@@ -150,9 +150,10 @@
 		user << "\red The [src] is full, make some space."
 		return
 
-	if ( W.w_class >= src.w_class && (istype(W, /obj/item/weapon/storage)))
-		user << "\red The [src] cannot hold [W] as it's a storage item of the same size."
-		return //To prevent the stacking of the same sized items.
+	if(W.w_class >= src.w_class && (istype(W, /obj/item/weapon/storage)))
+		if(!istype(src, /obj/item/weapon/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
+			user << "\red The [src] cannot hold [W] as it's a storage item of the same size."
+			return //To prevent the stacking of the same sized items.
 
 	user.u_equip(W)
 	W.loc = src

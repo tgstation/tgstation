@@ -45,10 +45,10 @@
 			stunned = max(stunned,0)
 			paralysis = max(paralysis, 0)
 			weakened = max(weakened, 0)
-			bruteloss = max(getBruteLoss(), 0)
-			fireloss = max(fireloss, 0)
-			oxyloss = max(getOxyLoss(), 0)
-			toxloss = max(getToxLoss(), 0)
+			adjustBruteLoss(0)
+			adjustFireLoss(0)
+			adjustOxyLoss(0)
+			adjustToxLoss(0)
 
 		handle_mutations_and_radiation()
 
@@ -117,8 +117,8 @@
 		handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
 			if(nodamage) return
 			var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
-			//fireloss += 2.5*discomfort
-			fireloss += 5.0*discomfort
+			//adjustFireLoss(2.5*discomfort)
+			adjustFireLoss(5.0*discomfort)
 
 		handle_chemicals_in_body()
 
@@ -144,7 +144,7 @@
 
 		handle_regular_status_updates()
 
-			health = 100 - (getOxyLoss() + getToxLoss() + fireloss + getBruteLoss() + cloneloss)
+			health = 100 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 
 			if(getOxyLoss() > 25) paralysis = max(paralysis, 3)
 

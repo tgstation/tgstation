@@ -319,3 +319,70 @@
 
 	attack_paw(mob/user as mob)
 		return attack_hand(user)
+
+/obj/item/toy/waterflower
+	name = "Water Flower"
+	desc = "A seemingly innocent sunflower...with a twist."
+	icon = 'harvest.dmi'
+	icon_state = "sunflower"
+	item_state = "sunflower"
+	var/empty = 0
+	flags =  USEDELAY
+
+/obj/item/toy/waterflower/New()
+	var/datum/reagents/R = new/datum/reagents(10)
+	reagents = R
+	R.my_atom = src
+	R.add_reagent("water", 10)
+
+/obj/item/toy/waterflower/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+	return
+
+/obj/item/toy/waterflower/afterattack(atom/A as mob|obj, mob/user as mob)
+
+	if (istype(A, /obj/item/weapon/storage/backpack ))
+		return
+
+	else if (locate (/obj/structure/table, src.loc))
+		return
+
+	else if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
+		A.reagents.trans_to(src, 10)
+		user << "\blue You refill your flower!"
+		return
+
+	else if (src.reagents.total_volume < 1)
+		src.empty = 1
+		user << "\blue Your flower has run dry!"
+		return
+
+	else
+		src.empty = 0
+
+
+		var/obj/effect/decal/D = new/obj/effect/decal/(get_turf(src))
+		D.name = "water"
+		D.icon = 'chemical.dmi'
+		D.icon_state = "chempuff"
+		D.create_reagents(5)
+		src.reagents.trans_to(D, 1)
+		playsound(src.loc, 'spray3.ogg', 50, 1, -6)
+
+		spawn(0)
+			for(var/i=0, i<1, i++)
+				step_towards(D,A)
+				D.reagents.reaction(get_turf(D))
+				for(var/atom/T in get_turf(D))
+					D.reagents.reaction(T)
+					if(ismob(T) && T:client)
+						T:client << "\red [user] has sprayed you with water!"
+				sleep(4)
+			del(D)
+
+		return
+
+/obj/item/toy/waterflower/examine()
+        set src in usr
+        usr << text("\icon[] [] units of water left!", src, src.reagents.total_volume)
+        ..()
+        return

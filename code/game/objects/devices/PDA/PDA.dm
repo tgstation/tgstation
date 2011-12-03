@@ -655,15 +655,16 @@
 				id = I
 	else
 		var/obj/item/weapon/card/I = user.equipped()
-		if(id)//Get id and replace it.
-			user.drop_item()
-			I.loc = src
-			user.put_in_hand(id)
-			id = I
-		else//Insert id.
-			user.drop_item()
-			I.loc = src
-			id = I
+		if (istype(I, /obj/item/weapon/card/id) && I:registered)
+			if(id)//Get id and replace it.
+				user.drop_item()
+				I.loc = src
+				user.put_in_hand(id)
+				id = I
+			else//Insert id.
+				user.drop_item()
+				I.loc = src
+				id = I
 	return
 
 // access to status display signals
@@ -721,7 +722,7 @@
 
 				user.show_message("\blue Analyzing Results for [C]:")
 				user.show_message("\blue \t Overall Status: [C.stat > 1 ? "dead" : "[C.health]% healthy"]", 1)
-				user.show_message("\blue \t Damage Specifics: [C.getOxyLoss() > 50 ? "\red" : "\blue"][C.getOxyLoss()]-[C.getToxLoss() > 50 ? "\red" : "\blue"][C.getToxLoss()]-[C.fireloss > 50 ? "\red" : "\blue"][C.fireloss]-[C.getBruteLoss() > 50 ? "\red" : "\blue"][C.getBruteLoss()]", 1)
+				user.show_message("\blue \t Damage Specifics: [C.getOxyLoss() > 50 ? "\red" : "\blue"][C.getOxyLoss()]-[C.getToxLoss() > 50 ? "\red" : "\blue"][C.getToxLoss()]-[C.getFireLoss() > 50 ? "\red" : "\blue"][C.getFireLoss()]-[C.getBruteLoss() > 50 ? "\red" : "\blue"][C.getBruteLoss()]", 1)
 				user.show_message("\blue \t Key: Suffocation/Toxin/Burns/Brute", 1)
 				user.show_message("\blue \t Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)", 1)
 				for(var/datum/disease/D in C.viruses)

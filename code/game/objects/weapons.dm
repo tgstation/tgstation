@@ -144,7 +144,7 @@
 	armed = 0
 /*
 	else if (ismouse(target))
-		target.bruteloss = 100
+		target.adjustBruteLoss(100)
 */
 
 /obj/item/weapon/mousetrap/attack_self(mob/user as mob)
@@ -153,7 +153,7 @@
 		user << "\blue You arm the mousetrap."
 	else
 		icon_state = "mousetrap"
-		if((user.brainloss >= 60 || user.mutations & CLUMSY) && prob(50))
+		if((user.getBrainLoss() >= 60 || user.mutations & CLUMSY) && prob(50))
 			var/which_hand = "l_hand"
 			if(!user.hand)
 				which_hand = "r_hand"
@@ -170,7 +170,7 @@
 
 /obj/item/weapon/mousetrap/attack_hand(mob/user as mob)
 	if(armed)
-		if((user.brainloss >= 60 || user.mutations & CLUMSY) && prob(50))
+		if((user.getBrainLoss() >= 60 || user.mutations & CLUMSY) && prob(50))
 			var/which_hand = "l_hand"
 			if(!user.hand)
 				which_hand = "r_hand"

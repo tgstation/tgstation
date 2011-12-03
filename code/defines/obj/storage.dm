@@ -12,6 +12,15 @@
 	desc = "A backpack and trophy rack, useful for both carrying extra gear and proudly declaring your insanity "
 	icon_state = "cultpack"
 
+/obj/item/weapon/storage/trashbag
+	name = "trash bag"
+	desc = "for picking up all those pens"
+	icon_state = "trashbag"
+	item_state = "trashbag"
+	w_class = 4.0
+	storage_slots = 20
+	max_w_class = 1
+	max_combined_w_class = 20
 /*
 /obj/item/weapon/storage/lbe
 	name = "Load Bearing Equipment"

@@ -20,11 +20,11 @@
 	New()
 		..()
 		build_icon()
-		initialize_directions = SOUTH
+		initialize_directions = dir
 
 	initialize()
 		if(node) return
-		var/node_connect = SOUTH
+		var/node_connect = dir
 		for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
 			if(target.initialize_directions & get_dir(target,src))
 				node = target
@@ -90,7 +90,7 @@
 			<B>Current cell temperature:</B> [temp_text]K<BR>
 			<B>Cryo status:</B> [ src.on ? "<A href='?src=\ref[src];start=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];start=1'>On</A>"]<BR>
 			[beaker_text]<BR><BR>
-			<B>Current occupant:</B> [src.occupant ? "<BR>Name: [src.occupant]<BR>Health: [health_text]<BR>Oxygen deprivation: [round(src.occupant.getOxyLoss(),0.1)]<BR>Brute damage: [round(src.occupant.getBruteLoss(),0.1)]<BR>Fire damage: [round(src.occupant.fireloss,0.1)]<BR>Toxin damage: [round(src.occupant.getToxLoss(),0.1)]<BR>Body temperature: [src.occupant.bodytemperature]" : "<FONT color=red>None</FONT>"]<BR>
+			<B>Current occupant:</B> [src.occupant ? "<BR>Name: [src.occupant]<BR>Health: [health_text]<BR>Oxygen deprivation: [round(src.occupant.getOxyLoss(),0.1)]<BR>Brute damage: [round(src.occupant.getBruteLoss(),0.1)]<BR>Fire damage: [round(src.occupant.getFireLoss(),0.1)]<BR>Toxin damage: [round(src.occupant.getToxLoss(),0.1)]<BR>Body temperature: [src.occupant.bodytemperature]" : "<FONT color=red>None</FONT>"]<BR>
 
 		"}
 		user.machine = src
@@ -168,15 +168,15 @@
 					occupant.sleeping = max(5, (1/occupant.bodytemperature)*2000)
 					occupant.paralysis = max(5, (1/occupant.bodytemperature)*3000)
 					if(air_contents.oxygen > 2)
-						if(occupant.getOxyLoss()) occupant.oxyloss = max(0, occupant.getOxyLoss() - 1)
+						if(occupant.getOxyLoss()) occupant.adjustOxyLoss(-1)
 					else
-						occupant.oxyloss -= 1
+						occupant.adjustOxyLoss(-1)
 					//severe damage should heal waaay slower without proper chemicals
 					if(occupant.bodytemperature < 225)
 						if (occupant.getToxLoss())
 							occupant.adjustToxLoss(max(-1, -20/occupant.getToxLoss()))
 						var/heal_brute = occupant.getBruteLoss() ? min(1, 20/occupant.getBruteLoss()) : 0
-						var/heal_fire = occupant.fireloss ? min(1, 20/occupant.fireloss) : 0
+						var/heal_fire = occupant.getFireLoss() ? min(1, 20/occupant.getFireLoss()) : 0
 						occupant.heal_organ_damage(heal_brute,heal_fire)
 				if(beaker && (next_trans == 0))
 					beaker:reagents.trans_to(occupant, 1, 10)

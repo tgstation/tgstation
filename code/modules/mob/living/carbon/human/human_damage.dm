@@ -11,12 +11,12 @@
 
 
 /mob/living/carbon/human/proc/UpdateDamage()
-	bruteloss = 0
-	fireloss = 0
+	adjustBruteLoss(-getBruteLoss())
+	adjustFireLoss(-getFireLoss())
 	for(var/datum/organ/external/O in organs)
 		if(istype(O, /datum/organ/external))
 			bruteloss += O.brute_dam
-			fireloss += O.burn_dam
+			adjustFireLoss(O.burn_dam)
 	return
 
 // new damage icon system

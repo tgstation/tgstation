@@ -339,7 +339,7 @@
 	if((C.getOxyLoss() >= (15 + heal_threshold)) && (!C.reagents.has_reagent(src.treatment_oxy)))
 		return 1
 
-	if((C.fireloss >= heal_threshold) && (!C.reagents.has_reagent(src.treatment_fire)))
+	if((C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(src.treatment_fire)))
 		return 1
 
 	if((C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(src.treatment_tox)))
@@ -399,7 +399,7 @@
 		if(!C.reagents.has_reagent(src.treatment_oxy))
 			reagent_id = src.treatment_oxy
 
-	if (!reagent_id && (C.fireloss >= heal_threshold))
+	if (!reagent_id && (C.getFireLoss() >= heal_threshold))
 		if(!C.reagents.has_reagent(src.treatment_fire))
 			reagent_id = src.treatment_fire
 

@@ -48,10 +48,11 @@
 
 		if(istype(I, /obj/item/weapon/trashbag))
 			user << "\blue You empty the bag."
-			for (var/obj/item/trash/O in I.contents)
+			for(var/obj/item/O in I.contents)
 				I.contents -= O
 				O.loc = src
 			I.update_icon()
+			update()
 			return
 
 		var/obj/item/weapon/grab/G = I
@@ -94,7 +95,7 @@
 		for (var/mob/V in viewers(usr))
 			if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
 				V.show_message("[usr] starts climbing into the disposal.", 3)
-			if(target != user && !user.restrained())
+			if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
 				if(target.anchored) return
 				V.show_message("[usr] starts stuffing [target.name] into the disposal.", 3)
 		if(!do_after(usr, 20))
@@ -103,7 +104,7 @@
 												// must be awake, not stunned or whatever
 			msg = "[user.name] climbs into the [src]."
 			user << "You climb into the [src]."
-		else if(target != user && !user.restrained())
+		else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
 			msg = "[user.name] stuffs [target.name] into the [src]!"
 			user << "You stuff [target.name] into the [src]!"
 		else

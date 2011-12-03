@@ -85,22 +85,22 @@
 				if(getBruteLoss() > 0)
 					bruteloss = max(0, getBruteLoss()-10)
 
-				if(fireloss > 0)
-					fireloss = max(0, fireloss-10)
+				if(getFireLoss() > 0)
+					adjustFireLoss(-10)
 
-				if(cloneloss > 0)
-					cloneloss = max(0, cloneloss-10)
+				if(getCloneLoss() > 0)
+					adjustCloneLoss(-10)
 
 				if(Victim)
 					for(var/mob/living/carbon/metroid/Metroid in view(1,M))
 						if(Metroid.Victim == M && Metroid != src)
 							Metroid.Feedstop()
 
-				if(getToxLoss()<0) toxloss = 0
-				if(getOxyLoss()<0) oxyloss = 0
-				if(getBruteLoss()<0) bruteloss = 0
-				if(fireloss<0) fireloss = 0
-				if(cloneloss<0) cloneloss = 0
+				if(getToxLoss()<0) adjustToxLoss(0)
+				if(getOxyLoss()<0) adjustOxyLoss(0)
+				if(getBruteLoss()<0) adjustBruteLoss(0)
+				if(getFireLoss()<0) adjustFireLoss(0)
+				if(getCloneLoss()<0) adjustCloneLoss(0)
 
 				nutrition += rand(10,25)
 				if(nutrition >= lastnut + 50)

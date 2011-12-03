@@ -212,24 +212,21 @@
 		del(src)
 		return
 
-	var/b_loss = getBruteLoss()
-	var/f_loss = fireloss
 	switch(severity)
 		if(1.0)
 			if (stat != 2)
-				b_loss += 100
-				f_loss += 100
+				adjustBruteLoss(100)
+				adjustFireLoss(100)
 				gib(1)
 				return
 		if(2.0)
 			if (stat != 2)
-				b_loss += 60
-				f_loss += 60
+				adjustBruteLoss(60)
+				adjustFireLoss(60)
 		if(3.0)
 			if (stat != 2)
-				b_loss += 30
-	bruteloss = b_loss
-	fireloss = f_loss
+				adjustBruteLoss(30)
+
 	updatehealth()
 
 
@@ -240,7 +237,7 @@
 	if (health > 0)
 		bruteloss += 30
 		if ((O.icon_state == "flaming"))
-			fireloss += 40
+			adjustFireLoss(40)
 		updatehealth()
 	return
 
@@ -269,6 +266,9 @@
 					return
 		now_pushing = 0
 		..()
+		if (istype(AM, /obj/machinery/recharge_station))
+			var/obj/machinery/recharge_station/F = AM
+			F.move_inside()
 		if (!istype(AM, /atom/movable))
 			return
 		if (!now_pushing)
@@ -344,8 +344,8 @@
 
 	else if(istype(W, /obj/item/weapon/cable_coil) && wiresexposed)
 		var/obj/item/weapon/cable_coil/coil = W
-		fireloss -= 30
-		if(fireloss < 0) fireloss = 0
+		adjustFireLoss(-30)
+		if(getFireLoss() < 0) adjustFireLoss(0)
 		updatehealth()
 		coil.use(1)
 		for(var/mob/O in viewers(user, null))

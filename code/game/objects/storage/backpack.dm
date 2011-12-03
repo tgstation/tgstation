@@ -3,7 +3,7 @@
 //	if (src.loc != usr)
 //		return
 //	if ((istype(usr, /mob/living/carbon/human) || (ticker && ticker.mode.name == "monkey")))
-	if (ishuman(usr) || ismonkey(usr)) //so monkies can take off their backpacks -- Urist
+	if (ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
 		var/mob/M = usr
 		if (!( istype(over_object, /obj/screen) ))
 			return ..()
@@ -38,6 +38,8 @@
 	desc = "A backpack that opens into a localized pocket of Blue Space."
 	origin_tech = "bluespace=4"
 	icon_state = "holdingpack"
+	max_w_class = 4
+	max_combined_w_class = 28
 
 	New()
 		..()
@@ -50,7 +52,8 @@
 		if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
 			user << "\red The Bluespace interfaces of the two devices catastrophically malfunction!"
 			del(W)
-			new /obj/machinery/singularity (get_turf(src))
+			var/obj/machinery/singularity/singulo = new /obj/machinery/singularity (get_turf(src))
+			singulo.energy = 300 //should make it a bit bigger~
 			message_admins("[key_name_admin(user)] detonated a bag of holding")
 			log_game("[key_name(user)] detonated a bag of holding")
 			del(src)

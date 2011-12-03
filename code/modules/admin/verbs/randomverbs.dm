@@ -813,3 +813,35 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	for(var/t in M.attack_log)
 		usr << t
 
+
+/client/proc/everyone_random()
+	set category = "Fun"
+	set name = "Make Everyone Random"
+	set desc = "Make everyone have a random appearance. You can only use this before rounds!"
+
+	if (ticker && ticker.mode)
+		usr << "Nope you can't do this, the game's already started. This only works before rounds!"
+		return
+
+	if(ticker.random_players)
+		ticker.random_players = 0
+		message_admins("Admin [key_name_admin(usr)] has disabled \"Everyone is Special\" mode.", 1)
+		usr << "Disabled."
+		return
+
+
+	var/notifyplayers = alert(src, "Do you want to notify the players?", "Options", "Yes", "No", "Cancel")
+	if(notifyplayers == "Cancel")
+		return
+
+	log_admin("Admin [key_name(src)] has forced the players to have random appearances.")
+	message_admins("Admin [key_name_admin(usr)] has forced the players to have random appearances.", 1)
+
+	if(notifyplayers == "Yes")
+		world << "\blue <b>Admin [usr.key] has forced the players to have completely random identities!"
+
+	usr << "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>."
+
+	ticker.random_players = 1
+
+

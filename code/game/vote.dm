@@ -74,7 +74,7 @@
 		world << "Result is change to \red [wintext]"
 		world.save_mode(winner)
 
-		if(ticker.current_state != 1)
+		if(ticker && ticker.mode)
 			world <<"\red <B>World will reboot in 10 seconds</B>"
 
 			feedback_set_details("end_error","mode vote - [winner]")

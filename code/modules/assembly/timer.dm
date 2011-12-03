@@ -49,7 +49,7 @@
 
 
 	process()
-		if(timing && (time >= 0))
+		if(timing && (time > 0))
 			time--
 		if(timing && time <= 0)
 			timing = 0

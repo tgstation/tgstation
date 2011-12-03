@@ -24,11 +24,9 @@ Bishop
 Blitz
 Box
 Brackenridge
-Buttbot
 C-3PO
 Cassandra One
 Cell
-Cherry 2000
 Chii
 Chip
 Computer
@@ -50,7 +48,6 @@ Ez-27
 FRIEND COMPUTER
 Fagor
 Faith
-Fembot
 Fi
 Frost
 Fum
@@ -97,14 +94,9 @@ Project 2501
 R.I.C. 2.0
 R2-D2
 R4-P17
-Real Doll
 Revelation
 Ro-Man
 Robbie
-Robot 5
-Robot Devil
-Robot
-Robotman
 S.A.M.
 S.H.O.C.K.
 S.H.R.O.U.D.
@@ -146,3 +138,10 @@ Z-3
 Zed
 Zord
 Mugsy3000
+Terminus
+Decimus
+Robot Devil
+Optimus
+Megatron
+Soundwave
+Ironhide

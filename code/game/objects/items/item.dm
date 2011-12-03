@@ -319,7 +319,7 @@ mob/proc/flash_weak_pain()
 		switch(src.damtype)
 			if("brute")
 				if(istype(src, /mob/living/carbon/metroid))
-					M.bruteloss += power
+					M.adjustBrainLoss(power)
 
 				else
 
@@ -376,7 +376,7 @@ mob/proc/flash_weak_pain()
 		M << "\red You stab yourself in the eye."
 		M.sdisabilities |= 1
 		M.weakened += 4
-		M.bruteloss += 10
+		M.adjustBruteLoss(10)
 		*/
 	if(M != user)
 		for(var/mob/O in (viewers(M) - user - M))

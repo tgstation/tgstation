@@ -103,7 +103,7 @@
 							A.suiciding = 1
 							A << "Your core files are being wiped!"
 							while (A.stat != 2)
-								A.oxyloss += 2
+								A.adjustOxyLoss(2)
 								A.updatehealth()
 								sleep(10)
 							flush = 0
