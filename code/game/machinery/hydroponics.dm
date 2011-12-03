@@ -243,7 +243,7 @@ obj/machinery/hydroponics/proc/mutate() // Mutates the current seed
 			src.myseed.yield = 1 // Mushrooms always have a minimum yield of 1.
 
 	if(src.myseed.potency != -1) //Not all plants have a potency
-		src.myseed.potency += rand(-10,10)
+		src.myseed.potency += rand(-25,25)
 		if(src.myseed.potency < 0)
 			src.myseed.potency = 0
 		else if(src.myseed.potency > 100)
@@ -282,7 +282,7 @@ obj/machinery/hydroponics/proc/hardmutate() // Strongly mutates the current seed
 			src.myseed.yield = 1 // Mushrooms always have a minimum yield of 1.
 
 	if(src.myseed.potency != -1) //Not all plants have a potency
-		src.myseed.potency += rand(-20,20)
+		src.myseed.potency += rand(-50,50)
 		if(src.myseed.potency < 0)
 			src.myseed.potency = 0
 		else if(src.myseed.potency > 100)

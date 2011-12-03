@@ -1222,7 +1222,7 @@ window "vendingslot"
 		is-maximized = false
 		can-scroll = none
 		icon = ""
-		image = 'icons\\vendingslot_bg.png'
+		image = ""
 		image-mode = stretch
 		keep-aspect = false
 		transparent-color = none
@@ -1291,8 +1291,8 @@ window "vendingslot"
 		anchor1 = none
 		anchor2 = none
 		font-family = ""
-		font-size = 14
-		font-style = ""
+		font-size = 11
+		font-style = "bold"
 		text-color = #000000
 		background-color = none
 		is-visible = true
@@ -1304,12 +1304,12 @@ window "vendingslot"
 		right-click = false
 		saved-params = ""
 		on-size = ""
-		text = "HoNK"
+		text = "Cuban Pete's Double Bearded Wine LOL LINES"
 		image = ""
 		image-mode = center
 		keep-aspect = false
 		align = center
-		text-wrap = false
+		text-wrap = true
 
 window "vendingwindow"
 	elem "vendingwindow"
