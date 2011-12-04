@@ -28,7 +28,7 @@
 			if(1)
 				if(security_level < 1)
 					world << "<font size=4 color='red'>Attention! security level elevated to blue</font>"
-					world << "<font color='red'>The station has received reliable information about possible hostle activity on the station. Security staff may have weapons visible, random searches are permitted.</font>"
+					world << "<font color='red'>The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted.</font>"
 				else
 					world << "<font size=4 color='red'>Attention! security level lowered to blue</font>"
 					world << "<font color='red'>The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed.</font>"
@@ -59,6 +59,17 @@
 						FA.overlays += image('monitors.dmi', "overlay_delta")
 	else
 		return
+
+/proc/get_security_level()
+	switch(security_level)
+		if(0)
+			return "green"
+		if(1)
+			return "blue"
+		if(2)
+			return "red"
+		if(3)
+			return "delta"
 
 
 /*DEBUG
