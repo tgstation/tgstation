@@ -22,7 +22,7 @@
 		if (M.stuttering)
 			src.storedinfo += "[M.name] stammers, \"[msg]\""
 			return
-		if (M.brainloss >= 60)
+		if (M.getBrainLoss() >= 60)
 			src.storedinfo += "[M.name] gibbers, \"[msg]\""
 			return
 		if (ending == "?")

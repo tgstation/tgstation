@@ -10,12 +10,12 @@
 
 	New()
 		..()
-		initialize_directions = NORTH
+		initialize_directions = dir
 
 	initialize()
 		if(node) return
 
-		var/node_connect = NORTH
+		var/node_connect = dir
 
 		for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
 			if(target.initialize_directions & get_dir(target,src))

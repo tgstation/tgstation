@@ -124,13 +124,13 @@
 
 		handle_mutations_and_radiation()
 
-			if(src.fireloss)
+			if(src.getFireLoss())
 				if(src.mutations & COLD_RESISTANCE || prob(50))
-					switch(src.fireloss)
+					switch(src.getFireLoss())
 						if(1 to 50)
-							src.fireloss--
+							src.adjustFireLoss(-1)
 						if(51 to 100)
-							src.fireloss -= 5
+							src.adjustFireLoss(-5)
 
 			if (src.mutations & HULK && src.health <= 25)
 				src.mutations &= ~HULK
@@ -370,8 +370,8 @@
 		handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
 			if(src.nodamage) return
 			var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
-			//fireloss += 2.5*discomfort
-			fireloss += 5.0*discomfort
+			//adjustFireLoss(2.5*discomfort)
+			adjustFireLoss(5.0*discomfort)
 
 		handle_chemicals_in_body()
 
@@ -397,7 +397,7 @@
 
 		handle_regular_status_updates()
 
-			health = 100 - (getOxyLoss() + getToxLoss() + fireloss + getBruteLoss() + cloneloss)
+			health = 100 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 
 			if(getOxyLoss() > 25) paralysis = max(paralysis, 3)
 

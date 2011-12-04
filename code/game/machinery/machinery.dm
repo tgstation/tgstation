@@ -186,11 +186,11 @@ Class Procs:
 		return 1
 */
 	if (ishuman(user))
-		if(user.brainloss >= 60)
+		if(user.getBrainLoss() >= 60)
 			for(var/mob/M in viewers(src, null))
 				M << "\red [user] stares cluelessly at [src] and drools."
 			return 1
-		else if(prob(user.brainloss))
+		else if(prob(user.getBrainLoss()))
 			user << "\red You momentarily forget how to use [src]."
 			return 1
 

@@ -322,7 +322,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 						continue // if threat level < 4, keep going
 
 				else if (istype(C, /mob/living/carbon/monkey) || istype(C, /mob/living/silicon))
-					continue // Don't target monkies or borgs/AIs you dumb shit
+					continue // Don't target monkeys or borgs/AIs you dumb shit
 
 				var/dst = get_dist(src, C) // if it's too far away, why bother?
 				if (dst > 12)

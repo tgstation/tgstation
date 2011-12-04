@@ -4,7 +4,7 @@
 	var/obj/screen/close/closer = null
 	var/icon_locking = "secureb"
 	var/icon_sparking = "securespark"
-	var/icon_open = "secure0"
+	var/icon_opened = "secure0"
 	var/locked = 1
 	var/code = ""
 	var/l_code = null
@@ -216,7 +216,7 @@
 			else if ((src.code == src.l_code) && (src.emagged == 0) && (src.l_set == 1))
 				src.locked = 0
 				src.overlays = null
-				overlays += image('storage.dmi', icon_open)
+				overlays += image('storage.dmi', icon_opened)
 				src.code = null
 			else
 				src.code = "ERROR"

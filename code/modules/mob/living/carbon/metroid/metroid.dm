@@ -175,7 +175,7 @@
 			b_loss += 30
 
 	bruteloss += b_loss
-	fireloss += f_loss
+	adjustFireLoss(f_loss)
 
 	updatehealth()
 
@@ -196,7 +196,7 @@
 
 	show_message("\red The blob attacks you!")
 
-	fireloss += damage
+	adjustFireLoss(damage)
 
 	updatehealth()
 	return
@@ -215,7 +215,7 @@
 			M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (health > 0)
 		bruteloss += (istype(O, /obj/effect/meteor/small) ? 10 : 25)
-		fireloss += 30
+		adjustFireLoss(30)
 
 		updatehealth()
 	return
@@ -648,9 +648,9 @@ mob/living/carbon/metroid/var/temperature_resistance = T0C+75
 	if (nodamage == 0)
 		// metroids can't suffocate unless they suicide. They are also not harmed by fire
 		if(istype(src, /mob/living/carbon/metroid/adult))
-			health = 200 - (getOxyLoss() + getToxLoss() + fireloss + getBruteLoss() + cloneloss)
+			health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 		else
-			health = 150 - (getOxyLoss() + getToxLoss() + fireloss + getBruteLoss() + cloneloss)
+			health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 	else
 		if(istype(src, /mob/living/carbon/metroid/adult))
 			health = 200

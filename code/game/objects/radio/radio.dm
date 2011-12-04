@@ -17,7 +17,7 @@
 		freerange = 0 // 0 - Sanitize frequencies, 1 - Full range
 		list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
-	flags = 450
+	flags = 450		// hello i'm a fucking idiot why is this 450?? CODE GODS PLEASE EXPLAIN~
 	throw_speed = 2
 	throw_range = 9
 	w_class = 2
@@ -27,7 +27,7 @@
 		WIRE_SIGNAL = 1 //sends a signal, like to set off a bomb or electrocute someone
 		WIRE_RECEIVE = 2
 		WIRE_TRANSMIT = 4
-		TRANSMISSION_DELAY = 5 // only 2/second/radio
+		TRANSMISSION_DELAY = 0 // only 2/second/radio
 		FREQ_LISTENING = 1
 		//FREQ_BROADCASTING = 2
 

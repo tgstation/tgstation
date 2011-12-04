@@ -146,7 +146,7 @@ var/ordernum=0
 	var/shuttleat = supply_shuttle_at_station ? SUPPLY_STATION_AREATYPE : SUPPLY_DOCK_AREATYPE
 
 	for(var/turf/T in get_area_turfs(shuttleat) )
-		var/crate = locate(/obj/structure/crate) in T
+		var/crate = locate(/obj/structure/closet/crate) in T
 		if (crate)
 			del(crate)
 			supply_shuttle_points += SUPPLY_POINTSPERCRATE
@@ -169,7 +169,7 @@ var/ordernum=0
 		var/pickedloc = 0
 		var/found = 0
 		for(var/C in markers)
-			if (locate(/obj/structure/crate) in get_turf(C)) continue
+			if (locate(/obj/structure/closet/crate) in get_turf(C)) continue
 			found = 1
 			pickedloc = get_turf(C)
 		if (!found) pickedloc = get_turf(pick(markers))

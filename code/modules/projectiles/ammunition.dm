@@ -21,27 +21,6 @@
 		dir = pick(cardinal)
 
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		..()
-		if (istype(W, /obj/item/weapon/trashbag))
-			var/obj/item/weapon/trashbag/S = W
-			if (S.mode == 1)
-				for (var/obj/item/ammo_casing/AC in locate(src.x,src.y,src.z))
-					if (S.contents.len < S.capacity)
-						S.contents += AC;
-					else
-						user << "\blue The bag is full."
-						break
-				user << "\blue You pick up all trash."
-			else
-				if (S.contents.len < S.capacity)
-					S.contents += src;
-				else
-					user << "\blue The bag is full."
-			S.update_icon()
-		return
-
-
 
 //Boxes of ammo
 /obj/item/ammo_magazine

@@ -335,7 +335,13 @@
 
 		close_spawn_windows()
 
-		preferences.copy_to(new_character)
+		if(ticker.random_players)
+			new_character.gender = pick(MALE, MALE, FEMALE)
+			preferences.randomize_name()
+			preferences.randomize_appearance_for(new_character)
+		else
+			preferences.copy_to(new_character)
+
 		new_character.dna.ready_dna(new_character)
 		if(mind)
 			mind.transfer_to(new_character)

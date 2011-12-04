@@ -226,22 +226,19 @@
 /mob/living/silicon/ai/ex_act(severity)
 	flick("flash", flash)
 
-	var/b_loss = getBruteLoss()
-	var/f_loss = fireloss
 	switch(severity)
 		if(1.0)
 			if (stat != 2)
-				b_loss += 100
-				f_loss += 100
+				adjustBruteLoss(100)
+				adjustFireLoss(100)
 		if(2.0)
 			if (stat != 2)
-				b_loss += 60
-				f_loss += 60
+				adjustBruteLoss(60)
+				adjustFireLoss(60)
 		if(3.0)
 			if (stat != 2)
-				b_loss += 30
-	bruteloss = b_loss
-	fireloss = f_loss
+				adjustBruteLoss(30)
+
 	updatehealth()
 
 
@@ -287,7 +284,7 @@
 	if (health > 0)
 		bruteloss += 30
 		if ((O.icon_state == "flaming"))
-			fireloss += 40
+			adjustFireLoss(40)
 		updatehealth()
 	return
 

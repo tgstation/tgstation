@@ -2,7 +2,7 @@
 /obj/item/trash
 	icon = 'trash.dmi'
 	w_class = 1.0
-	desc = "It's \a trash"
+	desc = "This is rubbish."
 	raisins
 		name = "4no raisins"
 		icon_state= "4no_raisins"
@@ -50,35 +50,16 @@
 /obj/item/trash/attack(mob/M as mob, mob/living/user as mob)
 	return
 
-/obj/item/trash/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if (istype(W, /obj/item/weapon/trashbag))
-		var/obj/item/weapon/trashbag/S = W
-		if (S.mode == 1)
-			for (var/obj/item/trash/O in locate(src.x,src.y,src.z))
-				if (S.contents.len < S.capacity)
-					S.contents += O;
-				else
-					user << "\blue The bag is full."
-					break
-			user << "\blue You pick up all trash."
-		else
-			if (S.contents.len < S.capacity)
-				S.contents += src;
-			else
-				user << "\blue The bag is full."
-		S.update_icon()
-	return
-
 /obj/item/weapon/trashbag
 	icon = 'trash.dmi'
 	icon_state = "trashbag0"
 	item_state = "trashbag"
 	name = "Trash bag"
+	desc = "A heavy-duty, no fun allowed trash bag."
 	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
 	var/capacity = 25; //the number of trash it can carry.
 	flags = FPRINT | TABLEPASS | ONBELT
-	w_class = 1
+	w_class = 2.0
 
 /obj/item/weapon/trashbag/update_icon()
 	if(contents.len == 0)
@@ -89,12 +70,39 @@
 		icon_state = "trashbag2"
 	else icon_state = "trashbag3"
 
-/obj/item/weapon/trashbag/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/trashbag/attackby(obj/item/W as obj, mob/living/user as mob)
 	..()
-	if (istype(W, /obj/item/trash))
-		var/obj/item/trash/O = W
-		src.contents += O;
-	return
+	if (contents.len < capacity)
+		if (istype(W, /obj/item))
+			if (W.w_class <= 2)
+				var/obj/item/O = W
+				src.contents += O
+	else
+		user << "\blue The bag is full!"
+
+/obj/item/weapon/trashbag/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)
+	if(istype(target, /obj/item))
+		var/obj/item/W = target
+		if(W.w_class <= 2)
+			if(mode == 1)
+				if(contents.len < capacity)	//slightly redundant, but it makes it prettier in the chatbox. -Pete
+					user << "\blue You pick up all the trash."
+					for(var/obj/item/O in get_turf(W))
+						if(contents.len < capacity)
+							if(O.w_class <= 2)
+								contents += O;
+						else
+							user << "\blue The bag is full!"
+							break
+				else
+					user << "\blue The bag is full!"
+			else
+				if(contents.len < capacity)
+					contents += W;
+				else
+					user << "\blue The bag is full!"
+			update_icon()
+		return
 
 /obj/item/weapon/trashbag/verb/toggle_mode()
 	set name = "Switch Bag Method"
@@ -104,5 +112,5 @@
 	switch (mode)
 		if(1)
 			usr << "The bag now picks up all trash in a tile at once."
-		if(0)
-			usr << "The bag now picks up one trash at a time."
+		else
+			usr << "The bag now picks up one piece of trash at a time."

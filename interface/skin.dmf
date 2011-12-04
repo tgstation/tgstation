@@ -4,20 +4,20 @@ macro "macro"
 		command = ".center"
 		is-disabled = false
 	elem 
-		name = "NORTHEAST"
-		command = "swap-hand"
+		name = "NORTHEAST+REP"
+		command = ".northeast"
 		is-disabled = false
 	elem 
-		name = "SOUTHEAST"
-		command = "attack-self"
+		name = "SOUTHEAST+REP"
+		command = ".southeast"
 		is-disabled = false
 	elem 
-		name = "SOUTHWEST"
-		command = "toggle-throw-mode"
+		name = "SOUTHWEST+REP"
+		command = ".southwest"
 		is-disabled = false
 	elem 
-		name = "NORTHWEST"
-		command = "drop-item"
+		name = "NORTHWEST+REP"
+		command = ".northwest"
 		is-disabled = false
 	elem 
 		name = "SHIFT+WEST"

@@ -415,7 +415,7 @@
 	if (!src.implanted)
 		return "ERROR"
 	else
-		src.healthstring = "[round(src.implanted:getOxyLoss())] - [round(src.implanted:fireloss)] - [round(src.implanted:getToxLoss())] - [round(src.implanted:getBruteLoss())]"
+		src.healthstring = "[round(src.implanted:getOxyLoss())] - [round(src.implanted:getFireLoss())] - [round(src.implanted:getToxLoss())] - [round(src.implanted:getBruteLoss())]"
 		if (!src.healthstring)
 			src.healthstring = "ERROR"
 		return src.healthstring
@@ -452,12 +452,12 @@
 	src.icon_state = "pod_1"
 	//Get the clone body ready
 	src.occupant.rejuv = 10
-	src.occupant.cloneloss += 190 //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
-	src.occupant.brainloss += 90
+	src.occupant.adjustCloneLoss(190) //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
+	src.occupant.adjustBrainLoss(90)
 	src.occupant.paralysis += 4
 
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
-	src.occupant.health = (src.occupant.getBruteLoss() + src.occupant.getToxLoss() + src.occupant.getOxyLoss() + src.occupant.cloneloss)
+	src.occupant.health = (src.occupant.getBruteLoss() + src.occupant.getToxLoss() + src.occupant.getOxyLoss() + src.occupant.getCloneLoss())
 
 	src.occupant << "\blue <b>Clone generation process initiated.</b>"
 	src.occupant << "\blue This will take a moment, please hold."
@@ -544,17 +544,17 @@
 			src.occupant.paralysis = 4
 
 			 //Slowly get that clone healed and finished.
-			src.occupant.cloneloss = max(src.occupant.cloneloss-2, 0)
+			src.occupant.adjustCloneLoss(-2)
 
 			//Premature clones may have brain damage.
-			src.occupant.brainloss = max(src.occupant.brainloss-1, 0)
+			src.occupant.adjustBrainLoss(-1)
 
 			//So clones don't die of oxyloss in a running pod.
 			if (src.occupant.reagents.get_reagent_amount("inaprovaline") < 30)
 				src.occupant.reagents.add_reagent("inaprovaline", 60)
 
 			//Also heal some oxyloss ourselves because inaprovaline is so bad at preventing it!!
-			src.occupant.oxyloss = max(src.occupant.getOxyLoss()-4, 0)
+			src.occupant.adjustOxyLoss(-4)
 
 			use_power(7500) //This might need tweaking.
 			return
@@ -630,14 +630,20 @@
 		src.mess = 0
 		gibs(src.loc)
 		src.icon_state = "pod_0"
+
+		/*
 		for(var/obj/O in src)
 			O.loc = src.loc
+		*/
 		return
 
 	if (!(src.occupant))
 		return
+
+	/*
 	for(var/obj/O in src)
 		O.loc = src.loc
+	*/
 
 	if (src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob

@@ -555,7 +555,7 @@
 	icon_state = null
 	w_class = 1
 	var/amount_per_transfer_from_this = 5
-	var/possible_transfer_amounts = list(5,10,25)
+	var/possible_transfer_amounts = list(5,10,15,25,30)
 	var/volume = 30
 
 	verb/set_APTFT() //set amount_per_transfer_from_this
@@ -595,7 +595,7 @@
 	icon_state = "null"
 	item_state = "null"
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,25)
+	possible_transfer_amounts = list(5,10,15,25,30,50)
 	volume = 50
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
@@ -604,7 +604,7 @@
 		/obj/machinery/chem_dispenser/,
 		/obj/machinery/reagentgrinder,
 		/obj/structure/table,
-		/obj/structure/secure_closet,
+		/obj/structure/closet/secure_closet,
 		/obj/structure/closet,
 		/obj/machinery/sink,
 		/obj/item/weapon/storage,
@@ -1339,27 +1339,6 @@
 		if (gulp_size < 5) gulp_size = 5
 		else gulp_size = max(round(reagents.total_volume / 5), 5)
 
-
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		..()
-		if (istype(W, /obj/item/weapon/trashbag))
-			var/obj/item/weapon/trashbag/S = W
-			if (S.mode == 1)
-				for (var/obj/item/weapon/reagent_containers/food/drinks/D in locate(src.x,src.y,src.z))
-					if (S.contents.len < S.capacity)
-						S.contents += D;
-					else
-						user << "\blue The bag is full."
-						break
-				user << "\blue You pick up all trash."
-			else
-				if (S.contents.len < S.capacity)
-					S.contents += src;
-				else
-					user << "\blue The bag is full."
-			S.update_icon()
-		return
-
 	attack_self(mob/user as mob)
 		return
 
@@ -1699,7 +1678,7 @@
 	item_state = "beaker"
 	volume = 100
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,30,50)
+	possible_transfer_amounts = list(5,10,15,25,30,50,100)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
 
@@ -2624,6 +2603,14 @@
 	New()
 		..()
 		reagents.add_reagent("dexalin", 30)
+
+/obj/item/weapon/reagent_containers/pill/bicardine
+	name = "Bicardine pill"
+	desc = "Used to treat physical injuries."
+	icon_state = "pill18"
+	New()
+		..()
+		reagents.add_reagent("bicardine", 30)
 
 //Dispensers
 /obj/structure/reagent_dispensers/watertank

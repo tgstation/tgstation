@@ -506,7 +506,7 @@ Code:
 								menu += "Calculating navigation path"
 							if(7)
 								menu += "Unable to locate destination"
-						var/obj/structure/crate/C = QC.botstatus["load"]
+						var/obj/structure/closet/crate/C = QC.botstatus["load"]
 						menu += "<BR>Current Load: [ !C ? "<i>none</i>" : "[C.name] (<A href='byond://?src=\ref[QC];op=unload'><i>unload</i></A>)" ]<BR>"
 						menu += "Destination: [!QC.botstatus["dest"] ? "<i>none</i>" : QC.botstatus["dest"] ] (<A href='byond://?src=\ref[QC];op=setdest'><i>set</i></A>)<BR>"
 						menu += "Power: [QC.botstatus["powr"]]%<BR>"

@@ -133,7 +133,7 @@ ________________________________________________________________________________
 				A += s_acost
 		else
 			if(prob(s_delay))//Suit delay is used as probability. May change later.
-				U.bruteloss += k_damage//Default damage done, usually 1.
+				U.adjustBruteLoss(k_damage)//Default damage done, usually 1.
 			A = k_cost//kamikaze cost.
 		cell.charge-=A
 		if(cell.charge<=0)
@@ -289,7 +289,7 @@ ________________________________________________________________________________
 			dat += "<h4>Nutrition Status: [U.nutrition]</h4>"
 			dat += "Oxygen loss: [U.getOxyLoss()]"
 			dat += " | Toxin levels: [U.getToxLoss()]<br>"
-			dat += "Burn severity: [U.fireloss]"
+			dat += "Burn severity: [U.getFireLoss()]"
 			dat += " | Brute trauma: [U.getBruteLoss()]<br>"
 			dat += "Radiation Level: [U.radiation] rad<br>"
 			dat += "Body Temperature: [U.bodytemperature-T0C]&deg;C ([U.bodytemperature*1.8-459.67]&deg;F)<br>"
@@ -690,7 +690,7 @@ ________________________________________________________________________________
 					spawn(0)
 						display_spideros()//To refresh the screen and let this finish.
 					while (A.stat != 2)
-						A.oxyloss += 2
+						A.adjustOxyLoss(2)
 						A.updatehealth()
 						sleep(10)
 					killai()

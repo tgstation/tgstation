@@ -172,7 +172,7 @@
 	if(rev_mind in revolutionaries)
 		revolutionaries -= rev_mind
 		rev_mind.special_role = null
-		rev_mind.current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel, and you cannot remember a thing!</B></FONT>"
+		rev_mind.current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</B></FONT>"
 		update_rev_icons_removed(rev_mind)
 		for(var/mob/living/M in view(rev_mind.current))
 			M << "[rev_mind.current] looks like they just remembered their real allegiance!"

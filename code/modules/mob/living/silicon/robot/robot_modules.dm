@@ -54,7 +54,9 @@
 
 	New()
 		..()
+		src.modules += new /obj/item/borg/sight/hud/med(src)
 		src.modules += new /obj/item/device/healthanalyzer(src)
+
 		for(var/i = 1 to 3)
 			var/obj/item/weapon/reagent_containers/syringe/S = new /obj/item/weapon/reagent_containers/syringe(src)
 			switch(i)
@@ -67,24 +69,22 @@
 		src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
 		src.modules += new /obj/item/weapon/reagent_containers/glass/bottle/robot/inaprovaline(src)
 		src.modules += new /obj/item/weapon/reagent_containers/glass/bottle/robot/antitoxin(src)
-		for(var/i = 1 to 2)
-			src.modules += new /obj/item/weapon/reagent_containers/pill/kelotane(src)
-		for(var/i = 1 to 2)
-			src.modules += new /obj/item/weapon/reagent_containers/pill/dexalin(src)
-
-		src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 		src.modules += new /obj/item/weapon/reagent_containers/glass/beaker(src)
-		src.modules += new /obj/item/borg/sight/hud/med(src)
+		src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 		src.emag = new /obj/item/weapon/reagent_containers/pill/cyanide(src)
+		src.modules += new /obj/item/weapon/reagent_containers/pill/dexalin(src)
+		src.modules += new /obj/item/weapon/reagent_containers/pill/antitox(src)
+		src.modules += new /obj/item/weapon/reagent_containers/pill/kelotane(src)
+		src.modules += new /obj/item/weapon/reagent_containers/pill/bicardine(src)
 		return
 
 
 	respawn_consumable(var/mob/living/silicon/robot/R)
 		var/list/what = list (
-			/obj/item/weapon/reagent_containers/pill/kelotane,
-			/obj/item/weapon/reagent_containers/pill/kelotane,
 			/obj/item/weapon/reagent_containers/pill/dexalin,
-			/obj/item/weapon/reagent_containers/pill/dexalin
+			/obj/item/weapon/reagent_containers/pill/antitox,
+			/obj/item/weapon/reagent_containers/pill/kelotane,
+			/obj/item/weapon/reagent_containers/pill/bicardine
 		)
 		for (var/T in what)
 			if (!(locate(T) in src.modules))
@@ -103,23 +103,25 @@
 
 	New()
 		..()
-		src.modules += new /obj/item/weapon/extinguisher(src)
-		src.modules += new /obj/item/weapon/screwdriver(src)
-		src.modules += new /obj/item/weapon/weldingtool/largetank(src)
-		src.modules += new /obj/item/weapon/wrench(src)
-		src.modules += new /obj/item/device/analyzer(src)
-		src.modules += new /obj/item/device/flashlight(src)
+		src.modules += new /obj/item/borg/sight/meson(src)
+		src.emag = new /obj/item/borg/stun(src)
 		src.modules += new /obj/item/borg/rcd(src)
-		src.modules += new /obj/item/device/t_scanner(src)
+		src.modules += new /obj/item/weapon/extinguisher(src)
+		src.modules += new /obj/item/device/flashlight(src)
+		src.modules += new /obj/item/weapon/weldingtool/largetank(src)
+		src.modules += new /obj/item/weapon/screwdriver(src)
+		src.modules += new /obj/item/weapon/wrench(src)
 		src.modules += new /obj/item/weapon/crowbar(src)
 		src.modules += new /obj/item/weapon/wirecutters(src)
 		src.modules += new /obj/item/device/multitool(src)
+		src.modules += new /obj/item/device/t_scanner(src)
+		src.modules += new /obj/item/device/analyzer(src)
 
-		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(src)
+		var/obj/item/stack/sheet/metal/cyborg/M = new /obj/item/stack/sheet/metal/cyborg(src)
 		M.amount = 50
 		src.modules += M
 
-		var/obj/item/stack/sheet/rglass/G = new /obj/item/stack/sheet/rglass(src)
+		var/obj/item/stack/sheet/rglass/cyborg/G = new /obj/item/stack/sheet/rglass/cyborg(src)
 		G.amount = 50
 		src.modules += G
 
@@ -127,8 +129,6 @@
 		W.amount = 50
 		src.modules += W
 
-		src.modules += new /obj/item/borg/sight/meson(src)
-		src.emag = new /obj/item/borg/stun(src)
 		return
 
 
@@ -154,10 +154,10 @@
 
 	New()
 		..()
-		src.modules += new /obj/item/weapon/melee/baton(src)
-		src.modules += new /obj/item/weapon/handcuffs/cyborg(src)
-		src.modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
 		src.modules += new /obj/item/borg/sight/hud/sec(src)
+		src.modules += new /obj/item/weapon/handcuffs/cyborg(src)
+		src.modules += new /obj/item/weapon/melee/baton(src)
+		src.modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
 		src.emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 		return
 
@@ -174,6 +174,7 @@
 		src.modules += new /obj/item/weapon/reagent_containers/glass/bucket(src)
 		src.modules += new /obj/item/weapon/trashbag(src)
 		src.emag = new /obj/item/weapon/cleaner(src)
+
 		var/datum/reagents/R = new/datum/reagents(1000)
 		src.emag.reagents = R
 		R.my_atom = src.emag
@@ -196,6 +197,7 @@
 		var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
 		M.matter = 30
 		src.modules += M
+
 		src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 
 		var/obj/item/weapon/zippo/L = new /obj/item/weapon/zippo(src)
@@ -205,6 +207,7 @@
 		src.modules += new /obj/item/weapon/tray(src)
 		src.modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 		src.emag = new /obj/item/weapon/reagent_containers/food/drinks/beer(src)
+
 		var/datum/reagents/R = new/datum/reagents(50)
 		src.emag.reagents = R
 		R.my_atom = src.emag
@@ -220,11 +223,11 @@
 
 	New()
 		..()
-		src.modules += new /obj/item/weapon/pickaxe/jackhammer(src)
-		src.modules += new /obj/item/weapon/shovel(src)
-		src.modules += new /obj/item/weapon/satchel(src)
 		src.modules += new /obj/item/borg/sight/meson(src)
 		src.emag = new /obj/item/borg/stun(src)
+		src.modules += new /obj/item/weapon/satchel(src)
+		src.modules += new /obj/item/weapon/pickaxe/jackhammer(src)
+		src.modules += new /obj/item/weapon/shovel(src)
 		return
 
 

@@ -126,7 +126,7 @@
 		return 0
 	src.take_overall_damage(0,shock_damage)
 	//src.burn_skin(shock_damage)
-	//src.fireloss += shock_damage //burn_skin will do this for us
+	//src.adjustFireLoss(shock_damage) //burn_skin will do this for us
 	//src.updatehealth()
 	src.visible_message(
 		"\red [src] was shocked by the [source]!", \

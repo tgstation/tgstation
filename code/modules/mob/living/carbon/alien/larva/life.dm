@@ -85,7 +85,7 @@
 			bruteloss = max(getBruteLoss(), 0)
 			toxloss = max(getToxLoss(), 0)
 			oxyloss = max(getOxyLoss(), 0)
-			fireloss = max(fireloss, 0)
+			adjustFireLoss(0)
 
 		handle_mutations_and_radiation()
 
@@ -279,7 +279,7 @@
 					adjustToxLoss(5)
 				else
 					bruteloss -= 5
-					fireloss -= 5
+					adjustFireLoss(-5)
 
 			return
 
@@ -323,7 +323,7 @@
 
 		handle_regular_status_updates()
 
-			health = 25 - (getOxyLoss() + fireloss + getBruteLoss() + cloneloss)
+			health = 25 - (getOxyLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 
 			if(getOxyLoss() > 50) paralysis = max(paralysis, 3)
 

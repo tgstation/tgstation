@@ -639,7 +639,6 @@ datum/preferences
 
 		ShowChoices(user)
 
-
 	proc/copy_to(mob/living/carbon/human/character, safety = 0)
 		if(be_random_name)
 			randomize_name()

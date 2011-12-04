@@ -12,7 +12,7 @@ datum/preferences
 			randomize_facial()
 			randomize_hair_color("facial")
 		randomize_eyes_color()
-		underwear = pick(0,1)
+		underwear = 1
 		b_type = pick("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
 		age = rand(19,35)
 		copy_to(H,1)
