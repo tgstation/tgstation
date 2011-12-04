@@ -283,10 +283,10 @@
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0 && selected_adamantine == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0 && selected_adamantine == 0)
 					if (ore_iron > 0)
 						ore_iron--;
-						new /obj/item/stack/sheet/metal(output.loc)
+						new /obj/item/stack/sheet/r_metal(output.loc)
 					else
 						on = 0
 					continue
