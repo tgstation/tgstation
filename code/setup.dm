@@ -221,3 +221,9 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define DROWSY "drowsy"
 
 var/static/list/scarySounds = list('thudswoosh.ogg','Taser.ogg','armbomb.ogg','hiss1.ogg','hiss2.ogg','hiss3.ogg','hiss4.ogg','hiss5.ogg','hiss6.ogg','Glassbr1.ogg','Glassbr2.ogg','Glassbr3.ogg','Welder.ogg','Welder2.ogg','airlock.ogg','clownstep1.ogg','clownstep2.ogg')
+
+//Security levels
+#define SEC_LEVEL_GREEN 0
+#define SEC_LEVEL_BLUE 1
+#define SEC_LEVEL_RED 2
+#define SEC_LEVEL_DELTA 3
