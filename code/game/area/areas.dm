@@ -19,9 +19,13 @@
 
 		src.icon = 'alert.dmi'
 		src.layer = 10
-//		update_lights()
+	//	update_lights()
 		if(name == "Space")			// override defaults for space
-			requires_power = 0
+			requires_power = 1
+			sd_SetLuminosity(1)
+			power_light = 0
+			power_equip = 0
+			power_environ = 0
 
 		if(!requires_power)
 			power_light = 0//rastaf0
