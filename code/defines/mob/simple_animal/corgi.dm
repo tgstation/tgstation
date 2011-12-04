@@ -146,9 +146,6 @@
 					src.inventory_head = item_to_add
 					update_clothing()
 
-					if(inventory_head && inventory_head.type == /obj/item/clothing/head/caphat)
-						name = "Captain "+real_name
-
 			if("back")
 				if(inventory_back)
 					usr << "\red The [inventory_back] is already in this slot."
