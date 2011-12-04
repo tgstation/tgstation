@@ -183,18 +183,18 @@ menu "menu"
 		group = "size"
 		is-disabled = false
 		saved-params = "is-checked"
-	elem "icon32"
-		name = "&32x32"
-		command = ".winset \"mapwindow.map.icon-size=32\""
+	elem "icon64"
+		name = "&64x64 (2x)"
+		command = ".winset \"mapwindow.map.icon-size=64\""
 		category = "&Icons"
 		is-checked = false
 		can-check = true
 		group = "size"
 		is-disabled = false
 		saved-params = "is-checked"
-	elem "icon16"
-		name = "&16x16"
-		command = ".winset \"mapwindow.map.icon-size=16\""
+	elem "icon32"
+		name = "&32x32"
+		command = ".winset \"mapwindow.map.icon-size=32\""
 		category = "&Icons"
 		is-checked = false
 		can-check = true
@@ -636,7 +636,7 @@ window "mainwindow"
 	elem "mainvsplit"
 		type = CHILD
 		pos = 3,0
-		size = 634x400
+		size = 634x416
 		anchor1 = 0,0
 		anchor2 = 100,100
 		font-family = ""
