@@ -18,7 +18,7 @@
 
 	if (vary)
 		S.frequency = rand(32000, 55000)
-	for (var/mob/M in range(world.view+extrarange, source))
+	for (var/mob/M in range(world.view+extrarange, source))       // Plays for people in range.
 		if (M.client)
 			if(M.ear_deaf <= 0 || !M.ear_deaf)
 				if(isturf(source))
@@ -26,6 +26,12 @@
 					S.pan = max(-100, min(100, dx/8.0 * 100))
 
 				M << S
+
+				for(var/obj/structure/closet/L in range(world.view+extrarange, source))
+					if(locate(/mob/, L))
+						for(var/mob/Ml in L)
+							Ml << S
+																		// Now plays for people in lockers!  -- Polymorph
 
 /mob/proc/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num)
 	if(!src.client || ear_deaf > 0)	return
@@ -81,22 +87,16 @@ client/verb/Toggle_Soundscape()
 
 		switch(src.name)
 			if ("Chapel") sound = pick('ambicha1.ogg','ambicha2.ogg','ambicha3.ogg','ambicha4.ogg')
-			if ("Morgue") sound = pick('ambimo1.ogg','ambimo2.ogg','ambistat.ogg')
-			if ("Space") sound = pick('ambispace.ogg','ambistat.ogg',)
+			if ("Morgue") sound = pick('ambimo1.ogg','ambimo2.ogg','title2.ogg')
+			if ("Space") sound = pick('ambispace.ogg','title2.ogg',)
 			if ("Engine Control") sound = pick('ambisin1.ogg','ambisin2.ogg','ambisin3.ogg','ambisin4.ogg')
 			if ("Atmospherics") sound = pick('ambiatm1.ogg')
-			if ("Medbay") sound = pick('ambistat.ogg')
-			if ("Bridge") sound = pick('ambistat.ogg')
-			if ("Arrival Shuttle Hallway") sound = pick('ambistat.ogg','ambiruntime.ogg')
 			if ("AI Sat Ext") sound = pick('ambiruntime.ogg','ambimalf.ogg')
 			if ("AI Satellite") sound = pick('ambimalf.ogg')
 			if ("AI Satellite Teleporter Room") sound = pick('ambiruntime.ogg','ambimalf.ogg')
-			if ("Port Primary Hallway") sound = pick('ambiruntime.ogg', 'ambistat.ogg')
-			if ("Bar") sound = pick('ambibar.ogg')
-			if ("Locker Room") sound = pick('ambiruntime.ogg','ambistat.ogg')
-			if ("Primary Tool Storage") sound = pick('ambiruntime.ogg','ambistat.ogg')
-			if ("AI Upload Foyer") sound = pick('ambimalf.ogg')
-			if ("AI Upload Chamber") sound = pick('ambimalf.ogg')
+			if ("Bar") sound = pick('title1.ogg')
+			if ("AI Upload Foyer") sound = pick('ambimalf.ogg', 'null.ogg')
+			if ("AI Upload Chamber") sound = pick('ambimalf.ogg','null.ogg')
 			if ("Mine")
 				sound = pick('ambimine.ogg')
 				musVolume = 25

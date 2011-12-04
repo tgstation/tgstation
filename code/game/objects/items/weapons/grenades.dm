@@ -93,6 +93,7 @@ FLASHBANG
 		active = 0
 		det_time = 30
 	proc
+		bang(var/turf/T , var/mob/living/carbon/M)
 		prime()
 		clown_check(var/mob/living/user)
 
@@ -143,81 +144,92 @@ FLASHBANG
 		..()
 		return
 
+	bang(var/turf/T , var/mob/living/carbon/M)						// Added a new proc called 'bang' that takes a location and a person to be banged.
+		if (locate(/obj/item/weapon/cloaking_device, M))			// Called during the loop that bangs people in lockers/containers and when banging
+			for(var/obj/item/weapon/cloaking_device/S in M)			// people in normal view.  Could theroetically be called during other explosions.
+				S.active = 0										// -- Polymorph
+				S.icon_state = "shield0"
 
-	prime()
+		M << "\red <B>BANG</B>"
 		playsound(src.loc, 'bang.ogg', 25, 1)
+
+//Checking for protections
+		var/eye_safety = 0
+		var/ear_safety = 0
+		if(iscarbon(M))
+			eye_safety = M.eyecheck()
+			if(ishuman(M))
+				if(istype(M:ears, /obj/item/clothing/ears/earmuffs))
+					ear_safety += 2
+				if(M.mutations & HULK)
+					ear_safety += 1
+				if(istype(M:head, /obj/item/clothing/head/helmet))
+					ear_safety += 1
+
+//Flashing everyone
+		if(eye_safety < 1)
+			flick("e_flash", M.flash)
+			M.eye_stat += rand(1, 3)
+			M.stunned = max(M.stunned,2)
+			M.weakened = max(M.weakened,10)
+
+
+
+//Now applying sound
+		if((get_dist(M, T) <= 2 || src.loc == M.loc || src.loc == M))
+			if(ear_safety > 0)
+				M.stunned = max(M.stunned,2)
+				M.weakened = max(M.weakened,1)
+			else
+				M.stunned = max(M.stunned,10)
+				M.weakened = max(M.weakened,3)
+				if ((prob(14) || (M == src.loc && prob(70))))
+					M.ear_damage += rand(1, 10)
+				else
+					M.ear_damage += rand(0, 5)
+					M.ear_deaf = max(M.ear_deaf,15)
+
+		else if(get_dist(M, T) <= 5)
+			if(!ear_safety)
+				M.stunned = max(M.stunned,8)
+				M.ear_damage += rand(0, 3)
+				M.ear_deaf = max(M.ear_deaf,10)
+
+		else if(!ear_safety)
+			M.stunned = max(M.stunned,4)
+			M.ear_damage += rand(0, 1)
+			M.ear_deaf = max(M.ear_deaf,5)
+
+//This really should be in mob not every check
+		if (M.eye_stat >= 20)
+			M << "\red Your eyes start to burn badly!"
+			M.disabilities |= 1
+			if (prob(M.eye_stat - 20 + 1))
+				M << "\red You can't see anything!"
+				M.sdisabilities |= 1
+		if (M.ear_damage >= 15)
+			M << "\red Your ears start to ring badly!"
+			if (prob(M.ear_damage - 10 + 5))
+				M << "\red You can't hear anything!"
+				M.sdisabilities |= 4
+		else
+			if (M.ear_damage >= 5)
+				M << "\red Your ears start to ring!"
+
+	prime()													// Prime now just handles the two loops that query for people in lockers and people who can see it.
 		var/turf/T = get_turf(src)
 		if(T)
 			T.hotspot_expose(700,125)
 
+		for(var/obj/structure/closet/L in view(T, null))
+			if(locate(/mob/living/carbon/, L))
+				for(var/mob/living/carbon/M in L)
+					bang(T, M)
+
+
 		for(var/mob/living/carbon/M in viewers(T, null))
-			if (locate(/obj/item/weapon/cloaking_device, M))
-				for(var/obj/item/weapon/cloaking_device/S in M)
-					S.active = 0
-					S.icon_state = "shield0"
+			bang(T, M)
 
-			M << "\red <B>BANG</B>"
-
-//Checking for protections
-			var/eye_safety = 0
-			var/ear_safety = 0
-			if(iscarbon(M))
-				eye_safety = M.eyecheck()
-				if(ishuman(M))
-					if(istype(M:ears, /obj/item/clothing/ears/earmuffs))
-						ear_safety += 2
-					if(M.mutations & HULK)
-						ear_safety += 1
-					if(istype(M:head, /obj/item/clothing/head/helmet))
-						ear_safety += 1
-
-//Flashing everyone
-			if(eye_safety < 1)
-				flick("e_flash", M.flash)
-				M.eye_stat += rand(1, 3)
-				M.stunned = max(M.stunned,2)
-				M.weakened = max(M.weakened,10)
-
-//Now applying sound
-			if((get_dist(M, T) <= 2 || src.loc == M.loc || src.loc == M))
-				if(ear_safety > 0)
-					M.stunned = max(M.stunned,2)
-					M.weakened = max(M.weakened,1)
-				else
-					M.stunned = max(M.stunned,10)
-					M.weakened = max(M.weakened,3)
-					if ((prob(14) || (M == src.loc && prob(70))))
-						M.ear_damage += rand(1, 10)
-					else
-						M.ear_damage += rand(0, 5)
-					M.ear_deaf = max(M.ear_deaf,15)
-
-			else if(get_dist(M, T) <= 5)
-				if(!ear_safety)
-					M.stunned = max(M.stunned,8)
-					M.ear_damage += rand(0, 3)
-					M.ear_deaf = max(M.ear_deaf,10)
-
-			else if(!ear_safety)
-				M.stunned = max(M.stunned,4)
-				M.ear_damage += rand(0, 1)
-				M.ear_deaf = max(M.ear_deaf,5)
-
-//This really should be in mob not every check
-			if (M.eye_stat >= 20)
-				M << "\red Your eyes start to burn badly!"
-				M.disabilities |= 1
-				if (prob(M.eye_stat - 20 + 1))
-					M << "\red You can't see anything!"
-					M.sdisabilities |= 1
-			if (M.ear_damage >= 15)
-				M << "\red Your ears start to ring badly!"
-				if (prob(M.ear_damage - 10 + 5))
-					M << "\red You can't hear anything!"
-					M.sdisabilities |= 4
-			else
-				if (M.ear_damage >= 5)
-					M << "\red Your ears start to ring!"
 
 //Blob damage here
 		for(var/obj/effect/blob/B in view(8,T))
@@ -251,3 +263,16 @@ FLASHBANG
 				prime()
 			return 0
 		return 1
+
+
+
+
+
+
+
+
+
+
+
+
+
