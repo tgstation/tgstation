@@ -130,6 +130,7 @@
 
 	T.death(0)
 	T.real_name = "Unknown"
+	M.warn_flavor_changed()
 	T.mutations |= HUSK
 	T.update_body()
 

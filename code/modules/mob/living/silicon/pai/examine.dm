@@ -18,4 +18,7 @@
 					usr << text("\red <B>[]'s casing is melted and heat-warped!</B>", src.name)
 				if (src.stat == 1)
 					usr << text("\red [] doesn't seem to be responding.", src.name)
+
+	print_flavor_text()
+
 	return

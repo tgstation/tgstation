@@ -81,6 +81,7 @@
 	var/ear_damage = null//Carbon
 	var/stuttering = null//Carbon
 	var/real_name = null
+	var/flavor_text = ""
 	var/blinded = null
 	var/bhunger = 0//Carbon
 	var/ajourn = 0

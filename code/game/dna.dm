@@ -254,6 +254,8 @@
 		H.update_face()
 		H.update_body()
 
+		H.warn_flavor_changed()
+
 		return 1
 	else
 		return 0
@@ -399,6 +401,8 @@
 		for (var/obj/item/weapon/implant/I in implants)
 			I.loc = O
 			I.implanted = O
+		O.flavor_text = M.flavor_text
+		O.warn_flavor_changed()
 		del(M)
 		return
 
@@ -473,6 +477,8 @@
 		for (var/obj/item/weapon/implant/I in implants)
 			I.loc = O
 			I.implanted = O
+		O.flavor_text = M.flavor_text
+		O.warn_flavor_changed()
 		del(M)
 		return
 //////////////////////////////////////////////////////////// Monkey Block

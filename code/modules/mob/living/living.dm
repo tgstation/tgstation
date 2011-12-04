@@ -151,3 +151,9 @@
 
 /mob/living/proc/UpdateDamageIcon()
 		return
+
+/mob/living/verb/change_flavor_text()
+	set name = "Change Flavor Text"
+	set category = "OOC"
+
+	src.update_flavor_text()
