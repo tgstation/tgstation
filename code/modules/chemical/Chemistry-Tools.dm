@@ -2733,6 +2733,18 @@
 		..()
 		reagents.add_reagent("fuel",1000)
 
+/obj/structure/reagent_dispensers/peppertank
+	name = "Pepper Spray Refiller"
+	desc = "Refill pepper spray canisters."
+	icon = 'objects.dmi'
+	icon_state = "peppertank"
+	anchored = 1
+	density = 0
+	amount_per_transfer_from_this = 45
+	New()
+		..()
+		reagents.add_reagent("condensedcapsaicin",1000)
+
 /obj/structure/reagent_dispensers/fueltank/blob_act()
 	explosion(src.loc,0,1,5,7,10)
 	if(src)

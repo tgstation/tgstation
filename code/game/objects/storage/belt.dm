@@ -107,6 +107,7 @@
 	storage_slots = 4
 	can_hold = list(
 		"/obj/item/weapon/flashbang",
+		"/obj/item/weapon/pepperspray",
 		"/obj/item/weapon/handcuffs",
 		"/obj/item/device/flash",
 		"/obj/item/clothing/glasses",
