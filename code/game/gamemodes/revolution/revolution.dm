@@ -166,16 +166,26 @@
 	update_rev_icons_added(rev_mind)
 	return 1
 //////////////////////////////////////////////////////////////////////////////
-//Deals with players being converted from the revolution (Not a rev anymore)//
+//Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.
 //////////////////////////////////////////////////////////////////////////////
-/datum/game_mode/proc/remove_revolutionary(datum/mind/rev_mind)
+/datum/game_mode/proc/remove_revolutionary(datum/mind/rev_mind , beingborged)
 	if(rev_mind in revolutionaries)
 		revolutionaries -= rev_mind
 		rev_mind.special_role = null
-		rev_mind.current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</B></FONT>"
+
+		if(beingborged)
+			rev_mind.current << "\red <FONT size = 3><B>The frame's firmware detects and deletes your neural reprogramming!  You remember nothing from the moment you were flashed until now.</B></FONT>"
+
+		else
+			rev_mind.current << "\red <FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</B></FONT>"
+
 		update_rev_icons_removed(rev_mind)
 		for(var/mob/living/M in view(rev_mind.current))
-			M << "[rev_mind.current] looks like they just remembered their real allegiance!"
+			if(beingborged)
+				M << "The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it."
+
+			else
+				M << "[rev_mind.current] looks like they just remembered their real allegiance!"
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
