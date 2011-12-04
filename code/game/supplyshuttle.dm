@@ -253,7 +253,7 @@ var/ordernum=0
 
 	if (href_list["order"])
 		src.temp = "Supply points: [supply_shuttle_points]<BR><HR><BR>Request what?<BR><BR>"
-		for(var/S in (typesof(/datum/supply_packs) - /datum/supply_packs) )
+		for(var/S in (typesof(/datum/supply_packs) - /datum/supply_packs - /datum/supply_packs/charge) )
 			var/datum/supply_packs/N = new S()
 			if(N.hidden) continue																	//Have to send the type instead of a reference to
 			src.temp += "<A href='?src=\ref[src];doorder=[N.type]'>[N.name]</A> Cost: [N.cost] "    //the obj because it would get caught by the garbage
@@ -438,7 +438,7 @@ var/ordernum=0
 	if (href_list["order"])
 		if(supply_shuttle_moving) return
 		src.temp = "Supply points: [supply_shuttle_points]<BR><HR><BR>Request what?<BR><BR>"
-		for(var/S in (typesof(/datum/supply_packs) - /datum/supply_packs) )
+		for(var/S in (typesof(/datum/supply_packs) - /datum/supply_packs - /datum/supply_packs/charge) )
 			var/datum/supply_packs/N = new S()
 			if(N.hidden && !src.hacked) continue													//Have to send the type instead of a reference to
 			src.temp += "<A href='?src=\ref[src];doorder=[N.type]'>[N.name]</A> Cost: [N.cost]<BR>" //the obj because it would get caught by the garbage
