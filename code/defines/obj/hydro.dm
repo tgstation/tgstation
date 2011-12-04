@@ -1093,6 +1093,7 @@
 		reagents.add_reagent("coco", 4+round((potency / 5), 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
+//This object is just a transition object. All it does is make a grass tile and delete itself.
 /obj/item/weapon/reagent_containers/food/snacks/grown/grass
 	seed = "/obj/item/seeds/grassseed"
 	name = "Grass"
@@ -1100,8 +1101,8 @@
 	icon_state = "grass"
 	potency = 20
 	New()
-		..()
-		reagents.add_reagent("nutriment", round((potency / 20), 1))
+		new/obj/item/stack/tile/grass(src.loc)
+		del(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
 	seed = "/obj/item/seeds/sugarcaneseed"

@@ -1068,9 +1068,9 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 
 /obj/item/stack/sheet/r_metal
-	name = "reinforced metal"
-	singular_name = "reinforced metal sheet"
-	desc = "A very heavy sheet of metal."
+	name = "steel"
+	singular_name = "steel sheet"
+	desc = "This sheet is an alloy of iron and plasma."
 	icon_state = "sheet-r_metal"
 	item_state = "sheet-metal"
 	m_amt = 7500
@@ -1079,7 +1079,7 @@
 	origin_tech = "materials=2"
 
 /obj/item/stack/tile/steel
-	name = "Steel floor tile"
+	name = "Metal floor tile"
 	singular_name = "Steel floor tile"
 	desc = "Those could work as a pretty decent throwing weapon"
 	icon_state = "tile"
