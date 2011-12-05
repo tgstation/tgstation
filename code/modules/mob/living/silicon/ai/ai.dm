@@ -80,10 +80,10 @@
 
 		//if(icon_state == initial(icon_state))
 	var/icontype = ""
+	var/list/icons = list("Blue", "HAL9000", "Monochrome", "Rainbow", "HAL9000 Mark2", "Inverted", "Firewall", "Green", "Text", "Smiley", "Angry", "Dorf", "Matrix")
 	if (src.name == "B.A.N.N.E.D." && src.ckey == "Spaceman96")
-		icontype = input("Please, select a display!", "AI", null/*, null*/) in list("B.A.N.N.E.D.", "Blue", "HAL9000", "Monochrome", "Rainbow", "HAL9000 Mark2", "Inverted", "Firewall", "Green", "Text", "Smiley", "Angry", "Dorf", "Matrix")
-	else
-		icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Blue", "HAL9000", "Monochrome", "Rainbow", "HAL9000 Mark2", "Inverted", "Firewall", "Green", "Text", "Smiley", "Angry", "Dorf", "Matrix")
+		icons += "B.A.N.N.E.D."
+	icontype = input("Please, select a display!", "AI", null/*, null*/) in icons
 	if(icontype == "Blue")
 		icon_state = "ai"
 	else if(icontype == "HAL9000")
@@ -346,9 +346,12 @@
 
 	// ok, we're alive, camera is good and in our network...
 
-	machine = src
-	src:current = C
-	reset_view(C)
+	if(client.eye == eyeobj)
+		eyeobj.loc = C.loc
+	else
+		machine = src
+		src:current = C
+		reset_view(C)
 	return 1
 
 /mob/living/silicon/ai/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
