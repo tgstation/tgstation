@@ -133,7 +133,7 @@
 "acC" = (/obj/structure/table/reinforced{tag = "icon-reinf_1tilethick"; icon_state = "reinf_1tilethick"},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor{dir = 4; icon_state = "warning"},/area/security/warden)
 "acD" = (/obj/structure/rack,/obj/item/clothing/suit/armor/laserproof{pixel_x = -2; pixel_y = 2},/turf/simulated/floor{icon_state = "bot"; dir = 1},/area/security/warden)
 "acE" = (/obj/structure/rack,/obj/item/clothing/suit/armor/bulletproof{pixel_x = 2; pixel_y = -2},/turf/simulated/floor{icon_state = "bot"; dir = 1},/area/security/warden)
-"acF" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = "Streight"},/obj/structure/rack,/obj/item/weapon/storage/handcuff_kit,/obj/item/weapon/storage/flashbang_kit{pixel_x = -2; pixel_y = -2; step_x = 0},/turf/simulated/floor{icon_state = "bot"; dir = 1},/area/security/warden)
+"acF" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = "Streight"},/obj/structure/rack,/obj/item/weapon/storage/handcuff_kit,/obj/item/weapon/storage/flashbang_kit{pixel_x = -2; pixel_y = -2},/turf/simulated/floor{icon_state = "bot"; dir = 1},/area/security/warden)
 "acG" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor,/area/security/warden)
 "acH" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 5},/turf/simulated/floor,/area/security/warden)
 "acI" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = "Streight"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor,/area/security/warden)
