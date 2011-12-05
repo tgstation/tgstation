@@ -6,6 +6,8 @@
 		return ..()
 	if (world.time <= usr:lastDblClick+2)
 		return ..()
+	if(istype(usr, /mob/living/silicon/ai) && usr.client.eye == usr:eyeobj)
+		return ..()
 
 	//try to find the closest working camera in the same area, switch to it
 	var/area/A = get_area(src)
@@ -93,6 +95,12 @@
 		usr.machine = usr
 
 	spawn (0)
+		if(client.eye == eyeobj)
+			if(checkcameravis(target))
+				eyeobj.loc = target.loc
+			else
+				usr << "Target is not on or near any active cameras on the station."
+			return
 		while (usr:cameraFollow == target)
 			if (usr:cameraFollow == null)
 				return

@@ -312,7 +312,7 @@ var/datum/cameranet/cameranet = new()
 
 /proc/checkcameravis(atom/A)
 	for(var/obj/machinery/camera/C in view(A,7))
-		if(!C.status)
+		if(!C.status || C.stat == 2)
 			continue
 		return 1
 	return 0
