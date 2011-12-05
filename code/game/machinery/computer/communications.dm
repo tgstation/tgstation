@@ -62,7 +62,7 @@
 		if("logout")
 			authenticated = 0
 
-		/*if("swipeidseclevel")
+		if("swipeidseclevel")
 			var/mob/M = usr
 			var/obj/item/weapon/card/id/I = M.equipped()
 			if (istype(I, /obj/item/device/pda))
@@ -85,7 +85,7 @@
 					tmp_alertlevel = 0
 				state = STATE_DEFAULT
 			else
-				usr << "You need to swipe your ID."*/
+				usr << "You need to swipe your ID."
 
 		if("announce")
 			if(src.authenticated==2)
@@ -288,7 +288,7 @@
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Red Alert</A> |"
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Lockdown</A> |"
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR><HR>"
-		/*if(STATE_ALERT_LEVEL)
+		if(STATE_ALERT_LEVEL)
 			dat += "Current alert level: [get_security_level()]<BR>"
 			if(security_level == SEC_LEVEL_DELTA)
 				dat += "<font color='red'><b>The self-destruct mechanism is active. Find a way to deactivate the mechanism to lower the alert level or evacuate.</b></font>"
@@ -298,7 +298,7 @@
 		if(STATE_CONFIRM_LEVEL)
 			dat += "Current alert level: [get_security_level()]<BR>"
 			dat += "Confirm the change to: [num2seclevel(tmp_alertlevel)]<BR>"
-			dat += "<A HREF='?src=\ref[src];operation=swipeidseclevel>Swipt ID</A> to confirm change.<BR>"*/
+			dat += "<A HREF='?src=\ref[src];operation=swipeidseclevel>Swipt ID</A> to confirm change.<BR>"
 
 	dat += "<BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
 	user << browse(dat, "window=communications;size=400x500")
