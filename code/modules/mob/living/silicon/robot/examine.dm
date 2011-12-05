@@ -21,4 +21,7 @@
 		usr << "The cover is open and the power cell is [ cell ? "installed" : "missing"]."
 	else
 		usr << "The cover is closed."
+
+	print_flavor_text()
+
 	return

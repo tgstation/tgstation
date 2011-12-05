@@ -4214,7 +4214,7 @@
 "bDb" = (/obj/machinery/atmospherics/binary/pump{dir = 8; icon_state = "intact_on"; name = "Air In"; on = 1},/turf/simulated/floor,/area/atmos)
 "bDc" = (/obj/machinery/atmospherics/pipe/simple{color = "cyan"; dir = 4; icon_state = "intact-c"; level = 2},/obj/machinery/meter,/turf/simulated/floor,/area/atmos)
 "bDd" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/machinery/atmospherics/pipe/simple{color = "cyan"; dir = 10; icon_state = "intact-c"; initialize_directions = 10; level = 2},/turf/simulated/floor/plating,/area/atmos)
-"bDe" = (/obj/machinery/atmospherics/unary/cold_sink/freezer,/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/medical/cryo)
+"bDe" = (/obj/machinery/atmospherics/unary/cold_sink/freezer{dir = 1},/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/medical/cryo)
 "bDf" = (/obj/machinery/atmospherics/portables_connector{dir = 1; name = "Connector Port (Air Supply)"},/obj/machinery/light,/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/medical/cryo)
 "bDg" = (/obj/machinery/atmospherics/portables_connector{dir = 1; name = "Connector Port (Air Supply)"},/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/medical/cryo)
 "bDh" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/medical/cryo)

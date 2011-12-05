@@ -97,6 +97,8 @@ datum/preferences/proc/savefile_save(mob/user, slot)
 	F["real_name"] << src.real_name
 	F["name_is_always_random"] << src.be_random_name
 
+	F["flavor_text"] << flavor_text
+
 	F["gender"] << src.gender
 	F["age"] << src.age
 
@@ -172,6 +174,8 @@ datum/preferences/proc/savefile_load(mob/user, slot)
 	F["real_name"] >> src.real_name
 	F["gender"] >> src.gender
 	F["age"] >> src.age
+
+	F["flavor_text"] >> flavor_text
 
 	F["hair_red"] >> src.r_hair
 	F["hair_green"] >> src.g_hair

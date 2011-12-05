@@ -102,6 +102,8 @@ datum/preferences
 		job_engsec_med = 0
 		job_engsec_low = 0
 
+		flavor_text = ""
+
 		// slot stuff
 		var/slotname
 		var/curslot = 0
@@ -162,6 +164,13 @@ datum/preferences
 
 		dat += "<hr><b>Eyes</b><br>"
 		dat += "<a href='byond://?src=\ref[user];preferences=1;eyes=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]\"><table  style='display:inline;' bgcolor=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]\"><tr><td>__</td></tr></table></font>"
+
+		dat += "<hr><b>Flavor Text</b><br>"
+		dat += "<a href='byond://?src=\ref[user];preferences=1;flavor_text=1'>Change</a><br>"
+		if(lentext(flavor_text) <= 40)
+			dat += "[flavor_text]"
+		else
+			dat += "[copytext(flavor_text, 1, 37)]..."
 
 		dat += "<hr>"
 		if(!jobban_isbanned(user, "Syndicate"))
@@ -557,6 +566,15 @@ datum/preferences
 		if(link_tags["b_random_name"])
 			be_random_name = !be_random_name
 
+		if(link_tags["flavor_text"])
+			var/msg = input(usr,"Set the flavor text in your 'examine' verb. Don't metagame!","Flavor Text",html_decode(flavor_text)) as message
+
+			if(msg != null)
+				msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+				msg = html_encode(msg)
+
+				flavor_text = msg
+
 		// slot links
 		if(!IsGuestKey(user.key))
 			if(link_tags["saveslot"])
@@ -595,7 +613,7 @@ datum/preferences
 			if(count > 10)
 				usr << "You have reached the character limit."
 				return
-			slotname = input(usr,"Choose a name for your slot","Name","Default")
+			slotname = input(usr,"Choose a name for your slot","Name","Slot "+num2text(count))
 
 			curslot = savefile_createslot(user, slotname)
 
@@ -643,6 +661,8 @@ datum/preferences
 		if(be_random_name)
 			randomize_name()
 		character.real_name = real_name
+
+		character.flavor_text = flavor_text
 
 		character.gender = gender
 
