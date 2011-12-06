@@ -129,11 +129,11 @@
 					return
 			else
 				if (state < 3)
-					if(istype(affecting, /mob/living/carbon/human))
+					/*if(istype(affecting, /mob/living/carbon/human))
 						var/mob/living/carbon/human/H = affecting
 						if(H.mutations & FAT)
 							assailant << "\blue You can't strangle [affecting] through all that fat!"
-							return
+							return*/
 
 						/*Hrm might want to add this back in
 						//we should be able to strangle the Captain if he is wearing a hat
@@ -199,7 +199,7 @@
 			s_click(hud1)
 		return
 	if(M == assailant && state >= 2)
-		if( ( ishuman(user) && (user.mutations & FAT) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
+		if( ( ishuman(user) /*&& (user.mutations & FAT)*/ && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
 			var/mob/living/carbon/attacker = user
 			for(var/mob/N in viewers(user, null))
 				if(N.client)
