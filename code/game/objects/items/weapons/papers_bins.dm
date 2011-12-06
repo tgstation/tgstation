@@ -62,7 +62,7 @@ CLIPBOARDS
 	var/n_name = input(usr, "What would you like to label the paper?", "Paper Labelling", null)  as text
 	n_name = copytext(n_name, 1, 32)
 	if ((src.loc == usr && usr.stat == 0))
-		src.name = text("paper[]", (n_name ? text("- '[n_name]'") : null))
+		src.name = n_name && n_name != "" ? n_name : "Untitled paper"
 	src.add_fingerprint(usr)
 	return
 

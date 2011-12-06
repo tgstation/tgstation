@@ -9,7 +9,6 @@
 
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))	return 0
-	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Captain", "Head of Security", "Security Officer", "Detective", "Chaplain", "Warden")))	return 0
 	for(var/obj/item/weapon/implant/loyalty/L in mind.current)
 		if(L && L.implanted)
 			return 0
@@ -19,7 +18,7 @@
 /datum/game_mode/cult
 	name = "cult"
 	config_tag = "cult"
-	restricted_jobs = list("Chaplain", "Security Officer", "Warden", "Detective", "AI", "Cyborg", "Captain", "Head of Security")
+	restricted_jobs = list("AI", "Cyborg")
 	required_players = 3
 	required_enemies = 3
 
@@ -71,12 +70,11 @@
 /datum/game_mode/cult/post_setup()
 	modePlayer += cult
 	if("sacrifice" in objectives)
-		var/list/possible_targets = get_unconvertables()
+		var/list/possible_targets = list()
 
-		if(!possible_targets.len)
-			for(var/mob/living/carbon/human/player in world)
-				if(player.mind && !(player.mind in cult))
-					possible_targets += player.mind
+		for(var/mob/living/carbon/human/player in world)
+			if(player.mind && !(player.mind in cult))
+				possible_targets += player.mind
 
 		if(possible_targets.len > 0)
 			sacrifice_target = pick(possible_targets)
@@ -245,14 +243,6 @@
 				for(var/image/I in cult_mind.current.client.images)
 					if(I.icon_state == "cult")
 						del(I)
-
-
-/datum/game_mode/cult/proc/get_unconvertables()
-	var/list/ucs = list()
-	for(var/mob/living/carbon/human/player in world)
-		if(!is_convertable_to_cult(player.mind))
-			ucs += player.mind
-	return ucs
 
 
 /datum/game_mode/cult/proc/check_cult_victory()
