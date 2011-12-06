@@ -77,7 +77,6 @@
 		var/datum/data/vending_product/R = new /datum/data/vending_product(  )
 		R.product_name = capitalize(temp.name)
 		R.product_path = path_list[p]
-		R.display_color = pick("red","blue","green")
 		R.amount = text2num(amt_list[p])
 		R.charge_amount = R.amount
 
@@ -102,6 +101,10 @@
 		winset(user, "vendingslot[i].buy", "command=\"skincmd vending;buy[i-1]\"")
 	winset(user, "vendingwindow.title", "text=\"[src.name]\"")
 	var/list/products = src.product_records
+	if(extended_inventory)
+		products |= src.hidden_records
+	if(coin)
+		products |= src.coin_records
 	var/pages = -round(-products.len / 6)
 	if (page > pages)
 		page = pages
@@ -128,6 +131,10 @@
 	if (get_dist(user, src) > 1)
 		return
 	var/list/products = src.product_records
+	if(extended_inventory)
+		products |= src.hidden_records
+	if(coin)
+		products |= src.coin_records
 	var/pages = -round(-products.len / 6)
 	switch(data)
 		if ("pagen")
@@ -151,6 +158,24 @@
 		if (!src.vend_ready)
 			return
 
+		if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
+			usr << "\red Access denied." //Unless emagged of course
+			flick(src.icon_deny,src)
+			return
+
+		if (R in coin_records)
+			if(!coin)
+				usr << "\blue You need to insert a coin to get this item."
+				return
+			if(coin.string_attached)
+				if(prob(50))
+					usr << "\blue You successfully pull the coin out before the [src] could swallow it."
+				else
+					usr << "\blue You weren't able to pull the coin out fast enough, the machine ate it, string and all."
+					del(coin)
+			else
+				del(coin)
+
 		R.amount--
 		src.vend_ready = 0
 
@@ -172,7 +197,7 @@
 /obj/machinery/vending/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/emag))
 		src.emagged = 1
-		user << "You short out the product lock on [src]"
+		user << "You short out the ID lock on [src]"
 		return
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		src.panel_open = !src.panel_open
@@ -191,6 +216,7 @@
 		W.loc = src
 		coin = W
 		user << "\blue You insert the [W] into the [src]"
+		updateWindow(user)
 		return
 	else if(istype(W,/obj/item/weapon/vending_charge/))
 		DoCharge(W,user)
@@ -226,6 +252,13 @@
 	winshow(user, "vendingwindow", 1)
 	user.skincmds["vending"] = src
 
+	var/dat = "<B>[src.name]</B>"
+
+	if(coin)
+		dat += "<br>There is a <a href='?src=\ref[src];remove_coin=1'>[coin.name]</a> in the slot!"
+	else
+		dat += "<br>The coin slot is empty."
+
 	if(panel_open)
 		var/list/vendwires = list(
 			"Violet" = 1,
@@ -233,7 +266,7 @@
 			"Goldenrod" = 3,
 			"Green" = 4,
 		)
-		var/dat = "<br><hr><br><B>Access Panel</B><br>"
+		dat += "<hr><B>Access Panel</B><br>"
 		for(var/wiredesc in vendwires)
 			var/is_uncut = src.wires & APCWireColorToFlag[vendwires[wiredesc]]
 			dat += "[wiredesc] wire: "
@@ -250,12 +283,11 @@
 		dat += "The green light is [src.extended_inventory ? "on" : "off"].<BR>"
 		dat += "The [(src.wires & WIRE_SCANID) ? "purple" : "yellow"] light is on.<BR>"
 
-		if (product_slogans != "")
+		if(product_slogans != "")
 			dat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
-		user << browse(dat, "")
-		onclose(user, "")
 
-	return
+	user << browse(dat, "")
+	onclose(user, "")
 
 /obj/machinery/vending/Topic(href, href_list)
 	if(stat & (BROKEN|NOPOWER))
@@ -283,6 +315,8 @@
 			usr.put_in_hand(coin)
 		usr << "\blue You remove the [coin] from the [src]"
 		coin = null
+		updateWindow(usr)
+		usr.skincmds["vending"] = src
 
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
@@ -349,6 +383,8 @@
 				src.mend(twire)
 			else
 				src.cut(twire)
+				updateWindow(usr)
+				usr.skincmds["vending"] = src
 
 		else if ((href_list["pulsewire"]) && (src.panel_open))
 			var/twire = text2num(href_list["pulsewire"])
@@ -360,6 +396,8 @@
 				return
 			else
 				src.pulse(twire)
+				updateWindow(usr)
+				usr.skincmds["vending"] = src
 
 		else if ((href_list["togglevoice"]) && (src.panel_open))
 			src.shut_up = !src.shut_up

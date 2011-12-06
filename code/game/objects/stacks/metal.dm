@@ -68,7 +68,6 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	null, \
 	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/steel, 1, 4, 10), \
 	new/datum/stack_recipe("metal rod", /obj/item/stack/rods, 1, 2, 60), \
-	new/datum/stack_recipe("reinforced sheet", /obj/item/stack/sheet/r_metal, 2, 1, 50), \
 	null, \
 	new/datum/stack_recipe("computer frame", /obj/structure/computerframe, 5, one_per_turf = 1), \
 	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 50, one_per_turf = 1, on_floor = 1), \
@@ -92,7 +91,6 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 // /datum/stack_recipe/New(title, result_type, req_amount, res_amount, max_res_amount, time, one_per_turf, on_floor = 0)
 var/global/list/datum/stack_recipe/r_metal_recipes = list ( \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts/reinforced, 2), \
-	new/datum/stack_recipe("metal sheet", /obj/item/stack/sheet/metal, 1, 2, 50), \
 	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, one_per_turf = 1), \
 	)
 

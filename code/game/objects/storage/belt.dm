@@ -108,6 +108,7 @@
 	//storage_slots = 6
 	can_hold = list(
 		"/obj/item/weapon/flashbang",
+		"/obj/item/weapon/pepperspray",
 		"/obj/item/weapon/handcuffs",
 		"/obj/item/device/flash",
 		"/obj/item/clothing/glasses",

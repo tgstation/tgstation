@@ -238,7 +238,6 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/airlock_electronics(), \
 		new /obj/item/stack/sheet/metal(), \
 		new /obj/item/stack/sheet/glass(), \
-		new /obj/item/stack/sheet/r_metal(), \
 		new /obj/item/stack/sheet/rglass(), \
 		new /obj/item/stack/rods(), \
 		new /obj/item/weapon/rcd_ammo(), \

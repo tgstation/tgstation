@@ -113,6 +113,7 @@
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 	world << sound('intercept.ogg')
+	set_security_level(1)
 
 
 /datum/game_mode/proc/get_players_for_role(var/role, override_jobbans=1)

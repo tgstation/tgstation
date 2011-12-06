@@ -185,6 +185,8 @@
 	product_slogans = "THIS'S WHERE TH' SEEDS LIVE! GIT YOU SOME!;Hands down the best seed selection on the station!;Also certain mushroom varieties available, more for experts! Get certified today!"
 	product_hidden = "/obj/item/seeds/amanitamycelium;/obj/item/seeds/glowshroom;/obj/item/seeds/libertymycelium;/obj/item/seeds/nettleseed;/obj/item/seeds/plumpmycelium"
 	product_hideamt = "2;2;2;2;2"
+	product_coin = "/obj/item/toy/waterflower"
+	product_coin_amt = "1"
 	charge_type = "hydroponics"
 
 /obj/machinery/vending/magivend

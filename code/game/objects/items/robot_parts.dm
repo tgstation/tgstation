@@ -162,6 +162,10 @@
 				user << "\red Sticking a dead brain into the frame would sort of defeat the purpose."
 				return
 
+			if(M.brainmob.mind in ticker.mode.head_revolutionaries)
+				user << "\red The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'.  It refuses to accept the MMI."
+				return
+
 			if(jobban_isbanned(M.brainmob, "Cyborg"))
 				user << "\red This MMI does not seem to fit."
 				return
@@ -183,6 +187,10 @@
 						G.corpse.mind.transfer_to(O)
 						del(G)
 						break
+
+			if(O.mind in ticker.mode:revolutionaries)
+				ticker.mode:remove_revolutionary(O.mind , 1)
+
 			if(O.mind && O.mind.special_role)
 				O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 

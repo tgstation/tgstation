@@ -12,6 +12,18 @@
 		return 1
 
 
+/obj/item/projectile/bullet/gyro
+	name ="gyro"
+	icon_state= "bolter"
+	damage = 50
+	flag = "bullet"
+
+
+	on_hit(var/atom/target, var/blocked = 0)
+		explosion(target, -1, 0, 2)
+		return 1
+
+
 
 /obj/item/projectile/temp
 	name = "freeze beam"
