@@ -584,7 +584,7 @@ datum/preferences
 
 			else if(link_tags["loadslot"])
 				var/slot = text2num(link_tags["loadslot"])
-				if(slot == "CLOSE")
+				if(link_tags["loadslot"] == "CLOSE")
 					closesave(user)
 					return
 				if(!savefile_load(user, slot))
