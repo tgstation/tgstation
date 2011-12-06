@@ -84,6 +84,7 @@
 		const_holder.density = 1
 		spawn()
 			del src
+		feedback_inc("mecha_ripley_created",1)
 		return
 
 
@@ -261,6 +262,7 @@
 		const_holder.density = 1
 		spawn()
 			del src
+		feedback_inc("mecha_gygax_created",1)
 		return
 
 
@@ -497,6 +499,7 @@
 		const_holder.density = 1
 		spawn()
 			del src
+		feedback_inc("mecha_firefighter_created",1)
 		return
 
 
@@ -586,6 +589,7 @@
 		const_holder.density = 1
 		spawn()
 			del src
+		feedback_inc("mecha_honker_created",1)
 		return
 
 
@@ -661,6 +665,7 @@
 		const_holder.density = 1
 		spawn()
 			del src
+		feedback_inc("mecha_durand_created",1)
 		return
 
 /datum/construction/mecha/durand
