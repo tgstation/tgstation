@@ -141,14 +141,13 @@
 		return 1
 	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
 		return 0
-	for(var/req in src.req_access)
-		if(!(req in I.access)) //doesn't have this access
-			return 0
 	if(src.req_one_access && src.req_one_access.len)
 		for(var/req in src.req_one_access)
 			if(req in I.access) //has an access from the single access list
 				return 1
-		return 0
+	for(var/req in src.req_access)
+		if(!(req in I.access)) //doesn't have this access
+			return 0
 	return 1
 
 
@@ -158,14 +157,14 @@
 	if(!src.req_access.len && (!src.req_one_access || !src.req_one_access.len))	return 1
 	if(!L)	return 0
 	if(!istype(L, /list))	return 0
-	for(var/req in src.req_access)
-		if(!(req in L)) //doesn't have this access
-			return 0
 	if(src.req_one_access && src.req_one_access.len)
 		for(var/req in src.req_one_access)
 			if(req in L) //has an access from the single access list
 				return 1
-		return 0
+	for(var/req in src.req_access)
+		if(!(req in L)) //doesn't have this access
+			return 0
+
 	return 1
 
 
@@ -176,7 +175,7 @@
 		if("Station Engineer")
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks)
 		if("Assistant")
-			return list(access_maint_tunnels)
+			return list()
 		if("Chaplain")
 			return list(access_morgue, access_chapel_office, access_crematorium)
 		if("Detective")
@@ -192,9 +191,9 @@
 		if("Captain")
 			return get_all_accesses()
 		if("Security Officer")
-			return list(access_security, access_brig, access_court)
+			return list(access_security, access_brig, access_court, access_maint_tunnels)
 		if("Warden")
-			return list(access_security, access_brig, access_armory, access_court)
+			return list(access_security, access_brig, access_armory, access_court, access_maint_tunnels)
 		if("Scientist")
 			return list(access_tox, access_tox_storage, access_research, access_xenobiology)
 		if("Head of Security")

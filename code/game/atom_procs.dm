@@ -81,6 +81,7 @@
 /atom/proc/add_fingerprint(mob/living/M as mob)
 	if(isnull(M)) return
 	if(isnull(M.key)) return
+	add_fibers(M)
 	if (!( src.flags ) & 256)
 		return
 	if (ishuman(M))
