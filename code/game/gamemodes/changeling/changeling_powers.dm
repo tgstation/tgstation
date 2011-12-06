@@ -400,7 +400,7 @@
 /client/proc/changeling_boost_range()
 	set category = "Changeling"
 	set name = "Ranged Sting (10)"
-	set desc="Your next sting ability can be used against targets 3 squares away."
+	set desc="Your next sting ability can be used against targets 2 squares away."
 
 	if(!usr.changeling)
 		usr << "\red You're not a changeling, something's wrong!"
@@ -417,7 +417,7 @@
 	usr.changeling.chem_charges -= 10
 
 	usr << "\blue Your throat adjusts to launch the sting."
-	usr.changeling.sting_range = 3
+	usr.changeling.sting_range = 2
 
 	usr.verbs -= /client/proc/changeling_boost_range
 
@@ -439,7 +439,7 @@
 	for(var/mob/living/carbon/C in oview(usr.changeling.sting_range))
 		victims += C
 	var/mob/T = input(usr, "Who do you wish to sting?") as null | anything in victims
-	if(T)
+	if(T && T in view(usr.changeling.sting_range))
 
 		if(usr.stat)
 			usr << "\red Not when we are incapacitated."
@@ -480,7 +480,7 @@
 	for(var/mob/living/carbon/C in oview(usr.changeling.sting_range))
 		victims += C
 	var/mob/T = input(usr, "Who do you wish to sting?") as null | anything in victims
-	if(T)
+	if(T && T in view(usr.changeling.sting_range))
 		if(usr.stat)
 			usr << "\red Not when we are incapacitated."
 			return
@@ -535,7 +535,7 @@
 		victims += C
 	var/mob/T = input(usr, "Who do you wish to sting?") as null | anything in victims
 
-	if(T)
+	if(T && T in view(usr.changeling.sting_range))
 		if(usr.stat)
 			usr << "\red Not when we are incapacitated."
 			return
@@ -575,7 +575,7 @@
 		victims += C
 	var/mob/T = input(usr, "Who do you wish to sting?") as null | anything in victims
 
-	if(T)
+	if(T && T in view(usr.changeling.sting_range))
 
 		if(usr.stat)
 			usr << "\red Not when we are incapacitated."
@@ -619,7 +619,7 @@
 		victims += C
 	var/mob/T = input(usr, "Who do you wish to sting?") as null | anything in victims
 
-	if(T)
+	if(T && T in view(usr.changeling.sting_range))
 		if(usr.stat)
 			usr << "\red Not when we are incapacitated."
 			return
@@ -671,7 +671,7 @@
 		victims += C
 	var/mob/T = input(usr, "Who do you wish to sting?") as null | anything in victims
 
-	if(T)
+	if(T && T in view(usr.changeling.sting_range))
 		if(usr.stat)
 			usr << "\red Not when we are incapacitated."
 			return

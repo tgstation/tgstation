@@ -6,7 +6,7 @@
 	icon = 'alien.dmi'
 	gender = NEUTER
 
-	toxloss = 250
+	var/storedPlasma = 250
 	var/alien_invis = 0.0
 	var/max_plasma = 500
 

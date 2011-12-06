@@ -788,6 +788,7 @@
 #include "code\modules\mob\living\say.dm"
 #include "code\modules\mob\living\blob\blob.dm"
 #include "code\modules\mob\living\carbon\carbon.dm"
+#include "code\modules\mob\living\carbon\alien\alien.dm"
 #include "code\modules\mob\living\carbon\alien\say.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\alien_powers.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\death.dm"
