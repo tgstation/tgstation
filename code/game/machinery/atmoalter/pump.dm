@@ -9,7 +9,7 @@
 	var/direction_out = 0 //0 = siphoning, 1 = releasing
 	var/target_pressure = 100
 
-	volume = 750
+	volume = 2500
 
 /obj/machinery/portable_atmospherics/pump/update_icon()
 	src.overlays = 0
