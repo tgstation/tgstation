@@ -74,7 +74,14 @@
 			if(!(message))
 				return
 			else
-				message = "<B>[src]</B> [message]"
+				if(cmptext(copytext(message, 1, 3), "v "))
+					message = "<B>[src]</B> [copytext(message, 3)]"
+					m_type = 1
+				else if(cmptext(copytext(message, 1, 3), "h "))
+					message = "<B>[src]</B> [copytext(message, 3)]"
+					m_type = 2
+				else
+					message = "<B>[src]</B> [message]"
 
 		if ("salute")
 			if (!src.buckled)
