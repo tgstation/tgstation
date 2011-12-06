@@ -11,7 +11,6 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/heads/captain(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
-		H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/captain(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/device/pda/captain(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/suit/armor/captain(H), H.slot_wear_suit)
@@ -40,7 +39,6 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/heads/hop(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
-		H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/head_of_personnel(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/brown(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/heads/hop(H), H.slot_belt)

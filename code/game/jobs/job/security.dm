@@ -10,7 +10,6 @@
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/weapon/storage/backpack/security (H), H.slot_back)
-		H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/device/radio/headset/heads/hos(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/head_of_security(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/jackboots(H), H.slot_shoes)
@@ -18,7 +17,6 @@
 		H.equip_if_possible(new /obj/item/clothing/suit/armor/hos(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/clothing/gloves/black(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/clothing/head/helmet/HoS(H), H.slot_head)
-		H.equip_if_possible(new /obj/item/clothing/mask/gas/emergency(H), H.slot_wear_mask)
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses/sechud(H), H.slot_glasses)
 		H.equip_if_possible(new /obj/item/weapon/handcuffs(H), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/weapon/gun/energy/gun(H), H.slot_s_store)
@@ -42,7 +40,6 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_sec(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/weapon/storage/backpack/security(H), H.slot_back)
-		H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/warden(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/jackboots(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/security(H), H.slot_belt)
@@ -50,7 +47,6 @@
 		H.equip_if_possible(new /obj/item/clothing/head/helmet/warden(H), H.slot_head)
 		H.equip_if_possible(new /obj/item/clothing/gloves/black(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses/sechud(H), H.slot_glasses)
-		H.equip_if_possible(new /obj/item/clothing/mask/gas/emergency(H), H.slot_wear_mask)
 		H.equip_if_possible(new /obj/item/weapon/handcuffs(H), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/device/flash(H), H.slot_l_store)
 		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
@@ -73,7 +69,6 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_sec(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
-		H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/clothing/under/det(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/brown(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/detective(H), H.slot_belt)

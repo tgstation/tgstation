@@ -11,7 +11,6 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/heads/ce(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/weapon/storage/backpack/industrial (H), H.slot_back)
-		H.equip_if_possible(new /obj/item/weapon/storage/box/engineer(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/chief_engineer(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/device/pda/heads/ce(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/shoes/brown(H), H.slot_shoes)
@@ -35,7 +34,6 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_eng(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/weapon/storage/backpack/industrial(H), H.slot_back)
-		H.equip_if_possible(new /obj/item/weapon/storage/box/engineer(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/engineer(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/orange(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/engineering(H), H.slot_belt)
@@ -59,7 +57,6 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_eng(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
-		H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/atmospheric_technician(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/engineering(H), H.slot_belt)
@@ -80,7 +77,6 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_eng(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
-		H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/roboticist(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/engineering(H), H.slot_belt)
