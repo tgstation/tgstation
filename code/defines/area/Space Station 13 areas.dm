@@ -684,6 +684,10 @@ proc/process_ghost_teleport_locs()
 		name = "Chief Engineers office"
 		icon_state = "engine_control"
 
+	particle_accelerator
+		name = "Particle Accelerator Core"
+		icon_state = "engine"
+
 
 //Solars
 
