@@ -610,10 +610,10 @@
 					if(getOxyLoss())
 						oxyloss--
 
-			if(overeatduration > 500 && !(mutations & FAT))
+		/*	if(overeatduration > 500 && !(mutations & FAT))
 				src << "\red You suddenly feel blubbery!"
 				mutations |= FAT
-				update_body()
+				update_body()	*/
 			if (overeatduration < 100 && mutations & FAT)
 				src << "\blue You feel fit again!"
 				mutations &= ~FAT
