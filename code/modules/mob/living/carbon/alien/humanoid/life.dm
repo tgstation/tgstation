@@ -365,7 +365,8 @@
 				if(prob(5 + round((src.nutrition - 200) / 2)))
 					src << "\red You suddenly feel blubbery!"
 					src.mutations |= FAT
-//					update_body()	*/
+//					update_body()
+		*/
 			if (src.nutrition < 100 && src.mutations & FAT)
 				if(prob(round((50 - src.nutrition) / 100)))
 					src << "\blue You feel fit again!"
