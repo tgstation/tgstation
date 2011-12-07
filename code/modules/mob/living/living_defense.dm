@@ -37,11 +37,11 @@
 
 
 /mob/living/bullet_act(var/obj/item/projectile/P, var/def_zone)
-	var/obj/item/weapon/cloaking_device/C = locate((/obj/item/weapon/cloaking_device) in src)
+	/*var/obj/item/weapon/cloaking_device/C = locate((/obj/item/weapon/cloaking_device) in src)
 	if(C && C.active)
 		C.attack_self(src)//Should shut it off
 		src << "\blue Your [C.name] was disrupted!"
-		stunned = max(stunned, 2)
+		stunned = max(stunned, 2)*/
 
 	flash_weak_pain()
 

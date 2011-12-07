@@ -1055,10 +1055,10 @@
 		l_hand.screen_loc = ui_lhand
 
 	var/shielded = 0
-	for (var/obj/item/weapon/cloaking_device/S in src)
+	/*for (var/obj/item/weapon/cloaking_device/S in src)
 		if (S.active)
 			shielded = 2
-			break
+			break*/
 
 	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_active)
 		shielded = 3

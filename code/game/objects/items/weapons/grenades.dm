@@ -151,10 +151,10 @@ FLASHBANG
 			T.hotspot_expose(700,125)
 
 		for(var/mob/living/carbon/M in viewers(T, null))
-			if (locate(/obj/item/weapon/cloaking_device, M))
+			/*if (locate(/obj/item/weapon/cloaking_device, M))
 				for(var/obj/item/weapon/cloaking_device/S in M)
 					S.active = 0
-					S.icon_state = "shield0"
+					S.icon_state = "shield0"*/
 
 			M << "\red <B>BANG</B>"
 
