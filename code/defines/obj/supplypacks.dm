@@ -17,7 +17,7 @@
 
 /datum/supply_packs/charge
 	cost = 10
-	containertype = "/obj/structure/crate"
+	containertype = "/obj/structure/closet/crate"
 
 /datum/supply_packs/charge/medical
 	name = "Medical Charge"
