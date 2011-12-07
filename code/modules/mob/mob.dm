@@ -606,8 +606,13 @@
 				return
 			if (!ismob(M))
 				return
+
+			var/recipient_name = M.key
+			if(M.client && M.client.holder && M.client.stealth)
+				recipient_name = "Administrator"
+
 			//This should have a check to prevent the player to player chat but I am too tired atm to add it.
-			var/t = input("Message:", text("Private message to [M.key]"))  as text|null
+			var/t = input("Message:", text("Private message to [recipient_name]"))  as text|null
 			if (!t || !usr || !M)
 				return
 			if (usr.client && usr.client.holder)
