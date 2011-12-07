@@ -155,7 +155,7 @@ var/const
 	XRAY			=(1<<2)
 	HULK			=(1<<3)
 	CLUMSY			=(1<<4)
-	FAT				=(1<<5)
+	//FAT				=(1<<5)
 	HUSK			=(1<<6)
 	LASER			=(1<<7)
 	HEAL			=(1<<8)

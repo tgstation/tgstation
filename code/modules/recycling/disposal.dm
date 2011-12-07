@@ -271,7 +271,7 @@
 	process()
 		if(stat & BROKEN)			// nothing can happen if broken
 			return
-			
+
 		if(length(src.contents) > 0)
 			if(timeleft == 0)
 				flush = 1
@@ -478,10 +478,11 @@
 		// note AM since can contain mobs or objs
 		for(var/atom/movable/AM in D)
 			AM.loc = src
-			if(istype(AM, /mob/living/carbon/human))
+			/*if(istype(AM, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = AM
 				if(H.mutations & FAT)		// is a human and fat?
 					has_fat_guy = 1			// set flag on holder
+			*/
 			if(istype(AM, /obj/effect/bigDelivery))
 				var/obj/effect/bigDelivery/T = AM
 				src.destinationTag = T.sortTag
