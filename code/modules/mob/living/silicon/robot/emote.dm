@@ -100,6 +100,7 @@
 				message = "<B>[src]</B> glares at [param]."
 			else
 				message = "<B>[src]</B> glares."
+			m_type = 1
 
 		if ("stare")
 			var/M = null
@@ -115,6 +116,7 @@
 				message = "<B>[src]</B> stares at [param]."
 			else
 				message = "<B>[src]</B> stares."
+			m_type = 1
 
 		if ("look")
 			var/M = null
@@ -132,6 +134,7 @@
 			else
 				message = "<B>[src]</B> looks."
 			m_type = 1
+
 		if("beep")
 			var/M = null
 			if(param)
@@ -147,7 +150,8 @@
 			else
 				message = "<B>[src]</B> beeps."
 			playsound(src.loc, 'twobeep.ogg', 50, 0)
-			m_type = 1
+			m_type = 2
+
 		if("ping")
 			var/M = null
 			if(param)
@@ -163,7 +167,8 @@
 			else
 				message = "<B>[src]</B> pings."
 			playsound(src.loc, 'ping.ogg', 50, 0)
-			m_type = 1
+			m_type = 2
+
 		if("buzz")
 			var/M = null
 			if(param)
@@ -179,7 +184,11 @@
 			else
 				message = "<B>[src]</B> buzzes."
 			playsound(src.loc, 'buzz-sigh.ogg', 50, 0)
-			m_type = 1
+			m_type = 2
+
+		if("help")
+			src << "beep-(none)/mob, ping-(none)/mob, buzz-(none)/mob, look-(none)/mob, stare-(none)/mob, glare-(none)/mob, twitch, twitch_s"
+
 		else
 			src << text("Invalid Emote: []", act)
 	if ((message && src.stat == 0))

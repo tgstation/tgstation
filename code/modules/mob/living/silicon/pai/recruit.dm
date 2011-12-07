@@ -114,7 +114,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		M << browse(dat, "window=paiRecruit")
 
 	proc/findPAI(var/obj/item/device/paicard/p, var/mob/user)
-		requestRecruits()
+		requestRecruits(user)
 		var/list/available = list()
 		for(var/datum/paiCandidate/c in paiController.pai_candidates)
 			if(c.ready)
@@ -159,7 +159,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 
 		user << browse(dat, "window=findPai")
 
-	proc/requestRecruits()
+	proc/requestRecruits(var/mob/origin)
 		for(var/mob/dead/observer/O in world)
 			if(jobban_isbanned(O, "pAI"))
 				continue
@@ -176,10 +176,10 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 				if(!hasSubmitted && O.client.be_pai)
 					spawn question(O.client)
 
-	proc/question(var/client/C)
+	proc/question(var/client/C, var/mob/origin)
 		asked.Add(C.key)
 		asked[C.key] = world.time
-		var/response = alert(C, "Someone is requesting a pAI personality. Would you like to play as a personal AI?", "pAI Request", "Yes", "No", "Never for this round")
+		var/response = alert(C, "[origin] is requesting a pAI personality. Would you like to play as a personal AI?", "pAI Request", "Yes", "No", "Never for this round")
 		if(response == "Yes")
 			recruitWindow(C.mob)
 		else if (response == "Never for this round")

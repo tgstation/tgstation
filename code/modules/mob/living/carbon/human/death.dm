@@ -6,6 +6,8 @@
 	src.stat = 2
 	src.dizziness = 0
 	src.jitteriness = 0
+	src.sleeping = 0
+	src.sleeping_willingly = 0
 
 	tension_master.death(src)
 
