@@ -14,9 +14,11 @@
 	item_state = "flight"
 	name = "Hand labeler"
 
-/obj/item/weapon/hand_labeler/afterattack(atom/A, mob/user as mob)
+/obj/item/weapon/hand_labeler/afterattack(atom/A as obj|mob, mob/user as mob)
 	if(A==loc)      // if placing the labeller into something (e.g. backpack)
 		return      // don't remove any labels
+	if(!A.labels)
+		return
 	if(A.labels.len == 1)
 		var/t = A.labels[1]
 		A.name = copytext(A.name,1,lentext(A.name) - (lentext(t) + 2))
@@ -78,6 +80,8 @@
 		if(ishuman(A))
 			user << "\red You can't label humans."
 			return
+		if(!A.labels)
+			A.labels = new()
 		for(var/i = 1, i < A.labels.len, i++)
 			if(label == A.labels[i])
 				user << "\red [A] already has that label!"
