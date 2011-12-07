@@ -361,16 +361,16 @@
 
 			if(reagents) reagents.metabolize(src)
 
-			if(src.nutrition > 500 && !(src.mutations & FAT))
+			/*if(src.nutrition > 500 && !(src.mutations & FAT))
 				if(prob(5 + round((src.nutrition - 200) / 2)))
 					src << "\red You suddenly feel blubbery!"
 					src.mutations |= FAT
-//					update_body()
+					update_body()
 			if (src.nutrition < 100 && src.mutations & FAT)
 				if(prob(round((50 - src.nutrition) / 100)))
 					src << "\blue You feel fit again!"
 					src.mutations &= ~FAT
-//					update_body()
+					update_body()*/
 			if (src.nutrition > 0)
 				src.nutrition -= HUNGER_FACTOR
 
