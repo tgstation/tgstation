@@ -23,7 +23,7 @@
 
 	var/style = styles.Find(character.hair_style.type)
 	if(style)
-		hair = style * hrange + hrange - rand(1,hrange-1)
+		hair = style * hrange - rand(1,hrange-1)
 	else
 		hair = 0
 
@@ -33,7 +33,7 @@
 
 	var/f_style = face_styles.Find(character.facial_hair_style.type)
 	if(f_style)
-		beard = f_style * f_hrange + f_hrange - rand(1,f_hrange-1)
+		beard = f_style * f_hrange - rand(1,f_hrange-1)
 	else
 		beard = 0
 
