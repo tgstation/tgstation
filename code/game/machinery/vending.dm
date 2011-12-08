@@ -1,3 +1,11 @@
+//Comment related to the commenting out of dmf stuff:
+//Yes, I know it has the benefit of working without needing to refresh the screen, but it
+//just looked absolutely terrible. People with light on dark windows setups couldn't view it.
+//If you make it better, prettier... decent looking, sure, add it. But as it is it's just awful, sorry.
+//The updateWindow() and SkinCmd() procs have been commented out along with a part of attack_hand().
+//There were four or five calls to updateWindow() scattered through the file. They are commented out with '//' comments.
+//-Errorage
+
 /obj/machinery/vending
 	var/const
 		WIRE_EXTEND = 1
@@ -10,6 +18,11 @@
 	var/product_name = "generic"
 	var/product_path = null
 	var/amount = 0
+	var/color = "#ffffff"
+
+	New()
+		..()
+		color = "#[pick(list("ff","ee","dd"))][pick(list("ff","ee","dd"))][pick(list("ff","ee","dd"))]"
 
 /obj/machinery/vending/New()
 	..()
@@ -93,7 +106,11 @@
 		continue
 
 	return
+
+
+/*
 /obj/machinery/vending/proc/updateWindow(mob/user as mob)
+
 	var/i
 	for (i = 1, i <= 6, i++)
 		winclone(user, "vendingslot", "vendingslot[i]")
@@ -126,6 +143,7 @@
 			winshow(user, "vendingwindow.slot[i+1]", 1)
 		else
 			winshow(user, "vendingwindow.slot[i+1]", 0)
+
 
 /obj/machinery/vending/SkinCmd(mob/user as mob, var/data as text)
 	if (get_dist(user, src) > 1)
@@ -191,7 +209,7 @@
 			new product_path(get_turf(src))
 			src.vend_ready = 1
 
-	updateWindow(user)
+	updateWindow(user)*/
 
 
 /obj/machinery/vending/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -216,7 +234,7 @@
 		W.loc = src
 		coin = W
 		user << "\blue You insert the [W] into the [src]"
-		updateWindow(user)
+		//updateWindow(user)
 		return
 	else
 		..()
@@ -236,43 +254,139 @@
 		if(src.shock(user, 100))
 			return
 
-	updateWindow(user)
+	/*updateWindow(user)
 	winshow(user, "vendingwindow", 1)
-	user.skincmds["vending"] = src
+	user.skincmds["vending"] = src*/
 
-	var/dat = "<B>[src.name]</B>"
+	var/dat = ""
+
+
+	dat += {"
+
+	<table width='400' cellspacing='10' bgcolor='black'>
+	<tr align='center' valign='bottom'>
+		<td colspan='2'>
+			<table width='100%'>
+				<tr>
+					<td colspan='3' align='center'>
+						<font color='white'><b>[src.name]</b></font>
+					</td>
+					<td rowspan='2' align='center'>
+						<font color='white'>
+							<b>Coin slot</b><br>
+							[coin ? "<a href='?src=\ref[src];remove_coin=1'>[coin.name]</a>" : "empty"]
+						</font>
+					</td>
+				</tr>
+				<tr>
+					<td width='25'>
+						&nbsp;
+					</td>
+					<td bgcolor='darkgreen' align='center' valign='middle'>
+						<font color='lightgreen' style='font-family:Arial;' size='5'>
+
+							SELECT ITEM
+
+						</font>
+					</td>
+					<td width='25'>
+						&nbsp;
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+
+	"}
+
+	for( var/datum/data/vending_product/product in product_records)
+		dat += {"
+
+		<tr height='37'>
+			<td align='center' bgcolor='[product.color]' width='330'><b>[product.product_name][product.amount ? " ([product.amount])" : "<font color='red' size='2'><br>Out of stock</font>"]</b></td>
+			<td width='70'>
+				<form name='vending' action='?src=\ref[src]' method='get'>
+					<input type='hidden' name='src' value='\ref[src]'>
+					<input type='hidden' name='vend' value='\ref[product]'>
+					<input type='submit' value='Vend' style='width:70px;position:relative;top:10px;'>
+				</form>
+			</td>
+		</tr>
+
+		"}
+
+	if(extended_inventory)
+		for( var/datum/data/vending_product/product in hidden_records)
+			dat += {"
+
+			<tr height='37'>
+				<td align='center' bgcolor='[product.color]' width='330'><b>[product.product_name][product.amount ? " ([product.amount])" : "<font color='red' size='2'><br>Out of stock</font>"]</b></td>
+				<td width='70'>
+					<form name='vending' action='?src=\ref[src]' method='get'>
+						<input type='hidden' name='src' value='\ref[src]'>
+						<input type='hidden' name='vend' value='\ref[product]'>
+						<input type='submit' value='Vend' style='width:70px;position:relative;top:10px;'>
+					</form>
+				</td>
+			</tr>
+
+			"}
 
 	if(coin)
-		dat += "<br>There is a <a href='?src=\ref[src];remove_coin=1'>[coin.name]</a> in the slot!"
-	else
-		dat += "<br>The coin slot is empty."
+		for( var/datum/data/vending_product/product in coin_records)
+			dat += {"
+
+			<tr height='37'>
+				<td align='center' bgcolor='[product.color]' width='330'><b>[product.product_name][product.amount ? " ([product.amount])" : "<font color='red' size='2'><br>Out of stock</font>"]</b></td>
+				<td width='70'>
+					<form name='vending' action='?src=\ref[src]' method='get'>
+						<input type='hidden' name='src' value='\ref[src]'>
+						<input type='hidden' name='vend' value='\ref[product]'>
+						<input type='submit' value='Vend' style='width:70px;position:relative;top:10px;'>
+					</form>
+				</td>
+			</tr>
+
+			"}
+
+	dat += {"
+
+	</table>
+
+	</p>
+
+	</div>
+
+	"}
 
 	if(panel_open)
+		var/dat2 = ""
 		var/list/vendwires = list(
 			"Violet" = 1,
 			"Orange" = 2,
 			"Goldenrod" = 3,
 			"Green" = 4,
 		)
-		dat += "<hr><B>Access Panel</B><br>"
+		dat2 += "<hr><B>Access Panel</B><br>"
 		for(var/wiredesc in vendwires)
 			var/is_uncut = src.wires & APCWireColorToFlag[vendwires[wiredesc]]
-			dat += "[wiredesc] wire: "
+			dat2 += "[wiredesc] wire: "
 			if(!is_uncut)
-				dat += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Mend</a>"
+				dat2 += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Mend</a>"
 			else
-				dat += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Cut</a> "
-				dat += "<a href='?src=\ref[src];pulsewire=[vendwires[wiredesc]]'>Pulse</a> "
-			dat += "<br>"
+				dat2 += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Cut</a> "
+				dat2 += "<a href='?src=\ref[src];pulsewire=[vendwires[wiredesc]]'>Pulse</a> "
+			dat2 += "<br>"
 
-		dat += "<br>"
-		dat += "The orange light is [(src.seconds_electrified == 0) ? "off" : "on"].<BR>"
-		dat += "The red light is [src.shoot_inventory ? "off" : "blinking"].<BR>"
-		dat += "The green light is [src.extended_inventory ? "on" : "off"].<BR>"
-		dat += "The [(src.wires & WIRE_SCANID) ? "purple" : "yellow"] light is on.<BR>"
+		dat2 += "<br>"
+		dat2 += "The orange light is [(src.seconds_electrified == 0) ? "off" : "on"].<BR>"
+		dat2 += "The red light is [src.shoot_inventory ? "off" : "blinking"].<BR>"
+		dat2 += "The green light is [src.extended_inventory ? "on" : "off"].<BR>"
+		dat2 += "The [(src.wires & WIRE_SCANID) ? "purple" : "yellow"] light is on.<BR>"
 
 		if(product_slogans != "")
-			dat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
+			dat2 += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a><br>"
+		user << browse(dat2, "window=vending")
 
 	user << browse(dat, "")
 	onclose(user, "")
@@ -303,14 +417,13 @@
 			usr.put_in_hand(coin)
 		usr << "\blue You remove the [coin] from the [src]"
 		coin = null
-		updateWindow(usr)
+		//updateWindow(usr)
 		usr.skincmds["vending"] = src
 
 
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
 		usr.machine = src
 		if ((href_list["vend"]) && (src.vend_ready))
-
 			if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
 				usr << "\red Access denied." //Unless emagged of course
 				flick(src.icon_deny,src)
@@ -371,7 +484,7 @@
 				src.mend(twire)
 			else
 				src.cut(twire)
-				updateWindow(usr)
+				//updateWindow(usr)
 				usr.skincmds["vending"] = src
 
 		else if ((href_list["pulsewire"]) && (src.panel_open))
@@ -384,7 +497,7 @@
 				return
 			else
 				src.pulse(twire)
-				updateWindow(usr)
+				//updateWindow(usr)
 				usr.skincmds["vending"] = src
 
 		else if ((href_list["togglevoice"]) && (src.panel_open))
