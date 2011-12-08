@@ -13,7 +13,7 @@
 /proc/event()
 	event = 1
 
-	var/eventNumbersToPickFrom = list(1,2,4,5,6,7,8,9,10,11,12,13) //so ninjas don't cause "empty" events.
+	var/eventNumbersToPickFrom = list(1,4,5,6,7,8,9,10,11,12,13) //so ninjas don't cause "empty" events.
 
 	if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)//If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
 		eventNumbersToPickFrom += 3
