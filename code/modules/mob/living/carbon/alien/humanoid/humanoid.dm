@@ -431,10 +431,10 @@
 
 
 	var/shielded = 0
-	for (var/obj/item/weapon/cloaking_device/S in src)
+	/*for (var/obj/item/weapon/cloaking_device/S in src)
 		if (S.active)
 			shielded = 2
-			break
+			break*/
 
 	if (shielded == 2 || alien_invis)
 		invisibility = 2

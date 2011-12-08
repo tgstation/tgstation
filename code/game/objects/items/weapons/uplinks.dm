@@ -146,14 +146,14 @@ SYNDICATE UPLINK
 					if (src.uses >= 7)
 						src.uses -= 7
 						new /obj/item/weapon/aiModule/syndicate(get_turf(src))
-				if("cloak")
+				/*if("cloak")
 					if (src.uses >= 4)
 						if (ticker.mode.config_tag!="nuclear" || \
 							(input(currentUser,"Spawning a cloak in nuke is generally regarded as entirely dumb, are you sure?") in list("Confirm", "Abort")) == "Confirm" \
 						)
 							if (src.uses >= 4)
 								src.uses -= 4
-								new /obj/item/weapon/cloaking_device(get_turf(src))
+								new /obj/item/weapon/cloaking_device(get_turf(src))*/
 				if("sword")
 					if (src.uses >= 4)
 						src.uses -= 4

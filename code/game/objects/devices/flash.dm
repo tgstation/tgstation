@@ -128,11 +128,11 @@
 				del(animation)
 
 		for(var/mob/living/carbon/M in oviewers(3, null))
-			if(prob(50))
+			/*if(prob(50))
 				if (locate(/obj/item/weapon/cloaking_device, M))
 					for(var/obj/item/weapon/cloaking_device/S in M)
 						S.active = 0
-						S.icon_state = "shield0"
+						S.icon_state = "shield0"*/
 			var/safety = M:eyecheck()
 			if(!safety)
 				flick("flash", M.flash)
