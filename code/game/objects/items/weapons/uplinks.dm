@@ -43,10 +43,11 @@ SYNDICATE UPLINK
 			dat += "<A href='byond://?src=\ref[src];buy_item=shoes'>Syndicate Shoes</A> (2)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=card'>Syndicate Card</A> (3)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=voice'>Voice-Changer</A> (4)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=thermal'>Thermal Glasses</A> (4)<BR>"
 			dat += "<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=imp_freedom'>Freedom Implant (with injector)</A> (3)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=paralysispen'>Paralysis Pen</A> (3)<BR>" //Note that this goes to the updated sleepypen now.
-//			dat += "<A href='byond://?src=\ref[src];buy_item=sleepypen'>Sleepy Pen</A> (5)<BR>" //Terrible -Pete.
+			dat += "<A href='byond://?src=\ref[src];buy_item=sleepypen'>Sleepy Pen</A> (4)<BR>" //Terrible -Pete. //Reinstated -Skymarshal
 			dat += "<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=detomatix'>Detomatix Cartridge</A> (3)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=bomb'>Plastic Explosives</A> (2)<BR>"
@@ -54,7 +55,7 @@ SYNDICATE UPLINK
 			dat += "<A href='byond://?src=\ref[src];buy_item=space'>Syndicate-made Space Suit (inludes a helmet)</A> (3)<BR>"
 			dat += "<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=projector'>Chameleon-projector</A> (4)<BR>"
-			dat += "<A href='byond://?src=\ref[src];buy_item=cloak'>Cloaking Device</A> (4)<BR>"
+//			dat += "<A href='byond://?src=\ref[src];buy_item=cloak'>Cloaking Device</A> (4)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=emag'>Electromagnet Card</A> (3)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=empbox'>5 EMP Grenades</A> (4)<BR>"
 			dat += "<BR>"
@@ -131,8 +132,8 @@ SYNDICATE UPLINK
 						var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(get_turf(src))
 						O.imp = new /obj/item/weapon/implant/freedom(O)
 				if("sleepypen")
-					if (src.uses >= 5)
-						src.uses -= 5
+					if (src.uses >= 4)
+						src.uses -= 4
 						new /obj/item/weapon/pen/sleepypen(get_turf(src))
 				if("paralysispen")
 					if (src.uses >= 3)
@@ -146,18 +147,22 @@ SYNDICATE UPLINK
 					if (src.uses >= 7)
 						src.uses -= 7
 						new /obj/item/weapon/aiModule/syndicate(get_turf(src))
-				if("cloak")
+/*				if("cloak")
 					if (src.uses >= 4)
 						if (ticker.mode.config_tag!="nuclear" || \
 							(input(currentUser,"Spawning a cloak in nuke is generally regarded as entirely dumb, are you sure?") in list("Confirm", "Abort")) == "Confirm" \
 						)
 							if (src.uses >= 4)
 								src.uses -= 4
-								new /obj/item/weapon/cloaking_device(get_turf(src))
+								new /obj/item/weapon/cloaking_device(get_turf(src))	*/
 				if("sword")
 					if (src.uses >= 4)
 						src.uses -= 4
 						new /obj/item/weapon/melee/energy/sword(get_turf(src))
+				if("thermal")
+					if (src.uses >= 4)
+						src.uses -= 4
+						new /obj/item/clothing/glasses/thermal(get_turf(src))
 				if("bomb")
 					if (src.uses >= 2)
 						src.uses -= 2

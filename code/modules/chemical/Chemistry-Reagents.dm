@@ -341,7 +341,7 @@ datum
 				..()
 				return
 
-		cyanide
+/*		cyanide
 			name = "Cyanide"
 			id = "cyanide"
 			description = "A highly toxic chemical."
@@ -354,7 +354,7 @@ datum
 				M:adjustOxyLoss(3)
 				M:sleeping += 1
 				..()
-				return
+				return	*/
 
 		stoxin
 			name = "Sleep Toxin"
