@@ -20,7 +20,7 @@ obj/item/weapon/gun/energy/laser/retro
 	icon_state = "caplaser"
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
 	force = 10
-	origin_tech = "combat=5;magnets=4"
+	origin_tech = null
 	var/charge_tick = 0
 
 
