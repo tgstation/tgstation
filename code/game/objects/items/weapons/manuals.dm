@@ -575,16 +575,220 @@
 	author = "Nanotrasen Inc."
 
 	dat = {"
-
 		<html><head>
 		</head>
 
 		<body>
-		<iframe width='100%' height='97%' src="http://nanotrasen.com/wiki/index.php?title=Space_Law&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		<p><b>If you can't find the crime listed in here you need to set up a proper trial</b> Go here: <a href="/index.php/Legal_Standard_Operating_Procedure" title="Legal Standard Operating Procedure">Legal Standard Operating Procedure</a></p>
+		<p>The time you took for bringing the suspect in and the time you spend questioning are NOT to be calculated into this. This is the pure time someone spends in a cell starring at the wall.<br />
+		On laggy games first take a look at how quickly the cell timer tick... we don't want people to spend an eternity in jail for staling a pair of gloves. I am sure you have a system clock on your PC that you can keep an eye on.</p>
+		<p><font size="3" color="red"><b>The maximum time someone can be put in jail for is 10 minutes (exceptions are listed below)</b></font><br />
+		Always remember that when you add crimes together!</p>
+		<p><br />
+		Note: Compare the ingame version of this found in Security with the version on the wiki regularly. If the ingame version differs, follow the rules on the wiki, since they are easier to update.
+		Link to the wiki page: <a href="http://wiki.baystation12.co.cc/index.php/Security_Sentences" class="external free" title="http://wiki.baystation12.co.cc/index.php/Security_Sentences" rel="nofollow">http://wiki.baystation12.co.cc/index.php/Security_Sentences</a>
+		Compare changes here: <a href="http://wiki.baystation12.co.cc/index.php?title=Security_Sentences&amp;action=history" class="external free" title="http://wiki.baystation12.co.cc/index.php?title=Security_Sentences&amp;action=history" rel="nofollow">http://wiki.baystation12.co.cc/index.php?title=Security_Sentences&amp;action=history</a></p>
+
+		<a name="Minor_Crimes" id="Minor_Crimes"></a><h3> <span class="mw-headline"> Minor Crimes </span></h3>
+		<table width="1150px" style="text-align:center; background-color:#ffee99;" border="1" cellspacing="0">
+		<tr>
+		<th style="background-color:#ffee55;" width="150px">Crime
+		</th><th style="background-color:#ffee55;" width="500px">Description
+		</th><th style="background-color:#ffee55;" width="100px">Punishment
+		</th><th style="background-color:#ffee55;" width="300px">Notes
+		</th></tr>
+		<tr>
+		<td><b>Resisting Arrest</b>
+		</td><td>Not cooperating with the officer who demands you turn yourself in peacefully. Shouting "No!" or otherwise making the officer have the need to tase you to put handcuffs on.
+		</td><td> +30 seconds to original time
+		</td><td> See manhunt if the suspect runs away. Or attack on an officer if he fights back. This is for shouting/swearing and moving around a bit (just so you cant cuff him) only.
+		</td></tr>
+		<tr>
+		<td><b>Petty Theft</b>
+		</td><td>Stealing non-crucial items from the ship. Items can include anything from toolboxes to metal to insulated gloves. To steal something the person must take it from a place which he doesn't have access to.
+		</td><td> 60 seconds (Half the time of Theft)
+		</td><td> Remember to take the items away from them and return them to where they stole them.
+		</td></tr>
+		<tr>
+		<td><b>Theft</b>
+		</td><td>Stealing of important, dangerous or otherwise crucial items like IDs, weapons or something similar. To steal something the person must take it from a place which he doesn't have access to.
+		</td><td> 2 minutes (2x the time of Petty Theft)
+		</td><td> Remember to take the items away from them and return them to where they stole them. Compare Robbery.
+		</td></tr>
+		<tr>
+		<td><b>Robbery</b>
+		</td><td> Robbery is stealing items from another person's possession. This can be the stealing of ID's, backpack contents or anything else.
+		</td><td> 1m 30s (3m)
+		</td><td> Remember to take the stolen items from the person and return them, if you can find the person they've been stolen from. Otherwise put them in a locker in security. Taking the items for yourself is considered stealing!! Remember to double the time if the robbed item was an ID or something else crucial or dangerous. Compare Theft and Petty Theft.
+		</td></tr>
+		<tr>
+		<td><b>Assault</b>
+		</td><td> To assault means to attack someone without causing them to die and without the intent to kill them.
+		</td><td> 3m
+		</td><td> Example: Knocking someone out to take their ID yields: Assault + Robbery
+		</td></tr>
+		<tr>
+		<td><b>Trespassing</b>
+		</td><td> Trespassing means to be in an area which you don't have access to.
+		</td><td> Remove from area, if the crime is repeated imprison for 60s
+		</td><td>
+		</td></tr>
+		<tr>
+		<td><b>Indecent Exposure or being a nuisance</b>
+		</td><td> Running around the ship naked, yelling at people for no reason (don't arrest someone because they are arguing), throwing around stuff where it could hit someone, etc.
+		</td><td> 30s
+		</td><td> Drunks can be keep to sober up, but only if they are badly harassing other crew members. Regular drunks don't get arrested and if they are only a nuisance you keep them for the regular time.
+		</td></tr></table>
+		<a name="Medium_Crimes" id="Medium_Crimes"></a><h3> <span class="mw-headline"> Medium Crimes </span></h3>
+		<table width="1150px" style="text-align:center; background-color:#ffcc99;" border="1" cellspacing="0">
+		<tr>
+		<th style="background-color:#ffaa55;" width="150px">Crime
+		</th><th style="background-color:#ffaa55;" width="500px">Description
+		</th><th style="background-color:#ffaa55;" width="100px">Punishment
+		</th><th style="background-color:#ffaa55;" width="300px">Notes
+		</th></tr>
+		<tr>
+		<td><b>Assault with a deadly or dangerous weapon</b>
+		</td><td> Getting assaulted with a knife or tased without the intention of your attacker killing you.
+		</td><td> 5m
+		</td><td> Usual weapons: Stun baton, taser or other gun, wirecutters, knife or scalpel, crowbar or fire extinguisher/oxygen tank.
+		</td></tr>
+		<tr>
+		<td><b>Assault on an officer</b>
+		</td><td> Assault with whichever weapon or object on an officer. An officer is defined as either a member of the security force (forensic technician included) or one of the heads of staff.
+		</td><td> 5m
+		</td><td> Don't abuse him. I know you want to, but don't. At least try not to. You'll get fired. Most likely.
+		</td></tr>
+		<tr>
+		<td><b>Unlawful conduct or negligence resulting in ship damage or harm to crewmen.</b>
+		</td><td> It's impossible to list everything that can lead up to this. Starting a fire in toxins is one thing, smashing windows and major vandalism is another, as is putting someone else in harms way. If you can't put it somewhere else, bets are good that it is this. If it is still not this, you need a trial.
+		</td><td> 3m 30s
+		</td><td> If someone dies directly related to it, add manslaughter.
+		</td></tr>
+		<tr>
+		<td><b>Manslaughter</b>
+		</td><td> Manslaughter is the unintentional killing of a fellow human being. If you cause a fire in toxins and someone else get's trapped and dies, that's manslaughter.
+		</td><td> 5m
+		</td><td> If there is the intention to kill, it's murder.
+		</td></tr>
+		<tr>
+		<td><b>Theft of a high value item</b>
+		</td><td> Stealing something which we know traitors often want.
+		</td><td> 3m
+		</td><td> Theft of a rapid construction device (RCD), Captain's jumpsuit, Hand teleporter, captain's antique laser or other items which the traitors want. Note that they have to be kept in areas which this person doesn't have access to.
+		</td></tr>
+		<tr>
+		<td><b>Threatening Ship Integrity</b>
+		</td><td> To threaten the ships integrity means to cause mediocre damage to the ships atmosphere, this means to create an air or gas leak that affects a vital part of the ship, or destroying an interior wall.
+		</td><td> 5m
+		</td><td> If it wasn't on purpose or if the damage is easily fixed see Unlawful conduct.
+		</td></tr>
+		<tr>
+		<td><b>Threatening Power Supply</b>
+		</td><td> Cutting power lines, shutting down power storage units, engine's power generators, etc.
+		</td><td> 4m + remove insulated gloves and wirecutters and anything else that might be related, like engineering access.
+		</td><td> This does not include blowing up the Engine. See Compromising Ship Integrity further down.
+		</td></tr>
+		<tr>
+		<td><b>Sparking a man-hunt or chase</b>
+		</td><td> This means the officer needs to chase after you to catch you. It means you actually flee from the scene.
+		</td><td> +3m to original time
+		</td><td> This will happen to you often...
+		</td></tr>
+		<tr>
+		<td><b>Escape attempt</b>
+		</td><td> Attempting to escape from the brig.
+		</td><td> +2m to current time, this can exceed the maximum jail time.
+		</td><td> It's the job of the officer to prevent such events.
+		</td></tr></table>
+		<a name="Major_Crimes" id="Major_Crimes"></a><h3> <span class="mw-headline"> Major Crimes </span></h3>
+		<table width="1150px" style="text-align:center; background-color:#ffaa99;" border="1" cellspacing="0">
+		<tr>
+		<th style="background-color:#ff8855;" width="150px">Crime
+		</th><th style="background-color:#ff8855;" width="500px">Description
+		</th><th style="background-color:#ff8855;" width="100px">Punishment
+		</th><th style="background-color:#ff8855;" width="300px">Notes
+		</th></tr>
+		<tr>
+		<td><b>Identity Theft</b>
+		</td><td> Stealing someones ID and/or other objects of identification with the purpose to appear to others as them or to enter into areas where the suspect would normally not have access.
+		</td><td> 10 minutes
+		</td><td> The case of impersonation regarding ship equipment(doors, computer terminals, AI, etc) or personnel has to be proven, otherwise see Petty Theft/Robbery. Remember to double the time if the object was an ID or something similar crucial (Compare Petty Theft).
+		</td></tr>
+		<tr>
+		<td><b>Syndicate collaboration</b>
+		</td><td> Being either a traitor, a syndicate operative or a head revolutionary
+		</td><td> Until the end of the round <br />(disregard maximum sentence time) <br />or DEATH <br />(if approved by the <a href="/index.php/Captain" title="Captain">Captain</a>)
+		</td><td> You have two choices: Killing them or permabrigging them. If you choose to kill them, first ask for permission from the <a href="/index.php/Captain" title="Captain">Captain</a>. If permission is given, it is wise to first <a href="/index.php/Adminhelp" title="Adminhelp" class="mw-redirect">Adminhelp</a> your intentions. Adminhelp something like: "I have grounds to believe X is a rev head. I have him locked in the brig and intend to kill him. If you have any objections to this action, please contact me." then wait for about a minute. If no PM comes, proceed to kill him. The other option is to permabrig them. This simply means you put them in the brig and don't ever let them out until your are going to evac. Then cuff them and secure them on one of the pods. (Note that Head Revolutionaries MUST be executed for you to win the round.)
+		</td></tr>
+		<tr>
+		<td><b>Murder</b>
+		</td><td> Killing someone with the intent to kill.
+		</td><td> Death Sentence if authorised by the Captain. Otherwise brigging for the rest of the round.
+		</td><td> Not to be confused with Manslaughter. Hint: Cyborgification is a valid execution method, since he will be bound by laws.
+		</td></tr>
+		<tr>
+		<td><b>Attempted Murder</b>
+		</td><td> Attempting to kill someone. The victim survives.
+		</td><td> See Murder
+		</td><td> Regardless if you succeed or not, if you try to commit murder, the punishment is the same! You have to be sure there was intent to kill though!
+		</td></tr>
+		<tr>
+		<td><b>Compromising Ship Integrity</b>
+		</td><td> Compromising a large part of the Ships atmosphere or integrity.
+		</td><td> 10m (You are going to evac anyway. Cuff him and secure him on a pod.)
+		</td><td> Blowing up the <a href="/index.php/Engine" title="Engine">Engine</a> is included here.
+		</td></tr></table>
+		<a name="Parole_Circumstances" id="Parole_Circumstances"></a><h3> <span class="mw-headline"> Parole Circumstances </span></h3>
+		<p>Okay, we've covered all the punishments. Now for the parole circumstances. These circumstances will shorten your prisoner's time in jail.
+		</p><p>Note that all of these add up to a maximum of <b>33%</b>!!
+		</p>
+		<table width="1150px" style="text-align:center; background-color:#aaffaa;" border="1" cellspacing="0">
+		<tr>
+		<th style="background-color:#55ff55;" width="150px">Crime
+		</th><th style="background-color:#55ff55;" width="500px">Description
+		</th><th style="background-color:#55ff55;" width="100px">Benefit
+		</th><th style="background-color:#55ff55;" width="300px">Notes
+		</th></tr>
+		<tr>
+		<td><b>Good behavior</b>
+		</td><td> Behaving well, not attempting any problems or causing riots or screaming and yelling.
+		</td><td> -20% of original time
+		</td><td> It sounds like a good deal... but few will actually take it.
+		</td></tr>
+		<tr>
+		<td><b>Reeducation</b>
+		</td><td> Getting de-converted from revolutionary, renouncing traitoring (must be arranged with admins), etc. (most of these must be arranged with admins)
+		</td><td> -15% of original time
+		</td><td>
+		</td></tr>
+		<tr>
+		<td><b>Cooperation with prosecution or security</b>
+		</td><td> Being helpful to the members of security, revealing things during questioning or providing names of head revolutionaries.
+		</td><td> -10%
+		</td><td> In the case of revealing a head revolutionary: Immediate release
+		</td></tr>
+		<tr>
+		<td><b>Surrender</b>
+		</td><td> Coming to the brig, confessing what you've done and taking the punishment.
+		</td><td> -25%
+		</td><td> Getting arrested without putting a fuss is not surrender. For this, you have to actually come to the brig yourself.
+		</td></tr>
+		<tr>
+		<td><b>Immediate threat to the prisoner</b>
+		</td><td> Call for evac, atmospheric problems in the <a href="/index.php/Brig" title="Brig">Brig</a> or <a href="/index.php/SecHQ" title="SecHQ" class="mw-redirect">SecHQ</a> area, threat of being overrun by revolutionaries, etc
+		</td><td> Immediately move the prisoner.<br /> If that is not possible: Immediate Release!
+		</td><td> Keep in mind the time until they get released. Exception is if the person is a <i>CONFIRMED</i> traitor, syndicate operative or head of revolutionary. In those cases you can leave them to die.
+		</td></tr>
+		<tr>
+		<td><b>Medical reasons</b>
+		</td><td> The person needs immediate medical attention
+		</td><td> Immediate escort to medbay
+		</td><td> The sentence timer continues to tick while he's at medbay, it's not paused.
+		</td></tr></table>
+
 		</body>
-
 		</html>
-
 		"}
 
 /obj/item/weapon/book/manual/engineering_guide
