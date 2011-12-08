@@ -431,7 +431,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/clothing/glasses/thermal/monocle(M), M.slot_glasses)
 			M.equip_if_possible(new /obj/item/clothing/head/det_hat(M), M.slot_head)
 
-			//M.equip_if_possible(new /obj/item/weapon/cloaking_device(M), M.slot_r_store)
+			M.equip_if_possible(new /obj/item/weapon/cloaking_device(M), M.slot_r_store)
 
 			M.equip_if_possible(new /obj/item/weapon/gun/projectile(M), M.slot_r_hand)
 			M.equip_if_possible(new /obj/item/ammo_magazine/a357(M), M.slot_l_store)
@@ -544,7 +544,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(M), M.slot_glasses)
 			M.equip_if_possible(new /obj/item/clothing/suit/wcoat(M), M.slot_wear_suit)
 			M.equip_if_possible(new /obj/item/weapon/melee/energy/sword(M), M.slot_l_store)
-			//M.equip_if_possible(new /obj/item/weapon/cloaking_device(M), M.slot_r_store)
+			M.equip_if_possible(new /obj/item/weapon/cloaking_device(M), M.slot_r_store)
 
 			var/obj/item/weapon/secstorage/sbriefcase/sec_briefcase = new(M)
 			for(var/obj/item/briefcase_item in sec_briefcase)

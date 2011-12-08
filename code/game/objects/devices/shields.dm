@@ -23,7 +23,7 @@
 	return
 */
 
-/*
+
 /obj/item/weapon/cloaking_device
 	name = "cloaking device"
 	desc = "Use this to become invisible to the human eyesocket."
@@ -54,4 +54,3 @@
 	active = 0
 	icon_state = "shield0"
 	..()
-*/

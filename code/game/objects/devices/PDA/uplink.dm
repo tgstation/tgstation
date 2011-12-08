@@ -52,7 +52,7 @@
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=space'>Syndicate-made Space Suit (inludes a helmet)</A> (3)<BR>"
 	menu_message += "<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=projector'>Chameleon-projector</A> (4)<BR>"
-	//menu_message += "<A href='byond://?src=\ref[src];buy_item=cloak'>Cloaking Device</A> (4)<BR>"
+	menu_message += "<A href='byond://?src=\ref[src];buy_item=cloak'>Cloaking Device</A> (4)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=emag'>Electromagnet Card</A> (3)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=empbox'>5 EMP Grenades</A> (4)<BR>"
 	menu_message += "<BR>"
@@ -153,10 +153,10 @@
 				if (uses >= 4)
 					uses -= 4
 					new /obj/item/device/chameleon(get_turf(hostpda))
-			/*if("cloak")
+			if("cloak")
 				if (uses >= 4)
 					uses -= 4
-					new /obj/item/weapon/cloaking_device(get_turf(hostpda))*/
+					new /obj/item/weapon/cloaking_device(get_turf(hostpda))
 			if("sword")
 				if (uses >= 4)
 					uses -= 4
