@@ -314,8 +314,8 @@ datum
 					holder.remove_reagent("plasma", 1)
 				if(holder.has_reagent("acid"))
 					holder.remove_reagent("acid", 1)
-				if(holder.has_reagent("cyanide"))
-					holder.remove_reagent("cyanide", 1)
+/*				if(holder.has_reagent("cyanide"))
+					holder.remove_reagent("cyanide", 1)	*/
 				if(holder.has_reagent("amatoxin"))
 					holder.remove_reagent("amatoxin", 2)
 				if(holder.has_reagent("chloralhydrate"))
@@ -1235,8 +1235,8 @@ datum
 					holder.remove_reagent("acid", 5)
 				if(holder.has_reagent("pacid"))
 					holder.remove_reagent("pacid", 5)
-				if(holder.has_reagent("cyanide"))
-					holder.remove_reagent("cyanide", 5)
+/*				if(holder.has_reagent("cyanide"))
+					holder.remove_reagent("cyanide", 5)	*/
 				if(holder.has_reagent("lexorin"))
 					holder.remove_reagent("lexorin", 5)
 				if(holder.has_reagent("amatoxin"))

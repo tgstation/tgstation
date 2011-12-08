@@ -600,7 +600,7 @@ datum
 				var/list/data = list("viruses"= list(F))
 				holder.add_reagent("blood", 20, data)
 
-				holder.add_reagent("cyanide", rand(1,10))
+				holder.add_reagent("toxin", rand(1,10))
 
 				return
 
