@@ -5,8 +5,8 @@
 			src.nutrition -= HUNGER_FACTOR/10
 			if(src.m_intent == "run")
 				src.nutrition -= HUNGER_FACTOR/10
-		if(src.mutations & FAT && src.m_intent == "run" && src.bodytemperature <= 360)
-			src.bodytemperature += 2
+		/*if(src.mutations & FAT && src.m_intent == "run" && src.bodytemperature <= 360)
+			src.bodytemperature += 2*/
 
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)

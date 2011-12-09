@@ -22,7 +22,7 @@
 	name = "alien hunter"
 
 	health = 150
-	toxloss = 100
+	storedPlasma = 100
 	max_plasma = 150
 	icon_state = "alien_s"
 
@@ -30,7 +30,7 @@
 	name = "alien sentinel"
 
 	health = 125
-	toxloss = 100
+	storedPlasma = 100
 	max_plasma = 250
 	icon_state = "alien_s"
 

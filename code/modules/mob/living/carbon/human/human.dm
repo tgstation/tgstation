@@ -125,12 +125,12 @@
 					Metroid.UpdateFeed()
 			return
 
-		if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
+		/*if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
 			if(prob(40) && !(mutations & FAT))
 				visible_message("\red <B>[src] fails to push [tmob]'s fat ass out of the way.</B>", \
 					"\red <B>You fail to push [tmob]'s fat ass out of the way.</B>")
 				now_pushing = 0
-				return
+				return*/
 
 		tmob.LAssailant = src
 
@@ -175,8 +175,8 @@
 	if(shoes)
 		tally += shoes.slowdown
 
-	if(mutations & FAT)
-		tally += 1.5
+	/*if(mutations & FAT)
+		tally += 1.5*/
 	if (bodytemperature < 283.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 
@@ -458,9 +458,9 @@
 				return
 			if (!( istype(W, /obj/item/clothing/suit) ))
 				return
-			if (mutations & FAT && !(W.flags & ONESIZEFITSALL))
+			/*if (mutations & FAT && !(W.flags & ONESIZEFITSALL))
 				src << "\red You're too fat to wear the [W.name]!"
-				return
+				return*/
 			u_equip(W)
 			wear_suit = W
 			W.equipped(src, text)
@@ -540,9 +540,9 @@
 				return
 			if (!( istype(W, /obj/item/clothing/under) ))
 				return
-			if (mutations & FAT && !(W.flags & ONESIZEFITSALL))
+			/*if (mutations & FAT && !(W.flags & ONESIZEFITSALL))
 				src << "\red You're too fat to wear the [W.name]!"
-				return
+				return*/
 			u_equip(W)
 			w_uniform = W
 			W.equipped(src, text)
@@ -725,8 +725,8 @@
 
 	// lol
 	var/fat = ""
-	if (mutations & FAT)
-		fat = "fat"
+	/*if (mutations & FAT)
+		fat = "fat"*/
 
 	if (mutations & HULK)
 		overlays += image("icon" = 'genetics.dmi', "icon_state" = "hulk[fat][!lying ? "_s" : "_l"]")
@@ -813,7 +813,7 @@
 
 	// Uniform
 	if(w_uniform)
-		if (mutations & FAT && !(w_uniform.flags & ONESIZEFITSALL))
+		/*if (mutations & FAT && !(w_uniform.flags & ONESIZEFITSALL))
 			src << "\red You burst out of the [w_uniform.name]!"
 			var/obj/item/clothing/c = w_uniform
 			u_equip(c)
@@ -822,17 +822,17 @@
 			if(c)
 				c:loc = loc
 				c:dropped(src)
-				c:layer = initial(c:layer)
+				c:layer = initial(c:layer)*/
 		if(w_uniform)//I should really not need these
 			w_uniform.screen_loc = ui_iclothing
 		if(istype(w_uniform, /obj/item/clothing/under))
 			var/t1 = w_uniform.color
 			if (!t1)
 				t1 = icon_state
-			if (mutations & FAT)
+			/*if (mutations & FAT)
 				overlays += image("icon" = 'uniform_fat.dmi', "icon_state" = "[t1][!lying ? "_s" : "_l"]", "layer" = MOB_LAYER)
-			else
-				overlays += image("icon" = 'uniform.dmi', "icon_state" = text("[][]",t1, (!(lying) ? "_s" : "_l")), "layer" = MOB_LAYER)
+			else*/
+			overlays += image("icon" = 'uniform.dmi', "icon_state" = text("[][]",t1, (!(lying) ? "_s" : "_l")), "layer" = MOB_LAYER)
 			if (w_uniform.blood_DNA)
 				var/icon/stain_icon = icon('blood.dmi', "uniformblood[!lying ? "" : "2"]")
 				overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
@@ -912,7 +912,7 @@
 
 
 	if (wear_suit)
-		if (mutations & FAT && !(wear_suit.flags & ONESIZEFITSALL))
+		/*if (mutations & FAT && !(wear_suit.flags & ONESIZEFITSALL))
 			src << "\red You burst out of the [wear_suit.name]!"
 			var/obj/item/clothing/c = wear_suit
 			u_equip(c)
@@ -921,7 +921,7 @@
 			if(c)
 				c:loc = loc
 				c:dropped(src)
-				c:layer = initial(c:layer)
+				c:layer = initial(c:layer)*/
 		if (istype(wear_suit, /obj/item/clothing/suit))
 			var/t1 = wear_suit.icon_state
 			overlays += image("icon" = 'suit.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
@@ -1199,14 +1199,14 @@
 	lying_icon = new /icon('human.dmi', "blank")
 
 	var/husk = (mutations & HUSK)
-	var/obese = (mutations & FAT)
+	//var/obese = (mutations & FAT)
 
 	if (husk)
 		stand_icon.Blend(new /icon('human.dmi', "husk_s"), ICON_OVERLAY)
 		lying_icon.Blend(new /icon('human.dmi', "husk_l"), ICON_OVERLAY)
-	else if(obese)
+	/*else if(obese)
 		stand_icon.Blend(new /icon('human.dmi', "fatbody_s"), ICON_OVERLAY)
-		lying_icon.Blend(new /icon('human.dmi', "fatbody_l"), ICON_OVERLAY)
+		lying_icon.Blend(new /icon('human.dmi', "fatbody_l"), ICON_OVERLAY)*/
 	else
 		stand_icon.Blend(new /icon('human.dmi', "chest_[g]_s"), ICON_OVERLAY)
 		lying_icon.Blend(new /icon('human.dmi', "chest_[g]_l"), ICON_OVERLAY)
@@ -1227,9 +1227,9 @@
 		lying_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 
 	if (underwear > 0)
-		if(!obese)
-			stand_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
-			lying_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_l"), ICON_OVERLAY)
+		//if(!obese)
+		stand_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
+		lying_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_l"), ICON_OVERLAY)
 
 /mob/living/carbon/human/proc/update_face()
 	if(!facial_hair_style || !hair_style)	return//Seems people like to lose their icons, this should stop the runtimes for now

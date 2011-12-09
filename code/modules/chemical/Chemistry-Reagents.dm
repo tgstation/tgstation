@@ -1687,6 +1687,37 @@ datum
 				..()
 				return
 
+		condensedcapsaicin
+			name = "Condensed Capsaicin"
+			id = "condensedcapsaicin"
+			description = "This shit goes in pepperspray."
+			reagent_state = LIQUID
+			color = "#B31008" // rgb: 179, 16, 8
+
+			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
+				if(!istype(M, /mob/living))
+					return
+				if(method == TOUCH)
+					if(istype(M, /mob/living/carbon/human))
+						if(M:wear_mask)
+
+							M << "\red Your mask protects you from the pepperspray!"
+							return
+						if(M:head)
+							M << "\red Your helmet protects you from the pepperspray!"
+							return
+						if(M:glasses)
+							M << "\red Your glasses protect you from most of the pepperspray!"
+							M:emote("scream")
+							M.eye_blurry = max(M.eye_blurry, 1)
+							return
+						M:emote("scream")
+						M << "\red You're sprayed directly in the eyes with pepperspray!"
+						M.eye_blurry = max(M.eye_blurry, 5)
+						M.eye_blind = max(M.eye_blind, 2)
+						M:paralysis = max(M:paralysis, 1)
+						M.drop_item()
+
 		frostoil
 			name = "Frost Oil"
 			id = "frostoil"

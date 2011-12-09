@@ -254,7 +254,7 @@
 		if ((!( yes ) || now_pushing))
 			return
 		now_pushing = 1
-		if(ismob(AM))
+		/*if(ismob(AM))
 			var/mob/tmob = AM
 			if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
 				if(prob(20))
@@ -263,7 +263,7 @@
 							M << M << "\red <B>[src] fails to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
 					//unlock_medal("That's No Moon, That's A Gourmand!", 1)
-					return
+					return*/
 		now_pushing = 0
 		..()
 		if (istype(AM, /obj/machinery/recharge_station))

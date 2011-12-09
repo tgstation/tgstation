@@ -219,6 +219,10 @@ datum/objective/escape
 		var/turf/location = get_turf(owner.current.loc)
 		if(!location)
 			return 0
+
+		if(istype(location, /turf/simulated/shuttle/floor4)) // Fails tratiors if they are in the shuttle brig -- Polymorph
+			return 0
+
 		var/area/check_area = location.loc
 		if(istype(check_area, /area/shuttle/escape/centcom))
 			return 1

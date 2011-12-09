@@ -155,7 +155,7 @@ var/const
 	XRAY			=(1<<2)
 	HULK			=(1<<3)
 	CLUMSY			=(1<<4)
-	FAT				=(1<<5)
+	//FAT				=(1<<5)
 	HUSK			=(1<<6)
 	LASER			=(1<<7)
 	HEAL			=(1<<8)
@@ -195,7 +195,11 @@ var/const
 	GAS_N2O = 1 << 4
 
 
-var/list/accessable_z_levels = list("1" = 10, "3" = 15, "4" = 60, "5" = 15) //This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there. (Exceptions: extended, sandbox and nuke) -Errorage
+var/list/accessable_z_levels = list("3" = 30, "4" = 70)
+//This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.
+//(Exceptions: extended, sandbox and nuke) -Errorage
+//Was list("1" = 10, "3" = 15, "4" = 60, "5" = 15); changed it to list("3" = 30, "4" = 70).
+//Spacing should be a reliable method of getting rid of a body -- Urist.
 
 #define IS_MODE_COMPILED(MODE) (ispath(text2path("/datum/game_mode/"+(MODE))))
 
@@ -221,3 +225,9 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define DROWSY "drowsy"
 
 var/static/list/scarySounds = list('thudswoosh.ogg','Taser.ogg','armbomb.ogg','hiss1.ogg','hiss2.ogg','hiss3.ogg','hiss4.ogg','hiss5.ogg','hiss6.ogg','Glassbr1.ogg','Glassbr2.ogg','Glassbr3.ogg','Welder.ogg','Welder2.ogg','airlock.ogg','clownstep1.ogg','clownstep2.ogg')
+
+//Security levels
+#define SEC_LEVEL_GREEN 0
+#define SEC_LEVEL_BLUE 1
+#define SEC_LEVEL_RED 2
+#define SEC_LEVEL_DELTA 3

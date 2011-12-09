@@ -18,7 +18,7 @@
 
 	if (vary)
 		S.frequency = rand(32000, 55000)
-	for (var/mob/M in range(world.view+extrarange, source))
+	for (var/mob/M in range(world.view+extrarange, source))       // Plays for people in range.
 		if (M.client)
 			if(M.ear_deaf <= 0 || !M.ear_deaf)
 				if(isturf(source))
@@ -26,6 +26,12 @@
 					S.pan = max(-100, min(100, dx/8.0 * 100))
 
 				M << S
+
+				for(var/obj/structure/closet/L in range(world.view+extrarange, source))
+					if(locate(/mob/, L))
+						for(var/mob/Ml in L)
+							Ml << S
+																		// Now plays for people in lockers!  -- Polymorph
 
 /mob/proc/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num)
 	if(!src.client || ear_deaf > 0)	return
@@ -75,31 +81,27 @@ client/verb/Toggle_Soundscape()
 		if (!A:client) return
 		//if (A:ear_deaf) return
 
-		if (A && A:client && !A:client:ambience_playing && !A:client:no_ambi) // Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! - LastyScratch
+		if (A && A:client && !A:client:ambience_playing && !A:client:no_ambi) // Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas next to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 			A:client:ambience_playing = 1
 			A << sound('shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
 
 		switch(src.name)
 			if ("Chapel") sound = pick('ambicha1.ogg','ambicha2.ogg','ambicha3.ogg','ambicha4.ogg')
-			if ("Morgue") sound = pick('ambimo1.ogg','ambimo2.ogg','ambistat.ogg')
-			if ("Space") sound = pick('ambispace.ogg','ambistat.ogg',)
+			if ("Morgue") sound = pick('ambimo1.ogg','ambimo2.ogg','title2.ogg')
+			if ("Space") sound = pick('ambispace.ogg','title2.ogg',)
 			if ("Engine Control") sound = pick('ambisin1.ogg','ambisin2.ogg','ambisin3.ogg','ambisin4.ogg')
 			if ("Atmospherics") sound = pick('ambiatm1.ogg')
-			if ("Medbay") sound = pick('ambistat.ogg')
-			if ("Bridge") sound = pick('ambistat.ogg')
-			if ("Arrival Shuttle Hallway") sound = pick('ambistat.ogg','ambiruntime.ogg')
 			if ("AI Sat Ext") sound = pick('ambiruntime.ogg','ambimalf.ogg')
 			if ("AI Satellite") sound = pick('ambimalf.ogg')
 			if ("AI Satellite Teleporter Room") sound = pick('ambiruntime.ogg','ambimalf.ogg')
-			if ("Central Primary Hallway") sound = pick('ambiruntime.ogg')
-			if ("Aft Primary Hallway") sound = pick('ambiruntime.ogg')
-			if ("AI Upload Foyer") sound = pick('ambimalf.ogg', 'null.ogg', 'null.ogg')
-			if ("AI Upload Chamber") sound = pick('ambimalf.ogg','null.ogg','null.ogg')
+			if ("Bar") sound = pick('title1.ogg')
+			if ("AI Upload Foyer") sound = pick('ambimalf.ogg', 'null.ogg')
+			if ("AI Upload Chamber") sound = pick('ambimalf.ogg','null.ogg')
 			if ("Mine")
 				sound = pick('ambimine.ogg')
 				musVolume = 25
 			else
-				sound = pick('ambigen1.ogg','ambigen3.ogg','ambigen4.ogg','ambigen5.ogg','ambigen6.ogg','ambigen7.ogg','ambigen8.ogg','ambigen9.ogg','ambigen10.ogg','ambigen11.ogg','ambigen12.ogg','ambigen14.ogg')
+				sound = pick('ambiruntime.ogg','ambigen1.ogg','ambigen3.ogg','ambigen4.ogg','ambigen5.ogg','ambigen6.ogg','ambigen7.ogg','ambigen8.ogg','ambigen9.ogg','ambigen10.ogg','ambigen11.ogg','ambigen12.ogg','ambigen14.ogg')
 
 
 		if (prob(35))

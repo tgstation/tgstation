@@ -34,12 +34,6 @@
 	damage = 20
 
 
-/obj/item/projectile/bullet/gyro
-	name ="gyro"
-	icon_state= "bolter"
-	damage = 50
-
-
 /obj/item/projectile/bullet/stunshot
 	name = "stunshot"
 	damage = 5

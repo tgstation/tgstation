@@ -524,6 +524,18 @@
 	throw_range = 10
 	origin_tech = "combat=3;materials=3;engineering=3"
 
+/obj/item/weapon/pepperspray
+	desc = "Manufactred by UhangInc., used to blind and down an opponent quickly."
+	icon = 'weapons.dmi'
+	name = "pepperspray"
+	icon_state = "pepperspray"
+	item_state = "pepperspray"
+	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	throwforce = 3
+	w_class = 2.0
+	throw_speed = 2
+	throw_range = 10
+
 /obj/item/weapon/clipboard
 	name = "clipboard"
 	desc = "Apply paper to this to write better. Can also hold pens."

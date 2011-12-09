@@ -4,6 +4,12 @@
 		return 0
 	return 1
 
+/obj/structure/closet/secure_closet/close()
+	..()
+	if(broken)
+		icon_state = src.icon_off
+	return 1
+
 /obj/structure/closet/secure_closet/emp_act(severity)
 	for(var/obj/O in src)
 		O.emp_act(severity)
@@ -35,7 +41,8 @@
 		broken = 1
 		locked = 0
 		desc = "It appears to be broken."
-		icon_state = src.icon_broken
+		icon_state = icon_off
+		flick(icon_broken, src)
 		if(istype(W, /obj/item/weapon/melee/energy/blade))
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)

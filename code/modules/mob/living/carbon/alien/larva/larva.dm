@@ -28,13 +28,13 @@
 		now_pushing = 1
 		if(ismob(AM))
 			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
+			/*if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
 				if(prob(70))
 					for(var/mob/M in viewers(src, null))
 						if(M.client)
 							M << "\red <B>[src] fails to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
-					return
+					return*/
 			tmob.LAssailant = src
 
 		now_pushing = 0
@@ -63,7 +63,7 @@
 
 	if (client.statpanel == "Status")
 		stat(null, "Progress: [amount_grown]/200")
-		stat(null, "Plasma Stored: [getToxLoss()]")
+		stat(null, "Plasma Stored: [getPlasma()]")
 
 
 ///mob/living/carbon/alien/larva/bullet_act(var/obj/item/projectile/Proj) taken care of in living

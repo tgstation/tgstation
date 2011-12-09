@@ -173,6 +173,7 @@
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (istype(target, /obj/item/weapon/storage)) return ..()
+		if (istype(target, /obj/item/weapon/gun/grenadelauncher)) return ..()
 		if (!src.state && stage == 2 && !crit_fail)
 			user << "\red You prime the grenade! 3 seconds!"
 			message_admins("[key_name_admin(user)] used a chemistry grenade ([src.name]).")
@@ -321,6 +322,105 @@
 		var/datum/reagents/R = new/datum/reagents(15)
 		reagents = R
 		R.my_atom = src
+
+/obj/item/weapon/gun/grenadelauncher
+	name = "grenade launcher"
+	icon = 'gun.dmi'
+	icon_state = "riotgun"
+	item_state = "riotgun"
+	w_class = 4.0
+	throw_speed = 2
+	throw_range = 10
+	force = 5.0
+	var/list/grenades = new/list()
+	var/max_grenades = 3
+	m_amt = 2000
+
+	examine()
+		set src in view()
+		..()
+		if (!(usr in view(2)) && usr!=src.loc) return
+		usr << "\icon [src] Grenade launcher:"
+		usr << "\blue [grenades] / [max_grenades] Grenades."
+
+	attackby(obj/item/I as obj, mob/user as mob)
+		if((istype(I, /obj/item/weapon/chem_grenade)) || (istype(I, /obj/item/weapon/flashbang)) || (istype(I, /obj/item/weapon/smokebomb)) || (istype(I, /obj/item/weapon/mustardbomb)) || (istype(I, /obj/item/weapon/empgrenade)))
+			if(grenades.len < max_grenades)
+				user.drop_item()
+				I.loc = src
+				grenades += I
+				user << "\blue You put the grenade in the grenade launcher."
+				user << "\blue [grenades.len] / [max_grenades] Grenades."
+			else
+				usr << "\red The grenade launcher cannot hold more grenades."
+
+	afterattack(obj/target, mob/user , flag)
+		if(target == user) return
+
+		if(grenades.len)
+			spawn(0) fire_grenade(target,user)
+		else
+			usr << "\red The grenade launcher is empty."
+
+	proc
+		fire_grenade(atom/target, mob/user)
+			if (locate (/obj/structure/table, src.loc))
+				return
+			else
+				for(var/mob/O in viewers(world.view, user))
+					O.show_message(text("\red [] fired a grenade!", user), 1)
+				user << "\red You fire the grenade launcher!"
+				if (istype(grenades[1], /obj/item/weapon/chem_grenade))
+					var/obj/item/weapon/chem_grenade/F = grenades[1]
+					grenades -= F
+					F.loc = user.loc
+					F.throw_at(target, 30, 2)
+					message_admins("[key_name_admin(user)] fired a chemistry grenade from a grenade launcher ([src.name]).")
+					log_game("[key_name_admin(user)] used a chemistry grenade ([src.name]).")
+					F.state = 1
+					F.icon_state = initial(icon_state)+"_armed"
+					playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
+					spawn(15)
+						F.explode()
+				else if (istype(grenades[1], /obj/item/weapon/flashbang))
+					var/obj/item/weapon/flashbang/F = grenades[1]
+					grenades -= F
+					F.loc = user.loc
+					F.throw_at(target, 30, 2)
+					F.active = 1
+					F.icon_state = "flashbang1"
+					playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
+					spawn(15)
+						F.prime()
+				else if (istype(grenades[1], /obj/item/weapon/smokebomb))
+					var/obj/item/weapon/smokebomb/F = grenades[1]
+					grenades -= F
+					F.loc = user.loc
+					F.throw_at(target, 30, 2)
+					F.icon_state = "flashbang1"
+					playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
+					spawn(15)
+						F.prime()
+				else if (istype(grenades[1], /obj/item/weapon/mustardbomb))
+					var/obj/item/weapon/mustardbomb/F = grenades[1]
+					grenades -= F
+					F.loc = user.loc
+					F.throw_at(target, 30, 2)
+					F.icon_state = "flashbang1"
+					playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
+					spawn(15)
+						F.prime()
+				else if (istype(grenades[1], /obj/item/weapon/empgrenade))
+					var/obj/item/weapon/empgrenade/F = grenades[1]
+					grenades -= F
+					F.loc = user.loc
+					F.throw_at(target, 30, 2)
+					F.active = 1
+					F.icon_state = "empar"
+					playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
+					spawn(15)
+						F.prime()
+
 
 /obj/item/weapon/gun/syringe
 	name = "syringe gun"
@@ -2632,6 +2732,18 @@
 	New()
 		..()
 		reagents.add_reagent("fuel",1000)
+
+/obj/structure/reagent_dispensers/peppertank
+	name = "Pepper Spray Refiller"
+	desc = "Refill pepper spray canisters."
+	icon = 'objects.dmi'
+	icon_state = "peppertank"
+	anchored = 1
+	density = 0
+	amount_per_transfer_from_this = 45
+	New()
+		..()
+		reagents.add_reagent("condensedcapsaicin",1000)
 
 /obj/structure/reagent_dispensers/fueltank/blob_act()
 	explosion(src.loc,0,1,5,7,10)

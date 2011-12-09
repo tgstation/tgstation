@@ -1,11 +1,9 @@
-/mob/living/silicon/robot/emote(var/act)
+/mob/living/silicon/robot/emote(var/act,var/m_type=1,var/message = null)
 	var/param = null
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
-	var/m_type = 1
-	var/message
 
 	switch(act)
 		if ("salute")
@@ -186,8 +184,34 @@
 			playsound(src.loc, 'buzz-sigh.ogg', 50, 0)
 			m_type = 2
 
+		if("law")
+			message = "<B>[src]</B> shows its legal authorization barcode."
+
+			playsound(src.loc, 'biamthelaw.ogg', 50, 0)
+			m_type = 2
+
+		if ("me")
+			if(silent)
+				return
+			if (src.client && (client.muted || client.muted_complete))
+				src << "You are muted."
+				return
+			if (stat)
+				return
+			if(!(message))
+				return
+			else
+				if(cmptext(copytext(message, 1, 3), "v "))
+					message = "<B>[src]</B> [copytext(message, 3)]"
+					m_type = 1
+				else if(cmptext(copytext(message, 1, 3), "h "))
+					message = "<B>[src]</B> [copytext(message, 3)]"
+					m_type = 2
+				else
+					message = "<B>[src]</B> [message]"
+
 		if("help")
-			src << "beep-(none)/mob, ping-(none)/mob, buzz-(none)/mob, look-(none)/mob, stare-(none)/mob, glare-(none)/mob, twitch, twitch_s"
+			src << "beep-(none)/mob, ping-(none)/mob, buzz-(none)/mob, look-(none)/mob, stare-(none)/mob, glare-(none)/mob, twitch, twitch_s, law"
 
 		else
 			src << text("Invalid Emote: []", act)
