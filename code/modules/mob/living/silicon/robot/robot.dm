@@ -71,6 +71,7 @@
 			hands.icon_state = "standard"
 			icon_state = "robot"
 			modtype = "Stand"
+			radio.borg(src, list())
 
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)

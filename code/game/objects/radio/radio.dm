@@ -401,6 +401,17 @@
 			hear+=M
 	return hear
 
+/obj/item/device/radio/proc/borg(mob/user as mob, op)
+	if(!(issilicon(user)))
+		return
+	for (var/ch_name in channels)
+		radio_controller.remove_object(src, radiochannels[ch_name])
+	secure_radio_connections = new
+	channels = list()
+	for (var/ch_name in op)
+		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
+	return
+
 /obj/item/device/radio/examine()
 	set src in view()
 
