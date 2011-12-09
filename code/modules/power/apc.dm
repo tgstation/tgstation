@@ -219,8 +219,8 @@
 				if ((stat & BROKEN) || malfhack)
 					user.visible_message(\
 						"\red [user.name] has broken the power control board inside [src.name]!",\
-						"You broke the charred power control board and remove remains.",
-						"You hear crack")
+						"You broke the charred power control board and remove the remains.",
+						"You hear a crack!")
 					//ticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
 				else
 					user.visible_message(\
@@ -274,7 +274,7 @@
 					return
 				updateicon()
 		else if(emagged || malfhack)
-			user << "The interface is broken"
+			user << "The interface is broken."
 		else
 			wiresexposed = !wiresexposed
 			user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
@@ -315,7 +315,7 @@
 					user << "You fail to [ locked ? "unlock" : "lock"] the APC interface."
 	else if (istype(W, /obj/item/weapon/cable_coil) && !terminal && opened && has_electronics!=2)
 		if (src.loc:intact)
-			user << "\red You must remove the floor plating first."
+			user << "\red You must remove the floor plating in front of the APC first."
 			return
 		var/obj/item/weapon/cable_coil/C = W
 		if(C.amount < 10)
@@ -339,7 +339,7 @@
 			terminal.connect_to_network()
 	else if (istype(W, /obj/item/weapon/wirecutters) && terminal && opened && has_electronics!=2)
 		if (src.loc:intact)
-			user << "\red You must remove the floor plating first."
+			user << "\red You must remove the floor plating in front of the APC first."
 			return
 		user << "You begin to cut cables..."
 		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
@@ -378,7 +378,7 @@
 					new /obj/item/stack/sheet/metal(loc)
 					user.visible_message(\
 						"\red [src] has been cut apart by [user.name] with the weldingtool.",\
-						"You disassembled brocken APC frame.",\
+						"You disassembled the broken APC frame.",\
 						"\red You hear welding.")
 				else
 					new /obj/item/apc_frame(loc)
@@ -394,13 +394,13 @@
 		if (opened==2)
 			opened = 1
 		user.visible_message(\
-			"\red [user.name] has replaced the damaged APC frontal panel with new one.",\
-			"You replace the damaged APC frontal panel with new one.")
+			"\red [user.name] has replaced the damaged APC frontal panel with a new one.",\
+			"You replace the damaged APC frontal panel with a new one.")
 		del(W)
 		updateicon()
 	else if (istype(W, /obj/item/apc_frame) && opened && ((stat & BROKEN) || malfhack))
 		if (has_electronics)
-			user << "You cannot repair this heavy damaged APC until broken electronics stills inside."
+			user << "You cannot repair this APC until you remove the electronics still inside."
 			return
 		user << "You begin to replace the damaged APC frame..."
 		if(do_after(user, 50))

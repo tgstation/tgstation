@@ -10,10 +10,10 @@ Doesn't work on other aliens/AI.*/
 	if(stat)
 		src << "\green You must be conscious to do this."
 		return 0
-	else if(X&&getToxLoss() < X)
+	else if(X && getPlasma() < X)
 		src << "\green Not enough plasma stored."
 		return 0
-	else if(Y&&(!isturf(src.loc) || istype(src.loc, /turf/space)))
+	else if(Y && (!isturf(src.loc) || istype(src.loc, /turf/space)))
 		src << "\green Bad place for a garden!"
 		return 0
 	else	return 1

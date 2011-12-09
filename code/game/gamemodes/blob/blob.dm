@@ -190,6 +190,7 @@
 
 //	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 //	world << sound('intercept.ogg')
+//  set_security_level(1)
 /datum/game_mode/blob/proc/check_quarantine()
 	var/numDead = 0
 	var/numAlive = 0
