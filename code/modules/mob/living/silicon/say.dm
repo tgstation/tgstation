@@ -26,9 +26,13 @@
 				message = copytext(message, 3)
 				message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 				holopad_talk(message)
-			else//Will not allow anyone by an active AI to use this function.
-				src << "This function is not available to you."
-				return
+			else if(istype(src,/mob/living/silicon/robot))	//Will not allow anyone by an active AI to use this function.
+				message = copytext(message, 3)
+				message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+				var/mob/living/silicon/robot/R = src
+				R.radio.talk_into(src, message, "department")
+			else
+				src << "You cannot use that channel."
 		else
 			return ..(message)
 	else

@@ -88,12 +88,14 @@
 			else
 				icon_state = "Service2"
 			modtype = "Butler"
+			radio.borg(src, list())
 
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
 			icon_state = "Miner"
 			modtype = "Miner"
+			radio.borg(src, list("Mining" = 1))
 
 		if("Medical")
 			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
@@ -104,6 +106,7 @@
 			if (sprite == "Non-Humanoid")
 				src.icon_state = "surgeon"
 			modtype = "Med"
+			radio.borg(src, list("Medical" = 1))
 
 		if("Security")
 			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
@@ -114,6 +117,7 @@
 			if (sprite == "Non-Humanoid")
 				src.icon_state = "bloodhound"
 			modtype = "Sec"
+			radio.borg(src, list("Security" = 1))
 
 		if("Engineering")
 			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
@@ -124,6 +128,7 @@
 			if (sprite == "Non-Humanoid")
 				src.icon_state = "landmate"
 			modtype = "Eng"
+			radio.borg(src, list("Engineering" = 1))
 
 		if("Janitor")
 			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
@@ -134,6 +139,7 @@
 			if (sprite == "Non-Humanoid")
 				src.icon_state = "mopgearrex"
 			modtype = "Jan"
+			radio.borg(src, list())
 
 	overlays -= "eyes" //Takes off the eyes that it started with
 	updateicon()
