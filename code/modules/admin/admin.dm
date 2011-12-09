@@ -61,6 +61,47 @@
 			alert("You cannot perform this action. You must be of a higher administrative rank!")
 			return
 
+	if(href_list["add_player_info"])
+		var/key = href_list["add_player_info"]
+		var/add = input("Add Player Info") as null|text
+		if(!add) return
+
+		var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
+		var/list/infos
+		info >> infos
+		if(!infos) infos = list()
+
+		var/datum/player_info/P = new
+		P.author = usr.key
+		P.content = add
+
+		infos += P
+
+		info << infos
+
+		del info
+
+		show_player_info(key)
+
+	if(href_list["remove_player_info"])
+		var/key = href_list["remove_player_info"]
+		var/index = text2num(href_list["remove_index"])
+
+		var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
+		var/list/infos
+		info >> infos
+		if(!infos || infos.len < index) return
+
+		var/datum/player_info/item = infos[index]
+		infos.Remove(item)
+		info << infos
+
+		del info
+
+		show_player_info(key)
+
+
+
 	/////////////////////////////////////new ban stuff
 	if(href_list["unbanf"])
 		var/banfolder = href_list["unbanf"]
@@ -778,6 +819,10 @@
 	if (href_list["adminplayeropts"])
 		var/mob/M = locate(href_list["adminplayeropts"])
 		show_player_panel(M)
+
+	if (href_list["player_info"])
+		var/key = href_list["player_info"]
+		show_player_info(key)
 
 	if (href_list["adminplayervars"])
 		var/mob/M = locate(href_list["adminplayervars"])
@@ -1741,11 +1786,48 @@
 	dat += text("<body>[foo]</body></html>")
 	usr << browse(dat, "window=adminplayeropts;size=480x150")
 
+
+/datum/player_info/var
+	author // admin who authored the information
+	content // text content of the information
+
+
+/obj/admins/proc/show_player_info(var/key as text)
+	set category = "Admin"
+	set name = "Show Player Info"
+	if (!istype(src,/obj/admins))
+		src = usr.client.holder
+	if (!istype(src,/obj/admins))
+		usr << "Error: you are not an admin!"
+		return
+	var/dat = "<html><head><title>Info on [key]</title></head>"
+	dat += "<body>"
+
+	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
+	var/list/infos
+	info >> infos
+	if(!infos)
+		dat += "No information found on the given key.<br>"
+	else
+		var/i = 0
+		for(var/datum/player_info/I in infos)
+			i += 1
+			dat += "<font color=blue>[I.content]</font> <i>by [I.author]</i> "
+			if(I.author == usr.key)
+				dat += "<A href='?src=\ref[src];remove_player_info=[key];remove_index=[i]'>Remove Info</A>"
+			dat += "<br>"
+
+	dat += "<br>"
+	dat += "<A href='?src=\ref[src];add_player_info=[key]'>Add Info</A><br>"
+
+	dat += "</body></html>"
+	usr << browse(dat, "window=adminplayerinfo;size=480x150")
+
 /obj/admins/proc/player()
 	if (!usr.client.holder)
 		return
 	var/dat = "<html><head><title>Player Menu</title></head>"
-	dat += "<body><table border=1 cellspacing=5><B><tr><th>Name</th><th>Real Name</th><th>Key</th><th>Options</th><th>PM</th><th>Traitor?</th><th>Karma</th></tr></B>"
+	dat += "<body><table border=1 cellspacing=5><B><tr><th>Name</th><th>Real Name</th><th>Key</th><th>Options</th><th>Info</th><th>PM</th><th>Traitor?</th><th>Karma</th></tr></B>"
 	//add <th>IP:</th> to this if wanting to add back in IP checking
 	//add <td>(IP: [M.lastKnownIP])</td> if you want to know their ip to the lists below
 	var/list/mobs = sortmobs()
@@ -1782,6 +1864,7 @@
 					dat += "<td>Alien</td>"
 				dat += {"<td>[M.client?"[M.client]":"No client"]</td>
 				<td align=center><A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>X</A></td>
+				<td align=center><A HREF='?src=\ref[src];player_info=[M.ckey]'>X</A></td>
 				<td align=center><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>
 				"}
 				switch(is_special_character(M))
@@ -1827,6 +1910,7 @@
 					dat += "<td>Alien</td>"
 				dat += {"<td>[(M.client ? "[M.client]" : "No client")]</td>
 				<td align=center><A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>X</A></td>
+				<td align=center><A HREF='?src=\ref[src];player_info=[M.ckey]'>X</A></td>
 				<td align=center><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>
 				"}
 				switch(is_special_character(M))
