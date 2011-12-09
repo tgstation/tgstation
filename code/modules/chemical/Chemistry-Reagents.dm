@@ -356,6 +356,20 @@ datum
 				..()
 				return
 
+		minttoxin
+			name = "Mint Toxin"
+			id = "minttoxin"
+			description = "Useful for dealing with undesirable customers."
+			reagent_state = LIQUID
+			color = "#CF3600" // rgb: 207, 54, 0
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				if (M.mutations & FAT)
+					M.gib()
+				..()
+				return
+
 		stoxin
 			name = "Sleep Toxin"
 			id = "stoxin"

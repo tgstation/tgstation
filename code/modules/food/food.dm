@@ -1370,6 +1370,15 @@
 		reagents.add_reagent("nutriment", 28)
 		bitesize = 3
 
+/obj/item/weapon/reagent_containers/food/snacks/mint
+	name = "mint"
+	desc = "it is only wafer thin."
+	icon_state = "mint"
+	New()
+		..()
+		reagents.add_reagent("minttoxin", 1)
+		bitesize = 1
+
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
 
