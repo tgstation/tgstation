@@ -307,7 +307,7 @@
 	if(!W || !user)
 		return 0
 
-	if ((istype(W, /obj/item/weapon/shovel))||(istype(W,/obj/item/weapon/pickaxe/drill))||(istype(W,/obj/item/weapon/pickaxe/diamonddrill)))
+	if ((istype(W, /obj/item/weapon/shovel)))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return
@@ -319,7 +319,7 @@
 		user << "\red You start digging."
 		playsound(src.loc, 'rustle1.ogg', 50, 1) //russle sounds sounded better
 
-		sleep(50)
+		sleep(40)
 		if ((user.loc == T && user.equipped() == W) && !dug)
 			user << "\blue You dug a hole."
 			gets_dug()
@@ -328,9 +328,54 @@
 			icon_state = "asteroid_dug"
 	else
 		..(W,user)
+	if ((istype(W,/obj/item/weapon/pickaxe/drill)))
+		var/turf/T = user.loc
+		if (!( istype(T, /turf) ))
+			return
+
+		if (dug == 1)
+			user << "\red This area has already been dug."
+			return
+
+		user << "\red You start digging."
+		playsound(src.loc, 'rustle1.ogg', 50, 1) //russle sounds sounded better
+
+		sleep(30)
+		if ((user.loc == T && user.equipped() == W))
+			user << "\blue You dug a hole."
+			gets_dug()
+			dug = 1
+			icon_plating = "asteroid_dug"
+			icon_state = "asteroid_dug"
+	else
+		..(W,user)
+
+	if ((istype(W,/obj/item/weapon/pickaxe/diamonddrill)))
+		var/turf/T = user.loc
+		if (!( istype(T, /turf) ))
+			return
+
+		if (dug == 1)
+			user << "\red This area has already been dug."
+			return
+
+		user << "\red You start digging."
+		playsound(src.loc, 'rustle1.ogg', 50, 1) //russle sounds sounded better
+
+		sleep(0)
+		if ((user.loc == T && user.equipped() == W))
+			user << "\blue You dug a hole."
+			gets_dug()
+			dug = 1
+			icon_plating = "asteroid_dug"
+			icon_state = "asteroid_dug"
+	else
+		..(W,user)
+
 	return
 
 /turf/simulated/floor/plating/airless/asteroid/proc/gets_dug()
+	new/obj/item/weapon/ore/glass(src)
 	new/obj/item/weapon/ore/glass(src)
 	new/obj/item/weapon/ore/glass(src)
 	new/obj/item/weapon/ore/glass(src)
