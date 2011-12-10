@@ -1,3 +1,3 @@
 <h1>Welcome to Space Station 13!</h1>
 
-<i>This server is running a /tg/station13 SVN build.</i>
+<i>This server is running Baystation 12's modification of the /tg/station13 code.</i>
