@@ -135,9 +135,9 @@
 
 /mob/living/proc/revive()
 	//src.fireloss = 0
-	src.toxloss = 0
+	src.setToxLoss(0)
 	//src.bruteloss = 0
-	src.oxyloss = 0
+	src.setOxyLoss(0)
 	src.paralysis = 0
 	src.stunned = 0
 	src.weakened =0

@@ -435,13 +435,14 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 
 // ++++ROCKDTBEN++++ MOB PROCS
 
-
-
 /mob/proc/getBruteLoss()
 	return bruteloss
 
 /mob/proc/adjustBruteLoss(var/amount)
 	bruteloss = max(bruteloss + amount, 0)
+
+/mob/proc/setBruteLoss(var/amount)
+	bruteloss = amount
 
 /mob/proc/getOxyLoss()
 	return oxyloss
@@ -449,11 +450,17 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 /mob/proc/adjustOxyLoss(var/amount)
 	oxyloss = max(oxyloss + amount, 0)
 
+/mob/proc/setOxyLoss(var/amount)
+	oxyloss = amount
+
 /mob/proc/getToxLoss()
 	return toxloss
 
 /mob/proc/adjustToxLoss(var/amount)
 	toxloss = max(toxloss + amount, 0)
+
+/mob/proc/setToxLoss(var/amount)
+	toxloss = amount
 
 /mob/proc/getFireLoss()
 	return fireloss
@@ -461,17 +468,27 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 /mob/proc/adjustFireLoss(var/amount)
 	fireloss = max(fireloss + amount, 0)
 
+/mob/proc/setFireLoss(var/amount)
+	fireloss = amount
+
+
 /mob/proc/getCloneLoss()
 	return cloneloss
 
 /mob/proc/adjustCloneLoss(var/amount)
 	cloneloss = max(cloneloss + amount, 0)
 
+/mob/proc/setCloneLoss(var/amount)
+	cloneloss = amount
+
 /mob/proc/getBrainLoss()
 	return brainloss
 
 /mob/proc/adjustBrainLoss(var/amount)
 	brainloss = max(brainloss + amount, 0)
+
+/mob/proc/setBrainLoss(var/amount)
+	brainloss = amount
 
 // ++++ROCKDTBEN++++ MOB PROCS //END
 

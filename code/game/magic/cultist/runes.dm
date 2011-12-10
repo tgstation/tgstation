@@ -273,8 +273,8 @@ var/list/sacrificed = list()
 			del(ghost)
 			for(var/datum/organ/external/affecting in corpse_to_raise.organs)
 				affecting.heal_damage(1000, 1000)
-			corpse_to_raise.toxloss = 0
-			corpse_to_raise.oxyloss = 0
+			corpse_to_raise.setToxLoss(0)
+			corpse_to_raise.setOxyLoss(0)
 			corpse_to_raise.paralysis = 0
 			corpse_to_raise.stunned = 0
 			corpse_to_raise.weakened = 0

@@ -232,10 +232,10 @@
 	O.loc = usr.loc
 
 	O.name = text("monkey ([])",copytext(md5(usr.real_name), 2, 6))
-	O.toxloss = usr.getToxLoss()
-	O.bruteloss = usr.getBruteLoss()
-	O.oxyloss = usr.getOxyLoss()
-	O.fireloss = usr.getFireLoss()
+	O.setToxLoss(usr.getToxLoss())
+	O.setBruteLoss(usr.getBruteLoss())
+	O.setOxyLoss(usr.getOxyLoss())
+	O.setFireLoss(usr.getFireLoss())
 	O.stat = usr.stat
 	O.a_intent = "hurt"
 	for (var/obj/item/weapon/implant/I in implants)
@@ -327,10 +327,10 @@
 
 	updateappearance(O,O.dna.uni_identity)
 	domutcheck(O, null)
-	O.toxloss = usr.getToxLoss()
-	O.bruteloss = usr.getBruteLoss()
-	O.oxyloss = usr.getOxyLoss()
-	O.fireloss = usr.getFireLoss()
+	O.setToxLoss(usr.getToxLoss())
+	O.setBruteLoss(usr.getBruteLoss())
+	O.setOxyLoss(usr.getOxyLoss())
+	O.setFireLoss(usr.getFireLoss())
 	O.stat = usr.stat
 	for (var/obj/item/weapon/implant/I in implants)
 		I.loc = O
@@ -371,10 +371,10 @@
 	spawn(1200)
 		usr.stat = 0
 		//usr.fireloss = 0
-		usr.toxloss = 0
+		usr.setToxLoss(0)
 		//usr.bruteloss = 0
-		usr.oxyloss = 0
-		usr.cloneloss = 0
+		usr.setOxyLoss(0)
+		usr.setCloneLoss(0)
 		usr.paralysis = 0
 		usr.stunned = 0
 		usr.weakened = 0

@@ -497,9 +497,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 	if(config.allow_admin_rev)
 		//M.fireloss = 0
-		M.toxloss = 0
+		M.setToxLoss(0)
 		//M.bruteloss = 0
-		M.oxyloss = 0
+		M.setOxyLoss(0)
 		M.paralysis = 0
 		M.stunned = 0
 		M.weakened = 0

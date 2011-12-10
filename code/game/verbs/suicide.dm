@@ -167,9 +167,9 @@
 
 	if(confirm == "Yes")
 		suiciding = 1
-		oxyloss = 100
-		bruteloss = 100
-		toxloss = 100
-		cloneloss = 100
+		setOxyLoss(100)
+		setBruteLoss(100)
+		setToxLoss(100)
+		setCloneLoss(100)
 
 		updatehealth()
