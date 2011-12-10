@@ -61,6 +61,9 @@
 			alert("You cannot perform this action. You must be of a higher administrative rank!")
 			return
 
+	if(href_list["view_player_info"])
+		show_player_info(href_list["view_player_info"])
+
 	if(href_list["add_player_info"])
 		var/key = href_list["add_player_info"]
 		var/add = input("Add Player Info") as null|text
@@ -80,6 +83,14 @@
 		info << infos
 
 		del info
+
+		var/savefile/note_list = new("data/player_notes.sav")
+		var/list/note_keys
+		note_list >> note_keys
+		if(!note_keys) note_keys = list()
+		if(!note_keys.Find(key)) note_keys += key
+		note_list << note_keys
+		del note_list
 
 		show_player_info(key)
 
@@ -1944,6 +1955,20 @@
 			dat += text("<tr><td><A href='?src=\ref[src];removejobban=[t]'>[t]</A></td></tr>")
 		dat += "</table>"
 		usr << browse(dat, "window=ban;size=400x400")
+
+/obj/admins/proc/PlayerNotes()
+	var/dat = "<B>Player notes</B><HR><table>"
+
+	var/savefile/S=new("data/player_notes.sav")
+	var/list/note_keys
+	S >> note_keys
+	if(!note_keys)
+		dat += "No notes found."
+	else
+		for(var/t in note_keys)
+			dat += text("<tr><td><A href='?src=\ref[src];view_player_info=[t]'>[t]</A></td></tr>")
+	dat += "</table>"
+	usr << browse(dat, "window=player_notes;size=400x400")
 
 /obj/admins/proc/Game()
 
