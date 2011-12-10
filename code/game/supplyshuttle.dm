@@ -18,6 +18,7 @@ var/supply_shuttle_time = 0
 var/supply_shuttle_timeleft = 0
 var/supply_shuttle_points = 50
 var/ordernum=0
+var/list/supply_groups = new()
 
 /area/supply/station //DO NOT TURN THE SD_LIGHTING STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
 	name = "supply shuttle"
@@ -78,12 +79,28 @@ var/ordernum=0
 	var/temp = null
 	var/hacked = 0
 
+/obj/machinery/computer/supplycomp/New()
+	// add the supply pack groups, if they haven't already been added
+	if(supply_groups.len == 0)
+		for(var/S in (typesof(/datum/supply_packs) - /datum/supply_packs - /datum/supply_packs/charge) )
+			var/datum/supply_packs/N = new S()
+			if(supply_groups.Find(N.group) == 0)
+				supply_groups += N.group
+
 /obj/machinery/computer/ordercomp
 	name = "Supply ordering console"
 	icon = 'computer.dmi'
 	icon_state = "request"
 	circuit = "/obj/item/weapon/circuitboard/ordercomp"
 	var/temp = null
+
+/obj/machinery/computer/ordercomp/New()
+	// add the supply pack groups, if they haven't already been added
+	if(supply_groups.len == 0)
+		for(var/S in (typesof(/datum/supply_packs) - /datum/supply_packs - /datum/supply_packs/charge) )
+			var/datum/supply_packs/N = new S()
+			if(supply_groups.Find(N.group) == 0)
+				supply_groups += N.group
 
 /obj/effect/marker/supplymarker
 	icon_state = "X"
@@ -107,6 +124,7 @@ var/ordernum=0
 	var/containername = null
 	var/access = null
 	var/hidden = 0
+	var/group = "Miscellaneous"
 
 /proc/supply_ticker()
 	//world << "Supply ticker ticked : Adding [SUPPLY_POINTSPER] to [supply_shuttle_points]."
@@ -253,12 +271,20 @@ var/ordernum=0
 
 	if (href_list["order"])
 		src.temp = "Supply points: [supply_shuttle_points]<BR><HR><BR>Request what?<BR><BR>"
+		for(var/G in supply_groups)
+			src.temp += "<A href='?src=\ref[src];order_group=[G]'>[G]</A><br>"
+		src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Back</A>"
+
+	else if (href_list["order_group"])
+		var/G = href_list["order_group"]
+		src.temp = "Supply points: [supply_shuttle_points]<BR><HR><BR>Request what?<BR><BR>"
 		for(var/S in (typesof(/datum/supply_packs) - /datum/supply_packs - /datum/supply_packs/charge) )
 			var/datum/supply_packs/N = new S()
 			if(N.hidden) continue																	//Have to send the type instead of a reference to
+			if(N.group != G) continue																//correct group?
 			src.temp += "<A href='?src=\ref[src];doorder=[N.type]'>[N.name]</A> Cost: [N.cost] "    //the obj because it would get caught by the garbage
 			src.temp += "<A href='?src=\ref[src];printform=[N.type]'>Print Requisition</A><br>"     //collector. oh well.
-		src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+		src.temp += "<BR><A href='?src=\ref[src];order=1'>Back</A>"
 
 	else if (href_list["doorder"])
 		var/datum/supply_order/O = new/datum/supply_order ()
@@ -436,13 +462,21 @@ var/ordernum=0
 			supply_process()
 
 	if (href_list["order"])
+		src.temp = "Supply points: [supply_shuttle_points]<BR><HR><BR>Request what?<BR><BR>"
+		for(var/G in supply_groups)
+			src.temp += "<A href='?src=\ref[src];order_group=[G]'>[G]</A><br>"
+		src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Back</A>"
+
+	else if (href_list["order_group"])
+		var/G = href_list["order_group"]
 		if(supply_shuttle_moving) return
 		src.temp = "Supply points: [supply_shuttle_points]<BR><HR><BR>Request what?<BR><BR>"
 		for(var/S in (typesof(/datum/supply_packs) - /datum/supply_packs - /datum/supply_packs/charge) )
 			var/datum/supply_packs/N = new S()
 			if(N.hidden && !src.hacked) continue													//Have to send the type instead of a reference to
+			if(N.group != G) continue																//correct group?
 			src.temp += "<A href='?src=\ref[src];doorder=[N.type]'>[N.name]</A> Cost: [N.cost]<BR>" //the obj because it would get caught by the garbage
-		src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"								//collector. oh well.
+		src.temp += "<BR><A href='?src=\ref[src];order=1'>Back</A>"								//collector. oh well.
 
 	else if (href_list["doorder"])
 
