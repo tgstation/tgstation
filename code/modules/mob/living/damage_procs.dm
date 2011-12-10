@@ -52,7 +52,7 @@
 		if(STUTTER)
 			stuttering = max(stuttering,(effect/(blocked+1)))
 		if(SLUR)
-			slurring = max(slurring, (effefct/(blocked+1)))
+			slurring = max(slurring, (effect/(blocked+1)))
 		if(EYE_BLUR)
 			eye_blurry = max(eye_blurry,(effect/(blocked+1)))
 		if(DROWSY)
