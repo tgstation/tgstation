@@ -166,7 +166,7 @@
 	if(!ismob(M))
 		return
 	user << "\red You stab [M] with the pen."
-	M << "\red You feel a tiny prick!"
+//	M << "\red You feel a tiny prick!" //Removed to make tritor pens stealthier
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [src.name]  by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to stab [M.name] ([M.ckey])</font>")
 	return
@@ -179,12 +179,10 @@
 	return
 
 /obj/item/weapon/pen/sleepypen/New()
-	var/datum/reagents/R = new/datum/reagents(30) //Used to be 300
+	var/datum/reagents/R = new/datum/reagents(150) //Used to be 300
 	reagents = R
 	R.my_atom = src
-	R.add_reagent("chloralhydrate", 22)	//Used to be 100 sleep toxin//30 Chloral seems to be fatal, reducing it to 22./N
-//	R.add_reagent("impedrezene", 100)
-//	R.add_reagent("cryptobiolin", 100)
+	R.add_reagent("stoxin", 150)
 	..()
 	return
 

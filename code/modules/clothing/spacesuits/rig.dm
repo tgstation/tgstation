@@ -15,6 +15,11 @@
 	name = "advanced RIG helmet"
 	icon_state = "rig-white"
 
+/obj/item/clothing/head/helmet/space/rig/security
+	name = "security RIG helmet"
+	icon = 'head.dmi'
+	icon_state = "rig-security"
+	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
 
 /obj/item/clothing/suit/space/rig
 	name = "engineer RIG suit"
@@ -34,3 +39,13 @@
 	icon_state = "rig-white"
 	name = "advanced RIG suit"
 	protective_temperature = 10000
+
+/obj/item/clothing/suit/space/rig/security
+	name = "security RIG suit"
+	desc = "A suit specially designed for security to offer minor protection from environmental hazards, and greater protection from human hazards"
+	icon = 'suit.dmi'
+	icon_state = "rig-security"
+	protective_temperature = 3000
+	slowdown = 1
+	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
+	allowed = list(/obj/item/weapon/gun/energy/laser, /obj/item/weapon/gun/energy/pulse_rifle, /obj/item/device/flashlight, /obj/item/weapon/tank/emergency_oxygen, /obj/item/weapon/gun/energy/taser, /obj/item/weapon/melee/baton)

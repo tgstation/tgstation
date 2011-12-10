@@ -70,8 +70,10 @@
 /obj/item/clothing/glasses/thermal
 	name = "Optical Thermal Scanner"
 	desc = "Thermals in the shape of glasses."
-	icon_state = "thermal"
-	item_state = "glasses"
+	//icon_state = "thermal"
+	//item_state = "glasses"
+	icon_state = "sun"
+	item_state = "sunglasses"
 	origin_tech = "magnets=3"
 	vision_flags = SEE_MOBS
 	invisa_view = 2
@@ -80,6 +82,7 @@
 	name = "Thermoncle"
 	desc = "A monocle thermal."
 	icon_state = "thermoncle"
+	item_state = "glasses"
 	flags = null //doesn't protect eyes because it's a monocle, duh
 
 /obj/item/clothing/glasses/thermal/eyepatch

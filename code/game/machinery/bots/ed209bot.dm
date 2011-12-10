@@ -828,7 +828,7 @@ Auto Patrol: []"},
 	else if(istype(W, /obj/item/weapon/cable_coil) && (src.build_step == 6) )
 		var/obj/item/weapon/cable_coil/coil = W
 		var/turf/T = get_turf(user)
-		user.visible_message("[user] wires killbot.", "You start to wire the killbot.")
+		user.visible_message("[user] wires the ED-209 assembly.", "You start to wire the ED-209 assembly.")
 		sleep(40)
 		if(get_turf(user) == T)
 			coil.use(1)

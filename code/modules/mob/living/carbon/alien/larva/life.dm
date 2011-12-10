@@ -379,7 +379,7 @@
 				stat = 2
 
 			if (stuttering) stuttering--
-			if (drunk)      drunk--
+			if (slurring) slurring--
 
 			if (eye_blind)
 				eye_blind--

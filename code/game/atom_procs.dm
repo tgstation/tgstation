@@ -81,10 +81,10 @@
 /atom/proc/add_fingerprint(mob/living/M as mob)
 	if(isnull(M)) return
 	if(isnull(M.key)) return
-	add_fibers(M)
 	if (!( src.flags ) & 256)
 		return
 	if (ishuman(M))
+		add_fibers(M)
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna))
 			return 0

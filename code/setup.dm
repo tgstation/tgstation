@@ -221,6 +221,7 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define PARALYZE "paralize"
 #define IRRADIATE "irradiate"
 #define STUTTER "stutter"
+#define SLUR "slur"
 #define EYE_BLUR "eye_blur"
 #define DROWSY "drowsy"
 

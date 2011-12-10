@@ -314,8 +314,8 @@ datum
 					holder.remove_reagent("plasma", 1)
 				if(holder.has_reagent("acid"))
 					holder.remove_reagent("acid", 1)
-				if(holder.has_reagent("cyanide"))
-					holder.remove_reagent("cyanide", 1)
+/*				if(holder.has_reagent("cyanide"))
+					holder.remove_reagent("cyanide", 1)	*/
 				if(holder.has_reagent("amatoxin"))
 					holder.remove_reagent("amatoxin", 2)
 				if(holder.has_reagent("chloralhydrate"))
@@ -341,7 +341,7 @@ datum
 				..()
 				return
 
-		cyanide
+/*		cyanide
 			name = "Cyanide"
 			id = "cyanide"
 			description = "A highly toxic chemical."
@@ -354,7 +354,7 @@ datum
 				M:adjustOxyLoss(3)
 				M:sleeping += 1
 				..()
-				return
+				return	*/
 
 		stoxin
 			name = "Sleep Toxin"
@@ -406,7 +406,7 @@ datum
 						M.dizziness = 0
 						M:drowsyness = 0
 						M:stuttering = 0
-						M:drunk      = 0
+						M:slurring = 0
 						M:confused = 0
 						M:jitteriness = 0
 				..()
@@ -1236,8 +1236,8 @@ datum
 					holder.remove_reagent("acid", 5)
 				if(holder.has_reagent("pacid"))
 					holder.remove_reagent("pacid", 5)
-				if(holder.has_reagent("cyanide"))
-					holder.remove_reagent("cyanide", 5)
+/*				if(holder.has_reagent("cyanide"))
+					holder.remove_reagent("cyanide", 5)	*/
 				if(holder.has_reagent("lexorin"))
 					holder.remove_reagent("lexorin", 5)
 				if(holder.has_reagent("amatoxin"))
@@ -1262,7 +1262,7 @@ datum
 				M.dizziness = 0
 				M:drowsyness = 0
 				M:stuttering = 0
-				M:drunk      = 0
+				M:slurring = 0
 				M:confused = 0
 				if(!M:sleeping_willingly)
 					M:sleeping = 0
@@ -1538,8 +1538,8 @@ datum
 				M.make_dizzy(5)
 				M:jitteriness = max(M:jitteriness-5,0)
 				if(data >= 25)
-					if (!M:drunk) M:drunk = 1
-					M:drunk += 4
+					if (!M:slurring) M:slurring = 1
+					M:slurring += 4
 				if(data >= 40 && prob(33))
 					if (!M:confused) M:confused = 1
 					M:confused += 3
@@ -1571,7 +1571,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.dizziness = 0
 				M:drowsyness = 0
-				M:drunk      = 0
+				M:slurring = 0
 				M:confused = 0
 				..()
 				return
@@ -1808,17 +1808,17 @@ datum
 				if(!data) data = 1
 				switch(data)
 					if(1 to 5)
-						if (!M:drunk) M:drunk = 1
+						if (!M:slurring) M:slurring = 1
 						M.make_dizzy(5)
 						if(prob(10)) M:emote(pick("twitch","giggle"))
 					if(5 to 10)
-						if (!M:drunk) M:drunk = 1
+						if (!M:slurring) M:slurring = 1
 						M.make_jittery(10)
 						M.make_dizzy(10)
 						M.druggy = max(M.druggy, 35)
 						if(prob(20)) M:emote(pick("twitch","giggle"))
 					if (10 to INFINITY)
-						if (!M:drunk) M:drunk = 1
+						if (!M:slurring) M:slurring = 1
 						M.make_jittery(20)
 						M.make_dizzy(20)
 						M.druggy = max(M.druggy, 40)
@@ -2186,7 +2186,7 @@ datum
 				..()
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
-				M:drunk = max(0, M:drunk-3)
+				M:slurring = max(0, M:slurring-3)
 				if(!M:sleeping_willingly)
 					M:sleeping = 0
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
@@ -2207,6 +2207,7 @@ datum
 				M.dizziness = max(0,M.dizziness-2)
 				M:drowsyness = max(0,M:drowsyness-1)
 				M:jitteriness = max(0,M:jitteriness-3)
+				M:slurring = max(0, M:slurring-3)
 				if(!M:sleeping_willingly)
 					M:sleeping = 0
 				if(M:getToxLoss() && prob(20))
@@ -2227,6 +2228,7 @@ datum
 				..()
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
+				M:slurring = max(0, M:slurring-3)
 				if(!M:sleeping_willingly)
 					M:sleeping = 0
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
@@ -2238,7 +2240,7 @@ datum
 		icetea
 			name = "Iced Tea"
 			id = "icetea"
-			description = "No relation to a certain rap artist/ actor."
+			description = "No relation to a certain rap artist/actor."
 			reagent_state = LIQUID
 			color = "#104038" // rgb: 16, 64, 56
 
@@ -2326,8 +2328,8 @@ datum
 				data++
 				M.dizziness +=4
 				if(data >= 45 && data <115)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2390,8 +2392,8 @@ datum
 				M:jitteriness = max(M:jitteriness-3,0)
 				M:nutrition += 2
 				if(data >= 25)
-					if (!M:drunk) M:drunk = 1
-					M:drunk += 3
+					if (!M:slurring) M:slurring = 1
+					M:slurring += 3
 				if(data >= 40 && prob(33))
 					if (!M:confused) M:confused = 1
 					M:confused += 2
@@ -2411,8 +2413,8 @@ datum
 				data++
 				M.dizziness +=4
 				if(data >= 45 && data <125)
-					if (!M:drunk) M:drunk = 1
-					M:drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2430,8 +2432,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 45 && data <125)
-					if (!M:drunk) M:drunk = 1
-					M:drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2450,8 +2452,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 45 && data <125)
-					if (!M:drunk) M:drunk = 1
-					M:drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2469,8 +2471,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 45 && data <125)
-					if (!M:drunk) M:drunk = 1
-					M:drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2488,7 +2490,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 45 && data <125)
-					if (!M:drunk) M:drunk = 1
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2506,7 +2509,7 @@ datum
 				data++
 				M.dizziness +=8
 				if(data >= 45 && data <125)
-					if (!M.drunk) M.drunk = 1
+					if (!M.stuttering) M.stuttering = 1
 					M.stuttering += 8
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+8,8)
@@ -2529,8 +2532,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 45 && data <125)
-					if (!M:drunk) M:drunk = 1
-					M:drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2548,8 +2551,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 45 && data <125)
-					if (!M:drunk) M:drunk = 1
-					M:drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2567,8 +2570,8 @@ datum
 				data++
 				M.dizziness +=2
 				if(data >= 65 && data <125)
-					if (!M:drunk) M:drunk = 1
-					M:drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 145 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2620,8 +2623,8 @@ datum
 				data++
 				M.dizziness +=4
 				if(data >= 45 && data <115)
-					if (!M:drunk) M:drunk = 1
-					M:drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2639,8 +2642,8 @@ datum
 				data++
 				M.dizziness +=6
 				if(data >= 35 && data <90)
-					if (!M:drunk) M:drunk = 1
-					M:drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 5
 				else if(data >= 90 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2658,8 +2661,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 45 && data <125)
-					if (!M:drunk) M:drunk = 1
-					M:drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2712,8 +2715,8 @@ datum
 				M.make_dizzy(3)
 				M:jitteriness = max(M:jitteriness-3,0)
 				if(data >= 25)
-					if (!M:drunk) M:drunk = 1
-					M:drunk += 3
+					if (!M:slurring) M:slurring = 1
+					M:slurring += 3
 				if(data >= 40 && prob(33))
 					if (!M:confused) M:confused = 1
 					M:confused += 2
@@ -2731,8 +2734,8 @@ datum
 				M.druggy = max(M.druggy, 50)
 				M.confused = max(M:confused+2,0)
 				M.make_dizzy(10)
-				if (!M:drunk) M:drunk = 1
-				M:drunk += 3
+				if (!M.slurring) M.slurring = 1
+				M.slurring += 3
 				if(!data) data = 1
 				data++
 				switch(data)
@@ -2754,8 +2757,8 @@ datum
 				M.dizziness +=3
 				M.druggy = max(M.druggy, 50)
 				if(data >= 35 && data <90)
-					if (!M:drunk) M:drunk = 1
-					M:drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 90)
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2773,8 +2776,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 45 && data <125)
-					if (!M:drunk) M:drunk = 1
-					M:drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2792,8 +2795,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 45 && data <125)
-					if (!M:drunk) M:drunk = 1
-					M:drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2811,8 +2814,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 45 && data <135)
-					if (!M:drunk) M:drunk = 1
-					M:drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 135 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2830,8 +2833,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 45 && data <135)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 135 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2849,8 +2852,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 55 && data <125)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2868,8 +2871,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 45 && data <165)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 135 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2887,8 +2890,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 45 && data <165)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 135 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2906,8 +2909,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 55 && data <165)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2925,8 +2928,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 55 && data <165)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2944,8 +2947,8 @@ datum
 				data++
 				M.dizziness +=4
 				if(data >= 55 && data <165)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 4
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 4
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+4,0)
 				..()
@@ -2963,8 +2966,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 55 && data <165)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -2982,8 +2985,8 @@ datum
 				data++
 				M.dizziness +=6
 				if(data >= 15 && data <45)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 45 && prob(50) && data <55)
 					M.confused = max(M:confused+3,0)
 				else if(data >=55)
@@ -3003,8 +3006,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 45 && data <145)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 145 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -3022,8 +3025,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 55 && data <165)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -3043,8 +3046,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 55 && data <165)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -3063,8 +3066,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 55 && data <165)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -3100,8 +3103,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 45 && data <145)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 145 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -3119,8 +3122,8 @@ datum
 				data++
 				M.dizziness +=5
 				if(data >= 35 && data <115)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -3138,8 +3141,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 55 && data <165)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -3157,8 +3160,8 @@ datum
 				data++
 				M.dizziness +=5
 				if(data >= 30 && data <60)
-					if (!M.drunk) M:drunk = 1
-					M.drunk += 4
+					if (!M.slurring) M:slurring = 1
+					M.slurring += 4
 				else if(data >= 60 && prob(40))
 					M.confused = max(M:confused+5,0)
 				..()
@@ -3176,8 +3179,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 25 && data <90)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 4
 				else if(data >= 90 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -3195,8 +3198,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 55 && data <150)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 150 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -3214,8 +3217,8 @@ datum
 				data++
 				M.dizziness +=4
 				if(data >= 55 && data <150)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 150 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -3233,8 +3236,8 @@ datum
 				data++
 				M.dizziness +=4
 				if(data >= 55 && data <115)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -3252,8 +3255,8 @@ datum
 				data++
 				M.dizziness +=4
 				if(data >= 55 && data <115)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -3272,8 +3275,8 @@ datum
 				M.dizziness +=4
 				M.druggy = max(M.druggy, 30)
 				if(data >= 55 && data <115)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -3291,8 +3294,8 @@ datum
 				data++
 				M.dizziness +=4
 				if(data >= 55 && data <115)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -3310,8 +3313,8 @@ datum
 				data++
 				M.dizziness +=5
 				if(data >= 55 && data <115)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 5
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 5
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+5,0)
 				..()
@@ -3329,8 +3332,8 @@ datum
 				data++
 				M.dizziness +=5
 				if(data >= 55 && data <115)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 5
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 5
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+5,0)
 				..()
@@ -3348,8 +3351,8 @@ datum
 				data++
 				M.dizziness +=4
 				if(data >= 55 && data <115)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 4
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 4
 				else if(data >= 115 && prob(30))
 					M.confused = max(M:confused+4,0)
 				..()
@@ -3367,8 +3370,8 @@ datum
 				data++
 				M.dizziness +=10
 				if(data >= 55 && data <115)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 30
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 10
 				else if(data >= 115 && prob(90))
 					M.confused = max(M:confused+10,10)
 				..()
@@ -3386,8 +3389,8 @@ datum
 				data++
 				M.dizziness +=4
 				if(data >= 55 && data <115)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -3405,8 +3408,8 @@ datum
 				data++
 				M.dizziness +=4
 				if(data >= 45 && data <125)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -3424,8 +3427,8 @@ datum
 				data++
 				M.dizziness +=3
 				if(data >= 55 && data <165)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
 				if (M.bodytemperature > 310)
@@ -3445,8 +3448,8 @@ datum
 				data++
 				M.dizziness +=15
 				if(data >= 55 && data <115)
-					if (!M.drunk) M.drunk = 1
-					M.drunk += 35
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 15
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+15,15)
 				..()
@@ -3468,8 +3471,8 @@ datum
 				data++
 				M.dizziness +=6
 				if(data >= 45 && data <125)
-					if (!M.drunk) M.drunk = 1
-					M.stuttering += 6
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 6
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+5,5)
 				..()
@@ -3487,8 +3490,8 @@ datum
 				data++
 				M.dizziness +=4
 				if(data >= 55 && data <165)
-					if (!M.drunk) M.drunk = 1
-					M.stuttering += 4
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 4
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+4,0)
 				..()
@@ -3506,8 +3509,8 @@ datum
 				data++
 				M.dizziness +=5
 				if(data >= 55 && data <115)
-					if (!M.drunk) M.drunk = 1
-					M.stuttering += 4
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 4
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+4,4)
 				..()
@@ -3527,8 +3530,8 @@ datum
 				M:jitteriness = max(M:jitteriness-3,0)
 				M:nutrition += 2
 				if(data >= 25)
-					if (!M:stuttering) M:stuttering = 1
-					M:stuttering += 3
+					if (!M:slurring) M:slurring = 1
+					M:slurring += 3
 				if(data >= 40 && prob(33))
 					if (!M:confused) M:confused = 1
 					M:confused += 2
@@ -3552,8 +3555,8 @@ datum
 				M:jitteriness = max(M:jitteriness-3,0)
 				M:nutrition += 2
 				if(data >= 25)
-					if (!M:stuttering) M:stuttering = 1
-					M:stuttering += 3
+					if (!M:slurring) M:slurring = 1
+					M:slurring += 3
 				if(data >= 40 && prob(33))
 					if (!M:confused) M:confused = 1
 					M:confused += 2
@@ -3573,8 +3576,8 @@ datum
 				data++
 				M.dizziness +=2
 				if(data >= 90 && data <250)
-					if (!M.drunk) M.drunk = 1
-					M.stuttering += 2
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 2
 				else if(data >= 250 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -3592,8 +3595,8 @@ datum
 				data++
 				M.dizziness +=2
 				if(data >= 90 && data <250)
-					if (!M.drunk) M.drunk = 1
-					M.stuttering += 2
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 2
 				else if(data >= 250 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -3611,8 +3614,8 @@ datum
 				data++
 				M.dizziness +=8
 				if(data >= 90 && data <250)
-					if (!M.drunk) M.drunk = 1
-					M.stuttering += 1
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 1
 				else if(data >= 250 && prob(33))
 					M.confused = max(M:confused+2,0)
 				..()
@@ -3630,8 +3633,8 @@ datum
 				data++
 				M.dizziness +=4
 				if(data >= 90 && data <250)
-					if (!M.drunk) M.drunk = 1
-					M.stuttering += 7
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 7
 				else if(data >= 250 && prob(60))
 					M.confused = max(M:confused+8,0)
 				..()
@@ -3689,8 +3692,8 @@ datum
 				data++
 				M.dizziness +=10
 				if(data >= 55 && data <115)
-					if (!M.drunk) M.drunk = 1
-					M.stuttering += 10
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 10
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+10,0)
 				..()
@@ -3709,8 +3712,8 @@ datum
 				data++
 				M.dizziness +=4
 				if(data >= 55 && data <165)
-					if (!M.drunk) M.drunk = 1
-					M.stuttering += 4
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 4
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+5,0)
 				..()
@@ -3733,8 +3736,8 @@ datum
 				data++
 				M.dizziness +=6
 				if(data >= 15 && data <45)
-					if (!M.drunk) M.drunk = 1
-					M.stuttering += 3
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 3
 				else if(data >= 45 && prob(50) && data <55)
 					M.confused = max(M:confused+3,0)
 				else if(data >=55)
@@ -3793,8 +3796,8 @@ datum
 					M:heal_organ_damage(1,1)
 					M.dizziness +=5
 					if(data >= 55 && data <165)
-						if (!M.drunk) M.drunk = 1
-						M.stuttering += 5
+						if (!M.slurring) M.slurring = 1
+						M.slurring += 5
 					else if(data >= 165 && prob(33))
 						M.confused = max(M:confused+5,0)
 					..()
@@ -3804,8 +3807,8 @@ datum
 					M:heal_organ_damage(1,1)
 					M.dizziness +=5
 					if(data >= 55 && data <165)
-						if (!M.drunk) M.drunk = 1
-						M.stuttering += 5
+						if (!M.slurring) M.slurring = 1
+						M.slurring += 5
 					else if(data >= 165 && prob(33))
 						M.confused = max(M:confused+5,0)
 					..()
@@ -3827,8 +3830,8 @@ datum
 					M:heal_organ_damage(1,1)
 					M.dizziness +=5
 					if(data >= 55 && data <165)
-						if (!M.drunk) M.drunk = 1
-						M.stuttering += 5
+						if (!M.slurring) M.slurring = 1
+						M.slurring += 5
 					else if(data >= 165 && prob(33))
 						M.confused = max(M:confused+5,0)
 					..()
@@ -3848,8 +3851,8 @@ datum
 				data++
 				M.dizziness +=5
 				if(data >= 55 && data <115)
-					if (!M.drunk) M.drunk = 1
-					M.stuttering += 5
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 5
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+15,15)
 				..()
@@ -3867,8 +3870,8 @@ datum
 				data++
 				M.dizziness +=5
 				if(data >= 55 && data <115)
-					if (!M.drunk) M.drunk = 1
-					M.stuttering += 5
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 5
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+15,15)
 				..()
@@ -3886,8 +3889,8 @@ datum
 				data++
 				M.dizziness +=10
 				if(data >= 55 && data <115)
-					if (!M.drunk) M.drunk = 1
-					M.stuttering += 10
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 10
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+15,15)
 				..()
@@ -3905,8 +3908,8 @@ datum
 				data++
 				M.dizziness +=30
 				if(data >= 55 && data <115)
-					if (!M.drunk) M.drunk = 1
-					M.stuttering += 30
+					if (!M.slurring) M.slurring = 1
+					M.slurring += 30
 				else if(data >= 115 && prob(60))
 					M.confused = max(M:confused+15,15)
 				..()
