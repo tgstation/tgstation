@@ -367,9 +367,16 @@
 	return
 */
 /obj/item/device/radio/proc/send_hear(freq)
+	/*
+
+		I'm removing this because this is apparently a REALLY REALLY bad thing and causes
+		people's transmissions to get cut off. This also means radios have no delay. A
+		fair price to pay for reliable radios. -- Doohl
+
 	if(last_transmission && world.time < (last_transmission + TRANSMISSION_DELAY))
 		return
 	last_transmission = world.time
+	*/
 	if (!(wires & WIRE_RECEIVE))
 		return
 	if (!freq) //recieved on main frequency

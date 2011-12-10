@@ -15,6 +15,8 @@ var/global/datum/controller/gameticker/ticker
 	var/event_time = null
 	var/event = 0
 
+	var/login_music			// music played in pregame lobby
+
 	var/list/datum/mind/minds = list()//The people in the game. Used for objective tracking.
 
 	var/Bible_icon_state	// icon_state the chaplain has chosen for his bible
@@ -26,7 +28,9 @@ var/global/datum/controller/gameticker/ticker
 
 	var/pregame_timeleft = 0
 
+
 /datum/controller/gameticker/proc/pregame()
+	login_music = pick('title1.ogg', 'title2.ogg') // choose title music!
 
 	do
 		pregame_timeleft = 90
