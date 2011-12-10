@@ -20,6 +20,7 @@
 	melee_damage_upper = 50
 	angertext = "runs"
 	attacktext = "chomps"
+	attack_sound = 'bite.ogg'
 
 
 /obj/effect/critter/roach
@@ -122,6 +123,7 @@
 	melee_damage_upper = 8
 	angertext = "charges"
 	attacktext = "hits"
+	attack_sound = 'genhit1.ogg'
 
 	Die()
 		..()

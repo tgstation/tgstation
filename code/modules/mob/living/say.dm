@@ -140,6 +140,7 @@
 		message = dd_replacetext(message, "grief", "grife")
 		message = dd_replacetext(message, "space", "spess")
 		message = dd_replacetext(message, "carp", "crap")
+		message = dd_replacetext(message, "reason", "raisin")
 		if(prob(50))
 			message = uppertext(message)
 			message += "[stutter(pick("!", "!!", "!!!"))]"
@@ -173,6 +174,7 @@
 
 			message_range = 1
 			italics = 1
+
 
 		if ("secure headset")
 			if (src:l_ear && istype(src:l_ear,/obj/item/device/radio))
