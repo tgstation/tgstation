@@ -1868,7 +1868,7 @@
 		..()
 		reagents.add_reagent("toxin", 30)
 
-/obj/item/weapon/reagent_containers/glass/bottle/cyanide
+/*/obj/item/weapon/reagent_containers/glass/bottle/cyanide
 	name = "cyanide bottle"
 	desc = "A small bottle of cyanide. Bitter almonds?"
 	icon = 'chemical.dmi'
@@ -1876,7 +1876,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("cyanide", 30)
+		reagents.add_reagent("cyanide", 30)	*/
 
 /obj/item/weapon/reagent_containers/glass/bottle/stoxin
 	name = "sleep-toxin bottle"
@@ -2657,12 +2657,12 @@
 		reagents.add_reagent("toxin", 50)
 
 /obj/item/weapon/reagent_containers/pill/cyanide
-	name = "Cyanide pill"
+	name = "Suicide pill"
 	desc = "Don't swallow this."
 	icon_state = "pill5"
 	New()
 		..()
-		reagents.add_reagent("cyanide", 50)
+		reagents.add_reagent("toxin", 100)
 
 /obj/item/weapon/reagent_containers/pill/adminordrazine
 	name = "Adminordrazine pill"

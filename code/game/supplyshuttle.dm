@@ -312,14 +312,14 @@ var/ordernum=0
 		src.temp = "Current approved orders: <BR><BR>"
 		for(var/S in supply_shuttle_shoppinglist)
 			var/datum/supply_order/SO = S
-			src.temp += "[SO.object.name] approved by [SO.orderedby] [SO.comment ? "([SO.comment])":""]<BR>"
+			src.temp = "[SO.object.name] approved by [SO.orderedby] [SO.comment ? "([SO.comment])":""]<BR>" + src.temp
 		src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
 	else if (href_list["viewrequests"])
 		src.temp = "Current requests: <BR><BR>"
 		for(var/S in supply_shuttle_requestlist)
 			var/datum/supply_order/SO = S
-			src.temp += "[SO.object.name] requested by [SO.orderedby]<BR>"
+			src.temp = "[SO.object.name] requested by [SO.orderedby]<BR>" + src.temp
 		src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
 	else if (href_list["mainmenu"])
@@ -483,7 +483,7 @@ var/ordernum=0
 		src.temp = "Current approved orders: <BR><BR>"
 		for(var/S in supply_shuttle_shoppinglist)
 			var/datum/supply_order/SO = S
-			src.temp += "[SO.object.name] approved by [SO.orderedby][SO.comment ? " ([SO.comment])":""]<BR>"// <A href='?src=\ref[src];cancelorder=[S]'>(Cancel)</A><BR>"
+			src.temp = "[SO.object.name] approved by [SO.orderedby][SO.comment ? " ([SO.comment])":""]<BR>" + src.temp// <A href='?src=\ref[src];cancelorder=[S]'>(Cancel)</A><BR>"
 		src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 /*
 	else if (href_list["cancelorder"])
@@ -501,7 +501,7 @@ var/ordernum=0
 		src.temp = "Current requests: <BR><BR>"
 		for(var/S in supply_shuttle_requestlist)
 			var/datum/supply_order/SO = S
-			src.temp += "[SO.object.name] requested by [SO.orderedby]  [supply_shuttle_moving ? "":supply_shuttle_at_station ? "":"<A href='?src=\ref[src];doorder=\ref[SO]'>Approve</A> <A href='?src=\ref[src];rreq=\ref[SO]'>Remove</A>"]<BR>"
+			src.temp = "[SO.object.name] requested by [SO.orderedby]  [supply_shuttle_moving ? "":supply_shuttle_at_station ? "":"<A href='?src=\ref[src];doorder=\ref[SO]'>Approve</A> <A href='?src=\ref[src];rreq=\ref[SO]'>Remove</A>"]<BR>" + src.temp
 
 		src.temp += "<BR><A href='?src=\ref[src];clearreq=1'>Clear list</A>"
 		src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"

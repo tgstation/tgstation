@@ -314,8 +314,8 @@ datum
 					holder.remove_reagent("plasma", 1)
 				if(holder.has_reagent("acid"))
 					holder.remove_reagent("acid", 1)
-				if(holder.has_reagent("cyanide"))
-					holder.remove_reagent("cyanide", 1)
+/*				if(holder.has_reagent("cyanide"))
+					holder.remove_reagent("cyanide", 1)	*/
 				if(holder.has_reagent("amatoxin"))
 					holder.remove_reagent("amatoxin", 2)
 				if(holder.has_reagent("chloralhydrate"))
@@ -341,7 +341,7 @@ datum
 				..()
 				return
 
-		cyanide
+/*		cyanide
 			name = "Cyanide"
 			id = "cyanide"
 			description = "A highly toxic chemical."
@@ -354,7 +354,7 @@ datum
 				M:adjustOxyLoss(3)
 				M:sleeping += 1
 				..()
-				return
+				return	*/
 
 		stoxin
 			name = "Sleep Toxin"
@@ -1235,8 +1235,8 @@ datum
 					holder.remove_reagent("acid", 5)
 				if(holder.has_reagent("pacid"))
 					holder.remove_reagent("pacid", 5)
-				if(holder.has_reagent("cyanide"))
-					holder.remove_reagent("cyanide", 5)
+/*				if(holder.has_reagent("cyanide"))
+					holder.remove_reagent("cyanide", 5)	*/
 				if(holder.has_reagent("lexorin"))
 					holder.remove_reagent("lexorin", 5)
 				if(holder.has_reagent("amatoxin"))

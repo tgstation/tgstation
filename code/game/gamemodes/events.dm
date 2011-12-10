@@ -13,7 +13,7 @@
 /proc/event()
 	event = 1
 
-	var/eventNumbersToPickFrom = list(1,2,4,5,6,7,8,9,10,11,12,13) //so ninjas don't cause "empty" events.
+	var/eventNumbersToPickFrom = list(1,4,5,6,7,8,9,10,11,12,13) //so ninjas don't cause "empty" events.
 
 	if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)//If an hour has passed, relatively speaking. Also, if ninjas are allowed to spawn and if there is not already a ninja for the round.
 		eventNumbersToPickFrom += 3
@@ -29,13 +29,13 @@
 				meteor_wave()
 				spawn_meteors()
 
-		if(2)
+/*		if(2)
 			command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 			world << sound('granomalies.ogg')
 			var/turf/T = pick(blobstart)
 			var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
 			spawn(rand(50, 300))
-				del(bh)
+				del(bh) */
 		/*
 		if(3) //Leaving the code in so someone can try and delag it, but this event can no longer occur randomly, per SoS's request. --NEO
 			command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
