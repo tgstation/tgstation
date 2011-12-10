@@ -451,6 +451,7 @@
 				src.stat = 2
 
 			if (src.stuttering) src.stuttering--
+			if (src.drunk)      src.drunk--
 
 			if (src.eye_blind)
 				src.eye_blind--
