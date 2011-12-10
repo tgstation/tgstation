@@ -56,6 +56,8 @@
 	var/ending = copytext(text, length(text))
 	if (src.stuttering)
 		return "stammers, \"[text]\"";
+	if (src.slurring)
+		return "slurrs, \"[text]\"";
 	if (src.brainloss >= 60)
 		return "gibbers, \"[text]\"";
 	if (ending == "?")

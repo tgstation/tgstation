@@ -52,6 +52,8 @@
 
 	if (src.stuttering)
 		message = stutter(message)
+	if (src.slurring)
+		message = slur(message)
 
 	for (var/obj/O in view(message_range, src))
 		spawn (0)

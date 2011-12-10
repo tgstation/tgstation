@@ -452,6 +452,7 @@
 				src.stat = 2
 
 			if (src.stuttering) src.stuttering--
+			if (src.slurring) src.slurring--
 
 			if (src.eye_blind)
 				src.eye_blind--

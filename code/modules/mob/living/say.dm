@@ -140,6 +140,8 @@
 
 	if (stuttering)
 		message = stutter(message)
+	if (slurring)
+		message = slur(message)
 
 /* //qw do not have beesease atm.
 	if(virus)

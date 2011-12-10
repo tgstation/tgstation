@@ -80,6 +80,7 @@
 	var/ear_deaf = null//Carbon
 	var/ear_damage = null//Carbon
 	var/stuttering = null//Carbon
+	var/slurring = null
 	var/real_name = null
 	var/flavor_text = ""
 	var/blinded = null
