@@ -82,6 +82,6 @@ client/verb/showrevinfo()
 	set category = "OOC"
 	set name = "Show Server Revision"
 	var/output =  "Sorry, the revision info is unavailable."
-	output = shell("cat /home/bay12/live/data/gitcommit")
+	output = file2text("/home/bay12/live/data/gitcommit")
 	usr << browse(output,"window=revdata");
 	return
