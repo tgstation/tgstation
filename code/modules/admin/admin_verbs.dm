@@ -249,6 +249,7 @@
 			verbs += /client/proc/player_panel
 			verbs += /client/proc/unban_panel
 			verbs += /client/proc/jobbans
+			verbs += /client/proc/playernotes
 			verbs += /client/proc/unjobban_panel
 			verbs += /obj/admins/proc/vmode
 			verbs += /obj/admins/proc/votekill
@@ -370,6 +371,7 @@
 	verbs -= /client/proc/player_panel
 	verbs -= /client/proc/unban_panel
 	verbs -= /client/proc/jobbans
+	verbs -= /client/proc/playernotes
 	verbs -= /client/proc/unjobban_panel
 	verbs -= /obj/admins/proc/vmode
 	verbs -= /obj/admins/proc/votekill
@@ -457,6 +459,13 @@
 	set category = "Admin"
 	if(holder)
 		holder.Jobbans()
+	return
+
+/client/proc/playernotes()
+	set name = "Display Player Info"
+	set category = "Admin"
+	if(holder)
+		holder.PlayerNotes()
 	return
 
 /client/proc/unban_panel()
