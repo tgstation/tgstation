@@ -70,8 +70,6 @@
 		if(locate(/obj/effect/alien/weeds) in loc)
 			if(health >= 250)
 				adjustToxLoss(20)
-				if(getToxLoss() > max_plasma)
-					toxloss = max_plasma
 			else
 				bruteloss -= 5
 				adjustFireLoss(-5)
