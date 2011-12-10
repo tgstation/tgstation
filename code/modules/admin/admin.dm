@@ -1791,6 +1791,12 @@
 	author // admin who authored the information
 	content // text content of the information
 
+/obj/admins/proc/player_has_info(var/key as text)
+	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
+	var/list/infos
+	info >> infos
+	if(!infos || !infos.len) return 0
+	else return 1
 
 /obj/admins/proc/show_player_info(var/key as text)
 	set category = "Admin"
@@ -1812,16 +1818,16 @@
 		var/i = 0
 		for(var/datum/player_info/I in infos)
 			i += 1
-			dat += "<font color=blue>[I.content]</font> <i>by [I.author]</i> "
+			dat += "<font color=#008800>[I.content]</font> <i>by [I.author]</i> "
 			if(I.author == usr.key)
-				dat += "<A href='?src=\ref[src];remove_player_info=[key];remove_index=[i]'>Remove Info</A>"
-			dat += "<br>"
+				dat += "<A href='?src=\ref[src];remove_player_info=[key];remove_index=[i]'>Remove</A>"
+			dat += "<br><br>"
 
 	dat += "<br>"
-	dat += "<A href='?src=\ref[src];add_player_info=[key]'>Add Info</A><br>"
+	dat += "<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>"
 
 	dat += "</body></html>"
-	usr << browse(dat, "window=adminplayerinfo;size=480x150")
+	usr << browse(dat, "window=adminplayerinfo;size=480x480")
 
 /obj/admins/proc/player()
 	if (!usr.client.holder)
@@ -1864,7 +1870,7 @@
 					dat += "<td>Alien</td>"
 				dat += {"<td>[M.client?"[M.client]":"No client"]</td>
 				<td align=center><A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>X</A></td>
-				<td align=center><A HREF='?src=\ref[src];player_info=[M.ckey]'>X</A></td>
+				<td align=center><A HREF='?src=\ref[src];player_info=[M.ckey]'>[player_has_info(M.ckey) ? "Info" : "N/A"] </A></td>
 				<td align=center><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>
 				"}
 				switch(is_special_character(M))
@@ -1910,7 +1916,7 @@
 					dat += "<td>Alien</td>"
 				dat += {"<td>[(M.client ? "[M.client]" : "No client")]</td>
 				<td align=center><A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>X</A></td>
-				<td align=center><A HREF='?src=\ref[src];player_info=[M.ckey]'>X</A></td>
+				<td align=center><A HREF='?src=\ref[src];player_info=[M.ckey]'>[player_has_info(M.ckey) ? "Info" : "N/A"] </A></td>
 				<td align=center><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>
 				"}
 				switch(is_special_character(M))
