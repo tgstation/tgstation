@@ -371,7 +371,12 @@
 			if(src.nodamage) return
 			var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
 			//adjustFireLoss(2.5*discomfort)
-			adjustFireLoss(5.0*discomfort)
+
+			if(exposed_temperature > bodytemperature)
+				adjustFireLoss(20.0*discomfort)
+
+			else
+				adjustFireLoss(5.0*discomfort)
 
 		handle_chemicals_in_body()
 
