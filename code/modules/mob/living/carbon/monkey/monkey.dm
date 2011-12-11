@@ -387,6 +387,7 @@
 		if (client.statpanel == "Status")
 			if (mind.special_role == "Changeling" && changeling)
 				stat("Chemical Storage", changeling.chem_charges)
+				stat("Genetic Damage Time", changeling.geneticdamage)
 	return
 
 /mob/living/carbon/monkey/update_clothing()

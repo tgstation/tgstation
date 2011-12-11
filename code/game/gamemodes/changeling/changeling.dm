@@ -201,6 +201,7 @@
 	var/sting_range = 1
 	var/changelingID = "none"
 	var/mob/living/host = null
+	var/geneticdamage = 0.0
 
 /datum/changeling/New()
 	..()
