@@ -1034,7 +1034,8 @@
 			if (mind)
 				if (mind.special_role == "Changeling" && changeling)
 					changeling.chem_charges = between(0, (max((0.9 - (changeling.chem_charges / 50)), 0.1) + changeling.chem_charges), 50)
-
+					if ((changeling.geneticdamage > 0))
+						changeling.geneticdamage = changeling.geneticdamage-1
 
 /*
 			// Commented out so hunger system won't be such shock
