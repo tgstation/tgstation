@@ -138,9 +138,7 @@
 		if(!stuttering && prob(15))
 			message = stutter(message)
 
-	if (drunk)
-		message = Intoxicated(message)
-	else if (stuttering)
+	if (stuttering)
 		message = stutter(message)
 	if (slurring)
 		message = slur(message)
