@@ -572,7 +572,11 @@
 		handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
 			if(nodamage)
 				return
+
 			var/discomfort = min(abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
+
+			if(exposed_temperature > bodytemperature)
+				discomfort *= 4
 
 			if(mutantrace == "plant")
 				discomfort *= 3 //I don't like magic numbers. I'll make mutantraces a datum with vars sometime later. -- Urist
