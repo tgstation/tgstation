@@ -202,15 +202,9 @@
 
 	usr.visible_message(text("\red <B>[usr] transforms!</B>"))
 
-<<<<<<< .mine
-	usr.changeling.geneticdamage = 30
-  	usr << "Our genes cry out!"
-
-=======
 	usr.changeling.geneticdamage = 30
 	usr << "Our genes cry out!"
 
->>>>>>> .r2659
 	var/list/implants = list() //Try to preserve implants.
 	for(var/obj/item/weapon/W in usr)
 		if (istype(W, /obj/item/weapon/implant))
