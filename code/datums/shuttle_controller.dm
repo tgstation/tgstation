@@ -135,10 +135,27 @@ datum/shuttle_controller
 
 					else
 						location = 2
+
+						//main shuttle
 						var/area/start_location = locate(/area/shuttle/escape/station)
 						var/area/end_location = locate(/area/shuttle/escape/centcom)
 
 						start_location.move_contents_to(end_location)
+
+						//pods
+						start_location = locate(/area/shuttle/escape_pod1/station)
+						end_location = locate(/area/shuttle/escape_pod1/centcom)
+						start_location.move_contents_to(end_location)
+						start_location = locate(/area/shuttle/escape_pod2/station)
+						end_location = locate(/area/shuttle/escape_pod2/centcom)
+						start_location.move_contents_to(end_location)
+						start_location = locate(/area/shuttle/escape_pod3/station)
+						end_location = locate(/area/shuttle/escape_pod3/centcom)
+						start_location.move_contents_to(end_location)
+						start_location = locate(/area/shuttle/escape_pod5/station)
+						end_location = locate(/area/shuttle/escape_pod5/centcom)
+						start_location.move_contents_to(end_location)
+
 						online = 0
 
 						return 1
