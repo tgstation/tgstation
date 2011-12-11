@@ -1844,7 +1844,7 @@
 	if (!usr.client.holder)
 		return
 	var/dat = "<html><head><title>Player Menu</title></head>"
-	dat += "<body><table border=1 cellspacing=5><B><tr><th>Name</th><th>Real Name</th><th>Key</th><th>Options</th><th>Info</th><th>PM</th><th>Traitor?</th><th>Karma</th></tr></B>"
+	dat += "<body><table border=1 cellspacing=5><B><tr><th>Name</th><th>Real Name</th><th>Assigned Job</th><th>Key</th><th>Options</th><th>Info</th><th>PM</th><th>Traitor?</th><th>Karma</th></tr></B>"
 	//add <th>IP:</th> to this if wanting to add back in IP checking
 	//add <td>(IP: [M.lastKnownIP])</td> if you want to know their ip to the lists below
 	var/list/mobs = sortmobs()
@@ -1862,8 +1862,8 @@
 	if(!show_karma)
 		for(var/mob/M in mobs)
 			if(M.ckey)
-				dat += "<tr><td>[M.name]</td>"
-				if(istype(M, /mob/living/silicon/ai))
+				dat += "<tr><td>[M.name]</td>" // Adds current name
+				if(istype(M, /mob/living/silicon/ai))    // Adds current 'Real Name'
 					dat += "<td>AI</td>"
 				if(istype(M, /mob/living/silicon/robot))
 					dat += "<td>Cyborg</td>"
@@ -1879,6 +1879,20 @@
 					dat += "<td>Monkey</td>"
 				if(istype(M, /mob/living/carbon/alien))
 					dat += "<td>Alien</td>"
+
+				if(M.mind.assigned_role)								// Adds a column to Player Panel that shows their current job.
+					var/mob/living/carbon/human/H = M
+					if (H.wear_id)
+						var/obj/item/weapon/card/id/id = H.wear_id
+						if(M.mind.assigned_role == id.assignment)			// Polymorph
+							dat += "<td>[M.mind.assigned_role]</td>"
+						else
+							dat += "<td>[M.mind.assigned_role] ([id.assignment])"
+					else
+						dat += "<td>[M.mind.assigned_role] (No ID)</td>"
+				else
+					dat += "<td>No Assigned Role</td>"
+
 				dat += {"<td>[M.client?"[M.client]":"No client"]</td>
 				<td align=center><A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>X</A></td>
 				<td align=center><A HREF='?src=\ref[src];player_info=[M.ckey]'>[player_has_info(M.ckey) ? "Info" : "N/A"] </A></td>
