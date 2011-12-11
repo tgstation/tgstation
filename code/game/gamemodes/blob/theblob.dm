@@ -158,9 +158,12 @@
 			return 1
 		if(special_action())
 			return 1
+
 		return 0
 
-
+	temperature_expose(datum/gas_mixture/air, temperature, volume)
+		if(temperature > T0C+200)
+			health -= 0.01 * temperature
 	proc/expand(var/turf/T = null)
 		if(!prob(health))	return//TODO: Change this to prob(health + o2 mols or such)
 		if(!T)
