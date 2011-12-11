@@ -58,6 +58,12 @@ Deathnettle
 					sleep(4)
 				del(D)
 
+
+			if((src.reagents.has_reagent("pacid")) || (src.reagents.has_reagent("lube"))) 	   				// Messages admins if someone sprays polyacid or space lube from a Plant-B-Gone bottle.
+				message_admins("[key_name_admin(user)] fired Polyacid/Space lube from a PlantBGone bottle.")		// Polymorph
+				log_game("[key_name(user)] fired Polyacid/Space lube from a PlantBGone bottle.")
+
+
 			return
 
 /obj/item/weapon/plantbgone/examine()
