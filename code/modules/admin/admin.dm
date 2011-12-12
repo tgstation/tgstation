@@ -1781,7 +1781,7 @@
 				if(istype(M, /mob/living/carbon/alien))
 					dat += "<td>Alien</td>"
 
-				if(M.mind.assigned_role)								// Adds a column to Player Panel that shows their current job.
+				if(M.mind && M.mind.assigned_role)								// Adds a column to Player Panel that shows their current job.
 					var/mob/living/carbon/human/H = M
 					if (H.wear_id)
 						var/obj/item/weapon/card/id/id = H.wear_id
