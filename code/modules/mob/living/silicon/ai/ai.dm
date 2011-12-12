@@ -473,7 +473,12 @@
 					holo_icon = getHologramIcon(icon('AI.dmi',"holo2"))
 	return
 
+/mob/living/silicon/ai/proc/corereturn()
+	set category = "Malfunction"
+	set name = "Return to Main Core"
 
-
-
-
+	var/obj/machinery/power/apc/apc = src.loc
+	if(!istype(apc))
+		src << "\blue You are already in your Main Core."
+		return
+	apc.malfvacate()
