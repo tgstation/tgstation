@@ -40,11 +40,12 @@
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=shoes'>Syndicate Shoes</A> (2)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=card'>Syndicate Card</A> (3)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=voice'>Voice-Changer</A> (4)<BR>"
+	menu_message += "<A href='byond://?src=\ref[src];buy_item=thermal'>Thermal Glasses</A> (4)<BR>"
 	menu_message += "<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=imp_freedom'>Freedom Implant (with injector)</A> (3)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=imp_uplink'>Uplink Implant (5 crystals inside)</A> (10)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=paralysispen'>Paralysis Pen</A> (3)<BR>" //Note that this goes to the updated sleepypen now.
-//	menu_message += "<A href='byond://?src=\ref[src];buy_item=sleepypen'>Sleepy Pen</A> (5)<BR>" //Terrible -Pete.
+	menu_message += "<A href='byond://?src=\ref[src];buy_item=sleepypen'>Sleepy Pen</A> (5)<BR>" //Terrible -Pete.
 	menu_message += "<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=detomatix'>Detomatix Cartridge</A> (3)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=bomb'>Plastic Explosives</A> (2)<BR>"
@@ -52,7 +53,7 @@
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=space'>Syndicate-made Space Suit (inludes a helmet)</A> (3)<BR>"
 	menu_message += "<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=projector'>Chameleon-projector</A> (4)<BR>"
-	menu_message += "<A href='byond://?src=\ref[src];buy_item=cloak'>Cloaking Device</A> (4)<BR>"
+//	menu_message += "<A href='byond://?src=\ref[src];buy_item=cloak'>Cloaking Device</A> (4)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=emag'>Electromagnet Card</A> (3)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=empbox'>5 EMP Grenades</A> (4)<BR>"
 	menu_message += "<BR>"
@@ -142,8 +143,8 @@
 					var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(get_turf(hostpda))
 					O.imp = new /obj/item/weapon/implant/uplink(O)
 			if("sleepypen")
-				if (uses >= 5)
-					uses -= 5
+				if (uses >= 4)
+					uses -= 4
 					new /obj/item/weapon/pen/sleepypen(get_turf(hostpda))
 			if("paralysispen")
 				if (uses >= 3)
@@ -153,10 +154,14 @@
 				if (uses >= 4)
 					uses -= 4
 					new /obj/item/device/chameleon(get_turf(hostpda))
-			if("cloak")
+			/*if("cloak")
 				if (uses >= 4)
 					uses -= 4
-					new /obj/item/weapon/cloaking_device(get_turf(hostpda))
+					new /obj/item/weapon/cloaking_device(get_turf(hostpda))*/
+			if("thermal")
+				if (src.uses >= 4)
+					src.uses -= 4
+					new /obj/item/clothing/glasses/thermal(get_turf(src))
 			if("sword")
 				if (uses >= 4)
 					uses -= 4
