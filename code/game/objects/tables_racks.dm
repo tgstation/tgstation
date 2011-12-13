@@ -133,11 +133,11 @@ TABLE AND RACK OBJECT INTERATIONS
 	if (istype(W, /obj/item/weapon/wrench))
 		user << "\blue Now disassembling table"
 		playsound(src.loc, 'Ratchet.ogg', 50, 1)
-		sleep(50)
-		new /obj/item/weapon/table_parts( src.loc )
-		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
-		//SN src = null
-		del(src)
+		if(do_after(user,50))
+			new /obj/item/weapon/table_parts( src.loc )
+			playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+			//SN src = null
+			del(src)
 		return
 
 	if(isrobot(user))
