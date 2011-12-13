@@ -674,7 +674,6 @@ datum
 						var/datum/organ/external/affecting = M:get_organ("head")
 						if(affecting)
 							affecting.take_damage(25, 0)
-							M:UpdateDamage()
 							M:UpdateDamageIcon()
 							M:emote("scream")
 							M << "\red Your face has become disfigured!"
@@ -720,7 +719,6 @@ datum
 							return
 						var/datum/organ/external/affecting = M:get_organ("head")
 						affecting.take_damage(35, 0)
-						M:UpdateDamage()
 						M:UpdateDamageIcon()
 						M:emote("scream")
 						M << "\red Your face has become disfigured!"
@@ -735,7 +733,6 @@ datum
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/affecting = M:get_organ("head")
 						affecting.take_damage(30, 0)
-						M:UpdateDamage()
 						M:UpdateDamageIcon()
 						M:emote("scream")
 						M << "\red Your face has become disfigured!"

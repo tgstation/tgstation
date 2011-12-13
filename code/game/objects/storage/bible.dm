@@ -13,8 +13,6 @@
 		for(var/datum/organ/external/affecting in H.organs)
 			if(affecting.heal_damage(heal_amt, heal_amt))
 				H.UpdateDamageIcon()
-			else
-				H.UpdateDamage()
 	return
 
 /obj/item/weapon/storage/bible/attack(mob/M as mob, mob/living/user as mob)
