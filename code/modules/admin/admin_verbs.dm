@@ -462,7 +462,7 @@
 	return
 
 /client/proc/playernotes()
-	set name = "Display Player Info"
+	set name = "Show Player Info"
 	set category = "Admin"
 	if(holder)
 		holder.PlayerNotes()
