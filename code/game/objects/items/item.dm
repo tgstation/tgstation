@@ -336,8 +336,6 @@
 /obj/item/proc/IsShield()
 	return 0
 
-
-
 /obj/item/proc/eyestab(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 
 	var/mob/living/carbon/human/H = M
