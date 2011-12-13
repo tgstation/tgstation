@@ -48,6 +48,7 @@
 	update_clothing()
 
 /mob/living/simple_animal/corgi/show_inv(mob/user as mob)
+	/*
 	user.machine = src
 
 	var/dat = 	"<div align='center'><b>Inventory of [src]</b></div><p>"
@@ -62,6 +63,7 @@
 
 	user << browse(dat, text("window=mob[];size=325x500", name))
 	onclose(user, "mob[name]")
+	*/
 	return
 
 /mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)
