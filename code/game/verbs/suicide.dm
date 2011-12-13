@@ -168,7 +168,7 @@
 	if(confirm == "Yes")
 		suiciding = 1
 		setOxyLoss(100)
-		setBruteLoss(100)
+		adjustBruteLoss(100 - getBruteLoss())
 		setToxLoss(100)
 		setCloneLoss(100)
 

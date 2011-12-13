@@ -82,10 +82,6 @@
 			paralysis = max(min(paralysis, 20), 0)
 			weakened = max(min(weakened, 20), 0)
 			sleeping = max(min(sleeping, 20), 0)
-			setBruteLoss(max(getBruteLoss(), 0))
-			setToxLoss(max(getToxLoss(), 0))
-			setOxyLoss(max(getOxyLoss(), 0))
-			adjustFireLoss(0)
 
 		handle_mutations_and_radiation()
 

@@ -2191,11 +2191,6 @@ It can still be worn/put on as normal.
 		src.health = 100
 		src.stat = 0
 		return
-	adjustBruteLoss(-getBruteLoss())
-	adjustFireLoss(-getFireLoss())
-	for(var/datum/organ/external/O in organs)
-		src.adjustBruteLoss(O.brute_dam)
-		src.adjustFireLoss(O.burn_dam)
 	src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss() - src.getCloneLoss()
 
 
@@ -2207,3 +2202,27 @@ It can still be worn/put on as normal.
 		return 1
 
 	return 0
+
+/mob/living/carbon/human/getBruteLoss()
+	var/amount = 0.0
+	for(var/datum/organ/external/O in organs)
+		amount+= O.brute_dam
+	return amount
+
+/mob/living/carbon/human/adjustBruteLoss(var/amount)
+	if(amount > 0)
+		take_overall_damage(amount, 0)
+	else
+		heal_overall_damage(-amount, 0)
+
+/mob/living/carbon/human/getFireLoss()
+	var/amount = 0.0
+	for(var/datum/organ/external/O in organs)
+		amount+= O.burn_dam
+	return amount
+
+/mob/living/carbon/human/adjustFireLoss(var/amount)
+	if(amount > 0)
+		take_overall_damage(0, amount)
+	else
+		heal_overall_damage(0, -amount)

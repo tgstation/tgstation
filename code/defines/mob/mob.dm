@@ -441,9 +441,6 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 /mob/proc/adjustBruteLoss(var/amount)
 	bruteloss = max(bruteloss + amount, 0)
 
-/mob/proc/setBruteLoss(var/amount)
-	bruteloss = amount
-
 /mob/proc/getOxyLoss()
 	return oxyloss
 
@@ -467,10 +464,6 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 
 /mob/proc/adjustFireLoss(var/amount)
 	fireloss = max(fireloss + amount, 0)
-
-/mob/proc/setFireLoss(var/amount)
-	fireloss = amount
-
 
 /mob/proc/getCloneLoss()
 	return cloneloss
