@@ -3,21 +3,8 @@
 	if(istype(E, /datum/organ/external))
 		if (E.heal_damage(brute, burn))
 			UpdateDamageIcon()
-		else
-			UpdateDamage()
 	else
 		return 0
-	return
-
-
-/mob/living/carbon/human/proc/UpdateDamage()
-// Rockdtben - remove this soon.
-//	adjustBruteLoss(-getBruteLoss())
-//	adjustFireLoss(-getFireLoss())
-//	for(var/datum/organ/external/O in organs)
-//		if(istype(O, /datum/organ/external))
-//			adjustBruteLoss(O.brute_dam)
-//			adjustFireLoss(O.burn_dam)
 	return
 
 // new damage icon system
