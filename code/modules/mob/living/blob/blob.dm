@@ -40,10 +40,6 @@
 		paralysis = 0
 		weakened = 0
 		sleeping = 0
-		setBruteLoss(max(getBruteLoss(), 0))
-		setToxLoss(max(getToxLoss(), 0))
-		setOxyLoss(max(getOxyLoss(), 0))
-		setFireLoss(max(getFireLoss(), 0))
 		if(stat)
 			stat = 0
 		return

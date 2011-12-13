@@ -11,12 +11,13 @@
 
 
 /mob/living/carbon/human/proc/UpdateDamage()
-	adjustBruteLoss(-getBruteLoss())
-	adjustFireLoss(-getFireLoss())
-	for(var/datum/organ/external/O in organs)
-		if(istype(O, /datum/organ/external))
-			adjustBruteLoss(O.brute_dam)
-			adjustFireLoss(O.burn_dam)
+// Rockdtben - remove this soon.
+//	adjustBruteLoss(-getBruteLoss())
+//	adjustFireLoss(-getFireLoss())
+//	for(var/datum/organ/external/O in organs)
+//		if(istype(O, /datum/organ/external))
+//			adjustBruteLoss(O.brute_dam)
+//			adjustFireLoss(O.burn_dam)
 	return
 
 // new damage icon system
@@ -27,7 +28,6 @@
 	body_standing = list()
 	del(body_lying)
 	body_lying = list()
-	UpdateDamage()
 	for(var/datum/organ/external/O in organs)
 		var/icon/DI = new /icon('dam_human.dmi', O.damage_state)			// the damage icon for whole human
 		DI.Blend(new /icon('dam_mask.dmi', O.icon_name), ICON_MULTIPLY)		// mask with this organ's pixels
