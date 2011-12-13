@@ -127,6 +127,7 @@
 
 
 /datum/game_mode/traitor/declare_completion()
+	..()
 	return//Traitors will be checked as part of check_extra_completion. Leaving this here as a reminder.
 
 

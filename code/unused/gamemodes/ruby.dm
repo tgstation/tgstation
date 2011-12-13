@@ -85,6 +85,7 @@
 		else
 			world << "<B>The traitor has failed!<B>"
 	*/
+	..()
 	return 1
 
 
