@@ -41,9 +41,8 @@
 		if(iscarbon(M))
 			var/safety = M:eyecheck()
 			if(safety <= 0)
-				if(M.weakened <= 10)
-					M.weakened = 10
-					flick("e_flash", M.flash)
+				M.Weaken(10)
+				flick("e_flash", M.flash)
 
 				if(ishuman(M) && ishuman(user))
 					if(user.mind in ticker.mode.head_revolutionaries)
@@ -65,7 +64,7 @@
 				flashfail = 1
 
 		else if(issilicon(M))
-			M.weakened = max(user.weakened, rand(5,10))
+			M.Weaken(rand(5,10))
 
 		if(isrobot(user))
 			spawn(0)

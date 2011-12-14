@@ -50,7 +50,7 @@ KNIFE
 	if ((user.mutations & CLUMSY) && prob(50))
 		user << "\red The [src] slips out of your hand and hits your head."
 		user.take_organ_damage(10)
-		user.paralysis += 2
+		user.Paralyse(2)
 		return
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
@@ -63,11 +63,9 @@ KNIFE
 			return
 		var/time = rand(2, 6)
 		if (prob(75))
-			if (M.paralysis < time && (!(M.mutations & HULK)) )
-				M.paralysis = time
+			M.Paralyse(time)
 		else
-			if (M.stunned < time && (!(M.mutations & HULK)) )
-				M.stunned = time
+			M.Stun(time)
 		if(M.stat != 2)	M.stat = 1
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red <B>[] has been knocked unconscious!</B>", M), 1, "\red You hear someone fall.", 2)
@@ -109,7 +107,7 @@ KNIFE
 
 	if((user.mutations & CLUMSY) && prob(50))              //What if he's a clown?
 		M << "\red You accidentally slam yourself with the [src]!"
-		M.weakened += 1
+		M.Weaken(1)
 		user.take_organ_damage(2)
 		if(prob(50))
 			playsound(M, 'trayhit1.ogg', 50, 1)
@@ -132,7 +130,7 @@ KNIFE
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
 
 		if(prob(15))
-			M.weakened += 3
+			M.Weaken(3)
 			M.take_organ_damage(3)
 		else
 			M.take_organ_damage(5)
@@ -173,7 +171,7 @@ KNIFE
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 		if(prob(10))
-			M.stunned = rand(1,3)
+			M.Stun(rand(1,3))
 			M.take_organ_damage(3)
 			return
 		else
@@ -197,13 +195,13 @@ KNIFE
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] in the face with the tray!</B>", user, M), 1)
 		if(prob(30))
-			M.stunned = rand(2,4)
+			M.Stun(rand(2,4))
 			M.take_organ_damage(4)
 			return
 		else
 			M.take_organ_damage(8)
 			if(prob(30))
-				M.weakened+=2
+				M.Weaken(2)
 				return
 			return
 

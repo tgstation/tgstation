@@ -768,8 +768,8 @@
 			else
 				src.visible_message("\red [src] knocks over [M]!")
 				M.pulling = null
-				M.stunned = 8
-				M.weakened = 5
+				M.Stun(8)
+				M.Weaken(5)
 				M.lying = 1
 	..()
 

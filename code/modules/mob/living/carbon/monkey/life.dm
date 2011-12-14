@@ -90,16 +90,16 @@
 
 		clamp_values()
 
-			stunned = max(stunned,0)
-			paralysis = max(paralysis, 0)
-			weakened = max(weakened, 0)
+			AdjustStunned(0)
+			AdjustParalysis(0)
+			AdjustWeakened(0)
 
 		handle_disabilities()
 
 			if (src.disabilities & 2)
 				if ((prob(1) && src.paralysis < 10 && src.r_epil < 1))
 					src << "\red You have a seizure!"
-					src.paralysis = max(10, src.paralysis)
+					Paralyse(10)
 			if (src.disabilities & 4)
 				if ((prob(5) && src.paralysis <= 1 && src.r_ch_cou < 1))
 					src.drop_item()
@@ -108,7 +108,7 @@
 						return
 			if (src.disabilities & 8)
 				if ((prob(10) && src.paralysis <= 1 && src.r_Tourette < 1))
-					src.stunned = max(10, src.stunned)
+					Stun(10)
 					spawn( 0 )
 						emote("twitch")
 						return
@@ -135,13 +135,13 @@
 			if (src.mutations & HULK && src.health <= 25)
 				src.mutations &= ~HULK
 				src << "\red You suddenly feel very weak."
-				src.weakened = 3
+				Weaken(3)
 				emote("collapse")
 
 			if (src.radiation)
 				if (src.radiation > 100)
 					src.radiation = 100
-					src.weakened = 10
+					Weaken(10)
 					src << "\red You feel weak."
 					emote("collapse")
 
@@ -157,7 +157,7 @@
 						src.adjustToxLoss(1)
 						if(prob(5))
 							src.radiation -= 5
-							src.weakened = 3
+							Weaken(3)
 							src << "\red You feel weak."
 							emote("collapse")
 						src.updatehealth()
@@ -304,7 +304,7 @@
 				if(!co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 					co2overloadtime = world.time
 				else if(world.time - co2overloadtime > 120)
-					src.paralysis = max(src.paralysis, 3)
+					Paralyse(3)
 					oxyloss += 3 // Lets hurt em a little, let them know we mean business
 					if(world.time - co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 						oxyloss += 8
@@ -325,7 +325,7 @@
 				for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
 					var/SA_pp = (SA.moles/breath.total_moles())*breath_pressure
 					if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
-						src.paralysis = max(src.paralysis, 3) // 3 gives them one second to wake up and run away a bit!
+						Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 						if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
 							src.sleeping = max(src.sleeping, 2)
 					else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
@@ -387,7 +387,7 @@
 				src.eye_blurry = max(2, src.eye_blurry)
 				if (prob(5))
 					src.sleeping = 1
-					src.paralysis = 5
+					Paralyse(5)
 
 			confused = max(0, confused - 1)
 			// decrement dizziness counter, clamped to 0
@@ -404,14 +404,14 @@
 
 			health = 100 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 
-			if(getOxyLoss() > 25) paralysis = max(paralysis, 3)
+			if(getOxyLoss() > 25) Paralyse(3)
 
 			if(src.sleeping)
-				src.paralysis = max(src.paralysis, 5)
+				Paralyse(5)
 				if (prob(1) && health) spawn(0) emote("snore")
 
 			if(src.resting)
-				src.weakened = max(src.weakened, 5)
+				Weaken(5)
 
 			if(health < config.health_threshold_dead && stat != 2)
 				death()
@@ -422,20 +422,20 @@
 				if(!src.reagents.has_reagent("inaprovaline")) src.oxyloss++
 
 				if(src.stat != 2)	src.stat = 1
-				src.paralysis = max(src.paralysis, 5)
+				Paralyse(5)
 
 			if (src.stat != 2) //Alive.
 
 				if (src.paralysis || src.stunned || src.weakened || (changeling && changeling.changeling_fakedeath)) //Stunned etc.
 					if (src.stunned > 0)
-						src.stunned--
+						AdjustStunned(-1)
 						src.stat = 0
 					if (src.weakened > 0)
-						src.weakened--
+						AdjustWeakened(-1)
 						src.lying = 1
 						src.stat = 0
 					if (src.paralysis > 0)
-						src.paralysis--
+						AdjustParalysis(-1)
 						src.blinded = 1
 						src.lying = 1
 						src.stat = 1

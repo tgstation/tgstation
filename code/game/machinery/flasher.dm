@@ -77,7 +77,7 @@
 		if (istype(O, /mob/living/carbon/alien))//So aliens don't get flashed (they have no external eyes)/N
 			continue
 
-		O.weakened = src.strength
+		O.Weaken(strength)
 		if ((O.eye_stat > 15 && prob(O.eye_stat + 50)))
 			flick("e_flash", O:flash)
 			O.eye_stat += rand(1, 2)

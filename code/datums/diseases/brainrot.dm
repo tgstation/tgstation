@@ -59,7 +59,7 @@
 				affected_mob << "\red You lose consciousness..."
 				for(var/mob/O in viewers(affected_mob, null))
 					O.show_message("[affected_mob] suddenly collapses", 1)
-				affected_mob.paralysis = rand(5,10)
+				affected_mob.Paralyse(rand(5,10))
 				if(prob(1))
 					affected_mob.emote("snore")
 			if(prob(15))

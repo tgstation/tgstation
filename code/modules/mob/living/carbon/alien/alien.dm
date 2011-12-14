@@ -16,3 +16,6 @@
 			var/image/activeIndicator = image('alien.dmi', loc = facehugger, icon_state = "facehugger_active")
 			activeIndicator.override = 1
 			client.images += activeIndicator
+
+/mob/living/carbon/alien/IsAdvancedToolUser()
+	return has_fine_manipulation

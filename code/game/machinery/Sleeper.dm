@@ -238,15 +238,12 @@
 			else
 				M.oxyloss = 0
 			M.updatehealth()
-		M.paralysis -= 4
-		M.weakened -= 4
-		M.stunned -= 4
-		if (M.paralysis < 1)
-			M.paralysis = 1
-		if (M.weakened < 1)
-			M.weakened = 1
-		if (M.stunned < 1)
-			M.stunned = 1
+		M.AdjustParalysis(-4)
+		M.AdjustWeakened(-4)
+		M.AdjustStunned(-4)
+		M.Paralyse(1)
+		M.Weaken(1)
+		M.Stun(1)
 		if (M:reagents.get_reagent_amount("inaprovaline") < 5)
 			M:reagents.add_reagent("inaprovaline", 5)
 		return

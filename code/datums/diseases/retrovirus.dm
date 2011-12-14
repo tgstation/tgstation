@@ -60,7 +60,7 @@
 				affected_mob << "You feel very strange."
 			if (prob(4))
 				affected_mob << "\red You feel a stabbing pain in your head!"
-				affected_mob.paralysis += 2
+				affected_mob.Paralyse(2)
 			if (prob(4))
 				affected_mob << "\red Your stomach churns."
 		if(3)

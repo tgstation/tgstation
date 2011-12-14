@@ -134,9 +134,9 @@
 		"\red You hear a heavy electrical crack." \
 	)
 //	if(src.stunned < shock_damage)	src.stunned = shock_damage
-	src.stunned = max(src.stunned,10)//This should work for now, more is really silly and makes you lay there forever
+	Stun(10)//This should work for now, more is really silly and makes you lay there forever
 //	if(src.weakened < 20*siemens_coeff)	src.weakened = 20*siemens_coeff
-	src.weakened = max(src.weakened,10)
+	Weaken(10)
 	return shock_damage
 
 
@@ -167,9 +167,9 @@
 		if(!src.sleeping_willingly)
 			src.sleeping = 0
 		src.resting = 0
-		if (src.paralysis >= 3) src.paralysis -= 3
-		if (src.stunned >= 3) src.stunned -= 3
-		if (src.weakened >= 3) src.weakened -= 3
+		AdjustParalysis(-3)
+		AdjustStunned(-3)
+		AdjustWeakened(-3)
 		playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
 		M.visible_message( \
 			"\blue [M] shakes [src] trying to wake [t_him] up!", \

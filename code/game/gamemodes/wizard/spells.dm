@@ -76,7 +76,7 @@
 					del(B)
 				step_to(A,M,0)
 				if (get_dist(A,M) == 0)
-					M.weakened += 5
+					M.Weaken(5)
 					M.take_overall_damage(0,10)
 					del(A)
 					return
@@ -560,8 +560,8 @@
 				spawn(500)
 					U << "Something about your body doesn't seem quite right..."
 
-				U.paralysis += 20
-				H.paralysis += 20
+				U.Paralyse(20)
+				H.Paralyse(20)
 
 				spawn(600)
 					H.verbs += /mob/proc/swap

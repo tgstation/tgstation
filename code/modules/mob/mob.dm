@@ -1071,4 +1071,38 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
 
+/mob/proc/Stun(amount)
+	stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
+	return
 
+/mob/proc/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
+	stunned = max(amount,0)
+	return
+
+/mob/proc/AdjustStunned(amount)
+	stunned = max(stunned + amount,0)
+	return
+
+/mob/proc/Weaken(amount)
+	weakened = max(max(weakened,amount),0)
+	return
+
+/mob/proc/SetWeakened(amount)
+	weakened = max(amount,0)
+	return
+
+/mob/proc/AdjustWeakened(amount)
+	weakened = max(weakened + amount,0)
+	return
+
+/mob/proc/Paralyse(amount)
+	paralysis = max(max(paralysis,amount),0)
+	return
+
+/mob/proc/SetParalysis(amount)
+	paralysis = max(amount,0)
+	return
+
+/mob/proc/AdjustParalysis(amount)
+	paralysis = max(paralysis + amount,0)
+	return

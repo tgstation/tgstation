@@ -108,7 +108,7 @@ Deathnettle
 		else
 			user.take_organ_damage(0,force)
 		if(prob(50))
-			user.paralysis += 5
+			user.Paralyse(5)
 			user << "\red You are stunned by the Deathnettle when you try picking it up!"
 
 /obj/item/weapon/grown/deathnettle/attack(mob/living/carbon/M as mob, mob/user as mob)
@@ -120,8 +120,8 @@ Deathnettle
 
 		M.eye_blurry += force/7
 		if(prob(20))
-			M.paralysis += force/6
-			M.weakened += force/15
+			M.Paralyse(force/6)
+			M.Weaken(force/15)
 		M.drop_item()
 
 /obj/item/weapon/grown/deathnettle/afterattack(atom/A as mob|obj, mob/user as mob)

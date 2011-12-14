@@ -97,6 +97,8 @@
 
 	vote = new /datum/vote()
 
+//	coffinhandler = new /datum/coffinhandler()
+
 	radio_controller = new /datum/controller/radio()
 	//main_hud1 = new /obj/hud()
 	data_core = new /obj/datacore()
