@@ -70,6 +70,36 @@
 	anchored = 1
 	density = 1
 	opacity = 1
+	var/category
+
+	New()
+		var/list/books = book_mgr.getall()
+		var/list/catbooks = new()
+		// get books in category
+		for(var/datum/archived_book/B in books)
+			if(category && !findtext(category, B.category))
+				continue;
+			catbooks += B
+			world << "cat [category]: [B.title]"
+		if(catbooks.len <= 3)
+			// if 3 or less books, fill shelf with that
+			for(var/datum/archived_book/AB in catbooks)
+				var/obj/item/weapon/book/B = new(src)
+				B.name = "Book: [AB.title]"
+				B.title = AB.title
+				B.author = AB.author
+				B.dat = AB.dat
+				B.icon_state = "book[rand(1,7)]"
+		else
+			// otherwise, pick 3 random books
+			for(var/i = 1 to 3)
+				var/datum/archived_book/AB = pick(catbooks)
+				var/obj/item/weapon/book/B = new(src)
+				B.name = "Book: [AB.title]"
+				B.title = AB.title
+				B.author = AB.author
+				B.dat = AB.dat
+				B.icon_state = "book[rand(1,7)]"
 
 	attackby(obj/O as obj, mob/user as mob)
 		if(istype(O, /obj/item/weapon/book))
@@ -192,13 +222,29 @@
 						return
 					else
 						src.name = sanitize(title)
-				else if("Contents")
-					var/content = strip_html(input("Write your book's contents (HTML NOT allowed):"),8192) as message|null
-					if(!content)
+				if("Contents")
+					var/t = "[src.dat]"
+					do
+						t = input(user, "What text do you wish to add?", src.name, t)  as message
+						if ((!in_range(src, usr) && src.loc != user && src.loc.loc != user && user.equipped() != W))
+							return
+
+						if(lentext(t) >= MAX_PAPER_MESSAGE_LEN)
+							var/cont = input(user, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
+							if(cont == "no")
+								break
+					while(lentext(t) > MAX_PAPER_MESSAGE_LEN)
+
+					if ((!in_range(src, usr) && src.loc != user && src.loc.loc != user && user.equipped() != W))
 						return
-					else
-						src.dat += content
-				else if("Author")
+
+					// check for exploits
+					if(findtext(t, "<script") != 0 || findtext(t, "<frame") != 0 || findtext(t, "<iframe") != 0 || findtext(t, "<input") != 0 || findtext(t, "<button") != 0 || findtext(t, "<a") != 0)
+						user << "\blue You think to yourself, \"Hm.. this is only paper...\""
+						return
+
+					src.dat = t
+				if("Author")
 					var/nauthor = input("Write the author's name:") as text|null
 					if(!nauthor)
 						return
@@ -334,27 +380,43 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			dat += "<A href='?src=\ref[src];setauthor=1'>Filter by Author: [author]</A><BR>"
 			dat += "<A href='?src=\ref[src];search=1'>\[Start Search\]</A><BR>"
 		if(1)
-			var/DBConnection/dbcon = new()
-			dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
-			if(!dbcon.IsConnected())
-				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
-			else if(!SQLquery)
-				dat += "<font color=red><b>ERROR</b>: Malformed search request. Please contact your system administrator for assistance.</font><BR>"
+			if(config.sql_enabled)
+				var/DBConnection/dbcon = new()
+				dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
+				if(!dbcon.IsConnected())
+					dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
+				else if(!SQLquery)
+					dat += "<font color=red><b>ERROR</b>: Malformed search request. Please contact your system administrator for assistance.</font><BR>"
+				else
+					dat += "<table>"
+					dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>SS<sup>13</sup>BN</td></tr>"
+
+					var/DBQuery/query = dbcon.NewQuery(SQLquery)
+					query.Execute()
+
+					while(query.NextRow())
+						var/author = query.item[1]
+						var/title = query.item[2]
+						var/category = query.item[3]
+						var/id = query.item[4]
+						dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td>[id]</td></tr>"
+					dat += "</table><BR>"
+				dbcon.Disconnect()
 			else
 				dat += "<table>"
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>SS<sup>13</sup>BN</td></tr>"
 
-				var/DBQuery/query = dbcon.NewQuery(SQLquery)
-				query.Execute()
-
-				while(query.NextRow())
-					var/author = query.item[1]
-					var/title = query.item[2]
-					var/category = query.item[3]
-					var/id = query.item[4]
-					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td>[id]</td></tr>"
+				var/list/books = book_mgr.getall()
+				for(var/datum/archived_book/book in books)
+					// search queries
+					if(author && !findtext(author, book.author))
+						continue;
+					if(title && !findtext(title, book.title))
+						continue;
+					if(category && !findtext(category, book.category))
+						continue;
+					dat += "<tr><td>[book.author]</td><td>[book.title]</td><td>[book.category]</td><td>[book.id]</td></tr>"
 				dat += "</table><BR>"
-			dbcon.Disconnect()
 			dat += "<A href='?src=\ref[src];back=1'>\[Go Back\]</A><BR>"
 	user << browse(dat, "window=publiclibrary")
 	onclose(user, "publiclibrary")
@@ -382,11 +444,12 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			author = null
 		author = dd_replacetext(author, "'", "''")
 	if(href_list["search"])
-		SQLquery = "SELECT author, title, category, id FROM library WHERE "
-		if(category == "Any")
-			SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%'"
-		else
-			SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%' AND category='[category]'"
+		if(config.sql_enabled)
+			SQLquery = "SELECT author, title, category, id FROM library WHERE "
+			if(category == "Any")
+				SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%'"
+			else
+				SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%' AND category='[category]'"
 		screenstate = 1
 
 	if(href_list["back"])
@@ -478,27 +541,38 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(4)
 			dat += "<h3>External Archive</h3>"
-			var/DBConnection/dbcon = new()
-			dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
-			if(!dbcon.IsConnected())
-				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
+			if(config.sql_enabled)
+				var/DBConnection/dbcon = new()
+				dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
+				if(!dbcon.IsConnected())
+					dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
+				else
+					dat += "<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>"
+					dat += "<table>"
+					dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td></tr>"
+
+					var/DBQuery/query = dbcon.NewQuery("SELECT id, author, title, category FROM library")
+					query.Execute()
+
+					while(query.NextRow())
+						var/id = query.item[1]
+						var/author = query.item[2]
+						var/title = query.item[3]
+						var/category = query.item[4]
+						dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td><A href='?src=\ref[src];targetid=[id]'>\[Order\]</A></td></tr>"
+					dat += "</table><BR>"
+					dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
+				dbcon.Disconnect()
 			else
 				dat += "<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>"
 				dat += "<table>"
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td></tr>"
 
-				var/DBQuery/query = dbcon.NewQuery("SELECT id, author, title, category FROM library")
-				query.Execute()
-
-				while(query.NextRow())
-					var/id = query.item[1]
-					var/author = query.item[2]
-					var/title = query.item[3]
-					var/category = query.item[4]
-					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td><A href='?src=\ref[src];targetid=[id]'>\[Order\]</A></td></tr>"
+				var/list/books = book_mgr.getall()
+				for(var/datum/archived_book/book in books)
+					dat += "<tr><td>[book.author]</td><td>[book.title]</td><td>[book.category]</td><td>[book.id]</td></tr>"
 				dat += "</table><BR>"
 				dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
-			dbcon.Disconnect()
 		if(5)
 			dat += "<H3>Upload a New Title</H3>"
 			if(!scanner)
@@ -617,52 +691,75 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			if(scanner.cache)
 				var/choice = input("Are you certain you wish to upload this title to the Archive?") in list("Confirm", "Abort")
 				if(choice == "Confirm")
-					var/DBConnection/dbcon = new()
-					dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
-					if(!dbcon.IsConnected())
-						alert("Connection to Archive has been severed. Aborting.")
-					else
-						/*
-						var/sqltitle = dbcon.Quote(scanner.cache.name)
-						var/sqlauthor = dbcon.Quote(scanner.cache.author)
-						var/sqlcontent = dbcon.Quote(scanner.cache.dat)
-						var/sqlcategory = dbcon.Quote(upload_category)
-						*/
-						var/sqltitle = dd_replacetext(scanner.cache.name, "'", "''")
-						var/sqlauthor = dd_replacetext(scanner.cache.author, "'", "''")
-						var/sqlcontent = dd_replacetext(scanner.cache.dat, "'", "''")
-						var/sqlcategory = upload_category
-						///proc/dd_replacetext(text, search_string, replacement_string)
-						var/DBQuery/query = dbcon.NewQuery("INSERT INTO library (author, title, content, category) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]')")
-						if(!query.Execute())
-							usr << query.ErrorMsg()
+					if(config.sql_enabled)
+						var/DBConnection/dbcon = new()
+						dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
+						if(!dbcon.IsConnected())
+							alert("Connection to Archive has been severed. Aborting.")
 						else
-							log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
-							alert("Upload Complete.")
-						dbcon.Disconnect()
-	if(href_list["targetid"])
-		var/sqlid = href_list["targetid"]
-		var/DBConnection/dbcon = new()
-		dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
-		if(!dbcon.IsConnected())
-			alert("Connection to Archive has been severed. Aborting.")
-		else
-			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM library WHERE id=[sqlid]")
-			query.Execute()
+							/*
+							var/sqltitle = dbcon.Quote(scanner.cache.name)
+							var/sqlauthor = dbcon.Quote(scanner.cache.author)
+							var/sqlcontent = dbcon.Quote(scanner.cache.dat)
+							var/sqlcategory = dbcon.Quote(upload_category)
+							*/
+							var/sqltitle = dd_replacetext(scanner.cache.name, "'", "''")
+							var/sqlauthor = dd_replacetext(scanner.cache.author, "'", "''")
+							var/sqlcontent = dd_replacetext(scanner.cache.dat, "'", "''")
+							var/sqlcategory = upload_category
+							///proc/dd_replacetext(text, search_string, replacement_string)
+							var/DBQuery/query = dbcon.NewQuery("INSERT INTO library (author, title, content, category) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]')")
+							if(!query.Execute())
+								usr << query.ErrorMsg()
+							else
+								log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
+								alert("Upload Complete.")
+							dbcon.Disconnect()
+					else
+						var/datum/archived_book/B = new()
+						B.title = scanner.cache.name
+						B.author = scanner.cache.author
+						B.dat = scanner.cache.dat
+						B.category = upload_category
+						B.id = book_mgr.freeid()
+						B.save()
 
-			while(query.NextRow())
-				var/author = query.item[2]
-				var/title = query.item[3]
-				var/content = query.item[4]
-				var/obj/item/weapon/book/B = new(src.loc)
-				B.name = "Book: [title]"
-				B.title = title
-				B.author = author
-				B.dat = content
-				B.icon_state = "book[rand(1,7)]"
-				src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
-				break
-			dbcon.Disconnect()
+						log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
+						alert("Upload Complete.")
+	if(href_list["targetid"])
+		if(config.sql_enabled)
+			var/sqlid = href_list["targetid"]
+			var/DBConnection/dbcon = new()
+			dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
+			if(!dbcon.IsConnected())
+				alert("Connection to Archive has been severed. Aborting.")
+			else
+				var/DBQuery/query = dbcon.NewQuery("SELECT * FROM library WHERE id=[sqlid]")
+				query.Execute()
+
+				while(query.NextRow())
+					var/author = query.item[2]
+					var/title = query.item[3]
+					var/content = query.item[4]
+					var/obj/item/weapon/book/B = new(src.loc)
+					B.name = "Book: [title]"
+					B.title = title
+					B.author = author
+					B.dat = content
+					B.icon_state = "book[rand(1,7)]"
+					src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
+					break
+				dbcon.Disconnect()
+		else
+			var/datum/archived_book/AB = new(book_mgr.path(href_list["targetid"]))
+			var/obj/item/weapon/book/B = new(src.loc)
+			B.name = "Book: [AB.title]"
+			B.title = AB.title
+			B.author = AB.author
+			B.dat = AB.dat
+			B.icon_state = "book[rand(1,7)]"
+			src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
+
 	if(href_list["orderbyid"])
 		var/orderid = input("Enter your order:") as num|null
 		if(orderid)
