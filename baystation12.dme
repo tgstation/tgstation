@@ -503,6 +503,7 @@
 #include "code\game\machinery\kitchen\processor.dm"
 #include "code\game\machinery\pipe\construction.dm"
 #include "code\game\machinery\pipe\pipe_dispenser.dm"
+#include "code\game\magic\archived_book.dm"
 #include "code\game\magic\library.dm"
 #include "code\game\magic\musician.dm"
 #include "code\game\magic\cultist\ritual.dm"

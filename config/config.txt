@@ -20,7 +20,7 @@ LOG_VOTE
 LOG_WHISPER
 
 ## sql switching
-# SQL_ENABLED
+SQL_ENABLED 0
 
 ## disconnect players who did nothing during 10 minutes
 # KICK_INACTIVE
