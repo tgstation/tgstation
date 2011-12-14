@@ -140,7 +140,7 @@
 				if(isobj(A))
 					del(A)
 				else
-					meteorhit(A)
+					A.meteorhit(src)
 				src.hits--
 				return
 				playsound(src.loc, 'meteorimpact.ogg', 40, 1)
