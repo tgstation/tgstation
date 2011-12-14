@@ -618,8 +618,12 @@
 	return
 
 /turf/simulated/wall/meteorhit(obj/M as obj)
-	if (M.icon_state == "flaming")
+	if (prob(15))
 		dismantle_wall()
+	else if(prob(70))
+		ReplaceWithPlating()
+	else
+		ReplaceWithLattice()
 	return 0
 
 
