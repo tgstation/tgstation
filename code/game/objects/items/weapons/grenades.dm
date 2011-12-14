@@ -172,19 +172,19 @@ FLASHBANG
 		if(eye_safety < 1)
 			flick("e_flash", M.flash)
 			M.eye_stat += rand(1, 3)
-			M.stunned = max(M.stunned,2)
-			M.weakened = max(M.weakened,10)
+			M.Stun(2)
+			M.Weaken(10)
 
 
 
 //Now applying sound
 		if((get_dist(M, T) <= 2 || src.loc == M.loc || src.loc == M))
 			if(ear_safety > 0)
-				M.stunned = max(M.stunned,2)
-				M.weakened = max(M.weakened,1)
+				M.Stun(2)
+				M.Weaken(1)
 			else
-				M.stunned = max(M.stunned,10)
-				M.weakened = max(M.weakened,3)
+				M.Stun(10)
+				M.Weaken(3)
 				if ((prob(14) || (M == src.loc && prob(70))))
 					M.ear_damage += rand(1, 10)
 				else
@@ -193,12 +193,12 @@ FLASHBANG
 
 		else if(get_dist(M, T) <= 5)
 			if(!ear_safety)
-				M.stunned = max(M.stunned,8)
+				M.Stun(8)
 				M.ear_damage += rand(0, 3)
 				M.ear_deaf = max(M.ear_deaf,10)
 
 		else if(!ear_safety)
-			M.stunned = max(M.stunned,4)
+			M.Stun(4)
 			M.ear_damage += rand(0, 1)
 			M.ear_deaf = max(M.ear_deaf,5)
 

@@ -98,9 +98,9 @@
 	proc
 		clamp_values()
 
-			stunned = max(min(stunned, 20),0)
-			paralysis = max(min(paralysis, 20), 0)
-			weakened = max(min(weakened, 20), 0)
+			SetStunned(min(stunned, 20))
+			SetParalysis(min(paralysis, 20))
+			SetWeakened(min(weakened, 20))
 			sleeping = max(min(sleeping, 20), 0)
 			adjustBruteLoss(0)
 			adjustToxLoss(0)
@@ -126,7 +126,7 @@
 						if(O == src)
 							continue
 						O.show_message(text("\red <B>[src] starts having a seizure!"), 1)
-					paralysis = max(10, paralysis)
+					Paralyse(10)
 					make_jittery(1000)
 			if (disabilities & 4)
 				if ((prob(5) && paralysis <= 1 && r_ch_cou < 1))
@@ -136,7 +136,7 @@
 						return
 			if (disabilities & 8)
 				if ((prob(10) && paralysis <= 1 && r_Tourette < 1))
-					stunned = max(10, stunned)
+					Stun(10)
 					spawn( 0 )
 						switch(rand(1, 3))
 							if(1)
@@ -160,7 +160,7 @@
 						if(1)
 							say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#"))
 						if(2)
-							say(pick("fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom"))
+							say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom"))
 						if(3)
 							emote("drool")
 
@@ -173,13 +173,13 @@
 			if (mutations & HULK && health <= 25)
 				mutations &= ~HULK
 				src << "\red You suddenly feel very weak."
-				weakened = 3
+				Weaken(3)
 				emote("collapse")
 
 			if (radiation)
 				if (radiation > 100)
 					radiation = 100
-					weakened = 10
+					Weaken(10)
 					src << "\red You feel weak."
 					emote("collapse")
 
@@ -198,7 +198,7 @@
 						adjustToxLoss(1)
 						if(prob(5))
 							radiation -= 5
-							weakened = 3
+							Weaken(3)
 							src << "\red You feel weak."
 							emote("collapse")
 						updatehealth()
@@ -357,7 +357,7 @@
 				if(!co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 					co2overloadtime = world.time
 				else if(world.time - co2overloadtime > 120)
-					paralysis = max(paralysis, 3)
+					Paralyse(3)
 					oxyloss += 3 // Lets hurt em a little, let them know we mean business
 					if(world.time - co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 						oxyloss += 8
@@ -378,7 +378,7 @@
 				for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
 					var/SA_pp = (SA.moles/breath.total_moles())*breath_pressure
 					if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
-						paralysis = max(paralysis, 3) // 3 gives them one second to wake up and run away a bit!
+						Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 						if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
 							sleeping = max(sleeping, 2)
 					else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
@@ -643,7 +643,7 @@
 				eye_blurry = max(2, eye_blurry)
 				if (prob(5))
 					sleeping = 1
-					paralysis = 5
+					Paralyse(5)
 
 			confused = max(0, confused - 1)
 			// decrement dizziness counter, clamped to 0
@@ -662,15 +662,15 @@
 
 		//	health = 100 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 
-			if(getOxyLoss() > 50) paralysis = max(paralysis, 3)
+			if(getOxyLoss() > 50) Paralyse(3)
 
 			if(sleeping)
-				paralysis = max(paralysis, 3)
+				Paralyse(3)
 				if (prob(10) && health) spawn(0) emote("snore")
 				sleeping--
 
 			if(resting)
-				weakened = max(weakened, 3)
+				Weaken(3)
 
 			if(health < config.health_threshold_dead || brain_op_stage == 4.0)
 				death()
@@ -681,7 +681,7 @@
 				if(!reagents.has_reagent("inaprovaline")) oxyloss++
 
 				if(stat != 2)	stat = 1
-				paralysis = max(paralysis, 5)
+				Paralyse(5)
 
 			if (stat != 2) //Alive.
 				if (silent)
@@ -689,14 +689,14 @@
 
 				if (paralysis || stunned || weakened || (changeling && changeling.changeling_fakedeath)) //Stunned etc.
 					if (stunned > 0)
-						stunned--
+						AdjustStunned(-1)
 						stat = 0
 					if (weakened > 0)
-						weakened--
+						AdjustWeakened(-1)
 						lying = 1
 						stat = 0
 					if (paralysis > 0)
-						paralysis--
+						AdjustParalysis(-1)
 						blinded = 1
 						lying = 1
 						stat = 1

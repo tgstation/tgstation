@@ -187,8 +187,8 @@
 						step(M, M.dir)
 						M << "\blue You slipped on the wet floor!"
 						playsound(src.loc, 'slip.ogg', 50, 1, -3)
-						M.stunned = 8
-						M.weakened = 5
+						M.Stun(8)
+						M.Weaken(5)
 					else
 						M.inertia_dir = 0
 						return
@@ -198,8 +198,8 @@
 						step(M, M.dir)
 						M << "\blue You slipped on the wet floor!"
 						playsound(src.loc, 'slip.ogg', 50, 1, -3)
-						M.stunned = 8
-						M.weakened = 5
+						M.Stun(8)
+						M.Weaken(5)
 					else
 						M.inertia_dir = 0
 						return
@@ -215,7 +215,7 @@
 					M.take_organ_damage(2) // Was 5 -- TLE
 					M << "\blue You slipped on the floor!"
 					playsound(src.loc, 'slip.ogg', 50, 1, -3)
-					M.weakened = 10
+					M.Weaken(10)
 
 	..()
 
@@ -1197,7 +1197,7 @@ turf/simulated/floor/return_siding_icon_state()
 		else if(ticker.mode.name == "extended"||ticker.mode.name == "sandbox")	Sandbox_Spacemove(A)
 
 		else
-			if (src.x <= 2)
+			if (src.x <= 2 || A.x >= (world.maxx - 1) || src.y <= 2 || A.y >= (world.maxy - 1))
 				if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
 					del(A)
 					return
@@ -1210,63 +1210,25 @@ turf/simulated/floor/return_siding_icon_state()
 					return
 
 				A.z = move_to_z
-				A.x = world.maxx - 2
-				spawn (0)
-					if ((A && A.loc))
-						A.loc.Entered(A)
-			else if (A.x >= (world.maxx - 1))
-				if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
-					del(A)
-					return
 
-				var/move_to_z_str = pickweight(accessable_z_levels)
+				if(src.x <= 2)
+					A.x = world.maxx - 2
 
-				var/move_to_z = text2num(move_to_z_str)
+				else if (A.x >= (world.maxx - 1))
+					A.x = 3
 
-				if(!move_to_z)
-					return
+				else if (src.y <= 2)
+					A.y = world.maxy - 2
 
-				A.z = move_to_z
-				A.x = 3
-				spawn (0)
-					if ((A && A.loc))
-						A.loc.Entered(A)
-			else if (src.y <= 2)
-				if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
-					del(A)
-					return
+				else if (A.y >= (world.maxy - 1))
+					A.y = 3
 
-				var/move_to_z_str = pickweight(accessable_z_levels)
-
-				var/move_to_z = text2num(move_to_z_str)
-
-				if(!move_to_z)
-					return
-
-				A.z = move_to_z
-				A.y = world.maxy - 2
 				spawn (0)
 					if ((A && A.loc))
 						A.loc.Entered(A)
 
-			else if (A.y >= (world.maxy - 1))
-				if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
-					del(A)
-					return
-
-				var/move_to_z_str = pickweight(accessable_z_levels)
-
-				var/move_to_z = text2num(move_to_z_str)
-
-				if(!move_to_z)
-					return
-
-				A.z = move_to_z
-				A.y = 3
-				spawn (0)
-					if ((A && A.loc))
-						A.loc.Entered(A)
-
+//				if(istype(A, /obj/structure/closet/coffin))
+//					coffinhandler.Add(A)
 
 /turf/space/proc/Sandbox_Spacemove(atom/movable/A as mob|obj)
 	var/cur_x

@@ -80,9 +80,9 @@
 	proc
 		clamp_values()
 
-			stunned = max(min(stunned, 20),0)
-			paralysis = max(min(paralysis, 20), 0)
-			weakened = max(min(weakened, 20), 0)
+			SetStunned(min(stunned, 20))
+			SetParalysis(min(paralysis, 20))
+			SetWeakened(min(weakened, 20))
 			sleeping = max(min(sleeping, 20), 0)
 			adjustBruteLoss(0)
 			adjustToxLoss(0)
@@ -95,7 +95,7 @@
 			if (src.disabilities & 2)
 				if ((prob(1) && src.paralysis < 10 && src.r_epil < 1))
 					src << "\red You have a seizure!"
-					src.paralysis = max(10, src.paralysis)
+					Paralyse(10)
 			if (src.disabilities & 4)
 				if ((prob(5) && src.paralysis <= 1 && src.r_ch_cou < 1))
 					src.drop_item()
@@ -104,7 +104,7 @@
 						return
 			if (src.disabilities & 8)
 				if ((prob(10) && src.paralysis <= 1 && src.r_Tourette < 1))
-					src.stunned = max(10, src.stunned)
+					Stun(10)
 					spawn( 0 )
 						emote("twitch")
 						return
@@ -132,13 +132,13 @@
 			if (src.mutations & HULK && src.health <= 25)
 				src.mutations &= ~HULK
 				src << "\red You suddenly feel very weak."
-				src.weakened = 3
+				Weaken(3)
 				emote("collapse")
 
 			if (src.radiation)
 				if (src.radiation > 100)
 					src.radiation = 100
-					src.weakened = 10
+					Weaken(10)
 					src << "\red You feel weak."
 					emote("collapse")
 
@@ -157,7 +157,7 @@
 						src.adjustToxLoss(1)
 						if(prob(5))
 							src.radiation -= 5
-							src.weakened = 3
+							Weaken(3)
 							src << "\red You feel weak."
 							emote("collapse")
 						src.updatehealth()
@@ -377,7 +377,7 @@
 				src.eye_blurry = max(2, src.eye_blurry)
 				if (prob(5))
 					src.sleeping = 1
-					src.paralysis = 5
+					src.Paralyse(5)
 
 			confused = max(0, confused - 1)
 			// decrement dizziness counter, clamped to 0
@@ -396,15 +396,15 @@
 
 			health = 100 - (getOxyLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 
-			if(getOxyLoss() > 50) paralysis = max(paralysis, 3)
+			if(getOxyLoss() > 50) Paralyse(3)
 
 			if(src.sleeping)
-				src.paralysis = max(src.paralysis, 3)
+				Paralyse(3)
 				if (prob(10) && health) spawn(0) emote("snore")
 				src.sleeping--
 
 			if(src.resting)
-				src.weakened = max(src.weakened, 5)
+				Weaken(5)
 
 			if(health < config.health_threshold_dead || src.brain_op_stage == 4.0)
 				death()
@@ -415,20 +415,20 @@
 				if(!src.reagents.has_reagent("inaprovaline")) src.oxyloss++
 
 				if(src.stat != 2)	src.stat = 1
-				src.paralysis = max(src.paralysis, 5)
+				Paralyse(5)
 
 			if (src.stat != 2) //Alive.
 
 				if (src.paralysis || src.stunned || src.weakened) //Stunned etc.
 					if (src.stunned > 0)
-						src.stunned--
+						AdjustStunned(-1)
 						src.stat = 0
 					if (src.weakened > 0)
-						src.weakened--
+						AdjustWeakened(-1)
 						src.lying = 1
 						src.stat = 0
 					if (src.paralysis > 0)
-						src.paralysis--
+						AdjustParalysis(-1)
 						src.blinded = 1
 						src.lying = 1
 						src.stat = 1

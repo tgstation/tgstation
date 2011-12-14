@@ -310,7 +310,7 @@ datum
 									continue
 
 							flick("e_flash", M.flash)
-							M.weakened = 15
+							M.Weaken(15)
 
 						if(4 to 5)
 							if(hasvar(M, "glasses"))
@@ -318,7 +318,7 @@ datum
 									continue
 
 							flick("e_flash", M.flash)
-							M.stunned = 5
+							M.Stun(5)
 
 		napalm
 			name = "Napalm"

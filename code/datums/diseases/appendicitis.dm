@@ -21,19 +21,19 @@
 		if(2)
 			if(prob(3))
 				affected_mob << "\red You feel a stabbing pain in your abdomen!"
-				affected_mob.stunned = rand(2,3)
+				affected_mob.Stun(rand(2,3))
 				affected_mob.adjustToxLoss(1)
 		if(3)
 			if(prob(1))
 				if (affected_mob.nutrition > 100)
-					affected_mob.stunned = rand(4,6)
+					affected_mob.Stun(rand(4,6))
 					affected_mob << "\red You throw up!"
 					var/turf/location = affected_mob.loc
 					if (istype(location, /turf/simulated))
 						location.add_vomit_floor(affected_mob)
 					affected_mob.nutrition -= 95
-					affected_mob:adjustToxLoss(-1)
+					affected_mob.adjustToxLoss(-1)
 				else
 					affected_mob << "\red You gag as you want to throw up, but there's nothing in your stomach!"
-					affected_mob.weakened += 10
+					affected_mob.Weaken(10)
 					affected_mob.adjustToxLoss(3)

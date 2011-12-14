@@ -42,9 +42,9 @@
 
 		clamp_values()
 
-			stunned = max(stunned,0)
-			paralysis = max(paralysis, 0)
-			weakened = max(weakened, 0)
+			AdjustParalysis(0)
+			AdjustStunned(0)
+			AdjustWeakened(0)
 			adjustBruteLoss(0)
 			adjustFireLoss(0)
 			adjustOxyLoss(0)
@@ -55,7 +55,7 @@
 			if (radiation)
 				if (radiation > 100)
 					radiation = 100
-					weakened = 10
+					Weaken(10)
 					src << "\red You feel weak."
 
 				switch(radiation)
@@ -70,7 +70,7 @@
 						adjustToxLoss(1)
 						if(prob(5))
 							radiation -= 5
-							weakened = 3
+							Weaken(3)
 							src << "\red You feel weak."
 //							emote("collapse")
 						updatehealth()
@@ -139,7 +139,7 @@
 				eye_blurry = max(2, eye_blurry)
 				if (prob(5))
 					sleeping = 1
-					paralysis = 5
+					Paralyse(5)
 
 			confused = max(0, confused - 1)
 			// decrement dizziness counter, clamped to 0
@@ -156,14 +156,14 @@
 
 			health = 100 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 
-			if(getOxyLoss() > 25) paralysis = max(paralysis, 3)
+			if(getOxyLoss() > 25) Paralyse(3)
 
 			if(sleeping)
-				paralysis = max(paralysis, 5)
+				Paralyse(5)
 				if (prob(1) && health) spawn(0) emote("snore")
 
 			if(resting)
-				weakened = max(weakened, 5)
+				Weaken(5)
 
 			if(stat != 2 && (!container && (health < config.health_threshold_dead || (config.revival_brain_life >= 0 && ((world.time - timeofhostdeath) > config.revival_brain_life )))))
 				death()
@@ -174,20 +174,20 @@
 				if(!reagents.has_reagent("inaprovaline")) oxyloss++
 
 				if(stat != 2)	stat = 1
-				paralysis = max(paralysis, 5)
+				Paralyse(5)
 
 			if (stat != 2) //Alive.
 
 				if (paralysis || stunned || weakened) //Stunned etc.
 					if (stunned > 0)
-						stunned--
+						AdjustStunned(-1)
 						stat = 0
 					if (weakened > 0)
-						weakened--
+						AdjustWeakened(-1)
 						lying = 1
 						stat = 0
 					if (paralysis > 0)
-						paralysis--
+						AdjustParalysis(-1)
 						blinded = 1
 						lying = 1
 						stat = 1

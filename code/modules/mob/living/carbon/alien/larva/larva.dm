@@ -105,7 +105,7 @@
 		if(3.0)
 			b_loss += 30
 			if (prob(50))
-				paralysis += 1
+				Paralyse(1)
 			ear_damage += 15
 			ear_deaf += 60
 
@@ -356,12 +356,12 @@
 			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
 				if(M.gloves.cell.charge >= 2500)
 					M.gloves.cell.charge -= 2500
-					if (weakened < 5)
-						weakened = 5
+
+					Weaken(5)
 					if (stuttering < 5)
 						stuttering = 5
-					if (stunned < 5)
-						stunned = 5
+					Stun(5)
+
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall.", 2)
@@ -418,7 +418,7 @@
 				if (M.mutations & HULK)
 					damage += 5
 					spawn(0)
-						paralysis += 1
+						Paralyse(1)
 						step_away(src,M,15)
 						sleep(3)
 						step_away(src,M,15)
@@ -427,8 +427,7 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
 				if (damage > 4.9)
-					if (weakened < 10)
-						weakened = rand(10, 15)
+					Weaken(rand(10,15))
 					for(var/mob/O in viewers(M, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has weakened []!</B>", M, src), 1, "\red You hear someone fall.", 2)
@@ -457,9 +456,9 @@
 		if ("help")
 			sleeping = 0
 			resting = 0
-			if (paralysis >= 3) paralysis -= 3
-			if (stunned >= 3) stunned -= 3
-			if (weakened >= 3) weakened -= 3
+			AdjustParalysis(-3)
+			AdjustStunned(-3)
+			AdjustWeakened(-3)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\blue [M.name] nuzzles [] trying to wake it up!", src), 1)

@@ -197,8 +197,7 @@
 		M << "\red <B>You feel a deep shock course through your body!</B>"
 		sleep(1)
 		M.burn_skin(85)
-		if(M.stunned < 600)
-			M.stunned = 600
+		M.Stun(600)
 	for(var/mob/M in hearers(src, null))
 		M.show_message("\red The electric chair went off!.", 3, "\red You hear a deep sharp shock.", 2)
 

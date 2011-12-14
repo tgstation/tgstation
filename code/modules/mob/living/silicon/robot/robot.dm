@@ -503,9 +503,8 @@
 
 		if ("disarm")
 			if(!(lying))
-				var/randn = rand(1, 100)
-				if (randn <= 85)
-					stunned = 5
+				if (rand(1,100) <= 85)
+					Stun(5)
 					step(src,get_dir(M,src))
 					spawn(5) step(src,get_dir(M,src))
 					playsound(loc, 'pierce.ogg', 50, 1, -1)

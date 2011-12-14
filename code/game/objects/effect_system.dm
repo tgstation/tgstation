@@ -884,8 +884,8 @@ steam.start() -- spawns the effect
 		M.pulling = null
 		M << "\blue You slipped on the foam!"
 		playsound(src.loc, 'slip.ogg', 50, 1, -3)
-		M.stunned = 5
-		M.weakened = 2
+		M.Stun(5)
+		M.Weaken(2)
 
 
 /datum/effect/effect/system/foam_spread
@@ -1094,7 +1094,7 @@ steam.start() -- spawns the effect
 			for(var/mob/M in viewers(1, location))
 				if (prob (50 * amount))
 					M << "\red The explosion knocks you down."
-					M.weakened += rand (1, 5)
+					M.Weaken(rand(1,5))
 			return
 		else
 			var/devastation = -1

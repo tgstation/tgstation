@@ -11,10 +11,10 @@
 	switch(severity)
 		if(1)
 			src.take_organ_damage(40)
-			src.stunned = max(src.stunned,rand(5,10))
+			Stun(rand(5,10))
 		if(2)
 			src.take_organ_damage(20)
-			src.stunned = max(src.stunned,rand(1,5))
+			Stun(rand(1,5))
 	flick("noise", src:flash)
 	src << "\red <B>*BZZZT*</B>"
 	src << "\red Warning: Electromagnetic pulse detected."

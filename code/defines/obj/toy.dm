@@ -213,7 +213,7 @@
 
 			return
 		else if (bullets == 0)
-			user.weakened += 5
+			user.Weaken(5)
 			for(var/mob/O in viewers(world.view, user))
 				O.show_message(text("\red [] realized they were out of ammo and starting scrounging for some!", user), 1)
 
@@ -236,7 +236,7 @@
 		else if (M.lying && src.bullets == 0)
 			for(var/mob/O in viewers(M, null))
 				if (O.client)	O.show_message(text("\red <B>[] casually lines up a shot with []'s head, pulls the trigger, then realizes they are out of ammo and drops to the floor in search of some!</B>", user, M), 1, "\red You hear someone fall", 2)
-			user.weakened += 5
+			user.Weaken(5)
 		return
 
 /obj/item/toy/crayonbox

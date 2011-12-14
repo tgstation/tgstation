@@ -24,7 +24,7 @@
 		for(var/obj/item/W in M)
 			M.drop_from_slot(W)
 		//teleport person to cell
-		M.paralysis += 5
+		M.Paralyse(5)
 		sleep(5)	//so they black out before warping
 		M.loc = pick(prisonwarp)
 		if(istype(M, /mob/living/carbon/human))
@@ -500,9 +500,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		M.setToxLoss(0)
 		//M.bruteloss = 0
 		M.setOxyLoss(0)
-		M.paralysis = 0
-		M.stunned = 0
-		M.weakened = 0
+		M.SetParalysis(0)
+		M.SetStunned(0)
+		M.SetWeakened(0)
 		M.radiation = 0
 		//M.health = 100
 		M.nutrition = 400

@@ -86,7 +86,7 @@
 			message = "<B>The [src.name]</B> jumps!"
 			m_type = 1
 		if("collapse")
-			if (!src.paralysis)	src.paralysis += 2
+			Paralyse(2)
 			message = text("<B>[]</B> collapses!", src)
 			m_type = 2
 		if("help")

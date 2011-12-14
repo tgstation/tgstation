@@ -138,14 +138,14 @@
 	src.setToxLoss(0)
 	//src.bruteloss = 0
 	src.setOxyLoss(0)
-	src.paralysis = 0
-	src.stunned = 0
-	src.weakened =0
+	SetParalysis(0)
+	SetStunned(0)
+	SetWeakened(0)
 	//src.health = 100
 	src.heal_overall_damage(1000, 1000)
 	src.buckled = initial(src.buckled)
 	src.handcuffed = initial(src.handcuffed)
-	if(src.stat > 1) src.stat=0
+	if(src.stat > 1) src.stat = CONSCIOUS
 	..()
 	return
 

@@ -382,9 +382,9 @@
 		//usr.bruteloss = 0
 		usr.setOxyLoss(0)
 		usr.setCloneLoss(0)
-		usr.paralysis = 0
-		usr.stunned = 0
-		usr.weakened = 0
+		usr.SetParalysis(0)
+		usr.SetStunned(0)
+		usr.SetWeakened(0)
 		usr.radiation = 0
 		//usr.health = 100
 		//usr.updatehealth()

@@ -41,7 +41,7 @@
 	if(C && C.active)
 		C.attack_self(src)//Should shut it off
 		src << "\blue Your [C.name] was disrupted!"
-		stunned = max(stunned, 2)
+		Stun(2)
 
 	var/absorb = run_armor_check(def_zone, P.flag)
 	if(absorb >= 2)

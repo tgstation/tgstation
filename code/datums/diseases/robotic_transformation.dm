@@ -36,7 +36,7 @@
 				affected_mob.take_organ_damage(5)
 			if (prob(4))
 				affected_mob << "\red You feel a stabbing pain in your head."
-				affected_mob.paralysis += 2
+				affected_mob.Paralyse(2)
 			if (prob(4))
 				affected_mob << "\red You can feel something move...inside."
 		if(4)

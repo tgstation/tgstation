@@ -258,7 +258,7 @@
 		cremating = 1
 		locked = 1
 		for (var/mob/living/M in contents)
-			M:stunned = 100 //You really dont want to place this inside the loop.
+			M.Stun(100) //You really dont want to place this inside the loop.
 			spawn(1)
 				for(var/i=1 to 10)
 					sleep(10)

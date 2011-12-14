@@ -123,7 +123,7 @@ TABLE AND RACK OBJECT INTERATIONS
 			user << "\red You need a better grip to do that!"
 			return
 		G.affecting.loc = src.loc
-		G.affecting.weakened = 5
+		G.affecting.Weaken(5)
 		for(var/mob/O in viewers(world.view, src))
 			if (O.client)
 				O << text("\red [] puts [] on the table.", G.assailant, G.affecting)
@@ -169,7 +169,7 @@ TABLE AND RACK OBJECT INTERATIONS
 			user << "\red You need a better grip to do that!"
 			return
 		G.affecting.loc = src.loc
-		G.affecting.weakened = 5
+		G.affecting.Weaken(5)
 		for(var/mob/O in viewers(world.view, src))
 			if (O.client)
 				O << text("\red [] puts [] on the wooden table.", G.assailant, G.affecting)
@@ -211,7 +211,7 @@ TABLE AND RACK OBJECT INTERATIONS
 			user << "\red You need a better grip to do that!"
 			return
 		G.affecting.loc = src.loc
-		G.affecting.weakened = 5
+		G.affecting.Weaken(5)
 		for(var/mob/O in viewers(world.view, src))
 			if (O.client)
 				O << text("\red [] puts [] on the reinforced table.", G.assailant, G.affecting)

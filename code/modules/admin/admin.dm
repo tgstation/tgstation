@@ -504,7 +504,7 @@
 						W.dropped(M)
 						W.layer = initial(W.layer)
 				//teleport person to cell
-				M.paralysis += 5
+				M.Paralyse(5)
 				sleep(5) //so they black out before warping
 				M.loc = pick(prisonwarp)
 				if(istype(M, /mob/living/carbon/human))
@@ -571,7 +571,7 @@
 							W.loc = M.loc
 							W.dropped(M)
 							W.layer = initial(W.layer)
-				M.paralysis += 5
+				M.Paralyse(5)
 				sleep(5)
 				M.loc = pick(tdome1)
 				spawn(50)
@@ -597,7 +597,7 @@
 							W.loc = M.loc
 							W.dropped(M)
 							W.layer = initial(W.layer)
-				M.paralysis += 5
+				M.Paralyse(5)
 				sleep(5)
 				M.loc = pick(tdome2)
 				spawn(50)
@@ -612,7 +612,7 @@
 				if(istype(M, /mob/living/silicon/ai))
 					alert("The AI can't be sent to the thunderdome you jerk!", null, null, null, null, null)
 					return
-				M.paralysis += 5
+				M.Paralyse(5)
 				sleep(5)
 				M.loc = pick(tdomeadmin)
 				spawn(50)
@@ -642,7 +642,7 @@
 					var/mob/living/carbon/human/observer = M
 					observer.equip_if_possible(new /obj/item/clothing/under/suit_jacket(observer), observer.slot_w_uniform)
 					observer.equip_if_possible(new /obj/item/clothing/shoes/black(observer), observer.slot_shoes)
-				M.paralysis += 5
+				M.Paralyse(5)
 				sleep(5)
 				M.loc = pick(tdomeobserve)
 				spawn(50)
@@ -1153,7 +1153,7 @@
 						if(loc.z > 1 || prisonwarped.Find(H))
 	//don't warp them if they aren't ready or are already there
 							continue
-						H.paralysis += 5
+						H.Paralyse(5)
 						if(H.wear_id)
 							var/obj/item/weapon/card/id/id = H.get_idcard()
 							for(var/A in id.access)

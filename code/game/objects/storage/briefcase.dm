@@ -14,7 +14,7 @@
 	if ((user.mutations & CLUMSY) && prob(50))
 		user << "\red The [src] slips out of your hand and hits your head."
 		user.take_organ_damage(10)
-		user.paralysis += 2
+		user.Paralyse(2)
 		return
 
 
@@ -29,11 +29,9 @@
 			return
 		var/time = rand(2, 6)
 		if (prob(75))
-			if (M.paralysis < time && (!(M.mutations & HULK)) )
-				M.paralysis = time
+			M.Paralyse(time)
 		else
-			if (M.stunned < time && (!(M.mutations & HULK)) )
-				M.stunned = time
+			M.Stun(time)
 		if(M.stat != 2)	M.stat = 1
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red <B>[] has been knocked unconscious!</B>", M), 1, "\red You hear someone fall.", 2)

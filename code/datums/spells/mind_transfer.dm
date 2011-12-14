@@ -115,8 +115,8 @@ Also, you never added distance checking after target is selected. I've went ahea
 	victim.mind.current = victim
 
 	//Here we paralyze both mobs and knock them out for a time.
-	caster.paralysis += paralysis_amount_caster
-	victim.paralysis += paralysis_amount_victim
+	caster.Paralyse(paralysis_amount_caster)
+	victim.Paralyse(paralysis_amount_victim)
 
 	//After a certain amount of time the victim gets a message about being in a different body.
 	spawn(msg_wait)

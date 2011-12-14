@@ -399,8 +399,8 @@
 				M << "\red You drop what you're holding and clutch at your eyes!"
 				M.drop_item()
 			M.eye_blurry += 10
-			M.paralysis += 1
-			M.weakened += 4
+			M.Paralyse(1)
+			M.Weaken(4)
 		if (prob(M.eye_stat - 10 + 1))
 			if(M.stat != 2)
 				M << "\red You go blind!"

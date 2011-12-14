@@ -138,8 +138,7 @@
 		s.set_up(3, 1, M)
 		s.start()
 
-		if (M.weakened < 10)
-			M.weakened = 10
+		M.Weaken(10)
 
 	if ((src.master && src.wires & 1))
 		src.master.receive_signal()

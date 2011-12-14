@@ -265,7 +265,7 @@
 				ear_damage += 15
 				ear_deaf += 60
 			if (prob(50) && !shielded)
-				paralysis += 10
+				Paralyse(10)
 
 	for(var/datum/organ/external/temp in organs)
 		switch(temp.name)
@@ -1154,12 +1154,10 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>The [M.name] has shocked []!</B>", src), 1)
 
-				if (weakened < power)
-					weakened = power
+				Weaken(power)
 				if (stuttering < power)
 					stuttering = power
-				if (stunned < power)
-					stunned = power
+				Stun(power)
 
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)
@@ -2226,3 +2224,18 @@ It can still be worn/put on as normal.
 		take_overall_damage(0, amount)
 	else
 		heal_overall_damage(0, -amount)
+
+/mob/living/carbon/human/Stun(amount)
+	if(mutations & HULK)
+		return
+	..()
+
+/mob/living/carbon/human/Weaken(amount)
+	if(mutations & HULK)
+		return
+	..()
+
+/mob/living/carbon/human/Paralyse(amount)
+	if(mutations & HULK)
+		return
+	..()
