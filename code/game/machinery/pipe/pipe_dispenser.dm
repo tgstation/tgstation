@@ -5,6 +5,7 @@
 	density = 1
 	anchored = 1
 	var/unwrenched = 0
+	var/wait = 0
 
 /obj/machinery/pipedispenser/attack_paw(user as mob)
 	return src.attack_hand(user)
@@ -49,16 +50,20 @@
 	usr.machine = src
 	src.add_fingerprint(usr)
 	if(href_list["make"])
-		var/p_type = text2num(href_list["make"])
-		var/p_dir = text2num(href_list["dir"])
-		var/obj/item/pipe/P = new (/*usr.loc*/ src.loc, pipe_type=p_type, dir=p_dir)
-		P.update()
+		if(!wait)
+			var/p_type = text2num(href_list["make"])
+			var/p_dir = text2num(href_list["dir"])
+			var/obj/item/pipe/P = new (/*usr.loc*/ src.loc, pipe_type=p_type, dir=p_dir)
+			P.update()
+			wait = 1
+			spawn(10)
+				wait = 0
 	if(href_list["makemeter"])
-		new /obj/item/pipe_meter(/*usr.loc*/ src.loc)
-
-/*	for(var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
-			src.attack_hand(M)*/
+		if(!wait)
+			new /obj/item/pipe_meter(/*usr.loc*/ src.loc)
+			wait = 1
+			spawn(15)
+				wait = 0
 	return
 
 /obj/machinery/pipedispenser/attackby(var/obj/item/W as obj, var/mob/user as mob)
@@ -128,23 +133,24 @@
 	usr.machine = src
 	src.add_fingerprint(usr)
 	if(href_list["dmake"])
-		var/p_type = text2num(href_list["dmake"])
-		var/obj/structure/disposalconstruct/C = new (src.loc)
-		switch(p_type)
-			if(0)
-				C.ptype = 0
-			if(1)
-				C.ptype = 1
-			if(2)
-				C.ptype = 2
-			if(3)
-				C.ptype = 4
-			if(4)
-				C.ptype = 5
+		if(!wait)
+			var/p_type = text2num(href_list["dmake"])
+			var/obj/structure/disposalconstruct/C = new (src.loc)
+			switch(p_type)
+				if(0)
+					C.ptype = 0
+				if(1)
+					C.ptype = 1
+				if(2)
+					C.ptype = 2
+				if(3)
+					C.ptype = 4
+				if(4)
+					C.ptype = 5
 
-		C.update()
-
-		usr << browse(null, "window=pipedispenser")
-		usr.machine = null
+			C.update()
+			wait = 1
+			spawn(15)
+				wait = 0
 	return
 
