@@ -320,7 +320,7 @@
 		playsound(src.loc, 'rustle1.ogg', 50, 1) //russle sounds sounded better
 
 		sleep(50)
-		if ((user.loc == T && user.equipped() == W))
+		if ((user.loc == T && user.equipped() == W) && !dug)
 			user << "\blue You dug a hole."
 			gets_dug()
 			dug = 1
