@@ -53,13 +53,13 @@
 /obj/item/clothing/head/redcoat
 	name = "Redcoat hat"
 	icon_state = "redcoat"
-	desc = "I guess it's a redhad."
+	desc = "I guess it's a redhead."
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/head/mailman
 	name = "Mailman Hat"
 	icon_state = "mailman"
-	desc = "Right-on-time mail ervice head wear."
+	desc = "Right-on-time mail service head wear."
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/head/plaguedoctorhat
