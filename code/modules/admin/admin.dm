@@ -1385,14 +1385,24 @@
 					message_admins("[key_name_admin(usr)] broke all lights", 1)
 					lightsout(0,0)
 				if("virus")
-					if(alert("Do you want this to be a random disease or do you have something in mind?",,"Random","Choose")=="Random")
+					var/answer = alert("Do you want this to be a random disease or do you have something in mind?",,"Virus2","Random","Choose")
+					if(answer=="Random")
 						viral_outbreak()
 						message_admins("[key_name_admin(usr)] has triggered a virus outbreak", 1)
-					else
+					else if(answer == "Choose")
 						var/list/viruses = list("fake gbs","gbs","magnitis","wizarditis",/*"beesease",*/"brain rot","cold","retrovirus","flu","pierrot's throat","rhumba beat")
 						var/V = input("Choose the virus to spread", "BIOHAZARD") in viruses
 						viral_outbreak(V)
 						message_admins("[key_name_admin(usr)] has triggered a virus outbreak of [V]", 1)
+					else
+						var/lesser = (alert("Do you want to infect the mob with a major or minor disease?",,"Major","Minor") == "Minor")
+						var/mob/living/carbon/victim = input("Select a mob to infect", "Virus2") as null|mob in world
+						if(!istype(victim)) return
+						if(lesser)
+							infect_mob_random_lesser(victim)
+						else
+							infect_mob_random_greater(victim)
+						message_admins("[key_name_admin(usr)] has infected [victim] with a [lesser ? "minor" : "major"] virus2.", 1)
 				if("retardify")
 					if (src.rank in list("Badmin", "Game Admin", "Game Master"))
 						for(var/mob/living/carbon/human/H in world)

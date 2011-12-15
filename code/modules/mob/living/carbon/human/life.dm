@@ -985,14 +985,27 @@
 
 
 			if(!virus2)
-				for(var/mob/living/carbon/M in oviewers(4,src))
+			    // the following is silly since it lets you infect people through glass
+				/*for(var/mob/living/carbon/M in oviewers(4,src))
 					if(M.virus2)
-						infect_virus2(src,M.virus2)
+						infect_virus2(src,M.virus2)*/
+				// instead we're going to use little floating disease objects
+				for(var/obj/virus/V in src.loc) if(src.get_infection_chance())
+					infect_virus2(src,V.disease)
 				for(var/obj/effect/decal/cleanable/blood/B in view(4, src))
 					if(B.virus2)
 						infect_virus2(src,B.virus2)
 			else
 				virus2.activate(src)
+
+				// activate may have deleted the virus
+				if(!virus2) return
+
+				// check if we're immune
+				if(virus2.antigen & src.antibodies) virus2.dead = 1
+				if(src.get_infection_chance())
+					var/obj/virus/V = new(src.loc)
+					V.disease = src.virus2
 
 
 
