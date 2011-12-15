@@ -96,7 +96,7 @@ datum
 
 
 		blood
-			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"virus2"=null)
+			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"virus2"=null,"antibodies"=0)
 			name = "Blood"
 			id = "blood"
 			reagent_state = LIQUID
@@ -118,6 +118,15 @@ datum
 						infect_virus2(M,self.data["virus2"])
 					else
 						infect_virus2(M,self.data["virus2"],1)
+
+				if(istype(M,/mob/living/carbon))
+					// add the host's antibodies to their blood
+					self.data["antibodies"] |= M:antibodies
+
+					// check if the blood has antibodies that cure our disease
+					if(self.data["antibodies"] & M:virus2.antigen) if(prob(10))
+						M:virus2.dead = 1
+
 
 				/*
 				if(self.data["virus"])
