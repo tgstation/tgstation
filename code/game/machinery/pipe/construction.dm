@@ -24,11 +24,12 @@ Buildable meters
 	var/pipe_type = 0
 	//var/pipe_dir = 0
 	var/pipename
+	force = 7
 	icon = 'pipe-item.dmi'
 	icon_state = "simple"
 	item_state = "buildpipe"
 	flags = TABLEPASS|FPRINT
-	w_class = 4
+	w_class = 3
 	level = 2
 
 /obj/item/pipe/New(var/loc, var/pipe_type as num, var/dir as num, var/obj/machinery/atmospherics/make_from = null)
