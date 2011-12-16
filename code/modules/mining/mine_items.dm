@@ -63,7 +63,7 @@ proc/move_mining_shuttle()
 /obj/machinery/computer/mining_shuttle/attack_hand(user as mob)
 	src.add_fingerprint(usr)
 	var/dat
-	dat = text("<b>Mining shuttle: <A href='?src=\ref[src];move=[1]'>Call</A></b>")
+	dat = text("<center>Mining shuttle:<br> <b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>")
 	user << browse("[dat]", "window=miningshuttle;size=200x100")
 
 /obj/machinery/computer/mining_shuttle/Topic(href, href_list)
@@ -78,17 +78,17 @@ proc/move_mining_shuttle()
 				return
 
 		if (!mining_shuttle_moving)
-			usr << "\blue shuttle called and will arrive shortly"
+			usr << "\blue Shuttle recieved message and will be sent shortly."
 			move_mining_shuttle()
 		else
-			usr << "\blue shuttle is already moving"
+			usr << "\blue Shuttle is already moving."
 
 /obj/machinery/computer/mining_shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if (istype(W, /obj/item/weapon/card/emag))
 		src.req_access = list()
 		hacked = 1
-		usr << "The computer's controls are now all access"
+		usr << "You fried the consoles ID checking system. It's now available to everyone!"
 
 /******************************Lantern*******************************/
 
