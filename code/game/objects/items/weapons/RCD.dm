@@ -117,7 +117,7 @@ RCD
 					desc = "A RCD. It currently holds [matter]/30 matter-units."
 			return
 		else if(mode == 3 && (istype(A, /turf) || istype(A, /obj/machinery/door/airlock) ) )
-			if(istype(A, /turf/simulated/wall) && matter >= 4)
+			if(istype(A, /turf/simulated/wall) && !istype(A, /turf/simulated/wall/r_wall) && matter >= 4)
 				user << "Deconstructing Wall (4)..."
 				playsound(src.loc, 'click.ogg', 50, 1)
 				if(do_after(user, 40))
