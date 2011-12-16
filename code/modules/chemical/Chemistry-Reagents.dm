@@ -1772,7 +1772,7 @@ datum
 
 		coco
 			name = "Coco Powder"
-			id = "Coco Powder"
+			id = "coco"
 			description = "A fatty, bitter paste made from coco beans."
 			reagent_state = SOLID
 			nutriment_factor = 5 * REAGENTS_METABOLISM

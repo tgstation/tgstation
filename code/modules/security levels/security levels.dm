@@ -21,7 +21,7 @@
 	if(level >= SEC_LEVEL_GREEN && level <= SEC_LEVEL_DELTA && level != security_level)
 		switch(level)
 			if(SEC_LEVEL_GREEN)
-				world << "<font size=4 color='red'>Attention! security level lowered to green</font>"
+				world << "<font size=4 color='red'>Attention! Security level lowered to green</font>"
 				world << "<font color='red'>[config.alert_desc_green]</font>"
 				security_level = SEC_LEVEL_GREEN
 				for(var/obj/machinery/firealarm/FA in world)
@@ -30,10 +30,10 @@
 						FA.overlays += image('monitors.dmi', "overlay_green")
 			if(SEC_LEVEL_BLUE)
 				if(security_level < SEC_LEVEL_BLUE)
-					world << "<font size=4 color='red'>Attention! security level elevated to blue</font>"
+					world << "<font size=4 color='red'>Attention! Security level elevated to blue</font>"
 					world << "<font color='red'>[config.alert_desc_blue_upto]</font>"
 				else
-					world << "<font size=4 color='red'>Attention! security level lowered to blue</font>"
+					world << "<font size=4 color='red'>Attention! Security level lowered to blue</font>"
 					world << "<font color='red'>[config.alert_desc_blue_downto]</font>"
 				security_level = SEC_LEVEL_BLUE
 				for(var/obj/machinery/firealarm/FA in world)

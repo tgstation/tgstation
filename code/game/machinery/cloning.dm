@@ -60,12 +60,14 @@
 	data = "0983E840344C39F4B059D5145FC5785DC6406A4FFF"
 	read_only = 1
 
+
 /obj/machinery/computer/cloning/New()
 	..()
 	spawn(5)
-		src.scanner = locate(/obj/machinery/dna_scannernew, get_step(src, WEST))
-		src.pod1 = locate(/obj/machinery/clonepod, get_step(src, EAST))
-
+		updatemodules()
+		/*src.scanner = findscanner()//locate(/obj/machinery/dna_scannernew, get_step(src, WEST))
+		src.pod1 = findcloner()//locate(/obj/machinery/clonepod, get_step(src, EAST))
+		world << "SEARCHING FOR MACHEIN"
 		src.temp = ""
 		if (isnull(src.scanner))
 			src.temp += " <font color=red>SCNR-ERROR</font>"
@@ -75,9 +77,49 @@
 			src.pod1.connected = src
 
 		if (src.temp == "")
-			src.temp = "System ready."
+			src.temp = "System ready."*/
 		return
 	return
+
+/obj/machinery/computer/cloning/proc/updatemodules()
+	//world << "UPDATING MODULES"
+	src.scanner = findscanner()//locate(/obj/machinery/dna_scannernew, get_step(src, WEST))
+	src.pod1 = findcloner()//locate(/obj/machinery/clonepod, get_step(src, EAST))
+	//world << "SEARCHING FOR MACHEIN"
+	//src.temp = ""
+	//if (isnull(src.scanner))
+	//	src.temp += " <font color=red>SCNR-ERROR</font>"
+	if (!isnull(src.pod1))
+		src.pod1.connected = src
+	//	src.temp += " <font color=red>POD1-ERROR</font>"
+	//else
+
+	//if (src.temp == "")
+	//	src.temp = "System ready."
+
+/obj/machinery/computer/cloning/proc/findscanner()
+	//..()
+	//world << "SEARCHING FOR SCANNER"
+	var/obj/machinery/dna_scannernew/scannerf = null
+	for(dir in list(NORTH,EAST,SOUTH,WEST))
+		//world << "SEARCHING IN [dir]"
+		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
+		if (!isnull(scannerf))
+			//world << "FOUND"
+			break
+	return scannerf
+
+/obj/machinery/computer/cloning/proc/findcloner()
+	//..()
+	//world << "SEARCHING FOR POD"
+	var/obj/machinery/clonepod/podf = null
+	for(dir in list(NORTH,EAST,SOUTH,WEST))
+		//world << "SEARCHING IN [dir]"
+		podf = locate(/obj/machinery/clonepod, get_step(src, dir))
+		if (!isnull(podf))
+			//world << "FOUND"
+			break
+	return podf
 
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
@@ -105,13 +147,26 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 
+	updatemodules()
+
 	var/dat = "<h3>Cloning System Control</h3>"
 	dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
 
-	dat += "<br><tt>[temp]</tt><br>"
+	//dat += "<br><tt>[temp]</tt><br>"
 
 	switch(src.menu)
 		if(1)
+			dat += "<h4>Modules</h4>"
+			//dat += "<a href='byond://?src=\ref[src];relmodules=1'>Reload Modules</a>"
+			if (isnull(src.scanner))
+				dat += " <font color=red>Scanner-ERROR</font><br>"
+			else
+				dat += " <font color=green>Scanner-Found!</font><br>"
+			if (isnull(src.pod1))
+				dat += " <font color=red>Pod-ERROR</font><br>"
+			else
+				dat += " <font color=green>Pod-Found!</font><br>"
+
 			dat += "<h4>Scanner Functions</h4>"
 
 			if (isnull(src.scanner))
@@ -170,7 +225,7 @@
 		if(4)
 			if (!src.active_record)
 				src.menu = 2
-			dat = "[src.temp]<br>"
+			//dat = "[src.temp]<br>"
 			dat += "<h4>Confirm Record Deletion</h4>"
 
 			dat += "<b><a href='byond://?src=\ref[src];del_rec=1'>Scan card to confirm.</a></b><br>"
