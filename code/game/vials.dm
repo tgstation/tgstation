@@ -271,6 +271,12 @@
 /proc/possess(obj/O as obj in world)
 	set name = "Possess Obj"
 	set category = "Object"
+
+	if(istype(O,/obj/machinery/singularity))
+		if(config.forbid_singulo_possession)
+			usr << "It is forbidden to possess singularities."
+			return
+
 	usr.loc = O
 	usr.real_name = O.name
 	usr.name = O.name

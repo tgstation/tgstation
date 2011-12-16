@@ -50,6 +50,8 @@
 	var/alert_desc_red_downto = "The self-destruct mechanism has been deactivated, there is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
 	var/alert_desc_delta = "The station's self-destruct mechanism has been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
 
+	var/forbid_singulo_possession = 0
+
 	//game_options.txt configs
 
 	var/health_threshold_crit = 0
@@ -245,6 +247,9 @@
 
 				if("alert_delta")
 					config.alert_desc_delta = value
+
+				if("forbid_singulo_possession")
+					forbid_singulo_possession = 1
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"

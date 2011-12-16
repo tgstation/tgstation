@@ -108,3 +108,6 @@ HOSTEDBY Yournamehere
 
 ##Toggle for having jobs load up from the .txt
 # LOAD_JOBS_FROM_TXT
+
+##Remove the # mark infront of this to forbid admins from posssessing the singularity.
+#FORBID_SINGULO_POSSESSION
