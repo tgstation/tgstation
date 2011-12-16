@@ -12,6 +12,7 @@
 	var/product_paths = "" //String of product paths separated by semicolons. No spaces!
 	var/product_amounts = "" //String of product amounts separated by semicolons, must have amount for every path in product_paths
 	var/product_slogans = "" //String of slogans separated by semicolons, optional
+	var/product_ads = "" //String of small ad messages in the vending screen - random chance
 	var/product_hidden = "" //String of products that are hidden unless hacked.
 	var/product_hideamt = "" //String of hidden product amounts, separated by semicolons. Exact same as amounts. Must be left blank if hidden is.
 	var/product_coin = ""
@@ -20,6 +21,7 @@
 	var/list/hidden_records = list()
 	var/list/coin_records = list()
 	var/list/slogan_list = list()
+	var/list/small_ads = list() // small ad messages in the vending screen - random chance of popping up whenever you open it
 	var/vend_reply //Thank you for shopping!
 	var/last_reply = 0
 	var/last_slogan = 0 //When did we last pitch?
@@ -40,17 +42,19 @@
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
 	icon_state = "boozeomat"        //////////////18 drink entities below, plus the glasses, in case someone wants to edit the number of bottles
 	product_paths = "/obj/item/weapon/reagent_containers/food/drinks/bottle/gin;/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey;/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla;/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka;/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth;/obj/item/weapon/reagent_containers/food/drinks/bottle/rum;/obj/item/weapon/reagent_containers/food/drinks/bottle/wine;/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac;/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua;/obj/item/weapon/reagent_containers/food/drinks/beer;/obj/item/weapon/reagent_containers/food/drinks/ale;/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice;/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice;/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice;/obj/item/weapon/reagent_containers/food/drinks/bottle/cream;/obj/item/weapon/reagent_containers/food/drinks/tonic;/obj/item/weapon/reagent_containers/food/drinks/cola;/obj/item/weapon/reagent_containers/food/drinks/sodawater;/obj/item/weapon/reagent_containers/food/drinks/drinkingglass;/obj/item/weapon/reagent_containers/food/drinks/ice"
-	product_amounts = "5;5;5;5;5;5;5;5;5;6;6;4;4;4;4;8;8;15;30;"
+	product_amounts = "5;5;5;5;5;5;5;5;5;6;6;4;4;4;4;8;8;15;30;9"
 	vend_delay = 15
 	product_hidden = "/obj/item/weapon/reagent_containers/food/drinks/tea"
 	product_hideamt = "10"
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
+	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
 
 /obj/machinery/vending/assist
 	product_amounts = "5;3;4;1;4"
 	product_hidden = "/obj/item/device/flashlight;obj/item/device/assembly/timer"
 	product_paths = "/obj/item/device/assembly/prox_sensor;/obj/item/device/assembly/igniter;/obj/item/device/assembly/signaler;/obj/item/weapon/wirecutters;/obj/item/weapon/cartridge/signal"
 	product_hideamt = "5;2"
+	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
 
 /obj/machinery/vending/coffee
 	name = "Hot Drinks machine"
@@ -61,6 +65,7 @@
 	product_amounts = "25;25;25"
 	vend_delay = 34
 	product_hidden = "/obj/item/weapon/reagent_containers/food/drinks/ice"
+	product_ads = "Have a drink!;Drink up!;It's good for you!;Would you like a hot joe?;I'd kill for some coffee!;The best beans in the galaxy.;Only the finest brew for you.;Mmmm. Nothing like a coffee.;I like coffee, don't you?;Coffee helps you work!;Try some tea.;We hope you like the best!;Try our new chocolate!;Admin conspiracies"
 	product_hideamt = "10"
 
 /obj/machinery/vending/snack
@@ -72,6 +77,7 @@
 	product_slogans = "Try our new nougat bar!;Twice the calories for half the price!"
 	product_hidden = "/obj/item/weapon/reagent_containers/food/snacks/syndicake"
 	product_hideamt = "10"
+	product_ads = "The healthiest!;Award-winning chocolate bars!;Mmm! So good!;Oh my god it's so juicy!;Have a snack.;Snacks are good for you!;Have some more Getmore!;Best quality snacks straight from mars.;We love chocolate!;Try our new jerky!"
 
 
 /obj/machinery/vending/cola
@@ -83,6 +89,7 @@
 	product_slogans = "Robust Softdrinks: More robust then a toolbox to the head!"
 	product_hidden = "/obj/item/weapon/reagent_containers/food/drinks/thirteenloko"
 	product_hideamt = "5"
+	product_ads = "Refreshing!;Hope you're thirsty!;Over 1 million drinks sold!;Thirsty? Why not cola?;Please, have a drink!;Drink up!;The best drinks in space."
 
 /obj/machinery/vending/cigarette
 	name = "cigarette machine"
@@ -96,6 +103,7 @@
 	product_hideamt = "4"
 	product_coin = "/obj/item/clothing/mask/cigarette/cigar/havanian"
 	product_coin_amt = "2"
+	product_ads = "Probably not bad for you!;Don't believe the scientists!;It's good for you!;Don't quit, buy more!;Smoke!;Nicotine heaven.;Best cigarettes since 2150.;Award-winning cigs."
 
 /obj/machinery/vending/medical
 	name = "NanoMed Plus"
@@ -107,6 +115,7 @@
 	product_amounts = "4;4;4;4;4;12;5;4;2"
 	product_hidden = "/obj/item/weapon/reagent_containers/pill/tox;/obj/item/weapon/reagent_containers/pill/stox;/obj/item/weapon/reagent_containers/pill/antitox"
 	product_hideamt = "3;4;6"
+	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?"
 
 /obj/machinery/vending/wallmed1
 	name = "NanoMed"
@@ -119,6 +128,7 @@
 	product_hidden = "/obj/item/weapon/reagent_containers/syringe/antitoxin;/obj/item/weapon/reagent_containers/syringe/antiviral;/obj/item/weapon/reagent_containers/pill/tox"
 	product_hideamt = "4;4;1"
 	density = 0 //It is wall-mounted, and thus, not dense. --Superxpdude
+	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?"
 
 /obj/machinery/vending/wallmed2
 	name = "NanoMed"
@@ -142,6 +152,7 @@
 	product_amounts = "8;4;5;12"
 	product_hidden = "/obj/item/clothing/glasses/sunglasses;/obj/item/kitchen/donut_box"
 	product_hideamt = "2;2"
+	product_ads = "Crack capitalist skulls!;Beat some heads in!;Don't forget - harm is good!;Your weapons are right here.;Handcuffs!;Freeze, scumbag!;Don't tase me bro!;Tase them, bro.;Why not have a donut?"
 
 /obj/machinery/vending/hydronutrients
 	name = "NutriMax"
@@ -153,6 +164,7 @@
 	product_slogans = "Aren't you glad you don't have to fertilize the natural way?;Now with 50% less stink!;Plants are people too!"
 	product_hidden = "/obj/item/weapon/reagent_containers/glass/bottle/ammonia;/obj/item/weapon/reagent_containers/glass/bottle/diethylamine"
 	product_hideamt = "10;5"
+	product_ads = "We like plants!;Don't you want some?;The greenest thumbs ever.;We like big plants.;Soft soil..."
 
 /obj/machinery/vending/hydroseeds
 	name = "MegaSeed Servitor"
@@ -165,6 +177,7 @@
 	product_hideamt = "2;2;2;2;2"
 	product_coin = "/obj/item/toy/waterflower"
 	product_coin_amt = "1"
+	product_ads = "We like plants!;Grow some crops!;Grow, baby, growww!;Aw h'yeah son!"
 
 /obj/machinery/vending/magivend
 	name = "MagiVend"
@@ -177,6 +190,7 @@
 	vend_reply = "Have an enchanted evening!"
 	product_hidden = "/obj/item/weapon/reagent_containers/glass/bottle/wizarditis" //No one can get to the machine to hack it anyways
 	product_hideamt = "1" //Just one, for the lulz, not like anyone can get it - Microwave
+	product_ads = "FJKLFJSD;AJKFLBJAKL;1234 LOONIES LOL!;>MFW;Kill them fuckers!;GET DAT FUKKEN DISK;HONK!;EI NATH;Destroy the station!;Admin conspiracies since forever!;Space-time bending hardware!"
 
 /obj/machinery/vending/dinnerware
 	name = "Dinnerware"
@@ -187,6 +201,7 @@
 	//product_amounts = "8;5;4" Old totals
 	product_hidden = "/obj/item/weapon/kitchen/utensil/spoon;/obj/item/weapon/kitchen/utensil/knife;/obj/item/weapon/kitchen/rollingpin;/obj/item/weapon/butch"
 	product_hideamt = "2;2;2;2"
+	product_ads = "Mm, food stuffs!;Food and food accessories.;Get your plates!;You like forks?;I like forks.;Woo, utensils.;You don't really need these..."
 
 
 /obj/machinery/vending/sovietsoda
@@ -198,3 +213,4 @@
 	//product_amounts = "8;5;4" Old totals
 	product_hidden = "/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola"
 	product_hideamt = "20"
+	product_ads = "What the fuck is this shit?;Why would you buy this;holy shit help;i'm stuck;in;a;universe;factory;AAAAAARGH!;HEIL... Stalin?;CAPITALIST PIGS;FUCK THE WEST"
