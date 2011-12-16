@@ -2,6 +2,7 @@
 	name = "sandbox"
 	config_tag = "sandbox"
 	required_players = 0
+	votable = 0
 
 /datum/game_mode/sandbox/announce()
 	world << "<B>The current game mode is - Sandbox!</B>"
