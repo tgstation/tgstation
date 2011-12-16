@@ -228,6 +228,7 @@
 					M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
 					M << "\red This is a temporary ban, it will be removed in [mins] minutes."
 					feedback_inc("ban_tmp",1)
+					feedback_inc("ban_tmp_mins",mins)
 					if(config.banappeals)
 						M << "\red To try to resolve this matter head to [config.banappeals]"
 					else

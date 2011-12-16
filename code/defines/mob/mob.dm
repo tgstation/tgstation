@@ -94,7 +94,7 @@
 	var/canmove = 1.0
 	var/eye_stat = null//Living, potentially Carbon
 
-
+	var/name_archive //For admin things like possession
 
 	var/timeofdeath = 0.0//Living
 	var/cpr_time = 1.0//Carbon
