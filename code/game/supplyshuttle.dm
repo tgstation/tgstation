@@ -84,7 +84,7 @@ var/ordernum=0
 	icon_state = "request"
 	circuit = "/obj/item/weapon/circuitboard/ordercomp"
 	var/temp = null
-
+	var/reqtime = 0 //Cooldown for requisitions - Quarxink
 /obj/effect/marker/supplymarker
 	icon_state = "X"
 	icon = 'mark.dmi'
@@ -273,43 +273,54 @@ var/ordernum=0
 		src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
 	else if (href_list["printform"])
-		var/supplytype = href_list["printform"]
-		var/datum/supply_packs/P = new supplytype ()
-		var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(src.loc)
-		var/idname = "Unknown"
-		var/idrank = "Unknown"
-		var/reason = input(usr,"Reason:","Why do you require this item?","")
+		if (!reqtime)
+			var/supplytype = href_list["printform"]
+			var/datum/supply_packs/P = new supplytype ()
+			var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(src.loc)
+			var/idname = "Unknown"
+			var/idrank = "Unknown"
+			var/reason = input(usr,"Reason:","Why do you require this item?","")
 
-		reqform.name = "Requisition Form - [P.name]"
-		reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
+			reqform.name = "Requisition Form - [P.name]"
+			reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
 
-		if (istype(usr:wear_id, /obj/item/weapon/card/id))
-			if(usr:wear_id.registered)
-				idname = usr:wear_id.registered
-			if(usr:wear_id.assignment)
-				idrank = usr:wear_id.assignment
-		if (istype(usr:wear_id, /obj/item/device/pda))
-			var/obj/item/device/pda/pda = usr:wear_id
-			if(pda.owner)
-				idname = pda.owner
-			if(pda.ownjob)
-				idrank = pda.ownjob
+			if (istype(usr:wear_id, /obj/item/weapon/card/id))
+				if(usr:wear_id.registered)
+					idname = usr:wear_id.registered
+				if(usr:wear_id.assignment)
+					idrank = usr:wear_id.assignment
+			if (istype(usr:wear_id, /obj/item/device/pda))
+				var/obj/item/device/pda/pda = usr:wear_id
+				if(pda.owner)
+					idname = pda.owner
+				if(pda.ownjob)
+					idrank = pda.ownjob
+			else
+				idname = usr.name
+
+			reqform.info += "REQUESTED BY: [idname]<br>"
+			reqform.info += "RANK: [idrank]<br>"
+			reqform.info += "REASON: [reason]<br>"
+			reqform.info += "SUPPLY CRATE TYPE: [P.name]<br>"
+			reqform.info += "Contents:<br><ul>"
+
+			for(var/B in P.contains)
+				var/thepath = text2path(B)
+				var/atom/B2 = new thepath ()
+				reqform.info += "<li>[B2.name]</li>"
+			reqform.info += "</ul><hr>"
+			reqform.info += "STAMP BELOW TO APPROVE THIS REQUISITION:<br>"
+
+			reqtime = 5 //5 second cooldown initiated after each printed req, change the number to change the cooldown (in seconds) - Quarxink
+			spawn(0)
+				while(reqtime >=1 && src)
+					sleep(10)
+					reqtime --
+				reqtime = 0
+
 		else
-			idname = usr.name
-
-		reqform.info += "REQUESTED BY: [idname]<br>"
-		reqform.info += "RANK: [idrank]<br>"
-		reqform.info += "REASON: [reason]<br>"
-		reqform.info += "SUPPLY CRATE TYPE: [P.name]<br>"
-		reqform.info += "Contents:<br><ul>"
-
-		for(var/B in P.contains)
-			var/thepath = text2path(B)
-			var/atom/B2 = new thepath ()
-			reqform.info += "<li>[B2.name]</li>"
-		reqform.info += "</ul><hr>"
-		reqform.info += "STAMP BELOW TO APPROVE THIS REQUISITION:<br>"
-
+			for (var/mob/V in hearers(src))
+				V.show_message("<b>[src]</b>'s monitor flashes, \"[reqtime] seconds remaining until another requisition form may be printed.\"")
 	else if (href_list["vieworders"])
 		src.temp = "Current approved orders: <BR><BR>"
 		for(var/S in supply_shuttle_shoppinglist)
