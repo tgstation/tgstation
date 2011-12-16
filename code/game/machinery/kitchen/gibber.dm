@@ -14,6 +14,36 @@
 	idle_power_usage = 2
 	active_power_usage = 500
 
+//auto-gibs anything that bumps into it
+/obj/machinery/gibber/autogibber
+	var/turf/input_plate
+
+	New()
+		..()
+		spawn(5)
+			for(var/i in cardinal)
+				var/obj/machinery/mineral/input/input_obj = locate( /obj/machinery/mineral/input, get_step(src.loc, i) )
+				if(input_obj)
+					if(isturf(input_obj.loc))
+						input_plate = input_obj.loc
+						del(input_obj)
+						break
+
+			if(!input_plate)
+				diary << "a [src] didn't find an input plate."
+				return
+
+	Bumped(var/atom/A)
+		if(!input_plate) return
+
+		if(ismob(A))
+			var/mob/M = A
+
+			if(M.loc == input_plate
+			)
+				M.loc = src
+				M.gib()
+
 
 /obj/machinery/gibber/New()
 	..()
