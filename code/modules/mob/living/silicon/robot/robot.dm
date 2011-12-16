@@ -60,10 +60,10 @@
 	..()
 
 /mob/living/silicon/robot/proc/pick_module()
-	if(module)
+	if(module || modlock)
 		return
 	var/mod = input("Please, select a module!", "Robot", null, null) in list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Security")
-	if(module)
+	if(module || modlock)
 		return
 	switch(mod)
 		if("Standard")
@@ -71,7 +71,7 @@
 			hands.icon_state = "standard"
 			icon_state = "robot"
 			modtype = "Stand"
-			radio.borg(src, list())
+			channels = list()
 
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
@@ -88,14 +88,14 @@
 			else
 				icon_state = "Service2"
 			modtype = "Butler"
-			radio.borg(src, list())
+			channels = list()
 
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
 			icon_state = "Miner"
 			modtype = "Miner"
-			radio.borg(src, list("Mining" = 1))
+			channels = list("Mining" = 1)
 
 		if("Medical")
 			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
@@ -106,7 +106,7 @@
 			if (sprite == "Non-Humanoid")
 				src.icon_state = "surgeon"
 			modtype = "Med"
-			radio.borg(src, list("Medical" = 1))
+			channels = list("Medical" = 1)
 
 		if("Security")
 			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
@@ -117,7 +117,7 @@
 			if (sprite == "Non-Humanoid")
 				src.icon_state = "bloodhound"
 			modtype = "Sec"
-			radio.borg(src, list("Security" = 1))
+			channels = list("Security" = 1)
 
 		if("Engineering")
 			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
@@ -128,7 +128,7 @@
 			if (sprite == "Non-Humanoid")
 				src.icon_state = "landmate"
 			modtype = "Eng"
-			radio.borg(src, list("Engineering" = 1))
+			channels = list("Engineering" = 1)
 
 		if("Janitor")
 			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
@@ -139,9 +139,10 @@
 			if (sprite == "Non-Humanoid")
 				src.icon_state = "mopgearrex"
 			modtype = "Jan"
-			radio.borg(src, list())
+			channels = list()
 
 	overlays -= "eyes" //Takes off the eyes that it started with
+	radio.borg(src, channels)
 	updateicon()
 
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
@@ -869,8 +870,10 @@ Frequency:
 [format_frequency(radio.frequency)]
 <A href='byond://?src=\ref[radio];freq=2'>+</A>
 <A href='byond://?src=\ref[radio];freq=10'>+</A><BR>
--------
-</TT>"}
+"}
+	for (var/ch_name in channels)
+		dat+=src.radio.text_sec_channel(ch_name, channels[ch_name])
+	dat+={"</TT>"}
 	src << browse(dat, "window=radio")
 	onclose(src, "radio")
 	return
@@ -946,6 +949,16 @@ Frequency:
 	if ((s_active && !( s_active in contents ) ))
 		s_active.close(src)
 	return
+
+/mob/living/silicon/robot/proc/reset_module()
+	modtype = "robot"
+	hands.icon_state = "standard"
+	icon_state = "robot"
+	updateicon()
+	channels = list()
+	radio.borg(src, channels)
+	uneq_all()
+	del(module)
 
 /mob/living/silicon/robot/proc/self_destruct()
 	gib(1)

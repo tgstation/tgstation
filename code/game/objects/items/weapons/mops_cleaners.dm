@@ -13,10 +13,24 @@ MOP
 /obj/item/weapon/cleaner/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
 
+/obj/item/weapon/cleaner/attack_self(var/mob/user as mob)
+	switch(catch)
+		if(0)
+			user << "\blue You flip the safety back on."
+			catch = 1
+			return
+		if(1)
+			user << "\blue You flip the safety off."
+			catch = 0
+			return
+
 /obj/item/weapon/cleaner/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (istype(A, /obj/item/weapon/storage ))
 		return
 	if (istype(A, /obj/effect/proc_holder/spell ))
+		return
+	else if (catch == 1)
+		user << "\blue The safety is on!"
 		return
 	else if (src.reagents.total_volume < 1)
 		user << "\blue [src] is empty!"
@@ -174,6 +188,17 @@ MOP
 /obj/item/weapon/pepperspray/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
 
+/obj/item/weapon/pepperspray/attack_self(var/mob/user as mob)
+	switch(catch)
+		if(0)
+			user << "\blue You flip the safety on."
+			catch = 1
+			return
+		if(1)
+			user << "\blue You flip the safety off."
+			catch = 0
+			return
+
 /obj/item/weapon/pepperspray/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (istype(A, /obj/item/weapon/storage ))
 		return
@@ -188,6 +213,9 @@ MOP
 		else
 			user << "\blue Pepper spray is already full!"
 			return
+	else if (catch == 1)
+		user << "\blue The safety is on!"
+		return
 	else if (src.reagents.total_volume < 1)
 		user << "\blue [src] is empty!"
 		return
@@ -259,7 +287,7 @@ MOP
 
 /obj/item/weapon/pepperspray/examine()
 	set src in usr
-	usr << text("\icon[] [] units of cleaner left!", src, src.reagents.total_volume)
+	usr << text("\icon[] [] units of pepperspray left!", src, src.reagents.total_volume)
 	..()
 	return
 
