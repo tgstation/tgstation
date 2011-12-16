@@ -180,10 +180,14 @@ MOP
 	if (istype(A, /obj/effect/proc_holder/spell ))
 		return
 	else if (istype(A, /obj/structure/reagent_dispensers/peppertank) && get_dist(src,A) <= 1)
-		A.reagents.trans_to(src, 45)
-		user << "\blue Pepper spray refilled"
-		playsound(src.loc, 'refill.ogg', 50, 1, -6)
-		return
+		if(src.reagents.total_volume < 45)
+			A.reagents.trans_to(src, 45 - src.reagents.total_volume)
+			user << "\blue Pepper spray refilled"
+			playsound(src.loc, 'refill.ogg', 50, 1, -6)
+			return
+		else
+			user << "\blue Pepper spray is already full!"
+			return
 	else if (src.reagents.total_volume < 1)
 		user << "\blue [src] is empty!"
 		return
@@ -195,8 +199,8 @@ MOP
 		var/obj/effect/decal/D = new/obj/effect/decal(get_turf(src))
 		D.name = "chemicals"
 		D.icon = 'chempuff.dmi'
-		D.create_reagents(15)
-		src.reagents.trans_to(D, 15)
+		D.create_reagents(5)
+		src.reagents.trans_to(D, 5)
 
 		var/rgbcolor[3]
 		var/finalcolor
