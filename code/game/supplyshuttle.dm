@@ -154,10 +154,12 @@ var/list/supply_groups = new()
 		//if((locate(/mob/living) in T) && (!locate(/mob/living/carbon/monkey) in T)) return 0  //old check for living excluded monkeys
 		if((locate(/mob/living) in T)) return 0
 		if((locate(/obj/item/device/radio/beacon) in T)) return 0
+		if((locate(/obj/mecha) in T)) return 0
 		for(var/atom/ATM in T)
 			if((locate(/mob/living/carbon) in ATM)) return 0	// allow simple_animals to be transported in containers
 			if((locate(/mob/living/silicon) in ATM)) return 0
 			if((locate(/obj/item/device/radio/beacon) in ATM)) return 0
+			if((locate(/obj/mecha ) in ATM)) return 0
 
 	return 1
 
@@ -433,7 +435,7 @@ var/list/supply_groups = new()
 		if(!supply_shuttle_at_station || supply_shuttle_moving) return
 
 		if (!supply_can_move())
-			usr << "\red The supply shuttle can not transport station employees or homing beacons."
+			usr << "\red The supply shuttle can not transport station employees, exosuits, or homing beacons."
 			return
 
 		src.temp = "Shuttle sent.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
