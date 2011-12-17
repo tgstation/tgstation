@@ -2122,7 +2122,6 @@
 	</body></html>
 	"}
 
-	text2file(dat, "debug.html")
 	usr << browse(dat, "window=players;size=600x480")
 
 
