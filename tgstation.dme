@@ -140,6 +140,7 @@
 #define FILE_DIR "code/WorkInProgress/mapload"
 #define FILE_DIR "code/WorkInProgress/organs"
 #define FILE_DIR "code/WorkInProgress/virus2"
+#define FILE_DIR "code/WorkInProgress/virus2/Disease2"
 #define FILE_DIR "html"
 #define FILE_DIR "icons"
 #define FILE_DIR "icons/effects"

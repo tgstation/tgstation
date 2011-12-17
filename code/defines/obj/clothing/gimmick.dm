@@ -517,3 +517,33 @@
 	icon_state = "bowler"
 	item_state = "bowler"
 	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/head/justice
+	name = "justice hat"
+	desc = "fight for what's righteous!"
+	icon_state = "justicered"
+	item_state = "justicered"
+	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+
+/obj/item/clothing/head/justice/blue
+	icon_state = "justiceblue"
+	item_state = "justiceblue"
+
+/obj/item/clothing/head/justice/yellow
+	icon_state = "justiceyellow"
+	item_state = "justiceyellow"
+
+/obj/item/clothing/head/justice/green
+	icon_state = "justicegreen"
+	item_state = "justicegreen"
+
+/obj/item/clothing/head/justice/pink
+	icon_state = "justicepink"
+	item_state = "justicepink"
+
+obj/item/clothing/suit/justice
+	name = "justice suit"
+	desc = "this pretty much looks ridiculous"
+	icon_state = "justice"
+	item_state = "justice"
+	flags = FPRINT | TABLEPASS
