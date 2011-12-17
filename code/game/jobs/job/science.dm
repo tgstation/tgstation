@@ -5,6 +5,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
+	supervisors = "the captain"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -26,6 +27,7 @@
 	faction = "Station"
 	total_positions = 5
 	spawn_positions = 3
+	supervisors = "the research director"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -48,6 +50,7 @@
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
+	supervisors = "the chief medical officer and the research director"
 
 
 	equip(var/mob/living/carbon/human/H)

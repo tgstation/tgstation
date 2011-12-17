@@ -209,6 +209,7 @@ var/global/datum/controller/occupations/job_master
 
 		spawnId(H,rank)
 		H << "<B>You are the [rank].</B>"
+		H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
 		H.job = rank
 		if(H.mind)
 			H.mind.assigned_role = rank
