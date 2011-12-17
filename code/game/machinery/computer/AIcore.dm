@@ -118,6 +118,8 @@
 				if(P:brainmob.mind in ticker.mode.head_revolutionaries)
 					user << "\red The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'.  It refuses to accept the MMI."
 					return
+				if(P:brainmob.mind in ticker.mode:revolutionaries)
+					ticker.mode:remove_revolutionary(P:brainmob.mind , 1)
 
 				if(jobban_isbanned(P:brainmob, "AI"))
 					user << "\red This MMI does not seem to fit."
@@ -146,13 +148,11 @@
 				else
 					icon_state = "3"
 				new /obj/item/stack/sheet/rglass( loc, 2 )
+				return
+
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(loc, 'Screwdriver.ogg', 50, 1)
 				user << "\blue You connect the monitor."
-
-				if(P:brainmob.mind in ticker.mode:revolutionaries)
-					ticker.mode:remove_revolutionary(P:brainmob.mind , 1)
-
 				new /mob/living/silicon/ai ( loc, laws, brain )
 				del(src)
 
