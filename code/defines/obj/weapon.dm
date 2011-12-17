@@ -510,6 +510,7 @@
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 10
+	var/catch = 1
 
 /obj/item/weapon/chemsprayer
 	desc = "A utility used to spray large amounts of reagent in a given area."
@@ -535,6 +536,7 @@
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 10
+	var/catch = 1
 
 /obj/item/weapon/clipboard
 	name = "clipboard"
