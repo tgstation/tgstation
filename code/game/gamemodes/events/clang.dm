@@ -17,7 +17,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	anchored = 1
 
 	Bump(atom/clong)
-		if (istype(clong, /turf))
+		if (istype(clong, /turf) && !istype(clong, /turf/simulated/shuttle) && !istype(clong, /turf/unsimulated))
 			if(clong.density)
 				clong.ex_act(2)
 				for (var/mob/O in hearers(src, null))
@@ -32,6 +32,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 				clong.meteorhit(src)
 		if(clong && prob(25))
 			src.loc = clong.loc
+		else del(src)
 
 /proc/immovablerod()
 

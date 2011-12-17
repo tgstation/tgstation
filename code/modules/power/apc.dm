@@ -857,6 +857,7 @@
 				else
 					src.malfai = usr
 				malfai << "Hack complete. The APC is now under your exclusive control."
+				updateicon()
 
 	else if (href_list["occupyapc"])
 		malfoccupy(usr)
