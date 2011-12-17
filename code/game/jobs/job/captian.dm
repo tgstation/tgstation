@@ -5,6 +5,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
+	supervisors = "Nanotrasen officials and Space law"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -34,6 +35,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
+	supervisors = "the captain"
 
 
 	equip(var/mob/living/carbon/human/H)
