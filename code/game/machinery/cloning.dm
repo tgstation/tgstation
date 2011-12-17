@@ -152,7 +152,7 @@
 	var/dat = "<h3>Cloning System Control</h3>"
 	dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
 
-	//dat += "<br><tt>[temp]</tt><br>"
+	dat += "<br><tt>[temp]</tt><br>"
 
 	switch(src.menu)
 		if(1)
@@ -225,7 +225,7 @@
 		if(4)
 			if (!src.active_record)
 				src.menu = 2
-			//dat = "[src.temp]<br>"
+			dat = "[src.temp]<br>"
 			dat += "<h4>Confirm Record Deletion</h4>"
 
 			dat += "<b><a href='byond://?src=\ref[src];del_rec=1'>Scan card to confirm.</a></b><br>"
