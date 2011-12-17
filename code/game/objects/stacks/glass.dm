@@ -19,6 +19,8 @@ SHARDS
 	title += " ([src.amount] sheet\s left)"
 	switch(alert(title, "Would you like full tile glass or one direction?", "one direct", "full (2 sheets)", "cancel", null))
 		if("one direct")
+			if (src.loc != usr)
+				return 1
 			if (src.amount < 1)
 				return 1
 			var/list/directions = new/list(cardinal)
@@ -52,6 +54,8 @@ SHARDS
 			W.anchored = 0
 			src.use(1)
 		if("full (2 sheets)")
+			if (src.loc != usr)
+				return 1
 			if (src.amount < 2)
 				return 1
 			if (locate(/obj/structure/window) in usr.loc)
