@@ -10,9 +10,15 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	opacity = 0
 
 	var/school = "evocation" //not relevant at now, but may be important later if there are changes to how spells work. the ones I used for now will probably be changed... maybe spell presets? lacking flexibility but with some other benefit?
-	var/charge_type = "recharge" //can be recharge or charges, see charge_max and charge_counter descriptions
+
+	var/charge_type = "recharge" //can be recharge or charges, see charge_max and charge_counter descriptions; can also be based on the holder's vars now, use "holder_var" for that
+
 	var/charge_max = 100 //recharge time in deciseconds if charge_type = "recharge" or starting charges if charge_type = "charges"
 	var/charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
+
+	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
+	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
+
 	var/clothes_req = 1 //see if it requires clothes
 	var/stat_allowed = 0 //see if it requires being conscious/alive, need to set to 1 for ghostpells
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
@@ -71,6 +77,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				charge_counter = 0 //doesn't start recharging until the targets selecting ends
 			if("charges")
 				charge_counter-- //returns the charge if the targets selecting fails
+			if("holdervar")
+				adjust_var(user, holder_var_type, holder_var_amount)
 
 	return 1
 
@@ -164,15 +172,36 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/proc/critfail(list/targets)
 	return
 
-/obj/effect/proc_holder/spell/proc/revert_cast() //resets recharge or readds a charge
+/obj/effect/proc_holder/spell/proc/revert_cast(mob/user = usr) //resets recharge or readds a charge
 	switch(charge_type)
 		if("recharge")
 			charge_counter = charge_max
 		if("charges")
 			charge_counter++
+		if("holdervar")
+			adjust_var(user, holder_var_type, -holder_var_amount)
 
 	return
 
+/obj/effect/proc_holder/spell/proc/adjust_var(mob/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
+	switch(type)
+		if("bruteloss")
+			target.adjustBruteLoss(amount)
+		if("fireloss")
+			target.adjustFireLoss(amount)
+		if("toxloss")
+			target.adjustToxLoss(amount)
+		if("oxyloss")
+			target.adjustOxyLoss(amount)
+		if("stunned")
+			target.AdjustStunned(amount)
+		if("weakened")
+			target.AdjustWeakened(amount)
+		if("paralysis")
+			target.AdjustParalysis(amount)
+		else
+			target.vars[type] += amount //I bear no responsibility for the runtimes that'll happen if you try to adjust non-numeric or even non-existant vars
+	return
 
 /obj/effect/proc_holder/spell/targeted //can mean aoe for mobs (limited/unlimited number) or one target mob
 	var/max_targets = 1 //leave 0 for unlimited targets in range, 1 for one selectable target in range, more for limited number of casts (can all target one guy, depends on target_ignore_prev) in range
@@ -185,65 +214,37 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/targeted/choose_targets(mob/user = usr)
 	var/list/targets = list()
 
-	switch(selection_type)
-		if("range")
-			switch(max_targets)
-				if(0)
-					for(var/mob/target in range(user,range))
-						targets += target
-				if(1)
-					if(range < 0)
-						targets += user
-					else
-						var/possible_targets = range(user,range)
-						if(!include_user && user in possible_targets)
-							possible_targets -= user
-						targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
+	switch(max_targets)
+		if(0) //unlimited
+			for(var/mob/target in view_or_range(range, user, selection_type))
+				targets += target
+		if(1) //single target can be picked
+			if(range < 0)
+				targets += user
+			else
+				var/possible_targets = view_or_range(range, user, selection_type)
+				if(!include_user && user in possible_targets)
+					possible_targets -= user
+				targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
+		else
+			var/list/possible_targets = list()
+			for(var/mob/target in view_or_range(range, user, selection_type))
+				possible_targets += target
+			for(var/i=1,i<=max_targets,i++)
+				if(!possible_targets.len)
+					break
+				if(target_ignore_prev)
+					var/target = pick(possible_targets)
+					possible_targets -= target
+					targets += target
 				else
-					var/list/possible_targets = list()
-					for(var/mob/target in range(user,range))
-						possible_targets += target
-					for(var/i=1,i<=max_targets,i++)
-						if(!possible_targets.len)
-							break
-						if(target_ignore_prev)
-							var/target = pick(possible_targets)
-							possible_targets -= target
-							targets += target
-						else
-							targets += pick(possible_targets)
-		if("view")
-			switch(max_targets)
-				if(0)
-					for(var/mob/target in view(user,range))
-						targets += target
-				if(1)
-					if(range < 0)
-						targets += user
-					else
-						var/possible_targets = view(user,range)
-						if(!include_user && user in possible_targets)
-							possible_targets -= user
-						targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
-				else
-					var/list/possible_targets = list()
-					for(var/mob/target in view(usr,range))
-						possible_targets += target
-					for(var/i=1,i<=max_targets,i++)
-						if(!possible_targets.len)
-							break
-						if(target_ignore_prev)
-							var/target = pick(possible_targets)
-							possible_targets -= target
-							targets += target
-						else
-							targets += pick(possible_targets)
+					targets += pick(possible_targets)
 
 	if(!include_user && (user in targets))
 		targets -= user
 
 	if(!targets.len) //doesn't waste the spell
-		revert_cast()
+		revert_cast(user)
 		return
 
 	perform(targets)
@@ -253,15 +254,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/aoe_turf/choose_targets(mob/user = usr)
 	var/list/targets = list()
 
-	switch(selection_type)
-		if("range")
-			for(var/turf/target in range(user,range))
-				if(!(target in range(user,inner_radius)))
-					targets += target
-		if("view")
-			for(var/turf/target in view(user,range))
-				if(!(target in view(user,inner_radius)))
-					targets += target
+	for(var/turf/target in view_or_range(range,user,selection_type))
+		if(!(target in view_or_range(inner_radius,user,selection_type)))
+			targets += target
 
 	if(!targets.len) //doesn't waste the spell
 		revert_cast()
