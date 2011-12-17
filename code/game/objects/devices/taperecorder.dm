@@ -97,12 +97,14 @@
 		src.recording = 0
 		src.timestamp+= src.timerecorded
 		src.storedinfo += "\[[time2text(src.timerecorded*10,"mm:ss")]\] Recording stopped."
-		usr << "\blue Stopped."
+		usr << "\blue Recording stopped."
 		src.icon_state = "taperecorderidle"
 		return
 	else if (src.playing == 1)
 		src.playing = 0
-		usr << "\blue Stopped."
+		var/turf/T = get_turf(src)
+		for(var/mob/O in hearers(world.view-1, T))
+			O.show_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>",2)
 		src.icon_state = "taperecorderidle"
 		return
 	else
@@ -125,6 +127,7 @@
 		return
 	else
 		src.storedinfo -= src.storedinfo
+		src.timestamp -= src.timestamp
 		src.timerecorded = 0
 		usr << "\blue Memory cleared."
 		return
@@ -153,22 +156,24 @@
 			break
 		var/turf/T = get_turf(src)
 		for(var/mob/O in hearers(world.view-1, T))
-			O.show_message("\green <B>Tape Recorder</B>: [src.storedinfo[i]]",2)
+			O.show_message("<font color=Maroon><B>Tape Recorder</B>: [src.storedinfo[i]]</font>",2)
 		if (src.storedinfo.len < i+1)
 			src.playsleepseconds = 1
+			sleep(10)
+			T = get_turf(src)
+			for(var/mob/O in hearers(world.view-1, T))
+				O.show_message("<font color=Maroon><B>Tape Recorder</B>: End of recording.</font>",2)
 		else
 			src.playsleepseconds = src.timestamp[i+1] - src.timestamp[i]
 		if (src.playsleepseconds > 19)
 			sleep(10)
+			T = get_turf(src)
 			for(var/mob/O in hearers(world.view-1, T))
-				O.show_message("\green <B>Tape Recorder</B>: Skipping [src.playsleepseconds] seconds of silence",2)
+				O.show_message("<font color=Maroon><B>Tape Recorder</B>: Skipping [src.playsleepseconds] seconds of silence</font>",2)
 			src.playsleepseconds = 1
 		i++
 	src.icon_state = "taperecorderidle"
 	src.playing = 0
-	var/turf/T = get_turf(src)
-	for(var/mob/O in hearers(world.view-1, T))
-		O.show_message("\green <B>Tape Recorder</B>: End of recording.",2)
 	if (src.emagged == 1.0)
 		for(var/mob/O in hearers(world.view-1, get_turf(src)))
 			O.show_message("Tape Recorder: This tape recorder will self destruct in <B>5</B>",2)
