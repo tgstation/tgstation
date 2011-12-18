@@ -257,8 +257,8 @@
 			italics = 1
 		if("changeling")
 			if(src.changeling)
-				for(var/mob/living/carbon/aChangeling in world)
-					if(aChangeling.changeling)
+				for(var/mob/aChangeling in world)
+					if(aChangeling.changeling || istype(aChangeling, /mob/dead/observer))
 						aChangeling << "<i><font color=#800080><b>[gender=="male"?"Mr.":"Mrs."] [changeling.changelingID]:</b> [message]</font></i>"
 				return
 ////SPECIAL HEADSETS START
