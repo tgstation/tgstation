@@ -22,6 +22,7 @@
 	//	update_lights()
 		if(name == "Space")			// override defaults for space
 			requires_power = 1
+			always_unpowered = 1
 			sd_SetLuminosity(1)
 			power_light = 0
 			power_equip = 0
@@ -218,6 +219,8 @@
 
 	if(!master.requires_power)
 		return 1
+	if(master.always_unpowered)
+		return 0
 	switch(chan)
 		if(EQUIP)
 			return master.power_equip
