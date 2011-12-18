@@ -281,6 +281,28 @@
 								return
 						scanner.computer.inventory.Add(src)
 						user << "[W]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"
+		else if(istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/weapon/scalpel))
+			if(unique)
+				user << "These pages seem to be made of a very robust paper. Looks like you can't carve it."
+				return
+			if(istype(src.loc, /mob) && usr.l_hand != src && usr.r_hand != src)
+				user << "\red You either need hold the book or put it down on something first."
+				return
+
+			var/obj/item/weapon/storage/book/B = new(loc)
+			B.icon_state = icon_state
+			B.name = name
+			B.desc = desc
+
+			user.remove_from_mob(src)
+			if(user.get_inactive_hand() == null)
+				user.put_in_inactive_hand(B)
+			else
+				B.loc = user.loc
+
+			user << "You carve out the inside of the book. Sneaky!"
+
+			del(src)
 		else
 			..()
 
