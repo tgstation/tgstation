@@ -152,7 +152,7 @@
 
 /obj/machinery/computer/pod
 	name = "Pod Launch Control"
-	desc = "A controll for launching pods."
+	desc = "A control for launching pods."
 	icon_state = "computer_generic"
 	var/id = 1.0
 	var/obj/machinery/mass_driver/connected = null
