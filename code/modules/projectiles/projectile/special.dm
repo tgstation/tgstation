@@ -23,8 +23,6 @@
 		explosion(target, -1, 0, 2)
 		return 1
 
-
-
 /obj/item/projectile/temp
 	name = "freeze beam"
 	icon_state = "ice_2"
