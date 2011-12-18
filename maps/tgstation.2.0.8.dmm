@@ -2344,7 +2344,7 @@
 "aTd" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/wall/r_wall,/area/crew_quarters/captain)
 "aTe" = (/obj/item/weapon/pinpointer,/obj/item/weapon/disk/nuclear,/obj/structure/table/woodentable,/turf/simulated/floor{icon_state = "wood"},/area/crew_quarters/captain)
 "aTf" = (/obj/item/weapon/camera_test,/obj/item/weapon/storage/photo_album{pixel_y = -10},/obj/structure/table/woodentable,/turf/simulated/floor{icon_state = "wood"},/area/crew_quarters/captain)
-"aTg" = (/obj/machinery/recharger{pixel_y = 4},/obj/item/weapon/melee/chainofcommand,/obj/structure/table/woodentable,/obj/machinery/light{dir = 1},/turf/simulated/floor{icon_state = "wood"},/area/crew_quarters/captain)
+"aTg" = (/obj/machinery/recharger{pixel_y = 4},/obj/structure/table/woodentable,/obj/machinery/light{dir = 1},/turf/simulated/floor{icon_state = "wood"},/area/crew_quarters/captain)
 "aTh" = (/obj/machinery/ai_status_display{pixel_y = 32},/turf/simulated/floor{icon_state = "wood"},/area/crew_quarters/captain)
 "aTi" = (/obj/machinery/requests_console{department = "Captain's Quarters"; departmentType = 5; pixel_y = 30},/turf/simulated/floor{icon_state = "wood"},/area/crew_quarters/captain)
 "aTj" = (/obj/machinery/status_display{pixel_x = 0; pixel_y = 32},/turf/simulated/floor{icon_state = "wood"},/area/crew_quarters/captain)
