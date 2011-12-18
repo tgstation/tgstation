@@ -259,6 +259,18 @@
 	origin_tech = "combat=1;syndicate=1"
 	force = 7.0
 
+/obj/item/weapon/storage/book
+	name = "book"
+	icon = 'library.dmi'
+	icon_state ="book"
+	throw_speed = 1
+	throw_range = 5
+	w_class = 2.0
+	max_w_class = 2
+	max_combined_w_class = 3
+	storage_slots = 3
+	flags = FPRINT | TABLEPASS
+
 /obj/item/weapon/storage/bible
 	name = "bible"
 	desc = "Apply to head repeatedly."
