@@ -4,8 +4,8 @@
 	var/icon_dead = ""
 	var/max_health = 20
 	var/alive = 1
-	var/list/speak = null
-	var/list/speak_emote = null//list()	Emotes while speaking IE: Ian [emote], [text] -- Ian barks, "WOOF!". Spoken text is generated from the speak variable.
+	var/list/speak = list()
+	var/list/speak_emote = list()//	Emotes while speaking IE: Ian [emote], [text] -- Ian barks, "WOOF!". Spoken text is generated from the speak variable.
 	var/speak_chance = 0
 	var/list/emote_hear = list()	//EHearable emotes
 	var/list/emote_see = list()		//Unlike speak_emote, the list of things in this variable only show by themselves with no spoken text. IE: Ian barks, Ian yaps
