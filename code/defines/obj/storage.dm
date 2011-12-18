@@ -14,7 +14,7 @@
 
 /obj/item/weapon/storage/trashbag
 	name = "trash bag"
-	desc = "for picking up all those pens"
+	desc = "For picking up all that trash..."
 	icon_state = "trashbag"
 	item_state = "trashbag"
 	w_class = 4.0
@@ -31,7 +31,7 @@
 */
 /obj/item/weapon/storage/pill_bottle
 	name = "pill bottle"
-	desc = "This is told to hold untold horrors of pulls."
+	desc = "A reasonable place to put your pills.."
 	icon_state = "pill_canister"
 	icon = 'chemical.dmi'
 	item_state = "contsolid"
@@ -69,7 +69,7 @@
 	item_state = "syringe_kit"
 
 /obj/item/weapon/storage/backpack/clown
-	name = "Giggles Von Honkerton"
+	name = "clown's backpack"
 	desc = "The backpack made by Honk. Co."
 	icon_state = "clownpack"
 
@@ -100,7 +100,7 @@
 
 /obj/item/weapon/storage/briefcase
 	name = "briefcase"
-	desc = "Used by the lawyer to robust security in the court room."
+	desc = "Used by the lawyer in the court room."
 	icon_state = "briefcase"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 8.0
@@ -136,7 +136,7 @@
 
 /obj/item/weapon/storage/firstaid/fire
 	name = "Fire First Aid"
-	desc = "A kit for when you 'accidently' set toxins on fire and burn yourself."
+	desc = "A kit for when you accidently burn yourself."
 	icon_state = "ointment"
 	item_state = "firstaid-ointment"
 
@@ -151,13 +151,13 @@
 
 /obj/item/weapon/storage/firstaid/toxin
 	name = "Toxin First Aid"
-	desc = "Used to treat when you have a high amoutn of toxins in your body."
+	desc = "Used to treat when you have a high amount of toxins in your body."
 	icon_state = "antitoxin"
 	item_state = "firstaid-toxin"
 
 /obj/item/weapon/storage/firstaid/o2
 	name = "Oxygen Deprivation First Aid"
-	desc = "A box full of oxygen goodies."
+	desc = "A box full of oxygenating goodies."
 	icon_state = "o2"
 	item_state = "firstaid-o2"
 
@@ -175,7 +175,7 @@
 
 /obj/item/weapon/storage/gl_kit
 	name = "Prescription Glasses"
-	desc = "This box contains nerd glasses."
+	desc = "This box contains vision correcting glasses."
 	icon_state = "glasses"
 	item_state = "syringe_kit"
 
@@ -189,7 +189,7 @@
 
 /obj/item/weapon/storage/id_kit
 	name = "Spare IDs"
-	desc = "Has so many empty IDs."
+	desc = "Has so many blank IDs."
 	icon_state = "id"
 	item_state = "syringe_kit"
 
@@ -201,19 +201,19 @@
 
 /obj/item/weapon/storage/injectbox
 	name = "DNA-Injectors"
-	desc = "This box contains injectors it seems."
+	desc = "This box contains injectors, it seems."
 	icon_state = "box"
 	item_state = "syringe_kit"
 
 /obj/item/weapon/storage/stma_kit
 	name = "Sterile Masks"
-	desc = "This box contains masks of sterility."
+	desc = "This box contains masks of +2 constitution." //I made it better.  --SkyMarshal
 	icon_state = "latex"
 	item_state = "syringe_kit"
 
 /obj/item/weapon/storage/trackimp_kit
 	name = "Tracking Implant Kit"
-	desc = "Box full of scum-bag tracking utensils."
+	desc = "Box full of tracking utensils."
 	icon_state = "implant"
 	item_state = "syringe_kit"
 
@@ -225,7 +225,7 @@
 
 /obj/item/weapon/storage/toolbox
 	name = "toolbox"
-	desc = "Danger. Very robust."
+	desc = "Danger. Very heavy."
 	icon = 'storage.dmi'
 	icon_state = "red"
 	item_state = "toolbox_red"
