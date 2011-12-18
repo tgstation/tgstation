@@ -14,15 +14,14 @@ MOP
 	return
 
 /obj/item/weapon/cleaner/attack_self(var/mob/user as mob)
-	switch(catch)
-		if(0)
-			user << "\blue You flip the safety back on."
-			catch = 1
-			return
-		if(1)
-			user << "\blue You flip the safety off."
-			catch = 0
-			return
+	if(catch)
+		user << "\blue You flip the safety on."
+		catch = 1
+		return
+	else
+		user << "\blue You flip the safety off."
+		catch = 0
+		return
 
 /obj/item/weapon/cleaner/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (istype(A, /obj/item/weapon/storage ))
@@ -179,25 +178,26 @@ MOP
 
 	return
 
+//Crowd control pepper spray, for Hawkie
+
 /obj/item/weapon/pepperspray/New()
-	var/datum/reagents/R = new/datum/reagents(45)
+	var/datum/reagents/R = new/datum/reagents(30)
 	reagents = R
 	R.my_atom = src
-	R.add_reagent("condensedcapsaicin", 45)
+	R.add_reagent("condensedcapsaicin", 30)
 
 /obj/item/weapon/pepperspray/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
 
 /obj/item/weapon/pepperspray/attack_self(var/mob/user as mob)
-	switch(catch)
-		if(0)
-			user << "\blue You flip the safety on."
-			catch = 1
-			return
-		if(1)
-			user << "\blue You flip the safety off."
-			catch = 0
-			return
+	if(catch)
+		user << "\blue You flip the safety on."
+		catch = 1
+		return
+	else
+		user << "\blue You flip the safety off."
+		catch = 0
+		return
 
 /obj/item/weapon/pepperspray/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (istype(A, /obj/item/weapon/storage ))
@@ -205,8 +205,8 @@ MOP
 	if (istype(A, /obj/effect/proc_holder/spell ))
 		return
 	else if (istype(A, /obj/structure/reagent_dispensers/peppertank) && get_dist(src,A) <= 1)
-		if(src.reagents.total_volume < 45)
-			A.reagents.trans_to(src, 45 - src.reagents.total_volume)
+		if(src.reagents.total_volume < 30)
+			A.reagents.trans_to(src, 30 - src.reagents.total_volume)
 			user << "\blue Pepper spray refilled"
 			playsound(src.loc, 'refill.ogg', 50, 1, -6)
 			return
