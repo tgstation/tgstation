@@ -51,7 +51,7 @@
 /mob/living/simple_animal/corgi/show_inv(mob/user as mob)
 	user.machine = src
 
-	var/dat = 	"<div align='center'><b>Inventory of [src]</b></div><p>"
+	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
 	if(inventory_head)
 		dat +=	"<br><b>Head:</b> [inventory_head] (<a href='?src=\ref[src];remove_inv=head'>Remove</a>)"
 	else
@@ -62,7 +62,7 @@
 		dat +=	"<br><b>Back:</b> <a href='?src=\ref[src];add_inv=back'>Nothing</a>"
 
 	user << browse(dat, text("window=mob[];size=325x500", name))
-	onclose(user, "mob[name]")
+	onclose(user, "mob[real_name]")
 	return
 
 /mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)
