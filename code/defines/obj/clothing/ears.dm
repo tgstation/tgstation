@@ -49,7 +49,9 @@
 	New(var/obj/O)
 		name = O.name
 		desc = O.desc
-		overlays += new/image(O.icon,icon_state=O.icon_state,dir=O.dir)
+		icon = O.icon
+		icon_state = O.icon_state
+		dir = O.dir
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
