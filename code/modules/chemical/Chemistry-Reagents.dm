@@ -1714,7 +1714,7 @@ datum
 						M:emote("scream")
 						M << "\red You're sprayed directly in the eyes with pepperspray!"
 						M.eye_blurry = max(M.eye_blurry, 60)
-						M.eye_blind = max(M.eye_blind, 16)
+						M.eye_blind = max(M.eye_blind, 12)
 						M:weakened = max(M:weakened, 20)
 						M.drop_item()
 

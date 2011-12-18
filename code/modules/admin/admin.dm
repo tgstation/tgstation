@@ -727,6 +727,40 @@
 			alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 			return
 
+	if (href_list["defense"])
+		if ((src.rank in list( "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+			var/mob/living/M = locate(href_list["defense"])
+			if (isliving(M) && istype(M, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = M
+				switch(alert("Shall they be equipped with a flash or mace?",,"Flash","Mace", "Cancel"))
+					if("Flash")
+						if(!H.s_store)
+							H.equip_if_possible(new /obj/item/device/flash(H), H.slot_l_store)
+						else if(!H.s_store)
+							H.equip_if_possible(new /obj/item/device/flash(H), H.slot_s_store)
+						else
+							alert("The target lacked an open pocket.", null, null, null, null, null)
+							return
+					if("Mace")
+						if(!H.s_store)
+							H.equip_if_possible(new /obj/item/weapon/pepperspray/small(H), H.slot_l_store)
+						else if(!H.s_store)
+							H.equip_if_possible(new /obj/item/weapon/pepperspray/small(H), H.slot_s_store)
+						else
+							alert("The target lacked an open pocket.", null, null, null, null, null)
+							return
+					if("Cancel")
+						return
+				message_admins("\red Admin [key_name_admin(usr)] gave [key_name_admin(M)] something to defend themselves!", 1)
+				log_admin("[key_name(usr)] defensified [key_name(M)]")
+				return
+			else
+				alert("This action can only be performed on living humans.", null, null, null, null, null)
+				return
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+			return
+
 	if (href_list["makeai"]) //Yes, im fucking lazy, so what? it works ... hopefully
 		if (src.level>=3)
 			var/mob/M = locate(href_list["makeai"])
@@ -1774,6 +1808,7 @@
 			foo += text("<A HREF='?src=\ref[src];sendtoprison=\ref[M]'>Prison</A> | ")
 		//	foo += text("<A HREF='?src=\ref[src];sendtomaze=\ref[M]'>Maze</A> | ")
 			foo += text("<A HREF='?src=\ref[src];revive=\ref[M]'>Heal/Revive</A> | ")
+			foo += text("<A HREF='?src=\ref[src];defense=\ref[M]'>Defensize</A> | ")
 		else
 			foo += text("<B>Hasn't Entered Game</B> | ")
 		foo += text("<A href='?src=\ref[src];forcespeech=\ref[M]'>Forcesay</A> | ")

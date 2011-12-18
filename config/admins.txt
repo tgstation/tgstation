@@ -5,8 +5,7 @@ cajoes - Game Admin
 cib - Game Master
 compactninja - Game Master
 hawk_v3 - Game Admin
-headswe - Game Master
-iaryni - Game Master
+skymarshal - Game Master
 masterofapples - Game Admin
 megacaesar - Game Admin
 miniature - Game Master

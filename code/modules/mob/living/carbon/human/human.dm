@@ -528,7 +528,7 @@
 				if (emptyHand)
 					ears.DblClick()
 				return
-			if (!( istype(W, /obj/item/clothing/ears) ) && !( istype(W, /obj/item/device/radio/headset) ))
+			if ((!istype(W, /obj/item) || W.w_class > 1 || w_uniform) && !(istype(W, /obj/item/device/radio/headset)))
 				return
 			u_equip(W)
 			ears = W

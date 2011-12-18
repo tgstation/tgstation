@@ -443,8 +443,8 @@
 	data = "Clown Land"
 
 /obj/item/weapon/card/emag
-	desc = "It's a card with a magnetic strip attached to some circuitry."
-	name = "cryptographic sequencer"
+	desc = "An identification card. No shit. Seems to have some funny chip on it, though."
+	name = "identification card"
 	icon_state = "emag"
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
@@ -525,7 +525,7 @@
 	throw_range = 10
 	origin_tech = "combat=3;materials=3;engineering=3"
 
-/obj/item/weapon/pepperspray
+/obj/item/weapon/pepperspray //This is riot control
 	desc = "Manufactred by UhangInc., used to blind and down an opponent quickly."
 	icon = 'weapons.dmi'
 	name = "pepperspray"
@@ -537,6 +537,23 @@
 	throw_speed = 2
 	throw_range = 10
 	var/catch = 1
+	var/BottleSize = 1
+	var/ReagentAmount = 30
+
+/obj/item/weapon/pepperspray/small //And this is for personal defense.
+	desc = "This appears to be a small, nonlethal, single use personal defense weapon.  Hurts like a bitch, though."
+	icon = 'weapons.dmi'
+	name = "mace"
+	icon_state = "pepperspray"
+	item_state = "pepperspray"
+	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	throwforce = 3
+	w_class = 1.0
+	throw_speed = 2
+	throw_range = 10
+	catch = 1
+	BottleSize = 0
+	ReagentAmount = 1
 
 /obj/item/weapon/clipboard
 	name = "clipboard"

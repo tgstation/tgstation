@@ -2740,7 +2740,7 @@
 	icon_state = "peppertank"
 	anchored = 1
 	density = 0
-	amount_per_transfer_from_this = 45
+	amount_per_transfer_from_this = 30
 	New()
 		..()
 		reagents.add_reagent("condensedcapsaicin",1000)
