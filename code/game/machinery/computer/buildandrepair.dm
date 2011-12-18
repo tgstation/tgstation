@@ -50,7 +50,7 @@
 	origin_tech = "programming=2;biotech=2"
 /obj/item/weapon/circuitboard/scan_consolenew
 	name = "Circuit board (DNA Machine)"
-	build_path = "/obj/machinery/scan_consolenew"
+	build_path = "/obj/machinery/computer/scan_consolenew"
 	origin_tech = "programming=2;biotech=2"
 /obj/item/weapon/circuitboard/communications
 	name = "Circuit board (Communications)"

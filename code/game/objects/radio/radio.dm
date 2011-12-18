@@ -425,14 +425,16 @@
 	if (!( istype(W, /obj/item/weapon/screwdriver) ))
 		return
 	b_stat = !( b_stat )
-	if (b_stat)
-		user.show_message("\blue The radio can now be attached and modified!")
-	else
-		user.show_message("\blue The radio can no longer be modified or attached!")
-	updateDialog()
-		//Foreach goto(83)
-	add_fingerprint(user)
-	return
+	if(!istype(src, /obj/item/device/radio/beacon))
+		if (b_stat)
+			user.show_message("\blue The radio can now be attached and modified!")
+		else
+			user.show_message("\blue The radio can no longer be modified or attached!")
+		updateDialog()
+			//Foreach goto(83)
+		add_fingerprint(user)
+		return
+	else return
 
 /obj/item/device/radio/emp_act(severity)
 	broadcasting = 0

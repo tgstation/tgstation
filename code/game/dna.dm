@@ -634,7 +634,7 @@
 			A.loc = src.loc
 		del(src)
 
-/obj/machinery/scan_consolenew/ex_act(severity)
+/obj/machinery/computer/scan_consolenew/ex_act(severity)
 
 	switch(severity)
 		if(1.0)
@@ -649,12 +649,12 @@
 		else
 	return
 
-/obj/machinery/scan_consolenew/blob_act()
+/obj/machinery/computer/scan_consolenew/blob_act()
 
 	if(prob(75))
 		del(src)
 
-/obj/machinery/scan_consolenew/power_change()
+/obj/machinery/computer/scan_consolenew/power_change()
 	if(stat & BROKEN)
 		icon_state = "broken"
 	else if(powered())
@@ -665,14 +665,14 @@
 			src.icon_state = "c_unpowered"
 			stat |= NOPOWER
 
-/obj/machinery/scan_consolenew/New()
+/obj/machinery/computer/scan_consolenew/New()
 	..()
 	spawn( 5 )
 		src.connected = locate(/obj/machinery/dna_scannernew, get_step(src, WEST))
 		return
 	return
 
-/obj/machinery/scan_consolenew/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/computer/scan_consolenew/attackby(obj/item/W as obj, mob/user as mob)
 	if ((istype(W, /obj/item/weapon/disk/data)) && (!src.diskette))
 		user.drop_item()
 		W.loc = src
@@ -680,20 +680,20 @@
 		user << "You insert [W]."
 		src.updateUsrDialog()
 
-/obj/machinery/scan_consolenew/process() //not really used right now
+/obj/machinery/computer/scan_consolenew/process() //not really used right now
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!( src.status )) //remove this
 		return
 	return
 
-/obj/machinery/scan_consolenew/attack_paw(user as mob)
+/obj/machinery/computer/scan_consolenew/attack_paw(user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/scan_consolenew/attack_ai(user as mob)
+/obj/machinery/computer/scan_consolenew/attack_ai(user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/scan_consolenew/attack_hand(user as mob)
+/obj/machinery/computer/scan_consolenew/attack_hand(user as mob)
 	if(..())
 		return
 	var/dat
@@ -751,7 +751,7 @@
 	onclose(user, "scannernew")
 	return
 
-/obj/machinery/scan_consolenew/Topic(href, href_list)
+/obj/machinery/computer/scan_consolenew/Topic(href, href_list)
 	if(..())
 		return
 	if(!istype(usr.loc, /turf))
