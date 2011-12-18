@@ -13,7 +13,7 @@
 
 /obj/item/weapon/shield/riot
 	name = "riot shield"
-	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
+	desc = "A shield adept at blocking blunt objects."
 	icon = 'weapons.dmi'
 	icon_state = "riot"
 	flags = FPRINT | TABLEPASS| CONDUCT| ONBACK
@@ -29,7 +29,7 @@
 	IsShield()
 		return 1
 
-/obj/item/weapon/sord
+/*/obj/item/weapon/sord
 	name = "SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
 	icon_state = "sord"
@@ -37,11 +37,11 @@
 	flags = FPRINT | ONBELT | TABLEPASS
 	force = 2
 	throwforce = 1
-	w_class = 3
+	w_class = 3	*/
 
 /obj/item/weapon/claymore
 	name = "claymore"
-	desc = "what are you standing around staring at this for? get to killing!"
+	desc = "BLOOD FOR THE BLOOD GOD."	//SKULLS FOR THE SKULL THRONE. --SkyMarshal
 	icon_state = "claymore"
 	item_state = "claymore"
 	flags = FPRINT | ONBELT | TABLEPASS
@@ -54,7 +54,7 @@
 
 /obj/item/weapon/bodybag
 	name = "body bag"
-	desc = "Bag mixed with a bit of body."
+	desc = "A bag used to deal with a corpse."
 	icon = 'closet.dmi'
 	icon_state = "bodybag"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -170,7 +170,7 @@
 
 /obj/item/weapon/melee/baton
 	name = "Stun Baton"
-	desc = "A stun baton for hitting people with."
+	desc = "The police baton of the future."
 	icon_state = "stunbaton"
 	item_state = "baton"
 	flags = FPRINT | ONBELT | TABLEPASS
@@ -182,7 +182,7 @@
 	var/status = 0
 	origin_tech = "combat=2"
 
-/obj/item/weapon/melee/chainofcommand
+/*/obj/item/weapon/melee/chainofcommand
 	name = "Chain of Command"
 	desc = "The Captain is first and all other heads are last."
 	icon_state = "chainofcommand"
@@ -194,7 +194,7 @@
 	var/charges = 50.0
 	var/maximum_charges = 50.0
 	var/status = 1
-	origin_tech = "combat=4"
+	origin_tech = "combat=4"	*/
 
 /obj/item/weapon/melee/energy
 	var/active = 0
@@ -214,7 +214,7 @@
 /obj/item/weapon/melee/energy/sword
 	var/color
 	name = "energy sword"
-	desc = "May the force be within you."
+	desc = "It cuts AND cooks at the same time!."
 	icon_state = "sword0"
 	force = 3.0
 	throwforce = 5.0
@@ -272,7 +272,7 @@
 	icon_state = "soapnt"
 
 /obj/item/weapon/soap/deluxe
-	desc = "A deluxe Waffle Co. brand bar of soap. Smells of comdoms."
+	desc = "A deluxe Waffle Co. brand bar of soap." //What is this I don't even. "Smells of comdoms." --SkyMarshal
 	icon_state = "soapdeluxe"
 
 /obj/item/weapon/soap/syndie
@@ -443,15 +443,15 @@
 	data = "Clown Land"
 
 /obj/item/weapon/card/emag
-	desc = "It's a card with a magnetic strip attached to some circuitry."
-	name = "cryptographic sequencer"
+	desc = "An identification card. Seems to have some funny chip on it, though."
+	name = "identification card"
 	icon_state = "emag"
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
 
 /obj/item/weapon/card/id
 	name = "identification card"
-	desc = "An identification card. No shit."
+	desc = "An identification card."
 	icon_state = "id"
 	item_state = "card-id"
 	var/access = list()
@@ -525,7 +525,7 @@
 	throw_range = 10
 	origin_tech = "combat=3;materials=3;engineering=3"
 
-/obj/item/weapon/pepperspray
+/obj/item/weapon/pepperspray //This is riot control
 	desc = "Manufactred by UhangInc., used to blind and down an opponent quickly."
 	icon = 'weapons.dmi'
 	name = "pepperspray"
@@ -537,6 +537,23 @@
 	throw_speed = 2
 	throw_range = 10
 	var/catch = 1
+	var/BottleSize = 1
+	var/ReagentAmount = 30
+
+/obj/item/weapon/pepperspray/small //And this is for personal defense.
+	desc = "This appears to be a small, nonlethal, single use personal defense weapon.  Hurts like a bitch, though."
+	icon = 'weapons.dmi'
+	name = "mace"
+	icon_state = "pepperspray"
+	item_state = "pepperspray"
+	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	throwforce = 3
+	w_class = 1.0
+	throw_speed = 2
+	throw_range = 10
+	catch = 1
+	BottleSize = 0
+	ReagentAmount = 1
 
 /obj/item/weapon/clipboard
 	name = "clipboard"
@@ -602,7 +619,7 @@
 /obj/item/weapon/fireaxe  // DEM AXES MAN, marker -Agouri
 	icon_state = "fireaxe0"
 	name = "Fire axe"
-	desc = "Truly, the tool of a madman. Who would possibly think to fight fire with an axe?"
+	desc = "A tool for breaking down those obstructions that stop you from fighting that fire."  //Less ROBUST. --SkyMarshal
 	force = 5
 	w_class = 4.0
 	flags = ONBACK
@@ -612,7 +629,7 @@
 
 /obj/item/weapon/cane
 	name = "cane"
-	desc = "A cane used by a true gentlemen. Or a clown."
+	desc = "A cane used by a true gentlemen."
 	icon = 'weapons.dmi'
 	icon_state = "cane"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -645,7 +662,7 @@
 
 /obj/item/weapon/extinguisher
 	name = "fire extinguisher"
-	desc = "Contains water....dangit..."
+	desc = "Contains water..."
 	icon = 'items.dmi'
 	icon_state = "fire_extinguisher0"
 	var/last_use = 1.0
@@ -776,7 +793,7 @@
 
 
 /obj/item/weapon/mop
-	desc = "The world of janitalia wouldn't be complete without a mop."
+	desc = "The world of the janitor wouldn't be complete without a mop."
 	name = "mop"
 	icon = 'janitor.dmi'
 	icon_state = "mop"
@@ -909,7 +926,7 @@
 	throw_range = 15
 
 /obj/item/weapon/pen/sleepypen
-	desc = "It's a normal black ink pen with a sharp point and a carefully engraved \"Waffle Co.\""
+	desc = "It's a normal black ink pen with a sharp point."
 	flags = FPRINT | ONBELT | TABLEPASS | OPENCONTAINER
 	origin_tech = "materials=2;biotech=1;syndicate=7"
 
@@ -1239,7 +1256,7 @@
 
 /obj/item/weapon/kitchen/rollingpin
 	name = "rolling pin"
-	desc = "Used to knock out the Bartender."
+	desc = "Used to flatten dough."
 	icon_state = "rolling_pin"
 	force = 8.0
 	throwforce = 10.0
@@ -1265,7 +1282,7 @@
 	name = "Butcher's Cleaver"
 	icon = 'kitchen.dmi'
 	icon_state = "butch"
-	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
+	desc = "A huge thing used for chopping and chopping up meat."
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 15.0
 	w_class = 2.0
@@ -1493,11 +1510,32 @@
 	icon_state = "mousetraparmed"
 	armed = 1
 
+/obj/item/weapon/dice/d4 // -- SkyMarshal
+	name = "d4"
+	desc = "A dice with four sides."
+	sides = 4
+	icon_state = "d20"
+	item_state = "dice"
+
 /obj/item/weapon/dice // -- TLE
 	name = "d6"
 	desc = "A dice with six sides."
 	var/sides = 6
 	icon_state = "dice"
+	item_state = "dice"
+
+/obj/item/weapon/dice/d8 // -- SkyMarshal
+	name = "d8"
+	desc = "A dice with eight sides."
+	sides = 8
+	icon_state = "d20"
+	item_state = "dice"
+
+/obj/item/weapon/dice/d12 // -- SkyMarshal
+	name = "d12"
+	desc = "A dice with twelve sides."
+	sides = 12
+	icon_state = "d20"
 	item_state = "dice"
 
 /obj/item/weapon/dice/d20 // -- TLE

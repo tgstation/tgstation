@@ -175,7 +175,7 @@
 
 /obj/item/weapon/storage/gl_kit
 	name = "Prescription Glasses"
-	desc = "This box contains nerd glasses."
+	desc = "This box contains vision correcting glasses."
 	icon_state = "glasses"
 	item_state = "syringe_kit"
 
@@ -213,7 +213,7 @@
 
 /obj/item/weapon/storage/trackimp_kit
 	name = "Tracking Implant Kit"
-	desc = "Box full of scum-bag tracking utensils."
+	desc = "Box full of tracking utensils."
 	icon_state = "implant"
 	item_state = "syringe_kit"
 
