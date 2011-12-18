@@ -54,7 +54,7 @@ var/global/datum/controller/gameticker/ticker
 			return 0
 		if(secret_force_mode != "secret")
 			var/datum/game_mode/M = config.pick_mode(secret_force_mode)
-			if(M.can_start())
+			if(M && M.can_start())
 				src.mode = config.pick_mode(secret_force_mode)
 		job_master.ResetOccupations()
 		if(!src.mode)

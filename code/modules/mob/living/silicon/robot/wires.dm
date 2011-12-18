@@ -2,18 +2,19 @@
 #define BORG_WIRE_MAIN_POWER1 2
 #define BORG_WIRE_MAIN_POWER2 3
 #define BORG_WIRE_AI_CONTROL 4
+#define BORG_WIRE_MODULE 5
 
 /proc/RandomBorgWires()
 	//to make this not randomize the wires, just set index to 1 and increment it in the flag for loop (after doing everything else).
-	var/list/Borgwires = list(0, 0, 0, 0)
-	BorgIndexToFlag = list(0, 0, 0, 0)
-	BorgIndexToWireColor = list(0, 0, 0, 0)
-	BorgWireColorToIndex = list(0, 0, 0, 0)
+	var/list/Borgwires = list(0, 0, 0, 0, 0)
+	BorgIndexToFlag = list(0, 0, 0, 0, 0)
+	BorgIndexToWireColor = list(0, 0, 0, 0, 0)
+	BorgWireColorToIndex = list(0, 0, 0, 0, 0)
 	var/flagIndex = 1
-	for (var/flag=1, flag<16, flag+=flag)
+	for (var/flag=1, flag<32, flag+=flag)
 		var/valid = 0
 		while (!valid)
-			var/colorIndex = rand(1, 4)
+			var/colorIndex = rand(1, 5)
 			if (Borgwires[colorIndex]==0)
 				valid = 1
 				Borgwires[colorIndex] = flag
@@ -40,9 +41,17 @@
 			if (src.lawupdate == 1)
 				src << "LawSync protocol engaged."
 				src.show_laws()
-		if (BORG_WIRE_AI_CONTROL) //Cut the AI wire to reset AI control
+		if(BORG_WIRE_AI_CONTROL) //Cut the AI wire to reset AI control
 			if (src.connected_ai)
 				src.connected_ai = null
+		if(BORG_WIRE_MODULE)
+			if (src.module)
+				src.reset_module()
+				src.modlock = 1
+				src << "\blue Your module has been reset, \red But you are locked into the standard module!"
+			else
+				src.modlock = 1
+				src << "\red You are locked into the standard module!"
 	src.interact(usr)
 
 /mob/living/silicon/robot/proc/mend(var/wireColor)
@@ -53,6 +62,9 @@
 		if(BORG_WIRE_LAWCHECK) //turns law updates back on assuming the borg hasn't been emagged
 			if (src.lawupdate == 0 && !src.emagged)
 				src.lawupdate = 1
+		if(BORG_WIRE_MODULE)
+			src.modlock = 0
+			src << "\blue You are no longer locked into the standard module."
 	src.interact(usr)
 
 
@@ -66,6 +78,10 @@
 		if (BORG_WIRE_AI_CONTROL) //pule the AI wire to make the borg reselect an AI
 			if(!src.emagged)
 				src.connected_ai = activeais()
+		if(BORG_WIRE_MODULE)
+			if (src.module)
+				src.reset_module()
+				src << "\blue Your module has been reset."
 	src.interact(usr)
 
 /mob/living/silicon/robot/proc/interact(mob/user)
@@ -77,6 +93,7 @@
 			"Dark red" = 2,
 			"White" = 3,
 			"Yellow" = 4,
+			"Blue" = 5,
 		)
 		for(var/wiredesc in Borgwires)
 			var/is_uncut = src.borgwires & BorgWireColorToFlag[Borgwires[wiredesc]]
@@ -87,7 +104,7 @@
 				t1 += "<a href='?src=\ref[src];borgwires=[Borgwires[wiredesc]]'>Cut</a> "
 				t1 += "<a href='?src=\ref[src];pulse=[Borgwires[wiredesc]]'>Pulse</a> "
 			t1 += "<br>"
-		t1 += text("<br>\n[(src.lawupdate ? "The LawSync light is on." : "The LawSync light is off.")]<br>\n[(src.connected_ai ? "The AI link light is on." : "The AI link light is off.")]")
+		t1 += text("<br>\n[(src.lawupdate ? "The LawSync light is on." : "The LawSync light is off.")]<br>\n[(src.connected_ai ? "The AI link light is on." : "The AI link light is off.")]<br>\n[(src.modlock ? "The Module Lock light is on." : "The Module Lock light is off.")]")
 		t1 += text("<p><a href='?src=\ref[src];close2=1'>Close</a></p>\n")
 		user << browse(t1, "window=borgwires")
 		onclose(user, "borgwires")
