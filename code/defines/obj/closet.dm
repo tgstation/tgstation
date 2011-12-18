@@ -15,7 +15,7 @@
 
 /obj/structure/closet/acloset
 	name = "Strange closet"
-	desc = "It looks alien!"
+	desc = "It looks weird!"
 	icon_state = "acloset"
 	icon_closed = "acloset"
 	icon_opened = "aclosetopen"
@@ -75,7 +75,7 @@
 
 /obj/structure/closet/fireaxecabinet
 	name = "Fire Axe Cabinet"
-	desc = "There is small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
+	desc = "There is small label that reads \"For Emergency use only\" along with details for safe use of the axe."
 	var/obj/item/weapon/fireaxe/fireaxe = new/obj/item/weapon/fireaxe
 	icon_state = "fireaxe1000"
 	icon_closed = "fireaxe1000"

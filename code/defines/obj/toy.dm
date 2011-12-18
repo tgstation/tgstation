@@ -241,7 +241,7 @@
 
 /obj/item/toy/crayonbox
 	name = "box of crayons"
-	desc = "A box of crayons for all your rune drawing needs."
+	desc = "A box of crayons for all your drawing needs."
 	icon = 'crayons.dmi'
 	icon_state = "crayonbox"
 	w_class = 2.0

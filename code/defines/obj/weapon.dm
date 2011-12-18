@@ -444,7 +444,7 @@
 
 /obj/item/weapon/card/emag
 	desc = "An identification card. Seems to have some funny chip on it, though."
-	name = "identification card"
+	name = "modified identification card"
 	icon_state = "emag"
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
