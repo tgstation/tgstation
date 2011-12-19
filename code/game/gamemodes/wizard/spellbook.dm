@@ -13,7 +13,7 @@
 		dat += "<B>Memorize which spell:</B><BR>"
 		dat += "<I>The number after the spell name is the cooldown time.</I><BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=1'>Magic Missile</A> (10)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=2'>Fireball</A> (10)<BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=2'>Fireball</A> (20)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=3'>Disintegrate</A> (60)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=4'>Disable Technology</A> (60)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=5'>Smoke</A> (10)<BR>"
