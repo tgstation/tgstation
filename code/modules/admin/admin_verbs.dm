@@ -231,7 +231,7 @@
 		if (holder.level >= 0)//Mod********************************************************************
 			verbs += /obj/admins/proc/toggleAI				//Toggle the AI
 			verbs += /obj/admins/proc/toggleenter			//Toggle enterting
-			verbs += /obj/admins/proc/toggleguests			//Toggle guests entering
+//			verbs += /obj/admins/proc/toggleguests			//Toggle guests entering
 			verbs += /obj/admins/proc/toggleooc				//toggle ooc
 			verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			verbs += /obj/admins/proc/voteres 				//toggle votes
@@ -352,7 +352,7 @@
 	verbs -= /client/proc/cmd_admin_create_centcom_report
 	verbs -= /obj/admins/proc/toggleAI				//Toggle the AI
 	verbs -= /obj/admins/proc/toggleenter			//Toggle enterting
-	verbs -= /obj/admins/proc/toggleguests			//Toggle guests entering
+//	verbs -= /obj/admins/proc/toggleguests			//Toggle guests entering
 	verbs -= /obj/admins/proc/toggleooc				//toggle ooc
 	verbs -= /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 	verbs -= /obj/admins/proc/voteres 				//toggle votes
