@@ -427,7 +427,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/clothing/under/det(M), M.slot_w_uniform)
 			M.equip_if_possible(new /obj/item/clothing/shoes/black(M), M.slot_shoes)
 
-			M.equip_if_possible(new /obj/item/clothing/suit/det_suit(M), M.slot_wear_suit)
+			M.equip_if_possible(new /obj/item/clothing/suit/storage/det_suit(M), M.slot_wear_suit)
 			M.equip_if_possible(new /obj/item/clothing/glasses/thermal/monocle(M), M.slot_glasses)
 			M.equip_if_possible(new /obj/item/clothing/head/det_hat(M), M.slot_head)
 
@@ -438,7 +438,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 		if ("tournament chef") //Steven Seagal FTW
 			M.equip_if_possible(new /obj/item/clothing/under/rank/chef(M), M.slot_w_uniform)
-			M.equip_if_possible(new /obj/item/clothing/suit/chef(M), M.slot_wear_suit)
+			M.equip_if_possible(new /obj/item/clothing/suit/storage/chef(M), M.slot_wear_suit)
 			M.equip_if_possible(new /obj/item/clothing/shoes/black(M), M.slot_shoes)
 			M.equip_if_possible(new /obj/item/clothing/head/chefhat(M), M.slot_head)
 
@@ -501,7 +501,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/clothing/head/chaplain_hood(M), M.slot_head)
 			M.equip_if_possible(new /obj/item/device/radio/headset(M), M.slot_ears)
 			M.equip_if_possible(new /obj/item/clothing/glasses/thermal/monocle(M), M.slot_glasses)
-			M.equip_if_possible(new /obj/item/clothing/suit/chaplain_hoodie(M), M.slot_wear_suit)
+			M.equip_if_possible(new /obj/item/clothing/suit/storage/chaplain_hoodie(M), M.slot_wear_suit)
 			M.equip_if_possible(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(M), M.slot_l_store)
 			M.equip_if_possible(new /obj/item/weapon/bikehorn(M), M.slot_r_store)
 
@@ -524,7 +524,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/clothing/head/helmet/welding(M), M.slot_head)
 			M.equip_if_possible(new /obj/item/device/radio/headset(M), M.slot_ears)
 			M.equip_if_possible(new /obj/item/clothing/glasses/thermal/monocle(M), M.slot_glasses)
-			M.equip_if_possible(new /obj/item/clothing/suit/apron(M), M.slot_wear_suit)
+			M.equip_if_possible(new /obj/item/clothing/suit/storage/apron(M), M.slot_wear_suit)
 			M.equip_if_possible(new /obj/item/weapon/kitchenknife(M), M.slot_l_store)
 			M.equip_if_possible(new /obj/item/weapon/scalpel(M), M.slot_r_store)
 
@@ -542,7 +542,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/clothing/gloves/black(M), M.slot_gloves)
 			M.equip_if_possible(new /obj/item/device/radio/headset(M), M.slot_ears)
 			M.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(M), M.slot_glasses)
-			M.equip_if_possible(new /obj/item/clothing/suit/wcoat(M), M.slot_wear_suit)
+			M.equip_if_possible(new /obj/item/clothing/suit/storage/wcoat(M), M.slot_wear_suit)
 			M.equip_if_possible(new /obj/item/weapon/melee/energy/sword(M), M.slot_l_store)
 			M.equip_if_possible(new /obj/item/weapon/cloaking_device(M), M.slot_r_store)
 

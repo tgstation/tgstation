@@ -55,6 +55,21 @@
 	item_state = "armor_reflec"
 	armor = list(melee = 10, bullet = 10, laser = 80, energy = 50, bomb = 0, bio = 0, rad = 0)
 
+/obj/item/clothing/suit/storage/gearharness
+	name = "gear harness"
+	desc = "A simple security harness, used for storing small objects"
+	icon_state = "gearharness"
+	item_state = "gearharness"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+
+/obj/item/clothing/suit/storage/armourrigvest
+	name = "armour rig vest"
+	desc = "An important looking armoured vest, outfitted with pockets."
+	icon_state = "armourrigvest"
+	item_state = "armourrigvest"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 
 
 
