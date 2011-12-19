@@ -24,9 +24,10 @@ obj/item/weapon/gun/energy/staff
 	name = "staff of change"
 	desc = "an artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself"
 	icon = 'gun.dmi'
-	icon_state = "staff"
-	item_state = "staff"
+	icon_state = "staffofchange"
+	item_state = "staffofchange"
 	fire_sound = 'emitter.ogg'
+	w_class = 4.0
 	charge_cost = 200
 	projectile_type = "/obj/item/projectile/change"
 	origin_tech = null
