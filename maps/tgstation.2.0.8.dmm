@@ -6143,7 +6143,7 @@
 "cog" = (/obj/machinery/door/airlock/centcom{name = "General Access"; opacity = 1; req_access_txt = "101"},/turf/unsimulated/floor{icon_state = "floor"},/area/tdome)
 "coh" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 5; health = 1e+007},/turf/unsimulated/floor{name = "plating"},/area/tdome)
 "coi" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 5; health = 1e+007},/turf/unsimulated/floor{name = "plating"},/area/tdome)
-"coj" = (/obj/structure/rack,/obj/item/clothing/head/that,/obj/item/clothing/under/suit_jacket,/obj/item/clothing/suit/wcoat,/turf/unsimulated/floor{icon_state = "cafeteria"; dir = 2},/area/centcom/holding)
+"coj" = (/obj/structure/rack,/obj/item/clothing/head/that,/obj/item/clothing/under/suit_jacket,/obj/item/clothing/suit/storage/wcoat,/turf/unsimulated/floor{icon_state = "cafeteria"; dir = 2},/area/centcom/holding)
 "cok" = (/turf/unsimulated/floor{icon_state = "floor"},/area/centcom/holding)
 "col" = (/obj/structure/table,/turf/unsimulated/floor{icon_state = "floor"},/area/tdome)
 "com" = (/turf/unsimulated/floor{icon_state = "floor"},/area/tdome)

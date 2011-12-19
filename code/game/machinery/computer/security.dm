@@ -43,6 +43,9 @@
 								background = "'background-color:#3BB9FF;'"
 							if("None")
 								background = "'background-color:#00FF7F;'"
+							if("")
+								background = "'background-color:#FFFFFF;'"
+								crimstat = "No Record."
 						dat += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[] (ID:[])</a></td>", background, src, R, R.fields["name"], R.fields["id"])
 						dat += text("<td>[]</td>", R.fields["rank"])
 						dat += text("<td>[]</td>", R.fields["fingerprint"])

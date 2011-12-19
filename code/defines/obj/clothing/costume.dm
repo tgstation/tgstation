@@ -15,7 +15,7 @@
 /obj/effect/landmark/costume/madscientist/New()
 	new /obj/item/clothing/under/gimmick/rank/captain/suit(src.loc)
 	new /obj/item/clothing/head/flatcap(src.loc)
-	new /obj/item/clothing/suit/labcoat/mad(src.loc)
+	new /obj/item/clothing/suit/storage/labcoat/mad(src.loc)
 	new /obj/item/clothing/glasses/gglasses(src.loc)
 	del(src)
 
@@ -39,7 +39,7 @@
 	del(src)
 
 /obj/effect/landmark/costume/butler/New()
-	new /obj/item/clothing/suit/wcoat(src.loc)
+	new /obj/item/clothing/suit/storage/wcoat(src.loc)
 	new /obj/item/clothing/under/suit_jacket(src.loc)
 	new /obj/item/clothing/head/that(src.loc)
 	del(src)
@@ -58,7 +58,7 @@
 	del(src)
 
 /obj/effect/landmark/costume/prig/New()
-	new /obj/item/clothing/suit/wcoat(src.loc)
+	new /obj/item/clothing/suit/storage/wcoat(src.loc)
 	new /obj/item/clothing/glasses/monocle(src.loc)
 	var/CHOICE= pick( /obj/item/clothing/head/bowler, /obj/item/clothing/head/that)
 	new CHOICE(src.loc)
@@ -82,7 +82,7 @@
 	new /obj/item/clothing/under/waiter(src.loc)
 	var/CHOICE= pick( /obj/item/clothing/head/kitty, /obj/item/clothing/head/rabbitears)
 	new CHOICE(src.loc)
-	new /obj/item/clothing/suit/apron(src.loc)
+	new /obj/item/clothing/suit/storage/apron(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/pirate/New()
