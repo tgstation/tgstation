@@ -1185,7 +1185,8 @@ proc/listclearnulls(list/list)
 
 	if(hasvar(src,"back")) if(src:back) items += src:back
 	if(hasvar(src,"belt")) if(src:belt) items += src:belt
-	if(hasvar(src,"ears")) if(src:ears) items += src:ears
+	if(hasvar(src,"l_ear")) if(src:l_ear) items += src:l_ear
+	if(hasvar(src,"r_ear")) if(src:r_ear) items += src:r_ear
 	if(hasvar(src,"glasses")) if(src:glasses) items += src:glasses
 	if(hasvar(src,"gloves")) if(src:gloves) items += src:gloves
 	if(hasvar(src,"head")) if(src:head) items += src:head
