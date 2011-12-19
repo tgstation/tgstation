@@ -253,6 +253,13 @@ var/datum/cameranet/cameranet = new()
 	..()
 	eyeobj.ai = src
 
+/mob/living/silicon/ai/death(gibbed)
+	if(client && client.eye == eyeobj)
+		for(var/datum/camerachunk/c in eyeobj.visibleCameraChunks)
+			c.remove(eyeobj)
+		client.eye = src
+	return ..(gibbed)
+
 /mob/living/silicon/ai/verb/freelook()
 	set category = "AI Commands"
 	set name = "freelook"
