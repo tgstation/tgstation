@@ -9,6 +9,7 @@
 	if(..())
 		return
 	var/dat
+
 	if (temp)
 		dat = text("<TT>[]</TT><BR><BR><A href='?src=\ref[];choice=Clear Screen'>Clear Screen</A>", temp, src)
 	else
@@ -20,7 +21,7 @@
 <p style='text-align:center;'>"}
 					dat += text("<A href='?src=\ref[];choice=Search Records'>Search Records</A><BR>", src)
 					dat += text("<A href='?src=\ref[];choice=Search Fingerprints'>Search Fingerprints</A><BR>", src)
-					dat += text("<A href='?src=\ref[];choice=New Record (General)'>New General Record</A><BR>", src)
+					dat += text("<A href='?src=\ref[];choice=New Record (Complete)'>New Record</A><BR>", src)
 					dat += {"
 </p>
 <table style="text-align:center;" cellspacing="0" width="100%">
@@ -84,6 +85,51 @@
 						dat += "<B>Security Record Lost!</B><BR>"
 						dat += text("<A href='?src=\ref[];choice=New Record (Security)'>New Security Record</A><BR><BR>", src)
 					dat += text("\n<A href='?src=\ref[];choice=Delete Record (ALL)'>Delete Record (ALL)</A><BR><BR>\n<A href='?src=\ref[];choice=Print Record'>Print Record</A><BR>\n<A href='?src=\ref[];choice=Return'>Back</A><BR>", src, src, src)
+				if(4.0)
+					if(!(istype(PerpSec[1],/datum/data/record/)))
+						dat += text("ERROR.  String could not be located.<br><br><A href='?src=\ref[];choice=Return'>Back</A>", src)
+					else
+						dat += {"
+<table style="text-align:center;" cellspacing="0" width="100%">
+<tr>
+<th>Search Results:</th>
+</tr>
+</table>
+<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+<tr>
+<th>Name</th>
+<th>ID</th>
+<th>Rank</th>
+<th>Fingerprints</th>
+<th>Criminal Status</th>
+</tr>					"}
+						for(var/i=1, i<=PerpGen.len, i++)
+							var/crimstat = ""
+							var/datum/data/record/R = PerpGen[i]
+							var/datum/data/record/E = PerpSec[i]
+							crimstat = E.fields["criminal"]
+							var/background
+							switch(crimstat)
+								if("*Arrest*")
+									background = "'background-color:#DC143C;'"
+								if("Incarcerated")
+									background = "'background-color:#CD853F;'"
+								if("Parolled")
+									background = "'background-color:#CD853F;'"
+								if("Released")
+									background = "'background-color:#3BB9FF;'"
+								if("None")
+									background = "'background-color:#00FF7F;'"
+								if("")
+									background = "'background-color:#FFFFFF;'"
+									crimstat = "No Record."
+							dat += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
+							dat += text("<td>[]</td>", R.fields["id"])
+							dat += text("<td>[]</td>", R.fields["rank"])
+							dat += text("<td>[]</td>", R.fields["fingerprint"])
+							dat += text("<td>[]</td></tr>", crimstat)
+						dat += "</table><hr width='75%' />"
+						dat += text("<br><A href='?src=\ref[];choice=Return'>Return to index.</A>", src)
 				else
 		else
 			dat += text("<A href='?src=\ref[];choice=Log In'>{Log In}</A>", src)
@@ -146,22 +192,22 @@ What a mess.*/
 						screen = 1
 //RECORD FUNCTIONS
 			if("Search Records")
-				var/t1 = input("Search String: (Name or ID)", "Secure. records", null, null)  as text
+				var/t1 = input("Search String: (Partial Name or ID or Fingerprints)", "Secure. records", null, null)  as text
 				if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || !in_range(src, usr)))
 					return
-				active1 = null
-				active2 = null
+				PerpGen.len = 1
+				PerpSec.len = 1
 				t1 = lowertext(t1)
 				for(var/datum/data/record/R in data_core.general)
-					if ((lowertext(R.fields["name"]) == t1 || t1 == lowertext(R.fields["id"])))
-						active1 = R
-				if (!( active1 ))
-					temp = text("Could not locate record [].", t1)
-				else
 					for(var/datum/data/record/E in data_core.security)
-						if ((E.fields["name"] == active1.fields["name"] || E.fields["id"] == active1.fields["id"]))
-							active2 = E
-					screen = 3
+						if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
+							var/temptext = E.fields["name"] + " " + E.fields["id"] + " " + R.fields["fingerprint"]
+							if(findtext(temptext,t1))
+								PerpGen[PerpGen.len] = E
+								PerpSec[PerpSec.len] = R
+								PerpGen.len += 1
+								PerpSec.len += 1
+				screen = 4
 
 			if("Record Maintenance")
 				screen = 2
@@ -289,6 +335,32 @@ What a mess.*/
 				data_core.general += G
 				active1 = G
 				active2 = null
+
+			if("New Record (Complete)")
+				var/datum/data/record/G = new /datum/data/record()
+				G.fields["name"] = "New Record"
+				G.fields["id"] = text("[]", add_zero(num2hex(rand(1, 1.6777215E7)), 6))
+				G.fields["rank"] = "Unassigned"
+				G.fields["sex"] = "Male"
+				G.fields["age"] = "Unknown"
+				G.fields["fingerprint"] = "Unknown"
+				G.fields["p_stat"] = "Active"
+				G.fields["m_stat"] = "Stable"
+				data_core.general += G
+				active1 = G
+				var/datum/data/record/R = new /datum/data/record()
+				R.fields["name"] = active1.fields["name"]
+				R.fields["id"] = active1.fields["id"]
+				R.name = text("Security Record #[]", R.fields["id"])
+				R.fields["criminal"] = "None"
+				R.fields["mi_crim"] = "None"
+				R.fields["mi_crim_d"] = "No minor crime convictions."
+				R.fields["ma_crim"] = "None"
+				R.fields["ma_crim_d"] = "No major crime convictions."
+				R.fields["notes"] = "No notes."
+				data_core.security += R
+				active2 = R
+
 //FIELD FUNCTIONS
 			if ("Edit Field")
 				var/a1 = active1

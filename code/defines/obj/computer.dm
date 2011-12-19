@@ -191,6 +191,8 @@
 	var/temp = null
 	var/printing = null
 	var/can_change_id = 0
+	var/PerpGen = list(1)
+	var/PerpSec = list(1)
 
 
 /obj/machinery/computer/secure_data/detective_computer
