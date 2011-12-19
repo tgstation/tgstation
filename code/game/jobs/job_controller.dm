@@ -225,7 +225,9 @@ var/global/datum/controller/occupations/job_master
 			H.Robotize()
 			return 1
 
-		H.equip_if_possible(new /obj/item/device/radio/headset(H), H.slot_ears)
+		// make sure we don't already have one on 1 ear :p
+		if(!istype(H.r_ear,/obj/item/device/radio/headset) && !istype(H.l_ear,/obj/item/device/radio/headset))
+			H.equip_if_possible(new /obj/item/device/radio/headset(H), H.slot_ears)
 		var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
 		H.equip_if_possible(BPK, H.slot_back,1)
 		H.equip_if_possible(new /obj/item/weapon/storage/box(H.back), H.slot_in_backpack)

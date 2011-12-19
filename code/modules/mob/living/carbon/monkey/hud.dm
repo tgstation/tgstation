@@ -248,10 +248,19 @@
 	src.other += using
 
 	using = new src.h_type( src )
-	using.name = "ears"
+	using.name = "left ear"
 	using.icon = ui_style
 	using.icon_state = "ears"
-	using.screen_loc = ui_ears
+	using.screen_loc = ui_lear
+	using.layer = 19
+	using.overlays += blocked
+	src.other += using
+
+	using = new src.h_type( src )
+	using.name = "right ear"
+	using.icon = ui_style
+	using.icon_state = "ears"
+	using.screen_loc = ui_rear
 	using.layer = 19
 	using.overlays += blocked
 	src.other += using
