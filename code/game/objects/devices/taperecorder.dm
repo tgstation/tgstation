@@ -207,3 +207,50 @@
 		t1 += "[src.storedinfo[i]]<BR>"
 	P.info = t1
 	P.name = "paper- 'Transcript'"
+
+
+/obj/item/device/taperecorder/attack_self(mob/user)
+	if(src.recording == 0 && src.playing == 0)
+		if(usr.stat)
+			usr << "Not when you're incapacitated."
+			return
+		if(src.emagged == 1)
+			usr << "\red The tape recorder makes a scratchy noise."
+			return
+		src.icon_state = "taperecorderrecording"
+		if(src.timerecorded < 3600 && src.playing == 0)
+			usr << "\blue Recording started."
+			src.recording = 1
+			src.timestamp+= src.timerecorded
+			src.storedinfo += "\[[time2text(src.timerecorded*10,"mm:ss")]\] Recording started."
+			for(src.timerecorded, src.timerecorded<3600)
+				if(src.recording == 0)
+					break
+				src.timerecorded++
+				sleep(10)
+			src.recording = 0
+			src.icon_state = "taperecorderidle"
+			return
+		else
+			usr << "\red Either your tape recorder's memory is full, or it is currently playing back its memory."
+	else
+		if(usr.stat)
+			usr << "Not when you're incapacitated."
+			return
+		if (src.recording == 1)
+			src.recording = 0
+			src.timestamp+= src.timerecorded
+			src.storedinfo += "\[[time2text(src.timerecorded*10,"mm:ss")]\] Recording stopped."
+			usr << "\blue Recording stopped."
+			src.icon_state = "taperecorderidle"
+			return
+		else if (src.playing == 1)
+			src.playing = 0
+			var/turf/T = get_turf(src)
+			for(var/mob/O in hearers(world.view-1, T))
+				O.show_message("<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>",2)
+			src.icon_state = "taperecorderidle"
+			return
+		else
+			usr << "\red Stop what?"
+			return
