@@ -81,7 +81,7 @@
 		//if(icon_state == initial(icon_state))
 	var/icontype = ""
 	var/list/icons = list("Blue", "HAL9000", "Monochrome", "Rainbow", "HAL9000 Mark2", "Inverted", "Firewall", "Green", "Text", "Smiley", "Angry", "Dorf", "Matrix")
-	if (src.name == "B.A.N.N.E.D." && src.ckey == "Spaceman96")
+	if (src.name == "B.A.N.N.E.D." && src.ckey == "spaceman96")
 		icons += "B.A.N.N.E.D."
 	icontype = input("Please, select a display!", "AI", null/*, null*/) in icons
 	if(icontype == "Blue")

@@ -134,6 +134,7 @@
 		new /obj/item/weapon/fcardholder(src)
 		new /obj/item/weapon/clipboard(src)
 		new /obj/item/device/detective_scanner(src)
+		new /obj/item/weapon/pepperspray/small(src)
 		return
 
 

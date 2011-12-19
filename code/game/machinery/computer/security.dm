@@ -18,10 +18,36 @@
 				if(1.0)
 					dat += text("<A href='?src=\ref[];choice=Search Records'>Search Records</A><BR>\n<A href='?src=\ref[];choice=List Records'>List Records</A><BR>\n<A href='?src=\ref[];choice=Search Fingerprints'>Search Fingerprints</A><BR>\n<A href='?src=\ref[];choice=New Record (General)'>New General Record</A><BR>\n<BR>\n<A href='?src=\ref[];choice=Record Maintenance'>Record Maintenance</A><BR>\n<A href='?src=\ref[];choice=Log Out'>{Log Out}</A><BR>\n", src, src, src, src, src, src)
 				if(2.0)
-					dat += "<B>Record List</B>:<HR>"
+					dat += {"<B>Record List</B>:<HR>
+					<table style="text-align:center;" border="1" cellspacing="0">
+					<tr>
+					<th>Name (ID#)</th>
+					<th>Rank</th>
+					<th>Fingerprints</th>
+					<th>Criminal Status</th>
+					</tr>"}
 					for(var/datum/data/record/R in data_core.general)
-						dat += text("<A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
-					dat += text("<HR><A href='?src=\ref[];choice=Return'>Back</A>", src)
+						var/crimstat = ""
+						for(var/datum/data/record/E in data_core.security)
+							if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
+								crimstat = E.fields["criminal"]
+						var/background
+						switch(crimstat)
+							if("*Arrest*")
+								background = "'background-color:#DC143C;'"
+							if("Incarcerated")
+								background = "'background-color:#CD853F;'"
+							if("Parolled")
+								background = "'background-color:#CD853F;'"
+							if("Released")
+								background = "'background-color:#3BB9FF;'"
+							if("None")
+								background = "'background-color:#00FF7F;'"
+						dat += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[] (ID:[])</a></td>", background, src, R, R.fields["name"], R.fields["id"])
+						dat += text("<td>[]</td>", R.fields["rank"])
+						dat += text("<td>[]</td>", R.fields["fingerprint"])
+						dat += text("<td>[]</td></tr>", crimstat)
+					dat += text("</table><br><HR><A href='?src=\ref[];choice=Return'>Back</A>", src)
 				if(3.0)
 					dat += text("<B>Records Maintenance</B><HR>\n<A href='?src=\ref[];choice=Delete All Records'>Delete All Records</A><BR>\n<BR>\n<A href='?src=\ref[];choice=Return'>Back</A>", src, src)
 				if(4.0)

@@ -44,7 +44,7 @@
 
 /obj/machinery/camera
 	name = "Security Camera"
-	desc = "This is used to monitor rooms. Can see through walls."
+	desc = "This is used to monitor rooms."
 	icon = 'monitors.dmi'
 	icon_state = "camera"
 	var/network = "SS13"
@@ -61,7 +61,7 @@
 	active_power_usage = 10
 
 /obj/machinery/dispenser
-	desc = "A simple yet bulky one-way storage device for gas tanks. Holds 10 plasma and 10 oxygen tanks."
+	desc = "A simple yet bulky one-way storage device for gas tanks. Holds plasma and oxygen tanks."
 	name = "Tank Storage Unit"
 	icon = 'objects.dmi'
 	icon_state = "dispenser"
@@ -101,7 +101,7 @@
 
 /obj/machinery/firealarm
 	name = "Fire Alarm"
-	desc = "Pull this in case of emergency. Thus keep pulling this forever."
+	desc = "Pull this in case of emergency."
 	icon = 'monitors.dmi'
 	icon_state = "fire0"
 	var/detecting = 1.0
@@ -133,7 +133,7 @@
 
 /obj/machinery/igniter
 	name = "igniter"
-	desc = "Fun for igniting plasma."
+	desc = "Might as well make that detonator, right?"
 	icon = 'stationobjs.dmi'
 	icon_state = "igniter1"
 	var/id = null
@@ -198,7 +198,7 @@
 
 /obj/machinery/scan_console
 	name = "DNA Scanner Access Console"
-	desc = "Scand DNA."
+	desc = "Scan DNA."
 	icon = 'computer.dmi'
 	icon_state = "scanner"
 	density = 1
@@ -220,7 +220,7 @@
 
 /obj/machinery/scan_consolenew
 	name = "DNA Modifier Access Console"
-	desc = "Scand DNA."
+	desc = "Scan DNA."
 	icon = 'computer.dmi'
 	icon_state = "scanner"
 	density = 1
@@ -258,7 +258,6 @@
 
 /obj/machinery/door_control
 	name = "Remote Door Control"
-	desc = "This controls doors."
 	icon = 'stationobjs.dmi'
 	icon_state = "doorctrl0"
 	desc = "A remote control switch for a door."
@@ -270,7 +269,6 @@
 
 /obj/machinery/driver_button
 	name = "Mass Driver Button"
-	desc = "FIRE AWAY!"
 	icon = 'objects.dmi'
 	icon_state = "launcherbtt"
 	desc = "A remote control switch for a Mass Driver."
@@ -283,7 +281,6 @@
 
 /obj/machinery/ignition_switch
 	name = "Ignition Switch"
-	desc = "Activates that igniter."
 	icon = 'objects.dmi'
 	icon_state = "launcherbtt"
 	desc = "A remote control switch for a mounted igniter."
@@ -312,7 +309,7 @@
 
 /obj/machinery/teleport/station
 	name = "station"
-	desc = "The station thingy of a teleport thingy."
+	desc = "The station's hub of a teleport system."
 	icon_state = "controller"
 	var/active = 0
 	var/engaged = 0
@@ -378,7 +375,7 @@
 
 /obj/machinery/power/monitor
 	name = "Power Monitoring Computer"
-	desc = "Used to monitor the power. Pretty useless."
+	desc = "Used to monitor the power."
 	icon = 'computer.dmi'
 	icon_state = "power"
 	density = 1

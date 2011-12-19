@@ -13,10 +13,23 @@ MOP
 /obj/item/weapon/cleaner/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
 
+/obj/item/weapon/cleaner/attack_self(var/mob/user as mob)
+	if(catch)
+		user << "\blue You flip the safety off."
+		catch = 0
+		return
+	else
+		user << "\blue You flip the safety on."
+		catch = 1
+		return
+
 /obj/item/weapon/cleaner/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (istype(A, /obj/item/weapon/storage ))
 		return
 	if (istype(A, /obj/effect/proc_holder/spell ))
+		return
+	else if (catch == 1)
+		user << "\blue The safety is on!"
 		return
 	else if (src.reagents.total_volume < 1)
 		user << "\blue [src] is empty!"
@@ -165,14 +178,26 @@ MOP
 
 	return
 
+//Pepper spray, set up to make the 2 different types
+
 /obj/item/weapon/pepperspray/New()
-	var/datum/reagents/R = new/datum/reagents(45)
+	var/datum/reagents/R = new/datum/reagents(ReagentAmount)
 	reagents = R
 	R.my_atom = src
-	R.add_reagent("condensedcapsaicin", 45)
+	R.add_reagent("condensedcapsaicin", ReagentAmount)
 
 /obj/item/weapon/pepperspray/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
+
+/obj/item/weapon/pepperspray/attack_self(var/mob/user as mob)
+	if(catch)
+		user << "\blue You flip the safety off."
+		catch = 0
+		return
+	else
+		user << "\blue You flip the safety on."
+		catch = 1
+		return
 
 /obj/item/weapon/pepperspray/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (istype(A, /obj/item/weapon/storage ))
@@ -180,23 +205,39 @@ MOP
 	if (istype(A, /obj/effect/proc_holder/spell ))
 		return
 	else if (istype(A, /obj/structure/reagent_dispensers/peppertank) && get_dist(src,A) <= 1)
-		A.reagents.trans_to(src, 45)
-		user << "\blue Pepper spray refilled"
-		playsound(src.loc, 'refill.ogg', 50, 1, -6)
+		if(src.reagents.total_volume < ReagentAmount)
+			A.reagents.trans_to(src, ReagentAmount - src.reagents.total_volume)
+			user << "\blue Pepper spray refilled"
+			playsound(src.loc, 'refill.ogg', 50, 1, -6)
+			return
+		else
+			user << "\blue Pepper spray is already full!"
+			return
+	else if (catch == 1)
+		user << "\blue The safety is on!"
 		return
 	else if (src.reagents.total_volume < 1)
 		user << "\blue [src] is empty!"
 		return
 	playsound(src.loc, 'spray2.ogg', 50, 1, -6)
 
-	var/Sprays[3]
-	for(var/i=1, i<=3, i++) // intialize sprays
+	var/SprayNum = 0 //Setting up the differentiation for the 2 bottles.   --SkyMarshal
+	var/SprayAmt = 0
+	if(BottleSize)
+		SprayNum = 3
+		SprayAmt = 5
+	else
+		SprayNum = 1
+		SprayAmt = 1
+
+	var/Sprays[SprayNum]
+	for(var/i=1, i<=SprayNum, i++) // intialize sprays
 		if(src.reagents.total_volume < 1) break
 		var/obj/effect/decal/D = new/obj/effect/decal(get_turf(src))
 		D.name = "chemicals"
 		D.icon = 'chempuff.dmi'
-		D.create_reagents(15)
-		src.reagents.trans_to(D, 15)
+		D.create_reagents(SprayAmt)
+		src.reagents.trans_to(D, SprayAmt)
 
 		var/rgbcolor[3]
 		var/finalcolor
@@ -231,11 +272,23 @@ MOP
 			var/obj/effect/decal/D = Sprays[i]
 			if(!D) continue
 
+			var/turf/my_target = null
 			// Spreads the sprays a little bit
-			var/turf/my_target = pick(the_targets)
+			if(i == 1)
+				my_target = T
+			else
+				my_target = pick(the_targets)
+
 			the_targets -= my_target
 
-			for(var/j=1, j<=rand(6,8), j++)
+			var/Dist = 0
+
+			if(BottleSize)
+				Dist = rand(6,8)
+			else
+				Dist = rand(2,3)
+
+			for(var/j=1, j<=Dist, j++)
 				step_towards(D, my_target)
 				D.reagents.reaction(get_turf(D))
 				for(var/atom/t in get_turf(D))
@@ -255,9 +308,14 @@ MOP
 
 /obj/item/weapon/pepperspray/examine()
 	set src in usr
-	usr << text("\icon[] [] units of cleaner left!", src, src.reagents.total_volume)
-	..()
-	return
+	if(BottleSize)
+		usr << text("\icon[] [] units of pepperspray left!", src, src.reagents.total_volume)
+		..()
+		return
+	else
+		usr << text("\icon[] [] use(s) remaining!", src, src.reagents.total_volume)
+		..()
+		return
 
 // MOP
 

@@ -28,7 +28,7 @@
 
 /obj/effect/decal/point
 	name = "point"
-	desc = "It is an arrow hanging in mid-air. There may be a wizard about."
+	desc = "It is an arrow hanging in mid-air."
 	icon = 'screen1.dmi'
 	icon_state = "arrow"
 	layer = 16.0
@@ -41,7 +41,7 @@
 
 /obj/effect/decal/cleanable/blood
 	name = "Blood"
-	desc = "It's red. Its Gooye. It is the chefs cooking perhaps."
+	desc = "It's red and disgusting."
 	density = 0
 	anchored = 1
 	layer = 2
@@ -94,7 +94,7 @@
 
 /obj/effect/decal/cleanable/xenoblood
 	name = "xeno blood"
-	desc = "It's green. Must be more of the chefs cooking."
+	desc = "It's green. What the hell?"
 	density = 0
 	anchored = 1
 	layer = 2
@@ -242,7 +242,7 @@
 //Vomit (sorry)
 /obj/effect/decal/cleanable/vomit
 	name = "Vomit"
-	desc = "Gosh, how unpleasant."
+	desc = "Geez, unpleasant."
 	density = 0
 	anchored = 1
 	layer = 2

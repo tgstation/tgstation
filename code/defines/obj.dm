@@ -103,7 +103,7 @@
 	var/mob/living/carbon/monkey/target = null
 
 /obj/effect/sign/securearea
-	desc = "A warning sign which reads 'SECURE AREA'. This obviously applies to a nun-Clown."
+	desc = "A warning sign which reads 'SECURE AREA'"
 	name = "SECURE AREA"
 	icon = 'decals.dmi'
 	icon_state = "securearea"
@@ -150,8 +150,8 @@
 	pixel_y = -1
 
 /obj/effect/sign/fire
-	desc = "A warning sign which reads 'HOT! HOT! AAAH! I'M BURNING!'"
-	name = "HOT! HOT! AAAH! I'M BURNING!"
+	desc = "A warning sign which reads 'EXTREME TEMPERATURES'"
+	name = "EXTREME TEMPERATURES"
 	icon = 'decals.dmi'
 	icon_state = "fire"
 	anchored = 1.0
@@ -212,7 +212,7 @@
 			del(src)*/
 
 /obj/effect/sign/maltesefalcon1         //The sign is 64x32, so it needs two tiles. ;3
-	desc = "The Maltese Falcon, Space Bar and Grill. Now with added monkey."
+	desc = "The Maltese Falcon, Space Bar and Grill."
 	name = "The Maltese Falcon"
 	icon = 'decals.dmi'
 	icon_state = "maltesefalcon1"
@@ -221,7 +221,7 @@
 	density = 0
 
 /obj/effect/sign/maltesefalcon2
-	desc = "The Maltese Falcon, Space Bar and Grill. Now with added monkey."
+	desc = "The Maltese Falcon, Space Bar and Grill."
 	name = "The Maltese Falcon"
 	icon = 'decals.dmi'
 	icon_state = "maltesefalcon2"
@@ -289,7 +289,7 @@
 
 /obj/item/device/multitool
 	name = "multitool"
-	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors."
+	desc = "Used for pulsing wires to test which to cut."
 	icon_state = "multitool"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 5.0
@@ -297,7 +297,6 @@
 	throwforce = 5.0
 	throw_range = 15
 	throw_speed = 3
-	desc = "You can use this on airlocks or APCs to try to hack them without cutting wires."
 	m_amt = 50
 	g_amt = 20
 	origin_tech = "magnets=1;engineering=1"
@@ -445,7 +444,7 @@
 	anchored =1
 	var/netnum = 0
 	name = "power cable"
-	desc = "A flexible superconducting cable for heavy-duty power transfer. Comes in clown colors now."
+	desc = "A flexible superconducting cable for heavy-duty power transfer."
 	icon = 'power_cond_red.dmi'
 	icon_state = "0-1"
 	var/d1 = 0
@@ -473,7 +472,7 @@
 
 /obj/structure/morgue
 	name = "morgue"
-	desc = "Used to keep bodies in untill someone fetches them."
+	desc = "Used to keep bodies in until someone fetches them."
 	icon = 'stationobjs.dmi'
 	icon_state = "morgue1"
 	density = 1
@@ -482,7 +481,7 @@
 
 /obj/structure/crematorium
 	name = "crematorium"
-	desc = "A human incinerator. Works well on barbeque nights."
+	desc = "An incinerator."
 	icon = 'stationobjs.dmi'
 	icon_state = "crema1"
 	density = 1
@@ -494,7 +493,7 @@
 
 /obj/effect/mine
 	name = "Mine"
-	desc = "I Better stay away from that thing."
+	desc = "I'd better stay away from that thing."
 	density = 1
 	anchored = 1
 	layer = 3
@@ -544,7 +543,7 @@
 
 /obj/effect/portal
 	name = "portal"
-	desc = "Looks unstable. Best to test it with the clown."
+	desc = "Looks unstable."
 	icon = 'stationobjs.dmi'
 	icon_state = "portal"
 	density = 1
@@ -610,7 +609,7 @@
 
 /obj/structure/stool/chair/e_chair
 	name = "electrified chair"
-	desc = "Looks absolutely SHOCKING!"
+	desc = "Looks absolutely terrifying!"
 	icon_state = "e_chair0"
 	var/atom/movable/overlay/overl = null
 	var/on = 0.0
@@ -811,7 +810,7 @@
 //BEGIN BRAINS=====================================================
 /obj/item/brain
 	name = "brain"
-	desc = "A piece of juicy meat found in a persons head."
+	desc = "A piece of complex biomass found in a persons head."
 	icon = 'surgery.dmi'
 	icon_state = "brain2"
 	flags = TABLEPASS
@@ -902,7 +901,7 @@
 	name = "desk clutter"
 	icon = 'items.dmi'
 	icon_state = "deskclutter"
-	desc = "Some clutter the detective has accumalated over the years..."
+	desc = "Some clutter the desk has accumulated over the years..."
 	anchored = 1
 
 /obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER
@@ -979,7 +978,7 @@
 
 /obj/item/stack/rods
 	name = "metal rods"
-	desc = "Some rods. Can be used for building, or something."
+	desc = "Some rods. Can be used for building."
 	singular_name = "metal rod"
 	icon_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -1023,7 +1022,7 @@
 
 /obj/item/stack/sheet/glass
 	name = "glass"
-	desc = "HOLY HELL! That is a lot of glass."
+	desc = "That is a lot of glass."
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
 	g_amt = 3750

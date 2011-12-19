@@ -73,16 +73,18 @@
 		H.equip_if_possible(new /obj/item/clothing/shoes/brown(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/detective(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/head/det_hat(H), H.slot_head)
-		var/obj/item/clothing/mask/cigarette/CIG = new /obj/item/clothing/mask/cigarette(H)
+/*		var/obj/item/clothing/mask/cigarette/CIG = new /obj/item/clothing/mask/cigarette(H)
 		CIG.light("")
-		H.equip_if_possible(CIG, H.slot_wear_mask)
+		H.equip_if_possible(CIG, H.slot_wear_mask)	*/
+		//Fuck that thing.  --SkyMarshal
 		H.equip_if_possible(new /obj/item/clothing/gloves/black(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/weapon/storage/fcard_kit(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/weapon/fcardholder(H), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/clothing/suit/det_suit(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/device/detective_scanner(H), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/weapon/zippo(H), H.slot_l_store)
-		H.equip_if_possible(new /obj/item/weapon/reagent_containers/food/snacks/candy_corn(H), H.slot_h_store)
+//		H.equip_if_possible(new /obj/item/weapon/reagent_containers/food/snacks/candy_corn(H), H.slot_h_store)
+//		No... just no. --SkyMarshal
 		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 		L.imp_in = H
 		L.implanted = 1

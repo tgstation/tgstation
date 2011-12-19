@@ -1705,19 +1705,17 @@ datum
 
 							M << "\red Your mask protects you from the pepperspray!"
 							return
-						if(M:head)
-							M << "\red Your helmet protects you from the pepperspray!"
-							return
 						if(M:glasses)
 							M << "\red Your glasses protect you from most of the pepperspray!"
 							M:emote("scream")
-							M.eye_blurry = max(M.eye_blurry, 1)
+							M.eye_blurry = max(M.eye_blurry, 20)
+							M.eye_blind = max(M.eye_blind, 4)
 							return
 						M:emote("scream")
 						M << "\red You're sprayed directly in the eyes with pepperspray!"
-						M.eye_blurry = max(M.eye_blurry, 5)
-						M.eye_blind = max(M.eye_blind, 2)
-						M:paralysis = max(M:paralysis, 1)
+						M.eye_blurry = max(M.eye_blurry, 60)
+						M.eye_blind = max(M.eye_blind, 12)
+						M:weakened = max(M:weakened, 20)
 						M.drop_item()
 
 		frostoil
