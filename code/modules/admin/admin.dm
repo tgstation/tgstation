@@ -2065,34 +2065,52 @@
 				while(query.NextRow())
 					karma = query.item[1]
 
-			var/job = ""
+			var/M_job = ""
 
 			if(istype(M,/mob/new_player))
-				job = "New player"
+				M_job = "New player"
 			if(isliving(M))
-				job = "Living"
+				M_job = "Living"
 			if(isobserver(M))
-				job = "Ghost"
+				M_job = "Ghost"
 			if(isalien(M))
-				job = "Alien"
+				M_job = "Alien"
 			if(islarva(M))
-				job = "Alien larva"
+				M_job = "Alien larva"
 			if(ishuman(M))
-				job = M.job
+				M_job = M.job
 			if(ismetroid(M))
-				job = "Metroid"
+				M_job = "Metroid"
 			if(ismonkey(M))
-				job = "Moneky"
+				M_job = "Moneky"
 			if(isAI(M))
-				job = "AI"
+				M_job = "AI"
 			if(ispAI(M))
-				job = "pAI"
+				M_job = "pAI"
 			if(isrobot(M))
-				job = "Cyborg"
+				M_job = "Cyborg"
 			if(isanimal(M))
-				job = "Animal"
+				M_job = "Animal"
 			if(iscorgi(M))
-				job = "Corgi"
+				M_job = "Corgi"
+
+			M_job = dd_replacetext(M_job, "'", "")
+			M_job = dd_replacetext(M_job, "\"", "")
+			M_job = dd_replacetext(M_job, "\\", "")
+
+			var/M_name = M.name
+			M_name = dd_replacetext(M_name, "'", "")
+			M_name = dd_replacetext(M_name, "\"", "")
+			M_name = dd_replacetext(M_name, "\\", "")
+			var/M_rname = M.real_name
+			M_rname = dd_replacetext(M_rname, "'", "")
+			M_rname = dd_replacetext(M_rname, "\"", "")
+			M_rname = dd_replacetext(M_rname, "\\", "")
+
+			var/M_key = M.key
+			M_key = dd_replacetext(M_key, "'", "")
+			M_key = dd_replacetext(M_key, "\"", "")
+			M_key = dd_replacetext(M_key, "\\", "")
 
 			//output for each mob
 			dat += {"
@@ -2101,9 +2119,9 @@
 					<td align='center' bgcolor='[color]'>
 						<span id='notice_span[i]'></span>
 						<a id='link[i]'
-						onmouseover='expand("item[i]","[job]","[M.name]","[M.real_name]","--unused--","[M.key]","[M.lastKnownIP]",[is_antagonist],"[karma]","\ref[M]")'
+						onmouseover='expand("item[i]","[M_job]","[M_name]","[M_rname]","--unused--","[M_key]","[M.lastKnownIP]",[is_antagonist],"[karma]","\ref[M]")'
 						>
-						<b id='search[i]'>[M.name] - [M.real_name] - [M.key] ([job])</b>
+						<b id='search[i]'>[M_name] - [M_rname] - [M_key] ([M_job])</b>
 						</a>
 						<br><span id='item[i]'></span>
 					</td>
