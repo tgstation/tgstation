@@ -128,7 +128,7 @@
 
 	ghost.client.mob = src.occupant
 
-	src.occupant.hud_used = new/obj/hud( src )
+	src.occupant.hud_used = new/obj/hud( src.occupant )
 		// probably redundant because previous line calls mob/Login() which does this line of code
 		// but until this is proven useless keep it for safety - Doohl
 
