@@ -432,7 +432,7 @@
 						O.show_message(text("\red <B>[] is trying to break the handcuffs!</B>", usr), 1)
 					spawn(0)
 						if(do_after(usr, 50))
-							if(!usr:handcuffed) return
+							if(!usr:handcuffed || usr.moved_recently || usr:buckled) return
 							for(var/mob/O in viewers(usr))
 								O.show_message(text("\red <B>[] manages to break the handcuffs!</B>", usr), 1)
 							usr << "\green You successfully break your handcuffs."
@@ -444,7 +444,7 @@
 						O.show_message(text("\red <B>[] attempts to remove the handcuffs!</B>", usr), 1)
 					spawn(0)
 						if(do_after(usr, 1200))
-							if(!usr:handcuffed) return
+							if(!usr:handcuffed || usr.moved_recently || usr:buckled) return
 							for(var/mob/O in viewers(usr))
 								O.show_message(text("\red <B>[] manages to remove the handcuffs!</B>", usr), 1)
 							usr << "\blue You successfully remove your handcuffs."
