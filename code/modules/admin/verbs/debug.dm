@@ -31,7 +31,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 /client/proc/callproc()
 	set category = "Debug"
-	set name = "Advanced ProcCall"
+	set name = "Advanced ProcCall (TG Version)"
 	if(!authenticated || !holder)
 		src << "Only administrators may use this command."
 		return
@@ -116,6 +116,96 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 			returnval = call(procname)(arglist(lst)) // Pass the lst as an argument list to the proc
 	usr << "\blue Proc returned: [returnval ? returnval : "null"]"
+
+/client/proc/callprocgen()
+	set category = "Debug"
+	set name = "ProcCall (BS12 Version)"
+	if(!src.holder)
+		src << "Only administrators may use this command."
+		return
+
+	var/class = null
+	var/returnval = null
+	var/procname = input("Procpath (in full)","path", null)
+
+	var/argNum = input("Number of arguments:","Number",null) as num //input("Arguments","Arguments:", null)
+	var/list/argL = new/list()
+
+	var/i
+	for(i=0; i<argNum; i++)
+		class = input("Type of Argument #[i]","Variable Type", "text") in list("text","num","type","reference","icon","file","cancel")
+		switch(class)
+			if("cancel")
+				return
+
+			if("text")
+				argL.Add( input("Enter new text:","Text",null) as text )
+
+			if("num")
+				argL.Add( input("Enter new number:","Num",null) as num )
+
+			if("type")
+				argL.Add( input("Enter type:","Type",null) in typesof(/obj,/mob,/area,/turf) )
+
+			if("reference")
+				argL.Add( input("Select reference:","Reference",null) as mob|obj|turf|area in world )
+
+			if("icon")
+				argL.Add( input("Pick icon:","Icon",null) as icon )
+
+			if("file")
+				argL.Add( input("Pick file:","File",null) as file )
+
+	usr << "\blue Calling '[procname]'"
+	returnval = call(procname)(arglist(argL))
+
+	usr << "\blue Proc returned: [returnval ? returnval : "null"]"
+
+
+/client/proc/callprocobj(var/target as obj|mob|area|turf in world)
+	set category = "Debug"
+	set name = "Object ProcCall (BS12 Version)"
+	if(!src.holder)
+		src << "Only administrators may use this command."
+		return
+
+	var/class = null
+	var/returnval = null
+	var/procname = input("Procpath (e.g. just \"update\" for lights)","path:", null)
+
+	var/argNum = input("Number of arguments:","Number",null) as num //input("Arguments","Arguments:", null)
+	var/list/argL = new/list()
+
+	var/i
+	for(i=0; i<argNum; i++)
+		class = input("Type of Argument #[i]","Variable Type", "text") in list("text","num","type","reference","icon","file","cancel")
+		switch(class)
+			if("cancel")
+				return
+
+			if("text")
+				argL.Add( input("Enter new text:","Text",null) as text )
+
+			if("num")
+				argL.Add( input("Enter new number:","Num",null) as num )
+
+			if("type")
+				argL.Add( input("Enter type:","Type",null) in typesof(/obj,/mob,/area,/turf) )
+
+			if("reference")
+				argL.Add( input("Select reference:","Reference",null) as mob|obj|turf|area in world )
+
+			if("icon")
+				argL.Add( input("Pick icon:","Icon",null) as icon )
+
+			if("file")
+				argL.Add( input("Pick file:","File",null) as file )
+
+	usr << "\blue Calling '[procname]' on '[target]'"
+	returnval = call(target,procname)(arglist(argL))
+
+	usr << "\blue Proc returned: [returnval ? returnval : "null"]"
+
 
 /client/proc/Cell()
 	set category = "Debug"

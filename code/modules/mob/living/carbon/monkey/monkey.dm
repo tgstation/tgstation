@@ -406,6 +406,11 @@
 		else
 			icon_state = "monkey0"
 
+	if(client && client.admin_invis)
+		invisibility = 100
+	else
+		invisibility = 0
+
 	if (wear_mask)
 		if (istype(wear_mask, /obj/item/clothing/mask))
 			var/t1 = wear_mask.icon_state
