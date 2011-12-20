@@ -249,7 +249,9 @@
 			else
 				m_select.screen_loc = null
 
-	if (alien_invis)
+	if(client && client.admin_invis)
+		invisibility = 100
+	else if (alien_invis)
 		invisibility = 2
 		if(istype(loc, /turf))//If they are standing on a turf.
 			AddCamoOverlay(loc)//Overlay camo.

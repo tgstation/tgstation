@@ -435,8 +435,9 @@
 		if (S.active)
 			shielded = 2
 			break
-
-	if (shielded == 2 || alien_invis)
+	if(client && client.admin_invis)
+		invisibility = 100
+	else if (shielded == 2 || alien_invis)
 		invisibility = 2
 		//New stealth. Hopefully doesn't lag too much. /N
 		if(istype(loc, /turf))//If they are standing on a turf.

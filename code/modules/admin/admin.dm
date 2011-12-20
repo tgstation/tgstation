@@ -2588,6 +2588,7 @@
 	log_admin("[key_name(usr)] toggled tinted_weldhelh.")
 	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.", 1)
 
+/*
 /obj/admins/proc/toggleguests()
 	set category = "Server"
 	set desc="Guests can't enter"
@@ -2599,6 +2600,7 @@
 		world << "<B>Guests may now enter the game.</B>"
 	log_admin("[key_name(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
 	message_admins("\blue [key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.", 1)
+*/
 
 
 

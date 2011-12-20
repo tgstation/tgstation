@@ -1112,6 +1112,14 @@
 					NinjaStealthMalf()
 		else
 			invisibility = 0
+
+	if(client && client.admin_invis)
+		invisibility = 100
+	else if (shielded == 2)
+		invisibility = 2
+	else
+		invisibility = 0
+
 /*
 	for (var/mob/M in viewers(1, src))//For the love of god DO NOT REFRESH EVERY SECOND - Mport
 		if ((M.client && M.machine == src))
