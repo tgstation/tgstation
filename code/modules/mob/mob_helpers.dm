@@ -50,6 +50,16 @@
 		return 1
 	return 0
 
+/proc/iscrab(A)
+	if(istype(A, /mob/living/simple_animal/crab))
+		return 1
+	return 0
+
+/proc/iscat(A)
+	if(istype(A, /mob/living/simple_animal/cat/))
+		return 1
+	return 0
+
 /*proc/ishivebot(A)
 	if(A && istype(A, /mob/living/silicon/hivebot))
 		return 1

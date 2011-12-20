@@ -83,7 +83,7 @@
 			step(src, pick(cardinal))
 		if(prob(1))
 			emote(pick("scratch","jump","roll","tail"))
-
+	src.moved_recently = max(0, src.moved_recently-1)
 
 /mob/living/carbon/monkey
 	proc
