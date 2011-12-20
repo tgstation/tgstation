@@ -85,7 +85,7 @@
 						dat += text("<A href='?src=\ref[];choice=New Record (Security)'>New Security Record</A><BR><BR>", src)
 					dat += text("\n<A href='?src=\ref[];choice=Delete Record (ALL)'>Delete Record (ALL)</A><BR><BR>\n<A href='?src=\ref[];choice=Print Record'>Print Record</A><BR>\n<A href='?src=\ref[];choice=Return'>Back</A><BR>", src, src, src)
 				if(4.0)
-					if(!(istype(Perp[1][1],/datum/data/record/)))
+					if(!Perp.len)
 						dat += text("ERROR.  String could not be located.<br><br><A href='?src=\ref[];choice=Return'>Back</A>", src)
 					else
 						dat += {"
@@ -103,13 +103,11 @@
 <th>Fingerprints</th>
 <th>Criminal Status</th>
 </tr>					"}
-						for(var/i=1, i<=Perp.len, i++)
-							if(!(istype(Perp[i][1],/datum/data/record/)))
-								continue
+						for(var/i=1, i<=Perp.len, i += 2)
 							var/crimstat = ""
-							var/datum/data/record/R = Perp[i][1]
-							if(istype(Perp[i][2],/datum/data/record/))
-								var/datum/data/record/E = Perp[i][2]
+							var/datum/data/record/R = Perp[i]
+							if(istype(Perp[i+1],/datum/data/record/))
+								var/datum/data/record/E = Perp[i+1]
 								crimstat = E.fields["criminal"]
 							var/background
 							switch(crimstat)
@@ -198,21 +196,19 @@ What a mess.*/
 				var/t1 = input("Search String: (Partial Name or ID or Fingerprints)", "Secure. records", null, null)  as text
 				if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || !in_range(src, usr)))
 					return
-				Perp = new/list(50,2)
+				Perp = new/list()
 				t1 = lowertext(t1)
-				var/perp_num = 1
 				for(var/datum/data/record/R in data_core.general)
 					var/temptext = R.fields["name"] + " " + R.fields["id"] + " " + R.fields["fingerprint"]
 					if(findtext(temptext,t1))
-						Perp[perp_num][1] = R
-						perp_num++
-				for(var/i = 1, i<=perp_num, i++)
-					if(!(istype(Perp[i][1],/datum/data/record/)))
-						continue
+						var/prelist = new/list(2)
+						prelist[1] = R
+						Perp += prelist
+				for(var/i = 1, i<=Perp.len, i+=2)
 					for(var/datum/data/record/E in data_core.security)
-						var/datum/data/record/R = Perp[i][1]
+						var/datum/data/record/R = Perp[i]
 						if ((E.fields["name"] == R.fields["name"] && E.fields["id"] == R.fields["id"]))
-							Perp[i][2] = E
+							Perp[i+1] = E
 				tempname = t1
 				screen = 4
 

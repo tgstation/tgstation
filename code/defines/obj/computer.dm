@@ -191,7 +191,7 @@
 	var/temp = null
 	var/printing = null
 	var/can_change_id = 0
-	var/Perp[50][2] //If you have more than 50 results, you're not on Bay12.
+	var/list/Perp
 	var/tempname = null
 
 
