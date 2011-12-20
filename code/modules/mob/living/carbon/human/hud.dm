@@ -271,10 +271,20 @@
 	src.other += using
 
 	using = new src.h_type( src )
-	using.name = "ears"
+	using.name = "l_ear"
+	using.dir = EAST
 	using.icon = ui_style
 	using.icon_state = "ears"
-	using.screen_loc = ui_ears
+	using.screen_loc = ui_lear
+	using.layer = 19
+	src.other += using
+
+	using = new src.h_type( src )
+	using.name = "r_ear"
+	using.dir = WEST
+	using.icon = ui_style
+	using.icon_state = "ears"
+	using.screen_loc = ui_rear
 	using.layer = 19
 	src.other += using
 

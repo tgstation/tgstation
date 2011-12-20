@@ -14,7 +14,7 @@
 		dat += "<I>The number after the spell name is the cooldown time.</I><BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=1'>Magic Missile</A> (10)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=2'>Fireball</A> (10)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=3'>Disintegrate</A> (60)<BR>"
+//		dat += "<A href='byond://?src=\ref[src];spell_choice=3'>Disintegrate</A> (60)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=4'>Disable Technology</A> (60)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=5'>Smoke</A> (10)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=6'>Blind</A> (30)<BR>"
@@ -54,10 +54,10 @@
 							usr.verbs += /client/proc/fireball
 							usr.mind.special_verbs += /client/proc/fireball
 							src.temp = "This spell fires a fireball at a target and does not require wizard garb. Be careful not to fire it at people that are standing next to you."
-						if ("3")
-							usr.verbs += /mob/proc/kill
-							usr.mind.special_verbs += /mob/proc/kill
-							src.temp = "This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown."
+//						if ("3")
+//							usr.verbs += /mob/proc/kill
+//							usr.mind.special_verbs += /mob/proc/kill
+//							src.temp = "This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown."
 						if ("4")
 							usr.verbs += /mob/proc/tech
 							usr.mind.special_verbs += /mob/proc/tech
@@ -114,9 +114,9 @@
 							if ("2")
 								usr.spell_list += new /obj/effect/proc_holder/spell/targeted/projectile/fireball(usr)
 								src.temp = "This spell fires a fireball at a target and does not require wizard garb. Be careful not to fire it at people that are standing next to you."
-							if ("3")
-								usr.spell_list += new /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate(usr)
-								src.temp = "This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown."
+//							if ("3")
+//								usr.spell_list += new /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate(usr)
+//								src.temp = "This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown."
 							if ("4")
 								usr.spell_list += new /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech(usr)
 								src.temp = "This spell disables all weapons, cameras and most other technology in range."
@@ -183,7 +183,7 @@
 			dat += "<I>Each item costs 1 telecrystal. The number afterwards is the cooldown time.</I><BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_magicmissile=1'>Magic Missile</A> (10)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_fireball=1'>Fireball</A> (10)<BR>"
-			dat += "<A href='byond://?src=\ref[src];spell_disintegrate=1'>Disintegrate</A> (60)<BR>"
+//			dat += "<A href='byond://?src=\ref[src];spell_disintegrate=1'>Disintegrate</A> (60)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_emp=1'>Disable Technology</A> (60)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_smoke=1'>Smoke</A> (10)<BR>"
 			dat += "<A href='byond://?src=\ref[src];spell_blind=1'>Blind</A> (30)<BR>"
@@ -224,12 +224,12 @@
 				usr.verbs += /client/proc/fireball
 				usr.mind.special_verbs += /client/proc/fireball
 				src.temp = "This spell fires a fireball at a target and does not require wizard garb. Be careful not to fire it at people that are standing next to you."
-		else if (href_list["spell_disintegrate"])
-			if (src.uses >= 1)
-				src.uses -= 1
-				usr.verbs += /mob/proc/kill
-				usr.mind.special_verbs += /mob/proc/kill
-				src.temp = "This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown."
+//		else if (href_list["spell_disintegrate"])
+//			if (src.uses >= 1)
+//				src.uses -= 1
+//				usr.verbs += /mob/proc/kill
+//				usr.mind.special_verbs += /mob/proc/kill
+//				src.temp = "This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown."
 		else if (href_list["spell_emp"])
 			if (src.uses >= 1)
 				src.uses -= 1

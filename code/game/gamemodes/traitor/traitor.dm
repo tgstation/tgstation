@@ -230,8 +230,11 @@
 	if (!R && traitor_mob.w_uniform && istype(traitor_mob.belt, /obj/item/device/radio))
 		R = traitor_mob.belt
 		loc = "on your belt"
-	if (!R && istype(traitor_mob.ears, /obj/item/device/radio))
-		R = traitor_mob.ears
+	if (!R && istype(traitor_mob.l_ear, /obj/item/device/radio))
+		R = traitor_mob.l_ear
+		loc = "on your head"
+	if (!R && istype(traitor_mob.r_ear, /obj/item/device/radio))
+		R = traitor_mob.r_ear
 		loc = "on your head"
 	if (!R)
 		traitor_mob << "Unfortunately, the Syndicate wasn't able to get you a radio."

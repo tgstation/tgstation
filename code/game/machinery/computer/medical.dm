@@ -18,6 +18,7 @@
 					dat += {"
 <A href='?src=\ref[src];search=1'>Search Records</A>
 <BR><A href='?src=\ref[src];screen=2'>List Records</A>
+<BR><A href='?src=\ref[src];search_dna=1'>Search DNA</A>
 <BR>
 <BR><A href='?src=\ref[src];screen=5'>Virus Database</A>
 <BR><A href='?src=\ref[src];screen=6'>Medbot Tracking</A>
@@ -403,6 +404,24 @@
 					P.info += "</TT>"
 					P.name = "paper- 'Medical Record'"
 					src.printing = null
+
+			if (href_list["search_dna"])
+				var/t1 = input("Search String: (DNA)", "Medical records", null, null)  as text
+				if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || (!in_range(src, usr)) && (!istype(usr, /mob/living/silicon))))
+					return
+				active1 = null
+				active2 = null
+				t1 = lowertext(t1)
+				for(var/datum/data/record/R in data_core.medical)
+					if (lowertext(R.fields["b_dna"]) == t1)
+						active2 = R
+				if (!( active2 ))
+					temp = text("Could not locate record [].", t1)
+				else
+					for(var/datum/data/record/E in data_core.general)
+						if ((E.fields["name"] == active2.fields["name"] || E.fields["id"] == active2.fields["id"]))
+							active1 = E
+					screen = 4
 
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()

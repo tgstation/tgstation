@@ -551,9 +551,12 @@
 			if(glasses)
 				if(glasses.protective_temperature > temp)
 					fire_prot += (glasses.protective_temperature/10)
-			if(ears)
-				if(ears.protective_temperature > temp)
-					fire_prot += (ears.protective_temperature/10)
+			if(l_ear)
+				if(l_ear.protective_temperature > temp)
+					fire_prot += (l_ear.protective_temperature/10)
+			if(r_ear)
+				if(r_ear.protective_temperature > temp)
+					fire_prot += (r_ear.protective_temperature/10)
 			if(wear_suit)
 				if(wear_suit.protective_temperature > temp)
 					fire_prot += (wear_suit.protective_temperature/10)
@@ -730,7 +733,7 @@
 
 			if ((sdisabilities & 1 || istype(glasses, /obj/item/clothing/glasses/blindfold)))
 				blinded = 1
-			if ((sdisabilities & 4 || istype(ears, /obj/item/clothing/ears/earmuffs)))
+			if ((sdisabilities & 4 || istype(l_ear, /obj/item/clothing/ears/earmuffs) || istype(r_ear, /obj/item/clothing/ears/earmuffs)))
 				ear_deaf = 1
 
 			if (eye_blurry > 0)

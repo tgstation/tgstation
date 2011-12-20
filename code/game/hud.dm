@@ -14,8 +14,9 @@
 #define ui_hstore1 "SOUTH+1,5"
 #define ui_resist "EAST+1,SOUTH-1"
 #define ui_gloves "SOUTH,5"
-#define ui_glasses "SOUTH,7"
-#define ui_ears "SOUTH,6"
+#define ui_glasses "SOUTH+1,6"
+#define ui_lear "SOUTH,7"
+#define ui_rear "SOUTH,6"
 #define ui_head "SOUTH+1,2"
 #define ui_shoes "SOUTH,4"
 #define ui_belt "SOUTH-1,3"
@@ -56,7 +57,8 @@ obj/hud/New(var/type = 0)
 	if(show_otherinventory)
 		if(mymob:shoes) mymob:shoes:screen_loc = ui_shoes
 		if(mymob:gloves) mymob:gloves:screen_loc = ui_gloves
-		if(mymob:ears) mymob:ears:screen_loc = ui_ears
+		if(mymob:l_ear) mymob:l_ear:screen_loc = ui_lear
+		if(mymob:r_ear) mymob:r_ear:screen_loc = ui_rear
 		if(mymob:s_store) mymob:s_store:screen_loc = ui_sstore1
 		if(mymob:glasses) mymob:glasses:screen_loc = ui_glasses
 		if(mymob:h_store) mymob:h_store:screen_loc = ui_hstore1
@@ -64,7 +66,8 @@ obj/hud/New(var/type = 0)
 		if(istype(mymob, /mob/living/carbon/human))
 			if(mymob:shoes) mymob:shoes:screen_loc = null
 			if(mymob:gloves) mymob:gloves:screen_loc = null
-			if(mymob:ears) mymob:ears:screen_loc = null
+			if(mymob:l_ear) mymob:l_ear:screen_loc = null
+			if(mymob:r_ear) mymob:r_ear:screen_loc = null
 			if(mymob:s_store) mymob:s_store:screen_loc = null
 			if(mymob:glasses) mymob:glasses:screen_loc = null
 			if(mymob:h_store) mymob:h_store:screen_loc = null

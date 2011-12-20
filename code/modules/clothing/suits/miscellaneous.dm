@@ -6,7 +6,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 
 
-/obj/item/clothing/suit/wcoat
+/obj/item/clothing/suit/storage/wcoat
 	name = "waistcoat"
 	desc = "For some classy, murderous fun."
 	icon_state = "vest"
@@ -14,18 +14,18 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 
-/obj/item/clothing/suit/apron
+/obj/item/clothing/suit/storage/apron
 	name = "apron"
-	desc = "A basic blue apron."
+	desc = "A basic blue apron. It has a large pocket you can store things in."
 	icon_state = "apron"
 	item_state = "apron"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	allowed = list (/obj/item/weapon/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/nutrient,/obj/item/weapon/minihoe)
 
 
-/obj/item/clothing/suit/chef
+/obj/item/clothing/suit/storage/chef
 	name = "Chef's apron"
-	desc = "An apron used by a high class chef."
+	desc = "An apron used by a high class chef.  Has a few pockets for nic-naks."
 	icon_state = "chef"
 	item_state = "chef"
 	gas_transfer_coefficient = 0.90
@@ -36,7 +36,7 @@
 	allowed = list (/obj/item/weapon/kitchenknife,/obj/item/weapon/butch)
 
 
-/obj/item/clothing/suit/chef/classic
+/obj/item/clothing/suit/storage/chef/classic
 	name = "A classic chef's apron."
 	desc = "A basic, dull, white chef's apron."
 	icon_state = "apronchef"
@@ -68,7 +68,7 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy)
 
 
-/obj/item/clothing/suit/captunic
+/obj/item/clothing/suit/storage/captunic
 	name = "captain's parade tunic"
 	desc = "Worn by a Captain to show their class."
 	icon_state = "captunic"
@@ -84,7 +84,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS
 
 
-/obj/item/clothing/suit/chaplain_hoodie
+/obj/item/clothing/suit/storage/chaplain_hoodie
 	name = "chaplain hoodie"
 	desc = "This suit says to you 'hush'!"
 	icon_state = "chaplain_hoodie"

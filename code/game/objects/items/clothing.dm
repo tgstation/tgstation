@@ -302,7 +302,7 @@ THERMAL GLASSES
 	else
 		usr << "Sorry! The suit you're wearing doesn't have buttons!"
 
-/obj/item/clothing/suit/labcoat/verb/toggle()
+/obj/item/clothing/suit/storage/labcoat/verb/toggle()
 	set name = "Toggle Labcoat Buttons"
 	set category = "Object"
 	if(src.icon_state == "labcoat_open")
