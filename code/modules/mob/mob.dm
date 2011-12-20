@@ -803,6 +803,8 @@
 			else
 				gibs(loc, viruses)
 		sleep(15)
+		for(var/obj/item/I in src.contents)
+			I.loc = get_turf(src)
 		del(src)
 
 /*
@@ -838,6 +840,8 @@ Dusting robots does not eject the MMI, so it's a bit more powerful than gib() /N
 	sleep(15)
 	if(isrobot(src)&&src:mmi)//Is a robot and it has an mmi.
 		del(src:mmi)//Delete the MMI first so that it won't go popping out.
+	for(var/obj/item/I in src.contents)
+		I.loc = get_turf(src)
 	del(src)
 
 /*

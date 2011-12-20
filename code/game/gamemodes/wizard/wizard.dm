@@ -243,7 +243,7 @@
 			M.verbs -= /client/proc/jaunt
 			M.verbs -= /client/proc/magicmissile
 			M.verbs -= /client/proc/fireball
-			M.verbs -= /mob/proc/kill
+//			M.verbs -= /mob/proc/kill
 			M.verbs -= /mob/proc/tech
 			M.verbs -= /client/proc/smokecloud
 			M.verbs -= /client/proc/blind
@@ -257,7 +257,7 @@
 			M.mind.special_verbs -= /client/proc/jaunt
 			M.mind.special_verbs -= /client/proc/magicmissile
 			M.mind.special_verbs -= /client/proc/fireball
-			M.mind.special_verbs -= /mob/proc/kill
+//			M.mind.special_verbs -= /mob/proc/kill
 			M.mind.special_verbs -= /mob/proc/tech
 			M.mind.special_verbs -= /client/proc/smokecloud
 			M.mind.special_verbs -= /client/proc/blind
