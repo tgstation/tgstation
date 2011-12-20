@@ -20,8 +20,7 @@
 					dat += {"
 <p style='text-align:center;'>"}
 					dat += text("<A href='?src=\ref[];choice=Search Records'>Search Records</A><BR>", src)
-					dat += text("<A href='?src=\ref[];choice=Search Fingerprints'>Search Fingerprints</A><BR>", src)
-					dat += text("<A href='?src=\ref[];choice=New Record (Complete)'>New Record</A><BR>", src)
+					dat += text("<A href='?src=\ref[];choice=New Record (General)'>New Record</A><BR>", src)
 					dat += {"
 </p>
 <table style="text-align:center;" cellspacing="0" width="100%">
@@ -40,7 +39,7 @@
 					for(var/datum/data/record/R in data_core.general)
 						var/crimstat = ""
 						for(var/datum/data/record/E in data_core.security)
-							if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
+							if ((E.fields["name"] == R.fields["name"] && E.fields["id"] == R.fields["id"]))
 								crimstat = E.fields["criminal"]
 						var/background
 						switch(crimstat)
@@ -86,13 +85,14 @@
 						dat += text("<A href='?src=\ref[];choice=New Record (Security)'>New Security Record</A><BR><BR>", src)
 					dat += text("\n<A href='?src=\ref[];choice=Delete Record (ALL)'>Delete Record (ALL)</A><BR><BR>\n<A href='?src=\ref[];choice=Print Record'>Print Record</A><BR>\n<A href='?src=\ref[];choice=Return'>Back</A><BR>", src, src, src)
 				if(4.0)
-					if(!(istype(PerpSec[1],/datum/data/record/)))
+					if(!(istype(Perp[1][1],/datum/data/record/)))
 						dat += text("ERROR.  String could not be located.<br><br><A href='?src=\ref[];choice=Return'>Back</A>", src)
 					else
 						dat += {"
 <table style="text-align:center;" cellspacing="0" width="100%">
-<tr>
-<th>Search Results:</th>
+<tr>					"}
+						dat += text("<th>Search Results for '[]':</th>", tempname)
+						dat += {"
 </tr>
 </table>
 <table style="text-align:center;" border="1" cellspacing="0" width="100%">
@@ -103,11 +103,14 @@
 <th>Fingerprints</th>
 <th>Criminal Status</th>
 </tr>					"}
-						for(var/i=1, i<=PerpGen.len, i++)
+						for(var/i=1, i<=Perp.len, i++)
+							if(!(istype(Perp[i][1],/datum/data/record/)))
+								continue
 							var/crimstat = ""
-							var/datum/data/record/R = PerpGen[i]
-							var/datum/data/record/E = PerpSec[i]
-							crimstat = E.fields["criminal"]
+							var/datum/data/record/R = Perp[i][1]
+							if(istype(Perp[i][2],/datum/data/record/))
+								var/datum/data/record/E = Perp[i][2]
+								crimstat = E.fields["criminal"]
 							var/background
 							switch(crimstat)
 								if("*Arrest*")
@@ -195,18 +198,22 @@ What a mess.*/
 				var/t1 = input("Search String: (Partial Name or ID or Fingerprints)", "Secure. records", null, null)  as text
 				if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || !in_range(src, usr)))
 					return
-				PerpGen.len = 1
-				PerpSec.len = 1
+				Perp = new/list(50,2)
 				t1 = lowertext(t1)
+				var/perp_num = 1
 				for(var/datum/data/record/R in data_core.general)
+					var/temptext = R.fields["name"] + " " + R.fields["id"] + " " + R.fields["fingerprint"]
+					if(findtext(temptext,t1))
+						Perp[perp_num][1] = R
+						perp_num++
+				for(var/i = 1, i<=perp_num, i++)
+					if(!(istype(Perp[i][1],/datum/data/record/)))
+						continue
 					for(var/datum/data/record/E in data_core.security)
-						if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
-							var/temptext = E.fields["name"] + " " + E.fields["id"] + " " + R.fields["fingerprint"]
-							if(findtext(temptext,t1))
-								PerpGen[PerpGen.len] = E
-								PerpSec[PerpSec.len] = R
-								PerpGen.len += 1
-								PerpSec.len += 1
+						var/datum/data/record/R = Perp[i][1]
+						if ((E.fields["name"] == R.fields["name"] && E.fields["id"] == R.fields["id"]))
+							Perp[i][2] = E
+				tempname = t1
 				screen = 4
 
 			if("Record Maintenance")
@@ -227,7 +234,7 @@ What a mess.*/
 					active2 = S
 					screen = 3
 
-			if ("Search Fingerprints")
+/*			if ("Search Fingerprints")
 				var/t1 = input("Search String: (Fingerprint)", "Secure. records", null, null)  as text
 				if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || (!in_range(src, usr)) && (!istype(usr, /mob/living/silicon))))
 					return
@@ -243,7 +250,7 @@ What a mess.*/
 					for(var/datum/data/record/E in data_core.security)
 						if ((E.fields["name"] == active1.fields["name"] || E.fields["id"] == active1.fields["id"]))
 							active2 = E
-					screen = 3
+					screen = 3	*/
 
 			if ("Print Record")
 				if (!( printing ))
@@ -335,31 +342,6 @@ What a mess.*/
 				data_core.general += G
 				active1 = G
 				active2 = null
-
-			if("New Record (Complete)")
-				var/datum/data/record/G = new /datum/data/record()
-				G.fields["name"] = "New Record"
-				G.fields["id"] = text("[]", add_zero(num2hex(rand(1, 1.6777215E7)), 6))
-				G.fields["rank"] = "Unassigned"
-				G.fields["sex"] = "Male"
-				G.fields["age"] = "Unknown"
-				G.fields["fingerprint"] = "Unknown"
-				G.fields["p_stat"] = "Active"
-				G.fields["m_stat"] = "Stable"
-				data_core.general += G
-				active1 = G
-				var/datum/data/record/R = new /datum/data/record()
-				R.fields["name"] = active1.fields["name"]
-				R.fields["id"] = active1.fields["id"]
-				R.name = text("Security Record #[]", R.fields["id"])
-				R.fields["criminal"] = "None"
-				R.fields["mi_crim"] = "None"
-				R.fields["mi_crim_d"] = "No minor crime convictions."
-				R.fields["ma_crim"] = "None"
-				R.fields["ma_crim_d"] = "No major crime convictions."
-				R.fields["notes"] = "No notes."
-				data_core.security += R
-				active2 = R
 
 //FIELD FUNCTIONS
 			if ("Edit Field")

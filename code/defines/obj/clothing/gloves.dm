@@ -140,11 +140,13 @@
 	color="orange"
 
 /obj/item/clothing/gloves/red
-	name = "Red Gloves"
-	desc = "A pair of gloves, they don't look special in any way."
+	desc = "Heavily padded heavy-duty red gloves."
+	name = "red gloves"
 	icon_state = "red"
 	item_state = "redgloves"
-	color = "red"
+	siemens_coefficient = 0.30
+
+	protective_temperature = 1100
 
 /obj/item/clothing/gloves/rainbow
 	name = "Rainbow Gloves"
