@@ -40,7 +40,7 @@ SYNDICATE UPLINK
 			dat += "<A href='byond://?src=\ref[src];buy_item=sword'>Energy Sword</A> (4)<BR>"
 			dat += "<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=jump'>Chameleon Jumpsuit</A> (3)<BR>"
-			dat += "<A href='byond://?src=\ref[src];buy_item=shoes'>Syndicate Shoes</A> (2)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=shoes'>Syndicate Shoes</A> (3)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=card'>Syndicate Card</A> (3)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=voice'>Voice-Changer</A> (4)<BR>"
 			dat += "<BR>"
@@ -114,8 +114,8 @@ SYNDICATE UPLINK
 						src.uses -= 3
 						new /obj/item/clothing/under/chameleon(get_turf(src))
 				if("shoes")
-					if (uses >= 2)
-						uses -= 2
+					if (uses >= 3)
+						uses -= 3
 						new /obj/item/clothing/shoes/syndigaloshes(get_turf(src))
 				if("card")
 					if (src.uses >= 3)
