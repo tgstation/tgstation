@@ -5666,7 +5666,7 @@
 "ceX" = (/obj/structure/shuttle/engine/heater{tag = "icon-heater (EAST)"; icon_state = "heater"; dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating/airless,/area/centcom/evac)
 "ceY" = (/obj/structure/shuttle/engine/propulsion{tag = "icon-propulsion (WEST)"; icon_state = "propulsion"; dir = 8},/turf/space,/area/centcom/evac)
 "ceZ" = (/obj/machinery/computer/communications,/turf/simulated/shuttle/floor,/area/centcom/evac)
-"cfa" = (/obj/machinery/door/airlock/glass{name = "Salvage Shuttle Bridge"; req_access_txt = "19"},/turf/space,/area/centcom/evac)
+"cfa" = (/obj/machinery/door/airlock/glass{name = "Salvage Shuttle Bridge"; req_access_txt = "19"},/turf/simulated/shuttle/floor,/area/centcom/evac)
 "cfb" = (/obj/machinery/vending/wallmed1{name = "Emergency NanoMed"; product_amounts = "5;5;6;3"; req_access_txt = "0"},/turf/simulated/shuttle/wall{tag = "icon-swall12"; icon_state = "swall12"; dir = 2},/area/centcom/evac)
 "cfc" = (/obj/structure/shuttle/engine/propulsion{tag = "icon-burst_l (WEST)"; icon_state = "burst_l"; dir = 8},/turf/space,/area/centcom/evac)
 "cfd" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s5"; icon_state = "swall_s5"; dir = 2},/area/centcom/evac)
