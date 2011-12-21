@@ -27,7 +27,7 @@ obj/item/weapon/gun/energy/staff
 	icon_state = "staffofchange"
 	item_state = "staffofchange"
 	fire_sound = 'emitter.ogg'
-	flags =  FPRINT | TABLEPASS | CONDUCT | ONBACK
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
 	w_class = 4.0
 	charge_cost = 200
 	projectile_type = "/obj/item/projectile/change"
