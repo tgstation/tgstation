@@ -87,6 +87,16 @@
 		"temperature"    = new/datum/tlv(40, 60, 100, 120), // K
 	)
 
+/obj/machinery/alarm/kitchen_cold_room
+	TLV = list(
+		"oxygen"         = new/datum/tlv(  16,   19, 135, 140), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1.0, -1.0,   5,  10), // Partial pressure, kpa
+		"plasma"         = new/datum/tlv(-1.0, -1.0, 0.2, 0.5), // Partial pressure, kpa
+		"other"          = new/datum/tlv(-1.0, -1.0, 0.5, 1.0), // Partial pressure, kpa
+		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.50,ONE_ATMOSPHERE*1.60), /* kpa */
+		"temperature"    = new/datum/tlv(200, 210, 273.15, 283.15), // K
+	)
+
 //all air alarms in area are connected via magic
 /area
 	var/obj/machinery/alarm/master_air_alarm
