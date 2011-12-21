@@ -832,7 +832,7 @@
 	var/list/stamped
 	var/see_face = 1
 	var/body_parts_covered = HEAD
-	var/protective_temperature = T0C + 10
+	protective_temperature = T0C + 10
 	var/heat_transfer_coefficient = 0.99
 	var/gas_transfer_coefficient = 1
 	var/permeability_coefficient = 0.99

@@ -6,7 +6,6 @@
 	g_amt = 0
 	m_amt = 75
 	var
-		protective_temperature = 0
 		translate_binary = 0
 		translate_hive = 0
 
