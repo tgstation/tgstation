@@ -4,7 +4,7 @@
 	icon = 'blob.dmi'
 	icon_state = "blob"
 	desc = "Some blob creature thingy"
-	density = 0
+	density = 1
 	opacity = 0
 	anchored = 1
 	var
@@ -25,7 +25,6 @@
 
 	New(loc, var/h = 30)
 		blobs += src
-		active_blobs += src
 		src.health = h
 		src.dir = pick(1,2,4,8)
 		src.update()
@@ -34,8 +33,6 @@
 
 	Del()
 		blobs -= src
-		if(active)
-			active_blobs -= src
 		if((blobtype == "Node") || (blobtype == "Core"))
 			processing_objects.Remove(src)
 		..()
@@ -58,7 +55,6 @@
 			name = "strong blob"
 			icon_state = "blob_idle"//needs a new sprite
 			blobtype = "Shield"
-			active_blobs -= src
 			return 1
 		//Commandblob
 		if((blobdebug == 1))
@@ -69,7 +65,7 @@
 			name = "blob core"
 			icon_state = "blob_core"
 			blobtype = "Core"
-			active_blobs -= src
+			blob_cores += src
 			processing_objects.Add(src)
 			return 1
 		//Nodeblob
@@ -81,7 +77,7 @@
 			name = "blob node"
 			icon_state = "blob_node"//needs a new sprite
 			blobtype = "Node"
-			active_blobs -= src
+			blob_nodes += src
 			processing_objects.Add(src)
 			return 1
 		if((blobdebug == 3))
@@ -231,6 +227,7 @@
 
 		src.health -= damage
 		src.update()
+		return
 
 
 	proc/revert()
@@ -241,63 +238,9 @@
 		blobtype = "Blob"
 		blobdebug = 0
 		health = (health/2)
-		active_blobs += src
 		src.update()
 		return 1
 
-
-/datum/station_state/proc/count()
-	for(var/turf/T in world)
-		if(T.z != 1)
-			continue
-
-		if(istype(T,/turf/simulated/floor))
-			if(!(T:burnt))
-				src.floor+=2
-			else
-				src.floor++
-
-		else if(istype(T, /turf/simulated/floor/engine))
-			src.floor+=2
-
-		else if(istype(T, /turf/simulated/wall))
-			if(T:intact)
-				src.wall+=2
-			else
-				src.wall++
-
-		else if(istype(T, /turf/simulated/wall/r_wall))
-			if(T:intact)
-				src.r_wall+=2
-			else
-				src.r_wall++
-
-	for(var/obj/O in world)
-		if(O.z != 1)
-			continue
-
-		if(istype(O, /obj/structure/window))
-			src.window++
-		else if(istype(O, /obj/structure/grille))
-			if(!O:destroyed)
-				src.grille++
-		else if(istype(O, /obj/machinery/door))
-			src.door++
-		else if(istype(O, /obj/machinery))
-			src.mach++
-
-
-
-/datum/station_state/proc/score(var/datum/station_state/result)
-	var/r1a = min( result.floor / max(floor,1), 1.0)
-	var/r1b = min(result.r_wall/ max(r_wall,1), 1.0)
-	var/r1c = min(result.wall / max(wall,1), 1.0)
-	var/r2a = min(result.window / max(window,1), 1.0)
-	var/r2b = min(result.door / max(door,1), 1.0)
-	var/r2c = min(result.grille / max(grille,1), 1.0)
-	var/r3 = min(result.mach / max(mach,1), 1.0)
-	//diary << "Blob scores:[r1b] [r1c] / [r2a] [r2b] [r2c] / [r3] [r1a]"
-	return (4*(r1b+r1c) + 2*(r2a+r2b+r2c) + r3+r1a)/16.0
 
 //////////////////////////////****IDLE BLOB***/////////////////////////////////////
 
