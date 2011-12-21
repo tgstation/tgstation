@@ -7,6 +7,11 @@ var/savefile/Banlist
 	var/id = clientvar.computer_id
 	var/key = clientvar.ckey
 
+	if(!Banlist)		// if Banlist cannot be located for some reason
+		LoadBans()		// try to load the bans
+		if(!Banlist)	// uh oh, can't find bans!
+			return 0	// ABORT ABORT ABORT
+
 	Banlist.cd = "/base"
 	if (Banlist.dir.Find("[key][id]"))
 		Banlist.cd = "[key][id]"

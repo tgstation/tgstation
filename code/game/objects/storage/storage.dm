@@ -162,6 +162,15 @@
 	src.orient2hud(user)
 	W.dropped(user)
 	add_fingerprint(user)
+
+	if(istype(src, /obj/item/weapon/storage/backpack/santabag)) // update the santa bag icon
+		if(contents.len < 5)
+			src.icon_state = "giftbag0"
+		else if(contents.len >= 5 && contents.len < 15)
+			src.icon_state = "giftbag1"
+		else if(contents.len >= 15)
+			src.icon_state = "giftbag2"
+
 	if (istype(W, /obj/item/weapon/gun/energy/crossbow)) return //STEALTHY
 	for(var/mob/O in viewers(user, null))
 		O.show_message(text("\blue [user] has added [W] to [src]!"))
@@ -185,7 +194,7 @@
 	return
 
 /obj/item/weapon/storage/attack_paw(mob/user as mob)
-	playsound(src.loc, "rustle", 50, 1, -5)
+	//playsound(src.loc, "rustle", 50, 1, -5) // what
 	return src.attack_hand(user)
 
 /obj/item/weapon/storage/attack_hand(mob/user as mob)
