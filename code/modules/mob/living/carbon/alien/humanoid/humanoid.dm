@@ -635,6 +635,16 @@
 
 		if ("hurt")
 			var/damage = rand(1, 9)
+
+			var/attack_verb
+			switch(M.mutantrace)
+				if("lizard")
+					attack_verb = "scratch"
+				if("plant")
+					attack_verb = "slash"
+				else
+					attack_verb = "punch"
+
 			if (prob(90))
 				if (M.mutations & HULK)//HULK SMASH
 					damage += 14
@@ -643,10 +653,9 @@
 						step_away(src,M,15)
 						sleep(3)
 						step_away(src,M,15)
+
 				playsound(loc, "punch", 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
+				visible_message("\red <B>[M] has [attack_verb]ed [src]!</B>")
 				if (damage > 9||prob(5))//Regular humans have a very small chance of weakening an alien.
 					if (weakened < 10)
 						weakened = rand(1,5)
@@ -659,7 +668,7 @@
 				playsound(loc, 'punchmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has attempted to punch []!</B>", M, src), 1)
+						O.show_message(text("\red <B>[] has attempted to [attack_verb] []!</B>", M, src), 1)
 
 		if ("disarm")
 			if (!lying)

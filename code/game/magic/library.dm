@@ -773,14 +773,17 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 					break
 				dbcon.Disconnect()
 		else
-			var/datum/archived_book/AB = new(book_mgr.path(href_list["targetid"]))
-			var/obj/item/weapon/book/B = new(src.loc)
-			B.name = "Book: [AB.title]"
-			B.title = AB.title
-			B.author = AB.author
-			B.dat = AB.dat
-			B.icon_state = "book[rand(1,7)]"
-			src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
+			var/datum/archived_book/AB = new(book_mgr.path(text2num(href_list["targetid"])))
+			if(!AB)
+				alert("Book not found!")
+			else
+				var/obj/item/weapon/book/B = new(src.loc)
+				B.name = "Book: [AB.title]"
+				B.title = AB.title
+				B.author = AB.author
+				B.dat = AB.dat
+				B.icon_state = "book[rand(1,7)]"
+				src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 
 	if(href_list["orderbyid"])
 		var/orderid = input("Enter your order:") as num|null

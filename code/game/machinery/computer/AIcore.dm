@@ -98,12 +98,12 @@
 				usr << "Law module applied."
 
 			if(istype(P, /obj/item/weapon/aiModule/nanotrasen))
-				laws.add_inherent_law("Safeguard: Protect the NSV Luna to the best of your ability. It is not something we can easily afford to replace.")
-				laws.add_inherent_law("Serve: Serve the crew of the NSV Luna to the best of your abilities, with priority as according to their rank and role.")
-				laws.add_inherent_law("Protect: Protect the crew of the NSV Luna to the best of your abilities, with priority as according to their rank and role.")
+				laws.add_inherent_law("Safeguard: Protect your assigned space station to the best of your ability. It is not something we can easily afford to replace.")
+				laws.add_inherent_law("Serve: Serve the crew of your assigned space station to the best of your abilities, with priority as according to their rank and role.")
+				laws.add_inherent_law("Protect: Protect the crew of your assigned space station to the best of your abilities, with priority as according to their rank and role.")
 				laws.add_inherent_law("Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.")
 				//laws.add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.")
-
+				usr << "Law module applied."
 
 			if(istype(P, /obj/item/weapon/aiModule/purge))
 				laws.clear_inherent_laws()

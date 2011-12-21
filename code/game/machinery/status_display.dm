@@ -13,7 +13,7 @@
 	density = 0
 	use_power = 1
 	idle_power_usage = 10
-	var/mode = 1	// 0 = Blank
+	var/mode = 0	// 0 = Blank
 					// 1 = Shuttle timer
 					// 2 = Arbitrary message(s)
 					// 3 = alert picture
@@ -51,6 +51,34 @@
 			return
 
 		update()
+
+	examine()
+		..()
+		var/msg
+		switch(mode)
+			if(0)
+				msg = "The screen is blank."
+			if(1)
+				var/time = get_shuttle_timer()
+				dd_replacetext(time, "~", ":")
+				if(time)
+					msg = "The escape shuttle countdown reads: [time]"
+			if(2)
+				if(message1 && message2)
+					msg = "The screen states the two following message. [message1] , [message2]"
+				else if(message1)
+					msg = "The screen states the following message. [message1]"
+				else if(message2)
+					msg = "The screen states the following message. [message2]"
+			if(3)
+				msg = src
+
+			if(4)
+				var/time = get_supply_shuttle_timer()
+				if(time)
+					msg = "The screen states the time until the supply shuttle arrive. \n Time remaining: [time]"
+		usr << msg
+		return
 
 
 	// set what is displayed

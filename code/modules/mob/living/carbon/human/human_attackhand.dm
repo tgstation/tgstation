@@ -73,10 +73,19 @@
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Punched [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
 
+			var/attack_verb
+			switch(M.mutantrace)
+				if("lizard")
+					attack_verb = "scratch"
+				if("plant")
+					attack_verb = "slash"
+				else
+					attack_verb = "punch"
+
 			var/damage = rand(0, 9)
 			if(!damage)
 				playsound(loc, 'punchmiss.ogg', 25, 1, -1)
-				visible_message("\red <B>[M] has attempted to punch [src]!</B>")
+				visible_message("\red <B>[M] has attempted to [attack_verb] [src]!</B>")
 				return 0
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/armor_block = run_armor_check(affecting, "melee")
@@ -84,7 +93,7 @@
 			if(M.mutations & HULK)	damage += 5
 			playsound(loc, "punch", 25, 1, -1)
 
-			visible_message("\red <B>[M] has punched [src]!</B>")
+			visible_message("\red <B>[M] has [attack_verb]ed [src]!</B>")
 
 			apply_damage(damage, BRUTE, affecting, armor_block)
 			if(damage >= 9)
