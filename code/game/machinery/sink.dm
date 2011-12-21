@@ -56,10 +56,15 @@
 			return
 
 		if (istype(O, /obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/food/drinks))
-			O:reagents.add_reagent("water", 10)
-			user.visible_message( \
-				"\blue [user] fills the [O] using the [src].", \
-				"\blue You fill the [O] using the [src].")
+			if(O.reagents.total_volume < O.reagents.maximum_volume)
+				O:reagents.add_reagent("water", 10)
+				user.visible_message( \
+					"\blue [user] fills the [O] using the [src].", \
+					"\blue You fill the [O] using the [src].")
+			else
+				user.visible_message( \
+					"\blue [user] spills water out of the overflowing [O] into the [src].", \
+					"\blue You spill water out of the overflowing [O] into the [src].")
 			return
 		else if (istype(O, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = O
