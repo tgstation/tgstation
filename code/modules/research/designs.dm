@@ -442,7 +442,7 @@ datum
 			build_path = "/obj/item/weapon/aiModule/asimov"
 
 		nanotrasen
-			name = "Core Module Design (Nanotrasen)"
+			name = "Core Module Design (NT Default)"
 			desc = "Allows for the construction of a NanoTrasen AI Core Module."
 			id = "nanotrasen_module"
 			req_tech = list("programming" = 3, "materials" = 6)
