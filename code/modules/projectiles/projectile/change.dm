@@ -21,6 +21,8 @@
 /obj/item/projectile/change/proc/wabbajack (mob/M as mob in world)
 	if(istype(M, /mob/living) && M.stat != 2)
 		for(var/obj/item/W in M)
+			if (istype(W, /obj/item/weapon/implant)||istype(W, /obj/item/weapon/cell)||istype(W, /obj/item/device/mmi))
+				del (W)
 			M.drop_from_slot(W)
 		var/randomize = pick("monkey","robot","metroid","alien","human")
 		switch(randomize)
