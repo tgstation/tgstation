@@ -92,7 +92,6 @@
 			playsound_local(src,pick(scarySounds),50, 1, -1)
 
 	..() //for organs
-	src.moved_recently = max(0, moved_recently-1)
 
 /mob/living/carbon/human
 	proc

@@ -444,7 +444,7 @@
 						O.show_message(text("\red <B>[] attempts to remove the handcuffs!</B>", usr), 1)
 					spawn(0)
 						if(do_after(usr, 1200))
-							if(!usr:handcuffed || usr:buckled || usr.moved_recently >= 90) return // time leniency for lag which also might make this whole thing pointless but the server
+							if(!usr:handcuffed || usr:buckled) return // time leniency for lag which also might make this whole thing pointless but the server
 							for(var/mob/O in viewers(usr))//                                         lags so hard that 40s isn't lenient enough - Quarxink
 								O.show_message(text("\red <B>[] manages to remove the handcuffs!</B>", usr), 1)
 							usr << "\blue You successfully remove your handcuffs."
