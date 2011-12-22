@@ -368,6 +368,10 @@
 				O.dna = M.dna
 				M.dna = null
 
+			if (M.suiciding)
+				O.suiciding = M.suiciding
+				M.suiciding = null
+
 
 		for(var/datum/disease/D in M.viruses)
 			O.viruses += D
@@ -431,8 +435,15 @@
 			O.gender = FEMALE
 		else
 			O.gender = MALE
-		O.dna = M.dna
-		M.dna = null
+
+		if (M)
+			if (M.dna)
+				O.dna = M.dna
+				M.dna = null
+
+			if (M.suiciding)
+				O.suiciding = M.suiciding
+				M.suiciding = null
 
 		for(var/datum/disease/D in M.viruses)
 			O.viruses += D
