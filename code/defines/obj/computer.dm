@@ -134,6 +134,7 @@
 	req_access = list(access_medical)
 	circuit = "/obj/item/weapon/circuitboard/med_data"
 	var/obj/item/weapon/card/id/scan = null
+	var/obj/item/weapon/disk/records/disk = null
 	var/authenticated = null
 	var/rank = null
 	var/screen = null
@@ -182,6 +183,7 @@
 	req_access = list(access_security)
 	circuit = "/obj/item/weapon/circuitboard/secure_data"
 	var/obj/item/weapon/card/id/scan = null
+	var/obj/item/weapon/disk/records/disk = null
 	var/authenticated = null
 	var/rank = null
 	var/screen = null

@@ -1,12 +1,15 @@
-/obj/machinery/computer/med_data/attackby(O as obj, user as mob)
-	if(istype(O, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/idcard = O
-		if(!scan)
-			usr.drop_item()
-			idcard.loc = src
-			scan = idcard
-	else
-		..()
+/obj/machinery/computer/med_data/attackby(obj/item/O as obj, user as mob)
+	if(istype(O, /obj/item/weapon/card/id) && !scan)
+		usr.drop_item()
+		O.loc = src
+		scan = O
+		user << "You insert [O]."
+	else if(istype(O, /obj/item/weapon/disk/records) && !disk)
+		usr.drop_item()
+		O.loc = src
+		disk = O
+		user << "You insert [O]."
+	..()
 
 /obj/machinery/computer/med_data/attack_ai(user as mob)
 	return src.attack_hand(user)
@@ -43,7 +46,24 @@
 						//Foreach goto(132)
 					dat += text("<HR><A href='?src=\ref[];screen=1'>Back</A>", src)
 				if(3.0)
-					dat += text("<B>Records Maintenance</B><HR>\n<A href='?src=\ref[];back=1'>Backup To Disk</A><BR>\n<A href='?src=\ref[];u_load=1'>Upload From disk</A><BR>\n<A href='?src=\ref[];del_all=1'>Delete All Records</A><BR>\n<BR>\n<A href='?src=\ref[];screen=1'>Back</A>", src, src, src, src)
+					dat += "<B>Records Maintenance</B><HR>"
+					if(disk)
+						dat += "<B>Disk Contents:</B><UL style='margin-top:0;margin-bottom:0'>"
+						if(disk.general)
+							dat += "<LI>General</LI>"
+						if(disk.medical)
+							dat += "<LI>Medical</LI>"
+						if(disk.security)
+							dat += "<LI>Security</LI>"
+						dat += "</UL><A href='?src=\ref[src];backup=1'>Backup To Disk</A><BR>"
+						if(disk.general && disk.medical)
+							dat += "<A href='?src=\ref[src];restore=1'>Restore From Disk</A><BR>"
+						else
+							dat += "Disk does not contain medical records.<BR>"
+						dat += "<A href='?src=\ref[src];eject_disk=1'>Eject Disk</A><BR>"
+					else
+						dat += "Please insert a records disk.<BR>"
+					dat += "<BR><A href='?src=\ref[src];del_all=1'>Delete All Records</A><BR><BR><A href='?src=\ref[src];screen=1'>Back</A>"
 				if(4.0)
 					dat += "<CENTER><B>Medical Record</B></CENTER><BR>"
 					if ((istype(src.active1, /datum/data/record) && data_core.general.Find(src.active1)))
@@ -108,8 +128,11 @@
 			src.temp = null
 		if (href_list["scan"])
 			if (src.scan)
-				src.scan.loc = src.loc
-				src.scan = null
+				if(!usr.get_active_hand())
+					usr.put_in_hand(scan)
+				else
+					scan.loc = get_turf(src)
+				scan = null
 			else
 				var/obj/item/I = usr.equipped()
 				if (istype(I, /obj/item/weapon/card/id))
@@ -432,6 +455,24 @@
 						if ((E.fields["name"] == active2.fields["name"] || E.fields["id"] == active2.fields["id"]))
 							active1 = E
 					screen = 4
+			if (href_list["eject_disk"])
+				if (!disk)
+					return
+				if(!usr.get_active_hand())
+					usr.put_in_hand(disk)
+				else
+					disk.loc = get_turf(src)
+				disk = null
+			if (href_list["backup"])
+				if (!disk)
+					return
+				disk.backup(1, 0)
+				temp = "Data backup complete."
+			if (href_list["restore"])
+				if (!disk)
+					return
+				disk.restore(1, 0)
+				temp = "Data restore complete."
 
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()

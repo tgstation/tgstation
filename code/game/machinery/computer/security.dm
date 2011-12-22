@@ -1,12 +1,15 @@
-/obj/machinery/computer/secure_data/attackby(O as obj, user as mob)
-	if(istype(O, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/idcard = O
-		if(!scan)
-			usr.drop_item()
-			idcard.loc = src
-			scan = idcard
-	else
-		..()
+/obj/machinery/computer/secure_data/attackby(obj/item/O as obj, user as mob)
+	if(istype(O, /obj/item/weapon/card/id) && !scan)
+		usr.drop_item()
+		O.loc = src
+		scan = O
+		user << "You insert [O]."
+	else if(istype(O, /obj/item/weapon/disk/records) && !disk)
+		usr.drop_item()
+		O.loc = src
+		disk = O
+		user << "You insert [O]."
+	..()
 
 /obj/machinery/computer/secure_data/attack_ai(mob/user as mob)
 	return attack_hand(user)
@@ -75,7 +78,24 @@
 					dat += text("<A href='?src=\ref[];choice=Record Maintenance'>Record Maintenance</A><br><br>", src)
 					dat += text("<A href='?src=\ref[];choice=Log Out'>{Log Out}</A>",src)
 				if(2.0)
-					dat += text("<B>Records Maintenance</B><HR>\n<A href='?src=\ref[];choice=Delete All Records'>Delete All Records</A><BR>\n<BR>\n<A href='?src=\ref[];choice=Return'>Back</A>", src, src)
+					dat += "<B>Records Maintenance</B><HR>"
+					if(disk)
+						dat += "<B>Disk Contents:</B><UL style='margin-top:0;margin-bottom:0'>"
+						if(disk.general)
+							dat += "<LI>General</LI>"
+						if(disk.medical)
+							dat += "<LI>Medical</LI>"
+						if(disk.security)
+							dat += "<LI>Security</LI>"
+						dat += "</UL><A href='?src=\ref[src];choice=backup'>Backup To Disk</A><BR>"
+						if(disk.general && disk.security)
+							dat += "<A href='?src=\ref[src];choice=restore'>Restore From Disk</A><BR>"
+						else
+							dat += "Disk does not contain security records.<BR>"
+						dat += "<A href='?src=\ref[src];choice=eject_disk'>Eject Disk</A><BR>"
+					else
+						dat += "Please insert a records disk.<BR>"
+					dat += "<BR><A href='?src=\ref[src];choice=Delete All Records'>Delete All Records</A><BR><BR><A href='?src=\ref[src];choice=Return'>Back</A>"
 				if(3.0)
 					dat += "<CENTER><B>Security Record</B></CENTER><BR>"
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
@@ -172,7 +192,10 @@ What a mess.*/
 
 			if("Confirm Identity")
 				if (scan)
-					scan.loc = loc
+					if(!usr.get_active_hand())
+						usr.put_in_hand(scan)
+					else
+						scan.loc = get_turf(src)
 					scan = null
 				else
 					var/obj/item/I = usr.equipped()
@@ -435,6 +458,24 @@ What a mess.*/
 							temp += "</ul>"
 						else
 							alert(usr, "You do not have the required rank to do this!")
+			if ("eject_disk")
+				if (!disk)
+					return
+				if(!usr.get_active_hand())
+					usr.put_in_hand(disk)
+				else
+					disk.loc = get_turf(src)
+				disk = null
+			if ("backup")
+				if (!disk)
+					return
+				disk.backup(0, 1)
+				temp = "Data backup complete."
+			if ("restore")
+				if (!disk)
+					return
+				disk.restore(0, 1)
+				temp = "Data restore complete."
 //TEMPORARY MENU FUNCTIONS
 			else//To properly clear as per clear screen.
 				temp=null
@@ -476,3 +517,100 @@ What a mess.*/
 	updateUsrDialog()
 	return
 
+/obj/item/weapon/disk/records
+	name = "Crew Records Disk"
+	desc = "Stores security and medical records."
+	icon = 'cloning.dmi'
+	icon_state = "datadisk2"
+	item_state = "card-id"
+	w_class = 1.0
+	var/list/general
+	var/list/security
+	var/list/medical
+
+/obj/item/weapon/disk/records/verb/label(t as text)
+	set name = "Label Disk"
+	set category = "Object"
+	set src in usr
+
+	if (t)
+		src.name = text("Records Disk - '[]'", t)
+	else
+		src.name = "Crew Records Disk"
+	src.add_fingerprint(usr)
+	return
+
+/obj/item/weapon/disk/records/proc/backup(var/med, var/sec)
+	// have to manually copy each field so there's no references between data_core and the disk
+	general = new()
+	for(var/datum/data/record/E in data_core.general)
+		var/datum/data/record/G = new /datum/data/record()
+		for(var/F in E.fields)
+			G.fields[F] += E.fields[F]
+		general += G
+
+	if(med)
+		medical = new()
+		for(var/datum/data/record/E in data_core.medical)
+			var/datum/data/record/G = new /datum/data/record()
+			for(var/F in E.fields)
+				G.fields[F] += E.fields[F]
+			medical += G
+
+	if(sec)
+		security = new()
+		for(var/datum/data/record/E in data_core.security)
+			var/datum/data/record/G = new /datum/data/record()
+			for(var/F in E.fields)
+				G.fields[F] += E.fields[F]
+			security += G
+
+/obj/item/weapon/disk/records/proc/restore(var/med, var/sec)
+	// actually merge the content to not wipe new arrivals, etc
+	if(general)
+		for(var/datum/data/record/R in general)
+			for(var/datum/data/record/E in data_core.general)
+				if (E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"])
+					data_core.general -= E
+					break
+			var/datum/data/record/G = new /datum/data/record()
+			for(var/F in R.fields)
+				G.fields[F] += R.fields[F]
+			data_core.general += G
+
+	if(med && medical)
+		for(var/datum/data/record/R in medical)
+			for(var/datum/data/record/E in data_core.medical)
+				if (E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"])
+					data_core.medical -= E
+					break
+			var/datum/data/record/G = new /datum/data/record()
+			for(var/F in R.fields)
+				G.fields[F] += R.fields[F]
+			data_core.medical += G
+
+	if(sec && security)
+		for(var/datum/data/record/R in security)
+			for(var/datum/data/record/E in data_core.security)
+				if (E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"])
+					data_core.security -= E
+					break
+			var/datum/data/record/G = new /datum/data/record()
+			for(var/F in R.fields)
+				G.fields[F] += R.fields[F]
+			data_core.security += G
+
+/obj/item/weapon/storage/recordsbox
+	name = "Records Diskette Box"
+	icon_state = "disk_kit"
+	item_state = "syringe_kit"
+
+/obj/item/weapon/storage/recordsbox/New()
+	..()
+	new /obj/item/weapon/disk/records(src)
+	new /obj/item/weapon/disk/records(src)
+	new /obj/item/weapon/disk/records(src)
+	new /obj/item/weapon/disk/records(src)
+	new /obj/item/weapon/disk/records(src)
+	new /obj/item/weapon/disk/records(src)
+	new /obj/item/weapon/disk/records(src)
