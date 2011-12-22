@@ -1,3 +1,13 @@
+/obj/machinery/computer/secure_data/attackby(O as obj, user as mob)
+	if(istype(O, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/idcard = O
+		if(!scan)
+			usr.drop_item()
+			idcard.loc = src
+			scan = idcard
+	else
+		..()
+
 /obj/machinery/computer/secure_data/attack_ai(mob/user as mob)
 	return attack_hand(user)
 
