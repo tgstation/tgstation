@@ -73,7 +73,7 @@
 		if(isrobot(user))
 			return
 
-		else
+		else if (!isnull(I)) // As per code/game/atom_procs.dm, this shouldn't even be required, but for some reason is. -- Abi79
 			user.drop_item()
 
 			I.loc = src
