@@ -231,6 +231,7 @@
 		var/icon/char_icon = getFlatIcon(character,0)//We're creating out own cache so it's not needed.
 		job_master.AssignRole(character, rank, 1)
 		job_master.EquipRank(character, rank, 1)
+		EquipCustomItems(character)
 		character.loc = pick(latejoin)
 		AnnounceArrival(character, rank)
 
