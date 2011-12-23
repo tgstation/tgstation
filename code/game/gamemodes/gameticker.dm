@@ -7,7 +7,7 @@ var/global/datum/controller/gameticker/ticker
 
 
 /datum/controller/gameticker
-	var/const/restart_timeout = 250
+	var/const/restart_timeout = 600
 	var/current_state = GAME_STATE_PREGAME
 
 	var/hide_mode = 0
@@ -29,7 +29,7 @@ var/global/datum/controller/gameticker/ticker
 /datum/controller/gameticker/proc/pregame()
 
 	do
-		pregame_timeleft = 90
+		pregame_timeleft = 180
 		world << "<B><FONT color='blue'>Welcome to the pre-game lobby!</FONT></B>"
 		world << "Please, setup your character and select ready. Game will start in [pregame_timeleft] seconds"
 		while(current_state == GAME_STATE_PREGAME)
@@ -164,6 +164,7 @@ var/global/datum/controller/gameticker/ticker
 
 		if(!mode.explosion_in_progress && mode.check_finished())
 			current_state = GAME_STATE_FINISHED
+			going = 1
 
 			spawn
 				declare_completion()
@@ -182,6 +183,7 @@ var/global/datum/controller/gameticker/ticker
 					blackbox.save_all_data_to_sql()
 
 				sleep(restart_timeout)
+				while(!going) sleep(10)
 				world.Reboot()
 
 		return 1
