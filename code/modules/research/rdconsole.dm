@@ -44,7 +44,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		screen = 1.0	//Which screen is currently showing.
 		id = 0			//ID of the computer (for server restrictions).
 		sync = 1		//If sync = 0, it doesn't show up on Server Control Console
-		emagged = 0		//Turns off ID check
 
 	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 

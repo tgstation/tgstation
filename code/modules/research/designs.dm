@@ -493,7 +493,7 @@ datum
 			req_tech = list("programming" = 3)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/item/mecha_parts/circuitboard/ripley/main"
+			build_path = "/obj/item/weapon/circuitboard/mecha/ripley/main"
 
 		ripley_peri
 			name = "Circuit Design (APLU \"Ripley\" Peripherals Control module)"
@@ -502,7 +502,7 @@ datum
 			req_tech = list("programming" = 3)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/item/mecha_parts/circuitboard/ripley/peripherals"
+			build_path = "/obj/item/weapon/circuitboard/mecha/ripley/peripherals"
 
 		gygax_main
 			name = "Circuit Design (\"Gygax\" Central Control module)"
@@ -511,7 +511,7 @@ datum
 			req_tech = list("programming" = 4)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/item/mecha_parts/circuitboard/gygax/main"
+			build_path = "/obj/item/weapon/circuitboard/mecha/gygax/main"
 
 		gygax_peri
 			name = "Circuit Design (\"Gygax\" Peripherals Control module)"
@@ -520,7 +520,7 @@ datum
 			req_tech = list("programming" = 4)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/item/mecha_parts/circuitboard/gygax/peripherals"
+			build_path = "/obj/item/weapon/circuitboard/mecha/gygax/peripherals"
 
 		gygax_targ
 			name = "Circuit Design (\"Gygax\" Weapons & Targeting Control module)"
@@ -529,7 +529,7 @@ datum
 			req_tech = list("programming" = 4, "combat" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/item/mecha_parts/circuitboard/gygax/targeting"
+			build_path = "/obj/item/weapon/circuitboard/mecha/gygax/targeting"
 
 		durand_main
 			name = "Circuit Design (\"Durand\" Central Control module)"
@@ -538,7 +538,7 @@ datum
 			req_tech = list("programming" = 4)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/item/mecha_parts/circuitboard/durand/main"
+			build_path = "/obj/item/weapon/circuitboard/mecha/durand/main"
 
 		durand_peri
 			name = "Circuit Design (\"Durand\" Peripherals Control module)"
@@ -547,7 +547,7 @@ datum
 			req_tech = list("programming" = 4)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/item/mecha_parts/circuitboard/durand/peripherals"
+			build_path = "/obj/item/weapon/circuitboard/mecha/durand/peripherals"
 
 		durand_targ
 			name = "Circuit Design (\"Durand\" Weapons & Targeting Control module)"
@@ -556,7 +556,7 @@ datum
 			req_tech = list("programming" = 4, "combat" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/item/mecha_parts/circuitboard/durand/targeting"
+			build_path = "/obj/item/weapon/circuitboard/mecha/durand/targeting"
 
 
 		honker_main
@@ -566,7 +566,7 @@ datum
 			req_tech = list("programming" = 3)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/item/mecha_parts/circuitboard/honker/main"
+			build_path = "/obj/item/weapon/circuitboard/mecha/honker/main"
 
 		honker_peri
 			name = "Circuit Design (\"H.O.N.K\" Peripherals Control module)"
@@ -575,7 +575,7 @@ datum
 			req_tech = list("programming" = 3)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/item/mecha_parts/circuitboard/honker/peripherals"
+			build_path = "/obj/item/weapon/circuitboard/mecha/honker/peripherals"
 
 		honker_targ
 			name = "Circuit Design (\"H.O.N.K\" Weapons & Targeting Control module)"
@@ -584,7 +584,7 @@ datum
 			req_tech = list("programming" = 3)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/item/mecha_parts/circuitboard/honker/targeting"
+			build_path = "/obj/item/weapon/circuitboard/mecha/honker/targeting"
 
 ////////////////////////////////////////
 /////////// Mecha Equpment /////////////
@@ -654,14 +654,14 @@ datum
 			req_tech = list("bluespace" = 2, "magnets" = 3, "engineering" = 3)
 			build_path = "/obj/item/mecha_parts/mecha_equipment/gravcatapult"
 
-		/*mech_repair_droid
+		mech_repair_droid
 			name = "Exosuit Module Design (Repair Droid Module)"
 			desc = "Automated Repair Droid. BEEP BOOP"
 			id = "mech_repair_droid"
 			build_type = MECHFAB
 			req_tech = list("magnets" = 3, "programming" = 3, "engineering" = 3)
 			build_path = "/obj/item/mecha_parts/mecha_equipment/repair_droid"
-			*/
+
 		mech_plasma_generator
 			name = "Exosuit Module Design (Plasma Converter Module)"
 			desc = "Exosuit-mounted plasma converter."
@@ -669,6 +669,32 @@ datum
 			build_type = MECHFAB
 			req_tech = list("plasmatech" = 2, "powerstorage"= 2, "engineering" = 2)
 			build_path = "/obj/item/mecha_parts/mecha_equipment/plasma_generator"
+
+		mech_energy_relay
+			name = "Exosuit Module Design (Tesla Energy Relay)"
+			desc = "Tesla Energy Relay"
+			id = "mech_energy_relay"
+			build_type = MECHFAB
+			req_tech = list("magnets" = 4, "syndicate" = 3)
+			build_path = "/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay"
+
+		mech_ccw_armor
+			name = "Exosuit Module Design(Reactive Armor Booster Module)"
+			desc = "Exosuit-mounted armor booster."
+			id = "mech_ccw_armor"
+			build_type = MECHFAB
+			req_tech = list("materials" = 5, "combat" = 4)
+			build_path = "/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster"
+
+		mech_proj_armor
+			name = "Exosuit Module Design(Reflective Armor Booster Module)"
+			desc = "Exosuit-mounted armor booster."
+			id = "mech_proj_armor"
+			build_type = MECHFAB
+			req_tech = list("materials" = 5, "combat" = 5, "engineering"=3)
+			build_path = "/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster"
+
+
 
 ////////////////////////////////////////
 //////////Disk Construction Disks///////

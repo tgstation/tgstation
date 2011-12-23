@@ -6,9 +6,9 @@
 	var/dam_force = 20
 	var/obj/mecha/working/ripley/cargo_holder
 
-	can_attach(obj/mecha/M as obj)
+	can_attach(obj/mecha/working/ripley/M as obj)
 		if(..())
-			if(istype(M, /obj/mecha/working/ripley))
+			if(istype(M))
 				return 1
 		return 0
 
@@ -65,6 +65,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/tool/drill
 	name = "Drill"
+	desc = "This is the drill that'll pierce the heavens! (Can be attached to: Combat and Engineering Exosuits)"
 	icon_state = "mecha_drill"
 	equip_cooldown = 30
 	energy_drain = 10
@@ -76,7 +77,6 @@
 		chassis.use_power(energy_drain)
 		chassis.visible_message("<font color='red'><b>[chassis] starts to drill [target]</b></font>", "You hear the drill.")
 		chassis.occupant_message("<font color='red'><b>You start to drill [target]</b></font>")
-		chassis.use_power(energy_drain)
 		var/T = chassis.loc
 		var/C = target.loc	//why are these backwards? we may never know -Pete
 		if(do_after_cooldown(target))
@@ -99,9 +99,16 @@
 					target.ex_act(2)
 		return 1
 
+	can_attach(obj/mecha/M as obj)
+		if(..())
+			if(istype(M, /obj/mecha/working) || istype(M, /obj/mecha/combat))
+				return 1
+		return 0
+
 
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
 	name = "Extinguisher"
+	desc = "Exosuit-mounted extinguisher (Can be attached to: Engineering exosuits)"
 	icon_state = "mecha_exting"
 	equip_cooldown = 5
 	energy_drain = 0
@@ -164,13 +171,19 @@
 	on_reagent_change()
 		return
 
+	can_attach(obj/mecha/working/M as obj)
+		if(..())
+			if(istype(M))
+				return 1
+		return 0
+
 
 /obj/item/mecha_parts/mecha_equipment/tool/rcd
 	name = "Mounted RCD"
-	desc = "An exosuit-mounted Rapid Construction Device."
+	desc = "An exosuit-mounted Rapid Construction Device. (Can be attached to: Any exosuit)"
 	icon_state = "mecha_rcd"
 	origin_tech = "materials=4;bluespace=3;magnets=4;powerstorage=4"
-	equip_cooldown = 20
+	equip_cooldown = 10
 	energy_drain = 250
 	range = MELEE|RANGED
 	construction_time = 1200
@@ -341,7 +354,7 @@
 	icon_state = "mecha_teleport"
 	origin_tech = "bluespace=2;magnets=3"
 	equip_cooldown = 10
-	energy_drain = 200
+	energy_drain = 100
 	range = MELEE|RANGED
 	var/atom/movable/locked
 	var/mode = 1 //1 - gravsling 2 - gravpush
@@ -496,6 +509,7 @@
 		else
 			chassis.take_damage(round(Proj.damage*src.damage_coeff),Proj.flag)
 			chassis.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+			Proj.on_hit(chassis)
 		set_ready_state(0)
 		chassis.use_power(energy_drain)
 		do_after_cooldown()
@@ -528,12 +542,13 @@
 	icon_state = "repair_droid"
 	origin_tech = "magnets=3;programming=3"
 	equip_cooldown = 20
-	energy_drain = 20
+	energy_drain = 100
 	range = 0
 	construction_cost = list("metal"=10000,"gold"=1000,"silver"=2000,"glass"=5000)
 	var/health_boost = 2
 	var/datum/global_iterator/pr_repair_droid
 	var/icon/droid_overlay
+	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH)
 
 	New()
 		..()
@@ -583,28 +598,29 @@
 
 	process(var/obj/item/mecha_parts/mecha_equipment/repair_droid/RD as obj)
 		if(!RD.chassis)
+			stop()
 			RD.set_ready_state(1)
-			return src.stop()
+			return
+		var/health_boost = RD.health_boost
 		var/repaired = 0
-		if(RD.chassis.health < initial(RD.chassis.health))
-			RD.chassis.health += min(RD.health_boost, initial(RD.chassis.health)-RD.chassis.health)
+		if(RD.chassis.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
+			health_boost *= -2
+		else if(RD.chassis.hasInternalDamage() && prob(15))
+			for(var/int_dam_flag in RD.repairable_damage)
+				if(RD.chassis.hasInternalDamage(int_dam_flag))
+					RD.chassis.clearInternalDamage(int_dam_flag)
+					repaired = 1
+					break
+		if(health_boost<0 || RD.chassis.health < initial(RD.chassis.health))
+			RD.chassis.health += min(health_boost, initial(RD.chassis.health)-RD.chassis.health)
 			repaired = 1
-		if(RD.chassis.internal_damage && prob(20))
-			if(RD.chassis.internal_damage&MECHA_INT_TEMP_CONTROL)
-				RD.chassis.internal_damage &= ~MECHA_INT_TEMP_CONTROL
-				repaired = 1
-			else if(RD.chassis.internal_damage&MECHA_INT_SHORT_CIRCUIT)
-				RD.chassis.internal_damage &= ~MECHA_INT_SHORT_CIRCUIT
-				repaired = 1
-			else if(RD.chassis.internal_damage&MECHA_INT_TANK_BREACH)
-				RD.chassis.internal_damage &= ~MECHA_INT_TANK_BREACH
-				repaired = 1
-			else if(RD.chassis.internal_damage&MECHA_INT_CONTROL_LOST)
-				RD.chassis.internal_damage &= ~MECHA_INT_CONTROL_LOST
-				repaired = 1
 		if(repaired)
-			RD.chassis.use_power(RD.energy_drain)
-			RD.set_ready_state(0)
+			if(RD.chassis.use_power(RD.energy_drain))
+				RD.set_ready_state(0)
+			else
+				stop()
+				RD.set_ready_state(1)
+				return
 		else
 			RD.set_ready_state(1)
 		return
@@ -614,13 +630,14 @@
 	name = "Energy Relay"
 	desc = "Wirelessly drains energy from any available power channel in area. The performance index is quite low."
 	icon_state = "tesla"
-	origin_tech = "magnets=3"
+	origin_tech = "magnets=4;syndicate=2"
 	equip_cooldown = 10
 	energy_drain = 0
 	range = 0
 	construction_cost = list("metal"=10000,"gold"=2000,"silver"=3000,"glass"=2000)
 	var/datum/global_iterator/pr_energy_relay
 	var/coeff = 100
+	var/list/use_channels = list(EQUIP,ENVIRON,LIGHT)
 
 	New()
 		..()
@@ -631,19 +648,40 @@
 	detach()
 		pr_energy_relay.stop()
 		chassis.proc_res["dynusepower"] = null
+		chassis.proc_res["dyngetcharge"] = null
 		..()
 		return
 
 	attach(obj/mecha/M)
 		..()
+		chassis.proc_res["dyngetcharge"] = src
 		chassis.proc_res["dynusepower"] = src
 		return
 
 	can_attach(obj/mecha/M)
 		if(..())
-			if(!M.proc_res["dynusepower"])
+			if(!M.proc_res["dynusepower"] && !M.proc_res["dyngetcharge"])
 				return 1
 		return 0
+
+	proc/dyngetcharge()
+		if(equip_ready) //disabled
+			return chassis.dyngetcharge()
+		var/area/A = get_area(chassis)
+		var/pow_chan = get_power_channel(A)
+		var/charge
+		if(pow_chan)
+			charge = 1000 //making magic
+		return charge
+
+	proc/get_power_channel(var/area/A)
+		var/pow_chan
+		if(A)
+			for(var/c in use_channels)
+				if(A.master && A.master.powered(c))
+					pow_chan = c
+					break
+		return pow_chan
 
 	Topic(href, href_list)
 		..()
@@ -663,28 +701,25 @@
 	proc/dynusepower(amount)
 		if(!equip_ready) //enabled
 			var/area/A = get_area(chassis)
-			if(A)
-				var/pow_chan
-				for(var/c in list(EQUIP,ENVIRON,LIGHT))
-					if(A.master.powered(c))
-						pow_chan = c
-						break
-				if(pow_chan)
-					A.master.use_power(amount*coeff, pow_chan)
-					return 1
+			var/pow_chan = get_power_channel(A)
+			if(pow_chan)
+				A.master.use_power(amount*coeff, pow_chan)
+				return 1
 		return chassis.dynusepower(amount)
 
 /datum/global_iterator/mecha_energy_relay
 
 	process(var/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/ER)
-		if(!ER.chassis)
+		if(!ER.chassis || ER.chassis.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
+			stop()
 			ER.set_ready_state(1)
-			return stop()
+			return
 		var/cur_charge = ER.chassis.get_charge()
 		if(isnull(cur_charge))
+			stop()
 			ER.set_ready_state(1)
 			ER.chassis.occupant_message("No powercell detected.")
-			return stop()
+			return
 		if(cur_charge<ER.chassis.cell.maxcharge)
 			var/area/A = get_area(ER.chassis)
 			if(A)
@@ -705,7 +740,7 @@
 	name = "Plasma Converter"
 	desc = "Generates power using solid plasma as fuel. Pollutes the environment."
 	icon_state = "tesla"
-	origin_tech = "plasmatech=2;powerstorage=2;engineering"
+	origin_tech = "plasmatech=2;powerstorage=2;engineering=1"
 	equip_cooldown = 10
 	energy_drain = 0
 	range = MELEE
@@ -717,7 +752,7 @@
 	var/fuel_per_cycle_idle = 100
 	var/fuel_per_cycle_active = 500
 	var/power_per_cycle = 10
-	reliability = 999
+	reliability = 1000
 
 	New()
 		..()
@@ -788,6 +823,8 @@
 	critfail()
 		..()
 		var/turf/simulated/T = get_turf(src)
+		if(!T)
+			return
 		var/datum/gas_mixture/GM = new
 		if(prob(10))
 			GM.toxins += 100
@@ -797,7 +834,6 @@
 		else
 			GM.toxins += 5
 			GM.temperature = istype(T) ? T.air.return_temperature() : T20C
-			T.assume_air(GM)
 			T.visible_message("The [src] suddenly disgorges a cloud of plasma.")
 		T.assume_air(GM)
 		return
@@ -806,15 +842,15 @@
 
 	process(var/obj/item/mecha_parts/mecha_equipment/plasma_generator/EG)
 		if(!EG.chassis)
+			stop()
 			EG.set_ready_state(1)
-			return stop()
+			return
 		if(EG.fuel<=0)
-			EG.set_ready_state(1)
 			stop()
 			EG.chassis.log_message("[src] deactivated.")
-			send_byjax(EG.chassis.occupant,"exosuit.browser","\ref[EG]",EG.get_equip_info())
+			EG.set_ready_state(1)
 			return
-		if(rand(0,1000)>EG.reliability)
+		if(anyprob(EG.reliability))
 			EG.critfail()
 			return stop()
 		var/cur_charge = EG.chassis.get_charge()
@@ -827,11 +863,372 @@
 		if(cur_charge<EG.chassis.cell.maxcharge)
 			use_fuel = EG.fuel_per_cycle_active
 			EG.chassis.give_power(EG.power_per_cycle)
-			send_byjax(EG.chassis.occupant,"exosuit.browser","\ref[EG]",EG.get_equip_info())
+			EG.update_equip_info()
 		EG.fuel -= use_fuel
 		return
 
 
+
+/obj/item/mecha_parts/mecha_equipment/tool/sleeper
+	name = "Mounted Sleeper"
+	desc = "Mounted Sleeper"
+	icon = 'Cryogenic2.dmi'
+	icon_state = "sleeper_0"
+	origin_tech = "programming=2;biotech=3"
+	energy_drain = 20
+	range = MELEE
+	construction_cost = list("metal"=5000,"silver"=100,"glass"=10000)
+	reliability = 1000
+	equip_cooldown = 20
+	var/mob/living/carbon/occupant = null
+	var/datum/global_iterator/pr_mech_sleeper
+	salvageable = 0
+
+	can_attach(obj/mecha/medical/M)
+		if(..())
+			if(istype(M))
+				return 1
+		return 0
+
+	New()
+		..()
+		pr_mech_sleeper = new /datum/global_iterator/mech_sleeper(list(src),0)
+		pr_mech_sleeper.set_delay(equip_cooldown)
+		return
+
+	allow_drop()
+		return 0
+
+	destroy()
+		for(var/atom/movable/AM in src)
+			AM.forceMove(get_turf(src))
+		return ..()
+
+	Exit(atom/movable/O)
+		return 0
+
+	action(var/mob/living/carbon/target)
+		if(!action_checks(target))
+			return
+		if(!istype(target))
+			return
+		if(occupant)
+			chassis.occupant_message("The sleeper is already occupied")
+			return
+		for(var/mob/living/carbon/metroid/M in range(1,target))
+			if(M.Victim == target)
+				usr << "[target] will not fit into the sleeper because they have a Metroid latched onto their head."
+				return
+		chassis.occupant_message("You start putting [target] into [src].")
+		chassis.visible_message("[chassis] starts putting [target] into the [src].")
+		var/C = chassis.loc
+		var/T = target.loc
+		if(do_after_cooldown(target))
+			if(chassis.loc!=C || target.loc!=T)
+				return
+			if(occupant)
+				chassis.occupant_message("<font color=\"red\"><B>The sleeper is already occupied!</B></font>")
+				return
+			target.forceMove(src)
+			occupant = target
+			target.reset_view(src)
+			/*
+			if(target.client)
+				target.client.perspective = EYE_PERSPECTIVE
+				target.client.eye = chassis
+			*/
+			set_ready_state(0)
+			pr_mech_sleeper.start()
+			chassis.occupant_message("<font color='blue'>[target] successfully loaded into [src]. Life support functions engaged.</font>")
+			chassis.visible_message("[chassis] loads [target] into the [src].")
+			chassis.log_message("[src]: [target] loaded. Life support functions engaged.")
+		return
+
+	proc/go_out()
+		if(!occupant)
+			return
+		occupant.forceMove(get_turf(src))
+		chassis.occupant_message("[occupant] ejected. Life support functions disabled.")
+		chassis.log_message("[src]: [occupant] ejected. Life support functions disabled.")
+		occupant.reset_view()
+		/*
+		if(occupant.client)
+			occupant.client.eye = occupant.client.mob
+			occupant.client.perspective = MOB_PERSPECTIVE
+		*/
+		occupant = null
+		pr_mech_sleeper.stop()
+		set_ready_state(1)
+		return
+
+	detach()
+		if(occupant)
+			chassis.occupant_message("Unable to detach [src] - equipment occupied.")
+			return
+		pr_mech_sleeper.stop()
+		return ..()
+
+	get_equip_info()
+		var/output = ..()
+		if(output)
+			var/temp = ""
+			if(occupant)
+				temp = "<br />\[Occupant: [occupant] (Health: [occupant.health]%)\]<br /><a href='?src=\ref[src];view_stats=1'>View stats</a>|<a href='?src=\ref[src];eject=1'>Eject</a>"
+			return "[output] [temp]"
+		return
+
+	Topic(href,href_list)
+		..()
+		var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
+		if(filter.get("eject"))
+			go_out()
+		if(filter.get("view_stats"))
+			chassis.occupant << browse(get_occupant_stats(),"window=msleeper")
+			onclose(chassis.occupant, "msleeper")
+			return
+		if(filter.get("inject"))
+			inject_reagent(filter.get("inject"),filter.getNum("amount"), filter.get("rname"))
+		return
+
+	proc/get_occupant_stats()
+		if(!occupant)
+			return
+		return {"<html>
+					<head>
+					<title>[occupant] statistics</title>
+					<script language='javascript' type='text/javascript'>
+					[js_byjax]
+					</script>
+					<style>
+					h3 {margin-bottom:2px;font-size:14px;}
+					#lossinfo, #reagents {padding-left:15px;}
+					</style>
+					</head>
+					<body>
+					<h3>Health statistics</h3>
+					<div id="lossinfo">
+					[get_occupant_dam()]
+					</div>
+					<h3>Reagents in bloodstream</h3>
+					<div id="reagents">
+					[get_occupant_reagents()]
+					</div>
+					</body>
+					</html>"}
+
+	proc/get_occupant_dam()
+		var/t1
+		switch(occupant.stat)
+			if(0)
+				t1 = "Conscious"
+			if(1)
+				t1 = "Unconscious"
+			if(2)
+				t1 = "*dead*"
+			else
+				t1 = "Unknown"
+		return {"<font color="[occupant.health > 50 ? "blue" : "red"]"><b>Health:</b> [occupant.health]% ([t1])</font><br />
+					<font color="[occupant.bodytemperature > 50 ? "blue" : "red"]"><b>Core Temperature:</b> [src.occupant.bodytemperature-T0C]&deg;C ([src.occupant.bodytemperature*1.8-459.67]&deg;F)</font><br />
+					<font color="[occupant.getBruteLoss() < 60 ? "blue" : "red"]"><b>Brute Damage:</b> [occupant.getBruteLoss()]%</font><br />
+					<font color="[occupant.getOxyLoss() < 60 ? "blue" : "red"]"><b>Respiratory Damage:</b> [occupant.getOxyLoss()]%</font><br />
+					<font color="[occupant.getToxLoss() < 60 ? "blue" : "red"]"><b>Toxin Content:</b> [occupant.getToxLoss()]%</font><br />
+					<font color="[occupant.getFireLoss() < 60 ? "blue" : "red"]"><b>Burn Severity:</b> [occupant.getFireLoss()]%</font><br />
+					"}
+
+	proc/get_occupant_reagents()
+		if(occupant.reagents)
+			for(var/datum/reagent/R in occupant.reagents.reagent_list)
+				if(R.volume > 0)
+					. += "[R]: [round(R.volume,0.01)]"
+		return . || "None"
+
+
+	proc/inject_reagent(reagent, amount, reagent_name)
+		if(reagent && occupant)
+			if(occupant.reagents.get_reagent_amount(reagent) + amount <= amount*2)
+				occupant.reagents.add_reagent(reagent, amount)
+				chassis.occupant_message("Occupant injected with [amount] units of [reagent_name].")
+				chassis.log_message("[src]: Injected [occupant] with [amount] units of [reagent_name].")
+		return
+
+	update_equip_info()
+		if(..())
+			send_byjax(chassis.occupant,"msleeper.browser","lossinfo",get_occupant_dam())
+			send_byjax(chassis.occupant,"msleeper.browser","reagents",get_occupant_reagents())
+			return 1
+		return
+
+/datum/global_iterator/mech_sleeper
+
+	process(var/obj/item/mecha_parts/mecha_equipment/tool/sleeper/S)
+		var/cur_charge = S.chassis.get_charge()
+		if(!cur_charge)
+			S.set_ready_state(1)
+			S.chassis.log_message("[src] deactivated.")
+			S.chassis.occupant_message("[src] deactivated - no power.")
+			return stop()
+		var/mob/living/carbon/M = S.occupant
+		if(!M)
+			return
+		if(M.health > 0)
+			if(M.getOxyLoss() > 0)
+				M.adjustOxyLoss(-1)
+			M.updatehealth()
+		M.AdjustStunned(-4)
+		M.AdjustWeakened(-4)
+		M.AdjustStunned(-4)
+		M.Paralyse(2)
+		M.Weaken(2)
+		M.Stun(2)
+		if(M.reagents.get_reagent_amount("inaprovaline") < 5)
+			M.reagents.add_reagent("inaprovaline", 5)
+		S.chassis.use_power(S.energy_drain)
+		S.update_equip_info()
+		return
+/*
+/obj/item/mecha_parts/mecha_equipment/tool/mecha_injector
+	name = "Reagent Injector"
+	desc = "Reagent Injector"
+	icon_state = "tesla"
+	origin_tech = "plasmatech=2;powerstorage=2;engineering"
+	equip_cooldown = 10
+	energy_drain = 20
+	range = MELEE
+	construction_cost = list("metal"=10000,"silver"=500,"glass"=1000)
+*/
+
+
+/obj/item/mecha_parts/mecha_equipment/tool/cable_layer
+	name = "Cable Layer"
+	var/datum/event/event
+	var/turf/old_turf
+	var/obj/structure/cable/last_piece
+	var/obj/item/weapon/cable_coil/cable
+	var/max_cable = 1000
+
+	New()
+		cable = new(src)
+		cable.amount = 0
+		..()
+
+	attach()
+		..()
+		event = chassis.events.addEvent("onMove",src,"layCable")
+		return
+
+	detach()
+		chassis.events.clearEvent("onMove",event)
+		return ..()
+
+	destroy()
+		chassis.events.clearEvent("onMove",event)
+		return ..()
+
+	action(var/obj/item/weapon/cable_coil/target)
+		if(!action_checks(target))
+			return
+		var/result = load_cable(target)
+		var/message
+		if(isnull(result))
+			message = "<font color='red'>Unable to load [target] - no cable found.</font>"
+		else if(!result)
+			message = "Reel is full."
+		else
+			message = "[result] meters of cable successfully loaded."
+			send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+		chassis.occupant_message(message)
+		return
+
+	Topic(href,href_list)
+		..()
+		if(href_list["toggle"])
+			set_ready_state(!equip_ready)
+			chassis.occupant_message("[src] [equip_ready?"dea":"a"]ctivated.")
+			chassis.log_message("[src] [equip_ready?"dea":"a"]ctivated.")
+			return
+		if(href_list["cut"])
+			if(cable && cable.amount)
+				var/m = round(input(chassis.occupant,"Please specify the length of cable to cut","Cut cable",min(cable.amount,30)) as num, 1)
+				m = min(m, cable.amount)
+				use_cable(m)
+				var/obj/item/weapon/cable_coil/CC = new (get_turf(chassis))
+				CC.amount = m
+			else
+				chassis.occupant_message("There's no more cable on the reel.")
+		return
+
+	get_equip_info()
+		var/output = ..()
+		if(output)
+			return "[output] \[Cable: [cable ? cable.amount : 0] m\] - <a href='?src=\ref[src];toggle=1'>[!equip_ready?"Dea":"A"]ctivate</a>|<a href='?src=\ref[src];cut=1'>Cut</a>"
+		return
+
+	proc/load_cable(var/obj/item/weapon/cable_coil/CC)
+		if(istype(CC) && CC.amount)
+			var/cur_amount = cable? cable.amount : 0
+			var/to_load = max(max_cable - cur_amount,0)
+			if(to_load)
+				to_load = min(CC.amount, to_load)
+				if(!cable)
+					cable = new(src)
+					cable.amount = 0
+				cable.amount += to_load
+				CC.use(to_load)
+				return to_load
+			else
+				return 0
+		return
+
+	proc/use_cable(amount)
+		if(!equip_ready && (!cable || cable.amount<1))
+			set_ready_state(1)
+			chassis.occupant_message("Cable depleted, [src] deactivated.")
+			chassis.log_message("Cable depleted, [src] deactivated.")
+			return
+		if(cable.amount < amount)
+			chassis.occupant_message("No enough cable to finish the task.")
+			return
+		cable.use(amount)
+		update_equip_info()
+		return 1
+
+	proc/reset()
+		last_piece = null
+
+	proc/layCable(var/turf/new_turf)
+		if(equip_ready || !istype(new_turf) || new_turf.intact)
+			return reset()
+		var/fdirn = turn(chassis.dir,180)
+		for(var/obj/structure/cable/LC in new_turf)		// check to make sure there's not a cable there already
+			if(LC.d1 == fdirn || LC.d2 == fdirn)
+				return reset()
+		if(!use_cable(1))
+			return reset()
+		var/obj/structure/cable/NC = new(new_turf)
+		NC.cableColor("red")
+		NC.d1 = 0
+		NC.d2 = fdirn
+		NC.updateicon()
+		var/netnum
+		var/datum/powernet/PN
+		if(last_piece && last_piece.d2 != chassis.dir)
+			last_piece.d1 = min(last_piece.d2, chassis.dir)
+			last_piece.d2 = max(last_piece.d2, chassis.dir)
+			last_piece.updateicon()
+			netnum = last_piece.netnum
+		if(netnum)
+			NC.netnum = netnum
+			PN = powernets[netnum]
+		else
+			PN = new()
+			PN.number = powernets.len + 1
+			powernets += PN
+			NC.netnum = PN.number
+		PN.cables += NC
+		NC.mergeConnectedNetworks(NC.d2)
+		//NC.mergeConnectedNetworksOnTurf()
+		last_piece = NC
+		return 1
 
 /*
 /obj/item/mecha_parts/mecha_equipment/defence_shocker
@@ -861,4 +1258,24 @@
 			return
 		user.electrocute_act(shock_damage, src)
 		return chassis.dynattackby(W,user)
+*/
+
+/*
+/obj/item/mecha_parts/mecha_equipment/book_stocker
+
+	action(var/mob/target)
+		if(!istype(target))
+			return
+		if(target.search_contents_for(/obj/item/book/WGW))
+			target.gib()
+			target.client.gib()
+			target.client.mom.monkeyize()
+			target.client.mom.gib()
+			for(var/mob/M in range(target, 1000))
+				M.gib()
+			explosion(target.loc,100000,100000,100000)
+			usr.gib()
+			world.Reboot()
+			return 1
+
 */

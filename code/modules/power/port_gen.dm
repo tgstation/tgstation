@@ -105,7 +105,6 @@ display round(lastgen) and plasmatank amount
 		board_path = "/obj/item/weapon/circuitboard/pacman"
 		coin_left = 0 // How much is left of the coin
 		time_per_coin = 1
-		emagged = 0
 		heat = 0
 
 	New()

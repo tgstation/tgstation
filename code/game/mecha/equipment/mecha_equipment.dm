@@ -13,6 +13,8 @@
 	var/energy_drain = 0
 	var/obj/mecha/chassis = null
 	var/range = MELEE //bitflags
+	reliability = 1000
+	var/salvageable = 1
 
 
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(target=1)
@@ -31,6 +33,13 @@
 	if(chassis)
 		send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
 		send_byjax(chassis.occupant,"exosuit.browser","equipment_menu",chassis.get_equipment_menu(),"dropdowns")
+		return 1
+	return
+
+/obj/item/mecha_parts/mecha_equipment/proc/update_equip_info()
+	if(chassis)
+		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
+		return 1
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/destroy()//missiles detonating, teleporter creating singularity?
@@ -90,7 +99,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/attach(obj/mecha/M as obj)
 	M.equipment += src
-	src.chassis = M
+	chassis = M
 	src.loc = M
 	M.log_message("[src] initialized.")
 	if(!M.selected)
@@ -103,10 +112,10 @@
 		chassis.equipment -= src
 		if(chassis.selected == src)
 			chassis.selected = null
-		src.update_chassis_page()
+		update_chassis_page()
 		chassis.log_message("[src] removed from equipment.")
-		src.chassis = null
-		src.equip_ready = 1
+		chassis = null
+		set_ready_state(1)
 	return
 
 
