@@ -5,6 +5,7 @@ obj/structure
 	icon_state = "girder"
 	anchored = 1
 	density = 1
+	layer = 2
 	var/state = 0
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -79,6 +80,8 @@ obj/structure
 				user << "\blue You added the plating!"
 				var/turf/Tsrc = get_turf(src)
 				Tsrc.ReplaceWithWall()
+				for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
+					P.layer = 1
 				W:use(2)
 				del(src)
 			return
@@ -92,6 +95,8 @@ obj/structure
 					user << "\blue Wall fully reinforced!"
 					var/turf/Tsrc = get_turf(src)
 					Tsrc.ReplaceWithRWall()
+					for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
+						P.layer = 1
 					if (W)
 						W:use(1)
 					del(src)
@@ -106,6 +111,12 @@ obj/structure
 					new/obj/structure/girder/reinforced( src.loc )
 					del(src)
 					return
+		else if(istype(W, /obj/item/pipe))
+			var/obj/item/pipe/P = W
+			if (P.pipe_type in list(0, 1, 5))	//simple pipes, simple bends, and simple manifolds.
+				user.drop_item()
+				P.loc = src.loc
+				user << "\blue You fit the pipe into the [src]!"
 		else
 			..()
 
