@@ -255,8 +255,9 @@
 						on = 0
 					continue
 				if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0 && selected_adamantine == 0)
-					if (ore_glass > 0)
+					if (ore_glass > 0 && ore_iron > 0)
 						ore_glass--;
+						ore_iron--;
 						new /obj/item/stack/sheet/rglass(output.loc)
 					else
 						on = 0
@@ -304,8 +305,9 @@
 						on = 0
 					continue
 				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0 && selected_adamantine == 0)
-					if (ore_iron > 0)
+					if (ore_iron > 0 && ore_plasma > 0)
 						ore_iron--;
+						ore_plasma--;
 						new /obj/item/stack/sheet/r_metal(output.loc)
 					else
 						on = 0
