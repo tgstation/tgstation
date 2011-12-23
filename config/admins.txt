@@ -8,7 +8,7 @@ chicagoted - Game Master
 neofite - Game Master
 uristmcdorf - Game Master
 cinless - Game Master
-
+trubblebass - Game Master
 mport2004 - Game Admin
 lj82 - Game Admin
 fatmanfive - Game Admin
@@ -23,8 +23,6 @@ atomictroop - Game Admin
 fateweaver - Game Admin
 agouri - Game Master
 errorage - Game Master
-
 uhangi - Game Master
-
 superxpdude - Game Master
 petethegoat - Game Master
