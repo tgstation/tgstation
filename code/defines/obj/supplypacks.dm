@@ -285,7 +285,7 @@
 					"/obj/item/weapon/minihoe",
 					"/obj/item/device/analyzer/plant_analyzer",
 					"/obj/item/clothing/gloves/botanic_leather",
-					"/obj/item/clothing/suit/apron") // Updated with new things
+					"/obj/item/clothing/suit/storage/apron") // Updated with new things
 	cost = 10
 	containertype = /obj/structure/closet/crate/hydroponics
 	containername = "Hydroponics crate"

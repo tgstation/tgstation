@@ -30,7 +30,8 @@
 	var/obj/item/clothing/gloves/gloves = null
 	var/obj/item/clothing/glasses/glasses = null
 	var/obj/item/clothing/head/head = null
-	var/obj/item/clothing/ears/ears = null
+	var/obj/item/clothing/ears/l_ear = null
+	var/obj/item/clothing/ears/r_ear = null
 	var/obj/item/weapon/card/id/wear_id = null
 	var/obj/item/weapon/r_store = null
 	var/obj/item/weapon/l_store = null
@@ -252,7 +253,7 @@
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
 
-			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
+			if (!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 30
 				ear_deaf += 120
 
@@ -260,7 +261,7 @@
 			b_loss += 30
 			if (!prob(getarmor(null, "bomb")))
 				b_loss = b_loss/2
-			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
+			if (!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 15
 				ear_deaf += 60
 			if (prob(50) && !shielded)
@@ -363,8 +364,10 @@
 			del(face_standing)
 			del(face_lying)
 
-	else if (W == ears)
-		ears = null
+	else if (W == l_ear)
+		l_ear = null
+	else if (W == r_ear)
+		r_ear = null
 	else if (W == shoes)
 		shoes = null
 	else if (W == belt)
@@ -523,15 +526,41 @@
 			if(istype(W,/obj/item/clothing/head/kitty))
 				W.update_icon(src)
 			W.equipped(src, text)
-		if("ears")
-			if (ears)
+		if("l_ear")
+			if (l_ear)
 				if (emptyHand)
-					ears.DblClick()
+					l_ear.DblClick()
 				return
-			if (!( istype(W, /obj/item/clothing/ears) ) && !( istype(W, /obj/item/device/radio/headset) ))
+			else if(emptyHand)
+				return
+			if (!( istype(W, /obj/item/clothing/ears) ) && !( istype(W, /obj/item/device/radio/headset) ) && W.w_class != 1)
+				return
+			if(istype(W,/obj/item/clothing/ears) && W:twoeared && r_ear)
 				return
 			u_equip(W)
-			ears = W
+			l_ear = W
+			if(istype(W,/obj/item/clothing/ears) && W:twoeared)
+				var/obj/item/clothing/ears/offear/O = new(W)
+				O.loc = src
+				equip_if_possible(O, slot_ears)
+			W.equipped(src, text)
+		if("r_ear")
+			if (r_ear)
+				if (emptyHand)
+					r_ear.DblClick()
+				return
+			else if(emptyHand)
+				return
+			if (!( istype(W, /obj/item/clothing/ears) ) && !( istype(W, /obj/item/device/radio/headset) ) && W.w_class != 1)
+				return
+			if(istype(W,/obj/item/clothing/ears) && W:twoeared && l_ear)
+				return
+			u_equip(W)
+			r_ear = W
+			if(istype(W,/obj/item/clothing/ears) && W:twoeared)
+				var/obj/item/clothing/ears/offear/O = new(W)
+				O.loc = src
+				equip_if_possible(O, slot_ears)
 			W.equipped(src, text)
 		if("i_clothing")
 			if (w_uniform)
@@ -865,8 +894,11 @@
 		var/t1 = glasses.icon_state
 		overlays += image("icon" = 'eyes.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
 	// Ears
-	if (ears)
-		var/t1 = ears.icon_state
+	if (l_ear)
+		var/t1 = l_ear.icon_state
+		overlays += image("icon" = 'ears.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
+	if (r_ear)
+		var/t1 = r_ear.icon_state
 		overlays += image("icon" = 'ears.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
 	// Shoes
 	if (shoes)
@@ -928,9 +960,9 @@
 		if (wear_suit)
 			if (wear_suit.blood_DNA)
 				var/icon/stain_icon = null
-				if (istype(wear_suit, /obj/item/clothing/suit/armor/vest || /obj/item/clothing/suit/wcoat))
+				if (istype(wear_suit, /obj/item/clothing/suit/armor/vest || /obj/item/clothing/suit/storage/wcoat))
 					stain_icon = icon('blood.dmi', "armorblood[!lying ? "" : "2"]")
-				else if (istype(wear_suit, /obj/item/clothing/suit/det_suit || /obj/item/clothing/suit/labcoat))
+				else if (istype(wear_suit, /obj/item/clothing/suit/storage/det_suit || /obj/item/clothing/suit/storage/labcoat))
 					stain_icon = icon('blood.dmi', "coatblood[!lying ? "" : "2"]")
 				else
 					stain_icon = icon('blood.dmi', "suitblood[!lying ? "" : "2"]")
@@ -974,6 +1006,8 @@
 		if(istype(head,/obj/item/clothing/head/kitty))
 			head_icon = (( lying ) ? head:mob2 : head:mob)
 		overlays += image("icon" = head_icon, "layer" = MOB_LAYER)
+		if(gimmick_hat)
+			overlays += image("icon" = icon('gimmick_head.dmi', "[gimmick_hat][!lying ? "" : "2"]"), "layer" = MOB_LAYER)
 		if (head.blood_DNA)
 			var/icon/stain_icon = icon('blood.dmi', "helmetblood[!lying ? "" : "2"]")
 			overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
@@ -1080,6 +1114,14 @@
 					NinjaStealthMalf()
 		else
 			invisibility = 0
+
+	if(client && client.admin_invis)
+		invisibility = 100
+	else if (shielded == 2)
+		invisibility = 2
+	else
+		invisibility = 0
+
 /*
 	for (var/mob/M in viewers(1, src))//For the love of god DO NOT REFRESH EVERY SECOND - Mport
 		if ((M.client && M.machine == src))
@@ -1413,11 +1455,16 @@
 										message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.glasses, target)
 									else
 										message = text("\red <B>[] is trying to take off the [] from []'s eyes!</B>", source, target.glasses, target)
-								if("ears")
-									if(istype(target.ears, /obj/item/clothing)&&!target.ears:canremove)
-										message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.ears, target)
+								if("l_ear")
+									if(istype(target.l_ear, /obj/item/clothing)&&!target.l_ear:canremove)
+										message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.l_ear, target)
 									else
-										message = text("\red <B>[] is trying to take off the [] from []'s ears!</B>", source, target.ears, target)
+										message = text("\red <B>[] is trying to take off the [] from []'s left ear!</B>", source, target.l_ear, target)
+								if("r_ear")
+									if(istype(target.r_ear, /obj/item/clothing)&&!target.r_ear:canremove)
+										message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.r_ear, target)
+									else
+										message = text("\red <B>[] is trying to take off the [] from []'s right ear!</B>", source, target.r_ear, target)
 								if("head")
 									if(istype(target.head, /obj/item/clothing)&&!target.head:canremove)
 										message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.head, target)
@@ -1643,12 +1690,19 @@ It can still be worn/put on as normal.
 					item.layer = 20
 					target.head = item
 					item.loc = target
-		if("ears")
-			if (target.ears)
-				if(istype(target.ears, /obj/item/clothing)&& !target.ears:canremove)
+		if("l_ear")
+			if (target.l_ear)
+				if(istype(target.l_ear, /obj/item/clothing)&& !target.l_ear:canremove)
 					return
-				var/obj/item/W = target.ears
+				var/obj/item/W = target.l_ear
 				target.u_equip(W)
+
+				if(istype(W,/obj/item/clothing/ears/offear))
+					W = target.r_ear
+				if(istype(W, /obj/item/clothing/ears) && W:twoeared)
+					if (target.client)
+						target.client.screen -= target.r_ear
+					target.u_equip(target.r_ear)
 				if (target.client)
 					target.client.screen -= W
 				if (W)
@@ -1657,18 +1711,53 @@ It can still be worn/put on as normal.
 					W.layer = initial(W.layer)
 				W.add_fingerprint(source)
 			else
-				if (istype(item, /obj/item/clothing/ears))
+				if (istype(item, /obj/item/clothing/ears) || istype(item, /obj/item/device/radio/headset) || item.w_class == 1)
 					source.drop_item()
-					loc = target
-					item.layer = 20
-					target.ears = item
-					item.loc = target
-				else if (istype(item, /obj/item/device/radio/headset))
+					if(istype(item, /obj/item/clothing/ears) && item:twoeared && target.r_ear)
+						loc = target.loc
+					else
+						loc = target
+						item.layer = 20
+						target.l_ear = item
+						item.loc = target
+						if(istype(item, /obj/item/clothing/ears) && item:twoeared)
+							var/obj/item/clothing/ears/offear/O = new(item)
+							O.loc = target
+							target.equip_if_possible(O, target.slot_ears)
+		if("r_ear")
+			if (target.r_ear)
+				if(istype(target.r_ear, /obj/item/clothing)&& !target.r_ear:canremove)
+					return
+				var/obj/item/W = target.r_ear
+				target.u_equip(W)
+
+				if(istype(W,/obj/item/clothing/ears/offear))
+					W = target.l_ear
+				if(istype(W, /obj/item/clothing/ears) && W:twoeared)
+					if (target.client)
+						target.client.screen -= target.r_ear
+					target.u_equip(target.l_ear)
+				if (target.client)
+					target.client.screen -= W
+				if (W)
+					W.loc = target.loc
+					W.dropped(target)
+					W.layer = initial(W.layer)
+				W.add_fingerprint(source)
+			else
+				if (istype(item, /obj/item/clothing/ears) || istype(item, /obj/item/device/radio/headset) || item.w_class == 1)
 					source.drop_item()
-					loc = target
-					item.layer = 20
-					target.ears = item
-					item.loc = target
+					if(istype(item, /obj/item/clothing/ears) && item:twoeared && target.r_ear)
+						loc = target.loc
+					else
+						loc = target
+						item.layer = 20
+						target.r_ear = item
+						item.loc = target
+						if(istype(item, /obj/item/clothing/ears) && item:twoeared)
+							var/obj/item/clothing/ears/offear/O = new/obj/item/clothing/ears/offear(item)
+							O.loc = target
+							target.equip_if_possible(O, target.slot_ears)
 		if("shoes")
 			if (target.shoes)
 				if(istype(target.shoes, /obj/item/clothing)&& !target.shoes:canremove)
@@ -1975,7 +2064,8 @@ It can still be worn/put on as normal.
 	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? r_hand : "Nothing")]</A>
 	<BR><B>Gloves:</B> <A href='?src=\ref[src];item=gloves'>[(gloves ? gloves : "Nothing")]</A>
 	<BR><B>Eyes:</B> <A href='?src=\ref[src];item=eyes'>[(glasses ? glasses : "Nothing")]</A>
-	<BR><B>Ears:</B> <A href='?src=\ref[src];item=ears'>[(ears ? ears : "Nothing")]</A>
+	<BR><B>Left Ear:</B> <A href='?src=\ref[src];item=l_ear'>[(l_ear ? l_ear : "Nothing")]</A>
+	<BR><B>Right Ear:</B> <A href='?src=\ref[src];item=r_ear'>[(r_ear ? r_ear : "Nothing")]</A>
 	<BR><B>Head:</B> <A href='?src=\ref[src];item=head'>[(head ? head : "Nothing")]</A>
 	<BR><B>Shoes:</B> <A href='?src=\ref[src];item=shoes'>[(shoes ? shoes : "Nothing")]</A>
 	<BR><B>Belt:</B> <A href='?src=\ref[src];item=belt'>[(belt ? belt : "Nothing")]</A>
@@ -2199,7 +2289,7 @@ It can still be worn/put on as normal.
 
 
 /mob/living/carbon/human/abiotic(var/full_body = 0)
-	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.ears || src.gloves)))
+	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.l_ear || src.r_ear || src.gloves)))
 		return 1
 
 	if((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )))

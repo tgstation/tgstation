@@ -2385,14 +2385,20 @@
 	set category = "Server"
 	set desc="Delay the game start"
 	set name="Delay"
-	if (!ticker || ticker.current_state != GAME_STATE_PREGAME)
+	if (!ticker || (ticker.current_state != GAME_STATE_PREGAME && ticker.current_state != GAME_STATE_FINISHED))
 		return alert("Too late... The game has already started!", null, null, null, null, null)
 	going = !( going )
 	if (!( going ))
-		world << "<b>The game start has been delayed.</b>"
+		if(ticker.current_state == GAME_STATE_FINISHED)
+			world << "<b>The game end has been delayed.</b>"
+		else
+			world << "<b>The game start has been delayed.</b>"
 		log_admin("[key_name(usr)] delayed the game.")
 	else
-		world << "<b>The game will start soon.</b>"
+		if(ticker.current_state == GAME_STATE_FINISHED)
+			world << "<b>The game will end soon.</b>"
+		else
+			world << "<b>The game will start soon.</b>"
 		log_admin("[key_name(usr)] removed the delay.")
 
 /obj/admins/proc/adjump()
@@ -2588,6 +2594,7 @@
 	log_admin("[key_name(usr)] toggled tinted_weldhelh.")
 	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.", 1)
 
+/*
 /obj/admins/proc/toggleguests()
 	set category = "Server"
 	set desc="Guests can't enter"
@@ -2599,6 +2606,7 @@
 		world << "<B>Guests may now enter the game.</B>"
 	log_admin("[key_name(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
 	message_admins("\blue [key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.", 1)
+*/
 
 
 

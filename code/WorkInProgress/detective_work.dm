@@ -132,9 +132,14 @@ obj/machinery/computer/forensic_scanning
 				var/mob/M = usr
 				var/obj/item/I = M.equipped()
 				if(I && istype(I))
-					scanning = I
-					M.drop_item()
-					I.loc = src
+					if(istype(I, /obj/item/weapon/evidencebag))
+						scanning = I.contents[1]
+						scanning.loc = src
+						I.underlays -= scanning
+					else
+						scanning = I
+						M.drop_item()
+						I.loc = src
 				else
 					temp = "Invalid Object Rejected."
 			if("scan")

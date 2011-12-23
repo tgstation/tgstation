@@ -65,7 +65,7 @@ var
 	dna_ident = 1
 	abandon_allowed = 1
 	enter_allowed = 1
-	guests_allowed = 1
+//	guests_allowed = 1
 	shuttle_frozen = 0
 	shuttle_left = 0
 	tinted_weldhelh = 1

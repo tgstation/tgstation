@@ -253,7 +253,7 @@
 /obj/item
 	name = "item"
 	icon = 'items.dmi'
-	var/icon_old = null//For when weapons get bloodied this saves their old icon.
+	var/icon_old = null // For when weapons get bloodied this saves their old icon.
 	var/abstract = 0
 	var/force = 0
 	var/item_state = null
@@ -265,9 +265,10 @@
 	var/hitsound = null
 	var/w_class = 3.0
 	var/wielded = 0
-	var/twohanded = 0 ///Two handed and wielded off by default, nyoro~n -Agouri
+	var/twohanded = 0 // Two handed and wielded off by default, nyoro~n -Agouri
 	var/force_unwielded = 0
 	var/force_wielded = 0
+	var/protective_temperature = 0 // Placing this here to avoid runtime errors, due to tiny items being allowed on ears and being queried for this variable
 	flags = FPRINT | TABLEPASS
 	pass_flags = PASSTABLE
 	pressure_resistance = 50

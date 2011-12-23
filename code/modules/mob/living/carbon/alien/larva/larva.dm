@@ -249,7 +249,9 @@
 			else
 				m_select.screen_loc = null
 
-	if (alien_invis)
+	if(client && client.admin_invis)
+		invisibility = 100
+	else if (alien_invis)
 		invisibility = 2
 		if(istype(loc, /turf))//If they are standing on a turf.
 			AddCamoOverlay(loc)//Overlay camo.
@@ -414,6 +416,14 @@
 
 		else
 			var/damage = rand(1, 9)
+			var/attack_verb
+			switch(M.mutantrace)
+				if("lizard")
+					attack_verb = "scratch"
+				if("plant")
+					attack_verb = "slash"
+				else
+					attack_verb = "punch"
 			if (prob(90))
 				if (M.mutations & HULK)
 					damage += 5
@@ -425,7 +435,7 @@
 				playsound(loc, "punch", 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
+						O.show_message(text("\red <B>[] has [attack_verb]ed []!</B>", M, src), 1)
 				if (damage > 4.9)
 					if (weakened < 10)
 						weakened = rand(10, 15)
@@ -438,7 +448,7 @@
 				playsound(loc, 'punchmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has attempted to punch []!</B>", M, src), 1)
+						O.show_message(text("\red <B>[] has attempted to [attack_verb] []!</B>", M, src), 1)
 	return
 
 /mob/living/carbon/alien/larva/attack_alien(mob/living/carbon/alien/humanoid/M as mob)

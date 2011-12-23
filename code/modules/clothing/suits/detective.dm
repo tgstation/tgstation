@@ -6,7 +6,7 @@
 	armor = list(melee = 50, bullet = 5, laser = 25,energy = 10, bomb = 0, bio = 0, rad = 0)
 
 
-/obj/item/clothing/suit/det_suit
+/obj/item/clothing/suit/storage/det_suit
 	name = "coat"
 	desc = "An 18th-century multi-purpose trenchcoat. Someone who wears this means serious business."
 	icon_state = "detective"

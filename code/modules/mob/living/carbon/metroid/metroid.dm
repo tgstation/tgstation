@@ -494,6 +494,15 @@
 		else
 			var/damage = rand(1, 9)
 
+			var/attack_verb
+			switch(M.mutantrace)
+				if("lizard")
+					attack_verb = "scratch"
+				if("plant")
+					attack_verb = "slash"
+				else
+					attack_verb = "punch"
+
 			attacked += 10
 			if (prob(90))
 				if (M.mutations & HULK)
@@ -513,7 +522,7 @@
 				playsound(loc, "punch", 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
+						O.show_message(text("\red <B>[] has [attack_verb]ed []!</B>", M, src), 1)
 
 				bruteloss += damage
 				updatehealth()
@@ -521,7 +530,7 @@
 				playsound(loc, 'punchmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has attempted to punch []!</B>", M, src), 1)
+						O.show_message(text("\red <B>[] has attempted to [attack_verb] []!</B>", M, src), 1)
 	return
 
 

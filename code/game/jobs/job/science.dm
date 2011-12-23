@@ -13,7 +13,7 @@
 		H.equip_if_possible(new /obj/item/clothing/shoes/brown(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/research_director(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/device/pda/heads/rd(H), H.slot_belt)
-		H.equip_if_possible(new /obj/item/clothing/suit/labcoat(H), H.slot_wear_suit)
+		H.equip_if_possible(new /obj/item/clothing/suit/storage/labcoat(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/weapon/clipboard(H), H.slot_r_hand)
 		return 1
 
@@ -34,7 +34,7 @@
 		H.equip_if_possible(new /obj/item/clothing/under/rank/scientist(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/white(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/toxins(H), H.slot_belt)
-		H.equip_if_possible(new /obj/item/clothing/suit/labcoat/science(H), H.slot_wear_suit)
+		H.equip_if_possible(new /obj/item/clothing/suit/storage/labcoat/science(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/clothing/mask/gas(H), H.slot_wear_mask)
 		H.equip_if_possible(new /obj/item/weapon/tank/oxygen(H), H.slot_l_hand)
 		return 1
@@ -56,5 +56,5 @@
 		H.equip_if_possible(new /obj/item/clothing/under/rank/chemist(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/white(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/toxins(H), H.slot_belt)
-		H.equip_if_possible(new /obj/item/clothing/suit/labcoat/chemist(H), H.slot_wear_suit)
+		H.equip_if_possible(new /obj/item/clothing/suit/storage/labcoat/chemist(H), H.slot_wear_suit)
 		return 1

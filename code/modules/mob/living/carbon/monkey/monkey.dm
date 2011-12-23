@@ -179,10 +179,19 @@
 		help_shake_act(M)
 	else
 		if (M.a_intent == "hurt")
+			var/attack_verb
+			switch(M.mutantrace)
+				if("lizard")
+					attack_verb = "scratch"
+				if("plant")
+					attack_verb = "slash"
+				else
+					attack_verb = "punch"
+
 			if ((prob(75) && health > 0))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has punched [name]!</B>", M), 1)
+						O.show_message(text("\red <B>[] has [attack_verb]ed [name]!</B>", M), 1)
 
 				playsound(loc, "punch", 25, 1, -1)
 				var/damage = rand(5, 10)
@@ -201,7 +210,7 @@
 				playsound(loc, 'punchmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has attempted to punch [name]!</B>", M), 1)
+						O.show_message(text("\red <B>[] has attempted to [attack_verb] [name]!</B>", M), 1)
 		else
 			if (M.a_intent == "grab")
 				if (M == src)
@@ -405,6 +414,11 @@
 			icon_state = "monkey1"
 		else
 			icon_state = "monkey0"
+
+	if(client && client.admin_invis)
+		invisibility = 100
+	else
+		invisibility = 0
 
 	if (wear_mask)
 		if (istype(wear_mask, /obj/item/clothing/mask))

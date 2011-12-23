@@ -134,6 +134,8 @@
 			verbs += /client/proc/enable_mapping_debug
 			verbs += /client/proc/everyone_random
 			verbs += /client/proc/only_one // Fateweaver suggested I do this - Doohl
+			verbs += /client/proc/callprocgen
+			verbs += /client/proc/callprocobj
 
 		if (holder.level >= 5)//Game Admin********************************************************************
 			verbs += /obj/admins/proc/view_txt_log
@@ -168,6 +170,8 @@
 			verbs += /client/proc/triple_ai
 			verbs += /client/proc/object_talk
 			verbs += /client/proc/strike_team
+			verbs += /client/proc/admin_invis
+			verbs += /client/proc/cmd_admin_godmode
 
 		if (holder.level >= 4)//Badmin********************************************************************
 			verbs += /obj/admins/proc/adrev					//toggle admin revives
@@ -203,6 +207,7 @@
 			verbs += /client/proc/admin_cancel_shuttle
 			verbs += /obj/admins/proc/show_traitor_panel
 			verbs += /client/proc/cmd_admin_dress
+			verbs += /client/proc/cmd_admin_christmas
 			verbs += /client/proc/respawn_character
 			verbs += /client/proc/spawn_xeno
 			verbs += /proc/possess
@@ -231,7 +236,7 @@
 		if (holder.level >= 0)//Mod********************************************************************
 			verbs += /obj/admins/proc/toggleAI				//Toggle the AI
 			verbs += /obj/admins/proc/toggleenter			//Toggle enterting
-			verbs += /obj/admins/proc/toggleguests			//Toggle guests entering
+//			verbs += /obj/admins/proc/toggleguests			//Toggle guests entering
 			verbs += /obj/admins/proc/toggleooc				//toggle ooc
 			verbs += /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 			verbs += /obj/admins/proc/voteres 				//toggle votes
@@ -336,6 +341,7 @@
 	verbs -= /client/proc/admin_cancel_shuttle
 	verbs -= /obj/admins/proc/show_traitor_panel
 	verbs -= /client/proc/cmd_admin_dress
+	verbs -= /client/proc/cmd_admin_christmas
 	verbs -= /client/proc/respawn_character
 	verbs -= /client/proc/spawn_xeno
 	verbs -= /proc/possess
@@ -352,7 +358,7 @@
 	verbs -= /client/proc/cmd_admin_create_centcom_report
 	verbs -= /obj/admins/proc/toggleAI				//Toggle the AI
 	verbs -= /obj/admins/proc/toggleenter			//Toggle enterting
-	verbs -= /obj/admins/proc/toggleguests			//Toggle guests entering
+//	verbs -= /obj/admins/proc/toggleguests			//Toggle guests entering
 	verbs -= /obj/admins/proc/toggleooc				//toggle ooc
 	verbs -= /obj/admins/proc/toggleoocdead         //toggle ooc for dead/unc
 	verbs -= /obj/admins/proc/voteres 				//toggle votes
@@ -395,6 +401,11 @@
 	verbs -= /client/proc/toggle_hear_radio
 	verbs -= /client/proc/tension_report
 	verbs -= /client/proc/cmd_admin_change_custom_event
+	verbs -= /client/proc/admin_invis
+	verbs -= /client/proc/callprocgen
+	verbs -= /client/proc/callprocobj
+	verbs -= /client/proc/cmd_admin_godmode
+
 	return
 
 
@@ -693,6 +704,7 @@
 	verbs += /client/proc/cmd_admin_subtle_message
 	verbs += /client/proc/cmd_admin_pm
 	verbs += /client/proc/cmd_admin_gib_self
+	verbs += /client/proc/admin_invis
 
 	verbs += /client/proc/deadchat					//toggles deadchat
 	verbs += /obj/admins/proc/toggleooc				//toggle ooc
@@ -717,3 +729,32 @@
 	verbs += /obj/admins/proc/toggleooc				//toggle ooc
 	verbs += /client/proc/cmd_admin_say//asay
 	return
+
+/client/proc/admin_invis()
+	set category = "Admin"
+	set name = "Invisibility"
+	if(!src.holder)
+		src << "Only administrators may use this command."
+		return
+	src.admin_invis =! src.admin_invis
+	if(src.mob)
+		var/mob/m = src.mob//probably don't need this cast, but I'm too lazy to check if /client.mob is of type /mob or not
+		m.update_clothing()
+	log_admin("[key_name(usr)] has turned their invisibility [src.admin_invis ? "ON" : "OFF"]")
+	message_admins("[key_name_admin(usr)] has turned their invisibility [src.admin_invis ? "ON" : "OFF"]", 1)
+
+/client/proc/cmd_admin_godmode(mob/M as mob in world)
+	set category = "Admin"
+	set name = "Toggle Godmode"
+	if(!src.holder)
+		src << "Only administrators may use this command."
+		return
+	if (M.nodamage == 1)
+		M.nodamage = 0
+		usr << "\blue Toggled OFF"
+	else
+		M.nodamage = 1
+		usr << "\blue Toggled ON"
+
+	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.nodamage ? "On" : "Off")]")
+	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.nodamage ? "On" : "Off")]", 1)

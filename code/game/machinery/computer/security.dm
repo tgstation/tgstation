@@ -1,3 +1,16 @@
+/obj/machinery/computer/secure_data/attackby(obj/item/O as obj, user as mob)
+	if(istype(O, /obj/item/weapon/card/id) && !scan)
+		usr.drop_item()
+		O.loc = src
+		scan = O
+		user << "You insert [O]."
+	else if(istype(O, /obj/item/weapon/disk/records) && !disk)
+		usr.drop_item()
+		O.loc = src
+		disk = O
+		user << "You insert [O]."
+	..()
+
 /obj/machinery/computer/secure_data/attack_ai(mob/user as mob)
 	return attack_hand(user)
 
@@ -9,6 +22,7 @@
 	if(..())
 		return
 	var/dat
+
 	if (temp)
 		dat = text("<TT>[]</TT><BR><BR><A href='?src=\ref[];choice=Clear Screen'>Clear Screen</A>", temp, src)
 	else
@@ -16,20 +30,29 @@
 		if (authenticated)
 			switch(screen)
 				if(1.0)
-					dat += text("<A href='?src=\ref[];choice=Search Records'>Search Records</A><BR>\n<A href='?src=\ref[];choice=List Records'>List Records</A><BR>\n<A href='?src=\ref[];choice=Search Fingerprints'>Search Fingerprints</A><BR>\n<A href='?src=\ref[];choice=New Record (General)'>New General Record</A><BR>\n<BR>\n<A href='?src=\ref[];choice=Record Maintenance'>Record Maintenance</A><BR>\n<A href='?src=\ref[];choice=Log Out'>{Log Out}</A><BR>\n", src, src, src, src, src, src)
-				if(2.0)
-					dat += {"<B>Record List</B>:<HR>
-					<table style="text-align:center;" border="1" cellspacing="0">
-					<tr>
-					<th>Name (ID#)</th>
-					<th>Rank</th>
-					<th>Fingerprints</th>
-					<th>Criminal Status</th>
-					</tr>"}
+					dat += {"
+<p style='text-align:center;'>"}
+					dat += text("<A href='?src=\ref[];choice=Search Records'>Search Records</A><BR>", src)
+					dat += text("<A href='?src=\ref[];choice=New Record (General)'>New Record</A><BR>", src)
+					dat += {"
+</p>
+<table style="text-align:center;" cellspacing="0" width="100%">
+<tr>
+<th>Records:</th>
+</tr>
+</table>
+<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+<tr>
+<th>Name</th>
+<th>ID</th>
+<th>Rank</th>
+<th>Fingerprints</th>
+<th>Criminal Status</th>
+</tr>"}
 					for(var/datum/data/record/R in data_core.general)
 						var/crimstat = ""
 						for(var/datum/data/record/E in data_core.security)
-							if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
+							if ((E.fields["name"] == R.fields["name"] && E.fields["id"] == R.fields["id"]))
 								crimstat = E.fields["criminal"]
 						var/background
 						switch(crimstat)
@@ -43,14 +66,37 @@
 								background = "'background-color:#3BB9FF;'"
 							if("None")
 								background = "'background-color:#00FF7F;'"
-						dat += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[] (ID:[])</a></td>", background, src, R, R.fields["name"], R.fields["id"])
+							if("")
+								background = "'background-color:#FFFFFF;'"
+								crimstat = "No Record."
+						dat += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
+						dat += text("<td>[]</td>", R.fields["id"])
 						dat += text("<td>[]</td>", R.fields["rank"])
 						dat += text("<td>[]</td>", R.fields["fingerprint"])
 						dat += text("<td>[]</td></tr>", crimstat)
-					dat += text("</table><br><HR><A href='?src=\ref[];choice=Return'>Back</A>", src)
+					dat += "</table><hr width='75%' />"
+					dat += text("<A href='?src=\ref[];choice=Record Maintenance'>Record Maintenance</A><br><br>", src)
+					dat += text("<A href='?src=\ref[];choice=Log Out'>{Log Out}</A>",src)
+				if(2.0)
+					dat += "<B>Records Maintenance</B><HR>"
+					if(disk)
+						dat += "<B>Disk Contents:</B><UL style='margin-top:0;margin-bottom:0'>"
+						if(disk.general)
+							dat += "<LI>General</LI>"
+						if(disk.medical)
+							dat += "<LI>Medical</LI>"
+						if(disk.security)
+							dat += "<LI>Security</LI>"
+						dat += "</UL><A href='?src=\ref[src];choice=backup'>Backup To Disk</A><BR>"
+						if(disk.general && disk.security)
+							dat += "<A href='?src=\ref[src];choice=restore'>Restore From Disk</A><BR>"
+						else
+							dat += "Disk does not contain security records.<BR>"
+						dat += "<A href='?src=\ref[src];choice=eject_disk'>Eject Disk</A><BR>"
+					else
+						dat += "Please insert a records disk.<BR>"
+					dat += "<BR><A href='?src=\ref[src];choice=Delete All Records'>Delete All Records</A><BR><BR><A href='?src=\ref[src];choice=Return'>Back</A>"
 				if(3.0)
-					dat += text("<B>Records Maintenance</B><HR>\n<A href='?src=\ref[];choice=Delete All Records'>Delete All Records</A><BR>\n<BR>\n<A href='?src=\ref[];choice=Return'>Back</A>", src, src)
-				if(4.0)
 					dat += "<CENTER><B>Security Record</B></CENTER><BR>"
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
 						dat += text("Name: <A href='?src=\ref[];choice=Edit Field;field=name'>[]</A> ID: <A href='?src=\ref[];choice=Edit Field;field=id'>[]</A><BR>\nSex: <A href='?src=\ref[];choice=Edit Field;field=sex'>[]</A><BR>\nAge: <A href='?src=\ref[];choice=Edit Field;field=age'>[]</A><BR>\nRank: <A href='?src=\ref[];choice=Edit Field;field=rank'>[]</A><BR>\nFingerprint: <A href='?src=\ref[];choice=Edit Field;field=fingerprint'>[]</A><BR>\nPhysical Status: []<BR>\nMental Status: []<BR>", src, active1.fields["name"], src, active1.fields["id"], src, active1.fields["sex"], src, active1.fields["age"], src, active1.fields["rank"], src, active1.fields["fingerprint"], active1.fields["p_stat"], active1.fields["m_stat"])
@@ -68,10 +114,57 @@
 						dat += "<B>Security Record Lost!</B><BR>"
 						dat += text("<A href='?src=\ref[];choice=New Record (Security)'>New Security Record</A><BR><BR>", src)
 					dat += text("\n<A href='?src=\ref[];choice=Delete Record (ALL)'>Delete Record (ALL)</A><BR><BR>\n<A href='?src=\ref[];choice=Print Record'>Print Record</A><BR>\n<A href='?src=\ref[];choice=Return'>Back</A><BR>", src, src, src)
+				if(4.0)
+					if(!Perp.len)
+						dat += text("ERROR.  String could not be located.<br><br><A href='?src=\ref[];choice=Return'>Back</A>", src)
+					else
+						dat += {"
+<table style="text-align:center;" cellspacing="0" width="100%">
+<tr>					"}
+						dat += text("<th>Search Results for '[]':</th>", tempname)
+						dat += {"
+</tr>
+</table>
+<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+<tr>
+<th>Name</th>
+<th>ID</th>
+<th>Rank</th>
+<th>Fingerprints</th>
+<th>Criminal Status</th>
+</tr>					"}
+						for(var/i=1, i<=Perp.len, i += 2)
+							var/crimstat = ""
+							var/datum/data/record/R = Perp[i]
+							if(istype(Perp[i+1],/datum/data/record/))
+								var/datum/data/record/E = Perp[i+1]
+								crimstat = E.fields["criminal"]
+							var/background
+							switch(crimstat)
+								if("*Arrest*")
+									background = "'background-color:#DC143C;'"
+								if("Incarcerated")
+									background = "'background-color:#CD853F;'"
+								if("Parolled")
+									background = "'background-color:#CD853F;'"
+								if("Released")
+									background = "'background-color:#3BB9FF;'"
+								if("None")
+									background = "'background-color:#00FF7F;'"
+								if("")
+									background = "'background-color:#FFFFFF;'"
+									crimstat = "No Record."
+							dat += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
+							dat += text("<td>[]</td>", R.fields["id"])
+							dat += text("<td>[]</td>", R.fields["rank"])
+							dat += text("<td>[]</td>", R.fields["fingerprint"])
+							dat += text("<td>[]</td></tr>", crimstat)
+						dat += "</table><hr width='75%' />"
+						dat += text("<br><A href='?src=\ref[];choice=Return'>Return to index.</A>", src)
 				else
 		else
 			dat += text("<A href='?src=\ref[];choice=Log In'>{Log In}</A>", src)
-	user << browse(text("<HEAD><TITLE>Security Records</TITLE></HEAD><TT>[]</TT>", dat), "window=secure_rec")
+	user << browse(text("<HEAD><TITLE>Security Records</TITLE></HEAD><TT>[]</TT>", dat), "window=secure_rec;size=550x400")
 	onclose(user, "secure_rec")
 	return
 
@@ -99,7 +192,10 @@ What a mess.*/
 
 			if("Confirm Identity")
 				if (scan)
-					scan.loc = loc
+					if(!usr.get_active_hand())
+						usr.put_in_hand(scan)
+					else
+						scan.loc = get_turf(src)
 					scan = null
 				else
 					var/obj/item/I = usr.equipped()
@@ -129,31 +225,28 @@ What a mess.*/
 						rank = scan.assignment
 						screen = 1
 //RECORD FUNCTIONS
-			if("List Records")
-				screen = 2
-				active1 = null
-				active2 = null
-
 			if("Search Records")
-				var/t1 = input("Search String: (Name or ID)", "Secure. records", null, null)  as text
+				var/t1 = input("Search String: (Partial Name or ID or Fingerprints)", "Secure. records", null, null)  as text
 				if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || !in_range(src, usr)))
 					return
-				active1 = null
-				active2 = null
+				Perp = new/list()
 				t1 = lowertext(t1)
 				for(var/datum/data/record/R in data_core.general)
-					if ((lowertext(R.fields["name"]) == t1 || t1 == lowertext(R.fields["id"])))
-						active1 = R
-				if (!( active1 ))
-					temp = text("Could not locate record [].", t1)
-				else
+					var/temptext = R.fields["name"] + " " + R.fields["id"] + " " + R.fields["fingerprint"]
+					if(findtext(temptext,t1))
+						var/prelist = new/list(2)
+						prelist[1] = R
+						Perp += prelist
+				for(var/i = 1, i<=Perp.len, i+=2)
 					for(var/datum/data/record/E in data_core.security)
-						if ((E.fields["name"] == active1.fields["name"] || E.fields["id"] == active1.fields["id"]))
-							active2 = E
-					screen = 4
+						var/datum/data/record/R = Perp[i]
+						if ((E.fields["name"] == R.fields["name"] && E.fields["id"] == R.fields["id"]))
+							Perp[i+1] = E
+				tempname = t1
+				screen = 4
 
 			if("Record Maintenance")
-				screen = 3
+				screen = 2
 				active1 = null
 				active2 = null
 
@@ -168,9 +261,9 @@ What a mess.*/
 							S = E
 					active1 = R
 					active2 = S
-					screen = 4
+					screen = 3
 
-			if ("Search Fingerprints")
+/*			if ("Search Fingerprints")
 				var/t1 = input("Search String: (Fingerprint)", "Secure. records", null, null)  as text
 				if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || (!in_range(src, usr)) && (!istype(usr, /mob/living/silicon))))
 					return
@@ -186,7 +279,7 @@ What a mess.*/
 					for(var/datum/data/record/E in data_core.security)
 						if ((E.fields["name"] == active1.fields["name"] || E.fields["id"] == active1.fields["id"]))
 							active2 = E
-					screen = 4
+					screen = 3	*/
 
 			if ("Print Record")
 				if (!( printing ))
@@ -263,7 +356,7 @@ What a mess.*/
 					R.fields["notes"] = "No notes."
 					data_core.security += R
 					active2 = R
-					screen = 4
+					screen = 3
 
 			if ("New Record (General)")
 				var/datum/data/record/G = new /datum/data/record()
@@ -278,6 +371,7 @@ What a mess.*/
 				data_core.general += G
 				active1 = G
 				active2 = null
+
 //FIELD FUNCTIONS
 			if ("Edit Field")
 				var/a1 = active1
@@ -364,6 +458,24 @@ What a mess.*/
 							temp += "</ul>"
 						else
 							alert(usr, "You do not have the required rank to do this!")
+			if ("eject_disk")
+				if (!disk)
+					return
+				if(!usr.get_active_hand())
+					usr.put_in_hand(disk)
+				else
+					disk.loc = get_turf(src)
+				disk = null
+			if ("backup")
+				if (!disk)
+					return
+				disk.backup(0, 1)
+				temp = "Data backup complete."
+			if ("restore")
+				if (!disk)
+					return
+				disk.restore(0, 1)
+				temp = "Data restore complete."
 //TEMPORARY MENU FUNCTIONS
 			else//To properly clear as per clear screen.
 				temp=null
@@ -405,3 +517,100 @@ What a mess.*/
 	updateUsrDialog()
 	return
 
+/obj/item/weapon/disk/records
+	name = "Crew Records Disk"
+	desc = "Stores security and medical records."
+	icon = 'cloning.dmi'
+	icon_state = "datadisk2"
+	item_state = "card-id"
+	w_class = 1.0
+	var/list/general
+	var/list/security
+	var/list/medical
+
+/obj/item/weapon/disk/records/verb/label(t as text)
+	set name = "Label Disk"
+	set category = "Object"
+	set src in usr
+
+	if (t)
+		src.name = text("Records Disk - '[]'", t)
+	else
+		src.name = "Crew Records Disk"
+	src.add_fingerprint(usr)
+	return
+
+/obj/item/weapon/disk/records/proc/backup(var/med, var/sec)
+	// have to manually copy each field so there's no references between data_core and the disk
+	general = new()
+	for(var/datum/data/record/E in data_core.general)
+		var/datum/data/record/G = new /datum/data/record()
+		for(var/F in E.fields)
+			G.fields[F] += E.fields[F]
+		general += G
+
+	if(med)
+		medical = new()
+		for(var/datum/data/record/E in data_core.medical)
+			var/datum/data/record/G = new /datum/data/record()
+			for(var/F in E.fields)
+				G.fields[F] += E.fields[F]
+			medical += G
+
+	if(sec)
+		security = new()
+		for(var/datum/data/record/E in data_core.security)
+			var/datum/data/record/G = new /datum/data/record()
+			for(var/F in E.fields)
+				G.fields[F] += E.fields[F]
+			security += G
+
+/obj/item/weapon/disk/records/proc/restore(var/med, var/sec)
+	// actually merge the content to not wipe new arrivals, etc
+	if(general)
+		for(var/datum/data/record/R in general)
+			for(var/datum/data/record/E in data_core.general)
+				if (E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"])
+					data_core.general -= E
+					break
+			var/datum/data/record/G = new /datum/data/record()
+			for(var/F in R.fields)
+				G.fields[F] += R.fields[F]
+			data_core.general += G
+
+	if(med && medical)
+		for(var/datum/data/record/R in medical)
+			for(var/datum/data/record/E in data_core.medical)
+				if (E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"])
+					data_core.medical -= E
+					break
+			var/datum/data/record/G = new /datum/data/record()
+			for(var/F in R.fields)
+				G.fields[F] += R.fields[F]
+			data_core.medical += G
+
+	if(sec && security)
+		for(var/datum/data/record/R in security)
+			for(var/datum/data/record/E in data_core.security)
+				if (E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"])
+					data_core.security -= E
+					break
+			var/datum/data/record/G = new /datum/data/record()
+			for(var/F in R.fields)
+				G.fields[F] += R.fields[F]
+			data_core.security += G
+
+/obj/item/weapon/storage/recordsbox
+	name = "Records Diskette Box"
+	icon_state = "disk_kit"
+	item_state = "syringe_kit"
+
+/obj/item/weapon/storage/recordsbox/New()
+	..()
+	new /obj/item/weapon/disk/records(src)
+	new /obj/item/weapon/disk/records(src)
+	new /obj/item/weapon/disk/records(src)
+	new /obj/item/weapon/disk/records(src)
+	new /obj/item/weapon/disk/records(src)
+	new /obj/item/weapon/disk/records(src)
+	new /obj/item/weapon/disk/records(src)

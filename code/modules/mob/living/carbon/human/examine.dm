@@ -30,8 +30,11 @@
 		else
 			usr << "\blue [src.name] has a \icon[src.wear_suit] [src.wear_suit.name] on."
 
-	if (src.ears)
-		usr << "\blue [src.name] has a \icon[src.ears] [src.ears.name] by [t_his] mouth."
+	if (src.l_ear)
+		usr << "\blue [src.name] has a \icon[src.l_ear] [src.l_ear.name] on [t_his] left ear."
+
+	if (src.r_ear)
+		usr << "\blue [src.name] has a \icon[src.r_ear] [src.r_ear.name] on [t_his] right ear."
 
 	if (src.wear_mask)
 		if (src.wear_mask.blood_DNA)

@@ -700,10 +700,16 @@
 		alert(src,"You have been banned.\nReason : [isbanned]","Ban","Ok")
 		del(src)
 
+/*
 	if (!guests_allowed && IsGuestKey(key))
 		log_access("Failed Login: [src] - Guests not allowed")
 		message_admins("\blue Failed Login: [src] - Guests not allowed")
 		alert(src,"You cannot play here.\nReason : Guests not allowed","Guests not allowed","Ok")
+		del(src)
+*/
+
+	if(IsGuestKey(src.key))
+		alert(src,"Baystation12 doesn't allow guest accounts to play. Please go to http://www.byond.com/ and register for a key.","Guest","OK")
 		del(src)
 
 	if (((world.address == address || !(address)) && !(host)))
@@ -803,6 +809,8 @@
 			else
 				gibs(loc, viruses)
 		sleep(15)
+		for(var/obj/item/I in src.contents)
+			I.loc = get_turf(src)
 		del(src)
 
 /*
@@ -838,6 +846,8 @@ Dusting robots does not eject the MMI, so it's a bit more powerful than gib() /N
 	sleep(15)
 	if(isrobot(src)&&src:mmi)//Is a robot and it has an mmi.
 		del(src:mmi)//Delete the MMI first so that it won't go popping out.
+	for(var/obj/item/I in src.contents)
+		I.loc = get_turf(src)
 	del(src)
 
 /*

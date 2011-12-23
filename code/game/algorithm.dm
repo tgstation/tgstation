@@ -113,8 +113,11 @@ proc/countJob(rank)
 				src.wear_id = W
 				equipped = 1
 		if(slot_ears)
-			if(!src.ears)
-				src.ears = W
+			if(!src.l_ear)
+				src.l_ear = W
+				equipped = 1
+			else if(!src.r_ear)
+				src.r_ear = W
 				equipped = 1
 		if(slot_glasses)
 			if(!src.glasses)

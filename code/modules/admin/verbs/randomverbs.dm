@@ -118,22 +118,6 @@
 			if(K && K.client && K.client.holder && K.key != usr.key && K.key != M.key)
 				K << "<B><font color='blue'>PM: [key_name(usr, K)]-&gt;[key_name(M, K)]:</B> \blue [t]</font>"
 
-/client/proc/cmd_admin_godmode(mob/M as mob in world)
-	set category = "Special Verbs"
-	set name = "Godmode"
-	if(!authenticated || !holder)
-		src << "Only administrators may use this command."
-		return
-	if (M.nodamage == 1)
-		M.nodamage = 0
-		usr << "\blue Toggled OFF"
-	else
-		M.nodamage = 1
-		usr << "\blue Toggled ON"
-
-	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.nodamage ? "On" : "Off")]")
-	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.nodamage ? "On" : "Off")]", 1)
-
 /client/proc/cmd_admin_mute(mob/M as mob in world)
 	set category = "Special Verbs"
 	set name = "Admin Mute"
