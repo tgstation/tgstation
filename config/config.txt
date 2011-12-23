@@ -111,3 +111,6 @@ HOSTEDBY Yournamehere
 
 ##Remove the # mark infront of this to forbid admins from posssessing the singularity.
 #FORBID_SINGULO_POSSESSION
+
+##Remove the # mark if you are going to use the SVN irc bot to relay adminhelps
+#USEIRCBOT

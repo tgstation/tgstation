@@ -67,3 +67,10 @@ The SQL backend for the library, karma system and stats tracking requires a
 MySQL server.  Your server details go in /config/dbconfig.txt, and the SQL 
 schema is in /SQL/tgstation_schema.sql.  More detailed setup instructions are
 coming soon, for now ask in our IRC channel.
+
+================================================================================
+IRC Bot Setup
+================================================================================
+
+Included in the SVN is an IRC bot capable of relaying adminhelps to a specified IRC channel/server (thanks to Skibiliano)
+Instructions for bot setup are included in the /bot/ folder along with the bot/relay script itself
