@@ -1006,6 +1006,8 @@
 		if(istype(head,/obj/item/clothing/head/kitty))
 			head_icon = (( lying ) ? head:mob2 : head:mob)
 		overlays += image("icon" = head_icon, "layer" = MOB_LAYER)
+		if(gimmick_hat)
+			overlays += image("icon" = icon('gimmick_head.dmi', "[gimmick_hat][!lying ? "" : "2"]"), "layer" = MOB_LAYER)
 		if (head.blood_DNA)
 			var/icon/stain_icon = icon('blood.dmi', "helmetblood[!lying ? "" : "2"]")
 			overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
