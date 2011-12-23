@@ -79,6 +79,9 @@ AI MODULES
 			src.transmitInstructions(comp.current, usr)
 			comp.current << "These are your laws now:"
 			comp.current.show_laws()
+			for(var/mob/living/silicon/robot/R in world)
+				if(R.lawupdate && (R.connected_ai == comp.current))
+					R << "Your AI has set your 'laws waiting' flag."
 			usr << "Upload complete. The AI's laws have been modified."
 
 
