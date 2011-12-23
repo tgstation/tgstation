@@ -275,7 +275,7 @@
 			if(config.allow_vote_restart)
 				text += "<A href='?src=\ref[vote];voter=\ref[src];vmode=1'>Begin restart vote.</A><BR>"
 			if(config.allow_vote_mode)
-				if(ticker.current_state == 1)
+				if(!ticker || ticker.current_state == 1)
 					text += "<A href='?src=\ref[vote];voter=\ref[src];vmode=2'>Begin change mode vote.</A><BR>"
 				else
 					text += "Change mode votes are disabled while a round is in progress, vote to restart first.<BR>"
