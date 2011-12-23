@@ -1128,7 +1128,7 @@
 
 		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
 		var/armor_block = run_armor_check(affecting, "melee")
-		apply_damage(damage, CLONE, affecting, armor_block)
+		apply_damage(damage, BRUTE, affecting, armor_block)
 		UpdateDamageIcon()
 
 

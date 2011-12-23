@@ -268,7 +268,7 @@ MOP
 
 /obj/item/weapon/pepperspray/examine()
 	set src in usr
-	usr << text("\icon[] [] units of cleaner left!", src, src.reagents.total_volume)
+	usr << text("\icon[] [] units of spray left!", src, src.reagents.total_volume)
 	..()
 	return
 

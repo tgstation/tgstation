@@ -213,7 +213,7 @@ datum
 							if(istype(my_atom, /obj/item/metroid_core))
 								var/obj/item/metroid_core/M = my_atom
 
-								if(M.POWERFLAG == C.required_other)
+								if(M.POWERFLAG == C.required_other && M.Uses > 0) // added a limit to metroid cores -- Muskets requested this
 									matching_other = 1
 
 
@@ -231,6 +231,14 @@ datum
 
 							for(var/mob/M in viewers(4, get_turf(my_atom)) )
 								M << "\blue \icon[my_atom] The solution begins to bubble."
+
+							if(istype(my_atom, /obj/item/metroid_core))
+								var/obj/item/metroid_core/ME = my_atom
+								ME.Uses--
+								if(ME.Uses <= 0) // give the notification that the metroid core is dead
+									for(var/mob/M in viewers(4, get_turf(my_atom)) )
+										M << "\blue \icon[my_atom] The innards begin to boil!"
+
 							playsound(get_turf(my_atom), 'bubbles.ogg', 80, 1)
 
 							C.on_reaction(src, created_volume)

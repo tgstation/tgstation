@@ -141,8 +141,6 @@
 			for(var/mob/living/silicon/C in view(12,src))
 				if(C.stat != 2)
 					var/notarget = 0
-					if(C in Friends)
-						notarget = 1
 
 					if(!istype(src, /mob/living/carbon/metroid/adult))
 						if(!starving && Discipline > 0)

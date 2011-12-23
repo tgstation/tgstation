@@ -260,6 +260,9 @@
 			if(power > 0)
 				Metroid.attacked += 10
 
+			if(Metroid.Discipline && prob(50))	// wow, buddy, why am I getting attacked??
+				Metroid.Discipline = 0
+
 			if(power >= 3)
 				if(istype(Metroid, /mob/living/carbon/metroid/adult))
 					if(prob(5 + round(power/2)))
@@ -270,9 +273,6 @@
 						Metroid.Victim = null
 						Metroid.anchored = 0
 
-						if(prob(80) && !Metroid.client)
-							Metroid.Discipline++
-
 						spawn()
 							if(Metroid)
 								Metroid.SStun = 1
@@ -282,7 +282,7 @@
 						spawn(0)
 							Metroid.canmove = 0
 							step_away(Metroid, user)
-							if(prob(25 + power*2))
+							if(prob(25 + power))
 								sleep(2)
 								step_away(Metroid, user)
 							Metroid.canmove = 1
