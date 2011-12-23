@@ -205,7 +205,7 @@
 					if(do_after_cooldown(target))
 						if(disabled) return
 						chassis.spark_system.start()
-						target:ReplaceWithFloor()
+						target:ReplaceWithPlating()
 						playsound(target, 'Deconstruct.ogg', 50, 1)
 						chassis.give_power(energy_drain)
 				else if (istype(target, /turf/simulated/floor))
@@ -232,7 +232,7 @@
 					set_ready_state(0)
 					if(do_after_cooldown(target))
 						if(disabled) return
-						target:ReplaceWithFloor()
+						target:ReplaceWithPlating()
 						playsound(target, 'Deconstruct.ogg', 50, 1)
 						chassis.spark_system.start()
 						chassis.use_power(energy_drain*2)

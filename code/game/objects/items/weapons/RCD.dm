@@ -79,7 +79,7 @@ RCD
 					playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 					spark_system.set_up(5, 0, src)
 					src.spark_system.start()
-					A:ReplaceWithFloor()
+					A:ReplaceWithPlating()
 					matter--
 					user << "The RCD now holds [matter]/30 matter-units."
 					desc = "A RCD. It currently holds [matter]/30 matter-units."
@@ -124,7 +124,7 @@ RCD
 					if(!disabled && matter >= 4)
 						spark_system.set_up(5, 0, src)
 						src.spark_system.start()
-						A:ReplaceWithFloor()
+						A:ReplaceWithPlating()
 						playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 						matter -= 4
 						user << "The RCD now holds [matter]/30 matter-units."

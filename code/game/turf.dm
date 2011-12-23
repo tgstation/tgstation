@@ -272,7 +272,7 @@
 			new /obj/item/stack/sheet/metal( src )
 			new /obj/item/stack/sheet/metal( src )
 
-	ReplaceWithFloor(explode)
+	ReplaceWithPlating(explode)
 
 /turf/simulated/wall/examine()
 	set src in oview(1)
@@ -354,7 +354,7 @@
 			O.anchored = 1
 			O.density = 1
 			O.layer = 5
-			var/turf/simulated/floor/F = ReplaceWithFloor()
+			var/turf/simulated/floor/F = ReplaceWithPlating()
 			F.burn_tile()
 			F.icon_state = "wall_thermite"
 			user << "\red The thermite melts the wall."
@@ -390,7 +390,7 @@
 			O.anchored = 1
 			O.density = 1
 			O.layer = 5
-			var/turf/simulated/floor/F = ReplaceWithFloor()
+			var/turf/simulated/floor/F = ReplaceWithPlating()
 			F.burn_tile()
 			F.icon_state = "wall_thermite"
 			user << "\red The thermite melts the wall."
@@ -464,7 +464,7 @@
 			O.anchored = 1
 			O.density = 1
 			O.layer = 5
-			var/turf/simulated/floor/F = ReplaceWithFloor()
+			var/turf/simulated/floor/F = ReplaceWithPlating()
 			F.burn_tile()
 			F.icon_state = "wall_thermite"
 			user << "\red The thermite melts the wall."
@@ -507,7 +507,7 @@
 			O.anchored = 1
 			O.density = 1
 			O.layer = 5
-			var/turf/simulated/floor/F = ReplaceWithFloor()
+			var/turf/simulated/floor/F = ReplaceWithPlating()
 			F.burn_tile()
 			F.icon_state = "wall_thermite"
 			user << "\red The thermite melts the wall."

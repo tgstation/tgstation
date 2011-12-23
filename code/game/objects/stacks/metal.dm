@@ -129,6 +129,7 @@ var/global/list/datum/stack_recipe/r_metal_recipes = list ( \
 	return
 
 /obj/item/stack/tile/steel/proc/build(turf/S as turf)
-	var/turf/simulated/floor/W = S.ReplaceWithFloor()
-	W.make_plating()
+	S.ReplaceWithPlating()
+//	var/turf/simulated/floor/W = S.ReplaceWithFloor()
+//	W.make_plating()
 	return
