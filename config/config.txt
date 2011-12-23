@@ -1,3 +1,11 @@
+## Alert levels
+ALERT_GREEN All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced.
+ALERT_BLUE_UPTO The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted.
+ALERT_BLUE_DOWNTO The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed.
+ALERT_RED_UPTO There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised.
+ALERT_RED_DOWNTO The self-destruct mechanism has been deactivated, there is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.
+ALERT_DELTA The station's self-destruct mechanism has been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
+
 ## log OOC channel
 LOG_OOC
 
