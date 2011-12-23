@@ -207,6 +207,7 @@
 			verbs += /client/proc/admin_cancel_shuttle
 			verbs += /obj/admins/proc/show_traitor_panel
 			verbs += /client/proc/cmd_admin_dress
+			verbs += /client/proc/cmd_admin_christmas
 			verbs += /client/proc/respawn_character
 			verbs += /client/proc/spawn_xeno
 			verbs += /proc/possess
@@ -340,6 +341,7 @@
 	verbs -= /client/proc/admin_cancel_shuttle
 	verbs -= /obj/admins/proc/show_traitor_panel
 	verbs -= /client/proc/cmd_admin_dress
+	verbs -= /client/proc/cmd_admin_christmas
 	verbs -= /client/proc/respawn_character
 	verbs -= /client/proc/spawn_xeno
 	verbs -= /proc/possess
