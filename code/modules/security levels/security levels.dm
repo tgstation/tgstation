@@ -4,6 +4,8 @@
 //2 = code red
 //3 = code delta
 
+//config.alert_desc_blue_downto
+
 /proc/set_security_level(var/level)
 	switch(level)
 		if("green")
@@ -20,7 +22,7 @@
 		switch(level)
 			if(SEC_LEVEL_GREEN)
 				world << "<font size=4 color='red'>Attention! security level lowered to green</font>"
-				world << "<font color='red'>All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced.</font>"
+				world << "<font color='red'>[config.alert_desc_green]</font>"
 				security_level = SEC_LEVEL_GREEN
 				for(var/obj/machinery/firealarm/FA in world)
 					if(FA.z == 1)
@@ -29,10 +31,10 @@
 			if(SEC_LEVEL_BLUE)
 				if(security_level < SEC_LEVEL_BLUE)
 					world << "<font size=4 color='red'>Attention! security level elevated to blue</font>"
-					world << "<font color='red'>The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted.</font>"
+					world << "<font color='red'>[config.alert_desc_blue_upto]</font>"
 				else
 					world << "<font size=4 color='red'>Attention! security level lowered to blue</font>"
-					world << "<font color='red'>The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed.</font>"
+					world << "<font color='red'>[config.alert_desc_blue_downto]</font>"
 				security_level = SEC_LEVEL_BLUE
 				for(var/obj/machinery/firealarm/FA in world)
 					if(FA.z == 1)
@@ -41,10 +43,10 @@
 			if(SEC_LEVEL_RED)
 				if(security_level < SEC_LEVEL_RED)
 					world << "<font size=4 color='red'>Attention! Code red!</font>"
-					world << "<font color='red'>There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised.</font>"
+					world << "<font color='red'>[config.alert_desc_red_upto]</font>"
 				else
 					world << "<font size=4 color='red'>Attention! Code red!</font>"
-					world << "<font color='red'>The self-destruct mechanism has been deactivated, there is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.</font>"
+					world << "<font color='red'>[config.alert_desc_red_downto]</font>"
 				security_level = SEC_LEVEL_RED
 
 				/*	- At the time of commit, setting status displays didn't work properly
@@ -58,7 +60,7 @@
 						FA.overlays += image('monitors.dmi', "overlay_red")
 			if(SEC_LEVEL_DELTA)
 				world << "<font size=4 color='red'>Attention! Delta security level reached!</font>"
-				world << "<font color='red'>The ship's self-destruct mechanism has been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.</font>"
+				world << "<font color='red'>[config.alert_desc_delta]</font>"
 				security_level = SEC_LEVEL_DELTA
 				for(var/obj/machinery/firealarm/FA in world)
 					if(FA.z == 1)
