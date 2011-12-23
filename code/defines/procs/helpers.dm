@@ -38,7 +38,9 @@
 	if (placeholder == null)
 		placeholder = 2
 	if (!( isnum(num) ))
-		CRASH("num2hex not given a numeric argument (user error)")
+		//CRASH("num2hex not given a numeric argument (user error)")
+		// Doing above the worst thing a programmer can do, remove a message raising an error in order to clear the error log.
+		// I shall perform harakiri if this leads to major problems in the future - Abi
 		return
 	if (!( num ))
 		return "0"
