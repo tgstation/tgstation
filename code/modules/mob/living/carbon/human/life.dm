@@ -1034,7 +1034,7 @@
 							continue
 						if(air_master.current_cycle%3==1)
 							if(!M.nodamage)
-								M.bruteloss += 5
+								M.adjustBruteLoss(5)
 							nutrition += 10
 
 		handle_changeling()

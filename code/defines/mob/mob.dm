@@ -11,18 +11,26 @@
 	//MOB overhaul
 
 	//Not in use yet
-//	var/obj/organstructure/organStructure = null
+	var/obj/organstructure/organStructure = null
 
-	//Vars that have been relocated.
+	//Vars that have been relocated to organStructure
+	//Vars that have been relocated to organStructure ++END
 
-//	var/uses_hud = 0
+
+
+	//Vars that should only be accessed via procs
 	var/bruteloss = 0.0//Living
 	var/oxyloss = 0.0//Living
 	var/toxloss = 0.0//Living
 	var/fireloss = 0.0//Living
 	var/cloneloss = 0//Carbon
 	var/brainloss = 0//Carbon
+	//Vars that should only be accessed via procs ++END
 
+
+
+
+//	var/uses_hud = 0
 	var/obj/screen/flash = null
 	var/obj/screen/blind = null
 	var/obj/screen/hands = null

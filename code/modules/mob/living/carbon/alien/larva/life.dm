@@ -274,7 +274,7 @@
 				if(health >= 25)
 					adjustToxLoss(5)
 				else
-					bruteloss -= 5
+					adjustBruteLoss(-5)
 					adjustFireLoss(-5)
 
 			return
@@ -508,5 +508,5 @@
 							continue
 						if(air_master.current_cycle%3==1)
 							if(!M.nodamage)
-								M.bruteloss += 5
+								M.adjustBruteLoss(5)
 							nutrition += 10

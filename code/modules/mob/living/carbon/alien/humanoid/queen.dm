@@ -71,7 +71,7 @@
 			if(health >= 250)
 				adjustToxLoss(20)
 			else
-				bruteloss -= 5
+				adjustBruteLoss(-5)
 				adjustFireLoss(-5)
 
 	handle_regular_status_updates()
