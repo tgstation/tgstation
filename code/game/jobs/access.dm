@@ -223,7 +223,7 @@
 		if("Mime")
 			return list(access_maint_tunnels, access_mime, access_theatre)
 		if("Chef")
-			return list(access_kitchen, access_morgue)
+			return list(access_kitchen)
 		if("Roboticist")
 			return list(access_robotics, access_tech_storage, access_maint_tunnels)
 		if("Cargo Technician")
