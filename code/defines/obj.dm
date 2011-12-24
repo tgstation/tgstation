@@ -264,7 +264,7 @@
 	var/burning = null
 	var/hitsound = null
 	var/w_class = 3.0
-	var/wielded = 0
+	var/wielded = 0 // 1 if item is two handed and grabbed with two hands
 	var/twohanded = 0 // Two handed and wielded off by default, nyoro~n -Agouri
 	var/force_unwielded = 0
 	var/force_wielded = 0

@@ -73,8 +73,16 @@
 		if(isrobot(user))
 			return
 
-		else if (!isnull(I)) // As per code/game/atom_procs.dm, this shouldn't even be required, but for some reason is. -- Abi79
+		else
+			if(isnull(I)) // Added these calls to CRASH to diagnose a runtime error that may be one of the causes of erasure errors --Abi79
+				CRASH("disposal/attackby() was called, but I was nulled before calling user.drop_item()")
+
+			var/debug_item_name = I.name
+
 			user.drop_item()
+
+			if(isnull(I))
+				CRASH("disposal/attackby() was called with [debug_item_name] as I, but I was nulled after calling user.drop_item()")
 
 			I.loc = src
 			user << "You place \the [I] into the [src]."
