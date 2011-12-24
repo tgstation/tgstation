@@ -147,14 +147,14 @@
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"
 	desc = "Designed for ease of access to the shards during a fight, as to not let a single enemy spirit slip away"
-	icon_state = "utilitybelt"
-	item_state = "utility"//Could likely use a better one.
+	icon_state = "soulstonebelt"
+	item_state = "soulstonebelt"
 	storage_slots = 6
 	can_hold = list(
 		"/obj/item/device/soulstone"
 		)
 
-/obj/item/weapon/storage/belt/utility/full/New()
+/obj/item/weapon/storage/belt/soulstone/New()
 	..()
 	new /obj/item/device/soulstone(src)
 	new /obj/item/device/soulstone(src)
