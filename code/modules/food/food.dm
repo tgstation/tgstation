@@ -1109,7 +1109,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/monkeysdelight
 	name = "monkey's Delight"
 	desc = "Eeee Eee!"
-	icon_state = "monkiesdelight"
+	icon_state = "monkeysdelight"
 	trash = "tray"
 	New()
 		..()
