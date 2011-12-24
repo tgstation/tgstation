@@ -32,9 +32,9 @@
 			paralysis = max(min(paralysis, 1), 0)
 			weakened = max(min(weakened, 15), 0)
 			sleeping = max(min(sleeping, 1), 0)
-			bruteloss = max(getBruteLoss(), 0)
-			toxloss = 0
-			oxyloss = 0
+			setBruteLoss(max(getBruteLoss(), 0))
+			setToxLoss(0)
+			setOxyLoss(0)
 			adjustFireLoss(0)
 
 		use_power()

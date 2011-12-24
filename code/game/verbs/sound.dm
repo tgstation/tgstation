@@ -14,3 +14,18 @@
 
 			M << "You will now [M.client.midis? "start":"stop"] receiving any sounds uploaded by admins[M.client.midis? "":", and any current midis playing have been disabled"]."
 		return
+
+
+
+/mob/verb/toggletitlemusic()
+	set category = "Special Verbs"
+	set name = "Toggle Pregame Music"
+	set desc = "Stops the pregame lobby music from playing."
+
+	if(istype(usr,/mob/new_player))
+		var/mob/M = usr
+
+		if(M.client)
+			M << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jamsz
+
+		return
