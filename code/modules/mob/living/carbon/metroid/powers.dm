@@ -76,31 +76,16 @@
 				if(Victim.health <= 0)
 					Victim.adjustToxLoss(rand(2,4))
 
-				if(getToxLoss() > 0)
-					adjustToxLoss(-10)
-
-				if(getOxyLoss() > 0)
-					oxyloss = max(0, getOxyLoss()-10)
-
-				if(getBruteLoss() > 0)
-					bruteloss = max(0, getBruteLoss()-10)
-
-				if(getFireLoss() > 0)
-					adjustFireLoss(-10)
-
-				if(getCloneLoss() > 0)
-					adjustCloneLoss(-10)
+				adjustToxLoss(-10)
+				adjustOxyLoss(-10)
+				adjustBruteLoss(-10)
+				adjustFireLoss(-10)
+				adjustCloneLoss(-10)
 
 				if(Victim)
 					for(var/mob/living/carbon/metroid/Metroid in view(1,M))
 						if(Metroid.Victim == M && Metroid != src)
 							Metroid.Feedstop()
-
-				if(getToxLoss()<0) adjustToxLoss(0)
-				if(getOxyLoss()<0) adjustOxyLoss(0)
-				if(getBruteLoss()<0) adjustBruteLoss(0)
-				if(getFireLoss()<0) adjustFireLoss(0)
-				if(getCloneLoss()<0) adjustCloneLoss(0)
 
 				nutrition += rand(10,25)
 				if(nutrition >= lastnut + 50)

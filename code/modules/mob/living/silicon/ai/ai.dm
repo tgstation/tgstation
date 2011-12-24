@@ -190,7 +190,7 @@
 
 /mob/living/silicon/ai/blob_act()
 	if (stat != 2)
-		bruteloss += 60
+		adjustBruteLoss(60)
 		updatehealth()
 		return 1
 	return 0
@@ -266,7 +266,7 @@
 		M.show_message(text("\red [] has been hit by []", src, O), 1)
 		//Foreach goto(19)
 	if (health > 0)
-		bruteloss += 30
+		adjustBruteLoss(30)
 		if ((O.icon_state == "flaming"))
 			adjustFireLoss(40)
 		updatehealth()
@@ -302,7 +302,7 @@
 						O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
 				if(prob(8))
 					flick("noise", flash)
-				bruteloss += damage
+				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(loc, 'slashmiss.ogg', 25, 1, -1)

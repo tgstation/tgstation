@@ -100,7 +100,7 @@
 		M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (health > 0)
 		var/shielded = 0
-		bruteloss += 30
+		adjustBruteLoss(30)
 		if ((O.icon_state == "flaming" && !( shielded )))
 			adjustFireLoss(40)
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
@@ -115,7 +115,7 @@
 				O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
 			var/damage = rand(1, 5)
 			if (mutations & HULK) damage += 10
-			bruteloss += damage
+			adjustBruteLoss(damage)
 			updatehealth()
 
 			for(var/datum/disease/D in M.viruses)
@@ -138,7 +138,7 @@
 				for(var/mob/O in viewers(src, null))
 					O.show_message("\red <B>[M.name] has bit [name]!</B>", 1)
 				var/damage = rand(1, 5)
-				bruteloss += damage
+				adjustBruteLoss(damage)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 				for(var/datum/disease/D in M.viruses)
 					if(istype(D, /datum/disease/jungle_fever))
@@ -194,7 +194,7 @@
 								if ((O.client && !( O.blinded )))
 									O.show_message(text("\red <B>[] has knocked out [name]!</B>", M), 1)
 							return
-				bruteloss += damage
+				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(loc, 'punchmiss.ogg', 25, 1, -1)
@@ -268,7 +268,7 @@
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has slashed [name]!</B>", M), 1)
-				bruteloss += damage
+				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(loc, 'slashmiss.ogg', 25, 1, -1)
@@ -309,7 +309,7 @@
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
-			bruteloss += damage
+			adjustBruteLoss(damage)
 			updatehealth()
 	return
 
@@ -335,7 +335,7 @@
 		else
 			damage = rand(5, 35)
 
-		bruteloss += damage
+		adjustBruteLoss(damage)
 
 		if(M.powerlevel > 0)
 			var/stunprob = 10
@@ -544,7 +544,7 @@
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 		if(2.0)
 			if (stat != 2)
-				bruteloss += 60
+				adjustBruteLoss(60)
 				adjustFireLoss(60)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 		if(3.0)

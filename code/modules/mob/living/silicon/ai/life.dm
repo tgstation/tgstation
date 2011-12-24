@@ -82,7 +82,7 @@
 						spawn(1)
 							while (src.getOxyLoss()>0 && stat!=2)
 								sleep(50)
-								src.oxyloss-=1
+								src.adjustOxyLoss(-1)
 							src.oxyloss = 0
 						return
 					else if (src:aiRestorePowerRoutine==3)
@@ -91,8 +91,7 @@
 						spawn(1)
 							while (src.getOxyLoss()>0 && stat!=2)
 								sleep(50)
-								src.oxyloss-=1
-							src.oxyloss = 0
+								src.adjustOxyLoss(-1)
 						return
 				else
 

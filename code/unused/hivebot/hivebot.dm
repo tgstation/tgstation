@@ -34,7 +34,7 @@
 
 /mob/living/silicon/hivebot/blob_act()
 	if (src.stat != 2)
-		src.bruteloss += 60
+		src.adjustBruteLoss(60)
 		src.updatehealth()
 		return 1
 	return 0
@@ -183,8 +183,7 @@
 /mob/living/silicon/hivebot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
 		if (W:remove_fuel(0))
-			src.bruteloss -= 30
-			if(src.getBruteLoss() < 0) src.bruteloss = 0
+			src.adjustBruteLoss(-30)
 			src.updatehealth()
 			src.add_fingerprint(user)
 			for(var/mob/O in viewers(user, null))
@@ -227,7 +226,7 @@
 				O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
 			if(prob(8))
 				flick("noise", src.flash)
-			src.bruteloss += damage
+			src.adjustBruteLoss(damage)
 			src.updatehealth()
 		else
 			playsound(src.loc, 'slashmiss.ogg', 25, 1, -1)

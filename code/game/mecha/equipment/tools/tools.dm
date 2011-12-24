@@ -1071,8 +1071,7 @@
 		if(!M)
 			return
 		if(M.health > 0)
-			if(M.getOxyLoss() > 0)
-				M.adjustOxyLoss(-1)
+			M.adjustOxyLoss(-1)
 			M.updatehealth()
 		M.AdjustStunned(-4)
 		M.AdjustWeakened(-4)
