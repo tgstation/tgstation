@@ -52,6 +52,7 @@
 		sleep(2)
 		new /obj/item/clothing/under/jensen(src)
 		new /obj/item/clothing/suit/armor/hos/jensen(src)
+		new /obj/item/clothing/suit/armor/hos(src)
 		new /obj/item/clothing/head/helmet/HoS/dermal(src)
 		new /obj/item/device/radio/headset/heads/hos(src)
 		new /obj/item/weapon/shield/riot(src)
