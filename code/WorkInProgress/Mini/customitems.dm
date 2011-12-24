@@ -9,15 +9,21 @@ var/list/CustomItemList = list(
 	)
 
 /proc/EquipCustomItems(mob/living/carbon/human/M)
-	for(var/list/test in CustomItemList)
-		if(test[1] == M.ckey && test[2] == M.real_name)
-			var/path = test[3]
-			var/obj/item/item = new path()
-			if(istype(M.back,/obj/item/weapon/storage))
-				item.loc = M.back
+	for(var/list/Entry in CustomItemList)
+		if(Entry[1] == M.ckey && Entry[2] == M.real_name)
+			var/ok = 0  // 1 if the item was placed successfully
+			var/path = Entry[3]
+			var/obj/item/Item = new path()
+
+			if(istype(M.back,/obj/item/weapon/storage) && M.back:len < M.back:storage_slots) // Try to place it in something on the mob's back first
+				Item.loc = M.back
+				ok = 1
 			else
-				for(var/obj/item/weapon/storage/S in M.contents)
-					item.loc = S
-					return
-				message_admins("Attempted to give [M.real_name]([M.key]) a [item] but there was nowhere to put it!")
-				M << "You were meant to recieve a [item] but there was nowhere to put it. Sorry. :("
+				for(var/obj/item/weapon/storage/S in M.contents) // Try to place it in any item that can store stuff, on the mob.
+					if (S:len < S:storage_slots)
+						Item.loc = S
+						ok = 1
+						break
+
+			if (ok == 0) // Finally, since everything else failed, place it on the ground
+				Item.loc = get_turf(M.loc)
