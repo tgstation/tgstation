@@ -38,6 +38,10 @@
 		world << "\blue <B>Alert: The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"
 		world << sound('shuttlecalled.ogg')
 
+	if(explosive)
+		spawn(10)
+			explosion(src.loc, 3, 6, 12, 15)
+
 	for(var/obj/machinery/ai_status_display/O in world) //change status
 		spawn( 0 )
 		O.mode = 2

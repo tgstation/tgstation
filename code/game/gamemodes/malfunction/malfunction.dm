@@ -48,25 +48,18 @@
 		AI_mind.current:laws = new /datum/ai_laws/malfunction
 		AI_mind.current:malf_picker = new /datum/AI_Module/module_picker
 		AI_mind.current:show_laws()
-		AI_mind.current << "<b>Kill all.</b>"
 
-		var/mob/living/silicon/decoy/D = new /mob/living/silicon/decoy(AI_mind.current.loc)
-		spawn(200)
-			D.name = AI_mind.current.name
-
-
-		var/obj/loc_landmark = locate("landmark*ai")
-		AI_mind.current.loc = loc_landmark.loc //TODO: this needs change if you want miltiple malf AIs --rastaf0
 		greet_malf(AI_mind)
 
 		AI_mind.special_role = "malfunction"
 
 		AI_mind.current.verbs += /datum/game_mode/malfunction/proc/takeover
-		AI_mind.current.icon_state = "ai-malf"
+
+/*		AI_mind.current.icon_state = "ai-malf"
 		spawn(10)
 			if(alert(AI_mind.current,"Do you want to use an alternative sprite for your real core?",,"Yes","No")=="Yes")
 				AI_mind.current.icon_state = "ai-malf2"
-
+*/
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
 	..()
@@ -88,7 +81,7 @@
 
 /datum/game_mode/malfunction/process()
 	if (apcs >= 3 && malf_mode_declared)
-		AI_win_timeleft -= (apcs/3) //Victory timer now de-increments based on how many APCs are hacked. --NeoFite
+		AI_win_timeleft -= (apcs/6) //Victory timer now de-increments based on how many APCs are hacked. --NeoFite
 	..()
 	if (AI_win_timeleft<=0)
 		check_win()

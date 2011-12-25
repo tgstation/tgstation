@@ -58,7 +58,7 @@
 					loc = T.loc
 					if (istype(loc, /area))
 						//stage = 4
-						if (!loc.master.power_equip && isturf(src.loc))
+						if (!loc.master.power_equip && !istype(src.loc,/obj/item))
 							//stage = 5
 							blind = 1
 
@@ -71,6 +71,10 @@
 					src.sight |= SEE_OBJS
 					src.see_in_dark = 8
 					src.see_invisible = 2
+
+					var/area/home = get_area(src)
+					if(home.powered(EQUIP))
+						home.use_power(1000, EQUIP)
 
 					if (src:aiRestorePowerRoutine==2)
 						src << "Alert cancelled. Power has been restored without our assistance."
@@ -102,7 +106,7 @@
 					src.see_in_dark = 0
 					src.see_invisible = 0
 
-					if (((!loc.master.power_equip) || istype(T, /turf/space)) && isturf(src.loc))
+					if (((!loc.master.power_equip) || istype(T, /turf/space)) && !istype(src.loc,/obj/item))
 						if (src:aiRestorePowerRoutine==0)
 							src:aiRestorePowerRoutine = 1
 
