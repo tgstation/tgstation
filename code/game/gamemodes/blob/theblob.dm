@@ -40,6 +40,13 @@
 			processing_objects.Remove(src)
 		..()
 
+	//copy pasta from turf code, so flamers work on blob without having to pixelhunt
+	//might need an else for the ..()
+	DblClick()
+		if((usr.hand && istype(usr.l_hand, /obj/item/weapon/flamethrower)) || (!usr.hand && istype(usr.r_hand, /obj/item/weapon/flamethrower)))
+			var/turf/location = get_turf_loc(src)
+			location.DblClick()
+		return ..()
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		if((air_group && blobtype != "Shield") || (height==0))	return 1
