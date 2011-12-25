@@ -371,7 +371,12 @@
 			if(src.nodamage) return
 			var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
 			//adjustFireLoss(2.5*discomfort)
-			adjustFireLoss(5.0*discomfort)
+
+			if(exposed_temperature > bodytemperature)
+				adjustFireLoss(20.0*discomfort)
+
+			else
+				adjustFireLoss(5.0*discomfort)
 
 		handle_chemicals_in_body()
 
@@ -616,3 +621,5 @@
 			if (mind)
 				if (mind.special_role == "Changeling" && changeling)
 					changeling.chem_charges = between(0, (max((0.9 - (changeling.chem_charges / 50)), 0.1) + changeling.chem_charges), 50)
+					if ((changeling.geneticdamage > 0))
+						changeling.geneticdamage = changeling.geneticdamage-1

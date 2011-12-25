@@ -84,6 +84,13 @@ MOP
 		spawn(600)
 			src.reagents.add_reagent(refill, 10)
 
+
+	if((src.reagents.has_reagent("pacid")) || (src.reagents.has_reagent("lube"))) 	   				// Messages admins if someone sprays polyacid or space lube from a Cleaner bottle.
+		message_admins("[key_name_admin(user)] fired Polyacid/Space lube from a Cleaner bottle.")			// Polymorph
+		log_game("[key_name(user)] fired Polyacid/Space lube from a Cleaner bottle.")
+
+
+
 	return
 
 /obj/item/weapon/cleaner/examine()
@@ -175,6 +182,12 @@ MOP
 		var/refill = src.reagents.get_master_reagent_id()
 		spawn(600)
 			src.reagents.add_reagent(refill, 10)
+
+
+	if((src.reagents.has_reagent("pacid")) || (src.reagents.has_reagent("lube")))  				// Messages admins if someone sprays polyacid or space lube from a Chem Sprayer.
+		message_admins("[key_name_admin(user)] fired Polyacid/Space lube from a Chem Sprayer.")			// Polymorph
+		log_game("[key_name(user)] fired Polyacid/Space lube from a Chem Sprayer.")
+
 
 	return
 

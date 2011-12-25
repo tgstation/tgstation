@@ -15,7 +15,7 @@
 	adjustFireLoss(-getFireLoss())
 	for(var/datum/organ/external/O in organs)
 		if(istype(O, /datum/organ/external))
-			bruteloss += O.brute_dam
+			adjustBruteLoss(O.brute_dam)
 			adjustFireLoss(O.burn_dam)
 	return
 

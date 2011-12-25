@@ -116,9 +116,19 @@
 
 		handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
 			if(nodamage) return
-			var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
-			//adjustFireLoss(2.5*discomfort)
-			adjustFireLoss(5.0*discomfort)
+
+			if(exposed_temperature > bodytemperature)
+				var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
+				//adjustFireLoss(2.5*discomfort)
+				//adjustFireLoss(5.0*discomfort)
+				adjustFireLoss(20.0*discomfort)
+
+			else
+				var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
+				//adjustFireLoss(2.5*discomfort)
+				adjustFireLoss(5.0*discomfort)
+
+
 
 		handle_chemicals_in_body()
 

@@ -465,7 +465,7 @@
 	maturation = 7
 	production = 1
 	yield = 5
-	potency = -1
+	potency = 1
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
@@ -483,7 +483,7 @@
 	maturation = 15
 	production = 1
 	yield = 5
-	potency = -1
+	potency = 1
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
@@ -555,7 +555,7 @@
 	maturation = 6
 	production = 6
 	yield = 4
-	potency = 8
+	potency = 10
 	oneharvest = 0
 	growthstages = 5
 	plant_type = 1
@@ -573,7 +573,7 @@
 	maturation = 8
 	production = 6
 	yield = 2
-	potency = 20
+	potency = 10
 	oneharvest = 0
 	growthstages = 5
 	plant_type = 1
@@ -608,7 +608,7 @@
 	maturation = 7
 	production = 1
 	yield = -1
-	potency = -1
+	potency = 1
 	oneharvest = 1
 	growthstages = 4
 	plant_type = 1
@@ -626,7 +626,7 @@
 	maturation = 6
 	production = 1
 	yield = 2
-	potency = -1
+	potency = 1
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 1
@@ -644,7 +644,7 @@
 	maturation = 10
 	production = 1
 	yield = -1
-	potency = -1
+	potency = 1
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
@@ -1255,7 +1255,7 @@
 	icon_state = "chilipepper"
 	New()
 		..()
-		reagents.add_reagent("nutriment", round((potency / 20), 1))
+		reagents.add_reagent("nutriment", 1+round((potency / 25), 1))
 		reagents.add_reagent("capsaicin", 3+round(potency / 5, 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
@@ -1281,7 +1281,7 @@
 	icon_state = "soybeans"
 	New()
 		..()
-		reagents.add_reagent("nutriment", round((potency / 20), 1))
+		reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
@@ -1363,7 +1363,7 @@
 	icon_state = "wheat"
 	New()
 		..()
-		reagents.add_reagent("nutriment", round((potency / 20), 1))
+		reagents.add_reagent("nutriment", 1+round((potency / 25), 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
@@ -1374,7 +1374,7 @@
 	potency = 20
 	New()
 		..()
-		reagents.add_reagent("nutriment", round((potency / 20), 1))
+		reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
 		reagents.add_reagent("frostoil", 3+round(potency / 5, 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
@@ -1391,7 +1391,7 @@
 	potency = 10
 	New()
 		..()
-		reagents.add_reagent("nutriment", round((potency / 10), 1))
+		reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
 		reagents.add_reagent("imidazoline", 3+round(potency / 5, 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
@@ -1403,7 +1403,7 @@
 	potency = 10
 	New()
 		..()
-		reagents.add_reagent("nutriment", round((potency / 20), 1))
+		reagents.add_reagent("nutriment", 1)
 		reagents.add_reagent("amatoxin", 3+round(potency / 3, 1))
 		reagents.add_reagent("psilocybin", 1+round(potency / 25, 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
@@ -1422,7 +1422,7 @@
 	potency = 35
 	New()
 		..()
-		reagents.add_reagent("nutriment", round((potency / 20), 1))
+		reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
 		reagents.add_reagent("amatoxin", 13+round(potency / 3, 1))
 		reagents.add_reagent("psilocybin", 1+round(potency / 25, 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
@@ -1441,7 +1441,7 @@
 	potency = 15
 	New()
 		..()
-		reagents.add_reagent("nutriment", round((potency / 20), 1))
+		reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
 		reagents.add_reagent("psilocybin", 3+round(potency / 5, 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
@@ -1495,7 +1495,7 @@
 	icon_state = "chanterelle"
 	New()
 		..()
-		reagents.add_reagent("nutriment",round((potency / 20), 1))
+		reagents.add_reagent("nutriment",1+round((potency / 25), 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
@@ -1561,7 +1561,7 @@
 	var/maturation = 7
 	var/production = 7
 	var/yield = 2
-	var/potency = -1
+	var/potency = 1
 	var/plant_type = 0
 	New()
 		var/datum/reagents/R = new/datum/reagents(50)
@@ -1647,9 +1647,9 @@
 	seed = "/obj/item/seeds/nettleseed"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
+		reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
 		reagents.add_reagent("acid", round(potency, 1))
-		force = round((15*potency/50), 1)
+		force = round((5+potency/5), 1)
 
 /obj/item/weapon/grown/deathnettle // -- Skie
 	desc = "The \red glowing \black nettle incites \red<B>rage</B>\black in you just from looking at it!"
@@ -1668,9 +1668,9 @@
 	origin_tech = "combat=3"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
+		reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
 		reagents.add_reagent("pacid", round(potency, 1))
-		force = round((15*potency/25), 1)
+		force = round((5+potency/2.5), 1)
 
 // *************************************
 // Pestkiller defines for hydroponics
