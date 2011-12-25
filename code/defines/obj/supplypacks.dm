@@ -363,12 +363,24 @@
 /datum/supply_packs/mecha_ripley
 	name = "Circuit Crate (\"Ripley\" APLU)"
 	contains = list("/obj/item/weapon/book/manual/ripley_build_and_repair",
-					"/obj/item/mecha_parts/circuitboard/ripley/peripherals", //TEMPORARY due to lack of circuitboard printer
-					"/obj/item/mecha_parts/circuitboard/ripley/main") //TEMPORARY due to lack of circuitboard printer
+					"/obj/item/weapon/circuitboard/mecha/ripley/peripherals", //TEMPORARY due to lack of circuitboard printer
+					"/obj/item/weapon/circuitboard/mecha/ripley/main") //TEMPORARY due to lack of circuitboard printer
 	cost = 40
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "APLU \"Ripley\" Circuit Crate"
 	access = access_robotics
+
+/datum/supply_packs/mecha_odysseus
+	name = "Circuit Crate (\"Odysseus\")"
+	contains = list(
+						"/obj/item/weapon/circuitboard/mecha/odysseus/peripherals", //TEMPORARY due to lack of circuitboard printer
+						"/obj/item/weapon/circuitboard/mecha/odysseus/main" //TEMPORARY due to lack of circuitboard printer
+						)
+	cost = 40
+	containertype = "/obj/structure/closet/crate/secure"
+	containername = "\"Odysseus\" Circuit Crate"
+	access = access_robotics
+
 
 /datum/supply_packs/robotics
 	name = "Robotics Assembly Crate"

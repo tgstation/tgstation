@@ -346,7 +346,7 @@
 	icon_state = "ripley_harness"
 	origin_tech = "programming=2;materials=2;biotech=2;engineering=2"
 	construction_time = 200
-	construction_cost = list("metal"=30000,"glass"=10000)
+	construction_cost = list("metal"=25000,"glass"=10000)
 
 /obj/item/mecha_parts/part/odysseus_left_arm
 	name="Odysseus Left Arm"
@@ -354,7 +354,7 @@
 	icon_state = "ripley_l_arm"
 	origin_tech = "programming=2;materials=2;engineering=2"
 	construction_time = 150
-	construction_cost = list("metal"=20000)
+	construction_cost = list("metal"=15000)
 
 /obj/item/mecha_parts/part/odysseus_right_arm
 	name="Odysseus Right Arm"
@@ -362,7 +362,7 @@
 	icon_state = "ripley_r_arm"
 	origin_tech = "programming=2;materials=2;engineering=2"
 	construction_time = 150
-	construction_cost = list("metal"=20000)
+	construction_cost = list("metal"=15000)
 
 /obj/item/mecha_parts/part/odysseus_left_leg
 	name="Odysseus Left Leg"
@@ -370,7 +370,7 @@
 	icon_state = "ripley_l_leg"
 	origin_tech = "programming=2;materials=2;engineering=2"
 	construction_time = 150
-	construction_cost = list("metal"=2500)
+	construction_cost = list("metal"=20000)
 
 /obj/item/mecha_parts/part/odysseus_right_leg
 	name="Odysseus Right Leg"
@@ -378,7 +378,7 @@
 	icon_state = "ripley_r_leg"
 	origin_tech = "programming=2;materials=2;engineering=2"
 	construction_time = 150
-	construction_cost = list("metal"=2500)
+	construction_cost = list("metal"=20000)
 
 
 

@@ -522,6 +522,24 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/mecha/ripley/peripherals"
 
+		odysseus_main
+			name = "Circuit Design (\"Odysseus\" Central Control module)"
+			desc = "Allows for the construction of a \"Odysseus\" Central Control module."
+			id = "odysseus_main"
+			req_tech = list("programming" = 3,"biotech" = 2)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/mecha/odysseus/main"
+
+		odysseus_peri
+			name = "Circuit Design (\"Odysseus\" Peripherals Control module)"
+			desc = "Allows for the construction of a \"Odysseus\" Peripheral Control module."
+			id = "odysseus_peri"
+			req_tech = list("programming" = 3,"biotech" = 2)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/mecha/odysseus/peripherals"
+
 		gygax_main
 			name = "Circuit Design (\"Gygax\" Central Control module)"
 			desc = "Allows for the construction of a \"Gygax\" Central Control module."
