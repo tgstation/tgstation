@@ -116,3 +116,57 @@
 		if(dx*dx + dy*dy <= rsq)
 			turfs += T
 	return turfs
+
+
+/proc/get_mobs_in_view(var/R, var/atom/source)
+	// Returns a list of mobs in range of R from source. Used in radio and say code.
+
+	var/turf/T = get_turf(source)
+	var/list/hear = hearers(R, T)
+	var/list/V = view(R, T)
+
+	// Search for closets:
+	for(var/obj/structure/closet/C in V)
+		for(var/mob/M in C.contents)
+			if(M.client)
+				hear += M
+
+	// Cryos:
+	for(var/obj/machinery/atmospherics/unary/cryo_cell/C in V)
+		if(C.occupant)
+			if(C.occupant.client)
+				hear += C.occupant
+
+	// Intelicards
+	for(var/obj/item/device/aicard/C in V)
+		for(var/mob/living/silicon/ai/M in C)
+			if(M.client)
+				hear += M
+
+	// Brains/MMIs/pAIs
+	for(var/mob/living/carbon/brain/C in world)
+		if(get_turf(C) in V)
+			hear += C
+	for(var/mob/living/silicon/pai/C in world)
+		if(get_turf(C) in V)
+			hear += C
+
+	// Personal AIs
+	for(var/obj/item/device/paicard/C in V)
+		if(C.pai)
+			if(C.pai.client)
+				hear += C.pai
+
+	// Exosuits
+	for(var/obj/mecha/C in V)
+		if(C.occupant)
+			if(C.occupant.client)
+				hear += C.occupant
+
+	// Disposal Machines
+	for(var/obj/machinery/disposal/C in V)
+		for(var/mob/M in C.contents)
+			if(M.client)
+				hear += M
+
+	return hear

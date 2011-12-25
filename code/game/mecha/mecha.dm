@@ -72,6 +72,7 @@
 	radio.name = "[src] radio"
 	radio.icon = icon
 	radio.icon_state = icon_state
+	radio.subspace_transmission = 1
 	src.icon_state += "-open"
 	/*
 	src.air_contents.volume = gas_tank_volume //liters

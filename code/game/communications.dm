@@ -271,6 +271,7 @@ datum/signal
 		transmission_method = model.transmission_method
 		data = model.data
 		encryption = model.encryption
+		frequency = model.frequency
 
 	proc/debug_print()
 		if (source)

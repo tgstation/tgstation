@@ -356,6 +356,18 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	else
 		alert("Invalid mob")
 
+/client/proc/cmd_switch_radio()
+	set category = "Debug"
+	set name = "Switch Radio Mode"
+	set desc = "Toggle between normal radios and experimental radios. Have a coder present if you do this."
+
+	GLOBAL_RADIO_TYPE = !GLOBAL_RADIO_TYPE // toggle
+	log_admin("[key_name(src)] has turned the experimental radio system [GLOBAL_RADIO_TYPE ? "on" : "off"].")
+	message_admins("[key_name_admin(src)] has turned the experimental radio system [GLOBAL_RADIO_TYPE ? "on" : "off"].", 0)
+
+
+
+
 
 /client/proc/cmd_admin_dress(var/mob/living/carbon/human/M in world)
 	set category = "Fun"
