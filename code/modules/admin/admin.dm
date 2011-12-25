@@ -1882,14 +1882,24 @@
 
 				if(M.mind && M.mind.assigned_role && istype(M, /mob/living/carbon/human))	// Adds a column to Player Panel that shows their current job.
 					var/mob/living/carbon/human/H = M
+
 					if (H.wear_id)
-						var/obj/item/weapon/card/id/id = H.wear_id
+						var/obj/item/weapon/card/id/id
+
+						if(istype(H.wear_id, /obj/item/weapon/card/id))
+							id = H.wear_id									// The ID is on the ID slot
+						else if(istype(H.wear_id, /obj/item/device/pda))
+							var/obj/item/device/pda/PDA = H.wear_id
+							id = PDA.id										// The ID is contained inside the PDA
+
 						if(M.mind.assigned_role == id.assignment)			// Polymorph
 							dat += "<td>[M.mind.assigned_role]</td>"
 						else
 							dat += "<td>[M.mind.assigned_role] ([id.assignment])"
+
 					else
 						dat += "<td>[M.mind.assigned_role] (No ID)</td>"
+
 				else
 					dat += "<td>No Assigned Role</td>"
 
