@@ -31,6 +31,8 @@
 	if (!message)
 		return
 
+	log_say("[name]/[key] : [message]")
+
 	if (length(message) >= 1)
 		if (miming && copytext(message, 1, 2) != "*")
 			return
@@ -459,9 +461,6 @@
 			sleep(11)
 			del(B)
 		*/
-
-
-	log_say("[name]/[key] : [message]")
 
 
 
