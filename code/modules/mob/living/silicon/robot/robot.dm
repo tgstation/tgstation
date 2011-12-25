@@ -579,6 +579,17 @@
 
 	return
 
+/mob/living/silicon/robot/attack_animal(mob/living/simple_animal/M as mob)
+	if(M.melee_damage_upper == 0)
+		M.emote("[M.friendly] [src]")
+	else
+		for(var/mob/O in viewers(src, null))
+			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		adjustBruteLoss(damage)
+		updatehealth()
+
+
 /mob/living/silicon/robot/attack_hand(mob/user)
 
 	add_fingerprint(user)
