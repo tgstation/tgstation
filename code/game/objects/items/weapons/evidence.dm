@@ -33,11 +33,14 @@
 	desc = "An evidence bag containing \a [O]. [O.desc]"
 
 /obj/item/weapon/evidencebag/attack_self(mob/user as mob)
-	var/obj/item/I = src.contents[1]
-	user << "You take the [I] out of the [src]."
-	I.loc = user.loc
-	src.underlays -= I
-	icon_state = "evidenceobj"
+	if (src.contents.len > 0)
+		var/obj/item/I = src.contents[1]
+		user << "You take the [I] out of the [src]."
+		I.loc = user.loc
+		src.underlays -= I
+		icon_state = "evidenceobj"
+	else
+		user << "The [src] is empty."
 
 /obj/item/weapon/storage/box/evidence
 	name = "evidence bag box"

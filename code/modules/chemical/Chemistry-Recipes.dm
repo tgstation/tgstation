@@ -526,9 +526,33 @@ datum
 
 /////////////////////////////////////METROID CORE REACTIONS ///////////////////////////////
 
+		metroidpepper
+			name = "Metroid Condensedcapaicin"
+			id = "m_condensedcapaicin"
+			result = "condensedcapsaicin"
+			required_reagents = list("sugar" = 1)
+			result_amount = 1
+			required_container = /obj/item/metroid_core
+			required_other = 1
+		metroidfrost
+			name = "Metroid Frost Oil"
+			id = "m_frostoil"
+			result = "frostoil"
+			required_reagents = list("water" = 1)
+			result_amount = 1
+			required_container = /obj/item/metroid_core
+			required_other = 1
+		metroidglycerol
+			name = "Metroid Glycerol"
+			id = "m_glycerol"
+			result = "glycerol"
+			required_reagents = list("blood" = 1)
+			result_amount = 1
+			required_container = /obj/item/metroid_core
+			required_other = 1
 
 		metroid_explosion
-			name = "Explosion"
+			name = "Metroid Explosion"
 			id = "m_explosion"
 			result = null
 			required_reagents = list("blood" = 1)
@@ -633,9 +657,10 @@ datum
 					playsound(TO, 'phasein.ogg', 100, 1)
 
 					var/list/flashers = list()
-					for(var/mob/living/carbon/M in viewers(TO, null))
-						flick("e_flash", M.flash) // flash dose faggots
-						flashers += M
+					for(var/mob/living/carbon/human/M in viewers(TO, null))
+						if(M:eyecheck() <= 0)
+							flick("e_flash", M.flash) // flash dose faggots
+							flashers += M
 
 					var/y_distance = TO.y - FROM.y
 					var/x_distance = TO.x - FROM.x
@@ -677,8 +702,9 @@ datum
 
 				playsound(get_turf_loc(holder.my_atom), 'phasein.ogg', 100, 1)
 
-				for(var/mob/living/carbon/M in viewers(get_turf_loc(holder.my_atom), null))
-					flick("e_flash", M.flash)
+				for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))
+					if(M:eyecheck() <= 0)
+						flick("e_flash", M.flash)
 
 				for(var/i = 1, i <= created_volume, i++)
 					var/chosen = pick(critters)
@@ -702,8 +728,9 @@ datum
 
 				playsound(get_turf_loc(holder.my_atom), 'phasein.ogg', 100, 1)
 
-				for(var/mob/living/carbon/M in viewers(get_turf_loc(holder.my_atom), null))
-					flick("e_flash", M.flash)
+				for(var/mob/living/carbon/human/M in viewers(get_turf_loc(holder.my_atom), null))
+					if(M:eyecheck() <= 0)
+						flick("e_flash", M.flash)
 
 				for(var/i = 1, i <= created_volume, i++)
 					var/chosen = pick(borks)

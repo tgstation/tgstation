@@ -1008,7 +1008,7 @@
 				spawn(5)
 					var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 					user << "\blue You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units."
-					if (reagents.total_volume >= reagents.maximum_volume && mode==SYRINGE_INJECT)
+					if (reagents.total_volume <= 0 && mode==SYRINGE_INJECT)
 						mode = SYRINGE_DRAW
 						update_icon()
 
@@ -1839,7 +1839,7 @@
 	icon_state = null
 	item_state = "atoxinbottle"
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15)
+	possible_transfer_amounts = list(5,10,15,25,30)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	volume = 30
 
@@ -2078,7 +2078,25 @@
 	desc = "A golden cup. It will be presented to a winner of tournament 26 june and name of the winner will be graved on it."
 
 //Syringes
-/obj/item/weapon/reagent_containers/syringe/robot
+/obj/item/weapon/reagent_containers/syringe/robot/antitoxin
+	name = "Syringe (anti-toxin)"
+	desc = "Contains anti-toxins."
+	New()
+		..()
+		reagents.add_reagent("anti_toxin", 15)
+		mode = SYRINGE_INJECT
+		update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/robot/inaprovaline
+	name = "Syringe (inaprovaline)"
+	desc = "Contains inaprovaline - used to stabilize patients."
+	New()
+		..()
+		reagents.add_reagent("inaprovaline", 15)
+		mode = SYRINGE_INJECT
+		update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/robot/mixed
 	name = "Syringe (mixed)"
 	desc = "Contains inaprovaline & anti-toxins."
 	New()
@@ -2094,6 +2112,7 @@
 	New()
 		..()
 		reagents.add_reagent("inaprovaline", 15)
+		mode = SYRINGE_INJECT
 		update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/antitoxin
@@ -2102,6 +2121,7 @@
 	New()
 		..()
 		reagents.add_reagent("anti_toxin", 15)
+		mode = SYRINGE_INJECT
 		update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/antiviral
@@ -2110,12 +2130,14 @@
 	New()
 		..()
 		reagents.add_reagent("spaceacillin", 15)
+		mode = SYRINGE_INJECT
 		update_icon()
 
 /obj/item/weapon/reagent_containers/ld50_syringe/choral
 	New()
 		..()
 		reagents.add_reagent("chloralhydrate", 50)
+		mode = SYRINGE_INJECT
 		update_icon()
 
 ////////////////////////////////////////////////////////////////////////////////

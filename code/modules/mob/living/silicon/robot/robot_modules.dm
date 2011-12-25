@@ -56,15 +56,9 @@
 		..()
 		src.modules += new /obj/item/borg/sight/hud/med(src)
 		src.modules += new /obj/item/device/healthanalyzer(src)
-
-		for(var/i = 1 to 3)
-			var/obj/item/weapon/reagent_containers/syringe/S = new /obj/item/weapon/reagent_containers/syringe(src)
-			switch(i)
-				if(1)	S.name = "Syringe-(Inaprovaline)"
-				if(2)	S.name = "Syringe-(Anti-Toxin)"
-				if(3)	S.name = "Syringe-(Mixed)"
-			src.modules += S
-
+		src.modules += new /obj/item/weapon/reagent_containers/syringe/robot/antitoxin(src)
+		src.modules += new /obj/item/weapon/reagent_containers/syringe/robot/inaprovaline(src)
+		src.modules += new /obj/item/weapon/reagent_containers/syringe/robot/mixed(src)
 		src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
 		src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
 		src.modules += new /obj/item/weapon/reagent_containers/glass/bottle/robot/inaprovaline(src)
