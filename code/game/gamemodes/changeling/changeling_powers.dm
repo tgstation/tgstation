@@ -193,11 +193,18 @@
 		usr << "\red We don't have enough stored chemicals to do that!"
 		return
 
+	if(usr.changeling.geneticdamage != 0)
+		usr << "Our genes are still mending themselves!  We cannot transform!"
+		return
+
 	usr.changeling.chem_charges--
 
 	usr.remove_changeling_powers()
 
 	usr.visible_message(text("\red <B>[usr] transforms!</B>"))
+
+	usr.changeling.geneticdamage = 30
+	usr << "Our genes cry out!"
 
 	var/list/implants = list() //Try to preserve implants.
 	for(var/obj/item/weapon/W in usr)
@@ -383,7 +390,7 @@
 		//usr.health = 100
 		//usr.updatehealth()
 		var/mob/living/M = src
-		M.heal_overall_damage(1000, 1000)
+		M.heal_overall_damage(M.getBruteLoss(), M.getFireLoss())
 		usr.reagents.clear_reagents()
 		usr.lying = 0
 		usr.canmove = 1

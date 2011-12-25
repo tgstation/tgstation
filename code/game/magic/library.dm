@@ -77,7 +77,7 @@
 		var/list/catbooks = new()
 		// get books in category
 		for(var/datum/archived_book/B in books)
-			if(category && !findtext(category, B.category))
+			if(!category || (category != B.category))
 				continue;
 			catbooks += B
 			world << "cat [category]: [B.title]"
@@ -435,7 +435,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 						continue;
 					if(title && !findtext(title, book.title))
 						continue;
-					if(category && !findtext(category, book.category))
+					if(!category || (category != "Any" && category != book.category))
 						continue;
 					dat += "<tr><td>[book.author]</td><td>[book.title]</td><td>[book.category]</td><td>[book.id]</td></tr>"
 				dat += "</table><BR>"
