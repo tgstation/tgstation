@@ -136,6 +136,7 @@ obj/machinery/computer/forensic_scanning
 						scanning = I.contents[1]
 						scanning.loc = src
 						I.underlays -= scanning
+						I.icon_state = "evidenceobj"
 					else
 						scanning = I
 						M.drop_item()

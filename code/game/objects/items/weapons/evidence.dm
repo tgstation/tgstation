@@ -23,6 +23,9 @@
 	if(!(O && istype(O)) || O.anchored == 1)
 		user << "You can't put that inside the [src]!"
 		return ..()
+	if(O in user)
+		user << "You are wearing that."
+		return
 	if(src.contents.len > 0)
 		user << "The [src] already has something inside it."
 		return ..()
