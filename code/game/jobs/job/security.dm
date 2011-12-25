@@ -71,9 +71,8 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_sec(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
-		H.equip_if_possible(new /obj/item/weapon/storage/box/evidence(H.back), H.slot_in_backpack)
-		H.equip_if_possible(new /obj/item/weapon/reagent_containers/food/drinks/dflask(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/clothing/under/det(H), H.slot_w_uniform)
+		H.equip_if_possible(new /obj/item/clothing/suit/storage/det_suit(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/clothing/shoes/brown(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/detective(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/head/det_hat(H), H.slot_head)
@@ -82,10 +81,10 @@
 		H.equip_if_possible(CIG, H.slot_wear_mask)	*/
 		//Fuck that thing.  --SkyMarshal
 		H.equip_if_possible(new /obj/item/clothing/gloves/detective(H), H.slot_gloves)
-		H.equip_if_possible(new /obj/item/weapon/storage/fcard_kit(H.back), H.slot_in_backpack)
+		H.equip_if_possible(new /obj/item/weapon/storage/box/evidence(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/weapon/fcardholder(H), H.slot_in_backpack)
-		H.equip_if_possible(new /obj/item/clothing/suit/storage/det_suit(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/device/detective_scanner(H), H.slot_in_backpack)
+		H.equip_if_possible(new /obj/item/weapon/reagent_containers/food/drinks/dflask(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/weapon/zippo(H), H.slot_l_store)
 //		H.equip_if_possible(new /obj/item/weapon/reagent_containers/food/snacks/candy_corn(H), H.slot_h_store)
 //		No... just no. --SkyMarshal

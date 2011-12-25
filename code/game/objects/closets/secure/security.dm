@@ -105,6 +105,7 @@
 		new /obj/item/clothing/gloves/red(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/weapon/storage/belt/security(src)
+		new /obj/item/policetaperoll(src)
 		new /obj/item/weapon/flashbang(src)
 		new /obj/item/weapon/pepperspray(src)
 		new /obj/item/device/flash(src)
@@ -141,6 +142,7 @@
 		new /obj/item/weapon/clipboard(src)
 		new /obj/item/device/detective_scanner(src)
 		new /obj/item/weapon/pepperspray/small(src)
+		new /obj/item/policetaperoll(src)
 		new /obj/item/weapon/storage/box/evidence(src)
 		new /obj/item/weapon/reagent_containers/food/drinks/dflask(src)
 		return

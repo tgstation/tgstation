@@ -38,9 +38,10 @@
 		user << "You take the [I] out of the [src]."
 		I.loc = user.loc
 		src.underlays -= I
-		icon_state = "evidenceobj"
+		src.icon_state = "evidenceobj"
 	else
 		user << "The [src] is empty."
+		src.icon_state = "evidenceobj"
 
 /obj/item/weapon/storage/box/evidence
 	name = "evidence bag box"
@@ -51,7 +52,7 @@
 		new /obj/item/weapon/evidencebag(src)
 		new /obj/item/weapon/evidencebag(src)
 		new /obj/item/weapon/evidencebag(src)
-		new /obj/item/weapon/evidencebag(src)
-		new /obj/item/weapon/evidencebag(src)
+		new /obj/item/weapon/f_card(src)
+		new /obj/item/weapon/f_card(src)
 		..()
 		return
