@@ -1106,6 +1106,19 @@
 
 
 
+/mob/living/carbon/human/attack_animal(mob/living/simple_animal/M as mob)
+	if(M.melee_damage_upper == 0)
+		M.emote("[M.friendly] [src]")
+	else
+		for(var/mob/O in viewers(src, null))
+			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
+		var/armor = run_armor_check(affecting, "melee")
+		apply_damage(damage, BRUTE, affecting, armor)
+		if(armor >= 2)	return
+
 
 /mob/living/carbon/human/attack_metroid(mob/living/carbon/metroid/M as mob)
 	if(M.Victim) return // can't attack while eating!

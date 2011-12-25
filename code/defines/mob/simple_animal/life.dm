@@ -38,7 +38,15 @@
 	var/max_co2 = 5
 	var/min_n2 = 0
 	var/max_n2 = 0
-	var/unsuitable_atoms_damage = 2	//This damage is taken when atmos doesn't fit all the requirements above.
+	var/unsuitable_atoms_damage = 2	//This damage is taken when atmos doesn't fit all the requirements above
+
+
+	//LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly
+	var/melee_damage_lower = 0
+	var/melee_damage_upper = 0
+	var/attacktext = "attacks"
+	var/attack_sound = null
+	var/friendly = "nuzzles" //If the mob does no damage with it's attack
 
 /mob/living/simple_animal/New()
 	..()

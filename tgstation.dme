@@ -288,6 +288,7 @@
 #include "code\defines\mob\simple_animal\corgi.dm"
 #include "code\defines\mob\simple_animal\crab.dm"
 #include "code\defines\mob\simple_animal\life.dm"
+#include "code\defines\mob\simple_animal\shade.dm"
 #include "code\defines\obj\closet.dm"
 #include "code\defines\obj\clothing.dm"
 #include "code\defines\obj\computer.dm"

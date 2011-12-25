@@ -1,0 +1,22 @@
+/mob/living/simple_animal/shade
+	name = "Shade"
+	desc = "A bound spirit"
+	icon = 'mob.dmi'
+	icon_state = "shade"
+	icon_living = "shade"
+	icon_dead = "shade_dead"
+	max_health = 50
+	health = 50
+	speak_emote = list("wails", "screeches")
+	emote_hear = list("wails","screeches")
+	response_help  = "puts their hand through"
+	response_disarm = "flails at"
+	response_harm   = "punches the"
+	melee_damage_lower = 5
+	melee_damage_upper = 15
+	attacktext = "drains the life from"
+	minbodytemp = 0
+	maxbodytemp = 4000
+	min_oxy = 0
+	max_co2 = 0
+	max_tox = 0
