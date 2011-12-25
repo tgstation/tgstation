@@ -46,42 +46,28 @@ var/global/datum/controller/gameticker/ticker
 	while (!setup())
 
 /datum/controller/gameticker/proc/setup()
-
 	//Create and announce mode
 	if(master_mode=="secret")
 		src.hide_mode = 1
-
 	var/list/datum/game_mode/runnable_modes
-
 	if((master_mode=="random") || (master_mode=="secret"))
 		runnable_modes = config.get_runnable_modes()
-
 		if (runnable_modes.len==0)
 			current_state = GAME_STATE_PREGAME
 			world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
 			return 0
-
 		if(secret_force_mode != "secret")
 			var/datum/game_mode/M = config.pick_mode(secret_force_mode)
-
 			if(M && M.can_start())
 				src.mode = config.pick_mode(secret_force_mode)
-				CRASH("Or maybe this is the problem")
-
 		job_master.ResetOccupations()
-
 		if(!src.mode)
 			src.mode = pickweight(runnable_modes)
-			CRASH("Maybe this is the problem.")
-
 		if(src.mode)
 			var/mtype = src.mode.type
 			src.mode = new mtype
-			CRASH("This is the problem")
-
 	else
 		src.mode = config.pick_mode(master_mode)
-		CRASH("It does it here.")
 
 	if (!src.mode.can_start())
 		world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed. Reverting to pre-game lobby."
