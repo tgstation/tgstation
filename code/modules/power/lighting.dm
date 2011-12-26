@@ -58,7 +58,7 @@
 	icon_state = "lamp1"
 	base_state = "lamp"
 	fitting = "bulb"
-	brightness = 5
+	brightness = 7
 	desc = "A desk lamp"
 	light_type = /obj/item/weapon/light/bulb
 	var/switchon = 0		// independent switching for lamps - not controlled by area lightswitch

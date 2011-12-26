@@ -8,6 +8,7 @@
 	desc = "An empty evidence bag."
 	icon = 'storage.dmi'
 	icon_state = "evidenceobj"
+	w_class = 1
 
 /* buggy and stuff
 /obj/item/weapon/evidencebag/attackby(obj/item/weapon/O, mob/user as mob)
@@ -29,11 +30,24 @@
 	if(src.contents.len > 0)
 		user << "The [src] already has something inside it."
 		return ..()
+	if(istype(O.loc, /obj/item/weapon/storage))
+		user << "This is broke as hell."
+		return
+/*		var/obj/item/weapon/storage/U = O.loc
+		w_class = O.w_class
+		for(var/i, i < U.contents.len, i++)
+			if(O in U.contents[i])
+				U.contents[i] = null
+				O.loc = src
+				continue*/
 	user << "You put the [O] inside the [src]."
-	O.loc = src
 	icon_state = "evidence"
 	src.underlays += O
 	desc = "An evidence bag containing \a [O]. [O.desc]"
+	else
+		O.loc = src
+	return
+
 
 /obj/item/weapon/evidencebag/attack_self(mob/user as mob)
 	if (src.contents.len > 0)
@@ -41,10 +55,13 @@
 		user << "You take the [I] out of the [src]."
 		I.loc = user.loc
 		src.underlays -= I
+		w_class = 1
 		src.icon_state = "evidenceobj"
+		desc = "An empty evidence bag."
 	else
-		user << "The [src] is empty."
+		user << "[src] is empty."
 		src.icon_state = "evidenceobj"
+	return
 
 /obj/item/weapon/storage/box/evidence
 	name = "evidence bag box"

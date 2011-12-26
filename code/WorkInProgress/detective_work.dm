@@ -135,7 +135,7 @@ obj/machinery/computer/forensic_scanning
 					if(istype(I, /obj/item/weapon/evidencebag))
 						scanning = I.contents[1]
 						scanning.loc = src
-						I.underlays -= scanning
+						I.underlays = null
 						I.icon_state = "evidenceobj"
 					else
 						scanning = I

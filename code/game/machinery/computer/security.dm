@@ -232,7 +232,7 @@ What a mess.*/
 				Perp = new/list()
 				t1 = lowertext(t1)
 				for(var/datum/data/record/R in data_core.general)
-					var/temptext = R.fields["name"] + " " + R.fields["id"] + " " + R.fields["fingerprint"] + " " + R.fields["b_dna"]
+					var/temptext = R.fields["name"] + " " + R.fields["id"] + " " + R.fields["fingerprint"]
 					if(findtext(temptext,t1))
 						var/prelist = new/list(2)
 						prelist[1] = R
