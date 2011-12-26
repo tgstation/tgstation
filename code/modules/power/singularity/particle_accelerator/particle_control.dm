@@ -3,12 +3,12 @@
 	desc = "Part of a Particle Accelerator."
 	icon = 'particle_accelerator.dmi'
 	icon_state = "control_box"
-	anchored = 0
+	anchored = 1
 	density = 1
 	use_power = 0
 	idle_power_usage = 500
 	active_power_usage = 10000
-	construction_state = 0
+	construction_state = 4
 	active = 0
 	var
 		list/obj/structure/particle_accelerator/connected_parts
