@@ -220,8 +220,8 @@
 			if(T0C to (T0C + 100))
 				health = max(0, health - 1)
 		if(health <= 0)
-			name = "rotten meat"
 			desc = "A slab of meat. It looks rotten."
+			icon_state = "rottenmeat"
 			var/toxin_amount = reagents.get_reagent_amount("nutriment") * 3
 			reagents.add_reagent("toxin",toxin_amount)
 			processing_objects.Remove(src)
@@ -238,8 +238,8 @@
 			if(T0C to (T0C + 100))
 				health = max(0, health - 1)
 		if(health <= 0)
-			name = "rotten synthetic meat"
 			desc = "A slab of synthetic meat. It looks rotten."
+			icon_state = "rottenmeat"
 			var/toxin_amount = reagents.get_reagent_amount("nutriment") * 3
 			reagents.add_reagent("toxin",toxin_amount)
 			processing_objects.Remove(src)
@@ -275,8 +275,8 @@
 			if(T0C to (T0C + 100))
 				health = max(0, health - 1)
 		if(health <= 0)
-			name = "-rotten meat"
 			desc = "A slab of meat. It looks rotten."
+			icon_state = "rottenmeat"
 			var/toxin_amount = reagents.get_reagent_amount("nutriment") * 3
 			reagents.add_reagent("toxin",toxin_amount)
 			processing_objects.Remove(src)
