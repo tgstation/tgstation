@@ -10,6 +10,7 @@
 	required_enemies = 1
 
 	var
+		changeling_amount
 		const
 			prob_int_murder_target = 50 // intercept names the assassination target half the time
 			prob_right_murder_target_l = 25 // lower bound on probability of naming right assassination target
@@ -31,7 +32,8 @@
 			waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 			waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
-			const/changeling_amount = 4
+			changeling_min = 2 //lower bound on number of traitors, assuming there are this many players
+			changeling_max = 3 //upper bound on number of traitors
 
 /datum/game_mode/changeling/announce()
 	world << "<B>The current game mode is - Changeling!</B>"
@@ -39,6 +41,8 @@
 
 /datum/game_mode/changeling/pre_setup()
 	var/list/datum/mind/possible_changelings = get_players_for_role(BE_CHANGELING)
+
+	changeling_amount = rand(changeling_min, changeling_max)
 
 	for(var/datum/mind/player in possible_changelings)
 		for(var/job in restricted_jobs)//Removing robots from the list
