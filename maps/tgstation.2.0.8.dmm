@@ -4406,7 +4406,7 @@
 "bGL" = (/obj/machinery/computer/rdservercontrol,/obj/machinery/atmospherics/pipe/simple,/turf/simulated/floor{icon_state = "dark"},/area/toxins/server)
 "bGM" = (/obj/machinery/firealarm{dir = 1; pixel_y = -24},/obj/structure/stool/chair{dir = 8},/turf/simulated/floor{icon_state = "dark"},/area/toxins/server)
 "bGN" = (/turf/simulated/floor{icon_state = "dark"},/area/toxins/server)
-"bGO" = (/obj/machinery/atmospherics/unary/cold_sink/freezer{current_temperature = 80; dir = 1; on = 1},/turf/simulated/floor{icon_state = "dark"},/area/toxins/server)
+"bGO" = (/obj/machinery/atmospherics/unary/cold_sink/freezer{current_temperature = 80; dir = 1; on = 1},/obj/effect/sign/securearea{desc = "A warning sign which reads 'SERVER ROOM'."; name = "SERVER ROOM"; pixel_y = -28},/turf/simulated/floor{icon_state = "dark"},/area/toxins/server)
 "bGP" = (/obj/machinery/atmospherics/pipe/simple,/obj/structure/table,/obj/item/weapon/book/manual/robotics_cyborgs{pixel_y = 5},/turf/simulated/floor{icon_state = "dark"},/area/toxins/server)
 "bGQ" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/effect/sign/biohazard{pixel_x = 28},/turf/simulated/floor{icon_state = "white"},/area/medical/research{name = "Research Division"})
 "bGR" = (/obj/machinery/alarm{dir = 4; icon_state = "alarm0"; pixel_x = -22},/turf/simulated/floor{icon_state = "white"},/area/toxins/xenobiology)
