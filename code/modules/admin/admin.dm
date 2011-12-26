@@ -1968,7 +1968,7 @@
 
 	dat += "</table></body></html>"
 
-	usr << browse(dat, "window=players;size=540x480")
+	usr << browse(dat, "window=players;size=905x480")
 
 
 /obj/admins/proc/Jobbans()
