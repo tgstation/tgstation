@@ -96,11 +96,12 @@
 				src.throw_impact(A)
 				src.throwing = 0
 			if(isobj(A))
-				if(A.density)				// **TODO: Better behaviour for windows
-											// which are dense, but shouldn't always stop movement
+				if(A.density && !A.throwpass)	// **TODO: Better behaviour for windows
+												// which are dense, but shouldn't always stop movement
 					src.throw_impact(A)
 					src.throwing = 0
 
+/atom/var/throwpass = 0
 /atom/proc/throw_impact(atom/hit_atom)
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom

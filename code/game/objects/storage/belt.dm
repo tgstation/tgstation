@@ -116,7 +116,6 @@
 		"/obj/item/ammo_magazine",
 		"/obj/item/weapon/reagent_containers/food/snacks/donut",
 		"/obj/item/weapon/reagent_containers/food/snacks/jellydonut",
-
 		"/obj/item/device/radio",
 		"/obj/item/device/detective_scanner",
 		"/obj/item/device/pda",
@@ -131,5 +130,6 @@
 		"/obj/item/weapon/camera_test",
 		"/obj/item/weapon/cigpacket",
 		"/obj/item/weapon/zippo",
-		"/obj/item/device/taperecorder"
+		"/obj/item/device/taperecorder",
+		"/obj/item/weapon/evidencebag"
 		)

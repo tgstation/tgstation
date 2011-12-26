@@ -37,6 +37,23 @@
 	ce
 		color = "chief"			//Exists for washing machines. Is not different from black gloves in any way.
 
+/obj/item/clothing/gloves/detective
+	desc = "Made of well worn leather, these gloves are comfortable, useful, and stylish!"
+	name = "The Detective's Gloves"
+	icon_state = "black"
+	item_state = "bgloves"
+	color="brown"
+	siemens_coefficient = 0.30
+	protective_temperature = 1100
+
+/obj/item/clothing/gloves/hos
+	desc = "These gloves belong to the man in charge of the guns."
+	name = "Head of Security's Gloves"
+	icon_state = "black"
+	item_state = "bgloves"
+	color="brown"
+	siemens_coefficient = 0.30
+	protective_temperature = 1100
 
 /obj/item/clothing/gloves/cyborg
 	desc = "beep boop borp"
@@ -145,7 +162,6 @@
 	icon_state = "red"
 	item_state = "redgloves"
 	siemens_coefficient = 0.30
-
 	protective_temperature = 1100
 
 /obj/item/clothing/gloves/rainbow
