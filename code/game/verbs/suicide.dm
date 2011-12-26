@@ -20,9 +20,7 @@
 	if(alien_egg_flag)
 		src << "The alien inside you forces you to breathe, preventing you from suiciding."
 		return
-	if(mutantrace == "trappedsoul")
-		src << "You are already dead, your soul trapped and contained!"
-		return
+
 	if(confirm == "Yes")
 		suiciding = 1
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while

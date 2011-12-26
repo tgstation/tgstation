@@ -1667,3 +1667,9 @@
 	origin_tech = "materials=5"
 	rating = 3
 	m_amt = 80
+
+/obj/item/weapon/ectoplasm
+	name = "ectoplasm"
+	desc = "spooky"
+	icon = 'wizard.dmi'
+	icon_state = "ectoplasm"
