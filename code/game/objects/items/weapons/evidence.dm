@@ -44,8 +44,8 @@
 	icon_state = "evidence"
 	src.underlays += O
 	desc = "An evidence bag containing \a [O]. [O.desc]"
-	else
-		O.loc = src
+	O.loc = src
+	w_class = O.w_class
 	return
 
 
