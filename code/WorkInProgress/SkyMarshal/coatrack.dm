@@ -1,5 +1,5 @@
 /obj/machinery/coatrack/attack_hand(mob/user as mob)
-	switch(alert("What do you want from the coatrack?",,"Coat","Hat"))
+	switch(alert("What do you want from the coat rack?",,"Coat","Hat"))
 		if("Coat")
 			if(coat)
 				if(!user.get_active_hand())
