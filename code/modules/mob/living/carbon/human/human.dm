@@ -1886,7 +1886,7 @@ It can still be worn/put on as normal.
 			if ((target.health >= -99.0 && target.health < 0))
 				target.cpr_time = world.time
 				var/suff = min(target.getOxyLoss(), 7)
-				target.oxyloss -= suff
+				target.adjustOxyLoss(-suff)
 				target.updatehealth()
 				for(var/mob/O in viewers(source, null))
 					O.show_message(text("\red [] performs CPR on []!", source, target), 1)

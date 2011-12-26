@@ -337,7 +337,7 @@
 				if(health <= 20 && prob(1)) spawn(0) emote("gasp")
 
 				//if(!rejuv) oxyloss++
-				if(!reagents.has_reagent("inaprovaline")) oxyloss++
+				if(!reagents.has_reagent("inaprovaline")) adjustOxyLoss(1)
 
 				if(stat != 2)	stat = 1
 				Paralyse(5)

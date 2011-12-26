@@ -422,7 +422,7 @@ datum
 						M:drowsyness  = max(M:drowsyness, 20)
 					if(25 to INFINITY)
 						M.sleeping = 1
-						M.oxyloss = 0
+						M.adjustOxyLoss(-M.getOxyLoss())
 						M.SetWeakened(0)
 						M.SetStunned(0)
 						M.SetParalysis(0)
@@ -1206,7 +1206,7 @@ datum
 				if(M.stat == 2.0)
 					return
 				if(!M) M = holder.my_atom
-				M:oxyloss = 0
+				M.adjustOxyLoss(-M.getOxyLoss())
 				if(holder.has_reagent("lexorin"))
 					holder.remove_reagent("lexorin", 2)
 				..()

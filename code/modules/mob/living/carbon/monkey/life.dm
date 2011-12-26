@@ -254,7 +254,7 @@
 				return
 
 			if(!breath || (breath.total_moles() == 0))
-				oxyloss += 7
+				adjustOxyLoss(7)
 
 				oxygen_alert = max(oxygen_alert, 1)
 
@@ -282,7 +282,7 @@
 				if (O2_pp == 0)
 					O2_pp = 0.01
 				var/ratio = safe_oxygen_min/O2_pp
-				oxyloss += min(5*ratio, 7) // Don't fuck them up too fast (space only does 7 after all!)
+				adjustOxyLoss(min(5*ratio, 7)) // Don't fuck them up too fast (space only does 7 after all!)
 				oxygen_used = breath.oxygen*ratio/6
 				oxygen_alert = max(oxygen_alert, 1)
 			/*else if (O2_pp > safe_oxygen_max) 		// Too much oxygen (commented this out for now, I'll deal with pressure damage elsewhere I suppose)
@@ -292,7 +292,7 @@
 				oxygen_used = breath.oxygen*ratio/6
 				oxygen_alert = max(oxygen_alert, 1)*/
 			else 									// We're in safe limits
-				oxyloss = max(getOxyLoss()-5, 0)
+				adjustOxyLoss(-5)
 				oxygen_used = breath.oxygen/6
 				oxygen_alert = 0
 
@@ -304,9 +304,9 @@
 					co2overloadtime = world.time
 				else if(world.time - co2overloadtime > 120)
 					Paralyse(3)
-					oxyloss += 3 // Lets hurt em a little, let them know we mean business
+					adjustOxyLoss(3) // Lets hurt em a little, let them know we mean business
 					if(world.time - co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
-						oxyloss += 8
+						adjustOxyLoss(8)
 				if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
 					spawn(0) emote("cough")
 
@@ -418,7 +418,7 @@
 				if(src.health <= 20 && prob(1)) spawn(0) emote("gasp")
 
 				//if(!src.rejuv) src.oxyloss++
-				if(!src.reagents.has_reagent("inaprovaline")) src.oxyloss++
+				if(!src.reagents.has_reagent("inaprovaline")) src.adjustOxyLoss(1)
 
 				if(src.stat != 2)	src.stat = 1
 				Paralyse(5)

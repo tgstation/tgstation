@@ -305,7 +305,7 @@
 			if(!breath || (breath.total_moles() == 0))
 				if(reagents.has_reagent("inaprovaline"))
 					return
-				oxyloss += HUMAN_MAX_OXYLOSS
+				adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 
 				oxygen_alert = max(oxygen_alert, 1)
 
@@ -333,10 +333,10 @@
 					spawn(0) emote("gasp")
 				if(O2_pp > 0)
 					var/ratio = safe_oxygen_min/O2_pp
-					oxyloss += min(5*ratio, HUMAN_MAX_OXYLOSS) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
+					adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
 					oxygen_used = breath.oxygen*ratio/6
 				else
-					oxyloss += HUMAN_MAX_OXYLOSS
+					adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 				oxygen_alert = max(oxygen_alert, 1)
 			/*else if (O2_pp > safe_oxygen_max) 		// Too much oxygen (commented this out for now, I'll deal with pressure damage elsewhere I suppose)
 				spawn(0) emote("cough")
@@ -345,7 +345,7 @@
 				oxygen_used = breath.oxygen*ratio/6
 				oxygen_alert = max(oxygen_alert, 1)*/
 			else								// We're in safe limits
-				oxyloss = max(getOxyLoss()-5, 0)
+				adjustOxyLoss(max(getOxyLoss()-5, 0))
 				oxygen_used = breath.oxygen/6
 				oxygen_alert = 0
 
@@ -357,9 +357,9 @@
 					co2overloadtime = world.time
 				else if(world.time - co2overloadtime > 120)
 					Paralyse(3)
-					oxyloss += 3 // Lets hurt em a little, let them know we mean business
+					adjustOxyLoss(3) // Lets hurt em a little, let them know we mean business
 					if(world.time - co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
-						oxyloss += 8
+						adjustOxyLoss(8)
 				if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
 					spawn(0) emote("cough")
 
@@ -604,14 +604,9 @@
 				if(nutrition < 500) //so they can't store nutrition to survive without light forever
 					nutrition += light_amount
 				if(light_amount > 0) //if there's enough light, heal
-					if(getFireLoss())
-						heal_overall_damage(0,1)
-					if(getBruteLoss())
-						heal_overall_damage(1,0)
+					heal_overall_damage(1,1)
 					adjustToxLoss(-1)
-
-					if(getOxyLoss())
-						oxyloss--
+					adjustOxyLoss(-1)
 
 			if(overeatduration > 500 && !(mutations & FAT))
 				src << "\red You suddenly feel blubbery!"
@@ -677,7 +672,7 @@
 				if(health <= 20 && prob(1)) spawn(0) emote("gasp")
 
 				//if(!rejuv) oxyloss++
-				if(!reagents.has_reagent("inaprovaline")) oxyloss++
+				if(!reagents.has_reagent("inaprovaline")) adjustOxyLoss(1)
 
 				if(stat != 2)	stat = 1
 				Paralyse(5)
