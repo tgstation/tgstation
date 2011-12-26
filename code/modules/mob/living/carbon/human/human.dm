@@ -1094,10 +1094,6 @@
 		if (S.active)
 			shielded = 2
 			break
-	for (var/obj/item/weapon/displacer/D in src)
-		if (D.active)
-			shielded = 4
-			break
 
 	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_active)
 		shielded = 3
@@ -1117,8 +1113,6 @@
 					NinjaStealthActive(loc)
 				else
 					NinjaStealthMalf()
-		if(4)
-			overlays += image("icon" = 'effects.dmi', "icon_state" = "shield-old", "layer" = MOB_LAYER+1)
 		else
 			invisibility = 0
 
