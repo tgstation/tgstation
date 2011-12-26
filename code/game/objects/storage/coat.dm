@@ -33,10 +33,30 @@
 	user.client.screen -= src.closer
 	user.client.screen -= src.contents
 
-/obj/item/clothing/suit/storage/MouseDrop(atom/A)
-	if(istype(A,/mob/living/carbon))
-		src.view_inv(A)
-		src.orient_objs(7,7,9,7)
+/obj/item/clothing/suit/storage/MouseDrop(atom/over_object)
+	if(ishuman(usr))
+		var/mob/living/carbon/human/M = usr
+		if (!( istype(over_object, /obj/screen) ))
+			return ..()
+		playsound(src.loc, "rustle", 50, 1, -5)
+		if ((!( M.restrained() ) && !( M.stat ) && M.wear_suit == src))
+			if (over_object.name == "r_hand")
+				if (!( M.r_hand ))
+					M.u_equip(src)
+					M.r_hand = src
+			else
+				if (over_object.name == "l_hand")
+					if (!( M.l_hand ))
+						M.u_equip(src)
+						M.l_hand = src
+			M.update_clothing()
+			src.add_fingerprint(usr)
+			return
+		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
+			src.view_inv(over_object)
+			src.orient_objs(7,7,9,7)
+			return
+	return
 
 /obj/item/clothing/suit/storage/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(W.w_class > 2 || src.loc == W )
@@ -76,13 +96,13 @@
 /obj/item/clothing/suit/storage/proc/orient2hud(mob/user as mob)
 
 	if (src == user.l_hand)
-		src.orient_objs(3, 11, 3, 9)
+		src.orient_objs(3, 5, 3, 3)
 	else if (src == user.r_hand)
-		src.orient_objs(1, 11, 1, 9)
+		src.orient_objs(1, 5, 1, 3)
 	else if (istype(user,/mob/living/carbon/human) && src == user:wear_suit)
-		src.orient_objs(1, 11, 3, 11)
+		src.orient_objs(1, 3, 3, 3)
 	else
-		src.orient_objs(4, 10, 4, 8)
+		src.orient_objs(4, 4, 4, 2)
 	return
 
 /obj/item/clothing/suit/storage/proc/orient_objs(tx, ty, mx, my)
