@@ -53,7 +53,7 @@
 			src.add_fingerprint(usr)
 			return
 		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
-			src.view_inv(over_object)
+			src.view_inv(M)
 			src.orient_objs(7,7,9,7)
 			return
 	return
