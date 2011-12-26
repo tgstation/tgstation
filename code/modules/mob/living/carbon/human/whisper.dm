@@ -50,6 +50,8 @@
 			message = dd_replaceText(message, "u", "µ")
 			message = dd_replaceText(message, "b", "ß")
 
+	message = capitalize(message)
+
 	if (src.stuttering)
 		message = stutter(message)
 	if (src.slurring)
