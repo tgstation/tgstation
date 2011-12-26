@@ -118,6 +118,9 @@
 			del(src)
 			return
 
+		if ("Retired Admin")
+			holder.level = -3
+
 		else
 			del(holder)
 			return
@@ -270,6 +273,9 @@
 		if (holder.level >= -1)//Admin Observer
 			verbs += /client/proc/cmd_admin_say
 			verbs += /client/proc/cmd_admin_gib_self
+
+		if (holder.level == -3)//Retired Admin, skips banned
+			verbs += /client/proc/cmd_admin_say
 
 
 /client/proc/clear_admin_verbs()
