@@ -1,15 +1,20 @@
 /world/proc/load_mode()
 	var/text = file2text("data/mode.txt")
-	if (text)
+	if (length(text) > 0)
 		var/list/lines = dd_text2list(text, "\n")
 		if (lines[1])
 			master_mode = lines[1]
 			diary << "Saved mode is '[master_mode]'"
+	else
+		master_mode = "traitor" // Default mode, in case of errors
 
 /world/proc/save_mode(var/the_mode)
 	var/F = file("data/mode.txt")
 	fdel(F)
-	F << the_mode
+	if (length(the_mode) > 0)
+		F << the_mode
+	else
+		F << "traitor" // Default mode, in case of errors
 
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
