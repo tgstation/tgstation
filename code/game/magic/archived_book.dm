@@ -29,6 +29,32 @@ datum/book_manager/proc/freeid()
 
 	return id
 
+/client/proc/delbook()
+	set name = "Delete Book"
+	set desc = "Permamently deletes a book from the database."
+	set category = "Admin"
+	if(!src.holder)
+		src << "Only administrators may use this command."
+		return
+
+	var/isbn = input("ISBN number?", "Delete Book") as num | null
+	if(!isbn)
+		return
+
+	if(config.sql_enabled)
+		var/DBConnection/dbcon = new()
+		dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
+		if(!dbcon.IsConnected())
+			alert("Connection to Archive has been severed. Aborting.")
+		else
+			var/DBQuery/query = dbcon.NewQuery("DELETE FROM library WHERE id=[isbn]")
+			if(!query.Execute())
+				usr << query.ErrorMsg()
+			dbcon.Disconnect()
+	else
+		book_mgr.remove(isbn)
+	log_admin("[usr.key] has deleted the book [isbn]")
+
 // delete a book
 datum/book_manager/proc/remove(var/id)
 	fdel(path(id))
