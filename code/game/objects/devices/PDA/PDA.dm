@@ -818,8 +818,8 @@
 		M.pulling = null
 		M << "\blue You slipped on the PDA!"
 		playsound(src.loc, 'slip.ogg', 50, 1, -3)
-		M.stunned = 8
-		M.weakened = 5
+		M.Stun(8)
+		M.Weaken(5)
 
 
 //AI verb and proc for sending PDA messages.

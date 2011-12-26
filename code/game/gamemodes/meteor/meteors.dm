@@ -6,19 +6,19 @@
 /var/const/meteors_in_wave = 50
 /var/const/meteors_in_small_wave = 10
 
-/proc/meteor_wave()
+/proc/meteor_wave(var/number = meteors_in_wave)
 	if(!ticker || wavesecret)
 		return
 
 	wavesecret = 1
-	for(var/i = 0 to meteors_in_wave)
+	for(var/i = 0 to number)
 		spawn(rand(10,100))
 			spawn_meteor()
 	spawn(meteor_wave_delay)
 		wavesecret = 0
 
-/proc/spawn_meteors()
-	for(var/i = 0; i < meteors_in_small_wave; i++)
+/proc/spawn_meteors(var/number = meteors_in_small_wave)
+	for(var/i = 0; i < number; i++)
 		spawn(0)
 			spawn_meteor()
 
@@ -36,23 +36,23 @@
 	do
 		switch(pick(1,2,3,4))
 			if(1) //NORTH
-				starty = world.maxy-1
+				starty = world.maxy-3
 				startx = rand(1, world.maxx-1)
 				endy = 1
 				endx = rand(1, world.maxx-1)
 			if(2) //EAST
 				starty = rand(1,world.maxy-1)
-				startx = world.maxx-1
+				startx = world.maxx-3
 				endy = rand(1, world.maxy-1)
 				endx = 1
 			if(3) //SOUTH
-				starty = 1
+				starty = 3
 				startx = rand(1, world.maxx-1)
 				endy = world.maxy-1
 				endx = rand(1, world.maxx-1)
 			if(4) //WEST
 				starty = rand(1, world.maxy-1)
-				startx = 1
+				startx = 3
 				endy = rand(1,world.maxy-1)
 				endx = world.maxx-1
 
@@ -67,9 +67,9 @@
 	var/obj/effect/meteor/M
 	switch(rand(1, 100))
 
-		if(1 to 10)
+		if(1 to 20)
 			M = new /obj/effect/meteor/big( pickedstart )
-		if(11 to 75)
+		if(21 to 75)
 			M = new /obj/effect/meteor( pickedstart )
 		if(76 to 100)
 			M = new /obj/effect/meteor/small( pickedstart )
@@ -137,7 +137,12 @@
 				if(!M.stat && !istype(M, /mob/living/silicon/ai)) //bad idea to shake an ai's view
 					shake_camera(M, 3, 1)
 			if (A)
-				explosion(src.loc, 0, 1, 2, 3, 0)
+				if(isobj(A))
+					del(A)
+				else
+					A.meteorhit(src)
+				src.hits--
+				return
 				playsound(src.loc, 'meteorimpact.ogg', 40, 1)
 			if (--src.hits <= 0)
 				if(prob(15) && !istype(A, /obj/structure/grille))

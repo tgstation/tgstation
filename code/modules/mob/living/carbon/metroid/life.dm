@@ -413,7 +413,7 @@
 				//if(!src.rejuv) src.oxyloss++
 				if(!src.reagents.has_reagent("inaprovaline")) src.oxyloss+=10
 
-				if(src.stat != 2)	src.stat = 1
+				if(src.stat != DEAD)	src.stat = UNCONSCIOUS
 
 			if(prob(30))
 				if(getOxyLoss()>0) oxyloss = max(getOxyLoss()-1, 0)
@@ -423,23 +423,22 @@
 				if(getBruteLoss()>0) bruteloss = max(getBruteLoss()-1,0)
 
 
-			if (src.stat == 2)
+			if (src.stat == DEAD)
 
 				src.lying = 1
 				src.blinded = 1
-				src.stat = 2
 
 			else
 				if (src.paralysis || src.stunned || src.weakened || (changeling && changeling.changeling_fakedeath)) //Stunned etc.
 					if (src.stunned > 0)
-						src.stunned = 0
+						AdjustStunned(-1)
 						src.stat = 0
 					if (src.weakened > 0)
-						src.weakened = 0
+						AdjustWeakened(-1)
 						src.lying = 0
 						src.stat = 0
 					if (src.paralysis > 0)
-						src.paralysis = 0
+						AdjustParalysis(-1)
 						src.blinded = 0
 						src.lying = 0
 						src.stat = 0

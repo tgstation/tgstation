@@ -24,14 +24,13 @@
 
 /datum/game_mode/meteor/process()
 	if(nometeors) return
-	if(prob(80))
+	/*if(prob(80))
 		spawn()
 			dust_swarm("norm")
 	else
 		spawn()
-			dust_swarm("strong")
-	if(prob(10)) meteor_wave()
-	else spawn_meteors()
+			dust_swarm("strong")*/
+	spawn() spawn_meteors(6)
 
 
 /datum/game_mode/meteor/declare_completion()

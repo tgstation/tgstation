@@ -275,9 +275,9 @@ var/list/sacrificed = list()
 				affecting.heal_damage(1000, 1000)
 			corpse_to_raise.setToxLoss(0)
 			corpse_to_raise.setOxyLoss(0)
-			corpse_to_raise.paralysis = 0
-			corpse_to_raise.stunned = 0
-			corpse_to_raise.weakened = 0
+			corpse_to_raise.SetParalysis(0)
+			corpse_to_raise.SetStunned(0)
+			corpse_to_raise.SetWeakened(0)
 			corpse_to_raise.radiation = 0
 			corpse_to_raise.buckled = null
 			if (corpse_to_raise.handcuffed)
@@ -914,12 +914,10 @@ var/list/sacrificed = list()
 				usr.say("Fuu ma'jin!")
 				for(var/mob/living/carbon/C in viewers(src))
 					flick("e_flash", C.flash)
-					if (C.weakened < 1 && (!(C.mutations & HULK)))  //Copied this off baton code
-						C.weakened = 1
 					if (C.stuttering < 1 && (!(C.mutations & HULK)))
 						C.stuttering = 1
-					if (C.stunned < 1 && (!(C.mutations & HULK)))
-						C.stunned = 1
+					C.Weaken(1)
+					C.Stun(1)
 					C.show_message("\red The rune explodes in a bright flash.", 3)
 				del(src)
 			else                        ///When invoked as talisman, stun and mute the target mob.
@@ -929,10 +927,8 @@ var/list/sacrificed = list()
 				flick("e_flash", T.flash)
 				if (!(T.mutations & HULK))
 					T.silent += 15
-				if (!(T.mutations & HULK))
-					T.weakened += 25
-				if (!(T.mutations & HULK))
-					T.stunned += 25
+				T.Weaken(25)
+				T.Stun(25)
 			return
 
 /////////////////////////////////////////TWENTY-FIFTH RUNE

@@ -169,7 +169,7 @@ SHARDS
 			var/mob/living/carbon/human/H = M
 			if(!H.shoes)
 				var/datum/organ/external/affecting = H.get_organ(pick("l_leg", "r_leg"))
-				H.weakened = max(3, H.weakened)
+				H.Weaken(3)
 				affecting.take_damage(5, 0)
 				H.UpdateDamageIcon()
 				H.updatehealth()

@@ -241,9 +241,9 @@
 
 	O.name = text("monkey ([])",copytext(md5(usr.real_name), 2, 6))
 	O.setToxLoss(usr.getToxLoss())
-	O.setBruteLoss(usr.getBruteLoss())
+	O.adjustBruteLoss(usr.getBruteLoss())
 	O.setOxyLoss(usr.getOxyLoss())
-	O.setFireLoss(usr.getFireLoss())
+	O.adjustFireLoss(usr.getFireLoss())
 	O.stat = usr.stat
 	O.a_intent = "hurt"
 	for (var/obj/item/weapon/implant/I in implants)
@@ -336,9 +336,9 @@
 	updateappearance(O,O.dna.uni_identity)
 	domutcheck(O, null)
 	O.setToxLoss(usr.getToxLoss())
-	O.setBruteLoss(usr.getBruteLoss())
+	O.adjustBruteLoss(usr.getBruteLoss())
 	O.setOxyLoss(usr.getOxyLoss())
-	O.setFireLoss(usr.getFireLoss())
+	O.adjustFireLoss(usr.getFireLoss())
 	O.stat = usr.stat
 	for (var/obj/item/weapon/implant/I in implants)
 		I.loc = O
@@ -383,9 +383,9 @@
 		//usr.bruteloss = 0
 		usr.setOxyLoss(0)
 		usr.setCloneLoss(0)
-		usr.paralysis = 0
-		usr.stunned = 0
-		usr.weakened = 0
+		usr.SetParalysis(0)
+		usr.SetStunned(0)
+		usr.SetWeakened(0)
 		usr.radiation = 0
 		//usr.health = 100
 		//usr.updatehealth()

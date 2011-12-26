@@ -168,8 +168,15 @@
 	anchored = 1.0
 	opacity = 0
 	density = 0
-	pixel_x = -1
-	pixel_y = -1
+
+/obj/effect/sign/pods
+	desc = "A warning sign which reads 'ESCAPE PODS'"
+	name = "ESCAPE PODS"
+	icon = 'decals.dmi'
+	icon_state = "pods"
+	anchored = 1.0
+	opacity = 0
+	density = 0
 
 /obj/effect/sign/fire
 	desc = "A warning sign which reads 'EXTREME TEMPERATURES'"

@@ -123,7 +123,7 @@ TABLE AND RACK OBJECT INTERATIONS
 			user << "\red You need a better grip to do that!"
 			return
 		G.affecting.loc = src.loc
-		G.affecting.weakened = 5
+		G.affecting.Weaken(5)
 		for(var/mob/O in viewers(world.view, src))
 			if (O.client)
 				O << text("\red [] puts [] on the table.", G.assailant, G.affecting)
@@ -133,11 +133,11 @@ TABLE AND RACK OBJECT INTERATIONS
 	if (istype(W, /obj/item/weapon/wrench))
 		user << "\blue Now disassembling table"
 		playsound(src.loc, 'Ratchet.ogg', 50, 1)
-		sleep(50)
-		new /obj/item/weapon/table_parts( src.loc )
-		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
-		//SN src = null
-		del(src)
+		if(do_after(user,50))
+			new /obj/item/weapon/table_parts( src.loc )
+			playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+			//SN src = null
+			del(src)
 		return
 
 	if(isrobot(user))
@@ -169,7 +169,7 @@ TABLE AND RACK OBJECT INTERATIONS
 			user << "\red You need a better grip to do that!"
 			return
 		G.affecting.loc = src.loc
-		G.affecting.weakened = 5
+		G.affecting.Weaken(5)
 		for(var/mob/O in viewers(world.view, src))
 			if (O.client)
 				O << text("\red [] puts [] on the wooden table.", G.assailant, G.affecting)
@@ -211,7 +211,7 @@ TABLE AND RACK OBJECT INTERATIONS
 			user << "\red You need a better grip to do that!"
 			return
 		G.affecting.loc = src.loc
-		G.affecting.weakened = 5
+		G.affecting.Weaken(5)
 		for(var/mob/O in viewers(world.view, src))
 			if (O.client)
 				O << text("\red [] puts [] on the reinforced table.", G.assailant, G.affecting)

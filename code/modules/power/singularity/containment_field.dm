@@ -64,9 +64,11 @@
 				user.visible_message("\red [user.name] was shocked by the [src.name]!", \
 					"\red <B>You feel a powerful shock course through your body sending you flying!</B>", \
 					"\red You hear a heavy electrical crack")
+
 				var/stun = min(shock_damage, 15)
-				if(user.stunned < shock_damage)	user.stunned = stun
-				if(user.weakened < 10)	user.weakened = 10
+				user.Stun(stun)
+				user.Weaken(10)
+
 				user.updatehealth()
 				var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
 				user.throw_at(target, 200, 4)
@@ -81,8 +83,7 @@
 					"\red <B>Energy pulse detected, system damaged!</B>", \
 					"\red You hear an electrical crack")
 				if(prob(20))
-					if(user.stunned < 2)
-						user.stunned = 2
+					user.Stun(2)
 				return
 			return
 

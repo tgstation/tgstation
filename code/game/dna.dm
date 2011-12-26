@@ -279,7 +279,7 @@
 		M.disabilities |= 1
 		M << "\red Your eyes feel strange."
 	if (isblockon(getblock(M.dna.struc_enzymes, HULKBLOCK,3),2))
-		if(inj || prob(15))
+		if(inj || prob(5))
 			M << "\blue Your muscles hurt."
 			M.mutations |= HULK
 	if (isblockon(getblock(M.dna.struc_enzymes, 3,3),3))

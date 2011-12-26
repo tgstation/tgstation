@@ -607,9 +607,8 @@ About the new airlock wires panel:
 					M << "\red [user] headbutts the airlock."
 				var/datum/organ/external/affecting = H.get_organ("head")
 				affecting.take_damage(10, 0)
-				H.stunned = 8
-				H.weakened = 5
-				H.UpdateDamage()
+				H.Stun(8)
+				H.Weaken(5)
 				H.UpdateDamageIcon()
 			else
 				for(var/mob/M in viewers(src, null))

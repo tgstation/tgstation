@@ -76,8 +76,8 @@
 		if (!( affecting.buckled ))
 			affecting.loc = assailant.loc
 	if ((killing && state == 3))
-		affecting.stunned = max(5, affecting.stunned)
-		affecting.paralysis = max(3, affecting.paralysis)
+		affecting.Stun(5)
+		affecting.Paralyse(3)
 		affecting.losebreath = min(affecting.losebreath + 2, 3)
 	return
 

@@ -57,8 +57,6 @@ MEDICAL
 
 		if (affecting.heal_damage(src.heal_brute, src.heal_burn))
 			H.UpdateDamageIcon()
-		else
-			H.UpdateDamage()
 		M.updatehealth()
 	else
 		M.heal_organ_damage((src.heal_brute/2), (src.heal_burn/2))

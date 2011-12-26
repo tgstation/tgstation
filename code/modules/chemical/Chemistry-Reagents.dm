@@ -96,7 +96,7 @@ datum
 
 
 		blood
-			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"virus2"=null)
+			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"virus2"=null,"antibodies"=0)
 			name = "Blood"
 			id = "blood"
 			reagent_state = LIQUID
@@ -118,6 +118,15 @@ datum
 						infect_virus2(M,self.data["virus2"])
 					else
 						infect_virus2(M,self.data["virus2"],1)
+
+				if(istype(M,/mob/living/carbon))
+					// add the host's antibodies to their blood
+					self.data["antibodies"] |= M:antibodies
+
+					// check if the blood has antibodies that cure our disease
+					if(self.data["antibodies"] & M:virus2.antigen) if(prob(10))
+						M:virus2.dead = 1
+
 
 				/*
 				if(self.data["virus"])
@@ -372,8 +381,8 @@ datum
 					if(15 to 25)
 						M:drowsyness  = max(M:drowsyness, 20)
 					if(25 to INFINITY)
-						M:paralysis = max(M:paralysis, 20)
-						M:drowsyness  = max(M:drowsyness, 30)
+						M.Paralyse(20)
+						M.drowsyness  = max(M:drowsyness, 30)
 				data++
 				..()
 				return
@@ -398,17 +407,17 @@ datum
 					if(15 to 25)
 						M:drowsyness  = max(M:drowsyness, 20)
 					if(25 to INFINITY)
-						M:sleeping = 1
-						M:oxyloss = 0
-						M:weakened = 0
-						M:stunned = 0
-						M:paralysis = 0
+						M.sleeping = 1
+						M.oxyloss = 0
+						M.SetWeakened(0)
+						M.SetStunned(0)
+						M.SetParalysis(0)
 						M.dizziness = 0
-						M:drowsyness = 0
-						M:stuttering = 0
-						M:slurring = 0
-						M:confused = 0
-						M:jitteriness = 0
+						M.drowsyness = 0
+						M.stuttering = 0
+						M.slurring = 0
+						M.confused = 0
+						M.jitteriness = 0
 				..()
 				return
 
@@ -661,7 +670,6 @@ datum
 						var/datum/organ/external/affecting = M:get_organ("head")
 						if(affecting)
 							affecting.take_damage(25, 0)
-							M:UpdateDamage()
 							M:UpdateDamageIcon()
 							M:emote("scream")
 							M << "\red Your face has become disfigured!"
@@ -708,7 +716,6 @@ datum
 							return
 						var/datum/organ/external/affecting = M:get_organ("head")
 						affecting.take_damage(35, 0)
-						M:UpdateDamage()
 						M:UpdateDamageIcon()
 						M:emote("scream")
 						M << "\red Your face has become disfigured!"
@@ -724,7 +731,6 @@ datum
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/affecting = M:get_organ("head")
 						affecting.take_damage(30, 0)
-						M:UpdateDamage()
 						M:UpdateDamageIcon()
 						M:emote("scream")
 						M << "\red Your face has become disfigured!"
@@ -1221,11 +1227,11 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom ///This can even heal dead people.
-				M:cloneloss = 0
-				M:oxyloss = 0
-				M:radiation = 0
-				M:heal_organ_damage(5,5)
-				M:adjustToxLoss(-5)
+				M.cloneloss = 0
+				M.setOxyLoss(0)
+				M.radiation = 0
+				M.heal_organ_damage(5,5)
+				M.adjustToxLoss(-5)
 				if(holder.has_reagent("toxin"))
 					holder.remove_reagent("toxin", 5)
 				if(holder.has_reagent("stoxin"))
@@ -1248,25 +1254,25 @@ datum
 					holder.remove_reagent("carpotoxin", 5)
 				if(holder.has_reagent("zombiepowder"))
 					holder.remove_reagent("zombiepowder", 5)
-				M:brainloss = 0
+				M.brainloss = 0
 				M.disabilities = 0
 				M.sdisabilities = 0
-				M:eye_blurry = 0
-				M:eye_blind = 0
-				M:disabilities &= ~1
-				M:sdisabilities &= ~1
-				M:weakened = 0
-				M:stunned = 0
-				M:paralysis = 0
-				M:silent = 0
+				M.eye_blurry = 0
+				M.eye_blind = 0
+				M.disabilities &= ~1
+				M.sdisabilities &= ~1
+				M.SetWeakened(0)
+				M.SetStunned(0)
+				M.SetParalysis(0)
+				M.silent = 0
 				M.dizziness = 0
-				M:drowsyness = 0
-				M:stuttering = 0
-				M:slurring = 0
-				M:confused = 0
-				if(!M:sleeping_willingly)
-					M:sleeping = 0
-				M:jitteriness = 0
+				M.drowsyness = 0
+				M.stuttering = 0
+				M.slurring = 0
+				M.confused = 0
+				if(!M.sleeping_willingly)
+					M.sleeping = 0
+				M.jitteriness = 0
 				for(var/datum/disease/D in M.viruses)
 					D.spread = "Remissive"
 					D.stage--
@@ -1285,10 +1291,10 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:drowsyness = max(M:drowsyness-5, 0)
-				if(M:paralysis) M:paralysis--
-				if(M:stunned) M:stunned--
-				if(M:weakened) M:weakened--
-				if(prob(60))	M:adjustToxLoss(1)
+				M.AdjustParalysis(-1)
+				M.AdjustStunned(-1)
+				M.AdjustWeakened(-1)
+				if(prob(60))	M.adjustToxLoss(1)
 				..()
 				return
 
@@ -1465,10 +1471,10 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:adjustOxyLoss(0.5)
-				M:adjustToxLoss(0.5)
-				M:weakened = max(M:weakened, 10)
-				M:silent = max(M:silent, 10)
+				M.adjustOxyLoss(0.5)
+				M.adjustToxLoss(0.5)
+				M.Weaken(10)
+				M.silent = max(M:silent, 10)
 				..()
 				return
 
@@ -1713,9 +1719,9 @@ datum
 							return
 						M:emote("scream")
 						M << "\red You're sprayed directly in the eyes with pepperspray!"
-						M.eye_blurry = max(M.eye_blurry, 60)
-						M.eye_blind = max(M.eye_blind, 12)
-						M:weakened = max(M:weakened, 20)
+						M.eye_blurry = max(M.eye_blurry, 5)
+						M.eye_blind = max(M.eye_blind, 2)
+						M.Paralyse(1)
 						M.drop_item()
 
 		frostoil
@@ -3059,7 +3065,7 @@ datum
 			color = "#664300" // rgb: 102, 67, 0
 
 			on_mob_life(var/mob/living/M as mob)
-				M.stunned = 2
+				M.Stun(2)
 				if(!data) data = 1
 				data++
 				M.dizziness +=3

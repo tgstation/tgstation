@@ -145,7 +145,7 @@ var/const
 
 		GoIdle() //so it doesn't jump the people that tear it off
 
-		if(!sterile) target.paralysis = max(target.paralysis,MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
+		if(!sterile) target.Paralyse(MAX_IMPREGNATION_TIME/6) //something like 25 ticks = 20 seconds with the default settings
 
 		spawn(rand(MIN_IMPREGNATION_TIME,MAX_IMPREGNATION_TIME))
 			Impregnate(target)

@@ -36,16 +36,12 @@
 
 
 	proc/clamp_values()
-		stunned = 0
-		paralysis = 0
-		weakened = 0
+		AdjustStunned(0)
+		AdjustParalysis(0)
+		AdjustWeakened(0)
 		sleeping = 0
-		setBruteLoss(max(getBruteLoss(), 0))
-		setToxLoss(max(getToxLoss(), 0))
-		setOxyLoss(max(getOxyLoss(), 0))
-		setFireLoss(max(getFireLoss(), 0))
 		if(stat)
-			stat = 0
+			stat = CONSCIOUS
 		return
 
 

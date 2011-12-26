@@ -15,7 +15,9 @@
 		del(src)
 
 /obj/effect/mine/proc/triggerstun(obj)
-	obj:stunned += 30
+	if(ismob(obj))
+		var/mob/M = obj
+		M.Stun(30)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
@@ -130,11 +132,11 @@
 			if("feet")
 				if(!H.shoes)
 					affecting = H.get_organ(pick("l_leg", "r_leg"))
-					H.weakened = max(3, H.weakened)
+					H.Weaken(3)
 			if("l_hand", "r_hand")
 				if(!H.gloves)
 					affecting = H.get_organ(type)
-					H.stunned = max(3, H.stunned)
+					H.Stun(3)
 		if(affecting)
 			affecting.take_damage(1, 0)
 			H.UpdateDamageIcon()

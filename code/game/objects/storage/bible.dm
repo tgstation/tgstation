@@ -13,8 +13,6 @@
 		for(var/datum/organ/external/affecting in H.organs)
 			if(affecting.heal_damage(heal_amt, heal_amt))
 				H.UpdateDamageIcon()
-			else
-				H.UpdateDamage()
 	return
 
 /obj/item/weapon/storage/bible/attack(mob/M as mob, mob/living/user as mob)
@@ -38,7 +36,7 @@
 	if ((user.mutations & CLUMSY) && prob(50))
 		user << "\red The [src] slips out of your hand and hits your head."
 		user.take_organ_damage(10)
-		user.paralysis += 20
+		user.Paralyse(20)
 		return
 
 //	if(..() == BLOCKED)

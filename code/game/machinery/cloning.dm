@@ -461,7 +461,7 @@
 	src.occupant.rejuv = 10
 	src.occupant.adjustCloneLoss(190) //new damage var so you can't eject a clone early then stab them to abuse the current damage system --NeoFite
 	src.occupant.adjustBrainLoss(90)
-	src.occupant.paralysis += 4
+	src.occupant.Paralyse(4)
 
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
 	src.occupant.health = (src.occupant.getBruteLoss() + src.occupant.getToxLoss() + src.occupant.getOxyLoss() + src.occupant.getCloneLoss())
@@ -545,7 +545,7 @@
 			return
 
 		else if(src.occupant.health < src.heal_level)
-			src.occupant.paralysis = 4
+			src.occupant.Paralyse(4)
 
 			 //Slowly get that clone healed and finished.
 			src.occupant.adjustCloneLoss(-2)

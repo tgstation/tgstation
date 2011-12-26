@@ -161,12 +161,11 @@
 			if(M.a_intent == "hurt")
 				if(M.gloves.cell.charge >= 2500)
 					M.gloves.cell.charge -= 2500
-					if (weakened < 5)
-						weakened = 5
+					Weaken(5)
 					if (stuttering < 5)
 						stuttering = 5
-					if (stunned < 5)
-						stunned = 5
+					Stun(5)
+
 					for(var/mob/O in viewers(src, null))
 						if (O.client)
 							O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall", 2)
@@ -198,7 +197,7 @@
 				if (prob(40))
 					damage = rand(10, 15)
 					if (paralysis < 5)
-						paralysis = rand(10, 15)
+						Paralyse(rand(10, 15))
 						spawn( 0 )
 							for(var/mob/O in viewers(src, null))
 								if ((O.client && !( O.blinded )))
@@ -235,7 +234,7 @@
 			else
 				if (!( paralysis ))
 					if (prob(25))
-						paralysis = 2
+						Paralyse(2)
 						playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
 						for(var/mob/O in viewers(src, null))
 							if ((O.client && !( O.blinded )))
@@ -270,7 +269,7 @@
 				if (damage >= 25)
 					damage = rand(20, 40)
 					if (paralysis < 15)
-						paralysis = rand(10, 15)
+						Paralyse(rand(10, 15))
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has wounded [name]!</B>", M), 1)
@@ -310,7 +309,7 @@
 			playsound(loc, 'pierce.ogg', 25, 1, -1)
 			var/damage = 5
 			if(prob(95))
-				weakened = rand(10, 15)
+				Weaken(rand(10,15))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has tackled down [name]!</B>", M), 1)
@@ -368,12 +367,10 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>The [M.name] has shocked []!</B>", src), 1)
 
-				if (weakened < power)
-					weakened = power
+				Weaken(power)
 				if (stuttering < power)
 					stuttering = power
-				if (stunned < power)
-					stunned = power
+				Stun(power)
 
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)
@@ -562,7 +559,7 @@
 				adjustBruteLoss(30)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 			if (prob(50))
-				paralysis += 10
+				Paralyse(10)
 		else
 	return
 
@@ -571,7 +568,7 @@
 		adjustFireLoss(60)
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 	if (prob(50))
-		paralysis += 10
+		Paralyse(10)
 
 /obj/effect/equip_e/monkey/process()
 	if (item)

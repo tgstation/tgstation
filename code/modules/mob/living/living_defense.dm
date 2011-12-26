@@ -41,7 +41,7 @@
 	if(C && C.active)
 		C.attack_self(src)//Should shut it off
 		src << "\blue Your [C.name] was disrupted!"
-		stunned = max(stunned, 2)
+		Stun(2)
 
 	flash_weak_pain()
 

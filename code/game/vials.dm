@@ -58,20 +58,21 @@
 ///////////////////////////////////////////////////////***
 
 /////////////////////////////////////////////////////green
-/obj/item/weapon/vial/green/drink(user)
+/obj/item/weapon/vial/green/drink(mob/living/user as mob)
 	var/A = src
 	src = null
 	del(A)
 	switch(pick(1,2,3))
 		if(1)
 			spawn(300)
-				user:gib()
+				user.gib()
 		if(2)
-			user:weakened += 5
-			user:contract_disease(new /datum/disease/gbs,1)
+			user.Weaken(5)
+			user.contract_disease(new /datum/disease/gbs,1)
 		if(3)
 			spawn(200)
-				user:contract_disease(new /datum/disease/gbs,1)
+				user.contract_disease(new /datum/disease/gbs,1)
+
 /obj/item/weapon/vial/green/shatter()
 	var/A = src
 	var/atom/sourceloc = get_turf(src.loc)

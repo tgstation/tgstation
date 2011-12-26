@@ -117,7 +117,7 @@
 		if(3.0)
 			b_loss += 30
 			if (prob(50) && !shielded)
-				paralysis += 1
+				Paralyse(1)
 			ear_damage += 15
 			ear_deaf += 60
 
@@ -542,12 +542,10 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>The [M.name] has shocked []!</B>", src), 1)
 
-				if (weakened < power)
-					weakened = power
+				Weaken(power)
 				if (stuttering < power)
 					stuttering = power
-				if (stunned < power)
-					stunned = power
+				Stun(power)
 
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)
@@ -577,12 +575,12 @@
 			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
 				if(M.gloves.cell.charge >= 2500)
 					M.gloves.cell.charge -= 2500
-					if (weakened < 5)
-						weakened = 5
+
+					Weaken(5)
 					if (stuttering < 5)
 						stuttering = 5
-					if (stunned < 5)
-						stunned = 5
+					Stun(5)
+
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>", 1, "\red You hear someone fall.", 2)
@@ -649,7 +647,7 @@
 				if (M.mutations & HULK)//HULK SMASH
 					damage += 14
 					spawn(0)
-						paralysis += 5
+						Paralyse(5)
 						step_away(src,M,15)
 						sleep(3)
 						step_away(src,M,15)
@@ -657,8 +655,7 @@
 				playsound(loc, "punch", 25, 1, -1)
 				visible_message("\red <B>[M] has [attack_verb]ed [src]!</B>")
 				if (damage > 9||prob(5))//Regular humans have a very small chance of weakening an alien.
-					if (weakened < 10)
-						weakened = rand(1,5)
+					Weaken(1,5)
 					for(var/mob/O in viewers(M, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has weakened []!</B>", M, src), 1, "\red You hear someone fall.", 2)
@@ -672,15 +669,14 @@
 
 		if ("disarm")
 			if (!lying)
-				var/randn = rand(1, 100)
-				if (randn <= 5)//Very small chance to push an alien down.
-					weakened = 2
+				if (prob(5))//Very small chance to push an alien down.
+					Weaken(2)
 					playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has pushed down []!</B>", M, src), 1)
 				else
-					if (randn <= 50)
+					if (prob(50))
 						drop_item()
 						playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
 						for(var/mob/O in viewers(src, null))
@@ -715,9 +711,9 @@ In all, this is a lot like the monkey code. /N
 			if(!sleeping_willingly)
 				sleeping = 0
 			resting = 0
-			if (paralysis >= 3) paralysis -= 3
-			if (stunned >= 3) stunned -= 3
-			if (weakened >= 3) weakened -= 3
+			AdjustParalysis(-3)
+			AdjustStunned(-3)
+			AdjustWeakened(-3)
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\blue [M.name] nuzzles [] trying to wake it up!", src), 1)

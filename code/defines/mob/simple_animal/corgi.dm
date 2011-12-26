@@ -192,7 +192,7 @@
 	..()
 
 	//Feeding, chasing food, FOOOOODDDD
-	if(alive && !resting && !buckled)
+	if(alive && !restrained() )
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			turns_since_scan = 0
@@ -238,6 +238,78 @@
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					dir = i
 					sleep(1)
+
+/mob/living/simple_animal/corgi/Ian/restrained()
+	if(resting || buckled)
+		return 1
+	return 0
+
+/mob/living/simple_animal/corgi/Ian/verb/stoppull()
+	set name = "Stop pulling"
+	set category = "IC"
+
+	pulling = null
+
+/mob/living/simple_animal/corgi/Ian/Move()
+	if(restrained())
+		pulling = null
+		return
+
+	var/turf/old_loc
+	var/turf/new_loc
+
+	if(isturf(loc))
+		old_loc = src.loc
+	else
+		return //in a container, cannot move
+
+	..()
+
+	if(isturf(loc))
+		new_loc = src.loc
+	else
+		return //in a container, cannot move
+
+	if(old_loc == new_loc)
+		return //has not moved
+
+	if(pulling)
+
+		if(isturf(old_loc) && isturf(pulling.loc))
+			if(get_dist(src.loc,old_loc) > 1)
+				world << "get_dist(src.loc,pulling.loc)"
+				pulling = null
+				return
+		else
+			pulling = null
+			return
+
+		if(istype(pulling,/obj/item))
+			var/obj/item/I = pulling
+			if(I.w_class > 4)
+				pulling = null
+				return
+			if(I.anchored)
+				pulling = null
+				return
+
+			I.loc = old_loc
+			return
+
+		if(ismob(pulling))
+			var/mob/M = pulling
+			if(!M.stat)
+				pulling = null
+				return //cannot drag live people
+			if(M.anchored)
+				pulling = null
+				return
+			if(M.restrained())
+				pulling = null
+				return
+
+			M.loc = old_loc
+			return
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	name = "Corgi meat"
