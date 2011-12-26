@@ -42,5 +42,5 @@
 		if(M && M.client && M.client.holder && M.client.authenticated)
 			if(usr.client.holder)
 				usr << "[M.key] is a [M.client.holder.rank][M.client.stealth ? " <i>(as [M.client.fakekey])</i>" : ""]"
-			else if(!M.client.stealth)
+			else if(!M.client.stealth && (M.client.holder.level != -3))
 				usr << "\t[M.client]"

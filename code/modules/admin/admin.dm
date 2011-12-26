@@ -970,6 +970,7 @@
 				<A href='?src=\ref[src];chgadlvl=Temporary Admin;client4ad=\ref[C]'>Temporary Admin</A> // Secondary Admin<BR>
 				<A href='?src=\ref[src];chgadlvl=Moderator;client4ad=\ref[C]'>Moderator</A> // Moderator<BR>
 				<A href='?src=\ref[src];chgadlvl=Admin Observer;client4ad=\ref[C]'>Admin Observer</A> // Filthy Xeno<BR>
+				<A href='?src=\ref[src];chgadlvl=Retired Admin;client4ad=\ref[C]'>Retired Admin</A> // Retired Administrator<BR>
 				<A href='?src=\ref[src];chgadlvl=Remove;client4ad=\ref[C]'>Remove Admin</A><BR>"}
 			else if(src.level == 5)
 			//coder
@@ -980,6 +981,7 @@
 				<A href='?src=\ref[src];chgadlvl=Temporary Admin;client4ad=\ref[C]'>Temporary Admin</A> // Secondary Admin<BR>
 				<A href='?src=\ref[src];chgadlvl=Moderator;client4ad=\ref[C]'>Moderator</A> // Moderator<BR>
 				<A href='?src=\ref[src];chgadlvl=Admin Observer;client4ad=\ref[C]'>Admin Observer</A> // Filthy Xeno<BR>
+				<A href='?src=\ref[src];chgadlvl=Retired Admin;client4ad=\ref[C]'>Retired Admin</A> // Retired Administrator<BR>
 				<A href='?src=\ref[src];chgadlvl=Remove;client4ad=\ref[C]'>Remove Admin</A><BR>"}
 			else
 				alert("Not a high enough level admin, sorry.")

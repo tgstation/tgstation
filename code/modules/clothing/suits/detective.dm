@@ -25,3 +25,34 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
+
+/obj/item/clothing/under/det/verb/holster()
+	set name = "Holster"
+	set category = "Object"
+	set src in usr
+
+	if(!gun)
+		if(istype(usr.get_active_hand(),/obj/item/weapon/gun/projectile/detective))
+			gun = usr.get_active_hand()
+			usr.drop_item()
+			gun.loc = src
+			for(var/mob/M in viewers(usr, null))
+				if(M.client)
+					M.show_message(text("\blue [usr] holsters his gun."), 2)
+		else
+			usr << "\blue You need your gun equiped to holster it."
+	else
+		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
+			usr << "\red If you want your gun from your holster, you need an empty hand!"
+		else
+			usr.put_in_hand(gun)
+			icon_state = "detective"
+			gun = null
+			if(usr.a_intent == "hurt")
+				for(var/mob/M in viewers(usr, null))
+					if(M.client)
+						M.show_message(text("\red [usr] draws his gun, and readies it for use!"), 2)
+			else
+				for(var/mob/M in viewers(usr, null))
+					if(M.client)
+						M.show_message(text("\blue [usr] draws his gun, but keeps it pointed safely at the ground."), 2)
