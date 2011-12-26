@@ -9,9 +9,10 @@
 
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))	return 0
-	for(var/obj/item/weapon/implant/loyalty/L in mind.current)
+	//This makes security unconvertable.  *comments out*
+/*	for(var/obj/item/weapon/implant/loyalty/L in mind.current)
 		if(L && L.implanted)
-			return 0
+			return 0	*/
 	return 1
 
 

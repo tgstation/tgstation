@@ -466,3 +466,25 @@
 		istype(W, /obj/item/weapon/reagent_containers/syringe)    || \
 		istype(W, /obj/item/weapon/kitchen/utensil/fork) && W.icon_state != "forkloaded" \
 	)
+
+/proc/is_cut(obj/item/W as obj)
+	return ( \
+		istype(W, /obj/item/weapon/wirecutters)                   || \
+		istype(W, /obj/item/weapon/circular_saw)                  || \
+		istype(W, /obj/item/weapon/melee/energy/sword)            && W:active  || \
+		istype(W, /obj/item/weapon/melee/energy/blade)                         || \
+		istype(W, /obj/item/weapon/shovel)                        || \
+		istype(W, /obj/item/weapon/kitchenknife)                  || \
+		istype(W, /obj/item/weapon/butch)						  || \
+		istype(W, /obj/item/weapon/scalpel)                       || \
+		istype(W, /obj/item/weapon/kitchen/utensil/knife)         || \
+		istype(W, /obj/item/weapon/shard)	\
+	)
+
+/proc/is_burn(obj/item/W as obj)
+	return ( \
+		istype(W, /obj/item/weapon/weldingtool)      && W:welding || \
+		istype(W, /obj/item/weapon/zippo)            && W:lit     || \
+		istype(W, /obj/item/weapon/match)            && W:lit     || \
+		istype(W, /obj/item/clothing/mask/cigarette) && W:lit	\
+	)
