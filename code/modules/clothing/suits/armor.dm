@@ -84,7 +84,7 @@
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/pepperspray,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)
 
-ng/suit/armor/reactive/IsShield()
+/obj/item/clothing/suit/armor/reactive/IsShield()
 	if(active)
 		return 1
 	return 0
