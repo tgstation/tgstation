@@ -2823,6 +2823,12 @@
 	icon_state = "flask"
 	volume = 60
 
+/obj/item/weapon/reagent_containers/food/drinks/dflask
+	name = "Detective's Flask"
+	desc = "A well used metal flask with the detective's name etched into it."
+	icon_state = "dflask"
+	volume = 60
+
 /obj/item/weapon/reagent_containers/food/drinks/britcup
 	name = "cup"
 	desc = "A cup with the british flag emblazoned on it."

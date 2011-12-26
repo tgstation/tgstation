@@ -83,6 +83,7 @@
 	icon_on = "plight1"
 	icon_off = "plight0"
 	brightness_on = 3
+	w_class = 1
 
 
 
@@ -90,7 +91,7 @@
 	if(!ismob(M))
 		return
 	user << "\red You stab [M] with the pen."
-	M << "\red You feel a tiny prick!"
+//	M << "\red You feel a tiny prick!"
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [src.name]  by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to stab [M.name] ([M.ckey])</font>")
 	..()

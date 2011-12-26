@@ -53,6 +53,7 @@
 		new /obj/item/clothing/under/jensen(src)
 		new /obj/item/clothing/suit/armor/hos/jensen(src)
 		new /obj/item/clothing/suit/armor/hos(src)
+		new /obj/item/clothing/gloves/hos(src)
 		new /obj/item/clothing/head/helmet/HoS/dermal(src)
 		new /obj/item/device/radio/headset/heads/hos(src)
 		new /obj/item/weapon/shield/riot(src)
@@ -104,6 +105,7 @@
 		new /obj/item/clothing/gloves/red(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/weapon/storage/belt/security(src)
+		new /obj/item/policetaperoll(src)
 		new /obj/item/weapon/flashbang(src)
 		new /obj/item/weapon/pepperspray(src)
 		new /obj/item/device/flash(src)
@@ -131,7 +133,7 @@
 		new /obj/item/clothing/under/det(src)
 		new /obj/item/clothing/suit/det_suit/armor(src)
 		new /obj/item/clothing/suit/storage/det_suit(src)
-		new /obj/item/clothing/gloves/black(src)
+		new /obj/item/clothing/gloves/detective(src)
 		new /obj/item/clothing/head/det_hat(src)
 		new /obj/item/clothing/shoes/brown(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
@@ -140,7 +142,9 @@
 		new /obj/item/weapon/clipboard(src)
 		new /obj/item/device/detective_scanner(src)
 		new /obj/item/weapon/pepperspray/small(src)
+		new /obj/item/policetaperoll(src)
 		new /obj/item/weapon/storage/box/evidence(src)
+		new /obj/item/weapon/reagent_containers/food/drinks/dflask(src)
 		return
 
 
