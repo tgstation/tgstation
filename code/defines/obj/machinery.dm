@@ -453,7 +453,7 @@
 		h_b = 245.0
 
 /obj/machinery/coatrack
-	name = "coatrack"
+	name = "coat rack"
 	desc = "A fancy stand for the Detective's coat and hat."
 	icon_state = "coatrack0"
 	icon = 'coatrack.dmi'
