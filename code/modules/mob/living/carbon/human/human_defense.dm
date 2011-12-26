@@ -57,8 +57,23 @@ emp_act
 		if(I.IsShield() && (prob(50 - round(damage / 3))))
 			visible_message("\red <B>[src] blocks [attack_text] with the [r_hand.name]!</B>")
 			return 1
+	if(slot_belt && istype(slot_belt, /obj/item/weapon/displacer))
+		var/obj/item/weapon/displacer/D = slot_belt
+		if(D.active && (prob(50)))
+			visible_message("\red <B>The displacer field flings [src] out of the way of [attack_text]!</B>")
+			var/list/turfs = new/list()
+			for(var/turf/T in orange(6))
+				if(istype(T,/turf/space)) continue
+				if(T.density) continue
+				if(T.x>world.maxx-8 || T.x<8)	continue
+				if(T.y>world.maxy-8 || T.y<8)	continue
+				turfs += T
+			if(!turfs.len) turfs += pick(/turf in orange(6))
+			var/turf/picked = pick(turfs)
+			if(!isturf(picked)) return
+			src.loc = picked
+			return 1
 	return 0
-
 
 /mob/living/carbon/human/emp_act(severity)
 	for(var/obj/O in src)

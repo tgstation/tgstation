@@ -54,3 +54,34 @@
 	active = 0
 	icon_state = "shield0"
 	..()
+
+/obj/item/weapon/displacer
+	name = "displacer field"
+	desc = "Projects a specialized energy field designed to teleport the user out of harms way."
+	icon = 'device.dmi'
+	icon_state = "shield0"
+	var/active = 0.0
+	flags = FPRINT | TABLEPASS| CONDUCT| ONBELT
+	item_state = "electronic"
+	throwforce = 10.0
+	throw_speed = 2
+	throw_range = 10
+	w_class = 4.0
+	origin_tech = "magnets=3;bluespace=4"
+
+
+/obj/item/weapon/displacer/attack_self(mob/user as mob)
+	src.active = !( src.active )
+	if (src.active)
+		user << "\blue The displacer field is now active."
+		src.icon_state = "shield1"
+	else
+		user << "\blue The displacer field is now inactive."
+		src.icon_state = "shield0"
+	src.add_fingerprint(user)
+	return
+
+/obj/item/weapon/displacer/emp_act(severity)
+	active = 0
+	icon_state = "shield0"
+	..()
