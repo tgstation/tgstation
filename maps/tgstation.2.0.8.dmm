@@ -3646,7 +3646,7 @@
 "bsf" = (/obj/item/device/radio/intercom{name = "Station Intercom (General)"; pixel_y = -29},/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor,/area/hallway/primary/aft)
 "bsg" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/wall,/area/maintenance/asmaint)
 "bsh" = (/obj/machinery/atmospherics/pipe/tank/air,/turf/simulated/floor/plating,/area/maintenance/asmaint)
-"bsi" = (/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/binary/pump{dir = 1; icon_state = "intact_on"; name = "Kitchen freezer air supply pump"; on = 1; target_pressure = 1000},/turf/simulated/floor/plating,/area/maintenance/asmaint)
+"bsi" = (/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/binary/pump{dir = 1; icon_state = "intact_on"; name = "Cold room air supply pump"; on = 1; target_pressure = 1000},/turf/simulated/floor/plating,/area/maintenance/asmaint)
 "bsj" = (/obj/structure/stool{pixel_y = 8},/obj/machinery/disposal,/obj/structure/disposalpipe/trunk,/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/bar)
 "bsk" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = "Streight"},/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/bar)
 "bsl" = (/obj/machinery/computer/security/telescreen{name = "Entertainment monitor"; desc = "Damn, they better have /tg/thechannel on these things."; icon = 'status_display.dmi'; icon_state = "entertainment"; pixel_y = -30},/obj/structure/table/reinforced,/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/bar)

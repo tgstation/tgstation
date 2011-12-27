@@ -41,10 +41,14 @@
 /obj/structure/closet/secure_closet/meat/New()
 	..()
 	sleep(2)
-	new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
+	var/obj/f = new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
+	f.infreezer = 1
+	f = new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
+	f.infreezer = 1
+	f = new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
+	f.infreezer = 1
+	f = new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
+	f.infreezer = 1
 
 /obj/structure/closet/secure_closet/fridge/New()
 	..()

@@ -213,10 +213,15 @@
 		..()
 
 	process()
+		if (src.infreezer)
+			health = 180
+			return
 		var/turf/location = get_turf(src.loc)
 		var/datum/gas_mixture/environment = location.return_air()
 		switch(environment.temperature)
 			if(0 to T0C)
+				health = 180
+				return
 			if(T0C to (T0C + 100))
 				health = max(0, health - 1)
 		if(health <= 0)
@@ -231,10 +236,15 @@
 	desc = "A synthetic slab of flesh."
 
 	process()
+		if (src.infreezer)
+			health = 180
+			return
 		var/turf/location = get_turf(src.loc)
 		var/datum/gas_mixture/environment = location.return_air()
 		switch(environment.temperature)
 			if(0 to T0C)
+				health = 180
+				return
 			if(T0C to (T0C + 100))
 				health = max(0, health - 1)
 		if(health <= 0)
@@ -268,10 +278,15 @@
 	var/subjectjob = null
 
 	process()
+		if (src.infreezer)
+			health = 180
+			return
 		var/turf/location = get_turf(src.loc)
 		var/datum/gas_mixture/environment = location.return_air()
 		switch(environment.temperature)
 			if(0 to T0C)
+				health = 180
+				return
 			if(T0C to (T0C + 100))
 				health = max(0, health - 1)
 		if(health <= 0)

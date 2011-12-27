@@ -65,6 +65,30 @@
 	icon_opened = "freezeropen"
 	icon_closed = "freezer"
 
+/obj/structure/closet/crate/freezer/open()
+	playsound(src.loc, 'click.ogg', 15, 1, -3)
+
+	for(var/obj/item/I in src)
+		I.loc = get_turf(src)
+		I.infreezer = 0
+
+	for(var/mob/M in src)
+		M.loc = get_turf(src)
+
+	icon_state = icon_opened
+	src.opened = 1
+
+/obj/structure/closet/crate/freezer/close()
+	playsound(src.loc, 'click.ogg', 15, 1, -3)
+
+	for(var/obj/item/I in get_turf(src))
+		if(I.density || I.anchored || I == src) continue
+		I.loc = src
+		I.infreezer = 1
+
+	icon_state = icon_closed
+	src.opened = 0
+
 /obj/structure/closet/crate/bin
 	desc = "A large bin."
 	name = "Large bin"
@@ -217,6 +241,7 @@
 
 	for(var/obj/O in src)
 		O.loc = get_turf(src)
+
 	for(var/mob/M in src)
 		M.loc = get_turf(src)
 
@@ -225,9 +250,11 @@
 
 /obj/structure/closet/crate/close()
 	playsound(src.loc, 'click.ogg', 15, 1, -3)
+
 	for(var/obj/O in get_turf(src))
 		if(O.density || O.anchored || O == src) continue
 		O.loc = src
+
 	icon_state = icon_closed
 	src.opened = 0
 

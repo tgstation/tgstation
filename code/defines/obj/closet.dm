@@ -12,6 +12,7 @@
 	flags = FPRINT
 	var/health = 100	//Might be a bit much, dono can always change later	//Nerfed -Pete
 	var/lastbang	//
+	var/isfreezer = 0
 
 /obj/structure/closet/acloset
 	name = "Strange closet"
@@ -636,6 +637,7 @@
 	icon_opened = "fridgeopen"
 	icon_broken = "fridgebroken"
 	icon_off = "fridge1"
+	isfreezer = 1
 
 /obj/structure/closet/secure_closet/fridge
 	name = "Refrigerator"
@@ -645,6 +647,7 @@
 	icon_opened = "fridgeopen"
 	icon_broken = "fridgebroken"
 	icon_off = "fridge1"
+	isfreezer = 1
 
 /obj/structure/closet/secure_closet/money_freezer
 	name = "Freezer"
@@ -654,6 +657,7 @@
 	icon_opened = "fridgeopen"
 	icon_broken = "fridgebroken"
 	icon_off = "fridge1"
+	isfreezer = 1
 	req_access = list(access_heads_vault)
 
 /obj/structure/closet/secure_closet/wall
