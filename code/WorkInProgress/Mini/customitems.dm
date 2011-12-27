@@ -16,7 +16,7 @@ var/list/CustomItemList = list(
 			var/path = Entry[3]
 			var/obj/item/Item = new path()
 
-			if(istype(M.back,/obj/item/weapon/storage) && M.back:len < M.back:storage_slots) // Try to place it in something on the mob's back first
+			if(istype(M.back,/obj/item/weapon/storage) && M.back:contents.len < M.back:storage_slots) // Try to place it in something on the mob's back first
 				Item.loc = M.back
 				ok = 1
 			else

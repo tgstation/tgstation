@@ -38,6 +38,7 @@
 		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/device/flash(src)
 		new /obj/item/clothing/glasses/sunglasses(src)
+		new /obj/item/clothing/gloves/blue(src)
 		return
 
 

@@ -106,7 +106,7 @@
 	breaktape(null, user)
 
 /obj/item/policetape/proc/breaktape(obj/item/weapon/W as obj, mob/user as mob)
-	if(!W || !is_cut(W))
+	if(!W || (!is_sharp(W) && src.allowed(user)) ||(!is_cut(W) && !src.allowed(user)))
 		user << "You can't break the tape with that!"
 		return
 	user.show_viewers(text("\blue [] breaks the police tape!", user))
