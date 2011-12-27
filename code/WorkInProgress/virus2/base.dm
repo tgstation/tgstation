@@ -217,7 +217,7 @@
 			return
 		// with a certain chance, the mob may become immune to the disease before it starts properly
 		if(stage <= 1 && clicks == 0)
-			if(prob(20))
+			if(prob(3))
 				mob.antibodies |= antigen // 20% immunity is a good chance IMO, because it allows finding an immune person easily
 			else
 		if(mob.radiation > 50)
