@@ -1722,7 +1722,7 @@ datum
 							return
 						if(M:glasses)
 							if(M.job in security_positions)
-								M:emote("me",1,"endures the pepperspray, their training paid off!")
+								M:emote("me",1,"glares at you as the pepperspray drips off the lenses!")
 								M << "\red Your glasses protect you from most of the pepperspray, and your training takes care of the rest!"
 								M.eye_blurry = max(M.eye_blurry, 10)
 							M << "\red Your glasses protect you from most of the pepperspray!"
