@@ -317,6 +317,7 @@ var/ordernum=0
 			reqform.info += "</ul><hr>"
 			reqform.info += "STAMP BELOW TO APPROVE THIS REQUISITION:<br>"
 
+			reqform.update_icon()	//Fix for appearing blank when printed.
 			reqtime = 5 //5 second cooldown initiated after each printed req, change the number to change the cooldown (in seconds) - Quarxink
 			spawn(0)
 				while(reqtime >=1 && src)

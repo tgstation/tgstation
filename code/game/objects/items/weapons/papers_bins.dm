@@ -18,10 +18,15 @@ CLIPBOARDS
 	..()
 	src.pixel_y = rand(-8, 8)
 	src.pixel_x = rand(-9, 9)
+	spawn(2)
+		if(src.info)
+			src.overlays += "paper_words"
+		return
+
+/obj/item/weapon/paper/update_icon()
 	if(src.info)
 		src.overlays += "paper_words"
 	return
-
 
 /obj/item/weapon/paper/examine()
 	set src in view()

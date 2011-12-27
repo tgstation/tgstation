@@ -377,11 +377,6 @@
 
 	return src.attack_hand(user)
 
-/obj/item/weapon/stamp/New()
-
-	..()
-	return
-
 /obj/item/weapon/dice/attack_self(mob/user as mob) // Roll the dice -- TLE
 	var/temp_sides
 	if(src.sides < 1)
