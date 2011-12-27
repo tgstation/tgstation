@@ -26,6 +26,7 @@
 		if(dongle.translate_hive) return 1
 
 /mob/living/say(var/message)
+	var/message_old = message
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	if (!message)
@@ -220,7 +221,7 @@
 
 		//I see no reason to restrict such way of whispering
 		if ("whisper")
-			whisper(message)
+			whisper(message_old)
 			return
 
 		if ("binary")
@@ -296,6 +297,7 @@
 	var/turf/T = get_turf(src)
 	listening = hearers(message_range, T)
 	var/list/V = view(message_range, T)
+	var/list/W = V
 	//find mobs in lockers, cryo, intellicards, brains, MMIs, and so on.
 	for (var/mob/M in world)
 		if (!M.client)
@@ -311,9 +313,15 @@
 			if (M.client && M.client.ghost_ears)
 				listening|=M
 
-	for (var/obj/O in ((V | contents)-used_radios)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
+	for (var/obj/O in ((W | contents)-used_radios))
+		W |= O
+
+	for (var/mob/M in W)
+		W |= M.contents
+
+	for (var/obj/O in W) //radio in pocket could work, radio in backpack wouldn't --rastaf0
 		spawn (0)
-			if (O)
+			if(O && !istype(O.loc, /obj/item/weapon/storage))
 				O.hear_talk(src, message)
 
 	if(isbrain(src))//For brains to properly talk if they are in an MMI..or in a brain. Could be extended to other mobs I guess.

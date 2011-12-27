@@ -10,7 +10,7 @@
 	var/access_security = 0
 	var/access_engine = 0
 	var/access_medical = 0
-	var/access_manifest = 0
+	var/access_manifest = 1
 	var/access_clown = 0
 	var/access_mime = 0
 	var/access_janitor = 0
@@ -55,7 +55,6 @@
 		icon_state = "cart-s"
 		access_security = 1
 		access_medical = 1
-		access_manifest = 1
 
 
 	janitor
@@ -107,13 +106,11 @@
 	head
 		name = "Easy-Record DELUXE"
 		icon_state = "cart-h"
-		access_manifest = 1
 		access_status_display = 1
 
 	hop
 		name = "HumanResources9001"
 		icon_state = "cart-h"
-		access_manifest = 1
 		access_status_display = 1
 		access_quartermaster = 1
 
@@ -125,7 +122,6 @@
 	hos
 		name = "R.O.B.U.S.T. DELUXE"
 		icon_state = "cart-hos"
-		access_manifest = 1
 		access_status_display = 1
 		access_security = 1
 
@@ -137,21 +133,18 @@
 	ce
 		name = "Power-On DELUXE"
 		icon_state = "cart-ce"
-		access_manifest = 1
 		access_status_display = 1
 		access_engine = 1
 
 	cmo
 		name = "Med-U DELUXE"
 		icon_state = "cart-cmo"
-		access_manifest = 1
 		access_status_display = 1
 		access_medical = 1
 
 	rd
 		name = "Signal Ace DELUXE"
 		icon_state = "cart-rd"
-		access_manifest = 1
 		access_status_display = 1
 		access_reagent_scanner = 1
 
@@ -164,7 +157,6 @@
 		name = "Value-PAK Cartridge"
 		desc = "Now with 200% more value!"
 		icon_state = "cart-c"
-		access_manifest = 1
 		access_engine = 1
 		access_security = 1
 		access_medical = 1
@@ -175,6 +167,7 @@
 		name = "Detomatix Cartridge"
 		icon_state = "cart"
 		access_remote_door = 1
+		access_manifest = 0
 		remote_door_id = "syndicate" //Make sure this matches the syndicate shuttle's shield/door id!!
 		var/shock_charges = 4
 

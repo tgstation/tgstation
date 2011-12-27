@@ -45,4 +45,5 @@
 		H.equip_if_possible(new /obj/item/clothing/suit/armor/vest(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/clothing/head/helmet(H), H.slot_head)
 		H.equip_if_possible(new /obj/item/weapon/storage/id_kit(H), H.slot_in_backpack)
+		H.equip_if_possible(new /obj/item/clothing/gloves/blue(H), H.slot_gloves)
 		return 1

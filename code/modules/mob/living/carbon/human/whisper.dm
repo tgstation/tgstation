@@ -1,5 +1,5 @@
-//Lallander was here
 /mob/living/carbon/human/whisper(message as text)
+	//Figured it out.  If you use say :w (message) it HTML encodes it, THEN passes it to the whisper code, which does so again.  Jeez.  --SkyMarshal
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	if (!message)
