@@ -124,7 +124,7 @@ datum
 					self.data["antibodies"] |= M:antibodies
 
 					// check if the blood has antibodies that cure our disease
-					if(self.data["antibodies"] & M:virus2.antigen) if(prob(10))
+					if (M:virus2) if((self.data["antibodies"] & M:virus2.antigen) && prob(10))
 						M:virus2.dead = 1
 
 

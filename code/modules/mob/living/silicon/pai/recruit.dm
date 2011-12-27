@@ -174,7 +174,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 					if(c.key == O.key)
 						hasSubmitted = 1
 				if(!hasSubmitted && O.client.be_pai)
-					spawn question(O.client)
+					spawn question(O.client, origin)
 
 	proc/question(var/client/C, var/mob/origin)
 		asked.Add(C.key)

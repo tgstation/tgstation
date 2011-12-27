@@ -74,15 +74,11 @@
 			return
 
 		else
-			if(isnull(I)) // Added these calls to CRASH to diagnose a runtime error that may be one of the causes of erasure errors --Abi79
-				CRASH("disposal/attackby() was called, but I was nulled before calling user.drop_item()")
-
-			var/debug_item_name = I.name
+			if(isnull(I))
+				//CRASH("disposal/attackby() was called, but I was nulled before calling user.drop_item()")
+				return // No idea why, but somehow I gets nulled before it goes into the else, and that leads to a lot of spam with runtime errors.
 
 			user.drop_item()
-
-			if(isnull(I))
-				CRASH("disposal/attackby() was called with [debug_item_name] as I, but I was nulled after calling user.drop_item()")
 
 			I.loc = src
 			user << "You place \the [I] into the [src]."
