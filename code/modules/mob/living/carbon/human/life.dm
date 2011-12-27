@@ -992,6 +992,8 @@
 				for(var/datum/disease/D in viruses)
 					D.cure()
 
+			// clean all the symptoms incurred by the virus
+			src.disease_symptoms = 0
 
 			if(!virus2)
 			    // the following is silly since it lets you infect people through glass
@@ -1013,8 +1015,10 @@
 				// check if we're immune
 				if(virus2.antigen & src.antibodies) virus2.dead = 1
 				if(src.get_infection_chance())
-					var/obj/virus/V = new(src.loc)
-					V.disease = src.virus2
+				    // need more pathogens
+					for(var/i=0, i<3, i++)
+						var/obj/virus/V = new(src.loc)
+						V.disease = src.virus2
 
 
 
