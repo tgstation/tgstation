@@ -65,7 +65,7 @@
 	if ( istype(I,/obj/item/clothing/suit/storage/det_suit) && coat)
 		user << "There's already a coat on the rack!"
 		return ..()
-	user << "The coatrack wants none of what you offer."
+	user << "The coat rack wants none of what you offer."
 	return ..()
 
 

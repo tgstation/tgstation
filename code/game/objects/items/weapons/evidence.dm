@@ -53,8 +53,8 @@
 	if (src.contents.len > 0)
 		var/obj/item/I = src.contents[1]
 		user << "You take the [I] out of the [src]."
-		I.loc = user.loc
 		src.underlays -= I
+		I.loc = get_turf(user.loc)
 		w_class = 1
 		src.icon_state = "evidenceobj"
 		desc = "An empty evidence bag."
