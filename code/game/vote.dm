@@ -58,7 +58,14 @@
 
 	calcwin()
 
-	if(mode)
+	if(mode == 2)
+		var/wintext = capitalize(winner)
+		world << "Result is [wintext]"
+		for(var/md in vote.choices)
+			vote.choices -= md
+		return
+
+	else if(mode == 1)
 		if(ticker.current_state == 1)
 			if(!going)
 				world << "<B>The game will start soon.</B>"
@@ -191,12 +198,38 @@
 	if(vote.voting)
 		// vote in progress, do the current
 
-		text += "Vote to [vote.mode?"change mode":"restart round"] in progress.<BR>"
-		text += "[vote.endwait()] until voting is closed.<BR>"
-
 		var/list/votes = vote.getvotes()
+		if(vote.mode == 2)
+			text += "A custom vote is in progress.<BR>"
+			text += "[vote.endwait()] until voting is closed.<BR>"
+			text += "[vote.customname]"
 
-		if(vote.mode)		// true if changing mode
+			for(var/md in vote.choices)
+				var/disp = capitalize(md)
+				if(md=="default")
+					disp = "No change"
+
+				//world << "[md]|[disp]|[src.client.vote]|[votes[md]]"
+
+				if(src.client.vote == md)
+					text += "<LI><B>[disp]</B>"
+				else
+					text += "<LI><A href='?src=\ref[vote];voter=\ref[src];vote=[md]'>[disp]</A>"
+
+				text += "[votes[md]>0?" - [votes[md]] vote\s":null]<BR>"
+
+			text += "</UL>"
+
+			text +="<p>Current winner: <B>[vote.calcwin()]</B><BR>"
+
+			text += footer
+
+			usr << browse(text, "window=vote")
+
+		else if(vote.mode == 1)		// true if changing mode
+
+			text += "Vote to change mode in progress.<BR>"
+			text += "[vote.endwait()] until voting is closed.<BR>"
 
 			text += "Current game mode is: <B>[master_mode]</B>.<BR>Select the mode to change to:<UL>"
 
@@ -223,6 +256,8 @@
 			usr << browse(text, "window=vote")
 
 		else	// voting to restart
+			text += "Vote to restart round in progress.<BR>"
+			text += "[vote.endwait()] until voting is closed.<BR>"
 
 			text += "Restart the world?<BR><UL>"
 
@@ -279,12 +314,13 @@
 					text += "<A href='?src=\ref[vote];voter=\ref[src];vmode=2'>Begin change mode vote.</A><BR>"
 				else
 					text += "Change mode votes are disabled while a round is in progress, vote to restart first.<BR>"
-
+			if(src.client.holder)			//Strumpetplaya Add - Custom Votes for Admins
+				text += "<A href='?src=\ref[vote];voter=\ref[src];vmode=3'>Begin custom vote.</A><BR>"
 			text += footer
 			usr << browse(text, "window=vote")
 
 	spawn(20)
-		if(usr.client && usr.client.showvote)
+		if(usr.client && usr.client.showvote && !vote.enteringchoices)
 			usr.vote()
 		else
 			usr << browse(null, "window=vote")
@@ -312,6 +348,48 @@
 			return
 
 		vote.mode = text2num(href_list["vmode"])-1 	// hack to yield 0=restart, 1=changemode
+
+		if(vote.mode == 2)
+			vote.enteringchoices = 1
+			vote.voting = 1
+			vote.customname = input(usr, "What are you voting for?", "Custom Vote") as text
+			if(!vote.customname)
+				vote.enteringchoices = 0
+				vote.voting = 0
+				return
+
+			var/N = input(usr, "How many options does this vote have?", "Custom Vote", 0) as num
+			if(!N)
+				vote.enteringchoices = 0
+				vote.voting = 0
+				return
+			//world << "You're voting for [N] options!"
+			var/i
+			for(i=1; i<=N; i++)
+				var/addvote = input(usr, "What is option #[i]?", "Enter Option #[i]") as text
+				vote.choices += addvote
+			//for(var/O in vote.choices)
+				//world << "[O]"
+			vote.enteringchoices = 0
+			vote.votetime = world.timeofday + config.vote_period*10	// when the vote will end
+
+			spawn(config.vote_period * 10)
+				vote.endvote()
+
+			world << "\red<B>*** A custom vote has been initiated by [M.key].</B>"
+			world << "\red     You have [vote.timetext(config.vote_period)] to vote."
+
+			//log_vote("Voting to [vote.mode ? "change mode" : "restart round"] started by [M.name]/[M.key]")
+
+			for(var/client/C)
+				if(config.vote_no_default || (config.vote_no_dead && C.mob.stat == 2))
+					C.vote = "none"
+				else
+					C.vote = "default"
+
+			if(M) M.vote()
+			return
+
 		if(!ticker && vote.mode == 1)
 			if(going)
 				world << "<B>The game start has been delayed.</B>"

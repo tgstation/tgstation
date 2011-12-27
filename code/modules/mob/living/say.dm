@@ -132,6 +132,8 @@
 	if (!message)
 		return
 
+	message = capitalize(message) //capitalize the first letter of what they actually say
+
 	// :downs:
 	if (brainloss >= 60)
 		message = dd_replacetext(message, " am ", " ")

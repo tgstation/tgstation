@@ -2207,18 +2207,40 @@
 	set desc="Starts vote"
 	if (!usr.client.holder)
 		return
-	var/confirm = alert("What vote would you like to start?", "Vote", "Restart", "Change Game Mode", "Cancel")
-	if(confirm == "Cancel")
-		return
-	if(confirm == "Restart")
-		vote.mode = 0
-	// hack to yield 0=restart, 1=changemode
-	if(confirm == "Change Game Mode")
-		vote.mode = 1
-		if(!ticker)
-			if(going)
-				world << "<B>The game start has been delayed.</B>"
-				going = 0
+	var/confirm = alert("What vote would you like to start?", "Vote", "Restart", "Custom Vote", "Change Game Mode", "Cancel")
+	switch(confirm)
+		if("Cancel")
+			return
+		if("Restart")
+			vote.mode = 0
+		// hack to yield 0=restart, 1=changemode
+		if("Change Game Mode")
+			vote.mode = 1
+			if(!ticker)
+				if(going)
+					world << "<B>The game start has been delayed.</B>"
+					going = 0
+		if("Custom Vote")
+			vote.mode = 2
+			vote.enteringchoices = 1
+			vote.customname = input(usr, "What are you voting for?", "Custom Vote") as text
+			if(!vote.customname)
+				vote.enteringchoices = 0
+				vote.voting = 0
+				return
+
+			var/N = input(usr, "How many options does this vote have?", "Custom Vote", 0) as num
+			if(!N)
+				vote.enteringchoices = 0
+				vote.voting = 0
+				return
+
+			var/i
+			for(i=1; i<=N; i++)
+				var/addvote = input(usr, "What is option #[i]?", "Enter Option #[i]") as text
+				vote.choices += addvote
+			vote.enteringchoices = 0
+
 	vote.voting = 1
 						// now voting
 	vote.votetime = world.timeofday + config.vote_period*10

@@ -24,12 +24,6 @@
 	user.client.screen += src.boxes
 	user.client.screen += src.closer
 	user.client.screen += src.contents
-	var/xs = 7
-	var/ys = 7
-	for(var/obj/O in src.contents)
-		O.screen_loc = "[xs],[ys]"
-		O.layer = 20
-		xs++
 
 /obj/item/clothing/suit/storage/proc/close(mob/user as mob)
 	if(!user)
@@ -39,9 +33,30 @@
 	user.client.screen -= src.closer
 	user.client.screen -= src.contents
 
-/obj/item/clothing/suit/storage/MouseDrop(atom/A)
-	if(istype(A,/mob/living/carbon))
-		src.view_inv(A)
+/obj/item/clothing/suit/storage/MouseDrop(atom/over_object)
+	if(ishuman(usr))
+		var/mob/living/carbon/human/M = usr
+		if (!( istype(over_object, /obj/screen) ))
+			return ..()
+		playsound(src.loc, "rustle", 50, 1, -5)
+		if ((!( M.restrained() ) && !( M.stat ) && M.wear_suit == src))
+			if (over_object.name == "r_hand")
+				if (!( M.r_hand ))
+					M.u_equip(src)
+					M.r_hand = src
+			else
+				if (over_object.name == "l_hand")
+					if (!( M.l_hand ))
+						M.u_equip(src)
+						M.l_hand = src
+			M.update_clothing()
+			src.add_fingerprint(usr)
+			return
+		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
+			src.view_inv(M)
+			src.orient_objs(7,7,9,7)
+			return
+	return
 
 /obj/item/clothing/suit/storage/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(W.w_class > 2 || src.loc == W )
@@ -56,7 +71,56 @@
 	else if(user.s_active == src)
 		close(user)
 		view_inv(user)
+		orient2hud(user)
 	W.dropped(user)
+
+/obj/item/clothing/suit/storage/attack_paw(mob/user as mob)
+	playsound(src.loc, "rustle", 50, 1, -5)
+	return attack_hand(user)
+
+/obj/item/clothing/suit/storage/attack_hand(mob/user as mob)
+	playsound(src.loc, "rustle", 50, 1, -5)
+	if (src.loc == user)
+		if (user.s_active)
+			user.s_active.close(user)
+		view_inv(user)
+		orient2hud(user)
+	else
+		..()
+		for(var/mob/M in range(1))
+			if (M.s_active == src)
+				src.close(M)
+	src.add_fingerprint(user)
+	return
+
+/obj/item/clothing/suit/storage/proc/orient2hud(mob/user as mob)
+
+	if (src == user.l_hand)
+		src.orient_objs(3, 5, 3, 3)
+	else if (src == user.r_hand)
+		src.orient_objs(1, 5, 1, 3)
+	else if (istype(user,/mob/living/carbon/human) && src == user:wear_suit)
+		src.orient_objs(1, 3, 3, 3)
+	else
+		src.orient_objs(4, 4, 4, 2)
+	return
+
+/obj/item/clothing/suit/storage/proc/orient_objs(tx, ty, mx, my)
+
+	var/cx = tx
+	var/cy = ty
+	src.boxes.screen_loc = text("[],[] to [],[]", tx, ty, mx, my)
+	for(var/obj/O in src.contents)
+		O.screen_loc = text("[],[]", cx, cy)
+		O.layer = 20
+		cx++
+		if (cx > mx)
+			cx = tx
+			cy--
+		//Foreach goto(56)
+	src.closer.screen_loc = text("[],[]", mx, my)
+	return
+
 /*/obj/item/clothing/suit/storage/New()
 
 	src.boxes = new /obj/screen/storage(  )
@@ -199,17 +263,4 @@
 		//Foreach goto(56)
 	src.closer.screen_loc = text("[],[]", mx, my)
 	return
-
-/obj/item/weapon/storage/proc/orient2hud(mob/user as mob)
-
-	if (src == user.l_hand)
-		src.orient_objs(3, 11, 3, 4)
-	else
-		if (src == user.r_hand)
-			src.orient_objs(1, 11, 1, 4)
-		else
-			if (src == user.back)
-				src.orient_objs(4, 10, 4, 3)
-			else
-				src.orient_objs(4, 10, 4, 3)
-	return*/
+*/

@@ -10,7 +10,6 @@ CLIPBOARDS
 
 */
 
-
 // PAPER
 
 /obj/item/weapon/paper/New()
@@ -112,9 +111,10 @@ CLIPBOARDS
 			return
 
 		// check for exploits
-		if(findtext(t, "<script") != 0 || findtext(t, "<frame") != 0 || findtext(t, "<iframe") != 0 || findtext(t, "<input") != 0 || findtext(t, "<button") != 0 || findtext(t, "<a") != 0)
-			user << "\blue You think to yourself, \"Hm.. this is only paper...\""
-			return
+		for(var/tag in paper_blacklist)
+			if(findtext(t,"<"+tag))
+				user << "\blue You think to yourself, \"Hm.. this is only paper...\""
+				return
 
 		if(!overlays.Find("paper_words"))
 			src.overlays += "paper_words"
