@@ -6,6 +6,7 @@ cib - Game Master
 compactninja - Game Master
 hawkv3 - Game Admin
 headswe - Game Master
+iaryni - Game Master
 masterofapples - Game Admin
 megacaesar - Game Admin
 miniature - Game Master
