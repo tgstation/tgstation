@@ -271,12 +271,12 @@
 				m_type = 2
 
 		if ("mumble")
-			message = "<B>[src]</B> mumbles!"
+			message = "<B>[src]</B> mumbles."
 			m_type = 2
 
 		if ("grumble")
 			if (!muzzled)
-				message = "<B>[src]</B> grumbles!"
+				message = "<B>[src]</B> grumbles."
 				m_type = 2
 			else
 				message = "<B>[src]</B> makes a noise."

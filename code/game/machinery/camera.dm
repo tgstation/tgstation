@@ -287,9 +287,9 @@
 	user.reset_view(src)
 
 /obj/machinery/camera/attackby(W as obj, user as mob)
-	..()
 	if (istype(W, /obj/item/weapon/wirecutters))
 		deactivate(user)
+		..()
 	else if (istype(W, /obj/item/weapon/paper))
 		var/obj/item/weapon/paper/X = W
 		user << "You hold a paper up to the camera ..."
@@ -307,6 +307,7 @@
 		if(src.status)
 			user << "\red You can't dismantle a camera while it is active."
 		else
+			..()
 			user << "\blue Dismantling camera..."
 			if(do_after(user, 20))
 				var/obj/item/weapon/chem_grenade/case = new /obj/item/weapon/chem_grenade(src.loc)
@@ -322,15 +323,19 @@
 				del(src)
 	else if (istype(W, /obj/item/weapon/camera_bug))
 		if (!src.status)
+			..()
 			user << "\blue Camera non-functional"
 			return
 		if (src.bugged)
+			..()
 			user << "\blue Camera bug removed."
 			src.bugged = 0
 		else
+			..()
 			user << "\blue Camera bugged."
 			src.bugged = 1
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
+		..()
 		deactivate(user,2)//Here so that you can disconnect anyone viewing the camera, regardless if it's on or off.
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, loc)

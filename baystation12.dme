@@ -981,6 +981,7 @@
 #include "code\WorkInProgress\mapload\dmm_suite.dm"
 #include "code\WorkInProgress\mapload\reader.dm"
 #include "code\WorkInProgress\Mini\customitems.dm"
+#include "code\WorkInProgress\SkyMarshal\coatrack.dm"
 #include "code\WorkInProgress\SkyMarshal\policetape.dm"
 #include "code\WorkInProgress\virus2\analyser.dm"
 #include "code\WorkInProgress\virus2\antibodies.dm"
