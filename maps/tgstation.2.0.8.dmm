@@ -734,7 +734,7 @@
 "aof" = (/turf/simulated/floor{dir = 8; icon_state = "carpetside"},/area/security/detectives_office)
 "aog" = (/obj/structure/table/woodentable,/obj/item/weapon/pen,/obj/item/weapon/hand_labeler,/obj/item/device/taperecorder{pixel_y = 0},/obj/item/weapon/paper,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = "Streight"},/turf/simulated/floor{dir = 2; icon_state = "carpet"},/area/security/detectives_office)
 "aoh" = (/turf/simulated/floor{dir = 2; icon_state = "carpetcorner"},/area/security/detectives_office)
-"aoi" = (/obj/structure/stool/chair{dir = 8},/turf/simulated/floor{icon_state = "carpetside"},/area/security/detectives_office)
+"aoi" = (/turf/simulated/floor{icon_state = "carpetside"},/area/security/detectives_office)
 "aoj" = (/turf/simulated/floor{dir = 6; icon_state = "carpetside"},/area/security/detectives_office)
 "aok" = (/obj/machinery/firealarm{dir = 4; pixel_x = 24},/obj/structure/rack{dir = 8; layer = 2.9},/obj/item/weapon/storage/briefcase,/turf/simulated/floor{icon_state = "grimy"},/area/security/detectives_office)
 "aol" = (/obj/machinery/firealarm{dir = 8; pixel_x = -24},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = "90Curve"},/turf/simulated/floor{icon_state = "wood"},/area/lawoffice)

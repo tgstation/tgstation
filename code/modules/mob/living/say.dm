@@ -26,6 +26,7 @@
 		if(dongle.translate_hive) return 1
 
 /mob/living/say(var/message)
+	var/message_old = message
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	if (!message)
@@ -220,7 +221,7 @@
 
 		//I see no reason to restrict such way of whispering
 		if ("whisper")
-			whisper(message)
+			whisper(message_old)
 			return
 
 		if ("binary")

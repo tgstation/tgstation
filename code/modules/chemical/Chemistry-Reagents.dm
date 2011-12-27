@@ -1718,15 +1718,22 @@ datum
 				if(method == TOUCH)
 					if(istype(M, /mob/living/carbon/human))
 						if(M:wear_mask)
-
 							M << "\red Your mask protects you from the pepperspray!"
 							return
 						if(M:glasses)
+							if(M.job in security_positions)
+								M:emote("me",1,"dodges the pepperspray, their training paid off!")
+								M << "\red Your glasses protect you from most of the pepperspray, and your training takes care of the rest!"
 							M << "\red Your glasses protect you from most of the pepperspray!"
 							M:emote("scream")
 							M.eye_blurry = max(M.eye_blurry, 20)
 							M.eye_blind = max(M.eye_blind, 4)
 							return
+						if(M.job in security_positions)
+							M:emote("me",1,"dodges most the pepperspray, at least they were trained!")
+							M << "\red Your training protects you from most of the pepperspray!"
+							M.eye_blurry = max(M.eye_blurry, 20)
+							M.eye_blind = max(M.eye_blind, 4)
 						M:emote("scream")
 						M << "\red You're sprayed directly in the eyes with pepperspray!"
 						M.eye_blurry = max(M.eye_blurry, 5)
