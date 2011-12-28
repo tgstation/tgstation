@@ -6,8 +6,9 @@
 
 	New()
 		..()
-		step_rand(src)
-		step_rand(src)
+		step(src, pick(cardinal))
+		step(src, pick(cardinal))
+		step(src, pick(cardinal))
 		anchored = 1
 		spawn(300) del(src)
 
@@ -503,12 +504,6 @@
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.say("*groan")
 
-/datum/disease2/effect/lesser/scream
-	name = "Loudness Syndrome"
-	stage = 4
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.say("*scream")
-
 /datum/disease2/effect/lesser/drool
 	name = "Saliva Effect"
 	stage = 1
@@ -527,6 +522,31 @@
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.say("*twitch")
 
+/datum/disease2/effect/lesser/pale
+	name = "Ghost Effect"
+	stage = 1
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		if(prob(10))
+			mob.emote("me",1,"looks very pale.")
+
+/datum/disease2/effect/lesser/stumble
+	name = "Poor Balance Syndrome"
+	stage = 3
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		if(!mob.client) return
+
+		// little trick, this way you only stumble while moving
+		if(world.time < mob.client.move_delay + 10)
+			step(mob, pick(cardinal))
+			mob.emote("me",1,"stumbles over their own feet.")
+
+/datum/disease2/effect/lesser/hoarse
+	name = "Hoarse Throat"
+	stage = 1
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.disease_symptoms |= DISEASE_HOARSE
+
+
 /*Removed on request by Spaceman, due to it being detrimental to RP. -CN
 /datum/disease2/effect/lesser/deathgasp
 	name = "Zombie Syndrome"
@@ -534,11 +554,8 @@
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.say("*deathgasp")*/
 
-/datum/disease2/effect/lesser/giggle
-	name = "Uncontrolled Laughter Effect"
-	stage = 3
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.say("*giggle")
+var/global/const/DISEASE_HOARSE  = 2
+var/global/const/DISEASE_WHISPER = 4
 
 
 /datum/disease2/effect/lesser

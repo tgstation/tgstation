@@ -132,6 +132,9 @@
 	if (!message)
 		return
 
+	if( !message_mode && (disease_symptoms & DISEASE_WHISPER))
+		message_mode = "whisper"
+
 	message = capitalize(message) //capitalize the first letter of what they actually say
 
 	// :downs:
