@@ -44,11 +44,11 @@ PE|PE|PE
 	desc = "Part of a Particle Accelerator."
 	icon = 'particle_accelerator.dmi'
 	icon_state = "none"
-	anchored = 1
+	anchored = 0
 	density = 1
 	var
 		obj/machinery/particle_accelerator/control_box/master = null
-		construction_state = 4
+		construction_state = 0
 
 	end_cap
 		icon_state = "end_cap"
