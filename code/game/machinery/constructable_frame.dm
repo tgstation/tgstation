@@ -89,9 +89,15 @@
 							del(O)
 						new_machine.component_parts = list()
 						for(var/obj/O in src)
-							O.loc = new_machine
+							if(circuit.contain_parts) // things like disposal don't want their parts in them
+								O.loc = new_machine
+							else
+								O.loc = null
 							new_machine.component_parts += O
-						circuit.loc = new_machine
+						if(circuit.contain_parts)
+							circuit.loc = new_machine
+						else
+							circuit.loc = null
 						new_machine.RefreshParts()
 						del(src)
 
@@ -234,3 +240,16 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/micro_laser" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
 							"/obj/item/weapon/cable_coil" = 2,)
+
+/obj/item/weapon/circuitboard/disposal
+	name = "Circuit board (Disposal)"
+	build_path = "/obj/machinery/disposal"
+	board_type = "machine"
+	origin_tech = "engineering=2"
+	frame_desc = "Requires 1 Matter Bin, and 1 piece of cable."
+	contain_parts = 0
+	req_components = list(
+							"/obj/item/weapon/stock_parts/matter_bin" = 1,
+							"/obj/item/weapon/cable_coil" = 1)
+	m_amt = 50
+	g_amt = 50

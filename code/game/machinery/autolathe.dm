@@ -236,6 +236,8 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/clothing/head/helmet/welding(), \
 		new /obj/item/weapon/stock_parts/console_screen(), \
 		new /obj/item/weapon/airlock_electronics(), \
+		new /obj/item/weapon/module/power_control(), \
+		new /obj/item/weapon/circuitboard/disposal(), \
 		new /obj/item/stack/sheet/metal(), \
 		new /obj/item/stack/sheet/glass(), \
 		new /obj/item/stack/sheet/rglass(), \

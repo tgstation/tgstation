@@ -392,7 +392,7 @@
 						for(var/i=2 to lentext(note))
 							var/ni = copytext(note,i,i+1)
 							if(!text2num(ni))
-								if(ni == "#" || ni == "b")
+								if(ni == "#" || ni == "b" || ni == "n")
 									cur_acc[cur_note] = ni
 								else if(ni == "s")
 									cur_acc[cur_note] = "#" // so shift is never required
