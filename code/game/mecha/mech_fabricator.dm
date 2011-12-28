@@ -262,7 +262,7 @@
 		if(!istype(queue))
 			queue = list()
 		if(part)
-			queue[++queue.len] = part
+			queue.Add(part)
 		return queue.len
 
 	proc/remove_from_queue(index)
