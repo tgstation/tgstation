@@ -5,7 +5,7 @@
 /datum/game_mode/traitor
 	name = "traitor"
 	config_tag = "traitor"
-	restricted_jobs = list("Cyborg", "AI")//Approved by headmins for a week test, if you see this it would be nice if you didn't spread it everywhere
+	restricted_jobs = list("Cyborg")//Approved by headmins for a week test, if you see this it would be nice if you didn't spread it everywhere
 	required_players = 0
 	required_enemies = 1
 
@@ -13,7 +13,7 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
-	var/const/traitor_scaling_coeff = 5.0 //how much does the amount of players get divided by to determine traitors
+	var/const/traitor_scaling_coeff = 10.0 //how much does the amount of players get divided by to determine traitors
 
 
 /datum/game_mode/traitor/announce()
@@ -31,7 +31,7 @@
 	var/num_traitors = 1
 
 	if(config.traitor_scaling)
-		num_traitors = max(1, round((num_players())/(traitor_scaling_coeff)))
+		num_traitors = max(1, round((num_players())/(traitor_scaling_coeff)) + 1)
 	else
 		num_traitors = max(1, min(num_players(), traitors_possible))
 
@@ -83,18 +83,23 @@
 			traitor.objectives += block_objective
 
 	else
-		switch(rand(1,100))
-			if(1 to 50)
-				var/datum/objective/assassinate/kill_objective = new
-				kill_objective.owner = traitor
-				kill_objective.find_target()
-				traitor.objectives += kill_objective
-			else
-				var/datum/objective/steal/steal_objective = new
-				steal_objective.owner = traitor
-				steal_objective.find_target()
-				traitor.objectives += steal_objective
-		switch(rand(1,100))
+		for(var/i = 1, i <= rand(1,3), i++)
+			switch(rand(1,100))
+				if(1 to 40)
+					var/datum/objective/assassinate/kill_objective = new
+					kill_objective.owner = traitor
+					kill_objective.find_target()
+					traitor.objectives += kill_objective
+				else
+					var/datum/objective/steal/steal_objective = new
+					steal_objective.owner = traitor
+					steal_objective.find_target()
+					traitor.objectives += steal_objective
+		if (!(locate(/datum/objective/escape) in traitor.objectives))
+			var/datum/objective/escape/escape_objective = new
+			escape_objective.owner = traitor
+			traitor.objectives += escape_objective
+/*		switch(rand(1,100))
 			if(1 to 90)
 				if (!(locate(/datum/objective/escape) in traitor.objectives))
 					var/datum/objective/escape/escape_objective = new
@@ -105,7 +110,7 @@
 				if (!(locate(/datum/objective/hijack) in traitor.objectives))
 					var/datum/objective/hijack/hijack_objective = new
 					hijack_objective.owner = traitor
-					traitor.objectives += hijack_objective
+					traitor.objectives += hijack_objective*/
 	return
 
 

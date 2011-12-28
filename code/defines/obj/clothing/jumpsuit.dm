@@ -375,7 +375,7 @@
 	item_state = "det"
 	color = "detective"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	var/obj/item/weapon/gun/projectile/detective/gun
+	var/obj/item/weapon/gun
 
 /obj/item/clothing/under/scratch
 	name = "White Suit"

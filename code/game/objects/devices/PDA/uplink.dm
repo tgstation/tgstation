@@ -44,7 +44,8 @@
 	menu_message += "<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=imp_freedom'>Freedom Implant (with injector)</A> (3)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=imp_uplink'>Uplink Implant (5 crystals inside)</A> (10)<BR>"
-	menu_message += "<A href='byond://?src=\ref[src];buy_item=paralysispen'>Paralysis Pen</A> (3)<BR>" //Note that this goes to the updated sleepypen now.
+//	menu_message += "<A href='byond://?src=\ref[src];buy_item=paralysispen'>Paralysis Pen</A> (3)<BR>"
+//When given the choice, people have been P2W
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=sleepypen'>Sleepy Pen</A> (4)<BR>" //Terrible -Pete.
 	menu_message += "<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=detomatix'>Detomatix Cartridge</A> (3)<BR>"
