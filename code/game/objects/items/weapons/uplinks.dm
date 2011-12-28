@@ -35,7 +35,7 @@ SYNDICATE UPLINK
 			dat += "<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=revolver'>Revolver</A> (6)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=revolver_ammo'>Ammo-357</A> for use with Revolver (2)<BR>"
-			dat += "<A href='byond://?src=\ref[src];buy_item=suffocation_revolver_ammo'>Ammo-418</A> for use with Revolver (3)<BR>"
+//			dat += "<A href='byond://?src=\ref[src];buy_item=suffocation_revolver_ammo'>Ammo-418</A> for use with Revolver (3)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=xbow'>Energy Crossbow</A> (5)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=sword'>Energy Sword</A> (4)<BR>"
 			dat += "<BR>"
@@ -89,10 +89,12 @@ SYNDICATE UPLINK
 					if (src.uses >= 6)
 						src.uses -= 6
 						new /obj/item/weapon/gun/projectile(get_turf(src))
+						feedback_add_details("traitor_uplink_items_bought","RE")
 				if("revolver_ammo")
 					if (src.uses >= 2)
 						src.uses -= 2
 						new /obj/item/ammo_magazine/a357(get_turf(src))
+						feedback_add_details("traitor_uplink_items_bought","RA")
 				if("suffocation_revolver_ammo")
 					if (src.uses >= 3)
 						src.uses -= 3
@@ -101,35 +103,43 @@ SYNDICATE UPLINK
 					if (src.uses >= 5)
 						src.uses -= 5
 						new /obj/item/weapon/gun/energy/crossbow(get_turf(src))
+						feedback_add_details("traitor_uplink_items_bought","XB")
 				if("empbox")
 					if (src.uses >= 4)
 						src.uses -= 4
 						new /obj/item/weapon/storage/emp_kit(get_turf(src))
+						feedback_add_details("traitor_uplink_items_bought","EM")
 				if("voice")
 					if (src.uses >= 4)
 						src.uses -= 4
 						new /obj/item/clothing/mask/gas/voice(get_turf(src))
+						feedback_add_details("traitor_uplink_items_bought","VC")
 				if("jump")
 					if (src.uses >= 3)
 						src.uses -= 3
 						new /obj/item/clothing/under/chameleon(get_turf(src))
+						feedback_add_details("traitor_uplink_items_bought","CJ")
 				if("shoes")
 					if (uses >= 3)
 						uses -= 3
 						new /obj/item/clothing/shoes/syndigaloshes(get_turf(src))
+						feedback_add_details("traitor_uplink_items_bought","SH")
 				if("card")
 					if (src.uses >= 3)
 						src.uses -= 3
 						new /obj/item/weapon/card/id/syndicate(get_turf(src))
+						feedback_add_details("traitor_uplink_items_bought","AC")
 				if("emag")
 					if (src.uses >= 3)
 						src.uses -= 3
 						new /obj/item/weapon/card/emag(get_turf(src))
+						feedback_add_details("traitor_uplink_items_bought","EC")
 				if("imp_freedom")
 					if (src.uses >= 3)
 						src.uses -= 3
 						var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(get_turf(src))
 						O.imp = new /obj/item/weapon/implant/freedom(O)
+						feedback_add_details("traitor_uplink_items_bought","FI")
 				if("sleepypen")
 					if (src.uses >= 5)
 						src.uses -= 5
@@ -138,10 +148,12 @@ SYNDICATE UPLINK
 					if (src.uses >= 3)
 						src.uses -= 3
 						new /obj/item/weapon/pen/paralysis(get_turf(src))
+						feedback_add_details("traitor_uplink_items_bought","PP")
 				if("projector")
 					if (src.uses >= 4)
 						src.uses -= 4
 						new /obj/item/device/chameleon(get_turf(src))
+						feedback_add_details("traitor_uplink_items_bought","CP")
 				if("lawmod")
 					if (src.uses >= 7)
 						src.uses -= 7
@@ -154,43 +166,53 @@ SYNDICATE UPLINK
 							if (src.uses >= 4)
 								src.uses -= 4
 								new /obj/item/weapon/cloaking_device(get_turf(src))
+								feedback_add_details("traitor_uplink_items_bought","CD")
 				if("sword")
 					if (src.uses >= 4)
 						src.uses -= 4
 						new /obj/item/weapon/melee/energy/sword(get_turf(src))
+						feedback_add_details("traitor_uplink_items_bought","ES")
 				if("bomb")
 					if (src.uses >= 2)
 						src.uses -= 2
 						new /obj/item/weapon/plastique(get_turf(src))
+						feedback_add_details("traitor_uplink_items_bought","C4")
 				if("powersink")
 					if (src.uses >= 5)
 						src.uses -= 5
 						new /obj/item/device/powersink(get_turf(src))
+						feedback_add_details("traitor_uplink_items_bought","PS")
 				if("detomatix")
 					if (src.uses >= 3)
 					 src.uses -= 3
 					 new /obj/item/weapon/cartridge/syndicate(get_turf(src))
+					 feedback_add_details("traitor_uplink_items_bought","DC")
 				if("space")
 					if (src.uses >= 3)
 					 src.uses -= 3
 					 new /obj/item/clothing/suit/space/syndicate(get_turf(src))
 					 new /obj/item/clothing/head/helmet/space/syndicate(get_turf(src))
+					 feedback_add_details("traitor_uplink_items_bought","SS")
 				if("botchat")
 					if (src.uses >= 3)
 						src.uses -= 3
 						new /obj/item/device/radio/headset/traitor(get_turf(src))
+						feedback_add_details("traitor_uplink_items_bought","BT")
 				if("toolbox")
 					if(uses)
 						uses--
 						new /obj/item/weapon/storage/toolbox/syndicate(get_turf(src))
+						feedback_add_details("traitor_uplink_items_bought","ST")
 				if("soap")
 					if(uses)
 						uses--
 						new /obj/item/weapon/soap/syndie(get_turf(src))
+						feedback_add_details("traitor_uplink_items_bought","SP")
 				if("balloon")
 					if (src.uses >= 10)
 						uses -= 10
 						new /obj/item/toy/syndicateballoon(get_turf(src))
+						feedback_add_details("traitor_uplink_items_bought","BS")
 		else if (href_list["lock"] && src.origradio)
 			// presto chango, a regular radio again! (reset the freq too...)
 			shutdown_uplink()
