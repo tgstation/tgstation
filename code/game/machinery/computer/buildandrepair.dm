@@ -26,6 +26,7 @@
 		powernet = null
 		list/records = null
 		frame_desc = null
+		contain_parts = 1
 
 /obj/item/weapon/circuitboard/security
 	name = "Circuit board (Security)"

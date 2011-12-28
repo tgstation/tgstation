@@ -56,6 +56,26 @@
 			update()
 			return
 
+		if(istype(I, /obj/item/weapon/weldingtool) && I:welding)
+			var/obj/item/weapon/weldingtool/W = I
+			playsound(src.loc, 'Welder.ogg', 100, 1)
+			var/turf/T = get_turf(user)
+			user.visible_message("[user] welds apart the disposal.", "You start to weld apart the disposal.")
+			sleep(40)
+			if(get_turf(user) == T && W.remove_fuel(2,user))
+				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(loc)
+				M.state = 2
+				M.icon_state = "box_1"
+				for(var/obj/O in component_parts)
+					if(O.reliability != 100 && crit_fail)
+						O.crit_fail = 1
+					O.loc = src.loc
+				// the stuff still in the disposal
+				for(var/obj/O in src)
+					O.loc = src.loc
+				del(src)
+			return
+
 		var/obj/item/weapon/grab/G = I
 		if(istype(G))	// handle grabbed mob
 			if(ismob(G.affecting))
