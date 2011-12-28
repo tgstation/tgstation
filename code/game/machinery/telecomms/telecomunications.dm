@@ -16,8 +16,10 @@
 		list/links = list() // list of machines this machine is linked to
 		traffic = 0 // value increases as traffic increases
 		list/autolinkers = list() // list of text/number values to link with
-		id = "" // identification string
+		id = "NULL" // identification string
 		network = "NULL" // the network of the machinery
+
+		list/freq_listening = list() // list of frequencies to tune into: if none, will listen to all
 
 		machinetype = 0 // just a hacky way of preventing alike machines from pairing
 
@@ -48,6 +50,13 @@
 		// receive information from linked machinery
 		..()
 
+	proc/is_freq_listening(datum/signal/signal)
+		// return 1 if found, 0 if not found
+		if((signal.frequency in freq_listening) || (!freq_listening.len))
+			return 1
+		else
+			return 0
+
 	New()
 		..()
 		if(autolinkers.len)
@@ -68,7 +77,7 @@
 */
 
 /obj/machinery/telecomms/receiver
-	name = "subspace receiver"
+	name = "Subspace Receiver"
 	icon = 'stationobjs.dmi'
 	icon_state = "broadcast receiver"
 	desc = "This machine has a dish-like shape and green lights. It is designed to detect and process subspace radio activity."
@@ -77,18 +86,16 @@
 	use_power = 1
 	idle_power_usage = 30
 	machinetype = 1
-	var
-		list/freq_listening = list() // list of frequencies that are being tuned into
-									 // you can use "ALL" on any machine using this var
 
 	receive_signal(datum/signal/signal)
 
 		if(signal.transmission_method == 2)
 
-			if( (signal.frequency in freq_listening) || ("ALL" in freq_listening) ) // detect subspace signals
+			if(is_freq_listening(signal)) // detect subspace signals
 
 				var/datum/signal/copy = new
 				copy.copy_from(signal) // copy information to new signal
+				copy.data["original"] = signal
 
 				relay_information(copy) // ideally relay the information to bus units
 
@@ -103,7 +110,7 @@
 */
 
 /obj/machinery/telecomms/bus
-	name = "bus mainframe"
+	name = "Bus Mainframe"
 	icon = 'stationobjs.dmi'
 	icon_state = "bus1"
 	desc = "A mighty piece of hardware used to send massive amounts of data quickly."
@@ -115,18 +122,19 @@
 
 	receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
-		if(signal.data["compression"]) // if signal is still compressed from subspace transmission
-			// send to one linked processor unit
+		if(is_freq_listening(signal))
+			if(signal.data["compression"]) // if signal is still compressed from subspace transmission
+				// send to one linked processor unit
 
-			var/send_to_processor = relay_information(signal, "/obj/machinery/telecomms/processor", 1)
+				var/send_to_processor = relay_information(signal, "/obj/machinery/telecomms/processor", 1)
 
-			if(!send_to_processor) // failed to send to a processor, relay information anyway
+				if(!send_to_processor) // failed to send to a processor, relay information anyway
+					relay_information(signal, "/obj/machinery/telecomms/server")
+
+
+			else // the signal has been decompressed by a processor unit
+				 // send to all linked server units
 				relay_information(signal, "/obj/machinery/telecomms/server")
-
-
-		else // the signal has been decompressed by a processor unit
-			 // send to all linked server units
-			relay_information(signal, "/obj/machinery/telecomms/server")
 
 
 
@@ -137,7 +145,7 @@
 */
 
 /obj/machinery/telecomms/processor
-	name = "processor unit"
+	name = "Processor Unit"
 	icon = 'stationobjs.dmi'
 	icon_state = "processor_on"
 	desc = "This machine is used to process large quantities of information."
@@ -149,8 +157,9 @@
 
 	receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
-		signal.data["compression"] = 0 // uncompress subspace signal
-		relay_direct_information(signal, machine_from) // send the signal back to the machine
+		if(is_freq_listening(signal))
+			signal.data["compression"] = 0 // uncompress subspace signal
+			relay_direct_information(signal, machine_from) // send the signal back to the machine
 
 
 
@@ -163,7 +172,7 @@
 
 
 /obj/machinery/telecomms/server
-	name = "telecommunication server"
+	name = "Telecommunication Server"
 	icon = 'stationobjs.dmi'
 	icon_state = "comm_server"
 	desc = "A machine used to store data and network statistics."
@@ -173,14 +182,13 @@
 	idle_power_usage = 15
 	machinetype = 4
 	var
-		list/freq_listening = list()
 		list/log_entries = list()
 
 	receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
 		if(signal.data["message"] && !signal.data["compression"])
 
-			if( (signal.frequency in freq_listening) || ("ALL" in freq_listening) )
+			if(is_freq_listening(signal))
 
 				// if signal contains discernable data
 

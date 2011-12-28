@@ -59,25 +59,35 @@
 					var/race			   // The actual race of the mob
 					var/language = "Human" // MMIs, pAIs, Cyborgs and humans all speak Human
 					var/mobtype = "[C.parameters["mobtype"]]"
-					switch(mobtype)
+					var/mob/M = new mobtype
 
-						if("/mob/living/carbon/human")
-							race = "Human"
+					if(istype(M, /mob/living/carbon/human))
+						race = "Human"
 
-						if("/mob/living/carbon/monkey")
-							race = "Monkey"
-							language = race
+					else if(istype(M, /mob/living/carbon/monkey))
+						race = "Monkey"
+						language = race
 
-						if("/mob/living/carbon/metroid")
-							race = "Metroid"
-							language = race
+					else if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/metroid))
+						race = "Alien"
+						language = race
 
-						if("/mob/living/carbon/alien")
-							race = "Alien"
-							language = race
-
-					if(findtext("C.parameters["mobtype"]", "/mob/living/silicon"))
+					else if(istype(M, /mob/living/silicon))
 						race = "Artificial Life"
+
+					else if(istype(M, /mob/living/simple_animal/corgi))
+						race = "Dog"
+						language = race
+
+					else if(istype(M, /mob/living/simple_animal/cat))
+						race = "Cat"
+						language = race
+
+					else
+						race = "<i>Unidentifiable</i>"
+						language = race
+
+					del(M)
 
 					// -- If the orator is a human, or universal translate is active, OR mob has universal speech on --
 
@@ -139,7 +149,7 @@
 
 				if("scan")
 					if(servers.len > 0)
-						temp = "- FAILED: CANNOT PROBE WHEN BUFFER FULL -"
+						temp = "<font color = #D70B00>- FAILED: CANNOT PROBE WHEN BUFFER FULL -</font color>"
 
 					else
 						for(var/obj/machinery/telecomms/server/T in range(25, src))
@@ -147,9 +157,9 @@
 								servers.Add(T)
 
 						if(!servers.len)
-							temp = "- FAILED: UNABLE TO LOCATE SERVERS IN \[[network]\] -"
+							temp = "<font color = #D70B00>- FAILED: UNABLE TO LOCATE SERVERS IN \[[network]\] -</font color>"
 						else
-							temp = "- [servers.len] SERVERS PROBED & BUFFERED -"
+							temp = "<font color = #336699>- [servers.len] SERVERS PROBED & BUFFERED -</font color>"
 
 						screen = 0
 
@@ -158,20 +168,28 @@
 
 				var/datum/comm_log_entry/D = SelectedServer.log_entries[text2num(href_list["delete"])]
 
-				temp = "- DELETED ENTRY: [D.name] -"
+				temp = "<font color = #336699>- DELETED ENTRY: [D.name] -</font color>"
 
 				SelectedServer.log_entries.Remove(D)
 				del(D)
 
+			else
+				temp = "<font color = #D70B00>- FAILED: NO SELECTED MACHINE -</font color>"
 
 		if(href_list["input"])
 
 			var/newnet = input(usr, "Which network do you want to view?", "Comm Monitor", network) as null|text
-			if(newnet && usr in range(1, src))
-				network = newnet
-				screen = 0
-				machines = list()
-				temp = "- NEW NETWORK TAG SET IN ADDRESS \[[network]\] -"
+
+			if(newnet && usr in range(1, src) && newnet != network)
+				if(length(newnet) > 15)
+					temp = "<font color = #D70B00>- FAILED: NETWORK TAG STRING TOO LENGHTLY -</font color>"
+
+				else
+
+					network = newnet
+					screen = 0
+					machines = list()
+					temp = "<font color = #336699>- NEW NETWORK TAG SET IN ADDRESS \[[network]\] -</font color>"
 
 		updateUsrDialog()
 		return

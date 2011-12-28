@@ -95,7 +95,7 @@
 
 				if("probe")
 					if(machines.len > 0)
-						temp = "- FAILED: CANNOT PROBE WHEN BUFFER FULL -"
+						temp = "<font color = #D70B00>- FAILED: CANNOT PROBE WHEN BUFFER FULL -</font color>"
 
 					else
 						for(var/obj/machinery/telecomms/T in range(25, src))
@@ -103,9 +103,9 @@
 								machines.Add(T)
 
 						if(!machines.len)
-							temp = "- FAILED: UNABLE TO LOCATE NETWORK ENTITIES IN \[[network]\] -"
+							temp = "<font color = #D70B00>- FAILED: UNABLE TO LOCATE NETWORK ENTITIES IN \[[network]\] -</font color>"
 						else
-							temp = "- [machines.len] ENTITIES LOCATED & BUFFERED -"
+							temp = "<font color = #336699>- [machines.len] ENTITIES LOCATED & BUFFERED -</font color>"
 
 						screen = 0
 
@@ -113,11 +113,15 @@
 		if(href_list["input"])
 
 			var/newnet = input(usr, "Which network do you want to view?", "Comm Monitor", network) as null|text
-			if(newnet && usr in range(1, src))
-				network = newnet
-				screen = 0
-				machines = list()
-				temp = "- NEW NETWORK TAG SET IN ADDRESS \[[network]\] -"
+			if(newnet && usr in range(1, src) && newnet != network)
+				if(length(newnet) > 15)
+					temp = "<font color = #D70B00>- FAILED: NETWORK TAG STRING TOO LENGHTLY -</font color>"
+
+				else
+					network = newnet
+					screen = 0
+					machines = list()
+					temp = "<font color = #336699>- NEW NETWORK TAG SET IN ADDRESS \[[network]\] -</font color>"
 
 		updateUsrDialog()
 		return

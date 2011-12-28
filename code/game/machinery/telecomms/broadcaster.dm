@@ -7,7 +7,7 @@
 
 
 /obj/machinery/telecomms/broadcaster
-	name = "subspace broadcaster"
+	name = "Subspace Broadcaster"
 	icon = 'stationobjs.dmi'
 	icon_state = "broadcaster"
 	desc = "A dish-shaped machine used to broadcast processed subspace signals."
@@ -30,6 +30,11 @@
 							  signal.data["realname"], signal.data["vname"])
 
 			signal.data["done"] = 1 // mark the signal as being broadcasted
+
+			// Search for the original signal and mark it as done as well
+			var/datum/signal/original = signal.data["original"]
+			if(original)
+				original.data["done"] = 1
 
 			/* --- Do a snazzy animation! --- */
 			flick("broadcaster_send", src)
@@ -294,8 +299,6 @@
 					R.show_message("[part_a]<a href='byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]'>[vname]</a>[part_b][quotedmsg][part_c]", 2)
 				else
 					R.show_message(rendered, 2)
-
-	// If the signal doesn't need to be used by intercoms or anything:
 
 
 
