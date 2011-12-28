@@ -183,9 +183,10 @@
 				message = "<B>[src]</B> makes a weak noise."
 				m_type = 2
 
-		if ("deathgasp")
+/*		if ("deathgasp")
 			message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
-			m_type = 1
+			m_type = 1	*/
+			//No.  --SkyMarshal
 
 		if ("giggle")
 			if (!muzzled)
