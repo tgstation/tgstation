@@ -234,3 +234,13 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/micro_laser" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
 							"/obj/item/weapon/cable_coil" = 2,)
+
+/obj/item/weapon/circuitboard/disposal
+	name = "Circuit board (Disposal)"
+	build_path = "/obj/machinery/disposal"
+	board_type = "machine"
+	origin_tech = "engineering=2"
+	frame_desc = "Requires 1 Matter Bin, and 2 pieces of cable."
+	req_components = list(
+							"/obj/item/weapon/stock_parts/matter_bin" = 1,
+							"/obj/item/weapon/cable_coil" = 3)
