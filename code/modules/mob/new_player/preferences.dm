@@ -52,6 +52,8 @@ datum/preferences
 		be_special = 0
 		//Play admin midis
 		midis = 1
+		//Play pregame music
+		pregame_music = 1
 		//Saved changlog filesize to detect if there was a change
 		lastchangelog = 0
 

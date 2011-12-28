@@ -15,8 +15,7 @@
 			M << "You will now [M.client.midis? "start":"stop"] receiving any sounds uploaded by admins[M.client.midis? "":", and any current midis playing have been disabled"]."
 		return
 
-
-
+/* why is something that only is usable in the lobby a mob verb?
 /mob/verb/toggletitlemusic()
 	set category = "Special Verbs"
 	set name = "Toggle Pregame Music"
@@ -29,3 +28,4 @@
 			M << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jamsz
 
 		return
+*/
