@@ -8,6 +8,9 @@
 
 
 	attack_hand(mob/M as mob)
+		if(isrobot(M) || isAI(M))
+			return
+
 		if(busy)
 			M << "\red Someone's already washing something here."
 			return
