@@ -67,6 +67,7 @@
 				verbs += /client/proc/debug_variables
 				//verbs += /client/proc/cmd_modify_object_variables --Merged with view variables
 				verbs += /client/proc/cmd_modify_ticker_variables
+				verbs += /client/proc/toggleadminhelpsound
 
 				// Admin helpers
 				verbs += /client/proc/toggle_view_range
