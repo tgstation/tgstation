@@ -5,6 +5,7 @@
 // Automatically recharges air (unless off), will flush when ready if pre-set
 // Can hold items and human size things, no other draggables
 // Toilets are a type of disposal bin for small objects only and work on magic. By magic, I mean torque rotation
+#define SEND_PRESSURE 0.05*ONE_ATMOSPHERE
 
 /obj/machinery/disposal
 	name = "disposal unit"
@@ -190,7 +191,7 @@
 		else
 			dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (idle)<BR>"
 
-		var/per = 100* air_contents.return_pressure() / (2*ONE_ATMOSPHERE)
+		var/per = 100* air_contents.return_pressure() / (SEND_PRESSURE)
 
 		dat += "Pressure: [round(per, 1)]%<BR></body>"
 
@@ -284,7 +285,7 @@
 
 		src.updateDialog()
 
-		if(flush && air_contents.return_pressure() >= 2*ONE_ATMOSPHERE)	// flush can happen even without power
+		if(flush && air_contents.return_pressure() >= SEND_PRESSURE)	// flush can happen even without power
 			flush()
 
 		if(stat & NOPOWER)			// won't charge if no power
@@ -312,7 +313,7 @@
 
 
 		// if full enough, switch to ready mode
-		if(air_contents.return_pressure() >= 2*ONE_ATMOSPHERE)
+		if(air_contents.return_pressure() >= SEND_PRESSURE)
 			mode = 2
 			update()
 		return
