@@ -76,6 +76,9 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("turret frame", /obj/machinery/porta_turret_construct, 5, one_per_turf = 1), \
 	null, \
 	new/datum/stack_recipe("apc frame", /obj/item/apc_frame, 2), \
+	new/datum/stack_recipe("tube light frame", /obj/structure/light_frame), \
+	new/datum/stack_recipe("small light frame", /obj/structure/light_frame/small), \
+	new/datum/stack_recipe("table lamp frame", /obj/structure/light_frame/lamp), \
 	new/datum/stack_recipe("grenade casing", /obj/item/weapon/chem_grenade), \
 	null, \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20), \

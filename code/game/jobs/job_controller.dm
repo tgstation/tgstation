@@ -103,6 +103,10 @@ var/global/datum/controller/occupations/job_master
 
 
 	proc/FillAIPosition()
+		// this now only forces AI if malf mode
+		if(ticker.mode.name != "AI malfunction")
+			return
+
 		var/ai_selected = 0
 		var/datum/job/job = GetJob("AI")
 		if(!job)	return 0
@@ -167,7 +171,7 @@ var/global/datum/controller/occupations/job_master
 		FillHeadPosition()
 		Debug("DO, Head Check end")
 
-		//Check for an AI
+		//Check for an AI, now purely just for malf mode
 		Debug("DO, Running AI Check")
 		FillAIPosition()
 		Debug("DO, AI Check end")

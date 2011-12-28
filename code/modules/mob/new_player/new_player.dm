@@ -21,8 +21,6 @@
 			mind.key = key
 			mind.current = src
 
-		spawn() Playmusic() // git some tunes up in heeyaa~
-
 		var/starting_loc = pick(newplayer_start)
 		if(!starting_loc)	starting_loc = locate(1,1,1)
 		loc = starting_loc
@@ -46,6 +44,9 @@
 				changes()
 				preferences.lastchangelog = lastchangelog
 				preferences.savefile_save(src, 1)
+
+		if(preferences.pregame_music)
+			spawn() Playmusic() // git some tunes up in heeyaa~
 
 		new_player_panel()
 		//PDA Resource Initialisation =======================================================>
@@ -125,6 +126,8 @@
 
 		output += "<BR><a href='byond://?src=\ref[src];observe=1'>Observe</A><BR>"
 
+		output += "<BR><a href='byond://?src=\ref[src];pregame_music=1'>Lobby Music</A><BR>"
+
 		src << browse(output,"window=playersetup;size=250x233;can_close=0")
 		return
 
@@ -142,6 +145,9 @@
 				break
 
 		src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS
+
+	proc/Stopmusic()
+		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jamsz
 
 	Stat()
 		..()
@@ -207,6 +213,16 @@
 
 				del(src)
 				return 1
+
+		if(href_list["pregame_music"])
+			preferences.pregame_music = !preferences.pregame_music
+			if(preferences.pregame_music)
+				Playmusic()
+			else
+				Stopmusic()
+			// only save this 1 pref, so current slot doesn't get saved w/o user's knowledge
+			var/savefile/F = new(preferences.savefile_path(src))
+			F["pregame_music"] << preferences.pregame_music
 
 		if(href_list["late_join"])
 			LateChoices()
