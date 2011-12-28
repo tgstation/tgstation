@@ -452,10 +452,6 @@
 
 	ghost.client.mob = src.occupant
 
-	src.occupant.hud_used = new/obj/hud( src )
-		// probably redundant because previous line calls mob/Login() which does this line of code
-		// but until this is proven useless keep it for safety - Doohl
-
 	src.icon_state = "pod_1"
 	//Get the clone body ready
 	src.occupant.rejuv = 10
