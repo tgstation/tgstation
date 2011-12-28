@@ -149,7 +149,7 @@
 		suiciding = 1
 		viewers(src) << "\red <b>[src] is thrashing wildly! It looks like \he's trying to commit suicide.</b>"
 		//put em at -175
-		adjustOxyLoss(max(100 - getFireLoss() - getBruteLoss() - getOxyLoss()), 0)
+		adjustOxyLoss(max(100 - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 
 
