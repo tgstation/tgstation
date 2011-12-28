@@ -207,6 +207,7 @@
 		t1 += "[src.storedinfo[i]]<BR>"
 	P.info = t1
 	P.name = "paper- 'Transcript'"
+	P.overlays += "paper_words"
 
 
 /obj/item/device/taperecorder/attack_self(mob/user)
