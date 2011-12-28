@@ -23,21 +23,23 @@
 		usr.emote(message)
 
 /mob/proc/say_dead(var/message)
-	var/name = src.real_name
-	var/alt_name = ""
+	var/m_name = src.real_name
+	if(!m_name)
+		m_name = src.name
+	//var/alt_name = ""
 
-	if (istype(src, /mob/living/carbon/human) && src.name != src.real_name)
-		var/mob/living/carbon/human/H = src
-		alt_name = " (as [H.get_authentification_name()])"
-	else if (istype(src, /mob/dead/observer))
-		name = "Ghost"
-		alt_name = " ([src.real_name])"
-	else if (!istype(src, /mob/living/carbon/human))
-		name = src.name
+	//if (istype(src, /mob/living/carbon/human) && src.name != src.real_name)
+		//var/mob/living/carbon/human/H = src
+		//alt_name = " (as [H.get_authentification_name()])"
+	//else if (istype(src, /mob/dead/observer))
+	//	name = "Ghost"
+	//	alt_name = " ([src.real_name])"
+	//else if (!istype(src, /mob/living/carbon/human))
+	//	name = src.name
 
 	message = src.say_quote(message)
 
-	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
+	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[m_name]</span> <span class='message'>[message]</span></span>"
 
 	for (var/mob/M in world)
 		if (istype(M, /mob/new_player))
