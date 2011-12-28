@@ -76,15 +76,6 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/security"
 
-		disposal
-			name = "Circuit Design (Disposal)"
-			desc = "Allows for the construction of circuit boards used to build disposal bins."
-			id = "disposal"
-			req_tech = list("engineering" = 2)
-			build_type = IMPRINTER
-			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/item/weapon/circuitboard/disposal"
-
 		aicore
 			name = "Circuit Design (AI Core)"
 			desc = "Allows for the construction of circuit boards used to build new AI cores."

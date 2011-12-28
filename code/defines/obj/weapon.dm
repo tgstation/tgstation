@@ -1215,6 +1215,8 @@
 	name = "power control module"
 	icon_state = "power_mod"
 	desc = "Heavy-duty switching circuits for power control."
+	m_amt = 50
+	g_amt = 50
 
 /obj/item/weapon/module/id_auth
 	name = "ID authentication module"

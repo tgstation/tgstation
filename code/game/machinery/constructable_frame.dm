@@ -251,3 +251,5 @@ obj/item/weapon/circuitboard/rdserver
 	req_components = list(
 							"/obj/item/weapon/stock_parts/matter_bin" = 1,
 							"/obj/item/weapon/cable_coil" = 1)
+	m_amt = 50
+	g_amt = 50
