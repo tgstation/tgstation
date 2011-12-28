@@ -24,6 +24,18 @@
 			var/obj/item/device/destTagger/O = W
 			user << "\blue *TAGGED*"
 			src.sortTag = O.currTag
+		else if(istype(W, /obj/item/weapon/pen))
+			var/str = input(usr,"Label text?","Set label","")
+			if(!str || !length(str))
+				usr << "\red Invalid text."
+				return
+			if(length(str) > 64)
+				usr << "\red Text too long."
+				return
+			var/label = str
+			for(var/mob/M in viewers())
+				M << "\blue [user] labels [src] as [label]."
+			src.name = "[src.name] ([label])"
 		return
 
 /obj/item/smallDelivery
@@ -36,7 +48,7 @@
 	flags = FPRINT
 
 
-	attack_hand(mob/user as mob)
+	attack_self(mob/user)
 		if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
 			src.wrapped.loc = (get_turf(src.loc))
 
@@ -48,14 +60,26 @@
 			var/obj/item/device/destTagger/O = W
 			user << "\blue *TAGGED*"
 			src.sortTag = O.currTag
+		else if(istype(W, /obj/item/weapon/pen))
+			var/str = input(usr,"Label text?","Set label","")
+			if(!str || !length(str))
+				usr << "\red Invalid text."
+				return
+			if(length(str) > 64)
+				usr << "\red Text too long."
+				return
+			var/label = str
+			for(var/mob/M in viewers())
+				M << "\blue [user] labels [src] as [label]."
+			src.name = "[src.name] ([label])"
 		return
-
 
 
 /obj/item/weapon/packageWrap
 	name = "package wrapper"
 	icon = 'items.dmi'
 	icon_state = "deliveryPaper"
+	w_class = 4.0
 	var/amount = 25.0
 
 
