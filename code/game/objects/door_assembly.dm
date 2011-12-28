@@ -87,6 +87,7 @@ obj/structure/door_assembly
 	door_assembly_mai
 		name = "Maintenance Airlock Assembly"
 		icon_state = "door_as_mai1"
+		glass_type = null
 		airlock_type = /obj/machinery/door/airlock/maintenance
 		anchored = 1
 		density = 1
@@ -96,6 +97,7 @@ obj/structure/door_assembly
 	door_assembly_ext
 		name = "External Airlock Assembly"
 		icon_state = "door_as_ext1"
+		glass_type = null
 		airlock_type = /obj/machinery/door/airlock/external
 		anchored = 1
 		density = 1
@@ -105,6 +107,7 @@ obj/structure/door_assembly
 	door_assembly_fre
 		name = "Freezer Airlock Assembly"
 		icon_state = "door_as_fre1"
+		glass_type = null
 		airlock_type = /obj/machinery/door/airlock/freezer
 		anchored = 1
 		density = 1
@@ -114,6 +117,7 @@ obj/structure/door_assembly
 	door_assembly_mhatch
 		name = "Airtight Maintenance Hatch Assembly"
 		icon_state = "door_as_mhatch1"
+		glass_type = null
 		airlock_type = /obj/machinery/door/airlock/maintenance_hatch
 		anchored = 1
 		density = 1
@@ -192,13 +196,26 @@ obj/structure/door_assembly
 		sleep(40)
 		if(get_turf(user) == T)
 			user << "\blue You installed the airlock electronics!"
-			src.state = 2
-			src.name = "Near finished Airlock Assembly"
-			src.electronics = W
+
+			var/obj/item/weapon/airlock_electronics/E = W
+			var/obj/structure/door_assembly/D = new E.style(loc)
+			D.state = 2
+			D.glass = glass
+			if(glass)
+				// just in case user is setting a glass door to a type that doesn't have a glass version
+				if(ispath(D.glass_type))
+					D.icon_state = "[D.glass_base_icon_state]2"
+				else
+					D.icon_state = "[D.base_icon_state]2"
+					// type doesn't support glass, drop it
+					D.glass = 0
+					new/obj/item/stack/sheet/rglass(get_turf(src))
+			D.name = "Near finished Airlock Assembly"
+			E.loc = D
+			D.electronics = W
+			del(src)
 		else
 			W.loc = src.loc
-
-			//del(W)
 	else if(istype(W, /obj/item/weapon/crowbar) && state == 2 )
 		playsound(src.loc, 'Crowbar.ogg', 100, 1)
 		var/turf/T = get_turf(user)
@@ -215,7 +232,7 @@ obj/structure/door_assembly
 				ae = electronics
 				electronics = null
 				ae.loc = src.loc
-	else if(istype(W, /obj/item/stack/sheet/rglass) && glass == 0)
+	else if(istype(W, /obj/item/stack/sheet/rglass) && glass == 0 && ispath(glass_type))
 		playsound(src.loc, 'Crowbar.ogg', 100, 1)
 		user.visible_message("[user] adds reinforced glass windows to the airlock assembly.", "You start to install reinforced glass windows into the airlock assembly.")
 		var/obj/item/stack/sheet/rglass/G = W
@@ -224,8 +241,7 @@ obj/structure/door_assembly
 			G.use(1)
 			src.glass = 1
 			src.name = "Near finished Window Airlock Assembly"
-			src.airlock_type = /obj/machinery/door/airlock/glass
-			src.base_icon_state = "door_as_g" //this will be applied to the icon_state with the correct state number at the proc's end.
+			src.airlock_type = glass_type
 	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 )
 		playsound(src.loc, 'Screwdriver.ogg', 100, 1)
 		var/turf/T = get_turf(user)
