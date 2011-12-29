@@ -41,6 +41,7 @@
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=card'>Syndicate Card</A> (3)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=voice'>Voice-Changer</A> (4)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=thermal'>Thermal Glasses</A> (4)<BR>"
+	menu_message += "<A href='byond://?src=\ref[src];buy_item=eraser'>Stamp Remover</A> (1)<BR>" //Allows doccuments to be de-stamped
 	menu_message += "<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=imp_freedom'>Freedom Implant (with injector)</A> (3)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=imp_uplink'>Uplink Implant (5 crystals inside)</A> (10)<BR>"
@@ -212,6 +213,10 @@
 				if(uses >= 10)
 					uses -= 10
 					new /obj/item/weapon/storage/box/syndicate(get_turf(hostpda))
+			if("bundle")
+				if(uses >= 1)
+					uses -= 1
+					new /obj/item/weapon/stamperaser(get_turf(hostpda))
 
 		generate_menu()
 		print_to_host(menu_message)

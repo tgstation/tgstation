@@ -19,6 +19,32 @@ CIRCULAR SAW
 	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/structure/table/, M.loc) && (M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(50))))
 		return ..()
 
+	if(user.zone_sel.selecting == "chest")
+		if(istype(M, /mob/living/carbon/human))
+			switch(M:embryo_op_stage)
+				if(2.0)
+					if(M != user)
+						for(var/mob/O in (viewers(M) - user - M))
+							O.show_message("\red [user] retracts the flap in [M]'s cut open torso with [src].", 1)
+						M << "\red [user] begins to retracts the flap in your chest with [src]!"
+						user << "\red You clamp retracts the flap in [M]'s torso with [src]!"
+						M:embryo_op_stage = 3.0
+						return
+				if(4.0)
+					if(M != user)
+						for(var/mob/O in (viewers(M) - user - M))
+							O.show_message("\red [user] rips the larva out of [M]'s torso!", 1)
+						M << "\red [user] begins to rip the larva out of [M]'s torso!"
+						user << "\red You rip the larva out of [M]'s torso!"
+						var/mob/living/carbon/alien/larva/stupid = new(M.loc)
+						stupid.death(0)
+						//Make a larva and kill it. -- SkyMarshal
+						M:embryo_op_stage = 5.0
+						for(var/datum/disease/alien_embryo in M.viruses)
+							alien_embryo.cure()
+						return
+		return
+
 	if(user.zone_sel.selecting == "groin")
 		if(istype(M, /mob/living/carbon/human))
 			switch(M:appendix_op_stage)
@@ -91,6 +117,26 @@ CIRCULAR SAW
 
 	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/structure/table/, M.loc) && M.lying && prob(50))))
 		return ..()
+
+	if(user.zone_sel.selecting == "chest")
+		if(istype(M, /mob/living/carbon/human))
+			switch(M:embryo_op_stage)
+				if(1.0)
+					if(M != user)
+						for(var/mob/O in (viewers(M) - user - M))
+							O.show_message("\red [user] is beginning to clamp bleeders in [M]'s cut open torso with [src].", 1)
+						M << "\red [user] begins to torso bleeders in your chest with [src]!"
+						user << "\red You clamp bleeders in [M]'s torso with [src]!"
+						M:embryo_op_stage = 2.0
+						return
+				if(5.0)
+					if(M != user)
+						for(var/mob/O in (viewers(M) - user - M))
+							O.show_message("\red [user] cleans out the debris from [M]'s cut open torso with [src].", 1)
+						M << "\red [user] begins to clean out the debris in your torso with [src]!"
+						user << "\red You clean out the debris from in [M]'s torso with [src]!"
+						M:embryo_op_stage = 6.0
+						return
 
 	if(user.zone_sel.selecting == "groin")
 		if(istype(M, /mob/living/carbon/human))
@@ -176,6 +222,18 @@ CIRCULAR SAW
 
 	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/structure/table/, M.loc) && M.lying && prob(50))))
 		return ..()
+
+	if(user.zone_sel.selecting == "chest")
+		if(istype(M, /mob/living/carbon/human))
+			switch(M:embryo_op_stage)
+				if(6.0)
+					if(M != user)
+						for(var/mob/O in (viewers(M) - user - M))
+							O.show_message("\red [user] is beginning to cauterize the incision in [M]'s torso with [src].", 1)
+						M << "\red [user] begins to cauterize the incision in your torso with [src]!"
+						user << "\red You cauterize the incision in [M]'s torso with [src]!"
+						M:embryo_op_stage = 7.0
+						return
 
 	if(user.zone_sel.selecting == "groin")
 		if(istype(M, /mob/living/carbon/human))
@@ -263,6 +321,28 @@ CIRCULAR SAW
 		return ..()
 
 	src.add_fingerprint(user)
+
+	if(user.zone_sel.selecting == "chest")
+		if(istype(M, /mob/living/carbon/human))
+			switch(M:embryo_op_stage)
+				if(0.0)
+					if(M != user)
+						for(var/mob/O in (viewers(M) - user - M))
+							O.show_message("\red [M] is beginning to have his torso cut open with [src] by [user].", 1)
+						M << "\red [user] begins to cut open your torso with [src]!"
+						user << "\red You cut [M]'s torso open with [src]!"
+						M:embryo_op_stage = 1.0
+				if(3.0)
+					if(M != user)
+						for(var/mob/O in (viewers(M) - user - M))
+							O.show_message("\red [M] is beginning to have his stomach cut open with [src] by [user].", 1)
+						M << "\red [user] begins to cut open your stomach with [src]!"
+						user << "\red You cut [M]'s stomach open with [src]!"
+						for(var/datum/disease/D in M.viruses)
+							if(istype(D, /datum/disease/alien_embryo))
+								user << "\red There's something wiggling in there!"
+								M:embryo_op_stage = 4.0
+			return
 
 	if(user.zone_sel.selecting == "groin")
 		if(istype(M, /mob/living/carbon/human))
