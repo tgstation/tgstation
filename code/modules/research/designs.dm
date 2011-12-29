@@ -775,6 +775,13 @@ datum
 			req_tech = list("materials" = 5, "combat" = 5, "engineering"=3)
 			build_path = "/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster"
 
+		mech_syringe_gun
+			name = "Exosuit Module Design(Syringe Gun)"
+			desc = "Exosuit-mounted syringe gun and chemical synthesizer."
+			id = "mech_syringe_gun"
+			build_type = MECHFAB
+			req_tech = list("materials" = 3, "biotech"=4, "magnets"=4, "programming"=3)
+			build_path = "/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun"
 
 
 ////////////////////////////////////////

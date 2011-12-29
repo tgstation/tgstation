@@ -775,10 +775,11 @@
 
 /datum/construction/mecha/odysseus_chassis
 	steps = list(list("key"=/obj/item/mecha_parts/part/odysseus_torso),//1
-					 list("key"=/obj/item/mecha_parts/part/odysseus_left_arm),//2
-					 list("key"=/obj/item/mecha_parts/part/odysseus_right_arm),//3
-					 list("key"=/obj/item/mecha_parts/part/odysseus_left_leg),//4
-					 list("key"=/obj/item/mecha_parts/part/odysseus_right_leg)//5
+					 list("key"=/obj/item/mecha_parts/part/odysseus_head),//2
+					 list("key"=/obj/item/mecha_parts/part/odysseus_left_arm),//3
+					 list("key"=/obj/item/mecha_parts/part/odysseus_right_arm),//4
+					 list("key"=/obj/item/mecha_parts/part/odysseus_left_leg),//5
+					 list("key"=/obj/item/mecha_parts/part/odysseus_right_leg)//6
 					)
 
 	custom_action(step, atom/used_atom, mob/user)
@@ -812,7 +813,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="External armor is installed."),
 					 //3
-					 list("key"=/obj/item/stack/sheet/r_metal,
+					 list("key"=/obj/item/mecha_parts/part/odysseus_armour,
 					 		"backkey"=/obj/item/weapon/weldingtool,
 					 		"desc"="Internal armor is welded."),
 					 //4
@@ -931,16 +932,17 @@
 					user.visible_message("[user] unfastens the internal armor layer.", "You unfasten the internal armor layer.")
 			if(3)
 				if(diff==FORWARD)
-					user.visible_message("[user] installs external reinforced armor layer to [holder].", "You install external reinforced armor layer to [holder].")
+					user.visible_message("[user] installs [used_atom] layer to [holder].", "You install external reinforced armor layer to [holder].")
+					holder.overlays += used_atom.icon_state
+					del used_atom
 				else
 					user.visible_message("[user] cuts internal armor layer from [holder].", "You cut the internal armor layer from [holder].")
 			if(2)
 				if(diff==FORWARD)
 					user.visible_message("[user] secures external armor layer.", "You secure external reinforced armor layer.")
 				else
-					user.visible_message("[user] pries external armor layer from [holder].", "You prie external armor layer from [holder].")
-					var/obj/item/stack/sheet/r_metal/MS = new /obj/item/stack/sheet/r_metal(get_turf(holder))
-					MS.amount = 5
+					var/obj/item/mecha_parts/part/odysseus_armour/MS = new /obj/item/mecha_parts/part/odysseus_armour(get_turf(holder))
+					user.visible_message("[user] pries [MS] from [holder].", "You prie [MS] from [holder].")
 			if(1)
 				if(diff==FORWARD)
 					user.visible_message("[user] welds external armor layer to [holder].", "You weld external armor layer to [holder].")

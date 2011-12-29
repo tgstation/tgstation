@@ -170,3 +170,24 @@
 /obj/effect/decal/mecha_wreckage/phazon
 	name = "Phazon wreckage"
 	icon_state = "phazon-broken"
+
+
+/obj/effect/decal/mecha_wreckage/odysseus
+	name = "Odysseus wreckage"
+	icon_state = "odysseus-broken"
+
+	New()
+		..()
+		var/list/parts = list(
+									/obj/item/mecha_parts/part/odysseus_torso,
+									/obj/item/mecha_parts/part/odysseus_head,
+									/obj/item/mecha_parts/part/odysseus_left_arm,
+									/obj/item/mecha_parts/part/odysseus_right_arm,
+									/obj/item/mecha_parts/part/odysseus_left_leg,
+									/obj/item/mecha_parts/part/odysseus_right_leg)
+		for(var/i=0;i<2;i++)
+			if(!isemptylist(parts) && prob(40))
+				var/part = pick(parts)
+				welder_salvage += part
+				parts -= part
+		return

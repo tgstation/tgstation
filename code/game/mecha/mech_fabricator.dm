@@ -56,10 +56,12 @@
 	"Odysseus"=list(
 						/obj/item/mecha_parts/chassis/odysseus,
 						/obj/item/mecha_parts/part/odysseus_torso,
+						/obj/item/mecha_parts/part/odysseus_head,
 						/obj/item/mecha_parts/part/odysseus_left_arm,
 						/obj/item/mecha_parts/part/odysseus_right_arm,
 						/obj/item/mecha_parts/part/odysseus_left_leg,
-						/obj/item/mecha_parts/part/odysseus_right_leg
+						/obj/item/mecha_parts/part/odysseus_right_leg,
+						/obj/item/mecha_parts/part/odysseus_armour
 					),
 
 	"Gygax"=list(
@@ -97,6 +99,7 @@
 						/obj/item/mecha_parts/mecha_equipment/tool/extinguisher,
 						/obj/item/mecha_parts/mecha_equipment/tool/cable_layer,
 						/obj/item/mecha_parts/mecha_equipment/tool/sleeper,
+						/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun,
 						///obj/item/mecha_parts/mecha_equipment/repair_droid,
 						/obj/item/mecha_parts/mecha_equipment/plasma_generator,
 						/obj/item/mecha_parts/mecha_equipment/weapon/energy/taser,

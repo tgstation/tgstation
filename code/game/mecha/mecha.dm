@@ -74,13 +74,10 @@
 	radio.icon_state = icon_state
 	radio.subspace_transmission = 1
 	src.icon_state += "-open"
-	/*
-	src.air_contents.volume = gas_tank_volume //liters
-	src.air_contents.temperature = T20C
-	src.air_contents.oxygen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-	*/
 
-	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
+	if(!add_airtank())
+		removeVerb(/obj/mecha/verb/connect_to_port)
+		removeVerb(/obj/mecha/verb/toggle_internal_tank)
 	src.spark_system.set_up(2, 0, src)
 	src.spark_system.attach(src)
 	cell = new(src)
@@ -93,8 +90,8 @@
 //	pr_location_temp_check = new /datum/global_iterator/mecha_location_temp_check(list(src))
 	pr_internal_damage = new /datum/global_iterator/mecha_internal_damage(list(src),0)
 
-	src.verbs -= /obj/mecha/verb/disconnect_from_port
-	src.verbs -= /atom/movable/verb/pull
+	removeVerb(/obj/mecha/verb/disconnect_from_port)
+	removeVerb(/atom/movable/verb/pull)
 	src.log_message("[src.name] created.")
 	src.loc.Entered(src)
 	return
@@ -107,6 +104,16 @@
 ////////////////////////
 ////// Helpers /////////
 ////////////////////////
+
+/obj/mecha/proc/removeVerb(verb_path)
+	verbs -= verb_path
+
+/obj/mecha/proc/addVerb(verb_path)
+	verbs += verb_path
+
+/obj/mecha/proc/add_airtank()
+	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
+	return internal_tank
 
 /obj/mecha/proc/do_after(delay as num)
 	sleep(delay)
@@ -705,6 +712,12 @@
 ////////  Atmospheric stuff  ////////
 /////////////////////////////////////
 
+/obj/mecha/proc/get_turf_air()
+	var/turf/T = get_turf(src)
+	if(T)
+		. = T.return_air()
+	return
+
 /obj/mecha/remove_air(amount)
 	if(use_internal_tank && internal_tank)
 		return internal_tank.air_contents.remove(amount)
@@ -715,19 +728,25 @@
 	return
 
 /obj/mecha/return_air()
-	if(internal_tank)
-		return internal_tank.return_air()
+	if(use_internal_tank && internal_tank)
+		. = internal_tank.return_air()
+	else
+		. = get_turf_air()
 	return
 
 /obj/mecha/proc/return_pressure()
-	if(internal_tank)
-		return internal_tank.return_pressure()
-	return 0
+	. = 0
+	var/datum/gas_mixture/gm = return_air()
+	if(gm)
+		. = gm.return_pressure()
+	return
 
 /obj/mecha/proc/return_temperature()
-	if(internal_tank)
-		return internal_tank.return_temperature()
-	return 0
+	. = 0
+	var/datum/gas_mixture/gm = return_air()
+	if(gm)
+		. = gm.return_temperature()
+	return
 
 /obj/mecha/proc/connect(obj/machinery/atmospherics/portables_connector/new_port)
 	//Make sure not already connected to something else
@@ -1387,6 +1406,7 @@
 			else
 				src.occupant_message("<font color='red'>Recalibration failed.</font>")
 				src.log_message("Recalibration of coordination system failed with 1 error.",1)
+
 	//debug
 	/*
 	if(href_list["debug"])
@@ -1396,6 +1416,7 @@
 			clearInternalDamage(filter.getNum("clear_i_dam"))
 		return
 	*/
+
 
 /*
 
@@ -1506,10 +1527,11 @@
 			return src.stop()
 		var/datum/gas_mixture/int_tank_air = mecha.return_air()
 		if(mecha.hasInternalDamage(MECHA_INT_FIRE))
-			if(mecha.return_pressure()>mecha.internal_tank.maximum_pressure && !(mecha.hasInternalDamage(MECHA_INT_TANK_BREACH)))
-				mecha.setInternalDamage(MECHA_INT_TANK_BREACH)
 			if(!mecha.hasInternalDamage(MECHA_INT_TEMP_CONTROL) && prob(5))
 				mecha.clearInternalDamage(MECHA_INT_FIRE)
+			if(mecha.use_internal_tank && mecha.internal_tank)
+				if(mecha.return_pressure()>mecha.internal_tank.maximum_pressure && !(mecha.hasInternalDamage(MECHA_INT_TANK_BREACH)))
+					mecha.setInternalDamage(MECHA_INT_TANK_BREACH)
 			if(int_tank_air && int_tank_air.volume>0) //heat the air_contents
 				int_tank_air.temperature = min(6000+T0C, int_tank_air.temperature+rand(10,15))
 				if(int_tank_air.temperature>mecha.max_temperature/2)//we assume that the tank contents include mecha pilot compartment.
@@ -1517,12 +1539,14 @@
 		if(mecha.hasInternalDamage(MECHA_INT_TEMP_CONTROL)) //stop the mecha_preserve_temp loop datum
 			mecha.pr_int_temp_processor.stop()
 		if(mecha.hasInternalDamage(MECHA_INT_TANK_BREACH)) //remove some air from internal tank
-			if(int_tank_air)
-				var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(0.10)
-				if(mecha.loc && hascall(mecha.loc,"assume_air"))
-					mecha.loc.assume_air(leaked_gas)
-				else
-					del(leaked_gas)
+			if(mecha.internal_tank)
+				int_tank_air = mecha.internal_tank.return_air()
+				if(int_tank_air)
+					var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(0.10)
+					if(mecha.loc && hascall(mecha.loc,"assume_air"))
+						mecha.loc.assume_air(leaked_gas)
+					else
+						del(leaked_gas)
 		if(mecha.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
 			if(mecha.get_charge())
 				mecha.spark_system.start()
