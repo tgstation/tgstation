@@ -1459,11 +1459,6 @@
 	icon_state = "stamp-hos"
 	color = "hosred"
 
-/obj/item/weapon/stamp/detective
-	name = "detective's rubber stamp"
-	icon_state = "stamp-hos"
-	color = "hosred"
-
 /obj/item/weapon/stamp/ce
 	name = "chief engineer's rubber stamp"
 	icon_state = "stamp-ce"
@@ -1522,7 +1517,7 @@
 	name = "d4"
 	desc = "A dice with four sides."
 	sides = 4
-	icon_state = "dice"
+	icon_state = "d20"
 	item_state = "dice"
 
 /obj/item/weapon/dice // -- TLE

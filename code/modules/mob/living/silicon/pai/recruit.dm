@@ -11,8 +11,6 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		comments
 		ready = 0
 
-
-
 /datum/paiController
 	var/list/pai_candidates = list()
 	var/list/asked = list()
@@ -25,7 +23,14 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 			var/obj/item/device/paicard/card = locate(href_list["device"])
 			if(card.pai)
 				return
-			if(istype(card,/obj/item/device/paicard) && istype(candidate,/datum/paiCandidate))
+			if(istype(card,/obj/item/device/paicard) && istype(candidate,/datum/paiCandidate/chatbot))
+				var/mob/living/silicon/pai/chatbot/pai = new(card)
+				pai.name = candidate.name
+				pai.real_name = pai.name
+				card.pai = pai
+				pai.init()
+				usr << browse(null, "window=findPai")
+			else if(istype(card,/obj/item/device/paicard) && istype(candidate,/datum/paiCandidate))
 				var/mob/living/silicon/pai/pai = new(card)
 				pai.name = candidate.name
 				pai.real_name = pai.name
@@ -154,6 +159,12 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 			dat += "<tr class=\"d0\"><td>Preferred Role:</td><td>[c.role]</td></tr>"
 			dat += "<tr class=\"d1\"><td>OOC Comments:</td><td>[c.comments]</td></tr>"
 			dat += "<tr class=\"d2\"><td><a href='byond://?src=\ref[src];download=1;candidate=\ref[c];device=\ref[p]'>\[Download [c.name]\]</a></td><td></td></tr>"
+		if(p.chatbot)
+			dat += "<tr class=\"d0\"><td>Name:</td><td>[p.chatbot.name]</td></tr>"
+			dat += "<tr class=\"d1\"><td>Description:</td><td>[p.chatbot.description]</td></tr>"
+			dat += "<tr class=\"d0\"><td>Preferred Role:</td><td>[p.chatbot.role]</td></tr>"
+			dat += "<tr class=\"d1\"><td>OOC Comments:</td><td>[p.chatbot.comments]</td></tr>"
+			dat += "<tr class=\"d2\"><td><a href='byond://?src=\ref[src];download=1;candidate=\ref[p.chatbot];device=\ref[p]'>\[Download [p.chatbot.name]\]</a></td><td></td></tr>"
 
 		dat += "</table>"
 

@@ -128,7 +128,7 @@
 
 		output += "<BR><a href='byond://?src=\ref[src];pregame_music=1'>Lobby Music</A><BR>"
 
-		src << browse(output,"window=playersetup;size=250x233;can_close=0")
+		src << browse(output,"window=playersetup;size=250x258;can_close=0")
 		return
 
 	proc/Playmusic()

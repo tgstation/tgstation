@@ -441,12 +441,6 @@
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.brainloss = 20
 
-/datum/disease2/effect/lesser/drowsy
-	name = "Bedroom Syndrome"
-	stage = 2
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.drowsyness = 5
-
 /datum/disease2/effect/lesser/deaf
 	name = "Hard of hearing syndrome"
 	stage = 3
