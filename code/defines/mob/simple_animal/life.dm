@@ -212,6 +212,11 @@
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		health -= damage
 
+/mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
+	if(!Proj)	return
+	src.health -= Proj.damage
+	return 0
+
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M as mob)
 	..()
 

@@ -51,6 +51,7 @@
 		if(blocked >= 2)	return 0//Full block
 		if(!isliving(target))	return 0
 		var/mob/living/L = target
+		if(istype(L, /mob/living/simple_animal)) return 0
 		L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, blocked)
 		return 1
 
