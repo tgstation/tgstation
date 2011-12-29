@@ -85,15 +85,13 @@ CLIPBOARDS
 
 /obj/item/weapon/paper/attackby(obj/item/weapon/P as obj, mob/user as mob)
 	..()
-	var/clown = 0
-	if(user.mind && (user.mind.assigned_role == "Clown"))
-		clown = 1
-
 	if (istype(P, /obj/item/weapon/pen))
 		if(src.stamped != null && src.stamped.len > 0)
 			user << "\blue This paper has been stamped and can no longer be edited."
 			return
 
+		for(var/mob/O in viewers(user))
+			O.show_message("\blue [user] starts writing on the paper with [src].", 1)
 		var/t = "[src.info]"
 		do
 			t = input(user, "What text do you wish to add?", text("[]", src.name), t)  as message
@@ -151,33 +149,32 @@ CLIPBOARDS
 
 			user << "\blue You stamp the paper with your rubber stamp."
 
-	else if(istype(P, /obj/item/weapon/stamperaser))
-		if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/weapon/clipboard) ) && src.loc.loc != user && user.equipped() != P))
+		if(istype(P, /obj/item/weapon/stamperaser))
+			if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/weapon/clipboard) ) && src.loc.loc != user && user.equipped() != P))
 				return
-		src.info = src.infoold
-		for(var/i, i <= stamped.len, i++)
-			switch(stamped[i])
-				if(/obj/item/weapon/stamp/captain)
-					src.overlays -= "paper_stamped_cap"
-				if(/obj/item/weapon/stamp/hop)
-					src.overlays -= "paper_stamped_hop"
-				if(/obj/item/weapon/stamp/hos)
-					src.overlays -= "paper_stamped_hos"
-				if(/obj/item/weapon/stamp/ce)
-					src.overlays -= "paper_stamped_ce"
-				if(/obj/item/weapon/stamp/rd)
-					src.overlays -= "paper_stamped_rd"
-				if(/obj/item/weapon/stamp/cmo)
-					src.overlays -= "paper_stamped_cmo"
-				if(/obj/item/weapon/stamp/denied)
-					src.overlays -= "paper_stamped_denied"
-				if(/obj/item/weapon/stamp/clown)
-					src.overlays -= "paper_stamped_clown"
-				else
-					src.overlays -= "paper_stamped"
-		stamped = new list()
-
-		user << "\blue You sucessfully remove those pesky stamps."
+			src.info = src.infoold
+			for(var/i, i <= stamped.len, i++)
+				switch(stamped[i])
+					if(/obj/item/weapon/stamp/captain)
+						src.overlays -= "paper_stamped_cap"
+					if(/obj/item/weapon/stamp/hop)
+						src.overlays -= "paper_stamped_hop"
+					if(/obj/item/weapon/stamp/hos)
+						src.overlays -= "paper_stamped_hos"
+					if(/obj/item/weapon/stamp/ce)
+						src.overlays -= "paper_stamped_ce"
+					if(/obj/item/weapon/stamp/rd)
+						src.overlays -= "paper_stamped_rd"
+					if(/obj/item/weapon/stamp/cmo)
+						src.overlays -= "paper_stamped_cmo"
+					if(/obj/item/weapon/stamp/denied)
+						src.overlays -= "paper_stamped_denied"
+					if(/obj/item/weapon/stamp/clown)
+						src.overlays -= "paper_stamped_clown"
+					else
+						src.overlays -= "paper_stamped"
+			stamped = list()
+			user << "\blue You sucessfully remove those pesky stamps."
 
 	/*
 	else

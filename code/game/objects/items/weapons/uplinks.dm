@@ -200,7 +200,7 @@ SYNDICATE UPLINK
 				if("eraser")
 					if(uses)
 						uses --
-						new /obj/item/weapon/stamperaser(get_turf(hostpda))
+						new /obj/item/weapon/stamperaser(get_turf(src))
 		else if (href_list["lock"] && src.origradio)
 			// presto chango, a regular radio again! (reset the freq too...)
 			shutdown_uplink()
