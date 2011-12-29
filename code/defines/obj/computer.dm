@@ -82,6 +82,9 @@
 
 /obj/machinery/computer/atmosphere/siphonswitch/mastersiphonswitch
 	name = "Master Air Control"
+	desc = "Emergancy global overrides for the entire atmospherics system."
+
+
 
 
 /obj/machinery/computer/card

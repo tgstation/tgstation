@@ -364,6 +364,31 @@
 				bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
 
 			//Account for massive pressure differences
+
+
+			var/pressure = environment.return_pressure()
+
+		//	if(!wear_suit)		Monkies cannot into space.
+		//		if(!istype(wear_suit, /obj/item/clothing/suit/space))
+
+					/*if(pressure < 20)
+						if(prob(25))
+							src << "You feel the splittle on your lips and the fluid on your eyes boiling away, the capillteries in your skin breaking."
+						adjustBruteLoss(5)
+					*/
+
+			if((pressure > 2000) && (pressure < 3000))
+				if(prob(50))
+					src << "It's getting hard to breathe.. the air is pushing down on you!"
+
+			if(pressure > 3000)
+				if(prob(25))
+					src << "You feel a crushing, opressive force squeezing every fiber, your joints creaking."
+				adjustBruteLoss(15)
+
+
+
+
 			return //TODO: DEFERRED
 
 		handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)

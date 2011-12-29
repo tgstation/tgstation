@@ -112,6 +112,7 @@
 				bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
 
 			//Account for massive pressure differences
+
 			return //TODO: DEFERRED
 
 		handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
