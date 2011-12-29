@@ -220,6 +220,7 @@ obj/machinery/computer/forensic_scanning
 					var/obj/item/weapon/paper/P = new(loc)
 					P.name = "Scan Data ([scan_name])"
 					P.info = "<tt>[scan_data]</tt>"
+					P.overlays += "paper_words"
 				else
 					temp = "Print Failed: No Data"
 			if("erase")

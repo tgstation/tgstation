@@ -221,7 +221,7 @@
 
 		//I see no reason to restrict such way of whispering
 		if ("whisper")
-			whisper(message_old)
+			whisper(copytext(message_old, 3))
 			return
 
 		if ("binary")
