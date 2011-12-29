@@ -68,6 +68,9 @@
 
 		if(B)
 			dat = "Blood sample inserted."
+			var/code = ""
+			for(var/V in ANTIGENS) if(text2num(V) & B.data["antibodies"]) code += ANTIGENS[V]
+			dat += "<BR>Antibodies: [code]"
 			dat += "<BR><A href='?src=\ref[src];antibody=1'>Begin antibody production</a>"
 		else
 			dat += "<BR>Please check container contents."
