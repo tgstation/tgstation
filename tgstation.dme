@@ -512,6 +512,7 @@
 #include "code\game\machinery\pipe\pipe_dispenser.dm"
 #include "code\game\machinery\telecomms\broadcaster.dm"
 #include "code\game\machinery\telecomms\logbrowser.dm"
+#include "code\game\machinery\telecomms\machine_interactions.dm"
 #include "code\game\machinery\telecomms\telecomunications.dm"
 #include "code\game\machinery\telecomms\telemonitor.dm"
 #include "code\game\magic\library.dm"
