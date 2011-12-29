@@ -17,13 +17,8 @@
 	return 1
 
 /obj/structure/closet/proc/dump_contents()
-	if(src.isfreezer)
-		for(var/obj/item/I in src)
-			I.loc = src.loc
-			I.infreezer = 0
-	else
-		for(var/obj/item/I in src)
-			I.loc = src.loc
+	for(var/obj/item/I in src)
+		I.loc = src.loc
 
 	for(var/mob/M in src)
 		M.loc = src.loc
@@ -52,15 +47,9 @@
 	if(!src.can_close())
 		return 0
 
-	if(src.isfreezer)
-		for(var/obj/item/I in src.loc)
-			if(!I.anchored)
-				I.loc = src
-				I.infreezer = 1
-	else
-		for(var/obj/item/I in src.loc)
-			if(!I.anchored)
-				I.loc = src
+	for(var/obj/item/I in src.loc)
+		if(!I.anchored)
+			I.loc = src
 
 	for(var/mob/M in src.loc)
 		if(istype (M, /mob/dead/observer))

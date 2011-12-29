@@ -12,20 +12,10 @@ atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
 
 turf
 	assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
-		//First, ensure there is no movable shuttle or what not on tile that is taking over
-//		var/obj/movable/floor/movable_on_me = locate(/obj/movable/floor) in src
-//		if(istype(movable_on_me))
-//			return movable_on_me.assume_air(giver)
-
 		del(giver)
 		return 0
 
 	return_air()
-		//First, ensure there is no movable shuttle or what not on tile that is taking over
-//		var/obj/movable/floor/movable_on_me = locate(/obj/movable/floor) in src
-//		if(istype(movable_on_me))
-//			return movable_on_me.return_air()
-
 		//Create gas mixture to hold data for passing
 		var/datum/gas_mixture/GM = new
 
@@ -39,11 +29,6 @@ turf
 		return GM
 
 	remove_air(amount as num)
-		//First, ensure there is no movable shuttle or what not on tile that is taking over
-//		var/obj/movable/floor/movable_on_me = locate(/obj/movable/floor) in src
-//		if(istype(movable_on_me))
-//			return movable_on_me.remove_air(amount)
-
 		var/datum/gas_mixture/GM = new
 
 		var/sum = oxygen + carbon_dioxide + nitrogen + toxins

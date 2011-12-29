@@ -64,30 +64,28 @@
 	density = 1
 	icon_opened = "freezeropen"
 	icon_closed = "freezer"
+	var
+		target_temp = T0C - 40
+		cooling_power = 40
 
-/obj/structure/closet/crate/freezer/open()
-	playsound(src.loc, 'click.ogg', 15, 1, -3)
+	return_air()
+		var/datum/gas_mixture/gas = (..())
+		if(!gas)	return null
+		var/datum/gas_mixture/newgas = new/datum/gas_mixture()
+		newgas.oxygen = gas.oxygen
+		newgas.carbon_dioxide = gas.carbon_dioxide
+		newgas.nitrogen = gas.nitrogen
+		newgas.toxins = gas.toxins
+		newgas.volume = gas.volume
+		newgas.temperature = gas.temperature
+		if(newgas.temperature <= target_temp)	return
 
-	for(var/obj/item/I in src)
-		I.loc = get_turf(src)
-		I.infreezer = 0
+		if((newgas.temperature - cooling_power) > target_temp)
+			newgas.temperature -= cooling_power
+		else
+			newgas.temperature = target_temp
+		return newgas
 
-	for(var/mob/M in src)
-		M.loc = get_turf(src)
-
-	icon_state = icon_opened
-	src.opened = 1
-
-/obj/structure/closet/crate/freezer/close()
-	playsound(src.loc, 'click.ogg', 15, 1, -3)
-
-	for(var/obj/item/I in get_turf(src))
-		if(I.density || I.anchored || I == src) continue
-		I.loc = src
-		I.infreezer = 1
-
-	icon_state = icon_closed
-	src.opened = 0
 
 /obj/structure/closet/crate/bin
 	desc = "A large bin."

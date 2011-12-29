@@ -248,6 +248,7 @@
 			verbs += /client/proc/admin_observe
 			verbs += /client/proc/game_panel
 			verbs += /client/proc/player_panel
+			verbs += /client/proc/player_panel_new
 			verbs += /client/proc/unban_panel
 			verbs += /client/proc/jobbans
 			verbs += /client/proc/unjobban_panel
@@ -393,6 +394,7 @@
 	verbs -= /client/proc/toggle_hear_deadcast
 	verbs -= /client/proc/toggle_hear_radio
 	verbs -= /client/proc/tension_report
+	verbs -= /client/proc/player_panel_new
 	return
 
 
@@ -447,8 +449,15 @@
 /client/proc/player_panel()
 	set name = "Player Panel"
 	set category = "Admin"
-	if (holder)
-		holder.player()
+	if(holder)
+		holder.player_panel_old()
+	return
+
+/client/proc/player_panel_new()
+	set name = "Player Panel-New"
+	set category = "Admin"
+	if(holder)
+		holder.player_panel_new()
 	return
 
 /client/proc/jobbans()
@@ -461,14 +470,14 @@
 /client/proc/unban_panel()
 	set name = "Unban Panel"
 	set category = "Admin"
-	if (holder)
+	if(holder)
 		holder.unbanpanel()
 	return
 
 /client/proc/game_panel()
 	set name = "Game Panel"
 	set category = "Admin"
-	if (holder)
+	if(holder)
 		holder.Game()
 	return
 
