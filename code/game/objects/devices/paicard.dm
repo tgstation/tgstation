@@ -9,7 +9,7 @@
 	var/obj/item/device/radio/radio
 	var/looking_for_personality = 0
 	var/mob/living/silicon/pai/pai
-
+	var/datum/paiCandidate/chatbot/chatbot
 
 	attack_self(mob/user)
 		if (!in_range(src, user))
@@ -58,8 +58,19 @@
 				var/datum/dna/dna = usr.dna
 				pai.master = M.real_name
 				pai.master_dna = dna.unique_enzymes
+				if(istype(pai,/mob/living/silicon/pai/chatbot))
+					if(istype(pai:P,/datum/text_parser/parser/eliza))
+						var/datum/text_parser/parser/eliza/P = pai:P
+						P.yesno_state = "username"
+						P.yesno_param = M.real_name
+						P.input_line = "yes"
+						P.process_line()
 				pai << "<font color = red><h3>You have been bound to a new master.</h3></font>"
 		if(href_list["request"])
+			if(!looking_for_personality)
+				spawn(600) // wait a minute
+					chatbot = new()
+					alertUpdate()
 			src.looking_for_personality = 1
 			paiController.findPAI(src, usr)
 		if(href_list["wipe"])
@@ -76,6 +87,8 @@
 			var/t1 = text2num(href_list["wires"])
 			if (radio.wires & t1)
 				radio.wires &= ~t1
+			else
+				radio.wires |= t1
 		if(href_list["setlaws"])
 			var/newlaws = input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.pai_laws) as message
 			if(newlaws)
@@ -100,3 +113,9 @@
 		for(var/mob/M in src)
 			M.emp_act(severity)
 		..()
+
+	hear_talk(mob/M, text)
+		..()
+		if(istype(pai, /mob/living/silicon/pai/chatbot))
+			var/mob/living/silicon/pai/chatbot/C = pai
+			C.hear_talk(M, text)

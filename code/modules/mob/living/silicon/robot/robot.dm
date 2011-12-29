@@ -883,6 +883,10 @@ Frequency:
 	if (buckled)
 		return
 
+	// borgs can't move with no power
+	if(!cell || !cell.charge)
+		return
+
 	if (restrained())
 		pulling = null
 
