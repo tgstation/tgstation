@@ -984,6 +984,7 @@
 #include "code\WorkInProgress\mapload\reader.dm"
 #include "code\WorkInProgress\Mini\customitems.dm"
 #include "code\WorkInProgress\SkyMarshal\coatrack.dm"
+#include "code\WorkInProgress\SkyMarshal\eraser.dm"
 #include "code\WorkInProgress\SkyMarshal\policetape.dm"
 #include "code\WorkInProgress\Tastyfish\Eliza.dm"
 #include "code\WorkInProgress\Tastyfish\Eliza_Data.dm"

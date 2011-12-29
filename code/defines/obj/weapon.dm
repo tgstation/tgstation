@@ -824,6 +824,7 @@
 	icon = 'paper.dmi'
 	icon_state = "paper"
 	var/info = null
+	var/infoold = null
 	throwforce = 0
 	w_class = 1.0
 	throw_speed = 3

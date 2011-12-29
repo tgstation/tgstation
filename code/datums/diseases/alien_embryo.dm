@@ -11,6 +11,7 @@
 	max_stages = 5
 	spread = "None"
 	spread_type = SPECIAL
+	stage_prob = 2
 	cure = "Unknown"
 	cure_id = list("lexorin","toxin","gargleblaster")
 	cure_chance = 20
