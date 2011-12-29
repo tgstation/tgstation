@@ -21,6 +21,9 @@
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
+	// clean all symptoms, they must be set again in this cycle
+	src.disease_symptoms = 0
+
 	if (stat != 2) //still breathing
 
 		//First, resolve location and get a breath
@@ -33,6 +36,8 @@
 			if(istype(loc, /obj/))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
+
+		src.handle_shock()
 
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
@@ -992,9 +997,6 @@
 				for(var/datum/disease/D in viruses)
 					D.cure()
 
-			// clean all the symptoms incurred by the virus
-			src.disease_symptoms = 0
-
 			if(!virus2)
 			    // the following is silly since it lets you infect people through glass
 				/*for(var/mob/living/carbon/M in oviewers(4,src))
@@ -1058,65 +1060,35 @@
 					if ((changeling.geneticdamage > 0))
 						changeling.geneticdamage = changeling.geneticdamage-1
 
-/*
-			// Commented out so hunger system won't be such shock
-			// Damage and effect from not eating
-			if(nutrition <= 50)
-				if (prob (0.1))
-					src << "\red Your stomach rumbles."
-				if (prob (10))
-					bruteloss++
-				if (prob (5))
-					src << "You feel very weak."
-					weakened += rand(2, 3)
-*/
-/*
-snippets
+	handle_shock()
+		..()
 
-	if (mach)
-		if (machine)
-			mach.icon_state = "mach1"
+		if(traumatic_shock >= 80)
+			shock_stage += 1
 		else
-			mach.icon_state = null
+			shock_stage--
+			shock_stage = max(shock_stage, 0)
+			return
 
-	if (!m_flag)
-		moved_recently = 0
-	m_flag = null
+		if (shock_stage > 60)
+			if(shock_stage == 61)
+				for(var/mob/O in viewers(src, null))
+					O.show_message("<b>[src.name]'s</b> body becomes limp.", 1)
+			Stun(20)
+			lying = 1
+			disease_symptoms |= DISEASE_WHISPER
 
-
-
-		if ((istype(loc, /turf/space) && !( locate(/obj/movable, loc) )))
-			var/layers = 20
-			// ******* Check
-			if (((istype(head, /obj/item/clothing/head) && head.flags & 4) || (istype(wear_mask, /obj/item/clothing/mask) && (!( wear_mask.flags & 4 ) && wear_mask.flags & 8))))
-				layers -= 5
-			if (istype(w_uniform, /obj/item/clothing/under))
-				layers -= 5
-			if ((istype(wear_suit, /obj/item/clothing/suit) && wear_suit.flags & 8))
-				layers -= 10
-			if (layers > oxcheck)
-				oxcheck = layers
-
-
-				if(bodytemperature < 282.591 && (!firemut))
-					if(bodytemperature < 250)
-						adjustFireLoss(4)
-						updatehealth()
-						if(paralysis <= 2)	paralysis += 2
-					else if(prob(1) && !paralysis)
-						if(paralysis <= 5)	paralysis += 5
-						emote("collapse")
-						src << "\red You collapse from the cold!"
-				if(bodytemperature > 327.444  && (!firemut))
-					if(bodytemperature > 345.444)
-						if(!eye_blurry)	src << "\red The heat blurs your vision!"
-						eye_blurry = max(4, eye_blurry)
-						if(prob(3))	adjustFireLoss(rand(1,2))
-					else if(prob(3) && !paralysis)
-						paralysis += 2
-						emote("collapse")
-						src << "\red You collapse from heat exaustion!"
-				plcheck = t_plasma
-				oxcheck = t_oxygen
-				G.turf_add(T, G.total_moles())
-*/
+		if (shock_stage > 70) if(shock_stage % 30 == 0)
+			Paralyse(rand(15,28))
+		if(shock_stage >= 30)
+			if(shock_stage == 30) emote("me",1,"is having trouble keeping their eyes open.")
+			eye_blurry = max(2, eye_blurry)
+			stuttering = max(stuttering, 5)
+			bodytemperature = 313.15 // high fever
+		// pain messages
+		if(shock_stage == 10)
+			src << "<font color='red'><b>"+pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")
+		else if(shock_stage == 40)
+			src << "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")
+		else if(shock_stage == 80)
+			src << "<font color='red'><b>"+pick("You see a light at the end of the tunnel!", "You feel like you could die any moment now.", "You're about to lose consciousness.")
