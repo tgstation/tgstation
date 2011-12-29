@@ -124,7 +124,6 @@ CLIPBOARDS
 		if(istype(P, /obj/item/weapon/stamp))
 			if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/weapon/clipboard) ) && src.loc.loc != user && user.equipped() != P))
 				return
-			src.infoold = src.info
 			src.info += text("<BR><i>This paper has been stamped with the [].</i><BR>", P.name)
 			switch(P.type)
 				if(/obj/item/weapon/stamp/captain)
@@ -142,7 +141,11 @@ CLIPBOARDS
 				if(/obj/item/weapon/stamp/denied)
 					src.overlays += "paper_stamped_denied"
 				if(/obj/item/weapon/stamp/clown)
-					src.overlays += "paper_stamped_clown"
+					if (!clown)
+						usr << "\red You are totally unable to use the stamp. HONK!"
+						return
+					else
+						src.overlays += "paper_stamped_clown"
 				else
 					src.overlays += "paper_stamped"
 			if(!stamped)
@@ -150,35 +153,6 @@ CLIPBOARDS
 			stamped += P.type
 
 			user << "\blue You stamp the paper with your rubber stamp."
-
-	else if(istype(P, /obj/item/weapon/stamperaser))
-		if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/weapon/clipboard) ) && src.loc.loc != user && user.equipped() != P))
-				return
-		src.info = src.infoold
-		for(var/i, i <= stamped.len, i++)
-			switch(stamped[i])
-				if(/obj/item/weapon/stamp/captain)
-					src.overlays -= "paper_stamped_cap"
-				if(/obj/item/weapon/stamp/hop)
-					src.overlays -= "paper_stamped_hop"
-				if(/obj/item/weapon/stamp/hos)
-					src.overlays -= "paper_stamped_hos"
-				if(/obj/item/weapon/stamp/ce)
-					src.overlays -= "paper_stamped_ce"
-				if(/obj/item/weapon/stamp/rd)
-					src.overlays -= "paper_stamped_rd"
-				if(/obj/item/weapon/stamp/cmo)
-					src.overlays -= "paper_stamped_cmo"
-				if(/obj/item/weapon/stamp/denied)
-					src.overlays -= "paper_stamped_denied"
-				if(/obj/item/weapon/stamp/clown)
-					src.overlays -= "paper_stamped_clown"
-				else
-					src.overlays -= "paper_stamped"
-		stamped = new list()
-
-		user << "\blue You sucessfully remove those pesky stamps."
-
 	/*
 	else
 		if (istype(P, /obj/item/weapon/weldingtool))
