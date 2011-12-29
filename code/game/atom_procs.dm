@@ -87,13 +87,13 @@
 			return 0
 		if (H.gloves)
 			if(src.fingerprintslast != H.key)
-				src.fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
+				src.fingerprintshidden += text("\[[time_stamp()]\] (Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
 			return 0
 		if (!( src.fingerprints ))
 			src.fingerprints = text("[]", md5(H.dna.uni_identity))
 			if(src.fingerprintslast != H.key)
-				src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
+				src.fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
 			return 1
 		else
@@ -104,11 +104,11 @@
 			L += md5(H.dna.uni_identity)
 			src.fingerprints = list2params(L)
 			if(src.fingerprintslast != H.key)
-				src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
+				src.fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
 	else
 		if(src.fingerprintslast != M.key)
-			src.fingerprintshidden += text("Real name: [], Key: []",M.real_name, M.key)
+			src.fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",M.real_name, M.key)
 			src.fingerprintslast = M.key
 	return
 
