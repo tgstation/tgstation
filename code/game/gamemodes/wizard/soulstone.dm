@@ -191,6 +191,7 @@
 					A.nodamage = 0
 					A.canmove = 1
 					A << "<b>[U.name] has chosen you!</b>"
+					U << "<b>[A.name]! I choose you!</b>"
 					A.loc = U.loc
 					A.cancel_camera()
 					src.icon_state = "pokeball"
