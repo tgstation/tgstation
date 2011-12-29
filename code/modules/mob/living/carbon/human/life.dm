@@ -1078,9 +1078,8 @@
 			lying = 1
 			disease_symptoms |= DISEASE_WHISPER
 
-		if (shock_stage > 100)
-			if(prob(5))
-				Paralyse(50)
+		if (shock_stage > 70) if(shock_stage % 30 == 0)
+			Paralyse(rand(15,28))
 		if(shock_stage >= 30)
 			if(shock_stage == 30) emote("me",1,"is having trouble keeping their eyes open.")
 			eye_blurry = max(2, eye_blurry)
