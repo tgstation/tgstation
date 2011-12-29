@@ -197,6 +197,10 @@ SYNDICATE UPLINK
 					if (src.uses >= 10)
 						uses -= 10
 						new /obj/item/toy/syndicateballoon(get_turf(src))
+				if("eraser")
+					if(uses)
+						uses --
+						new /obj/item/weapon/stamperaser(get_turf(hostpda))
 		else if (href_list["lock"] && src.origradio)
 			// presto chango, a regular radio again! (reset the freq too...)
 			shutdown_uplink()

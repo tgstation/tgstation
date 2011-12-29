@@ -213,7 +213,7 @@
 				if(uses >= 10)
 					uses -= 10
 					new /obj/item/weapon/storage/box/syndicate(get_turf(hostpda))
-			if("bundle")
+			if("eraser")
 				if(uses >= 1)
 					uses -= 1
 					new /obj/item/weapon/stamperaser(get_turf(hostpda))
