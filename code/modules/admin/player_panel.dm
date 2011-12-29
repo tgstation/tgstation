@@ -365,18 +365,12 @@
 			dat += "<td>Unknown</td>"
 
 
-		if(M.mind && M.mind.assigned_role)	// Adds a column to Player Panel that shows their current job.
+		if(istype(M,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
-			if (H.wear_id)
-				var/obj/item/weapon/card/id/id = H.wear_id
-				if(M.mind.assigned_role == id.assignment)	// Polymorph
-					dat += "<td>[M.mind.assigned_role]</td>"
-				else
-					dat += "<td>[M.mind.assigned_role] ([id.assignment])"
-			else
-				dat += "<td>[M.mind.assigned_role] (No ID)</td>"
+			if(H.mind && H.mind.assigned_role)
+				dat += "<td>[H.mind.assigned_role]</td>"
 		else
-			dat += "<td>No Assigned Role</td>"
+			dat += "<td>NA</td>"
 
 
 		dat += {"<td>[(M.client ? "[M.client]" : "No client")]</td>
