@@ -8,11 +8,13 @@
 	anchored = 1
 	icon = 'chemical.dmi'
 	icon_state = "dispenser"
+	use_power = 1
 	var/energy = 25
 	var/max_energy = 75
 	var/amount = 30
 	var/beaker = null
 	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine","sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron","copper","mercury","radium","water","ethanol","sugar","acid","milk",)
+	var/charging_reagents = 0
 
 	ex_act(severity)
 		switch(severity)
@@ -33,12 +35,16 @@
 		return
 
 	proc/updateWindow(mob/user as mob)
-		winset(user, "chemdispenser.energy", "text=\"Energy: [src.energy]\"")
+		winset(user, "chemdispenser.energy", "text=\"Energy: [round(src.energy)]\"")
 		winset(user, "chemdispenser.amount", "text=\"Amount: [src.amount]\"")
 		if (beaker)
 			winset(user, "chemdispenser.eject", "text=\"Eject beaker\"")
 		else
 			winset(user, "chemdispenser.eject", "text=\"\[Insert beaker\]\"")
+		if(charging_reagents)
+			winset(user, "chemdispenser.charging", "text=\"Charging\"")
+		else
+			winset(user, "chemdispenser.charging", "text=\"Not Charging\"")
 	proc/initWindow(mob/user as mob)
 		var/i = 0
 		var list/nameparams = params2list(winget(user, "chemdispenser_reagents.template_name", "pos;size;type;image;image-mode"))
@@ -77,6 +83,8 @@
 				var/obj/item/weapon/reagent_containers/glass/B = src.beaker
 				B.loc = src.loc
 				src.beaker = null
+		else if (data == "tcharge")
+			src.charging_reagents = !src.charging_reagents
 		else if (copytext(data, 1, 7) == "amount")
 			if (text2num(copytext(data, 7)))
 				amount = text2num(copytext(data, 7))
@@ -85,7 +93,7 @@
 				var/obj/item/weapon/reagent_containers/glass/B = src.beaker
 				var/datum/reagents/R = B.reagents
 				var/space = R.maximum_volume - R.total_volume
-				R.add_reagent(data, min(amount, energy * 10, space))
+				R.add_reagent(data, min(amount, round(energy) * 10, space))
 				energy = max(energy - min(amount, space) / 10, 0)
 
 		amount = round(amount, 10) // Chem dispenser doesnt really have that much prescion
@@ -142,6 +150,14 @@
 		winshow(user, "chemdispenser", 1)
 		user.skincmds["chemdispenser"] = src
 		return
+
+
+/obj/machinery/chem_dispenser/process()
+	if(stat & NOPOWER) return
+	if(!charging_reagents) return
+
+	use_power(5000)
+	src.energy += 0.01
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
