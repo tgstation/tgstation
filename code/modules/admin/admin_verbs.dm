@@ -524,7 +524,7 @@
 /client/proc/stealth()
 	set category = "Admin"
 	set name = "Stealth Mode"
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 	stealth = !stealth
@@ -542,12 +542,13 @@
 	log_admin("[key_name(usr)] has turned stealth mode [stealth ? "ON" : "OFF"]")
 	message_admins("[key_name_admin(usr)] has turned stealth mode [stealth ? "ON" : "OFF"]", 1)
 
-#define AUTOBATIME 10
+#define AUTOBANTIME 10
 /client/proc/warn(var/mob/M in world)
 	set category = "Special Verbs"
 	set name = "Warn"
-	set desc = "Warn a player"
-	if(!authenticated || !holder)
+	// If you've edited AUTOBANTIME, change the below desc.
+	set desc = "Warn a player. If player is already warned, they will be autobanned for 10 minutes."
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 	if(M.client && M.client.holder && (M.client.holder.level >= holder.level))
@@ -558,12 +559,12 @@
 		M.client.warned = 1
 		message_admins("\blue [ckey] warned [M.ckey].")
 	else
-		AddBan(M.ckey, M.computer_id, "Autobanning due to previous warn", ckey, 1, AUTOBATIME)
+		AddBan(M.ckey, M.computer_id, "Autobanning due to previous warn", ckey, 1, AUTOBANTIME)
 		M << "\red<BIG><B>You have been autobanned by [ckey]. This is what we in the biz like to call a \"second warning\".</B></BIG>"
-		M << "\red This is a temporary ban; it will automatically be removed in [AUTOBATIME] minutes."
-		log_admin("[ckey] warned [M.ckey], resulting in a [AUTOBATIME] minute autoban.")
-		ban_unban_log_save("[ckey] warned [M.ckey], resulting in a [AUTOBATIME] minute autoban.")
-		message_admins("\blue [ckey] warned [M.ckey], resulting in a [AUTOBATIME] minute autoban.")
+		M << "\red This is a temporary ban; it will automatically be removed in [AUTOBANTIME] minutes."
+		log_admin("[ckey] warned [M.ckey], resulting in a [AUTOBANTIME] minute autoban.")
+		ban_unban_log_save("[ckey] warned [M.ckey], resulting in a [AUTOBANTIME] minute autoban.")
+		message_admins("\blue [ckey] warned [M.ckey], resulting in a [AUTOBANTIME] minute autoban.")
 		feedback_inc("ban_warn",1)
 
 		del(M.client)

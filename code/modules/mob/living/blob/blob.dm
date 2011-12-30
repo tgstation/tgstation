@@ -202,7 +202,7 @@
 	set desc = "Ghost into blobthing."
 	set hidden = 1
 
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 	var/input = input(src, "Please specify which key will be turned into a bloby.", "Key", "")

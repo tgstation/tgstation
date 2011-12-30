@@ -158,7 +158,7 @@ dmm_suite/preloader
 	set name = "LoadMap"
 	set desc = "Loads a map"
 	set hidden = 1
-	if(src.authenticated && src.holder)
+	if(src.holder)
 		if(!src.mob)
 			return
 		if(src.holder.rank in list("Game Admin", "Game Master"))

@@ -721,8 +721,6 @@
 	if (join_motd)
 		src << "<div class=\"motd\">[join_motd]</div>"
 
-	authorize()
-
 	if(custom_event_msg && custom_event_msg != "")
 		src << "<h1 class='alert'>Custom Event</h1>"
 		src << "<h2 class='alert'>A custom event is taking place. OOC Info:</h2>"
@@ -734,7 +732,7 @@
 		holder.rank = admins[ckey]
 		update_admins(admins[ckey])
 
-	if(ticker && ticker.mode && ticker.mode.name =="sandbox" && authenticated)
+	if(ticker && ticker.mode && ticker.mode.name =="sandbox")
 		mob.CanBuild()
 
 /client/Del()

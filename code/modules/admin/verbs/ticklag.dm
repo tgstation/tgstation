@@ -4,7 +4,7 @@
 	set desc = "Ticklag"
 	set hidden = 1
 	if(Debug2)
-		if(src.authenticated && src.holder)
+		if(src.holder)
 			if(!src.mob)
 				return
 			if(src.holder.rank in list("Game Admin", "Game Master"))

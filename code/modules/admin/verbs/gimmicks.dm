@@ -5,7 +5,7 @@ var/global/gimmick_hat = null
 	set category = "Fun"
 	set name = "Christmas Time"
 
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 

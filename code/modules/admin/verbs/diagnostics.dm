@@ -180,7 +180,7 @@
 	jump_to_dead_group()
 		set name = "Jump to dead group"
 		set category = "Debug"
-		if(!authenticated || !holder)
+		if(!holder)
 			src << "Only administrators may use this command."
 			return
 
