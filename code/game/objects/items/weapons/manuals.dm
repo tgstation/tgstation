@@ -203,10 +203,12 @@
 					<li><a href='#5'>Clone body</a></li>
 					<li><a href='#6'>Get clean Structurel Enzymes for the body</a></li>
 					<li><a href='#7'>Put body in morgue</a></li>
-					<li><a href='#8'>Await cloned body</a></li>
-					<li><a href='#9'>Use the clean SW injector</a></li>
-					<li><a href='#10'>Give person clothes back</a></li>
-					<li><a href='#11'>Send person on their way</a></li>
+					<li><a href='#8'>Prepare Cryo</a></li>
+					<li><a href='#9'>Await cloned body</a></li>
+					<li><a href='#10'>Put body in cryo</a></li>
+					<li><a href='#11'>Use the clean SW injector</a></li>
+					<li><a href='#12'>Give person clothes back</a></li>
+					<li><a href='#13'>Send person on their way</a></li>
 				</ol>
 
 				<a name='1'><H4>Step 1: Acquire body</H4>
@@ -230,16 +232,22 @@
 				<a name='7'><H4>Step 7: Put body in morgue</H4>
 				Now that the cloning process has been initiated and you have some clean Structural Enzymes, you no longer need the body! Drag it to the morgue and tell the Chef over the radio that they have some fresh meat waiting for them in there. To put a body in a morgue bed, simply open the tray, grab the body, put it on the open tray, then close the tray again. Use one of the nearby pens to label the bed “CHEF MEAT” in order to avoid confusion.
 
-				<a name='8'><H4>Step 8: Await cloned body</H4>
+				<a name='8'><H4>Step 8: Prepare cryo</H4>
+				Go to the freezer room, wrench in the cannisters, and set the freezer to lowest. Put a beaker of cryodaxone or clonexadone in on of the cryo tubes.
+
+				<a name='9'><H4>Step 9: Await cloned body</H4>
 				Now go back to the lab and wait for your patient to be cloned. It won’t be long now, I promise.
 
-				<a name='9'><H4>Step 9: Use the clean SE injector on person</H4>
+				<a name='10'><H4>Step 10: Put body in cryo</H4>
+				Fetch a stretcher, put your patient on it, move to the freezer room, dump the body in the tube and turn it on. Patient will start regenerating once his temperature goes below 170K. Make sure there's a beaker in the tube.
+
+				<a name='11'><H4>Step 11: Use the clean SE injector on person</H4>
 				Has your body been cloned yet? Great! As soon as the guy pops out, grab your injector and jab it in them. Once you’ve injected them, they now have clean Structural Enzymes and their defects, if any, will disappear in a short while.
 
-				<a name='10'><H4>Step 10: Give person clothes back</H4>
+				<a name='12'><H4>Step 12: Give person clothes back</H4>
 				Obviously the person will be naked after they have been cloned. Provided you weren’t an irresponsible little shit, you should have protected their possessions from thieves and should be able to give them back to the patient. No matter how cruel you are, it’s simply against protocol to force your patients to walk outside naked.
 
-				<a name='11'><H4>Step 11: Send person on their way</H4>
+				<a name='13'><H4>Step 13: Send person on their way</H4>
 				Give the patient one last check-over - make sure they don’t still have any defects and that they have all their possessions. Ask them how they died, if they know, so that you can report any foul play over the radio. Once you’re done, your patient is ready to go back to work! Chances are they do not have Medbay access, so you should let them out of Genetics and the Medbay main entrance.
 
 				<p>If you’ve gotten this far, congratulations! You have mastered the art of cloning. Now, the real problem is how to resurrect yourself after that traitor had his way with you for cloning his target.
