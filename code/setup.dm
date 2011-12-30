@@ -18,6 +18,15 @@
 #define HUMAN_NEEDED_OXYGEN	MOLES_CELLSTANDARD*BREATH_PERCENTAGE*0.16
 	//Amount of air needed before pass out/suffocation commences
 
+// Pressure limits.
+#define HAZARD_HIGH_PRESSURE 750
+#define HIGH_STEP_PRESSURE HAZARD_HIGH_PRESSURE/2
+#define WARNING_HIGH_PRESSURE HAZARD_HIGH_PRESSURE*0.7
+#define HAZARD_LOW_PRESSURE 50
+#define WARNING_LOW_PRESSURE HAZARD_LOW_PRESSURE*0.7
+#define MAX_PRESSURE_DAMAGE 20
+
+
 // Factor of how fast mob nutrition decreases
 #define	HUNGER_FACTOR 0.1
 #define	REAGENTS_METABOLISM 0.4

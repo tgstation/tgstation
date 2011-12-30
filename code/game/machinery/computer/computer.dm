@@ -133,6 +133,37 @@ Pod/Blast Doors computer
 	user.reset_view(current)
 	return 1
 
+/obj/machinery/computer/atmosphere/siphonswitch/mastersiphonswitch/attackby(O as obj, user as mob)
+
+
+/obj/machinery/computer/atmosphere/siphonswitch/mastersiphonswitch/attack_ai(var/mob/user as mob)
+	return attack_hand(user)
+
+/obj/machinery/computer/atmosphere/siphonswitch/mastersiphonswitch/attack_paw(var/mob/user as mob)
+	return attack_hand(user)
+
+/obj/machinery/computer/atmosphere/siphonswitch/mastersiphonswitch/attack_hand(var/mob/user as mob)
+	if(..())
+		return
+
+	user << "We're sorry, this terminal is currently out of order!"
+
+
+
+	//var/screen = AALARM_SCREEN_MAIN
+	//var/area_uid
+	//var/area/alarm_area
+	//var/danger_level = 0
+
+
+	//var/myproc = /obj/machinery/alarm/proc/return_controls
+	//call(myproc)()
+
+
+
+
+
+
 /obj/machinery/computer/card/attackby(O as obj, user as mob)
 	if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = O

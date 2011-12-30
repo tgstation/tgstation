@@ -377,15 +377,9 @@
 						adjustBruteLoss(5)
 					*/
 
-			if((pressure > 2000) && (pressure < 3000))
-				if(prob(50))
-					src << "It's getting hard to breathe.. the air is pushing down on you!"
+			if(pressure > HAZARD_HIGH_PRESSURE)
 
-			if(pressure > 3000)
-				if(prob(25))
-					src << "You feel a crushing, opressive force squeezing every fiber, your joints creaking."
-				adjustBruteLoss(15)
-
+				adjustBruteLoss(min((10+(round(pressure/(HIGH_STEP_PRESSURE)-2)*5)),MAX_PRESSURE_DAMAGE))
 
 
 
@@ -544,6 +538,22 @@
 							src.healths.icon_state = "health6"
 				else
 					src.healths.icon_state = "health7"
+
+			if (pressure)
+				var/datum/gas_mixture/environment = loc.return_air()
+				if(environment)
+					switch(environment.return_pressure())
+
+						if(HAZARD_HIGH_PRESSURE to INFINITY)
+							pressure.icon_state = "pressure2"
+						if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
+							pressure.icon_state = "pressure1"
+						if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
+							pressure.icon_state = "pressure0"
+						if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
+							pressure.icon_state = "pressure-1"
+						else
+							pressure.icon_state = "pressure-2"
 
 			if(src.pullin)	src.pullin.icon_state = "pull[src.pulling ? 1 : 0]"
 
