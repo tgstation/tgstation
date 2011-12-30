@@ -61,6 +61,8 @@
 /obj/item/clothing/suit/storage/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(W.w_class > 2 || src.loc == W )
 		return
+	if(istype(W,/obj/item/weapon/evidencebag) && src.loc != user)
+		return
 	if(src.contents.len >= 2)
 		user << "You have nowhere to place that"
 		return
