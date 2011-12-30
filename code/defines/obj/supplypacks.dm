@@ -238,7 +238,7 @@
 	containertype = "/obj/structure/closet/crate"
 	containername = "Replacement lights"
 
-/datum/supply_packs/costume
+/*/datum/supply_packs/costume
 	name = "Standard Costume crate"
 	contains = list("/obj/item/weapon/storage/backpack/clown",
 					"/obj/item/clothing/shoes/clown_shoes",
@@ -256,7 +256,7 @@
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Standard Costumes"
 	access = access_theatre
-	group = "Clothing"
+	group = "Clothing"	*/
 
 /datum/supply_packs/wizard
 	name = "Wizard costume"
