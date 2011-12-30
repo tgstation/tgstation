@@ -3,7 +3,7 @@
 	set name = "Play Global Sound"
 
 	//if(Debug2)
-	if(!src.authenticated || !src.holder)
+	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -37,7 +37,7 @@
 	set category = "Fun"
 	set name = "Play Local Sound"
 
-	if(!src.authenticated || !src.holder)
+	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
 

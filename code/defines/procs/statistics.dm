@@ -23,7 +23,7 @@ proc/sql_poll_admins()
 		return
 	var/admincount = 0
 	for (var/mob/M in world)
-		if(M && M.client && M.client.holder && M.client.authenticated)
+		if(M && M.client && M.client.holder)
 			admincount += 1
 	var/DBConnection/dbcon = new()
 	dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")

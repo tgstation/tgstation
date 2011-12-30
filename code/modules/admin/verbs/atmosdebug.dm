@@ -1,7 +1,7 @@
 /client/proc/atmosscan()
 	set category = "Mapping"
 	set name = "Check Plumbing"
-	if(!src.authenticated || !src.holder)
+	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
 
