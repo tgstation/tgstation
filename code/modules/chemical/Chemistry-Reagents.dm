@@ -1456,8 +1456,7 @@ datum
 			color = "#C8A5DC" // rgb: 200, 165, 220
 
 			on_mob_life(var/mob/living/M as mob)//no more mr. panacea
-				holder.remove_reagent(src.id, 0.2)
-				..()
+				holder.remove_reagent(src.id, 0.1)
 				return
 
 		carpotoxin
