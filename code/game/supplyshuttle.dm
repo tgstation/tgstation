@@ -64,7 +64,7 @@ var/ordernum=0
 			if (prob(5))
 				del(src)
 
-/area/supplyshuttle/
+/area/supplyshuttle
 	name = "Supply Shuttle"
 	icon_state = "supply"
 	requires_power = 0

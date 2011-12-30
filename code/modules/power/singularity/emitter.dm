@@ -6,15 +6,19 @@
 	anchored = 0
 	density = 1
 	req_access = list(access_engine)
-	var/active = 0
-	var/fire_delay = 100
-	var/last_shot = 0
-	var/shot_number = 0
-	var/state = 0
-	var/locked = 0
+
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 300
+
+	var
+		active = 0
+		fire_delay = 100
+		last_shot = 0
+		shot_number = 0
+		state = 0
+		locked = 0
+
 
 	verb/rotate()
 		set name = "Rotate"
@@ -113,6 +117,7 @@
 
 
 	attackby(obj/item/W, mob/user)
+
 		if(istype(W, /obj/item/weapon/wrench))
 			if(active)
 				user << "Turn off the [src] first."
@@ -134,16 +139,15 @@
 					src.anchored = 0
 				if(2)
 					user << "\red The [src.name] needs to be unwelded from the floor."
-					return
+			return
 
-		else if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
+		if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
 			if(active)
 				user << "Turn off the [src] first."
 				return
 			switch(state)
 				if(0)
 					user << "\red The [src.name] needs to be wrenched to the floor."
-					return
 				if(1)
 					if (W:remove_fuel(0,user))
 						W:welding = 2
@@ -157,7 +161,6 @@
 						W:welding = 1
 					else
 						user << "\blue You need more welding fuel to complete this task."
-						return
 				if(2)
 					if (W:remove_fuel(0,user))
 						W:welding = 2
@@ -171,19 +174,31 @@
 						W:welding = 1
 					else
 						user << "\blue You need more welding fuel to complete this task."
-						return
-		else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-			if (src.allowed(user))
+			return
+
+		if(istype(W, /obj/item/weapon/card/id))//The slot is too small for PDAs
+			if(emagged)
+				user << "\red The lock seems to be broken"
+				return
+			if(src.allowed(user))
 				src.locked = !src.locked
 				user << "Controls are now [src.locked ? "locked." : "unlocked."]"
 			else
 				user << "\red Access denied."
-				return
-		else
-			..()
 			return
+
+
+		if(istype(W, /obj/item/weapon/card/emag) && !emagged)
+			locked = 0
+			emagged = 1
+			user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
+			return
+
+		..()
+		return
 
 
 	power_change()
 		..()
 		update_icon()
+		return

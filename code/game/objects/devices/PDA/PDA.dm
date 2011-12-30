@@ -168,6 +168,8 @@
 				dat += "<h2>PERSONAL DATA ASSISTANT v.1.2</h2>"
 				dat += "Owner: [owner], [ownjob]<br>"
 				dat += text("ID: <A href='?src=\ref[];choice=Authenticate'>[]</A><br>", src, (id ? "[id.registered], [id.assignment]" : "----------"))
+				dat += text("<A href='?src=\ref[];choice=UpdateInfo'>[]</A><br>", src, (id ? "Update PDA Info" : ""))
+
 				dat += "Station Time: [round(world.time / 36000)+12]:[(world.time / 600 % 60) < 10 ? add_zero(world.time / 600 % 60, 1) : world.time / 600 % 60]"//:[world.time / 100 % 6][world.time / 100 % 10]"
 
 				dat += "<br><br>"
@@ -355,6 +357,9 @@
 							cartridge.unlock()
 				if ("Authenticate")//Checks for ID
 					id_check(U, 1)
+				if("UpdateInfo")
+					ownjob = id.assignment
+					name = "PDA-[owner] ([ownjob])"
 				if("Eject")//Ejects the cart, only done from hub.
 					if (!isnull(cartridge))
 						var/turf/T = loc
@@ -685,13 +690,11 @@
 			name = "PDA-[owner] ([ownjob])"
 			user << "\blue Card scanned."
 		else
-			var/input=alert("Would you like to insert the card or update owner information?",,"Insert","Update")
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
-
 			if ( ( (src in user.contents) && (C in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (C in user.contents)) )
 				if ( !(user.stat || user.restrained()) )//If they can still act.
-					if(input=="Insert")
-						id_check(user, 2)
+					id_check(user, 2)
+						/*Now just has a button for it
 					else
 						if(!(owner == C:registered))
 							user << "\blue Name on card does not match registered name. Please try again."
@@ -700,7 +703,7 @@
 						else if((owner == C:registered) && (ownjob != C:assignment))
 							ownjob = C:assignment
 							name = "PDA-[owner] ([ownjob])"
-							user << "\blue Rank updated."
+							user << "\blue Rank updated."*/
 					updateSelfDialog()//Update self dialog on success.
 			return//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
