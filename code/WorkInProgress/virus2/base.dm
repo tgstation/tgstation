@@ -104,7 +104,6 @@
 	if(!M.virus2)
 		M.virus2 = new /datum/disease2/disease
 		M.virus2.makerandom()
-		M.virus2.infectionchance = 1
 
 /proc/infect_mob_random_greater(var/mob/living/carbon/M)
 	if(!M.virus2)
@@ -154,7 +153,7 @@
 			holder.getrandomeffect_lesser()
 		effects += holder
 		uniqueID = rand(0,10000)
-		infectionchance = rand(1,10)
+		infectionchance = rand(4,10)
 		// pick 2 antigens
 		antigen |= text2num(pick(ANTIGENS))
 		antigen |= text2num(pick(ANTIGENS))
