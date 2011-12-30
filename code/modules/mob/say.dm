@@ -59,7 +59,7 @@
 	var/ending = copytext(text, length(text))
 	if (src.stuttering)
 		return "stammers, \"[text]\"";
-	if (src.brainloss >= 60)
+	if (src.getBrainLoss() >= 60)
 		return "gibbers, \"[text]\"";
 	if (ending == "?")
 		return "asks, \"[text]\"";

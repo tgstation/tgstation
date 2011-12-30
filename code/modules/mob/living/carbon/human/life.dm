@@ -153,7 +153,7 @@
 			if (disabilities & 16)
 				if (prob(10))
 					stuttering = max(10, stuttering)
-			if (brainloss >= 60 && stat != 2)
+			if (getBrainLoss() >= 60 && stat != 2)
 				if (prob(7))
 					switch(pick(1,2,3))
 						if(1)

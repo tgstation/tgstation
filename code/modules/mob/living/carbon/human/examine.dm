@@ -143,7 +143,7 @@
 
 		if (src.stat == 1)
 			usr << "\red [src.name] doesn't seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep."
-		else if (src.brainloss >= 60)
+		else if (src.getBrainLoss() >= 60)
 			usr << "\red [src.name] has a stupid expression on [t_his] face."
 		if (!src.client)
 			usr << "\red [src.name] doesn't seem as though they want to talk."

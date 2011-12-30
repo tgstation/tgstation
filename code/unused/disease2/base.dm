@@ -279,7 +279,7 @@
 	name = "Lazy mind syndrome"
 	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.brainloss = 50
+		mob.setBrainLoss(50)
 
 /datum/disease2/effect/suicide
 	name = "Suicidal syndrome"
