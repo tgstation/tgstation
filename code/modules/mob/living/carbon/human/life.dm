@@ -1084,7 +1084,6 @@
 			if(shock_stage == 30) emote("me",1,"is having trouble keeping their eyes open.")
 			eye_blurry = max(2, eye_blurry)
 			stuttering = max(stuttering, 5)
-			bodytemperature = 313.15 // high fever
 		// pain messages
 		if(shock_stage == 10)
 			src << "<font color='red'><b>"+pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")
