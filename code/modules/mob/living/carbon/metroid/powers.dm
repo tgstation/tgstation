@@ -71,7 +71,7 @@
 				"A sharp, deep pain bathes every inch of your body!")]"
 
 			if(istype(M, /mob/living/carbon))
-				Victim.cloneloss += rand(1,10)
+				Victim.adjustCloneLoss(rand(1,10))
 				Victim.adjustToxLoss(rand(1,2))
 				if(Victim.health <= 0)
 					Victim.adjustToxLoss(rand(2,4))

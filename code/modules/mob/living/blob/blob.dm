@@ -46,7 +46,7 @@
 
 
 	proc/UpdateDamage()
-		health = 60 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + cloneloss)
+		health = 60 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 		return
 
 
