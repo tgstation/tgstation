@@ -301,7 +301,7 @@
 	stage = 4
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob << "\red You feel something tearing its way out of your stomach..."
-		mob.toxloss += 10
+		mob.adjustToxLoss(10)
 		mob.updatehealth()
 		if(prob(40))
 			if(mob.client)
@@ -330,7 +330,7 @@
 	stage = 3
 	maxm = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.toxloss += (2*multiplier)
+		mob.adjustToxLoss((2*multiplier))
 
 /datum/disease2/effect/greater/scream
 	name = "Random screaming syndrome"
@@ -401,7 +401,7 @@
 	name = "Toxification syndrome"
 	stage = 4
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.toxloss += 15
+		mob.adjustToxLoss(15)
 
 /*/datum/disease2/effect/greater/hallucinations
 	name = "Hallucinational Syndrome"
