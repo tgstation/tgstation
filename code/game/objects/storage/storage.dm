@@ -102,6 +102,9 @@
 		user << "\blue You're a robot. No."
 		return //Robots can't interact with storage items.
 
+	if(istype(W,/obj/item/weapon/evidencebag) && src.loc != user)
+		return
+
 	if(src.loc == W)
 		return //Means the item is already in the storage item
 

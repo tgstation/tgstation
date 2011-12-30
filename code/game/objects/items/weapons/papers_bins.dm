@@ -122,7 +122,8 @@ CLIPBOARDS
 		if(istype(P, /obj/item/weapon/stamp))
 			if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/weapon/clipboard) ) && src.loc.loc != user && user.equipped() != P))
 				return
-			src.infoold = src.info
+			if(!src.infoold)
+				src.infoold = src.info
 			src.info += text("<BR><i>This paper has been stamped with the [].</i><BR>", P.name)
 			switch(P.type)
 				if(/obj/item/weapon/stamp/captain)
@@ -153,6 +154,7 @@ CLIPBOARDS
 			if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/weapon/clipboard) ) && src.loc.loc != user && user.equipped() != P))
 				return
 			src.info = src.infoold
+			src.infoold = null
 			for(var/i, i <= stamped.len, i++)
 				switch(stamped[i])
 					if(/obj/item/weapon/stamp/captain)

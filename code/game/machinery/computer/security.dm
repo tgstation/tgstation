@@ -226,17 +226,21 @@ What a mess.*/
 						screen = 1
 //RECORD FUNCTIONS
 			if("Search Records")
-				var/t1 = input("Search String: (Partial Name or ID or Fingerprints)", "Secure. records", null, null)  as text
+				var/t1 = input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text
 				if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || !in_range(src, usr)))
 					return
 				Perp = new/list()
 				t1 = lowertext(t1)
+				var/list/components = dd_text2list(t1, " ")
+				if(components.len > 5)
+					return //Lets not let them search too greedily.
 				for(var/datum/data/record/R in data_core.general)
-					var/temptext = R.fields["name"] + " " + R.fields["id"] + " " + R.fields["fingerprint"]
-					if(findtext(temptext,t1))
-						var/prelist = new/list(2)
-						prelist[1] = R
-						Perp += prelist
+					var/temptext = R.fields["name"] + " " + R.fields["id"] + " " + R.fields["fingerprint"] + " " + R.fields["rank"]
+					for(var/i = 1, i<=components.len, i++)
+						if(findtext(temptext,components[i]))
+							var/prelist = new/list(2)
+							prelist[1] = R
+							Perp += prelist
 				for(var/i = 1, i<=Perp.len, i+=2)
 					for(var/datum/data/record/E in data_core.security)
 						var/datum/data/record/R = Perp[i]
