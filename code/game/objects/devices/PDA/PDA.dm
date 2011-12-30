@@ -694,16 +694,7 @@
 			if ( ( (src in user.contents) && (C in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (C in user.contents)) )
 				if ( !(user.stat || user.restrained()) )//If they can still act.
 					id_check(user, 2)
-						/*Now just has a button for it
-					else
-						if(!(owner == C:registered))
-							user << "\blue Name on card does not match registered name. Please try again."
-						else if((owner == C:registered) && (ownjob == C:assignment))
-							user << "\blue Rank is up to date."
-						else if((owner == C:registered) && (ownjob != C:assignment))
-							ownjob = C:assignment
-							name = "PDA-[owner] ([ownjob])"
-							user << "\blue Rank updated."*/
+					user << "\blue You put the ID into the [src.name]'s slot."
 					updateSelfDialog()//Update self dialog on success.
 			return//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
