@@ -1254,7 +1254,7 @@
 	equip_cooldown = 10
 	origin_tech = "materials=3;biotech=4;magnets=4;programming=3"
 	construction_time = 200
-	construction_cost = list("metal"=3000,"gold"=2000,"plasma"=4000)
+	construction_cost = list("metal"=3000,"glass"=2000)
 
 	New()
 		..()
