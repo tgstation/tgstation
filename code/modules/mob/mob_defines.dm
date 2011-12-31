@@ -28,8 +28,6 @@
 	//Vars that should only be accessed via procs ++END
 
 
-
-
 //	var/uses_hud = 0
 	var/obj/screen/flash = null
 	var/obj/screen/blind = null
@@ -249,3 +247,6 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 	var/UI = 'screen1_old.dmi' // For changing the UI from preferences
 
 //	var/obj/effect/organstructure/organStructure = null //for dem organs
+
+	var/canstun = 1 	// determines if this mob can be stunned by things
+	var/canweaken = 1	// determines if this mob can be weakened/knocked down by things

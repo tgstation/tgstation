@@ -58,7 +58,9 @@
 		tally += 2
 	if (istype(src, /mob/living/carbon/alien/humanoid/sentinel))
 		tally += 1
-	return tally
+	if (istype(src, /mob/living/carbon/alien/humanoid/hunter))
+		tally = -1 // hunters go supersuperfast
+	return tally + move_delay_add
 
 //This needs to be fixed
 /mob/living/carbon/alien/humanoid/Stat()
