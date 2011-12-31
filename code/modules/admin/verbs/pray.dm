@@ -1,9 +1,6 @@
 /mob/verb/pray(msg as text)
 	set category = "IC"
 	set name = "Pray"
-	if(!usr.client.authenticated)
-		src << "Please authorize before sending these messages."
-		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 

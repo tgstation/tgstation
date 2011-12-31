@@ -1,7 +1,7 @@
 /client
 //START Admin Things
 	//This should be changed to a datum
-	var/obj/admins/holder = null
+	var/obj/admins/holder = null // Stays null if client isn't an admin. Stores properties about the admin, if not null.
 	var/buildmode = 0
 	var/stealth = 0
 	var/fakekey = null
@@ -13,11 +13,6 @@
 	var/admin_invis = 0
 
 //END Admin Things
-
-	//Key auth things
-	authenticate = 0
-	var/authenticated = 0
-	var/authenticating = 0
 
 	var/listen_ooc = 1
 	var/move_delay = 1

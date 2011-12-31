@@ -686,7 +686,6 @@
 #include "code\game\objects\tanks\oxygen.dm"
 #include "code\game\structure\structure.dm"
 #include "code\game\verbs\AI_status.dm"
-#include "code\game\verbs\authorize.dm"
 #include "code\game\verbs\checkkarma.dm"
 #include "code\game\verbs\ooc.dm"
 #include "code\game\verbs\sound.dm"
