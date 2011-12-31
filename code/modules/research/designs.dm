@@ -339,6 +339,42 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/mining"
 
+		firealarm
+			name = "Circuit Design (Fire Alarm)"
+			desc = "Allows for the construction of circuit boards used to build fire alarms."
+			id = "firealarm"
+			req_tech = list("engineering" = 2)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/firealarm"
+
+		alarm
+			name = "Circuit Design (Atmospheric Alarm)"
+			desc = "Allows for the construction of circuit boards used to build atmos alarms."
+			id = "alarm"
+			req_tech = list("engineering" = 2, "programming" = 2)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/alarm"
+
+		status_display
+			name = "Circuit Design (Status Display)"
+			desc = "Allows for the construction of circuit boards used to build status displays."
+			id = "status_display"
+			req_tech = list("engineering" = 2, "programming" = 2)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/status_display"
+
+		light_switch
+			name = "Circuit Design (Light Switch)"
+			desc = "Allows for the construction of circuit boards used to build light switches."
+			id = "status_display"
+			req_tech = list("engineering" = 2)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/light_switch"
+
 ///////////////////////////////////
 //////////AI Module Disks//////////
 ///////////////////////////////////
@@ -1104,7 +1140,7 @@ datum
 			req_tech = list("combat" = 4, "materials" = 5, "engineering" = 3, "biotech" = 4, "syndicate" = 3)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 5000, "$glass" = 1000, "$uranium" = 1000, "$silver" = 1000)
-			build_path = "/obj/item/weapon/gun/energy/largecrossbow"
+			build_path = "/obj/item/weapon/gun/energy/crossbow/largecrossbow"
 
 		temp_gun
 			name = "Temperature Gun"

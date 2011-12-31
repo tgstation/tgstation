@@ -209,6 +209,7 @@
 			verbs += /client/proc/cmd_admin_remove_plasma
 			verbs += /client/proc/admin_call_shuttle
 			verbs += /client/proc/admin_cancel_shuttle
+			verbs += /client/proc/admin_deny_shuttle
 			verbs += /obj/admins/proc/show_traitor_panel
 			verbs += /client/proc/cmd_admin_dress
 			verbs += /client/proc/cmd_admin_christmas
@@ -346,6 +347,7 @@
 	verbs -= /client/proc/cmd_admin_remove_plasma
 	verbs -= /client/proc/admin_call_shuttle
 	verbs -= /client/proc/admin_cancel_shuttle
+	verbs -= /client/proc/admin_deny_shuttle
 	verbs -= /obj/admins/proc/show_traitor_panel
 	verbs -= /client/proc/cmd_admin_dress
 	verbs -= /client/proc/cmd_admin_christmas
