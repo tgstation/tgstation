@@ -12,6 +12,8 @@
 		custom_event_msg = null
 		return
 
+	log_admin("[usr.key] has changed the custom event text.")
+
 	custom_event_msg = input
 
 	world << "<h1 class='alert'>Custom Event</h1>"
