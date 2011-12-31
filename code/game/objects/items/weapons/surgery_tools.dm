@@ -225,15 +225,14 @@ CIRCULAR SAW
 
 	if(user.zone_sel.selecting == "chest")
 		if(istype(M, /mob/living/carbon/human))
-			switch(M:embryo_op_stage)
-				if(6.0)
-					if(M != user)
-						for(var/mob/O in (viewers(M) - user - M))
-							O.show_message("\red [user] is beginning to cauterize the incision in [M]'s torso with [src].", 1)
-						M << "\red [user] begins to cauterize the incision in your torso with [src]!"
-						user << "\red You cauterize the incision in [M]'s torso with [src]!"
-						M:embryo_op_stage = 7.0
-						return
+			if(M:embryo_op_stage == 6.0 || M:embryo_op_stage ==  3.0 || M:embryo_op_stage ==  7.0)
+				if(M != user)
+					for(var/mob/O in (viewers(M) - user - M))
+						O.show_message("\red [user] is beginning to cauterize the incision in [M]'s torso with [src].", 1)
+					M << "\red [user] begins to cauterize the incision in your torso with [src]!"
+					user << "\red You cauterize the incision in [M]'s torso with [src]!"
+					M:embryo_op_stage = 0.0
+					return
 
 	if(user.zone_sel.selecting == "groin")
 		if(istype(M, /mob/living/carbon/human))
@@ -332,6 +331,7 @@ CIRCULAR SAW
 						M << "\red [user] begins to cut open your torso with [src]!"
 						user << "\red You cut [M]'s torso open with [src]!"
 						M:embryo_op_stage = 1.0
+						return
 				if(3.0)
 					if(M != user)
 						for(var/mob/O in (viewers(M) - user - M))
@@ -340,9 +340,11 @@ CIRCULAR SAW
 						user << "\red You cut [M]'s stomach open with [src]!"
 						for(var/datum/disease/D in M.viruses)
 							if(istype(D, /datum/disease/alien_embryo))
-								user << "\red There's something wiggling in there!"
+								user << "\blue There's something wiggling in there!"
 								M:embryo_op_stage = 4.0
-			return
+						if(M:embryo_op_stage == 3.0)
+							M:embryo_op_stage = 7.0 //Make it not cut their stomach open again and again if no larvae.
+						return
 
 	if(user.zone_sel.selecting == "groin")
 		if(istype(M, /mob/living/carbon/human))
