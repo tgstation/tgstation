@@ -416,9 +416,9 @@
 				dat += "<A href='?src=\ref[src];stop=1'>Stop Playing</A><BR><BR>"
 
 		if(!edit)
-			dat += "<A href='?src=\ref[src];edit=2'>Show Editer</A><BR><BR>"
+			dat += "<A href='?src=\ref[src];edit=2'>Show Editor</A><BR><BR>"
 		else
-			dat += "<A href='?src=\ref[src];edit=1'>Hide Editer</A><BR>"
+			dat += "<A href='?src=\ref[src];edit=1'>Hide Editor</A><BR>"
 			dat += "<A href='?src=\ref[src];newsong=1'>Start a New Song</A><BR>"
 			dat += "<A href='?src=\ref[src];import=1'>Import a Song</A><BR><BR>"
 			if(song)
