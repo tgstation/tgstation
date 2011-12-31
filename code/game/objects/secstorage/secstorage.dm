@@ -74,7 +74,6 @@
 		if (cx > mx)
 			cx = tx
 			cy--
-		//Foreach goto(56)
 	src.closer.screen_loc = text("[],[]", mx, my)
 	return
 
