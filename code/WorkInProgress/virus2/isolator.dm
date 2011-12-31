@@ -141,10 +141,10 @@
 	if(prob(50))
 		user << "The dish shatters"
 		if(virus2.infectionchance > 0)
-			// spread around some pathogens
-			for(var/i = 0, i<= (growth / 3), i++)
-				var/obj/virus/V = new(src.loc)
-				V.disease = virus2.getcopy()
+			for(var/mob/living/carbon/target in view(null, src)) if(!target.virus2)
+				if(airborne_can_reach(src.loc, target.loc))
+					if(target.get_infection_chance())
+						infect_virus2(target,src.virus2)
 		del src
 
 /obj/item/weapon/virusdish/examine()

@@ -1,17 +1,3 @@
-/obj/virus
-	// a virus instance that is placed on the map, moves, and infects
-	invisibility = 100
-
-	var/datum/disease2/disease
-
-	New()
-		..()
-		step(src, pick(cardinal))
-		step(src, pick(cardinal))
-		step(src, pick(cardinal))
-		anchored = 1
-		spawn(300) del(src)
-
 /mob/living/carbon/proc/get_infection_chance()
 	var/score = 0
 	var/mob/living/carbon/M = src
@@ -44,6 +30,17 @@
 
 	return 1
 
+
+proc/airborne_can_reach(turf/source, turf/target)
+	var/obj/dummy = new(source)
+	dummy.flags = FPRINT | TABLEPASS
+	dummy.pass_flags = PASSTABLE
+
+	for(var/i=0, i<5, i++) if(!step_towards(dummy, target)) break
+
+	var/rval = (dummy.loc == target)
+	del dummy
+	return rval
 
 /proc/infect_virus2(var/mob/living/carbon/M,var/datum/disease2/disease/disease,var/forced = 0)
 	if(M.virus2)
@@ -218,13 +215,12 @@
 		// with a certain chance, the mob may become immune to the disease before it starts properly
 		if(stage <= 1 && clicks == 0)
 			if(prob(3))
-				mob.antibodies |= antigen // 20% immunity is a good chance IMO, because it allows finding an immune person easily
+				mob.antibodies |= antigen // 3% chance of spontanous immunity
 			else
 		if(mob.radiation > 50)
 			if(prob(1))
 				majormutate()
 		if(mob.reagents.has_reagent("spaceacillin"))
-			mob.reagents.remove_reagent("spaceacillin",0.3)
 			return
 		if(mob.reagents.has_reagent("virusfood"))
 			mob.reagents.remove_reagent("virusfood",0.1)
@@ -242,6 +238,8 @@
 		for(var/datum/disease2/effectholder/e in effects)
 			e.runeffect(mob,stage)
 		clicks+=speed
+
+		if(prob(5)) spread_airborne(mob)
 
 	proc/cure(var/mob/living/carbon/mob)
 		var/datum/disease2/effectholder/E
@@ -287,6 +285,12 @@
 	//		world << "[newholder.effect.name]"
 	//	world << "[disease]"
 		return disease
+
+	proc/spread_airborne(var/mob/living/carbon/mob)
+		for(var/mob/living/carbon/target in view(null, mob)) if(!target.virus2)
+			if(airborne_can_reach(mob.loc, target.loc))
+				if(mob.get_infection_chance() && target.get_infection_chance())
+					infect_virus2(target,src)
 
 /datum/disease2/effect
 	var/chance_maxm = 100
@@ -334,13 +338,13 @@
 
 /datum/disease2/effect/greater/scream
 	name = "Random screaming syndrome"
-	stage = 2
+	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.say("*scream")
 
 /datum/disease2/effect/greater/drowsness
 	name = "Automated sleeping syndrome"
-	stage = 2
+	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.drowsyness += 10
 
@@ -387,9 +391,20 @@
 
 /datum/disease2/effect/greater/sneeze
 	name = "Coldingtons Effect"
-	stage = 1
+	stage = 2
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.say("*sneeze")
+		if(mob.virus2) mob.virus2.spread_airborne(mob)
+		if(mob.virus2) mob.virus2.spread_airborne(mob)
+
+
+/datum/disease2/effect/greater/cough
+	name = "Anima Syndrome"
+	stage = 2
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.say("*cough")
+		if(mob.virus2) mob.virus2.spread_airborne(mob)
+		if(mob.virus2) mob.virus2.spread_airborne(mob)
 
 /datum/disease2/effect/greater/gunck
 	name = "Flemmingtons"
@@ -411,7 +426,7 @@
 
 /datum/disease2/effect/greater/sleepy
 	name = "Resting syndrome"
-	stage = 2
+	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.say("*collapse")
 
@@ -461,15 +476,19 @@
 
 /datum/disease2/effect/lesser/sneeze
 	name = "Coldingtons Effect"
-	stage = 1
+	stage = 2
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.say("*sneeze")
+		if(mob.virus2) mob.virus2.spread_airborne(mob)
+		if(mob.virus2) mob.virus2.spread_airborne(mob)
 
 /datum/disease2/effect/lesser/cough
 	name = "Anima Syndrome"
 	stage = 2
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.say("*cough")
+		if(mob.virus2) mob.virus2.spread_airborne(mob)
+		if(mob.virus2) mob.virus2.spread_airborne(mob)
 
 /*/datum/disease2/effect/lesser/hallucinations
 	name = "Hallucinational Syndrome"
@@ -487,7 +506,7 @@
 
 /datum/disease2/effect/lesser/hungry
 	name = "Appetiser Effect"
-	stage = 2
+	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.nutrition = max(0, mob.nutrition - 200)
 
@@ -497,21 +516,15 @@
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.say("*groan")
 
-/datum/disease2/effect/lesser/drool
-	name = "Saliva Effect"
-	stage = 1
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.say("*drool")
-
 /datum/disease2/effect/lesser/fridge
 	name = "Refridgerator Syndrome"
-	stage = 2
+	stage = 1
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.say("*shiver")
 
 /datum/disease2/effect/lesser/twitch
 	name = "Twitcher"
-	stage = 1
+	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.say("*twitch")
 
@@ -538,14 +551,6 @@
 	stage = 1
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.disease_symptoms |= DISEASE_HOARSE
-
-
-/*Removed on request by Spaceman, due to it being detrimental to RP. -CN
-/datum/disease2/effect/lesser/deathgasp
-	name = "Zombie Syndrome"
-	stage = 4
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.say("*deathgasp")*/
 
 var/global/const/DISEASE_HOARSE  = 2
 var/global/const/DISEASE_WHISPER = 4
