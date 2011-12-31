@@ -379,6 +379,10 @@
 	if ((!( ticker ) || emergency_shuttle.location))
 		return
 
+	if(emergency_shuttle.deny_shuttle)
+		user << "Centcom does not currently have a shuttle available in your sector. Please try again later."
+		return
+
 	if(sent_strike_team == 1)
 		user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
 		return

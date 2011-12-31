@@ -18,12 +18,15 @@ datum/shuttle_controller
 		timelimit //important when the shuttle gets called for more than shuttlearrivetime
 		//timeleft = 360 //600
 		fake_recall = 0 //Used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
-
+		deny_shuttle = 0 //for admins not allowing it to be called.
 
 	// call the shuttle
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
 	proc/incall(coeff = 1)
+		if(deny_shuttle)
+			return
+
 		if(endtime)
 			if(direction == -1)
 				setdirection(1)

@@ -990,6 +990,7 @@
 #include "code\WorkInProgress\Tastyfish\Eliza_Data.dm"
 #include "code\WorkInProgress\Tastyfish\paiLiza.dm"
 #include "code\WorkInProgress\Tastyfish\Parser.dm"
+#include "code\WorkInProgress\Tastyfish\wallmount_frame.dm"
 #include "code\WorkInProgress\virus2\analyser.dm"
 #include "code\WorkInProgress\virus2\antibodies.dm"
 #include "code\WorkInProgress\virus2\base.dm"
