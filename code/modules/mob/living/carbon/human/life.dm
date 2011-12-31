@@ -495,19 +495,14 @@
 
 
 			var/pressure = environment.return_pressure()
-
-			if(!wear_suit)
-				if(!istype(wear_suit, /obj/item/clothing/suit/space))
-
+			if(!istype(wear_suit, /obj/item/clothing/suit/space)&&!istype(wear_suit, /obj/item/clothing/suit/armor/captain))
 					/*if(pressure < 20)
 						if(prob(25))
 							src << "You feel the splittle on your lips and the fluid on your eyes boiling away, the capillteries in your skin breaking."
 						adjustBruteLoss(5)
 					*/
-
-					if(pressure > HAZARD_HIGH_PRESSURE)
-
-						adjustBruteLoss(min((10+(round(pressure/(HIGH_STEP_PRESSURE)-2)*5)),MAX_PRESSURE_DAMAGE))
+				if(pressure > HAZARD_HIGH_PRESSURE)
+					adjustBruteLoss(min((10+(round(pressure/(HIGH_STEP_PRESSURE)-2)*5)),MAX_PRESSURE_DAMAGE))
 
 
 
@@ -926,7 +921,7 @@
 
 			if (pressure)
 
-				if((wear_suit) && (istype(wear_suit, /obj/item/clothing/suit/space)))
+				if(istype(wear_suit, /obj/item/clothing/suit/space)||istype(wear_suit, /obj/item/clothing/suit/armor/captain))
 					pressure.icon_state = "pressure0"
 
 				else
