@@ -369,7 +369,7 @@ datum
 		light_switch
 			name = "Circuit Design (Light Switch)"
 			desc = "Allows for the construction of circuit boards used to build light switches."
-			id = "status_display"
+			id = "light_switch"
 			req_tech = list("engineering" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
