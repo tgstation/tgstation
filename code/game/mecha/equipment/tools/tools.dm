@@ -1099,6 +1099,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/tool/cable_layer
 	name = "Cable Layer"
+	icon_state = "mecha_wire"
 	var/datum/event/event
 	var/turf/old_turf
 	var/obj/structure/cable/last_piece
