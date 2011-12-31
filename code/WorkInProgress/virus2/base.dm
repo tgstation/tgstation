@@ -508,7 +508,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 	name = "Appetiser Effect"
 	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.nutrition = max(0, mob.nutrition - 200)
+		mob.nutrition = max(0, mob.nutrition - 3)
 
 /datum/disease2/effect/lesser/groan
 	name = "Groaning Syndrome"
