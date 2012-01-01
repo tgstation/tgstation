@@ -4,9 +4,10 @@
 
 /obj/machinery/computer/atmoscontrol
 	name = "Central Atmospherics Computer"
+	icon = 'computer.dmi'
+	icon_state = "computer_generic"
 	density = 1
 	anchored = 1.0
-	icon_state = "operating"
 	circuit = "/obj/item/weapon/circuitboard/atmoscontrol"
 	var/obj/machinery/alarm/current = ""
 
@@ -19,13 +20,22 @@
 		dat += src.specific()
 	else
 		for(var/obj/machinery/alarm/alarm in world)
-			dat += "<a href='?src=\ref[src]&alarm=\ref[alarm]'>[alarm]</a><br/>"
+			dat += "<a href='?src=\ref[src]&alarm=\ref[alarm]'>"
+			switch(max(alarm.danger_level, alarm.alarm_area.atmosalm))
+				if (0)
+					dat += "<font color=blue>"
+				if (1)
+					dat += "<font color=yellow>"
+				if (2)
+					dat += "<font color=red>"
+			dat += "[alarm]</font></a><br/>"
 	user << browse(dat, "window=atmoscontrol")
 
 /obj/machinery/computer/atmoscontrol/proc/specific()
 	if(!current)
 		return ""
-	var/dat = current.return_status()
+	var/dat = "<h3>[current.name]</h3><hr>"
+	dat += current.return_status()
 	if(current.remote_control)
 		dat += "<hr>[src.return_controls()]"
 	return dat
