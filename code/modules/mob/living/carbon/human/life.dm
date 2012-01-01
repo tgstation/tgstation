@@ -998,9 +998,12 @@
 					D.cure()
 
 			if(!virus2)
-				for(var/obj/effect/decal/cleanable/blood/B in src.loc)
-					if(B.virus2)
+				for(var/obj/effect/decal/cleanable/blood/B in view(1,src))
+					if(B.virus2 && get_infection_chance())
 						infect_virus2(src,B.virus2)
+				for(var/obj/effect/decal/cleanable/mucus/M in view(1,src))
+					if(M.virus2 && get_infection_chance())
+						infect_virus2(src,M.virus2)
 			else
 				virus2.activate(src)
 
