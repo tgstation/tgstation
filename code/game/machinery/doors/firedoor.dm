@@ -67,9 +67,9 @@
 	animate(animation)
 		switch(animation)
 			if("opening")
-				flick("door_closing", src)
-			if("closing")
 				flick("door_opening", src)
+			if("closing")
+				flick("door_closing", src)
 		return
 
 
