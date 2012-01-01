@@ -7,6 +7,9 @@
 	flag = "laser"
 	eyeblur = 2
 
+/obj/item/projectile/beam/practice
+	damage = 0
+
 
 /obj/item/projectile/beam/heavylaser
 	name = "heavy laser"
