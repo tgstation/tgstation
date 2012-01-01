@@ -2233,8 +2233,12 @@
 	// when the vote will end
 	spawn(config.vote_period*10)
 		vote.endvote()
-	world << "\red<B>*** A vote to [vote.mode?"change game mode":"restart"] has been initiated by Admin [usr.key].</B>"
-	world << "\red     You have [vote.timetext(config.vote_period)] to vote."
+	if(vote.mode == 2)
+		world << "\red<B>*** A custom vote has been initiated by [usr.key].</B>"
+		world << "\red     You have [vote.timetext(config.vote_period)] to vote."
+	else
+		world << "\red<B>*** A vote to [vote.mode?"change game mode":"restart"] has been initiated by [usr.key].</B>"
+		world << "\red     You have [vote.timetext(config.vote_period)] to vote."
 
 	log_admin("Voting to [vote.mode?"change mode":"restart round"] forced by admin [key_name(usr)]")
 

@@ -46,12 +46,6 @@
 
 
 /datum/game_mode/cult/pre_setup()
-	if(prob(50))
-		objectives += "survive"
-		objectives += "sacrifice"
-	else
-		objectives += "eldergod"
-		objectives += "sacrifice"
 
 	var/list/cultists_possible = get_players_for_role(BE_CULTIST)
 	for(var/datum/mind/player in cultists_possible)
@@ -65,6 +59,16 @@
 		var/datum/mind/cultist = pick(cultists_possible)
 		cultists_possible -= cultist
 		cult += cultist
+
+	// don't give summon nar-sie if less than 10 people,
+	// it's literally impossible in that case!
+	if(prob(50) || num_players() < 10)
+		objectives += "survive"
+		objectives += "sacrifice"
+	else
+		objectives += "eldergod"
+		objectives += "sacrifice"
+
 	return (cult.len>0)
 
 
