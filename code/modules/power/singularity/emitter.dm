@@ -2,7 +2,7 @@
 	name = "Emitter"
 	desc = "A heavy duty industrial laser"
 	icon = 'singularity.dmi'
-	icon_state = "Emitter"
+	icon_state = "emitter"
 	anchored = 0
 	density = 1
 	req_access = list(access_engine)
@@ -39,9 +39,9 @@
 
 	update_icon()
 		if (active && !(stat & (NOPOWER|BROKEN)))
-			icon_state = "Emitter +a"
+			icon_state = "emitter_+a"
 		else
-			icon_state = "Emitter"
+			icon_state = "emitter"
 
 
 	attack_hand(mob/user as mob)

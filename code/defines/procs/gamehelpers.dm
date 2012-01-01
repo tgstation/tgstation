@@ -28,29 +28,6 @@
 /proc/in_range(source, user)
 	if(get_dist(source, user) <= 1)
 		return 1
-	/*
-	else//TK TODO: remove this
-		if(istype(user, /mob/living/carbon))
-			if(user:mutations & TK && get_dist(source, user) <= 7)
-				if(user:equipped())	return 0
-				var/X = source:x
-				var/Y = source:y
-				var/Z = source:z
-				spawn(0)
-					//I really shouldnt put this here but i dont have a better idea
-					var/obj/effect/overlay/O = new /obj/effect/overlay ( locate(X,Y,Z) )
-					O.name = "sparkles"
-					O.anchored = 1
-					O.density = 0
-					O.layer = FLY_LAYER
-					O.dir = pick(cardinal)
-					O.icon = 'effects.dmi'
-					O.icon_state = "nothing"
-					flick("empdisable",O)
-					spawn(5)
-						del(O)
-				return 1*/
-
 	return 0 //not in range and not telekinetic
 
 /proc/circlerange(center=usr,radius=3)
