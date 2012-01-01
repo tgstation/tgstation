@@ -19,16 +19,15 @@
 	src.closer.screen_loc = "9,7"
 
 /obj/item/clothing/suit/storage/proc/view_inv(mob/user as mob)
-	if(!user)
+	if(!user.client)
 		return
 	user.client.screen += src.boxes
 	user.client.screen += src.closer
 	user.client.screen += src.contents
 
 /obj/item/clothing/suit/storage/proc/close(mob/user as mob)
-	if(!user)
+	if(!user.client)
 		return
-	user.s_active = src
 	user.client.screen -= src.boxes
 	user.client.screen -= src.closer
 	user.client.screen -= src.contents

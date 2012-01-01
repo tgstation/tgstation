@@ -397,8 +397,12 @@
 		spawn(config.vote_period*10)
 			vote.endvote()
 
-		world << "\red<B>*** A vote to [vote.mode?"change game mode":"restart"] has been initiated by [M.key].</B>"
-		world << "\red     You have [vote.timetext(config.vote_period)] to vote."
+		if(vote.mode == 2)
+			world << "\red<B>*** A custom vote has been initiated by [M.key].</B>"
+			world << "\red     You have [vote.timetext(config.vote_period)] to vote."
+		else
+			world << "\red<B>*** A vote to [vote.mode?"change game mode":"restart"] has been initiated by [M.key].</B>"
+			world << "\red     You have [vote.timetext(config.vote_period)] to vote."
 
 		log_vote("Voting to [vote.mode ? "change mode" : "restart round"] started by [M.name]/[M.key]")
 

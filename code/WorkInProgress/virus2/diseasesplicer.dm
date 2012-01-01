@@ -68,14 +68,14 @@
 	user.machine = src
 	var/dat
 	if(splicing)
-		dat = "Splicing in progress"
+		dat = "Splicing in progress."
 	else if(scanning)
-		dat = "Splicing in progress"
+		dat = "Splicing in progress."
 	else if(burning)
-		dat = "Data disk burning in progress"
+		dat = "Data disk burning in progress."
 	else
 		if(dish)
-			dat = "Virus dish inserted"
+			dat = "Virus dish inserted."
 
 		dat += "<BR>Current DNA strand : "
 		if(memorybank)
@@ -88,7 +88,7 @@
 
 			dat += "<BR><A href='?src=\ref[src];disk=1'>Burn DNA Sequence to data storage disk</a>"
 		else
-			dat += "Empty"
+			dat += "Empty."
 
 		dat += "<BR><BR>"
 
@@ -101,13 +101,13 @@
 							dat += ": [e.effect.name]"
 						dat += " (5-[e.effect.stage])</a>"
 				else
-					dat += "<BR>Insufficent cells to attempt gene splicing"
+					dat += "<BR>Insufficent cells to attempt gene splicing."
 			else
-				dat += "<BR>No virus found in dish"
+				dat += "<BR>No virus found in dish."
 
 			dat += "<BR><BR><A href='?src=\ref[src];eject=1'>Eject disk</a>"
 		else
-			dat += "<BR>Please insert dish"
+			dat += "<BR>Please insert dish."
 
 	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")

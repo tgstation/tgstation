@@ -58,6 +58,17 @@
 			D.cure(0)
 		..()
 
+/obj/effect/decal/cleanable/mucus
+	name = "Mucus"
+	desc = "Icky mucus!"
+	density = 0
+	anchored = 1
+	layer = 2
+	icon = 'blood.dmi'
+	icon_state = "mucus"
+	random_icon_states = list("mucus")
+	var/datum/disease2/disease/virus2 = null
+
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
 

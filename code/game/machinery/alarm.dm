@@ -40,6 +40,7 @@
 	var/frequency = 1439
 	//var/skipprocess = 0 //Experimenting
 	var/alarm_frequency = 1437
+	var/remote_control = 0
 #define AALARM_REPORT_TIMEOUT 100
 	var/datum/radio_frequency/radio_connection
 	var/locked = 1
@@ -211,9 +212,9 @@
 
 /obj/machinery/alarm/proc/return_text()
 	if(!(istype(usr, /mob/living/silicon)) && locked)
-		return "<html><head><title>[src]</title></head><body>[return_status()]<hr><i>(Swipe ID card to unlock interface)</i></body></html>"
+		return "<html><head><title>[src]</title></head><body>[return_status()]<hr><a href='?src=\ref[src]&ctrl=1'>[remote_control ? "Disable" : "Enable"] Remote Control</a><hr><i>(Swipe ID card to unlock interface)</i></body></html>"
 	else
-		return "<html><head><title>[src]</title></head><body>[return_status()]<hr>[return_controls()]</body></html>"
+		return "<html><head><title>[src]</title></head><body>[return_status()]<hr><a href='?src=\ref[src]&ctrl=1'>[remote_control ? "Disable" : "Enable"] Remote Control</a><hr>[return_controls()]</body></html>"
 
 /obj/machinery/alarm/proc/return_status()
 	var/turf/location = src.loc
@@ -491,7 +492,9 @@ table tr:first-child th:first-child { border: none;}
 /obj/machinery/alarm/Topic(href, href_list)
 	if(..())
 		return
-
+	if(href_list["ctrl"])
+		remote_control = !remote_control
+		src.updateUsrDialog()
 	if(href_list["command"])
 		var/device_id = href_list["id_tag"]
 		switch(href_list["command"])
@@ -554,7 +557,6 @@ table tr:first-child th:first-child { border: none;}
 		apply_mode()
 		spawn(5)
 			src.updateUsrDialog()
-
 	return
 
 /obj/machinery/alarm/proc/apply_mode()

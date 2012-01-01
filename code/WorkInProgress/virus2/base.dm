@@ -38,7 +38,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 
 	for(var/i=0, i<5, i++) if(!step_towards(dummy, target)) break
 
-	var/rval = (dummy.loc == target)
+	var/rval = (dummy.loc in range(1,target))
 	del dummy
 	return rval
 
@@ -396,6 +396,12 @@ proc/airborne_can_reach(turf/source, turf/target)
 		mob.say("*sneeze")
 		if(mob.virus2) mob.virus2.spread_airborne(mob)
 		if(mob.virus2) mob.virus2.spread_airborne(mob)
+		if(prob(5))
+			var/obj/effect/decal/cleanable/mucus/this = new(mob.loc)
+			this.anchored = 0
+			step(this, mob.dir)
+			this.anchored = 1
+			this.virus2 = mob.virus2
 
 
 /datum/disease2/effect/greater/cough
@@ -405,6 +411,9 @@ proc/airborne_can_reach(turf/source, turf/target)
 		mob.say("*cough")
 		if(mob.virus2) mob.virus2.spread_airborne(mob)
 		if(mob.virus2) mob.virus2.spread_airborne(mob)
+		if(prob(2))
+			var/obj/effect/decal/cleanable/mucus/this = new(mob.loc)
+			this.virus2 = mob.virus2
 
 /datum/disease2/effect/greater/gunck
 	name = "Flemmingtons"
@@ -481,6 +490,12 @@ proc/airborne_can_reach(turf/source, turf/target)
 		mob.say("*sneeze")
 		if(mob.virus2) mob.virus2.spread_airborne(mob)
 		if(mob.virus2) mob.virus2.spread_airborne(mob)
+		if(prob(10))
+			var/obj/effect/decal/cleanable/mucus/this = new(mob.loc)
+			this.anchored = 0
+			step(this, mob.dir)
+			this.anchored = 1
+			this.virus2 = mob.virus2
 
 /datum/disease2/effect/lesser/cough
 	name = "Anima Syndrome"
@@ -489,6 +504,9 @@ proc/airborne_can_reach(turf/source, turf/target)
 		mob.say("*cough")
 		if(mob.virus2) mob.virus2.spread_airborne(mob)
 		if(mob.virus2) mob.virus2.spread_airborne(mob)
+		if(prob(10))
+			var/obj/effect/decal/cleanable/mucus/this = new(mob.loc)
+			this.virus2 = mob.virus2
 
 /*/datum/disease2/effect/lesser/hallucinations
 	name = "Hallucinational Syndrome"
