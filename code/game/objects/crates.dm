@@ -105,8 +105,6 @@
 	icon_opened = "radiationopen"
 	icon_closed = "radiation"
 
-/obj/item/clothing/suit/radiation
-
 /obj/structure/closet/crate/secure/weapon
 	desc = "A secure weapons crate."
 	name = "Weapons crate"

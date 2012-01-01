@@ -71,3 +71,8 @@
 		new /obj/item/clothing/gloves/yellow(src)
 	if(prob(40))
 		new /obj/item/clothing/head/helmet/hardhat(src)
+
+/obj/structure/closet/radiation/New()
+	..()
+	new /obj/item/clothing/suit/radiation(src)
+	new /obj/item/clothing/head/radiation(src)

@@ -83,6 +83,13 @@
 	icon_closed = "toolcloset"
 	icon_opened = "toolclosetopen"
 
+/obj/structure/closet/radiation
+	desc = "A closet with a radiation sign on it."
+	name = "Level 2 Radiation Suit"
+	icon_state = "radsuitcloset"
+	icon_opened = "toolclosetopen"
+	icon_closed = "radsuitcloset"
+
 /obj/structure/closet/jcloset
 	name = "Custodial Closet"
 	desc = "A bulky (yet mobile) closet. Comes with janitor's clothes and gear."
