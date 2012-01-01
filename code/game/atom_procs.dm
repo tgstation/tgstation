@@ -142,6 +142,7 @@
 			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source2)
 			this.blood_DNA = M.dna.unique_enzymes
 			this.blood_type = M.b_type
+			this.virus2 = M.virus2
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
 				this.viruses += newDisease
