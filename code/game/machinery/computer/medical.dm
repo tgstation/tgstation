@@ -128,7 +128,7 @@
 			src.temp = null
 		if (href_list["scan"])
 			if (src.scan)
-				if(!usr.get_active_hand())
+				if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
 					usr.put_in_hand(scan)
 				else
 					scan.loc = get_turf(src)
@@ -458,7 +458,7 @@
 			if (href_list["eject_disk"])
 				if (!disk)
 					return
-				if(!usr.get_active_hand())
+				if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
 					usr.put_in_hand(disk)
 				else
 					disk.loc = get_turf(src)
