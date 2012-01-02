@@ -15,6 +15,72 @@
 	containername = "Special Ops crate"
 	hidden = 1
 
+/datum/supply_packs/boxes
+	name = "Empty Box supplies"
+	contains = list("/obj/item/weapon/storage/box",
+	"/obj/item/weapon/storage/box",
+	"/obj/item/weapon/storage/box",
+	"/obj/item/weapon/storage/box",
+	"/obj/item/weapon/storage/box",
+	"/obj/item/weapon/storage/box",
+	"/obj/item/weapon/storage/box",
+	"/obj/item/weapon/storage/box",
+	"/obj/item/weapon/storage/box",
+	"/obj/item/weapon/storage/box",)
+	cost = 5
+	containertype = "/obj/structure/closet/crate"
+	containername = "Empty Box crate"
+
+/datum/supply_packs/stationary
+	name = "Stationary supplies"
+	contains = list("/obj/item/device/taperecorder",
+	"/obj/item/weapon/packageWrap",
+	"/obj/item/weapon/clipboard",
+	"/obj/item/weapon/clipboard",
+	"/obj/item/weapon/hand_labeler",
+	"/obj/item/weapon/paper_bin",
+	"/obj/item/weapon/pen",
+	"/obj/item/weapon/pen",
+	"/obj/item/weapon/pen",
+	"/obj/item/weapon/stamp",
+	"/obj/item/weapon/stamp/denied",
+	"/obj/item/weapon/stamperaser",
+	"/obj/item/weapon/storage/diskbox",
+	"/obj/item/weapon/storage/recordsbox",
+	)
+	cost = 5
+	containertype = "/obj/structure/closet/crate"
+	containername = "Stationary crate"
+
+/datum/supply_packs/artscrafts
+	name = "Arts and Crafts supplies"
+	contains = list("/obj/item/toy/crayonbox",
+	"/obj/item/weapon/c_tube",
+	"/obj/item/weapon/camera_test",
+	"/obj/item/weapon/storage/photo_album",
+	"/obj/item/weapon/packageWrap",
+	"/obj/item/weapon/paint/red",
+	"/obj/item/weapon/paint/green",
+	"/obj/item/weapon/paint/blue",
+	"/obj/item/weapon/paint/yellow",
+	"/obj/item/weapon/paint/violet",
+	"/obj/item/weapon/paint/black",
+	"/obj/item/weapon/paint/white",
+	"/obj/item/weapon/paint/paint_remover",
+	"/obj/item/weapon/wrapping_paper",
+	"/obj/item/weapon/wrapping_paper",
+	"/obj/item/weapon/wrapping_paper")
+	cost = 5
+	containertype = "/obj/structure/closet/crate"
+	containername = "Arts and Crafts crate"
+
+/datum/supply_packs/empty
+	name = "Empty crate"
+	contains = list()
+	cost = 5
+	containertype = "/obj/structure/closet/crate"
+	containername = "crate"
+
 /datum/supply_packs/charge
 	cost = 10
 	containertype = "/obj/structure/closet/crate"
