@@ -582,6 +582,7 @@
 #include "code\game\objects\closets\nuclear.dm"
 #include "code\game\objects\closets\syndicate.dm"
 #include "code\game\objects\closets\thunderdome.dm"
+#include "code\game\objects\closets\walllocker.dm"
 #include "code\game\objects\closets\wardrobe.dm"
 #include "code\game\objects\closets\secure\bar.dm"
 #include "code\game\objects\closets\secure\engineering.dm"

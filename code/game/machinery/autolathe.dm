@@ -2,10 +2,17 @@
 	var/busy = 0
 	var/max_m_amount = 150000.0
 	var/max_g_amount = 75000.0
+	var/outputAmount = 1
+	var/makeDir = 0
 
 /obj/machinery/autolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (stat)
 		return 1
+	if(istype(O,/obj/item/weapon/storage/))
+		usr.before_take_item(O)
+		O.loc = src
+		user << "\blue You insert the \icon[O] [O.name] into the autolathe!"
+		return 0
 	if (busy)
 		user << "\red The autolathe is busy. Please wait for completion of previous operation."
 		return 1
@@ -110,6 +117,17 @@
 /obj/machinery/autolathe/proc/regular_win(mob/user as mob)
 	var/dat as text
 	dat = text("<B>Metal Amount:</B> [src.m_amount] cm<sup>3</sup> (MAX: [max_m_amount])<BR>\n<FONT color=blue><B>Glass Amount:</B></FONT> [src.g_amount] cm<sup>3</sup> (MAX: [max_g_amount])<HR>")
+	dat += "<FONT color=green><B>Output Queue:</B></FONT> [outputAmount] (<A href='?src=\ref[src];modifyOutputAmount=1'>Modify</A>)"
+	dat += "<HR>"
+	var/list/heldContainers = list()
+	for(var/obj/item/weapon/storage/container in src.contents)
+		heldContainers += container
+	if(heldContainers.len)
+		for(var/obj/item/weapon/storage/container in heldContainers)
+			dat += "<A href='?src=\ref[src];removeContainer=\ref[container]'>[container.name] (eject stored container)</A><br>"
+	else
+		dat += "No held storage containers"
+	dat += "<HR>"
 	var/list/objs = list()
 	objs += src.L
 	if (src.hacked)
@@ -154,9 +172,19 @@
 		return
 	usr.machine = src
 	src.add_fingerprint(usr)
+	if(href_list["removeContainer"])
+		var/obj/item/weapon/storage/container = locate(href_list["removeContainer"])
+		container.loc = src.loc
+		container.layer = initial(container.layer)
+	if(href_list["modifyOutputAmount"])
+		outputAmount = text2num(input(usr,"Amount:","Enter new quantity to create",""))
+		if(outputAmount < 1)
+			outputAmount = 1
 	if (!busy)
 		if(href_list["make"])
-			var/turf/T = get_step(src.loc, get_dir(src,usr))
+			makeDir = get_dir(src,usr)
+			makeNew:
+			var/turf/T = get_step(src.loc, makeDir)
 			var/obj/template = locate(href_list["make"])
 			var/multiplier = text2num(href_list["multiplier"])
 			if (!multiplier) multiplier = 1
@@ -177,12 +205,23 @@
 								src.m_amount = 0
 							if(src.g_amount < 0)
 								src.g_amount = 0
-							var/obj/new_item = new template.type(T)
+							var/obj/new_item = new template.type(src)
+							for(var/obj/item/weapon/storage/container in src.contents)
+								container.attackby(new_item)
+								if(new_item.loc == container)
+									break
 							if (multiplier>1)
 								var/obj/item/stack/S = new_item
 								S.amount = multiplier
-							busy = 0
+							if(new_item in src)
+								new_item.loc = T
 							src.updateUsrDialog()
+							outputAmount -= 1
+							if(outputAmount > 0)
+								goto makeNew
+							busy = 0
+			else
+				outputAmount = 1
 		if(href_list["act"])
 			var/temp_wire = href_list["wire"]
 			if(href_list["act"] == "pulse")

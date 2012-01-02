@@ -138,7 +138,6 @@
 				user << "\red The tray won't fit in [src]."
 				return
 			else
-
 				W.loc = user.loc
 				if ((user.client && user.s_active != src))
 					user.client.screen -= W
@@ -158,16 +157,20 @@
 			user << "\red The [src] cannot hold [W] as it's a storage item of the same size."
 			return //To prevent the stacking of the same sized items.
 
-	user.u_equip(W)
-	W.loc = src
-	if ((user.client && user.s_active != src))
-		user.client.screen -= W
-	src.orient2hud(user)
-	W.dropped(user)
-	add_fingerprint(user)
+	if(user)
+		user.u_equip(W)
+		W.loc = src
+		if ((user.client && user.s_active != src))
+			user.client.screen -= W
+		src.orient2hud(user)
+		W.dropped(user)
+		add_fingerprint(user)
+		for(var/mob/O in viewers(user, null))
+			O.show_message(text("\blue [user] has added [W] to [src]!"))
+	else
+		W.loc = src
+		orient_objs(5, 10, 4 + min(7, storage_slots), 10)
 	if (istype(W, /obj/item/weapon/gun/energy/crossbow)) return //STEALTHY
-	for(var/mob/O in viewers(user, null))
-		O.show_message(text("\blue [user] has added [W] to [src]!"))
 		//Foreach goto(139)
 	return
 

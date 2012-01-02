@@ -29,10 +29,10 @@ var/global/list/cached_icons = list()
 	color = "FFFF00"
 	icon_state = "paint_yellow"
 
-/obj/item/weapon/paint/violet //no icon
+/obj/item/weapon/paint/violet
 	name = "Violet paint"
 	color = "FF00FF"
-	icon_state = "paint_neutral"
+	icon_state = "paint_violet"
 
 /obj/item/weapon/paint/black
 	name = "Black paint"
@@ -43,7 +43,6 @@ var/global/list/cached_icons = list()
 	name = "White paint"
 	color = "FFFFFF"
 	icon_state = "paint_white"
-
 
 /obj/item/weapon/paint/anycolor
 	name = "Any color"
