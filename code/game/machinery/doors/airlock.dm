@@ -1047,25 +1047,23 @@ About the new airlock wires panel:
 	if(src.welded || src.locked || (!src.arePowerSystemsOn()) || (stat & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 		return
 	if(safe)
-		for(var/mob/M in src.loc)
-			M << "The door buzzes angerly."
-		for(var/mob/M in src.loc)
+		if(locate(/mob/living) in get_turf(src))
+			playsound(src.loc, 'buzz-two.ogg', 50, 0)
 			spawn (60)
 				close()
 			return
 
-	else // OH FUCK MOVE
-		for(var/mob/M in src.loc)
-			if(isrobot(M))
-				M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-			else
-				M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-				M.SetStunned(5)
-				M.SetWeakened(5)
-				M.emote("scream")
-			var/turf/location = src.loc
-			if(istype(location, /turf/simulated))
-				location.add_blood(M)
+	for(var/mob/M in get_turf(src))
+		if(isrobot(M))
+			M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+		else
+			M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+			M.SetStunned(5)
+			M.SetWeakened(5)
+			M.emote("scream")
+		var/turf/location = src.loc
+		if(istype(location, /turf/simulated))
+			location.add_blood(M)
 
 	use_power(50)
 	playsound(src.loc, 'airlock.ogg', 30, 1)

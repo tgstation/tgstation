@@ -80,18 +80,25 @@
 
 
 /turf/Entered(atom/movable/M as mob|obj)
+	var/loopsanity = 10
 	if(ismob(M))
 		if(M.flags & NOGRAV)
 			inertial_drift(M)
 		else if(!istype(src, /turf/space))
 			M:inertia_dir = 0
 	..()
+	var/objects = 0
 	for(var/atom/A as mob|obj|turf|area in src)
+		if(objects > loopsanity)	break
+		objects++
 		spawn( 0 )
 			if ((A && M))
 				A.HasEntered(M, 1)
 			return
+	objects = 0
 	for(var/atom/A as mob|obj|turf|area in range(1))
+		if(objects > loopsanity)	break
+		objects++
 		spawn( 0 )
 			if ((A && M))
 				A.HasProximity(M, 1)
@@ -168,17 +175,19 @@
 	if (istype(A,/mob/living/carbon))
 		var/mob/living/carbon/M = A
 		if(M.lying)	return
-		if(istype(M, /mob/living/carbon/human))			// Split this into two seperate if checks, when non-humans were being checked it would throw a null error -- TLE
-			if(istype(M:shoes, /obj/item/clothing/shoes/clown_shoes))
-				if(M.m_intent == "run")
-					if(M.footstep >= 2)
-						M.footstep = 0
+		if(istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			if(istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
+				if(H.m_intent == "run")
+					if(H.footstep >= 2)
+						H.footstep = 0
 					else
-						M.footstep++
-					if(M.footstep == 0)
+						H.footstep++
+					if(H.footstep == 0)
 						playsound(src, "clownstep", 50, 1) // this will get annoying very fast.
 				else
 					playsound(src, "clownstep", 20, 1)
+
 		switch (src.wet)
 			if(1)
 				if(istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
