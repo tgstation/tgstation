@@ -290,7 +290,7 @@
 		command_alert("Unknown biological entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
 		world << sound('commandreport.ogg')
 
-/proc/lightsout(isEvent = 0, lightsoutAmount = 1,lightsoutRange = 25) //leave lightsoutAmount as 0 to break ALL lights
+/proc/lightsout(isEvent = 0, lightsoutAmount = 1,lightsoutRange = 10) //leave lightsoutAmount as 0 to break ALL lights
 	if(isEvent)
 		command_alert("An Electrical storm has been detected in your area, please repair potential electronic overloads.","Electrical Storm Alert")
 

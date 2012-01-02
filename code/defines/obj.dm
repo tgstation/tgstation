@@ -133,6 +133,15 @@
 	opacity = 0
 	density = 0
 
+/obj/effect/sign/movingparts
+	desc = "A warning sign which reads 'CAUTION: MOVING PARTS, machinery liable to stop and start at random'"
+	name = "CAUTION"
+	icon = 'decals.dmi'
+	icon_state = "securearea"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
 /obj/effect/sign/biohazard
 	desc = "A warning sign which reads 'BIOHAZARD'"
 	name = "BIOHAZARD"
