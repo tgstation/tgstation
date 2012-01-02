@@ -11,7 +11,8 @@
 /world/proc/save_mode(var/the_mode)
 	var/F = file("data/mode.txt")
 	fdel(F)
-	if (length(the_mode) > 0)
+	if (length(the_mode) > 0 && the_mode != "none") // "None" is the vote set to dead people
+													// , who can't pick an option in a gamemode vote.
 		F << the_mode
 	else
 		F << "traitor" // Default mode, in case of errors
