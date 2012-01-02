@@ -960,7 +960,7 @@
 #include "code\modules\projectiles\projectile\bullets.dm"
 #include "code\modules\projectiles\projectile\energy.dm"
 #include "code\modules\projectiles\projectile\special.dm"
-#include "code\modules\recycling\conveyor.dm"
+#include "code\modules\recycling\conveyor2.dm"
 #include "code\modules\recycling\disposal-construction.dm"
 #include "code\modules\recycling\disposal.dm"
 #include "code\modules\recycling\sortingmachinery.dm"
