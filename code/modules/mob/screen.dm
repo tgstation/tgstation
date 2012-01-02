@@ -470,7 +470,7 @@
 								O.show_message(text("\red <B>[] manages to break out of the straight jacket!</B>", usr), 1)
 							usr << "\green You successfully break out of your straight jacket."
 							var/obj/sj = usr:wear_suit
-							usr.u_equip(sj)
+							usr.remove_from_mob(sj)
 							sj.loc = usr.loc
 				else
 					usr << "\red You attempt to get out of your straight jacket. (This will take around 4 minutes and you need to stand still)"
@@ -483,7 +483,7 @@
 								O.show_message(text("\red <B>[] manages to wriggle out of the straight jacket!</B>", usr), 1)
 							usr << "\blue You successfully get out of your straight jacket."
 							var/obj/sj = usr:wear_suit
-							usr.u_equip(sj)
+							usr.remove_from_mob(sj)
 							sj.loc = usr.loc
 
 			if(usr:handcuffed && (usr.last_special <= world.time) && usr:buckled)
