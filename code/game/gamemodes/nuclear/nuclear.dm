@@ -6,7 +6,7 @@
 	name = "nuclear emergency"
 	config_tag = "nuclear"
 	required_players = 3
-	required_enemies = 3
+	required_enemies = 2
 
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
@@ -110,6 +110,9 @@
 
 	var/nuke_code = "[rand(10000, 99999)]"
 	var/leader_selected = 0
+	var/freq = random_radio_frequency()
+	radiochannels += list("Nuclear" = freq)
+	NUKE_FREQ = freq
 	//var/agent_number = 1
 
 	for(var/datum/mind/synd_mind in syndicates)
@@ -126,7 +129,7 @@
 			//synd_mind.current.real_name = "[syndicate_name()] Operative #[agent_number]"
 			//agent_number++
 
-		equip_syndicate(synd_mind.current)
+		equip_syndicate(synd_mind.current,freq)
 		update_synd_icons_added(synd_mind)
 
 	update_all_synd_icons()
@@ -182,7 +185,7 @@
 				P.loc = H.loc
 
 	else
-		nuke_code = "code will be proveded later"
+		nuke_code = "code will be provided later"
 	synd_mind.current << "Nuclear Explosives 101:\n\tHello and thank you for choosing the Syndicate for your nuclear information needs.\nToday's crash course will deal with the operation of a Fusion Class Nanotrasen made Nuclear Device.\nFirst and foremost, DO NOT TOUCH ANYTHING UNTIL THE BOMB IS IN PLACE.\nPressing any button on the compacted bomb will cause it to extend and bolt itself into place.\nIf this is done to unbolt it one must compeltely log in which at this time may not be possible.\nTo make the device functional:\n1. Place bomb in designated detonation zone\n2. Extend and anchor bomb (attack with hand).\n3. Insert Nuclear Auth. Disk into slot.\n4. Type numeric code into keypad ([nuke_code]).\n\tNote: If you make a mistake press R to reset the device.\n5. Press the E button to log onto the device\nYou now have activated the device. To deactivate the buttons at anytime for example when\nyou've already prepped the bomb for detonation remove the auth disk OR press the R ont he keypad.\nNow the bomb CAN ONLY be detonated using the timer. A manual det. is not an option.\n\tNote: Nanotrasen is a pain in the neck.\nToggle off the SAFETY.\n\tNote: You wouldn't believe how many Syndicate Operatives with doctorates have forgotten this step\nSo use the - - and + + to set a det time between 5 seconds and 10 minutes.\nThen press the timer toggle button to start the countdown.\nNow remove the auth. disk so that the buttons deactivate.\n\tNote: THE BOMB IS STILL SET AND WILL DETONATE\nNow before you remove the disk if you need to move the bomb you can:\nToggle off the anchor, move it, and re-anchor.\n\nGood luck. Remember the order:\nDisk, Code, Safety, Timer, Disk, RUN!\nIntelligence Analysts believe that they are hiding the disk in the bridge. Your space ship will not leave until the bomb is armed and timing.\nGood luck!"
 	return
 
@@ -203,17 +206,18 @@
 	return
 
 
-/datum/game_mode/proc/random_radio_frequency()
-	return 1337
+/datum/game_mode/proc/random_radio_frequency(var/tempfreq = 1459)
+	tempfreq = rand(1400,1600)
+	if(tempfreq in radiochannels || (tempfreq > 1441 && tempfreq < 1489))
+		random_radio_frequency(tempfreq)
+	return tempfreq
 
-
-/datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob)
-	var/radio_freq = random_radio_frequency()
-
+/datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob,radio_freq)
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(synd_mob)
 	R.set_frequency(radio_freq)
+	R.freerange = 1
+	R.config(list("Nuclear" = 1))
 	synd_mob.equip_if_possible(R, synd_mob.slot_ears)
-
 	synd_mob.equip_if_possible(new /obj/item/clothing/under/syndicate(synd_mob), synd_mob.slot_w_uniform)
 	synd_mob.equip_if_possible(new /obj/item/clothing/shoes/black(synd_mob), synd_mob.slot_shoes)
 	synd_mob.equip_if_possible(new /obj/item/clothing/suit/armor/vest(synd_mob), synd_mob.slot_wear_suit)
@@ -225,9 +229,10 @@
 	synd_mob.equip_if_possible(new /obj/item/ammo_magazine/a12mm(synd_mob), synd_mob.slot_in_backpack)
 	synd_mob.equip_if_possible(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), synd_mob.slot_in_backpack)
 	synd_mob.equip_if_possible(new /obj/item/weapon/gun/projectile/automatic/c20r(synd_mob), synd_mob.slot_belt)
-	var/obj/item/weapon/implant/explosive/E = new/obj/item/weapon/implant/explosive(synd_mob)
+	var/obj/item/weapon/implant/dexplosive/E = new/obj/item/weapon/implant/dexplosive(synd_mob)
 	E.imp_in = synd_mob
 	E.implanted = 1
+
 	return 1
 
 

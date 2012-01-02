@@ -15,6 +15,9 @@
 
 	if(src.stat == 2.0 && (act != "deathgasp"))
 		return
+	if(src.stat != 2.0 && act == "deathgasp" && !src.mind.special_role == "Syndicate")
+		src << "You are not dead.  No."
+		return
 	switch(act)
 		if ("airguitar")
 			if (!src.restrained())
@@ -460,6 +463,18 @@
 			else
 				message = "<B>[src]</B> makes a very loud noise."
 				m_type = 2
+
+		if ("hungry")
+			if(prob(1))
+				message = "<B>Blue Elf</B> needs food Badly."
+			else
+				message = "<B>[src]'s</B> stomach growls."
+
+		if ("thirsty")
+			if(prob(1))
+				message = "<B>[src]</B> cancels destory station: Drinking."
+			else
+				message = "<B>[src]</B> looks thirsty."
 
 		if ("help")
 			src << "blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough,\ncry, custom, deathgasp, drool, eyebrow, frown, gasp, giggle, groan, grumble, handshake, hug-(none)/mob, glare-(none)/mob,\ngrin, laugh, look-(none)/mob, moan, mumble, nod, pale, point-atom, raise, salute, shake, shiver, shrug,\nsigh, signal-#1-10, smile, sneeze, sniff, snore, stare-(none)/mob, tremble, twitch, twitch_s, whimper,\nwink, yawn"

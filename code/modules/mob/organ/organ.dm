@@ -29,6 +29,7 @@
 		max_damage = 0
 		wound_size = 0
 		max_size = 0
+	var/obj/item/weapon/implant/implant = null
 
 
 	proc/take_damage(brute, burn)

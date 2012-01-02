@@ -49,6 +49,7 @@
 //When given the choice, people have been P2W
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=sleepypen'>Sleepy Pen</A> (4)<BR>" //Terrible -Pete.
 	menu_message += "<BR>"
+	menu_message += "<A href='byond://?src=\ref[src];buy_item=imp_exp'>Explosive Implant (with injector)</A> (6)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=detomatix'>Detomatix Cartridge</A> (3)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=bomb'>Plastic Explosives</A> (2)<BR>"
 	menu_message += "<A href='byond://?src=\ref[src];buy_item=powersink'>Power Sink</A> (5)<BR>"
@@ -144,6 +145,13 @@
 					uses -= 10
 					var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(get_turf(hostpda))
 					O.imp = new /obj/item/weapon/implant/uplink(O)
+			if("imp_exp")
+				if (src.uses >= 6)
+					src.uses -= 6
+					var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(get_turf(hostpda))
+					O.imp = new /obj/item/weapon/implant/explosive(O)
+					O.name = "(BIO-HAZARD) BIO-detpack"
+					O.update()
 			if("sleepypen")
 				if (uses >= 4)
 					uses -= 4

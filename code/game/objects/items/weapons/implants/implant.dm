@@ -45,8 +45,9 @@
 
 
 	implanted(mob/source as mob)
-		source.mind.store_memory("Uplink implant can be activated by using the [activation_emote] emote, <B>say *[activation_emote]</B> to attempt to activate.", 0, 0)
-		source << "The implanted uplink implant can be activated by using the [activation_emote] emote, <B>say *[activation_emote]</B> to attempt to activate."
+		activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
+		source.mind.store_memory("Uplink implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
+		source << "The implanted uplink implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
 		return
 
 
@@ -82,11 +83,15 @@ Implant Specifics:<BR>"}
 		return dat
 
 
-
-/obj/item/weapon/implant/explosive
+//Nuke Agent Explosive
+/obj/item/weapon/implant/dexplosive
 	name = "explosive"
 	desc = "And boom goes the weasel."
+	var/activation_emote = "deathgasp"
+	var/coded = 0
 
+	New()
+		verbs += /obj/item/weapon/implant/dexplosive/proc/set_emote
 
 	get_data()
 		var/dat = {"
@@ -103,7 +108,7 @@ Implant Specifics:<BR>"}
 
 
 	trigger(emote, source as mob)
-		if(emote == "deathgasp")
+		if(emote == activation_emote)
 			src.activate("death")
 		return
 
@@ -113,6 +118,20 @@ Implant Specifics:<BR>"}
 		explosion(src, -1, 0, 2, 3, 0)//This might be a bit much, dono will have to see.
 		if(src.imp_in)
 			src.imp_in.gib()
+
+	proc/set_emote()
+		set name = "Set Emote"
+		set category = "Object"
+		set src in usr
+		if(coded != 0)
+			usr << "You've already set up your implant!"
+			return
+		activation_emote = input("Choose activation emote:") in list("deathgasp","blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
+		usr.mind.store_memory("Explosive implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
+		usr << "The implanted explosive implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
+		coded = 1
+		verbs -= /obj/item/weapon/implant/dexplosive/proc/set_emote
+		return
 
 
 
@@ -195,3 +214,40 @@ the implant may become unstable and either pre-maturely inject the subject or si
 			ticker.mode:remove_revolutionary(H.mind)
 		H << "\blue You feel a surge of loyalty towards NanoTrasen."
 		return
+
+
+//BS12 Explosive
+/obj/item/weapon/implant/explosive
+	name = "explosive"
+	desc = "And boom goes the weasel."
+	var/phrase = "die"
+
+
+	get_data()
+		var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> Robust Corp RX-78 Intimidation Class Implant<BR>
+<b>Life:</b> Activates upon codephrase.<BR>
+<b>Important Notes:</b> Explodes<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR>
+<b>Special Features:</b> Explodes<BR>
+<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+		return dat
+
+	hear_talk(M as mob, var/msg)
+		if(findtext(msg,phrase))
+			if(istype(loc, /mob/))
+				var/mob/T = loc
+				T.gib()
+			explosion(find_loc(src), 1, 3, 4, 6, 3)
+			var/turf/t = find_loc(src)
+			if(t)
+				t.hotspot_expose(3500,125)
+			del(src)
+
+	implanted(mob/source as mob)
+		phrase = input("Choose activation phrase:") as text
+		usr.mind.store_memory("Explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.", 0, 0)
+		usr << "The implanted explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate."
