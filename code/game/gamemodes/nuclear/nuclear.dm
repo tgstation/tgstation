@@ -5,8 +5,8 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
-	required_players = 3
-	required_enemies = 2
+	required_players = 1
+	required_enemies = 1
 
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
@@ -206,17 +206,17 @@
 	return
 
 
-/datum/game_mode/proc/random_radio_frequency()
-	var/tempfreq = 1459
-	do
-		tempfreq = rand(1400,1600)
-	while(tempfreq in radiochannels || (tempfreq > 1441 && tempfreq < 1489))
+/datum/game_mode/proc/random_radio_frequency(var/tempfreq = 1459)
+	tempfreq = rand(1400,1600)
+	if(tempfreq in radiochannels || (tempfreq > 1441 && tempfreq < 1489))
+		random_radio_frequency(tempfreq)
 	return tempfreq
 
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob,radio_freq)
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(synd_mob)
 	R.set_frequency(radio_freq)
 	R.freerange = 1
+	R.config(list("Nuclear" = 1))
 	synd_mob.equip_if_possible(R, synd_mob.slot_ears)
 	synd_mob.equip_if_possible(new /obj/item/clothing/under/syndicate(synd_mob), synd_mob.slot_w_uniform)
 	synd_mob.equip_if_possible(new /obj/item/clothing/shoes/black(synd_mob), synd_mob.slot_shoes)

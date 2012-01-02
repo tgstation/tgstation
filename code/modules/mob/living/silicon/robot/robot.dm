@@ -142,7 +142,7 @@
 			channels = list()
 
 	overlays -= "eyes" //Takes off the eyes that it started with
-	radio.borg(src, channels)
+	radio.config(channels)
 	updateicon()
 
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
@@ -959,7 +959,7 @@ Frequency:
 	icon_state = "robot"
 	updateicon()
 	channels = list()
-	radio.borg(src, channels)
+	radio.config(channels)
 	uneq_all()
 	del(module)
 

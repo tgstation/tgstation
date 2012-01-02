@@ -190,10 +190,6 @@
 			message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
 			m_type = 1
 
-		if ("struckdown")
-			message = "<B>[src]</B>, Station Dweller, has been struck down."
-			m_type = 2
-
 		if ("giggle")
 			if (!muzzled)
 				message = "<B>[src]</B> giggles."

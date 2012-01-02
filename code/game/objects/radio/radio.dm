@@ -412,9 +412,7 @@
 			hear+=M
 	return hear
 
-/obj/item/device/radio/proc/borg(mob/user as mob, op)
-	if(!(issilicon(user)))
-		return
+/obj/item/device/radio/proc/config(op)
 	for (var/ch_name in channels)
 		radio_controller.remove_object(src, radiochannels[ch_name])
 	secure_radio_connections = new
