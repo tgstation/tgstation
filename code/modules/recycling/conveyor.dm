@@ -396,3 +396,23 @@
 		if(S.id == src.id)
 			S.position = position
 			S.update()
+
+
+/obj/machinery/conveyor/turntable
+	icon = 'recycling.dmi'
+	icon_state = "conveyor0"
+	name = "conveyor turntable"
+	desc = "A conveyor belt turntable."
+	/*
+	anchored = 1
+	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
+	var/operable = 1	// true if can operate (no broken segments in this belt run)
+	var/basedir			// this is the default (forward) direction, set by the map dir
+						// note dir var can vary when the direction changes
+
+	var/list/affecting	// the list of all items that will be moved this ptick
+	var/id = ""			// the control ID	- must match controller ID
+	// following two only used if a diverter is present
+	var/divert = 0 		// if non-zero, direction to divert items
+	var/divdir = 0		// if diverting, will be conveyer dir needed to divert (otherwise dense)
+	*/
