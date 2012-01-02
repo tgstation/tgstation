@@ -102,6 +102,11 @@ h1, h2, h3, h4, h5, h6
 	color: #6D3F40;
 }
 
+.nukeradio
+{
+	color: #FF3300;
+}
+
 .alert
 {
 	color: #ff0000;

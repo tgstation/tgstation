@@ -259,6 +259,8 @@
 				freq_text = "Mining"
 			if(1347)
 				freq_text = "Cargo"
+		if(connection.frequency == NUKE_FREQ)
+			freq_text = "Agent"
 		//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 
 		if(!freq_text)
@@ -269,6 +271,8 @@
 
 		if (display_freq==SYND_FREQ)
 			part_a = "<span class='syndradio'><span class='name'>"
+		if (display_freq==NUKE_FREQ)
+			part_a = "<span class='nukeradio'><span class='name'>"
 		else if (display_freq==COMM_FREQ)
 			part_a = "<span class='comradio'><span class='name'>"
 		else if (display_freq in DEPT_FREQS)
@@ -408,9 +412,7 @@
 			hear+=M
 	return hear
 
-/obj/item/device/radio/proc/borg(mob/user as mob, op)
-	if(!(issilicon(user)))
-		return
+/obj/item/device/radio/proc/config(op)
 	for (var/ch_name in channels)
 		radio_controller.remove_object(src, radiochannels[ch_name])
 	secure_radio_connections = new
