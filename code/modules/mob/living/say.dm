@@ -318,6 +318,10 @@
 
 	for (var/mob/M in W)
 		W |= M.contents
+		if(ishuman(M))
+			var/mob/living/carbon/human/G = M
+			for(var/datum/organ/external/F in G.organs)
+				W |= F.implant
 
 	for (var/obj/item/device/pda/M in W)
 		W |= M.contents
