@@ -18,7 +18,8 @@ RACK PARTS
 		del(src)
 
 /obj/item/weapon/table_parts/attack_self(mob/user as mob)
-	new /obj/structure/table( user.loc )
+	var/obj/structure/table/T = new /obj/structure/table( user.loc )
+	T.add_fingerprint(usr)
 	del(src)
 	return
 

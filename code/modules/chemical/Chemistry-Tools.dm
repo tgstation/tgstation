@@ -366,7 +366,7 @@
 
 	proc
 		fire_grenade(atom/target, mob/user)
-			if (locate (/obj/structure/table, src.loc))
+			if (locate (/obj/structure/table, src.loc) || locate (/obj/item/weapon/storage, src.loc))
 				return
 			else
 				for(var/mob/O in viewers(world.view, user))
