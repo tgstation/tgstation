@@ -97,8 +97,8 @@
 		"/obj/item/weapon/cigpacket",
 		"/obj/item/weapon/storage/pill_bottle",
 		"/obj/item/stack/medical",
-		"/obj/item/device/flashlight/pen"
-		"/obj/item/device/pda",
+		"/obj/item/device/flashlight/pen",
+		"/obj/item/device/pda"
 	)
 
 
