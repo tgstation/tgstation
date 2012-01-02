@@ -81,7 +81,7 @@
 					"You hear metal clanking")
 			else
 				M.visible_message(\
-					"\blue [M.name] was unbuckled himself!",\
+					"\blue [M.name] unbuckled \himself!",\
 					"You unbuckle yourself from [src].",\
 					"You hear metal clanking")
 //			world << "[M] is no longer buckled to [src]"
@@ -102,7 +102,7 @@
 			"You hear metal clanking")
 	else
 		M.visible_message(\
-			"\blue [M.name] is buckled in to [src] by [user.name]!",\
+			"\blue [M.name] is buckled into [src] by [user.name]!",\
 			"You buckled in to [src] by [user.name].",\
 			"You hear metal clanking")
 	M.anchored = 1
@@ -290,7 +290,7 @@
 		else
 			M.visible_message(\
 				"\blue [M.name] is buckled in to [src] by [user.name]!",\
-				"You buckled in to [src] by [user.name].",\
+				"You buckled into [src] by [user.name].",\
 				"You hear metal clanking")
 		M.anchored = 1
 		M.buckled = src
@@ -314,7 +314,7 @@
 						"You hear metal clanking")
 				else
 					M.visible_message(\
-						"\blue [M.name] was unbuckled himself!",\
+						"\blue [M.name] unbuckled \himself!",\
 						"You unbuckle yourself from [src].",\
 						"You hear metal clanking")
 				M.pixel_y = 0

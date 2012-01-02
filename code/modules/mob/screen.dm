@@ -456,6 +456,36 @@
 							usr:handcuffed:loc = usr:loc
 							usr:handcuffed = null
 
+			if(istype(usr, /mob/living/carbon/human) && istype(usr:wear_suit, /obj/item/clothing/suit/straight_jacket) && usr:canmove && (usr.last_special <= world.time))
+				usr.next_move = world.time + 200
+				usr.last_special = world.time + 200
+				if(isalienadult(usr) || usr.mutations & HULK)//Don't want to do a lot of logic gating here.
+					usr << "\green You attempt to break out of your straight jacket. (This will take around 5 seconds and you need to stand still)"
+					for(var/mob/O in viewers(usr))
+						O.show_message(text("\red <B>[] is trying to break out of \his straight jacket!</B>", usr), 1)
+					spawn(0)
+						if(do_after(usr, 50))
+							if(!istype(usr:wear_suit, /obj/item/clothing/suit/straight_jacket)) return
+							for(var/mob/O in viewers(usr))
+								O.show_message(text("\red <B>[] manages to break out of the straight jacket!</B>", usr), 1)
+							usr << "\green You successfully break out of your straight jacket."
+							var/obj/sj = usr:wear_suit
+							usr.u_equip(sj)
+							sj.loc = usr.loc
+				else
+					usr << "\red You attempt to get out of your straight jacket. (This will take around 4 minutes and you need to stand still)"
+					for(var/mob/O in viewers(usr))
+						O.show_message(text("\red <B>[] attempts to get out \his straight jacket!</B>", usr), 1)
+					spawn(0)
+						if(do_after(usr, 1200))
+							if(!istype(usr:wear_suit, /obj/item/clothing/suit/straight_jacket)) return
+							for(var/mob/O in viewers(usr))
+								O.show_message(text("\red <B>[] manages to wriggle out of the straight jacket!</B>", usr), 1)
+							usr << "\blue You successfully get out of your straight jacket."
+							var/obj/sj = usr:wear_suit
+							usr.u_equip(sj)
+							sj.loc = usr.loc
+
 			if(usr:handcuffed && (usr.last_special <= world.time) && usr:buckled)
 				usr.next_move = world.time + 100
 				usr.last_special = world.time + 100

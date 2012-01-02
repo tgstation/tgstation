@@ -381,7 +381,8 @@
 					var/list/notes = dd_text2list(beat, "/")
 					for(var/note in dd_text2list(notes[1], "-"))
 						//world << "note: [note]"
-						if(!playing)//If the piano is playing and you don't want it playing, this will stop the proc.
+						if(!playing || !anchored)//If the piano is playing, or is loose
+							playing = 0
 							return
 						if(lentext(note) == 0)
 							continue
@@ -404,8 +405,12 @@
 					else
 						sleep(song.tempo)
 			playing = 0
+			updateUsrDialog()
 
 	attack_hand(var/mob/user as mob)
+		if(!anchored)
+			return
+
 		usr.machine = src
 		var/dat = "<HEAD><TITLE>Piano</TITLE></HEAD><BODY>"
 
@@ -455,7 +460,7 @@
 		onclose(user, "piano")
 
 	Topic(href, href_list)
-		if(in_range(src, usr) && !issilicon(usr))
+		if(in_range(src, usr) && !issilicon(usr) && !anchored)
 			if(href_list["tempo"])
 				song.tempo += text2num(href_list["tempo"])
 				if(song.tempo < 1)
@@ -529,3 +534,26 @@
 		add_fingerprint(usr)
 		updateUsrDialog()
 		return
+
+	attackby(obj/item/O as obj, mob/user as mob)
+		if (istype(O, /obj/item/weapon/wrench))
+			if (anchored)
+				playsound(src.loc, 'Ratchet.ogg', 50, 1)
+				user << "\blue You begin to loosen \the [src]'s casters..."
+				if (do_after(user, 40))
+					user.visible_message( \
+						"[user] loosens \the [src]'s casters.", \
+						"\blue You have loosened \the [src]. Now it can be pulled somewhere else.", \
+						"You hear ratchet.")
+					src.anchored = 0
+			else
+				playsound(src.loc, 'Ratchet.ogg', 50, 1)
+				user << "\blue You begin to tighten \the [src] to the floor..."
+				if (do_after(user, 20))
+					user.visible_message( \
+						"[user] tightens \the [src]'s casters.", \
+						"\blue You have tightened \the [src]'s casters. Now it can be played again.", \
+						"You hear ratchet.")
+					src.anchored = 1
+		else
+			..()

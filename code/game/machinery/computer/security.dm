@@ -192,7 +192,7 @@ What a mess.*/
 
 			if("Confirm Identity")
 				if (scan)
-					if(!usr.get_active_hand())
+					if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
 						usr.put_in_hand(scan)
 					else
 						scan.loc = get_turf(src)
@@ -465,7 +465,7 @@ What a mess.*/
 			if ("eject_disk")
 				if (!disk)
 					return
-				if(!usr.get_active_hand())
+				if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
 					usr.put_in_hand(disk)
 				else
 					disk.loc = get_turf(src)
