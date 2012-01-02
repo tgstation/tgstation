@@ -353,13 +353,10 @@
 
 	process(object)
 		// get name & message
-		var/i = findtext(object, " that ")
-		var/sl = 6
+		var/i = findtext(object, ",")
+		var/sl = 1
 		if(!i || lentext(object) < i + sl)
-			i = findtext(object, ",")
-			sl = 1
-			if(!i || lentext(object) < i + sl)
-				return "Tell who that you what?"
+			return "Tell who that you what?"
 
 		var/name = trim(copytext(object, 1, i))
 		object = trim(copytext(object, i + sl))
