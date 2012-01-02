@@ -27,7 +27,7 @@
 #define MAX_PRESSURE_DAMAGE 20
 
 // Doors!
-#define DOOR_CRUSH_DAMAGE 5
+#define DOOR_CRUSH_DAMAGE 10
 
 // Factor of how fast mob nutrition decreases
 #define	HUNGER_FACTOR 0.1
