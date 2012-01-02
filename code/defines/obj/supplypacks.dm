@@ -44,7 +44,6 @@
 	"/obj/item/weapon/pen",
 	"/obj/item/weapon/stamp",
 	"/obj/item/weapon/stamp/denied",
-	"/obj/item/weapon/stamperaser",
 	"/obj/item/weapon/storage/diskbox",
 	"/obj/item/weapon/storage/recordsbox",
 	)

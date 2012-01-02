@@ -582,6 +582,7 @@
 #include "code\game\objects\closets\nuclear.dm"
 #include "code\game\objects\closets\syndicate.dm"
 #include "code\game\objects\closets\thunderdome.dm"
+#include "code\game\objects\closets\walllocker.dm"
 #include "code\game\objects\closets\wardrobe.dm"
 #include "code\game\objects\closets\secure\bar.dm"
 #include "code\game\objects\closets\secure\engineering.dm"
@@ -1004,6 +1005,6 @@
 #include "code\WorkInProgress\virus2\monkeydispensor.dm"
 #include "code\WorkInProgress\virus2\Prob.dm"
 #include "interface\skin.dmf"
-#include "maps\tgstation.2.0.8.dmm"
+#include "maps\Antiqua.dmm"
 // END_INCLUDE
 

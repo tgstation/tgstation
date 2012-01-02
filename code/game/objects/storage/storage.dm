@@ -138,7 +138,6 @@
 				user << "\red The tray won't fit in [src]."
 				return
 			else
-
 				W.loc = user.loc
 				if ((user.client && user.s_active != src))
 					user.client.screen -= W
@@ -170,6 +169,7 @@
 			O.show_message(text("\blue [user] has added [W] to [src]!"))
 	else
 		W.loc = src
+		orient_objs(5, 10, 4 + min(7, storage_slots), 10)
 	if (istype(W, /obj/item/weapon/gun/energy/crossbow)) return //STEALTHY
 		//Foreach goto(139)
 	return
