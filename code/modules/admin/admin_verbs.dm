@@ -802,15 +802,50 @@
 		M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
 		M.s_tone =  -M.s_tone + 35
 
-	var/new_style = input("Please select hair style", "Character Generation")  as null|anything in list( "Cut Hair", "Short Hair", "Long Hair", "Mohawk", "Balding", "Wave", "Bedhead", "Dreadlocks", "Ponytail", "Bald" )
+	// hair
+	var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
+	var/list/hairs = list()
 
+	// loop through potential hairs
+	for(var/x in all_hairs)
+		var/datum/sprite_accessory/hair/H = new x // create new hair datum based on type x
+		hairs.Add(H.name) // add hair name to hairs
+		del(H) // delete the hair after it's all done
+
+	var/new_style = input("Please select hair style", "Character Generation")  as null|anything in hairs
+
+	// if new style selected (not cancel)
 	if (new_style)
 		M.h_style = new_style
 
-	new_style = input("Please select facial style", "Character Generation")  as null|anything in list("Watson", "Chaplin", "Selleck", "Full Beard", "Long Beard", "Neckbeard", "Van Dyke", "Elvis", "Abe", "Chinstrap", "Hipster", "Goatee", "Hogan", "Shaved")
+		for(var/x in all_hairs) // loop through all_hairs again. Might be slightly CPU expensive, but not significantly.
+			var/datum/sprite_accessory/hair/H = new x // create new hair datum
+			if(H.name == new_style)
+				M.hair_style = H // assign the hair_style variable a new hair datum
+				break
+			else
+				del(H) // if hair H not used, delete. BYOND can garbage collect, but better safe than sorry
 
-	if (new_style)
+	// facial hair
+	var/list/all_fhairs = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
+	var/list/fhairs = list()
+
+	for(var/x in all_fhairs)
+		var/datum/sprite_accessory/facial_hair/H = new x
+		fhairs.Add(H.name)
+		del(H)
+
+	new_style = input("Please select facial style", "Character Generation")  as null|anything in fhairs
+
+	if(new_style)
 		M.f_style = new_style
+		for(var/x in all_fhairs)
+			var/datum/sprite_accessory/facial_hair/H = new x
+			if(H.name == new_style)
+				M.facial_hair_style = H
+				break
+			else
+				del(H)
 
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
 	if (new_gender)
