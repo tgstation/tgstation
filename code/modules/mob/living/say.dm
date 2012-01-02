@@ -319,6 +319,9 @@
 	for (var/mob/M in W)
 		W |= M.contents
 
+	for (var/obj/item/device/pda/M in W)
+		W |= M.contents
+
 	for (var/obj/O in W) //radio in pocket could work, radio in backpack wouldn't --rastaf0
 		spawn (0)
 			if(O && !istype(O.loc, /obj/item/weapon/storage))
