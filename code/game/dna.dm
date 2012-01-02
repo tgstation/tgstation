@@ -717,7 +717,7 @@
 		if (src.connected) //Is something connected?
 			var/mob/occupant = src.connected.occupant
 			dat = "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>" //Blah obvious
-			if (occupant) //is there REALLY someone in there?
+			if(occupant && occupant.dna) //is there REALLY someone in there?
 				if(occupant.mutations & HUSK)
 					dat += "The occupant's DNA structure is of an unknown configuration, please insert a subject with a standard DNA structure.<BR><BR>" //NOPE. -Pete
 					dat += text("<A href='?src=\ref[];buffermenu=1'>View/Edit/Transfer Buffer</A><BR><BR>", src)

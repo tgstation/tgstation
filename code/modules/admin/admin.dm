@@ -1463,6 +1463,8 @@
 						viral_outbreak(V)
 						message_admins("[key_name_admin(usr)] has triggered a virus outbreak of [V]", 1)
 					else
+						usr << "Nope"
+						/*
 						var/lesser = (alert("Do you want to infect the mob with a major or minor disease?",,"Major","Minor") == "Minor")
 						var/mob/living/carbon/victim = input("Select a mob to infect", "Virus2") as null|mob in world
 						if(!istype(victim)) return
@@ -1471,6 +1473,7 @@
 						else
 							infect_mob_random_greater(victim)
 						message_admins("[key_name_admin(usr)] has infected [victim] with a [lesser ? "minor" : "major"] virus2.", 1)
+						*/
 				if("retardify")
 					if (src.rank in list("Badmin", "Game Admin", "Game Master"))
 						feedback_inc("admin_secrets_fun_used",1)

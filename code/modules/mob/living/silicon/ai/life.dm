@@ -5,9 +5,6 @@
 		//Being dead doesn't mean your temperature never changes
 		var/turf/T = get_turf(src)
 
-		//	if (isturf(T))	//let cryo/sleeper handle adjusting body temp in their respective alter_health procs
-		//		src.bodytemperature = adjustBodyTemp(src.bodytemperature, (shuttlefloor ? shuttlefloor.temp : T.temp), 1.0) //TODO: DEFERRED
-
 		if (src.stat!=0)
 			src:cameraFollow = null
 			src:current = null
@@ -17,16 +14,6 @@
 
 		src.update_mind()
 
-		/*if (istype(T, /turf))
-			var/ficheck = src.firecheck(T)
-			if (ficheck)
-				src.adjustFireLoss(ficheck * 10)
-				src.updatehealth()
-				if (src.fire)
-					src.fire.icon_state = "fire1"
-			else if (src.fire)
-				src.fire.icon_state = "fire0"
-		*/ //TODO: DEFERRED
 		if (src.malfhack)
 			if (src.malfhack.aidisabled)
 				src << "\red ERROR: APC access disabled, hack attempt canceled."
@@ -39,8 +26,6 @@
 		if (src.health <= config.health_threshold_dead)
 			death()
 			return
-//		else if (src.health < config.health_threshold_crit && !istype(src.loc, /obj/machinery/computer/aifixer)) //Removing this for now, as it's bloody annoying. We'll see how it works -- Urist
-//			src.oxyloss++
 
 		if (src.machine)
 			if (!( src.machine.check_eye(src) ))
@@ -73,6 +58,7 @@
 					src.see_invisible = 2
 
 					var/area/home = get_area(src)
+					if(!home)	return//something to do with malf fucking things up I guess.
 					if(home.powered(EQUIP))
 						home.use_power(1000, EQUIP)
 

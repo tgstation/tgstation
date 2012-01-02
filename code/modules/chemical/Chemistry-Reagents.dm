@@ -96,7 +96,7 @@ datum
 
 
 		blood
-			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"virus2"=null,"antibodies"=0)
+			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null)
 			name = "Blood"
 			id = "blood"
 			reagent_state = LIQUID
@@ -112,20 +112,6 @@ datum
 
 					else //injected
 						M.contract_disease(virus, 1, 0)
-
-				if(self.data["virus2"])
-					if(method == TOUCH)
-						infect_virus2(M,self.data["virus2"])
-					else
-						infect_virus2(M,self.data["virus2"],1)
-
-				if(istype(M,/mob/living/carbon))
-					// add the host's antibodies to their blood
-					self.data["antibodies"] |= M:antibodies
-
-					// check if the blood has antibodies that cure our disease
-					if(self.data["antibodies"] & M:virus2.antigen) if(prob(10))
-						M:virus2.dead = 1
 
 
 				/*
@@ -157,18 +143,6 @@ datum
 						blood_prop.viruses += newVirus
 						newVirus.holder = blood_prop
 
-					var/datum/disease2/disease/v = self.data["virus2"]
-					if(v)
-						blood_prop.virus2 = v.getcopy()
-
-						// this makes it almost impossible for airborne diseases to spread
-						// THIS SHIT HAS TO GO, SORRY!
-						/*
-						if(T.density==0)
-							newVirus.spread_type = CONTACT_FEET
-						else
-							newVirus.spread_type = CONTACT_HANDS
-						*/
 
 				else if(istype(self.data["donor"], /mob/living/carbon/monkey))
 					var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T

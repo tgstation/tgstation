@@ -38,7 +38,7 @@
 
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
-		if(stat & BROKEN)
+		if(stat & BROKEN || !I || !user)
 			return
 
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
@@ -68,19 +68,20 @@
 					for (var/mob/C in viewers(src))
 						C.show_message("\red [GM.name] has been placed in the [src] by [user].", 3)
 					del(G)
+			return
 
 		if(isrobot(user))
 			return
 
-		else
-			user.drop_item()
+		if(!I)	return
 
-			I.loc = src
-			user << "You place \the [I] into the [src]."
-			for(var/mob/M in viewers(src))
-				if(M == user)
-					continue
-				M.show_message("[user.name] places \the [I] into the [src].", 3)
+		user.drop_item()
+		I.loc = src
+		user << "You place \the [I] into the [src]."
+		for(var/mob/M in viewers(src))
+			if(M == user)
+				continue
+			M.show_message("[user.name] places \the [I] into the [src].", 3)
 
 		update()
 

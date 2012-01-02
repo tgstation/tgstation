@@ -51,7 +51,7 @@
 	var/list/viruses = list()
 	blood_DNA = null
 	blood_type = null
-	var/datum/disease2/disease/virus2 = null
+	//var/datum/disease2/disease/virus2 = null
 
 	Del()
 		for(var/datum/disease/D in viruses)
