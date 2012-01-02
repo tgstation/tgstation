@@ -1063,6 +1063,9 @@ About the new airlock wires panel:
 				M.SetStunned(5)
 				M.SetWeakened(5)
 				M.emote("scream")
+			var/turf/location = src.loc
+			if(istype(location, /turf/simulated))
+				location.add_blood(M)
 
 	use_power(50)
 	playsound(src.loc, 'airlock.ogg', 30, 1)
