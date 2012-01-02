@@ -1005,6 +1005,6 @@
 #include "code\WorkInProgress\virus2\monkeydispensor.dm"
 #include "code\WorkInProgress\virus2\Prob.dm"
 #include "interface\skin.dmf"
-#include "maps\Antiqua.dmm"
+#include "maps\tgstation.2.0.8.dmm"
 // END_INCLUDE
 
