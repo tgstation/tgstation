@@ -178,6 +178,8 @@
 		container.layer = initial(container.layer)
 	if(href_list["modifyOutputAmount"])
 		outputAmount = text2num(input(usr,"Amount:","Enter new quantity to create",""))
+		if(outputAmount < 1)
+			outputAmount = 1
 	if (!busy)
 		if(href_list["make"])
 			makeDir = get_dir(src,usr)
