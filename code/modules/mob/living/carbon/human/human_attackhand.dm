@@ -17,6 +17,11 @@
 					visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
 					M.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [src.name] ([src.ckey])</font>")
 					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
+
+
+					log_attack("<font color='red'>[M.name] ([M.ckey]) stungloved [src.name] ([src.ckey])</font>")
+
+
 					var/armorblock = run_armor_check(M.zone_sel.selecting, "energy")
 					apply_effects(5,5,0,0,5,0,0,armorblock)
 					return 1
@@ -73,6 +78,9 @@
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Punched [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
 
+			log_attack("<font color='red'>[M.name] ([M.ckey]) punched [src.name] ([src.ckey])</font>")
+
+
 			var/damage = rand(0, 9)
 			if(!damage)
 				playsound(loc, 'punchmiss.ogg', 25, 1, -1)
@@ -96,6 +104,10 @@
 		if("disarm")
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
+
+
+			log_attack("<font color='red'>[M.name] ([M.ckey]) disarmed [src.name] ([src.ckey])</font>")
+
 
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)

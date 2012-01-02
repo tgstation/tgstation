@@ -12,6 +12,11 @@
 	var/log_game = 0					// log game events
 	var/log_vote = 0					// log voting
 	var/log_whisper = 0					// log client whisper
+	var/log_emote = 0					// log emotes
+	var/log_attack = 0					// log attack messages
+	var/log_adminchat = 0				// log admin chat messages
+	var/log_adminwarn = 0				// log warnings admins get about bomb construction and such
+	var/log_pda = 0						// log pda messages
 	var/sql_enabled = 1					// for sql switching
 	var/allow_vote_restart = 0 			// allow votes to restart
 	var/allow_vote_mode = 0				// allow votes to change mode
@@ -140,6 +145,21 @@
 
 				if ("log_whisper")
 					config.log_whisper = 1
+
+				if ("log_attack")
+					config.log_attack = 1
+
+				if ("log_emote")
+					config.log_emote = 1
+
+				if ("log_adminchat")
+					config.log_adminchat = 1
+
+				if ("log_adminwarn")
+					config.log_adminwarn = 1
+
+				if ("log_pda")
+					config.log_pda = 1
 
 				if ("allow_vote_restart")
 					config.allow_vote_restart = 1

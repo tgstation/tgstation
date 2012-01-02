@@ -94,6 +94,7 @@
 		else
 			src << text("Invalid Emote: []", act)
 	if ((message && src.stat == 0))
+		log_emote("[name]/[key] : [message]")
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)

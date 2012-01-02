@@ -46,6 +46,7 @@
 			signal.data["data"] = t
 			signal.data["sender"] = src.screen_name
 			src.messages += "<i><b>&rarr; You:</b></i><br>[t]<br>"
+
 			peripheral_command("send signal", signal)
 
 		if(href_list["func_msg"])

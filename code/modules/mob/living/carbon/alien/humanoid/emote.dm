@@ -97,6 +97,7 @@
 		else
 			src << text("Invalid Emote: []", act)
 	if ((message && src.stat == 0))
+		log_emote("[name]/[key] : [message]")
 		if (act == "roar")
 			playsound(src.loc, 'hiss5.ogg', 40, 1, 1)
 		if (act == "deathgasp")

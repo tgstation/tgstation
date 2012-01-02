@@ -11,7 +11,10 @@
 	user << "Planting explosives..."
 	if(ismob(target))
 		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target:real_name] ([target:ckey])</font>"
+		log_attack("<font color='red'> [user.real_name] ([user.ckey]) tried planting [name] on [target:real_name] ([target:ckey])</font>")
 		user.visible_message("\red [user.name] is trying to plant some kind of explosive on [target.name]!")
+
+
 	if(do_after(user, 50) && in_range(user, target))
 		user.drop_item()
 		target = target

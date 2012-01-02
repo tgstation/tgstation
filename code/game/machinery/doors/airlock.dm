@@ -7,6 +7,7 @@
 #define AIRLOCK_WIRE_OPEN_DOOR 7
 #define AIRLOCK_WIRE_AI_CONTROL 8
 #define AIRLOCK_WIRE_ELECTRIFY 9
+#define AIRLOCK_WIRE_SAFETY 10
 
 /*
 	New methods:
@@ -30,15 +31,15 @@
 //This generates the randomized airlock wire assignments for the game.
 /proc/RandomAirlockWires()
 	//to make this not randomize the wires, just set index to 1 and increment it in the flag for loop (after doing everything else).
-	var/list/wires = list(0, 0, 0, 0, 0, 0, 0, 0, 0)
-	airlockIndexToFlag = list(0, 0, 0, 0, 0, 0, 0, 0, 0)
-	airlockIndexToWireColor = list(0, 0, 0, 0, 0, 0, 0, 0, 0)
-	airlockWireColorToIndex = list(0, 0, 0, 0, 0, 0, 0, 0, 0)
+	var/list/wires = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+	airlockIndexToFlag = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+	airlockIndexToWireColor = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+	airlockWireColorToIndex = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 	var/flagIndex = 1
-	for (var/flag=1, flag<512, flag+=flag)
+	for (var/flag=1, flag<1024, flag+=flag)
 		var/valid = 0
 		while (!valid)
-			var/colorIndex = rand(1, 9)
+			var/colorIndex = rand(1, 10)
 			if(wires[colorIndex]==0)
 				valid = 1
 				wires[colorIndex] = flag
@@ -66,17 +67,18 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/spawnPowerRestoreRunning = 0
 	var/welded = null
 	var/locked = 0
-	var/wires = 511
+	var/wires = 1023
 	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
 	var/aiDisabledIdScanner = 0
 	var/aiHacking = 0
 	var/obj/machinery/door/airlock/closeOther = null
 	var/closeOtherId = null
-	var/list/signalers[9]
+	var/list/signalers[10]
 	var/lockdownbyai = 0
 	autoclose = 1
 	var/doortype = 0
 	var/justzap = 0
+	var/safe = 1
 	var/obj/item/weapon/airlock_electronics/electronics = null
 
 /obj/machinery/door/airlock/command
@@ -201,7 +203,10 @@ About the new airlock wires panel:
 *		one wire for opening the door. Sending a pulse through this while the door has power makes it open the door if no access is required.
 *		one wire for AI control. Sending a pulse through this blocks AI control for a second or so (which is enough to see the AI control light on the panel dialog go off and back on again). Cutting this prevents the AI from controlling the door unless it has hacked the door through the power connection (which takes about a minute). If both main and backup power are cut, as well as this wire, then the AI cannot operate or hack the door at all.
 *		one wire for electrifying the door. Sending a pulse through this electrifies the door for 30 seconds. Cutting this wire electrifies the door, so that the next person to touch the door without insulated gloves gets electrocuted. (Currently it is also STAYING electrified until someone mends the wire)
+*		one wire for controling door safetys.  When active, door does not close on someone.  When cut, door will ruin someone's shit.  When pulsed, door will immedately ruin someone's shit.
 */
+
+
 
 /obj/machinery/door/airlock/bumpopen(mob/user as mob) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
 	if(!istype(usr, /mob/living/silicon))
@@ -277,7 +282,11 @@ About the new airlock wires panel:
 					open()
 				else
 					close()
-
+		if(AIRLOCK_WIRE_SAFETY)
+			safe = !safe
+			if(!src.density)
+				close()
+			src.updateUsrDialog()
 
 
 /obj/machinery/door/airlock/proc/cut(var/wireColor)
@@ -313,7 +322,9 @@ About the new airlock wires panel:
 			//Cutting this wire electrifies the door, so that the next person to touch the door without insulated gloves gets electrocuted.
 			if(src.secondsElectrified != -1)
 				src.secondsElectrified = -1
-
+		if (AIRLOCK_WIRE_SAFETY)
+			safe = 0
+			src.updateUsrDialog()
 
 /obj/machinery/door/airlock/proc/mend(var/wireColor)
 	var/wireFlag = airlockWireColorToFlag[wireColor]
@@ -341,6 +352,10 @@ About the new airlock wires panel:
 		if(AIRLOCK_WIRE_ELECTRIFY)
 			if(src.secondsElectrified == -1)
 				src.secondsElectrified = 0
+
+		if (AIRLOCK_WIRE_SAFETY)
+			safe = 1
+			src.updateUsrDialog()
 
 /obj/machinery/door/airlock/proc/isElectrified()
 	if(src.secondsElectrified != 0)
@@ -535,6 +550,14 @@ About the new airlock wires panel:
 	else
 		t1 += text("Door is not electrified. <A href='?src=\ref[];aiEnable=5'>Electrify it for 30 seconds?</a> Or, <A href='?src=\ref[];aiEnable=6'>Electrify it indefinitely until someone cancels the electrification?</a><br>\n", src, src)
 
+	if(src.isWireCut(AIRLOCK_WIRE_SAFETY))
+		t1 += text("Door force sensors not responding.</a><br>\n")
+	else if(src.safe)
+		t1 += text("Door safeties operating normally.  <A href='?src=\ref[];aiDisable=8'> Override?</a><br>\n",src)
+	else
+		t1 += text("Danger.  Door safeties disabled.  <A href='?src=\ref[];aiEnable=8'> Restore?</a><br>\n",src)
+
+
 	if(src.welded)
 		t1 += text("Door appears to have been welded shut.<br>\n")
 	else if(!src.locked)
@@ -639,7 +662,8 @@ About the new airlock wires panel:
 			"Blue" = 6,
 			"Green" = 7,
 			"Grey" = 8,
-			"Black" = 9
+			"Black" = 9,
+			"Gold" = 10
 		)
 		for(var/wiredesc in wires)
 			var/is_uncut = src.wires & airlockWireColorToFlag[wires[wiredesc]]
@@ -655,7 +679,7 @@ About the new airlock wires panel:
 					t1 += "<a href='?src=\ref[src];signaler=[wires[wiredesc]]'>Attach signaler</a>"
 			t1 += "<br>"
 
-		t1 += text("<br>\n[]<br>\n[]<br>\n[]", (src.locked ? "The door bolts have fallen!" : "The door bolts look up."), ((src.arePowerSystemsOn() && !(stat & NOPOWER)) ? "The test light is on." : "The test light is off!"), (src.aiControlDisabled==0 ? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off."))
+		t1 += text("<br>\n[]<br>\n[]<br>\n[]<br>\n[]", (src.locked ? "The door bolts have fallen!" : "The door bolts look up."), ((src.arePowerSystemsOn() && !(stat & NOPOWER)) ? "The test light is on." : "The test light is off!"), (src.aiControlDisabled==0 ? "The 'AI control allowed' light is on." : "The 'AI control allowed' light is off."),  (src.safe==0 ? "The 'Check Wiring' light is on." : "The 'Check Wiring' light is off."))
 
 		t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
 
@@ -769,6 +793,16 @@ About the new airlock wires panel:
 						src.secondsElectrified = 0
 					else if(src.secondsElectrified>0)
 						src.secondsElectrified = 0
+
+				if(8)
+					// Safeties!  We don't need no stinking safeties!
+					if (src.isWireCut(AIRLOCK_WIRE_SAFETY))
+						usr << text("Control to door sensors is disabled.</a><br>\n")
+					else if (src.safe)
+						safe = 0
+					else
+						usr << text("Firmware reports safeties already overriden.</a><br>\n")
+
 				if(7)
 					//close door
 					if(src.welded)
@@ -779,6 +813,8 @@ About the new airlock wires panel:
 						close()
 					else
 						usr << text("The airlock is already closed.<br>\n")
+
+
 
 		else if(href_list["aiEnable"])
 			var/code = text2num(href_list["aiEnable"])
@@ -831,6 +867,17 @@ About the new airlock wires panel:
 						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
 						src.secondsElectrified = -1
+
+				if (8) // Not in order >.>
+					// Safeties!  Maybe we do need some stinking safeties!
+					if (src.isWireCut(AIRLOCK_WIRE_SAFETY))
+						usr << text("Control to door sensors is disabled.<br>\n")
+					else if (!src.safe)
+						safe = 1
+					else
+						usr << text("Firmware reports safeties already in place.<br>\n")
+
+
 				if(7)
 					//open door
 					if(src.welded)
@@ -999,6 +1046,24 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/close()
 	if(src.welded || src.locked || (!src.arePowerSystemsOn()) || (stat & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 		return
+	if(safe)
+		for(var/mob/M in src.loc)
+			M << "The door buzzes angerly."
+		for(var/mob/M in src.loc)
+			spawn (60)
+				close()
+			return
+
+	else // OH FUCK MOVE
+		for(var/mob/M in src.loc)
+			if(isrobot(M))
+				M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+			else
+				M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
+				M.SetStunned(5)
+				M.SetWeakened(5)
+				M.emote("scream")
+
 	use_power(50)
 	playsound(src.loc, 'airlock.ogg', 30, 1)
 	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))

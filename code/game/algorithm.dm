@@ -6,6 +6,7 @@
 
 Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 ---------------------
+Dear Diary....
 
 "}
 

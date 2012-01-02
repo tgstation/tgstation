@@ -357,7 +357,15 @@
 				usr << "\red The grenade launcher cannot hold more grenades."
 
 	afterattack(obj/target, mob/user , flag)
-		if(target == user) return
+
+		if (istype(target, /obj/item/weapon/storage/backpack ))
+			return
+
+		else if (locate (/obj/structure/table, src.loc))
+			return
+
+		else if(target == user)
+			return
 
 		if(grenades.len)
 			spawn(0) fire_grenade(target,user)
@@ -366,6 +374,59 @@
 
 	proc
 		fire_grenade(atom/target, mob/user)
+			for(var/mob/O in viewers(world.view, user))
+				O.show_message(text("\red [] fired a grenade!", user), 1)
+			user << "\red You fire the grenade launcher!"
+			if (istype(grenades[1], /obj/item/weapon/chem_grenade))
+				var/obj/item/weapon/chem_grenade/F = grenades[1]
+				grenades -= F
+				F.loc = user.loc
+				F.throw_at(target, 30, 2)
+				message_admins("[key_name_admin(user)] fired a chemistry grenade from a grenade launcher ([src.name]).")
+				log_game("[key_name_admin(user)] used a chemistry grenade ([src.name]).")
+				F.state = 1
+				F.icon_state = initial(icon_state)+"_armed"
+				playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
+				spawn(15)
+					F.explode()
+			else if (istype(grenades[1], /obj/item/weapon/flashbang))
+				var/obj/item/weapon/flashbang/F = grenades[1]
+				grenades -= F
+				F.loc = user.loc
+				F.throw_at(target, 30, 2)
+				F.active = 1
+				F.icon_state = "flashbang1"
+				playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
+				spawn(15)
+					F.prime()
+			else if (istype(grenades[1], /obj/item/weapon/smokebomb))
+				var/obj/item/weapon/smokebomb/F = grenades[1]
+				grenades -= F
+				F.loc = user.loc
+				F.throw_at(target, 30, 2)
+				F.icon_state = "flashbang1"
+				playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
+				spawn(15)
+					F.prime()
+			else if (istype(grenades[1], /obj/item/weapon/mustardbomb))
+				var/obj/item/weapon/mustardbomb/F = grenades[1]
+				grenades -= F
+				F.loc = user.loc
+				F.throw_at(target, 30, 2)
+				F.icon_state = "flashbang1"
+				playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
+				spawn(15)
+					F.prime()
+			else if (istype(grenades[1], /obj/item/weapon/empgrenade))
+				var/obj/item/weapon/empgrenade/F = grenades[1]
+				grenades -= F
+				F.loc = user.loc
+				F.throw_at(target, 30, 2)
+				F.active = 1
+				F.icon_state = "empar"
+				playsound(user.loc, 'armbomb.ogg', 75, 1, -3)
+				spawn(15)
+					F.prime()
 			if (locate (/obj/structure/table, src.loc) || locate (/obj/item/weapon/storage, src.loc))
 				return
 			else
@@ -1196,6 +1257,10 @@
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [src.name] by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject [M.name] ([M.ckey])</font>")
+
+		log_attack("<font color='red'>[user.name] ([user.ckey]) injected [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+
+
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
@@ -1309,6 +1374,8 @@
 
 					M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
 					user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
+
+					log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
 					for(var/mob/O in viewers(world.view, user))
 						O.show_message("\red [user] feeds [M] [src].", 1)
@@ -1480,6 +1547,8 @@
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
 
+			log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+
 
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
@@ -1601,6 +1670,8 @@
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
 
+
+			log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
@@ -2203,6 +2274,8 @@
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
 
+
+			log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)

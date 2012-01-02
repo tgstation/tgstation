@@ -26,6 +26,8 @@
 #define WARNING_LOW_PRESSURE HAZARD_LOW_PRESSURE*2.5
 #define MAX_PRESSURE_DAMAGE 20
 
+// Doors!
+#define DOOR_CRUSH_DAMAGE 35
 
 // Factor of how fast mob nutrition decreases
 #define	HUNGER_FACTOR 0.1

@@ -2,12 +2,14 @@
 ////////////////////////////////
 /proc/message_admins(var/text, var/admin_ref = 0)
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
+	log_adminwarn(rendered)
 	for (var/mob/M in world)
 		if (M && M.client && M.client.holder && M.client.authenticated)
 			if (admin_ref)
 				M << dd_replaceText(rendered, "%admin_ref%", "\ref[M]")
 			else
 				M << rendered
+
 
 /obj/admins/Topic(href, href_list)
 	..()

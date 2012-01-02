@@ -457,6 +457,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had the [name] used on him by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [name] on [M.name] ([M.ckey])</font>")
 
+		log_attack("<font color='red'>[user.name] ([user.ckey]) used [name] on [M.name] ([M.ckey])</font>")
+
+
 		if(istype(M,/mob/dead))
 			M.invisibility = 0
 			user.visible_message( \

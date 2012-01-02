@@ -281,6 +281,7 @@
 						signal.data["tag"] = "\ref[P]"
 						src.post_signal(signal)
 						src.message_note += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
+						log_pda("[usr] sent [t] to [P.owner]")
 
 					if("rename")
 						var/datum/computer/file/F = locate(href_list["target"])

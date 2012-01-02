@@ -86,7 +86,7 @@
 	attack(target as obj, mob/user as mob)
 
 		user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[target]</font>")
-
+		log_attack("<font color='blue'>[user] ([user.ckey]) has used [src.name] on \ref[target]</font>")
 		if (istype(target, /obj/item))
 			var/obj/item/O = target
 			if(!istype(loc,/turf))
