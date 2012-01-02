@@ -108,6 +108,7 @@ var
 //	list/traitors = list()	//traitor list
 	list/cardinal = list( NORTH, SOUTH, EAST, WEST )
 	list/alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
+	list/emclosets = list()	//random emergency closets woo
 
 	datum/station_state/start_state = null
 	datum/configuration/config = null
