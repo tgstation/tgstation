@@ -113,6 +113,7 @@ var/list/radiochannels = list(
 var/list/DEPT_FREQS = list(1351,1355,1357,1359,1213,1441,1349,1347)
 var/const/COMM_FREQ = 1353 //command, colored gold in chat window
 var/const/SYND_FREQ = 1213
+var/NUKE_FREQ = 1199 //Never accessable except on nuke rounds.
 
 #define TRANSMISSION_WIRE	0
 #define TRANSMISSION_RADIO	1

@@ -6,12 +6,12 @@
 /obj/item/weapon/plastique/afterattack(atom/target as obj|turf, mob/user as mob, flag)
 	if (!flag)
 		return
-	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/))
+	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/) || ismob(target))
 		return
 	user << "Planting explosives..."
-	if(ismob(target))
+/*	if(ismob(target))
 		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target:real_name] ([target:ckey])</font>"
-		user.visible_message("\red [user.name] is trying to plant some kind of explosive on [target.name]!")
+		user.visible_message("\red [user.name] is trying to plant some kind of explosive on [target.name]!")	*/
 	if(do_after(user, 50) && in_range(user, target))
 		user.drop_item()
 		target = target

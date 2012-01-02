@@ -15,6 +15,9 @@
 
 	if(src.stat == 2.0 && (act != "deathgasp"))
 		return
+	if(src.stat != 2.0 && act == "deathgasp" && !src.mind.special_role == "Syndicate")
+		src << "You are not dead.  No."
+		return
 	switch(act)
 		if ("airguitar")
 			if (!src.restrained())
@@ -186,6 +189,10 @@
 		if ("deathgasp")
 			message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."
 			m_type = 1
+
+		if ("struckdown")
+			message = "<B>[src]</B>, Station Dweller, has been struck down."
+			m_type = 2
 
 		if ("giggle")
 			if (!muzzled)

@@ -79,7 +79,7 @@
 
 
 /obj/item/weapon/implantcase/explosive
-	name = "Glass Case- 'Explosive'"
+	name = "Glass Case- '(BIO-HAZARD) BIO-detpack'"
 	desc = "A case containing an explosive implant."
 	icon = 'items.dmi'
 	icon_state = "implantcase-r"
