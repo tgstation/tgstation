@@ -566,6 +566,15 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 //		world << "atom.DblClick() on [src] by [usr] : src.type is [src.type]"
 		usr:lastDblClick = world.time
 
+	// ------- SHIFT-CLICK -------
+
+	var/parameters = params2list(params)
+
+	if(parameters["shift"]){
+		ShiftClick(usr)
+		return
+	}
+
 
 	// ------- AI -------
 	if (istype(usr, /mob/living/silicon/ai))
@@ -855,6 +864,9 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				usr.next_move = world.time + 6
 	return
 
+/atom/proc/ShiftClick(var/mob/M as mob)
+	examine()
+	return
 
 /atom/proc/get_global_map_pos()
 	if(!islist(global_map) || isemptylist(global_map)) return
