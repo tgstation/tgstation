@@ -6,7 +6,7 @@
 		list/obj/machinery/light/Doors = list( )
 
 	Announce()
-		Lifetime = rand(60, 300)
+		Lifetime = rand(90, 300)
 		command_alert("The ship is flying through an electrical storm.  Radio communications may be disrupted", "Anomaly Alert")
 
 		for (var/datum/radio_frequency/Freq in radio_controller.frequencies)
@@ -43,7 +43,7 @@
 			if(Door.z == 1)
 				Doors += Door
 
-		sleep(rand(20,100))
+		sleep(rand(70,180))
 
 		var/picked = 0
 		var/list/SafeTemp = list()
@@ -61,7 +61,7 @@
 		command_alert("The radio frequency [SafeFreq/10] has been identified as stable despite the interference.", "Station Central Computer System")
 
 	Tick()
-		for(var/x = 0; x < 4; x++)
+		for(var/x = 0; x < 3; x++)
 			if (prob(30))
 				BlowLight()
 		if (prob(10))
