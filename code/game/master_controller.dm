@@ -65,6 +65,13 @@ datum/controller/game_controller
 		for(var/obj/machinery/atmospherics/unary/vent_scrubber/T in world)
 			T.broadcast_status()
 
+		var/emclosetcount = rand((emclosets.len)/2, (emclosets.len)*2/3)
+		while(emclosetcount > 0)
+			var/turf/loc = pick(emclosets)
+			emclosets -= loc
+			new /obj/structure/closet/emcloset(loc)
+			emclosetcount--
+
 		world << "\red \b Initializations complete."
 
 
