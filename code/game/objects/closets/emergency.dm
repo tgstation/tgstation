@@ -9,6 +9,8 @@
 	var/counter = 0
 	while(prob(60) && counter < 3)
 		new /obj/item/weapon/tank/emergency_oxygen(src)
+		counter++
 	counter = 0
 	while(prob(60) && counter < 3)
 		new /obj/item/clothing/mask/breath(src)
+		counter++
