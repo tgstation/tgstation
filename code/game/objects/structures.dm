@@ -74,6 +74,8 @@ obj/structure
 		else if((istype(W, /obj/item/stack/sheet/metal)) && (W:amount >= 2))
 			user << "\blue Now adding plating..."
 			if (do_after(user,40))
+				if(!W)
+					return
 				user << "\blue You added the plating!"
 				var/turf/Tsrc = get_turf(src)
 				Tsrc.ReplaceWithWall()
@@ -85,6 +87,8 @@ obj/structure
 			if (src.icon_state == "reinforced") //Time to finalize!
 				user << "\blue Now finalising reinforced wall."
 				if(do_after(user, 50))
+					if(!W)
+						return
 					user << "\blue Wall fully reinforced!"
 					var/turf/Tsrc = get_turf(src)
 					Tsrc.ReplaceWithRWall()
@@ -95,6 +99,8 @@ obj/structure
 			else
 				user << "\blue Now reinforcing girders"
 				if (do_after(user,60))
+					if(!W)
+						return
 					user << "\blue Girders reinforced!"
 					W:use(1)
 					new/obj/structure/girder/reinforced( src.loc )
