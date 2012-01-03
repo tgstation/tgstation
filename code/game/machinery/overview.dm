@@ -5,8 +5,9 @@
 	set category = "Object"
 	set src in view(1)
 	usr.machine = src
+	if(!mapping)	return
 
-	log_game("[usr]([usr.key]) used station map L[maplevel] in [src.loc.loc]")
+	log_game("[usr]([usr.key]) used station map L[z] in [src.loc.loc]")
 
 	src.drawmap(usr)
 
@@ -36,7 +37,7 @@
 
 		for(var/wy = 1; wy <= world.maxy; wy++)
 
-			var/turf/T = locate(wx, wy, maplevel)
+			var/turf/T = locate(wx, wy, z)
 
 			var/colour
 			var/colour2
@@ -122,8 +123,9 @@
 					colour = rgb(red, green, blue)
 
 			if(!colour2 && !T.density)
-
-				var/turf_total = T.co2 + T.oxygen + T.poison + T.sl_gas + T.n2
+				var/datum/gas_mixture/environment = T.return_air()
+				var/turf_total = environment.total_moles()
+				//var/turf_total = T.co2 + T.oxygen + T.poison + T.sl_gas + T.n2
 
 
 				var/t1 = turf_total / MOLES_CELLSTANDARD * 150
@@ -192,7 +194,7 @@
 
 		for(var/wy = 1; wy <= world.maxy; wy++)
 
-			var/turf/T = locate(wx, wy, maplevel)
+			var/turf/T = locate(wx, wy, z)
 
 			var/colour
 
@@ -284,7 +286,7 @@
 
 			//world << "icon: \icon[I]"
 
-			I.DrawBox(colour, rx, ry, rx+1, ry+1)
+			I.DrawBox(colour, rx, ry, rx, ry)
 
 
 	user.clearmap()

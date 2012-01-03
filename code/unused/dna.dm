@@ -7,6 +7,16 @@
 		p++
 	return t
 
+/obj/machinery/computer/dna
+	name = "DNA operations computer"
+	desc = "A Computer used to advanced DNA stuff."
+	icon_state = "dna"
+	var/obj/item/weapon/card/data/scan = null
+	var/obj/item/weapon/card/data/modify = null
+	var/obj/item/weapon/card/data/modify2 = null
+	var/mode = null
+	var/temp = null
+
 /obj/machinery/computer/dna/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
 

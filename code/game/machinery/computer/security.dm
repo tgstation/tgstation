@@ -1,8 +1,28 @@
+/obj/machinery/computer/secure_data//TODO:SANITY
+	name = "Security Records"
+	desc = "Used to view and edit personnel's security records"
+	icon_state = "security"
+	req_access = list(access_security)
+	circuit = "/obj/item/weapon/circuitboard/secure_data"
+	var
+		obj/item/weapon/card/id/scan = null
+		authenticated = null
+		rank = null
+		screen = null
+		datum/data/record/active1 = null
+		datum/data/record/active2 = null
+		a_id = null
+		temp = null
+		printing = null
+
+
 /obj/machinery/computer/secure_data/attack_ai(mob/user as mob)
 	return attack_hand(user)
 
+
 /obj/machinery/computer/secure_data/attack_paw(mob/user as mob)
 	return attack_hand(user)
+
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
 /obj/machinery/computer/secure_data/attack_hand(mob/user as mob)
@@ -20,7 +40,7 @@
 				if(2.0)
 					dat += "<B>Record List</B>:<HR>"
 					for(var/datum/data/record/R in data_core.general)
-						dat += text("<A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
+						dat += text("<A href='?src=\ref[src];choice=Browse Record;d_rec=\ref[R]'>[R.fields["id"]]: [R.fields["name"]] - [R.fields["rank"]]<BR>")
 					dat += text("<HR><A href='?src=\ref[];choice=Return'>Back</A>", src)
 				if(3.0)
 					dat += text("<B>Records Maintenance</B><HR>\n<A href='?src=\ref[];choice=Delete All Records'>Delete All Records</A><BR>\n<BR>\n<A href='?src=\ref[];choice=Return'>Back</A>", src, src)
@@ -48,6 +68,7 @@
 	user << browse(text("<HEAD><TITLE>Security Records</TITLE></HEAD><TT>[]</TT>", dat), "window=secure_rec")
 	onclose(user, "secure_rec")
 	return
+
 
 /*Revised /N
 I can't be bothered to look more of the actual code outside of switch but that probably needs revising too.
@@ -379,3 +400,8 @@ What a mess.*/
 	updateUsrDialog()
 	return
 
+
+
+/obj/machinery/computer/secure_data/detective_computer
+	icon = 'computer.dmi'
+	icon_state = "messyfiles"

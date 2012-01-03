@@ -20,43 +20,6 @@ AI MODULES
 	throw_range = 15
 	origin_tech = "programming=3"
 
-/obj/machinery/computer/aiupload/verb/AccessInternals()
-	set category = "Object"
-	set name = "Access Computer's Internals"
-	set src in oview(1)
-	if(get_dist(src, usr) > 1 || usr.restrained() || usr.lying || usr.stat || istype(usr, /mob/living/silicon))
-		return
-
-	opened = !opened
-	if(opened)
-		usr << "\blue The access panel is now open."
-	else
-		usr << "\blue The access panel is now closed."
-	return
-
-
-/obj/machinery/computer/aiupload/attackby(obj/item/weapon/O as obj, mob/user as mob)
-	if(istype(O, /obj/item/weapon/aiModule))
-		var/obj/item/weapon/aiModule/M = O
-		M.install(src)
-	else
-		..()
-
-/obj/machinery/computer/aiupload/attack_hand(var/mob/user as mob)
-	if(src.stat & NOPOWER)
-		usr << "The upload computer has no power!"
-		return
-	if(src.stat & BROKEN)
-		usr << "The upload computer is broken!"
-		return
-
-	src.current = activeais()
-
-	if (!src.current)
-		usr << "No active AIs detected."
-	else
-		usr << "[src.current.name] selected for law changes."
-
 
 /obj/item/weapon/aiModule/proc/install(var/obj/machinery/computer/C)
 	if (istype(C, /obj/machinery/computer/aiupload))
@@ -106,30 +69,6 @@ AI MODULES
 			comp.current << "These are your laws now:"
 			comp.current.show_laws()
 			usr << "Upload complete. The cyborg's laws have been modified."
-
-
-/obj/machinery/computer/borgupload/attackby(obj/item/weapon/aiModule/module as obj, mob/user as mob)
-	if(istype(module, /obj/item/weapon/aiModule))
-		module.install(src)
-	else
-		return ..()
-
-/obj/machinery/computer/borgupload/attack_hand(var/mob/user as mob)
-	if(src.stat & NOPOWER)
-		usr << "The upload computer has no power!"
-		return
-	if(src.stat & BROKEN)
-		usr << "The upload computer is broken!"
-		return
-
-	src.current = freeborg()
-
-	if (!src.current)
-		usr << "No free cyborgs detected."
-	else
-		usr << "[src.current.name] selected for law changes."
-
-
 
 
 /obj/item/weapon/aiModule/proc/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)

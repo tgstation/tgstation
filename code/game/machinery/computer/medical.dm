@@ -1,3 +1,20 @@
+/obj/machinery/computer/med_data//TODO:SANITY
+	name = "Medical Records"
+	desc = "This can be used to check medical records."
+	icon_state = "medcomp"
+	req_access = list(access_medical)
+	circuit = "/obj/item/weapon/circuitboard/med_data"
+	var
+		obj/item/weapon/card/id/scan = null
+		authenticated = null
+		rank = null
+		screen = null
+		datum/data/record/active1 = null
+		datum/data/record/active2 = null
+		a_id = null
+		temp = null
+		printing = null
+
 /obj/machinery/computer/med_data/attack_ai(user as mob)
 	return src.attack_hand(user)
 
@@ -408,3 +425,8 @@
 	src.updateUsrDialog()
 	return
 
+
+/obj/machinery/computer/med_data/laptop
+	name = "Medical Laptop"
+	desc = "Cheap Nanotrasen Laptop."
+	icon_state = "medlaptop"

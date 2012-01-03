@@ -1,8 +1,21 @@
+/obj/machinery/computer/operating
+	name = "Operating Computer"
+	density = 1
+	anchored = 1.0
+	icon_state = "operating"
+	circuit = "/obj/item/weapon/circuitboard/operating"
+	var
+		mob/living/carbon/human/victim = null
+		obj/machinery/optable/table = null
+		id = 0.0
+
+
 /obj/machinery/computer/operating/New()
 	..()
 	for(var/obj/machinery/optable/O in world)
 		if(src.id == O.id)
 			src.table = O
+
 
 /obj/machinery/computer/operating/attack_ai(mob/user)
 	add_fingerprint(user)
@@ -10,11 +23,13 @@
 		return
 	interact(user)
 
+
 /obj/machinery/computer/operating/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(stat & (BROKEN|NOPOWER))
 		return
 	interact(user)
+
 
 /obj/machinery/computer/operating/proc/interact(mob/user)
 	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
@@ -52,14 +67,14 @@
 	user << browse(dat, "window=op")
 	onclose(user, "op")
 
+
 /obj/machinery/computer/operating/Topic(href, href_list)
 	if(..())
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		usr.machine = src
-//		if (href_list["update"])
-//			src.interact(usr)
 	return
+
 
 /obj/machinery/computer/operating/process()
 	if(!(stat & (NOPOWER|BROKEN)) )
