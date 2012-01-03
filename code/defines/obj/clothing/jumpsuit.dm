@@ -30,6 +30,13 @@
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 
+/obj/item/clothing/under/chameleon/psyche
+	item_state = "bl_suit"
+	name = "psychedelic"
+	desc = "Groovy!"
+	icon_state = "psyche"
+	color = "psyche"
+
 /obj/item/clothing/under/chameleon/all
 
 /obj/item/clothing/under/color/black

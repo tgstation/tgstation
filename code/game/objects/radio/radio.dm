@@ -230,11 +230,13 @@
 	var/list/heard_normal = list() // normal message
 	var/list/heard_voice = list() // voice message
 	var/list/heard_garbled = list() // garbled message
+	var/turf/cl = get_turf(M)
 
 	for (var/mob/R in receive)
+		var/turf/gl = get_turf(R)
 		if (R.client && R.client.STFU_radio) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			continue
-		if (R.say_understands(M))
+		if (R.say_understands(M) && ((gl.z == cl.z) || !istype(src, /obj/item/device/radio/headset)))
 			if ((!ishuman(M) || istype(M.wear_mask, /obj/item/clothing/mask/gas/voice)) && !scramble)
 				heard_masked += R
 			else if (!scramble)
@@ -242,7 +244,7 @@
 			else
 				heard_garbled += R
 		else
-			if (M.voice_message)
+			if (M.voice_message && (gl.z == cl.z))
 				heard_voice += R
 			else
 				heard_garbled += R
@@ -356,9 +358,7 @@
 
 		if (length(heard_garbled))
 			quotedmsg = M.say_quote(stars(message))
-			var/rendered = "[part_a][M.voice_name][part_b][quotedmsg][part_c]"
-			if(scramble)
-				rendered = "[part_a]Unknown[part_b][quotedmsg][part_c]"
+			var/rendered = "[part_a]Unknown[part_b][quotedmsg][part_c]"
 
 			for (var/mob/R in heard_garbled)
 				if(istype(R, /mob/living/silicon/ai))
