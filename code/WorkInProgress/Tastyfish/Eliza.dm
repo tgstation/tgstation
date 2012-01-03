@@ -19,7 +19,7 @@
 	username = ""
 	yesno_state = ""
 	yesno_param = ""
-	print("Hi! I'm [callsign], how are you doing?")
+	print("Hi! I'm [callsign], how are you doing? You can talk to me by beginning your statements with \"[callsign],\"")
 
 /datum/text_parser/parser/eliza/process_line()
 	..()

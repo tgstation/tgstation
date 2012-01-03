@@ -108,7 +108,7 @@
 				"Oh, I*",
 				"You're not really talking about me, are you?")),
 		new/datum/text_parser/keyword(
-			list("i want"),
+			list("i want","i like"),
 			list(
 				"What would it mean if you got*",
 				"Why do you want*",
@@ -397,7 +397,7 @@
 		pda.overlays = null
 		pda.overlays += image('pda.dmi', "pda-r")
 
-		return "Told [name] that [object]."
+		return "Told [name], [object]."
 
 /datum/text_parser/keyword/yes
 	process(object)
