@@ -489,6 +489,7 @@ datum
 			req_tech = list("programming" = 4, "engineering" = 3, "bluespace" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/telecomms/receiver"
 
 		telecomms_bus
 			name = "Circuit Design (Bus Mainframe)"
@@ -497,6 +498,7 @@ datum
 			req_tech = list("programming" = 4, "engineering" = 4)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/telecomms/bus"
 
 		telecomms_processor
 			name = "Circuit Design (Processor Unit)"
@@ -505,6 +507,7 @@ datum
 			req_tech = list("programming" = 4, "engineering" = 4)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/telecomms/processor"
 
 		telecomms_server
 			name = "Circuit Design (Subspace Receiver)"
@@ -513,6 +516,7 @@ datum
 			req_tech = list("programming" = 4, "engineering" = 4)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/telecomms/server"
 
 		subspace_broadcaster
 			name = "Circuit Design (Subspace Broadcaster)"
@@ -521,6 +525,7 @@ datum
 			req_tech = list("programming" = 4, "engineering" = 4, "bluespace" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/telecomms/broadcaster"
 
 
 ///////////////////////////////////
