@@ -6,8 +6,8 @@
 
 */
 
-
-var/list/EventTypes = typesof(/datum/event) - /datum/event - /datum/event/spaceninja
+var/list/DisallowedEvents = list(/datum/event/spaceninja, /datum/event/prisonbreak, /datum/event/immovablerod)
+var/list/EventTypes = typesof(/datum/event) - /datum/event - DisallowedEvents
 var/datum/event/ActiveEvent = null
 var/datum/event/LongTermEvent = null
 
