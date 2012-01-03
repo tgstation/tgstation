@@ -305,6 +305,9 @@
 
 		src.updateDialog()
 
+		if(!air_contents) // caused runtime error for the first tick, if created mid-game
+			return
+
 		if(flush && air_contents.return_pressure() >= SEND_PRESSURE)	// flush can happen even without power
 			flush()
 

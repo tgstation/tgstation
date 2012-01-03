@@ -460,7 +460,7 @@
 		onclose(user, "piano")
 
 	Topic(href, href_list)
-		if(in_range(src, usr) && !issilicon(usr) && !anchored)
+		if(in_range(src, usr) && !issilicon(usr) && anchored)
 			if(href_list["tempo"])
 				song.tempo += text2num(href_list["tempo"])
 				if(song.tempo < 1)
