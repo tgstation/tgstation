@@ -6,7 +6,8 @@
 var/list/CustomItemList = list(
 		//    ckey        real_name   item path
 	//	list("miniature","Dave Booze",/obj/item/toy/crayonbox)	//screw this i dont want crayons, it's an example okay
-	list("skymarshal", "Phillip Oswald", /obj/item/weapon/coin/silver)	//Phillip likes to chew on cigars.  Just unlit cigars, don't ask me why.  Must be a clone thing.  (Cigarette machines dispense cigars if they have a coin in them)  --SkyMarshal
+	list("skymarshal", "Phillip Oswald", /obj/item/weapon/coin/silver),	//Phillip likes to chew on cigars.  Just unlit cigars, don't ask me why.  Must be a clone thing.  (Cigarette machines dispense cigars if they have a coin in them)  --SkyMarshal
+	list("spaceman96", "Trenna Seber", /obj/item/weapon/pen/multi)	//For Spesss.
 	)
 
 /proc/EquipCustomItems(mob/living/carbon/human/M)

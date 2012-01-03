@@ -176,6 +176,7 @@
 			verbs += /client/proc/admin_invis
 			verbs += /client/proc/cmd_admin_godmode
 			verbs += /client/proc/delbook
+			verbs += /client/proc/Force_Event_admin
 
 		if (holder.level >= 4)//Badmin********************************************************************
 			verbs += /obj/admins/proc/adrev					//toggle admin revives
@@ -416,6 +417,7 @@
 	verbs -= /client/proc/callprocobj
 	verbs -= /client/proc/cmd_admin_godmode
 	verbs -= /client/proc/delbook
+	verbs -= /client/proc/Force_Event_admin
 
 	return
 

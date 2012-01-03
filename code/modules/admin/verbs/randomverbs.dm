@@ -152,7 +152,7 @@
 		command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
 		world << sound('ionstorm.ogg')
 
-	IonStorm(0)
+	//IonStorm(0)
 
  /*
  Stealth spawns xenos
