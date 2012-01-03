@@ -746,7 +746,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	while ( t_amount < (yield * parent.yieldmod ))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new produce(user.loc, potency) // User gets a consumable
-
+		if(!t_prod)	return
 		t_prod.seed = mypath
 		t_prod.species = species
 		t_prod.lifespan = lifespan

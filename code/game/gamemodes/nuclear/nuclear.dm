@@ -268,7 +268,7 @@
 		world << "<B>[syndicate_name()] operatives have destroyed [station_name()]!</B>"
 
 	else if (!disk_rescued &&  station_was_nuked &&           herp)
-		feedback_set_details("round_end_result","win - syndicate nuke - did not evacuate in time")
+		feedback_set_details("round_end_result","halfwin - syndicate nuke - did not evacuate in time")
 		world << "<FONT size = 3><B>Total Annihilation</B></FONT>"
 		world << "<B>[syndicate_name()] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
 
