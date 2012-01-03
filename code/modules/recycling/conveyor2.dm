@@ -9,8 +9,8 @@
 	anchored = 1
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
-	var/forwards		// this is the default (forward) direction, set by the map dir
-	var/backwards		// hopefully self-explanatory
+	var/forwards		// this is the default (forward) direction, set by the map dir, can be 0
+	var/backwards		// hopefully self-explanatory, can be 0
 	var/movedir			// the actual direction to move stuff in
 
 	var/list/affecting	// the list of all items that will be moved this ptick
@@ -19,14 +19,20 @@
 	//these ones below for backwards compatibility
 
 	// following two only used if a diverter is present
-	var/divert = 0 		// if non-zero, direction to divert items
-	var/divdir = 0		// if diverting, will be conveyer dir needed to divert (otherwise dense)
+	var/divert_from = 0 		// if non-zero, direction to divert items
+	var/divert_to = 0		// if diverting, will be conveyer dir needed to divert (otherwise dense)
 	var/basedir			// this is the default (forward) direction, set by the map dir
 						// note dir var can vary when the direction changes
+
+	//cael - corner icon bug that needs a manual fix
+	//note: for now, the sprites/anis and their directions are mostly independant from the actual conveyor move directions
+	//if no conveyor move directions are specified, they are extracted from the sprite dir
+	var/reverseSpriteMoveDir = 0
 
 	// create a conveyor
 /obj/machinery/conveyor/New()
 	..()
+	//added these to allow for custom conveyor dirs defined in map
 	if(!forwards)
 		switch(dir)
 			if(NORTH)
@@ -80,7 +86,7 @@
 		operating = 0
 	if(stat & NOPOWER)
 		operating = 0
-	icon_state = "conveyor[operating]"
+	icon_state = "conveyor[operating * (reverseSpriteMoveDir?-1:1)]"
 
 	// machine process
 	// move items to the target location
@@ -91,8 +97,10 @@
 		return
 	use_power(100)
 
-	if(divert && dir==divdir)	// update if diverter present
-		movedir = divert
+	if(movedir == divert_to && divert_from == (movedir == backwards ? forwards : backwards ) )	// update if diverter present
+		movedir = divert_to
+	//conv.divert = divert_to
+	//conv.divdir = divert_from
 
 	affecting = loc.contents - src		// moved items will be all in loc
 	spawn(1)	// slight delay to prevent infinite propagation due to map order
@@ -310,10 +318,10 @@
 /obj/machinery/diverter/proc/set_divert()
 	if(conv)
 		if(deployed)
-			conv.divert = divert_to
-			conv.divdir = divert_from
+			conv.divert_to = divert_to
+			conv.divert_from = divert_from
 		else
-			conv.divert= 0
+			conv.divert_to = 0
 
 
 // *** TESTING click to toggle
