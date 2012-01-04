@@ -10,7 +10,7 @@
 
 	Announce()
 		Lifetime = rand(90, 300)
-		command_alert("The ship is flying through an electrical storm.  Radio communications may be disrupted", "Anomaly Alert")
+		command_alert("The station is flying through an electrical storm.  Radio communications may be disrupted", "Anomaly Alert")
 
 		for (var/datum/radio_frequency/Freq in radio_controller.frequencies)
 			if(prob(35))
@@ -74,7 +74,7 @@
 
 
 	Die()
-		command_alert("The ship has cleared the electrical storm.  Radio communications restored", "Anomaly Alert")
+		command_alert("The station has cleared the electrical storm.  Radio communications restored", "Anomaly Alert")
 		for (var/datum/radio_frequency/Freq in ScrambledFrequencies)
 			radio_controller.UnregisterScrambler(Freq)
 		DisruptedFrequencies = list( )

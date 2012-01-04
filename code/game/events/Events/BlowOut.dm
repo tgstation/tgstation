@@ -17,10 +17,10 @@
 			SpawnEvent()
 			del src
 			return
-		command_alert("Warning: Ship approaching high-density radiation cloud. Seek cover immediately.")
+		command_alert("Warning: station approaching high-density radiation cloud. Seek cover immediately.")
 	Tick()
 		if(ActiveFor == 50)
-			command_alert("Ship has entered radiation cloud. Do not leave cover until it has passed.")
+			command_alert("Station has entered radiation cloud. Do not leave cover until it has passed.")
 		if(ActiveFor == 100 || ActiveFor == 150)	//1/2 and 2/2 f the way after it start proper make peope be half dead mostly
 			for(var/mob/living/carbon/M in world)
 				var/area = M.loc.loc
@@ -31,4 +31,4 @@
 				if(!M.stat)
 					M.radiate(100)
 	Die()
-		command_alert("The ship has cleared the radiation cloud. It is now safe to leave cover.")
+		command_alert("The station has cleared the radiation cloud. It is now safe to leave cover.")
