@@ -95,7 +95,7 @@
 			return
 
 		else
-			if(isnull(I))
+			if(!I || isnull(I))
 				//CRASH("disposal/attackby() was called, but I was nulled before calling user.drop_item()")
 				return // No idea why, but somehow I gets nulled before it goes into the else, and that leads to a lot of spam with runtime errors.
 

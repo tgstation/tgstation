@@ -41,7 +41,7 @@ var
 	skipupdate = 0
 	///////////////
 	eventchance = 1 //% per 2 mins
-	event = 0
+	EventsOn = 1
 	hadevent = 0
 	blobevent = 0
 	///////////////
@@ -108,6 +108,7 @@ var
 //	list/traitors = list()	//traitor list
 	list/cardinal = list( NORTH, SOUTH, EAST, WEST )
 	list/alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
+	list/emclosets = list()	//random emergency closets woo
 
 	datum/station_state/start_state = null
 	datum/configuration/config = null
@@ -156,6 +157,8 @@ var
 	list/BorgIndexToFlag
 	list/BorgIndexToWireColor
 	list/BorgWireColorToIndex
+	list/ScrambledFrequencies = list( ) //These are used for electrical storms, and anything else that jams radios.
+	list/UnscrambledFrequencies = list( )
 
 	const/SPEED_OF_LIGHT = 3e8 //not exact but hey!
 	const/SPEED_OF_LIGHT_SQ = 9e+16

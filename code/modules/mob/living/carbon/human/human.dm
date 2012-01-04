@@ -1564,6 +1564,7 @@ It can still be worn/put on as normal.
 					W.layer = initial(W.layer)
 				W.add_fingerprint(source)
 			else
+				if(!item) return
 				if (istype(item, /obj/item/clothing/mask))
 					source.drop_item()
 					loc = target
@@ -1601,6 +1602,7 @@ It can still be worn/put on as normal.
 					W.layer = initial(W.layer)
 				W.add_fingerprint(source)
 			else
+				if(!item) return
 				if (istype(item, /obj/item/clothing/gloves))
 					source.drop_item()
 					loc = target
@@ -1621,6 +1623,7 @@ It can still be worn/put on as normal.
 					W.layer = initial(W.layer)
 				W.add_fingerprint(source)
 			else
+				if(!item) return
 				if (istype(item, /obj/item/clothing/glasses))
 					source.drop_item()
 					loc = target
@@ -1639,6 +1642,7 @@ It can still be worn/put on as normal.
 					W.layer = initial(W.layer)
 				W.add_fingerprint(source)
 			else
+				if(!item) return
 				if ((istype(item, /obj) && item.flags & 128 && target.w_uniform))
 					source.drop_item()
 					loc = target
@@ -1657,6 +1661,7 @@ It can still be worn/put on as normal.
 					W.layer = initial(W.layer)
 				W.add_fingerprint(source)
 			else
+				if(!item) return
 				if (istype(item, /obj) && target.wear_suit)
 					var/confirm
 					for(var/i=1, i<=target.wear_suit.allowed.len, i++)
@@ -1685,6 +1690,7 @@ It can still be worn/put on as normal.
 					W.layer = initial(W.layer)
 				W.add_fingerprint(source)
 			else
+				if(!item) return
 				if (istype(item, /obj/item/clothing/head))
 					source.drop_item()
 					loc = target
@@ -1712,6 +1718,7 @@ It can still be worn/put on as normal.
 					W.layer = initial(W.layer)
 				W.add_fingerprint(source)
 			else
+				if(!item) return
 				if (istype(item, /obj/item/clothing/ears) || istype(item, /obj/item/device/radio/headset) || item.w_class == 1)
 					source.drop_item()
 					if(istype(item, /obj/item/clothing/ears) && item:twoeared && target.r_ear)
@@ -1746,6 +1753,7 @@ It can still be worn/put on as normal.
 					W.layer = initial(W.layer)
 				W.add_fingerprint(source)
 			else
+				if(!item) return
 				if (istype(item, /obj/item/clothing/ears) || istype(item, /obj/item/device/radio/headset) || item.w_class == 1)
 					source.drop_item()
 					if(istype(item, /obj/item/clothing/ears) && item:twoeared && target.r_ear)
@@ -1773,6 +1781,7 @@ It can still be worn/put on as normal.
 					W.layer = initial(W.layer)
 				W.add_fingerprint(source)
 			else
+				if(!item) return
 				if (istype(item, /obj/item/clothing/shoes))
 					source.drop_item()
 					loc = target
@@ -1795,6 +1804,7 @@ It can still be worn/put on as normal.
 					W.layer = initial(W.layer)
 				W.add_fingerprint(source)
 			else
+				if(!item) return
 				if(istype(item, /obj/item))
 					source.drop_item()
 					if(item)
@@ -1819,6 +1829,7 @@ It can still be worn/put on as normal.
 					W.layer = initial(W.layer)
 				W.add_fingerprint(source)
 			else
+				if(!item) return
 				if (istype(item, /obj/item))
 					source.drop_item()
 					loc = target
@@ -1868,6 +1879,7 @@ It can still be worn/put on as normal.
 						W.dropped(target)
 						W.layer = initial(W.layer)
 			else
+				if(!item) return
 				if (istype(item, /obj/item/clothing/under))
 					source.drop_item()
 					loc = target
@@ -1886,6 +1898,7 @@ It can still be worn/put on as normal.
 					W.layer = initial(W.layer)
 				W.add_fingerprint(source)
 			else
+				if(!item) return
 				if (istype(item, /obj/item/clothing/suit))
 					source.drop_item()
 					loc = target
@@ -1904,6 +1917,7 @@ It can still be worn/put on as normal.
 					W.layer = initial(W.layer)
 				W.add_fingerprint(source)
 			else
+				if(!item) return
 				if (((istype(item, /obj/item/weapon/card/id)||istype(item, /obj/item/device/pda)) && target.w_uniform))
 					source.drop_item()
 					loc = target
@@ -1922,6 +1936,7 @@ It can still be worn/put on as normal.
 					W.layer = initial(W.layer)
 				W.add_fingerprint(source)
 			else
+				if(!item) return
 				if ((istype(item, /obj/item) && item.flags & 1))
 					source.drop_item()
 					loc = target
@@ -1951,6 +1966,7 @@ It can still be worn/put on as normal.
 					W.layer = initial(W.layer)
 				W.add_fingerprint(source)
 			else
+				if(!item) return
 				if (istype(item, /obj/item/weapon/handcuffs))
 					target.drop_from_slot(target.r_hand)
 					target.drop_from_slot(target.l_hand)
