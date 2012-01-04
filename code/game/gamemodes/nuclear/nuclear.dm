@@ -13,7 +13,7 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
-	var/derp = 0 //Used for tracking if the syndies actually haul the nuke to the station
+	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
 	var/herp = 0 //Used for tracking if the syndies got the shuttle off of the z-level
 	//It is so hillarious so I wont rename those two variables --rastaf0
 
@@ -272,12 +272,12 @@
 		world << "<FONT size = 3><B>Total Annihilation</B></FONT>"
 		world << "<B>[syndicate_name()] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
 
-	else if (!disk_rescued && !station_was_nuked &&  derp && !herp)
+	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station && !herp)
 		feedback_set_details("round_end_result","halfwin - blew wrong station")
 		world << "<FONT size = 3><B>Crew Minor Victory</B></FONT>"
 		world << "<B>[syndicate_name()] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't lose the disk!"
 
-	else if (!disk_rescued && !station_was_nuked &&  derp &&  herp)
+	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station &&  herp)
 		feedback_set_details("round_end_result","halfwin - blew wrong station - did not evacuate in time")
 		world << "<FONT size = 3><B>[syndicate_name()] operatives have earned Darwin Award!</B></FONT>"
 		world << "<B>[syndicate_name()] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't lose the disk!"
