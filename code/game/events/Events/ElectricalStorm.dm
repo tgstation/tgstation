@@ -4,6 +4,9 @@
 		list/obj/machinery/light/Lights = list( )
 		list/obj/machinery/light/APCs = list( )
 		list/obj/machinery/light/Doors = list( )
+		talk_out = 0
+		has_talked = 0
+		SafeFreq = 0
 
 	Announce()
 		Lifetime = rand(90, 300)
@@ -43,11 +46,10 @@
 			if(Door.z == 1)
 				Doors += Door
 
-		sleep(rand(70,180))
+		talk_out = rand(40,70)
 
 		var/picked = 0
 		var/list/SafeTemp = list()
-		var/SafeFreq = 0
 		if(UnscrambledFrequencies["1459"])
 			SafeFreq = 1459
 			picked = 1
@@ -58,8 +60,6 @@
 				if(SafeFreq < 1489 && SafeFreq > 1441)
 					picked = 1
 
-		command_alert("The radio frequency [SafeFreq/10] has been identified as stable despite the interference.", "Station Central Computer System")
-
 	Tick()
 		for(var/x = 0; x < 3; x++)
 			if (prob(30))
@@ -68,6 +68,9 @@
 			DisruptAPC()
 		if (prob(10))
 			DisableDoor()
+		if(talk_out <= ActiveFor && has_talked == 0)
+			command_alert("The radio frequency [SafeFreq/10] has been identified as stable despite the interference.", "Station Central Computer System")
+			has_talked = 1
 
 
 	Die()

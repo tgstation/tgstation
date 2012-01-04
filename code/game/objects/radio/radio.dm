@@ -231,9 +231,12 @@
 	var/list/heard_voice = list() // voice message
 	var/list/heard_garbled = list() // garbled message
 	var/turf/cl = get_turf(M)
+	var/zlev = 25
 
 	for (var/mob/R in receive)
 		var/turf/gl = get_turf(R)
+		if(zlev == 25 && !(scrambleoverride || scramble) && (gl.z == cl.z) || !istype(src, /obj/item/device/radio/headset))
+			zlev = 75
 		if (R.client && R.client.STFU_radio) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			continue
 		if (R.say_understands(M) && ((gl.z == cl.z) || !istype(src, /obj/item/device/radio/headset)))
@@ -357,7 +360,7 @@
 					R.show_message(rendered, 2)
 
 		if (length(heard_garbled))
-			quotedmsg = M.say_quote(stars(message))
+			quotedmsg = M.say_quote(stars(message, zlev))
 			var/rendered = "[part_a]Unknown[part_b][quotedmsg][part_c]"
 
 			for (var/mob/R in heard_garbled)
