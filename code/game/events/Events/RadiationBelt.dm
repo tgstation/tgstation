@@ -6,7 +6,7 @@
 	Tick()
 		for(var/mob/living/L in world)
 			L.radiation += rand(1,7)
-			if (prob(4))
+			if (L && prob(4))
 				if (prob(75))
 					randmutb(L)
 					domutcheck(L,null,1)
