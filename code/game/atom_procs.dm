@@ -571,7 +571,16 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 	var/parameters = params2list(params)
 
 	if(parameters["shift"]){
-		ShiftClick(usr)
+		if(!isAI(usr))
+			ShiftClick(usr)
+		return
+	}
+
+	// ------- ALT-CLICK -------
+
+	if(parameters["alt"]){
+		if(!isAI(usr))
+			AltClick(usr)
 		return
 	}
 
@@ -866,6 +875,16 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 /atom/proc/ShiftClick(var/mob/M as mob)
 	examine()
+	return
+
+/atom/proc/AltClick()
+
+	src:pull()
+
+/*
+	if(hascall(src,"pull"))
+		call(src,/atom/movable/verb/pull)()
+*/
 	return
 
 /atom/proc/get_global_map_pos()
