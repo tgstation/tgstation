@@ -878,8 +878,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 	return
 
 /atom/proc/AltClick()
-
-	src:pull()
+	if(hascall(src,"pull"))
+		src:pull()
 
 /*
 	if(hascall(src,"pull"))
