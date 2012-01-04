@@ -212,14 +212,14 @@ atom/proc/ul_LightLevelChanged()
 	//Designed for client projects to use.  Called on items when the turf they are in has its light level changed
 	return
 
-atom/proc/New()
+atom/New()
 	..()
 	if(ul_IsLuminous())
 		spawn(1)
 			ul_Illuminate()
 	return
 
-atom/proc/Del()
+atom/Del()
 	if(ul_IsLuminous())
 		ul_Extinguish()
 
@@ -227,11 +227,11 @@ atom/proc/Del()
 
 	return
 
-atom/proc/movable/Move()
+/*atom/proc/movable/Move()
 	ul_Extinguish()
 	..()
 	ul_Illuminate()
-	return
+	return*/
 
 turf
 	var
