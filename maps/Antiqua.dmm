@@ -403,13 +403,13 @@
 "hM" = (/obj/machinery/light_switch{pixel_x = 24; pixel_y = 1},/turf/simulated/floor,/area/quartermaster/storage)
 "hN" = (/obj/effect/sign/movingparts,/turf/simulated/wall,/area/quartermaster/qm)
 "hO" = (/obj/machinery/door/airlock/glass_security{name = "Brig"; req_access_txt = "1"},/turf/simulated/floor,/area)
-"hP" = (/obj/machinery/conveyor{backwards = 2; dir = 2;forwards = 1; id = "QMoffload"},/turf/simulated/floor,/area/quartermaster/storage)
+"hP" = (/obj/machinery/conveyor{backwards = 2; dir = 2; forwards = 1; id = "QMoffload"},/turf/simulated/floor,/area/quartermaster/storage)
 "hQ" = (/turf/simulated/floor{dir = 8; icon_state = "warning"},/area/quartermaster/storage)
 "hR" = (/turf/simulated/floor{dir = 4; icon_state = "warning"},/area/quartermaster/qm)
-"hS" = (/obj/machinery/conveyor{backwards = null; dir = 2;forwards = null; id = "QMonload"},/turf/simulated/floor,/area/quartermaster/qm)
+"hS" = (/obj/machinery/conveyor{backwards = null; dir = 2; forwards = null; id = "QMonload"},/turf/simulated/floor,/area/quartermaster/qm)
 "hT" = (/obj/structure/stool/chair{name = "Bailiff"},/turf/simulated/floor,/area)
 "hU" = (/obj/machinery/door/airlock/maintenance,/turf/simulated/floor,/area/quartermaster/qm)
-"hV" = (/obj/machinery/conveyor{backwards = 1; dir = 2;forwards = 2; id = "QMonload"},/turf/simulated/floor,/area/quartermaster/qm)
+"hV" = (/obj/machinery/conveyor{backwards = 1; dir = 2; forwards = 2; id = "QMonload"},/turf/simulated/floor,/area/quartermaster/qm)
 "hW" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/quartermaster/qm)
 "hX" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/maintenance/starboard)
 "hY" = (/obj/structure/stool/chair{dir = 4},/turf/simulated/floor,/area)
@@ -436,7 +436,7 @@
 "it" = (/obj/effect/sign/movingparts{pixel_x = 32; pixel_y = 0},/turf/simulated/floor{icon_state = "warning"},/area/quartermaster/storage)
 "iu" = (/obj/effect/sign/movingparts{pixel_x = -32; pixel_y = 0},/turf/simulated/floor{dir = 6; icon_state = "warning"},/area/quartermaster/qm)
 "iv" = (/obj/machinery/conveyor{backwards = 4; dir = 5; forwards = 2; id = "QMonload"; reverseSpriteMoveDir = 1},/turf/simulated/floor,/area/quartermaster/qm)
-"iw" = (/obj/machinery/conveyor{backwards = 1; dir = 2;forwards = 2; id = "QMonload"},/obj/effect/sign/movingparts{pixel_x = 32},/turf/simulated/floor,/area/quartermaster/qm)
+"iw" = (/obj/machinery/conveyor{backwards = 1; dir = 2; forwards = 2; id = "QMonload"},/obj/effect/sign/movingparts{pixel_x = 32},/turf/simulated/floor,/area/quartermaster/qm)
 "ix" = (/turf/simulated/floor/plating{dir = 2; icon_state = "warnplate"; tag = "icon-warnplate (EAST)"},/area/quartermaster/qm)
 "iy" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/effect/sign/movingparts,/turf/simulated/floor/plating,/area/quartermaster/qm)
 "iz" = (/obj/machinery/door/window/westleft,/turf/simulated/floor{icon_state = "grimy"},/area)
@@ -639,19 +639,20 @@
 "mo" = (/obj/effect/sign/securearea{desc = "A warning sign which reads 'EXTERNAL AIRLOCK'"; icon_state = "space"; name = "EXTERNAL AIRLOCK"; pixel_x = -32},/obj/effect/marker/supplymarker,/turf/simulated/shuttle/floor,/area/supply/dock)
 "mp" = (/obj/machinery/door/airlock/external{name = "Supply Dock Airlock"},/turf/simulated/shuttle/floor,/area/supply/dock)
 "mq" = (/turf/simulated/shuttle/floor,/area/supply/dock)
-"mr" = (/obj/machinery/conveyor{dir = 2; id = "QMshuttle"},/obj/effect/sign/movingparts{pixel_x = -32},/turf/simulated/shuttle/floor,/area/supply/dock)
+"mr" = (/obj/effect/sign/movingparts{pixel_x = -32},/obj/effect/marker/supplymarker,/turf/simulated/shuttle/floor,/area/supply/dock)
 "ms" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/supply/dock)
 "mt" = (/obj/machinery/conveyor{dir = 2; id = "QMshuttle"},/turf/simulated/shuttle/floor,/area/supply/dock)
 "mu" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/supply/dock)
 "mv" = (/turf/space,/area/supply)
-"mw" = (/obj/machinery/door/poddoor{density = 1; icon_state = "pdoor1"; id = "QMLoaddoor"; name = "Supply Dock Loading Door"; opacity = 1},/obj/machinery/conveyor{dir = 8; id = "QMshuttle"},/obj/structure/plasticflaps,/turf/simulated/shuttle/floor,/area/supply/dock)
-"mx" = (/obj/machinery/conveyor{dir = 8; id = "QMshuttle"},/turf/simulated/shuttle/floor,/area/supply/dock)
-"my" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s5"; icon_state = "swall_s5"; dir = 2},/area/supply/dock)
-"mz" = (/obj/structure/shuttle/engine/heater,/turf/simulated/shuttle/wall{tag = "icon-swall14"; icon_state = "swall14"; dir = 2},/area/supply/dock)
-"mA" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s9"; icon_state = "swall_s9"; dir = 2},/area/supply/dock)
-"mB" = (/obj/structure/shuttle/engine/propulsion/burst/left,/turf/space,/area/supply/dock)
-"mC" = (/obj/structure/shuttle/engine/propulsion/burst,/turf/space,/area/supply/dock)
-"mD" = (/obj/structure/shuttle/engine/propulsion/burst/right,/turf/space,/area/supply/dock)
+"mw" = (/obj/machinery/conveyor{dir = 2; id = "QMshuttle"},/obj/effect/sign/movingparts{pixel_x = -32},/turf/simulated/shuttle/floor,/area/supply/dock)
+"mx" = (/obj/machinery/door/poddoor{density = 1; icon_state = "pdoor1"; id = "QMLoaddoor"; name = "Supply Dock Loading Door"; opacity = 1},/obj/machinery/conveyor{dir = 8; id = "QMshuttle"},/obj/structure/plasticflaps,/turf/simulated/shuttle/floor,/area/supply/dock)
+"my" = (/obj/machinery/conveyor{backwards = 1; dir = 10; forwards = 8; id = "QMshuttle"},/turf/simulated/shuttle/floor,/area/supply/dock)
+"mz" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s5"; icon_state = "swall_s5"; dir = 2},/area/supply/dock)
+"mA" = (/obj/structure/shuttle/engine/heater,/turf/simulated/shuttle/wall{tag = "icon-swall14"; icon_state = "swall14"; dir = 2},/area/supply/dock)
+"mB" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s9"; icon_state = "swall_s9"; dir = 2},/area/supply/dock)
+"mC" = (/obj/structure/shuttle/engine/propulsion/burst/left,/turf/space,/area/supply/dock)
+"mD" = (/obj/structure/shuttle/engine/propulsion/burst,/turf/space,/area/supply/dock)
+"mE" = (/obj/structure/shuttle/engine/propulsion/burst/right,/turf/space,/area/supply/dock)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -1708,11 +1709,11 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamnmtmlmlmlmnaaaamvmvmvmvmvmvmvmvmvmvmvmvmvmvmvmvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamvmvmvmvmvmvmvmvmvmvmvmvmvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamsmtmlmlmlmsaaaamvmvmvmvmvmvmvmvmvmvmvmvmvmvmvmvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamvmvmvmvmvmvmvmvmvmvmvmvmvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamumtmlmlmlmuaaaamvmvmvmvmvmvmvmvmvmvmvmvmvmvmvmvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamvmvmvmvmvmvmvmvmvmvmvmvmvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamnmrmlmlmlmnaaaamvmvmvmvmvmvmvmvmvmvmvmvmvmvmvmvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamvmvmvmvmvmvmvmvmvmvmvmvmvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamwmxmlmlmlmnaaaamvmvmvmvmvmvmvmvmvmvmvmvmvmvmvmvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamvmvmvmvmvmvmvmvmvmvmvmvmvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamnmwmlmlmlmnaaaamvmvmvmvmvmvmvmvmvmvmvmvmvmvmvmvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamvmvmvmvmvmvmvmvmvmvmvmvmvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamxmymlmlmlmnaaaamvmvmvmvmvmvmvmvmvmvmvmvmvmvmvmvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamvmvmvmvmvmvmvmvmvmvmvmvmvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamnmlmlmlmlmnaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamvmvmvmvmvmvmvmvmvmvmvmvmvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamymzmzmzmzmAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamvmvmvmvmvmvmvmvmvmvmvmvmvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamfmBmCmCmDmfaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamvmvmvmvmvmvmvmvmvmvmvmvmvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamzmAmAmAmAmBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamvmvmvmvmvmvmvmvmvmvmvmvmvaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamfmCmDmDmEmfaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamfaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
