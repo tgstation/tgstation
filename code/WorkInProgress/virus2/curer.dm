@@ -3,7 +3,7 @@
 	icon = 'computer.dmi'
 	icon_state = "dna"
 	var/curing
-	var/virusing
+	var/virusing = 0
 
 	var/obj/item/weapon/reagent_containers/container = null
 
@@ -40,6 +40,20 @@
 			container = I
 			C.drop_item()
 			I.loc = src
+	if(istype(I,/obj/item/weapon/virusdish))
+		if(virusing)
+			user << "<b>The pathogen materializer is still recharging.."
+			return
+		var/obj/item/weapon/reagent_containers/glass/beaker/product = new(src.loc)
+
+		var/list/data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"virus2"=null,"antibodies"=0)
+		data["virus2"] = I:virus2
+		product.reagents.add_reagent("blood",30,data)
+
+		virusing = 1
+		spawn(1200) virusing = 0
+
+	state("The [src.name] Buzzes", "blue")
 
 	//else
 	src.attack_hand(user)
