@@ -113,7 +113,7 @@ var/list/radiochannels = list(
 var/list/DEPT_FREQS = list(1351,1355,1357,1359,1213,1441,1349,1347)
 var/const/COMM_FREQ = 1353 //command, colored gold in chat window
 var/const/SYND_FREQ = 1213
-var/NUKE_FREQ = 1199 //Never accessable except on nuke rounds.
+var/NUKE_FREQ = 1199 //Never accessable except on nuke rounds, randomised on nuke rounds.
 
 #define TRANSMISSION_WIRE	0
 #define TRANSMISSION_RADIO	1
@@ -159,6 +159,13 @@ datum/controller/radio
 
 		return 1
 
+	proc/RegisterScrambler(var/Frequency)
+		var/datum/radio_frequency/frequency = frequencies[Frequency]
+		frequency.scrambled++
+
+	proc/UnregisterScrambler(var/Frequency)
+		var/datum/radio_frequency/frequency = frequencies[Frequency]
+		frequency.scrambled--
 	proc/return_frequency(var/frequency as num)
 		var/f_text = num2text(frequency)
 		return frequencies[f_text]
@@ -166,6 +173,7 @@ datum/controller/radio
 datum/radio_frequency
 	var/frequency as num
 	var/list/list/obj/devices = list()
+	var/scrambled = 0
 
 	proc
 		post_signal(obj/source as obj|null, datum/signal/signal, var/filter = null as text|null, var/range = null as num|null)
@@ -173,6 +181,8 @@ datum/radio_frequency
 //			var/N_f=0
 //			var/N_nf=0
 //			var/Nt=0
+			if(scrambled)
+				return
 			var/turf/start_point
 			if(range)
 				start_point = get_turf(source)

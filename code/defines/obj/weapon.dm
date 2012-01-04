@@ -915,6 +915,10 @@
 	var/text_underline = 0
 	var/text_break = 0
 
+/obj/item/weapon/pen/multi
+	desc = "It's a cool looking pen. Lots of colors!"
+	name = "multicolor pen"
+
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
 	name = "Banhammer"

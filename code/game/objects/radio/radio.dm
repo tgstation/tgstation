@@ -16,6 +16,7 @@
 		listening = 1
 		freerange = 0 // 0 - Sanitize frequencies, 1 - Full range
 		list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
+		scrambleoverride = 0 //For use by jammers.
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	flags = 450		// hello i'm a fucking idiot why is this 450?? CODE GODS PLEASE EXPLAIN~
 	throw_speed = 2
@@ -190,6 +191,13 @@
 	if (!istype(connection))
 		return
 	var/display_freq = connection.frequency
+	var/scramble = 0
+	if(ScrambledFrequencies.len || scrambleoverride)
+		if(ScrambledFrequencies["[display_freq]"] || scrambleoverride)
+			scramble = 1
+		if(prob(35+(25*scrambleoverride)))
+			M << "\blue The radio made a popping sound and nothing was transmitted."
+			return
 
 	//world << "DEBUG: used channel=\"[channel]\" frequency= \"[display_freq]\" connection.devices.len = [connection.devices.len]"
 
@@ -214,8 +222,7 @@
 	var/list/receive = list()
 
 	//for (var/obj/item/device/radio/R in radio_connection.devices)
-	for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"]) // Modified for security headset code -- TLE
-		//if(R.accept_rad(src, message))
+	for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
 		receive |= R.send_hear(display_freq)
 
 	//world << "DEBUG: receive.len=[receive.len]"
@@ -223,17 +230,21 @@
 	var/list/heard_normal = list() // normal message
 	var/list/heard_voice = list() // voice message
 	var/list/heard_garbled = list() // garbled message
+	var/turf/cl = get_turf(M)
 
 	for (var/mob/R in receive)
+		var/turf/gl = get_turf(R)
 		if (R.client && R.client.STFU_radio) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			continue
-		if (R.say_understands(M))
-			if (!ishuman(M) || istype(M.wear_mask, /obj/item/clothing/mask/gas/voice))
+		if (R.say_understands(M) && ((gl.z == cl.z) || !istype(src, /obj/item/device/radio/headset)))
+			if ((!ishuman(M) || istype(M.wear_mask, /obj/item/clothing/mask/gas/voice)) && !scramble)
 				heard_masked += R
-			else
+			else if (!scramble)
 				heard_normal += R
+			else
+				heard_garbled += R
 		else
-			if (M.voice_message)
+			if (M.voice_message && (gl.z == cl.z))
 				heard_voice += R
 			else
 				heard_garbled += R
@@ -330,7 +341,6 @@
 
 		if (length(heard_normal))
 			var/rendered = "[part_a][M.real_name][part_b][quotedmsg][part_c]"
-
 			for (var/mob/R in heard_normal)
 				if(istype(R, /mob/living/silicon/ai))
 					R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.real_name] ([eqjobname]) </a>[part_b][quotedmsg][part_c]", 2)
@@ -348,9 +358,9 @@
 
 		if (length(heard_garbled))
 			quotedmsg = M.say_quote(stars(message))
-			var/rendered = "[part_a][M.voice_name][part_b][quotedmsg][part_c]"
+			var/rendered = "[part_a]Unknown[part_b][quotedmsg][part_c]"
 
-			for (var/mob/R in heard_voice)
+			for (var/mob/R in heard_garbled)
 				if(istype(R, /mob/living/silicon/ai))
 					R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name]</a>[part_b][quotedmsg][part_c]", 2)
 				else
