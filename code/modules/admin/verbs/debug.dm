@@ -173,6 +173,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/returnval = null
 	var/procname = input("Procpath (e.g. just \"update\" for lights)","path:", null)
 
+	if(procname == "") return
+
 	var/argNum = input("Number of arguments:","Number",null) as num //input("Arguments","Arguments:", null)
 	var/list/argL = new/list()
 
