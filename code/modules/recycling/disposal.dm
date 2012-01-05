@@ -932,6 +932,7 @@
 	desc = "An underfloor disposal pipe with a package sorting mechanism."
 	icon_state = "pipe-j1s"
 	var/list/sortType = list()
+	var/list/backType = list()
 	var/backsort = 0 //For sending disposal packets to upstream destinations.
 	var/mailsort = 0
 	var/posdir = 0
@@ -968,10 +969,16 @@
 				if(sortTag == src.sortType[i])
 					issort = 1
 
+			var/isback = 0
+			if(!issort && sortTag)
+				for(var/i, i <= backType.len, i++)
+					if(sortTag == src.backType[i])
+						isback = 1
+
 			if(issort || ((!sortTag || ismail) && mailsort)) //if destination matches filtered type...
 				return sortdir		// exit through sortdirection
-			else if (backsort && sortTag)
-				return negdir
+			else if (isback)
+				return turn(fromdir, 180)
 			else
 				return posdir
 		else				// came from sortdir
