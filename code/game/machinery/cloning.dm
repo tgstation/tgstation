@@ -32,6 +32,8 @@
 	var/list/records = list()
 	var/datum/data/record/active_record = null
 	var/obj/item/weapon/disk/data/diskette = null //Mostly so the geneticist can steal everything.
+	var/wantsscan = 1
+	var/wantspod = 1
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -64,12 +66,14 @@
 	..()
 	spawn(5)
 		src.scanner = locate(/obj/machinery/dna_scannernew, get_step(src, WEST))
-		src.pod1 = locate(/obj/machinery/clonepod, get_step(src, EAST))
+//		src.scanner = locate(/obj/machinery/dna_scannernew, get_step(src, EAST))
+//		src.pod1 = locate(/obj/machinery/clonepod, get_step(src, EAST))
+		src.pod1 = locate(/obj/machinery/clonepod, get_step(src, WEST))
 
 		src.temp = ""
-		if (isnull(src.scanner))
+		if (isnull(src.scanner) && wantsscan)
 			src.temp += " <font color=red>SCNR-ERROR</font>"
-		if (isnull(src.pod1))
+		if (isnull(src.pod1) && wantspod)
 			src.temp += " <font color=red>POD1-ERROR</font>"
 		else
 			src.pod1.connected = src
@@ -112,17 +116,18 @@
 
 	switch(src.menu)
 		if(1)
-			dat += "<h4>Scanner Functions</h4>"
+			if(wantsscan)
+				dat += "<h4>Scanner Functions</h4>"
 
-			if (isnull(src.scanner))
-				dat += "No scanner connected!"
-			else
-				if (src.scanner.occupant)
-					dat += "<a href='byond://?src=\ref[src];scan=1'>Scan - [src.scanner.occupant]</a>"
+				if (isnull(src.scanner))
+					dat += "No scanner connected!"
 				else
-					dat += "Scanner unoccupied"
+					if (src.scanner.occupant)
+						dat += "<a href='byond://?src=\ref[src];scan=1'>Scan - [src.scanner.occupant]</a>"
+					else
+						dat += "Scanner unoccupied"
 
-				dat += "<br>Lock status: <a href='byond://?src=\ref[src];lock=1'>[src.scanner.locked ? "Locked" : "Unlocked"]</a>"
+					dat += "<br>Lock status: <a href='byond://?src=\ref[src];lock=1'>[src.scanner.locked ? "Locked" : "Unlocked"]</a>"
 
 			dat += "<h4>Database Functions</h4>"
 			dat += "<a href='byond://?src=\ref[src];menu=2'>View Records</a><br>"
@@ -164,8 +169,9 @@
 					dat += "<br>" //Keeping a line empty for appearances I guess.
 
 				dat += {"<b>UI:</b> [src.active_record.fields["UI"]]<br>
-				<b>SE:</b> [src.active_record.fields["SE"]]<br><br>
-				<a href='byond://?src=\ref[src];clone=\ref[src.active_record]'>Clone</a><br>"}
+				<b>SE:</b> [src.active_record.fields["SE"]]<br><br>"}
+				if(wantspod)
+					dat += "<a href='byond://?src=\ref[src];clone=\ref[src.active_record]'>Clone</a><br>"
 
 		if(4)
 			if (!src.active_record)
