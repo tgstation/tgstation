@@ -5,7 +5,7 @@
 	icon_state = "deliverycrate"
 	var/obj/wrapped = null
 	density = 1
-	var/sortTag = 0
+	var/sortTag = null
 	flags = FPRINT
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
@@ -24,6 +24,18 @@
 			var/obj/item/device/destTagger/O = W
 			user << "\blue *TAGGED*"
 			src.sortTag = O.currTag
+		else if(istype(W, /obj/item/weapon/pen))
+			var/str = input(usr,"Label text?","Set label","")
+			if(!str || !length(str))
+				usr << "\red Invalid text."
+				return
+			if(length(str) > 64)
+				usr << "\red Text too long."
+				return
+			var/label = str
+			for(var/mob/M in viewers())
+				M << "\blue [user] labels [src] as [label]."
+			src.name = "[src.name] ([label])"
 		return
 
 /obj/item/smallDelivery
@@ -32,11 +44,11 @@
 	icon = 'storage.dmi'
 	icon_state = "deliverycrateSmall"
 	var/obj/item/wrapped = null
-	var/sortTag = 0
+	var/sortTag = null
 	flags = FPRINT
 
 
-	attack_hand(mob/user as mob)
+	attack_self(mob/user)
 		if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
 			src.wrapped.loc = (get_turf(src.loc))
 
@@ -48,6 +60,18 @@
 			var/obj/item/device/destTagger/O = W
 			user << "\blue *TAGGED*"
 			src.sortTag = O.currTag
+		else if(istype(W, /obj/item/weapon/pen))
+			var/str = input(usr,"Label text?","Set label","")
+			if(!str || !length(str))
+				usr << "\red Invalid text."
+				return
+			if(length(str) > 64)
+				usr << "\red Text too long."
+				return
+			var/label = str
+			for(var/mob/M in viewers())
+				M << "\blue [user] labels [src] as [label]."
+			src.name = "[src.name] ([label])"
 		return
 
 
@@ -56,6 +80,7 @@
 	name = "package wrapper"
 	icon = 'items.dmi'
 	icon_state = "deliveryPaper"
+	w_class = 4.0
 	var/amount = 25.0
 
 
@@ -102,13 +127,18 @@
 	name = "destination tagger"
 	desc = "Used to set the destination of properly wrapped packages."
 	icon_state = "forensic0"
-	var/currTag = 0
+	var/currTag = null
+	var/list/spaceList = list(0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,0,0) // Breaks up departments with whitespace.
 	var/list/locationList = list("Disposals",
-	"Cargo Bay", "QM Office", "Engineering", "CE Office",
-	"Atmospherics", "Security", "HoS Office", "Medbay",
-	"CMO Office", "Chemistry", "Research", "RD Office",
-	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
-	"Bar", "Kitchen", "Hydroponics", "Janitor Closet",)
+	"Mail Office", "Cargo Bay", "QM Office",
+	"Locker Room", "Tool Storage", "Laundry Room", "Toilets",
+	"Security", "Courtroom", "Detective's Office", "Law Office",
+	"Research Division", "Research Director", "Genetics",
+	"Medbay", "CMO", "Chemistry", "Morgue",
+	"Library", "Chapel", "Chapel Office", "Theater", "Janitor",
+	"Bar", "Kitchen", "Diner", "Hydroponics",
+	"Meeting Room", "HoP Office",
+	"Engineering", "Chief Engineer", "Robotics",)
 	//The whole system for the sorttype var is determined based on the order of this list,
 	//disposals must always be 1, since anything that's untagged will automatically go to disposals, or sorttype = 1 --Superxpdude
 
@@ -120,37 +150,36 @@
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 
 	attack_self(mob/user as mob)
+		user.machine = src
+		interact(user)
+
+	proc/interact(mob/user as mob)
 		var/dat = "<TT><B>TagMaster 2.2</B><BR><BR>"
-		if (src.currTag == 0)
+		if (!currTag)
 			dat += "<br>Current Selection: None<br>"
 		else
-			dat += "<br>Current Selection: [locationList[currTag]]<br><br>"
+			dat += "<br>Current Selection: [currTag]<br><br>"
 		for (var/i = 1, i <= locationList.len, i++)
-			dat += "<A href='?src=\ref[src];nextTag=[i]'>[locationList[i]]</A>"
-			if (i%4==0)
+			if(spaceList[i])
 				dat += "<br>"
-			else
-				dat += "	"
+			dat += "<A href='?src=\ref[src];nextTag=[i]'>[locationList[i]]</A>"
+			dat += "<br>"
 		user << browse(dat, "window=destTagScreen")
 		onclose(user, "destTagScreen")
+		usr.machine = null
 		return
 
 	Topic(href, href_list)
 		src.add_fingerprint(usr)
 		if(href_list["nextTag"])
 			var/n = text2num(href_list["nextTag"])
-			src.currTag = n
-		src.updateUsrDialog()
+			src.currTag = locationList[n]
+		if(istype(loc,/mob))
+			interact(loc)
+		else
+			updateDialog()
+			return
 
-
-/*
-	attack(target as obj, mob/user as mob)
-		user << "/blue *TAGGED*"
-		target.sortTag = src.currTag
-
-	attack(target as obj, mob/user as mob)
-		user << "/blue You can only tag properly wrapped delivery packages!"
-*/
 	attack(target as obj, mob/user as mob)
 		if (istype(target, /obj/effect/bigDelivery))
 			user << "\blue *TAGGED*"
@@ -190,14 +219,14 @@
 											// travels through the pipes.
 		for(var/obj/effect/bigDelivery/O in src)
 			deliveryCheck = 1
-			if(O.sortTag == 0)
-				O.sortTag = 1
+			if(!O.sortTag)
+				O.sortTag = "Disposals"
 		for(var/obj/item/smallDelivery/O in src)
 			deliveryCheck = 1
-			if (O.sortTag == 0)
-				O.sortTag = 1
+			if (!O.sortTag)
+				O.sortTag = "Disposals"
 		if(deliveryCheck == 0)
-			H.destinationTag = 1
+			H.destinationTag = "Disposals"
 
 
 		H.init(src)	// copy the contents of disposer to holder
@@ -217,3 +246,10 @@
 			mode = 1	// switch to charging
 		update()
 		return
+
+	CanPass(atom/A, turf/T)
+		if(istype(A, /mob/living)) // You Shall Not Pass!
+			var/mob/living/M = A
+			HasEntered(M)
+			return 0
+		return 1
