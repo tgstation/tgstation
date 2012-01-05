@@ -127,9 +127,25 @@
 		user.next_move = world.time + 2
 
 	if (user.hand)
-		user.l_hand = src
+		if(ishuman(user))
+			var/datum/organ/external/temp = user:organs["l_hand"]
+			if(!temp.destroyed)
+				user.l_hand = src
+			else
+				user << "\blue You pick \the [src] up with your ha- wait a minute."
+				return
+		else
+			user.l_hand = src
 	else
-		user.r_hand = src
+		if(ishuman(user))
+			var/datum/organ/external/temp = user:organs["r_hand"]
+			if(!temp.destroyed)
+				user.r_hand = src
+			else
+				user << "\blue You pick \the [src] up with your ha- wait a minute."
+				return
+		else
+			user.r_hand = src
 	src.loc = user
 	src.layer = 20
 	add_fingerprint(user)

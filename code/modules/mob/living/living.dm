@@ -134,6 +134,20 @@
 	src.updatehealth()
 
 /mob/living/proc/revive()
+	if(istype(src, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = src
+		for(var/A in H.organs)
+			var/datum/organ/external/affecting = null
+			if(!H.organs[A])    continue
+			affecting = H.organs[A]
+			if(!istype(affecting, /datum/organ/external))    continue
+			affecting.heal_damage(1000, 1000)    //fixes getting hit after ingestion, killing you when game updates organ health
+			affecting.broken = 0
+			affecting.destroyed = 0
+			for(var/datum/organ/external/wound/W in affecting.wounds)
+				W.stopbleeding()
+		H.UpdateDamageIcon()
+		H.update_body()
 	//src.fireloss = 0
 	src.setToxLoss(0)
 	//src.bruteloss = 0
