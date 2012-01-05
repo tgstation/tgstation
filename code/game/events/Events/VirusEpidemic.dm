@@ -5,7 +5,7 @@
 		virus2 = 0
 
 	Announce()
-		if((prob(66) && !virus) || virus2)
+		if(!virus)
 			for(var/mob/living/carbon/human/H in world)
 				if((H.virus2) || (H.stat == 2) || prob(30))
 					continue

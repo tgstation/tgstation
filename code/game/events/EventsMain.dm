@@ -6,7 +6,7 @@
 
 */
 
-var/list/DisallowedEvents = list(/datum/event/spaceninja, /datum/event/prisonbreak, /datum/event/immovablerod)
+var/list/DisallowedEvents = list(/datum/event/spaceninja, /datum/event/prisonbreak, /datum/event/immovablerod, /datum/event/gravitationalanomaly)
 var/list/EventTypes = typesof(/datum/event) - /datum/event - DisallowedEvents
 var/datum/event/ActiveEvent = null
 var/datum/event/LongTermEvent = null
@@ -17,6 +17,7 @@ var/datum/event/LongTermEvent = null
 	if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)
 		EventTypes |= /datum/event/spaceninja
 	var/Type = pick(EventTypes)
+	EventTypes -= Type
 	ActiveEvent = new Type()
 	ActiveEvent.Announce()
 	if (!ActiveEvent)
@@ -39,11 +40,8 @@ client/proc/Force_Event_admin(Type as null|anything in typesof(/datum/event))
 		src << "There is an active event."
 		return
 	if(istype(Type,/datum/event/viralinfection))
-		var/answer = alert("Do you want this to be a random disease or do you have something in mind?",,"Virus2","Random","Choose")
-		if(answer=="Random")
-			Force_Event(/datum/event/viralinfection)
-			message_admins("[key_name_admin(usr)] has triggered a virus outbreak", 1)
-		else if(answer == "Choose")
+		var/answer = alert("Do you want this to be a random disease or do you have something in mind?",,"Virus2","Choose")
+		if(answer == "Choose")
 			var/list/viruses = list("fake gbs","gbs","magnitis","wizarditis",/*"beesease",*/"brain rot","cold","retrovirus","flu","pierrot's throat","rhumba beat")
 			var/V = input("Choose the virus to spread", "BIOHAZARD") in viruses
 			Force_Event(/datum/event/viralinfection, V)
@@ -65,10 +63,6 @@ client/proc/Force_Event_admin(Type as null|anything in typesof(/datum/event))
 	if(istype(ActiveEvent,/datum/event/viralinfection) && args && args != "virus2")
 		var/datum/event/viralinfection/V = ActiveEvent
 		V.virus = args
-		ActiveEvent = V
-	else if(istype(ActiveEvent,/datum/event/viralinfection) && args && args == "virus2")
-		var/datum/event/viralinfection/V = ActiveEvent
-		V.virus2 = 1
 		ActiveEvent = V
 	ActiveEvent.Announce()
 	if (!ActiveEvent)
