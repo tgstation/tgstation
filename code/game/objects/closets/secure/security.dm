@@ -7,6 +7,7 @@
 		..()
 		sleep(2)
 		new /obj/item/clothing/suit/storage/captunic(src)
+		new /obj/item/clothing/suit/armor/captain(src)
 		new /obj/item/clothing/head/helmet/cap(src)
 		new /obj/item/clothing/under/rank/captain(src)
 		new /obj/item/clothing/suit/armor/vest(src)
@@ -110,7 +111,6 @@
 		new /obj/item/weapon/pepperspray(src)
 		new /obj/item/device/flash(src)
 		new /obj/item/weapon/melee/baton(src)
-		new /obj/item/weapon/gun/energy/taser(src)
 		new /obj/item/clothing/glasses/sunglasses/sechud(src)
 		return
 
