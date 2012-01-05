@@ -15,6 +15,15 @@ MEDICAL
 			t_him = "her"
 		user << "\red \The [M] is dead, you cannot help [t_him]!"
 		return
+	if (M.health < 50)
+		var/t_him = "it"
+		if (M.gender == MALE)
+			t_him = "him"
+		else if (M.gender == FEMALE)
+			t_him = "her"
+		user << "\red \The [M] is wounded badly, this item cannot help [t_him]!"
+		return
+
 
 	if (!istype(M))
 		user << "\red \The [src] cannot be applied to [M]!"

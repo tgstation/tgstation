@@ -383,29 +383,7 @@
 	if(src.emagged) //Emagged! Time to poison everybody.
 		reagent_id = "toxin"
 
-	var/virus = 0
-	for(var/datum/disease/D in C.viruses)
-		virus = 1
-
-	if (!reagent_id && (virus))
-		if(!C.reagents.has_reagent(src.treatment_virus))
-			reagent_id = src.treatment_virus
-
-	if (!reagent_id && (C.getBruteLoss() >= heal_threshold))
-		if(!C.reagents.has_reagent(src.treatment_brute))
-			reagent_id = src.treatment_brute
-
-	if (!reagent_id && (C.getOxyLoss() >= (15 + heal_threshold)))
-		if(!C.reagents.has_reagent(src.treatment_oxy))
-			reagent_id = src.treatment_oxy
-
-	if (!reagent_id && (C.getFireLoss() >= heal_threshold))
-		if(!C.reagents.has_reagent(src.treatment_fire))
-			reagent_id = src.treatment_fire
-
-	if (!reagent_id && (C.getToxLoss() >= heal_threshold))
-		if(!C.reagents.has_reagent(src.treatment_tox))
-			reagent_id = src.treatment_tox
+	if (!reagent_id) reagent_id = "inaprovaline"
 
 	if(!reagent_id) //If they don't need any of that they're probably cured!
 		src.oldpatient = src.patient

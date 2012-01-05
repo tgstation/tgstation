@@ -1894,7 +1894,10 @@
 						else
 							id = H.wear_id
 
-						if(isnull(id.assignment))
+						if(!id)
+							usr << "<font color=red>ERROR:</font> Inform the coders that an [H.name] had wear_id but no ID on their ID slot."
+							dat += "<td><font color=red>ERROR</font></td>"
+						else if(isnull(id.assignment))
 							usr << "<font color=red>ERROR:</font> Inform the coders that an [id.name] was checked for its assignment variable."
 							dat += "<td><font color=red>ERROR</font></td>"
 						else
