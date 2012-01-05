@@ -1,5 +1,6 @@
 abi79 - Game Master
 arcalane - Game Admin
+bobbehluvspropane - Game Admin
 cacophony - Game Admin
 cajoes - Game Admin
 cib - Game Master
@@ -13,6 +14,8 @@ megacaesar - Game Admin
 miniature - Game Master
 misterfox - Retired Admin
 mloc - Game Master
+skymarshal - Game Master
 spaceman96 - Game Admin
 strumpetplaya - Retired Admin
+tastyfish - Game Master
 uristqwerty - Game Master
