@@ -236,7 +236,7 @@
 	for (var/mob/R in receive)
 		var/turf/gl = get_turf(R)
 		if(zlev == 25 && !(scrambleoverride || scramble) && (gl.z == cl.z) || !istype(src, /obj/item/device/radio/headset))
-			zlev = 75
+			zlev = 85
 		if (R.client && R.client.STFU_radio) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			continue
 		if (R.say_understands(M) && ((gl.z == cl.z) || !istype(src, /obj/item/device/radio/headset)))
