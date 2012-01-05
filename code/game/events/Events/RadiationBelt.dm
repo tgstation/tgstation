@@ -5,6 +5,8 @@
 
 	Tick()
 		for(var/mob/living/L in world)
+			if(istype(L,/mob/living/simple_animal))
+				continue
 			L.radiation += rand(1,7)
 			if (prob(4))
 				if (prob(75))

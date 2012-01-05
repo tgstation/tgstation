@@ -60,6 +60,18 @@
 			var/obj/item/device/destTagger/O = W
 			user << "\blue *TAGGED*"
 			src.sortTag = O.currTag
+		else if(istype(W, /obj/item/weapon/pen))
+			var/str = input(usr,"Label text?","Set label","")
+			if(!str || !length(str))
+				usr << "\red Invalid text."
+				return
+			if(length(str) > 64)
+				usr << "\red Text too long."
+				return
+			var/label = str
+			for(var/mob/M in viewers())
+				M << "\blue [user] labels [src] as [label]."
+			src.name = "[src.name] ([label])"
 		return
 
 
@@ -239,4 +251,5 @@
 		if(istype(A, /mob/living)) // You Shall Not Pass!
 			var/mob/living/M = A
 			HasEntered(M)
-		return 0
+			return 0
+		return 1
