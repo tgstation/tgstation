@@ -175,6 +175,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	if(!procname || procname == "") return
 
+	if(procname == "") return
+
 	var/argNum = input("Number of arguments:","Number",null) as num //input("Arguments","Arguments:", null)
 	var/list/argL = new/list()
 
