@@ -962,6 +962,12 @@
 
 	nextdir(var/fromdir, var/sortTag, var/ismail)
 		//var/flipdir = turn(fromdir, 180)
+		var/isback = 0
+		if(sortTag)
+			for(var/i, i <= backType.len, i++)
+				if(sortTag == src.backType[i])
+					isback = 1
+
 		if(fromdir != sortdir)	// probably came from the negdir
 
 			var/issort = 0
@@ -969,21 +975,16 @@
 				if(sortTag == src.sortType[i])
 					issort = 1
 
-			var/isback = 0
-			if(!issort && sortTag)
-				for(var/i, i <= backType.len, i++)
-					if(sortTag == src.backType[i])
-						isback = 1
-
 			if(issort || ((!sortTag || ismail) && mailsort)) //if destination matches filtered type...
 				return sortdir		// exit through sortdirection
 			else if (isback)
-				return turn(fromdir, 180)
+				return negdir
 			else
 				return posdir
 		else				// came from sortdir
-							// so go with the flow to positive direction
-			return posdir
+			if(isback)
+				return negdir
+			return posdir	// so go with the flow to positive direction
 
 	transfer(var/obj/structure/disposalholder/H)
 		var/nextdir = nextdir(H.dir, H.destinationTag, H.tomail)
