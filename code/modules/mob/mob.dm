@@ -566,7 +566,7 @@
 			reset_view(null)
 			client.adminobs = 0
 	else
-		if(ticker)
+		if(ticker && ticker.mode)
 //		 world << "there's a ticker"
 			if(ticker.mode.name == "AI malfunction")
 //				world << "ticker says its malf"

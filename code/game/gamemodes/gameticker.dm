@@ -114,11 +114,12 @@ var/global/datum/controller/gameticker/ticker
 			world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
 			world << sound('welcome.ogg') // Skie
 
-	spawn (3000)
-		start_events()
-	spawn ((18000+rand(3000)))
-		event()
 	spawn() supply_ticker() // Added to kick-off the supply shuttle regenerating points -- TLE
+
+	spawn(0)
+		while(1)
+			sleep(5000+rand(6000,9000))
+			SpawnEvent()
 
 	//Start master_controller.process()
 	spawn master_controller.process()

@@ -10,6 +10,7 @@
 	anchored = 1.0
 	circuit = "/obj/item/weapon/circuitboard/atmoscontrol"
 	var/obj/machinery/alarm/current = ""
+	var/overridden = 0 //not set yet, can't think of a good way to do it
 
 /obj/machinery/computer/atmoscontrol/attack_hand(mob/user)
 	if(..())
@@ -36,7 +37,7 @@
 		return ""
 	var/dat = "<h3>[current.name]</h3><hr>"
 	dat += current.return_status()
-	if(current.remote_control)
+	if(current.remote_control || overridden && current.rcon_setting)
 		dat += "<hr>[src.return_controls()]"
 	return dat
 

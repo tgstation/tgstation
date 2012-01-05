@@ -1406,7 +1406,7 @@
 					message_admins("[key_name_admin(usr)] has spawned blob", 1)
 				if("aliens")
 					if(aliens_allowed)
-						alien_infestation()
+						Force_Event(/datum/event/alieninfestation)
 						message_admins("[key_name_admin(usr)] has spawned aliens", 1)
 				if("spaceninja")
 					if(toggle_space_ninja)
@@ -1416,31 +1416,35 @@
 					var/choice = input("You sure you want to spawn carp?") in list("Badmin", "Cancel")
 					if(choice == "Badmin")
 						message_admins("[key_name_admin(usr)] has spawned carp.", 1)
-						carp_migration()
+						Force_Event(/datum/event/spacecarp)
 				if("radiation")
 					message_admins("[key_name_admin(usr)] has has irradiated the station", 1)
-					high_radiation_event()
+					Force_Event(/datum/event/radiation)
 				if("immovable")
 					message_admins("[key_name_admin(usr)] has sent an immovable rod to the station", 1)
 					immovablerod()
 				if("prison_break")
 					message_admins("[key_name_admin(usr)] has allowed a prison break", 1)
-					prison_break()
+					Force_Event(/datum/event/prisonbreak)
+				if("electric")
+					message_admins("[key_name_admin(usr)] has triggered an electrical storm", 1)
+					Force_Event(/datum/event/electricalstorm)
 				if("lightsout")
 					message_admins("[key_name_admin(usr)] has broke a lot of lights", 1)
 					lightsout(1,2)
 				if("blackout")
 					message_admins("[key_name_admin(usr)] broke all lights", 1)
+					SpawnEvent()
 					lightsout(0,0)
 				if("virus")
 					var/answer = alert("Do you want this to be a random disease or do you have something in mind?",,"Virus2","Random","Choose")
 					if(answer=="Random")
-						viral_outbreak()
+						Force_Event(/datum/event/viralinfection)
 						message_admins("[key_name_admin(usr)] has triggered a virus outbreak", 1)
 					else if(answer == "Choose")
 						var/list/viruses = list("fake gbs","gbs","magnitis","wizarditis",/*"beesease",*/"brain rot","cold","retrovirus","flu","pierrot's throat","rhumba beat")
 						var/V = input("Choose the virus to spread", "BIOHAZARD") in viruses
-						viral_outbreak(V)
+						Force_Event(/datum/event/viralinfection,V)
 						message_admins("[key_name_admin(usr)] has triggered a virus outbreak of [V]", 1)
 					else
 						var/lesser = (alert("Do you want to infect the mob with a major or minor disease?",,"Major","Minor") == "Minor")
@@ -1495,7 +1499,7 @@
 						return
 				if("ionstorm")
 					if (src.rank in list("Badmin","Game Admin", "Game Master"))
-						IonStorm()
+						Force_Event(/datum/event/ionstorm)
 						message_admins("[key_name_admin(usr)] triggered an ion storm")
 						var/show_log = alert(usr, "Show ion message?", "Message", "Yes", "No")
 						if(show_log == "Yes")
@@ -1884,16 +1888,20 @@
 					if (H.wear_id)
 						var/obj/item/weapon/card/id/id
 
-						if(istype(H.wear_id, /obj/item/weapon/card/id))
-							id = H.wear_id									// The ID is on the ID slot
-						else if(istype(H.wear_id, /obj/item/device/pda))
+						if(istype(H.wear_id, /obj/item/device/pda))
 							var/obj/item/device/pda/PDA = H.wear_id
-							id = PDA.id										// The ID is contained inside the PDA
-
-						if(M.mind.assigned_role == id.assignment)			// Polymorph
-							dat += "<td>[M.mind.assigned_role]</td>"
+							id = PDA.id								// The ID is contained inside the PDA
 						else
-							dat += "<td>[M.mind.assigned_role] ([id.assignment])"
+							id = H.wear_id
+
+						if(isnull(id.assignment))
+							usr << "<font color=red>ERROR:</font> Inform the coders that an [id.name] was checked for its assignment variable."
+							dat += "<td><font color=red>ERROR</font></td>"
+						else
+							if(M.mind.assigned_role == id.assignment)			// Polymorph
+								dat += "<td>[M.mind.assigned_role]</td>"
+							else
+								dat += "<td>[M.mind.assigned_role] ([id.assignment])"
 
 					else
 						dat += "<td>[M.mind.assigned_role] (No ID)</td>"
@@ -2123,7 +2131,8 @@
 <A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
 <A href='?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>
 <A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
-<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR><BR>"}
+<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
+<A href='?src=\ref[src];secretsfun=electric'>Trigger Electrical Storm</A><BR><BR>"}
 //<A href='?src=\ref[src];secretsfun=shockwave'>Station Shockwave</A><BR>
 
 	if(lvl >= 5)

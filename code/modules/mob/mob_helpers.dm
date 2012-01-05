@@ -144,7 +144,7 @@ proc/isorgan(A)
 	else
 		if (pr >= 100)
 			return n
-	var/te = n
+	var/te = html_decode(n)
 	var/t = ""
 	n = length(n)
 	var/p = null
@@ -155,7 +155,7 @@ proc/isorgan(A)
 		else
 			t = text("[]*", t)
 		p++
-	return t
+	return html_encode(t)
 
 /*proc/NewStutter(phrase,stunned)
 	phrase = html_decode(phrase)
