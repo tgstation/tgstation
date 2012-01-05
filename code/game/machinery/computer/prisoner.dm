@@ -77,15 +77,15 @@
 
 			if(href_list["inject1"])
 				var/obj/item/weapon/implant/I = locate(href_list["inject1"])
-				I.activate(1)
+				if(I)	I.activate(1)
 
 			else if(href_list["inject5"])
 				var/obj/item/weapon/implant/I = locate(href_list["inject5"])
-				I.activate(5)
+				if(I)	I.activate(5)
 
 			else if(href_list["inject10"])
 				var/obj/item/weapon/implant/I = locate(href_list["inject10"])
-				I.activate(10)
+				if(I)	I.activate(10)
 
 			else if(href_list["lock"])
 				if(src.allowed(usr))

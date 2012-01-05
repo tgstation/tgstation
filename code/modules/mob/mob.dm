@@ -911,85 +911,43 @@ note dizziness decrements automatically in the mob's Life() proc.
 					statpanel("Spells","[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
 					statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
-#if 1
-/client/proc/station_explosion_cinematic(var/derp)
-	if(mob)
-		var/mob/M = mob
-		M.loc = null // HACK, but whatever, this works
 
-		if (M.client&&M.hud_used)//They may some times not have a hud, apparently.
-			var/obj/screen/boom = M.hud_used.station_explosion
-			M.client.screen += boom
-			if(ticker)
-				switch(ticker.mode.name)
-					if("nuclear emergency")
-						flick("start_nuke", boom)
-					if("AI malfunction")
-						flick("start_malf", boom)
-					else
-						boom.icon_state = "start"
-			sleep(40)
-			M << sound('explosionfar.ogg')
-			boom.icon_state = "end"
-			if(!derp) flick("explode", boom)
-			else flick("explode2", boom)
-			sleep(40)
-			if(ticker)
-				switch(ticker.mode.name)
-					if("nuclear emergency")
-						if(!derp) boom.icon_state = "loss_nuke"
-						else boom.icon_state = "loss_nuke2"
-					if("malfunction")
-						boom.icon_state = "loss_malf"
-					if("blob")
-						return//Nothin here yet and the general one does not fit.
-					else
-						boom.icon_state = "loss_general"
-#elif
-/client/proc/station_explosion_cinematic(var/derp)
-	if(!src.mob)
-		return
 
-	var/mob/M = src.mob
-	M.loc = null // HACK, but whatever, this works
+/client/proc/station_explosion_cinematic(var/station_missed)
+	if(!mob || !ticker)	return
+	if(!mob.client || !mob.hud_used || !ticker.mode)	return
+//	M.loc = null this might make it act weird but fuck putting them in nullspace, it causes issues.
+	var/obj/screen/boom = mob.hud_used.station_explosion
+	if(!istype(boom))	return
 
-	if(!M.hud_used)
-		return
+	mob.client.screen += boom
 
-	var/obj/screen/boom = M.hud_used.station_explosion
-	src.screen += boom
-	if(ticker)
-		switch(ticker.mode.name)
-			if("nuclear emergency")
-				flick("start_nuke", boom)
-			if("AI malfunction")
-				flick("start_malf", boom)
-			else
-				boom.icon_state = "start"
+	switch(ticker.mode.name)
+		if("nuclear emergency")
+			flick("start_nuke", boom)
+		if("AI malfunction")
+			flick("start_malf", boom)
+		else
+			boom.icon_state = "start"
+
 	sleep(40)
-	M << sound('explosionfar.ogg')
+	mob << sound('explosionfar.ogg')
 	boom.icon_state = "end"
-	if(!derp)
-		flick("explode", boom)
-	else
-		flick("explode2", boom)
+	if(!station_missed) flick("explode", boom)
+	else flick("explode2", boom)
 	sleep(40)
-	if(ticker)
-		switch(ticker.mode.name)
-			if("nuclear emergency")
-				if (!derp)
-					boom.icon_state = "loss_nuke"
-				else
-					boom.icon_state = "loss_nuke2"
-			if("AI malfunction")
-				boom.icon_state = "loss_malf"
-			else
-				boom.icon_state = "loss_general"
-#endif
 
-
-
-
+	switch(ticker.mode.name)
+		if("nuclear emergency")
+			if(!station_missed) boom.icon_state = "loss_nuke"
+			else boom.icon_state = "loss_nuke2"
+		if("malfunction")
+			boom.icon_state = "loss_malf"
+		if("blob")
+			return//Nothin here yet and the general one does not fit.
+		else
+			boom.icon_state = "loss_general"
+	return
 
 
 // facing verbs
@@ -1039,6 +997,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
 
+
 /mob/proc/Stun(amount)
 	if(canstun)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
@@ -1046,7 +1005,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(istype(src, /mob/living/carbon/alien))	// add some movement delay
 			var/mob/living/carbon/alien/Alien = src
 			Alien.move_delay_add = min(Alien.move_delay_add + round(amount / 5), 10) // a maximum delay of 10
-
 	return
 
 /mob/proc/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"

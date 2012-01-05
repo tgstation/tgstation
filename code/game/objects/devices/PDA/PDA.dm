@@ -466,6 +466,7 @@
 						return
 
 					var/obj/item/device/pda/P = locate(href_list["target"])
+					if(!istype(P))	return
 
 					if(istype(P, /obj/item/device/pda))
 						if (isnull(P)||P.toff || toff)

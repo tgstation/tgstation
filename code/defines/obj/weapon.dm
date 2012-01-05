@@ -500,43 +500,6 @@
 		access = get_all_centcom_access()
 		..()
 
-/obj/item/weapon/cleaner
-	desc = "Space Cleaner!"
-	icon = 'janitor.dmi'
-	name = "space cleaner"
-	icon_state = "cleaner"
-	item_state = "cleaner"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
-	throwforce = 3
-	w_class = 2.0
-	throw_speed = 2
-	throw_range = 10
-
-/obj/item/weapon/chemsprayer
-	desc = "A utility used to spray large amounts of reagent in a given area."
-	icon = 'gun.dmi'
-	name = "chem sprayer"
-	icon_state = "chemsprayer"
-	item_state = "chemsprayer"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
-	throwforce = 3
-	w_class = 3.0
-	throw_speed = 2
-	throw_range = 10
-	origin_tech = "combat=3;materials=3;engineering=3"
-
-/obj/item/weapon/pepperspray
-	desc = "Manufactred by UhangInc., used to blind and down an opponent quickly."
-	icon = 'weapons.dmi'
-	name = "pepperspray"
-	icon_state = "pepperspray"
-	item_state = "pepperspray"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
-	throwforce = 3
-	w_class = 2.0
-	throw_speed = 2
-	throw_range = 10
-
 /obj/item/weapon/clipboard
 	name = "clipboard"
 	desc = "Apply paper to this to write better. Can also hold pens."
@@ -772,21 +735,6 @@
 	m_amt = 400
 	origin_tech = "magnets=1"
 
-
-
-/obj/item/weapon/mop
-	desc = "The world of janitalia wouldn't be complete without a mop."
-	name = "mop"
-	icon = 'janitor.dmi'
-	icon_state = "mop"
-	var/mopping = 0
-	var/mopcount = 0
-	force = 3.0
-	throwforce = 10.0
-	throw_speed = 5
-	throw_range = 10
-	w_class = 3.0
-	flags = FPRINT | TABLEPASS
 
 /obj/item/weapon/caution
 	desc = "Caution! Wet Floor!"
