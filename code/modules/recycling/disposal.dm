@@ -512,9 +512,11 @@
 			if(istype(AM, /obj/effect/bigDelivery))
 				var/obj/effect/bigDelivery/T = AM
 				src.destinationTag = T.sortTag
-			if(istype(AM, /obj/item/smallDelivery))
+			else if(istype(AM, /obj/item/smallDelivery))
 				var/obj/item/smallDelivery/T = AM
 				src.destinationTag = T.sortTag
+			else if (!src.destinationTag)
+				src.destinationTag = "Mail Office"
 
 
 	// start the movement process

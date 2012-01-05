@@ -116,14 +116,17 @@
 	desc = "Used to set the destination of properly wrapped packages."
 	icon_state = "forensic0"
 	var/currTag = null
+	var/list/spaceList = list(0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,0,0) // Breaks up departments with whitespace.
 	var/list/locationList = list("Disposals",
-	"Cargo Bay", "Mail Office", "Locker Room", "Detective's Office",
-	"Law Office", "Tool Storage", "Security", "Courtroom", "Laundry Room",
-	"Toilets", "Library", "Hydroponics", "Chapel", "Research Division",
-	"Chemistry", "Research Director", "CMO", "Medbay", "Bar", "Diner",
-	"Kitchen", "Meeting Room", "HoP Office", "Robotics", "Engineering",
-	"Chief Engineer", "Janitor", "QM Office", "Chapel Office", "Theater",
-	"Morgue", "Genetics")
+	"Mail Office", "Cargo Bay", "QM Office",
+	"Locker Room", "Tool Storage", "Laundry Room", "Toilets",
+	"Security", "Courtroom", "Detective's Office", "Law Office",
+	"Research Division", "Research Director", "Genetics",
+	"Medbay", "CMO", "Chemistry", "Morgue",
+	"Library", "Chapel", "Chapel Office", "Theater", "Janitor",
+	"Bar", "Kitchen", "Diner", "Hydroponics",
+	"Meeting Room", "HoP Office",
+	"Engineering", "Chief Engineer", "Robotics",)
 	//The whole system for the sorttype var is determined based on the order of this list,
 	//disposals must always be 1, since anything that's untagged will automatically go to disposals, or sorttype = 1 --Superxpdude
 
@@ -145,11 +148,10 @@
 		else
 			dat += "<br>Current Selection: [currTag]<br><br>"
 		for (var/i = 1, i <= locationList.len, i++)
-			dat += "<A href='?src=\ref[src];nextTag=[i]'>[locationList[i]]</A>"
-			if (i%3==0)
+			if(spaceList[i])
 				dat += "<br>"
-			else
-				dat += "	"
+			dat += "<A href='?src=\ref[src];nextTag=[i]'>[locationList[i]]</A>"
+			dat += "<br>"
 		user << browse(dat, "window=destTagScreen")
 		onclose(user, "destTagScreen")
 		usr.machine = null
@@ -232,3 +234,9 @@
 			mode = 1	// switch to charging
 		update()
 		return
+
+	CanPass(atom/A, turf/T)
+		if(istype(A, /mob/living)) // You Shall Not Pass!
+			var/mob/living/M = A
+			HasEntered(M)
+		return 0
