@@ -347,15 +347,8 @@
 		flushing = 1
 		flick("disposal-flush", src)
 
-		var/wrapcheck = 0
 		var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
 											// travels through the pipes.
-		for(var/obj/item/smallDelivery/O in src)
-			wrapcheck = 1
-
-		if(wrapcheck == 1)
-			H.tomail = 1
-
 		H.init(src)	// copy the contents of disposer to holder
 
 		air_contents = new()		// new empty gas resv.
