@@ -1453,3 +1453,21 @@ proc/safepick(list/list)
 		return
 	return pick(list)
 
+proc/get_opposite(var/checkdir)
+	switch(checkdir)
+		if(NORTH)
+			return SOUTH
+		if(SOUTH)
+			return NORTH
+		if(EAST)
+			return WEST
+		if(WEST)
+			return EAST
+		if(NORTHEAST)
+			return SOUTHWEST
+		if(NORTHWEST)
+			return SOUTHEAST
+		if(SOUTHEAST)
+			return NORTHWEST
+		if(SOUTHWEST)
+			return NORTHEAST

@@ -220,7 +220,7 @@
 							M.animate_movement = 2
 							return
 
-		else if(mob.confused)
+		else if(mob.confused && prob(30))
 			step(mob, pick(cardinal))
 		else
 			. = ..()

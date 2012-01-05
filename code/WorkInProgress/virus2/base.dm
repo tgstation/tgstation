@@ -239,7 +239,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 			e.runeffect(mob,stage)
 		clicks+=speed
 
-		if(prob(5)) spread_airborne(mob)
+		if(prob(50)) spread_airborne(mob)
 
 	proc/cure(var/mob/living/carbon/mob)
 		var/datum/disease2/effectholder/E

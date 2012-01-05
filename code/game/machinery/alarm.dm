@@ -41,6 +41,11 @@
 	//var/skipprocess = 0 //Experimenting
 	var/alarm_frequency = 1437
 	var/remote_control = 0
+#define RCON_NO 1
+#define RCON_AUTO 2
+#define RCON_YES 3
+	var/rcon_setting = 2
+	var/rcon_time = 0
 #define AALARM_REPORT_TIMEOUT 100
 	var/datum/radio_frequency/radio_connection
 	var/locked = 1
@@ -212,9 +217,9 @@
 
 /obj/machinery/alarm/proc/return_text()
 	if(!(istype(usr, /mob/living/silicon)) && locked)
-		return "<html><head><title>[src]</title></head><body>[return_status()]<hr><a href='?src=\ref[src]&ctrl=1'>[remote_control ? "Disable" : "Enable"] Remote Control</a><hr><i>(Swipe ID card to unlock interface)</i></body></html>"
+		return "<html><head><title>[src]</title></head><body>[return_status()]<hr>[rcon_text()]<hr><i>(Swipe ID card to unlock interface)</i></body></html>"
 	else
-		return "<html><head><title>[src]</title></head><body>[return_status()]<hr><a href='?src=\ref[src]&ctrl=1'>[remote_control ? "Disable" : "Enable"] Remote Control</a><hr>[return_controls()]</body></html>"
+		return "<html><head><title>[src]</title></head><body>[return_status()]<hr>[rcon_text()]<hr>[return_controls()]</body></html>"
 
 /obj/machinery/alarm/proc/return_status()
 	var/turf/location = src.loc
@@ -297,6 +302,24 @@ Temperature: <span class='dl[temperature_dangerlevel]'>[environment.temperature]
 		output += {"<span class='dl0'>Optimal</span>"}
 
 	return output
+
+/obj/machinery/alarm/proc/rcon_text()
+	var/dat = "<b>Remote Control:</b><br>"
+	if(src.rcon_setting == RCON_NO)
+		dat += "Off"
+	else
+		dat += "<a href='?src=\ref[src];rcon=[RCON_NO]'>Off</a>"
+	dat += " | "
+	if(src.rcon_setting == RCON_AUTO)
+		dat += "Auto"
+	else
+		dat += "<a href='?src=\ref[src];rcon=[RCON_AUTO]'>Auto</a>"
+	dat += " | "
+	if(src.rcon_setting == RCON_YES)
+		dat += "On"
+	else
+		dat += "<a href='?src=\ref[src];rcon=[RCON_YES]'>On</a>"
+	return dat
 
 /obj/machinery/alarm/proc/return_controls()
 	var/output = ""//"<B>[alarm_zone] Air [name]</B><HR>"
@@ -492,8 +515,8 @@ table tr:first-child th:first-child { border: none;}
 /obj/machinery/alarm/Topic(href, href_list)
 	if(..())
 		return
-	if(href_list["ctrl"])
-		remote_control = !remote_control
+	if(href_list["rcon"])
+		rcon_setting = text2num(href_list["rcon"])
 		src.updateUsrDialog()
 	if(href_list["command"])
 		var/device_id = href_list["id_tag"]
@@ -674,6 +697,21 @@ table tr:first-child th:first-child { border: none;}
 	if (mode==AALARM_MODE_REPLACEMENT && environment_pressure<ONE_ATMOSPHERE*0.05)
 		mode=AALARM_MODE_SCRUBBING
 		apply_mode()
+
+	//atmos computer remote controll stuff
+	switch(rcon_setting)
+		if(RCON_NO)
+			remote_control = 0
+		if(RCON_AUTO)
+			if(danger_level == 2)
+				remote_control = 1
+				rcon_time = 60
+		if(RCON_YES)
+			remote_control = 1
+	if(rcon_time > 0)
+		rcon_time--
+	else if(rcon_setting == RCON_AUTO)
+		remote_control = 0
 
 	src.updateDialog()
 	return

@@ -1888,16 +1888,20 @@
 					if (H.wear_id)
 						var/obj/item/weapon/card/id/id
 
-						if(istype(H.wear_id, /obj/item/weapon/card/id))
-							id = H.wear_id									// The ID is on the ID slot
-						else if(istype(H.wear_id, /obj/item/device/pda))
+						if(istype(H.wear_id, /obj/item/device/pda))
 							var/obj/item/device/pda/PDA = H.wear_id
-							id = PDA.id										// The ID is contained inside the PDA
-
-						if(M.mind.assigned_role == id.assignment)			// Polymorph
-							dat += "<td>[M.mind.assigned_role]</td>"
+							id = PDA.id								// The ID is contained inside the PDA
 						else
-							dat += "<td>[M.mind.assigned_role] ([id.assignment])"
+							id = H.wear_id
+
+						if(isnull(id.assignment))
+							usr << "<font color=red>ERROR:</font> Inform the coders that an [id.name] was checked for its assignment variable."
+							dat += "<td><font color=red>ERROR</font></td>"
+						else
+							if(M.mind.assigned_role == id.assignment)			// Polymorph
+								dat += "<td>[M.mind.assigned_role]</td>"
+							else
+								dat += "<td>[M.mind.assigned_role] ([id.assignment])"
 
 					else
 						dat += "<td>[M.mind.assigned_role] (No ID)</td>"
