@@ -227,11 +227,13 @@ atom/proc/Del()
 
 	return
 
-atom/proc/movable/Move()
+// formerly atom/proc/movable/Move(), this now overwrites other shit causing random inexplicable problems.
+// need to find a way to plug it in to the root without overriding, might just do the snowflake treatment
+/*atom/proc/Move()
 	ul_Extinguish()
 	..()
 	ul_Illuminate()
-	return
+	return*/
 
 turf
 	var

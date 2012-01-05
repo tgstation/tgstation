@@ -9,7 +9,7 @@ datum/reagent/antibodies
 	reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 		if(istype(M,/mob/living/carbon/human))
 			if(src.data && method == INGEST)
-				if(src.data["antibodies"] & M:virus2.antigen)
+				if(M:virus2) if(src.data["antibodies"] & M:virus2.antigen)
 					M:virus2.dead = 1
 		return
 

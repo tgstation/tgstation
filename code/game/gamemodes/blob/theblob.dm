@@ -161,6 +161,7 @@
 
 
 	proc/Life()
+		update()
 		if(check_mutations())
 			return 1
 		if(special_action())

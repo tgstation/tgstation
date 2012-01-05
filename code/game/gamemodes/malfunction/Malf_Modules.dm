@@ -93,7 +93,7 @@ rcd light flash thingy on matter drain
 /datum/AI_Module/small/blackout
 	module_name = "Blackout"
 	mod_pick_name = "blackout"
-	uses = 3
+	uses = 1
 
 /client/proc/blackout()
 	set category = "Malfunction"
@@ -246,7 +246,7 @@ rcd light flash thingy on matter drain
 				already = 1
 		if (!already)
 			usr.verbs += /client/proc/interhack
-			src.temp = "Hacks the status upgrade from Cent. Com, removing any information about malfunctioning electrical systems."
+			src.temp = "Tricks the station's automated diagnosis suite for a while, giving you more time until you are revealed."
 			usr:current_modules += new /datum/AI_Module/small/interhack
 			src.processing_time -= 15
 		else src.temp = "This module is only needed once."
