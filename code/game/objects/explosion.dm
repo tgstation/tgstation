@@ -7,8 +7,16 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			defer_powernet_rebuild = 1
 		if (!istype(epicenter, /turf))
 			epicenter = get_turf(epicenter.loc)
-		playsound(epicenter.loc, 'explosionfar.ogg', 100, 1, round(devastation_range*2,1) )
+		//playsound(epicenter.loc, 'explosionfar.ogg', 100, 1, round(devastation_range*2,1) )
 		playsound(epicenter.loc, "explosion", 100, 1, round(devastation_range,1) )
+
+
+		var/close = range(world.view+round(devastation_range,1), epicenter)
+		// to all distanced mobs play a different sound
+		for(var/mob/M in world) if(M.z == epicenter.z) if(!(M in close))
+			// check if the mob can hear
+			if(M.ear_deaf <= 0 || !M.ear_deaf) if(!istype(M.loc,/turf/space))
+				M << 'explosionfar.ogg'
 		if (adminlog)
 			message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
 			log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range]) in area [epicenter.loc.name] ")
