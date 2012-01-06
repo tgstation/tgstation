@@ -204,7 +204,7 @@
 				src.target = T
 		if(!src.target || src.target == null)
 			for (var/turf/space/D in view(7,src))
-				if(!(D in floorbottargets) && D != src.oldtarget && (D.loc.name != "Space"))
+				if(!(D in floorbottargets) && D != src.oldtarget && (D.loc.name != "Space") && !istype(D.loc, /area/shuttle))
 					src.oldtarget = D
 					src.target = D
 					break
