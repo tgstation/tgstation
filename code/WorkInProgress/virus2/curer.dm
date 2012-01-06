@@ -40,6 +40,8 @@
 			container = I
 			C.drop_item()
 			I.loc = src
+		state("The [src.name] Buzzes", "blue")
+		return
 	if(istype(I,/obj/item/weapon/virusdish))
 		if(virusing)
 			user << "<b>The pathogen materializer is still recharging.."
@@ -53,7 +55,8 @@
 		virusing = 1
 		spawn(1200) virusing = 0
 
-	state("The [src.name] Buzzes", "blue")
+		state("The [src.name] Buzzes", "blue")
+		return
 
 	//else
 	src.attack_hand(user)
@@ -132,6 +135,7 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/product = new(src.loc)
 
 	var/datum/reagent/blood/B = locate() in container.reagents.reagent_list
+	if(!B) return
 
 	var/list/data = list()
 	data["antibodies"] = B.data["antibodies"]
