@@ -76,7 +76,7 @@
 			src.temp += " <font color=red>SCNR-ERROR</font>"
 		if (isnull(src.pod1) && wantspod)
 			src.temp += " <font color=red>POD1-ERROR</font>"
-		else
+		else if (wantspod)
 			src.pod1.connected = src
 
 		if (src.temp == "")

@@ -130,17 +130,7 @@
 
 		user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[target]</font>")
 
-		if (istype(target, /obj/item))
-			if(istype(target,/obj/item/weapon/storage) || istype(target,/obj/item/clothing/suit/storage/))	//Put it into the bag
-				return
-			var/obj/item/temptrgt = target
-			if(istype(temptrgt.loc,/obj/item/weapon/storage) || istype(temptrgt.loc,/obj/item/clothing/suit/storage/))	//Taking stuff out of storage duplicates it.
-				user << "\blue Do not do this, it is broken as all hell.  Take it out of the container first."
-				return
-			for(var/obj/item/T in user)	//Lets remove it from their inventory
-				if(T == src)
-					user.remove_from_mob(target)
-					break
+/*		if (istype(target, /obj/item))
 			var/obj/item/O = target
 			if (src.amount > 1)
 				var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(O.loc))	//Aaannd wrap it up!
@@ -162,13 +152,13 @@
 				var/obj/effect/bigDelivery/P = new /obj/effect/bigDelivery(get_turf(O.loc))
 				P.wrapped = O
 				O.close()
-//				O.welded = 1	//You should be able to burst out of the package, now. (maybe)
+				O.welded = 1
 				O.loc = P
 				src.amount -= 3
 			else
-				user << "\blue You need more paper."
+				user << "\blue You need more paper."	*/
 
-		else
+		if(!(istype (target, /obj/structure/closet) || istype(target, /obj/structure/closet/crate) || istype(target, /obj/item)))
 			user << "\blue The object you are trying to wrap is unsuitable for the sorting machinery!"
 		if (src.amount <= 0)
 			new /obj/item/weapon/c_tube( src.loc )
