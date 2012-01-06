@@ -348,6 +348,7 @@
 #include "code\game\landmarks.dm"
 #include "code\game\master_controller.dm"
 #include "code\game\prisonshuttle.dm"
+#include "code\game\response_team.dm"
 #include "code\game\shuttle_engines.dm"
 #include "code\game\skincmd.dm"
 #include "code\game\smoothwall.dm"

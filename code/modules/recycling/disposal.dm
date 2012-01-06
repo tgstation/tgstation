@@ -502,6 +502,7 @@
 
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs
+		var/tagOverride = 0
 		for(var/atom/movable/AM in D)
 			AM.loc = src
 			/*if(istype(AM, /mob/living/carbon/human))
@@ -516,7 +517,12 @@
 				var/obj/item/smallDelivery/T = AM
 				src.destinationTag = T.sortTag
 			else if (!src.destinationTag)
-				src.destinationTag = "Mail Office"
+				src.destinationTag = null
+			else if (istype(AM, /mob))	//If there is a mob somewhere in there....
+				tagOverride = 1
+		if(tagOverride)
+			if(prob(50))
+				src.destinationTag = null	//Then 50% chance of going to the mail room!
 
 
 	// start the movement process
@@ -996,6 +1002,8 @@
 			for(var/i, i <= backType.len, i++)
 				if(sortTag == src.backType[i])
 					return negdir
+		else if (!sortTag && !mailsort)
+			return posdir
 
 		if(fromdir != sortdir)	// probably came from the negdir
 

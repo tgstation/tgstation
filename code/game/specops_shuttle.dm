@@ -179,7 +179,7 @@ var/specops_shuttle_timeleft = 0
 		user << "\red Access Denied."
 		return
 
-	if (sent_strike_team == 0)
+	if (sent_strike_team == 0 && send_emergency_team == 0)
 		usr << "\red The strike team has not yet deployed."
 		return
 
