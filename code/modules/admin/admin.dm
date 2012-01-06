@@ -1895,10 +1895,9 @@
 							id = H.wear_id
 
 						if(!id)
-							usr << "Player has wear_id, but no id exists."
+							usr << "<font color=red>ERROR:</font> Inform the coders that an [H.name] had wear_id but no ID on their ID slot."
 							dat += "<td><font color=red>ERROR</font></td>"
-
-						if(isnull(id.assignment))
+						else if(isnull(id.assignment))
 							usr << "<font color=red>ERROR:</font> Inform the coders that an [id.name] was checked for its assignment variable."
 							dat += "<td><font color=red>ERROR</font></td>"
 						else

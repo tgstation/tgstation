@@ -62,6 +62,13 @@
 */
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
+		sleep(10*60*5) // 5 minutes
+		if(intercept_hacked)
+			sleep(10 * 60 * 20) // 30 minutes
+			command_alert("Diagnosis suite failure detected. Running backup diagnosis tool.", "Anomaly Alert")
+			sleep(100)
+		command_alert("AI unit diagnosis failed. Unable to detect morality cores. Disabling of unit recommended.", "Anomaly Alert")
+
 	..()
 
 
