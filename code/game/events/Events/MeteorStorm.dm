@@ -4,7 +4,7 @@
 		command_alert("The station is now in a meteor shower", "Meteor Alert")
 
 	Tick()
-		if (prob(40))
+		if (prob(20))
 			meteor_wave()
 
 	Die()

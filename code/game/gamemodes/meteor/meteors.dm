@@ -3,26 +3,12 @@
 /var/const/meteor_wave_delay = 625 //minimum wait between waves in tenths of seconds
 //set to at least 100 unless you want evarr ruining every round
 
-/var/const/meteors_in_wave = 50
+/var/const/meteors_in_wave = 20
 /var/const/meteors_in_small_wave = 10
 
 /proc/meteor_wave(var/number = meteors_in_wave)
 	if(!ticker || wavesecret)
 		return
-
-	wavesecret = 1
-	for(var/i = 0 to number)
-		spawn(rand(10,100))
-			spawn_meteor()
-	spawn(meteor_wave_delay)
-		wavesecret = 0
-
-/proc/spawn_meteors(var/number = meteors_in_small_wave)
-	for(var/i = 0; i < number; i++)
-		spawn(0)
-			spawn_meteor()
-
-/proc/spawn_meteor()
 
 	var/startx
 	var/starty
@@ -30,53 +16,62 @@
 	var/endy
 	var/turf/pickedstart
 	var/turf/pickedgoal
-	var/max_i = 10//number of tries to spawn meteor.
+	switch(pick(1,2,3,4))
+		if(1) //NORTH
+			starty = world.maxy-3
+			startx = rand(1, world.maxx-1)
+			endy = 1
+			endx = rand(1, world.maxx-1)
+		if(2) //EAST
+			starty = rand(1,world.maxy-1)
+			startx = world.maxx-3
+			endy = rand(1, world.maxy-1)
+			endx = 1
+		if(3) //SOUTH
+			starty = 3
+			startx = rand(1, world.maxx-1)
+			endy = world.maxy-1
+			endx = rand(1, world.maxx-1)
+		if(4) //WEST
+			starty = rand(1, world.maxy-1)
+			startx = 3
+			endy = rand(1,world.maxy-1)
+			endx = world.maxx-1
+	pickedstart = locate(startx, starty, 1)
+	pickedgoal = locate(endx, endy, 1)
+	wavesecret = 1
+	for(var/i = 0 to number)
+		spawn(rand(10,100))
+			spawn_meteor(pickedstart, pickedgoal)
+	spawn(meteor_wave_delay)
+		wavesecret = 0
 
+/proc/spawn_meteors(var/turf/pickedstart, var/turf/pickedgoal, var/number = meteors_in_small_wave)
+	for(var/i = 0; i < number; i++)
+		spawn(0)
+			spawn_meteor(pickedstart, pickedgoal)
 
-	do
-		switch(pick(1,2,3,4))
-			if(1) //NORTH
-				starty = world.maxy-3
-				startx = rand(1, world.maxx-1)
-				endy = 1
-				endx = rand(1, world.maxx-1)
-			if(2) //EAST
-				starty = rand(1,world.maxy-1)
-				startx = world.maxx-3
-				endy = rand(1, world.maxy-1)
-				endx = 1
-			if(3) //SOUTH
-				starty = 3
-				startx = rand(1, world.maxx-1)
-				endy = world.maxy-1
-				endx = rand(1, world.maxx-1)
-			if(4) //WEST
-				starty = rand(1, world.maxy-1)
-				startx = 3
-				endy = rand(1,world.maxy-1)
-				endx = world.maxx-1
+/proc/spawn_meteor(var/turf/pickedstart, var/turf/pickedgoal)
 
-		pickedstart = locate(startx, starty, 1)
-		pickedgoal = locate(endx, endy, 1)
-		max_i--
-		if(max_i<=0) return
+	var/route = rand(1,5)
+	var/turf/tempgoal = pickedgoal
+	for(var/i, i < route, i++)
+		tempgoal = get_step(tempgoal,rand(1,8))
 
 	while (!istype(pickedstart, /turf/space) || pickedstart.loc.name != "Space" ) //FUUUCK, should never happen.
 
+		var/obj/effect/meteor/M
+		switch(rand(1, 100))
+			if(1 to 15)
+				M = new /obj/effect/meteor/big(pickedstart)
+			if(16 to 75)
+				M = new /obj/effect/meteor( pickedstart )
+			if(76 to 100)
+				M = new /obj/effect/meteor/small( pickedstart )
 
-	var/obj/effect/meteor/M
-	switch(rand(1, 100))
-
-		if(1 to 20)
-			M = new /obj/effect/meteor/big( pickedstart )
-		if(21 to 75)
-			M = new /obj/effect/meteor( pickedstart )
-		if(76 to 100)
-			M = new /obj/effect/meteor/small( pickedstart )
-
-	M.dest = pickedgoal
-	spawn(0)
-		walk_towards(M, M.dest, 1)
+		M.dest = tempgoal
+		spawn(0)
+			walk_towards(M, M.dest, 1)
 
 	return
 

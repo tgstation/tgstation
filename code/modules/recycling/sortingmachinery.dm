@@ -54,6 +54,8 @@
 
 	examine()
 		set src in oview(4)
+		if(sortTag)
+			usr << "\blue It is labeled \"[sortTag]\""
 		if(examtext)
 			usr << examtext
 		..()
@@ -111,6 +113,8 @@
 
 	examine()
 		set src in oview(4)
+		if(sortTag)
+			usr << "\blue It is labeled \"[sortTag]\""
 		if(examtext)
 			usr << examtext
 		..()
