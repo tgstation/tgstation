@@ -82,8 +82,18 @@
 /turf/Entered(atom/movable/M as mob|obj)
 	var/loopsanity = 10
 	if(ismob(M))
+
+		var/area/a = get_area(M.loc)
+		if(a.has_gravity == 0)
+			inertial_drift(M)
+
+	/*
 		if(M.flags & NOGRAV)
 			inertial_drift(M)
+	*/
+
+
+
 		else if(!istype(src, /turf/space))
 			M:inertia_dir = 0
 	..()

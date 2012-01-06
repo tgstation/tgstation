@@ -169,6 +169,8 @@
 			verbs += /client/proc/Blobize//I need to remember to move/remove this later
 			verbs += /client/proc/toggle_clickproc //TODO ERRORAGE (Temporary proc while the enw clickproc is being tested)
 			verbs += /client/proc/cmd_switch_radio // BEEP BOOP FARTE -- Doohl
+			verbs += /client/proc/toggle_gravity_on
+			verbs += /client/proc/toggle_gravity_off
 
 		if (holder.level >= 4)//Badmin********************************************************************
 			verbs += /obj/admins/proc/adrev					//toggle admin revives
@@ -395,6 +397,8 @@
 	verbs -= /client/proc/toggle_hear_radio
 	verbs -= /client/proc/tension_report
 	verbs -= /client/proc/player_panel_new
+	verbs -= /client/proc/toggle_gravity_on
+	verbs -= /client/proc/toggle_gravity_off
 	return
 
 

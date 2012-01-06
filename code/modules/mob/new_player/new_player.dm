@@ -26,6 +26,7 @@
 		var/starting_loc = pick(newplayer_start)
 		if(!starting_loc)	starting_loc = locate(1,1,1)
 		loc = starting_loc
+
 		sight |= SEE_TURFS
 
 		var/list/watch_locations = list()
@@ -247,6 +248,7 @@
 		job_master.AssignRole(character, rank, 1)
 		job_master.EquipRank(character, rank, 1)
 		character.loc = pick(latejoin)
+		character.lastarea = get_area(loc)
 		AnnounceArrival(character, rank)
 
 		if(character.mind.assigned_role != "Cyborg")
@@ -347,6 +349,7 @@
 	proc/create_character()
 		spawning = 1
 		var/mob/living/carbon/human/new_character = new(loc)
+		new_character.lastarea = get_area(loc)
 
 		close_spawn_windows()
 

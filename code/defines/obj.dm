@@ -1206,3 +1206,10 @@
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		user.drop_item()
 		src.throw_at(target, throw_range, throw_speed)
+
+/obj/special/stop
+	var/victim = null
+	icon_state = "empty"
+	name = "Geas"
+	desc = "You can't resist."
+	// name = ""

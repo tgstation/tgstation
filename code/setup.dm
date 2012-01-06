@@ -137,7 +137,6 @@
 #define NOJAUNT 1
 
 //Cant seem to find a mob bitflags area other than the powers one
-#define NOGRAV 1
 
 
 // bitflags for clothing parts

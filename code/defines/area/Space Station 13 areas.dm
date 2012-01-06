@@ -34,6 +34,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 	var/requires_power = 1
 	var/always_unpowered = 0	//this gets overriden to 1 for space in area/New()
+
 	var/power_equip = 1
 	var/power_light = 1
 	var/power_environ = 1
@@ -42,6 +43,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/used_light = 0
 	var/used_environ = 0
 
+	var/has_gravity = 1
 
 	var/no_air = null
 	var/area/master				// master area used for power calcluations
@@ -291,6 +293,7 @@ proc/process_ghost_teleport_locs()
 	requires_power = 0
 	luminosity = 1
 	sd_lighting = 0
+	has_gravity = 1
 
 // === end remove
 
@@ -1304,6 +1307,8 @@ var/list/the_station_areas = list (
 	/area/turret_protected/ai_upload_foyer,
 	/area/turret_protected/ai,
 )
+
+
 
 
 /area/beach

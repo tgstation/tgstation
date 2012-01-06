@@ -27,6 +27,7 @@
 			power_light = 0
 			power_equip = 0
 			power_environ = 0
+			has_gravity = 0
 
 		if(!requires_power)
 			power_light = 0//rastaf0
@@ -38,6 +39,9 @@
 			luminosity = 0
 			area_lights_luminosity = rand(6,9)
 			//sd_SetLuminosity(0)		// *DAL*
+
+		if(is_type_in_list(src, the_station_areas))
+			has_gravity = 1
 
 
 	/*spawn(5)
