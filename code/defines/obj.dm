@@ -734,7 +734,7 @@
 				else
 					table_type = 2 //1 tile thick, corner table (treated the same as streight tables in code later on)
 			if(dir_sum in list(13,14,7,11)) //Three-way intersection
-				table_type = 3 //full table as three-way intersections are not sprited, would require 64 sprites to handle all combinations
+				table_type = 5 //full table as three-way intersections are not sprited, would require 64 sprites to handle all combinations
 				switch(dir_sum)
 					if(7)
 						dir_sum = 4
@@ -759,6 +759,8 @@
 						icon_state = "reinf_tabledir"
 					if(4)
 						icon_state = "reinf_middle"
+					if(5)
+						icon_state = "reinf_tabledir"
 			else if(istype(src,/obj/structure/table/woodentable))
 				switch(table_type)
 					if(0)
@@ -771,6 +773,8 @@
 						icon_state = "wood_tabledir"
 					if(4)
 						icon_state = "wood_middle"
+					if(5)
+						icon_state = "wood_tabledir"
 			else
 				switch(table_type)
 					if(0)
@@ -783,6 +787,8 @@
 						icon_state = "tabledir"
 					if(4)
 						icon_state = "table_middle"
+					if(5)
+						icon_state = "tabledir2"
 			if (dir_sum in list(1,2,4,8,5,6,9,10))
 				dir = dir_sum
 			else
