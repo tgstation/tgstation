@@ -8,6 +8,7 @@
 	var/sortTag = null
 	flags = FPRINT
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+	var/examtext = null
 
 
 	attack_hand(mob/user as mob)
@@ -25,17 +26,37 @@
 			user << "\blue *TAGGED*"
 			src.sortTag = O.currTag
 		else if(istype(W, /obj/item/weapon/pen))
-			var/str = input(usr,"Label text?","Set label","")
-			if(!str || !length(str))
-				usr << "\red Invalid text."
-				return
-			if(length(str) > 64)
-				usr << "\red Text too long."
-				return
-			var/label = str
-			for(var/mob/M in viewers())
-				M << "\blue [user] labels [src] as [label]."
-			src.name = "[src.name] ([label])"
+			switch(alert("What would you like to alter?",,"Title","Description", "Cancel"))
+				if("Title")
+					var/str = input(usr,"Label text?","Set label","")
+					if(!str || !length(str))
+						usr << "\red Invalid text."
+						return
+					if(length(str) > 64)
+						usr << "\red Text too long."
+						return
+					var/label = str
+					for(var/mob/M in viewers())
+						M << "\blue [user] labels [src] as [label]."
+					src.name = "[src.name] ([label])"
+				if("Description")
+					var/str = input(usr,"Label text?","Set label","")
+					if(!str || !length(str))
+						usr << "\red Invalid text."
+						return
+					if(length(str) > 64)
+						usr << "\red Text too long."
+						return
+					examtext = str
+					for(var/mob/M in viewers())
+						M << "\blue [user] labels [src] with the note: [examtext]."
+		return
+
+	examine()
+		set src in oview(4)
+		if(examtext)
+			usr << examtext
+		..()
 		return
 
 /obj/item/smallDelivery
@@ -46,6 +67,7 @@
 	var/obj/item/wrapped = null
 	var/sortTag = null
 	flags = FPRINT
+	var/examtext = null
 
 
 	attack_self(mob/user)
@@ -61,17 +83,37 @@
 			user << "\blue *TAGGED*"
 			src.sortTag = O.currTag
 		else if(istype(W, /obj/item/weapon/pen))
-			var/str = input(usr,"Label text?","Set label","")
-			if(!str || !length(str))
-				usr << "\red Invalid text."
-				return
-			if(length(str) > 64)
-				usr << "\red Text too long."
-				return
-			var/label = str
-			for(var/mob/M in viewers())
-				M << "\blue [user] labels [src] as [label]."
-			src.name = "[src.name] ([label])"
+			switch(alert("What would you like to alter?",,"Title","Description", "Cancel"))
+				if("Title")
+					var/str = input(usr,"Label text?","Set label","")
+					if(!str || !length(str))
+						usr << "\red Invalid text."
+						return
+					if(length(str) > 64)
+						usr << "\red Text too long."
+						return
+					var/label = str
+					for(var/mob/M in viewers())
+						M << "\blue [user] labels [src] as [label]."
+					src.name = "[src.name] ([label])"
+				if("Description")
+					var/str = input(usr,"Label text?","Set label","")
+					if(!str || !length(str))
+						usr << "\red Invalid text."
+						return
+					if(length(str) > 64)
+						usr << "\red Text too long."
+						return
+					examtext = str
+					for(var/mob/M in viewers())
+						M << "\blue [user] labels [src] with the note: [examtext]."
+		return
+
+	examine()
+		set src in oview(4)
+		if(examtext)
+			usr << examtext
+		..()
 		return
 
 
@@ -80,7 +122,7 @@
 	name = "package wrapper"
 	icon = 'items.dmi'
 	icon_state = "deliveryPaper"
-	w_class = 4.0
+	w_class = 3.0
 	var/amount = 25.0
 
 
@@ -89,9 +131,19 @@
 		user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[target]</font>")
 
 		if (istype(target, /obj/item))
+			if(istype(target,/obj/item/weapon/storage) || istype(target,/obj/item/clothing/suit/storage/))	//Put it into the bag
+				return
+			var/obj/item/temptrgt = target
+			if(istype(temptrgt.loc,/obj/item/weapon/storage) || istype(temptrgt.loc,/obj/item/clothing/suit/storage/))	//Taking stuff out of storage duplicates it.
+				user << "\blue Do not do this, it is broken as all hell.  Take it out of the container first."
+				return
+			for(var/obj/item/T in user)	//Lets remove it from their inventory
+				if(T == src)
+					user.remove_from_mob(target)
+					break
 			var/obj/item/O = target
 			if (src.amount > 1)
-				var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(O.loc))
+				var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(O.loc))	//Aaannd wrap it up!
 				P.wrapped = O
 				O.loc = P
 				src.amount -= 1
@@ -110,9 +162,11 @@
 				var/obj/effect/bigDelivery/P = new /obj/effect/bigDelivery(get_turf(O.loc))
 				P.wrapped = O
 				O.close()
-				O.welded = 1
+//				O.welded = 1	//You should be able to burst out of the package, now. (maybe)
 				O.loc = P
 				src.amount -= 3
+			else
+				user << "\blue You need more paper."
 
 		else
 			user << "\blue The object you are trying to wrap is unsuitable for the sorting machinery!"
@@ -121,6 +175,12 @@
 			//SN src = null
 			del(src)
 			return
+		return
+
+	examine()
+		set src in usr
+		usr << "\blue There are [amount] units of package wrap left!"
+		..()
 		return
 
 /obj/item/device/destTagger
@@ -252,4 +312,8 @@
 			var/mob/living/M = A
 			HasEntered(M)
 			return 0
+		if(istype(A, /obj)) // You Shall Not Pass!
+			var/obj/M = A
+			HasEntered(M)
+			return 1
 		return 1
