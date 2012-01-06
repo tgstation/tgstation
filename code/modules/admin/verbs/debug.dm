@@ -171,7 +171,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	var/class = null
 	var/returnval = null
-	var/procname = input("Procpath (e.g. just \"update\" for lights)","path:", null)
+	var/procname = input("Procpath (e.g. just \"update\" for lights)","path:", null) as null|text
+
+	if(!procname || procname == "") return
 
 	if(procname == "") return
 
