@@ -126,6 +126,8 @@
 			src.welded = 1
 			src.loc = P
 			O.amount -= 3
+		else
+			user << "\blue You need more paper."
 	else if(src.opened)
 		if(istype(W, /obj/item/weapon/grab))
 			src.MouseDrop_T(W:affecting, user)      //act like they were dragged onto the closet

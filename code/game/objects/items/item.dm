@@ -176,6 +176,15 @@
 
 /obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/packageWrap))
+		if(istype(src,/obj/item/weapon/storage) && istype(src.loc, /mob))	//Put it into the bag
+			return
+		if(istype(src.loc,/obj/item/weapon/storage) || istype(src.loc,/obj/item/clothing/suit/storage/))	//Taking stuff out of storage duplicates it.
+			user << "\blue Do not do this, it is broken as all hell.  Take it out of the container first."
+			return
+		for(var/obj/item/T in user)	//Lets remove it from their inventory
+			if(T == src)
+				user.remove_from_mob(T)
+				break
 		var/obj/item/weapon/packageWrap/O = W
 		if (O.amount > 1)
 			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(src.loc))
