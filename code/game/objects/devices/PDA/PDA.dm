@@ -517,7 +517,7 @@
 
 						playsound(P.loc, 'twobeep.ogg', 50, 1)
 
-					log_pda("[usr] (PDA: [src.owner]) sent \"[t]\" to [P.owner]")
+					log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
 
 
 				if("Send Honk")//Honk virus

@@ -375,9 +375,13 @@
 			if(clear)
 				L+=T
 
-	usr.loc = pick(L)
+	if(!L.len)
+		usr <<"Invalid teleport destination."
+		return
 
-	smoke.start()
+	else
+		usr.loc = pick(L)
+		smoke.start()
 
 //JAUNT
 
