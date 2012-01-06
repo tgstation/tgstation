@@ -17,7 +17,7 @@ SHARDS
 	switch(alert(title, "Would you like full tile glass or one direction?", "one direct", "full (2 sheets)", "cancel", null))
 		if("one direct")
 			if(!src)	return 1
-			if(src.loc != user || !src.use(1))	return 1
+			if(src.loc != user)	return 1
 			var/list/directions = new/list(cardinal)
 			for (var/obj/structure/window/win in user.loc)
 				directions-=win.dir
@@ -50,7 +50,7 @@ SHARDS
 			src.use(1)
 		if("full (2 sheets)")
 			if(!src)	return 1
-			if(src.loc != user || !src.use(2))	return 1
+			if(src.loc != user)	return 1
 			if(locate(/obj/structure/window) in user.loc)
 				user << "\red There is a window in the way."
 				return 1
@@ -63,6 +63,7 @@ SHARDS
 			W.dir = SOUTHWEST
 			W.ini_dir = SOUTHWEST
 			W.anchored = 0
+			src.use(2)
 	return 0
 
 // GLASS
