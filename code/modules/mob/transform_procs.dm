@@ -10,8 +10,8 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
-	for(var/t in organs)
-		del(t)
+	for(var/name in organs)
+		del(organs[name])
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
 	animation.icon_state = "blank"
 	animation.icon = 'mob.dmi'
@@ -51,8 +51,8 @@
 /mob/living/carbon/human/AIize()
 	if (monkeyizing)
 		return
-	for(var/t in organs)
-		del(t)
+	for(var/name in organs)
+		del(organs[name])
 	return ..()
 
 /mob/living/carbon/AIize()
@@ -153,8 +153,8 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
-	for(var/t in organs)
-		del(t)
+	for(var/name in organs)
+		del(organs[name])
 	if(client)
 		//client.screen -= main_hud1.contents
 		client.screen -= hud_used.contents
@@ -216,8 +216,8 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
-	for(var/t in organs)
-		del(t)
+	for(var/name in organs)
+		del(organs[name])
 
 	var/alien_caste = pick("Hunter","Sentinel","Drone")
 	var/mob/living/carbon/alien/humanoid/new_xeno
@@ -256,8 +256,8 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
-	for(var/t in organs)
-		del(t)
+	for(var/name in organs)
+		del(organs[name])
 
 	if(reproduce)
 		var/number = pick(2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,4)

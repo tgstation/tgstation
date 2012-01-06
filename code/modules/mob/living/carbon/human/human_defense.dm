@@ -27,7 +27,8 @@ emp_act
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
-	for(var/datum/organ/external/organ in organs)
+	for(var/name in organs)
+		var/datum/organ/external/organ = organs[name]
 		armorval += checkarmor(organ, type)
 		organnum++
 	return (armorval/max(organnum, 1))

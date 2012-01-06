@@ -758,7 +758,8 @@
 					real_name = "Unknown"
 					src << "\red Your face has become disfigured."
 					warn_flavor_changed()
-			for(var/datum/organ/external/temp in organs)
+			for(var/name in organs)
+				var/datum/organ/external/temp = organs[name]
 				if(!temp.bleeding)
 					continue
 				else

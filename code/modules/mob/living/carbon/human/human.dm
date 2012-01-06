@@ -56,6 +56,8 @@
 
 	var/list/organs = list()
 	var/bloodloss = 0
+	var/debug_leftarm
+	var/debug_lefthand
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
@@ -86,6 +88,9 @@
 	part.parent = organs["r_arm"]
 	part = new /datum/organ/external/r_foot(src)
 	part.parent = organs["r_leg"]
+
+	debug_leftarm = organs["l_arm"]
+	debug_lefthand = organs["l_hand"]
 
 	var/g = "m"
 	if (gender == MALE)
@@ -274,7 +279,8 @@
 			if (prob(50) && !shielded)
 				Paralyse(10)
 
-	for(var/datum/organ/external/temp in organs)
+	for(var/name in organs)
+		var/datum/organ/external/temp = organs[name]
 		switch(temp.name)
 			if("head")
 				temp.take_damage(b_loss * 0.2, f_loss * 0.2)
@@ -1242,8 +1248,8 @@
 	else if (gender == FEMALE)
 		g = "f"
 
-	stand_icon = new /icon('human.dmi', "blank")
-	lying_icon = new /icon('human.dmi', "blank")
+	stand_icon = new /icon('human.dmi', "body_[g]_s")
+	lying_icon = new /icon('human.dmi', "body_[g]_l")
 
 	var/husk = (mutations & HUSK)
 	//var/obese = (mutations & FAT)
@@ -1255,18 +1261,13 @@
 		stand_icon.Blend(new /icon('human.dmi', "fatbody_s"), ICON_OVERLAY)
 		lying_icon.Blend(new /icon('human.dmi', "fatbody_l"), ICON_OVERLAY)*/
 	else
-		stand_icon.Blend(new /icon('human.dmi', "chest_[g]_s"), ICON_OVERLAY)
-		lying_icon.Blend(new /icon('human.dmi', "chest_[g]_l"), ICON_OVERLAY)
-
-		for(var/datum/organ/external/part in organs)
+		for(var/name in organs)
+			var/datum/organ/external/part = organs[name]
 			if(!istype(part, /datum/organ/external/groin) \
 				&& !istype(part, /datum/organ/external/chest) \
-				&& !part.destroyed)
-				stand_icon.Blend(new /icon('human.dmi', "[part.icon_name]_s"), ICON_OVERLAY)
-				lying_icon.Blend(new /icon('human.dmi', "[part.icon_name]_l"), ICON_OVERLAY)
-
-		stand_icon.Blend(new /icon('human.dmi', "groin_[g]_s"), ICON_OVERLAY)
-		lying_icon.Blend(new /icon('human.dmi', "groin_[g]_l"), ICON_OVERLAY)
+				&& part.destroyed)
+				stand_icon.Blend(new /icon('dam_mask.dmi', "[part.icon_name]"), ICON_OVERLAY)
+				lying_icon.Blend(new /icon('dam_mask.dmi', "[part.icon_name]2"), ICON_OVERLAY)
 
 	// Skin tone
 	if (s_tone >= 0)
@@ -2191,14 +2192,16 @@ It can still be worn/put on as normal.
 
 /mob/living/carbon/human/proc/get_damaged_organs(var/brute, var/burn)
 	var/list/datum/organ/external/parts = list()
-	for(var/datum/organ/external/organ in organs)
+	for(var/name in organs)
+		var/datum/organ/external/organ = organs[name]
 		if((brute && organ.brute_dam) || (burn && organ.burn_dam))
 			parts += organ
 	return parts
 
 /mob/living/carbon/human/proc/get_damageable_organs()
 	var/list/datum/organ/external/parts = list()
-	for(var/datum/organ/external/organ in organs)
+	for(var/name in organs)
+		var/datum/organ/external/organ = organs[name]
 		if(organ.brute_dam + organ.burn_dam < organ.max_damage)
 			parts += organ
 	return parts
@@ -2326,7 +2329,8 @@ It can still be worn/put on as normal.
 
 /mob/living/carbon/human/getBruteLoss()
 	var/amount = 0.0
-	for(var/datum/organ/external/O in organs)
+	for(var/name in organs)
+		var/datum/organ/external/O = organs[name]
 		amount+= O.brute_dam
 	return amount
 
@@ -2338,7 +2342,8 @@ It can still be worn/put on as normal.
 
 /mob/living/carbon/human/getFireLoss()
 	var/amount = 0.0
-	for(var/datum/organ/external/O in organs)
+	for(var/name in organs)
+		var/datum/organ/external/O = organs[name]
 		amount+= O.burn_dam
 	return amount
 

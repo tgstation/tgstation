@@ -637,6 +637,15 @@ CIRCULAR SAW
 				..()
 		return
 
+	else if(user.zone_sel.selecting != "chest" && user.zone_sel.selecting != "groin" && istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
+		if(S.destroyed)
+			return
+		for(var/mob/O in viewers(H, null))
+			O.show_message(text("\red [H] gets \his [S.display_name] sawed off with [src] by [user]."), 1)
+		S.destroyed = 1
+		H.update_body()
 	else
 		return ..()
 /*
