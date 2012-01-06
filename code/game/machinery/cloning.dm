@@ -1,3 +1,4 @@
+/var/list/geneticsrecords = list()
 //Cloning revival method.
 //The pod handles the actual cloning while the computer manages the clone profiles
 
@@ -34,6 +35,8 @@
 	var/obj/item/weapon/disk/data/diskette = null //Mostly so the geneticist can steal everything.
 	var/wantsscan = 1
 	var/wantspod = 1
+	var/poddir = 8 //Which dir relative to the computer it is in.
+	var/scandir = 8
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -65,10 +68,8 @@
 /obj/machinery/computer/cloning/New()
 	..()
 	spawn(5)
-		src.scanner = locate(/obj/machinery/dna_scannernew, get_step(src, WEST))
-//		src.scanner = locate(/obj/machinery/dna_scannernew, get_step(src, EAST))
-//		src.pod1 = locate(/obj/machinery/clonepod, get_step(src, EAST))
-		src.pod1 = locate(/obj/machinery/clonepod, get_step(src, WEST))
+		src.scanner = locate(/obj/machinery/dna_scannernew, get_step(src, scandir))
+		src.pod1 = locate(/obj/machinery/clonepod, get_step(src, poddir))
 
 		src.temp = ""
 		if (isnull(src.scanner) && wantsscan)
@@ -138,7 +139,7 @@
 		if(2)
 			dat += "<h4>Current records</h4>"
 			dat += "<a href='byond://?src=\ref[src];menu=1'>Back</a><br><br>"
-			for(var/datum/data/record/R in src.records)
+			for(var/datum/data/record/R in geneticsrecords)
 				dat += "<a href='byond://?src=\ref[src];view_rec=\ref[R]'>[R.fields["id"]]-[R.fields["name"]]</a><br>"
 
 		if(3)
@@ -220,7 +221,7 @@
 			var/obj/item/weapon/card/id/C = usr.equipped()
 			if (istype(C)||istype(C, /obj/item/device/pda))
 				if(src.check_access(C))
-					src.records.Remove(src.active_record)
+					geneticsrecords.Remove(src.active_record)
 					del(src.active_record)
 					src.temp = "Record deleted."
 					src.menu = 2
@@ -290,7 +291,7 @@
 				src.temp = "Unable to initiate cloning cycle." // most helpful error message in THE HISTORY OF THE WORLD
 			else if (src.pod1.growclone(selected, C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["interface"],C.fields["changeling"]))
 				src.temp = "Cloning cycle activated."
-				src.records.Remove(C)
+				geneticsrecords.Remove(C)
 				del(C)
 				src.menu = 1
 
@@ -350,14 +351,13 @@
 	if (!isnull(subject.mind)) //Save that mind so traitors can continue traitoring after cloning.
 		R.fields["mind"] = "\ref[subject.mind]"
 
-	for(var/obj/machinery/computer/cloning/F in world)
-		F.records += R
+	geneticsrecords += R //Save it to the global scan list.
 	src.temp = "Subject successfully scanned."
 
 //Find a specific record by key.
 /obj/machinery/computer/cloning/proc/find_record(var/find_key)
 	var/selected_record = null
-	for(var/datum/data/record/R in src.records)
+	for(var/datum/data/record/R in geneticsrecords)
 		if (R.fields["ckey"] == find_key)
 			selected_record = R
 			break
