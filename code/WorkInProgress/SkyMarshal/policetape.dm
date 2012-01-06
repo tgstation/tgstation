@@ -106,7 +106,7 @@
 	breaktape(null, user)
 
 /obj/item/policetape/attack_paw(mob/user as mob)
-	breaktape(1,user)
+	breaktape(/obj/item/weapon/wirecutters,user)
 
 /obj/item/policetape/proc/breaktape(obj/item/weapon/W as obj, mob/user as mob)
 	if(user.a_intent == "help" && ((!is_sharp(W) && src.allowed(user)) ||(!is_cut(W) && !src.allowed(user))))
