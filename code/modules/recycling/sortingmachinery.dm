@@ -178,7 +178,7 @@
 	desc = "Used to set the destination of properly wrapped packages."
 	icon_state = "forensic0"
 	var/currTag = null
-	var/list/spaceList = list(0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,0,0,0) // Breaks up departments with whitespace.
+	var/list/spaceList = list(0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0) // Breaks up departments with whitespace.
 	var/list/locationList = list("Disposals",
 	"Mail Office", "Cargo Bay", "QM Office",
 	"Locker Room", "Tool Storage", "Laundry Room", "Toilets",
@@ -187,7 +187,7 @@
 	"Medbay", "CMO", "Chemistry", "Morgue",
 	"Library", "Chapel", "Chapel Office", "Theater", "Janitor",
 	"Bar", "Kitchen", "Diner", "Hydroponics",
-	"Meeting Room", "HoP Office",
+	"Meeting Room", "HoP Office", "Captain",
 	"Atmospherics", "Engineering", "Chief Engineer", "Robotics",)
 	//The whole system for the sorttype var is determined based on the order of this list,
 	//disposals must always be 1, since anything that's untagged will automatically go to disposals, or sorttype = 1 --Superxpdude
