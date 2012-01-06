@@ -549,8 +549,7 @@ var/list/sacrificed = list()
 			var/list/mob/living/carbon/human/cultsinrange = list()
 			var/list/mob/living/carbon/human/victims = list()
 			for(var/mob/living/carbon/human/V in src.loc)
-				if(!(iscultist(V)))
-					victims += V
+				victims += V
 			for(var/mob/living/carbon/C in orange(1,src))
 				if(iscultist(C))
 					cultsinrange += C

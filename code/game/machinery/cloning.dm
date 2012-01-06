@@ -350,7 +350,8 @@
 	if (!isnull(subject.mind)) //Save that mind so traitors can continue traitoring after cloning.
 		R.fields["mind"] = "\ref[subject.mind]"
 
-	src.records += R
+	for(var/obj/machinery/computer/cloning/F in world)
+		F.records += R
 	src.temp = "Subject successfully scanned."
 
 //Find a specific record by key.
