@@ -144,8 +144,8 @@
 
 	if(!mob)	return
 
-	if(locate(/obj/special/stop/, mob.loc))
-		for(var/obj/special/stop/S in mob.loc)
+	if(locate(/obj/effect/stop/, mob.loc))
+		for(var/obj/effect/stop/S in mob.loc)
 			if(S.victim == mob)
 				return
 

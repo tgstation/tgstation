@@ -1060,8 +1060,8 @@ About the new airlock wires panel:
 			M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 			M.SetStunned(5)
 			M.SetWeakened(5)
-			var/obj/special/stop/S
-			S = new /obj/special/stop
+			var/obj/effect/stop/S
+			S = new /obj/effect/stop
 			S.victim = M
 			S.loc = src.loc
 			spawn(20)

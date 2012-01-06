@@ -57,14 +57,18 @@
 
 
 /area/proc/thunk(mob)
-	if(istype(src,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
+	if(istype(mob,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
 		if((istype(mob:shoes, /obj/item/clothing/shoes/magboots) && (mob:shoes.flags & NOSLIP)))
 			return
-	if((istype(src,/mob/living/carbon/human/)) && (mob:m_intent == "run")) // Only clumbsy humans can fall on their asses.
+
+	if(istype(get_turf(mob), /turf/space)) // Can't fall onto nothing.
+		return
+
+	if((istype(mob,/mob/living/carbon/human/)) && (mob:m_intent == "run")) // Only clumbsy humans can fall on their asses.
 		mob:AdjustStunned(5)
 		mob:AdjustWeakened(5)
 
-	else if (istype(src,/mob/living/carbon/human/))
+	else if (istype(mob,/mob/living/carbon/human/))
 		mob:AdjustStunned(2)
 		mob:AdjustWeakened(2)
 
@@ -75,7 +79,7 @@
 	A.has_gravity = gravitystate
 
 	if(gravitystate)
-		for(var/mob/living/M in A)
-			thunk(A)
+		for(var/mob/living/carbon/human/M in A)
+			thunk(M)
 
 

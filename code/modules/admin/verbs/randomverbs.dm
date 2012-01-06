@@ -857,7 +857,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 
 	for(var/area/A in world)
-		A.has_gravity = 1
+		A.gravitychange(1,A)
 
 	command_alert("CentComm is now beaming gravitons to your station.  We appoligize for any inconvience.")
 
@@ -872,7 +872,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 
 	for(var/area/A in world)
-		A.has_gravity = 0
+		A.gravitychange(0,A)
 
 	command_alert("For budget reasons, Centcomm is no longer beaming gravitons to your station.  We appoligize for any inconvience.")
 

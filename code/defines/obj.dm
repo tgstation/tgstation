@@ -1207,7 +1207,7 @@
 		user.drop_item()
 		src.throw_at(target, throw_range, throw_speed)
 
-/obj/special/stop
+/obj/effect/stop
 	var/victim = null
 	icon_state = "empty"
 	name = "Geas"
