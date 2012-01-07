@@ -100,7 +100,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="External armor is installed."),
 					 //3
-					 list("key"=/obj/item/stack/sheet/r_metal,
+					 list("key"=/obj/item/stack/sheet/plasteel,
 					 		"backkey"=/obj/item/weapon/weldingtool,
 					 		"desc"="Internal armor is welded."),
 					 //4
@@ -227,7 +227,7 @@
 					user.visible_message("[user] secures external armor layer.", "You secure external reinforced armor layer.")
 				else
 					user.visible_message("[user] pries external armor layer from [holder].", "You prie external armor layer from [holder].")
-					var/obj/item/stack/sheet/r_metal/MS = new /obj/item/stack/sheet/r_metal(get_turf(holder))
+					var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 					MS.amount = 5
 			if(1)
 				if(diff==FORWARD)
@@ -507,7 +507,7 @@
 	result = "/obj/mecha/working/firefighter"
 	steps = list(list("key"=/obj/item/weapon/weldingtool),//1
 					 list("key"=/obj/item/weapon/wrench),//2
-					 list("key"=/obj/item/stack/sheet/r_metal),//3
+					 list("key"=/obj/item/stack/sheet/plasteel),//3
 					 list("key"=/obj/item/weapon/weldingtool),//4
 					 list("key"=/obj/item/weapon/wrench),//5
 					 list("key"=/obj/item/stack/sheet/metal),//6

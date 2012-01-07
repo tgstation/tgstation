@@ -24,7 +24,7 @@
 				P:welding = 2
 				if(do_after(user, 20))
 					user << "\blue You deconstruct the frame."
-					new /obj/item/stack/sheet/r_metal( loc, 4)
+					new /obj/item/stack/sheet/plasteel( loc, 4)
 					del(src)
 				P:welding = 1
 		if(1)

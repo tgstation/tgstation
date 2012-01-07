@@ -304,8 +304,8 @@
 					if (ore_iron > 0 && ore_plasma > 0)
 						ore_iron--;
 						ore_plasma--;
-						new /obj/item/stack/sheet/r_metal(output.loc)
-						feedback_inc("mining_steel_produced",1)
+						new /obj/item/stack/sheet/plasteel(output.loc)
+						feedback_inc("mining_steel_produced",1) //should be plasteel, but that'd break Erro's stat logging -- Urist
 					else
 						on = 0
 					continue

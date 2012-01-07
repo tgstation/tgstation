@@ -2202,6 +2202,9 @@ It can still be worn/put on as normal.
 		src.stat = 0
 		return
 	src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss() - src.getCloneLoss()
+	if(getFireLoss() > 100 && stat == DEAD)
+		ChangeToHusk()
+	return
 
 
 /mob/living/carbon/human/abiotic(var/full_body = 0)

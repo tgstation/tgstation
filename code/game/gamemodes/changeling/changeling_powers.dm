@@ -80,7 +80,7 @@
 		return
 
 	if (M.mutations & HUSK)
-		usr << "\red This creature has already been drained!"
+		usr << "\red This creature's DNA is ruined beyond useability!"
 		return
 
 	if (!G.killing)
@@ -137,9 +137,7 @@
 	usr.changeling.isabsorbing = 0
 
 	T.death(0)
-	T.real_name = "Unknown"
-	T.mutations |= HUSK
-	T.update_body()
+	T.ChangeToHusk()
 
 	return
 

@@ -1078,20 +1078,20 @@
 	throwforce = 14.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 
-/obj/item/stack/sheet/r_metal
-	name = "steel"
-	singular_name = "steel sheet"
+/obj/item/stack/sheet/plasteel
+	name = "plasteel"
+	singular_name = "plasteel sheet"
 	desc = "This sheet is an alloy of iron and plasma."
-	icon_state = "sheet-r_metal"
+	icon_state = "sheet-plasteel"
 	item_state = "sheet-metal"
 	m_amt = 7500
 	throwforce = 15.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=2"
 
-/obj/item/stack/tile/steel
-	name = "Metal floor tile"
-	singular_name = "Steel floor tile"
+/obj/item/stack/tile/plasteel
+	name = "plasteel tiles"
+	singular_name = "plasteel floor tile"
 	desc = "Those could work as a pretty decent throwing weapon"
 	icon_state = "tile"
 	w_class = 3.0
@@ -1104,8 +1104,8 @@
 	max_amount = 60
 
 /obj/item/stack/tile/grass
-	name = "Grass tile"
-	singular_name = "Grass floor tile"
+	name = "grass tiles"
+	singular_name = "grass floor tile"
 	desc = "A patch of grass like they often use on golf courses"
 	icon_state = "tile_grass"
 	w_class = 3.0
@@ -1118,8 +1118,8 @@
 	origin_tech = "biotech=1"
 
 /obj/item/stack/light_w
-	name = "Wired glass tile"
-	singular_name = "Wired glass tile"
+	name = "wired glass tiles"
+	singular_name = "wired glass floor tile"
 	desc = "A glass tile, which is wired, somehow."
 	icon_state = "glass_wire"
 	w_class = 3.0
@@ -1154,8 +1154,8 @@
 				del(src)
 
 /obj/item/stack/tile/light
-	name = "Light floor tile"
-	singular_name = "Light floor tile"
+	name = "light tiles"
+	singular_name = "light floor tile"
 	desc = "A floor tile, made out off glass. It produces light."
 	icon_state = "tile_e"
 	w_class = 3.0

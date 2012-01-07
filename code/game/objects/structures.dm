@@ -35,7 +35,7 @@ obj/structure
 			new /obj/structure/falsewall (src.loc)
 			del(src)
 
-		else if(istype(W, /obj/item/stack/sheet/r_metal) && istype(src,/obj/structure/girder/displaced))
+		else if(istype(W, /obj/item/stack/sheet/plasteel) && istype(src,/obj/structure/girder/displaced))
 			W:use(2)
 			user << "\blue You create a false r wall! Push on it to open or close the passage."
 			new /obj/structure/falserwall (src.loc)
@@ -84,7 +84,7 @@ obj/structure
 				del(src)
 			return
 
-		else if (istype(W, /obj/item/stack/sheet/r_metal))
+		else if (istype(W, /obj/item/stack/sheet/plasteel))
 			if (src.icon_state == "reinforced") //Time to finalize!
 				user << "\blue Now finalising reinforced wall."
 				if(do_after(user, 50))
