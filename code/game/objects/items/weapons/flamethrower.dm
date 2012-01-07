@@ -191,7 +191,7 @@
 				damtype = "brute"
 		if (href_list["amount"])
 			src.throw_amount = src.throw_amount + text2num(href_list["amount"])
-			src.throw_amount = max(50,min(5000,src.throw_amount))
+			src.throw_amount = max(90,min(300,src.throw_amount))
 		if (href_list["remove"])
 			if(!src.ptank)	return
 			var/obj/item/weapon/tank/plasma/A = src.ptank
@@ -235,7 +235,7 @@
 /obj/item/weapon/flamethrower/proc/ignite_turf(turf/target)
 	//TODO: DEFERRED Consider checking to make sure tank pressure is high enough before doing this...
 	//Transfer 5% of current tank air contents to turf
-	var/datum/gas_mixture/air_transfer = ptank.air_contents.remove_ratio(0.05)
+	var/datum/gas_mixture/air_transfer = ptank.air_contents.remove_ratio(0.05*throw_amount/100)
 	air_transfer.toxins = air_transfer.toxins * 5 // This is me not comprehending the air system. I realize this is retarded and I could probably make it work without fucking it up like this, but there you have it. -- TLE
 	target.assume_air(air_transfer)
 	//Burn it based on transfered gas
