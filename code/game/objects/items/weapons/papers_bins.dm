@@ -91,7 +91,7 @@ CLIPBOARDS
 			return
 
 		for(var/mob/O in viewers(user))
-			O.show_message("\blue [user] starts writing on the paper with [src].", 1)
+			O.show_message("\blue [user] starts writing on the paper with [P].", 1)
 		var/t = "[src.info]"
 		do
 			t = input(user, "What text do you wish to add?", text("[]", src.name), t)  as message

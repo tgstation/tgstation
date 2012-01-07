@@ -740,16 +740,14 @@
 			//  4 = middle table (full, 4 connections)
 
 			var/table_type = 0 //stand_alone table
-			world << dir_sum%16
-			world << dir_sum
 			if(dir_sum%16 in cardinal)
 				table_type = 1 //endtable
 				dir_sum %= 16
 			if(dir_sum%16 in list(3,12))
 				table_type = 2 //1 tile thick, streight table
-				if(dir_sum == 3) //3 doesn't exist as a dir
+				if(dir_sum%16 == 3) //3 doesn't exist as a dir
 					dir_sum = 2
-				if(dir_sum == 12) //12 doesn't exist as a dir.
+				if(dir_sum%16 == 12) //12 doesn't exist as a dir.
 					dir_sum = 4
 			if(dir_sum%16 in list(5,6,9,10))
 				if(locate(/obj/structure/table,get_step(src.loc,dir_sum%16)))
@@ -768,7 +766,7 @@
 							dir_sum = 4
 							table_type = 6
 						else if(dir_sum == 55 || dir_sum == 119 || dir_sum == 247 || dir_sum == 183)
-							dir_sum = 8
+							dir_sum = 4
 							table_type = 3
 						else
 							dir_sum = 4
@@ -780,7 +778,7 @@
 							dir_sum = 9
 							table_type = 6
 						else if(dir_sum == 203 || dir_sum == 219 || dir_sum == 251 || dir_sum == 235)
-							dir_sum = 4
+							dir_sum = 8
 							table_type = 3
 						else
 							dir_sum = 8
