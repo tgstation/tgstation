@@ -1,10 +1,15 @@
 var
-	jobban_runonce	// Updates legacy bans with new info
+	jobban_runonce			// Updates legacy bans with new info
 	jobban_keylist[0]		//to store the keys & ranks
 
-/proc/jobban_fullban(mob/M, rank)
+/proc/jobban_fullban(mob/M, rank, reason)
 	if (!M || !M.key || !M.client) return
-	jobban_keylist.Add(text("[M.ckey] - [rank]"))
+	jobban_keylist.Add(text("[M.ckey] - [rank] ## [reason]"))
+	jobban_savebanfile()
+
+/proc/jobban_client_fullban(ckey, rank)
+	if (!ckey || !rank) return
+	jobban_keylist.Add(text("[ckey] - [rank]"))
 	jobban_savebanfile()
 
 /proc/jobban_isbanned(mob/M, rank)
@@ -15,17 +20,41 @@ var
 				return 1
 			if(config.usewhitelist && !check_whitelist(M))
 				return 1
-		if (jobban_keylist.Find(text("[M.ckey] - [rank]")))
-			return 1
-		else
-			return 0
 
+		for (var/s in jobban_keylist)
+			if( findtext(s,"[M.ckey] - [rank]") )
+				return 1
+		return 0
+
+/*
+DEBUG
+/mob/verb/list_all_jobbans()
+	set name = "list all jobbans"
+
+	for(var/s in jobban_keylist)
+		world << s
+
+/mob/verb/reload_jobbans()
+	set name = "reload jobbans"
+
+	jobban_loadbanfile()
+*/
 
 /proc/jobban_loadbanfile()
 	var/savefile/S=new("data/job_full.ban")
 	S["keys[0]"] >> jobban_keylist
 	log_admin("Loading jobban_rank")
 	S["runonce"] >> jobban_runonce
+
+	/*
+	for(var/i = 1; i <= length(jobban_keylist); i++)
+		if( findtext(jobban_keylist[i],"##") )
+			var/index = findtext(jobban_keylist[i],"##")
+			var/s = jobban_keylist[i]
+			s = copytext( s , 1 , index ) //Removes the reason for the ban from this list
+			jobban_keylist[i] = s
+			world << "DEBUG: index: [index] - s: [s] - jobban_keylist\[[i]\] = [jobban_keylist[i]]"*/
+
 	if (!length(jobban_keylist))
 		jobban_keylist=list()
 		log_admin("jobban_keylist was empty")
@@ -36,7 +65,7 @@ var
 	S["keys[0]"] << jobban_keylist
 
 /proc/jobban_unban(mob/M, rank)
-	jobban_keylist.Remove(text("[M.ckey] - [rank]"))
+	jobban_remove("[M.ckey] - [rank]")
 	jobban_savebanfile()
 
 
@@ -54,8 +83,9 @@ var
 
 
 /proc/jobban_remove(X)
-	if(jobban_keylist.Find(X))
-		jobban_keylist.Remove(X)
-		jobban_savebanfile()
-		return 1
+	for (var/i = 1; i <= length(jobban_keylist); i++)
+		if( findtext(jobban_keylist[i], "[X]") )
+			jobban_keylist.Remove(jobban_keylist[i])
+			jobban_savebanfile()
+			return 1
 	return 0
