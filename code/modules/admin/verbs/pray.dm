@@ -21,3 +21,22 @@
 
 	usr << "Your prayers have been received by the gods."
 	//log_admin("HELP: [key_name(src)]: [msg]")
+
+
+/proc/Centcomm_announce(var/text , var/mob/Sender)
+
+	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
+
+
+	for (var/mob/M in world)
+		if (M.client && M.client.holder)
+			M << "\blue <b><font color=orange>CENTCOMM:</font>[key_name(Sender, M)] (<A HREF='?src=\ref[M.client.holder];adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?src=\ref[M.client.holder];adminplayervars=\ref[Sender]'>VV</A>) (<A HREF='?src=\ref[M.client.holder];adminplayersubtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?src=\ref[M.client.holder];adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?src=\ref[M.client.holder];secretsadmin=check_antagonist'>CA</A>) (<A HREF='?src=\ref[M.client.holder];BlueSpaceArtillery=\ref[Sender]'>BSA</A>):</b> [msg]"
+
+/proc/Syndicate_announce(var/text , var/mob/Sender)
+
+	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
+
+	for (var/mob/M in world)
+		if (M.client && M.client.holder)
+			M << "\blue <b><font color=crimson>SYNDICATE:</font>[key_name(Sender, M)] (<A HREF='?src=\ref[M.client.holder];adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?src=\ref[M.client.holder];adminplayervars=\ref[Sender]'>VV</A>) (<A HREF='?src=\ref[M.client.holder];adminplayersubtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?src=\ref[M.client.holder];adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?src=\ref[M.client.holder];secretsadmin=check_antagonist'>CA</A>) (<A HREF='?src=\ref[M.client.holder];BlueSpaceArtillery=\ref[Sender]'>BSA</A>):</b> [msg]"
+

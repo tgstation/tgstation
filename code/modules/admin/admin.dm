@@ -826,6 +826,29 @@
 					sleep(2)
 					cl.jumptomob(M)
 
+	if (href_list["BlueSpaceArtillery"])
+		var/mob/M = locate(href_list["BlueSpaceArtillery"])
+		M << "You've been hit by bluespace artillery!"
+
+		var/obj/effect/stop/S
+		S = new /obj/effect/stop
+		S.victim = M
+		S.loc = M.loc
+		spawn(20)
+			del(S)
+
+		var/turf/T = get_turf(M)
+		if(T)
+			T.ex_act(2)
+
+		if(M.health == 1)
+			M.gib()
+		else
+			M.adjustBruteLoss( min( 99 , (M.health - 1) )    )
+			M.Stun(20)
+			M.Weaken(20)
+			M.stuttering = 20
+
 
 	if (href_list["jumpto"])
 		if(rank in list("Badmin", "Game Admin", "Game Master"))
