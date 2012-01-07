@@ -1125,7 +1125,7 @@ turf/simulated/floor/return_siding_icon_state()
 				levelupdate()
 				playsound(src.loc, 'Genhit.ogg', 50, 1)
 			else
-				user << "\blue This section already has a tile on it. Use a crowbar to pry it off."
+				user << "\blue This section is too damaged to support a tile. Use a welder to fix the damage."
 
 
 	if(istype(C, /obj/item/weapon/cable_coil))
