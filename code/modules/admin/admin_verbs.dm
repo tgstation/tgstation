@@ -780,7 +780,7 @@
 		usr << "\red You can only do this to humans!"
 		return
 	switch(alert("You sure you wish to edit this mob's appearance?",,"Yes","No"))
-		if("Yes")
+		if("No")
 			return
 	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
 	if(new_facial)
