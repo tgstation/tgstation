@@ -69,6 +69,12 @@
 /obj/structure/closet/secure_closet/warden
 	name = "Warden's Locker"
 	req_access = list(access_armory)
+	icon_state = "sec1"
+	icon_closed = "sec"
+	icon_locked = "sec1"
+	icon_opened = "secopen"
+	icon_broken = "secbroken"
+	icon_off = "secoff"
 
 
 	New()
@@ -90,6 +96,12 @@
 /obj/structure/closet/secure_closet/security
 	name = "Security Locker"
 	req_access = list(access_security)
+	icon_state = "sec1"
+	icon_closed = "sec"
+	icon_locked = "sec1"
+	icon_opened = "secopen"
+	icon_broken = "secbroken"
+	icon_off = "secoff"
 
 
 	New()
