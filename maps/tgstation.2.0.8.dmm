@@ -435,7 +435,7 @@
 "ais" = (/obj/effect/landmark{name = "carpspawn"},/turf/space,/area)
 "ait" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/turf/simulated/wall/r_wall,/area/security/brig)
 "aiu" = (/obj/machinery/power/apc{cell_type = 5000; dir = 8; name = "Brig APC"; pixel_x = -28; pixel_y = 0},/obj/structure/cable,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor,/area/security/brig)
-"aiv" = (/obj/machinery/light{icon_state = "tube1"; dir = 4},/obj/structure/table,/obj/item/weapon/paper_bin{pixel_x = -3; pixel_y = 7},/obj/item/clothing/glasses/sunglasses,/obj/item/weapon/book/manual/security_space_law,/obj/item/weapon/book/manual/security_space_law,/turf/simulated/floor,/area/security/main)
+"aiv" = (/obj/structure/table,/obj/item/weapon/paper_bin{pixel_x = -3; pixel_y = 7},/obj/item/clothing/glasses/sunglasses,/obj/item/weapon/book/manual/security_space_law,/obj/item/weapon/book/manual/security_space_law,/turf/simulated/floor,/area/security/main)
 "aiw" = (/obj/structure/table,/obj/item/stack/medical/bruise_pack{pixel_x = 10; pixel_y = 2},/obj/item/stack/medical/bruise_pack{pixel_x = 10; pixel_y = 2},/obj/item/stack/medical/ointment{pixel_y = 4},/obj/item/device/healthanalyzer,/obj/machinery/atmospherics/unary/vent_scrubber{dir = 1; on = 1; scrub_N2O = 0; scrub_Toxins = 0},/turf/simulated/floor,/area/security/main)
 "aix" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 9; pixel_y = -1},/turf/simulated/floor,/area/security/brig)
 "aiy" = (/obj/machinery/door_timer/cell_2{dir = 4; pixel_x = 32; pixel_y = 0},/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor,/area/security/brig)
