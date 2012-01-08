@@ -90,6 +90,9 @@ Note: Must be placed within 3 tiles of the R&D Console
 			busy = 1
 			loaded_item = O
 			user.drop_item()
+			if(istype(O,/obj/item/weapon/storage))
+				var/obj/item/weapon/storage/L = O
+				L.close(user)
 			O.loc = src
 			user << "\blue You add the [O.name] to the machine!"
 			flick("d_analyzer_la", src)
