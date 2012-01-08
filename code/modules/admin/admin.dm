@@ -1890,19 +1890,23 @@
 
 						if(istype(H.wear_id, /obj/item/device/pda))
 							var/obj/item/device/pda/PDA = H.wear_id
-							id = PDA.id								// The ID is contained inside the PDA
-						else
-							id = H.wear_id
+							if(!isnull(PDA.id))				// The PDA may contain no ID
+								id = PDA.id					// The ID is contained inside the PDA
 
-						if(!id)
-							usr << "<font color=red>ERROR:</font> Inform the coders that an [H.name] had wear_id but no ID on their ID slot."
+						else
+							id = H.wear_id					// The ID was on the ID slot
+
+						if(!id) 							// Happens when there's no ID in the PDA located on the wear_id slot
+							dat += "<td>[M.mind.assigned_role] (No ID)</td>"
+
+						else if(isnull(id.assignment))		// Preventing runtime errors blocking the player panel
+							usr << "<font color=red>ERROR:</font> Inform the coders that an [id.name] was checked for its assignment variable, and it was null."
 							dat += "<td><font color=red>ERROR</font></td>"
-						else if(isnull(id.assignment))
-							usr << "<font color=red>ERROR:</font> Inform the coders that an [id.name] was checked for its assignment variable."
-							dat += "<td><font color=red>ERROR</font></td>"
+
 						else
 							if(M.mind.assigned_role == id.assignment)			// Polymorph
 								dat += "<td>[M.mind.assigned_role]</td>"
+
 							else
 								dat += "<td>[M.mind.assigned_role] ([id.assignment])"
 
