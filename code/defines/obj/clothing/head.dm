@@ -92,6 +92,14 @@
 	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
 	item_state = "helmet"
 
+/obj/item/clothing/head/cargosoft
+	name = "Cargo cap"
+	desc = "A baseball hat in tasteless yellow."
+	icon_state = "cargosoft"
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
+	item_state = "helmet"
+	var/flipped = 0
+
 /obj/item/clothing/head/syndicatefake
 	name = "red space helmet replica"
 	icon_state = "syndicate"
@@ -130,8 +138,6 @@
 	g_amt = 1000
 	var/up = 0
 	armor = list(melee = 10, bullet = 5, laser = 10,energy = 5, bomb = 10, bio = 5, rad = 10)
-
-
 
 /obj/item/clothing/head/helmet/that
 	name = "Sturdy Top hat"

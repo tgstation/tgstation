@@ -379,7 +379,7 @@
 
 /obj/machinery/hologram/holopad
 	name = "AI holopad"
-	desc = "A floor-mounted device for projecting a holographic image. It will activate remotely."
+	desc = "A floor-mounted device for projecting a holographic image. It is activated remotely."
 	icon_state = "holopad0"
 	var
 		mob/living/silicon/ai/master//Which AI, if any, is controlling the object? Only one AI may control a hologram at any time.
