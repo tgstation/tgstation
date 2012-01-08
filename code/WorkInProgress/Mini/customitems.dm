@@ -5,7 +5,6 @@
 //yes, it has to be an item, you can't pick up nonitems
 var/list/CustomItemList = list(
 		//    ckey        real_name   item path
-	//	list("miniature","Dave Booze",/obj/item/toy/crayonbox)	//screw this i dont want crayons, it's an example okay
 	list("skymarshal", "Phillip Oswald", /obj/item/weapon/coin/silver),	//Phillip likes to chew on cigars.  Just unlit cigars, don't ask me why.  Must be a clone thing.  (Cigarette machines dispense cigars if they have a coin in them)  --SkyMarshal
 	list("spaceman96", "Trenna Seber", /obj/item/weapon/pen/multi),	//For Spesss.
 	list("asanadas", "Book Berner", /obj/item/clothing/under/chameleon/psyche)
