@@ -833,7 +833,8 @@
 	if (href_list["BlueSpaceArtillery"])
 		var/mob/M = locate(href_list["BlueSpaceArtillery"])
 		M << "You've been hit by bluespace artillery!"
-
+		log_admin("[key_name(M)] has been hit by Bluespace Artillery fired by [src.owner]")
+		message_admins("[key_name(M)] has been hit by Bluespace Artillery fired by [src.owner]")
 		var/obj/effect/stop/S
 		S = new /obj/effect/stop
 		S.victim = M
@@ -842,8 +843,11 @@
 			del(S)
 
 		var/turf/T = get_turf(M)
-		if(T)
-			T.ex_act(2)
+		if(T && (istype(T,/turf/simulated/floor/)))
+			if(prob(80))
+				T:break_tile_to_plating()
+			else
+				T:break_tile()
 
 		if(M.health == 1)
 			M.gib()
@@ -2513,6 +2517,25 @@
 	var/output = {"<html>
 						<head>
 						<title>[time2text(world.realtime,"Day, MMM DD, YYYY")] - Log</title>
+						</head>
+						<body>
+						<pre>
+						[file2text(path)]
+						</pre>
+						</body>
+						</html>"}
+	usr << browse(output,"window=server_logfile")
+	onclose(usr,"server_logfile")
+	return
+
+/obj/admins/proc/view_atk_log()
+	set category = "Admin"
+	set desc="Shows todays server attack log in new window"
+	set name="Show Server Attack Log"
+	var/path = "data/logs/[time2text(world.realtime,"YYYY")]/[time2text(world.realtime,"MM")]-[time2text(world.realtime,"Month")]/[time2text(world.realtime,"DD")]-[time2text(world.realtime,"Day")] Attack.log"
+	var/output = {"<html>
+						<head>
+						<title>[time2text(world.realtime,"Day, MMM DD, YYYY")] - Attack Log</title>
 						</head>
 						<body>
 						<pre>

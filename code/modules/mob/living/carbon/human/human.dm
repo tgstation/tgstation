@@ -2203,7 +2203,7 @@ It can still be worn/put on as normal.
 		return
 	src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss() - src.getCloneLoss()
 	if(getFireLoss() > 100 && stat == DEAD)
-		ChangeToHusk()
+	//	ChangeToHusk()  // Commented out due to lasers and fire also husking you and making you unclonable.
 	return
 
 

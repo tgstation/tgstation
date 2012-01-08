@@ -33,12 +33,12 @@
 
 /proc/log_attack(text)
 	if (config.log_attack)
-		diary << "\[[time_stamp()]]ATTACK: [text]"
-/*
+		diaryofmeanpeople << "\[[time_stamp()]]ATTACK: [text]"
+
 /proc/log_adminsay(text)
 	if (config.log_adminchat)
 		diary << "\[[time_stamp()]]ADMINSAY: [text]"
-*/
+
 /proc/log_adminwarn(text)
 	if (config.log_adminwarn)
 		diary << "\[[time_stamp()]]ADMINWARN: [text]"

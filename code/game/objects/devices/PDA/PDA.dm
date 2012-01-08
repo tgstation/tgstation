@@ -143,6 +143,27 @@
 	if (default_cartridge)
 		cartridge = new default_cartridge(src)
 
+/obj/item/device/pda/proc/can_use()
+	if(!ismob(loc))
+		return 0
+	var/mob/M = loc
+
+	if(!M.canmove)
+		return 0
+
+	if((src in M.contents) || ( istype(loc, /turf) && in_range(src, M) ) )
+		return 1
+	else
+		return 0
+
+
+/obj/item/device/pda/MouseDrop(obj/over_object as obj, src_location, over_location)
+	var/mob/M = usr
+	world << "Test"
+	if((!istype(over_object, /obj/screen)) && !M.restrained() && !M.stat && can_use())
+		return attack_self(M)
+	return
+
 //NOTE: graphic resources are loaded on client login
 /obj/item/device/pda/attack_self(mob/user as mob)
 	user.machine = src
