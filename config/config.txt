@@ -31,7 +31,7 @@ LOG_WHISPER
 LOG_EMOTE
 
 ## log attack messages
-## LOG_ATTACK
+LOG_ATTACK
 
 ## log pda messages
 LOG_PDA
