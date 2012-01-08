@@ -61,7 +61,7 @@
 
 				// trigger a response team
 				spawn
-					sleep(6000)
+					sleep(100)
 					if(security_level == SEC_LEVEL_RED) trigger_armed_response_team()
 			if(SEC_LEVEL_DELTA)
 				world << "<font size=4 color='red'>Attention! Delta security level reached!</font>"
