@@ -494,6 +494,24 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		//M.updatehealth()
 		M.buckled = initial(M.buckled)
 		M.handcuffed = initial(M.handcuffed)
+		if(istype(M,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			for(var/name in H.organs)
+				var/datum/organ/external/e = H.organs[name]
+				e.brute_dam = 0.0
+				e.burn_dam = 0.0
+				e.bandaged = 0.0
+				e.wound_size = 0.0
+				e.max_damage = initial(e.max_damage)
+				e.bleeding = 0
+				e.open = 0
+				e.broken = 0
+				e.destroyed = 0
+				e.perma_injury = 0
+				e.update_icon()
+			H.update_body()
+			H.update_face()
+			H.UpdateDamageIcon()
 		if (M.stat > 1)
 			M.stat=0
 		..()

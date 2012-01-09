@@ -294,7 +294,6 @@
 	var/icon_old = null // For when weapons get bloodied this saves their old icon.
 	var/abstract = 0
 	var/force = 0
-	var/slash = 0
 	var/item_state = null
 	var/damtype = "brute"
 	var/r_speed = 1.0

@@ -15,8 +15,8 @@
 /datum/organ/external/head
 	name = "head"
 	icon_name = "head"
-	max_damage = 125
-	min_broken_damage = 70
+	max_damage = 75
+	min_broken_damage = 40
 	body_part = HEAD
 	var/disfigured = 0
 
@@ -84,32 +84,41 @@
 	min_broken_damage = 15
 	body_part = HAND_LEFT
 
-obj/item/weapon/organ/
+obj/item/weapon/organ
 	icon = 'human.dmi'
+
+obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
+	..(loc)
+	if(!istype(H))
+		return
+	if(H.dna)
+		blood_DNA = H.dna.unique_enzymes
+	blood_type = H.b_type
+
 obj/item/weapon/organ/head
 	name = "head"
-	icon_state = "head_l"
+	icon_state = "head_m_l"
 obj/item/weapon/organ/l_arm
 	name = "left arm"
-	icon_state = "arm_left_l"
+	icon_state = "l_arm_l"
 obj/item/weapon/organ/l_foot
 	name = "left foot"
-	icon_state = "foot_left_l"
+	icon_state = "l_foot_l"
 obj/item/weapon/organ/l_hand
 	name = "left hand"
-	icon_state = "hand_left_l"
+	icon_state = "l_hand_l"
 obj/item/weapon/organ/l_leg
 	name = "left leg"
-	icon_state = "leg_left_l"
+	icon_state = "l_leg_l"
 obj/item/weapon/organ/r_arm
 	name = "right arm"
-	icon_state = "arm_right_l"
+	icon_state = "r_arm_l"
 obj/item/weapon/organ/r_foot
 	name = "right foot"
-	icon_state = "foot_right_l"
+	icon_state = "r_foot_l"
 obj/item/weapon/organ/r_hand
 	name = "right hand"
-	icon_state = "hand_right_l"
+	icon_state = "r_hand_l"
 obj/item/weapon/organ/r_leg
 	name = "right leg"
-	icon_state = "leg_right_l"
+	icon_state = "r_leg_l"

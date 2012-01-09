@@ -133,6 +133,8 @@
 				user.l_hand = src
 			else
 				user << "\blue You pick \the [src] up with your ha- wait a minute."
+				if(loc == user)
+					user.drop_from_slot(src)
 				return
 		else
 			user.l_hand = src
@@ -143,6 +145,8 @@
 				user.r_hand = src
 			else
 				user << "\blue You pick \the [src] up with your ha- wait a minute."
+				if(loc == user)
+					user.drop_from_slot(src)
 				return
 		else
 			user.r_hand = src

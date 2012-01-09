@@ -208,7 +208,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 3.0
-	slash = 1
 	flags = FPRINT | CONDUCT | NOSHIELD | TABLEPASS
 	origin_tech = "combat=3"
 
@@ -244,7 +243,6 @@
 	throw_speed = 1
 	throw_range = 1
 	w_class = 4.0//So you can't hide it in your pocket or some such.
-	slash = 1
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	var/datum/effect/effect/system/spark_spread/spark_system
 
@@ -624,7 +622,6 @@
 	desc = "A tool for breaking down those obstructions that stop you from fighting that fire."  //Less ROBUST. --SkyMarshal
 	force = 5
 	w_class = 4.0
-	slash = 1
 	flags = ONBACK
 	twohanded = 1
 	force_unwielded = 5
@@ -967,7 +964,6 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 5.0
 	w_class = 1.0
-	slash = 1
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -981,7 +977,6 @@
 	desc = "Could probably be used as ... a throwing weapon?"
 	w_class = 1.0
 	force = 5.0
-	slash = 1
 	throwforce = 15.0
 	item_state = "shard-glass"
 	g_amt = 3750
@@ -1358,7 +1353,6 @@
 	icon_state = "knife"
 	force = 10.0
 	throwforce = 10.0
-	slash = 1
 
 /obj/item/weapon/kitchen/utensil/spoon
 	name = "spoon"
@@ -1373,7 +1367,6 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 10.0
 	w_class = 1.0
-	slash = 1
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -1415,7 +1408,6 @@
 	icon_state = "drill"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
-	slash = 1
 	origin_tech = "materials=1;biotech=1"
 
 /obj/item/weapon/circular_saw

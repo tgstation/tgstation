@@ -6,7 +6,6 @@
 	flags = FPRINT | ONBELT | TABLEPASS
 	force = 40
 	throwforce = 10
-	slash = 1
 
 
 /obj/item/clothing/head/culthood

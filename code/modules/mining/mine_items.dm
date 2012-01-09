@@ -131,7 +131,6 @@ proc/move_mining_shuttle()
 	throwforce = 4.0
 	item_state = "pickaxe"
 	w_class = 4.0
-	slash = 1
 	m_amt = 3750 //one sheet, but where can you make them?
 	var/digspeed = 40 //moving the delay to an item var so R&D can make improved picks. --NEO
 	origin_tech = "materials=1;engineering=1"

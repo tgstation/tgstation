@@ -33,7 +33,6 @@ STUN BATON
 		else
 			icon_state = "sword[color]"
 		w_class = 4
-		slash = 1
 		playsound(user, 'saberon.ogg', 50, 1)
 		user << "\blue [src] is now active."
 	else
@@ -43,7 +42,6 @@ STUN BATON
 		else
 			icon_state = "sword0"
 		w_class = 2
-		slash = 0
 		playsound(user, 'saberoff.ogg', 50, 1)
 		user << "\blue [src] can now be concealed."
 	add_fingerprint(user)

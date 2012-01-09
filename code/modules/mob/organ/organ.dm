@@ -41,10 +41,8 @@
 		damage_msg = "\red You feel a intense pain"
 
 		var/open = 0
-		var/clean = 1
 		var/stage = 0
 		var/wound = 0
-		var/split = 0
 
 	New(mob/living/carbon/human/H)
 		..(H)
@@ -54,14 +52,14 @@
 			owner = H
 			H.organs[name] = src
 
-	proc/take_damage(brute, burn, slash)
+	proc/take_damage(brute, burn, sharp)
 		if((brute <= 0) && (burn <= 0))
 			return 0
 		if(destroyed)
 			return 0
 
 		if(owner) owner.pain(display_name, (brute+burn)*3, 1)
-		if(slash)
+		if(sharp)
 			var/chance = rand(1,5)
 			var/nux = brute * chance
 			if(brute_dam >= max_damage)
@@ -190,19 +188,25 @@
 			switch(body_part)
 				if(UPPER_TORSO)
 					owner.gib()
+				if(LOWER_TORSO)
+					owner << "\red You are now sterile."
 				if(HEAD)
-					var/obj/item/weapon/organ/head/H = new(owner.loc)
+					var/obj/item/weapon/organ/head/H = new(owner.loc, owner)
+					if(owner.gender == FEMALE)
+						H.icon_state = "head_f_l"
+					H.overlays += owner.face_lying
+
 					var/lol = pick(cardinal)
 					step(H,lol)
-					owner:update_face()
-					owner:update_body()
-					return
+					owner.update_face()
+					owner.update_body()
+					owner.death()
 				if(ARM_RIGHT)
 					var/obj/item/weapon/organ/r_arm/H = new(owner.loc)
 					if(owner:organs["r_hand"])
 						var/datum/organ/external/S = owner:organs["r_hand"]
 						if(!S.destroyed)
-							var/obj/item/weapon/organ/r_hand/X = new(owner.loc)
+							var/obj/item/weapon/organ/r_hand/X = new(owner.loc, owner)
 							for(var/mob/M in viewers(owner))
 								M.show_message("\red [owner.name]'s [X.name] flies off.")
 							var/lol2 = pick(cardinal)
@@ -210,13 +214,12 @@
 					var/lol = pick(cardinal)
 					step(H,lol)
 					destroyed = 1
-					return
 				if(ARM_LEFT)
 					var/obj/item/weapon/organ/l_arm/H = new(owner.loc)
 					if(owner:organs["l_hand"])
 						var/datum/organ/external/S = owner:organs["l_hand"]
 						if(!S.destroyed)
-							var/obj/item/weapon/organ/l_hand/X = new(owner.loc)
+							var/obj/item/weapon/organ/l_hand/X = new(owner.loc, owner)
 							for(var/mob/M in viewers(owner))
 								M.show_message("\red [owner.name]'s [X.name] flies off in arc.")
 							var/lol2 = pick(cardinal)
@@ -224,13 +227,12 @@
 					var/lol = pick(cardinal)
 					step(H,lol)
 					destroyed = 1
-					return
 				if(LEG_RIGHT)
 					var/obj/item/weapon/organ/r_leg/H = new(owner.loc)
 					if(owner:organs["r_foot"])
 						var/datum/organ/external/S = owner:organs["r_foot"]
 						if(!S.destroyed)
-							var/obj/item/weapon/organ/l_foot/X = new(owner.loc)
+							var/obj/item/weapon/organ/l_foot/X = new(owner.loc, owner)
 							for(var/mob/M in viewers(owner))
 								M.show_message("\red [owner.name]'s [X.name] flies off flies off in arc.")
 							var/lol2 = pick(cardinal)
@@ -238,13 +240,12 @@
 					var/lol = pick(cardinal)
 					step(H,lol)
 					destroyed = 1
-					return
 				if(LEG_LEFT)
 					var/obj/item/weapon/organ/l_leg/H = new(owner.loc)
 					if(owner:organs["l_foot"])
 						var/datum/organ/external/S = owner:organs["l_foot"]
 						if(!S.destroyed)
-							var/obj/item/weapon/organ/l_foot/X = new(owner.loc)
+							var/obj/item/weapon/organ/l_foot/X = new(owner.loc, owner)
 							for(var/mob/M in viewers(owner))
 								M.show_message("\red [owner.name]'s [X.name] flies off.")
 							var/lol2 = pick(cardinal)
@@ -252,7 +253,6 @@
 					var/lol = pick(cardinal)
 					step(H,lol)
 					destroyed = 1
-					return
 
 	proc/createwound(var/size = 1)
 		if(ishuman(src.owner))

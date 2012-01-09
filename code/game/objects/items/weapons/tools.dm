@@ -290,7 +290,6 @@ WELDINGTOOOL
 	icon_state = "cutters"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 6.0
-	slash = 1
 	throw_speed = 2
 	throw_range = 9
 	w_class = 2.0

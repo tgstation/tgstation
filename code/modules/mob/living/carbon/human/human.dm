@@ -891,17 +891,33 @@
 	//because theyre located on the 'other' inventory bar.
 
 	// Gloves
-	if (gloves)
-		var/t1 = gloves.item_state
-		if (!t1)
-			t1 = gloves.icon_state
-		overlays += image("icon" = 'hands.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
-		if (gloves.blood_DNA)
+	var/datum/organ/external/lo = organs["l_hand"]
+	var/datum/organ/external/ro = organs["r_hand"]
+	if (!lo.destroyed || !ro.destroyed)
+		if (gloves)
+			var/t1 = gloves.item_state
+			if (!t1)
+				t1 = gloves.icon_state
+			var/icon/gloves_icon = new /icon("icon" = 'hands.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")))
+			if(lo.destroyed)
+				gloves_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
+			else if(ro.destroyed)
+				gloves_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
+			overlays += image(gloves_icon, "layer" = MOB_LAYER)
+			if (gloves.blood_DNA)
+				var/icon/stain_icon = icon('blood.dmi', "bloodyhands[!lying ? "" : "2"]")
+				if(lo.destroyed)
+					stain_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
+				else if(ro.destroyed)
+					stain_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
+				overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
+		else if (blood_DNA)
 			var/icon/stain_icon = icon('blood.dmi', "bloodyhands[!lying ? "" : "2"]")
+			if(lo.destroyed)
+				stain_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
+			else if(ro.destroyed)
+				stain_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
 			overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
-	else if (blood_DNA)
-		var/icon/stain_icon = icon('blood.dmi', "bloodyhands[!lying ? "" : "2"]")
-		overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
 	// Glasses
 	if (glasses)
 		var/t1 = glasses.icon_state
@@ -914,11 +930,22 @@
 		var/t1 = r_ear.icon_state
 		overlays += image("icon" = 'ears.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
 	// Shoes
-	if (shoes)
+	lo = organs["l_foot"]
+	ro = organs["r_foot"]
+	if ((!lo.destroyed || !ro.destroyed) && shoes)
 		var/t1 = shoes.icon_state
-		overlays += image("icon" = 'feet.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
+		var/icon/shoes_icon = new /icon("icon" = 'feet.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")))
+		if(lo.destroyed && !lying)
+			shoes_icon.Blend(new /icon('limb_mask.dmi', "right[lying?"_l":""]"), ICON_MULTIPLY)
+		else if(ro.destroyed && !lying)
+			shoes_icon.Blend(new /icon('limb_mask.dmi', "left[lying?"_l":""]"), ICON_MULTIPLY)
+		overlays += image(shoes_icon, "layer" = MOB_LAYER)
 		if (shoes.blood_DNA)
 			var/icon/stain_icon = icon('blood.dmi', "shoesblood[!lying ? "" : "2"]")
+			if(lo.destroyed)
+				stain_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
+			else if(ro.destroyed)
+				stain_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
 			overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)	// Radio
 /*	if (w_radio)
 		overlays += image("icon" = 'ears.dmi', "icon_state" = "headset[!lying ? "" : "2"]", "layer" = MOB_LAYER) */
@@ -1248,26 +1275,50 @@
 	else if (gender == FEMALE)
 		g = "f"
 
-	stand_icon = new /icon('human.dmi', "body_[g]_s")
-	lying_icon = new /icon('human.dmi', "body_[g]_l")
+	stand_icon = new /icon('human.dmi', "torso_s")
+	lying_icon = new /icon('human.dmi', "torso_l")
 
 	var/husk = (mutations & HUSK)
 	//var/obese = (mutations & FAT)
 
+	stand_icon.Blend(new /icon('human.dmi', "chest_[g]_s"), ICON_OVERLAY)
+	lying_icon.Blend(new /icon('human.dmi', "chest_[g]_l"), ICON_OVERLAY)
+
+	var/datum/organ/external/head = organs["head"]
+	if(!head.destroyed)
+		stand_icon.Blend(new /icon('human.dmi', "head_[g]_s"), ICON_OVERLAY)
+		lying_icon.Blend(new /icon('human.dmi', "head_[g]_l"), ICON_OVERLAY)
+
+	for(var/name in organs)
+		var/datum/organ/external/part = organs[name]
+		if(!istype(part, /datum/organ/external/groin) \
+			&& !istype(part, /datum/organ/external/chest) \
+			&& !istype(part, /datum/organ/external/head) \
+			&& !part.destroyed)
+			stand_icon.Blend(new /icon('human.dmi', "[part.icon_name]_s"), ICON_OVERLAY)
+			lying_icon.Blend(new /icon('human.dmi', "[part.icon_name]_l"), ICON_OVERLAY)
+
+	stand_icon.Blend(new /icon('human.dmi', "groin_[g]_s"), ICON_OVERLAY)
+	lying_icon.Blend(new /icon('human.dmi', "groin_[g]_l"), ICON_OVERLAY)
+
 	if (husk)
-		stand_icon.Blend(new /icon('human.dmi', "husk_s"), ICON_OVERLAY)
-		lying_icon.Blend(new /icon('human.dmi', "husk_l"), ICON_OVERLAY)
-	/*else if(obese)
-		stand_icon.Blend(new /icon('human.dmi', "fatbody_s"), ICON_OVERLAY)
-		lying_icon.Blend(new /icon('human.dmi', "fatbody_l"), ICON_OVERLAY)*/
-	else
+		var/icon/husk_s = new /icon('human.dmi', "husk_s")
+		var/icon/husk_l = new /icon('human.dmi', "husk_l")
+
 		for(var/name in organs)
 			var/datum/organ/external/part = organs[name]
 			if(!istype(part, /datum/organ/external/groin) \
 				&& !istype(part, /datum/organ/external/chest) \
+				&& !istype(part, /datum/organ/external/head) \
 				&& part.destroyed)
-				stand_icon.Blend(new /icon('dam_mask.dmi', "[part.icon_name]"), ICON_OVERLAY)
-				lying_icon.Blend(new /icon('dam_mask.dmi', "[part.icon_name]2"), ICON_OVERLAY)
+				husk_s.Blend(new /icon('dam_mask.dmi', "[part.icon_name]"), ICON_SUBTRACT)
+				husk_l.Blend(new /icon('dam_mask.dmi', "[part.icon_name]2"), ICON_SUBTRACT)
+
+		stand_icon.Blend(husk_s, ICON_OVERLAY)
+		lying_icon.Blend(husk_l, ICON_OVERLAY)
+	/*else if(obese)
+		stand_icon.Blend(new /icon('human.dmi', "fatbody_s"), ICON_OVERLAY)
+		lying_icon.Blend(new /icon('human.dmi', "fatbody_l"), ICON_OVERLAY)*/
 
 	// Skin tone
 	if (s_tone >= 0)
