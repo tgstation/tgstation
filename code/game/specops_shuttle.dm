@@ -159,9 +159,6 @@ var/specops_shuttle_timeleft = 0
 	if(specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom) return 0
 	else return 1
 
-/obj/machinery/computer/specops_shuttle/attackby(I as obj, user as mob)
-	return attack_hand(user)
-
 /obj/machinery/computer/specops_shuttle/attack_ai(var/mob/user as mob)
 	return attack_hand(user)
 

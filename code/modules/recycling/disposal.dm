@@ -521,7 +521,7 @@
 			else if (istype(AM, /mob))	//If there is a mob somewhere in there....
 				tagOverride = 1
 		if(tagOverride)
-			if(prob(50))
+			if(prob(25))
 				src.destinationTag = null	//Then 50% chance of going to the mail room!
 
 
