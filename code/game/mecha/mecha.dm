@@ -427,7 +427,27 @@
 		src.occupant_message("\blue The [user]'s claws are stopped by the armor.")
 		for (var/mob/V in viewers(src))
 			if(V.client && !(V.blinded))
-				V.show_message("\blue The [user] rebounds off the [src.name] armor!", 1)
+				V.show_message("\blue The [user] rebounds off [src.name]'s armor!", 1)
+	return
+
+
+/obj/mecha/proc/attack_critter(obj/effect/critter/C)
+	src.log_message("Attack by creature. Attacker - [C].",1)
+	var/damage = max(0, rand(C.melee_damage_lower - 5, C.melee_damage_upper - 5 ))
+
+	if(!prob(src.deflect_chance) && damage > 0)
+		src.take_damage(damage)
+		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+		playsound(src.loc, "sparks", 50, 1)
+		for (var/mob/V in viewers(src))
+			if(V.client && !(V.blinded))
+				V.show_message("\red <b>[C]</b> hits [src.name]'s armor!", 1)
+	else
+		src.log_append_to_last("Armor saved.")
+		src.occupant_message("\blue <b>[C]'s</b> attack is stopped by the armor.")
+		for (var/mob/V in viewers(src))
+			if(V.client && !(V.blinded))
+				V.show_message("\blue <b>[C]</b> rebounds off [src.name]'s armor!", 1)
 	return
 
 

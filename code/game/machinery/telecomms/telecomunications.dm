@@ -24,10 +24,13 @@
 		machinetype = 0 // just a hacky way of preventing alike machines from pairing
 
 
-	proc/relay_information(datum/signal/signal, filter, amount)
+	proc/relay_information(datum/signal/signal, filter, copysig, amount)
 		// relay signal to all linked machinery that are of type [filter]. If signal has been sent [amount] times, stop sending
 
 		var/send_count = 0
+
+
+		// Loop through all linked machines and send the signal or copy.
 
 		for(var/obj/machinery/telecomms/machine in links)
 			if(filter && !istype( machine, text2path(filter) ))
@@ -35,10 +38,48 @@
 			if(amount && send_count >= amount)
 				break
 
+			// If we're sending a copy, be sure to create the copy for EACH machine and paste the data
+			var/datum/signal/copy = new
+			if(copysig)
+
+				copy.transmission_method = 2
+				copy.frequency = signal.frequency
+				// Copy the main data contents! Workaround for some nasty bug where the actual array memory is copied and not its contents.
+				copy.data = list(
+
+				"mob" = signal.data["mob"],
+				"mobtype" = signal.data["mobtype"],
+				"realname" = signal.data["realname"],
+				"name" = signal.data["name"],
+				"job" = signal.data["job"],
+				"key" = signal.data["key"],
+				"vmessage" = signal.data["vmessage"],
+				"vname" = signal.data["vname"],
+				"vmask" = signal.data["vmask"],
+				"compression" = signal.data["compression"],
+				"message" = signal.data["message"],
+				"connection" = signal.data["connection"],
+				"radio" = signal.data["radio"],
+				"slow" = signal.data["slow"]
+				)
+
+				// Keep the "original" signal constant
+				if(!copy.data["original"])
+					copy.data["original"] = signal
+				else
+					copy.data["original"] = signal.data["original"]
+
+			else
+				del(copy)
+
+
 			send_count++
 
 			spawn()
-				machine.receive_information(signal, src)
+				if(copysig && copy)
+					machine.receive_information(copy, src)
+				else
+					machine.receive_information(signal, src)
 
 		return send_count
 
@@ -74,6 +115,8 @@
 	The receiver idles and receives messages from subspace-compatible radio equipment;
 	primarily headsets. They then just relay this information to all linked devices,
 	which can would probably be network buses.
+
+	Link to Processor Units in case receiver can't send to bus units.
 */
 
 /obj/machinery/telecomms/receiver
@@ -93,12 +136,13 @@
 
 			if(is_freq_listening(signal)) // detect subspace signals
 
-				var/datum/signal/copy = new
-				copy.copy_from(signal) // copy information to new signal
-				copy.data["original"] = signal
 
-				relay_information(copy) // ideally relay the information to bus units
+				var/sendbus = relay_information(signal, "/obj/machinery/telecomms/bus", 1) // ideally relay the copied information to bus units
 
+				/* We can't send the signal to a bus, so we send it to a processor */
+				if(!sendbus)
+					signal.data["slow"] += rand(5, 10) // slow the signal down
+					relay_information(signal, "/obj/machinery/telecomms/processor", 1) // send copy to processors
 
 
 /*
@@ -107,6 +151,8 @@
 
 	They transfer uncompressed subspace packets to processor units, and then take
 	the processed packet to a server for logging.
+
+	Link to a subspace broadcaster if it can't send to a server.
 */
 
 /obj/machinery/telecomms/bus
@@ -126,15 +172,21 @@
 			if(signal.data["compression"]) // if signal is still compressed from subspace transmission
 				// send to one linked processor unit
 
-				var/send_to_processor = relay_information(signal, "/obj/machinery/telecomms/processor", 1)
+				var/send_to_processor = relay_information(signal, "/obj/machinery/telecomms/processor")
 
 				if(!send_to_processor) // failed to send to a processor, relay information anyway
-					relay_information(signal, "/obj/machinery/telecomms/server")
+					signal.data["slow"] += rand(1, 5) // slow the signal down only slightly
+					relay_information(signal, "/obj/machinery/telecomms/server", 1)
 
 
 			else // the signal has been decompressed by a processor unit
 				 // send to all linked server units
-				relay_information(signal, "/obj/machinery/telecomms/server")
+				var/sendserver = relay_information(signal, "/obj/machinery/telecomms/server", 1)
+
+				// Can't send to a single server, send to a broadcaster instead! But it needs a processor to do this
+				if(!sendserver)
+					signal.data["slow"] += rand(0, 1) // slow the signal down only slightly
+					relay_information(signal, "/obj/machinery/telecomms/broadcaster")
 
 
 
@@ -142,6 +194,8 @@
 	The processor is a very simple machine that decompresses subspace signals and
 	transfers them back to the original bus. It is essential in producing audible
 	data.
+
+	Link to servers if bus is not present
 */
 
 /obj/machinery/telecomms/processor
@@ -159,7 +213,12 @@
 
 		if(is_freq_listening(signal))
 			signal.data["compression"] = 0 // uncompress subspace signal
-			relay_direct_information(signal, machine_from) // send the signal back to the machine
+
+			if(istype(machine_from, /obj/machinery/telecomms/bus))
+				relay_direct_information(signal, machine_from) // send the signal back to the machine
+
+			else // no bus detected - send the signal to servers instead
+				relay_information(signal, "/obj/machinery/telecomms/server", 1)
 
 
 
@@ -186,11 +245,11 @@
 
 	receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
-		if(signal.data["message"] && !signal.data["compression"])
+		if(signal.data["message"])
 
 			if(is_freq_listening(signal))
 
-				// if signal contains discernable data
+				// If signal has a message and appropriate frequency
 
 				update_logs()
 
@@ -207,6 +266,15 @@
 				log.parameters["name"] = signal.data["name"]
 				log.parameters["realname"] = signal.data["realname"]
 				log.parameters["uspeech"] = M.universal_speak
+
+				// If the signal is still compressed, make the log entry gibberish
+				if(signal.data["compression"] > 0)
+					log.parameters["message"] = Gibberish(signal.data["message"], signal.data["compression"] + 50)
+					log.parameters["job"] = Gibberish(signal.data["job"], signal.data["compression"] + 50)
+					log.parameters["name"] = Gibberish(signal.data["name"], signal.data["compression"] + 50)
+					log.parameters["realname"] = Gibberish(signal.data["realname"], signal.data["compression"] + 50)
+					log.parameters["vname"] = Gibberish(signal.data["vname"], signal.data["compression"] + 50)
+					log.input_type = "Corrupt File"
 
 				log_entries.Add(log)
 

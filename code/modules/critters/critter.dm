@@ -21,6 +21,8 @@
 		wanderer = 1
 	//Will open doors it bumps ignoring access
 		opensdoors = 0
+	//Will randomly travel through vents
+		ventcrawl = 0
 
 	//Internal tracking ignore
 		frustration = 0
@@ -32,6 +34,10 @@
 		target = null
 		oldtarget_name = null
 		target_lastloc = null
+
+		thinkspeed  = 15
+		chasespeed  = 4
+		wanderspeed = 10
 		//The last guy who attacked it
 		attacker = null
 		//Will not attack this thing
@@ -47,6 +53,11 @@
 		atksame = 0
 		atkmech = 0
 
+		//Attacks syndies/traitors (distinguishes via mind)
+		atksynd = 1
+		//Attacks things NOT in its obj/req_access list
+		atkreq = 0
+
 	//Damage multipliers
 		brutevuln = 1
 		firevuln = 1
@@ -59,7 +70,10 @@
 		//Basic attack message when they move to attack and attack
 		angertext = "charges at"
 		attacktext = "attacks"
+		deathtext = "dies!"
 
+		chasestate = null // the icon state to use when attacking or chasing a target
+		attackflick = null // the icon state to flick when it attacks
 		attack_sound = null // the sound it makes when it attacks!
 
 		attack_speed = 25 // delay of attack

@@ -93,8 +93,8 @@
 
 					if(language == "Human" || universal_translate || C.parameters["uspeech"])
 						dat += "<u><font color = #18743E>Data type</font color></u>: [C.input_type]<br>"
-						dat += "<u><font color = #18743E>Orator</font color></u>: [C.parameters["name"]] (Job: [C.parameters["job"]])<br>"
-						dat += "<u><font color = #18743E>Race</font color></u>: [race]<br>"
+						dat += "<u><font color = #18743E>Source</font color></u>: [C.parameters["name"]] (Job: [C.parameters["job"]])<br>"
+						dat += "<u><font color = #18743E>Class</font color></u>: [race]<br>"
 						dat += "<u><font color = #18743E>Contents</font color></u>: \"[C.parameters["message"]]\"<br>"
 
 

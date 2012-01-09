@@ -21,20 +21,22 @@
 
 		if(signal.data["message"])
 
-
-			/* ###### Broadcast a message using signal.data ###### */
-			Broadcast_Message(signal.data["connection"], signal.data["mob"],
-							  signal.data["vmask"], signal.data["vmessage"],
-							  signal.data["radio"], signal.data["message"],
-							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], signal.data["vname"])
-
 			signal.data["done"] = 1 // mark the signal as being broadcasted
 
 			// Search for the original signal and mark it as done as well
 			var/datum/signal/original = signal.data["original"]
 			if(original)
 				original.data["done"] = 1
+
+			if(signal.data["slow"] > 0)
+				sleep(signal.data["slow"]) // simulate the network lag if necessary
+
+			/* ###### Broadcast a message using signal.data ###### */
+			Broadcast_Message(signal.data["connection"], signal.data["mob"],
+							  signal.data["vmask"], signal.data["vmessage"],
+							  signal.data["radio"], signal.data["message"],
+							  signal.data["name"], signal.data["job"],
+							  signal.data["realname"], signal.data["vname"],, signal.data["compression"])
 
 			/* --- Do a snazzy animation! --- */
 			flick("broadcaster_send", src)
@@ -82,12 +84,16 @@
 				1 -- Will only broadcast to intercoms
 				2 -- Will only broadcast to intercoms and station-bounced radios
 
+	@param compression:
+		If 0, the signal is audible
+		If nonzero, the signal may be partially inaudible or just complete gibberish.
+
 **/
 
 /proc/Broadcast_Message(var/datum/radio_frequency/connection, var/mob/M,
 						var/vmask, var/vmessage, var/obj/item/device/radio/radio,
 						var/message, var/name, var/job, var/realname, var/vname,
-						var/filtertype)
+						var/filtertype, var/compression)
 
 
   /* ###### Prepare the radio connection ###### */
@@ -133,12 +139,19 @@
 	// Did not understand the message:
 	var/list/heard_voice 	= list() // voice message	(ie "chimpers")
 	var/list/heard_garbled	= list() // garbled message (ie "f*c* **u, **i*er!")
+	var/list/heard_gibberish= list() // completely screwed over message (ie "F%! (O*# *#!<>&**%!")
 
 	for (var/mob/R in receive)
 
 	  /* --- Loop through the receivers and categorize them --- */
 
 		if (R.client && R.client.STFU_radio) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
+			continue
+
+
+		// --- Check for compression ---
+		if(compression > 0)
+			heard_gibberish += R
 			continue
 
 		// --- Can understand the speech ---
@@ -166,7 +179,7 @@
 
 
   /* ###### Begin formatting and sending the message ###### */
-	if (length(heard_masked) || length(heard_normal) || length(heard_voice) || length(heard_garbled))
+	if (length(heard_masked) || length(heard_normal) || length(heard_voice) || length(heard_garbled) || length(heard_gibberish))
 
 	  /* --- Some miscellaneous variables to format the string output --- */
 		var/part_a = "<span class='radio'><span class='name'>" // goes in the actual output
@@ -294,9 +307,23 @@
 			quotedmsg = M.say_quote(stars(message))
 			var/rendered = "[part_a][vname][part_b][quotedmsg][part_c]"
 
-			for (var/mob/R in heard_voice)
+			for (var/mob/R in heard_garbled)
 				if(istype(R, /mob/living/silicon/ai))
 					R.show_message("[part_a]<a href='byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]'>[vname]</a>[part_b][quotedmsg][part_c]", 2)
+				else
+					R.show_message(rendered, 2)
+
+
+		/* --- Complete gibberish. Usually happens when there's a compressed message --- */
+
+		if (length(heard_gibberish))
+			quotedmsg = M.say_quote(Gibberish(message, compression + 50))
+			world << "Gibberish: [quotedmsg]"
+			var/rendered = "[part_a][Gibberish(M.real_name, compression + 50)][part_b][quotedmsg][part_c]"
+
+			for (var/mob/R in heard_gibberish)
+				if(istype(R, /mob/living/silicon/ai))
+					R.show_message("[part_a]<a href='byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]'>[Gibberish(realname, compression + 50)] ([Gibberish(job, compression + 50)]) </a>[part_b][quotedmsg][part_c]", 2)
 				else
 					R.show_message(rendered, 2)
 

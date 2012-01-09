@@ -286,10 +286,11 @@ var/GLOBAL_RADIO_TYPE = 0 // radio type to use
 				// so that they can be logged even AFTER the mob is deleted or something
 
 			  // Other tags:
-				"compression" = 1, // compressed radio signal
+				"compression" = rand(45,50), // compressed radio signal
 				"message" = message, // the actual sent message
 				"connection" = connection, // the radio connection to use
-				"radio" = src // stores the radio used for transmission
+				"radio" = src, // stores the radio used for transmission
+				"slow" = 0 // how much to sleep() before broadcasting - simulates net lag
 			)
 			signal.frequency = connection.frequency // Quick frequency set
 
@@ -328,10 +329,11 @@ var/GLOBAL_RADIO_TYPE = 0 // radio type to use
 			"vname" = M.voice_name, // the name to display if the voice wasn't understood
 			"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
 
-			"compression" = 1, // compressed radio signal
+			"compression" = 0, // uncompressed radio signal
 			"message" = message, // the actual sent message
 			"connection" = connection, // the radio connection to use
-			"radio" = src // stores the radio used for transmission
+			"radio" = src, // stores the radio used for transmission
+			"slow" = 0
 		)
 		signal.frequency = connection.frequency // Quick frequency set
 
@@ -350,7 +352,7 @@ var/GLOBAL_RADIO_TYPE = 0 // radio type to use
 
 		Broadcast_Message(connection, M, voicemask, M.voice_message,
 						  src, message, displayname, jobname, real_name, M.voice_name,
-		                  filter_type)
+		                  filter_type, signal.data["compression"])
 
 
 

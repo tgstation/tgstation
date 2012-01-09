@@ -130,20 +130,26 @@
 		if(href_list["link"])
 
 			if(P.buffer)
-				if( (!(src in P.buffer.links)) && (!(P.buffer in src.links)))
+				if(!(src in P.buffer.links))
 					P.buffer.links.Add(src)
+
+				if(!(P.buffer in src.links))
 					src.links.Add(P.buffer)
+
+				temp = "<font color = #666633>-% Successfully linked with \ref[P.buffer] [P.buffer.name] %-</font color>"
 
 			else
 				temp = "<font color = #666633>-% Unable to acquire buffer %-</font color>"
 
 		if(href_list["buffer"])
 
+			temp = "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>"
 			P.buffer = src
 
 
 		if(href_list["flush"])
 
+			temp = "<font color = #666633>-% Buffer successfully flushed. %-</font color>"
 			P.buffer = null
 
 
