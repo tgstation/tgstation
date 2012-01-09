@@ -8,7 +8,6 @@
 	throwforce = 10
 
 
-
 /obj/item/clothing/head/culthood
 	name = "cult hood"
 	icon_state = "culthood"

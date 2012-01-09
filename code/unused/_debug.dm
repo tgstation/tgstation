@@ -486,9 +486,13 @@ Doing this because FindTurfs() isn't even used
 			e.bandaged = 0.0
 			e.wound_size = 0.0
 			e.max_damage = initial(e.max_damage)
+			e.broken = 0
+			e.destroyed = 0
+			e.perma_injury = 0
 			e.update_icon()
 		if(src.type == /mob/living/carbon/human)
 			var/mob/living/carbon/human/H = src
+			H.update_body()
 			H.UpdateDamageIcon()
 	else
 		alert("Debugging off")
