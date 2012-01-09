@@ -685,11 +685,6 @@
 					else if(E.name == "l_leg" || E.name == "l_foot" \
 						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
 						leg_tally--									// let it fail even if just foot&leg
-				if(E.open && (!resting) && (!sleeping))
-					emote("scream")
-					E.take_damage(20,0)
-					emote("collapse")
-					paralysis = 10
 
 			// can't stand
 			if(leg_tally == 0)

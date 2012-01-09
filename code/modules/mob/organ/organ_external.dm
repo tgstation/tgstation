@@ -95,9 +95,74 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 		blood_DNA = H.dna.unique_enzymes
 	blood_type = H.b_type
 
+	var/icon/I = new /icon(icon, icon_state)
+
+	if (H.s_tone >= 0)
+		I.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
+	else
+		I.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
+	icon = I
+
 obj/item/weapon/organ/head
 	name = "head"
 	icon_state = "head_m_l"
+	var/mob/living/carbon/brain/brainmob
+	var/brain_op_stage = 0
+
+obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
+	brainmob = new(src)
+	brainmob.name = H.real_name
+	brainmob.real_name = H.real_name
+	brainmob.dna = H.dna
+	brainmob.container = src
+
+obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/weapon/scalpel))
+		switch(brain_op_stage)
+			if(0)
+				for(var/mob/O in (oviewers(brainmob) - user))
+					O.show_message("\red [brainmob] is beginning to have \his head cut open with [src] by [user].", 1)
+				brainmob << "\red [user] begins to cut open your head with [src]!"
+				user << "\red You cut [brainmob]'s head open with [src]!"
+
+				brain_op_stage = 1
+
+			if(2)
+				for(var/mob/O in (oviewers(brainmob) - user))
+					O.show_message("\red [brainmob] is having \his connections to the brain delicately severed with [src] by [user].", 1)
+				brainmob << "\red [user] begins to cut open your head with [src]!"
+				user << "\red You cut [brainmob]'s head open with [src]!"
+
+				brain_op_stage = 3.0
+			else
+				..()
+	else if(istype(W,/obj/item/weapon/circular_saw))
+		switch(brain_op_stage)
+			if(1)
+				for(var/mob/O in (oviewers(brainmob) - user))
+					O.show_message("\red [brainmob] has \his skull sawed open with [src] by [user].", 1)
+				brainmob << "\red [user] begins to saw open your head with [src]!"
+				user << "\red You saw [brainmob]'s head open with [src]!"
+
+				brain_op_stage = 2
+			if(3)
+				for(var/mob/O in (oviewers(brainmob) - user))
+					O.show_message("\red [brainmob] has \his spine's connection to the brain severed with [src] by [user].", 1)
+				brainmob << "\red [user] severs your brain's connection to the spine with [src]!"
+				user << "\red You sever [brainmob]'s brain's connection to the spine with [src]!"
+
+				user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [brainmob.name] ([brainmob.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
+				brainmob.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
+
+				var/obj/item/brain/B = new(loc)
+				B.transfer_identity(brainmob)
+
+				brain_op_stage = 4.0
+			else
+				..()
+	else
+		..()
+
 obj/item/weapon/organ/l_arm
 	name = "left arm"
 	icon_state = "l_arm_l"
