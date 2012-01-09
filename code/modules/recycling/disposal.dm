@@ -972,6 +972,8 @@
 			for(var/i, i <= backType.len, i++)
 				if(sortTag == src.backType[i])
 					return negdir
+		else if (!sortTag && mailsort)
+			return sortdir
 		else if (!sortTag && !mailsort)
 			return posdir
 
@@ -982,7 +984,7 @@
 				if(sortTag == src.sortType[i])
 					issort = 1
 
-			if(issort || ((!sortTag || ismail) && mailsort)) //if destination matches filtered type...
+			if(issort) //if destination matches filtered type...
 				return sortdir		// exit through sortdirection
 			else
 				return posdir

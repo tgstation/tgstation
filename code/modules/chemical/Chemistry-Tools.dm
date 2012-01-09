@@ -172,7 +172,8 @@
 
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (istype(target, /obj/item/weapon/storage || istype(target, /obj/item/weapon/gun/grenadelauncher) || istype(target, /obj/structure/table))) return ..()
+		if (istype(target, /obj/item/weapon/storage) || istype(target, /obj/item/clothing/suit/storage) || istype(target, /obj/item/weapon/gun/grenadelauncher) || istype(target, /obj/structure/table))
+			return ..()
 		if (!src.state && stage == 2 && !crit_fail)
 			user << "\red You prime the grenade! 3 seconds!"
 			message_admins("[key_name_admin(user)] used a chemistry grenade ([src.name]).")
