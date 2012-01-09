@@ -2045,7 +2045,7 @@ It can still be worn/put on as normal.
 				//SN src = null
 				del(src)
 				return
-			if ((target.health >= -99.0 && target.health < 0))
+			if ((target.health >= -99.0 && target.health < config.health_threshold_dead))
 				target.cpr_time = world.time
 				var/suff = min(target.getOxyLoss(), 7)
 				target.oxyloss -= suff
