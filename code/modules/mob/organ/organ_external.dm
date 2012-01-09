@@ -114,7 +114,8 @@ obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)
 	brainmob.name = H.real_name
 	brainmob.real_name = H.real_name
 	brainmob.dna = H.dna
-	brainmob.container = src
+	if(H.mind)
+		H.mind.transfer_to(brainmob)
 
 obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/scalpel))
