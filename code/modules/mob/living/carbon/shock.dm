@@ -7,9 +7,19 @@
 	if(reagents.has_reagent("alkysine"))
 		src.traumatic_shock -= 10
 	if(reagents.has_reagent("inaprovaline"))
-		src.traumatic_shock -= 15
+		src.traumatic_shock -= 25
 	if(reagents.has_reagent("synaptizine"))
-		src.traumatic_shock -= 50
+		src.traumatic_shock -= 100 // make synaptizine function as good painkiller
+
+	// broken or ripped off organs will add quite a bit of pain
+	if(istype(src,/mob/living/carbon/human))
+		var/mob/living/carbon/human/M = src
+		for(var/name in M.organs)
+			var/datum/organ/external/organ = M.organs[name]
+			if(organ.destroyed)
+				src.traumatic_shock += 60
+			else if(organ.broken)
+				src.traumatic_shock += 40
 
 	return src.traumatic_shock
 

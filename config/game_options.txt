@@ -1,7 +1,7 @@
 ### HEALTH ###
 
 ## level of health at which a mob becomes unconscious (crit)
-HEALTH_THRESHOLD_CRIT 0
+HEALTH_THRESHOLD_CRIT -50
 
 ## level of health at which a mob becomes dead
 HEALTH_THRESHOLD_DEAD -100
