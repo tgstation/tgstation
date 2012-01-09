@@ -751,7 +751,7 @@
 	var/max_fuel = 150000
 	var/fuel_per_cycle_idle = 100
 	var/fuel_per_cycle_active = 500
-	var/power_per_cycle = 10
+	var/power_per_cycle = 15
 	reliability = 1000
 
 	New()

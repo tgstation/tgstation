@@ -60,6 +60,26 @@ Stuff which is in development and not yet visible to players or just code relate
 (ie. code improvements for expandability, etc.) should not be listed here. They 
 should be listed in the changelog upon commit tho. Thanks. -->
 
+<b><font color='blue'>9 January 2012</font><b>
+<ul>
+  <li><b>ConstantA:</b>
+  <ul>	
+	<li>Reworked exosuit internal atmospherics (the situation when exosuit is set to take air from internal tank, otherwise cabin air = location air): 
+		<ul>
+			<li>If current cabin presure is lower than &quot;tank output pressure&quot;, the air will be taken from internal tank (if possible), to equalize cabin pressure to &quot;tank output pressure&quot;</li>
+			<li>If current cabin presure is higher than &quot;tank output pressure&quot;, the air will be siphoned from cabin to location until cabin pressure is equal to &quot;tank output pressure&quot;</li>
+			<li>Tank air is not altered in any way even if it's overheated or overpressured - connect exosuit to atmos connector port to vent it</li>
+			<li>&quot;Tank output pressure&quot; can be set through Maintenance window - Initiate maintenance protocol to get the option</li>
+		</ul>
+	</li>
+	<li>Fixed bug that prevented exosuit tank air updates if exosuit was connected to connector port</li>
+	<li>Combat exosuits melee won't gib dead mobs anymore </li>
+	<li>QM exosuit circuit crates cost lowered to 30 points</li>
+	<li>Exosuit plasma converter effectiveness +50%</li>
+  </ul>  
+</ul>
+
+
 <b><font color='blue'>8 January 2012</font><b>
 <ul>
   <li><b>Agouri updated:</b>
