@@ -25,6 +25,7 @@
 	var/fireloss = 0.0//Living
 	var/cloneloss = 0//Carbon
 	var/brainloss = 0//Carbon
+	var/maxHealth = 100 //Living
 	//Vars that should only be accessed via procs ++END
 
 
@@ -106,6 +107,7 @@
 	var/timeofdeath = 0.0//Living
 	var/cpr_time = 1.0//Carbon
 	var/health = 100//Living
+
 	var/bodytemperature = 310.055	//98.7 F
 	var/drowsyness = 0.0//Carbon
 	var/dizziness = 0//Carbon
