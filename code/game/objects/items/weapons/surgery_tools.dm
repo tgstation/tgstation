@@ -517,6 +517,12 @@ CIRCULAR SAW
 	if(user.zone_sel.selecting == "head" || istype(M, /mob/living/carbon/metroid))
 
 		var/mob/living/carbon/human/H = M
+
+		if(istype(H) && H.organs["head"])
+			var/datum/organ/external/affecting = H.organs["head"]
+			if(affecting.destroyed)
+				return ..()
+
 		if(istype(H) && ( \
 				(H.head && H.head.flags & HEADCOVERSEYES) || \
 				(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
