@@ -517,6 +517,12 @@ CIRCULAR SAW
 	if(user.zone_sel.selecting == "head" || istype(M, /mob/living/carbon/metroid))
 
 		var/mob/living/carbon/human/H = M
+
+		if(istype(H) && H.organs["head"])
+			var/datum/organ/external/affecting = H.organs["head"]
+			if(affecting.destroyed)
+				return ..()
+
 		if(istype(H) && ( \
 				(H.head && H.head.flags & HEADCOVERSEYES) || \
 				(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
@@ -776,6 +782,17 @@ CIRCULAR SAW
 			return
 
 		switch(M:brain_op_stage)
+			if(0)
+				if(!istype(H))
+					return ..()
+				var/datum/organ/external/S = H.organs["head"]
+				if(S.destroyed)
+					return
+				for(var/mob/O in viewers(H, null))
+					O.show_message(text("\red [H] gets \his [S.display_name] sawed off with [src] by [user]."), 1)
+				S.destroyed = 1
+				S.droplimb()
+				H.update_body()
 			if(1.0)
 				if(istype(M, /mob/living/carbon/metroid))
 					return
