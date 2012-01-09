@@ -31,6 +31,18 @@
 	containertype = "/obj/structure/closet/crate"
 	containername = "Empty Box crate"
 
+/datum/supply_packs/body_bags
+	name = "Body Bag supplies"
+	contains = list(
+	"/obj/item/weapon/bodybag",
+	"/obj/item/weapon/bodybag",
+	"/obj/item/weapon/bodybag",
+	"/obj/item/weapon/bodybag",
+	)
+	cost = 10
+	containertype = "/obj/structure/closet/crate"
+	containername = "Body Bag crate"
+
 /datum/supply_packs/stationary
 	name = "Stationary supplies"
 	contains = list("/obj/item/device/taperecorder",
@@ -54,7 +66,6 @@
 /datum/supply_packs/artscrafts
 	name = "Arts and Crafts supplies"
 	contains = list("/obj/item/toy/crayonbox",
-	"/obj/item/weapon/c_tube",
 	"/obj/item/weapon/camera_test",
 	"/obj/item/weapon/storage/photo_album",
 	"/obj/item/weapon/packageWrap",
