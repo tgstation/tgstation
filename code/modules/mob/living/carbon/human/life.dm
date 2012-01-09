@@ -1,4 +1,4 @@
-#define HUMAN_MAX_OXYLOSS 12 //Defines how much oxyloss humans can get per tick. No air applies this value.
+#define HUMAN_MAX_OXYLOSS 3 //Defines how much oxyloss humans can get per tick. No air applies this value.
 
 /mob/living/carbon/human
 	var
@@ -1106,9 +1106,14 @@
 	handle_shock()
 		..()
 
+		if(health < 0)
+			// health 0 makes you immediately collapse
+			shock_stage = max(shock_stage, 61)
+
 		if(traumatic_shock >= 80)
 			shock_stage += 1
 		else
+			if(shock_stage > 100) shock_stage = 100
 			shock_stage--
 			shock_stage = max(shock_stage, 0)
 			return
