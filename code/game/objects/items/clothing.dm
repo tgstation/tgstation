@@ -168,18 +168,17 @@ THERMAL GLASSES
 	if(!A)
 		return
 
-	desc = null
 	permeability_coefficient = 0.90
 
-	desc = A.desc
 	name = A.name
+	desc = A.desc
 	icon_state = A.icon_state
 	item_state = A.item_state
 	color = A.color
 
 /obj/item/clothing/under/chameleon/emp_act(severity)
-	name = "psychedelic"
-	desc = "Groovy!"
+	name = "Groovy Jumpsuit"
+	desc = "A groovy jumpsuit! It seems to have a small dial on the wrist, that won't stop spinning."
 	icon_state = "psyche"
 	color = "psyche"
 	spawn(200)
@@ -188,6 +187,9 @@ THERMAL GLASSES
 		color = "black"
 		desc = null
 	..()
+
+/obj/item/clothing/under/chameleon/psyche/emp_act(severity)
+	return
 
 /*
 /obj/item/clothing/suit/swat_suit/death_commando

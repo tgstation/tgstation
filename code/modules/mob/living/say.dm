@@ -320,7 +320,8 @@
 		W |= M.contents
 		if(ishuman(M))
 			var/mob/living/carbon/human/G = M
-			for(var/datum/organ/external/F in G.organs)
+			for(var/name in G.organs)
+				var/datum/organ/external/F = G.organs[name]
 				W |= F.implant
 
 	for (var/obj/item/device/pda/M in W)

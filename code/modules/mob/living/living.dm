@@ -23,7 +23,8 @@
 		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
 		var/divided_damage = (burn_amount)/(H.organs.len)
 		var/extradam = 0	//added to when organ is at max dam
-		for(var/datum/organ/external/affecting in H.organs)
+		for(var/name in H.organs)
+			var/datum/organ/external/affecting = H.organs[name]
 			if(!affecting)	continue
 			if(affecting.take_damage(0, divided_damage+extradam))
 				extradam = 0
@@ -134,6 +135,20 @@
 	src.updatehealth()
 
 /mob/living/proc/revive()
+	if(istype(src, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = src
+		for(var/A in H.organs)
+			var/datum/organ/external/affecting = null
+			if(!H.organs[A])    continue
+			affecting = H.organs[A]
+			if(!istype(affecting, /datum/organ/external))    continue
+			affecting.heal_damage(1000, 1000)    //fixes getting hit after ingestion, killing you when game updates organ health
+			affecting.broken = 0
+			affecting.destroyed = 0
+			for(var/datum/organ/external/wound/W in affecting.wounds)
+				W.stopbleeding()
+		H.UpdateDamageIcon()
+		H.update_body()
 	//src.fireloss = 0
 	src.setToxLoss(0)
 	//src.bruteloss = 0

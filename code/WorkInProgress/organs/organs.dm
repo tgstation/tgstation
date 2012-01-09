@@ -52,7 +52,8 @@
 		set background = 1
 
 		var/list/organs = GetAllContents()
-		for(var/obj/organ/organ in organs)
+		for(var/name in organs)
+			var/obj/organ/organ = organs[name]
 			organ.ProcessOrgan()
 
 		return

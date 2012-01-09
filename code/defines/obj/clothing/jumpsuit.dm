@@ -32,8 +32,8 @@
 
 /obj/item/clothing/under/chameleon/psyche
 	item_state = "bl_suit"
-	name = "psychedelic"
-	desc = "Groovy!"
+	name = "Groovy Jumpsuit"
+	desc = "A groovy jumpsuit! It seems to have a small dial on the wrist, that won't stop spinning."
 	icon_state = "psyche"
 	color = "psyche"
 
