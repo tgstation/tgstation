@@ -27,7 +27,8 @@ emp_act
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
-	for(var/datum/organ/external/organ in organs)
+	for(var/name in organs)
+		var/datum/organ/external/organ = organs[name]
 		armorval += checkarmor(organ, type)
 		organnum++
 	return (armorval/max(organnum, 1))
@@ -95,7 +96,7 @@ emp_act
 	var/armor = run_armor_check(affecting, "melee", "Your armor has protected you from a hit to the [hit_area].", "Your armor has softened hit to your [hit_area].")
 	if(armor >= 2)	return 0
 	if(!I.force)	return 0
-	apply_damage(I.force, I.damtype, affecting, armor)
+	apply_damage(I.force, I.damtype, affecting, armor, is_cut(I))
 
 	var/bloody = 0
 	if((I.damtype == BRUTE) && prob(25 + (I.force * 2)))

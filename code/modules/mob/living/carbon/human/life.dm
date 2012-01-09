@@ -73,6 +73,8 @@
 	UpdateLuminosity()
 	handle_regular_status_updates()
 
+	handle_pain()
+
 	// Update clothing
 	update_clothing()
 
@@ -667,6 +669,35 @@
 			return //TODO: DEFERRED
 
 		handle_regular_status_updates()
+			var/leg_tally = 2
+			for(var/name in organs)
+				var/datum/organ/external/E = organs[name]
+				E.process()
+				if(E.broken || E.destroyed)
+					if(E.name == "l_hand" || E.name == "l_arm")
+						if(hand && equipped())
+							drop_item()
+							emote("scream")
+					else if(E.name == "r_hand" || E.name == "r_arm")
+						if(!hand && equipped())
+							drop_item()
+							emote("scream")
+					else if(E.name == "l_leg" || E.name == "l_foot" \
+						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
+						leg_tally--									// let it fail even if just foot&leg
+				if(E.open && (!resting) && (!sleeping))
+					emote("scream")
+					E.take_damage(20,0)
+					emote("collapse")
+					paralysis = 10
+
+			// can't stand
+			if(leg_tally == 0)
+				emote("scream")
+				emote("collapse")
+				paralysis = 10
+
+			updatehealth()
 
 		//	health = 100 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 
@@ -729,6 +760,28 @@
 			if (stuttering) stuttering--
 			if (slurring) slurring--
 
+			var/datum/organ/external/head/head = organs["head"]
+			if(head && !head.disfigured)
+				if(head.brute_dam >= 45 || head.burn_dam >= 45)
+					head.disfigured = 1
+					emote("scream")
+					real_name = "Unknown"
+					src << "\red Your face has become disfigured."
+					warn_flavor_changed()
+			for(var/name in organs)
+				var/datum/organ/external/temp = organs[name]
+				if(!temp.bleeding)
+					continue
+				else
+					if(prob(35))
+						bloodloss += rand(1,10)
+				if(temp.wounds)
+					for(var/datum/organ/external/wound/W in temp.wounds)
+						if(!temp.bleeding)
+							continue
+						else
+							if(prob(25))
+								bloodloss++
 			if (eye_blind)
 				eye_blind--
 				blinded = 1

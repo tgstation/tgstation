@@ -83,12 +83,12 @@ CIRCULAR SAW
 			if(1.0)
 				if(M != user)
 					for(var/mob/O in (viewers(M) - user - M))
-						O.show_message("\red [M] is having his eyes retracted by [user].", 1)
+						O.show_message("\red [M] is having \his eyes retracted by [user].", 1)
 					M << "\red [user] begins to seperate your eyes with [src]!"
 					user << "\red You seperate [M]'s eyes with [src]!"
 				else
 					user.visible_message( \
-						"\red [user] begins to have his eyes retracted.", \
+						"\red [user] begins to have \his eyes retracted.", \
 						"\red You begin to pry open your eyes with [src]!" \
 					)
 				if(M == user && prob(25))
@@ -102,10 +102,56 @@ CIRCULAR SAW
 
 				M:eye_op_stage = 2.0
 
-	else if((!(user.zone_sel.selecting == "head")) || (!(user.zone_sel.selecting == "groin")) || (!(istype(M, /mob/living/carbon/human))))
-		return ..()
+	else
+		// bone surgery doable?
+		if(!try_bone_surgery(M, user))
+			return ..()
 
-	return
+/obj/item/weapon/retractor/proc/try_bone_surgery(mob/living/carbon/human/H as mob, mob/living/user as mob)
+	if(!istype(H))
+		return 0
+	var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
+	if(!S || !istype(S))
+		return 0
+
+	if(S.destroyed)
+		user << "What [S.display_name]?"
+	if(!S.open)
+		user << "\red There is skin in the way!"
+		return 0
+	if(S.bleeding)
+		user << "\red [H] is profusely bleeding in \his [S.display_name]!"
+		return 0
+
+	if(H != user)
+		H.visible_message( \
+			"\red [user] is beginning to retract the flap in the wound in [H]'s [S.display_name] with [src].", \
+			"\red [user] begins to retract the flap in the wound in your [S.display_name] with [src]!")
+	else
+		H.visible_message( \
+			"\red [user] begins to retract the flap in the wound in \his [S.display_name] with [src]!", \
+			"\red You begin to retract the flap in the wound in your [S.display_name] with [src]!")
+
+	if(do_mob(user, H, 30))
+		if(H != user)
+			H.visible_message( \
+				"\red [user] retracts the flap in the wound in [H]'s [S.display_name] with [src]!", \
+				"\red [user] retracts the flap in the wound in your [S.display_name] with [src]!")
+		else
+			H.visible_message( \
+				"\red [user] retracts the flap in the wound in \his [S.display_name] with [src]!", \
+				"\red You retract the flap in the wound in your [S.display_name] with [src]!")
+
+		if(H == user && prob(25))
+			user << "\red You mess up!"
+			S.take_damage(15)
+
+		S.open = 2
+
+		H.updatehealth()
+		H.UpdateDamageIcon()
+
+	return 1
 
 ////////////
 //Hemostat//
@@ -189,12 +235,12 @@ CIRCULAR SAW
 			if(2.0)
 				if(M != user)
 					for(var/mob/O in (viewers(M) - user - M))
-						O.show_message("\red [M] is having his eyes mended by [user].", 1)
+						O.show_message("\red [M] is having \his eyes mended by [user].", 1)
 					M << "\red [user] begins to mend your eyes with [src]!"
 					user << "\red You mend [M]'s eyes with [src]!"
 				else
 					user.visible_message( \
-						"\red [user] begins to have his eyes mended.", \
+						"\red [user] begins to have \his eyes mended.", \
 						"\red You begin to mend your eyes with [src]!" \
 					)
 				if(M == user && prob(25))
@@ -206,11 +252,68 @@ CIRCULAR SAW
 					else
 						M.take_organ_damage(15)
 				M:eye_op_stage = 3.0
+	else if(user.zone_sel.selecting == "head")
+		if(istype(M, /mob/living/carbon/human) && M:brain_op_stage == 1)
+			M:brain_op_stage = 0
+			var/datum/organ/external/S = M:organs["head"]
+			if(!S || !istype(S))
+				return ..()
+			M:brain_op_stage = 0
+			S.open = 1
+			if(!try_bone_surgery(M, user))
+				return ..()
+		else
+			return ..()
+	else
+		// bone surgery doable?
+		if(!try_bone_surgery(M, user))
+			return ..()
 
-	else if((!(user.zone_sel.selecting == "head")) || (!(user.zone_sel.selecting == "groin")) || (!(istype(M, /mob/living/carbon/human))))
-		return ..()
+/obj/item/weapon/hemostat/proc/try_bone_surgery(mob/living/carbon/human/H as mob, mob/living/user as mob)
+	if(!istype(H))
+		return 0
+	var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
+	if(!S || !istype(S))
+		return 0
 
-	return
+	if(S.destroyed)
+		user << "What [S.display_name]?"
+	if(!S.open)
+		user << "\red There is skin in the way!"
+		return 0
+	if(!S.bleeding)
+		user << "\red [H] is not bleeding in \his [S.display_name]!"
+		return 0
+
+	if(H != user)
+		H.visible_message( \
+			"\red [user] is beginning to clamp bleeders in the wound in [H]'s [S.display_name] with [src].", \
+			"\red [user] begins to clamp bleeders in the wound in your [S.display_name] with [src]!")
+	else
+		H.visible_message( \
+			"\red [user] begins to clamp bleeders in the wound in \his [S.display_name] with [src]!", \
+			"\red You begin to clamp bleeders in the wound in your [S.display_name] with [src]!")
+
+	if(do_mob(user, H, 50))
+		if(H != user)
+			H.visible_message( \
+				"\red [user] clamps bleeders in the wound in [H]'s [S.display_name] with [src]!", \
+				"\red [user] clamps bleeders in the wound in your [S.display_name] with [src]!")
+		else
+			H.visible_message( \
+				"\red [user] clamps bleeders in the wound in \his [S.display_name] with [src]!", \
+				"\red You clamp bleeders in the wound in your [S.display_name] with [src]!")
+
+		if(H == user && prob(25))
+			user << "\red You mess up!"
+			S.take_damage(15)
+
+		S.bleeding = 0
+
+		H.updatehealth()
+		H.UpdateDamageIcon()
+
+	return 1
 
 ///////////
 //Cautery//
@@ -233,6 +336,8 @@ CIRCULAR SAW
 					user << "\red You cauterize the incision in [M]'s torso with [src]!"
 					M:embryo_op_stage = 0.0
 					return
+			else
+				try_bone_surgery(M, user)
 
 	if(user.zone_sel.selecting == "groin")
 		if(istype(M, /mob/living/carbon/human))
@@ -247,6 +352,8 @@ CIRCULAR SAW
 						for(var/datum/disease/appendicitis in M.viruses)
 							appendicitis.cure()
 							M.resistances += appendicitis
+				else
+					try_bone_surgery(M, user)
 		return
 
 	if (user.zone_sel.selecting == "eyes")
@@ -275,12 +382,12 @@ CIRCULAR SAW
 			if(3.0)
 				if(M != user)
 					for(var/mob/O in (viewers(M) - user - M))
-						O.show_message("\red [M] is having his eyes cauterized by [user].", 1)
+						O.show_message("\red [M] is having \his eyes cauterized by [user].", 1)
 					M << "\red [user] begins to cauterize your eyes!"
 					user << "\red You cauterize [M]'s eyes with [src]!"
 				else
 					user.visible_message( \
-						"\red [user] begins to have his eyes cauterized.", \
+						"\red [user] begins to have \his eyes cauterized.", \
 						"\red You begin to cauterize your eyes!" \
 					)
 				if(M == user && prob(25))
@@ -294,11 +401,53 @@ CIRCULAR SAW
 				M.sdisabilities &= ~1
 				M:eye_op_stage = 0.0
 
-	else if((!(user.zone_sel.selecting == "head")) || (!(user.zone_sel.selecting == "groin")) || (!(istype(M, /mob/living/carbon/human))))
-		return ..()
+	else
+		// bone surgery doable?
+		if(!try_bone_surgery(M, user))
+			return ..()
 
-	return
+/obj/item/weapon/cautery/proc/try_bone_surgery(mob/living/carbon/human/H as mob, mob/living/user as mob)
+	if(!istype(H))
+		return 0
+	var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
+	if(!S || !istype(S))
+		return 0
 
+	if(S.destroyed)
+		user << "What [S.display_name]?"
+	if(!S.open)
+		user << "\red There is no wound to close up!"
+		return 0
+
+	if(H != user)
+		H.visible_message( \
+			"\red [user] is beginning to cauterize the incision in [H]'s [S.display_name] with [src].", \
+			"\red [user] begins to cut open the wound in your [S.display_name] with [src]!")
+	else
+		H.visible_message( \
+			"\red [user] begins to cauterize the incision in \his [S.display_name] with [src]!", \
+			"\red You begin to cauterize the incision in your [S.display_name] with [src]!")
+
+	if(do_mob(user, H, 100))
+		if(H != user)
+			H.visible_message( \
+				"\red [user] cauterizes the incision in [H]'s [S.display_name] with [src]!", \
+				"\red [user] cauterizes the incision in your [S.display_name] with [src]!")
+		else
+			H.visible_message( \
+				"\red [user] cauterizes the incision in \his [S.display_name] with [src]!", \
+				"\red You cauterize the incision in your [S.display_name] with [src]!")
+
+		if(H == user && prob(25))
+			user << "\red You mess up!"
+			S.take_damage(15)
+
+		S.open = 0
+
+		H.updatehealth()
+		H.UpdateDamageIcon()
+
+	return 1
 
 //obj/item/weapon/surgicaldrill
 
@@ -327,7 +476,7 @@ CIRCULAR SAW
 				if(0.0)
 					if(M != user)
 						for(var/mob/O in (viewers(M) - user - M))
-							O.show_message("\red [M] is beginning to have his torso cut open with [src] by [user].", 1)
+							O.show_message("\red [M] is beginning to have \his torso cut open with [src] by [user].", 1)
 						M << "\red [user] begins to cut open your torso with [src]!"
 						user << "\red You cut [M]'s torso open with [src]!"
 						M:embryo_op_stage = 1.0
@@ -335,7 +484,7 @@ CIRCULAR SAW
 				if(3.0)
 					if(M != user)
 						for(var/mob/O in (viewers(M) - user - M))
-							O.show_message("\red [M] is beginning to have his stomach cut open with [src] by [user].", 1)
+							O.show_message("\red [M] is beginning to have \his stomach cut open with [src] by [user].", 1)
 						M << "\red [user] begins to cut open your stomach with [src]!"
 						user << "\red You cut [M]'s stomach open with [src]!"
 						for(var/datum/disease/D in M.viruses)
@@ -352,14 +501,14 @@ CIRCULAR SAW
 				if(0.0)
 					if(M != user)
 						for(var/mob/O in (viewers(M) - user - M))
-							O.show_message("\red [M] is beginning to have his abdomen cut open with [src] by [user].", 1)
+							O.show_message("\red [M] is beginning to have \his abdomen cut open with [src] by [user].", 1)
 						M << "\red [user] begins to cut open your abdomen with [src]!"
 						user << "\red You cut [M]'s abdomen open with [src]!"
 						M:appendix_op_stage = 1.0
 				if(3.0)
 					if(M != user)
 						for(var/mob/O in (viewers(M) - user - M))
-							O.show_message("\red [M] is beginning to have his appendix seperated with [src] by [user].", 1)
+							O.show_message("\red [M] is beginning to have \his appendix seperated with [src] by [user].", 1)
 						M << "\red [user] begins to seperate your appendix with [src]!"
 						user << "\red You seperate [M]'s appendix with [src]!"
 						M:appendix_op_stage = 4.0
@@ -397,12 +546,12 @@ CIRCULAR SAW
 
 				if(M != user)
 					for(var/mob/O in (viewers(M) - user - M))
-						O.show_message("\red [M] is beginning to have his head cut open with [src] by [user].", 1)
+						O.show_message("\red [M] is beginning to have \his head cut open with [src] by [user].", 1)
 					M << "\red [user] begins to cut open your head with [src]!"
 					user << "\red You cut [M]'s head open with [src]!"
 				else
 					user.visible_message( \
-						"\red [user] begins to cut open his skull with [src]!", \
+						"\red [user] begins to cut open \his skull with [src]!", \
 						"\red You begin to cut open your head with [src]!" \
 					)
 
@@ -443,12 +592,12 @@ CIRCULAR SAW
 
 				if(M != user)
 					for(var/mob/O in (viewers(M) - user - M))
-						O.show_message("\red [M] is having his connections to the brain delicately severed with [src] by [user].", 1)
+						O.show_message("\red [M] is having \his connections to the brain delicately severed with [src] by [user].", 1)
 					M << "\red [user] begins to cut open your head with [src]!"
 					user << "\red You cut [M]'s head open with [src]!"
 				else
 					user.visible_message( \
-						"\red [user] begin to delicately remove the connections to his brain with [src]!", \
+						"\red [user] begin to delicately remove the connections to \his brain with [src]!", \
 						"\red You begin to cut open your head with [src]!" \
 					)
 				if(M == user && prob(25))
@@ -498,12 +647,12 @@ CIRCULAR SAW
 			if(0.0)
 				if(M != user)
 					for(var/mob/O in (viewers(M) - user - M))
-						O.show_message("\red [M] is beginning to have his eyes incised with [src] by [user].", 1)
+						O.show_message("\red [M] is beginning to have \his eyes incised with [src] by [user].", 1)
 					M << "\red [user] begins to cut open your eyes with [src]!"
 					user << "\red You make an incision around [M]'s eyes with [src]!"
 				else
 					user.visible_message( \
-						"\red [user] begins to cut around his eyes with [src]!", \
+						"\red [user] begins to cut around \his eyes with [src]!", \
 						"\red You begin to cut open your eyes with [src]!" \
 					)
 				if(M == user && prob(25))
@@ -519,13 +668,78 @@ CIRCULAR SAW
 				M:eye_op_stage = 1.0
 				user << "\blue So far so good after."
 	else
-		return ..()
+		// bone surgery doable?
+		if(!try_bone_surgery(M, user))
+			return ..()
+
 /* wat
 	else if((!(user.zone_sel.selecting == "head")) || (!(user.zone_sel.selecting == "groin")) || (!(istype(M, /mob/living/carbon/human))))
 		return ..()
 */
 	return
 
+/obj/item/weapon/scalpel/proc/try_bone_surgery(mob/living/carbon/human/H as mob, mob/living/user as mob)
+	if(!istype(H))
+		return 0
+	var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
+	if(!S || !istype(S))
+		return 0
+
+	if(S.destroyed)
+		user << "What [S.display_name]?"
+	if(S.open)
+		user << "\red The wound is already open!"
+		return 0
+
+	if(H != user)
+		H.visible_message( \
+			"\red [user] is beginning to cut open the wound in [H]'s [S.display_name] with [src].", \
+			"\red [user] begins to cut open the wound in your [S.display_name] with [src]!")
+	else
+		H.visible_message( \
+			"\red [user] begins to cut open the wound in \his [S.display_name] with [src]!", \
+			"\red You begin to cut open the wound in your [S.display_name] with [src]!")
+
+	if(do_mob(user, H, 100))
+		if(H != user)
+			H.visible_message( \
+				"\red [user] cuts open the wound in [H]'s [S.display_name] with [src]!", \
+				"\red [user] cuts open the wound in your [S.display_name] with [src]!")
+		else
+			H.visible_message( \
+				"\red [user] cuts open the wound in \his [S.display_name] with [src]!", \
+				"\red You cut open the wound in your [S.display_name] with [src]!")
+
+		if(H == user && prob(25))
+			user << "\red You mess up!"
+			S.take_damage(15)
+
+		S.open = 1
+		S.bleeding = 1
+
+		H.updatehealth()
+		H.UpdateDamageIcon()
+	else
+		var/a = pick(1,2,3)
+		var/msg
+		if(a == 1)
+			msg = "\red [user]'s move slices open [H]'s wound, causing massive bleeding"
+			S.brute_dam += 35
+			S.createwound(rand(1,3))
+		else if(a == 2)
+			msg = "\red [user]'s move slices open [H]'s wound, and causes \him to accidentally stab himself"
+			S.brute_dam += 35
+			var/datum/organ/external/userorgan = user:organs["chest"]
+			if(userorgan)
+				userorgan.brute_dam += 35
+			else
+				user.take_organ_damage(35)
+		else if(a == 3)
+			msg = "\red [user] quickly stops the surgery"
+		for(var/mob/O in viewers(H))
+			O.show_message(msg, 1)
+
+	return 1
 
 ////////////////
 //CIRCULAR SAW//
@@ -567,12 +781,12 @@ CIRCULAR SAW
 					return
 				if(M != user)
 					for(var/mob/O in (viewers(M) - user - M))
-						O.show_message("\red [M] has his skull sawed open with [src] by [user].", 1)
+						O.show_message("\red [M] has \his skull sawed open with [src] by [user].", 1)
 					M << "\red [user] begins to saw open your head with [src]!"
 					user << "\red You saw [M]'s head open with [src]!"
 				else
 					user.visible_message( \
-						"\red [user] saws open his skull with [src]!", \
+						"\red [user] saws open \his skull with [src]!", \
 						"\red You begin to saw open your head with [src]!" \
 					)
 				if(M == user && prob(25))
@@ -615,12 +829,12 @@ CIRCULAR SAW
 			if(3.0)
 				if(M != user)
 					for(var/mob/O in (viewers(M) - user - M))
-						O.show_message("\red [M] has his spine's connection to the brain severed with [src] by [user].", 1)
+						O.show_message("\red [M] has \his spine's connection to the brain severed with [src] by [user].", 1)
 					M << "\red [user] severs your brain's connection to the spine with [src]!"
 					user << "\red You sever [M]'s brain's connection to the spine with [src]!"
 				else
 					user.visible_message( \
-						"\red [user] severs his brain's connection to the spine with [src]!", \
+						"\red [user] severs \his brain's connection to the spine with [src]!", \
 						"\red You sever your brain's connection to the spine with [src]!" \
 					)
 
@@ -637,6 +851,16 @@ CIRCULAR SAW
 				..()
 		return
 
+	else if(user.zone_sel.selecting != "chest" && user.zone_sel.selecting != "groin" && istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
+		if(S.destroyed)
+			return
+		for(var/mob/O in viewers(H, null))
+			O.show_message(text("\red [H] gets \his [S.display_name] sawed off with [src] by [user]."), 1)
+		S.destroyed = 1
+		S.droplimb()
+		H.update_body()
 	else
 		return ..()
 /*
@@ -644,3 +868,135 @@ CIRCULAR SAW
 		return ..()
 */
 	return
+
+/obj/item/weapon/surgical_tool
+	name = "surgical tool"
+	var/list/stage = list() //Stage to act on
+	var/time = 50 //Time it takes to use
+	var/wound //Wound type to act on
+
+	proc/get_message(var/mnumber,var/M,var/user,var/datum/organ/external/organ)//=Start,2=finish,3=walk away,4=screw up, 5 = closed wound
+	proc/screw_up(mob/living/carbon/M as mob,mob/living/carbon/user as mob,var/datum/organ/external/organ)
+		organ.brute_dam += 30
+/obj/item/weapon/surgical_tool/proc/IsFinalStage(var/stage)
+	var/a
+	switch(wound)
+		if("broken") //Basic broken bone
+			a=3
+		if("blood")
+			a=3
+	return stage == a
+
+/obj/item/weapon/surgical_tool/attack(mob/living/carbon/human/M as mob, mob/living/carbon/user as mob)
+	if(!istype(M, /mob))
+		return
+	if((usr.mutations & 16) && prob(50))
+		M << "\red You stab yourself in the eye."
+		M.disabilities |= 128
+		M.weakened += 4
+		M.bruteloss += 10
+
+	src.add_fingerprint(user)
+
+	if(!(locate(/obj/machinery/optable, M.loc) && M.resting))
+		return ..()
+
+	var/zone = user.zone_sel.selecting
+	if (istype(M.organs[zone], /datum/organ/external))
+		var/datum/organ/external/temp = M.organs[zone]
+		var/msg
+
+        // quickly convert embryo removal to bone surgery
+		if(zone == "chest" && M.embryo_op_stage == 3)
+			M.embryo_op_stage = 0
+			temp.open = 2
+			temp.bleeding = 0
+
+		// quickly convert appendectomy to bone surgery
+		if(zone == "groin" && M.appendix_op_stage == 3)
+			M.appendix_op_stage = 0
+			temp.open = 2
+			temp.bleeding = 0
+
+		msg = get_message(1,M,user,temp)
+		for(var/mob/O in viewers(M,null))
+			O.show_message("\red [msg]",1)
+		if(do_mob(user,M,time))
+			if(temp.open == 2 && !temp.bleeding)
+				if(temp.wound == wound)
+					if(temp.stage in stage)
+						temp.stage += 1
+
+						if(IsFinalStage(temp.stage))
+							temp.broken = 0
+							temp.stage = 0
+							temp.perma_injury = 0
+							temp.brute_dam = temp.min_broken_damage -1
+						msg = get_message(2,M,user,temp)
+					else
+						msg = get_message(4,M,user,temp)
+						screw_up(M,user,temp)
+				else
+					msg = get_message(5,M,user,temp)
+		else
+			msg = get_message(3,M,user,temp)
+
+		for(var/mob/O in viewers(M,null))
+			O.show_message("\red [msg]",1)
+
+
+//Broken bone
+//Basic
+//Open -> Clean -> Bone-gel -> pop-into-place -> Bone-gel -> close -> glue -> clean
+
+//Split
+//Open -> Clean -> Tweasers -> bone-glue -> close -> glue -> clean
+
+//
+
+/obj/item/weapon/surgical_tool/bonegel
+	name = "Bone-gel"
+	icon = 'janitor.dmi'
+	icon_state = "cleaner"
+
+/obj/item/weapon/surgical_tool/bonegel/New()
+	stage += 0
+	stage += 2
+	wound = "broken"
+/obj/item/weapon/surgical_tool/bonegel/get_message(var/n,var/m,var/usr,var/datum/organ/external/organ)
+	var/z
+	switch(n)
+		if(1)
+			z="[usr] starts applying bone-gel to [m]'s [organ.display_name]"
+		if(2)
+			z="[usr] finishes applying bone-gel to [m]'s [organ.display_name]"
+		if(3)
+			z="[usr] stops applying bone-gel to [m]'s [organ.display_name]"
+		if(4)
+			z="[usr] applies bone-gel incorrectly to [m]'s [organ.display_name]"
+		if(5)
+			z="[usr] lubricates [m]'s [organ.display_name]"
+	return z
+
+/obj/item/weapon/surgical_tool/bonecracker
+	name = "Bone-cracker"
+	icon = 'items.dmi'
+	icon_state = "wrench"
+
+/obj/item/weapon/surgical_tool/bonecracker/New()
+	stage += 1
+	wound = "broken"
+/obj/item/weapon/surgical_tool/bonecracker/get_message(var/n,var/m,var/usr,var/datum/organ/external/organ)
+	var/z
+	switch(n)
+		if(1)
+			z="[usr] starts popping [m]'s [organ.display_name] bone into place"
+		if(2)
+			z="[usr] finishes popping [m]'s [organ.display_name] bone into place"
+		if(3)
+			z="[usr] stops popping [m]'s [organ.display_name] bone into place"
+		if(4)
+			z="[usr] pops [m]'s [organ.display_name] bone into the wrong place"
+		if(5)
+			z="[usr] performs chiropractice on [m]'s [organ.display_name]"
+	return z
