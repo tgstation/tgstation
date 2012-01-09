@@ -33,18 +33,19 @@
 	var/heal_threshold = 15 //Start healing when they have this much damage in a category
 	var/use_beaker = 0 //Use reagents in beaker instead of default treatment agents.
 	//Setting which reagents to use to treat what by default. By id.
-	var/treatment_brute = "bicaridine"
-	var/treatment_oxy = "dexalin"
-	var/treatment_fire = "kelotane"
-	var/treatment_tox = "anti_toxin"
-	var/treatment_virus = "spaceacillin"
+//	var/treatment_brute = "bicaridine"
+//	var/treatment_oxy = "dexalin"
+//	var/treatment_fire = "kelotane"
+//	var/treatment_tox = "anti_toxin"
+//	var/treatment_virus = "spaceacillin"
+	var/reagent_id = "inaprovaline"
 	var/shut_up = 0 //self explanatory :)
 
 /obj/machinery/bot/medbot/mysterious
 	name = "Mysterious Medibot"
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
-	treatment_oxy = "dexalinp"
+	reagent_id = "dexalinp"
 
 /obj/item/weapon/firstaid_arm_assembly
 	name = "first aid/robot arm assembly"
@@ -263,6 +264,9 @@
 			if ((C == src.oldpatient) && (world.time < src.last_found + 100))
 				continue
 
+			if(C.getOxyLoss() < 5 && reagent_id == "inaprovaline" && !src.emagged && !src.reagent_glass)
+				continue
+
 			if(src.assess_patient(C))
 				src.patient = C
 				src.oldpatient = C
@@ -333,24 +337,17 @@
 			continue
 
 	//They're injured enough for it!
-	if((C.getBruteLoss() >= heal_threshold) && (!C.reagents.has_reagent(src.treatment_brute)))
+	if(C.getBruteLoss() >= heal_threshold)
 		return 1 //If they're already medicated don't bother!
 
-	if((C.getOxyLoss() >= (15 + heal_threshold)) && (!C.reagents.has_reagent(src.treatment_oxy)))
+	if(C.getOxyLoss() >= (15 + heal_threshold))
 		return 1
 
-	if((C.getFireLoss() >= heal_threshold) && (!C.reagents.has_reagent(src.treatment_fire)))
+	if(C.getFireLoss() >= heal_threshold)
 		return 1
 
-	if((C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(src.treatment_tox)))
+	if(C.getToxLoss() >= heal_threshold)
 		return 1
-
-
-	for(var/datum/disease/D in C.viruses)
-		if((D.stage > 1) || (D.spread_type == AIRBORNE))
-
-			if (!C.reagents.has_reagent(src.treatment_virus))
-				return 1 //STOP DISEASE FOREVER
 
 	return 0
 
@@ -374,8 +371,6 @@
 		src.last_found = world.time
 		return
 
-	var/reagent_id = null
-
 	//Use whatever is inside the loaded beaker. If there is one.
 	if((src.use_beaker) && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
 		reagent_id = "internal_beaker"
@@ -383,9 +378,7 @@
 	if(src.emagged) //Emagged! Time to poison everybody.
 		reagent_id = "toxin"
 
-	if (!reagent_id) reagent_id = "inaprovaline"
-
-	if(!reagent_id) //If they don't need any of that they're probably cured!
+	if(C.getOxyLoss() < 10 && reagent_id == "inaprovaline") //If they don't need any of that they're probably cured!
 		src.oldpatient = src.patient
 		src.patient = null
 		src.currently_healing = 0
@@ -409,6 +402,7 @@
 
 			src.icon_state = "medibot[src.on]"
 			src.currently_healing = 0
+			reagent_id = "inaprovaline"
 			return
 
 //	src.speak(reagent_id)
