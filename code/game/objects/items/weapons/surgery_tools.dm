@@ -776,6 +776,17 @@ CIRCULAR SAW
 			return
 
 		switch(M:brain_op_stage)
+			if(0)
+				if(!istype(H))
+					return ..()
+				var/datum/organ/external/S = H.organs["head"]
+				if(S.destroyed)
+					return
+				for(var/mob/O in viewers(H, null))
+					O.show_message(text("\red [H] gets \his [S.display_name] sawed off with [src] by [user]."), 1)
+				S.destroyed = 1
+				S.droplimb()
+				H.update_body()
 			if(1.0)
 				if(istype(M, /mob/living/carbon/metroid))
 					return

@@ -195,6 +195,7 @@
 					if(owner.gender == FEMALE)
 						H.icon_state = "head_f_l"
 					H.overlays += owner.face_lying
+					H.transfer_identity(owner)
 
 					var/lol = pick(cardinal)
 					step(H,lol)
@@ -202,7 +203,7 @@
 					owner.update_body()
 					owner.death()
 				if(ARM_RIGHT)
-					var/obj/item/weapon/organ/r_arm/H = new(owner.loc)
+					var/obj/item/weapon/organ/r_arm/H = new(owner.loc, owner)
 					if(owner:organs["r_hand"])
 						var/datum/organ/external/S = owner:organs["r_hand"]
 						if(!S.destroyed)
@@ -215,7 +216,7 @@
 					step(H,lol)
 					destroyed = 1
 				if(ARM_LEFT)
-					var/obj/item/weapon/organ/l_arm/H = new(owner.loc)
+					var/obj/item/weapon/organ/l_arm/H = new(owner.loc, owner)
 					if(owner:organs["l_hand"])
 						var/datum/organ/external/S = owner:organs["l_hand"]
 						if(!S.destroyed)
@@ -228,7 +229,7 @@
 					step(H,lol)
 					destroyed = 1
 				if(LEG_RIGHT)
-					var/obj/item/weapon/organ/r_leg/H = new(owner.loc)
+					var/obj/item/weapon/organ/r_leg/H = new(owner.loc, owner)
 					if(owner:organs["r_foot"])
 						var/datum/organ/external/S = owner:organs["r_foot"]
 						if(!S.destroyed)
@@ -241,7 +242,7 @@
 					step(H,lol)
 					destroyed = 1
 				if(LEG_LEFT)
-					var/obj/item/weapon/organ/l_leg/H = new(owner.loc)
+					var/obj/item/weapon/organ/l_leg/H = new(owner.loc, owner)
 					if(owner:organs["l_foot"])
 						var/datum/organ/external/S = owner:organs["l_foot"]
 						if(!S.destroyed)
