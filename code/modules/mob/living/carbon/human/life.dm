@@ -971,6 +971,7 @@
 				else
 					bodytemp.icon_state = "temp-4"
 
+			if(!client)	return 0 //Wish we did not need these
 			client.screen -= hud_used.blurry
 			client.screen -= hud_used.druggy
 			client.screen -= hud_used.vimpaired
