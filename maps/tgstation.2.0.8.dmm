@@ -609,7 +609,7 @@
 "alK" = (/obj/machinery/door/firedoor/border_only,/turf/simulated/floor{icon_state = "redcorner"; dir = 4},/area/hallway/primary/fore)
 "alL" = (/obj/structure/disposalpipe/segment{dir = 1},/turf/simulated/wall,/area/maintenance/fsmaint)
 "alM" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = "Streight"},/turf/simulated/wall,/area/maintenance/fsmaint)
-"alN" = (/obj/machinery/door/airlock/maintenance{name = "Atmospherics Maintenance"; req_access_txt = "12;24"},/turf/simulated/floor/plating,/area/maintenance/fsmaint)
+"alN" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/turf/simulated/floor/plating,/area/maintenance/fsmaint)
 "alO" = (/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/machinery/door/airlock/external{req_access_txt = "12"},/turf/simulated/floor/plating/airless,/area/maintenance/fpmaint)
 "alP" = (/turf/simulated/floor/plating/airless,/area/maintenance/fpmaint)
 "alQ" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/turf/simulated/wall,/area/security/detectives_office)

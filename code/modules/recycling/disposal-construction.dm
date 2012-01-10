@@ -12,7 +12,7 @@
 	m_amt = 1850
 	level = 2
 	var/ptype = 0
-	// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk
+	// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk, 6=junction-j1s, 7=junction-j2s
 
 	var/dpdir = 0	// directions as disposalpipe
 	var/base_state = "pipe-s"
@@ -42,6 +42,12 @@
 			if(5)
 				base_state = "pipe-t"
 				dpdir = dir
+			if(6)
+				base_state = "pipe-j1s"
+				dpdir = dir | right | flip
+			if(7)
+				base_state = "pipe-j2s"
+				dpdir = dir | left | flip
 
 
 		icon_state = "con[base_state]"
@@ -93,6 +99,8 @@
 				return /obj/structure/disposalpipe/junction
 			if(5)
 				return /obj/structure/disposalpipe/trunk
+			if(6,7)
+				return /obj/structure/disposalpipe/sortjunction
 		return
 
 

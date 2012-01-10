@@ -12,6 +12,9 @@
 
 
 	attack_hand(mob/user as mob)
+		return unwrap()
+
+	proc/unwrap()
 		if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
 			src.wrapped.loc = (get_turf(src.loc))
 			if (istype(src.wrapped,/obj/structure/closet))

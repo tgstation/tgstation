@@ -934,13 +934,19 @@
 
 	desc = "An underfloor disposal pipe with a package sorting mechanism."
 	icon_state = "pipe-j1s"
-	var/list/sortType = list()
-	var/list/backType = list()
-	var/backsort = 0 //For sending disposal packets to upstream destinations.
-	var/mailsort = 0
-	var/posdir = 0
-	var/negdir = 0
-	var/sortdir = 0
+	var
+		list/sortType = list()
+		list/backType = list()
+		backsort = 0 //For sending disposal packets to upstream destinations.
+		mailsort = 0
+		posdir = 0
+		negdir = 0
+		sortdir = 0
+		service = 0
+		screen = 0
+		icon_state_old = null
+//		mob/living/lastuser
+
 
 	New()
 		..()
@@ -965,6 +971,8 @@
 
 	nextdir(var/fromdir, var/sortTag, var/ismail)
 		//var/flipdir = turn(fromdir, 180)
+		if(service)
+			return posdir //If it's being worked on, it isn't sorting.
 		if(sortTag)
 			for(var/i, i <= backType.len, i++)
 				if(sortTag == src.backType[i])
@@ -1007,6 +1015,77 @@
 
 		return P
 
+	attackby(var/obj/item/I, var/mob/user)
+		if(istype(I, /obj/item/weapon/screwdriver))
+			if(service)
+				icon_state = icon_state_old
+				service = 0
+				user << "You close the service hatch on the sorter"
+			else
+				icon_state_old = icon_state
+				icon_state += "s"
+				service = 1
+				user << "You open up the service hatch on the sorter"
+
+	attack_hand(mob/user as mob)
+		if(service)
+			interact(user)
+		return
+
+	proc
+		interact(var/mob/user)
+//			lastuser = user
+			var/dat = "<TT><B>Sorting Mechanism</B><BR>"
+			if (!sortType)
+				dat += "<br>Currently Filtering: <A href='?src=\ref[src];choice=selectSort'>None</A><br>"
+			else
+				dat += "<br>Currently Filtering:"
+				for(var/i = 1, i <= sortType.len, i++)
+					dat += " <A href='?src=\ref[src];choice=selectSort'>[sortType[i]]</A>,"
+				dat += "<br>"
+			if (!backsort)
+				dat += "Backwards Sorting Disabled  <A href='?src=\ref[src];choice=toggleBack'>Toggle</A><br>"
+			else if(!backType && backsort)
+				dat += "Backwards Sorting Active.  Sorting: <A href='?src=\ref[src];choice=selectBack'>None.</A>  <A href='?src=\ref[src];choice=toggleBack'>Toggle</A><br>"
+			else
+				dat += "Backwards Sorting Active.  Sorting:"
+				for(var/i = 1, i <= backType.len, i++)
+					dat += " <A href='?src=\ref[src];choice=selectBack'>[backType[i]]</A>,"
+				dat += "  <A href='?src=\ref[src];choice=toggleBack'>Toggle</A><br>"
+			user << browse(dat, "window=sortScreen")
+			onclose(user, "sortScreen")
+			return
+
+	Topic(href, href_list)
+		src.add_fingerprint(usr)
+		usr.machine = src
+		switch(href_list["choice"])
+			if("toggleBack")
+				backsort = !backsort
+			if("selectBack")
+				var/list/names = sortList(backType)
+				var/variable = input("Which tag?","Tag") as null|anything in names + "(ADD TAG)"
+				if(!variable)
+					return
+				if(variable == "(ADD TAG)")
+					var/var_value = input("Enter new tag:","Tag") as text|null
+					if(!var_value) return
+					backType |= var_value
+				else
+					backType -= variable
+			if("selectSort")
+				var/list/names = sortList(sortType)
+				var/variable = input("Which tag?","Tag") as null|anything in names + "(ADD TAG)"
+				if(!variable)
+					return
+				if(variable == "(ADD TAG)")
+					var/var_value = input("Enter new tag:","Tag") as text|null
+					if(!var_value) return
+					sortType |= var_value
+				else
+					sortType -= variable
+//		interact(lastuser)
+		updateUsrDialog()
 
 //a trunk joining to a disposal bin or outlet on the same turf
 /obj/structure/disposalpipe/trunk
