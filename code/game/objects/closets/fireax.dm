@@ -30,9 +30,13 @@
 				user << "\blue You disable the locking modules."
 				update_icon()
 				return
-			if(istype(O, /obj/item/weapon))
+			else if(istype(O, /obj/item/weapon))
 				var/obj/item/weapon/W = O
-				if(src.smashed)
+				if(src.smashed || src.localopened)
+					if(localopened)
+						localopened = 0
+						icon_state = text("fireaxe[][][][]closing",hasaxe,src.localopened,src.hitstaken,src.smashed)
+						spawn(10) update_icon()
 					return
 				else
 					playsound(user, 'Glasshit.ogg', 100, 1) //We don't want this playing every time
