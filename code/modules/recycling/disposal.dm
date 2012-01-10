@@ -688,7 +688,7 @@
 								M.weakened += 4
 								M << "\red You're gonna remember that one in the morning!"
 							M:UpdateDamageIcon()
-							M:UpdateDamage()
+							//M:UpdateDamage() //doesnt fucking exist if you arent a blob
 					else
 						M.bruteloss += 4
 					if(prob(2))
@@ -742,7 +742,7 @@
 			H.active = 0
 			H.loc = src
 			return
-		if(T.intact && istype(T,/turf/simulated/floor)) //intact floor, pop the tile
+		if(istype(T,/turf/simulated/floor) && T.intact) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
 			//F.health	= 100
 			F.burnt	= 1

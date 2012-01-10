@@ -1139,7 +1139,7 @@
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris
-	seed = "/obj/item/seeds/ambrosiavulgaris"
+	seed = "/obj/item/seeds/ambrosiavulgarisseed"
 	name = "Ambrosia Vulgaris"
 	desc = "A plant containing various healing chemicals."
 	icon_state = "ambrosiavulgaris"
