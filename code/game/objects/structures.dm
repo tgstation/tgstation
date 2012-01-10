@@ -80,7 +80,7 @@ obj/structure
 				Tsrc.ReplaceWithWall()
 				for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 					P.layer = 1
-				W:use(2)
+				if (W)	W:use(2)
 				del(src)
 			return
 
