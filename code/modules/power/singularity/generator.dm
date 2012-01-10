@@ -5,7 +5,7 @@
 	desc = "An Odd Device which produces a Gravitational Singularity when set up."
 	icon = 'singularity.dmi'
 	icon_state = "TheSingGen"
-	anchored = 1
+	anchored = 0
 	density = 1
 	use_power = 0
 	var
