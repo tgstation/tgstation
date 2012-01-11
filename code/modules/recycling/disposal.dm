@@ -20,6 +20,7 @@
 	var/obj/structure/disposalpipe/trunk/trunk = null // the attached pipe trunk
 	var/flushing = 0	// true if flushing in progress
 	var/timeleft = 0	//used to give a delay after the last item was put in before flushing
+	var/islarge = 0		//If there is a crate, lets not add a second.
 
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
@@ -112,41 +113,83 @@
 
 	// mouse drop another mob or self
 	//
-	MouseDrop_T(mob/target, mob/user)
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai))
+	MouseDrop_T(var/atom/movable/T, mob/user)
+		if (istype(T,/mob))
+			var/mob/target = T
+			if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai))
+				return
+
+			if(src.islarge == 1)
+				user << "They won't fit with that crate in there!"
+				return
+
+			var/msg
+			for (var/mob/V in viewers(usr))
+				if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
+					V.show_message("[usr] starts climbing into the disposal.", 3)
+				if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
+					if(target.anchored) return
+					V.show_message("[usr] starts stuffing [target.name] into the disposal.", 3)
+			if(!do_after(usr, 20))
+				return
+			if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)	// if drop self, then climbed in										// must be awake, not stunned or whatever
+				msg = "[user.name] climbs into the [src]."
+				user << "You climb into the [src]."
+			else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
+				msg = "[user.name] stuffs [target.name] into the [src]!"
+				user << "You stuff [target.name] into the [src]!"
+			else
+				return
+			if (target.client)
+				target.client.perspective = EYE_PERSPECTIVE
+				target.client.eye = src
+			target.loc = src
+
+			for (var/mob/C in viewers(src))
+				if(C == user)
+					continue
+				C.show_message(msg, 3)
+
+			timeleft = 5
+			update()
+			return
+		if(istype(T,/obj/effect/bigDelivery))
+			if (T.anchored || get_dist(user, src) > 1 || get_dist(src,T) > 2 )
+				return
+
+			if(src.islarge == 1)
+				user << "[T] won't fit with that crate in there!"
+				return
+
+			for(var/mob/M in viewers(src))
+				if(M == user)
+					user << "You start to shove \the [T] into the [src]."
+					continue
+				M.show_message("[user.name] looks like they're trying to place \the [T] into the [src].", 5)
+
+			if(!do_after(usr, 20))
+				return
+
+			user << "Your back is starting to hurt!"
+			sleep(5)
+			if(prob(50))
+				user << "No way can you get this thing in there."
+				return
+
+			if(!do_after(usr, 20))
+				return
+
+			T.loc = src
+			src.islarge = 1
+			for(var/mob/M in viewers(src))
+				if(M == user)
+					user << "You shove \the [T] into the [src]."
+					continue
+				M.show_message("[user.name] manages to stuff \the [T] into the [src].  Impressive!", 5)
 			return
 
-		var/msg
-		for (var/mob/V in viewers(usr))
-			if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-				V.show_message("[usr] starts climbing into the disposal.", 3)
-			if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-				if(target.anchored) return
-				V.show_message("[usr] starts stuffing [target.name] into the disposal.", 3)
-		if(!do_after(usr, 20))
-			return
-		if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)	// if drop self, then climbed in
-												// must be awake, not stunned or whatever
-			msg = "[user.name] climbs into the [src]."
-			user << "You climb into the [src]."
-		else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-			msg = "[user.name] stuffs [target.name] into the [src]!"
-			user << "You stuff [target.name] into the [src]!"
 		else
 			return
-		if (target.client)
-			target.client.perspective = EYE_PERSPECTIVE
-			target.client.eye = src
-		target.loc = src
-
-		for (var/mob/C in viewers(src))
-			if(C == user)
-				continue
-			C.show_message(msg, 3)
-
-		timeleft = 5
-		update()
-		return
 
 	// can breath normally in the disposal
 	alter_health()
@@ -364,6 +407,8 @@
 		flush = 0
 		if(mode == 2)	// if was ready,
 			mode = 1	// switch to charging
+		if(islarge)
+			islarge = 0
 		update()
 		return
 
@@ -517,10 +562,6 @@
 				src.destinationTag = T.sortTag
 			else if (!src.destinationTag)
 				src.destinationTag = null
-			else if (istype(AM, /mob))	//If there is a mob somewhere in there....
-				if(prob(10))
-					src.destinationTag = "Mail Office"
-
 
 	// start the movement process
 	// argument is the disposal unit the holder started in
@@ -945,7 +986,6 @@
 		service = 0
 		screen = 0
 		icon_state_old = null
-//		mob/living/lastuser
 
 
 	New()
@@ -1034,9 +1074,8 @@
 
 	proc
 		interact(var/mob/user)
-//			lastuser = user
 			var/dat = "<TT><B>Sorting Mechanism</B><BR>"
-			if (!sortType)
+			if (sortType.len == 0)
 				dat += "<br>Currently Filtering: <A href='?src=\ref[src];choice=selectSort'>None</A><br>"
 			else
 				dat += "<br>Currently Filtering:"
@@ -1045,7 +1084,7 @@
 				dat += "<br>"
 			if (!backsort)
 				dat += "Backwards Sorting Disabled  <A href='?src=\ref[src];choice=toggleBack'>Toggle</A><br>"
-			else if(!backType && backsort)
+			else if(backType.len == 0 && backsort)
 				dat += "Backwards Sorting Active.  Sorting: <A href='?src=\ref[src];choice=selectBack'>None.</A>  <A href='?src=\ref[src];choice=toggleBack'>Toggle</A><br>"
 			else
 				dat += "Backwards Sorting Active.  Sorting:"
@@ -1084,7 +1123,6 @@
 					sortType |= var_value
 				else
 					sortType -= variable
-//		interact(lastuser)
 		updateUsrDialog()
 
 //a trunk joining to a disposal bin or outlet on the same turf

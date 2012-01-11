@@ -150,6 +150,15 @@
 					var/obj/structure/disposalpipe/P = new pipetype(src.loc)
 					P.base_icon_state = base_state
 					P.dir = dir
+					if(ptype >= 6)
+						var/obj/structure/disposalpipe/sortjunction/V = P
+						V.posdir = dir
+						if(ptype == 6)
+							V.sortdir = turn(dir, -90)
+							V.negdir = turn(dir, 180)
+						else
+							V.sortdir = turn(dir, 90)
+							V.negdir = turn(dir, 180)
 					P.dpdir = dpdir
 					P.updateicon()
 					del(src)

@@ -5,6 +5,13 @@ var/list/sacrificed = list()
 	proc
 		teleport(var/key)
 			var/mob/living/user = usr
+			var/mob/living/grabbed
+			if (istype(user.get_active_hand(), /obj/item/weapon/grab))
+				var/obj/item/weapon/grab/G = user.get_active_hand()
+				grabbed = G.affecting
+			else if (istype(user.get_inactive_hand(), /obj/item/weapon/grab))
+				var/obj/item/weapon/grab/G = user.get_inactive_hand()
+				grabbed = G.affecting
 			var/allrunesloc[]
 			allrunesloc = new/list()
 			var/index = 0
@@ -17,7 +24,7 @@ var/list/sacrificed = list()
 					allrunesloc.len = index
 					allrunesloc[index] = R.loc
 			if(index >= 5)
-				user << "\red You feel pain, as rune disappears in reality shift caused by too much wear of space-time fabric"
+				user << "\red You feel pain, as the rune disappears into a reality shift caused by too much wear on the fabric of space-time."
 				if (istype(user, /mob/living))
 					user.take_overall_damage(5, 0)
 				del(src)
@@ -29,7 +36,10 @@ var/list/sacrificed = list()
 				user.visible_message("\red [user] disappears in a flash of red light!", \
 				"\red You feel as your body gets dragged through the dimension of Nar-Sie!", \
 				"\red You hear a sickening crunch and sloshing of viscera.")
-				user.loc = allrunesloc[rand(1,index)]
+				var/target = rand(1,index)
+				user.loc = allrunesloc[target]
+				if(grabbed)
+					grabbed.loc = allrunesloc[target]
 				return
 			if(istype(src,/obj/effect/rune))
 				return	fizzle() //Use friggin manuals, Dorf, your list was of zero length.

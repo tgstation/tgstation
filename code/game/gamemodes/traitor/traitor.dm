@@ -83,23 +83,34 @@
 			traitor.objectives += block_objective
 
 	else
+		var/list/target = traitor.objectives
 		for(var/i = 1, i <= rand(1,3), i++)
+			var/datum/objective/objective
 			switch(rand(1,100))
 				if(1 to 30)
 					var/datum/objective/assassinate/kill_objective = new
 					kill_objective.owner = traitor
 					kill_objective.find_target()
-					traitor.objectives += kill_objective
+					objective = kill_objective
 				if(31 to 40)
 					var/datum/objective/protect/protect_objective = new
 					protect_objective.owner = traitor
 					protect_objective.find_target()
-					traitor.objectives += protect_objective
+					objective = protect_objective
 				else
 					var/datum/objective/steal/steal_objective = new
 					steal_objective.owner = traitor
 					steal_objective.find_target()
-					traitor.objectives += steal_objective
+					objective = steal_objective
+			var/inthere = 0
+			for(var/j, j<= target.len, j++)
+				if(target[j] == objective)
+					inthere = 1
+					break
+			if(!inthere)
+				traitor.objectives += objective
+			else
+				i -= 1
 		if (!(locate(/datum/objective/escape) in traitor.objectives))
 			var/datum/objective/escape/escape_objective = new
 			escape_objective.owner = traitor
