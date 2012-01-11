@@ -9,7 +9,8 @@
 	flags = FPRINT
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/examtext = null
-
+	var/label_x = 0
+	var/tag_x = 0
 
 	attack_hand(mob/user as mob)
 		if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
@@ -20,11 +21,29 @@
 		del(src)
 		return
 
+	update_icon()
+		overlays = new()
+		if(name != initial(name) || examtext)
+			var/image/I = new/image('storage.dmi',"delivery_label")
+			if(!label_x)
+				label_x = rand(-8, 6)
+			I.pixel_x = label_x
+			I.pixel_y = -3
+			overlays += I
+		if(sortTag)
+			var/image/I = new/image('storage.dmi',"delivery_tag")
+			if(!tag_x)
+				tag_x = rand(-8, 6)
+			I.pixel_x = tag_x
+			I.pixel_y = -3
+			overlays += I
+
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/device/destTagger))
 			var/obj/item/device/destTagger/O = W
 			user << "\blue *TAGGED*"
 			src.sortTag = O.currTag
+			update_icon()
 		else if(istype(W, /obj/item/weapon/pen))
 			switch(alert("What would you like to alter?",,"Title","Description", "Cancel"))
 				if("Title")
@@ -39,6 +58,7 @@
 					for(var/mob/M in viewers())
 						M << "\blue [user] labels [src] as [label]."
 					src.name = "[src.name] ([label])"
+					update_icon()
 				if("Description")
 					var/str = input(usr,"Label text?","Set label","")
 					if(!str || !length(str))
@@ -50,6 +70,7 @@
 					examtext = str
 					for(var/mob/M in viewers())
 						M << "\blue [user] labels [src] with the note: [examtext]."
+					update_icon()
 		return
 
 	examine()
@@ -79,11 +100,19 @@
 		del(src)
 		return
 
+	update_icon()
+		overlays = new()
+		if(name != initial(name) || examtext)
+			overlays += new/image('storage.dmi',"delivery_label")
+		if(sortTag)
+			overlays += new/image('storage.dmi',"delivery_tag")
+
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/device/destTagger))
 			var/obj/item/device/destTagger/O = W
 			user << "\blue *TAGGED*"
 			src.sortTag = O.currTag
+			update_icon()
 		else if(istype(W, /obj/item/weapon/pen))
 			switch(alert("What would you like to alter?",,"Title","Description", "Cancel"))
 				if("Title")
@@ -98,6 +127,7 @@
 					for(var/mob/M in viewers())
 						M << "\blue [user] labels [src] as [label]."
 					src.name = "[src.name] ([label])"
+					update_icon()
 				if("Description")
 					var/str = input(usr,"Label text?","Set label","")
 					if(!str || !length(str))
@@ -109,6 +139,7 @@
 					examtext = str
 					for(var/mob/M in viewers())
 						M << "\blue [user] labels [src] with the note: [examtext]."
+					update_icon()
 		return
 
 	examine()
@@ -239,10 +270,12 @@
 			user << "\blue *TAGGED*"
 			var/obj/effect/bigDelivery/O = target
 			O.sortTag = src.currTag
+			O.update_icon()
 		else if (istype(target, /obj/item/smallDelivery))
 			user << "\blue *TAGGED*"
 			var/obj/item/smallDelivery/O = target
 			O.sortTag = src.currTag
+			O.update_icon()
 		else
 			user << "\blue You can only tag properly wrapped delivery packages!"
 		return
