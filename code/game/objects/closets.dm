@@ -123,6 +123,7 @@
 			var/obj/effect/bigDelivery/P = new /obj/effect/bigDelivery(get_turf(src.loc))
 			P.wrapped = src
 			src.close()
+			P.waswelded = welded
 			src.welded = 1
 			src.loc = P
 			O.amount -= 3
@@ -185,13 +186,26 @@
 		return
 
 	if(!src.open())
-		user << "\blue It won't budge!"
-		if(!lastbang)
-			lastbang = 1
-			for (var/mob/M in hearers(src, null))
-				M << text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M)))
-			spawn(30)
-				lastbang = 0
+		if(istype(src.loc,/obj/effect/bigDelivery) && lastbang == 0)
+			var/obj/effect/bigDelivery/Pack = src.loc
+			if(istype(Pack.loc,/turf) && Pack.waswelded == 0)
+				for (var/mob/M in hearers(src.loc, null))
+					M << text("<FONT size=[] color=#6D3F40>BANG, bang, rrrrrip!</FONT>", max(0, 5 - get_dist(src, M)))
+				lastbang = 1
+				sleep(10)
+				src.welded = 0
+				Pack.unwrap()
+				src.open()
+				spawn(30)
+					lastbang = 0
+		else if(!istype(src.loc,/obj/effect/bigDelivery))
+			user << "\blue It won't budge!"
+			if(!lastbang)
+				lastbang = 1
+				for (var/mob/M in hearers(src, null))
+					M << text("<FONT size=[]>BANG, bang!</FONT>", max(0, 5 - get_dist(src, M)))
+				spawn(30)
+					lastbang = 0
 
 /obj/structure/closet/Move()
 	..()

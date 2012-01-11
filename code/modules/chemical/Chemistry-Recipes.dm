@@ -70,6 +70,13 @@ datum
 			required_reagents = list("radium" = 1, "phosphorus" = 1, "chlorine" = 1)
 			result_amount = 3
 
+		tramadol
+			name = "Tramadol"
+			id = "tramadol"
+			result = "tramadol"
+			required_reagents = list("inaprovaline" = 1, "ethanol" = 1, "oxygen" = 1)
+			result_amount = 3
+
 		//cyanide
 		//	name = "Cyanide"
 		//	id = "cyanide"

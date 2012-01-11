@@ -8,8 +8,12 @@
 		src.traumatic_shock -= 10
 	if(reagents.has_reagent("inaprovaline"))
 		src.traumatic_shock -= 25
-	if(reagents.has_reagent("synaptizine"))
-		src.traumatic_shock -= 100 // make synaptizine function as good painkiller
+	if(reagents.has_reagent("tramadol"))
+		src.traumatic_shock -= 80 // make synaptizine function as good painkiller
+	if(reagents.has_reagent("oxycodone"))
+		src.traumatic_shock -= 200 // make synaptizine function as good painkiller
+	if(src.slurring)
+		src.traumatic_shock -= 20
 
 	// broken or ripped off organs will add quite a bit of pain
 	if(istype(src,/mob/living/carbon/human))
@@ -19,7 +23,10 @@
 			if(organ.destroyed || organ.open)
 				src.traumatic_shock += 60
 			else if(organ.broken)
-				src.traumatic_shock += 40
+				src.traumatic_shock += 30
+
+	if(src.traumatic_shock < 0)
+		src.traumatic_shock = 0
 
 	return src.traumatic_shock
 

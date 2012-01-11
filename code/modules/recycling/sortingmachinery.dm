@@ -11,13 +11,18 @@
 	var/examtext = null
 	var/label_x = 0
 	var/tag_x = 0
+	var/waswelded = 0
+
 
 	attack_hand(mob/user as mob)
+		return unwrap()
+
+	proc/unwrap()
 		if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
 			src.wrapped.loc = (get_turf(src.loc))
 			if (istype(src.wrapped,/obj/structure/closet))
 				var/obj/structure/closet/O = src.wrapped
-				O.welded = 0
+				O.welded = waswelded
 		del(src)
 		return
 
@@ -235,7 +240,6 @@
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 
 	attack_self(mob/user as mob)
-		user.machine = src
 		interact(user)
 
 	proc/interact(mob/user as mob)
@@ -244,6 +248,7 @@
 			dat += "<br>Current Selection: None<br>"
 		else
 			dat += "<br>Current Selection: [currTag]<br><br>"
+		dat += "<A href='?src=\ref[src];nextTag=[locationList.len + 1]'>Set Custom Destination</A><br><br>"
 		for (var/i = 1, i <= locationList.len, i++)
 			if(spaceList[i])
 				dat += "<br>"
@@ -251,14 +256,19 @@
 			dat += "<br>"
 		user << browse(dat, "window=destTagScreen")
 		onclose(user, "destTagScreen")
-		usr.machine = null
 		return
 
 	Topic(href, href_list)
+		usr.machine = src
 		src.add_fingerprint(usr)
 		if(href_list["nextTag"])
 			var/n = text2num(href_list["nextTag"])
-			src.currTag = locationList[n]
+			if(n > locationList.len)
+				var/t1 = input("Which tag?","Tag") as null|text
+				if(t1)
+					src.currTag = t1
+			else
+				src.currTag = locationList[n]
 		if(istype(loc,/mob))
 			interact(loc)
 		else
