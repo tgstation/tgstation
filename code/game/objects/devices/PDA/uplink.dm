@@ -140,11 +140,13 @@
 					uses -= 3
 					var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(get_turf(hostpda))
 					O.imp = new /obj/item/weapon/implant/freedom(O)
+					O.update()
 			if("imp_uplink")
 				if (uses >= 10)
 					uses -= 10
 					var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(get_turf(hostpda))
 					O.imp = new /obj/item/weapon/implant/uplink(O)
+					O.update()
 			if("imp_exp")
 				if (src.uses >= 6)
 					src.uses -= 6
