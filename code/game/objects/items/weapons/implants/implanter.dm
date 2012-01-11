@@ -29,17 +29,16 @@
 					O.show_message(text("\red <B>[] is trying to implant [] with [src.name]!</B>", user, M), 1)
 				else
 					O.show_message("\red <B>[user] is trying to inject themselves with [src.name]!</B>", 1)
-			if(!do_mob(user, M,60)) return
+			if(!do_mob(user, M,60))
+				return
 			if(istype(M, /mob/living/carbon/human))
 				var/picked = 0
 				var/mob/living/carbon/human/T = M
-				var/list/datum/organ/external/E = T.organs
-				while(picked == 0 && E.len > 0)
-					var/datum/organ/external/O = pick(E)
-					E -= O
+				for(var/datum/organ/external/E in T)
 					if(!E.implant)
-						O.implant = src.imp
+						E.implant = src.imp
 						picked = 1
+						break
 				if(picked == 0)
 					for (var/mob/O in viewers(M, null))
 						O.show_message(text("[user.name] can't find anywhere to implant [M.name]"), 1)
