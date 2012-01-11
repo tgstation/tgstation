@@ -70,6 +70,8 @@ emp_act
 				if(T.y>world.maxy-6 || T.y<6)	continue
 				turfs += T
 			if(!turfs.len) turfs += pick(/turf in orange(6))
+			else
+				visible_message("\red <B>The reactive teleport system malfunctions!</B>")
 			var/turf/picked = pick(turfs)
 			if(!isturf(picked)) return
 			src.loc = picked
