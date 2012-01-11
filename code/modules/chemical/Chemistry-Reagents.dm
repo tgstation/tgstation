@@ -667,8 +667,9 @@ datum
 							return
 
 					if(prob(15) && istype(M, /mob/living/carbon/human) && volume >= 30)
-						var/datum/organ/external/affecting = M:get_organ("head")
+						var/datum/organ/external/head/affecting = M:get_organ("head")
 						if(affecting)
+							affecting.disfigured = 1
 							affecting.take_damage(25, 0)
 							M:UpdateDamageIcon()
 							M:emote("scream")
@@ -714,7 +715,8 @@ datum
 							del (M:head)
 							M << "\red Your helmet melts into uselessness!"
 							return
-						var/datum/organ/external/affecting = M:get_organ("head")
+						var/datum/organ/external/head/affecting = M:get_organ("head")
+						affecting.disfigured = 1
 						affecting.take_damage(35, 0)
 						M:UpdateDamageIcon()
 						M:emote("scream")
@@ -729,7 +731,8 @@ datum
 						M.take_organ_damage(min(15, volume * 4)) // same deal as sulphuric acid
 				else
 					if(istype(M, /mob/living/carbon/human))
-						var/datum/organ/external/affecting = M:get_organ("head")
+						var/datum/organ/external/head/affecting = M:get_organ("head")
+						affecting.disfigured = 1
 						affecting.take_damage(30, 0)
 						M:UpdateDamageIcon()
 						M:emote("scream")
@@ -1308,6 +1311,19 @@ datum
 				..()
 				return
 
+		tramadol
+			name = "Tramadol"
+			id = "tramadol"
+			description = "A simple, yet effective painkiller."
+			reagent_state = LIQUID
+			color = "#C8A5DC"
+
+		oxycodone
+			name = "Oxycodone"
+			id = "oxycodone"
+			description = "An effective and very addictive painkiller."
+			reagent_state = LIQUID
+			color = "#C805DC"
 
 		impedrezene
 			name = "Impedrezene"

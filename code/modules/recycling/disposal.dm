@@ -708,6 +708,36 @@
 				H.merge(H2)
 
 			H.loc = P
+
+			if((P.dir & (P.dir - 1)) || istype(P,/obj/structure/disposalpipe/junction) || istype(P,/obj/structure/disposalpipe/sortjunction))
+				for(var/mob/M in H)
+					M.weakened += 2
+					if(prob(20))
+						M.paralysis += 2
+					if(istype(M,/mob/living/carbon/human))
+						var/name = pick(M:organs)
+						var/datum/organ/external/temp = M:organs[name]
+						if (istype(temp, /datum/organ/external))
+							temp.take_damage(4, 0)
+							if(temp.name == "head")
+								M.paralysis += 4
+								M << "\red Your head smashes into a rogue piece of metal!"
+							else if(temp.name == "groin")
+								M.weakened += 4
+								M << "\red You're gonna remember that one in the morning!"
+							M:UpdateDamageIcon()
+							//M:UpdateDamage() //doesnt fucking exist if you arent a blob
+					else
+						M.bruteloss += 4
+					if(prob(2))
+						M << "\red Your elbow doesn't bend that way, dammit!"
+					//else
+					//	M << "\red <b>You are tossed about in the pipes!</b>"
+					M << 'clang.ogg'
+					for (var/mob/O in hearers(get_turf(src)))
+						O << "<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG!</FONT>"
+
+					playsound(src.loc, 'clang.ogg', 50, 0, 0)
 		else			// if wasn't a pipe, then set loc to turf
 			H.loc = T
 			return null
@@ -750,7 +780,7 @@
 			H.active = 0
 			H.loc = src
 			return
-		if(T.intact && istype(T,/turf/simulated/floor)) //intact floor, pop the tile
+		if(istype(T,/turf/simulated/floor) && T.intact) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
 			//F.health	= 100
 			F.burnt	= 1

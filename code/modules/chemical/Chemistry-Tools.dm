@@ -2726,6 +2726,14 @@
 		..()
 		reagents.add_reagent("kelotane", 30)
 
+/obj/item/weapon/reagent_containers/pill/tramadol
+	name = "Tramadol pill"
+	desc = "A simple painkiller."
+	icon_state = "pill8"
+	New()
+		..()
+		reagents.add_reagent("tramadol", 30)
+
 /obj/item/weapon/reagent_containers/pill/inaprovaline
 	name = "Inaprovaline pill"
 	desc = "Used to stabilize patients."

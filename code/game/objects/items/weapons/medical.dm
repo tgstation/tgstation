@@ -15,7 +15,7 @@ MEDICAL
 			t_him = "her"
 		user << "\red \The [M] is dead, you cannot help [t_him]!"
 		return
-	if (M.health < 50)
+	if (M.health < 0)
 		var/t_him = "it"
 		if (M.gender == MALE)
 			t_him = "him"
@@ -66,6 +66,30 @@ MEDICAL
 
 		if (affecting.heal_damage(src.heal_brute, src.heal_burn))
 			H.UpdateDamageIcon()
+
+		if(H.bloodloss > 0 && heal_brute > 0)		// fix wounds too if bruise pack
+			var/stoped = 0
+			for(var/datum/organ/external/wound/W in affecting.wounds)
+				if(W.bleeding)
+					W.stopbleeding()
+					stoped = 0
+					break
+			if(!stoped)
+				// user << "There is no bleeding wound at [t]" //code no longer in a dedicated obj, thus this doesn't really matter
+				return
+			if (user)
+				if (M != user)
+					for (var/mob/O in viewers(H, null))
+						O.show_message("\red [H] has been bandaged with [src] by [user]", 1)
+				else
+					var/t_himself = "itself"
+					if (user.gender == MALE)
+						t_himself = "himself"
+					else if (user.gender == FEMALE)
+						t_himself = "herself"
+					for (var/mob/O in viewers(H, null))
+						O.show_message("\red [H] bandaged [t_himself] with [src]", 1)
+
 		M.updatehealth()
 	else
 		M.heal_organ_damage((src.heal_brute/2), (src.heal_burn/2))

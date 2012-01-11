@@ -55,6 +55,9 @@
 	var/mutantrace = null
 
 	var/list/organs = list()
+	var/bloodloss = 0
+	var/debug_leftarm
+	var/debug_lefthand
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
@@ -69,24 +72,25 @@
 
 	if(!dna)	dna = new /datum/dna(null)
 
-	var/datum/organ/external/chest/chest = new /datum/organ/external/chest(src)
-	var/datum/organ/external/head/head = new /datum/organ/external/head(src)
-	var/datum/organ/external/l_arm/l_arm = new /datum/organ/external/l_arm(src)
-	var/datum/organ/external/r_arm/r_arm = new /datum/organ/external/r_arm(src)
-	var/datum/organ/external/r_leg/r_leg = new /datum/organ/external/r_leg(src)
-	var/datum/organ/external/l_leg/l_leg = new /datum/organ/external/l_leg(src)
-	chest.owner = src
-	head.owner = src
-	r_arm.owner = src
-	l_arm.owner = src
-	r_leg.owner = src
-	l_leg.owner = src
-	organs += chest
-	organs += head
-	organs += r_arm
-	organs += l_arm
-	organs += r_leg
-	organs += l_leg
+	new /datum/organ/external/chest(src)
+	new /datum/organ/external/groin(src)
+	new /datum/organ/external/head(src)
+	new /datum/organ/external/l_arm(src)
+	new /datum/organ/external/r_arm(src)
+	new /datum/organ/external/r_leg(src)
+	new /datum/organ/external/l_leg(src)
+
+	var/datum/organ/external/part = new /datum/organ/external/l_hand(src)
+	part.parent = organs["l_arm"]
+	part = new /datum/organ/external/l_foot(src)
+	part.parent = organs["l_leg"]
+	part = new /datum/organ/external/r_hand(src)
+	part.parent = organs["r_arm"]
+	part = new /datum/organ/external/r_foot(src)
+	part.parent = organs["r_leg"]
+
+	debug_leftarm = organs["l_arm"]
+	debug_lefthand = organs["l_hand"]
 
 	var/g = "m"
 	if (gender == MALE)
@@ -169,6 +173,11 @@
 
 	var/hungry = (500 - nutrition)/5 // So overeat would be 100 and default level would be 80
 	if (hungry >= 70) tally += hungry/50
+
+	for(var/organ in list("l_leg","l_foot","r_leg","r_foot"))
+		var/datum/organ/external/o = organs["[organ]"]
+		if(o.broken)
+			tally += 6
 
 	if(wear_suit)
 		tally += wear_suit.slowdown
@@ -270,7 +279,8 @@
 			if (prob(50) && !shielded)
 				Paralyse(10)
 
-	for(var/datum/organ/external/temp in organs)
+	for(var/name in organs)
+		var/datum/organ/external/temp = organs[name]
 		switch(temp.name)
 			if("head")
 				temp.take_damage(b_loss * 0.2, f_loss * 0.2)
@@ -653,7 +663,7 @@
 			M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (health > 0)
 		var/datum/organ/external/affecting = get_organ(pick("chest", "chest", "chest", "head"))
-		if(!affecting)	return
+		if(!affecting || affecting.destroyed)	return
 		if (istype(O, /obj/effect/immovablerod))
 			affecting.take_damage(101, 0)
 		else
@@ -881,17 +891,33 @@
 	//because theyre located on the 'other' inventory bar.
 
 	// Gloves
-	if (gloves)
-		var/t1 = gloves.item_state
-		if (!t1)
-			t1 = gloves.icon_state
-		overlays += image("icon" = 'hands.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
-		if (gloves.blood_DNA)
+	var/datum/organ/external/lo = organs["l_hand"]
+	var/datum/organ/external/ro = organs["r_hand"]
+	if (!lo.destroyed || !ro.destroyed)
+		if (gloves)
+			var/t1 = gloves.item_state
+			if (!t1)
+				t1 = gloves.icon_state
+			var/icon/gloves_icon = new /icon("icon" = 'hands.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")))
+			if(lo.destroyed)
+				gloves_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
+			else if(ro.destroyed)
+				gloves_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
+			overlays += image(gloves_icon, "layer" = MOB_LAYER)
+			if (gloves.blood_DNA)
+				var/icon/stain_icon = icon('blood.dmi', "bloodyhands[!lying ? "" : "2"]")
+				if(lo.destroyed)
+					stain_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
+				else if(ro.destroyed)
+					stain_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
+				overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
+		else if (blood_DNA)
 			var/icon/stain_icon = icon('blood.dmi', "bloodyhands[!lying ? "" : "2"]")
+			if(lo.destroyed)
+				stain_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
+			else if(ro.destroyed)
+				stain_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
 			overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
-	else if (blood_DNA)
-		var/icon/stain_icon = icon('blood.dmi', "bloodyhands[!lying ? "" : "2"]")
-		overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
 	// Glasses
 	if (glasses)
 		var/t1 = glasses.icon_state
@@ -904,11 +930,22 @@
 		var/t1 = r_ear.icon_state
 		overlays += image("icon" = 'ears.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
 	// Shoes
-	if (shoes)
+	lo = organs["l_foot"]
+	ro = organs["r_foot"]
+	if ((!lo.destroyed || !ro.destroyed) && shoes)
 		var/t1 = shoes.icon_state
-		overlays += image("icon" = 'feet.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
+		var/icon/shoes_icon = new /icon("icon" = 'feet.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")))
+		if(lo.destroyed && !lying)
+			shoes_icon.Blend(new /icon('limb_mask.dmi', "right[lying?"_l":""]"), ICON_MULTIPLY)
+		else if(ro.destroyed && !lying)
+			shoes_icon.Blend(new /icon('limb_mask.dmi', "left[lying?"_l":""]"), ICON_MULTIPLY)
+		overlays += image(shoes_icon, "layer" = MOB_LAYER)
 		if (shoes.blood_DNA)
 			var/icon/stain_icon = icon('blood.dmi', "shoesblood[!lying ? "" : "2"]")
+			if(lo.destroyed)
+				stain_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
+			else if(ro.destroyed)
+				stain_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
 			overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)	// Radio
 /*	if (w_radio)
 		overlays += image("icon" = 'ears.dmi', "icon_state" = "headset[!lying ? "" : "2"]", "layer" = MOB_LAYER) */
@@ -1238,28 +1275,50 @@
 	else if (gender == FEMALE)
 		g = "f"
 
-	stand_icon = new /icon('human.dmi', "blank")
-	lying_icon = new /icon('human.dmi', "blank")
+	stand_icon = new /icon('human.dmi', "torso_s")
+	lying_icon = new /icon('human.dmi', "torso_l")
 
 	var/husk = (mutations & HUSK)
 	//var/obese = (mutations & FAT)
 
+	stand_icon.Blend(new /icon('human.dmi', "chest_[g]_s"), ICON_OVERLAY)
+	lying_icon.Blend(new /icon('human.dmi', "chest_[g]_l"), ICON_OVERLAY)
+
+	var/datum/organ/external/head = organs["head"]
+	if(!head.destroyed)
+		stand_icon.Blend(new /icon('human.dmi', "head_[g]_s"), ICON_OVERLAY)
+		lying_icon.Blend(new /icon('human.dmi', "head_[g]_l"), ICON_OVERLAY)
+
+	for(var/name in organs)
+		var/datum/organ/external/part = organs[name]
+		if(!istype(part, /datum/organ/external/groin) \
+			&& !istype(part, /datum/organ/external/chest) \
+			&& !istype(part, /datum/organ/external/head) \
+			&& !part.destroyed)
+			stand_icon.Blend(new /icon('human.dmi', "[part.icon_name]_s"), ICON_OVERLAY)
+			lying_icon.Blend(new /icon('human.dmi', "[part.icon_name]_l"), ICON_OVERLAY)
+
+	stand_icon.Blend(new /icon('human.dmi', "groin_[g]_s"), ICON_OVERLAY)
+	lying_icon.Blend(new /icon('human.dmi', "groin_[g]_l"), ICON_OVERLAY)
+
 	if (husk)
-		stand_icon.Blend(new /icon('human.dmi', "husk_s"), ICON_OVERLAY)
-		lying_icon.Blend(new /icon('human.dmi', "husk_l"), ICON_OVERLAY)
+		var/icon/husk_s = new /icon('human.dmi', "husk_s")
+		var/icon/husk_l = new /icon('human.dmi', "husk_l")
+
+		for(var/name in organs)
+			var/datum/organ/external/part = organs[name]
+			if(!istype(part, /datum/organ/external/groin) \
+				&& !istype(part, /datum/organ/external/chest) \
+				&& !istype(part, /datum/organ/external/head) \
+				&& part.destroyed)
+				husk_s.Blend(new /icon('dam_mask.dmi', "[part.icon_name]"), ICON_SUBTRACT)
+				husk_l.Blend(new /icon('dam_mask.dmi', "[part.icon_name]2"), ICON_SUBTRACT)
+
+		stand_icon.Blend(husk_s, ICON_OVERLAY)
+		lying_icon.Blend(husk_l, ICON_OVERLAY)
 	/*else if(obese)
 		stand_icon.Blend(new /icon('human.dmi', "fatbody_s"), ICON_OVERLAY)
 		lying_icon.Blend(new /icon('human.dmi', "fatbody_l"), ICON_OVERLAY)*/
-	else
-		stand_icon.Blend(new /icon('human.dmi', "chest_[g]_s"), ICON_OVERLAY)
-		lying_icon.Blend(new /icon('human.dmi', "chest_[g]_l"), ICON_OVERLAY)
-
-		for (var/part in list("head", "arm_left", "arm_right", "hand_left", "hand_right", "leg_left", "leg_right", "foot_left", "foot_right"))
-			stand_icon.Blend(new /icon('human.dmi', "[part]_s"), ICON_OVERLAY)
-			lying_icon.Blend(new /icon('human.dmi', "[part]_l"), ICON_OVERLAY)
-
-		stand_icon.Blend(new /icon('human.dmi', "groin_[g]_s"), ICON_OVERLAY)
-		lying_icon.Blend(new /icon('human.dmi', "groin_[g]_l"), ICON_OVERLAY)
 
 	// Skin tone
 	if (s_tone >= 0)
@@ -1275,6 +1334,14 @@
 		lying_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_l"), ICON_OVERLAY)
 
 /mob/living/carbon/human/proc/update_face()
+	if(organs)
+		var/datum/organ/external/head = organs["head"]
+		if(head)
+			if(head.destroyed)
+				del(face_standing)
+				del(face_lying)
+				return
+
 	if(!facial_hair_style || !hair_style)	return//Seems people like to lose their icons, this should stop the runtimes for now
 	del(face_standing)
 	del(face_lying)
@@ -1978,7 +2045,7 @@ It can still be worn/put on as normal.
 				//SN src = null
 				del(src)
 				return
-			if ((target.health >= -99.0 && target.health < 0))
+			if ((target.health >= -99.0 && target.health < config.health_threshold_dead))
 				target.cpr_time = world.time
 				var/suff = min(target.getOxyLoss(), 7)
 				target.oxyloss -= suff
@@ -2176,14 +2243,16 @@ It can still be worn/put on as normal.
 
 /mob/living/carbon/human/proc/get_damaged_organs(var/brute, var/burn)
 	var/list/datum/organ/external/parts = list()
-	for(var/datum/organ/external/organ in organs)
+	for(var/name in organs)
+		var/datum/organ/external/organ = organs[name]
 		if((brute && organ.brute_dam) || (burn && organ.burn_dam))
 			parts += organ
 	return parts
 
 /mob/living/carbon/human/proc/get_damageable_organs()
 	var/list/datum/organ/external/parts = list()
-	for(var/datum/organ/external/organ in organs)
+	for(var/name in organs)
+		var/datum/organ/external/organ = organs[name]
 		if(organ.brute_dam + organ.burn_dam < organ.max_damage)
 			parts += organ
 	return parts
@@ -2311,7 +2380,8 @@ It can still be worn/put on as normal.
 
 /mob/living/carbon/human/getBruteLoss()
 	var/amount = 0.0
-	for(var/datum/organ/external/O in organs)
+	for(var/name in organs)
+		var/datum/organ/external/O = organs[name]
 		amount+= O.brute_dam
 	return amount
 
@@ -2323,7 +2393,8 @@ It can still be worn/put on as normal.
 
 /mob/living/carbon/human/getFireLoss()
 	var/amount = 0.0
-	for(var/datum/organ/external/O in organs)
+	for(var/name in organs)
+		var/datum/organ/external/O = organs[name]
 		amount+= O.burn_dam
 	return amount
 

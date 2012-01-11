@@ -1,17 +1,14 @@
 /datum/organ
 	var
 		name = "organ"
-		owner = null
+		mob/living/carbon/human/owner = null
 
 
 	proc/process()
 		return 0
 
-
 	proc/receive_chem(chemical as obj)
 		return 0
-
-
 
 /****************************************************
 				EXTERNAL ORGANS
@@ -29,11 +26,53 @@
 		max_damage = 0
 		wound_size = 0
 		max_size = 0
-	var/obj/item/weapon/implant/implant = null
+		obj/item/weapon/implant/implant = null
 
+		display_name
+		list/wounds = list()
+		bleeding = 0
+		perma_injury = 0
+		perma_dmg = 0
+		broken = 0
+		destroyed = 0
+		destspawn
+		min_broken_damage = 30
+		datum/organ/external/parent
+		damage_msg = "\red You feel a intense pain"
 
-	proc/take_damage(brute, burn)
-		if((brute <= 0) && (burn <= 0))	return 0
+		var/open = 0
+		var/stage = 0
+		var/wound = 0
+
+	New(mob/living/carbon/human/H)
+		..(H)
+		if(!display_name)
+			display_name = name
+		if(istype(H))
+			owner = H
+			H.organs[name] = src
+
+	proc/take_damage(brute, burn, sharp)
+		if((brute <= 0) && (burn <= 0))
+			return 0
+		if(destroyed)
+			return 0
+
+		if(owner) owner.pain(display_name, (brute+burn)*3, 1)
+		if(sharp)
+			var/chance = rand(1,5)
+			var/nux = brute * chance
+			if(brute_dam >= max_damage)
+				if(prob(5 * brute))
+					for(var/mob/M in viewers(owner))
+						M.show_message("\red [owner.name]'s [display_name] flies off.")
+					destroyed = 1
+					droplimb()
+					return
+			else if(prob(nux))
+				createwound(rand(1,5))
+				owner << "You feel something wet on your [display_name]"
+
 		if((src.brute_dam + src.burn_dam + brute + burn) < src.max_damage)
 			src.brute_dam += brute
 			src.burn_dam += burn
@@ -56,19 +95,57 @@
 			else
 				return 0
 
+			if(broken)
+				owner.emote("scream")
+
 		var/result = src.update_icon()
 		return result
 
 
-	proc/heal_damage(brute, burn)
-		src.brute_dam = max(0, src.brute_dam - brute)
-		src.burn_dam = max(0, src.burn_dam - burn)
+	proc/heal_damage(brute, burn, internal = 0)
+		brute_dam = max(0, brute_dam - brute)
+		burn_dam = max(0, burn_dam - burn)
+		if(internal)
+			broken = 0
+			perma_injury = 0
 		return update_icon()
 
 
 	proc/get_damage()	//returns total damage
-		return src.brute_dam + src.burn_dam	//could use src.health?
+		return max(brute_dam + burn_dam - perma_injury,perma_injury)	//could use health?
 
+	proc/get_damage_brute()
+		return max(brute_dam+perma_injury,perma_injury)
+
+	proc/get_damage_fire()
+		return burn_dam
+
+	process()
+		if(destroyed)
+			if(destspawn)
+				droplimb()
+			return
+		if(broken == 0)
+			perma_dmg = 0
+		if(parent)
+			if(parent.destroyed)
+				destroyed = 1
+				owner:update_body()
+				return
+		if(brute_dam > min_broken_damage)
+			if(broken == 0)
+				var/dmgmsg = "[damage_msg] in your [display_name]"
+				owner << dmgmsg
+				//owner.unlock_medal("Broke Yarrr Bones!", 0, "Break a bone.", "easy")
+				for(var/mob/M in viewers(owner))
+					if(M != owner)
+						M.show_message("\red You hear a loud cracking sound coming from [owner.name].")
+				owner.emote("scream")
+				broken = 1
+				wound = "broken" //Randomise in future
+				perma_injury = brute_dam
+			return
+		return
 
 // new damage icon system
 // returns just the brute/burn damage code
@@ -105,7 +182,102 @@
 			return 1
 		return 0
 
+	proc/droplimb()
+		if(destroyed)
+			//owner.unlock_medal("Lost something?", 0, "Lose a limb.", "easy")
+			switch(body_part)
+				if(UPPER_TORSO)
+					owner.gib()
+				if(LOWER_TORSO)
+					owner << "\red You are now sterile."
+				if(HEAD)
+					var/obj/item/weapon/organ/head/H = new(owner.loc, owner)
+					if(owner.gender == FEMALE)
+						H.icon_state = "head_f_l"
+					H.overlays += owner.face_lying
+					H.transfer_identity(owner)
 
+					var/lol = pick(cardinal)
+					step(H,lol)
+					owner.update_face()
+					owner.update_body()
+					owner.death()
+				if(ARM_RIGHT)
+					var/obj/item/weapon/organ/r_arm/H = new(owner.loc, owner)
+					if(owner:organs["r_hand"])
+						var/datum/organ/external/S = owner:organs["r_hand"]
+						if(!S.destroyed)
+							var/obj/item/weapon/organ/r_hand/X = new(owner.loc, owner)
+							for(var/mob/M in viewers(owner))
+								M.show_message("\red [owner.name]'s [X.name] flies off.")
+							var/lol2 = pick(cardinal)
+							step(X,lol2)
+					var/lol = pick(cardinal)
+					step(H,lol)
+					destroyed = 1
+				if(ARM_LEFT)
+					var/obj/item/weapon/organ/l_arm/H = new(owner.loc, owner)
+					if(owner:organs["l_hand"])
+						var/datum/organ/external/S = owner:organs["l_hand"]
+						if(!S.destroyed)
+							var/obj/item/weapon/organ/l_hand/X = new(owner.loc, owner)
+							for(var/mob/M in viewers(owner))
+								M.show_message("\red [owner.name]'s [X.name] flies off in arc.")
+							var/lol2 = pick(cardinal)
+							step(X,lol2)
+					var/lol = pick(cardinal)
+					step(H,lol)
+					destroyed = 1
+				if(LEG_RIGHT)
+					var/obj/item/weapon/organ/r_leg/H = new(owner.loc, owner)
+					if(owner:organs["r_foot"])
+						var/datum/organ/external/S = owner:organs["r_foot"]
+						if(!S.destroyed)
+							var/obj/item/weapon/organ/l_foot/X = new(owner.loc, owner)
+							for(var/mob/M in viewers(owner))
+								M.show_message("\red [owner.name]'s [X.name] flies off flies off in arc.")
+							var/lol2 = pick(cardinal)
+							step(X,lol2)
+					var/lol = pick(cardinal)
+					step(H,lol)
+					destroyed = 1
+				if(LEG_LEFT)
+					var/obj/item/weapon/organ/l_leg/H = new(owner.loc, owner)
+					if(owner:organs["l_foot"])
+						var/datum/organ/external/S = owner:organs["l_foot"]
+						if(!S.destroyed)
+							var/obj/item/weapon/organ/l_foot/X = new(owner.loc, owner)
+							for(var/mob/M in viewers(owner))
+								M.show_message("\red [owner.name]'s [X.name] flies off.")
+							var/lol2 = pick(cardinal)
+							step(X,lol2)
+					var/lol = pick(cardinal)
+					step(H,lol)
+					destroyed = 1
+
+	proc/createwound(var/size = 1)
+		if(ishuman(src.owner))
+			var/datum/organ/external/wound/W = new(src)
+			W.bleeding = 1
+			src.owner:bloodloss += 10 * size
+			W.wound_size = size
+			W.owner = src.owner
+			src.wounds += W
+
+/datum/organ/external/wound
+	name = "wound"
+	wound_size = 1
+	icon_name = "wound"
+	display_name = "wound"
+	parent = null
+
+	proc/stopbleeding()
+		if(!src.bleeding)
+			return
+		var/t = 10 * src.wound_size
+		src.owner:bloodloss -= t
+		src.bleeding = 0
+		del(src)
 
 /****************************************************
 				INTERNAL ORGANS
