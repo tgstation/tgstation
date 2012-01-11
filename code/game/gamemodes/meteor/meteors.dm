@@ -58,20 +58,21 @@
 	for(var/i, i < route, i++)
 		tempgoal = get_step(tempgoal,rand(1,8))
 
-	while (!istype(pickedstart, /turf/space) || pickedstart.loc.name != "Space" ) //FUUUCK, should never happen.
+	var/obj/effect/meteor/M
+	switch(rand(1, 100))
+		if(1 to 15)
+			M = new /obj/effect/meteor/big(pickedstart)
+		if(16 to 75)
+			M = new /obj/effect/meteor( pickedstart )
+		if(76 to 100)
+			M = new /obj/effect/meteor/small( pickedstart )
 
-		var/obj/effect/meteor/M
-		switch(rand(1, 100))
-			if(1 to 15)
-				M = new /obj/effect/meteor/big(pickedstart)
-			if(16 to 75)
-				M = new /obj/effect/meteor( pickedstart )
-			if(76 to 100)
-				M = new /obj/effect/meteor/small( pickedstart )
+	M.dest = tempgoal
 
-		M.dest = tempgoal
-		spawn(0)
-			walk_towards(M, M.dest, 1)
+	do
+		sleep(1)
+		walk_towards(M, M.dest, 1)
+	while (!istype(M.loc, /turf/space) || pickedstart.loc.name != "Space" ) //FUUUCK, should never happen.
 
 	return
 
