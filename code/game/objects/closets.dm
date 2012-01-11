@@ -124,7 +124,7 @@
 			P.wrapped = src
 			src.close()
 			P.waswelded = welded
-			src.welded = 1
+			src.welded = 0
 			src.loc = P
 			O.amount -= 3
 		else
