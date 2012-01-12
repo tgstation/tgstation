@@ -191,7 +191,7 @@
 			var/obj/effect/bigDelivery/Pack = src.loc
 			if(istype(Pack.loc,/turf) && Pack.waswelded == 0)
 				for (var/mob/M in hearers(src.loc, null))
-					M << text("<FONT size=[] color=#6D3F40>BANG, bang, rrrrrip!</FONT>", max(0, 5 - get_dist(src, M)))
+					M << text("<FONT size=[] color=red>BANG, bang, rrrrrip!</FONT>", max(0, 5 - get_dist(src, M)))
 				lasttry = 1
 				sleep(10)
 				src.welded = 0
