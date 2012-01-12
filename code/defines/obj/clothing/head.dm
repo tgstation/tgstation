@@ -18,15 +18,22 @@
 	name = "Captain's hat"
 	icon_state = "captain"
 	desc = "It's good being the king."
-	flags = FPRINT|TABLEPASS|SUITSPACE
+	flags = FPRINT|TABLEPASS
 	item_state = "caphat"
 
 /obj/item/clothing/head/centhat
 	name = "Cent. Comm. hat"
 	icon_state = "centcom"
 	desc = "It's even better to be the emperor."
-	flags = FPRINT|TABLEPASS|SUITSPACE
+	flags = FPRINT|TABLEPASS
 	item_state = "centhat"
+
+/obj/item/clothing/head/deathsquad/beret
+	name = "officer's beret"
+	desc = "An armored beret commonly used by special operations officers."
+	icon_state = "beret_badge"
+	flags = FPRINT|TABLEPASS
+	armor = list(melee = 65, bullet = 55, laser = 35,energy = 20, bomb = 30, bio = 30, rad = 30)
 
 
 /obj/item/clothing/head/powdered_wig
