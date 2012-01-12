@@ -9,22 +9,46 @@
 	flags = FPRINT
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/examtext = null
+	var/label_x = 0
+	var/tag_x = 0
+	var/waswelded = 0
 
 
 	attack_hand(mob/user as mob)
+		return unwrap()
+
+	proc/unwrap()
 		if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
 			src.wrapped.loc = (get_turf(src.loc))
 			if (istype(src.wrapped,/obj/structure/closet))
 				var/obj/structure/closet/O = src.wrapped
-				O.welded = 0
+				O.welded = waswelded
 		del(src)
 		return
+
+	update_icon()
+		overlays = new()
+		if(name != initial(name) || examtext)
+			var/image/I = new/image('storage.dmi',"delivery_label")
+			if(!label_x)
+				label_x = rand(-8, 6)
+			I.pixel_x = label_x
+			I.pixel_y = -3
+			overlays += I
+		if(sortTag)
+			var/image/I = new/image('storage.dmi',"delivery_tag")
+			if(!tag_x)
+				tag_x = rand(-8, 6)
+			I.pixel_x = tag_x
+			I.pixel_y = -3
+			overlays += I
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/device/destTagger))
 			var/obj/item/device/destTagger/O = W
 			user << "\blue *TAGGED*"
 			src.sortTag = O.currTag
+			update_icon()
 		else if(istype(W, /obj/item/weapon/pen))
 			switch(alert("What would you like to alter?",,"Title","Description", "Cancel"))
 				if("Title")
@@ -39,6 +63,7 @@
 					for(var/mob/M in viewers())
 						M << "\blue [user] labels [src] as [label]."
 					src.name = "[src.name] ([label])"
+					update_icon()
 				if("Description")
 					var/str = input(usr,"Label text?","Set label","")
 					if(!str || !length(str))
@@ -50,6 +75,7 @@
 					examtext = str
 					for(var/mob/M in viewers())
 						M << "\blue [user] labels [src] with the note: [examtext]."
+					update_icon()
 		return
 
 	examine()
@@ -79,11 +105,19 @@
 		del(src)
 		return
 
+	update_icon()
+		overlays = new()
+		if(name != initial(name) || examtext)
+			overlays += new/image('storage.dmi',"delivery_label")
+		if(sortTag)
+			overlays += new/image('storage.dmi',"delivery_tag")
+
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/device/destTagger))
 			var/obj/item/device/destTagger/O = W
 			user << "\blue *TAGGED*"
 			src.sortTag = O.currTag
+			update_icon()
 		else if(istype(W, /obj/item/weapon/pen))
 			switch(alert("What would you like to alter?",,"Title","Description", "Cancel"))
 				if("Title")
@@ -98,6 +132,7 @@
 					for(var/mob/M in viewers())
 						M << "\blue [user] labels [src] as [label]."
 					src.name = "[src.name] ([label])"
+					update_icon()
 				if("Description")
 					var/str = input(usr,"Label text?","Set label","")
 					if(!str || !length(str))
@@ -109,6 +144,7 @@
 					examtext = str
 					for(var/mob/M in viewers())
 						M << "\blue [user] labels [src] with the note: [examtext]."
+					update_icon()
 		return
 
 	examine()
@@ -204,7 +240,6 @@
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 
 	attack_self(mob/user as mob)
-		user.machine = src
 		interact(user)
 
 	proc/interact(mob/user as mob)
@@ -213,6 +248,7 @@
 			dat += "<br>Current Selection: None<br>"
 		else
 			dat += "<br>Current Selection: [currTag]<br><br>"
+		dat += "<A href='?src=\ref[src];nextTag=[locationList.len + 1]'>Set Custom Destination</A><br><br>"
 		for (var/i = 1, i <= locationList.len, i++)
 			if(spaceList[i])
 				dat += "<br>"
@@ -220,14 +256,19 @@
 			dat += "<br>"
 		user << browse(dat, "window=destTagScreen")
 		onclose(user, "destTagScreen")
-		usr.machine = null
 		return
 
 	Topic(href, href_list)
+		usr.machine = src
 		src.add_fingerprint(usr)
 		if(href_list["nextTag"])
 			var/n = text2num(href_list["nextTag"])
-			src.currTag = locationList[n]
+			if(n > locationList.len)
+				var/t1 = input("Which tag?","Tag") as null|text
+				if(t1)
+					src.currTag = t1
+			else
+				src.currTag = locationList[n]
 		if(istype(loc,/mob))
 			interact(loc)
 		else
@@ -239,10 +280,12 @@
 			user << "\blue *TAGGED*"
 			var/obj/effect/bigDelivery/O = target
 			O.sortTag = src.currTag
+			O.update_icon()
 		else if (istype(target, /obj/item/smallDelivery))
 			user << "\blue *TAGGED*"
 			var/obj/item/smallDelivery/O = target
 			O.sortTag = src.currTag
+			O.update_icon()
 		else
 			user << "\blue You can only tag properly wrapped delivery packages!"
 		return

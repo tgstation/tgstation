@@ -5,14 +5,7 @@
 
 	Tick()
 		for(var/mob/living/carbon/L in world)
-			L.radiation += rand(1,7)
-			if (L && prob(4))
-				if (prob(75))
-					randmutb(L)
-					domutcheck(L,null,1)
-				else
-					randmutg(L)
-					domutcheck(L,null,1)
+			L.apply_effect(rand(1,7), IRRADIATE)
 
 	Die()
 		command_alert("The station has cleared the radiation belt", "Medical Alert")

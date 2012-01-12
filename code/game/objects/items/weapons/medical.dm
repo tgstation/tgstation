@@ -15,7 +15,7 @@ MEDICAL
 			t_him = "her"
 		user << "\red \The [M] is dead, you cannot help [t_him]!"
 		return
-	if (M.health < 50)
+	if (M.health < 0)
 		var/t_him = "it"
 		if (M.gender == MALE)
 			t_him = "him"

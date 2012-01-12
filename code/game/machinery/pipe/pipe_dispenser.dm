@@ -119,6 +119,8 @@
 <A href='?src=\ref[src];dmake=2'>Junction</A><BR>
 <A href='?src=\ref[src];dmake=3'>Y-Junction</A><BR>
 <A href='?src=\ref[src];dmake=4'>Trunk</A><BR>
+<A href='?src=\ref[src];dmake=5'>Sort Junction 1</A><BR>
+<A href='?src=\ref[src];dmake=6'>Sort Junction 2</A><BR>
 "}
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
@@ -147,6 +149,10 @@
 					C.ptype = 4
 				if(4)
 					C.ptype = 5
+				if(5)
+					C.ptype = 6
+				if(6)
+					C.ptype = 7
 
 			C.update()
 			wait = 1

@@ -172,7 +172,8 @@
 
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (istype(target, /obj/item/weapon/storage || istype(target, /obj/item/weapon/gun/grenadelauncher) || istype(target, /obj/structure/table))) return ..()
+		if (istype(target, /obj/item/weapon/storage) || istype(target, /obj/item/clothing/suit/storage) || istype(target, /obj/item/weapon/gun/grenadelauncher) || istype(target, /obj/structure/table))
+			return ..()
 		if (!src.state && stage == 2 && !crit_fail)
 			user << "\red You prime the grenade! 3 seconds!"
 			message_admins("[key_name_admin(user)] used a chemistry grenade ([src.name]).")
@@ -674,6 +675,21 @@
 		R.my_atom = src
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/weapon/packageWrap))
+			if(istype(src.loc,/obj/item/weapon/storage) || istype(src.loc,/obj/item/clothing/suit/storage/))	//Taking stuff out of storage duplicates it.
+				user << "\blue Do not do this, it is broken as all hell.  Take it out of the container first."
+				return
+			for(var/obj/item/T in user)	//Lets remove it from their inventory
+				if(T == src)
+					user.remove_from_mob(T)
+					break
+			var/obj/item/weapon/packageWrap/O = W
+			if (O.amount > 1)
+				var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(src.loc))
+				P.wrapped = src
+
+				src.loc = P
+				O.amount -= 1
 		return
 	attack_self(mob/user as mob)
 		return
@@ -2709,6 +2725,14 @@
 	New()
 		..()
 		reagents.add_reagent("kelotane", 30)
+
+/obj/item/weapon/reagent_containers/pill/tramadol
+	name = "Tramadol pill"
+	desc = "A simple painkiller."
+	icon_state = "pill8"
+	New()
+		..()
+		reagents.add_reagent("tramadol", 30)
 
 /obj/item/weapon/reagent_containers/pill/inaprovaline
 	name = "Inaprovaline pill"

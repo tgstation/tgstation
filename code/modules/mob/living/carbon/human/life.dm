@@ -1,4 +1,4 @@
-#define HUMAN_MAX_OXYLOSS 12 //Defines how much oxyloss humans can get per tick. No air applies this value.
+#define HUMAN_MAX_OXYLOSS 3 //Defines how much oxyloss humans can get per tick. No air applies this value.
 
 /mob/living/carbon/human
 	var
@@ -685,11 +685,6 @@
 					else if(E.name == "l_leg" || E.name == "l_foot" \
 						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
 						leg_tally--									// let it fail even if just foot&leg
-				if(E.open && (!resting) && (!sleeping))
-					emote("scream")
-					E.take_damage(20,0)
-					emote("collapse")
-					paralysis = 10
 
 			// can't stand
 			if(leg_tally == 0)
@@ -1106,9 +1101,14 @@
 	handle_shock()
 		..()
 
+		if(health < 0)
+			// health 0 makes you immediately collapse
+			shock_stage = max(shock_stage, 61)
+
 		if(traumatic_shock >= 80)
 			shock_stage += 1
 		else
+			if(shock_stage > 100) shock_stage = 100
 			shock_stage--
 			shock_stage = max(shock_stage, 0)
 			return

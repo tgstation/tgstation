@@ -1311,6 +1311,19 @@ datum
 				..()
 				return
 
+		tramadol
+			name = "Tramadol"
+			id = "tramadol"
+			description = "A simple, yet effective painkiller."
+			reagent_state = LIQUID
+			color = "#C8A5DC"
+
+		oxycodone
+			name = "Oxycodone"
+			id = "oxycodone"
+			description = "An effective and very addictive painkiller."
+			reagent_state = LIQUID
+			color = "#C805DC"
 
 		impedrezene
 			name = "Impedrezene"

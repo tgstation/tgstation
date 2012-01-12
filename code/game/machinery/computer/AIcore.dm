@@ -158,8 +158,8 @@
 				playsound(loc, 'Screwdriver.ogg', 50, 1)
 				user << "\blue You connect the monitor."
 
-				if(P:brainmob.mind in ticker.mode:revolutionaries)
-					ticker.mode:remove_revolutionary(P:brainmob.mind , 1)
+				if(brain.brainmob.mind in ticker.mode:revolutionaries)
+					ticker.mode:remove_revolutionary(brain.brainmob.mind , 1)
 
 				new /mob/living/silicon/ai ( loc, laws, brain )
 				del(src)

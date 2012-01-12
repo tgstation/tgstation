@@ -336,12 +336,6 @@ proc/airborne_can_reach(turf/source, turf/target)
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.toxloss += (2*multiplier)
 
-/datum/disease2/effect/greater/scream
-	name = "Random screaming syndrome"
-	stage = 3
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.say("*scream")
-
 /datum/disease2/effect/greater/drowsness
 	name = "Automated sleeping syndrome"
 	stage = 3
