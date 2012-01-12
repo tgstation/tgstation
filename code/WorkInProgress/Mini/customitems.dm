@@ -7,6 +7,7 @@ var/list/CustomItemList = list(
 		//    ckey        real_name   item path
 	list("skymarshal", "Phillip Oswald", /obj/item/weapon/coin/silver),	//Phillip likes to chew on cigars.  Just unlit cigars, don't ask me why.  Must be a clone thing.  (Cigarette machines dispense cigars if they have a coin in them)  --SkyMarshal
 	list("spaceman96", "Trenna Seber", /obj/item/weapon/pen/multi),	//For Spesss.
+	list("spaceman96", "Trenna Seber", /obj/item/clothing/suit/storage/labcoat/pink),	//For Spesss.
 	list("asanadas", "Book Berner", /obj/item/clothing/under/chameleon/psyche)
 	)
 
