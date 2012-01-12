@@ -69,6 +69,10 @@
 				backwards = NORTH
 			if(SOUTHWEST)
 				backwards = NORTH
+	if(operating > 0)
+		movedir = forwards
+	else if(operating < 0)
+		movedir = backwards
 
 /obj/machinery/conveyor/proc/setmove()
 	if(operating > 0)
