@@ -12,7 +12,7 @@
 	for(var/line in lines)
 		// split & clean up
 		var/list/Entry = dd_text2list(line, ":")
-		for(var/i = 1 to parts.len)
+		for(var/i = 1 to Entry.len)
 			Entry[i] = trim(Entry[i])
 
 		if(Entry.len < 3)
@@ -20,7 +20,7 @@
 
 		if(Entry[1] == M.ckey && Entry[2] == M.real_name)
 			var/list/Paths = dd_text2list(Entry[3], ",")
-			for(P in Paths)
+			for(var/P in Paths)
 				var/ok = 0  // 1 if the item was placed successfully
 				P = trim(P)
 				var/path = text2path(P)
