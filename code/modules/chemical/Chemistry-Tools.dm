@@ -29,6 +29,7 @@
 		R.my_atom = src
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)//TODO:Have grenades use the new assembly things
+		wrap(W,user)
 		if(istype(W,/obj/item/device/assembly_holder) && !stage && path != 2)
 			path = 1
 			user << "\blue You add [W] to the metal casing."
@@ -344,6 +345,7 @@
 		usr << "\blue [grenades] / [max_grenades] Grenades."
 
 	attackby(obj/item/I as obj, mob/user as mob)
+		wrap(I,user)
 		if((istype(I, /obj/item/weapon/chem_grenade)) || (istype(I, /obj/item/weapon/flashbang)) || (istype(I, /obj/item/weapon/smokebomb)) || (istype(I, /obj/item/weapon/mustardbomb)) || (istype(I, /obj/item/weapon/empgrenade)))
 			if(grenades.len < max_grenades)
 				user.drop_item()
@@ -443,6 +445,7 @@
 		usr << "\blue [syringes] / [max_syringes] Syringes."
 
 	attackby(obj/item/I as obj, mob/user as mob)
+		wrap(I,user)
 		if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 			if(syringes.len < max_syringes)
 				user.drop_item()
@@ -521,6 +524,7 @@
 		usr << "\blue [syringes] / [max_syringes] Syringes."
 
 	attackby(obj/item/I as obj, mob/user as mob)
+		wrap(I,user)
 		if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 			if(syringes.len < max_syringes)
 				user.drop_item()
@@ -675,27 +679,14 @@
 		R.my_atom = src
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weapon/packageWrap))
-			if(istype(src.loc,/obj/item/weapon/storage) || istype(src.loc,/obj/item/clothing/suit/storage/))	//Taking stuff out of storage duplicates it.
-				user << "\blue Do not do this, it is broken as all hell.  Take it out of the container first."
-				return
-			for(var/obj/item/T in user)	//Lets remove it from their inventory
-				if(T == src)
-					user.remove_from_mob(T)
-					break
-			var/obj/item/weapon/packageWrap/O = W
-			if (O.amount > 1)
-				var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(src.loc))
-				P.wrapped = src
-
-				src.loc = P
-				O.amount -= 1
+		wrap(W,user)
 		return
 	attack_self(mob/user as mob)
 		return
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		return
 	attackby(obj/item/I as obj, mob/user as mob)
+		wrap(I,user)
 		return
 	afterattack(obj/target, mob/user , flag)
 		return
@@ -1086,6 +1077,7 @@
 		return attack_hand()
 
 	attackby(obj/item/I as obj, mob/user as mob)
+		wrap(I,user)
 		return
 
 	afterattack(obj/target, mob/user , flag)
@@ -1279,6 +1271,7 @@
 		return
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		wrap(W,user)
 		return
 	attack_self(mob/user as mob)
 		return
@@ -1350,6 +1343,7 @@
 		return 0
 
 	attackby(obj/item/I as obj, mob/user as mob)
+		wrap(I,user)
 		return
 	afterattack(obj/target, mob/user , flag)
 		return
@@ -1372,6 +1366,7 @@
 	var/slices_num
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		wrap(W,user)
 
 		if((slices_num <= 0 || !slices_num) || !slice_path)
 			return 1
@@ -1578,6 +1573,7 @@
 			icon_state = "pill[rand(1,20)]"
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		wrap(W,user)
 		return
 	attack_self(mob/user as mob)
 		return
@@ -1620,6 +1616,7 @@
 		return 0
 
 	attackby(obj/item/I as obj, mob/user as mob)
+		wrap(I,user)
 		return
 
 	afterattack(obj/target, mob/user , flag)
@@ -2176,6 +2173,7 @@
 	volume = 50
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		wrap(W,user)
 		return
 	attack_self(mob/user as mob)
 		return
@@ -2217,6 +2215,7 @@
 		return 0
 
 	attackby(obj/item/I as obj, mob/user as mob)
+		wrap(I,user)
 		return
 
 	afterattack(obj/target, mob/user , flag)

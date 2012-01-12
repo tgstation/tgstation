@@ -637,12 +637,7 @@ CLIPBOARDS
 			user.update_clothing()
 		src.add_fingerprint(user)
 	else
-		if (user.contents.Find(src))
-			spawn( 0 )
-				src.attack_self(user)
-				return
-		else
-			return ..()
+		return ..()
 	return
 
 /obj/item/weapon/clipboard/attackby(obj/item/weapon/P as obj, mob/user as mob)
