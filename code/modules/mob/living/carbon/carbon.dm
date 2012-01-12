@@ -195,3 +195,10 @@
 	if(src.sleeping_willingly)
 		src.sleeping = 0
 		src.sleeping_willingly = 0
+
+/mob/living/carbon/human/proc/GetOrgans()
+	var/list/L = list(  )
+	for(var/t in organs)
+		if (istype(organs[text("[]", t)], /datum/organ/external))
+			L += organs[text("[]", t)]
+	return L
