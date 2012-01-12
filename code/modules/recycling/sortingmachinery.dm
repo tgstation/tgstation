@@ -163,8 +163,6 @@
 		..()
 		return
 
-
-
 /obj/item/weapon/packageWrap
 	name = "package wrapper"
 	icon = 'items.dmi'
@@ -219,6 +217,22 @@
 		usr << "\blue There are [amount] units of package wrap left!"
 		..()
 		return
+
+/obj/item/proc/wrap(obj/item/I as obj, mob/user as mob)
+	if(istype(I, /obj/item/weapon/packageWrap))
+		var/obj/item/weapon/packageWrap/C = I
+		if(!istype(src.loc,/turf))
+			user << "\red You need to place the item on the ground or a table before wrapping it!"
+			return
+		else if (C.amount > 1)
+			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(src.loc))
+			P.wrapped = src
+			src.loc = P
+			C.amount -= 1
+		if (C.amount <= 0)
+			new /obj/item/weapon/c_tube( C.loc )
+			del(C)
+			return
 
 /obj/item/device/destTagger
 	name = "destination tagger"
