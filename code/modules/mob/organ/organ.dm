@@ -233,7 +233,7 @@
 					if(owner:organs["r_foot"])
 						var/datum/organ/external/S = owner:organs["r_foot"]
 						if(!S.destroyed)
-							var/obj/item/weapon/organ/l_foot/X = new(owner.loc, owner)
+							var/obj/item/weapon/organ/r_foot/X = new(owner.loc, owner)
 							for(var/mob/M in viewers(owner))
 								M.show_message("\red [owner.name]'s [X.name] flies off flies off in arc.")
 							var/lol2 = pick(cardinal)
