@@ -880,7 +880,7 @@
 				overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
 
 	if (wear_id)
-		if(wear_id.over)
+		if(wear_id.over_jumpsuit)
 			overlays += image("icon" = 'mob.dmi', "icon_state" = "id[!lying ? null : "2"]", "layer" = MOB_LAYER)
 
 	if (client)

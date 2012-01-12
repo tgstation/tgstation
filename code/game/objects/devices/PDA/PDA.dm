@@ -30,6 +30,7 @@
 	var/mimeamt = 0 //How many silence left when infected with mime.exe
 	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function.
 	var/cart = "" //A place to stick cartridge menu information
+	var/over_jumpsuit = 1 // If set to 0, it won't display on top of the mob's jumpsuit
 
 	var/obj/item/weapon/integrated_uplink/uplink = null
 

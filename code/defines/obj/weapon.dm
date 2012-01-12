@@ -458,7 +458,7 @@
 	var/registered = null
 	var/assignment = null
 	var/obj/item/weapon/photo/PHOTO = null
-	var/over = 1
+	var/over_jumpsuit = 1 // If set to 0, it won't display on top of the mob's jumpsuit
 
 /obj/item/weapon/card/id/gold
 	name = "identification card"

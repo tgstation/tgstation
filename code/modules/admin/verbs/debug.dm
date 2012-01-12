@@ -701,7 +701,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access += list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer")
 			W.assignment = "CentCom Review Official"
 			W.registered = M.real_name
-			W.over = 0
+			W.over_jumpsuit = 0
 			M.equip_if_possible(W, M.slot_wear_id)
 
 		if("centcom commander")
@@ -726,7 +726,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access += get_all_centcom_access()
 			W.assignment = "CentCom Commanding Officer"
 			W.registered = M.real_name
-			W.over = 0
+			W.over_jumpsuit = 0
 			M.equip_if_possible(W, M.slot_wear_id)
 
 		if("special ops officer")
