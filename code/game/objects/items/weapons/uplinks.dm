@@ -18,6 +18,9 @@ SYNDICATE UPLINK
 	return
 
 /obj/item/weapon/syndicate_uplink/attack_self(mob/user as mob)
+	interact(user)
+
+/obj/item/weapon/syndicate_uplink/proc/interact(mob/user as mob)
 	currentUser = user
 	user.machine = src
 	var/dat
@@ -220,11 +223,11 @@ SYNDICATE UPLINK
 			if (href_list["temp"])
 				src.temp = null
 		if (istype(src.loc, /mob))
-			attack_self(src.loc)
+			interact(src.loc)
 		else
 			for(var/mob/M in viewers(1, src))
 				if (M.client)
-					src.attack_self(M)
+					interact(M)
 	return
 
 /obj/item/weapon/syndicate_uplink/proc/shutdown_uplink()

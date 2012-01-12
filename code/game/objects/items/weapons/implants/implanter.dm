@@ -34,11 +34,13 @@
 			if(istype(M, /mob/living/carbon/human))
 				var/picked = 0
 				var/mob/living/carbon/human/T = M
-				for(var/datum/organ/external/E in T)
+				var/list/datum/organ/external/E = T.GetOrgans()
+				while(picked == 0 && E.len > 0)
+					var/datum/organ/external/O = pick(E)
+					E -= O
 					if(!E.implant)
-						E.implant = src.imp
+						O.implant = src.imp
 						picked = 1
-						break
 				if(picked == 0)
 					for (var/mob/O in viewers(M, null))
 						O.show_message(text("[user.name] can't find anywhere to implant [M.name]"), 1)

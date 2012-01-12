@@ -458,6 +458,7 @@
 	var/registered = null
 	var/assignment = null
 	var/obj/item/weapon/photo/PHOTO = null
+	var/over = 1
 
 /obj/item/weapon/card/id/gold
 	name = "identification card"

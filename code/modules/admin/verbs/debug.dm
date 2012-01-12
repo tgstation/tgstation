@@ -674,11 +674,13 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if("centcom official")
 			M.equip_if_possible(new /obj/item/clothing/under/rank/centcom_officer(M), M.slot_w_uniform)
 			M.equip_if_possible(new /obj/item/clothing/shoes/black(M), M.slot_shoes)
-			M.equip_if_possible(new /obj/item/clothing/gloves/black(M), M.slot_gloves)
+			M.equip_if_possible(new /obj/item/clothing/gloves/white(M), M.slot_gloves)
 			M.equip_if_possible(new /obj/item/device/radio/headset/heads/hop(M), M.slot_ears)
-			M.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(M), M.slot_glasses)
-			M.equip_if_possible(new /obj/item/weapon/gun/energy(M), M.slot_belt)
-			M.equip_if_possible(new /obj/item/weapon/pen(M), M.slot_l_store)
+			var/obj/item/clothing/suit/storage/armoredundersuit/K = new(M)
+			var/obj/item/clothing/glasses/sunglasses/V = new(M)
+			V.loc = K
+			M.equip_if_possible(K, M.slot_wear_suit)
+			M.equip_if_possible(new /obj/item/weapon/gun/energy(M), M.slot_s_store)
 
 			var/obj/item/device/pda/heads/pda = new(M)
 			pda.owner = M.real_name
@@ -687,27 +689,33 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			M.equip_if_possible(pda, M.slot_r_store)
 
-			M.equip_if_possible(new /obj/item/weapon/clipboard(M), M.slot_l_hand)
+			var/obj/item/weapon/clipboard/G = new(M)
+			G.pen = new /obj/item/weapon/pen(G)
+			M.equip_if_possible(G, M.slot_l_store)
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.name = "[M.real_name]'s ID Card"
 			W.icon_state = "centcom"
+			W.item_state = "id_inv"
 			W.access = get_all_accesses()
 			W.access += list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer")
 			W.assignment = "CentCom Review Official"
 			W.registered = M.real_name
+			W.over = 0
 			M.equip_if_possible(W, M.slot_wear_id)
 
 		if("centcom commander")
 			M.equip_if_possible(new /obj/item/clothing/under/rank/centcom_commander(M), M.slot_w_uniform)
-			M.equip_if_possible(new /obj/item/clothing/suit/armor/bulletproof(M), M.slot_wear_suit)
+			var/obj/item/clothing/suit/storage/armoredundersuit/K = new(M)
+			var/obj/item/clothing/glasses/eyepatch/G = new(M)
+			G.loc = K
+			M.equip_if_possible(K, M.slot_wear_suit)
 			M.equip_if_possible(new /obj/item/clothing/shoes/swat(M), M.slot_shoes)
-			M.equip_if_possible(new /obj/item/clothing/gloves/swat(M), M.slot_gloves)
+			M.equip_if_possible(new /obj/item/clothing/gloves/white(M), M.slot_gloves)
 			M.equip_if_possible(new /obj/item/device/radio/headset/heads/captain(M), M.slot_ears)
-			M.equip_if_possible(new /obj/item/clothing/glasses/eyepatch(M), M.slot_glasses)
 			M.equip_if_possible(new /obj/item/clothing/mask/cigarette/cigar/cohiba(M), M.slot_wear_mask)
 			M.equip_if_possible(new /obj/item/clothing/head/centhat(M), M.slot_head)
-			M.equip_if_possible(new /obj/item/weapon/gun/projectile/mateba(M), M.slot_belt)
+			M.equip_if_possible(new /obj/item/weapon/gun/projectile/mateba(M), M.slot_s_store)
 			M.equip_if_possible(new /obj/item/weapon/zippo(M), M.slot_r_store)
 			M.equip_if_possible(new /obj/item/ammo_magazine/a357(M), M.slot_l_store)
 
@@ -718,17 +726,18 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access += get_all_centcom_access()
 			W.assignment = "CentCom Commanding Officer"
 			W.registered = M.real_name
+			W.over = 0
 			M.equip_if_possible(W, M.slot_wear_id)
 
 		if("special ops officer")
 			M.equip_if_possible(new /obj/item/clothing/under/syndicate/combat(M), M.slot_w_uniform)
-			M.equip_if_possible(new /obj/item/clothing/suit/armor/swat/officer(M), M.slot_wear_suit)
+			M.equip_if_possible(new /obj/item/clothing/suit/storage/officer(M), M.slot_wear_suit)
 			M.equip_if_possible(new /obj/item/clothing/shoes/combat(M), M.slot_shoes)
 			M.equip_if_possible(new /obj/item/clothing/gloves/combat(M), M.slot_gloves)
 			M.equip_if_possible(new /obj/item/device/radio/headset/heads/captain(M), M.slot_ears)
 			M.equip_if_possible(new /obj/item/clothing/glasses/thermal/eyepatch(M), M.slot_glasses)
 			M.equip_if_possible(new /obj/item/clothing/mask/cigarette/cigar/havanian(M), M.slot_wear_mask)
-			M.equip_if_possible(new /obj/item/clothing/head/helmet/space/deathsquad/beret(M), M.slot_head)
+			M.equip_if_possible(new /obj/item/clothing/head/deathsquad/beret(M), M.slot_head)
 			M.equip_if_possible(new /obj/item/weapon/gun/energy/pulse_rifle/M1911(M), M.slot_belt)
 			M.equip_if_possible(new /obj/item/weapon/zippo(M), M.slot_r_store)
 			M.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(M), M.slot_back)

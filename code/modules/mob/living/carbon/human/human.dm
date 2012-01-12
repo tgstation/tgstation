@@ -880,7 +880,8 @@
 				overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
 
 	if (wear_id)
-		overlays += image("icon" = 'mob.dmi', "icon_state" = "id[!lying ? null : "2"]", "layer" = MOB_LAYER)
+		if(wear_id.over)
+			overlays += image("icon" = 'mob.dmi', "icon_state" = "id[!lying ? null : "2"]", "layer" = MOB_LAYER)
 
 	if (client)
 		client.screen -= hud_used.intents
@@ -954,7 +955,8 @@
 		var/t1 = s_store.item_state
 		if (!t1)
 			t1 = s_store.icon_state
-		overlays += image("icon" = 'belt_mirror.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
+		if(!istype(wear_suit, /obj/item/clothing/suit/storage/armoredundersuit))
+			overlays += image("icon" = 'belt_mirror.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
 		s_store.screen_loc = ui_sstore1
 
 	if (h_store)
