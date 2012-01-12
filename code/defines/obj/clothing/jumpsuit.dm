@@ -197,16 +197,16 @@
 /obj/item/clothing/under/rank/centcom_officer
 	desc = "A jumpsuit worn by Centcom Officers."
 	name = "CentCom Officer Jumpsuit"
-	icon_state = "officer"
+	icon_state = "centcom"
 	item_state = "g_suit"
-	color = "officer"
+	color = "centcom"
 
 /obj/item/clothing/under/rank/centcom_commander
 	desc = "A jumpsuit worn by Centcom's highest level Commanders."
 	name = "CentCom Officer Jumpsuit"
-	icon_state = "centcom"
+	icon_state = "officer"
 	item_state = "dg_suit"
-	color = "centcom"
+	color = "officer"
 
 /obj/item/clothing/under/rank/miner
 	desc = "A snappy jumpsuit with a sturdy set of overalls. It is very dirty."

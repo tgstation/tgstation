@@ -6,7 +6,7 @@
 	return (!density)
 
 /obj/structure/closet/proc/can_open()
-	if(src.welded)
+	if(src.welded || istype(src.loc,/obj/effect/bigDelivery))
 		return 0
 	return 1
 
@@ -120,12 +120,13 @@
 	if(istype(W, /obj/item/weapon/packageWrap))
 		var/obj/item/weapon/packageWrap/O = W
 		if (O.amount > 3)
+			src.close()
 			var/obj/effect/bigDelivery/P = new /obj/effect/bigDelivery(get_turf(src.loc))
 			P.wrapped = src
-			src.close()
 			P.waswelded = welded
 			src.welded = 0
 			src.loc = P
+			src.opened = 0
 			O.amount -= 3
 		else
 			user << "\blue You need more paper."
@@ -186,18 +187,18 @@
 		return
 
 	if(!src.open())
-		if(istype(src.loc,/obj/effect/bigDelivery) && lastbang == 0)
+		if(istype(src.loc,/obj/effect/bigDelivery) && lasttry == 0)
 			var/obj/effect/bigDelivery/Pack = src.loc
 			if(istype(Pack.loc,/turf) && Pack.waswelded == 0)
 				for (var/mob/M in hearers(src.loc, null))
 					M << text("<FONT size=[] color=#6D3F40>BANG, bang, rrrrrip!</FONT>", max(0, 5 - get_dist(src, M)))
-				lastbang = 1
+				lasttry = 1
 				sleep(10)
 				src.welded = 0
 				Pack.unwrap()
 				src.open()
 				spawn(30)
-					lastbang = 0
+					lasttry = 0
 		else if(!istype(src.loc,/obj/effect/bigDelivery))
 			user << "\blue It won't budge!"
 			if(!lastbang)

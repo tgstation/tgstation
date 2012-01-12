@@ -87,6 +87,13 @@
 		..()
 		return
 
+	relaymove(mob/user as mob)
+		for(var/obj/structure/closet/F in src)
+			user.loc = F
+			F.contents += user
+			F.opened = 0
+			break
+
 /obj/item/smallDelivery
 	desc = "A small wrapped package."
 	name = "small parcel"
