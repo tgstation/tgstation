@@ -832,6 +832,13 @@
 
 	if (href_list["BlueSpaceArtillery"])
 		var/mob/M = locate(href_list["BlueSpaceArtillery"])
+		if(!M)
+			return
+
+		var/choice = alert(src.owner, "Are you sure you wish to hit [key_name(M)] with Blue Space Artillery?",  "Confirm Firing?" , "Yes" , "No")
+		if (choice == "No")
+			return
+
 		M << "You've been hit by bluespace artillery!"
 		log_admin("[key_name(M)] has been hit by Bluespace Artillery fired by [src.owner]")
 		message_admins("[key_name(M)] has been hit by Bluespace Artillery fired by [src.owner]")
@@ -856,6 +863,36 @@
 			M.Stun(20)
 			M.Weaken(20)
 			M.stuttering = 20
+
+	if (href_list["CentcommReply"])
+		var/mob/M = locate(href_list["CentcommReply"])
+		if(!M)
+			return
+		if(!istype(M, /mob/living/carbon/human))
+			alert("Centcomm cannot transmit to non-humans.")
+			return
+		if(!istype(M:ears, /obj/item/device/radio/headset))
+			alert("The person you're trying to reply to doesn't have a headset!  Centcomm cannot transmit directly to them.")
+			return
+		var/input = input(src.owner, "Please enter a message to reply to [key_name(M)] via their headset.","Outgoing message from Centcomm", "")
+		if(!input)
+			return
+		M << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. [input].  Message ends.\""
+
+	if (href_list["SyndicateReply"])
+		var/mob/M = locate(href_list["SyndicateReply"])
+		if(!M)
+			return
+		if(!istype(M, /mob/living/carbon/human))
+			alert("The Syndicate cannot transmit to non-humans.")
+			return
+		if(!istype(M:ears, /obj/item/device/radio/headset))
+			alert("The person you're trying to reply to doesn't have a headset!  The Syndicate cannot transmit directly to them.")
+			return
+		var/input = input(src.owner, "Please enter a message to reply to [key_name(M)] via their headset.","Outgoing message from The Syndicate", "")
+		if(!input)
+			return
+		M << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. [input].  Message ends.\""
 
 
 	if (href_list["jumpto"])

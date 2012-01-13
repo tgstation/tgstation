@@ -190,6 +190,13 @@ var/const
 #define MAINT 8			// under maintaince
 #define EMPED 16		// temporary broken by EMP pulse
 
+//bitflags for door switches.
+#define OPEN 1
+#define IDSCAN 2
+#define BOLTS 4
+#define SHOCK 8
+#define SAFE 16
+
 #define ENGINE_EJECT_Z 3
 
 //metal, glass, rod stacks

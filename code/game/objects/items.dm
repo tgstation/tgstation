@@ -148,7 +148,7 @@
 					sleep(2)
 
 		var/area/a = get_area(usr.loc)
-		if((istype(src.loc, /turf/space)) || (a.has_gravity == 0))
+		if((istype(usr.loc, /turf/space)) || (a.has_gravity == 0))
 			user.inertia_dir = get_dir(target, user)
 			step(user, user.inertia_dir)
 
