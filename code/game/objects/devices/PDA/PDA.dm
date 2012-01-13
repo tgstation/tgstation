@@ -159,7 +159,6 @@
 
 /obj/item/device/pda/MouseDrop(obj/over_object as obj, src_location, over_location)
 	var/mob/M = usr
-	world << "Test"
 	if((!istype(over_object, /obj/screen)) && !M.restrained() && !M.stat && can_use())
 		return attack_self(M)
 	return
