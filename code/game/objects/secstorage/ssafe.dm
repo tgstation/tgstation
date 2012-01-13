@@ -18,8 +18,8 @@
 	new /obj/item/weapon/pen(src)
 
 /obj/item/weapon/secstorage/ssafe/HoS/New()
-	..()
-	new /obj/item/weapon/storage/lockbox/clusterbang(src)
+//	..()
+//	new /obj/item/weapon/storage/lockbox/clusterbang(src) - Commented out because this item is retarded (trubble)
 
 /obj/item/weapon/secstorage/ssafe/attack_hand(mob/user as mob)
 	return attack_self(user)
