@@ -235,6 +235,7 @@ CIRCULAR SAW
 					else
 						M.take_organ_damage(15)
 				M.sdisabilities &= ~1
+				M.eye_stat = 0
 				M:eye_op_stage = 0.0
 
 	else if((!(user.zone_sel.selecting == "head")) || (!(user.zone_sel.selecting == "groin")) || (!(istype(M, /mob/living/carbon/human))))

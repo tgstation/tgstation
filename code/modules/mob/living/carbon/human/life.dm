@@ -992,9 +992,17 @@
 					if (druggy)
 						client.screen += hud_used.druggy
 
-					if (istype(head, /obj/item/clothing/head/helmet/welding))
+					if ((istype(head, /obj/item/clothing/head/helmet/welding)) )
 						if(!head:up && tinted_weldhelh)
 							client.screen += hud_used.darkMask
+
+					if(eye_stat > 20)
+						if((eye_stat > 30))
+							client.screen += hud_used.darkMask
+						else
+							client.screen += hud_used.vimpaired
+
+
 
 			if (stat != 2)
 				if (machine)
