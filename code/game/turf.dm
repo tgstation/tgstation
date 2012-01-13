@@ -82,9 +82,9 @@
 /turf/Entered(atom/movable/M as mob|obj)
 	var/loopsanity = 10
 	if(ismob(M))
-
-		var/area/a = get_area(M.loc)
-		if(a.has_gravity == 0)
+		if(!M:lastarea)
+			M:lastarea = get_area(M.loc)
+		if(M:lastarea.has_gravity == 0)
 			inertial_drift(M)
 
 	/*
