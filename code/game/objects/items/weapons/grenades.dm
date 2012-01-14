@@ -325,7 +325,7 @@ FLASHBANG
 			F.active = 1
 			F.banglet = 1
 			var/stepdist = rand(1,3)
-			step_away(F,src,stepdist)
+			walk_away(F,src,stepdist)
 			var/dettime = rand(15,60)
 			spawn(dettime)
 				F.prime()
@@ -338,8 +338,8 @@ FLASHBANG
 			F.active = 1
 			F.child = 1
 			F.icon_state = "clusterbang1"
-			var/stepdist = rand(1,3)
-			step_away(F,src,stepdist)
+			var/stepdist = rand(1,4)
+			walk_away(F,src,stepdist)
 			spawn(30)
 				F.arm()
 
