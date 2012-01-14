@@ -1075,17 +1075,46 @@
 
 	update_icon()
 		var/rounded_vol = round(reagents.total_volume,5)
+		overlays = null
 		if(ismob(loc))
-			var/mode_t
+			var/injoverlay
 			switch(mode)
 				if (SYRINGE_DRAW)
-					mode_t = "d"
+					injoverlay = "draw"
 				if (SYRINGE_INJECT)
-					mode_t = "i"
-			icon_state = "[mode_t][rounded_vol]"
-		else
-			icon_state = "[rounded_vol]"
+					injoverlay = "inject"
+			overlays += injoverlay
+		icon_state = "[rounded_vol]"
 		item_state = "syringe_[rounded_vol]"
+		if(reagents.total_volume)
+			var/obj/effect/overlay = new/obj
+			overlay.icon = 'syringefilling.dmi'
+			switch(rounded_vol)
+				if(5)	overlay.icon_state = "5"
+				if(10)	overlay.icon_state = "10"
+				if(15)	overlay.icon_state = "15"
+
+			var/list/rgbcolor = list(0,0,0)
+			var/finalcolor
+			for(var/datum/reagent/re in reagents.reagent_list) // natural color mixing bullshit/algorithm
+				if(!finalcolor)
+					rgbcolor = GetColors(re.color)
+					finalcolor = re.color
+				else
+					var/newcolor[3]
+					var/prergbcolor[3]
+					prergbcolor = rgbcolor
+					newcolor = GetColors(re.color)
+
+					rgbcolor[1] = (prergbcolor[1]+newcolor[1])/2
+					rgbcolor[2] = (prergbcolor[2]+newcolor[2])/2
+					rgbcolor[3] = (prergbcolor[3]+newcolor[3])/2
+
+					finalcolor = rgb(rgbcolor[1], rgbcolor[2], rgbcolor[3])
+
+			overlay.icon += finalcolor
+			if(!istype(src.loc, /turf))	overlay.layer = 30
+			overlays += overlay
 
 
 /obj/item/weapon/reagent_containers/ld50_syringe

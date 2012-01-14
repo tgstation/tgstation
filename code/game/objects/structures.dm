@@ -33,12 +33,14 @@ obj/structure
 			W:use(2)
 			user << "\blue You create a false wall! Push on it to open or close the passage."
 			new /obj/structure/falsewall (src.loc)
+			add_hiddenprint(usr)
 			del(src)
 
 		else if(istype(W, /obj/item/stack/sheet/plasteel) && istype(src,/obj/structure/girder/displaced))
 			W:use(2)
 			user << "\blue You create a false r wall! Push on it to open or close the passage."
 			new /obj/structure/falserwall (src.loc)
+			add_hiddenprint(usr)
 			del(src)
 
 		else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 && istype(src,/obj/structure/girder/reinforced))
@@ -80,6 +82,8 @@ obj/structure
 				Tsrc.ReplaceWithWall()
 				for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 					P.layer = 1
+				for(var/turf/simulated/wall/X in Tsrc.loc)
+					if(X)	X.add_hiddenprint(usr)
 				if (W)	W:use(2)
 				del(src)
 			return
@@ -93,6 +97,8 @@ obj/structure
 					Tsrc.ReplaceWithRWall()
 					for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 						P.layer = 1
+					for(var/turf/simulated/wall/r_wall/X in Tsrc.loc)
+						if(X)	X.add_hiddenprint(usr)
 					if (W)
 						W:use(1)
 					del(src)
