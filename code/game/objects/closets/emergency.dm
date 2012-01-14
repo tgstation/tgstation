@@ -31,3 +31,7 @@
 		/*if ("fire")
 			new /obj/structure/closet/firecloset(src.loc)
 			del(src)*/
+
+/obj/structure/closet/emcloset/legacy/New()
+	new /obj/item/weapon/tank/oxygen(src)
+	new /obj/item/clothing/mask/gas(src)
