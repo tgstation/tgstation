@@ -136,12 +136,7 @@
 					L.Add(t)
 		return L
 	Distance(turf/t)
-		if(get_dist(src,t) == 1)
-			var/cost = (src.x - t.x) * (src.x - t.x) + (src.y - t.y) * (src.y - t.y)
-			cost *= (pathweight+t.pathweight)/2
-			return cost
-		else
-			return get_dist(src,t)
+		return abs(src.x - t.x) + abs(src.y - t.y)
 	AdjacentTurfsSpace()
 		var/L[] = new()
 		for(var/turf/t in oview(src,1))
