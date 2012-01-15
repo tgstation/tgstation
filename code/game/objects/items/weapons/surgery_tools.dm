@@ -962,17 +962,19 @@ CIRCULAR SAW
 			O.show_message("\red [msg]",1)
 
 
-//Broken bone
-//Basic
-//Open -> Clean -> Bone-gel -> pop-into-place -> Bone-gel -> close -> glue -> clean
+/*Broken bone
+ Basic:
+ Open -> Clean -> Bone-gel -> pop-into-place -> Bone-gel -> close -> glue -> clean
 
-//Split
-//Open -> Clean -> Tweasers -> bone-glue -> close -> glue -> clean
+ Split:
+ Open -> Clean -> Tweasers -> bone-glue -> close -> glue -> clean
 
-//
+ The above might not apply anymore.
+
+*/
 
 /obj/item/weapon/surgical_tool/bonegel
-	name = "Bone-gel"
+	name = "bone gel"
 	icon = 'janitor.dmi'
 	icon_state = "cleaner"
 
@@ -984,26 +986,26 @@ CIRCULAR SAW
 	var/z
 	switch(n)
 		if(1)
-			z="[usr] starts applying bone-gel to [m]'s [organ.display_name]"
+			z="[usr] starts applying bone gel to [m]'s [organ.display_name]"
 		if(2)
-			z="[usr] finishes applying bone-gel to [m]'s [organ.display_name]"
+			z="[usr] finishes applying bone gel to [m]'s [organ.display_name]"
 		if(3)
-			z="[usr] stops applying bone-gel to [m]'s [organ.display_name]"
+			z="[usr] stops applying bone gel to [m]'s [organ.display_name]"
 		if(4)
-			z="[usr] applies bone-gel incorrectly to [m]'s [organ.display_name]"
+			z="[usr] applies bone gel incorrectly to [m]'s [organ.display_name]"
 		if(5)
 			z="[usr] lubricates [m]'s [organ.display_name]"
 	return z
 
-/obj/item/weapon/surgical_tool/bonecracker
-	name = "Bone-cracker"
+/obj/item/weapon/surgical_tool/bonesetter
+	name = "bone setter"
 	icon = 'items.dmi'
 	icon_state = "wrench"
 
-/obj/item/weapon/surgical_tool/bonecracker/New()
+/obj/item/weapon/surgical_tool/bonesetter/New()
 	stage += 1
 	wound = "broken"
-/obj/item/weapon/surgical_tool/bonecracker/get_message(var/n,var/m,var/usr,var/datum/organ/external/organ)
+/obj/item/weapon/surgical_tool/bonesetter/get_message(var/n,var/m,var/usr,var/datum/organ/external/organ)
 	var/z
 	switch(n)
 		if(1)
