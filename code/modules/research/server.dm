@@ -23,6 +23,7 @@
 		component_parts += new /obj/item/weapon/cable_coil(src)
 		component_parts += new /obj/item/weapon/cable_coil(src)
 		RefreshParts()
+		src.initialize(); //Agouri
 
 	RefreshParts()
 		var/tot_rating = 0
