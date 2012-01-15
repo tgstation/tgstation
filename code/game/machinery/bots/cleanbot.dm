@@ -232,7 +232,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 				if (!next_dest_loc)
 					next_dest_loc = closest_loc
 				if (next_dest_loc)
-					src.patrol_path = AStar(src.loc, next_dest_loc, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 120, id=botcard, exclude=null)
+					src.patrol_path = AStar(src.loc, next_dest_loc, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_ortho, 0, 120, id=botcard, exclude=null)
 					src.patrol_path = reverselist(src.patrol_path)
 		else
 			patrol_move()
