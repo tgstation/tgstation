@@ -62,6 +62,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon_state = "door_closed"
 
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
+	var/hackProof = 0 // if 1, this door can't be hacked by the AI
 	var/secondsMainPowerLost = 0 //The number of seconds until power is restored.
 	var/secondsBackupPowerLost = 0 //The number of seconds until power is restored.
 	var/spawnPowerRestoreRunning = 0
@@ -374,7 +375,7 @@ About the new airlock wires panel:
 	return ((src.aiControlDisabled!=1) && (!src.isAllPowerCut()));
 
 /obj/machinery/door/airlock/proc/canAIHack()
-	return ((src.aiControlDisabled==1) && (!src.isAllPowerCut()));
+	return ((src.aiControlDisabled==1) && (!hackProof) && (!src.isAllPowerCut()));
 
 /obj/machinery/door/airlock/proc/arePowerSystemsOn()
 	return (src.secondsMainPowerLost==0 || src.secondsBackupPowerLost==0)
@@ -487,6 +488,8 @@ About the new airlock wires panel:
 		if(src.canAIHack())
 			src.hack(user)
 			return
+		else
+			user << "Airlock AI control has been blocked with a firewall. Unable to hack."
 
 	//Separate interface for the AI.
 	user.machine = src
