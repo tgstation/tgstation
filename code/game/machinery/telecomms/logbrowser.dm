@@ -67,26 +67,22 @@
 					var/mobtype = C.parameters["mobtype"]
 					var/mob/M = new mobtype
 
-					if(istype(M, /mob/living/carbon/human))
+					if(ishuman() || isbrain(M))
 						race = "Human"
 
-					else if(istype(M, /mob/living/carbon/monkey))
+					else if(ismonkey())
 						race = "Monkey"
 						language = race
 
-					else if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/metroid))
-						race = "Alien"
-						language = race
-
-					else if(istype(M, /mob/living/silicon))
+					else if(issilicon() || C.parameters["job"] = "AI") // sometimes M gets deleted prematurely for AIs... just check the job
 						race = "Artificial Life"
 
-					else if(istype(M, /mob/living/simple_animal/corgi))
-						race = "Dog"
+					else if(ismetroid()) // NT knows a lot about metroids, but not aliens. Can identify metroids
+						race = "Metroid"
 						language = race
 
-					else if(istype(M, /mob/living/simple_animal/cat))
-						race = "Cat"
+					else if(isanimal())
+						race = "Domestic Animal"
 						language = race
 
 					else

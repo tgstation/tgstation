@@ -15,7 +15,7 @@
 	var
 		list/links = list() // list of machines this machine is linked to
 		traffic = 0 // value increases as traffic increases
-		netspeed = 1 // how much traffic to lose per tick (50 gigabytes/second * netspeed)
+		netspeed = 5 // how much traffic to lose per tick (50 gigabytes/second * netspeed)
 		list/autolinkers = list() // list of text/number values to link with
 		id = "NULL" // identification string
 		network = "NULL" // the network of the machinery
@@ -157,6 +157,8 @@
 		// Update the icon
 		update_icon()
 
+		if(traffic > 0)
+			traffic -= netspeed
 		/* Machine checks */
 		if(on)
 			if(machinetype == 2) // bus mainframes
@@ -185,7 +187,6 @@
 			if(on && traffic > 0)
 				produce_heat(heatgen)
 				delay = initial(delay)
-				traffic -= netspeed
 
 	proc/produce_heat(heat_amt)
 		if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
@@ -265,9 +266,9 @@
 	use_power = 1
 	idle_power_usage = 50
 	machinetype = 2
-	heatgen = 50
+	heatgen = 20
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/bus"
-	netspeed = 3
+	netspeed = 40
 
 	receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
