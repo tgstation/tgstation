@@ -360,7 +360,8 @@
 
 			if(is_freq_listening(signal))
 
-				totaltraffic += traffic // add current traffic to total traffic
+				if(traffic > 0)
+					totaltraffic += traffic // add current traffic to total traffic
 
 				// If signal has a message and appropriate frequency
 
