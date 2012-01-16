@@ -67,21 +67,21 @@
 					var/mobtype = C.parameters["mobtype"]
 					var/mob/M = new mobtype
 
-					if(ishuman() || isbrain(M))
+					if(ishuman(M) || isbrain(M))
 						race = "Human"
 
-					else if(ismonkey())
+					else if(ismonkey(M))
 						race = "Monkey"
 						language = race
 
-					else if(issilicon() || C.parameters["job"] == "AI") // sometimes M gets deleted prematurely for AIs... just check the job
+					else if(issilicon(M) || C.parameters["job"] == "AI") // sometimes M gets deleted prematurely for AIs... just check the job
 						race = "Artificial Life"
 
-					else if(ismetroid()) // NT knows a lot about metroids, but not aliens. Can identify metroids
+					else if(ismetroid(M)) // NT knows a lot about metroids, but not aliens. Can identify metroids
 						race = "Metroid"
 						language = race
 
-					else if(isanimal())
+					else if(isanimal(M))
 						race = "Domestic Animal"
 						language = race
 
