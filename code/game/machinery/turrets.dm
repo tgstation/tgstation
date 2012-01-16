@@ -56,6 +56,11 @@
 	invisibility = 2
 	density = 1
 	var/lasers = 0
+	var/lasertype = 1
+		// 1 = lasers
+		// 2 = cannons
+		// 3 = pulse
+		// 4 = change (HONK)
 	var/health = 80
 	var/obj/machinery/turretcover/cover = null
 	var/popping = 0
@@ -200,7 +205,15 @@
 		return
 	var/obj/item/projectile/A
 	if (src.lasers)
-		A = new /obj/item/projectile/beam( loc )
+		switch(lasertype)
+			if(1)
+				A = new /obj/item/projectile/beam( loc )
+			if(2)
+				A = new /obj/item/projectile/beam/heavylaser( loc )
+			if(3)
+				A = new /obj/item/projectile/beam/pulse( loc )
+			if(4)
+				A = new /obj/item/projectile/change( loc )
 		A.original = target.loc
 		use_power(500)
 	else

@@ -1653,7 +1653,7 @@
 
 /obj/item/weapon/stock_parts/subspace/analyzer
 	name = "Subspace Wavelength Analyzer"
-	icon_state = "treatment_disk"
+	icon_state = "wavelength_analyzer"
 	desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."
 	origin_tech = "programming=3;magnets=4;materials=4;bluespace=2"
 	m_amt = 30

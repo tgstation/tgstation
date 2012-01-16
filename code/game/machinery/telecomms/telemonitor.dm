@@ -18,7 +18,7 @@
 
 		temp = ""				// temporary feedback messages
 
-	req_access = list(access_engine)
+	req_access = list(access_tcomsat)
 
 	attack_hand(mob/user as mob)
 		if(stat & (BROKEN|NOPOWER))

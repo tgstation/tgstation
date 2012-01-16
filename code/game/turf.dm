@@ -1232,7 +1232,20 @@ turf/simulated/floor/return_siding_icon_state()
 	inertial_drift(A)
 
 	if(ticker && ticker.mode)
-		if(ticker.mode.name == "nuclear emergency")	return
+
+		// Okay, so let's make it so that people can travel z levels but not nuke disks!
+		// if(ticker.mode.name == "nuclear emergency")	return
+
+
+		if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels
+			return
+
+		if(!isemptylist(A.search_contents_for(/obj/item/weapon/disk/nuclear)))
+			if(istype(A, /mob/living))
+				var/mob/living/MM = A
+				if(MM.client)
+					MM << "\red Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is."
+			return
 
 		else if(ticker.mode.name == "extended"||ticker.mode.name == "sandbox")	Sandbox_Spacemove(A)
 

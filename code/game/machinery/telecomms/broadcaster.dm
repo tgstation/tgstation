@@ -16,6 +16,9 @@
 	use_power = 1
 	idle_power_usage = 25
 	machinetype = 5
+	heatgen = 60
+	delay = 7
+	circuitboard = "/obj/item/weapon/circuitboard/telecomms/broadcaster"
 	receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
 
@@ -318,7 +321,6 @@
 
 		if (length(heard_gibberish))
 			quotedmsg = M.say_quote(Gibberish(message, compression + 50))
-			world << "Gibberish: [quotedmsg]"
 			var/rendered = "[part_a][Gibberish(M.real_name, compression + 50)][part_b][quotedmsg][part_c]"
 
 			for (var/mob/R in heard_gibberish)

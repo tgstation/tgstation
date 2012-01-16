@@ -17,7 +17,7 @@
 		recharge()
 			if(stat & BROKEN) return
 			if(energy != max_energy)
-				energy++
+				energy += 4
 				use_power(2000) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
 			spawn(200) recharge()
 

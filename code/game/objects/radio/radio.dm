@@ -1,4 +1,4 @@
-var/GLOBAL_RADIO_TYPE = 0 // radio type to use
+var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	// 0 = old radios
 	// 1 = new radios (subspace technology)
 
@@ -290,7 +290,8 @@ var/GLOBAL_RADIO_TYPE = 0 // radio type to use
 				"message" = message, // the actual sent message
 				"connection" = connection, // the radio connection to use
 				"radio" = src, // stores the radio used for transmission
-				"slow" = 0 // how much to sleep() before broadcasting - simulates net lag
+				"slow" = 0, // how much to sleep() before broadcasting - simulates net lag
+				"traffic" = 0 // dictates the total traffic sum that the signal went through
 			)
 			signal.frequency = connection.frequency // Quick frequency set
 
@@ -333,7 +334,8 @@ var/GLOBAL_RADIO_TYPE = 0 // radio type to use
 			"message" = message, // the actual sent message
 			"connection" = connection, // the radio connection to use
 			"radio" = src, // stores the radio used for transmission
-			"slow" = 0
+			"slow" = 0,
+			"traffic" = 0
 		)
 		signal.frequency = connection.frequency // Quick frequency set
 

@@ -1245,6 +1245,38 @@ proc/process_ghost_teleport_locs()
 	icon_state = "storage"
 
 
+
+// Telecommunications Satellite
+
+/area/tcommsat/entrance
+	name = "Telecommunications Satellite Teleporter"
+	icon_state = "tcomsatentrance"
+
+/area/tcommsat/chamber
+	name = "Telecommunications Satellite Central Compartment"
+	icon_state = "tcomsatcham"
+
+/area/turret_protected/tcomfoyer
+	name = "Telecommunications Satellite Foyer"
+	icon_state = "tcomsatlob"
+
+/area/turret_protected/tcomwest
+	name = "Telecommunications Satellite West Wing"
+	icon_state = "tcomsatwest"
+
+/area/turret_protected/tcomeast
+	name = "Telecommunications Satellite East Wing"
+	icon_state = "tcomsateast"
+
+/area/tcommsat/computer
+	name = "Telecommunications Satellite Observatory"
+	icon_state = "tcomsatcomp"
+
+/area/tcommsat/lounge
+	name = "Telecommunications Satellite Lounge"
+	icon_state = "tcomsatlounge"
+
+
 /////////////////////////////////////////////////////////////////////
 /*
  Lists of areas to be used with is_type_in_list.

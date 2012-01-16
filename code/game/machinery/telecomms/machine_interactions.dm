@@ -8,6 +8,7 @@
 /obj/machinery/telecomms
 	var
 		temp = "" // output message
+		construct_op = 0
 
 
 
@@ -16,6 +17,75 @@
 		// Using a multitool lets you access the receiver's interface
 		if(istype(P, /obj/item/device/multitool))
 			attack_hand(user)
+
+		switch(construct_op)
+			if(0)
+				if(istype(P, /obj/item/weapon/screwdriver))
+					user << "You unfasten the bolts."
+					playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+					construct_op ++
+			if(1)
+				if(istype(P, /obj/item/weapon/screwdriver))
+					user << "You fasten the bolts."
+					playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+					construct_op --
+				if(istype(P, /obj/item/weapon/wrench))
+					user << "You dislodge the external plating."
+					playsound(src.loc, 'Ratchet.ogg', 75, 1)
+					construct_op ++
+			if(2)
+				if(istype(P, /obj/item/weapon/wrench))
+					user << "You secure the external plating."
+					playsound(src.loc, 'Ratchet.ogg', 75, 1)
+					construct_op --
+				if(istype(P, /obj/item/weapon/wirecutters))
+					playsound(src.loc, 'wirecutter.ogg', 50, 1)
+					user << "You remove the cables."
+					construct_op ++
+					var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( user.loc )
+					A.amount = 5
+					stat |= BROKEN // the machine's been borked!
+			if(3)
+				if(istype(P, /obj/item/weapon/cable_coil))
+					var/obj/item/weapon/cable_coil/A = P
+					if(A.amount >= 5)
+						user << "You insert the cables."
+						A.amount -= 5
+						if(A.amount <= 0)
+							user.drop_item()
+							del(A)
+						construct_op --
+						stat &= ~BROKEN // the machine's not borked anymore!
+				if(istype(P, /obj/item/weapon/crowbar))
+					user << "You begin prying out the circuit board other components..."
+					playsound(src.loc, 'Crowbar.ogg', 50, 1)
+					if(do_after(user,60))
+						user << "You finish prying out the components."
+
+						// Drop all the component stuff
+						if(contents.len > 0)
+							for(var/obj/x in src)
+								x.loc = user.loc
+						else
+
+							// If the machine wasn't made during runtime, probably doesn't have components:
+							// manually find the components and drop them!
+							var/newpath = text2path(circuitboard)
+							var/obj/item/weapon/circuitboard/C = new newpath
+							for(var/I in C.req_components)
+								for(var/i = 1, i <= C.req_components[I], i++)
+									newpath = text2path(I)
+									var/obj/item/s = new newpath
+									s.loc = user.loc
+
+							// Drop a circuit board too
+							C.loc = user.loc
+
+						// Create a machine frame and delete the current machine
+						var/obj/machinery/constructable_frame/machine_frame/F = new
+						F.loc = src.loc
+						del(src)
+
 
 	attack_hand(var/mob/user as mob)
 
@@ -26,7 +96,7 @@
 		else
 			return
 
-		if(stat & (BROKEN|NOPOWER))
+		if(stat & (BROKEN|NOPOWER) || !on)
 			return
 
 		var/obj/item/device/multitool/P = user.equipped()
@@ -80,7 +150,7 @@
 		else
 			return
 
-		if(stat & (BROKEN|NOPOWER))
+		if(stat & (BROKEN|NOPOWER) || !on)
 			return
 
 		var/obj/item/device/multitool/P = usr.equipped()
@@ -96,7 +166,7 @@
 
 				if("network")
 					var/newnet = input(usr, "Specify the new network for this machine. This will break all current links.", src, network) as null|text
-					if(newnet && usr in range(1, src) && newnet != network)
+					if(newnet && usr in range(1, src))
 
 						if(length(newnet) > 15)
 							temp = "<font color = #666633>-% Too many characters in new network tag %-</font color>"
@@ -143,8 +213,8 @@
 
 		if(href_list["buffer"])
 
-			temp = "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>"
 			P.buffer = src
+			temp = "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>"
 
 
 		if(href_list["flush"])

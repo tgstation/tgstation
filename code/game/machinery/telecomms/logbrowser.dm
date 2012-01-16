@@ -12,7 +12,7 @@
 
 		universal_translate = 0 // set to 1 if it can translate nonhuman speech
 
-	req_access = list(access_engine)
+	req_access = list(access_tcomsat)
 
 	attack_hand(mob/user as mob)
 		if(stat & (BROKEN|NOPOWER))
@@ -45,7 +45,13 @@
 				dat += "<br>[temp]<br>"
 				dat += "<center><a href='?src=\ref[src];operation=mainmenu'>\[Main Menu\]</a>     <a href='?src=\ref[src];operation=refresh'>\[Refresh\]</a></center>"
 				dat += "<br>Current Network: [network]"
-				dat += "<br>Selected Server: [SelectedServer.id]<br><br>"
+				dat += "<br>Selected Server: [SelectedServer.id]"
+
+				if(SelectedServer.totaltraffic >= 1024)
+					dat += "<br>Total recorded traffic: [round(SelectedServer.totaltraffic / 1024)] Terrabytes<br><br>"
+				else
+					dat += "<br>Total recorded traffic: [SelectedServer.totaltraffic] Gigabytes<br><br>"
+
 				dat += "Stored Logs: <ol>"
 
 				var/i = 0
@@ -58,7 +64,7 @@
 
 					var/race			   // The actual race of the mob
 					var/language = "Human" // MMIs, pAIs, Cyborgs and humans all speak Human
-					var/mobtype = "[C.parameters["mobtype"]]"
+					var/mobtype = C.parameters["mobtype"]
 					var/mob/M = new mobtype
 
 					if(istype(M, /mob/living/carbon/human))
@@ -103,7 +109,7 @@
 					else
 						dat += "<u><font color = #18743E>Data type</font color></u>: Audio File<br>"
 						dat += "<u><font color = #18743E>Source</font color></u>: <i>Unidentifiable</i><br>"
-						dat += "<u><font color = #18743E>Race</font color></u>: [race]<br>"
+						dat += "<u><font color = #18743E>Class</font color></u>: [race]<br>"
 						dat += "<u><font color = #18743E>Contents</font color></u>: <i>Unintelligble</i><br>"
 
 					dat += "</li><br>"

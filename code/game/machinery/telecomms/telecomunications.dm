@@ -15,6 +15,7 @@
 	var
 		list/links = list() // list of machines this machine is linked to
 		traffic = 0 // value increases as traffic increases
+		netspeed = 1 // how much traffic to lose per tick (50 gigabytes/second * netspeed)
 		list/autolinkers = list() // list of text/number values to link with
 		id = "NULL" // identification string
 		network = "NULL" // the network of the machinery
@@ -22,18 +23,39 @@
 		list/freq_listening = list() // list of frequencies to tune into: if none, will listen to all
 
 		machinetype = 0 // just a hacky way of preventing alike machines from pairing
+		on = 1
+		integrity = 100 // basically HP, loses integrity by heat
+		heatgen = 20 // how much heat to transfer to the environment
+		delay = 10 // how many process() ticks to delay per heat
+		heating_power = 40000
+
+		circuitboard = null // string pointing to a circuitboard type
+
 
 
 	proc/relay_information(datum/signal/signal, filter, copysig, amount)
 		// relay signal to all linked machinery that are of type [filter]. If signal has been sent [amount] times, stop sending
 
+		if(!on)
+			return
+
+
 		var/send_count = 0
+
+		signal.data["slow"] += rand(0, round((100-integrity))) // apply some lag based on integrity
+
+		// Apply some lag based on traffic rates
+		var/netlag = round(traffic / 50)
+		if(netlag > signal.data["slow"])
+			signal.data["slow"] = netlag
 
 
 		// Loop through all linked machines and send the signal or copy.
 
 		for(var/obj/machinery/telecomms/machine in links)
 			if(filter && !istype( machine, text2path(filter) ))
+				continue
+			if(!machine.on)
 				continue
 			if(amount && send_count >= amount)
 				break
@@ -60,11 +82,12 @@
 				"message" = signal.data["message"],
 				"connection" = signal.data["connection"],
 				"radio" = signal.data["radio"],
-				"slow" = signal.data["slow"]
+				"slow" = signal.data["slow"],
+				"traffic" = signal.data["traffic"]
 				)
 
 				// Keep the "original" signal constant
-				if(!copy.data["original"])
+				if(!signal.data["original"])
 					copy.data["original"] = signal
 				else
 					copy.data["original"] = signal.data["original"]
@@ -74,12 +97,17 @@
 
 
 			send_count++
+			if(machine.is_freq_listening(signal))
+				machine.traffic++
 
 			spawn()
 				if(copysig && copy)
 					machine.receive_information(copy, src)
 				else
 					machine.receive_information(signal, src)
+
+		if(send_count > 0 && is_freq_listening(signal))
+			traffic++
 
 		return send_count
 
@@ -110,7 +138,74 @@
 								links.Add(T)
 
 
+	update_icon()
+		if(on)
+			icon_state = initial(icon_state)
+		else
+			icon_state = "[initial(icon_state)]_off"
 
+
+	process()
+		if(stat & (BROKEN|NOPOWER) || integrity <= 0) // if powered, on. if not powered, off. if too damaged, off
+			on = 0
+		else
+			on = 1
+
+		// Check heat and generate some
+		checkheat()
+
+		// Update the icon
+		update_icon()
+
+		/* Machine checks */
+		if(on)
+			if(machinetype == 2) // bus mainframes
+				switch(traffic)
+					if(-100 to 49)
+						icon_state = initial(icon_state)
+					if(50 to 200)
+						icon_state = "bus2"
+					else
+						icon_state = "bus3"
+
+		// Check heat and generate some
+
+	proc/checkheat()
+		// Checks heat from the environment and applies any integrity damage
+		var/datum/gas_mixture/environment = loc.return_air()
+		switch(environment.temperature)
+			if(T0C to (T20C + 20))
+				integrity = between(0, integrity, 100)
+			if((T20C + 20) to (T0C + 70))
+				integrity = max(0, integrity - 1)
+		if(delay)
+			delay--
+		else
+			// If the machine is on, ready to produce heat, and has positive traffic, genn some heat
+			if(on && traffic > 0)
+				produce_heat(heatgen)
+				delay = initial(delay)
+				traffic -= netspeed
+
+	proc/produce_heat(heat_amt)
+		if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
+			var/turf/simulated/L = loc
+			if(istype(L))
+				var/datum/gas_mixture/env = L.return_air()
+				if(env.temperature < (heat_amt+T0C))
+
+					var/transfer_moles = 0.25 * env.total_moles()
+
+					var/datum/gas_mixture/removed = env.remove(transfer_moles)
+
+					if(removed)
+
+						var/heat_capacity = removed.heat_capacity()
+						if(heat_capacity == 0 || heat_capacity == null)
+							heat_capacity = 1
+						removed.temperature = min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000)
+
+					env.merge(removed)
 /*
 	The receiver idles and receives messages from subspace-compatible radio equipment;
 	primarily headsets. They then just relay this information to all linked devices,
@@ -129,8 +224,13 @@
 	use_power = 1
 	idle_power_usage = 30
 	machinetype = 1
+	heatgen = 10
+	circuitboard = "/obj/item/weapon/circuitboard/telecomms/receiver"
 
 	receive_signal(datum/signal/signal)
+
+		if(!on) // has to be on to receive messages
+			return
 
 		if(signal.transmission_method == 2)
 
@@ -165,6 +265,9 @@
 	use_power = 1
 	idle_power_usage = 50
 	machinetype = 2
+	heatgen = 50
+	circuitboard = "/obj/item/weapon/circuitboard/telecomms/bus"
+	netspeed = 3
 
 	receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
@@ -201,13 +304,16 @@
 /obj/machinery/telecomms/processor
 	name = "Processor Unit"
 	icon = 'stationobjs.dmi'
-	icon_state = "processor_on"
+	icon_state = "processor"
 	desc = "This machine is used to process large quantities of information."
 	density = 1
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 30
 	machinetype = 3
+	heatgen = 100
+	delay = 5
+	circuitboard = "/obj/item/weapon/circuitboard/telecomms/processor"
 
 	receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
@@ -218,6 +324,7 @@
 				relay_direct_information(signal, machine_from) // send the signal back to the machine
 
 			else // no bus detected - send the signal to servers instead
+				signal.data["slow"] += rand(5, 10) // slow the signal down
 				relay_information(signal, "/obj/machinery/telecomms/server", 1)
 
 
@@ -240,14 +347,19 @@
 	use_power = 1
 	idle_power_usage = 15
 	machinetype = 4
+	heatgen = 50
+	circuitboard = "/obj/item/weapon/circuitboard/telecomms/server"
 	var
 		list/log_entries = list()
+		totaltraffic = 0 // gigabytes (if > 1024, divide by 1024 -> terrabytes)
 
 	receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
 		if(signal.data["message"])
 
 			if(is_freq_listening(signal))
+
+				totaltraffic += traffic // add current traffic to total traffic
 
 				// If signal has a message and appropriate frequency
 
