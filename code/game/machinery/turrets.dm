@@ -302,6 +302,7 @@
 	var/lethal = 0
 	var/locked = 1
 	var/control_area //can be area name, path or nothing.
+	var/ailock = 0 // AI cannot use this
 	req_access = list(access_ai_upload)
 
 /obj/machinery/turretid/New()
@@ -339,7 +340,10 @@
 			user << "\red Access denied."
 
 /obj/machinery/turretid/attack_ai(mob/user as mob)
-	return attack_hand(user)
+	if(!ailock)
+		return attack_hand(user)
+	else
+		user << "There seems to be a firewall preventing you from accessing this device."
 
 /obj/machinery/turretid/attack_hand(mob/user as mob)
 	if ( (get_dist(src, user) > 1 ))
