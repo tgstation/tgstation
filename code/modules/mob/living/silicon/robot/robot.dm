@@ -414,12 +414,12 @@
 					user << "You emag [src]'s interface."
 					message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
 					log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
-//					clear_supplied_laws()
-//					clear_inherent_laws()
-//					laws = new /datum/ai_laws/syndicate_override They just get the law zero now.
+					clear_supplied_laws()
+					clear_inherent_laws()
+					laws = new /datum/ai_laws/syndicate_override
 					var/time = time2text(world.realtime,"hh:mm:ss")
 					lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-					set_zeroth_law("Only [user.real_name] and people he designates as being such are humans.")
+					set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
 					src << "\red ALERT: Foreign software detected."
 					sleep(5)
 					src << "\red Initiating diagnostics..."
