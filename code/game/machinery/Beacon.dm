@@ -13,11 +13,12 @@
 
 	New()
 		..()
-		hide(T.intact)
 		var/turf/T = loc
 		Beacon = new /obj/item/device/radio/beacon
 		Beacon.invisibility = 100
 		Beacon.loc = T
+
+		hide(T.intact)
 
 	Del()
 		if(Beacon)
