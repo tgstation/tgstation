@@ -1026,24 +1026,25 @@
 			*/
 
 			// Puke if toxloss is too high
-			if (prob(50) && getToxLoss() >= 45 && nutrition > 20)
-				lastpuke ++
-				if(lastpuke >= 5)
-					Stun(rand(4,6))
+			if(!stat)
+				if (prob(50) && getToxLoss() >= 45 && nutrition > 20)
+					lastpuke ++
+					if(lastpuke >= rand(15,20))
+						Stun(rand(4,6))
 
-					for(var/mob/O in viewers(world.view, src))
-						O.show_message(text("<b>\red [] throws up!</b>", src), 1)
-					playsound(src.loc, 'splat.ogg', 50, 1)
+						for(var/mob/O in viewers(world.view, src))
+							O.show_message(text("<b>\red [] throws up!</b>", src), 1)
+						playsound(src.loc, 'splat.ogg', 50, 1)
 
-					var/turf/location = loc
-					if (istype(location, /turf/simulated))
-						location.add_vomit_floor(src, 1)
+						var/turf/location = loc
+						if (istype(location, /turf/simulated))
+							location.add_vomit_floor(src, 1)
 
-					nutrition -= rand(10,20)
-					adjustToxLoss(-rand(1,10))
+						nutrition -= rand(10,20)
+						adjustToxLoss(-rand(1,10))
 
-					// make it so you can only puke so fast
-					lastpuke = 0
+						// make it so you can only puke so fast
+						lastpuke = 0
 
 		handle_virus_updates()
 			if(bodytemperature > 406)
