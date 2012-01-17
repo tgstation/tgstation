@@ -178,7 +178,7 @@
 		if("Station Engineer")
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks)
 		if("Assistant")
-			return list(access_maint_tunnels)
+			return list()
 		if("Chaplain")
 			return list(access_morgue, access_chapel_office, access_crematorium)
 		if("Detective")
@@ -194,9 +194,9 @@
 		if("Captain")
 			return get_all_accesses()
 		if("Security Officer")
-			return list(access_security, access_brig, access_court)
+			return list(access_security, access_brig, access_court, access_maint_tunnels)
 		if("Warden")
-			return list(access_security, access_brig, access_armory, access_court)
+			return list(access_security, access_brig, access_armory, access_court, access_maint_tunnels)
 		if("Scientist")
 			return list(access_tox, access_tox_storage, access_research, access_xenobiology)
 		if("Head of Security")
@@ -225,7 +225,7 @@
 		if("Mime")
 			return list(access_maint_tunnels, access_mime, access_theatre)
 		if("Chef")
-			return list(access_kitchen, access_morgue)
+			return list(access_kitchen)
 		if("Roboticist")
 			return list(access_robotics, access_tech_storage, access_maint_tunnels)
 		if("Cargo Technician")
@@ -482,7 +482,7 @@
 /proc/get_all_jobs()
 	return list("Assistant", "Station Engineer", "Shaft Miner", "Detective", "Medical Doctor", "Captain", "Security Officer", "Warden",
 				"Geneticist", "Scientist", "Head of Security", "Head of Personnel", "Atmospheric Technician",
-				"Chaplain", "Bartender", "Chemist", "Janitor", "Clown", "Mime", "Chef", "Roboticist", "Quartermaster",
+				"Chaplain", "Bartender", "Chemist", "Janitor", "Chef", "Roboticist", "Quartermaster",
 				"Chief Engineer", "Research Director", "Botanist", "Librarian", "Lawyer", "Virologist", "Cargo Technician", "Chief Medical Officer")
 
 /proc/get_all_centcom_jobs()
