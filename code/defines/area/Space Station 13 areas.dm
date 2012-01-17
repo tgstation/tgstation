@@ -81,7 +81,7 @@ proc/process_ghost_teleport_locs()
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z == 1 || picked.z == 5)
+		if (picked.z == 1 || picked.z == 3 || picked.z == 5)
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 
@@ -1203,6 +1203,37 @@ proc/process_ghost_teleport_locs()
 /area/generic
 	name = "Unknown"
 	icon_state = "storage"
+
+
+// Telecommunications Satellite
+
+/area/tcommsat/entrance
+	name = "Telecommunications Satellite Teleporter"
+	icon_state = "tcomsatentrance"
+
+/area/tcommsat/chamber
+	name = "Telecommunications Satellite Central Compartment"
+	icon_state = "tcomsatcham"
+
+/area/turret_protected/tcomfoyer
+	name = "Telecommunications Satellite Foyer"
+	icon_state = "tcomsatlob"
+
+/area/turret_protected/tcomwest
+	name = "Telecommunications Satellite West Wing"
+	icon_state = "tcomsatwest"
+
+/area/turret_protected/tcomeast
+	name = "Telecommunications Satellite East Wing"
+	icon_state = "tcomsateast"
+
+/area/tcommsat/computer
+	name = "Telecommunications Satellite Observatory"
+	icon_state = "tcomsatcomp"
+
+/area/tcommsat/lounge
+	name = "Telecommunications Satellite Lounge"
+	icon_state = "tcomsatlounge"
 
 
 /////////////////////////////////////////////////////////////////////
