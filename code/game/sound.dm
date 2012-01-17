@@ -27,10 +27,16 @@
 
 				M << S
 
-				for(var/obj/structure/closet/L in range(world.view+extrarange, source))
-					if(locate(/mob/, L))
-						for(var/mob/Ml in L)
-							Ml << S
+	for(var/obj/structure/closet/L in range(world.view+extrarange, source))
+		if(locate(/mob/, L))
+			for(var/mob/M in L)
+				if (M.client)
+					if(M.ear_deaf <= 0 || !M.ear_deaf)
+						if(isturf(source))
+							var/dx = source.x - M.x
+							S.pan = max(-100, min(100, dx/8.0 * 100))
+
+						M << S
 																		// Now plays for people in lockers!  -- Polymorph
 
 /mob/proc/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num)
