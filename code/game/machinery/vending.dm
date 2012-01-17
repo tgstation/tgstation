@@ -31,7 +31,7 @@ To combat this, I changed the window name. -- Doohl
 	page = 1
 	spawn(4)
 		src.slogan_list = dd_text2List(src.product_slogans, ";")
-		src.small_ads = dd_text2List(src.product_ads, ";") // huehue
+		//src.small_ads = dd_text2List(src.product_ads, ";") // huehue
 		var/list/temp_paths = dd_text2List(src.product_paths, ";")
 		var/list/temp_amounts = dd_text2List(src.product_amounts, ";")
 		var/list/temp_hidden = dd_text2List(src.product_hidden, ";")
@@ -112,9 +112,10 @@ To combat this, I changed the window name. -- Doohl
 	winset(user, "vendingwindow_n.title", "text=\"[src.name]\"")
 	winset(user, "vendingwindow_n.advert", "text=\"\"")
 
-	if(prob(25) && small_ads.len)
+	/*if(prob(25) && small_ads.len)
 		var/advert = pick(small_ads)
-		winset(user, "vendingwindow_n.advert", "text=\"[advert]\"")
+		winset(user, "vendingwindow_n.advert", "text=\"[advert]\"")*/
+
 	//  Create a list of things to display
 	var/list/products = src.product_records
 	if(extended_inventory)
