@@ -40,13 +40,6 @@
 		else
 			if(bitecount == 0 || prob(50))
 				M.emote("nibbles away at the [src]")
-			bitecount++
-			if(bitecount >= 5)
-				var/speak_emote = pick(M:speak_emote)
-				var/sattisfaction_text = pick("[speak_emote] for more!", "[speak_emote] from enjoyment.", "looks at the area where the [src] was")
-				if(sattisfaction_text)
-					M.emote("[sattisfaction_text]")
-				del(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/candy
 	name = "candy"

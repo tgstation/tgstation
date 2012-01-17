@@ -1021,6 +1021,7 @@
 #include "code\WorkInProgress\SkyMarshal\traitoritems.dm"
 #include "code\WorkInProgress\Tastyfish\Eliza.dm"
 #include "code\WorkInProgress\Tastyfish\Eliza_Data.dm"
+#include "code\WorkInProgress\Tastyfish\livestock.dm"
 #include "code\WorkInProgress\Tastyfish\paiLiza.dm"
 #include "code\WorkInProgress\Tastyfish\Parser.dm"
 #include "code\WorkInProgress\Tastyfish\wallmount_frame.dm"
