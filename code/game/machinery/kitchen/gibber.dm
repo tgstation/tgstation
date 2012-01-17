@@ -13,7 +13,7 @@
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 500
-
+	var/emagged = 0
 
 /obj/machinery/gibber/New()
 	..()
@@ -49,20 +49,36 @@
 		src.startgibbing(user)
 
 /obj/machinery/gibber/attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
-	if(src.occupant)
-		user << "\red The gibber is full, empty it first!"
-		return
-	if (!( istype(G, /obj/item/weapon/grab)) || !(istype(G.affecting, /mob/living/carbon/human)))
-		user << "\red This item is not suitable for the gibber!"
-		return
-	if(G.affecting.abiotic(1))
-		user << "\red Subject may not have abiotic items on."
+	if(istype(G,/obj/item/weapon/card/emag))
+		user.visible_message( \
+			"\red [user] swipes a strange card through \the [src]'s control panel!", \
+			"\red You swipe a strange card through \the [src]'s control panel!", \
+			"You hear a scratchy sound.")
+		emagged = 1
 		return
 
-	user.visible_message("\red [user] starts to put [G.affecting] into the gibber!")
+	if(src.occupant)
+		user << "\red \The [src] is full, empty it first!"
+		return
+	if (!istype(G, /obj/item/weapon/grab))
+		user << "\red This item is not suitable for \the [src]!"
+		return
+	if(istype(G.affecting, /mob/living/carbon/human))
+		if(!emagged)
+			user << "\red \The [src] buzzes and spits [G.affecting] back out."
+			return
+		if(G.affecting.abiotic(1))
+			user << "\red Subject may not have abiotic items on."
+			return
+	else if(istype(G.affecting, /mob/living/carbon/monkey) || istype(G.affecting, /mob/living/carbon/alien) || istype(G.affecting, /mob/living/simple_animal))
+		// do nothing special
+	else
+		user << "\red This item is not suitable for \the [src]!"
+
+	user.visible_message("\red [user] starts to put [G.affecting] into \the [src]!")
 	src.add_fingerprint(user)
 	if(do_after(user, 30) && G && G.affecting && !occupant)
-		user.visible_message("\red [user] stuffs [G.affecting] into the gibber!")
+		user.visible_message("\red [user] stuffs [G.affecting] into \the [src]!")
 		var/mob/M = G.affecting
 		if(M.client)
 			M.client.perspective = EYE_PERSPECTIVE
@@ -109,21 +125,56 @@
 		M.show_message("\red You hear a loud squelchy grinding sound.", 1)
 	src.operating = 1
 	update_icon()
-	var/sourcename = src.occupant.real_name
-	var/sourcejob = src.occupant.job
-	var/sourcenutriment = src.occupant.nutrition / 15
-	var/sourcetotalreagents = src.occupant.reagents.total_volume
-	var/totalslabs = 3
 
-	var/obj/item/weapon/reagent_containers/food/snacks/meat/human/allmeat[totalslabs]
-	for (var/i=1 to totalslabs)
-		var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat = new
-		newmeat.name = sourcename + newmeat.name
-		newmeat.subjectname = sourcename
-		newmeat.subjectjob = sourcejob
-		newmeat.reagents.add_reagent ("nutriment", sourcenutriment / totalslabs) // Thehehe. Fat guys go first
-		src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the
-		allmeat[i] = newmeat
+	var/list/obj/item/weapon/reagent_containers/food/snacks/allmeat = new()
+
+	if(istype(occupant,/mob/living/carbon/human))
+		var/sourcename = src.occupant.real_name
+		var/sourcejob = src.occupant.job
+		var/sourcenutriment = src.occupant.nutrition / 15
+		var/sourcetotalreagents = src.occupant.reagents.total_volume
+		var/totalslabs = 8
+
+		for (var/i=1 to totalslabs)
+			var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat = new()
+			newmeat.name = sourcename + newmeat.name
+			newmeat.subjectname = sourcename
+			newmeat.subjectjob = sourcejob
+			newmeat.reagents.add_reagent("nutriment", sourcenutriment / totalslabs) // Thehehe. Fat guys go first
+			src.occupant.reagents.trans_to(newmeat, round(sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the
+			allmeat += newmeat
+	else if(istype(occupant,/mob/living/carbon/monkey))
+		var/sourcename = src.occupant.real_name
+		var/sourcenutriment = src.occupant.nutrition / 15
+		var/sourcetotalreagents = src.occupant.reagents.total_volume
+		var/totalslabs = 5
+
+		for (var/i=1 to totalslabs)
+			var/obj/item/weapon/reagent_containers/food/snacks/meat/monkey/newmeat = new()
+			newmeat.name = sourcename + newmeat.name
+			newmeat.reagents.add_reagent("nutriment", sourcenutriment / totalslabs) // Thehehe. Fat guys go first
+			src.occupant.reagents.trans_to(newmeat, round(sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the
+			allmeat += newmeat
+	else if(istype(occupant,/mob/living/carbon/alien))
+		var/sourcename = src.occupant.real_name
+		var/sourcenutriment = src.occupant.nutrition / 15
+		var/sourcetotalreagents = src.occupant.reagents.total_volume
+		var/totalslabs = 5
+
+		for (var/i=1 to totalslabs)
+			var/obj/item/weapon/reagent_containers/food/snacks/xenomeat/newmeat = new()
+			newmeat.name = sourcename + newmeat.name
+			newmeat.reagents.add_reagent("nutriment", sourcenutriment / totalslabs) // Thehehe. Fat guys go first
+			src.occupant.reagents.trans_to(newmeat, round(sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the
+			allmeat += newmeat
+	else if(istype(occupant,/mob/living/simple_animal))
+		var/sourcenutriment = src.occupant.nutrition / 15
+		var/totalslabs = occupant:meat_amount
+
+		for (var/i=1 to totalslabs)
+			var/obj/item/weapon/reagent_containers/food/snacks/newmeat = new occupant:meat_type()
+			newmeat.reagents.add_reagent("nutriment", sourcenutriment / totalslabs) // Thehehe. Fat guys go first
+			allmeat += newmeat
 
 	src.occupant.death(1)
 	src.occupant.ghostize()
@@ -131,7 +182,7 @@
 	spawn(src.gibtime)
 		playsound(src.loc, 'splat.ogg', 50, 1)
 		operating = 0
-		for (var/i=1 to totalslabs)
+		for (var/i=1 to allmeat.len)
 			var/obj/item/meatslab = allmeat[i]
 			var/turf/Tx = locate(src.x - i, src.y, src.z)
 			meatslab.loc = src.loc
@@ -140,5 +191,3 @@
 				new /obj/effect/decal/cleanable/blood/gibs(Tx,i)
 		src.operating = 0
 		update_icon()
-
-

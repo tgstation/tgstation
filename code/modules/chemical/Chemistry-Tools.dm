@@ -722,7 +722,8 @@
 		/obj/machinery/disposal,
 		/obj/machinery/disease2/incubator,
 		/obj/machinery/disease2/isolator,
-		/obj/machinery/disease2/biodestroyer
+		/obj/machinery/disease2/biodestroyer,
+		/mob/living/simple_animal/livestock/cow
 	)
 
 	examine()
@@ -1339,7 +1340,60 @@
 							del(src)
 				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
 				return 1
+		else if(istype(M, /mob/living/simple_animal/livestock))
+			if(M == user)								//If you're eating it yourself.
+				var/fullness = (M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)) / M:max_nutrition
+				if (fullness <= 0.1)
+					M << "\red You hungrily chew out a piece of [src] and gobble it!"
+				if (fullness > 0.1 && fullness <= 0.27)
+					M << "\blue You hungrily begin to eat [src]."
+				if (fullness > 0.27 && fullness <= 0.64)
+					M << "\blue You take a bite of [src]."
+				if (fullness > 0.64 && fullness <= 1)
+					M << "\blue You unwillingly chew a bit of [src]."
+				if (fullness > 1)
+					M << "\red You cannot force any more of [src] to go down your throat."
+					return 0
+			else
+				var/fullness = (M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)) / M:max_nutrition
+				if (fullness <= 1)
+					for(var/mob/O in viewers(world.view, user))
+						O.show_message("\red [user] attempts to feed [M] [src].", 1)
+				else
+					for(var/mob/O in viewers(world.view, user))
+						O.show_message("\red [user] cannot force anymore of [src] down [M]'s throat.", 1)
+						return 0
 
+				if(!do_mob(user, M)) return
+
+				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
+				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
+
+				for(var/mob/O in viewers(world.view, user))
+					O.show_message("\red [user] feeds [M] [src].", 1)
+
+			if(reagents)								//Handle ingestion of the reagent.
+				if(reagents.total_volume)
+					reagents.reaction(M, INGEST)
+					spawn(5)
+						if(reagents.total_volume > bitesize)
+							/*
+							 * I totally cannot understand what this code supposed to do.
+							 * Right now every snack consumes in 2 bites, my popcorn does not work right, so I simplify it. -- rastaf0
+							var/temp_bitesize =  max(reagents.total_volume /2, bitesize)
+							reagents.trans_to(M, temp_bitesize)
+							*/
+							reagents.trans_to(M, bitesize)
+						else
+							reagents.trans_to(M, reagents.total_volume)
+						bitecount++
+						On_Consume()
+						if(!reagents.total_volume)
+							if(M == user) user << "\red You finish eating [src]."
+							else user << "\red [M] finishes eating [src]."
+							del(src)
+				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
+				return 1
 		return 0
 
 	attackby(obj/item/I as obj, mob/user as mob)

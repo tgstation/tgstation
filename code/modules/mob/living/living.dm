@@ -165,7 +165,10 @@
 	return
 
 /mob/living/proc/UpdateDamageIcon()
-		return
+	return
+
+/mob/living/attack_animal(mob/M)
+	attack_paw(M)	// treat it like a normal non-human attack
 
 /mob/living/verb/change_flavor_text()
 	set name = "Change Flavor Text"
