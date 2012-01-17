@@ -85,7 +85,7 @@
 	name = "Pill bottle (tramadol)"
 	desc = "Contains painkiller pills."
 
-/obj/item/weapon/storage/pill_bottle/kelotane/New()
+/obj/item/weapon/storage/pill_bottle/tramadol/New()
 	..()
 	new /obj/item/weapon/reagent_containers/pill/tramadol( src )
 	new /obj/item/weapon/reagent_containers/pill/tramadol( src )

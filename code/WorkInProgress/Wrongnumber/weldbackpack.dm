@@ -1,20 +1,21 @@
 /obj/item/weapon/weldpack
-	name = "Portable welding tank."
-	desc = "For welding on the go!"
-	icon_state = "backpack"
+	name = "Welding kit"
+	desc = "A heavy-duty, portable welding fluid carrier."
+	flags = ONBACK
+	icon_state = "engiepack"
 	w_class = 4.0
-	flags = 259.0
-	var/max_fuel = 100
+	var/max_fuel = 350
 
 /obj/item/weapon/weldpack/New()
-	var/datum/reagents/R = new/datum/reagents(100) //5 refills
+	var/datum/reagents/R = new/datum/reagents(max_fuel) //5 refills
 	reagents = R
 	R.my_atom = src
-	R.add_reagent("fuel", 100)
+	R.add_reagent("fuel", max_fuel)
 
 /obj/item/weapon/weldpack/attackby(obj/item/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/weldingtool)
-		if(W.welding & prob(15))
+	if(istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/T = W
+		if(T.welding & prob(50))
 			message_admins("[key_name_admin(user)] triggered a fueltank explosion.")
 			log_game("[key_name(user)] triggered a fueltank explosion.")
 			user << "\red That was stupid of you."
@@ -23,9 +24,9 @@
 				del(src)
 			return
 		else
-			if(W.welding)
+			if(T.welding)
 				user << "\red That was close!"
-			src.reagents.trans_to(W, W.max_fuel)
+			src.reagents.trans_to(W, T.max_fuel)
 			user << "\blue Welder refilled!"
 			playsound(src.loc, 'refill.ogg', 50, 1, -6)
 			return
@@ -33,14 +34,14 @@
 	return
 
 /obj/item/weapon/weldpack/afterattack(obj/O as obj, mob/user as mob)
-		if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.reagents.total_volume < max_fuel)
-			O.reagents.trans_to(src, max_fuel)
-			user << "\blue Tank refilled!"
-			playsound(src.loc, 'refill.ogg', 50, 1, -6)
-			return
-		else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.reagents.total_volume == max_fuel)
-			user << "\blue Tank is already full!"
-			return
+	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.reagents.total_volume < max_fuel)
+		O.reagents.trans_to(src, max_fuel)
+		user << "\blue You crack the cap off the top of the pack and fill it back up again from the tank."
+		playsound(src.loc, 'refill.ogg', 50, 1, -6)
+		return
+	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.reagents.total_volume == max_fuel)
+		user << "\blue The pack is already full!"
+		return
 
 /obj/item/weapon/weldpack/examine()
 	set src in usr

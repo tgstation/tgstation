@@ -458,7 +458,7 @@
 	var/registered = null
 	var/assignment = null
 	var/obj/item/weapon/photo/PHOTO = null
-	var/over = 1
+	var/over_jumpsuit = 1 // If set to 0, it won't display on top of the mob's jumpsuit
 
 /obj/item/weapon/card/id/gold
 	name = "identification card"
@@ -567,6 +567,7 @@
 	w_class = 2.0
 	throw_speed = 3
 	throw_range = 10
+	flags = ONBELT
 
 #define MAXCOIL 30
 /obj/item/weapon/cable_coil
