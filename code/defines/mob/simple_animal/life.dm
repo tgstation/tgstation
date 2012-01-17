@@ -189,8 +189,11 @@
 			return "[emote], \"[text]\""
 	return "says, \"[text]\"";
 
-/mob/living/simple_animal/emote(var/act)
-	if(act)
+/mob/living/simple_animal/emote(var/act,var/m_type=1,var/message = null)
+	if(act == "me")
+		for (var/mob/O in viewers(src, null))
+			O.show_message("<B>[src]</B> [message]")
+	else if(act)
 		for (var/mob/O in viewers(src, null))
 			O.show_message("<B>[src]</B> [act].")
 

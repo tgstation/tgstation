@@ -155,7 +155,8 @@ var/list/supply_groups = new()
 		if((locate(/mob/living) in T)) return 0
 		if((locate(/obj/item/device/radio/beacon) in T)) return 0
 		for(var/atom/ATM in T)
-			if((locate(/mob/living) in ATM)) return 0
+			if((locate(/mob/living/carbon) in ATM)) return 0	// allow simple_animals to be transported in containers
+			if((locate(/mob/living/silicon) in ATM)) return 0
 			if((locate(/obj/item/device/radio/beacon) in ATM)) return 0
 
 	return 1
@@ -172,6 +173,10 @@ var/list/supply_groups = new()
 /obj/item/weapon/paper/manifest
 	name = "Supply Manifest"
 
+	New()
+		..()
+		overlays += "paper_words"
+
 /proc/process_supply_order()
 	var/shuttleat = supply_shuttle_at_station ? SUPPLY_STATION_AREATYPE : SUPPLY_DOCK_AREATYPE
 
@@ -187,7 +192,7 @@ var/list/supply_groups = new()
 		var/pickedloc = 0
 		var/found = 0
 		for(var/C in markers)
-			if (locate(/obj/structure/closet/crate) in get_turf(C)) continue
+			if (locate(/obj/structure/closet) in get_turf(C)) continue
 			found = 1
 			pickedloc = get_turf(C)
 		if (!found) pickedloc = get_turf(pick(markers))
@@ -305,6 +310,7 @@ var/list/supply_groups = new()
 		var/reason = input(usr,"Reason:","Why do you require this item?","")
 
 		reqform.name = "Requisition Form - [P.name]"
+		reqform.overlays += "paper_words"
 		reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
 
 		if (istype(usr:wear_id, /obj/item/weapon/card/id))
