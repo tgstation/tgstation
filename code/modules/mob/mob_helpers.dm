@@ -240,6 +240,22 @@ proc/slur(phrase)
 		p++//for each letter p is increased to find where the next letter will be.
 	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
+proc/Gibberish(t, p)
+	/* Turn text into complete gibberish! */
+	var/returntext = ""
+	for(var/i = 1, i <= length(t), i++)
+
+		var/letter = copytext(t, i, i+1)
+		if(prob(50))
+			if(p >= 70)
+				letter = ""
+
+			for(var/j = 1, j <= rand(0, 2), j++)
+				letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
+
+		returntext += letter
+
+	return returntext
 
 /proc/ninjaspeak(n)
 /*

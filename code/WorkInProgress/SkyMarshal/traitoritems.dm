@@ -7,7 +7,7 @@
 	item_state = "zippo"
 	w_class = 1.0
 	m_amt = 80
-
+/*
 /obj/item/device/jammer
 	name = "strange device"
 	desc = "It blinks and has an antenna on it.  Weird."
@@ -72,3 +72,4 @@
 		icon_state = "t-ray0"
 
 	sleep(2)
+	*/

@@ -165,7 +165,6 @@
 			servers = list()
 			consoles = list()
 		badmin = 0
-		emagged = 0
 
 	Topic(href, href_list)
 		if(..())
