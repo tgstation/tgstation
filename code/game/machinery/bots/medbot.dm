@@ -296,7 +296,7 @@
 
 	if(src.patient && src.path.len == 0 && (get_dist(src,src.patient) > 1))
 		spawn(0)
-			src.path = AStar(src.loc, get_turf(src.patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 30,id=botcard)
+			src.path = AStar(src.loc, get_turf(src.patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_ortho, 0, 30,id=botcard)
 			src.path = reverselist(src.path)
 			if(src.path.len == 0)
 				src.oldpatient = src.patient
