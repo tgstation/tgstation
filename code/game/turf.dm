@@ -338,6 +338,23 @@
 
 	return src.attack_hand(user)
 
+
+/turf/simulated/wall/attack_animal(mob/living/simple_animal/M as mob)
+	if((M.destroyer))
+		if (istype(src, /turf/simulated/wall/r_wall))
+			M << text("\blue This wall is far too strong for you to destroy.")
+			return
+		else
+			if (prob(40))
+				M << text("\blue You smash through the wall.")
+				dismantle_wall(1)
+				return
+			else
+				M << text("\blue You smash against the wall.")
+				return
+
+	return src.attack_animal(M)
+
 /turf/simulated/wall/attack_hand(mob/user as mob)
 	if ((user.mutations & HULK))
 		if (prob(40))
