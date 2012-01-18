@@ -335,6 +335,10 @@
 		user << "\blue You're going to need to remove their head cover first."
 		return
 
+	var/datum/organ/external/head = H.organs["head"]
+	if(head.destroyed)
+		user << "\blue Put it where? There's no head."
+
 //since these people will be dead M != usr
 
 	if(M:brain_op_stage == 4.0)
@@ -360,6 +364,14 @@
 			brainmob.mind.transfer_to(M)
 		else
 			M.key = brainmob.key
+
+		// force re-entering corpse
+		if (!M.client)
+			for(var/mob/dead/observer/ghost in world)
+				if(ghost.corpse == brainmob && ghost.client)
+					ghost.cancel_camera()
+					ghost.reenter_corpse()
+					break
 
 		M:brain_op_stage = 3.0
 
