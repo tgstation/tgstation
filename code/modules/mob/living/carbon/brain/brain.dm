@@ -30,3 +30,10 @@
 		if (istype(other, /mob/living/carbon/metroid))
 			return 1
 		return ..()
+
+	Login()
+		if(!container)
+			verbs += /mob/proc/ghost
+
+	Logout()
+		verbs -= /mob/proc/ghost
