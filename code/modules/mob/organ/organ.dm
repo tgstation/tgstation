@@ -103,6 +103,20 @@
 			src.damage_state = n_is
 			return 1
 		return 0
+	
+	
+	proc/getDisplayName()
+		switch(src.name)
+			if("l_leg")
+				return "left leg"
+			if("r_leg")
+				return "right leg"
+			if("l_arm")
+				return "left arm"
+			if("r_arm")
+				return "right arm"
+			else
+				return src.name
 
 
 

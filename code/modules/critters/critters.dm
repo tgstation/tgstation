@@ -266,7 +266,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	attacktext = "cuts"
-	attack_sound = 'bladeslice.wav'
+	attack_sound = 'bladeslice.ogg'
 	chasestate = "viscerator_attack"
 	deathtext = "is smashed into pieces!"
 

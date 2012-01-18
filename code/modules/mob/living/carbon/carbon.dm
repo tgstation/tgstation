@@ -156,24 +156,52 @@
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if (src.health > 0)
-		var/t_him = "it"
-		if (src.gender == MALE)
-			t_him = "him"
-		else if (src.gender == FEMALE)
-			t_him = "her"
-		if (istype(src,/mob/living/carbon/human) && src:w_uniform)
+		if(src == M && istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = src
-			H.w_uniform.add_fingerprint(M)
-		src.sleeping = 0
-		src.resting = 0
-		AdjustParalysis(-3)
-		AdjustStunned(-3)
-		AdjustWeakened(-3)
-		playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
-		M.visible_message( \
-			"\blue [M] shakes [src] trying to wake [t_him] up!", \
-			"\blue You shake [src] trying to wake [t_him] up!", \
-			)
+			src.visible_message( \
+				text("\blue [src] examines [].",src.gender==MALE?"himself":"herself"), \
+				"\blue You check yourself for injuries." \
+				)
+
+			for(var/datum/organ/external/org in H.organs)
+				var/status = ""
+				if(org.brute_dam > 0)
+					status = "bruised"
+				if(org.brute_dam > 20)
+					status = "bleeding"
+				if(org.brute_dam > 40)
+					status = "mangled"
+				if(org.brute_dam > 0 && org.burn_dam > 0)
+					status += " and "
+				if(org.burn_dam > 40)
+					status += "peeling away"
+
+				else if(org.burn_dam > 10)
+					status += "blistered"
+				else if(org.burn_dam > 0)
+					status += "numb"
+				if(status == "")
+					status = "OK"
+				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.getDisplayName(),status),1)
+		else
+			var/t_him = "it"
+			if (src.gender == MALE)
+				t_him = "him"
+			else if (src.gender == FEMALE)
+				t_him = "her"
+			if (istype(src,/mob/living/carbon/human) && src:w_uniform)
+				var/mob/living/carbon/human/H = src
+				H.w_uniform.add_fingerprint(M)
+			src.sleeping = 0
+			src.resting = 0
+			AdjustParalysis(-3)
+			AdjustStunned(-3)
+			AdjustWeakened(-3)
+			playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
+			M.visible_message( \
+				"\blue [M] shakes [src] trying to wake [t_him] up!", \
+				"\blue You shake [src] trying to wake [t_him] up!", \
+				)
 
 /mob/living/carbon/proc/eyecheck()
 	return 0

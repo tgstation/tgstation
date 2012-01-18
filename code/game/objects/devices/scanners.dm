@@ -178,6 +178,7 @@ MASS SPECTROMETER
 	throw_range = 10
 	m_amt = 200
 	origin_tech = "magnets=1;biotech=1"
+	var/mode = 1;
 
 /obj/item/device/healthanalyzer/attack(mob/M as mob, mob/user as mob)
 	if ((user.mutations & CLUMSY || user.getBrainLoss() >= 60) && prob(50))
@@ -204,6 +205,16 @@ MASS SPECTROMETER
 		user.show_message(text("\blue \t Damage Specifics: []-[]-[]-[]", M.getOxyLoss() > 50 ? "\red [M.getOxyLoss()]" : M.getOxyLoss(), M.getToxLoss() > 50 ? "\red [M.getToxLoss()]" : M.getToxLoss(), M.getFireLoss() > 50 ? "\red[M.getFireLoss()]" : M.getFireLoss(), M.getBruteLoss() > 50 ? "\red[M.getBruteLoss()]" : M.getBruteLoss()), 1)
 	user.show_message("\blue Key: Suffocation/Toxin/Burns/Brute", 1)
 	user.show_message("\blue Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)", 1)
+	if(mode == 1 && istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		var/list/damaged = H.get_damaged_organs(1,1)
+		user.show_message("\blue Localized Damage, Brute\\Burn:",1)
+		if(length(damaged)>0)
+			for(var/datum/organ/external/org in damaged)
+				user.show_message(text("\blue \t []: []\blue-[]",capitalize(org.getDisplayName()),(org.brute_dam > 0)?"\red [org.brute_dam]":0,(org.burn_dam > 0)?"\red [org.burn_dam]":0),1)
+		else
+			user.show_message("\blue \t Limbs are OK.",1)
+
 	if((M.changeling && M.changeling.changeling_fakedeath) ||  (M.reagents && M.reagents.has_reagent("zombiepowder")))
 		user.show_message(text("\blue [] | [] | [] | []", fake_oxy > 50 ? "\red Severe oxygen deprivation detected\blue" : "Subject bloodstream oxygen level normal", M.getToxLoss() > 50 ? "\red Dangerous amount of toxins detected\blue" : "Subject bloodstream toxin level minimal", M.getFireLoss() > 50 ? "\red Severe burn damage detected\blue" : "Subject burn injury status O.K", M.getBruteLoss() > 50 ? "\red Severe anatomical damage detected\blue" : "Subject brute-force injury status O.K"), 1)
 	else
@@ -223,6 +234,17 @@ MASS SPECTROMETER
 		user.show_message(text("\red Significant brain damage detected. Subject may have had a concussion."), 1)
 	src.add_fingerprint(user)
 	return
+
+/obj/item/device/healthanalyzer/verb/toggle_mode()
+	set name = "Switch Verbosity"
+	set category = "Object"
+
+	mode = !mode
+	switch (mode)
+		if(1)
+			usr << "The scanner now shows specific limb damage."
+		if(0)
+			usr << "The scanner no longer shows limb damage."
 
 
 /obj/item/device/analyzer
