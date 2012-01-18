@@ -158,9 +158,16 @@ datum/controller/radio
 
 		return 1
 
-	proc/return_frequency(var/frequency as num)
-		var/f_text = num2text(frequency)
-		return frequencies[f_text]
+	proc/return_frequency(var/new_frequency as num)
+		var/f_text = num2text(new_frequency)
+		var/datum/radio_frequency/frequency = frequencies[f_text]
+
+		if(!frequency)
+			frequency = new
+			frequency.frequency = new_frequency
+			frequencies[f_text] = frequency
+
+		return frequency
 
 datum/radio_frequency
 	var/frequency as num

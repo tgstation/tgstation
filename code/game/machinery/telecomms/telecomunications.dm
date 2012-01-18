@@ -189,6 +189,9 @@
 				delay = initial(delay)
 
 	proc/produce_heat(heat_amt)
+		if(heatgen == 0)
+			return
+
 		if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
 			var/turf/simulated/L = loc
 			if(istype(L))

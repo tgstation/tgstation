@@ -254,9 +254,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		// --- Modifications to the mob's identity ---
 
 		// The mob is disguising their identity:
-		if (istype(M.wear_mask, /obj/item/clothing/mask/gas/voice)&&M.wear_mask:vchange)
-			displayname = M.wear_mask:voice
-			jobname = "Unknown"
+		if (istype(M.wear_mask, /obj/item/clothing/mask/gas/voice))
+			if(M.wear_mask:vchange)
+				displayname = M.wear_mask:voice
+				jobname = "Unknown"
 			voicemask = 1
 
 
@@ -299,7 +300,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			for(var/obj/machinery/telecomms/receiver/R in world)
 				R.receive_signal(signal)
 
-		  	// Receiving code can be located in _____.dm
+			// Allinone can act as receivers.
+			for(var/obj/machinery/telecomms/allinone/R in world)
+				R.receive_signal(signal)
+
+		  	// Receiving code can be located in Telecommunications.dm
 			return
 
 

@@ -1027,10 +1027,10 @@
 
 			// Puke if toxloss is too high
 			if(!stat)
-				if (prob(50) && getToxLoss() >= 45 && nutrition > 20)
+				if (getToxLoss() >= 45 && nutrition > 20)
 					lastpuke ++
-					if(lastpuke >= rand(15,20))
-						Stun(rand(4,6))
+					if(lastpuke >= 25) // about 25 second delay I guess
+						Stun(5)
 
 						for(var/mob/O in viewers(world.view, src))
 							O.show_message(text("<b>\red [] throws up!</b>", src), 1)
@@ -1040,8 +1040,8 @@
 						if (istype(location, /turf/simulated))
 							location.add_vomit_floor(src, 1)
 
-						nutrition -= rand(10,20)
-						adjustToxLoss(-rand(1,10))
+						nutrition -= 20
+						adjustToxLoss(-3)
 
 						// make it so you can only puke so fast
 						lastpuke = 0
