@@ -28,6 +28,11 @@
 				if (affected_mob.nutrition > 100)
 					affected_mob.Stun(rand(4,6))
 					affected_mob << "\red You throw up!"
+					for(var/mob/O in viewers(world.view, affected_mob))
+						if(O == affected_mob)
+							continue
+						O.show_message(text("<b>\red [] throws up!</b>", affected_mob), 1)
+					playsound(affected_mob.loc, 'splat.ogg', 50, 1)
 					var/turf/location = affected_mob.loc
 					if (istype(location, /turf/simulated))
 						location.add_vomit_floor(affected_mob)

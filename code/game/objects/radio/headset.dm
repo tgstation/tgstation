@@ -5,6 +5,7 @@
 	item_state = "headset"
 	g_amt = 0
 	m_amt = 75
+	subspace_transmission = 1
 	var
 		translate_binary = 0
 		translate_hive = 0

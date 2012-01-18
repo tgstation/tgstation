@@ -1,5 +1,4 @@
 /obj/machinery/computer/arcade
-	var/emagged
 	var/turtle = 0
 
 /obj/machinery/computer/arcade/New()

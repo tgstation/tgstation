@@ -1,3 +1,14 @@
+/*
+Important notice: I changed "vendingwindow" to "vendingwindow_n" (n for new) because
+I extended the window's height a small amount and, for some reason, BYOND saves the
+height of all the panels on the player's computer in a text file. This means the
+players see some madly-deformed piece of shit window instead of what is intended.
+
+To combat this, I changed the window name. -- Doohl
+*/
+
+#define PRODUCTS_PER_PAGE		15 // # of products per page
+
 /obj/machinery/vending
 	var/const
 		WIRE_EXTEND = 1
@@ -5,6 +16,8 @@
 		WIRE_SHOCK = 3
 		WIRE_SHOOTINV = 4
 	var/page
+	var/builtpaths = 0
+	var/lastpaths
 
 /datum/data/vending_product
 	var/product_name = "generic"
@@ -18,6 +31,7 @@
 	page = 1
 	spawn(4)
 		src.slogan_list = dd_text2List(src.product_slogans, ";")
+		//src.small_ads = dd_text2List(src.product_ads, ";") // huehue
 		var/list/temp_paths = dd_text2List(src.product_paths, ";")
 		var/list/temp_amounts = dd_text2List(src.product_amounts, ";")
 		var/list/temp_hidden = dd_text2List(src.product_hidden, ";")
@@ -93,13 +107,91 @@
 		continue
 
 	return
-/obj/machinery/vending/proc/updateWindow(mob/user as mob)
-	var/i
-	for (i = 1, i <= 6, i++)
-		winclone(user, "vendingslot", "vendingslot[i]")
-		winset(user, "vendingwindow.slot[i]", "left=vendingslot[i]")
+/obj/machinery/vending/proc/updateWindow(mob/user as mob, var/rebuild = 1)
+
+	winset(user, "vendingwindow_n.title", "text=\"[src.name]\"")
+	winset(user, "vendingwindow_n.advert", "text=\"\"")
+
+	/*if(prob(25) && small_ads.len)
+		var/advert = pick(small_ads)
+		winset(user, "vendingwindow_n.advert", "text=\"[advert]\"")*/
+
+	//  Create a list of things to display
+	var/list/products = src.product_records
+	if(extended_inventory)
+		products |= src.hidden_records
+	if(coin)
+		products |= src.coin_records
+		winshow(user, "vendingwindow_n.coinbutton", 1)
+	else
+		winshow(user, "vendingwindow_n.coinbutton", 0)
+
+	if(rebuild) // rebuild the buttons and shit
+		for(var/i = 1, i <= PRODUCTS_PER_PAGE, i++) // "refresh" everything to default state
+			winshow(user, "vendingwindow_n.stock[i]", 0)
+			winshow(user, "vendingwindow_n.product[i]", 0)
+			winset(user, "vendingwindow_n.product[i]", "is-disabled=false")
+			winset(user, "vendingwindow_n.product[i]", "command=\"skincmd vending;buy[i-1]\"")
+
+			if(i % 2 == 0) // even number (remainder of i / 2 == 0)
+				winset(user, "vendingwindow_n.product[i]", "background-color=#78A6C7") // Specific even color
+			else
+				winset(user, "vendingwindow_n.product[i]", "background-color=#8BA5B4") // Odd color
+
+	for (var/i = 1, i <= products.len, i++) // loop through all products
+		if(i > PRODUCTS_PER_PAGE) // too many products, don't display on this page!
+			break
+
+		// Locate our product:
+
+		if(products.len < ((page-1) * PRODUCTS_PER_PAGE) + i)
+			continue
+		var/datum/data/vending_product/product = products[((page-1) * PRODUCTS_PER_PAGE) + i] // ie.: (1-0) * (15) + 1 = index 1  [start of 1st page]
+																						   	  // or : (2-1) * (15) + 1 = index 16 [start of 2nd page]
+		// Product located: display information
+		if(product)
+			winshow(user, "vendingwindow_n.stock[i]", 1)	// unhide things
+			winshow(user, "vendingwindow_n.product[i]", 1)	// unhide things
+			winset(user, "vendingwindow_n.stock[i]", "text=\"[product.amount]\"") // set stock number label
+			winset(user, "vendingwindow_n.product[i]", "text=\"[product.product_name]\"") // set product button name
+
+			if(product.amount <= 0)
+				winset(user, "vendingwindow_n.product[i]", "is-disabled=true") // disable product button, makes it unclickable and gives it that "disabled" look
+				winset(user, "vendingwindow_n.product[i]", "background-color=#526F7C") // Darken the button
+
+	// Calculate the number of pages in total
+	var/pages = -round(-products.len / PRODUCTS_PER_PAGE)
+
+		/* Ok, it took me a while to figure out why double negatives were even necessary, but eventually I got it:
+		   Basically, instead of a small decimal number rounding to 0 it'd round to 1.
+		   Really fucking bizarre but okay I guess it works??
+		*/
+
+	winset(user, "vendingwindow_n.page", "text=[page]/[pages]")
+
+
+	if(page >= pages)
+		// Disable the forward page button if max page >= current
+		winset(user, "vendingwindow_n.forwardbutton", "is-disabled=true")
+
+	else
+		winset(user, "vendingwindow_n.forwardbutton", "is-disabled=false")
+
+	if(page <= 1)
+		// Disable the backwards page button if max page <= 1
+		winset(user, "vendingwindow_n.backbutton", "is-disabled=true")
+	else
+		winset(user, "vendingwindow_n.backbutton", "is-disabled=false")
+
+
+	/*  // Old code. I don't really like it, also I kind of needed to rewrite this stuff -- Doohl
+
+	for (var/i = 1, i <= 6, i++)
+		//winclone(user, "vendingslot", "vendingslot[i]")
+		winset(user, "vendingwindow_n.slot[i]", "left=vendingslot[i]")
 		winset(user, "vendingslot[i].buy", "command=\"skincmd vending;buy[i-1]\"")
-	winset(user, "vendingwindow.title", "text=\"[src.name]\"")
+
+	winset(user, "vendingwindow_n.title", "text=\"[src.name]\"")
 	var/list/products = src.product_records
 	if(extended_inventory)
 		products |= src.hidden_records
@@ -108,7 +200,7 @@
 	var/pages = -round(-products.len / 6)
 	if (page > pages)
 		page = pages
-	winset(user, "vendingwindow.page", "text=[page]/[pages]")
+	winset(user, "vendingwindow_n.page", "text=[page]/[pages]")
 
 	var/base = (page-1)*6+1
 	for (i = 0, i < 6, i++)
@@ -123,30 +215,48 @@
 				winset(user, "vendingslot[i+1].stock", "text=\"OUT OF STOCK\"")
 				winset(user, "vendingslot[i+1].stock", "text-color=\"#FF0000\"")
 				winshow(user, "vendingslot[i+1].buy", 0)
-			winshow(user, "vendingwindow.slot[i+1]", 1)
+			winshow(user, "vendingwindow_n.slot[i+1]", 1)
 		else
-			winshow(user, "vendingwindow.slot[i+1]", 0)
+			winshow(user, "vendingwindow_n.slot[i+1]", 0)
+	*/
 
 /obj/machinery/vending/SkinCmd(mob/user as mob, var/data as text)
 	if (get_dist(user, src) > 1)
 		return
+
 	var/list/products = src.product_records
 	if(extended_inventory)
 		products |= src.hidden_records
 	if(coin)
 		products |= src.coin_records
-	var/pages = -round(-products.len / 6)
+
+
+	var/pages = -round(-products.len / PRODUCTS_PER_PAGE)
 	switch(data)
 		if ("pagen")
 			page++
 			if (page > pages)
 				page = pages
+			updateWindow(user)
 		if ("pagep")
 			page--
 			if (page < 1)
 				page = 1
+			updateWindow(user)
+		if ("coin")
+			if(!coin)
+				user << "There is no coin in this machine."
+				return
+
+			coin.loc = src.loc
+			if(!user.get_active_hand())
+				user.put_in_hand(coin)
+			user << "\blue You remove the [coin] from the [src]"
+			coin = null
+			updateWindow(user)
+
 	if (copytext(data, 1, 4) == "buy")
-		var/base = (page-1)*6+1
+		var/base = (page-1) * PRODUCTS_PER_PAGE + 1
 		var/num = text2num(copytext(data, 4))
 		if (products.len < base + num)
 			return
@@ -168,7 +278,7 @@
 				usr << "\blue You need to insert a coin to get this item."
 				return
 			if(coin.string_attached)
-				if(prob(50))
+				if(prob(80))
 					usr << "\blue You successfully pull the coin out before the [src] could swallow it."
 				else
 					usr << "\blue You weren't able to pull the coin out fast enough, the machine ate it, string and all."
@@ -177,21 +287,34 @@
 				del(coin)
 
 		R.amount--
-		src.vend_ready = 0
+		//src.vend_ready = 0
+
+		/*
+				FOLKS IN IRC RULED THAT THIS WAS SHITTY -- Doohl
+				No more delays! Go nuts~~~~~~~~~~~
 
 		if(((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
 			spawn(0)
 				src.speak(src.vend_reply)
 				src.last_reply = world.time
+		*/
 
 		use_power(5)
 		if (src.icon_vend) //Show the vending animation if needed
 			flick(src.icon_vend,src)
-		spawn(src.vend_delay)
-			new product_path(get_turf(src))
-			src.vend_ready = 1
 
-	updateWindow(user)
+		// spawn(src.vend_delay)    NOPE.jpg
+			//src.vend_ready = 1
+
+		new product_path(get_turf(src))
+
+		if(R)
+			if(R in coin_records)
+				updateWindow(user)
+				return
+
+		updateWindow(user, 0)
+
 
 
 /obj/machinery/vending/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -211,7 +334,11 @@
 		if(src.panel_open)
 			attack_hand(user)
 		return
-	else if(istype(W, /obj/item/weapon/coin) && product_coin != "")
+	else if(istype(W, /obj/item/weapon/coin))
+		if(product_coin == "" || !product_coin)
+			user << "\blue This machine doesn't have a coin slot."
+			return
+
 		user.drop_item()
 		W.loc = src
 		coin = W
@@ -249,7 +376,7 @@
 			return
 
 	updateWindow(user)
-	winshow(user, "vendingwindow", 1)
+	winshow(user, "vendingwindow_n", 1)
 	user.skincmds["vending"] = src
 
 	var/dat = "<B>[src.name]</B>"
