@@ -26,10 +26,9 @@
 	Life()
 		..()
 		if(stat == 2)
-			explosion(src, -1, 0, 2)
 			for(var/mob/M in viewers(src, null))
 				if((M.client && !( M.blinded )))
-					M.show_message("\red [src] howls as the forces animating it overwhelm it's shattered frame ")
+					M.show_message("\red [src] collapses in a shattered heap ")
 					ghostize(0)
 			del src
 			return
