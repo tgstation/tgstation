@@ -837,12 +837,17 @@
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 10
-	var/text_size = 2
-	var/text_color = "#000000"
-	var/text_bold = 0
-	var/text_italic = 0
-	var/text_underline = 0
-	var/text_break = 0
+	var/colour = "black"	//what colour the ink is!
+
+/obj/item/weapon/pen/blue
+	desc = "It's a normal blue ink pen."
+	icon_state = "pen_blue"
+	colour = "blue"
+
+/obj/item/weapon/pen/red
+	desc = "It's a normal red ink pen."
+	icon_state = "pen_red"
+	colour = "red"
 
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
