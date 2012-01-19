@@ -147,7 +147,6 @@
 		for(var/req in src.req_one_access)
 			if(req in I.access) //has an access from the single access list
 				return 1
-		return 0
 	for(var/req in src.req_access)
 		if(!(req in I.access)) //doesn't have this access
 			return 0
@@ -164,7 +163,6 @@
 		for(var/req in src.req_one_access)
 			if(req in L) //has an access from the single access list
 				return 1
-		return 0
 	for(var/req in src.req_access)
 		if(!(req in L)) //doesn't have this access
 			return 0
