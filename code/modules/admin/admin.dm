@@ -22,6 +22,7 @@
 			if( ticker.mode.name == "blob" )
 				alert("You can't call the shuttle during blob!")
 				return
+			emergency_shuttle.fake_recall = 0 // allow admins to override gamemode
 			switch(href_list["call_shuttle"])
 				if("1")
 					if ((!( ticker ) || emergency_shuttle.location))
