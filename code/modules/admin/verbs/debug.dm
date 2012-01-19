@@ -157,7 +157,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				argL.Add( input("Pick file:","File",null) as file )
 
 			if("marked datum")
-				argL.Add(usr.client.holder.marked_datum)
+				argL.Add(holder.marked_datum)
 
 	usr << "\blue Calling '[procname]'"
 	returnval = call(procname)(arglist(argL))
@@ -209,7 +209,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				argL.Add( input("Pick file:","File",null) as file )
 
 			if("marked datum")
-				argL.Add(usr.client.holder.marked_datum)
+				argL.Add(holder.marked_datum)
 
 	usr << "\blue Calling '[procname]' on '[target]'"
 	returnval = call(target,procname)(arglist(argL))
