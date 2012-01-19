@@ -135,6 +135,7 @@
 	src.overl.layer = 5
 	src.overl.name = "electrified chair"
 	src.overl.master = src
+	spark.set_up(12, 1, src)
 	return
 
 /obj/structure/stool/chair/e_chair/Del()
@@ -156,6 +157,14 @@
 		//SN src = null
 		del(src)
 		return
+	if(istype(W, /obj/item/device/assembly/signaler))
+		var/obj/item/assembly/shock_kit/kit = src.part1
+		var/obj/item/device/radio/electropack/target = kit.part2
+		var/obj/item/device/assembly/signaler/S = W
+		target.set_frequency(S.frequency)
+		target.code = S.code
+		for(var/mob/M in viewers(src, null))
+			M.show_message("\red [user] has set the electric chair using the [W].")
 	return
 
 /obj/structure/stool/chair/e_chair/verb/toggle_power()
@@ -165,6 +174,8 @@
 
 	if ((usr.stat || usr.restrained() || !( usr.canmove ) || usr.lying))
 		return
+	if(isshocking && on)
+		shock()
 	src.on = !( src.on )
 	src.icon_state = text("e_chair[]", src.on)
 	src.overl.icon_state = text("e_chairo[]", src.on)
@@ -173,37 +184,39 @@
 /obj/structure/stool/chair/e_chair/proc/shock()
 	if (!( src.on ))
 		return
-	if ( (src.last_time + 50) > world.time)
+	if(isshocking)
+		processing_objects.Remove(src)
+		src.icon_state = text("e_chair[]", src.on)
+		src.overl.icon_state = text("e_chairo[]", src.on)
+		for(var/mob/living/M in affected)
+			M.jitteriness = 0
+			M.is_jittery = 0
+			M.anchored = 0
+			affected.Remove(M)
+		isshocking = 0
 		return
-	src.last_time = world.time
+	else
+		src.icon_state = "e_chairs"
+		src.overl.icon_state = "e_chairos"
+		spark.start()
+		for(var/mob/M in hearers(src, null))
+			M.show_message("\red The electric chair went off!.", 3, "\red You hear a deep sharp shock.", 2)
+		processing_objects.Add(src)
+		isshocking = 1
+		return
 
+/obj/structure/stool/chair/e_chair/process()
 	// special power handling
 	var/area/A = get_area(src)
-	if(!isarea(A))
-		return
-	if(!A.powered(EQUIP))
-		return
-	A.use_power(EQUIP, 5000)
-	var/light = A.power_light
-	A.updateicon()
-
-	flick("e_chairs", src)
-	flick("e_chairos", src.overl)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(12, 1, src)
-	s.start()
+	if(isarea(A) && A.powered(EQUIP))
+		A.use_power(EQUIP, 5000)
 	for(var/mob/living/M in src.loc)
-		M.burn_skin(85)
-		M << "\red <B>You feel a deep shock course through your body!</B>"
-		sleep(1)
-		M.burn_skin(85)
+		affected.Add(M)
+		M.make_jittery(1000)
+		M.anchored = 1
 		M.Stun(600)
-	for(var/mob/M in hearers(src, null))
-		M.show_message("\red The electric chair went off!.", 3, "\red You hear a deep sharp shock.", 2)
-
-	A.power_light = light
-	A.updateicon()
-	return
+		M.burn_skin(10)
+		spark.start()
 
 /obj/structure/stool/chair/ex_act(severity)
 	unbuckle_all()

@@ -650,7 +650,9 @@
 	var/atom/movable/overlay/overl = null
 	var/on = 0.0
 	var/obj/item/assembly/shock_kit/part1 = null
-	var/last_time = 1.0
+	var/isshocking
+	var/datum/effect/effect/system/spark_spread/spark = new /datum/effect/effect/system/spark_spread
+	var/list/mob/living/affected = list()
 
 /obj/structure/table
 	name = "table"

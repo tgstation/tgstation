@@ -162,12 +162,22 @@
 
 	proc/Life()
 		update()
+		// only do special stuff if there' air
+		if(!consume_air())
+			return
 		if(check_mutations())
 			return 1
 		if(special_action())
 			return 1
 
 		return 0
+
+	proc/consume_air()
+		if(!istype(src.loc,/turf/simulated)) return 0
+		var/turf/simulated/S = src.loc
+		if(!S.air) return 1 // this means it's a wall, so do process
+		if(S.air.oxygen < 1 || S.air.toxins > 1) return 0
+		return 1
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if(temperature > T0C+200)
