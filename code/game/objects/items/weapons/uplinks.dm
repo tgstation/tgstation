@@ -38,7 +38,6 @@ SYNDICATE UPLINK
 			dat += "<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=revolver'>Revolver</A> (6)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=revolver_ammo'>Ammo-357</A> for use with Revolver (2)<BR>"
-			dat += "<A href='byond://?src=\ref[src];buy_item=suffocation_revolver_ammo'>Ammo-418</A> for use with Revolver (3)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=xbow'>Energy Crossbow</A> (5)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=sword'>Energy Sword</A> (4)<BR>"
 			dat += "<BR>"
@@ -99,10 +98,6 @@ SYNDICATE UPLINK
 					if (src.uses >= 2)
 						src.uses -= 2
 						new /obj/item/ammo_magazine/a357(get_turf(src))
-				if("suffocation_revolver_ammo")
-					if (src.uses >= 3)
-						src.uses -= 3
-						new /obj/item/ammo_magazine/a418(get_turf(src))
 				if("xbow")
 					if (src.uses >= 5)
 						src.uses -= 5

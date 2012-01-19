@@ -254,9 +254,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		// --- Modifications to the mob's identity ---
 
 		// The mob is disguising their identity:
-		if (istype(M.wear_mask, /obj/item/clothing/mask/gas/voice)&&M.wear_mask:vchange)
-			displayname = M.wear_mask:voice
-			jobname = "Unknown"
+		if (istype(M.wear_mask, /obj/item/clothing/mask/gas/voice))
+			if(M.wear_mask:vchange)
+				displayname = M.wear_mask:voice
+				jobname = "Unknown"
 			voicemask = 1
 
 
@@ -299,7 +300,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			for(var/obj/machinery/telecomms/receiver/R in world)
 				R.receive_signal(signal)
 
-		  	// Receiving code can be located in _____.dm
+			// Allinone can act as receivers.
+			for(var/obj/machinery/telecomms/allinone/R in world)
+				R.receive_signal(signal)
+
+		  	// Receiving code can be located in Telecommunications.dm
 			return
 
 
@@ -441,8 +446,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					freq_text = "Mining"
 				if(1347)
 					freq_text = "Cargo"
-			if(connection.frequency == NUKE_FREQ)
-				freq_text = "Agent"
 			//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 
 			if(!freq_text)
@@ -453,8 +456,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 			if (display_freq==SYND_FREQ)
 				part_a = "<span class='syndradio'><span class='name'>"
-			else if (display_freq==NUKE_FREQ)
-				part_a = "<span class='nukeradio'><span class='name'>"
 			else if (display_freq==COMM_FREQ)
 				part_a = "<span class='comradio'><span class='name'>"
 			else if (display_freq in DEPT_FREQS)

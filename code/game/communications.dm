@@ -113,7 +113,7 @@ var/list/radiochannels = list(
 var/list/DEPT_FREQS = list(1351,1355,1357,1359,1213,1441,1349,1347)
 var/const/COMM_FREQ = 1353 //command, colored gold in chat window
 var/const/SYND_FREQ = 1213
-var/NUKE_FREQ = 1199 //Never accessable except on nuke rounds, randomised on nuke rounds.
+var/NUKE_FREQ = 1200 //Randomised on nuke rounds.
 
 #define TRANSMISSION_WIRE	0
 #define TRANSMISSION_RADIO	1
@@ -159,9 +159,16 @@ datum/controller/radio
 
 		return 1
 
-	proc/return_frequency(var/frequency as num)
-		var/f_text = num2text(frequency)
-		return frequencies[f_text]
+	proc/return_frequency(var/new_frequency as num)
+		var/f_text = num2text(new_frequency)
+		var/datum/radio_frequency/frequency = frequencies[f_text]
+
+		if(!frequency)
+			frequency = new
+			frequency.frequency = new_frequency
+			frequencies[f_text] = frequency
+
+		return frequency
 
 datum/radio_frequency
 	var/frequency as num

@@ -207,15 +207,15 @@
 
 
 /datum/game_mode/proc/random_radio_frequency(var/tempfreq = 1459)
-	tempfreq = rand(1400,1600)
+	tempfreq = rand(1200,1600)
 	if(tempfreq in radiochannels || (tempfreq > 1441 && tempfreq < 1489))
 		random_radio_frequency(tempfreq)
 	return tempfreq
 
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob,radio_freq)
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(synd_mob)
-	R.set_frequency(radio_freq)
 	R.freerange = 1
+	R.listening = 0
 	R.config(list("Nuclear" = 1))
 	synd_mob.equip_if_possible(R, synd_mob.slot_ears)
 	synd_mob.equip_if_possible(new /obj/item/clothing/under/syndicate(synd_mob), synd_mob.slot_w_uniform)

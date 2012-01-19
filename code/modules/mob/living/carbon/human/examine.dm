@@ -115,8 +115,25 @@
 			if(1)
 				usr << "\red [src.name] appears to have bitten [t_his] tongue off!"
 
+	var/distance = get_dist(usr,src)
+	if(istype(usr, /mob/dead/observer) || usr.stat == 2) // ghosts can see anything
+		distance = 1
+
+	if (src.stat == 1 || stat == 2)
+		usr << "\red [name] doesn't seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep."
+		if((health < 0 || stat == 1) && distance <= 3)
+			usr << "\red [name] does not appear to be breathing."
+		if(istype(usr, /mob/living/carbon/human) && usr.stat == 0 && src.stat == 1 && distance <= 1)
+			for(var/mob/O in viewers(usr.loc, null))
+				O.show_message("[usr] checks [src]'s pulse.", 1)
+			usr << "\blue [name] has a pulse!"
+
 	if (src.stat == 2 || (changeling && changeling.changeling_fakedeath == 1))
-		usr << "\red [src] is limp and unresponsive, a dull lifeless look in [t_his] eyes."
+		if(distance <= 1)
+			if(istype(usr, /mob/living/carbon/human) && usr.stat == 0)
+				for(var/mob/O in viewers(usr.loc, null))
+					O.show_message("[usr] checks [src]'s pulse.", 1)
+			usr << "\red [name] has no pulse!"
 	else
 		if (src.getBruteLoss())
 			if (src.getBruteLoss() < 30)
@@ -144,8 +161,6 @@
 			else
 				usr << "\blue [src.name] looks quite chubby."
 
-		if (src.stat == 1)
-			usr << "\red [src.name] doesn't seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep."
 		else if (src.brainloss >= 60)
 			usr << "\red [src.name] has a stupid expression on [t_his] face."
 		if (!src.client)
