@@ -133,7 +133,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	var/i
 	for(i=0; i<argNum; i++)
-		class = input("Type of Argument #[i]","Variable Type", "text") in list("text","num","type","reference","icon","file","cancel")
+		class = input("Type of Argument #[i]","Variable Type", "text") in list("text","num","type","reference","icon","file","marked datum","cancel")
 		switch(class)
 			if("cancel")
 				return
@@ -155,6 +155,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			if("file")
 				argL.Add( input("Pick file:","File",null) as file )
+
+			if("marked datum")
+				argL.Add(holder.marked_datum)
 
 	usr << "\blue Calling '[procname]'"
 	returnval = call(procname)(arglist(argL))
@@ -182,7 +185,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	var/i
 	for(i=0; i<argNum; i++)
-		class = input("Type of Argument #[i]","Variable Type", "text") in list("text","num","type","reference","icon","file","cancel")
+		class = input("Type of Argument #[i]","Variable Type", "text") in list("text","num","type","reference","icon","file","marked datum","cancel")
 		switch(class)
 			if("cancel")
 				return
@@ -204,6 +207,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			if("file")
 				argL.Add( input("Pick file:","File",null) as file )
+
+			if("marked datum")
+				argL.Add(holder.marked_datum)
 
 	usr << "\blue Calling '[procname]' on '[target]'"
 	returnval = call(target,procname)(arglist(argL))
