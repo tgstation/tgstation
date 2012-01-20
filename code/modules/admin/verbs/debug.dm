@@ -694,10 +694,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
 
 			M.equip_if_possible(pda, M.slot_r_store)
-
-			var/obj/item/weapon/clipboard/G = new(M)
-			G.pen = new /obj/item/weapon/pen(G)
-			M.equip_if_possible(G, M.slot_l_store)
+			M.equip_if_possible(new /obj/item/weapon/clipboard(M), M.slot_l_store)
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.name = "[M.real_name]'s ID Card"

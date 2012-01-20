@@ -54,6 +54,10 @@
 
 /obj/item/weapon/storage/box/engineer
 
+/obj/item/weapon/storage/box/medic
+	name = "anesthetic box"
+	desc = "Full of masks and emergency anesthetic tanks."
+
 /obj/item/weapon/storage/box/syndicate
 
 /obj/item/weapon/storage/pillbottlebox
@@ -97,6 +101,53 @@
 	name = "industrial backpack"
 	desc = "A tough backpack for the daily grind"
 	icon_state = "engiepack"
+
+/obj/item/weapon/storage/backpack/industrial/full
+	name = "loaded industrial backpack"
+	desc = "A tough backpack for the daily grind, full of gear"
+	icon_state = "engiepack"
+
+//Spawns with 2 glass, 2 metal, 1 steel, and 2 special boxes.
+	New()
+		..()
+		for(var/i = 1, i <=2, i++)
+			var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src)
+			G.amount = 50
+			G.loc = src
+		for(var/i = 1, i <=2, i++)
+			var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src)
+			G.amount = 50
+			G.loc = src
+		var/obj/item/stack/sheet/r_metal/R = new /obj/item/stack/sheet/r_metal(src)
+		R.amount = 50
+		R.loc = src
+		var/obj/item/weapon/storage/box/B1 = new /obj/item/weapon/storage/box(src)
+		B1.name = "power and airlock circuit box"
+		B1.desc = "Bursting with repair gear"
+		B1.w_class = 2
+		for(var/i = 1, i <= 7, i++)
+			if(i < 4)
+				var/obj/item/weapon/module/power_control/P = new /obj/item/weapon/module/power_control(B1)
+				P.loc = B1
+			if(i >= 4)
+				var/obj/item/weapon/airlock_electronics/P = new /obj/item/weapon/airlock_electronics(B1)
+				P.loc = B1
+		var/obj/item/weapon/storage/box/B2 = new /obj/item/weapon/storage/box(src)
+		B2.name = "power cells and wire box"
+		B2.desc = "Bursting with repair gear"
+		B2.w_class = 2
+		var/color = pick("red","yellow","green","blue")
+		for(var/i = 1, i <= 7, i++)
+			if(i < 4)
+				var/obj/item/weapon/cable_coil/P = new /obj/item/weapon/cable_coil(B2,30,color)
+				P.loc = B2
+			if(i >= 4)
+				var/obj/item/weapon/cell/P = new /obj/item/weapon/cell(B2)
+				P.maxcharge = 15000
+				P.charge = 15000
+				P.updateicon()
+				P.loc = B2
+		return
 
 /obj/item/weapon/storage/briefcase
 	name = "briefcase"
@@ -222,6 +273,22 @@
 	desc = "Box of stuff used to implant chemicals."
 	icon_state = "implant"
 	item_state = "syringe_kit"
+
+/obj/item/weapon/storage/deathalarm_kit
+	name = "Death Alarm Kit"
+	desc = "Box of stuff used to implant death alarms."
+	icon_state = "implant"
+	item_state = "syringe_kit"
+
+	New()
+		..()
+		new /obj/item/weapon/implanter(src)
+		new /obj/item/weapon/implantcase/death_alarm(src)
+		new /obj/item/weapon/implantcase/death_alarm(src)
+		new /obj/item/weapon/implantcase/death_alarm(src)
+		new /obj/item/weapon/implantcase/death_alarm(src)
+		new /obj/item/weapon/implantcase/death_alarm(src)
+		new /obj/item/weapon/implantcase/death_alarm(src)
 
 /obj/item/weapon/storage/toolbox
 	name = "toolbox"

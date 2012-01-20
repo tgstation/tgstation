@@ -115,3 +115,14 @@
 		src.imp = new /obj/item/weapon/implant/loyalty( src )
 		..()
 		return
+
+/obj/item/weapon/implantcase/death_alarm
+	name = "Glass Case- 'Tracking'"
+	desc = "A case containing a tracking implant."
+	icon = 'items.dmi'
+	icon_state = "implantcase-b"
+
+	New()
+		src.imp = new /obj/item/weapon/implant/death_alarm( src )
+		..()
+		return

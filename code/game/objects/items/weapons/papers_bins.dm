@@ -663,9 +663,6 @@ CLIPBOARDS
 		else
 			return
 	src.update()
-	spawn(0)
-		attack_self(user)
-		return
 	return
 
 /obj/item/weapon/clipboard/proc/update()
@@ -692,6 +689,15 @@ CLIPBOARDS
 			src.add_fingerprint(usr)
 			return //
 
+/obj/item/weapon/clipboard/New()
+
+	..()
+	for(var/i = 1, i <= 3, i++)
+		var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src)
+		P.loc = src
+	src.pen = new /obj/item/weapon/pen(src)
+	src.update()
+	return
 
 // PHOTOGRAPH
 

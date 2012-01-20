@@ -58,7 +58,7 @@ proc/trigger_armed_response_team()
 	new_commando.mind.current = new_commando
 	new_commando.mind.original = new_commando
 	new_commando.mind.assigned_role = "MODE"
-	new_commando.mind.special_role = "Death Commando"
+	new_commando.mind.special_role = "Response Team"
 	if(!(new_commando.mind in ticker.minds))
 		ticker.minds += new_commando.mind//Adds them to regular mind list.
 	new_commando.equip_strike_team(leader_selected)
@@ -67,23 +67,44 @@ proc/trigger_armed_response_team()
 
 /mob/living/carbon/human/proc/equip_strike_team(leader_selected = 0)
 
+	//Special radio setup
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
-	R.set_frequency(1441)
+	R.name = "CentCom Response Team headset"
+	R.desc = "The headset of the boss's boss. Channels are as follows: :h - Response Team :c - command, :s - security, :e - engineering, :d - mining, :q - cargo, :m - medical, :n - science."
+	R.freerange = 1
+	R.listening = 0
+	R.config(list("ResponseTeam" = 1, "Science" = 0, "Command" = 0, "Medical" = 0, "Engineering" = 0, "Security" = 0, "Mining" = 0, "Cargo" = 0,))
 	equip_if_possible(R, slot_ears)
+
+	//Adding Camera Network
+	var/obj/machinery/camera/camera = new /obj/machinery/camera(src) //Gives all the commandos internals cameras.
+	camera.network = "CREED"
+	camera.c_tag = real_name
+
+	//Basic Uniform
 	equip_if_possible(new /obj/item/clothing/under/color/black(src), slot_w_uniform)
-	equip_if_possible(new /obj/item/clothing/shoes/swat(src), slot_shoes)
-	equip_if_possible(new /obj/item/clothing/suit/armor/swat(src), slot_wear_suit)
+	equip_if_possible(new /obj/item/device/flashlight(src), slot_l_store)
+	equip_if_possible(new /obj/item/weapon/clipboard(src), slot_r_store)
+	equip_if_possible(new /obj/item/weapon/gun/energy/taser(src), slot_belt)
+
+	//Glasses
+	equip_if_possible(new /obj/item/clothing/glasses/sunglasses/sechud(src), slot_glasses)
+
+	//Shoes & gloves
+	var/obj/item/clothing/shoes/swat/S = new /obj/item/clothing/shoes/swat(src)
+	S.flags = NOSLIP
+	equip_if_possible(S, slot_shoes)
 	equip_if_possible(new /obj/item/clothing/gloves/swat(src), slot_gloves)
-	equip_if_possible(new /obj/item/clothing/head/helmet/space/deathsquad(src), slot_head)
-	equip_if_possible(new /obj/item/clothing/mask/gas/swat(src), slot_wear_mask)
 
+	//Removed
+//	equip_if_possible(new /obj/item/clothing/suit/armor/swat(src), slot_wear_suit)
+//	equip_if_possible(new /obj/item/clothing/head/helmet/space/deathsquad(src), slot_head)
+//	equip_if_possible(new /obj/item/clothing/mask/gas/swat(src), slot_wear_mask)
+
+	//Backpack
 	equip_if_possible(new /obj/item/weapon/storage/backpack/security(src), slot_back)
-	equip_if_possible(new /obj/item/weapon/storage/box(src), slot_in_backpack)
-
+	equip_if_possible(new /obj/item/weapon/storage/box/engineer(src), slot_in_backpack)
 	equip_if_possible(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
-	equip_if_possible(new /obj/item/device/flashlight(src), slot_in_backpack)
-
-	equip_if_possible(new /obj/item/weapon/tank/emergency_oxygen(src), slot_s_store)
 
 	var/obj/item/weapon/card/id/W = new(src)
 	W.name = "[real_name]'s ID Card"

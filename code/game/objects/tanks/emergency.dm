@@ -33,3 +33,19 @@
 	icon_state = "emergency_double"
 	name = "Double Emergency Oxygen Tank"
 	volume = 10
+
+/obj/item/weapon/tank/emergency_oxygen/anesthetic
+	icon_state = "emergency_sleep"
+	name = "emergency sleeping gas tank"
+	desc = "Contains an Oxygen/N2O mix."
+	distribute_pressure = ONE_ATMOSPHERE
+
+	New()
+		..()
+		src.air_contents.oxygen = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
+
+		var/datum/gas/sleeping_agent/trace_gas = new()
+		trace_gas.moles = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
+
+		src.air_contents.trace_gases += trace_gas
+		return
