@@ -2136,12 +2136,9 @@ It can still be worn/put on as normal.
 	if(target)
 		target.update_clothing()
 	//SN src = null
-	world << "Trying to update window"
 	for(var/mob/living/carbon/M in oview(1,target))
 		if(M.machine == target)
-			world << "Updating for [M.name]"
 			target.interact(M)
-	world << "Done trying"
 	del(src)
 	return
 
