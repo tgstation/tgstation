@@ -2136,10 +2136,16 @@ It can still be worn/put on as normal.
 	if(target)
 		target.update_clothing()
 	//SN src = null
+	for(var/mob/living/carbon/M in oview(1,target))
+		if(M.machine == target)
+			target.interact(M)
 	del(src)
 	return
 
 /mob/living/carbon/human/show_inv(mob/user as mob)
+	interact(user)
+
+/mob/living/carbon/human/proc/interact(mob/user as mob)
 
 	user.machine = src
 	var/dat = {"
@@ -2338,9 +2344,6 @@ It can still be worn/put on as normal.
 		requests += O
 		spawn( 0 )
 			O.process()
-			for(var/mob/living/carbon/M in oview(1,src))
-				if((M.machine == src)&&(in_range(src, M)))
-					show_inv(M)
 			return
 	..()
 	return
