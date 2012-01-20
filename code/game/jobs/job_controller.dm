@@ -254,10 +254,11 @@ var/global/datum/controller/occupations/job_master
 			C.name = "[C.registered]'s ID Card ([C.assignment])"
 			C.access = get_access(C.assignment)
 			H.equip_if_possible(C, H.slot_wear_id)
-		H.equip_if_possible(new /obj/item/weapon/pen(H), H.slot_r_store)
+		if(!H.equip_if_possible(new /obj/item/weapon/pen(H), H.slot_r_store))
+			H.equip_if_possible(new /obj/item/weapon/pen(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/device/pda(H), H.slot_belt)
-		if(istype(H.belt, /obj/item/device/pda))//I bet this could just use locate
-			var/obj/item/device/pda/pda = H.belt
+		if(locate(/obj/item/device/pda,H))//I bet this could just use locate
+			var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
 			pda.owner = H.real_name
 			pda.ownjob = H.wear_id.assignment
 			pda.name = "PDA-[H.real_name] ([pda.ownjob])"

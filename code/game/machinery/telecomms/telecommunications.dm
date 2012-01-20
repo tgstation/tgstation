@@ -382,7 +382,10 @@
 				log.parameters["message"] = signal.data["message"]
 				log.parameters["name"] = signal.data["name"]
 				log.parameters["realname"] = signal.data["realname"]
-				log.parameters["uspeech"] = M.universal_speak
+				if(M)
+					log.parameters["uspeech"] = M.universal_speak
+				else
+					log.parameters["uspeech"] = 0
 
 				// If the signal is still compressed, make the log entry gibberish
 				if(signal.data["compression"] > 0)

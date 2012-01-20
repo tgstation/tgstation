@@ -8,7 +8,7 @@
 	use_power = 1
 	idle_power_usage = 1
 	active_power_usage = 5
-	var/mob/living/carbon/human/victim = null
+	var/mob/living/carbon/victim = null
 	var/strapped = 0.0
 
 	var/obj/machinery/computer/operating/computer = null
@@ -95,8 +95,8 @@
 	return
 
 /obj/machinery/optable/proc/check_victim()
-	if(locate(/mob/living/carbon/human, src.loc))
-		var/mob/M = locate(/mob/living/carbon/human, src.loc)
+	if(locate(/mob/living/carbon, src.loc))
+		var/mob/M = locate(/mob/living/carbon, src.loc)
 		if(M.resting)
 			src.victim = M
 			icon_state = "table2-active"
@@ -131,3 +131,77 @@
 	if(W && W.loc)
 		W.loc = src.loc
 	return
+
+/obj/machinery/optable/portable
+	name = "mobile operating Table"
+	desc = "Used for advanced medical procedures. Seems to be movable, neat."
+	icon = 'rollerbed.dmi'
+	icon_state = "up"
+	density = 1
+	anchored = 0
+
+	New()
+		..()
+		processing_objects.Remove(src)
+
+	MouseDrop_T(obj/O as obj, mob/user as mob)
+		if ((!( istype(O, /obj/item/weapon) ) || user.equipped() != O))
+			return
+		user.drop_item()
+		if (O.loc != src.loc)
+			step(O, get_dir(O, src))
+		return
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(!anchored)
+			return
+		if (istype(W, /obj/item/weapon/grab))
+			if(ismob(W:affecting))
+				var/mob/M = W:affecting
+				if (M.client)
+					M.client.perspective = EYE_PERSPECTIVE
+					M.client.eye = src
+				M.resting = 1
+				M.loc = src.loc
+				for (var/mob/C in viewers(src))
+					C.show_message("\red [M] has been laid on the operating table by [user].", 3)
+				for(var/obj/O in src)
+					O.loc = src.loc
+				src.add_fingerprint(user)
+				src.victim = M
+				processing_objects.Add(src)
+				del(W)
+				return
+		user.drop_item()
+		if(W && W.loc)
+			W.loc = src.loc
+		return
+
+	check_victim()
+		if(locate(/mob/living/carbon/human, src.loc))
+			var/mob/M = locate(/mob/living/carbon/human, src.loc)
+			if(M.resting)
+				src.victim = M
+				return 1
+		src.victim = null
+		processing_objects.Remove(src)
+		return 0
+
+	verb/make_deployable()
+		set category = "Object"
+		set name = "Deploy Table"
+		set src in oview(1)
+
+		if(anchored)
+			if(victim)
+				usr << "You can't do that with someone on the table!"
+			else
+				anchored = 0
+				for(var/mob/M in orange(5,src))
+					M.show_message("\blue [usr] releases the locks on the table's casters!")
+				icon_state = "up"
+		else
+			anchored = 1
+			for(var/mob/M in orange(5,src))
+				M.show_message("\blue [usr] locks the table's casters in place!")
+			icon_state = "down"

@@ -84,7 +84,7 @@
 		H.equip_if_possible(new /obj/item/device/pda/quartermaster(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/gloves/black(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(H), H.slot_glasses)
-		H.equip_if_possible(new /obj/item/weapon/clipboard(H), H.slot_l_hand)
+		H.equip_if_possible(new /obj/item/weapon/clipboard(H), H.slot_r_store)
 		return 1
 
 
@@ -224,7 +224,7 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/clothing/under/suit_jacket/red(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
-		H.equip_if_possible(new /obj/item/weapon/barcodescanner(H), H.slot_l_hand)
+		H.equip_if_possible(new /obj/item/weapon/barcodescanner(H), H.slot_l_store)
 		return 1
 
 

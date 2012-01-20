@@ -104,13 +104,13 @@ var/list/radiochannels = list(
 	"Medical" = 1355,
 	"Engineering" = 1357,
 	"Security" = 1359,
-	"Deathsquad" = 1441,
+	"Response Team" = 1439,
 	"Syndicate" = 1213,
 	"Mining" = 1349,
 	"Cargo" = 1347,
 )
 //depenging helpers
-var/list/DEPT_FREQS = list(1351,1355,1357,1359,1213,1441,1349,1347)
+var/list/DEPT_FREQS = list(1351,1355,1357,1359,1213,1439,1349,1347)
 var/const/COMM_FREQ = 1353 //command, colored gold in chat window
 var/const/SYND_FREQ = 1213
 var/NUKE_FREQ = 1200 //Randomised on nuke rounds.

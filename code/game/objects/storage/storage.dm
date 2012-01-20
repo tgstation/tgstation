@@ -259,9 +259,22 @@
 	new /obj/item/weapon/tank/emergency_oxygen/engi( src )
 	return
 
+/obj/item/weapon/storage/box/medic/New()
+	..()
+	contents = list()
+	sleep(1)
+	new /obj/item/clothing/mask/medical( src )
+	new /obj/item/weapon/tank/emergency_oxygen/anesthetic( src )
+	new /obj/item/weapon/tank/emergency_oxygen/anesthetic( src )
+	new /obj/item/weapon/tank/emergency_oxygen/anesthetic( src )
+	new /obj/item/weapon/tank/emergency_oxygen/anesthetic( src )
+	new /obj/item/weapon/tank/emergency_oxygen/anesthetic( src )
+	new /obj/item/weapon/tank/emergency_oxygen/anesthetic( src )
+	return
+
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
-	switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "freedom" = 1)))
+	switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "freedom" = 1)))
 		if ("bloodyspai")
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/clothing/mask/gas/voice(src)
@@ -288,12 +301,6 @@
 			new /obj/item/ammo_magazine/a357(src)
 			new /obj/item/weapon/card/emag(src)
 			new /obj/item/weapon/plastique(src)
-			return
-
-		if ("murder")
-			new /obj/item/weapon/melee/energy/sword(src)
-			new /obj/item/weapon/cloaking_device(src)
-			new /obj/item/weapon/card/emag(src)
 			return
 
 		if("freedom")

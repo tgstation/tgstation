@@ -129,6 +129,8 @@
 	var/prior_icon = icon_old
 	var/old_dir = dir
 
+	for(var/obj/structure/lattice/L in locate(src.x, src.y, src.z))
+		del(L)
 	var/turf/simulated/floor/W = new /turf/simulated/floor( locate(src.x, src.y, src.z) )
 
 	W.dir = old_dir
@@ -146,6 +148,8 @@
 	var/prior_icon = icon_old
 	var/old_dir = dir
 
+	for(var/obj/structure/lattice/L in locate(src.x, src.y, src.z))
+		del(L)
 	var/turf/simulated/floor/plating/W = new /turf/simulated/floor/plating( locate(src.x, src.y, src.z) )
 
 	W.dir = old_dir
@@ -159,6 +163,8 @@
 /turf/proc/ReplaceWithEngineFloor()
 	var/old_dir = dir
 
+	for(var/obj/structure/lattice/L in locate(src.x, src.y, src.z))
+		del(L)
 	var/turf/simulated/floor/engine/E = new /turf/simulated/floor/engine( locate(src.x, src.y, src.z) )
 
 	E.dir = old_dir

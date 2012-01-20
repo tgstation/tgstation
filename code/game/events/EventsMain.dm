@@ -6,18 +6,22 @@
 
 */
 
-var/list/DisallowedEvents = list(/datum/event/spaceninja, /datum/event/prisonbreak, /datum/event/immovablerod, /datum/event/gravitationalanomaly)
+var/list/DisallowedEvents = list(/datum/event/spaceninja, /datum/event/prisonbreak, /datum/event/immovablerod, /datum/event/gravitationalanomaly, /datum/event/alieninfestation)
 var/list/EventTypes = typesof(/datum/event) - /datum/event - DisallowedEvents
+var/list/OneTimeEvents = list(/datum/event/spacecarp, /datum/event/miniblob)
 var/datum/event/ActiveEvent = null
 var/datum/event/LongTermEvent = null
+var/is_ninjad_yet = 0
 
 /proc/SpawnEvent()
 	if(!EventsOn || ActiveEvent)
 		return
-	if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station)
+	if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station && !is_ninjad_yet)
 		EventTypes |= /datum/event/spaceninja
+		is_ninjad_yet = 1
 	var/Type = pick(EventTypes)
-	EventTypes -= Type
+	if(Type in OneTimeEvents)
+		EventTypes -= Type
 	ActiveEvent = new Type()
 	ActiveEvent.Announce()
 	if (!ActiveEvent)
