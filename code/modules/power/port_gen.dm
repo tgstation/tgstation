@@ -102,7 +102,7 @@ display round(lastgen) and plasmatank amount
 		coins = 0
 		max_coins = 1000
 		coin_path = "/obj/item/weapon/coin/plasma"
-		board_path = "/obj/item/weapon/circuitboard/pacman"
+		board_path = "/obj/item/weapon/circuitboard/pacman2"
 		coin_left = 0 // How much is left of the coin
 		time_per_coin = 1
 		emagged = 0
@@ -328,3 +328,4 @@ display round(lastgen) and plasmatank amount
 	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"
 	overheat()
 		explosion(src.loc, 4, 4, 4, -1)
+
