@@ -65,6 +65,8 @@
 		if(!special_check(user))	return
 		if(!load_into_chamber())
 			user << "\red *click*";
+			for(var/mob/M in orange(4,src.loc))
+				M.show_message("*click, click*")
 			return
 
 		if(!in_chamber)	return

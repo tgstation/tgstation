@@ -114,7 +114,7 @@
 		dat += "<br>Prefabrication: [autolinkers.len ? "TRUE" : "FALSE"]"
 		dat += "<br>Linked Network Entities: <ol>"
 		for(var/obj/machinery/telecomms/T in links)
-			dat += "<li>\ref[T] [T.name] ([T.id])</li>"
+			dat += "<li>\ref[T] [T.name] ([T.id]) (<a href='?src=\ref[src];remove=[T.id]'>X</a>)</li>"
 		dat += "</ol>"
 
 		dat += "<br>Filtering Frequencies: "
@@ -222,6 +222,13 @@
 			temp = "<font color = #666633>-% Buffer successfully flushed. %-</font color>"
 			P.buffer = null
 
+		if(href_list["remove"])
+
+			temp = "<font color = #666633>-% Link successfully removed. %-</font color>"
+			for(var/obj/machinery/telecomms/T in links)
+				if(T.id == href_list["remove"])
+					src.links.Remove(T)
+					break
 
 		usr.machine = src
 		src.add_fingerprint(usr)

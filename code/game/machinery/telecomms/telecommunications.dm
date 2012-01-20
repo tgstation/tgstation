@@ -189,6 +189,9 @@
 				delay = initial(delay)
 
 	proc/produce_heat(heat_amt)
+		if(heatgen == 0)
+			return
+
 		if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
 			var/turf/simulated/L = loc
 			if(istype(L))
@@ -472,7 +475,7 @@
 
 /obj/machinery/telecomms/processor/preset_three
 	id = "Processor 3"
-	network = "Communications Satellite"
+	network = "tcommsat"
 	autolinkers = list("processor3")
 
 /obj/machinery/telecomms/processor/preset_four
