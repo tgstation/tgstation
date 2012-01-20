@@ -17,6 +17,8 @@ Buildable meters
 #define PIPE_INSULATED_BENT		12
 #define PIPE_GAS_FILTER			13
 #define PIPE_GAS_MIXER			14
+#define PIPE_MTVALVE			15
+#define PIPE_MANIFOLD4W			16
 
 /obj/item/pipe
 	name = "pipe"
@@ -65,6 +67,10 @@ Buildable meters
 			src.pipe_type = PIPE_GAS_MIXER
 		else if(istype(make_from, /obj/machinery/atmospherics/unary/vent_scrubber))
 			src.pipe_type = PIPE_SCRUBBER
+		else if(istype(make_from, /obj/machinery/atmospherics/tvalve))
+			src.pipe_type = PIPE_MTVALVE
+		else if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold))
+			src.pipe_type = PIPE_MANIFOLD4W
 	else
 		src.pipe_type = pipe_type
 		src.dir = dir
@@ -92,6 +98,8 @@ Buildable meters
 		"bent insulated pipe", \
 		"gas filter", \
 		"gas mixer", \
+		"t-valve", \
+		"4-way manifold", \
 	)
 	name = nlist[pipe_type+1] + " fitting"
 	var/list/islist = list( \
@@ -110,6 +118,8 @@ Buildable meters
 		"insulated", \
 		"filter", \
 		"mixer", \
+		"mtvalve", \
+		"manifold4w", \
 	)
 	icon_state = islist[pipe_type + 1]
 
@@ -133,6 +143,8 @@ Buildable meters
 			dir = 1
 		else if(dir==8)
 			dir = 4
+	else if (pipe_type == PIPE_MANIFOLD4W)
+		dir = 2
 	//src.pipe_dir = get_pipe_dir()
 	return
 
@@ -168,11 +180,11 @@ Buildable meters
 			return dir|flip
 		if(PIPE_SIMPLE_BENT, PIPE_INSULATED_BENT, PIPE_HE_BENT)
 			return dir //dir|acw
-		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_SCRUBBER)
+		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_SCRUBBER,PIPE_MANIFOLD4W)
 			return dir
 		if(PIPE_MANIFOLD)
 			return flip|cw|acw
-		if(PIPE_GAS_FILTER, PIPE_GAS_MIXER)
+		if(PIPE_GAS_FILTER, PIPE_GAS_MIXER,PIPE_MTVALVE)
 			return dir|flip|cw
 	return 0
 
@@ -223,6 +235,8 @@ Buildable meters
 			dir = 1
 		else if(dir==8)
 			dir = 4
+	else if (pipe_type == PIPE_MANIFOLD4W)
+		dir = 2
 	var/pipe_dir = get_pipe_dir()
 
 	for(var/obj/machinery/atmospherics/M in src.loc)
@@ -307,6 +321,31 @@ Buildable meters
 			if (M.node3)
 				M.node3.initialize()
 				M.node3.build_network()
+
+		if(PIPE_MANIFOLD4W)		//4-way manifold
+			var/obj/machinery/atmospherics/pipe/manifold4w/M = new( src.loc )
+			M.dir = dir
+			M.initialize_directions = pipe_dir
+			//M.New()
+			var/turf/T = M.loc
+			M.level = T.intact ? 2 : 1
+			M.initialize()
+			if (!M)
+				usr << "There's nothing to connect this manifold to! (with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment)"
+				return 1
+			M.build_network()
+			if (M.node1)
+				M.node1.initialize()
+				M.node1.build_network()
+			if (M.node2)
+				M.node2.initialize()
+				M.node2.build_network()
+			if (M.node3)
+				M.node3.initialize()
+				M.node3.build_network()
+			if (M.node4)
+				M.node4.initialize()
+				M.node4.build_network()
 
 		if(PIPE_JUNCTION)
 			var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/P = new ( src.loc )
@@ -450,6 +489,26 @@ Buildable meters
 				P.node2.initialize()
 				P.node2.build_network()
 
+		if(PIPE_MTVALVE)		//manual t-valve
+			var/obj/machinery/atmospherics/tvalve/V = new(src.loc)
+			V.dir = dir
+			V.initialize_directions = pipe_dir
+			if (pipename)
+				V.name = pipename
+			var/turf/T = V.loc
+			V.level = T.intact ? 2 : 1
+			V.initialize()
+			V.build_network()
+			if (V.node1)
+				V.node1.initialize()
+				V.node1.build_network()
+			if (V.node2)
+				V.node2.initialize()
+				V.node2.build_network()
+			if (V.node3)
+				V.node3.initialize()
+				V.node3.build_network()
+
 	playsound(src.loc, 'Ratchet.ogg', 50, 1)
 	user.visible_message( \
 		"[user] fastens the [src].", \
@@ -501,3 +560,5 @@ Buildable meters
 #undef PIPE_INSULATED_BENT
 #undef PIPE_GAS_FILTER
 #undef PIPE_GAS_MIXER
+#undef PIPE_MTVALVE
+#undef PIPE_MANIFOLD4W
