@@ -1599,6 +1599,9 @@
 								M.show_message(message, 1)
 	spawn( 40 )
 		done()
+		for(var/mob/living/carbon/M in oview(1,src))
+			if((M.machine == src)&&(in_range(src, M)))
+				src.show_inv(M)
 		return
 	return
 
