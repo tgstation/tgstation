@@ -1599,9 +1599,6 @@
 								M.show_message(message, 1)
 	spawn( 40 )
 		done()
-		for(var/mob/living/carbon/M in oview(1,src))
-			if((M.machine == src)&&(in_range(src, M)))
-				src.show_inv(M)
 		return
 	return
 
@@ -2139,10 +2136,19 @@ It can still be worn/put on as normal.
 	if(target)
 		target.update_clothing()
 	//SN src = null
+	world << "Trying to update window"
+	for(var/mob/living/carbon/M in oview(1,target))
+		if(M.machine == target)
+			world << "Updating for [M.name]"
+			target.interact(M)
+	world << "Done trying"
 	del(src)
 	return
 
 /mob/living/carbon/human/show_inv(mob/user as mob)
+	interact(user)
+
+/mob/living/carbon/human/proc/interact(mob/user as mob)
 
 	user.machine = src
 	var/dat = {"
@@ -2341,9 +2347,6 @@ It can still be worn/put on as normal.
 		requests += O
 		spawn( 0 )
 			O.process()
-			for(var/mob/living/carbon/M in oview(1,src))
-				if((M.machine == src)&&(in_range(src, M)))
-					show_inv(M)
 			return
 	..()
 	return
