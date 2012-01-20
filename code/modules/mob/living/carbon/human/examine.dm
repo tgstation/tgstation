@@ -121,11 +121,12 @@
 
 	if (src.stat == 1 || stat == 2)
 		usr << "\red [name] doesn't seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep."
-		if((health < 0 || stat == 1) && distance <= 3)
+		if(health < 0 && distance <= 3)
 			usr << "\red [name] does not appear to be breathing."
 		if(istype(usr, /mob/living/carbon/human) && usr.stat == 0 && src.stat == 1 && distance <= 1)
 			for(var/mob/O in viewers(usr.loc, null))
 				O.show_message("[usr] checks [src]'s pulse.", 1)
+			sleep(15)
 			usr << "\blue [name] has a pulse!"
 
 	if (src.stat == 2 || (changeling && changeling.changeling_fakedeath == 1))
@@ -133,6 +134,7 @@
 			if(istype(usr, /mob/living/carbon/human) && usr.stat == 0)
 				for(var/mob/O in viewers(usr.loc, null))
 					O.show_message("[usr] checks [src]'s pulse.", 1)
+			sleep(15)
 			usr << "\red [name] has no pulse!"
 	else
 		if (src.getBruteLoss())
