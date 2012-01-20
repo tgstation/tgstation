@@ -800,6 +800,202 @@ obj/machinery/atmospherics/pipe
 		level = 1
 		icon_state = "manifold-f"
 
+	manifold4w
+		icon = 'pipe_manifold.dmi'
+		icon_state = "manifold4w-f"
+
+		name = "4-way pipe manifold"
+		desc = "A manifold composed of regular pipes"
+
+		volume = 140
+
+		dir = SOUTH
+		initialize_directions = EAST|NORTH|WEST|SOUTH
+
+		var/obj/machinery/atmospherics/node1
+		var/obj/machinery/atmospherics/node2
+		var/obj/machinery/atmospherics/node3
+		var/obj/machinery/atmospherics/node4
+
+		level = 1
+
+		hide(var/i)
+			if(level == 1 && istype(loc, /turf/simulated))
+				invisibility = i ? 101 : 0
+			update_icon()
+
+		pipeline_expansion()
+			return list(node1, node2, node3, node4)
+
+		process()
+			if(!parent)
+				..()
+			else
+				machines.Remove(src)
+/*
+			if(!node1)
+				parent.mingle_with_turf(loc, 70)
+				if(!nodealert)
+					//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+					nodealert = 1
+			else if(!node2)
+				parent.mingle_with_turf(loc, 70)
+				if(!nodealert)
+					//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+					nodealert = 1
+			else if(!node3)
+				parent.mingle_with_turf(loc, 70)
+				if(!nodealert)
+					//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+					nodealert = 1
+			else if (nodealert)
+				nodealert = 0
+*/
+		Del()
+			if(node1)
+				node1.disconnect(src)
+			if(node2)
+				node2.disconnect(src)
+			if(node3)
+				node3.disconnect(src)
+			if(node4)
+				node4.disconnect(src)
+
+			..()
+
+		disconnect(obj/machinery/atmospherics/reference)
+			if(reference == node1)
+				if(istype(node1, /obj/machinery/atmospherics/pipe))
+					del(parent)
+				node1 = null
+
+			if(reference == node2)
+				if(istype(node2, /obj/machinery/atmospherics/pipe))
+					del(parent)
+				node2 = null
+
+			if(reference == node3)
+				if(istype(node3, /obj/machinery/atmospherics/pipe))
+					del(parent)
+				node3 = null
+
+			if(reference == node4)
+				if(istype(node4, /obj/machinery/atmospherics/pipe))
+					del(parent)
+				node3 = null
+
+			update_icon()
+
+			..()
+
+		update_icon()
+			overlays = new()
+			if(node1&&node2&&node3&&node4)
+				var/C = ""
+				switch(color)
+					if ("red") C = "-r"
+					if ("blue") C = "-b"
+					if ("cyan") C = "-c"
+					if ("green") C = "-g"
+					if ("yellow") C = "-y"
+					if ("purple") C = "-p"
+				icon_state = "manifold4w[C][invisibility ? "-f" : ""]"
+
+			else
+				icon_state = "manifold4w_ex"
+				var/icon/con = new/icon('pipe_manifold.dmi',"manifold4w_con")
+
+				if(node1)
+					overlays += new/image(con,dir=1)
+				if(node2)
+					overlays += new/image(con,dir=2)
+				if(node3)
+					overlays += new/image(con,dir=4)
+				if(node4)
+					overlays += new/image(con,dir=8)
+
+				if(!node1 && !node2 && !node3 && !node4)
+					del(src)
+			return
+
+		initialize()
+			for(var/obj/machinery/atmospherics/target in get_step(src,1))
+				if(target.initialize_directions & get_dir(target,src))
+					node1 = target
+					break
+
+			for(var/obj/machinery/atmospherics/target in get_step(src,2))
+				if(target.initialize_directions & get_dir(target,src))
+					node2 = target
+					break
+
+			for(var/obj/machinery/atmospherics/target in get_step(src,4))
+				if(target.initialize_directions & get_dir(target,src))
+					node3 = target
+					break
+
+			for(var/obj/machinery/atmospherics/target in get_step(src,8))
+				if(target.initialize_directions & get_dir(target,src))
+					node4 = target
+					break
+
+			var/turf/T = src.loc			// hide if turf is not intact
+			hide(T.intact)
+			//update_icon()
+			update_icon()
+
+	manifold4w/scrubbers
+		name="Scrubbers pipe"
+		color="red"
+		icon_state = ""
+
+	manifold4w/supply
+		name="Air supply pipe"
+		color="blue"
+		icon_state = ""
+
+	manifold4w/supplymain
+		name="Main air supply pipe"
+		color="purple"
+		icon_state = ""
+
+	manifold4w/general
+		name="Air supply pipe"
+		color="gray"
+		icon_state = ""
+
+	manifold4w/scrubbers/visible
+		level = 2
+		icon_state = "manifold4w-r"
+
+	manifold4w/scrubbers/hidden
+		level = 1
+		icon_state = "manifold4w-r-f"
+
+	manifold4w/supply/visible
+		level = 2
+		icon_state = "manifold4w-b"
+
+	manifold4w/supply/hidden
+		level = 1
+		icon_state = "manifold4w-b-f"
+
+	manifold4w/supplymain/visible
+		level = 2
+		icon_state = "manifold4w-p"
+
+	manifold4w/supplymain/hidden
+		level = 1
+		icon_state = "manifold4w-p-f"
+
+	manifold4w/general/visible
+		level = 2
+		icon_state = "manifold4w"
+
+	manifold4w/general/hidden
+		level = 1
+		icon_state = "manifold4w-f"
+
 obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (istype(src, /obj/machinery/atmospherics/pipe/tank))
 		return ..()
