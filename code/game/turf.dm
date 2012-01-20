@@ -353,7 +353,8 @@
 				M << text("\blue You smash against the wall.")
 				return
 
-	return src.attack_animal(M)
+	M << "\blue You push the wall but nothing happens!"
+	return
 
 /turf/simulated/wall/attack_hand(mob/user as mob)
 	if ((user.mutations & HULK))

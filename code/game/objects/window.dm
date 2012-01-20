@@ -138,6 +138,30 @@
 		return
 	return
 
+
+/obj/structure/window/attack_animal(mob/living/simple_animal/M as mob)
+	if (M.melee_damage_upper == 0)
+		return
+	M << text("\green You smash against the window.")
+	for(var/mob/O in viewers(src, null))
+		if ((O.client && !( O.blinded )))
+			O << text("\red [] smashes against the window.", M)
+	playsound(src.loc, 'Glasshit.ogg', 100, 1)
+	src.health -= M.melee_damage_upper
+	if(src.health <= 0)
+		M << text("\green You smash through the window.")
+		for(var/mob/O in viewers(src, null))
+			if ((O.client && !( O.blinded )))
+				O << text("\red [] smashes through the window!", M)
+		src.health = 0
+		new /obj/item/weapon/shard(src.loc)
+		if(reinf)
+			new /obj/item/stack/rods(src.loc)
+		src.density = 0
+		del(src)
+		return
+	return
+
 /obj/structure/window/attack_metroid()
 	if(!istype(usr, /mob/living/carbon/metroid/adult))
 		return

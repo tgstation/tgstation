@@ -327,6 +327,16 @@
 		reagents.add_reagent("nutriment", 6)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/ghostburger
+	name = "Ghost Burger"
+	desc = "Spooky! It doesn't look very filling."
+	icon_state = "ghostburger"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 2
+
+
 /obj/item/weapon/reagent_containers/food/snacks/human
 	var/hname = ""
 	var/job = null

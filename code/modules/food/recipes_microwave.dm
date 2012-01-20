@@ -141,6 +141,13 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/tofuburger
 
+/datum/recipe/ghostburger
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/ectoplasm
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/ghostburger
+
 /datum/recipe/clownburger
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/flour,

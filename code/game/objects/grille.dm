@@ -81,6 +81,15 @@
 		healthcheck()
 		return
 
+	attack_animal(var/mob/living/simple_animal/M as mob)
+		if(M.melee_damage_upper == 0)	return
+		playsound(src.loc, 'grillehit.ogg', 80, 1)
+		M.visible_message("[M.name] smashes against the [src.name].", \
+							"You smash against the [src.name].", \
+							"You hear a noise")
+		src.health -= rand(4)
+		healthcheck()
+		return
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		if(air_group || (height==0)) return 1
