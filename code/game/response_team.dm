@@ -73,7 +73,7 @@ proc/trigger_armed_response_team()
 	R.desc = "The headset of the boss's boss. Channels are as follows: :h - Response Team :c - command, :s - security, :e - engineering, :d - mining, :q - cargo, :m - medical, :n - science."
 	R.freerange = 1
 	R.listening = 0
-	R.config(list("ResponseTeam" = 1, "Science" = 0, "Command" = 0, "Medical" = 0, "Engineering" = 0, "Security" = 0, "Mining" = 0, "Cargo" = 0,))
+	R.config(list("Response Team" = 1, "Science" = 0, "Command" = 0, "Medical" = 0, "Engineering" = 0, "Security" = 0, "Mining" = 0, "Cargo" = 0,))
 	equip_if_possible(R, slot_ears)
 
 	//Adding Camera Network
