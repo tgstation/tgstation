@@ -68,6 +68,18 @@
 	containertype = "/obj/structure/closet/crate"
 	containername = "Beanbag shells"
 
+/datum/supply_packs/toner
+	name = "Toner Cartridges"
+	contains = list("/obj/item/device/toner",
+					"/obj/item/device/toner",
+					"/obj/item/device/toner",
+					"/obj/item/device/toner",
+					"/obj/item/device/toner",
+					"/obj/item/device/toner")
+	cost = 10
+	containertype = "/obj/structure/closet/crate"
+	containername = "Toner Cartridges"
+
 /datum/supply_packs/party
 	name = "Party equipment"
 	contains = list("/obj/item/weapon/storage/drinkingglasses",

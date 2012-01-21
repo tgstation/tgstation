@@ -439,6 +439,7 @@
 #include "code\game\machinery\navbeacon.dm"
 #include "code\game\machinery\OpTable.dm"
 #include "code\game\machinery\overview.dm"
+#include "code\game\machinery\photocopier.dm"
 #include "code\game\machinery\portable_turret.dm"
 #include "code\game\machinery\recharger.dm"
 #include "code\game\machinery\rechargestation.dm"
