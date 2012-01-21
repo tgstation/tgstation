@@ -202,6 +202,12 @@
 		else
 			jobs += "<BR><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'>[dd_replacetext("Syndicate", " ", "&nbsp")]</a> "
 
+		if(jobban_isbanned(M, "Emergency Response Team"))
+			jobs += "<BR><a href='?src=\ref[src];jobban3=Emergency Response Team;jobban4=\ref[M]'><font color=red>[dd_replacetext("Emergency Response Team", " ", "&nbsp")]</font></a> "
+		else
+			jobs += "<BR><a href='?src=\ref[src];jobban3=Emergency Response Team;jobban4=\ref[M]'>[dd_replacetext("Emergency Response Team", " ", "&nbsp")]</a> "
+
+
 		if(jobban_isbanned(M, "pAI"))
 			jobs += "<BR><a href='?src=\ref[src];jobban3=pAI;jobban4=\ref[M]'><font color=red>pAI</font></a> "
 		else
@@ -333,6 +339,7 @@
 		jobs += "<a href='?src=\ref[src];newjobban2=Scientist_RD;jobban4=\ref[M]'>Scientist+RD</a> <br>"
 		jobs += "<a href='?src=\ref[src];newjobban2=AI_Cyborg;jobban4=\ref[M]'>AI+Cyborg</a> <br>"
 		jobs += "<a href='?src=\ref[src];newjobban2=Detective_HoS;jobban4=\ref[M]'>Detective+HoS</a> <br><br>"
+		jobs += "<a href='?src=\ref[src];newjobban2=ERT;jobban4=\ref[M]'>Emergency Response Team</a> <br><br>"
 		for(var/datum/job/job in job_master.occupations)
 			if(job.title == "Tourist")
 				continue
