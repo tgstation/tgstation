@@ -208,7 +208,7 @@ MASS SPECTROMETER
 	if(mode == 1 && istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_organs(1,1)
-		user.show_message("\blue Localized Damage, Brute\\Burn:",1)
+		user.show_message("\blue Localized Damage, Brute/Burn:",1)
 		if(length(damaged)>0)
 			for(var/datum/organ/external/org in damaged)
 				user.show_message(text("\blue \t []: []\blue-[]",capitalize(org.getDisplayName()),(org.brute_dam > 0)?"\red [org.brute_dam]":0,(org.burn_dam > 0)?"\red [org.burn_dam]":0),1)
