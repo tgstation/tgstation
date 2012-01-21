@@ -204,7 +204,10 @@
 	attack_self(var/mob/user as mob)
 		if(src.dat)
 			user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")
-			user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
+			if(title)
+				user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
+			else
+				user.visible_message("[user] opens a book titled \"[src.name]\" and begins reading intently.")
 			onclose(user, "book")
 		else
 			user << "This book is completely blank!"

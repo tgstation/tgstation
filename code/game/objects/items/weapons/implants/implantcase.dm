@@ -117,8 +117,8 @@
 		return
 
 /obj/item/weapon/implantcase/death_alarm
-	name = "Glass Case- 'Tracking'"
-	desc = "A case containing a tracking implant."
+	name = "Glass Case- 'Death Alarm'"
+	desc = "A case containing a death alarm implant."
 	icon = 'items.dmi'
 	icon_state = "implantcase-b"
 

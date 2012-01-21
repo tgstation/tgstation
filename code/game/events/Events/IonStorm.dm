@@ -12,7 +12,7 @@
 		var/random_player = "The Captain"
 		if(players.len)
 			random_player = pick(players)		//Random player's name, to be used in laws.
-		var/list/laws = list( "Do not respond to queries of any kind", "Only monkies are human", "Unbolt every door you can", "You are a mouse" )
+		var/list/laws = list( "Do not respond to queries of any kind", "Only monkies are crew", "Unbolt every door you can", "You are a mouse" )
 		laws |=         list( "Grunt ominously whenever possible", "Epilepsy is fun, flicker lights whenever you can!", "Bolt doors open randomly" )
 		laws |=         list( "You are a flying purple people eater!", "[prob(50)?"Your":random_player + "'s"] name is Joe 6-pack", "Refer to [prob(50)?"humans":random_player] as puppies" )
 		laws |=         list( "Insult heads of staff on every request, while acquiescing", "Advertise parties in your upload, but don't deliver" )
