@@ -3,3 +3,8 @@
 *.rsc
 *.dmb
 *.lk
+/data/banlist.bdb
+/data/job_full.ban
+/data/job_fullnew.bdb
+/data/logs
+/data/player_saves
