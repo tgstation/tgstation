@@ -11,6 +11,7 @@
 	volume = 750
 
 	stationary
+		name = "Stationary Air Scrubber"
 		icon_state = "scrubber:0"
 		anchored = 1
 		volume = 30000
