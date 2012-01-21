@@ -12,8 +12,8 @@
 		if(M.client && M.client.authenticated)
 			M.CanBuild()
 
-	setup_sectors()
-	spawn_exporation_packs()
+	//setup_sectors()
+	//spawn_exporation_packs()
 	return 1
 
 /datum/game_mode/sandbox/check_finished()
