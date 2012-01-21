@@ -1,6 +1,6 @@
 /obj/machinery/optable
-	name = "Operating Table"
-	desc = "Used for advanced medical procedures. Apparently this includes the clown."
+	name = "Operating table"
+	desc = "Used for advanced medical procedures."
 	icon = 'surgery.dmi'
 	icon_state = "table2-idle"
 	density = 1
@@ -133,7 +133,7 @@
 	return
 
 /obj/machinery/optable/portable
-	name = "mobile operating Table"
+	name = "Mobile operating table"
 	desc = "Used for advanced medical procedures. Seems to be movable, neat."
 	icon = 'rollerbed.dmi'
 	icon_state = "up"
