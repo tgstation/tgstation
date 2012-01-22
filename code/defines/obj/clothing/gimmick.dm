@@ -547,3 +547,18 @@ obj/item/clothing/suit/justice
 	icon_state = "justice"
 	item_state = "justice"
 	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/under/gladiator
+	name = "gladiator uniform"
+	desc = "Are you not entertained? Is that not why you are here?"
+	icon_state = "gladiator"
+	item_state = "gladiator"
+	color = "gladiator"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
+/obj/item/clothing/head/helmet/gladiator
+	name = "gladiator helmet"
+	desc = "Ave, Imperator, morituri te salutant."
+	icon_state = "gladiator"
+	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	item_state="gladiator"
