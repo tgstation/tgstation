@@ -10,6 +10,9 @@ client/verb/JoinResponseTeam()
 		if(!send_emergency_team)
 			usr << "No emergency response team is currently being sent."
 			return
+		if(jobban_isbanned(usr, "Syndicate") || jobban_isbanned(usr, "Emergency Response Team") || jobban_isbanned(usr, "Security Officer"))
+			usr << "<font color=red><b>You are jobbanned from the emergency reponse team!"
+			return
 
 		if(response_team_members.len > 5) usr << "The emergency response team is already full!"
 
@@ -32,9 +35,41 @@ client/verb/JoinResponseTeam()
 	else
 		usr << "You need to be an observer or new player to use this."
 
+// returns a number of dead players in %
+proc/percentage_dead()
+	var/total = 0
+	var/deadcount = 0
+	for(var/mob/living/carbon/human/H in world) if(H.mind) // I *think* monkeys gone human don't have a mind
+		if(H.stat == 2) deadcount++
+		total++
+
+	if(total == 0) return 0
+	else return round(100 * deadcount / total)
+
+// counts the number of antagonists in %
+proc/percentage_antagonists()
+	var/total = 0
+	var/antagonists = 0
+	for(var/mob/living/carbon/human/H in world)
+		if(is_special_character(H) >= 1)
+			antagonists++
+		total++
+
+	if(total == 0) return 0
+	else return round(100 * antagonists / total)
+
+
 proc/trigger_armed_response_team()
 	if(send_emergency_team)
 		return
+
+	var/send_team_chance = 20 // base chance that a team will be sent
+	send_team_chance += 2*percentage_dead() // the more people are dead, the higher the chance
+	send_team_chance += percentage_antagonists() // the more antagonists, the higher the chance
+	send_team_chance = min(send_team_chance, 100)
+
+	// there's only a certain chance a team will be sent
+	if(!prob(send_team_chance)) return
 
 	command_alert("According to our sensors, [station_name()] has entered code red. We will prepare and dispatch an emergency response team to deal with the situation.", "Command Report")
 
