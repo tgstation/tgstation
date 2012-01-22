@@ -115,6 +115,7 @@
 	var/t_loc = null
 	var/obj/item/item = null
 	var/place = null
+	var/internalloc = null
 
 /obj/effect/equip_e/human
 	name = "human"

@@ -77,6 +77,9 @@
 									newpath = text2path(I)
 									var/obj/item/s = new newpath
 									s.loc = user.loc
+									if(istype(P, /obj/item/weapon/cable_coil))
+										var/obj/item/weapon/cable_coil/A = P
+										A.amount = 1
 
 							// Drop a circuit board too
 							C.loc = user.loc
@@ -113,13 +116,16 @@
 		dat += "<br>Network: <a href='?src=\ref[src];input=network'>[network]</a>"
 		dat += "<br>Prefabrication: [autolinkers.len ? "TRUE" : "FALSE"]"
 		dat += "<br>Linked Network Entities: <ol>"
+
+		var/i = 0
 		for(var/obj/machinery/telecomms/T in links)
-			dat += "<li>\ref[T] [T.name] ([T.id]) (<a href='?src=\ref[src];remove=[T.id]'>X</a>)</li>"
+			i++
+			dat += "<li>\ref[T] [T.name] ([T.id])  <a href='?src=\ref[src];unlink=[i]'>\[X\]</a></li>"
 		dat += "</ol>"
 
 		dat += "<br>Filtering Frequencies: "
-		var/i = 0
 
+		i = 0
 		if(length(freq_listening))
 			for(var/x in freq_listening)
 				i++
@@ -197,6 +203,16 @@
 			temp = "<font color = #666633>-% Removed frequency filter [x] %-</font color>"
 			freq_listening.Remove(x)
 
+		if(href_list["unlink"])
+
+			var/obj/machinery/telecomms/T = links[text2num(href_list["unlink"])]
+			temp = "<font color = #666633>-% Removed \ref[T] [T.name] from linked entities. %-</font color>"
+
+			// Remove link entries from both T and src.
+			if(src in T.links)
+				T.links.Remove(src)
+			links.Remove(T)
+
 		if(href_list["link"])
 
 			if(P.buffer)
@@ -222,13 +238,6 @@
 			temp = "<font color = #666633>-% Buffer successfully flushed. %-</font color>"
 			P.buffer = null
 
-		if(href_list["remove"])
-
-			temp = "<font color = #666633>-% Link successfully removed. %-</font color>"
-			for(var/obj/machinery/telecomms/T in links)
-				if(T.id == href_list["remove"])
-					src.links.Remove(T)
-					break
 
 		usr.machine = src
 		src.add_fingerprint(usr)
