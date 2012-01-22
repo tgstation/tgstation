@@ -69,7 +69,7 @@
 		src.modules += new /obj/item/weapon/reagent_containers/pill/dexalin(src)
 		src.modules += new /obj/item/weapon/reagent_containers/pill/antitox(src)
 		src.modules += new /obj/item/weapon/reagent_containers/pill/kelotane(src)
-		src.modules += new /obj/item/weapon/reagent_containers/pill/bicaridine(src)
+		src.modules += new /obj/item/weapon/reagent_containers/pill/bicardine(src)
 		return
 
 
@@ -78,7 +78,7 @@
 			/obj/item/weapon/reagent_containers/pill/dexalin,
 			/obj/item/weapon/reagent_containers/pill/antitox,
 			/obj/item/weapon/reagent_containers/pill/kelotane,
-			/obj/item/weapon/reagent_containers/pill/bicaridine
+			/obj/item/weapon/reagent_containers/pill/bicardine
 		)
 		for (var/T in what)
 			if (!(locate(T) in src.modules))

@@ -20,8 +20,8 @@
 	min_oxy = 0
 	max_co2 = 0
 	max_tox = 0
-	speed = 3
-	destroyer = 1
+	var/speed = 3
+	var/destroyer = 1
 
 	Life()
 		..()
