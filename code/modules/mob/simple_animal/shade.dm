@@ -20,7 +20,6 @@
 	min_oxy = 0
 	max_co2 = 0
 	max_tox = 0
-	speed = -1
 
 
 	Life()

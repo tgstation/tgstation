@@ -189,9 +189,6 @@
 				delay = initial(delay)
 
 	proc/produce_heat(heat_amt)
-		if(heatgen == 0)
-			return
-
 		if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
 			var/turf/simulated/L = loc
 			if(istype(L))
@@ -363,8 +360,7 @@
 
 			if(is_freq_listening(signal))
 
-				if(traffic > 0)
-					totaltraffic += traffic // add current traffic to total traffic
+				totaltraffic += traffic // add current traffic to total traffic
 
 				// If signal has a message and appropriate frequency
 

@@ -44,65 +44,6 @@
 			/* --- Do a snazzy animation! --- */
 			flick("broadcaster_send", src)
 
-
-/*
-	Basically just an empty shell for receiving and broadcasting radio messages. Not
-	very flexible, but it gets the job done.
-*/
-
-/obj/machinery/telecomms/allinone
-	name = "Telecommunications Mainframe"
-	icon = 'stationobjs.dmi'
-	icon_state = "comm_server"
-	desc = "A compact machine used for portable subspace telecommuniations processing."
-	density = 1
-	anchored = 1
-	use_power = 0
-	idle_power_usage = 0
-	machinetype = 6
-	heatgen = 0
-	var/intercept = 0 // if nonzero, broadcasts all messages to syndicate channel
-
-	receive_signal(datum/signal/signal)
-
-		if(!on) // has to be on to receive messages
-			return
-
-		if(signal.transmission_method == 2)
-
-			if(is_freq_listening(signal)) // detect subspace signals
-
-				signal.data["done"] = 1 // mark the signal as being broadcasted
-				signal.data["compression"] = 0
-
-				// Search for the original signal and mark it as done as well
-				var/datum/signal/original = signal.data["original"]
-				if(original)
-					original.data["done"] = 1
-
-				if(signal.data["slow"] > 0)
-					sleep(signal.data["slow"]) // simulate the network lag if necessary
-
-				/* ###### Broadcast a message using signal.data ###### */
-
-				var/datum/radio_frequency/connection = signal.data["connection"]
-
-				if(connection.frequency == SYND_FREQ) // if syndicate broadcast, just
-					Broadcast_Message(signal.data["connection"], signal.data["mob"],
-									  signal.data["vmask"], signal.data["vmessage"],
-									  signal.data["radio"], signal.data["message"],
-									  signal.data["name"], signal.data["job"],
-									  signal.data["realname"], signal.data["vname"],, signal.data["compression"])
-				else
-					if(intercept)
-						Broadcast_Message(signal.data["connection"], signal.data["mob"],
-									  signal.data["vmask"], signal.data["vmessage"],
-									  signal.data["radio"], signal.data["message"],
-									  signal.data["name"], signal.data["job"],
-									  signal.data["realname"], signal.data["vname"], 3, signal.data["compression"])
-
-
-
 /**
 
 	Here is the big, bad function that broadcasts a message given the appropriate
@@ -141,11 +82,10 @@
 	@param vname:
 		If specified, will use this name when mob M is not understood. signal.data["vname"]
 
-	@param data:
+	@param filtertype:
 		If specified:
 				1 -- Will only broadcast to intercoms
 				2 -- Will only broadcast to intercoms and station-bounced radios
-				3 -- Broadcast to syndicate frequency
 
 	@param compression:
 		If 0, the signal is audible
@@ -156,7 +96,7 @@
 /proc/Broadcast_Message(var/datum/radio_frequency/connection, var/mob/M,
 						var/vmask, var/vmessage, var/obj/item/device/radio/radio,
 						var/message, var/name, var/job, var/realname, var/vname,
-						var/data, var/compression)
+						var/filtertype, var/compression)
 
 
   /* ###### Prepare the radio connection ###### */
@@ -168,7 +108,7 @@
 
 	// --- Broadcast only to intercom devices ---
 
-	if(data == 1)
+	if(filtertype == 1)
 		for (var/obj/item/device/radio/intercom/R in connection.devices["[RADIO_CHAT]"])
 
 			receive |= R.send_hear(display_freq)
@@ -176,23 +116,13 @@
 
 	// --- Broadcast only to intercoms and station-bounced radios ---
 
-	else if(data == 2)
+	else if(filtertype == 2)
 		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
 
 			if(istype(R, /obj/item/device/radio/headset))
 				continue
 
 			receive |= R.send_hear(display_freq)
-
-
-	// --- Broadcast to syndicate radio! ---
-
-	else if(data == 3)
-		var/datum/radio_frequency/syndicateconnection = radio_controller.return_frequency(SYND_FREQ)
-
-		for (var/obj/item/device/radio/R in syndicateconnection.devices["[RADIO_CHAT]"])
-
-			receive |= R.send_hear(SYND_FREQ)
 
 
 	// --- Broadcast to ALL radio devices ---
@@ -287,10 +217,7 @@
 
 		// --- Some more pre-message formatting ---
 
-		var/part_b_extra = ""
-		if(data == 3) // intercepted radio message
-			part_b_extra = " <i>(Intercepted)</i>"
-		var/part_b = "</span><b> \icon[radio]\[[freq_text]\][part_b_extra]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+		var/part_b = "</span><b> \icon[radio]\[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 		var/part_c = "</span></span>"
 
 		if (display_freq==SYND_FREQ)
