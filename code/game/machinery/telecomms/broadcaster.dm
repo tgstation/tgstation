@@ -5,6 +5,9 @@
 	They receive their message from a server after the message has been logged.
 */
 
+var
+	list/recentmessages = list() // global list of recent messages broadcasted : used to circumvent massive radio spam
+
 
 /obj/machinery/telecomms/broadcaster
 	name = "Subspace Broadcaster"
@@ -19,10 +22,16 @@
 	heatgen = 60
 	delay = 7
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/broadcaster"
+
 	receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
-
 		if(signal.data["message"])
+
+			// Kind of lame way to prevent MASSIVE RADIO SPAM but it works
+			if("[signal.data["message"]]:[signal.data["realname"]]" in recentmessages)
+				return
+			recentmessages.Add( "[signal.data["message"]]:[signal.data["realname"]]" )
+
 
 			signal.data["done"] = 1 // mark the signal as being broadcasted
 
@@ -43,6 +52,9 @@
 
 			/* --- Do a snazzy animation! --- */
 			flick("broadcaster_send", src)
+
+			spawn(1)
+				recentmessages = list()
 
 
 /*
@@ -68,38 +80,36 @@
 		if(!on) // has to be on to receive messages
 			return
 
-		if(signal.transmission_method == 2)
+		if(is_freq_listening(signal)) // detect subspace signals
 
-			if(is_freq_listening(signal)) // detect subspace signals
+			signal.data["done"] = 1 // mark the signal as being broadcasted
+			signal.data["compression"] = 0
 
-				signal.data["done"] = 1 // mark the signal as being broadcasted
-				signal.data["compression"] = 0
+			// Search for the original signal and mark it as done as well
+			var/datum/signal/original = signal.data["original"]
+			if(original)
+				original.data["done"] = 1
 
-				// Search for the original signal and mark it as done as well
-				var/datum/signal/original = signal.data["original"]
-				if(original)
-					original.data["done"] = 1
+			if(signal.data["slow"] > 0)
+				sleep(signal.data["slow"]) // simulate the network lag if necessary
 
-				if(signal.data["slow"] > 0)
-					sleep(signal.data["slow"]) // simulate the network lag if necessary
+			/* ###### Broadcast a message using signal.data ###### */
 
-				/* ###### Broadcast a message using signal.data ###### */
+			var/datum/radio_frequency/connection = signal.data["connection"]
 
-				var/datum/radio_frequency/connection = signal.data["connection"]
-
-				if(connection.frequency == SYND_FREQ) // if syndicate broadcast, just
+			if(connection.frequency == SYND_FREQ) // if syndicate broadcast, just
+				Broadcast_Message(signal.data["connection"], signal.data["mob"],
+								  signal.data["vmask"], signal.data["vmessage"],
+								  signal.data["radio"], signal.data["message"],
+								  signal.data["name"], signal.data["job"],
+								  signal.data["realname"], signal.data["vname"],, signal.data["compression"])
+			else
+				if(intercept)
 					Broadcast_Message(signal.data["connection"], signal.data["mob"],
-									  signal.data["vmask"], signal.data["vmessage"],
-									  signal.data["radio"], signal.data["message"],
-									  signal.data["name"], signal.data["job"],
-									  signal.data["realname"], signal.data["vname"],, signal.data["compression"])
-				else
-					if(intercept)
-						Broadcast_Message(signal.data["connection"], signal.data["mob"],
-									  signal.data["vmask"], signal.data["vmessage"],
-									  signal.data["radio"], signal.data["message"],
-									  signal.data["name"], signal.data["job"],
-									  signal.data["realname"], signal.data["vname"], 3, signal.data["compression"])
+								  signal.data["vmask"], signal.data["vmessage"],
+								  signal.data["radio"], signal.data["message"],
+								  signal.data["name"], signal.data["job"],
+								  signal.data["realname"], signal.data["vname"], 3, signal.data["compression"])
 
 
 
