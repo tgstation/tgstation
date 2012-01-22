@@ -10,6 +10,7 @@
 	active_power_usage = 5
 	var/mob/living/carbon/victim = null
 	var/strapped = 0.0
+	var/updatesicon = 1
 
 	var/obj/machinery/computer/operating/computer = null
 	var/id = 0.0
@@ -94,10 +95,12 @@
 			var/mob/M = locate(/mob/living/carbon, src.loc)
 			if(M.resting)
 				src.victim = M
-				icon_state = "table2-active"
+				if(updatesicon)
+					icon_state = "table2-active"
 				return 1
 		src.victim = null
-		icon_state = "table2-idle"
+		if(updatesicon)
+			icon_state = "table2-idle"
 		processing_objects.Remove(src)
 		return 0
 
@@ -118,7 +121,8 @@
 				for(var/obj/O in src)
 					O.loc = src.loc
 				src.add_fingerprint(user)
-				icon_state = "table2-active"
+				if(updatesicon)
+					icon_state = "table2-active"
 				src.victim = M
 				processing_objects.Add(src)
 				del(W)
@@ -136,6 +140,7 @@
 	density = 1
 	anchored = 0
 	id = null
+	updatesicon = 0
 
 	New()
 		..()
