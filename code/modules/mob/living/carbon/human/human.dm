@@ -2118,11 +2118,11 @@ It can still be worn/put on as normal.
 				if (!( istype(target.wear_mask, /obj/item/clothing/mask) ))
 					return
 				else
-					if (istype(target.back, /obj/item/weapon/tank) && internalloc == "back")
+					if (istype(target.back, /obj/item/weapon/tank) && (internalloc == "back" || !internalloc))
 						target.internal = target.back
-					else if (istype(target.s_store, /obj/item/weapon/tank) && internalloc == "store")
+					else if (istype(target.s_store, /obj/item/weapon/tank) && (internalloc == "store" || !internalloc))
 						target.internal = target.s_store
-					else if (istype(target.belt, /obj/item/weapon/tank) && internalloc == "belt")
+					else if (istype(target.belt, /obj/item/weapon/tank) && (internalloc == "belt" || !internalloc))
 						target.internal = target.belt
 					if (target.internal)
 						for(var/mob/M in viewers(target, 1))
