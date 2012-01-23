@@ -1063,7 +1063,7 @@ datum
 			name = "Hyper-Capacity Power Cell"
 			desc = "A power cell that holds 30000 units of energy"
 			id = "hyper_cell"
-			req_tech = list("powerstorage" = 6, "materials" = 4)
+			req_tech = list("powerstorage" = 5, "materials" = 4)
 			reliability_base = 70
 			build_type = PROTOLATHE
 			materials = list("$metal" = 400, "$gold" = 150, "$silver" = 150, "$glass" = 70)
