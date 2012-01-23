@@ -50,6 +50,15 @@
 				M.drop_item()
 				del(src)
 				return
+			if (target == user && user.zone_sel.selecting == "mouth")
+				M.visible_message("\red [user] sticks their gun in their mouth, ready to pull the trigger...")
+				if(!do_after(user, 20))
+					M.visible_message("\blue [user] decided life was worth living")
+					return
+				M.visible_message("\red [user] pulls the trigger.")
+				M.apply_damage(60, BRUTE, "head")
+				M.apply_damage(90, BRUTE, "chest")
+				return
 
 		if (!user.IsAdvancedToolUser())
 			user << "\red You don't have the dexterity to do this!"

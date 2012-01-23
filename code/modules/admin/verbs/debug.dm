@@ -690,7 +690,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/clothing/glasses/sunglasses/V = new(M)
 			V.loc = K
 			M.equip_if_possible(K, M.slot_wear_suit)
-			M.equip_if_possible(new /obj/item/weapon/gun/energy(M), M.slot_s_store)
+			M.equip_if_possible(new /obj/item/weapon/gun/energy/gun(M), M.slot_s_store)
 
 			var/obj/item/device/pda/heads/pda = new(M)
 			pda.owner = M.real_name

@@ -62,7 +62,7 @@
 	machinetype = 6
 	heatgen = 0
 	var/intercept = 0 // if nonzero, broadcasts all messages to syndicate channel
-	var/syndi = 1 //If 1, it goes to syndicate frequency.  Else, goes to deathsquad
+	var/syndi = 1 //If 1, it goes to syndicate frequency.  Else, goes to deathsquad/Response Team
 
 	receive_signal(datum/signal/signal)
 
@@ -210,7 +210,7 @@
 
 	// --- Broadcast to response team radio! ---
 
-	else if(data == 3)
+	else if(data == 4)
 		var/datum/radio_frequency/syndicateconnection = radio_controller.return_frequency(1439)
 
 		for (var/obj/item/device/radio/R in syndicateconnection.devices["[RADIO_CHAT]"])

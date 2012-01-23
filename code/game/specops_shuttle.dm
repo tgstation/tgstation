@@ -10,7 +10,6 @@ var/specops_shuttle_at_station = 0
 var/specops_shuttle_can_send = 1
 var/specops_shuttle_time = 0
 var/specops_shuttle_timeleft = 0
-var/specops_shuttle_timereset = 0
 
 /obj/machinery/computer/specops_shuttle
 	name = "Spec. Ops. Shuttle Console"
@@ -20,15 +19,16 @@ var/specops_shuttle_timereset = 0
 	var/temp = null
 	var/hacked = 0
 	var/allowedtocall = 0
+	var/specops_shuttle_timereset = 0
 
 /proc/specops_return()
-	var/area/centcom/control/cent_com = locate()//To find announcer. This area should exist for this proc to work.
-	var/mob/living/silicon/decoy/announcer = locate() in cent_com//We need a fake AI to announce some stuff below. Otherwise it will be wonky.
+	var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)//We need a fake AI to announce some stuff below. Otherwise it will be wonky.
+	announcer.config(list("Response Team" = 0))
 
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
-	var/message = "THE SPECIAL OPERATIONS SHUTTLE IS PREPARING FOR LAUNCH"//Initial message shown.
+	var/message = "THE SPECIAL OPERATIONS SHUTTLE IS PREPARING TO RETURN"//Initial message shown.
 	if(announcer)
-		announcer.say(message)
+		announcer.autosay(message, "A.L.I.C.E.", "Response Team")
 
 	while(specops_shuttle_time - world.timeofday > 0)
 		var/ticksleft = specops_shuttle_time - world.timeofday
@@ -44,7 +44,7 @@ var/specops_shuttle_timereset = 0
 				message = "ALERT: [rounded_time_left] SECOND[(rounded_time_left!=1)?"S":""] REMAIN"
 				if(rounded_time_left==0)
 					message = "ALERT: TAKEOFF"
-				announcer.say(message)
+				announcer.autosay(message, "A.L.I.C.E.", "Response Team")
 				message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
 				//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
 
@@ -82,17 +82,22 @@ var/specops_shuttle_timereset = 0
 		var/mob/M = locate(/mob) in T
 		M << "\red You have arrived at Central Command. Operation has ended!"
 
+	for(var/obj/machinery/computer/specops_shuttle/S in world)
+		S.specops_shuttle_timereset = world.time + SPECOPS_RETURN_DELAY
+
+	del(announcer)
+
 /proc/specops_process()
-	var/area/centcom/control/cent_com = locate()//To find announcer. This area should exist for this proc to work.
 	var/area/centcom/specops/special_ops = locate()//Where is the specops area located?
-	var/mob/living/silicon/decoy/announcer = locate() in cent_com//We need a fake AI to announce some stuff below. Otherwise it will be wonky.
+	var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)//We need a fake AI to announce some stuff below. Otherwise it will be wonky.
+	announcer.config(list("Response Team" = 0))
 
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
 	var/message = "THE SPECIAL OPERATIONS SHUTTLE IS PREPARING FOR LAUNCH"//Initial message shown.
 	if(announcer)
-		announcer.say(message)
+		announcer.autosay(message, "A.L.I.C.E.", "Response Team")
 		message = "ARMORED SQUAD TAKE YOUR POSITION ON GRAVITY LAUNCH PAD"
-		announcer.say(message)
+		announcer.autosay(message, "A.L.I.C.E.", "Response Team")
 
 	while(specops_shuttle_time - world.timeofday > 0)
 		var/ticksleft = specops_shuttle_time - world.timeofday
@@ -108,7 +113,7 @@ var/specops_shuttle_timereset = 0
 				message = "ALERT: [rounded_time_left] SECOND[(rounded_time_left!=1)?"S":""] REMAIN"
 				if(rounded_time_left==0)
 					message = "ALERT: TAKEOFF"
-				announcer.say(message)
+				announcer.autosay(message, "A.L.I.C.E.", "Response Team")
 				message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
 				//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
 
@@ -218,16 +223,18 @@ var/specops_shuttle_timereset = 0
 		var/mob/M = locate(/mob) in T
 		M << "\red You have arrived to [station_name]. Commence operation!"
 
+	for(var/obj/machinery/computer/specops_shuttle/S in world)
+		S.specops_shuttle_timereset = world.time + SPECOPS_RETURN_DELAY
+
+	del(announcer)
+
 /proc/specops_can_move()
 	if(specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom)
 		return 0
-	else if(world.time <= specops_shuttle_timereset)
-		return 0
+	for(var/obj/machinery/computer/specops_shuttle/S in world)
+		if(world.time <= S.specops_shuttle_timereset)
+			return 0
 	return 1
-
-/obj/machinery/computer/specops_shuttle/proc/make_move()
-	specops_shuttle_timereset = world.time
-	return
 
 /obj/machinery/computer/specops_shuttle/attack_ai(var/mob/user as mob)
 	return attack_hand(user)
@@ -280,7 +287,9 @@ var/specops_shuttle_timereset = 0
 		if (!specops_can_move())
 			usr << "\blue Central Command will not allow the Special Operations shuttle to return yet."
 			if(world.time <= specops_shuttle_timereset)
-				usr << "\blue [(world.time - specops_shuttle_timereset)/10] seconds remain!"
+				if (((world.time - specops_shuttle_timereset)/10) > 60)
+					usr << "\blue [-((world.time - specops_shuttle_timereset)/10)/60] minutes remain!"
+				usr << "\blue [-(world.time - specops_shuttle_timereset)/10] seconds remain!"
 			return
 
 		usr << "\blue The Special Operations shuttle will arrive at Central Command in [(SPECOPS_MOVETIME/10)] seconds."
@@ -290,7 +299,6 @@ var/specops_shuttle_timereset = 0
 
 		specops_shuttle_moving_to_centcom = 1
 		specops_shuttle_time = world.timeofday + SPECOPS_MOVETIME
-		specops_shuttle_timereset = world.time + SPECOPS_RETURN_DELAY
 		spawn(0)
 			specops_return()
 
@@ -312,7 +320,6 @@ var/specops_shuttle_timereset = 0
 		specops_shuttle_moving_to_station = 1
 
 		specops_shuttle_time = world.timeofday + SPECOPS_MOVETIME
-		specops_shuttle_timereset = world.time + SPECOPS_RETURN_DELAY
 		spawn(0)
 			specops_process()
 
