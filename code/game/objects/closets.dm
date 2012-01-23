@@ -20,6 +20,9 @@
 	for(var/obj/item/I in src)
 		I.loc = src.loc
 
+	for(var/obj/mecha/working/ripley/deathripley/I in src)
+		I.loc = src.loc
+
 	for(var/mob/M in src)
 		M.loc = src.loc
 		if(M.client)
@@ -53,6 +56,9 @@
 	for(var/obj/item/I in src.loc)
 		if(!I.anchored)
 			I.loc = src
+
+	for(var/obj/mecha/working/ripley/deathripley/I in src.loc)
+		I.loc = src
 
 	for(var/mob/M in src.loc)
 		if(istype (M, /mob/dead/observer))
