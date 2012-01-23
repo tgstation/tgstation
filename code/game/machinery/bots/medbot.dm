@@ -33,13 +33,14 @@
 	var/heal_threshold = 15 //Start healing when they have this much damage in a category
 	var/use_beaker = 0 //Use reagents in beaker instead of default treatment agents.
 	//Setting which reagents to use to treat what by default. By id.
-//	var/treatment_brute = "bicaridine"
-//	var/treatment_oxy = "dexalin"
-//	var/treatment_fire = "kelotane"
-//	var/treatment_tox = "anti_toxin"
-//	var/treatment_virus = "spaceacillin"
+	var/treatment_brute = "bicaridine"
+	var/treatment_oxy = "dexalin"
+	var/treatment_fire = "kelotane"
+	var/treatment_tox = "anti_toxin"
+	var/treatment_virus = "spaceacillin"
 	var/reagent_id = "inaprovaline"
 	var/shut_up = 0 //self explanatory :)
+	var/always_inject = 0
 
 /obj/machinery/bot/medbot/mysterious
 	name = "Mysterious Medibot"
@@ -131,6 +132,9 @@
 		dat += "Reagent Source: "
 		dat += "<a href='?src=\ref[src];use_beaker=1'>[src.use_beaker ? "Loaded Beaker (When available)" : "Internal Synthesizer"]</a><br>"
 
+		dat += "Inject: "
+		dat += "<a href='?src=\ref[src];toggle_inject=1'>[src.always_inject ? "Always" : "If loaded chemical is known to help"]</a><br>"
+
 		dat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
 
 	user << browse("<HEAD><TITLE>Medibot v1.0 controls</TITLE></HEAD>[dat]", "window=automed")
@@ -166,13 +170,12 @@
 
 	else if((href_list["use_beaker"]) && (!src.locked))
 		src.use_beaker = !src.use_beaker
+	else if((href_list["toggle_inject"]) && (!src.locked))
+		src.always_inject = !src.always_inject
 
 	else if (href_list["eject"] && (!isnull(src.reagent_glass)))
-		if(!src.locked)
-			src.reagent_glass.loc = get_turf(src)
-			src.reagent_glass = null
-		else
-			usr << "You cannot eject the beaker because the panel is locked!"
+		src.reagent_glass.loc = get_turf(src)
+		src.reagent_glass = null
 
 	else if ((href_list["togglevoice"]) && (!src.locked))
 		src.shut_up = !src.shut_up
@@ -190,9 +193,6 @@
 			user << "\red Access denied."
 
 	else if (istype(W, /obj/item/weapon/reagent_containers/glass))
-		if(src.locked)
-			user << "You cannot insert a beaker because the panel is locked!"
-			return
 		if(!isnull(src.reagent_glass))
 			user << "There is already a beaker loaded!"
 			return
@@ -371,9 +371,29 @@
 		src.last_found = world.time
 		return
 
-	//Use whatever is inside the loaded beaker. If there is one.
+	//See if we have anything inside the beaker to help.
 	if((src.use_beaker) && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
-		reagent_id = "internal_beaker"
+		if(always_inject)
+			reagent_id = "internal_beaker"
+		else if (C.getBruteLoss() >= heal_threshold)
+			if(C.reagents.has_reagent(src.treatment_brute))
+				reagent_id = "internal_beaker"
+
+		else if (C.getOxyLoss() >= (15 + heal_threshold))
+			if(C.reagents.has_reagent(src.treatment_oxy))
+				reagent_id = "internal_beaker"
+
+		else if (C.getFireLoss() >= heal_threshold)
+			if(C.reagents.has_reagent(src.treatment_fire))
+				reagent_id = "internal_beaker"
+
+		else if (C.getToxLoss() >= heal_threshold)
+			if(C.reagents.has_reagent(src.treatment_tox))
+				reagent_id = "internal_beaker"
+
+		else if (100 - C.health >= heal_threshold)
+			if(C.reagents.has_reagent("tricordrazine"))
+				reagent_id = "internal_beaker"
 
 	if(src.emagged) //Emagged! Time to poison everybody.
 		reagent_id = "toxin"

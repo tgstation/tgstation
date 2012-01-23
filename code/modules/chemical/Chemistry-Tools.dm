@@ -2128,6 +2128,17 @@
 		..()
 		reagents.add_reagent("cryoxadone", 30)
 
+/obj/item/weapon/reagent_containers/glass/beaker/tricordrazine
+	name = "beaker"
+	desc = "A beaker. Can hold up to 50 units."
+	icon = 'chemical.dmi'
+	icon_state = "beaker0"
+	item_state = "beaker"
+
+	New()
+		..()
+		reagents.add_reagent("tricordrazine", 30)
+
 /obj/item/weapon/reagent_containers/food/drinks/golden_cup
 	desc = "A golden cup"
 	name = "golden cup"
