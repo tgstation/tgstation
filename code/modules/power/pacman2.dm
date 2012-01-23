@@ -6,7 +6,7 @@
 	power_gen = 4500
 	var
 		obj/item/weapon/tank/plasma/P = null
-		board_path = "/obj/item/weapon/circuitboard/pacman"
+		board_path = "/obj/item/weapon/circuitboard/pacman2"
 		emagged = 0
 		heat = 0
 /*
