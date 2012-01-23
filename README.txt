@@ -1,4 +1,3 @@
-TEST
 tgstation13 v1.0 - 6 October 2010
 
 Website: http://nanotrasen.com
