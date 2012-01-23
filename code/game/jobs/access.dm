@@ -491,14 +491,25 @@
 		return
 
 	var/jobName
+	var/list/accesses = list()
 
 	if(istype(src, /obj/item/device/pda))
 		if(src:id)
 			jobName = src:id:assignment
+			accesses = src:id:access
 	if(istype(src, /obj/item/weapon/card/id))
 		jobName = src:assignment
+		accesses = src:access
 
 	if(jobName in get_all_jobs())
 		return jobName
+
+	var/centcom = 0
+	for(var/i = 1, i <= accesses.len, i++)
+		if(accesses[i] > 100)
+			centcom = 1
+			break
+	if(centcom)
+		return "centcom"
 	else
 		return "Unknown"

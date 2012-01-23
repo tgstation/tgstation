@@ -209,7 +209,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			"mobtype" = /mob/living/silicon/ai, 	// the mob's type
 			"realname" = from, // the mob's real name
 			"name" = from,	// the mob's display name
-			"job" = "(Automated Announcement)",		// the mob's job
+			"job" = "Automated Announcement",		// the mob's job
 			"key" = "none",			// the mob's key
 			"vmessage" = "*garbled automated announcement*", // the message to display if the voice wasn't understood
 			"vname" = "synthesized voice", // the name to display if the voice wasn't understood
@@ -261,7 +261,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		"mobtype" = /mob/living/silicon/ai, 	// the mob's type
 		"realname" = from, // the mob's real name
 		"name" = from,	// the mob's display name
-		"job" = "(Automated Announcement)",		// the mob's job
+		"job" = "Automated Announcement",		// the mob's job
 		"key" = "none",			// the mob's key
 		"vmessage" = "*garbled automated announcement*", // the message to display if the voice wasn't understood
 		"vname" = "synthesized voice", // the name to display if the voice wasn't understood
@@ -294,7 +294,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	// Send a mundane broadcast with limited targets:
 
 	Broadcast_Message(connection, new /mob/living/silicon/ai(src), 0, "*garbled automated announcement*",
-					  src, message, from, "(Automated Announcement)", from, "synthesized voice",
+					  src, message, from, "Automated Announcement", from, "synthesized voice",
 	                  filter_type, signal.data["compression"])
 	return
 

@@ -190,7 +190,7 @@ proc/trigger_armed_response_team()
 	camera.c_tag = real_name
 
 	//Basic Uniform
-	equip_if_possible(new /obj/item/clothing/under/color/black(src), slot_w_uniform)
+	equip_if_possible(new /obj/item/clothing/under/syndicate/tacticool(src), slot_w_uniform)
 	equip_if_possible(new /obj/item/device/flashlight(src), slot_l_store)
 	equip_if_possible(new /obj/item/weapon/clipboard(src), slot_r_store)
 	equip_if_possible(new /obj/item/weapon/gun/energy/gun(src), slot_belt)
