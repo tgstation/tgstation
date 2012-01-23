@@ -1080,7 +1080,7 @@
 
 /obj/item/weapon/cell/super
 	name = "super-capacity power cell"
-	origin_tech = "powerstorage=3"
+	origin_tech = "powerstorage=5"
 	maxcharge = 20000
 	g_amt = 70
 
