@@ -47,6 +47,8 @@
 			M.apply_damage(70, BRUTE, "head")
 			M.apply_damage(110, BRUTE, "chest")
 			return
+		else
+			return ..()
 
 	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)//TODO: go over this
 		if(flag)	return //we're placing gun on a table or in backpack
