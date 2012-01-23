@@ -120,7 +120,7 @@ proc/trigger_armed_response_team()
 	equip_if_possible(new /obj/item/clothing/under/color/black(src), slot_w_uniform)
 	equip_if_possible(new /obj/item/device/flashlight(src), slot_l_store)
 	equip_if_possible(new /obj/item/weapon/clipboard(src), slot_r_store)
-	equip_if_possible(new /obj/item/weapon/gun/energy/taser(src), slot_belt)
+	equip_if_possible(new /obj/item/weapon/gun/energy/gun(src), slot_belt)
 
 	//Glasses
 	equip_if_possible(new /obj/item/clothing/glasses/sunglasses/sechud(src), slot_glasses)

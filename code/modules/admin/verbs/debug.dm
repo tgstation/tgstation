@@ -480,6 +480,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"assassin",
 		"death commando",
 		"syndicate commando",
+		"response team",
 		"centcom official",
 		"centcom commander",
 		"special ops officer",
@@ -676,6 +677,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 		if("syndicate commando")
 			M.equip_syndicate_commando()
+
+		if("response team")
+			M.equip_strike_team()
 
 		if("centcom official")
 			M.equip_if_possible(new /obj/item/clothing/under/rank/centcom_officer(M), M.slot_w_uniform)
