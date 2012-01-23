@@ -183,6 +183,121 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			updateDialog()
 	add_fingerprint(usr)
 
+/obj/item/device/radio/proc/autosay(var/message, var/from, var/channel)
+	var/datum/radio_frequency/connection = null
+	if(channel && channels && channels.len > 0)
+		if (channel == "department")
+			//world << "DEBUG: channel=\"[channel]\" switching to \"[channels[1]]\""
+			channel = channels[1]
+		connection = secure_radio_connections[channel]
+	else
+		connection = radio_connection
+		channel = null
+	if (!istype(connection))
+		return
+
+	if(subspace_transmission)
+		// First, we want to generate a new radio signal
+		var/datum/signal/signal = new
+		signal.transmission_method = 2 // 2 would be a subspace transmission.
+									   // transmission_method could probably be enumerated through #define. Would be neater.
+
+		// --- Finally, tag the actual signal with the appropriate values ---
+		signal.data = list(
+		  // Identity-associated tags:
+			"mob" = new /mob/living/silicon/ai(src), // store a reference to the mob
+			"mobtype" = /mob/living/silicon/ai, 	// the mob's type
+			"realname" = from, // the mob's real name
+			"name" = from,	// the mob's display name
+			"job" = "Automated Announcement",		// the mob's job
+			"key" = "none",			// the mob's key
+			"vmessage" = "*garbled automated announcement*", // the message to display if the voice wasn't understood
+			"vname" = "synthesized voice", // the name to display if the voice wasn't understood
+			"vmask" = 0,	// 1 if the mob is using a voice gas mask
+
+			// We store things that would otherwise be kept in the actual mob
+			// so that they can be logged even AFTER the mob is deleted or something
+
+		  // Other tags:
+			"compression" = rand(45,50), // compressed radio signal
+			"message" = message, // the actual sent message
+			"connection" = connection, // the radio connection to use
+			"radio" = src, // stores the radio used for transmission
+			"slow" = 0, // how much to sleep() before broadcasting - simulates net lag
+			"traffic" = 0 // dictates the total traffic sum that the signal went through
+		)
+		signal.frequency = connection.frequency // Quick frequency set
+
+	  //#### Sending the signal to all subspace receivers ####//
+		for(var/obj/machinery/telecomms/receiver/R in world)
+			R.receive_signal(signal)
+
+		// Allinone can act as receivers.
+		for(var/obj/machinery/telecomms/allinone/R in world)
+			R.receive_signal(signal)
+
+	  	// Receiving code can be located in Telecommunications.dm
+		return
+
+
+	/* ###### Intercoms and station-bounced radios ###### */
+
+	var/filter_type = 2
+
+	/* --- Intercoms can only broadcast to other intercoms, but bounced radios can broadcast to bounced radios and intercoms --- */
+	if(istype(src, /obj/item/device/radio/intercom))
+		filter_type = 1
+
+
+	var/datum/signal/signal = new
+	signal.transmission_method = 2
+
+
+	/* --- Try to send a normal subspace broadcast first */
+
+	signal.data = list(
+
+		"mob" = new /mob/living/silicon/ai(src), // store a reference to the mob
+		"mobtype" = /mob/living/silicon/ai, 	// the mob's type
+		"realname" = from, // the mob's real name
+		"name" = from,	// the mob's display name
+		"job" = "Automated Announcement",		// the mob's job
+		"key" = "none",			// the mob's key
+		"vmessage" = "*garbled automated announcement*", // the message to display if the voice wasn't understood
+		"vname" = "synthesized voice", // the name to display if the voice wasn't understood
+		"vmask" = 0,	// 1 if the mob is using a voice gas mask
+
+		// We store things that would otherwise be kept in the actual mob
+		// so that they can be logged even AFTER the mob is deleted or something
+
+	  // Other tags:
+		"compression" = 0, // compressed radio signal
+		"message" = message, // the actual sent message
+		"connection" = connection, // the radio connection to use
+		"radio" = src, // stores the radio used for transmission
+		"slow" = 0, // how much to sleep() before broadcasting - simulates net lag
+		"traffic" = 0 // dictates the total traffic sum that the signal went through
+	)
+	signal.frequency = connection.frequency // Quick frequency set
+
+	for(var/obj/machinery/telecomms/receiver/R in world)
+		R.receive_signal(signal)
+
+
+	sleep(rand(10,25)) // wait a little...
+
+	if(signal.data["done"])
+		del(signal) // delete the signal - we're done here.
+		return
+
+	// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet.
+	// Send a mundane broadcast with limited targets:
+
+	Broadcast_Message(connection, new /mob/living/silicon/ai(src), 0, "*garbled automated announcement*",
+					  src, message, from, "Automated Announcement", from, "synthesized voice",
+	                  filter_type, signal.data["compression"])
+	return
+
 /obj/item/device/radio/talk_into(mob/M as mob, message, channel)
 
 	if(GLOBAL_RADIO_TYPE == 1) // NEW RADIO SYSTEMS: By Doohl

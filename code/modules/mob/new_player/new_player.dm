@@ -270,15 +270,9 @@
 
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 		if (ticker.current_state == GAME_STATE_PLAYING)
-			var/ailist[] = list()
-			for (var/mob/living/silicon/ai/A in world)
-				if (!A.stat)
-					ailist += A
-			if (ailist.len)
-				var/mob/living/silicon/ai/announcer = pick(ailist)
-				if(character.mind)
-					if((character.mind.assigned_role != "Cyborg") && (character.mind.special_role != "MODE"))
-						announcer.say("[character.real_name] has signed up as [rank].")
+			var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)
+			a.autosay("[character.real_name] has arrived on the station.", "Arrivals Announcement Computer")
+			del(a)
 
 
 	proc/ManifestLateSpawn(var/mob/living/carbon/human/H, icon/H_icon) // Attempted fix to add late joiners to various databases -- TLE

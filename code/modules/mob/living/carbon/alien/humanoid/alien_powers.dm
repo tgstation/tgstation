@@ -14,7 +14,7 @@ Doesn't work on other aliens/AI.*/
 		src << "\green Not enough plasma stored."
 		return 0
 	else if(Y && (!isturf(src.loc) || istype(src.loc, /turf/space)))
-		src << "\green Bad place for a garden!"
+		src << "\green Weeds would not be able to survive here."
 		return 0
 	else	return 1
 
@@ -133,35 +133,32 @@ I kind of like the right click only--the window version can get a little confusi
 		for(var/obj/machinery/atmospherics/unary/vent_pump/v in range(1,src))
 			if(!v.welded)
 				vent_found = v
+				break
 			else
 				src << "\red That vent is welded."
+
 		if(vent_found)
-			var/list/vents = list()
-			if(vent_found.network&&vent_found.network.normal_members.len)
+			var/list/ventAreas = list() // A list of the areas of all the vents you can go to.
+			var/list/vents = list()		// The list of vent objects you can go to.
+			if(vent_found.network && vent_found.network.normal_members.len)
 				for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in vent_found.network.normal_members)
-					if(temp_vent.loc == loc)
+					if(temp_vent.loc == loc || temp_vent.loc.z != loc.z)
 						continue
 					if(temp_vent.welded)
 						continue
+
 					vents.Add(temp_vent)
-				var/list/choices = list()
-				for(var/obj/machinery/atmospherics/unary/vent_pump/vent in vents)
-					if(vent.loc.z != loc.z)
-						continue
-					if(vent.welded)
-						continue
-					var/atom/a = get_turf_loc(vent)
-					choices.Add(a.loc)
-				var/turf/startloc = loc
-				var/obj/selection = input("Select a destination.", "Duct System") in choices
-				var/selection_position = choices.Find(selection)
-				if(loc==startloc)
 
-					// Hacky way of hopefully preventing a runtime error from happening
-					if(vents.len < selection_position)
-						vents.len = selection_position//What the fuck is this I dont even,  Right will likely have to fix this later
+					var/atom/a = get_turf_loc(temp_vent)
+					ventAreas.Add(a.loc)
 
-					var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[selection_position]
+
+				var/turf/startLoc = loc
+				var/area/destArea = input("Select a destination.", "Duct System") in ventAreas
+				var/destAreaIndex = ventAreas.Find(destArea)
+
+				if(loc==startLoc)
+					var/obj/machinery/atmospherics/unary/vent_pump/target_vent = vents[destAreaIndex]
 					if(target_vent)
 						for(var/mob/O in viewers(src, null))
 							O.show_message(text("<B>[src] scrambles into the ventillation ducts!</B>"), 1)
@@ -178,7 +175,7 @@ I kind of like the right click only--the window version can get a little confusi
 						spawn(round(travel_time/2))//give sound warning to anyone near the target vent
 							if(!target_vent.welded)
 								for(var/mob/O in hearers(target_vent, null))
-									O.show_message("You hear something crawling trough the ventilation pipes.",2)
+									O.show_message("You hear something crawling through the ventilation pipes.",2)
 
 						spawn(travel_time)
 							if(target_vent.welded)//the vent can be welded while alien scrolled through the list or travelled.

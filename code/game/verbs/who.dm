@@ -34,3 +34,16 @@
 				usr << "[M.key] is a [M.client.holder.rank][M.client.stealth ? " <i>(as [M.client.fakekey])</i>" : ""]"
 			else if(!M.client.stealth && (M.client.holder.level != -3))
 				usr << "\t[M.client]"
+
+/client/verb/active_players()
+	set category = "OOC"
+	set name = "Active Players"
+	var/total = 0
+	for(var/mob/living/M in world)
+		if(!M.client) continue
+		if(M.client.inactivity > 10 * 60 * 10) continue
+		if(M.stat == 2) continue
+
+		total++
+
+	usr << "<b>Active Players: [total]</b>"

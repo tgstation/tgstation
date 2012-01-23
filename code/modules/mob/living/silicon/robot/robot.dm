@@ -753,18 +753,36 @@
 			contents += O
 			if(istype(module_state_1,/obj/item/borg/sight))
 				sight_mode |= module_state_1:sight_mode
+			else if(istype(module_state_1,/obj/item/weapon/zippo))
+				var/obj/item/weapon/zippo/Z = module_state_1
+				Z.lit = 1
+				Z.icon_state = "zippoon"
+				Z.item_state = "zippoon"
+				processing_objects.Add(Z)
 		else if(!module_state_2)
 			module_state_2 = O
 			O.layer = 20
 			contents += O
 			if(istype(module_state_2,/obj/item/borg/sight))
 				sight_mode |= module_state_2:sight_mode
+			else if(istype(module_state_2,/obj/item/weapon/zippo))
+				var/obj/item/weapon/zippo/Z = module_state_2
+				Z.lit = 1
+				Z.icon_state = "zippoon"
+				Z.item_state = "zippoon"
+				processing_objects.Add(Z)
 		else if(!module_state_3)
 			module_state_3 = O
 			O.layer = 20
 			contents += O
 			if(istype(module_state_3,/obj/item/borg/sight))
 				sight_mode |= module_state_3:sight_mode
+			else if(istype(module_state_3,/obj/item/weapon/zippo))
+				var/obj/item/weapon/zippo/Z = module_state_3
+				Z.lit = 1
+				Z.icon_state = "zippoon"
+				Z.item_state = "zippoon"
+				processing_objects.Add(Z)
 		else
 			src << "You need to disable a module first!"
 		installed_modules()
@@ -773,12 +791,30 @@
 		var/obj/item/O = locate(href_list["deact"])
 		if(activated(O))
 			if(module_state_1 == O)
+				if(istype(module_state_1, /obj/item/weapon/zippo))
+					var/obj/item/weapon/zippo/Z = module_state_1
+					Z.lit = 0
+					Z.icon_state = "zippo"
+					Z.item_state = "zippo"
+					processing_objects.Remove(Z)
 				module_state_1 = null
 				contents -= O
 			else if(module_state_2 == O)
-				module_state_2 = null
+				if(istype(module_state_2, /obj/item/weapon/zippo))
+					var/obj/item/weapon/zippo/Z = module_state_2
+					Z.lit = 0
+					Z.icon_state = "zippo"
+					Z.item_state = "zippo"
+					processing_objects.Remove(Z)
+				module_state_2= null
 				contents -= O
 			else if(module_state_3 == O)
+				if(istype(module_state_3, /obj/item/weapon/zippo))
+					var/obj/item/weapon/zippo/Z = module_state_3
+					Z.lit = 0
+					Z.icon_state = "zippo"
+					Z.item_state = "zippo"
+					processing_objects.Remove(Z)
 				module_state_3 = null
 				contents -= O
 			else
