@@ -37,6 +37,18 @@
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 
+	attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+		if (M == user && user.zone_sel.selecting == "mouth" && load_into_chamber())
+			M.visible_message("\red [user] sticks their gun in their mouth, ready to pull the trigger...")
+			if(!do_after(user, 40))
+				M.visible_message("\blue [user] decided life was worth living")
+				return
+			M.visible_message("\red [user] pulls the trigger.")
+			M.apply_damage(70, BRUTE, "head")
+			M.apply_damage(110, BRUTE, "chest")
+			return
+		else
+			return ..()
 
 	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)//TODO: go over this
 		if(flag)	return //we're placing gun on a table or in backpack

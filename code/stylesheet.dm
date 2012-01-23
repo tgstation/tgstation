@@ -94,7 +94,8 @@ h1, h2, h3, h4, h5, h6
 
 .comradio
 {
-	color: #ACA82D;
+	color:#FF9900;
+	text-decoration: underline;
 }
 
 .syndradio
