@@ -105,6 +105,14 @@
 				return 1
 		return 0
 
+/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill
+	name = "Diamond Drill"
+	desc = "This is an upgraded version of the drill that'll pierce the heavens! (Can be attached to: Combat and Engineering Exosuits)"
+	icon_state = "mecha_diamond_drill"
+	origin_tech = "materials=4;engineering=3"
+	construction_cost = list("metal"=10000,"diamond"=6500)
+	equip_cooldown = 20
+	force = 15
 
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
 	name = "Extinguisher"

@@ -788,6 +788,14 @@ datum
 			req_tech = list("materials" = 3, "biotech"=4, "magnets"=4, "programming"=3)
 			build_path = "/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun"
 
+		mech_diamond_drill
+			name = "Exosuit Module Design (Diamond Mining Drill)"
+			desc = "An upgraded version of the standard drill"
+			id = "mech_diamond_drill"
+			build_type = MECHFAB
+			req_tech = list("materials" = 4, "engineering" = 3)
+			build_path = "/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill"
+
 
 ////////////////////////////////////////
 //////////Disk Construction Disks///////
@@ -1055,7 +1063,7 @@ datum
 			name = "Hyper-Capacity Power Cell"
 			desc = "A power cell that holds 30000 units of energy"
 			id = "hyper_cell"
-			req_tech = list("powerstorage" = 6, "materials" = 4)
+			req_tech = list("powerstorage" = 5, "materials" = 4)
 			reliability_base = 70
 			build_type = PROTOLATHE
 			materials = list("$metal" = 400, "$gold" = 150, "$silver" = 150, "$glass" = 70)

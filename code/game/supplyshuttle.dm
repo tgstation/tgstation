@@ -64,6 +64,9 @@ var/ordernum=0
 			if (prob(5))
 				del(src)
 
+/obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates
+	var/blocks_air = 1
+
 /area/supplyshuttle
 	name = "Supply Shuttle"
 	icon_state = "supply"
