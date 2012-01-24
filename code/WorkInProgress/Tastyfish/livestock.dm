@@ -6,9 +6,9 @@
 	speak_chance = 1
 	turns_per_move = 15
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
+	response_help  = "pets \the"
+	response_disarm = "gently pushes aside \the"
+	response_harm   = "kicks \the"
 	var/max_nutrition = 100	// different animals get hungry faster, basically number of 5-second steps from full to starving (60 == 5 minutes)
 	var/nutrition_step		// cycle step in nutrition system
 	var/obj/movement_target // eating-ing target
@@ -141,7 +141,7 @@
 	max_nutrition = 200
 	speak = list("Bock bock!","Cl-cluck.","Click.")
 	speak_emote = list("bocks","clucks")
-	emote_hear = list("bocks", "clucks", "squacks")
+	emote_hear = list("bocks", "clucks", "squawks")
 
 /mob/living/simple_animal/livestock/chicken/Life()
 	..()
@@ -151,7 +151,7 @@
 		// lay an egg with probability of 5% in 5 second time period
 		if(prob(33))
 			new/obj/item/weapon/reagent_containers/food/snacks/egg(src.loc) // lay an egg
-			nutrition -= 5
+			nutrition -= 25
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/chicken
 	name = "Chicken"
