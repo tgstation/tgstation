@@ -1,4 +1,3 @@
-
 /mob/living/silicon/robot/New(loc,var/syndie = 0)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -9,9 +8,11 @@
 		modtype = "robot"
 		updateicon()
 //		syndicate = syndie
-		if(real_name == "Cyborg")
-			real_name += " [pick(rand(1, 999))]"
+
+		if(!real_name)//The cyborg should always get a name, even if one was not chosen.
+			real_name = "Cyborg [pick(rand(1, 999))]"
 			name = real_name
+
 	spawn (4)
 		if (client)
 			connected_ai = activeais()
