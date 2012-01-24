@@ -683,6 +683,31 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		M.real_name = newname
 		M.name = newname
 
+/proc/robotname(var/mob/M as mob) //Same as ainame, but for cyborgs
+	var/randomname = M.name
+	var/time_passed = world.time//Pretty basic but it'll do. It's still possible to bypass this by return robotname().
+	var/newname = input(M,"You are a Cyborg. Would you like to change your name to something else?", "Name change",randomname)
+	if((world.time-time_passed)>200)//If more than 20 game seconds passed.
+		M << "You took too long to decide. Default name selected."
+		return
+
+	if (length(newname) == 0)
+		newname = randomname
+
+	if (newname)
+		if ((newname == "Unknown") || (newname == "floor") || (newname == "wall") || (newname == "r-wall"))//Keeping this here to prevent dumb.
+			M << "Don't do that."
+			return robotname(M)
+		for (var/mob/living/silicon/ai/A in world)
+			if (A.real_name == newname&&newname!=randomname)
+				M << "There's already a cyborg with that name."
+				return robotname(M)
+		if (length(newname) >= 26)
+			newname = copytext(newname, 1, 26)
+		newname = dd_replacetext(newname, ">", "'")
+		M.real_name = newname
+		M.name = newname
+
 /proc/clname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea
 	var/randomname = pick(clown_names)
 	var/newname = input(M,"You are the clown. Would you like to change your name to something else?", "Name change",randomname)
