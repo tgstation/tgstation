@@ -597,8 +597,29 @@
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
 
+	var/obj/machinery/water/portables_connector/connected_port
+	var/max_pressure = 4*ONE_ATMOSPHERE
+
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		return
+		if (istype(W, /obj/item/weapon/wrench))
+			if(connected_port)
+				disconnect()
+				user << "\blue You disconnect [name] from the port."
+				update_icon()
+				return
+			else
+				var/obj/machinery/water/portables_connector/possible_port = locate(/obj/machinery/water/portables_connector/) in loc
+				if(possible_port)
+					if(connect(possible_port))
+						user << "\blue You connect [name] to the port."
+						update_icon()
+						return
+					else
+						user << "\blue [name] failed to connect to the port."
+						return
+				else
+					user << "\blue Nothing happens."
+					return
 
 	New()
 		var/datum/reagents/R = new/datum/reagents(1000)
@@ -650,6 +671,43 @@
 			new /obj/effect/effect/water(src.loc)
 			del(src)
 
+	proc/connect(obj/machinery/water/portables_connector/new_port)
+		//Make sure not already connected to something else
+		if(connected_port || !new_port || new_port.connected_device)
+			return 0
+
+		//Make sure are close enough for a valid connection
+		if(new_port.loc != loc)
+			return 0
+
+		//Perform the connection
+		connected_port = new_port
+		connected_port.connected_device = src
+
+		anchored = 1 //Prevent movement
+
+		//Actually enforce the air sharing
+		var/datum/water/pipe_network/network = connected_port.return_network(src)
+		if(network && !network.reagents.Find(reagents))
+			network.reagents += reagents
+			network.update = 1
+
+		return 1
+
+	proc/disconnect()
+		if(!connected_port)
+			return 0
+
+		var/datum/water/pipe_network/network = connected_port.return_network(src)
+		if(network)
+			network.reagents -= reagents
+
+		anchored = 0
+
+		connected_port.connected_device = null
+		connected_port = null
+
+		return 1
 
 
 /obj/item/weapon/reagent_containers
@@ -723,7 +781,8 @@
 		/obj/machinery/disease2/incubator,
 		/obj/machinery/disease2/isolator,
 		/obj/machinery/disease2/biodestroyer,
-		/mob/living/simple_animal/livestock/cow
+		/mob/living/simple_animal/livestock/cow,
+		/obj/machinery/water/glass_connector
 	)
 
 	examine()
@@ -2822,6 +2881,13 @@
 		..()
 		reagents.add_reagent("water",1000)
 
+	update_icon()
+		overlays = 0
+		if(connected_port)
+			var/image/I = image('atmos.dmi', "can-connector")
+			I.pixel_x = 7
+			overlays += I
+
 /obj/structure/reagent_dispensers/fueltank
 	name = "fueltank"
 	desc = "A fueltank"
@@ -2831,6 +2897,13 @@
 	New()
 		..()
 		reagents.add_reagent("fuel",1000)
+
+	update_icon()
+		overlays = 0
+		if(connected_port)
+			var/image/I = image('atmos.dmi', "can-connector")
+			I.pixel_x = 7
+			overlays += I
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
