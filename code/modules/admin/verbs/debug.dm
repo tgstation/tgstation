@@ -480,6 +480,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"assassin",
 		"death commando",
 		"syndicate commando",
+		"response team",
 		"centcom official",
 		"centcom commander",
 		"special ops officer",
@@ -677,6 +678,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if("syndicate commando")
 			M.equip_syndicate_commando()
 
+		if("response team")
+			M.equip_strike_team()
+
 		if("centcom official")
 			M.equip_if_possible(new /obj/item/clothing/under/rank/centcom_officer(M), M.slot_w_uniform)
 			M.equip_if_possible(new /obj/item/clothing/shoes/black(M), M.slot_shoes)
@@ -686,7 +690,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/clothing/glasses/sunglasses/V = new(M)
 			V.loc = K
 			M.equip_if_possible(K, M.slot_wear_suit)
-			M.equip_if_possible(new /obj/item/weapon/gun/energy(M), M.slot_s_store)
+			M.equip_if_possible(new /obj/item/weapon/gun/energy/gun(M), M.slot_s_store)
 
 			var/obj/item/device/pda/heads/pda = new(M)
 			pda.owner = M.real_name
@@ -694,10 +698,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
 
 			M.equip_if_possible(pda, M.slot_r_store)
-
-			var/obj/item/weapon/clipboard/G = new(M)
-			G.pen = new /obj/item/weapon/pen(G)
-			M.equip_if_possible(G, M.slot_l_store)
+			M.equip_if_possible(new /obj/item/weapon/clipboard(M), M.slot_l_store)
 
 			var/obj/item/weapon/card/id/W = new(M)
 			W.name = "[M.real_name]'s ID Card"

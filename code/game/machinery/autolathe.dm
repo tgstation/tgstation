@@ -178,13 +178,15 @@
 		container.layer = initial(container.layer)
 	if(href_list["modifyOutputAmount"])
 		outputAmount = text2num(input(usr,"Amount:","Enter new quantity to create",""))
-		if(outputAmount < 1)
-			outputAmount = 1
+		if(!busy)
+			if(outputAmount < 1)
+				outputAmount = 1
+		else
+			usr << "\red The autolathe is busy. Please wait for completion of previous operation."
 	if (!busy)
 		if(href_list["make"])
-			makeDir = get_dir(src,usr)
 			makeNew:
-			var/turf/T = get_step(src.loc, makeDir)
+			var/turf/T = src.loc
 			var/obj/template = locate(href_list["make"])
 			var/multiplier = text2num(href_list["multiplier"])
 			if (!multiplier) multiplier = 1

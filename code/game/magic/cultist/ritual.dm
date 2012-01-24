@@ -489,7 +489,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				user << "\red You do not have enough space to write a proper rune."
 				return
 			if (C>=26+runedec+ticker.mode.cult.len) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
-				switch(alert("The cloth of reality can't take that much of a strain. By creating another rune, you risk locally tearing reality apart, which would prove fatal to you. Do you still wish to scribe the rune?",,"Yes","No"))
+				switch(alert("Too many runes are already in the vicinity.. The cloth of reality can't take that much of a strain. By creating another rune, you risk locally tearing reality apart, which would prove fatal to you. Do you still wish to scribe the rune?",,"Yes","No"))
 					if("Yes")
 						if(prob(C*5-105-(runedec-ticker.mode.cult.len)*5)) //including the useless rune at the secret room, shouldn't count against the limit - Urist
 							usr.emote("scream")

@@ -62,6 +62,7 @@
 	machinetype = 6
 	heatgen = 0
 	var/intercept = 0 // if nonzero, broadcasts all messages to syndicate channel
+	var/syndi = 1 //If 1, it goes to syndicate frequency.  Else, goes to deathsquad/Response Team
 
 	receive_signal(datum/signal/signal)
 
@@ -87,19 +88,31 @@
 
 				var/datum/radio_frequency/connection = signal.data["connection"]
 
-				if(connection.frequency == NUKE_FREQ) // if syndicate broadcast, just
+				if(connection.frequency == NUKE_FREQ && syndi) // if syndicate broadcast, just
 					Broadcast_Message(signal.data["connection"], signal.data["mob"],
 									  signal.data["vmask"], signal.data["vmessage"],
 									  signal.data["radio"], signal.data["message"],
 									  signal.data["name"], signal.data["job"],
 									  signal.data["realname"], signal.data["vname"],, signal.data["compression"])
-				else
-					if(intercept)
+				else if(connection.frequency == 1439 && !syndi)
+					Broadcast_Message(signal.data["connection"], signal.data["mob"],
+									  signal.data["vmask"], signal.data["vmessage"],
+									  signal.data["radio"], signal.data["message"],
+									  signal.data["name"], signal.data["job"],
+									  signal.data["realname"], signal.data["vname"],, signal.data["compression"])
+				else if (intercept)
+					if(syndi)
 						Broadcast_Message(signal.data["connection"], signal.data["mob"],
 									  signal.data["vmask"], signal.data["vmessage"],
 									  signal.data["radio"], signal.data["message"],
 									  signal.data["name"], signal.data["job"],
 									  signal.data["realname"], signal.data["vname"], 3, signal.data["compression"])
+					else
+						Broadcast_Message(signal.data["connection"], signal.data["mob"],
+									  signal.data["vmask"], signal.data["vmessage"],
+									  signal.data["radio"], signal.data["message"],
+									  signal.data["name"], signal.data["job"],
+									  signal.data["realname"], signal.data["vname"], 4, signal.data["compression"])
 
 
 
@@ -195,6 +208,15 @@
 			receive |= R.send_hear(NUKE_FREQ)
 
 
+	// --- Broadcast to response team radio! ---
+
+	else if(data == 4)
+		var/datum/radio_frequency/syndicateconnection = radio_controller.return_frequency(1439)
+
+		for (var/obj/item/device/radio/R in syndicateconnection.devices["[RADIO_CHAT]"])
+
+			receive |= R.send_hear(1439)
+
 	// --- Broadcast to ALL radio devices ---
 
 	else
@@ -250,6 +272,9 @@
 			else
 				heard_garbled += R
 
+		for(var/obj/item/weapon/implant/imp in R)
+			imp.hear(message,M)
+
 
   /* ###### Begin formatting and sending the message ###### */
 	if (length(heard_masked) || length(heard_normal) || length(heard_voice) || length(heard_garbled) || length(heard_gibberish))
@@ -277,6 +302,8 @@
 				freq_text = "Mining"
 			if(1347)
 				freq_text = "Cargo"
+			if(1439)
+				freq_text = "Response Team"
 
 		if(connection.frequency == NUKE_FREQ)
 			freq_text = "Agent"
@@ -308,7 +335,9 @@
 
 		// --- Filter the message; place it in quotes apply a verb ---
 
-		var/quotedmsg = M.say_quote(message)
+		var/quotedmsg = "\"" + message + "\""
+		if(M)
+			quotedmsg = M.say_quote(message)
 
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 
@@ -385,7 +414,10 @@
 			// Displays garbled message (ie "f*c* **u, **i*er!")
 
 		if (length(heard_garbled))
-			quotedmsg = M.say_quote(stars(message))
+			if(M)
+				quotedmsg = M.say_quote(stars(message))
+			else
+				quotedmsg = "\"" + stars(message) + "\""
 			var/rendered = "[part_a][vname][part_b][quotedmsg][part_c]"
 
 			for (var/mob/R in heard_garbled)
@@ -398,7 +430,10 @@
 		/* --- Complete gibberish. Usually happens when there's a compressed message --- */
 
 		if (length(heard_gibberish))
-			quotedmsg = M.say_quote(Gibberish(message, compression + 50))
+			if(M)
+				quotedmsg = M.say_quote(Gibberish(message, compression + 50))
+			else
+				quotedmsg = "\"" + Gibberish(message, compression + 50) + "\""
 			var/rendered = "[part_a][Gibberish(M.real_name, compression + 50)][part_b][quotedmsg][part_c]"
 
 			for (var/mob/R in heard_gibberish)

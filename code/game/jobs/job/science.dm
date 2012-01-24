@@ -14,7 +14,7 @@
 		H.equip_if_possible(new /obj/item/clothing/under/rank/research_director(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/device/pda/heads/rd(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/suit/storage/labcoat(H), H.slot_wear_suit)
-		H.equip_if_possible(new /obj/item/weapon/clipboard(H), H.slot_r_hand)
+		H.equip_if_possible(new /obj/item/weapon/clipboard(H), H.slot_l_store)
 		return 1
 
 

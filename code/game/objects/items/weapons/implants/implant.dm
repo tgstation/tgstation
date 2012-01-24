@@ -10,6 +10,7 @@
 		activate()
 		implanted(source as mob)
 		get_data()
+		hear(message, source as mob)
 
 
 	trigger(emote, source as mob)
@@ -26,6 +27,9 @@
 
 	get_data()
 		return "No information available"
+
+	hear(message, source as mob)
+		return
 
 
 
@@ -236,7 +240,11 @@ the implant may become unstable and either pre-maturely inject the subject or si
 <b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
 		return dat
 
-	hear_talk(M as mob, var/msg)
+	hear_talk(mob/M as mob, msg)
+		hear(msg)
+		return
+
+	hear(var/msg)
 		if(findtext(msg,phrase))
 			if(istype(loc, /mob/))
 				var/mob/T = loc
@@ -251,3 +259,35 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		phrase = input("Choose activation phrase:") as text
 		usr.mind.store_memory("Explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.", 0, 0)
 		usr << "The implanted explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate."
+
+/obj/item/weapon/implant/death_alarm
+	name = "death alarm"
+	desc = "Danger Will Robinson!"
+	var/mobname = "Will Robinson"
+
+	get_data()
+		var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> NanoTrasen \"Profit Margin\" Class Employee Lifesign Sensor<BR>
+<b>Life:</b> Activates upon death.<BR>
+<b>Important Notes:</b> Alerts crew to crewmember death.<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains a compact radio signaler that triggers when the host's lifesigns cease.<BR>
+<b>Special Features:</b> Alerts crew to crewmember death.<BR>
+<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+		return dat
+
+	process()
+		var/mob/M = src.loc
+		if(M.stat == 2)
+			var/turf/t = get_turf(M)
+			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
+			a.autosay("[mobname] has died in [t.loc.name]!", "[mobname]'s Death Alarm")
+			del(a)
+			processing_objects.Remove(src)
+
+
+	implanted(mob/source as mob)
+		mobname = source.real_name
+		processing_objects.Add(src)
