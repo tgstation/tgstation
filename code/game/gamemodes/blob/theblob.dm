@@ -21,6 +21,8 @@
 		Factory
 		Shield
 		*/
+		steps_per_action = 4	// how many times should process() needs to be called for Life() to happen
+		steps_since_action = 1
 
 
 	New(loc, var/h = 30)
@@ -101,8 +103,11 @@
 
 
 	process()
-		spawn(-1)
-			Life()
+		if(steps_since_action >= steps_per_action)
+			steps_since_action = 0
+			spawn(-1)
+				Life()
+		steps_since_action++
 		return
 
 
@@ -154,9 +159,9 @@
 				spawn(0)
 					Pulse(0,0)
 				return 1
-			if("Blob")
+			/*if("Blob") // only expand on pulse
 				if(expand())
-					return 1
+					return 1*/
 		return 0
 
 
