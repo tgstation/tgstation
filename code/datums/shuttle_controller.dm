@@ -35,9 +35,8 @@ datum/shuttle_controller
 		if(direction == 1)
 			var/timeleft = timeleft()
 			if(timeleft >= 600)
-				world << "\blue <B>Shuttle is at Centcom. Unable to recall.</B>"
 				return
-			world << "\blue <B>Alert: The shuttle is going back!</B>"
+			station_announce("ALERT","The emergency shuttle has been recalled.")
 			world << sound('shuttlerecalled.ogg')
 			setdirection(-1)
 			online = 1
@@ -124,7 +123,7 @@ datum/shuttle_controller
 
 						start_location.move_contents_to(end_location)
 						settimeleft(SHUTTLELEAVETIME)
-						world << "<B>The Emergency Shuttle has docked with the station! You have [timeleft()/60] minutes to board the Emergency Shuttle.</B>"
+						station_announce ("ALERT","The Emergency Shuttle has docked with the station! You have [timeleft()] seconds to board the Emergency Shuttle.")
 						world << sound('shuttledock.ogg')
 
 						return 1
