@@ -216,9 +216,7 @@ proc/trigger_armed_response_team()
 	equip_if_possible(new /obj/item/clothing/glasses/sunglasses/sechud(src), slot_glasses)
 
 	//Shoes & gloves
-	var/obj/item/clothing/shoes/swat/S = new /obj/item/clothing/shoes/swat(src)
-	S.flags += NOSLIP
-	equip_if_possible(S, slot_shoes)
+	equip_if_possible(new /obj/item/clothing/shoes/swat(src), slot_shoes)
 	equip_if_possible(new /obj/item/clothing/gloves/swat(src), slot_gloves)
 
 	//Removed
