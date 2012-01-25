@@ -27,8 +27,9 @@ client/verb/JoinResponseTeam()
 			new_commando.mind.key = usr.key
 			new_commando.key = usr.key
 
-			new_commando << "\blue You are [!leader_selected?" a member":" the <B>LEADER</B>"] of an armed response team in CentComm's service. Something went down on [station_name()] and they're now on code red. Go in there and fix the problem."
+			new_commando << "\blue You are [!leader_selected?"a member":"the <B>LEADER</B>"] of an armed response team in CentComm's service. Something went down on [station_name()] and they're now on code red. Go in there and fix the problem."
 			new_commando << "<b>You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready."
+			del(L)
 
 	else
 		usr << "You need to be an observer or new player to use this."
@@ -73,9 +74,23 @@ proc/trigger_armed_response_team()
 
 	send_emergency_team = 1
 
+	var/area/security/nuke_storage/nukeloc = locate()//To find the nuke in the vault
+	var/obj/machinery/nuclearbomb/nuke = locate() in nukeloc
+	if(!nuke)
+		nuke = locate() in world
+	var/obj/item/weapon/paper/P = new
+	P.info = "The nuclear authorization code is: <b>[nuke.r_code]</b>"
+	P.name = "nuclear bomb code"
+	for (var/obj/effect/landmark/A in world)
+		if (A.name == "nukecode")
+			P.loc = A.loc
+			del(A)
+			continue
+
 /client/proc/create_response_team(obj/spawn_location, leader_selected = 0, commando_name)
 
-	var/mob/living/carbon/human/M = new(spawn_location.loc)
+	var/mob/living/carbon/human/M = new(null)
+	response_team_members |= M
 
 	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
 	if(new_facial)
@@ -97,9 +112,10 @@ proc/trigger_armed_response_team()
 
 	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
 
-	if (new_tone)
-		M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
-		M.s_tone =  -M.s_tone + 35
+	if (!new_tone)
+		new_tone = 35
+	M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
+	M.s_tone =  -M.s_tone + 35
 
 	// hair
 	var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
@@ -157,6 +173,7 @@ proc/trigger_armed_response_team()
 	M.update_clothing()
 
 	M.real_name = commando_name
+	M.name = commando_name
 	M.age = !leader_selected ? rand(23,35) : rand(35,45)
 
 	M.dna.ready_dna(M)//Creates DNA.
@@ -169,6 +186,7 @@ proc/trigger_armed_response_team()
 	M.mind.special_role = "Response Team"
 	if(!(M.mind in ticker.minds))
 		ticker.minds += M.mind//Adds them to regular mind list.
+	M.loc = spawn_location.loc
 	M.equip_strike_team(leader_selected)
 	del(spawn_location)
 	return M
@@ -180,8 +198,7 @@ proc/trigger_armed_response_team()
 	R.name = "CentCom Response Team headset"
 	R.desc = "The headset of the boss's boss. Channels are as follows: :h - Response Team :c - command, :s - security, :e - engineering, :d - mining, :q - cargo, :m - medical, :n - science."
 	R.freerange = 1
-	R.listening = 0
-	R.config(list("Response Team" = 1, "Science" = 0, "Command" = 0, "Medical" = 0, "Engineering" = 0, "Security" = 0, "Mining" = 0, "Cargo" = 0,))
+	R.config(list("Response Team" = 1, "Science" = 1, "Command" = 1, "Medical" = 1, "Engineering" = 1, "Security" = 1, "Mining" = 1, "Cargo" = 1,))
 	equip_if_possible(R, slot_ears)
 
 	//Adding Camera Network
@@ -200,7 +217,7 @@ proc/trigger_armed_response_team()
 
 	//Shoes & gloves
 	var/obj/item/clothing/shoes/swat/S = new /obj/item/clothing/shoes/swat(src)
-	S.flags = NOSLIP
+	S.flags += NOSLIP
 	equip_if_possible(S, slot_shoes)
 	equip_if_possible(new /obj/item/clothing/gloves/swat(src), slot_gloves)
 
@@ -219,6 +236,7 @@ proc/trigger_armed_response_team()
 	W.icon_state = "centcom"
 	if(leader_selected)
 		W.access = get_access("Captain")
+		W.access += list(access_cent_teleporter)
 	else
 		W.access = get_access("Head of Personnel")
 	W.access += list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)//Let's add their alloted CentCom access.
