@@ -79,8 +79,8 @@ proc/trigger_armed_response_team()
 	if(!nuke)
 		nuke = locate() in world
 	var/obj/item/weapon/paper/P = new
-	P.info = "The nuclear authorization code is: <b>[nuke.r_code]</b>"
-	P.name = "nuclear bomb code"
+	P.info = "Your orders, Commander, are to use all necessary tools given to return the station to a survivable condition. <br> To this end, you have been provided with the best tools we can give in the three areas of Medical Engineering and Security. The nuclear authorization code is: <b>[nuke.r_code]</b>. Be warned, if you detonate this without good reason, we will hold you to account for damages. Memorise this code, and then burn this message."
+	P.name = "Emergency Nuclear Code, and ERT Orders"
 	for (var/obj/effect/landmark/A in world)
 		if (A.name == "nukecode")
 			P.loc = A.loc

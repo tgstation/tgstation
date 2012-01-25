@@ -1513,7 +1513,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:bodytemperature -= 50 //This and the following two lines need to be checked and tinkered with so that the Cryo-In-A-Syringe
-				if(prob(40)) // leaves someone at 100% healthy from anything up to in heavy crit (-75%)
+				if(prob(5)) // leaves someone at 100% healthy from anything up to in heavy crit (-75%)
 					M.take_organ_damage(0, 1)
 				if(prob(80) && istype(M, /mob/living/carbon/metroid))
 					M.adjustFireLoss(rand(5,20))
