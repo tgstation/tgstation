@@ -115,6 +115,21 @@
 	now_pushing = 1
 	if (ismob(AM))
 		var/mob/tmob = AM
+
+		//BubbleWrap - Should stop you pushing a restrained person out of the way
+		if(istype(tmob, /mob/living/carbon/human))
+
+			for(var/mob/M in range(tmob, 1))
+				if( ((M.pulling == tmob && ( tmob.restrained() && !( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)) )
+					src << "\red [tmob] is restrained, you cannot push past"
+					now_pushing = 0
+					return
+				if( tmob.pulling == M && ( M.restrained() && !( tmob.restrained() ) && tmob.stat == 0) )
+					src << "\red [tmob] is restraining [M], you cannot push past"
+					now_pushing = 0
+					return
+		//BubbleWrap End
+
 		if(tmob.a_intent == "help" && a_intent == "help" && tmob.canmove && canmove) // mutual brohugs all around!
 			var/turf/oldloc = loc
 			loc = tmob.loc
