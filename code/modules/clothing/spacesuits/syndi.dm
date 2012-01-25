@@ -101,23 +101,29 @@
 	name = "Black Space Helmet"
 	icon_state = "syndicate-helm-black-blue"
 	item_state = "syndicate-helm-black-blue"
+	armor = list(melee = 70, bullet = 70, laser = 60, energy = 30, bomb = 30, bio = 50, rad = 50)
 
 
 /obj/item/clothing/suit/space/syndicate/black/blue
 	name = "Black and Blue Space Suit"
 	icon_state = "syndicate-black-blue"
 	item_state = "syndicate-black-blue"
+	armor = list(melee = 70, bullet = 70, laser = 60, energy = 30, bomb = 30, bio = 50, rad = 50)
+	slowdown = 2
 
 /obj/item/clothing/head/helmet/space/syndicate/black/med
 	name = "Black Space Helmet"
 	icon_state = "syndicate-helm-black-med"
 	item_state = "syndicate-helm-black"
+	armor = list(melee = 50, bullet = 40, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 100)
 
 
 /obj/item/clothing/suit/space/syndicate/black/med
 	name = "Green Space Suit"
 	icon_state = "syndicate-black-med"
 	item_state = "syndicate-black"
+	armor = list(melee = 50, bullet = 40, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 100)
+	slowdown = 0
 
 
 
@@ -138,12 +144,15 @@
 	name = "Black Space Helmet"
 	icon_state = "syndicate-helm-black-red"
 	item_state = "syndicate-helm-black-red"
+	armor = list(melee = 70, bullet = 70, laser = 60, energy = 30, bomb = 30, bio = 30, rad = 30)
 
 
 /obj/item/clothing/suit/space/syndicate/black/red
 	name = "Black and Red Space Suit"
 	icon_state = "syndicate-black-red"
 	item_state = "syndicate-black-red"
+	armor = list(melee = 70, bullet = 70, laser = 60, energy = 30, bomb = 30, bio = 30, rad = 30)
+	slowdown = 4
 
 
 
@@ -151,12 +160,15 @@
 	name = "Black Space Helmet"
 	icon_state = "syndicate-helm-black-engie"
 	item_state = "syndicate-helm-black"
+	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 50, bio = 30, rad = 100)
 
 
 /obj/item/clothing/suit/space/syndicate/black/engie
 	name = "Black Engineering Space Suit"
 	icon_state = "syndicate-black-engie"
 	item_state = "syndicate-black"
+	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 50, bio = 30, rad = 100)
+	slowdown = 2
 
 
 
