@@ -38,11 +38,12 @@ RCD
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		..()
 		if(istype(W, /obj/item/weapon/rcd_ammo))
-			if((matter + 10) > max_matter)
+			var/obj/item/weapon/rcd_ammo/R = W
+			if((matter + R.ammo) > max_matter)
 				user << "The RCD cant hold any more matter."
 				return
+			matter += R.ammo
 			del(W)
-			matter += 10
 			playsound(src.loc, 'click.ogg', 50, 1)
 			user << "The RCD now holds [matter]/[max_matter] matter-units."
 			desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
