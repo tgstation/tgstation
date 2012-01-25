@@ -418,7 +418,7 @@
 			else if(src.health < config.health_threshold_crit)
 				if(src.health <= 20 && prob(1)) spawn(0) emote("gasp")
 
-				//if(!src.rejuv) src.oxyloss++
+				if(!src.rejuv) src.oxyloss++
 				if(!src.reagents.has_reagent("inaprovaline")) src.oxyloss++
 
 				if(src.stat != 2)	src.stat = 1
