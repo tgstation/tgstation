@@ -232,7 +232,7 @@
 						if(!cell.use(30))	return
 						user << "Building Floor..."
 						activate()
-						A:ReplaceWithFloor()
+						A:ReplaceWithPlating()
 						return
 
 					if(istype(A, /turf/simulated/floor))
@@ -263,7 +263,7 @@
 						playsound(src.loc, 'click.ogg', 50, 1)
 						if(do_after(user, 40))
 							activate()
-							A:ReplaceWithFloor()
+							A:ReplaceWithPlating()
 						return
 
 					if(istype(A, /turf/simulated/wall/r_wall))
