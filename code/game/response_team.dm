@@ -76,6 +76,7 @@ proc/trigger_armed_response_team()
 /client/proc/create_response_team(obj/spawn_location, leader_selected = 0, commando_name)
 
 	var/mob/living/carbon/human/M = new(spawn_location.loc)
+	response_team_members |= M
 
 	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
 	if(new_facial)
@@ -157,6 +158,7 @@ proc/trigger_armed_response_team()
 	M.update_clothing()
 
 	M.real_name = commando_name
+	M.name = commando_name
 	M.age = !leader_selected ? rand(23,35) : rand(35,45)
 
 	M.dna.ready_dna(M)//Creates DNA.

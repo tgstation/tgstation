@@ -48,3 +48,15 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 0
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+
+/obj/item/clothing/head/helmet/space/medic
+	name = "medical space helmet"
+	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 30)
+
+
+/obj/item/clothing/suit/space/medic
+	name = "medical space suit"
+	icon_state = "bio_general"
+	w_class = 3
+	slowdown = 0
+	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 30)
