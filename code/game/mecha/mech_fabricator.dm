@@ -94,6 +94,7 @@
 						/obj/item/mecha_parts/part/honker_right_leg
 						),
 	"Exosuit Equipment"=list(
+						/obj/item/mecha_parts/chassis/firefighter,
 						/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
 						/obj/item/mecha_parts/mecha_equipment/tool/drill,
 						/obj/item/mecha_parts/mecha_equipment/tool/extinguisher,
@@ -111,9 +112,17 @@
 
 	"Misc"=list(/obj/item/mecha_tracking)
 	)
-
 	New()
 		..()
+		component_parts = list()
+		component_parts += new /obj/item/weapon/circuitboard/mechfab(src)
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
+		component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+		component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
+		component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
+		RefreshParts()
+
 		for(var/part_set in part_sets)
 			convert_part_set(part_set)
 		files = new /datum/research(src) //Setup the research data holder.

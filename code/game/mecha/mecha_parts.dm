@@ -205,12 +205,12 @@
 ////////// Firefighter
 
 /obj/item/mecha_parts/chassis/firefighter
-	name = "Ripley-on-Fire Chassis"
+	name = "Firefighter Chassis"
 
 	New()
 		..()
 		construct = new /datum/construction/mecha/firefighter_chassis(src)
-
+/*
 /obj/item/mecha_parts/part/firefighter_torso
 	name="Ripley-on-Fire Torso"
 	icon_state = "ripley_harness"
@@ -230,7 +230,7 @@
 /obj/item/mecha_parts/part/firefighter_right_leg
 	name="Ripley-on-Fire Right Leg"
 	icon_state = "ripley_r_leg"
-
+*/
 
 ////////// HONK
 
@@ -451,10 +451,6 @@
 	durand/main
 		name = "Circuit board (Durand Central Control module)"
 		icon_state = "mainboard"
-
-	firefighter/peripherals
-		name = "Circuit board (Ripley-on-Fire Peripherals Control module)"
-		icon_state = "mcontroller"
 
 	honker
 		origin_tech = "programming=4"

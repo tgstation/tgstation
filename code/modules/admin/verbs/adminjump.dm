@@ -49,6 +49,25 @@
 	else
 		alert("Admin jumping disabled")
 
+/client/proc/jumptocoord(tx as num, ty as num, tz as num)
+	set category = "Admin"
+	set name = "Jump to Coordinate"
+
+	if (!authenticated || !holder)
+		src << "Only administrators may use this command."
+		return
+
+	if (config.allow_admin_jump)
+		if(src.mob)
+			var/mob/A = src.mob
+			A.x = tx
+			A.y = ty
+			A.z = tz
+		message_admins("[key_name_admin(usr)] jumped to coordinates [tx], [ty], [tz]")
+
+	else
+		alert("Admin jumping disabled")
+
 /client/proc/jumptokey()
 	set category = "Admin"
 	set name = "Jump to Key"

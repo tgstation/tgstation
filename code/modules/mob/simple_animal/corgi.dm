@@ -365,3 +365,10 @@
 			now_pushing = null
 		return
 	return
+//PC stuff-Sieve
+
+/mob/living/simple_animal/corgi/proc/mind_initialize(mob/G)
+	mind = new
+	mind.current = src
+	mind.assigned_role = "Corgi"
+	mind.key = G.key

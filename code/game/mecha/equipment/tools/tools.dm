@@ -105,6 +105,14 @@
 				return 1
 		return 0
 
+/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill
+	name = "Diamond Drill"
+	desc = "This is an upgraded version of the drill that'll pierce the heavens! (Can be attached to: Combat and Engineering Exosuits)"
+	icon_state = "mecha_diamond_drill"
+	origin_tech = "materials=4;engineering=3"
+	construction_cost = list("metal"=10000,"diamond"=6500)
+	equip_cooldown = 20
+	force = 15
 
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
 	name = "Extinguisher"
@@ -1543,3 +1551,69 @@
 			return 1
 
 */
+
+//This is pretty much just for the death-ripley so that it is harmless
+/obj/item/mecha_parts/mecha_equipment/tool/safety_clamp
+	name = "KILL CLAMP"
+	icon_state = "mecha_clamp"
+	equip_cooldown = 15
+	energy_drain = 0
+	var/dam_force = 0
+	var/obj/mecha/working/ripley/cargo_holder
+
+	can_attach(obj/mecha/working/ripley/M as obj)
+		if(..())
+			if(istype(M))
+				return 1
+		return 0
+
+	attach(obj/mecha/M as obj)
+		..()
+		cargo_holder = M
+		return
+
+	action(atom/target)
+		if(!action_checks(target)) return
+		if(!cargo_holder) return
+		if(istype(target,/obj))
+			var/obj/O = target
+			if(!O.anchored)
+				if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
+					chassis.occupant_message("You lift [target] and start to load it into cargo compartment.")
+					chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
+					set_ready_state(0)
+					chassis.use_power(energy_drain)
+					O.anchored = 1
+					var/T = chassis.loc
+					if(do_after_cooldown(target))
+						if(T == chassis.loc && src == chassis.selected)
+							cargo_holder.cargo += O
+							O.loc = chassis
+							O.anchored = 0
+							chassis.occupant_message("<font color='blue'>[target] succesfully loaded.</font>")
+							chassis.log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
+						else
+							chassis.occupant_message("<font color='red'>You must hold still while handling objects.</font>")
+							O.anchored = initial(O.anchored)
+				else
+					chassis.occupant_message("<font color='red'>Not enough room in cargo compartment.</font>")
+			else
+				chassis.occupant_message("<font color='red'>[target] is firmly secured.</font>")
+
+		else if(istype(target,/mob/living))
+			var/mob/living/M = target
+			if(M.stat>1) return
+			if(chassis.occupant.a_intent == "hurt")
+				chassis.occupant_message("\red You obliterate [target] with [src.name], leaving blood and guts everywhere.")
+				chassis.visible_message("\red [chassis] destroys [target] in an unholy fury.")
+			if(chassis.occupant.a_intent == "disarm")
+				chassis.occupant_message("\red You tear [target]'s limbs off with [src.name].")
+				chassis.visible_message("\red [chassis] rips [target]'s arms off.")
+			else
+				step_away(M,chassis)
+				chassis.occupant_message("You smash into [target], sending them flying.")
+				chassis.visible_message("[chassis] tosses [target] like a piece of paper.")
+			set_ready_state(0)
+			chassis.use_power(energy_drain)
+			do_after_cooldown()
+		return 1
