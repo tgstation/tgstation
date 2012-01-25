@@ -105,7 +105,7 @@
 	origin_tech = "materials=2"
 	m_amt = 30000
 	g_amt = 15000
-	ammo = 10
+	var/ammo = 10
 
 /obj/item/weapon/rcd_ammo/large
 	name = "Super compressed matter cartridge"
