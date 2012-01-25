@@ -304,7 +304,7 @@
 
 		//if (A:ear_deaf) return
 
-		if (A && A:client && !A:client:ambience_playing && !A:client:no_ambi) // Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas  to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
+		if (A && A:client && !A:client:ambience_playing && !A:client:no_ambi) // Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 			A:client:ambience_playing = 1
 			A:client:no_ambi = 0
 			A << sound('shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
