@@ -77,6 +77,14 @@
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/weapon/cable_coil(src,30,pick("red","yellow"))
 
+/obj/item/weapon/storage/belt/security/full/New()
+	..()
+	new /obj/item/weapon/melee/baton(src)
+	new /obj/item/weapon/pepperspray(src)
+	new /obj/item/weapon/flashbang(src)
+	new /obj/item/weapon/handcuffs(src)
+	new /obj/item/weapon/handcuffs(src)
+	new /obj/item/weapon/handcuffs(src)
 
 
 /obj/item/weapon/storage/belt/medical

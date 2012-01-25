@@ -60,6 +60,12 @@
 
 /obj/item/weapon/storage/box/syndicate
 
+/obj/item/weapon/storage/box/ert
+	name = "medical box"
+	desc = "Full of goodness."
+	icon_state = "implant"
+	item_state = "syringe_kit"
+
 /obj/item/weapon/storage/pillbottlebox
 	name = "pill bottles"
 	desc = "A box of pill bottles."
@@ -81,6 +87,17 @@
 	name = "medic's backpack"
 	desc = "The backpack used to keep with the sterile environment."
 	icon_state = "medicalpack"
+
+/obj/item/weapon/storage/backpack/medic/full
+//Spawns with 2 boxes of ERT gear, a box of ERT gear and a hypo, and a box of anesthetic.
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/hypospray/ert(src)
+		for(var/i = 1, i <=2, i++)
+			new /obj/item/weapon/storage/box/ert(src)
+		new /obj/item/weapon/storage/box/medic(src)
+		new /obj/item/weapon/storage/belt/medical(src)
+		return
 
 /obj/item/weapon/storage/backpack/security
 	name = "security backpack"
