@@ -1979,7 +1979,7 @@ It can still be worn/put on as normal.
 	return
 
 /mob/living/carbon/human/show_inv(mob/user as mob)
-	show_inv(user)
+	interact(user)
 
 /mob/living/carbon/human/proc/interact(mob/user as mob)
 	user.machine = src
