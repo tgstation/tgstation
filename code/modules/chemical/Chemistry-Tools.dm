@@ -2139,21 +2139,21 @@
 			icon_state = "bottle[rand(1,20)]"
 
 /obj/item/weapon/reagent_containers/glass/bottle/ert/quikheal
-	name = "quikheal bottle"
-	desc = "Seems to be a strange mix of delicious goodness."
+	name = "Quikheal bottle"
+	desc = "Seems to be a strange mix of delicious goodness. Smells woozy."
 
 	New()
 		..()
-		reagents.add_reagent("bicaridine", 10)
+		reagents.add_reagent("bicaridine", 8)
 		reagents.add_reagent("dexalinp", 5)
-		reagents.add_reagent("dermaline", 10)
-		reagents.add_reagent("arithrazine", 10)
-		reagents.add_reagent("inaprovaline", 10)
-		reagents.add_reagent("cryptobiolin", 5)
+		reagents.add_reagent("dermaline", 8)
+		reagents.add_reagent("arithrazine", 8)
+		reagents.add_reagent("inaprovaline", 8)
+		reagents.add_reagent("cryptobiolin", 13)
 
 /obj/item/weapon/reagent_containers/glass/bottle/ert/boost
-	name = "combat boost bottle"
-	desc = "Seems to be a strange mix of delicious goodness."
+	name = "Combat Boost bottle"
+	desc = "Seems to be a strange mix of delicious goodness. It... Pulses slightly before your eyes."
 
 	New()
 		..()
@@ -2164,13 +2164,13 @@
 		reagents.add_reagent("mutagen", 10)
 
 /obj/item/weapon/reagent_containers/glass/bottle/ert/cryo
-	name = "cryo in a bottle"
-	desc = "Seems to be a strange mix of delicious goodness."
+	name = "Cryo-in-a-bottle"
+	desc = "Seems to be a strange mix of delicious goodness. It's freezing cold to the touch."
 
 	New()
 		..()
-		reagents.add_reagent("clonexadone", 20)
-		reagents.add_reagent("liquidnitrogen", 20)
+		reagents.add_reagent("clonexadone", 25)
+		reagents.add_reagent("liquidnitrogen", 15)
 		reagents.add_reagent("chloralhydrate", 10)
 
 
