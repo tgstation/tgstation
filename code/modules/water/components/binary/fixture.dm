@@ -1,11 +1,14 @@
 /obj/machinery/water/binary/fixture
 	name = "water fixture connection"
 	icon = 'water_fixtures.dmi'
-	icon_state = "fixture"
+	icon_state = "fixture-f"
 	level = 1
 	layer = 2.9
 
 	var/obj/parent
+
+	update_icon()
+		icon_state = "intact[invisibility ? "-f" : "" ]"
 
 	hide(var/i)
 		if(level == 1 && istype(loc, /turf/simulated))
@@ -75,3 +78,7 @@
 				"You hear ratchet.")
 			new /obj/item/water_pipe(loc, make_from=src)
 			del(src)
+
+	visible
+		icon_state = "fixture"
+		level = 2

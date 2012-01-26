@@ -8,8 +8,9 @@
 	initialize_directions = SOUTH
 	density = 1
 
-	var/obj/item/weapon/reagent_containers/glass/connected_device
+	var/icon_type = ""
 
+	var/obj/item/weapon/reagent_containers/glass/connected_device
 	var/obj/machinery/water/node
 	var/datum/water/pipe_network/network
 
@@ -19,14 +20,14 @@
 
 	update_icon()
 		if(node)
-			icon_state = "[node.level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
+			icon_state = "[node.level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact[icon_type]"
 			dir = get_dir(src, node)
 		else
-			icon_state = "exposed"
+			icon_state = "exposed[icon_type]"
 
 		overlays = new()
 		if(connected_device)
-			overlays += "inserted"
+			overlays += "inserted[icon_type]"
 
 			if(connected_device.reagents.total_volume)
 				var/obj/effect/overlay = new/obj
@@ -205,3 +206,7 @@
 			user << "\blue You add \the [W] to \the [src]."
 		else
 			return ..()
+
+/obj/machinery/water/glass_connector/wall
+	icon_state = "intact-w"
+	icon_type = "-w"

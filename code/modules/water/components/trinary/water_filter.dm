@@ -97,9 +97,16 @@ obj/machinery/water/trinary/filter
 
 		return 1
 
+	hide(var/i)
+		if(level == 1 && istype(loc, /turf/simulated))
+			invisibility = i ? 101 : 0
+		update_icon()
+
 	initialize()
 		set_frequency(frequency)
 		..()
+		var/turf/T = src.loc	// hide if turf is not intact
+		hide(T.intact)
 
 	attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 		if (!istype(W, /obj/item/weapon/wrench))
