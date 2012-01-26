@@ -466,6 +466,10 @@ proc/process_ghost_teleport_locs()
  	name = "Atmospherics"
  	icon_state = "atmos"
 
+/area/atmos/plumbing
+ 	name = "Plumbing"
+ 	icon_state = "toilet"
+
 //Maintenance
 
 /area/maintenance/atmos_control
