@@ -121,16 +121,19 @@
 
 			for(var/mob/M in range(tmob, 1))
 				if( ((M.pulling == tmob && ( tmob.restrained() && !( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)) )
-					src << "\red [tmob] is restrained, you cannot push past"
+					if ( !(world.time % 5) )
+						src << "\red [tmob] is restrained, you cannot push past"
 					now_pushing = 0
 					return
 				if( tmob.pulling == M && ( M.restrained() && !( tmob.restrained() ) && tmob.stat == 0) )
-					src << "\red [tmob] is restraining [M], you cannot push past"
+					if ( !(world.time % 5) )
+						src << "\red [tmob] is restraining [M], you cannot push past"
 					now_pushing = 0
 					return
 		//BubbleWrap End
 
-		if(tmob.a_intent == "help" && a_intent == "help" && tmob.canmove && canmove) // mutual brohugs all around!
+		//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
+		if((tmob.a_intent == "help" || tmob.restrained()) && (a_intent == "help" || src.restrained()) && tmob.canmove && canmove) // mutual brohugs all around!
 			var/turf/oldloc = loc
 			loc = tmob.loc
 			tmob.loc = oldloc
