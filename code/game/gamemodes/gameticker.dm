@@ -118,7 +118,7 @@ var/global/datum/controller/gameticker/ticker
 
 	spawn(0)
 		while(1)
-			sleep(5000+rand(6000,9000))
+			sleep(5000+rand(6000,10000))
 			SpawnEvent()
 
 	//Start master_controller.process()

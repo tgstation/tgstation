@@ -316,6 +316,7 @@
 	desc = "A chute for big and small packages alike!"
 	density = 0
 	icon_state = "intake"
+	var/currentlyFlushing = 0
 
 	interact()
 		return
@@ -351,8 +352,13 @@
 
 		air_contents = new()		// new empty gas resv.
 
-		sleep(10)
-		playsound(src, 'disposalflush.ogg', 50, 0, 0)
+		sleep(10)	// Prevent sound spam when several objects are flushed simultaneously.
+		if(!currentlyFlushing)
+			currentlyFlushing = 1
+			playsound(src, 'disposalflush.ogg', 50, 0, 0)
+			spawn(17)	// Sound file is ~3 seconds long, adjust this if it becomes longer/shorter.
+				currentlyFlushing = 0
+
 		sleep(5) // wait for animation to finish
 
 

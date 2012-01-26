@@ -272,6 +272,19 @@
 	new /obj/item/weapon/tank/emergency_oxygen/anesthetic( src )
 	return
 
+/obj/item/weapon/storage/box/ert/New()
+	..()
+	contents = list()
+	sleep(1)
+	new /obj/item/weapon/reagent_containers/glass/bottle/ert/cryo( src )
+	new /obj/item/weapon/reagent_containers/glass/bottle/ert/cryo( src )
+	new /obj/item/weapon/reagent_containers/glass/bottle/ert/cryo( src )
+	new /obj/item/weapon/reagent_containers/glass/bottle/ert/quikheal( src )
+	new /obj/item/weapon/reagent_containers/glass/bottle/ert/quikheal( src )
+	new /obj/item/weapon/reagent_containers/glass/bottle/ert/boost( src )
+	new /obj/item/weapon/reagent_containers/glass/bottle/ert/boost( src )
+	return
+
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
 	switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "freedom" = 1)))

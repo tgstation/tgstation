@@ -105,6 +105,11 @@
 	origin_tech = "materials=2"
 	m_amt = 30000
 	g_amt = 15000
+	var/ammo = 10
+
+/obj/item/weapon/rcd_ammo/large
+	name = "Super compressed matter cartridge"
+	ammo = 30
 
 /obj/item/weapon/spacecash
 	name = "Space Cash"

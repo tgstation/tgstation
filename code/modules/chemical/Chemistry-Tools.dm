@@ -1262,6 +1262,12 @@
 			user << "\blue [trans] units injected.  [reagents.total_volume] units remaining in the hypospray."
 	return
 
+/obj/item/weapon/reagent_containers/hypospray/ert
+	name = "emergency hypospray"
+	desc = "The DeForest Medical Corporation hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients."
+	amount_per_transfer_from_this = 50
+	volume = 50
+
 ////////////////////////////////////////////////////////////////////////////////
 /// Food.
 ////////////////////////////////////////////////////////////////////////////////
@@ -2175,6 +2181,57 @@
 		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", 20, data)
 
+/obj/item/weapon/reagent_containers/glass/bottle/ert
+	name = "emergency medicine bottle"
+	desc = "A large bottle."
+	icon = 'chemical.dmi'
+	icon_state = "bottle3"
+	item_state = "atoxinbottle"
+	amount_per_transfer_from_this = 50
+	possible_transfer_amounts = null
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	volume = 50
+
+	New()
+		..()
+		if(!icon_state)
+			icon_state = "bottle[rand(1,20)]"
+
+/obj/item/weapon/reagent_containers/glass/bottle/ert/quikheal
+	name = "Quikheal bottle"
+	desc = "Seems to be a strange mix of delicious goodness. Smells woozy."
+
+	New()
+		..()
+		reagents.add_reagent("bicaridine", 8)
+		reagents.add_reagent("dexalinp", 5)
+		reagents.add_reagent("dermaline", 8)
+		reagents.add_reagent("arithrazine", 8)
+		reagents.add_reagent("inaprovaline", 8)
+		reagents.add_reagent("cryptobiolin", 13)
+
+/obj/item/weapon/reagent_containers/glass/bottle/ert/boost
+	name = "Combat Boost bottle"
+	desc = "Seems to be a strange mix of delicious goodness. It... Pulses slightly before your eyes."
+
+	New()
+		..()
+		reagents.add_reagent("hyperzine", 10)
+		reagents.add_reagent("dermaline", 10)
+		reagents.add_reagent("leporazine", 10)
+		reagents.add_reagent("bicaridine", 10)
+		reagents.add_reagent("mutagen", 10)
+
+/obj/item/weapon/reagent_containers/glass/bottle/ert/cryo
+	name = "Cryo-in-a-bottle"
+	desc = "Seems to be a strange mix of delicious goodness. It's freezing cold to the touch."
+
+	New()
+		..()
+		reagents.add_reagent("clonexadone", 25)
+		reagents.add_reagent("liquidnitrogen", 15)
+		reagents.add_reagent("chloralhydrate", 10)
+
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
 	name = "beaker"
@@ -2823,7 +2880,7 @@
 	icon_state = "pill5"
 	New()
 		..()
-		reagents.add_reagent("toxin", 100)
+		reagents.add_reagent("chloralhydrate", 100)
 
 /obj/item/weapon/reagent_containers/pill/adminordrazine
 	name = "Adminordrazine pill"
