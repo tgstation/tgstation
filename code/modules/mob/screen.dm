@@ -464,6 +464,36 @@
 							O.show_message(text("\red <B>[] manages to unbuckle themself!</B>", usr), 1)
 						usr << "\blue You successfully unbuckle yourself."
 						usr:buckled.manual_unbuckle_all(usr)
+
+		if("comply")
+			if(!istype(usr, /mob/living/carbon/human))
+				usr << "You can't comply, no one would understand what you're doing!"
+				return
+			if(!usr:iscomplying)
+				usr.complying.icon_state = "act_comply_active"
+				for(var/mob/O in viewers(usr))
+					O.show_message(text("\red <B>[] begins to get onto his knees, his hands going behind his head.</B>", usr), 1)
+					usr.m_intent = "walk"
+					usr.hud_used.move_intent.icon_state = "walking"
+					spawn(30)
+						if ((usr:l_hand || usr:r_hand))
+							var/h = usr:hand
+							usr:hand = 1
+							usr:drop_item()
+							usr:hand = 0
+							usr:drop_item()
+							usr:hand = h
+						usr:iscomplying = 1
+			else
+				for(var/mob/O in viewers(usr))
+					O.show_message(text("\red <B>[] begins to get up, his hands coming down.</B>", usr), 1)
+					usr.m_intent = "run"
+					usr.hud_used.move_intent.icon_state = "running"
+					spawn(30)
+						usr.complying.icon_state = "act_comply"
+						usr:iscomplying = 0
+
+
 		if("module")
 			if(issilicon(usr))
 				if(usr:module)

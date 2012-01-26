@@ -231,6 +231,14 @@
 	src.adding += using
 
 	using = new src.h_type( src )
+	using.name = "comply"
+	using.icon = ui_style
+	using.icon_state = "act_comply"
+	using.screen_loc = ui_comply
+	using.layer = 19
+	src.adding += using
+
+	using = new src.h_type( src )
 	using.name = "other"
 	using.icon = ui_style
 	using.icon_state = "other"
@@ -529,6 +537,12 @@
 	mymob.pullin.name = "pull"
 	mymob.pullin.screen_loc = ui_pull
 
+	mymob.complying = new /obj/screen( null )
+	mymob.complying.icon = ui_style
+	mymob.complying.icon_state = "act_comply"
+	mymob.complying.name = "comply"
+	mymob.complying.screen_loc = ui_comply
+
 	mymob.blind = new /obj/screen( null )
 	mymob.blind.icon = ui_style
 	mymob.blind.icon_state = "blackanimate"
@@ -657,7 +671,7 @@
 	mymob.client.screen = null
 
 	//, mymob.i_select, mymob.m_select
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.hands, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.hands, mymob.complying, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 
 	//if(istype(mymob,/mob/living/carbon/monkey)) mymob.client.screen += src.mon_blo

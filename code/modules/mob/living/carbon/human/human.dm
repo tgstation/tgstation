@@ -1189,6 +1189,8 @@
 		return 1
 	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
 		return 1
+	if (iscomplying)
+		return 1
 	return 0
 
 /mob/living/carbon/human/proc/update_body()
