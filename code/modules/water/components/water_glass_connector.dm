@@ -27,7 +27,7 @@
 
 		overlays = new()
 		if(connected_device)
-			overlays += "inserted[icon_type]"
+			overlays += "inserted"
 
 			if(connected_device.reagents.total_volume)
 				var/obj/effect/overlay = new/obj
@@ -210,3 +210,4 @@
 /obj/machinery/water/glass_connector/wall
 	icon_state = "intact-w"
 	icon_type = "-w"
+	density = 0

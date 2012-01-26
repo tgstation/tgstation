@@ -8,7 +8,7 @@
 	var/obj/parent
 
 	update_icon()
-		icon_state = "intact[invisibility ? "-f" : "" ]"
+		icon_state = "fixture[invisibility ? "-f" : "" ]"
 
 	hide(var/i)
 		if(level == 1 && istype(loc, /turf/simulated))
