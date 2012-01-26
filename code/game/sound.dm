@@ -64,7 +64,7 @@
 
 	src << S
 
-client/verb/Toggle_Soundscape()
+client/verb/Toggle_Soundscape() //If you add a new ambience, list it here!!!
 	set category = "OOC"
 	set name = "Toggle Ambience"
 	usr:client:no_ambi = !usr:client:no_ambi
