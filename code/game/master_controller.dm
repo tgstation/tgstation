@@ -58,9 +58,6 @@ datum/controller/game_controller
 		for(var/obj/machinery/atmospherics/machine in world)
 			machine.build_network()
 
-		for(var/obj/machinery/water/machine in world)
-			machine.build_network()
-
 		world << "\red \b Initializing atmos machinery."
 		sleep(-1)
 		for(var/obj/machinery/atmospherics/unary/vent_pump/T in world)
@@ -121,9 +118,6 @@ datum/controller/game_controller
 			object.process()
 
 		for(var/datum/pipe_network/network in pipe_networks)
-			network.process()
-
-		for(var/datum/water/pipe_network/network in water_pipe_networks)
 			network.process()
 
 		for(var/datum/powernet/P in powernets)
