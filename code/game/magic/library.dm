@@ -371,9 +371,10 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	if(href_list["setcategory"])
 		var/newcategory = input("Choose a category to search for:") in list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
 		if(newcategory)
-			category = newcategory
+			category = sanitize(newcategory)
 		else
 			category = "Any"
+		category = dd_replacetext(category, "'", "''")
 	if(href_list["setauthor"])
 		var/newauthor = input("Enter an author to search for:") as text|null
 		if(newauthor)
@@ -640,7 +641,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 							alert("Upload Complete.")
 						dbcon.Disconnect()
 	if(href_list["targetid"])
-		var/sqlid = href_list["targetid"]
+		var/sqlid = dd_replacetext(href_list["targetid"], "'", "''")
 		var/DBConnection/dbcon = new()
 		dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
 		if(!dbcon.IsConnected())
@@ -665,6 +666,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	if(href_list["orderbyid"])
 		var/orderid = input("Enter your order:") as num|null
 		if(orderid)
+			orderid = dd_replacetext(orderid, "'", "''")
 			var/nhref = "src=\ref[src];targetid=[orderid]"
 			spawn() src.Topic(nhref, params2list(nhref), src)
 	src.add_fingerprint(usr)
