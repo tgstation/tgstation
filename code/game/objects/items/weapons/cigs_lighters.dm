@@ -22,7 +22,10 @@ ZIPPO
 
 
 	process()
-		while(src.lit == 1)
+		var/turf/location = get_turf(src)
+		if(src.lit == 1)
+			if(location)
+				location.hotspot_expose(700, 5)
 			src.smoketime--
 			sleep(10)
 			if(src.smoketime < 1)
@@ -31,15 +34,18 @@ ZIPPO
 				processing_objects.Remove(src)
 				return
 
-
 	dropped(mob/user as mob)
 		if(src.lit == 1)
-			src.lit = -1
-			src.damtype = "brute"
-			src.icon_state = "match_burnt"
-			src.item_state = "cigoff"
-			src.name = "Burnt match"
-			src.desc = "A match that has been burnt"
+			spawn(10)
+				var/turf/location = get_turf(src)
+				location.hotspot_expose(700, 5)
+				src.lit = -1
+				src.damtype = "brute"
+				src.icon_state = "match_burnt"
+				src.item_state = "cigoff"
+				src.name = "Burnt match"
+				src.desc = "A match that has been burnt"
+				processing_objects.Remove(src)
 		return ..()
 
 

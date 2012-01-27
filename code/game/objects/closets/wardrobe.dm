@@ -45,8 +45,7 @@
 
 /obj/structure/closet/wardrobe/chaplain_black/New()
 	//new /obj/item/clothing/suit/imperium_monk(src) //No. -- Urist
-	new /obj/item/clothing/under/rank/chaplain(src)
-	new /obj/item/clothing/shoes/black(src)
+	new /obj/item/wardrobe/chaplain(src)
 	new /obj/item/clothing/suit/nun(src)
 	new /obj/item/clothing/suit/storage/chaplain_hoodie(src)
 	new /obj/item/clothing/head/chaplain_hood(src)
@@ -86,12 +85,10 @@
 	return
 
 /obj/structure/closet/wardrobe/atmospherics_yellow/New()
-	new /obj/item/clothing/under/rank/atmospheric_technician(src)
-	new /obj/item/clothing/under/rank/atmospheric_technician(src)
-	new /obj/item/clothing/under/rank/atmospheric_technician(src)
-	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/shoes/black(src)
+	new /obj/item/wardrobe/atmos(src)
+	new /obj/item/wardrobe/atmos(src)
+	new /obj/item/wardrobe/atmos(src)
+	new /obj/item/wardrobe/atmos(src)
 	return
 
 /obj/structure/closet/wardrobe/engineering_yellow/New()
@@ -113,29 +110,19 @@
 	return
 
 /obj/structure/closet/wardrobe/toxins_white/New()
-	new /obj/item/clothing/under/rank/scientist(src)
-	new /obj/item/clothing/under/rank/scientist(src)
-	new /obj/item/clothing/under/rank/scientist(src)
-	new /obj/item/clothing/suit/storage/labcoat(src)
-	new /obj/item/clothing/suit/storage/labcoat(src)
-	new /obj/item/clothing/suit/storage/labcoat(src)
-	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/wardrobe/scientist(src)
+	new /obj/item/wardrobe/scientist(src)
+	new /obj/item/wardrobe/scientist(src)
+	new /obj/item/wardrobe/scientist(src)
 	return
 
 /obj/structure/closet/wardrobe/genetics_white/New()
-	new /obj/item/clothing/under/rank/geneticist(src)
-	new /obj/item/clothing/under/rank/geneticist(src)
-	new /obj/item/clothing/under/rank/geneticist(src)
-	new /obj/item/clothing/under/rank/geneticist(src)
-	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/weapon/storage/stma_kit(src)
-	new /obj/item/clothing/suit/storage/labcoat(src)
-	new /obj/item/clothing/suit/storage/labcoat(src)
-	new /obj/item/clothing/suit/storage/labcoat(src)
+	new /obj/item/wardrobe/geneticist(src)
+	new /obj/item/wardrobe/geneticist(src)
+	new /obj/item/wardrobe/geneticist(src)
+	new /obj/item/wardrobe/geneticist(src)
+	new /obj/item/wardrobe/geneticist(src)
 	return
 
 /obj/structure/closet/wardrobe/grey/New()
@@ -160,11 +147,71 @@
 	return
 
 /obj/structure/closet/lawcloset/New()
-	new /obj/item/clothing/under/lawyer/black(src)
-	new /obj/item/clothing/under/lawyer/red(src)
-	new /obj/item/clothing/under/lawyer/bluesuit(src)
-	new /obj/item/clothing/suit/lawyer/bluejacket(src)
-	new /obj/item/clothing/under/lawyer/purpsuit(src)
-	new /obj/item/clothing/suit/lawyer/purpjacket(src)
-	new /obj/item/clothing/shoes/brown(src)
-	new /obj/item/clothing/shoes/black(src)
+	new /obj/item/wardrobe/lawyer(src)
+	new /obj/item/wardrobe/lawyer(src)
+	new /obj/item/wardrobe/lawyer(src)
+	new /obj/item/wardrobe/lawyer(src)
+
+/obj/structure/closet/wardrobe/medic_white/New()
+	new /obj/item/wardrobe/doctor(src)
+	new /obj/item/wardrobe/doctor(src)
+	new /obj/item/wardrobe/doctor(src)
+	new /obj/item/wardrobe/doctor(src)
+	new /obj/item/wardrobe/doctor(src)
+	new /obj/item/wardrobe/doctor(src)
+	return
+
+/obj/structure/closet/wardrobe/robotics_yellow/New()
+	new /obj/item/wardrobe/roboticist(src)
+	new /obj/item/wardrobe/roboticist(src)
+	new /obj/item/wardrobe/roboticist(src)
+	new /obj/item/wardrobe/roboticist(src)
+	return
+
+
+/obj/structure/closet/wardrobe/bartender_black/New()
+	new /obj/item/wardrobe/bartender(src)
+	new /obj/item/wardrobe/bartender(src)
+	new /obj/item/wardrobe/bartender(src)
+	new /obj/item/wardrobe/bartender(src)
+	return
+
+/obj/structure/closet/wardrobe/chef_white/New()
+	new /obj/item/wardrobe/chef(src)
+	new /obj/item/wardrobe/chef(src)
+	new /obj/item/wardrobe/chef(src)
+	new /obj/item/weapon/storage/lglo_kit(src)
+	return
+
+/obj/structure/closet/wardrobe/hydro_green/New()
+	new /obj/item/wardrobe/hydro(src)
+	new /obj/item/wardrobe/hydro(src)
+	new /obj/item/wardrobe/hydro(src)
+	new /obj/item/wardrobe/hydro(src)
+	return
+
+/obj/structure/closet/wardrobe/librarian_red/New()
+	new /obj/item/wardrobe/librarian(src)
+	new /obj/item/wardrobe/librarian(src)
+	new /obj/item/wardrobe/librarian(src)
+	return
+
+/obj/structure/closet/wardrobe/cargo_yellow/New()
+	new /obj/item/wardrobe/cargo_tech(src)
+	new /obj/item/wardrobe/cargo_tech(src)
+	new /obj/item/wardrobe/cargo_tech(src)
+	new /obj/item/wardrobe/cargo_tech(src)
+	return
+
+/obj/structure/closet/wardrobe/qm_yellow/New()
+	new /obj/item/wardrobe/qm(src)
+	new /obj/item/wardrobe/qm(src)
+	new /obj/item/wardrobe/qm(src)
+	return
+
+/obj/structure/closet/wardrobe/virology_white/New()
+	new /obj/item/wardrobe/virologist(src)
+	new /obj/item/wardrobe/virologist(src)
+	new /obj/item/wardrobe/virologist(src)
+	new /obj/item/wardrobe/virologist(src)
+	return

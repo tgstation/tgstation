@@ -1044,6 +1044,7 @@
 #include "code\WorkInProgress\SkyMarshal\coatrack.dm"
 #include "code\WorkInProgress\SkyMarshal\policetape.dm"
 #include "code\WorkInProgress\SkyMarshal\traitoritems.dm"
+#include "code\WorkInProgress\SkyMarshal\wardrobes.dm"
 #include "code\WorkInProgress\Tastyfish\Eliza.dm"
 #include "code\WorkInProgress\Tastyfish\Eliza_Data.dm"
 #include "code\WorkInProgress\Tastyfish\livestock.dm"

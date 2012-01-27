@@ -248,6 +248,12 @@
 			R = foo
 			loc = "in the [S.name] on your back"
 			break
+	if (!R && istype(traitor_mob.slot_l_store, /obj/item/device/pda))
+		R = traitor_mob.slot_l_store
+		loc = "in your pocket"
+	if (!R && istype(traitor_mob.slot_r_store, /obj/item/device/pda))
+		R = traitor_mob.slot_r_store
+		loc = "in your pocket"
 	if (!R && traitor_mob.w_uniform && istype(traitor_mob.belt, /obj/item/device/radio))
 		R = traitor_mob.belt
 		loc = "on your belt"

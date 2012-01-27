@@ -4,8 +4,8 @@
 /obj/structure/closet/secure_closet/personal/New()
 	..()
 	spawn(2)
-		new /obj/item/weapon/storage/backpack( src )
-		new /obj/item/device/radio/headset( src )
+		new /obj/item/wardrobe/assistant(src)
+		new /obj/item/device/assembly/signaler(src)
 	return
 
 /obj/structure/closet/secure_closet/personal/patient/New()
@@ -37,6 +37,7 @@
 			if(!src.registered)
 				src.registered = I.registered
 				src.desc = "Owned by [I.registered]."
+				src.name = "Personal Closet - [I.registered]"
 		else
 			user << "\red Access Denied"
 	else if( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)

@@ -495,3 +495,9 @@
 		istype(W, /obj/item/weapon/match)            && W:lit     || \
 		istype(W, /obj/item/clothing/mask/cigarette) && W:lit	\
 	)
+
+/obj/item/weapon/paper/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(exposed_temperature >= 373.15)
+		for(var/mob/M in viewers(5, src))
+			M << "\red \the [src] burns up."
+		del(src)

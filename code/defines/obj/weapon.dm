@@ -846,6 +846,7 @@
 	var/gas_transfer_coefficient = 1
 	var/permeability_coefficient = 0.99
 	var/siemens_coefficient = 0.80
+	var/iteration
 
 /obj/item/weapon/directions
 	name = "Crumpled Paper"
