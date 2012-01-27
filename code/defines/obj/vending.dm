@@ -37,6 +37,32 @@
 	var/wires = 15
 	var/obj/item/weapon/coin/coin
 
+/*
+
+/obj/machinery/vending/[vendors name here]   // --vending machine template   :)
+	name = ""
+	desc = ""
+	icon = ''
+	icon_state = ""
+	product_paths = ""
+	product_amounts = ""
+	vend_delay = 15
+	product_hidden = ""
+	product_hideamt = ""
+	product_slogans = ""
+	product_ads = ""
+
+*/
+
+/obj/machinery/vending/atmospherics
+	name = "Tank Vendor"
+	desc = "A vendor with a wide variety of masks and gas tanks."
+	icon = 'objects.dmi'
+	icon_state = "dispenser"
+	product_paths = "/obj/item/weapon/tank/oxygen;/obj/item/weapon/tank/plasma;/obj/item/weapon/tank/emergency_oxygen;/obj/item/weapon/tank/emergency_oxygen/engi;/obj/item/clothing/mask/breath"
+	product_amounts = "10;10;10;5;25"
+	vend_delay = 0
+
 /obj/machinery/vending/boozeomat
 	name = "Booze-O-Mat"
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
