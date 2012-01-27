@@ -326,8 +326,14 @@
 						"You unbuckled from [src] by [user.name].",\
 						"You hear metal clanking")
 				else
+					var/t_himself = "itself"
+					if (M.gender == MALE)
+						t_himself = "himself"
+					else if (M.gender == FEMALE)
+						t_himself = "herself"
+
 					M.visible_message(\
-						"\blue [M.name] unbuckled \himself!",\
+						"\blue [M.name] unbuckled [t_himself]!",\
 						"You unbuckle yourself from [src].",\
 						"You hear metal clanking")
 				M.pixel_y = 0
