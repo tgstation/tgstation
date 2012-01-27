@@ -21,16 +21,6 @@
 	//1 = hacked
 	var/gibs_ready = 0
 	var/obj/crayon
-	var/obj/machinery/water/binary/fixture/cxn
-
-	New()
-		..()
-		reagents = new(200)
-		reagents.my_atom = src
-		spawn(2)
-			cxn = locate(/obj/machinery/water/binary/fixture) in loc
-			if(cxn)
-				cxn.parent = src
 
 /obj/machinery/washing_machine/verb/start()
 	set name = "Start Washing"
@@ -41,31 +31,13 @@
 		usr << "The washing machine cannot run in this state."
 		return
 
-	if(!cxn)
-		usr << "\The [src] makes a grinding sound and stalls."
-
 	if( locate(/mob,contents) )
 		state = 8
 	else
 		state = 5
 	update_icon()
-
-	// collect water, fill up
-	var/amt_needed
-	do
-		amt_needed = reagents.maximum_volume/2 - reagents.total_volume
-		cxn.fill(amt_needed)
-		sleep(10)
-	while(amt_needed > 0)
-
-	// now, clean things
 	sleep(200)
 	for(var/atom/A in contents)
-		reagents.reaction(A, TOUCH)
-
-		if(A.blood_DNA)
-			reagents.add_reagent("blood", 10) // down the sink
-		reagents.add_reagent("carbon", 5)
 		A.clean_blood()
 
 	if(crayon)
@@ -170,7 +142,6 @@
 		gibs_ready = 1
 	else
 		state = 4
-	cxn.drain(reagents.total_volume)
 	update_icon()
 
 /obj/machinery/washing_machine/verb/climb_out()
