@@ -100,7 +100,6 @@ obj/machinery/water/trinary/filter
 	hide(var/i)
 		if(level == 1 && istype(loc, /turf/simulated))
 			invisibility = i ? 101 : 0
-			density = !i
 		update_icon()
 
 	initialize()

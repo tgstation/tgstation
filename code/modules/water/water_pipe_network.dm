@@ -89,35 +89,21 @@ var/global/list/datum/water/pipe_network/water_pipe_networks = list()
 		reagents_transient = new(0)
 		reagents_transient.my_atom = new/obj()
 
-		// it's more efficient to avoid .add_reagent, etc more then once per reagent type
 		for(var/datum/reagents/R in reagents)
 			// add in each reagents
 			reagents_transient.maximum_volume += R.maximum_volume
-
-			for (var/datum/reagent/re in R.reagent_list)
-				var/datum/reagent/rr = reagents_transient.has_reagent(re.id)
-				if(!rr)
-					reagents_transient.add_reagent(re.id, re.volume, re.data)
-				else
-					rr.volume += re.volume
-		reagents_transient.update_total()
+			R.copy_to(reagents_transient, R.total_volume)
 
 		if(reagents_transient.total_volume > 0)
 			update = 1
 
 			//Update individual reagents by volume ratio
 			for(var/datum/reagents/R in reagents)
+				R.clear_reagents()
 				for(var/datum/reagent/re in reagents_transient.reagent_list)
-					var/datum/reagent/rr = R.has_reagent(re.id)
-					if(!rr)
-						R.add_reagent(re.id, re.volume \
-							* R.maximum_volume \
-							/ reagents_transient.maximum_volume, re.data)
-					else
-						rr.volume = re.volume \
-							* R.maximum_volume \
-							/ reagents_transient.maximum_volume
-				R.update_total()
+					R.add_reagent(re.id, re.volume \
+						* R.maximum_volume \
+						/ reagents_transient.maximum_volume)
 		return 1
 
 	proc/return_pressure_transient()
@@ -195,31 +181,20 @@ proc/equalize_reagents(var/list/datum/reagents/reagents)
 	var/datum/reagents/reagents_transient = new(0)
 	reagents_transient.my_atom = new/obj()
 
-	// it's more efficient to avoid .add_reagent, etc more then once per reagent type
 	for(var/datum/reagents/R in reagents)
-		// add in each reagents
+		// add in each reagent
 		reagents_transient.maximum_volume += R.maximum_volume
+		R.copy_to(reagents_transient, R.total_volume)
 
-		for (var/datum/reagent/re in R.reagent_list)
-			var/datum/reagent/rr = reagents_transient.has_reagent(re.id)
-			if(!rr)
-				reagents_transient.add_reagent(re.id, re.volume, re.data)
-			else
-				rr.volume += re.volume
-	reagents_transient.update_total()
+	//Allow reagents to react
+	reagents_transient.handle_reactions()
 
 	if(reagents_transient.total_volume > 0)
 		//Update individual reagents by volume ratio
 		for(var/datum/reagents/R in reagents)
+			R.clear_reagents()
 			for(var/datum/reagent/re in reagents_transient.reagent_list)
-				var/datum/reagent/rr = R.has_reagent(re.id)
-				if(!rr)
-					R.add_reagent(re.id, re.volume \
-						* R.maximum_volume \
-						/ reagents_transient.maximum_volume, re.data)
-				else
-					rr.volume = re.volume \
-						* R.maximum_volume \
-						/ reagents_transient.maximum_volume
-			R.update_total()
+				R.add_reagent(re.id, re.volume \
+					* R.maximum_volume \
+					/ reagents_transient.maximum_volume)
 	return 1
