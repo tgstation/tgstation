@@ -65,7 +65,7 @@
 	src << S
 
 client/verb/Toggle_Soundscape()
-	set category = "OOC"
+	set category = "Special Verbs"
 	set name = "Toggle Ambience"
 	usr:client:no_ambi = !usr:client:no_ambi
 	if(usr:client:no_ambi)

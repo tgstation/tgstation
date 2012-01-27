@@ -304,8 +304,9 @@
 
 		//if (A:ear_deaf) return
 
-		if (A && A:client && !A:client:ambience_playing && !A:client:no_ambi) // Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas next to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
+		if (A && A:client && !A:client:ambience_playing && !A:client:no_ambi) // Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 			A:client:ambience_playing = 1
+			A:client:no_ambi = 0
 			A << sound('shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
 
 		switch(src.name)
@@ -313,10 +314,7 @@
 			if ("Morgue") sound = pick('ambimo1.ogg','ambimo2.ogg','title2.ogg')
 			if ("Space") sound = pick('ambispace.ogg','title2.ogg',)
 			if ("Engine Control") sound = pick('ambisin1.ogg','ambisin2.ogg','ambisin3.ogg','ambisin4.ogg')
-			if ("Atmospherics") sound = pick('ambiatm1.ogg')
-			if ("AI Sat Ext") sound = pick('ambiruntime.ogg','ambimalf.ogg')
-			if ("AI Satellite") sound = pick('ambimalf.ogg')
-			if ("AI Satellite Teleporter Room") sound = pick('ambiruntime.ogg','ambimalf.ogg')
+			if ("AI Satellite Teleporter Room") sound = pick('ambimalf.ogg')
 			if ("Bar") sound = pick('null.ogg')
 			if ("AI Upload Foyer") sound = pick('ambimalf.ogg', 'null.ogg')
 			if ("AI Upload Chamber") sound = pick('ambimalf.ogg','null.ogg')
@@ -324,7 +322,7 @@
 				sound = pick('ambimine.ogg')
 				musVolume = 25
 			else
-				sound = pick('ambiruntime.ogg','ambigen1.ogg','ambigen3.ogg','ambigen4.ogg','ambigen5.ogg','ambigen6.ogg','ambigen7.ogg','ambigen8.ogg','ambigen9.ogg','ambigen10.ogg','ambigen11.ogg','ambigen12.ogg','ambigen14.ogg')
+				sound = pick('ambigen1.ogg','ambigen3.ogg','ambigen4.ogg','ambigen5.ogg','ambigen6.ogg','ambigen7.ogg','ambigen8.ogg','ambigen9.ogg','ambigen10.ogg','ambigen11.ogg','ambigen12.ogg','ambigen14.ogg')
 
 
 		if (prob(35))
