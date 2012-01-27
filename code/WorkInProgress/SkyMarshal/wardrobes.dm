@@ -45,8 +45,8 @@
 
 	New()
 		..()
-		pixel_x = random(0,4) -2
-		pixel_y = random(0,4) -2
+		pixel_x = rand(0,4) -2
+		pixel_y = rand(0,4) -2
 
 /obj/item/wardrobe/assistant
 	name = "assistant wardrobe"
