@@ -6,9 +6,9 @@
 	speak_chance = 1
 	turns_per_move = 15
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	response_help  = "pets \the"
-	response_disarm = "gently pushes aside \the"
-	response_harm   = "kicks \the"
+	response_help  = "pets "
+	response_disarm = "gently pushes aside "
+	response_harm   = "kicks "
 	var/max_nutrition = 100	// different animals get hungry faster, basically number of 5-second steps from full to starving (60 == 5 minutes)
 	var/nutrition_step		// cycle step in nutrition system
 	var/obj/movement_target // eating-ing target
