@@ -14,6 +14,7 @@
 			user.visible_message("\blue [user] unwraps the clothing from the [src]")
 			for(var/obj/item/I in src)
 				I.loc = get_turf(src)
+			update_icon()
 		return
 
 	attackby(var/obj/item/I as obj, var/mob/user as mob)
@@ -22,7 +23,7 @@
 		if(contents.len < 20)
 			if(istype(I, /obj/item/weapon/grab))
 				return
-			usr.drop_item()
+			user.drop_item()
 			if(I)
 				I.loc = src.loc
 		else
@@ -30,10 +31,22 @@
 		return
 
 	examine()
-		set src in oview(4)
+		set src in usr
 		..()
 		usr << "It claims to contain [contents.len ? descriptor : descriptor + "...but it looks empty"]"
 		return
+
+	update_icon()
+		if(contents.len)
+			icon_state = "wardrobe"
+		else
+			icon_state = "wardrobe_empty"
+		return
+
+	New()
+		..()
+		pixel_x = random(0,4) -2
+		pixel_y = random(0,4) -2
 
 /obj/item/wardrobe/assistant
 	name = "assistant wardrobe"

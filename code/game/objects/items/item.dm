@@ -194,7 +194,7 @@
 	user.update_clothing()
 	return
 
-/obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/packageWrap))
 		if(istype(src,/obj/item/weapon/storage) && istype(src.loc, /mob))	//Put it into the bag
 			return
@@ -212,6 +212,20 @@
 
 			src.loc = P
 			O.amount -= 1
+	else if(istype(W,/obj/item/wardrobe))
+		var/obj/item/wardrobe/I = W
+		for (var/obj/O in locate(src.x,src.y,src.z))
+			if (I.contents.len < 20)
+				if(istype(O,/obj/item/wardrobe))
+					continue
+				if(O.anchored)
+					continue
+				I.contents += O;
+			else
+				user << "\blue The wardrobe is full."
+				return
+		user << "\blue You pick up all the items."
+		I.update_icon()
 
 /obj/item/attack_self(mob/user as mob)
 	..()

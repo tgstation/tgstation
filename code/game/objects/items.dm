@@ -244,7 +244,7 @@
 	return
 
 
-//What the fuck is this code
+//What the fuck is this code  Looks to be the parrying code.  If you're grabbing someone, it might hit them instead... or something.--SkyMarshal
 /mob/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (user.intent != "harm")
 		if (istype(src.l_hand,/obj/item/latexballon) && src.l_hand:air_contents && is_sharp(W))
