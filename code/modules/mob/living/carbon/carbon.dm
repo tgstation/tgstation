@@ -202,3 +202,18 @@
 		if (istype(organs[text("[]", t)], /datum/organ/external))
 			L += organs[text("[]", t)]
 	return L
+
+/mob/living/carbon/proc/UpdateDamage()
+
+	if (!(istype(src, /mob/living/carbon/human)))	//Added by Strumpetplaya - Invincible Monkey Fix
+		return										//Possibly helps with other invincible mobs like Aliens?
+	var/list/L = list(  )
+	for(var/t in organs)
+		if (istype(organs[text("[]", t)], /datum/organ/external))
+			L += organs[text("[]", t)]
+	bruteloss = 0
+	fireloss = 0
+	for(var/datum/organ/external/O in L)
+		bruteloss += O.get_damage_brute()
+		fireloss += O.get_damage_fire()
+	return

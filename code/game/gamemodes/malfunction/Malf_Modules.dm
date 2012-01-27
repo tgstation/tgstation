@@ -152,6 +152,7 @@ rcd light flash thingy on matter drain
 	src.possible_modules += new /datum/AI_Module/small/interhack
 	src.possible_modules += new /datum/AI_Module/small/blackout
 	src.possible_modules += new /datum/AI_Module/small/reactivate_camera
+	return
 
 /datum/AI_Module/module_picker/proc/use(user as mob)
 	var/dat

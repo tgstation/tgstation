@@ -3,6 +3,7 @@
 	desc = "Seems to have everything I need for my job in it, sweet."
 	icon = 'suits.dmi'
 	icon_state = "wardrobe"
+	item_state = "wardrobe"
 	w_class = 4
 	var
 		descriptor = "various clothing."

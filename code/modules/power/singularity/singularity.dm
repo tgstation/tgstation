@@ -232,9 +232,7 @@ var/global/list/uneatable = list(
 			if (istype(A,/mob/living))//Mobs get gibbed
 				gain = 20
 				if(istype(A,/mob/living/carbon/human))
-					if(A:mind)
-						if((A:mind:assigned_role == "Station Engineer") || (A:mind:assigned_role == "Chief Engineer") )
-							gain = 100
+					gain = 100
 				spawn()
 					A:gib()
 				sleep(1)
