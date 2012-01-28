@@ -46,12 +46,12 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		for(var/D in ItemList)
 			var/list/O = stringsplit(D, ":")
 			if(O.len != 3)	//If it is not an actual item, make a break in the menu.
-				if(category_items < 1)	//If there were no itens in the last category...
-					src.menu_message += "<i>We apologize, as you could not afford anything from this category.</i><br>"
 				if(O.len == 1)	//If there is one item, it's probably a title
 					src.menu_message += "<b>[O[1]]</b><br>"
 					category_items = 0
 				else	//Else, it's a white space.
+					if(category_items < 1)	//If there were no itens in the last category...
+						src.menu_message += "<i>We apologize, as you could not afford anything from this category.</i><br>"
 					src.menu_message += "<br>"
 				continue
 

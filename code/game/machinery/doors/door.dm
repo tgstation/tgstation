@@ -293,18 +293,21 @@
 		return
 	src.operating = 1
 
+	var/X = src:x
+	var/Y = src:y
+	var/Z = src:z
 	var/held = 1
 
 	if(src.holdopen)
 		while(held == 1)
+			sleep(held? 10:40)
 			held = 0
-			var/list/objects = locate() in get_turf(src)
+			var/list/objects = locate(X,Y,Z)
 			for(var/obj/T in objects)
-				if(T != src)
+				if(!istype(T,/obj/machinery/door))
 					held = 1
 			for(var/mob/T in objects)
 				held = 1
-			sleep(10)
 	animate("closing")
 	src.density = 1
 	spawn(4)
