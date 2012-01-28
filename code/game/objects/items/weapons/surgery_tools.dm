@@ -269,6 +269,7 @@ CIRCULAR SAW
 		if(!try_bone_surgery(M, user))
 			return ..()
 
+
 /obj/item/weapon/hemostat/proc/try_bone_surgery(mob/living/carbon/human/H as mob, mob/living/user as mob)
 	if(!istype(H))
 		return 0
@@ -314,6 +315,119 @@ CIRCULAR SAW
 		H.UpdateDamageIcon()
 
 	return 1
+
+///////////////////
+//AUTOPSY SCANNER//
+///////////////////
+/obj/item/weapon/autopsy_scanner/var/list/datum/wound_data/wdata = list()
+/obj/item/weapon/autopsy_scanner/var/target_name = null
+
+/datum/wound_data
+	var
+		weapon_type = null // this is the DEFINITE weapon type that was used
+		list/organs_scanned = list() // this maps a number of scanned organs to
+		                             // the wounds to those organs with this data's weapon type
+		organ_names = ""
+
+/obj/item/weapon/autopsy_scanner/proc/add_data(var/datum/organ/external/O)
+	if(!O.weapon_wounds.len) return
+
+	for(var/V in O.weapon_wounds)
+		var/datum/wound/W = O.weapon_wounds[V]
+
+		if(!W.pretend_weapon_type)
+			// the more hits, the more likely it is that we get the right weapon type
+			if(prob(W.hits * 10 + W.damage))
+				W.pretend_weapon_type = W.weapon_type
+			else
+				if(prob(50))
+					W.pretend_weapon_type = pick(/obj/item/weapon/storage/toolbox, /obj/item/weapon/wirecutters, /obj/item/weapon/gun/projectile, /obj/item/weapon/crowbar, /obj/item/weapon/extinguisher)
+				else
+					W.pretend_weapon_type = pick(typesof(/obj/item/weapon))
+
+		var/datum/wound_data/D = wdata[V]
+		if(!D)
+			D = new()
+			D.weapon_type = W.weapon_type
+			wdata[V] = D
+
+		if(!D.organs_scanned[O.name])
+			D.organ_names += "[O.display_name] "
+
+		del D.organs_scanned[O.name]
+		D.organs_scanned[O.name] = W.copy()
+
+/obj/item/weapon/autopsy_scanner/verb/print_data()
+	set src in view(usr, 1)
+
+	var/scan_data = ""
+	var/n = 1
+	for(var/wdata_idx in wdata)
+		var/datum/wound_data/D = wdata[wdata_idx]
+		var/total_hits = 0
+		var/total_score = 0
+		var/list/weapon_chances = list() // maps weapon names to a score
+
+		for(var/wound_idx in D.organs_scanned)
+			var/datum/wound/W = D.organs_scanned[wound_idx]
+			total_hits += W.hits
+
+			var/atom/weapon = new W.pretend_weapon_type()
+
+			if(weapon.name in weapon_chances) weapon_chances[weapon.name] += W.damage
+			else weapon_chances[weapon.name] = W.damage
+			total_score+=W.damage
+
+			del weapon
+
+		scan_data += "<b>Weapon #[n]</b><br>"
+		scan_data += "Hits by weapon: [total_hits]<br>"
+		scan_data += "Affected limbs: [D.organ_names]<br>"
+		scan_data += "Possible weapons:<br>"
+		for(var/weapon_name in weapon_chances)
+			scan_data += "\t[100*weapon_chances[weapon_name]/total_score]% [weapon_name]<br>"
+
+		scan_data += "<br>"
+
+		n++
+
+	for(var/mob/O in viewers(usr))
+		O.show_message("\red The [src] rattles and prints out a sheet of paper.", 1)
+
+	sleep(10)
+
+	var/obj/item/weapon/paper/P = new(usr.loc)
+	P.name = "Autopsy Data ([target_name])"
+	P.info = "<tt>[scan_data]</tt>"
+	P.overlays += "paper_words"
+
+/obj/item/weapon/autopsy_scanner/attack(mob/living/carbon/human/M as mob, mob/living/carbon/user as mob)
+	if(!istype(M))
+		return
+
+	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/structure/table/, M.loc) && M.lying && prob(50))))
+		return ..()
+
+	if(target_name != M.name)
+		target_name = M.name
+		for(var/V in src.wdata)
+			del src.wdata[V]
+		src.wdata = list()
+
+	var/datum/organ/external/S = M.organs[user.zone_sel.selecting]
+	if(!S)
+		usr << "<b>You can't scan this body part.</b>"
+		return
+	if(!S.open)
+		usr << "<b>You have to cut the limb open first!</b>"
+		return
+	for(var/mob/O in viewers(M))
+		O.show_message("\red [user.name] scans the wounds on [M.name]'s [S.display_name] with the [src.name]", 1)
+
+	src.add_data(S)
+
+	return 1
+
 
 ///////////
 //Cautery//
@@ -572,6 +686,7 @@ CIRCULAR SAW
 				if(istype(M, /mob/living/carbon/human))
 					var/datum/organ/external/affecting = M:get_organ("head")
 					affecting.take_damage(7)
+					affecting.open = 1
 				else
 					M.take_organ_damage(7)
 
