@@ -77,15 +77,14 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/aiHacking = 0
 	var/obj/machinery/door/airlock/closeOther = null
 	var/closeOtherId = null
-	var/list/signalers[9]
+	var/list/signalers[12]
 	var/lockdownbyai = 0
 	autoclose = 1
 	var/doortype = 0
 	var/justzap = 0
 	var/safetylight = 1
 	var/obj/item/weapon/airlock_electronics/electronics = null
-
-/obj/machinery/door/airlock/New()
+	holdopen = 1
 
 /obj/machinery/door/airlock/command
 	name = "Airlock"
@@ -563,9 +562,9 @@ About the new airlock wires panel:
 	if(src.isWireCut(AIRLOCK_WIRE_HOLDOPEN))
 		t1 += "Behavior Control light wire is cut.<br>\n"
 	else if(!src.holdopen)
-		t1 += text("Door behavior is set to: Automatically close <A href='?src=\ref[src];aiDisable=10'>Toggle?</a><br>\n")
+		t1 += text("Door behavior is set to: Automatically close <A href='?src=\ref[src];aiEnable=10'>Toggle?</a><br>\n")
 	else
-		t1 += text("Door behavior is set to: Wait for clearance to close <A href='?src=\ref[src];aiEnable=10'>Toggle?</a><br>\n")
+		t1 += text("Door behavior is set to: Wait for clearance to close <A href='?src=\ref[src];aiDisable=10'>Toggle?</a><br>\n")
 
 	if (src.welded)
 		t1 += text("Door appears to have been welded shut.<br>\n")
@@ -593,7 +592,6 @@ About the new airlock wires panel:
 		return
 
 	//Separate interface for the hacker.
-	user.machine = src
 	var/t1 = text("<B>Airlock Control</B><br>\n")
 	if (src.secondsMainPowerLost > 0)
 		if ((!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)) && (!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)))
@@ -671,9 +669,9 @@ About the new airlock wires panel:
 	if(src.isWireCut(AIRLOCK_WIRE_HOLDOPEN))
 		t1 += "Behavior Control light wire is cut.<br>\n"
 	else if(!src.holdopen)
-		t1 += text("Door behavior is set to: Automatically close <A href='?src=\ref[src];aiDisable=10'>Toggle?</a><br>\n")
+		t1 += text("Door behavior is set to: Automatically close <A href='?src=\ref[src];aiEnable=10'>Toggle?</a><br>\n")
 	else
-		t1 += text("Door behavior is set to: Wait for clearance to close <A href='?src=\ref[src];aiEnable=10'>Toggle?</a><br>\n")
+		t1 += text("Door behavior is set to: Wait for clearance to close <A href='?src=\ref[src];aiDisable=10'>Toggle?</a><br>\n")
 
 	if (src.welded)
 		t1 += text("Door appears to have been welded shut.<br>\n")
@@ -934,7 +932,7 @@ About the new airlock wires panel:
 					if(!src.holdopen)
 						usr << text("Door Behavior already set to: Wait for clearance to close<br>\n")
 					else
-						src.holdopen = 1
+						src.holdopen = 0
 
 		else if (href_list["aiEnable"])
 			var/code = text2num(href_list["aiEnable"])
@@ -1012,7 +1010,7 @@ About the new airlock wires panel:
 					if(src.holdopen)
 						usr << text("Door Behavior already set to: Automatically close<br>\n")
 					else
-						src.holdopen = 0
+						src.holdopen = 1
 
 		src.update_icon()
 		src.updateUsrDialog()

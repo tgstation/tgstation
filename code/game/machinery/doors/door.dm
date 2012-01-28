@@ -293,18 +293,17 @@
 		return
 	src.operating = 1
 
-	var/held = 0
+	var/held = 1
 
 	if(src.holdopen)
-		while(held == 0)
+		while(held == 1)
+			held = 0
 			var/list/objects = locate() in get_turf(src)
 			for(var/obj/T in objects)
-				if(T.anchored && T != src)
+				if(T != src)
 					held = 1
-					break
 			for(var/mob/T in objects)
 				held = 1
-				break
 			sleep(10)
 	animate("closing")
 	src.density = 1
