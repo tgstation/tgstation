@@ -79,24 +79,18 @@
 		return
 
 		//if(icon_state == initial(icon_state))
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "HAL9000", "Monochrome", "Blue", "HAL9000 Mark2", "Inverted", "Firewall", "Green")
+	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green")
 	if(icontype == "Clown")
 		icon_state = "ai-clown2"
-	else if(icontype == "HAL9000")
-		icon_state = "ai-hal9000-2"
 	else if(icontype == "Monochrome")
 		icon_state = "ai-mono"
 	else if(icontype == "Blue")
 		icon_state = "ai"
-	else if(icontype == "HAL9000 Mark2")
-		icon_state = "ai-hal9000-3"
 	else if(icontype == "Inverted")
 		icon_state = "ai-u"
 	else if(icontype == "Firewall")
 		icon_state = "ai-magma"
-	else if(icontype == "Funny")
-		icon_state = "ai-yesman"
-	else//(icontype == "Green")
+	else if(icontype == "Green")
 		icon_state = "ai-wierd"
 
 	//else
