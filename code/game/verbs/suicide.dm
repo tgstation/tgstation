@@ -12,7 +12,7 @@
 		return
 
 	if (mind.special_role != "Syndicate")
-		src << "No."
+		src << "No.  Adminhelp if there is a legitimate reason."
 		return
 
 	if (suiciding)
