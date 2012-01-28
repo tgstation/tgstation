@@ -53,6 +53,7 @@ obj/machinery/photocopier/Topic(href, href_list)
 					copied = dd_replacetext(copied, "<font face=\"Comic Sans MS\" color=", "<font face=\"Comic Sans MS\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
 					c.info += copied
 					c.info += "</font>"
+					c.name = copy.name // -- Doohl
 					toner--
 					sleep(15)
 				else

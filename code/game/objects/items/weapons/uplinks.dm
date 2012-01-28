@@ -196,7 +196,7 @@ SYNDICATE UPLINK
 				if("botchat")
 					if (src.uses >= 3)
 						src.uses -= 3
-						new /obj/item/device/radio/headset/traitor(get_turf(src))
+						new /obj/item/device/radio/headset/binary(get_turf(src))
 						feedback_add_details("traitor_uplink_items_bought","BT")
 				if("toolbox")
 					if(uses)

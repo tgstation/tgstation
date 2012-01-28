@@ -313,7 +313,7 @@
 			if ("Chapel") sound = pick('ambicha1.ogg','ambicha2.ogg','ambicha3.ogg','ambicha4.ogg')
 			if ("Morgue") sound = pick('ambimo1.ogg','ambimo2.ogg','title2.ogg')
 			if ("Space") sound = pick('ambispace.ogg','title2.ogg',)
-			if ("Engine Control") sound = pick('ambisin1.ogg','ambisin2.ogg','ambisin3.ogg','ambisin4.ogg')
+			if ("Engine Control", "Engineering", "Engineering SMES") sound = pick('ambisin1.ogg','ambisin2.ogg','ambisin3.ogg','ambisin4.ogg')
 			if ("AI Satellite Teleporter Room") sound = pick('ambimalf.ogg')
 			if ("Bar") sound = pick('null.ogg')
 			if ("AI Upload Foyer") sound = pick('ambimalf.ogg', 'null.ogg')
@@ -324,6 +324,8 @@
 			else
 				sound = pick('ambigen1.ogg','ambigen3.ogg','ambigen4.ogg','ambigen5.ogg','ambigen6.ogg','ambigen7.ogg','ambigen8.ogg','ambigen9.ogg','ambigen10.ogg','ambigen11.ogg','ambigen12.ogg','ambigen14.ogg')
 
+		if(findtext(src.name, "Telecommunications"))
+			sound = pick('ambisin2.ogg', 'signal.ogg', 'signal.ogg', 'ambigen10.ogg')
 
 		if (prob(35))
 			if(A && A:client && !A:client:played)
