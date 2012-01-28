@@ -6046,7 +6046,7 @@
 "cmn" = (/obj/structure/stool/chair{dir = 1},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/specops/centcom)
 "cmo" = (/obj/machinery/door_control{desc = "A remote control switch for the Entrylock."; id = "ERTOUT"; name = "Entrylock Control"; pixel_x = 26},/obj/structure/stool/chair{dir = 1},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/specops/centcom)
 "cmp" = (/turf/space,/turf/simulated/shuttle/wall{dir = 4; icon_state = "diagonalWall3"},/area/shuttle/specops/centcom)
-"cmq" = (/obj/machinery/telecomms/allinone{syndi = 0},/turf/unsimulated/floor{icon_state = "grimy"},/area/centcom/creed)
+"cmq" = (/obj/machinery/telecomms/allinone,/turf/unsimulated/floor{icon_state = "grimy"},/area/centcom/creed)
 "cmr" = (/obj/machinery/vending/snack,/turf/unsimulated/floor{icon_state = "dark"},/area/centcom/control)
 "cms" = (/obj/machinery/vending/coffee,/turf/unsimulated/floor{icon_state = "dark"},/area/centcom/control)
 "cmt" = (/obj/structure/shuttle/engine/propulsion{tag = "icon-burst_r (EAST)"; icon_state = "burst_r"; dir = 4},/turf/space,/area/shuttle/specops/centcom)
