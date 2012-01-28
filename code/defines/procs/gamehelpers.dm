@@ -25,20 +25,36 @@
 			return A
 	return 0
 
-/proc/in_range(source, user)
+/proc/get_random_turf(var/atom/A, var/list/L)
+	while(L.len > 0)
+		var/dir = pick(L)
+		L -= dir
+		var/turf/T = get_step(A,dir)
+		var/possible = 1
+
+		if(T.density == 0)
+			for(var/obj/I in T)
+				if(I.density == 1)
+					possible = 0
+					break
+
+			if(possible)
+				return T
+
+	return
+
+/proc/in_range(source, user, telepathy=1)
 	if(get_dist(source, user) <= 1)
 		return 1
-	/*
-	else//TK TODO: remove this
-		if(istype(user, /mob/living/carbon))
-			if(user:mutations & TK && get_dist(source, user) <= 7)
-				if(user:equipped())	return 0
+	else
+		if (istype(user, /mob/living/carbon))
+			if (user:mutations & telepathy)
 				var/X = source:x
 				var/Y = source:y
 				var/Z = source:z
 				spawn(0)
 					//I really shouldnt put this here but i dont have a better idea
-					var/obj/effect/overlay/O = new /obj/effect/overlay ( locate(X,Y,Z) )
+					var/obj/effect/overlay/O = new /obj/effect/overlay( locate(X,Y,Z) )
 					O.name = "sparkles"
 					O.anchored = 1
 					O.density = 0
@@ -49,7 +65,9 @@
 					flick("empdisable",O)
 					spawn(5)
 						del(O)
-				return 1*/
+
+
+				return 1
 
 	return 0 //not in range and not telekinetic
 

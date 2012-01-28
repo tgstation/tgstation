@@ -23,6 +23,9 @@
 		list/restricted_jobs = list()
 		required_players = 0
 		required_enemies = 0
+		uplink_welcome
+		uplink_items
+		uplink_uses
 
 /datum/game_mode/proc/announce() //to be calles when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"

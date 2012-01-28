@@ -9,6 +9,49 @@
 	required_players = 0
 	required_enemies = 1
 
+	uplink_welcome = "Syndicate Uplink Console:"
+	uplink_items = {"Highly Visible and Dangerous Weapons;
+/obj/item/weapon/gun/projectile:6:Revolver;
+/obj/item/ammo_magazine/a357:2:Ammo-357;
+/obj/item/weapon/gun/energy/crossbow:5:Energy Crossbow;
+/obj/item/weapon/melee/energy/sword:4:Energy Sword;
+/obj/item/weapon/storage/box/syndicate:10:Syndicate Bundle;
+/obj/item/weapon/storage/emp_kit:4:5 EMP Grenades;
+Whitespace:Seperator;
+Stealthy and Inconspicuous Weapons;
+/obj/item/weapon/pen/sleepypen:3:Sleepy Pen;
+/obj/item/weapon/soap/syndie:1:Syndicate Soap;
+/obj/item/weapon/cartridge/syndicate:3:Detomatix PDA Cartridge;
+Whitespace:Seperator;
+Stealth and Camouflage Items;
+/obj/item/clothing/under/chameleon:3:Chameleon Jumpsuit;
+/obj/item/clothing/shoes/syndigaloshes:2:No-Slip Syndicate Shoes;
+/obj/item/weapon/card/id/syndicate:3:Agent ID card;
+/obj/item/clothing/mask/gas/voice:4:Voice Changer;
+/obj/item/clothing/glasses/thermal:4:Thermal Imaging Glasses;
+/obj/item/device/chameleon:4:Chameleon-Projector;
+/obj/item/weapon/stamperaser:1:Stamp Remover;
+Whitespace:Seperator;
+Devices and Tools;
+/obj/item/weapon/card/emag:3:Cryptographic Sequencer;
+/obj/item/device/hacktool:4:Hacktool;
+/obj/item/weapon/storage/toolbox/syndicate:1:Fully Loaded Toolbox;
+/obj/item/weapon/aiModule/syndicate:7:Hacked AI Upload Module;
+/obj/item/device/radio/headset/traitor:3:Headset with Binary Translator;
+/obj/item/weapon/plastique:2:C-4;
+/obj/item/device/powersink:5:Powersink (DANGER!);
+/obj/machinery/singularity_beacon/syndicate:7:Singularity Beacon (DANGER!);
+Whitespace:Seperator;
+Implants;
+/obj/item/weapon/storage/syndie_kit/imp_freedom:3:Freedom Implant;
+/obj/item/weapon/storage/syndie_kit/imp_compress:5:Compressed Matter Implant;
+/obj/item/weapon/storage/syndie_kit/imp_explosive:6:Explosive Implant;
+/obj/item/weapon/storage/syndie_kit/imp_uplink:10:Uplink Implant (Contains 5 Telecrystals);
+Whitespace:Seperator;
+Badassery;
+/obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);"}
+	uplink_uses = 10
+
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
@@ -163,12 +206,12 @@
 		killer << "\red Code Phrase: \black [syndicate_code_phrase]"
 		killer.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
 	else
-		killer << "Unfortunetly, the Syndicate did not provide you with a code phrase."
+		killer << "Unfortunately, the Syndicate did not provide you with a code phrase."
 	if(prob(80))
 		killer << "\red Code Response: \black [syndicate_code_response]"
 		killer.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
 	else
-		killer << "Unfortunetly, the Syndicate did not provide you with a code response."
+		killer << "Unfortunately, the Syndicate did not provide you with a code response."
 	killer << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
 	//End code phrase.
 
@@ -215,7 +258,7 @@
 			traitor_mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
 			traitor_mob.mutations &= ~CLUMSY
 
-	// find a radio! toolbox(es), backpack, belt, headset
+	// find a radio! toolbox(es), backpack, belt, headset, pockets
 	var/loc = ""
 	var/obj/item/device/R = null //Hide the uplink in a PDA if available, otherwise radio
 	if (!R && istype(traitor_mob.belt, /obj/item/device/pda))
@@ -248,11 +291,11 @@
 			R = foo
 			loc = "in the [S.name] on your back"
 			break
-	if (!R && istype(traitor_mob.slot_l_store, /obj/item/device/pda))
-		R = traitor_mob.slot_l_store
+	if (!R && istype(traitor_mob.l_store, /obj/item/device/pda))
+		R = traitor_mob.l_store
 		loc = "in your pocket"
-	if (!R && istype(traitor_mob.slot_r_store, /obj/item/device/pda))
-		R = traitor_mob.slot_r_store
+	if (!R && istype(traitor_mob.r_store, /obj/item/device/pda))
+		R = traitor_mob.r_store
 		loc = "in your pocket"
 	if (!R && traitor_mob.w_uniform && istype(traitor_mob.belt, /obj/item/device/radio))
 		R = traitor_mob.belt
@@ -264,10 +307,10 @@
 		R = traitor_mob.r_ear
 		loc = "on your head"
 	if (!R)
-		traitor_mob << "Unfortunately, the Syndicate wasn't able to get you a radio."
+		traitor_mob << "Unfortunately, the Syndicate wasn't able to get you an uplink."
 		. = 0
 	else
-		if (istype(R, /obj/item/device/radio))
+		if (istype(R, /obj/item/device/radio) || prob(10))
 			// generate list of radio freqs
 			var/freq = 1441
 			var/list/freqlist = list()
@@ -279,10 +322,12 @@
 					freq += 1
 			freq = freqlist[rand(1, freqlist.len)]
 
-			var/obj/item/weapon/syndicate_uplink/T = new /obj/item/weapon/syndicate_uplink(R)
+			var/obj/item/device/uplink/radio/T = new /obj/item/device/uplink/radio(R)
 			R:traitorradio = T
 			R:traitor_frequency = freq
 			T.name = R.name
+			T.icon = R.icon
+			T.w_class = R.w_class
 			T.icon_state = R.icon_state
 			T.origradio = R
 			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features."
@@ -291,7 +336,7 @@
 			// generate a passcode if the uplink is hidden in a PDA
 			var/pda_pass = "[rand(100,999)] [pick("Alpha","Bravo","Delta","Omega")]"
 
-			var/obj/item/weapon/integrated_uplink/T = new /obj/item/weapon/integrated_uplink(R)
+			var/obj/item/device/uplink/pda/T = new /obj/item/device/uplink/pda(R)
 			R:uplink = T
 			T.lock_code = pda_pass
 			T.hostpda = R
@@ -304,11 +349,11 @@
 			traitor_mob << "\red Code Phrase: \black [syndicate_code_phrase]"
 			traitor_mob.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
 		else
-			traitor_mob << "Unfortunetly, the Syndicate did not provide you with a code phrase."
+			traitor_mob << "Unfortunately, the Syndicate did not provide you with a code phrase."
 		if(prob(80))
 			traitor_mob << "\red Code Response: \black [syndicate_code_response]"
 			traitor_mob.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
 		else
-			traitor_mob << "Unfortunetly, the Syndicate did not provide you with a code response."
+			traitor_mob << "Unfortunately, the Syndicate did not provide you with a code response."
 		traitor_mob << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
 	//End code phrase.

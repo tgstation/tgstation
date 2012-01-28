@@ -32,7 +32,7 @@
 	var/cart = "" //A place to stick cartridge menu information
 	var/over_jumpsuit = 1 // If set to 0, it won't display on top of the mob's jumpsuit
 
-	var/obj/item/weapon/integrated_uplink/uplink = null
+	var/obj/item/device/uplink/pda/uplink = null
 
 	var/obj/item/weapon/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
