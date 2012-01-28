@@ -6033,7 +6033,7 @@
 "cma" = (/obj/machinery/computer/card/centcom,/obj/item/weapon/card/id/centcom,/turf/unsimulated/floor{icon_state = "grimy"},/area/centcom/creed)
 "cmb" = (/turf/unsimulated/floor{tag = "icon-warning"; icon_state = "warning"},/area/centcom/control)
 "cmc" = (/obj/machinery/door/airlock/external{name = "Entrylock"},/obj/machinery/door/poddoor{icon_state = "pdoor1"; id = "ERTOUT"; name = "Entrylock"; p_open = 0},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/specops/centcom)
-"cmd" = (/obj/structurodentable{dir = 10},/obj/machinery/door_control{name = "Spec Ops Ready Room"; desc = "A remote control switch to block view of the singularity."; icon_state = "doorctrl0"; pixel_y = 15; req_access_txt = "11"; id = "CREED"},/turf/unsimulated/floor{icon_state = "grimy"},/area/centcom/creed)
+"cmd" = (/obj/structure/table/woodentable{dir = 10},/obj/machinery/door_control{name = "Spec Ops Ready Room"; desc = "A remote control switch to block view of the singularity."; icon_state = "doorctrl0"; pixel_y = 15; req_access_txt = "11"; id = "CREED"},/turf/unsimulated/floor{icon_state = "grimy"},/area/centcom/creed)
 "cme" = (/obj/structure/stool/chair{dir = 1},/turf/unsimulated/floor{icon_state = "grimy"},/area/centcom/creed)
 "cmf" = (/obj/item/device/radio/intercom{broadcasting = 1; dir = 1; frequency = 1441; name = "Spec Ops Intercom"; pixel_y = 28},/turf/unsimulated/floor{icon_state = "grimy"},/area/centcom/creed)
 "cmg" = (/obj/machinery/door/airlock/centcom{name = "General Access"; opacity = 1; req_access_txt = "101"},/turf/unsimulated/floor{icon_state = "floor"},/area/centcom/control)
