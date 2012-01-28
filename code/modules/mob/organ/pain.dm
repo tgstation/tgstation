@@ -34,6 +34,10 @@ mob/proc/pain(var/partname, var/amount, var/force)
 mob/living/carbon/human/proc/handle_pain()
 	// not when sleeping
 	if(stat >= 2) return
+	if(reagents.has_reagent("tramadol"))
+		return
+	if(reagents.has_reagent("oxycodone"))
+		return
 	var/maxdam = 0
 	var/datum/organ/external/damaged_organ = null
 	for(var/name in organs)

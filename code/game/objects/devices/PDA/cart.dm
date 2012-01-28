@@ -34,7 +34,6 @@
 		name = "Power-ON Cartridge"
 		icon_state = "cart-e"
 		access_engine = 1
-		access_reagent_scanner = 1
 
 	medical
 		name = "Med-U Cartridge"

@@ -775,15 +775,6 @@
 						user << "\blue \t [re]"
 				else
 					user << "\blue No active chemical agents found in [A]."
-			else if(istype(A,/obj/machinery/water/pipe))
-				var/datum/water/pipeline/P = A:parent
-				if(P.reagents.reagent_list.len > 0)
-					var/reagents_length = P.reagents.reagent_list.len
-					user << "\blue [reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found at [P.return_pressure()]kPa."
-					for (var/re in P.reagents.reagent_list)
-						user << "\blue \t [re]"
-				else
-					user << "\blue No active chemical agents found in [A]."
 			else
 				user << "\blue No significant chemical agents found in [A]."
 
