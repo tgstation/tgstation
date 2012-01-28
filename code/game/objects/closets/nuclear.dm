@@ -19,6 +19,6 @@
 	new /obj/item/weapon/pinpointer(src)
 	new /obj/item/weapon/pinpointer(src)
 	new /obj/item/device/pda/syndicate(src)
-	var/obj/item/weapon/syndicate_uplink/U = new /obj/item/weapon/syndicate_uplink(src)
+	var/obj/item/device/uplink/radio/U = new /obj/item/device/uplink/radio(src)
 	U.uses = 40
 	return

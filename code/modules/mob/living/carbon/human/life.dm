@@ -253,10 +253,10 @@
 			var/datum/gas_mixture/environment = loc.return_air()
 			var/datum/air_group/breath
 			// HACK NEED CHANGING LATER
-			if(health < config.health_threshold_dead)
+			if(health < (config.health_threshold_dead + 50)) //PEOPLE ARE NOT DYING, DAMMIT
 				losebreath++
 
-			if(losebreath>0) //Suffocating so do not take a breath
+			if(losebreath>0 && prob(90)) //Suffocating so do not take a breath
 				losebreath--
 				if (prob(75)) //High chance of gasping for air
 					spawn emote("gasp")

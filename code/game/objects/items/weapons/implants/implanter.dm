@@ -81,3 +81,38 @@
 		..()
 		update()
 		return
+
+/obj/item/weapon/implanter/compressed
+	name = "implanter-compressed"
+	icon_state = "cimplanter0"
+
+	New()
+		src.imp = new /obj/item/weapon/implant/compressed( src )
+		..()
+		update()
+		return
+
+	update()
+		if (src.imp)
+			var/obj/item/weapon/implant/compressed/c = src.imp
+			if(!c.scanned)
+				src.icon_state = "cimplanter0"
+			else
+				src.icon_state = "cimplanter1"
+		else
+			src.icon_state = "cimplanter2"
+		return
+
+	attack(mob/M as mob, mob/user as mob)
+		var/obj/item/weapon/implant/compressed/c = src.imp
+		if (c.scanned == null)
+			user << "Please scan an object with the implanter first."
+			return
+		..()
+
+	afterattack(atom/A, mob/user as mob)
+		if(istype(A,/obj/item))
+			var/obj/item/weapon/implant/compressed/c = src.imp
+			c.scanned = A
+			A.loc.contents.Remove(A)
+			src.update()

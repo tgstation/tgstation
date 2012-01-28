@@ -244,7 +244,7 @@
 	return
 
 
-//What the fuck is this code
+//What the fuck is this code  Looks to be the parrying code.  If you're grabbing someone, it might hit them instead... or something.--SkyMarshal
 /mob/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (user.intent != "harm")
 		if (istype(src.l_hand,/obj/item/latexballon) && src.l_hand:air_contents && is_sharp(W))
@@ -495,3 +495,9 @@
 		istype(W, /obj/item/weapon/match)            && W:lit     || \
 		istype(W, /obj/item/clothing/mask/cigarette) && W:lit	\
 	)
+
+/obj/item/weapon/paper/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(exposed_temperature >= 373.15)
+		for(var/mob/M in viewers(5, src))
+			M << "\red \the [src] burns up."
+		del(src)

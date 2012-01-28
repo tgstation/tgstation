@@ -5623,7 +5623,7 @@
 "ceg" = (/obj/structure/table,/obj/machinery/light/lamp{pixel_x = 4; pixel_y = 1},/turf/unsimulated/floor{icon = 'shuttle.dmi'; icon_state = "floor4"},/area/syndicate_station/start)
 "ceh" = (/obj/machinery/computer/syndicate_station,/turf/unsimulated/floor{icon = 'shuttle.dmi'; icon_state = "floor4"},/area/syndicate_station/start)
 "cei" = (/obj/structure/table,/obj/item/weapon/pen/sleepypen,/obj/item/weapon/paper,/turf/unsimulated/floor{icon = 'shuttle.dmi'; icon_state = "floor4"},/area/syndicate_station/start)
-"cej" = (/obj/machinery/telecomms/allinone{intercept = 1},/turf/unsimulated/floor{icon = 'shuttle.dmi'; icon_state = "floor4"},/area/syndicate_station/start)
+"cej" = (/obj/machinery/telecomms/allinone{intercept = 1; nuke = 1},/turf/unsimulated/floor{icon = 'shuttle.dmi'; icon_state = "floor4"},/area/syndicate_station/start)
 "cek" = (/obj/machinery/vending/cigarette,/turf/unsimulated/floor{icon = 'shuttle.dmi'; icon_state = "floor4"},/area/syndicate_station/start)
 "cel" = (/obj/structure/table,/obj/item/weapon/storage/donkpocket_kit{pixel_x = 3; pixel_y = 3},/turf/unsimulated/floor{icon = 'shuttle.dmi'; icon_state = "floor4"},/area/syndicate_station/start)
 "cem" = (/obj/structure/stool{pixel_y = 8},/turf/unsimulated/floor{icon = 'shuttle.dmi'; icon_state = "floor4"},/area/syndicate_station/start)

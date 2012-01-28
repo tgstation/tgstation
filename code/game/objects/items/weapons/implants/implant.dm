@@ -38,12 +38,12 @@
 	desc = "Summon things."
 	var
 		activation_emote = "chuckle"
-		obj/item/weapon/syndicate_uplink/uplink = null
+		obj/item/device/uplink/radio/uplink = null
 
 
 	New()
 		activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
-		uplink = new /obj/item/weapon/syndicate_uplink/implanted(src)
+		uplink = new /obj/item/device/uplink/radio/implanted(src)
 		..()
 		return
 
@@ -291,3 +291,37 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	implanted(mob/source as mob)
 		mobname = source.real_name
 		processing_objects.Add(src)
+
+/obj/item/weapon/implant/compressed
+	name = "compressed matter implant"
+	desc = "*fwooomp*"
+	var/activation_emote = "sigh"
+	var/obj/item/scanned = null
+
+	get_data()
+		var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> NanoTrasen \"Profit Margin\" Class Employee Lifesign Sensor<BR>
+<b>Life:</b> Activates upon death.<BR>
+<b>Important Notes:</b> Alerts crew to crewmember death.<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains a compact radio signaler that triggers when the host's lifesigns cease.<BR>
+<b>Special Features:</b> Alerts crew to crewmember death.<BR>
+<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+		return dat
+
+	trigger(emote, mob/source as mob)
+		if (src.scanned == null)
+			return 0
+
+		if (emote == src.activation_emote)
+			source << "The air glows as \the [src.scanned.name] uncompresses."
+			var/turf/t = get_turf(source)
+			src.scanned.loc = t
+			del src
+
+	implanted(mob/source as mob)
+		src.activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
+		source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
+		source << "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."

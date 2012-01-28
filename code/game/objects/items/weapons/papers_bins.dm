@@ -21,10 +21,44 @@ CLIPBOARDS
 			src.overlays += "paper_words"
 		return
 
+/obj/item/weapon/paper/process()
+	if(iteration < 5)
+		var/turf/location = src.loc
+		if(istype(location, /mob/))
+			var/mob/M = location
+			if(M.l_hand == src || M.r_hand == src)
+				location = get_turf(M)
+		if (istype(location, /turf))
+			location.hotspot_expose(700, 5)
+		iteration++
+	else
+		for(var/mob/M in viewers(5, get_turf(src)))
+			M << "\red \the [src] burns up."
+		if(istype(src.loc,/mob))
+			var/mob/M = src.loc
+			M.total_luminosity -= 8
+		else
+			src.sd_SetLuminosity(0)
+		processing_objects.Remove(src)
+		del(src)
+
 /obj/item/weapon/paper/update_icon() //derp.
 	if(src.info)
 		src.overlays += "paper_words"
+	if(src.burning)
+		src.overlays += "paper_fire"
 	return
+
+
+/obj/item/weapon/paper/pickup(mob/user)
+	if(burning)
+		src.sd_SetLuminosity(0)
+		user.total_luminosity += 8
+
+/obj/item/weapon/paper/dropped(mob/user)
+	if(burning)
+		user.total_luminosity -= 8
+		src.sd_SetLuminosity(8)
 
 /obj/item/weapon/paper/examine()
 	set src in view()
@@ -125,6 +159,14 @@ CLIPBOARDS
 
 		src.info = t
 	else
+		if(is_burn(P))
+			for(var/mob/M in viewers(5, get_turf(src)))
+				M << "\red [user] sets \the [src] on fire."
+			user.total_luminosity += 8
+			burning = 1
+			processing_objects.Add(src)
+			update_icon()
+			return
 		if(istype(P, /obj/item/weapon/stamp))
 			if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/weapon/clipboard) ) && src.loc.loc != user && user.equipped() != P))
 				return

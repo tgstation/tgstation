@@ -54,7 +54,6 @@
 
 	var/mutantrace = null
 
-	var/list/organs = list()
 	var/bloodloss = 0
 	var/debug_leftarm
 	var/debug_lefthand

@@ -1,5 +1,5 @@
 var/global/datum/controller/gameticker/ticker
-
+var/datum/roundinfo/roundinfo = new()
 #define GAME_STATE_PREGAME		1
 #define GAME_STATE_SETTING_UP	2
 #define GAME_STATE_PLAYING		3

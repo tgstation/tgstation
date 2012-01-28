@@ -230,15 +230,17 @@ proc/trigger_armed_response_team()
 	equip_if_possible(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
 
 	var/obj/item/weapon/card/id/W = new(src)
-	W.name = "[real_name]'s ID Card"
+	W.name = "[real_name]'s ID Card (Emergency Response Team)"
 	W.icon_state = "centcom"
 	if(leader_selected)
+		W.name = "[real_name]'s ID Card (Emergency Response Team Leader)"
 		W.access = get_access("Captain")
 		W.access += list(access_cent_teleporter)
+		W.assignment = "Emergency Response Team Leader"
 	else
 		W.access = get_access("Head of Personnel")
+		W.assignment = "Emergency Response Team"
 	W.access += list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)//Let's add their alloted CentCom access.
-	W.assignment = "Emergency Response Team"
 	W.registered = real_name
 	equip_if_possible(W, slot_wear_id)
 

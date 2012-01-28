@@ -846,6 +846,7 @@
 	var/gas_transfer_coefficient = 1
 	var/permeability_coefficient = 0.99
 	var/siemens_coefficient = 0.80
+	var/iteration
 
 /obj/item/weapon/directions
 	name = "Crumpled Paper"
@@ -988,25 +989,6 @@
 	throwforce = 15.0
 	item_state = "shard-glass"
 	g_amt = 3750
-
-/obj/item/weapon/syndicate_uplink
-	name = "station bounced radio"
-	desc = "Remain silent about this..."
-	icon = 'radio.dmi'
-	icon_state = "radio"
-	var/temp = null
-	var/uses = 10.0
-	var/selfdestruct = 0.0
-	var/traitor_frequency = 0.0
-	var/mob/currentUser = null
-	var/obj/item/device/radio/origradio = null
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
-	w_class = 2.0
-	item_state = "radio"
-	throw_speed = 4
-	throw_range = 20
-	m_amt = 100
-	origin_tech = "magnets=2;syndicate=3"
 
 /obj/item/weapon/SWF_uplink
 	name = "station bounced radio"

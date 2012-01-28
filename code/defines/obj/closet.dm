@@ -557,6 +557,12 @@
 	icon_state = "white"
 	icon_closed = "white"
 
+/obj/structure/closet/wardrobe/medic_white
+	name = "Doctor's Wardrobe"
+	desc = "Contains medical jumpsuits."
+	icon_state = "white"
+	icon_closed = "white"
+
 /obj/structure/closet/wardrobe/yellow
 	name = "Yellow Wardrobe"
 	desc = "Contains yellow jumpsuits."
@@ -566,6 +572,12 @@
 /obj/structure/closet/wardrobe/engineering_yellow
 	name = "Engineering Wardrobe"
 	desc = "Contains engineering jumpsuits."
+	icon_state = "yellow"
+	icon_closed = "yellow"
+
+/obj/structure/closet/wardrobe/robotics_yellow
+	name = "Robotics Wardrobe"
+	desc = "Contains robotics jumpsuits."
 	icon_state = "yellow"
 	icon_closed = "yellow"
 
@@ -580,6 +592,48 @@
 	desc = "Contains grey jumpsuits."
 	icon_state = "grey"
 	icon_closed = "grey"
+
+/obj/structure/closet/wardrobe/bartender_black
+	name = "Bartender Wardrobe"
+	desc = "Closet of basic bartending clothes."
+	icon_state = "black"
+	icon_closed = "black"
+
+/obj/structure/closet/wardrobe/chef_white
+	name = "Chef's Wardrobe"
+	desc = "Contains chef jumpsuits."
+	icon_state = "white"
+	icon_closed = "white"
+
+/obj/structure/closet/wardrobe/hydro_green
+	name = "Hydroponics Wardrobe"
+	desc = "Contains botanist jumpsuits."
+	icon_state = "green"
+	icon_closed = "green"
+
+/obj/structure/closet/wardrobe/librarian_red
+	name = "Librarian Wardrobe"
+	desc = "Contains librarian jumpsuits."
+	icon_state = "red"
+	icon_closed = "red"
+
+/obj/structure/closet/wardrobe/cargo_yellow
+	name = "Cargo Tech Wardrobe"
+	desc = "Contains cargo tech jumpsuits."
+	icon_state = "yellow"
+	icon_closed = "yellow"
+
+/obj/structure/closet/wardrobe/qm_yellow
+	name = "Quartermaster Wardrobe"
+	desc = "Contains quartermaster jumpsuits."
+	icon_state = "yellow"
+	icon_closed = "yellow"
+
+/obj/structure/closet/wardrobe/virology_white
+	name = "Virology Wardrobe"
+	desc = "Contains virologist jumpsuits."
+	icon_state = "white"
+	icon_closed = "white"
 
 
 
