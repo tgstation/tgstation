@@ -41,7 +41,7 @@
 	for (var/flag=1, flag<4096, flag+=flag)
 		var/valid = 0
 		while (!valid)
-			var/colorIndex = rand(1, 11)
+			var/colorIndex = rand(1, 12)
 			if (wires[colorIndex] == 0)
 				valid = 1
 				wires[colorIndex] = flag
@@ -563,9 +563,9 @@ About the new airlock wires panel:
 	if(src.isWireCut(AIRLOCK_WIRE_HOLDOPEN))
 		t1 += "Behavior Control light wire is cut.<br>\n"
 	else if(!src.holdopen)
-		t1 += text("Door behavior is set to: Automatically close <A href='?src=\ref[src];aiEnable=10'>Toggle?</a><br>\n")
+		t1 += text("Door behavior is set to: Automatically close <A href='?src=\ref[src];aiDisable=10'>Toggle?</a><br>\n")
 	else
-		t1 += text("Door behavior is set to: Wait for clearance to close <A href='?src=\ref[src];aiDisable=10'>Toggle?</a><br>\n")
+		t1 += text("Door behavior is set to: Wait for clearance to close <A href='?src=\ref[src];aiEnable=10'>Toggle?</a><br>\n")
 
 	if (src.welded)
 		t1 += text("Door appears to have been welded shut.<br>\n")
@@ -593,6 +593,7 @@ About the new airlock wires panel:
 		return
 
 	//Separate interface for the hacker.
+	user.machine = src
 	var/t1 = text("<B>Airlock Control</B><br>\n")
 	if (src.secondsMainPowerLost > 0)
 		if ((!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER1)) && (!src.isWireCut(AIRLOCK_WIRE_MAIN_POWER2)))
@@ -670,9 +671,9 @@ About the new airlock wires panel:
 	if(src.isWireCut(AIRLOCK_WIRE_HOLDOPEN))
 		t1 += "Behavior Control light wire is cut.<br>\n"
 	else if(!src.holdopen)
-		t1 += text("Door behavior is set to: Automatically close <A href='?src=\ref[src];aiEnable=10'>Toggle?</a><br>\n")
+		t1 += text("Door behavior is set to: Automatically close <A href='?src=\ref[src];aiDisable=10'>Toggle?</a><br>\n")
 	else
-		t1 += text("Door behavior is set to: Wait for clearance to close <A href='?src=\ref[src];aiDisable=10'>Toggle?</a><br>\n")
+		t1 += text("Door behavior is set to: Wait for clearance to close <A href='?src=\ref[src];aiEnable=10'>Toggle?</a><br>\n")
 
 	if (src.welded)
 		t1 += text("Door appears to have been welded shut.<br>\n")
@@ -1015,6 +1016,8 @@ About the new airlock wires panel:
 
 		src.update_icon()
 		src.updateUsrDialog()
+		if((istype(usr.equipped(), /obj/item/device/hacktool)))
+			attack_hack(usr, usr.equipped())
 
 	return
 
@@ -1251,18 +1254,16 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/close()
 	if (src.welded || src.locked || (!src.arePowerSystemsOn()) || (stat & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 		return
+	..()
 	use_power(50)
 	playsound(src.loc, 'airlock.ogg', 30, 1)
 	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 	if(killthis)
 		killthis.ex_act(2)//Smashin windows
-	..()
 	return
 
 /obj/machinery/door/airlock/New()
 	..()
-	if(src.holdopen)
-		wires -= 2^11
 	if (src.closeOtherId != null)
 		spawn (5)
 			for (var/obj/machinery/door/airlock/A in machines)

@@ -45,7 +45,6 @@
 
 /obj/structure/closet/wardrobe/chaplain_black/New()
 	//new /obj/item/clothing/suit/imperium_monk(src) //No. -- Urist
-	new /obj/item/wardrobe/chaplain(src)
 	new /obj/item/clothing/suit/nun(src)
 	new /obj/item/clothing/suit/storage/chaplain_hoodie(src)
 	new /obj/item/clothing/head/chaplain_hood(src)
@@ -55,6 +54,7 @@
 	new /obj/item/weapon/storage/backpack/cultpack (src)
 	new /obj/item/weapon/candlepack(src)
 	new /obj/item/weapon/candlepack(src)
+	new /obj/item/wardrobe/chaplain(src)
 	return
 
 /obj/structure/closet/wardrobe/green/New()
@@ -177,10 +177,10 @@
 	return
 
 /obj/structure/closet/wardrobe/chef_white/New()
-	new /obj/item/wardrobe/chef(src)
-	new /obj/item/wardrobe/chef(src)
-	new /obj/item/wardrobe/chef(src)
 	new /obj/item/weapon/storage/lglo_kit(src)
+	new /obj/item/wardrobe/chef(src)
+	new /obj/item/wardrobe/chef(src)
+	new /obj/item/wardrobe/chef(src)
 	return
 
 /obj/structure/closet/wardrobe/hydro_green/New()

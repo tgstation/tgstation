@@ -6,10 +6,10 @@
 	New()
 		..()
 		sleep(2)
-		new /obj/item/wardrobe/captain(src)
-		new /obj/item/wardrobe/captain(src)
 		new /obj/item/clothing/suit/armor/captain(src)
 		new /obj/item/clothing/head/helmet/cap(src)
+		new /obj/item/wardrobe/captain(src)
+		new /obj/item/wardrobe/captain(src)
 		return
 
 
@@ -36,13 +36,13 @@
 	New()
 		..()
 		sleep(2)
-		new /obj/item/wardrobe/hos(src)
-		new /obj/item/wardrobe/hos(src)
 		new /obj/item/weapon/storage/lockbox/loyalty(src)
 		new /obj/item/weapon/storage/flashbang_kit(src)
 		new /obj/item/clothing/under/jensen(src)
 		new /obj/item/clothing/suit/armor/hos/jensen(src)
 		new /obj/item/clothing/head/helmet/HoS/dermal(src)
+		new /obj/item/wardrobe/hos(src)
+		new /obj/item/wardrobe/hos(src)
 		return
 
 
@@ -55,11 +55,11 @@
 	New()
 		..()
 		sleep(2)
-		new /obj/item/wardrobe/warden(src)
-		new /obj/item/wardrobe/warden(src)
-		new /obj/item/wardrobe/warden(src)
-		new /obj/item/wardrobe/warden(src)
 		new /obj/item/weapon/storage/flashbang_kit(src)
+		new /obj/item/wardrobe/warden(src)
+		new /obj/item/wardrobe/warden(src)
+		new /obj/item/wardrobe/warden(src)
+		new /obj/item/wardrobe/warden(src)
 		return
 
 
@@ -96,12 +96,12 @@
 	New()
 		..()
 		sleep(2)
-		new /obj/item/wardrobe/detective(src)
-		new /obj/item/wardrobe/detective(src)
-		new /obj/item/wardrobe/detective(src)
 		new /obj/item/weapon/reagent_containers/food/drinks/dflask(src)
 		new /obj/item/weapon/zippo(src)
 		new /obj/item/weapon/pepperspray/small(src)
+		new /obj/item/wardrobe/detective(src)
+		new /obj/item/wardrobe/detective(src)
+		new /obj/item/wardrobe/detective(src)
 		return
 
 

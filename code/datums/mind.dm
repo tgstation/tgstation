@@ -245,7 +245,7 @@ datum/mind
 			istype(current,/mob/living/carbon/human)      )
 
 			text = "Uplink: <a href='?src=\ref[src];common=uplink'>give</a>"
-			var/obj/item/weapon/syndicate_uplink/suplink = find_syndicate_uplink()
+			var/obj/item/device/uplink/radio/suplink = find_syndicate_uplink()
 			var/obj/item/device/uplink/iuplink = find_integrated_uplink()
 			var/crystals
 			if (suplink)
@@ -798,7 +798,7 @@ datum/mind
 					memory = null//Remove any memory they may have had.
 				if("crystals")
 					if (usr.client.holder.level >= 3)
-						var/obj/item/weapon/syndicate_uplink/suplink = find_syndicate_uplink()
+						var/obj/item/device/uplink/radio/suplink = find_syndicate_uplink()
 						var/obj/item/device/uplink/iuplink = find_integrated_uplink()
 						var/crystals
 						if (suplink)
@@ -837,7 +837,7 @@ datum/mind
 				if (t:traitorradio) del(t:traitorradio)
 				t:traitorradio = null
 				t:traitor_frequency = 0.0
-			else if (istype(t, /obj/item/weapon/SWF_uplink) || istype(t, /obj/item/weapon/syndicate_uplink))
+			else if (istype(t, /obj/item/weapon/SWF_uplink) || istype(t, /obj/item/device/uplink/radio))
 				if (t:origradio)
 					var/obj/item/device/radio/R = t:origradio
 					R.loc = current.loc
@@ -856,7 +856,7 @@ datum/mind
 */
 
 	proc/find_syndicate_uplink()
-		var/obj/item/weapon/syndicate_uplink/uplink = null
+		var/obj/item/device/uplink/radio/uplink = null
 		var/list/L = current.get_contents()
 		for (var/obj/item/device/radio/radio in L)
 			uplink = radio.traitorradio

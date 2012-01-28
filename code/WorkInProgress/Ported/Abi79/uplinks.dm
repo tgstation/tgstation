@@ -77,9 +77,9 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			if(text2num(href_list["cost"]) > uses) // Not enough crystals for the item
 				return 0
 
-			if(usr:mind && ticker.mode.traitors[usr:mind])
-				var/datum/traitorinfo/info = ticker.mode.traitors[usr:mind]
-				info.spawnlist += href_list["buy_item"]
+			//if(usr:mind && ticker.mode.traitors[usr:mind])
+				//var/datum/traitorinfo/info = ticker.mode.traitors[usr:mind]
+				//info.spawnlist += href_list["buy_item"]
 
 			uses -= text2num(href_list["cost"])
 
@@ -187,7 +187,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 /obj/item/device/uplink/radio
 	name = "ship bounced radio"
-	icon = 'device.dmi'
+	icon = 'radio.dmi'
 	icon_state = "radio"
 	var/temp = null 			//Temporary storage area for a message offering the option to destroy the radio
 	var/selfdestruct = 0		//Set to 1 while the radio is self destructing itself.
@@ -242,10 +242,10 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 							item:loc = A
 							A.r_hand = item
 							item:layer = 20
-					else if(!A.l_hand)
-						item:loc = A
-						A.l_hand = item
-						item:layer = 20
+						else if(!A.l_hand)
+							item:loc = A
+							A.l_hand = item
+							item:layer = 20
 	/*				if(istype(item, /obj/spawner)) // Spawners need to have del called on them to avoid leaving a marker behind
 						del item*/
 	//				usr.client.onBought("[item:name]")	When we have the stats again, uncomment.
@@ -317,7 +317,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 				M.machine = null
 
 		var/obj/item/device/radio/T = src.origradio
-		var/obj/item/weapon/syndicate_uplink/R = src
+		var/obj/item/device/uplink/radio/R = src
 		var/mob/L = src.loc
 		R.loc = T
 		T.loc = L

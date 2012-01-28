@@ -4,8 +4,8 @@
 /obj/structure/closet/secure_closet/personal/New()
 	..()
 	spawn(2)
-		new /obj/item/wardrobe/assistant(src)
 		new /obj/item/device/assembly/signaler(src)
+		new /obj/item/wardrobe/assistant(src)
 	return
 
 /obj/structure/closet/secure_closet/personal/patient/New()
