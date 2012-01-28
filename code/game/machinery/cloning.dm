@@ -311,9 +311,9 @@
 	if (subject.brain_op_stage == 4.0)
 		src.temp = "Error: No signs of intelligence detected."
 		return
-	if (subject.suiciding == 1)
-		src.temp = "Error: Subject's brain is not responding to scanning stimuli."
-		return
+//	if (subject.suiciding == 1)
+//		src.temp = "Error: Subject's brain is not responding to scanning stimuli."
+//		return
 	if ((!subject.ckey) || (!subject.client))
 		src.temp = "Error: Mental interface failure."
 		return
