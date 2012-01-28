@@ -11,8 +11,9 @@
 		src << "You can't commit suicide before the game starts!"
 		return
 
-	if (!src.mind.special_role == "Syndicate")
+	if (mind.special_role != "Syndicate")
 		src << "No."
+		return
 
 	if (suiciding)
 		src << "You're already committing suicide! Be patient!"

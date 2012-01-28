@@ -3,6 +3,7 @@
 	var/unique_enzymes = null
 	var/struc_enzymes = null
 	var/uni_identity = null
+	var/original_name = "Unknown"
 
 /datum/dna/proc/check_integrity()
 	//Lazy.
@@ -66,6 +67,7 @@
 	struc_enzymes = mutstring
 
 	unique_enzymes = md5(character.real_name)
+	original_name = character.real_name
 	reg_dna[unique_enzymes] = character.real_name
 
 /////////////////////////// DNA DATUM
@@ -687,6 +689,7 @@
 		src.updateUsrDialog()
 
 /obj/machinery/scan_consolenew/process() //not really used right now
+	processing_objects.Remove(src) //Lets not have it waste CPU
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!( src.status )) //remove this
@@ -1029,7 +1032,10 @@
 			if (!istype(src.connected.occupant,/mob/living/carbon/human))
 				src.buffer1owner = src.connected.occupant.name
 			else
-				src.buffer1owner = src.connected.occupant.real_name
+				if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
+					src.buffer1owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+				else
+					src.buffer1owner = src.connected.occupant.real_name
 			src.buffer1label = "Unique Identifier"
 			src.buffer1type = "ui"
 			dopage(src,"buffermenu")
@@ -1038,7 +1044,10 @@
 			if (!istype(src.connected.occupant,/mob/living/carbon/human))
 				src.buffer1owner = src.connected.occupant.name
 			else
-				src.buffer1owner = src.connected.occupant.real_name
+				if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
+					src.buffer1owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+				else
+					src.buffer1owner = src.connected.occupant.real_name
 			src.buffer1label = "Unique Identifier & Unique Enzymes"
 			src.buffer1type = "ui"
 			src.buffer1iue = 1
@@ -1048,7 +1057,10 @@
 			if (!istype(src.connected.occupant,/mob/living/carbon/human))
 				src.buffer2owner = src.connected.occupant.name
 			else
-				src.buffer2owner = src.connected.occupant.real_name
+				if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
+					src.buffer2owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+				else
+					src.buffer2owner = src.connected.occupant.real_name
 			src.buffer2label = "Unique Identifier & Unique Enzymes"
 			src.buffer2type = "ui"
 			src.buffer2iue = 1
@@ -1058,7 +1070,10 @@
 			if (!istype(src.connected.occupant,/mob/living/carbon/human))
 				src.buffer3owner = src.connected.occupant.name
 			else
-				src.buffer3owner = src.connected.occupant.real_name
+				if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
+					src.buffer3owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+				else
+					src.buffer3owner = src.connected.occupant.real_name
 			src.buffer3label = "Unique Identifier & Unique Enzymes"
 			src.buffer3type = "ui"
 			src.buffer3iue = 1
@@ -1069,7 +1084,10 @@
 			if (!istype(src.connected.occupant,/mob/living/carbon/human))
 				src.buffer2owner = src.connected.occupant.name
 			else
-				src.buffer2owner = src.connected.occupant.real_name
+				if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
+					src.buffer2owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+				else
+					src.buffer2owner = src.connected.occupant.real_name
 			src.buffer2label = "Unique Identifier"
 			src.buffer2type = "ui"
 			dopage(src,"buffermenu")
@@ -1079,7 +1097,10 @@
 			if (!istype(src.connected.occupant,/mob/living/carbon/human))
 				src.buffer3owner = src.connected.occupant.name
 			else
-				src.buffer3owner = src.connected.occupant.real_name
+				if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
+					src.buffer3owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+				else
+					src.buffer3owner = src.connected.occupant.real_name
 			src.buffer3label = "Unique Identifier"
 			src.buffer3type = "ui"
 			dopage(src,"buffermenu")
@@ -1089,7 +1110,10 @@
 			if (!istype(src.connected.occupant,/mob/living/carbon/human))
 				src.buffer1owner = src.connected.occupant.name
 			else
-				src.buffer1owner = src.connected.occupant.real_name
+				if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
+					src.buffer1owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+				else
+					src.buffer1owner = src.connected.occupant.real_name
 			src.buffer1label = "Structural Enzymes"
 			src.buffer1type = "se"
 			dopage(src,"buffermenu")
@@ -1099,7 +1123,10 @@
 			if (!istype(src.connected.occupant,/mob/living/carbon/human))
 				src.buffer2owner = src.connected.occupant.name
 			else
-				src.buffer2owner = src.connected.occupant.real_name
+				if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
+					src.buffer2owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+				else
+					src.buffer2owner = src.connected.occupant.real_name
 			src.buffer2label = "Structural Enzymes"
 			src.buffer2type = "se"
 			dopage(src,"buffermenu")
@@ -1109,7 +1136,10 @@
 			if (!istype(src.connected.occupant,/mob/living/carbon/human))
 				src.buffer3owner = src.connected.occupant.name
 			else
-				src.buffer3owner = src.connected.occupant.real_name
+				if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
+					src.buffer3owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+				else
+					src.buffer3owner = src.connected.occupant.real_name
 			src.buffer3label = "Structural Enzymes"
 			src.buffer3type = "se"
 			dopage(src,"buffermenu")
@@ -1147,6 +1177,7 @@
 				if (src.buffer1iue)
 					src.connected.occupant.real_name = src.buffer1owner
 					src.connected.occupant.name = src.buffer1owner
+					src.connected.occupant.dna.original_name = src.buffer1owner
 				src.connected.occupant.dna.uni_identity = src.buffer1
 				updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
 			else if (src.buffer1type == "se")
@@ -1162,6 +1193,7 @@
 				if (src.buffer2iue)
 					src.connected.occupant.real_name = src.buffer2owner
 					src.connected.occupant.name = src.buffer2owner
+					src.connected.occupant.dna.original_name = src.buffer2owner
 				src.connected.occupant.dna.uni_identity = src.buffer2
 				updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
 			else if (src.buffer2type == "se")
@@ -1177,6 +1209,7 @@
 				if (src.buffer3iue)
 					src.connected.occupant.real_name = src.buffer3owner
 					src.connected.occupant.name = src.buffer3owner
+					src.connected.occupant.dna.original_name = src.buffer3owner
 				src.connected.occupant.dna.uni_identity = src.buffer3
 				updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
 			else if (src.buffer3type == "se")

@@ -3,6 +3,7 @@
 		list/obj/machinery/light/Lights = list( )
 		list/obj/machinery/light/APCs = list( )
 		list/obj/machinery/light/Doors = list( )
+		list/obj/machinery/light/Comms = list( )
 
 	Announce()
 		command_alert("The station is flying through an electrical storm.  Radio communications may be disrupted", "Anomaly Alert")
@@ -19,6 +20,11 @@
 			if(Door.z == 1)
 				Doors += Door
 
+		for(var/obj/machinery/telecomms/processor/T in world)
+			if(prob(90) && !(T.stat & (BROKEN|NOPOWER)))
+				T.stat |= BROKEN
+				Comms |= T
+
 	Tick()
 		for(var/x = 0; x < 3; x++)
 			if (prob(30))
@@ -31,6 +37,9 @@
 
 	Die()
 		command_alert("The station has cleared the electrical storm.  Radio communications restored", "Anomaly Alert")
+		for(var/obj/machinery/telecomms/processor/T in Comms)
+			T.stat &= ~BROKEN
+		Comms = list()
 
 	proc
 		BlowLight() //Blow out a light fixture

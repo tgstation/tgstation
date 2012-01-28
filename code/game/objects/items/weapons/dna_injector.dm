@@ -31,6 +31,7 @@
 					updateappearance(M, M.dna.uni_identity)
 					M.real_name = ue
 					M.name = ue
+					M.dna.original_name = ue
 					uses--
 				else //unique enzymes? no
 					M.dna.uni_identity = dna
