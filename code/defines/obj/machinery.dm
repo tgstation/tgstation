@@ -373,16 +373,19 @@
 	var/lastgen = 0
 	var/lastgenlev = -1
 
+
 /obj/machinery/power/monitor
-	name = "Power Monitoring Computer"
-	desc = "Used to monitor the power."
-	icon = 'computer.dmi'
-	icon_state = "power"
-	density = 1
-	anchored = 1
-	use_power = 2
-	idle_power_usage = 20
-	active_power_usage = 80
+        name = "Power Monitoring Computer"
+        desc = "Used to monitor the power, and remotely toggle main breakers."
+        icon = 'computer.dmi'
+        icon_state = "power"
+        density = 1
+        anchored = 1
+        use_power = 2
+        idle_power_usage = 20
+        active_power_usage = 80
+        var/control = 0
+        req_access = list(access_engine_equip)
 
 /obj/machinery/cell_charger
 	name = "cell charger"
