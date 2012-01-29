@@ -36,13 +36,14 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 		// 2 = create feed channel
 		// 3 = create feed story
 		// 4 = feed story submited sucessfully
-		// 5 = feed channel created succesfully
+		// 5 = feed channel created successfully
 		// 6 = ERROR: Cannot create feed story
 		// 7 = ERROR: Cannot create feed channel
 		// 8 = print newspaper
 		// 9 = viewing channel feeds
 		// 10 = censor feed story
 		// 11 = censor feed channel
+		//Holy shit this is outdated, made this when I was still starting newscasters :3
 	var/paper_remaining = 0
 	var/securityCaster = 0
 	var/unit_no = 0 //Each newscaster has a unit_no
@@ -68,7 +69,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 
 /obj/machinery/newscaster/New()         //Right, apparently it's good to have a New() for machinery for some sort of global machine list...
 	allCasters += src
-	src.paper_remaining = 20            // Will probably change this to something better
+	src.paper_remaining = 15            // Will probably change this to something better
 	for(var/obj/machinery/newscaster/NEWSCASTER in allCasters) // Let's give it an appropriate unit number
 		src.unit_no++
 	src.update_icon() //for any custom ones on the map...
@@ -191,10 +192,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 				dat+="<B><A href='?src=\ref[src];set_new_message=1'>Message Body</A>:</B> [src.msg] <BR>"
 				dat+="<BR><A href='?src=\ref[src];submit_new_message=1'>Submit</A><BR><BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A><BR>"
 			if(4)
-				dat+="Feed story succesfully submitted to [src.channel_name].<BR><BR>"
+				dat+="Feed story successfully submitted to [src.channel_name].<BR><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
 			if(5)
-				dat+="Feed Channel [src.channel_name] created succesfully.<BR><BR>"
+				dat+="Feed Channel [src.channel_name] created successfully.<BR><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
 			if(6)
 				dat+="<B><FONT COLOR='maroon'>ERROR: Could not submit Feed story to Network.</B></FONT><HR><BR>"
@@ -253,7 +254,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Back</A>"
 			if(10)
 				dat+="<B>Nanotrasen Feed Censorship Tool</B><BR>"
-				dat+="<FONT SIZE=1>NOTE: Due to the nature of news Feeds, total deletation of a Feed Story is not possible.<BR>"
+				dat+="<FONT SIZE=1>NOTE: Due to the nature of news Feeds, total deletion of a Feed Story is not possible.<BR>"
 				dat+="Keep in mind that users attempting to view a censored feed will instead see the \[REDACTED\] tag above it.</FONT>"
 				dat+="<HR>Select Feed channel to get Stories from:<BR>"
 				if(isemptylist(src.channel_list))
@@ -264,7 +265,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Cancel</A>"
 			if(11)
 				dat+="<B>Nanotrasen D-Notice Handler</B><HR>"
-				dat+="<FONT SIZE=1>A D-Noticed is to be bestowed upon the channel if the handling Authority deemsi it as harmful for the station's"
+				dat+="<FONT SIZE=1>A D-Notice is to be bestowed upon the channel if the handling Authority deems it as harmful for the station's"
 				dat+="morale, integrity or disciplinary behaviour. A D-Notice will render a channel unable to be updated by anyone, without deleting any feed"
 				dat+="stories it might contain at the time. You can lift a D-Notice if you have the required access at any time.</FONT><HR>"
 				if(isemptylist(src.channel_list))
@@ -332,7 +333,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 					dat+="<FONT COLOR='maroon'>•Invalid description.</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
 			if(17)
-				dat+="<B>Wanted Issue succesfully deleted from Circulation</B><BR>"
+				dat+="<B>Wanted Issue successfully deleted from Circulation</B><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
 			if(18)
 				dat+="<B><FONT COLOR ='maroon'>-- STATIONWIDE WANTED ISSUE --</B></FONT><BR><FONT SIZE=2>\[Submitted by: <FONT COLOR='green'>[src.wanted.backup_author]</FONT>\]</FONT><HR>"
@@ -340,13 +341,13 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 				dat+="<B>Description</B>: [src.wanted.body]<BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Back</A><BR>"
 			if(19)
-				dat+="<FONT COLOR='green'>Wanted issue for [src.channel_name] succesfully edited.</FONT><BR><BR>"
+				dat+="<FONT COLOR='green'>Wanted issue for [src.channel_name] successfully edited.</FONT><BR><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Return</A><BR>"
 			if(20)
-				dat+="<FONT COLOR='green'>Printing succesfull. Please receive your newspaper from the bottom of the machine.</FONT><BR><BR>"
+				dat+="<FONT COLOR='green'>Printing successfull. Please receive your newspaper from the bottom of the machine.</FONT><BR><BR>"
 				dat+="<A href='?src=\ref[src];setScreen=[0]'>Return</A>"
 			if(21)
-				dat+="<FONT COLOR='maroon'>Unable to print newspaper. Insufficient paper. Please notify maintenance personell to refill machine storage.</FONT><BR><BR>"
+				dat+="<FONT COLOR='maroon'>Unable to print newspaper. Insufficient paper. Please notify maintenance personnell to refill machine storage.</FONT><BR><BR>"
 				dat+="<A href='?src=\ref[src];setScreen=[0]'>Return</A>"
 			else
 				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
@@ -675,22 +676,26 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		var/dat
+		src.pages = 0
 		switch(screen)
 			if(0) //Cover
 				dat+="<DIV ALIGN='center'><B><FONT SIZE=6>The Griffon</FONT></B></div>"
 				dat+="<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen© Space Facilities</FONT></div><HR>"
 				if(isemptylist(src.news_content))
-					dat+="<I>Other than the title, the rest of the newspaper is unprinted...</I>"
+					if(src.important_message)
+						dat+="Contents:<BR><ul><B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [src.pages+2]\]</FONT><BR></ul>"
+					else
+						dat+="<I>Other than the title, the rest of the newspaper is unprinted...</I>"
 				else
 					dat+="Contents:<BR><ul>"
 					for(var/datum/feed_channel/NP in src.news_content)
 						src.pages++
 					if(src.important_message)
-						dat+="<B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [src.pages]\]</FONT><BR>"
+						dat+="<B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [src.pages+2]\]</FONT><BR>"
 					var/temp_page=0
 					for(var/datum/feed_channel/NP in src.news_content)
 						temp_page++
-						dat+="<B>[NP.channel_name]</B> <FONT SIZE=2>\[page [temp_page]\]</FONT><BR>"
+						dat+="<B>[NP.channel_name]</B> <FONT SIZE=2>\[page [temp_page+2]\]</FONT><BR>"
 					dat+="</ul>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[src.scribble]\"</I>"
@@ -710,7 +715,7 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 				dat+= "<BR><HR><DIV STYLE='float:left;'><A href='?src=\ref[src];prev_page=1'>Previous Page</A></DIV> <DIV STYLE='float:right;'><A href='?src=\ref[src];next_page=1'>Next Page</A></DIV>"
 			if(2) //Last page
 				if(src.important_message!=null)
-					dat+="<DIV STYLE='float:right;'><FONT SIZE=4><B>Wanted Issue:</B></FONT SIZE></DIV><BR><BR>"
+					dat+="<DIV STYLE='float:center;'><FONT SIZE=4><B>Wanted Issue:</B></FONT SIZE></DIV><BR><BR>"
 					dat+="<B>Criminal name</B>: <FONT COLOR='maroon'>[important_message.author]</FONT><BR>"
 					dat+="<B>Description</B>: [important_message.body]"
 				else
@@ -736,10 +741,10 @@ obj/item/weapon/newspaper/Topic(href, href_list)
 		if(href_list["next_page"])
 			if(curr_page==src.pages+1)
 				return //Don't need that at all, but anyway.
-			if(src.curr_page == src.pages)
+			if(src.curr_page == src.pages) //We're at the middle, get to the end
 				src.screen = 2
 			else
-				if(curr_page == 0)
+				if(curr_page == 0) //We're at the start, get to the middle
 					src.screen=1
 			src.curr_page++
 			playsound(src.loc, "pageturn", 50, 1)
@@ -749,7 +754,7 @@ obj/item/weapon/newspaper/Topic(href, href_list)
 				return
 			if(curr_page == 1)
 				src.screen = 0
-				src.pages = 0 //so it doesn't create extra pages every time we return to the cover screen
+
 			else
 				if(curr_page == src.pages+1) //we're at the end, let's go back to the middle.
 					src.screen = 1
