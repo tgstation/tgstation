@@ -298,15 +298,15 @@
 	var/Z = src:z
 	var/held = 1
 
-	if(src.holdopen)
-		while(held == 1 && holdopen) //If it is no longer hold open, it should close.
+	if(src.holdopen && !forcecrush)
+		while(held == 1 && holdopen && !forcecrush) //If it is no longer hold open, it should close.
 			sleep(held? 10:40)
 			held = 0
 			var/list/objects = locate(X,Y,Z)
 			for(var/obj/T in objects)
 				if(!istype(T,/obj/machinery/door) && !(istype(T,/obj/machinery) && T.anchored == 1)  && !istype(T,/obj/structure/cable) && !istype(T,/obj/structure/disposalpipe) && !(T.loc == get_turf(src)))
 					held = 1
-			for(var/mob/T in objects)
+			for(var/mob/living/T in objects) //Geez, ghosts were OP.
 				held = 1
 	animate("closing")
 	src.density = 1

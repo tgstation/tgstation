@@ -11,7 +11,8 @@
 		src << "You can't commit suicide before the game starts!"
 		return
 
-	if (mind.special_role != "Syndicate")
+	var/list/allowed = list("Syndicate","traitor","Wizard","Head Revolutionary","Cultist","Changeling")
+	if (mind.special_role in allowed)
 		message_admins("[ckey] has tried to suicide, but they were not permitted due to not being antagonist as human.", 1)
 		src << "No.  Adminhelp if there is a legitimate reason."
 		return

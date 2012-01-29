@@ -190,6 +190,8 @@ CLIPBOARDS
 					src.overlays += "paper_stamped_denied"
 				if(/obj/item/weapon/stamp/clown)
 					src.overlays += "paper_stamped_clown"
+				if(/obj/item/weapon/stamp/centcom)
+					src.overlays += "paper_stamped_cent"
 				else
 					src.overlays += "paper_stamped"
 			if(!stamped)
