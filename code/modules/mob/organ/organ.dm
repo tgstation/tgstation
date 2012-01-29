@@ -14,19 +14,19 @@
 
 /datum/wound
 	var
-		weapon_type = null
-		pretend_weapon_type = null
+		weapon = null
+		pretend_weapon = null
 		damage = 0
 		hits = 0
-		scar = 0
+		time_inflicted = 0
 
 	proc/copy()
 		var/datum/wound/W = new()
-		W.weapon_type = src.weapon_type
-		W.pretend_weapon_type = src.pretend_weapon_type
+		W.weapon = src.weapon
+		W.pretend_weapon = src.pretend_weapon
 		W.damage = src.damage
 		W.hits = src.hits
-		W.scar = src.scar
+		W.time_inflicted = src.time_inflicted
 		return W
 
 /****************************************************
@@ -131,20 +131,20 @@
 		if(brute_dam + burn_dam == 0)
 			for(var/V in weapon_wounds)
 				var/datum/wound/W = weapon_wounds[V]
-				W.scar = 1
+				del W
+			weapon_wounds = list()
 		return update_icon()
 
-	proc/add_wound(var/obj/item/used_weapon, var/damage)
-		var/weapon_type = "[used_weapon.type]"
-
-		var/datum/wound/W = weapon_wounds[weapon_type]
+	proc/add_wound(var/used_weapon, var/damage)
+		var/datum/wound/W = weapon_wounds[used_weapon]
 		if(!W)
 			W = new()
-			W.weapon_type = used_weapon.type
-			weapon_wounds[weapon_type] = W
+			W.weapon = used_weapon
+			weapon_wounds[used_weapon] = W
 
 		W.hits += 1
 		W.damage += damage
+		W.time_inflicted = world.time
 
 
 
