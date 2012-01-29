@@ -27,6 +27,7 @@
 				connectedDoorIds.Add("Starboard Observation Rad Shielding")
 				connectedDoorIds.Add("Atmospheric Storage Rad Shielding")
 				connectedDoorIds.Add("Construction Storage Rad Shielding")
+				connectedDoorIds.Add("Engineering Secure Storage")
 
 		//loop through the world, grabbing all the relevant doors
 		spawn(1)
