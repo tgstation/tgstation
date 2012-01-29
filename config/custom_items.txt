@@ -2,3 +2,4 @@ skymarshal: Phillip Oswald: /obj/item/weapon/coin/silver
 spaceman96: Trenna Seber: /obj/item/weapon/pen/multi, /obj/item/clothing/suit/storage/labcoat/pink
 asanadas: Book Berner: /obj/item/clothing/under/chameleon/psyche
 tastyfish: Cindy Robertson: /obj/item/weapon/wrapping_paper
+eternal248: Maximilian Haynes: /obj/item/weapon/paper/certificate

@@ -167,8 +167,8 @@
 	rev_mind.current << "\red <FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT>"
 	rev_mind.special_role = "Revolutionary"
 	update_rev_icons_added(rev_mind)
-	if(ticker.mode.name == "rp-revolution")
-		rev_mind.current.verbs += /mob/living/carbon/human/proc/RevConvert
+//	if(ticker.mode.name == "rp-revolution")
+//		rev_mind.current.verbs += /mob/living/carbon/human/proc/RevConvert
 	return 1
 //////////////////////////////////////////////////////////////////////////////
 //Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.
@@ -191,8 +191,8 @@
 
 			else
 				M << "[rev_mind.current] looks like they just remembered their real allegiance!"
-		if(ticker.mode.name == "rp-revolution")
-			rev_mind.current.verbs -= /mob/living/carbon/human/proc/RevConvert
+//		if(ticker.mode.name == "rp-revolution")
+//			rev_mind.current.verbs -= /mob/living/carbon/human/proc/RevConvert
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
