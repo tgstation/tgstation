@@ -10,6 +10,7 @@
 		if ("clownstep") soundin = pick('clownstep1.ogg','clownstep2.ogg')
 		if ("swing_hit") soundin = pick('genhit1.ogg', 'genhit2.ogg', 'genhit3.ogg')
 		if ("hiss") soundin = pick('hiss1.ogg','hiss2.ogg','hiss3.ogg','hiss4.ogg')
+		if ("pageturn") soundin = pick('pageturn1.ogg', 'pageturn2.ogg','pageturn3.ogg')
 
 	var/sound/S = sound(soundin)
 	S.wait = 0 //No queue
