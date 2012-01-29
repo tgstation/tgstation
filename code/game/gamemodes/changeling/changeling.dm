@@ -9,6 +9,9 @@
 	required_players = 1
 	required_enemies = 1
 
+	uplink_welcome = "Syndicate Uplink Console:"
+	uplink_uses = 10
+
 	var
 		changeling_amount
 		const

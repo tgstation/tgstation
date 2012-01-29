@@ -42,7 +42,7 @@
 
 
 	for(var/obj/machinery/power/tracker/T in machines)
-		T.set_angle(angle)
+		T.set_angle()
 
 	for(var/obj/machinery/power/solar/S in machines)
 		if(S.control)

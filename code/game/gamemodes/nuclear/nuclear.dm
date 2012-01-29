@@ -8,6 +8,9 @@
 	required_players = 3
 	required_enemies = 2
 
+	uplink_welcome = "Corporate Backed Uplink Console:"
+	uplink_uses = 40
+
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)

@@ -846,6 +846,7 @@
 	var/gas_transfer_coefficient = 1
 	var/permeability_coefficient = 0.99
 	var/siemens_coefficient = 0.80
+	var/iteration
 
 /obj/item/weapon/directions
 	name = "Crumpled Paper"
@@ -861,6 +862,12 @@
 /obj/item/weapon/paper/Court
 	name = "paper- 'Judgement'"
 	info = "For crimes against the station, the offender is sentenced to:<BR>\n<BR>\n"
+
+/obj/item/weapon/paper/certificate
+	name = "paper- 'Certificate'"
+	info = "Due to this person's unique actions in the past, we hereby certify that they are \"Totally Radical\"<br><br>----<b>Central Command</b><BR><i>This paper has been stamped with the central command rubber stamp.</i><BR>"
+	stamped = list(/obj/item/weapon/stamp/centcom)
+	overlays = list("paper_stamped_cent")
 
 /obj/item/weapon/paper/Toxin
 	name = "paper- 'Chemical Information'"
@@ -988,25 +995,6 @@
 	throwforce = 15.0
 	item_state = "shard-glass"
 	g_amt = 3750
-
-/obj/item/weapon/syndicate_uplink
-	name = "station bounced radio"
-	desc = "Remain silent about this..."
-	icon = 'radio.dmi'
-	icon_state = "radio"
-	var/temp = null
-	var/uses = 10.0
-	var/selfdestruct = 0.0
-	var/traitor_frequency = 0.0
-	var/mob/currentUser = null
-	var/obj/item/device/radio/origradio = null
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
-	w_class = 2.0
-	item_state = "radio"
-	throw_speed = 4
-	throw_range = 20
-	m_amt = 100
-	origin_tech = "magnets=2;syndicate=3"
 
 /obj/item/weapon/SWF_uplink
 	name = "station bounced radio"
@@ -1504,6 +1492,11 @@
 	name = "clown's rubber stamp"
 	icon_state = "stamp-clown"
 	color = "clown"
+
+/obj/item/weapon/stamp/centcom
+	name = "central command rubber stamp"
+	icon_state = "stamp-cent"
+	color = "centcom"
 
 /*
 /obj/item/weapon/cigarpacket

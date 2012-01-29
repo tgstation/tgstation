@@ -6,13 +6,15 @@
 	opacity = 1
 	density = 1
 	layer = 2.7
+	anchored = 1
 	var/secondsElectrified = 0
 	var/visible = 1
 	var/p_open = 0
 	var/operating = 0
-	anchored = 1
 	var/autoclose = 0
 	var/glass = 0
+	var/forcecrush = 0
+	var/holdopen = 0
 
 
 /obj/machinery/door/firedoor

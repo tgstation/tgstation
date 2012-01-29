@@ -285,7 +285,9 @@
 		//Look for that player! They better be dead!
 		if(C)
 			var/mob/selected = find_dead_player("[C.fields["ckey"]]")
-
+			var/answer = alert(selected,"Do you want to return to life?","Cloning","Yes","No")
+			if(answer == "No")
+				selected = null
 //Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
 			if ((!selected) || (!src.pod1) || (src.pod1.occupant) || (src.pod1.mess) || !config.revival_cloning)
 				src.temp = "Unable to initiate cloning cycle." // most helpful error message in THE HISTORY OF THE WORLD
@@ -309,9 +311,9 @@
 	if (subject.brain_op_stage == 4.0)
 		src.temp = "Error: No signs of intelligence detected."
 		return
-	if (subject.suiciding == 1)
-		src.temp = "Error: Subject's brain is not responding to scanning stimuli."
-		return
+//	if (subject.suiciding == 1)
+//		src.temp = "Error: Subject's brain is not responding to scanning stimuli."
+//		return
 	if ((!subject.ckey) || (!subject.client))
 		src.temp = "Error: Mental interface failure."
 		return
@@ -394,6 +396,11 @@
 		if (M.ckey == find_key)
 			selected = M
 			break
+	if(!selected) //Search for a ghost if dead body with client isn't found.
+		for(var/mob/dead/observer/ghost in world)
+			if (ghost.corpse.mind.key == find_key)
+				selected = ghost
+				break
 	return selected
 
 //Disk stuff.

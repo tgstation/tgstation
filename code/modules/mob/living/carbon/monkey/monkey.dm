@@ -22,6 +22,40 @@
 	if(name == "monkey")
 		name = text("monkey ([rand(1, 1000)])")
 	real_name = name
+	var/datum/organ/external/chest/chest = new /datum/organ/external/chest( src )
+	chest.owner = src
+	var/datum/organ/external/groin/groin = new /datum/organ/external/groin( src )
+	groin.owner = src
+	var/datum/organ/external/head/head = new /datum/organ/external/head( src )
+	head.owner = src
+	var/datum/organ/external/l_arm/l_arm = new /datum/organ/external/l_arm( src )
+	l_arm.owner = src
+	var/datum/organ/external/r_arm/r_arm = new /datum/organ/external/r_arm( src )
+	r_arm.owner = src
+	var/datum/organ/external/l_hand/l_hand = new /datum/organ/external/l_hand( src )
+	l_hand.owner = src
+	var/datum/organ/external/r_hand/r_hand = new /datum/organ/external/r_hand( src )
+	r_hand.owner = src
+	var/datum/organ/external/l_leg/l_leg = new /datum/organ/external/l_leg( src )
+	l_leg.owner = src
+	var/datum/organ/external/r_leg/r_leg = new /datum/organ/external/r_leg( src )
+	r_leg.owner = src
+	var/datum/organ/external/l_foot/l_foot = new /datum/organ/external/l_foot( src )
+	l_foot.owner = src
+	var/datum/organ/external/r_foot/r_foot = new /datum/organ/external/r_foot( src )
+	r_foot.owner = src
+
+	organs["chest"] = chest
+	organs["groin"] = groin
+	organs["head"] = head
+	organs["l_arm"] = l_arm
+	organs["r_arm"] = r_arm
+	organs["l_hand"] = l_hand
+	organs["r_hand"] = r_hand
+	organs["l_leg"] = l_leg
+	organs["r_leg"] = r_leg
+	organs["l_foot"] = l_foot
+	organs["r_foot"] = r_foot
 	..()
 	return
 

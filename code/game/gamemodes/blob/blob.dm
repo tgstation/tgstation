@@ -3,6 +3,9 @@
 	config_tag = "blob"
 	required_players = 0
 
+	uplink_welcome = "Syndicate Uplink Console:"
+	uplink_uses = 10
+
 	var/const/waittime_l = 2000 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 3000 //upper bound on time before intercept arrives (in tenths of seconds)
 

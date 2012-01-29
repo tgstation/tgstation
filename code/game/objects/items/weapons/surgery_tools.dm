@@ -573,6 +573,8 @@ CIRCULAR SAW
 			S.take_damage(15)
 
 		S.open = 0
+		if(S.display_name == "chest" && H:embryo_op_stage == 1.0)
+			H:embryo_op_stage = 0.0
 
 		H.updatehealth()
 		H.UpdateDamageIcon()
@@ -603,14 +605,14 @@ CIRCULAR SAW
 	if(user.zone_sel.selecting == "chest")
 		if(istype(M, /mob/living/carbon/human))
 			switch(M:embryo_op_stage)
-				if(0.0)
-					if(M != user)
-						for(var/mob/O in (viewers(M) - user - M))
-							O.show_message("\red [M] is beginning to have \his torso cut open with [src] by [user].", 1)
-						M << "\red [user] begins to cut open your torso with [src]!"
-						user << "\red You cut [M]'s torso open with [src]!"
-						M:embryo_op_stage = 1.0
-						return
+//				if(0.0)
+//					if(M != user)
+//						for(var/mob/O in (viewers(M) - user - M))
+//							O.show_message("\red [M] is beginning to have \his torso cut open with [src] by [user].", 1)
+//						M << "\red [user] begins to cut open your torso with [src]!"
+//						user << "\red You cut [M]'s torso open with [src]!"
+//						M:embryo_op_stage = 1.0
+//						return
 				if(3.0)
 					if(M != user)
 						for(var/mob/O in (viewers(M) - user - M))
@@ -853,6 +855,8 @@ CIRCULAR SAW
 
 		S.open = 1
 		S.bleeding = 1
+		if(S.display_name == "chest")
+			H:embryo_op_stage = 1.0
 
 		H.updatehealth()
 		H.UpdateDamageIcon()
@@ -918,6 +922,12 @@ CIRCULAR SAW
 					return ..()
 				var/datum/organ/external/S = H.organs["head"]
 				if(S.destroyed)
+					return
+				for(var/mob/O in viewers(H, null))
+					O.show_message(text("\red [H] gets \his [S.display_name] sawed at with [src] by [user].... It looks like [user] is trying to cut it off!"), 1)
+				if(!do_after(rand(50,70)))
+					for(var/mob/O in viewers(H, null))
+						O.show_message(text("\red [user] tried to cut [H]'s [S.display_name] off with [src], but failed."), 1)
 					return
 				for(var/mob/O in viewers(H, null))
 					O.show_message(text("\red [H] gets \his [S.display_name] sawed off with [src] by [user]."), 1)
@@ -1003,6 +1013,12 @@ CIRCULAR SAW
 		var/mob/living/carbon/human/H = M
 		var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
 		if(S.destroyed)
+			return
+		for(var/mob/O in viewers(H, null))
+			O.show_message(text("\red [H] gets \his [S.display_name] sawed at with [src] by [user].... It looks like [user] is trying to cut it off!"), 1)
+		if(!do_after(rand(20,80)))
+			for(var/mob/O in viewers(H, null))
+				O.show_message(text("\red [user] tried to cut [H]'s [S.display_name] off with [src], but failed."), 1)
 			return
 		for(var/mob/O in viewers(H, null))
 			O.show_message(text("\red [H] gets \his [S.display_name] sawed off with [src] by [user]."), 1)

@@ -19,6 +19,7 @@ datum/shuttle_controller
 		//timeleft = 360 //600
 		fake_recall = 0 //Used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
 		deny_shuttle = 0 //for admins not allowing it to be called.
+		departed = 0
 
 	// call the shuttle
 	// if not called before, set the endtime to T+600 seconds
@@ -137,6 +138,7 @@ datum/shuttle_controller
 						return 0
 
 					else
+						departed = 1
 						location = 2
 						var/area/start_location = locate(/area/shuttle/escape/station)
 						var/area/end_location = locate(/area/shuttle/escape/centcom)

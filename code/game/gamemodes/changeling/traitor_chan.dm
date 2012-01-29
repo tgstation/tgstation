@@ -5,6 +5,9 @@
 	required_players = 20
 	required_enemies = 2
 
+	uplink_welcome = "Syndicate Uplink Console:"
+	uplink_uses = 10
+
 /datum/game_mode/traitor/changeling/announce()
 	world << "<B>The current game mode is - Traitor+Changeling!</B>"
 	world << "<B>There is an alien creature on the station along with some syndicate operatives out for their own gain! Do not let the changeling and the traitors succeed!</B>"

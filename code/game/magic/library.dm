@@ -118,7 +118,7 @@
 		for(var/obj/item/weapon/book/b in src.contents)
 			books.Add(b)
 		if(books.len)
-			var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in books as obj|null
+			var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in books|null as obj|null
 			if(choice)
 				choice.loc = src.loc
 			else
@@ -768,7 +768,10 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 					var/title = query.item[3]
 					var/content = query.item[4]
 					var/obj/item/weapon/book/B = new(src.loc)
-					B.name = "Book: [title]"
+					if(title)
+						B.name = "[title]"
+					else
+						B.name = "Untitled book"
 					B.title = title
 					B.author = author
 					B.dat = content

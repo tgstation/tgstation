@@ -354,6 +354,41 @@
 		reset_view(C)
 	return 1
 
+/mob/living/silicon/ai/proc/triggerUnmarkedAlarm(var/class, area/A, var/O)
+	if(stat == 2) // stat = 2 = dead AI
+		return 1
+	var/obj/machinery/camera/C = null
+	var/list/CL = null
+	var/alarmtext = ""
+	if(class == "AirlockHacking") // In case more unmarked alerts would be added eventually;
+		alarmtext = "--- Unauthorized remote access detected"
+	if (O && istype(O, /list))
+		CL = O
+		if (CL.len == 1)
+			C = CL[1]
+	else if (O && istype(O, /obj/machinery/camera))
+		C = O
+	if (A)
+		alarmtext += " in " + A.name
+		if (O)
+			if (C && C.status)
+				alarmtext += text("! (<A HREF=?src=\ref[];switchcamera=\ref[]>[]</A>)", src, C, C.c_tag)
+			else if (CL && CL.len)
+				var/foo = 0
+				var/dat2 = ""
+				for (var/obj/machinery/camera/I in CL)
+					dat2 += text("[]<A HREF=?src=\ref[];switchcamera=\ref[]>[]</A>", (!foo) ? "" : " | ", src, I, I.c_tag)
+					foo = 1
+				alarmtext += text("! ([])", dat2)
+			else
+				alarmtext += "! (No Camera)"
+		else
+			alarmtext += "! (No Camera)"
+	else
+		alarmtext += "!"
+	src << alarmtext
+	return 1
+
 /mob/living/silicon/ai/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
 	if (stat == 2)
 		return 1
