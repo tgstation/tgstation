@@ -789,6 +789,12 @@ CIRCULAR SAW
 				if(S.destroyed)
 					return
 				for(var/mob/O in viewers(H, null))
+					O.show_message(text("\red [H] gets \his [S.display_name] sawed at with [src] by [user].... It looks like [user] is trying to cut it off!"), 1)
+				if(!do_after(rand(50,70)))
+					for(var/mob/O in viewers(H, null))
+						O.show_message(text("\red [user] tried to cut [H]'s [S.display_name] off with [src], but failed."), 1)
+					return
+				for(var/mob/O in viewers(H, null))
 					O.show_message(text("\red [H] gets \his [S.display_name] sawed off with [src] by [user]."), 1)
 				S.destroyed = 1
 				S.droplimb()
@@ -872,6 +878,12 @@ CIRCULAR SAW
 		var/mob/living/carbon/human/H = M
 		var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
 		if(S.destroyed)
+			return
+		for(var/mob/O in viewers(H, null))
+			O.show_message(text("\red [H] gets \his [S.display_name] sawed at with [src] by [user].... It looks like [user] is trying to cut it off!"), 1)
+		if(!do_after(rand(20,80)))
+			for(var/mob/O in viewers(H, null))
+				O.show_message(text("\red [user] tried to cut [H]'s [S.display_name] off with [src], but failed."), 1)
 			return
 		for(var/mob/O in viewers(H, null))
 			O.show_message(text("\red [H] gets \his [S.display_name] sawed off with [src] by [user]."), 1)
