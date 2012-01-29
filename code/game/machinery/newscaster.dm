@@ -102,11 +102,12 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 	if( src.powered() )
 		src.ispowered = 1
 		stat &= ~NOPOWER
+		src.update_icon()
 	else
 		spawn(rand(0, 15))
 			src.ispowered = 0
 			stat |= NOPOWER
-	src.update_icon()
+			src.update_icon()
 
 
 /obj/machinery/newscaster/ex_act(severity)
@@ -128,6 +129,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 			return
 	return
 
+/obj/machinery/newscaster/attack_ai(mob/user as mob)
+	return src.attack_hand(user)
 
 /obj/machinery/newscaster/attack_hand(mob/user as mob)
 	if(!src.ispowered || src.isbroken)
@@ -695,25 +698,32 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 					var/temp_page=0
 					for(var/datum/feed_channel/NP in src.news_content)
 						temp_page++
-						dat+="<B>[NP.channel_name]</B> <FONT SIZE=2>\[page [temp_page+2]\]</FONT><BR>"
+						dat+="<B>[NP.channel_name]</B> <FONT SIZE=2>\[page [temp_page+1]\]</FONT><BR>"
 					dat+="</ul>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[src.scribble]\"</I>"
 				dat+= "<HR><DIV STYLE='float:right;'><A href='?src=\ref[src];next_page=1'>Next Page</A></DIV> <div style='float:left;'><A href='?src=\ref[human_user];mach_close=newspaper_main'>Done reading</A></DIV>"
 			if(1) // X channel pages inbetween.
+				for(var/datum/feed_channel/NP in src.news_content)
+					src.pages++ //Let's get it right again.
 				var/datum/feed_channel/C = src.news_content[src.curr_page]
 				dat+="<FONT SIZE=4><B>[C.channel_name]</B></FONT><FONT SIZE=1> \[created by: <FONT COLOR='maroon'>[C.author]</FONT>\]</FONT><BR><BR>"
-				if(isemptylist(C.messages))
-					dat+="No Feed stories stem from this channel..."
+				if(C.censored)
+					dat+="This channel was deemed dangerous to the general welfare of the station and therefore marked with a <B><FONT COLOR='red>D-Notice</B></FONT>. Its contents were not transferred to the newspaper at the time of printing."
 				else
-					dat+="<ul>"
-					for(var/datum/feed_message/MESSAGE in C.messages)
-						dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR><BR>"
-					dat+="</ul>"
+					if(isemptylist(C.messages))
+						dat+="No Feed stories stem from this channel..."
+					else
+						dat+="<ul>"
+						for(var/datum/feed_message/MESSAGE in C.messages)
+							dat+="-[MESSAGE.body] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR><BR>"
+						dat+="</ul>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[src.scribble]\"</I>"
 				dat+= "<BR><HR><DIV STYLE='float:left;'><A href='?src=\ref[src];prev_page=1'>Previous Page</A></DIV> <DIV STYLE='float:right;'><A href='?src=\ref[src];next_page=1'>Next Page</A></DIV>"
 			if(2) //Last page
+				for(var/datum/feed_channel/NP in src.news_content)
+					src.pages++
 				if(src.important_message!=null)
 					dat+="<DIV STYLE='float:center;'><FONT SIZE=4><B>Wanted Issue:</B></FONT SIZE></DIV><BR><BR>"
 					dat+="<B>Criminal name</B>: <FONT COLOR='maroon'>[important_message.author]</FONT><BR>"
