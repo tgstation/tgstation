@@ -212,7 +212,7 @@
 	name = "pepperspray"
 	icon_state = "pepperspray"
 	item_state = "pepperspray"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	flags = ONBELT|TABLEPASS|FPRINT|USEDELAY
 	throwforce = 3
 	w_class = 2.0
 	throw_speed = 2
