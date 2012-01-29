@@ -1422,7 +1422,7 @@
 	origin_tech = "materials=1;biotech=1"
 
 /obj/item/weapon/autopsy_scanner
-	name = "autopscy scanner"
+	name = "autopsy scanner"
 	desc = "Extracts information on wounds."
 	icon = 'autopsy_scanner.dmi'
 	icon_state = ""

@@ -17,8 +17,12 @@
 			M << "\blue <b><font color=red>HELP: </font>[key_name(src, M)] (<A HREF='?src=\ref[M.client.holder];adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?src=\ref[M.client.holder];adminplayervars=\ref[src]'>VV</A>) (<A HREF='?src=\ref[M.client.holder];adminplayersubtlemessage=\ref[src]'>SM</A>) (<A HREF='?src=\ref[M.client.holder];adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?src=\ref[M.client.holder];secretsadmin=check_antagonist'>CA</A>):</b> [msg]"
 
 	usr << "Your message has been broadcast to administrators."
-	send2adminirc("#bs12admin","HELP: [src.key]: [msg]")
 	log_admin("HELP: [key_name(src)]: [msg]")
+
+	var/list/replacechars = list("'","\"",">","<","(",")")
+	for(var/rep in replacechars)
+		msg = dd_list2text((dd_text2list(msg, rep)))
+	send2adminirc("#bs12admin","HELP: [src.key]: [msg]")
 	if(tension_master)
 		tension_master.new_adminhelp()
 	return

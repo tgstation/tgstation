@@ -324,7 +324,7 @@ CIRCULAR SAW
 
 /datum/wound_data
 	var
-		weapon_type = null // this is the DEFINITE weapon type that was used
+		weapon = null // this is the DEFINITE weapon type that was used
 		list/organs_scanned = list() // this maps a number of scanned organs to
 		                             // the wounds to those organs with this data's weapon type
 		organ_names = ""
@@ -335,20 +335,18 @@ CIRCULAR SAW
 	for(var/V in O.weapon_wounds)
 		var/datum/wound/W = O.weapon_wounds[V]
 
-		if(!W.pretend_weapon_type)
+		if(!W.pretend_weapon)
 			// the more hits, the more likely it is that we get the right weapon type
 			if(prob(W.hits * 10 + W.damage))
-				W.pretend_weapon_type = W.weapon_type
+				W.pretend_weapon = W.weapon
 			else
-				if(prob(50))
-					W.pretend_weapon_type = pick(/obj/item/weapon/storage/toolbox, /obj/item/weapon/wirecutters, /obj/item/weapon/gun/projectile, /obj/item/weapon/crowbar, /obj/item/weapon/extinguisher)
-				else
-					W.pretend_weapon_type = pick(typesof(/obj/item/weapon))
+				W.pretend_weapon = pick("mechanical toolbox", "wirecutters", "revolver", "crowbar", "fire extinguisher", "tomato soup", "oxygen tank", "emergency oxygen tank", "laser", "bullet")
+
 
 		var/datum/wound_data/D = wdata[V]
 		if(!D)
 			D = new()
-			D.weapon_type = W.weapon_type
+			D.weapon = W.weapon
 			wdata[V] = D
 
 		if(!D.organs_scanned[O.name])
@@ -367,21 +365,39 @@ CIRCULAR SAW
 		var/total_hits = 0
 		var/total_score = 0
 		var/list/weapon_chances = list() // maps weapon names to a score
+		var/age = 0
 
 		for(var/wound_idx in D.organs_scanned)
 			var/datum/wound/W = D.organs_scanned[wound_idx]
 			total_hits += W.hits
 
-			var/atom/weapon = new W.pretend_weapon_type()
+			var/wname = W.pretend_weapon
 
-			if(weapon.name in weapon_chances) weapon_chances[weapon.name] += W.damage
-			else weapon_chances[weapon.name] = W.damage
+			if(wname in weapon_chances) weapon_chances[wname] += W.damage
+			else weapon_chances[wname] = W.damage
 			total_score+=W.damage
 
-			del weapon
+
+			var/wound_age = world.time - W.time_inflicted
+			age = max(age, wound_age)
+
+		var/damage_desc
+
+		// total score happens to be the total damage
+		switch(total_score)
+			if(0 to 5)
+				damage_desc = "<font color='green'>negligible</font>"
+			if(5 to 15)
+				damage_desc = "<font color='green'>light</font>"
+			if(15 to 30)
+				damage_desc = "<font color='orange'>moderate</font>"
+			if(30 to 1000)
+				damage_desc = "<font color='red'>severe</font>"
 
 		scan_data += "<b>Weapon #[n]</b><br>"
+		scan_data += "Severity: [damage_desc]<br>"
 		scan_data += "Hits by weapon: [total_hits]<br>"
+		scan_data += "Age of wound: [round(age / (60*10))] minutes<br>"
 		scan_data += "Affected limbs: [D.organ_names]<br>"
 		scan_data += "Possible weapons:<br>"
 		for(var/weapon_name in weapon_chances)
@@ -557,6 +573,8 @@ CIRCULAR SAW
 			S.take_damage(15)
 
 		S.open = 0
+		if(S.display_name == "chest" && H:embryo_op_stage == 1.0)
+			H:embryo_op_stage = 0.0
 
 		H.updatehealth()
 		H.UpdateDamageIcon()
@@ -587,14 +605,14 @@ CIRCULAR SAW
 	if(user.zone_sel.selecting == "chest")
 		if(istype(M, /mob/living/carbon/human))
 			switch(M:embryo_op_stage)
-				if(0.0)
-					if(M != user)
-						for(var/mob/O in (viewers(M) - user - M))
-							O.show_message("\red [M] is beginning to have \his torso cut open with [src] by [user].", 1)
-						M << "\red [user] begins to cut open your torso with [src]!"
-						user << "\red You cut [M]'s torso open with [src]!"
-						M:embryo_op_stage = 1.0
-						return
+//				if(0.0)
+//					if(M != user)
+//						for(var/mob/O in (viewers(M) - user - M))
+//							O.show_message("\red [M] is beginning to have \his torso cut open with [src] by [user].", 1)
+//						M << "\red [user] begins to cut open your torso with [src]!"
+//						user << "\red You cut [M]'s torso open with [src]!"
+//						M:embryo_op_stage = 1.0
+//						return
 				if(3.0)
 					if(M != user)
 						for(var/mob/O in (viewers(M) - user - M))
@@ -837,6 +855,8 @@ CIRCULAR SAW
 
 		S.open = 1
 		S.bleeding = 1
+		if(S.display_name == "chest")
+			H:embryo_op_stage = 1.0
 
 		H.updatehealth()
 		H.UpdateDamageIcon()
