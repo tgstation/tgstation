@@ -1415,6 +1415,15 @@
 	g_amt = 10000
 	origin_tech = "materials=1;biotech=1"
 
+/obj/item/weapon/autopsy_scanner
+	name = "autopscy scanner"
+	desc = "Extracts information on wounds."
+	icon = 'autopsy_scanner.dmi'
+	icon_state = ""
+	flags = FPRINT | TABLEPASS | CONDUCT
+	w_class = 1.0
+	origin_tech = "materials=1;biotech=1"
+
 /obj/item/weapon/syntiflesh
 	name = "Syntiflesh"
 	desc = "Meat that appears...strange..."

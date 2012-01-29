@@ -39,7 +39,7 @@
 	return null
 
 
-/mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/sharp = 0)
+/mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/sharp = 0, var/used_weapon = null)
 	if((damagetype != BRUTE) && (damagetype != BURN))
 		..(damage, damagetype, def_zone, blocked)
 		return 1
@@ -61,6 +61,10 @@
 			organ.take_damage(damage, 0, sharp)
 		if(BURN)
 			organ.take_damage(0, damage, sharp)
+
+	if(used_weapon)
+		organ.add_wound(used_weapon, damage)
+
 	UpdateDamageIcon()
 	updatehealth()
 	return 1

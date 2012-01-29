@@ -1,9 +1,3 @@
-/obj/item/weapon/storage/toolbox/New()
-	..()
-	if (src.type == /obj/item/weapon/storage/toolbox)
-		world << "BAD: [src] ([src.type]) spawned at [src.x] [src.y] [src.z]"
-		del(src)
-
 /obj/item/weapon/storage/toolbox/emergency/New()
 	..()
 	new /obj/item/weapon/crowbar/red(src)

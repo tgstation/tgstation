@@ -31,7 +31,7 @@
 	var/currently_healing = 0
 	var/injection_amount = 15 //How much reagent do we inject at a time?
 	var/heal_threshold = 15 //Start healing when they have this much damage in a category
-	var/use_beaker = 0 //Use reagents in beaker instead of default treatment agents.
+	var/use_beaker = 1 //Use reagents in beaker instead of default treatment agents.
 	//Setting which reagents to use to treat what by default. By id.
 	var/treatment_brute = "bicaridine"
 	var/treatment_oxy = "dexalin"
