@@ -20,6 +20,9 @@
 			sleep(3)
 			if (i > 0)
 				var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
+				b.blood_DNA = blood_DNA
+				b.blood_type = blood_type
+				b.OriginalMob = OriginalMob
 				for(var/datum/disease/D in src.viruses)
 					b.viruses += D
 			if (step_to(src, get_step(src, direction), 0))

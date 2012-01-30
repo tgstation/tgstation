@@ -793,19 +793,19 @@
 	spawn()
 		if(key)
 			if(istype(src, /mob/living/silicon))
-				robogibs(loc, viruses, name)
+				robogibs(loc, viruses)
 			else if (istype(src, /mob/living/carbon/alien))
-				xgibs(loc, viruses, name)
+				xgibs(loc, viruses)
 			else
-				gibs(loc, viruses, name, dna)
+				gibs(loc, viruses, dna)
 
 		else
 			if(istype(src, /mob/living/silicon))
 				robogibs(loc, viruses)
 			else if(istype(src, /mob/living/carbon/alien))
-				xgibs(loc, viruses, name)
+				xgibs(loc, viruses)
 			else
-				gibs(loc, viruses, name, dna)
+				gibs(loc, viruses, dna)
 		sleep(15)
 		for(var/obj/item/I in src.contents)
 			I.loc = get_turf(src)

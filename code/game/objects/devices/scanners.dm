@@ -66,11 +66,11 @@ MASS SPECTROMETER
 	var/amount = 20.0
 	var/printing = 0.0
 	var/fibers_index = 0
-	var/list/stored_fibers = null
-	var/list/stored_name = null
+	var/list/stored_fibers = list()
+	var/list/stored_name = list()
 	var/prints_index = 0
-	var/list/stored_prints = null
-	var/list/prints_name = null
+	var/list/stored_prints = list()
+	var/list/prints_name = list()
 	w_class = 3.0
 	item_state = "electronic"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | USEDELAY
@@ -138,20 +138,22 @@ MASS SPECTROMETER
 	return
 
 /obj/item/device/detective_scanner/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-
+	if(src.loc != user)
+		return 0
 	src.add_fingerprint(user)
 	if (istype(A, /obj/effect/decal/cleanable/blood) || istype(A, /obj/effect/rune))
 		if(A.blood_DNA)
 			user << "\blue Blood type: [A.blood_type]\nDNA: [A.blood_DNA]"
+		return
+	if (!( A.fingerprints ) && !(A.suit_fibers) && !(A.blood_DNA))
+		user << "\blue Unable to locate any fingerprints, materials, fibers, or fingerprints on [A]!"
+		return 0
 	else if (A.blood_DNA)
 		user << "\blue Blood found on [A]. Analysing..."
 		sleep(15)
 		user << "\blue Blood type: [A.blood_type]\nDNA: [A.blood_DNA]"
 	else
 		user << "\blue No blood found on [A]."
-	if (!( A.fingerprints ) && !(A.suit_fibers))
-		user << "\blue Unable to locate any fingerprints or fibers on [A]!"
-		return 0
 	if(!( A.fingerprints ))
 		user << "\blue Unable to locate any fingerprints on [A]!"
 	else

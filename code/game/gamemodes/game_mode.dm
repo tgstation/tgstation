@@ -64,7 +64,8 @@ Implants;
 /obj/item/weapon/storage/syndie_kit/imp_uplink:10:Uplink Implant (Contains 5 Telecrystals);
 Whitespace:Seperator;
 Badassery;
-/obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);"}
+/obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);
+Whitespace:Seperator;"}
 
 /datum/game_mode/proc/announce() //to be calles when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"

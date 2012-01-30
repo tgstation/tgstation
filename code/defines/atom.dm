@@ -2,7 +2,7 @@
 	layer = 2
 	var/level = 2
 	var/flags = FPRINT
-	var/fingerprints = null
+	var/list/fingerprints
 	var/list/fingerprintshidden = new/list()
 	var/fingerprintslast = null
 	var/blood_DNA = null

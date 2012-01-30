@@ -88,27 +88,36 @@
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna))
 			return 0
+		world << md5(H.dna.uni_identity)
 		if (H.gloves)
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
 			return 0
 		if (!( src.fingerprints ))
-			src.fingerprints = text("[]", md5(H.dna.uni_identity))
+			src.fingerprints = list(text("[]&[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), rand(40,60))))
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
 			return 1
 		else
-			var/list/L = params2list(src.fingerprints)
-			L -= md5(H.dna.uni_identity)
-			while(L.len >= 3)
-				L -= L[1]
-			L += md5(H.dna.uni_identity)
-			src.fingerprints = list2params(L)
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
+			var/new_prints = 0
+			var/prints
+			for(var/i = 1, i < src.fingerprints.len, i++)
+				var/list/L = params2list(src.fingerprints[i])
+				if(L[1] == md5(H.dna.uni_identity))
+					new_prints = i
+					prints = L[2]
+					break
+			if(new_prints)
+				src.fingerprints[new_prints] = list(text("[]&[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), rand(40,60)))))
+				return 1
+			else
+				src.fingerprints += text("[]&[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), rand(40,60)))
+				return 1
 	else
 		if(src.fingerprintslast != M.key)
 			src.fingerprintshidden += text("Real name: [], Key: []",M.real_name, M.key)

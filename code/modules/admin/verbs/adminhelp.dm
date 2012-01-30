@@ -22,6 +22,7 @@
 	var/list/replacechars = list("'","\"",">","<","(",")")
 	for(var/rep in replacechars)
 		msg = dd_list2text((dd_text2list(msg, rep)))
+	world << msg
 	send2adminirc("#bs12admin","HELP: [src.key]: [msg]")
 	if(tension_master)
 		tension_master.new_adminhelp()

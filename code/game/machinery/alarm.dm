@@ -90,7 +90,7 @@
 		"plasma"         = new/datum/tlv(-1.0, -1.0, 0.2, 0.5), // Partial pressure, kpa
 		"other"          = new/datum/tlv(-1.0, -1.0, 0.5, 1.0), // Partial pressure, kpa
 		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.20,ONE_ATMOSPHERE*0.35,ONE_ATMOSPHERE*0.8,ONE_ATMOSPHERE*0.9), /* kpa */
-		"temperature"    = new/datum/tlv(40, 60, 140, 160), // K
+		"temperature"    = new/datum/tlv(40, 60, 150, 160), // K
 	)
 
 //all air alarms in area are connected via magic
