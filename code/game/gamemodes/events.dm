@@ -2,7 +2,7 @@
 	if(prob(50))//Every 120 seconds and prob 50 2-4 weak spacedusts will hit the station
 		spawn(1)
 			dust_swarm("weak")
-	if (!event && prob(eventchance))
+	if (!event && prob(eventchance) && config.allow_random_events) //CARN: checks to see if random events are enabled.
 		event()
 		hadevent = 1
 		spawn(1300)

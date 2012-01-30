@@ -25,7 +25,7 @@
 	holder.rank = rank
 
 	if(!holder.state)
-		var/state = alert("Which state do you the admin to begin in?", "Admin-state", "Play", "Observe", "Neither")
+		var/state = alert("Which state do you want the admin to begin in?", "Admin-state", "Play", "Observe", "Neither")
 		if(state == "Play")
 			holder.state = 1
 			admin_play()
@@ -173,6 +173,7 @@
 			verbs += /client/proc/cmd_switch_radio // BEEP BOOP FARTE -- Doohl
 			verbs += /client/proc/toggle_gravity_on
 			verbs += /client/proc/toggle_gravity_off
+			verbs += /client/proc/toggle_random_events
 
 		if (holder.level >= 4)//Badmin********************************************************************
 			verbs += /obj/admins/proc/adrev					//toggle admin revives
@@ -403,6 +404,7 @@
 	verbs -= /client/proc/player_panel_new
 	verbs -= /client/proc/toggle_gravity_on
 	verbs -= /client/proc/toggle_gravity_off
+	verbs -= /client/proc/toggle_random_events
 	return
 
 

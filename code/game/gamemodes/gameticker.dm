@@ -115,9 +115,13 @@ var/global/datum/controller/gameticker/ticker
 			world << sound('welcome.ogg') // Skie
 
 	spawn (3000)
-		start_events()
-	spawn ((18000+rand(3000)))
-		event()
+		start_events() //handles random events and space dust.
+
+	//CARN: Seems supefluous so I commented it out. Start_events already handles random events nicely.
+	//spawn ((18000+rand(3000)))
+	//	if (config.allow_random_events)
+	//		event()
+
 	spawn() supply_ticker() // Added to kick-off the supply shuttle regenerating points -- TLE
 
 	//Start master_controller.process()
