@@ -31,6 +31,55 @@
 
 /obj/multiz/ladder/attack_hand(var/mob/M)
 	M.Move(locate(src.x, src.y, targetZ()))
+
+
+/obj/multiz/ladder/hatch
+	icon_state = "hatchdown"
+	name = "hatch"
+	desc = "A Hatch. You climb down it, and it will automatically seal against pressure loss behind you."
+
+/obj/multiz/ladder/hatch/New()
+	..()
+	if(istop == 1)
+		icon_state = "hatchdown"
+
+/obj/multiz/ladder/hatch/hatchbottom
+	icon_state = "hatchdown"
+
+/obj/multiz/ladder/hatch/hatchbottom/New()
+	istop = 0
+	..()
+
+/obj/multiz/ladder/hatch/attack_hand(var/mob/M)
+	var/obj/multiz/ladder/hatch/Htop
+	var/obj/multiz/ladder/hatch/Hbottom
+	if(!istop && src.z > 1)
+		Htop = locate(/obj/multiz/ladder/hatch, locate(src.x, src.y, src.z-1))
+		Hbottom = src
+	else
+		Hbottom = locate(/obj/multiz/ladder/hatch, locate(src.x, src.y, src.z + 1))
+		Htop = src
+
+	if(!Htop)
+		//world << "Htop == null"
+		return
+	if(!Hbottom)
+		//world << "Hbottom == null"
+		return
+
+	if(Htop.icon_state == "hatchdown")
+		flick("hatchdown-open",Htop)
+		Hbottom.overlays += "green-ladderlight"
+		spawn(7)
+			if(M.z == src.z && get_dist(src,M) <= 1)
+				M.Move(locate(src.x, src.y, targetZ()))
+			flick("hatchdown-close",Htop)
+			Hbottom.overlays -= "green-ladderlight"
+			Hbottom.overlays += "red-ladderlight"
+			spawn(7)
+				Htop.icon_state = "hatchdown"
+				Hbottom.overlays -= "red-ladderlight"
+
 /*
 /obj/multiz/ladder/blob_act()
 	var/newblob = 1
@@ -81,7 +130,7 @@
 /turf/simulated/floor/open
 	name = "open space"
 	intact = 0
-	icon_state = "open"
+	icon_state = "black"
 	pathweight = 100000 //Seriously, don't try and path over this one numbnuts
 	var/icon/darkoverlays = null
 	var/turf/floorbelow
@@ -115,10 +164,22 @@
 			spawn(1)
 				if(AM)
 					AM.Move(locate(x, y, z + 1))
-					if (istype(AM, /mob))
-						AM:bruteloss += 20 //You were totally doin it wrong. 5 damage? Really? - Aryn
-						AM:weakened = max(AM:weakened,5)
-						AM:updatehealth()
+					if (istype(AM, /mob/living/carbon/human))
+						var/mob/living/carbon/human/H = AM
+						var/damage = rand(5,15)
+						H.apply_damage(2*damage, BRUTE, "head")
+						H.apply_damage(2*damage, BRUTE, "chest")
+						H.apply_damage(0.5*damage, BRUTE, "l_leg")
+						H.apply_damage(0.5*damage, BRUTE, "r_leg")
+						H.apply_damage(0.5*damage, BRUTE, "l_arm")
+						H.apply_damage(0.5*damage, BRUTE, "r_arm")
+
+						var/obj/effect/decal/cleanable/blood/B = new(src.loc)
+						B.blood_DNA = H.dna.unique_enzymes
+						B.blood_type = H.b_type
+
+						H:weakened = max(H:weakened,2)
+						H:updatehealth()
 		return ..()
 
 	attackby()
@@ -137,8 +198,8 @@
 		I.layer = TURF_LAYER + 0.2
 		src.addoverlay(I)*/
 
-var/maxZ = 1
-var/minZ = 1
+var/maxZ = 6
+var/minZ = 2
 
 // Maybe it's best to have this hardcoded for whatever we'd add to the map, in order to avoid exploits
 // (such as mining base => admin station)
