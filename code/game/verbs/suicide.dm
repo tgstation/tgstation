@@ -11,6 +11,12 @@
 		src << "You can't commit suicide before the game starts!"
 		return
 
+	var/list/allowed = list("Syndicate","traitor","Wizard","Head Revolutionary","Cultist","Changeling")
+	if (mind.special_role in allowed)
+		message_admins("[ckey] has tried to suicide, but they were not permitted due to not being antagonist as human.", 1)
+		src << "No.  Adminhelp if there is a legitimate reason."
+		return
+
 	if (suiciding)
 		src << "You're already committing suicide! Be patient!"
 		return
@@ -22,6 +28,7 @@
 		return
 
 	if(confirm == "Yes")
+		message_admins("[ckey] has suicided.", 1)
 		suiciding = 1
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
 		viewers(src) << "\red <b>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</b>"
@@ -46,6 +53,7 @@
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 
 	if(confirm == "Yes")
+		message_admins("[ckey] has suicided.", 1)
 		suiciding = 1
 		viewers(loc) << "\red <b>[src]'s brain is growing dull and lifeless. It looks like it's trying to commit suicide. Somehow.</b>"
 		oxyloss = max(175 - getToxLoss() - getFireLoss() - getBruteLoss(), getOxyLoss())
@@ -71,6 +79,7 @@
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 
 	if(confirm == "Yes")
+		message_admins("[ckey] has suicided.", 1)
 		suiciding = 1
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
 		viewers(src) << "\red <b>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</b>"
@@ -91,6 +100,7 @@
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 
 	if(confirm == "Yes")
+		message_admins("[ckey] has suicided.", 1)
 		suiciding = 1
 		viewers(src) << "\red <b>[src] is powering down. It looks like \he's trying to commit suicide.</b>"
 		//put em at -175
@@ -111,6 +121,7 @@
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 
 	if(confirm == "Yes")
+		message_admins("[ckey] has suicided.", 1)
 		suiciding = 1
 		viewers(src) << "\red <b>[src] is powering down. It looks like \he's trying to commit suicide.</b>"
 		//put em at -175
@@ -123,6 +134,7 @@
 	set name = "pAI Suicide"
 	var/answer = input("REALLY kill yourself? This action can't be undone.", "Suicide", "No") in list ("Yes", "No")
 	if(answer == "Yes")
+		message_admins("[ckey] has suicided.", 1)
 		var/obj/item/device/paicard/card = loc
 		card.pai = null
 		var/turf/T = get_turf_or_move(card.loc)
@@ -146,6 +158,7 @@
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 
 	if(confirm == "Yes")
+		message_admins("[ckey] has suicided.", 1)
 		suiciding = 1
 		viewers(src) << "\red <b>[src] is thrashing wildly! It looks like \he's trying to commit suicide.</b>"
 		//put em at -175
@@ -166,6 +179,7 @@
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 
 	if(confirm == "Yes")
+		message_admins("[ckey] has suicided.", 1)
 		suiciding = 1
 		setOxyLoss(100)
 		adjustBruteLoss(100 - getBruteLoss())

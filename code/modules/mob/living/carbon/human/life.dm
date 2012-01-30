@@ -8,6 +8,8 @@
 
 		temperature_alert = 0
 
+		// used to do some stuff only on every X life tick
+		life_tick = 0
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
@@ -18,6 +20,8 @@
 
 	if(!loc)			// Fixing a null error that occurs when the mob isn't found in the world -- TLE
 		return
+
+	life_tick++
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -75,6 +79,9 @@
 
 	handle_pain()
 
+	// Some mobs heal slowly, others die slowly
+	handle_health_updates()
+
 	// Update clothing
 	update_clothing()
 
@@ -103,6 +110,23 @@
 
 /mob/living/carbon/human
 	proc
+		handle_health_updates()
+			// if the mob has enough health, she should slowly heal
+			if(health >= 0)
+				var/pr = 5
+				if(stat == 1) // sleeping means faster healing
+					pr += 3
+				if(prob(pr))
+					heal_organ_damage(1,1)
+					adjustToxLoss(-1)
+			else if(health < 0)
+				var/pr = 8
+				// sleeping means slower damage
+				if(stat == 1)
+					pr = 3
+				if(prob(pr))
+					adjustToxLoss(1)
+
 		clamp_values()
 
 			SetStunned(min(stunned, 20))
@@ -229,10 +253,10 @@
 			var/datum/gas_mixture/environment = loc.return_air()
 			var/datum/air_group/breath
 			// HACK NEED CHANGING LATER
-			if(health < config.health_threshold_dead)
+			if(health < (config.health_threshold_dead + 50)) //PEOPLE ARE NOT DYING, DAMMIT
 				losebreath++
 
-			if(losebreath>0) //Suffocating so do not take a breath
+			if(losebreath>0 && prob(90)) //Suffocating so do not take a breath
 				losebreath--
 				if (prob(75)) //High chance of gasping for air
 					spawn emote("gasp")

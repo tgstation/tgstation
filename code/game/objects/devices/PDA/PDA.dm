@@ -32,7 +32,7 @@
 	var/cart = "" //A place to stick cartridge menu information
 	var/over_jumpsuit = 1 // If set to 0, it won't display on top of the mob's jumpsuit
 
-	var/obj/item/weapon/integrated_uplink/uplink = null
+	var/obj/item/device/uplink/pda/uplink = null
 
 	var/obj/item/weapon/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
@@ -772,15 +772,6 @@
 					var/reagents_length = A.reagents.reagent_list.len
 					user << "\blue [reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found."
 					for (var/re in A.reagents.reagent_list)
-						user << "\blue \t [re]"
-				else
-					user << "\blue No active chemical agents found in [A]."
-			else if(istype(A,/obj/machinery/water/pipe))
-				var/datum/water/pipeline/P = A:parent
-				if(P.reagents.reagent_list.len > 0)
-					var/reagents_length = P.reagents.reagent_list.len
-					user << "\blue [reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found at [P.return_pressure()]kPa."
-					for (var/re in P.reagents.reagent_list)
 						user << "\blue \t [re]"
 				else
 					user << "\blue No active chemical agents found in [A]."

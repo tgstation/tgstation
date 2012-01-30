@@ -72,7 +72,8 @@ var
 	machinetype = 6
 	heatgen = 0
 	var/intercept = 0 // if nonzero, broadcasts all messages to syndicate channel
-	var/syndi = 1 //If 1, it goes to syndicate frequency.  Else, goes to deathsquad/Response Team
+	var/frequency = 1439
+	var/nuke = 0
 
 	receive_signal(datum/signal/signal)
 
@@ -96,20 +97,21 @@ var
 
 			var/datum/radio_frequency/connection = signal.data["connection"]
 
-			if(connection.frequency == NUKE_FREQ && syndi) // if syndicate broadcast, just
-				Broadcast_Message(signal.data["connection"], signal.data["mob"],
-								  signal.data["vmask"], signal.data["vmessage"],
-								  signal.data["radio"], signal.data["message"],
-								  signal.data["name"], signal.data["job"],
-								  signal.data["realname"], signal.data["vname"],, signal.data["compression"])
-			else if(connection.frequency == 1439 && !syndi)
-				Broadcast_Message(signal.data["connection"], signal.data["mob"],
-								  signal.data["vmask"], signal.data["vmessage"],
-								  signal.data["radio"], signal.data["message"],
-								  signal.data["name"], signal.data["job"],
-								  signal.data["realname"], signal.data["vname"],, signal.data["compression"])
-			else if (intercept)
-				if(syndi)
+			if(!intercept) // if syndicate broadcast, just
+				if(connection.frequency == frequency  && !nuke)
+					Broadcast_Message(signal.data["connection"], signal.data["mob"],
+									  signal.data["vmask"], signal.data["vmessage"],
+									  signal.data["radio"], signal.data["message"],
+									  signal.data["name"], signal.data["job"],
+									  signal.data["realname"], signal.data["vname"],, signal.data["compression"])
+				else if(connection.frequency == NUKE_FREQ && !nuke)
+					Broadcast_Message(signal.data["connection"], signal.data["mob"],
+									  signal.data["vmask"], signal.data["vmessage"],
+									  signal.data["radio"], signal.data["message"],
+									  signal.data["name"], signal.data["job"],
+									  signal.data["realname"], signal.data["vname"],, signal.data["compression"])
+			else
+				if(nuke)
 					Broadcast_Message(signal.data["connection"], signal.data["mob"],
 								  signal.data["vmask"], signal.data["vmessage"],
 								  signal.data["radio"], signal.data["message"],
@@ -120,7 +122,7 @@ var
 								  signal.data["vmask"], signal.data["vmessage"],
 								  signal.data["radio"], signal.data["message"],
 								  signal.data["name"], signal.data["job"],
-								  signal.data["realname"], signal.data["vname"], 4, signal.data["compression"])
+								  signal.data["realname"], signal.data["vname"], 4, signal.data["compression"], frequency)
 
 
 
@@ -177,7 +179,7 @@ var
 /proc/Broadcast_Message(var/datum/radio_frequency/connection, var/mob/M,
 						var/vmask, var/vmessage, var/obj/item/device/radio/radio,
 						var/message, var/name, var/job, var/realname, var/vname,
-						var/data, var/compression)
+						var/data, var/compression, var/intercept_frequency)
 
 
   /* ###### Prepare the radio connection ###### */
@@ -219,11 +221,11 @@ var
 	// --- Broadcast to response team radio! ---
 
 	else if(data == 4)
-		var/datum/radio_frequency/syndicateconnection = radio_controller.return_frequency(1439)
+		var/datum/radio_frequency/interceptconnection = radio_controller.return_frequency(intercept_frequency)
 
-		for (var/obj/item/device/radio/R in syndicateconnection.devices["[RADIO_CHAT]"])
+		for (var/obj/item/device/radio/R in interceptconnection.devices["[RADIO_CHAT]"])
 
-			receive |= R.send_hear(1439)
+			receive |= R.send_hear(intercept_frequency)
 
 	// --- Broadcast to ALL radio devices ---
 

@@ -152,7 +152,7 @@
 		src.modules += new /obj/item/weapon/handcuffs/cyborg(src)
 		src.modules += new /obj/item/weapon/melee/baton(src)
 		src.modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
-		src.emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
+//		src.emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 		return
 
 

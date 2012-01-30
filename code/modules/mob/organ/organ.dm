@@ -3,12 +3,31 @@
 		name = "organ"
 		mob/living/carbon/human/owner = null
 
+		list/datum/wound/weapon_wounds = list()
+
 
 	proc/process()
 		return 0
 
 	proc/receive_chem(chemical as obj)
 		return 0
+
+/datum/wound
+	var
+		weapon = null
+		pretend_weapon = null
+		damage = 0
+		hits = 0
+		time_inflicted = 0
+
+	proc/copy()
+		var/datum/wound/W = new()
+		W.weapon = src.weapon
+		W.pretend_weapon = src.pretend_weapon
+		W.damage = src.damage
+		W.hits = src.hits
+		W.time_inflicted = src.time_inflicted
+		return W
 
 /****************************************************
 				EXTERNAL ORGANS
@@ -108,7 +127,25 @@
 		if(internal)
 			broken = 0
 			perma_injury = 0
+		// if all damage is healed, replace the wounds with scars
+		if(brute_dam + burn_dam == 0)
+			for(var/V in weapon_wounds)
+				var/datum/wound/W = weapon_wounds[V]
+				del W
+			weapon_wounds = list()
 		return update_icon()
+
+	proc/add_wound(var/used_weapon, var/damage)
+		var/datum/wound/W = weapon_wounds[used_weapon]
+		if(!W)
+			W = new()
+			W.weapon = used_weapon
+			weapon_wounds[used_weapon] = W
+
+		W.hits += 1
+		W.damage += damage
+		W.time_inflicted = world.time
+
 
 
 	proc/get_damage()	//returns total damage

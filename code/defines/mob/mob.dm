@@ -245,6 +245,7 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 	var/UI = 'screen1_old.dmi' // For changing the UI from preferences
 
 //	var/obj/effect/organstructure/organStructure = null //for dem organs
+	var/list/organs = list(  )	//List of organs.
 
 
 /mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0, var/force_species_check=1)

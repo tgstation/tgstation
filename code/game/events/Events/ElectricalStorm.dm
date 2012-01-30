@@ -3,13 +3,13 @@
 		list/obj/machinery/light/Lights = list( )
 		list/obj/machinery/light/APCs = list( )
 		list/obj/machinery/light/Doors = list( )
+		list/obj/machinery/light/Comms = list( )
 
 	Announce()
-		Lifetime = rand(90, 300)
 		command_alert("The station is flying through an electrical storm.  Radio communications may be disrupted", "Anomaly Alert")
 
 		for(var/obj/machinery/light/Light in world)
-			if(Light.z == 1)
+			if(Light.z == 1 && Light.status != 0)
 				Lights += Light
 
 		for(var/obj/machinery/power/apc/APC in world)
@@ -19,6 +19,11 @@
 		for(var/obj/machinery/door/airlock/Door in world)
 			if(Door.z == 1)
 				Doors += Door
+
+		for(var/obj/machinery/telecomms/processor/T in world)
+			if(prob(90) && !(T.stat & (BROKEN|NOPOWER)))
+				T.stat |= BROKEN
+				Comms |= T
 
 	Tick()
 		for(var/x = 0; x < 3; x++)
@@ -32,6 +37,9 @@
 
 	Die()
 		command_alert("The station has cleared the electrical storm.  Radio communications restored", "Anomaly Alert")
+		for(var/obj/machinery/telecomms/processor/T in Comms)
+			T.stat &= ~BROKEN
+		Comms = list()
 
 	proc
 		BlowLight() //Blow out a light fixture
@@ -48,6 +56,7 @@
 				//sleep(2)
 				Light.on = 1
 				Light.broken()
+				Lights -= Light
 
 		DisruptAPC()
 			var/failed_attempts = 0
@@ -62,6 +71,7 @@
 				APC.operating = 0 //Blow its breaker
 			if (prob(8))
 				APC.set_broken()
+			APCs -= APC
 
 		DisableDoor()
 			var/obj/machinery/door/airlock/Airlock
@@ -74,3 +84,4 @@
 					Wire = rand(1, 9)
 				Airlock.pulse(airlockIndexToWireColor[Wire])
 			Airlock.update_icon()
+			Doors -= Airlock

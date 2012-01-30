@@ -15,6 +15,9 @@
 	var/to_nuke_or_not_to_nuke = 0
 	var/apcs = 0 //Adding dis to track how many APCs the AI hacks. --NeoFite
 
+	uplink_welcome = "Crazy AI Uplink Console:"
+	uplink_uses = 10
+
 
 /datum/game_mode/malfunction/announce()
 	world << "<B>The current game mode is - AI Malfunction!</B>"

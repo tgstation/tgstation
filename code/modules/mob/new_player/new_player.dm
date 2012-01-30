@@ -258,6 +258,8 @@
 		job_master.EquipRank(character, rank, 1)
 		EquipCustomItems(character)
 		character.loc = pick(latejoin)
+		character.be_syndicate = src.preferences.be_special & BE_TRAITOR
+		ticker.mode.latespawn(character)
 		AnnounceArrival(character, rank)
 
 		if(character.mind.assigned_role != "Cyborg")

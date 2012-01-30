@@ -1212,7 +1212,7 @@ turf/simulated/floor/return_siding_icon_state()
 					MM << "\red Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is."
 			return
 
-		else if(ticker.mode.name == "extended"||ticker.mode.name == "sandbox")	Sandbox_Spacemove(A)
+//		else if(ticker.mode.name == "extended"||ticker.mode.name == "sandbox")	Sandbox_Spacemove(A)
 
 		else
 			if (src.x <= 2 || A.x >= (world.maxx - 1) || src.y <= 2 || A.y >= (world.maxy - 1))
@@ -1247,7 +1247,7 @@ turf/simulated/floor/return_siding_icon_state()
 
 //				if(istype(A, /obj/structure/closet/coffin))
 //					coffinhandler.Add(A)
-
+/*
 /turf/space/proc/Sandbox_Spacemove(atom/movable/A as mob|obj)
 	var/cur_x
 	var/cur_y
@@ -1356,7 +1356,7 @@ turf/simulated/floor/return_siding_icon_state()
 				if ((A && A.loc))
 					A.loc.Entered(A)
 	return
-
+*/
 /obj/effect/vaultspawner
 	var/maxX = 6
 	var/maxY = 6

@@ -293,6 +293,17 @@
 		return
 	return
 
+/mob/living/silicon/robot/proc/triggerUnmarkedAlarm(var/class, area/A)
+	if(stat == 2) // stat = 2 = dead Cyborg
+		return 1
+	var/alarmtext = ""
+	if(class == "AirlockHacking") // In case more unmarked alerts would be added eventually;
+		alarmtext = "--- Unauthorized remote access detected"
+	if (A)
+		alarmtext += " in " + A.name
+	alarmtext += "!"
+	src << alarmtext
+	return 1
 
 /mob/living/silicon/robot/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
 	if (stat == 2)

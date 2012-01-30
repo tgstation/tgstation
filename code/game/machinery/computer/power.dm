@@ -1,5 +1,9 @@
 // the power monitoring computer
 // for the moment, just report the status of all APCs in the same powernet
+
+//Now Supports remote access -- Newt
+
+
 /obj/machinery/power/monitor/attack_ai(mob/user)
 	add_fingerprint(user)
 
@@ -41,6 +45,15 @@
 				A.icon_state = "4"
 				A.anchored = 1
 				del(src)
+	if(istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))
+		//var/obj/item/weapon/card/id/W = I
+		if(src.allowed(user))
+			src.control = !src.control
+			user << "You [ control ? "enable" : "disable"] remote APC control."
+		else
+			user << "\red Access denied."
+		
+		
 	else
 		src.attack_hand(user)
 	return
@@ -84,6 +97,10 @@
 			for(var/obj/machinery/power/apc/A in L)
 
 				t += copytext(add_tspace(A.area.name, 30), 1, 30)
+				if(control)
+					t += " (<A href='?src=\ref[src];apc=\ref[A];breaker=1'>[A.operating? " On" : "Off"]</A>)"
+				else
+					t += " ([A.operating? "On " : "Off"])"
 				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
 
 		t += "</FONT></PRE></TT>"
@@ -99,6 +116,13 @@
 		usr.machine = null
 		return
 	if( href_list["update"] )
+		src.updateDialog()
+		return
+	if( href_list["breaker"])
+		var/obj/machinery/power/apc/APC = locate(href_list["apc"])
+		APC.operating = !APC.operating
+		APC.update()
+		APC.updateicon()
 		src.updateDialog()
 		return
 
@@ -119,4 +143,3 @@
 			spawn(rand(0, 15))
 				src.icon_state = "c_unpowered"
 				stat |= NOPOWER
-

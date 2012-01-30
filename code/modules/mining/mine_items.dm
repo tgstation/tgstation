@@ -21,16 +21,9 @@
 /obj/structure/closet/secure_closet/miner/New()
 	..()
 	sleep(2)
-	new /obj/item/device/analyzer(src)
-	new /obj/item/device/radio/headset/headset_mine(src)
-	new /obj/item/clothing/under/rank/miner(src)
-	new /obj/item/clothing/gloves/black(src)
-	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/weapon/satchel(src)
-	new /obj/item/device/flashlight/lantern(src)
-	new /obj/item/weapon/shovel(src)
-	new /obj/item/weapon/pickaxe(src)
-	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/wardrobe/mining(src)
+	new /obj/item/wardrobe/mining(src)
+	new /obj/item/wardrobe/mining(src)
 
 
 /**********************Shuttle Computer**************************/

@@ -7,6 +7,8 @@
 	var/nometeors = 1
 	required_players = 0
 
+	uplink_welcome = "EVIL METEOR Uplink Console:"
+	uplink_uses = 10
 
 /datum/game_mode/meteor/announce()
 	world << "<B>The current game mode is - Meteor!</B>"

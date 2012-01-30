@@ -59,6 +59,7 @@
 	desc = "Full of masks and emergency anesthetic tanks."
 
 /obj/item/weapon/storage/box/syndicate
+	icon_state = "box_of_doom"
 
 /obj/item/weapon/storage/box/ert
 	name = "medical box"

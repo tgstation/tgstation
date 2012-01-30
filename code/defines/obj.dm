@@ -342,6 +342,20 @@
 	origin_tech = "magnets=1;engineering=1"
 	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage
 
+/obj/item/device/hacktool
+	name = "hacktool"
+	icon_state = "hacktool"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	var/in_use = 0
+	force = 5.0
+	w_class = 2.0
+	throwforce = 5.0
+	throw_range = 15
+	throw_speed = 3
+	desc = "An item of dubious origins, with wires and antennas protruding out of it."
+	m_amt = 60
+	g_amt = 20
+
 /obj/item/blueprints
 	name = "station blueprints"
 	desc = "Blueprints of the station. There's stamp \"Classified\" and several coffee stains on it."

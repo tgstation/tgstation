@@ -39,6 +39,9 @@
 	var/const/max_cultists_to_start = 4
 	var/acolytes_survived = 0
 
+	uplink_welcome = "Nar-Sie Uplink Console:"
+	uplink_uses = 10
+
 
 /datum/game_mode/cult/announce()
 	world << "<B>The current game mode is - Cult!</B>"
