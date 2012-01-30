@@ -710,7 +710,7 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 				var/datum/feed_channel/C = src.news_content[src.curr_page]
 				dat+="<FONT SIZE=4><B>[C.channel_name]</B></FONT><FONT SIZE=1> \[created by: <FONT COLOR='maroon'>[C.author]</FONT>\]</FONT><BR><BR>"
 				if(C.censored)
-					dat+="This channel was deemed dangerous to the general welfare of the station and therefore marked with a <B><FONT COLOR='red>D-Notice</B></FONT>. Its contents were not transferred to the newspaper at the time of printing."
+					dat+="This channel was deemed dangerous to the general welfare of the station and therefore marked with a <B><FONT COLOR='red'>D-Notice</B></FONT>. Its contents were not transferred to the newspaper at the time of printing."
 				else
 					if(isemptylist(C.messages))
 						dat+="No Feed stories stem from this channel..."
