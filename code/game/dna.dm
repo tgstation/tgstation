@@ -4,6 +4,7 @@
 	var/struc_enzymes = null
 	var/uni_identity = null
 	var/original_name = "Unknown"
+	var/b_type
 
 /datum/dna/proc/check_integrity()
 	//Lazy.
@@ -68,6 +69,7 @@
 
 	unique_enzymes = md5(character.real_name)
 	original_name = character.real_name
+	b_type = character.b_type
 	reg_dna[unique_enzymes] = character.real_name
 
 /////////////////////////// DNA DATUM

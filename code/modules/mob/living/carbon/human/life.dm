@@ -253,7 +253,7 @@
 			var/datum/gas_mixture/environment = loc.return_air()
 			var/datum/air_group/breath
 			// HACK NEED CHANGING LATER
-			if(health < (config.health_threshold_dead + 50)) //PEOPLE ARE NOT DYING, DAMMIT
+			if(health < config.health_threshold_dead)
 				losebreath++
 
 			if(losebreath>0 && prob(90)) //Suffocating so do not take a breath
@@ -630,7 +630,7 @@
 					apply_damage(0.4*discomfort, BURN, "r_arm")
 
 		handle_chemicals_in_body()
-			if(reagents) reagents.metabolize(src)
+			if(reagents && stat != 2) reagents.metabolize(src)
 
 			if(mutantrace == "plant") //couldn't think of a better place to place it, since it handles nutrition -- Urist
 				var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
@@ -755,6 +755,7 @@
 						lying = 1
 						stat = 0
 					if (paralysis > 0)
+						handle_dreams()
 						AdjustParalysis(-1)
 						blinded = 1
 						lying = 1

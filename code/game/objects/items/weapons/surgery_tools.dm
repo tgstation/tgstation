@@ -575,6 +575,8 @@ CIRCULAR SAW
 		S.open = 0
 		if(S.display_name == "chest" && H:embryo_op_stage == 1.0)
 			H:embryo_op_stage = 0.0
+		if(S.display_name == "groin" && H:appendix_op_stage == 1.0)
+			H:appendix_op_stage = 0.0
 
 		H.updatehealth()
 		H.UpdateDamageIcon()
@@ -630,13 +632,13 @@ CIRCULAR SAW
 	if(user.zone_sel.selecting == "groin")
 		if(istype(M, /mob/living/carbon/human))
 			switch(M:appendix_op_stage)
-				if(0.0)
-					if(M != user)
-						for(var/mob/O in (viewers(M) - user - M))
-							O.show_message("\red [M] is beginning to have \his abdomen cut open with [src] by [user].", 1)
-						M << "\red [user] begins to cut open your abdomen with [src]!"
-						user << "\red You cut [M]'s abdomen open with [src]!"
-						M:appendix_op_stage = 1.0
+//				if(0.0)
+//					if(M != user)
+//						for(var/mob/O in (viewers(M) - user - M))
+//							O.show_message("\red [M] is beginning to have \his abdomen cut open with [src] by [user].", 1)
+//						M << "\red [user] begins to cut open your abdomen with [src]!"
+//						user << "\red You cut [M]'s abdomen open with [src]!"
+//						M:appendix_op_stage = 1.0
 				if(3.0)
 					if(M != user)
 						for(var/mob/O in (viewers(M) - user - M))
@@ -857,6 +859,8 @@ CIRCULAR SAW
 		S.bleeding = 1
 		if(S.display_name == "chest")
 			H:embryo_op_stage = 1.0
+		if(S.display_name == "groin")
+			H:appendix_op_stage = 1.0
 
 		H.updatehealth()
 		H.UpdateDamageIcon()

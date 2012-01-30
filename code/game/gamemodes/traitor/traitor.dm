@@ -137,6 +137,10 @@
 
 /datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
 	traitor.current << "<B><font size=3 color=red>You are the traitor.</font></B>"
+	traitor.current << "\red <B>REPEAT</B>"
+	traitor.current << "\red <B>You are the traitor.</B>"
+	spawn(rand(600,1800))			//Strumpetplaya - Just another friendly reminder so people don't forget they're the traitor.
+		traitor.current << "\red <B>In case you missed it the first time - YOU ARE THE TRAITOR!</B>"
 	var/obj_count = 1
 	for(var/datum/objective/objective in traitor.objectives)
 		traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
@@ -175,6 +179,8 @@
 	else
 		killer << "Unfortunately, the Syndicate did not provide you with a code response."
 	killer << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
+	spawn(30)
+		killer << sound('AISyndiHack.ogg',volume=50)
 	//End code phrase.
 
 
@@ -318,4 +324,6 @@
 		else
 			traitor_mob << "Unfortunately, the Syndicate did not provide you with a code response."
 		traitor_mob << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
+		spawn(30)
+			traitor_mob << sound('syndicate intro.ogg',volume=50)
 	//End code phrase.

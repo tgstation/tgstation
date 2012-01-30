@@ -61,6 +61,7 @@
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
 	nodamage = 1
+	universal_speak = 1
 
 
 

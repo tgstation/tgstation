@@ -65,8 +65,12 @@ MASS SPECTROMETER
 	icon_state = "forensic0"
 	var/amount = 20.0
 	var/printing = 0.0
+	var/fibers_index = 0
 	var/list/stored_fibers = null
-	var/stored_name = null
+	var/list/stored_name = null
+	var/prints_index = 0
+	var/list/stored_prints = null
+	var/list/prints_name = null
 	w_class = 3.0
 	item_state = "electronic"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | USEDELAY
@@ -106,7 +110,7 @@ MASS SPECTROMETER
 /obj/item/device/detective_scanner/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 
 	if (!ishuman(M))
-		user << "\red [M] is not humas and cannot have the fingerprints."
+		user << "\red [M] is not human and cannot have the fingerprints."
 		return 0
 	if (( !( istype(M.dna, /datum/dna) ) || M.gloves) )
 		user << "\blue No fingerprints found on [M]"
@@ -145,26 +149,37 @@ MASS SPECTROMETER
 		user << "\blue Blood type: [A.blood_type]\nDNA: [A.blood_DNA]"
 	else
 		user << "\blue No blood found on [A]."
-	if (!( A.fingerprints ))
-		user << "\blue Unable to locate any fingerprints on [A]!"
+	if (!( A.fingerprints ) && !(A.suit_fibers))
+		user << "\blue Unable to locate any fingerprints or fibers on [A]!"
 		return 0
+	if(!( A.fingerprints ))
+		user << "\blue Unable to locate any fingerprints on [A]!"
 	else
-		if ((src.amount < 1 && src.printing))
-			user << "\blue Fingerprints found. Need more cards to print."
-			src.printing = 0
-	src.icon_state = text("forensic[]", src.printing)
-	if (src.printing)
-		src.amount--
-		var/obj/item/weapon/f_card/F = new /obj/item/weapon/f_card( user.loc )
-		F.amount = 1
-		F.fingerprints = A.fingerprints
-		F.icon_state = "fingerprint1"
-		user << "\blue Done printing."
-	var/list/L = params2list(A.fingerprints)
-	user << text("\blue Isolated [L.len] fingerprints.")
-	for(var/i in L)
-		user << text("\blue \t [i]")
-		//Foreach goto(186)
+		var/list/L = params2list(A.fingerprints)
+		stored_prints[prints_index] = L
+		prints_name[prints_index] = A.name
+		user << text("\blue Isolated [L.len] fingerprints. Stored in memory.")
+	if(!A.suit_fibers)
+		user << "\blue No Fibers/Materials Located."
+	else
+		user << "\blue Fibers/Materials Data Stored: Scan with Hi-Res Forensic Scanner to retrieve."
+		stored_fibers[fibers_index] = A.suit_fibers
+		stored_name[fibers_index] = A.name
+//	else
+//		if ((src.amount < 1 && src.printing))
+//			user << "\blue Fingerprints found. Need more cards to print."
+//			src.printing = 0
+//	src.icon_state = text("forensic[]", src.printing)
+//	if (src.printing)
+//		src.amount--
+//		var/obj/item/weapon/f_card/F = new /obj/item/weapon/f_card( user.loc )
+//		F.amount = 1
+//		F.fingerprints = A.fingerprints
+//		F.icon_state = "fingerprint1"
+//		user << "\blue Done printing."
+//	for(var/i in L)
+//		user << text("\blue \t [i]")
+//		//Foreach goto(186)
 	return
 
 

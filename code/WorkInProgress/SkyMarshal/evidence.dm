@@ -33,13 +33,8 @@
 	if(istype(O.loc, /obj/item/weapon/storage))
 		user << "This is broke as hell."
 		return
-/*		var/obj/item/weapon/storage/U = O.loc
-		w_class = O.w_class
-		for(var/i, i < U.contents.len, i++)
-			if(O in U.contents[i])
-				U.contents[i] = null
-				O.loc = src
-				continue*/
+		var/obj/item/weapon/storage/U = O.loc
+		U.contents.Remove(O)
 	user << "You put the [O] inside the [src]."
 	icon_state = "evidence"
 	src.underlays += O

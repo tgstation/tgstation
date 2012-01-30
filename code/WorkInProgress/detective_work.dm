@@ -244,9 +244,11 @@ mob/var
 obj/item/clothing/gloves/var
 	transfer_blood = 0
 	mob/living/carbon/human/bloody_hands_mob
-/*
-obj/decal/cleanable/blood/var/track_amt = 3
 
+
+obj/effect/decal/cleanable/blood/var
+	track_amt = 3
+	mob/blood_owner
 
 turf/Exited(mob/living/carbon/human/M)
 	if(istype(M,/mob/living))
@@ -271,9 +273,9 @@ turf/Entered(mob/living/carbon/human/M)
 					M.shoes.track_blood--
 					src.add_bloody_footprints(M.shoes.track_blood_mob,0,M.dir,M.shoes.name)
 
-		for(var/obj/decal/cleanable/blood/B in src)
+		for(var/obj/effect/decal/cleanable/blood/B in src)
 			if(B.track_amt <= 0) continue
-			if(B.type != /obj/decal/cleanable/blood/tracks && B.type != /obj/decal/cleanable/blood/drip)
+			if(B.type != /obj/effect/decal/cleanable/blood/tracks)
 				if(istype(M,/mob/living/carbon/human))
 					if(M.shoes)
 						M.shoes.add_blood(B.blood_owner)
@@ -282,13 +284,13 @@ turf/Entered(mob/living/carbon/human/M)
 				else
 					M.add_blood(B.blood_owner)
 					M.track_blood_mob = B.blood_owner
-					M.track_blood = max(M.track_blood,8)
+					M.track_blood = max(M.track_blood,rand(4,8))
 				B.track_amt--
 				break
 	. = ..()
 
 turf/proc/add_bloody_footprints(mob/living/carbon/human/M,leaving,d,info)
-	for(var/obj/decal/cleanable/blood/tracks/T in src)
+	for(var/obj/effect/decal/cleanable/blood/tracks/T in src)
 		if(T.dir == d)
 			if((leaving && T.icon_state == "steps2") || (!leaving && T.icon_state == "steps1"))
 				T.desc = "These bloody footprints appear to have been made by [info]."
@@ -296,11 +298,12 @@ turf/proc/add_bloody_footprints(mob/living/carbon/human/M,leaving,d,info)
 					T.blood_DNA = M.dna.unique_enzymes
 					T.blood_type = M.b_type
 				return
-	var/obj/decal/cleanable/blood/tracks/this = new(src)
+	var/obj/effect/decal/cleanable/blood/tracks/this = new(src)
+	this.icon = 'footprints.dmi'
 	if(leaving)
-		this.icon_state = "steps2"
+		this.icon_state = "blood2"
 	else
-		this.icon_state = "steps1"
+		this.icon_state = "blood1"
 	this.dir = d
 	this.desc = "These bloody footprints appear to have been made by [info]."
 	if(istype(M,/mob/living/carbon/human))
@@ -334,4 +337,3 @@ proc/blood_incompatible(donor,receiver)
 			if(donor_antigen != "O") return 1
 		//AB is a universal receiver.
 	return 0
-*/
