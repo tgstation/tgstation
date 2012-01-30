@@ -82,7 +82,6 @@
 		H.equip_if_possible(new /obj/item/clothing/under/rank/cargo(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/quartermaster(H), H.slot_belt)
-		H.equip_if_possible(new /obj/item/clothing/gloves/black(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(H), H.slot_glasses)
 		H.equip_if_possible(new /obj/item/weapon/clipboard(H), H.slot_r_store)
 		return 1
@@ -104,7 +103,6 @@
 		H.equip_if_possible(new /obj/item/clothing/under/rank/cargo(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/quartermaster(H), H.slot_belt)
-		H.equip_if_possible(new /obj/item/clothing/gloves/black(H), H.slot_gloves)
 		return 1
 
 
@@ -124,7 +122,6 @@
 		H.equip_if_possible(new /obj/item/weapon/storage/backpack/industrial (H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/miner(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
-		H.equip_if_possible(new /obj/item/clothing/gloves/black(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/weapon/crowbar(H), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/weapon/satchel(H), H.slot_in_backpack)
 		return 1

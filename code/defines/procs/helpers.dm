@@ -1512,3 +1512,15 @@ proc/get_opposite(var/checkdir)
 			else //The lists disagree, Uh-oh!
 				return 0
 	return newtext
+
+/proc/stringpercent(var/text,character = "*")
+//This proc returns the number of chars of the string that is the character
+//This is used for detective work to determine fingerprint completion.
+	if(!text || !character)
+		return 0
+	var/count = 0
+	for(var/i = 1, i < lentext(text), i++)
+		var/a = copytext(text,i,i+1)
+		if(a == character)
+			count++
+	return count

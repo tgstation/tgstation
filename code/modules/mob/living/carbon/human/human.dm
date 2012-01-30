@@ -21,7 +21,7 @@
 	var/b_eyes = 0.0
 	var/s_tone = 0.0
 	var/age = 30.0
-	var/b_type = "A+"
+	var/b_type
 
 	var/obj/item/clothing/suit/wear_suit = null
 	var/obj/item/clothing/under/w_uniform = null

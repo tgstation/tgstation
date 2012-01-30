@@ -88,7 +88,6 @@
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna))
 			return 0
-		world << md5(H.dna.uni_identity)
 		if (H.gloves)
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
@@ -112,6 +111,8 @@
 					new_prints = i
 					prints = L[2]
 					break
+				else
+					src.fingerprints[i] = L[1] + "&" + stars(L[2], rand(90,95))
 			if(new_prints)
 				src.fingerprints[new_prints] = list(text("[]&[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), rand(40,60)))))
 				return 1
@@ -139,8 +140,8 @@
 			I.Blend(new /icon('blood.dmi', "itemblood"),ICON_MULTIPLY)
 			I.Blend(new /icon(src.icon, src.icon_state),ICON_UNDERLAY)
 			src.icon = I
-			src.blood_DNA = M.dna.unique_enzymes
-			src.blood_type = M.b_type
+			src.blood_DNA.len++
+			src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes, M.b_type)
 		else if (istype(src, /turf/simulated))
 			var/turf/simulated/source2 = src
 			var/list/objsonturf = range(0,src)
@@ -149,16 +150,16 @@
 				if(istype(objsonturf[i],/obj/effect/decal/cleanable/blood))
 					return
 			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source2)
-			this.blood_DNA = M.dna.unique_enzymes
-			this.blood_type = M.b_type
+			this.blood_DNA.len++
+			this.blood_DNA[this.blood_DNA.len] = list(M.dna.unique_enzymes, M.b_type)
 			this.virus2 = M.virus2
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
 				this.viruses += newDisease
 				newDisease.holder = this
 		else if (istype(src, /mob/living/carbon/human))
-			src.blood_DNA = M.dna.unique_enzymes
-			src.blood_type = M.b_type
+			src.blood_DNA.len++
+			src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.b_type)
 		else
 			return
 	else

@@ -38,7 +38,7 @@
 		U.contents.Remove(O)
 	user << "You put the [O] inside the [src]."
 	icon_state = "evidence"
-	src.underlays += O
+	src.overlays += O
 	desc = "An evidence bag containing \a [O]. [O.desc]"
 	O.loc = src
 	w_class = O.w_class
@@ -49,7 +49,7 @@
 	if (src.contents.len > 0)
 		var/obj/item/I = src.contents[1]
 		user << "You take the [I] out of the [src]."
-		src.underlays -= I
+		src.overlays -= I
 		I.loc = get_turf(user.loc)
 		w_class = 1
 		src.icon_state = "evidenceobj"

@@ -53,19 +53,35 @@ atom/proc/add_fibers(mob/living/carbon/human/M)
 obj/machinery/computer/forensic_scanning
 	name = "High-Res Forensic Scanning Computer"
 	icon_state = "forensic"
-	var/obj/item/scanning
-	var/temp = ""
-	var/canclear = 1
-	var/authenticated = 0
+	var
+		obj/item/scanning
+		temp = ""
+		canclear = 1
+		authenticated = 0
 
-	var/scan_data = ""
-	var/scan_name = ""
-	var/scan_process = 0
+//Here's the structure for files: each entry is a list, and entry one in that list is the string of their
+//full and scrambled fingerprint.  This acts as the method to arrange evidence.  Each subsequent entry is list
+//in the form (from entries):
+//	1: Object
+//	2: All prints on the object
+//	3: All fibers on the object
+//	4: All blood on the object
+//This is then used to show what objects were used to "find" the full print, as well as the fibers on it.
+		list/files = list()
+//This holds objects (1) without prints, and their fibers(2) and blood(3).
+		list/misc = list()
+		obj/item/weapon/f_card/card
+
+		scan_data = ""
+		scan_name = ""
+		scan_process = 0
 
 	req_access = list(access_forensics_lockers)
 
+
 	attack_ai(mob/user)
 		return attack_hand(user)
+
 
 	attack_hand(mob/user)
 		if(..())
@@ -100,8 +116,198 @@ obj/machinery/computer/forensic_scanning
 					dat += "<br><a href='?src=\ref[src];operation=erase'>{Erase Data}</a>"
 		user << browse(dat,"window=scanner")
 		onclose(user,"scanner")
+
+
 	ex_act()
 		return
+
+
+	proc/add_data_scanner(var/obj/item/device/detective_scanner/W as obj)
+		for(var/i = 1, i < W.stored.len, i++)
+			var/list/data = W.stored[i]
+			var/atom/A = new
+			A = W
+			world << "[A] at [A.loc]"
+			A.fingerprints = data[2]
+			A.suit_fibers = data[3]
+			A.blood_DNA = data[4]
+			add_data(A,1)
+			del(A)
+
+
+	proc/add_data(var/atom/A, var/override = 0)
+//What follows is massive.  It cross references all stored data in the scanner with the other stored data,
+//and what is already in the computer.  Not sure how bad the lag may/may not be.
+		if((!A.fingerprints || A.fingerprints.len < 1) && !override)	//No prints
+			var/merged = 0
+			for(var/i = 1, i < misc.len, i++)	//Lets see if we can find it.
+				var/list/templist = misc[i]
+				var/check = templist[1]
+				if(check == A) //There it is!
+					merged = 1
+					var/list/fibers = templist[2]
+					if(A.suit_fibers)
+						for(var/j = 1, j < A.suit_fibers.len, j++)	//Fibers~~~
+							var/test_print1 = A.suit_fibers[j]
+							var/found = 0
+							for(var/k = 1, k <= fibers.len, k++)	//Lets see if the fiber is already in there
+								var/test_print2 = fibers[k]
+								if(test_print2 == test_print1)	//It is! Do nothing!
+									found = 1
+									break
+							if(!found)	//It isn't!  Add!
+								fibers += A.suit_fibers[j]
+					var/list/blood = templist[3]
+					if(A.blood_DNA)
+						for(var/j = 1, j < A.blood_DNA.len, j++)	//Blood~~~
+							var/test_print1 = A.blood_DNA[j]
+							var/found = 0
+							for(var/k = 1, k <= blood.len, k++)	//Lets see if the fiber is already in there
+								var/test_print2 = blood[k]
+								if(test_print2 == test_print1)	//It is! Do nothing!
+									found = 1
+									break
+							if(!found)	//It isn't!  Add!
+								blood += A.blood_DNA[j]
+					var/list/sum_list[3]	//Pack it back up!
+					sum_list[1] = A
+					sum_list[2] = fibers
+					sum_list[3] = blood
+					misc[i] = sum_list	//Store it!
+					break	//We found it, we're done here.
+			if(!merged)	//Nope!  Guess we have to add it!
+				var/list/templist[4]
+				templist[1] = A
+				templist[2] = A.suit_fibers
+				templist[3] = A.blood_DNA
+				misc.len++
+				misc[misc.len] = templist	//Store it!
+			return !merged
+		else //Has prints.
+			var/list/found_prints[A.fingerprints.len]
+			for(var/i = 1, i < found_prints.len, i++)
+				found_prints[i] = 0
+			for(var/i = 1, i < files.len, i++)	//Lets see if we can find the owner of the prints
+				var/merged = 0
+				var/list/perp_list = files[i]
+				var/list/perp_prints = params2list(perp_list[1])
+				var/perp = perp_prints[1]
+				for(var/m = 1, m < A.fingerprints.len, m++)	//Compare database prints with prints on object.
+					var/list/test_prints_list = params2list(A.fingerprints[m])
+					var/checker = test_prints_list[1]
+					if(checker == perp)	//Found 'em!  Merge!
+						found_prints[m] = 1
+						for(var/n = 2, n < perp_list.len, n++)	//Lets see if it is already in the database
+							var/list/target = perp_list[n]
+							if(target[1] == A)	//Found the original object!
+								merged = 1
+								var/list/prints = target[2]
+								if(A.fingerprints)
+									for(var/j = 1, j < A.fingerprints.len, j++)	//Fingerprints~~~
+										var/list/print_test1 = params2list(A.fingerprints[j])
+										var/test_print1 = print_test1[1]
+										var/found = 0
+										for(var/k = 1, k <= prints.len, k++)	//Lets see if the print is already in there
+											var/list/print_test2 = params2list(prints[k])
+											var/test_print2 = print_test2[1]
+											if(test_print2 == test_print1)	//It is!  Merge!
+												prints[k] = test_print2 + "&" + stringmerge(print_test2[2],print_test1[2])
+												found = 1
+												break	//We found it, we're done here.
+										if(!found)	//It isn't!  Add!
+											prints += A.fingerprints[j]
+								var/list/fibers = target[3]
+								if(A.suit_fibers)
+									for(var/j = 1, j < A.suit_fibers.len, j++)	//Fibers~~~
+										var/test_print1 = A.suit_fibers[j]
+										var/found = 0
+										for(var/k = 1, k <= fibers.len, k++)	//Lets see if the fiber is already in there
+											var/test_print2 = fibers[k]
+											if(test_print2 == test_print1)	//It is! Do nothing!
+												found = 1
+												break	//We found it, we're done here.
+										if(!found)	//It isn't!  Add!
+											fibers += A.suit_fibers[j]
+								var/list/blood = target[4]
+								if(A.blood_DNA)
+									for(var/j = 1, j < A.blood_DNA.len, j++)	//Blood~~~
+										var/test_print1 = A.blood_DNA[j]
+										var/found = 0
+										for(var/k = 1, k <= blood.len, k++)	//Lets see if the blood is already in there
+											var/test_print2 = blood[k]
+											if(test_print2 == test_print1)	//It is! Do nothing!
+												found = 1
+												break	//We found it, we're done here.
+										if(!found)	//It isn't!  Add!
+											blood += A.blood_DNA[j]
+								var/list/sum_list[4]	//Pack it back up!
+								sum_list[1] = A
+								sum_list[2] = prints
+								sum_list[3] = fibers
+								sum_list[4] = blood
+								perp_list[n] = sum_list	//Store it!
+								files[i] = perp_list
+								break	//We found it, we're done here.
+				if(merged)
+					update_fingerprints(i)	//Lets update the calculated sum of the stored prints.
+				for(var/m = 1, m < found_prints.len, m++)	//Uh Oh!  A print wasn't used!  New datapoint!
+					if(found_prints.len[m] == 0)
+						var/list/newperp[2]
+						var/list/sum_list
+						sum_list[1] = A
+						sum_list[2] = A.fingerprints
+						sum_list[3] = A.suit_fibers
+						sum_list[4] = A.blood_DNA
+						newperp[2] = sum_list
+						newperp[1] = A.fingerprints[m]
+						files.len++
+						files[files.len] = newperp
+			return
+
+
+	proc/update_fingerprints(var/index)	//I am tired, but this updates the master print, which is used to determine completion of a print.
+		if(!index)
+			return
+		var/list/perp_list = files[1]
+		var/list/perp_prints = params2list(perp_list[1])
+		var/perp = perp_prints[1]
+		var/list/found_prints = list()
+		for(var/i = 2, i < perp_list.len, i++)
+			var/list/test_list = perp_list[i]
+			var/list/test_prints = test_list[2]
+			for(var/j = 1, j < test_prints.len)
+				var/list/test_list_2 = params2list(test_prints[j])
+				var/test_prints_2 = test_list_2[1]
+				if(test_prints_2 == perp)
+					found_prints += test_list_2[2]
+					break
+		for(var/prints in found_prints)
+			perp_prints[2] = stringmerge(perp_prints[2],prints)
+		perp_list[1] = perp + "&" + perp_prints[2]
+		files[1] = perp_list
+		return
+
+//	attackby(var/obj/item/device/detective_scanner/W as obj, mob/user as mob)
+//		..()
+//		if (istype(W, /obj/item/device/detective_scanner))
+//
+//What follows is massive.  It cross references all stored data in the scanner with the other stored data,
+//and what is already in the computer.  Not sure how bad the lag may/may not be.
+//
+//			var/list/data = W.stored
+//			if(files.len || misc.len)
+//
+//
+//
+//			else
+//
+//
+//			src.add_fingerprint(user)
+//			if (W)
+//				W.add_fingerprint(user)
+//		return
+
+
 	Topic(href,href_list)
 		switch(href_list["operation"])
 			if("login")
@@ -135,7 +341,7 @@ obj/machinery/computer/forensic_scanning
 					if(istype(I, /obj/item/weapon/evidencebag))
 						scanning = I.contents[1]
 						scanning.loc = src
-						I.underlays = null
+						I.overlays -= scanning
 						I.icon_state = "evidenceobj"
 					else
 						scanning = I
@@ -174,20 +380,20 @@ obj/machinery/computer/forensic_scanning
 					scan_data = "<u>[scanning]</u><br><br>"
 					if (scanning.blood_DNA)
 						scan_data += "Blood Found:<br>"
-						scan_data += "-Blood type: [scanning.blood_type]\nDNA: [scanning.blood_DNA]<br><br>"
+						for(var/i = 1, i < scanning.blood_DNA.len, i++)
+							var/list/templist = scanning.blood_DNA[i]
+							scan_data += "-Blood type: [templist[2]]\nDNA: [templist[1]]<br><br>"
 					else
 						scan_data += "No Blood Found<br><br>"
-					if (!( scanning.fingerprints ))
+					if (!( scanning.fingerprints.len ))
 						scan_data += "No Fingerprints Found<br><br>"
 					else
-						var/list/L = params2list(scanning.fingerprints)
-						scan_data += "Isolated [L.len] Fingerprints:<br>"
-						for(var/i in L)
-							scan_data += "#[L.Find(i)] - [i]<br>"
-						scan_data += "<br>"
+						var/list/L = scanning.fingerprints
+						scan_data += "Isolated [L.len] Fingerprints.  Loaded into database.<br>"
+						add_data(scanning)
 
-					if(!scanning.suit_fibers)
-						if(istype(scanning,/obj/item/device/detective_scanner))
+					if(!scanning.suit_fibers.len)
+						/*if(istype(scanning,/obj/item/device/detective_scanner))
 							var/obj/item/device/detective_scanner/scanner = scanning
 							if(scanner.stored_name)
 								scan_data += "Fibers/Materials Data - [scanner.stored_name]:<br>"
@@ -195,21 +401,25 @@ obj/machinery/computer/forensic_scanning
 									scan_data += "- [data]<br>"
 							else
 								scan_data += "No Fibers/Materials Data<br>"
-						else
-							scan_data += "No Fibers/Materials Located<br>"
+						else*/
+						scan_data += "No Fibers/Materials Located<br>"
 					else
-						if(istype(scanning,/obj/item/device/detective_scanner))
+						/*if(istype(scanning,/obj/item/device/detective_scanner))
 							var/obj/item/device/detective_scanner/scanner = scanning
 							if(scanner.stored_name)
 								scan_data += "Fibers/Materials Data - [scanner.stored_name]:<br>"
 								for(var/data in scanner.stored_fibers)
 									scan_data += "- [data]<br>"
 							else
-								scan_data += "No Fibers/Materials Data<br>"
+								scan_data += "No Fibers/Materials Data<br>"*/
 
 						scan_data += "Fibers/Materials Found:<br>"
 						for(var/data in scanning.suit_fibers)
 							scan_data += "- [data]<br>"
+					if(istype(scanning,/obj/item/device/detective_scanner))
+						scan_data += "<br><b>Data transfered from Scanner to Database.</b><br>"
+					else if(!scanning.fingerprints.len)
+						scan_data += "<br><b><a href='?src=\ref[src];operation=add'>Add to Database?</a></b><br>"
 				else
 					temp = "Scan Failed: No Object"
 
@@ -227,6 +437,11 @@ obj/machinery/computer/forensic_scanning
 				scan_data = ""
 			if("cancel")
 				scan_process = 0
+			if("add")
+				if(scanning)
+					add_data(scanning)
+				else
+					temp = "Data Transfer Failed: No Object."
 		updateUsrDialog()
 
 	detective
@@ -295,8 +510,8 @@ turf/proc/add_bloody_footprints(mob/living/carbon/human/M,leaving,d,info)
 			if((leaving && T.icon_state == "steps2") || (!leaving && T.icon_state == "steps1"))
 				T.desc = "These bloody footprints appear to have been made by [info]."
 				if(istype(M,/mob/living/carbon/human))
-					T.blood_DNA = M.dna.unique_enzymes
-					T.blood_type = M.b_type
+					T.blood_DNA.len++
+					T.blood_DNA[T.blood_DNA.len] = list(M.dna.unique_enzymes,M.b_type)
 				return
 	var/obj/effect/decal/cleanable/blood/tracks/this = new(src)
 	this.icon = 'footprints.dmi'
@@ -307,8 +522,8 @@ turf/proc/add_bloody_footprints(mob/living/carbon/human/M,leaving,d,info)
 	this.dir = d
 	this.desc = "These bloody footprints appear to have been made by [info]."
 	if(istype(M,/mob/living/carbon/human))
-		this.blood_DNA = M.dna.unique_enzymes
-		this.blood_type = M.b_type
+		this.blood_DNA.len++
+		this.blood_DNA[this.blood_DNA.len] = list(M.dna.unique_enzymes,M.b_type)
 
 proc/get_tracks(mob/M)
 	if(istype(M,/mob/living))
