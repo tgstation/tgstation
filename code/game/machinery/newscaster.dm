@@ -625,7 +625,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 	else
 		if(istype(I, /obj/item/weapon) )
 			var/obj/item/weapon/W = I
-			if(W.force <10)
+			if(W.force <15)
 				for (var/mob/O in hearers(5, src.loc))
 					O.show_message("[user.name] hits the [src.name] with the [W.name] with no visible effect." )
 					playsound(src.loc, 'Glasshit.ogg', 100, 1)
