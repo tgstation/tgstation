@@ -146,7 +146,11 @@
 			return get_dist(src,t)
 
 	Distance_ortho(turf/t)
-		return abs(src.x - t.x) + abs(src.y - t.y)
+		if(t != null && src != null)
+			return abs(src.x - t.x) + abs(src.y - t.y)
+
+		else
+			return 99999
 
 	AdjacentTurfsSpace()
 		var/L[] = new()
