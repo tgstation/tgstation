@@ -1485,12 +1485,12 @@
 					else
 						alert("You cannot perform this action. You must be of a higher administrative rank!")
 						return
-				if("schoolgirl")
+				/*if("schoolgirl")
 					if (src.rank in list("Badmin", "Game Admin", "Game Master"))
 						alert("You cannot perform this action. It is unbelievably stupid.")
 					else
 						alert("You cannot perform this action. You must be of a higher administrative rank!")
-						return
+						return*/
 				if("dorf")
 					if (src.rank in list("Badmin","Game Admin", "Game Master"))
 						for(var/mob/living/carbon/human/B in world)
@@ -2136,7 +2136,6 @@
 <A href='?src=\ref[src];secretsfun=flicklights'>Ghost Mode</A><BR>
 <A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>
 <A href='?src=\ref[src];secretsfun=fakeguns'>Make all items look like guns</A><BR>
-<A href='?src=\ref[src];secretsfun=schoolgirl'>Japanese Animes Mode</A><BR>
 <A href='?src=\ref[src];secretsfun=moveadminshuttle'>Move Administration Shuttle</A><BR>
 <A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
 <A href='?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>
