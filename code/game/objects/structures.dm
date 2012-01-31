@@ -176,14 +176,9 @@ obj/structure
 
 /obj/structure/lattice/attackby(obj/item/C as obj, mob/user as mob)
 
-	if (istype(C, /obj/item/stack/tile))
-
-		C:build(get_turf(src))
-		C:use(1)
-		playsound(src.loc, 'Genhit.ogg', 50, 1)
-		if (C)
-			C.add_fingerprint(user)
-		del(src)
+	if (istype(C, /obj/item/stack/tile/plasteel))
+		var/turf/T = get_turf(src)
+		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead
 		return
 	if (istype(C, /obj/item/weapon/weldingtool) && C:welding)
 		user << "\blue Slicing lattice joints ..."
