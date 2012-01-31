@@ -797,7 +797,7 @@
 			else if (istype(src, /mob/living/carbon/alien))
 				xgibs(loc, viruses)
 			else
-				gibs(loc, viruses)
+				gibs(loc, viruses, dna)
 
 		else
 			if(istype(src, /mob/living/silicon))
@@ -805,7 +805,7 @@
 			else if(istype(src, /mob/living/carbon/alien))
 				xgibs(loc, viruses)
 			else
-				gibs(loc, viruses)
+				gibs(loc, viruses, dna)
 		sleep(15)
 		for(var/obj/item/I in src.contents)
 			I.loc = get_turf(src)

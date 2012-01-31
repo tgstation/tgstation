@@ -33,7 +33,9 @@
 			if(usr.client.holder)
 				usr << "[M.key] is a [M.client.holder.rank][M.client.stealth ? " <i>(as [M.client.fakekey])</i>" : ""]"
 			else if(!M.client.stealth && (M.client.holder.level != -3))
-				usr << "\t[M.client]"
+				usr << "\t[pick(nobles)] [M.client]"
+
+var/list/nobles = list("Baron","Bookkeeper","Captain of the Guard","Chief medical dwarf","Count","Dungeon master","Duke","General","Mayor","Outpost liaison","Sheriff","Champion")
 
 /client/verb/active_players()
 	set category = "OOC"

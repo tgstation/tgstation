@@ -92,8 +92,8 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 	if(!istype(H))
 		return
 	if(H.dna)
-		blood_DNA = H.dna.unique_enzymes
-	blood_type = H.b_type
+		blood_DNA.len++
+		blood_DNA[blood_DNA.len] = list(H.dna.unique_enzymes, H.dna.b_type)
 
 	var/icon/I = new /icon(icon, icon_state)
 

@@ -1487,12 +1487,7 @@
 						return
 				if("schoolgirl")
 					if (src.rank in list("Badmin", "Game Admin", "Game Master"))
-						for(var/obj/item/clothing/under/W in world)
-							W.icon_state = "schoolgirl"
-							W.item_state = "w_suit"
-							W.color = "schoolgirl"
-						message_admins("[key_name_admin(usr)] activated Japanese Animes mode")
-						world << sound('animes.ogg')
+						alert("You cannot perform this action. It is unbelievably stupid.")
 					else
 						alert("You cannot perform this action. You must be of a higher administrative rank!")
 						return
@@ -1695,7 +1690,7 @@
 					dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
 					for(var/mob/living/carbon/human/H in world)
 						if(H.dna && H.ckey)
-							dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.b_type]</td></tr>"
+							dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.dna.b_type]</td></tr>"
 					dat += "</table>"
 					usr << browse(dat, "window=DNA;size=440x410")
 				if("fingerprints")

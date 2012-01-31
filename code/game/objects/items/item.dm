@@ -162,7 +162,7 @@
 	if(isalien(user)) // -- TLE
 		var/mob/living/carbon/alien/A = user
 
-		if(!A.has_fine_manipulation || w_class >= 4)
+		if(!A.has_fine_manipulation || w_class <= 4)
 			user << "Your claws aren't capable of such fine manipulation."
 			return
 
@@ -196,20 +196,23 @@
 
 /obj/item/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/packageWrap))
+		var/location = get_turf(src.loc)
 		if(istype(src,/obj/item/weapon/storage) && istype(src.loc, /mob))	//Put it into the bag
 			return
-		if(istype(src.loc,/obj/item/weapon/storage) || istype(src.loc,/obj/item/clothing/suit/storage/))	//Taking stuff out of storage duplicates it.
-			user << "\blue Do not do this, it is broken as all hell.  Take it out of the container first."
-			return
-		for(var/obj/item/T in user)	//Lets remove it from their inventory
-			if(T == src)
-				user.remove_from_mob(T)
-				break
+		if(istype(src.loc,/obj/item/weapon/storage))	//Taking stuff out of storage duplicates it.
+			var/obj/item/weapon/storage/U = src.loc
+			user.client.screen -= src
+			U.contents.Remove(src)
+		if(istype(src.loc,/obj/item/clothing/suit/storage/))
+			var/obj/item/clothing/suit/storage/X = src.loc
+			user.client.screen -= src
+			X.contents.Remove(src)
+		if(src in user)
+			user.remove_from_mob(src)
 		var/obj/item/weapon/packageWrap/O = W
 		if (O.amount > 1)
-			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(src.loc))
+			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(location)
 			P.wrapped = src
-
 			src.loc = P
 			O.amount -= 1
 	else if(istype(W,/obj/item/wardrobe))
@@ -225,6 +228,7 @@
 				user << "\blue The wardrobe is full."
 				return
 		user << "\blue You pick up all the items."
+		user.visible_message("\blue [user] gathers up the pile of stuff, and puts it into \the [W]")
 		I.update_icon()
 
 /obj/item/attack_self(mob/user as mob)

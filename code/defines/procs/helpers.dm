@@ -1491,3 +1491,36 @@ proc/get_opposite(var/checkdir)
 		found_char = findtext(cur_text,character,last_found)
 	list += copytext(cur_text,last_found,length(cur_text)+1)
 	return list
+
+/proc/stringmerge(var/text,var/compare,replace = "*")
+//This proc fills in all spaces with the "replace" var (* by default) with whatever
+//is in the other string at the same spot (assuming it is not a replace char).
+//This is used for fingerprints
+	var/newtext = text
+	if(lentext(text) != lentext(compare))
+		return 0
+	for(var/i = 1, i < lentext(text), i++)
+		var/a = copytext(text,i,i+1)
+		var/b = copytext(compare,i,i+1)
+//if it isn't both the same letter, or if they are both the replacement character
+//(no way to know what it was supposed to be)
+		if(a != b)
+			if(a == replace) //if A is the replacement char
+				newtext = copytext(newtext,1,i) + b + copytext(newtext, i+1)
+			else if(b == replace) //if B is the replacement char
+				newtext = copytext(newtext,1,i) + a + copytext(newtext, i+1)
+			else //The lists disagree, Uh-oh!
+				return 0
+	return newtext
+
+/proc/stringpercent(var/text,character = "*")
+//This proc returns the number of chars of the string that is the character
+//This is used for detective work to determine fingerprint completion.
+	if(!text || !character)
+		return 0
+	var/count = 0
+	for(var/i = 1, i < lentext(text), i++)
+		var/a = copytext(text,i,i+1)
+		if(a == character)
+			count++
+	return count

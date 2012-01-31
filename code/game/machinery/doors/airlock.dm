@@ -429,6 +429,8 @@ About the new airlock wires panel:
 		return 0
 	if(!prob(prb))
 		return 0 //you lucked out, no shock for you
+	if(istype(usr.equipped(),/obj/item/weapon/shard))
+		return 0
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
@@ -817,10 +819,10 @@ About the new airlock wires panel:
 		usr.machine = src
 		if (href_list["wires"])
 			var/t1 = text2num(href_list["wires"])
-			if (!( istype(usr.equipped(), /obj/item/weapon/wirecutters) ))
+			if (!istype(usr.equipped(), /obj/item/weapon/wirecutters) || !istype(usr.equipped(),/obj/item/weapon/shard))
 				usr << "You need wirecutters!"
 				return
-			if (src.isWireColorCut(t1))
+			if (src.isWireColorCut(t1) && istype(usr.equipped(), /obj/item/weapon/wirecutters))
 				src.mend(t1)
 			else
 				src.cut(t1)
