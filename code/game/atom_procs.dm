@@ -101,12 +101,18 @@
 			var/prints
 			for(var/i = 1, i < (src.fingerprints.len + 1), i++)
 				var/list/L = params2list(src.fingerprints[i])
-				if(L[1] == md5(H.dna.uni_identity))
-					new_prints = i
-					prints = L[2]
-					break
+				if(L.len > 1)
+					if(L[1] == md5(H.dna.uni_identity))
+						new_prints = i
+						prints = L[2]
+						break
+					else
+						src.fingerprints[i] = L[1] + "&" + stars(L[2], rand(80,90))
 				else
-					src.fingerprints[i] = L[1] + "&" + stars(L[2], rand(80,90))
+					var/turf/T = get_turf(src)
+					for (var/mob/N in world)
+						if (N.client && N.client.holder)
+							N << "<span class=\"gfartadmin\"><span class=\"prefix\">ERROR:</span><span class=\"message\">Fingerprint application failed!  Important data: [src.name] at [T.x], [T.y], [T.z] with the print string [L[1]]</span></span>"
 			if(new_prints)
 				src.fingerprints[new_prints] = text("[]&[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), rand(15,30))))
 			else if(new_prints == 0)
