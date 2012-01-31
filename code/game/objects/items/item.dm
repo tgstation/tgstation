@@ -221,7 +221,7 @@
 			if (I.contents.len < 20)
 				if(istype(O,/obj/item/wardrobe))
 					continue
-				if(O.anchored || O.density)
+				if(O.anchored || O.density || istype(O,/obj/structure))
 					continue
 				I.contents += O;
 			else

@@ -107,16 +107,16 @@
 						prints = L[2]
 						break
 					else
-						src.fingerprints[i] = L[1] + "&" + stars(L[2], rand(80,90))
+						src.fingerprints[i] = "1=" + L[1] + "&2=" + stars(L[2], rand(80,90))
 				else
 					var/turf/T = get_turf(src)
 					for (var/mob/N in world)
 						if (N.client && N.client.holder)
 							N << "<span class=\"gfartadmin\"><span class=\"prefix\">ERROR:</span><span class=\"message\">Fingerprint application failed!  Important data: [src.name] at [T.x], [T.y], [T.z] with the print string [L[1]]</span></span>"
 			if(new_prints)
-				src.fingerprints[new_prints] = text("[]&[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), rand(15,30))))
+				src.fingerprints[new_prints] = text("1=[]&2=[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), rand(15,30))))
 			else if(new_prints == 0)
-				src.fingerprints += text("[]&[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), rand(15,30)))
+				src.fingerprints += text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), rand(15,30)))
 			return 1
 	else
 		if(src.fingerprintslast != M.key)
