@@ -698,8 +698,13 @@
 // calculates a path to the current destination
 // given an optional turf to avoid
 /obj/machinery/bot/mulebot/proc/calc_path(var/turf/avoid = null)
-	src.path = AStar(src.loc, src.target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_ortho, 0, 250, id=botcard, exclude=avoid)
-	src.path = reverselist(src.path)
+	if(src.target)
+		src.path = AStar(src.loc, src.target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance_ortho, 0, 250, id=botcard, exclude=avoid)
+		src.path = reverselist(src.path)
+	else
+		for (var/mob/M in world)
+			if (M.client && M.client.holder)
+				M << "<span class=\"gfartadmin\"><span class=\"prefix\">ERROR:</span><span class=\"message\">A Mulebot has attempted to path to a null target!  This is a bug!</span></span>"
 
 
 // sets the current destination

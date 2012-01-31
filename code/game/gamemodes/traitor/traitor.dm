@@ -88,35 +88,86 @@
 			traitor.objectives += block_objective
 
 	else
-		var/list/target = traitor.objectives
 		for(var/i = 1, i <= rand(1,3), i++)
-			var/datum/objective/objective
 			switch(rand(1,100))
 				if(1 to 30)
-					var/datum/objective/assassinate/kill_objective = new
-					kill_objective.owner = traitor
-					kill_objective.find_target()
-					objective = kill_objective
+					if(!locate(/datum/objective/assassinate) in traitor.objectives && !locate(/datum/objective/protect) in traitor.objectives)
+						var/datum/objective/assassinate/kill_objective = new
+						kill_objective.owner = traitor
+						kill_objective.find_target()
+						traitor.objectives += kill_objective
+					else
+						var/works = 1
+						var/datum/objective/assassinate/kill_objective = new
+						kill_objective.owner = traitor
+						kill_objective.find_target()
+						for(var/j, j < traitor.objectives.len, j++)
+							var/compare = istype(traitor.objectives[j],/datum/objective/assassinate)
+							if(compare)
+								var/datum/objective/assassinate/test = traitor.objectives[j]
+								if(test.target == kill_objective.target)
+									works = 0
+									break
+							compare = istype(traitor.objectives[j],/datum/objective/protect)
+							if(compare)
+								var/datum/objective/protect/test = traitor.objectives[j]
+								if(test.target == kill_objective.target)
+									works = 0
+									break
+						if(works)
+							traitor.objectives += kill_objective
+						else
+							i -= 1
 				if(31 to 40)
-					var/datum/objective/protect/protect_objective = new
-					protect_objective.owner = traitor
-					protect_objective.find_target()
-					objective = protect_objective
+					if(!locate(/datum/objective/assassinate) in traitor.objectives && !locate(/datum/objective/protect) in traitor.objectives)
+						var/datum/objective/protect/protect_objective = new
+						protect_objective.owner = traitor
+						protect_objective.find_target()
+						traitor.objectives += protect_objective
+					else
+						var/works = 1
+						var/datum/objective/protect/protect_objective = new
+						protect_objective.owner = traitor
+						protect_objective.find_target()
+						for(var/j, j < traitor.objectives.len, j++)
+							var/compare = istype(traitor.objectives[j],/datum/objective/assassinate)
+							if(compare)
+								var/datum/objective/assassinate/test = traitor.objectives[j]
+								if(test.target == protect_objective.target)
+									works = 0
+									break
+							compare = istype(traitor.objectives[j],/datum/objective/protect)
+							if(compare)
+								var/datum/objective/protect/test = traitor.objectives[j]
+								if(test.target == protect_objective.target)
+									works = 0
+									break
+						if(works)
+							traitor.objectives += protect_objective
+						else
+							i -= 1
 				else
-					var/datum/objective/steal/steal_objective = new
-					steal_objective.owner = traitor
-					steal_objective.find_target()
-					objective = steal_objective
-			var/inthere = 0
-			for(var/j, j<= target.len, j++)
-				var/datum/objective/temp = target[j]
-				if(temp:target == objective:target)
-					inthere = 1
-					break
-			if(!inthere)
-				traitor.objectives += objective
-			else
-				i -= 1
+					if(!locate(/datum/objective/steal) in traitor.objectives)
+						var/datum/objective/steal/steal_objective = new
+						steal_objective.owner = traitor
+						steal_objective.find_target()
+						traitor.objectives += steal_objective
+					else
+						var/works = 1
+						var/datum/objective/steal/steal_objective = new
+						steal_objective.owner = traitor
+						steal_objective.find_target()
+						for(var/j, j < traitor.objectives.len, j++)
+							var/compare = istype(traitor.objectives[j],/datum/objective/steal)
+							if(compare)
+								var/datum/objective/steal/test = traitor.objectives[j]
+								if(test.target_name == steal_objective.target_name)
+									works = 0
+									break
+						if(works)
+							traitor.objectives += steal_objective
+						else
+							i -= 1
 		if (!(locate(/datum/objective/escape) in traitor.objectives))
 			var/datum/objective/escape/escape_objective = new
 			escape_objective.owner = traitor
