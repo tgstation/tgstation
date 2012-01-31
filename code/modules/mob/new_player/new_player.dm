@@ -354,7 +354,6 @@
 	proc/create_character()
 		spawning = 1
 		var/mob/living/carbon/human/new_character = new(loc)
-		new_character.be_syndicate = src.preferences.be_special
 
 		close_spawn_windows()
 

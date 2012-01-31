@@ -59,9 +59,6 @@
 
 /datum/game_mode/traitor/autotraitor/post_setup()
 	..()
-	for(var/mob/T in world)
-		if(T.mind in possible_traitors)
-			T.be_syndicate = 1
 	abandon_allowed = 1
 	traitorcheckloop()
 

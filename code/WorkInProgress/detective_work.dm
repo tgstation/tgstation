@@ -176,7 +176,7 @@ obj/machinery/computer/forensic_scanning
 						misc[i] = sum_list	//Store it!
 						break	//We found it, we're done here.
 			if(!merged)	//Nope!  Guess we have to add it!
-				var/list/templist[4]
+				var/list/templist[3]
 				templist[1] = A
 				templist[2] = A.suit_fibers
 				templist[3] = A.blood_DNA

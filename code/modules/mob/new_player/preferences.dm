@@ -670,6 +670,7 @@ datum/preferences
 
 		character.age = age
 		character.dna.b_type = b_type
+		character.be_syndicate = be_special
 
 		character.r_eyes = r_eyes
 		character.g_eyes = g_eyes
