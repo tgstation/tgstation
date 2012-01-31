@@ -109,7 +109,8 @@
 					objective = steal_objective
 			var/inthere = 0
 			for(var/j, j<= target.len, j++)
-				if(target[j] == objective)
+				var/datum/objective/temp = target[j]
+				if(temp:target == objective:target)
 					inthere = 1
 					break
 			if(!inthere)

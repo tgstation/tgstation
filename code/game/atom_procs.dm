@@ -93,32 +93,25 @@
 				src.fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
 			return 0
-		if (!( src.fingerprints ))
-			src.fingerprints = list(text("[]&[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), rand(40,60))))
-			if(src.fingerprintslast != H.key)
-				src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
-				src.fingerprintslast = H.key
-			return 1
 		else
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
 			var/new_prints = 0
 			var/prints
-			for(var/i = 1, i < src.fingerprints.len, i++)
+			for(var/i = 1, i < (src.fingerprints.len + 1), i++)
 				var/list/L = params2list(src.fingerprints[i])
 				if(L[1] == md5(H.dna.uni_identity))
 					new_prints = i
 					prints = L[2]
 					break
 				else
-					src.fingerprints[i] = L[1] + "&" + stars(L[2], rand(90,95))
+					src.fingerprints[i] = L[1] + "&" + stars(L[2], rand(80,90))
 			if(new_prints)
-				src.fingerprints[new_prints] = list(text("[]&[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), rand(40,60)))))
-				return 1
-			else
-				src.fingerprints += text("[]&[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), rand(40,60)))
-				return 1
+				src.fingerprints[new_prints] = text("[]&[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), rand(15,30))))
+			else if(new_prints == 0)
+				src.fingerprints += text("[]&[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), rand(15,30)))
+			return 1
 	else
 		if(src.fingerprintslast != M.key)
 			src.fingerprintshidden += text("Real name: [], Key: []",M.real_name, M.key)
@@ -140,26 +133,37 @@
 			I.Blend(new /icon('blood.dmi', "itemblood"),ICON_MULTIPLY)
 			I.Blend(new /icon(src.icon, src.icon_state),ICON_UNDERLAY)
 			src.icon = I
-			src.blood_DNA.len++
-			src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes, M.b_type)
+			if(src.blood_DNA)
+				src.blood_DNA.len++
+				src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.b_type)
+			else
+				var/list/blood_DNA_temp[1]
+				blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.b_type)
+				src.blood_DNA =  blood_DNA_temp
 		else if (istype(src, /turf/simulated))
 			var/turf/simulated/source2 = src
 			var/list/objsonturf = range(0,src)
-			var/i
-			for(i=1, i<=objsonturf.len, i++)
-				if(istype(objsonturf[i],/obj/effect/decal/cleanable/blood))
-					return
+			if(objsonturf)
+				for(var/i=1, i<=objsonturf.len, i++)
+					if(istype(objsonturf[i],/obj/effect/decal/cleanable/blood))
+						return
 			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source2)
-			this.blood_DNA.len++
-			this.blood_DNA[this.blood_DNA.len] = list(M.dna.unique_enzymes, M.b_type)
+			var/list/blood_DNA_temp[1]
+			blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.b_type)
+			this.blood_DNA =  blood_DNA_temp
 			this.virus2 = M.virus2
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
 				this.viruses += newDisease
 				newDisease.holder = this
 		else if (istype(src, /mob/living/carbon/human))
-			src.blood_DNA.len++
-			src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.b_type)
+			if(src.blood_DNA)
+				src.blood_DNA.len++
+				src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.b_type)
+			else
+				var/list/blood_DNA_temp[1]
+				blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.b_type)
+				src.blood_DNA =  blood_DNA_temp
 		else
 			return
 	else

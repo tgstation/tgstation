@@ -228,7 +228,7 @@
 				user << "\blue The wardrobe is full."
 				return
 		user << "\blue You pick up all the items."
-		user.visible_message("\blue [user] gathers up the pile of stuff, and puts it into \the [src]")
+		user.visible_message("\blue [user] gathers up the pile of stuff, and puts it into \the [W]")
 		I.update_icon()
 
 /obj/item/attack_self(mob/user as mob)

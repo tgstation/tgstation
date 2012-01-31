@@ -101,6 +101,12 @@ datum
 			id = "blood"
 			reagent_state = LIQUID
 			color = "#C80000" // rgb: 200, 0, 0
+			on_mob_life(var/mob/living/M)
+				if(istype(M, /mob/living/carbon/human) && blood_incompatible(data["blood_type"],M.dna.b_type))
+					M.adjustToxLoss(rand(1.5,3))
+					M.adjustOxyLoss(rand(1.5,3))
+				..()
+				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				var/datum/reagent/blood/self = src

@@ -131,7 +131,7 @@ MASS SPECTROMETER
 					user << "\blue Blood type: [templist[2]]\nDNA: [templist[1]]"
 		return
 
-	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
+	afterattack(atom/A as obj|turf|area, mob/user as mob)
 		if(src.loc != user)
 			return 0
 		src.add_fingerprint(user)
@@ -141,34 +141,42 @@ MASS SPECTROMETER
 					var/list/templist = A.blood_DNA[i]
 					user << "\blue Blood type: [templist[2]]\nDNA: [templist[1]]"
 			return
-		if (!( A.fingerprints ) && !(A.suit_fibers) && !(A.blood_DNA))
+		var/duplicate = 0
+		if ((!A.fingerprints || A.fingerprints.len == 0) && !(A.suit_fibers) && !(A.blood_DNA))
 			user << "\blue Unable to locate any fingerprints, materials, fibers, or blood on [A]!"
 			return 0
 		else if (A.blood_DNA)
 			user << "\blue Blood found on [A]. Analysing..."
 			sleep(15)
-			var/duplicate = add_data(A)
-			if(duplicate)
-				user << "\blue Blood already in memory."
-			for(var/i = 1, i < A.blood_DNA.len, i++)
+			if(!duplicate)
+				duplicate = 1
+				var/i = add_data(A)
+				if(i)
+					user << "\blue Blood already in memory."
+			for(var/i = 1, i < (A.blood_DNA.len + 1), i++)
 				var/list/templist = A.blood_DNA[i]
 				user << "\blue Blood type: [templist[2]]\nDNA: [templist[1]]"
 		else
 			user << "\blue No Blood Located"
-		if(!( A.fingerprints ))
+		if(!A.fingerprints || A.fingerprints.len == 0)
 			user << "\blue No Fingerprints Located."
 		else
 			user << text("\blue Isolated [A.fingerprints.len] fingerprints: Data Stored: Scan with Hi-Res Forensic Scanner to retrieve.")
-			var/duplicate = add_data(A)
-			if(duplicate)
-				user << "\blue Figerprints already in memory."
+			if(!duplicate)
+				duplicate = 1
+				var/i = add_data(A)
+				if(i)
+					user << "\blue Fingerprints already in memory."
 		if(!A.suit_fibers)
 			user << "\blue No Fibers/Materials Located."
 		else
 			user << "\blue Fibers/Materials Data Stored: Scan with Hi-Res Forensic Scanner to retrieve."
-			var/duplicate = add_data(A)
-			if(duplicate)
-				user << "\blue Fibers/Materials already in memory."
+
+			if(!duplicate)
+				duplicate = 1
+				var/i = add_data(A)
+				if(i)
+					user << "\blue Fibers/Materials already in memory."
 	//	else
 	//		if ((src.amount < 1 && src.printing))
 	//			user << "\blue Fingerprints found. Need more cards to print."
@@ -188,18 +196,20 @@ MASS SPECTROMETER
 
 	proc/add_data(atom/A as mob|obj|turf|area)
 		var/merged = 0
-		for(var/i = 1, i < stored.len, i++)	//Lets see if the object is already in there!
+		for(var/i = 1, i < (stored.len + 1), i++)	//Lets see if the object is already in there!
 			var/list/temp = stored[i]
 			var/checker = temp[1]
 			if(checker == A)	//It is!  Merge!
 				merged = 1
 				var/list/prints = temp[2]
+				if(!prints)
+					prints = list()
 				if(A.fingerprints)
-					for(var/j = 1, j < A.fingerprints.len, j++)	//Fingerprints~~~
+					for(var/j = 1, j < (A.fingerprints.len + 1), j++)	//Fingerprints~~~
 						var/list/print_test1 = params2list(A.fingerprints[j])
 						var/test_print1 = print_test1[1]
 						var/found = 0
-						for(var/k = 1, k <= prints.len, k++)	//Lets see if the print is already in there
+						for(var/k = 1, k < (prints.len + 1), k++)	//Lets see if the print is already in there
 							var/list/print_test2 = params2list(prints[k])
 							var/test_print2 = print_test2[1]
 							if(test_print2 == test_print1)	//It is!  Merge!
@@ -209,28 +219,18 @@ MASS SPECTROMETER
 						if(!found)	//It isn't!  Add!
 							prints += A.fingerprints[j]
 				var/list/fibers = temp[3]
+				if(!fibers)
+					fibers = list()
 				if(A.suit_fibers)
-					for(var/j = 1, j < A.suit_fibers.len, j++)	//Fibers~~~
-						var/test_print1 = A.suit_fibers[j]
-						var/found = 0
-						for(var/k = 1, k <= fibers.len, k++)	//Lets see if the fiber is already in there
-							var/test_print2 = fibers[k]
-							if(test_print2 == test_print1)	//It is! Do nothing!
-								found = 1
-								break	//We found it, we're done here.
-						if(!found)	//It isn't!  Add!
+					for(var/j = 1, j < (A.suit_fibers.len + 1), j++)	//Fibers~~~
+						if(!fibers.Find(A.suit_fibers[j]))	//It isn't!  Add!
 							fibers += A.suit_fibers[j]
 				var/list/blood = temp[4]
+				if(!blood)
+					blood = list()
 				if(A.blood_DNA)
-					for(var/j = 1, j < A.blood_DNA.len, j++)	//Blood~~~
-						var/test_print1 = A.blood_DNA[j]
-						var/found = 0
-						for(var/k = 1, k <= blood.len, k++)	//Lets see if the blood is already in there
-							var/test_print2 = blood[k]
-							if(test_print2 == test_print1)	//It is! Do nothing!
-								found = 1
-								break	//We found it, we're done here.
-						if(!found)	//It isn't!  Add!
+					for(var/j = 1, j < (A.blood_DNA.len + 1), j++)	//Blood~~~
+						if(!blood.Find(A.blood_DNA[j]))	//It isn't!  Add!
 							blood += A.blood_DNA[j]
 				var/list/sum_list[4]	//Pack it back up!
 				sum_list[1] = A
@@ -247,7 +247,7 @@ MASS SPECTROMETER
 			sum_list[4] = A.blood_DNA
 			stored.len++
 			stored[stored.len] = sum_list
-		return !merged
+		return merged
 
 
 /obj/item/device/healthanalyzer

@@ -863,6 +863,7 @@
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = null //list(5,10,15)
 	volume = 15
+	var/has_blood = 0
 	var/mode = SYRINGE_DRAW
 
 	on_reagent_change()
@@ -1023,6 +1024,10 @@
 
 	update_icon()
 		var/rounded_vol = round(reagents.total_volume,5)
+		has_blood = 0
+		for(var/datum/reagent/blood/B in reagents.reagent_list)
+			has_blood = 1
+			break
 		if(ismob(loc))
 			var/mode_t
 			switch(mode)
@@ -1030,9 +1035,9 @@
 					mode_t = "d"
 				if (SYRINGE_INJECT)
 					mode_t = "i"
-			icon_state = "[mode_t][rounded_vol]"
+			icon_state = "[mode_t][(has_blood?"b":"")][rounded_vol]"
 		else
-			icon_state = "[rounded_vol]"
+			icon_state = "[(has_blood?"b":"")][rounded_vol]"
 		item_state = "syringe_[rounded_vol]"
 
 

@@ -1,4 +1,5 @@
 mob/living/carbon/verb/give()
+	set category = "IC"
 	set name = "Give"
 	set src in view(1)
 	if(src.stat == 2 || usr.stat == 2|| src.client == null)
@@ -42,6 +43,7 @@ mob/living/carbon/verb/give()
 						src.l_hand = I
 					else
 						usr << "Their hands are full."
+						return
 				else
 					usr.drop_item(I)
 					src.r_hand = I
@@ -70,6 +72,7 @@ mob/living/carbon/verb/give()
 						src.r_hand = I
 					else
 						usr << "Their hands are full."
+						return
 				else
 					usr.drop_item(I)
 					src.l_hand = I
