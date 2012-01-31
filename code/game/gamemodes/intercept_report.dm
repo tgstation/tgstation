@@ -207,14 +207,14 @@
 
 	src.text += "<BR><BR>The evil Space Wizards Federation have recently broke their most feared wizard, known only as \"[SWF_desc]\" out of space jail. "
 	src.text += "He is on the run, last spotted in a system near your present location. If anybody suspicious is located aboard, please "
-	src.text += "approach with EXTREME caution. Cent. Com also recommends that it would be wise to not inform the crew of this, due to it's fearful nature."
+	src.text += "approach with EXTREME caution. Cent. Com also recommends that it would be wise to not inform the crew of this, due to their fearful nature."
 	src.text += "Known attributes include: Brown sandals, a large blue hat, a voluptous white beard, and an inclination to cast spells."
 
 /datum/intercept_text/proc/build_nuke(datum/mind/correct_person)
 	src.text += "<BR><BR>Cent. Com recently recieved a report of a plot to destory one of our stations in your area. We believe the Nuclear Authentication Disc "
-	src.text += "that is standard issue aboard your vessel may be a target, and reccommend removal of this object, and it's storage in a safe "
+	src.text += "that is standard issue aboard your vessel may be a target. We recommend removal of this object, and it's storage in a safe "
 	src.text += "environment. As this may cause panic among the crew, all efforts should be made to keep this information a secret from all but "
-	src.text += "the most trusted members."
+	src.text += "the most trusted crew-members."
 
 /datum/intercept_text/proc/build_malf(datum/mind/correct_person)
 	var/a_name = pick(src.anomalies)

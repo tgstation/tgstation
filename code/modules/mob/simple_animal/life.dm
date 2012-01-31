@@ -2,7 +2,7 @@
 	name = "animal"
 	var/icon_living = ""
 	var/icon_dead = ""
-	var/max_health = 20
+	maxHealth = 20
 	var/alive = 1
 	var/list/speak = list()
 	var/list/speak_emote = list()//	Emotes while speaking IE: Ian [emote], [text] -- Ian barks, "WOOF!". Spoken text is generated from the speak variable.
@@ -77,8 +77,8 @@
 		density = 0
 		return
 
-	if(health > max_health)
-		health = max_health
+	if(health > maxHealth)
+		health = maxHealth
 
 	//Movement
 	if(!ckey && !stop_automated_movement)
@@ -201,6 +201,7 @@
 
 /mob/living/simple_animal/emote(var/act)
 	if(act)
+		if(act == "scream")	act = "makes a loud and pained whimper" //ugly hack to stop animals screaming when crushed :P
 		for (var/mob/O in viewers(src, null))
 			O.show_message("<B>[src]</B> [act].")
 
@@ -267,9 +268,9 @@
 	if(istype(O, /obj/item/stack/medical))
 		if(alive)
 			var/obj/item/stack/medical/MED = O
-			if(health < max_health)
+			if(health < maxHealth)
 				if(MED.amount >= 1)
-					health = min(max_health, health + MED.heal_brute)
+					health = min(maxHealth, health + MED.heal_brute)
 					MED.amount -= 1
 					if(MED.amount <= 0)
 						del(MED)

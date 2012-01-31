@@ -41,7 +41,7 @@
 
 /obj/effect/decal/cleanable/blood
 	name = "Blood"
-	desc = "It's red. Its Gooye. It is the chefs cooking perhaps."
+	desc = "It's red. It's Gooye. It's the chef's cooking, perhaps?"
 	density = 0
 	anchored = 1
 	layer = 2
@@ -94,7 +94,7 @@
 
 /obj/effect/decal/cleanable/xenoblood
 	name = "xeno blood"
-	desc = "It's green. Must be more of the chefs cooking."
+	desc = "It's green. Must be more of the chef's cooking."
 	density = 0
 	anchored = 1
 	layer = 2

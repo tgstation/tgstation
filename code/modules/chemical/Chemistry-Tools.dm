@@ -2357,7 +2357,7 @@
 					icon_state = "soysauce"
 				if("frostoil")
 					name = "Coldsauce"
-					desc = "Leaves the tongue numb in it's passage."
+					desc = "Leaves the tongue numb in its passage."
 					icon_state = "coldsauce"
 				if("sodiumchloride")
 					name = "Salt Shaker"

@@ -36,7 +36,7 @@ var/ordernum=0
 //SUPPLY PACKS MOVED TO /code/defines/obj/supplypacks.dm
 
 /obj/structure/plasticflaps //HOW DO YOU CALL THOSE THINGS ANYWAY
-	name = "Plastic flaps"
+	name = "\improper Plastic flaps"
 	desc = "I definitely cant get past those. no way."
 	icon = 'stationobjs.dmi' //Change this.
 	icon_state = "plasticflaps"
@@ -65,7 +65,21 @@ var/ordernum=0
 				del(src)
 
 /obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates
-	var/blocks_air = 1
+	name = "\improper Airtight plastic flaps"
+	desc = "Heavy duty, airtight, plastic flaps."
+
+	New() //set the turf below the flaps to block air
+		var/turf/T = get_turf(src.loc)
+		if(T)
+			T.blocks_air = 1
+		..()
+
+	Del() //lazy hack to set the turf to allow air to pass if it's a simulated floor
+		var/turf/T = get_turf(src.loc)
+		if(T)
+			if(istype(T, /turf/simulated/floor))
+				T.blocks_air = 0
+		..()
 
 /area/supplyshuttle
 	name = "Supply Shuttle"

@@ -366,7 +366,7 @@
 // called when area power state changes
 
 /obj/machinery/light/power_change()
-	spawn(rand(0,15))
+	spawn(0)  //rand(0,15)
 		var/area/A = src.loc.loc
 		A = A.master
 		seton(A.lightswitch && A.power_light)

@@ -19,7 +19,7 @@
 			gl_uid = 1
 
 /obj/machinery/autolathe
-	name = "Autolathe"
+	name = "\improper Autolathe"
 	desc = "Produces items with metal and glass."
 	icon_state = "autolathe"
 	density = 1
@@ -42,7 +42,7 @@
 	active_power_usage = 100
 
 /obj/machinery/camera
-	name = "Security Camera"
+	name = "security camera"
 	desc = "This is used to monitor rooms. Can see through walls."
 	icon = 'monitors.dmi'
 	icon_state = "camera"
@@ -60,8 +60,8 @@
 	active_power_usage = 10
 
 /obj/machinery/dispenser
+	name = "\improper Tank Storage Unit"
 	desc = "A simple yet bulky one-way storage device for gas tanks. Holds 10 plasma and 10 oxygen tanks."
-	name = "Tank Storage Unit"
 	icon = 'objects.dmi'
 	icon_state = "dispenser"
 	density = 1
@@ -73,7 +73,7 @@
 	active_power_usage = 10
 
 /obj/machinery/dna_scanner
-	name = "DNA Scanner/Implanter"
+	name = "\improper DNA Scanner/Implanter"
 	desc = "Scans DNA."
 	icon = 'Cryogenic2.dmi'
 	icon_state = "scanner_0"
@@ -86,7 +86,7 @@
 	active_power_usage = 300
 
 /obj/machinery/dna_scannernew
-	name = "DNA Modifier"
+	name = "\improper DNA Modifier"
 	desc = "Scans DNA better."
 	icon = 'Cryogenic2.dmi'
 	icon_state = "scanner_0"
@@ -99,7 +99,7 @@
 	active_power_usage = 300
 
 /obj/machinery/firealarm
-	name = "Fire Alarm"
+	name = "fire alarm"
 	desc = "Pull this in case of emergency. Thus keep pulling this forever."
 	icon = 'monitors.dmi'
 	icon_state = "fire0"
@@ -115,7 +115,7 @@
 	power_channel = ENVIRON
 
 /obj/machinery/partyalarm
-	name = "Party Button"
+	name = "\improper Party Button"
 	desc = "Cuban Pete is in the house!"
 	icon = 'monitors.dmi'
 	icon_state = "fire0"
@@ -169,7 +169,7 @@
 	active_power_usage = 4
 
 /obj/machinery/restruct
-	name = "DNA Physical Restructurization Accelerator"
+	name = "\improper DNA Physical Restructurization Accelerator"
 	desc = "This looks complex."
 	icon = 'Cryogenic2.dmi'
 	icon_state = "restruct_0"
@@ -182,7 +182,7 @@
 	active_power_usage = 600
 
 /obj/machinery/scan_console
-	name = "DNA Scanner Access Console"
+	name = "\improper DNA Scanner Access Console"
 	desc = "Scand DNA."
 	icon = 'computer.dmi'
 	icon_state = "scanner"
@@ -204,7 +204,7 @@
 	active_power_usage = 400
 
 /obj/machinery/door_control
-	name = "Remote Door Control"
+	name = "remote door control"
 	desc = "This controls doors."
 	icon = 'stationobjs.dmi'
 	icon_state = "doorctrl0"
@@ -228,7 +228,7 @@
 	active_power_usage = 4
 
 /obj/machinery/driver_button
-	name = "Mass Driver Button"
+	name = "mass driver button"
 	desc = "FIRE AWAY!"
 	icon = 'objects.dmi'
 	icon_state = "launcherbtt"
@@ -241,7 +241,7 @@
 	active_power_usage = 4
 
 /obj/machinery/ignition_switch
-	name = "Ignition Switch"
+	name = "ignition switch"
 	desc = "Activates that igniter."
 	icon = 'objects.dmi'
 	icon_state = "launcherbtt"
@@ -336,7 +336,7 @@
 	var/lastgenlev = -1
 
 /obj/machinery/power/monitor
-	name = "Power Monitoring Computer"
+	name = "\improper Power Monitoring Computer"
 	desc = "Used to monitor the power. Pretty useless."
 	icon = 'computer.dmi'
 	icon_state = "power"
@@ -359,7 +359,7 @@
 	active_power_usage = 60
 
 /obj/machinery/light_switch
-	desc = "A light switch"
+	desc = "light switch"
 	name = null
 	icon = 'power.dmi'
 	icon_state = "light1"
@@ -390,20 +390,20 @@
 		obj/effect/overlay/hologram//The projection itself. If there is one, the instrument is on, off otherwise.
 
 /obj/machinery/hologram/holopad
-	name = "AI holopad"
+	name = "\improper AI holopad"
 	desc = "A floor-mounted device for projecting a holographic image. It is activated remotely."
 	icon_state = "holopad0"
 	var
 		mob/living/silicon/ai/master//Which AI, if any, is controlling the object? Only one AI may control a hologram at any time.
 
 /obj/machinery/hologram/projector
-	name = "Hologram Projector"
+	name = "\improper Hologram Projector"
 	desc = "Makes a hologram appear...somehow..."
 	icon = 'stationobjs.dmi'
 	icon_state = "hologram0"
 
 /obj/machinery/hologram/proj_ai
-	name = "Hologram Projector Platform"
+	name = "\improper Hologram Projector Platform"
 	desc = "Used for the fun of the diabolical AI."
 	icon = 'stationobjs.dmi'
 	icon_state = "hologram0"

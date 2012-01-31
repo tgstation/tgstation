@@ -134,7 +134,7 @@ will suffer from an increased appetite.</B><BR>
 the implant releases the chemicals directly into the blood stream.<BR>
 <b>Special Features:</b>
 <i>Micro-Capsule</i>- Can be loaded with any sort of chemical agent via the common syringe and can hold 15 units.<BR>
-Can only be loaded while still in it's original case.<BR>
+Can only be loaded while still in its original case.<BR>
 <b>Integrity:</b> Implant will last so long as the subject is alive. However, if the subject suffers from malnutrition,<BR>
 the implant may become unstable and either pre-maturely inject the subject or simply break."}
 		return dat

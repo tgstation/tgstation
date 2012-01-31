@@ -54,6 +54,8 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 
 		if(svndirpath && fexists(svndirpath) && fexists("[svndirpath]/entries") && isfile(file("[svndirpath]/entries")))
 			var/list/filelist = dd_file2list("[svndirpath]/entries",null)
+			if(filelist.len < 4)
+				return abort()
 			revision = filelist[4]
 			commiter = filelist[12]
 			diary << "Revision info loaded succesfully"

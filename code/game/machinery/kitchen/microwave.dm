@@ -88,7 +88,7 @@
 					"\blue [user]  has cleaned  the microwave.", \
 					"\blue You have cleaned the microwave." \
 				)
-				src.dirty = 0 // It's cleaned!
+				src.dirty = 0 // It's clean!
 				src.broken = 0 // just to be sure
 				src.icon_state = "mw"
 				src.flags = OPENCONTAINER
