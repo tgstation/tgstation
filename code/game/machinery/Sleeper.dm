@@ -144,7 +144,10 @@
 		..()
 		spawn( 5 )
 			if(orient == "RIGHT")
-				icon_state = "sleeper_0-r"
+				if(!istype(src,/obj/machinery/sleeper/syndicate))
+					icon_state = "sleeper_0-r"
+				else
+					icon_state = "syndipod_0-r"
 			return
 		return
 
@@ -193,9 +196,14 @@
 				M.client.eye = src
 			M.loc = src
 			src.occupant = M
-			src.icon_state = "sleeper_1"
-			if(orient == "RIGHT")
-				icon_state = "sleeper_1-r"
+			if(!istype(src,/obj/machinery/sleeper/syndicate))
+				src.icon_state = "sleeper_1"
+				if(orient == "RIGHT")
+					icon_state = "sleeper_1-r"
+			else
+				src.icon_state = "syndipod_1"
+				if(orient == "RIGHT")
+					icon_state = "syndipod_1-r"
 
 			for(var/obj/O in src)
 				O.loc = src.loc
@@ -259,8 +267,11 @@
 			src.occupant.client.perspective = MOB_PERSPECTIVE
 		src.occupant.loc = src.loc
 		src.occupant = null
-		if(orient == "RIGHT" && !istype(src,/obj/machinery/sleeper/syndicate))
-			icon_state = "sleeper_0-r"
+		if(orient == "RIGHT")
+			if(!istype(src,/obj/machinery/sleeper/syndicate))
+				icon_state = "sleeper_0-r"
+			else
+				icon_state = "syndipod_0-r"
 		return
 
 
@@ -350,7 +361,9 @@
 				icon_state = "sleeper_0-r"
 			src.icon_state = "sleeper_0"
 		else
-			src.icon_state = "syndi_0"
+			if(orient == "RIGHT")
+				icon_state = "syndipod_0-r"
+			src.icon_state = "syndipod_0"
 		src.go_out()
 		add_fingerprint(usr)
 		return
@@ -390,7 +403,9 @@
 				if(orient == "RIGHT")
 					icon_state = "sleeper_1-r"
 			else
-				src.icon_state = "syndi_1"
+				src.icon_state = "syndipod_1"
+				if(orient == "RIGHT")
+					icon_state = "syndipod_1-r"
 
 			for(var/obj/O in src)
 				del(O)
