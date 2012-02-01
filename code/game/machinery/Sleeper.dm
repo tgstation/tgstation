@@ -363,6 +363,9 @@
 
 		if(usr.stat != 0)
 			return
+		if(istype(src,/obj/machinery/sleeper/syndicate))
+			usr << "\red You really want to get into an illegal stasis pod? Are you dumb?"
+			return
 		if(src.occupant)
 			usr << "\blue <B>The [src.name] is already occupied!</B>"
 			return

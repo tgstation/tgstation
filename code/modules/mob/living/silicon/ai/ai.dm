@@ -54,7 +54,7 @@
 			if (!(ticker && ticker.mode && (mind in ticker.mode.malf_ai)))
 				show_laws()
 				src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
-				src << "<br><b><font color=red>IMPORTANT GAMEPLAY ASPECTS:</font</b>"
+				src << "<br><b><font color=red>IMPORTANT GAMEPLAY ASPECTS:</font></b>"
 				src << "1.) Act like an AI.  If someone is breaking into your upload, say something like \"Alert.  Unauthorised Access Detected: AI Upload.\" not \"Help! Urist is trying to subvert me!\""
 				src << "2.) Do not watch the traitor like a hawk alerting the station to his/her every move.  This relates to 1."
 				src << "3.) You are theoretically omniscient, but you should not be Beepsky 5000, laying down the law left and right.  That is security's job.  Instead, try to keep the station productive and effective.  (Feel free to report the location of major violence and crimes and all that, just do not be the evil thing looking over peoples shoulders)"
