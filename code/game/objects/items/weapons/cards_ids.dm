@@ -201,11 +201,11 @@ FINGERPRINT CARD
 
 /obj/item/weapon/f_card/proc/display()
 
-	if (src.fingerprints)
+	if (length(src.fingerprints))
 		var/dat = "<B>Fingerprints on Card</B><HR>"
-		var/L = params2list(src.fingerprints)
-		for(var/i in L)
-			dat += text("[]<BR>", i)
+		for(var/i = 1, i < (src.fingerprints.len + 1), i++)
+			var/list/L = params2list(src.fingerprints[i])
+			dat += text("[]<BR>", L[1])
 			//Foreach goto(41)
 		return dat
 	else
@@ -270,7 +270,7 @@ FINGERPRINT CARD
 
 	..()
 	if (!istype(usr, /mob/living/silicon))
-		if (src.fingerprints)
+		if (length(src.fingerprints))
 			if (src.amount > 1)
 				var/obj/item/weapon/f_card/F = new /obj/item/weapon/f_card( (ismob(src.loc) ? src.loc.loc : src.loc) )
 				F.amount = --src.amount

@@ -743,7 +743,9 @@
 				else
 					user << "\blue Blood found on [C]. Analysing..."
 					spawn(15)
-						user << "\blue Blood type: [C:blood_type]\nDNA: [C:blood_DNA]"
+						for(var/i = 1, i < C:blood_DNA.len, i++)
+							var/list/templist = C:blood_DNA[i]
+							user << "\blue Blood type: [templist[2]]\nDNA: [templist[1]]"
 
 			if(4)
 				for (var/mob/O in viewers(C, null))
@@ -761,10 +763,9 @@
 			if (!A.fingerprints)
 				user << "\blue Unable to locate any fingerprints on [A]!"
 			else
-				var/list/L = params2list(A:fingerprints)
-				user << "\blue Isolated [L.len] fingerprints."
-				for(var/i in L)
-					user << "\blue \t [i]"
+				user << "\blue Isolated [A:fingerprints.len] fingerprints."
+//				for(var/i in L)
+//					user << "\blue \t [i]"
 
 		if(3)
 			if(!isnull(A.reagents))

@@ -59,9 +59,6 @@
 
 /datum/game_mode/traitor/autotraitor/post_setup()
 	..()
-	for(var/mob/T in world)
-		if(T.mind in possible_traitors)
-			T.be_syndicate = 1
 	abandon_allowed = 1
 	traitorcheckloop()
 
@@ -79,7 +76,7 @@
 				playercount += 1
 			if (player.client && player.mind && player.mind.special_role && player.stat != 2)
 				traitorcount += 1
-			if (player.client && player.mind && !player.mind.special_role && player.stat != 2 && player.be_syndicate && !jobban_isbanned(player, "Syndicate"))
+			if (player.client && player.mind && !player.mind.special_role && player.stat != 2 && (player.be_syndicate & BE_TRAITOR) && !jobban_isbanned(player, "Syndicate"))
 				possible_traitors += player
 		//message_admins("Live Players: [playercount]")
 		//message_admins("Live Traitors: [traitorcount]")
@@ -162,7 +159,7 @@
 	if(emergency_shuttle.departed)
 		return
 	//message_admins("Late Join Check")
-	if(character.be_syndicate == 1 && !jobban_isbanned(character, "Syndicate"))
+	if((character.be_syndicate & BE_TRAITOR) && !jobban_isbanned(character, "Syndicate"))
 		//message_admins("Late Joiner has Be Syndicate")
 		//message_admins("Checking number of players")
 		var/playercount = 0

@@ -112,6 +112,7 @@ emp_act
 				else					H.add_blood(src)
 				if(H.wear_suit)			H.wear_suit.add_blood(src)
 				else if(H.w_uniform)	H.w_uniform.add_blood(src)
+				if(H.shoes)				H.shoes.add_blood(src)
 
 		switch(hit_area)
 			if("head")//Harder to score a stun but if you do it lasts a bit longer

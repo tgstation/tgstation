@@ -1,7 +1,7 @@
 //HUMANS
 
-/proc/gibs(atom/location, var/list/viruses)
-	new /obj/effect/gibspawner/human(get_turf(location),viruses)
+/proc/gibs(atom/location, var/list/viruses, var/datum/dna/MobDNA)
+	new /obj/effect/gibspawner/human(get_turf(location),viruses,MobDNA)
 
 /proc/xgibs(atom/location, var/list/viruses)
 	new /obj/effect/gibspawner/xeno(get_turf(location),viruses)
@@ -16,13 +16,13 @@
 	var/list/gibamounts = list()
 	var/list/gibdirections = list() //of lists
 
-	New(location, var/list/viruses)
+	New(location, var/list/viruses, var/datum/dna/MobDNA)
 		..()
 
 		if(istype(loc,/turf)) //basically if a badmin spawns it
-			Gib(loc,viruses)
+			Gib(loc,viruses,MobDNA)
 
-	proc/Gib(atom/location, var/list/viruses = list())
+	proc/Gib(atom/location, var/list/viruses = list(), var/datum/dna/MobDNA = null)
 		if(gibtypes.len != gibamounts.len || gibamounts.len != gibdirections.len)
 			world << "\red Gib list length mismatch!"
 			return
@@ -50,6 +50,11 @@
 								gib.viruses += viruus
 								viruus.holder = gib
 								viruus.spread_type = CONTACT_FEET
+					if(MobDNA)
+						gib.blood_DNA.len++
+						gib.blood_DNA[gib.blood_DNA.len] = list(MobDNA.unique_enzymes, MobDNA.b_type)
+						if(MobDNA.original_name != "Unknown")
+							gib.OriginalMob = MobDNA.original_name
 					var/list/directions = gibdirections[i]
 					if(directions.len)
 						gib.streak(directions)

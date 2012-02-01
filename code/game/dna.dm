@@ -4,6 +4,7 @@
 	var/struc_enzymes = null
 	var/uni_identity = null
 	var/original_name = "Unknown"
+	var/b_type = "A+"
 
 /datum/dna/proc/check_integrity()
 	//Lazy.

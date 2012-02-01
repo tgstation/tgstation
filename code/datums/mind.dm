@@ -309,13 +309,13 @@ datum/mind
 				if(!def_value)//If it's a custom objective, it will be an empty string.
 					def_value = "custom"
 
-			var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "debrain", "protect", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
+			var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate","decapitate", "debrain", "protect", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
 			if (!new_obj_type) return
 
 			var/datum/objective/new_objective = null
 
 			switch (new_obj_type)
-				if ("assassinate","protect","debrain")
+				if ("assassinate","protect","debrain","decapitate")
 					//To determine what to name the objective in explanation text.
 					var/objective_type_capital = uppertext(copytext(new_obj_type, 1,2))//Capitalize first letter.
 					var/objective_type_text = copytext(new_obj_type, 2)//Leave the rest of the text.
@@ -327,7 +327,7 @@ datum/mind
 							possible_targets += possible_target.current
 
 					var/mob/def_target = null
-					var/objective_list[] = list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain)
+					var/objective_list[] = list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain, /datum/objective/decapitate)
 					if (objective&&(objective.type in objective_list) && objective:target)
 						def_target = objective:target.current
 
