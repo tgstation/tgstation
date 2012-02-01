@@ -500,6 +500,7 @@
 #include "code\game\machinery\bots\ed209bot.dm"
 #include "code\game\machinery\bots\floorbot.dm"
 #include "code\game\machinery\bots\medbot.dm"
+#include "code\game\machinery\bots\mulebot.dm"
 #include "code\game\machinery\bots\secbot.dm"
 #include "code\game\machinery\computer\AIcore.dm"
 #include "code\game\machinery\computer\aifixer.dm"
