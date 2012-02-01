@@ -100,6 +100,8 @@ proc/process_ghost_teleport_locs()
 /*-----------------------------------------------------------------------------*/
 
 /area/engine/
+	name = "Engineering"
+	icon_state = "engine"
 
 /area/turret_protected/
 
@@ -671,23 +673,73 @@ proc/process_ghost_teleport_locs()
 //Engineering
 
 /area/engine
+	engineering
+
 	engine_smes
 		name = "Engineering SMES"
 		icon_state = "engine_smes"
 		requires_power = 0//This area only covers the batteries and they deal with their own power
 
-	engineering
-		name = "Engineering"
-		icon_state = "engine"
-
 	particle_accelerator
 		name = "Particle Accelerator"
-		icon_state = "engine_smes" // not really, but it's some way to distinguish
+		icon_state = "engine_pa"
 
 	chiefs_office
 		name = "Chief Engineers office"
+		icon_state = "engine_ce"
+
+//new engine areas
+	control
+		name = "Engineering Control"
 		icon_state = "engine_control"
 
+	port
+		name = "Engineering Port"
+		icon_state = "engine_port"
+
+	starboard
+		name = "Engineering Starboard"
+		icon_state = "engine_starboard"
+
+	fore
+		name = "Engineering Fore"
+		icon_state = "engine_fore"
+
+	aft
+		name = "Engineering Aft"
+		icon_state = "engine_aft"
+
+	locker
+		name = "Engineering Locker Room"
+		icon_state = "engine_locker"
+
+	construction_storage
+		name = "Engineering Construction Storage"
+		icon_state = "engine_construction"
+
+	atmos_storage
+		name = "Engineering Atmos Storage"
+		icon_state = "engine_atmos"
+
+	electrical_storage
+		name = "Engineering Electrical Storage"
+		icon_state = "engine_electrical"
+
+	secure_storage
+		name = "Engineering Secure Storage"
+		icon_state = "engine_secure"
+
+	foyer
+		name = "Engineering Foyer"
+		icon_state = "engine_foyer"
+
+	breakroom
+		name = "Engineering Break Room"
+		icon_state = "engine_breakroom"
+
+	core
+		name = "Engineering Core"
+		icon_state = "engine_core"
 
 //Solars
 
