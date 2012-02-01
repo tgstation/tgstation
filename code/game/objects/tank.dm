@@ -42,7 +42,7 @@
 	name = "Gas Tank (BIOHAZARD)"
 	desc = "Contains dangerous plasma. Do not inhale."
 	icon_state = "plasma"
-
+	flags = FPRINT | TABLEPASS | CONDUCT
 
 /obj/item/weapon/tank/blob_act()
 	if(prob(50))
