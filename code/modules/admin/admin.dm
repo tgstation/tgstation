@@ -1485,17 +1485,12 @@
 					else
 						alert("You cannot perform this action. You must be of a higher administrative rank!")
 						return
-				if("schoolgirl")
+				/*if("schoolgirl")
 					if (src.rank in list("Badmin", "Game Admin", "Game Master"))
-						for(var/obj/item/clothing/under/W in world)
-							W.icon_state = "schoolgirl"
-							W.item_state = "w_suit"
-							W.color = "schoolgirl"
-						message_admins("[key_name_admin(usr)] activated Japanese Animes mode")
-						world << sound('animes.ogg')
+						alert("You cannot perform this action. It is unbelievably stupid.")
 					else
 						alert("You cannot perform this action. You must be of a higher administrative rank!")
-						return
+						return*/
 				if("dorf")
 					if (src.rank in list("Badmin","Game Admin", "Game Master"))
 						for(var/mob/living/carbon/human/B in world)
@@ -1695,7 +1690,7 @@
 					dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
 					for(var/mob/living/carbon/human/H in world)
 						if(H.dna && H.ckey)
-							dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.b_type]</td></tr>"
+							dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.dna.b_type]</td></tr>"
 					dat += "</table>"
 					usr << browse(dat, "window=DNA;size=440x410")
 				if("fingerprints")
@@ -2141,7 +2136,6 @@
 <A href='?src=\ref[src];secretsfun=flicklights'>Ghost Mode</A><BR>
 <A href='?src=\ref[src];secretsfun=retardify'>Make all players retarded</A><BR>
 <A href='?src=\ref[src];secretsfun=fakeguns'>Make all items look like guns</A><BR>
-<A href='?src=\ref[src];secretsfun=schoolgirl'>Japanese Animes Mode</A><BR>
 <A href='?src=\ref[src];secretsfun=moveadminshuttle'>Move Administration Shuttle</A><BR>
 <A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
 <A href='?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>

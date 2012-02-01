@@ -429,6 +429,11 @@
 					O.show_message(text("\red <B>[] resists!</B>", usr), 1)
 
 			if(usr:handcuffed && usr:canmove && (usr.last_special <= world.time))
+				var/breakouttime = 1200
+				var/displaytime = 2
+				if(!usr:canmove)
+					breakouttime = 2400
+					displaytime = 4
 				usr.next_move = world.time + 100
 				usr.last_special = world.time + 100
 				if(isalienadult(usr) || usr.mutations & HULK)//Don't want to do a lot of logic gating here.
@@ -444,17 +449,31 @@
 							del(usr:handcuffed)
 							usr:handcuffed = null
 				else
-					usr << "\red You attempt to remove your handcuffs. (This will take around 2 minutes and you need to stand still)"
+					usr << "\red You attempt to remove your handcuffs. (This will take around [displaytime] minutes and you need to stand still)"
 					for(var/mob/O in viewers(usr))
 						O.show_message(text("\red <B>[] attempts to remove the handcuffs!</B>", usr), 1)
 					spawn(0)
-						if(do_after(usr, 1200))
-							if(!usr:handcuffed) return
-							for(var/mob/O in viewers(usr))
-								O.show_message(text("\red <B>[] manages to remove the handcuffs!</B>", usr), 1)
-							usr << "\blue You successfully remove your handcuffs."
-							usr:handcuffed:loc = usr:loc
-							usr:handcuffed = null
+						var/increment = 150
+						for(var/i = 0, i < breakouttime, i += increment)
+							if(!do_after(usr, increment))
+								return
+
+							else
+								usr << pick("You hear something click, but it doesn't open yet.",	// - Uristqwerty
+											"The latch resists!",									// - IRC: BowlSoldier
+											"The chain is starting to give!",						// - IRC: BowlSoldier
+											"The chain bends a little.",							// - IRC: STALKER
+											"Your wrist hurts.",									// - IRC: STALKER
+											"Unnng",												// - IRC: Doug_H_Nuts
+											"The chain jangles a bit.",								// - SkyMarshal
+											"\red Hurry up, dammit!",								// - SkyMarshal
+											"This is exhausting!")									// - SkyMarshal
+						if(!usr:handcuffed) return
+						for(var/mob/O in viewers(usr))
+							O.show_message(text("\red <B>[] manages to remove the handcuffs!</B>", usr), 1)
+						usr << "\blue You successfully remove your handcuffs."
+						usr:handcuffed:loc = usr:loc
+						usr:handcuffed = null
 
 			if(istype(usr, /mob/living/carbon/human) && istype(usr:wear_suit, /obj/item/clothing/suit/straight_jacket) && usr:canmove && (usr.last_special <= world.time))
 				usr.next_move = world.time + 200

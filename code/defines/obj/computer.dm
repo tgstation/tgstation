@@ -237,6 +237,23 @@
 	network = "MINE"
 	circuit = "/obj/item/weapon/circuitboard/mining"
 
+/obj/machinery/computer/security/engineering
+	name = "Engineering Cameras"
+	desc = "Used to access the various cameras in engineering."
+	icon_state = "engineeringcameras"
+	network = "ENGINEERING"
+	circuit = "/obj/item/weapon/circuitboard/engineeringcam"
+
+/obj/machinery/computer/lockdown
+	/*
+	name = "Lockdown Control"
+	desc = "Used to control blast doors."
+	icon_state = "lockdown"
+	circuit = "/obj/item/weapon/circuitboard/lockdown"
+	var/connectedDoorIds[0]
+	var/department = ""
+	var/connected_doors[0][0]
+	*/
 
 /obj/machinery/computer/crew
 	name = "Crew monitoring computer"

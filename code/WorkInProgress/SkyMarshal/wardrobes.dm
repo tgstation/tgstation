@@ -5,6 +5,7 @@
 	icon_state = "wardrobe"
 	item_state = "wardrobe"
 	w_class = 4
+	layer = 2.9
 	var
 		descriptor = "various clothing."
 
@@ -34,7 +35,7 @@
 	examine()
 		set src in usr
 		..()
-		usr << "It claims to contain [contents.len ? descriptor : descriptor + "...but it looks empty"]"
+		usr << "It claims to contain [contents.len ? descriptor : descriptor + "... but it looks empty"]"
 		return
 
 	update_icon()
@@ -481,7 +482,6 @@
 		new /obj/item/weapon/pen(src)
 		new /obj/item/weapon/clipboard(src)
 		new /obj/item/device/pda/quartermaster(src)
-		new /obj/item/clothing/gloves/black(src)
 		new /obj/item/clothing/glasses/sunglasses(src)
 		new /obj/item/device/radio/headset/heads/qm(src)
 		new /obj/item/clothing/shoes/black(src)
@@ -497,7 +497,6 @@
 		new /obj/item/weapon/storage/box(BPK)
 		new /obj/item/weapon/pen(src)
 		new /obj/item/device/pda/quartermaster(src)
-		new /obj/item/clothing/gloves/black(src)
 		new /obj/item/device/radio/headset/headset_cargo(src)
 		new /obj/item/clothing/shoes/black(src)
 		new /obj/item/clothing/under/rank/cargo(src)
@@ -518,7 +517,6 @@
 		new /obj/item/weapon/pickaxe(src)
 		new /obj/item/weapon/crowbar(src)
 		new /obj/item/clothing/glasses/meson(src)
-		new /obj/item/clothing/gloves/black(src)
 		new /obj/item/device/radio/headset/headset_mine(src)
 		new /obj/item/clothing/shoes/black(src)
 		new /obj/item/clothing/under/rank/miner(src)
