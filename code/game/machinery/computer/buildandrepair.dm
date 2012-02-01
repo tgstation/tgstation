@@ -28,9 +28,6 @@
 		frame_desc = null
 		contain_parts = 1
 
-/obj/item/weapon/circuitboard/security
-	name = "Circuit board (Security)"
-	build_path = "/obj/machinery/computer/security"
 /obj/item/weapon/circuitboard/aicore
 	name = "Circuit board (AI core)"
 	origin_tech = "programming=4;biotech=2"
@@ -154,10 +151,22 @@
 	name = "Circuit board (Operating Computer)"
 	build_path = "/obj/machinery/computer/operating"
 	origin_tech = "programming=2;biotech=2"
-/obj/item/weapon/circuitboard/mining
-	name = "Circuit board (Outpost Status Display)"
-	build_path = "/obj/machinery/computer/security/mining"
+/obj/item/weapon/circuitboard/camera
+	name = "Circuit board (Camera)"
 	origin_tech = "programming=2"
+	build_path = ""		//build path has to be manually set
+/obj/item/weapon/circuitboard/security
+	name = "Circuit board (Security Monitoring)"
+	origin_tech = ""	//unresearchable
+	build_path = "/obj/machinery/computer/security"
+/obj/item/weapon/circuitboard/security/engineering
+	name = "Circuit board (Engineering Monitoring)"
+	origin_tech = ""	//unresearchable
+	build_path = "/obj/machinery/computer/security/engineering"
+/obj/item/weapon/circuitboard/security/mining
+	name = "Circuit board (Mining Outpost Monitoring)"
+	origin_tech = ""	//unresearchable
+	build_path = "/obj/machinery/computer/security/mining"
 /obj/item/weapon/circuitboard/comm_monitor
 	name = "Circuit board (Telecommunications Monitor)"
 	build_path = "/obj/machinery/computer/telecomms/monitor"
@@ -204,12 +213,15 @@
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "computer")
-					playsound(src.loc, 'Deconstruct.ogg', 50, 1)
-					user << "\blue You place the circuit board inside the frame."
-					src.icon_state = "1"
-					src.circuit = P
-					user.drop_item()
-					P.loc = src
+					if(B.build_path != "")
+						playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+						user << "\blue You place the circuit board inside the frame."
+						src.icon_state = "1"
+						src.circuit = P
+						user.drop_item()
+						P.loc = src
+					else
+						user << "\red That circuit board requires additional modifications before it can be used."
 				else
 					user << "\red This frame does not accept circuit boards of this type!"
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
