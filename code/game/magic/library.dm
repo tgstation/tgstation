@@ -232,11 +232,11 @@
 						if ((!in_range(src, usr) && src.loc != user && src.loc.loc != user && user.equipped() != W))
 							return
 
-						if(lentext(t) >= MAX_PAPER_MESSAGE_LEN)
+						if(lentext(t) >= MAX_BOOK_MESSAGE_LEN)
 							var/cont = input(user, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
 							if(cont == "no")
 								break
-					while(lentext(t) > MAX_PAPER_MESSAGE_LEN)
+					while(lentext(t) > MAX_BOOK_MESSAGE_LEN)
 
 					if ((!in_range(src, usr) && src.loc != user && src.loc.loc != user && user.equipped() != W))
 						return

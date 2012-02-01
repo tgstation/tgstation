@@ -93,22 +93,31 @@
 				src.fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
 			return 0
-		if (!( src.fingerprints ))
-			src.fingerprints = text("[]", md5(H.dna.uni_identity))
-			if(src.fingerprintslast != H.key)
-				src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
-				src.fingerprintslast = H.key
-			return 1
 		else
-			var/list/L = params2list(src.fingerprints)
-			L -= md5(H.dna.uni_identity)
-			while(L.len >= 3)
-				L -= L[1]
-			L += md5(H.dna.uni_identity)
-			src.fingerprints = list2params(L)
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
+			var/new_prints = 0
+			var/prints
+			for(var/i = 1, i < (src.fingerprints.len + 1), i++)
+				var/list/L = params2list(src.fingerprints[i])
+				if(L.len > 1)
+					if(L[num2text(1)] == md5(H.dna.uni_identity))
+						new_prints = i
+						prints = L[num2text(2)]
+						break
+					else
+						src.fingerprints[i] = "1=" + L[num2text(1)] + "&2=" + stars(L[num2text(2)], rand(80,90))
+				else
+					var/turf/T = get_turf(src)
+					for (var/mob/N in world)
+						if (N.client && N.client.holder)
+							N << "<span class=\"gfartadmin\"><span class=\"prefix\">ERROR:</span><span class=\"message\">Fingerprint application failed!  Important data: [src.name] at [T.x], [T.y], [T.z] with the print string [L[1]]</span></span>"
+			if(new_prints)
+				src.fingerprints[new_prints] = text("1=[]&2=[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), rand(15,30))))
+			else if(new_prints == 0)
+				src.fingerprints += text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), rand(15,30)))
+			return 1
 	else
 		if(src.fingerprintslast != M.key)
 			src.fingerprintshidden += text("Real name: [], Key: []",M.real_name, M.key)
@@ -130,26 +139,37 @@
 			I.Blend(new /icon('blood.dmi', "itemblood"),ICON_MULTIPLY)
 			I.Blend(new /icon(src.icon, src.icon_state),ICON_UNDERLAY)
 			src.icon = I
-			src.blood_DNA = M.dna.unique_enzymes
-			src.blood_type = M.b_type
+			if(src.blood_DNA)
+				src.blood_DNA.len++
+				src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.b_type)
+			else
+				var/list/blood_DNA_temp[1]
+				blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.b_type)
+				src.blood_DNA =  blood_DNA_temp
 		else if (istype(src, /turf/simulated))
 			var/turf/simulated/source2 = src
 			var/list/objsonturf = range(0,src)
-			var/i
-			for(i=1, i<=objsonturf.len, i++)
-				if(istype(objsonturf[i],/obj/effect/decal/cleanable/blood))
-					return
+			if(objsonturf)
+				for(var/i=1, i<=objsonturf.len, i++)
+					if(istype(objsonturf[i],/obj/effect/decal/cleanable/blood))
+						return
 			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source2)
-			this.blood_DNA = M.dna.unique_enzymes
-			this.blood_type = M.b_type
+			var/list/blood_DNA_temp[1]
+			blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.b_type)
+			this.blood_DNA =  blood_DNA_temp
 			this.virus2 = M.virus2
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
 				this.viruses += newDisease
 				newDisease.holder = this
 		else if (istype(src, /mob/living/carbon/human))
-			src.blood_DNA = M.dna.unique_enzymes
-			src.blood_type = M.b_type
+			if(src.blood_DNA)
+				src.blood_DNA.len++
+				src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.b_type)
+			else
+				var/list/blood_DNA_temp[1]
+				blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.b_type)
+				src.blood_DNA =  blood_DNA_temp
 		else
 			return
 	else

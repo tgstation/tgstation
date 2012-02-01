@@ -10,69 +10,73 @@
 	if(!ticker || wavesecret)
 		return
 
+	wavesecret = 1
+	for(var/i = 0 to number)
+		spawn(rand(10,100))
+			spawn_meteor()
+	spawn(meteor_wave_delay)
+		wavesecret = 0
+
+/proc/spawn_meteors(var/number = meteors_in_small_wave)
+	for(var/i = 0; i < number; i++)
+		spawn(0)
+			spawn_meteor()
+
+/proc/spawn_meteor()
+
 	var/startx
 	var/starty
 	var/endx
 	var/endy
 	var/turf/pickedstart
 	var/turf/pickedgoal
-	switch(pick(1,2,3,4))
-		if(1) //NORTH
-			starty = world.maxy-3
-			startx = rand(1, world.maxx-1)
-			endy = 1
-			endx = rand(1, world.maxx-1)
-		if(2) //EAST
-			starty = rand(1,world.maxy-1)
-			startx = world.maxx-3
-			endy = rand(1, world.maxy-1)
-			endx = 1
-		if(3) //SOUTH
-			starty = 3
-			startx = rand(1, world.maxx-1)
-			endy = world.maxy-1
-			endx = rand(1, world.maxx-1)
-		if(4) //WEST
-			starty = rand(1, world.maxy-1)
-			startx = 3
-			endy = rand(1,world.maxy-1)
-			endx = world.maxx-1
-	pickedstart = locate(startx, starty, 1)
-	pickedgoal = locate(endx, endy, 1)
-	wavesecret = 1
-	for(var/i = 0 to number)
-		spawn(rand(10,100))
-			spawn_meteor(pickedstart, pickedgoal)
-	spawn(meteor_wave_delay)
-		wavesecret = 0
+	var/max_i = 10//number of tries to spawn meteor.
 
-/proc/spawn_meteors(var/turf/pickedstart, var/turf/pickedgoal, var/number = meteors_in_small_wave)
-	for(var/i = 0; i < number; i++)
-		spawn(0)
-			spawn_meteor(pickedstart, pickedgoal)
 
-/proc/spawn_meteor(var/turf/pickedstart, var/turf/pickedgoal)
+	do
+		switch(pick(1,2,3,4))
+			if(1) //NORTH
+				starty = world.maxy-3
+				startx = rand(1, world.maxx-1)
+				endy = 1
+				endx = rand(1, world.maxx-1)
+			if(2) //EAST
+				starty = rand(1,world.maxy-1)
+				startx = world.maxx-3
+				endy = rand(1, world.maxy-1)
+				endx = 1
+			if(3) //SOUTH
+				starty = 3
+				startx = rand(1, world.maxx-1)
+				endy = world.maxy-1
+				endx = rand(1, world.maxx-1)
+			if(4) //WEST
+				starty = rand(1, world.maxy-1)
+				startx = 3
+				endy = rand(1,world.maxy-1)
+				endx = world.maxx-1
 
-	var/route = rand(1,5)
-	var/turf/tempgoal = pickedgoal
-	for(var/i, i < route, i++)
-		tempgoal = get_step(tempgoal,rand(1,8))
+		pickedstart = locate(startx, starty, 1)
+		pickedgoal = locate(endx, endy, 1)
+		max_i--
+		if(max_i<=0) return
+
+	while (!istype(pickedstart, /turf/space) || pickedstart.loc.name != "Space" ) //FUUUCK, should never happen.
+
 
 	var/obj/effect/meteor/M
 	switch(rand(1, 100))
-		if(1 to 15)
-			M = new /obj/effect/meteor/big(pickedstart)
-		if(16 to 75)
+
+		if(1 to 10)
+			M = new /obj/effect/meteor/big( pickedstart )
+		if(11 to 75)
 			M = new /obj/effect/meteor( pickedstart )
 		if(76 to 100)
 			M = new /obj/effect/meteor/small( pickedstart )
 
-	M.dest = tempgoal
-
-	do
-		sleep(1)
+	M.dest = pickedgoal
+	spawn(0)
 		walk_towards(M, M.dest, 1)
-	while (!istype(M.loc, /turf/space) || pickedstart.loc.name != "Space" ) //FUUUCK, should never happen.
 
 	return
 
@@ -133,12 +137,7 @@
 				if(!M.stat && !istype(M, /mob/living/silicon/ai)) //bad idea to shake an ai's view
 					shake_camera(M, 3, 1)
 			if (A)
-				if(isobj(A))
-					del(A)
-				else
-					A.meteorhit(src)
-				src.hits--
-				return
+				explosion(src.loc, 0, 1, 2, 3, 0)
 				playsound(src.loc, 'meteorimpact.ogg', 40, 1)
 			if (--src.hits <= 0)
 				if(prob(15) && !istype(A, /obj/structure/grille))

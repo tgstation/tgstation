@@ -16,8 +16,6 @@
 */
 
 /obj/item/weapon/evidencebag/afterattack(obj/item/O, mob/user as mob)
-
-//Now you can put it into a briefcase, if it is in your hand.  Otherwise, if it is evidence on the ground, it picks it up.
 	if(istype(O, /obj/item/weapon/storage) && O in user)
 		user << "You put the evidence bag into the [O]."
 		return ..()
@@ -30,19 +28,17 @@
 	if(src.contents.len > 0)
 		user << "The [src] already has something inside it."
 		return ..()
-	if(istype(O.loc, /obj/item/weapon/storage))
-		user << "This is broke as hell."
-		return
-/*		var/obj/item/weapon/storage/U = O.loc
-		w_class = O.w_class
-		for(var/i, i < U.contents.len, i++)
-			if(O in U.contents[i])
-				U.contents[i] = null
-				O.loc = src
-				continue*/
+	if(istype(O.loc,/obj/item/weapon/storage))
+		var/obj/item/weapon/storage/U = O.loc
+		user.client.screen -= O
+		U.contents.Remove(O)
+	if(istype(O.loc,/obj/item/clothing/suit/storage/))
+		var/obj/item/clothing/suit/storage/U = O.loc
+		user.client.screen -= O
+		U.contents.Remove(O)
 	user << "You put the [O] inside the [src]."
 	icon_state = "evidence"
-	src.underlays += O
+	src.overlays += O
 	desc = "An evidence bag containing \a [O]. [O.desc]"
 	O.loc = src
 	w_class = O.w_class
@@ -53,7 +49,7 @@
 	if (src.contents.len > 0)
 		var/obj/item/I = src.contents[1]
 		user << "You take the [I] out of the [src]."
-		src.underlays -= I
+		src.overlays -= I
 		I.loc = get_turf(user.loc)
 		w_class = 1
 		src.icon_state = "evidenceobj"
@@ -72,7 +68,7 @@
 		new /obj/item/weapon/evidencebag(src)
 		new /obj/item/weapon/evidencebag(src)
 		new /obj/item/weapon/evidencebag(src)
-		new /obj/item/weapon/f_card(src)
+		new /obj/item/weapon/evidencebag(src)
 		new /obj/item/weapon/f_card(src)
 		..()
 		return
