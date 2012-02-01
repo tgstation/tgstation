@@ -207,13 +207,13 @@ MASS SPECTROMETER
 				if(A.fingerprints)
 					for(var/j = 1, j < (A.fingerprints.len + 1), j++)	//Fingerprints~~~
 						var/list/print_test1 = params2list(A.fingerprints[j])
-						var/test_print1 = print_test1[1]
+						var/test_print1 = print_test1[num2text(1)]
 						var/found = 0
 						for(var/k = 1, k < (prints.len + 1), k++)	//Lets see if the print is already in there
 							var/list/print_test2 = params2list(prints[k])
-							var/test_print2 = print_test2[1]
+							var/test_print2 = print_test2[num2text(1)]
 							if(test_print2 == test_print1)	//It is!  Merge!
-								prints[k] = test_print2 + "&" + stringmerge(print_test2[2],print_test1[2])
+								prints[k] = test_print2 + "&" + stringmerge(print_test2[num2text(2)],print_test1[num2text(2)])
 								found = 1
 								break	//We found it, we're done here.
 						if(!found)	//It isn't!  Add!

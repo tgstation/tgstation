@@ -192,11 +192,11 @@ obj/machinery/computer/forensic_scanning
 			for(var/i = 1, i < (files.len + 1), i++)	//Lets see if we can find the owner of the prints
 				var/list/perp_list = files[i]
 				var/list/perp_prints = params2list(perp_list[1])
-				var/perp = perp_prints[1]
+				var/perp = perp_prints[num2text(1)]
 				var/found2 = 0
 				for(var/m = 1, m < (A.fingerprints.len + 1), m++)	//Compare database prints with prints on object.
 					var/list/test_prints_list = params2list(A.fingerprints[m])
-					var/checker = test_prints_list[1]
+					var/checker = test_prints_list[num2text(1)]
 					if(checker == perp)	//Found 'em!  Merge!
 						found_prints[m] = 1
 						for(var/n = 2, n < (perp_list.len + 1), n++)	//Lets see if it is already in the database
@@ -209,13 +209,13 @@ obj/machinery/computer/forensic_scanning
 								if(A.fingerprints)
 									for(var/j = 1, j < (A.fingerprints.len + 1), j++)	//Fingerprints~~~
 										var/list/print_test1 = params2list(A.fingerprints[j])
-										var/test_print1 = print_test1[1]
+										var/test_print1 = print_test1[num2text(1)]
 										var/found = 0
 										for(var/k = 1, k <= (prints.len + 1), k++)	//Lets see if the print is already in there
 											var/list/print_test2 = params2list(prints[k])
-											var/test_print2 = print_test2[1]
+											var/test_print2 = print_test2[num2text(1)]
 											if(test_print2 == test_print1)	//It is!  Merge!
-												prints[k] = test_print2 + "&" + stringmerge(print_test2[2],print_test1[2])
+												prints[k] = "1=" + test_print2 + "&2=" + stringmerge(print_test2[num2text(2)],print_test1[num2text(2)])
 												found = 1
 												break	//We found it, we're done here.
 										if(!found)	//It isn't!  Add!
@@ -278,20 +278,20 @@ obj/machinery/computer/forensic_scanning
 		for(var/k = 1, k < (files.len + 1), k++)
 			var/list/perp_list = files[k]
 			var/list/perp_prints = params2list(perp_list[1])
-			var/perp = perp_prints[1]
+			var/perp = perp_prints[num2text(1)]
 			var/list/found_prints = list()
 			for(var/i = 2, i < (perp_list.len + 1), i++)
 				var/list/test_list = perp_list[i]
 				var/list/test_prints = test_list[2]
 				for(var/j = 1, j < (test_prints.len + 1), j++)
 					var/list/test_list_2 = params2list(test_prints[j])
-					var/test_prints_2 = test_list_2[1]
+					var/test_prints_2 = test_list_2[num2text(1)]
 					if(test_prints_2 == perp)
-						found_prints += test_list_2[2]
+						found_prints += test_list_2[num2text(2)]
 						break
 			for(var/prints in found_prints)
-				perp_prints[2] = stringmerge(perp_prints[2],prints)
-			perp_list[1] = perp + "&" + perp_prints[2]
+				perp_prints[num2text(2)] = stringmerge(perp_prints[num2text(2)],prints)
+			perp_list[1] = "1=" + perp + "&2=" + perp_prints[num2text(2)]
 			files[k] = perp_list
 		return
 
@@ -300,13 +300,13 @@ obj/machinery/computer/forensic_scanning
 		if(card.fingerprints)
 			for(var/k = 1, k < (card.fingerprints.len + 1), k++)
 				var/list/test_prints = params2list(card.fingerprints[k])
-				var/print = test_prints[1]
+				var/print = test_prints[num2text(1)]
 				for(var/i = 1, i < (files.len + 1), i++)
 					var/list/test_list = files[i]
 					var/list/perp_prints = params2list(test_list[1])
-					var/perp = perp_prints[1]
+					var/perp = perp_prints[num2text(1)]
 					if(perp == print)
-						test_list[1] = print + "&" + print
+						test_list[1] = "1=" + print + "&2=" + print
 						files[i] = test_list
 						break
 		del(card)
@@ -396,8 +396,8 @@ obj/machinery/computer/forensic_scanning
 					var/list/dossier = files[identifier]
 					var/list/prints = params2list(dossier[1])
 					var/print_string = "Fingerprints: Print not complete!<br>"
-					if(stringpercent(prints[2]) <= FINGERPRINT_COMPLETE)
-						print_string = "Fingerprints: (80% or higher completion reached)<br>" + prints[2] + "<br>"
+					if(stringpercent(prints[num2text(2)]) <= FINGERPRINT_COMPLETE)
+						print_string = "Fingerprints: (80% or higher completion reached)<br>" + prints[num2text(2)] + "<br>"
 					temp += print_string
 					for(var/i = 2, i < (dossier.len + 1), i++)
 						var/list/outputs = dossier[i]
@@ -436,8 +436,8 @@ obj/machinery/computer/forensic_scanning
 					var/list/dossier = files[text2num(href_list["identifier"])]
 					var/list/prints = params2list(dossier[1])
 					var/print_string = "Fingerprints: Print not complete!<br>"
-					if(stringpercent(prints[2]) <= FINGERPRINT_COMPLETE)
-						print_string = "Fingerprints: " + prints[2] + "<BR>"
+					if(stringpercent(prints[num2text(2)]) <= FINGERPRINT_COMPLETE)
+						print_string = "Fingerprints: " + prints[num2text(2)] + "<BR>"
 					P.info += print_string
 					for(var/i = 2, i < (dossier.len + 1), i++)
 						var/list/outputs = dossier[i]
