@@ -102,12 +102,12 @@
 			for(var/i = 1, i < (src.fingerprints.len + 1), i++)
 				var/list/L = params2list(src.fingerprints[i])
 				if(L.len > 1)
-					if(L[1] == md5(H.dna.uni_identity))
+					if(L[num2text(1)] == md5(H.dna.uni_identity))
 						new_prints = i
-						prints = L[2]
+						prints = L[num2text(2)]
 						break
 					else
-						src.fingerprints[i] = "1=" + L[1] + "&2=" + stars(L[2], rand(80,90))
+						src.fingerprints[i] = "1=" + L[num2text(1)] + "&2=" + stars(L[num2text(2)], rand(80,90))
 				else
 					var/turf/T = get_turf(src)
 					for (var/mob/N in world)

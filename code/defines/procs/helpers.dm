@@ -1254,7 +1254,7 @@ proc/listclearnulls(list/list)
 		return 0
 
 /proc/do_after(mob/M as mob, time as num)
-	var/turf/T = M.loc
+	var/turf/T = get_turf(M)
 	var/holding = M.equipped()
 	sleep(time)
 	if(M)

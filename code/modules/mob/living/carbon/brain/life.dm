@@ -280,6 +280,8 @@
 
 			if(pullin)	pullin.icon_state = "pull[pulling ? 1 : 0]"
 
+			if (!src.hud_used)
+				src.hud_used = new/obj/hud(src)
 			client.screen -= hud_used.blurry
 			client.screen -= hud_used.druggy
 			client.screen -= hud_used.vimpaired
