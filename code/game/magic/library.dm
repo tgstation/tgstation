@@ -73,33 +73,55 @@
 	var/category
 
 	New()
-		var/list/books = book_mgr.getall()
-		var/list/catbooks = new()
-		// get books in category
-		for(var/datum/archived_book/B in books)
-			if(!category || (category != B.category))
-				continue;
-			catbooks += B
-			world << "cat [category]: [B.title]"
-		if(catbooks.len <= 3)
-			// if 3 or less books, fill shelf with that
-			for(var/datum/archived_book/AB in catbooks)
-				var/obj/item/weapon/book/B = new(src)
-				B.name = "Book: [AB.title]"
-				B.title = AB.title
-				B.author = AB.author
-				B.dat = AB.dat
-				B.icon_state = "book[rand(1,7)]"
-		else
-			// otherwise, pick 3 random books
-			for(var/i = 1 to 3)
-				var/datum/archived_book/AB = pick(catbooks)
-				var/obj/item/weapon/book/B = new(src)
-				B.name = "Book: [AB.title]"
-				B.title = AB.title
-				B.author = AB.author
-				B.dat = AB.dat
-				B.icon_state = "book[rand(1,7)]"
+		spawn(2) // allow library comp to exist
+			var/list/books = book_mgr.getall()
+			var/list/catbooks = new()
+			// see if we have a library computer
+			var/obj/machinery/librarycomp/comp
+			if(istype(loc.loc, /area))
+				comp = locate() in loc.loc
+			// get books in category
+			for(var/datum/archived_book/B in books)
+				if(!category || (category != B.category))
+					continue;
+				catbooks += B
+			if(catbooks.len <= 3)
+				// if 3 or less books, fill shelf with that
+				for(var/datum/archived_book/AB in catbooks)
+					var/obj/item/weapon/book/B = new(src)
+					B.name = "Book: [AB.title]"
+					B.title = AB.title
+					B.author = AB.author
+					B.dat = AB.dat
+					B.gen_pages()
+					B.icon_state = "book[rand(1,7)]"
+					B.ssbn = AB.id
+					B.author_real = AB.author_real
+					B.author_key = AB.author_key
+					B.photos = AB.photos
+
+					// add to inventory
+					if(comp)
+						comp.inventory += B
+			else
+				// otherwise, pick 3 random books
+				for(var/i = 1 to 3)
+					var/datum/archived_book/AB = pick(catbooks)
+					var/obj/item/weapon/book/B = new(src)
+					B.name = "Book: [AB.title]"
+					B.title = AB.title
+					B.author = AB.author
+					B.dat = AB.dat
+					B.gen_pages()
+					B.icon_state = "book[rand(1,7)]"
+					B.ssbn = AB.id
+					B.author_real = AB.author_real
+					B.author_key = AB.author_key
+					B.photos = AB.photos
+
+					// add to inventory
+					if(comp)
+						comp.inventory += B
 
 	attackby(obj/O as obj, mob/user as mob)
 		if(istype(O, /obj/item/weapon/book))
@@ -201,13 +223,75 @@
 		unique = 0   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 		title		 // The real name of the book.
 
-	attack_self(var/mob/user as mob)
+		author_real	 // author's real_name
+		author_key	 // author's byond key
+		ssbn		 // the ssbn, if a downloaded book
+
+		list/pages = new()	 // individual pages as a list of text
+		cur_page = 1 // current page being read
+		list/icon/photos	 // in-game photos used
+
+	proc/navbar()
+		return "<div style='position:absolute;bottom:0;color:#666;background:white;font-style:italic;margin-top:1em;margin-bottom:1em;width:100%'>" \
+			+ "<div style='float:left'>"+(cur_page > 1 \
+				? "<a href='?src=\ref[src];page=[1]'>&lt;</a>" \
+				+ "<a href='?src=\ref[src];page=[cur_page-1]'>&lt;</a>" \
+				: "") \
+			+ "</div><div style='float:right'>"+(cur_page < pages.len \
+				? "<a href='?src=\ref[src];page=[cur_page+1]'>&gt;</a>" \
+				+ "<a href='?src=\ref[src];page=[pages.len]'>&gt;</a>" \
+				: "") \
+			+ "</div><div style='text-align:center'>[cur_page]/[pages.len]</div></div>"
+
+	// should be called if dat is changed
+	proc/gen_pages()
+		// split into pages
+		cur_page = 1
+		pages = dd_text2list(dat, "<page>")
+		var/PN = 1
+		for(var/page in pages)
+			// look for photos and process
+			var/i = 1
+			while(i <= lentext(page))
+				i = findtext(page, "<photo ", i)
+				if(i == 0)
+					break
+				var/e_s = findtext(page, " ", i+7)
+				if(e_s == 0) e_s = INFINITY
+				var/e_c = findtext(page, ">", i+7)
+				if(e_c == 0) e_c = INFINITY
+				var/e = min(e_s, e_c) // find the closest of the two
+				if(e == INFINITY) break
+				var/i_num = text2num(copytext(page, i+7, e))
+				page = copytext(page, 1, i) + "<img src='book_[i_num].png'" + copytext(page, e)
+				i = e + 1
+			pages[PN] = page
+			PN++
+
+	Topic(href, href_list)
+		if(..())
+			return
+		src.add_fingerprint(usr)
+
+		if(href_list["page"])
+			cur_page = text2num(href_list["page"])
+			attack_self(usr, 0)
+
+	proc/cache_imgs(mob/user as mob)
+		for(var/icon/I in photos)
+			user << browse_rsc(I, "book_[photos.Find(I)].png")
+
+	attack_self(var/mob/user as mob, opening=1)
 		if(src.dat)
-			user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")
-			if(title)
-				user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
-			else
-				user.visible_message("[user] opens a book titled \"[src.name]\" and begins reading intently.")
+			cache_imgs(user)
+			user << browse("<div style='color:#666;font-style:italic;margin-bottom:1em'><div style='float:left'>[title]</div><div style='float:right'>[author]</div></div><div style='clear:both;overflow:scroll'>[pages[cur_page]]</div>[pages.len > 1 ? navbar() : ""]", "window=book;size=600x500")
+
+			if(opening)
+				if(title)
+					user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
+				else
+					user.visible_message("[user] opens a book titled \"[src.name]\" and begins reading intently.")
+
 			onclose(user, "book")
 		else
 			user << "This book is completely blank!"
@@ -220,11 +304,12 @@
 			var/choice = input("What would you like to change?") in list("Title", "Contents", "Author", "Cancel")
 			switch(choice)
 				if("Title")
-					var/title = input("Write a new title:") as text|null
-					if(!title)
+					var/ntitle = input("Write a new title:") as text|null
+					if(!ntitle)
 						return
 					else
-						src.name = sanitize(title)
+						title = sanitize(ntitle)
+						name = "Book: [title]"
 				if("Contents")
 					var/t = "[src.dat]"
 					do
@@ -248,6 +333,7 @@
 							return
 
 					src.dat = t
+					gen_pages()
 				if("Author")
 					var/nauthor = input("Write the author's name:") as text|null
 					if(!nauthor)
@@ -609,9 +695,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 				dat += "<FONT color=red>No scanner found within wireless network range.</FONT><BR>"
 			else if(!scanner.cache)
 				dat += "<FONT color=red>No data found in scanner memory.</FONT><BR>"
+			else if(scanner.cache.ssbn && (scanner.cache.author_real != user.real_name && scanner.cache.author_key != user.client.ckey))
+				dat += "<FONT color=red>This book contains copy protection preventing you from re-uploading this to the database.</FONT><BR>"
 			else
-				dat += "<TT>Data marked for upload...</TT><BR>"
-				dat += "<TT>Title: </TT>[scanner.cache.name]<BR>"
+				dat += "<TT>Data marked for [scanner.cache.ssbn ? "re-" : ""]upload...</TT><BR>"
+				dat += "<TT>Title: </TT><A href='?src=\ref[src];settitle=1'>[scanner.cache.title]</A><BR>"
 				if(!scanner.cache.author)
 					scanner.cache.author = "Anonymous"
 				dat += "<TT>Author: </TT><A href='?src=\ref[src];setauthor=1'>[scanner.cache.author]</A><BR>"
@@ -704,8 +792,13 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	if(href_list["delbook"])
 		var/obj/item/weapon/book/b = locate(href_list["delbook"])
 		inventory.Remove(b)
+	if(href_list["settitle"])
+		var/newtitle = input("Enter the book name: ", "Book Upload", scanner.cache.title) as text|null
+		if(newtitle)
+			scanner.cache.title = sanitize(newtitle)
+			scanner.cache.name = "Book: [scanner.cache.title]"
 	if(href_list["setauthor"])
-		var/newauthor = input("Enter the author's name: ") as text|null
+		var/newauthor = input("Enter the author's name: ", "Book Upload", scanner.cache.author) as text|null
 		if(newauthor)
 			scanner.cache.author = sanitize(newauthor)
 	if(href_list["setcategory"])
@@ -743,11 +836,22 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 							dbcon.Disconnect()
 					else
 						var/datum/archived_book/B = new()
-						B.title = scanner.cache.name
+						if(scanner.cache.title)
+							B.title = scanner.cache.title
+						else
+							B.title = scanner.cache.name
 						B.author = scanner.cache.author
 						B.dat = scanner.cache.dat
 						B.category = upload_category
-						B.id = book_mgr.freeid()
+						if(scanner.cache.ssbn)
+							B.id = scanner.cache.ssbn
+						else
+							B.id = book_mgr.freeid()
+						B.author_real = scanner.cache.author_real
+						B.author_key = scanner.cache.author_key
+						if(scanner.cache.photos.len >= 8)
+							scanner.cache.photos.len = 8
+						B.photos = scanner.cache.photos
 						B.save()
 
 						log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
@@ -775,6 +879,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 					B.title = title
 					B.author = author
 					B.dat = content
+					B.gen_pages()
 					B.icon_state = "book[rand(1,7)]"
 					src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 					break
@@ -789,7 +894,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 				B.title = AB.title
 				B.author = AB.author
 				B.dat = AB.dat
+				B.gen_pages()
 				B.icon_state = "book[rand(1,7)]"
+				B.author_real = AB.author_real
+				B.author_key = AB.author_key
+				B.photos = AB.photos
 				src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 
 	if(href_list["orderbyid"])
@@ -873,18 +982,236 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	anchored = 1
 	density = 1
 
+	var/obj/item/weapon/book/template
+	var/list/icon_names
+	var/i_preview = 1
+	var/printing = 0
+
+	proc/newGenericBook()
+		template = new(src)
+		template.title = "Print Job #" + "[rand(100, 999)]"
+		template.author = "Anonymous"
+		template.name = "Book: [template.title]"
+		template.icon_state = "book[rand(1,7)]"
+		template.dat = ""
+		template.gen_pages()
+		template.photos = new()
+		icon_names = new()
+		i_preview = 1
+
 	attackby(var/obj/O as obj, var/mob/user as mob)
 		if(istype(O, /obj/item/weapon/paper))
 			user.drop_item()
 			O.loc = src
 			user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
-			src.visible_message("[src] begins to hum as it warms up its printing drums.")
-			sleep(rand(200,400))
-			src.visible_message("[src] whirs as it prints and binds a new book.")
-			var/obj/item/weapon/book/b = new(src.loc)
-			b.dat = O:info
-			b.name = "Print Job #" + "[rand(100, 999)]"
-			b.icon_state = "book[rand(1,7)]"
+
+			if(template)
+				template.dat += "<page>[O:info]"
+				template.gen_pages()
+			else
+				template = new(src)
+				template.title = O.name == initial(O.name) ? "Print Job #" + "[rand(100, 999)]" : O.name
+				template.name = "Book: [template.title]"
+				template.icon_state = "book[rand(1,7)]"
+				template.dat = O:info
+				template.gen_pages()
+				template.photos = new()
+				icon_names = new()
+				i_preview = 1
 			del(O)
+			updateUsrDialog()
+		else if(istype(O, /obj/item/weapon/photo))
+			user.drop_item()
+			O.loc = src
+			user.visible_message("[user] loads a photo into [src].", "You load a photo into [src].")
+
+			if(!template)
+				newGenericBook()
+			if(template.photos.len >= 8)
+				user << "\red The photo tray is already full!"
+				O.loc = src.loc
+				return
+
+			var/icon/imported = new(O.icon)
+			imported.Crop(6,8,27,27)
+			imported.Scale(32,32)
+			template.photos += imported
+			icon_names += O.name
+			del(O)
+			updateUsrDialog()
+		else if(istype(O, /obj/item/weapon/book))
+			if(template)
+				user << "\red The binder already has a book in the buffer!"
+				return
+
+			user.drop_item()
+			O.loc = src
+			user.visible_message("[user] loads a book into [src] for editing.", "You load a book into [src] for editing.")
+
+			var/obj/machinery/librarycomp/C = locate() in loc.loc
+			if(C)
+				if(C.inventory.Find(O))
+					C.inventory -= O
+			template = O
+			icon_names = new()
+			for(var/i = 1 to template.photos.len)
+				icon_names += "Photo [i]"
+			updateUsrDialog()
 		else
 			..()
+
+/obj/machinery/bookbinder/attack_paw(user as mob)
+	return src.attack_hand(user)
+
+/obj/machinery/bookbinder/attack_ai(user as mob)
+	return src.attack_hand(user)
+
+/obj/machinery/bookbinder/attack_hand(user as mob)
+	if(..())
+		return
+
+	if(src.stat)
+		user << "[name] does not seem to be responding to your button mashing."
+		return
+
+	var/dat = "<HEAD><TITLE>Book Binder</TITLE></HEAD><TT><b>NT Publishing House</b><hr>"
+
+	if(printing)
+		dat += "[src] is currently printing."
+	else
+		// general settings
+		dat += "<a href='?src=\ref[src];new=1'>New Book</a>"
+
+		if(template)
+			template.cache_imgs(user)
+
+			dat += " <a href='?src=\ref[src];delete=1'>Delete Book</a><hr>"
+
+			dat += "Title: <a href='?src=\ref[src];title=1'>[template.title]</a><br>"
+			dat += "Author: <a href='?src=\ref[src];author=1'>[template.author]</a><hr>"
+
+			// articles
+			dat += "Pages:<ol>"
+			var/ID = 1
+			for(var/P in template.pages)
+				dat += "<li><a href='?src=\ref[src];p_edit=[ID]'>Page [ID]</a>"
+				dat += " <a href='?src=\ref[src];p_preview=[ID]'>Preview</a>"
+				dat += " <a href='?src=\ref[src];p_delete=[ID]'>Delete</a></li>"
+				ID++
+
+			dat += "</ol><a href='?src=\ref[src];p_new=1'>New Page</a><hr>"
+
+			// images
+			dat += "Images:<ol>"
+			ID = 1
+			for(var/icon/I in template.photos)
+				dat += "<li><a href='?src=\ref[src];i_view=[ID]'>[ID]: [icon_names[ID]]</a>"
+				dat += " <a href='?src=\ref[src];i_delete=[ID]'>Delete</a>"
+				ID++
+			dat += "</ol>"
+			if(i_preview >= 1 && i_preview <= template.photos.len)
+				var/iconname = "book_preview.png"
+				user << browse_rsc(template.photos[i_preview],iconname)
+				dat += "[i_preview] ([icon_names[i_preview]]): <img src='[iconname]'>"
+			dat += "<hr><A href='?src=\ref[src];print=1'>Print</a>"
+
+	dat += "</TT>"
+	user << browse(dat, "window=bookbinder")
+	onclose(user, "bookbinder")
+
+
+/obj/machinery/bookbinder/Topic(href, href_list)
+	if(..())
+		return
+	usr.machine = src
+	src.add_fingerprint(usr)
+
+	if(href_list["new"])
+		if(template)
+			var/R = alert("There is already a book in the buffer. Do you want to delete it and start over?", "Book Binder", "Delete", "Cancel")
+			if(R == "Cancel")
+				return
+			del(template)
+		newGenericBook()
+		updateUsrDialog()
+	if(href_list["delete"])
+		if(template)
+			del(template)
+		updateUsrDialog()
+	if(href_list["print"])
+		printing = 1
+		updateUsrDialog()
+		src.visible_message("[src] begins to hum as it warms up its printing drums.")
+		sleep(rand(50,100))
+		src.visible_message("[src] whirs as it prints and binds a new book.")
+
+		if(!template.ssbn)
+			template.author_real = usr.real_name
+			if(usr.client)
+				template.author_key = usr.client.ckey
+		template.loc = src.loc
+		template = null
+		printing = 0
+		updateUsrDialog()
+	if(href_list["p_new"])
+		template.dat += "<page>"
+		template.gen_pages()
+		updateUsrDialog()
+
+	if(href_list["title"])
+		var/n_name = input(usr, "What would you like to title your book?", "Book Binder", template.title) as text|null
+		if(n_name)
+			template.title = sanitize(n_name)
+			template.name = "Book: [template.title]"
+		updateUsrDialog()
+	if(href_list["author"])
+		var/n_name = input(usr, "Who would you like your pen name to be?", "Book Binder", template.author) as text|null
+		if(n_name)
+			template.author = sanitize(n_name)
+		updateUsrDialog()
+
+	if(href_list["p_edit"])
+		var/PN = text2num(href_list["p_edit"])
+		var/list/pages = dd_text2list(template.dat, "<page>")
+		var/t = pages[PN]
+		do
+			t = input(usr, "What text do you wish to add?", "Book Binder P.[PN]", t) as message
+
+			if(lentext(t) >= MAX_BOOK_MESSAGE_LEN)
+				var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
+				if(cont == "no")
+					break
+		while(lentext(t) > MAX_BOOK_MESSAGE_LEN)
+
+		// check for exploits
+		for(var/tag in paper_blacklist)
+			if(findtext(t,"<"+tag))
+				usr << "\blue You think to yourself, \"Hm.. this is only paper...\""
+				return
+
+		// the actual pages list is formatted and shouldn't be directly editted
+		pages[PN] = t
+		template.dat = dd_list2text(pages, "<page>")
+		template.gen_pages()
+		updateUsrDialog()
+	if(href_list["p_delete"])
+		var/i = text2num(href_list["p_delete"])
+		var/list/pages = dd_text2list(template.dat, "<page>")
+		pages.Cut(i, i+1)
+		template.dat = dd_list2text(pages, "<page>")
+		template.gen_pages()
+		updateUsrDialog()
+	if(href_list["p_preview"])
+		var/i = text2num(href_list["p_preview"])
+		var/dat = template.pages[i]
+		usr << browse(dat, "window=bookbinder_preview;size=600x500")
+		onclose(usr, "bookbinder_preview")
+
+	if(href_list["i_view"])
+		i_preview = text2num(href_list["i_view"])
+		updateUsrDialog()
+	if(href_list["i_delete"])
+		var/i = text2num(href_list["i_delete"])
+		template.photos.Cut(i, i+1)
+		icon_names.Cut(i, i+1)
+		updateUsrDialog()
