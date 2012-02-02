@@ -23,7 +23,7 @@ mob/living/carbon/proc/handle_hallucinations()
 	if(handling_hal) return
 	handling_hal = 1
 	while(hallucination > 20)
-		sleep(rand(200,500)/(hallucination/10))
+		sleep(rand(200,500)/(hallucination/25))
 		var/halpick = rand(1,100)
 		switch(halpick)
 			if(0 to 15)
@@ -35,72 +35,74 @@ mob/living/carbon/proc/handle_hallucinations()
 			if(16 to 25)
 				//Strange items
 				//src << "Traitor Items"
-				halitem = new
-				var/list/slots_free = list("1,1","3,1")
-				if(l_hand) slots_free -= "1,1"
-				if(r_hand) slots_free -= "3,1"
-				if(istype(src,/mob/living/carbon/human))
-					var/mob/living/carbon/human/H = src
-					if(!H.belt) slots_free += "3,0"
-					if(!H.l_store) slots_free += "4,0"
-					if(!H.r_store) slots_free += "5,0"
-				if(slots_free.len)
-					halitem.screen_loc = pick(slots_free)
-					halitem.layer = 50
-					switch(rand(1,6))
-						if(1) //revolver
-							halitem.icon = 'gun.dmi'
-							halitem.icon_state = "revolver"
-							halitem.name = "Revolver"
-						if(2) //c4
-							halitem.icon = 'syndieweapons.dmi'
-							halitem.icon_state = "c4small_0"
-							halitem.name = "Mysterious Package"
-							if(prob(25))
-								halitem.icon_state = "c4small_1"
-						if(3) //sword
-							halitem.icon = 'weapons.dmi'
-							halitem.icon_state = "sword1"
-							halitem.name = "Sword"
-						if(4) //stun baton
-							halitem.icon = 'weapons.dmi'
-							halitem.icon_state = "stunbaton"
-							halitem.name = "Stun Baton"
-						if(5) //emag
-							halitem.icon = 'card.dmi'
-							halitem.icon_state = "emag"
-							halitem.name = "Cryptographic Sequencer"
-						if(6) //flashbang
-							halitem.icon = 'grenade.dmi'
-							halitem.icon_state = "flashbang1"
-							halitem.name = "Flashbang"
-					if(client) client.screen += halitem
-					spawn(rand(100,250))
-						del halitem
+				if(!halitem)
+					halitem = new
+					var/list/slots_free = list("1,1","3,1")
+					if(l_hand) slots_free -= "1,1"
+					if(r_hand) slots_free -= "3,1"
+					if(istype(src,/mob/living/carbon/human))
+						var/mob/living/carbon/human/H = src
+						if(!H.belt) slots_free += "3,0"
+						if(!H.l_store) slots_free += "4,0"
+						if(!H.r_store) slots_free += "5,0"
+					if(slots_free.len)
+						halitem.screen_loc = pick(slots_free)
+						halitem.layer = 50
+						switch(rand(1,6))
+							if(1) //revolver
+								halitem.icon = 'gun.dmi'
+								halitem.icon_state = "revolver"
+								halitem.name = "Revolver"
+							if(2) //c4
+								halitem.icon = 'syndieweapons.dmi'
+								halitem.icon_state = "c4small_0"
+								halitem.name = "Mysterious Package"
+								if(prob(25))
+									halitem.icon_state = "c4small_1"
+							if(3) //sword
+								halitem.icon = 'weapons.dmi'
+								halitem.icon_state = "sword1"
+								halitem.name = "Sword"
+							if(4) //stun baton
+								halitem.icon = 'weapons.dmi'
+								halitem.icon_state = "stunbaton"
+								halitem.name = "Stun Baton"
+							if(5) //emag
+								halitem.icon = 'card.dmi'
+								halitem.icon_state = "emag"
+								halitem.name = "Cryptographic Sequencer"
+							if(6) //flashbang
+								halitem.icon = 'grenade.dmi'
+								halitem.icon_state = "flashbang1"
+								halitem.name = "Flashbang"
+						if(client) client.screen += halitem
+						spawn(rand(100,250))
+							del halitem
 			if(26 to 40)
 				//Flashes of danger
 				//src << "Danger Flash"
-				var/possible_points = list()
-				for(var/turf/simulated/floor/F in view(src,world.view))
-					possible_points += F
-				var/turf/simulated/floor/target = pick(possible_points)
+				if(!halimage)
+					var/possible_points = list()
+					for(var/turf/simulated/floor/F in view(src,world.view))
+						possible_points += F
+					var/turf/simulated/floor/target = pick(possible_points)
 
-				switch(rand(1,3))
-					if(1)
-						//src << "Space"
-						halimage = image('space.dmi',target,"[rand(1,25)]",TURF_LAYER)
-					if(2)
-						//src << "Fire"
-						halimage = image('fire.dmi',target,"1",TURF_LAYER)
-					if(3)
-						//src << "C4"
-						halimage = image('syndieweapons.dmi',target,"c4small_1",OBJ_LAYER+0.01)
+					switch(rand(1,3))
+						if(1)
+							//src << "Space"
+							halimage = image('space.dmi',target,"[rand(1,25)]",TURF_LAYER)
+						if(2)
+							//src << "Fire"
+							halimage = image('fire.dmi',target,"1",TURF_LAYER)
+						if(3)
+							//src << "C4"
+							halimage = image('syndieweapons.dmi',target,"c4small_1",OBJ_LAYER+0.01)
 
 
-				if(client) client.images += halimage
-				spawn(rand(10,50)) //Only seen for a brief moment.
-					if(client) client.images -= halimage
-					halimage = null
+					if(client) client.images += halimage
+					spawn(rand(10,50)) //Only seen for a brief moment.
+						if(client) client.images -= halimage
+						halimage = null
 
 
 			if(41 to 65)
@@ -142,13 +144,21 @@ mob/living/carbon/proc/handle_hallucinations()
 				for(var/turf/simulated/floor/F in view(src,world.view))
 					possible_points += F
 				var/turf/simulated/floor/target = pick(possible_points)
-				halbody = image('human.dmi',target,"husk_l",TURF_LAYER)
+				switch(rand(1,3))
+					if(1)
+						halbody = image('human.dmi',target,"husk_l",TURF_LAYER)
+					if(2,3)
+						halbody = image('human.dmi',target,"husk_s",TURF_LAYER)
+						spawn(2)
+							step_towards(halbody,my_target)
+							sleep
+							step_towards(halbody,my_target)
 
 				if(client) client.images += halbody
 				spawn(rand(50,80)) //Only seen for a brief moment.
 					if(client) client.images -= halbody
 					halbody = null
-			if(71 to 80)
+			if(71 to 75)
 				//Fake death
 				src.sleeping_willingly = 1
 				src.sleeping = 1

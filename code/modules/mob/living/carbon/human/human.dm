@@ -2376,7 +2376,7 @@ It can still be worn/put on as normal.
 		src.health = 100
 		src.stat = 0
 		return
-	src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss() - src.getCloneLoss()
+	src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss() - src.getCloneLoss() -src.halloss
 
 
 /mob/living/carbon/human/abiotic(var/full_body = 0)
