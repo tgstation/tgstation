@@ -13,6 +13,7 @@
 	var/health = 100	//Might be a bit much, dono can always change later	//Nerfed -Pete
 	var/lastbang	//
 	var/lasttry = 0
+	layer = 2.8
 
 /obj/structure/closet/acloset
 	name = "Strange closet"

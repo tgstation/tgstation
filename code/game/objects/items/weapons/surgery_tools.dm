@@ -533,8 +533,9 @@ CIRCULAR SAW
 
 	else
 		// bone surgery doable?
-		if(!try_bone_surgery(M, user))
-			return ..()
+		try_bone_surgery(M, user)
+//		if(!try_bone_surgery(M, user))
+//			return ..()
 
 /obj/item/weapon/cautery/proc/try_bone_surgery(mob/living/carbon/human/H as mob, mob/living/user as mob)
 	if(!istype(H))
@@ -575,6 +576,8 @@ CIRCULAR SAW
 		S.open = 0
 		if(S.display_name == "chest" && H:embryo_op_stage == 1.0)
 			H:embryo_op_stage = 0.0
+		if(S.display_name == "groin" && H:appendix_op_stage == 1.0)
+			H:appendix_op_stage = 0.0
 
 		H.updatehealth()
 		H.UpdateDamageIcon()
@@ -630,13 +633,13 @@ CIRCULAR SAW
 	if(user.zone_sel.selecting == "groin")
 		if(istype(M, /mob/living/carbon/human))
 			switch(M:appendix_op_stage)
-				if(0.0)
-					if(M != user)
-						for(var/mob/O in (viewers(M) - user - M))
-							O.show_message("\red [M] is beginning to have \his abdomen cut open with [src] by [user].", 1)
-						M << "\red [user] begins to cut open your abdomen with [src]!"
-						user << "\red You cut [M]'s abdomen open with [src]!"
-						M:appendix_op_stage = 1.0
+//				if(0.0)
+//					if(M != user)
+//						for(var/mob/O in (viewers(M) - user - M))
+//							O.show_message("\red [M] is beginning to have \his abdomen cut open with [src] by [user].", 1)
+//						M << "\red [user] begins to cut open your abdomen with [src]!"
+//						user << "\red You cut [M]'s abdomen open with [src]!"
+//						M:appendix_op_stage = 1.0
 				if(3.0)
 					if(M != user)
 						for(var/mob/O in (viewers(M) - user - M))
@@ -644,7 +647,7 @@ CIRCULAR SAW
 						M << "\red [user] begins to seperate your appendix with [src]!"
 						user << "\red You seperate [M]'s appendix with [src]!"
 						M:appendix_op_stage = 4.0
-		return
+						return
 
 	if(user.zone_sel.selecting == "head" || istype(M, /mob/living/carbon/metroid))
 
@@ -857,6 +860,8 @@ CIRCULAR SAW
 		S.bleeding = 1
 		if(S.display_name == "chest")
 			H:embryo_op_stage = 1.0
+		if(S.display_name == "groin")
+			H:appendix_op_stage = 1.0
 
 		H.updatehealth()
 		H.UpdateDamageIcon()
@@ -925,7 +930,7 @@ CIRCULAR SAW
 					return
 				for(var/mob/O in viewers(H, null))
 					O.show_message(text("\red [H] gets \his [S.display_name] sawed at with [src] by [user].... It looks like [user] is trying to cut it off!"), 1)
-				if(!do_after(rand(50,70)))
+				if(!do_after(user,rand(50,70)))
 					for(var/mob/O in viewers(H, null))
 						O.show_message(text("\red [user] tried to cut [H]'s [S.display_name] off with [src], but failed."), 1)
 					return
@@ -1009,14 +1014,14 @@ CIRCULAR SAW
 				..()
 		return
 
-	else if(user.zone_sel.selecting != "chest" && user.zone_sel.selecting != "groin" && istype(M, /mob/living/carbon/human))
+	else if(user.zone_sel.selecting != "chest" && istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
 		if(S.destroyed)
 			return
 		for(var/mob/O in viewers(H, null))
 			O.show_message(text("\red [H] gets \his [S.display_name] sawed at with [src] by [user].... It looks like [user] is trying to cut it off!"), 1)
-		if(!do_after(rand(20,80)))
+		if(!do_after(user, rand(20,80)))
 			for(var/mob/O in viewers(H, null))
 				O.show_message(text("\red [user] tried to cut [H]'s [S.display_name] off with [src], but failed."), 1)
 			return

@@ -53,7 +53,9 @@ Devices and Tools;
 /obj/item/weapon/storage/toolbox/syndicate:1:Fully Loaded Toolbox;
 /obj/item/weapon/aiModule/syndicate:7:Hacked AI Upload Module;
 /obj/item/device/radio/headset/traitor:3:Headset with Binary Translator;
-/obj/item/weapon/plastique:2:C-4;
+/obj/item/weapon/plastique:2:C-4 (Destroys walls);
+/obj/item/weapon/syndie/c4explosive:4:Low Power Explosive Charge, with Detonator;
+/obj/item/weapon/syndie/c4explosive/heavy:7:High (!) Power Explosive Charge, with Detonator;
 /obj/item/device/powersink:5:Powersink (DANGER!);
 /obj/machinery/singularity_beacon/syndicate:7:Singularity Beacon (DANGER!);
 Whitespace:Seperator;
@@ -64,7 +66,8 @@ Implants;
 /obj/item/weapon/storage/syndie_kit/imp_uplink:10:Uplink Implant (Contains 5 Telecrystals);
 Whitespace:Seperator;
 Badassery;
-/obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);"}
+/obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);
+Whitespace:Seperator;"}
 
 /datum/game_mode/proc/announce() //to be calles when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"

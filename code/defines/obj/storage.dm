@@ -337,6 +337,13 @@
 	icon_state = "yellow"
 	item_state = "toolbox_yellow"
 
+/obj/item/weapon/storage/PCMBox
+	name = "spare power control modules"
+	desc = "A box of spare power control module circuit boards."
+	icon = 'storage.dmi'
+	icon_state = "circuit"
+	item_state = "syringe_kit"
+
 /obj/item/weapon/storage/toolbox/syndicate
 	name = "Suspicious looking toolbox"
 	icon_state = "syndicate"

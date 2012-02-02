@@ -31,6 +31,14 @@
 	containertype = "/obj/structure/closet/crate"
 	containername = "Empty Box crate"
 
+/datum/supply_packs/pcm
+	name = "Power Control Module supplies"
+	contains = list("/obj/item/weapon/storage/PCMBox",
+	"/obj/item/weapon/storage/PCMBox")
+	cost = 25
+	containertype = "/obj/structure/closet/crate"
+	containername = "Power Control Module crate"
+
 /datum/supply_packs/body_bags
 	name = "Body Bag supplies"
 	contains = list(

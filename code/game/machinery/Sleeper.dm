@@ -171,20 +171,20 @@
 		if((!( istype(G, /obj/item/weapon/grab)) || !( ismob(G.affecting))))
 			return
 		if(src.occupant)
-			user << "\blue <B>The sleeper is already occupied!</B>"
+			user << "\blue <B>The [src.name] is already occupied!</B>"
 			return
 
 		for(var/mob/living/carbon/metroid/M in range(1,G.affecting))
 			if(M.Victim == G.affecting)
-				usr << "[G.affecting.name] will not fit into the sleeper because they have a Metroid latched onto their head."
+				usr << "[G.affecting.name] will not fit into the [src.name] because they have a Metroid latched onto their head."
 				return
 
 		for (var/mob/V in viewers(user))
-			V.show_message("[user] starts putting [G.affecting.name] into the sleeper.", 3)
+			V.show_message("[user] starts putting [G.affecting.name] into the [src.name].", 3)
 
 		if(do_after(user, 20))
 			if(src.occupant)
-				user << "\blue <B>The sleeper is already occupied!</B>"
+				user << "\blue <B>The [src.name] is already occupied!</B>"
 				return
 			if(!G || !G.affecting) return
 			var/mob/M = G.affecting
@@ -259,7 +259,7 @@
 			src.occupant.client.perspective = MOB_PERSPECTIVE
 		src.occupant.loc = src.loc
 		src.occupant = null
-		if(orient == "RIGHT")
+		if(orient == "RIGHT" && !istype(src,/obj/machinery/sleeper/syndicate))
 			icon_state = "sleeper_0-r"
 		return
 
@@ -345,9 +345,12 @@
 		set src in oview(1)
 		if(usr.stat != 0)
 			return
-		if(orient == "RIGHT")
-			icon_state = "sleeper_0-r"
-		src.icon_state = "sleeper_0"
+		if(!istype(src,/obj/machinery/sleeper/syndicate))
+			if(orient == "RIGHT")
+				icon_state = "sleeper_0-r"
+			src.icon_state = "sleeper_0"
+		else
+			src.icon_state = "syndi_0"
 		src.go_out()
 		add_fingerprint(usr)
 		return
@@ -360,8 +363,11 @@
 
 		if(usr.stat != 0)
 			return
+		if(istype(src,/obj/machinery/sleeper/syndicate))
+			usr << "\red You really want to get into an illegal stasis pod? Are you dumb?"
+			return
 		if(src.occupant)
-			usr << "\blue <B>The sleeper is already occupied!</B>"
+			usr << "\blue <B>The [src.name] is already occupied!</B>"
 			return
 
 		for(var/mob/living/carbon/metroid/M in range(1,usr))
@@ -369,22 +375,40 @@
 				usr << "You're too busy getting your life sucked out of you."
 				return
 		for(var/mob/V in viewers(usr))
-			V.show_message("[usr] starts climbing into the sleeper.", 3)
+			V.show_message("[usr] starts climbing into the [src.name].", 3)
 		if(do_after(usr, 20))
 			if(src.occupant)
-				usr << "\blue <B>The sleeper is already occupied!</B>"
+				usr << "\blue <B>The [src.name] is already occupied!</B>"
 				return
 			usr.pulling = null
 			usr.client.perspective = EYE_PERSPECTIVE
 			usr.client.eye = src
 			usr.loc = src
 			src.occupant = usr
-			src.icon_state = "sleeper_1"
-			if(orient == "RIGHT")
-				icon_state = "sleeper_1-r"
+			if(!istype(src,/obj/machinery/sleeper/syndicate))
+				src.icon_state = "sleeper_1"
+				if(orient == "RIGHT")
+					icon_state = "sleeper_1-r"
+			else
+				src.icon_state = "syndi_1"
 
 			for(var/obj/O in src)
 				del(O)
 			src.add_fingerprint(usr)
 			return
 		return
+
+
+
+/obj/machinery/sleeper/syndicate
+	name = "Illegal Stasis Pod"
+	icon = 'Cryogenic2.dmi'
+	icon_state = "syndi_0"
+	density = 1
+	anchored = 1
+
+	process()
+		if(src.occupant)
+			src.occupant.sleeping = 5
+		return
+

@@ -67,14 +67,14 @@ datum
 
 ///////////////////Computer Boards///////////////////////////////////
 
-		seccamera
-			name = "Circuit Design (Security)"
-			desc = "Allows for the construction of circuit boards used to build security camera computers."
-			id = "seccamera"
+		camera
+			name = "Circuit Design (Camera)"
+			desc = "Allows for the construction of circuit boards used to build camera network computers."
+			id = "camera"
 			req_tech = list("programming" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/item/weapon/circuitboard/security"
+			build_path = "/obj/item/weapon/circuitboard/camera"
 
 		aicore
 			name = "Circuit Design (AI Core)"

@@ -1,3 +1,10 @@
+//cael - added this for the lockdown computer
+/obj/machinery/door/poddoor/Topic(href, href_list)
+	if(href_list["close"])
+		close()
+	if(href_list["open"])
+		open()
+
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(!density)
 		return ..()

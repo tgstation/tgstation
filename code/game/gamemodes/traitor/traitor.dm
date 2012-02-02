@@ -88,34 +88,86 @@
 			traitor.objectives += block_objective
 
 	else
-		var/list/target = traitor.objectives
 		for(var/i = 1, i <= rand(1,3), i++)
-			var/datum/objective/objective
 			switch(rand(1,100))
 				if(1 to 30)
-					var/datum/objective/assassinate/kill_objective = new
-					kill_objective.owner = traitor
-					kill_objective.find_target()
-					objective = kill_objective
+					if(!locate(/datum/objective/assassinate) in traitor.objectives && !locate(/datum/objective/protect) in traitor.objectives)
+						var/datum/objective/assassinate/kill_objective = new
+						kill_objective.owner = traitor
+						kill_objective.find_target()
+						traitor.objectives += kill_objective
+					else
+						var/works = 1
+						var/datum/objective/assassinate/kill_objective = new
+						kill_objective.owner = traitor
+						kill_objective.find_target()
+						for(var/j, j < traitor.objectives.len, j++)
+							var/compare = istype(traitor.objectives[j],/datum/objective/assassinate)
+							if(compare)
+								var/datum/objective/assassinate/test = traitor.objectives[j]
+								if(test.target == kill_objective.target)
+									works = 0
+									break
+							compare = istype(traitor.objectives[j],/datum/objective/protect)
+							if(compare)
+								var/datum/objective/protect/test = traitor.objectives[j]
+								if(test.target == kill_objective.target)
+									works = 0
+									break
+						if(works)
+							traitor.objectives += kill_objective
+						else
+							i -= 1
 				if(31 to 40)
-					var/datum/objective/protect/protect_objective = new
-					protect_objective.owner = traitor
-					protect_objective.find_target()
-					objective = protect_objective
+					if(!locate(/datum/objective/assassinate) in traitor.objectives && !locate(/datum/objective/protect) in traitor.objectives)
+						var/datum/objective/protect/protect_objective = new
+						protect_objective.owner = traitor
+						protect_objective.find_target()
+						traitor.objectives += protect_objective
+					else
+						var/works = 1
+						var/datum/objective/protect/protect_objective = new
+						protect_objective.owner = traitor
+						protect_objective.find_target()
+						for(var/j, j < traitor.objectives.len, j++)
+							var/compare = istype(traitor.objectives[j],/datum/objective/assassinate)
+							if(compare)
+								var/datum/objective/assassinate/test = traitor.objectives[j]
+								if(test.target == protect_objective.target)
+									works = 0
+									break
+							compare = istype(traitor.objectives[j],/datum/objective/protect)
+							if(compare)
+								var/datum/objective/protect/test = traitor.objectives[j]
+								if(test.target == protect_objective.target)
+									works = 0
+									break
+						if(works)
+							traitor.objectives += protect_objective
+						else
+							i -= 1
 				else
-					var/datum/objective/steal/steal_objective = new
-					steal_objective.owner = traitor
-					steal_objective.find_target()
-					objective = steal_objective
-			var/inthere = 0
-			for(var/j, j<= target.len, j++)
-				if(target[j] == objective)
-					inthere = 1
-					break
-			if(!inthere)
-				traitor.objectives += objective
-			else
-				i -= 1
+					if(!locate(/datum/objective/steal) in traitor.objectives)
+						var/datum/objective/steal/steal_objective = new
+						steal_objective.owner = traitor
+						steal_objective.find_target()
+						traitor.objectives += steal_objective
+					else
+						var/works = 1
+						var/datum/objective/steal/steal_objective = new
+						steal_objective.owner = traitor
+						steal_objective.find_target()
+						for(var/j, j < traitor.objectives.len, j++)
+							var/compare = istype(traitor.objectives[j],/datum/objective/steal)
+							if(compare)
+								var/datum/objective/steal/test = traitor.objectives[j]
+								if(test.target_name == steal_objective.target_name)
+									works = 0
+									break
+						if(works)
+							traitor.objectives += steal_objective
+						else
+							i -= 1
 		if (!(locate(/datum/objective/escape) in traitor.objectives))
 			var/datum/objective/escape/escape_objective = new
 			escape_objective.owner = traitor
@@ -137,6 +189,10 @@
 
 /datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
 	traitor.current << "<B><font size=3 color=red>You are the traitor.</font></B>"
+	traitor.current << "\red <B>REPEAT</B>"
+	traitor.current << "\red <B>You are the traitor.</B>"
+	spawn(rand(600,1800))			//Strumpetplaya - Just another friendly reminder so people don't forget they're the traitor.
+		traitor.current << "\red <B>In case you missed it the first time - YOU ARE THE TRAITOR!</B>"
 	var/obj_count = 1
 	for(var/datum/objective/objective in traitor.objectives)
 		traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
@@ -175,6 +231,8 @@
 	else
 		killer << "Unfortunately, the Syndicate did not provide you with a code response."
 	killer << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
+	spawn(30)
+		killer << sound('AISyndiHack.ogg',volume=50)
 	//End code phrase.
 
 
@@ -318,4 +376,6 @@
 		else
 			traitor_mob << "Unfortunately, the Syndicate did not provide you with a code response."
 		traitor_mob << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
+		spawn(30)
+			traitor_mob << sound('syndicate intro.ogg',volume=50)
 	//End code phrase.

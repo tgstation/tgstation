@@ -32,7 +32,7 @@
 <B>Patient Information:</B><BR>
 <BR>
 <B>Name:</B> [src.victim.real_name]<BR>
-<B>Age:</B> [src.victim.age]<BR>
+<B>Age:</B> [!isnull(src.victim.age) ? src.victim.age : "Undetermined"]<BR>
 <B>Blood Type:</B> [src.victim.b_type]<BR>
 <BR>
 <B>Health:</B> [src.victim.health]<BR>

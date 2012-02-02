@@ -196,19 +196,27 @@
 		return
 
 	attackby(var/obj/item/weapon/reagent_containers/glass/B as obj, var/mob/user as mob)
-		if(!istype(B, /obj/item/weapon/reagent_containers/glass))
+		if(!istype(B, /obj/item/weapon/reagent_containers/glass) && !istype(B,/obj/item/weapon/reagent_containers/syringe))
 			return
 
 		if(src.beaker)
-			user << "A beaker is already loaded into the machine."
+			if(istype(beaker,/obj/item/weapon/reagent_containers/syringe))
+				user << "A syringe is already loaded into the machine."
+			else
+				user << "A beaker is already loaded into the machine."
 			return
 
 		src.beaker =  B
 		user.drop_item()
 		B.loc = src
-		user << "You add the beaker to the machine!"
-		src.updateUsrDialog()
-		icon_state = "mixer1"
+		if(istype(B,/obj/item/weapon/reagent_containers/syringe))
+			user << "You add the syringe to the machine!"
+			src.updateUsrDialog()
+			icon_state = "mixers"
+		else
+			user << "You add the beaker to the machine!"
+			src.updateUsrDialog()
+			icon_state = "mixer1"
 
 	Topic(href, href_list)
 		if(stat & BROKEN) return
@@ -222,7 +230,18 @@
 		if (href_list["analyze"])
 			var/dat = ""
 			if(!condi)
-				dat += "<TITLE>Chemmaster 3000</TITLE>Chemical infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
+				if(href_list["name"] == "Blood")
+					var/datum/reagent/blood/G
+					for(var/datum/reagent/F in R.reagent_list)
+						if(F.name == href_list["name"])
+							G = F
+							break
+					var/A = G.name
+					var/B = G.data["blood_type"]
+					var/C = G.data["blood_DNA"]
+					dat += "<TITLE>Chemmaster 3000</TITLE>Chemical infos:<BR><BR>Name:<BR>[A]<BR><BR>Description:<BR>Blood Type: [B]<br>DNA: [C]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
+				else
+					dat += "<TITLE>Chemmaster 3000</TITLE>Chemical infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
 			else
 				dat += "<TITLE>Condimaster 3000</TITLE>Condiment infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
 			usr << browse(dat, "window=chem_master;size=575x400")
@@ -316,7 +335,7 @@
 				dat += "Add to buffer:<BR>"
 				for(var/datum/reagent/G in R.reagent_list)
 					dat += "[G.name] , [G.volume] Units - "
-					dat += "<A href='?src=\ref[src];analyze=1;desc=[G.description];name=[G.name]'>(Analyze)</A> "
+					dat += "<A href='?src=\ref[src];analyze=1;desc=[G.description];name=[G.name];reagent=[G]'>(Analyze)</A> "
 					dat += "<A href='?src=\ref[src];add1=[G.id]'>(1)</A> "
 					if(G.volume >= 5) dat += "<A href='?src=\ref[src];add5=[G.id]'>(5)</A> "
 					if(G.volume >= 10) dat += "<A href='?src=\ref[src];add10=[G.id]'>(10)</A> "
