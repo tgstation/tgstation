@@ -60,7 +60,7 @@
 			if (!(ticker && ticker.mode && (mind in ticker.mode.malf_ai)))
 				show_laws()
 				src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
-				job = "AI"
+			job = "AI"
 
 			spawn(0)
 				ainame(src)
