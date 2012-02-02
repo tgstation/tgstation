@@ -406,7 +406,7 @@ obj/machinery/computer/forensic_scanning
 						temp += "Object: [item_name]<br>"
 						temp += "&nbsp;&nbsp;&nbsp;&nbsp;[prints_len.len] Unique fingerprints found.<br>"
 						var/list/fibers = outputs[3]
-						if(fibers)
+						if(fibers && fibers.len)
 							var/dat = "[fibers[1]]"
 							for(var/j = 2, j < (fibers.len + 1), j++)
 								dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]"
@@ -414,7 +414,7 @@ obj/machinery/computer/forensic_scanning
 						else
 							temp += "&nbsp;&nbsp;&nbsp;&nbsp;No fibers found.<br>"
 						var/list/blood = outputs[4]
-						if(blood)
+						if(blood && blood.len)
 							var/dat = "[blood[1]]"
 							if(blood.len > 1)
 								for(var/j = 2, j < (blood.len + 1), j++)
@@ -446,7 +446,7 @@ obj/machinery/computer/forensic_scanning
 						P.info += "Object: [item_name]<br>"
 						P.info += "&nbsp;&nbsp;&nbsp;&nbsp;[prints_len.len] Unique fingerprints found.<br>"
 						var/list/fibers = outputs[3]
-						if(fibers)
+						if(fibers && fibers.len)
 							var/dat = "[fibers[1]]"
 							for(var/j = 2, j < (fibers.len + 1), j++)
 								dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]"
@@ -454,7 +454,7 @@ obj/machinery/computer/forensic_scanning
 						else
 							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;No fibers found.<br>"
 						var/list/blood = outputs[4]
-						if(blood)
+						if(blood && blood.len)
 							var/dat = "[blood[1]]"
 							if(blood.len > 1)
 								for(var/j = 2, j < (blood.len + 1), j++)
@@ -473,18 +473,18 @@ obj/machinery/computer/forensic_scanning
 					var/item_name = get_name(outputs[1])
 					temp += "Consolidated data points: [item_name]<br>"
 					var/list/fibers = outputs[2]
-					if(fibers)
+					if(fibers && fibers.len)
 						var/dat = "[fibers[1]]"
-						for(var/j = 2, j < (fibers.len + 1), j++)
-							dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]"
+						for(var/j = 2, j <= fibers.len, j++)
+							dat += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]"
 						temp += "&nbsp;&nbsp;&nbsp;&nbsp;Fibers: [dat]<br>"
 					else
 						temp += "&nbsp;&nbsp;&nbsp;&nbsp;No fibers found."
 					var/list/blood = outputs[3]
-					if(blood)
+					if(blood && blood.len)
 						var/dat = "[blood[1]]"
-						for(var/j = 2, j < (blood.len + 1), j++)
-							dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]"
+						for(var/j = 2, j <= blood.len, j++)
+							dat += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]"
 						temp += "&nbsp;&nbsp;&nbsp;&nbsp;Blood: [dat]<br>"
 					else
 						temp += "&nbsp;&nbsp;&nbsp;&nbsp;No blood found.<br>"
@@ -586,6 +586,14 @@ obj/machinery/computer/forensic_scanning
 				else
 					temp = "Data Transfer Failed: No Object."
 		updateUsrDialog()
+
+	verb/reset()
+		set name = "Reset Screen"
+		set category = "Object"
+		set src in oview(1)
+		temp = ""
+		add_fingerprint(usr)
+		return
 
 	detective
 		icon_state = "old"
