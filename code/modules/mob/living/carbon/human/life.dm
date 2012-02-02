@@ -150,6 +150,24 @@
 
 
 		handle_disabilities()
+			if(hallucination > 0)
+
+				if(hallucinations.len == 0 && hallucination >= 20 && health > 0)
+					if(prob(5))
+						fake_attack(src)
+				//for(var/atom/a in hallucinations)
+				//	a.hallucinate(src)
+				if(!handling_hal && hallucination > 20)
+					spawn handle_hallucinations() //The not boring kind!
+				hallucination -= 1
+				//if(health < 0)
+				//	for(var/obj/a in hallucinations)
+				//		del a
+			else
+				halloss = 0
+				for(var/atom/a in hallucinations)
+					del a
+
 			if (disabilities & 2)
 				if ((prob(1) && paralysis < 1 && r_epil < 1))
 					src << "\red You have a seizure!"
@@ -724,7 +742,7 @@
 
 			if(sleeping)
 				Paralyse(3)
-				if (prob(10) && health) spawn(0) emote("snore")
+				if (prob(10) && health && !hal_crit) spawn(0) emote("snore")
 				if(!src.sleeping_willingly)
 					src.sleeping--
 
@@ -953,7 +971,7 @@
 
 
 
-			if (src.sleep)
+			if (src.sleep && !hal_crit)
 				src.sleep.icon_state = text("sleep[]", src.sleeping > 0 ? 1 : 0)
 				src.sleep.overlays = null
 				if(src.sleeping_willingly)
@@ -979,6 +997,10 @@
 							healths.icon_state = "health6"
 				else
 					healths.icon_state = "health7"
+				if(hal_screwyhud == 1)
+					healths.icon_state = "health6"
+				if(hal_screwyhud == 2)
+					healths.icon_state = "health7"
 
 			if (nutrition_icon)
 				switch(nutrition)
@@ -998,8 +1020,8 @@
 			if(resting || lying || sleeping)	rest.icon_state = "rest[(resting || lying || sleeping) ? 1 : 0]"
 
 
-			if (toxin)	toxin.icon_state = "tox[toxins_alert ? 1 : 0]"
-			if (oxygen) oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
+			if (toxin || hal_screwyhud == 4)	toxin.icon_state = "tox[toxins_alert ? 1 : 0]"
+			if (oxygen || hal_screwyhud == 3) oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
 			if (fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"
 			//NOTE: the alerts dont reset when youre out of danger. dont blame me,
 			//blame the person who coded them. Temporary fix added.

@@ -13,15 +13,17 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 mob/living/carbon/var
 	image/halimage
+	image/halbody
 	obj/halitem
 	hal_screwyhud = 0 //1 - critical, 2 - dead, 3 - oxygen indicator, 4 - toxin indicator
 	handling_hal = 0
+	hal_crit = 0
 
 mob/living/carbon/proc/handle_hallucinations()
 	if(handling_hal) return
 	handling_hal = 1
 	while(hallucination > 20)
-		sleep(rand(200,500))
+		sleep(rand(200,500)/(hallucination/10))
 		var/halpick = rand(1,100)
 		switch(halpick)
 			if(0 to 15)
@@ -103,7 +105,7 @@ mob/living/carbon/proc/handle_hallucinations()
 
 			if(41 to 65)
 				//Strange audio
-				src << "Strange Audio"
+				//src << "Strange Audio"
 				switch(rand(1,12))
 					if(1) src << 'airlock.ogg'
 					if(2)
@@ -133,6 +135,30 @@ mob/living/carbon/proc/handle_hallucinations()
 							if(2) src << 'ghost2.ogg'
 							if(3) src << 'Heart Beat.ogg'
 							if(4) src << 'screech.ogg'
+			if(66 to 70)
+				//Flashes of danger
+				//src << "Danger Flash"
+				var/possible_points = list()
+				for(var/turf/simulated/floor/F in view(src,world.view))
+					possible_points += F
+				var/turf/simulated/floor/target = pick(possible_points)
+				halbody = image('human.dmi',target,"husk_l",TURF_LAYER)
+
+				if(client) client.images += halbody
+				spawn(rand(50,80)) //Only seen for a brief moment.
+					if(client) client.images -= halbody
+					halbody = null
+			if(71 to 80)
+				//Fake death
+				src.sleeping_willingly = 1
+				src.sleeping = 1
+				hal_crit = 1
+				hal_screwyhud = 1
+				spawn(rand(50,100))
+					src.sleeping_willingly = 0
+					src.sleeping = 0
+					hal_crit = 0
+					hal_screwyhud = 0
 	handling_hal = 0
 
 
@@ -172,4 +198,193 @@ proc/check_panel(mob/M)
 	if (istype(M, /mob/living/carbon/human) || istype(M, /mob/living/silicon/ai))
 		if(M.hallucination < 15)
 			return 1
-	return 0*/
+	return 0	*/
+
+/obj/fake_attacker
+	icon = null
+	icon_state = null
+	name = ""
+	desc = ""
+	density = 0
+	anchored = 1
+	opacity = 0
+	var/mob/living/carbon/human/my_target = null
+	var/weapon_name = null
+	var/obj/item/weap = null
+	var/image/stand_icon = null
+	var/image/currentimage = null
+	var/icon/base = null
+	var/s_tone
+	var/mob/living/clone = null
+	var/image/left
+	var/image/right
+	var/image/up
+	var/collapse
+	var/image/down
+
+	var/health = 100
+
+	attackby(var/obj/item/weapon/P as obj, mob/user as mob)
+		step_away(src,my_target,2)
+		for(var/mob/M in oviewers(world.view,my_target))
+			M << "\red <B>[my_target] flails around wildly.</B>"
+		my_target.show_message("\red <B>[src] has been attacked by [my_target] </B>", 1) //Lazy.
+
+		//src.health -= P.power
+
+
+		return
+
+	HasEntered(var/mob/M, somenumber)
+		if(M == my_target)
+			step_away(src,my_target,2)
+			if(prob(30))
+				for(var/mob/O in oviewers(world.view , my_target))
+					O << "\red <B>[my_target] stumbles around.</B>"
+
+	New()
+		spawn(300)
+			if(my_target)
+				my_target.hallucinations -= src
+			del(src)
+		step_away(src,my_target,2)
+		proccess()
+
+
+	proc/updateimage()
+	//	del src.currentimage
+
+
+		if(src.dir == NORTH)
+			del src.currentimage
+			src.currentimage = new /image(up,src)
+		else if(src.dir == SOUTH)
+			del src.currentimage
+			src.currentimage = new /image(down,src)
+		else if(src.dir == EAST)
+			del src.currentimage
+			src.currentimage = new /image(right,src)
+		else if(src.dir == WEST)
+			del src.currentimage
+			src.currentimage = new /image(left,src)
+		my_target << currentimage
+
+
+	proc/proccess()
+		if(!my_target) spawn(5) .()
+		if(src.health < 0)
+			collapse()
+			return
+		if(get_dist(src,my_target) > 1)
+			src.dir = get_dir(src,my_target)
+			step_towards(src,my_target)
+			updateimage()
+		else
+			if(prob(15))
+				if(weapon_name)
+					my_target << sound(pick('genhit1.ogg', 'genhit2.ogg', 'genhit3.ogg'))
+					my_target.show_message("\red <B>[my_target] has been attacked with [weapon_name] by [src.name] </B>", 1)
+					my_target.halloss += 8
+					if(prob(20)) my_target.eye_blurry += 3
+					if(prob(33))
+						if(!locate(/obj/effect/overlay) in my_target.loc)
+							fake_blood(my_target)
+				else
+					my_target << sound(pick('punch1.ogg','punch2.ogg','punch3.ogg','punch4.ogg'))
+					my_target.show_message("\red <B>[src.name] has punched [my_target]!</B>", 1)
+					my_target.halloss += 4
+					if(prob(33))
+						if(!locate(/obj/effect/overlay) in my_target.loc)
+							fake_blood(my_target)
+
+		if(prob(15))
+			step_away(src,my_target,2)
+		spawn(5) .()
+
+	proc/collapse()
+		collapse = 1
+		updateimage()
+
+/proc/fake_blood(var/mob/target)
+	var/obj/effect/overlay/O = new/obj/effect/overlay(target.loc)
+	O.name = "blood"
+	var/image/I = image('blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
+	target << I
+	spawn(300)
+		del(O)
+	return
+
+var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/item/ammo_magazine/a357,\
+	/obj/item/weapon/gun/energy/crossbow, /obj/item/weapon/melee/energy/sword,\
+	/obj/item/weapon/storage/box/syndicate, /obj/item/weapon/storage/emp_kit,\
+	/obj/item/weapon/cartridge/syndicate, /obj/item/clothing/under/chameleon,\
+	/obj/item/clothing/shoes/syndigaloshes, /obj/item/weapon/card/id/syndicate,\
+	/obj/item/clothing/mask/gas/voice, /obj/item/clothing/glasses/thermal,\
+	/obj/item/device/chameleon, /obj/item/weapon/card/emag, /obj/item/device/hacktool,\
+	/obj/item/weapon/storage/toolbox/syndicate, /obj/item/weapon/aiModule,\
+	/obj/item/device/radio/headset/traitor,	/obj/item/weapon/plastique,\
+	/obj/item/weapon/syndie/c4explosive, /obj/item/device/powersink,\
+	/obj/machinery/singularity_beacon/syndicate, /obj/item/weapon/storage/syndie_kit,\
+	/obj/item/toy/syndicateballoon, /obj/item/weapon/gun/energy/laser/captain,\
+	/obj/item/weapon/hand_tele, /obj/item/weapon/rcd, /obj/item/weapon/tank/jetpack,\
+	/obj/item/clothing/under/rank/captain, /obj/item/device/aicard,\
+	/obj/item/clothing/shoes/magboots, /obj/item/blueprints, /obj/item/weapon/disk/nuclear,\
+	/obj/item/clothing/suit/space/nasavoid, /obj/item/weapon/tank)
+
+/proc/fake_attack(var/mob/target)
+	var/list/possible_clones = new/list()
+	var/mob/living/carbon/human/clone = null
+	var/clone_weapon = null
+
+	for(var/mob/living/carbon/human/H in world)
+		if(H.stat || H.lying) continue
+		possible_clones += H
+
+	if(!possible_clones.len) return
+	clone = pick(possible_clones)
+	//var/obj/fake_attacker/F = new/obj/fake_attacker(outside_range(target))
+	var/obj/fake_attacker/F = new/obj/fake_attacker(target.loc)
+	if(clone.l_hand)
+		if(!(locate(clone.l_hand) in non_fakeattack_weapons))
+			clone_weapon = clone.l_hand.name
+			F.weap = clone.l_hand
+	else if (clone.r_hand)
+		if(!(locate(clone.r_hand) in non_fakeattack_weapons))
+			clone_weapon = clone.r_hand.name
+			F.weap = clone.r_hand
+
+	F.name = clone.name
+	F.my_target = target
+	F.weapon_name = clone_weapon
+	target.hallucinations += F
+
+
+	F.left = image(clone,dir = WEST)
+	F.right = image(clone,dir = EAST)
+	F.up = image(clone,dir = NORTH)
+	F.down = image(clone,dir = SOUTH)
+
+//	F.base = new /icon(clone.stand_icon)
+//	F.currentimage = new /image(clone)
+
+/*
+
+
+
+	F.left = new /icon(clone.stand_icon,dir=WEST)
+	for(var/icon/i in clone.overlays)
+		F.left.Blend(i)
+	F.up = new /icon(clone.stand_icon,dir=NORTH)
+	for(var/icon/i in clone.overlays)
+		F.up.Blend(i)
+	F.down = new /icon(clone.stand_icon,dir=SOUTH)
+	for(var/icon/i in clone.overlays)
+		F.down.Blend(i)
+	F.right = new /icon(clone.stand_icon,dir=EAST)
+	for(var/icon/i in clone.overlays)
+		F.right.Blend(i)
+
+	target << F.up
+	*/
+
+	F.updateimage()

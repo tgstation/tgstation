@@ -107,7 +107,16 @@
 						prints = L[num2text(2)]
 						break
 					else
-						src.fingerprints[i] = "1=" + L[num2text(1)] + "&2=" + stars(L[num2text(2)], rand(80,90))
+						var/test_print = stars(L[num2text(2)], rand(80,90))
+						if(stringpercent(test_print) == 32)
+							if(src.fingerprints.len == 1)
+								src.fingerprints = list()
+							else
+								for(var/j = (i + 1), j < (src.fingerprints.len), j++)
+									src.fingerprints[j-1] = src.fingerprints[j]
+								src.fingerprints.len--
+						else
+							src.fingerprints[i] = "1=" + L[num2text(1)] + "&2=" + test_print
 				else
 					var/turf/T = get_turf(src)
 					for (var/mob/N in world)
@@ -245,6 +254,25 @@
 			source2.blood_DNA = null
 			var/icon/I = new /icon(source2.icon_old, source2.icon_state)
 			source2.icon = I
+	if(src.fingerprints && src.fingerprints.len)
+		var/done = 0
+		while(!done)
+			done = 1
+			for(var/i = 1, i < (src.fingerprints.len + 1), i++)
+				var/list/prints = params2list(src.fingerprints[i])
+				var/test_print = prints["2"]
+				var/new_print = stars(test_print, rand(1,20))
+				if(stringpercent(new_print) == 32)
+					if(src.fingerprints.len == 1)
+						src.fingerprints = list()
+					else
+						for(var/j = (i + 1), j < (src.fingerprints.len), j++)
+							src.fingerprints[j-1] = src.fingerprints[j]
+						src.fingerprints.len--
+						done = 0
+					break
+				else
+					src.fingerprints[i] = "1=" + prints["1"] + "&2=" + new_print
 	return
 
 /atom/MouseDrop(atom/over_object as mob|obj|turf|area)

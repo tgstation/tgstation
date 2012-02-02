@@ -631,20 +631,21 @@ turf/Entered(mob/living/carbon/human/M)
 					M.shoes.track_blood--
 					src.add_bloody_footprints(M.shoes.track_blood_mob,0,M.dir,M.shoes.name)
 
-		for(var/obj/effect/decal/cleanable/blood/B in src)
-			if(B.track_amt <= 0) continue
-			if(B.type != /obj/effect/decal/cleanable/blood/tracks)
-				if(istype(M,/mob/living/carbon/human))
-					if(M.shoes)
-						M.shoes.add_blood(B.blood_owner)
-						M.shoes.track_blood_mob = B.blood_owner
-						M.shoes.track_blood = max(M.shoes.track_blood,8)
-				else
-					M.add_blood(B.blood_owner)
-					M.track_blood_mob = B.blood_owner
-					M.track_blood = max(M.track_blood,rand(4,8))
-				B.track_amt--
-				break
+//REMOVED until we improve it.
+//		for(var/obj/effect/decal/cleanable/blood/B in src)
+//			if(B.track_amt <= 0) continue
+//			if(B.type != /obj/effect/decal/cleanable/blood/tracks)
+//				if(istype(M,/mob/living/carbon/human))
+//					if(M.shoes)
+//						M.shoes.add_blood(B.blood_owner)
+//						M.shoes.track_blood_mob = B.blood_owner
+//						M.shoes.track_blood = max(M.shoes.track_blood,8)
+//				else
+//					M.add_blood(B.blood_owner)
+//					M.track_blood_mob = B.blood_owner
+//					M.track_blood = max(M.track_blood,rand(4,8))
+//				B.track_amt--
+//				break
 	. = ..()
 
 turf/proc/add_bloody_footprints(mob/living/carbon/human/M,leaving,d,info)
@@ -695,3 +696,18 @@ proc/blood_incompatible(donor,receiver)
 			if(donor_antigen != "O") return 1
 		//AB is a universal receiver.
 	return 0
+
+/obj/item/weapon/rag
+	name = "damp rag"
+	desc = "For cleaning up messes, I suppose."
+	w_class = 1
+	icon = 'toy.dmi'
+	icon_state = "rag"
+
+	afterattack(atom/A as obj|turf|area, mob/user as mob)
+		if(istype(A))
+			user.visible_message("[user] starts to wipe the prints off of [A] with \the [src]!")
+			if(do_after(user,30))
+				user.visible_message("[user] finishes wiping away the evidence!")
+				A.clean_blood()
+		return
