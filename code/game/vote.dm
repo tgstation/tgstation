@@ -362,6 +362,7 @@
 				return
 			//world << "You're voting for [N] options!"
 			var/i
+			vote.choices = list()
 			for(i=1; i<=N; i++)
 				var/addvote = input(usr, "What is option #[i]?", "Enter Option #[i]") as text
 				vote.choices += addvote
