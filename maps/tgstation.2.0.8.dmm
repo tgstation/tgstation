@@ -1498,7 +1498,7 @@
 "aCP" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/wall,/area/maintenance/fpmaint)
 "aCQ" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/obj/structure/disposalpipe/segment{dir = 1},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/plating,/area/maintenance/fpmaint)
 "aCR" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/maintenance/fpmaint)
-"aCS" = (/obj/machinery/door/firedoor/border_only,/obj/machinery/door/airlock/maintenance{name = "Autolathe Storage"; req_access_txt = "12"},/turf/simulated/floor,/area/maintenance/fpmaint)
+"aCS" = (/obj/machinery/door/firedoor/border_only,/obj/machinery/door/airlock/maintenance{name = "Autolathe Storage"; req_access_txt = "0"},/turf/simulated/floor,/area/maintenance/fpmaint)
 "aCT" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/turf/simulated/floor/plating,/area/maintenance/fpmaint)
 "aCU" = (/obj/structure/cable,/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/ai_monitored/storage/eva)
 "aCV" = (/obj/machinery/door/firedoor/border_only,/obj/machinery/door/airlock/command{name = "E.V.A."; req_access = null; req_access_txt = "18"},/turf/simulated/floor,/area/ai_monitored/storage/eva)
