@@ -1,5 +1,5 @@
 
-/obj/item/clothing/suit/storage/
+/obj/item/clothing/suit/storage
 	var/obj/screen/storage/boxes
 	var/obj/screen/close/closer
 	var/obj/slot1
@@ -95,7 +95,6 @@
 	return
 
 /obj/item/clothing/suit/storage/proc/orient2hud(mob/user as mob)
-
 	if (src == user.l_hand)
 		src.orient_objs(3, 5, 3, 3)
 	else if (src == user.r_hand)
@@ -119,9 +118,8 @@
 			cx = tx
 			cy--
 		//Foreach goto(56)
-	src.closer.screen_loc = text("[],[]", mx, my)
+	src.closer.screen_loc = text("[],[]", mx+1, my)
 	return
-
 /*/obj/item/clothing/suit/storage/New()
 
 	src.boxes = new /obj/screen/storage(  )

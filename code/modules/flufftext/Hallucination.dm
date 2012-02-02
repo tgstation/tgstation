@@ -132,11 +132,12 @@ mob/living/carbon/proc/handle_hallucinations()
 							src << 'Taser.ogg'
 				//Rare audio
 					if(12)
-						switch(rand(1,4))
-							if(1) src << 'ghost.ogg'
-							if(2) src << 'ghost2.ogg'
-							if(3) src << 'Heart Beat.ogg'
-							if(4) src << 'screech.ogg'
+						var/list/creepyasssounds = list('ghost.ogg', 'ghost2.ogg', 'Heart Beat.ogg', 'screech.ogg',\
+							'behind_you1.ogg', 'behind_you2.ogg', 'far_noise.ogg', 'growl1.ogg', 'growl2.ogg',\
+							'growl3.ogg', 'im_here1.ogg', 'im_here2.ogg', 'i_see_you1.ogg', 'i_see_you2.ogg',\
+							'look_up1.ogg', 'look_up2.ogg', 'over_here1.ogg', 'over_here2.ogg', 'over_here3.ogg',\
+							'turn_around1.ogg', 'turn_around2.ogg', 'veryfar_noise.ogg', 'wail.ogg')
+						src << pick(creepyasssounds)
 			if(66 to 70)
 				//Flashes of danger
 				//src << "Danger Flash"
@@ -150,9 +151,9 @@ mob/living/carbon/proc/handle_hallucinations()
 					if(2,3)
 						halbody = image('human.dmi',target,"husk_s",TURF_LAYER)
 						spawn(2)
-							step_towards(halbody,my_target)
-							sleep
-							step_towards(halbody,my_target)
+							step_towards(halbody,src)
+							sleep(2)
+							step_towards(halbody,src)
 
 				if(client) client.images += halbody
 				spawn(rand(50,80)) //Only seen for a brief moment.
