@@ -7,6 +7,14 @@
 /turf/proc/visibilityChanged()
 	cameranet.updateVisibility(src)
 
+/turf/New()
+	..()
+	cameranet.updateVisibility(src)
+/*
+/turf/Del()
+	..()
+	cameranet.updateVisibility(src)
+*/
 /datum/camerachunk
 	var/list/obscuredTurfs = list()
 	var/list/visibleTurfs = list()
@@ -246,6 +254,21 @@ var/datum/cameranet/cameranet = new()
 					chunk.cameras += c
 					chunk.hasChanged()
 
+/datum/cameranet/proc/removeCamera(obj/machinery/camera/c)
+	var/x1 = max(0, c.x - 16) & ~0xf
+	var/y1 = max(0, c.y - 16) & ~0xf
+	var/x2 = min(world.maxx, c.x + 16) & ~0xf
+	var/y2 = min(world.maxy, c.y + 16) & ~0xf
+
+	for(var/x = x1; x <= x2; x += 16)
+		for(var/y = y1; y <= y2; y += 16)
+			if(chunkGenerated(x, y, c.z))
+				var/datum/camerachunk/chunk = getCameraChunk(x, y, c.z)
+				if(!c)
+					chunk.hasChanged()
+				if(c in chunk.cameras)
+					chunk.cameras -= c
+					chunk.hasChanged()
 
 /mob/living/silicon/ai/var/mob/aiEye/eyeobj = new()
 
@@ -317,6 +340,18 @@ var/datum/cameranet/cameranet = new()
 /obj/machinery/camera/New()
 	..()
 	cameranet.addCamera(src)
+
+/obj/machinery/camera/Del()
+	cameranet.removeCamera(src)
+	..()
+
+/obj/machinery/camera/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	. = ..(W, user)
+	if(istype(W, /obj/item/weapon/wirecutters))
+		if(status)
+			cameranet.addCamera(src)
+		else
+			cameranet.removeCamera(src)
 
 /proc/checkcameravis(atom/A)
 	for(var/obj/machinery/camera/C in view(A,7))
