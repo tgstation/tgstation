@@ -1450,6 +1450,8 @@ datum
 					M:adjustOxyLoss(-3)
 					M:heal_organ_damage(3,3)
 					M:adjustToxLoss(-3)
+					M:halloss = 0
+					M:hallucination -= 5
 				..()
 				return
 
