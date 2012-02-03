@@ -212,7 +212,10 @@
 		if(src in user)
 			user.remove_from_mob(src)
 		var/obj/item/weapon/packageWrap/O = W
-		if (O.amount > 1)
+		if(!istype(loc,/turf))
+			user << "\red You need to place the item on the ground before wrapping it!"
+			return
+		else if (O.amount > 1)
 			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(location)
 			P.wrapped = src
 			src.loc = P
