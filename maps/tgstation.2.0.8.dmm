@@ -5278,7 +5278,7 @@
 "bXz" = (/obj/machinery/light/small{dir = 8},/turf/simulated/floor/plating,/area/maintenance/aft)
 "bXA" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = "90Curve"},/turf/simulated/floor/plating,/area/maintenance/aft)
 "bXB" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = "Streight"},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = "90Curve"},/turf/simulated/floor/plating,/area/maintenance/aft)
-"bXC" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = "90Curve"},/turf/simulated/floor/plating,/area/maintenance/aft)
+"bXC" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = "90Curve"},/obj/machinery/camera{c_tag = "Engineering Maintenance"; dir = 8; network = "SS13"},/turf/simulated/floor/plating,/area/maintenance/aft)
 "bXD" = (/obj/machinery/door/firedoor/border_only,/obj/machinery/door/airlock/engineering{name = "Engineering"; req_access_txt = "10"},/turf/simulated/floor,/area/engine/engineering)
 "bXE" = (/obj/machinery/power/terminal{icon_state = "term"; dir = 1},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor,/area/engine/engineering)
 "bXF" = (/obj/machinery/power/terminal{icon_state = "term"; dir = 1},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor,/area/engine/engineering)
