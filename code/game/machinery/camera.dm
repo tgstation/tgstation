@@ -201,6 +201,7 @@
 	var/obj/machinery/camera/C = D[t]
 
 	if (t == "Cancel")
+		user.cancel_camera()
 		user.machine = null
 		return 0
 
