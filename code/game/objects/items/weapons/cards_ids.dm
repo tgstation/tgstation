@@ -45,13 +45,10 @@ FINGERPRINT CARD
 	return
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user as mob)
-	if(!src.registered)
-		src.registered = input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)
-		src.assignment = input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")
-		src.name = "[src.registered]'s ID Card ([src.assignment])"
-		user << "\blue You successfully forge the ID card."
-	else
-		..()
+	src.registered = input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)
+	src.assignment = input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")
+	src.name = "[src.registered]'s ID Card ([src.assignment])"
+	user << "\blue You successfully forge the ID card."
 
 /obj/item/weapon/card/id/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()

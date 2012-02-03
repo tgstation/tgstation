@@ -129,6 +129,8 @@
 	return 1
 
 /obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I, /obj/item/device/detective_scanner))
+		return ..()
 	if (src.operating)
 		return
 	src.add_fingerprint(user)

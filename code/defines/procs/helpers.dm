@@ -1519,7 +1519,7 @@ proc/get_opposite(var/checkdir)
 	if(!text || !character)
 		return 0
 	var/count = 0
-	for(var/i = 1, i < lentext(text), i++)
+	for(var/i = 1, i <= lentext(text), i++)
 		var/a = copytext(text,i,i+1)
 		if(a == character)
 			count++

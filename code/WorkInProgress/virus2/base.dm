@@ -322,6 +322,12 @@ proc/airborne_can_reach(turf/source, turf/target)
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.gib()
 
+/datum/disease2/effect/greater/hallucinations
+	name = "Hallucinational Syndrome"
+	stage = 3
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.hallucination += 25
+
 /datum/disease2/effect/greater/radian
 	name = "Radian's syndrome"
 	stage = 4
@@ -452,6 +458,12 @@ proc/airborne_can_reach(turf/source, turf/target)
 			mob.suiciding = 0
 
 // lesser syndromes, partly just copypastes
+/datum/disease2/effect/lesser/hallucinations
+	name = "Hallucinational Syndrome"
+	stage = 3
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		mob.hallucination += 5
+
 /datum/disease2/effect/lesser/mind
 	name = "Lazy mind syndrome"
 	stage = 3

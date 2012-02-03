@@ -233,6 +233,8 @@
 						H.icon_state = "head_f_l"
 					H.overlays += owner.face_lying
 					H.transfer_identity(owner)
+					H.pixel_x = -10
+					H.pixel_y = 6
 
 					var/lol = pick(cardinal)
 					step(H,lol)

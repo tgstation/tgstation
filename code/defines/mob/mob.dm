@@ -247,6 +247,10 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 //	var/obj/effect/organstructure/organStructure = null //for dem organs
 	var/list/organs = list(  )	//List of organs.
 
+//Yes, yes I did.  --SkyMarshal
+	var/list/atom/hallucinations = list()
+	var/halloss = 0
+	var/hallucination = 0
 
 /mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0, var/force_species_check=1)
 //	world << "Contract_disease called by [src] with virus [virus]"

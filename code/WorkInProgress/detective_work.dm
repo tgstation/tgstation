@@ -121,6 +121,319 @@ obj/machinery/computer/forensic_scanning
 		onclose(user,"scanner")
 
 
+	Topic(href,href_list)
+		switch(href_list["operation"])
+			if("login")
+				var/mob/M = usr
+				if(istype(M,/mob/living/silicon))
+					authenticated = 1
+					updateDialog()
+					return
+				var/obj/item/weapon/card/id/I = M.equipped()
+				if (I && istype(I))
+					if(src.check_access(I))
+						authenticated = 1
+						//usr << "\green Access Granted"
+				//if(!authenticated)
+					//usr << "\red Access Denied"
+			if("logout")
+				authenticated = 0
+			if("clear")
+				if(canclear)
+					temp = null
+			if("eject")
+				if(scanning)
+					scanning.loc = loc
+					scanning = null
+				else
+					temp = "Eject Failed: No Object"
+			if("insert")
+				var/mob/M = usr
+				var/obj/item/I = M.equipped()
+				if(I && istype(I))
+					if(istype(I, /obj/item/weapon/evidencebag))
+						scanning = I.contents[1]
+						scanning.loc = src
+						I.overlays -= scanning
+						I.icon_state = "evidenceobj"
+					else
+						scanning = I
+						M.drop_item()
+						I.loc = src
+				else
+					temp = "Invalid Object Rejected."
+			if("card")
+				var/mob/M = usr
+				var/obj/item/I = M.equipped()
+				if(I && istype(I,/obj/item/weapon/f_card))
+					card = I
+					M.drop_item()
+					I.loc = src
+					process_card()
+					usr << "You insert the card, and it is destroyed by the machinery in the process of comparing prints."
+				else
+					usr << "\red Invalid Object Rejected."
+			if("database")
+				canclear = 1
+				if((!misc || !misc.len) && (!files || !files.len))
+					temp = "Database is empty."
+				else
+					if(files && files.len)
+						temp = "<b>Criminal Evidence Database</b><br><br>"
+						temp += "Consolidated data points:<br>"
+						for(var/i = 1, i < (files.len + 1), i++)
+							temp += "<a href='?src=\ref[src];operation=record;identifier=[i]'>{Dossier [i]}</a><br>"
+						temp += "<br><a href='?src=\ref[src];operation=card'>{Insert Finger Print Card}</a><br><br><br>"
+					else
+						temp = ""
+					if(misc && misc.len)
+						if(href_list["delete"])
+							delete_record(text2num(href_list["delete"]))
+						temp += "<b>Auxiliary Evidence Database</b><br><br>"
+						temp += "This is where anything without fingerprints goes.<br><br>"
+						for(var/i = 1, i < (misc.len + 1), i++)
+							var/list/temp_list = misc[i]
+							var/item_name = get_name(temp_list[1])
+							temp += "<a href='?src=\ref[src];operation=auxiliary;identifier=[i]'>{[item_name]}</a><br>"
+			if("record")
+				canclear = 0
+				if(files)
+					temp = "<b>Criminal Evidence Database</b><br><br>"
+					temp += "Consolidated data points: Dossier [href_list["identifier"]]<br>"
+					var/identifier = text2num(href_list["identifier"])
+					var/list/dossier = files[identifier]
+					var/list/prints = params2list(dossier[1])
+					var/print_string = "Fingerprints: Print not complete!<br>"
+					if(stringpercent(prints[num2text(2)]) <= FINGERPRINT_COMPLETE)
+						print_string = "Fingerprints: (80% or higher completion reached)<br>" + prints[num2text(2)] + "<br>"
+					temp += print_string
+					for(var/i = 2, i < (dossier.len + 1), i++)
+						var/list/outputs = dossier[i]
+						var/item_name = get_name(outputs[1])
+						var/list/prints_len = outputs[2]
+						temp += "Object: [item_name]<br>"
+						temp += "&nbsp;&nbsp;&nbsp;&nbsp;[prints_len.len] Unique fingerprints found.<br>"
+						var/list/fibers = outputs[3]
+						if(fibers && fibers.len)
+							var/dat = "[fibers[1]]"
+							for(var/j = 2, j < (fibers.len + 1), j++)
+								dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]"
+							temp += "&nbsp;&nbsp;&nbsp;&nbsp;Fibers: [dat]<br>"
+						else
+							temp += "&nbsp;&nbsp;&nbsp;&nbsp;No fibers found.<br>"
+						var/list/blood = outputs[4]
+						if(blood && blood.len)
+							var/dat = "[blood[1]]"
+							if(blood.len > 1)
+								for(var/j = 2, j < (blood.len + 1), j++)
+									dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]"
+							temp += "&nbsp;&nbsp;&nbsp;&nbsp;Blood: [dat]<br>"
+						else
+							temp += "&nbsp;&nbsp;&nbsp;&nbsp;No blood found.<br>"
+				else
+					temp = "ERROR.  Database not found!<br>"
+				temp += "<br><a href='?src=\ref[src];operation=databaseprint;identifier=[href_list["identifier"]]'>{Print}</a>"
+				temp += "<br><a href='?src=\ref[src];operation=database'>{Return}</a>"
+			if("databaseprint")
+				if(files)
+					var/obj/item/weapon/paper/P = new(loc)
+					P.name = "Database File (Dossier [href_list["identifier"]])"
+					P.overlays += "paper_words"
+					P.info = "<b>Criminal Evidence Database</b><br><br>"
+					P.info += "Consolidated data points: Dossier [href_list["identifier"]]<br>"
+					var/list/dossier = files[text2num(href_list["identifier"])]
+					var/list/prints = params2list(dossier[1])
+					var/print_string = "Fingerprints: Print not complete!<br>"
+					if(stringpercent(prints[num2text(2)]) <= FINGERPRINT_COMPLETE)
+						print_string = "Fingerprints: " + prints[num2text(2)] + "<BR>"
+					P.info += print_string
+					for(var/i = 2, i < (dossier.len + 1), i++)
+						var/list/outputs = dossier[i]
+						var/item_name = get_name(outputs[1])
+						var/list/prints_len = outputs[2]
+						P.info += "Object: [item_name]<br>"
+						P.info += "&nbsp;&nbsp;&nbsp;&nbsp;[prints_len.len] Unique fingerprints found.<br>"
+						var/list/fibers = outputs[3]
+						if(fibers && fibers.len)
+							var/dat = "[fibers[1]]"
+							for(var/j = 2, j < (fibers.len + 1), j++)
+								dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]"
+							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;Fibers: [dat]<br>"
+						else
+							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;No fibers found.<br>"
+						var/list/blood = outputs[4]
+						if(blood && blood.len)
+							var/dat = "[blood[1]]"
+							if(blood.len > 1)
+								for(var/j = 2, j < (blood.len + 1), j++)
+									dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]"
+							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;Blood: [dat]<br>"
+						else
+							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;No blood found."
+				else
+					usr << "ERROR.  Database not found!<br>"
+			if("auxiliary")
+				canclear = 0
+				if(misc)
+					temp = "<b>Auxiliary Evidence Database</b><br><br>"
+					var/identifier = text2num(href_list["identifier"])
+					var/list/outputs = misc[identifier]
+					var/item_name = get_name(outputs[1])
+					temp += "Consolidated data points: [item_name]<br>"
+					var/list/fibers = outputs[2]
+					if(fibers && fibers.len)
+						var/dat = "[fibers[1]]"
+						for(var/j = 2, j <= fibers.len, j++)
+							dat += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]"
+						temp += "&nbsp;&nbsp;&nbsp;&nbsp;Fibers: [dat]<br>"
+					else
+						temp += "&nbsp;&nbsp;&nbsp;&nbsp;No fibers found."
+					var/list/blood = outputs[3]
+					if(blood && blood.len)
+						var/dat = "[blood[1]]"
+						for(var/j = 2, j <= blood.len, j++)
+							dat += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]"
+						temp += "&nbsp;&nbsp;&nbsp;&nbsp;Blood: [dat]<br>"
+					else
+						temp += "&nbsp;&nbsp;&nbsp;&nbsp;No blood found.<br>"
+				else
+					temp = "ERROR.  Database not found!<br>"
+				temp += "<br><a href='?src=\ref[src];operation=database;delete=[href_list["identifier"]]'>{Delete This Record}</a>"
+				temp += "<br><a href='?src=\ref[src];operation=auxiliaryprint;identifier=[href_list["identifier"]]'>{Print}</a>"
+				temp += "<br><a href='?src=\ref[src];operation=database'>{Return}</a>"
+			if("auxiliaryprint")
+				if(misc)
+					var/obj/item/weapon/paper/P = new(loc)
+					var/identifier = text2num(href_list["identifier"])
+					var/list/outputs = misc[identifier]
+					var/item_name = get_name(outputs[1])
+					P.name = "Auxiliary Database File ([item_name])"
+					P.overlays += "paper_words"
+					P.info = "<b>Auxiliary Evidence Database</b><br><br>"
+					P.info += "Consolidated data points: [item_name]<br>"
+					var/list/fibers = outputs[2]
+					if(fibers && fibers.len)
+						var/dat = "[fibers[1]]"
+						for(var/j = 2, j <= fibers.len, j++)
+							dat += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]"
+						P.info += "&nbsp;&nbsp;&nbsp;&nbsp;Fibers: [dat]<br>"
+					else
+						P.info += "&nbsp;&nbsp;&nbsp;&nbsp;No fibers found."
+					var/list/blood = outputs[3]
+					if(blood && blood.len)
+						var/dat = "[blood[1]]"
+						for(var/j = 2, j <= blood.len, j++)
+							dat += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]"
+						P.info += "&nbsp;&nbsp;&nbsp;&nbsp;Blood: [dat]<br>"
+					else
+						P.info += "&nbsp;&nbsp;&nbsp;&nbsp;No blood found.<br>"
+				else
+					usr << "ERROR.  Database not found!<br>"
+			if("scan")
+				if(scanning)
+					scan_process = 3
+					scan_data = "Scanning [scanning]: 25% complete"
+					updateDialog()
+					sleep(50)
+					if(!scan_process)
+						scan_data = null
+						updateDialog()
+						return
+					scan_data = "Scanning [scanning]: 50% complete"
+					updateDialog()
+					scan_process = 2
+					sleep(50)
+					if(!scan_process)
+						scan_data = null
+						updateDialog()
+						return
+					scan_data = "Scanning [scanning]: 75% complete"
+					updateDialog()
+					scan_process = 1
+					sleep(50)
+					if(!scan_process)
+						scan_data = null
+						updateDialog()
+						return
+					scan_process = 0
+					scan_name = scanning.name
+					scan_data = "<u>[scanning]</u><br><br>"
+					if (scanning.blood_DNA)
+						scan_data += "Blood Found:<br>"
+						for(var/i = 1, i < (scanning.blood_DNA.len + 1), i++)
+							var/list/templist = scanning.blood_DNA[i]
+							scan_data += "-Blood type: [templist[2]]\nDNA: [templist[1]]<br><br>"
+					else
+						scan_data += "No Blood Found<br><br>"
+					if (!length(scanning.fingerprints))
+						scan_data += "No Fingerprints Found<br><br>"
+					else
+						var/list/L = scanning.fingerprints
+						scan_data += "Isolated [L.len] Fingerprints.  Loaded into database.<br>"
+						add_data(scanning)
+
+					if(!scanning.suit_fibers)
+						/*if(istype(scanning,/obj/item/device/detective_scanner))
+							var/obj/item/device/detective_scanner/scanner = scanning
+							if(scanner.stored_name)
+								scan_data += "Fibers/Materials Data - [scanner.stored_name]:<br>"
+								for(var/data in scanner.stored_fibers)
+									scan_data += "- [data]<br>"
+							else
+								scan_data += "No Fibers/Materials Data<br>"
+						else*/
+						scan_data += "No Fibers/Materials Located<br>"
+					else
+						/*if(istype(scanning,/obj/item/device/detective_scanner))
+							var/obj/item/device/detective_scanner/scanner = scanning
+							if(scanner.stored_name)
+								scan_data += "Fibers/Materials Data - [scanner.stored_name]:<br>"
+								for(var/data in scanner.stored_fibers)
+									scan_data += "- [data]<br>"
+							else
+								scan_data += "No Fibers/Materials Data<br>"*/
+
+						scan_data += "Fibers/Materials Found:<br>"
+						for(var/data in scanning.suit_fibers)
+							scan_data += "- [data]<br>"
+					if(istype(scanning,/obj/item/device/detective_scanner))
+						scan_data += "<br><b>Data transfered from Scanner to Database.</b><br>"
+						add_data_scanner(scanning)
+					else if(!length(scanning.fingerprints))
+						scan_data += "<br><b><a href='?src=\ref[src];operation=add'>Add to Database?</a></b><br>"
+				else
+					temp = "Scan Failed: No Object"
+
+
+			if("print")
+				if(scan_data)
+					temp = "Scan Data Printed."
+					var/obj/item/weapon/paper/P = new(loc)
+					P.name = "Scan Data ([scan_name])"
+					P.info = "<tt>[scan_data]</tt>"
+					P.overlays += "paper_words"
+				else
+					temp = "Print Failed: No Data"
+			if("erase")
+				scan_data = ""
+			if("cancel")
+				scan_process = 0
+			if("add")
+				if(scanning)
+					add_data(scanning)
+				else
+					temp = "Data Transfer Failed: No Object."
+		updateUsrDialog()
+
+	verb/reset()
+		set name = "Reset Screen"
+		set category = "Object"
+		set src in oview(1)
+		temp = ""
+		add_fingerprint(usr)
+		return
+
+
 	ex_act()
 		return
 
@@ -312,280 +625,15 @@ obj/machinery/computer/forensic_scanning
 		del(card)
 		return
 
+	proc/delete_record(var/location)
+		if(misc && misc.len)
+			for(var/i = location, i < misc.len, i++)
+				misc[i] = misc[i+i]
+			misc.len--
+		return
+
 	proc/get_name(var/atom/A)
 		return A.name
-
-	Topic(href,href_list)
-		switch(href_list["operation"])
-			if("login")
-				var/mob/M = usr
-				if(istype(M,/mob/living/silicon))
-					authenticated = 1
-					updateDialog()
-					return
-				var/obj/item/weapon/card/id/I = M.equipped()
-				if (I && istype(I))
-					if(src.check_access(I))
-						authenticated = 1
-						//usr << "\green Access Granted"
-				//if(!authenticated)
-					//usr << "\red Access Denied"
-			if("logout")
-				authenticated = 0
-			if("clear")
-				if(canclear)
-					temp = null
-			if("eject")
-				if(scanning)
-					scanning.loc = loc
-					scanning = null
-				else
-					temp = "Eject Failed: No Object"
-			if("insert")
-				var/mob/M = usr
-				var/obj/item/I = M.equipped()
-				if(I && istype(I))
-					if(istype(I, /obj/item/weapon/evidencebag))
-						scanning = I.contents[1]
-						scanning.loc = src
-						I.overlays -= scanning
-						I.icon_state = "evidenceobj"
-					else
-						scanning = I
-						M.drop_item()
-						I.loc = src
-				else
-					temp = "Invalid Object Rejected."
-			if("card")
-				var/mob/M = usr
-				var/obj/item/I = M.equipped()
-				if(I && istype(I,/obj/item/weapon/f_card))
-					card = I
-					M.drop_item()
-					I.loc = src
-					process_card()
-					usr << "You insert the card, and it is destroyed by the machinery in the process of comparing prints."
-				else
-					usr << "\red Invalid Object Rejected."
-			if("database")
-				canclear = 1
-				if(!misc && !files)
-					temp = "Database is empty."
-				else
-					if(files)
-						temp = "<b>Criminal Evidence Database</b><br><br>"
-						temp += "Consolidated data points:<br>"
-						for(var/i = 1, i < (files.len + 1), i++)
-							temp += "<a href='?src=\ref[src];operation=record;identifier=[i]'>{Dossier [i]}</a><br>"
-						temp += "<br><a href='?src=\ref[src];operation=card'>{Insert Finger Print Card}</a><br><br><br>"
-					else
-						temp = ""
-					if(misc)
-						temp += "<b>Auxiliary Evidence Database</b><br><br>"
-						temp += "This is where anything without fingerprints goes.<br><br>"
-						for(var/i = 1, i < (misc.len + 1), i++)
-							var/list/temp_list = misc[i]
-							var/item_name = get_name(temp_list[1])
-							temp += "<a href='?src=\ref[src];operation=auxiliary;identifier=[i]'>{[item_name]}</a><br>"
-			if("record")
-				canclear = 0
-				if(files)
-					temp = "<b>Criminal Evidence Database</b><br><br>"
-					temp += "Consolidated data points: Dossier [href_list["identifier"]]<br>"
-					var/identifier = text2num(href_list["identifier"])
-					var/list/dossier = files[identifier]
-					var/list/prints = params2list(dossier[1])
-					var/print_string = "Fingerprints: Print not complete!<br>"
-					if(stringpercent(prints[num2text(2)]) <= FINGERPRINT_COMPLETE)
-						print_string = "Fingerprints: (80% or higher completion reached)<br>" + prints[num2text(2)] + "<br>"
-					temp += print_string
-					for(var/i = 2, i < (dossier.len + 1), i++)
-						var/list/outputs = dossier[i]
-						var/item_name = get_name(outputs[1])
-						var/list/prints_len = outputs[2]
-						temp += "Object: [item_name]<br>"
-						temp += "&nbsp;&nbsp;&nbsp;&nbsp;[prints_len.len] Unique fingerprints found.<br>"
-						var/list/fibers = outputs[3]
-						if(fibers)
-							var/dat = "[fibers[1]]"
-							for(var/j = 2, j < (fibers.len + 1), j++)
-								dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]"
-							temp += "&nbsp;&nbsp;&nbsp;&nbsp;Fibers: [dat]<br>"
-						else
-							temp += "&nbsp;&nbsp;&nbsp;&nbsp;No fibers found.<br>"
-						var/list/blood = outputs[4]
-						if(blood)
-							var/dat = "[blood[1]]"
-							if(blood.len > 1)
-								for(var/j = 2, j < (blood.len + 1), j++)
-									dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]"
-							temp += "&nbsp;&nbsp;&nbsp;&nbsp;Blood: [dat]<br>"
-						else
-							temp += "&nbsp;&nbsp;&nbsp;&nbsp;No blood found.<br>"
-				else
-					temp = "ERROR.  Database not found!<br>"
-				temp += "<br><a href='?src=\ref[src];operation=databaseprint;identifier=[href_list["identifier"]]'>{Print}</a>"
-				temp += "<br><a href='?src=\ref[src];operation=database'>{Return}</a>"
-			if("databaseprint")
-				if(files)
-					var/obj/item/weapon/paper/P = new(loc)
-					P.name = "Database File (Dossier [href_list["identifier"]])"
-					P.overlays += "paper_words"
-					P.info = "<b>Criminal Evidence Database</b><br><br>"
-					P.info += "Consolidated data points: Dossier [href_list["identifier"]]<br>"
-					var/list/dossier = files[text2num(href_list["identifier"])]
-					var/list/prints = params2list(dossier[1])
-					var/print_string = "Fingerprints: Print not complete!<br>"
-					if(stringpercent(prints[num2text(2)]) <= FINGERPRINT_COMPLETE)
-						print_string = "Fingerprints: " + prints[num2text(2)] + "<BR>"
-					P.info += print_string
-					for(var/i = 2, i < (dossier.len + 1), i++)
-						var/list/outputs = dossier[i]
-						var/item_name = get_name(outputs[1])
-						var/list/prints_len = outputs[2]
-						P.info += "Object: [item_name]<br>"
-						P.info += "&nbsp;&nbsp;&nbsp;&nbsp;[prints_len.len] Unique fingerprints found.<br>"
-						var/list/fibers = outputs[3]
-						if(fibers)
-							var/dat = "[fibers[1]]"
-							for(var/j = 2, j < (fibers.len + 1), j++)
-								dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]"
-							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;Fibers: [dat]<br>"
-						else
-							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;No fibers found.<br>"
-						var/list/blood = outputs[4]
-						if(blood)
-							var/dat = "[blood[1]]"
-							if(blood.len > 1)
-								for(var/j = 2, j < (blood.len + 1), j++)
-									dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]"
-							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;Blood: [dat]<br>"
-						else
-							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;No blood found."
-				else
-					usr << "ERROR.  Database not found!<br>"
-			if("auxiliary")
-				canclear = 0
-				if(misc)
-					temp = "<b>Auxiliary Evidence Database</b><br><br>"
-					var/identifier = text2num(href_list["identifier"])
-					var/list/outputs = misc[identifier]
-					var/item_name = get_name(outputs[1])
-					temp += "Consolidated data points: [item_name]<br>"
-					var/list/fibers = outputs[2]
-					if(fibers)
-						var/dat = "[fibers[1]]"
-						for(var/j = 2, j < (fibers.len + 1), j++)
-							dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]"
-						temp += "&nbsp;&nbsp;&nbsp;&nbsp;Fibers: [dat]<br>"
-					else
-						temp += "&nbsp;&nbsp;&nbsp;&nbsp;No fibers found."
-					var/list/blood = outputs[3]
-					if(blood)
-						var/dat = "[blood[1]]"
-						for(var/j = 2, j < (blood.len + 1), j++)
-							dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]"
-						temp += "&nbsp;&nbsp;&nbsp;&nbsp;Blood: [dat]<br>"
-					else
-						temp += "&nbsp;&nbsp;&nbsp;&nbsp;No blood found.<br>"
-				else
-					temp = "ERROR.  Database not found!<br>"
-				temp += "<br><a href='?src=\ref[src];operation=database'>{Return}</a>"
-			if("scan")
-				if(scanning)
-					scan_process = 3
-					scan_data = "Scanning [scanning]: 25% complete"
-					updateDialog()
-					sleep(50)
-					if(!scan_process)
-						scan_data = null
-						updateDialog()
-						return
-					scan_data = "Scanning [scanning]: 50% complete"
-					updateDialog()
-					scan_process = 2
-					sleep(50)
-					if(!scan_process)
-						scan_data = null
-						updateDialog()
-						return
-					scan_data = "Scanning [scanning]: 75% complete"
-					updateDialog()
-					scan_process = 1
-					sleep(50)
-					if(!scan_process)
-						scan_data = null
-						updateDialog()
-						return
-					scan_process = 0
-					scan_name = scanning.name
-					scan_data = "<u>[scanning]</u><br><br>"
-					if (scanning.blood_DNA)
-						scan_data += "Blood Found:<br>"
-						for(var/i = 1, i < (scanning.blood_DNA.len + 1), i++)
-							var/list/templist = scanning.blood_DNA[i]
-							scan_data += "-Blood type: [templist[2]]\nDNA: [templist[1]]<br><br>"
-					else
-						scan_data += "No Blood Found<br><br>"
-					if (!length(scanning.fingerprints))
-						scan_data += "No Fingerprints Found<br><br>"
-					else
-						var/list/L = scanning.fingerprints
-						scan_data += "Isolated [L.len] Fingerprints.  Loaded into database.<br>"
-						add_data(scanning)
-
-					if(!scanning.suit_fibers)
-						/*if(istype(scanning,/obj/item/device/detective_scanner))
-							var/obj/item/device/detective_scanner/scanner = scanning
-							if(scanner.stored_name)
-								scan_data += "Fibers/Materials Data - [scanner.stored_name]:<br>"
-								for(var/data in scanner.stored_fibers)
-									scan_data += "- [data]<br>"
-							else
-								scan_data += "No Fibers/Materials Data<br>"
-						else*/
-						scan_data += "No Fibers/Materials Located<br>"
-					else
-						/*if(istype(scanning,/obj/item/device/detective_scanner))
-							var/obj/item/device/detective_scanner/scanner = scanning
-							if(scanner.stored_name)
-								scan_data += "Fibers/Materials Data - [scanner.stored_name]:<br>"
-								for(var/data in scanner.stored_fibers)
-									scan_data += "- [data]<br>"
-							else
-								scan_data += "No Fibers/Materials Data<br>"*/
-
-						scan_data += "Fibers/Materials Found:<br>"
-						for(var/data in scanning.suit_fibers)
-							scan_data += "- [data]<br>"
-					if(istype(scanning,/obj/item/device/detective_scanner))
-						scan_data += "<br><b>Data transfered from Scanner to Database.</b><br>"
-						add_data_scanner(scanning)
-					else if(!length(scanning.fingerprints))
-						scan_data += "<br><b><a href='?src=\ref[src];operation=add'>Add to Database?</a></b><br>"
-				else
-					temp = "Scan Failed: No Object"
-
-
-			if("print")
-				if(scan_data)
-					temp = "Scan Data Printed."
-					var/obj/item/weapon/paper/P = new(loc)
-					P.name = "Scan Data ([scan_name])"
-					P.info = "<tt>[scan_data]</tt>"
-					P.overlays += "paper_words"
-				else
-					temp = "Print Failed: No Data"
-			if("erase")
-				scan_data = ""
-			if("cancel")
-				scan_process = 0
-			if("add")
-				if(scanning)
-					add_data(scanning)
-				else
-					temp = "Data Transfer Failed: No Object."
-		updateUsrDialog()
 
 	detective
 		icon_state = "old"
@@ -631,20 +679,21 @@ turf/Entered(mob/living/carbon/human/M)
 					M.shoes.track_blood--
 					src.add_bloody_footprints(M.shoes.track_blood_mob,0,M.dir,M.shoes.name)
 
-		for(var/obj/effect/decal/cleanable/blood/B in src)
-			if(B.track_amt <= 0) continue
-			if(B.type != /obj/effect/decal/cleanable/blood/tracks)
-				if(istype(M,/mob/living/carbon/human))
-					if(M.shoes)
-						M.shoes.add_blood(B.blood_owner)
-						M.shoes.track_blood_mob = B.blood_owner
-						M.shoes.track_blood = max(M.shoes.track_blood,8)
-				else
-					M.add_blood(B.blood_owner)
-					M.track_blood_mob = B.blood_owner
-					M.track_blood = max(M.track_blood,rand(4,8))
-				B.track_amt--
-				break
+//REMOVED until we improve it.
+//		for(var/obj/effect/decal/cleanable/blood/B in src)
+//			if(B.track_amt <= 0) continue
+//			if(B.type != /obj/effect/decal/cleanable/blood/tracks)
+//				if(istype(M,/mob/living/carbon/human))
+//					if(M.shoes)
+//						M.shoes.add_blood(B.blood_owner)
+//						M.shoes.track_blood_mob = B.blood_owner
+//						M.shoes.track_blood = max(M.shoes.track_blood,8)
+//				else
+//					M.add_blood(B.blood_owner)
+//					M.track_blood_mob = B.blood_owner
+//					M.track_blood = max(M.track_blood,rand(4,8))
+//				B.track_amt--
+//				break
 	. = ..()
 
 turf/proc/add_bloody_footprints(mob/living/carbon/human/M,leaving,d,info)
@@ -654,7 +703,7 @@ turf/proc/add_bloody_footprints(mob/living/carbon/human/M,leaving,d,info)
 				T.desc = "These bloody footprints appear to have been made by [info]."
 				if(istype(M,/mob/living/carbon/human))
 					T.blood_DNA.len++
-					T.blood_DNA[T.blood_DNA.len] = list(M.dna.unique_enzymes,M.b_type)
+					T.blood_DNA[T.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
 				return
 	var/obj/effect/decal/cleanable/blood/tracks/this = new(src)
 	this.icon = 'footprints.dmi'
@@ -695,3 +744,18 @@ proc/blood_incompatible(donor,receiver)
 			if(donor_antigen != "O") return 1
 		//AB is a universal receiver.
 	return 0
+
+/obj/item/weapon/rag
+	name = "damp rag"
+	desc = "For cleaning up messes, I suppose."
+	w_class = 1
+	icon = 'toy.dmi'
+	icon_state = "rag"
+
+	afterattack(atom/A as obj|turf|area, mob/user as mob)
+		if(istype(A))
+			user.visible_message("[user] starts to wipe the prints off of [A] with \the [src]!")
+			if(do_after(user,30))
+				user.visible_message("[user] finishes wiping away the evidence!")
+				A.clean_blood()
+		return
