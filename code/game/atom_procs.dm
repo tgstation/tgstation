@@ -92,11 +92,10 @@
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
-			return 0
 		if (H.dna.uni_identity)
 			if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
 				return 0
-			else if(H.gloves)
+			else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
 				return 0
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)

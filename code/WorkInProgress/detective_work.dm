@@ -175,7 +175,7 @@ obj/machinery/computer/forensic_scanning
 					usr << "\red Invalid Object Rejected."
 			if("database")
 				canclear = 1
-				if(!misc && !files)
+				if((!misc || !misc.len) && (!files || !files.len))
 					temp = "Database is empty."
 				else
 					if(files && files.len)
@@ -626,7 +626,7 @@ obj/machinery/computer/forensic_scanning
 		return
 
 	proc/delete_record(var/location)
-		if(misc)
+		if(misc && misc.len)
 			for(var/i = location, i < misc.len, i++)
 				misc[i] = misc[i+i]
 			misc.len--

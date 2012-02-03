@@ -195,6 +195,8 @@
 	return
 
 /obj/item/attackby(obj/item/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/device/detective_scanner))
+		return
 	if (istype(W, /obj/item/weapon/packageWrap))
 		var/location = get_turf(src.loc)
 		if(istype(src,/obj/item/weapon/storage) && istype(src.loc, /mob))	//Put it into the bag
@@ -439,7 +441,7 @@ mob/proc/flash_weak_pain()
 	else
 		M.take_organ_damage(7)
 	M.eye_blurry += rand(3,4)
-	M.eye_stat += rand(2,4)
+	M.eye_stat += rand(5,9)
 	if (M.eye_stat >= 10)
 		M.eye_blurry += 15+(0.1*M.eye_blurry)
 		M.disabilities |= 1
