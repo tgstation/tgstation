@@ -81,6 +81,7 @@
 			if ((O.client && !( O.blinded )))
 				O << text("\red [] kicks the display case.", usr)
 		src.health -= 2
+		src.add_fingerprint(user)
 		healthcheck()
 		return
 

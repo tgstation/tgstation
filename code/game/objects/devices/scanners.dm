@@ -132,6 +132,8 @@ MASS SPECTROMETER
 		return
 
 	afterattack(atom/A as obj|turf|area, mob/user as mob)
+		if(!(locate(A) in oview(1,user)))
+			return
 		if(src.loc != user)
 			return 0
 		src.add_fingerprint(user)

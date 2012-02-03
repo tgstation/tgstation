@@ -92,14 +92,17 @@
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
-			return 0
-		if (H.dna.uni_identity || (H.gloves && prob(25) && istype(H.gloves, /obj/item/clothing/gloves/latex)))
+		if (H.dna.uni_identity)
+			if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
+				return 0
+			else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
+				return 0
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
 			var/new_prints = 0
 			var/prints
-			for(var/i = 1, i < (src.fingerprints.len + 1), i++)
+			for(var/i = 1, i <= src.fingerprints.len, i++)
 				var/list/L = params2list(src.fingerprints[i])
 				if(L[num2text(1)] == md5(H.dna.uni_identity))
 					new_prints = i
@@ -117,9 +120,12 @@
 					else
 						src.fingerprints[i] = "1=" + L[num2text(1)] + "&2=" + test_print
 			if(new_prints)
-				src.fingerprints[new_prints] = text("1=[]&2=[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40))))
+				src.fingerprints[new_prints] = text("1=[]&2=[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), (H.gloves ? rand(10,20) : rand(25,40)))))
 			else if(new_prints == 0)
 				src.fingerprints += text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40)))
+			for(var/i = 1, i <= src.fingerprints.len, i++)
+				if(length(src.fingerprints[i]) != 69)
+					src.fingerprints.Remove(src.fingerprints[i])
 			return 1
 	else
 		if(src.fingerprintslast != M.key)
@@ -133,7 +139,7 @@
 		return 0
 	if (!( src.flags ) & 256)
 		return
-	if (!( src.blood_DNA ))
+	if (src.blood_DNA)
 		if (istype(src, /obj/item)&&!istype(src, /obj/item/weapon/melee/energy))//Only regular items. Energy melee weapon are not affected.
 			var/obj/item/source2 = src
 			source2.icon_old = src.icon
@@ -158,7 +164,7 @@
 						return
 			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source2)
 			var/list/blood_DNA_temp[1]
-			blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.b_type)
+			blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.dna.b_type)
 			this.blood_DNA =  blood_DNA_temp
 			this.virus2 = M.virus2
 			for(var/datum/disease/D in M.viruses)
@@ -201,7 +207,8 @@
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source1 = src
 			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source1)
-			this.blood_DNA = M.dna.unique_enzymes
+			this.blood_DNA = list(M.dna.unique_enzymes, M.dna.b_type)
+			this.OriginalMob = M.dna.original_name
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
 				this.viruses += newDisease
