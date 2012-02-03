@@ -13,7 +13,7 @@
 	var/playsleepseconds = 0.0
 	var/list/storedinfo = new/list()
 	var/list/timestamp = new/list()
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
 	throwforce = 2
 	throw_speed = 4
 	throw_range = 20

@@ -141,24 +141,25 @@ mob/living/carbon/proc/handle_hallucinations()
 			if(66 to 70)
 				//Flashes of danger
 				//src << "Danger Flash"
-				var/possible_points = list()
-				for(var/turf/simulated/floor/F in view(src,world.view))
-					possible_points += F
-				var/turf/simulated/floor/target = pick(possible_points)
-				switch(rand(1,3))
-					if(1)
-						halbody = image('human.dmi',target,"husk_l",TURF_LAYER)
-					if(2,3)
-						halbody = image('human.dmi',target,"husk_s",TURF_LAYER)
-						spawn(2)
-							step_towards(halbody,src)
-							sleep(2)
-							step_towards(halbody,src)
+				if(!halbody)
+					var/possible_points = list()
+					for(var/turf/simulated/floor/F in view(src,world.view))
+						possible_points += F
+					var/turf/simulated/floor/target = pick(possible_points)
+					switch(rand(1,5))
+						if(1)
+							halbody = image('human.dmi',target,"husk_l",TURF_LAYER)
+						if(2,3)
+							halbody = image('human.dmi',target,"husk_s",TURF_LAYER)
+						if(4)
+							halbody = image('alien.dmi',target,"alienother",TURF_LAYER)
+						if(5)
+							halbody = image('xcomalien.dmi',target,"chryssalid",TURF_LAYER)
 
-				if(client) client.images += halbody
-				spawn(rand(50,80)) //Only seen for a brief moment.
-					if(client) client.images -= halbody
-					halbody = null
+					if(client) client.images += halbody
+					spawn(rand(50,80)) //Only seen for a brief moment.
+						if(client) client.images -= halbody
+						halbody = null
 			if(71 to 75)
 				//Fake death
 				src.sleeping_willingly = 1
