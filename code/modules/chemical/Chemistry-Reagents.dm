@@ -1450,6 +1450,8 @@ datum
 					M:adjustOxyLoss(-3)
 					M:heal_organ_damage(3,3)
 					M:adjustToxLoss(-3)
+					M:halloss = 0
+					M:hallucination -= 5
 				..()
 				return
 
@@ -1530,6 +1532,19 @@ datum
 			reaction_turf(var/turf/simulated/T, var/volume)
 				for(var/mob/living/carbon/metroid/M in T)
 					M.adjustToxLoss(rand(15,30))
+
+		LSD
+			name = "LSD"
+			id = "LSD"
+			description = "A hallucinogen"
+			reagent_state = LIQUID
+			color = "#B31008" // rgb: 139, 166, 233
+
+			on_mob_life(var/mob/M)
+				if(!M) M = holder.my_atom
+				M:hallucination += 5
+				..()
+				return
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

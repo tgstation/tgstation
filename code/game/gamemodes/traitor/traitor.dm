@@ -101,7 +101,7 @@
 						var/datum/objective/assassinate/kill_objective = new
 						kill_objective.owner = traitor
 						kill_objective.find_target()
-						for(var/j, j < traitor.objectives.len, j++)
+						for(var/j, j < (traitor.objectives.len + 1), j++)
 							var/compare = istype(traitor.objectives[j],/datum/objective/assassinate)
 							if(compare)
 								var/datum/objective/assassinate/test = traitor.objectives[j]
@@ -129,7 +129,7 @@
 						var/datum/objective/protect/protect_objective = new
 						protect_objective.owner = traitor
 						protect_objective.find_target()
-						for(var/j, j < traitor.objectives.len, j++)
+						for(var/j, j < (traitor.objectives.len + 1), j++)
 							var/compare = istype(traitor.objectives[j],/datum/objective/assassinate)
 							if(compare)
 								var/datum/objective/assassinate/test = traitor.objectives[j]
@@ -157,7 +157,7 @@
 						var/datum/objective/steal/steal_objective = new
 						steal_objective.owner = traitor
 						steal_objective.find_target()
-						for(var/j, j < traitor.objectives.len, j++)
+						for(var/j, j < (traitor.objectives.len + 1), j++)
 							var/compare = istype(traitor.objectives[j],/datum/objective/steal)
 							if(compare)
 								var/datum/objective/steal/test = traitor.objectives[j]

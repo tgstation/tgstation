@@ -1,5 +1,5 @@
 #define BOOK_VERSION_MIN	1
-#define BOOK_VERSION_MAX	1
+#define BOOK_VERSION_MAX	2
 #define BOOK_PATH			"data/books/"
 
 var/global/datum/book_manager/book_mgr = new()
@@ -67,6 +67,10 @@ datum/archived_book
 		id			 // the id of the book (like an isbn number)
 		dat			 // Actual page content
 
+		author_real	 // author's real_name
+		author_key	 // author's byond key
+		list/icon/photos	 // in-game photos used
+
 // loads the book corresponding by the specified id
 datum/archived_book/New(var/path)
 	if(isnull(path))
@@ -88,6 +92,12 @@ datum/archived_book/New(var/path)
 	F["id"] >> id
 	F["dat"] >> dat
 
+	F["author_real"] >> author_real
+	F["author_key"] >> author_key
+	F["photos"] >> photos
+	if(!photos)
+		photos = new()
+
 	// let's sanitize it here too!
 	for(var/tag in paper_blacklist)
 		if(findtext(dat,"<"+tag))
@@ -104,6 +114,10 @@ datum/archived_book/proc/save()
 	F["category"] << category
 	F["id"] << id
 	F["dat"] << dat
+
+	F["author_real"] << author_real
+	F["author_key"] << author_key
+	F["photos"] << photos
 
 #undef BOOK_VERSION_MIN
 #undef BOOK_VERSION_MAX

@@ -1,4 +1,10 @@
 /mob/living/carbon/human/death(gibbed)
+	if(halloss > 0 && (!gibbed))
+		//hallucination = 0
+		halloss = 0
+		// And the suffocation was a hallucination (lazy)
+		//oxyloss = 0
+		return
 	if(src.stat == 2)
 		return
 	if(src.healths)

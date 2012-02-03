@@ -211,6 +211,11 @@ About the new airlock wires panel:
 					return
 			else /*if (src.justzap)*/
 				return
+		else if(user.hallucination > 50 && prob(10) && src.operating == 0)
+			user << "\red <B>You feel a powerful shock course through your body!</B>"
+			user.halloss += 10
+			user.stunned += 10
+			return
 	..(user)
 
 
@@ -819,7 +824,7 @@ About the new airlock wires panel:
 		usr.machine = src
 		if (href_list["wires"])
 			var/t1 = text2num(href_list["wires"])
-			if (!istype(usr.equipped(), /obj/item/weapon/wirecutters) || !istype(usr.equipped(),/obj/item/weapon/shard))
+			if (!(istype(usr.equipped(), /obj/item/weapon/wirecutters) || istype(usr.equipped(),/obj/item/weapon/shard)))
 				usr << "You need wirecutters!"
 				return
 			if (src.isWireColorCut(t1) && istype(usr.equipped(), /obj/item/weapon/wirecutters))
@@ -1023,6 +1028,8 @@ About the new airlock wires panel:
 
 /obj/machinery/door/airlock/attackby(C as obj, mob/user as mob)
 	//world << text("airlock attackby src [] obj [] mob []", src, C, user)
+	if(istype(C, /obj/item/device/detective_scanner))
+		return
 	if (!istype(usr, /mob/living/silicon))
 		if (src.isElectrified())
 			if(src.shock(user, 75))
