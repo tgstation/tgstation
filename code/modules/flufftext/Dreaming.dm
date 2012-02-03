@@ -8,16 +8,17 @@ mob/living/carbon/proc/dream()
 		"a blue light","an abandoned laboratory","Nanotrasen","The Syndicate","blood","healing","power","respect",
 		"riches","space","a crash","happiness","pride","a fall","water","flames","ice","melons","flying"
 		)
-	for(var/i = rand(1,4),i > 0, i--)
-		var/dream_image = pick(dreams)
-		dreams -= dream_image
-		src << "\blue <i>... [dream_image] ...</i>"
-		sleep(rand(40,70))
-		if(paralysis <= 0)
-			dreaming = 0
-			return 0
-	dreaming = 0
-	return 1
+	spawn(0)
+		for(var/i = rand(1,4),i > 0, i--)
+			var/dream_image = pick(dreams)
+			dreams -= dream_image
+			src << "\blue <i>... [dream_image] ...</i>"
+			sleep(rand(40,70))
+			if(paralysis <= 0)
+				dreaming = 0
+				return 0
+		dreaming = 0
+		return 1
 
 mob/living/carbon/proc/handle_dreams()
 	if(prob(5) && !dreaming) dream()
