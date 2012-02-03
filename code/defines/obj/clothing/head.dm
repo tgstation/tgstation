@@ -187,3 +187,11 @@
 	desc = "For quick identification of trained medical personnel."
 	icon_state = "nursehat"
 	flags = FPRINT|TABLEPASS
+
+/obj/item/clothing/head/helmet/cardborg
+	name = "cardborg helmet"
+	desc = "A helmet made out of a box."
+	icon_state = "cardborg_h"
+	item_state = "cardborg_h"
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH
+	see_face = 0.0

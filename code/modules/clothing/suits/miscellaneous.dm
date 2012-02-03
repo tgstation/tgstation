@@ -132,3 +132,12 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
 
+// BubbleWrap - Nothing to see here
+
+/obj/item/clothing/suit/cardborg
+	name = "cardborg suit"
+	desc = "An ordinary cardboard box with holes cut in the sides."
+	icon_state = "cardborg"
+	item_state = "cardborg"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+

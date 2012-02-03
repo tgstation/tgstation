@@ -387,6 +387,7 @@
 	name = "Diskette Box"
 	icon_state = "disk_kit"
 	item_state = "syringe_kit"
+	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
 /obj/item/weapon/storage/diskbox/New()
 	..()

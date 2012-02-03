@@ -917,6 +917,7 @@
 	icon = 'pda.dmi'
 	icon_state = "pdabox"
 	item_state = "syringe_kit"
+	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
 /obj/item/weapon/storage/PDAbox/New()
 	..()

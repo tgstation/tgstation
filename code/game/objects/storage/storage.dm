@@ -9,6 +9,7 @@
 	var/obj/screen/storage/boxes = null
 	var/obj/screen/close/closer = null
 	w_class = 3.0
+	var/foldable = null	// BubbleWrap - if set, can be folded (when empty) into a sheet of cardboard
 
 /obj/item/weapon/storage/proc/return_inv()
 
@@ -244,7 +245,29 @@
 	src.master.attackby(W, user)
 	return
 
+// BubbleWrap - A box can be folded up to make card
+/obj/item/weapon/storage/attack_self(mob/user as mob)
+	if ( contents.len )
+		return
+	if ( !ispath(src.foldable) )
+		return
+	var/found = 0
+	// Close any open UI windows first
+	for(var/mob/M in range(1))
+		if (M.s_active == src)
+			src.close(M)
+		if ( M == user )
+			found = 1
+	if ( !found )	// User is too far away
+		return
+	// Now make the cardboard
+	user << "\blue You fold [src] flat."
+	new src.foldable(get_turf(src))
+	del(src)
+//BubbleWrap END
+
 /obj/item/weapon/storage/box/
+	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
 /obj/item/weapon/storage/box/survival/New()
 	..()

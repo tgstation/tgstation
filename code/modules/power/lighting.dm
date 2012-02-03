@@ -537,6 +537,7 @@
 	icon = 'storage.dmi'
 	icon_state = "light"
 	item_state = "syringe_kit"
+	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
 
 /obj/item/weapon/storage/lightbox/bulbs/New()
 	..()

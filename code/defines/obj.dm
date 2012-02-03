@@ -955,6 +955,7 @@
 	name = "Paper-cup Box"
 	icon_state = "box"
 	item_state = "syringe_kit"
+	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 	New()
 		..()
 		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
@@ -1189,6 +1190,13 @@
 				user.u_equip(src)
 				del(src)
 
+/obj/item/stack/sheet/cardboard	//BubbleWrap
+	name = "cardboard"
+	desc = "Large sheets of card, like boxes folded flat."
+	singular_name = "cardboard sheet"
+	icon_state = "sheet-card"
+	flags = FPRINT | TABLEPASS
+	origin_tech = "materials=1"
 
 /obj/item/weapon/beach_ball
 	icon = 'beach.dmi'

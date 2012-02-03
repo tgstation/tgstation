@@ -15,6 +15,7 @@
 	desc = "This box contains body bags."
 	icon_state = "bodybags"
 	item_state = "syringe_kit"
+	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
 
 	New()
