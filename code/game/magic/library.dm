@@ -284,6 +284,8 @@
 	attack_self(var/mob/user as mob, opening=1)
 		if(src.dat)
 			cache_imgs(user)
+			if(pages.len == 0) // For instance, when the book is spawned by admisn
+				src.gen_pages()
 			user << browse("<div style='color:#666;font-style:italic;margin-bottom:1em'><div style='float:left'>[title]</div><div style='float:right'>[author]</div></div><div style='clear:both;overflow:scroll'>[pages[cur_page]]</div>[pages.len > 1 ? navbar() : ""]", "window=book;size=600x500")
 
 			if(opening)

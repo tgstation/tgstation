@@ -1,8 +1,15 @@
 /datum/event/power_offline
 	Announce()
-		command_alert("The station is performing an automated power system grid check, please stand by.", "Maintenance alert")
 		for(var/obj/machinery/power/apc/a in world)
 			if(!a.crit)
+				if(istype(a.area, /area/engine))
+					continue
 				a.eventoff = 1
-				spawn(200)
-					a.eventoff = 0 /*Got a few bug reports about this, disabling for now --Mloc*/
+				a.update()
+
+	Die()
+		command_alert("The station has finished an automated power system grid check, thank you.", "Maintenance alert")
+		for(var/obj/machinery/power/apc/a in world)
+			if(!a.crit)
+				a.eventoff = 0
+				a.update()

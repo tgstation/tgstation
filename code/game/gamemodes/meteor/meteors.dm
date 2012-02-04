@@ -22,7 +22,9 @@
 		spawn(0)
 			spawn_meteor()
 
-/proc/spawn_meteor()
+//if size is 0, it picks a random size
+//if T is null, it starts on an edge space tile
+/proc/spawn_meteor(var/size = 0, var/turf/T = null)
 
 	var/startx
 	var/starty
@@ -32,47 +34,55 @@
 	var/turf/pickedgoal
 	var/max_i = 10//number of tries to spawn meteor.
 
-
 	do
-		switch(pick(1,2,3,4))
-			if(1) //NORTH
-				starty = world.maxy-3
-				startx = rand(1, world.maxx-1)
-				endy = 1
-				endx = rand(1, world.maxx-1)
-			if(2) //EAST
-				starty = rand(1,world.maxy-1)
-				startx = world.maxx-3
-				endy = rand(1, world.maxy-1)
-				endx = 1
-			if(3) //SOUTH
-				starty = 3
-				startx = rand(1, world.maxx-1)
-				endy = world.maxy-1
-				endx = rand(1, world.maxx-1)
-			if(4) //WEST
-				starty = rand(1, world.maxy-1)
-				startx = 3
-				endy = rand(1,world.maxy-1)
-				endx = world.maxx-1
-
-		pickedstart = locate(startx, starty, 1)
+		if(T)
+			pickedstart = T
+		else
+			switch(pick(1,2,3,4))
+				if(1) //NORTH
+					starty = world.maxy-3
+					startx = rand(1, world.maxx-1)
+					endy = 1
+					endx = rand(1, world.maxx-1)
+				if(2) //EAST
+					starty = rand(1,world.maxy-1)
+					startx = world.maxx-3
+					endy = rand(1, world.maxy-1)
+					endx = 1
+				if(3) //SOUTH
+					starty = 3
+					startx = rand(1, world.maxx-1)
+					endy = world.maxy-1
+					endx = rand(1, world.maxx-1)
+				if(4) //WEST
+					starty = rand(1, world.maxy-1)
+					startx = 3
+					endy = rand(1,world.maxy-1)
+					endx = world.maxx-1
+			pickedstart = locate(startx, starty, 1)
 		pickedgoal = locate(endx, endy, 1)
 		max_i--
 		if(max_i<=0) return
-
-	while (!istype(pickedstart, /turf/space) || pickedstart.loc.name != "Space" ) //FUUUCK, should never happen.
+		//meteors can spawn on station when a large one is hit by a missile
+	while ( (!istype(pickedstart, /turf/space) || pickedstart.loc.name != "Space") && !T )
 
 
 	var/obj/effect/meteor/M
-	switch(rand(1, 100))
-
-		if(1 to 10)
-			M = new /obj/effect/meteor/big( pickedstart )
-		if(11 to 75)
-			M = new /obj/effect/meteor( pickedstart )
-		if(76 to 100)
+	switch(size)
+		if(0)
+			switch(rand(1, 100))
+				if(1 to 10)
+					M = new /obj/effect/meteor/big( pickedstart )
+				if(11 to 75)
+					M = new /obj/effect/meteor( pickedstart )
+				if(76 to 100)
+					M = new /obj/effect/meteor/small( pickedstart )
+		if(1)
 			M = new /obj/effect/meteor/small( pickedstart )
+		if(2)
+			M = new /obj/effect/meteor( pickedstart )
+		if(3)
+			M = new /obj/effect/meteor/big( pickedstart )
 
 	M.dest = pickedgoal
 	spawn(0)

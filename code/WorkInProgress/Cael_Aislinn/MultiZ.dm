@@ -174,9 +174,9 @@
 						H.apply_damage(0.5*damage, BRUTE, "l_arm")
 						H.apply_damage(0.5*damage, BRUTE, "r_arm")
 
-						var/obj/effect/decal/cleanable/blood/B = new(src.loc)
-						B.blood_DNA = H.dna.unique_enzymes
-						B.blood_type = H.b_type
+						//var/obj/effect/decal/cleanable/blood/B = new(src.loc)
+						//B.blood_DNA = H.dna.unique_enzymes
+						//B.blood_type = H.b_type
 
 						H:weakened = max(H:weakened,2)
 						H:updatehealth()

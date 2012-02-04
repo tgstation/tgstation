@@ -357,6 +357,9 @@ CIRCULAR SAW
 
 /obj/item/weapon/autopsy_scanner/verb/print_data()
 	set src in view(usr, 1)
+	if(usr.stat == 2)
+		src << "No."
+		return
 
 	var/scan_data = ""
 	var/n = 1

@@ -62,7 +62,7 @@
 				user.burn_skin(shock_damage)
 				user.updatehealth()
 				user.visible_message("\red [user.name] was shocked by the [src.name]!", \
-					"\red <B>You feel a powerful shock course through your body sending you flying!</B>", \
+					"\red <B>You feel a powerful shock course through your body, sending you flying!</B>", \
 					"\red You hear a heavy electrical crack")
 
 				var/stun = min(shock_damage, 15)
