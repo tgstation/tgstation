@@ -5,7 +5,7 @@
 
 	Announce()
 		Lifetime = rand(15, 20)
-		command_alert("The station has entered an ion storm.  Monitor all electronic equipment for malfunctions", "Anomaly Alert")
+//		command_alert("The station has entered an ion storm.  Monitor all electronic equipment for malfunctions", "Anomaly Alert")
 		for (var/mob/living/carbon/human/player in world)
 			if(player.client)
 				players += player.real_name
@@ -44,3 +44,6 @@
 					bot.Emag()
 
 	Die()
+		spawn(rand(5000,8000))
+			if(prob(50))
+				command_alert("It has come to our attention that the station passed through an ion storm.  Please monitor all electronic equipment for malfunctions.", "Anomaly Alert")

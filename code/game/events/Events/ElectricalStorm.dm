@@ -6,7 +6,7 @@
 		list/obj/machinery/light/Comms = list( )
 
 	Announce()
-		command_alert("The station is flying through an electrical storm.  Radio communications may be disrupted", "Anomaly Alert")
+//		command_alert("The station is flying through an electrical storm.  Radio communications may be disrupted", "Anomaly Alert")
 
 		for(var/obj/machinery/light/Light in world)
 			if(Light.z == 1 && Light.status != 0)
