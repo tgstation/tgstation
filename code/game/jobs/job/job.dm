@@ -22,5 +22,8 @@
 	//Supervisors, who this person answers to directly
 	var/supervisors = ""
 
+	//Sellection screen color
+	var/selection_color = "#ffffff"
+
 /datum/job/proc/equip(var/mob/living/carbon/human/H)
 	return 1

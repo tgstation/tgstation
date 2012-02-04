@@ -6,6 +6,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the captain"
+	selection_color = "#ffeeaa"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -31,6 +32,7 @@
 	total_positions = 5
 	spawn_positions = 5
 	supervisors = "the chief engineer"
+	selection_color = "#fff5cc"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -56,6 +58,7 @@
 	total_positions = 3
 	spawn_positions = 2
 	supervisors = "the chief engineer"
+	selection_color = "#fff5cc"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -79,6 +82,7 @@
 	total_positions = 2
 	spawn_positions = 1
 	supervisors = "the chief engineer and research director"
+	selection_color = "#fff5cc"
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
