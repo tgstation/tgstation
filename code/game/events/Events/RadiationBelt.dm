@@ -5,7 +5,7 @@
 
 	Tick()
 		for(var/mob/living/carbon/L in world)
-			L.apply_effect(rand(1,7), IRRADIATE)
+			L.apply_effect(rand(4,10), IRRADIATE)
 
 	Die()
 		command_alert("The station has cleared the radiation belt", "Medical Alert")
