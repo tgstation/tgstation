@@ -78,12 +78,30 @@
 
 // CHUMP HELMETS: COOKING THEM DESTROYS THE CHUMP HELMET SPAWN.
 
+/obj/item/clothing/head/helmet
+	name = "helmet"
+	desc = "Standard Security gear. Protects the head from impacts."
+	icon_state = "helmet"
+	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
+	item_state = "helmet"
+	armor = list(melee = 50, bullet = 15, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
+	protective_temperature = 500
+	heat_transfer_coefficient = 0.10
+	flags_inv = HIDEEARS|HIDEEYES
+
+/obj/item/clothing/head/helmet/warden
+	name = "Warden Hat"
+	desc = "A special helmet issued to the Warden of a securiy force. Protects the head from impacts."
+	icon_state = "policehelm"
+	flags_inv = 0
+
 /obj/item/clothing/head/helmet/cueball
 	name = "cueball helmet"
 	desc = "A large, featureless white orb mean to be worn on your head. How do you even see out of this thing?"
 	icon_state = "cueball"
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	item_state="cueball"
+	flags_inv = 0
 
 /obj/item/clothing/head/secsoft
 	name = "Soft Cap"
@@ -107,6 +125,7 @@
 	desc = "A plastic replica of a syndicate agent's space helmet, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	see_face = 0.0
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/helmet/swat
 	name = "swat helmet"
@@ -115,6 +134,7 @@
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | HEADCOVERSEYES | BLOCKHAIR
 	item_state = "swat"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
+	flags_inv = HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "Thunderdome helmet"
@@ -138,6 +158,7 @@
 	g_amt = 1000
 	var/up = 0
 	armor = list(melee = 10, bullet = 5, laser = 10,energy = 5, bomb = 10, bio = 5, rad = 10)
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/helmet/that
 	name = "Sturdy Top hat"
@@ -146,6 +167,7 @@
 	item_state = "that"
 	flags = FPRINT|TABLEPASS
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 0, rad = 0)
+	flags_inv = 0
 
 /obj/item/clothing/head/helmet/greenbandana
 	name = "Green Bandana"
@@ -154,6 +176,7 @@
 	item_state = "greenbandana"
 	flags = FPRINT|TABLEPASS
 	armor = list(melee = 5, bullet = 5, laser = 5,energy = 5, bomb = 15, bio = 15, rad = 15)
+	flags_inv = 0
 
 /obj/item/clothing/head/helmet/riot
 	name = "Riot Helmet"
@@ -162,6 +185,7 @@
 	item_state = "helmet"
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
 	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
+	flags_inv = HIDEEARS
 
 /obj/item/clothing/head/helmet/cap
 	name = "Captain's cap"
@@ -169,6 +193,7 @@
 	icon_state = "capcap"
 	flags = FPRINT|TABLEPASS|SUITSPACE
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 0, rad = 0)
+	flags_inv = 0
 
 /obj/item/clothing/head/chaplain_hood
 	name = "Chaplain's hood"
@@ -195,3 +220,4 @@
 	item_state = "cardborg_h"
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH
 	see_face = 0.0
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES

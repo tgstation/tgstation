@@ -28,6 +28,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
 	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0)
+	flags_inv = HIDEJUMPSUIT
 
 /obj/item/clothing/head/magus
 	name = "magus helm"
@@ -47,3 +48,4 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
 	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0)
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT

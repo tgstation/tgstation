@@ -4,6 +4,7 @@
 	icon_state = "straight_jacket"
 	item_state = "straight_jacket"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
 /obj/item/clothing/suit/wcoat
@@ -66,6 +67,7 @@
 	w_class = 3
 	flags = FPRINT | TABLEPASS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy)
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
 /obj/item/clothing/suit/captunic
@@ -74,6 +76,7 @@
 	icon_state = "captunic"
 	item_state = "bio_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	flags_inv = HIDEJUMPSUIT
 
 
 /obj/item/clothing/suit/nun
@@ -82,6 +85,7 @@
 	icon_state = "nun"
 	item_state = "nun"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS
+	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
 
 /obj/item/clothing/suit/chaplain_hoodie
@@ -98,6 +102,7 @@
 	icon_state = "hastur"
 	item_state = "hastur"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
 /obj/item/clothing/suit/imperium_monk
@@ -106,6 +111,7 @@
 	icon_state = "imperium_monk"
 	item_state = "imperium_monk"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
 
 /obj/item/clothing/suit/chickensuit
@@ -114,6 +120,7 @@
 	icon_state = "chickensuit"
 	item_state = "chickensuit"
 	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS|FEET|HEAD
+	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
 
 /obj/item/clothing/suit/monkeysuit
@@ -122,6 +129,7 @@
 	icon_state = "monkeysuit"
 	item_state = "monkeysuit"
 	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS|FEET|HANDS
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
 /obj/item/clothing/suit/holidaypriest
@@ -130,6 +138,7 @@
 	icon_state = "holidaypriest"
 	item_state = "holidaypriest"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	flags_inv = HIDEJUMPSUIT
 
 
 // BubbleWrap - Nothing to see here
@@ -140,4 +149,5 @@
 	icon_state = "cardborg"
 	item_state = "cardborg"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+	flags_inv = HIDEJUMPSUIT
 

@@ -8,6 +8,7 @@
 	var/on = 0
 	color = "yellow" //Determines used sprites: hardhat[on]_[color] and hardhat[on]_[color]2 (lying down sprite)
 	armor = list(melee = 30, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
+	flags_inv = 0
 
 /obj/item/clothing/head/helmet/hardhat/orange
 	icon_state = "hardhat0_orange"

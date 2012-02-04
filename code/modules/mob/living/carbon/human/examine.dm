@@ -15,14 +15,30 @@
 		t_his = "her"
 		t_him = "her"
 
-	if (src.w_uniform)
+	var/skipgloves = 0
+	var/skipsuitstorage = 0
+	var/skipjumpsuit = 0
+	var/skipshoes = 0
+	var/skipmask = 0
+	var/skipears = 0
+	var/skipeyes = 0
+
+	if (src.wear_suit)
+		skipgloves = src.wear_suit.flags_inv & HIDEGLOVES
+		skipsuitstorage = src.wear_suit.flags_inv & HIDESUITSTORAGE
+		skipjumpsuit = src.wear_suit.flags_inv & HIDEJUMPSUIT
+		skipshoes = src.wear_suit.flags_inv & HIDESHOES
+
+	if (src.head)
+		skipmask = src.head.flags_inv & HIDEMASK
+		skipeyes = src.head.flags_inv & HIDEEYES
+		skipears = src.head.flags_inv & HIDEEARS
+
+	if (src.w_uniform && !skipjumpsuit)
 		if (src.w_uniform.blood_DNA)
 			usr << "\red [src.name] is wearing a[src.w_uniform.blood_DNA ? " bloody " : " "] \icon[src.w_uniform] [src.w_uniform.name]!"
 		else
 			usr << "\blue [src.name] is wearing a \icon[src.w_uniform] [src.w_uniform.name]."
-
-	if (src.handcuffed)
-		usr << "\blue [src.name] is \icon[src.handcuffed] handcuffed!"
 
 	if (src.wear_suit)
 		if (src.wear_suit.blood_DNA)
@@ -30,10 +46,19 @@
 		else
 			usr << "\blue [src.name] has a \icon[src.wear_suit] [src.wear_suit.name] on."
 
-	if (src.ears)
+	if (src.head)
+		if (src.head.blood_DNA)
+			usr << "\red [src.name] has a[src.head.blood_DNA ? " bloody " : " "] \icon[src.head] [src.head.name] on his head!"
+		else
+			usr << "\blue [src.name] has a \icon[src.head] [src.head.name] on."
+
+	if (src.handcuffed)
+		usr << "\blue [src.name] is \icon[src.handcuffed] handcuffed!"
+
+	if (src.ears && !skipears)
 		usr << "\blue [src.name] has a \icon[src.ears] [src.ears.name] by [t_his] mouth."
 
-	if (src.wear_mask)
+	if (src.wear_mask && !skipmask)
 		if (src.wear_mask.blood_DNA)
 			usr << "\red [src.name] has a[src.wear_mask.blood_DNA ? " bloody " : " "] \icon[src.wear_mask] [src.wear_mask.name] on [t_his] face!"
 		else
@@ -56,22 +81,28 @@
 			usr << "\red [src.name] has a[src.belt.blood_DNA ? " bloody " : " "] \icon[src.belt] [src.belt.name] on [t_his] belt!"
 		else
 			usr << "\blue [src.name] has a \icon[src.belt] [src.belt.name] on [t_his] belt."
-	if(src.s_store)
+	if(src.s_store && !skipsuitstorage)
 		if(src.s_store.blood_DNA)
 			usr << "\red [src.name] has a[src.s_store.blood_DNA ? " bloody " : " "] \icon[src.s_store] [src.s_store.name] on [t_his][src.wear_suit.blood_DNA ? " bloody " : " "] \icon[src.wear_suit] [src.wear_suit.name]!"
 		else
 			usr << "\blue [src.name] has a \icon[src.s_store] [src.s_store.name] on [t_his][src.wear_suit.blood_DNA ? " bloody " : " "] \icon[src.wear_suit] [src.wear_suit.name]."
-	if (src.shoes)
+
+	if (src.shoes && !skipshoes)
 		usr << "[src.shoes.blood_DNA ? "\red" : "\blue"] [src.name] is wearing[src.shoes.blood_DNA ? " bloody " : " "] \icon[src.shoes] [src.shoes.name] on [t_his] feet."
 
-
-	if (src.gloves)
+	if (src.gloves && !skipgloves)
 		if (src.gloves.blood_DNA)
 			usr << "\red [src.name] has bloody \icon[src.gloves] [src.gloves.name] on [t_his] hands!"
 		else
 			usr << "\blue [src.name] has \icon[src.gloves] [src.gloves.name] on [t_his] hands."
 	else if (src.blood_DNA)
 		usr << "\red [src.name] has[src.blood_DNA ? " bloody " : " "] hands!"
+
+	if (src.glasses && !skipeyes)
+		if (src.glasses.blood_DNA)
+			usr << "\red [src.name] has bloody \icon[src.glasses] [src.glasses.name] on [t_his] eyes!"
+		else
+			usr << "\blue [src.name] has \icon[src.glasses] [src.glasses.name] on [t_his] eyes."
 
 	if (src.back)
 		usr << "\blue [src.name] has a \icon[src.back] [src.back.name] on [t_his] back."

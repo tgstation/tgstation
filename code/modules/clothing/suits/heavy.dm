@@ -7,6 +7,7 @@
 	w_class = 4//bulky item
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
@@ -17,9 +18,11 @@
 	gas_transfer_coefficient = 0.90
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	slowdown = 3
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/suit/armor/tdome
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/suit/armor/tdome/red
 	name = "Thunderdome suit (red)"
@@ -47,13 +50,14 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 0, rad = 0)
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/suit/armor/swat/officer
 	name = "officer jacket"
 	desc = "An armored jacket used in special operations."
 	icon_state = "detective"
 	item_state = "det_suit"
-
+	flags_inv = 0
 
 
 
