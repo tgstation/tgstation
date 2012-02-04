@@ -119,6 +119,7 @@ MASS SPECTROMETER
 				F.fingerprints = md5(M.dna.uni_identity)
 				F.icon_state = "fingerprint1"
 				F.name = text("FPrintC- '[M.name]'")
+
 				user << "\blue Done printing."
 			user << text("\blue [M]'s Fingerprints: [md5(M.dna.uni_identity)]")
 		if ( !(M.blood_DNA) )
@@ -126,7 +127,7 @@ MASS SPECTROMETER
 		else
 			user << "\blue Blood found on [M]. Analysing..."
 			spawn(15)
-				for(var/i = 1, i < M.blood_DNA.len, i++)
+				for(var/i = 1, i <= M.blood_DNA.len, i++)
 					var/list/templist = M.blood_DNA[i]
 					user << "\blue Blood type: [templist[2]]\nDNA: [templist[1]]"
 		return
