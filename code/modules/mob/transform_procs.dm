@@ -119,6 +119,12 @@
 	if (!(ticker && ticker.mode && (O.mind in ticker.mode.malf_ai)))
 		O.show_laws()
 		O << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
+		O << "<br><b><font color=red>IMPORTANT GAMEPLAY ASPECTS:</font></b>"
+		O << "1.) Act like an AI.  If someone is breaking into your upload, say something like \"Alert.  Unauthorised Access Detected: AI Upload.\" not \"Help! Urist is trying to subvert me!\""
+		O << "2.) Do not watch the traitor like a hawk alerting the station to his/her every move.  This relates to 1."
+		O << "3.) You are theoretically omniscient, but you should not be Beepsky 5000, laying down the law left and right.  That is security's job.  Instead, try to keep the station productive and effective.  (Feel free to report the location of major violence and crimes and all that, just do not be the evil thing looking over peoples shoulders)"
+		O << "<br>We want everyone to have a good time, so we, the admins, will try to correct you if you stray from these rules.  Just try to keep it sensible."
+
 
 	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb

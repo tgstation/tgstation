@@ -148,12 +148,12 @@
 			I.Blend(new /icon('blood.dmi', "itemblood"),ICON_MULTIPLY)
 			I.Blend(new /icon(src.icon, src.icon_state),ICON_UNDERLAY)
 			src.icon = I
-			if(src.blood_DNA)
+			if(src.blood_DNA.len)
 				src.blood_DNA.len++
-				src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.b_type)
+				src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
 			else
 				var/list/blood_DNA_temp[1]
-				blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.b_type)
+				blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.dna.b_type)
 				src.blood_DNA =  blood_DNA_temp
 		else if (istype(src, /turf/simulated))
 			var/turf/simulated/source2 = src
@@ -172,22 +172,19 @@
 				this.viruses += newDisease
 				newDisease.holder = this
 		else if (istype(src, /mob/living/carbon/human))
-			if(src.blood_DNA)
+			if(src.blood_DNA.len)
 				src.blood_DNA.len++
-				src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.b_type)
+				src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
 			else
 				var/list/blood_DNA_temp[1]
-				blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.b_type)
+				blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.dna.b_type)
 				src.blood_DNA =  blood_DNA_temp
 		else
 			return
 	else
-		var/list/L = params2list(src.blood_DNA)
-		L -= M.dna.unique_enzymes
-		while(L.len >= 3)
-			L -= L[1]
-		L += M.dna.unique_enzymes
-		src.blood_DNA = list2params(L)
+		var/list/blood_DNA_temp[1]
+		blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.dna.b_type)
+		src.blood_DNA =  blood_DNA_temp
 	return
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M as mob, var/toxvomit = 0)

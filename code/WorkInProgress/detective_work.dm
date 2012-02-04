@@ -714,8 +714,11 @@ turf/proc/add_bloody_footprints(mob/living/carbon/human/M,leaving,d,info)
 	this.dir = d
 	this.desc = "These bloody footprints appear to have been made by [info]."
 	if(istype(M,/mob/living/carbon/human))
-		this.blood_DNA.len++
-		this.blood_DNA[this.blood_DNA.len] = list(M.dna.unique_enzymes,M.b_type)
+		if(this.blood_DNA.len)
+			this.blood_DNA.len++
+			this.blood_DNA[this.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
+		else
+			this.blood_DNA = list(list(M.dna.unique_enzymes,M.dna.b_type))
 
 proc/get_tracks(mob/M)
 	if(istype(M,/mob/living))

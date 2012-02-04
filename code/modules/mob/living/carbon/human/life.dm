@@ -10,6 +10,8 @@
 
 		// used to do some stuff only on every X life tick
 		life_tick = 0
+		isbreathing = 1
+		holdbreath = 0
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
@@ -272,16 +274,37 @@
 			var/datum/air_group/breath
 			// HACK NEED CHANGING LATER
 			if(health < config.health_threshold_dead)
-				losebreath++
+				isbreathing = 0
+				spawn emote("stopbreath")
 
-			if(losebreath>0 && prob(90)) //Suffocating so do not take a breath
-				losebreath--
-				if (prob(75)) //High chance of gasping for air
-					spawn emote("gasp")
+			if(holdbreath)
+				isbreathing = 0
+
+			if(isbreathing)
+				// are we running out of air in our lungs?
+				if(losebreath > 0)
+					// inaprovaline prevents the need to breathe for a while
+					if(reagents.has_reagent("inaprovaline"))
+						losebreath = 0
+					else
+						// we're running out of air, gasp for it!
+						if (prob(25)) //High chance of gasping for air
+							spawn emote("gasp")
+			else if(health >= 0)
+				if(holdbreath)
+					// we're simply holding our breath, see if we can hold it longer
+					if(health < 30)
+						holdbreath = 0
+						isbreathing = 1
+						spawn emote("custom h inhales sharply.")
+				else
+					isbreathing = 1
+					emote("breathe")
+			else
 				if(istype(loc, /obj/))
 					var/obj/location_as_object = loc
 					location_as_object.handle_internal_lifeform(src, 0)
-			else
+			if(isbreathing)
 				//First, check for air from internal atmosphere (using an air tank and mask generally)
 				breath = get_breath_from_internal(BREATH_VOLUME) // Super hacky -- TLE
 				//breath = get_breath_from_internal(0.5) // Manually setting to old BREATH_VOLUME amount -- TLE
