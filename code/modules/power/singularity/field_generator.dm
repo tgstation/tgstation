@@ -333,7 +333,8 @@ field_generator power level display
 			if(!containment_fail_announced)
 				containment_fail_announced = 1
 				var/obj/item/device/radio/a = new /obj/item/device/radio(null)
-				a.autosay("DANGER!  Field failure detected!  Immediate response advised!", "Singularity Monitoring Computer")
+				a.config(list("Engineering" = 0))
+				a.autosay("DANGER!  Field failure detected!  Immediate response advised!", "Singularity Monitoring Computer", "department")
 				del(a)
 				spawn(6000)	//10 minutes.
 					containment_fail_announced = 0
