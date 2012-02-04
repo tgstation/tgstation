@@ -5,7 +5,7 @@
 	faction = "Station"
 	total_positions = -1
 	spawn_positions = -1
-
+	supervisors = "absolutely everyone"
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0

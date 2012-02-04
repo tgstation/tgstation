@@ -11,6 +11,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
+	supervisors = "the head of personnel"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -34,6 +35,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
+	supervisors = "the head of personnel"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -53,6 +55,7 @@
 	faction = "Station"
 	total_positions = 3
 	spawn_positions = 2
+	supervisors = "the head of personnel"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -74,6 +77,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
+	supervisors = "the head of personnel"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -95,6 +99,7 @@
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
+	supervisors = "the quartermaster and the head of personnel"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -114,6 +119,7 @@
 	faction = "Station"
 	total_positions = 3
 	spawn_positions = 3
+	supervisors = "the quartermaster and the head of personnel"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -137,6 +143,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
+	supervisors = "the head of personnel"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -164,6 +171,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
+	supervisors = "the head of personnel"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -196,6 +204,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
+	supervisors = "the head of personnel"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -215,6 +224,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
+	supervisors = "the head of personnel"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -234,6 +244,7 @@ var/global/lawyer = 0//Checks for another lawyer
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
+	supervisors = "the head of personnel"
 
 
 	equip(var/mob/living/carbon/human/H)

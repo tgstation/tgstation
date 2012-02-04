@@ -185,13 +185,13 @@ datum
 			build_path = "/obj/item/weapon/circuitboard/secure_data"
 
 		atmosalerts
-			name = "Circuit Design (Atmosphere Alerts Console)"
+			name = "Circuit Design (Atmosphere Alert)"
 			desc = "Allows for the construction of circuit boards used to build an atmosphere alert console.."
 			id = "atmosalerts"
 			req_tech = list("programming" = 2)
 			build_type = IMPRINTER
 			materials = list("$glass" = 2000, "acid" = 20)
-			build_path = "/obj/item/weapon/circuitboard/atmosphere/alerts"
+			build_path = "/obj/item/weapon/circuitboard/atmos_alert"
 
 		air_management
 			name = "Circuit Design (Atmospheric Monitor)"
