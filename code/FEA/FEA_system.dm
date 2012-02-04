@@ -329,8 +329,8 @@ datum
 					AG.process_group()
 
 			process_singletons()
-				for(var/item in active_singletons)
-					item:process_cell()
+				for(var/turf/simulated/T in active_singletons)
+					T.process_cell()
 
 			process_super_conductivity()
 				for(var/turf/simulated/hot_potato in active_super_conductivity)
