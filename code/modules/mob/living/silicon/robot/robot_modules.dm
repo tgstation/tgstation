@@ -193,7 +193,7 @@
 
 		src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 
-		var/obj/item/weapon/zippo/L = new /obj/item/weapon/zippo(src)
+		var/obj/item/weapon/lighter/zippo/L = new /obj/item/weapon/lighter/zippo(src)
 		L.lit = 1
 		src.modules += L
 

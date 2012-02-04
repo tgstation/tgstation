@@ -92,7 +92,7 @@
 		H.equip_if_possible(new /obj/item/weapon/fcardholder(H), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/clothing/suit/det_suit(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/device/detective_scanner(H), H.slot_in_backpack)
-		H.equip_if_possible(new /obj/item/weapon/zippo(H), H.slot_l_store)
+		H.equip_if_possible(new /obj/item/weapon/lighter/zippo(H), H.slot_l_store)
 		H.equip_if_possible(new /obj/item/weapon/reagent_containers/food/snacks/candy_corn(H), H.slot_h_store)
 		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 		L.imp_in = H
