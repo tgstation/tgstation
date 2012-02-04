@@ -23,7 +23,7 @@
 	for(var/rep in replacechars)
 		msg = dd_replacetext(msg, rep, "")
 	world << msg*/
-	send2adminirc("#bs12admin","HELP: [src.key]: [msg]")
+	send2adminirc("#bs12admin","HELP: \"[src.key]: [msg]\"")
 	if(tension_master)
 		tension_master.new_adminhelp()
 	return
