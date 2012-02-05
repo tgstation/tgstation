@@ -53,9 +53,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 	var/wanted_issue = 0
 		// 0 = there's no WANTED issued, we don't need a special icon_state
 		// 1 = Guess what.
-	var/alert = 0
-		// 0 = there hasn't been a news/wanted update in the last minutes
-		// 1 = there has
 	var/scanned_user = "Unknown" //Will contain the name of the person who currently uses the newscaster
 	var/msg = "";        //Feed message
 	var/channel_name = ""; //the feed channel which will be receiving the feed, or being created
@@ -88,9 +85,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 		if(isbroken) //If the thing is smashed, we use add the cracks on top of the unpowered sprite.
 			src.overlays = null
 			src.overlays += image(src.icon, "crack3")
-		return
-	if(alert)
-		icon_state = "newscaster_alert"
 		return
 	if(wanted_issue)
 		icon_state = "newscaster_wanted"
@@ -451,10 +445,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 						FC.messages += newMsg                      // To avoid further confusion, this one for adds the message to all existing newscasters' channel_list's channels.
 						break                                      // Another for to go through newscasters is not needed. Due to the nature of submit_new_CHANNEL, every reference
 				src.screen=4                                       // to a channel in ANY newscaster is the same. Editing one will edit them all.
-
-			for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
-				NEWSCASTER.newsAlert(src.channel_name)
-
 			src.updateUsrDialog()
 
 		else if(href_list["create_channel"])
@@ -523,7 +513,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 						for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
 							NEWSCASTER.wanted = WANTED
 							NEWSCASTER.wanted_issue = 1
-							NEWSCASTER.wantedAlert()
 							NEWSCASTER.update_icon()
 						src.screen = 15
 					else
@@ -835,24 +824,7 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	return
 
 
-/obj/machinery/newscaster/proc/newsAlert(channel)
-	var/turf/T = get_turf(src)
-	for(var/mob/O in hearers(world.view-1, T))
-		O.show_message("<font color=Maroon><B>Newscaster</B> beeps, \"Breaking news from [channel]!</font>\"",2)
-	playsound(src.loc, 'twobeep.ogg', 75, 1)
-	src.alert = 1
-	src.update_icon()
-	spawn(600)
-		src.alert = 0
-		src.update_icon()
 
-/obj/machinery/newscaster/proc/wantedAlert()
-	var/turf/T = get_turf(src)
-	for(var/mob/O in hearers(world.view-1, T))
-		O.show_message("<font color=Maroon><B>Newscaster</B> beeps, \"Wanted notice posted!</font>\"",2)
-	playsound(src.loc, 'twobeep.ogg', 75, 1)
-	src.alert = 1
-	src.update_icon()
-	spawn(600)
-		src.alert = 0
-		src.update_icon()
+
+
+
