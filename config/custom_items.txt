@@ -3,3 +3,4 @@ spaceman96: Trenna Seber: /obj/item/weapon/pen/multi, /obj/item/clothing/suit/st
 asanadas: Book Berner: /obj/item/clothing/under/chameleon/psyche
 tastyfish: Cindy Robertson: /obj/item/weapon/wrapping_paper
 eternal248: Maximilian Haynes: /obj/item/weapon/paper/certificate
+searif: Yuki Matsuda: /obj/item/weapon/paper/certificate
