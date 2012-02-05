@@ -50,6 +50,11 @@
 		return 1
 	return 0
 
+/proc/istajaran(A)
+	if(istype(A, /mob/living/carbon/human/tajaran))
+		return 1
+	return 0
+
 /*proc/ishivebot(A)
 	if(A && istype(A, /mob/living/silicon/hivebot))
 		return 1

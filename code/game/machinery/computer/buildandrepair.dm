@@ -151,22 +151,38 @@
 	name = "Circuit board (Operating Computer)"
 	build_path = "/obj/machinery/computer/operating"
 	origin_tech = "programming=2;biotech=2"
+
 /obj/item/weapon/circuitboard/camera
 	name = "Circuit board (Camera)"
 	origin_tech = "programming=2"
-	build_path = ""		//build path has to be manually set
-/obj/item/weapon/circuitboard/security
+	build_path = ""		//build path has to be manually set via circuit interaction
+
+//the following camera circuit boards are for adminspawn / reference
+/obj/item/weapon/circuitboard/securitycam
 	name = "Circuit board (Security Monitoring)"
 	origin_tech = ""	//unresearchable
 	build_path = "/obj/machinery/computer/security"
-/obj/item/weapon/circuitboard/security/engineering
+/obj/item/weapon/circuitboard/engineeringcam
 	name = "Circuit board (Engineering Monitoring)"
 	origin_tech = ""	//unresearchable
 	build_path = "/obj/machinery/computer/security/engineering"
-/obj/item/weapon/circuitboard/security/mining
+/obj/item/weapon/circuitboard/miningcam
 	name = "Circuit board (Mining Outpost Monitoring)"
 	origin_tech = ""	//unresearchable
 	build_path = "/obj/machinery/computer/security/mining"
+/obj/item/weapon/circuitboard/cargocam
+	name = "Circuit board (Cargo Department Monitoring)"
+	origin_tech = ""	//unresearchable
+	build_path = "/obj/machinery/computer/security/cargo"
+/obj/item/weapon/circuitboard/medbaycam
+	name = "Circuit board (Mining Outpost Monitoring)"
+	origin_tech = ""	//unresearchable
+	build_path = "/obj/machinery/computer/security/medbay"
+/obj/item/weapon/circuitboard/researchcam
+	name = "Circuit board (Mining Outpost Monitoring)"
+	origin_tech = ""	//unresearchable
+	build_path = "/obj/machinery/computer/security/research"
+
 /obj/item/weapon/circuitboard/comm_monitor
 	name = "Circuit board (Telecommunications Monitor)"
 	build_path = "/obj/machinery/computer/telecomms/monitor"

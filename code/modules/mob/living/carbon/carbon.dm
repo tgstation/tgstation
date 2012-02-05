@@ -17,7 +17,7 @@
 			var/obj/item/I = user.equipped()
 			if(I && I.force)
 				var/d = rand(round(I.force / 4), I.force)
-				if(istype(src, /mob/living/carbon/human))
+				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
 					var/organ = H.get_organ("chest")
 					if (istype(organ, /datum/organ/external))

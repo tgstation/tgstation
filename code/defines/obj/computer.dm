@@ -207,11 +207,48 @@
 	name = "Security Cameras"
 	desc = "Used to access the various cameras on the station."
 	icon_state = "cameras"
-	circuit = "/obj/item/weapon/circuitboard/security"
+	circuit = "/obj/item/weapon/circuitboard/securitycam"
+	var/department = "Security"
+	var/network = ""
 	var/obj/machinery/camera/current = null
 	var/last_pic = 1.0
-	var/network = "SS13"
+	var/list/networks
 	var/maplevel = 1
+
+/obj/machinery/computer/security/mining
+	name = "Outpost Cameras"
+	desc = "Used to access the various cameras on the outpost."
+	icon_state = "miningcameras"
+	department = "Mining"
+	circuit = "/obj/item/weapon/circuitboard/miningcam"
+
+/obj/machinery/computer/security/cargo
+	name = "Cargo Cameras"
+	desc = "Used to access the cargo department cameras."
+	icon_state = "miningcameras"
+	department = "Cargo"
+	circuit = "/obj/item/weapon/circuitboard/cargocam"
+
+/obj/machinery/computer/security/engineering
+	name = "Engineering Cameras"
+	desc = "Used to access the various cameras in engineering."
+	icon_state = "engineeringcameras"
+	department = "Engineering"
+	circuit = "/obj/item/weapon/circuitboard/engineeringcam"
+
+/obj/machinery/computer/security/research
+	name = "Research Cameras"
+	desc = "Used to access the various cameras in the research division."
+	icon_state = "researchcameras"
+	department = "Research"
+	circuit = "/obj/item/weapon/circuitboard/researchcam"
+
+/obj/machinery/computer/security/medbay
+	name = "Medbay Cameras"
+	desc = "Used to access the various cameras in the research division."
+	icon_state = "medbaycameras"
+	department = "Medbay"
+	circuit = "/obj/item/weapon/circuitboard/medbaycam"
 
 
 /obj/machinery/computer/security/telescreen
@@ -219,7 +256,8 @@
 	desc = "Used for watching an empty arena."
 	icon = 'stationobjs.dmi'
 	icon_state = "telescreen"
-	network = "thunder"
+	department = ""
+	network = "Thunderdome"
 	density = 0
 	circuit = null
 
@@ -228,21 +266,6 @@
 	name = "Security Cameras"
 	desc = "An old TV hooked into the stations camera network."
 	icon_state = "security_det"
-
-
-/obj/machinery/computer/security/mining
-	name = "Outpost Cameras"
-	desc = "Used to access the various cameras on the outpost."
-	icon_state = "miningcameras"
-	network = "MINE"
-	circuit = "/obj/item/weapon/circuitboard/mining"
-
-/obj/machinery/computer/security/engineering
-	name = "Engineering Cameras"
-	desc = "Used to access the various cameras in engineering."
-	icon_state = "engineeringcameras"
-	network = "ENGINEERING"
-	circuit = "/obj/item/weapon/circuitboard/engineeringcam"
 
 /obj/machinery/computer/lockdown
 	/*
