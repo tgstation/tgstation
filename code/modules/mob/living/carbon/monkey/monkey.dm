@@ -49,11 +49,12 @@
 			var/mob/tmob = AM
 			if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
 				if(prob(70))
-					for(var/mob/M in viewers(src, null))
-						if(M.client)
-							M << "\red <B>[src] fails to push [tmob]'s fat ass out of the way.</B>"
+					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
 					return
+			if(tmob.relentless)
+				now_pushing = 0
+				return
 
 			tmob.LAssailant = src
 		now_pushing = 0

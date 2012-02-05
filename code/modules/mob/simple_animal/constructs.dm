@@ -22,6 +22,9 @@
 	max_tox = 0
 	speed = 3
 	destroyer = 1
+	relentless = 1
+	a_intent = "harm"
+	stop_automated_movement = 1
 
 	Life()
 		..()
@@ -49,3 +52,40 @@
 		for(var/mob/M in viewers(src, null))
 			if ((M.client && !( M.blinded )))
 				M.show_message("\red [user] gently taps [src] with the [O]. ")
+
+
+/mob/living/simple_animal/constructarmoured/Bump(atom/movable/AM as mob|obj, yes)
+
+	spawn( 0 )
+		if ((!( yes ) || now_pushing))
+			return
+		now_pushing = 1
+		if(ismob(AM))
+			var/mob/tmob = AM
+			if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
+				if(prob(5))
+					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
+					now_pushing = 0
+					return
+			if(tmob.relentless)
+				now_pushing = 0
+				return
+
+			tmob.LAssailant = src
+		now_pushing = 0
+		..()
+		if (!( istype(AM, /atom/movable) ))
+			return
+		if (!( now_pushing ))
+			now_pushing = 1
+			if (!( AM.anchored ))
+				var/t = get_dir(src, AM)
+				if (istype(AM, /obj/structure/window))
+					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
+						for(var/obj/structure/window/win in get_step(AM,t))
+							now_pushing = 0
+							return
+				step(AM, t)
+			now_pushing = null
+		return
+	return

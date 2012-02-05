@@ -145,10 +145,12 @@
 
 		if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
 			if(prob(40) && !(mutations & FAT))
-				visible_message("\red <B>[src] fails to push [tmob]'s fat ass out of the way.</B>", \
-					"\red <B>You fail to push [tmob]'s fat ass out of the way.</B>")
+				src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 				now_pushing = 0
 				return
+		if(tmob.relentless)
+			now_pushing = 0
+			return
 
 		tmob.LAssailant = src
 

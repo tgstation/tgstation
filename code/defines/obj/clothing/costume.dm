@@ -12,6 +12,11 @@
 	new /obj/item/clothing/suit/chickensuit(src.loc)
 	del(src)
 
+/obj/effect/landmark/costume/gladiator/New()
+	new /obj/item/clothing/under/gladiator(src.loc)
+	new /obj/item/clothing/head/gladiator(src.loc)
+	del(src)
+
 /obj/effect/landmark/costume/madscientist/New()
 	new /obj/item/clothing/under/gimmick/rank/captain/suit(src.loc)
 	new /obj/item/clothing/head/flatcap(src.loc)

@@ -253,6 +253,6 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 
 	var/canstun = 1 	// determines if this mob can be stunned by things
 	var/canweaken = 1	// determines if this mob can be weakened/knocked down by things
-
+	var/relentless = 0 //Can they be shoved?
 
 	var/area/lastarea = null

@@ -242,12 +242,13 @@
 			var/mob/tmob = AM
 			if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
 				if(prob(20))
-					for(var/mob/M in viewers(src, null))
-						if(M.client)
-							M << M << "\red <B>[src] fails to push [tmob]'s fat ass out of the way.</B>"
+					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
 					//unlock_medal("That's No Moon, That's A Gourmand!", 1)
 					return
+			if(tmob.relentless)
+				now_pushing = 0
+				return
 		now_pushing = 0
 		..()
 		if (istype(AM, /obj/machinery/recharge_station))

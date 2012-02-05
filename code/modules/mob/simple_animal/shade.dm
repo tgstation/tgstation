@@ -21,6 +21,7 @@
 	max_co2 = 0
 	max_tox = 0
 	speed = -1
+	stop_automated_movement = 1
 
 
 	Life()
