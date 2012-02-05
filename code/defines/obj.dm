@@ -677,6 +677,7 @@
 	density = 1
 	anchored = 1.0
 	layer = 2.8
+	throwpass = 1
 
 	New()
 		..()

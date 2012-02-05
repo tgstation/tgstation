@@ -404,7 +404,7 @@ Pod/Blast Doors computer
 				G.fields["fingerprint"] = text("[]", md5(H.dna.uni_identity))
 				G.fields["p_stat"] = "Active"
 				G.fields["m_stat"] = "Stable"
-				M.fields["b_type"] = text("[]", H.b_type)
+				M.fields["b_type"] = text("[]", H.dna.b_type)
 				M.fields["b_dna"] = H.dna.unique_enzymes
 				M.fields["mi_dis"] = "None"
 				M.fields["mi_dis_d"] = "No minor disabilities have been declared."
@@ -428,7 +428,7 @@ Pod/Blast Doors computer
 				L.fields["age"] = H.age
 				L.fields["id"] = md5("[H.real_name][H.mind.assigned_role]")
 				L.fields["rank"] = H.mind.assigned_role
-				L.fields["b_type"] = H.b_type
+				L.fields["b_type"] = H.dna.b_type
 				L.fields["b_dna"] = H.dna.unique_enzymes
 				L.fields["enzymes"] = H.dna.struc_enzymes
 				L.fields["identity"] = H.dna.uni_identity
@@ -481,7 +481,7 @@ Pod/Blast Doors computer
 		G.fields["fingerprint"] = text("[]", md5(H.dna.uni_identity))
 		G.fields["p_stat"] = "Active"
 		G.fields["m_stat"] = "Stable"
-		M.fields["b_type"] = text("[]", H.b_type)
+		M.fields["b_type"] = text("[]", H.dna.b_type)
 		M.fields["b_dna"] = H.dna.unique_enzymes
 		M.fields["mi_dis"] = "None"
 		M.fields["mi_dis_d"] = "No minor disabilities have been declared."
@@ -505,7 +505,7 @@ Pod/Blast Doors computer
 		L.fields["age"] = H.age
 		L.fields["id"] = md5("[H.real_name][H.mind.assigned_role]")
 		L.fields["rank"] = H.mind.assigned_role
-		L.fields["b_type"] = H.b_type
+		L.fields["b_type"] = H.dna.b_type
 		L.fields["b_dna"] = H.dna.unique_enzymes
 		L.fields["enzymes"] = H.dna.struc_enzymes
 		L.fields["identity"] = H.dna.uni_identity

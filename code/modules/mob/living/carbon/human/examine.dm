@@ -121,7 +121,7 @@
 
 	if (src.stat == 1 || stat == 2)
 		usr << "\red [name] doesn't seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep."
-		if(health < 0 && distance <= 3)
+		if((!isbreathing || holdbreath) && distance <= 3)
 			usr << "\red [name] does not appear to be breathing."
 		if(istype(usr, /mob/living/carbon/human) && usr.stat == 0 && src.stat == 1 && distance <= 1)
 			for(var/mob/O in viewers(usr.loc, null))

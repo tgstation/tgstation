@@ -1,8 +1,8 @@
 /mob/living/carbon/human/emote(var/act,var/m_type=1,var/message = null)
 	var/param = null
 
-	if (findtext(act, "-", 1, null))
-		var/t1 = findtext(act, "-", 1, null)
+	if (findtext(act, " ", 1, null))
+		var/t1 = findtext(act, " ", 1, null)
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
@@ -50,22 +50,33 @@
 			m_type = 1
 
 		if ("custom")
-			var/input = input("Choose an emote to display.") as text|null
-			if (!input)
-				return
-			input = sanitize(input)
-			var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
-			if (input2 == "Visible")
+			m_type = 0
+			if(copytext(param,1,2) == "v")
 				m_type = 1
-			else if (input2 == "Hearable")
-				if (src.miming)
-					return
+			else if(copytext(param,1,2) == "h")
 				m_type = 2
 			else
-				alert("Unable to use this emote, must be either hearable or visible.")
+				var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
+				if (input2 == "Visible")
+					m_type = 1
+				else if (input2 == "Hearable")
+					m_type = 2
+				else
+					alert("Unable to use this emote, must be either hearable or visible.")
+					return
+			if(m_type)
+				param = trim(copytext(param,2))
+			else
+				param = trim(param)
+			var/input
+			if(!param)
+				input = input("Choose an emote to display.") as text|null
+			else
+				input = param
+			if(input)
+				message = "<B>[src]</B> [input]"
+			else
 				return
-			message = "<B>[src]</B> [input]"
-
 		if ("me")
 			if(silent)
 				return
@@ -185,6 +196,20 @@
 			else
 				message = "<B>[src]</B> makes a weak noise."
 				m_type = 2
+
+		if ("breathe")
+			message = "<B>[src]</B> breathes."
+			m_type = 1
+			holdbreath = 0
+
+		if ("stopbreath")
+			message = "<B>[src]</B> stops breathing..."
+			m_type = 1
+
+		if ("holdbreath")
+			message = "<B>[src]</B> stops breathing..."
+			m_type = 1
+			holdbreath = 1
 
 		if ("deathgasp")
 			message = "<B>[src]</B> seizes up and falls limp, \his eyes dead and lifeless..."

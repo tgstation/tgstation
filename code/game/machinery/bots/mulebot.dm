@@ -806,7 +806,7 @@
 
 	var/obj/effect/decal/cleanable/blood/B = new(src.loc)
 	B.blood_DNA.len++
-	B.blood_DNA[B.blood_DNA.len] = list(H.dna.unique_enzymes, H.b_type)
+	B.blood_DNA[B.blood_DNA.len] = list(H.dna.unique_enzymes, H.dna.b_type)
 
 	bloodiness += 4
 

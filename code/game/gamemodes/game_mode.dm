@@ -55,7 +55,6 @@ Devices and Tools;
 /obj/item/device/radio/headset/traitor:3:Headset with Binary Translator;
 /obj/item/weapon/plastique:2:C-4 (Destroys walls);
 /obj/item/weapon/syndie/c4explosive:4:Low Power Explosive Charge, with Detonator;
-/obj/item/weapon/syndie/c4explosive/heavy:7:High (!) Power Explosive Charge, with Detonator;
 /obj/item/device/powersink:5:Powersink (DANGER!);
 /obj/machinery/singularity_beacon/syndicate:7:Singularity Beacon (DANGER!);
 Whitespace:Seperator;
@@ -68,6 +67,8 @@ Whitespace:Seperator;
 Badassery;
 /obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);
 Whitespace:Seperator;"}
+
+//obj/item/weapon/syndie/c4explosive/heavy:7:High (!) Power Explosive Charge, with Detonator;
 
 /datum/game_mode/proc/announce() //to be calles when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"
