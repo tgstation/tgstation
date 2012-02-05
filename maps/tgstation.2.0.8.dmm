@@ -4331,7 +4331,7 @@
 "bFo" = (/obj/machinery/disposal,/obj/structure/disposalpipe/trunk{dir = 8},/turf/simulated/floor{icon_state = "white"},/area/medical/surgery)
 "bFp" = (/turf/simulated/wall/r_wall,/area/crew_quarters/hor)
 "bFq" = (/obj/structure/window/reinforced{dir = 1},/obj/machinery/atmospherics/pipe/simple{dir = 6},/obj/machinery/light{icon_state = "tube1"; dir = 8},/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/machinery/power/apc{dir = 8; name = "Server Room APC"; pixel_x = -25},/obj/structure/filingcabinet,/turf/simulated/floor{icon_state = "dark"},/area/toxins/server)
-"bFr" = (/obj/machinery/camera{c_tag = "Research Director's Office"; dir = 2; network = "Research"; pixel_x = 22},/turf/simulated/floor{icon_state = "dark"},/area/toxins/server)
+"bFr" = (/obj/machinery/camera{c_tag = "Research Director's Office"; dir = 2; network = "Research"; pixel_x = 22},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor{icon_state = "dark"},/area/toxins/server)
 "bFs" = (/obj/machinery/door/window/northleft{name = "Server Room"; req_access_txt = "30"},/obj/machinery/atmospherics/pipe/simple{dir = 4},/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = "90Curve"},/turf/simulated/floor{icon_state = "dark"},/area/toxins/server)
 "bFt" = (/obj/structure/window/reinforced{dir = 1},/obj/machinery/atmospherics/pipe/manifold{dir = 1},/turf/simulated/floor{icon_state = "dark"},/area/toxins/server)
 "bFu" = (/obj/machinery/atmospherics/pipe/simple{dir = 10},/obj/structure/window/reinforced{dir = 1},/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor{icon_state = "dark"},/area/toxins/server)
