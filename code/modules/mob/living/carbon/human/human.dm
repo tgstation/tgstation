@@ -875,7 +875,7 @@
 				overlays += image("icon" = 'uniform_fat.dmi', "icon_state" = "[t1][!lying ? "_s" : "_l"]", "layer" = MOB_LAYER)
 			else*/
 			overlays += image("icon" = 'uniform.dmi', "icon_state" = text("[][]",t1, (!(lying) ? "_s" : "_l")), "layer" = MOB_LAYER)
-			if (w_uniform.blood_DNA)
+			if (w_uniform.blood_DNA.len)
 				var/icon/stain_icon = icon('blood.dmi', "uniformblood[!lying ? "" : "2"]")
 				overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
 
@@ -905,14 +905,14 @@
 			else if(ro.destroyed)
 				gloves_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
 			overlays += image(gloves_icon, "layer" = MOB_LAYER)
-			if (gloves.blood_DNA)
+			if (gloves.blood_DNA.len)
 				var/icon/stain_icon = icon('blood.dmi', "bloodyhands[!lying ? "" : "2"]")
 				if(lo.destroyed)
 					stain_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
 				else if(ro.destroyed)
 					stain_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
 				overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
-		else if (blood_DNA)
+		else if (blood_DNA.len)
 			var/icon/stain_icon = icon('blood.dmi', "bloodyhands[!lying ? "" : "2"]")
 			if(lo.destroyed)
 				stain_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
@@ -941,7 +941,7 @@
 		else if(ro.destroyed && !lying)
 			shoes_icon.Blend(new /icon('limb_mask.dmi', "left[lying?"_l":""]"), ICON_MULTIPLY)
 		overlays += image(shoes_icon, "layer" = MOB_LAYER)
-		if (shoes.blood_DNA)
+		if (shoes.blood_DNA.len)
 			var/icon/stain_icon = icon('blood.dmi', "shoesblood[!lying ? "" : "2"]")
 			if(lo.destroyed)
 				stain_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
@@ -1000,7 +1000,7 @@
 			var/t1 = wear_suit.icon_state
 			overlays += image("icon" = 'suit.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
 		if (wear_suit)
-			if (wear_suit.blood_DNA)
+			if (wear_suit.blood_DNA.len)
 				var/icon/stain_icon = null
 				if (istype(wear_suit, /obj/item/clothing/suit/armor/vest || /obj/item/clothing/suit/storage/wcoat))
 					stain_icon = icon('blood.dmi', "armorblood[!lying ? "" : "2"]")
@@ -1036,7 +1036,7 @@
 			var/t1 = wear_mask.icon_state
 			overlays += image("icon" = 'mask.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
 			if (!istype(wear_mask, /obj/item/clothing/mask/cigarette))
-				if (wear_mask.blood_DNA)
+				if (wear_mask.blood_DNA.len)
 					var/icon/stain_icon = icon('blood.dmi', "maskblood[!lying ? "" : "2"]")
 					overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
 			wear_mask.screen_loc = ui_mask
@@ -1050,7 +1050,7 @@
 		overlays += image("icon" = head_icon, "layer" = MOB_LAYER)
 		if(gimmick_hat)
 			overlays += image("icon" = icon('gimmick_head.dmi', "[gimmick_hat][!lying ? "" : "2"]"), "layer" = MOB_LAYER)
-		if (head.blood_DNA)
+		if (head.blood_DNA.len)
 			var/icon/stain_icon = icon('blood.dmi', "helmetblood[!lying ? "" : "2"]")
 			overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
 		head.screen_loc = ui_head

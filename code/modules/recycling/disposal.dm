@@ -439,7 +439,7 @@
 		del(H)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if (istype(mover,/obj/item))
+		if (istype(mover,/obj/item) && !istype(mover,/obj/item/weapon/dummy))
 			var/obj/item/I = mover
 			if(prob(75))
 				I.loc = src
