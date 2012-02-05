@@ -153,17 +153,16 @@ ZIPPO
 		var/turf/location = get_turf(src)
 		src.smoketime--
 		if(src.smoketime < 1)
-			if (istype(src,/obj/item/clothing/mask/cigarette/cigar))
-				var/obj/item/weapon/cigbutt/C = new /obj/item/weapon/cigarbutt
-				C.loc = location
-			else
-				var/obj/item/weapon/cigbutt/C = new /obj/item/weapon/cigbutt
-				C.loc = location
+			src.lit = -1
+			src.damtype = "brute"
+			src.icon_state = icon_butt
+			src.item_state = icon_off
+			src.desc = "A [src.name] butt."
+			src.name = "[src.name] butt"
 			if(ismob(src.loc))
 				var/mob/living/M = src.loc
 				M << "\red Your [src.name] goes out."
 			processing_objects.Remove(src)
-			del(src)
 			return
 		if(location)
 			location.hotspot_expose(700, 5)
@@ -230,13 +229,6 @@ ZIPPO
 	icon_state = "cigarbutt"
 	w_class = 1
 	throwforce = 1
-
-
-/obj/item/clothing/mask/cigarette/cigar/havanian/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/match) && (W:lit > 0))
-		user << "\red The [src] straight out REFUSES to be lit by such uncivilized means."
-	else
-		..()
 
 
 ////////////
