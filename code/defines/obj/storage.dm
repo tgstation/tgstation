@@ -90,6 +90,10 @@
 	desc = "A very robust satchel to wear on your back."
 	icon_state = "satchel"
 
+	New()
+		..()
+		new /obj/item/weapon/storage/wallet/random(src)
+
 /obj/item/weapon/storage/backpack/bandolier
 	name = "Bandolier"
 	desc = "A very old bandolier to wear on your back."
@@ -148,6 +152,22 @@
 		for(var/obj/item/weapon/card/id/ID in contents)
 			if(istype(ID))
 				return ID
+
+/obj/item/weapon/storage/wallet/random/New()
+	..()
+	var/item1_type = pick( /obj/item/weapon/spacecash/c10,/obj/item/weapon/spacecash/c100,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c20,/obj/item/weapon/spacecash/c200,/obj/item/weapon/spacecash/c50, /obj/item/weapon/spacecash/c500)
+	var/item2_type
+	if(prob(50))
+		item2_type = pick( /obj/item/weapon/spacecash/c10,/obj/item/weapon/spacecash/c100,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c20,/obj/item/weapon/spacecash/c200,/obj/item/weapon/spacecash/c50, /obj/item/weapon/spacecash/c500)
+	var/item3_type = pick( /obj/item/weapon/coin/silver, /obj/item/weapon/coin/silver, /obj/item/weapon/coin/gold, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron, /obj/item/weapon/coin/iron )
+
+	spawn(2)
+		if(item1_type)
+			new item1_type(src)
+		if(item2_type)
+			new item2_type(src)
+		if(item3_type)
+			new item3_type(src)
 
 
 /obj/item/weapon/storage/disk_kit

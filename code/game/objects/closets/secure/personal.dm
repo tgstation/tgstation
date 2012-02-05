@@ -10,10 +10,19 @@
 
 /obj/structure/closet/secure_closet/personal/patient/New()
 	..()
-	contents = list()
 	spawn(4)
+		contents = list()
 		new /obj/item/clothing/under/color/white( src )
 		new /obj/item/clothing/shoes/white( src )
+	return
+
+
+/obj/structure/closet/secure_closet/personal/cabinet/New()
+	..()
+	spawn(4)
+		contents = list()
+		new /obj/item/weapon/storage/backpack/satchel( src )
+		new /obj/item/device/radio/headset( src )
 	return
 
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/weapon/W as obj, mob/user as mob)

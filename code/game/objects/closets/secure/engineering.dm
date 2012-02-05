@@ -93,10 +93,10 @@
 		..()
 		sleep(2)
 		new /obj/item/clothing/under/rank/engineer(src)
-		new /obj/item/clothing/suit/hazardvest(src)
 		new /obj/item/clothing/shoes/orange(src)
-		new /obj/item/device/radio/headset/headset_eng(src)
 		new /obj/item/weapon/storage/toolbox/mechanical(src)
+		new /obj/item/device/radio/headset/headset_eng(src)
+		new /obj/item/clothing/suit/hazardvest(src)
 		new /obj/item/clothing/mask/gas(src)
 		new /obj/item/clothing/glasses/meson(src)
 		return
