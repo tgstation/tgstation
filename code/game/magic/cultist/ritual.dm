@@ -555,11 +555,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				R.word2 = w2
 				R.word3 = w3
 				R.check_icon()
-				if(R.blood_DNA.len)
-					R.blood_DNA.len++
-					R.blood_DNA[R.blood_DNA.len] = list(H.dna.unique_enzymes, H.dna.b_type)
-				else
-					R.blood_DNA = list(list(H.dna.unique_enzymes, H.dna.b_type))
+				R.blood_DNA = list(list(H.dna.unique_enzymes, H.dna.b_type))
 			return
 		else
 			user << "The book seems full of illegible scribbles. Is this a joke?"
