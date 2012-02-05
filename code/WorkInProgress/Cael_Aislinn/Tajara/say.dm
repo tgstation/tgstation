@@ -6,7 +6,7 @@
 	var/is_decipherable = 0
 	var/n = length(text)
 	var/p = 0
-	while(p <= n)
+	while(p < n)
 		if (copytext(text, p, p + 1) in tajspeak_letters)
 			p++
 			continue
@@ -65,6 +65,7 @@
 	return html_encode(t)*/
 
 /mob/living/carbon/human/tajaran/say(var/message)
+	world << "\blue check1:\"[message]\")"
 	var/message_old = message
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
@@ -169,6 +170,8 @@
 			if (!ishuman(src) && (message_mode=="department" || (message_mode in radiochannels)))
 				message_mode = null //only humans can use headsets
 
+	world << "\blue check2:\"[message]\")"
+
 	if (!message)
 		return
 
@@ -213,6 +216,8 @@
 					message += "Z"
 */
 	var/list/obj/item/used_radios = new
+
+	world << "\blue check3:\"[message]\")"
 
 	switch (message_mode)
 		if ("headset")
@@ -308,11 +313,15 @@
 				italics = 1
 /////SPECIAL HEADSETS END
 
+	world << "\blue check4:\"[message]\")"
+
 	//work out if we're speaking tajaran or not
 	var/is_speaking_taj = 0
 	if(copytext(message, 1, 3) == ":j")
 		is_speaking_taj = 1
 		message = trim(copytext(message, 1, 3))
+
+	world << "\blue check5:\"[message]\")"
 
 	var/list/listening
 /*
@@ -409,6 +418,7 @@
 		else
 			rendered = "<span class='game say'><span class='name'>[real_name]</span>[alt_name] <span class='message'>[message_a]</span></span>"
 
+
 /*
 		// Create speech bubble
 		var/obj/effect/speech_bubble/B = new/obj/effect/speech_bubble
@@ -427,6 +437,7 @@
 		if(istype(src, /mob/living/carbon/metroid))
 			presay = "metroid"
 */
+		world << "\blue check6:\"[message]\")"
 		for (var/mob/M in heard_a)
 
 			M.show_message(rendered, 2)
@@ -442,6 +453,9 @@
 					I.override = 1
 					M << I
 			*/
+
+		world << "\blue check7:\"[message]\")"
+
 		/*
 		// find the suffix, if bot, human or monkey
 		var/punctuation = ""
@@ -526,3 +540,5 @@
 			sleep(11)
 			del(B)
 		*/
+
+	world << "\blue check8:\"[message]\")"

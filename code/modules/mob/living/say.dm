@@ -387,6 +387,7 @@
 		if(istype(src, /mob/living/carbon/metroid))
 			presay = "metroid"
 */
+		world << "\blue rendered: \"[rendered]\""
 		for (var/mob/M in heard_a)
 
 			M.show_message(rendered, 2)

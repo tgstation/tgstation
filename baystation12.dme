@@ -146,6 +146,7 @@
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn/Rust"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn/Tajara"
+#define FILE_DIR "code/WorkInProgress/Cael_Aislinn/tajara_sprites"
 #define FILE_DIR "code/WorkInProgress/mapload"
 #define FILE_DIR "code/WorkInProgress/Mini"
 #define FILE_DIR "code/WorkInProgress/organs"
@@ -191,7 +192,6 @@
 #define FILE_DIR "sound/scary"
 #define FILE_DIR "sound/voice"
 #define FILE_DIR "sound/weapons"
-#define FILE_DIR "tajara_sprites"
 // END_FILE_DIR
 // BEGIN_PREFERENCES
 #define DEBUG
