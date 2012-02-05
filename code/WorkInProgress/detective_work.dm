@@ -718,9 +718,7 @@ turf/proc/add_bloody_footprints(mob/living/carbon/human/M,leaving,d,info)
 			this.blood_DNA.len++
 			this.blood_DNA[this.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
 		else
-			var/list/blood_DNA_temp[1]
-			blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.dna.b_type)
-			this.blood_DNA = blood_DNA_temp
+			this.blood_DNA = list(list(M.dna.unique_enzymes,M.dna.b_type))
 
 proc/get_tracks(mob/M)
 	if(istype(M,/mob/living))
