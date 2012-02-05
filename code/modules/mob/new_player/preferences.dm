@@ -52,6 +52,8 @@ datum/preferences
 		be_special = 0
 		//Play admin midis
 		midis = 1
+		//Toggle ghost ears
+		ghost_ears = 1
 		//Saved changlog filesize to detect if there was a change
 		lastchangelog = 0
 
@@ -127,6 +129,7 @@ datum/preferences
 		dat += "<br>"
 		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[UI == UI_NEW ? "New" : "Old"]</b></a><br>"
 		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
+		dat += "<b>Ghost ears:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_ears=input\"><b>[ghost_ears == 0 ? "Nearest Creatures" : "All Speech"]</b></a><br>"
 
 		if((user.client) && (user.client.holder) && (user.client.holder.rank) && (user.client.holder.level >= 5))
 			dat += "<hr><b>OOC</b><br>"
@@ -141,8 +144,8 @@ datum/preferences
 		dat += "Blood Type: <a href='byond://?src=\ref[user];preferences=1;b_type=input'>[b_type]</a><br>"
 		dat += "Skin Tone: <a href='byond://?src=\ref[user];preferences=1;s_tone=input'>[-s_tone + 35]/220<br></a>"
 
-		if(!IsGuestKey(user.key))
-			dat += "Underwear: <a href =\"byond://?src=\ref[user];preferences=1;underwear=1\"><b>[underwear == 1 ? "Yes" : "No"]</b></a><br>"
+	//	if(!IsGuestKey(user.key))//Seeing as it doesn't do anything, it may as well not show up.
+	//		dat += "Underwear: <a href =\"byond://?src=\ref[user];preferences=1;underwear=1\"><b>[underwear == 1 ? "Yes" : "No"]</b></a><br>"
 		dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64></td></tr></table>"
 
 		dat += "<hr><b>Hair</b><br>"
@@ -522,6 +525,9 @@ datum/preferences
 		if(link_tags["midis"])
 			midis = (midis+1)%2
 
+		if(link_tags["ghost_ears"])
+			ghost_ears = !ghost_ears
+
 		if(link_tags["underwear"])
 			if(!IsGuestKey(user.key))
 				switch(link_tags["underwear"])
@@ -582,6 +588,7 @@ datum/preferences
 			b_type = "A+"
 			UI = UI_OLD
 			midis = 1
+			ghost_ears = 1
 
 		ShowChoices(user)
 
@@ -633,6 +640,7 @@ datum/preferences
 					character.client.ooccolor = ooccolor
 					character.client.be_alien = be_special&BE_ALIEN
 					character.client.be_pai = be_special&BE_PAI
+					character.client.ghost_ears = ghost_ears
 
 #undef UI_OLD
 #undef UI_NEW

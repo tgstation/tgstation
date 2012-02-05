@@ -52,6 +52,7 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["be_special"] << src.be_special
 	F["UI"] << src.UI
 	F["midis"] << src.midis
+	F["ghost_ears"] << src.ghost_ears
 	F["ooccolor"] << src.ooccolor
 	F["lastchangelog"] << src.lastchangelog
 
@@ -98,6 +99,7 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["underwear"] >> src.underwear
 	F["name_is_always_random"] >> src.be_random_name
 	F["midis"] >> src.midis
+	F["ghost_ears"] >> src.ghost_ears
 	F["ooccolor"] >> src.ooccolor
 	F["lastchangelog"] >> src.lastchangelog
 	F["UI"] >> src.UI

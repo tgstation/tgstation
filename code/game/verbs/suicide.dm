@@ -47,10 +47,9 @@
 
 	if(confirm == "Yes")
 		suiciding = 1
-		viewers(loc) << "\red <b>[src]'s brain is growing dull and lifeless. It looks like it's trying to commit suicide. Somehow.</b>"
-		adjustOxyLoss(max(175 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
-		updatehealth()
-		spawn(200)
+		viewers(loc) << "\red <b>[src]'s brain is growing dull and lifeless. It looks like it's lost the will to live.</b>"
+		spawn(50)
+			death(0)
 			suiciding = 0
 
 /mob/living/carbon/monkey/verb/suicide()
