@@ -175,9 +175,9 @@ Class Procs:
 		return 1
 	if(user.lying || user.stat)
 		return 1
-	if ( ! (istype(usr, /mob/living/carbon/human) || \
-			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
+	if ( ! (istype(user, /mob/living/carbon/human) || \
+			istype(user, /mob/living/silicon) || \
+			istype(user, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
 		usr << "\red You don't have the dexterity to do this!"
 		return 1
 /*
