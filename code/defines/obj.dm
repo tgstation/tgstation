@@ -576,6 +576,7 @@
 	density = 1
 	flags = FPRINT
 	anchored = 1.0
+	throwpass = 1	//You can throw objects over this, despite it's density.
 
 /obj/effect/shut_controller
 	name = "shut controller"
@@ -634,6 +635,7 @@
 	density = 1
 	anchored = 1.0
 	layer = 2.8
+	throwpass = 1	//You can throw objects over this, despite it's density.
 
 	New()
 		..()

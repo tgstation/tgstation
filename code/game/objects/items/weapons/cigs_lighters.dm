@@ -112,7 +112,7 @@ ZIPPO
 		lit = 0
 		icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
 		icon_off = "cigoff"
-		icon_butt = "cigbutt"
+		type_butt = /obj/item/weapon/cigbutt
 		lastHolder = null
 		smoketime = 300
 	proc
@@ -121,17 +121,17 @@ ZIPPO
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		..()
-		if(istype(W, /obj/item/weapon/weldingtool)  && W:welding)
+		if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
 			light("\red [user] casually lights the [name] with [W], what a badass.")
 
 		else if(istype(W, /obj/item/weapon/lighter/zippo) && (W:lit > 0))
 			light("\red With a single flick of their wrist, [user] smoothly lights their [name] with their [W]. Damn they're cool.")
 
 		else if(istype(W, /obj/item/weapon/lighter) && (W:lit > 0))
-			light("\red After some fiddling, [user] manages to light their [name] with their cheap [W].")
+			light("\red After some fiddling, [user] manages to light their [name] with [W].")
 
 		else if(istype(W, /obj/item/weapon/match) && (W:lit > 0))
-			light("\red [user] lights their [name] with their [W]. How poor can you get?")
+			light("\red [user] lights their [name] with their [W].")
 		return
 
 
@@ -150,12 +150,7 @@ ZIPPO
 		var/turf/location = get_turf(src)
 		src.smoketime--
 		if(src.smoketime < 1)
-			if (istype(src,/obj/item/clothing/mask/cigarette/cigar))
-				var/obj/item/weapon/cigbutt/C = new /obj/item/weapon/cigarbutt
-				C.loc = location
-			else
-				var/obj/item/weapon/cigbutt/C = new /obj/item/weapon/cigbutt
-				C.loc = location
+			new type_butt(location)
 			if(ismob(src.loc))
 				var/mob/living/M = src.loc
 				M << "\red Your [src.name] goes out."
@@ -171,12 +166,9 @@ ZIPPO
 		if(src.lit == 1)
 			for(var/mob/O in viewers(user, null))
 				O.show_message(text("\red [] calmly drops and treads on the lit [], putting it out instantly.", user,src.name), 1)
-			src.lit = -1
-			src.damtype = "brute"
-			src.icon_state = icon_butt
-			src.item_state = icon_off
-			src.desc = "A [src.name] butt."
-			src.name = "[src.name] butt"
+				new type_butt(loc)
+				processing_objects.Remove(src)
+				del(src)
 		return ..()
 
 
@@ -190,51 +182,45 @@ ZIPPO
 	icon_state = "cigaroff"
 	icon_on = "cigaron"
 	icon_off = "cigaroff"
-	icon_butt = "cigarbutt"
+	type_butt = /obj/item/weapon/cigbutt
 	throw_speed = 0.5
 	item_state = "cigaroff"
 	smoketime = 1500
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
-	name = "Cohiba Cigar"
+	name = "Cohiba Robusto Cigar"
 	desc = "There's little more you could want from a cigar."
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
-	icon_butt = "cigarbutt"
 
-/obj/item/clothing/mask/cigarette/cigar/havanian
+/obj/item/clothing/mask/cigarette/cigar/havana
 	name = "Premium Havanian Cigar"
 	desc = "A cigar fit for only the best for the best."
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
-	icon_butt = "cigarbutt"
 	smoketime = 7200
 
 /obj/item/weapon/cigbutt
-	name = "Cigarette butt"
+	name = "cigarette butt"
 	desc = "A manky old cigarette butt."
-	icon = 'cigarettes.dmi'
+	icon = 'masks.dmi'
 	icon_state = "cigbutt"
 	w_class = 1
 	throwforce = 1
 
-/obj/item/weapon/cigarbutt
-	name = "Cigar butt"
+/obj/item/weapon/cigbutt/cigarbutt
+	name = "cigar butt"
 	desc = "A manky old cigar butt."
-	icon = 'cigarettes.dmi'
 	icon_state = "cigarbutt"
-	w_class = 1
-	throwforce = 1
 
 
-/obj/item/clothing/mask/cigarette/cigar/havanian/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/match) && (W:lit > 0))
-		user << "\red The [src] straight out REFUSES to be lit by such uncivilized means."
-	else
+/obj/item/clothing/mask/cigarette/cigar/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/match))
 		..()
-
+	else
+		user << "\red The [src] straight out REFUSES to be lit by such uncivilized means."
 
 ////////////
 //CIG PACK//
@@ -329,7 +315,7 @@ ZIPPO
 						user << "\red <b>You burn yourself while lighting the lighter.</b>"
 						user.adjustFireLoss(5)
 						for(var/mob/O in viewers(user, null))
-							O.show_message("\red After a few attempts, [user] manages to light the [src], they however burn their finger in the process", 1)
+							O.show_message("\red After a few attempts, [user] manages to light the [src], they however burn their finger in the process.", 1)
 
 				user.total_luminosity += 2
 				processing_objects.Add(src)
@@ -339,10 +325,10 @@ ZIPPO
 				src.item_state = icon_off
 				if( istype(src,/obj/item/weapon/lighter/zippo) )
 					for(var/mob/O in viewers(user, null))
-						O.show_message(text("\red You hear a quiet click, as [] shuts off the [] without even looking what they're doing. Wow.", user, src), 1)
+						O.show_message(text("\red You hear a quiet click, as [] shuts off the [] without even looking at what they're doing. Wow.", user, src), 1)
 				else
 					for(var/mob/O in viewers(user, null))
-						O.show_message("\red [user] quietly shuts off the [src]", 1)
+						O.show_message("\red [user] quietly shuts off the [src].", 1)
 
 				user.total_luminosity -= 2
 				processing_objects.Remove(src)
