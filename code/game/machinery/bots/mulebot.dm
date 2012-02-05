@@ -805,8 +805,7 @@
 	H.apply_damage(0.5*damage, BRUTE, "r_arm")
 
 	var/obj/effect/decal/cleanable/blood/B = new(src.loc)
-	B.blood_DNA.len++
-	B.blood_DNA[B.blood_DNA.len] = list(H.dna.unique_enzymes, H.dna.b_type)
+	B.blood_DNA = list(list(H.dna.unique_enzymes, H.dna.b_type))
 
 	bloodiness += 4
 

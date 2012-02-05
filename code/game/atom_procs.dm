@@ -149,8 +149,15 @@
 			I.Blend(new /icon(src.icon, src.icon_state),ICON_UNDERLAY)
 			src.icon = I
 			if(src.blood_DNA.len)
-				src.blood_DNA.len++
-				src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
+				var/inthere = 0
+				for(var/i = 1, i <= src.blood_DNA.len, i++)
+					var/list/templist = src.blood_DNA[i]
+					if(templist[1] == M.dna.unique_enzymes && templist[2] == M.dna.b_type)
+						inthere = 1
+						break
+				if(!inthere)
+					src.blood_DNA.len++
+					src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
 			else
 				var/list/blood_DNA_temp[1]
 				blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.dna.b_type)
@@ -173,8 +180,15 @@
 				newDisease.holder = this
 		else if (istype(src, /mob/living/carbon/human))
 			if(src.blood_DNA.len)
-				src.blood_DNA.len++
-				src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
+				var/inthere = 0
+				for(var/i = 1, i <= src.blood_DNA.len, i++)
+					var/list/templist = src.blood_DNA[i]
+					if(templist[1] == M.dna.unique_enzymes && templist[2] == M.dna.b_type)
+						inthere = 1
+						break
+				if(!inthere)
+					src.blood_DNA.len++
+					src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
 			else
 				var/list/blood_DNA_temp[1]
 				blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.dna.b_type)

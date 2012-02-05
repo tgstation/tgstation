@@ -96,7 +96,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 
 /obj/effect/meteor/Move()
-	var/turf/T = src.loc
+//	var/turf/T = src.loc
 	//FUCK YOU. FUCK YOU ALL, METEORS. ~Hawk.
 	/*if (istype(T, /turf))
 		T.hotspot_expose(METEOR_TEMPERATURE, 1000) */
