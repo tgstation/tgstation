@@ -16,13 +16,12 @@
 		autoclose = 0
 		glass = 0
 
-	proc
-		bumpopen(mob/user as mob)
-		update_nearby_tiles(need_rebuild)
-		requiresID()	return 1
-		animate(animation)
-		open()
-		close()
+	proc/bumpopen(mob/user as mob)
+	proc/update_nearby_tiles(need_rebuild)
+	proc/requiresID()	return 1
+	proc/animate(animation)
+	proc/open()
+	proc/close()
 
 
 	New()
@@ -198,6 +197,7 @@
 		if(!operating)	operating = 1
 
 		animate("opening")
+		src.sd_SetOpacity(0)
 		sleep(10)
 		src.layer = 2.7
 		src.density = 0
