@@ -9,6 +9,25 @@
 				possibleNames -= pickedName
 				pickedName = null
 
+	networks = list("SS13",
+					"Medbay",
+					"Research",
+					"Engineering",
+					"Singularity",
+					"Tcomsat",
+					"Solars",
+					"Security",
+					"Cargo",
+					"Bomb Testing",
+					"Research",
+					"Medbay",
+					"Atmospherics",
+					"Mess Hall",
+					"Arrivals",
+					"Singularity",
+					"Arrivals",
+					"Mine")
+
 	real_name = pickedName
 	name = real_name
 	anchored = 1
@@ -347,7 +366,7 @@
 		machine = null
 		reset_view(null)
 		return 0
-	if (stat == 2 || !C.status || C.network != network) return 0
+	if (stat == 2 || !C.status || !(C.network in src.networks) ) return 0
 
 	// ok, we're alive, camera is good and in our network...
 
@@ -460,7 +479,7 @@
 //Addition by Mord_Sith to define AI's network change ability
 /mob/living/silicon/ai/proc/ai_network_change()
 	set category = "AI Commands"
-	set name = "Change Camera Network"
+	set name = "Jump to Camera Network"
 	reset_view(null)
 	machine = null
 	src:cameraFollow = null
@@ -480,12 +499,21 @@
 					if (mind == M)
 						cameralist[C.network] = C.network
 		else
-			if(C.network != "CREED" && C.network != "thunder" && C.network != "RD" && C.network != "toxins" && C.network != "Prison")
+			if(C.network != "CREED" && C.network != "thunder" && C.network != "Prison" )
 				cameralist[C.network] = C.network
 
-	network = input(usr, "Which network would you like to view?") as null|anything in cameralist
-	src << "\blue Switched to [network] camera network."
+	var/newnet = input(usr, "Which network would you like to view?") as null|anything in cameralist
+
+	cameralist = new/list
+	for(var/obj/machinery/camera/C in world)
+		if(C.network == newnet)
+			cameralist.Add(C)
+
+	switchCamera( pick(cameralist) )
+	src << "\blue Jumped to [newnet] camera network."
 //End of code by Mord_Sith
+//cael - with the multiple onstation networks all linked together, changing networks is legacy functionality
+//so i recycled it to instantly jump to any network
 
 
 /mob/living/silicon/ai/proc/choose_modules()

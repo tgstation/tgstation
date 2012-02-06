@@ -14,7 +14,7 @@
 	var/best_dist = INFINITY //infinity
 	var/best_cam = null
 	for(var/obj/machinery/camera/C in A)
-		if(usr:network != C.network)	continue
+		if( !(C.network in usr:networks))	continue
 		if(!C.status)	continue	//	ignore disabled cameras
 		var/dist = get_dist(src, C)
 		if(dist < best_dist)
@@ -135,7 +135,7 @@
 					//check other cameras
 					var/obj/machinery/camera/closest = C
 					for(var/obj/machinery/camera/C2 in world)
-						if (C2.network == src.network)
+						if (C2.network in src.networks)
 							if (C2.z == target.z)
 								zmatched = 1
 								if (C2.status)
@@ -158,6 +158,30 @@
 
 			sleep(10)
 
+/proc/camera_network_sort(list/L)
+	var/obj/machinery/camera/a
+	var/obj/machinery/camera/b
+
+	//loop through once to get in network order
+	for (var/i = L.len, i > 0, i--)
+		for (var/j = 1 to i - 1)
+			a = L[j]
+			b = L[j + 1]
+			if (sorttext(a.network, b.network) < 0)
+				L.Swap(j, j + 1)
+
+	//loop through a second time to get alphabetical order within the network order
+	for (var/i = L.len, i > 0, i--)
+		for (var/j = 1 to i - 1)
+			a = L[j]
+			b = L[j + 1]
+			if ( sorttext(a.network, b.network) )
+				continue
+			if ( sorttext(a.c_tag, b.c_tag) < 0 )
+				L.Swap(j, j + 1)
+
+	return L
+
 /proc/camera_sort(list/L)
 	var/obj/machinery/camera/a
 	var/obj/machinery/camera/b
@@ -173,46 +197,6 @@
 				if (sorttext(a.c_tag, b.c_tag) < 0)
 					L.Swap(j, j + 1)
 	return L
-
-/obj/machinery/computer/security/attack_hand(var/mob/user as mob)
-	if (stat & (NOPOWER|BROKEN))
-		return
-
-	user.machine = src
-
-	var/list/L = list()
-	for (var/obj/machinery/camera/C in world)
-		L.Add(C)
-
-	camera_sort(L)
-
-	var/list/D = list()
-	D["Cancel"] = "Cancel"
-	for (var/obj/machinery/camera/C in L)
-		if (C.network == network)
-			D[text("[][]", C.c_tag, (C.status ? null : " (Deactivated)"))] = C
-
-	var/t = input(user, "Which camera should you change to?") as null|anything in D
-
-	if(!t)
-		user.machine = null
-		return 0
-
-	var/obj/machinery/camera/C = D[t]
-
-	if (t == "Cancel")
-		user.machine = null
-		return 0
-
-	if (C)
-		if ((get_dist(user, src) > 1 || user.machine != src || user.blinded || !( user.canmove ) || !( C.status )) && (!istype(user, /mob/living/silicon/ai)))
-			return 0
-		else
-			src.current = C
-			use_power(50)
-
-			spawn( 5 )
-				attack_hand(user)
 
 /mob/living/silicon/ai/attack_ai(var/mob/user as mob)
 	if (user != src)
@@ -232,7 +216,7 @@
 	var/list/D = list()
 	D["Cancel"] = "Cancel"
 	for (var/obj/machinery/camera/C in L)
-		if (C.network == src.network)
+		if ( C.network in src.networks )
 			D[text("[][]", C.c_tag, (C.status ? null : " (Deactivated)"))] = C
 
 	var/t = input(user, "Which camera should you change to?") as null|anything in D
@@ -281,7 +265,7 @@
 /obj/machinery/camera/attack_ai(var/mob/living/silicon/ai/user as mob)
 	if (!istype(user))
 		return
-	if (src.network != user.network || !(src.status))
+	if ( !(src.network in user.networks) || !(src.status))
 		return
 	user.current = src
 	user.reset_view(src)

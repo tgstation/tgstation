@@ -28,6 +28,13 @@
 				connectedDoorIds.Add("Atmospheric Storage Rad Shielding")
 				connectedDoorIds.Add("Construction Storage Rad Shielding")
 				connectedDoorIds.Add("Engineering Secure Storage")
+			if("Medbay")
+				connectedDoorIds.Add("Genetics Outer Shutters")
+				connectedDoorIds.Add("Genetics Inner Shutters")
+				connectedDoorIds.Add("Chemistry Outer Shutters")
+				connectedDoorIds.Add("Observation Shutters")
+				connectedDoorIds.Add("Patient Room 1 Shutters")
+				connectedDoorIds.Add("Patient Room 2 Shutters")
 
 		//loop through the world, grabbing all the relevant doors
 		spawn(1)

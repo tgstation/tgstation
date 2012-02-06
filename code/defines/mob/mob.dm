@@ -231,6 +231,7 @@
 
 	var/robot_talk_understand = 0
 	var/alien_talk_understand = 0
+	var/taj_talk_understand = 0
 
 /*For ninjas and others. This variable is checked when a mob moves and I guess it was supposed to allow the mob to move
 through dense areas, such as walls. Setting density to 0 does the same thing. The difference here is that
