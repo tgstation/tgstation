@@ -118,7 +118,8 @@
 				return
 		var/obj/mecha/Mech = M.loc
 		spawn() //this helps prevent clickspam fest.
-			if (Mech && !(object in M.get_contents())  )	//cael - make sure you cant drill shit in your invent
+			var/list/mob_contents = M.get_contents()
+			if (Mech && !(locate(object) in mob_contents))	//cael - make sure you cant drill shit in your invent
 				Mech.click_action(object,M)
 	else
 		return ..()
