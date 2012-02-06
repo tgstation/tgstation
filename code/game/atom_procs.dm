@@ -139,7 +139,7 @@
 		return 0
 	if (!( src.flags ) & 256)
 		return
-	if (src.blood_DNA)
+	if (src.blood_DNA.len)
 		if (istype(src, /obj/item)&&!istype(src, /obj/item/weapon/melee/energy))//Only regular items. Energy melee weapon are not affected.
 			var/obj/item/source2 = src
 			source2.icon_old = src.icon
@@ -148,13 +148,15 @@
 			I.Blend(new /icon('blood.dmi', "itemblood"),ICON_MULTIPLY)
 			I.Blend(new /icon(src.icon, src.icon_state),ICON_UNDERLAY)
 			src.icon = I
-			if(src.blood_DNA.len)
+			var/inthere = 0
+			for(var/i = 1, i <= src.blood_DNA.len, i++)
+				var/list/templist = src.blood_DNA[i]
+				if(templist[1] == M.dna.unique_enzymes && templist[2] == M.dna.b_type)
+					inthere = 1
+					break
+			if(!inthere)
 				src.blood_DNA.len++
 				src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
-			else
-				var/list/blood_DNA_temp[1]
-				blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.dna.b_type)
-				src.blood_DNA =  blood_DNA_temp
 		else if (istype(src, /turf/simulated))
 			var/turf/simulated/source2 = src
 			var/list/objsonturf = range(0,src)
@@ -172,13 +174,15 @@
 				this.viruses += newDisease
 				newDisease.holder = this
 		else if (istype(src, /mob/living/carbon/human))
-			if(src.blood_DNA.len)
+			var/inthere = 0
+			for(var/i = 1, i <= src.blood_DNA.len, i++)
+				var/list/templist = src.blood_DNA[i]
+				if(templist[1] == M.dna.unique_enzymes && templist[2] == M.dna.b_type)
+					inthere = 1
+					break
+			if(!inthere)
 				src.blood_DNA.len++
 				src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
-			else
-				var/list/blood_DNA_temp[1]
-				blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.dna.b_type)
-				src.blood_DNA =  blood_DNA_temp
 		else
 			return
 	else
@@ -235,21 +239,21 @@
 
 	if (!( src.flags ) & 256)
 		return
-	if ( src.blood_DNA )
+	if ( src.blood_DNA.len )
 		if (istype (src, /mob/living/carbon))
 			var/obj/item/source2 = src
-			source2.blood_DNA = null
+			source2.blood_DNA = list()
 			//var/icon/I = new /icon(source2.icon_old, source2.icon_state) //doesnt have icon_old
 			//source2.icon = I
 		if (istype (src, /obj/item))
 			var/obj/item/source2 = src
-			source2.blood_DNA = null
+			source2.blood_DNA = list()
 //			var/icon/I = new /icon(source2.icon_old, source2.icon_state)
 			source2.icon = source2.icon_old
 			source2.update_icon()
 		if (istype(src, /turf/simulated))
 			var/obj/item/source2 = src
-			source2.blood_DNA = null
+			source2.blood_DNA = list()
 			var/icon/I = new /icon(source2.icon_old, source2.icon_state)
 			source2.icon = I
 	if(src.fingerprints && src.fingerprints.len)

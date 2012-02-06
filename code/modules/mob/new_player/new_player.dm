@@ -274,7 +274,7 @@
 	proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 		if (ticker.current_state == GAME_STATE_PLAYING)
 			var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)
-			a.autosay("[character.real_name][character.wear_id.assignment ? ", [character.wear_id.assignment], " : "" ] has arrived on the station.", "Arrivals Announcement Computer")
+			a.autosay("[character.real_name],[character.wear_id.assignment ? " [character.wear_id.assignment]," : "" ] has arrived on the station.", "Arrivals Announcement Computer")
 			del(a)
 
 

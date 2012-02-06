@@ -122,7 +122,7 @@ MASS SPECTROMETER
 
 				user << "\blue Done printing."
 			user << text("\blue [M]'s Fingerprints: [md5(M.dna.uni_identity)]")
-		if ( !(M.blood_DNA) )
+		if ( !(M.blood_DNA.len) )
 			user << "\blue No blood found on [M]"
 		else
 			user << "\blue Blood found on [M]. Analysing..."
@@ -145,10 +145,10 @@ MASS SPECTROMETER
 					user << "\blue Blood type: [templist[2]]\nDNA: [templist[1]]"
 			return
 		var/duplicate = 0
-		if ((!A.fingerprints || A.fingerprints.len == 0) && !(A.suit_fibers) && !(A.blood_DNA))
+		if ((!A.fingerprints || A.fingerprints.len == 0) && !(A.suit_fibers) && !(A.blood_DNA.len))
 			user << "\blue Unable to locate any fingerprints, materials, fibers, or blood on [A]!"
 			return 0
-		else if (A.blood_DNA)
+		else if (A.blood_DNA.len)
 			user << "\blue Blood found on [A]. Analysing..."
 			sleep(15)
 			if(!duplicate)
@@ -231,7 +231,7 @@ MASS SPECTROMETER
 				var/list/blood = temp[4]
 				if(!blood)
 					blood = list()
-				if(A.blood_DNA)
+				if(A.blood_DNA.len)
 					for(var/j = 1, j < (A.blood_DNA.len + 1), j++)	//Blood~~~
 						if(!blood.Find(A.blood_DNA[j]))	//It isn't!  Add!
 							blood += A.blood_DNA[j]

@@ -738,7 +738,7 @@
 						user << "\blue No fingerprints found on [C]"
 				else
 					user << text("\blue [C]'s Fingerprints: [md5(C:dna.uni_identity)]")
-				if ( !(C:blood_DNA) )
+				if ( !(C:blood_DNA.len) )
 					user << "\blue No blood found on [C]"
 				else
 					user << "\blue Blood found on [C]. Analysing..."

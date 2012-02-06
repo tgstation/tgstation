@@ -100,7 +100,7 @@
 			t = "huge"
 		else
 	if ((usr.mutations & CLUMSY) && prob(50)) t = "funny-looking"
-	usr << text("This is a []\icon[][]. It is a [] item.", !src.blood_DNA ? "" : "bloody ",src, src.name, t)
+	usr << text("This is a []\icon[][]. It is a [] item.", !src.blood_DNA.len ? "" : "bloody ",src, src.name, t)
 	if(src.desc)
 		usr << src.desc
 	return
