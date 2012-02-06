@@ -358,7 +358,7 @@ obj/machinery/computer/forensic_scanning
 					scan_process = 0
 					scan_name = scanning.name
 					scan_data = "<u>[scanning]</u><br><br>"
-					if (scanning.blood_DNA)
+					if (scanning.blood_DNA.len)
 						scan_data += "Blood Found:<br>"
 						for(var/i = 1, i < (scanning.blood_DNA.len + 1), i++)
 							var/list/templist = scanning.blood_DNA[i]
