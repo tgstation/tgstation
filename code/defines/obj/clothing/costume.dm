@@ -14,7 +14,7 @@
 
 /obj/effect/landmark/costume/gladiator/New()
 	new /obj/item/clothing/under/gladiator(src.loc)
-	new /obj/item/clothing/head/gladiator(src.loc)
+	new /obj/item/clothing/head/helmet/gladiator(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/madscientist/New()
