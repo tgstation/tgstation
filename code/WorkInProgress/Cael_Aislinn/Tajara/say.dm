@@ -1,17 +1,7 @@
 //their language needs to hook into radios as well
 
-/mob/living/carbon/human/tajaran/say_quote(var/text)
+/mob/living/carbon/human/tajaran/say_quote(var/text,var/is_speaking_taj)
 	//work out if the listener can understand or not
-
-	var/is_decipherable = 0
-	var/n = length(text)
-	var/p = 0
-	while(p < n)
-		if (copytext(text, p, p + 1) in tajspeak_letters)
-			p++
-			continue
-		is_decipherable = 1
-		break
 
 	var/ending = copytext(text, length(text))
 	if (src.disease_symptoms & DISEASE_HOARSE)
@@ -23,7 +13,7 @@
 	if (src.brainloss >= 60)
 		return "gibbers, \"[text]\"";
 
-	if(!is_decipherable)
+	if(is_speaking_taj)
 		return "mewls, \"[text]\""//pick("yowls, \"[text]\"", "growls, \"[text]\"","mewls, \"[text]\"", "mrowls, \"[text]\"", "meows, \"[text]\"", "purrs, \"[text]\"");
 
 	if (ending == "?")
@@ -35,6 +25,7 @@
 
 //convert message to an indecipherable series of sounds for anyone who isnt tajaran
 /mob/living/carbon/human/tajaran/proc/tajspeak(var/message)
+	return stars(message)
 	var/te = html_decode(message)
 	var/t = ""
 	var/n = length(message)
@@ -65,7 +56,6 @@
 	return html_encode(t)*/
 
 /mob/living/carbon/human/tajaran/say(var/message)
-	world << "\blue check1:\"[message]\")"
 	var/message_old = message
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
@@ -170,10 +160,15 @@
 			if (!ishuman(src) && (message_mode=="department" || (message_mode in radiochannels)))
 				message_mode = null //only humans can use headsets
 
-	world << "\blue check2:\"[message]\")"
-
 	if (!message)
 		return
+
+	//work out if we're speaking tajaran or not
+	var/is_speaking_taj = 0
+	if(copytext(message, 1, 4) == ":j ")
+		message = copytext(message, 4)
+		if(taj_talk_understand)
+			is_speaking_taj = 1
 
 	if( !message_mode && (disease_symptoms & DISEASE_WHISPER))
 		message_mode = "whisper"
@@ -217,15 +212,13 @@
 */
 	var/list/obj/item/used_radios = new
 
-	world << "\blue check3:\"[message]\")"
-
 	switch (message_mode)
 		if ("headset")
 			if (src:l_ear && istype(src:l_ear,/obj/item/device/radio))
-				src:l_ear.talk_into(src, message)
+				src:l_ear.talk_into(src, message, 0, "[is_speaking_taj ? "tajaran" : "universal"]")
 				used_radios += src:l_ear
 			else if (src:r_ear)
-				src:r_ear.talk_into(src, message)
+				src:r_ear.talk_into(src, message, 0, "[is_speaking_taj ? "tajaran" : "universal"]")
 				used_radios += src:r_ear
 
 			message_range = 1
@@ -234,10 +227,10 @@
 
 		if ("secure headset")
 			if (src:l_ear && istype(src:l_ear,/obj/item/device/radio))
-				src:l_ear.talk_into(src, message, 1)
+				src:l_ear.talk_into(src, message, 1, "[is_speaking_taj ? "tajaran" : "universal"]")
 				used_radios += src:l_ear
 			else if (src:r_ear)
-				src:r_ear.talk_into(src, message, 1)
+				src:r_ear.talk_into(src, message, 1, "[is_speaking_taj ? "tajaran" : "universal"]")
 				used_radios += src:r_ear
 
 			message_range = 1
@@ -245,7 +238,7 @@
 
 		if ("right ear")
 			if (src:r_ear)
-				src:r_ear.talk_into(src, message)
+				src:r_ear.talk_into(src, message, 0, "[is_speaking_taj ? "tajaran" : "universal"]")
 				used_radios += src:r_ear
 
 			message_range = 1
@@ -253,7 +246,7 @@
 
 		if ("left ear")
 			if (src:l_ear)
-				src:l_ear.talk_into(src, message)
+				src:l_ear.talk_into(src, message, 0, "[is_speaking_taj ? "tajaran" : "universal"]")
 				used_radios += src:l_ear
 
 			message_range = 1
@@ -261,7 +254,7 @@
 
 		if ("intercom")
 			for (var/obj/item/device/radio/intercom/I in view(1, null))
-				I.talk_into(src, message)
+				I.talk_into(src, message, 0, "[is_speaking_taj ? "tajaran" : "universal"]")
 				used_radios += I
 
 			message_range = 1
@@ -312,16 +305,6 @@
 				message_range = 1
 				italics = 1
 /////SPECIAL HEADSETS END
-
-	world << "\blue check4:\"[message]\")"
-
-	//work out if we're speaking tajaran or not
-	var/is_speaking_taj = 0
-	if(copytext(message, 1, 3) == ":j")
-		is_speaking_taj = 1
-		message = trim(copytext(message, 1, 3))
-
-	world << "\blue check5:\"[message]\")"
 
 	var/list/listening
 /*
@@ -405,7 +388,7 @@
 
 	var/rendered = null
 	if (length(heard_a))
-		var/message_a = say_quote(message)
+		var/message_a = say_quote(message,0)
 		if (italics)
 			message_a = "<i>[message_a]</i>"
 		if (!istype(src, /mob/living/carbon/human))
@@ -437,7 +420,6 @@
 		if(istype(src, /mob/living/carbon/metroid))
 			presay = "metroid"
 */
-		world << "\blue check6:\"[message]\")"
 		for (var/mob/M in heard_a)
 
 			M.show_message(rendered, 2)
@@ -453,8 +435,6 @@
 					I.override = 1
 					M << I
 			*/
-
-		world << "\blue check7:\"[message]\")"
 
 		/*
 		// find the suffix, if bot, human or monkey
@@ -488,7 +468,7 @@
 			message_b = voice_message
 		else
 			message_b = tajspeak(message)
-			message_b = say_quote(message_b)
+			message_b = say_quote(message_b,1)
 
 		if (italics)
 			message_b = "<i>[message_b]</i>"
@@ -540,5 +520,3 @@
 			sleep(11)
 			del(B)
 		*/
-
-	world << "\blue check8:\"[message]\")"

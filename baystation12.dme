@@ -1028,6 +1028,7 @@
 #include "code\WorkInProgress\Cael_Aislinn\Tajara\examine.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Tajara\say.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Tajara\tajaran.dm"
+#include "code\WorkInProgress\Cael_Aislinn\Tajara\whisper.dm"
 #include "code\WorkInProgress\mapload\dmm_suite.dm"
 #include "code\WorkInProgress\mapload\reader.dm"
 #include "code\WorkInProgress\Mini\atmos_control.dm"

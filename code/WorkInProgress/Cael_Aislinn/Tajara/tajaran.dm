@@ -4,6 +4,10 @@
 	voice_name = "tajaran"
 	icon = 'tajaran.dmi'
 	var/list/tajspeak_letters
+	//
+	universal_speak = 1
+	taj_talk_understand = 1
+	voice_message = "mrowls"
 
 /mob/living/carbon/human/tajaran/New()
 	tajspeak_letters = new/list("~","*","-")
