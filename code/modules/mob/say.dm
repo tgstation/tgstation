@@ -44,13 +44,15 @@
 				M.show_message(rendered, 2)
 
 /mob/proc/say_understands(var/mob/other)
-	if(!other)
-		return 1
+//	if(!other)
+//		return 1
 	if (src.stat == 2)
 		return 1
 	else if (istype(other, src.type))
 		return 1
 	else if(other.universal_speak || src.universal_speak)
+		return 1
+	else if(isAI(src) && ispAI(other))
 		return 1
 	return 0
 
