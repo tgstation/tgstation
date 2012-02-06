@@ -56,10 +56,10 @@
 			M << browse(null, "window=vote")
 			M.client.showvote = 0
 
+	calcwin()
+
 	if(winner == "none")
 		winner = "default"
-
-	calcwin()
 
 	if(mode == 2)
 		var/wintext = capitalize(winner)

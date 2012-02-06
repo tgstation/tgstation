@@ -4,7 +4,7 @@
 	icon_state = "ai"
 	anchored = 1 // -- TLE
 	density = 1
-	var/network = "SS13"
+	var/list/networks
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0

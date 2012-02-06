@@ -43,8 +43,8 @@
 	var/list/old_types = dd_text2list("[A.type]", "/")
 
 	for(var/obj/machinery/camera/current in world)
-		if(user.network != current.network)	continue
-		if(!current.status)	continue	//	ignore disabled cameras
+		if( !(current.network in user.networks) )	continue
+		if(!current.status)	continue			//	ignore disabled cameras
 
 		//make sure it's the right direction
 		if(dx && (current.x * dx <= old.x * dx))

@@ -265,6 +265,7 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 	var/brainloss = 0//Carbon
 	var/robot_talk_understand = 0
 	var/alien_talk_understand = 0
+	var/taj_talk_understand = 0
 	var/universal_speak = 0 // Set to 1 to enable the mob to speak to everyone -- TLE
 	var/ear_deaf = null//Carbon
 	var/eye_blind = null//Carbon
