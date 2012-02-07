@@ -701,7 +701,7 @@ datum
 						if(M:head)
 							if(prob(15))
 								del(M:head)
-								M << "\red Your helmet melts from the acid"
+								M << "\red Your helmet melts from the acid!"
 							else
 								M << "\red Your helmet protects you from the acid!"
 							return

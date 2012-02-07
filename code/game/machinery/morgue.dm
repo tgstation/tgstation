@@ -251,7 +251,7 @@
 		return //don't let you cremate something twice or w/e
 
 	if(length(contents) == 0)
-		for (var/mob/M in viewers(user))
+		for (var/mob/M in viewers(src))
 			M.show_message("\red You hear a hollow crackle.", 1)
 			return
 	else if(contents)
@@ -283,8 +283,9 @@
 					playsound(src.loc, 'ding.ogg', 50, 1)
 		else
 			for(var/obj/item/I in contents)
-				del(I)
-				new /obj/effect/decal/ash(src)
+				if(!istype(I, /obj/item/weapon/disk/nuclear))
+					del(I)
+					new /obj/effect/decal/ash(src)
 				sleep(30)
 				cremating = 0
 				locked = 0
