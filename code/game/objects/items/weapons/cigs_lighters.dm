@@ -269,7 +269,7 @@ ZIPPO
 /////////
 
 /obj/item/weapon/lighter
-	name = "Cheap lighter"
+	name = "cheap lighter"
 	desc = "A cheap-as-free lighter."
 	icon = 'items.dmi'
 	icon_state = "lighter-g"
