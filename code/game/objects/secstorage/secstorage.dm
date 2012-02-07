@@ -122,7 +122,7 @@
 	if ((istype(W, /obj/item/device/multitool)) && (src.open == 1) && (src.locked ==1) && (!src.l_hacking))
 		user.show_message(text("\red Now attempting to reset internal memory, please hold."), 1)
 		src.l_hacking = 1
-		spawn(100)
+		if (do_after(usr, 100))
 			if (prob(40))
 				src.l_setshort = 1
 				src.l_set = 0
@@ -133,6 +133,7 @@
 			else
 				user.show_message(text("\red Unable to reset internal memory."), 1)
 				src.l_hacking = 0
+		else	src.l_hacking = 0
 		return
 	if (src.contents.len >= 7)
 		return
