@@ -81,6 +81,12 @@ obj/machinery/computer/forensic_scanning
 	req_access = list(access_forensics_lockers)
 
 
+	New()
+		..()
+		new /obj/item/weapon/book/manual/detective(src)
+		return
+
+
 	attack_ai(mob/user)
 		return attack_hand(user)
 
