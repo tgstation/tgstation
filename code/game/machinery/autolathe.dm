@@ -81,13 +81,13 @@
 		stack.use(amount)
 	else
 		usr.before_take_item(O)
+		flick("autolathe_o",src)//plays metal insertion animation
 		O.loc = src
 	icon_state = "autolathe"
 	busy = 1
 	use_power(max(1000, (m_amt+g_amt)*amount/10))
 	spawn(16)
 		icon_state = "autolathe"
-		flick("autolathe_o",src)
 		src.m_amount += m_amt * amount
 		src.g_amount += g_amt * amount
 		if (O && O.loc == src)
@@ -185,12 +185,13 @@
 			usr << "\red The autolathe is busy. Please wait for completion of previous operation."
 	if (!busy)
 		if(href_list["make"])
-			while(outputAmount > 0)
-				var/turf/T = src.loc
-				var/obj/template = locate(href_list["make"])
-				var/multiplier = text2num(href_list["multiplier"])
-				if (!multiplier) multiplier = 1
-				var/power = max(2000, (template.m_amt+template.g_amt)*multiplier/5)
+			var/turf/T = src.loc
+			var/obj/template = locate(href_list["make"])
+			var/multiplier = text2num(href_list["multiplier"])
+			if (!multiplier) multiplier = 1
+			var/power = max(2000, (template.m_amt+template.g_amt)*multiplier/5)
+			restart:
+			if(outputAmount > 0)
 				if( (src.m_amount >= template.m_amt*multiplier) && (src.g_amount >= template.g_amt*multiplier) )
 					use_power(power)
 					icon_state = "autolathe"
@@ -224,9 +225,12 @@
 									src.updateUsrDialog()
 									outputAmount -= 1
 									busy = 0
+									goto restart
 				else
-					outputAmount = 1
-					break
+					for(var/mob/M in view(3,src))
+						M << "\red\icon[src] has run out of materials."
+			else
+				outputAmount = 1
 		if(href_list["act"])
 			var/temp_wire = href_list["wire"]
 			if(href_list["act"] == "pulse")
