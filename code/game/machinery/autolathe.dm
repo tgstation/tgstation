@@ -185,45 +185,48 @@
 			usr << "\red The autolathe is busy. Please wait for completion of previous operation."
 	if (!busy)
 		if(href_list["make"])
-			makeNew:
-			var/turf/T = src.loc
-			var/obj/template = locate(href_list["make"])
-			var/multiplier = text2num(href_list["multiplier"])
-			if (!multiplier) multiplier = 1
-			var/power = max(2000, (template.m_amt+template.g_amt)*multiplier/5)
-			if(src.m_amount >= template.m_amt*multiplier && src.g_amount >= template.g_amt*multiplier)
-				busy = 1
-				use_power(power)
-				icon_state = "autolathe"
-				flick("autolathe_n",src)
-				spawn(16)
+			while(outputAmount > 0)
+				var/turf/T = src.loc
+				var/obj/template = locate(href_list["make"])
+				var/multiplier = text2num(href_list["multiplier"])
+				if (!multiplier) multiplier = 1
+				var/power = max(2000, (template.m_amt+template.g_amt)*multiplier/5)
+				if( (src.m_amount >= template.m_amt*multiplier) && (src.g_amount >= template.g_amt*multiplier) )
 					use_power(power)
+					icon_state = "autolathe"
+					flick("autolathe_n",src)
 					spawn(16)
-						use_power(power)
-						spawn(16)
-							src.m_amount -= template.m_amt*multiplier
-							src.g_amount -= template.g_amt*multiplier
-							if(src.m_amount < 0)
-								src.m_amount = 0
-							if(src.g_amount < 0)
-								src.g_amount = 0
-							var/obj/new_item = new template.type(src)
-							for(var/obj/item/weapon/storage/container in src.contents)
-								container.attackby(new_item)
-								if(new_item.loc == container)
-									break
-							if (multiplier>1)
-								var/obj/item/stack/S = new_item
-								S.amount = multiplier
-							if(new_item in src)
-								new_item.loc = T
-							src.updateUsrDialog()
-							outputAmount -= 1
-							if(outputAmount > 0)
-								goto makeNew
-							busy = 0
-			else
-				outputAmount = 1
+						if(!busy)
+							busy = 1
+							use_power(power)
+							flick("autolathe_n",src)
+							spawn(16)
+								use_power(power)
+								flick("autolathe_n",src)
+								spawn(16)
+									flick("autolathe_n",src)
+									src.m_amount -= template.m_amt*multiplier
+									src.g_amount -= template.g_amt*multiplier
+									if(src.m_amount < 0)
+										src.m_amount = 0
+									if(src.g_amount < 0)
+										src.g_amount = 0
+									var/obj/new_item = new template.type(src)
+									for(var/obj/item/weapon/storage/container in src.contents)
+										container.attackby(new_item)
+										if(new_item.loc == container)
+											break
+									if (multiplier>1)
+										var/obj/item/stack/S = new_item
+										S.amount = multiplier
+									if(new_item in src)
+										new_item.loc = T
+									src.updateUsrDialog()
+									outputAmount -= 1
+									busy = 0
+				else
+					outputAmount = 1
+					break
 		if(href_list["act"])
 			var/temp_wire = href_list["wire"]
 			if(href_list["act"] == "pulse")

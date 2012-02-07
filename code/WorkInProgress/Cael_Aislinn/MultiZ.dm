@@ -174,9 +174,36 @@
 						H.apply_damage(0.5*damage, BRUTE, "l_arm")
 						H.apply_damage(0.5*damage, BRUTE, "r_arm")
 
-						//var/obj/effect/decal/cleanable/blood/B = new(src.loc)
-						//B.blood_DNA = H.dna.unique_enzymes
-						//B.blood_type = H.b_type
+/*
+/obj/effect/decal/cleanable/blood
+	name = "Blood"
+	desc = "It's red and disgusting."
+	density = 0
+	anchored = 1
+	layer = 2
+	icon = 'blood.dmi'
+	icon_state = "floor1"
+	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
+	var/list/viruses = list()
+	blood_DNA = list()
+	var/datum/disease2/disease/virus2 = null
+	var/OriginalMob = null
+
+	Del()
+		for(var/datum/disease/D in viruses)
+			D.cure(0)
+		..()
+*/
+
+						var/obj/effect/decal/cleanable/blood/B = new(src.loc)
+						var/list/blood_DNA_temp[1]
+						blood_DNA_temp[1] = list(H.dna.unique_enzymes, H.dna.b_type)
+						B.blood_DNA =  blood_DNA_temp
+						B.virus2 = H.virus2
+						for(var/datum/disease/D in H.viruses)
+							var/datum/disease/newDisease = new D.type
+							B.viruses += newDisease
+							newDisease.holder = B
 
 						H:weakened = max(H:weakened,2)
 						H:updatehealth()

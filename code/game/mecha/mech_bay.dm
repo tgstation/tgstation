@@ -31,7 +31,7 @@
 
 	proc/init_devices()
 		recharge_console = locate() in range(1,src)
-		recharge_port = locate(/obj/machinery/mech_bay_recharge_port, get_step(src, dir))	//gets the recharge poyrt from the facing dir
+		recharge_port = locate(/obj/machinery/mech_bay_recharge_port, get_step(src, dir))	//gets the recharge port from the facing dir
 		if(recharge_console)
 			recharge_console.recharge_floor = src
 			if(recharge_port)
