@@ -13,7 +13,7 @@
 				client.images += image(tempHud,perp,"hud[ckey(perp:wear_id:GetJobName())]")
 				var/perpname = "wot"
 				if(istype(perp.wear_id,/obj/item/weapon/card/id))
-					perpname = perp.wear_id:registered
+					perpname = perp.wear_id:registered_name
 				else if(istype(perp.wear_id,/obj/item/device/pda))
 					var/obj/item/device/pda/tempPda = perp.wear_id
 					perpname = tempPda.owner
