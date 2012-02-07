@@ -2776,7 +2776,7 @@
 "bbt" = (/obj/machinery/atmospherics/pipe/manifold{color = "blue"; icon_state = "manifold-b-f"; level = 1; name = "pipe manifold"},/turf/simulated/wall,/area/crew_quarters/bar)
 "bbu" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor/plating,/area/maintenance/maintcentral)
 "bbv" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/turf/simulated/floor/plating,/area/maintenance/maintcentral)
-"bbw" = (/turf/simulated/floor{dir = 2; icon_state = "carpet"},/area/maintenance/maintcentral)
+"bbw" = (/obj/structure/rack{dir = 1},/obj/item/clothing/mask/gas,/obj/item/clothing/glasses/meson,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/turf/simulated/floor/plating,/area/maintenance/maintcentral)
 "bbx" = (/obj/machinery/light{icon_state = "tube1"; dir = 8},/obj/structure/table,/obj/item/weapon/storage/pill_bottle/tramadol{pixel_x = 8},/obj/item/stack/medical/bruise_pack,/obj/item/stack/medical/bruise_pack,/obj/item/stack/medical/ointment,/obj/item/stack/medical/ointment,/turf/simulated/floor{icon_state = "white"},/area/medical/medbay)
 "bby" = (/obj/machinery/light{icon_state = "tube1"; dir = 4},/obj/structure/table,/turf/simulated/floor{icon_state = "white"},/area/medical/medbay)
 "bbz" = (/obj/structure/morgue,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor{icon_state = "dark"},/area/medical/morgue)
