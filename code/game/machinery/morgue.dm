@@ -255,29 +255,40 @@
 			M.show_message("\red You hear a hollow crackle.", 1)
 			return
 	else if(contents)
+		for (var/mob/M in viewers(src))
+			M.show_message("\red You hear a roar as the crematorium activates.", 1)
 		cremating = 1
 		locked = 1
-		for (var/mob/living/M in contents)
-			M.Stun(100) //You really dont want to place this inside the loop.
-			spawn(1)
-				for(var/i=1 to 10)
-					sleep(10)
-					if(M)
-						M.take_overall_damage(0,30)
-						if (M.stat!=2 && prob(30))
-							M.emote("scream")
+		if(locate(/mob/living/, src))
+			for (var/obj/item/I in contents)
+				del(I)
+			for (var/mob/living/M in contents)
+				M.Stun(100) //You really dont want to place this inside the loop.
+				spawn(1)
+					for(var/i=1 to 10)
+						sleep(10)
+						if(M)
+							M.take_overall_damage(0,30)
+							if (M.stat!=2 && prob(30))
+								M.emote("scream")
+					new /obj/effect/decal/ash(src)
+					for (var/obj/item/W in M)
+						if (prob(10))
+							W.loc = src
+					M.death(1)
+					M.ghostize()
+					del(M)
+					cremating = 0
+					locked = 0
+					playsound(src.loc, 'ding.ogg', 50, 1)
+		else
+			for(var/obj/item/I in contents)
+				del(I)
 				new /obj/effect/decal/ash(src)
-				for (var/obj/item/W in M)
-					if (prob(10))
-						W.loc = src
-				M.death(1)
-				M.ghostize()
-				del(M)
+				sleep(30)
 				cremating = 0
 				locked = 0
 				playsound(src.loc, 'ding.ogg', 50, 1)
-		for (var/mob/M in viewers(src))
-			M.show_message("\red You hear a roar as the crematorium activates.", 1)
 	return
 
 /obj/structure/c_tray/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
