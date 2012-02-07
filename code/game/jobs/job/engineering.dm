@@ -20,6 +20,9 @@
 		H.equip_if_possible(new /obj/item/clothing/head/helmet/hardhat/white(H), H.slot_head)
 		H.equip_if_possible(new /obj/item/weapon/storage/belt/utility/full(H), H.slot_l_hand)
 		H.equip_if_possible(new /obj/item/clothing/gloves/black(H), H.slot_gloves)
+		if(prob(10))
+			H.disabilities |= 1
+			H.equip_if_possible(new /obj/item/clothing/glasses/regular(H), H.slot_glasses)
 		return 1
 
 
@@ -46,6 +49,9 @@
 		H.equip_if_possible(new /obj/item/clothing/head/helmet/hardhat(H), H.slot_head)
 		H.equip_if_possible(new /obj/item/weapon/storage/belt/utility/full(H), H.slot_l_hand)
 		H.equip_if_possible(new /obj/item/device/t_scanner(H), H.slot_r_store)
+		if(prob(10))
+			H.disabilities |= 1
+			H.equip_if_possible(new /obj/item/clothing/glasses/regular(H), H.slot_glasses)
 		return 1
 
 
