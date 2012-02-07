@@ -8,6 +8,11 @@ obj/machinery/atmospherics/pipe/simple/heat_exchanging
 	minimum_temperature_difference = 20
 	thermal_conductivity = WINDOW_HEAT_TRANSFER_COEFFICIENT
 
+	// BubbleWrap
+	New()
+		..()
+		initialize_directions_he = initialize_directions	// The auto-detection from /pipe is good enough for a simple HE pipe
+	// BubbleWrap END
 
 	initialize()
 		normalize_dir()
@@ -58,6 +63,24 @@ obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction
 	level = 2
 	minimum_temperature_difference = 300
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
+
+	// BubbleWrap
+	New()
+		.. ()
+		switch ( dir )
+			if ( SOUTH )
+				initialize_directions = NORTH
+				initialize_directions_he = SOUTH
+			if ( NORTH )
+				initialize_directions = SOUTH
+				initialize_directions_he = NORTH
+			if ( EAST )
+				initialize_directions = WEST
+				initialize_directions_he = EAST
+			if ( WEST )
+				initialize_directions = EAST
+				initialize_directions_he = WEST
+	// BubbleWrap END
 
 	update_icon()
 		if(node1&&node2)
