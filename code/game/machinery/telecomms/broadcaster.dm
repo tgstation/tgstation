@@ -412,7 +412,9 @@ var
 			// Does not display message; displayes the mob's voice_message (ie "chimpers")
 
 		if (length(heard_voice))
-			var/rendered = "[part_a][vname][part_b][M.voice_message][part_c]"
+			var/rendered = ""
+			if(M)
+				rendered = "[part_a][vname][part_b][M.voice_message][part_c]"
 
 			for (var/mob/R in heard_voice)
 				if(istype(R, /mob/living/silicon/ai))
