@@ -435,7 +435,7 @@
 					else
 						P.info += "<B>Medical Record Lost!</B><BR>"
 					P.info += "</TT>"
-					P.name = "paper- 'Medical Record'"
+					P.name = "paper - 'Medical Record'"
 					src.printing = null
 
 			if (href_list["search_dna"])

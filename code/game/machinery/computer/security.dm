@@ -304,7 +304,7 @@ What a mess.*/
 					else
 						P.info += "<B>Security Record Lost!</B><BR>"
 					P.info += "</TT>"
-					P.name = "paper- 'Security Record'"
+					P.name = "paper - 'Security Record'"
 					printing = null
 //RECORD DELETE
 			if ("Delete All Records")

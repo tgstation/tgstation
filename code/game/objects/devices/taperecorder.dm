@@ -206,7 +206,7 @@
 	for(var/i=1,src.storedinfo.len >= i,i++)
 		t1 += "[src.storedinfo[i]]<BR>"
 	P.info = t1
-	P.name = "paper- 'Transcript'"
+	P.name = "paper - 'Transcript'"
 	P.overlays += "paper_words"
 
 
