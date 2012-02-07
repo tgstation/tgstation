@@ -83,7 +83,7 @@ obj/machinery/computer/forensic_scanning
 
 	New()
 		..()
-		new /obj/item/weapon/book/manual/detective(src)
+		new /obj/item/weapon/book/manual/detective(get_turf(src)) //DEEEERP
 		return
 
 
