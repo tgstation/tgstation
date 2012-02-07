@@ -528,8 +528,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		src << "Only administrators may use this command."
 		return
 	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
+	var/customname = input(usr, "Pick a title for the report.", "Title") as message|null
 	if(!input)
 		return
+	if(!customname)
+		customname = "NanoTrasen Update"
 	for (var/obj/machinery/computer/communications/C in machines)
 		if(! (C.stat & (BROKEN|NOPOWER) ) )
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
@@ -538,7 +541,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			C.messagetitle.Add("[command_name()] Update")
 			C.messagetext.Add(P.info)
 
-	command_alert(input);
+	command_alert(input, maintitle=customname);
 
 	world << sound('commandreport.ogg')
 	log_admin("[key_name(src)] has created a command report: [input]")

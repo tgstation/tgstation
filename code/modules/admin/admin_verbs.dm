@@ -177,6 +177,7 @@
 			verbs += /client/proc/cmd_admin_godmode
 			verbs += /client/proc/delbook
 			verbs += /client/proc/Force_Event_admin
+			verbs += /client/proc/radioalert
 
 		if (holder.level >= 4)//Badmin********************************************************************
 			verbs += /obj/admins/proc/adrev					//toggle admin revives
@@ -418,6 +419,7 @@
 	verbs -= /client/proc/cmd_admin_godmode
 	verbs -= /client/proc/delbook
 	verbs -= /client/proc/Force_Event_admin
+	verbs -= /client/proc/radioalert
 
 	return
 
@@ -860,3 +862,13 @@
 	M.update_body()
 	M.update_face()
 	M.update_clothing()
+
+
+/client/proc/radioalert()
+	set category = "Fun"
+	set name = "Create Radio Alert"
+	var/message = input("Choose a message! (Don't forget the \"says, \" or similar at the start.)", "Message") as message|null
+	var/from = input("From whom? (Who's saying this?)", "From") as text|null
+	var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)
+	a.autosay(message,from)
+	del(a)

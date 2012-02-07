@@ -6,9 +6,9 @@
 		else
 			switch(department)
 				if("Security")
-					networks = list("Arrivals","SS13","Engineering","Research","Medbay","Tcomsat","Mess Hall","Security","Atmospherics","Cargo")
+					networks = list("Arrivals","SS13","Engineering","Research","Medbay","Tcomsat","Mess Hall","Security","Atmospherics","Cargo","Command","Solars")
 				if("Engineering")
-					networks = list("Engineering","Tcomsat","Singularity","Atmospherics")
+					networks = list("Engineering","Tcomsat","Singularity","Atmospherics","Solars")
 				if("Research")
 					networks = list("Research","Bomb Testing")
 				if("Medbay")
