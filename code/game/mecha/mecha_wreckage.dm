@@ -126,7 +126,7 @@
 				parts -= part
 		return
 
-/obj/effect/decal/mecha_wreckage/ripley
+/obj/effect/decal/mecha_wreckage/ripley/firefighter
 	name = "Firefighter wreckage"
 	icon_state = "firefighter-broken"
 
@@ -145,7 +145,7 @@
 				parts -= part
 		return
 
-/obj/effect/decal/mecha_wreckage/deathripley
+/obj/effect/decal/mecha_wreckage/ripley/deathripley
 	name = "Death-Ripley wreckage"
 	icon_state = "deathripley-broken"
 
