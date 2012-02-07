@@ -90,6 +90,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "Airlock"
 	icon = 'Doorcom.dmi'
 	doortype = 1
+	holdopen = 0
 
 /obj/machinery/door/airlock/security
 	name = "Airlock"
@@ -115,6 +116,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "External Airlock"
 	icon = 'Doorext.dmi'
 	doortype = 6
+	holdopen = 0
 
 /obj/machinery/door/airlock/glass
 	name = "Glass Airlock"
