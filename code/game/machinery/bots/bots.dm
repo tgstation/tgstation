@@ -69,6 +69,11 @@
 		else
 			user << "\blue [src] does not need a repair!"
 	else if (istype(W, /obj/item/weapon/card/emag) && !emagged)
+		var/obj/item/weapon/card/emag/E = W
+		if(E.uses)
+			E.uses--
+		else
+			return
 		Emag(user)
 	else
 		switch(W.damtype)

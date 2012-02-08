@@ -196,6 +196,11 @@ display round(lastgen) and plasmatank amount
 			del(O)
 			user << "\blue You add a coin to the generator."
 		else if (istype(O, /obj/item/weapon/card/emag))
+			var/obj/item/weapon/card/emag/E = O
+			if(E.uses)
+				E.uses--
+			else
+				return
 			emagged = 1
 			emp_act(1)
 		else if(!active)

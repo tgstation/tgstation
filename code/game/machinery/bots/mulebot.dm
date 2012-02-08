@@ -123,6 +123,11 @@
 // other: chance to knock rider off bot
 /obj/machinery/bot/mulebot/attackby(var/obj/item/I, var/mob/user)
 	if(istype(I,/obj/item/weapon/card/emag))
+		var/obj/item/weapon/card/emag/E = I
+		if(E.uses)
+			E.uses--
+		else
+			return
 		locked = !locked
 		user << "\blue You [locked ? "lock" : "unlock"] the mulebot's controls!"
 		flick("mulebot-emagged", src)

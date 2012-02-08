@@ -17,7 +17,7 @@
 				APCs += APC
 
 		for(var/obj/machinery/door/airlock/Door in world)
-			if(Door.z == 1)
+			if(Door.z == 1 && !istype(Door,/obj/machinery/door/airlock/secure))
 				Doors += Door
 
 		for(var/obj/machinery/telecomms/processor/T in world)

@@ -187,6 +187,11 @@ for reference:
 					return
 			return
 		else if (istype(W, /obj/item/weapon/card/emag))
+			var/obj/item/weapon/card/emag/E = W
+			if(E.uses)
+				E.uses--
+			else
+				return
 			if (src.emagged == 0)
 				src.emagged = 1
 				src.req_access = null

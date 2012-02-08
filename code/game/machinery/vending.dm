@@ -319,6 +319,11 @@ To combat this, I changed the window name. -- Doohl
 
 /obj/machinery/vending/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/emag))
+		var/obj/item/weapon/card/emag/E = W
+		if(E.uses)
+			E.uses--
+		else
+			return
 		src.emagged = 1
 		user << "You short out the ID lock on [src]"
 		return

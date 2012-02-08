@@ -402,6 +402,11 @@ var/list/supply_groups = new()
 
 /obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
 	if(istype(I,/obj/item/weapon/card/emag) && !hacked)
+		var/obj/item/weapon/card/emag/E = I
+		if(E.uses)
+			E.uses--
+		else
+			return
 		user << "\blue Special supplies unlocked."
 		src.hacked = 1
 		return

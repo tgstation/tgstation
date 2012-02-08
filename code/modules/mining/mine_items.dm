@@ -86,6 +86,11 @@ proc/move_mining_shuttle()
 /obj/machinery/computer/mining_shuttle/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if (istype(W, /obj/item/weapon/card/emag))
+		var/obj/item/weapon/card/emag/E = W
+		if(E.uses)
+			E.uses--
+		else
+			return
 		src.req_access = list()
 		hacked = 1
 		usr << "You fried the consoles ID checking system. It's now available to everyone!"

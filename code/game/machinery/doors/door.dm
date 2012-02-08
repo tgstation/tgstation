@@ -137,7 +137,13 @@
 	if (!src.requiresID())
 		//don't care who they are or what they have, act as if they're NOTHING
 		user = null
-	if (src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
+	if (src.density && (istype(I, /obj/item/weapon/card/emag) ||istype(I, /obj/item/weapon/melee/energy/blade)))
+		if(istype(I, /obj/item/weapon/card/emag))
+			var/obj/item/weapon/card/emag/E = I
+			if(E.uses)
+				E.uses--
+			else
+				return
 		src.operating = -1
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
 			if(istype(src, /obj/machinery/door/airlock))
@@ -342,12 +348,13 @@
 				if(T)
 					L.loc = T
 
-			for(var/obj/item/I in src.loc) // Move items out of the way
-				if(!I.anchored)
-					var/list/lst = list(NORTH,SOUTH,EAST,WEST)
-					var/turf/T = get_random_turf(I, lst)
-					if(T)
-						I.loc = T
+			if(!src.forcecrush)
+				for(var/obj/item/I in src.loc) // Move items out of the way
+					if(!I.anchored)
+						var/list/lst = list(NORTH,SOUTH,EAST,WEST)
+						var/turf/T = get_random_turf(I, lst)
+						if(T)
+							I.loc = T
 
 	sleep(6)
 	update_icon()

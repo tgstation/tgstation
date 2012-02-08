@@ -172,6 +172,11 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 
 
 	if ((istype(W, /obj/item/weapon/card/emag)) && (!src.emagged))
+		var/obj/item/weapon/card/emag/E = W
+		if(E.uses)
+			E.uses--
+		else
+			return
 		// Emagging the turret makes it go bonkers and stun everyone. It also makes
 		// the turret shoot much, much faster.
 
@@ -861,6 +866,11 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 /obj/machinery/porta_turret_cover/attackby(obj/item/W as obj, mob/user as mob)
 
 	if ((istype(W, /obj/item/weapon/card/emag)) && (!Parent_Turret.emagged))
+		var/obj/item/weapon/card/emag/E = W
+		if(E.uses)
+			E.uses--
+		else
+			return
 		user << "\red You short out [Parent_Turret]'s threat assessment circuits."
 		spawn(0)
 			for(var/mob/O in hearers(Parent_Turret, null))
