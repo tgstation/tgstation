@@ -22,8 +22,8 @@
 	max_temperature = 2500
 	health = 250
 	lights_power = 8
+	damage_absorption = list("fire"=0.5,"bullet"=0.8,"bomb"=0.5)
 	wreckage = /obj/effect/decal/mecha_wreckage/ripley/firefighter
-	list/damage_absorption = list("fire"=0.5,"bullet"=0.8,"bomb"=0.5)
 
 /obj/mecha/working/ripley/deathripley
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE"
@@ -52,7 +52,7 @@
 	if(href_list["drop_from_cargo"])
 		var/obj/O = locate(href_list["drop_from_cargo"])
 		if(O && O in src.cargo)
-			src.occupant << "\blue You unload [O]."
+			src.occupant_message("\blue You unload [O].")
 			O.loc = get_turf(src)
 			src.cargo -= O
 			var/turf/T = get_turf(O)

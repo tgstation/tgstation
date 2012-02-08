@@ -1,10 +1,10 @@
-﻿<html>
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
   <title>/tg/ Station 13 Changelog</title>
-  <style type="text/css">
-
-  </style>
+  <link rel="stylesheet" type="text/css" href="changelog.css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="changelog.js"></script>
   <script type='text/javascript'>
 	function changeText(tagID, newText, linkTagID){
 		var tag = document.getElementById(tagID);
@@ -13,16 +13,17 @@
 		linkTag.removeAttribute("href");
 		linkTag.removeAttribute("onclick");
 	}
-  </script>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
+  </script>  
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
 
 <body>
 <table align='center' width='650'><tr><td>
-<div align='center'><font size='5'><b>Space Station 13</b></font></div>
+<h1 align='center'>Space Station 13</h1>
 <table align='center'>
 	<tr>
 		<td valign='top'>
-			<img src="postcardsmall.jpg" alt="/tg/Station 13" />
+			<img src="postcardsmall.jpg" alt="/tg/Station 13">
 		</td>
 		<td valign='top'>
 			<br><div align='center'><font size='3'><b>Traditional Games Space Station 13</b></font></div><p>
@@ -47,47 +48,91 @@
 	</tr>
 </table>
 
-<b><font color='blue'>PLEASE READ: A PERSONAL APPEAL FROM CODERBUS COMMITER KOR PHAERON</font><b>
+<b><font color='blue'>PLEASE READ: A PERSONAL APPEAL FROM CODERBUS COMMITER KOR PHAERON</font></b>
 <ul>
-  <li><b>http://nanotrasen.com/phpBB3/viewtopic.php?f=3&t=7278</b>
+  <li><b>http://nanotrasen.com/phpBB3/viewtopic.php?f=3&amp;t=7278</b>
 </ul>
 
 
-<h4>Changelog</h4>
+<h2>Changelog</h2>
+<p> Filter changes:
+<select onchange="filterchanges(this.value);">
+<option value="">Show all</option>
+<option value="rscadd">Added feature</option>
+<option value="rscdel">Removed feature</option>
+<option value="bugfix">Bugfix</option>
+<option value="wip">Work in progress</option>
+<option value="tweak">Tweak</option>
+<option value="experiment">Experimental feature</option>
+<option value="imageadd">Added icon</option>
+<option value="imagedel">Removed icon</option>
+<option value="soundadd">Added sound</option>
+<option value="sounddel">Removed sound</option>
+</select>
+</p>
+<div class="drop">Icon legend</div>
+<div class="indrop">
+	<p><img src="bug-minus.png" alt="bug-minus">Bugfix.</p>
+	<p><img src="hard-hat-exclamation.png" alt="hard-hat-exclamation">Work in progress. Will be changed in future versions.</p>
+	<p><img src="burn-exclamation.png" alt="burn-exclamation">Experimental feature. Visit the forum and express your opinion about it.</p>
+	<p><img src="wrench-screwdriver.png" alt="wrench-screwdriver">Tweak.</p>
+	<p><img src="music-plus.png" alt="music-plus">Added sound.</p>
+	<p><img src="music-minus.png" alt="music-minus">Removed sound.</p>
+	<p><img src="cross-circle.png" alt="cross-circle">Removed feature.</p>
+	<p><img src="tick-circle.png" alt="tick-circle">Added feature.</p>
+	<p><img src="image-plus.png" alt="image-plus">Added icon or image.</p>
+	<p><img src="image-minus.png" alt="image-minus">Removed icon or image.</p>
+	<p><img src="spell-check.png" alt="spell-check">Tweaked text.</p>
+</div>
 
 <!-- NOTE TO UPDATERS!! Please only list things which are important to players. 
 Stuff which is in development and not yet visible to players or just code related 
 (ie. code improvements for expandability, etc.) should not be listed here. They 
 should be listed in the changelog upon commit tho. Thanks. -->
-
-<b><font color='blue'>4 February 2012, World Cancer Day</font><b>
-<ul>
-  <li><b>Erro updated:</b>
-  <ul>
-	<li>Examining humans now works a bit differently. Some external suits and helmets can hide certain pieces of clothing so you don't see them when examining. Glasses are also now displayed when examining.</li>
-	<li>The job selection screen has been changed a little to hopefully make making changes there easier.</li>
+<div class="commit sansserif">
+<h2 class="date">8 February 2012</h2>
+  <h3 class="author"><abbr title="a.k.a. panurgomatic on google code">ConstantA</abbr> updated:</h3>
+  <ul class="changes bgimages16">
+	<li class="rscadd">Added Exosuit Jetpack</li>
+	<li class="rscadd">Added Exosuit Nuclear Reactor (runs of normal, everyday uranium, maybe I'll switch it to run on enriched) - requires research (level 3 in Materials, Power Manipulation and Engineering)</li>
+	<li class="imageadd">Added Ripley construction steps sprites (courtesy of <b>WJohnston</b> - man, you're awesome)</li>
+	<li class="tweak">Exosuit Sleeper can now inject occupant with reagents taken from Syringe Gun</li>
+	<li class="tweak">Exosuit Cable Layer will now auto-dismantle floors</li>
+	<li class="tweak">Exosuit Heavy Lazer cooldown increased, Scattershot now fires medium calibre ammo (less damage)</li>	
+	<li class="tweak">Exosuit wreckage can be pulled</li>
+	<li class="wip">EMP now drains half of current exosuit cell charge, not half of maximum charge.</li>
+	<li class="bugfix">Fixed several possible exosuit equipment runtimes</li>
+	<li class="wip">Introduced new markup to changelog. Javascript is extremely slow (in byond embedded browser) for some reason.</li>
   </ul>
-  <li><b>Kor updated:</b>
-  <ul>
-	<li>A new passive mob ability: Relentless. Relentless mobs cannot be shoved (though may still swap places with help intent)</li>
-	<li>Alien Queens, Juggernaut constructs, and Medical Borgs are all Relentless. Maybe the medborg can actually drag people to medbay on time now</li>
-	<li>Two constructs, the Juggernaut and the Wraith are now available for wizards and cultists to use soul stones with</li>
-	<li>The Chaplain is immune to cult stun, blind, deafen, and blood boil</li>
+</div>
+<div class="commit sansserif">
+<h2 class="date">4 February 2012, World Cancer Day</h2>
+<h3 class="author">Erro updated:</h3>
+  <ul class="changes bgimages16">
+	<li class="tweak">Examining humans now works a bit differently. Some external suits and helmets can hide certain pieces of clothing so you don't see them when examining. Glasses are also now displayed when examining.</li>
+	<li class="tweak">The job selection screen has been changed a little to hopefully make making changes there easier.</li>
   </ul>
-</ul>
+<h3 class="author">Kor updated:</h3>
+  <ul class="changes bgimages16">
+	<li class="rscadd">A new passive mob ability: Relentless. Relentless mobs cannot be shoved (though may still swap places with help intent)</li>
+	<li class="rscadd">Alien Queens, Juggernaut constructs, and Medical Borgs are all Relentless. Maybe the medborg can actually drag people to medbay on time now</li>
+	<li class="rscadd">Two constructs, the Juggernaut and the Wraith are now available for wizards and cultists to use soul stones with</li>
+	<li class="tweak">The Chaplain is immune to cult stun, blind, deafen, and blood boil</li>
+  </ul>
+</div>
 
-<b><font color='blue'>31 January 2012</font><b>
+<b><font color='blue'>31 January 2012</font></b>
 <ul>
   <li><b>Carn updated:</b>
   <ul>
-	<li>Grammar & various bug-fixes</li>
-	<li>Thank-you to everyone who reported spelling/grammar mistakes. I'm still working on it, so if you spot anymore please leave a comment <a href="http://nanotrasen.com/phpBB3/viewtopic.php?f=3&t=7578" target='_blank'>here</a>. There's still lots to fix.</li>
+	<li>Grammar &amp; various bug-fixes</li>
+	<li>Thank-you to everyone who reported spelling/grammar mistakes. I'm still working on it, so if you spot anymore please leave a comment <a href="http://nanotrasen.com/phpBB3/viewtopic.php?f=3&amp;t=7578" target='_blank'>here</a>. There's still lots to fix.</li>
 	<li>Mining station areas should no longer lose air.</li>
   </ul>
 </ul>
 
 
-<b><font color='blue'>30 January 2012(</font><b>
+<b><font color='blue'>30 January 2012(</font></b>
 <ul>
   <li><b>Sieve updated:</b>
   <ul>	
@@ -103,12 +148,12 @@ should be listed in the changelog upon commit tho. Thanks. -->
   </ul>  
 </ul>
 
-<b><font color='blue'>29 January 2012, got Comp Arch exams on Wednesday :(</font><b>
+<b><font color='blue'>29 January 2012, got Comp Arch exams on Wednesday :(</font></b>
 <ul>
   <li><b>Agouri updated:</b>
   <ul>	
-	<li><font face="terminal"><B>UPDATE ON THE UPDATE</B>: Newspapers are now fully working, sorry for that. Some minor icon bugs fixed. Now I'm free to work on the contest prizes :3</FONT></li>
-	<li><b><font color=red>Newscasters are now LIVE!</font color></b> Bug reports, suggestions for extra uses, tears etc go <a href="http://code.google.com/p/tgstation13/source/detail?r=3005" target='_blank'>here</a>.</li>
+	<li><font face="terminal"><b>UPDATE ON THE UPDATE</b>: Newspapers are now fully working, sorry for that. Some minor icon bugs fixed. Now I'm free to work on the contest prizes :3</FONT></li>
+	<li><b><font color="red">Newscasters are now LIVE!</font></b> Bug reports, suggestions for extra uses, tears etc go <a href="http://code.google.com/p/tgstation13/source/detail?r=3005" target='_blank'>here</a>.</li>
 	<li>What <b>ARE</b> newscasters? Fans of the Transmetropolitan series might find them familiar. Basically, they're terminals connected to a station-wide news network. Users are able to submit channels of their own (one per identified user, with channels allowing feed stories by other people or, if you want the channel to be your very own SpaceJournal, being submit-locked to you), while others are able to read the channels, either through the terminals or a printed newspaper which contains every news-story circulating at the time of printing.</li>
 	<li>About censorship: You can censor channels and feed stories through Security casters, found in the HoS'es office and the Bridge. Alternatively, if you want a channel to stop operating completely, you can mark it with a D-Notice which will freeze it and make all its messages unreadable for the duration it is in effect. If you've got the access, of course.</li>
 	<li>Basically I think of the newscaster as nothing more as an additional Roleplaying tool. Grab a newspaper along with your donuts and coffee from the machines, read station rumors when you're manning your desk, be a station adventurer or journalist with your very own network journal!</li>
@@ -118,7 +163,7 @@ should be listed in the changelog upon commit tho. Thanks. -->
   </ul>  
 </ul>
 
-<b><font color='blue'>28 January 2012</font><b>
+<b><font color='blue'>28 January 2012</font></b>
 <ul>
   <li><b>BubbleWrap updated:</b>
   <ul>
@@ -127,7 +172,7 @@ should be listed in the changelog upon commit tho. Thanks. -->
   </ul>  
 </ul>
 
-<b><font color='blue'>27 January 2012</font><b>
+<b><font color='blue'>27 January 2012</font></b>
 <ul>
   <li><b>LastyScratch updated:</b>
   <ul>	
@@ -154,7 +199,7 @@ oxygen tanks, and breath masks.</li>
 <li>Borg RCDs can no longer take down R-walls. (headcoder orders)</li>  </ul>      
 </ul>
 
-<b><font color='blue'>19 January 2012</font><b>
+<b><font color='blue'>19 January 2012</font></b>
 <ul>
   <li><b>Petethegoat updated:</b>
   <ul>	
@@ -162,7 +207,7 @@ oxygen tanks, and breath masks.</li>
   </ul>  
 </ul>
 
-<b><font color='blue'>17 January 2012</font><b>
+<b><font color='blue'>17 January 2012</font></b>
 <ul>
   <li><b>Doohl updated:</b>
   <ul>	
@@ -170,27 +215,27 @@ oxygen tanks, and breath masks.</li>
   </ul>
 </ul>
 
-<b><font color='blue'>15 January 2012</font><b>
+<b><font color='blue'>15 January 2012</font></b>
 <ul>
   <li><b>Doohl updated:</b>
   <ul>	
-	<li><b><font color=blue>The radio overhaul 'Telecommunications' is now LIVE.</font color></b> Please submit any opinions/feedback in the forums and check the wiki article on Telecommunications for some more info for the curious.</li>
+	<li><b><font color="blue">The radio overhaul 'Telecommunications' is now LIVE.</font></b> Please submit any opinions/feedback in the forums and check the wiki article on Telecommunications for some more info for the curious.</li>
 	<li>The AI satellite has been replaced with a communications satellite. You can get there via teleporter or space, just like the AI satellite. I highly recommend not bum-rushing the new satellite, as you may be killed if you don't have access. It's a very secure place.</li>
 	<li>Once a human's toxicity level reaches a certain point, they begin throwing up. This is a natural, but overall ineffective method of purging toxins from the body.</li>
 	<li>You can now travel Z-levels in Nuclear Emergency mode (the nuke disk is still bound to the station). This means the nuclear agents can and probably will fly off into space to blow up the comm satellite and shut down communications.</li>
   </ul>  
 </ul>
 
-<b><font color='blue'>9 January 2012</font><b>
+<b><font color='blue'>9 January 2012</font></b>
 <ul>
   <li><b>ConstantA updated:</b>
   <ul>	
 	<li>Reworked exosuit internal atmospherics (the situation when exosuit is set to take air from internal tank, otherwise cabin air = location air): 
 		<ul>
-			<li>If current cabin presure is lower than &quot;tank output pressure&quot;, the air will be taken from internal tank (if possible), to equalize cabin pressure to &quot;tank output pressure&quot;</li>
-			<li>If current cabin presure is higher than &quot;tank output pressure&quot;, the air will be siphoned from cabin to location until cabin pressure is equal to &quot;tank output pressure&quot;</li>
+			<li>If current cabin presure is lower than &amp;quot;tank output pressure&amp;quot;, the air will be taken from internal tank (if possible), to equalize cabin pressure to &amp;quot;tank output pressure&amp;quot;</li>
+			<li>If current cabin presure is higher than &amp;quot;tank output pressure&amp;quot;, the air will be siphoned from cabin to location until cabin pressure is equal to &amp;quot;tank output pressure&amp;quot;</li>
 			<li>Tank air is not altered in any way even if it's overheated or overpressured - connect exosuit to atmos connector port to vent it</li>
-			<li>&quot;Tank output pressure&quot; can be set through Maintenance window - Initiate maintenance protocol to get the option</li>
+			<li>&amp;quot;Tank output pressure&amp;quot; can be set through Maintenance window - Initiate maintenance protocol to get the option</li>
 		</ul>
 	</li>
 	<li>Fixed bug that prevented exosuit tank air updates if exosuit was connected to connector port</li>
@@ -201,7 +246,7 @@ oxygen tanks, and breath masks.</li>
 </ul>
 
 
-<b><font color='blue'>8 January 2012</font><b>
+<b><font color='blue'>8 January 2012</font></b>
 <ul>
   <li><b>Agouri updated:</b>
   <ul>	
@@ -211,7 +256,7 @@ oxygen tanks, and breath masks.</li>
   </ul>
 </ul>
 
-<b><font color='blue'>7 January 2012</font><b>
+<b><font color='blue'>7 January 2012</font></b>
 <ul>
   <li><b>Donkieyo updated:</b>
   <ul>	
@@ -224,7 +269,7 @@ oxygen tanks, and breath masks.</li>
 	<li>You can now send emergancy messages to Centcomm (Or, with some.. tampering, the Syndicate.) via a comms console.  (This occurs in much the fashion as a prayer.)</li>
   </ul>
 </ul>
-<b><font color='blue'>3 January 2012</font><b>
+<b><font color='blue'>3 January 2012</font></b>
 <ul>
   <li><b>Erro updated:</b>
   <ul>	
@@ -236,11 +281,11 @@ oxygen tanks, and breath masks.</li>
   </ul>
   </ul>
 
-<b><font color='blue'>1 January 2012 (12 more months until doomsday)</font><b>
+<b><font color='blue'>1 January 2012 (12 more months until doomsday)</font></b>
 <ul>
   <li><b>Doohl updated:</b>
   <ul>	
-	<li><font color=red><b>XENOS ARE NOW IMMUNE TO STUNNING!</b></font color> To compensate, stunning via tasers/batons now slows them down significantly.</li>
+	<li><font color="red"><b>XENOS ARE NOW IMMUNE TO STUNNING!</b></font> To compensate, stunning via tasers/batons now slows them down significantly.</li>
   </ul>
   
   <li><b>Polymorph updated:</b>
@@ -250,7 +295,7 @@ oxygen tanks, and breath masks.</li>
   
 </ul>
 
-<b><font color='blue'>29 December 2011</font><b>
+<b><font color='blue'>29 December 2011</font></b>
 <ul>
   <li><b>ConstantA updated:</b>
   <ul>	
@@ -265,7 +310,7 @@ oxygen tanks, and breath masks.</li>
   </ul>  
 </ul>
 
-<b><font color='blue'>28 December 2011</font><b>
+<b><font color='blue'>28 December 2011</font></b>
 <ul>
   <li><b>RavingManiac updated:</b>
   <ul>	
@@ -277,7 +322,7 @@ oxygen tanks, and breath masks.</li>
   </ul>
 </ul>
 
-<b><font color='blue'>27 December 2011</font><b>
+<b><font color='blue'>27 December 2011</font></b>
 <ul>
   <li><b>Errorage updated:</b>
   <ul>	
@@ -289,12 +334,12 @@ oxygen tanks, and breath masks.</li>
   </ul>
 </ul>
 
-<b><font color='blue'><a href='#' id='achristmas' onclick="changeText('spanchristmas','<b><font color=&#34;black&#34;>Comment by Errorage: &#34;You guys REALLY coded on Christmas?!&#34;</font></b>','achristmas')">25 December 2011</a> <span id='spanchristmas'></span></font><b>
+<b><font color='blue'><a href='#' id='achristmas' onclick="changeText('spanchristmas','</b><font color=&amp;#34;black&amp;#34;>Comment by Errorage: &amp;#34;You guys REALLY coded on Christmas?!&amp;#34;</font></b>','achristmas')">25 December 2011</a> <span id='spanchristmas'></span></font></b>
 <ul>
   <li><b>ConstantA updated:</b>
   <ul>	
 	<li>Circuit boards for Odysseus mech can be ordered by QM</li>
-	<li>Designs for them were added to R&amp;D</li>
+	<li>Designs for them were added to R&amp;amp;D</li>
   </ul>
   </li>
     <li><b>Kor updated:</b>
@@ -310,7 +355,7 @@ oxygen tanks, and breath masks.</li>
 
 
 
-<b><font color='blue'>24 December 2011</font><b>
+<b><font color='blue'>24 December 2011</font></b>
 <ul>
   <li><b>Rockdtben updated:</b>
   <ul>	
@@ -320,7 +365,7 @@ oxygen tanks, and breath masks.</li>
 
 </ul>
 
-<b><font color='blue'>23 December 2011</font><b>
+<b><font color='blue'>23 December 2011</font></b>
 <ul>
   <li><b>ConstantA updated:</b>
   <ul>	
@@ -348,7 +393,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>21 December 2011</font><b>
+<b><font color='blue'>21 December 2011</font></b>
 <ul>
   <li><b>RavingManiac updated:</b>
   <ul>	
@@ -356,32 +401,32 @@ start of their shift.</li>
   </ul>
 </ul>
 
-<b><font color='blue'>19 December 2011</font><b>
+<b><font color='blue'>19 December 2011</font></b>
 <ul>
   <li><b>Kor updated:</b>
   <ul>	
-	<li>General/Misc Changes</li>
+	<li>General/Misc Changes
 	<ul>
 	<li>Escape pods no longer go to the horrific gibbing chambers. Rather, they will be picked up by a salvage ship in deep space. (This basically changes nothing mechanics wise, just fluff)</li>
 	<li>An ion rifle now spawns on the nuclear operative shuttle. Maybe this will help with them getting destroyed by sec borgs every round?</li>
 	</ul>
-	<br/>
-	<li>Wizard Changes</li>
+	</li>
+	<li>Wizard Changes
 	<ul>
 	<li>The wizard can now purchase magic artefacts in addition to spells in a subsection of the spellbook.</li>
 	<li>The first (and currently only) new artefact is the Staff of Change, which functions as a self recharging energy weapon with some special effects.</li>
 	<li>The wizard has a new alternative set of robes on his shuttle.</li>
-	<br/>
+	</li>
 	</ul>
-	<li>Cult Changes</li><ul>
+	<li>Cult Changes<ul>
 	<li>Cultists now each start with three words (join, blood, self). No more will you suffer at the hands of cultists who refuse to share words.</li>
 	<li>The starting supply talisman can now be used five times and can now be used to spawn armor and a blade.</li>
 	<li>Replaced the sprites on the cultist robes/hood.</li>
-	</ul>
+	</ul></li>
   </ul>
 </ul>
 
-<b><font color='blue'>18 December 2011</font><b>
+<b><font color='blue'>18 December 2011</font></b>
 <ul>
   <li><b>Carnwennan updated:</b>
   <ul>
@@ -395,7 +440,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>17 December 2011</font><b>
+<b><font color='blue'>17 December 2011</font></b>
 <ul>
   <li><b>Erro updated:</b>
   <ul>
@@ -404,7 +449,7 @@ start of their shift.</li>
   </li>  
 </ul>
 
-<b><font color='blue'>14 December 2011</font><b>
+<b><font color='blue'>14 December 2011</font></b>
 <ul>
   <li><b>Erro updated:</b>
   <ul>
@@ -418,7 +463,7 @@ start of their shift.</li>
   </li>   
 </ul>
 
-<b><font color='blue'>11 December 2011</font><b>
+<b><font color='blue'>11 December 2011</font></b>
 <ul>
   <li><b>NEO updated:</b>
   <ul>
@@ -428,7 +473,7 @@ start of their shift.</li>
   </li>  
 </ul>
 
-<b><font color='blue'>10 December 2011</font><b>
+<b><font color='blue'>10 December 2011</font></b>
 <ul>
   <li><b>Doohl updated:</b>
   <ul>
@@ -451,7 +496,7 @@ start of their shift.</li>
   
 </ul>
 
-<b><font color='blue'>8 December 2011</font><b>
+<b><font color='blue'>8 December 2011</font></b>
 <ul>
   <li><b>Errorage updated:</b>
   <ul>
@@ -466,9 +511,9 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>3 December 2011</font><b>
+<b><font color='blue'>3 December 2011</font></b>
 <ul>
-  <li><b>Pete & Erro Christmas update:</b>
+  <li><b>Pete &amp; Erro Christmas update:</b>
   <ul>
 	<li>Reinforced metal renamed to steel and steel floor tile renamed to metal floor tile to avoid confusion before it even happens.</li>
     <li>It is no longer possible to make steel from metal or vice versa or from the autolathe. You can however make metal from the autolathe and still insert steel to increase the metal resource.</li>
@@ -502,7 +547,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>30 November 2011</font><b>
+<b><font color='blue'>30 November 2011</font></b>
 <ul>
   <li><b><a href='#' id='vinylscratch_link' onclick="changeText('vinylscratch_tag','Lasty', 'vinylscratch_link')"><span id='vinylscratch_tag'>Vinyl Scratch</span></a> updated:</b>
   <ul>
@@ -512,7 +557,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>27 November 2011</font><b>
+<b><font color='blue'>27 November 2011</font></b>
 <ul>
   <li><b>Kor updated:</b>
   <ul>
@@ -523,7 +568,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>22 November 2011</font><b>
+<b><font color='blue'>22 November 2011</font></b>
 <ul>
   <li><b>Doohl updated:</b>
   <ul>
@@ -532,11 +577,11 @@ start of their shift.</li>
   </li>
 </ul>
   
-<b><font color='blue'>19 November 2011</font><b>
+<b><font color='blue'>19 November 2011</font></b>
 <ul>
   <li><b>Doohl updated:</b>
   <ul>
-    <li>Toggling admin midis will now <b><font color=red>DISABLE THE CURRENT MIDI OH MY GOSH!</b></font color></li>
+    <li>Toggling admin midis will now <font color=red><b>DISABLE THE CURRENT MIDI OH MY GOSH!</b></font></li>
   </ul>
   </li>
   <li><b>Tobba updated:</b>
@@ -556,7 +601,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>16 November 2011</font><b>
+<b><font color='blue'>16 November 2011</font></b>
 <ul>
   <li><b>Tobba updated:</b>
   <ul>
@@ -565,7 +610,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>16 November 2011</font><b>
+<b><font color='blue'>16 November 2011</font></b>
 <ul>
   <li><b>Petethegoat updated:</b>
   <ul>
@@ -574,7 +619,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>7 November 2011</font><b>
+<b><font color='blue'>7 November 2011</font></b>
 <ul>
   <li><b>Kor updated:</b>
   <ul>
@@ -585,7 +630,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>29 October 2011</font><b>
+<b><font color='blue'>29 October 2011</font></b>
 <ul>
   <li><b>ConstantA updated:</b>
   <ul>
@@ -605,7 +650,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>29 October 2011</font><b>
+<b><font color='blue'>29 October 2011</font></b>
 <ul>
   <li><b>Petethegoat updated:</b>
   <ul>
@@ -617,12 +662,12 @@ start of their shift.</li>
   <li><b>Doohl updated:</b>
   <ul>
     <li>More hairs added and a very long beard.</li>
-    <li>Finally fixed the request console announcements going <b><font color = red>AMP AMP AMP</font color></b> all the time when you use punctuation.</li>
+    <li>Finally fixed the request console announcements going <font color = red><b>AMP AMP AMP</b></font> all the time when you use punctuation.</li>
   </ul>
   </li>
 </ul>
 
-<b><font color='blue'>27 October 2011</font><b>
+<b><font color='blue'>27 October 2011</font></b>
 <ul>
   <li><b>Mport updated:</b>
   <ul>
@@ -631,7 +676,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>21 October 2011, Tuesday:</font><b>
+<b><font color='blue'>21 October 2011, Tuesday:</font></b>
 <ul>
   <li><b>Errorage updated:</b>
   <ul>
@@ -659,7 +704,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>18 October 2011, Tuesday:</font><b>
+<b><font color='blue'>18 October 2011, Tuesday:</font></b>
 <ul>
   <li><b>Errorage updated:</b>
   <ul>
@@ -679,7 +724,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>15 October 2011, <a href="http://en.wikipedia.org/wiki/Blindness" target='_blank'>White Cane</a> Safety Day:</font><b>
+<b><font color='blue'>15 October 2011, <a href="http://en.wikipedia.org/wiki/Blindness" target='_blank'>White Cane</a> Safety Day:</font></b>
 <ul>
   <li><b>Agouri updated:</b>
   <ul>
@@ -698,17 +743,17 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>11 October 2011:</font><b>
+<b><font color='blue'>11 October 2011:</font></b>
 <ul>
   <li><b>ConstantA updated:</b>
   <ul>
     <li>Added radios to exosuits. Setting can be found in 'Electronics' menu.</li>
-    <li>Exosuit maintenance can be initiated even if it's occupied. The pilot must permit maintenance through 'Permissions &amp; Logging' - 'Permit maintenance protocols'. For combat exosuits it's disabled by default. While in maintenance mode, exosuit can't move or use equipment.</li>
+    <li>Exosuit maintenance can be initiated even if it's occupied. The pilot must permit maintenance through 'Permissions &amp;amp; Logging' - 'Permit maintenance protocols'. For combat exosuits it's disabled by default. While in maintenance mode, exosuit can't move or use equipment.</li>
   </ul>
   </li>
 </ul>
 
-<b><font color='blue'>8 October 2011:</font><b>
+<b><font color='blue'>8 October 2011:</font></b>
 <ul>
   <li><b>Doohl updated:</b>
   <ul>
@@ -725,7 +770,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>2 October 2011:</font><b>
+<b><font color='blue'>2 October 2011:</font></b>
 <ul>
   <li><b>Petethegoat updated:</b>
   <ul>
@@ -740,7 +785,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>1 October 2011:</font><b>
+<b><font color='blue'>1 October 2011:</font></b>
 <ul>
   <li><b><a href='#' id='misterdorf_link' onclick="changeText('misterdorf_tag','Urist McDorf', 'misterdorf_link')"><span id='misterdorf_tag'>Knognob Lungsparkle</span></a> updated:</b>
   <ul>
@@ -750,7 +795,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>28 September 2011:</font><b>
+<b><font color='blue'>28 September 2011:</font></b>
 <ul>
   <li><b>Rolan7 updated:</b>
   <ul>
@@ -764,7 +809,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>22 September 2011, OneWebDay:</font><b>
+<b><font color='blue'>22 September 2011, OneWebDay:</font></b>
 <ul>
   <li><b>Errorage updated:</b>
   <ul>
@@ -774,7 +819,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>20 September 2011, 10 year anniversary of the declaration of the "war on terror":</font><b>
+<b><font color='blue'>20 September 2011, 10 year anniversary of the declaration of the "war on terror":</font></b>
 <ul>
   <li><b>Errorage updated:</b>
   <ul>
@@ -784,7 +829,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>18 September 2011, World Water Monitoring Day:</font><b>
+<b><font color='blue'>18 September 2011, World Water Monitoring Day:</font></b>
 <ul>
   <li><b>Errorage updated:</b>
   <ul>
@@ -810,7 +855,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>17 September 2011, Operation Market Garden remembrance day:</font><b>
+<b><font color='blue'>17 September 2011, Operation Market Garden remembrance day:</font></b>
 <ul>
   <li><b>Errorage updated:</b>
   <ul>
@@ -819,7 +864,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>14 September 2011:</font><b>
+<b><font color='blue'>14 September 2011:</font></b>
 <ul>
   <li><b>Lasty updated:</b>
   <ul>
@@ -843,7 +888,7 @@ start of their shift.</li>
   </ul>
   </li>
 </ul>
-<b><font color='blue'>13 September 2011:</font><b>
+<b><font color='blue'>13 September 2011:</font></b>
 <ul>
   <li><b>Errorage updated:</b>
   <ul>
@@ -871,7 +916,7 @@ start of their shift.</li>
 </ul>
 
 
-<b><font color='blue'>11 September 2011:</font><b>
+<b><font color='blue'>11 September 2011:</font></b>
 <ul>
   <li><b>Errorage updated:</b>
   <ul>
@@ -883,7 +928,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>10 September 2011:</font><b>
+<b><font color='blue'>10 September 2011:</font></b>
 <ul>
   <li><b>Errorage updated:</b>
   <ul>
@@ -912,7 +957,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>8 September 2011:</font><b>
+<b><font color='blue'>8 September 2011:</font></b>
 <ul>
   <li><b>Lasty updated:</b>
   <ul>
@@ -922,7 +967,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>6 September 2011</font color><b>
+<b><font color='blue'>6 September 2011</font></b>
 <ul>
   <li><b><a href='#' id='greekrioter_link' onclick="changeText('greekrioter_tag','Agouri', 'greekrioter_link')"><span id='greekrioter_tag'>Greek Rioter</span></a> updated:</b>
   <ul>
@@ -970,7 +1015,7 @@ start of their shift.</li>
   </ul>
   </li>
 </ul>
-<b><font color='blue'>5 September 2011.</font color><b>
+<b><font color='blue'>5 September 2011.</font></b>
 <ul>
   <li><b><a href='#' id='rageroro_link' onclick="changeText('rageroro_tag','Errorage', 'rageroro_link')"><span id='rageroro_tag'>Rageroro</span></a> updated:</b>
   <ul>
@@ -980,7 +1025,7 @@ start of their shift.</li>
   </li>
 </ul>
 
-<b><font color='blue'>4 September 2011.</font color><b>
+<b><font color='blue'>4 September 2011.</font></b>
 <ul>
   <li><b>Urist McDorf updated:</b>
   <ul>
@@ -994,7 +1039,7 @@ start of their shift.</li>
   </ul>
   <li><b>Erro updated:</b>
   <ul>
-    <li>R'n'D and Gas Storage locations have been swapped in order for R&D to be given a hallway-facing table, just like Chemistry.</li>
+    <li>R'n'D and Gas Storage locations have been swapped in order for R&amp;D to be given a hallway-facing table, just like Chemistry.</li>
 	<li>Buckling someone to a chair now causes them to face in the same direction as the chair.</li>
 	<li>Conveyor will now move only 10 items per game cycle. This is to prevent miners from overloading the belts with 2000 pieces of ore and slowing down time by turning it on. Does not apply to mobs on belt.</li>
   </ul>
@@ -1030,7 +1075,7 @@ start of their shift.</li>
   </ul>
 </ul>
 
-<b><font color='blue'>31 August 2011.</font color><b>
+<b><font color='blue'>31 August 2011.</font></b>
 <ul>
   <li><b>Lasty  updated:</b>
   <ul>
@@ -1051,7 +1096,7 @@ start of their shift.</li>
   </ul>
 </ul>
 
-<b><font color='blue'>28 August 2011.</font color><b>
+<b><font color='blue'>28 August 2011.</font></b>
 <ul>
   <li><b>Doohl updated:</b>
   <ul>
@@ -1061,7 +1106,7 @@ start of their shift.</li>
   </ul>
 </ul>
 
-<b><font color='blue'>26 August 2011.</font color><b>
+<b><font color='blue'>26 August 2011.</font></b>
 <ul>
   <li><b>Mport updated:</b>
   <ul>
@@ -1081,7 +1126,7 @@ start of their shift.</li>
   </ul>
 </ul>
 
-<b><font color='blue'>20 August 2011.</font color><b>
+<b><font color='blue'>20 August 2011.</font></b>
 <ul>
   <li><b>Doohl updated:</b>
   <ul>
@@ -1089,7 +1134,7 @@ start of their shift.</li>
   </ul>
 </ul>
 
-<b><font color='blue'>16 August 2011.</font color><b>
+<b><font color='blue'>16 August 2011.</font></b>
 <ul>
   <li><b>Superxpdude updated</b>:
   <ul>
@@ -1104,16 +1149,16 @@ start of their shift.</li>
   </ul>
 </ul>
 
-<b><font color='blue'>15 August 2011.</font color><b>
+<b><font color='blue'>15 August 2011.</font></b>
 <ul>
   <li><b>Superxpdude updated</b>:
   <ul> 
-    <li>NEW MINING STATION, POST YOUR OPINIONS AND BUGS <a href="http://nanotrasen.com/phpBB3/viewtopic.php?f=7&t=5733">HERE</a>  </li>
+    <li>NEW MINING STATION, POST YOUR OPINIONS AND BUGS <a href="http://nanotrasen.com/phpBB3/viewtopic.php?f=7&amp;t=5733">HERE</a>  </li>
     <li>Added some new awesome mining-related sprites by Petethegoat. All credit for the sprites goes to him.</li>
   </ul>
 </ul>
 
-<b><font color='blue'>9 August 2011.</font color><b>
+<b><font color='blue'>9 August 2011.</font></b>
 <ul>
   <li><b>Mport updated</b>:
   <ul>
@@ -1124,7 +1169,7 @@ start of their shift.</li>
 	</ul>
 </ul>
 
-<b><font color='blue'>5 August 2011.</font color><b>
+<b><font color='blue'>5 August 2011.</font></b>
 <ul>
   <li><b>Mport updated</b>:
   <ul>
@@ -1133,7 +1178,7 @@ start of their shift.</li>
   </ul>
 </ul>
 
-<b><font color='blue'>3 August 2011.</font color><b>
+<b><font color='blue'>3 August 2011.</font></b>
 <ul>
   <li><b>Superxpdude updated</b>:
   <ul>
@@ -1143,7 +1188,7 @@ start of their shift.</li>
   </ul>
 </ul>
 
-<b><font color='blue'>2 August 2011. The day the earth stood still.</font color><b>
+<b><font color='blue'>2 August 2011. The day the earth stood still.</font></b>
 <ul>
 	<li><b>Agouri updated</b>:
 	<ul>
@@ -1162,7 +1207,7 @@ start of their shift.</li>
 	</ul>
 </ul>
 
-<b><font color='blue'>30 July 2011.</font color><b>
+<b><font color='blue'>30 July 2011.</font></b>
 <ul>
   <li><b>Superxpdude Updated</b>:
   <ul>
@@ -1179,13 +1224,13 @@ start of their shift.</li>
 	</ul>
 </ul>
 
-<b><font color='blue'>29 July 2011. - Day of Forum revival!</font color><b>
+<b><font color='blue'>29 July 2011. - Day of Forum revival!</font></b>
 <ul>
 	<li><b>Doohl updated</b>:
 	<ul>
 		<li>Bugfix: Metroids should never "shut down" and just die in a corner when they begin starving. And so, hungry Metroids are a force to be feared.</li>
 		<li>The Cargo computers now have the ability to cancel pending orders to refund credits. This was put in place so that idiots couldn't waste all the cargo points and run off. However, if the shuttle is en route to the station you won't be able to cancel orders.</li>
-		<li><font color='blue'>Bugfix: the manifest has been fixed!</font color> Additionally, the manfiest is now updated realtime; job changes and new arrivals will be automatically updated into the manifest. Joy!</li>
+		<li><font color='blue'>Bugfix: the manifest has been fixed!</font> Additionally, the manfiest is now updated realtime; job changes and new arrivals will be automatically updated into the manifest. Joy!</li>
 		<li>Metroids, when wrestled off of someone's head or beaten off, now get stunned for a few seconds.</li>
 	</ul>		
 	<li><b>Agouri updated</b>:
@@ -1199,7 +1244,7 @@ start of their shift.</li>
 		<li>EVA and CMO office modified to accomodate the new suits and SSUs. Look, I'm not a competent mapper, okay? Fuck you too. A mapper is strongly recommended to rearrange my half assed shit.</li>
 		<li>Soda cans, cigarette packets, cigarettes and cigars as well as bullet casings are now considered trash and can be picked up by the trashbag. Now you can annoy the janitor even more!</li>
 		<li>Sprite credit goes to Alex Jones, his portfolio can be found here: <a href="http://bspbox.com/">http://bspbox.com</a>. Thanks a lot, bro.</li>
-		<li>With the recent forum fuss and all that, I've got a thread to specifically contain  rants and bug reports about this update. <a href="http://tgstation13.servehttp.com/phpBB3/viewtopic.php?f=3&t=5569&p=45549&sid=a4a96f5b0e896cd3e3f7c1db73f09f1b#p45549">Click me</a></li>
+		<li>With the recent forum fuss and all that, I've got a thread to specifically contain  rants and bug reports about this update. <a href="http://tgstation13.servehttp.com/phpBB3/viewtopic.php?f=3&amp;t=5569&amp;p=45549&amp;sid=a4a96f5b0e896cd3e3f7c1db73f09f1b#p45549">Click me</a></li>
 	</ul>
 	<li><b>Uhangi updated</b>:
 	<ul>
@@ -1212,7 +1257,7 @@ start of their shift.</li>
 	</ul>
 </ul>
 
-<b><font color='blue'>4 July - 28 July 2011.</font color><b>
+<b><font color='blue'>4 July - 28 July 2011.</font></b>
 <ul>
 	
 	<li><b>Trubble Bass updated</b> (committed by Superxpdude):
@@ -1230,7 +1275,7 @@ start of their shift.</li>
 	</ul>
 	<li><b>Superxpdude updated</b>:
 	<ul>
-		<li>Added in the Submachine Gun to R&D.</li>
+		<li>Added in the Submachine Gun to R&amp;D.</li>
 		<li>Syndicate agents now have Mini-Uzis.</li>
 		<li>Added an exosuit recharged to the mining station.</li>
 		<li>New labcoats for scientists, virologists, chemists, and genetecists.</li>
@@ -1295,8 +1340,8 @@ start of their shift.</li>
 	</ul>
 	<li><b>Doohl updated:</b>
 	<ul>
-		<li><font color = red>A new alien race: Metroids!</font color> They are a mostly non-sentient race of jellyfish-like organisms that float in the air and feed on the life energy of other organisms. While most Metroids have never shown signs of self-awareness, they do exhibit signs of basic logic and reasoning skills as well as very sophisticated perception. Nanotrasen has shipped two baby Metroids for the xenobiology department. They should be handled with the utmost care - they are some of the deadliest beings in the known universe!</li>
-		<li>R&D gets a new toy: the freeze gun. Despite popular belief, this will not literally freeze things!</li>
+		<li><font color = red>A new alien race: Metroids!</font> They are a mostly non-sentient race of jellyfish-like organisms that float in the air and feed on the life energy of other organisms. While most Metroids have never shown signs of self-awareness, they do exhibit signs of basic logic and reasoning skills as well as very sophisticated perception. Nanotrasen has shipped two baby Metroids for the xenobiology department. They should be handled with the utmost care - they are some of the deadliest beings in the known universe!</li>
+		<li>R&amp;D gets a new toy: the freeze gun. Despite popular belief, this will not literally freeze things!</li>
 		<li>Every single chemical reagent has been assigned a color.</li>
 		<li>You can now see beakers fill up with chemicals. You can also observe how the colors mix inside the beakers. Spray bottles also will also show the color of whatever you're spraying.</li>
 		<li>Added a timestamp to combat logs.</li>
@@ -1306,7 +1351,7 @@ start of their shift.</li>
 	</ul>
 </ul>
 
-<b><font color='blue'>4 July 2011.</font><b>
+<b><font color='blue'>4 July 2011.</font></b>
 <ul>
 	<li><b>Agouri updated:</b>
 	<ul>
@@ -1327,7 +1372,7 @@ start of their shift.</li>
 	</li>
 </ul>
 
-<b><font color='blue'>18 June 2011.</font><b>
+<b><font color='blue'>18 June 2011.</font></b>
 <ul>
 	<li><b>Agouri updated:</b>
 	<ul>
@@ -1337,7 +1382,7 @@ start of their shift.</li>
 	</li>
 </ul>
 <br>
-<b><font color='blue'>7 June 2011.</font><b>
+<b><font color='blue'>7 June 2011.</font></b>
 <ul>
 	<li><b>TLE updated:</b>
 	<ul>	
@@ -1369,7 +1414,7 @@ start of their shift.</li>
 </ul>
 <br>
 
-<b><font color='blue'>1 June 2011, Canadian Day Against Homophobia</font><b>
+<b><font color='blue'>1 June 2011, Canadian Day Against Homophobia</font></b>
 <ul>
 	<li><b>Noise updated:</b>
 	<ul>	
@@ -1402,7 +1447,7 @@ start of their shift.</li>
 	<ul>
 		<li>Added exosuit energy relay equipment. Uses area power (any power channel
 available) instead of powercell for movement and actions, recharges powercell.</li>
-		<li>Exosuits can be renamed. Command is in Permissions & Logging menu.</li>
+		<li>Exosuits can be renamed. Command is in Permissions &amp; Logging menu.</li>
 		<li>Lowered construction time for Ripley parts.</li>
 		<li>Exosuit wreckage can be salvaged for exosuit parts (torso, limbs etc).</li>
 		<li>Speed-up for mecha.</li>
@@ -1441,7 +1486,7 @@ available) instead of powercell for movement and actions, recharges powercell.</
 </ul>
 <br>
 
-<b><font color='blue'>19 May 2011</font><b>
+<b><font color='blue'>19 May 2011</font></b>
 <ul>
   <li><b>Errorage updated:</b>
     <ul>
@@ -1453,7 +1498,7 @@ available) instead of powercell for movement and actions, recharges powercell.</
         
     <li><b>NEO updated:</b>
     <ul>
-        <li><font color='red'>Armour overhaul, phase 3. See <a href="http://code.google.com/p/tgstation13/source/detail?r=1588">rev notes</a> for details.</font color></li>
+        <li><font color='red'>Armour overhaul, phase 3. See <a href="http://code.google.com/p/tgstation13/source/detail?r=1588">rev notes</a> for details.</font></li>
         <li>AI cores should now block movement.</li>
         <li>MMIs are now properly buildable with the mecha fabricator.</li>
     </ul>
@@ -1472,17 +1517,17 @@ available) instead of powercell for movement and actions, recharges powercell.</
     <ul>
         <li>New serviceborg sprite option.</li>
         <li>Map changes to robotics; removed borg fabricators and added second exosuit fabricator.</li>
-        <li><font color='red'>Cyborg parts are now built from exosuit fabricators and benefit from research.</font color></li>
+        <li><font color='red'>Cyborg parts are now built from exosuit fabricators and benefit from research.</font></li>
         <li>New exosuit fabricator and borg frame sprites.</li>
     </ul>
     </li>
 </ul>
 <br>
-<b><font color='blue'>14 May 2011, late friday 13 update.</font><b>
+<b><font color='blue'>14 May 2011, late friday 13 update.</font></b>
 <ul>
 	<li><b>K0000 updated:</b>
 	<ul>
-		<li><font color='red'>Cult updates:</font color></li>
+		<li><font color='red'>Cult updates:</font></li>
 		<li><b>New rune!</b> Stun rune. When used as rune, briefly stuns everyone around (including cultists). When imbued into a talisman, hit someone to stun and briefly mute them. Spawnable with the starter talisman.</li>
 		<li>Imbue rune doesnt disappear after succesful invocation, only the source rune.</li>
 		<li>Chaplain's bible now has 20% chance to convert a cultist (was 10%), and gives a message on success.</li>
@@ -1501,18 +1546,18 @@ available) instead of powercell for movement and actions, recharges powercell.</
 	<ul>
 		<li>Chemistry update</li>
 		<li>In containers where there isn't a perfect ratio of reagents, reactions won't consume ALL of the related reagents (so if you mix 10 anti-toxin with 20 inaprovaline, you get 10 tricordrazine and 10 inaprovaline rather then just 10 tricodrazine)</li>
-		<li><font color='red'>Catalysts</font color>: some reactions might need presence of an element, while not directly consuming it.</li>
+		<li><font color='red'>Catalysts</font>: some reactions might need presence of an element, while not directly consuming it.</li>
 		<li>Reactions changed to use catalysts: all recipes that require Universal Enzyme now require 5 units of the enzyme but the enzyme isn't consumed (So Tofu, Cheese, Moonshine, Wine, Vodka, and Kahlua recipes). 
 	</ul>
 	</li>
 	<li><b>Errorage updated:</b>
 	<ul>
-		<li><font color='red'>Smooth tables</font color>: Tables now automatically determine which direction and sprite they'll use. They will connect to any adjacent table unless there is a window between them (regular, reinforced, tinted, whichever)</li>
+		<li><font color='red'>Smooth tables</font>: Tables now automatically determine which direction and sprite they'll use. They will connect to any adjacent table unless there is a window between them (regular, reinforced, tinted, whichever)</li>
 	</ul>
 	</li>
 </ul>
 <br>
-<b><font color='blue'>7 May 2011, Mother's day?</font><b>
+<b><font color='blue'>7 May 2011, Mother's day?</font></b>
 <ul>
 	<li><b>Agouri updated:</b>
 	<ul>
@@ -1535,22 +1580,22 @@ available) instead of powercell for movement and actions, recharges powercell.</
 	</li>
 </ul>
 <br>
-<b><font color='blue'>6 May 2011, AMURRICA FUCK YEAH day</font><b>
+<b><font color='blue'>6 May 2011, AMURRICA FUCK YEAH day</font></b>
 <ul>
-	<li><b><font color='red'>DANGERCON UPDATE:</font color><font color='blue'>Agouri and Erro updated(I'm in the DangerCon team now, nyoro~n :3):</font color></b>
+	<li><b><font color='red'>DANGERCON UPDATE:</font><font color='blue'>Agouri and Erro updated(I'm in the DangerCon team now, nyoro~n :3):</font></b>
 	<ul>
 		<li>Backpacks removed from all players. It was unrealistic. You can now had to the living quarters to get one from the personal closets there.</li>
 		<li>Any firearms now send you to critical in 1-2 shots. Doctors need to get the wounded man to surgery to provide good treatment. Guide for bullet removal is up on the wiki.</li>
 		<li>Brute packs and kelotane removed altogether to encourage use of surgery for heavy injury.</li>
 		<li>Just kidding</li>
 		<li>Fireaxe cabinets and Extinguisher wall-mounted closets now added around the station, thank Nanotransen for that.</li>
-		<li>Because of Nanotransen being Nanotransen, the fire cabinets are electrically operated. AIs can lock them and you can hack them if you want the precious axe inside and it's locked. The axe itself uses an experimental two-handed system, so while it's <u><font color='red'>FUCKING ROBUST</u></font color> you need to wield it to fully unlock its capabilities. Pick up axe and click it in your hand to wield it, click it again or drop to unwield and carry it.You can also use it as a crowbar for cranking doors and firedoors open when wielded, utilising the lever on the back of the blade. And I didn't lie to you. It's fucking robust.</li>
+		<li>Because of Nanotransen being Nanotransen, the fire cabinets are electrically operated. AIs can lock them and you can hack them if you want the precious axe inside and it's locked. The axe itself uses an experimental two-handed system, so while it's <u><font color='red'>FUCKING ROBUST</u></font> you need to wield it to fully unlock its capabilities. Pick up axe and click it in your hand to wield it, click it again or drop to unwield and carry it.You can also use it as a crowbar for cranking doors and firedoors open when wielded, utilising the lever on the back of the blade. And I didn't lie to you. It's fucking robust.</li>
 		<li>Fireaxe, when wielded, fully takes up your other hand as well. You can't switch hands and the fireaxe itself is unwieldy and won't fit anywhere. 
 		<li>A fireaxe cabinet can also be smashed if you've got a strong enough object in your hand.<li>
 		<li><b>EXTINGUISHER CLOSETS</b>, made by dear Erro, can be found in abundance around the station. Click once to open them, again to retrieve the extinguisher, attack with extinguisher to place it back. Limited uses, but we've got plans for our little friend.
-		<li><font color ='blue'><u>Sprite kudos go to: Cheridan for most of them, Khodoque for the fantastic fireaxe head. I merged those two. Also thanks to matty and Arcalane for giving it a shot.</font color></u></li>
+		<li><font color ='blue'><u>Sprite kudos go to: Cheridan for most of them, Khodoque for the fantastic fireaxe head. I merged those two. Also thanks to matty and Arcalane for giving it a shot.</font></u></li>
 		<li><font size = '2'><i>Has the piano got TOO annoying? Try the fire axe...</font size></i></li>
-		<li>Oh, and tou can now construct Light floors! To do it: Use wires on glass, then metal on the produced assembly, then place it on an uncovered floor like you would when replacing broken floor tiles. To deconstruct: Crowbar on light floor, use crowbar on produced assembly to remove metal, wirecutters to seperate the wires from the glass. Sprites by delicious <font color ='blue'>Hempuli.</font color></li>
+		<li>Oh, and tou can now construct Light floors! To do it: Use wires on glass, then metal on the produced assembly, then place it on an uncovered floor like you would when replacing broken floor tiles. To deconstruct: Crowbar on light floor, use crowbar on produced assembly to remove metal, wirecutters to seperate the wires from the glass. Sprites by delicious <font color ='blue'>Hempuli.</font></li>
 		<li>Got something to bitch about? Got a bug to report? Want to create drama? Did the clown destroy your piano while you were playing an amazing space remix of the moonlight sonata? Give it <a href="http://code.google.com/p/tgstation13/source/detail?r=1543">here</a>
 
 	</ul>
@@ -1558,7 +1603,7 @@ available) instead of powercell for movement and actions, recharges powercell.</
 
 	<li><b>Rastaf.Zero updated:</b>
 	<ul>
-		<li>New uniforms added for captain and chaplain, in their respective lockers. Credits to <font color='blue'>Farart</font color>.</li>
+		<li>New uniforms added for captain and chaplain, in their respective lockers. Credits to <font color='blue'>Farart</font>.</li>
 	</ul>
 	</li>
 
@@ -1580,7 +1625,7 @@ available) instead of powercell for movement and actions, recharges powercell.</
 </ul>
 </br>
 
-<b><font color='blue'>17 April 2011, World Hemophilia Day</font><b>
+<b><font color='blue'>17 April 2011, World Hemophilia Day</font></b>
 <ul>
 	<li><b>Microwave updated:</b>
 	<ul>	
@@ -1723,7 +1768,7 @@ available) instead of powercell for movement and actions, recharges powercell.</
 </ul>
 <br>
 
-<b><font color='blue'>2 April 2011, International Children's Book Day</font><b>
+<b><font color='blue'>2 April 2011, International Children's Book Day</font></b>
 <ul>
 	<li><b>Microwave updated:</b>
 	<ul>	
@@ -1746,7 +1791,7 @@ available) instead of powercell for movement and actions, recharges powercell.</
 </ul>
 <br>
 
-<b><font color='blue'>26 March 2011</font><b>
+<b><font color='blue'>26 March 2011</font></b>
 <ul>
 	<li><b>Rastaf0 updated:</b>
 	<ul>	
@@ -1773,13 +1818,13 @@ resistance (only slight don't run into a fire).</li>
 	<li><b>ConstantA updated:</b>
 	<ul>	
 		<li>Removed redundand steps from Gygax and HONK construction.</li>
-		<li>Added some mecha equipment designs to R&D.</li>
+		<li>Added some mecha equipment designs to R&amp;D.</li>
 	</ul>
 	</li>
 </ul>
 <br>
 
-<b><font color='blue'>23 March 2011, World Meteorological Day</font><b>
+<b><font color='blue'>23 March 2011, World Meteorological Day</font></b>
 <ul>
 	<li><b>Neo updated:</b>
 	<ul>
@@ -1795,7 +1840,7 @@ resistance (only slight don't run into a fire).</li>
 		<li>Energy swords now come in blue, green, purple and red.</li>
 		<li>Cameras are now constructable and dismantlable. (Code donated by Powerful Station 13)</li>
 		<li>Updated the change network verb for AIs. (Code donated by Powerful Station 13)</li>
-		<li>Added gold, silver and diamond pickaxes to R&D which mine faster.</li>
+		<li>Added gold, silver and diamond pickaxes to R&amp;D which mine faster.</li>
 	</ul>
 	</li>
 	<li><b>Agouri updated:</b>
@@ -1859,7 +1904,7 @@ resistance (only slight don't run into a fire).</li>
 	
 <br>
 
-<b><font color='blue'>18 March 2011</font><b>
+<b><font color='blue'>18 March 2011</font></b>
 <ul>
 	<li><b>Errorage updated:</b>
 	<ul>
@@ -1891,7 +1936,7 @@ resistance (only slight don't run into a fire).</li>
 	</li>
 </ul>	
 <br>
-<b><font color='blue'>15 March 2011, International Day Against Police Brutality</font><b>
+<b><font color='blue'>15 March 2011, International Day Against Police Brutality</font></b>
 <ul>
 	<li><b>Errorage updated:</b>
 	<ul>
@@ -1910,7 +1955,7 @@ resistance (only slight don't run into a fire).</li>
 	</li>
 	<li><b>Neo updated:</b>
 	<ul>
-		<li><b>New R&D Item: The 'Bag of holding'. (Sprite by Cheridan)</b></li>
+		<li><b>New R&amp;D Item: The 'Bag of holding'. (Sprite by Cheridan)</b></li>
 		<li><b>Getting someone out of the cloner now leaves damage, which can only be fixed in the cryo tube.</b></li>
 		<li><b>New reagent: Clonexadone, for use with the cryo tube.</b></li>
 		<li><b>Fixed using syringes on plants.</b></li>
@@ -1931,7 +1976,7 @@ resistance (only slight don't run into a fire).</li>
 	</li>
 </ul>
 
-<b><font color='blue'>6 March 2011</font><b>
+<b><font color='blue'>6 March 2011</font></b>
 <ul>
 	<li><b>Neo updated:</b>
 	<ul>
@@ -1957,7 +2002,7 @@ resistance (only slight don't run into a fire).</li>
 	</li>
 </ul>
 
-<b><font color='blue'>2 March 2011, Wednesday</font><b>
+<b><font color='blue'>2 March 2011, Wednesday</font></b>
 <ul>
 	<li><b>Errorage updated:</b>
 	<ul>
@@ -1985,12 +2030,12 @@ resistance (only slight don't run into a fire).</li>
 	</li>
 	<li><b>Darem updated:</b>
 	<ul>
-		<li><b>R&D minor bugfixes.</b></li>
+		<li><b>R&amp;D minor bugfixes.</b></li>
 		<li><b>AI computer can now be deconstructed (right click and select 'accessinternals').</b></li>
-		<li><b>Server room updated, added server equipment to use with R&D.</b></li>
+		<li><b>Server room updated, added server equipment to use with R&amp;D.</b></li>
 		<li><b>Wizard and ghost teleport lists are now in alphabetical order, ghosts can now teleport to the mining station.</b></li>
 		<li><b>Rightclicking and examining a constructable frame now tells you what parts still need to be finished.</b></li>
-		<li><b>Large grenades added to R&D.</b></li>
+		<li><b>Large grenades added to R&amp;D.</b></li>
 	</ul>
 	</li>
 	<li><b>Deeyach updated:</b>
@@ -2001,16 +2046,16 @@ resistance (only slight don't run into a fire).</li>
 	</li>
 </ul>
 
-<b><font color='blue'>24 February 2011, Thursday</font><b>
+<b><font color='blue'>24 February 2011, Thursday</font></b>
 <ul>
 	<li><b>Darem updated:</b>
 	<ul>
 		<li><b>Lighting code fixed for mining and thermite.</b></li>
-		<li><b>R&D instruction manual added to the R&D lab.</b></li>
-		<li><b>Fixed R&D disk commands not working.</b></li>
+		<li><b>R&amp;D instruction manual added to the R&amp;D lab.</b></li>
+		<li><b>Fixed R&amp;D disk commands not working.</b></li>
 		<li><b>Added portable power generators which run on solid plasma.</b></li>
 		<li><b>You can now set the numer of coins to produce in the mint.</b></li>
-		<li><b>Added two more portable power generators to R&D.</b></li>
+		<li><b>Added two more portable power generators to R&amp;D.</b></li>
 	</ul>
 	</li>
 	<li><b>Deeyach updated:</b>
@@ -2025,7 +2070,7 @@ resistance (only slight don't run into a fire).</li>
 		<li><b>Stackable uranium ore added (a better sprite is needed, contributions are welcome)</b></li>
 		<li><b>Made Meteor gamemode actually do stuff</b></li>
 		<li><b>Made a bigger class of meteor</b></li>
-		<li><b>New R&D item: Advanced Energy Gun</b></li>
+		<li><b>New R&amp;D item: Advanced Energy Gun</b></li>
 		<li><b>Law priority clarified with regards to ion laws and law 0.</b></li>
 	</ul>
 	</li>
@@ -2048,7 +2093,7 @@ resistance (only slight don't run into a fire).</li>
 	</li>
 </ul>
 
-<b><font color='blue'>23 February 2011, Red Army Day</font><b>
+<b><font color='blue'>23 February 2011, Red Army Day</font></b>
 <ul>
 	<li><b>Uhangi updated:</b>
 	<ul>
@@ -2088,7 +2133,7 @@ resistance (only slight don't run into a fire).</li>
 	</li>
 </ul>
 
-<b><font color='blue'>20 February 2011, Sunday</font><b>
+<b><font color='blue'>20 February 2011, Sunday</font></b>
 <ul>
 	<li><b>Errorage updated:</b>
 	<ul>
@@ -2110,7 +2155,7 @@ resistance (only slight don't run into a fire).</li>
 	</li>
 		<li><b>Darem updated:</b>
 	<ul>
-		<li><b>Mass Spectrometer added to R&D. Load it with a syringe of blood and it will tell you the chemicals in it. Low reliability devices may yield false information.</b></li>
+		<li><b>Mass Spectrometer added to R&amp;D. Load it with a syringe of blood and it will tell you the chemicals in it. Low reliability devices may yield false information.</b></li>
 		<li><b>Not all devices have a 100% reliability now.</b></li>
 		<li><b>Miners now have access to mint foyer and loading area. Only captain has access to the vault.</b></li>
 		<li><b>More stuff can be analyzed in the destructive analyzer, protolathe can produce intelicards.</b></li>
@@ -2126,7 +2171,7 @@ resistance (only slight don't run into a fire).</li>
 	</li>
 </ul>
 
-<b><font color='blue'>18 February 2011, Friday</font><b>
+<b><font color='blue'>18 February 2011, Friday</font></b>
 <ul>
 	<li><b>Errorage updated:</b>
 	<ul>
@@ -2154,13 +2199,13 @@ resistance (only slight don't run into a fire).</li>
 	</li>
 	<li><b>Darem updates:</b>
 	<ul>
-		<li><b><font color='red'>Research and Development system is LIVE.</font> Scientists can now research new advancements in technology. Not much can be made, right now, but the system is there. Technologies are researched by shoving items into the destructive analyzer. Circuit Imprinter, Destructive Analyzer, and Protolathe are controlled from the R&D console.</font></b></li>
+		<li><b><font color='red'>Research and Development system is LIVE.</font> Scientists can now research new advancements in technology. Not much can be made, right now, but the system is there. Technologies are researched by shoving items into the destructive analyzer. Circuit Imprinter, Destructive Analyzer, and Protolathe are controlled from the R&amp;D console.</font></b></li>
 		<li><b>Autolathe, Protolathe, Destructive Analyzer, and Circuit Imprinter can now be built, taken apart, and upgraded. The basic frame for all of the above requires 5 metal.</b></li>
 	</ul>
 	</li>
 </ul>
 
-<b><font color='blue'>15 February 2011, Tuesday</font><b>
+<b><font color='blue'>15 February 2011, Tuesday</font></b>
 <ul>
 	<li><b>Rastaf0 updated:</b>
 	<ul>
@@ -2184,7 +2229,7 @@ resistance (only slight don't run into a fire).</li>
 	</li>
 </ul>
 
-<b><font color='blue'>14 February 2011, Valentine's day</font><b>
+<b><font color='blue'>14 February 2011, Valentine's day</font></b>
 <ul>
 	<li><b>Errorage updated:</b>
 	<ul>
@@ -2243,10 +2288,10 @@ resistance (only slight don't run into a fire).</li>
 <h5>06.02.2011, r979</h5>
 <ul>
 	<LI>Jesus christ it's a new map what the fuck
-	<LI>Just kidding, it's only minor changes to medbay/mechbay/cybernetics/R&D/toxins/robotics/chapel/theatre
-	<LI>Okay so there's too many changes to list completely, but basically: toxins/R&D/virology/xenobiology are south <i>through</i> medbay; robotics/cybernetics/mechbay are where toxins used to be, the theatre and chapel are above medbay.
+	<LI>Just kidding, it's only minor changes to medbay/mechbay/cybernetics/R&amp;D/toxins/robotics/chapel/theatre
+	<LI>Okay so there's too many changes to list completely, but basically: toxins/R&amp;D/virology/xenobiology are south <i>through</i> medbay; robotics/cybernetics/mechbay are where toxins used to be, the theatre and chapel are above medbay.
 	<LI>Theatre is a new place for the Clown and Mime to play, there are some costumes available, a stage and backstage, and seating for the audience.
-	<LI>R&D and Toxins have been combined together. R&D is still work in progress. You need to head south through medbay to get there.
+	<LI>R&amp;D and Toxins have been combined together. R&amp;D is still work in progress. You need to head south through medbay to get there.
 	<LI>Medbay has been re-arranged slightly. Honestly, it's nothing, I bet you won't even notice anything different. There's also a new surgery suite, complete with pre-op and post-op rooms. 
 	<LI>Virology's been rearranged, but it is mostly in the same place still.
 	<LI>Xenobiology is work in progress. [There's some fun stuff still being coded]
@@ -2409,7 +2454,7 @@ resistance (only slight don't run into a fire).</li>
 	<LI>5-unit pills now work</li>
 	<LI>APCs added and moved</li>
 	<LI>Cola machine added. Contains various flavours of soda. Also added new snacks to the now named snack machine. Water cooler added, just apply an empty glass to it</li>
-	<LI>Salt & Pepper have been added, as part of the food overhaul</li>
+	<LI>Salt &amp; Pepper have been added, as part of the food overhaul</li>
 	<LI>More bug fixes. There was a lot</li>
 </ul>
 
@@ -2453,7 +2498,7 @@ resistance (only slight don't run into a fire).</li>
 	<li>Fixed cyborgs pressing Cancel when choosing AIs.</li>
 	<li>The play MIDIs setting now carries over when ghosting.</li>
 	<li>Admins can now see if a cyborg is emagged via the player panel.</li>
-	<li><B>PAPERWORK UPDATE v1:</B> Supply crates contain manifest slips, in a later update these will be returnable for supply points.
+	<li><b>PAPERWORK UPDATE v1:</b> Supply crates contain manifest slips, in a later update these will be returnable for supply points.
 	<li>The Supply Ordering Console (Request computer in the QM lobby) can now print requisition forms for ordering crates.  In conjunction with the rubber stamps, these can be used to demonstrate proper authorisation for supply orders.</li>
 	<li>Rubber stamps now spawn for each head of staff.</li>
 	<li>The use of DNA Injectors and fueltank detonations are now admin-logged.</li>
@@ -2573,12 +2618,12 @@ resistance (only slight don't run into a fire).</li>
 	<li>A new variant freeform module has been added to the AI Upload room.</li>
 	<li>The changeling's neurotoxic dart has been made more powerful - this will likely be an optional upgrade from a set of choices, akin to wizard spells.</li>
 	<li>Some gimmick clothes moved to a different object path.</li>
-	<li><B>The chameleon jumpsuit should now be more useful - it includes job-specific jumpsuits as well as flat colours.</B></li>
+	<li><b>The chameleon jumpsuit should now be more useful - it includes job-specific jumpsuits as well as flat colours.</b></li>
 </ul>
 
 <h5>Wednesday, September 29, 15:40</h5>
 <ul>
-	<li><B>Bartender update!</b>  Bartender now has a Booze-O-Mat vending machine dispensing spirits and glasses, which he can use to mix cocktails.  Recipes for cocktails are available on the wiki.</li>
+	<li><b>Bartender update!</b>  Bartender now has a Booze-O-Mat vending machine dispensing spirits and glasses, which he can use to mix cocktails.  Recipes for cocktails are available on the wiki.</li>
 	<li>The barman also now has a shotgun hidden under a table in the bar.  He spawns with beanbag shells and blanks.  Lethal ammo is obtainable from hacked autolathes.</li>
 	<li>Dead AIs can once more be intelicarded, however in order to be restored to functionality they must be repaired using a machine in the RD office.</li>
 	<li>Silicon-based lifeforms have metal gibs and motor oil instead of blood.</li>
@@ -3162,7 +3207,7 @@ resistance (only slight don't run into a fire).</li>
 
 <h5>Friday, July 31, 2009</h5>
     <ul>
-        <li>I&#39;m really sorry everyone I just HAD to add a gib all verb.</li>
+        <li>I&amp;#39;m really sorry everyone I just HAD to add a gib all verb.</li>
         <li>Decided to add the creation of bombs to bombers list</li>
         <li>Made the new bombing list EVEN BETTER!!!</li>
         <li>Fixed a bug with admin jumping AND the traitor death message</li>
@@ -3182,10 +3227,10 @@ resistance (only slight don't run into a fire).</li>
         <li>Added in jump to key coded in a much better way than showtime originally did it.</li>
         <li>Fixed magical wind when laying pipes. They start out empty!!</li>
         <li>Made blink safer. Fixed the crew-quarters to ai sattelite teleport problem.</li>
-        <li>Forgot the message again. Added an emp spell. thanks copy&amp;paste.</li>
+        <li>Forgot the message again. Added an emp spell. thanks copy&amp;amp;paste.</li>
         <li>OH MY GOD I HAVE RUINED ASAY</li>
         <li>Added electronic items to the pipe dispenser </li>
-        <li>fixed a formatting error with the changelog (I didn&#39;t break it, it was showtime)</li>
+        <li>fixed a formatting error with the changelog (I didn&amp;#39;t break it, it was showtime)</li>
         <li>Fixed a formatting error</li>
         <li>Cleaned up sandbox object spawn code</li>
         <li>New and improved admin log so we can keep an eye on these fuckers</li>
@@ -3212,9 +3257,9 @@ resistance (only slight don't run into a fire).</li>
         turrets and added a few areas.</li>
     <li>Some stuff in here you know the usual shit. Bugfixes, formatting etc.</li>
     <li>Stunbaton nerf.</li>
-    <li>Tempban longer than 1 year -&gt; permaban.</li>
-    <li>Turfs &gt; spawnable.</li>
-    <li>Shaking someone now slowly removes paralysis, stuns and the &#39;weakened&#39; stuff.</li>
+    <li>Tempban longer than 1 year -&amp;gt; permaban.</li>
+    <li>Turfs &amp;gt; spawnable.</li>
+    <li>Shaking someone now slowly removes paralysis, stuns and the &amp;#39;weakened&amp;#39; stuff.</li>
     <li>CTF flags now check if someone has them equipped every 20 seconds, if they are 
         not then they delete themselves and respawn. </li>
     <li>Fixed the r-wall-welder-message-thing.</li>
@@ -3224,7 +3269,7 @@ resistance (only slight don't run into a fire).</li>
     <li>Instead of the red and green team its now the American and Irish teams!</li>
     <li>BACKUP BACKUP TELL ME WHAT YOU GONNA DO NOW Changed the monkey name code. Re-did 
         my antimatter engine code so it actually puts out power now</li>
-    <li>dumb as fuck change, whoever did that, it already spawn ()&#39;s inside the proc 
+    <li>dumb as fuck change, whoever did that, it already spawn ()&amp;#39;s inside the proc 
         code, whoever did that, you are a faggot and should read code before you modify 
         it</li>
     <li>Fixed a bug that gave everyone modify ticker variables you silly sausage.</li>
@@ -3314,7 +3359,7 @@ resistance (only slight don't run into a fire).</li>
 	<li>Unprison verb (again, for admins).</li>
 </ul>
 
-<h5>Wed&Thu, April 8&9, 2009</h5>
+<h5>Wed&amp;Thu, April 8&amp;9, 2009</h5>
 <ul>
   <li>Medical redone, doctors do your jobs! (Tell me what you think of this 
   compared to the old one)</li>
@@ -3322,9 +3367,9 @@ resistance (only slight don't run into a fire).</li>
   <li>Only the heads can launch the shuttle early now. Or an emag.</li>
 </ul>
 
-<h5>Mon&Tue, April 6&7, 2009</h5>
+<h5>Mon&amp;Tue, April 6&amp;7, 2009</h5>
 <ul>
-  <li>Sounds. Turn on your speakers & sound downloads.</li>
+  <li>Sounds. Turn on your speakers &amp; sound downloads.</li>
   <li>Scan something with blood on it detective.</li>
 </ul>
 
@@ -3588,7 +3633,8 @@ resistance (only slight don't run into a fire).</li>
 	<strong>Spriters:</strong> Supernorn, Haruhi, Stuntwaffle, Pantaloons, Rho, SynthOrange, I Said No<br>
 <br>
 
-<p class="lic"><a name="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img src="88x31.png" alt="Creative Commons License" /></a><br><i><font size="1">Except where otherwise noted, Goon Station 13 is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-Noncommercial-Share Alike 3.0 License</a>.<br>Rights are currently extended to <a href="http://forums.somethingawful.com/">SomethingAwful Goons</a> only.</font></i></p>
+<p class="lic"><a name="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img src="88x31.png" alt="Creative Commons License" /></a><br><i>Except where otherwise noted, Goon Station 13 is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-Noncommercial-Share Alike 3.0 License</a>.<br>Rights are currently extended to <a href="http://forums.somethingawful.com/">SomethingAwful Goons</a> only.</i></p>
+<p class="lic">Some icons by <a href="http://p.yusukekamiyamane.com/">Yusuke Kamiyamane</a>. All rights reserved. Licensed under a <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License</a>.</p>
 </td></tr></table>
 </body>
 </html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           

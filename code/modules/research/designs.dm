@@ -796,6 +796,14 @@ datum
 			req_tech = list("materials" = 4, "engineering" = 3)
 			build_path = "/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill"
 
+		mech_generator_nuclear
+			name = "Exosuit Module Design (ExoNuclear Reactor)"
+			desc = "Compact nuclear reactor module"
+			id = "mech_generator_nuclear"
+			build_type = MECHFAB
+			req_tech = list("powerstorage"= 3, "engineering" = 3, "materials" = 3)
+			build_path = "/obj/item/mecha_parts/mecha_equipment/generator/nuclear"
+
 
 ////////////////////////////////////////
 //////////Disk Construction Disks///////

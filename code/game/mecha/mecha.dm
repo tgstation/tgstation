@@ -39,16 +39,14 @@
 	var/lights = 0
 	var/lights_power = 6
 
-	//inner atmos machinery. Air tank mostly
+	//inner atmos
 	var/use_internal_tank = 0
 	var/internal_tank_valve = ONE_ATMOSPHERE
-	var/internal_tank_wire = null
-
-	var/obj/item/device/radio/radio = null
-	var/obj/machinery/atmospherics/portables_connector/connected_port = null //filling the air tanks
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
 	var/datum/gas_mixture/cabin_air
-	var/obj/machinery/portable_atmospherics/canister/cabin
+	var/obj/machinery/atmospherics/portables_connector/connected_port = null
+
+	var/obj/item/device/radio/radio = null
 
 	var/max_temperature = 2500
 	var/internal_damage_threshold = 50 //health percentage below which internal damage is possible
@@ -73,33 +71,20 @@
 /obj/mecha/New()
 	..()
 	events = new
-	radio = new(src)
-	radio.name = "[src] radio"
-	radio.icon = icon
-	radio.icon_state = icon_state
-	radio.subspace_transmission = 1
-	src.icon_state += "-open"
+	icon_state += "-open"
+	add_radio()
 	add_cabin()
 	if(!add_airtank()) //we check this here in case mecha does not have an internal tank available by default - WIP
 		removeVerb(/obj/mecha/verb/connect_to_port)
 		removeVerb(/obj/mecha/verb/toggle_internal_tank)
-	src.spark_system.set_up(2, 0, src)
-	src.spark_system.attach(src)
-	cell = new(src)
-	src.cell.charge = 15000
-	src.cell.maxcharge = 15000
-
-//misc global_iteration datums
-	pr_int_temp_processor = new /datum/global_iterator/mecha_preserve_temp(list(src))
-	pr_inertial_movement = new /datum/global_iterator/mecha_intertial_movement(null,0)
-	pr_give_air = new /datum/global_iterator/mecha_tank_give_air(list(src))
-//	pr_location_temp_check = new /datum/global_iterator/mecha_location_temp_check(list(src))
-	pr_internal_damage = new /datum/global_iterator/mecha_internal_damage(list(src),0)
-
+	spark_system.set_up(2, 0, src)
+	spark_system.attach(src)
+	add_cell()
+	add_iterators()
 	removeVerb(/obj/mecha/verb/disconnect_from_port)
 	removeVerb(/atom/movable/verb/pull)
-	src.log_message("[src.name] created.")
-	src.loc.Entered(src)
+	log_message("[src.name] created.")
+	loc.Entered(src)
 	return
 
 /obj/mecha/Del()
@@ -121,6 +106,15 @@
 	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 	return internal_tank
 
+/obj/mecha/proc/add_cell(var/obj/item/weapon/cell/C=null)
+	if(C)
+		C.forceMove(src)
+		cell = C
+		return
+	cell = new(src)
+	cell.charge = 15000
+	cell.maxcharge = 15000
+
 /obj/mecha/proc/add_cabin()
 	cabin_air = new
 	cabin_air.temperature = T20C
@@ -128,6 +122,19 @@
 	cabin_air.oxygen = O2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
 	cabin_air.nitrogen = N2STANDARD*cabin_air.volume/(R_IDEAL_GAS_EQUATION*cabin_air.temperature)
 	return cabin_air
+
+/obj/mecha/proc/add_radio()
+	radio = new(src)
+	radio.name = "[src] radio"
+	radio.icon = icon
+	radio.icon_state = icon_state
+	radio.subspace_transmission = 1
+
+/obj/mecha/proc/add_iterators()
+	pr_int_temp_processor = new /datum/global_iterator/mecha_preserve_temp(list(src))
+	pr_inertial_movement = new /datum/global_iterator/mecha_intertial_movement(null,0)
+	pr_give_air = new /datum/global_iterator/mecha_tank_give_air(list(src))
+	pr_internal_damage = new /datum/global_iterator/mecha_internal_damage(list(src),0)
 
 /obj/mecha/proc/do_after(delay as num)
 	sleep(delay)
@@ -243,19 +250,25 @@
 		user.forceMove(get_turf(src))
 		user << "You climb out from [src]"
 		return 0
-	if(!can_move)
-		return 0
 	if(connected_port)
 		if(world.time - last_message > 20)
 			src.occupant_message("Unable to move while connected to the air system port")
 			last_message = world.time
 		return 0
-	if(src.pr_inertial_movement.active())
-		return 0
 	if(state)
 		occupant_message("<font color='red'>Maintenance protocols in effect</font>")
 		return
-	if(!get_charge())
+	return domove(direction)
+
+/obj/mecha/proc/domove(direction)
+	return call((proc_res["dyndomove"]||src), "dyndomove")(direction)
+
+/obj/mecha/proc/dyndomove(direction)
+	if(!can_move)
+		return 0
+	if(src.pr_inertial_movement.active())
+		return 0
+	if(!has_charge(step_energy_drain))
 		return 0
 	var/move_result = 0
 	if(hasInternalDamage(MECHA_INT_CONTROL_LOST))
@@ -277,7 +290,6 @@
 				src.log_message("Movement control lost. Inertial movement started.")
 		if(do_after(step_in))
 			can_move = 1
-
 		return 1
 	return 0
 
@@ -518,7 +530,7 @@
 							WR.crowbar_salvage += E
 							E.forceMove(WR)
 							E.equip_ready = 1
-							E.reliability = rand(30,100)
+							E.reliability = round(rand(E.reliability/3,E.reliability))
 						else
 							E.forceMove(T)
 							E.destroy()
@@ -587,7 +599,7 @@
 
 /obj/mecha/emp_act(severity)
 	if(get_charge())
-		use_power(min(cell.charge, (cell.maxcharge/2)/severity))
+		use_power((cell.charge/2)/severity)
 		take_damage(50 / severity,"energy")
 	src.log_message("EMP detected",1)
 	check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
@@ -1157,13 +1169,13 @@
 	var/output = {"<html>
 						<head><title>[src.name] data</title>
 						<style>
-						body {color: #00ff00; background: #000000; font-family:"Courier New", Courier, monospace; font-size: 12px;}
+						body {color: #00ff00; background: #000000; font-family:"Lucida Console",monospace; font-size: 12px;}
 						hr {border: 1px solid #0f0; color: #0f0; background-color: #0f0;}
 						a {padding:2px 5px;;color:#0f0;}
 						.wr {margin-bottom: 5px;}
 						.header {cursor:pointer;}
 						.open, .closed {background: #32CD32; color:#000; padding:1px 2px;}
-						.links a {margin-bottom: 2px;}
+						.links a {margin-bottom: 2px;padding-top:3px;}
 						.visible {display: block;}
 						.hidden {display: none;}
 						</style>
@@ -1197,6 +1209,7 @@
 						</html>
 					 "}
 	return output
+
 
 /obj/mecha/proc/report_internal_damage()
 	var/output = null
@@ -1567,6 +1580,8 @@
 ///// Power stuff /////
 ///////////////////////
 
+/obj/mecha/proc/has_charge(amount)
+	return (get_charge()>=amount)
 
 /obj/mecha/proc/get_charge()
 	return call((proc_res["dyngetcharge"]||src), "dyngetcharge")()
@@ -1579,7 +1594,7 @@
 	return call((proc_res["dynusepower"]||src), "dynusepower")(amount)
 
 /obj/mecha/proc/dynusepower(amount)
-	if(get_charge()>=amount)
+	if(get_charge())
 		cell.use(amount)
 		return 1
 	return 0
@@ -1624,15 +1639,16 @@
 					cabin_air.merge(removed)
 			else if(pressure_delta < 0) //cabin pressure higher than release pressure
 				var/datum/gas_mixture/t_air = mecha.get_turf_air()
+				pressure_delta = cabin_pressure - release_pressure
 				if(t_air)
-					pressure_delta = min(cabin_pressure - t_air.return_pressure(), cabin_pressure - release_pressure)
-					if(pressure_delta > 0) //if location pressure is lower than cabin pressure
-						transfer_moles = pressure_delta*cabin_air.return_volume()/(cabin_air.return_temperature() * R_IDEAL_GAS_EQUATION)
-						var/datum/gas_mixture/removed = cabin_air.remove(transfer_moles)
+					pressure_delta = min(cabin_pressure - t_air.return_pressure(), pressure_delta)
+				if(pressure_delta > 0) //if location pressure is lower than cabin pressure
+					transfer_moles = pressure_delta*cabin_air.return_volume()/(cabin_air.return_temperature() * R_IDEAL_GAS_EQUATION)
+					var/datum/gas_mixture/removed = cabin_air.remove(transfer_moles)
+					if(t_air)
 						t_air.merge(removed)
-				else //just delete the cabin gas, we're in space or some shit
-					var/datum/gas_mixture/removed = cabin_air.remove_ratio(1)
-					del(removed)
+					else //just delete the cabin gas, we're in space or some shit
+						del(removed)
 		else
 			return stop()
 		return
@@ -1652,7 +1668,7 @@
 
 	process(var/obj/mecha/mecha)
 		if(!mecha.hasInternalDamage())
-			return src.stop()
+			return stop()
 		if(mecha.hasInternalDamage(MECHA_INT_FIRE))
 			if(!mecha.hasInternalDamage(MECHA_INT_TEMP_CONTROL) && prob(5))
 				mecha.clearInternalDamage(MECHA_INT_FIRE)

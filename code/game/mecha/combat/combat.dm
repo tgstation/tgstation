@@ -12,26 +12,6 @@
 	var/am = "d3c2fbcadca903a41161ccc9df9cf948"
 
 /*
-/obj/mecha/combat/verb/switch_weapon()
-	set category = "Exosuit Interface"
-	set name = "Switch weapon"
-	set src in view(0)
-	if(usr!=src.occupant)
-		return
-	if(state || !cell || cell.charge<=0) return
-
-	if(selected_weapon == weapon_1)
-		selected_weapon = weapon_2
-	else if(selected_weapon == weapon_2)
-		selected_weapon = weapon_1
-
-	src.occupant << "You switch to [selected_weapon.name]"
-	for (var/mob/M in oviewers(src))
-		M.show_message("[src.name] raises [selected_weapon.name]")
-	return
-*/
-
-/*
 /obj/mecha/combat/range_action(target as obj|mob|turf)
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
 		target = pick(view(3,target))
@@ -259,7 +239,7 @@
 /obj/mecha/combat/moved_inside(var/mob/living/carbon/human/H as mob)
 	if(..())
 		if(H.client)
-			H.client.mouse_pointer_icon = file("icons/misc/mecha_mouse.dmi")
+			H.client.mouse_pointer_icon = file("icons/mecha/mecha_mouse.dmi")
 		return 1
 	else
 		return 0
@@ -267,7 +247,7 @@
 /obj/mecha/combat/mmi_moved_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
 	if(..())
 		if(occupant.client)
-			occupant.client.mouse_pointer_icon = file("icons/misc/mecha_mouse.dmi")
+			occupant.client.mouse_pointer_icon = file("icons/mecha/mecha_mouse.dmi")
 		return 1
 	else
 		return 0

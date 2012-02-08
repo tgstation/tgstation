@@ -8,7 +8,7 @@
 	desc = "Remains of some unfortunate mecha. Completely unrepairable."
 	icon = 'mecha.dmi'
 	density = 1
-	anchored = 1
+	anchored = 0
 	opacity = 0
 	var/list/welder_salvage = list(/obj/item/stack/sheet/plasteel,/obj/item/stack/sheet/metal,/obj/item/stack/rods)
 	var/list/wirecutters_salvage = list(/obj/item/weapon/cable_coil)

@@ -2,7 +2,7 @@
 
 /obj/item/mecha_parts/mecha_equipment
 	name = "mecha equipment"
-	icon = 'mech_construct.dmi'
+	icon = 'mecha_equipment.dmi'
 	icon_state = "mecha_equip"
 	force = 5
 	origin_tech = "materials=2"
@@ -61,7 +61,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/critfail()
 	if(chassis)
-		chassis.log_message("Critical failure of component: [src]",1)
+		log_message("Critical failure",1)
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/get_equip_info()
@@ -80,7 +80,7 @@
 		return 0
 	if(!chassis)
 		return 0
-	if(energy_drain && chassis.get_charge() < energy_drain)
+	if(energy_drain && !chassis.has_charge(energy_drain))
 		return 0
 	if(!equip_ready)
 		return 0
@@ -107,8 +107,9 @@
 	src.update_chassis_page()
 	return
 
-/obj/item/mecha_parts/mecha_equipment/proc/detach()
-	if(src.Move(get_turf(chassis)))
+/obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto=null)
+	moveto = moveto || get_turf(chassis)
+	if(src.Move(moveto))
 		chassis.equipment -= src
 		if(chassis.selected == src)
 			chassis.selected = null
@@ -134,4 +135,9 @@
 /obj/item/mecha_parts/mecha_equipment/proc/occupant_message(message)
 	if(chassis)
 		chassis.occupant_message("\icon[src] [message]")
+	return
+
+/obj/item/mecha_parts/mecha_equipment/proc/log_message(message)
+	if(chassis)
+		chassis.log_message("<i>[src]:</i> [message]")
 	return
