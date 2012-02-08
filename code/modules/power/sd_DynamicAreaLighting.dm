@@ -446,7 +446,8 @@ atom
 			luminosity = new_luminosity
 			if(luminosity>0)
 				sd_ApplyLum()
-/*
+
+
 		sd_SetOpacity(new_opacity as num)
 			/* if(opacity != new_opacity)
 				var/list/affected = sd_StripLocalLum()
@@ -515,100 +516,6 @@ atom
 				for(A in affected)
 					ATurf = A
 					while(ATurf && !istype(ATurf)) ATurf = ATurf.loc
-					if(ATurf)
-						for(T in view(A.luminosity, ATurf) - affected[A])
-							T.sd_lumcount += (A.luminosity-get_dist(A,T))
-							//if(T.tag == "sdd")
-							//	slog << "\red lc(1)+([A.luminosity-get_dist(A,T)]) from [A] ([A.x],[A.y])"
-							//	slog << "now [T.sd_lumcount]"
-
-							T.sd_LumUpdate()
-				/*
-				for(A in spill)
-					if(A.opacity) continue
-					ATurf = A
-					while(ATurf && !istype(ATurf)) ATurf = ATurf.loc
-					if(ATurf)
-						for(T in (A==src)?spill[A]:(view(sd_light_outside, ATurf)-spill[A]))
-							if(T.loc:sd_outside) continue
-							T.sd_lumcount += (sd_light_outside-get_dist(A,T))
-							//if(T.tag == "sdd")
-							//	slog << "\red lc(O)+([sd_light_outside-get_dist(A,T)]) from [A] ([A:x],[A:y])"
-							//	slog << "now [T.sd_lumcount]"
-
-							T.sd_LumUpdate()
-
-				*/
-				// end new_opacity = 0 block
-*/
-
-
-		sd_SetOpacity(new_opacity as num)
-			/* if(opacity != new_opacity)
-				var/list/affected = sd_StripLocalLum()
-				opacity = new_opacity
-				sd_ApplyLocalLum(affected) */
-			if(opacity == (new_opacity ? 1 : 0))
-				return
-			var/list/affected = new
-					//spill
-			var/atom/A
-			var/turf/T
-			var/turf/ATurf
-
-			for(A in range(sd_top_luminosity,src))
-				if(A.luminosity) //atoms with no luminosity don't affect anything, so why should we check the fuckers?
-					T = get_turf(A)
-					if(T)
-						var/list/V = view(A.luminosity,T)
-						if(!(src in V))
-							continue
-						var/turfflag = 0
-						if(A == T)
-							turfflag = 1
-						if(get_dist(A,src)<=A.luminosity+turfflag)
-							affected[A] = V
-						//if(sd_light_outside && (A in sd_light_spill_turfs))
-						//	if(!spill) spill=new
-						//	spill[A] = view(sd_light_outside, T)
-			opacity = new_opacity
-			if(opacity)
-				for(A in affected)
-					ATurf = get_turf(A)
-					if(ATurf)
-						for(T in affected[A]-view(A.luminosity, ATurf))
-							T.sd_lumcount -= (A.luminosity-get_dist(A,T))
-
-							//if(T.tag == "sdd")
-							//	slog << "\red lc(1)-([A.luminosity-get_dist(A,T)]) from [A] ([A.x],[A.y])"
-							//	slog << "now [T.sd_lumcount]"
-
-
-							T.sd_LumUpdate()
-				/*
-				for(A in spill)
-					if(A.opacity && A!=src) continue
-					ATurf = A
-					while(ATurf && !istype(ATurf)) ATurf = ATurf.loc
-					if(ATurf)
-						//spill[A] -= view(sd_light_outside, A)
-						for(T in (A==src)?spill[A]:(spill[A]-view(sd_light_outside,ATurf)))
-							if(T.loc:sd_outside) continue
-							T.sd_lumcount -= (sd_light_outside-get_dist(A,T))
-
-							//if(T.tag == "sdd")
-							//	slog << "\red lc(O)-([sd_light_outside-get_dist(A,T)]) from [A] ([A:x],[A:y])"
-							//	slog << "now [T.sd_lumcount]"
-
-
-							T.sd_LumUpdate()
-				*/
-
-				// end new_opacity = 1 block
-
-			else
-				for(A in affected)
-					ATurf = get_turf(A)
 					if(ATurf)
 						for(T in view(A.luminosity, ATurf) - affected[A])
 							T.sd_lumcount += (A.luminosity-get_dist(A,T))
