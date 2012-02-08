@@ -145,7 +145,7 @@
 	invocation_type = "none"
 	range = 0
 	summon_type = list("/obj/effect/forcefield")
-	summon_lifespan = 100
+	summon_lifespan = 50
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
 	name = "Summon Bigger Carp"
@@ -247,7 +247,7 @@
 	desc = "This spell allows you to pass through walls"
 
 	school = "transmutation"
-	charge_max = 20
+	charge_max = 200
 	clothes_req = 0
 	invocation = "none"
 	invocation_type = "none"

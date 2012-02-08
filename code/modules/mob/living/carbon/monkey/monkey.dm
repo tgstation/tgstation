@@ -52,7 +52,7 @@
 					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
 					return
-			if(tmob.relentless)
+			if(tmob.nopush)
 				now_pushing = 0
 				return
 

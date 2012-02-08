@@ -99,7 +99,7 @@
 			hands.icon_state = "medical"
 			icon_state = "surgeon"
 			modtype = "Med"
-			relentless = 1
+			nopush = 1
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
@@ -247,7 +247,7 @@
 					now_pushing = 0
 					//unlock_medal("That's No Moon, That's A Gourmand!", 1)
 					return
-			if(tmob.relentless)
+			if(tmob.nopush)
 				now_pushing = 0
 				return
 		now_pushing = 0

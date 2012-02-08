@@ -22,7 +22,7 @@
 	max_tox = 0
 	speed = 3
 	destroyer = 1
-	relentless = 1
+	nopush = 1
 	a_intent = "harm"
 	stop_automated_movement = 1
 
@@ -76,7 +76,7 @@
 					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
 					return
-			if(tmob.relentless)
+			if(tmob.nopush)
 				now_pushing = 0
 				return
 
@@ -173,7 +173,7 @@
 					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
 					return
-			if(tmob.relentless)
+			if(tmob.nopush)
 				now_pushing = 0
 				return
 
