@@ -110,7 +110,7 @@
 				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( src.host.loc )
 				P.info = print_data
 				if(print_title)
-					P.name = "paper- '[print_title]'"
+					P.name = "paper - '[print_title]'"
 
 				src.printing = 0
 				return

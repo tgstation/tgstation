@@ -1,19 +1,22 @@
 /obj/item/wardrobe
 	name = "wardrobe"
-	desc = "Seems to have everything I need for my job in it, sweet."
+	desc = "A standard-issue bag for clothing and equipment. Usually comes sealed, stocked with everything you need for a particular job."
 	icon = 'suits.dmi'
-	icon_state = "wardrobe"
+	icon_state = "wardrobe_sealed"
 	item_state = "wardrobe"
 	w_class = 4
 	layer = 2.9
 	var
-		descriptor = "various clothing."
+		descriptor = "various clothing"
+		seal_torn = 0
 
 	attack_self(mob/user)
 		if(!contents.len)
 			user << "It's empty!"
 		else
-			user.visible_message("\blue [user] unwraps the clothing from the [src]")
+			user.visible_message("\blue [user] unwraps the clothing from the [src][seal_torn ? "" : ", tearing the seal"].")
+			seal_torn = 1
+
 			for(var/obj/item/I in src)
 				I.loc = get_turf(src)
 			update_icon()
@@ -26,8 +29,11 @@
 			if(istype(I, /obj/item/weapon/grab))
 				return
 			user.drop_item()
+
 			if(I)
-				I.loc = src.loc
+				I.loc = src
+
+			update_icon()
 		else
 			user << "\red There's not enough space to fit that!"
 		return
@@ -35,7 +41,11 @@
 	examine()
 		set src in usr
 		..()
-		usr << "It claims to contain [contents.len ? descriptor : descriptor + "... but it looks empty"]"
+		usr << "It claims to contain [contents.len ? descriptor : descriptor + "... but it looks empty"]."
+		if(seal_torn && !contents.len)
+			usr << "The seal on the bag is broken."
+		else
+			usr << "The seal on the bag is[seal_torn ? ", however, not intact" : " intact"]."
 		return
 
 	update_icon()
@@ -52,7 +62,7 @@
 
 /obj/item/wardrobe/assistant
 	name = "assistant wardrobe"
-	descriptor = "clothing for an assistant"
+	descriptor = "clothing and basic equipment for an assistant"
 
 	New()
 		..()
@@ -66,7 +76,7 @@
 
 /obj/item/wardrobe/chief_engineer
 	name = "Chief Engineer wardrobe"
-	descriptor = "clothing for a Chief Engineer"
+	descriptor = "clothing and basic equipment for a Chief Engineer"
 
 	New()
 		..()
@@ -90,7 +100,7 @@
 
 /obj/item/wardrobe/engineer
 	name = "Station Engineer wardrobe"
-	descriptor = "clothing for a Station Engineer"
+	descriptor = "clothing and basic equipment for a Station Engineer"
 
 	New()
 		..()
@@ -111,7 +121,7 @@
 
 /obj/item/wardrobe/atmos
 	name = "Atmospheric Technician wardrobe"
-	descriptor = "clothing for an Atmospheric Technician"
+	descriptor = "clothing and basic equipment for an Atmospheric Technician"
 
 	New()
 		..()
@@ -126,7 +136,7 @@
 
 /obj/item/wardrobe/roboticist
 	name = "Roboticist wardrobe"
-	descriptor = "clothing for a Roboticist"
+	descriptor = "clothing and basic equipment for a Roboticist"
 
 	New()
 		..()
@@ -143,7 +153,7 @@
 
 /obj/item/wardrobe/chaplain
 	name = "Chaplain wardrobe"
-	descriptor = "clothing for a Chaplain"
+	descriptor = "clothing and basic equipment for a Chaplain"
 
 	New()
 		..()
@@ -158,7 +168,7 @@
 
 /obj/item/wardrobe/captain
 	name = "Captain wardrobe"
-	descriptor = "clothing for a Captain"
+	descriptor = "clothing and basic equipment for a Captain"
 
 	New()
 		..()
@@ -181,7 +191,7 @@
 
 /obj/item/wardrobe/hop
 	name = "Head of Personnel wardrobe"
-	descriptor = "clothing for a Head of Personnel"
+	descriptor = "clothing and basic equipment for a Head of Personnel"
 
 	New()
 		..()
@@ -202,7 +212,7 @@
 
 /obj/item/wardrobe/cmo
 	name = "Chief Medical Officer wardrobe"
-	descriptor = "clothing for a Chief Medical Officer"
+	descriptor = "clothing and basic equipment for a Chief Medical Officer"
 
 	New()
 		..()
@@ -222,7 +232,7 @@
 
 /obj/item/wardrobe/doctor
 	name = "Medical Doctor wardrobe"
-	descriptor = "clothing for a Medical Doctor"
+	descriptor = "clothing and basic equipment for a Medical Doctor"
 
 	New()
 		..()
@@ -242,7 +252,7 @@
 
 /obj/item/wardrobe/geneticist
 	name = "Geneticist wardrobe"
-	descriptor = "clothing for a Geneticist"
+	descriptor = "clothing and basic equipment for a Geneticist"
 
 	New()
 		..()
@@ -258,7 +268,7 @@
 
 /obj/item/wardrobe/virologist
 	name = "Virologist wardrobe"
-	descriptor = "clothing for a Virologist"
+	descriptor = "clothing and basic equipment for a Virologist"
 
 	New()
 		..()
@@ -275,7 +285,7 @@
 
 /obj/item/wardrobe/rd
 	name = "Research Director wardrobe"
-	descriptor = "clothing for a Research Director"
+	descriptor = "clothing and basic equipment for a Research Director"
 
 	New()
 		..()
@@ -296,7 +306,7 @@
 
 /obj/item/wardrobe/scientist
 	name = "Scientist wardrobe"
-	descriptor = "clothing for a Scientist"
+	descriptor = "clothing and basic equipment for a Scientist"
 
 	New()
 		..()
@@ -313,7 +323,7 @@
 
 /obj/item/wardrobe/chemist
 	name = "Chemist wardrobe"
-	descriptor = "clothing for a Chemist"
+	descriptor = "clothing and basic equipment for a Chemist"
 
 	New()
 		..()
@@ -328,7 +338,7 @@
 
 /obj/item/wardrobe/hos
 	name = "Head of Security wardrobe"
-	descriptor = "clothing for a Head of Security"
+	descriptor = "clothing and basic equipment for a Head of Security"
 
 	New()
 		..()
@@ -351,7 +361,7 @@
 
 /obj/item/wardrobe/warden
 	name = "Warden wardrobe"
-	descriptor = "clothing for a Warden"
+	descriptor = "clothing and basic equipment for a Warden"
 
 	New()
 		..()
@@ -374,7 +384,7 @@
 
 /obj/item/wardrobe/detective
 	name = "Detective wardrobe"
-	descriptor = "clothing for a Detective"
+	descriptor = "clothing and basic equipment for a Detective"
 
 	New()
 		..()
@@ -396,7 +406,7 @@
 
 /obj/item/wardrobe/officer
 	name = "Security Officer wardrobe"
-	descriptor = "clothing for a Security Officer"
+	descriptor = "clothing and basic equipment for a Security Officer"
 
 	New()
 		..()
@@ -424,7 +434,7 @@
 
 /obj/item/wardrobe/bartender
 	name = "Bartender wardrobe"
-	descriptor = "clothing for a Bartender"
+	descriptor = "clothing and basic equipment for a Bartender"
 
 	New()
 		..()
@@ -442,7 +452,7 @@
 
 /obj/item/wardrobe/chef
 	name = "Chef wardrobe"
-	descriptor = "clothing for a Chef"
+	descriptor = "clothing and basic equipment for a Chef"
 
 	New()
 		..()
@@ -457,7 +467,7 @@
 
 /obj/item/wardrobe/hydro
 	name = "Botanist wardrobe"
-	descriptor = "clothing for a Botanist"
+	descriptor = "clothing and basic equipment for a Botanist"
 
 	New()
 		..()
@@ -473,7 +483,7 @@
 
 /obj/item/wardrobe/qm
 	name = "Quartermaster wardrobe"
-	descriptor = "clothing for a Quartermaster"
+	descriptor = "clothing and basic equipment for a Quartermaster"
 
 	New()
 		..()
@@ -489,7 +499,7 @@
 
 /obj/item/wardrobe/cargo_tech
 	name = "Cargo Technician wardrobe"
-	descriptor = "clothing for a Cargo Technician"
+	descriptor = "clothing and basic equipment for a Cargo Technician"
 
 	New()
 		..()
@@ -503,7 +513,7 @@
 
 /obj/item/wardrobe/mining
 	name = "Shaft Miner wardrobe"
-	descriptor = "clothing for a Shaft Miner"
+	descriptor = "clothing and basic equipment for a Shaft Miner"
 
 	New()
 		..()
@@ -523,7 +533,7 @@
 
 /obj/item/wardrobe/janitor
 	name = "Janitor wardrobe"
-	descriptor = "clothing for a Janitor"
+	descriptor = "clothing and basic equipment for a Janitor"
 
 	New()
 		..()
@@ -536,7 +546,7 @@
 
 /obj/item/wardrobe/librarian
 	name = "Librarian wardrobe"
-	descriptor = "clothing for a Librarian"
+	descriptor = "clothing and basic equipment for a Librarian"
 
 	New()
 		..()
@@ -549,7 +559,7 @@
 
 /obj/item/wardrobe/lawyer
 	name = "Lawyer wardrobe"
-	descriptor = "clothing for a Lawyer"
+	descriptor = "clothing and basic equipment for a Lawyer"
 
 	New()
 		..()
