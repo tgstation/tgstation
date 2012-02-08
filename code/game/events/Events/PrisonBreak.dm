@@ -14,7 +14,7 @@
 		for (var/obj/machinery/door/airlock/security/temp_airlock in world)
 			if(istype(get_area(temp_airlock), /area/security/brig))
 				temp_airlock.prison_open()
-		for (var/obj/machinery/door/airlock/glass_security/temp_glassairlock in world)
+		for (var/obj/machinery/door/airlock/glass/glass_security/temp_glassairlock in world)
 			if(istype(get_area(temp_glassairlock), /area/security/brig))
 				temp_glassairlock.prison_open()
 		for (var/obj/machinery/door_timer/temp_timer in world)

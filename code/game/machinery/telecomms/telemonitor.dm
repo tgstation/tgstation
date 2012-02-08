@@ -154,6 +154,11 @@
 					A.anchored = 1
 					del(src)
 		else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
+			var/obj/item/weapon/card/emag/E = D
+			if(E.uses)
+				E.uses--
+			else
+				return
 			playsound(src.loc, 'sparks4.ogg', 75, 1)
 			emagged = 1
 			user << "\blue You you disable the security protocols"
