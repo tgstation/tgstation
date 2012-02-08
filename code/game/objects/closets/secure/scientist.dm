@@ -9,3 +9,11 @@
 		new /obj/item/wardrobe/rd(src)
 		new /obj/item/wardrobe/rd(src)
 		return
+
+//cpy
+/*
+	new /obj/item/wardrobe/scientist(src)
+	new /obj/item/wardrobe/scientist(src)
+	new /obj/item/wardrobe/scientist(src)
+	new /obj/item/wardrobe/scientist(src)
+	*/

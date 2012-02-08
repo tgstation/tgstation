@@ -6,6 +6,10 @@
 	spawn(2)
 		new /obj/item/device/assembly/signaler(src)
 		new /obj/item/wardrobe/assistant(src)
+
+		var/obj/item/weapon/storage/backpack/BPK = new /obj/item/weapon/storage/backpack(src)
+		var/obj/item/weapon/storage/box/newbox = new(BPK)
+		new /obj/item/weapon/pen(newbox)
 	return
 
 /obj/structure/closet/secure_closet/personal/patient/New()
