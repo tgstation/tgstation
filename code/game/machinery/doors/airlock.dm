@@ -704,7 +704,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 				spawn(20*multiplier)
 					user << "Jacking in. Stay close to the airlock or you'll rip the cables out and we'll have to start over."
 					sleep(25*multiplier)
-					if (src.canSynControl())
+					if (src.canSynControl() && !istype(C, /obj/item/device/hacktool/engineer))
 						user << "Hack cancelled, control already possible."
 						src.synHacking=0
 						I.in_use = 0
@@ -747,7 +747,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 						src.synHacking=0
 						I.in_use = 0
 						return
-					else if (src.canSynControl())
+					else if (src.canSynControl() && !istype(C, /obj/item/device/hacktool/engineer))
 						user << "Local override already in place, hack aborted."
 						src.synHacking=0
 						I.in_use = 0
@@ -759,7 +759,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 						src.synHacking=0
 						I.in_use = 0
 						return
-					else if (src.canSynControl())
+					else if (src.canSynControl() && !istype(C, /obj/item/device/hacktool/engineer))
 						user << "Upload access aborted, local override already in place."
 						src.synHacking=0
 						I.in_use = 0
