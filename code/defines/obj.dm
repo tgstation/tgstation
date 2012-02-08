@@ -356,6 +356,10 @@
 	m_amt = 60
 	g_amt = 20
 
+/obj/item/device/hacktool/engineer
+	name = "door debugger"
+	desc = "An item of immense complexion, it appears to work by magic."
+
 /obj/item/blueprints
 	name = "station blueprints"
 	desc = "Blueprints of the station. There's stamp \"Classified\" and several coffee stains on it."
