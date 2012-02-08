@@ -4,13 +4,33 @@ DATA CARD
 ID CARD
 FINGERPRINT CARD HOLDER
 FINGERPRINT CARD
-
 */
 
+/obj/item/weapon/card
+	name = "card"
+	desc = "Does card things."
+	icon = 'card.dmi'
+	w_class = 1.0
 
+	var/list/files = list(  )
+
+/obj/item/weapon/card/emag
+	desc = "An identification card. Seems to have some funny chip on it, though."
+	name = "modified identification card"
+	icon_state = "emag"
+	item_state = "card-id"
+	origin_tech = "magnets=2;syndicate=2"
 
 
 // DATA CARDS
+/obj/item/weapon/card/data
+	name = "data disk"
+	desc = "A disk with data."
+	icon_state = "data"
+	var/function = "storage"
+	var/data = "null"
+	var/special = null
+	item_state = "card-id"
 
 /obj/item/weapon/card/data/verb/label(t as text)
 	set name = "Label Disk"
@@ -25,9 +45,58 @@ FINGERPRINT CARD
 	return
 
 
-
-
 // ID CARDS
+/obj/item/weapon/card/id
+	name = "identification card"
+	desc = "An identification card."
+	icon_state = "id"
+	item_state = "card-id"
+	var/access = list()
+	var/registered_name = null // The name registered on the card
+	var/assignment = null
+	var/obj/item/weapon/photo/PHOTO = null
+	var/over_jumpsuit = 1 // If set to 0, it won't display on top of the mob's jumpsuit
+	var/dorm = 0    // determines if this ID has claimed a dorm already
+
+/obj/item/weapon/card/id/gold
+	name = "identification card"
+	desc = "A golden identification card."
+	icon_state = "gold"
+	item_state = "gold_id"
+
+/obj/item/weapon/card/id/captains_spare
+	name = "Captain's spare ID"
+	icon_state = "gold"
+	item_state = "gold_id"
+	registered_name = "Captain"
+	assignment = "Captain"
+	New()
+		access = get_access("Captain")
+		..()
+
+/obj/item/weapon/card/id/centcom
+	name = "CentCom ID"
+	desc = "An ID straight from Cent. Com."
+	icon_state = "centcom"
+	registered_name = "Central Command"
+	assignment = "General"
+	New()
+		access = get_all_centcom_access()
+		..()
+
+/obj/item/weapon/card/id/syndicate
+	name = "agent card"
+	desc = "Shhhhh."
+	access = list(access_maint_tunnels)
+	origin_tech = "syndicate=3"
+
+/obj/item/weapon/card/id/syndicate_command
+	name = "Syndicate ID card"
+	desc = "An ID straight from the Syndicate."
+	registered_name = "Syndicate"
+	assignment = "Syndicate Overlord"
+	access = list(access_syndicate)
+
 
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
 	for(var/mob/O in viewers(user, null))
@@ -59,9 +128,9 @@ FINGERPRINT CARD
 			W.loc = src
 			//src.orient2hud(usr)
 			add_fingerprint(usr)
-			usr << "\blue You add the photo to the ID"
+			usr << "\blue You add the photo to the ID."
 		else
-			usr << "\blue There is already a photo on this ID"
+			usr << "\blue There is already a photo on this ID."
 
 			//PHOTO.loc = locate(0,0,0)
 
@@ -75,7 +144,7 @@ FINGERPRINT CARD
 		PHOTO.layer = 3
 		PHOTO = null
 	else
-		usr << "\blue There is no photo to remove"
+		usr << "\blue There is no photo to remove."
 
 
 // FINGERPRINT HOLDER
