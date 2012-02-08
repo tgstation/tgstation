@@ -1926,7 +1926,7 @@
 "aLb" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor/plating,/area/storage/emergency)
 "aLc" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = "90Curve"},/turf/simulated/floor/plating,/area/storage/emergency)
 "aLd" = (/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/power/apc{dir = 4; name = "Emergency Storage APC"; pixel_x = 27; pixel_y = 2},/turf/simulated/floor/plating,/area/storage/emergency)
-"aLe" = (/obj/effect/landmark{name = "blobstart"},/obj/item/clothing/glasses/monocle,/turf/simulated/floor/plating,/area/maintenance/port)
+"aLe" = (/obj/effect/landmark{name = "blobstart"},/obj/item/clothing/suit/ianshirt,/turf/simulated/floor/plating,/area/maintenance/port)
 "aLf" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/plating,/area/maintenance/port)
 "aLg" = (/turf/simulated/wall/r_wall,/area/storage/tools)
 "aLh" = (/obj/machinery/light/small{dir = 1},/turf/simulated/floor{icon_state = "white"},/area/storage/tools)

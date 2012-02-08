@@ -39,6 +39,12 @@
 	else
 		icon_state = "pscrubber:0"
 
+	if(holding)
+		overlays += "scrubber-open"
+
+	if(connected_port)
+		overlays += "scrubber-connector"
+
 	return
 
 /obj/machinery/portable_atmospherics/scrubber/process()

@@ -19,6 +19,12 @@
 	else
 		icon_state = "psiphon:0"
 
+	if(holding)
+		overlays += "siphon-open"
+
+	if(connected_port)
+		overlays += "siphon-connector"
+
 	return
 
 /obj/machinery/portable_atmospherics/pump/process()

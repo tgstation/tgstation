@@ -58,10 +58,10 @@
 	else
 		icon_state = "[color]"
 		if(holding)
-			overlays += image('atmos.dmi', "can-open")
+			overlays += "can-open"
 
 		if(connected_port)
-			overlays += image('atmos.dmi', "can-connector")
+			overlays += "can-connector"
 
 		var/tank_pressure = air_contents.return_pressure()
 
