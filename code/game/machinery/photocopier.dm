@@ -11,6 +11,7 @@
 	var/obj/item/weapon/paper/copy = null	//what's in the copier!
 	var/copies = 1	//how many copies to print!
 	var/toner = 30 //how much toner is left! woooooo~
+	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 
 /obj/machinery/photocopier/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
@@ -73,7 +74,7 @@ obj/machinery/photocopier/Topic(href, href_list)
 			copies--
 			updateUsrDialog()
 	if(href_list["add"])
-		if(copies < 10)
+		if(copies < maxcopies)
 			copies++
 			updateUsrDialog()
 
@@ -97,6 +98,37 @@ obj/machinery/photocopier/attackby(obj/item/O as obj, mob/user as mob)
 			updateUsrDialog()
 		else
 			user << "This cartridge is not yet ready for replacement! Use up the rest of the toner."
+
+obj/machinery/photocopier/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			del(src)
+			return
+		if(2.0)
+			if(prob(50))
+				del(src)
+			else
+				if(toner > 0)
+					new /obj/effect/decal/cleanable/oil(get_turf(src))
+					toner = 0
+			return
+		else
+			if(prob(50))
+				if(toner > 0)
+					new /obj/effect/decal/cleanable/oil(get_turf(src))
+					toner = 0
+			return
+	return
+
+obj/machinery/photocopier/blob_act()
+	if(prob(50))
+		del(src)
+		return
+	else
+		if(toner > 0)
+			new /obj/effect/decal/cleanable/oil(get_turf(src))
+			toner = 0
+		return
 
 obj/item/device/toner
 	name = "toner cartridge"
