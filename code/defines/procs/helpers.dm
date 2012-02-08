@@ -685,7 +685,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		M.real_name = newname
 		M.name = newname
 
-/proc/clname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea
+/*/proc/clname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea
 	var/randomname = pick(clown_names)
 	var/newname = input(M,"You are the clown. Would you like to change your name to something else?", "Name change",randomname)
 	var/oldname = M.real_name
@@ -725,7 +725,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(id.registered == oldname)
 			id.registered = newname
 			id.name = "[id.registered]'s ID Card ([id.assignment])"
-			break
+			break*/
 
 /proc/ionnum()
 	return "[pick("!","@","#","$","%","^","&","*")][pick(pick("!","@","#","$","%","^","&","*"))][pick(pick("!","@","#","$","%","^","&","*"))][pick(pick("!","@","#","$","%","^","&","*"))]"

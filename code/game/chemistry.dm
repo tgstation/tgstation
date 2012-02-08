@@ -194,7 +194,7 @@
 	new /obj/item/weapon/reagent_containers/glass/beaker( src )
 
 /obj/item/weapon/paper/alchemy/
-	name = "paper- 'Chemistry Information'"
+	name = "paper - 'Chemistry Information'"
 
 /obj/item/weapon/storage/trashcan
 	name = "disposal unit"
