@@ -85,28 +85,9 @@
 	name = "Master Air Control"
 
 
-/obj/machinery/computer/card
-	name = "Identification Computer"
-	desc = "You can use this to change ID's."
-	icon_state = "id"
-	circuit = "/obj/item/weapon/circuitboard/card"
-	var/obj/item/weapon/card/id/scan = null
-	var/obj/item/weapon/card/id/modify = null
-	var/authenticated = 0.0
-	var/mode = 0.0
-	var/printing = null
-	req_access = list(access_change_ids)
-
-
-/obj/machinery/computer/card/centcom
-	name = "CentCom Identification Computer"
-	circuit = "/obj/item/weapon/circuitboard/card/centcom"
-	req_access = list(access_cent_captain)
-
-
 /obj/machinery/computer/dna
 	name = "DNA operations computer"
-	desc = "A Computer used to advanced DNA stuff."
+	desc = "A computer used for advanced DNA operations."
 	icon_state = "dna"
 	var/obj/item/weapon/card/data/scan = null
 	var/obj/item/weapon/card/data/modify = null
