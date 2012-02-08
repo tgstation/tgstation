@@ -134,6 +134,19 @@
 	summon_type = list("/obj/effect/forcefield")
 	summon_lifespan = 300
 
+/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall
+	name = "Shield"
+	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire"
+
+	school = "transmutation"
+	charge_max = 300
+	clothes_req = 0
+	invocation = "none"
+	invocation_type = "none"
+	range = 0
+	summon_type = list("/obj/effect/forcefield")
+	summon_lifespan = 100
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
 	name = "Summon Bigger Carp"
 	desc = "This spell conjures an elite carp."
@@ -146,6 +159,21 @@
 	range = 1
 
 	summon_type = list("/obj/effect/critter/spesscarp/elite")
+
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/construct
+	name = "Artificer"
+	desc = "This spell conjures a construct which may be controlled by Shades"
+
+	school = "conjuration"
+	charge_max = 600
+	clothes_req = 0
+	invocation = "none"
+	invocation_type = "none"
+	range = 1
+
+	summon_type = list("/obj/structure/constructshell")
+
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature
 	name = "Summon Creature Swarm"
@@ -212,3 +240,18 @@
 	ex_heavy = -1
 	ex_light = 2
 	ex_flash = 5
+
+
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift
+	name = "Phase Shift"
+	desc = "This spell allows you to pass through walls"
+
+	school = "transmutation"
+	charge_max = 20
+	clothes_req = 0
+	invocation = "none"
+	invocation_type = "none"
+	range = -1
+	include_user = 1
+
+	jaunt_duration = 25 //in deciseconds

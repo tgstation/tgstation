@@ -782,6 +782,8 @@ var/list/sacrificed = list()
 				for(var/mob/living/carbon/C in range(7,src))
 					if (iscultist(C))
 						continue
+					if(C.mind && (C.mind.assigned_role == "Chaplain"))
+						continue
 					C.ear_deaf += 50
 					C.show_message("\red The world around you suddenly becomes quiet.", 3)
 					affected++
@@ -797,6 +799,8 @@ var/list/sacrificed = list()
 				var/affected = 0
 				for(var/mob/living/carbon/C in range(7,usr))
 					if (iscultist(C))
+						continue
+					if(C.mind && (C.mind.assigned_role == "Chaplain"))
 						continue
 					C.ear_deaf += 30
 					//talismans is weaker.
@@ -816,6 +820,8 @@ var/list/sacrificed = list()
 				for(var/mob/living/carbon/C in viewers(src))
 					if (iscultist(C))
 						continue
+					if(C.mind && (C.mind.assigned_role == "Chaplain"))
+						continue
 					C.eye_blurry += 50
 					C.eye_blind += 20
 					if(prob(5))
@@ -834,6 +840,8 @@ var/list/sacrificed = list()
 				var/affected = 0
 				for(var/mob/living/carbon/C in viewers(usr))
 					if (iscultist(C))
+						continue
+					if(C.mind && (C.mind.assigned_role == "Chaplain"))
 						continue
 					C.eye_blurry += 30
 					C.eye_blind += 10
@@ -861,6 +869,8 @@ var/list/sacrificed = list()
 			if(culcount>=3)
 				for(var/mob/living/carbon/M in viewers(usr))
 					if(iscultist(M))
+						continue
+					if(M.mind && (M.mind.assigned_role == "Chaplain"))
 						continue
 					M.take_overall_damage(51,51)
 					M << "\red Your blood boils!"
@@ -922,14 +932,18 @@ var/list/sacrificed = list()
 				del(src)
 			else                        ///When invoked as talisman, stun and mute the target mob.
 				usr.say("Dream sign ''Evil sealing talisman''!")
-				for(var/mob/O in viewers(T, null))
-					O.show_message(text("\red <B>[] invokes a talisman at []</B>", usr, T), 1)
-				flick("e_flash", T.flash)
-				if (!(T.mutations & HULK))
-					T.silent += 15
-				T.Weaken(25)
-				T.Stun(25)
-			return
+				if(T.mind && (T.mind.assigned_role == "Chaplain"))
+					for(var/mob/O in viewers(T, null))
+						O.show_message(text("\red <B>[] invokes a talisman at [], but they are unaffected!</B>", usr, T), 1)
+				else
+					for(var/mob/O in viewers(T, null))
+						O.show_message(text("\red <B>[] invokes a talisman at []</B>", usr, T), 1)
+					flick("e_flash", T.flash)
+					if (!(T.mutations & HULK))
+						T.silent += 15
+					T.Weaken(25)
+					T.Stun(25)
+				return
 
 /////////////////////////////////////////TWENTY-FIFTH RUNE
 

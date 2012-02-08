@@ -99,6 +99,7 @@
 			hands.icon_state = "medical"
 			icon_state = "surgeon"
 			modtype = "Med"
+			relentless = 1
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
