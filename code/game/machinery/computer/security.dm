@@ -221,7 +221,7 @@ What a mess.*/
 					active1 = null
 					active2 = null
 					if(check_access(scan))
-						authenticated = scan.registered
+						authenticated = scan.registered_name
 						rank = scan.assignment
 						screen = 1
 //RECORD FUNCTIONS
@@ -304,7 +304,7 @@ What a mess.*/
 					else
 						P.info += "<B>Security Record Lost!</B><BR>"
 					P.info += "</TT>"
-					P.name = "paper- 'Security Record'"
+					P.name = "paper - 'Security Record'"
 					printing = null
 //RECORD DELETE
 			if ("Delete All Records")

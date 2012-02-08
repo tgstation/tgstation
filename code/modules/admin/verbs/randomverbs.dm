@@ -536,7 +536,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	for (var/obj/machinery/computer/communications/C in machines)
 		if(! (C.stat & (BROKEN|NOPOWER) ) )
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
-			P.name = "paper- '[command_name()] Update.'"
+			P.name = "paper - '[command_name()] Update.'"
 			P.info = input
 			C.messagetitle.Add("[command_name()] Update")
 			C.messagetext.Add(P.info)

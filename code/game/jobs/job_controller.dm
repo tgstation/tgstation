@@ -250,9 +250,9 @@ var/global/datum/controller/occupations/job_master
 			else
 				C = new /obj/item/weapon/card/id(H)
 		if(C)
-			C.registered = H.real_name
+			C.registered_name = H.real_name
 			C.assignment = rank
-			C.name = "[C.registered]'s ID Card ([C.assignment])"
+			C.name = "[C.registered_name]'s ID Card ([C.assignment])"
 			C.access = get_access(C.assignment)
 			H.equip_if_possible(C, H.slot_wear_id)
 		if(!H.equip_if_possible(new /obj/item/weapon/pen(H), H.slot_r_store))
@@ -264,9 +264,9 @@ var/global/datum/controller/occupations/job_master
 			pda.ownjob = H.wear_id.assignment
 			pda.name = "PDA-[H.real_name] ([pda.ownjob])"
 
-		if(rank == "Clown")
+		/*if(rank == "Clown")
 			spawn(1)
-				clname(H)
+				clname(H)*/
 		return 1
 
 
