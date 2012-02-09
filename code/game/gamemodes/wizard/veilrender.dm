@@ -22,7 +22,7 @@
 
 
 /obj/effect/rend/New()
-	spawn(30)
+	spawn(50)
 		new /obj/machinery/singularity/narsie(get_turf(src))
 		del(src)
 		return
@@ -33,7 +33,7 @@
 	if(charged == 1)
 		new /obj/effect/rend(get_turf(usr))
 		charged = 0
-		for(var/mob/M in viewers(src, null))
+		for(var/mob/M in viewers(usr, null))
 			if ((M.client && !( M.blinded )))
 				M.show_message("\red <B>[src] hums with power as [usr] deals a blow to reality itself!</B>")
 	else

@@ -196,7 +196,7 @@
 							if ("16")
 								feedback_add_details("wizard_spell_learned","VR") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 								new /obj/item/weapon/veilrender(get_turf(usr))
-								src.temp = "Recovered from a shattered temple in what was speculated to be the ruins of an alien capital city, the blade is said to cut more than just the material. There was no trace of the blades creators, nor of any other life left on the dead planet, and what caused such an apocalypse remains a mystery."
+								src.temp = "Recovered from a shattered temple in what was speculated to be the ruins of an alien capital city, the blade is said to cut more than just the material. There was no trace of the blades creators, nor of any other life left on the dead planet, and what caused such an apocalypse remains a mystery.(Activate inhand to trigger its special ability)"
 								src.max_uses--
 			if (href_list["spell_choice"] == "17")
 				var/area/wizard_station/A = locate()
