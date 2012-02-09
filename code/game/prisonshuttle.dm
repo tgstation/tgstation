@@ -35,6 +35,11 @@ var/prison_shuttle_timeleft = 0
 
 	attackby(I as obj, user as mob)
 		if(istype(I,/obj/item/weapon/card/emag) && (!hacked))
+			var/obj/item/weapon/card/emag/E = I
+			if(E.uses)
+				E.uses--
+			else
+				return
 			hacked = 1
 			user << "\blue You disable the lock."
 		else

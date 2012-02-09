@@ -421,6 +421,11 @@
 				user << "\red Access denied."
 
 	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
+		var/obj/item/weapon/card/emag/E = W
+		if(E.uses)
+			E.uses--
+		else
+			return
 		if(!opened)//Cover is closed
 			if(locked)
 				if(prob(90))

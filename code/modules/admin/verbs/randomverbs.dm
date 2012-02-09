@@ -315,6 +315,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!record_found)//We have to pick their role if they have no record.
 		if(G_found.mind&&G_found.mind.assigned_role)//But they may have an assigned role already.
 			new_character.mind.assigned_role = G_found.mind.assigned_role//Also makes sure our MODE people are equipped right later on.
+			new_character.mind.role_alt_title = G_found.mind.role_alt_title
 		else
 			var/assigned_role = input("Please specify which job the character will be respawned as.", "Assigned role") as null|anything in get_all_jobs()
 			if(!assigned_role)	new_character.mind.assigned_role = "Assistant"//Defaults to assistant.

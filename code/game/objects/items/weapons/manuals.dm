@@ -929,7 +929,7 @@
 /obj/item/weapon/book/manual/detective
 	name = "The Film Noir: Proper Procedures for Investigations"
 	icon_state ="bookHacking"
-	author = "Nanotrasen"
+	author = "NanoTrasen"
 
 	dat = {"<html>
 <head>

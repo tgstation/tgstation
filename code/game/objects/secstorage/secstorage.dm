@@ -93,7 +93,13 @@
 
 /obj/item/weapon/secstorage/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && (src.locked == 1) && (!src.emagged))
+	if ((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && (src.locked == 1) && (!src.emagged))
+		if(istype(W, /obj/item/weapon/card/emag))
+			var/obj/item/weapon/card/emag/E = W
+			if(E.uses)
+				E.uses--
+			else
+				return
 		emagged = 1
 		src.overlays += image('storage.dmi', icon_sparking)
 		sleep(6)

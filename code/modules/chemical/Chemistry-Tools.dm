@@ -132,17 +132,27 @@
 							playsound(src.loc, 'Crowbar.ogg', 50, 1)
 							user << "\blue You remove the remote signalling device."
 							src.state = 3
-							new /obj/item/device/assembly/signaler( src.loc, 1 )
+							var/obj/item/device/assembly/signaler/S = locate() in src
+							if(S)
+								S.loc = src.loc
+							else
+								new /obj/item/device/assembly/signaler( src.loc, 1 )
 						if(isprox(W) && motion == 0)
 //							if(W:amount >= 1)
 							playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 //								W:use(1)
 							user << "\blue You attach the proximity sensor."
+							user.drop_item()
+							W.loc = src
 							motion = 1
 						if(istype(W, /obj/item/weapon/crowbar) && motion)
 							playsound(src.loc, 'Crowbar.ogg', 50, 1)
 							user << "\blue You remove the proximity sensor."
-							new /obj/item/device/assembly/prox_sensor( src.loc, 1 )
+							var/obj/item/device/assembly/prox_sensor/S = locate() in src
+							if(S)
+								S.loc = src.loc
+							else
+								new /obj/item/device/assembly/prox_sensor( src.loc, 1 )
 							motion = 0
 						if(istype(W, /obj/item/stack/sheet/glass))
 							if(W:amount >= 1)

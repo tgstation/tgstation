@@ -20,7 +20,12 @@ FINGERPRINT CARD
 	icon_state = "emag"
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
+	var/uses = 5
 
+	New()
+		..()
+		uses = rand(3,5)
+		return
 
 // DATA CARDS
 /obj/item/weapon/card/data
@@ -271,7 +276,7 @@ FINGERPRINT CARD
 		var/dat = "<B>Fingerprints on Card</B><HR>"
 		for(var/i = 1, i < (src.fingerprints.len + 1), i++)
 			var/list/L = params2list(src.fingerprints[i])
-			dat += text("[]<BR>", L[1])
+			dat += text("[]<BR>", L["1"])
 			//Foreach goto(41)
 		return dat
 	else

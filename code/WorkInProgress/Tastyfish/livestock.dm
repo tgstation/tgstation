@@ -6,9 +6,9 @@
 	speak_chance = 1
 	turns_per_move = 15
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	response_help  = "pets "
-	response_disarm = "gently pushes aside "
-	response_harm   = "kicks "
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "kicks"
 	var/max_nutrition = 100	// different animals get hungry faster, basically number of 5-second steps from full to starving (60 == 5 minutes)
 	var/nutrition_step		// cycle step in nutrition system
 	var/obj/movement_target // eating-ing target
@@ -16,6 +16,9 @@
 	New()
 		if(!nutrition)
 			nutrition = max_nutrition * 0.33 // at 1/3 nutrition
+
+		reagents = new()
+		reagents.my_atom = src
 
 	Life()
 		..()
@@ -38,12 +41,14 @@
 				if(nutrition >= max_nutrition)
 					return
 
-				if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
+				if((movement_target) && !(isturf(movement_target.loc)))
 					movement_target = null
-					stop_automated_movement = 0
+					a_intent = "help"
+					turns_per_move = initial(turns_per_move)
 				if( !movement_target || !(movement_target.loc in oview(src, 3)) )
 					movement_target = null
-					stop_automated_movement = 0
+					a_intent = "help"
+					turns_per_move = initial(turns_per_move)
 					for(var/obj/item/weapon/reagent_containers/food/snacks/S in oview(src,3))
 						if(isturf(S.loc) || ishuman(S.loc))
 							movement_target = S

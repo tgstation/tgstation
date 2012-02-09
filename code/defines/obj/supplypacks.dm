@@ -322,7 +322,7 @@
 	containertype = "/obj/structure/closet/crate"
 	containername = "Replacement lights"
 
-/*/datum/supply_packs/costume
+/datum/supply_packs/costume
 	name = "Standard Costume crate"
 	contains = list("/obj/item/weapon/storage/backpack/clown",
 					"/obj/item/clothing/shoes/clown_shoes",
@@ -340,7 +340,7 @@
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Standard Costumes"
 	access = access_theatre
-	group = "Clothing"	*/
+	group = "Clothing"
 
 /datum/supply_packs/wizard
 	name = "Wizard costume"
@@ -421,7 +421,8 @@
 					"/obj/item/weapon/reagent_containers/glass/bottle/antitoxin",
 					"/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline",
 					"/obj/item/weapon/reagent_containers/glass/bottle/stoxin",
-					"/obj/item/weapon/storage/syringes")
+					"/obj/item/weapon/storage/syringes",
+					"/obj/item/weapon/reagent_containers/glass/large")
 	cost = 10
 	containertype = "/obj/structure/closet/crate/medical"
 	containername = "Medical crate"
