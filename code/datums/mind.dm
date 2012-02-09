@@ -9,6 +9,8 @@ datum/mind
 	var/assigned_role
 	var/special_role
 
+	var/role_alt_title
+
 	var/datum/job/assigned_job
 
 	var/list/datum/objective/objectives = list()
@@ -287,6 +289,7 @@ datum/mind
 			var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in get_all_jobs()
 			if (!new_role) return
 			assigned_role = new_role
+			role_alt_title = null
 
 		else if (href_list["memory_edit"])
 			var/new_memo = input("Write new memory", "Memory", memory) as null|message
@@ -345,7 +348,7 @@ datum/mind
 						new_objective.owner = src
 						new_objective:target = new_target:mind
 						//Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
-						new_objective.explanation_text = "[objective_type] [new_target:real_name], the [new_target:mind:assigned_role=="MODE" ? (new_target:mind:special_role) : (new_target:mind:assigned_role)]."
+						new_objective.explanation_text = "[objective_type] [new_target:real_name], the [new_target:mind:assigned_role=="MODE" ? (new_target:mind:special_role) : (new_target:mind:role_alt_title ? new_target:mind:role_alt_title : new_target:mind:assigned_role)]."
 
 				if ("hijack")
 					new_objective = new /datum/objective/hijack

@@ -104,6 +104,8 @@ datum/preferences
 		job_engsec_med = 0
 		job_engsec_low = 0
 
+		list/job_alt_titles = new()		// the default name of a job like "Medical Doctor"
+
 		flavor_text = ""
 
 		// slot stuff
@@ -213,6 +215,19 @@ datum/preferences
 	proc/closesave(mob/user)
 		user << browse(null, "window=saves;size=300x640")
 
+	proc/GetAltTitle(datum/job/job)
+		return job_alt_titles.Find(job.title) > 0 \
+			? job_alt_titles[job.title] \
+			: job.title
+
+	proc/SetAltTitle(datum/job/job, new_title)
+		// remove existing entry
+		if(job_alt_titles.Find(job.title))
+			job_alt_titles -= job.title
+		// add one if it's not default
+		if(job.title != new_title)
+			job_alt_titles[job.title] = new_title
+
 	proc/SetChoices(mob/user, changedjob)
 		var/HTML = "<body>"
 		HTML += "<tt><center>"
@@ -246,14 +261,17 @@ datum/preferences
 				HTML += "<font color=orange>\[Low]</font>"
 			else
 				HTML += "<font color=red>\[NEVER]</font>"
-			HTML += "</a><br>"
+			if(job.alt_titles)
+				HTML += "</a> <a href=\"byond://?src=\ref[user];preferences=1;alt_title=1;job=\ref[job]\">\[[GetAltTitle(job)]\]</a><br>"
+			else
+				HTML += "</a><br>"
 
 		HTML += "<br>"
 		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;occ=0;job=cancel\">\[Done\]</a>"
 		HTML += "</center></tt>"
 
 		user << browse(null, "window=preferences")
-		user << browse(HTML, "window=mob_occupation;size=320x600")
+		user << browse(HTML, "window=mob_occupation;size=350x600")
 		return
 
 
@@ -377,6 +395,14 @@ datum/preferences
 					SetChoices(user)
 
 			return 1
+
+		if(link_tags["alt_title"] && link_tags["job"])
+			var/datum/job/job = locate(link_tags["job"])
+			var/choices = list(job.title) + job.alt_titles
+			var/choice = input("Pick a title for [job.title].", "Character Generation", GetAltTitle(job)) as anything in choices | null
+			if(choice)
+				SetAltTitle(job, choice)
+				SetChoices(user)
 
 		if(link_tags["real_name"])
 			var/new_name
@@ -638,6 +664,7 @@ datum/preferences
 			job_engsec_high = 0
 			job_engsec_med = 0
 			job_engsec_low = 0
+			job_alt_titles = new()
 			underwear = 1
 			be_special = 0
 			be_random_name = 0

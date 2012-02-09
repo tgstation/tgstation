@@ -72,7 +72,7 @@
 			var/datum/objective/assassinate/rev_obj = new
 			rev_obj.owner = rev_mind
 			rev_obj.target = head_mind
-			rev_obj.explanation_text = "Assassinate [head_mind.current.real_name], the [head_mind.assigned_role]."
+			rev_obj.explanation_text = "Assassinate [head_mind.current.real_name], the [head_mind.role_alt_title ? head_mind.role_alt_title : head_mind.assigned_role]."
 			rev_mind.objectives += rev_obj
 
 		equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
@@ -102,7 +102,7 @@
 		var/datum/objective/mutiny/rev_obj = new
 		rev_obj.owner = rev_mind
 		rev_obj.target = head_mind
-		rev_obj.explanation_text = "Assassinate [head_mind.current.real_name], the [head_mind.assigned_role]."
+		rev_obj.explanation_text = "Assassinate [head_mind.current.real_name], the [head_mind.role_alt_title ? head_mind.role_alt_title : head_mind.assigned_role]."
 		rev_mind.objectives += rev_obj
 
 /datum/game_mode/proc/greet_revolutionary(var/datum/mind/rev_mind, var/you_are=1)

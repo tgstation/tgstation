@@ -68,6 +68,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of security"
+	alt_titles = list("Forensic Technician")
 
 
 	equip(var/mob/living/carbon/human/H)

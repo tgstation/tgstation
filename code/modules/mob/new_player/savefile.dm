@@ -115,6 +115,8 @@ datum/preferences/proc/savefile_save(mob/user, slot)
 	F["job_engsec_med"] << src.job_engsec_med
 	F["job_engsec_low"] << src.job_engsec_low
 
+	F["job_alt_titles"] << job_alt_titles
+
 	//Body data
 	F["hair_red"] << src.r_hair
 	F["hair_green"] << src.g_hair
@@ -211,6 +213,10 @@ datum/preferences/proc/savefile_load(mob/user, slot)
 	F["job_engsec_high"] >> src.job_engsec_high
 	F["job_engsec_med"] >> src.job_engsec_med
 	F["job_engsec_low"] >> src.job_engsec_low
+
+	F["job_alt_titles"] >> job_alt_titles
+	if(!job_alt_titles)
+		job_alt_titles = new()
 
 	//NOTE: Conversion things go inside this if statement
 	//When updating the save file remember to add 1 to BOTH the savefile constants
