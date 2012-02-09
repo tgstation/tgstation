@@ -25,18 +25,19 @@
 		dat += "<A href='byond://?src=\ref[src];spell_choice=11'>Mutate</A> (60)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=12'>Ethereal Jaunt</A> (60)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=13'>Knock</A> (10)<BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=14'>Summon Guns</A> (One time use, global spell)<BR>"
 		dat += "<HR>"
 		dat += "<B>Artefacts:</B><BR>"
 		dat += "Powerful items imbued with eldritch magics. Summoning one will count towards your maximum number of spells.<BR>"
 		dat += "It is recommended that only experienced wizards attempt to wield such artefacts.<BR>"
 		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=14'>Staff of Change</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=15'>Staff of Change</A><BR>"
 		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=15'>Six Soul Stone Shards and the spell Artificer</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=16'>Six Soul Stone Shards and the spell Artificer</A><BR>"
 		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=16'>Veil Render</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=17'>Veil Render</A><BR>"
 		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=17'>Re-memorize Spells</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=18'>Re-memorize Spells</A><BR>"
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
@@ -108,14 +109,17 @@
 							usr.mind.special_verbs += /client/proc/knock
 							src.temp = "This spell opens nearby doors and does not require wizard garb."
 						if ("14")
+							src.max_uses--
+							src.temp = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill eachother. Just be careful not to get hit in the crossfire!"
+						if ("15")
 							new /obj/item/weapon/gun/energy/staff(get_turf(usr))
 							src.temp = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself"
 							src.max_uses--
-						if ("15")
+						if ("16")
 							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(usr))
 							src.temp = "Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying"
 							src.max_uses--
-						if ("16")
+						if ("17")
 							new /obj/item/weapon/veilrender(get_turf(usr))
 							src.temp = "Recovered from a shattered temple in what was speculated to be the ruins of an alien capital city, the blade is said to cut more than just the material. There was no trace of the blades creators, nor of any other life left on the dead planet, and what caused such an apocalypse remains a mystery."
 							src.max_uses--
@@ -183,22 +187,27 @@
 								usr.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/knock(usr)
 								src.temp = "This spell opens nearby doors and does not require wizard garb."
 							if ("14")
+								feedback_add_details("wizard_spell_learned","SG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+								usr.verbs += /client/proc/rightandwrong
+								src.max_uses--
+								src.temp = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill eachother. Just be careful not to get hit in the crossfire!"
+							if ("15")
 								feedback_add_details("wizard_spell_learned","ST") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 								new /obj/item/weapon/gun/energy/staff(get_turf(usr))
 								src.temp = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself"
 								src.max_uses--
-							if ("15")
+							if ("16")
 								feedback_add_details("wizard_spell_learned","SS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 								new /obj/item/weapon/storage/belt/soulstone/full(get_turf(usr))
 								usr.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct(usr)
 								src.temp = "Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. The spell Artificer allows you to create arcane machines for the captured souls to pilot."
 								src.max_uses--
-							if ("16")
+							if ("17")
 								feedback_add_details("wizard_spell_learned","VR") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 								new /obj/item/weapon/veilrender(get_turf(usr))
 								src.temp = "Recovered from a shattered temple in what was speculated to be the ruins of an alien capital city, the blade is said to cut more than just the material. There was no trace of the blades creators, nor of any other life left on the dead planet, and what caused such an apocalypse remains a mystery.(Activate inhand to trigger its special ability)"
 								src.max_uses--
-			if (href_list["spell_choice"] == "17")
+			if (href_list["spell_choice"] == "18")
 				var/area/wizard_station/A = locate()
 				if(usr in A.contents)
 					src.uses = src.max_uses
