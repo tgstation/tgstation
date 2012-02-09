@@ -6,7 +6,7 @@
 
 */
 
-var/list/DisallowedEvents = list(/datum/event/spaceninja, /datum/event/prisonbreak, /datum/event/immovablerod, /datum/event/gravitationalanomaly, /datum/event/alieninfestation)
+var/list/DisallowedEvents = list(/datum/event/spaceninja, /datum/event/prisonbreak, /datum/event/immovablerod, /datum/event/gravitationalanomaly, /datum/event/alieninfestation, /datum/event/meteorstorm)
 var/list/EventTypes = typesof(/datum/event) - /datum/event - DisallowedEvents
 var/list/OneTimeEvents = list(/datum/event/spacecarp, /datum/event/miniblob)
 var/datum/event/ActiveEvent = null
