@@ -335,7 +335,7 @@
 		jobs += "<a href='?src=\ref[src];newjobban2=Chemist_RD_CMO;jobban4=\ref[M]'>Chemist+RD+CMO</a> <br>"
 		jobs += "<a href='?src=\ref[src];newjobban2=Geneticist_RD_CMO;jobban4=\ref[M]'>Geneticist+RD+CMO</a> <br>"
 		jobs += "<a href='?src=\ref[src];newjobban2=MD_CMO;jobban4=\ref[M]'>MD+CMO</a> <br>"
-		jobs += "<a href='?src=\ref[src];newjobban2=Virologist_RD_CMO;jobban4=\ref[M]'>Virologist+RD+CMO</a> <br>"
+		/*jobs += "<a href='?src=\ref[src];newjobban2=Virologist_RD_CMO;jobban4=\ref[M]'>Virologist+RD+CMO</a> <br>"*/
 		jobs += "<a href='?src=\ref[src];newjobban2=Scientist_RD;jobban4=\ref[M]'>Scientist+RD</a> <br>"
 		jobs += "<a href='?src=\ref[src];newjobban2=AI_Cyborg;jobban4=\ref[M]'>AI+Cyborg</a> <br>"
 		jobs += "<a href='?src=\ref[src];newjobban2=Detective_HoS;jobban4=\ref[M]'>Detective+HoS</a> <br><br>"

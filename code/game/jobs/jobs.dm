@@ -22,7 +22,6 @@ var/const
 	CMO				=(1<<3)
 	DOCTOR			=(1<<4)
 	GENETICIST		=(1<<5)
-	VIROLOGIST		=(1<<6)
 
 
 	CIVILIAN	=(1<<2)
@@ -74,8 +73,7 @@ var/list/engineering_positions = list(
 var/list/medical_positions = list(
 	"Chief Medical Officer",
 	"Medical Doctor",
-	"Geneticist",
-	"Virologist"
+	"Geneticist"
 )
 
 

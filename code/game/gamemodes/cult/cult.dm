@@ -108,7 +108,7 @@
 				explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
 			if("sacrifice")
 				if(sacrifice_target && sacrifice_target.current)
-					explanation = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell blood join) and three acolytes to do so."
+					explanation = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.role_alt_title ? sacrifice_target.role_alt_title : sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell blood join) and three acolytes to do so."
 				else
 					explanation = "Free objective."
 			if("eldergod")
@@ -307,9 +307,9 @@
 					explanation = "Free objective"
 				else
 					if(sacrificed.Find(sacrifice_target))
-						explanation = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. \green <b>Success!</b>"
+						explanation = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.role_alt_title ? sacrifice_target.role_alt_title : sacrifice_target.assigned_role]. \green <b>Success!</b>"
 					else if(sacrifice_target && sacrifice_target.current)
-						explanation = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. \red Failed."
+						explanation = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.role_alt_title ? sacrifice_target.role_alt_title : sacrifice_target.assigned_role]. \red Failed."
 					else
 						explanation = "Sacrifice Unknown, the Unknown whos body was likely gibbed. \red Failed."
 			if("eldergod")

@@ -189,7 +189,7 @@ Pod/Blast Doors computer
 				L.fields["sex"] = H.gender
 				L.fields["age"] = H.age
 				L.fields["id"] = md5("[H.real_name][H.mind.assigned_role]")
-				L.fields["rank"] = H.mind.assigned_role
+				L.fields["rank"] = H.mind.role_alt_title ? H.mind.role_alt_title : H.mind.assigned_role
 				L.fields["b_type"] = H.dna.b_type
 				L.fields["b_dna"] = H.dna.unique_enzymes
 				L.fields["enzymes"] = H.dna.struc_enzymes
@@ -266,7 +266,7 @@ Pod/Blast Doors computer
 		L.fields["sex"] = H.gender
 		L.fields["age"] = H.age
 		L.fields["id"] = md5("[H.real_name][H.mind.assigned_role]")
-		L.fields["rank"] = H.mind.assigned_role
+		L.fields["rank"] = H.mind.role_alt_title ? H.mind.role_alt_title : H.mind.assigned_role
 		L.fields["b_type"] = H.dna.b_type
 		L.fields["b_dna"] = H.dna.unique_enzymes
 		L.fields["enzymes"] = H.dna.struc_enzymes

@@ -22,5 +22,8 @@
 	//Supervisors, who this person answers to directly
 	var/supervisors = ""
 
+	//List of alternate titles, if any
+	var/list/alt_titles
+
 /datum/job/proc/equip(var/mob/living/carbon/human/H)
 	return 1

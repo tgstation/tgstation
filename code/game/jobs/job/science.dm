@@ -28,6 +28,7 @@
 	total_positions = 5
 	spawn_positions = 3
 	supervisors = "the research director"
+	alt_titles = list("Plasma Researcher", "Xenobiologist")
 
 
 	equip(var/mob/living/carbon/human/H)
