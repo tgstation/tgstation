@@ -154,7 +154,7 @@
 				playsound(loc, 'Screwdriver.ogg', 50, 1)
 				user << "\blue You connect the monitor."
 				new /mob/living/silicon/ai ( loc, laws, brain )
-				feedback_inc("ais_created",1)
+				feedback_inc("cyborg_ais_created",1)
 				del(src)
 
 /obj/structure/AIcore/deactivated

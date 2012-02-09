@@ -71,7 +71,7 @@
 			hands.icon_state = "standard"
 			icon_state = "robot"
 			modtype = "Stand"
-			feedback_inc("standard_cyborgs",1)
+			feedback_inc("cyborg_standard",1)
 
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
@@ -88,14 +88,14 @@
 			else
 				icon_state = "Service2"
 			modtype = "Butler"
-			feedback_inc("service_cyborgs",1)
+			feedback_inc("cyborg_service",1)
 
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
 			icon_state = "Miner"
 			modtype = "Miner"
-			feedback_inc("miner_cyborgs",1)
+			feedback_inc("cyborg_miner",1)
 
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
@@ -103,28 +103,28 @@
 			icon_state = "surgeon"
 			modtype = "Med"
 			nopush = 1
-			feedback_inc("medical_cyborgs",1)
+			feedback_inc("cyborg_medical",1)
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"
 			icon_state = "bloodhound"
 			modtype = "Sec"
-			feedback_inc("security_cyborgs",1)
+			feedback_inc("cyborg_security",1)
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			hands.icon_state = "engineer"
 			icon_state = "landmate"
 			modtype = "Eng"
-			feedback_inc("engineering_cyborgs",1)
+			feedback_inc("cyborg_engineering",1)
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
 			hands.icon_state = "janitor"
 			icon_state = "mopgearrex"
 			modtype = "Jan"
-			feedback_inc("janitor_cyborgs",1)
+			feedback_inc("cyborg_janitor",1)
 
 	overlays -= "eyes" //Takes off the eyes that it started with
 	updateicon()

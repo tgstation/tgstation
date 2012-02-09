@@ -207,7 +207,7 @@
 			W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 			O.mmi = W
 
-			feedback_inc("cyborgs_created",1)
+			feedback_inc("cyborg_birth",1)
 
 			del(src)
 		else
