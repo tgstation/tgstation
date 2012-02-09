@@ -50,6 +50,11 @@
 
 /obj/machinery/gibber/attackby(obj/item/weapon/grab/G as obj, mob/user as mob)
 	if(istype(G,/obj/item/weapon/card/emag))
+		var/obj/item/weapon/card/emag/E = G
+		if(E.uses)
+			E.uses--
+		else
+			return
 		user.visible_message( \
 			"\red [user] swipes a strange card through \the [src]'s control panel!", \
 			"\red You swipe a strange card through \the [src]'s control panel!", \

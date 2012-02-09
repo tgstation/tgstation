@@ -38,6 +38,12 @@
 		user << "\red It appears to be broken."
 		return
 	else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
+		if(istype(W, /obj/item/weapon/card/emag))
+			var/obj/item/weapon/card/emag/E = W
+			if(E.uses)
+				E.uses--
+			else
+				return
 		broken = 1
 		locked = 0
 		desc = "It appears to be broken."

@@ -39,6 +39,11 @@
 		..()
 		if(istype(I,/obj/item/weapon/card/emag))
 			if(network)
+				var/obj/item/weapon/card/emag/E = I
+				if(E.uses)
+					E.uses--
+				else
+					return
 				authorised = 1
 				user << "\blue You authorised the circuit network!"
 				updateDialog()
@@ -103,6 +108,11 @@
 					authorised = 1
 			if(istype(I,/obj/item/weapon/card/emag))
 				if(network)
+					var/obj/item/weapon/card/emag/E = I
+					if(E.uses)
+						E.uses--
+					else
+						return
 					authorised = 1
 					usr << "\blue You authorised the circuit network!"
 					updateDialog()

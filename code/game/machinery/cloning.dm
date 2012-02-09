@@ -653,6 +653,11 @@
 	else if (istype(W, /obj/item/weapon/card/emag))
 		if (isnull(src.occupant))
 			return
+		var/obj/item/weapon/card/emag/E = W
+		if(E.uses)
+			E.uses--
+		else
+			return
 		user << "You force an emergency ejection."
 		src.locked = 0
 		src.go_out()

@@ -202,6 +202,11 @@
 
 /obj/machinery/computer/arcade/attackby(I as obj, user as mob)
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
+		var/obj/item/weapon/card/emag/E = I
+		if(E.uses)
+			E.uses--
+		else
+			return
 		temp = "If you die in the game, you die for real!"
 		player_hp = 30
 		player_mp = 10

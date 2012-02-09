@@ -48,6 +48,11 @@
 		user << "\red It appears to be broken."
 		return
 	else if(istype(W, /obj/item/weapon/card/emag) && !src.broken)
+		var/obj/item/weapon/card/emag/E = W
+		if(E.uses)
+			E.uses--
+		else
+			return
 		src.broken = 1
 		src.locked = 0
 		src.icon_state = src.icon_broken

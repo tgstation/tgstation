@@ -121,6 +121,12 @@
 		//don't care who they are or what they have, act as if they're NOTHING
 		user = null
 	if (src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
+		if(istype(I, /obj/item/weapon/card/emag))
+			var/obj/item/weapon/card/emag/E = I
+			if(E.uses)
+				E.uses--
+			else
+				return
 		src.operating = -1
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
