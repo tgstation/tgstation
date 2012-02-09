@@ -5,13 +5,18 @@
 	desc = "A sink used for washing one's hands and face."
 	anchored = 1
 	var/busy = 0 	//Something's being washed at the moment
+	var/mode = 0	//0 == fill, 1 == pour
 
+
+	New()
+		..()
+		verbs += /obj/machinery/sink/proc/mode_pour
 
 	attack_hand(mob/M as mob)
 		if(busy)
 			M << "\red Someone's already washing something here."
 			return
-		usr << "\blue You start washing up."
+		M << "\blue You start washing up."
 
 		busy = 1
 		if(do_after(M,40))
@@ -43,6 +48,25 @@
 				V.show_message(text("\blue [M] washes up using \the [src]."))
 		busy = 0
 
+	proc/mode_pour()
+		set name = "Mode -> Pour"
+		set category = "Object"
+		set src in oview(1)
+
+		mode = 1
+		verbs -= /obj/machinery/sink/proc/mode_pour
+		verbs += /obj/machinery/sink/proc/mode_fill
+		usr << "You will now pour reagents down \the [src]."
+
+	proc/mode_fill()
+		set name = "Mode -> Fill"
+		set category = "Object"
+		set src in oview(1)
+
+		mode = 0
+		verbs -= /obj/machinery/sink/proc/mode_fill
+		verbs += /obj/machinery/sink/proc/mode_pour
+		usr << "You will now fill your container from the faucet."
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if(busy)
@@ -50,15 +74,26 @@
 			return
 
 		if (istype(O, /obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/food/drinks))
-			if(O.reagents.total_volume < O.reagents.maximum_volume)
-				O:reagents.add_reagent("water", 10)
-				user.visible_message( \
-					"\blue [user] fills the [O] using the [src].", \
-					"\blue You fill the [O] using the [src].")
+			if(!mode)
+				// fill
+				if(O.reagents.total_volume < O.reagents.maximum_volume)
+					O:reagents.add_reagent("water", 10)
+					user.visible_message( \
+						"\blue [user] fills the [O] using the [src].", \
+						"\blue You fill the [O] using the [src].")
+				else
+					user.visible_message( \
+						"\blue [user] spills water out of the overflowing [O] into the [src].", \
+						"\blue You spill water out of the overflowing [O] into the [src].")
 			else
-				user.visible_message( \
-					"\blue [user] spills water out of the overflowing [O] into the [src].", \
-					"\blue You spill water out of the overflowing [O] into the [src].")
+				// pour
+				if(O.reagents.total_volume > 0)
+					O.reagents.clear_reagents()
+					user.visible_message( \
+						"\blue [user] pours the contents of \the [O] into \the [src].", \
+						"\blue You pour the contents of \the [O] into \the [src].")
+				else
+					user << "\The [O] is empty."
 			return
 		else if (istype(O, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = O

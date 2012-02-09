@@ -253,9 +253,9 @@
 			src << alert("[rank] is not available. Please try another.")
 			return 0
 
+		job_master.AssignRole(src, rank, 1)
 		var/mob/living/carbon/human/character = create_character()
 		var/icon/char_icon = getFlatIcon(character,0)//We're creating out own cache so it's not needed.
-		job_master.AssignRole(character, rank, 1)
 		job_master.EquipRank(character, rank, 1)
 		EquipCustomItems(character)
 		character.loc = pick(latejoin)
@@ -327,7 +327,7 @@
 			L.fields["sex"] = H.gender
 			L.fields["age"] = H.age
 			L.fields["id"] = md5("[H.real_name][H.mind.assigned_role]")
-			L.fields["rank"] = H.mind.assigned_role
+			L.fields["rank"] = H.mind.role_alt_title ? H.mind.role_alt_title : H.mind.assigned_role
 			L.fields["b_type"] = H.dna.b_type
 			L.fields["b_dna"] = H.dna.unique_enzymes
 			L.fields["enzymes"] = H.dna.struc_enzymes

@@ -84,7 +84,7 @@
 	var/list/heard_b = list() // didn't understand us
 
 	for (var/mob/M in listening)
-		if (M.say_understands(src))
+		if ( M.say_understands(src) && (M.taj_talk_understand || !is_speaking_taj)  )
 			heard_a += M
 		else
 			heard_b += M
@@ -93,9 +93,9 @@
 
 	for (var/mob/M in watching)
 		if ( (M.say_understands(src) && !is_speaking_taj) || istype(M,/mob/living/carbon/human/tajaran) )
-			rendered = "<span class='game say'><span class='name'>[src.name]</span> whispers something.</span>"
+			rendered = "<span class='game say'><span class='name'>[src.name]</span> [is_speaking_taj ? "quietly mrowls" : "whispers"] something.</span>"
 		else
-			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> whispers something.</span>"
+			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> [is_speaking_taj ? "quietly mrowls" : "whispers"] something.</span>"
 		M.show_message(rendered, 2)
 
 	if (length(heard_a))
@@ -105,14 +105,14 @@
 			message_a = "<i>[message_a]</i>"
 		//This appears copied from carbon/living say.dm so the istype check for mob is probably not needed. Appending for src is also not needed as the game will check that automatically.
 		if (!istype(src, /mob/living/carbon/human))
-			rendered = "<span class='game say'><span class='name'>[name]</span> whispers, <span class='message'>\"[message_a]\"</span></span>"
+			rendered = "<span class='game say'><span class='name'>[name]</span> [is_speaking_taj ? "mrowls quietly" : "whispers"], <span class='message'>\"[message_a]\"</span></span>"
 		else if (istype(wear_mask, /obj/item/clothing/mask/gas/voice))
 			if (wear_mask:vchange)
-				rendered = "<span class='game say'><span class='name'>[wear_mask:voice]</span> whispers, <span class='message'>\"[message_a]\"</span></span>"
+				rendered = "<span class='game say'><span class='name'>[wear_mask:voice]</span> [is_speaking_taj ? "mrowls quietly" : "whispers"], <span class='message'>\"[message_a]\"</span></span>"
 			else
-				rendered = "<span class='game say'><span class='name'>[name]</span> whispers, <span class='message'>\"[message_a]\"</span></span>"
+				rendered = "<span class='game say'><span class='name'>[name]</span> [is_speaking_taj ? "mrowls quietly" : "whispers"], <span class='message'>\"[message_a]\"</span></span>"
 		else
-			rendered = "<span class='game say'><span class='name'>[real_name]</span>[alt_name] whispers, <span class='message'>\"[message_a]\"</span></span>"
+			rendered = "<span class='game say'><span class='name'>[real_name]</span>[alt_name] [is_speaking_taj ? "mrowls quietly" : "whispers"], <span class='message'>\"[message_a]\"</span></span>"
 
 		for (var/mob/M in heard_a)
 			M.show_message(rendered, 2)
@@ -120,49 +120,45 @@
 	if (length(heard_b))
 		var/message_b
 
-		if (src.voice_message)
-			message_b = src.voice_message
-		else
-			message_b = stars(message)
+		message_b = tajspeak(message)
 
 		if (italics)
 			message_b = "<i>[message_b]</i>"
 
-		rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> whispers, <span class='message'>\"[message_b]\"</span></span>"
+		rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> mrows quietly, <span class='message'>\"[message_b]\"</span></span>"
 
 		for (var/mob/M in heard_b)
 			M.show_message(rendered, 2)
 
 	for (var/mob/M in eavesdropping)
 		if (M.say_understands(src))
-			var/message_c
-			message_c = stars(message)
+			var/message_c = tajspeak(message)
 			if (!istype(src, /mob/living/carbon/human))
-				rendered = "<span class='game say'><span class='name'>[name]</span> whispers, <span class='message'>\"[message_c]\"</span></span>"
+				rendered = "<span class='game say'><span class='name'>[name]</span> mrowls quietly, <span class='message'>\"[message_c]\"</span></span>"
 			else if(istype(wear_mask, /obj/item/clothing/mask/gas/voice))
 				if(wear_mask:vchange)
-					rendered = "<span class='game say'><span class='name'>[wear_mask:voice]</span> whispers, <span class='message'>\"[message_c]\"</span></span>"
+					rendered = "<span class='game say'><span class='name'>[wear_mask:voice]</span> mrowls quietly, <span class='message'>\"[message_c]\"</span></span>"
 				else
-					rendered = "<span class='game say'><span class='name'>[name]</span> whispers, <span class='message'>\"[message_c]\"</span></span>"
+					rendered = "<span class='game say'><span class='name'>[name]</span> mrowls quietly, <span class='message'>\"[message_c]\"</span></span>"
 			else
-				rendered = "<span class='game say'><span class='name'>[real_name]</span>[alt_name] whispers, <span class='message'>\"[message_c]\"</span></span>"
+				rendered = "<span class='game say'><span class='name'>[real_name]</span>[alt_name] mrowls quietly, <span class='message'>\"[message_c]\"</span></span>"
 			M.show_message(rendered, 2)
 		else
-			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> whispers something.</span>"
+			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> quietly mrowls something.</span>"
 			M.show_message(rendered, 2)
 
 	if (italics)
 		message = "<i>[message]</i>"
 
 	if (!istype(src, /mob/living/carbon/human))
-		rendered = "<span class='game say'><span class='name'>[name]</span> whispers, <span class='message'>\"[message]\"</span></span>"
+		rendered = "<span class='game say'><span class='name'>[name]</span> [is_speaking_taj ? "mrowls quietly" : "whispers"], <span class='message'>\"[message]\"</span></span>"
 	else if (istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
 		if(wear_mask:vchange)
-			rendered = "<span class='game say'><span class='name'>[wear_mask:voice]</span> whispers, <span class='message'>\"[message]\"</span></span>"
+			rendered = "<span class='game say'><span class='name'>[wear_mask:voice]</span> [is_speaking_taj ? "mrowls quietly" : "whispers"], <span class='message'>\"[message]\"</span></span>"
 		else
-			rendered = "<span class='game say'><span class='name'>[name]</span> whispers, <span class='message'>\"[message]\"</span></span>"
+			rendered = "<span class='game say'><span class='name'>[name]</span> [is_speaking_taj ? "mrowls quietly" : "whispers"], <span class='message'>\"[message]\"</span></span>"
 	else
-		rendered = "<span class='game say'><span class='name'>[real_name]</span>[alt_name] whispers, <span class='message'>\"[message]\"</span></span>"
+		rendered = "<span class='game say'><span class='name'>[real_name]</span>[alt_name] [is_speaking_taj ? "mrowls quietly" : "whispers"], <span class='message'>\"[message]\"</span></span>"
 
 	for (var/mob/M in world)
 		if (istype(M, /mob/new_player))
