@@ -4361,7 +4361,7 @@
 "bFS" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 1; on = 1; scrub_N2O = 0; scrub_Toxins = 0},/turf/simulated/floor,/area/hallway/primary/aft)
 "bFT" = (/turf/simulated/floor{icon_state = "caution"; dir = 4},/area/hallway/primary/aft)
 "bFU" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/obj/structure/grille,/turf/simulated/floor/plating,/area/atmos)
-"bFV" = (/obj/machinery/vending/atmospherics{pixel_x = -1},/turf/simulated/floor,/area/atmos)
+"bFV" = (/obj/machinery/dispenser{pixel_x = -1},/turf/simulated/floor,/area/atmos)
 "bFW" = (/obj/machinery/door/poddoor{density = 0; icon_state = "pdoor0"; id = "atmos"; name = "Airlock Window Shield"; opacity = 0},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/door/airlock/atmos{name = "Atmospherics"; req_access_txt = "24"},/turf/simulated/floor,/area/atmos)
 "bFX" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = "90Curve"},/obj/structure/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/turf/simulated/floor,/area/atmos)
 "bFY" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_y = 0; tag = "Streight"},/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor,/area/atmos)
