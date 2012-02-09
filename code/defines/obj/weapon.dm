@@ -748,6 +748,11 @@
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS
 
+/obj/item/weapon/caution/cone
+	desc = "This cone is trying to warn you of something!"
+	name = "warning cone"
+	icon_state = "cone"
+
 
 /obj/item/weapon/paper
 	name = "Paper"

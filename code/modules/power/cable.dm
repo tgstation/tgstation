@@ -126,6 +126,10 @@
 
 	if(istype(W, /obj/item/weapon/wirecutters))
 
+		if(power_switch)
+			user << "\red This piece of cable is tied to a power switch. Flip the switch to remove it."
+			return
+
 		if (shock(user, 50))
 			return
 

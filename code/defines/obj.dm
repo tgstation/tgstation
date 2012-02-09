@@ -461,6 +461,7 @@
 	var/d2 = 1
 	layer = 2.5
 	var/color="red"
+	var/obj/structure/powerswitch/power_switch
 
 /obj/structure/cable/yellow
 	color="yellow"
@@ -897,6 +898,7 @@
 			if(Flush <= 0)
 				reagents.clear_reagents()
 				Flush = 30
+
 
 
 
