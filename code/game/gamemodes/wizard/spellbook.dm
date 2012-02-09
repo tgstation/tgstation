@@ -34,7 +34,9 @@
 		dat += "<HR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=15'>Six Soul Stone Shards and the spell Artificer</A><BR>"
 		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=16'>Re-memorize Spells</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=16'>Veil Render</A><BR>"
+		dat += "<HR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=17'>Re-memorize Spells</A><BR>"
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
@@ -113,6 +115,10 @@
 							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(usr))
 							src.temp = "Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying"
 							src.max_uses--
+						if ("16")
+							new /obj/item/weapon/veilrender(get_turf(usr))
+							src.temp = "Recovered from a shattered temple in what was speculated to be the ruins of an alien capital city, the blade is said to cut more than just the material. There was no trace of the blades creators, nor of any other life left on the dead planet, and what caused such an apocalypse remains a mystery."
+							src.max_uses--
 				else if(spell_type == "object")
 					var/list/available_spells = list("Magic Missile","Fireball","Disintegrate","Disable Tech","Smoke","Blind","Mind Transfer","Forcewall","Blink","Teleport","Mutate","Ethereal Jaunt","Knock")
 					var/already_knows = 0
@@ -187,7 +193,12 @@
 								usr.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct(usr)
 								src.temp = "Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. The spell Artificer allows you to create arcane machines for the captured souls to pilot."
 								src.max_uses--
-			if (href_list["spell_choice"] == "16")
+							if ("16")
+								feedback_add_details("wizard_spell_learned","VR") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+								new /obj/item/weapon/veilrender(get_turf(usr))
+								src.temp = "Recovered from a shattered temple in what was speculated to be the ruins of an alien capital city, the blade is said to cut more than just the material. There was no trace of the blades creators, nor of any other life left on the dead planet, and what caused such an apocalypse remains a mystery."
+								src.max_uses--
+			if (href_list["spell_choice"] == "17")
 				var/area/wizard_station/A = locate()
 				if(usr in A.contents)
 					src.uses = src.max_uses
