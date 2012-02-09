@@ -45,9 +45,7 @@ var/global/datum/controller/occupations/job_master
 
 
 	proc/GetAltTitle(mob/new_player/player, rank)
-		. = player.preferences.GetAltTitle(GetJob(rank))
-		world << "AT: [rank]: [.]"
-		return .
+		return player.preferences.GetAltTitle(GetJob(rank))
 
 
 	proc/AssignRole(var/mob/new_player/player, var/rank, var/latejoin = 0)
