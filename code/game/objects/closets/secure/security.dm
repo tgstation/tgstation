@@ -6,10 +6,18 @@
 	New()
 		..()
 		sleep(2)
+		new /obj/item/wardrobe/captain(src)
+		//
+		new /obj/item/device/pda/captain(src)
+		new /obj/item/weapon/storage/id_kit(src)
+		new /obj/item/weapon/reagent_containers/food/drinks/flask(src)
+		new /obj/item/weapon/gun/energy/gun(src)
+		new /obj/item/clothing/glasses/sunglasses(src)
+		new /obj/item/clothing/suit/armor/vest(src)
+		new /obj/item/clothing/head/helmet/swat(src)
+		new /obj/item/device/radio/headset/heads/captain(src)
 		new /obj/item/clothing/suit/armor/captain(src)
 		new /obj/item/clothing/head/helmet/cap(src)
-		new /obj/item/wardrobe/captain(src)
-		new /obj/item/wardrobe/captain(src)
 		return
 
 
@@ -23,7 +31,16 @@
 		..()
 		sleep(2)
 		new /obj/item/wardrobe/hop(src)
-		new /obj/item/wardrobe/hop(src)
+		//
+		var/obj/item/weapon/storage/backpack/BPK = new /obj/item/weapon/storage/backpack(src)
+		var/obj/item/weapon/storage/box/B = new(BPK)
+		new /obj/item/weapon/pen(B)
+		new /obj/item/device/flash(B)
+		new /obj/item/device/pda/heads/hop(src)
+		new /obj/item/weapon/storage/id_kit(src)
+		new /obj/item/weapon/gun/energy/gun(src)
+		new /obj/item/clothing/glasses/sunglasses(src)
+		new /obj/item/device/radio/headset/heads/hop(src)
 		return
 
 
@@ -32,52 +49,70 @@
 	name = "Head Of Security"
 	req_access = list(access_hos)
 
-
 	New()
 		..()
 		sleep(2)
+		new /obj/item/wardrobe/hos(src)
+		//
+		var/obj/item/weapon/storage/backpack/security/BPK = new /obj/item/weapon/storage/backpack/security(src)
+		var/obj/item/weapon/storage/box/B = new(BPK)
+		new /obj/item/weapon/pen(B)
+		new /obj/item/device/flash(B)
+		new /obj/item/weapon/melee/baton(src)
+		new /obj/item/weapon/gun/energy/gun(src)
+		new /obj/item/device/pda/heads/hos(src)
+		new /obj/item/clothing/glasses/sunglasses/sechud(src)
 		new /obj/item/weapon/storage/lockbox/loyalty(src)
 		new /obj/item/weapon/storage/flashbang_kit(src)
-		new /obj/item/clothing/under/jensen(src)
-		new /obj/item/clothing/suit/armor/hos/jensen(src)
-		new /obj/item/clothing/head/helmet/HoS/dermal(src)
-		new /obj/item/wardrobe/hos(src)
-		new /obj/item/wardrobe/hos(src)
 		return
-
-
 
 /obj/structure/closet/secure_closet/warden
 	name = "Warden's Locker"
 	req_access = list(access_armory)
 
-
 	New()
 		..()
 		sleep(2)
+		new /obj/item/wardrobe/warden(src)
+		//
+		var/obj/item/weapon/storage/backpack/security/BPK = new /obj/item/weapon/storage/backpack/security(src)
+		var/obj/item/weapon/storage/box/B = new(BPK)
+		new /obj/item/weapon/pen(B)
+		new /obj/item/device/flash(B)
+		new /obj/item/weapon/melee/baton(src)
+		new /obj/item/weapon/gun/energy/taser(src)
+		new /obj/item/device/pda/security(src)
+		new /obj/item/clothing/suit/armor/vest(src)
+		new /obj/item/clothing/glasses/sunglasses/sechud(src)
+		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/weapon/storage/flashbang_kit(src)
-		new /obj/item/wardrobe/warden(src)
-		new /obj/item/wardrobe/warden(src)
-		new /obj/item/wardrobe/warden(src)
-		new /obj/item/wardrobe/warden(src)
 		return
-
-
 
 /obj/structure/closet/secure_closet/security
 	name = "Security Locker"
 	req_access = list(access_security)
 
-
 	New()
 		..()
 		sleep(2)
 		new /obj/item/wardrobe/officer(src)
 		new /obj/item/wardrobe/officer(src)
-		new /obj/item/wardrobe/officer(src)
-		new /obj/item/wardrobe/officer(src)
-		new /obj/item/wardrobe/officer(src)
-		new /obj/item/wardrobe/officer(src)
+		//
+		var/obj/item/weapon/storage/backpack/security/BPK = new /obj/item/weapon/storage/backpack/security(src)
+		var/obj/item/weapon/storage/box/B = new(BPK)
+		new /obj/item/weapon/pen(B)
+		new /obj/item/device/flash(B)
+		new /obj/item/weapon/pepperspray(src)
+		new /obj/item/weapon/melee/baton(src)
+		new /obj/item/policetaperoll(src)
+		new /obj/item/weapon/flashbang(src)
+		new /obj/item/device/pda/security(src)
+		new /obj/item/clothing/suit/armor/vest(src)
+		new /obj/item/clothing/suit/storage/gearharness(src)
+		new /obj/item/clothing/glasses/sunglasses/sechud(src)
+		new /obj/item/weapon/storage/belt/security(src)
+		new /obj/item/clothing/head/helmet(src)
+		new /obj/item/device/radio/headset/headset_sec(src)
 		return
 
 
@@ -96,12 +131,21 @@
 	New()
 		..()
 		sleep(2)
+		new /obj/item/wardrobe/detective(src)
+		//
+		var/obj/item/weapon/storage/backpack/security/BPK = new /obj/item/weapon/storage/backpack/security(src)
+		var/obj/item/weapon/storage/box/B = new(BPK)
+		var/obj/item/weapon/clipboard/C = new(B)
+		new /obj/item/weapon/pen(C)
+		new /obj/item/device/detective_scanner(src)
+		new /obj/item/policetaperoll(src)
+		new /obj/item/weapon/storage/box/evidence(src)
+		new /obj/item/device/pda/detective(src)
+		new /obj/item/device/radio/headset/headset_sec(src)
+		//
 		new /obj/item/weapon/reagent_containers/food/drinks/dflask(src)
-		new /obj/item/weapon/zippo(src)
+		new /obj/item/weapon/zippo(B)
 		new /obj/item/weapon/pepperspray/small(src)
-		new /obj/item/wardrobe/detective(src)
-		new /obj/item/wardrobe/detective(src)
-		new /obj/item/wardrobe/detective(src)
 		return
 
 

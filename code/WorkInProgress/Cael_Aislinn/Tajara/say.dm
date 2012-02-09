@@ -14,7 +14,7 @@
 		return "gibbers, \"[text]\"";
 
 	if(is_speaking_taj)
-		return "mewls, \"[text]\""//pick("yowls, \"[text]\"", "growls, \"[text]\"","mewls, \"[text]\"", "mrowls, \"[text]\"", "meows, \"[text]\"", "purrs, \"[text]\"");
+		return "mrowls, \"[text]\""//pick("yowls, \"[text]\"", "growls, \"[text]\"","mewls, \"[text]\"", "mrowls, \"[text]\"", "meows, \"[text]\"", "purrs, \"[text]\"");
 
 	if (ending == "?")
 		return "asks, \"[text]\"";
@@ -25,7 +25,7 @@
 
 //convert message to an indecipherable series of sounds for anyone who isnt tajaran
 /mob/living/carbon/human/tajaran/proc/tajspeak(var/message)
-	return stars(message)
+	//return stars(message)
 	var/te = html_decode(message)
 	var/t = ""
 	var/n = length(message)
@@ -215,10 +215,10 @@
 	switch (message_mode)
 		if ("headset")
 			if (src:l_ear && istype(src:l_ear,/obj/item/device/radio))
-				src:l_ear.talk_into(src, message, 0, "[is_speaking_taj ? "tajaran" : "universal"]")
+				src:l_ear.talk_into(src, message, 0, "[is_speaking_taj ? "tajaran" : "english"]")
 				used_radios += src:l_ear
 			else if (src:r_ear)
-				src:r_ear.talk_into(src, message, 0, "[is_speaking_taj ? "tajaran" : "universal"]")
+				src:r_ear.talk_into(src, message, 0, "[is_speaking_taj ? "tajaran" : "english"]")
 				used_radios += src:r_ear
 
 			message_range = 1
@@ -227,10 +227,10 @@
 
 		if ("secure headset")
 			if (src:l_ear && istype(src:l_ear,/obj/item/device/radio))
-				src:l_ear.talk_into(src, message, 1, "[is_speaking_taj ? "tajaran" : "universal"]")
+				src:l_ear.talk_into(src, message, 1, "[is_speaking_taj ? "tajaran" : "english"]")
 				used_radios += src:l_ear
 			else if (src:r_ear)
-				src:r_ear.talk_into(src, message, 1, "[is_speaking_taj ? "tajaran" : "universal"]")
+				src:r_ear.talk_into(src, message, 1, "[is_speaking_taj ? "tajaran" : "english"]")
 				used_radios += src:r_ear
 
 			message_range = 1
@@ -238,7 +238,7 @@
 
 		if ("right ear")
 			if (src:r_ear)
-				src:r_ear.talk_into(src, message, 0, "[is_speaking_taj ? "tajaran" : "universal"]")
+				src:r_ear.talk_into(src, message, 0, "[is_speaking_taj ? "tajaran" : "english"]")
 				used_radios += src:r_ear
 
 			message_range = 1
@@ -246,7 +246,7 @@
 
 		if ("left ear")
 			if (src:l_ear)
-				src:l_ear.talk_into(src, message, 0, "[is_speaking_taj ? "tajaran" : "universal"]")
+				src:l_ear.talk_into(src, message, 0, "[is_speaking_taj ? "tajaran" : "english"]")
 				used_radios += src:l_ear
 
 			message_range = 1
@@ -254,7 +254,7 @@
 
 		if ("intercom")
 			for (var/obj/item/device/radio/intercom/I in view(1, null))
-				I.talk_into(src, message, 0, "[is_speaking_taj ? "tajaran" : "universal"]")
+				I.talk_into(src, message, 0, "[is_speaking_taj ? "tajaran" : "english"]")
 				used_radios += I
 
 			message_range = 1
@@ -377,8 +377,8 @@
 	var/list/heard_b = list() // didn't understand us
 
 	for (var/mob/M in listening)
-		//if speaking in tajaran, only let other tajs hear
-		if ( (M.say_understands(src) && !is_speaking_taj) || istype(M,/mob/living/carbon/human/tajaran) )
+		//if speaking in tajaran, only let other tajs understand
+		if ( M.say_understands(src) && (M.taj_talk_understand || !is_speaking_taj)  )
 			heard_a += M
 		else
 			heard_b += M
@@ -388,7 +388,7 @@
 
 	var/rendered = null
 	if (length(heard_a))
-		var/message_a = say_quote(message,0)
+		var/message_a = say_quote(message,is_speaking_taj)
 		if (italics)
 			message_a = "<i>[message_a]</i>"
 		if (!istype(src, /mob/living/carbon/human))
@@ -462,13 +462,8 @@
 		*/
 
 	if (length(heard_b))
-		var/message_b
-
-		if (voice_message)
-			message_b = voice_message
-		else
-			message_b = tajspeak(message)
-			message_b = say_quote(message_b,1)
+		var/message_b = tajspeak(message)
+		message_b = say_quote(message_b,1)
 
 		if (italics)
 			message_b = "<i>[message_b]</i>"

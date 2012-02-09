@@ -15,6 +15,10 @@
 	var/lasttry = 0
 	layer = 2.8
 
+/obj/structure/closet/detective
+	name = "Detective's Closet"
+	desc = "Holds the detective's clothes while his coat rack is being repaired."
+
 /obj/structure/closet/acloset
 	name = "Strange closet"
 	desc = "It looks weird!"
@@ -280,7 +284,11 @@
 
 /obj/structure/closet/jcloset
 	name = "Custodial Closet"
-	desc = "A bulky (yet mobile) closet. Comes with janitor's clothes and gear."
+	desc = "A bulky (yet mobile) closet. Contains the janitor's gear."
+
+/obj/structure/closet/jcloset2
+	name = "Cleaner's Closet"
+	desc = "A bulky (yet mobile) closet. Contains various items for cleaning."
 
 /obj/structure/closet/lawcloset
 	name = "Legal Closet"
@@ -536,9 +544,27 @@
 
 /obj/structure/closet/wardrobe/red
 	name = "Red Wardrobe"
-	desc = "Contains red jumpsuits."
+	desc = "Contains red security jumpsuits."
 	icon_state = "red"
 	icon_closed = "red"
+
+/obj/structure/closet/wardrobe/warden
+	name = "Warden's Wardrobe"
+	desc = "Contains the warden's security uniform."
+	icon_state = "red"
+	icon_closed = "red"
+
+/obj/structure/closet/wardrobe/hos
+	name = "Head of Security's Wardrobe"
+	desc = "Contains the Head of Security's uniform."
+	icon_state = "red"
+	icon_closed = "red"
+
+/obj/structure/closet/wardrobe/hop
+	name = "Head of Personnel's Wardrobe"
+	desc = "Contains the Head of Personnel's uniform."
+	icon_state = "blue"
+	icon_closed = "blue"
 
 /obj/structure/closet/wardrobe/white
 	name = "White Wardrobe"
@@ -564,11 +590,47 @@
 	icon_state = "white"
 	icon_closed = "white"
 
+/obj/structure/closet/wardrobe/chemistry_white
+	name = "Chemistry Wardrobe"
+	desc = "Contains chemistry jumpsuits."
+	icon_state = "white"
+	icon_closed = "white"
+
+/obj/structure/closet/wardrobe/nurse
+	name = "Nurse's Wardrobe"
+	desc = "Contains nurse uniforms."
+	icon_state = "white"
+	icon_closed = "white"
+
+/obj/structure/closet/wardrobe/cmo
+	name = "Chief Medical Officer's Wardrobe"
+	desc = "Contains the Chief Medical Officer's clothing."
+	icon_state = "white"
+	icon_closed = "white"
+
+/obj/structure/closet/wardrobe/rd
+	name = "Research Director's Wardrobe"
+	desc = "Contains the Research Director's clothing."
+	icon_state = "white"
+	icon_closed = "white"
+
+/obj/structure/closet/wardrobe/scientist
+	name = "Scientist's Wardrobe"
+	desc = "Contains the scientist's clothing."
+	icon_state = "white"
+	icon_closed = "white"
+
+/obj/structure/closet/wardrobe/virology_white
+	name = "Virology Wardrobe"
+	desc = "Contains virologist jumpsuits."
+	icon_state = "white"
+	icon_closed = "white"
+
 /obj/structure/closet/wardrobe/yellow
 	name = "Yellow Wardrobe"
 	desc = "Contains yellow jumpsuits."
-	icon_state = "wardrobe-y"
-	icon_closed = "wardrobe-y"
+	icon_state = "yellow"
+	icon_closed = "yellow"
 
 /obj/structure/closet/wardrobe/engineering_yellow
 	name = "Engineering Wardrobe"
@@ -629,12 +691,6 @@
 	desc = "Contains quartermaster jumpsuits."
 	icon_state = "yellow"
 	icon_closed = "yellow"
-
-/obj/structure/closet/wardrobe/virology_white
-	name = "Virology Wardrobe"
-	desc = "Contains virologist jumpsuits."
-	icon_state = "white"
-	icon_closed = "white"
 
 
 
