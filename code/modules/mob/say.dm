@@ -26,14 +26,10 @@
 	var/name = src.real_name
 	var/alt_name = ""
 
-	if (istype(src, /mob/living/carbon/human) && src.name != src.real_name)
-		var/mob/living/carbon/human/H = src
-		alt_name = " (as [H.get_authentification_name()])"
-	if (!istype(src, /mob/living/carbon/human))
-		name = src.name
-	if (istype(src, /mob/dead/observer))
-		name = "Ghost"
-		alt_name = " ([src.real_name])"
+	if(original_name) //Original name is only used in ghost chat! It is not to be edited by anything!
+		name = src.original_name
+		if( original_name != real_name )
+			alt_name = " (died as [src.real_name])"
 
 	message = src.say_quote(message)
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"

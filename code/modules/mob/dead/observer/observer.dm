@@ -12,8 +12,9 @@
 		else//Safety, in case a turf cannot be found.
 			loc = pick(latejoin)
 		if(!istype(body,/mob))	return//This needs to be recoded sometime so it has loc as its first arg
-		real_name = body.real_name
-		name = body.real_name
+		real_name = body.name
+		original_name = body.original_name //Original name is only used in ghost chat! It is not to be edited by anything!
+		name = body.original_name
 		if(!safety)
 			corpse = body
 			verbs += /mob/dead/observer/proc/reenter_corpse
