@@ -41,6 +41,9 @@
 			icon_state = "mmi_full"
 
 			locked = 1
+
+			feedback_inc("mmis_filled",1)
+
 			return
 
 		if((istype(O,/obj/item/weapon/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
