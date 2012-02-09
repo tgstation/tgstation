@@ -53,7 +53,7 @@
 	if ((usr.contents.Find(src) || (in_range(src,usr) && istype(src.loc, /turf))))
 		usr.machine = src
 		if(href_list["spell_choice"])
-			if(src.uses >= 1 && href_list["spell_choice"] != 14)
+			if(src.uses >= 1 && src.max_uses >=1 && href_list["spell_choice"] != 18)
 				src.uses--
 				if(spell_type == "verb")
 					switch(href_list["spell_choice"])
@@ -109,6 +109,7 @@
 							usr.mind.special_verbs += /client/proc/knock
 							src.temp = "This spell opens nearby doors and does not require wizard garb."
 						if ("14")
+							usr.verbs += /client/proc/rightandwrong
 							src.max_uses--
 							src.temp = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill eachother. Just be careful not to get hit in the crossfire!"
 						if ("15")
