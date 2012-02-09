@@ -71,7 +71,7 @@ datum
 					var/current_reagent_transfer = current_reagent.volume * part
 					if(preserve_data)
 						trans_data = current_reagent.data
-					R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
+					R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, 0)
 					src.remove_reagent(current_reagent.id, current_reagent_transfer)
 
 				src.update_total()
@@ -195,6 +195,7 @@ datum
 							if(!has_reagent(B, C.required_reagents[B]))	break
 							total_matching_reagents++
 							multipliers += round(get_reagent_amount(B) / C.required_reagents[B])
+
 						for(var/B in C.required_catalysts)
 							if(!has_reagent(B, C.required_catalysts[B]))	break
 							total_matching_catalysts++
@@ -309,7 +310,7 @@ datum
 									else R.reaction_obj(A, R.volume+volume_modifier)
 				return
 
-			add_reagent(var/reagent, var/amount, var/data=null)
+			add_reagent(var/reagent, var/amount, var/data=null, var/react = 1)
 				if(!isnum(amount)) return 1
 				update_total()
 				if(total_volume + amount > maximum_volume) amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
@@ -336,7 +337,8 @@ datum
 												D.cure(0)
 									*/
 
-						handle_reactions()
+						if(react)
+							handle_reactions()
 						return 0
 
 				for(var/A in typesof(/datum/reagent) - /datum/reagent)
@@ -353,10 +355,12 @@ datum
 						//debug
 						update_total()
 						my_atom.on_reagent_change()
-						handle_reactions()
+						if(react)
+							handle_reactions()
 						return 0
 
-				handle_reactions()
+				if(react)
+					handle_reactions()
 
 				return 1
 
