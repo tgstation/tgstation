@@ -9,6 +9,7 @@
 		new /obj/item/wardrobe/chief_engineer(src)
 		new /obj/item/wardrobe/chief_engineer(src)
 		new /obj/item/blueprints(src)
+		new /obj/item/device/hacktool/engineer(src)
 		return
 
 

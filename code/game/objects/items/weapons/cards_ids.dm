@@ -24,7 +24,7 @@ FINGERPRINT CARD
 
 	New()
 		..()
-		uses = rand(3,7)
+		uses = rand(3,5)
 		return
 
 // DATA CARDS

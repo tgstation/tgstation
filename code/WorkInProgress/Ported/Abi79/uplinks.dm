@@ -187,7 +187,17 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 //A Syndicate uplink disguised as a portable radio
 /obj/item/device/uplink/radio/implanted
-	uses = 5
+	New()
+		..()
+		uses = 5
+		return
+
+	explode()
+		var/obj/item/weapon/implant/uplink/U = src.loc
+		var/mob/living/A = U.imp_in
+		A.gib()
+		..()
+
 
 /obj/item/device/uplink/radio
 	name = "ship bounced radio"
@@ -228,12 +238,10 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		if (usr.stat || usr.restrained())
 			return
 
-		var/mob/living/carbon/human/H = usr
-
-		if (!( istype(H, /mob/living/carbon/human)))
+		if (!( istype(usr, /mob/living/carbon/human)))
 			return 1
 
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
+		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf)) || istype(src.loc,/obj/item/weapon/implant/uplink)))
 			usr.machine = src
 
 			if(href_list["buy_item"])
@@ -241,6 +249,9 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 					var/path_obj = text2path(href_list["buy_item"])
 					var/item = new path_obj(get_turf(src.loc))
 					var/mob/A = src.loc
+					if(istype(src.loc,/obj/item/weapon/implant/uplink))
+						var/obj/item/weapon/implant/uplink/U = src.loc
+						A = U.imp_in
 					if(ismob(A) && !(locate(item) in NotInHand)) //&& !istype(item, /obj/spawner))
 						if(!A.r_hand)
 							item:loc = A
@@ -295,12 +306,13 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			else if (href_list["clear_selfdestruct"])
 				src.temp = null
 
-			if (istype(src.loc, /mob))
-				attack_self(src.loc)
-			else
-				for(var/mob/M in viewers(1, src))
-					if (M.client)
-						src.attack_self(M)
+			attack_self(usr)
+//			if (istype(src.loc, /mob))
+//				attack_self(src.loc)
+//			else
+//				for(var/mob/M in viewers(1, src))
+//					if (M.client)
+//						src.attack_self(M)
 		return
 
 	proc/explode()

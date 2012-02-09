@@ -48,7 +48,7 @@ Stealth and Camouflage Items;
 /obj/item/weapon/stamperaser:1:Stamp Remover;
 Whitespace:Seperator;
 Devices and Tools;
-/obj/item/weapon/card/emag:5:Cryptographic Sequencer (Limited uses, almost full access);
+/obj/item/weapon/card/emag:4:Cryptographic Sequencer (Limited uses, almost full access);
 /obj/item/device/hacktool:3:Hacktool (Slow, but stealthy.  Unlimited uses);
 /obj/item/weapon/storage/toolbox/syndicate:1:Fully Loaded Toolbox;
 /obj/item/weapon/aiModule/syndicate:7:Hacked AI Upload Module;

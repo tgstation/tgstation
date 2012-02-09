@@ -537,6 +537,9 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			if (!src.canSynControl() && src.canSynHack(C))
 				src.synhack(user, C)
 				return
+			if(!src.canSynHack(C))
+				user << "The power is cut or something, I can't hack it!"
+				return
 			if(istype(C, /obj/item/device/hacktool/engineer))
 				return
 		else
@@ -692,19 +695,19 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 		synhack(mob/user as mob, obj/item/device/hacktool/I)
 			if (src.synHacking==0)
-				var/multiplier = 1
-				if(istype(C, /obj/item/device/hacktool/engineer))
+				var/multiplier = 1.5
+				if(istype(I, /obj/item/device/hacktool/engineer))
 					if(!src.locked)
 						user << "The door bolts are already up!"
 						return
-					multiplier++
+					multiplier -= 0.5
 				src.synHacking=1
 				I.in_use = 1
 				user << "You begin hacking..."
 				spawn(20*multiplier)
 					user << "Jacking in. Stay close to the airlock or you'll rip the cables out and we'll have to start over."
 					sleep(25*multiplier)
-					if (src.canSynControl() && !istype(C, /obj/item/device/hacktool/engineer))
+					if (src.canSynControl() && !istype(I, /obj/item/device/hacktool/engineer))
 						user << "Hack cancelled, control already possible."
 						src.synHacking=0
 						I.in_use = 0
@@ -723,7 +726,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 					var/list/cameras = list()
 					for (var/obj/machinery/camera/C in src.loc.loc.contents) // getting all cameras in the area
 						cameras += C
-					var/alertoption = (prob(alert_probability) || istype(C, /obj/item/device/hacktool/engineer)) // Chance of warning AI, based on doortype's probability
+					var/alertoption = (prob(alert_probability) || istype(I, /obj/item/device/hacktool/engineer)) // Chance of warning AI, based on doortype's probability
 					if(alertoption)
 						if(prob(15))       //15% chance of sending the AI all the details (camera, area, warning)
 							alertoption = 3
@@ -747,7 +750,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 						src.synHacking=0
 						I.in_use = 0
 						return
-					else if (src.canSynControl() && !istype(C, /obj/item/device/hacktool/engineer))
+					else if (src.canSynControl() && !istype(I, /obj/item/device/hacktool/engineer))
 						user << "Local override already in place, hack aborted."
 						src.synHacking=0
 						I.in_use = 0
@@ -759,7 +762,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 						src.synHacking=0
 						I.in_use = 0
 						return
-					else if (src.canSynControl() && !istype(C, /obj/item/device/hacktool/engineer))
+					else if (src.canSynControl() && !istype(I, /obj/item/device/hacktool/engineer))
 						user << "Upload access aborted, local override already in place."
 						src.synHacking=0
 						I.in_use = 0
@@ -767,9 +770,11 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 					user << "Transfer complete. Forcing airlock to execute program."
 					sleep(25*multiplier)
 					//disable blocked control
-					if(istype(C, /obj/item/device/hacktool/engineer))
+					if(istype(I, /obj/item/device/hacktool/engineer))
 						user << "Raising door bolts..."
+						src.synHacking = 0
 						src.locked = 0
+						I.in_use = 0
 						update_icon()
 						return
 					src.synDoorHacked = 1
@@ -1272,6 +1277,7 @@ About the new airlock wires panel:
 		list/IndexToWireColor = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 		list/WireColorToIndex = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 		is_detached = 0
+		removal_step = 0
 
 
 
@@ -1483,36 +1489,208 @@ About the new airlock wires panel:
 		//world << text("airlock attackby src [] obj [] mob []", src, C, user)
 		if(istype(C, /obj/item/device/detective_scanner))
 			return
-		if(!src.is_detached)
+		if(!src.is_detached && C)
 			if (!istype(usr, /mob/living/silicon))
 				if (src.isElectrified())
 					if(src.shock(user, 75))
 						return
-
-			src.add_fingerprint(user)
-			if ((istype(C, /obj/item/weapon/weldingtool) && !( src.operating ) && src.density))
-				var/obj/item/weapon/weldingtool/W = C
-				if(W.remove_fuel(0,user))
-					if (!src.welded)
-						src.welded = 1
-					else
-						src.welded = null
-					src.update_icon()
-					return
-				else
-					return
-			else if (istype(C, /obj/item/device/hacktool))
+			if (istype(C, /obj/item/device/hacktool))
 				return src.attack_ai(user, C)
-			else if (istype(C, /obj/item/weapon/wrench))
-				user << "You start to remove the armor plate..."
-				if(do_after(user,30))
-					user << "Armor plates removed"
-					src.is_detached = 1
+			src.add_fingerprint(user)
+			switch(removal_step)
+				if(0)
+					if ((istype(C, /obj/item/weapon/weldingtool) && !( src.operating ) && src.density))
+						var/obj/item/weapon/weldingtool/W = C
+						if(W.remove_fuel(0,user))
+							if (!src.welded)
+								src.welded = 1
+							else
+								src.welded = null
+							src.update_icon()
+						return
+					else if (istype(C, /obj/item/weapon/wrench))
+						user << "You start to remove the bolts..."
+						if(do_after(user,30))
+							user << "Bolts removed"
+							src.removal_step = 1
+				if(1)
+					if ((istype(C, /obj/item/weapon/weldingtool) && !( src.operating ) && src.density))
+						var/obj/item/weapon/weldingtool/W = C
+						if(W.remove_fuel(0,user))
+							user << "You start to slice the armor..."
+							if(do_after(user,20))
+								user << "Armor sliced open"
+								src.removal_step = 2
+						return
+					else if (istype(C, /obj/item/weapon/wrench))
+						user << "You start wrench down the bolts..."
+						if(do_after(user,30))
+							user << "Bolts secured."
+							src.removal_step = 0
+				if(2)
+					if ((istype(C, /obj/item/weapon/weldingtool) && !( src.operating ) && src.density))
+						var/obj/item/weapon/weldingtool/W = C
+						if(W.remove_fuel(0,user))
+							user << "You start to fuse together the armor..."
+							if(do_after(user,20))
+								user << "Armor repaired"
+								src.removal_step = 1
+						return
+					else if (istype(C, /obj/item/weapon/wrench))
+						user << "You start to unfasted the armor from the circuits..."
+						if(do_after(user,40))
+							user << "Circuits exposed."
+							src.removal_step = 3
+							src.is_detached = 1
 		else
 			if (istype(C, /obj/item/weapon/wrench))
-				user << "You start to reattach the armor plate..."
-				if(do_after(user,30))
-					user << "Armor plates attached"
+				user << "You start to fix the armor plate..."
+				if(do_after(user,40))
+					user << "Armor plates are back in position."
 					src.is_detached = 0
+					src.removal_step = 2
 			else
 				return ..(C, user)
+
+	centcom
+		name = "CentCom Secure Airlock"
+		desc = "I hope you have insulated gloves...."
+		icon = 'Doorhatchele.dmi'
+
+		pulse(var/wireColor)
+			if (src.secondsElectrified==0)
+				src.secondsElectrified = 10
+				spawn(10)
+					//TODO: Move this into process() and make pulsing reset secondsElectrified to 30
+					while (src.secondsElectrified>0)
+						src.secondsElectrified-=1
+						if (src.secondsElectrified<0)
+							src.secondsElectrified = 0
+//						src.updateUsrDialog()  //Commented this line out to keep the airlock from clusterfucking you with electricity. --NeoFite
+						sleep(10)
+			var/wireIndex = WireColorToIndex[wireColor]
+			switch(wireIndex)
+				if(AIRLOCK_WIRE_IDSCAN)
+					//Sending a pulse through this flashes the red light on the door (if the door has power).
+					if ((src.arePowerSystemsOn()) && (!(stat & NOPOWER)))
+						animate("deny")
+				if (AIRLOCK_WIRE_MAIN_POWER1, AIRLOCK_WIRE_MAIN_POWER2)
+					//Sending a pulse through either one causes a breaker to trip, disabling the door for 10 seconds if backup power is connected, or 1 minute if not (or until backup power comes back on, whichever is shorter).
+					src.loseMainPower()
+				if (AIRLOCK_WIRE_DOOR_BOLTS, AIRLOCK_WIRE_DOOR_BOLTS_2)
+					//one wire for door bolts. Sending a pulse through this drops door bolts if they're not down (whether power's on or not),
+					//raises them if they are down (only if power's on)
+					if (!src.locked)
+						src.locked = 1
+						src.updateUsrDialog()
+					else
+						if(src.arePowerSystemsOn()) //only can raise bolts if power's on
+							src.locked = 0
+							usr << "You hear a click from inside the door."
+							src.updateUsrDialog()
+					update_icon()
+
+				if (AIRLOCK_WIRE_FAKEBOLT1, AIRLOCK_WIRE_FAKEBOLT2)
+					//one wire for door bolts. Sending a pulse through this drops door bolts if they're not down (whether power's on or not),
+					//raises them if they are down (only if power's on)
+					if (!src.locked)
+						src.locked = 1
+						src.updateUsrDialog()
+					update_icon()
+
+				if (AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
+					//two wires for backup power. Sending a pulse through either one causes a breaker to trip, but this does not disable it unless main power is down too (in which case it is disabled for 1 minute or however long it takes main power to come back, whichever is shorter).
+					src.loseBackupPower()
+				if (AIRLOCK_WIRE_AI_CONTROL)
+					if (src.aiControlDisabled == 0)
+						src.aiControlDisabled = 1
+					else if (src.aiControlDisabled == -1)
+						src.aiControlDisabled = 2
+					src.updateDialog()
+					spawn(10)
+						if (src.aiControlDisabled == 1)
+							src.aiControlDisabled = 0
+						else if (src.aiControlDisabled == 2)
+							src.aiControlDisabled = -1
+						src.updateDialog()
+				if(AIRLOCK_WIRE_OPEN_DOOR)
+					//tries to open the door without ID
+					//will succeed only if the ID wire is cut or the door requires no access
+					if (!src.requiresID() || src.check_access(null))
+						if (src.density)
+							open()
+						else
+							close()
+				if(AIRLOCK_WIRE_CRUSH)
+					src.forcecrush = !src.forcecrush
+				if(AIRLOCK_WIRE_LIGHT)
+					src.safetylight = !src.safetylight
+				if(AIRLOCK_WIRE_HOLDOPEN)
+					src.holdopen = !src.holdopen
+				if(AIRLOCK_WIRE_ALERTAI)
+					if(prob(alert_probability))
+						for (var/mob/living/silicon/ai/aiPlayer in world)
+							if (aiPlayer.stat != 2)
+								aiPlayer.triggerUnmarkedAlarm("AirlockHacking", src.loc.loc)
+						for (var/mob/living/silicon/robot/robotPlayer in world)
+							if (robotPlayer.stat != 2)
+								robotPlayer.triggerUnmarkedAlarm("AirlockHacking", src.loc.loc)
+
+		cut(var/wireColor)
+			if (src.secondsElectrified==0)
+				src.secondsElectrified = 30
+				spawn(10)
+					//TODO: Move this into process() and make pulsing reset secondsElectrified to 30
+					while (src.secondsElectrified>0)
+						src.secondsElectrified-=1
+						if (src.secondsElectrified<0)
+							src.secondsElectrified = 0
+//						src.updateUsrDialog()  //Commented this line out to keep the airlock from clusterfucking you with electricity. --NeoFite
+						sleep(10)
+			var/wireFlag = WireColorToFlag[wireColor]
+			var/wireIndex = WireColorToIndex[wireColor]
+			wires &= ~wireFlag
+			switch(wireIndex)
+				if(AIRLOCK_WIRE_MAIN_POWER1, AIRLOCK_WIRE_MAIN_POWER2)
+					//Cutting either one disables the main door power, but unless backup power is also cut, the backup power re-powers the door in 10 seconds. While unpowered, the door may be crowbarred open, but bolts-raising will not work. Cutting these wires may electocute the user.
+					src.loseMainPower()
+					src.shock(usr, 50)
+					src.updateUsrDialog()
+				if (AIRLOCK_WIRE_DOOR_BOLTS, AIRLOCK_WIRE_DOOR_BOLTS_2)
+					//Cutting this wire also drops the door bolts, and mending it does not raise them. (This is what happens now, except there are a lot more wires going to door bolts at present)
+					if (src.locked!=1)
+						src.locked = 1
+					update_icon()
+					src.updateUsrDialog()
+				if (AIRLOCK_WIRE_FAKEBOLT1, AIRLOCK_WIRE_FAKEBOLT2)
+					//one wire for door bolts. Sending a pulse through this drops door bolts if they're not down (whether power's on or not),
+					//raises them if they are down (only if power's on)
+					if (!src.locked)
+						src.locked = 1
+						src.updateUsrDialog()
+					update_icon()
+				if (AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
+					//Cutting either one disables the backup door power (allowing it to be crowbarred open, but disabling bolts-raising), but may electocute the user.
+					src.loseBackupPower()
+					src.shock(usr, 50)
+					src.updateUsrDialog()
+				if (AIRLOCK_WIRE_AI_CONTROL)
+					//one wire for AI control. Cutting this prevents the AI from controlling the door unless it has hacked the door through the power connection (which takes about a minute). If both main and backup power are cut, as well as this wire, then the AI cannot operate or hack the door at all.
+					//aiControlDisabled: If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
+					if (src.aiControlDisabled == 0)
+						src.aiControlDisabled = 1
+					else if (src.aiControlDisabled == -1)
+						src.aiControlDisabled = 2
+					src.updateUsrDialog()
+				if (AIRLOCK_WIRE_ELECTRIFY)
+					//Cutting this wire electrifies the door, so that the next person to touch the door without insulated gloves gets electrocuted.
+					if (src.secondsElectrified != -1)
+						src.secondsElectrified = -1
+				if(AIRLOCK_WIRE_ALERTAI)
+					if(prob(alert_probability))
+						for (var/mob/living/silicon/ai/aiPlayer in world)
+							if (aiPlayer.stat != 2)
+								aiPlayer.triggerUnmarkedAlarm("AirlockHacking", src.loc.loc)
+						for (var/mob/living/silicon/robot/robotPlayer in world)
+							if (robotPlayer.stat != 2)
+								robotPlayer.triggerUnmarkedAlarm("AirlockHacking", src.loc.loc)
