@@ -1,1 +1,0 @@
-/obj/structure/closet/detective

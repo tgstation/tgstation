@@ -94,6 +94,8 @@
 			holder.process_activation(src, 1, 0)
 		if(holder && (wires & WIRE_PULSE_SPECIAL))
 			holder.process_activation(src, 0, 1)
+		if(master && (wires & WIRE_PULSE))
+			master.receive_signal("activate")
 //		if(radio && (wires & WIRE_RADIO_PULSE))
 			//Not sure what goes here quite yet send signal?
 		return 1
@@ -138,7 +140,6 @@
 
 
 	process()
-		processing_objects.Remove(src)
 		return
 
 
