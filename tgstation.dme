@@ -496,6 +496,7 @@
 #define FILE_DIR "html/.svn"
 #define FILE_DIR "html/.svn/prop-base"
 #define FILE_DIR "html/.svn/text-base"
+#define FILE_DIR "html/.svn/tmp"
 #define FILE_DIR "icons"
 #define FILE_DIR "icons/.svn"
 #define FILE_DIR "icons/.svn/prop-base"
