@@ -512,6 +512,21 @@ datum
 			description = "A colorless, odorless gas."
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
+			reaction_obj(var/obj/O, var/volume)
+				if((!O) || (!volume))	return 0
+				src = null
+				var/turf/the_turf = get_turf(O)
+				var/datum/gas_mixture/napalm = new
+				napalm.oxygen = volume*10
+				napalm.temperature = T0C
+				the_turf.assume_air(napalm)
+			reaction_turf(var/turf/T, var/volume)
+				src = null
+				var/datum/gas_mixture/napalm = new
+				napalm.oxygen = volume*10
+				napalm.temperature = T0C
+				T.assume_air(napalm)
+				return
 
 		copper
 			name = "Copper"
@@ -974,13 +989,13 @@ datum
 				if(!the_turf)
 					return //No sense trying to start a fire if you don't have a turf to set on fire. --NEO
 				var/datum/gas_mixture/napalm = new
-				napalm.toxins = volume
+				napalm.toxins = volume*10
 				napalm.temperature = T0C
 				the_turf.assume_air(napalm)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				var/datum/gas_mixture/napalm = new
-				napalm.toxins = volume
+				napalm.toxins = volume*10
 				napalm.temperature = T0C
 				T.assume_air(napalm)
 				return

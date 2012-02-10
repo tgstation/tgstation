@@ -7,7 +7,7 @@
 	w_amt = 50
 	origin_tech = "magnets=1"
 
-	secured = 0
+	secured = 1
 	small_icon_state_left = "prox_left"
 	small_icon_state_right = "prox_right"
 
@@ -87,11 +87,18 @@
 		if(timing)
 			overlays += text("prox_timing")
 			small_icon_state_overlays += text("prox_timing")
+			if(master && istype(master, /obj/item/weapon/chem_grenade))
+				var/obj/item/weapon/chem_grenade/M = master
+				M.c_state(1)
 		if(scanning)
 			overlays += text("prox_scanning")
 			small_icon_state_overlays += text("prox_scanning")
+			if(master && istype(master, /obj/item/weapon/chem_grenade))
+				var/obj/item/weapon/chem_grenade/M = master
+				M.c_state(1)
 		if(holder)
 			holder.update_icon()
+
 		return
 
 

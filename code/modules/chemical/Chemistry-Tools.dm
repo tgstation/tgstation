@@ -257,36 +257,42 @@
 				D.sense()
 
 
-	proc/explode()
-		if(exploding) return
-		exploding = 1
+	proc
+		explode()
+			if(exploding) return
+			exploding = 1
 
-		if(reliability)
-			playsound(src.loc, 'bamf.ogg', 50, 1)
-			beaker_two.reagents.maximum_volume += beaker_one.reagents.maximum_volume // make sure everything can mix
-			beaker_one.reagents.update_total()
-			beaker_one.reagents.trans_to(beaker_two, beaker_one.reagents.total_volume)
-			if(beaker_one.reagents.total_volume) //The possible reactions didnt use up all reagents.
-				var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
-				steam.set_up(10, 0, get_turf(src))
-				steam.attach(src)
-				steam.start()
+			if(reliability)
+				playsound(src.loc, 'bamf.ogg', 50, 1)
+				beaker_two.reagents.maximum_volume += beaker_one.reagents.maximum_volume // make sure everything can mix
+				beaker_one.reagents.update_total()
+				beaker_one.reagents.trans_to(beaker_two, beaker_one.reagents.total_volume)
+				if(beaker_one.reagents.total_volume) //The possible reactions didnt use up all reagents.
+					var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
+					steam.set_up(10, 0, get_turf(src))
+					steam.attach(src)
+					steam.start()
 
-				for(var/atom/A in view(affected_area, src.loc))
-					if( A == src ) continue
-					src.reagents.reaction(A, 1, 10)
+					for(var/atom/A in view(affected_area, src.loc))
+						if( A == src ) continue
+						src.reagents.reaction(A, 1, 10)
 
 
-			invisibility = 100 //Why am i doing this?
-			spawn(50)		   //To make sure all reagents can work
-				del(src)	   //correctly before deleting the grenade.
-		else
-			icon_state = initial(icon_state) + "_locked"
-			crit_fail = 1
-			if(beaker_one)
-				beaker_one.loc = get_turf(src.loc)
-			if(beaker_two)
-				beaker_two.loc = get_turf(src.loc)
+				invisibility = 100 //Why am i doing this?
+				spawn(50)		   //To make sure all reagents can work
+					del(src)	   //correctly before deleting the grenade.
+			else
+				icon_state = initial(icon_state) + "_locked"
+				crit_fail = 1
+				if(beaker_one)
+					beaker_one.loc = get_turf(src.loc)
+				if(beaker_two)
+					beaker_two.loc = get_turf(src.loc)
+
+		c_state(var/i = 0)
+			if(i)
+				icon_state = initial(icon_state) + "_armed"
+			return
 
 
 	large

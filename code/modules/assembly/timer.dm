@@ -7,7 +7,7 @@
 	w_amt = 10
 	origin_tech = "magnets=1"
 
-	secured = 0
+	secured = 1
 	small_icon_state_left = "timer_left"
 	small_icon_state_right = "timer_right"
 
@@ -64,6 +64,9 @@
 		if(timing)
 			overlays += text("timer_timing")
 			small_icon_state_overlays += text("timer_timing")
+			if(master && istype(master, /obj/item/weapon/chem_grenade))
+				var/obj/item/weapon/chem_grenade/M = master
+				M.c_state(1)
 		if(holder)
 			holder.update_icon()
 		return
