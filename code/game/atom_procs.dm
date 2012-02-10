@@ -571,6 +571,22 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 //		world << "atom.DblClick() on [src] by [usr] : src.type is [src.type]"
 		usr:lastDblClick = world.time
 
+	// ------- DIR CHANGING WHEN CLICKING (changes facting direction) ------
+
+	if( usr && iscarbon(usr) )
+		if( src.x && src.y && usr.x && usr.y )
+			var/dx = src.x - usr.x
+			var/dy = src.y - usr.y
+
+			if( dy > 0 && abs(dx) < dy ) //North
+				usr.dir = 1
+			if( dy < 0 && abs(dx) < abs(dy) ) //South
+				usr.dir = 2
+			if( dx > 0 && abs(dy) <= dx ) //East
+				usr.dir = 4
+			if( dx < 0 && abs(dy) <= abs(dx) ) //West
+				usr.dir = 8
+
 	// ------- SHIFT-CLICK -------
 
 	var/parameters = params2list(params)
