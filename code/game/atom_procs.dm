@@ -292,7 +292,10 @@
 
 /atom/Click(location,control,params)
 	//world << "atom.Click() on [src] by [usr] : src.type is [src.type]"
-
+	var/list/pram = params2list(params)
+	if(pram["ctrl"] != null && pram["left"] != null)
+		src.examine()
+		return
 	if(usr.client.buildmode)
 		build_click(usr, usr.client.buildmode, location, control, params, src)
 		return
