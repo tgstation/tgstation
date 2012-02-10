@@ -125,6 +125,8 @@
 			A.pulse(src.airlock_wire)
 		else if(holder)
 			holder.process_activation(src, 1, 0)
+			else
+				..()
 		return 1
 
 

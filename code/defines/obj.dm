@@ -359,6 +359,7 @@
 /obj/item/device/hacktool/engineer
 	name = "door debugger"
 	desc = "An item of immense complexion, it appears to work by magic."
+	icon_state = "hacktool-g"
 
 /obj/item/blueprints
 	name = "station blueprints"

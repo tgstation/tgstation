@@ -83,7 +83,7 @@ obj/machinery/computer/forensic_scanning
 
 	New()
 		..()
-		new /obj/item/weapon/book/manual/detective(get_turf(src)) //DEEEERP
+		new /obj/item/weapon/book/manual/detective(get_turf(src))
 		return
 
 
@@ -187,7 +187,7 @@ obj/machinery/computer/forensic_scanning
 					if(files && files.len)
 						temp = "<b>Criminal Evidence Database</b><br><br>"
 						temp += "Consolidated data points:<br>"
-						for(var/i = 1, i < (files.len + 1), i++)
+						for(var/i = 1, i <= files.len, i++)
 							temp += "<a href='?src=\ref[src];operation=record;identifier=[i]'>{Dossier [i]}</a><br>"
 						temp += "<br><a href='?src=\ref[src];operation=card'>{Insert Finger Print Card}</a><br><br><br>"
 					else
@@ -197,7 +197,7 @@ obj/machinery/computer/forensic_scanning
 							delete_record(text2num(href_list["delete"]))
 						temp += "<b>Auxiliary Evidence Database</b><br><br>"
 						temp += "This is where anything without fingerprints goes.<br><br>"
-						for(var/i = 1, i < (misc.len + 1), i++)
+						for(var/i = 1, i <= misc.len, i++)
 							var/list/temp_list = misc[i]
 							var/item_name = get_name(temp_list[1])
 							temp += "<a href='?src=\ref[src];operation=auxiliary;identifier=[i]'>{[item_name]}</a><br>"
@@ -213,7 +213,7 @@ obj/machinery/computer/forensic_scanning
 					if(stringpercent(prints[num2text(2)]) <= FINGERPRINT_COMPLETE)
 						print_string = "Fingerprints: (80% or higher completion reached)<br>" + prints[num2text(2)] + "<br>"
 					temp += print_string
-					for(var/i = 2, i < (dossier.len + 1), i++)
+					for(var/i = 2, i <= dossier.len, i++)
 						var/list/outputs = dossier[i]
 						var/item_name = get_name(outputs[1])
 						var/list/prints_len = outputs[2]
@@ -222,7 +222,7 @@ obj/machinery/computer/forensic_scanning
 						var/list/fibers = outputs[3]
 						if(fibers && fibers.len)
 							var/dat = "[fibers[1]]"
-							for(var/j = 2, j < (fibers.len + 1), j++)
+							for(var/j = 2, j <= fibers.len, j++)
 								dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]"
 							temp += "&nbsp;&nbsp;&nbsp;&nbsp;Fibers: [dat]<br>"
 						else
@@ -231,7 +231,7 @@ obj/machinery/computer/forensic_scanning
 						if(blood && blood.len)
 							var/dat = "[blood[1]]"
 							if(blood.len > 1)
-								for(var/j = 2, j < (blood.len + 1), j++)
+								for(var/j = 2, j <= blood.len, j++)
 									dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]"
 							temp += "&nbsp;&nbsp;&nbsp;&nbsp;Blood: [dat]<br>"
 						else
@@ -253,7 +253,7 @@ obj/machinery/computer/forensic_scanning
 					if(stringpercent(prints[num2text(2)]) <= FINGERPRINT_COMPLETE)
 						print_string = "Fingerprints: " + prints[num2text(2)] + "<BR>"
 					P.info += print_string
-					for(var/i = 2, i < (dossier.len + 1), i++)
+					for(var/i = 2, i <= dossier.len, i++)
 						var/list/outputs = dossier[i]
 						var/item_name = get_name(outputs[1])
 						var/list/prints_len = outputs[2]
@@ -262,7 +262,7 @@ obj/machinery/computer/forensic_scanning
 						var/list/fibers = outputs[3]
 						if(fibers && fibers.len)
 							var/dat = "[fibers[1]]"
-							for(var/j = 2, j < (fibers.len + 1), j++)
+							for(var/j = 2, j <= fibers.len, j++)
 								dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]"
 							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;Fibers: [dat]<br>"
 						else
@@ -271,7 +271,7 @@ obj/machinery/computer/forensic_scanning
 						if(blood && blood.len)
 							var/dat = "[blood[1]]"
 							if(blood.len > 1)
-								for(var/j = 2, j < (blood.len + 1), j++)
+								for(var/j = 2, j <= blood.len, j++)
 									dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]"
 							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;Blood: [dat]<br>"
 						else
@@ -366,7 +366,7 @@ obj/machinery/computer/forensic_scanning
 					scan_data = "<u>[scanning]</u><br><br>"
 					if (scanning.blood_DNA.len)
 						scan_data += "Blood Found:<br>"
-						for(var/i = 1, i < (scanning.blood_DNA.len + 1), i++)
+						for(var/i = 1, i <= scanning.blood_DNA.len, i++)
 							var/list/templist = scanning.blood_DNA[i]
 							scan_data += "-Blood type: [templist[2]]\nDNA: [templist[1]]<br><br>"
 					else
@@ -432,11 +432,13 @@ obj/machinery/computer/forensic_scanning
 		updateUsrDialog()
 
 	verb/reset()
-		set name = "Reset Screen"
+		set name = "Reset Database"
 		set category = "Object"
 		set src in oview(1)
 		temp = ""
 		add_fingerprint(usr)
+		files = list()
+		misc = list()
 		return
 
 
@@ -445,9 +447,10 @@ obj/machinery/computer/forensic_scanning
 
 
 	proc/add_data_scanner(var/obj/item/device/detective_scanner/W)
-		for(var/i = 1, i < (W.stored.len + 1), i++)
+		for(var/i = 1, i <= W.stored.len, i++)
 			var/list/data = W.stored[i]
 			add_data(data[1],1,data[2],data[3],data[4])
+		W.stored = list()
 
 
 	proc/add_data(var/atom/A, var/override = 0, var/tempfingerprints, var/tempsuit_fibers,var/tempblood_DNA)
@@ -469,7 +472,7 @@ obj/machinery/computer/forensic_scanning
 			if(!misc)
 				misc = list()
 			if(misc)
-				for(var/i = 1, i < (misc.len + 1), i++)	//Lets see if we can find it.
+				for(var/i = 1, i <= misc.len, i++)	//Lets see if we can find it.
 					var/list/templist = misc[i]
 					var/check = templist[1]
 					if(check == A) //There it is!
@@ -478,14 +481,14 @@ obj/machinery/computer/forensic_scanning
 						if(!fibers)
 							fibers = list()
 						if(A.suit_fibers)
-							for(var/j = 1, j < (A.suit_fibers.len + 1), j++)	//Fibers~~~
+							for(var/j = 1, j <= A.suit_fibers.len, j++)	//Fibers~~~
 								if(!fibers.Find(A.suit_fibers[j]))	//It isn't!  Add!
 									fibers += A.suit_fibers[j]
 						var/list/blood = templist[3]
 						if(!blood)
 							blood = list()
 						if(A.blood_DNA)
-							for(var/j = 1, j < (A.blood_DNA.len + 1), j++)	//Blood~~~
+							for(var/j = 1, j <= A.blood_DNA.len, j++)	//Blood~~~
 								if(!blood.Find(A.blood_DNA[j]))	//It isn't!  Add!
 									blood += A.blood_DNA[j]
 						var/list/sum_list[3]	//Pack it back up!
@@ -504,21 +507,21 @@ obj/machinery/computer/forensic_scanning
 			return !merged
 		else //Has prints.
 			var/list/found_prints[A.fingerprints.len + 1]
-			for(var/i = 1, i < (found_prints.len + 1), i++)
+			for(var/i = 1, i <= found_prints.len, i++)
 				found_prints[i] = 0
 			if(!files)
 				files = list()
-			for(var/i = 1, i < (files.len + 1), i++)	//Lets see if we can find the owner of the prints
+			for(var/i = 1, i <= files.len, i++)	//Lets see if we can find the owner of the prints
 				var/list/perp_list = files[i]
 				var/list/perp_prints = params2list(perp_list[1])
 				var/perp = perp_prints[num2text(1)]
 				var/found2 = 0
-				for(var/m = 1, m < (A.fingerprints.len + 1), m++)	//Compare database prints with prints on object.
+				for(var/m = 1, m <= A.fingerprints.len, m++)	//Compare database prints with prints on object.
 					var/list/test_prints_list = params2list(A.fingerprints[m])
 					var/checker = test_prints_list[num2text(1)]
 					if(checker == perp)	//Found 'em!  Merge!
 						found_prints[m] = 1
-						for(var/n = 2, n < (perp_list.len + 1), n++)	//Lets see if it is already in the database
+						for(var/n = 2, n <= perp_list.len, n++)	//Lets see if it is already in the database
 							var/list/target = perp_list[n]
 							if(target[1] == A)	//Found the original object!
 								found2 = 1
@@ -526,11 +529,11 @@ obj/machinery/computer/forensic_scanning
 								if(!prints)
 									prints = list()
 								if(A.fingerprints)
-									for(var/j = 1, j < (A.fingerprints.len + 1), j++)	//Fingerprints~~~
+									for(var/j = 1, j <= A.fingerprints.len, j++)	//Fingerprints~~~
 										var/list/print_test1 = params2list(A.fingerprints[j])
 										var/test_print1 = print_test1[num2text(1)]
 										var/found = 0
-										for(var/k = 1, k <= (prints.len + 1), k++)	//Lets see if the print is already in there
+										for(var/k = 1, k <= prints.len, k++)	//Lets see if the print is already in there
 											var/list/print_test2 = params2list(prints[k])
 											var/test_print2 = print_test2[num2text(1)]
 											if(test_print2 == test_print1)	//It is!  Merge!
@@ -594,15 +597,15 @@ obj/machinery/computer/forensic_scanning
 
 
 	proc/update_fingerprints()	//I am tired, but this updates the master print, which is used to determine completion of a print.
-		for(var/k = 1, k < (files.len + 1), k++)
+		for(var/k = 1, k <= files.len, k++)
 			var/list/perp_list = files[k]
 			var/list/perp_prints = params2list(perp_list[1])
 			var/perp = perp_prints[num2text(1)]
 			var/list/found_prints = list()
-			for(var/i = 2, i < (perp_list.len + 1), i++)
+			for(var/i = 2, i <= perp_list.len, i++)
 				var/list/test_list = perp_list[i]
 				var/list/test_prints = test_list[2]
-				for(var/j = 1, j < (test_prints.len + 1), j++)
+				for(var/j = 1, j <= test_prints.len, j++)
 					var/list/test_list_2 = params2list(test_prints[j])
 					var/test_prints_2 = test_list_2[num2text(1)]
 					if(test_prints_2 == perp)
@@ -617,10 +620,10 @@ obj/machinery/computer/forensic_scanning
 	proc/process_card()	//I am tired, but this updates the master print from a fingerprint card
 						//which is used to determine completion of a print.
 		if(card.fingerprints)
-			for(var/k = 1, k < (card.fingerprints.len + 1), k++)
+			for(var/k = 1, k <= card.fingerprints.len, k++)
 				var/list/test_prints = params2list(card.fingerprints[k])
 				var/print = test_prints[num2text(1)]
-				for(var/i = 1, i < (files.len + 1), i++)
+				for(var/i = 1, i <= files.len, i++)
 					var/list/test_list = files[i]
 					var/list/perp_prints = params2list(test_list[1])
 					var/perp = perp_prints[num2text(1)]

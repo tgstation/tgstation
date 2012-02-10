@@ -7,7 +7,7 @@
 	w_amt = 100
 	origin_tech = "magnets=2"
 
-	secured = 0
+	secured = 1
 	small_icon_state_left = "infrared_left"
 	small_icon_state_right = "infrared_right"
 
@@ -45,6 +45,9 @@
 		if(scanning)
 			src.overlays += text("infrared_old2")
 			src.small_icon_state_overlays += text("infrared_on")
+			if(master && istype(master, /obj/item/weapon/chem_grenade))
+				var/obj/item/weapon/chem_grenade/M = master
+				M.c_state(1)
 
 		if(holder)
 			holder.update_icon()

@@ -276,7 +276,7 @@ FINGERPRINT CARD
 		var/dat = "<B>Fingerprints on Card</B><HR>"
 		for(var/i = 1, i < (src.fingerprints.len + 1), i++)
 			var/list/L = params2list(src.fingerprints[i])
-			dat += text("[]<BR>", L[1])
+			dat += text("[]<BR>", L["1"])
 			//Foreach goto(41)
 		return dat
 	else

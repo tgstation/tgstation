@@ -122,6 +122,8 @@
 			if(new_prints)
 				src.fingerprints[new_prints] = text("1=[]&2=[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), (H.gloves ? rand(10,20) : rand(25,40)))))
 			else if(new_prints == 0)
+				if(!src.fingerprints)
+					src.fingerprints = list(text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40))))
 				src.fingerprints += text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40)))
 			for(var/i = 1, i <= src.fingerprints.len, i++)
 				if(length(src.fingerprints[i]) != 69)
@@ -254,8 +256,9 @@
 		if (istype(src, /turf/simulated))
 			var/obj/item/source2 = src
 			source2.blood_DNA = list()
-			var/icon/I = new /icon(source2.icon_old, source2.icon_state)
-			source2.icon = I
+			if(source2.icon_old)
+				var/icon/I = new /icon(source2.icon_old, source2.icon_state)
+				source2.icon = I
 	if(src.fingerprints && src.fingerprints.len)
 		var/done = 0
 		while(!done)
@@ -275,6 +278,8 @@
 					break
 				else
 					src.fingerprints[i] = "1=" + prints["1"] + "&2=" + new_print
+		if(!src.fingerprints)
+			src.fingerprints = list()
 	return
 
 /atom/MouseDrop(atom/over_object as mob|obj|turf|area)

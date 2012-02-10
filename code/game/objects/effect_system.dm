@@ -390,6 +390,7 @@ steam.start() -- spawns the effect
 	anchored = 0.0
 	mouse_opacity = 0
 	var/amount = 6.0
+	var/divisor = 1
 
 	icon = 'chemsmoke.dmi'
 	pixel_x = -32
@@ -407,14 +408,22 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/chem_smoke/Move()
 	..()
+	var/obj/R = new /obj()
+	R.reagents = new/datum/reagents(500)
+	reagents.trans_to(R, reagents.total_volume/divisor)
 	for(var/atom/A in view(1, src))
-		reagents.reaction(A)
+		R.reagents.reaction(A)
+	del(R)
 
 	return
 
 /obj/effect/effect/chem_smoke/HasEntered(mob/living/carbon/M as mob )
 	..()
-	reagents.reaction(M)
+	var/obj/R = new /obj()
+	R.reagents = new/datum/reagents(500)
+	reagents.trans_to(R, reagents.total_volume/divisor)
+	R.reagents.reaction(M)
+	del(R)
 
 	return
 
@@ -475,7 +484,9 @@ steam.start() -- spawns the effect
 			spawn(0)
 				if(holder)
 					src.location = get_turf(holder)
+				var/iterator = pick(0,1,1,1,2,2,2,3)
 				var/obj/effect/effect/chem_smoke/smoke = new /obj/effect/effect/chem_smoke(src.location)
+				smoke.divisor = iterator + 1
 				src.total_smoke++
 				var/direction = src.direction
 				if(!direction)
@@ -485,7 +496,7 @@ steam.start() -- spawns the effect
 						direction = pick(alldirs)
 
 				if(chemholder.reagents.total_volume != 1) // can't split 1 very well
-					chemholder.reagents.copy_to(smoke, chemholder.reagents.total_volume / number) // copy reagents to each smoke, divide evenly
+					chemholder.reagents.copy_to(smoke, chemholder.reagents.total_volume*2 / number) // copy reagents to each smoke, divide evenly
 
 				if(finalcolor)
 					smoke.icon += finalcolor // give the smoke color, if it has any to begin with
@@ -494,7 +505,7 @@ steam.start() -- spawns the effect
 					smoke.icon = '96x96.dmi'
 					smoke.icon_state = "smoke"
 
-				for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
+				for(i=0, i<iterator, i++)
 					sleep(10)
 					step(smoke,direction)
 				spawn(150+rand(10,30))
