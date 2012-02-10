@@ -39,7 +39,7 @@ var/savefile/Banlist
 	Banlist.cd = "/base"
 	for (var/A in Banlist.dir)
 		Banlist.cd = "/base/[A]"
-		if ( (id == Banlist["id"] && Banlist["skipIdCheck"] == 0) || key == Banlist["key"])
+		if ( key == Banlist["key"] || (id == Banlist["id"] && Banlist["skipIdCheck"] == 0) )
 			if(Banlist["temp"])
 				if (!GetBanExp(Banlist["minutes"]))
 					ClearTempbans()
