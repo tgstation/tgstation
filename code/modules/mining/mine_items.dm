@@ -185,7 +185,7 @@ proc/move_mining_shuttle()
 		item_state = "dpickaxe"
 		digspeed = 10
 		origin_tech = "materials=6;engineering=4"
-		desc = "A pickaxe with a diamond pick head, this is just like minecraft."
+		desc = "A pickaxe with a diamond pick head."
 
 	diamonddrill //When people ask about the badass leader of the mining tools, they are talking about ME!
 		name = "Diamond Mining Drill"
