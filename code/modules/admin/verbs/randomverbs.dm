@@ -491,6 +491,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		M.radiation = 0
 		//M.health = 100
 		M.nutrition = 400
+		M.bodytemperature = initial(M.bodytemperature)
 		M.heal_overall_damage(1000, 1000)
 		//M.updatehealth()
 		M.buckled = initial(M.buckled)
@@ -725,35 +726,25 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	for(var/t in L)
 		usr << "[t]"
 
-/client/proc/cmd_admin_remove_plasma()
+/client/proc/cmd_admin_remove_plasma(area/A as area)
 	set category = "Debug"
 	set name = "Stabilize Atmos."
+	set desc = "Stabilize atmos in selected area."
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
-// DEFERRED
-/*
-	spawn(0)
-		for(var/turf/T in view())
-			T.poison = 0
-			T.oldpoison = 0
-			T.tmppoison = 0
-			T.oxygen = 755985
-			T.oldoxy = 755985
-			T.tmpoxy = 755985
-			T.co2 = 14.8176
-			T.oldco2 = 14.8176
-			T.tmpco2 = 14.8176
-			T.n2 = 2.844e+006
-			T.on2 = 2.844e+006
-			T.tn2 = 2.844e+006
-			T.tsl_gas = 0
-			T.osl_gas = 0
-			T.sl_gas = 0
-			T.temp = 293.15
-			T.otemp = 293.15
-			T.ttemp = 293.15
-*/
+
+	spawn(1)
+		for(var/turf/simulated/T in A)
+			if(T.air)
+				T.air.oxygen = T.oxygen
+				T.air.carbon_dioxide = T.carbon_dioxide
+				T.air.nitrogen = T.nitrogen
+				T.air.toxins = T.toxins
+				T.air.temperature = T.temperature
+
+				// make things update properly
+				T.assume_air(new /datum/gas_mixture())
 
 /client/proc/toggle_view_range()
 	set category = "Special Verbs"
