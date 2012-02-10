@@ -410,6 +410,7 @@ steam.start() -- spawns the effect
 	..()
 	var/obj/R = new /obj()
 	R.reagents = new/datum/reagents(500)
+	R.reagents.my_atom = R
 	reagents.trans_to(R, reagents.total_volume/divisor)
 	for(var/atom/A in view(1, src))
 		R.reagents.reaction(A)
@@ -421,6 +422,7 @@ steam.start() -- spawns the effect
 	..()
 	var/obj/R = new /obj()
 	R.reagents = new/datum/reagents(500)
+	R.reagents.my_atom = R
 	reagents.trans_to(R, reagents.total_volume/divisor)
 	R.reagents.reaction(M)
 	del(R)
