@@ -250,6 +250,7 @@
 	S.icon_old = old_icon
 	S.opacity = 0
 	S.sd_NewOpacity(1)
+	levelupdate()
 	return S
 
 /turf/proc/ReplaceWithRWall()
@@ -259,6 +260,7 @@
 	S.icon_old = old_icon
 	S.opacity = 0
 	S.sd_NewOpacity(1)
+	levelupdate()
 	return S
 
 /turf/simulated/wall/New()
