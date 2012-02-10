@@ -519,3 +519,12 @@
 	flags = FPRINT | TABLEPASS | SUITSPACE
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	armor = list(melee = 100, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100)
+
+/obj/item/clothing/under/rank/medical_sleeve
+	desc = "Made of a special fiber that gives special protection against biohazards. Has a cross on the chest denoting that the wearer is trained medical personnel. Has short sleeves."
+	name = "Short Sleeve Medical Jumpsuit"
+	icon_state = "medical_sleeve"
+	item_state = "medical_sleeve"
+	color = "medical_sleeve"
+	permeability_coefficient = 0.50
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)

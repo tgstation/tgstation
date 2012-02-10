@@ -355,6 +355,12 @@ THERMAL GLASSES
 	else if(src.icon_state == "labcoat_pink")
 		src.icon_state = "labcoat_pink_open"
 		usr << "You unbutton the labcoat."
+	else if(src.icon_state == "labcoat_sleeve_open")
+		src.icon_state = "labcoat_sleeve"
+		usr << "You button up the labcoat."
+	else if(src.icon_state == "labcoat_sleeve")
+		src.icon_state = "labcoat_sleeve_open"
+		usr << "You unbutton the labcoat."
 
 	else
 		usr << "Sorry! The suit you're wearing doesn't have buttons!"
