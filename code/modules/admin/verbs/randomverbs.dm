@@ -529,7 +529,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		src << "Only administrators may use this command."
 		return
 	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
-	var/customname = input(usr, "Pick a title for the report.", "Title") as message|null
+	var/customname = input(usr, "Pick a title for the report.", "Title") as text|null
 	if(!input)
 		return
 	if(!customname)

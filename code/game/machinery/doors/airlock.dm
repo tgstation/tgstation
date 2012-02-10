@@ -537,7 +537,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			if (!src.canSynControl() && src.canSynHack(C))
 				src.synhack(user, C)
 				return
-			if(!src.canSynHack(C))
+			if(!src.canSynHack(C) && !synDoorHacked)
 				user << "The power is cut or something, I can't hack it!"
 				return
 			if(istype(C, /obj/item/device/hacktool/engineer))
