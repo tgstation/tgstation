@@ -2,7 +2,7 @@
 //CONTAINS
 CRAYONS
 --------*/
-/obj/item/toy/crayonbox/New()
+/obj/item/weapon/storage/crayonbox/New()
 	..()
 	new /obj/item/toy/crayon/red(src)
 	new /obj/item/toy/crayon/orange(src)
@@ -12,13 +12,13 @@ CRAYONS
 	new /obj/item/toy/crayon/purple(src)
 	updateIcon()
 
-/obj/item/toy/crayonbox/proc/updateIcon()
+/obj/item/weapon/storage/crayonbox/proc/updateIcon()
 	overlays = list() //resets list
 	overlays += image('crayons.dmi',"crayonbox")
 	for(var/obj/item/toy/crayon/crayon in contents)
 		overlays += image('crayons.dmi',crayon.colourName)
 
-/obj/item/toy/crayonbox/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/storage/crayonbox/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/toy/crayon))
 		switch(W:colourName)
 			if("mime")
@@ -27,38 +27,12 @@ CRAYONS
 			if("rainbow")
 				usr << "This crayon is too powerful to be contained in this box."
 				return
-			else
-				usr << "You add the crayon to the box."
-				user.u_equip(W)
-				W.loc = src
-				if ((user.client && user.s_active != src))
-					user.client.screen -= W
-				W.dropped(user)
-				add_fingerprint(user)
-				updateIcon()
-				return
-	else
-		..()
+	..()
+	updateIcon()
 
-/obj/item/toy/crayonbox/attack_hand(mob/user as mob)
-	if(user.r_hand == src || user.l_hand == src)
-		if(!contents.len)
-			user << "\red You're out of crayons!"
-			return
-		else
-			var/crayon = pick(contents)
-			user.contents += crayon
-			if(user.hand)
-				user.l_hand = crayon
-			else
-				user.r_hand = crayon
-			crayon:layer = 20
-			user << "You take the [crayon:colourName] crayon out of the box."
-			updateIcon()
-	else
-		return ..()
-	icon_state = "crayonbox[contents.len]"
-	return
+/obj/item/weapon/storage/crayonbox/attack_hand(mob/user as mob)
+	updateIcon()
+	..()
 
 /obj/item/toy/crayon/red
 	icon_state = "crayonred"
@@ -159,6 +133,14 @@ CRAYONS
 				del(src)
 	else
 		..()
+
+/obj/item/toy/crayon/attack_hand(mob/user as mob)
+	var/obj/item/weapon/storage/crayonbox/CB
+	if(istype(src.loc, /obj/item/weapon/storage/crayonbox))
+		CB = src.loc
+	..()
+	if(CB)
+		CB.updateIcon()
 
 /obj/effect/decal/cleanable/crayon
 	name = "rune"

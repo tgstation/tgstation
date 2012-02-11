@@ -56,6 +56,21 @@
 
 /obj/item/weapon/storage/box/syndicate
 
+/obj/item/weapon/storage/cupbox
+	name = "Paper-cup Box"
+	icon_state = "box"
+	item_state = "syringe_kit"
+	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
+		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
+		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
+		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
+		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
+		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
+		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
+
 /obj/item/weapon/storage/pillbottlebox
 	name = "pill bottles"
 	desc = "A box of pill bottles."
