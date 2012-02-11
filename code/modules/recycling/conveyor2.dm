@@ -16,8 +16,8 @@
 	var/list/affecting	// the list of all items that will be moved this ptick
 	var/id = ""			// the control ID	- must match controller ID
 
-/obj/machinery/conveyor/centcom_auto 
-	id = "round_end_belt" 
+/obj/machinery/conveyor/centcom_auto
+	id = "round_end_belt"
 
 	// create a conveyor
 /obj/machinery/conveyor/New()
@@ -214,6 +214,26 @@
 			last_pos = 0
 	else
 		last_pos = position
+		position = 0
+
+	operated = 1
+	update()
+
+	// find any switches with same id as this one, and set their positions to match us
+	for(var/obj/machinery/conveyor_switch/S in world)
+		if(S.id == src.id)
+			S.position = position
+			S.update()
+
+/obj/machinery/conveyor_switch/oneway
+	var/convdir = 1 //Set to 1 or -1 depending on which way you want the convayor to go. (In other words keep at 1 and set the proper dir on the belts.)
+	desc = "A conveyor control switch. It appears to only go in one direction."
+
+// attack with hand, switch position
+/obj/machinery/conveyor_switch/oneway/attack_hand(mob/user)
+	if(position == 0)
+		position = convdir
+	else
 		position = 0
 
 	operated = 1
