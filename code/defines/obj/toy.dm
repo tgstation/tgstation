@@ -392,7 +392,7 @@
         return
 
 /obj/item/toy/balloon
-	name = "Water Balloon"
+	name = "water balloon"
 	desc = "A translucent balloon. There's nothing in it."
 	icon = 'toy.dmi'
 	icon_state = "waterballoon-e"

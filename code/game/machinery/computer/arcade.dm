@@ -162,7 +162,7 @@
 				if(9)
 					new /obj/item/toy/spinningtoy(src.loc)
 				if(10)
-					new /obj/item/toy/balloon(src/loc)
+					new /obj/item/toy/balloon(src.loc)
 		else
 			var/atom/movable/Prize = pick(contents)
 			Prize.loc = src.loc
