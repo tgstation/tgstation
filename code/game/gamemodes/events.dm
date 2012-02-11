@@ -88,9 +88,6 @@
 /proc/power_failure()
 	command_alert("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure")
 	world << sound('poweroff.ogg')
-	for(var/obj/machinery/power/apc/C in world)
-		if(C.cell && C.z == 1)
-			C.cell.charge = 0
 	for(var/obj/machinery/power/smes/S in world)
 		if(istype(get_area(S), /area/turret_protected) || S.z != 1)
 			continue
@@ -99,12 +96,41 @@
 		S.online = 0
 		S.updateicon()
 		S.power_change()
+
+	var/list/skipped_areas = list(/area/engine/engineering, /area/turret_protected/ai)
+
 	for(var/area/A in world)
-		if(A.name != "Space" && A.name != "Engine Walls" && A.name != "Chemical Lab Test Chamber" && A.name != "Escape Shuttle" && A.name != "Arrival Area" && A.name != "Arrival Shuttle" && A.name != "start area" && A.name != "Engine Combustion Chamber")
-			A.power_light = 0
-			A.power_equip = 0
-			A.power_environ = 0
-			A.power_change()
+		if( !A.requires_power || A.always_unpowered )
+			continue
+
+		var/skip = 0
+		for(var/area_type in skipped_areas)
+			if(istype(A,area_type))
+				skip = 1
+				break
+		if(A.contents)
+			for(var/atom/AT in A.contents)
+				if(AT.z != 1) //Only check one, it's enough.
+					skip = 1
+				break
+		if(skip) continue
+		A.power_light = 0
+		A.power_equip = 0
+		A.power_environ = 0
+		A.power_change()
+
+	for(var/obj/machinery/power/apc/C in world)
+		if(C.cell && C.z == 1)
+			var/area/A = get_area(C)
+
+			var/skip = 0
+			for(var/area_type in skipped_areas)
+				if(istype(A,area_type))
+					skip = 1
+					break
+			if(skip) continue
+
+			C.cell.charge = 0
 
 /proc/power_restore()
 	command_alert("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal")
