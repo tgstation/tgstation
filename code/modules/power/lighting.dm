@@ -438,7 +438,7 @@
 	flags = FPRINT | TABLEPASS
 	force = 2
 	throwforce = 5
-	w_class = 2
+	w_class = 1
 	var/status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/switchcount = 0	// number of times switched
@@ -456,6 +456,7 @@
 	brightness = 8
 
 	large
+		w_class = 2
 		name = "large light tube"
 		brightness = 15
 
@@ -536,18 +537,17 @@
 	name = "replacement bulbs"
 	icon = 'storage.dmi'
 	icon_state = "light"
+	desc = "This box is shaped on the inside so that only light tubes and bulbs fit."
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
+	storage_slots=21
+	can_hold = list("/obj/item/weapon/light/tube", "/obj/item/weapon/light/bulb")
+	max_combined_w_class = 21
 
 /obj/item/weapon/storage/lightbox/bulbs/New()
 	..()
-	new /obj/item/weapon/light/bulb(src)
-	new /obj/item/weapon/light/bulb(src)
-	new /obj/item/weapon/light/bulb(src)
-
-	new /obj/item/weapon/light/bulb(src)
-	new /obj/item/weapon/light/bulb(src)
-	new /obj/item/weapon/light/bulb(src)
+	for(var/i = 0; i < 21; i++)
+		new /obj/item/weapon/light/bulb(src)
 
 /obj/item/weapon/storage/lightbox/tubes
 	name = "replacement tubes"
@@ -555,10 +555,16 @@
 
 /obj/item/weapon/storage/lightbox/tubes/New()
 	..()
-	new /obj/item/weapon/light/tube(src)
-	new /obj/item/weapon/light/tube(src)
-	new /obj/item/weapon/light/tube(src)
+	for(var/i = 0; i < 21; i++)
+		new /obj/item/weapon/light/tube(src)
 
-	new /obj/item/weapon/light/tube(src)
-	new /obj/item/weapon/light/tube(src)
-	new /obj/item/weapon/light/tube(src)
+/obj/item/weapon/storage/lightbox/mixed
+	name = "replacement lights"
+	icon_state = "lightmixed"
+
+/obj/item/weapon/storage/lightbox/mixed/New()
+	..()
+	for(var/i = 0; i < 14; i++)
+		new /obj/item/weapon/light/tube(src)
+	for(var/i = 0; i < 7; i++)
+		new /obj/item/weapon/light/bulb(src)
