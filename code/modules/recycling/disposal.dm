@@ -18,6 +18,8 @@
 	var/flush = 0	// true if flush handle is pulled
 	var/obj/structure/disposalpipe/trunk/trunk = null // the attached pipe trunk
 	var/flushing = 0	// true if flushing in progress
+	var/flush_every_ticks = 30 //Every 30 ticks it will look whether it is ready to flush
+	var/flush_count = 0 //this var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
 
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
@@ -159,10 +161,14 @@
 
 	// human interact with machine
 	attack_hand(mob/user as mob)
+		if(user && user.loc == src)
+			usr << "\red You cannot reach the controls from inside."
+			return
 		interact(user, 0)
 
 	// user interaction
 	proc/interact(mob/user, var/ai=0)
+
 		src.add_fingerprint(user)
 		if(stat & BROKEN)
 			user.machine = null
@@ -197,6 +203,9 @@
 	// handle machine interaction
 
 	Topic(href, href_list)
+		if(usr.loc == src)
+			usr << "\red You cannot reach the controls from inside."
+			return
 		..()
 		src.add_fingerprint(usr)
 		if(stat & BROKEN)
@@ -270,6 +279,14 @@
 	process()
 		if(stat & BROKEN)			// nothing can happen if broken
 			return
+
+		flush_count++
+		if( flush_count >= flush_every_ticks )
+			if( contents.len )
+				if(mode == 2)
+					spawn(0)
+						flush()
+			flush_count = 0
 
 		src.updateDialog()
 
