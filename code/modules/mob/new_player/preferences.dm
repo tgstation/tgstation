@@ -523,7 +523,7 @@ datum/preferences
 				UI = UI_OLD
 
 		if(link_tags["midis"])
-			midis = (midis+1)%2
+			midis = !midis
 
 		if(link_tags["ghost_ears"])
 			ghost_ears = !ghost_ears
@@ -637,11 +637,21 @@ datum/preferences
 		if(!safety)//To prevent run-time errors due to null datum when using randomize_appearance_for()
 			spawn(10)
 				if(character&&character.client)
-					character.client.midis = midis
-					character.client.ooccolor = ooccolor
-					character.client.be_alien = be_special&BE_ALIEN
-					character.client.be_pai = be_special&BE_PAI
-					character.client.ghost_ears = ghost_ears
+					setup_client(character.client)
+
+	proc/copy_to_observer(mob/dead/observer/character)
+		spawn(10)
+			if(character && character.client)
+				setup_client(character.client)
+
+	proc/setup_client(var/client/C)
+		if(C)
+			C.midis = src.midis
+			C.ooccolor = src.ooccolor
+			C.be_alien = be_special & BE_ALIEN
+			C.be_pai = be_special & BE_PAI
+			C.ghost_ears = src.ghost_ears
+			
 
 #undef UI_OLD
 #undef UI_NEW
