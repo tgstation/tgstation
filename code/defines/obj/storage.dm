@@ -158,10 +158,21 @@
 		"/obj/item/weapon/stamp")
 
 	attackby(obj/item/A as obj, mob/user as mob)
-		if (istype(A, /obj/item/weapon/card/id))
-			icon_state = "walletid"
 		..()
+		update_icon()
 		return
+
+	update_icon()
+		for(var/obj/item/weapon/card/id/ID in contents)
+			if(ID.icon_state == "gold")
+				icon_state = "walletid_gold"
+				return
+			else if(ID.icon_state == "id")
+				icon_state = "walletid"
+				return
+		icon_state = "wallet"
+
+
 
 	proc/get_id()
 		for(var/obj/item/weapon/card/id/ID in contents)
