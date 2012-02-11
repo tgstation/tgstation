@@ -432,15 +432,15 @@
 	return
 
 /obj/item/toy/balloon/throw_impact(atom/hit_atom)
-	..()
 	if(src.reagents.total_volume >= 1)
 		src.visible_message("\red The [src] bursts!","You hear a pop and a splash.")
 		src.reagents.reaction(get_turf(hit_atom))
 		for(var/atom/A in get_turf(hit_atom))
 			src.reagents.reaction(A)
 		src.icon_state = "burst"
-		sleep(5)
-		del(src)
+		spawn(5)
+			if(src)
+				del(src)
 	return
 
 /obj/item/toy/balloon/update_icon()
