@@ -125,7 +125,7 @@
 							src.temp = "Recovered from a shattered temple in what was speculated to be the ruins of an alien capital city, the blade is said to cut more than just the material. There was no trace of the blades creators, nor of any other life left on the dead planet, and what caused such an apocalypse remains a mystery."
 							src.max_uses--
 				else if(spell_type == "object")
-					var/list/available_spells = list("Magic Missile","Fireball","Disintegrate","Disable Tech","Smoke","Blind","Mind Transfer","Forcewall","Blink","Teleport","Mutate","Ethereal Jaunt","Knock")
+					var/list/available_spells = list("Magic Missile","Fireball","Disintegrate","Disable Tech","Smoke","Blind","Mind Transfer","Forcewall","Blink","Teleport","Mutate","Ethereal Jaunt","Knock","Summon Guns","Staff of Change","Six Soul Stone Shards and the spell Artificer","Veil Render")
 					var/already_knows = 0
 					for(var/obj/effect/proc_holder/spell/aspell in usr.spell_list)
 						if(available_spells[text2num(href_list["spell_choice"])] == aspell.name)
