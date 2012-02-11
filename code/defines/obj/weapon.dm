@@ -457,7 +457,6 @@
 	var/access = list()
 	var/registered = null
 	var/assignment = null
-	var/obj/item/weapon/photo/PHOTO = null
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
 /obj/item/weapon/card/id/gold

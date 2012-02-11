@@ -5,7 +5,7 @@
 	w_class = 4.0
 	flags = 259.0
 	max_w_class = 3
-	max_combined_w_class = 20
+	max_combined_w_class = 21
 
 /obj/item/weapon/storage/backpack/cultpack
 	name = "Trophy Rack"
