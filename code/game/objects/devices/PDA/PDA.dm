@@ -350,7 +350,9 @@
 	..()
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
-	if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ) )
+	//if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ) )
+
+	if(can_use()) //Why reinvent the wheel? There's a proc that does exactly that.
 		if ( !(U.stat || U.restrained()) )
 
 			add_fingerprint(U)

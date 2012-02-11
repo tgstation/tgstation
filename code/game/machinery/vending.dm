@@ -287,24 +287,27 @@ To combat this, I changed the window name. -- Doohl
 				del(coin)
 
 		R.amount--
-		//src.vend_ready = 0
+		src.vend_ready = 0
 
 		/*
 				FOLKS IN IRC RULED THAT THIS WAS SHITTY -- Doohl
 				No more delays! Go nuts~~~~~~~~~~~
 
-		if(((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
+				A 20 second delay is stupid, a 2 second delay however, is not. -- Nodrak
+				No more greyshirts intentionally crashing clients through vended item spam!
+		*/
+
+		if(((src.last_reply + (src.vend_delay + 50)) <= world.time) && src.vend_reply)
 			spawn(0)
 				src.speak(src.vend_reply)
 				src.last_reply = world.time
-		*/
 
 		use_power(5)
 		if (src.icon_vend) //Show the vending animation if needed
 			flick(src.icon_vend,src)
 
-		// spawn(src.vend_delay)    NOPE.jpg
-			//src.vend_ready = 1
+		spawn(src.vend_delay)
+			src.vend_ready = 1
 
 		new product_path(get_turf(src))
 
