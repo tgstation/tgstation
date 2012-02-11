@@ -255,7 +255,3 @@
 		src.orient_objs(7, 8, 10, 7)
 		return
  	return
-
-/obj/screen/storage/attackby(W, mob/user as mob)
-	src.master.attackby(W, user)
-	return

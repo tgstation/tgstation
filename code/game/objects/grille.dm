@@ -117,6 +117,49 @@
 				for(var/mob/O in oviewers())
 					O << text("\red [user] [src.anchored ? "fastens" : "unfastens"] the grille.")
 				return
+		else if( istype(W,/obj/item/stack/sheet/rglass) || istype(W,/obj/item/stack/sheet/glass) )
+			var/dir_to_set = 1
+			if(src.loc == usr.loc)
+				dir_to_set = usr.dir
+			else
+				if( ( src.x == usr.x ) || (src.y == usr.y) ) //Only supposed to work for cardinal directions.
+					if( src.x == usr.x )
+						if( src.y > usr.y )
+							dir_to_set = 2
+						else
+							dir_to_set = 1
+					else if( src.y == usr.y )
+						if( src.x > usr.x )
+							dir_to_set = 8
+						else
+							dir_to_set = 4
+				else
+					usr << "\red You can't reach there.."
+					return //Only works for cardinal direcitons, diagonals aren't supposed to work like this.
+			for(var/obj/structure/window/WINDOW in src.loc)
+				if(WINDOW.dir == dir_to_set)
+					usr << "\red There is already a window facing this way there."
+					return
+			usr << "\blue You start placing the window"
+			if(do_after(user,20))
+				if(!src) return //Grille destroyed while waiting
+				for(var/obj/structure/window/WINDOW in src.loc)
+					if(WINDOW.dir == dir_to_set)//checking this for a 2nd time to check if a window was made while we were waiting.
+						usr << "\red There is already a window facing this way there."
+						return
+				var/obj/structure/window/WD
+				if(istype(W,/obj/item/stack/sheet/rglass))
+					WD = new/obj/structure/window(src.loc,1) //reinforced window
+				else
+					WD = new/obj/structure/window(src.loc,0) //normal window
+				WD.dir = dir_to_set
+				WD.ini_dir = dir_to_set
+				WD.anchored = 0
+				WD.state = 0
+				var/obj/item/stack/ST = W
+				ST.use(1)
+				usr << "\blue You place the [WD] on the [src]"
+			return
 		else if(istype(W, /obj/item/weapon/shard))
 			src.health -= W.force * 0.1
 		else if(!shock(user, 70))

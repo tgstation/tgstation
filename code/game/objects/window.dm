@@ -297,6 +297,8 @@
 		health = 40
 		if(opacity)
 			icon_state = "twindow"
+	else
+		icon_state = "window"
 
 	update_nearby_tiles(need_rebuild=1)
 
