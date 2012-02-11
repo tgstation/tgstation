@@ -114,6 +114,13 @@
 	active_power_usage = 6
 	power_channel = ENVIRON
 
+	New()
+		if(z == 1)
+			if(security_level)
+				src.overlays += image('monitors.dmi', "overlay_[get_security_level()]")
+			else
+				src.overlays += image('monitors.dmi', "overlay_green")
+
 /obj/machinery/partyalarm
 	name = "\improper Party Button"
 	desc = "Cuban Pete is in the house!"

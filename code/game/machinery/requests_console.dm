@@ -217,7 +217,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			announceAuth = 0;
 			screen = 0
 	if(href_list["sendAnnouncement"])
-		world << "<b><font size = 3> <font color = red>[department] announcement:</font color> [html_encode(message)]</font size></b>"
+		world << "<b><font size = 3><font color = red>[department] announcement:</font color> [html_encode(message)]</font size></b>"
 		announceAuth = 0
 		message = ""
 		screen = 0

@@ -25,11 +25,12 @@ RACK PARTS
 
 // WOODEN TABLE PARTS
 /obj/item/weapon/table_parts/wood/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/wood( src.loc )
 		//SN src = null
 		del(src)
+	else
+		..()
 
 /obj/item/weapon/table_parts/wood/attack_self(mob/user as mob)
 	new /obj/structure/table/woodentable( user.loc )
