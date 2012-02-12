@@ -182,7 +182,7 @@
 		if("Detective")
 			return list(access_security, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 		if("Medical Doctor")
-			return list(access_medical, access_morgue, access_surgery)
+			return list(access_medical, access_morgue, access_surgery, access_virology)
 		if("Botanist")	// -- TLE
 			return list(access_hydroponics) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT
 		if("Librarian") // -- TLE
@@ -243,8 +243,8 @@
 			            access_tox_storage, access_chemistry, access_teleporter,
 			            access_research, access_robotics, access_xenobiology, access_RC_announce,
 			            access_keycard_auth, access_tcomsat)
-		if("Virologist")
-			return list(access_medical, access_morgue, access_virology)
+		/*if("Virologist")
+			return list(access_medical, access_morgue, access_virology)*/
 		if("Chief Medical Officer")
 			return list(access_medical, access_morgue, access_medlab, access_heads,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
