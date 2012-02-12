@@ -10,6 +10,8 @@
 		alive = 1
 		health = 10
 		max_health = 10
+		aggression = 100
+		speed = 8
 		list/access_list = list()//accesses go here
 //AI things
 		task = "thinking"

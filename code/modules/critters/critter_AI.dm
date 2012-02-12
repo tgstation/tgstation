@@ -33,7 +33,7 @@
 						src.target_lastloc = M.loc
 					else
 						var/turf/olddist = get_dist(src, src.target)
-						walk_to(src, src.target,1,4)
+						walk_to(src, src.target,1,speed)
 						if ((get_dist(src, src.target)) >= (olddist))
 							src.frustration++
 						else
@@ -106,6 +106,8 @@
 
 
 	seek_target()
+		if(!prob(aggression)) return // make them attack depending on aggression levels
+	
 		src.anchored = 0
 		var/T = null
 		for(var/mob/living/C in view(src.seekrange,src))//TODO: mess with this
