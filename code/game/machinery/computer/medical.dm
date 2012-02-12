@@ -21,6 +21,7 @@
 	if(..())
 		return
 	var/dat
+
 	if (src.temp)
 		dat = text("<TT>[src.temp]</TT><BR><BR><A href='?src=\ref[src];temp=1'>Clear Screen</A>")
 	else
@@ -28,23 +29,94 @@
 		if (src.authenticated)
 			switch(src.screen)
 				if(1.0)
+					dat += "<p style='text-align:center;'>"
+					dat += text("<A href='?src=\ref[];search=1'>Search Records</A><BR>", src)
 					dat += {"
-<A href='?src=\ref[src];search=1'>Search Records</A>
-<BR><A href='?src=\ref[src];screen=2'>List Records</A>
-<BR><A href='?src=\ref[src];search_dna=1'>Search DNA</A>
-<BR>
-<BR><A href='?src=\ref[src];screen=5'>Virus Database</A>
-<BR><A href='?src=\ref[src];screen=6'>Medbot Tracking</A>
-<BR>
-<BR><A href='?src=\ref[src];screen=3'>Record Maintenance</A>
-<BR><A href='?src=\ref[src];logout=1'>{Log Out}</A><BR>
-"}
-				if(2.0)
-					dat += "<B>Record List</B>:<HR>"
+						</p>
+						<table style="text-align:center;" cellspacing="0" width="100%">
+						<tr>
+						<th>Records:</th>
+						</tr>
+						</table>
+						<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+						<tr>
+						<th>Name</th>
+						<th>ID</th>
+						<th>Rank</th>
+						<th>Fingerprints</th>
+						<th>Physical Status</th>
+						<th>Mental Status</th>
+						</tr>"}
 					for(var/datum/data/record/R in data_core.general)
-						dat += text("<A href='?src=\ref[];d_rec=\ref[]'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
-						//Foreach goto(132)
-					dat += text("<HR><A href='?src=\ref[];screen=1'>Back</A>", src)
+						var/physstat = R.fields["p_stat"]
+						var/background
+						switch(physstat)
+							if("*Deceased*")
+								background = "'background-color:#CD853F;'"
+							if("*Unconscious*")
+								background = "'background-color:#DC143C;'"
+							if("Physically Unfit")
+								background = "'background-color:#3BB9FF;'"
+							if("Active")
+								background = "'background-color:#00FF7F;'"
+							if("")
+								background = "'background-color:#FFFFFF;'"
+								physstat = "No Record."
+						dat += text("<tr style=[]><td><A href='?src=\ref[];d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
+						dat += text("<td>[]</td>", R.fields["id"])
+						dat += text("<td>[]</td>", R.fields["rank"])
+						dat += text("<td>[]</td>", R.fields["fingerprint"])
+						dat += text("<td>[]</td>", physstat)
+						dat += text("<td>[]</td></tr>", R.fields["m_stat"])
+					dat += "</table><hr width='75%' />"
+					dat += "<A href='?src=\ref[src];screen=5'>Virus Database</A><BR>"
+					dat += "<A href='?src=\ref[src];screen=6'>Medbot Tracking</A><BR>"
+					dat += "<A href='?src=\ref[src];screen=3'>Record Maintenance</A><BR><BR>"
+					dat += "<A href='?src=\ref[src];logout=1'>{Log Out}</A>"
+				if(2.0)
+					if(!Perp.len)
+						dat += text("ERROR.  String could not be located.<br><br><A href='?src=\ref[];screen=1'>Back</A>", src)
+					else
+						dat += {"
+							<table style="text-align:center;" cellspacing="0" width="100%">
+							<tr>					"}
+						dat += text("<th>Search Results for '[]':</th>", tempname)
+						dat += {"
+							</tr>
+							</table>
+							<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+							<tr>
+							<th>Name</th>
+							<th>ID</th>
+							<th>Rank</th>
+							<th>Fingerprints</th>
+							<th>Physical Status</th>
+							<th>Mental Status</th>
+							</tr>					"}
+						for(var/i=1, i<=Perp.len, i += 2)
+							var/datum/data/record/R = Perp[i]
+							var/physstat = R.fields["p_stat"]
+							var/background
+							switch(physstat)
+								if("*Deceased*")
+									background = "'background-color:#CD853F;'"
+								if("*Unconscious*")
+									background = "'background-color:#DC143C;'"
+								if("Physically Unfit")
+									background = "'background-color:#3BB9FF;'"
+								if("Active")
+									background = "'background-color:#00FF7F;'"
+								if("")
+									background = "'background-color:#FFFFFF;'"
+									physstat = "No Record."
+							dat += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
+							dat += text("<td>[]</td>", R.fields["id"])
+							dat += text("<td>[]</td>", R.fields["rank"])
+							dat += text("<td>[]</td>", R.fields["fingerprint"])
+							dat += text("<td>[]</td>", physstat)
+							dat += text("<td>[]</td></tr>", R.fields["m_stat"])
+						dat += "</table><hr width='75%' />"
+						dat += text("<br><A href='?src=\ref[];screen=1'>Return to index.</A>", src)
 				if(3.0)
 					dat += "<B>Records Maintenance</B><HR>"
 					if(disk)
@@ -81,19 +153,18 @@
 					else
 						dat += "<B>Medical Record Lost!</B><BR>"
 						dat += text("<A href='?src=\ref[src];new=1'>New Record</A><BR><BR>")
-					dat += text("\n<A href='?src=\ref[];print_p=1'>Print Record</A><BR>\n<A href='?src=\ref[];screen=2'>Back</A><BR>", src, src)
+					dat += text("\n<A href='?src=\ref[];print_p=1'>Print Record</A><BR>\n<A href='?src=\ref[];screen=1'>Back</A><BR>", src, src)
 				if(5.0)
-					dat += "<CENTER><B>Virus Database</B></CENTER>"
+					dat += "<B>Virus Database</B><HR>"
 					for(var/Dt in typesof(/datum/disease/))
 						var/datum/disease/Dis = new Dt(0)
 						if(!Dis.desc)
 							continue
-						dat += "<br><a href='?src=\ref[src];vir=[Dt]'>[Dis.name]</a>"
+						dat += "<a href='?src=\ref[src];vir=[Dt]'>[Dis.name]</a><br>"
 					dat += "<br><a href='?src=\ref[src];screen=1'>Back</a>"
 				if(6.0)
-					dat += "<center><b>Medical Robot Monitor</b></center>"
-					dat += "<a href='?src=\ref[src];screen=1'>Back</a>"
-					dat += "<br><b>Medical Robots:</b>"
+					dat += "<b>Medical Robot Monitor</b><hr>"
+					dat += "<b>Medical Robots:</b><br>"
 					var/bdat = null
 					for(var/obj/machinery/bot/medbot/M in world)
 						var/turf/bl = get_turf(M)
@@ -104,14 +175,16 @@
 							bdat += "Using Internal Synthesizer.<br>"
 
 					if(!bdat)
-						dat += "<br><center>None detected</center>"
+						dat += "None detected<br><br>"
 					else
-						dat += "<br>[bdat]"
+						dat += "[bdat]<br>"
+
+					dat += "<a href='?src=\ref[src];screen=1'>Back</a>"
 
 				else
 		else
 			dat += text("<A href='?src=\ref[];login=1'>{Log In}</A>", src)
-	user << browse(text("<HEAD><TITLE>Medical Records</TITLE></HEAD><TT>[]</TT>", dat), "window=med_rec")
+	user << browse(text("<HEAD><TITLE>Medical Records</TITLE></HEAD><TT>[]</TT>", dat), "window=med_rec;size=600x400")
 	onclose(user, "med_rec")
 	return
 
@@ -309,7 +382,7 @@
 						if("watch")
 							src.active1.fields["m_stat"] = "*Watch*"
 						if("stable")
-							src.active2.fields["m_stat"] = "Stable"
+							src.active1.fields["m_stat"] = "Stable"
 
 
 			if (href_list["b_type"])
@@ -395,26 +468,33 @@
 					src.active2.fields[text("com_[]", href_list["del_c"])] = "<B>Deleted</B>"
 
 			if (href_list["search"])
-				var/t1 = input("Search String: (Name or ID)", "Med. records", null, null)  as text
+				var/t1 = input("Search String: (Partial Name or ID or Fingerprints or DNA or Rank)", "Med. records", null, null)  as text
 				if ((!( t1 ) || usr.stat || !( src.authenticated ) || usr.restrained() || ((!in_range(src, usr)) && (!istype(usr, /mob/living/silicon)))))
 					return
-				src.active1 = null
-				src.active2 = null
+				Perp = new/list()
 				t1 = lowertext(t1)
+				var/list/components = dd_text2list(t1, " ")
+				if(components.len > 5)
+					return //Lets not let them search too greedily.
 				for(var/datum/data/record/R in data_core.general)
-					if ((lowertext(R.fields["name"]) == t1 || t1 == lowertext(R.fields["id"])))
-						src.active1 = R
-					else
-						//Foreach continue //goto(3229)
-				if (!( src.active1 ))
-					src.temp = text("Could not locate record [].", t1)
-				else
+					var/temptext = R.fields["name"] + " " + R.fields["id"] + " " + R.fields["fingerprint"] + " " + R.fields["rank"]
+
 					for(var/datum/data/record/E in data_core.medical)
-						if ((E.fields["name"] == src.active1.fields["name"] || E.fields["id"] == src.active1.fields["id"]))
-							src.active2 = E
-						else
-							//Foreach continue //goto(3334)
-					src.screen = 4
+						if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
+							temptext += " " + E.fields["b_dna"]
+
+					for(var/i = 1, i<=components.len, i++)
+						if(findtext(temptext,components[i]))
+							var/prelist = new/list(2)
+							prelist[1] = R
+							Perp += prelist
+				for(var/i = 1, i<=Perp.len, i+=2)
+					for(var/datum/data/record/E in data_core.medical)
+						var/datum/data/record/R = Perp[i]
+						if ((E.fields["name"] == R.fields["name"] && E.fields["id"] == R.fields["id"]))
+							Perp[i+1] = E
+				tempname = t1
+				src.screen = 2
 
 			if (href_list["print_p"])
 				if (!( src.printing ))
@@ -437,24 +517,6 @@
 					P.info += "</TT>"
 					P.name = "paper - 'Medical Record'"
 					src.printing = null
-
-			if (href_list["search_dna"])
-				var/t1 = input("Search String: (DNA)", "Medical records", null, null)  as text
-				if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || (!in_range(src, usr)) && (!istype(usr, /mob/living/silicon))))
-					return
-				active1 = null
-				active2 = null
-				t1 = lowertext(t1)
-				for(var/datum/data/record/R in data_core.medical)
-					if (lowertext(R.fields["b_dna"]) == t1)
-						active2 = R
-				if (!( active2 ))
-					temp = text("Could not locate record [].", t1)
-				else
-					for(var/datum/data/record/E in data_core.general)
-						if ((E.fields["name"] == active2.fields["name"] || E.fields["id"] == active2.fields["id"]))
-							active1 = E
-					screen = 4
 			if (href_list["eject_disk"])
 				if (!disk)
 					return

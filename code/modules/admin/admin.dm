@@ -115,8 +115,8 @@
 
 
 	/////////////////////////////////////new ban stuff
-	if(href_list["unbanf"])
-		var/banfolder = href_list["unbanf"]
+	if(href_list["unban_del"])
+		var/banfolder = href_list["unban_del"]
 		Banlist.cd = "/base/[banfolder]"
 		var/key = Banlist["key"]
 		if(alert(usr, "Are you sure you want to unban [key]?", "Confirmation", "Yes", "No") == "Yes")
@@ -126,11 +126,18 @@
 				alert(usr,"This ban has already been lifted / does not exist.","Error","Ok")
 				unbanpanel()
 
-	if(href_list["unbane"])
+	if(href_list["unban_cid"])
+		var/banfolder = href_list["unban_cid"]
+		Banlist.cd = "/base/[banfolder]"
+		var/key = Banlist["key"]
+		if(alert(usr, "Are you sure you want to remove the computer ID for [key]'s ban? Without the ID, a different account could get on the server from [key]'s computer.", "Confirmation", "Yes", "No") == "Yes")
+			Banlist["skipIdCheck"] << 1
+
+	if(href_list["unban_edit"])
 		UpdateTime()
 		var/reason
 		var/mins = 0
-		var/banfolder = href_list["unbane"]
+		var/banfolder = href_list["unban_edit"]
 		Banlist.cd = "/base/[banfolder]"
 		var/reason2 = Banlist["reason"]
 		var/temp = Banlist["temp"]
@@ -155,10 +162,10 @@
 				if(!reason)
 					return
 
-		log_admin("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [GetExp(mins)]")
+		log_admin("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [GetBanExp(mins)]")
 
-		ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [GetExp(mins)]")
-		message_admins("\blue [key_name_admin(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [GetExp(mins)]", 1)
+		ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [GetBanExp(mins)]")
+		message_admins("\blue [key_name_admin(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [GetBanExp(mins)]", 1)
 		Banlist.cd = "/base/[banfolder]"
 		Banlist["reason"] << reason
 		Banlist["temp"] << temp

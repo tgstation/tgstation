@@ -1,6 +1,22 @@
 var/CMinutes = null
 var/savefile/Banlist
 
+/proc/LoadBans()
+
+	Banlist = new("data/banlist.bdb")
+	log_admin("Loading banlist.")
+
+	if (!length(Banlist.dir)) log_admin("Banlist is empty.")
+
+	if (!Banlist.dir.Find("base"))
+		log_admin("Banlist missing base dir.")
+		Banlist.dir.Add("base")
+
+	Banlist.cd = "/base"
+
+	ClearTempbans()
+	return 1
+
 
 /proc/CheckBan(var/client/clientvar)
 
@@ -11,11 +27,11 @@ var/savefile/Banlist
 	if (Banlist.dir.Find("[key][id]"))
 		Banlist.cd = "[key][id]"
 		if (Banlist["temp"])
-			if (!GetExp(Banlist["minutes"]))
+			if (!GetBanExp(Banlist["minutes"]))
 				ClearTempbans()
 				return 0
 			else
-				return "[Banlist["reason"]]\n(This ban will be automatically removed in [GetExp(Banlist["minutes"])].)"
+				return "[Banlist["reason"]]\n(This ban will be automatically removed in [GetBanExp(Banlist["minutes"])].)"
 		else
 			Banlist.cd = "/base/[key][id]"
 			return "[Banlist["reason"]]\n(This is a permanent ban)"
@@ -23,38 +39,21 @@ var/savefile/Banlist
 	Banlist.cd = "/base"
 	for (var/A in Banlist.dir)
 		Banlist.cd = "/base/[A]"
-		if (id == Banlist["id"] || key == Banlist["key"])
+		if ( key == Banlist["key"] || (id == Banlist["id"] && Banlist["skipIdCheck"] == 0) )
 			if(Banlist["temp"])
-				if (!GetExp(Banlist["minutes"]))
+				if (!GetBanExp(Banlist["minutes"]))
 					ClearTempbans()
 					return 0
 				else
-					return "[Banlist["reason"]]\n(This ban will be automatically removed in [GetExp(Banlist["minutes"])].)"
+					return "[Banlist["reason"]]\n(This ban will be automatically removed in [GetBanExp(Banlist["minutes"])].)"
 			else
 				return "[Banlist["reason"]]\n(This is a permanent ban)"
 
 	return 0
 
 
-/proc/UpdateTime() //No idea why i made this a proc.
+/proc/UpdateTime()
 	CMinutes = (world.realtime / 10) / 60
-	return 1
-
-/proc/LoadBans()
-
-	Banlist = new("data/banlist.bdb")
-	log_admin("Loading Banlist")
-
-	if (!length(Banlist.dir)) log_admin("Banlist is empty.")
-
-	if (!Banlist.dir.Find("base"))
-		log_admin("Banlist missing base dir.")
-		Banlist.dir.Add("base")
-		Banlist.cd = "/base"
-	else if (Banlist.dir.Find("base"))
-		Banlist.cd = "/base"
-
-	ClearTempbans()
 	return 1
 
 /proc/ClearTempbans()
@@ -92,6 +91,7 @@ var/savefile/Banlist
 		Banlist.cd = "/base/[ckey][computerid]"
 		Banlist["key"] << ckey
 		Banlist["id"] << computerid
+		Banlist["skipIdCheck"] << 0
 		Banlist["reason"] << reason
 		Banlist["bannedby"] << bannedby
 		Banlist["temp"] << temp
@@ -106,7 +106,6 @@ var/savefile/Banlist
 
 	Banlist.cd = "/base/[foldername]"
 	Banlist["key"] >> key
-	Banlist["id"] >> id
 	Banlist.cd = "/base"
 
 	if (!Banlist.dir.Remove(foldername)) return 0
@@ -129,7 +128,7 @@ var/savefile/Banlist
 
 	return 1
 
-/proc/GetExp(minutes as num)
+/proc/GetBanExp(minutes as num)
 	UpdateTime()
 	var/exp = minutes - CMinutes
 	if (exp <= 0)
@@ -147,20 +146,19 @@ var/savefile/Banlist
 /obj/admins/proc/unbanpanel()
 	var/count = 0
 	var/dat
-	//var/dat = "<HR><B>Unban Player:</B> \blue(U) = Unban , (E) = Edit Ban\green (Total<HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >"
 	Banlist.cd = "/base"
 	for (var/A in Banlist.dir)
 		count++
 		Banlist.cd = "/base/[A]"
-		dat += text("<tr><td><A href='?src=\ref[src];unbanf=[Banlist["key"]][Banlist["id"]]'>(U)</A><A href='?src=\ref[src];unbane=[Banlist["key"]][Banlist["id"]]'>(E)</A> Key: <B>[Banlist["key"]]</B></td><td> ([Banlist["temp"] ? "[GetExp(Banlist["minutes"]) ? GetExp(Banlist["minutes"]) : "Removal pending" ]" : "Permaban"])</td><td>(By: [Banlist["bannedby"]])</td><td>(Reason: [Banlist["reason"]])</td></tr>")
+		dat += text("<tr><td><A href='?src=\ref[src];unban_del=[Banlist["key"]][Banlist["id"]]'>(U)</A><A href='?src=\ref[src];unban_edit=[Banlist["key"]][Banlist["id"]]'>(E)</A><A href='?src=\ref[src];unban_cid=[Banlist["key"]][Banlist["id"]]'>(K)</A> Key: <B>[Banlist["key"]]</B></td><td> ([Banlist["temp"] ? "[GetBanExp(Banlist["minutes"]) ? GetBanExp(Banlist["minutes"]) : "Removal pending" ]" : "Permaban"])</td><td>(By: [Banlist["bannedby"]])</td><td>(Reason: [Banlist["reason"]])</td></tr>")
 
 	dat += "</table>"
-	dat = "<HR><B>Bans:</B> <FONT COLOR=blue>(U) = Unban , (E) = Edit Ban</FONT> - <FONT COLOR=green>([count] Bans)</FONT><HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >[dat]"
+	dat = "<HR><B>Bans:</B> <FONT COLOR=blue>(U) = Unban , (E) = Edit Ban , (K) = Remove Computer ID</FONT> - <FONT COLOR=green>([count] Bans)</FONT><HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >[dat]"
 	usr << browse(dat, "window=unbanp;size=875x400")
 
 //////////////////////////////////// DEBUG ////////////////////////////////////
 
-/proc/CreateBans()
+/*/proc/CreateBans()
 
 	UpdateTime()
 
@@ -192,5 +190,5 @@ var/savefile/Banlist
 /proc/ClearAllBans()
 	Banlist.cd = "/base"
 	for (var/A in Banlist.dir)
-		RemoveBan(A)
+		RemoveBan(A)*/
 

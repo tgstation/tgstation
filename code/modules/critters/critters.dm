@@ -135,9 +135,10 @@
 	name = "Spess Carp"
 	desc = "A ferocious, fang-bearing creature that resembles a fish."
 	icon_state = "spesscarp"
-	health = 25
-	max_health = 25
+	health = 100
+	max_health = 100
 	aggressive = 1
+	aggression = 20
 	defensive = 1
 	wanderer = 1
 	atkcarbon = 1
@@ -152,6 +153,7 @@
 	attacktext = "bites"
 	attack_sound = 'bite.ogg'
 	attack_speed = 10
+	speed = 8
 	var/stunchance = 10 // chance to tackle things down
 
 
@@ -185,8 +187,8 @@
 
 /obj/effect/critter/spesscarp/elite
 	desc = "Oh shit, you're really fucked now. It has an evil gleam in its eye."
-	health = 50
-	max_health = 50
+	health = 200
+	max_health = 200
 	melee_damage_lower = 20
 	melee_damage_upper = 35
 	stunchance = 15
