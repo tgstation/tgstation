@@ -100,6 +100,7 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["name_is_always_random"] >> src.be_random_name
 	F["midis"] >> src.midis
 	F["ghost_ears"] >> src.ghost_ears
+	if(isnull(ghost_ears)) ghost_ears = 1 //Hotfix
 	F["ooccolor"] >> src.ooccolor
 	F["lastchangelog"] >> src.lastchangelog
 	F["UI"] >> src.UI

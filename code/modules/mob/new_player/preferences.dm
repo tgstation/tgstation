@@ -650,8 +650,9 @@ datum/preferences
 			C.ooccolor = src.ooccolor
 			C.be_alien = be_special & BE_ALIEN
 			C.be_pai = be_special & BE_PAI
+			if(isnull(src.ghost_ears)) src.ghost_ears = 1 //There were problems where the default was null before someone saved their profile.
 			C.ghost_ears = src.ghost_ears
-			
+
 
 #undef UI_OLD
 #undef UI_NEW
