@@ -49,6 +49,7 @@
 
 /mob/living/simple_animal/corgi/show_inv(mob/user as mob)
 	user.machine = src
+	if(user.stat) return
 
 	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
 	if(inventory_head)
@@ -82,6 +83,8 @@
 	..()
 
 /mob/living/simple_animal/corgi/Topic(href, href_list)
+	if(usr.stat) return
+
 	//Removing from inventory
 	if(href_list["remove_inv"])
 		if(get_dist(src,usr) > 1 || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
