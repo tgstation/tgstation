@@ -1257,6 +1257,7 @@
 	name = "fork"
 	desc = "Pointy."
 	icon_state = "fork"
+	var/obj/item/weapon/reagent_containers/food/snacks/bite
 
 /obj/item/weapon/kitchen/utensil/knife
 	name = "knife"
