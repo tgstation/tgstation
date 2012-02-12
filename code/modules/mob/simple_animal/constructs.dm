@@ -11,7 +11,8 @@
 	emote_hear = list("wails","screeches")
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"
-	response_harm   = "punches the"
+	response_harm   = "harmlessly punches the"
+	harm_intent_damage = 0
 	melee_damage_lower = 15
 	melee_damage_upper = 30
 	attacktext = "smashes their armoured gauntlet into"
