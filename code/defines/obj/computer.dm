@@ -125,6 +125,8 @@
 	var/a_id = null
 	var/temp = null
 	var/printing = null
+	var/list/Perp
+	var/tempname = null
 
 
 /obj/machinery/computer/med_data/laptop
