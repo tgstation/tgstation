@@ -38,7 +38,7 @@
 			world << "Rebooting world in 5 seconds."
 
 			feedback_set_details("end_error","malf - no AI")
-			feedback_set_details("round_end","[time2text(world.realtime)]")
+
 			if(blackbox)
 				blackbox.save_all_data_to_sql()
 			sleep(50)

@@ -2233,7 +2233,7 @@
 		log_admin("[key_name(usr)] initiated a reboot.")
 
 		feedback_set_details("end_error","admin reboot - by [usr.key] [usr.client.stealth ? "(stealth)" : ""]")
-		feedback_set_details("round_end","[time2text(world.realtime)]")
+
 		if(blackbox)
 			blackbox.save_all_data_to_sql()
 
@@ -2395,7 +2395,7 @@
 	log_admin("[key_name(usr)] initiated an immediate reboot.")
 
 	feedback_set_details("end_error","immediate admin reboot - by [usr.key] [usr.client.stealth ? "(stealth)" : ""]")
-	feedback_set_details("round_end","[time2text(world.realtime)]")
+
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
 

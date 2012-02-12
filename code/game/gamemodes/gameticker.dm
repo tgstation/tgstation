@@ -184,7 +184,7 @@ var/global/datum/controller/gameticker/ticker
 					feedback_set_details("end_proper","proper completion")
 					world << "\blue <B>Restarting in [restart_timeout/10] seconds</B>"
 
-				feedback_set_details("round_end","[time2text(world.realtime)]")
+
 				if(blackbox)
 					blackbox.save_all_data_to_sql()
 

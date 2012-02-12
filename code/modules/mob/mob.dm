@@ -115,7 +115,7 @@
 		world << "<B>Everyone is dead! Resetting in 30 seconds!</B>"
 
 		feedback_set_details("end_error","no live players")
-		feedback_set_details("round_end","[time2text(world.realtime)]")
+
 		if(blackbox)
 			blackbox.save_all_data_to_sql()
 
