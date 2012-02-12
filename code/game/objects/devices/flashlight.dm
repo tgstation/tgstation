@@ -13,18 +13,36 @@
 		icon_on = "flight1"
 		icon_off = "flight0"
 
+/obj/item/device/flashlight/initialize()
+	..()
+	if (on)
+		icon_state = icon_on
+		src.sd_SetLuminosity(brightness_on)
+	else
+		icon_state = icon_off
+		src.sd_SetLuminosity(0)
+
+/obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
+	if (on)
+		icon_state = icon_on
+		if(src.loc == user)
+			user.total_luminosity += brightness_on
+		else if (isturf(src.loc))
+			src.sd_SetLuminosity(brightness_on)
+
+	else
+		icon_state = icon_off
+		if(src.loc == user)
+			user.total_luminosity -= brightness_on
+		else if (isturf(src.loc))
+			src.sd_SetLuminosity(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if(!isturf(user.loc))
 		user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
 		return
 	on = !on
-	if (on)
-		icon_state = icon_on
-		user.total_luminosity += brightness_on
-	else
-		icon_state = icon_off
-		user.total_luminosity -= brightness_on
+	update_brightness(user)
 	return
 
 
@@ -64,8 +82,8 @@
 
 /obj/item/device/flashlight/pickup(mob/user)
 	if(on)
-		src.sd_SetLuminosity(0)
 		user.total_luminosity += brightness_on
+		src.sd_SetLuminosity(0)
 
 
 /obj/item/device/flashlight/dropped(mob/user)
@@ -133,10 +151,41 @@
 
 /obj/item/clothing/head/helmet/hardhat/pickup(mob/user)
 	if(on)
-		src.sd_SetLuminosity(0)
 		user.total_luminosity += brightness_on
+		user.UpdateLuminosity()
+		src.sd_SetLuminosity(0)
 
 /obj/item/clothing/head/helmet/hardhat/dropped(mob/user)
 	if(on)
 		user.total_luminosity -= brightness_on
+		user.UpdateLuminosity()
 		src.sd_SetLuminosity(brightness_on)
+
+// the desk lamps are a bit special
+/obj/item/device/flashlight/lamp
+	name = "desk lamp"
+	desc = "A desk lamp"
+	icon = 'lighting.dmi'
+	icon_state = "lamp0"
+	brightness_on = 5
+	icon_on = "lamp1"
+	icon_off = "lamp0"
+	w_class = 4
+	flags = FPRINT | TABLEPASS | CONDUCT
+	m_amt = 0
+	g_amt = 0
+	on = 1
+
+// green-shaded desk lamp
+/obj/item/device/flashlight/lamp/green
+	icon_state = "green0"
+	icon_on = "green1"
+	icon_off = "green0"
+	desc = "A green-shaded desk lamp"
+
+/obj/item/device/flashlight/lamp/verb/toggle_light(mob/user)
+	set name = "Toggle light"
+	set category = "Object"
+	set src in oview(1)
+
+	attack_self(user)

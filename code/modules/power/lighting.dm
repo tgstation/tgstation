@@ -52,23 +52,6 @@
 	light_type = /obj/item/weapon/light/tube/large
 	brightness = 15
 
-// the desk lamp
-/obj/machinery/light/lamp
-	name = "desk lamp"
-	icon_state = "lamp1"
-	base_state = "lamp"
-	fitting = "bulb"
-	brightness = 5
-	desc = "A desk lamp"
-	light_type = /obj/item/weapon/light/bulb
-	var/switchon = 0		// independent switching for lamps - not controlled by area lightswitch
-
-// green-shaded desk lamp
-/obj/machinery/light/lamp/green
-	icon_state = "green1"
-	base_state = "green"
-	desc = "A green-shaded desk lamp"
-
 
 // create a new lighting fixture
 /obj/machinery/light/New()
@@ -392,37 +375,7 @@
 
 
 
-// special handling for desk lamps
 
-
-// if attack with hand, only "grab" attacks are an attempt to remove bulb
-// otherwise, switch the lamp on/off
-
-/obj/machinery/light/lamp/attack_hand(mob/user)
-
-	if(user.a_intent == "grab")
-		..()	// do standard hand attack
-	else
-		switchon = !switchon
-		user << "You switch [switchon ? "on" : "off"] the [name]."
-		seton(switchon && powered(LIGHT))
-
-
-// called when area power state changes
-// override since lamp does not use area lightswitch
-
-/obj/machinery/light/lamp/power_change()
-	spawn(rand(0,15))
-		var/area/A = src.loc.loc
-		A = A.master
-		seton(switchon && A.power_light)
-
-// returns whether this lamp has power
-// true if area has power and lamp switch is on
-
-/obj/machinery/light/lamp/has_power()
-	var/area/A = src.loc.loc
-	return switchon && A.master.power_light
 
 
 
