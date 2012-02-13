@@ -528,7 +528,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 				if (src.canAIHack())
 					src.hack(user)
 					return
-		else if(user)
+		else if(user && !isrobot(user))
 			if(!C)
 				return
 			if(C.in_use)
@@ -542,7 +542,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 				return
 			if(istype(C, /obj/item/device/hacktool/engineer))
 				return
-		else
+		else if(!isrobot(user))
 			world << "ERROR: Mob was null when calling attack_ai on [src.name] at [src.x],[src.y],[src.z]"
 			return
 
