@@ -329,8 +329,8 @@ datum
 					AG.process_group()
 
 			process_singletons()
-				//for(var/turf/simulated/T in active_singletons)	// this code shouldn't actually exist in the current version of FEA apparently,
-				//	T.process_cell()								// causes horrible gas variable glitching
+				for(var/turf/simulated/T in active_singletons)
+					T.process_cell()
 
 			process_super_conductivity()
 				for(var/turf/simulated/hot_potato in active_super_conductivity)
