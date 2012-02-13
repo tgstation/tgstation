@@ -510,10 +510,3 @@
 	item_state = "sexymime"
 	color = "sexymime"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
-
-/obj/item/clothing/head/bowler
-	name = "bowler-hat"
-	desc = "Gentleman, elite aboard!"
-	icon_state = "bowler"
-	item_state = "bowler"
-	flags = FPRINT | TABLEPASS

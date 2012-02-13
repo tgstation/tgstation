@@ -188,3 +188,24 @@
 	desc = "For quick identification of trained medical personnel."
 	icon_state = "nursehat"
 	flags = FPRINT|TABLEPASS
+
+/obj/item/clothing/head/bowlerhat
+	name = "Bowler hat"
+	icon_state = "bowler_hat"
+	item_state = "bowler_hat"
+	desc = "For the gentleman of distinction."
+	flags = FPRINT|TABLEPASS
+
+/obj/item/clothing/head/beaverhat
+	name = "Beaver hat"
+	icon_state = "beaver_hat"
+	item_state = "beaver_hat"
+	desc = "Solf felt make this hat both comfortable and elegant."
+	flags = FPRINT|TABLEPASS
+
+/obj/item/clothing/head/boaterhat
+	name = "Boater hat"
+	icon_state = "boater_hat"
+	item_state = "boater_hat"
+	desc = "The ultimate in summer fashion."
+	flags = FPRINT|TABLEPASS
