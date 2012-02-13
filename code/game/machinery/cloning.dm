@@ -444,7 +444,7 @@
 			break
 	if(!selected) //Search for a ghost if dead body with client isn't found.
 		for(var/mob/dead/observer/ghost in world)
-			if (ghost.corpse.mind.key == find_key)
+			if (ghost.corpse && ghost.corpse.mind.key == find_key)
 				selected = ghost
 				break
 	return selected

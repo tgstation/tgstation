@@ -217,7 +217,7 @@ datum
 					base.processing = 0 //singletons at startup are technically unconnected anyway
 					base.parent = null
 
-					if(base.air.check_tile_graphic())
+					if(base.air && base.air.check_tile_graphic())
 						base.update_visuals(base.air)
 
 				return null

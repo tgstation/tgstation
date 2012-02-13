@@ -194,7 +194,6 @@
 				shroom.pixel_y = 0
 
 	W = new /turf/simulated/floor/plating/airless/asteroid( locate(src.x, src.y, src.z) )
-	W.New()
 	W.dir = old_dir
 	W.fullUpdateMineralOverlays()
 

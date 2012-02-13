@@ -132,7 +132,6 @@
 	for(var/obj/structure/lattice/L in locate(src.x, src.y, src.z))
 		del(L)
 	var/turf/simulated/floor/W = new /turf/simulated/floor( locate(src.x, src.y, src.z) )
-	W.New()
 
 	W.dir = old_dir
 	if(prior_icon) W.icon_state = prior_icon
@@ -152,7 +151,6 @@
 	for(var/obj/structure/lattice/L in locate(src.x, src.y, src.z))
 		del(L)
 	var/turf/simulated/floor/plating/W = new /turf/simulated/floor/plating( locate(src.x, src.y, src.z) )
-	W.New()
 
 	W.dir = old_dir
 	if(prior_icon) W.icon_state = prior_icon
@@ -168,7 +166,6 @@
 	for(var/obj/structure/lattice/L in locate(src.x, src.y, src.z))
 		del(L)
 	var/turf/simulated/floor/engine/E = new /turf/simulated/floor/engine( locate(src.x, src.y, src.z) )
-	E.New()
 
 	E.dir = old_dir
 	E.icon_state = "engine"
@@ -231,14 +228,12 @@
 /turf/proc/ReplaceWithSpace()
 	var/old_dir = dir
 	var/turf/space/S = new /turf/space( locate(src.x, src.y, src.z) )
-	S.New()
 	S.dir = old_dir
 	return S
 
 /turf/proc/ReplaceWithLattice()
 	var/old_dir = dir
 	var/turf/space/S = new /turf/space( locate(src.x, src.y, src.z) )
-	S.New()
 	S.dir = old_dir
 	new /obj/structure/lattice( locate(src.x, src.y, src.z) )
 	return S
@@ -246,7 +241,6 @@
 /turf/proc/ReplaceWithWall()
 	var/old_icon = icon_state
 	var/turf/simulated/wall/S = new /turf/simulated/wall( locate(src.x, src.y, src.z) )
-	S.New()
 	S.icon_old = old_icon
 	S.opacity = 0
 	S.sd_NewOpacity(1)
@@ -256,7 +250,6 @@
 /turf/proc/ReplaceWithRWall()
 	var/old_icon = icon_state
 	var/turf/simulated/wall/r_wall/S = new /turf/simulated/wall/r_wall( locate(src.x, src.y, src.z) )
-	S.New()
 	S.icon_old = old_icon
 	S.opacity = 0
 	S.sd_NewOpacity(1)
