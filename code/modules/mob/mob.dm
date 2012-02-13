@@ -604,42 +604,62 @@
 			src:cameraFollow = null
 
 
-/mob/Topic(href, href_list)
-	if(href_list["mach_close"])
-		var/t1 = text("window=[href_list["mach_close"]]")
-		machine = null
-		src << browse(null, t1)
+/client/Topic(href, href_list)
+	if(href_list["priv_msg"]) //All PM links have clients as their SRC-s (So that you always PM the same client even if they change mob (ghost, observe, etc.)), but PM code is in mob/topic() So this redirects the call.
+		if(mob)
+			mob.Topic(href, href_list)
+	else
+		..()
 
+/mob/Topic(href, href_list)
 	if(href_list["priv_msg"])
-		var/mob/M = locate(href_list["priv_msg"])
-		if(M)
+		var/client/C = locate(href_list["priv_msg"])
+
+		if(ismob(C)) //Old stuff can pass in mobs instead of clients
+			var/mob/M = C
+			C = M.client
+
+		if(C)
 			if(src.client && client.muted_complete)
 				src << "You are muted have a nice day"
 				return
-			if (!ismob(M))
+			if (!istype(C,/client))
+				src << "\red not a client."
 				return
-			//This should have a check to prevent the player to player chat but I am too tired atm to add it.
-			var/t = input("Message:", text("Private message to [M.key]"))  as text|null
-			if (!t || !usr || !M)
-				return
-			if (usr.client && usr.client.holder)
-				M << "\red Admin PM from-<b>[key_name(usr, M, 0)]</b>: [t]"
-				usr << "\blue Admin PM to-<b>[key_name(M, usr, 1)]</b>: [t]"
-			else
-				if (M)
-					if (M.client && M.client.holder)
-						M << "\blue Reply PM from-<b>[key_name(usr, M, 1)]</b>: [t]"
-					else
-						M << "\red Reply PM from-<b>[key_name(usr, M, 0)]</b>: [t]"
-					usr << "\blue Reply PM to-<b>[key_name(M, usr, 0)]</b>: [t]"
 
-			log_admin("PM: [key_name(usr)]->[key_name(M)] : [t]")
+			if ( !( src.client.holder || C.holder ) ) //neither of the two is an admin.
+				src.client << "\red Admin-player or player-admin conversation only!"
+				return.
+
+			var/t = input("Message:", text("Private message to [C.key]"))  as text|null
+			if (!t || !usr || !C)
+				return
+			if (usr.client && usr.client.holder) //Admin is messaging a player
+				C << "\red <font size='4'><b>-- Administrator private message --</b></font>"
+				C << "<b>[key_name(usr.client, C, 0)] [t]</b>"
+				C << "Click on the administrator's name to reply."
+				usr << "\blue Admin PM to <b>[key_name(C, usr.client, 1)]</b>: [t]"
+			else
+				if (C)
+					if (C.holder)
+						C << "\blue Reply PM from <b>[key_name(usr.client, C, 1)]</b>: [t]"
+					else
+						C << "\red Reply PM from <b>[key_name(usr.client, C, 0)]</b>: [t]"
+					usr.client << "\blue Reply PM to <b>[key_name(C, usr.client, 0)]</b>: [t]"
+
+			log_admin("PM: [usr.client.key]->[C.key] : [t]")
 
 			//we don't use message_admins here because the sender/receiver might get it too
 			for (var/mob/K in world)
 				if(K && usr)
-					if(K.client && K.client.holder && K.key != usr.key && K.key != M.key)
-						K << "<b><font color='blue'>PM: [key_name(usr, K)]->[key_name(M, K)]:</b> \blue [t]</font>"
+					if(K.client && K.client.holder && K.key != usr.key && K.key != C.key)
+						K << "<b><font color='blue'>PM: [key_name(usr.client, K.client)]->[key_name(C, K.client)]:</b> \blue [t]</font>"
+		else
+			client << "\red Client disconnected"
+	if(href_list["mach_close"])
+		var/t1 = text("window=[href_list["mach_close"]]")
+		machine = null
+		src << browse(null, t1)
 	..()
 	return
 
