@@ -60,6 +60,14 @@ macro "macro"
 		command = "drop-item"
 		is-disabled = false
 	elem 
+		name = "CTRL+E"
+		command = "_changeintent 1"
+		is-disabled = false
+	elem 
+		name = "CTRL+Q"
+		command = "_changeintent -1"
+		is-disabled = false
+	elem 
 		name = "CTRL+S"
 		command = "swap-hand"
 		is-disabled = false
