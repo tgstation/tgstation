@@ -29,6 +29,7 @@
 					dropped(source)
 					if (W)
 						W.layer = initial(W.layer)
+				source.update_clothing()
 		return
 
 
