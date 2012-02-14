@@ -10,6 +10,7 @@
 
 /obj/item/proc/dropped(mob/user as mob)
 	..()
+	user.update_clothing()
 
 	// So you can't drop the Offhand
 	if(istype(src, /obj/item/weapon/offhand))
