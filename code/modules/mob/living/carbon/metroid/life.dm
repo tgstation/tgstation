@@ -211,6 +211,7 @@
 	var/Tempstun = 0 // temporary temperature stuns
 	var/Discipline = 0 // if a metroid has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
 	var/SStun = 0 // stun variable
+	var/Obstacle = 1 // determines whether the turf the metroid will head to has an obstacle
 	proc
 
 		AIprocess()  // the master AI process
@@ -228,7 +229,9 @@
 				switch(nutrition)
 					if(150 to 800) hungry = 1
 					if(0 to 149) starving = 1
+
 			AIproc = 1
+
 			while(AIproc && stat != 2 && (attacked > 0 || starving || hungry || rabid || Victim))
 				if(Victim) // can't eat AND have this little process at the same time
 					break
@@ -242,63 +245,63 @@
 					AIproc = 0
 					break
 
-				if(Target)
-					for(var/mob/living/carbon/metroid/M in view(1,Target))
-						if(M.Victim == Target)
-							Target = null
-							AIproc = 0
-							break
-					if(!AIproc)
+				for(var/mob/living/carbon/metroid/M in view(1,Target))
+					if(M.Victim == Target)
+						Target = null
+						AIproc = 0
 						break
 
-					if(Target in view(1,src))
+				if(!AIproc)
+					break
 
-						if(istype(Target, /mob/living/silicon))
-							if(!Atkcool)
-								spawn()
-									Atkcool = 1
-									sleep(15)
-									Atkcool = 0
+				if(get_obstacle_ok(Target))
+					Obstacle = 0
+				else Obstacle = 1
 
-								if(get_obstacle_ok(Target))
-									Target.attack_metroid(src)
-							return
-						if(prob(80) && !Target.lying)
+				if(Target in view(1,src))
 
-							if(Target.client && Target.health >= rand(10,30))
-								if(!Atkcool)
-									spawn()
-										Atkcool = 1
-										sleep(25)
-										Atkcool = 0
+					if(istype(Target, /mob/living/silicon))
+						if(!Atkcool)
+							spawn()
+								Atkcool = 1
+								sleep(15)
+								Atkcool = 0
 
-									if(get_obstacle_ok(Target))
-										Target.attack_metroid(src)
+							if(!Obstacle)
+								Target.attack_metroid(src)
+						return
+
+					if(prob(80) && !Target.lying && Target.client && Target.health >= rand(10,30))
+
+						if(!Atkcool)
+							spawn()
+								Atkcool = 1
+								sleep(25)
+								Atkcool = 0
+
+							if(!Obstacle)
+								Target.attack_metroid(src)
 
 
-								if(prob(30))
-									step_to(src, Target)
-
-							else
-								if(!Atkcool && get_obstacle_ok(Target))
-									Feedon(Target)
-
-						else
-							if(!Atkcool && get_obstacle_ok(Target))
-								Feedon(Target)
+						if(prob(30))
+							step_to(src, Target)
 
 					else
-						if(Target in view(30, src))
-							if(get_obstacle_ok(Target))
-								step_to(src, Target)
+						if(!Atkcool && !Obstacle)
+							Feedon(Target)
 
-						else
-							Target = null
-							AIproc = 0
-							break
+				else
+					if(Target in view(30, src))
+						if(!Obstacle)
+							step_to(src, Target)
+
+					else
+						Target = null
+						AIproc = 0
+						break
 
 				var/sleeptime = movement_delay()
-				if(sleeptime <= 0) sleeptime = 1
+				if(sleeptime < 1) sleeptime = 1
 
 				sleep(sleeptime + 2) // this is about as fast as a player Metroid can go
 

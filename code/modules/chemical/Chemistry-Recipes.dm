@@ -194,7 +194,7 @@ datum
 			name = "Dexalin"
 			id = "dexalin"
 			result = "dexalin"
-			required_reagents = list("oxygen" = 2)
+			required_reagents = list("oxygen" = 2, "plasma" = 0.1)
 			required_catalysts = list("plasma" = 5)
 			result_amount = 1
 
@@ -244,7 +244,7 @@ datum
 			name = "Clonexadone"
 			id = "clonexadone"
 			result = "clonexadone"
-			required_reagents = list("cryoxadone" = 1, "sodium" = 1)
+			required_reagents = list("cryoxadone" = 1, "sodium" = 1, "plasma" = 0.1)
 			required_catalysts = list("plasma" = 5)
 			result_amount = 2
 

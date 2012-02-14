@@ -49,8 +49,8 @@
 	flag = CHEMIST
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 1
+	spawn_positions = 1
 	supervisors = "the chief medical officer and the research director"
 
 

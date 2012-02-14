@@ -87,15 +87,9 @@
 		if(timing)
 			overlays += text("prox_timing")
 			small_icon_state_overlays += text("prox_timing")
-			if(master && istype(master, /obj/item/weapon/chem_grenade))
-				var/obj/item/weapon/chem_grenade/M = master
-				M.c_state(1)
 		if(scanning)
 			overlays += text("prox_scanning")
 			small_icon_state_overlays += text("prox_scanning")
-			if(master && istype(master, /obj/item/weapon/chem_grenade))
-				var/obj/item/weapon/chem_grenade/M = master
-				M.c_state(1)
 		if(holder)
 			holder.update_icon()
 
