@@ -578,8 +578,8 @@
 /obj/item/clothing/mask/redscarf
 	name = "Red scarf"
 	desc = "A red and white checkered neck scarf."
-	icon_state = "red_scarf"
-	item_state = "red_scarf"
+	icon_state = "redwhite_scarf"
+	item_state = "redwhite_scarf"
 	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
 	w_class = 2
 	gas_transfer_coefficient = 0.90
@@ -596,8 +596,8 @@
 /obj/item/clothing/mask/ninjascarf
 	name = "Ninja scarf"
 	desc = "A stealthy, dark scarf."
-	icon_state = "ninjascarf"
-	item_state = "ninjascarf"
+	icon_state = "ninja_scarf"
+	item_state = "ninja_scarf"
 	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
 	w_class = 2
 	gas_transfer_coefficient = 0.90
