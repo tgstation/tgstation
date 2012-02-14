@@ -464,6 +464,7 @@
 	m_amt = 60
 	var/rigged = 0		// true if rigged to explode
 	var/brightness = 2 //how much light it gives off
+	var/repair_state = 0
 
 /obj/item/weapon/light/tube
 	name = "light tube"
@@ -497,9 +498,15 @@
 			if(LIGHT_BURNED)
 				icon_state = "[base_state]-burned"
 				desc = "A burnt-out [name]."
+				if(repair_state == 1)
+					desc += " It has some wires hanging out."
 			if(LIGHT_BROKEN)
 				icon_state = "[base_state]-broken"
 				desc = "A broken [name]."
+				if(repair_state == 1)
+					desc += " It has some wires hanging out."
+				else if(repair_state == 2)
+					desc += " It has had new wires put in."
 
 
 /obj/item/weapon/light/New()
@@ -514,8 +521,9 @@
 
 // attack bulb/tube with object
 // if a syringe, can inject plasma to make it explode
+// also repairing them with wire and screwdriver
+// and glass if it's broken
 /obj/item/weapon/light/attackby(var/obj/item/I, var/mob/user)
-	..()
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = I
 
@@ -526,8 +534,36 @@
 			rigged = 1
 
 		S.reagents.clear_reagents()
-	else
-		..()
+		return
+	if(status != 0)
+		if(istype(I, /obj/item/weapon/cable_coil) && repair_state == 0)
+			user << "You put some new wiring into the [src]."
+			I:use(1)
+			repair_state = 1
+			update()
+			return
+		if(istype(I, /obj/item/weapon/screwdriver) && repair_state == 1)
+			user << "You attach the new wiring."
+			playsound(src.loc, 'Screwdriver.ogg', 100, 1)
+			if(status == LIGHT_BURNED)
+				repair_state = 0
+				status = LIGHT_OK
+			else
+				repair_state = 2
+			update()
+			return
+		if(istype(I, /obj/item/stack/sheet/glass) && status == LIGHT_BROKEN)
+			user << "You repair the glass of the [src]." //this is worded terribly
+			I:use(1)
+			force = 2 //because breaking it changes the force, this changes it back
+			if(repair_state == 2)
+				repair_state = 0
+				status = LIGHT_OK
+			else
+				status = LIGHT_BURNED
+			update()
+			return
+	..()
 	return
 
 // called after an attack with a light item
