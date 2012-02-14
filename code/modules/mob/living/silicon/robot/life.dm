@@ -20,8 +20,7 @@
 		use_power()
 		process_killswitch()
 		process_locks()
-	if(modtype != "robot") //only update canmove if we've selected a module
-		update_canmove()
+	update_canmove()
 
 	update_mind()
 

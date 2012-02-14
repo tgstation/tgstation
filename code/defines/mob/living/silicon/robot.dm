@@ -3,7 +3,6 @@
 	icon = 'robots.dmi'//
 	icon_state = "robot"
 	health = 300
-	canmove = 0
 
 #define BORGMESON 1
 #define BORGTHERM 2
