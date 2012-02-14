@@ -12,6 +12,7 @@
 		life_tick = 0
 		isbreathing = 1
 		holdbreath = 0
+		lyingcheck = 0
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
@@ -86,6 +87,9 @@
 
 	// Update clothing
 //	update_clothing()
+	if(lyingcheck != lying)		//This is a fix for falling down / standing up not updating icons.  Instead of going through and changing every
+		update_clothing()		//instance in the code where lying is modified, I've just added a new variable "lyingcheck" which will be compared
+		lyingcheck = lying		//to lying, so if lying ever changes, update_clothing() will run like normal.
 
 	if(client)
 		handle_regular_hud_updates()
