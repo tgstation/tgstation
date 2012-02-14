@@ -47,7 +47,7 @@
 	attack_hand(mob/user as mob)
 		src.add_fingerprint(user)
 		if(state == 2)
-			if(!src.locked || istype(user, /mob/living/silicon))
+			if(!src.locked)
 				if(src.active==1)
 					src.active = 0
 					user << "You turn off the [src]."
@@ -60,9 +60,9 @@
 					src.use_power = 2
 				update_icon()
 			else
-				user << "The controls are locked!"
+				user << "\red The controls are locked!"
 		else
-			user << "The [src] needs to be firmly secured to the floor first."
+			user << "\red The [src] needs to be firmly secured to the floor first."
 			return 1
 
 
@@ -90,8 +90,7 @@
 				src.fire_delay = rand(20,100)
 				src.shot_number = 0
 			use_power(1000)
-			var/obj/item/projectile/beam/A = new /obj/item/projectile/beam( src.loc )
-			A.icon_state = "emitter"
+			var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
 			playsound(src.loc, 'emitter.ogg', 25, 1)
 			if(prob(35))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -128,14 +127,14 @@
 					playsound(src.loc, 'Ratchet.ogg', 75, 1)
 					user.visible_message("[user.name] secures [src.name] to the floor.", \
 						"You secure the external reinforcing bolts to the floor.", \
-						"You hear ratchet")
+						"You hear a ratchet")
 					src.anchored = 1
 				if(1)
 					state = 0
 					playsound(src.loc, 'Ratchet.ogg', 75, 1)
 					user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
 						"You undo the external reinforcing bolts.", \
-						"You hear ratchet")
+						"You hear a ratchet")
 					src.anchored = 0
 				if(2)
 					user << "\red The [src.name] needs to be unwelded from the floor."
@@ -160,7 +159,7 @@
 							user << "You weld the [src] to the floor."
 						W:welding = 1
 					else
-						user << "\blue You need more welding fuel to complete this task."
+						user << "\red You need more welding fuel to complete this task."
 				if(2)
 					if (W:remove_fuel(0,user))
 						W:welding = 2
@@ -173,16 +172,20 @@
 							user << "You cut the [src] free from the floor."
 						W:welding = 1
 					else
-						user << "\blue You need more welding fuel to complete this task."
+						user << "\red You need more welding fuel to complete this task."
 			return
 
-		if(istype(W, /obj/item/weapon/card/id))//The slot is too small for PDAs
+		if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 			if(emagged)
 				user << "\red The lock seems to be broken"
 				return
 			if(src.allowed(user))
-				src.locked = !src.locked
-				user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+				if(active)
+					src.locked = !src.locked
+					user << "The controls are now [src.locked ? "locked." : "unlocked."]"
+				else
+					src.locked = 0 //just in case it somehow gets locked
+					user << "\red The controls can only be locked when the [src] is online"
 			else
 				user << "\red Access denied."
 			return

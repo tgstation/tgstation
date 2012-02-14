@@ -34,6 +34,9 @@
 	icon_state = "heavylaser"
 	damage = 60
 
+/obj/item/projectile/beam/emitter
+	name = "emitter beam"
+	icon_state = "emitter"
 
 
 

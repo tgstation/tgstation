@@ -1,7 +1,7 @@
 /**********************Mineral stacking unit console**************************/
 
 /obj/machinery/mineral/stacking_unit_console
-	name = "Stacking machine console"
+	name = "stacking machine console"
 	icon = 'mining_machines.dmi'
 	icon_state = "console"
 	density = 1
@@ -132,7 +132,7 @@
 
 
 /obj/machinery/mineral/stacking_machine
-	name = "Stacking machine"
+	name = "stacking machine"
 	icon = 'mining_machines.dmi'
 	icon_state = "stacker"
 	density = 1

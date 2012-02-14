@@ -9,9 +9,6 @@
 		modtype = "robot"
 		updateicon()
 //		syndicate = syndie
-		if(real_name == "Cyborg")
-			real_name += " [pick(rand(1, 999))]"
-			name = real_name
 	spawn (4)
 		if (client)
 			connected_ai = activeais()
@@ -67,6 +64,7 @@
 		return
 	switch(mod)
 		if("Standard")
+			updatename("Cy")
 			module = new /obj/item/weapon/robot_module/standard(src)
 			hands.icon_state = "standard"
 			icon_state = "robot"
@@ -74,6 +72,7 @@
 			feedback_inc("cyborg_standard",1)
 
 		if("Service")
+			updatename("Servi")
 			module = new /obj/item/weapon/robot_module/butler(src)
 			hands.icon_state = "service"
 			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich")
@@ -91,6 +90,7 @@
 			feedback_inc("cyborg_service",1)
 
 		if("Miner")
+			updatename("Digger")
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
 			icon_state = "Miner"
@@ -98,6 +98,7 @@
 			feedback_inc("cyborg_miner",1)
 
 		if("Medical")
+			updatename("Medi")
 			module = new /obj/item/weapon/robot_module/medical(src)
 			hands.icon_state = "medical"
 			icon_state = "surgeon"
@@ -106,6 +107,7 @@
 			feedback_inc("cyborg_medical",1)
 
 		if("Security")
+			updatename("Securi")
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"
 			icon_state = "bloodhound"
@@ -113,6 +115,7 @@
 			feedback_inc("cyborg_security",1)
 
 		if("Engineering")
+			updatename("Engi")
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			hands.icon_state = "engineer"
 			icon_state = "landmate"
@@ -120,6 +123,7 @@
 			feedback_inc("cyborg_engineering",1)
 
 		if("Janitor")
+			updatename("Jani")
 			module = new /obj/item/weapon/robot_module/janitor(src)
 			hands.icon_state = "janitor"
 			icon_state = "mopgearrex"
@@ -128,6 +132,18 @@
 
 	overlays -= "eyes" //Takes off the eyes that it started with
 	updateicon()
+
+/mob/living/silicon/robot/verb/updatename(var/prefix as text)
+	if(real_name == "Cyborg")
+		var/defaultname = "[prefix]borg -[rand(1,999)]"
+		var/newname = input("Please input a name", "Name selection", defaultname, null)
+		newname = copytext(sanitize(newname), 1, MAX_MESSAGE_LEN) //Sanitize the name
+
+		if(!newname)
+			newname = "[defaultname]"
+
+		real_name = newname
+		name = real_name
 
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
 	set category = "Robot Commands"

@@ -1,7 +1,7 @@
 /proc/mini_blob_event()
 
 	var/turf/T = pick(blobstart)
-	var/obj/effect/blob/bl = new /obj/effect/blob( T.loc, 30 )
+	var/obj/effect/blob/bl = new /obj/effect/blob( T, 30 )
 	spawn(0)
 		bl.Life()
 		bl.Life()
