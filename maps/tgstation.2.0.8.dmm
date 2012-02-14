@@ -2719,7 +2719,7 @@
 "bao" = (/turf/simulated/floor/plating,/area/maintenance/asmaint2)
 "bap" = (/obj/machinery/camera{c_tag = "Arrivals Auxiliary Docking"; dir = 8; network = "SS13"},/turf/simulated/floor,/area/hallway/secondary/entry)
 "baq" = (/obj/machinery/door_control{id = "Disposal Exit"; name = "Disposal Vent Control"; pixel_x = -25; pixel_y = 4},/obj/machinery/driver_button{id = "trash"; pixel_x = -26; pixel_y = -6},/turf/simulated/floor/plating,/area/maintenance/disposal)
-"bar" = (/obj/machinery/conveyor_switch/oneway{id = "garbage"; name = "disposal coveyor"},/turf/simulated/floor/plating,/area/maintenance/disposal)
+"bar" = (/obj/machinery/conveyor_switch/oneway{convdir = -1; id = "garbage"; name = "disposal coveyor"},/turf/simulated/floor/plating,/area/maintenance/disposal)
 "bas" = (/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plating,/area/maintenance/disposal)
 "bat" = (/obj/effect/decal/cleanable/oil,/obj/machinery/status_display{density = 0; layer = 4; pixel_x = 0; pixel_y = 32},/obj/machinery/power/apc{dir = 4; name = "Disposal APC"; pixel_x = 27; pixel_y = 0},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor/plating,/area/maintenance/disposal)
 "bau" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/maintenance/port)
