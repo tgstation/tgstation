@@ -290,7 +290,7 @@ THERMAL GLASSES
 		state = "enabled"
 	usr << "Its mag-pulse traction system appears to be [state]."
 
-/obj/item/clothing/suit/suit/verb/toggle()
+/obj/item/clothing/suit/lawyer/verb/toggle()
 	set name = "Toggle Jacket Buttons"
 	set category = "Object"
 	if(src.icon_state == "suitjacket_blue_open")

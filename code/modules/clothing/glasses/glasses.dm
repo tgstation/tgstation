@@ -56,6 +56,22 @@
 	protective_temperature = 1300
 	darkness_view = -1
 
+/obj/item/clothing/glasses/sunglasses/big
+	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks many flashes."
+	icon_state = "bigsunglasses"
+	item_state = "bigsunglasses"
+	protective_temperature = 1400
+
+//ultimate glasses
+/obj/item/clothing/glasses/hud/security/jensenshades
+	name = "Augmented shades"
+	desc = "Polarized bioneural eyewear, designed to augment your vision."
+	icon_state = "jensenshades"
+	item_state = "jensenshades"
+	protective_temperature = 1500
+	vision_flags = SEE_MOBS
+	invisa_view = 2
+
 /obj/item/clothing/glasses/sunglasses/sechud
 	name = "HUDSunglasses"
 	desc = "Sunglasses with a HUD."

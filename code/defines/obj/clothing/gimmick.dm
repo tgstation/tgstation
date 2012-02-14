@@ -510,3 +510,133 @@
 	item_state = "sexymime"
 	color = "sexymime"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+
+//stylish new hats
+
+/obj/item/clothing/head/bowlerhat
+	name = "Bowler hat"
+	icon_state = "bowler_hat"
+	item_state = "bowler_hat"
+	desc = "For the gentleman of distinction."
+	flags = FPRINT|TABLEPASS
+
+/obj/item/clothing/head/beaverhat
+	name = "Beaver hat"
+	icon_state = "beaver_hat"
+	item_state = "beaver_hat"
+	desc = "Solf felt make this hat both comfortable and elegant."
+	flags = FPRINT|TABLEPASS
+
+/obj/item/clothing/head/boaterhat
+	name = "Boater hat"
+	icon_state = "boater_hat"
+	item_state = "boater_hat"
+	desc = "The ultimate in summer fashion."
+	flags = FPRINT|TABLEPASS
+
+/obj/item/clothing/head/fedora
+	name = "Fedora"
+	icon_state = "fedora"
+	item_state = "fedora"
+	desc = "A sharp, stylish hat."
+	flags = FPRINT|TABLEPASS
+
+/obj/item/clothing/head/feathertrilby
+	name = "Feather trilby"
+	icon_state = "feather_trilby"
+	item_state = "feather_trilby"
+	desc = "A sharp, stylish hat with a feather."
+	flags = FPRINT|TABLEPASS
+
+//pyjamas
+
+/obj/item/clothing/under/bluepyjamas
+	name = "Blue pyjamas"
+	desc = "Slightly old-fashioned sleepwear."
+	icon_state = "blue_pyjamas"
+	item_state = "blue_pyjamas"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
+/obj/item/clothing/under/redpyjamas
+	name = "Red pyjamas"
+	desc = "Slightly old-fashioned sleepwear."
+	icon_state = "red_pyjamas"
+	item_state = "red_pyjamas"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
+//scarves (fit in in mask slot)
+
+/obj/item/clothing/mask/bluescarf
+	name = "Blue neck scarf"
+	desc = "A blue neck scarf."
+	icon_state = "blueneckscarf"
+	item_state = "blueneckscarf"
+	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
+	w_class = 2
+	gas_transfer_coefficient = 0.90
+
+/obj/item/clothing/mask/redscarf
+	name = "Red scarf"
+	desc = "A red and white checkered neck scarf."
+	icon_state = "red_scarf"
+	item_state = "red_scarf"
+	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
+	w_class = 2
+	gas_transfer_coefficient = 0.90
+
+/obj/item/clothing/mask/greenscarf
+	name = "Green scarf"
+	desc = "A green neck scarf."
+	icon_state = "green_scarf"
+	item_state = "green_scarf"
+	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
+	w_class = 2
+	gas_transfer_coefficient = 0.90
+
+/obj/item/clothing/mask/ninjascarf
+	name = "Ninja scarf"
+	desc = "A stealthy, dark scarf."
+	icon_state = "ninjascarf"
+	item_state = "ninjascarf"
+	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
+	w_class = 2
+	gas_transfer_coefficient = 0.90
+
+//shoes
+
+/obj/item/clothing/shoes/laceups
+	name = "Laceup shoes"
+	desc = "Stylish black leather."
+	icon_state = "laceups"
+	item_state = "laceups"
+	color = "black"
+
+//suits
+
+/obj/item/clothing/suit/leathercoat
+	name = "Leather Coat"
+	desc = "A long, thick black leather coat."
+	icon_state = "leathercoat"
+	item_state = "leathercoat"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/suit/browncoat
+	name = "Brown Leather Coat"
+	desc = "A long, brown leather coat."
+	icon_state = "browncoat"
+	item_state = "browncoat"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/suit/neocoat
+	name = "Black coat"
+	desc = "A flowing, black coat."
+	icon_state = "neocoat"
+	item_state = "neocoat"
+	flags = FPRINT | TABLEPASS
+
+/obj/item/clothing/suit/creamsuit
+	name = "Cream suit"
+	desc = "A cream coloured, genteel suit."
+	icon_state = "creamsuit"
+	item_state = "creamsuit"
+	flags = FPRINT | TABLEPASS
