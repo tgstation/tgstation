@@ -67,4 +67,5 @@
 
 	UpdateDamageIcon()
 	updatehealth()
+	update_clothing()
 	return 1
