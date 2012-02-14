@@ -5,7 +5,7 @@
 	emote_see = list("shakes its head", "kicks the ground")
 	speak_chance = 1
 	turns_per_move = 15
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -107,7 +107,7 @@
 	icon_state = "cow"
 	icon_living = "cow"
 	icon_dead = "cow_d"
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/cow
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/cow
 	meat_amount = 10
 	max_nutrition = 1000
 	speak = list("Moo.","Moooo!","Snort.")
@@ -131,7 +131,7 @@
 		if(user.a_intent == "hurt")
 			rage_at(user)
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/cow
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/cow
 	name = "Beef"
 	desc = "It's what's for dinner!"
 
@@ -141,7 +141,7 @@
 	icon_state = "chick"
 	icon_living = "chick"
 	icon_dead = "chick_d"
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/chicken
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/chicken
 	meat_amount = 3
 	max_nutrition = 200
 	speak = list("Bock bock!","Cl-cluck.","Click.")
@@ -158,7 +158,7 @@
 			new/obj/item/weapon/reagent_containers/food/snacks/egg(src.loc) // lay an egg
 			nutrition -= 25
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/chicken
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/chicken
 	name = "Chicken"
 	desc = "Tasty!"
 

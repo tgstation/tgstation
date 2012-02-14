@@ -141,7 +141,7 @@
 		var/totalslabs = 8
 
 		for (var/i=1 to totalslabs)
-			var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat = new()
+			var/obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/human/newmeat = new()
 			newmeat.name = sourcename + newmeat.name
 			newmeat.subjectname = sourcename
 			newmeat.subjectjob = sourcejob
@@ -155,7 +155,7 @@
 		var/totalslabs = 5
 
 		for (var/i=1 to totalslabs)
-			var/obj/item/weapon/reagent_containers/food/snacks/meat/monkey/newmeat = new()
+			var/obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/monkey/newmeat = new()
 			newmeat.name = sourcename + newmeat.name
 			newmeat.reagents.add_reagent("nutriment", sourcenutriment / totalslabs) // Thehehe. Fat guys go first
 			src.occupant.reagents.trans_to(newmeat, round(sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the
