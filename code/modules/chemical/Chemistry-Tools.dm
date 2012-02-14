@@ -289,12 +289,6 @@
 				if(beaker_two)
 					beaker_two.loc = get_turf(src.loc)
 
-		c_state(var/i = 0)
-			if(i)
-				icon_state = initial(icon_state) + "_armed"
-			return
-
-
 	large
 		name = "Large Chem Grenade"
 		desc = "An oversized grenade that affects a larger area."

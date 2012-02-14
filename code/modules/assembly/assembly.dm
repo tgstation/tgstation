@@ -140,6 +140,7 @@
 
 
 	process()
+		processing_objects.Remove(src)
 		return
 
 

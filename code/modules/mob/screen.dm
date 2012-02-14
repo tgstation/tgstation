@@ -474,6 +474,7 @@
 						usr << "\blue You successfully remove your handcuffs."
 						usr:handcuffed:loc = usr:loc
 						usr:handcuffed = null
+						usr.update_clothing()
 
 			if(istype(usr, /mob/living/carbon/human) && istype(usr:wear_suit, /obj/item/clothing/suit/straight_jacket) && usr:canmove && (usr.last_special <= world.time))
 				usr.next_move = world.time + 200

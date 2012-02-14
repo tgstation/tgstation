@@ -482,6 +482,7 @@
 			I.implanted = O
 		O.flavor_text = M.flavor_text
 		O.warn_flavor_changed()
+		O.update_clothing()
 		del(M)
 		return
 //////////////////////////////////////////////////////////// Monkey Block

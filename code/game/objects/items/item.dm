@@ -10,6 +10,7 @@
 
 /obj/item/proc/dropped(mob/user as mob)
 	..()
+	user.update_clothing()
 
 	// So you can't drop the Offhand
 	if(istype(src, /obj/item/weapon/offhand))
@@ -369,6 +370,11 @@ mob/proc/flash_weak_pain()
 
 	if(istype(M, /mob/living/carbon/human))
 		M:attacked_by(src, user, def_zone)
+		var/mob/living/carbon/human/H = M
+		if(H)
+			H.UpdateDamageIcon()
+			H.update_clothing()
+		user.update_clothing()
 	else
 		switch(src.damtype)
 			if("brute")

@@ -135,4 +135,5 @@ emp_act
 				if(bloody)
 					if(src.wear_suit)	src.wear_suit.add_blood(src)
 					if(src.w_uniform)	src.w_uniform.add_blood(src)
-	src.UpdateDamageIcon()
+	UpdateDamageIcon()
+	update_clothing()

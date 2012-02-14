@@ -174,6 +174,7 @@ THERMAL GLASSES
 	desc = A.desc
 	icon_state = A.icon_state
 	item_state = A.item_state
+	usr.update_clothing()
 	color = A.color
 
 /obj/item/clothing/under/chameleon/emp_act(severity)

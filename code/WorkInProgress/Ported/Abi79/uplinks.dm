@@ -193,10 +193,20 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		return
 
 	explode()
+		var/turf/location = get_turf(src.loc)
+		if(location)
+			location.hotspot_expose(700,125)
+			explosion(location, 0, 0, 2, 4, 1)
+
 		var/obj/item/weapon/implant/uplink/U = src.loc
 		var/mob/living/A = U.imp_in
-		A.gib()
-		..()
+		var/datum/organ/external/head = A:organs["head"]
+		head.destroyed = 1
+		spawn(2)
+			head.droplimb()
+			del(src.master)
+			del(src)
+		return
 
 
 /obj/item/device/uplink/radio
