@@ -2861,6 +2861,25 @@
 		..()
 		reagents.add_reagent("fuel",1000)
 
+
+	bullet_act(var/obj/item/projectile/Proj)
+		if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
+			explosion(src.loc,-1,0,2)
+			if(src)
+				del(src)
+
+
+
+	blob_act()
+		explosion(src.loc,0,1,5,7,10)
+		if(src)
+			del(src)
+
+	ex_act()
+		explosion(src.loc,-1,0,2)
+		if(src)
+			del(src)
+
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
 	desc = "Refill pepper spray canisters."
@@ -2873,15 +2892,6 @@
 		..()
 		reagents.add_reagent("condensedcapsaicin",1000)
 
-/obj/structure/reagent_dispensers/fueltank/blob_act()
-	explosion(src.loc,0,1,5,7,10)
-	if(src)
-		del(src)
-
-/obj/structure/reagent_dispensers/fueltank/ex_act()
-	explosion(src.loc,-1,0,2)
-	if(src)
-		del(src)
 
 /obj/structure/reagent_dispensers/water_cooler
 	name = "Water-Cooler"

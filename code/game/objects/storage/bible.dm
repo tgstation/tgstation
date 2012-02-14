@@ -45,6 +45,9 @@
 //		return
 
 	if (M.stat !=2)
+		if(M.mind && (M.mind.assigned_role == "Chaplain"))
+			user << "\red You can't heal yourself!"
+			return
 		if((M.mind in ticker.mode.cult) && (prob(20)))
 			M << "\red The power of [src.deity_name] clears your mind of heresy!"
 			user << "\red You see how [M]'s eyes become clear, the cult no longer holds control over him!"

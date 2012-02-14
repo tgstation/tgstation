@@ -650,7 +650,7 @@ var/list/sacrificed = list()
 			if (istype(W,/obj/item/weapon/paper/talisman))
 				rad = 4
 				go = 1
-			if (istype(W,/obj/item/weapon/storage/bible))
+			if (istype(W,/obj/item/weapon/nullrod))
 				rad = 1
 				go = 1
 			if(go)
@@ -659,7 +659,7 @@ var/list/sacrificed = list()
 						R:visibility=15
 					S=1
 			if(S)
-				if(istype(W,/obj/item/weapon/storage/bible))
+				if(istype(W,/obj/item/weapon/nullrod))
 					usr << "\red Arcane markings suddenly glow from underneath a thin layer of dust!"
 					return
 				if(istype(W,/obj/effect/rune))
@@ -759,7 +759,7 @@ var/list/sacrificed = list()
 				if (cultist == user) //just to be sure.
 					return
 				if(cultist.buckled || cultist.handcuffed || (!isturf(cultist.loc) && !istype(cultist.loc, /obj/structure/closet)))
-					user << "\red You cannot summon the [cultist], for him shackles of blood are strong"
+					user << "\red You cannot summon the [cultist], for his shackles of blood are strong"
 					return fizzle()
 				cultist.loc = src.loc
 				cultist.lying = 1
@@ -782,7 +782,8 @@ var/list/sacrificed = list()
 				for(var/mob/living/carbon/C in range(7,src))
 					if (iscultist(C))
 						continue
-					if(C.mind && (C.mind.assigned_role == "Chaplain"))
+					var/obj/item/weapon/nullrod/N = locate() in C
+					if(N)
 						continue
 					C.ear_deaf += 50
 					C.show_message("\red The world around you suddenly becomes quiet.", 3)
@@ -800,7 +801,8 @@ var/list/sacrificed = list()
 				for(var/mob/living/carbon/C in range(7,usr))
 					if (iscultist(C))
 						continue
-					if(C.mind && (C.mind.assigned_role == "Chaplain"))
+					var/obj/item/weapon/nullrod/N = locate() in C
+					if(N)
 						continue
 					C.ear_deaf += 30
 					//talismans is weaker.
@@ -820,7 +822,8 @@ var/list/sacrificed = list()
 				for(var/mob/living/carbon/C in viewers(src))
 					if (iscultist(C))
 						continue
-					if(C.mind && (C.mind.assigned_role == "Chaplain"))
+					var/obj/item/weapon/nullrod/N = locate() in C
+					if(N)
 						continue
 					C.eye_blurry += 50
 					C.eye_blind += 20
@@ -841,7 +844,8 @@ var/list/sacrificed = list()
 				for(var/mob/living/carbon/C in viewers(usr))
 					if (iscultist(C))
 						continue
-					if(C.mind && (C.mind.assigned_role == "Chaplain"))
+					var/obj/item/weapon/nullrod/N = locate() in C
+					if(N)
 						continue
 					C.eye_blurry += 30
 					C.eye_blind += 10
@@ -870,7 +874,8 @@ var/list/sacrificed = list()
 				for(var/mob/living/carbon/M in viewers(usr))
 					if(iscultist(M))
 						continue
-					if(M.mind && (M.mind.assigned_role == "Chaplain"))
+					var/obj/item/weapon/nullrod/N = locate() in M
+					if(N)
 						continue
 					M.take_overall_damage(51,51)
 					M << "\red Your blood boils!"
@@ -932,7 +937,8 @@ var/list/sacrificed = list()
 				del(src)
 			else                        ///When invoked as talisman, stun and mute the target mob.
 				usr.say("Dream sign ''Evil sealing talisman''!")
-				if(T.mind && (T.mind.assigned_role == "Chaplain"))
+				var/obj/item/weapon/nullrod/N = locate() in T
+				if(N)
 					for(var/mob/O in viewers(T, null))
 						O.show_message(text("\red <B>[] invokes a talisman at [], but they are unaffected!</B>", usr, T), 1)
 				else

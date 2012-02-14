@@ -7,8 +7,14 @@
 	flag = "laser"
 	eyeblur = 2
 
-/obj/item/projectile/beam/practice
+/obj/item/projectile/practice
+	name = "laser"
+	icon_state = "laser"
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 0
+	damage_type = BURN
+	flag = "laser"
+	eyeblur = 2
 
 
 /obj/item/projectile/beam/heavylaser

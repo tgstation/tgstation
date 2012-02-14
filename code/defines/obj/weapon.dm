@@ -29,6 +29,19 @@
 	IsShield()
 		return 1
 
+
+/obj/item/weapon/nullrod
+	name = "null rod"
+	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
+	icon_state = "nullrod"
+	item_state = "nullrod"
+	flags = FPRINT | ONBELT | TABLEPASS
+	force = 15
+	throw_speed = 1
+	throw_range = 4
+	throwforce = 10
+	w_class = 1
+
 /obj/item/weapon/sord
 	name = "SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."

@@ -126,9 +126,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			user << "You retrace your steps, carefully undoing the lines of the rune."
 			del(src)
 			return
-		else if(istype(I, /obj/item/weapon/storage/bible) && usr.mind && (usr.mind.assigned_role == "Chaplain"))
-			var/obj/item/weapon/storage/bible/bible = I
-			user << "\blue You banish the vile magic with the blessing of [bible.deity_name]!"
+		else if(istype(I, /obj/item/weapon/nullrod))
+			user << "\blue You disrupt the vile magic with the deadening field of the null rod!"
 			del(src)
 			return
 		return

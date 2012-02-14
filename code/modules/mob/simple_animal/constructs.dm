@@ -38,30 +38,21 @@
 			return
 
 /mob/living/simple_animal/constructarmoured/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(istype(O, /obj/item/weapon/storage/bible))
-		if(user.mind && (user.mind.assigned_role == "Chaplain"))
-			health -= 75
+	if(O.force)
+		if(O.force >= 11)
+			health -= O.force
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] lets out a pained screech, its armoured skin fizzling and melting. ")
+					M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
 		else
-			usr << "\red Your faith is not strong enough!"
+			for(var/mob/M in viewers(src, null))
+				if ((M.client && !( M.blinded )))
+					M.show_message("\red \b The [O] bounces harmlessly off of [src]. ")
 	else
-		if(O.force)
-			if(O.force >= 11)
-				health -= O.force
-				for(var/mob/M in viewers(src, null))
-					if ((M.client && !( M.blinded )))
-						M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
-			else
-				for(var/mob/M in viewers(src, null))
-					if ((M.client && !( M.blinded )))
-						M.show_message("\red \b The [O] bounces harmlessly off of [src]. ")
-		else
-			usr << "\red This weapon is ineffective, it does no damage."
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("\red [user] gently taps [src] with the [O]. ")
+		usr << "\red This weapon is ineffective, it does no damage."
+		for(var/mob/M in viewers(src, null))
+			if ((M.client && !( M.blinded )))
+				M.show_message("\red [user] gently taps [src] with the [O]. ")
 
 
 /mob/living/simple_animal/constructarmoured/Bump(atom/movable/AM as mob|obj, yes)
@@ -140,26 +131,16 @@
 
 
 /mob/living/simple_animal/constructwraith/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if(istype(O, /obj/item/weapon/storage/bible))
-		if(user.mind && (user.mind.assigned_role == "Chaplain"))
-			health -= 75
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] lets out a pained screech, its armoured skin fizzling and melting. ")
-		else
-			usr << "\red Your faith is not strong enough!"
-
+	if(O.force)
+		health -= O.force
+		for(var/mob/M in viewers(src, null))
+			if ((M.client && !( M.blinded )))
+				M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
 	else
-		if(O.force)
-			health -= O.force
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
-		else
-			usr << "\red This weapon is ineffective, it does no damage."
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("\red [user] gently taps [src] with the [O]. ")
+		usr << "\red This weapon is ineffective, it does no damage."
+		for(var/mob/M in viewers(src, null))
+			if ((M.client && !( M.blinded )))
+				M.show_message("\red [user] gently taps [src] with the [O]. ")
 
 /mob/living/simple_animal/constructwraith/Bump(atom/movable/AM as mob|obj, yes)
 
