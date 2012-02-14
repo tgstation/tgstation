@@ -195,7 +195,8 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	explode()
 		var/obj/item/weapon/implant/uplink/U = src.loc
 		var/mob/living/A = U.imp_in
-		A.gib()
+		var/datum/organ/external/head = A:organs["head"]
+		head.take_damage(100, 0, 1)
 		..()
 
 

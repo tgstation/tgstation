@@ -85,7 +85,7 @@
 	handle_health_updates()
 
 	// Update clothing
-	update_clothing()
+//	update_clothing()
 
 	if(client)
 		handle_regular_hud_updates()

@@ -246,6 +246,7 @@ var/global/datum/controller/occupations/job_master
 		var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
 		H.equip_if_possible(BPK, H.slot_back,1)
 		H.equip_if_possible(new /obj/item/weapon/storage/box(H.back), H.slot_in_backpack)
+		H.update_clothing()
 		return 1
 
 
