@@ -245,6 +245,11 @@
 
 	if (!( src.flags ) & 256)
 		return
+	if(!blood_DNA)
+		var/turf/Z = get_turf(src)
+		world << "\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!  Tell a dev!"
+		blood_DNA = list()
+		return
 	if ( src.blood_DNA.len )
 		if (istype (src, /mob/living/carbon))
 			var/obj/item/source2 = src

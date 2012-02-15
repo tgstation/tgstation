@@ -558,7 +558,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 5.0
 	throwforce = 7.0
-	item_state = "cane"
+	item_state = "browncane"
 	w_class = 2.0
 	m_amt = 50
 
