@@ -141,7 +141,11 @@
 		return 0
 	if (!( src.flags ) & 256)
 		return
-	if (src.blood_DNA.len)
+	if(!blood_DNA)
+		var/turf/Z = get_turf(src)
+		world << "\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!  Tell a dev!"
+		return
+	if (blood_DNA.len)
 		if (istype(src, /obj/item)&&!istype(src, /obj/item/weapon/melee/energy))//Only regular items. Energy melee weapon are not affected.
 			var/obj/item/source2 = src
 			source2.icon_old = src.icon

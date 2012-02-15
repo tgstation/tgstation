@@ -507,14 +507,14 @@ What a mess.*/
 							del(active2)
 
 					if ("Delete Record (ALL) Execute")
-						for(var/datum/data/record/R in data_core.medical)
-							if ((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
-								del(R)
-							else
+						if (active1)
+							for(var/datum/data/record/R in data_core.medical)
+								if ((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
+									del(R)
+								else
+							del(active1)
 						if (active2)
 							del(active2)
-						if (active1)
-							del(active1)
 					else
 						temp = "This function does not appear to be working at the moment. Our apologies."
 	add_fingerprint(usr)
