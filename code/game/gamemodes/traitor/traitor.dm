@@ -174,15 +174,19 @@
 			for(var/datum/objective/objective in traitor.objectives)
 				if(objective.check_completion())
 					world << "<B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
+					feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
 				else
 					world << "<B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
+					feedback_add_details("traitor_objective","[objective.type]|FAIL")
 					traitorwin = 0
 				count++
 
 			if(traitorwin)
 				world << "<B>The [special_role_text] was successful!<B>"
+				feedback_add_details("traitor_success","SUCCESS")
 			else
 				world << "<B>The [special_role_text] has failed!<B>"
+				feedback_add_details("traitor_success","FAIL")
 	return 1
 
 

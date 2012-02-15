@@ -178,8 +178,10 @@
 			for(var/datum/objective/objective in changeling.objectives)
 				if(objective.check_completion())
 					world << "<B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
+					feedback_add_details("changeling_objective","[objective.type]|SUCCESS")
 				else
 					world << "<B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
+					feedback_add_details("changeling_objective","[objective.type]|FAIL")
 					changelingwin = 0
 				count++
 
@@ -189,8 +191,10 @@
 
 		if(changelingwin)
 			world << "<B>The changeling was successful!<B>"
+			feedback_add_details("changeling_success","SUCCESS")
 		else
 			world << "<B>The changeling has failed!<B>"
+			feedback_add_details("changeling_success","FAIL")
 	return 1
 
 /datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)
