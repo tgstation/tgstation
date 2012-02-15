@@ -143,7 +143,8 @@
 		return
 	if(!blood_DNA)
 		var/turf/Z = get_turf(src)
-		world << "\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!  Tell a dev!"
+		message_admins("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
+		log_game("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
 		return
 	if (blood_DNA.len)
 		if (istype(src, /obj/item)&&!istype(src, /obj/item/weapon/melee/energy))//Only regular items. Energy melee weapon are not affected.
@@ -247,7 +248,8 @@
 		return
 	if(!blood_DNA)
 		var/turf/Z = get_turf(src)
-		world << "\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!  Tell a dev!"
+		message_admins("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
+		log_game("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
 		blood_DNA = list()
 		return
 	if ( src.blood_DNA.len )
@@ -260,14 +262,20 @@
 			var/obj/item/source2 = src
 			source2.blood_DNA = list()
 //			var/icon/I = new /icon(source2.icon_old, source2.icon_state)
-			source2.icon = source2.icon_old
-			source2.update_icon()
+			if(source2.icon_old)
+				source2.icon = source2.icon_old
+				source2.update_icon()
+			else
+				source2.icon = initial(icon)
+				source2.update_icon()
 		if (istype(src, /turf/simulated))
 			var/obj/item/source2 = src
 			source2.blood_DNA = list()
 			if(source2.icon_old)
 				var/icon/I = new /icon(source2.icon_old, source2.icon_state)
 				source2.icon = I
+			else
+				source2.icon = initial(icon)
 	if(src.fingerprints && src.fingerprints.len)
 		var/done = 0
 		while(!done)
