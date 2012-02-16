@@ -663,23 +663,23 @@
 	anchored = 1.0
 	var/list/buckled_mobs = list(  )
 
-/obj/stool/chair/comfy
+/obj/structure/stool/chair/comfy
 	name = "comfy chair"
 	desc = "It looks comfy."
 
-/obj/stool/chair/comfy/brown
+/obj/structure/stool/chair/comfy/brown
 	icon_state = "comfychair_brown"
 
-/obj/stool/chair/comfy/beige
+/obj/structure/stool/chair/comfy/beige
 	icon_state = "comfychair_beige"
 
-/obj/stool/chair/comfy/teal
+/obj/structure/stool/chair/comfy/teal
 	icon_state = "comfychair_teal"
 
-/obj/stool/chair/comfy/black
+/obj/structure/stool/chair/comfy/black
 	icon_state = "comfychair_black"
 
-/obj/stool/chair/comfy/lime
+/obj/structure/stool/chair/comfy/lime
 	icon_state = "comfychair_lime"
 
 /obj/structure/stool/chair/e_chair
