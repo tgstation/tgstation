@@ -2703,12 +2703,12 @@
 	onclose(usr,"server_logfile")
 	return
 
-/client/proc/unjobban_panel()
+/*/client/proc/unjobban_panel()
 	set name = "Unjobban Panel"
 	set category = "Admin"
 	if (src.holder)
 		src.holder.unjobbanpanel()
-	return
+	return*/
 
 
 //

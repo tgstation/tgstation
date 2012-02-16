@@ -262,7 +262,6 @@
 			verbs += /client/proc/unban_panel
 			verbs += /client/proc/jobbans
 			verbs += /client/proc/playernotes
-			verbs += /client/proc/unjobban_panel
 			verbs += /obj/admins/proc/vmode
 			verbs += /obj/admins/proc/votekill
 			verbs += /client/proc/voting
@@ -389,7 +388,6 @@
 	verbs -= /client/proc/unban_panel
 	verbs -= /client/proc/jobbans
 	verbs -= /client/proc/playernotes
-	verbs -= /client/proc/unjobban_panel
 	verbs -= /obj/admins/proc/vmode
 	verbs -= /obj/admins/proc/votekill
 	verbs -= /client/proc/voting
@@ -481,7 +479,7 @@
 	return
 
 /client/proc/jobbans()
-	set name = "Display Job bans"
+	set name = "Unjobban Panel"
 	set category = "Admin"
 	if(holder)
 		holder.Jobbans()
