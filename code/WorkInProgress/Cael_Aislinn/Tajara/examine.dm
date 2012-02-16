@@ -73,8 +73,8 @@
 			usr << "\red [src.name] has bloody \icon[src.gloves] [src.gloves.name] on [t_his] hands!"
 		else
 			usr << "\blue [src.name] has \icon[src.gloves] [src.gloves.name] on [t_his] hands."
-	else if (src.blood_DNA)
-		usr << "\red [src.name] has[src.blood_DNA ? " bloody " : " "] hands!"
+	else if (src.blood_DNA.len)
+		usr << "\red [src.name] has bloody hands!"
 
 	if (src.back)
 		usr << "\blue [src.name] has a \icon[src.back] [src.back.name] on [t_his] back."

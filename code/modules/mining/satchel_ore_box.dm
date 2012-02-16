@@ -39,10 +39,14 @@
 
 /obj/structure/ore_box
 	icon = 'mining.dmi'
-	icon_state = "orebox"
+	icon_state = "orebox0"
 	name = "Ore Box"
 	desc = "It's heavy"
 	density = 1
+
+	New()
+		if(prob(50))
+			icon_state = "orebox1"
 
 /obj/structure/ore_box/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/ore))
