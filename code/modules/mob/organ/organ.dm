@@ -293,6 +293,7 @@
 					var/lol = pick(cardinal)
 					step(H,lol)
 					destroyed = 1
+			src.owner.update_clothing()
 
 	proc/createwound(var/size = 1)
 		if(ishuman(src.owner))

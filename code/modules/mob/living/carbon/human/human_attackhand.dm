@@ -124,6 +124,7 @@
 
 			playsound(loc, 'punchmiss.ogg', 25, 1, -1)
 			visible_message("\red <B>[M] attempted to disarm [src]!</B>")
+	update_clothing()
 	return
 
 

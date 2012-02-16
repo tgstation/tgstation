@@ -20,4 +20,5 @@
 				src = null
 				src = H.monkeyize()
 				contract_disease(D,1,0)
+	update_clothing()
 	return
