@@ -10,4 +10,5 @@
 	new /obj/item/weapon/cell(src)
 	new /obj/item/weapon/card/id/syndicate(src)
 	new /obj/item/device/multitool(src)
+	new /obj/item/weapon/shield/riot(src)
 
