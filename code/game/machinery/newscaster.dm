@@ -53,6 +53,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 	var/wanted_issue = 0
 		// 0 = there's no WANTED issued, we don't need a special icon_state
 		// 1 = Guess what.
+	var/alert = 0
+		// 0 = there hasn't been a news/wanted update in the last minutes
+		// 1 = there has
 	var/scanned_user = "Unknown" //Will contain the name of the person who currently uses the newscaster
 	var/msg = "";        //Feed message
 	var/channel_name = ""; //the feed channel which will be receiving the feed, or being created
@@ -82,20 +85,23 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 /obj/machinery/newscaster/update_icon()
 	if(!ispowered || isbroken)
 		icon_state = "newscaster_off"
-		if(isbroken) //If the thing is smashed, we use add the cracks on top of the unpowered sprite.
+		if(isbroken) //If the thing is smashed, add crack overlay on top of the unpowered sprite.
 			src.overlays = null
 			src.overlays += image(src.icon, "crack3")
 		return
-	if(wanted_issue)
+
+	src.overlays = null //reset overlays
+	if(alert) //new message alert overlay
+		src.overlays += "newscaster_alert"
+	if(hitstaken > 0) //Cosmetic damage overlay
+		src.overlays += image(src.icon, "crack[hitstaken]")
+
+	if(wanted_issue) //wanted icon state
 		icon_state = "newscaster_wanted"
 		return
+
 	icon_state = "newscaster_normal"
-	if(hitstaken > 0) //Right, looks like it's hit but still in working condition
-		src.overlays = null
-		src.overlays += image(src.icon, "crack[hitstaken]")
-		return
-
-
+	return
 
 /obj/machinery/newscaster/power_change()
 	if(isbroken) //Broken shit can't be powered.
@@ -360,14 +366,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 		human_user << browse(dat, "window=newscaster_main;size=400x600")
 		onclose(human_user, "newscaster_main")
 
-
-
-
-
-
-
-
-
 	/*if(src.isbroken) //debugging shit
 		return
 	src.hitstaken++
@@ -445,6 +443,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 						FC.messages += newMsg                      // To avoid further confusion, this one for adds the message to all existing newscasters' channel_list's channels.
 						break                                      // Another for to go through newscasters is not needed. Due to the nature of submit_new_CHANNEL, every reference
 				src.screen=4                                       // to a channel in ANY newscaster is the same. Editing one will edit them all.
+
+			for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
+				NEWSCASTER.newsAlert(src.channel_name)
+
 			src.updateUsrDialog()
 
 		else if(href_list["create_channel"])
@@ -513,6 +515,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 						for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
 							NEWSCASTER.wanted = WANTED
 							NEWSCASTER.wanted_issue = 1
+							NEWSCASTER.newsAlert()
 							NEWSCASTER.update_icon()
 						src.screen = 15
 					else
@@ -824,7 +827,17 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	return
 
 
-
-
-
-
+/obj/machinery/newscaster/proc/newsAlert(channel)
+	var/turf/T = get_turf(src)
+	if(channel)
+		for(var/mob/O in hearers(world.view-1, T))
+			O.show_message("<font color=Maroon><B>[src.name]</B> beeps, \"Breaking news from [channel]!</font>\"",2)
+		src.alert = 1
+		src.update_icon()
+		spawn(600)
+			src.alert = 0
+			src.update_icon()
+	else
+		for(var/mob/O in hearers(world.view-1, T))
+			O.show_message("<font color=Maroon><B>[src.name]</B> beeps, \"Wanted notice posted!</font>\"",2)
+	playsound(src.loc, 'twobeep.ogg', 75, 1)
