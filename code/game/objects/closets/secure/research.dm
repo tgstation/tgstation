@@ -1,7 +1,7 @@
 
 /obj/structure/closet/secure_closet/rd
 	name = "Research Director's Locker"
-	req_access = list(access_cmo)
+	req_access = list(access_rd)
 
 	New()
 		..()
@@ -20,7 +20,7 @@
 
 /obj/structure/closet/secure_closet/scientist
 	name = "Scientist's Locker"
-	req_access = list(access_cmo)
+	req_access = list(access_research)
 
 	New()
 		..()
