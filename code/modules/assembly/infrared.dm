@@ -45,6 +45,13 @@
 		if(scanning)
 			src.overlays += text("infrared_old2")
 			src.small_icon_state_overlays += text("infrared_on")
+			if(master && istype(master, /obj/item/weapon/chem_grenade))
+				var/obj/item/weapon/chem_grenade/M = master
+				M.c_state(1)
+		else
+			if(master && istype(master, /obj/item/weapon/chem_grenade))
+				var/obj/item/weapon/chem_grenade/M = master
+				M.c_state(0)
 		if(holder)
 			holder.update_icon()
 		return
@@ -129,6 +136,7 @@
 		if (href_list["state"])
 			src.scanning = !(src.scanning)
 			update_icon()
+			processing_objects.Add(src)
 
 		if (href_list["visible"])
 			src.visible = !(src.visible)

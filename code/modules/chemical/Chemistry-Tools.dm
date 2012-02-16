@@ -209,7 +209,7 @@
 
 	attack_self(mob/user as mob)
 		if(active == 2)
-			attached_device.attack_self(usr)
+			attached_device.attack_self(user)
 			return
 		user.machine = src
 		var/dat = {"<B> Grenade properties: </B>
@@ -289,6 +289,13 @@
 				if(beaker_two)
 					beaker_two.loc = get_turf(src.loc)
 
+		c_state(var/i = 0)
+			if(i)
+				icon_state = initial(icon_state) + "_armed"
+			else
+				icon_state = initial(icon_state) + "_locked"
+			return
+
 	large
 		name = "Large Chem Grenade"
 		desc = "An oversized grenade that affects a larger area."
@@ -305,6 +312,7 @@
 
 		New()
 			..()
+			attached_device = new /obj/item/device/assembly/timer(src)
 			var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 			var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
@@ -324,6 +332,7 @@
 
 		New()
 			..()
+			attached_device = new /obj/item/device/assembly/timer(src)
 			var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 			var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
@@ -343,6 +352,7 @@
 
 		New()
 			..()
+			attached_device = new /obj/item/device/assembly/timer(src)
 			var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 			var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
