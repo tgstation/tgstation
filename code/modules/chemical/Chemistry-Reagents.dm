@@ -1782,7 +1782,7 @@ datum
 				if(!M) M = holder.my_atom
 				M:bodytemperature += 5
 				if(prob(40) && !istype(M, /mob/living/carbon/metroid))
-					M.take_organ_damage(0, 1)
+					M.apply_damage(1, BURN, pick("head", "chest"))
 
 				if(istype(M, /mob/living/carbon/metroid))
 					M:bodytemperature += rand(5,20)
@@ -1837,7 +1837,7 @@ datum
 				if(!M) M = holder.my_atom
 				M:bodytemperature -= 5
 				if(prob(40))
-					M.take_organ_damage(0, 1)
+					M.apply_damage(1, BURN, pick("head", "chest"))
 				if(prob(80) && istype(M, /mob/living/carbon/metroid))
 					M.adjustFireLoss(rand(5,20))
 					M << "\red You feel a terrible chill inside your body!"

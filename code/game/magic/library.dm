@@ -232,13 +232,13 @@
 		list/icon/photos	 // in-game photos used
 
 	proc/navbar()
-		return "<div style='position:absolute;bottom:0;color:#666;background:white;font-style:italic;margin-top:1em;margin-bottom:1em;width:100%'>" \
+		return "<div style='color:#666;font-style:italic;padding-top:1em;height:7.5%'>" \
 			+ "<div style='float:left'>"+(cur_page > 1 \
-				? "<a href='?src=\ref[src];page=[1]'>&lt;</a>" \
+				? "<a href='?src=\ref[src];page=[1]'>&lt;</a> " \
 				+ "<a href='?src=\ref[src];page=[cur_page-1]'>&lt;</a>" \
 				: "") \
 			+ "</div><div style='float:right'>"+(cur_page < pages.len \
-				? "<a href='?src=\ref[src];page=[cur_page+1]'>&gt;</a>" \
+				? "<a href='?src=\ref[src];page=[cur_page+1]'>&gt;</a> " \
 				+ "<a href='?src=\ref[src];page=[pages.len]'>&gt;</a>" \
 				: "") \
 			+ "</div><div style='text-align:center'>[cur_page]/[pages.len]</div></div>"
@@ -284,9 +284,14 @@
 	attack_self(var/mob/user as mob, opening=1)
 		if(src.dat)
 			cache_imgs(user)
-			if(pages.len == 0) // For instance, when the book is spawned by admisn
+			if(!pages || pages.len == 0) // For instance, when the book is spawned by admisn
 				src.gen_pages()
-			user << browse("<div style='color:#666;font-style:italic;margin-bottom:1em'><div style='float:left'>[title]</div><div style='float:right'>[author]</div></div><div style='clear:both;overflow:scroll'>[pages[cur_page]]</div>[pages.len > 1 ? navbar() : ""]", "window=book;size=600x500")
+			user << browse("<html><head><title>[title]</title></head>" \
+				+ "<body style='overflow:hidden'>" \
+				+ "<div style='color:#666;font-style:italic;padding-bottom:1em;height:7.5%'><div style='float:left'>[title]</div><div style='float:right'>[author]</div></div>" \
+				+ "<div style='clear:both;overflow:auto;height:[pages.len > 1 ? "85" : "82.5"]%'>[pages[cur_page]]</div>" \
+				+ (pages.len > 1 ? navbar() : "") \
+				+ "</body></html>", "window=book;size=600x500")
 
 			if(opening)
 				if(title)

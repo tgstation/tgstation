@@ -128,7 +128,7 @@
 		user << "\red This is ridiculous. You can not fit \the [G.affecting] in this [src]."
 		return 1
 	else
-		user << "\red You have no idea what you can cook with this [O]."
+		user << "\red You have no idea what you can cook with \this [O]."
 		return 1
 	src.updateUsrDialog()
 
@@ -169,7 +169,7 @@
 			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/tofu))
 				items_measures[display_name] = "tofu chunk"
 				items_measures_p[display_name] = "tofu chunks"
-			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/meat)) //any meat
+			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/sliceable/meat)) //any meat
 				items_measures[display_name] = "slab of meat"
 				items_measures_p[display_name] = "slabs of meat"
 			if (istype(O,/obj/item/weapon/reagent_containers/food/snacks/donkpocket))

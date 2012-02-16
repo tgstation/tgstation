@@ -1278,6 +1278,13 @@
 		src.pixel_x = rand(-5.0, 5)						//Randomizes postion slightly.
 		src.pixel_y = rand(-5.0, 5)
 
+
+	proc/foodloc(var/mob/M, var/obj/item/O)
+		if(O.loc == M)
+			return M.loc
+		else
+			return O.loc
+
 /obj/item/weapon/reagent_containers/food/snacks		//Food items that are eaten normally and don't leave anything behind.
 	name = "snack"
 	desc = "yummy"

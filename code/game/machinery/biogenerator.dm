@@ -156,7 +156,7 @@
 		if("milk")
 			beaker.reagents.add_reagent("milk",10)
 		if("meat")
-			new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+			new/obj/item/weapon/reagent_containers/food/snacks/sliceable/meat(src.loc)
 		if("ez")
 			new/obj/item/nutrient/ez(src.loc)
 		if("l4z")

@@ -30,24 +30,25 @@
 		output = /obj/item/weapon/reagent_containers/food/snacks/flour
 
 	meat
-		input = /obj/item/weapon/reagent_containers/food/snacks/meat
-		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
+		input = /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat
+		output = /obj/item/weapon/reagent_containers/food/snacks/rawfaggot
 
 	meat2
 		input = /obj/item/weapon/syntiflesh
-		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
+		output = /obj/item/weapon/reagent_containers/food/snacks/rawfaggot
 /*
 	monkeymeat
-		input = /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
+		input = /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/monkey
 		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 
 	humanmeat
-		input = /obj/item/weapon/reagent_containers/food/snacks/meat/human
+		input = /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/human
 		output = /obj/item/weapon/reagent_containers/food/snacks/faggot
 */
+
 	potato
 		input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
-		output = /obj/item/weapon/reagent_containers/food/snacks/fries
+		output = /obj/item/weapon/reagent_containers/food/snacks/rawsticks
 
 	carrot
 		input = /obj/item/weapon/reagent_containers/food/snacks/grown/carrot

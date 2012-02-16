@@ -200,16 +200,18 @@
 		..()
 		reagents.add_reagent("nutriment", 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/meat
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/meat
 	name = "meat"
 	desc = "A slab of meat"
 	icon_state = "meat"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/rawcutlet
+	slices_num = 3
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
 		src.bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/syntiflesh
 	name = "synthetic meat"
 	desc = "A synthetic slab of flesh."
 
@@ -231,12 +233,12 @@
 		reagents.add_reagent("nutriment", 1)
 		src.bitesize = 1
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/human
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/human
 	name = "-meat"
 	var/subjectname = ""
 	var/subjectjob = null
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/monkey
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/monkey
 	//same as plain meat
 
 /obj/item/weapon/reagent_containers/food/snacks/tofu
@@ -308,8 +310,8 @@
 		src.bitesize = 6
 
 /obj/item/weapon/reagent_containers/food/snacks/faggot
-	name = "Faggot"
-	desc = "A great meal all round. Not a cord of wood."
+	name = "meatball"
+	desc = "A great meal all round."
 	icon_state = "faggot"
 	New()
 		..()
@@ -342,14 +344,27 @@
 				src.name = "donk-pocket"
 		return
 
-/obj/item/weapon/reagent_containers/food/snacks/brainburger
-	name = "brainburger"
-	desc = "A strange looking burger. It looks almost sentient."
-	icon_state = "brainburger"
+/obj/item/weapon/reagent_containers/food/snacks/burger
+	name = "burger"
+	desc = "The cornerstone of every nutritious breakfast."
+	icon_state = "burger"
+	bitesize = 2
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
-		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/cheese
+	name = "cheeseburger"
+	desc = "The cheese adds a good flavor."
+	icon_state = "cheeseburger"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/brain
+	name = "brainburger"
+	desc = "A strange looking burger. It looks almost sentient."
+	icon_state = "brainburger"
 
 /obj/item/weapon/reagent_containers/food/snacks/human
 	var/hname = ""
@@ -358,50 +373,35 @@
 /obj/item/weapon/reagent_containers/food/snacks/human/burger
 	name = "-burger"
 	desc = "A bloody burger."
-	icon_state = "hburger"
+	icon_state = "burger"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
 		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/monkeyburger
-	name = "burger"
-	desc = "The cornerstone of every nutritious breakfast."
-	icon_state = "hburger"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 6)
-		bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/fishburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/fish
 	name = "Fillet -o- Carp Sandwich"
 	desc = "Almost like a carp is yelling somewhere... Give me back that fillet -o- carp, give me that carp."
 	icon_state = "fishburger"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 6)
 		reagents.add_reagent("carpotoxin", 3)
 		bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/tofuburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/tofu
 	name = "Tofu Burger"
 	desc = "What.. is that meat?"
 	icon_state = "tofuburger"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 6)
-		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/roburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/ro
 	name = "roburger"
 	desc = "The lettuce is the only organic component. Beep."
 	icon_state = "roburger"
 	New()
 		..()
 		reagents.add_reagent("nanites", 2)
-		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/roburgerbig
+/obj/item/weapon/reagent_containers/food/snacks/burger/ro_big
 	name = "roburger"
 	desc = "This massive patty looks like poison. Beep."
 	icon_state = "roburger"
@@ -411,37 +411,30 @@
 		reagents.add_reagent("nanites", 100)
 		bitesize = 0.1
 
-/obj/item/weapon/reagent_containers/food/snacks/xenoburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/xeno
 	name = "xenoburger"
 	desc = "Smells caustic. Tastes like heresy."
 	icon_state = "xburger"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 8)
-		bitesize = 2
+		reagents.add_reagent("nutriment", 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/clownburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/clown
 	name = "Clown Burger"
 	desc = "This tastes funny..."
 	icon_state = "clownburger"
-	New()
+/*	New()
 		..()
-/*
+
 		var/datum/disease/F = new /datum/disease/pierrot_throat(0)
 		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", 4, data)
 */
-		reagents.add_reagent("nutriment", 6)
-		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/mimeburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/mime
 	name = "Mime Burger"
 	desc = "It's taste defies language."
 	icon_state = "mimeburger"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 6)
-		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette
 	name = "Omelette Du Fromage"
@@ -801,7 +794,7 @@
 		reagents.add_reagent("carbon", 1)
 		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/meatsteak
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/meatsteak
 	name = "Meat steak"
 	desc = "A piece of hot spicy meat."
 	icon_state = "meatstake"
@@ -1729,3 +1722,234 @@
 	icon_state = "vegetablepizzaslice"
 	bitesize = 2
 
+///////////////////////////////////////////
+// new food stuff from bs12
+///////////////////////////////////////////
+
+// Flour + egg = dough
+/obj/item/weapon/reagent_containers/food/snacks/flour/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/egg))
+		var/turf/spawnloc = foodloc(user, src)
+		new /obj/item/weapon/reagent_containers/food/snacks/dough(spawnloc)
+		user << "You make some dough."
+		del(W)
+		del(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/dough
+	name = "dough"
+	desc = "A dough."
+	icon = 'food_ingredients.dmi'
+	icon_state = "dough"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+
+// Dough + rolling pin = flat dough
+/obj/item/weapon/reagent_containers/food/snacks/dough/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/weapon/kitchen/rollingpin))
+		var/turf/spawnloc = foodloc(user, src)
+		new /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough(spawnloc)
+		user << "You flatten the dough."
+		del(src)
+
+// slicable into 3xdoughslices
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough
+	name = "flat dough"
+	desc = "A flattened dough."
+	icon = 'food_ingredients.dmi'
+	icon_state = "flat dough"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/doughslice
+	slices_num = 3
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/doughslice
+	name = "dough slice"
+	desc = "Make your magic."
+	icon = 'food_ingredients.dmi'
+	icon_state = "doughslice"
+	New()
+		..()
+		bitesize = 2
+		reagents.add_reagent("nutriment", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/bun
+	name = "bun"
+	desc = "A base for any self-respecting burger."
+	icon = 'food_ingredients.dmi'
+	icon_state = "bun"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 4)
+
+/obj/item/weapon/reagent_containers/food/snacks/bun/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	// Bun + meatball = burger
+	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/faggot))
+		var/turf/spawnloc = foodloc(user, src)
+		new /obj/item/weapon/reagent_containers/food/snacks/burger(spawnloc)
+		user << "You make a burger."
+		del(W)
+		del(src)
+
+	// Bun + cutlet = hamburger
+	else if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/cutlet))
+		var/turf/spawnloc = foodloc(user, src)
+		new /obj/item/weapon/reagent_containers/food/snacks/burger(spawnloc)
+		user << "You make a burger."
+		del(W)
+		del(src)
+
+	// Bun + sausage = hotdog
+	else if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/sausage))
+		var/turf/spawnloc = foodloc(user, src)
+		new /obj/item/weapon/reagent_containers/food/snacks/hotdog(spawnloc)
+		user << "You make a hotdog."
+		del(W)
+		del(src)
+
+// Burger + cheese wedge = cheeseburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/attackby(obj/item/weapon/reagent_containers/food/snacks/cheesewedge/W as obj, mob/user as mob)
+	if(istype(W) && !istype(src,/obj/item/weapon/reagent_containers/food/snacks/burger/cheese))
+		var/turf/spawnloc = foodloc(user, src)
+		new /obj/item/weapon/reagent_containers/food/snacks/burger/cheese(spawnloc)
+		user << "You make a cheeseburger."
+		del(W)
+		del(src)
+		return
+	else
+		..()
+
+// Human Burger + cheese wedge = cheeseburger
+/obj/item/weapon/reagent_containers/food/snacks/human/burger/attackby(obj/item/weapon/reagent_containers/food/snacks/cheesewedge/W as obj, mob/user as mob)
+	if(istype(W))
+		var/turf/spawnloc = foodloc(user, src)
+		new /obj/item/weapon/reagent_containers/food/snacks/burger/cheese(spawnloc)
+		user << "You make a cheeseburger."
+		del(W)
+		del(src)
+		return
+	else
+		..()
+
+// Cheese burger + cheeseburger = big bite burger
+/obj/item/weapon/reagent_containers/food/snacks/burger/cheese/attackby(obj/item/weapon/reagent_containers/food/snacks/burger/cheese/W as obj, mob/user as mob)
+	if(istype(W))
+		var/turf/spawnloc = foodloc(user, src)
+		new /obj/item/weapon/reagent_containers/food/snacks/bigbiteburger(spawnloc)
+		user << "You make a big bite burger."
+		del(W)
+		del(src)
+		return
+	else
+		..()
+
+// Big bite burger + Big bite burger = unfinished super bite burger
+/obj/item/weapon/reagent_containers/food/snacks/bigbiteburger/attackby(obj/item/weapon/reagent_containers/food/snacks/bigbiteburger/W as obj, mob/user as mob)
+	if(istype(W))
+		var/turf/spawnloc = foodloc(user, src)
+		new /obj/item/weapon/reagent_containers/food/snacks/unfinished_superbiteburger(spawnloc)
+		user << "You start to make a super bite burger. It could use more ingredients."
+		del(W)
+		del(src)
+		return
+	else
+		..()
+
+/obj/item/weapon/reagent_containers/food/snacks/taco
+	name = "taco"
+	desc = "Take a bite!"
+	icon_state = "taco"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("nutriment", 7)
+
+/obj/item/weapon/reagent_containers/food/snacks/rawcutlet
+	name = "raw cutlet"
+	desc = "A thin piece of meat."
+	icon = 'food_ingredients.dmi'
+	icon_state = "rawcutlet"
+	bitesize = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/cutlet
+	name = "cutlet"
+	desc = "A tasty meat slice - 'Bacon'."
+	icon = 'food_ingredients.dmi'
+	icon_state = "cutlet"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/rawfaggot
+	name = "raw meatball"
+	desc = "A raw meatball."
+	icon = 'food_ingredients.dmi'
+	icon_state = "rawmeatball"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/hotdog
+	name = "hotdog"
+	desc = "Unrelated to dogs."
+	icon_state = "hotdog"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+
+/obj/item/weapon/reagent_containers/food/snacks/flatbread
+	name = "flatbread"
+	desc = "Bland but filling."
+	icon = 'food_ingredients.dmi'
+	icon_state = "flatbread"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+
+// potato + knife = raw sticks
+/obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W,/obj/item/weapon/kitchen/utensil/knife))
+		var/turf/spawnloc = foodloc(user, src)
+		new /obj/item/weapon/reagent_containers/food/snacks/rawsticks(spawnloc)
+		user << "You cut the potato."
+		del(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/rawsticks
+	name = "raw potato sticks"
+	desc = "Maybe you should cook it first?"
+	icon = 'food_ingredients.dmi'
+	icon_state = "rawsticks"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/mint
+	name = "mint"
+	desc = "Minty fresh!"
+	icon_state = "mint"
+	trash = "plate"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("sugar", 2)
+		reagents.add_reagent("frostoil", 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/unfinished_superbiteburger
+	name = "Unfinished Super Bite Burger"
+	desc = "This is a mountain of a burger. Could be bigger."
+	icon_state = "superbiteburger"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 30)
+		bitesize = 10

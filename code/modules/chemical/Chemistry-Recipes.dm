@@ -605,7 +605,7 @@ datum
 			required_other = 2
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh(location)
+				new /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/syntiflesh(location)
 				return
 
 		metroidenzyme
@@ -894,7 +894,7 @@ datum
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
-				new /obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh(location)
+				new /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/syntiflesh(location)
 				return
 
 		hot_ramen
