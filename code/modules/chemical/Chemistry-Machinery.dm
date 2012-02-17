@@ -329,9 +329,9 @@
 			usr << browse(dat, "window=chem_master")
 			return
 		else if(href_list["pill_sprite"])
-			pillsprite = min(max(href_list["pill_sprite"],0),MAX_PILL_SPRITE)
+			pillsprite = href_list["pill_sprite"]
 		else if(href_list["bottle_sprite"])
-			bottlesprite = min(max(href_list["bottlesprite"],0),MAX_BOTTLE_SPRITE)
+			bottlesprite = href_list["bottlesprite"]
 		else
 			usr << browse(null, "window=chem_master")
 		src.updateUsrDialog()
