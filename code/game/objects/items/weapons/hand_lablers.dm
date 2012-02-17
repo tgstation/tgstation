@@ -69,8 +69,6 @@
 
 /obj/item/weapon/label/afterattack(atom/A, mob/user as mob)
 	if(!backing)
-		if(A==loc)      // if placing the label into something (e.g. backpack)
-			return      // don't stick it on
 		if(!label || !length(label))
 			user << "\red This label doesn't have any text! How did this happen?!?"
 			return
