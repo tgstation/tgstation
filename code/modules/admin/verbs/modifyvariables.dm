@@ -267,6 +267,17 @@
 		src << "Only administrators may use this command."
 		return
 
+	var/list/forbidden_object_types = list(
+											/obj/admins,						//Admins editing their own admin-power object? Yup, sounds like a good idea.
+											/obj/machinery/blackbox_recorder,	//Prevents people messing with feedback gathering
+											/datum/feedback_variable			//Prevents people messing with feedback gathering
+										)
+
+	for(var/p in forbidden_object_types)
+		if( istype(O,p) )
+			usr << "\red It is forbidden to edit this object's variables."
+			return
+
 	var/class
 	var/variable
 	var/var_value
