@@ -20,12 +20,6 @@ mob/living/carbon/verb/give()
 		I = usr.r_hand
 	if(!I)
 		return
-	var/obj/item/weapon/T = new(usr.loc)
-	if(!src.loc.Enter(T))
-		usr << "Can't reach him"
-		del(T)
-		return
-	del(T)
 	if(src.r_hand == null)
 		switch(alert(src,"[usr.name] wants to give you \a [I.name]?",,"Yes","No"))
 			if("Yes")
@@ -42,11 +36,13 @@ mob/living/carbon/verb/give()
 						usr.drop_item(I)
 						src.l_hand = I
 					else
+						src << "Your hands are full."
 						usr << "Their hands are full."
 						return
 				else
 					usr.drop_item(I)
 					src.r_hand = I
+				usr.client.screen -= I
 				I.loc = src
 				I.layer = 20
 				I.add_fingerprint(src)
@@ -71,11 +67,13 @@ mob/living/carbon/verb/give()
 						usr.drop_item(I)
 						src.r_hand = I
 					else
+						src << "Your hands are full."
 						usr << "Their hands are full."
 						return
 				else
 					usr.drop_item(I)
 					src.l_hand = I
+				usr.client.screen -= I
 				I.loc = src
 				I.layer = 20
 				I.add_fingerprint(src)

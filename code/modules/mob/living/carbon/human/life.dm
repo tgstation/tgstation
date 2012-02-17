@@ -118,17 +118,18 @@
 	proc
 		handle_health_updates()
 			// if the mob has enough health, she should slowly heal
-			if(health >= 0)
-				var/pr = 10
-				if(stat == 1) // sleeping means faster healing
-					pr += 5
-				if(prob(pr))
-					heal_organ_damage(1,1)
-					adjustToxLoss(-1)
-			else if(health < 0)
-				var/pr = 80
-				if(prob(pr))
-					adjustToxLoss(1)
+			if(stat != 2)
+				if(health >= 0)
+					var/pr = 10
+					if(stat == 1) // sleeping means faster healing
+						pr += 5
+					if(prob(pr))
+						heal_organ_damage(1,1)
+						adjustToxLoss(-1)
+				else if(health < 0)
+					var/pr = 50
+					if(prob(pr))
+						adjustToxLoss(1)
 
 		clamp_values()
 
@@ -275,23 +276,23 @@
 			var/datum/air_group/breath
 			// HACK NEED CHANGING LATER
 			if(health < config.health_threshold_dead)
+				losebreath++
 				isbreathing = 0
 				spawn emote("stopbreath")
 
 			if(holdbreath)
 				isbreathing = 0
-
-			if(isbreathing)
-				// are we running out of air in our lungs?
-				if(losebreath > 0)
-					// inaprovaline prevents the need to breathe for a while
-					if(reagents.has_reagent("inaprovaline"))
-						losebreath = 0
-					else
-						// we're running out of air, gasp for it!
-						if (prob(25)) //High chance of gasping for air
-							spawn emote("gasp")
-			else if(health >= 0)
+			if(losebreath > 0)
+				// inaprovaline prevents the need to breathe for a while
+				if(reagents.has_reagent("inaprovaline"))
+					losebreath = 0
+				else
+					losebreath--
+					// we're running out of air, gasp for it!
+					if (prob(25)) //High chance of gasping for air
+						spawn emote("gasp")
+					isbreathing = 0
+			else if(health >= 0 && !isbreathing)
 				if(holdbreath)
 					// we're simply holding our breath, see if we can hold it longer
 					if(health < 30)
@@ -457,6 +458,7 @@
 					else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 						if(prob(20))
 							spawn(0) emote(pick("giggle", "laugh"))
+					SA.moles = 0 //Hack to stop the damned surgeon from giggling.
 
 
 			if(breath.temperature > (T0C+66) && !(mutations & COLD_RESISTANCE)) // Hot air hurts :(

@@ -277,7 +277,7 @@
 /obj/item/weapon/storage/stma_kit
 	name = "Sterile Masks"
 	desc = "This box contains masks of +2 constitution." //I made it better.  --SkyMarshal
-	icon_state = "latex"
+	icon_state = "mask"
 	item_state = "syringe_kit"
 
 /obj/item/weapon/storage/trackimp_kit
