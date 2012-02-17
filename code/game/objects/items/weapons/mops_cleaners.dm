@@ -1,4 +1,3 @@
-
 /obj/item/weapon/cleaner
 	desc = "Space Cleaner!"
 	icon = 'janitor.dmi'
@@ -11,17 +10,14 @@
 	throw_speed = 2
 	throw_range = 10
 
-
 /obj/item/weapon/cleaner/New()
 	var/datum/reagents/R = new/datum/reagents(250)
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("cleaner", 250)
 
-
 /obj/item/weapon/cleaner/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
-
 
 /obj/item/weapon/cleaner/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (istype(A, /obj/item/weapon/storage ))
@@ -89,7 +85,6 @@
 		log_game("[key_name(user)] fired Space lube from a Cleaner bottle.")
 	return
 
-
 /obj/item/weapon/cleaner/examine()
 	set src in usr
 	for(var/datum/reagent/R in reagents.reagent_list)
@@ -113,17 +108,13 @@
 	throw_range = 10
 	origin_tech = "combat=3;materials=3;engineering=3"
 
-
 /obj/item/weapon/chemsprayer/New()
-	var/datum/reagents/R = new/datum/reagents(1000)
+	var/datum/reagents/R = new/datum/reagents(600)
 	reagents = R
 	R.my_atom = src
-	R.add_reagent("cleaner", 10)
-
 
 /obj/item/weapon/chemsprayer/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
-
 
 /obj/item/weapon/chemsprayer/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (istype(A, /obj/item/weapon/storage ))
@@ -207,7 +198,7 @@
 
 //A direct copy paste of the cleaner, fantastic.
 /obj/item/weapon/pepperspray
-	desc = "Manufactred by UhangInc., used to blind and down an opponent quickly. It has three spray settings, and is currently set to 'low'."
+	desc = "Manufactured by UhangInc., used to blind and down an opponent quickly. It has three spray settings, and is currently set to 'low'."
 	icon = 'weapons.dmi'
 	name = "pepperspray"
 	icon_state = "pepperspray"
@@ -234,14 +225,14 @@
 	switch ( src.setting )
 		if (2)
 			user << "You change the spray to 'medium'."
-			src.desc = "Manufactred by UhangInc., used to blind and down an opponent quickly. It has three spray settings, and is currently set to 'medium'."
+			src.desc = "Manufactured by UhangInc., used to blind and down an opponent quickly. It has three spray settings, and is currently set to 'medium'."
 		if (3)
 			user << "You change the spray to 'high'."
-			src.desc = "Manufactred by UhangInc., used to blind and down an opponent quickly. It has three spray settings, and is currently set to 'high'."
+			src.desc = "Manufactured by UhangInc., used to blind and down an opponent quickly. It has three spray settings, and is currently set to 'high'."
 		if (4)
 			src.setting = 1
 			user << "You change the spray to 'low'."
-			src.desc = "Manufactred by UhangInc., used to blind and down an opponent quickly. It has three spray settings, and is currently set to 'low'."
+			src.desc = "Manufactured by UhangInc., used to blind and down an opponent quickly. It has three spray settings, and is currently set to 'low'."
 	return
 
 /obj/item/weapon/pepperspray/afterattack(atom/A as mob|obj, mob/user as mob)
@@ -333,7 +324,7 @@
 
 /obj/item/weapon/pepperspray/examine()
 	set src in usr
-	usr << text("\icon[] [] units of spray left!", src, src.reagents.total_volume)
+	usr << "\icon[src] [src.reagents.total_volume] units of spray left!"
 	..()
 	return
 
