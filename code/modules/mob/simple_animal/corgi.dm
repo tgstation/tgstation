@@ -376,3 +376,17 @@
 	mind.current = src
 	mind.assigned_role = "Corgi"
 	mind.key = G.key
+
+
+/mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
+	if(istype(O, /obj/item/weapon/newspaper))
+		if(alive)
+			for(var/mob/M in viewers(user, null))
+				if ((M.client && !( M.blinded )))
+					M.show_message("\blue [user] baps [name] on the nose with the rolled up [O]")
+			spawn(0)
+				for(var/i in list(1,2,4,8,4,2,1,2))
+					dir = i
+					sleep(1)
+	else
+		..()
