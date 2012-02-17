@@ -7,7 +7,6 @@
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	anchored = 1
-	layer = 2.7
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir, can be 0

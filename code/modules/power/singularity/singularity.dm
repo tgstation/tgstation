@@ -85,16 +85,17 @@ var/global/list/uneatable = list(
 
 
 	process()
-		eat()
-		dissipate()
-		check_energy()
-		if(current_size >= 3)
-			move()
-			if(current_size <= 7)
-				pulse()
-				if(current_size >= 5)
-					if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
-						event()
+		spawn(0)
+			eat()
+			dissipate()
+			check_energy()
+			if(current_size >= 3)
+				move()
+				if(current_size <= 7)
+					pulse()
+					if(current_size >= 5)
+						if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
+							event()
 		return
 
 
@@ -442,12 +443,13 @@ var/global/list/uneatable = list(
 		consume_range = 3 //How many tiles out do we eat
 
 		process()
-			eat()
-			if(!target || prob(5))
-				pickcultist()
-			move()
-			if(prob(25))
-				mezzer()
+			spawn(0)
+				eat()
+				if(!target || prob(5))
+					pickcultist()
+				move()
+				if(prob(25))
+					mezzer()
 
 		consume(var/atom/A) //Has its own consume proc because it doesn't need energy and I don't want BoHs to explode it. --NEO
 			if(is_type_in_list(A, uneatable))

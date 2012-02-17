@@ -17,7 +17,7 @@
 
 	New()
 		..()
-		if(id)
+		if(!isnull(id))
 			for(var/obj/machinery/computer/operating/O in world)
 				if(src.id == O.id)
 					src.computer = O
@@ -94,11 +94,13 @@
 		if(locate(/mob/living/carbon, src.loc))
 			var/mob/M = locate(/mob/living/carbon, src.loc)
 			if(M.resting)
-				src.victim = M
+				victim = M
 				if(updatesicon)
 					icon_state = "table2-active"
 				return 1
-		src.victim = null
+		if(victim)
+			victim.update_clothing()
+		victim = null
 		if(updatesicon)
 			icon_state = "table2-idle"
 		processing_objects.Remove(src)
@@ -124,6 +126,7 @@
 				if(updatesicon)
 					icon_state = "table2-active"
 				src.victim = M
+				M.update_clothing()
 				processing_objects.Add(src)
 				del(W)
 				return
@@ -133,7 +136,7 @@
 		return
 
 /obj/machinery/optable/portable
-	name = "mobile operating Table"
+	name = "mobile operating table"
 	desc = "Used for advanced medical procedures. Seems to be movable, neat."
 	icon = 'rollerbed.dmi'
 	icon_state = "up"

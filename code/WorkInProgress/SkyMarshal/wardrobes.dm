@@ -5,7 +5,6 @@
 	icon_state = "wardrobe_sealed"
 	item_state = "wardrobe"
 	w_class = 4
-	layer = 2.9
 	var
 		descriptor = "various clothing"
 		seal_torn = 0
