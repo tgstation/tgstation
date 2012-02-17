@@ -79,7 +79,7 @@
 		usr << "\red This creature is not compatible with our biology."
 		return
 
-	if (M.mutations & HUSK)
+	if (M.mutations & NOCLONE)
 		usr << "\red This creature's DNA is ruined beyond useability!"
 		return
 
@@ -137,7 +137,7 @@
 	usr.changeling.isabsorbing = 0
 
 	T.death(0)
-	T.ChangeToHusk()
+	T.Drain()
 
 	return
 

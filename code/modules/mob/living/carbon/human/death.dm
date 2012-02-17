@@ -56,3 +56,8 @@
 	real_name = "Unknown"
 	update_body()
 	return
+
+/mob/living/carbon/human/proc/Drain()
+	ChangeToHusk()
+	mutations |= NOCLONE
+	return

@@ -47,7 +47,7 @@
 	var/attacktext = "attacks"
 	var/attack_sound = null
 	var/friendly = "nuzzles" //If the mob does no damage with it's attack
-	var/destroyer = 0 //if they can smash walls
+	var/wall_smash = 0 //if they can smash walls
 
 	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 /mob/living/simple_animal/New()
@@ -66,16 +66,12 @@
 		if(health > 0)
 			icon_state = icon_living
 			alive = 1
-			stat = 0 		//Alive - conscious
+			stat = CONSCIOUS
 			density = 1
 		return
 
 	if(health < 1)
-		alive = 0
-		icon_state = icon_dead
-		stat = 2 			//Dead
-		density = 0
-		return
+		Die()
 
 	if(health > maxHealth)
 		health = maxHealth
@@ -91,35 +87,37 @@
 	//Speaking
 	if(speak_chance)
 		if(prob(speak_chance))
-			if(speak && (emote_hear || emote_see) )
-				var/length = speak.len
-				if(emote_hear)
-					length += emote_hear.len
-				if(emote_see)
-					length += emote_see.len
-				var/pick = rand(1,length)
-				if(pick <= speak.len)
-					say(pick(speak))
-				else
-					pick -= speak.len
-					if(emote_see && pick <= emote_see.len)
-						emote(pick(emote_see),1)
+			if(speak && speak.len)
+				if((emote_hear && emote_hear.len) || (emote_see && emote_see.len))
+					var/length = speak.len
+					if(emote_hear && emote_hear.len)
+						length += emote_hear.len
+					if(emote_see && emote_see.len)
+						length += emote_see.len
+					var/randomValue = rand(1,length)
+					if(randomValue <= speak.len)
+						say(pick(speak))
 					else
-						emote(pick(emote_hear),2)
-			if(!speak)
-				if(!emote_hear && emote_see)
+						randomValue -= speak.len
+						if(emote_see && randomValue <= emote_see.len)
+							emote(pick(emote_see),1)
+						else
+							emote(pick(emote_hear),2)
+				else
+					say(pick(speak))
+			else
+				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
 					emote(pick(emote_see),1)
-				if(emote_hear && !emote_see)
+				if((emote_hear && emote_hear.len) && !(emote_see && emote_see.len))
 					emote(pick(emote_hear),2)
-				if(emote_hear && emote_see)
+				if((emote_hear && emote_hear.len) && (emote_see && emote_see.len))
 					var/length = emote_hear.len + emote_see.len
 					var/pick = rand(1,length)
 					if(pick <= emote_see.len)
 						emote(pick(emote_see),1)
 					else
 						emote(pick(emote_hear),2)
-			if(speak && !(emote_see || emote_hear))
-				say(pick(speak))
+
 
 	//Atmos
 	var/atmos_suitable = 1
@@ -193,7 +191,7 @@
 	..()
 
 /mob/living/simple_animal/say_quote(var/text)
-	if(speak_emote)
+	if(speak_emote && speak_emote.len)
 		var/emote = pick(speak_emote)
 		if(emote)
 			return "[emote], \"[text]\""
@@ -300,3 +298,10 @@
 	tally = speed
 
 	return tally
+
+/mob/living/simple_animal/proc/Die()
+	alive = 0
+	icon_state = icon_dead
+	stat = DEAD
+	density = 0
+	return

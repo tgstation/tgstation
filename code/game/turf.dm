@@ -348,7 +348,7 @@
 
 
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M as mob)
-	if((M.destroyer))
+	if(M.wall_smash)
 		if (istype(src, /turf/simulated/wall/r_wall))
 			M << text("\blue This wall is far too strong for you to destroy.")
 			return

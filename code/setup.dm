@@ -179,6 +179,7 @@ var/const
 	HUSK			=(1<<6)
 	LASER			=(1<<7)
 	HEAL			=(1<<8)
+	NOCLONE			=(1<<9)
 
 
 //mob/var/stat things

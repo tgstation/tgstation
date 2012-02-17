@@ -2222,8 +2222,8 @@ It can still be worn/put on as normal.
 		src.stat = 0
 		return
 	src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss() - src.getCloneLoss()
-	//if(getFireLoss() > 100 && stat == DEAD)
-	//	ChangeToHusk()  // Commented out due to lasers and fire also husking you and making you unclonable.
+	if(getFireLoss() > (100 - config.health_threshold_dead) && stat == DEAD) //100 only being used as the magic human max health number, feel free to change it if you add a var for it -- Urist
+		ChangeToHusk()
 	return
 
 

@@ -22,7 +22,7 @@
 	max_co2 = 0
 	max_tox = 0
 	speed = 3
-	destroyer = 1
+	wall_smash = 1
 	nopush = 1
 	a_intent = "harm"
 	stop_automated_movement = 1
