@@ -548,7 +548,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if("Yes")
 			command_alert(input, maintitle=customname);
 		if("No")
-			world << "\red New NanoTrasen Update availible at all communication consoles."
+			world << "\red New NanoTrasen Update available at all communication consoles."
 
 	world << sound('commandreport.ogg')
 	log_admin("[key_name(src)] has created a command report: [input]")
