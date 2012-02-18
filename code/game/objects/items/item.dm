@@ -473,7 +473,7 @@ mob/proc/flash_weak_pain()
 		if (prob(M.eye_stat - 10 + 1))
 			if(M.stat != 2)
 				M << "\red You go blind!"
-			M.sdisabilities |= 1
+			M.disabilities |= 128
 	return
 
 

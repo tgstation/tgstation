@@ -194,6 +194,12 @@
 
 	if (shock_stage >= 10) tally += 3
 
+	if(tally < 0)
+		tally = 0
+
+	if(mutations & mRun)
+		tally = 0
+
 	return tally
 
 /mob/living/carbon/human/Stat()
@@ -2431,3 +2437,96 @@ It can still be worn/put on as normal.
 	if(mutations & HULK)
 		return
 	..()
+
+/mob/living/carbon/human/proc/morph()
+	set name = "Morph"
+	set category = "Superpower"
+	if(!(src.mutations & mMorph))
+		src.verbs -= /mob/living/carbon/human/proc/morph
+		return
+
+	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
+	if(new_facial)
+		r_facial = hex2num(copytext(new_facial, 2, 4))
+		g_facial = hex2num(copytext(new_facial, 4, 6))
+		b_facial = hex2num(copytext(new_facial, 6, 8))
+
+
+
+	var/new_eyes = input("Please select eye color.", "Character Generation") as color
+	if(new_eyes)
+		r_eyes = hex2num(copytext(new_eyes, 2, 4))
+		g_eyes = hex2num(copytext(new_eyes, 4, 6))
+		b_eyes = hex2num(copytext(new_eyes, 6, 8))
+
+	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
+
+	if (new_tone)
+		s_tone = max(min(round(text2num(new_tone)), 220), 1)
+		s_tone =  -s_tone + 35
+
+	var/new_style = input("Please select hair style", "Character Generation")  as null|anything in list( "Cut Hair", "Short Hair", "Long Hair", "Mohawk", "Balding", "Wave", "Bedhead", "Dreadlocks", "Ponytail", "Bald" )
+
+	if (new_style)
+		h_style = new_style
+
+	new_style = input("Please select facial style", "Character Generation")  as null|anything in list("Watson", "Chaplin", "Selleck", "Full Beard", "Long Beard", "Neckbeard", "Van Dyke", "Elvis", "Abe", "Chinstrap", "Hipster", "Goatee", "Hogan", "Shaved")
+
+	if (new_style)
+		f_style = new_style
+
+	var/new_gender = input("Please select gender") as null|anything in list("Male","Female")
+	if (new_gender)
+		if(new_gender == "Male")
+			gender = MALE
+		else
+			gender = FEMALE
+	update_body()
+	update_face()
+	update_clothing()
+
+	for(var/mob/M in view())
+		M.show_message("[src.name] just morphed!")
+
+/mob/living/carbon/human/proc/remotesay()
+	set name = "Project mind"
+	set category = "Superpower"
+	if(!(src.mutations & mRemotetalk))
+		src.verbs -= /mob/living/carbon/human/proc/remotesay
+		return
+	var/list/creatures = list()
+	for(var/mob/living/carbon/h in world)
+		creatures += h
+	var/mob/target = input ("Who do you want to project your mind to ?") as mob in creatures
+
+	var/say = input ("What do you wish to say")
+	if(target.mutations & mRemotetalk)
+		target.show_message("\blue You hear [src.real_name]'s voice: [say]")
+	else
+		target.show_message("\blue You hear a voice: [say]")
+	usr.show_message("\blue You project your mind into [target.real_name]: [say]")
+	for(var/mob/dead/observer/G in world)
+		G.show_message("<i>Telepathic message from <b>[src]</b> to <b>[target]</b>: [say]</i>")
+
+/mob/living/carbon/human/proc/remoteobserve()
+	set name = "Remote View"
+	set category = "Superpower"
+
+	if(!(src.mutations & mRemote))
+		src.verbs -= /mob/living/carbon/human/proc/remoteobserve
+		return
+
+	var/list/mob/creatures = list()
+
+	for(var/mob/living/carbon/h in world)
+		creatures += h
+	client.perspective = EYE_PERSPECTIVE
+
+
+
+	var/mob/target = input ("Who do you want to project your mind to ?") as mob in creatures
+
+	if (target)
+		client.eye = target
+	else
+		client.eye = client.mob

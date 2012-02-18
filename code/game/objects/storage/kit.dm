@@ -62,9 +62,9 @@
 	new /obj/item/clothing/glasses/regular(src)
 	new /obj/item/clothing/glasses/regular(src)
 	new /obj/item/clothing/glasses/regular(src)
-	new /obj/item/clothing/glasses/regular(src)
-	new /obj/item/clothing/glasses/regular(src)
-	new /obj/item/clothing/glasses/regular(src)
+	new /obj/item/clothing/glasses/sunglasses/prescription(src)
+	new /obj/item/clothing/glasses/sunglasses/prescription(src)
+	new /obj/item/clothing/glasses/meson/prescription(src)
 	..()
 	return
 

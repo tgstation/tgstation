@@ -831,7 +831,7 @@ var/list/sacrificed = list()
 					if(prob(5))
 						C.disabilities |= 1
 						if(prob(10))
-							C.sdisabilities |= 1
+							C.disabilities |= 128
 					C.show_message("\red Suddenly you see red flash that blinds you.", 3)
 					affected++
 				if(affected)

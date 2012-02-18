@@ -53,7 +53,7 @@
 		return
 
 	// Mute disability
-	if (sdisabilities & 2)
+	if (disabilities & 64)
 		return
 
 	if (istype(wear_mask, /obj/item/clothing/mask/muzzle))

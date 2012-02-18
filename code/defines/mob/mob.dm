@@ -66,7 +66,6 @@
 	var/other_mobs = null
 	var/memory = ""
 	var/poll_answer = 0.0
-	var/sdisabilities = 0//Carbon
 	var/disabilities = 0//Carbon
 	var/atom/movable/pulling = null
 	var/stat = 0.0

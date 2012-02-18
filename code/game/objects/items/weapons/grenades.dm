@@ -208,12 +208,12 @@ FLASHBANG
 			M.disabilities |= 1
 			if (prob(M.eye_stat - 20 + 1))
 				M << "\red You can't see anything!"
-				M.sdisabilities |= 1
+				M.disabilities |= 128
 		if (M.ear_damage >= 15)
 			M << "\red Your ears start to ring badly!"
 			if (prob(M.ear_damage - 10 + 5))
 				M << "\red You can't hear anything!"
-				M.sdisabilities |= 4
+				M.disabilities |= 32
 		else
 			if (M.ear_damage >= 5)
 				M << "\red Your ears start to ring!"

@@ -108,9 +108,10 @@ datum/preferences
 
 		flavor_text = ""
 
-		// slot stuff
-		var/slotname
-		var/curslot = 0
+		// slot stuff (Why were they var/var?  --SkyMarshal)
+		slotname
+		curslot = 0
+		disabilities = 0
 
 	New()
 		hair_style = new/datum/sprite_accessory/hair/short
@@ -168,6 +169,8 @@ datum/preferences
 
 		dat += "<hr><b>Eyes</b><br>"
 		dat += "<a href='byond://?src=\ref[user];preferences=1;eyes=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]\"><table  style='display:inline;' bgcolor=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]\"><tr><td>__</td></tr></table></font>"
+
+		dat += "<hr><b>Disabilities: </b><a href=\"byond://?src=\ref[user];preferences=1;disabilities=1\">[disabilities]</a><br>"
 
 		dat += "<hr><b>Flavor Text</b><br>"
 		dat += "<a href='byond://?src=\ref[user];preferences=1;flavor_text=1'>Change</a><br>"
@@ -683,6 +686,25 @@ datum/preferences
 			b_type = "A+"
 			UI = UI_OLD
 			midis = 1
+			disabilities = 0
+		if(link_tags["disabilities"])
+			var/temp = input(usr,"Disability number","Disabilities",disabilities) as num
+			disabilities = min(max(temp,0),63)
+			usr << "You have chosen..."
+			if(disabilities == 0)
+				usr << "No disabilities"
+			if(disabilities & 1)
+				usr << "Nearsightedness"
+			if(disabilities & 2)
+				usr << "Headaches"
+			if(disabilities & 4)
+				usr << "Coughing"
+			if(disabilities & 8)
+				usr << "Twitchiness/Tourettes (You must hate yourself)"
+			if(disabilities & 16)
+				usr << "Nervousness"
+			if(disabilities & 32)
+				usr << "Trenna's Disorder (Deafness)"
 
 		ShowChoices(user)
 
@@ -737,6 +759,25 @@ datum/preferences
 					character.client.ooccolor = ooccolor
 					character.client.be_alien = be_special&BE_ALIEN
 					character.client.be_pai = be_special&BE_PAI
+
+	proc/copydisabilities(mob/living/carbon/human/character)
+		if(disabilities & 1)
+			character.dna.struc_enzymes = setblock(character.dna.struc_enzymes,GLASSESBLOCK,toggledblock(getblock(character.dna.struc_enzymes,GLASSESBLOCK,3)),3)
+		if(disabilities & 2)
+			character.dna.struc_enzymes = setblock(character.dna.struc_enzymes,HEADACHEBLOCK,toggledblock(getblock(character.dna.struc_enzymes,HEADACHEBLOCK,3)),3)
+		if(disabilities & 4)
+			character.dna.struc_enzymes = setblock(character.dna.struc_enzymes,COUGHBLOCK,toggledblock(getblock(character.dna.struc_enzymes,COUGHBLOCK,3)),3)
+		if(disabilities & 8)
+			character.dna.struc_enzymes = setblock(character.dna.struc_enzymes,TWITCHBLOCK,toggledblock(getblock(character.dna.struc_enzymes,TWITCHBLOCK,3)),3)
+		if(disabilities & 16)
+			character.dna.struc_enzymes = setblock(character.dna.struc_enzymes,NERVOUSBLOCK,toggledblock(getblock(character.dna.struc_enzymes,NERVOUSBLOCK,3)),3)
+		if(disabilities & 32)
+			character.dna.struc_enzymes = setblock(character.dna.struc_enzymes,DEAFBLOCK,toggledblock(getblock(character.dna.struc_enzymes,DEAFBLOCK,3)),3)
+		//if(disabilities & 64)
+			//mute
+		//if(disabilities & 128)
+			//character.dna.struc_enzymes = setblock(character.dna.struc_enzymes,BLINDBLOCK,toggledblock(getblock(character.dna.struc_enzymes,BLINDBLOCK,3)),3)
+		character.disabilities = disabilities
 
 #undef UI_OLD
 #undef UI_NEW

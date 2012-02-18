@@ -558,9 +558,9 @@
 		usr << "\blue We stealthily sting [T]."
 
 		if(!T.changeling)
-			T.sdisabilities |= 4
+			T.disabilities |= 32
 			spawn(300)
-				T.sdisabilities &= ~4
+				T.disabilities &= ~32
 
 		usr.verbs -= /client/proc/changeling_deaf_sting
 

@@ -85,6 +85,11 @@
 		return
 	if (ishuman(M))
 		add_fibers(M)
+		if (M.mutations & mFingerprints)
+			if(src.fingerprintslast != M.key)
+				src.fingerprintshidden += "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]"
+				src.fingerprintslast = M.key
+			return 0
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna))
 			return 0

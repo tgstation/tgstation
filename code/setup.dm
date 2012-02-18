@@ -159,7 +159,17 @@ var/const
 	HUSK			=(1<<6)
 	LASER			=(1<<7)
 	HEAL			=(1<<8)
-
+	mNobreath		=(1<<9)
+	mRemote			=(1<<10)
+	mRegen			=(1<<11)
+	mRun			=(1<<12)
+	mRemotetalk		=(1<<13)
+	mMorph			=(1<<14)
+	mBlend			=(1<<15)
+	mHallucination	=(1<<16)
+	mFingerprints	=(1<<17)
+	mShock			=(1<<18)
+	mSmallsize		=(1<<19)
 
 //mob/var/stat things
 var/const
