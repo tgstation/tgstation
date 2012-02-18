@@ -872,8 +872,9 @@
 /client/proc/radioalert()
 	set category = "Fun"
 	set name = "Create Radio Alert"
-	var/message = input("Choose a message! (Don't forget the \"says, \" or similar at the start.)", "Message") as message|null
+	var/message = input("Choose a message! (Don't forget the \"says, \" or similar at the start.)", "Message") as text|null
 	var/from = input("From whom? (Who's saying this?)", "From") as text|null
-	var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)
-	a.autosay(message,from)
-	del(a)
+	if(message && from)
+		var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)
+		a.autosay(message,from)
+		del(a)
