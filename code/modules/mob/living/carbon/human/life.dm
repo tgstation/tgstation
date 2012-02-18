@@ -157,7 +157,7 @@
 			if(hallucination > 0)
 
 				if(hallucinations.len == 0 && hallucination >= 20 && health > 0)
-					if(prob(5))
+					if(prob(2)) //Waaay to often.
 						fake_attack(src)
 				//for(var/atom/a in hallucinations)
 				//	a.hallucinate(src)
@@ -174,11 +174,11 @@
 
 
 			if(mutations & mSmallsize)
-				if(!(flags & TABLEPASS))
-					flags |= TABLEPASS
+				if(!(flags & PASSTABLE))
+					flags |= PASSTABLE
 			else
-				if(flags & TABLEPASS)
-					flags &= ~TABLEPASS
+				if(flags & PASSTABLE)
+					flags &= ~PASSTABLE
 
 			if (mutations & mHallucination)
 				hallucination = 100
@@ -249,7 +249,7 @@
 						pixel_x = old_x
 						pixel_y = old_y
 			if (disabilities & 16)
-				if (prob(10))
+				if (prob(20))//Instant Chad Ore!
 					stuttering = max(10, stuttering)
 
 			if (brainloss >= 60 && stat != 2)

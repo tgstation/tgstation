@@ -814,3 +814,69 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	M.update_clothing()
 	return
+
+
+/client/proc/cmd_debug_blood()
+	set category = "Debug"
+	set name = "Analyze all blood_DNA"
+
+	// to prevent REALLY stupid activations
+	switch(alert("Are you sure?", ,"Yes", "No"))
+		if("No")
+			return
+	world << "\red ALERT! \black Standby for high CPU bugtesting to determine missing blood_DNA values!"
+	world << "\red THIS WILL PROBABLY LAG LIKE HELL."
+	world << "Initiating in 10 BYOND seconds..."
+	log_admin("[key_name(src)] has initiated a scan of all blood_DNA lists!")
+	message_admins("[key_name_admin(src)] has initiated a scan of all blood_DNA lists!", 0)
+	sleep(100)
+	world << "\red SCAN INITIATED."
+	spawn(0) //I am not stupid enough to leave that in a regular loop.
+		for(var/atom/O in world)
+			if(!islist(O.blood_DNA))
+				var/turf/T = get_turf(O)
+				if(istype(O.loc,/turf))
+					src << "[O] at [T.x],[T.y],[T.z] has a non-list blood_DNA variable!"
+				else
+					src << "[O] in [O.loc] at [T.x],[T.y],[T.z] has a non-list blood_DNA variable!"
+		world << "\red SCAN COMPLETE."
+		world << "Thank you for your patience."
+
+
+/client/proc/cmd_debug_prints()
+	set category = "Debug"
+	set name = "Analyze all fingerprints"
+
+	// to prevent REALLY stupid activations
+	switch(alert("Are you sure?", ,"Yes", "No"))
+		if("No")
+			return
+	world << "\red ALERT! \black Standby for high CPU bugtesting to determine incorrect fingerprint values!"
+	world << "\red THIS WILL PROBABLY LAG LIKE HELL."
+	world << "Initiating in 10 BYOND seconds..."
+	log_admin("[key_name(src)] has initiated a scan of all fingerprints!")
+	message_admins("[key_name_admin(src)] has initiated a scan of all fingerprints!", 0)
+	sleep(100)
+	world << "\red SCAN INITIATED."
+	spawn(0) //I am not stupid enough to leave that in a regular loop.
+		for(var/atom/O in world)
+			if(istype(O, /mob)) //Lets not.
+				continue
+			if(!islist(O.fingerprints))
+				var/turf/T = get_turf(O)
+				if(istype(O.loc,/turf))
+					src << "[O] at [T.x],[T.y],[T.z] has a non-list fingerprints variable!"
+				else
+					src << "[O] in [O.loc] at [T.x],[T.y],[T.z] has a non-list fingerprints variable!"
+			else
+				for(var/i, i <= O.fingerprints.len, i++)
+					if(length(O.fingerprints[i]) != 69)
+						var/turf/T = get_turf(O)
+						if(istype(O.loc,/turf))
+							src << "[O] at [T.x],[T.y],[T.z] has a fingerprints variable of incorrect length!"
+						else
+							src << "[O] in [O.loc] at [T.x],[T.y],[T.z] has a fingerprints variable of incorrect length!"
+						break
+
+		world << "\red SCAN COMPLETE."
+		world << "Thank you for your patience."

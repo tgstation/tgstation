@@ -170,7 +170,13 @@ datum/preferences
 		dat += "<hr><b>Eyes</b><br>"
 		dat += "<a href='byond://?src=\ref[user];preferences=1;eyes=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]\"><table  style='display:inline;' bgcolor=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]\"><tr><td>__</td></tr></table></font>"
 
-		dat += "<hr><b>Disabilities: </b><a href=\"byond://?src=\ref[user];preferences=1;disabilities=1\">[disabilities]</a><br>"
+		dat += "<hr><b>Disabilities: </b><br>"
+		dat += "Need Glasses? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=1\">[disabilities & (1<<1) ? "Yes" : "No"]</a><br>"
+		dat += "Seizures? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=2\">[disabilities & (1<<2) ? "Yes" : "No"]</a><br>"
+		dat += "Coughing? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=3\">[disabilities & (1<<3) ? "Yes" : "No"]</a><br>"
+		dat += "Tourettes/Twitching? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=4\">[disabilities & (1<<4) ? "Yes" : "No"]</a><br>"
+		dat += "Nervousness? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=5\">[disabilities & (1<<5) ? "Yes" : "No"]</a><br>"
+		dat += "Trenna's Disorder? (Deafness) <a href=\"byond://?src=\ref[user];preferences=1;disabilities=6\">[disabilities & (1<<6) ? "Yes" : "No"]</a><br>"
 
 		dat += "<hr><b>Flavor Text</b><br>"
 		dat += "<a href='byond://?src=\ref[user];preferences=1;flavor_text=1'>Change</a><br>"
@@ -688,23 +694,7 @@ datum/preferences
 			midis = 1
 			disabilities = 0
 		if(link_tags["disabilities"])
-			var/temp = input(usr,"Disability number","Disabilities",disabilities) as num
-			disabilities = min(max(temp,0),63)
-			usr << "You have chosen..."
-			if(disabilities == 0)
-				usr << "No disabilities"
-			if(disabilities & 1)
-				usr << "Nearsightedness"
-			if(disabilities & 2)
-				usr << "Headaches"
-			if(disabilities & 4)
-				usr << "Coughing"
-			if(disabilities & 8)
-				usr << "Twitchiness/Tourettes (You must hate yourself)"
-			if(disabilities & 16)
-				usr << "Nervousness"
-			if(disabilities & 32)
-				usr << "Trenna's Disorder (Deafness)"
+			disabilities ^= (1<<text2num(link_tags["disabilities"])) //MAGIC
 
 		ShowChoices(user)
 

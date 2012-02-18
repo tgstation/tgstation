@@ -75,7 +75,7 @@
 			O.place = "dnainjector"
 			M.requests += O
 			if (dnatype == "se")
-				if (isblockon(getblock(dna, 14,3),14) && istype(M, /mob/living/carbon/human))
+				if (isblockon(getblock(dna, MONKEYBLOCK,3),MONKEYBLOCK) && istype(M, /mob/living/carbon/human))
 					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
 					log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
 				else

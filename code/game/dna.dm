@@ -66,7 +66,9 @@
 
 	uni_identity = temp
 
-	var/mutstring = "43359156756131E13763334D1C369012032164D4FE4CD61544B6C03F251B6C60A42821D26BA3B02D6"
+	var/mutstring = ""
+	for(var/i = 1, i <= 26, i++)
+		mutstring += add_zero2(num2hex(rand(1,1024)),3)
 
 	struc_enzymes = mutstring
 
