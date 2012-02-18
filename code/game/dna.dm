@@ -1029,7 +1029,7 @@
 			if (src.buffer3) src.temphtml += text("<A href='?src=\ref[];b3clear=1'>Clear Buffer</A><BR><BR>", src)
 			if (!src.buffer3) src.temphtml += "<BR>"
 		if (href_list["b1addui"])
-			if(src.connected.occupant)
+			if(src.connected.occupant && src.connected.occupant.dna)
 				src.buffer1iue = 0
 				src.buffer1 = src.connected.occupant.dna.uni_identity
 				if (!istype(src.connected.occupant,/mob/living/carbon/human))
@@ -1040,7 +1040,7 @@
 				src.buffer1type = "ui"
 				dopage(src,"buffermenu")
 		if (href_list["b1adduiue"])
-			if(src.connected.occupant)
+			if(src.connected.occupant && src.connected.occupant.dna)
 				src.buffer1 = src.connected.occupant.dna.uni_identity
 				if (!istype(src.connected.occupant,/mob/living/carbon/human))
 					src.buffer1owner = src.connected.occupant.name
@@ -1051,7 +1051,7 @@
 				src.buffer1iue = 1
 				dopage(src,"buffermenu")
 		if (href_list["b2adduiue"])
-			if(src.connected.occupant)
+			if(src.connected.occupant && src.connected.occupant.dna)
 				src.buffer2 = src.connected.occupant.dna.uni_identity
 				if (!istype(src.connected.occupant,/mob/living/carbon/human))
 					src.buffer2owner = src.connected.occupant.name
@@ -1062,7 +1062,7 @@
 				src.buffer2iue = 1
 				dopage(src,"buffermenu")
 		if (href_list["b3adduiue"])
-			if(src.connected.occupant)
+			if(src.connected.occupant && src.connected.occupant.dna)
 				src.buffer3 = src.connected.occupant.dna.uni_identity
 				if (!istype(src.connected.occupant,/mob/living/carbon/human))
 					src.buffer3owner = src.connected.occupant.name
@@ -1073,7 +1073,7 @@
 				src.buffer3iue = 1
 				dopage(src,"buffermenu")
 		if (href_list["b2addui"])
-			if(src.connected.occupant)
+			if(src.connected.occupant && src.connected.occupant.dna)
 				src.buffer2iue = 0
 				src.buffer2 = src.connected.occupant.dna.uni_identity
 				if (!istype(src.connected.occupant,/mob/living/carbon/human))
@@ -1084,7 +1084,7 @@
 				src.buffer2type = "ui"
 				dopage(src,"buffermenu")
 		if (href_list["b3addui"])
-			if(src.connected.occupant)
+			if(src.connected.occupant && src.connected.occupant.dna)
 				src.buffer3iue = 0
 				src.buffer3 = src.connected.occupant.dna.uni_identity
 				if (!istype(src.connected.occupant,/mob/living/carbon/human))
@@ -1095,7 +1095,7 @@
 				src.buffer3type = "ui"
 				dopage(src,"buffermenu")
 		if (href_list["b1addse"])
-			if(src.connected.occupant)
+			if(src.connected.occupant && src.connected.occupant.dna)
 				src.buffer1iue = 0
 				src.buffer1 = src.connected.occupant.dna.struc_enzymes
 				if (!istype(src.connected.occupant,/mob/living/carbon/human))
@@ -1106,7 +1106,7 @@
 				src.buffer1type = "se"
 				dopage(src,"buffermenu")
 		if (href_list["b2addse"])
-			if(src.connected.occupant)
+			if(src.connected.occupant && src.connected.occupant.dna)
 				src.buffer2iue = 0
 				src.buffer2 = src.connected.occupant.dna.struc_enzymes
 				if (!istype(src.connected.occupant,/mob/living/carbon/human))
@@ -1117,7 +1117,7 @@
 				src.buffer2type = "se"
 				dopage(src,"buffermenu")
 		if (href_list["b3addse"])
-			if(src.connected.occupant)
+			if(src.connected.occupant && src.connected.occupant.dna)
 				src.buffer3iue = 0
 				src.buffer3 = src.connected.occupant.dna.struc_enzymes
 				if (!istype(src.connected.occupant,/mob/living/carbon/human))

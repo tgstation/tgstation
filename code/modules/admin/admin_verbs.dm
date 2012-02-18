@@ -200,7 +200,7 @@
 			verbs += /client/proc/cmd_admin_delete
 			//verbs += /proc/togglebuildmode --now in view vars
 			verbs += /client/proc/toggleadminhelpsound
-			verbs += /client/proc/togglebuildmodeself
+//			verbs += /client/proc/togglebuildmodeself
 			verbs += /client/proc/hide_most_verbs
 			verbs += /client/proc/tension_report
 			verbs += /client/proc/jumptocoord
@@ -346,7 +346,7 @@
 	verbs -= /client/proc/cmd_admin_delete
 	//verbs -= /proc/togglebuildmode --now in view vars
 	verbs -= /client/proc/toggleadminhelpsound
-	verbs -= /client/proc/togglebuildmodeself
+//	verbs -= /client/proc/togglebuildmodeself
 	verbs -= /client/proc/cmd_admin_remove_plasma
 	verbs -= /client/proc/admin_call_shuttle
 	verbs -= /client/proc/admin_cancel_shuttle
@@ -614,11 +614,14 @@
 		for (var/mob/V in hearers(O))
 			V.show_message(message, 2)
 
+////I'm removing buildmode because it's shitty and runtimes a lot.	-Pete
+/*
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
 	set category = "Special Verbs"
 	if(src.mob)
 		togglebuildmode(src.mob)
+*/
 
 /client/proc/toggleadminhelpsound()
 	set name = "Toggle Adminhelp Sound"
@@ -718,7 +721,7 @@
 		//verbs += /client/proc/cmd_modify_object_variables --merged with view vairiables
 		verbs += /client/proc/Jump
 		verbs += /client/proc/jumptoturf
-		verbs += /client/proc/togglebuildmodeself
+//		verbs += /client/proc/togglebuildmodeself
 
 	verbs += /client/proc/dsay
 	verbs += /client/proc/admin_play
