@@ -139,6 +139,8 @@
 			verbs += /client/proc/only_one // Fateweaver suggested I do this - Doohl
 			verbs += /client/proc/callprocgen
 			verbs += /client/proc/callprocobj
+			verbs += /client/proc/cmd_debug_prints
+			verbs += /client/proc/cmd_debug_blood
 
 		if (holder.level >= 5)//Game Admin********************************************************************
 			verbs += /obj/admins/proc/view_txt_log
@@ -418,6 +420,8 @@
 	verbs -= /client/proc/delbook
 	verbs -= /client/proc/Force_Event_admin
 	verbs -= /client/proc/radioalert
+	verbs -= /client/proc/cmd_debug_prints
+	verbs -= /client/proc/cmd_debug_blood
 
 	return
 
