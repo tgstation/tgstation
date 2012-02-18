@@ -27,6 +27,11 @@
 		src << "Only administrators may use this command."
 		return
 
+	for(var/p in forbidden_varedit_object_types)
+		if( istype(O,p) )
+			usr << "\red It is forbidden to edit this object's variables."
+			return
+
 	var/list/names = list()
 	for (var/V in O.vars)
 		names += V
