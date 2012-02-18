@@ -167,7 +167,7 @@
 "dk" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction,/turf/simulated/floor/plating,/area/engine/engineering)
 "dl" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/engine/engineering)
 "dm" = (/obj/machinery/dispenser{pltanks = 0},/turf/simulated/floor,/area/derelict/bridge)
-"dn" = (/obj/structure/rack,/obj/item/clothing/suit/space,/obj/item/clothing/head/helmet/space,/obj/item/clothing/mask/gas,/obj/item/clothing/gloves/black,/obj/item/clothing/under/color/black,/obj/item/clothing/shoes/black,/obj/item/weapon/tank/jetpack,/turf/simulated/floor,/area/derelict/bridge)
+"dn" = (/obj/structure/rack,/obj/item/clothing/suit/space,/obj/item/clothing/head/helmet/space,/obj/item/clothing/mask/gas,/obj/item/clothing/gloves/black,/obj/item/clothing/under/color/black,/obj/item/clothing/shoes/black,/obj/item/weapon/tank/jetpack/oxygen,/turf/simulated/floor,/area/derelict/bridge)
 "do" = (/obj/machinery/portable_atmospherics/pump,/turf/simulated/floor,/area/hallway/primary/central)
 "dp" = (/obj/machinery/atmospherics/portables_connector{dir = 1},/turf/simulated/floor/plating/airless,/area/assembly/chargebay)
 "dq" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 6},/turf/simulated/wall/r_wall,/area/assembly/chargebay)
