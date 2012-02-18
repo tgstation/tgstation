@@ -209,7 +209,7 @@
 			return
 		if(istype(src.loc,/obj/item/weapon/storage))	//Taking stuff out of storage duplicates it.
 			var/obj/item/weapon/storage/U = src.loc
-			user.client.screen -= src
+			user.client.screen -= src	//Fixed!
 			U.contents.Remove(src)
 		if(istype(src.loc,/obj/item/clothing/suit/storage/))
 			var/obj/item/clothing/suit/storage/X = src.loc
@@ -224,6 +224,11 @@
 			src.loc = P
 			O.amount -= 1
 	else if(istype(W,/obj/item/wardrobe))
+		if(src in user)
+			return
+		if(!istype(src.loc,/turf))
+			user << "It's got to be on the ground to do that!"
+			return
 		var/obj/item/wardrobe/I = W
 		var/could_fill = 1
 		for (var/obj/O in locate(src.x,src.y,src.z))
@@ -241,7 +246,7 @@
 			user << "\blue You pick up all the items."
 		else
 			user << "\blue You try to pick up all of the items, but run out of space in the bag."
-		user.visible_message("\blue [user] gathers up[could_fill ? "  " : " most of "]the pile of items and puts it into the [W].")
+		user.visible_message("\blue [user] gathers up[could_fill ? " " : " most of "]the pile of items and puts it into the [W].")
 		I.update_icon()
 
 /obj/item/attack_self(mob/user as mob)

@@ -143,7 +143,7 @@ MASS SPECTROMETER
 		src.add_fingerprint(user)
 		if (istype(A, /obj/effect/decal/cleanable/blood) || istype(A, /obj/effect/rune))
 			if(!isnull(A.blood_DNA.len))
-				for(var/i = 1, i < A.blood_DNA.len, i++)
+				for(var/i = 1, i <= A.blood_DNA.len, i++)
 					var/list/templist = A.blood_DNA[i]
 					user << "\blue Blood type: [templist[2]]\nDNA: [templist[1]]"
 			return
