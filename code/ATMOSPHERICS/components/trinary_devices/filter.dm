@@ -7,6 +7,8 @@ obj/machinery/atmospherics/trinary/filter
 
 	req_access = list(access_atmospherics)
 
+	var/locked = 1 // If it's not locked, no need for an access check.
+
 	var/on = 0
 	var/temp = null // -- TLE
 
@@ -159,7 +161,7 @@ obj/machinery/atmospherics/trinary/filter/attack_hand(user as mob) // -- TLE
 	if(..())
 		return
 
-	if(!src.allowed(user))
+	if(src.locked && !src.allowed(user))
 		user << "\red Access denied."
 		return
 
@@ -167,7 +169,7 @@ obj/machinery/atmospherics/trinary/filter/attack_hand(user as mob) // -- TLE
 	var/current_filter_type
 	switch(filter_type)
 		if(0)
-			current_filter_type = "Carbon Molecules"
+			current_filter_type = "Carbon Molecules (e.g. Plasma)"
 		if(1)
 			current_filter_type = "Oxygen"
 		if(2)
@@ -185,7 +187,7 @@ obj/machinery/atmospherics/trinary/filter/attack_hand(user as mob) // -- TLE
 			<b>Power: </b><a href='?src=\ref[src];power=1'>[on?"On":"Off"]</a><br>
 			<b>Filtering: </b>[current_filter_type]<br><HR>
 			<h4>Set Filter Type:</h4>
-			<A href='?src=\ref[src];filterset=0'>Carbon Molecules</A><BR>
+			<A href='?src=\ref[src];filterset=0'>Carbon Molecules (e.g Plasma)</A><BR>
 			<A href='?src=\ref[src];filterset=1'>Oxygen</A><BR>
 			<A href='?src=\ref[src];filterset=2'>Nitrogen</A><BR>
 			<A href='?src=\ref[src];filterset=3'>Carbon Dioxide</A><BR>
@@ -230,5 +232,3 @@ obj/machinery/atmospherics/trinary/filter/Topic(href, href_list) // -- TLE
 			src.attack_hand(M)
 */
 	return
-
-
