@@ -268,7 +268,7 @@
 
 /obj/machinery/vending/engineering
 	name = "Robco Tool Maker"
-	desc = "Everything you need for do-it-yourself ship repair."
+	desc = "Everything you need for do-it-yourself station repair."
 	icon_state = "engi"
 	icon_deny = "engi-deny"
 	req_access_txt = "10"
@@ -279,6 +279,14 @@
 	product_hideamt = ""
 	charge_type = "engineering"
 
+/obj/machinery/vending/plasmaresearch
+	name = "Toximate 3000"
+	desc = "All the fine parts you need in one vending machine!"
+	product_hidden = ""
+	product_hideamt = ""
+	product_paths = "/obj/item/device/transfer_valve;/obj/item/device/assembly/signaler;/obj/item/device/assembly/prox_sensor;/obj/item/device/assembly/igniter;/obj/item/device/assembly/timer"
+	product_amounts = "6;6;6;6;6"
+	charge_type = "toxinslab"
 
 /obj/item/weapon/vending_charge
 	name = "Vending Charge"
@@ -361,3 +369,8 @@
 	name = "Soda Charge"
 	charge_type = "soda"
 	icon_state = "soda-charge"
+
+/obj/item/weapon/vending_charge/toxinslab
+	name = "Toxins Lab Charge"
+	charge_type = "toxinslab"
+	icon_state = "toxinslab-charge"

@@ -970,24 +970,32 @@ proc/process_ghost_teleport_locs()
 //Toxins
 
 /area/toxins/lab
-	name = "Toxin Lab"
-	icon_state = "toxlab"
+	name = "Research Lab"
+	icon_state = "researchlab"
 
 /area/toxins/xenobiology
 	name = "Xenobiology Lab"
+	icon_state = "xenolab"
+
+/area/toxins/gasstorage
+	name = "R&D Gas Storage"
+	icon_state = "gasstorage"
+
+/area/toxins/toxinslab
+	name = "Toxins Lab"
 	icon_state = "toxlab"
 
-/area/toxins/storage
-	name = "Toxin Storage"
-	icon_state = "toxstorage"
-
 /area/toxins/test_area
-	name = "Toxin Test Area"
+	name = "Toxins Lab Test Area"
 	icon_state = "toxtest"
 
 /area/toxins/mixing
-	name = "Toxin Mixing Room"
+	name = "Toxins Lab Mixing Room"
 	icon_state = "toxmix"
+
+/area/toxins/observatory
+	name = "Toxins Lab Observatory"
+	icon_state = "toxobserv"
 
 /area/toxins/server
 	name = "Server Room"

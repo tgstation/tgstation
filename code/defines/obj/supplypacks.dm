@@ -183,6 +183,12 @@
 	contains = list("/obj/item/weapon/vending_charge/hydroponics")
 	containername = "Hydroponics charge crate"
 
+/datum/supply_packs/charge/tl
+	name = "Toxins Lab Charge"
+	contains = list("/obj/item/weapon/vending_charge/toxinslab")
+	containername = "Toxins Lab charge crate"
+
+
 /datum/supply_packs/food
 	name = "Food crate"
 	contains = list("/obj/item/weapon/reagent_containers/food/snacks/flour",
