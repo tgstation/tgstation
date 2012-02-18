@@ -346,7 +346,9 @@ var
 		// --- Filter the message; place it in quotes apply a verb ---
 
 		var/quotedmsg = "\"" + message + "\""
-		if(M)
+		if(job == "Automated Announcement")
+			quotedmsg = message
+		else if(M)
 			quotedmsg = M.say_quote(message)
 
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---

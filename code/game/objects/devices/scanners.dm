@@ -137,6 +137,9 @@ MASS SPECTROMETER
 			return
 		if(src.loc != user)
 			return 0
+		if(istype(A,/obj/item/weapon/f_card))
+			user << "Haha, nice try.  Cheater.  (It would break stuff anyways.)"
+			return
 		src.add_fingerprint(user)
 		if (istype(A, /obj/effect/decal/cleanable/blood) || istype(A, /obj/effect/rune))
 			if(!isnull(A.blood_DNA.len))

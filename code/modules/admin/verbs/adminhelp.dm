@@ -21,7 +21,6 @@
 
 	var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
 	msg = sanitize_simple(msg, replacechars)
-	world << msg
 	send2adminirc("#bs12admin","HELP: \"[src.key]: [msg]\"")
 	if(tension_master)
 		tension_master.new_adminhelp()
