@@ -238,7 +238,7 @@ obj/machinery/computer/forensic_scanning
 							temp += "&nbsp;&nbsp;&nbsp;&nbsp;No blood found.<br>"
 				else
 					temp = "ERROR.  Database not found!<br>"
-				temp += "<br><a href='?src=\ref[src];operation=databaseprint;delete=[href_list["identifier"]]'>{delete}</a>"
+				temp += "<br><a href='?src=\ref[src];operation=delete;identifier=[href_list["identifier"]]'>{delete}</a>"
 				temp += "<br><a href='?src=\ref[src];operation=databaseprint;identifier=[href_list["identifier"]]'>{Print}</a>"
 				temp += "<br><a href='?src=\ref[src];operation=database'>{Return}</a>"
 			if("databaseprint")
@@ -305,7 +305,7 @@ obj/machinery/computer/forensic_scanning
 						temp += "&nbsp;&nbsp;&nbsp;&nbsp;No blood found.<br>"
 				else
 					temp = "ERROR.  Database not found!<br>"
-				temp += "<br><a href='?src=\ref[src];operation=delete;identifier=[href_list["identifier"]]'>{Delete This Record}</a>"
+				temp += "<br><a href='?src=\ref[src];operation=delete_aux;identifier=[href_list["identifier"]]'>{Delete This Record}</a>"
 				temp += "<br><a href='?src=\ref[src];operation=auxiliaryprint;identifier=[href_list["identifier"]]'>{Print}</a>"
 				temp += "<br><a href='?src=\ref[src];operation=database'>{Return}</a>"
 			if("auxiliaryprint")
@@ -427,6 +427,8 @@ obj/machinery/computer/forensic_scanning
 					temp = "Print Failed: No Data"
 			if("erase")
 				scan_data = ""
+			if("delete_aux")
+				delete_record(text2num(href_list["identifier"]))
 			if("delete")
 				delete_dossier(text2num(href_list["identifier"]))
 			if("cancel")
