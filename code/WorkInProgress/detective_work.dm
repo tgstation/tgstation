@@ -238,6 +238,7 @@ obj/machinery/computer/forensic_scanning
 							temp += "&nbsp;&nbsp;&nbsp;&nbsp;No blood found.<br>"
 				else
 					temp = "ERROR.  Database not found!<br>"
+				temp += "<br><a href='?src=\ref[src];operation=databaseprint;delete=[href_list["identifier"]]'>{delete}</a>"
 				temp += "<br><a href='?src=\ref[src];operation=databaseprint;identifier=[href_list["identifier"]]'>{Print}</a>"
 				temp += "<br><a href='?src=\ref[src];operation=database'>{Return}</a>"
 			if("databaseprint")
@@ -304,7 +305,7 @@ obj/machinery/computer/forensic_scanning
 						temp += "&nbsp;&nbsp;&nbsp;&nbsp;No blood found.<br>"
 				else
 					temp = "ERROR.  Database not found!<br>"
-				temp += "<br><a href='?src=\ref[src];operation=database;delete=[href_list["identifier"]]'>{Delete This Record}</a>"
+				temp += "<br><a href='?src=\ref[src];operation=delete;identifier=[href_list["identifier"]]'>{Delete This Record}</a>"
 				temp += "<br><a href='?src=\ref[src];operation=auxiliaryprint;identifier=[href_list["identifier"]]'>{Print}</a>"
 				temp += "<br><a href='?src=\ref[src];operation=database'>{Return}</a>"
 			if("auxiliaryprint")
@@ -336,7 +337,11 @@ obj/machinery/computer/forensic_scanning
 				else
 					usr << "ERROR.  Database not found!<br>"
 			if("scan")
-				if(scanning)
+				if(istype(scanning,/obj/item/weapon/f_card))
+					card = scanning
+					scanning = initial(scanning)
+					process_card()
+				else if(scanning)
 					scan_process = 3
 					scan_data = "Scanning [scanning]: 25% complete"
 					updateDialog()
@@ -422,6 +427,8 @@ obj/machinery/computer/forensic_scanning
 					temp = "Print Failed: No Data"
 			if("erase")
 				scan_data = ""
+			if("delete")
+				delete_dossier(text2num(href_list["identifier"]))
 			if("cancel")
 				scan_process = 0
 			if("add")
@@ -643,6 +650,16 @@ obj/machinery/computer/forensic_scanning
 
 	proc/get_name(var/atom/A)
 		return A.name
+
+	proc/delete_dossier(var/location)
+		if(files && files.len)
+			if(files.len < location)
+				for(var/i = location, i < files.len, i++)
+					files[i] = files[i + 1]
+			if(files.len <= location)
+				files[files.len] = list()
+				files.len--
+		return
 
 	detective
 		icon_state = "old"

@@ -283,7 +283,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		if(M.stat == 2)
 			var/turf/t = get_turf(M)
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			a.autosay("[mobname] has died in [t.loc.name]!", "[mobname]'s Death Alarm")
+			a.autosay("states, \"[mobname] has died in [t.loc.name]!\"", "[mobname]'s Death Alarm")
 			del(a)
 			processing_objects.Remove(src)
 
