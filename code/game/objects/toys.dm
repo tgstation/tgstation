@@ -29,11 +29,8 @@ CRAYONS
 				return
 			else
 				usr << "You add the crayon to the box."
-				user.u_equip(W)
+				user.drop_item()
 				W.loc = src
-				if ((user.client && user.s_active != src))
-					user.client.screen -= W
-				W.dropped(user)
 				add_fingerprint(user)
 				updateIcon()
 				return
@@ -46,15 +43,15 @@ CRAYONS
 			user << "\red You're out of crayons!"
 			return
 		else
-			var/crayon = pick(contents)
-			user.contents += crayon
-			if(user.hand)
-				user.l_hand = crayon
-			else
-				user.r_hand = crayon
-			crayon:layer = 20
-			user << "You take the [crayon:colourName] crayon out of the box."
-			updateIcon()
+			var/list/crayons = new()
+			for(var/obj/item/toy/crayon/C in contents)
+				crayons[C:colourName] = C
+			var/choice = input(user, "Pick a color:", "Crayon Box") in crayons as text|null
+			if(choice)
+				var/obj/crayon = crayons[choice]
+				user.put_in_hand(crayon)
+				user << "You take the [crayon:colourName] crayon out of the box."
+				updateIcon()
 	else
 		return ..()
 	icon_state = "crayonbox[contents.len]"
