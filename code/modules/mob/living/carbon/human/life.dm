@@ -232,11 +232,10 @@
 					drop_item()
 					spawn( 0 )
 						emote("cough")
-						return
 			if (disabilities & 8)
-				if ((prob(10) && paralysis <= 1 && r_Tourette < 1))
+				if ((prob(5) && paralysis <= 1 && r_Tourette < 1))
 					Stun(10)
-					spawn( 0 )
+					spawn(0)
 						switch(rand(1, 3))
 							if(1)
 								emote("twitch")
@@ -249,7 +248,6 @@
 						sleep(2)
 						pixel_x = old_x
 						pixel_y = old_y
-						return
 			if (disabilities & 16)
 				if (prob(10))
 					stuttering = max(10, stuttering)
@@ -1131,7 +1129,7 @@
 				else
 					blind.layer = 0
 
-					if (disabilities & 1 && ((glasses && !glasses.prescription) || !glasses))
+					if ((disabilities & 1 && ((glasses && !glasses.prescription) || !glasses)) || (glasses && glasses.prescription && !(disabilities & 1)))
 						client.screen += hud_used.vimpaired
 
 					if (eye_blurry)

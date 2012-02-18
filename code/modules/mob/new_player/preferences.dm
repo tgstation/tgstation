@@ -700,7 +700,7 @@ datum/preferences
 			if(disabilities & 4)
 				usr << "Coughing"
 			if(disabilities & 8)
-				usr << "Twitchiness"
+				usr << "Twitchiness/Tourettes (You must hate yourself)"
 			if(disabilities & 16)
 				usr << "Nervousness"
 			if(disabilities & 32)

@@ -13,9 +13,12 @@
 	origin_tech = "magnets=2;engineering=2"
 	vision_flags = SEE_TURFS
 
+	prescription
+		prescription = 1
+
 /obj/item/clothing/glasses/science
 	name = "Science Goggles"
-	desc = "nothing"
+	desc = "Used for !!SCIENCE!!"
 	icon_state = "purple"
 	item_state = "glasses"
 
@@ -56,6 +59,9 @@
 	item_state = "sunglasses"
 	protective_temperature = 1300
 	darkness_view = -1
+
+	prescription
+		prescription = 1
 
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks many flashes."

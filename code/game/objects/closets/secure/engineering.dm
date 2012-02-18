@@ -8,7 +8,6 @@
 		sleep(2)
 		new /obj/item/wardrobe/chief_engineer(src)
 		new /obj/item/blueprints(src)
-		//
 		var/obj/item/weapon/storage/backpack/industrial/BPK = new /obj/item/weapon/storage/backpack/industrial(src)
 		var/obj/item/weapon/storage/box/B = new(BPK)
 		new /obj/item/weapon/pen(B)

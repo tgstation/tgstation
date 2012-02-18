@@ -834,7 +834,7 @@
 			dat += text("<BR><BR><A href='?src=\ref[];mach_close=scannernew'>Close</A>", user)
 		else
 			dat = "<font color='red'> Error: No DNA Modifier connected. </FONT>"
-	user << browse(dat, "window=scannernew;size=550x625")
+	user << browse(dat, "window=scannernew;size=700x625")
 	onclose(user, "scannernew")
 	return
 
@@ -975,7 +975,15 @@
 		////////////////////////////////////////////////////////
 		if (href_list["strucmenu"])
 			if(src.connected.occupant)
-				src.temphtml = text("Structural Enzymes: <font color='blue'>[getleftblocks(src.connected.occupant.dna.struc_enzymes,strucblock,3)][src.subblock == 1 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1)][src.subblock == 2 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1)][src.subblock == 3 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)][getrightblocks(src.connected.occupant.dna.struc_enzymes,strucblock,3)]</FONT><BR><BR>")
+				var/temp_string1 = getleftblocks(src.connected.occupant.dna.struc_enzymes,strucblock,3)
+				var/temp1 = ""
+				for(var/i = 3, i <= length(temp_string1), i += 3)
+					temp1 += copytext(temp_string1, i-2, i+1) + " "
+				var/temp_string2 = getrightblocks(src.connected.occupant.dna.struc_enzymes,strucblock,3)
+				var/temp2 = ""
+				for(var/i = 3, i <= length(temp_string2), i += 3)
+					temp2 += copytext(temp_string2, i-2, i+1) + " "
+				src.temphtml = text("Structural Enzymes: <font color='blue'>[temp1] [src.subblock == 1 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1)][src.subblock == 2 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1)+"</U></B>":getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1)][src.subblock == 3 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)+"</U></B>":getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)] [temp2]</FONT><BR><BR>")
 				//src.temphtml = text("Structural Enzymes: <font color='blue'>[]</FONT><BR><BR>", src.connected.occupant.dna.struc_enzymes)
 				src.temphtml += text("Selected Block: <font color='blue'><B>[]</B></FONT><BR>", src.strucblock)
 				src.temphtml += text("<A href='?src=\ref[];strucmenuminus=1'><-</A> <A href='?src=\ref[];strucmenuchoose=1'>Block</A> <A href='?src=\ref[];strucmenuplus=1'>-></A><BR><BR>", src, src, src)
