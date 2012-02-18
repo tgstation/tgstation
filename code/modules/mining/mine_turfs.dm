@@ -162,15 +162,6 @@
 	spread = 1
 
 
-/turf/simulated/mineral/adamantine
-	name = "Adamantine deposit"
-	icon_state = "rock_Adamantine"
-	mineralName = "Adamantine"
-	mineralAmt = 3
-	spreadChance = 0
-	spread = 0 //It shouldn't spawn yet; will change these to match diamond once it's fully implemented. -Durandan
-
-
 /turf/simulated/mineral/clown
 	name = "Bananium deposit"
 	icon_state = "rock_Clown"
@@ -255,8 +246,6 @@
 				new /obj/item/weapon/ore/diamond(src)
 			if (src.mineralName == "Clown")
 				new /obj/item/weapon/ore/clown(src)
-			if (src.mineralName == "Adamantine")
-				new /obj/item/weapon/ore/adamantine(src)
 	ReplaceWithFloor()
 	return
 
