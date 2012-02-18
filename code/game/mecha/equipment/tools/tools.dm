@@ -1685,7 +1685,8 @@
 			do_after_cooldown()
 		return 1
 
-
+/*
+//NEEDS SPRITE! (When this gets uncommented search for 'TODO MECHA JETPACK SPRITE MISSING' through code to uncomment the place where it's missing.)
 /obj/item/mecha_parts/mecha_equipment/jetpack
 	name = "Jetpack"
 	desc = "Using directed ion bursts and cunning solar wind reflection technique, this device enables controlled space flight."
@@ -1783,5 +1784,5 @@
 		sleep(equip_cooldown)
 		wait = 0
 		return 1
-
+*/
 
