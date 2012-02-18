@@ -329,7 +329,7 @@
 	proc/flush()
 
 		flushing = 1
-		flick("disposal-flush", src)
+		flick("[icon_state]-flush", src)
 
 		var/wrapcheck = 0
 		var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
@@ -489,6 +489,11 @@
 		flush--
 		update()
 		return
+
+//Red coloured disposals to indicate that they lead to space.
+/obj/machinery/disposal/space
+	desc = "A pneumatic waste disposal unit, with the rim coloured red to indicate that it leads to space."
+	icon_state = "deathsposal"
 
 // virtual disposal object
 // travels through pipes in lieu of actual items
