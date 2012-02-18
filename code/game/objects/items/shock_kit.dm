@@ -49,8 +49,8 @@
 /obj/item/assembly/shock_kit/receive_signal()
 	//*****
 	//world << "Shock kit got r_signal"
-	if (istype(src.loc, /obj/structure/stool/chair/e_chair))
-		var/obj/structure/stool/chair/e_chair/C = src.loc
+	if (istype(src.loc, /obj/structure/stool/bed/chair/e_chair))
+		var/obj/structure/stool/bed/chair/e_chair/C = src.loc
 		//world << "Shock kit sending shock to EC"
 		C.shock()
 	return

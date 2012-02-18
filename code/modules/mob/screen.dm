@@ -487,7 +487,7 @@
 						for(var/mob/O in viewers(usr))
 							O.show_message(text("\red <B>[] manages to unbuckle themself!</B>", usr), 1)
 						usr << "\blue You successfully unbuckle yourself."
-						usr:buckled.manual_unbuckle_all(usr)
+						usr:buckled.manual_unbuckle(usr)
 		if("module")
 			if(issilicon(usr))
 				if(usr:module)

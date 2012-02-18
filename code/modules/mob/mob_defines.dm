@@ -130,7 +130,7 @@
 	var/m_intent = "run"//Living
 	var/lastDblClick = 0
 	var/lastKnownIP = null
-	var/obj/structure/stool/buckled = null//Living
+	var/obj/structure/stool/bed/buckled = null//Living
 	var/obj/item/weapon/handcuffs/handcuffed = null//Living
 	var/obj/item/l_hand = null//Living
 	var/obj/item/r_hand = null//Living

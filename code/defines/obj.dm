@@ -595,6 +595,7 @@
 	desc = "Apply butt."
 	icon = 'objects.dmi'
 	icon_state = "stool"
+	anchored = 1.0
 	flags = FPRINT
 	pressure_resistance = 3*ONE_ATMOSPHERE
 
@@ -602,8 +603,7 @@
 	name = "bed"
 	desc = "This is used to lie in, sleep in or strap on."
 	icon_state = "bed"
-	anchored = 1.0
-	var/list/buckled_mobs = list(  )
+	var/mob/living/buckled_mob
 
 /obj/structure/stool/bed/alien
 	name = "Resting contraption"
@@ -611,22 +611,10 @@
 	icon_state = "abed"
 
 
-/obj/structure/stool/chair
+/obj/structure/stool/bed/chair	//YES, chairs are a type of bed, which are a type of stool. This works, believe me.	-Pete
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
 	icon_state = "chair"
-	var/status = 0.0
-	anchored = 1.0
-	var/list/buckled_mobs = list(  )
-
-/obj/structure/stool/chair/e_chair
-	name = "electrified chair"
-	desc = "Looks absolutely SHOCKING!"
-	icon_state = "e_chair0"
-	var/atom/movable/overlay/overl = null
-	var/on = 0.0
-	var/obj/item/assembly/shock_kit/part1 = null
-	var/last_time = 1.0
 
 /obj/structure/table
 	name = "table"
