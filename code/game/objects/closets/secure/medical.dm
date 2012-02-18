@@ -65,6 +65,7 @@
 		new /obj/item/clothing/under/rank/medical(src)
 		new /obj/item/clothing/suit/labcoat(src)
 		new /obj/item/clothing/shoes/white(src)
+		new /obj/item/weapon/cartridge/medical(src)
 		new /obj/item/device/radio/headset/headset_med(src)
 		new /obj/item/weapon/storage/belt/medical(src)
 		return
@@ -83,6 +84,7 @@
 		new /obj/item/clothing/head/bio_hood/general(src)
 		new /obj/item/clothing/under/rank/chief_medical_officer(src)
 		new /obj/item/clothing/suit/labcoat/cmo(src)
+		new /obj/item/weapon/cartridge/cmo(src)
 		new /obj/item/clothing/gloves/latex(src)
 		new /obj/item/clothing/shoes/brown	(src)
 		new /obj/item/device/radio/headset/heads/cmo(src)
