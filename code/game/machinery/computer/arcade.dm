@@ -139,7 +139,7 @@
 			emagged = 0
 
 		else if(!contents.len)
-			var/prizeselect = pick(1,2,3,4,5,6,7,8,9,10)
+			var/prizeselect = pick(1,2,3,4,5,6,7,8,9)
 			switch(prizeselect)
 				if(1)
 					new /obj/item/toy/snappopbox(src.loc)
@@ -161,8 +161,8 @@
 					new /obj/item/weapon/storage/crayonbox(src.loc)
 				if(9)
 					new /obj/item/toy/spinningtoy(src.loc)
-				if(10)
-					new /obj/item/toy/balloon(src.loc)
+			//	if(10)									//Commented out on Urist-chan's orders~
+			//		new /obj/item/toy/balloon(src.loc)	//Until it gets a better sprite~
 		else
 			var/atom/movable/Prize = pick(contents)
 			Prize.loc = src.loc
