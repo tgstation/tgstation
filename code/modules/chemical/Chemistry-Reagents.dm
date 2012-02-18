@@ -840,7 +840,6 @@ datum
 				if(!M) M = holder.my_atom
 				M.mutations = 0
 				M.disabilities = 0
-				M.sdisabilities = 0
 				..()
 				return
 
@@ -1302,11 +1301,9 @@ datum
 					holder.remove_reagent("zombiepowder", 5)
 				M.brainloss = 0
 				M.disabilities = 0
-				M.sdisabilities = 0
 				M.eye_blurry = 0
 				M.eye_blind = 0
 				M.disabilities &= ~1
-				M.sdisabilities &= ~1
 				M.SetWeakened(0)
 				M.SetStunned(0)
 				M.SetParalysis(0)

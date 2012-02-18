@@ -5,17 +5,8 @@
 	if (prob(75))
 		DIFFMUT = rand(0,20)
 
-	var/list/avnums = new/list()
+	var/list/avnums = list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26)
 	var/tempnum
-
-	avnums.Add(2)
-	avnums.Add(12)
-	avnums.Add(10)
-	avnums.Add(8)
-	avnums.Add(4)
-	avnums.Add(11)
-	avnums.Add(13)
-	avnums.Add(6)
 
 	tempnum = pick(avnums)
 	avnums.Remove(tempnum)
@@ -41,6 +32,54 @@
 	tempnum = pick(avnums)
 	avnums.Remove(tempnum)
 	BLINDBLOCK = tempnum
+	tempnum = pick(avnums)
+	avnums.Remove(tempnum)
+	HEADACHEBLOCK = tempnum
+	tempnum = pick(avnums)
+	avnums.Remove(tempnum)
+	COUGHBLOCK = tempnum
+	tempnum = pick(avnums)
+	avnums.Remove(tempnum)
+	TWITCHBLOCK = tempnum
+	tempnum = pick(avnums)
+	avnums.Remove(tempnum)
+	NERVOUSBLOCK = tempnum
+	tempnum = pick(avnums)
+	avnums.Remove(tempnum)
+	NOBREATHBLOCK = tempnum
+	tempnum = pick(avnums)
+	avnums.Remove(tempnum)
+	REMOTEVIEWBLOCK = tempnum
+	tempnum = pick(avnums)
+	avnums.Remove(tempnum)
+	REGENERATEBLOCK = tempnum
+	tempnum = pick(avnums)
+	avnums.Remove(tempnum)
+	INCREASERUNBLOCK = tempnum
+	tempnum = pick(avnums)
+	avnums.Remove(tempnum)
+	REMOTETALKBLOCK = tempnum
+	tempnum = pick(avnums)
+	avnums.Remove(tempnum)
+	MORPHBLOCK = tempnum
+	tempnum = pick(avnums)
+	avnums.Remove(tempnum)
+	BLENDBLOCK = tempnum
+	tempnum = pick(avnums)
+	avnums.Remove(tempnum)
+	HALLUCINATIONBLOCK = tempnum
+	tempnum = pick(avnums)
+	avnums.Remove(tempnum)
+	NOPRINTSBLOCK = tempnum
+	tempnum = pick(avnums)
+	avnums.Remove(tempnum)
+	SHOCKIMMUNITYBLOCK = tempnum
+	tempnum = pick(avnums)
+	avnums.Remove(tempnum)
+	SMALLSIZEBLOCK = tempnum
+	tempnum = pick(avnums)
+	avnums.Remove(tempnum)
+	GLASSESBLOCK = tempnum
 
 
 	// HIDDEN MUTATIONS / SUPERPOWERS INITIALIZTION

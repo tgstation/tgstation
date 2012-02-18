@@ -221,9 +221,9 @@
 
 //			density = !( lying )
 
-			if (sdisabilities & 1)
+			if (disabilities & 128)
 				blinded = 1
-			if (sdisabilities & 4)
+			if (disabilities & 32)
 				ear_deaf = 1
 
 			if (eye_blurry > 0)

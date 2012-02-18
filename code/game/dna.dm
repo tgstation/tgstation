@@ -1,4 +1,7 @@
 /////////////////////////// DNA DATUM
+
+#define STRUCDNASIZE 27
+
 /datum/dna
 	var/unique_enzymes = null
 	var/struc_enzymes = null
@@ -9,7 +12,7 @@
 /datum/dna/proc/check_integrity()
 	//Lazy.
 	if(length(uni_identity) != 39) uni_identity = "00600200A00E0110148FC01300B0095BD7FD3F4"
-	if(length(struc_enzymes)!= 42) struc_enzymes = "0983E840344C39F4B059D5145FC5785DC6406A4000"
+	if(length(struc_enzymes)!= 81) struc_enzymes = "43359156756131E13763334D1C369012032164D4FE4CD61544B6C03F251B6C60A42821D26BA3B02D6"
 
 /datum/dna/proc/ready_dna(mob/living/carbon/human/character)
 
@@ -63,7 +66,7 @@
 
 	uni_identity = temp
 
-	var/mutstring = "2013E85C944C19A4B00185144725785DC6406A4508"
+	var/mutstring = "43359156756131E13763334D1C369012032164D4FE4CD61544B6C03F251B6C60A42821D26BA3B02D6"
 
 	struc_enzymes = mutstring
 
@@ -84,7 +87,7 @@
 
 /proc/getrightblocks(input,blocknumber,blocksize)
 	var/string
-	string = copytext(input,blocksize*blocknumber+1,length(input)+1)
+	string = copytext(input,blocksize*blocknumber+1)
 	if (blocknumber < (length(input)/blocksize))
 		return string
 	else
@@ -152,7 +155,7 @@
 	if(!M)	return
 	var/num
 	var/newdna
-	num = pick(1,3,FAKEBLOCK,5,CLUMSYBLOCK,7,9,BLINDBLOCK,DEAFBLOCK)
+	num = pick(GLASSESBLOCK,COUGHBLOCK,FAKEBLOCK,NERVOUSBLOCK,CLUMSYBLOCK,TWITCHBLOCK,HEADACHEBLOCK,BLINDBLOCK,DEAFBLOCK)
 	M.dna.check_integrity()
 	newdna = setblock(M.dna.struc_enzymes,num,toggledblock(getblock(M.dna.struc_enzymes,num,3)),3)
 	M.dna.struc_enzymes = newdna
@@ -172,13 +175,13 @@
 	if(!M)	return
 	M.dna.check_integrity()
 	if(type)
-		for(var/i = 1, i <= 13, i++)
+		for(var/i = 1, i <= 26, i++)
 			if(prob(p))
 				M.dna.uni_identity = setblock(M.dna.uni_identity, i, add_zero2(num2hex(rand(1,4095), 1), 3), 3)
 		updateappearance(M, M.dna.uni_identity)
 
 	else
-		for(var/i = 1, i <= 13, i++)
+		for(var/i = 1, i <= 26, i++)
 			if(prob(p))
 				M.dna.struc_enzymes = setblock(M.dna.struc_enzymes, i, add_zero2(num2hex(rand(1,4095), 1), 3), 3)
 		domutcheck(M, null)
@@ -263,32 +266,108 @@
 	else
 		return 0
 
+/proc/ismuton(var/block,var/mob/M)
+	return isblockon(getblock(M.dna.struc_enzymes, block,3),block)
+
 /proc/domutcheck(mob/living/M as mob, connected, inj)
-	//telekinesis = 1
-	//firemut = 2
-	//xray = 4
-	//hulk = 8
-	//clumsy = 16
+	if (!M) return
+	//mutations
+	/*
+	TK				=(1<<0)
+	COLD_RESISTANCE	=(1<<1)
+	XRAY			=(1<<2)
+	HULK			=(1<<3)
+	CLUMSY			=(1<<4)
+	//FAT				=(1<<5)
+	HUSK			=(1<<6)
+	LASER			=(1<<7)
+	HEAL			=(1<<8)
+	mNobreath		=(1<<9)
+	mRemote			=(1<<10)
+	mRegen			=(1<<11)
+	mRun			=(1<<12)
+	mRemotetalk		=(1<<13)
+	mMorph			=(1<<14)
+	mBlend			=(1<<15)
+	mHallucination	=(1<<16)
+	mFingerprints	=(1<<17)
+	mShock			=(1<<18)
+	mSmallsize		=(1<<19)
+	*/
+
+	//disabilities
+	//1 = blurry eyes
+	//2 = headache
+	//4 = coughing
+	//8 = twitch
+	//16 = nervous
+	//32 = deaf
+	//64 = mute
+	//128 = blind
+
 	M.dna.check_integrity()
 
 	M.disabilities = 0
-	M.sdisabilities = 0
 	M.mutations = 0
 
 	M.see_in_dark = 2
 	M.see_invisible = 0
 
-	if (isblockon(getblock(M.dna.struc_enzymes, 1,3),1))
-		M.disabilities |= 1
-		M << "\red Your eyes feel strange."
-	if (isblockon(getblock(M.dna.struc_enzymes, HULKBLOCK,3),2))
+	if(ismuton(NOBREATHBLOCK,M))
+		if(prob(50))
+			M << "\blue You feel no need to breathe."
+			M.mutations |= mNobreath
+	if(ismuton(REMOTEVIEWBLOCK,M))
+		if(prob(50))
+			M << "\blue Your mind expands"
+			M.mutations |= mRemote
+	if(ismuton(REGENERATEBLOCK,M))
+		if(prob(50))
+			M << "\blue You feel strange"
+			M.mutations |= mRegen
+	if(ismuton(INCREASERUNBLOCK,M))
+		if(prob(50))
+			M << "\blue You feel quick"
+			M.mutations |= mRun
+	if(ismuton(REMOTETALKBLOCK,M))
+		if(prob(50))
+			M << "\blue You expand your mind outwards"
+			M.mutations |= mRemotetalk
+	if(ismuton(MORPHBLOCK,M))
+		if(prob(50))
+			M.mutations |= mMorph
+			M << "\blue Your skin feels strange"
+	if(ismuton(BLENDBLOCK,M))
+		if(prob(50))
+			M.mutations |= mBlend
+			M << "\blue You feel alone"
+	if(ismuton(HALLUCINATIONBLOCK,M))
+		if(prob(50))
+			M.mutations |= mHallucination
+			M << "\blue Your mind says 'Hello'"
+	if(ismuton(NOPRINTSBLOCK,M))
+		if(prob(50))
+			M.mutations |= mFingerprints
+			M << "\blue Your fingers feel numb"
+	if(ismuton(SHOCKIMMUNITYBLOCK,M))
+		if(prob(50))
+			M.mutations |= mShock
+			M << "\blue You feel strange"
+	if(ismuton(SMALLSIZEBLOCK,M))
+		if(prob(50))
+			M << "\blue Your skin feels rubbery"
+			M.mutations |= mSmallsize
+
+
+
+	if (isblockon(getblock(M.dna.struc_enzymes, HULKBLOCK,3),HULKBLOCK))
 		if(inj || prob(5))
 			M << "\blue Your muscles hurt."
 			M.mutations |= HULK
-	if (isblockon(getblock(M.dna.struc_enzymes, 3,3),3))
+	if (isblockon(getblock(M.dna.struc_enzymes, HEADACHEBLOCK,3),HEADACHEBLOCK))
 		M.disabilities |= 2
 		M << "\red You get a headache."
-	if (isblockon(getblock(M.dna.struc_enzymes, FAKEBLOCK,3),4))
+	if (isblockon(getblock(M.dna.struc_enzymes, FAKEBLOCK,3),FAKEBLOCK))
 		M << "\red You feel strange."
 		if (prob(95))
 			if(prob(50))
@@ -297,49 +376,46 @@
 				randmuti(M)
 		else
 			randmutg(M)
-	if (isblockon(getblock(M.dna.struc_enzymes, 5,3),5))
+	if (isblockon(getblock(M.dna.struc_enzymes, COUGHBLOCK,3),COUGHBLOCK))
 		M.disabilities |= 4
 		M << "\red You start coughing."
-	if (isblockon(getblock(M.dna.struc_enzymes, CLUMSYBLOCK,3),6))
+	if (isblockon(getblock(M.dna.struc_enzymes, CLUMSYBLOCK,3),CLUMSYBLOCK))
 		M << "\red You feel lightheaded."
 		M.mutations |= CLUMSY
-	if (isblockon(getblock(M.dna.struc_enzymes, 7,3),7))
+	if (isblockon(getblock(M.dna.struc_enzymes, TWITCHBLOCK,3),TWITCHBLOCK))
 		M.disabilities |= 8
 		M << "\red You twitch."
-	if (isblockon(getblock(M.dna.struc_enzymes, XRAYBLOCK,3),8))
+	if (isblockon(getblock(M.dna.struc_enzymes, XRAYBLOCK,3),XRAYBLOCK))
 		if(inj || prob(30))
 			M << "\blue The walls suddenly disappear."
 			M.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 			M.see_in_dark = 8
 			M.see_invisible = 2
 			M.mutations |= XRAY
-	if (isblockon(getblock(M.dna.struc_enzymes, 9,3),9))
+	if (isblockon(getblock(M.dna.struc_enzymes, NERVOUSBLOCK,3),NERVOUSBLOCK))
 		M.disabilities |= 16
 		M << "\red You feel nervous."
-	if (isblockon(getblock(M.dna.struc_enzymes, FIREBLOCK,3),10))
+	if (isblockon(getblock(M.dna.struc_enzymes, FIREBLOCK,3),FIREBLOCK))
 		if(inj || prob(30))
 			M << "\blue Your body feels warm."
 			M.mutations |= COLD_RESISTANCE
-	if (isblockon(getblock(M.dna.struc_enzymes, BLINDBLOCK,3),11))
-		M.sdisabilities |= 1
+	if (isblockon(getblock(M.dna.struc_enzymes, BLINDBLOCK,3),BLINDBLOCK))
+		M.disabilities |= 128
 		M << "\red You can't seem to see anything."
-	if (isblockon(getblock(M.dna.struc_enzymes, TELEBLOCK,3),12))
+	if (isblockon(getblock(M.dna.struc_enzymes, TELEBLOCK,3),TELEBLOCK))
 		if(inj || prob(15))
 			M << "\blue You feel smarter."
 			M.mutations |= TK
-	if (isblockon(getblock(M.dna.struc_enzymes, DEAFBLOCK,3),13))
-		M.sdisabilities |= 4
+	if (isblockon(getblock(M.dna.struc_enzymes, DEAFBLOCK,3),DEAFBLOCK))
+		M.disabilities |= 32
 		M.ear_deaf = 1
-		M << "\red You can't seem to hear anything..."
-
-	/* If you want the new mutations to work, UNCOMMENT THIS.
-	if(istype(M, /mob/living/carbon))
-		for (var/datum/mutations/mut in global_mutations)
-			mut.check_mutation(M)
-	*/
+		M << "\red Its kinda quiet.."
+	if (isblockon(getblock(M.dna.struc_enzymes, GLASSESBLOCK,3),GLASSESBLOCK))
+		M.disabilities |= 1
+		M << "Your eyes feel weird..."
 
 //////////////////////////////////////////////////////////// Monkey Block
-	if (isblockon(getblock(M.dna.struc_enzymes, 14,3),14) && istype(M, /mob/living/carbon/human))
+	if (isblockon(getblock(M.dna.struc_enzymes, MONKEYBLOCK,3),MONKEYBLOCK) && istype(M, /mob/living/carbon/human))
 	// human > monkey
 		var/mob/living/carbon/human/H = M
 		H.monkeyizing = 1
@@ -409,7 +485,7 @@
 		del(M)
 		return
 
-	if (!isblockon(getblock(M.dna.struc_enzymes, 14,3),14) && !istype(M, /mob/living/carbon/human))
+	if (!isblockon(getblock(M.dna.struc_enzymes, MONKEYBLOCK,3),MONKEYBLOCK) && !istype(M, /mob/living/carbon/human))
 	// monkey > human,
 		var/mob/living/carbon/monkey/Mo = M
 		Mo.monkeyizing = 1
@@ -902,19 +978,27 @@
 				src.temphtml = text("Structural Enzymes: <font color='blue'>[getleftblocks(src.connected.occupant.dna.struc_enzymes,strucblock,3)][src.subblock == 1 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1)][src.subblock == 2 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1)][src.subblock == 3 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)][getrightblocks(src.connected.occupant.dna.struc_enzymes,strucblock,3)]</FONT><BR><BR>")
 				//src.temphtml = text("Structural Enzymes: <font color='blue'>[]</FONT><BR><BR>", src.connected.occupant.dna.struc_enzymes)
 				src.temphtml += text("Selected Block: <font color='blue'><B>[]</B></FONT><BR>", src.strucblock)
-				src.temphtml += text("<A href='?src=\ref[];strucmenuminus=1'><-</A> Block <A href='?src=\ref[];strucmenuplus=1'>-></A><BR><BR>", src, src)
+				src.temphtml += text("<A href='?src=\ref[];strucmenuminus=1'><-</A> <A href='?src=\ref[];strucmenuchoose=1'>Block</A> <A href='?src=\ref[];strucmenuplus=1'>-></A><BR><BR>", src, src, src)
 				src.temphtml += text("Selected Sub-Block: <font color='blue'><B>[]</B></FONT><BR>", src.subblock)
 				src.temphtml += text("<A href='?src=\ref[];strucmenusubminus=1'><-</A> Sub-Block <A href='?src=\ref[];strucmenusubplus=1'>-></A><BR><BR>", src, src)
 				src.temphtml += "<B>Modify Block:</B><BR>"
 				src.temphtml += text("<A href='?src=\ref[];strucpulse=1'>Radiation</A><BR>", src)
 				src.delete = 0
 		if (href_list["strucmenuplus"])
-			if (src.strucblock < 14)
+			if (src.strucblock < 27)
 				src.strucblock++
 			dopage(src,"strucmenu")
 		if (href_list["strucmenuminus"])
 			if (src.strucblock > 1)
 				src.strucblock--
+			dopage(src,"strucmenu")
+		if (href_list["strucmenuchoose"])
+			var/temp = input("What block?", "Block", src.strucblock) as num
+			if (temp > 27)
+				temp = 27
+			if (temp < 1)
+				temp = 1
+			src.strucblock = temp
 			dopage(src,"strucmenu")
 		if (href_list["strucmenusubplus"])
 			if (src.subblock < 3)
@@ -945,13 +1029,13 @@
 			///
 			if(src.connected.occupant)
 				if (prob((80 + (src.radduration / 2))))
-					if ((src.strucblock != 2 || src.strucblock != 12 || src.strucblock != 8 || src.strucblock || 10) && prob (20))
+					if (prob (20))
 						oldblock = src.strucblock
 						block = miniscramble(block, src.radstrength, src.radduration)
 						newblock = null
-						if (src.strucblock > 1 && src.strucblock < 5)
+						if (src.strucblock > 1 && src.strucblock < STRUCDNASIZE/2)
 							src.strucblock++
-						else if (src.strucblock > 5 && src.strucblock < 14)
+						else if (src.strucblock > STRUCDNASIZE/2 && src.strucblock < STRUCDNASIZE)
 							src.strucblock--
 						if (src.subblock == 1) newblock = block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1) + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)
 						if (src.subblock == 2) newblock = getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1) + block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)
@@ -962,7 +1046,6 @@
 						src.connected.occupant.radiation += (src.radstrength+src.radduration)
 						src.strucblock = oldblock
 					else
-					//
 						block = miniscramble(block, src.radstrength, src.radduration)
 						newblock = null
 						if (src.subblock == 1) newblock = block + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1) + getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)

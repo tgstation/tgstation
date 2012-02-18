@@ -139,6 +139,7 @@ datum/preferences/proc/savefile_save(mob/user, slot)
 	F["pregame_music"] << src.pregame_music
 	F["ooccolor"] << src.ooccolor
 	F["lastchangelog"] << src.lastchangelog
+	F["disabilities"] << src.disabilities
 
 	return 1
 
@@ -213,6 +214,10 @@ datum/preferences/proc/savefile_load(mob/user, slot)
 	F["job_engsec_high"] >> src.job_engsec_high
 	F["job_engsec_med"] >> src.job_engsec_med
 	F["job_engsec_low"] >> src.job_engsec_low
+	F["disabilities"] >> src.disabilities
+	if(isnull(src.disabilities))	//Sanity checking
+		src.disabilities = 0
+		F["disabilities"] << src.disabilities
 
 	F["job_alt_titles"] >> job_alt_titles
 	if(!job_alt_titles)

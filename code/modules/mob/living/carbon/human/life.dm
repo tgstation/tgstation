@@ -172,6 +172,52 @@
 				for(var/atom/a in hallucinations)
 					del a
 
+
+			if(mutations & mSmallsize)
+				if(!(flags & TABLEPASS))
+					flags |= TABLEPASS
+			else
+				if(flags & TABLEPASS)
+					flags &= ~TABLEPASS
+
+			if (mutations & mHallucination)
+				hallucination = 100
+				halloss = 0
+
+			if (mutations & mRegen)
+				src.bruteloss -= 2
+				src.fireloss -= 2
+				src.oxyloss -= 2
+				src.toxloss -= 2
+
+				for(var/datum/organ/external/org in organs)
+					org.brute_dam -= 2
+					org.burn_dam -= 2
+					org.brute_dam = max(org.brute_dam, 0)
+					org.burn_dam = max(org.burn_dam, 0)
+
+			if(!(/mob/living/carbon/human/proc/morph in src.verbs))
+				if(mutations & mMorph)
+					src.verbs += /mob/living/carbon/human/proc/morph
+			else
+				if(!(mutations & mMorph))
+					src.verbs -= /mob/living/carbon/human/proc/morph
+
+			if(!(/mob/living/carbon/human/proc/remoteobserve in src.verbs))
+				if(mutations & mRemote)
+					src.verbs += /mob/living/carbon/human/proc/remoteobserve
+			else
+				if(!(mutations & mRemote))
+					src.verbs += /mob/living/carbon/human/proc/remoteobserve
+
+			if(!(/mob/living/carbon/human/proc/remotesay in src.verbs))
+				if(mutations & mRemotetalk)
+					src.verbs += /mob/living/carbon/human/proc/remotesay
+			else
+				if(!(mutations & mRemotetalk))
+					src.verbs -= /mob/living/carbon/human/proc/remotesay
+
+
 			if (disabilities & 2)
 				if ((prob(1) && paralysis < 1 && r_epil < 1))
 					src << "\red You have a seizure!"
@@ -195,7 +241,7 @@
 							if(1)
 								emote("twitch")
 							if(2 to 3)
-								say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
+								say("[prob(50) ? ";" : ""][pick("EELS","MOTORBOATS","MERDE","ANTIDISESTABLISHMENTARIANISM","OGOPOGO","POPEMOBILE","RHOMBUS","TUMESCENCE","ZIGGURAT","DIRIGIBLES","WAFFLES","PICKLES","BIKINI","DUCK","KNICKERBOCKERS","LOQUACIOUS","MACADAMIA","MAHOGANY","KUMQUAT","PERCOLATOR","AUBERGINES","FLANGES","GOURDS","DONUTS","CALLIPYGIAN","DARJEELING","DWARFS","MAGMA","ARMOK","BERR","APPLES","SPACEMEN","NINJAS","PIRATES","BUNION")]!")
 						var/old_x = pixel_x
 						var/old_y = pixel_y
 						pixel_x += rand(-2,2)
@@ -207,6 +253,7 @@
 			if (disabilities & 16)
 				if (prob(10))
 					stuttering = max(10, stuttering)
+
 			if (brainloss >= 60 && stat != 2)
 				if (prob(7))
 					switch(pick(1,2,3))
@@ -374,7 +421,7 @@
 			else canmove = 1
 
 		handle_breath(datum/gas_mixture/breath)
-			if(nodamage)
+			if(nodamage || (mutations & mNobreath))
 				return
 
 			if(!breath || (breath.total_moles() == 0))
@@ -857,9 +904,9 @@
 
 			density = !( lying )
 
-			if ((sdisabilities & 1 || istype(glasses, /obj/item/clothing/glasses/blindfold)))
+			if ((disabilities & 128 || istype(glasses, /obj/item/clothing/glasses/blindfold)))
 				blinded = 1
-			if ((sdisabilities & 4 || istype(l_ear, /obj/item/clothing/ears/earmuffs) || istype(r_ear, /obj/item/clothing/ears/earmuffs)))
+			if ((disabilities & 32 || istype(l_ear, /obj/item/clothing/ears/earmuffs) || istype(r_ear, /obj/item/clothing/ears/earmuffs)))
 				ear_deaf = 1
 
 			if (eye_blurry > 0)
@@ -1084,7 +1131,7 @@
 				else
 					blind.layer = 0
 
-					if (disabilities & 1 && !istype(glasses, /obj/item/clothing/glasses/regular) )
+					if (disabilities & 1 && ((glasses && !glasses.prescription) || !glasses))
 						client.screen += hud_used.vimpaired
 
 					if (eye_blurry)

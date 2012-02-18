@@ -41,6 +41,7 @@
 	desc = "Made by Nerd. Co."
 	icon_state = "glasses"
 	item_state = "glasses"
+	prescription = 1
 
 /obj/item/clothing/glasses/gglasses
 	name = "Green Glasses"

@@ -531,7 +531,7 @@ CIRCULAR SAW
 						M.updatehealth()
 					else
 						M.take_organ_damage(15)
-				M.sdisabilities &= ~1
+				M.disabilities &= ~128
 				M:eye_op_stage = 0.0
 
 	else
