@@ -3606,7 +3606,7 @@
 "brr" = (/obj/machinery/navbeacon{codes_txt = "patrol;next_patrol=AftH"; location = "AIW"},/obj/machinery/door/firedoor/border_only{dir = 4},/turf/simulated/floor,/area/hallway/primary/aft)
 "brs" = (/obj/machinery/navbeacon{codes_txt = "patrol;next_patrol=HOP"; location = "AIE"},/turf/simulated/floor,/area/hallway/primary/aft)
 "brt" = (/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor,/area/hallway/primary/aft)
-"bru" = (/obj/machinery/door/airlock/maintenance{name = "Kitchen Maintenance"; req_access_txt = "28"},/obj/structure/disposalpipe/sortjunction{backsort = list("Kitchen"); dir = 1; icon_state = "pipe-j1s"; sortType = list("Bar")},/turf/simulated/floor/plating,/area/crew_quarters/kitchen)
+"bru" = (/obj/machinery/door/airlock/maintenance{name = "Kitchen Maintenance"; req_access_txt = "28"},/obj/structure/disposalpipe/sortjunction{backsort = 1; backType = list("Kitchen"); dir = 1; icon_state = "pipe-j1s"; sortType = list("Bar")},/turf/simulated/floor/plating,/area/crew_quarters/kitchen)
 "brv" = (/obj/machinery/door/window/westleft{base_state = "right"; dir = 1; icon_state = "right"; name = "Kitchen Delivery"; req_access_txt = "28"},/obj/structure/window/reinforced{dir = 8},/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor{icon_state = "delivery"},/area/crew_quarters/kitchen)
 "brw" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/wall,/area/crew_quarters/kitchen)
 "brx" = (/obj/structure/disposalpipe/trunk{dir = 8},/obj/machinery/disposal,/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/cafeteria)
