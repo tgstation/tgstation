@@ -249,8 +249,8 @@ var/global/datum/controller/occupations/job_master
 		//Give'em glasses if they are nearsighted
 		if(H.disabilities & 1)
 			var/equipped = H.equip_if_possible(new /obj/item/clothing/glasses/regular(H), H.slot_glasses)
-			if(equipped)
-				var/obj/item/clothing/glasses/G = H.slot_glasses
+			if(!equipped)
+				var/obj/item/clothing/glasses/G = H.glasses
 				G.prescription = 1
 		H.update_clothing()
 		return 1

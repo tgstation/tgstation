@@ -868,14 +868,17 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 					src << "[O] at [T.x],[T.y],[T.z] has a non-list fingerprints variable!"
 				else
 					src << "[O] in [O.loc] at [T.x],[T.y],[T.z] has a non-list fingerprints variable!"
-			else
+			else if (O.fingerprints.len)
 				for(var/i, i <= O.fingerprints.len, i++)
 					if(length(O.fingerprints[i]) != 69)
 						var/turf/T = get_turf(O)
-						if(istype(O.loc,/turf))
-							src << "[O] at [T.x],[T.y],[T.z] has a fingerprints variable of incorrect length!"
+						if(isnull(T))
+							src << "[O] at [O.loc] has a fingerprints variable of incorrect length! (TURF NOT FOUND)."
 						else
-							src << "[O] in [O.loc] at [T.x],[T.y],[T.z] has a fingerprints variable of incorrect length!"
+							if(istype(O.loc,/turf))
+								src << "[O] at [T.x],[T.y],[T.z] has a fingerprints variable of incorrect length!"
+							else
+								src << "[O] in [O.loc] at [T.x],[T.y],[T.z] has a fingerprints variable of incorrect length!"
 						break
 
 		world << "\red SCAN COMPLETE."
