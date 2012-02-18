@@ -33,21 +33,19 @@ mob/living/carbon/verb/give()
 					return
 				if(src.r_hand != null)
 					if(src.l_hand == null)
-						usr.drop_item(I)
+						usr.drop_item()
 						src.l_hand = I
 					else
 						src << "Your hands are full."
 						usr << "Their hands are full."
 						return
 				else
-					usr.drop_item(I)
+					usr.drop_item()
 					src.r_hand = I
-				usr.client.screen -= I
 				I.loc = src
 				I.layer = 20
 				I.add_fingerprint(src)
 				src.update_clothing()
-				usr.update_clothing()
 				action_message(src,"[usr.name] handed \the [I.name] to [src.name].")
 			if("No")
 				action_message(src,"[usr.name] tried to hand [I.name] to [src.name] but [src.name] didn't want it.")
@@ -64,21 +62,19 @@ mob/living/carbon/verb/give()
 					return
 				if(src.l_hand != null)
 					if(src.r_hand == null)
-						usr.drop_item(I)
+						usr.drop_item()
 						src.r_hand = I
 					else
 						src << "Your hands are full."
 						usr << "Their hands are full."
 						return
 				else
-					usr.drop_item(I)
+					usr.drop_item()
 					src.l_hand = I
-				usr.client.screen -= I
 				I.loc = src
 				I.layer = 20
 				I.add_fingerprint(src)
 				src.update_clothing()
-				usr.update_clothing()
 				action_message(src,"[usr.name] handed \the [I.name] to [src.name].")
 			if("No")
 				action_message(src,"[usr.name] tried to hand [I.name] to [src.name] but [src.name] didn't want it.")

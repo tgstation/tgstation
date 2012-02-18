@@ -1,6 +1,7 @@
 /obj/effect/sign/barsign
 	icon = 'barsigns.dmi'
 	icon_state = "empty"
+	anchored = 1
 	New()
 		ChangeSign(pick("pinkflamingo", "magmasea", "limbo", "rustyaxe", "armokbar", "brokendrum"))
 		return
