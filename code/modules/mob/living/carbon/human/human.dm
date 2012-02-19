@@ -775,8 +775,8 @@
 
 	// lol
 	var/fat = ""
-	/*if (mutations & FAT)
-		fat = "fat"*/
+	if (mutations & FAT)
+		fat = "fat"
 
 	if (mutations & HULK)
 		overlays += image("icon" = 'genetics.dmi', "icon_state" = "hulk[fat][!lying ? "_s" : "_l"]")
@@ -879,10 +879,10 @@
 			var/t1 = w_uniform.color
 			if (!t1)
 				t1 = icon_state
-			/*if (mutations & FAT)
+			if (mutations & FAT)
 				overlays += image("icon" = 'uniform_fat.dmi', "icon_state" = "[t1][!lying ? "_s" : "_l"]", "layer" = MOB_LAYER)
-			else*/
-			overlays += image("icon" = 'uniform.dmi', "icon_state" = text("[][]",t1, (!(lying) ? "_s" : "_l")), "layer" = MOB_LAYER)
+			else
+				overlays += image("icon" = 'uniform.dmi', "icon_state" = text("[][]",t1, (!(lying) ? "_s" : "_l")), "layer" = MOB_LAYER)
 			if (w_uniform.blood_DNA.len)
 				var/icon/stain_icon = icon('blood.dmi', "uniformblood[!lying ? "" : "2"]")
 				overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
@@ -1289,7 +1289,7 @@
 	lying_icon = new /icon('human.dmi', "torso_l")
 
 	var/husk = (mutations & HUSK)
-	//var/obese = (mutations & FAT)
+	var/obese = (mutations & FAT)
 
 	stand_icon.Blend(new /icon('human.dmi', "chest_[g]_s"), ICON_OVERLAY)
 	lying_icon.Blend(new /icon('human.dmi', "chest_[g]_l"), ICON_OVERLAY)
@@ -1326,9 +1326,9 @@
 
 		stand_icon.Blend(husk_s, ICON_OVERLAY)
 		lying_icon.Blend(husk_l, ICON_OVERLAY)
-	/*else if(obese)
+	else if(obese)
 		stand_icon.Blend(new /icon('human.dmi', "fatbody_s"), ICON_OVERLAY)
-		lying_icon.Blend(new /icon('human.dmi', "fatbody_l"), ICON_OVERLAY)*/
+		lying_icon.Blend(new /icon('human.dmi', "fatbody_l"), ICON_OVERLAY)
 
 	// Skin tone
 	if (s_tone >= 0)
@@ -2524,6 +2524,7 @@ It can still be worn/put on as normal.
 	update_body()
 	update_face()
 	update_clothing()
+	check_dna()
 
 	for(var/mob/M in view())
 		M.show_message("[src.name] just morphed!")
@@ -2543,35 +2544,43 @@ It can still be worn/put on as normal.
 	if(target.mutations & mRemotetalk)
 		target.show_message("\blue You hear [src.real_name]'s voice: [say]")
 	else
-		target.show_message("\blue You hear a voice: [say]")
+		target.show_message("\blue You hear a voice that seems to echo around the room: [say]")
+		target << "\red This ain't an admin message, this is IC.  Act like it.  If someone's abusing it, pretending to be us, adminhelp it."
 	usr.show_message("\blue You project your mind into [target.real_name]: [say]")
 	for(var/mob/dead/observer/G in world)
 		G.show_message("<i>Telepathic message from <b>[src]</b> to <b>[target]</b>: [say]</i>")
+/mob/living/carbon/human
+	var/mob/remoteobserve
 
 /mob/living/carbon/human/proc/remoteobserve()
 	set name = "Remote View"
 	set category = "Superpower"
 
 	if(!(src.mutations & mRemote))
-		client.eye = client.mob
+		reset_view(0)
+		remoteobserve = null
 		src.verbs -= /mob/living/carbon/human/proc/remoteobserve
 		return
 
 	if(client.eye != client.mob)
-		client.eye = client.mob
+		reset_view(0)
+		remoteobserve = null
 		return
 
 	var/list/mob/creatures = list()
 
 	for(var/mob/living/carbon/h in world)
 		creatures += h
-	client.perspective = EYE_PERSPECTIVE
-
-
 
 	var/mob/target = input ("Who do you want to project your mind to ?") as mob in creatures
 
 	if (target)
-		client.eye = target
+		reset_view(target)
+		remoteobserve = target
 	else
-		client.eye = client.mob
+		reset_view(0)
+		remoteobserve = null
+
+/mob/living/carbon/human/proc/check_dna()
+	dna.check_integrity(src)
+	return

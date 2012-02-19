@@ -867,6 +867,7 @@
 	M.update_body()
 	M.update_face()
 	M.update_clothing()
+	M.check_dna(M)
 
 
 /client/proc/radioalert()

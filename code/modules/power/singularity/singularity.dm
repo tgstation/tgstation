@@ -2,7 +2,6 @@ var/global/list/uneatable = list(
 	/turf/space,
 	/obj/effect,
 	/obj/effect/overlay,
-	/obj/effect/decal/cleanable,
 	/obj/effect/rune
 	)
 
@@ -212,15 +211,19 @@ var/global/list/uneatable = list(
 				consume(X)
 			for(var/atom/movable/X in orange(grav_pull,src))
 				if(is_type_in_list(X, uneatable))	continue
-				if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))|| (src.current_size >= 9))
-					step_towards(X,src)
+				if((((X) && (!X:anchored)) || (src.current_size >= 9)) && (!istype(X,/mob/living/carbon/human)))
+					spawn(rand(0,15))
+						step_towards(X,src)
 				else if(istype(X,/mob/living/carbon/human))
 					var/mob/living/carbon/human/H = X
-					if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
+					H << "\red The singularity has you in it's gravitational pull!  It's hard to break free!"
+					H.grav_delay = 20 //No running this time!
+					if(istype(H.shoes,/obj/item/clothing/shoes/magboots) && !(src.current_size >= 9))
 						var/obj/item/clothing/shoes/magboots/M = H.shoes
 						if(M.magpulse)
 							continue
-					step_towards(H,src)
+					spawn(rand(0,15))
+						step_towards(H,src)
 			if(defer_powernet_rebuild != 2)
 				defer_powernet_rebuild = 0
 			return
@@ -236,7 +239,8 @@ var/global/list/uneatable = list(
 					gain = 100
 				spawn()
 					A:gib()
-				sleep(1)
+//Sleep being called in process() :|
+//				sleep(1)
 			else if(istype(A,/obj/))
 
 				if (istype(A,/obj/item/weapon/storage/backpack/holding))
@@ -258,8 +262,8 @@ var/global/list/uneatable = list(
 					O.y = 2
 					O.z = 2
 				else
-					A:ex_act(1.0)
-					if(A) del(A)
+					spawn(rand(0,10)) //Spreading shit out
+						del(A)
 				gain = 2
 			else if(isturf(A))
 				var/turf/T = A
@@ -271,6 +275,9 @@ var/global/list/uneatable = list(
 							src.consume(O)
 				A:ReplaceWithSpace()
 				gain = 2
+			else
+				spawn(rand(0,10)) //Spreading shit out
+					del(A)
 			src.energy += gain
 			return
 

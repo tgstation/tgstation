@@ -85,7 +85,7 @@
 		return
 	if (ishuman(M))
 		add_fibers(M)
-		if (M.mutations & mFingerprints)
+		if (M.mutations2 & mFingerprints)
 			if(src.fingerprintslast != M.key)
 				src.fingerprintshidden += "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]"
 				src.fingerprintslast = M.key

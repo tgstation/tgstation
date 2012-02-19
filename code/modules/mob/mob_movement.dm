@@ -185,6 +185,7 @@
 //					move_delay += mob.organStructure.legs.moveWalkDelay
 				move_delay += 5
 		move_delay += mob.movement_delay()
+		move_delay += mob.grav_delay
 
 		//We are now going to move
 		moving = 1
