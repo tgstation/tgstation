@@ -969,7 +969,7 @@
 						user << "\red There is already a blood sample in this syringe"
 						return
 					if(istype(target, /mob/living/carbon))//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
-						var/amount = src.reagents.maximum_volume - src.reagents.total_volume
+						var/amount = max(src.reagents.maximum_volume - src.reagents.total_volume - 2, 0)
 						var/mob/living/carbon/T = target
 						var/datum/reagent/B = new /datum/reagent/blood
 						if(!T.dna)
@@ -1015,6 +1015,10 @@
 						//for(var/D in B.data)
 						//	world << "Data [D] = [B.data[D]]"
 						//debug
+
+						// also transfer some of the reagents other than blood
+						T.reagents.trans_to(src, 2)
+
 						src.reagents.reagent_list += B
 						src.reagents.update_total()
 						src.on_reagent_change()

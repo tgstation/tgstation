@@ -93,7 +93,10 @@
 			else
 				dat += "Contained reagents:<BR>"
 				for(var/datum/reagent/blood/G in R.reagent_list)
-					dat += "    [G.name]: <A href='?src=\ref[src];isolate=[G.id]'>Isolate</a>"
+					if(G.data["virus2"])
+						dat += "    [G.name]: <A href='?src=\ref[src];isolate=[G.id]'>Isolate</a>"
+					else
+						dat += "    <b>No pathogen</b>"
 		user << browse("<TITLE>Pathogenic Isolator</TITLE>Isolator menu:<BR><BR>[dat]", "window=isolator;size=575x400")
 		onclose(user, "isolator")
 		return
