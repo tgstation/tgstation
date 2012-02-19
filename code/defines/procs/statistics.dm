@@ -91,6 +91,7 @@ proc/sql_report_karma(var/mob/spender, var/mob/receiver, var/isnegative = 1)
 			id = query.item[1]
 			karma = text2num(query.item[3])
 			karma = sanitizeSQL(karma)
+			karma = text2num(karma)	//sanitization turns it into a string, so we need to change it back!	-Pete
 		if(karma == null)
 			if(isnegative)
 				karma = -1
