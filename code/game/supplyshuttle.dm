@@ -38,7 +38,7 @@ var/list/supply_groups = new()
 
 /obj/structure/plasticflaps //HOW DO YOU CALL THOSE THINGS ANYWAY
 	name = "Plastic flaps"
-	desc = "I definitely cant get past those. no way."
+	desc = "Durable plastic flaps."
 	icon = 'stationobjs.dmi' //Change this.
 	icon_state = "plasticflaps"
 	density = 0

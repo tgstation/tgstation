@@ -10,7 +10,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"malf AI" = IS_MODE_COMPILED("malfunction"),
 	"revolutionary" = IS_MODE_COMPILED("revolution"),
 	"alien candidate" = 1, //always show
-	"pai candidate" = 1, // -- TLE
+	"pAI candidate" = 1, // -- TLE
 	"cultist" = IS_MODE_COMPILED("cult"),
 	"infested monkey" = IS_MODE_COMPILED("monkey"),
 )
@@ -176,7 +176,7 @@ datum/preferences
 		dat += "Coughing? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=2\">[disabilities & (1<<2) ? "Yes" : "No"]</a><br>"
 		dat += "Tourettes/Twitching? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=3\">[disabilities & (1<<3) ? "Yes" : "No"]</a><br>"
 		dat += "Nervousness? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=4\">[disabilities & (1<<4) ? "Yes" : "No"]</a><br>"
-		dat += "Trenna's Disorder? (Deafness) <a href=\"byond://?src=\ref[user];preferences=1;disabilities=5\">[disabilities & (1<<5) ? "Yes" : "No"]</a><br>"
+		dat += "Deafness? <a href=\"byond://?src=\ref[user];preferences=1;disabilities=5\">[disabilities & (1<<5) ? "Yes" : "No"]</a><br>"
 
 		dat += "<hr><b>Flavor Text</b><br>"
 		dat += "<a href='byond://?src=\ref[user];preferences=1;flavor_text=1'>Change</a><br>"
@@ -193,7 +193,7 @@ datum/preferences
 					dat += "<b>Be [i]:</b> <a href=\"byond://?src=\ref[user];preferences=1;be_special=[n]\"><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
 				n++
 		else
-			dat += "<b>You are banned from being syndicate.</b>"
+			dat += "<b>You are banned from being Syndicate.</b>"
 			src.be_special = 0
 		dat += "<hr>"
 
