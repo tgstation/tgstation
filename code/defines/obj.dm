@@ -1069,8 +1069,8 @@
 	origin_tech = "materials=2"
 
 /obj/item/stack/tile/plasteel
-	name = "plasteel tiles"
-	singular_name = "plasteel floor tile"
+	name = "floor tiles"
+	singular_name = "floor tile"
 	desc = "Those could work as a pretty decent throwing weapon"
 	icon_state = "tile"
 	w_class = 3.0
