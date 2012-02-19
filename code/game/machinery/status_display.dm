@@ -65,7 +65,7 @@
 					msg = "The escape shuttle countdown reads: [time]"
 			if(2)
 				if(message1 && message2)
-					msg = "The screen states the two following message. [message1] , [message2]"
+					msg = "The screen states the two following messages: [message1] , [message2]"
 				else if(message1)
 					msg = "The screen states the following message. [message1]"
 				else if(message2)
@@ -76,7 +76,7 @@
 			if(4)
 				var/time = get_supply_shuttle_timer()
 				if(time)
-					msg = "The screen states the time until the supply shuttle arrive. \n Time remaining: [time]"
+					msg = "The screen states the time until the supply shuttle arrival. \n Time remaining: [time]"
 		usr << msg
 		return
 

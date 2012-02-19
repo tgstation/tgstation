@@ -35,6 +35,7 @@
 				connectedDoorIds.Add("Observation Shutters")
 				connectedDoorIds.Add("Patient Room 1 Shutters")
 				connectedDoorIds.Add("Patient Room 2 Shutters")
+				connectedDoorIds.Add("Patient Room 3 Shutters")
 
 		//loop through the world, grabbing all the relevant doors
 		spawn(1)

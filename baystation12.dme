@@ -292,7 +292,6 @@
 #include "code\defines\mob\living\carbon\alien_larva.dm"
 #include "code\defines\mob\living\carbon\carbon.dm"
 #include "code\defines\mob\living\carbon\metroid.dm"
-#include "code\defines\mob\living\carbon\monkey.dm"
 #include "code\defines\mob\living\silicon\ai.dm"
 #include "code\defines\mob\living\silicon\decoy.dm"
 #include "code\defines\mob\living\silicon\pai.dm"
