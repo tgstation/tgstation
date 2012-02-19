@@ -154,8 +154,11 @@
 
 
 		handle_disabilities()
-			if(hallucination > 0)
+			if (mutations & mHallucination)
+				hallucination = 100
+				halloss = 0
 
+			if(hallucination > 0)
 				if(hallucinations.len == 0 && hallucination >= 20 && health > 0)
 					if(prob(2)) //Waaay to often.
 						fake_attack(src)
@@ -180,9 +183,7 @@
 				if(flags & PASSTABLE)
 					flags &= ~PASSTABLE
 
-			if (mutations & mHallucination)
-				hallucination = 100
-				halloss = 0
+
 
 			if (mutations & mRegen)
 				src.bruteloss -= 2
