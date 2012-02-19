@@ -37,9 +37,12 @@
 	var/mob/living/simple_animal/space_worm/previous //next/previous segments, correspondingly
 	var/mob/living/simple_animal/space_worm/next     //head is the nextest segment
 
-	var/stomach_process_probability = 50
-	var/digestion_probability = 20
-	var/flat_plasma_value = 5 //flat plasma amount given for non-items
+	var/stomachProcessProbability = 50
+	var/digestionProbability = 20
+	var/flatPlasmaValue = 5 //flat plasma amount given for non-items
+
+	var/atom/currentlyEating //what the worm is currently eating
+	var/eatingDuration = 0 //how long he's been eating it for
 
 	head
 		name = "space worm head"
@@ -86,7 +89,7 @@
 			if(next)
 				Detach(1)
 
-		if(prob(stomach_process_probability))
+		if(prob(stomachProcessProbability))
 			ProcessStomach()
 
 		update_icon()
@@ -106,7 +109,16 @@
 			update_icon()
 
 	Bump(atom/obstacle)
-		AttemptToEat(obstacle)
+		if(currentlyEating != obstacle)
+			currentlyEating = obstacle
+			eatingDuration = 0
+
+		if(!AttemptToEat(obstacle))
+			eatingDuration++
+		else
+			currentlyEating = null
+			eatingDuration = 0
+
 		return
 
 	proc/update_icon() //only for the sake of consistency with the other update icon procs
@@ -121,16 +133,20 @@
 
 		return
 
-	proc/AttemptToEat(var/atom/target) //will take time later, prototype right now
+	proc/AttemptToEat(var/atom/target)
 		if(istype(target,/turf/simulated/wall))
-			var/turf/simulated/wall/wall = target
-			wall.ReplaceWithFloor()
-			new /obj/item/stack/sheet/metal(src, 5) //will depend on wall type later, of course
+			if((!istype(target,/turf/simulated/wall/r_wall) && eatingDuration >= 100) || eatingDuration >= 200) //need 20 ticks to eat an rwall, 10 for a regular one
+				var/turf/simulated/wall/wall = target
+				wall.ReplaceWithFloor()
+				new /obj/item/stack/sheet/metal(src, flatPlasmaValue)
+				return 1
 		else if(istype(target,/atom/movable))
-			var/atom/movable/objectOrMob = target
-			contents += objectOrMob
+			if(istype(target,/mob) || eatingDuration >= 50) //5 ticks to eat stuff like airlocks
+				var/atom/movable/objectOrMob = target
+				contents += objectOrMob
+				return 1
 
-		return
+		return 0
 
 	proc/Attach(var/mob/living/simple_animal/space_worm/attachement)
 		if(!attachement)
@@ -156,7 +172,7 @@
 
 	proc/ProcessStomach()
 		for(var/atom/movable/stomachContent in contents)
-			if(prob(digestion_probability))
+			if(prob(digestionProbability))
 				if(istype(stomachContent,/obj/item/stack)) //converts to plasma, keeping the stack value
 					if(!istype(stomachContent,/obj/item/stack/sheet/plasma))
 						var/obj/item/stack/oldStack = stomachContent
@@ -169,7 +185,7 @@
 					del(oldItem)
 					continue
 				else
-					new /obj/item/stack/sheet/plasma(src, flat_plasma_value) //just flat amount
+					new /obj/item/stack/sheet/plasma(src, flatPlasmaValue) //just flat amount
 					del(stomachContent)
 					continue
 
