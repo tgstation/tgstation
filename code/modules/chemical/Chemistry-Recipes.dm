@@ -451,7 +451,6 @@ datum
 				holder.clear_reagents()
 				return
 
-
 		metalfoam
 			name = "Metal Foam"
 			id = "metalfoam"
@@ -468,7 +467,7 @@ datum
 					M << "\red The solution spews out a metalic foam!"
 
 				var/datum/effect/effect/system/foam_spread/s = new()
-				s.set_up(created_volume/2, location, holder, 1)
+				s.set_up(created_volume, location, holder, 1)
 				s.start()
 				return
 
@@ -488,7 +487,7 @@ datum
 					M << "\red The solution spews out a metalic foam!"
 
 				var/datum/effect/effect/system/foam_spread/s = new()
-				s.set_up(created_volume/2, location, holder, 2)
+				s.set_up(created_volume, location, holder, 2)
 				s.start()
 				return
 

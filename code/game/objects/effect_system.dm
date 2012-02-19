@@ -408,7 +408,11 @@ steam.start() -- spawns the effect
 /obj/effect/effect/chem_smoke/Move()
 	..()
 	for(var/atom/A in view(1, src))
-		reagents.reaction(A)
+		if(reagents.has_reagent("radium")||reagents.has_reagent("uranium")||reagents.has_reagent("carbon")||reagents.has_reagent("thermite"))//Prevents unholy radium spam by reducing the number of 'greenglows' down to something reasonable -Sieve
+			if(prob(5))
+				reagents.reaction(A)
+		else
+			reagents.reaction(A)
 
 	return
 
@@ -910,7 +914,7 @@ steam.start() -- spawns the effect
 
 
 	set_up(amt=5, loca, var/datum/reagents/carry = null, var/metalfoam = 0)
-		amount = round(amt/5, 1)
+		amount = round(sqrt(amt / 3), 1)
 		if(istype(loca, /turf/))
 			location = loca
 		else

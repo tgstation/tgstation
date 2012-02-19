@@ -51,7 +51,7 @@
 	src.get_targets()
 	src.icon_state = "cleanbot[src.on]"
 
-	should_patrol = 0
+	should_patrol = 1
 
 	src.botcard = new /obj/item/weapon/card/id(src)
 	src.botcard.access = get_access("Janitor")
@@ -313,6 +313,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		target_types += /obj/effect/decal/cleanable/xenoblood/xgibs
 		target_types += /obj/effect/decal/cleanable/blood/
 		target_types += /obj/effect/decal/cleanable/blood/gibs/
+		target_types += /obj/effect/decal/cleanable/dirt
 
 /obj/machinery/bot/cleanbot/proc/clean(var/obj/effect/decal/cleanable/target)
 	src.anchored = 1
