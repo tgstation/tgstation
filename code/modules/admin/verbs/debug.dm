@@ -836,11 +836,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			if(!islist(O.blood_DNA))
 				var/turf/T = get_turf(O)
 				if(istype(O.loc,/turf))
-					src << "[O] at [T.x],[T.y],[T.z] has a non-list blood_DNA variable!"
+					src << "[O] at [T.x],[T.y],[T.z] has a non-list blood_DNA variable! (Last touched by [O.fingerprintslast])"
 				else
-					src << "[O] in [O.loc] at [T.x],[T.y],[T.z] has a non-list blood_DNA variable!"
+					src << "[O] in [O.loc] at [T.x],[T.y],[T.z] has a non-list blood_DNA variable! (Last touched by [O.fingerprintslast])"
 		world << "\red SCAN COMPLETE."
 		world << "Thank you for your patience."
+		return
 
 
 /client/proc/cmd_debug_prints()
@@ -865,21 +866,22 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			if(!islist(O.fingerprints))
 				var/turf/T = get_turf(O)
 				if(istype(O.loc,/turf))
-					src << "[O] at [T.x],[T.y],[T.z] has a non-list fingerprints variable!"
+					src << "[O] at [T.x],[T.y],[T.z] has a non-list fingerprints variable! (Last touched by [O.fingerprintslast])"
 				else
-					src << "[O] in [O.loc] at [T.x],[T.y],[T.z] has a non-list fingerprints variable!"
+					src << "[O] in [O.loc] at [T.x],[T.y],[T.z] has a non-list fingerprints variable! (Last touched by [O.fingerprintslast])"
 			else if (O.fingerprints.len)
-				for(var/i, i <= O.fingerprints.len, i++)
+				for(var/i = 1, i <= O.fingerprints.len, i++)
 					if(length(O.fingerprints[i]) != 69)
 						var/turf/T = get_turf(O)
 						if(isnull(T))
-							src << "[O] at [O.loc] has a fingerprints variable of incorrect length! (TURF NOT FOUND)."
+							src << "[O] at [O.loc] has a fingerprints variable of incorrect length! (TURF NOT FOUND). (Last touched by [O.fingerprintslast])"
 						else
 							if(istype(O.loc,/turf))
-								src << "[O] at [T.x],[T.y],[T.z] has a fingerprints variable of incorrect length!"
+								src << "[O] at [T.x],[T.y],[T.z] has a fingerprints variable of incorrect length! (Last touched by [O.fingerprintslast])"
 							else
-								src << "[O] in [O.loc] at [T.x],[T.y],[T.z] has a fingerprints variable of incorrect length!"
+								src << "[O] in [O.loc] at [T.x],[T.y],[T.z] has a fingerprints variable of incorrect length! (Last touched by [O.fingerprintslast])"
 						break
 
 		world << "\red SCAN COMPLETE."
 		world << "Thank you for your patience."
+		return
