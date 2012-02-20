@@ -189,16 +189,15 @@
 
 
 			if (mutations & mRegen)
-				src.bruteloss -= 2
-				src.fireloss -= 2
-				src.oxyloss -= 2
-				src.toxloss -= 2
+				adjustBruteLoss(-2)
+				adjustToxLoss(-2)
+				adjustOxyLoss(-2)
+				adjustFireLoss(-2)
 
 				for(var/datum/organ/external/org in organs)
-					org.brute_dam -= 2
-					org.burn_dam -= 2
-					org.brute_dam = max(org.brute_dam, 0)
-					org.burn_dam = max(org.burn_dam, 0)
+					org.brute_dam = max(org.brute_dam - 2, 0)
+					org.burn_dam = max(org.burn_dam - 2, 0)
+				updatehealth()
 
 			if(!(/mob/living/carbon/human/proc/morph in src.verbs))
 				if(mutations & mMorph)

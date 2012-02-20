@@ -454,13 +454,3 @@
 		h_r = 245.0
 		h_g = 245.0
 		h_b = 245.0
-
-/obj/machinery/coatrack
-	name = "coat rack"
-	desc = "A fancy stand for the Detective's coat and hat."
-	icon_state = "coatrack0"
-	icon = 'coatrack.dmi'
-	density = 1
-	anchored = 1.0
-	var/obj/item/clothing/suit/storage/det_suit/coat
-	var/obj/item/clothing/head/det_hat/hat
