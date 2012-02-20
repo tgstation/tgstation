@@ -4,6 +4,7 @@ datum/news/var
 	title  // the title of the news
 	body   // a body with an exact explanation
 	author // key of the author
+	date   // date on which this was created
 
 datum/news_topic_handler
 	Topic(href,href_list)
@@ -41,6 +42,7 @@ proc/make_news(title, body, author)
 	created.title 	= title
 	created.body 	= body
 	created.author 	= author
+	created.date    = world.realtime
 
 	news.Insert(1, created)
 
@@ -135,7 +137,8 @@ client/proc/display_all_news_list()
 	for(var/datum/news/N in news)
 		if(!(N.ID in read_news))
 			read_news += N.ID
-		output += "<b>[N.title]</b><br>"
+		var/date = time2text(N.date,"MM/DD")
+		output += "[date] <b>[N.title]</b><br>"
 		output += "[N.body]<br>"
 		output += "<small>authored by <i>[N.author]</i></small><br>"
 		output += "<br>"
