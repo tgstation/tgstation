@@ -122,12 +122,24 @@ client/proc/display_news_list()
 client/proc/display_all_news_list()
 	var/list/news = load_news()
 
+	// load the list of news already read by this player
+	var/path = savefile_path(src.mob)
+	if(!fexists(path))
+		return
+
+	var/savefile/F = new(path)
+	var/list/read_news = list()
+	F["read_news"] >> read_news
+
 	var/output = ""
 	for(var/datum/news/N in news)
+		if(!(N.ID in read_news))
+			read_news += N.ID
 		output += "<b>[N.title]</b><br>"
 		output += "[N.body]<br>"
 		output += "<small>authored by <i>[N.author]</i></small><br>"
 		output += "<br>"
+	F["read_news"] << read_news
 	if(src.holder && istype(src.holder, /obj/admins))
 		output += "<a href='?src=\ref[news_topic_handler];client=\ref[src];action=add_news'>Add</a>"
 	usr << browse(output, "window=news;size=600x400")
