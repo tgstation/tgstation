@@ -7,7 +7,7 @@ datum/news/var
 
 datum/news_topic_handler
 	Topic(href,href_list)
-		var/client/C = href_list["client"]
+		var/client/C = locate(href_list["client"])
 		if(href_list["action"] == "show_all_news")
 			C.display_all_news_list()
 		else if(href_list["action"] == "show_news")
@@ -147,6 +147,7 @@ client/proc/add_news()
 	make_news(title, body, key)
 
 client/verb/read_news()
+	set name = "Read News"
 	set category = "OOC"
 	set desc = "Read important news and updates"
 	display_all_news_list()
