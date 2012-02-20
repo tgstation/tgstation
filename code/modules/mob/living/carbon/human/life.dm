@@ -253,8 +253,8 @@
 						pixel_x = old_x
 						pixel_y = old_y
 			if (disabilities & 16)
-				if (prob(40))//Instant Chad Ore!
-					stuttering = max(5, stuttering)
+				if (prob(10))//Instant Chad Ore!
+					stuttering = max(10, stuttering)
 
 			if (brainloss >= 60 && stat != 2)
 				if (prob(7))

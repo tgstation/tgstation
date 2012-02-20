@@ -157,10 +157,10 @@
 			message = uppertext(message)
 			message += "[stutter(pick("!", "!!", "!!!"))]"
 		if(!stuttering && prob(15))
-			message = stutter(message)
+			message = NewStutter(message,stunned)
 
 	if (stuttering)
-		message = stutter(message)
+		message = NewStutter(message,stunned)
 	if (slurring)
 		message = slur(message)
 

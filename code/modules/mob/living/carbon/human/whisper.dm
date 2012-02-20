@@ -53,7 +53,7 @@
 	message = capitalize(message)
 
 	if (src.stuttering)
-		message = stutter(message)
+		message = NewStutter(message,stunned)
 	if (src.slurring)
 		message = slur(message)
 
