@@ -183,9 +183,10 @@
 	icon_off = "green0"
 	desc = "A green-shaded desk lamp"
 
-/obj/item/device/flashlight/lamp/verb/toggle_light(mob/user)
+/obj/item/device/flashlight/lamp/verb/toggle_light()
 	set name = "Toggle light"
 	set category = "Object"
 	set src in oview(1)
 
-	attack_self(user)
+	if(!user.stat)
+		attack_self(user)
