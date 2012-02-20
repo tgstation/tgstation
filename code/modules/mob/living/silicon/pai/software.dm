@@ -550,7 +550,7 @@
 
 	var/obj/machinery/machine = src.cable.machine
 	dat += "<font color=#55FF55>Connected</font> <br>"
-	if(!istype(machine, /obj/machinery/door))
+	if(!istype(machine, /obj/machinery/door) || istype(machine, /obj/machinery/door/airlock/secure/centcom))
 		dat += "Connected device's firmware does not appear to be compatible with Airlock Jack protocols.<br>"
 		return dat
 //	var/obj/machinery/airlock/door = machine

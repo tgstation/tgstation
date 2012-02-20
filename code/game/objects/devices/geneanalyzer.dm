@@ -18,9 +18,10 @@
 	user.show_message(text("\blue \t Deaf: [isblockon(getblock(M.dna.struc_enzymes, DEAFBLOCK,3),DEAFBLOCK) ? "Yes" : "No"]"), 1)
 	user.show_message(text("\blue \t Requires Glasses: [isblockon(getblock(M.dna.struc_enzymes, GLASSESBLOCK,3),GLASSESBLOCK) ? "Yes" : "No"]"), 1)
 
+/*
 	var/unknow = 0
 	var/list/unknowns = list(HULKBLOCK,TELEBLOCK,FIREBLOCK,XRAYBLOCK,NOBREATHBLOCK,REMOTEVIEWBLOCK,REGENERATEBLOCK,INCREASERUNBLOCK,REMOTETALKBLOCK,MORPHBLOCK,BLENDBLOCK,HALLUCINATIONBLOCK,NOPRINTSBLOCK,SHOCKIMMUNITYBLOCK,SMALLSIZEBLOCK)
 	for(var/unknown in unknowns)
 		if(isblockon(getblock(M.dna.struc_enzymes, unknown,3),unknown))
 			unknow += 1
-	user.show_message(text("\blue \t Unknown Anomalies: [unknow]"))
+	user.show_message(text("\blue \t Unknown Anomalies: [unknow]"))*/

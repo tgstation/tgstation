@@ -130,6 +130,10 @@
 					var/pr = 50
 					if(prob(pr))
 						adjustToxLoss(1)
+			else
+				if(!lying)
+					lying = 1 //Seriously, stay down :x
+					update_clothing()
 
 		clamp_values()
 
@@ -154,7 +158,7 @@
 
 
 		handle_disabilities()
-			if (mutations & mHallucination)
+			if(mutations2 & mHallucination)
 				hallucination = 100
 				halloss = 0
 
@@ -175,27 +179,25 @@
 				for(var/atom/a in hallucinations)
 					del a
 
-
-			if(mutations & mSmallsize)
-				if(!(flags & PASSTABLE))
-					flags |= PASSTABLE
+			if(mutations2 & mSmallsize)
+				if(!(pass_flags & PASSTABLE))
+					pass_flags |= PASSTABLE
 			else
-				if(flags & PASSTABLE)
-					flags &= ~PASSTABLE
+				if(pass_flags & PASSTABLE)
+					pass_flags &= ~PASSTABLE
 
 
 
 			if (mutations & mRegen)
-				src.bruteloss -= 2
-				src.fireloss -= 2
-				src.oxyloss -= 2
-				src.toxloss -= 2
+				adjustBruteLoss(-2)
+				adjustToxLoss(-2)
+				adjustOxyLoss(-2)
+				adjustFireLoss(-2)
 
 				for(var/datum/organ/external/org in organs)
-					org.brute_dam -= 2
-					org.burn_dam -= 2
-					org.brute_dam = max(org.brute_dam, 0)
-					org.burn_dam = max(org.burn_dam, 0)
+					org.brute_dam = max(org.brute_dam - 2, 0)
+					org.burn_dam = max(org.burn_dam - 2, 0)
+				updatehealth()
 
 			if(!(/mob/living/carbon/human/proc/morph in src.verbs))
 				if(mutations & mMorph)
@@ -209,7 +211,7 @@
 					src.verbs += /mob/living/carbon/human/proc/remoteobserve
 			else
 				if(!(mutations & mRemote))
-					src.verbs += /mob/living/carbon/human/proc/remoteobserve
+					src.verbs -= /mob/living/carbon/human/proc/remoteobserve
 
 			if(!(/mob/living/carbon/human/proc/remotesay in src.verbs))
 				if(mutations & mRemotetalk)
@@ -250,7 +252,7 @@
 						pixel_x = old_x
 						pixel_y = old_y
 			if (disabilities & 16)
-				if (prob(20))//Instant Chad Ore!
+				if (prob(10))//Instant Chad Ore!
 					stuttering = max(10, stuttering)
 
 			if (brainloss >= 60 && stat != 2)
@@ -312,6 +314,8 @@
 							emote("gasp")
 						updatehealth()
 
+			//As close as I could find to where to put it
+			grav_delay = max(grav_delay-3,0)
 
 		breathe()
 
@@ -1147,9 +1151,10 @@
 				if (machine)
 					if (!( machine.check_eye(src) ))
 						reset_view(null)
-				else
-					if(!client.adminobs)
-						reset_view(null)
+				else if(!(mutations & mRemote) && !client.adminobs)
+					reset_view(null)
+					if(remoteobserve)
+						remoteobserve = null
 
 			return 1
 

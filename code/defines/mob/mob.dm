@@ -174,6 +174,7 @@
 	var/radiation = 0.0//Carbon
 
 	var/mutations = 0//Carbon
+	var/mutations2 = 0//Carbon
 	//telekinesis = 1
 	//firemut = 2
 	//xray = 4
@@ -251,6 +252,8 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 	var/list/atom/hallucinations = list()
 	var/halloss = 0
 	var/hallucination = 0
+//Singularity wants you!
+	var/grav_delay = 0
 
 /mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0, var/force_species_check=1)
 //	world << "Contract_disease called by [src] with virus [virus]"

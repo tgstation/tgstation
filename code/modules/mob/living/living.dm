@@ -17,7 +17,7 @@
 //sort of a legacy burn method for /electrocute, /shock, and the e_chair
 /mob/living/proc/burn_skin(burn_amount)
 	if(istype(src, /mob/living/carbon/human))
-		if(src.mutations & mShock)
+		if(src.mutations2 & mShock)
 			return 0
 		//world << "DEBUG: burn_skin(), mutations=[mutations]"
 		if (src.mutations & COLD_RESISTANCE) //fireproof
