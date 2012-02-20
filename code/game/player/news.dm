@@ -97,8 +97,9 @@ client/proc/display_news_list()
 			return
 
 		var/savefile/F = new(path)
-		var/list/read_news = list()
+		var/list/read_news
 		F["read_news"] >> read_news
+		if(!read_news) read_news = list()
 
 		for(var/datum/news/N in news)
 			if(N.ID in read_news)
@@ -130,8 +131,9 @@ client/proc/display_all_news_list()
 		return
 
 	var/savefile/F = new(path)
-	var/list/read_news = list()
+	var/list/read_news
 	F["read_news"] >> read_news
+	if(!read_news) read_news = list()
 
 	var/output = ""
 	for(var/datum/news/N in news)
@@ -160,6 +162,8 @@ client/proc/add_news()
 	if(!body) return
 
 	make_news(title, body, key)
+
+	display_all_news_list()
 
 client/verb/read_news()
 	set name = "Read News"
