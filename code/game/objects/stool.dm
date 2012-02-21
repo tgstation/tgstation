@@ -76,6 +76,9 @@
 		user << "You can't buckle anyone in before the game starts."
 	if ((!( istype(M, /mob) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat || M.buckled))
 		return
+
+	unbuckle()
+
 	if (M == usr)
 		M.visible_message(\
 			"\blue [M.name] buckles in!",\
