@@ -41,9 +41,11 @@
 		on = !on
 		if(on)
 			icon_state = "[icon_state]-on"
+			item_state = "[item_state]-on"
 			ion_trail.start()
 		else
 			icon_state = initial(icon_state)
+			item_state = initial(item_state)
 			ion_trail.stop()
 		return
 
@@ -68,7 +70,7 @@
 /obj/item/weapon/tank/jetpack/void
 	name = "Void Jetpack (Oxygen)"
 	desc = "It works well in a void."
-	icon_state = "voidjetpack"
+	icon_state = "jetpack-void"
 	item_state =  "jetpack-void"
 
 	New()
@@ -90,7 +92,7 @@
 /obj/item/weapon/tank/jetpack/carbondioxide
 	name = "Jetpack (Carbon Dioxide)"
 	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals."
-	icon_state = "black_jetpack"
+	icon_state = "jetpack-black"
 	item_state =  "jetpack-black"
 
 	New()
