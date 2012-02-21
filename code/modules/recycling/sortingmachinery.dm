@@ -89,6 +89,7 @@
 		log_attack("<font color='blue'>[user] ([user.ckey]) has used [src.name] on \ref[target]</font>")
 		if (istype(target, /obj/item))
 			var/obj/item/O = target
+			if(O.anchored)	return
 			if(!istype(loc,/turf))
 				user << "\red You need to place the item on the ground before wrapping it!"
 				return
@@ -129,6 +130,7 @@
 /obj/item/proc/wrap(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/packageWrap))
 		var/obj/item/weapon/packageWrap/C = I
+		if(src.anchored)	return
 		if(!istype(src.loc,/turf))
 			user << "\red You need to place the item on the ground before wrapping it!"
 			return
