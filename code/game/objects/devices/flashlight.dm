@@ -188,5 +188,5 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(!user.stat)
-		attack_self(user)
+	if(!usr.stat)
+		attack_self(usr)
