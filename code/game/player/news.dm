@@ -114,9 +114,9 @@ client/proc/display_news_list()
 	else
 		output += "<b>Nothing new!</b><br><br>"
 
-	output += "<a href='?src=\ref[news_topic_handler];client=\ref[src];action=show_all_news'>Display All</a>"
+	output += "<a href='?src=\ref[news_topic_handler];client=\ref[src];action=show_all_news'>Display All</a><br>"
 	if(src.holder && istype(src.holder, /obj/admins))
-		output += "<a href='?src=\ref[news_topic_handler];client=\ref[src];action=add_news'>Add</a>"
+		output += "<a href='?src=\ref[news_topic_handler];client=\ref[src];action=add_news'>Add</a> <a href=http://baystation12.net/forums/index.php/topic,3680.0.html>Guidelines</a><br>"
 
 	usr << browse(output, "window=news;size=600x400")
 
@@ -146,7 +146,7 @@ client/proc/display_all_news_list()
 		output += "<br>"
 	F["read_news"] << read_news
 	if(src.holder && istype(src.holder, /obj/admins))
-		output += "<a href='?src=\ref[news_topic_handler];client=\ref[src];action=add_news'>Add</a>"
+		output += "<a href='?src=\ref[news_topic_handler];client=\ref[src];action=add_news'>Add</a> <a href=http://baystation12.net/forums/index.php/topic,3680.0.html>Guidelines</a><br>"
 	usr << browse(output, "window=news;size=600x400")
 
 
