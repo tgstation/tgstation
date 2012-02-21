@@ -158,7 +158,7 @@
 			var/obj/item/device/soulstone/C = src
 			var/mob/living/simple_animal/shade/A = locate() in C
 			if(A)
-				var/construct_class = alert(U, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith")
+				var/construct_class = alert(U, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
 				var/mob/living/simple_animal/Z
 				switch(construct_class)
 					if("Juggernaut")
@@ -180,6 +180,20 @@
 						Z << "<B>You are playing a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</B>"
 						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
 						Z.spell_list += new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift(Z)
+						Z.cancel_camera()
+						del(C)
+
+					if("Artificer")
+						Z = new /mob/living/simple_animal/constructbuilder (get_turf(T.loc))
+						if (A.client)
+							A.client.mob = Z
+						del(T)
+						Z << "<B>You are playing an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, repair allied constructs (by clicking on them), and even create new constructs</B>"
+						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
+						Z.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser(Z)
+						Z.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/wall(Z)
+						Z.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/wall/reinforced(Z)
+						Z.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone(Z)
 						Z.cancel_camera()
 						del(C)
 			else

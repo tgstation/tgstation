@@ -134,18 +134,6 @@
 	summon_type = list("/obj/effect/forcefield")
 	summon_lifespan = 300
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall
-	name = "Shield"
-	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire"
-
-	school = "transmutation"
-	charge_max = 300
-	clothes_req = 0
-	invocation = "none"
-	invocation_type = "none"
-	range = 0
-	summon_type = list("/obj/effect/forcefield")
-	summon_lifespan = 50
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
 	name = "Summon Bigger Carp"
@@ -242,6 +230,72 @@
 	ex_flash = 5
 
 
+
+
+
+
+//////////////////////////////Construct Spells/////////////////////////
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser
+	charge_max = 1800
+
+
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/wall
+	name = "Leser Construction"
+	desc = "This spell constructs a normal metal wall"
+
+	school = "conjuration"
+	charge_max = 100
+	clothes_req = 0
+	invocation = "none"
+	invocation_type = "none"
+	range = 0
+	summon_type = list("/turf/simulated/wall")
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/wall/reinforced
+	name = "Greater Construction"
+	desc = "This spell constructs a reinforced metal wall"
+
+	school = "conjuration"
+	charge_max = 300
+	clothes_req = 0
+	invocation = "none"
+	invocation_type = "none"
+	range = 0
+
+	summon_type = list("/turf/simulated/wall/r_wall")
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone
+	name = "Summon Soulstone"
+	desc = "This spell reaches into Nar-Sie's realm, summoning one of the legendary fragments across time and space"
+
+	school = "conjuration"
+	charge_max = 3000
+	clothes_req = 0
+	invocation = "none"
+	invocation_type = "none"
+	range = 0
+
+	summon_type = list("/obj/item/device/soulstone")
+
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall
+	name = "Shield"
+	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire"
+
+	school = "transmutation"
+	charge_max = 300
+	clothes_req = 0
+	invocation = "none"
+	invocation_type = "none"
+	range = 0
+	summon_type = list("/obj/effect/forcefield")
+	summon_lifespan = 50
+
+
+
+
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift
 	name = "Phase Shift"
 	desc = "This spell allows you to pass through walls"
@@ -254,4 +308,4 @@
 	range = -1
 	include_user = 1
 
-	jaunt_duration = 25 //in deciseconds
+	jaunt_duration = 50 //in deciseconds

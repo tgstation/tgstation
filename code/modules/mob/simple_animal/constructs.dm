@@ -1,3 +1,6 @@
+
+/////////////////Juggernaut///////////////
+
 /mob/living/simple_animal/constructarmoured
 	name = "Juggernaut"
 	desc = "A possessed suit of armour driven by the will of the restless dead"
@@ -13,7 +16,7 @@
 	response_disarm = "flails at"
 	response_harm   = "harmlessly punches the"
 	harm_intent_damage = 0
-	melee_damage_lower = 15
+	melee_damage_lower = 30
 	melee_damage_upper = 30
 	attacktext = "smashes their armoured gauntlet into"
 	minbodytemp = 0
@@ -29,6 +32,7 @@
 
 	Life()
 		..()
+		new /obj/item/weapon/ectoplasm (src.loc)
 		if(stat == 2)
 			for(var/mob/M in viewers(src, null))
 				if((M.client && !( M.blinded )))
@@ -92,6 +96,39 @@
 	return
 
 
+/mob/living/simple_animal/constructarmoured/attack_animal(mob/living/simple_animal/M as mob)
+	if(istype(M, /mob/living/simple_animal/constructbuilder))
+		health += 10
+		M.emote("mends some of [src]'s wounds")
+	else
+		if(M.melee_damage_upper == 0)
+			M.emote("[M.friendly] [src]")
+		else
+			for(var/mob/O in viewers(src, null))
+				O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+			health -= damage
+
+
+
+
+/mob/living/simple_animal/constructarmoured/examine()
+	set src in oview()
+
+	usr << "\blue *---------*"
+	usr << text("\blue This is \icon[src] <B>[src.name]</B>!")
+	if (src.health != src.maxHealth)
+		if (src.health >= 150)
+			usr << text("\red [src.name] looks slightly dented")
+		else
+			usr << text("\red <B>[src.name] looks severely dented!</B>")
+	return
+
+
+
+////////////////////////Wraith/////////////////////////////////////////////
+
+
 
 /mob/living/simple_animal/constructwraith
 	name = "Wraith"
@@ -121,6 +158,7 @@
 
 	Life()
 		..()
+		new /obj/item/weapon/ectoplasm (src.loc)
 		if(stat == 2)
 			for(var/mob/M in viewers(src, null))
 				if((M.client && !( M.blinded )))
@@ -176,4 +214,100 @@
 				step(AM, t)
 			now_pushing = null
 		return
+	return
+
+/mob/living/simple_animal/constructwraith/attack_animal(mob/living/simple_animal/M as mob)
+	if(istype(M, /mob/living/simple_animal/constructbuilder))
+		health += 10
+		M.emote("mends some of [src]'s wounds")
+	else
+		if(M.melee_damage_upper == 0)
+			M.emote("[M.friendly] [src]")
+		else
+			for(var/mob/O in viewers(src, null))
+				O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+			health -= damage
+
+
+
+/mob/living/simple_animal/constructwraith/examine()
+	set src in oview()
+
+	usr << "\blue *---------*"
+	usr << text("\blue This is \icon[src] <B>[src.name]</B>!")
+	if (src.health != src.maxHealth)
+		if (src.health >= 35)
+			usr << text("\red [src.name] looks slightly dented")
+		else
+			usr << text("\red <B>[src.name] looks severely dented!</B>")
+	return
+
+
+
+/////////////////////////////Artificer/////////////////////////
+
+/mob/living/simple_animal/constructbuilder
+	name = "Artificer"
+	desc = "A bulbous construct dedicated to building and maintaining The Cult of Nar-Sie's armies"
+	icon = 'mob.dmi'
+	icon_state = "artificer"
+	icon_living = "artificer"
+	icon_dead = "shade_dead"
+	maxHealth = 50
+	health = 50
+	speak_emote = list("hisses")
+	emote_hear = list("wails","screeches")
+	response_help  = "thinks better of touching"
+	response_disarm = "flails at"
+	response_harm   = "viciously beats"
+	harm_intent_damage = 5
+	melee_damage_lower = 5
+	melee_damage_upper = 5
+	attacktext = "rams"
+	minbodytemp = 0
+	maxbodytemp = 4000
+	min_oxy = 0
+	max_co2 = 0
+	max_tox = 0
+	speed = 0
+	wall_smash = 1
+	nopush = 1
+	a_intent = "harm"
+	stop_automated_movement = 1
+
+	Life()
+		..()
+		if(stat == 2)
+			new /obj/item/weapon/ectoplasm (src.loc)
+			for(var/mob/M in viewers(src, null))
+				if((M.client && !( M.blinded )))
+					M.show_message("\red [src] collapses in a shattered heap ")
+					ghostize(0)
+			del src
+			return
+
+/mob/living/simple_animal/constructbuilder/attack_animal(mob/living/simple_animal/M as mob)
+	if(istype(M, /mob/living/simple_animal/constructbuilder))
+		health += 5
+		M.emote("mends some of [src]'s wounds")
+	else
+		if(M.melee_damage_upper == 0)
+			M.emote("[M.friendly] [src]")
+		else
+			for(var/mob/O in viewers(src, null))
+				O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+			health -= damage
+
+/mob/living/simple_animal/constructbuilder/examine()
+	set src in oview()
+
+	usr << "\blue *---------*"
+	usr << text("\blue This is \icon[src] <B>[src.name]</B>!")
+	if (src.health != src.maxHealth)
+		if (src.health >= 75)
+			usr << text("\red [src.name] looks slightly dented")
+		else
+			usr << text("\red <B>[src.name] looks severely dented!</B>")
 	return

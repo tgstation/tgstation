@@ -299,6 +299,12 @@
 
 	return tally
 
+/mob/living/simple_animal/Stat()
+	..()
+
+	statpanel("Status")
+	stat(null, "Health: [round((health / maxHealth) * 100)]%")
+
 /mob/living/simple_animal/proc/Die()
 	alive = 0
 	icon_state = icon_dead
