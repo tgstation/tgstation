@@ -15,6 +15,9 @@
 		real_name = body.name
 		original_name = body.original_name //Original name is only used in ghost chat! It is not to be edited by anything!
 		name = body.original_name
+		if(!name)
+			name = capitalize(pick(first_names_male) + " " + capitalize(pick(last_names)))
+			real_name = name
 		if(!safety)
 			corpse = body
 			verbs += /mob/dead/observer/proc/reenter_corpse
