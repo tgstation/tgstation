@@ -29,6 +29,8 @@
 	nopush = 1
 	a_intent = "harm"
 	stop_automated_movement = 1
+	canstun = 0
+	canweaken = 0
 
 	Life()
 		..()
@@ -155,6 +157,8 @@
 	speed = -1
 	a_intent = "harm"
 	stop_automated_movement = 1
+	canstun = 0
+	canweaken = 0
 
 	Life()
 		..()
@@ -275,6 +279,8 @@
 	nopush = 1
 	a_intent = "harm"
 	stop_automated_movement = 1
+	canstun = 0
+	canweaken = 0
 
 	Life()
 		..()
