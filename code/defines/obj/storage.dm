@@ -270,7 +270,13 @@
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
-
+/obj/item/weapon/storage/seccart_kit
+	name = "Spare R.O.B.U.S.T. Cartridges"
+	desc = "A box full of R.O.B.U.S.T. Cartridges, used by Security."
+	icon = 'pda.dmi'
+	icon_state = "pdabox"
+	item_state = "syringe_kit"
+	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
 /obj/item/weapon/storage/handcuff_kit
 	name = "Spare Handcuffs"

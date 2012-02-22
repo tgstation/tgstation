@@ -34,14 +34,14 @@ datum
 
 				holder.clear_reagents()
 				return
-
+/*
 		silicate
 			name = "Silicate"
 			id = "silicate"
 			result = "silicate"
 			required_reagents = list("aluminum" = 1, "silicon" = 1, "oxygen" = 1)
 			result_amount = 3
-
+*/
 		stoxin
 			name = "Sleep Toxin"
 			id = "stoxin"

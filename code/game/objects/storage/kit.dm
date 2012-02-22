@@ -140,6 +140,17 @@
 	..()
 	return
 
+/obj/item/weapon/storage/seccart_kit/New()
+	new /obj/item/weapon/cartridge/security(src)
+	new /obj/item/weapon/cartridge/security(src)
+	new /obj/item/weapon/cartridge/security(src)
+	new /obj/item/weapon/cartridge/security(src)
+	new /obj/item/weapon/cartridge/security(src)
+	new /obj/item/weapon/cartridge/security(src)
+	new /obj/item/weapon/cartridge/security(src)
+	..()
+	return
+
 /obj/item/weapon/storage/donkpocket_kit/New()
 
 	new /obj/item/weapon/reagent_containers/food/snacks/donkpocket(src)
