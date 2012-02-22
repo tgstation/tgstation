@@ -130,7 +130,7 @@
 					var/pr = 50
 					if(prob(pr))
 						adjustToxLoss(1)
-			else
+			else if (stat != 0)
 				if(!lying)
 					lying = 1 //Seriously, stay down :x
 					update_clothing()

@@ -477,6 +477,10 @@
 						tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
 						P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a>:</b></i><br>[t]<br>"
 
+						// Give every ghost the ability to see all messages
+						for (var/mob/dead/observer/G in world)
+							G.show_message("<i>PDA message from <b>[src.owner]</b> to <b>[P:owner]</b>: [t]</i>")
+
 						if (prob(15)) //Give the AI a chance of intercepting the message
 							var/who = src.owner
 							if(prob(50))
@@ -763,8 +767,19 @@
 				user << "\blue Unable to locate any fingerprints on [A]!"
 			else
 				user << "\blue Isolated [A:fingerprints.len] fingerprints."
-//				for(var/i in L)
-//					user << "\blue \t [i]"
+				var/list/prints = A:fingerprints
+				var/list/complete_prints = list()
+				for(var/i in prints)
+					var/list/templist = params2list(i)
+					var/temp = stringpercent(templist["2"])
+					if(temp <= 6)
+						complete_prints += templist["2"]
+				if(complete_prints.len < 1)
+					user << "\blue No intact prints found"
+				else
+					user << "\blue Found [complete_prints.len] intact prints"
+					for(var/i in complete_prints)
+						user << "\blue " + i
 
 		if(3)
 			if(!isnull(A.reagents))

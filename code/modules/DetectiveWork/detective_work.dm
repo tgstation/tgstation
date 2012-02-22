@@ -49,6 +49,21 @@ atom/proc/add_fibers(mob/living/carbon/human/M)
 			suit_fibers += "Material from a pair of [M.gloves.name]."
 	if(!suit_fibers.len) del suit_fibers
 
+atom/proc/get_duplicate(var/atom/location)
+	var/atom/temp_atom = new src.type(location)
+	temp_atom.name = src.name
+	temp_atom.desc = src.desc
+	temp_atom.icon = src.icon
+	temp_atom.icon_state = src.icon_state
+	temp_atom.fingerprints = src.fingerprints
+	temp_atom.blood_DNA = src.blood_DNA
+	temp_atom.suit_fibers = src.suit_fibers
+	if(src.original_atom)
+		temp_atom.original_atom = src.original_atom
+	else
+		temp_atom.original_atom = src
+	return temp_atom
+
 #define FINGERPRINT_COMPLETE 6	//This is the output of the stringpercent(print) proc, and means about 80% of
 								//the print must be there for it to be complete.  (Prints are 32 digits)
 
@@ -167,12 +182,20 @@ obj/machinery/computer/forensic_scanning
 						M.drop_item()
 						I.loc = src
 				else
-					temp = "Invalid Object Rejected."
+					usr << "Invalid Object Rejected."
 			if("card")
 				var/mob/M = usr
 				var/obj/item/I = M.equipped()
+				if(!(I && istype(I,/obj/item/weapon/f_card)))
+					I = card
 				if(I && istype(I,/obj/item/weapon/f_card))
 					card = I
+					if(card.amount > 1 || !card.fingerprints.len)
+						usr << "\red ERROR: No prints/too many cards."
+						if(card.loc == src)
+							card.loc = src.loc
+						card = null
+						return
 					M.drop_item()
 					I.loc = src
 					process_card()
@@ -181,8 +204,16 @@ obj/machinery/computer/forensic_scanning
 					usr << "\red Invalid Object Rejected."
 			if("database")
 				canclear = 1
+				if(href_list["delete_record"])
+					delete_dossier(text2num(href_list["delete_record"]))
+				if(href_list["delete_aux"])
+					delete_record(text2num(href_list["delete_aux"]))
 				if((!misc || !misc.len) && (!files || !files.len))
 					temp = "Database is empty."
+					for(var/atom/A in contents)
+						if(A == scanning)
+							continue
+						del(A)
 				else
 					if(files && files.len)
 						temp = "<b>Criminal Evidence Database</b><br><br>"
@@ -238,7 +269,7 @@ obj/machinery/computer/forensic_scanning
 							temp += "&nbsp;&nbsp;&nbsp;&nbsp;No blood found.<br>"
 				else
 					temp = "ERROR.  Database not found!<br>"
-				temp += "<br><a href='?src=\ref[src];operation=delete;identifier=[href_list["identifier"]]'>{delete}</a>"
+				temp += "<br><a href='?src=\ref[src];operation=database;delete_record=[href_list["identifier"]]'>{Delete this Dossier}</a>"
 				temp += "<br><a href='?src=\ref[src];operation=databaseprint;identifier=[href_list["identifier"]]'>{Print}</a>"
 				temp += "<br><a href='?src=\ref[src];operation=database'>{Return}</a>"
 			if("databaseprint")
@@ -305,7 +336,7 @@ obj/machinery/computer/forensic_scanning
 						temp += "&nbsp;&nbsp;&nbsp;&nbsp;No blood found.<br>"
 				else
 					temp = "ERROR.  Database not found!<br>"
-				temp += "<br><a href='?src=\ref[src];operation=delete_aux;identifier=[href_list["identifier"]]'>{Delete This Record}</a>"
+				temp += "<br><a href='?src=\ref[src];operation=database;delete_aux=[href_list["identifier"]]'>{Delete This Record}</a>"
 				temp += "<br><a href='?src=\ref[src];operation=auxiliaryprint;identifier=[href_list["identifier"]]'>{Print}</a>"
 				temp += "<br><a href='?src=\ref[src];operation=database'>{Return}</a>"
 			if("auxiliaryprint")
@@ -427,10 +458,6 @@ obj/machinery/computer/forensic_scanning
 					temp = "Print Failed: No Data"
 			if("erase")
 				scan_data = ""
-			if("delete_aux")
-				delete_record(text2num(href_list["identifier"]))
-			if("delete")
-				delete_dossier(text2num(href_list["identifier"]))
 			if("cancel")
 				scan_process = 0
 			if("add")
@@ -448,6 +475,10 @@ obj/machinery/computer/forensic_scanning
 		add_fingerprint(usr)
 		files = list()
 		misc = list()
+		for(var/atom/A in contents)
+			if(A == scanning)
+				continue
+			del(A)
 		return
 
 
@@ -460,6 +491,9 @@ obj/machinery/computer/forensic_scanning
 			var/list/data = W.stored[i]
 			add_data(data[1],1,data[2],data[3],data[4])
 		W.stored = list()
+		for(var/atom/A in W.contents)
+			del(A)
+		return
 
 
 	proc/add_data(var/atom/A, var/override = 0, var/tempfingerprints, var/tempsuit_fibers,var/tempblood_DNA)
@@ -483,8 +517,8 @@ obj/machinery/computer/forensic_scanning
 			if(misc)
 				for(var/i = 1, i <= misc.len, i++)	//Lets see if we can find it.
 					var/list/templist = misc[i]
-					var/check = templist[1]
-					if(check == A) //There it is!
+					var/atom/check = templist[1]
+					if(check.original_atom == A || check.original_atom == A.original_atom) //There it is!
 						merged = 1
 						var/list/fibers = templist[2]
 						if(!fibers)
@@ -501,14 +535,14 @@ obj/machinery/computer/forensic_scanning
 								if(!blood.Find(A.blood_DNA[j]))	//It isn't!  Add!
 									blood += A.blood_DNA[j]
 						var/list/sum_list[3]	//Pack it back up!
-						sum_list[1] = A
+						sum_list[1] = check
 						sum_list[2] = fibers
 						sum_list[3] = blood
 						misc[i] = sum_list	//Store it!
 						break	//We found it, we're done here.
 			if(!merged)	//Nope!  Guess we have to add it!
 				var/list/templist[3]
-				templist[1] = A
+				templist[1] = A.get_duplicate(src)
 				templist[2] = A.suit_fibers
 				templist[3] = A.blood_DNA
 				misc.len++
@@ -532,7 +566,8 @@ obj/machinery/computer/forensic_scanning
 						found_prints[m] = 1
 						for(var/n = 2, n <= perp_list.len, n++)	//Lets see if it is already in the database
 							var/list/target = perp_list[n]
-							if(target[1] == A)	//Found the original object!
+							var/atom/atom_checker = target[1]
+							if(atom_checker.original_atom == A || atom_checker.original_atom == A.original_atom)	//Found the original object!
 								found2 = 1
 								var/list/prints = target[2]
 								if(!prints)
@@ -566,7 +601,7 @@ obj/machinery/computer/forensic_scanning
 										if(!blood.Find(A.blood_DNA[j]))	//It isn't!  Add!
 											blood += A.blood_DNA[j]
 								var/list/sum_list[4]	//Pack it back up!
-								sum_list[1] = A
+								sum_list[1] = atom_checker
 								sum_list[2] = prints
 								sum_list[3] = fibers
 								sum_list[4] = blood
@@ -575,7 +610,7 @@ obj/machinery/computer/forensic_scanning
 								break	//We found it, we're done here.
 						if(!found2) //Add a new datapoint to this perp!
 							var/list/sum_list[4]
-							sum_list[1] = A
+							sum_list[1] = A.get_duplicate(src)
 							sum_list[2] = A.fingerprints
 							sum_list[3] = A.suit_fibers
 							sum_list[4] = A.blood_DNA
@@ -586,7 +621,7 @@ obj/machinery/computer/forensic_scanning
 				if(found_prints[m] == 0)
 					var/list/newperp[2]
 					var/list/sum_list[4]
-					sum_list[1] = A
+					sum_list[1] = A.get_duplicate(src)
 					sum_list[2] = A.fingerprints
 					sum_list[3] = A.suit_fibers
 					sum_list[4] = A.blood_DNA
@@ -628,7 +663,7 @@ obj/machinery/computer/forensic_scanning
 
 	proc/process_card()	//I am tired, but this updates the master print from a fingerprint card
 						//which is used to determine completion of a print.
-		if(card.fingerprints)
+		if(card.fingerprints && !(card.amount > 1))
 			for(var/k = 1, k <= card.fingerprints.len, k++)
 				var/list/test_prints = params2list(card.fingerprints[k])
 				var/print = test_prints[num2text(1)]
@@ -640,7 +675,13 @@ obj/machinery/computer/forensic_scanning
 						test_list[1] = "1=" + print + "&2=" + print
 						files[i] = test_list
 						break
-		del(card)
+			del(card)
+		else
+			usr << "\red ERROR: No prints/too many cards."
+			if(card.loc == src)
+				card.loc = src.loc
+			card = null
+			return
 		return
 
 	proc/delete_record(var/location)

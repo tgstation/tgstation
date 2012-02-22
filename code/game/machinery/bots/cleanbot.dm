@@ -51,7 +51,7 @@
 	src.get_targets()
 	src.icon_state = "cleanbot[src.on]"
 
-	should_patrol = 0
+	should_patrol = 1
 
 	src.botcard = new /obj/item/weapon/card/id(src)
 	src.botcard.access = get_access("Janitor")

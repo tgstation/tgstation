@@ -1413,6 +1413,7 @@
 							else user << "\red [M] finishes eating [src]."
 							del(src)
 				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
+				user.update_clothing()
 				return 1
 		else if(istype(M, /mob/living/simple_animal/livestock))
 			if(M == user)								//If you're eating it yourself.
@@ -1465,6 +1466,8 @@
 						if(!reagents.total_volume)
 							if(M == user) user << "\red You finish eating [src]."
 							else user << "\red [M] finishes eating [src]."
+							spawn(2)
+								user.update_clothing()
 							del(src)
 				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
 				return 1
