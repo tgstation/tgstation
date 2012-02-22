@@ -93,15 +93,17 @@
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna))
 			return 0
-		if (H.gloves)
+		if (H.gloves && H.gloves != src)
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
+				H.gloves.add_fingerprint(M)
 		if (H.dna.uni_identity)
-			if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
-				return 0
-			else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
-				return 0
+			if(H.gloves != src)
+				if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
+					return 0
+				else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
+					return 0
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
@@ -302,6 +304,9 @@
 					src.fingerprints[i] = "1=" + prints["1"] + "&2=" + new_print
 		if(!src.fingerprints)
 			src.fingerprints = list()
+	if(istype(src, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = src
+		M.update_clothing()
 	return
 
 /atom/MouseDrop(atom/over_object as mob|obj|turf|area)
