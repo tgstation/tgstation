@@ -1747,7 +1747,18 @@
 					J.spawn_positions = -1
 					message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
 		return
-		//hahaha
+	if (href_list["rnd_max"])
+		for(var/obj/machinery/computer/rdconsole/C in world)
+			for(var/datum/tech/T in C.files.known_tech)
+				T.level = 6
+			C.files.RefreshResearch()
+
+		for(var/obj/machinery/r_n_d/server/C in world)
+			for(var/datum/tech/T in C.files.known_tech)
+				T.level = 6
+			C.files.RefreshResearch()
+
+		owner:rnd_check_designs()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
