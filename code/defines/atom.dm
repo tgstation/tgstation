@@ -3,7 +3,7 @@
 	var/level = 2
 	var/flags = FPRINT
 	var/list/fingerprints = list()
-	var/list/fingerprintshidden = new/list()
+	var/list/fingerprintshidden = list()
 	var/fingerprintslast = null
 	var/list/blood_DNA = list()
 	var/last_bumped = 0
