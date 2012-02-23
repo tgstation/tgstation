@@ -48,8 +48,8 @@
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
 	set category = "Alien"
 
-	if (layer != TURF_LAYER)
-		layer = TURF_LAYER
+	if (layer != TURF_LAYER+0.2)
+		layer = TURF_LAYER+0.2
 		src << text("\green You are now hiding.")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
