@@ -490,11 +490,6 @@
 		update()
 		return
 
-//Red coloured disposals to indicate that they lead to space.
-/obj/machinery/disposal/space
-	desc = "A pneumatic waste disposal unit, with the rim coloured red to indicate that it leads to space."
-	icon_state = "deathsposal"
-
 // virtual disposal object
 // travels through pipes in lieu of actual items
 // contents will be items flushed by the disposal
