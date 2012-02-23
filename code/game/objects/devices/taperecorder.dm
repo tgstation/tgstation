@@ -13,6 +13,7 @@
 	var/playsleepseconds = 0.0
 	var/list/storedinfo = new/list()
 	var/list/timestamp = new/list()
+	var/canprint = 1
 	flags = FPRINT | TABLEPASS| CONDUCT
 	throwforce = 2
 	throw_speed = 4
@@ -197,6 +198,9 @@
 	set name = "Print Transcript"
 	set category = "Object"
 
+	if (!canprint)
+		usr << "\red The recorder can't print that fast!"
+		return
 	if (src.recording == 1 || src.playing == 1)
 		usr << "\red You can't print the transcript while playing or recording!"
 		return
@@ -207,6 +211,9 @@
 		t1 += "[src.storedinfo[i]]<BR>"
 	P.info = t1
 	P.name = "paper- 'Transcript'"
+	canprint = 0
+	sleep(300)
+	canprint = 1
 
 
 /obj/item/device/taperecorder/attack_self(mob/user)
