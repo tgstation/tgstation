@@ -1,6 +1,6 @@
-// DM Environment file for InSpace.dme.
-// All manual changes should be made outside the BEGIN_ and END_ blocks.
-// New source code should be placed in .dm files: choose File/New --> Code File.
+// DM Environment file for tgstation.dme.
+// All manual changes should be made outside the BEGIN_ and END_ blocks. 
+ // New source code should be placed in .dm files: choose File/New --> Code File. 
 // BEGIN_INTERNALS
 // END_INTERNALS
 // BEGIN_FILE_DIR
@@ -163,6 +163,7 @@
 #define FILE_DIR "icons/vending_icons"
 #define FILE_DIR "interface"
 #define FILE_DIR "maps"
+#define FILE_DIR "maps/backup"
 #define FILE_DIR "sound"
 #define FILE_DIR "sound/ambience"
 #define FILE_DIR "sound/announcer"
@@ -176,9 +177,10 @@
 #define FILE_DIR "sound/voice"
 #define FILE_DIR "sound/weapons"
 // END_FILE_DIR
+
 // BEGIN_PREFERENCES
-#define DEBUG
 // END_PREFERENCES
+
 // BEGIN_INCLUDE
 #include "code\names.dm"
 #include "code\setup.dm"
@@ -1004,4 +1006,3 @@
 #include "interface\skin.dmf"
 #include "maps\tgstation.2.0.8.dmm"
 // END_INCLUDE
-
