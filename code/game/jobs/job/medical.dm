@@ -91,7 +91,7 @@
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_medsci(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (H), H.slot_back)
 		H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H.back), H.slot_in_backpack)
-		H.equip_if_possible(new /obj/item/clothing/under/rank/medical(H), H.slot_w_uniform)
+		H.equip_if_possible(new /obj/item/clothing/under/rank/virologist(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/device/pda/medical(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/mask/surgical(H), H.slot_wear_mask)
 		H.equip_if_possible(new /obj/item/clothing/shoes/white(H), H.slot_shoes)
