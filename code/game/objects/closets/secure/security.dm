@@ -1,7 +1,12 @@
 /obj/structure/closet/secure_closet/captains
 	name = "Captain's Closet"
 	req_access = list(access_captain)
-
+	icon_state = "capsecure1"
+	icon_closed = "capsecure"
+	icon_locked = "capsecure1"
+	icon_opened = "capsecureopen"
+	icon_broken = "capsecurebroken"
+	icon_off = "capsecureoff"
 
 	New()
 		..()
@@ -47,7 +52,12 @@
 /obj/structure/closet/secure_closet/hos
 	name = "Head Of Security"
 	req_access = list(access_hos)
-
+	icon_state = "hossecure1"
+	icon_closed = "hossecure"
+	icon_locked = "hossecure1"
+	icon_opened = "hossecurecopen"
+	icon_broken = "hossecurebroken"
+	icon_off = "hossecurecoff"
 
 	New()
 		..()
