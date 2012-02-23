@@ -154,7 +154,7 @@
 
 /obj/machinery/chem_dispenser/process()
 	if(stat & NOPOWER) return
-	if(!charging_reagents) return
+	if(!charging_reagents || src.energy > 30) return
 
 	use_power(10000)
 	src.energy += 0.05
