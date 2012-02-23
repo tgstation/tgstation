@@ -17,7 +17,6 @@
 
 /obj/item/weapon/evidencebag/afterattack(obj/item/O, mob/user as mob)
 	if(istype(O, /obj/item/weapon/storage) && O in user)
-		user << "You put the evidence bag into the [O]."
 		return ..()
 	if(!(O && istype(O)) || O.anchored == 1)
 		user << "You can't put that inside the [src]!"

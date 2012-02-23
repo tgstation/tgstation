@@ -1207,19 +1207,19 @@ turf/simulated/floor/return_siding_icon_state()
 		if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels
 			return
 
-		if(!isemptylist(A.search_contents_for(/obj/item/weapon/disk/nuclear)))
-			if(istype(A, /mob/living))
-				var/mob/living/MM = A
-				if(MM.client)
-					MM << "\red Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is."
-			return
-
 //		else if(ticker.mode.name == "extended"||ticker.mode.name == "sandbox")	Sandbox_Spacemove(A)
 
 		else
 			if (src.x <= 2 || A.x >= (world.maxx - 1) || src.y <= 2 || A.y >= (world.maxy - 1))
 				if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
 					del(A)
+					return
+
+				if(!isemptylist(A.search_contents_for(/obj/item/weapon/disk/nuclear)))
+					if(istype(A, /mob/living))
+						var/mob/living/MM = A
+						if(MM.client)
+							MM << "\red Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is."
 					return
 
 				var/move_to_z_str = pickweight(accessable_z_levels)
