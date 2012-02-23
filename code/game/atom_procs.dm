@@ -617,6 +617,16 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		return
 	}
 
+	// ------- CTRL-CLICK -------
+
+	if(parameters["ctrl"]){
+		if(!isAI(usr))
+			CtrlClick(usr)
+		return
+	}
+
+
+
 
 	// ------- AI -------
 	if (istype(usr, /mob/living/silicon/ai))
@@ -911,13 +921,11 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 	return
 
 /atom/proc/AltClick()
+	return
+
+/atom/proc/CtrlClick()
 	if(hascall(src,"pull"))
 		src:pull()
-
-/*
-	if(hascall(src,"pull"))
-		call(src,/atom/movable/verb/pull)()
-*/
 	return
 
 /atom/proc/get_global_map_pos()
