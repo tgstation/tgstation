@@ -217,7 +217,7 @@ var/global/list/uneatable = list(
 				else if(istype(X,/mob/living/carbon/human))
 					var/mob/living/carbon/human/H = X
 					H << "\red The singularity has you in it's gravitational pull!  It's hard to break free!"
-					H.grav_delay = 20 //No running this time!
+					H.grav_delay = 15 //No running this time!
 					if(istype(H.shoes,/obj/item/clothing/shoes/magboots) && !(src.current_size >= 9))
 						var/obj/item/clothing/shoes/magboots/M = H.shoes
 						if(M.magpulse)
