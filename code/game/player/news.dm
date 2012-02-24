@@ -11,6 +11,10 @@ datum/news_topic_handler
 		var/client/C = locate(href_list["client"])
 		if(href_list["action"] == "show_all_news")
 			C.display_all_news_list()
+		else if(href_list["action"] == "remove")
+			C.remove_news(text2num(href_list["ID"]))
+		else if(href_list["action"] == "edit")
+			C.edit_news(text2num(href_list["ID"]))
 		else if(href_list["action"] == "show_news")
 			C.display_news_list()
 		else if(href_list["action"] == "add_news")
@@ -115,7 +119,7 @@ client/proc/display_news_list()
 		output += "<b>Nothing new!</b><br><br>"
 
 	output += "<a href='?src=\ref[news_topic_handler];client=\ref[src];action=show_all_news'>Display All</a><br>"
-	if(src.holder && istype(src.holder, /obj/admins))
+	if(src.holder)
 		output += "<a href='?src=\ref[news_topic_handler];client=\ref[src];action=add_news'>Add</a> <a href=http://baystation12.net/forums/index.php/topic,3680.0.html>Guidelines</a><br>"
 
 	usr << browse(output, "window=news;size=600x400")
@@ -124,6 +128,8 @@ client/proc/display_news_list()
 // display all news, even the ones read already
 client/proc/display_all_news_list()
 	var/list/news = load_news()
+
+	var/admin = (src.holder)
 
 	// load the list of news already read by this player
 	var/path = savefile_path(src.mob)
@@ -142,16 +148,19 @@ client/proc/display_all_news_list()
 		var/date = time2text(N.date,"MM/DD")
 		output += "[date] <b>[N.title]</b><br>"
 		output += "[N.body]<br>"
-		output += "<small>authored by <i>[N.author]</i></small><br>"
+		output += "<small>authored by <i>[N.author]</i></small>"
+		if(admin && N.author == src.key)
+			output += " <a href='?src=\ref[news_topic_handler];client=\ref[src];action=remove;ID=[N.ID]'>Delete</a> <a href='?src=\ref[news_topic_handler];client=\ref[src];action=edit;ID=[N.ID]'>Edit</a>"
+		output += "<br>"
 		output += "<br>"
 	F["read_news"] << read_news
-	if(src.holder && istype(src.holder, /obj/admins))
+	if(admin)
 		output += "<a href='?src=\ref[news_topic_handler];client=\ref[src];action=add_news'>Add</a> <a href=http://baystation12.net/forums/index.php/topic,3680.0.html>Guidelines</a><br>"
 	usr << browse(output, "window=news;size=600x400")
 
 
 client/proc/add_news()
-	if(!istype(src.holder, /obj/admins))
+	if(!src.holder)
 		src << "<b>You tried to modify the news, but you're not an admin!"
 		return
 
@@ -163,10 +172,61 @@ client/proc/add_news()
 
 	make_news(title, body, key)
 
-	display_all_news_list()
+	spawn(1)
+		display_all_news_list()
 
 client/verb/read_news()
 	set name = "Read News"
 	set category = "OOC"
 	set desc = "Read important news and updates"
 	display_all_news_list()
+
+client/proc/remove_news(ID as num)
+	if(src.holder)
+		src << "<b>You tried to modify the news, but you're not an admin!"
+		return
+
+	var/savefile/News = new("data/news.sav")
+	var/list/news
+
+	News["news"]   >> news
+
+	for(var/datum/news/N in news)
+		if(N.ID == ID)
+			news.Remove(N)
+
+	News["news"]   << news
+
+	spawn(1)
+		display_all_news_list()
+
+client/proc/edit_news(ID as num)
+	if(src.holder)
+		src << "<b>You tried to modify the news, but you're not an admin!"
+		return
+
+	var/savefile/News = new("data/news.sav")
+	var/list/news
+
+	News["news"]   >> news
+
+	var/datum/news/found
+	for(var/datum/news/N in news)
+		if(N.ID == ID)
+			found = N
+	if(!found) src << "<b>* An error occured, sorry.</b>"
+
+	var/title = input(src.mob, "Select a title for the news", "Title") as null|text
+	if(!title) return
+
+	var/body = input(src.mob, "Enter a body for the news", "Body") as null|message
+	if(!body) return
+
+	found.title = title
+	found.body = body
+
+
+	News["news"]   << news
+
+	spawn(1)
+		display_all_news_list()
