@@ -42,6 +42,14 @@
 		else
 			usr << "\blue [src.name] has a \icon[src.wear_mask] [src.wear_mask.name] on [t_his] face."
 
+	if (src.head)
+		usr << "\red [src.name] is wearing a[src.head.blood_DNA.len ? " bloody " : " "] \icon[src.head] [src.head.name] on [t_his] head!"
+
+	if (src.glasses)
+		usr << "\red [src.name] is wearing a pair of [src.glasses.blood_DNA.len ? " bloody " : " "] \icon[src.glasses] [src.glasses.name]!"
+
+
+
 	if (src.l_hand)
 		if (src.l_hand.blood_DNA.len)
 			usr << "\red [src.name] has a[src.l_hand.blood_DNA.len ? " bloody " : " "] \icon[src.l_hand] [src.l_hand.name] in [t_his] left hand!"
