@@ -159,7 +159,7 @@ var/global/datum/controller/occupations/job_master
 		if(unassigned.len == 0)	return 0
 		//Shuffle players and jobs
 		unassigned = shuffle(unassigned)
-	//	occupations = shuffle(occupations) check and see if we can do this one
+		occupations = shuffle(occupations)
 
 		//Assistants are checked first
 		Debug("DO, Running Assistant Check 1")

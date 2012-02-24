@@ -862,4 +862,31 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	ticker.random_players = 1
 
+/client/proc/rnd_check_designs()
+	set category = "Debug"
+	set name = "Check RnD Designs"
+	set desc = "Check validity of RnD data of the consoles and server."
 
+	if (!holder)
+		src << "Only administrators may use this command."
+		return
+
+	var/dat = "<head><title>RnD Check</title></head>"
+
+	for(var/obj/machinery/computer/rdconsole/C in world)
+		dat += "<b>[C.name] - RnD Console</b><br>"
+		for(var/datum/design/D in C.files.known_designs)
+			if(!text2path(D.build_path))
+				dat += "[D.name]'s has invalid build path [D.build_path]<br>"
+		dat += "<br>"
+
+	for(var/obj/machinery/r_n_d/server/C in world)
+		dat += "<b>[C.name] - Server</b><br>"
+		for(var/datum/design/D in C.files.known_designs)
+			if(!text2path(D.build_path))
+				dat += "[D.name]'s has invalid build path [D.build_path]<br>"
+		dat += "<br>"
+
+	dat += "<hr><a href='?src=\ref[holder];rnd_max=1'>Max out tech levels.</a>"
+
+	usr << browse(dat, "window=chk_design")

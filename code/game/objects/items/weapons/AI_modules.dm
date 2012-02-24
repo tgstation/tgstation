@@ -79,6 +79,7 @@ AI MODULES
 			src.transmitInstructions(comp.current, usr)
 			comp.current << "These are your laws now:"
 			comp.current.show_laws()
+
 			usr << "Upload complete. The AI's laws have been modified."
 
 

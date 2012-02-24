@@ -204,8 +204,8 @@ MASS SPECTROMETER
 		var/merged = 0
 		for(var/i = 1, i < (stored.len + 1), i++)	//Lets see if the object is already in there!
 			var/list/temp = stored[i]
-			var/checker = temp[1]
-			if(checker == A)	//It is!  Merge!
+			var/atom/checker = temp[1]
+			if(checker.original_atom == A || checker.original_atom == A.original_atom)	//It is!  Merge!
 				merged = 1
 				var/list/prints = temp[2]
 				if(!prints)
@@ -239,7 +239,7 @@ MASS SPECTROMETER
 						if(!blood.Find(A.blood_DNA[j]))	//It isn't!  Add!
 							blood += A.blood_DNA[j]
 				var/list/sum_list[4]	//Pack it back up!
-				sum_list[1] = A
+				sum_list[1] = checker
 				sum_list[2] = prints
 				sum_list[3] = fibers
 				sum_list[4] = blood
@@ -247,7 +247,7 @@ MASS SPECTROMETER
 				break	//We found it, we're done here.
 		if(!merged)	//Uh, oh!  New data point!
 			var/list/sum_list[4]	//Pack it back up!
-			sum_list[1] = A
+			sum_list[1] = A.get_duplicate(src)
 			if(!A.fingerprints)
 				world << "Report this to a dev! [A] was lacking a list() for fingerprints!"
 				sum_list[2] = list()

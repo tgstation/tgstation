@@ -387,7 +387,7 @@
 	icon_state = "seed-carrot"
 	mypath = "/obj/item/seeds/carrotseed"
 	species = "carrot"
-	plantname = "CURROTS MAN CURROTS"
+	plantname = "Carrot"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/carrot"
 	lifespan = 25
 	endurance = 15

@@ -154,7 +154,7 @@
 
 /obj/machinery/chem_dispenser/process()
 	if(stat & NOPOWER) return
-	if(!charging_reagents) return
+	if(!charging_reagents || src.energy > 30) return
 
 	use_power(10000)
 	src.energy += 0.05
@@ -331,7 +331,7 @@
 		else if(href_list["pill_sprite"])
 			pillsprite = href_list["pill_sprite"]
 		else if(href_list["bottle_sprite"])
-			bottlesprite = href_list["bottlesprite"]
+			bottlesprite = href_list["bottle_sprite"]
 		else
 			usr << browse(null, "window=chem_master")
 		src.updateUsrDialog()

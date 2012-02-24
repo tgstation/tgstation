@@ -219,6 +219,7 @@
 			return
 
 		src.created_name = t
+	user.update_clothing()
 
 	return
 

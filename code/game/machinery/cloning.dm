@@ -360,9 +360,9 @@
 //	if (subject.suiciding == 1)
 //		src.temp = "Error: Subject's brain is not responding to scanning stimuli."
 //		return
-	if ((!subject.ckey) || (!subject.client))
-		src.temp = "Error: Mental interface failure."
-		return
+//	if ((!subject.ckey) || (!subject.client))
+//		src.temp = "Error: Mental interface failure."
+//		return
 	if (subject.mutations & HUSK)
 		src.temp = "Error: Mental interface failure."
 		return
@@ -372,9 +372,13 @@
 
 	subject.dna.check_integrity()
 
+	var/ckey = subject.ckey
+	if(!ckey && subject && subject.mind)
+		ckey = subject.mind.key
+
 	var/datum/data/record/R = new /datum/data/record(  )
 	R.fields["mrace"] = subject.mutantrace
-	R.fields["ckey"] = subject.ckey
+	R.fields["ckey"] = ckey
 	R.fields["name"] = subject.real_name
 	R.fields["id"] = copytext(md5(subject.real_name), 2, 6)
 	R.fields["UI"] = subject.dna.uni_identity

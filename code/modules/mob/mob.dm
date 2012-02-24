@@ -188,6 +188,7 @@
 		var/turf/T = get_turf(loc)
 		if (istype(T))
 			T.Entered(W)
+	update_clothing()
 	return
 
 /mob/proc/before_take_item(var/obj/item/item)

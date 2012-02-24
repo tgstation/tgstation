@@ -141,6 +141,7 @@
 			verbs += /client/proc/callprocobj
 			verbs += /client/proc/cmd_debug_prints
 			verbs += /client/proc/cmd_debug_blood
+			verbs += /client/proc/rnd_check_designs
 
 		if (holder.level >= 5)//Game Admin********************************************************************
 			verbs += /obj/admins/proc/view_txt_log
@@ -422,6 +423,7 @@
 	verbs -= /client/proc/radioalert
 	verbs -= /client/proc/cmd_debug_prints
 	verbs -= /client/proc/cmd_debug_blood
+	verbs -= /client/proc/rnd_check_designs
 
 	return
 
