@@ -317,6 +317,15 @@
 			//As close as I could find to where to put it
 			grav_delay = max(grav_delay-3,0)
 
+		/** Overview of breathing code:
+			- first it's determined whether the human is capable of breathing
+			- then it's determined whether the human is holding his breath intentionally
+			- the isbreathing variable is set according to this
+
+			- next, we look for any air that the mob could breathe, first internals, then in the air around him
+			- if the human isn't breathing, it counts as vacuum
+			- then we check if the air we found is breathable, if not, we inflict oxygen damage
+		**/
 		breathe()
 
 			if(reagents.has_reagent("lexorin")) return
@@ -324,25 +333,15 @@
 
 			var/datum/gas_mixture/environment = loc.return_air()
 			var/datum/air_group/breath
+
 			// HACK NEED CHANGING LATER
-			if(health < config.health_threshold_dead)
-				losebreath++
-				isbreathing = 0
+			if(isbreathing && health < config.health_threshold_crit)
 				spawn emote("stopbreath")
+				isbreathing = 0
 
 			if(holdbreath)
 				isbreathing = 0
-			if(losebreath > 0)
-				// inaprovaline prevents the need to breathe for a while
-				if(reagents.has_reagent("inaprovaline"))
-					losebreath = 0
-				else
-					losebreath--
-					// we're running out of air, gasp for it!
-					if (prob(25)) //High chance of gasping for air
-						spawn emote("gasp")
-					isbreathing = 0
-			else if(health >= 0 && !isbreathing)
+			else if(health >= config.health_threshold_crit && !isbreathing)
 				if(holdbreath)
 					// we're simply holding our breath, see if we can hold it longer
 					if(health < 30)
@@ -434,6 +433,8 @@
 
 				oxygen_alert = max(oxygen_alert, 1)
 
+				if(isbreathing && prob(20)) spawn(0) emote("gasp")
+
 				return 0
 
 			var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
@@ -454,7 +455,7 @@
 			//var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*0.5 // The default pressure value
 
 			if(O2_pp < safe_oxygen_min) 			// Too little oxygen
-				if(prob(20))
+				if(prob(20) && isbreathing)
 					spawn(0) emote("gasp")
 				if(O2_pp > 0)
 					var/ratio = safe_oxygen_min/O2_pp
@@ -485,7 +486,7 @@
 					oxyloss += 3 // Lets hurt em a little, let them know we mean business
 					if(world.time - co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 						oxyloss += 8
-				if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
+				if(prob(20) && isbreathing) // Lets give them some chance to know somethings not right though I guess.
 					spawn(0) emote("cough")
 
 			else
@@ -506,7 +507,7 @@
 						if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
 							sleeping = max(sleeping, 2)
 					else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-						if(prob(20))
+						if(prob(20) && isbreathing)
 							spawn(0) emote(pick("giggle", "laugh"))
 					SA.moles = 0 //Hack to stop the damned surgeon from giggling.
 
@@ -829,9 +830,6 @@
 				death()
 			else if(health < config.health_threshold_crit)
 				if(health <= 20 && prob(1)) spawn(0) emote("gasp")
-
-				//if(!rejuv) oxyloss++
-				if(!reagents.has_reagent("inaprovaline")) oxyloss++
 
 				if(stat != 2)	stat = 1
 				Paralyse(5)
