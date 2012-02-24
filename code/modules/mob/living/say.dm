@@ -264,8 +264,11 @@
 		listening += src
 
 */
+/*  Handing this section over to get_mobs_in_view which was written with radiocode update
 	var/turf/T = get_turf(src)
 	listening = hearers(message_range, T)
+	for (var/O in listening)
+		world << O
 	var/list/V = view(message_range, T)
 	//find mobs in lockers, cryo, intellicards, brains, MMIs, and so on.
 	for (var/mob/M in world)
@@ -282,6 +285,21 @@
 			if (M.client && M.client.ghost_ears)
 				listening|=M
 
+*/
+
+	listening = get_mobs_in_view(message_range, src)
+	for(var/mob/M in world)
+		if (!M.client)
+			continue //skip monkeys and leavers
+		if (istype(M, /mob/new_player))
+			continue
+		if(M.stat == 2 && M.client.ghost_ears)
+			listening|=M
+
+	var/turf/T = get_turf(src)
+	var/list/V = view(message_range, T)
+
+
 	for (var/obj/O in ((V | contents)-used_radios)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
 		spawn (0)
 			if (O)
@@ -293,14 +311,17 @@
 				spawn(0)
 					O.hear_talk(src, message)
 
+
+
 	var/list/heard_a = list() // understood us
 	var/list/heard_b = list() // didn't understand us
 
-	for (var/mob/M in listening)
-		if (M.say_understands(src))
-			heard_a += M
-		else
-			heard_b += M
+	for (var/M in listening)
+		if(hascall(M,"say_understands"))
+			if (M:say_understands(src))
+				heard_a += M
+			else
+				heard_b += M
 
 	var/rendered = null
 	if (length(heard_a))
@@ -318,60 +339,9 @@
 		else
 			rendered = "<span class='game say'><span class='name'>[real_name]</span>[alt_name] <span class='message'>[message_a]</span></span>"
 
-/*
-		// Create speech bubble
-		var/obj/effect/speech_bubble/B = new/obj/effect/speech_bubble
-		B.icon = 'speechbubble.dmi'
-		B.parent = src
-		B.mouse_opacity = 0
-		B.invisibility = invisibility
-		B.layer = 10
-
-		// Determine if the speech bubble's going to have a special look
-		var/presay = ""
-		if(istype(src, /mob/living/silicon))
-			presay = "bot"
-		if(istype(src, /mob/living/carbon/alien))
-			presay = "xeno"
-		if(istype(src, /mob/living/carbon/metroid))
-			presay = "metroid"
-*/
-		for (var/mob/M in heard_a)
-
-			M.show_message(rendered, 2)
-			/*
-			if(M.client)
-
-				// If this client has bubbles disabled, obscure the bubble
-				if(!M.client.bubbles || M == src)
-					var/image/I = image('speechbubble.dmi', B, "override")
-					I.override = 1
-					M << I
-			*/
-		/*
-		// find the suffix, if bot, human or monkey
-		var/punctuation = ""
-		if(presay == "bot" || presay == "")
-			var/ending = copytext(text, length(text))
-			if (ending == "?")
-				punctuation = "question"
-			else if (ending == "!")
-				punctuation = "exclamation"
-			else
-				punctuation = ""
-
-		// flick the bubble
-		flick("[presay]say[punctuation]", B)
-
-		if(istype(loc, /turf))
-			B.loc = loc
-		else
-			B.loc = loc.loc
-
-		spawn()
-			sleep(11)
-			del(B)
-		*/
+		for (var/M in heard_a)
+			if(hascall(M,"show_message"))
+				M:show_message(rendered, 2)
 
 	if (length(heard_b))
 		var/message_b
@@ -388,27 +358,9 @@
 		rendered = "<span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span>"
 
 
-		/*
-		// Create speech bubble
-		var/obj/effect/speech_bubble/B = new/obj/effect/speech_bubble
-		B.icon = 'speechbubble.dmi'
-		B.parent = src
-		B.mouse_opacity = 0
-		B.invisibility = invisibility
-		B.layer = 10
-
-		// Determine if the speech bubble's going to have a special look
-		var/presay = ""
-		if(istype(src, /mob/living/silicon))
-			presay = "bot"
-		if(istype(src, /mob/living/carbon/alien))
-			presay = "xeno"
-		if(istype(src, /mob/living/carbon/metroid))
-			presay = "metroid"
-		*/
-
-		for (var/mob/M in heard_b)
-			M.show_message(rendered, 2)
+		for (var/M in heard_b)
+			if(hascall(M,"show_message"))
+				M:show_message(rendered, 2)
 
 			/*
 			if(M.client)
