@@ -306,7 +306,6 @@
 
 		if (A && A:client && !A:client:ambience_playing && !A:client:no_ambi) // Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
 			A:client:ambience_playing = 1
-			A:client:no_ambi = 0
 			A << sound('shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
 
 		switch(src.name)
@@ -315,9 +314,8 @@
 			if ("Space") sound = pick('ambispace.ogg','title2.ogg',)
 			if ("Engine Control", "Engineering", "Engineering SMES") sound = pick('ambisin1.ogg','ambisin2.ogg','ambisin3.ogg','ambisin4.ogg')
 			if ("AI Satellite Teleporter Room") sound = pick('ambimalf.ogg')
-			if ("Bar") sound = pick('null.ogg')
-			if ("AI Upload Foyer") sound = pick('ambimalf.ogg', 'null.ogg')
-			if ("AI Upload Chamber") sound = pick('ambimalf.ogg','null.ogg')
+			if ("AI Upload Foyer") sound = pick('ambimalf.ogg')
+			if ("AI Upload Chamber") sound = pick('ambimalf.ogg')
 			if ("Mine")
 				sound = pick('ambimine.ogg')
 				musVolume = 25

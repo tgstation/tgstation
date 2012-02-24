@@ -3,9 +3,9 @@
 	name = "cat"
 	desc = "Kitty!!"
 	icon = 'mob.dmi'
-	icon_state = "tempcat"
-	icon_living = "tempcat"
-	icon_dead = "catdeath"
+	icon_state = "cat"
+	icon_living = "cat"
+	icon_dead = "cat_dead"
 	speak = list("Meow!","Esp!","Purr!","HSSSSS")
 	speak_emote = list("purrs", "meows")
 	emote_hear = list("meows","mews")
@@ -17,7 +17,7 @@
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
 
-//RUNTIME! SQUEEEEEEEE~
+//RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/cat/Runtime
 	name = "Runtime"
 	desc = ""

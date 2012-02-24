@@ -65,14 +65,14 @@
 
 	src << S
 
-client/verb/Toggle_Soundscape()
+client/verb/Toggle_Soundscape() //All new ambience should be added here so it works with this verb until someone better at things comes up with a fix that isn't awful
 	set category = "Special Verbs"
 	set name = "Toggle Ambience"
 	usr:client:no_ambi = !usr:client:no_ambi
 	if(usr:client:no_ambi)
-		usr << sound('shipambience.ogg', repeat = 0, wait = 0, volume = 0, channel = 2)
+		usr << sound('shipambience.ogg','ambigen1.ogg','ambigen3.ogg','ambigen4.ogg','ambigen5.ogg','ambigen6.ogg','ambigen7.ogg','ambigen8.ogg','ambigen9.ogg','ambigen10.ogg','ambigen11.ogg','ambigen12.ogg','ambigen14.ogg','ambicha1.ogg','ambicha2.ogg','ambicha3.ogg','ambicha4.ogg','ambimalf.ogg','ambispace.ogg','ambimine.ogg','title2.ogg', repeat = 0, wait = 0, volume = 0, channel = 2)
 	else
-		usr << sound('shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
+		usr << sound('shipambience.ogg','ambigen1.ogg','ambigen3.ogg','ambigen4.ogg','ambigen5.ogg','ambigen6.ogg','ambigen7.ogg','ambigen8.ogg','ambigen9.ogg','ambigen10.ogg','ambigen11.ogg','ambigen12.ogg','ambigen14.ogg','ambicha1.ogg','ambicha2.ogg','ambicha3.ogg','ambicha4.ogg','ambimalf.ogg','ambispace.ogg','ambimine.ogg','title2.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
 	usr << "Toggled ambience sound."
 	return
 
