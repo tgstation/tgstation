@@ -24,6 +24,9 @@
 	if(!loc)			// Fixing a null error that occurs when the mob isn't found in the world -- TLE
 		return
 
+	if(stat == 2)
+		return
+
 	life_tick++
 
 	var/datum/gas_mixture/environment = loc.return_air()
