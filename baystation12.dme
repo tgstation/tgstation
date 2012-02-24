@@ -1,6 +1,6 @@
 // DM Environment file for baystation12.dme.
-// All manual changes should be made outside the BEGIN_ and END_ blocks. 
- // New source code should be placed in .dm files: choose File/New --> Code File. 
+// All manual changes should be made outside the BEGIN_ and END_ blocks.
+// New source code should be placed in .dm files: choose File/New --> Code File.
 // BEGIN_INTERNALS
 // END_INTERNALS
 // BEGIN_FILE_DIR
@@ -144,7 +144,6 @@
 #define FILE_DIR "code/unused/pda2"
 #define FILE_DIR "code/unused/spacecraft"
 #define FILE_DIR "code/WorkInProgress"
-#define FILE_DIR "code/WorkInProgress/Apples"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn/Tajara"
 #define FILE_DIR "code/WorkInProgress/mapload"
@@ -193,10 +192,9 @@
 #define FILE_DIR "sound/voice"
 #define FILE_DIR "sound/weapons"
 // END_FILE_DIR
-
 // BEGIN_PREFERENCES
+#define DEBUG
 // END_PREFERENCES
-
 // BEGIN_INCLUDE
 #include "code\names.dm"
 #include "code\setup.dm"
@@ -639,6 +637,7 @@
 #include "code\game\objects\devices\chameleonproj.dm"
 #include "code\game\objects\devices\flash.dm"
 #include "code\game\objects\devices\flashlight.dm"
+#include "code\game\objects\devices\geneanalyzer.dm"
 #include "code\game\objects\devices\infra_sensor.dm"
 #include "code\game\objects\devices\multitool.dm"
 #include "code\game\objects\devices\paicard.dm"
@@ -1068,3 +1067,4 @@
 #include "interface\skin.dmf"
 #include "maps\tgstation.2.0.8.dmm"
 // END_INCLUDE
+

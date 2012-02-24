@@ -29,7 +29,7 @@
 	var/last_found = 0
 	var/last_newpatient_speak = 0 //Don't spam the "HEY I'M COMING" messages
 	var/currently_healing = 0
-	var/injection_amount = 15 //How much reagent do we inject at a time?
+	var/injection_amount = 5 //How much reagent do we inject at a time?
 	var/heal_threshold = 15 //Start healing when they have this much damage in a category
 	var/use_beaker = 1 //Use reagents in beaker instead of default treatment agents.
 	//Setting which reagents to use to treat what by default. By id.
@@ -375,25 +375,21 @@
 	if((src.use_beaker) && (src.reagent_glass) && (src.reagent_glass.reagents.total_volume))
 		if(always_inject)
 			reagent_id = "internal_beaker"
-		else if (C.getBruteLoss() >= heal_threshold)
-			if(C.reagents.has_reagent(src.treatment_brute))
-				reagent_id = "internal_beaker"
+		else if (C.getBruteLoss() >= heal_threshold && reagent_glass.reagents.has_reagent(src.treatment_brute))
+			reagent_id = "internal_beaker"
 
-		else if (C.getOxyLoss() >= (15 + heal_threshold))
-			if(C.reagents.has_reagent(src.treatment_oxy))
-				reagent_id = "internal_beaker"
+		else if (C.getOxyLoss() >= (15 + heal_threshold) && reagent_glass.reagents.has_reagent(src.treatment_oxy))
+			reagent_id = "internal_beaker"
 
-		else if (C.getFireLoss() >= heal_threshold)
-			if(C.reagents.has_reagent(src.treatment_fire))
-				reagent_id = "internal_beaker"
+		else if (C.getFireLoss() >= heal_threshold && reagent_glass.reagents.has_reagent(src.treatment_fire))
+			reagent_id = "internal_beaker"
 
-		else if (C.getToxLoss() >= heal_threshold)
-			if(C.reagents.has_reagent(src.treatment_tox))
-				reagent_id = "internal_beaker"
+		else if (C.getToxLoss() >= heal_threshold && reagent_glass.reagents.has_reagent(src.treatment_tox))
+			reagent_id = "internal_beaker"
 
-		else if (100 - C.health >= heal_threshold)
-			if(C.reagents.has_reagent("tricordrazine"))
-				reagent_id = "internal_beaker"
+		else if (100 - C.health >= heal_threshold && reagent_glass.reagents.has_reagent("tricordrazine"))
+			reagent_id = "internal_beaker"
+
 
 	if(src.emagged) //Emagged! Time to poison everybody.
 		reagent_id = "toxin"
@@ -425,8 +421,6 @@
 			reagent_id = "inaprovaline"
 			return
 
-//	src.speak(reagent_id)
-	reagent_id = null
 	return
 
 
