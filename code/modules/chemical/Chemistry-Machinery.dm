@@ -331,7 +331,7 @@
 		else if(href_list["pill_sprite"])
 			pillsprite = href_list["pill_sprite"]
 		else if(href_list["bottle_sprite"])
-			bottlesprite = href_list["bottlesprite"]
+			bottlesprite = href_list["bottle_sprite"]
 		else
 			usr << browse(null, "window=chem_master")
 		src.updateUsrDialog()
