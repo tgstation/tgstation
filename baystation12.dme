@@ -144,6 +144,7 @@
 #define FILE_DIR "code/unused/pda2"
 #define FILE_DIR "code/unused/spacecraft"
 #define FILE_DIR "code/WorkInProgress"
+#define FILE_DIR "code/WorkInProgress/Apples"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn/Tajara"
 #define FILE_DIR "code/WorkInProgress/mapload"
@@ -637,7 +638,6 @@
 #include "code\game\objects\devices\chameleonproj.dm"
 #include "code\game\objects\devices\flash.dm"
 #include "code\game\objects\devices\flashlight.dm"
-#include "code\game\objects\devices\geneanalyzer.dm"
 #include "code\game\objects\devices\infra_sensor.dm"
 #include "code\game\objects\devices\multitool.dm"
 #include "code\game\objects\devices\paicard.dm"
@@ -1065,6 +1065,6 @@
 #include "code\WorkInProgress\virus2\Prob.dm"
 #include "code\WorkInProgress\Wrongnumber\weldbackpack.dm"
 #include "interface\skin.dmf"
-#include "maps\tgstation.2.0.8.dmm"
+#include "maps\test.dmm"
 // END_INCLUDE
 
