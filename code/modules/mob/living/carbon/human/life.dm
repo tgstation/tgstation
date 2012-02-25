@@ -13,6 +13,7 @@
 		isbreathing = 1
 		holdbreath = 0
 		lyingcheck = 0
+		buckle_check = 0
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
@@ -24,7 +25,20 @@
 	if(!loc)			// Fixing a null error that occurs when the mob isn't found in the world -- TLE
 		return
 
+	//Being buckled to a chair or bed
+	check_if_buckled()
+
+	// Update clothing
+//	update_clothing()
+	if((lyingcheck != lying) || (buckle_check != (buckled ? 1 : 0)))		//This is a fix for falling down / standing up not updating icons.  Instead of going through and changing every
+		spawn(5)
+			update_clothing()		//instance in the code where lying is modified, I've just added a new variable "lyingcheck" which will be compared
+		lyingcheck = lying		//to lying, so if lying ever changes, update_clothing() will run like normal.
+
 	if(stat == 2)
+		if((!lying || !lyingcheck) && !buckled)
+			lying = 1
+			update_clothing()
 		return
 
 	life_tick++
@@ -88,17 +102,8 @@
 	// Some mobs heal slowly, others die slowly
 	handle_health_updates()
 
-	// Update clothing
-//	update_clothing()
-	if(lyingcheck != lying)		//This is a fix for falling down / standing up not updating icons.  Instead of going through and changing every
-		update_clothing()		//instance in the code where lying is modified, I've just added a new variable "lyingcheck" which will be compared
-		lyingcheck = lying		//to lying, so if lying ever changes, update_clothing() will run like normal.
-
 	if(client)
 		handle_regular_hud_updates()
-
-	//Being buckled to a chair or bed
-	check_if_buckled()
 
 	// Yup.
 	update_canmove()
@@ -1191,13 +1196,18 @@
 
 
 		check_if_buckled()
-			if (buckled)
-				lying = istype(buckled, /obj/structure/stool/bed) || istype(buckled, /obj/machinery/conveyor)
-				if(lying)
+			if(buckle_check != (buckled ? 1 : 0))
+				buckle_check = (buckled ? 1 : 0)
+				if (buckled)
+					lying = istype(buckled, /obj/structure/stool/bed) || istype(buckled, /obj/machinery/conveyor)
+					if(lying)
+						drop_item()
+					density = 1
+				else
+					density = !lying
+			if(buckle_check)
+				if(istype(buckled, /obj/structure/stool/bed) || istype(buckled, /obj/machinery/conveyor))
 					drop_item()
-				density = 1
-			else
-				density = !lying
 
 		handle_stomach()
 			spawn(0)

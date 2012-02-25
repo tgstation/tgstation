@@ -92,13 +92,16 @@ obj/machinery/computer/forensic_scanning
 		scan_data = ""
 		scan_name = ""
 		scan_process = 0
+		booked = 0
 
 	req_access = list(access_forensics_lockers)
 
 
 	New()
 		..()
-		new /obj/item/weapon/book/manual/detective(get_turf(src))
+		if(!booked)
+			new /obj/item/weapon/book/manual/detective(get_turf(src))
+			booked = 1
 		return
 
 

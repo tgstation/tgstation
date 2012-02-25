@@ -1419,6 +1419,7 @@
 /obj/effect/equip_e/human/process()
 	if (item)
 		item.add_fingerprint(source)
+	var/item_loc = 0
 	if (!item)
 		switch(place)
 			if("mask")
@@ -1481,9 +1482,65 @@
 					//SN src = null
 					del(src)
 					return
+	else
+		switch(place)
+			if("mask")
+				if(target.wear_mask)
+					item_loc = 1
+			if("l_hand")
+				if(target.l_hand)
+					item_loc = 1
+			if("r_hand")
+				if(target.r_hand)
+					item_loc = 1
+			if("gloves")
+				if(target.gloves)
+					item_loc = 1
+			if("eyes")
+				if(target.glasses)
+					item_loc = 1
+			if("l_ear")
+				if(target.l_ear)
+					item_loc = 1
+			if("r_ear")
+				if(target.r_ear)
+					item_loc = 1
+			if("head")
+				if(target.head)
+					item_loc = 1
+			if("shoes")
+				if(target.shoes)
+					item_loc = 1
+			if("belt")
+				if(target.belt)
+					item_loc = 1
+			if("suit")
+				if(target.wear_suit)
+					item_loc = 1
+			if("back")
+				if(target.back)
+					item_loc = 1
+			if("uniform")
+				if(target.w_uniform)
+					item_loc = 1
+			if("s_store")
+				if(target.s_store)
+					item_loc = 1
+			if("h_store")
+				if(target.h_store)
+					item_loc = 1
+			if("id")
+				if(target.wear_id)
+					item_loc = 1
+			if("internal")
+				if (target.internal)
+					item_loc = 1
+			if("handcuff")
+				if (target.handcuffed)
+					item_loc = 1
 
 	var/list/L = list( "syringe", "pill", "drink", "dnainjector", "fuel")
-	if ((item && !( L.Find(place) )))
+	if (item && !L.Find(place) && !item_loc)
 		if(isrobot(source) && place != "handcuff")
 			del(src)
 			return
