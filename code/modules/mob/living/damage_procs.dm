@@ -48,7 +48,7 @@
 		if(PARALYZE)
 			Paralyse(effect/(blocked+1))
 		if(IRRADIATE)
-			radiation += min((effect - (effect*getarmor(null, "rad"))), 0)//Rads auto check armor
+			radiation += max((effect - (effect*getarmor(null, "rad"))), 0)//Rads auto check armor
 		if(STUTTER)
 			stuttering = max(stuttering,(effect/(blocked+1)))
 		if(SLUR)
