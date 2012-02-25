@@ -2,7 +2,8 @@ var/global/list/uneatable = list(
 	/turf/space,
 	/obj/effect,
 	/obj/effect/overlay,
-	/obj/effect/rune
+	/obj/effect/rune,
+	/mob/aiEye
 	)
 
 /obj/machinery/singularity/
