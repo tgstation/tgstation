@@ -81,9 +81,8 @@
 	var/rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
 	for (var/mob/living/S in world)
 		if(!S.stat)
-			if(S.robot_talk_understand)
-				if(S.robot_talk_understand == robot_talk_understand)
-					S.show_message(rendered, 2)
+			if(S.robot_talk_understand && (S.robot_talk_understand == robot_talk_understand))
+				S.show_message(rendered, 2)
 			else if (S.binarycheck())
 				S.show_message(rendered, 2)
 
