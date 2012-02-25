@@ -55,7 +55,7 @@
 	icon_state = "hossecure1"
 	icon_closed = "hossecure"
 	icon_locked = "hossecure1"
-	icon_opened = "hossecurecopen"
+	icon_opened = "hossecureopen"
 	icon_broken = "hossecurebroken"
 	icon_off = "hossecurecoff"
 
