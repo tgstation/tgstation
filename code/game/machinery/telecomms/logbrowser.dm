@@ -27,7 +27,7 @@
 
 			if(0)
 				dat += "<br>[temp]<br>"
-				dat += "<br>Current Network: <a href='?src=\ref[src];input=network'>[network]</a><br>"
+				dat += "<br>Current Network: <a href='?src=\ref[src];network=1'>[network]</a><br>"
 				if(servers.len)
 					dat += "<br>Detected Telecommunication Servers:<ul>"
 					for(var/obj/machinery/telecomms/T in servers)
@@ -60,55 +60,63 @@
 
 					dat += "<li><font color = #008F00>[C.name]</font color>  <font color = #FF0000><a href='?src=\ref[src];delete=[i]'>\[X\]</a></font color><br>"
 
-					// -- Determine race of orator --
+					// If the log is a speech file
+					if(C.input_type == "Speech File")
+						// -- Determine race of orator --
 
-					var/race			   // The actual race of the mob
-					var/language = "Human" // MMIs, pAIs, Cyborgs and humans all speak Human
-					var/mobtype = C.parameters["mobtype"]
-					var/mob/M = new mobtype
+						var/race			   // The actual race of the mob
+						var/language = "Human" // MMIs, pAIs, Cyborgs and humans all speak Human
+						var/mobtype = C.parameters["mobtype"]
+						var/mob/M = new mobtype
 
-					if(ishuman(M) || isbrain(M))
-						race = "Human"
+						if(ishuman(M) || isbrain(M))
+							race = "Human"
 
-					else if(ismonkey(M))
-						race = "Monkey"
-						language = race
+						else if(ismonkey(M))
+							race = "Monkey"
+							language = race
 
-					else if(issilicon(M) || C.parameters["job"] == "AI") // sometimes M gets deleted prematurely for AIs... just check the job
-						race = "Artificial Life"
+						else if(issilicon(M) || C.parameters["job"] == "AI") // sometimes M gets deleted prematurely for AIs... just check the job
+							race = "Artificial Life"
 
-					else if(ismetroid(M)) // NT knows a lot about metroids, but not aliens. Can identify metroids
-						race = "Metroid"
-						language = race
+						else if(ismetroid(M)) // NT knows a lot about metroids, but not aliens. Can identify metroids
+							race = "Metroid"
+							language = race
 
-					else if(isanimal(M))
-						race = "Domestic Animal"
-						language = race
+						else if(isanimal(M))
+							race = "Domestic Animal"
+							language = race
 
-					else
-						race = "<i>Unidentifiable</i>"
-						language = race
+						else
+							race = "<i>Unidentifiable</i>"
+							language = race
 
-					del(M)
+						del(M)
 
-					// -- If the orator is a human, or universal translate is active, OR mob has universal speech on --
+						// -- If the orator is a human, or universal translate is active, OR mob has universal speech on --
 
-					if(language == "Human" || universal_translate || C.parameters["uspeech"])
+						if(language == "Human" || universal_translate || C.parameters["uspeech"])
+							dat += "<u><font color = #18743E>Data type</font color></u>: [C.input_type]<br>"
+							dat += "<u><font color = #18743E>Source</font color></u>: [C.parameters["name"]] (Job: [C.parameters["job"]])<br>"
+							dat += "<u><font color = #18743E>Class</font color></u>: [race]<br>"
+							dat += "<u><font color = #18743E>Contents</font color></u>: \"[C.parameters["message"]]\"<br>"
+
+
+						// -- Orator is not human and universal translate not active --
+
+						else
+							dat += "<u><font color = #18743E>Data type</font color></u>: Audio File<br>"
+							dat += "<u><font color = #18743E>Source</font color></u>: <i>Unidentifiable</i><br>"
+							dat += "<u><font color = #18743E>Class</font color></u>: [race]<br>"
+							dat += "<u><font color = #18743E>Contents</font color></u>: <i>Unintelligble</i><br>"
+
+						dat += "</li><br>"
+
+					else if(C.input_type == "Execution Error")
 						dat += "<u><font color = #18743E>Data type</font color></u>: [C.input_type]<br>"
-						dat += "<u><font color = #18743E>Source</font color></u>: [C.parameters["name"]] (Job: [C.parameters["job"]])<br>"
-						dat += "<u><font color = #18743E>Class</font color></u>: [race]<br>"
+						dat += "<u><font color = #18743E>Source</font color></u>: Internal server code<br>"
 						dat += "<u><font color = #18743E>Contents</font color></u>: \"[C.parameters["message"]]\"<br>"
 
-
-					// -- Orator is not human and universal translate not active --
-
-					else
-						dat += "<u><font color = #18743E>Data type</font color></u>: Audio File<br>"
-						dat += "<u><font color = #18743E>Source</font color></u>: <i>Unidentifiable</i><br>"
-						dat += "<u><font color = #18743E>Class</font color></u>: [race]<br>"
-						dat += "<u><font color = #18743E>Contents</font color></u>: <i>Unintelligble</i><br>"
-
-					dat += "</li><br>"
 
 				dat += "</ol>"
 
@@ -128,9 +136,6 @@
 
 		add_fingerprint(usr)
 		usr.machine = src
-		if(!src.allowed(usr) && !emagged)
-			usr << "\red ACCESS DENIED."
-			return
 
 		if(href_list["viewserver"])
 			screen = 1
@@ -166,6 +171,11 @@
 						screen = 0
 
 		if(href_list["delete"])
+
+			if(!src.allowed(usr) && !emagged)
+				usr << "\red ACCESS DENIED."
+				return
+
 			if(SelectedServer)
 
 				var/datum/comm_log_entry/D = SelectedServer.log_entries[text2num(href_list["delete"])]
@@ -178,11 +188,11 @@
 			else
 				temp = "<font color = #D70B00>- FAILED: NO SELECTED MACHINE -</font color>"
 
-		if(href_list["input"])
+		if(href_list["network"])
 
 			var/newnet = input(usr, "Which network do you want to view?", "Comm Monitor", network) as null|text
 
-			if(newnet && usr in range(1, src) && newnet != network)
+			if(newnet && usr in range(1, src))
 				if(length(newnet) > 15)
 					temp = "<font color = #D70B00>- FAILED: NETWORK TAG STRING TOO LENGHTLY -</font color>"
 

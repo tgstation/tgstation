@@ -18,8 +18,6 @@
 
 		temp = ""				// temporary feedback messages
 
-	req_access = list(access_tcomsat)
-
 	attack_hand(mob/user as mob)
 		if(stat & (BROKEN|NOPOWER))
 			return
@@ -33,7 +31,7 @@
 
 			if(0)
 				dat += "<br>[temp]<br><br>"
-				dat += "<br>Current Network: <a href='?src=\ref[src];input=network'>[network]</a><br>"
+				dat += "<br>Current Network: <a href='?src=\ref[src];network=1'>[network]</a><br>"
 				if(machines.len)
 					dat += "<br>Detected Network Entities:<ul>"
 					for(var/obj/machinery/telecomms/T in machines)
@@ -72,9 +70,6 @@
 
 		add_fingerprint(usr)
 		usr.machine = src
-		if(!src.allowed(usr) && !emagged)
-			usr << "\red ACCESS DENIED."
-			return
 
 		if(href_list["viewmachine"])
 			screen = 1
@@ -110,10 +105,10 @@
 						screen = 0
 
 
-		if(href_list["input"])
+		if(href_list["network"])
 
 			var/newnet = input(usr, "Which network do you want to view?", "Comm Monitor", network) as null|text
-			if(newnet && usr in range(1, src) && newnet != network)
+			if(newnet && usr in range(1, src))
 				if(length(newnet) > 15)
 					temp = "<font color = #D70B00>- FAILED: NETWORK TAG STRING TOO LENGHTLY -</font color>"
 
