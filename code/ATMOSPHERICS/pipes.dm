@@ -253,11 +253,19 @@ obj/machinery/atmospherics/pipe
 		name="Scrubbers pipe"
 		color="red"
 		icon_state = ""
+		initialize()
+			..()
+			if(istype(node1, /obj/machinery/atmospherics/pipe/simple/supply) || istype(node1, /obj/machinery/atmospherics/pipe/simple/supply))
+				log_admin("Warning, scrubber pipeline connected to supply pipeline at [x], [y], [z]!")
 
 	simple/supply
 		name="Air supply pipe"
 		color="blue"
 		icon_state = ""
+		initialize()
+			..()
+			if(istype(node1, /obj/machinery/atmospherics/pipe/simple/scrubbers) || istype(node1, /obj/machinery/atmospherics/pipe/simple/scrubbers))
+				log_admin("Warning, supply  pipeline connected to scrubber pipeline at [x], [y], [z]!")
 
 	simple/supplymain
 		name="Main air supply pipe"
