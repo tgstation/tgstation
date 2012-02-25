@@ -62,9 +62,9 @@ MASS SPECTROMETER
 /obj/item/device/detective_scanner
 	name = "Scanner"
 	desc = "Used to scan objects for DNA and fingerprints."
-	icon_state = "forensic0"
+	icon_state = "forensic1"
 	var/amount = 20.0
-	var/printing = 0.0
+//	var/printing = 0.0
 	var/list/stored = list()
 	w_class = 3.0
 	item_state = "electronic"
@@ -90,15 +90,15 @@ MASS SPECTROMETER
 				W.add_fingerprint(user)
 		return
 
-	attack_self(mob/user as mob)
-		src.printing = !( src.printing )
-		if(src.printing)
-			user << "\blue Printing turned on"
-		else
-			user << "\blue Printing turned off"
-		src.icon_state = text("forensic[]", src.printing)
-		add_fingerprint(user)
-		return
+//	attack_self(mob/user as mob)
+//		src.printing = !( src.printing )
+//		if(src.printing)
+//			user << "\blue Printing turned on"
+//		else
+//			user << "\blue Printing turned off"
+//		src.icon_state = text("forensic[]", src.printing)
+//		add_fingerprint(user)
+//		return
 
 	attack(mob/living/carbon/human/M as mob, mob/user as mob)
 		if (!ishuman(M))
@@ -108,11 +108,12 @@ MASS SPECTROMETER
 			user << "\blue No fingerprints found on [M]"
 			return 0
 		else
-			if ((src.amount < 1 && src.printing))
+			if (src.amount < 1)
 				user << text("\blue Fingerprints scanned on [M]. Need more cards to print.")
-				src.printing = 0
-			src.icon_state = text("forensic[]", src.printing)
-			if (src.printing)
+//				src.printing = 0
+//			src.icon_state = text("forensic[]", src.printing)
+//			if (src.printing)
+			else
 				src.amount--
 				var/obj/item/weapon/f_card/F = new /obj/item/weapon/f_card( user.loc )
 				F.amount = 1

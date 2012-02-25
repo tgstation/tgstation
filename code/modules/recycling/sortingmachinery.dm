@@ -221,8 +221,7 @@
 /obj/item/proc/wrap(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/packageWrap))
 		var/obj/item/weapon/packageWrap/C = I
-		if(!istype(src.loc,/turf))
-			user << "\red You need to place the item on the ground or a table before wrapping it!"
+		if(anchored)
 			return
 		else if (C.amount > 1)
 			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(src.loc))

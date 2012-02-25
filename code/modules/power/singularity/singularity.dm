@@ -216,8 +216,9 @@ var/global/list/uneatable = list(
 						step_towards(X,src)
 				else if(istype(X,/mob/living/carbon/human))
 					var/mob/living/carbon/human/H = X
-					H << "\red The singularity has you in it's gravitational pull!  It's hard to break free!"
-					H.grav_delay = 20 //No running this time!
+					if(prob(25))
+						H << "\red The singularity has you in it's gravitational pull!  It's hard to break free!"
+						H.grav_delay = 15 //No running this time!
 					if(istype(H.shoes,/obj/item/clothing/shoes/magboots) && !(src.current_size >= 9))
 						var/obj/item/clothing/shoes/magboots/M = H.shoes
 						if(M.magpulse)
@@ -405,8 +406,8 @@ var/global/list/uneatable = list(
 			for(var/mob/living/M in view(toxrange, src.loc))
 				if(istype(M,/mob/living/))
 					M.apply_effect(rand(radiation), IRRADIATE)
-					toxdamage = (toxdamage - (toxdamage*M.getarmor(null, "rad")))
-					M.apply_effect(toxdamage, TOX)
+					var/tdamage = (toxdamage - (toxdamage*M.getarmor(null, "rad")))
+					M.apply_effect(tdamage, TOX)
 			return
 
 
@@ -432,6 +433,17 @@ var/global/list/uneatable = list(
 			for(var/obj/machinery/power/rad_collector/R in orange(15,src))
 				if(istype(R,/obj/machinery/power/rad_collector))
 					R.receive_pulse(energy)
+
+			// when we radiate rad collectors, naturally we radiate everything else, too
+			if(prob(10))
+				var/toxrange = 20
+				var/radiation = 20
+				if (src.energy>200)
+					radiation = round(((src.energy-150)/50)*20,1)
+				for(var/mob/living/M in view(toxrange, src.loc))
+					if(istype(M,/mob/living/))
+						var/damage = radiation / (get_dist(M, src) + 5)
+						M.apply_effect(rand(damage), IRRADIATE)
 			return
 
 

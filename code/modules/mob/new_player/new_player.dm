@@ -48,6 +48,9 @@
 		if(preferences.pregame_music)
 			spawn() Playmusic() // git some tunes up in heeyaa~
 
+		if(client.has_news())
+			src << "<b><font color=blue>There are some unread <a href='?src=\ref[news_topic_handler];client=\ref[client];action=show_news'>news</a> for you! Please make sure to read all news, as they may contain important updates about roleplay rules or canon.</font></b>"
+
 		new_player_panel()
 		//PDA Resource Initialisation =======================================================>
 		/*

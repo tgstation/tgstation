@@ -1,0 +1,2 @@
+directory: player
+content: Anything relating to out-of-character, player related features, including saves, announcements and so on.

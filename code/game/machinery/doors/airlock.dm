@@ -1496,6 +1496,8 @@ About the new airlock wires panel:
 						return
 			if (istype(C, /obj/item/device/hacktool))
 				return src.attack_ai(user, C)
+			if(ismob(C))
+				return ..(C, user)
 			src.add_fingerprint(user)
 			switch(removal_step)
 				if(0)

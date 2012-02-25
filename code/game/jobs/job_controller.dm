@@ -4,6 +4,7 @@ var/global/datum/controller/occupations/job_master
 	var
 		//List of all jobs
 		list/occupations = list()
+		list/occupations2 = list()
 		//Players who need jobs
 		list/unassigned = list()
 		//Debug info
@@ -159,7 +160,7 @@ var/global/datum/controller/occupations/job_master
 		if(unassigned.len == 0)	return 0
 		//Shuffle players and jobs
 		unassigned = shuffle(unassigned)
-	//	occupations = shuffle(occupations) check and see if we can do this one
+		occupations2 = shuffle(occupations)
 
 		//Assistants are checked first
 		Debug("DO, Running Assistant Check 1")
@@ -185,7 +186,7 @@ var/global/datum/controller/occupations/job_master
 		//Other jobs are now checked
 		Debug("DO, Running Standard Check")
 		for(var/level = 1 to 3)
-			for(var/datum/job/job in occupations)
+			for(var/datum/job/job in occupations2)
 				Debug("Checking job: [job]")
 				if(!job)	continue
 				if(!unassigned.len)	break

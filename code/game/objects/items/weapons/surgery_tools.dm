@@ -43,7 +43,6 @@ CIRCULAR SAW
 						for(var/datum/disease/alien_embryo in M.viruses)
 							alien_embryo.cure()
 						return
-		return
 
 	if(user.zone_sel.selecting == "groin")
 		if(istype(M, /mob/living/carbon/human))
@@ -55,7 +54,7 @@ CIRCULAR SAW
 						M << "\red [user] begins to retract the flap in your abdomen with [src]!"
 						user << "\red You retract the flap in [M]'s abdomen with [src]!"
 						M:appendix_op_stage = 3.0
-		return
+						return
 
 	if (user.zone_sel.selecting == "eyes")
 
@@ -101,11 +100,11 @@ CIRCULAR SAW
 						M.take_organ_damage(15)
 
 				M:eye_op_stage = 2.0
+				return
 
-	else
-		// bone surgery doable?
-		if(!try_bone_surgery(M, user))
-			return ..()
+	// bone surgery doable?
+	if(!try_bone_surgery(M, user))
+		return ..()
 
 /obj/item/weapon/retractor/proc/try_bone_surgery(mob/living/carbon/human/H as mob, mob/living/user as mob)
 	if(!istype(H))
@@ -194,6 +193,7 @@ CIRCULAR SAW
 						M << "\red [user] begins to clamp bleeders in your abdomen with [src]!"
 						user << "\red You clamp bleeders in [M]'s abdomen with [src]!"
 						M:appendix_op_stage = 2.0
+						return
 				if(4.0)
 					if(M != user)
 						for(var/mob/O in (viewers(M) - user - M))
@@ -207,7 +207,7 @@ CIRCULAR SAW
 								return
 						new /obj/item/weapon/reagent_containers/food/snacks/appendix(get_turf(M))
 						M:appendix_op_stage = 5.0
-		return
+						return
 
 	if (user.zone_sel.selecting == "eyes")
 
@@ -252,7 +252,8 @@ CIRCULAR SAW
 					else
 						M.take_organ_damage(15)
 				M:eye_op_stage = 3.0
-	else if(user.zone_sel.selecting == "head")
+				return
+	if(user.zone_sel.selecting == "head")
 		if(istype(M, /mob/living/carbon/human) && M:brain_op_stage == 1)
 			M:brain_op_stage = 0
 			var/datum/organ/external/S = M:organs["head"]
@@ -264,10 +265,9 @@ CIRCULAR SAW
 				return ..()
 		else
 			return ..()
-	else
-		// bone surgery doable?
-		if(!try_bone_surgery(M, user))
-			return ..()
+	// bone surgery doable?
+	if(!try_bone_surgery(M, user))
+		return ..()
 
 
 /obj/item/weapon/hemostat/proc/try_bone_surgery(mob/living/carbon/human/H as mob, mob/living/user as mob)
@@ -357,7 +357,7 @@ CIRCULAR SAW
 
 /obj/item/weapon/autopsy_scanner/verb/print_data()
 	set src in view(usr, 1)
-	if(usr.stat == 2)
+	if(usr.stat)
 		src << "No."
 		return
 
@@ -411,7 +411,7 @@ CIRCULAR SAW
 		n++
 
 	for(var/mob/O in viewers(usr))
-		O.show_message("\red The [src] rattles and prints out a sheet of paper.", 1)
+		O.show_message("\red \the [src] rattles and prints out a sheet of paper.", 1)
 
 	sleep(10)
 
@@ -441,7 +441,7 @@ CIRCULAR SAW
 		usr << "<b>You have to cut the limb open first!</b>"
 		return
 	for(var/mob/O in viewers(M))
-		O.show_message("\red [user.name] scans the wounds on [M.name]'s [S.display_name] with the [src.name]", 1)
+		O.show_message("\red [user.name] scans the wounds on [M.name]'s [S.display_name] with \the [src.name]", 1)
 
 	src.add_data(S)
 
@@ -469,8 +469,6 @@ CIRCULAR SAW
 					user << "\red You cauterize the incision in [M]'s torso with [src]!"
 					M:embryo_op_stage = 0.0
 					return
-			else
-				try_bone_surgery(M, user)
 
 	if(user.zone_sel.selecting == "groin")
 		if(istype(M, /mob/living/carbon/human))
@@ -485,9 +483,7 @@ CIRCULAR SAW
 						for(var/datum/disease/appendicitis in M.viruses)
 							appendicitis.cure()
 							M.resistances += appendicitis
-				else
-					try_bone_surgery(M, user)
-		return
+						return
 
 	if (user.zone_sel.selecting == "eyes")
 
@@ -533,12 +529,10 @@ CIRCULAR SAW
 						M.take_organ_damage(15)
 				M.disabilities &= ~128
 				M:eye_op_stage = 0.0
+				return
 
-	else
-		// bone surgery doable?
-		try_bone_surgery(M, user)
-//		if(!try_bone_surgery(M, user))
-//			return ..()
+	if(!try_bone_surgery(M, user))
+		return ..()
 
 /obj/item/weapon/cautery/proc/try_bone_surgery(mob/living/carbon/human/H as mob, mob/living/user as mob)
 	if(!istype(H))
@@ -562,7 +556,7 @@ CIRCULAR SAW
 			"\red [user] begins to cauterize the incision in \his [S.display_name] with [src]!", \
 			"\red You begin to cauterize the incision in your [S.display_name] with [src]!")
 
-	if(do_mob(user, H, 100))
+	if(do_mob(user, H, rand(70,100)))
 		if(H != user)
 			H.visible_message( \
 				"\red [user] cauterizes the incision in [H]'s [S.display_name] with [src]!", \
@@ -763,9 +757,9 @@ CIRCULAR SAW
 				M:brain_op_stage = 3.0
 			else
 				..()
-		return
+			return
 
-	else if(user.zone_sel.selecting == "eyes")
+	if(user.zone_sel.selecting == "eyes")
 		user << "\blue So far so good."
 
 		var/mob/living/carbon/human/H = M
@@ -812,10 +806,9 @@ CIRCULAR SAW
 				M.updatehealth()
 				M:eye_op_stage = 1.0
 				user << "\blue So far so good after."
-	else
-		// bone surgery doable?
-		if(!try_bone_surgery(M, user))
-			return ..()
+				return
+	if(!try_bone_surgery(M, user))
+		return ..()
 
 /* wat
 	else if((!(user.zone_sel.selecting == "head")) || (!(user.zone_sel.selecting == "groin")) || (!(istype(M, /mob/living/carbon/human))))

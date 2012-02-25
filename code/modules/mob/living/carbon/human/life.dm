@@ -13,6 +13,7 @@
 		isbreathing = 1
 		holdbreath = 0
 		lyingcheck = 0
+		buckle_check = 0
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
@@ -22,6 +23,22 @@
 		return
 
 	if(!loc)			// Fixing a null error that occurs when the mob isn't found in the world -- TLE
+		return
+
+	//Being buckled to a chair or bed
+	check_if_buckled()
+
+	// Update clothing
+//	update_clothing()
+	if((lyingcheck != lying) || (buckle_check != (buckled ? 1 : 0)))		//This is a fix for falling down / standing up not updating icons.  Instead of going through and changing every
+		spawn(5)
+			update_clothing()		//instance in the code where lying is modified, I've just added a new variable "lyingcheck" which will be compared
+		lyingcheck = lying		//to lying, so if lying ever changes, update_clothing() will run like normal.
+
+	if(stat == 2)
+		if((!lying || !lyingcheck) && !buckled)
+			lying = 1
+			update_clothing()
 		return
 
 	life_tick++
@@ -85,17 +102,8 @@
 	// Some mobs heal slowly, others die slowly
 	handle_health_updates()
 
-	// Update clothing
-//	update_clothing()
-	if(lyingcheck != lying)		//This is a fix for falling down / standing up not updating icons.  Instead of going through and changing every
-		update_clothing()		//instance in the code where lying is modified, I've just added a new variable "lyingcheck" which will be compared
-		lyingcheck = lying		//to lying, so if lying ever changes, update_clothing() will run like normal.
-
 	if(client)
 		handle_regular_hud_updates()
-
-	//Being buckled to a chair or bed
-	check_if_buckled()
 
 	// Yup.
 	update_canmove()
@@ -317,6 +325,15 @@
 			//As close as I could find to where to put it
 			grav_delay = max(grav_delay-3,0)
 
+		/** Overview of breathing code:
+			- first it's determined whether the human is capable of breathing
+			- then it's determined whether the human is holding his breath intentionally
+			- the isbreathing variable is set according to this
+
+			- next, we look for any air that the mob could breathe, first internals, then in the air around him
+			- if the human isn't breathing, it counts as vacuum
+			- then we check if the air we found is breathable, if not, we inflict oxygen damage
+		**/
 		breathe()
 
 			if(reagents.has_reagent("lexorin")) return
@@ -324,25 +341,15 @@
 
 			var/datum/gas_mixture/environment = loc.return_air()
 			var/datum/air_group/breath
+
 			// HACK NEED CHANGING LATER
-			if(health < config.health_threshold_dead)
-				losebreath++
-				isbreathing = 0
+			if(isbreathing && health < config.health_threshold_crit)
 				spawn emote("stopbreath")
+				isbreathing = 0
 
 			if(holdbreath)
 				isbreathing = 0
-			if(losebreath > 0)
-				// inaprovaline prevents the need to breathe for a while
-				if(reagents.has_reagent("inaprovaline"))
-					losebreath = 0
-				else
-					losebreath--
-					// we're running out of air, gasp for it!
-					if (prob(25)) //High chance of gasping for air
-						spawn emote("gasp")
-					isbreathing = 0
-			else if(health >= 0 && !isbreathing)
+			else if(health >= config.health_threshold_crit && !isbreathing)
 				if(holdbreath)
 					// we're simply holding our breath, see if we can hold it longer
 					if(health < 30)
@@ -434,6 +441,8 @@
 
 				oxygen_alert = max(oxygen_alert, 1)
 
+				if(isbreathing && prob(20)) spawn(0) emote("gasp")
+
 				return 0
 
 			var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
@@ -454,7 +463,7 @@
 			//var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*0.5 // The default pressure value
 
 			if(O2_pp < safe_oxygen_min) 			// Too little oxygen
-				if(prob(20))
+				if(prob(20) && isbreathing)
 					spawn(0) emote("gasp")
 				if(O2_pp > 0)
 					var/ratio = safe_oxygen_min/O2_pp
@@ -485,7 +494,7 @@
 					oxyloss += 3 // Lets hurt em a little, let them know we mean business
 					if(world.time - co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 						oxyloss += 8
-				if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
+				if(prob(20) && isbreathing) // Lets give them some chance to know somethings not right though I guess.
 					spawn(0) emote("cough")
 
 			else
@@ -506,7 +515,7 @@
 						if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
 							sleeping = max(sleeping, 2)
 					else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-						if(prob(20))
+						if(prob(20) && isbreathing)
 							spawn(0) emote(pick("giggle", "laugh"))
 					SA.moles = 0 //Hack to stop the damned surgeon from giggling.
 
@@ -829,9 +838,6 @@
 				death()
 			else if(health < config.health_threshold_crit)
 				if(health <= 20 && prob(1)) spawn(0) emote("gasp")
-
-				//if(!rejuv) oxyloss++
-				if(!reagents.has_reagent("inaprovaline")) oxyloss++
 
 				if(stat != 2)	stat = 1
 				Paralyse(5)
@@ -1190,13 +1196,18 @@
 
 
 		check_if_buckled()
-			if (buckled)
-				lying = istype(buckled, /obj/structure/stool/bed) || istype(buckled, /obj/machinery/conveyor)
-				if(lying)
+			if(buckle_check != (buckled ? 1 : 0))
+				buckle_check = (buckled ? 1 : 0)
+				if (buckled)
+					lying = istype(buckled, /obj/structure/stool/bed) || istype(buckled, /obj/machinery/conveyor)
+					if(lying)
+						drop_item()
+					density = 1
+				else
+					density = !lying
+			if(buckle_check)
+				if(istype(buckled, /obj/structure/stool/bed) || istype(buckled, /obj/machinery/conveyor))
 					drop_item()
-				density = 1
-			else
-				density = !lying
 
 		handle_stomach()
 			spawn(0)

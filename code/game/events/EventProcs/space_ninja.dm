@@ -90,7 +90,7 @@ I decided to scrap round-specific objectives since keeping track of them would r
 When I already created about 4 new objectives, this doesn't seem terribly important or needed.
 */
 
-/var/global/toggle_space_ninja = 1//If ninjas can spawn or not.
+/var/global/toggle_space_ninja = 0//If ninjas can spawn or not.
 /var/global/sent_ninja_to_station = 0//If a ninja is already on the station.
 
 /proc/space_ninja_arrival()
