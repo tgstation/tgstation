@@ -21,6 +21,8 @@
 	var/b_eyes = 0.0
 	var/s_tone = 0.0
 	var/age = 30.0
+	var/used_skillpoints = 0
+	var/skills = null
 //	var/b_type
 
 	var/obj/item/clothing/suit/wear_suit = null
