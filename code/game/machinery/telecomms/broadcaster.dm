@@ -65,7 +65,7 @@ var
 			if(signal.data["type"] == 1)
 
 				/* ###### Broadcast a message using signal.data ###### */
-				Broadcast_SimpleMessage(signal.data["source"], signal.data["frequency"],
+				Broadcast_SimpleMessage(signal.data["name"], signal.frequency,
 									  signal.data["message"],null, null,
 									  signal.data["compression"])
 
@@ -138,7 +138,7 @@ var
 								  signal.data["realname"], signal.data["vname"],, signal.data["compression"])
 			else
 				if(intercept)
-					Broadcast_Message(signal.data["source"], signal.frequency,
+					Broadcast_Message(signal.data["connection"], signal.data["mob"],
 								  signal.data["vmask"], signal.data["vmessage"],
 								  signal.data["radio"], signal.data["message"],
 								  signal.data["name"], signal.data["job"],
