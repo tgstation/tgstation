@@ -71,7 +71,7 @@
 			owner = H
 			H.organs[name] = src
 
-	proc/take_damage(brute, burn, sharp)
+	proc/take_damage(brute, burn, sharp, used_weapon = null)
 		if((brute <= 0) && (burn <= 0))
 			return 0
 		if(destroyed)
@@ -116,6 +116,8 @@
 
 			if(broken)
 				owner.emote("scream")
+
+		if(used_weapon) add_wound(used_weapon, brute + burn)
 
 		var/result = src.update_icon()
 		return result
