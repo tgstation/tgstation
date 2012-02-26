@@ -288,14 +288,14 @@
 		return output
 
 	proc/remove_resources(var/obj/item/mecha_parts/part)
-		if(istype(part, /obj/item/mecha_parts/part))
+		if(istype(part, /obj/item))
 			for(var/resource in part.construction_cost)
 				if(resource in src.resources)
 					src.resources[resource] -= get_resource_cost_w_coeff(part,resource)
 		return
 
 	proc/check_resources(var/obj/item/mecha_parts/part)
-		if(istype(part, /obj/item/mecha_parts/part))
+		if(istype(part, /obj/item))
 			for(var/resource in part.construction_cost)
 				if(resource in src.resources)
 					if(src.resources[resource] < get_resource_cost_w_coeff(part,resource))
