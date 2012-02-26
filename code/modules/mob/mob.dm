@@ -942,6 +942,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 					statpanel("Spells","[S.charge_counter/10.0]/[S.charge_max/10]",S)
 				if("charges")
 					statpanel("Spells","[S.charge_counter]/[S.charge_max]",S)
+				if("holdervar")
+					statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
 #if 1
 /client/proc/station_explosion_cinematic(var/derp)
 	if(mob)

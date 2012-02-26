@@ -1453,6 +1453,21 @@ proc/safepick(list/list)
 		return
 	return pick(list)
 
+proc/view_or_range(distance = world.view , center = usr , type)
+	switch(type)
+		if("view")
+			. = view(distance,center)
+		if("range")
+			. = range(distance,center)
+	return
+
+proc/oview_or_orange(distance = world.view , center = usr , type)
+	switch(type)
+		if("view")
+			. = oview(distance,center)
+		if("range")
+			. = orange(distance,center)
+	return
 proc/get_opposite(var/checkdir)
 	switch(checkdir)
 		if(NORTH)
