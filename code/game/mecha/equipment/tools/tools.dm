@@ -526,7 +526,7 @@
 	proc/dynhitby(atom/movable/A)
 		if(!action_checks(A))
 			return chassis.dynhitby(A)
-		if(prob(chassis.deflect_chance*deflect_coeff) || istype(A, /mob/living) || istype(A, /obj/item/mecha_tracking))
+		if(prob(chassis.deflect_chance*deflect_coeff) || istype(A, /mob/living) || istype(A, /obj/item/mecha_parts/mecha_tracking))
 			chassis.occupant_message("\blue The [A] bounces off the armor.")
 			chassis.visible_message("The [A] bounces off the [chassis] armor")
 			chassis.log_append_to_last("Armor saved.")

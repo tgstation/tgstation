@@ -175,14 +175,6 @@
 		signal.data["job"]		= html_encode(interpreter.GetVar("$job"))
 		signal.data["reject"]	= !(interpreter.GetVar("$pass")) // set reject to the opposite of $pass
 
-		world << "message: [interpreter.GetVar("$content")]"
-		world << "freq: [interpreter.GetVar("$freq")]"
-		world << "name: [setname]"
-		world << "job: [interpreter.GetVar("$job")]"
-		world << "pass: [interpreter.GetVar("$pass")]"
-
-
-
 /*  -- Actual language proc code --  */
 
 datum/signal

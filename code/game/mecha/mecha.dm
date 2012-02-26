@@ -491,7 +491,7 @@
 	return
 
 /obj/mecha/proc/dynhitby(atom/movable/A)
-	if(istype(A, /obj/item/mecha_tracking))
+	if(istype(A, /obj/item/mecha_parts/mecha_tracking))
 		A.forceMove(src)
 		src.visible_message("The [A] fastens firmly to [src].")
 		return
@@ -756,7 +756,7 @@
 			user << "The [src.name] is at full integrity"
 		return
 
-	else if(istype(W, /obj/item/mecha_tracking))
+	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
 		user.drop_from_slot(W)
 		W.forceMove(src)
 		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")

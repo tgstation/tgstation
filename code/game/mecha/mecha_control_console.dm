@@ -21,7 +21,7 @@
 		var/dat = "<html><head><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body>"
 		if(screen == 0)
 			dat += "<h3>Tracking beacons data</h3>"
-			for(var/obj/item/mecha_tracking/TR in world)
+			for(var/obj/item/mecha_parts/mecha_tracking/TR in world)
 				var/answer = TR.get_mecha_info()
 				if(answer)
 					dat += {"<hr>[answer]<br/>
@@ -45,17 +45,17 @@
 			return
 		var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
 		if(href_list["send_message"])
-			var/obj/item/mecha_tracking/MT = filter.getObj("send_message")
+			var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("send_message")
 			var/message = strip_html_simple(input(usr,"Input message","Transmit message") as text)
 			var/obj/mecha/M = MT.in_mecha()
 			if(trim(message) && M)
 				M.occupant_message(message)
 			return
 		if(href_list["shock"])
-			var/obj/item/mecha_tracking/MT = filter.getObj("shock")
+			var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("shock")
 			MT.shock()
 		if(href_list["get_log"])
-			var/obj/item/mecha_tracking/MT = filter.getObj("get_log")
+			var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("get_log")
 			stored_data = MT.get_mecha_log()
 			screen = 1
 		if(href_list["return"])
@@ -65,14 +65,14 @@
 
 
 
-/obj/item/mecha_tracking
+/obj/item/mecha_parts/mecha_tracking
 	name = "Exosuit tracking beacon"
 	desc = "Device used to transmit exosuit data."
 	icon = 'device.dmi'
 	icon_state = "motion2"
 	origin_tech = "programming=2;magnets=2"
-	var/construction_time = 50
-	var/list/construction_cost = list("metal"=500)
+	construction_time = 50
+	construction_cost = list("metal"=500)
 
 	proc/get_mecha_info()
 		if(!in_mecha())
@@ -121,12 +121,12 @@
 /obj/item/weapon/storage/mechatrackingbox
 
 	New()
-		new /obj/item/mecha_tracking(src)
-		new /obj/item/mecha_tracking(src)
-		new /obj/item/mecha_tracking(src)
-		new /obj/item/mecha_tracking(src)
-		new /obj/item/mecha_tracking(src)
-		new /obj/item/mecha_tracking(src)
-		new /obj/item/mecha_tracking(src)
+		new /obj/item/mecha_parts/mecha_tracking(src)
+		new /obj/item/mecha_parts/mecha_tracking(src)
+		new /obj/item/mecha_parts/mecha_tracking(src)
+		new /obj/item/mecha_parts/mecha_tracking(src)
+		new /obj/item/mecha_parts/mecha_tracking(src)
+		new /obj/item/mecha_parts/mecha_tracking(src)
+		new /obj/item/mecha_parts/mecha_tracking(src)
 		..()
 		return
