@@ -870,6 +870,10 @@ proc/process_ghost_teleport_locs()
 	name = "Security"
 	icon_state = "security"
 
+/area/security/lobby
+	name = "Security Lobby"
+	icon_state = "security"
+
 /area/security/brig
 	name = "Brig"
 	icon_state = "brig"
@@ -877,6 +881,10 @@ proc/process_ghost_teleport_locs()
 /area/security/warden
 	name = "Warden"
 	icon_state = "Warden"
+
+/area/security/armoury
+	name = "Armoury"
+	icon_state = "security"
 
 /area/security/hos
 	name = "Head of Security"
