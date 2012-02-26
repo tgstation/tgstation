@@ -40,6 +40,7 @@ var/const
 	BE_MONKEY    =(1<<8)
 	BE_PAI       =(1<<9)
 
+
 datum/preferences
 	var
 		real_name
@@ -113,11 +114,80 @@ datum/preferences
 		curslot = 0
 		disabilities = 0
 
+		used_skillpoints = 0
+		list/skills = list() // skills can range from 0 to 3
+
 	New()
 		hair_style = new/datum/sprite_accessory/hair/short
 		facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
 		randomize_name()
 		..()
+
+	proc/ZeroSkills()
+		for(var/V in SKILLS) for(var/datum/skill/S in SKILLS[V])
+			if(!skills.Find(S.ID))
+				skills[S.ID] = SKILL_NONE
+
+	proc/GetSkillClass(points)
+		// skill classes describe how your character compares in total points
+		switch(points)
+			if(0)
+				return "Unconfigured"
+			if(1 to 3)
+				return "Talentless"
+			if(4 to 6)
+				return "Below Average"
+			if(7 to 9)
+				return "Average"
+			if(10 to 12)
+				return "Talented"
+			if(13 to 15)
+				return "Extremely Talented"
+			if(16 to 18)
+				return "Genius"
+			if(19 to 21)
+				return "True Genius"
+			if(22 to 1000)
+				return "God"
+
+	proc/SetSkills(mob/user)
+		if(SKILLS == null)
+			SKILLS = list()
+			for(var/T in (typesof(/datum/skill)-/datum/skill))
+				var/datum/skill/S = new T
+				if(S.ID != "none")
+					if(!SKILLS.Find(S.field))
+						SKILLS[S.field] = list()
+					var/list/L = SKILLS[S.field]
+					L += S
+
+		if(skills.len == 0)
+			ZeroSkills()
+
+
+		var/HTML = "<body>"
+		HTML += "<b>Select your Skills</b><br>"
+		HTML += "Current skill level: <b>[GetSkillClass(used_skillpoints)]</b> ([used_skillpoints])<br>"
+		HTML += "<a href=\"byond://?src=\ref[user];skills=1;preferences=1;preconfigured=1;\">Use preconfigured skillset</a><br>"
+		HTML += "<table>"
+		for(var/V in SKILLS)
+			HTML += "<tr><th colspan = 5><b>[V]</b></th></tr>"
+			for(var/datum/skill/S in SKILLS[V])
+				var/level = skills[S.ID]
+				HTML += "<tr style='text-align:left;'>"
+				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;skillinfo=\ref[S]'>[S.name]</a></th>"
+				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_NONE]'><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[None\]</font></a></th>"
+				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_BASIC]'><font color=[(level == SKILL_BASIC) ? "red" : "black"]>\[Basic\]</font></a></th>"
+				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_ADEPT]'><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Adept\]</font></a></th>"
+				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_EXPERT]'><font color=[(level == SKILL_EXPERT) ? "red" : "black"]>\[Expert\]</font></a></th>"
+				HTML += "</tr>"
+		HTML += "</table>"
+		HTML += "<a href=\"byond://?src=\ref[user];skills=1;preferences=1;cancel=1;\">\[Done\]</a>"
+
+		user << browse(null, "window=preferences")
+		user << browse(HTML, "window=show_skills;size=600x800")
+		return
+
 
 
 	proc/ShowChoices(mob/user)
@@ -144,6 +214,10 @@ datum/preferences
 
 		dat += "<hr><b>Occupation Choices</b><br>"
 		dat += "\t<a href=\"byond://?src=\ref[user];preferences=1;occ=1\"><b>Set Preferences</b></a><br>"
+
+		dat += "<hr><b>Skill Choices</b><br>"
+		dat += "\t<i>[GetSkillClass(used_skillpoints)]</i> ([used_skillpoints])<br>"
+		dat += "\t<a href=\"byond://?src=\ref[user];preferences=1;skills=1\"><b>Set Skills</b></a><br>"
 
 		dat += "<hr><table><tr><td><b>Body</b> "
 		dat += "(<a href=\"byond://?src=\ref[user];preferences=1;s_tone=random;underwear=random;age=random;b_type=random;hair=random;h_style=random;facial=random;f_style=random;eyes=random\">&reg;</A>)" // Random look
@@ -416,6 +490,37 @@ datum/preferences
 			else
 				if(job_master)
 					SetChoices(user)
+
+			return 1
+
+		if(link_tags["skills"])
+			if(link_tags["cancel"])
+				user << browse(null, "window=show_skills")
+				SetSkills(user)
+				return
+			else if(link_tags["skillinfo"])
+				var/datum/skill/S = locate(link_tags["skillinfo"])
+				var/HTML = "<b>[S.name]</b><br>[S.desc]"
+				user << browse(HTML, "window=\ref[user]skillinfo")
+			else if(link_tags["setskill"])
+				var/datum/skill/S = locate(link_tags["setskill"])
+				var/value = text2num(link_tags["newvalue"])
+				var/current_value = skills[S.ID]
+				used_skillpoints += value - current_value
+				skills[S.ID] = value
+				SetSkills(user)
+			else if(link_tags["preconfigured"])
+				var/selected = input(user, "Select a skillset", "Skillset") as null|anything in SKILL_PRE
+				if(!selected) return
+
+				skills = SKILL_PRE[selected]
+				ZeroSkills()
+				used_skillpoints = 0
+				for(var/V in skills) used_skillpoints += skills[V]
+
+				SetSkills(user)
+			else
+				SetSkills(user)
 
 			return 1
 
@@ -758,6 +863,9 @@ datum/preferences
 		character.facial_hair_style = facial_hair_style
 
 		character.underwear = underwear == 1 ? pick(1,2,3,4,5) : 0
+
+		character.used_skillpoints = used_skillpoints
+		character.skills = skills
 
 		character.update_face()
 		character.update_body()

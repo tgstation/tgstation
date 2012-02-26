@@ -141,6 +141,9 @@ datum/preferences/proc/savefile_save(mob/user, slot)
 	F["lastchangelog"] << src.lastchangelog
 	F["disabilities"] << src.disabilities
 
+	F["used_skillpoints"] << src.used_skillpoints
+	F["skills"] << src.skills
+
 	return 1
 
 // loads the savefile corresponding to the mob's ckey
@@ -210,6 +213,12 @@ datum/preferences/proc/savefile_load(mob/user, slot)
 	F["job_medsci_high"] >> src.job_medsci_high
 	F["job_medsci_med"] >> src.job_medsci_med
 	F["job_medsci_low"] >> src.job_medsci_low
+
+
+	F["used_skillpoints"] >> src.used_skillpoints
+	F["skills"] >> src.skills
+	if(!src.skills) src.skills = list()
+	if(!src.used_skillpoints) src.used_skillpoints= 0
 
 	F["job_engsec_high"] >> src.job_engsec_high
 	F["job_engsec_med"] >> src.job_engsec_med
