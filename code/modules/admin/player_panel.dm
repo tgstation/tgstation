@@ -60,7 +60,7 @@
 
 				}
 
-				function expand(id,job,name,real_name,image,key,ip,antagonist,karma,ref){
+				function expand(id,job,name,real_name,image,key,ip,antagonist){
 
 					clearAll();
 
@@ -80,9 +80,7 @@
 					body += "<a href='?src=\ref[src];adminplayersubtlemessage="+ref+"'>SM</a> - "
 					body += "<a href='?src=\ref[src];adminplayerobservejump="+ref+"'>JMP</a><br>"
 					if(antagonist == 1)
-						body += "<font size='2'><a href='?src=\ref[src];secretsadmin=check_antagonist'><b><font color='red'>Antagonist</font></b></a> with "+karma+" karma</font>";
-					else
-						body += "<font size='2'>"+karma+" karma</font>";
+						body += "<font size='2'><a href='?src=\ref[src];secretsadmin=check_antagonist'>";
 
 					body += "</td></tr></table>";
 
@@ -213,16 +211,6 @@
 
 	var/list/mobs = sortmobs()
 	var/i = 1
-	var/show_karma = 0
-	var/DBConnection/dbcon
-	if(config.sql_enabled) // SQL is enabled in config.txt
-		dbcon = new() // Setting up connection
-		dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
-		if(dbcon.IsConnected())
-			show_karma = 1
-		else
-			usr << "\red Unable to connect to karma database. This error can occur if your host has failed to set up an SQL database or improperly configured its login credentials.<br>"
-
 	for(var/mob/M in mobs)
 		if(M.ckey)
 
@@ -230,15 +218,6 @@
 			if(i%2 == 0)
 				color = "#f2f2f2"
 			var/is_antagonist = is_special_character(M)
-
-			var/karma = "DC"
-
-			if(show_karma)
-				var/DBQuery/query = dbcon.NewQuery("SELECT karma FROM karmatotals WHERE byondkey='[M.key]'")
-				query.Execute()
-
-				while(query.NextRow())
-					karma = query.item[1]
 
 			var/M_job = ""
 
@@ -294,7 +273,7 @@
 					<td align='center' bgcolor='[color]'>
 						<span id='notice_span[i]'></span>
 						<a id='link[i]'
-						onmouseover='expand("item[i]","[M_job]","[M_name]","[M_rname]","--unused--","[M_key]","[M.lastKnownIP]",[is_antagonist],"[karma]","\ref[M]")'
+						onmouseover='expand("item[i]","[M_job]","[M_name]","[M_rname]","--unused--","[M_key]","[M.lastKnownIP]",[is_antagonist],"\ref[M]")'
 						>
 						<b id='search[i]'>[M_name] - [M_rname] - [M_key] ([M_job])</b>
 						</a>
@@ -326,20 +305,10 @@
 	if (!usr.client.holder)
 		return
 	var/dat = "<html><head><title>Player Menu</title></head>"
-	dat += "<body><table border=1 cellspacing=5><B><tr><th>Name</th><th>Real Name</th><th>Assigned Job</th><th>Key</th><th>Options</th><th>PM</th><th>Traitor?</th><th>Karma</th></tr></B>"
+	dat += "<body><table border=1 cellspacing=5><B><tr><th>Name</th><th>Real Name</th><th>Assigned Job</th><th>Key</th><th>Options</th><th>PM</th><th>Traitor?</th></tr></B>"
 	//add <th>IP:</th> to this if wanting to add back in IP checking
 	//add <td>(IP: [M.lastKnownIP])</td> if you want to know their ip to the lists below
 	var/list/mobs = sortmobs()
-	var/show_karma = 0
-	var/DBConnection/dbcon
-
-	if(config.sql_enabled) // SQL is enabled in config.txt
-		dbcon = new() // Setting up connection
-		dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
-		if(dbcon.IsConnected())
-			show_karma = 1
-		else
-			usr << "\red Unable to connect to karma database. This error can occur if your host has failed to set up an SQL database or improperly configured its login credentials.<br>"
 
 	for(var/mob/M in mobs)
 		if(!M.ckey)	continue
@@ -384,18 +353,6 @@
 				dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'><font color=red>Traitor?</font></A></td>"}
 			if(2)
 				dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'><font color=red><b>Traitor?</b></font></A></td>"}
-
-		var/currentkarma = 0
-		if(show_karma)
-			var/DBQuery/query = dbcon.NewQuery("SELECT karma FROM karmatotals WHERE byondkey='[M.key]'")
-			query.Execute()
-			while(query.NextRow())
-				currentkarma = query.item[1]
-
-		if(currentkarma)
-			dat += "<td>[currentkarma]</td></tr>"
-		else
-			dat += "<td>0</td></tr>"
 
 	dat += "</table></body></html>"
 

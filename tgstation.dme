@@ -1,6 +1,6 @@
 // DM Environment file for tgstation.dme.
-// All manual changes should be made outside the BEGIN_ and END_ blocks. 
- // New source code should be placed in .dm files: choose File/New --> Code File. 
+// All manual changes should be made outside the BEGIN_ and END_ blocks.
+ // New source code should be placed in .dm files: choose File/New --> Code File.
 // BEGIN_INTERNALS
 // END_INTERNALS
 // BEGIN_FILE_DIR
@@ -170,7 +170,6 @@
 #define FILE_DIR "icons/vending_icons"
 #define FILE_DIR "interface"
 #define FILE_DIR "maps"
-#define FILE_DIR "maps/backup"
 #define FILE_DIR "sound"
 #define FILE_DIR "sound/AI"
 #define FILE_DIR "sound/ambience"
@@ -711,7 +710,6 @@
 #include "code\game\objects\tanks\oxygen.dm"
 #include "code\game\verbs\AI_status.dm"
 #include "code\game\verbs\authorize.dm"
-#include "code\game\verbs\checkkarma.dm"
 #include "code\game\verbs\ooc.dm"
 #include "code\game\verbs\sound.dm"
 #include "code\game\verbs\suicide.dm"

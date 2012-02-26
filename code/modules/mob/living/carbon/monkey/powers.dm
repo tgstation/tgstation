@@ -35,7 +35,7 @@
 				if(loc==startloc)
 					var/obj/target_vent = vents[selection_position]
 					if(target_vent)
-						for(var/mob/O in oviewers())
+						for(var/mob/O in oviewers(src, null))
 							if ((O.client && !( O.blinded )))
 								O.show_message(text("<B>[src] scrambles into the ventillation ducts!</B>"), 1)
 						loc = target_vent.loc

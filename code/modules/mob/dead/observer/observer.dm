@@ -188,57 +188,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			else
 				A << "This mob is not located in the game world."
 
-var/list/karma_spenders = list()
-
-/mob/dead/observer/verb/spend_karma(var/mob/M in world) // Karma system -- TLE
-	set name = "Spend Karma"
-	set category = "Ghost"
-	set desc = "Let the gods know whether someone's been naughty or nice. <One use only>"
-	if(!istype(M, /mob))
-		usr << "\red That's not a mob. You shouldn't have even been able to specify that. Please inform your server administrator post haste."
-		return
-
-	if(!M.client)
-		usr << "\red That mob has no client connected at the moment."
-		return
-	if(client.karma_spent)
-		usr << "\red You've already spent your karma for the round."
-		return
-	for(var/a in karma_spenders)
-		if(a == key)
-			usr << "\red You've already spent your karma for the round."
-			return
-	if(M.key == key)
-		usr << "\red You can't spend karma on yourself!"
-		return
-	var/choice = input("Give [M.name] good karma or bad karma?", "Karma") in list("Good", "Bad", "Cancel")
-	client.karma_spent = 1
-	if(!choice || choice == "Cancel")
-		return
-	client.karma_spent = 0
-	if(choice == "Good")
-		M.client.karma += 1
-	if(choice == "Bad")
-		M.client.karma -= 1
-	usr << "[choice] karma spent on [M.name]."
-	client.karma_spent = 1
-	karma_spenders.Add(key)
-	if(M.client.karma <= -2 || M.client.karma >= 2)
-		var/special_role = "None"
-		var/assigned_role = "None"
-		var/karma_diary = file("data/logs/karma_[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
-		if(M.mind)
-			if(M.mind.special_role)
-				special_role = M.mind.special_role
-			if(M.mind.assigned_role)
-				assigned_role = M.mind.assigned_role
-		karma_diary << "[M.name] ([M.key]) [assigned_role]/[special_role]: [M.client.karma] - [time2text(world.timeofday, "hh:mm:ss")]"
-	var/isnegative = 1
-	if(choice == "Good")
-		isnegative = 0
-	else
-		isnegative = 1
-	sql_report_karma(src, M, isnegative)
 
 /mob/dead/observer/verb/toggle_alien_candidate()
 	set name = "Toggle Be Alien Candidate"

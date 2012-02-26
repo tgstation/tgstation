@@ -32,8 +32,6 @@
 	var/played = 0
 	var/team = null
 	var/warned = 0
-	var/karma = 0
-	var/karma_spent = 0
 
 	var/STFU_ghosts		//80+ people rounds are fun to admin when text flies faster than airport security
 	var/STFU_radio		//80+ people rounds are fun to admin when text flies faster than airport security
