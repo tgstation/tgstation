@@ -54,8 +54,8 @@
 	new /obj/item/clothing/gloves/white(src.loc)
 	new /obj/item/clothing/shoes/white(src.loc)
 	new /obj/item/clothing/under/scratch(src.loc)
-	if (prob(30))
-		new /obj/item/clothing/head/helmet/cueball(src.loc)
+//	if (prob(30))
+//		new /obj/item/clothing/head/helmet/cueball(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/highlander/New()
