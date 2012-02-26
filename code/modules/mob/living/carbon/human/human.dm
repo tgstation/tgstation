@@ -239,7 +239,7 @@
 
 // /obj/item/clothing/suit/bomb_suit(src)
 // /obj/item/clothing/head/bomb_hood(src)
-
+/*
 	if (stat == 2 && client)
 		gib(1)
 		return
@@ -248,7 +248,7 @@
 		gibs(loc, viruses)
 		del(src)
 		return
-
+*/
 	var/shielded = 0
 	var/b_loss = null
 	var/f_loss = null

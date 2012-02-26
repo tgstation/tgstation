@@ -91,51 +91,52 @@
 				src.fingerprintslast = M.key
 			return 0
 		var/mob/living/carbon/human/H = M
-		if (!istype(H.dna, /datum/dna))
-			return 0
+		if (!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 32))
+			if(!istype(H.dna, /datum/dna))
+				H.dna = new /datum/dna(null)
+			H.check_dna()
 		if (H.gloves && H.gloves != src)
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
 				H.gloves.add_fingerprint(M)
-		if (H.dna.uni_identity)
-			if(H.gloves != src)
-				if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
-					return 0
-				else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
-					return 0
-			if(src.fingerprintslast != H.key)
-				src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
-				src.fingerprintslast = H.key
-			var/new_prints = 0
-			var/prints
-			for(var/i = 1, i <= src.fingerprints.len, i++)
-				var/list/L = params2list(src.fingerprints[i])
-				if(L[num2text(1)] == md5(H.dna.uni_identity))
-					new_prints = i
-					prints = L[num2text(2)]
-					break
-				else
-					var/test_print = stars(L[num2text(2)], rand(80,90))
-					if(stringpercent(test_print) == 32)
-						if(src.fingerprints.len == 1)
-							src.fingerprints = list()
-						else
-							for(var/j = (i + 1), j < (src.fingerprints.len), j++)
-								src.fingerprints[j-1] = src.fingerprints[j]
-							src.fingerprints.len--
+		if(H.gloves != src)
+			if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
+				return 0
+			else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
+				return 0
+		if(src.fingerprintslast != H.key)
+			src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
+			src.fingerprintslast = H.key
+		var/new_prints = 0
+		var/prints
+		for(var/i = 1, i <= src.fingerprints.len, i++)
+			var/list/L = params2list(src.fingerprints[i])
+			if(L[num2text(1)] == md5(H.dna.uni_identity))
+				new_prints = i
+				prints = L[num2text(2)]
+				break
+			else
+				var/test_print = stars(L[num2text(2)], rand(80,90))
+				if(stringpercent(test_print) == 32)
+					if(src.fingerprints.len == 1)
+						src.fingerprints = list()
 					else
-						src.fingerprints[i] = "1=" + L[num2text(1)] + "&2=" + test_print
-			if(new_prints)
-				src.fingerprints[new_prints] = text("1=[]&2=[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), (H.gloves ? rand(10,20) : rand(25,40)))))
-			else if(new_prints == 0)
-				if(!src.fingerprints)
-					src.fingerprints = list(text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40))))
-				src.fingerprints += text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40)))
-			for(var/i = 1, i <= src.fingerprints.len, i++)
-				if(length(src.fingerprints[i]) != 69)
-					src.fingerprints.Remove(src.fingerprints[i])
-			return 1
+						for(var/j = (i + 1), j < (src.fingerprints.len), j++)
+							src.fingerprints[j-1] = src.fingerprints[j]
+						src.fingerprints.len--
+				else
+					src.fingerprints[i] = "1=" + L[num2text(1)] + "&2=" + test_print
+		if(new_prints)
+			src.fingerprints[new_prints] = text("1=[]&2=[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), (H.gloves ? rand(10,20) : rand(25,40)))))
+		else if(new_prints == 0)
+			if(!src.fingerprints)
+				src.fingerprints = list(text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40))))
+			src.fingerprints += text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40)))
+		for(var/i = 1, i <= src.fingerprints.len, i++)
+			if(length(src.fingerprints[i]) != 69)
+				src.fingerprints.Remove(src.fingerprints[i])
+		return 1
 	else
 		if(src.fingerprintslast != M.key)
 			src.fingerprintshidden += text("Real name: [], Key: []",M.real_name, M.key)
