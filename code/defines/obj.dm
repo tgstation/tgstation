@@ -41,7 +41,6 @@
 	icon = 'policetape.dmi'
 	anchored = 1
 	density = 1
-	throwpass = 1
 	req_access = list(access_security)
 
 /obj/structure/signpost
@@ -701,7 +700,6 @@
 	density = 1
 	anchored = 1.0
 	layer = 2.8
-	throwpass = 1
 
 	New()
 		..()
@@ -827,10 +825,10 @@
 							dir_sum = 8
 					if(13)
 						if(dir_sum == 29)
-							dir_sum = 6
+							dir_sum = 10
 							table_type = 6
 						else if(dir_sum == 141)
-							dir_sum = 10
+							dir_sum = 6
 							table_type = 6
 						else if(dir_sum == 189 || dir_sum == 221 || dir_sum == 253 || dir_sum == 157)
 							dir_sum = 1

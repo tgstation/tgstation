@@ -138,6 +138,8 @@ MASS SPECTROMETER
 			return
 		if(src.loc != user)
 			return 0
+		if(istype(A,/obj/machinery/computer/forensic_scanning)) //breaks shit.
+			return
 		if(istype(A,/obj/item/weapon/f_card))
 			user << "Haha, nice try.  Cheater.  (It would break stuff anyways.)"
 			return
