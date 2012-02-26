@@ -261,6 +261,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			channel = null
 		if (!istype(connection))
 			return
+		if (!connection)
+			return
 
 
 

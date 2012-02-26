@@ -1544,6 +1544,7 @@ It can still be worn/put on as normal.
 				if (W)
 					W.loc = target.loc
 					W.dropped(target)
+				if (W)
 					W.layer = initial(W.layer)
 				W.add_fingerprint(source)
 			else

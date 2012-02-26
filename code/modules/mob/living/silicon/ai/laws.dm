@@ -90,10 +90,11 @@
 		var/law = src.laws.supplied[index]
 
 		if (length(law) > 0)
-			if (src.lawcheck[number+1] == "Yes")
-				src.say("[number]. [law]")
-				sleep(10)
-			number++
+			if(src.lawcheck.len >= number+1)
+				if (src.lawcheck[number+1] == "Yes")
+					src.say("[number]. [law]")
+					sleep(10)
+				number++
 
 
 /mob/living/silicon/ai/verb/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite

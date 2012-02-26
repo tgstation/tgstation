@@ -2579,6 +2579,7 @@
 
 	if (!M.mind)
 		usr << "Sorry, this mob has no mind!"
+		return
 	M.mind.edit_memory()
 
 

@@ -632,7 +632,7 @@
 				return.
 
 			var/t = input("Message:", text("Private message to [C.key]"))  as text|null
-			if (!t || !usr || !C)
+			if (!t || !usr || !C || !usr.client)
 				return
 			if (usr.client && usr.client.holder) //Admin is messaging a player
 				C << "\red <font size='4'><b>-- Administrator private message --</b></font>"
