@@ -24,6 +24,7 @@
 	..()
 	del(keyslot1)
 	keyslot1 = new /obj/item/device/radio/headset/encryptionkey/traitor
+	recalculateChannels()
 
 /obj/item/device/radio/headset/binary
 	origin_tech = "syndicate=3"
@@ -31,6 +32,7 @@
 	..()
 	del(keyslot1)
 	keyslot1 = new /obj/item/device/radio/headset/encryptionkey/binary
+	recalculateChannels()
 
 /obj/item/device/radio/headset/headset_sec
 	name = "Security Radio Headset"
