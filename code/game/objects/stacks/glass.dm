@@ -6,8 +6,9 @@ SHARDS
 
 */
 
-/proc/construct_window(mob/user as mob, obj/item/stack/sheet/src as obj)//Why is this a general proc and not on the glass sheet?
+/obj/item/stack/sheet/glass/proc/construct_window(mob/user as mob)
 	if(!user || !src)	return 0
+	if(!istype(user.loc,/turf)) return 0
 	if(!user.IsAdvancedToolUser())
 		user << "\red You don't have the dexterity to do this!"
 		return 0
@@ -69,7 +70,7 @@ SHARDS
 // GLASS
 
 /obj/item/stack/sheet/glass/attack_self(mob/user as mob)
-	construct_window(user, src)
+	construct_window(user)
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
 	..()
@@ -104,13 +105,6 @@ SHARDS
 
 
 // REINFORCED GLASS
-
-/obj/item/stack/sheet/rglass/attack_self(mob/user as mob)
-	construct_window(user, src)
-
-
-
-
 
 
 // SHARDS
