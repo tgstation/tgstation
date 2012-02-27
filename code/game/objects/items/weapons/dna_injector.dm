@@ -52,6 +52,8 @@
 				uses--
 
 	spawn(0)//this prevents the collapse of space-time continuum
+		spawn(5)
+			usr.update_clothing()
 		del(src)
 	return uses
 
