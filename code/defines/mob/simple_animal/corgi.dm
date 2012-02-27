@@ -7,9 +7,9 @@
 	icon_state = "corgi"
 	icon_living = "corgi"
 	icon_dead = "corgi_dead"
-	speak = list("YAP","Woof!","Bark!","AUUUUUU")
+	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
 	speak_emote = list("barks", "woofs")
-	emote_hear = list("barks","woofs","yaps")
+	emote_hear = list("barks", "woofs", "yaps","pants")
 	emote_see = list("shakes it's head", "shivers")
 	speak_chance = 1
 	turns_per_move = 5
@@ -20,6 +20,7 @@
 	response_harm   = "kicks the"
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
+	var/obj/item/inventory_mouth
 
 /mob/living/simple_animal/corgi/update_clothing()
 	overlays = list()
@@ -92,21 +93,25 @@
 		switch(remove_from)
 			if("head")
 				if(inventory_head)
-
-					if(inventory_head.type == /obj/item/clothing/head/caphat)
-						name = real_name
-
+					name = real_name
+					desc = initial(desc)
+					speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
+					speak_emote = list("barks", "woofs")
+					emote_hear = list("barks", "woofs", "yaps","pants")
+					emote_see = list("shakes it's head", "shivers")
+					desc = "It's a corgi."
+					src.sd_SetLuminosity(0)
 					inventory_head.loc = src.loc
 					inventory_head = null
 				else
-					usr << "\red There is nothing on this slot."
+					usr << "\red There is nothing on its [remove_from]."
 					return
 			if("back")
 				if(inventory_back)
 					inventory_back.loc = src.loc
 					inventory_back = null
 				else
-					usr << "\red There is nothing on this slot."
+					usr << "\red There is nothing on its [remove_from]."
 					return
 
 		show_inv(usr)
@@ -131,22 +136,106 @@
 
 					//Corgis are supposed to be simpler, so only a select few objects can actually be put
 					//to be compatible with them. The objects are below.
+					//Many  hats added, Some will probably be removed, just want to see which ones are popular.
 
 					var/list/allowed_types = list(
 						/obj/item/clothing/head/helmet,
 						/obj/item/clothing/glasses/sunglasses,
 						/obj/item/clothing/head/caphat,
-						/obj/item/clothing/head/that
+						/obj/item/clothing/head/collectable/captain,
+						/obj/item/clothing/head/that,
+						/obj/item/clothing/head/helmet/that,
+						/obj/item/clothing/head/kitty,
+						/obj/item/clothing/head/collectable/kitty,
+						/obj/item/clothing/head/rabbitears,
+						/obj/item/clothing/head/collectable/rabbitears,
+						/obj/item/clothing/head/beret,
+						/obj/item/clothing/head/collectable/beret,
+						/obj/item/clothing/head/det_hat,
+						/obj/item/clothing/head/nursehat,
+						/obj/item/clothing/head/pirate,
+						/obj/item/clothing/head/collectable/pirate,
+						/obj/item/clothing/head/ushanka,
+						/obj/item/clothing/head/chefhat,
+						/obj/item/clothing/head/collectable/chef,
+						/obj/item/clothing/head/collectable/police,
+						/obj/item/clothing/head/wizard/fake,
+						/obj/item/clothing/head/wizard,
+						/obj/item/clothing/head/collectable/wizard,
+						/obj/item/clothing/head/helmet/hardhat,
+						/obj/item/clothing/head/collectable/hardhat,
+						/obj/item/clothing/head/helmet/hardhat/white,
+						/obj/item/weapon/bedsheet,
+						/obj/item/clothing/head/helmet/space/santahat,
+						/obj/item/clothing/head/collectable/paper
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
-						usr << "\red The object cannot fit on this animal."
+						usr << "\red The corgi doesn't seem too keen on wearing that item."
 						return
 
 					usr.drop_item()
 					item_to_add.loc = src
 					src.inventory_head = item_to_add
 					update_clothing()
+
+					//Various hats and items (worn on his head) change Ian's behaviour. His attributesare reset when a HAT is removed.
+
+
+					switch(inventory_head && inventory_head.type)
+						if(/obj/item/clothing/head/caphat, /obj/item/clothing/head/collectable/captain)
+							name = "Captain [real_name]"
+							desc = "Probably better than the last captain."
+						if(/obj/item/clothing/head/kitty, /obj/item/clothing/head/collectable/kitty)
+							name = "Runtime"
+							emote_see = list("coughs up a furball", "stretches")
+							emote_hear = list("purrs")
+							speak = list("Purrr", "Meow!", "MAOOOOOW!", "HISSSSS", "MEEEEEEW")
+							desc = "It's a cute little kitty-cat! ... wait ... what the hell?"
+						if(/obj/item/clothing/head/rabbitears, /obj/item/clothing/head/collectable/rabbitears)
+							name = "Hoppy"
+							emote_see = list("twitches his nose", "hops around a bit")
+							desc = "This is hoppy. It's a corgi-...urmm... bunny rabbit"
+						if(/obj/item/clothing/head/beret, /obj/item/clothing/head/collectable/beret)
+							name = "Yann"
+							desc = "mon dieu! C'est un chien!"
+							speak = list("le woof!", "le bark!", "JAPPE!!")
+							emote_see = list("cowers in fear", "surrenders", "plays dead")
+						if(/obj/item/clothing/head/det_hat)
+							name = "Detective [real_name]"
+							desc = "[name] sees through your lies..."
+							emote_see = list("investigates the area","sniffs around for clues","searches for scooby snacks")
+						if(/obj/item/clothing/head/nursehat)
+							name = "Nurse [real_name]"
+							desc = "[name] needs 100cc of beef jerky...STAT!"
+						if(/obj/item/clothing/head/pirate, /obj/item/clothing/head/collectable/pirate)
+							name = "'[pick("Ol'","Scurvy","Black","Rum","Gammy","Bloody","Gangrene","Death","Long-John")] [pick("kibbles","leg","beard","tooth","poop-deck","Threepwood","Le Chuck","corsair","Silver","Crusoe")]'"
+							desc = "Yaarghh!! Thar' be a scurvy dog!"
+							emote_see = list("hunts for treasure","stares coldly...","gnashes his tiny corgi teeth")
+							emote_hear = list("growls ferociously", "snarls")
+							speak = list("Arrrrgh!!","Grrrrrr!")
+						if(/obj/item/clothing/head/ushanka)
+							name = "[pick("Comrade","Commissar")] [real_name]"
+							desc = "A follower of Karl Barx."
+							emote_see = list("contemplates the failings of the capitalist economic model", "ponders the pros and cons of vangaurdism")
+						if(/obj/item/clothing/head/collectable/police)
+							name = "Officer [real_name]"
+							emote_see = list("drools","looks for donuts")
+							desc = "Stop right there criminal scum!"
+						if(/obj/item/clothing/head/wizard/fake,	/obj/item/clothing/head/wizard,	/obj/item/clothing/head/collectable/wizard)
+							name = "Grandwizard [real_name]"
+							speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI  NATH!")
+						if(/obj/item/weapon/bedsheet)
+							name = "The ghost"
+							speak = list("WoooOOOooo~","AUUUUUUUUUUUUUUUUUU")
+							emote_see = list("stumbles around", "shivers")
+							emote_hear = list("howls","groans")
+							desc = "Spooky!"
+						if(/obj/item/clothing/head/helmet/space/santahat)
+							name = "Rudolph the Red-Nosed Corgi"
+							emote_hear = list("barks christmas songs", "yaps")
+							desc = "He has a very shiny nose."
+							src.sd_SetLuminosity(6)
 
 			if("back")
 				if(inventory_back)
@@ -161,7 +250,8 @@
 					//to be compatible with them. The objects are below.
 
 					var/list/allowed_types = list(
-						/obj/item/clothing/suit/armor/vest
+						/obj/item/clothing/suit/armor/vest,
+						/obj/item/device/radio
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
@@ -173,7 +263,7 @@
 					src.inventory_back = item_to_add
 					update_clothing()
 
-		show_inv(usr)
+		//show_inv(usr) //Commented out because changing Ian's  name and then calling up his inventory opens a new inventory...which is annoying.
 	else
 		..()
 
@@ -181,7 +271,7 @@
 /mob/living/simple_animal/corgi/Ian
 	name = "Ian"
 	real_name = "Ian"	//Intended to hold the name without altering it.
-	desc = "It's Ian, what else do you need to know?"
+	desc = "It's a corgi."
 	var/turns_since_scan = 0
 	var/obj/movement_target
 	response_help  = "pets"
@@ -192,7 +282,7 @@
 	..()
 
 	//Feeding, chasing food, FOOOOODDDD
-	if(alive && !restrained() )
+	if(alive && !resting && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			turns_since_scan = 0
@@ -239,77 +329,44 @@
 					dir = i
 					sleep(1)
 
-/mob/living/simple_animal/corgi/Ian/restrained()
-	if(resting || buckled)
-		return 1
-	return 0
+/obj/item/weapon/reagent_containers/food/snacks/meat/corgi
+	name = "Corgi meat"
+	desc = "Tastes like... well you know..."
 
-/mob/living/simple_animal/corgi/Ian/verb/stoppull()
-	set name = "Stop pulling"
-	set category = "IC"
+/mob/living/simple_animal/corgi/Ian/Bump(atom/movable/AM as mob|obj, yes)
 
-	pulling = null
+	spawn( 0 )
+		if ((!( yes ) || now_pushing))
+			return
+		now_pushing = 1
+		if(ismob(AM))
+			var/mob/tmob = AM
+			if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
+				if(prob(70))
+					for(var/mob/M in viewers(src, null))
+						if(M.client)
+							M << "\red <B>[src] fails to push [tmob]'s fat ass out of the way.</B>"
+					now_pushing = 0
+					return
 
-/mob/living/simple_animal/corgi/Ian/Move()
-	if(restrained())
-		pulling = null
+			tmob.LAssailant = src
+		now_pushing = 0
+		..()
+		if (!( istype(AM, /atom/movable) ))
+			return
+		if (!( now_pushing ))
+			now_pushing = 1
+			if (!( AM.anchored ))
+				var/t = get_dir(src, AM)
+				if (istype(AM, /obj/structure/window))
+					if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
+						for(var/obj/structure/window/win in get_step(AM,t))
+							now_pushing = 0
+							return
+				step(AM, t)
+			now_pushing = null
 		return
-
-	var/turf/old_loc
-	var/turf/new_loc
-
-	if(isturf(loc))
-		old_loc = src.loc
-	else
-		return //in a container, cannot move
-
-	..()
-
-	if(isturf(loc))
-		new_loc = src.loc
-	else
-		return //in a container, cannot move
-
-	if(old_loc == new_loc)
-		return //has not moved
-
-	if(pulling)
-
-		if(isturf(old_loc) && isturf(pulling.loc))
-			if(get_dist(src.loc,old_loc) > 1)
-				world << "get_dist(src.loc,pulling.loc)"
-				pulling = null
-				return
-		else
-			pulling = null
-			return
-
-		if(istype(pulling,/obj/item))
-			var/obj/item/I = pulling
-			if(I.w_class > 4)
-				pulling = null
-				return
-			if(I.anchored)
-				pulling = null
-				return
-
-			I.loc = old_loc
-			return
-
-		if(ismob(pulling))
-			var/mob/M = pulling
-			if(!M.stat)
-				pulling = null
-				return //cannot drag live people
-			if(M.anchored)
-				pulling = null
-				return
-			if(M.restrained())
-				pulling = null
-				return
-
-			M.loc = old_loc
-			return
+	return
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/corgi
 	name = "Corgi meat"
