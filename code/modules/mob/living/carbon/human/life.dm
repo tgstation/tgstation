@@ -127,18 +127,18 @@
 
 		handle_health_updates()
 			// if the mob has enough health, she should slowly heal
-			if(stat != 2)
+			if(stat == 1)
 				if(health >= 0)
-					var/pr = 10
+					var/pr = 5
 					if(stat == 1) // sleeping means faster healing
 						pr += 5
 					if(prob(pr))
 						heal_organ_damage(1,1)
 						adjustToxLoss(-1)
 				else if(health < 0)
-					var/pr = 50
+					var/pr = 15
 					if(prob(pr))
-						adjustToxLoss(1)
+						take_overall_damage(0, 1, used_weapon = "Bloodloss")
 			else if (stat != 0)
 				if(!lying)
 					lying = 1 //Seriously, stay down :x
