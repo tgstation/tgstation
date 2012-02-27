@@ -363,7 +363,7 @@
 				if(istype(loc, /obj/))
 					var/obj/location_as_object = loc
 					location_as_object.handle_internal_lifeform(src, 0)
-			if(isbreathing)
+			if(isbreathing && !being_strangled)
 				//First, check for air from internal atmosphere (using an air tank and mask generally)
 				breath = get_breath_from_internal(BREATH_VOLUME) // Super hacky -- TLE
 				//breath = get_breath_from_internal(0.5) // Manually setting to old BREATH_VOLUME amount -- TLE
@@ -407,6 +407,7 @@
 						location_as_object.handle_internal_lifeform(src, 0)
 
 			handle_breath(breath)
+			being_strangled = 0
 
 			if(breath)
 				loc.assume_air(breath)
