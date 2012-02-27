@@ -2108,6 +2108,10 @@
 
 			var/job = ""
 
+			if(istype(M,/mob/new_player))
+				job = "New player"
+			if(isliving(M))
+				job = "Living"
 			if(isobserver(M))
 				job = "Ghost"
 			if(isalien(M))
@@ -2140,7 +2144,7 @@
 						<a id='link[i]'
 						onmouseover='expand("item[i]","[job]","[M.name]","[M.real_name]","--unused--","[M.key]","[M.lastKnownIP]",[is_antagonist],"[karma]","\ref[M]")'
 						>
-						<b id='search[i]'>[M.name] - [M.real_name] - [M.key]</b>
+						<b id='search[i]'>[M.name] - [M.real_name] - [M.key] ([job])</b>
 						</a>
 						<br><span id='item[i]'></span>
 					</td>
@@ -2163,7 +2167,6 @@
 	</body></html>
 	"}
 
-	text2file(dat, "debug.html")
 	usr << browse(dat, "window=players;size=600x480")
 
 /obj/admins/proc/Jobbans()
