@@ -1,7 +1,7 @@
 /proc/mini_blob_event()
 	//command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 	//world << sound('outbreak5.ogg')
-	var/turf/T = pick(blobstart)
+/*	var/turf/T = pick(blobstart)
 	var/obj/effect/blob/bl = new /obj/effect/blob( T.loc, 30 )
 	spawn(0)
 		bl.Life()
@@ -14,9 +14,9 @@
 	spawn(0)
 		dotheblobbaby()
 	spawn(15000)
-		blobevent = 0
+		blobevent = 0*/
 	spawn(rand(30, 60)) //Delayed announcements to keep the crew on their toes.
-		command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
+		command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()].", "Biohazard Alert")
 		world << sound('outbreak5.ogg')
 
 /proc/dotheblobbaby()

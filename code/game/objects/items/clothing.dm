@@ -266,6 +266,7 @@ THERMAL GLASSES
 		src.flags &= ~HEADCOVERSEYES
 		icon_state = "weldingup"
 		usr << "You push the mask up out of your face."
+	usr.update_clothing()
 
 /obj/item/clothing/shoes/magboots/verb/toggle()
 	set name = "Toggle Magboots"
@@ -304,6 +305,7 @@ THERMAL GLASSES
 		usr << "You unbutton the suit jacket."
 	else
 		usr << "Sorry! The suit you're wearing doesn't have buttons!"
+	usr.update_clothing()
 
 /obj/item/clothing/suit/storage/labcoat/verb/toggle()
 	set name = "Toggle Labcoat Buttons"
@@ -365,6 +367,7 @@ THERMAL GLASSES
 
 	else
 		usr << "Sorry! The suit you're wearing doesn't have buttons!"
+	usr.update_clothing()
 
 /obj/item/clothing/head/ushanka/attack_self(mob/user as mob)
 	if(src.icon_state == "ushankadown")

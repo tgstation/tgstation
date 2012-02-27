@@ -42,13 +42,13 @@
 	if(!effect || (blocked >= 2))	return 0
 	switch(effecttype)
 		if(STUN)
-			Stun(effect/(blocked+1))
+			Stun((effect - (effect*getarmor(null, "melee")))/(blocked + 1))
 		if(WEAKEN)
-			Weaken(effect/(blocked+1))
+			Weaken((effect - (effect*getarmor(null, "melee")))/(blocked + 1))
 		if(PARALYZE)
 			Paralyse(effect/(blocked+1))
 		if(IRRADIATE)
-			radiation += max((effect - (effect*getarmor(null, "rad"))), 0)//Rads auto check armor
+			radiation += max((effect - (effect*getarmor(null, "melee"))), 0)//Rads auto check armor
 		if(STUTTER)
 			stuttering = max(stuttering,(effect/(blocked+1)))
 		if(SLUR)
