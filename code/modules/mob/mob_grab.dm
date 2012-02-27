@@ -78,7 +78,9 @@
 	if ((killing && state == 3))
 		affecting.Stun(5)
 		affecting.Paralyse(3)
-		affecting.losebreath = min(affecting.losebreath + 2, 3)
+		affecting.being_strangled = 1
+		var/datum/organ/external/head = affecting.organs["head"]
+		head.add_wound("Strangulation", 0)
 	return
 
 
