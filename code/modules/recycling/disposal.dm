@@ -51,8 +51,8 @@
 		if(istype(I, /obj/item/weapon/trashbag))
 			user << "\blue You empty the bag."
 			for(var/obj/item/O in I.contents)
-				I.contents -= O
 				O.loc = src
+				I.contents -= O
 			I.update_icon()
 			update()
 			return
@@ -78,8 +78,9 @@
 
 		if(!I)	return
 
-		user.drop_item()
 		I.loc = src
+		user.drop_item()
+
 		user << "You place \the [I] into the [src]."
 		for(var/mob/M in viewers(src))
 			if(M == user)
