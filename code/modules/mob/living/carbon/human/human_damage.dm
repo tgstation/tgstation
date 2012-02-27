@@ -58,9 +58,9 @@
 
 	switch(damagetype)
 		if(BRUTE)
-			organ.take_damage(damage, 0, sharp)
+			organ.take_damage(damage, 0, sharp, used_weapon)
 		if(BURN)
-			organ.take_damage(0, damage, sharp)
+			organ.take_damage(0, damage, sharp, used_weapon)
 
 	if(used_weapon)
 		organ.add_wound(used_weapon, damage)

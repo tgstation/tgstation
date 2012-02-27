@@ -12,10 +12,10 @@
 	if(!damage || (blocked >= 2))	return 0
 	switch(damagetype)
 		if(BRUTE)
-			adjustBruteLoss(damage/(blocked+1))
+			adjustBruteLoss(damage/(blocked+1), used_weapon)
 		if(BURN)
 			if(mutations & COLD_RESISTANCE)	damage = 0
-			adjustFireLoss(damage/(blocked+1))
+			adjustFireLoss(damage/(blocked+1), used_weapon)
 		if(TOX)
 			adjustToxLoss(damage/(blocked+1))
 		if(OXY)

@@ -291,19 +291,20 @@
 
 	for(var/name in organs)
 		var/datum/organ/external/temp = organs[name]
+		var/au_msg = "Explosion" // for autopsy
 		switch(temp.name)
 			if("head")
-				temp.take_damage(b_loss * 0.2, f_loss * 0.2)
+				temp.take_damage(b_loss * 0.2, f_loss * 0.2, 0, used_weapon = au_msg)
 			if("chest")
-				temp.take_damage(b_loss * 0.4, f_loss * 0.4)
+				temp.take_damage(b_loss * 0.4, f_loss * 0.4, 0, used_weapon = au_msg)
 			if("l_arm")
-				temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				temp.take_damage(b_loss * 0.05, f_loss * 0.05, 0, used_weapon = au_msg)
 			if("r_arm")
-				temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				temp.take_damage(b_loss * 0.05, f_loss * 0.05, 0, used_weapon = au_msg)
 			if("l_leg")
-				temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				temp.take_damage(b_loss * 0.05, f_loss * 0.05, 0, used_weapon = au_msg)
 			if("r_leg")
-				temp.take_damage(b_loss * 0.05, f_loss * 0.05)
+				temp.take_damage(b_loss * 0.05, f_loss * 0.05, 0, used_weapon = au_msg)
 	UpdateDamageIcon()
 
 
@@ -2373,7 +2374,7 @@ It can still be worn/put on as normal.
 	UpdateDamageIcon()
 
 // damage MANY external organs, in random order
-/mob/living/carbon/human/take_overall_damage(var/brute, var/burn)
+/mob/living/carbon/human/take_overall_damage(var/brute, var/burn, var/used_weapon = null)
 	var/list/datum/organ/external/parts = get_damageable_organs()
 
 	while(parts.len && (brute>0 || burn>0) )
@@ -2382,7 +2383,7 @@ It can still be worn/put on as normal.
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
 
-		picked.take_damage(brute,burn)
+		picked.take_damage(brute,burn, 0, used_weapon)
 
 		brute -= (picked.brute_dam-brute_was)
 		burn -= (picked.burn_dam-burn_was)
@@ -2463,9 +2464,9 @@ It can still be worn/put on as normal.
 		amount+= O.brute_dam
 	return amount
 
-/mob/living/carbon/human/adjustBruteLoss(var/amount)
+/mob/living/carbon/human/adjustBruteLoss(var/amount, var/used_weapon = null)
 	if(amount > 0)
-		take_overall_damage(amount, 0)
+		take_overall_damage(amount, 0, used_weapon)
 	else
 		heal_overall_damage(-amount, 0)
 
@@ -2476,9 +2477,9 @@ It can still be worn/put on as normal.
 		amount+= O.burn_dam
 	return amount
 
-/mob/living/carbon/human/adjustFireLoss(var/amount)
+/mob/living/carbon/human/adjustFireLoss(var/amount,var/used_weapon = null)
 	if(amount > 0)
-		take_overall_damage(0, amount)
+		take_overall_damage(0, amount, used_weapon)
 	else
 		heal_overall_damage(0, -amount)
 

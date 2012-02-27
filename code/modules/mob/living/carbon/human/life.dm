@@ -720,17 +720,19 @@
 			else
 				discomfort *= 1.5 //Dangercon 2011 - Upping damage by use of magic numbers - Errorage
 
+			var/au_msg = "High Temperature"
+
 			switch(body_part)
 				if(HEAD)
-					apply_damage(2.5*discomfort, BURN, "head")
+					apply_damage(2.5*discomfort, BURN, "head", used_weapon = au_msg)
 				if(UPPER_TORSO)
-					apply_damage(2.5*discomfort, BURN, "chest")
+					apply_damage(2.5*discomfort, BURN, "chest", used_weapon = au_msg)
 				if(LEGS)
-					apply_damage(0.6*discomfort, BURN, "l_leg")
-					apply_damage(0.6*discomfort, BURN, "r_leg")
+					apply_damage(0.6*discomfort, BURN, "l_leg", used_weapon = au_msg)
+					apply_damage(0.6*discomfort, BURN, "r_leg", used_weapon = au_msg)
 				if(ARMS)
-					apply_damage(0.4*discomfort, BURN, "l_arm")
-					apply_damage(0.4*discomfort, BURN, "r_arm")
+					apply_damage(0.4*discomfort, BURN, "l_arm", used_weapon = au_msg)
+					apply_damage(0.4*discomfort, BURN, "r_arm", used_weapon = au_msg)
 
 		handle_chemicals_in_body()
 			if(reagents && stat != 2) reagents.metabolize(src)

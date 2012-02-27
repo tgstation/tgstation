@@ -337,7 +337,7 @@ CIRCULAR SAW
 
 		if(!W.pretend_weapon)
 			// the more hits, the more likely it is that we get the right weapon type
-			if(prob(W.hits * 10 + W.damage))
+			if(prob(50 + W.hits * 10 + W.damage))
 				W.pretend_weapon = W.weapon
 			else
 				W.pretend_weapon = pick("mechanical toolbox", "wirecutters", "revolver", "crowbar", "fire extinguisher", "tomato soup", "oxygen tank", "emergency oxygen tank", "laser", "bullet")
@@ -357,8 +357,13 @@ CIRCULAR SAW
 
 /obj/item/weapon/autopsy_scanner/verb/print_data()
 	set src in view(usr, 1)
+	set name = "Print Data"
 	if(usr.stat)
-		src << "No."
+		usr << "No."
+		return
+
+	if(wdata.len == 0)
+		usr << "<b>* There is no data about any wounds in the scanners database. You may have to scan more bodyparts, or otherwise this wound type may not be in the scanner's database."
 		return
 
 	var/scan_data = ""
