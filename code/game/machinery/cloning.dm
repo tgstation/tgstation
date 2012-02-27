@@ -35,8 +35,6 @@
 	var/obj/item/weapon/disk/data/diskette = null //Mostly so the geneticist can steal everything.
 	var/wantsscan = 1
 	var/wantspod = 1
-	var/poddir = 8 //Which dir relative to the computer it is in.
-	var/scandir = 8
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -105,7 +103,7 @@
 	//..()
 	//world << "SEARCHING FOR SCANNER"
 	var/obj/machinery/dna_scannernew/scannerf = null
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(dir in list(1,2,4,8,5,6,9,10))
 		//world << "SEARCHING IN [dir]"
 		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
 		if (!isnull(scannerf))
@@ -119,7 +117,7 @@
 	//..()
 	//world << "SEARCHING FOR POD"
 	var/obj/machinery/clonepod/podf = null
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(dir in list(1,2,4,8,5,6,9,10))
 		//world << "SEARCHING IN [dir]"
 		podf = locate(/obj/machinery/clonepod, get_step(src, dir))
 		if (!isnull(podf))
