@@ -63,8 +63,6 @@
 		if(!ready)
 			return
 
-		world << "sucessful run!"
-
 		interpreter.SetVar("$content", 	signal.data["message"])
 		interpreter.SetVar("$freq"   , 	signal.frequency)
 		interpreter.SetVar("$source" , 	signal.data["name"])
@@ -154,8 +152,6 @@
 		// Run the compiled code
 		interpreter.Run()
 
-		world << "interpreter.Run() complete."
-
 		// Backwards-apply variables onto signal data
 		/* html_encode() EVERYTHING. fucking players can't be trusted with SHIT */
 
@@ -193,10 +189,6 @@ datum/signal
 
 	proc/tcombroadcast(var/message, var/freq, var/source, var/job)
 
-		world << message
-		world << freq
-		world << source
-		world << job
 		var/mob/living/carbon/human/H = new
 		var/datum/signal/newsign = new
 		var/obj/machinery/telecomms/server/S = data["server"]
