@@ -319,10 +319,12 @@ CIRCULAR SAW
 ///////////////////
 //AUTOPSY SCANNER//
 ///////////////////
-/obj/item/weapon/autopsy_scanner/var/list/datum/wound_data/wdata = list()
+/obj/item/weapon/autopsy_scanner/var/list/datum/autopsy_data_data/wdata = list()
+/obj/item/weapon/autopsy_scanner/var/list/datum/autopsy_data_data/chemtraces = list()
 /obj/item/weapon/autopsy_scanner/var/target_name = null
+/obj/item/weapon/autopsy_scanner/var/timeofdeath = null
 
-/datum/wound_data
+/datum/autopsy_data_data
 	var
 		weapon = null // this is the DEFINITE weapon type that was used
 		list/organs_scanned = list() // this maps a number of scanned organs to
@@ -330,10 +332,10 @@ CIRCULAR SAW
 		organ_names = ""
 
 /obj/item/weapon/autopsy_scanner/proc/add_data(var/datum/organ/external/O)
-	if(!O.weapon_wounds.len) return
+	if(!O.autopsy_data.len && !O.trace_chemicals.len) return
 
-	for(var/V in O.weapon_wounds)
-		var/datum/wound/W = O.weapon_wounds[V]
+	for(var/V in O.autopsy_data)
+		var/datum/autopsy_data/W = O.autopsy_data[V]
 
 		if(!W.pretend_weapon)
 			// the more hits, the more likely it is that we get the right weapon type
@@ -343,17 +345,24 @@ CIRCULAR SAW
 				W.pretend_weapon = pick("mechanical toolbox", "wirecutters", "revolver", "crowbar", "fire extinguisher", "tomato soup", "oxygen tank", "emergency oxygen tank", "laser", "bullet")
 
 
-		var/datum/wound_data/D = wdata[V]
+		var/datum/autopsy_data_data/D = wdata[V]
 		if(!D)
 			D = new()
 			D.weapon = W.weapon
 			wdata[V] = D
 
 		if(!D.organs_scanned[O.name])
-			D.organ_names += "[O.display_name] "
+			if(D.organ_names == "")
+				D.organ_names = O.display_name
+			else
+				D.organ_names += ", [O.display_name]"
 
 		del D.organs_scanned[O.name]
 		D.organs_scanned[O.name] = W.copy()
+
+	for(var/V in O.trace_chemicals)
+		if(O.trace_chemicals[V] > 0 && !chemtraces.Find(V))
+			chemtraces += V
 
 /obj/item/weapon/autopsy_scanner/verb/print_data()
 	set src in view(usr, 1)
@@ -362,27 +371,31 @@ CIRCULAR SAW
 		usr << "No."
 		return
 
-	if(wdata.len == 0)
-		usr << "<b>* There is no data about any wounds in the scanners database. You may have to scan more bodyparts, or otherwise this wound type may not be in the scanner's database."
+	if(wdata.len == 0 && chemtraces.len == 0)
+		usr << "<b>* There is no data about any wounds in the scanner's database. You may have to scan more bodyparts, or otherwise this wound type may not be in the scanner's database."
 		return
 
 	var/scan_data = ""
+
+	if(timeofdeath)
+		scan_data += "<b>Time since death:</b> [round((world.time - timeofdeath) / (60*10))] minutes<br><br>"
+
 	var/n = 1
 	for(var/wdata_idx in wdata)
-		var/datum/wound_data/D = wdata[wdata_idx]
+		var/datum/autopsy_data_data/D = wdata[wdata_idx]
 		var/total_hits = 0
 		var/total_score = 0
 		var/list/weapon_chances = list() // maps weapon names to a score
 		var/age = 0
 
 		for(var/wound_idx in D.organs_scanned)
-			var/datum/wound/W = D.organs_scanned[wound_idx]
+			var/datum/autopsy_data/W = D.organs_scanned[wound_idx]
 			total_hits += W.hits
 
 			var/wname = W.pretend_weapon
 
 			if(wname in weapon_chances) weapon_chances[wname] += W.damage
-			else weapon_chances[wname] = W.damage
+			else weapon_chances[wname] = max(W.damage, 1)
 			total_score+=W.damage
 
 
@@ -391,9 +404,13 @@ CIRCULAR SAW
 
 		var/damage_desc
 
+		var/damaging_weapon = (total_score != 0)
+
 		// total score happens to be the total damage
 		switch(total_score)
-			if(0 to 5)
+			if(0)
+				damage_desc = "Unknown"
+			if(1 to 5)
 				damage_desc = "<font color='green'>negligible</font>"
 			if(5 to 15)
 				damage_desc = "<font color='green'>light</font>"
@@ -402,9 +419,12 @@ CIRCULAR SAW
 			if(30 to 1000)
 				damage_desc = "<font color='red'>severe</font>"
 
+		if(!total_score) total_score = D.organs_scanned.len
+
 		scan_data += "<b>Weapon #[n]</b><br>"
-		scan_data += "Severity: [damage_desc]<br>"
-		scan_data += "Hits by weapon: [total_hits]<br>"
+		if(damaging_weapon)
+			scan_data += "Severity: [damage_desc]<br>"
+			scan_data += "Hits by weapon: [total_hits]<br>"
 		scan_data += "Age of wound: [round(age / (60*10))] minutes<br>"
 		scan_data += "Affected limbs: [D.organ_names]<br>"
 		scan_data += "Possible weapons:<br>"
@@ -415,6 +435,12 @@ CIRCULAR SAW
 
 		n++
 
+	if(chemtraces.len)
+		scan_data += "<b>Trace Chemicals: </b><br>"
+		for(var/chemID in chemtraces)
+			scan_data += chemID
+			scan_data += "<br>"
+
 	for(var/mob/O in viewers(usr))
 		O.show_message("\red \the [src] rattles and prints out a sheet of paper.", 1)
 
@@ -424,6 +450,19 @@ CIRCULAR SAW
 	P.name = "Autopsy Data ([target_name])"
 	P.info = "<tt>[scan_data]</tt>"
 	P.overlays += "paper_words"
+
+	if(istype(usr,/mob/living/carbon))
+		// place the item in the usr's hand if possible
+		if(!usr.r_hand)
+			P.loc = usr
+			usr.r_hand = P
+			P.layer = 20
+		else if(!usr.l_hand)
+			P.loc = usr
+			usr.l_hand = P
+			P.layer = 20
+
+	usr.update_clothing()
 
 /obj/item/weapon/autopsy_scanner/attack(mob/living/carbon/human/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
@@ -437,6 +476,8 @@ CIRCULAR SAW
 		for(var/V in src.wdata)
 			del src.wdata[V]
 		src.wdata = list()
+
+	src.timeofdeath = M.timeofdeath
 
 	var/datum/organ/external/S = M.organs[user.zone_sel.selecting]
 	if(!S)
@@ -715,6 +756,7 @@ CIRCULAR SAW
 
 				M.updatehealth()
 				M:brain_op_stage = 1.0
+				return
 
 			if(1)
 				if(istype(M, /mob/living/carbon/metroid))
@@ -812,7 +854,7 @@ CIRCULAR SAW
 				M:eye_op_stage = 1.0
 				user << "\blue So far so good after."
 				return
-	if(!try_bone_surgery(M, user))
+	if(!try_bone_surgery(M, user) && user.a_intent == "hurt") // if we call ..(), we'll attack them, so require a hurt intent
 		return ..()
 
 /* wat
