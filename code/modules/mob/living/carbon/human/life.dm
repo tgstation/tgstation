@@ -124,6 +124,7 @@
 
 /mob/living/carbon/human
 	proc
+
 		handle_health_updates()
 			// if the mob has enough health, she should slowly heal
 			if(stat != 2)
@@ -295,16 +296,20 @@
 				if (radiation < 0)
 					radiation = 0
 
+				var/damage = 0 // stores how much damage was inflicted
+
 				switch(radiation)
 					if(1 to 49)
 						radiation--
 						if(prob(25))
+							damage = 1
 							adjustToxLoss(1)
 							updatehealth()
 
 					if(50 to 74)
 						radiation -= 2
 						adjustToxLoss(1)
+						damage = 1
 						if(prob(5))
 							radiation -= 5
 							Weaken(3)
@@ -315,12 +320,19 @@
 					if(75 to 100)
 						radiation -= 3
 						adjustToxLoss(3)
+						damage = 3
 						if(prob(1))
 							src << "\red You mutate!"
 							randmutb(src)
 							domutcheck(src,null)
 							emote("gasp")
 						updatehealth()
+
+				if(damage)
+					var/V = pick(organs)
+					var/datum/organ/external/O = organs[V]
+					if(istype(O)) O.add_wound("Radiation Poisoning", damage)
+
 
 			//As close as I could find to where to put it
 			grav_delay = max(grav_delay-3,0)
@@ -793,6 +805,21 @@
 			else
 				dizziness = max(0, dizziness - 3)
 				jitteriness = max(0, jitteriness - 3)
+
+			if(life_tick % 10 == 0)
+				// handle trace chemicals for autopsy
+				for(var/V in organs)
+					var/datum/organ/O = organs[V]
+					for(var/chemID in O.trace_chemicals)
+						O.trace_chemicals[chemID] = O.trace_chemicals[chemID] - 1
+						if(O.trace_chemicals[chemID] <= 0)
+							O.trace_chemicals.Remove(chemID)
+			for(var/datum/reagent/A in reagents.reagent_list)
+				// add chemistry traces to a random organ
+				var/V = pick(organs)
+				var/datum/organ/O = organs[V]
+				O.trace_chemicals[A.name] = 100
+
 
 			updatehealth()
 
