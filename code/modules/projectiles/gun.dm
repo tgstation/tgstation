@@ -44,16 +44,19 @@
 				M.visible_message("\blue [user] decided life was worth living")
 				return
 			if(istype(src.in_chamber, /obj/item/projectile/bullet) && !istype(src.in_chamber, /obj/item/projectile/bullet/stunshot))
-				M.apply_damage(160, BRUTE, "head", used_weapon = "Suicide attempt with a projectile weapon.")
+				M.apply_damage(75, BRUTE, "head", used_weapon = "Suicide attempt with a projectile weapon.")
+				M.apply_damage(85, BRUTE, "chest")
 				M.visible_message("\red [user] pulls the trigger.")
 			else if(istype(src.in_chamber, /obj/item/projectile/bullet/stunshot) || istype(src.in_chamber, /obj/item/projectile/energy/electrode))
 				M.apply_damage(10, BURN, "head", used_weapon = "Suicide attempt with a stun round.")
 				M.visible_message("\red [user] pulls the trigger, but luckily it was a stun round.")
 			else if(istype(src.in_chamber, /obj/item/projectile/beam) || istype(src.in_chamber, /obj/item/projectile/energy))
-				M.apply_damage(160, BURN, "head", used_weapon = "Suicide attempt with an energy weapon")
+				M.apply_damage(75, BURN, "head", used_weapon = "Suicide attempt with an energy weapon")
+				M.apply_damage(85, BURN, "chest")
 				M.visible_message("\red [user] pulls the trigger.")
 			else
-				M.apply_damage(160, BRUTE, "head", used_weapon = "Suicide attempt with a gun")
+				M.apply_damage(75, BRUTE, "head", used_weapon = "Suicide attempt with a gun")
+				M.apply_damage(85, BRUTE, "chest")
 				M.visible_message("\red [user] pulls the trigger. Ow.")
 			return
 		else
