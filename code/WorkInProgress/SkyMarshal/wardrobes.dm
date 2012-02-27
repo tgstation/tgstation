@@ -22,7 +22,7 @@
 		return
 
 	attackby(var/obj/item/I as obj, var/mob/user as mob)
-		if(istype(I, /obj/item/wardrobe))
+		if(istype(I, /obj/item/wardrobe) || istype(I, /obj/item/weapon/evidencebag))
 			return
 		if(contents.len < 20)
 			if(istype(I, /obj/item/weapon/grab))
