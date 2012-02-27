@@ -2,6 +2,7 @@
 	name = "Welding kit"
 	desc = "A heavy-duty, portable welding fluid carrier."
 	flags = ONBACK
+	icon = 'storage.dmi'
 	icon_state = "engiepack"
 	w_class = 4.0
 	var/max_fuel = 350

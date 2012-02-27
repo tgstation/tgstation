@@ -829,7 +829,7 @@ proc/blood_incompatible(donor,receiver)
 
 	afterattack(atom/A as obj|turf|area, mob/user as mob)
 		if(istype(A))
-			user.visible_message("[user] starts to wipe the prints and blood off of [A] with \the [src]!")
+			user.visible_message("[user] starts to wipe down [A] with [src]!")
 			if(do_after(user,30))
 				user.visible_message("[user] finishes wiping away the evidence!")
 				A.clean_blood()

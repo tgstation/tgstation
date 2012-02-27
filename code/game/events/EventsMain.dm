@@ -8,7 +8,7 @@
 
 var/list/DisallowedEvents = list(/datum/event/spaceninja, /datum/event/prisonbreak, /datum/event/immovablerod, /datum/event/gravitationalanomaly, /datum/event/alieninfestation)
 var/list/EventTypes = typesof(/datum/event) - /datum/event - DisallowedEvents
-var/list/OneTimeEvents = list(/datum/event/spacecarp, /datum/event/miniblob)
+var/list/OneTimeEvents = list(/datum/event/spacecarp)
 var/datum/event/ActiveEvent = null
 var/datum/event/LongTermEvent = null
 var/is_ninjad_yet = 0

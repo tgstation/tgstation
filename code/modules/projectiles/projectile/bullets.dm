@@ -8,7 +8,7 @@
 
 
 /obj/item/projectile/bullet/weakbullet
-	damage = 10
+	damage = 5
 	stun = 5
 	weaken = 5
 
