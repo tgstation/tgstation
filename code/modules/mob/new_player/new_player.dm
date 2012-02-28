@@ -383,9 +383,7 @@
 	proc/ViewManifest()
 		var/dat = "<html><body>"
 		dat += "<h4>Crew Manifest</h4>"
-		for(var/datum/data/record/t in data_core.general)
-			dat += "[t.fields["name"]] - [t.fields["rank"]]<br>"
-		dat += "<br>"
+		dat += data_core.get_manifest()
 
 		src << browse(dat, "window=manifest;size=300x420;can_close=1")
 

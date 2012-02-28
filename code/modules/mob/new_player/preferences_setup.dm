@@ -208,7 +208,7 @@ datum/preferences
 		else if (gender == FEMALE)
 			g = "f"
 
-		preview_icon = new /icon('human.dmi', "body_[g]_s")
+		preview_icon = new /icon('human.dmi', "body_[g]_s", "dir" = preview_dir)
 
 		// Skin tone
 		if (s_tone >= 0)
@@ -217,21 +217,21 @@ datum/preferences
 			preview_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 
 		if (underwear > 0)
-			preview_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
+			preview_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_s", "dir" = preview_dir), ICON_OVERLAY)
 
-		var/icon/eyes_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "eyes_s")
+		var/icon/eyes_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "eyes_s", "dir" = preview_dir)
 		eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
 
 
 		// Hair and facial hair, improved by Doohl
-		var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
+		var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s", "dir" = preview_dir)
 		hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
 
-		var/icon/facial_s = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
+		var/icon/facial_s = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s", "dir" = preview_dir)
 		facial_s.Blend(rgb(r_facial, g_facial, b_facial), ICON_ADD)
 
 
-		var/icon/mouth_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "mouth_[g]_s")
+		var/icon/mouth_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "mouth_[g]_s", "dir" = preview_dir)
 
 		eyes_s.Blend(hair_s, ICON_OVERLAY)
 		eyes_s.Blend(mouth_s, ICON_OVERLAY)

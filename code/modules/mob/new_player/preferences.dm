@@ -91,6 +91,7 @@ datum/preferences
 
 		//Mob preview
 		icon/preview_icon = null
+		preview_dir = SOUTH
 
 		//Jobs, uses bitflags
 		job_civilian_high = 0
@@ -227,7 +228,12 @@ datum/preferences
 
 		if(!IsGuestKey(user.key))
 			dat += "Underwear: <a href =\"byond://?src=\ref[user];preferences=1;underwear=1\"><b>[underwear == 1 ? "Yes" : "No"]</b></a><br>"
-		dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64></td></tr></table>"
+
+		dat += "</td><td style='text-align:center;padding-left:2em'><b>Preview</b><br>"
+		dat += "<a href='?src=\ref[user];preferences=1;preview_dir=[turn(preview_dir,-90)]'>&lt;</a>"
+		dat += "<img src=previewicon.png height=64 width=64 style='vertical-align:middle'>"
+		dat += "<a href='?src=\ref[user];preferences=1;preview_dir=[turn(preview_dir,90)]'>&gt;</a>"
+		dat += "</td></tr></table>"
 
 		dat += "<hr><b>Hair</b><br>"
 
@@ -492,6 +498,9 @@ datum/preferences
 					SetChoices(user)
 
 			return 1
+
+		if(link_tags["preview_dir"])
+			preview_dir = text2num(link_tags["preview_dir"])
 
 		if(link_tags["skills"])
 			if(link_tags["cancel"])
