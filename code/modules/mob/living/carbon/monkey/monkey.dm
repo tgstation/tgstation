@@ -578,14 +578,6 @@
 
 /mob/living/carbon/monkey/ex_act(severity)
 	flick("flash", flash)
-	if (stat == 2 && client)
-		gib(1)
-		return
-
-	if (stat == 2 && !client)
-		gibs(loc, viruses)
-		del(src)
-		return
 	switch(severity)
 		if(1.0)
 			if (stat != 2)
