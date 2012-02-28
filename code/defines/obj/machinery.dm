@@ -229,6 +229,14 @@
 				16= door safties
 
 	*/
+
+	var/exposedwires = 0
+	var/wires = 3
+	/*
+	Bitflag,	1=checkID
+				2=Network Access
+	*/
+
 	anchored = 1.0
 	use_power = 1
 	idle_power_usage = 2
