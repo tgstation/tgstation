@@ -169,7 +169,7 @@
 
 	E.dir = old_dir
 	E.icon_state = "engine"
-	W.levelupdate()
+	E.levelupdate()
 	return E
 
 /turf/simulated/Entered(atom/A, atom/OL)
