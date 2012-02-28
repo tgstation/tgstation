@@ -216,9 +216,6 @@
 		if (istype(W, /obj/item/weapon/implant))
 			implants += W
 
-	for(var/obj/item/W in usr)
-		usr.drop_from_slot(W)
-
 	usr.update_clothing()
 	usr.monkeyizing = 1
 	usr.canmove = 0
@@ -236,6 +233,10 @@
 	O.dna = usr.dna
 	usr.dna = null
 	O.changeling = usr.changeling
+
+	for(var/obj/item/W in usr)
+		usr.drop_from_slot(W)
+
 
 	for(var/obj/T in usr)
 		del(T)
@@ -301,15 +302,6 @@
 	for (var/obj/item/weapon/implant/I in usr) //Still preserving implants
 		implants += I
 
-	for(var/obj/item/W in usr)
-		usr.u_equip(W)
-		if (usr.client)
-			usr.client.screen -= W
-		if (W)
-			W.loc = usr.loc
-			W.dropped(usr)
-			W.layer = initial(W.layer)
-
 	usr.update_clothing()
 	usr.monkeyizing = 1
 	usr.canmove = 0
@@ -322,6 +314,15 @@
 	flick("monkey2h", animation)
 	sleep(48)
 	del(animation)
+
+	for(var/obj/item/W in usr)
+		usr.u_equip(W)
+		if (usr.client)
+			usr.client.screen -= W
+		if (W)
+			W.loc = usr.loc
+			W.dropped(usr)
+			W.layer = initial(W.layer)
 
 	var/mob/living/carbon/human/O = new /mob/living/carbon/human( src )
 	if (isblockon(getblock(usr.dna.uni_identity, 11,3),11))
