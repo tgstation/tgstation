@@ -475,6 +475,8 @@
 	last_b_state = stat
 
 /mob/living/carbon/human/tajaran/update_body()
+	return
+
 	if(stand_icon)
 		del(stand_icon)
 	if(lying_icon)

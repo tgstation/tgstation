@@ -181,6 +181,7 @@
 			verbs += /client/proc/delbook
 			verbs += /client/proc/Force_Event_admin
 			verbs += /client/proc/radioalert
+			verbs += /client/proc/make_tajaran
 
 		if (holder.level >= 4)//Badmin********************************************************************
 			verbs += /obj/admins/proc/adrev					//toggle admin revives
@@ -424,6 +425,7 @@
 	verbs -= /client/proc/cmd_debug_prints
 	verbs -= /client/proc/cmd_debug_blood
 	verbs -= /client/proc/rnd_check_designs
+	verbs -= /client/proc/make_tajaran
 
 	return
 
