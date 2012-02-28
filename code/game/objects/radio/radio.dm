@@ -14,6 +14,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		last_transmission
 		frequency = 1459 //common chat
 		traitor_frequency = 0 //tune to frequency to unlock traitor supplies
+		canhear_range = 3 // the range which mobs can hear this radio from
 		obj/item/device/radio/patch_link = null
 		obj/item/weapon/syndicate_uplink/traitorradio = null
 		wires = WIRE_SIGNAL | WIRE_RECEIVE | WIRE_TRANSMIT
@@ -62,6 +63,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			checkpower()
 
 /obj/item/device/radio/initialize()
+
 	if(freerange)
 		if(frequency < 1200 || frequency > 1600)
 			frequency = sanitize_frequency(frequency)
@@ -660,7 +662,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	/* Instead, let's individually search potential containers for mobs! More verbose but a LOT more efficient and less laggy */
 	// Check gamehelpers.dm for the proc definition:
 
-	return get_mobs_in_view(3, src)
+	return get_mobs_in_view(canhear_range, src)
 
 /obj/item/device/radio/examine()
 	set src in view()

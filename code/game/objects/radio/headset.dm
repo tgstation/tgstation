@@ -6,6 +6,7 @@
 	g_amt = 0
 	m_amt = 75
 	subspace_transmission = 1
+	canhear_range = 1 // can't hear headsets from very far away
 
 	var/protective_temperature = 0
 	var/translate_binary = 0

@@ -222,16 +222,10 @@ datum/signal
 		var/datum/radio_frequency/connection = radio_controller.return_frequency(freq)
 		newsign.data["connection"] = connection
 
-		// This is a really hacky way of finding a source radio - but it works, i suppose.
+		// The radio is a radio headset!
 
 		if(!hradio)
-			for(var/obj/item/device/radio/headset/r in world)
-				hradio = r
-				break
-
-		// There are no radios in the world! Oh no! Just make a new one and pray to baby jesus
-		if(!hradio)
-			hradio = new
+			hradio = new /obj/item/device/radio/headset
 
 		newsign.data["radio"] = hradio
 		newsign.data["vmessage"] = H.voice_message
