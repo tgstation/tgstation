@@ -557,8 +557,8 @@
 /obj/item/weapon/gun/rapidsyringe
 	name = "rapid syringe gun"
 	icon = 'gun.dmi'
-	icon_state = "syringegun"
-	item_state = "syringegun"
+	icon_state = "rapidsyringegun"
+	item_state = "rapidsyringegun"
 	w_class = 3.0
 	throw_speed = 4
 	throw_range = 10
