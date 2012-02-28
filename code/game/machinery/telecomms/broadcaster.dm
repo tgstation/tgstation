@@ -97,32 +97,26 @@ var
 
 			var/datum/radio_frequency/connection = signal.data["connection"]
 
-			if(!intercept || (nuke && connection.frequency == NUKE_FREQ)) // if syndicate broadcast, just
+			if(!intercept) // if syndicate broadcast, just
 				if(connection.frequency == frequency  && !nuke)
 					Broadcast_Message(signal.data["connection"], signal.data["mob"],
 									  signal.data["vmask"], signal.data["vmessage"],
 									  signal.data["radio"], signal.data["message"],
 									  signal.data["name"], signal.data["job"],
 									  signal.data["realname"], signal.data["vname"],, signal.data["compression"])
-				else if(connection.frequency == NUKE_FREQ && !nuke)
-					Broadcast_Message(signal.data["connection"], signal.data["mob"],
-									  signal.data["vmask"], signal.data["vmessage"],
-									  signal.data["radio"], signal.data["message"],
-									  signal.data["name"], signal.data["job"],
-									  signal.data["realname"], signal.data["vname"],, signal.data["compression"])
-				else
-					Broadcast_Message(signal.data["connection"], signal.data["mob"],
-									  signal.data["vmask"], signal.data["vmessage"],
-									  signal.data["radio"], signal.data["message"],
-									  signal.data["name"], signal.data["job"],
-									  signal.data["realname"], signal.data["vname"],, signal.data["compression"])
 			else
-				if(nuke)
+				if(nuke && connection.frequency != NUKE_FREQ)
 					Broadcast_Message(signal.data["connection"], signal.data["mob"],
 								  signal.data["vmask"], signal.data["vmessage"],
 								  signal.data["radio"], signal.data["message"],
 								  signal.data["name"], signal.data["job"],
 								  signal.data["realname"], signal.data["vname"], 3, signal.data["compression"])
+				else if(nuke)
+					Broadcast_Message(signal.data["connection"], signal.data["mob"],
+									  signal.data["vmask"], signal.data["vmessage"],
+									  signal.data["radio"], signal.data["message"],
+									  signal.data["name"], signal.data["job"],
+									  signal.data["realname"], signal.data["vname"],, signal.data["compression"])
 				else
 					Broadcast_Message(signal.data["connection"], signal.data["mob"],
 								  signal.data["vmask"], signal.data["vmessage"],
