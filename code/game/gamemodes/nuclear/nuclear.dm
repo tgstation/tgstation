@@ -43,8 +43,10 @@
 		agent_number = possible_syndicates.len
 
 	var/n_players = num_players()
-	if(agent_number > n_players)
-		agent_number = n_players/2
+	if(agent_number > (n_players - agent_number))
+		agent_number = (n_players - agent_number)/2
+	if(agent_number < required_enemies)
+		agent_number  = required_enemies
 
 	while(agent_number > 0)
 		var/datum/mind/new_syndicate = pick(possible_syndicates)

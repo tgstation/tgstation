@@ -200,6 +200,7 @@
 	user.update_clothing()
 	return
 
+/*
 /obj/item/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
@@ -222,32 +223,7 @@
 			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(location)
 			P.wrapped = src
 			src.loc = P
-			O.amount -= 1
-	else if(istype(W,/obj/item/wardrobe))
-		if(src in user)
-			return
-		if(!istype(src.loc,/turf))
-			user << "It's got to be on the ground to do that!"
-			return
-		var/obj/item/wardrobe/I = W
-		var/could_fill = 1
-		for (var/obj/O in locate(src.x,src.y,src.z))
-			if (I.contents.len < 20)
-				if(istype(O,/obj/item/wardrobe))
-					continue
-				if(O.anchored || O.density || istype(O,/obj/structure))
-					continue
-				I.contents += O;
-			else
-				could_fill = 0
-				break
-
-		if(could_fill)
-			user << "\blue You pick up all the items."
-		else
-			user << "\blue You try to pick up all of the items, but run out of space in the bag."
-		user.visible_message("\blue [user] gathers up[could_fill ? " " : " most of "]the pile of items and puts it into the [W].")
-		I.update_icon()
+			O.amount -= 1*/
 
 /obj/item/attack_self(mob/user as mob)
 	..()

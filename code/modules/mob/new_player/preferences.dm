@@ -828,6 +828,7 @@ datum/preferences
 		if(be_random_name)
 			randomize_name()
 		character.real_name = real_name
+		character.original_name = real_name //Original name is only used in ghost chat! It is not to be edited by anything!
 
 		character.flavor_text = flavor_text
 
