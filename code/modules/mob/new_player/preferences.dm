@@ -496,7 +496,7 @@ datum/preferences
 		if(link_tags["skills"])
 			if(link_tags["cancel"])
 				user << browse(null, "window=show_skills")
-				SetSkills(user)
+				ShowChoices(user)
 				return
 			else if(link_tags["skillinfo"])
 				var/datum/skill/S = locate(link_tags["skillinfo"])
