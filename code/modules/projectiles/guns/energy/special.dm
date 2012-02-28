@@ -19,3 +19,35 @@
 	origin_tech = "combat=5;materials=4;powerstorage=3"
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/energy/declone"
+
+obj/item/weapon/gun/energy/staff
+	name = "staff of change"
+	desc = "an artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself"
+	icon = 'gun.dmi'
+	icon_state = "staff"
+	item_state = "staff"
+	fire_sound = 'emitter.ogg'
+	charge_cost = 200
+	projectile_type = "/obj/item/projectile/change"
+	origin_tech = null
+	var/charge_tick = 0
+
+
+	New()
+		..()
+		processing_objects.Add(src)
+
+
+	Del()
+		processing_objects.Remove(src)
+		..()
+
+
+	process()
+		charge_tick++
+		if(charge_tick < 4) return 0
+		charge_tick = 0
+		if(!power_supply) return 0
+		power_supply.give(200)
+		update_icon()
+		return 1

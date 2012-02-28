@@ -439,8 +439,10 @@
 		del(H)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if (istype(mover,/obj/item) && !istype(mover,/obj/item/weapon/dummy))
+		if (istype(mover,/obj/item))
 			var/obj/item/I = mover
+			if(!mover.throwing)
+				return ..()
 			if(prob(75))
 				I.loc = src
 				for(var/mob/M in viewers(src))
@@ -450,7 +452,7 @@
 					M.show_message("\the [I] bounces off of \the [src]'s rim!", 3)
 			return 0
 		else
-			return ..(mover, target, height, air_group)
+			return ..()
 
 //The toilet does not need to pressurized but can only handle small items.
 //You can also choke people by dunking them into the toilet.

@@ -258,11 +258,16 @@
 				if ((M.client && M.client.holder && (M.client.holder.level >= src.level)))
 					alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 					return
-				M << "\red You have been kicked from the server"
-				log_admin("[key_name(usr)] booted [key_name(M)].")
-				message_admins("\blue [key_name_admin(usr)] booted [key_name_admin(M)].", 1)
-				//M.client = null
-				del(M.client)
+				switch(alert("Are you sure?", ,"Yes", "NO, WAIT.. DAMMIT! NOT THAT BUTTON!"))
+					if("Yes")
+						if(ismob(M))
+							M << "\red You have been kicked from the server"
+							log_admin("[key_name(usr)] booted [key_name(M)].")
+							message_admins("\blue [key_name_admin(usr)] booted [key_name_admin(M)].", 1)
+							//M.client = null
+							del(M.client)
+						else
+							src << "Looks like someone already beat you."
 
 	if (href_list["removejobban"])
 		if ((src.rank in list("Game Admin", "Game Master"  )))
@@ -1759,6 +1764,36 @@
 			C.files.RefreshResearch()
 
 		owner:rnd_check_designs()
+	#define AUTOBANTIME 10
+	if(href_list["warn"])
+		var/mob/M = locate(href_list["warn"])
+		if (ismob(M))
+			var/client/user
+			if(istype(usr, /client))
+				user = usr
+			else if(istype(usr, /mob))
+				user = usr.client
+
+			if(!user.holder)
+				src << "Only administrators may use this command."
+				return
+			if(M.client && M.client.holder && (M.client.holder.level >= user.holder.level))
+				alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+				return
+			if(!M.client.warned)
+				M << "\red <B>You have been warned by an administrator. This is the only warning you will recieve.</B>"
+				M.client.warned = 1
+				message_admins("\blue [user.ckey] warned [M.ckey].")
+			else
+				AddBan(M.ckey, M.computer_id, "Autobanning due to previous warn", user.ckey, 1, AUTOBANTIME)
+				M << "\red<BIG><B>You have been autobanned by [user.ckey]. This is what we in the biz like to call a \"second warning\".</B></BIG>"
+				M << "\red This is a temporary ban; it will automatically be removed in [AUTOBANTIME] minutes."
+				log_admin("[user.ckey] warned [M.ckey], resulting in a [AUTOBANTIME] minute autoban.")
+				ban_unban_log_save("[user.ckey] warned [M.ckey], resulting in a [AUTOBANTIME] minute autoban.")
+				message_admins("\blue [user.ckey] warned [M.ckey], resulting in a [AUTOBANTIME] minute autoban.")
+				feedback_inc("ban_warn",1)
+
+				del(M.client)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
