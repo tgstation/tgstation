@@ -1083,7 +1083,10 @@ About the new airlock wires panel:
 			location.add_blood(M)
 
 	use_power(50)
-	playsound(src.loc, 'airlock.ogg', 30, 1)
+	if(istype(src, /obj/machinery/door/airlock/glass))
+		playsound(src.loc, 'windowdoor.ogg', 30, 1)
+	else
+		playsound(src.loc, 'airlock.ogg', 30, 1)
 	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 	if(killthis)
 		killthis.ex_act(2)//Smashin windows
