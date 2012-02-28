@@ -103,7 +103,7 @@
 
 // Cow
 /mob/living/simple_animal/livestock/cow
-	name = "cow"
+	name = "\improper Cow"
 	icon_state = "cow"
 	icon_living = "cow"
 	icon_dead = "cow_d"
@@ -137,7 +137,7 @@
 
 // Chicken
 /mob/living/simple_animal/livestock/chicken
-	name = "chicken"
+	name = "\improper Chicken"
 	icon_state = "chick"
 	icon_living = "chick"
 	icon_dead = "chick_d"
@@ -163,7 +163,7 @@
 	desc = "Tasty!"
 
 /obj/structure/closet/critter
-	desc = "A critter crate."
+	desc = "\improper Critter crate."
 	name = "Critter Crate"
 	icon = 'storage.dmi'
 	icon_state = "critter"
@@ -172,7 +172,7 @@
 	icon_closed = "critter"
 
 /datum/supply_packs/chicken
-	name = "Chicken crate"
+	name = "\improper Chicken crate"
 	contains = list("/mob/living/simple_animal/livestock/chicken",
 					"/obj/item/weapon/reagent_containers/food/snacks/grown/corn")
 	cost = 10
@@ -181,7 +181,7 @@
 	group = "Hydroponics"
 
 /datum/supply_packs/cow
-	name = "Cow crate"
+	name = "\improper Cow crate"
 	contains = list("/mob/living/simple_animal/livestock/cow",
 					"/obj/item/weapon/reagent_containers/food/snacks/grown/corn")
 	cost = 50

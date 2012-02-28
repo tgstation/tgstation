@@ -232,7 +232,7 @@ var/specops_shuttle_timeleft = 0
 	if(specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom)
 		return 0
 	for(var/obj/machinery/computer/specops_shuttle/S in world)
-		if(world.time <= S.specops_shuttle_timereset)
+		if(world.timeofday <= S.specops_shuttle_timereset)
 			return 0
 	return 1
 
@@ -286,10 +286,10 @@ var/specops_shuttle_timeleft = 0
 
 		if (!specops_can_move())
 			usr << "\blue Central Command will not allow the Special Operations shuttle to return yet."
-			if(world.time <= specops_shuttle_timereset)
-				if (((world.time - specops_shuttle_timereset)/10) > 60)
-					usr << "\blue [-((world.time - specops_shuttle_timereset)/10)/60] minutes remain!"
-				usr << "\blue [-(world.time - specops_shuttle_timereset)/10] seconds remain!"
+			if(world.timeofday <= specops_shuttle_timereset)
+				if (((world.timeofday - specops_shuttle_timereset)/10) > 60)
+					usr << "\blue [-((world.timeofday - specops_shuttle_timereset)/10)/60] minutes remain!"
+				usr << "\blue [-(world.timeofday - specops_shuttle_timereset)/10] seconds remain!"
 			return
 
 		usr << "\blue The Special Operations shuttle will arrive at Central Command in [(SPECOPS_MOVETIME/10)] seconds."
