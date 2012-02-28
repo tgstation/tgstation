@@ -261,7 +261,8 @@
 			verbs += /client/proc/admin_play
 			verbs += /client/proc/admin_observe
 			verbs += /client/proc/game_panel
-			verbs += /client/proc/player_panel
+//			verbs += /client/proc/player_panel
+			verbs += /client/proc/player_panel_new
 			verbs += /client/proc/unban_panel
 			verbs += /client/proc/jobbans
 			verbs += /client/proc/playernotes
@@ -387,7 +388,8 @@
 	verbs -= /client/proc/admin_play
 	verbs -= /client/proc/admin_observe
 	verbs -= /client/proc/game_panel
-	verbs -= /client/proc/player_panel
+//	verbs -= /client/proc/player_panel
+	verbs -= /client/proc/player_panel_new
 	verbs -= /client/proc/unban_panel
 	verbs -= /client/proc/jobbans
 	verbs -= /client/proc/playernotes
@@ -477,11 +479,18 @@
 				src << "[M.key] is undefined - [M.client.holder.state]"
 
 
-/client/proc/player_panel()
+///client/proc/player_panel()
+//	set name = "Player Panel-Old"
+//	set category = "Admin"
+//	if(holder)
+//		holder.player_panel_old()
+//	return
+
+/client/proc/player_panel_new()
 	set name = "Player Panel"
 	set category = "Admin"
-	if (holder)
-		holder.player()
+	if(holder)
+		holder.player_panel_new()
 	return
 
 /client/proc/jobbans()
@@ -720,7 +729,7 @@
 	verbs += /client/proc/admin_play
 	verbs += /client/proc/admin_observe
 	verbs += /client/proc/game_panel
-	verbs += /client/proc/player_panel
+//	verbs += /client/proc/player_panel
 	verbs += /client/proc/cmd_admin_subtle_message
 	verbs += /client/proc/cmd_admin_pm
 	verbs += /client/proc/cmd_admin_gib_self

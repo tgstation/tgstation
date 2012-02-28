@@ -256,6 +256,8 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 	var/grav_delay = 0
 	var/being_strangled = 0
 
+	var/original_name = null //Original name is only used in ghost chat! It is not to be edited by anything!
+
 /mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0, var/force_species_check=1)
 //	world << "Contract_disease called by [src] with virus [virus]"
 	if(stat >=2) return

@@ -58,6 +58,7 @@
 				M.apply_damage(75, BRUTE, "head", used_weapon = "Suicide attempt with a gun")
 				M.apply_damage(85, BRUTE, "chest")
 				M.visible_message("\red [user] pulls the trigger. Ow.")
+			del(src.in_chamber)
 			return
 		else
 			return ..()

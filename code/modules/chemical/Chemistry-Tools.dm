@@ -29,7 +29,6 @@
 
 
 	attackby(var/obj/item/weapon/W, var/mob/user)
-		wrap(W,user)
 		if(path || !active)
 			switch(active)
 				if(0)
@@ -398,7 +397,6 @@
 		usr << "\blue [grenades] / [max_grenades] Grenades."
 
 	attackby(obj/item/I as obj, mob/user as mob)
-		wrap(I,user)
 		if((istype(I, /obj/item/weapon/chem_grenade)) || (istype(I, /obj/item/weapon/flashbang)) || (istype(I, /obj/item/weapon/smokebomb)) || (istype(I, /obj/item/weapon/mustardbomb)) || (istype(I, /obj/item/weapon/empgrenade)))
 			if(grenades.len < max_grenades)
 				user.drop_item()
@@ -498,7 +496,6 @@
 		usr << "\blue [syringes] / [max_syringes] Syringes."
 
 	attackby(obj/item/I as obj, mob/user as mob)
-		wrap(I,user)
 		if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 			if(syringes.len < max_syringes)
 				user.drop_item()
@@ -577,7 +574,6 @@
 		usr << "\blue [syringes] / [max_syringes] Syringes."
 
 	attackby(obj/item/I as obj, mob/user as mob)
-		wrap(I,user)
 		if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 			if(syringes.len < max_syringes)
 				user.drop_item()
@@ -731,15 +727,9 @@
 		reagents = R
 		R.my_atom = src
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		wrap(W,user)
-		return
 	attack_self(mob/user as mob)
 		return
 	attack(mob/M as mob, mob/user as mob, def_zone)
-		return
-	attackby(obj/item/I as obj, mob/user as mob)
-		wrap(I,user)
 		return
 	afterattack(obj/target, mob/user , flag)
 		return
@@ -1138,10 +1128,6 @@
 	attack_paw()
 		return attack_hand()
 
-	attackby(obj/item/I as obj, mob/user as mob)
-		wrap(I,user)
-		return
-
 	afterattack(obj/target, mob/user , flag)
 		if(!target.reagents) return
 
@@ -1346,7 +1332,6 @@
 		return
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		wrap(W,user)
 		return
 	attack_self(mob/user as mob)
 		return
@@ -1475,7 +1460,6 @@
 		return 0
 
 	attackby(obj/item/I as obj, mob/user as mob)
-		wrap(I,user)
 		return
 	afterattack(obj/target, mob/user , flag)
 		return
@@ -1498,8 +1482,6 @@
 	var/slices_num
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		wrap(W,user)
-
 		if((slices_num <= 0 || !slices_num) || !slice_path)
 			return 1
 		var/inaccurate = 0
@@ -1704,9 +1686,6 @@
 		if(!icon_state)
 			icon_state = "pill[rand(1,20)]"
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		wrap(W,user)
-		return
 	attack_self(mob/user as mob)
 		return
 	attack(mob/M as mob, mob/user as mob, def_zone)
@@ -1746,10 +1725,6 @@
 			return 1
 
 		return 0
-
-	attackby(obj/item/I as obj, mob/user as mob)
-		wrap(I,user)
-		return
 
 	afterattack(obj/target, mob/user , flag)
 
@@ -2367,7 +2342,6 @@
 	volume = 50
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		wrap(W,user)
 		return
 	attack_self(mob/user as mob)
 		return
@@ -2409,7 +2383,6 @@
 		return 0
 
 	attackby(obj/item/I as obj, mob/user as mob)
-		wrap(I,user)
 		return
 
 	afterattack(obj/target, mob/user , flag)

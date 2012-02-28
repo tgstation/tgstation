@@ -79,11 +79,11 @@
 		return
 
 	examine()
-		set src in oview(4)
-		if(sortTag)
-			usr << "\blue It is labeled \"[sortTag]\""
-		if(examtext)
-			usr << examtext
+		if(src in oview(4))
+			if(sortTag)
+				usr << "\blue It is labeled \"[sortTag]\""
+			if(examtext)
+				usr << examtext
 		..()
 		return
 
@@ -155,11 +155,11 @@
 		return
 
 	examine()
-		set src in oview(4)
-		if(sortTag)
-			usr << "\blue It is labeled \"[sortTag]\""
-		if(examtext)
-			usr << examtext
+		if(src in oview(4))
+			if(sortTag)
+				usr << "\blue It is labeled \"[sortTag]\""
+			if(examtext)
+				usr << examtext
 		..()
 		return
 
@@ -171,14 +171,19 @@
 	var/amount = 25.0
 
 
-	attack(target as obj, mob/user as mob)
+	afterattack(target as obj, mob/user as mob)
+		if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack))
+			return
 
 		user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[target]</font>")
 
-/*		if (istype(target, /obj/item))
+		if (istype(target, /obj/item))
 			var/obj/item/O = target
 			if (src.amount > 1)
 				var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(O.loc))	//Aaannd wrap it up!
+				if(!istype(O.loc, /turf))
+					if(user.client)
+						user.client.screen -= O
 				P.wrapped = O
 				O.loc = P
 				src.amount -= 1
@@ -201,9 +206,8 @@
 				O.loc = P
 				src.amount -= 3
 			else
-				user << "\blue You need more paper."	*/
-
-		if(!(istype (target, /obj/structure/closet) || istype(target, /obj/structure/closet/crate) || istype(target, /obj/item)))
+				user << "\blue You need more paper."
+		else
 			user << "\blue The object you are trying to wrap is unsuitable for the sorting machinery!"
 		if (src.amount <= 0)
 			new /obj/item/weapon/c_tube( src.loc )
@@ -213,12 +217,12 @@
 		return
 
 	examine()
-		set src in usr
-		usr << "\blue There are [amount] units of package wrap left!"
+		if(src in usr)
+			usr << "\blue There are [amount] units of package wrap left!"
 		..()
 		return
 
-/obj/item/proc/wrap(obj/item/I as obj, mob/user as mob)
+/*/obj/item/proc/wrap(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/packageWrap))
 		var/obj/item/weapon/packageWrap/C = I
 		if(anchored)
@@ -231,7 +235,7 @@
 		if (C.amount <= 0)
 			new /obj/item/weapon/c_tube( C.loc )
 			del(C)
-			return
+			return*/
 
 /obj/item/device/destTagger
 	name = "destination tagger"
