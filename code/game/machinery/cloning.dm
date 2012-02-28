@@ -35,6 +35,8 @@
 	var/obj/item/weapon/disk/data/diskette = null //Mostly so the geneticist can steal everything.
 	var/wantsscan = 1
 	var/wantspod = 1
+	var/poddir = 8 //Which dir relative to the computer it is in.
+	var/scandir = 8
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -66,8 +68,7 @@
 /obj/machinery/computer/cloning/New()
 	..()
 	spawn(5)
-		updatemodules()
-		/*src.scanner = locate(/obj/machinery/dna_scannernew, get_step(src, scandir))
+		src.scanner = locate(/obj/machinery/dna_scannernew, get_step(src, scandir))
 		src.pod1 = locate(/obj/machinery/clonepod, get_step(src, poddir))
 
 		src.temp = ""
@@ -79,53 +80,9 @@
 			src.pod1.connected = src
 
 		if (src.temp == "")
-			src.temp = "System ready."*/
+			src.temp = "System ready."
 		return
 	return
-
-/obj/machinery/computer/cloning/proc/updatemodules()
-	//world << "UPDATING MODULES"
-	src.scanner = findscanner()//locate(/obj/machinery/dna_scannernew, get_step(src, WEST))
-	src.pod1 = findcloner()//locate(/obj/machinery/clonepod, get_step(src, EAST))
-	//world << "SEARCHING FOR MACHEIN"
-	//src.temp = ""
-	//if (isnull(src.scanner))
-	//	src.temp += " <font color=red>SCNR-ERROR</font>"
-	if (!isnull(src.pod1)  && !wantspod)
-		src.pod1.connected = src
-	//	src.temp += " <font color=red>POD1-ERROR</font>"
-	//else
-
-	//if (src.temp == "")
-	//	src.temp = "System ready."
-
-/obj/machinery/computer/cloning/proc/findscanner()
-	//..()
-	//world << "SEARCHING FOR SCANNER"
-	var/obj/machinery/dna_scannernew/scannerf = null
-	for(dir in list(1,2,4,8,5,6,9,10))
-		//world << "SEARCHING IN [dir]"
-		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
-		if (!isnull(scannerf))
-			//world << "FOUND"
-			break
-	if(isnull(scannerf) && wantsscan)
-		src.temp += " <font color=red>SCNR-ERROR</font>"
-	return scannerf
-
-/obj/machinery/computer/cloning/proc/findcloner()
-	//..()
-	//world << "SEARCHING FOR POD"
-	var/obj/machinery/clonepod/podf = null
-	for(dir in list(1,2,4,8,5,6,9,10))
-		//world << "SEARCHING IN [dir]"
-		podf = locate(/obj/machinery/clonepod, get_step(src, dir))
-		if (!isnull(podf))
-			//world << "FOUND"
-			break
-	if(isnull(podf) && wantspod)
-		src.temp += " <font color=red>POD1-ERROR</font>"
-	return podf
 
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
@@ -153,7 +110,6 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 
-	updatemodules()
 	var/dat = "<h3>Cloning System Control</h3>"
 	dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font>"
 
@@ -355,12 +311,12 @@
 	if (subject.brain_op_stage == 4.0)
 		src.temp = "Error: No signs of intelligence detected."
 		return
-//	if (subject.suiciding == 1)
-//		src.temp = "Error: Subject's brain is not responding to scanning stimuli."
-//		return
-//	if ((!subject.ckey) || (!subject.client))
-//		src.temp = "Error: Mental interface failure."
-//		return
+	if (subject.suiciding == 1)
+		src.temp = "Error: Subject's brain is not responding to scanning stimuli."
+		return
+	if ((!subject.ckey) || (!subject.client))
+		src.temp = "Error: Mental interface failure."
+		return
 	if (subject.mutations & HUSK)
 		src.temp = "Error: Mental interface failure."
 		return
@@ -370,13 +326,9 @@
 
 	subject.dna.check_integrity()
 
-	var/ckey = subject.ckey
-	if(!ckey && subject && subject.mind)
-		ckey = subject.mind.key
-
 	var/datum/data/record/R = new /datum/data/record(  )
 	R.fields["mrace"] = subject.mutantrace
-	R.fields["ckey"] = ckey
+	R.fields["ckey"] = subject.ckey
 	R.fields["name"] = subject.real_name
 	R.fields["id"] = copytext(md5(subject.real_name), 2, 6)
 	R.fields["UI"] = subject.dna.uni_identity
@@ -446,7 +398,7 @@
 			break
 	if(!selected) //Search for a ghost if dead body with client isn't found.
 		for(var/mob/dead/observer/ghost in world)
-			if (ghost.corpse && ghost.corpse.mind.key == find_key)
+			if (ghost.corpse.mind.key == find_key)
 				selected = ghost
 				break
 	return selected
@@ -654,11 +606,6 @@
 			user << "System unlocked."
 	else if (istype(W, /obj/item/weapon/card/emag))
 		if (isnull(src.occupant))
-			return
-		var/obj/item/weapon/card/emag/E = W
-		if(E.uses)
-			E.uses--
-		else
 			return
 		user << "You force an emergency ejection."
 		src.locked = 0
