@@ -11,6 +11,7 @@
 	for(var/mob/M in mobs)
 		if(M.ckey)
 			var/color = "#e6e6e6"
+			i++
 			if(i%2 == 0)
 				color = "#f2f2f2"
 			var/real = (M.real_name == M.original_name ? M.real_name : "[M.original_name] (as [M.real_name])")
@@ -19,26 +20,32 @@
 			dat += "<tr align='center' bgcolor='[color]'><td>[M.name] \[[real]\] <br>[M.client ? M.client : "No client ([client_key])"] at ([T.x], [T.y], [T.z])</td>" // Adds current name
 			if(isobserver(M))
 				dat += "<td>Ghost</td>"
-			if(isalien(M))
+			else if(isalien(M))
 				dat += "<td>Alien</td>"
-			if(islarva(M))
+			else if(islarva(M))
 				dat += "<td>Alien larva</td>"
-			if(ishuman(M))
+			else if(istajaran(M))
+				dat += "<td>Tajaran</td>"
+			else if(ishuman(M))
 				dat += "<td>[M.job]</td>"
-			if(ismetroid(M))
+			else if(ismetroid(M))
 				dat += "<td>Metroid</td>"
-			if(ismonkey(M))
+			else if(ismonkey(M))
 				dat += "<td>Monkey</td>"
-			if(isAI(M))
+			else if(isAI(M))
 				dat += "<td>AI</td>"
-			if(ispAI(M))
+			else if(ispAI(M))
 				dat += "<td>pAI</td>"
-			if(isrobot(M))
+			else if(isrobot(M))
 				dat += "<td>Cyborg</td>"
-			if(isanimal(M))
+			else if(isanimal(M))
 				dat += "<td>Animal</td>"
-			if(iscorgi(M))
+			else if(iscorgi(M))
 				dat += "<td>Corgi</td>"
+			else if(istype(M,/mob/new_player))
+				dat += "<td>New Player</td>"
+			else
+				dat += "<td>ERROR</td>"
 
 			if(M.mind && M.mind.assigned_role && istype(M, /mob/living/carbon/human))	// Adds a column to Player Panel that shows their current job.
 				var/mob/living/carbon/human/H = M
@@ -81,13 +88,14 @@
 				"}
 
 			dat += {"<td><A HREF='?src=\ref[src];player_info=[M.ckey]'>[player_has_info(M.ckey) ? "Info" : "N/A"] </A></td>
-			<td><A href='?src=\ref[src];boot2=\ref[M]'>Boot</A> | <A href='?src=\ref[src];newban=\ref[M]'>Ban</A> | <A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A>
-			<br><font size="2.5">[muting]</font><br>
-			<font size="2"><A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A> |
+			<td><A href='?src=\ref[usr];priv_msg=\ref[M]'><b>PM</b></A> |
+			<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A> |
 			<A HREF='?src=\ref[src];adminplayervars=\ref[M]'>VV</A> |
 			<A HREF='?src=\ref[src];adminplayersubtlemessage=\ref[M]'>SM</A> |
 			<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A> |
-			<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A></font></td>
+			<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A></font>
+			<br><font size="2">[muting]</font><br>
+			<font size="2"><A href='?src=\ref[src];warn=\ref[M]'>Warn</A> | <A href='?src=\ref[src];boot2=\ref[M]'>Boot</A> | <A href='?src=\ref[src];newban=\ref[M]'>Ban</A> | <A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A></td>
 			"}
 
 			switch(is_special_character(M))
@@ -100,7 +108,7 @@
 
 	dat += "</table></body></html>"
 
-	usr << browse(dat, "window=players;size=905x480")
+	usr << browse(dat, "window=players;size=905x600")
 
 //The old one
 /obj/admins/proc/player_panel_old()
