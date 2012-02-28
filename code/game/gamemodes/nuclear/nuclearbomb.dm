@@ -6,7 +6,8 @@
 	density = 1
 	var/deployable = 0.0
 	var/extended = 0.0
-	var/timeleft = 60.0
+	var/timeleft = 1200
+	var/time_actual = 0
 	var/timing = 0.0
 	var/r_code = "ADMIN"
 	var/code = ""
@@ -22,8 +23,7 @@
 
 /obj/machinery/nuclearbomb/process()
 	if (src.timing)
-		src.timeleft--
-		if (src.timeleft <= 0)
+		if((time_actual <= world.timeofday) && ((world.timeofday + (time_actual - world.timeofday)) <= 864000) )
 			explode()
 		for(var/mob/M in viewers(1, src))
 			if ((M.client && M.machine == src))
@@ -35,18 +35,23 @@
 
 /obj/machinery/nuclearbomb/attack_hand(mob/user as mob)
 	if (src.extended)
+		var/time_left = time2text(time_actual-world.timeofday, "mm:ss")
+		if(world.timeofday + (time_actual - world.timeofday) >= 864000)
+			time_left = time2text(time_actual-(864000 - world.timeofday), "mm:ss")
+		if(!timing)
+			time_left = time2text(timeleft, "mm:ss")
 		user.machine = src
 		var/dat = text("<TT><B>Nuclear Fission Explosive</B><BR>\nAuth. Disk: <A href='?src=\ref[];auth=1'>[]</A><HR>", src, (src.auth ? "++++++++++" : "----------"))
 		if (src.auth)
 			if (src.yes_code)
-				dat += text("\n<B>Status</B>: []-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] <A href='?src=\ref[];timer=1'>Toggle</A><BR>\nTime: <A href='?src=\ref[];time=-10'>-</A> <A href='?src=\ref[];time=-1'>-</A> [] <A href='?src=\ref[];time=1'>+</A> <A href='?src=\ref[];time=10'>+</A><BR>\n<BR>\nSafety: [] <A href='?src=\ref[];safety=1'>Toggle</A><BR>\nAnchor: [] <A href='?src=\ref[];anchor=1'>Toggle</A><BR>\n", (src.timing ? "Func/Set" : "Functional"), (src.safety ? "Safe" : "Engaged"), src.timeleft, (src.timing ? "On" : "Off"), src, src, src, src.timeleft, src, src, (src.safety ? "On" : "Off"), src, (src.anchored ? "Engaged" : "Off"), src)
+				dat += text("\n<B>Status</B>: []-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] <A href='?src=\ref[];timer=1'>Toggle</A><BR>\nTime: <A href='?src=\ref[];time=-60'>-</A><A href='?src=\ref[];time=-10'>-</A><A href='?src=\ref[];time=-1'>-</A> [] <A href='?src=\ref[];time=1'>+</A><A href='?src=\ref[];time=10'>+</A><A href='?src=\ref[];time=60'>+</A><BR>\n<BR>\nSafety: [] <A href='?src=\ref[];safety=1'>Toggle</A><BR>\nAnchor: [] <A href='?src=\ref[];anchor=1'>Toggle</A><BR>\n", (src.timing ? "Func/Set" : "Functional"), (src.safety ? "Safe" : "Engaged"), time_left, (src.timing ? "On" : "Off"), src, src, src, src, time_left, src, src, src, (src.safety ? "On" : "Off"), src, (src.anchored ? "Engaged" : "Off"), src)
 			else
-				dat += text("\n<B>Status</B>: Auth. S2-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\n[] Safety: Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), src.timeleft, (src.timing ? "On" : "Off"), src.timeleft, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
+				dat += text("\n<B>Status</B>: Auth. S2-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\n[] Safety: Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), time_left, (src.timing ? "On" : "Off"), time_left, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
 		else
 			if (src.timing)
-				dat += text("\n<B>Status</B>: Set-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\nSafety: [] Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), src.timeleft, (src.timing ? "On" : "Off"), src.timeleft, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
+				dat += text("\n<B>Status</B>: Set-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\nSafety: [] Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), time_left, (src.timing ? "On" : "Off"), time_left, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
 			else
-				dat += text("\n<B>Status</B>: Auth. S1-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\nSafety: [] Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), src.timeleft, (src.timing ? "On" : "Off"), src.timeleft, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
+				dat += text("\n<B>Status</B>: Auth. S1-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\nSafety: [] Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), time_left, (src.timing ? "On" : "Off"), time_left, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
 		var/message = "AUTH"
 		if (src.auth)
 			message = text("[]", src.code)
@@ -111,17 +116,22 @@
 			if (src.yes_code)
 				if (href_list["time"])
 					var/time = text2num(href_list["time"])
-					src.timeleft += time
-					src.timeleft = min(max(round(src.timeleft), 5), 600)
+					timeleft = min(max(time + (timeleft/10), 120), 900) * 10
 				if (href_list["timer"])
-					if (src.timing == -1.0)
+					if (timing == -1.0)
 						return
-					src.timing = !( src.timing )
-					if (src.timing)
+					timing = !( timing )
+					if (timing)
+						time_actual = world.timeofday + timeleft
+						if(time_actual >= 864000)
+							time_actual -= 864000
 						src.icon_state = "nuclearbomb2"
 						if(!src.safety)
 							bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
 					else
+						timeleft = time_actual - world.timeofday
+						if(timeleft < 0)
+							timeleft += 864000
 						src.icon_state = "nuclearbomb1"
 						bomb_set = 0
 				if (href_list["safety"])
@@ -153,6 +163,7 @@
 /obj/machinery/nuclearbomb/proc/explode()
 	if (src.safety)
 		src.timing = 0
+		timeleft = 0
 		return
 	src.timing = -1.0
 	src.yes_code = 0
