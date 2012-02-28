@@ -12,9 +12,13 @@
 	process()
 		main = 1
 		ID = rand(0,1000)
-		var/lets_not_be_a_derp = 1
+		var/first = 1
+		var/obj/effect/effect/laserdealer/lasor = new /obj/effect/effect/laserdealer(null)
+		spawn(0)
+			lasor.setup(ID)
 		spawn(0)
 			while(!bumped)
+				step_towards(src, current)
 				for(var/mob/living/M in loc)
 					Bump(M)
 				if((!( current ) || loc == current))
@@ -22,25 +26,27 @@
 				if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
 					del(src)
 					return
-				if(!lets_not_be_a_derp)
+				if(!first)
 					var/obj/item/projectile/beam/new_beam = new src.type(loc)
 					processing_objects.Remove(new_beam)
-					new_beam.dir = dir
+					new_beam.dir = get_dir(src, current)
 					new_beam.ID = ID
+					new_beam.icon_state = icon_state
 				else
-					lets_not_be_a_derp = 0
-				step_towards(src, current)
+					first = 0
 		processing_objects.Remove(src)
 		return
 
-	Del()
-		if(main)
-			sleep(3)
-			for(var/obj/item/projectile/beam/beam in world)
-				if(beam.ID == ID)
-					del(beam)
-		..()
+/obj/effect/effect/laserdealer
+	name = "laserdealio"
 
+	proc/setup(var/ID = 0)
+		sleep(5)
+		for(var/obj/item/projectile/beam/beam in world)
+			if(ID == beam.ID)
+				del(beam)
+		spawn(0)
+			del(src)
 
 /obj/item/projectile/beam/heavylaser
 	name = "heavy laser"
