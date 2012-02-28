@@ -183,7 +183,16 @@
 	name = "Chemist Jumpsuit"
 	icon_state = "genetics"
 	item_state = "w_suit"
-	color = "geneticswhite"
+	color = "chemistrywhite"
+	permeability_coefficient = 0.50
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
+
+/obj/item/clothing/under/rank/virologist
+	desc = "Made of a special fiber that gives special protection against biohazards. Has a virologist rank stripe on it."
+	name = "Virology Jumpsuit"
+	icon_state = "virology"
+	item_state = "w_suit"
+	color = "virologywhite"
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 

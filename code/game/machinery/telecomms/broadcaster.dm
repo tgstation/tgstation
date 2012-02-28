@@ -394,7 +394,7 @@ var
 			var/J = job
 			var/rendered = "[part_a][N][part_b][quotedmsg][part_c]"
 			for (var/mob/R in heard_masked)
-				if(istype(R, /mob/living/silicon/ai))
+				if(istype(R, /mob/living/silicon/ai) && job != "Automated Announcement")
 					R.show_message("[part_a]<a href='byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]'>[N] ([J]) </a>[part_b][quotedmsg][part_c]", 2)
 				else
 					R.show_message(rendered, 2)
@@ -405,7 +405,7 @@ var
 			var/rendered = "[part_a][M.real_name][part_b][quotedmsg][part_c]"
 
 			for (var/mob/R in heard_normal)
-				if(istype(R, /mob/living/silicon/ai))
+				if(istype(R, /mob/living/silicon/ai) && job != "Automated Announcement")
 					R.show_message("[part_a]<a href='byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]'>[realname] ([job]) </a>[part_b][quotedmsg][part_c]", 2)
 				else
 					R.show_message(rendered, 2)
@@ -419,7 +419,7 @@ var
 				rendered = "[part_a][vname][part_b][M.voice_message][part_c]"
 
 			for (var/mob/R in heard_voice)
-				if(istype(R, /mob/living/silicon/ai))
+				if(istype(R, /mob/living/silicon/ai) && job != "Automated Announcement")
 					R.show_message("[part_a]<a href='byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]'>[vname] ([job]) </a>[part_b][vmessage]][part_c]", 2)
 				else
 					R.show_message(rendered, 2)
@@ -435,7 +435,7 @@ var
 			var/rendered = "[part_a][vname][part_b][quotedmsg][part_c]"
 
 			for (var/mob/R in heard_garbled)
-				if(istype(R, /mob/living/silicon/ai))
+				if(istype(R, /mob/living/silicon/ai) && job != "Automated Announcement")
 					R.show_message("[part_a]<a href='byond://?src=\ref[radio];track2=\ref[R];track=\ref[M]'>[vname]</a>[part_b][quotedmsg][part_c]", 2)
 				else
 					R.show_message(rendered, 2)

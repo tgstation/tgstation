@@ -514,8 +514,8 @@ datum/preferences
 				if(!selected) return
 
 				ZeroSkills(1)
-				skills = SKILL_PRE[selected]
-				ZeroSkills()
+				for(var/V in SKILL_PRE[selected])
+					skills[V] = SKILL_PRE[selected][V]
 				used_skillpoints = 0
 				for(var/V in skills) used_skillpoints += skills[V]
 
