@@ -30,7 +30,7 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 
-	if(!allowed(user) & (wires & 1))
+	if(!allowed(user) && (wires & 1))
 		flick("doorctrl-denied",src)
 		return
 
