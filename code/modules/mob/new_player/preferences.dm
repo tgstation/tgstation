@@ -123,9 +123,9 @@ datum/preferences
 		randomize_name()
 		..()
 
-	proc/ZeroSkills()
+	proc/ZeroSkills(var/forced = 0)
 		for(var/V in SKILLS) for(var/datum/skill/S in SKILLS[V])
-			if(!skills.Find(S.ID))
+			if(!skills.Find(S.ID) || forced)
 				skills[S.ID] = SKILL_NONE
 
 	proc/GetSkillClass(points)
@@ -513,6 +513,7 @@ datum/preferences
 				var/selected = input(user, "Select a skillset", "Skillset") as null|anything in SKILL_PRE
 				if(!selected) return
 
+				ZeroSkills(1)
 				skills = SKILL_PRE[selected]
 				ZeroSkills()
 				used_skillpoints = 0
