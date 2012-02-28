@@ -205,7 +205,7 @@
 			if("botchat")
 				if (uses >= 3)
 					uses -= 3
-					new /obj/item/device/radio/headset/encryptionkey/binary(get_turf(hostpda))
+					new /obj/item/device/encryptionkey/binary(get_turf(hostpda))
 					feedback_add_details("traitor_uplink_items_bought","BT")
 			if("singubeacon")
 				if(uses >= 7)
