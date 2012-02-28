@@ -107,6 +107,14 @@
 		name = "Bedhead 2"
 		icon_state = "hair_bedhead"
 
+	bedhead3
+		name = "Bedhead 3"
+		icon_state = "hair_bedheadv2"
+
+	bedhead4
+		name = "Bedhead 4"
+		icon_state = "hair_bedheadalt"
+
 	dreadlocks
 		name = "Dreadlocks"
 		icon_state = "hair_dreads"
@@ -124,6 +132,21 @@
 		icon_state = "bald"
 		choose_female = 0
 
+	longalt
+		name = "Long Hair Alt"
+		icon_state = "hair_longfringe"
+
+	longestalt
+		name = "Longest Hair Alt"
+		icon_state = "hair_vlongfringe"
+
+	himecut
+		name = "Hime Cut"
+		icon_state = "hair_himecut"
+
+	curls
+		name = "Curls"
+		icon_state = "hair_curls"
 
 
 /*
