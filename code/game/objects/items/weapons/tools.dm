@@ -164,6 +164,7 @@ WELDINGTOOOL
 
 	attack_self(mob/user as mob)
 		toggle()
+		user.update_clothing()
 		return
 
 
@@ -223,6 +224,7 @@ WELDINGTOOOL
 			src.damtype = "brute"
 			src.icon_state = "welder"
 			src.welding = 0
+		return
 
 
 	eyecheck(mob/user as mob)

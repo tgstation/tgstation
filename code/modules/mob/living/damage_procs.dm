@@ -42,9 +42,9 @@
 	if(!effect || (blocked >= 2))	return 0
 	switch(effecttype)
 		if(STUN)
-			Stun(effect/(blocked+1))
+			Stun((effect - (effect*getarmor(null, "melee")))/(blocked + 1))
 		if(WEAKEN)
-			Weaken(effect/(blocked+1))
+			Weaken((effect - (effect*getarmor(null, "melee")))/(blocked + 1))
 		if(PARALYZE)
 			Paralyse(effect/(blocked+1))
 		if(IRRADIATE)
