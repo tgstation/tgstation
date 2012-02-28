@@ -228,11 +228,8 @@
 	return
 
 /obj/effect/manifest/proc/manifest()
-	var/dat = "<B>Crew Manifest</B>:<BR>"
-	for(var/mob/living/carbon/human/M in world)
-		dat += text("    <B>[]</B> -  []<BR>", M.name, M.get_assignment())
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( src.loc )
-	P.info = dat
+	P.info = "<B>Crew Manifest:</B><BR>" + data_core.get_manifest()
 	P.name = "paper - 'Crew Manifest'"
 	//SN src = null
 	del(src)

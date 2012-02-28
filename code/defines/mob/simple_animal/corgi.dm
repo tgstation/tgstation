@@ -329,7 +329,7 @@
 					dir = i
 					sleep(1)
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/corgi
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/corgi
 	name = "Corgi meat"
 	desc = "Tastes like... well you know..."
 

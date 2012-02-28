@@ -111,14 +111,6 @@ proc/isorgan(A)
 			zone = "head"
 		if("mouth")
 			zone = "head"
-		if("l_hand")
-			zone = "l_arm"
-		if("r_hand")
-			zone = "r_arm"
-		if("l_foot")
-			zone = "l_leg"
-		if("r_foot")
-			zone = "r_leg"
 		if("groin")
 			zone = "chest"
 	return zone

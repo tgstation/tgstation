@@ -169,6 +169,8 @@
 
 	E.dir = old_dir
 	E.icon_state = "engine"
+	E.levelupdate()
+	return E
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	if (istype(A,/mob/living/carbon))

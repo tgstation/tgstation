@@ -799,11 +799,25 @@
 	desc = "A piece of hot spicy meat."
 	icon_state = "meatstake"
 	trash = "plate"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cutlet
+	slices_num = 3
 	New()
 		..()
 		reagents.add_reagent("nutriment", 4)
 		reagents.add_reagent("sodiumchloride", 1)
 		reagents.add_reagent("blackpepper", 1)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/cookedmeat
+	name = "Simple, cooked meat"
+	desc = "A chunk of meat."
+	icon_state = "meatstake"
+	trash = "plate"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cutlet
+	slices_num = 3
+	New()
+		..()
+		reagents.add_reagent("nutriment", 3)
 		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/spacylibertyduff

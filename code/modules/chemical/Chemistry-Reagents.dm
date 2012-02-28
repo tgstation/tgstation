@@ -2131,6 +2131,20 @@ datum
 				..()
 				return
 
+		grapejuice
+			name = "Grape Juice"
+			id = "grapejuice"
+			description = "A tasty, purple juice made from grapes."
+			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#333386" // rgb: 51, 51, 134
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M:nutrition += nutriment_factor
+				..()
+				return
+
 		berryjuice
 			name = "Berry Juice"
 			id = "berryjuice"
