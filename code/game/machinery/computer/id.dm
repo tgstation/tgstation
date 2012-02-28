@@ -52,9 +52,7 @@
 	if (!( ticker ))
 		return
 	if (mode) // accessing crew manifest
-		var/crew = ""
-		for(var/datum/data/record/t in data_core.general)
-			crew += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+		var/crew = data_core.get_manifest()
 		dat = "<tt><b>Crew Manifest:</b><br>Please use the security record computer to modify entries.<br>[crew]<a href='?src=\ref[src];choice=print'>Print</a><br><br><a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
 	else
 		var/header = "<div align='center'><b>Identification Card Modifier</b></div>"
@@ -245,10 +243,7 @@
 				printing = 1
 				sleep(50)
 				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
-				var/t1 = "<B>Crew Manifest:</B><BR>"
-				for(var/datum/data/record/t in data_core.general)
-					t1 += "<B>[t.fields["name"]]</B> - [t.fields["rank"]]<BR>"
-				P.info = t1
+				P.info = "<B>Crew Manifest:</B><BR>" + data_core.get_manifest()
 				P.name = "paper - 'Crew Manifest'"
 				printing = null
 	if (modify)

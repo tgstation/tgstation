@@ -235,8 +235,7 @@ Code:
 				menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
 				menu += "Entries cannot be modified from this terminal.<br><br>"
 
-				for (var/datum/data/record/t in data_core.general)
-					menu += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+				menu += data_core.get_manifest(1)
 				menu += "<br>"
 
 
