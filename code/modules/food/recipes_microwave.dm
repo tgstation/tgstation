@@ -461,6 +461,12 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/meatsteak
 
+/datum/recipe/cookedmeat
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/meat
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/cookedmeat
+
 /datum/recipe/syntisteak
 	reagents = list("sodiumchloride" = 1, "blackpepper" = 1)
 	items = list(

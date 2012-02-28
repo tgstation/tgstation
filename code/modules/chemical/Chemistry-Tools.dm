@@ -1518,12 +1518,9 @@
 			inaccurate = 1
 		else if(W.w_class <= 2 && istype(src,/obj/item/weapon/reagent_containers/food/snacks/sliceable))
 			user << "\red You slip [W] inside [src]."
-			user.u_equip(W)
-			if ((user.client && user.s_active != src))
-				user.client.screen -= W
-			W.dropped(user)
+			user.drop_item()
+			W.loc = src
 			add_fingerprint(user)
-			contents += W
 			return
 		else
 			return 1

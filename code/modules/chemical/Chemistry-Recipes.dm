@@ -969,7 +969,7 @@ datum
 			name = "Wine"
 			id = "wine"
 			result = "wine"
-			required_reagents = list("berryjuice" = 10)
+			required_reagents = list("grapejuice" = 10)
 			required_catalysts = list("enzyme" = 5)
 			result_amount = 10
 
