@@ -603,13 +603,7 @@
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 	if (prob(50))
 		Paralyse(10)
-	if (stat == DEAD && client)
-		gib(1)
-		return
-	if (stat == DEAD && !client)
-		gibs(loc, viruses)
-		del(src)
-		return
+
 
 /obj/effect/equip_e/monkey/process()
 	if (item)
