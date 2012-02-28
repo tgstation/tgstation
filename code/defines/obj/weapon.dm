@@ -939,10 +939,10 @@
 	throw_range = 5
 	w_class = 1.0
 	flags = FPRINT | TABLEPASS
-	var/uses = 4.0
+	var/uses = 5.0
 	var/temp = null
 	var/spell_type = "verb"
-	var/max_uses = 4
+	var/max_uses = 5
 
 /obj/item/weapon/spellbook/object_type_spells //used for giving out object spells as opposed to verb spells
 	spell_type = "object"
