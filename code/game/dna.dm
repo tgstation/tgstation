@@ -14,7 +14,7 @@
 		if(length(uni_identity) != 39)
 			//Lazy.
 			var/temp
-			var/hair
+			var/hair = 0
 			var/beard
 
 			// determine DNA fragment from hairstyle
@@ -23,11 +23,10 @@
 			var/list/styles = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
 			var/hrange = round(4095 / styles.len)
 
-			var/style = styles.Find(character.hair_style.type)
-			if(style)
-				hair = style * hrange - rand(1,hrange-1)
-			else
-				hair = 0
+			if(character.hair_style)
+				var/style = styles.Find(character.hair_style.type)
+				if(style)
+					hair = style * hrange - rand(1,hrange-1)
 
 			// Beard dna code - mostly copypasted from hair code to allow for more dynamic facial hair style additions
 			var/list/face_styles = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
