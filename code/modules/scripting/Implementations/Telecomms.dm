@@ -63,6 +63,9 @@
 		if(!ready)
 			return
 
+		if(!interpreter)
+			return
+
 		interpreter.SetVar("$content", 	signal.data["message"])
 		interpreter.SetVar("$freq"   , 	signal.frequency)
 		interpreter.SetVar("$source" , 	signal.data["name"])

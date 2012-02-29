@@ -298,13 +298,29 @@
 
 	var/turf/T = get_turf(src)
 	var/list/V = view(message_range, T)
+	var/list/W = V
 
 
+
+
+	for (var/obj/O in ((W | contents)-used_radios))
+		W |= O
+
+	for (var/mob/M in W)
+		W |= M.contents
+
+	for (var/obj/O in W) //radio in pocket could work, radio in backpack wouldn't --rastaf0
+		spawn (0)
+			if(O && !istype(O.loc, /obj/item/weapon/storage))
+				O.hear_talk(src, message)
+
+
+/*			Commented out as replaced by code above from BS12
 	for (var/obj/O in ((V | contents)-used_radios)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
 		spawn (0)
 			if (O)
 				O.hear_talk(src, message)
-
+*/
 	if(isbrain(src))//For brains to properly talk if they are in an MMI..or in a brain. Could be extended to other mobs I guess.
 		for(var/obj/O in loc)//Kinda ugly but whatever.
 			if(O)
