@@ -135,27 +135,28 @@
 		for(var/datum/data/record/t in data_core.general)
 			var/name = t.fields["name"]
 			var/rank = t.fields["rank"]
+			var/real_rank = t.fields["real_rank"]
 
 			//world << "[name]: [rank]"
 
-			if(rank in command_positions)
+			if(real_rank in command_positions)
 				heads[name] = rank
-			if(rank in security_positions)
+			if(real_rank in security_positions)
 				sec[name] = rank
 				continue
-			if(rank in engineering_positions)
+			if(real_rank in engineering_positions)
 				eng[name] = rank
 				continue
-			if(rank in medical_positions)
+			if(real_rank in medical_positions)
 				med[name] = rank
 				continue
-			if(rank in science_positions)
+			if(real_rank in science_positions)
 				sci[name] = rank
 				continue
-			if(rank in civilian_positions)
+			if(real_rank in civilian_positions)
 				civ[name] = rank
 				continue
-			if(rank in nonhuman_positions)
+			if(real_rank in nonhuman_positions)
 				bot[name] = rank
 				continue
 
