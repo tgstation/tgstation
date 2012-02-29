@@ -13,7 +13,7 @@
 		dat += "<B>Memorize which spell:</B><BR>"
 		dat += "<I>The number after the spell name is the cooldown time.</I><BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=1'>Magic Missile</A> (10)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=2'>Fireball</A> (10)<BR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=2'>Fireball</A> (20)<BR>"
 //		dat += "<A href='byond://?src=\ref[src];spell_choice=3'>Disintegrate</A> (60)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=4'>Disable Technology</A> (60)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=5'>Smoke</A> (10)<BR>"
@@ -26,7 +26,12 @@
 		dat += "<A href='byond://?src=\ref[src];spell_choice=12'>Ethereal Jaunt</A> (60)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=13'>Knock</A> (10)<BR>"
 		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=14'>Re-memorize Spells</A><BR>"
+		dat += "<B>Artefacts:</B><BR>"
+		dat += "Powerful items imbued with eldritch magics. Summoning one will count towards your maximum number of spells.<BR>"
+		dat += "<HR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=14'>Staff of Change</A><BR>"
+		dat += "<HR>"
+		dat += "<A href='byond://?src=\ref[src];spell_choice=15'>Re-memorize Spells</A><BR>"
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
@@ -97,6 +102,10 @@
 							usr.verbs += /client/proc/knock
 							usr.mind.special_verbs += /client/proc/knock
 							src.temp = "This spell opens nearby doors and does not require wizard garb."
+						if ("14")
+							new /obj/item/weapon/gun/energy/staff(get_turf(usr))
+							src.temp = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself"
+							src.max_uses--
 				else if(spell_type == "object")
 					var/list/available_spells = list("Magic Missile","Fireball","Disintegrate","Disable Tech","Smoke","Blind","Mind Transfer","Forcewall","Blink","Teleport","Mutate","Ethereal Jaunt","Knock")
 					var/already_knows = 0
@@ -147,7 +156,11 @@
 							if ("13")
 								usr.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/knock(usr)
 								src.temp = "This spell opens nearby doors and does not require wizard garb."
-			if (href_list["spell_choice"] == "14")
+							if ("14")
+								new /obj/item/weapon/gun/energy/staff(get_turf(usr))
+								src.temp = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself"
+								src.max_uses--
+			if (href_list["spell_choice"] == "15")
 				var/area/wizard_station/A = locate()
 				if(usr in A.contents)
 					src.uses = src.max_uses

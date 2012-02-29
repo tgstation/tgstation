@@ -604,6 +604,7 @@
 	if (prob(50))
 		Paralyse(10)
 
+
 /obj/effect/equip_e/monkey/process()
 	if (item)
 		item.add_fingerprint(source)

@@ -450,7 +450,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 15)
-				if(isturf(M.loc))
+				if(isturf(M.loc) && !istype(M.loc, /turf/space))
 					if(M.canmove)
 						if(prob(10)) step(M, pick(cardinal))
 				if(prob(7)) M:emote(pick("twitch","drool","moan","giggle"))
@@ -579,7 +579,8 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				if(M.canmove) step(M, pick(cardinal))
+				if(M.canmove && istype(M.loc, /turf/space))
+					step(M, pick(cardinal))
 				if(prob(5)) M:emote(pick("twitch","drool","moan"))
 				..()
 				return
@@ -652,7 +653,8 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				if(M.canmove) step(M, pick(cardinal))
+				if(M.canmove && istype(M.loc, /turf/space))
+					step(M, pick(cardinal))
 				if(prob(5)) M:emote(pick("twitch","drool","moan"))
 				..()
 				return
