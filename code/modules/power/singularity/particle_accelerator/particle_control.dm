@@ -46,16 +46,22 @@
 			return
 		if(href_list["togglep"])
 			src.toggle_power()
+			message_admins("[usr] toggled particle accelerator power to [active ? "on" : "off"].")
+			log_admin("[usr] toggled particle accelerator power to [active ? "on" : "off"].")
 		if(href_list["scan"])
 			src.part_scan()
 		if(href_list["strengthup"])
 			src.strength++
 			if(src.strength > 2)
 				src.strength = 2
+			message_admins("[usr] increased particle accelerator power to [strength].")
+			log_admin("[usr] increased particle accelerator power to [strength].")
 		if(href_list["strengthdown"])
 			src.strength--
 			if(src.strength < 0)
 				src.strength = 0
+			message_admins("[usr] decreased particle accelerator power to [strength].")
+			log_admin("[usr] decreased particle accelerator power to [strength].")
 		src.updateDialog()
 
 
