@@ -228,13 +228,6 @@ Code:
 [radio:code]
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=1'>+</a>
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=5'>+</a><br>"}
-			if (41) //crew manifest
-
-				menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
-				menu += "Entries cannot be modified from this terminal.<br><br>"
-
-				menu += data_core.get_manifest(1)
-				menu += "<br>"
 
 
 			if (42) //status displays
