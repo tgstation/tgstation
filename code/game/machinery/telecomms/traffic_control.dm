@@ -1,16 +1,70 @@
-/obj/machinery/computer/telecomms/server
-	name = "Telecommunications Server Monitor"
-	icon_state = "comm_logs"
+
+
+
+
+/obj/machinery/computer/telecomms/traffic
+	name = "Telecommunications Traffic Control"
+	icon_state = "computer_generic"
 
 	var
 		screen = 0				// the screen number:
 		list/servers = list()	// the servers located by the computer
-		var/obj/machinery/telecomms/server/SelectedServer
+		mob/editingcode
+		list/viewingcode = list()
+		obj/machinery/telecomms/server/SelectedServer
 
 		network = "NULL"		// the network to probe
 		temp = ""				// temporary feedback messages
 
-		universal_translate = 0 // set to 1 if it can translate nonhuman speech
+		storedcode = ""			// code stored
+
+
+	proc/update_ide()
+
+		// loop if there's someone manning the keyboard
+		while(editingcode)
+			if(!editingcode.client)
+				editingcode = null
+				break
+
+			// For the typer, the input is enabled. Buffer the typed text
+			if(editingcode)
+				storedcode = "[winget(editingcode, "tcscode", "text")]"
+			if(editingcode) // double if's to work around a runtime error
+				winset(editingcode, "tcscode", "is-disabled=false")
+
+			// If the player's not manning the keyboard anymore, adjust everything
+			if(!(editingcode in range(1, src)) || editingcode.machine != src)
+				if(editingcode)
+					winshow(editingcode, "Telecomms IDE", 0) // hide the window!
+				editingcode = null
+				break
+
+			// For other people viewing the typer type code, the input is disabled and they can only view the code
+			// (this is put in place so that there's not any magical shenanigans with 50 people inputting different code all at once)
+
+			if(length(viewingcode))
+				// This piece of code is very important - it escapes quotation marks so string aren't cut off by the input element
+				var/showcode = dd_replacetext(storedcode, "\\\"", "\\\\\"")
+				showcode = dd_replacetext(storedcode, "\"", "\\\"")
+
+				for(var/mob/M in viewingcode)
+					if(M.machine == src && M in view(1, src))
+						winset(M, "tcscode", "is-disabled=true")
+						winset(M, "tcscode", "text=\"[showcode]\"")
+					else
+						if(!issilicon(M))
+							viewingcode.Remove(M)
+							winshow(M, "Telecomms IDE", 0) // hide the window!
+
+			sleep(5)
+
+		if(length(viewingcode) > 0)
+			editingcode = pick(viewingcode)
+			viewingcode.Remove(editingcode)
+			update_ide()
+
+
 
 	req_access = list(access_tcomsat)
 
@@ -18,7 +72,7 @@
 		if(stat & (BROKEN|NOPOWER))
 			return
 		user.machine = src
-		var/dat = "<TITLE>Telecommunication Server Monitor</TITLE><center><b>Telecommunications Server Monitor</b></center>"
+		var/dat = "<TITLE>Telecommunication Traffic Control</TITLE><center><b>Telecommunications Traffic Control</b></center>"
 
 		switch(screen)
 
@@ -45,84 +99,16 @@
 				dat += "<br>[temp]<br>"
 				dat += "<center><a href='?src=\ref[src];operation=mainmenu'>\[Main Menu\]</a>     <a href='?src=\ref[src];operation=refresh'>\[Refresh\]</a></center>"
 				dat += "<br>Current Network: [network]"
-				dat += "<br>Selected Server: [SelectedServer.id]"
-
-				if(SelectedServer.totaltraffic >= 1024)
-					dat += "<br>Total recorded traffic: [round(SelectedServer.totaltraffic / 1024)] Terrabytes<br><br>"
+				dat += "<br>Selected Server: [SelectedServer.id]<br><br>"
+				dat += "<br><a href='?src=\ref[src];operation=editcode'>\[Edit Code\]</a>"
+				dat += "<br>Signal Execution: "
+				if(SelectedServer.autoruncode)
+					dat += "<a href='?src=\ref[src];operation=togglerun'>ALWAYS</a>"
 				else
-					dat += "<br>Total recorded traffic: [SelectedServer.totaltraffic] Gigabytes<br><br>"
-
-				dat += "Stored Logs: <ol>"
-
-				var/i = 0
-				for(var/datum/comm_log_entry/C in SelectedServer.log_entries)
-					i++
-
-					dat += "<li><font color = #008F00>[C.name]</font color>  <font color = #FF0000><a href='?src=\ref[src];delete=[i]'>\[X\]</a></font color><br>"
-
-					// If the log is a speech file
-					if(C.input_type == "Speech File")
-						// -- Determine race of orator --
-
-						var/race			   // The actual race of the mob
-						var/language = "Human" // MMIs, pAIs, Cyborgs and humans all speak Human
-						var/mobtype = C.parameters["mobtype"]
-						var/mob/M = new mobtype
-
-						if(ishuman(M) || isbrain(M))
-							race = "Human"
-
-						else if(ismonkey(M))
-							race = "Monkey"
-							language = race
-
-						else if(issilicon(M) || C.parameters["job"] == "AI") // sometimes M gets deleted prematurely for AIs... just check the job
-							race = "Artificial Life"
-
-						else if(ismetroid(M)) // NT knows a lot about metroids, but not aliens. Can identify metroids
-							race = "Metroid"
-							language = race
-
-						else if(isanimal(M))
-							race = "Domestic Animal"
-							language = race
-
-						else
-							race = "<i>Unidentifiable</i>"
-							language = race
-
-						del(M)
-
-						// -- If the orator is a human, or universal translate is active, OR mob has universal speech on --
-
-						if(language == "Human" || universal_translate || C.parameters["uspeech"])
-							dat += "<u><font color = #18743E>Data type</font color></u>: [C.input_type]<br>"
-							dat += "<u><font color = #18743E>Source</font color></u>: [C.parameters["name"]] (Job: [C.parameters["job"]])<br>"
-							dat += "<u><font color = #18743E>Class</font color></u>: [race]<br>"
-							dat += "<u><font color = #18743E>Contents</font color></u>: \"[C.parameters["message"]]\"<br>"
+					dat += "<a href='?src=\ref[src];operation=togglerun'>NEVER</a>"
 
 
-						// -- Orator is not human and universal translate not active --
-
-						else
-							dat += "<u><font color = #18743E>Data type</font color></u>: Audio File<br>"
-							dat += "<u><font color = #18743E>Source</font color></u>: <i>Unidentifiable</i><br>"
-							dat += "<u><font color = #18743E>Class</font color></u>: [race]<br>"
-							dat += "<u><font color = #18743E>Contents</font color></u>: <i>Unintelligble</i><br>"
-
-						dat += "</li><br>"
-
-					else if(C.input_type == "Execution Error")
-						dat += "<u><font color = #18743E>Data type</font color></u>: [C.input_type]<br>"
-						dat += "<u><font color = #18743E>Source</font color></u>: Internal server code<br>"
-						dat += "<u><font color = #18743E>Contents</font color></u>: \"[C.parameters["message"]]\"<br>"
-
-
-				dat += "</ol>"
-
-
-
-		user << browse(dat, "window=comm_monitor;size=575x400")
+		user << browse(dat, "window=traffic_control;size=575x400")
 		onclose(user, "server_control")
 
 		temp = ""
@@ -136,6 +122,9 @@
 
 		add_fingerprint(usr)
 		usr.machine = src
+		if(!src.allowed(usr) && !emagged)
+			usr << "\red ACCESS DENIED."
+			return
 
 		if(href_list["viewserver"])
 			screen = 1
@@ -170,23 +159,26 @@
 
 						screen = 0
 
-		if(href_list["delete"])
+				if("editcode")
+					if(!editingcode)
+						editingcode = usr
+						winshow(editingcode, "Telecomms IDE", 1) // show the IDE
+						winset(editingcode, "tcscode", "is-disabled=false")
+						var/showcode = dd_replacetext(storedcode, "\\\"", "\\\\\"")
+						showcode = dd_replacetext(storedcode, "\"", "\\\"")
+						winset(editingcode, "tcscode", "text=\"[showcode]\"")
+						spawn()
+							update_ide()
 
-			if(!src.allowed(usr) && !emagged)
-				usr << "\red ACCESS DENIED."
-				return
+					else
+						viewingcode.Add(usr)
+						winshow(usr, "Telecomms IDE", 1) // show the IDE
+						winset(usr, "tcscode", "is-disabled=true")
+						var/showcode = dd_replacetext(storedcode, "\"", "\\\"")
+						winset(usr, "tcscode", "text=\"[showcode]\"")
 
-			if(SelectedServer)
-
-				var/datum/comm_log_entry/D = SelectedServer.log_entries[text2num(href_list["delete"])]
-
-				temp = "<font color = #336699>- DELETED ENTRY: [D.name] -</font color>"
-
-				SelectedServer.log_entries.Remove(D)
-				del(D)
-
-			else
-				temp = "<font color = #D70B00>- FAILED: NO SELECTED MACHINE -</font color>"
+				if("togglerun")
+					SelectedServer.autoruncode = !(SelectedServer.autoruncode)
 
 		if(href_list["network"])
 

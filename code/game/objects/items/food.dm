@@ -36,16 +36,17 @@ MONKEY CUBE BOX
 
 /obj/item/kitchen/donut_box/MouseDrop(mob/user as mob)
 	if ((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
-		if (usr.hand)
-			if (!( usr.l_hand ))
-				spawn( 0 )
-					src.attack_hand(usr, 1, 1)
-					return
-		else
-			if (!( usr.r_hand ))
-				spawn( 0 )
-					src.attack_hand(usr, 0, 1)
-					return
+		if(ishuman(user))
+			if (usr.hand)
+				if (!( usr.l_hand ))
+					spawn( 0 )
+						src.attack_hand(usr, 1, 1)
+						return
+			else
+				if (!( usr.r_hand ))
+					spawn( 0 )
+						src.attack_hand(usr, 0, 1)
+						return
 	return
 
 /obj/item/kitchen/donut_box/attack_paw(mob/user as mob)

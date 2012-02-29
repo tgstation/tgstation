@@ -10,7 +10,6 @@
 	var/access_security = 0
 	var/access_engine = 0
 	var/access_medical = 0
-	var/access_manifest = 1
 	var/access_clown = 0
 	var/access_mime = 0
 	var/access_janitor = 0
@@ -167,7 +166,6 @@
 		name = "Detomatix Cartridge"
 		icon_state = "cart"
 		access_remote_door = 1
-		access_manifest = 0
 		remote_door_id = "syndicate" //Make sure this matches the syndicate shuttle's shield/door id!!
 		var/shock_charges = 4
 
