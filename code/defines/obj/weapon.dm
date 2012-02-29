@@ -939,7 +939,7 @@
 	throw_range = 5
 	w_class = 1.0
 	flags = FPRINT | TABLEPASS
-	var/uses = 4.0
+	var/uses = 5.0
 	var/temp = null
 	var/spell_type = "verb"
 	var/max_uses = 5

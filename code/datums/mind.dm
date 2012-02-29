@@ -560,7 +560,7 @@ datum/mind
 					if(!(src in ticker.mode.wizards))
 						ticker.mode.wizards += src
 						special_role = "Wizard"
-						ticker.mode.learn_basic_spells(current)
+						//ticker.mode.learn_basic_spells(current)
 						current << "<B>\red You are the Space Wizard!</B>"
 				if("lair")
 					current.loc = pick(wizardstart)

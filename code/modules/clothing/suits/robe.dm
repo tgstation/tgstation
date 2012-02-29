@@ -19,6 +19,13 @@
 	desc = "Strange-looking hat-wear, makes you want to cast fireballs."
 	icon_state = "marisa"
 
+/obj/item/clothing/head/wizard/magus
+	name = "Magus Helm"
+	desc = "A mysterious helmet that hums with an unearthly power"
+	icon_state = "magus"
+	item_state = "magus"
+
+
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
 	desc = "A magnificant, gem-lined robe that seems to radiate power."
