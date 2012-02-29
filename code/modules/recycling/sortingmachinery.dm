@@ -1,4 +1,4 @@
-/obj/effect/bigDelivery
+/obj/structure/bigDelivery
 	desc = "A big wrapped package."
 	name = "large parcel"
 	icon = 'storage.dmi'
@@ -171,8 +171,12 @@
 	var/amount = 25.0
 
 
-	afterattack(target as obj, mob/user as mob)
+	afterattack(var/obj/target as obj, mob/user as mob)
 		if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack))
+			return
+		if(target.anchored)
+			return
+		if(target in user)
 			return
 
 		user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[target]</font>")
@@ -190,7 +194,7 @@
 		else if (istype(target, /obj/structure/closet/crate))
 			var/obj/structure/closet/crate/O = target
 			if (src.amount > 3)
-				var/obj/effect/bigDelivery/P = new /obj/effect/bigDelivery(get_turf(O.loc))
+				var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 				P.wrapped = O
 				O.loc = P
 				src.amount -= 3
@@ -199,9 +203,11 @@
 		else if (istype (target, /obj/structure/closet))
 			var/obj/structure/closet/O = target
 			if (src.amount > 3)
-				var/obj/effect/bigDelivery/P = new /obj/effect/bigDelivery(get_turf(O.loc))
-				P.wrapped = O
 				O.close()
+				var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
+				P.wrapped = O
+				P.waswelded = O.welded
+				O.opened = 0
 				O.welded = 1
 				O.loc = P
 				src.amount -= 3
@@ -242,9 +248,10 @@
 	desc = "Used to set the destination of properly wrapped packages."
 	icon_state = "forensic0"
 	var/currTag = null
-	var/list/spaceList = list(0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0) // Breaks up departments with whitespace.
+	var/list/spaceList = list(0,1,0,0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0) // Breaks up departments with whitespace.
 	var/list/locationList = list("Disposals",
 	"Mail Office", "Cargo Bay", "QM Office",
+	"Mining Base", "Mining West", "Mining North",
 	"Locker Room", "Tool Storage", "Laundry Room", "Toilets",
 	"Security", "Courtroom", "Detective's Office", "Law Office",
 	"Research Division", "Research Director", "Genetics",
@@ -253,11 +260,6 @@
 	"Bar", "Kitchen", "Diner", "Hydroponics",
 	"Meeting Room", "HoP Office", "Captain",
 	"Atmospherics", "Engineering", "Chief Engineer", "Robotics",)
-	//The whole system for the sorttype var is determined based on the order of this list,
-	//disposals must always be 1, since anything that's untagged will automatically go to disposals, or sorttype = 1 --Superxpdude
-
-	//If you don't want to fuck up disposals, add to this list, and don't change the order.
-	//If you insist on changing the order, you'll have to change every sort junction to reflect the new order. --Pete
 
 	w_class = 1
 	item_state = "electronic"
@@ -300,9 +302,9 @@
 			return
 
 	attack(target as obj, mob/user as mob)
-		if (istype(target, /obj/effect/bigDelivery))
+		if (istype(target, /obj/structure/bigDelivery))
 			user << "\blue *TAGGED*"
-			var/obj/effect/bigDelivery/O = target
+			var/obj/structure/bigDelivery/O = target
 			O.sortTag = src.currTag
 			O.update_icon()
 		else if (istype(target, /obj/item/smallDelivery))
@@ -339,7 +341,7 @@
 		var/deliveryCheck = 0
 		var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
 											// travels through the pipes.
-		for(var/obj/effect/bigDelivery/O in src)
+		for(var/obj/structure/bigDelivery/O in src)
 			deliveryCheck = 1
 			if(!O.sortTag)
 				O.sortTag = "Disposals"
