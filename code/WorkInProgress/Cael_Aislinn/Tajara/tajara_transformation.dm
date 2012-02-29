@@ -30,6 +30,7 @@
 	viruses = list()
 	for(var/datum/disease/D in O.viruses)
 		D.affected_mob = O
+	O.flavor_text = flavor_text
 
 	if (client)
 		client.mob = O
