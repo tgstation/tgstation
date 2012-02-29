@@ -35,25 +35,6 @@
 		interpreter.persist	= 1
 		interpreter.Compiler= src
 
-		// Set up all the preprocessor bullshit
-		//TCS_Setup(program)
-		// Apply preprocessor global variables
-		program.SetVar("PI"		, 	3.141592653)	// value of pi
-		program.SetVar("E" 		, 	2.718281828)	// value of e
-		program.SetVar("SQURT2" , 	1.414213562)	// value of the square root of 2
-		program.SetVar("FALSE"  , 	0)				// boolean shortcut to 0
-		program.SetVar("TRUE"	,	1)				// boolean shortcut to 1
-
-		program.SetVar("NORTH" 	, 	NORTH)			// NORTH (1)
-		program.SetVar("SOUTH" 	, 	SOUTH)			// SOUTH (2)
-		program.SetVar("EAST" 	, 	EAST)			// EAST  (4)
-		program.SetVar("WEST" 	, 	WEST)			// WEST  (8)
-
-		program.SetVar("HONK"	, 	"clown griff u")
-		program.SetVar("CODERS" ,	"hide the fun")
-		program.SetVar("GRIFF"	,	pick("HALP IM BEING GRIFFED", "HALP AI IS MALF", "HALP GRIFFE", "HALP TRAITORS", "HALP WIZ GRIEFE ME"))
-
-
 		return returnerrors
 
 	/* -- Execute the compiled code -- */
@@ -65,6 +46,29 @@
 
 		if(!interpreter)
 			return
+
+		interpreter.SetVar("PI"		, 	3.141592653)	// value of pi
+		interpreter.SetVar("E" 		, 	2.718281828)	// value of e
+		interpreter.SetVar("SQURT2" , 	1.414213562)	// value of the square root of 2
+		interpreter.SetVar("FALSE"  , 	0)				// boolean shortcut to 0
+		interpreter.SetVar("TRUE"	,	1)				// boolean shortcut to 1
+
+		interpreter.SetVar("NORTH" 	, 	NORTH)			// NORTH (1)
+		interpreter.SetVar("SOUTH" 	, 	SOUTH)			// SOUTH (2)
+		interpreter.SetVar("EAST" 	, 	EAST)			// EAST  (4)
+		interpreter.SetVar("WEST" 	, 	WEST)			// WEST  (8)
+
+		// Channel macros
+		interpreter.SetVar("$common",	1459)
+		interpreter.SetVar("$science",	1351)
+		interpreter.SetVar("$command",	1353)
+		interpreter.SetVar("$medical",	1355)
+		interpreter.SetVar("$engineering",1357)
+		interpreter.SetVar("$security",	1359)
+		interpreter.SetVar("$mining",	1349)
+		interpreter.SetVar("$cargo",	1347)
+
+		// Signal data
 
 		interpreter.SetVar("$content", 	signal.data["message"])
 		interpreter.SetVar("$freq"   , 	signal.frequency)
@@ -157,22 +161,22 @@
 		interpreter.Run()
 
 		// Backwards-apply variables onto signal data
-		/* html_encode() EVERYTHING. fucking players can't be trusted with SHIT */
+		/* sanitize EVERYTHING. fucking players can't be trusted with SHIT */
 
-		signal.data["message"] 	= html_encode(interpreter.GetVar("$content"))
+		signal.data["message"] 	= trim(copytext(sanitize(interpreter.GetVar("$content")), 1, MAX_MESSAGE_LEN))
 		signal.frequency 		= interpreter.GetVar("$freq")
 
 		var/setname = ""
 		var/obj/machinery/telecomms/server/S = signal.data["server"]
 		if(interpreter.GetVar("$source") in S.stored_names)
-			setname = html_encode(interpreter.GetVar("$source"))
+			setname = interpreter.GetVar("$source")
 		else
-			setname = "<i>[html_encode(interpreter.GetVar("$source"))]</i>"
+			setname = "<i>[trim(copytext(sanitize(interpreter.GetVar("$source")), 1, MAX_MESSAGE_LEN))]</i>"
 
 		if(signal.data["name"] != setname)
 			signal.data["realname"] = setname
 		signal.data["name"]		= setname
-		signal.data["job"]		= html_encode(interpreter.GetVar("$job"))
+		signal.data["job"]		= trim(copytext(sanitize(interpreter.GetVar("$job")), 1, MAX_MESSAGE_LEN))
 		signal.data["reject"]	= !(interpreter.GetVar("$pass")) // set reject to the opposite of $pass
 
 /*  -- Actual language proc code --  */
@@ -205,6 +209,9 @@ datum/signal
 			hradio = new // sets the hradio as a radio intercom
 		if(!freq)
 			freq = 1459
+		if(findtext(num2text(freq), ".")) // if the frequency has been set as a decimal
+			freq *= 10 // shift the decimal one place
+
 		if(!job)
 			job = "None"
 

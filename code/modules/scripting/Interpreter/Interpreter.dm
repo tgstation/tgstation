@@ -32,6 +32,7 @@
 		returnVal
 
 		max_iterations=100 // max iterations without any kind of delay
+		cur_iterations=0   // current iteration
 		max_recursion=50   // max recursions without returning anything (or completing the code block)
 		cur_recursion=0	   // current amount of recursion
 /*
@@ -211,9 +212,14 @@
 */
 		RunWhile(node/statement/WhileLoop/stmt)
 			var/i=1
+			if(!cur_iterations)
+				cur_iterations = 1
 			while(Eval(stmt.cond) && Iterate(stmt.block, i++))
+				cur_iterations++
 				continue
 			status &= ~BREAKING
+			cur_iterations -= i
+			if(cur_iterations <= 0) cur_iterations = 0
 
 /*
 	Proc:Iterate
@@ -221,7 +227,7 @@
 */
 		Iterate(node/BlockDefinition/block, count)
 			RunBlock(block)
-			if(max_iterations > 0 && count >= max_iterations)
+			if(max_iterations > 0 && (count >= max_iterations || cur_iterations + 1 >= max_iterations))
 				RaiseError(new/runtimeError/IterationLimitReached())
 				return 0
 			if(status & (BREAKING|RETURNING))
