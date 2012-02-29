@@ -176,12 +176,11 @@
 				dat += "<ul>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=pda_notes.png> Notekeeper</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=pda_mail.png> Messenger</a></li>"
+				dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png> View Crew Manifest</a></li>"
 
 				if (cartridge)
 					if (cartridge.access_clown)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Honk'><img src=pda_honk.png> Honk Synthesizer</a></li>"
-					if (cartridge.access_manifest)
-						dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png> View Crew Manifest</a></li>"
 					if(cartridge.access_status_display)
 						dat += "<li><a href='byond://?src=\ref[src];choice=42'><img src=pda_status.png> Set Status Display</a></li>"
 					dat += "</ul>"
@@ -577,7 +576,6 @@
 									difficulty += P.cartridge.access_engine
 									difficulty += P.cartridge.access_clown
 									difficulty += P.cartridge.access_janitor
-									difficulty += P.cartridge.access_manifest * 2
 								else
 									difficulty += 2
 

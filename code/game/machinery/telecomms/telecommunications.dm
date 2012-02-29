@@ -83,7 +83,10 @@
 				"connection" = signal.data["connection"],
 				"radio" = signal.data["radio"],
 				"slow" = signal.data["slow"],
-				"traffic" = signal.data["traffic"]
+				"traffic" = signal.data["traffic"],
+				"type" = signal.data["type"],
+				"server" = signal.data["server"],
+				"reject" = signal.data["reject"]
 				)
 
 				// Keep the "original" signal constant
@@ -136,6 +139,11 @@
 						if(T.autolinkers.Find(x))
 							if(!(T in links) && machinetype != T.machinetype)
 								links.Add(T)
+
+		if(istype(src, /obj/machinery/telecomms/server))
+			var/obj/machinery/telecomms/server/S = src
+			S.Compiler = new()
+			S.Compiler.Holder = src
 
 
 	update_icon()
@@ -355,7 +363,20 @@
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/server"
 	var
 		list/log_entries = list()
+		list/stored_names = list()
+		list/TrafficActions = list()
+		logs = 0 // number of logs
 		totaltraffic = 0 // gigabytes (if > 1024, divide by 1024 -> terrabytes)
+
+		list/memory = list()	// stored memory
+		rawcode = ""	// the code to compile (raw text)
+		datum/TCS_Compiler/Compiler	// the compiler that compiles and runs the code
+		autoruncode = 0		// 1 if the code is set to run every time a signal is picked up
+
+		encryption = "null" // encryption key: ie "password"
+		salt = "null"		// encryption salt: ie "123comsat"
+							// would add up to md5("password123comsat")
+		language = "human"
 
 	receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 
@@ -382,10 +403,7 @@
 				log.parameters["message"] = signal.data["message"]
 				log.parameters["name"] = signal.data["name"]
 				log.parameters["realname"] = signal.data["realname"]
-				if(M)
-					log.parameters["uspeech"] = M.universal_speak
-				else
-					log.parameters["uspeech"] = 0
+				log.parameters["uspeech"] = M.universal_speak
 
 				// If the signal is still compressed, make the log entry gibberish
 				if(signal.data["compression"] > 0)
@@ -396,25 +414,50 @@
 					log.parameters["vname"] = Gibberish(signal.data["vname"], signal.data["compression"] + 50)
 					log.input_type = "Corrupt File"
 
+				// Log and store everything that needs to be logged
 				log_entries.Add(log)
+				if(!(signal.data["name"] in stored_names))
+					stored_names.Add(signal.data["name"])
+				logs++
+				signal.data["server"] = src
 
+				// Give the log a name
 				var/identifier = num2text( rand(-1000,1000) + world.time )
 				log.name = "data packet ([md5(identifier)])"
 
-				relay_information(signal, "/obj/machinery/telecomms/broadcaster") // send to all broadcasters
+				if(Compiler && autoruncode)
+					Compiler.Run(signal)	// execute the code
+
+				relay_information(signal, "/obj/machinery/telecomms/broadcaster")
+
+
+	proc/setcode(var/t)
+		if(t)
+			if(istext(t))
+				rawcode = t
+
+	proc/compile()
+		if(Compiler)
+			return Compiler.Compile(rawcode)
 
 	proc/update_logs()
-		// deletes all logs when there are 100
-		if(log_entries.len >= 100)
-			var/list/restore = list()
-			for(var/datum/comm_log_entry/log in log_entries)
-				if(log.garbage_collector) // if garbage collector is set to 1, delete
-					del(log)
-				else
-					restore.Add(log)
+		// start deleting the very first log entry
+		if(logs >= 400)
+			for(var/i = 1, i <= logs, i++) // locate the first garbage collectable log entry and remove it
+				var/datum/comm_log_entry/L = log_entries[i]
+				if(L.garbage_collector)
+					log_entries.Remove(L)
+					logs--
+					break
 
-			log_entries.len = 0
-			log_entries.Add(restore)
+	proc/add_entry(var/content, var/input)
+		var/datum/comm_log_entry/log = new
+		var/identifier = num2text( rand(-1000,1000) + world.time )
+		log.name = "data packet ([md5(identifier)])"
+		log.input_type = input
+		log.parameters["message"] = content
+
+
 
 // Simple log entry datum
 
@@ -493,42 +536,42 @@
 	network = "tcommsat"
 
 	science
-		id = "science server"
+		id = "Science Server"
 		freq_listening = list(1351)
 		autolinkers = list("science", "broadcasterA")
 
 	medical
-		id = "medical server"
+		id = "Medical Server"
 		freq_listening = list(1355)
 		autolinkers = list("medical", "broadcasterA")
 
 	cargo
-		id = "cargo server"
+		id = "Cargo Server"
 		freq_listening = list(1347)
 		autolinkers = list("cargo", "broadcasterA")
 
 	mining
-		id = "mining server"
+		id = "Mining Server"
 		freq_listening = list(1349)
 		autolinkers = list("mining", "broadcasterA")
 
 	common
-		id = "common server"
+		id = "Common Server"
 		freq_listening = list(1459)
 		autolinkers = list("common", "broadcasterB")
 
 	command
-		id = "command server"
+		id = "Command Server"
 		freq_listening = list(1353)
 		autolinkers = list("command", "broadcasterB")
 
 	engineering
-		id = "engineering server"
+		id = "Engineering Server"
 		freq_listening = list(1357)
 		autolinkers = list("engineering", "broadcasterB")
 
 	security
-		id = "security server"
+		id = "Security Server"
 		freq_listening = list(1359)
 		autolinkers = list("security", "broadcasterB")
 

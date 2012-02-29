@@ -139,13 +139,13 @@
 		dat += "<br>  <a href='?src=\ref[src];input=freq'>\[Add Filter\]</a>"
 		dat += "<hr>"
 		if(P.buffer)
-			dat += "<br><br>MULTITOOL BUFFER: \ref[P.buffer] [P.buffer] <a href='?src=\ref[src];link=1'>\[Link\]</a> <a href='?src=\ref[src];flush=1'>\[Flush\]"
+			dat += "<br><br>MULTITOOL BUFFER: [P.buffer] ([P.buffer.id]) <a href='?src=\ref[src];link=1'>\[Link\]</a> <a href='?src=\ref[src];flush=1'>\[Flush\]"
 		else
 			dat += "<br><br>MULTITOOL BUFFER: <a href='?src=\ref[src];buffer=1'>\[Add Machine\]</a>"
 
 		dat += "</font>"
 		temp = ""
-		user << browse(dat, "window=[src.name];size=520x500;can_resize=0")
+		user << browse(dat, "window=tcommachine;size=520x500;can_resize=0")
 		onclose(user, "dormitory")
 
 	Topic(href, href_list)

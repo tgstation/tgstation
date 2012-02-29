@@ -55,8 +55,8 @@
 		if(istype(I, /obj/item/weapon/trashbag))
 			user << "\blue You empty the bag."
 			for(var/obj/item/O in I.contents)
-				I.contents -= O
 				O.loc = src
+				I.contents -= O
 			I.update_icon()
 			update()
 			return
@@ -101,8 +101,9 @@
 				return // No idea why, but somehow I gets nulled before it goes into the else, and that leads to a lot of spam with runtime errors.
 
 			user.drop_item()
+			if(I)
+				I.loc = src
 
-			I.loc = src
 			user << "You place \the [I] into the [src]."
 			for(var/mob/M in viewers(src))
 				if(M == user)
@@ -305,6 +306,7 @@
 		for(var/atom/movable/AM in src)
 			AM.loc = src.loc
 			AM.pipe_eject(0)
+		islarge = 0
 		update()
 
 	// update the icon & overlays to reflect mode & status
