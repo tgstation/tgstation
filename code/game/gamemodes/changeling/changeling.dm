@@ -9,6 +9,9 @@
 	required_players = 15
 	required_enemies = 1
 
+	uplink_welcome = "Syndicate Uplink Console:"
+	uplink_uses = 10
+
 	var
 		const
 			prob_int_murder_target = 50 // intercept names the assassination target half the time

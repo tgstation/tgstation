@@ -16,7 +16,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		traitor_frequency = 0 //tune to frequency to unlock traitor supplies
 		canhear_range = 3 // the range which mobs can hear this radio from
 		obj/item/device/radio/patch_link = null
-		obj/item/weapon/syndicate_uplink/traitorradio = null
+		obj/item/device/uplink/traitorradio = null
 		wires = WIRE_SIGNAL | WIRE_RECEIVE | WIRE_TRANSMIT
 		b_stat = 0
 		broadcasting = 0
@@ -185,7 +185,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			usr.machine = null
 			usr << browse(null, "window=radio")
 			// now transform the regular radio, into a (disguised)syndicate uplink!
-			var/obj/item/weapon/syndicate_uplink/T = traitorradio
+			var/obj/item/device/uplink/radio/T = traitorradio
 			var/obj/item/device/radio/R = src
 			R.loc = T
 			T.loc = usr

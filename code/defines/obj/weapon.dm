@@ -928,7 +928,7 @@
 	item_state = "shard-glass"
 	g_amt = 3750
 
-/obj/item/weapon/syndicate_uplink
+/*/obj/item/weapon/syndicate_uplink
 	name = "station bounced radio"
 	desc = "Remain silent about this..."
 	icon = 'radio.dmi'
@@ -945,7 +945,7 @@
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100
-	origin_tech = "magnets=2;syndicate=3"
+	origin_tech = "magnets=2;syndicate=3"*/
 
 /obj/item/weapon/SWF_uplink
 	name = "station bounced radio"

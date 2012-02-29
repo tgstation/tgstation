@@ -6,6 +6,10 @@
 	config_tag = "malfunction"
 	required_players = 20
 	required_enemies = 1
+
+	uplink_welcome = "Crazy AI Uplink Console:"
+	uplink_uses = 10
+
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
 

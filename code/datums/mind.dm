@@ -245,8 +245,8 @@ datum/mind
 			istype(current,/mob/living/carbon/human)      )
 
 			text = "Uplink: <a href='?src=\ref[src];common=uplink'>give</a>"
-			var/obj/item/weapon/syndicate_uplink/suplink = find_syndicate_uplink()
-			var/obj/item/weapon/integrated_uplink/iuplink = find_integrated_uplink()
+			var/obj/item/device/uplink/suplink = find_syndicate_uplink()
+			var/obj/item/device/uplink/iuplink = find_integrated_uplink()
 			var/crystals
 			if (suplink)
 				crystals = suplink.uses
@@ -797,8 +797,8 @@ datum/mind
 					memory = null//Remove any memory they may have had.
 				if("crystals")
 					if (usr.client.holder.level >= 3)
-						var/obj/item/weapon/syndicate_uplink/suplink = find_syndicate_uplink()
-						var/obj/item/weapon/integrated_uplink/iuplink = find_integrated_uplink()
+						var/obj/item/device/uplink/suplink = find_syndicate_uplink()
+						var/obj/item/device/uplink/iuplink = find_integrated_uplink()
 						var/crystals
 						if (suplink)
 							crystals = suplink.uses
@@ -855,7 +855,7 @@ datum/mind
 */
 
 	proc/find_syndicate_uplink()
-		var/obj/item/weapon/syndicate_uplink/uplink = null
+		var/obj/item/device/uplink/radio/uplink = null
 		var/list/L = current.get_contents()
 		for (var/obj/item/device/radio/radio in L)
 			uplink = radio.traitorradio
@@ -866,7 +866,7 @@ datum/mind
 
 	proc/find_integrated_uplink()
 		//world << "DEBUG: find_integrated_uplink()"
-		var/obj/item/weapon/integrated_uplink/uplink = null
+		var/obj/item/device/uplink/uplink = null
 		var/list/L = current.get_contents()
 		for (var/obj/item/device/pda/pda in L)
 			uplink = pda.uplink
@@ -876,8 +876,8 @@ datum/mind
 
 	proc/take_uplink() //assuming only one uplink because I am tired of all this uplink shit --rastaf0
 		var/list/L = current.get_contents()
-		var/obj/item/weapon/syndicate_uplink/suplink = null
-		var/obj/item/weapon/integrated_uplink/iuplink = null
+		var/obj/item/device/uplink/radio/suplink = null
+		var/obj/item/device/uplink/pda/iuplink = null
 		for (var/obj/item/device/radio/radio in L)
 			suplink = radio.traitorradio
 			if (suplink)

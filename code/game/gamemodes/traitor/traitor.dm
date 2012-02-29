@@ -9,6 +9,9 @@
 	required_players = 0
 	required_enemies = 1
 
+	uplink_welcome = "Syndicate Uplink Console:"
+	uplink_uses = 10
+
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
@@ -232,10 +235,16 @@
 			R = foo
 			loc = "in the [S.name] on your back"
 			break
+	if (!R && istype(traitor_mob.l_store, /obj/item/device/pda))
+		R = traitor_mob.l_store
+		loc = "in your pocket"
+	if (!R && istype(traitor_mob.r_store, /obj/item/device/pda))
+		R = traitor_mob.r_store
+		loc = "in your pocket"
 	if (!R && traitor_mob.w_uniform && istype(traitor_mob.belt, /obj/item/device/radio))
 		R = traitor_mob.belt
 		loc = "on your belt"
-	if (!R && istype(traitor_mob.ears, /obj/item/device/radio))
+	if ((!R && istype(traitor_mob.ears, /obj/item/device/radio)) || prob(10))
 		R = traitor_mob.ears
 		loc = "on your head"
 	if (!R)
@@ -254,7 +263,7 @@
 					freq += 1
 			freq = freqlist[rand(1, freqlist.len)]
 
-			var/obj/item/weapon/syndicate_uplink/T = new /obj/item/weapon/syndicate_uplink(R)
+			var/obj/item/device/uplink/radio/T = new /obj/item/device/uplink/radio(R)
 			R:traitorradio = T
 			R:traitor_frequency = freq
 			T.name = R.name
@@ -266,7 +275,7 @@
 			// generate a passcode if the uplink is hidden in a PDA
 			var/pda_pass = "[rand(100,999)] [pick("Alpha","Bravo","Delta","Omega")]"
 
-			var/obj/item/weapon/integrated_uplink/T = new /obj/item/weapon/integrated_uplink(R)
+			var/obj/item/device/uplink/pda/T = new /obj/item/device/uplink/pda(R)
 			R:uplink = T
 			T.lock_code = pda_pass
 			T.hostpda = R

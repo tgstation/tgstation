@@ -1486,3 +1486,23 @@ proc/oview_or_orange(distance = world.view , center = usr , type)
 		if("range")
 			. = orange(distance,center)
 	return
+
+/proc/stringsplit(txt, character)
+	var
+		cur_text = txt
+		last_found = 1
+		found_char = findtext(cur_text,character)
+		list/list = list()
+	if(found_char)
+		var/fs = copytext(cur_text,last_found,found_char)
+		list += fs
+		last_found = found_char+length(character)
+		found_char = findtext(cur_text,character,last_found)
+	while(found_char)
+		var
+			found_string = copytext(cur_text,last_found,found_char)
+		last_found = found_char+length(character)
+		list += found_string
+		found_char = findtext(cur_text,character,last_found)
+	list += copytext(cur_text,last_found,length(cur_text)+1)
+	return list

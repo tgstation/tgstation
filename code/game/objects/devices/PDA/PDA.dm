@@ -31,7 +31,7 @@
 	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function.
 	var/cart = "" //A place to stick cartridge menu information
 
-	var/obj/item/weapon/integrated_uplink/uplink = null
+	var/obj/item/device/uplink/pda/uplink = null
 
 	var/obj/item/weapon/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above

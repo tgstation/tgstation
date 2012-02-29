@@ -23,6 +23,49 @@
 		list/restricted_jobs = list()
 		required_players = 0
 		required_enemies = 0
+		uplink_welcome
+		uplink_uses
+		uplink_items = {"Highly Visible and Dangerous Weapons;
+/obj/item/weapon/gun/projectile:6:Revolver;
+/obj/item/ammo_magazine/a357:2:Ammo-357;
+/obj/item/weapon/gun/energy/crossbow:5:Energy Crossbow;
+/obj/item/weapon/melee/energy/sword:4:Energy Sword;
+/obj/item/weapon/storage/box/syndicate:10:Syndicate Bundle;
+/obj/item/weapon/storage/emp_kit:4:5 EMP Grenades;
+Whitespace:Seperator;
+Stealthy and Inconspicuous Weapons;
+/obj/item/weapon/pen/parapen:3:Paralysis Pen;
+/obj/item/weapon/soap/syndie:1:Syndicate Soap;
+/obj/item/weapon/cartridge/syndicate:3:Detomatix PDA Cartridge;
+Whitespace:Seperator;
+Stealth and Camouflage Items;
+/obj/item/clothing/under/chameleon:3:Chameleon Jumpsuit;
+/obj/item/clothing/shoes/syndigaloshes:2:No-Slip Syndicate Shoes;
+/obj/item/weapon/card/id/syndicate:3:Agent ID card;
+/obj/item/clothing/mask/gas/voice:4:Voice Changer;
+/obj/item/clothing/glasses/thermal:4:Thermal Imaging Glasses;
+/obj/item/device/chameleon:4:Chameleon-Projector;
+/obj/item/weapon/cloaking_device:4:Cloaking Device;
+Whitespace:Seperator;
+Devices and Tools;
+/obj/item/weapon/card/emag:4:Cryptographic Sequencer;
+/obj/item/weapon/storage/toolbox/syndicate:1:Fully Loaded Toolbox;
+/obj/item/weapon/storage/syndie_kit/space:3:Space Suit;
+/obj/item/device/encryptionkey/binary:3:Binary Translator Key;
+/obj/item/weapon/aiModule/syndicate:7:Hacked AI Upload Module;
+/obj/item/weapon/plastique:2:C-4 (Destroys walls);
+/obj/item/device/powersink:5:Powersink (DANGER!);
+/obj/machinery/singularity_beacon/syndicate:7:Singularity Beacon (DANGER!);
+/obj/item/weapon/circuitboard/teleporter:20:Teleporter Circuit Board;
+Whitespace:Seperator;
+Implants;
+/obj/item/weapon/storage/syndie_kit/imp_freedom:3:Freedom Implant;
+/obj/item/weapon/storage/syndie_kit/imp_uplink:10:Uplink Implant (Contains 5 Telecrystals);
+Whitespace:Seperator;
+Badassery;
+/obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);
+Whitespace:Seperator;"}
+
 
 /datum/game_mode/proc/announce() //to be calles when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"

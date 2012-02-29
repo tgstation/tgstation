@@ -34,19 +34,20 @@
 	desc = "Summon things."
 	var
 		activation_emote = "chuckle"
-		obj/item/weapon/syndicate_uplink/uplink = null
+		obj/item/device/uplink/radio/uplink = null
 
 
 	New()
 		activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
-		uplink = new /obj/item/weapon/syndicate_uplink/implanted(src)
+		uplink = new /obj/item/device/uplink/radio/implanted(src)
 		..()
 		return
 
 
 	implanted(mob/source as mob)
-		source.mind.store_memory("Uplink implant can be activated by using the [activation_emote] emote, <B>say *[activation_emote]</B> to attempt to activate.", 0, 0)
-		source << "The implanted uplink implant can be activated by using the [activation_emote] emote, <B>say *[activation_emote]</B> to attempt to activate."
+		activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
+		source.mind.store_memory("Uplink implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
+		source << "The implanted uplink implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
 		return
 
 
