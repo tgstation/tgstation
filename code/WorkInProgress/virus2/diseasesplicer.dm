@@ -158,11 +158,12 @@
 			dish = null
 
 		else if(href_list["splice"])
-			for(var/datum/disease2/effectholder/e in dish.virus2.effects)
-				if(e.stage == memorybank.stage)
-					e.effect = memorybank.effect
-			splicing = 10
-			dish.virus2.spreadtype = "Blood"
+			if(dish)
+				for(var/datum/disease2/effectholder/e in dish.virus2.effects)
+					if(e.stage == memorybank.stage)
+						e.effect = memorybank.effect
+				splicing = 10
+				dish.virus2.spreadtype = "Blood"
 
 		else if(href_list["disk"])
 			burning = 10
