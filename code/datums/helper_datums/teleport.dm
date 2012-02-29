@@ -3,6 +3,10 @@
 	new /datum/teleport/instant/science(arglist(args))
 	return
 
+/proc/do_teleport_stealth(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
+	new /datum/teleport/instant(arglist(args))
+	return
+
 /datum/teleport
 	var/atom/movable/teleatom //atom to teleport
 	var/atom/destination //destination to teleport to

@@ -6,7 +6,7 @@
 	return (!density)
 
 /obj/structure/closet/proc/can_open()
-	if(src.welded || istype(src.loc,/obj/effect/bigDelivery))
+	if(src.welded || istype(src.loc,/obj/structure/bigDelivery))
 		return 0
 	return 1
 
@@ -117,20 +117,7 @@
 		del(src)
 
 /obj/structure/closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/packageWrap))
-		var/obj/item/weapon/packageWrap/O = W
-		if (O.amount > 3)
-			src.close()
-			var/obj/effect/bigDelivery/P = new /obj/effect/bigDelivery(get_turf(src.loc))
-			P.wrapped = src
-			P.waswelded = welded
-			src.welded = 0
-			src.loc = P
-			src.opened = 0
-			O.amount -= 3
-		else
-			user << "\blue You need more paper."
-	else if(src.opened)
+	if(src.opened)
 		if(istype(W, /obj/item/weapon/grab))
 			src.MouseDrop_T(W:affecting, user)      //act like they were dragged onto the closet
 
@@ -145,6 +132,9 @@
 			return
 
 		if(isrobot(user))
+			return
+
+		if(istype(W, /obj/item/weapon/packageWrap))
 			return
 
 		usr.drop_item()
@@ -187,8 +177,8 @@
 		return
 
 	if(!src.open())
-		if(istype(src.loc,/obj/effect/bigDelivery) && lasttry == 0)
-			var/obj/effect/bigDelivery/Pack = src.loc
+		if(istype(src.loc,/obj/structure/bigDelivery) && lasttry == 0)
+			var/obj/structure/bigDelivery/Pack = src.loc
 			if(istype(Pack.loc,/turf) && Pack.waswelded == 0)
 				for (var/mob/M in hearers(src.loc, null))
 					M << text("<FONT size=[] color=red>BANG, bang, rrrrrip!</FONT>", max(0, 5 - get_dist(src, M)))
@@ -199,7 +189,7 @@
 				src.open()
 				spawn(30)
 					lasttry = 0
-		else if(!istype(src.loc,/obj/effect/bigDelivery))
+		else if(!istype(src.loc,/obj/structure/bigDelivery))
 			user << "\blue It won't budge!"
 			if(!lastbang)
 				lastbang = 1
