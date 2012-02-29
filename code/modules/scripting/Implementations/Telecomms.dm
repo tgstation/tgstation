@@ -130,7 +130,7 @@
 					@param container: the list or container to measure
 
 		*/
-		interpreter.SetProc("length", /proc/smartfind)
+		interpreter.SetProc("length", /proc/smartlength)
 
 		/* -- Clone functions, carried from default BYOND procs --- */
 
