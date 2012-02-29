@@ -92,8 +92,7 @@
 			<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A> |
 			<A HREF='?src=\ref[src];adminplayervars=\ref[M]'>VV</A> |
 			<A HREF='?src=\ref[src];adminplayersubtlemessage=\ref[M]'>SM</A> |
-			<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A> |
-			<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A></font>
+			<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A></font>
 			<br><font size="2">[muting]</font><br>
 			<font size="2"><A href='?src=\ref[src];warn=\ref[M]'>Warn</A> | <A href='?src=\ref[src];boot2=\ref[M]'>Boot</A> | <A href='?src=\ref[src];newban=\ref[M]'>Ban</A> | <A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A></td>
 			"}

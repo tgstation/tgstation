@@ -457,6 +457,9 @@
 		usr << "\red You don't have the dexterity to do this!"
 		return
 
+	if(!istype(src, /turf/simulated/wall/r_wall))
+		return // this may seem stupid and redundant but apparently floors can call this attackby() proc, it was spamming shit up. -- Doohl
+
 	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
 		W:eyecheck(user)
 		var/turf/T = user.loc

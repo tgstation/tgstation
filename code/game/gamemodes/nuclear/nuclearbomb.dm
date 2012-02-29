@@ -46,12 +46,12 @@
 			if (src.yes_code)
 				dat += text("\n<B>Status</B>: []-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] <A href='?src=\ref[];timer=1'>Toggle</A><BR>\nTime: <A href='?src=\ref[];time=-60'>-</A><A href='?src=\ref[];time=-10'>-</A><A href='?src=\ref[];time=-1'>-</A> [] <A href='?src=\ref[];time=1'>+</A><A href='?src=\ref[];time=10'>+</A><A href='?src=\ref[];time=60'>+</A><BR>\n<BR>\nSafety: [] <A href='?src=\ref[];safety=1'>Toggle</A><BR>\nAnchor: [] <A href='?src=\ref[];anchor=1'>Toggle</A><BR>\n", (src.timing ? "Func/Set" : "Functional"), (src.safety ? "Safe" : "Engaged"), time_left, (src.timing ? "On" : "Off"), src, src, src, src, time_left, src, src, src, (src.safety ? "On" : "Off"), src, (src.anchored ? "Engaged" : "Off"), src)
 			else
-				dat += text("\n<B>Status</B>: Auth. S2-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\n[] Safety: Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), time_left, (src.timing ? "On" : "Off"), time_left, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
+				dat += text("\n<B>Status</B>: Auth. S2-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: --- [] +++<BR>\n<BR>\n[] Safety: Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), time_left, (src.timing ? "On" : "Off"), time_left, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
 		else
 			if (src.timing)
-				dat += text("\n<B>Status</B>: Set-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\nSafety: [] Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), time_left, (src.timing ? "On" : "Off"), time_left, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
+				dat += text("\n<B>Status</B>: Set-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: --- [] +++<BR>\n<BR>\nSafety: [] Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), time_left, (src.timing ? "On" : "Off"), time_left, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
 			else
-				dat += text("\n<B>Status</B>: Auth. S1-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\nSafety: [] Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), time_left, (src.timing ? "On" : "Off"), time_left, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
+				dat += text("\n<B>Status</B>: Auth. S1-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: --- [] +++<BR>\n<BR>\nSafety: [] Toggle<BR>\nAnchor: [] Toggle<BR>\n", (src.safety ? "Safe" : "Engaged"), time_left, (src.timing ? "On" : "Off"), time_left, (src.safety ? "On" : "Off"), (src.anchored ? "Engaged" : "Off"))
 		var/message = "AUTH"
 		if (src.auth)
 			message = text("[]", src.code)

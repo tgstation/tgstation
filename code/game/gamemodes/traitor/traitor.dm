@@ -5,7 +5,7 @@
 /datum/game_mode/traitor
 	name = "traitor"
 	config_tag = "traitor"
-	restricted_jobs = list("Cyborg")//Approved by headmins for a week test, if you see this it would be nice if you didn't spread it everywhere
+	restricted_jobs = list("Cyborg", "AI")//Approved by headmins for a week test, if you see this it would be nice if you didn't spread it everywhere
 	required_players = 0
 	required_enemies = 1
 

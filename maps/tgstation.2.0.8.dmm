@@ -3966,7 +3966,7 @@
 "byn" = (/obj/structure/reagent_dispensers/watertank,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor/plating,/area/maintenance/asmaint)
 "byo" = (/obj/machinery/atmospherics/pipe/manifold{color = "blue"; icon_state = "manifold-b-f"; level = 1; name = "pipe manifold"},/turf/simulated/wall,/area/maintenance/asmaint)
 "byp" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/simulated/floor/plating,/area/maintenance/asmaint)
-"byq" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/obj/structure/disposalpipe/segment,/obj/effect/decal/cleanable/blood/splatter{icon_state = "floor2"},/turf/simulated/floor/plating,/area/maintenance/asmaint)
+"byq" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/obj/structure/disposalpipe/segment,/turf/simulated/floor/plating,/area/maintenance/asmaint)
 "byr" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/obj/structure/disposalpipe/segment{dir = 1},/turf/simulated/floor/plating,/area/maintenance/maintcentral)
 "bys" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/wall,/area/medical/cryo)
 "byt" = (/turf/simulated/wall,/area/medical/cryo)

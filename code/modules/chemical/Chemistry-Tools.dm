@@ -534,15 +534,16 @@
 					if(D.loc == trg) break
 					step_towards(D,trg)
 
-					for(var/mob/living/carbon/M in D.loc)
-						if(!istype(M,/mob/living/carbon)) continue
-						if(M == user) continue
-						D.reagents.trans_to(M, 15)
-						M.take_organ_damage(5)
-						for(var/mob/O in viewers(world.view, D))
-							O.show_message(text("\red [] was hit by the syringe!", M), 1)
+					if(D)
+						for(var/mob/living/carbon/M in D.loc)
+							if(!istype(M,/mob/living/carbon)) continue
+							if(M == user) continue
+							D.reagents.trans_to(M, 15)
+							M.take_organ_damage(5)
+							for(var/mob/O in viewers(world.view, D))
+								O.show_message(text("\red [] was hit by the syringe!", M), 1)
 
-						del(D)
+							del(D)
 					if(D)
 						for(var/atom/A in D.loc)
 							if(A == user) continue

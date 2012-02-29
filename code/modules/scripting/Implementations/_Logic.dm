@@ -78,7 +78,8 @@
 // Clone of list.Swap()
 /proc/n_listswap(var/list/L, var/firstindex, var/secondindex)
 	if(!istype(L, /list)) return
-	return L.Swap(firstindex, secondindex)
+	if(L.len >= secondindex && L.len >= firstindex)
+		return L.Swap(firstindex, secondindex)
 
 // Clone of list.Insert()
 /proc/n_listinsert(var/list/L, var/index, var/element)
@@ -100,12 +101,20 @@
 	if(haystack && needle)
 		if(isobject(haystack))
 			if(istype(haystack, /list))
-				var/list/listhaystack = haystack
-				return listhaystack.Find(needle, start, end)
+				if(length(haystack) >= end && start > 0)
+					var/list/listhaystack = haystack
+					return listhaystack.Find(needle, start, end)
 
 		else
 			if(istext(haystack))
-				return findtext(haystack, needle, start, end)
+				if(length(haystack) >= end && start > 0)
+					return findtext(haystack, needle, start, end)
+
+// Clone of copytext()
+/proc/docopytext(var/string, var/start = 1, var/end = 0)
+	if(istext(string) && isnum(start) && isnum(end))
+		if(length(string) >= end && start > 0)
+			return copytext(string, start, end)
 
 // Clone of length()
 /proc/smartlength(var/container)

@@ -614,7 +614,7 @@
 
 			//This should have a check to prevent the player to player chat but I am too tired atm to add it.
 			var/t = input("Message:", text("Private message to [recipient_name]"))  as text|null
-			if (!t || !usr || !M)
+			if (!t || !usr || !usr.client)
 				return
 			if (usr.client && usr.client.holder)
 				M << "\red Admin PM from-<b>[key_name(usr, M, 0)]</b>: [t]"

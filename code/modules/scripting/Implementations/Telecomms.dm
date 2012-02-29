@@ -41,8 +41,8 @@
 		program.SetVar("PI"		, 	3.141592653)	// value of pi
 		program.SetVar("E" 		, 	2.718281828)	// value of e
 		program.SetVar("SQURT2" , 	1.414213562)	// value of the square root of 2
-		program.SetVar("false"  , 	0)				// boolean shortcut to 0
-		program.SetVar("true"	,	1)				// boolean shortcut to 1
+		program.SetVar("FALSE"  , 	0)				// boolean shortcut to 0
+		program.SetVar("TRUE"	,	1)				// boolean shortcut to 1
 
 		program.SetVar("NORTH" 	, 	NORTH)			// NORTH (1)
 		program.SetVar("SOUTH" 	, 	SOUTH)			// SOUTH (2)
@@ -62,8 +62,6 @@
 
 		if(!ready)
 			return
-
-		world << "sucessful run!"
 
 		interpreter.SetVar("$content", 	signal.data["message"])
 		interpreter.SetVar("$freq"   , 	signal.frequency)
@@ -148,13 +146,12 @@
 
 		interpreter.SetProc("pick", /proc/n_pick)
 		interpreter.SetProc("prob", /proc/prob_chance)
+		interpreter.SetProc("substr", /proc/docopytext)
 
 
 
 		// Run the compiled code
 		interpreter.Run()
-
-		world << "interpreter.Run() complete."
 
 		// Backwards-apply variables onto signal data
 		/* html_encode() EVERYTHING. fucking players can't be trusted with SHIT */
@@ -175,13 +172,6 @@
 		signal.data["job"]		= html_encode(interpreter.GetVar("$job"))
 		signal.data["reject"]	= !(interpreter.GetVar("$pass")) // set reject to the opposite of $pass
 
-		world << "message: [interpreter.GetVar("$content")]"
-		world << "freq: [interpreter.GetVar("$freq")]"
-		world << "name: [setname]"
-		world << "job: [interpreter.GetVar("$job")]"
-		world << "pass: [interpreter.GetVar("$pass")]"
-
-
 
 /*  -- Actual language proc code --  */
 
@@ -201,10 +191,6 @@ datum/signal
 
 	proc/tcombroadcast(var/message, var/freq, var/source, var/job)
 
-		world << message
-		world << freq
-		world << source
-		world << job
 		var/mob/living/carbon/human/H = new
 		var/datum/signal/newsign = new
 		var/obj/machinery/telecomms/server/S = data["server"]
@@ -238,16 +224,10 @@ datum/signal
 		var/datum/radio_frequency/connection = radio_controller.return_frequency(freq)
 		newsign.data["connection"] = connection
 
-		// This is a really hacky way of finding a source radio - but it works, i suppose.
+		// The radio is a radio headset!
 
 		if(!hradio)
-			for(var/obj/item/device/radio/headset/r in world)
-				hradio = r
-				break
-
-		// There are no radios in the world! Oh no! Just make a new one and pray to baby jesus
-		if(!hradio)
-			hradio = new
+			hradio = new /obj/item/device/radio/headset
 
 		newsign.data["radio"] = hradio
 		newsign.data["vmessage"] = H.voice_message

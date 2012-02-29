@@ -63,9 +63,9 @@ client/verb/Toggle_Soundscape()
 	set name = "Toggle Ambience"
 	usr:client:no_ambi = !usr:client:no_ambi
 	if(usr:client:no_ambi)
-		usr << sound('shipambience.ogg', repeat = 0, wait = 0, volume = 0, channel = 2)
+		usr << sound(pick('shipambience.ogg'), repeat = 0, wait = 0, volume = 0, channel = 2)
 	else
-		usr << sound('shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
+		usr << sound(pick('shipambience.ogg'), repeat = 1, wait = 0, volume = 35, channel = 2)
 	usr << "Toggled ambience sound."
 	return
 
