@@ -92,6 +92,23 @@
 			  ":q" = "Cargo",
 			  ":g" = "changeling",
 
+			  ":R" = "right hand",
+			  ":L" = "left hand",
+			  ":I" = "intercom",
+			  ":H" = "department",
+			  ":C" = "Command",
+			  ":N" = "Science",
+			  ":M" = "Medical",
+			  ":E" = "Engineering",
+			  ":S" = "Security",
+			  ":W" = "whisper",
+			  ":B" = "binary",
+			  ":A" = "alientalk",
+			  ":T" = "Syndicate",
+			  ":D" = "Mining",
+			  ":Q" = "Cargo",
+			  ":G" = "changeling",
+
 			  //kinda localization -- rastaf0
 			  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
 			  ":ê" = "right hand",
