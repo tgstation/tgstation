@@ -169,6 +169,8 @@
 
 	E.dir = old_dir
 	E.icon_state = "engine"
+	E.levelupdate()
+	return E
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	if (istype(A,/mob/living/carbon))
@@ -456,6 +458,9 @@
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		usr << "\red You don't have the dexterity to do this!"
 		return
+
+	if(!istype(src, /turf/simulated/wall/r_wall))
+		return // this may seem stupid and redundant but apparently floors can call this attackby() proc, it was spamming shit up. -- Doohl
 
 	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
 		W:eyecheck(user)

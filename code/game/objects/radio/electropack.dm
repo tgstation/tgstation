@@ -3,7 +3,6 @@
 	desc = "Dance my monkeys! DANCE!!!"
 	icon_state = "electropack0"
 	var/code = 2
-	var/on = 0
 	var/e_pads = 0.0
 	g_amt = 2500
 	m_amt = 10000

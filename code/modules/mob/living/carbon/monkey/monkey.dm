@@ -560,7 +560,7 @@
 
 	for(var/mob/living/carbon/metroid/M in view(1,src))
 		M.UpdateFeed(src)
-
+	src.moved_recently = 120
 	return
 
 /mob/living/carbon/monkey/verb/removeinternal()
@@ -603,6 +603,7 @@
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 	if (prob(50))
 		Paralyse(10)
+
 
 /obj/effect/equip_e/monkey/process()
 	if (item)

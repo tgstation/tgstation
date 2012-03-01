@@ -15,7 +15,7 @@
 
 
 //sort of a legacy burn method for /electrocute, /shock, and the e_chair
-/mob/living/proc/burn_skin(burn_amount)
+/mob/living/proc/burn_skin(burn_amount, used_weapon = null)
 	if(istype(src, /mob/living/carbon/human))
 		if(src.mutations2 & mShock)
 			return 0
@@ -28,7 +28,7 @@
 		for(var/name in H.organs)
 			var/datum/organ/external/affecting = H.organs[name]
 			if(!affecting)	continue
-			if(affecting.take_damage(0, divided_damage+extradam))
+			if(affecting.take_damage(0, divided_damage+extradam, 0, used_weapon))
 				extradam = 0
 			else
 				extradam += divided_damage

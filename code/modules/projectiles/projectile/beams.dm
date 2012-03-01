@@ -6,7 +6,47 @@
 	damage_type = BURN
 	flag = "laser"
 	eyeblur = 2
+	var/ID = 0
+	var/main = 0
 
+	process()
+		main = 1
+		ID = rand(0,1000)
+		var/first = 1
+		var/obj/effect/effect/laserdealer/lasor = new /obj/effect/effect/laserdealer(null)
+		spawn(0)
+			lasor.setup(ID)
+		spawn(0)
+			while(!bumped)
+				step_towards(src, current)
+				for(var/mob/living/M in loc)
+					Bump(M)
+				if((!( current ) || loc == current))
+					current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
+				if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
+					del(src)
+					return
+				if(!first)
+					var/obj/item/projectile/beam/new_beam = new src.type(loc)
+					processing_objects.Remove(new_beam)
+					new_beam.dir = get_dir(src, current)
+					new_beam.ID = ID
+					new_beam.icon_state = icon_state
+				else
+					first = 0
+		processing_objects.Remove(src)
+		return
+
+/obj/effect/effect/laserdealer
+	name = "laserdealio"
+
+	proc/setup(var/ID = 0)
+		sleep(5)
+		for(var/obj/item/projectile/beam/beam in world)
+			if(ID == beam.ID)
+				del(beam)
+		spawn(0)
+			del(src)
 
 /obj/item/projectile/beam/heavylaser
 	name = "heavy laser"

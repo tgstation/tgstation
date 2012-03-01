@@ -10,7 +10,6 @@
 	var/access_security = 0
 	var/access_engine = 0
 	var/access_medical = 0
-	var/access_manifest = 1
 	var/access_clown = 0
 	var/access_mime = 0
 	var/access_janitor = 0
@@ -167,7 +166,6 @@
 		name = "Detomatix Cartridge"
 		icon_state = "cart"
 		access_remote_door = 1
-		access_manifest = 0
 		remote_door_id = "syndicate" //Make sure this matches the syndicate shuttle's shield/door id!!
 		var/shock_charges = 4
 
@@ -230,14 +228,6 @@ Code:
 [radio:code]
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=1'>+</a>
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=5'>+</a><br>"}
-			if (41) //crew manifest
-
-				menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
-				menu += "Entries cannot be modified from this terminal.<br><br>"
-
-				for (var/datum/data/record/t in data_core.general)
-					menu += "[t.fields["name"]] - [t.fields["rank"]]<br>"
-				menu += "<br>"
 
 
 			if (42) //status displays

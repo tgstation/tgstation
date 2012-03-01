@@ -12,6 +12,12 @@
 	new /obj/item/clothing/suit/chickensuit(src.loc)
 	del(src)
 
+/obj/effect/landmark/costume/justice/New()
+	new /obj/item/clothing/suit/justice(src.loc)
+	var/CHOICE = pick( /obj/item/clothing/head/justice , /obj/item/clothing/head/justice/blue , /obj/item/clothing/head/justice/yellow , /obj/item/clothing/head/justice/green , /obj/item/clothing/head/justice/pink )
+	new CHOICE(src.loc)
+	del(src)
+
 /obj/effect/landmark/costume/madscientist/New()
 	new /obj/item/clothing/under/gimmick/rank/captain/suit(src.loc)
 	new /obj/item/clothing/head/flatcap(src.loc)
@@ -48,8 +54,8 @@
 	new /obj/item/clothing/gloves/white(src.loc)
 	new /obj/item/clothing/shoes/white(src.loc)
 	new /obj/item/clothing/under/scratch(src.loc)
-	if (prob(30))
-		new /obj/item/clothing/head/helmet/cueball(src.loc)
+//	if (prob(30))
+//		new /obj/item/clothing/head/helmet/cueball(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/highlander/New()

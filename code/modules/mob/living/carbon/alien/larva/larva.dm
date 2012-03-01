@@ -75,7 +75,7 @@
 
 /mob/living/carbon/alien/larva/ex_act(severity)
 	flick("flash", flash)
-
+/*
 	if (stat == 2 && client)
 		gib(1)
 		return
@@ -84,7 +84,7 @@
 		gibs(loc, viruses)
 		del(src)
 		return
-
+*/
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)

@@ -208,6 +208,7 @@
 					preferences.randomize_name()
 				observer.name = preferences.real_name
 				observer.real_name = observer.name
+				observer.original_name = observer.name //Original name is only used in ghost chat! It is not to be edited by anything!
 
 				del(src)
 				return 1
@@ -291,8 +292,14 @@
 			var/obj/item/weapon/card/id/C = H.wear_id
 			if (C)
 				G.fields["rank"] = C.assignment
+				G.fields["real_rank"] = H.mind.assigned_role
 			else
-				G.fields["rank"] = "Unassigned"
+				if(H.mind && H.mind.assigned_role)
+					G.fields["rank"] = H.mind.assigned_role
+					G.fields["real_rank"] = H.mind.assigned_role
+				else
+					G.fields["rank"] = "Unassigned"
+					G.fields["real_rank"] = G.fields["rank"]
 			G.fields["name"] = H.real_name
 			G.fields["id"] = text("[]", add_zero(num2hex(rand(1, 1.6777215E7)), 6))
 			M.fields["name"] = G.fields["name"]
@@ -331,6 +338,7 @@
 			L.fields["age"] = H.age
 			L.fields["id"] = md5("[H.real_name][H.mind.assigned_role]")
 			L.fields["rank"] = H.mind.role_alt_title ? H.mind.role_alt_title : H.mind.assigned_role
+			L.fields["real_rank"] = H.mind.assigned_role
 			L.fields["b_type"] = H.dna.b_type
 			L.fields["b_dna"] = H.dna.unique_enzymes
 			L.fields["enzymes"] = H.dna.struc_enzymes
@@ -382,9 +390,7 @@
 	proc/ViewManifest()
 		var/dat = "<html><body>"
 		dat += "<h4>Crew Manifest</h4>"
-		for(var/datum/data/record/t in data_core.general)
-			dat += "[t.fields["name"]] - [t.fields["rank"]]<br>"
-		dat += "<br>"
+		dat += data_core.get_manifest()
 
 		src << browse(dat, "window=manifest;size=300x420;can_close=1")
 

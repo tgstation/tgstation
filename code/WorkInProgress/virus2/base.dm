@@ -427,12 +427,6 @@ proc/airborne_can_reach(turf/source, turf/target)
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.toxloss += 15
 
-/*/datum/disease2/effect/greater/hallucinations
-	name = "Hallucinational Syndrome"
-	stage = 3
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.hallucination += 25*/
-
 /datum/disease2/effect/greater/sleepy
 	name = "Resting syndrome"
 	stage = 3
@@ -513,12 +507,6 @@ proc/airborne_can_reach(turf/source, turf/target)
 		if(prob(10))
 			var/obj/effect/decal/cleanable/mucus/this = new(mob.loc)
 			this.virus2 = mob.virus2
-
-/*/datum/disease2/effect/lesser/hallucinations
-	name = "Hallucinational Syndrome"
-	stage = 3
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.hallucination += 5*/
 
 /*/datum/disease2/effect/lesser/arm
 	name = "Disarming Syndrome"

@@ -87,6 +87,7 @@ obj/machinery/scanner/attack_hand(mob/living/carbon/human/user)
 	var/datum/data/record/S = new()
 	var/datum/data/record/L = new()
 	G.fields["rank"] = "Unassigned"
+	G.fields["real_rank"] = G.fields["rank"]
 	G.fields["name"] = mname
 	G.fields["id"] = text("[]", add_zero(num2hex(rand(1, 1.6777215E7)), 6))
 	M.fields["name"] = G.fields["name"]
@@ -125,6 +126,7 @@ obj/machinery/scanner/attack_hand(mob/living/carbon/human/user)
 	L.fields["age"] = age
 	L.fields["id"] = md5("[mname][user.mind.assigned_role]")
 	L.fields["rank"] = "Unknown"
+	L.fields["real_rank"] = L.fields["rank"]
 	L.fields["b_type"] = bloodtype
 	L.fields["b_dna"] = dna
 	L.fields["enzymes"] = user.dna.struc_enzymes

@@ -92,16 +92,13 @@ obj/machinery/computer/forensic_scanning
 		scan_data = ""
 		scan_name = ""
 		scan_process = 0
-		booked = 0
 
 	req_access = list(access_forensics_lockers)
 
 
 	New()
 		..()
-		if(!booked)
-			new /obj/item/weapon/book/manual/detective(get_turf(src))
-			booked = 1
+		new /obj/item/weapon/book/manual/detective(get_turf(src))
 		return
 
 
@@ -643,7 +640,7 @@ obj/machinery/computer/forensic_scanning
 			return
 
 
-	proc/update_fingerprints()	//I am tired, but this updates the master print, which is used to determine completion of a print.
+	proc/update_fingerprints()	//I am tired, but this updates the master print from evidence, which is used to determine completion of a print.
 		for(var/k = 1, k <= files.len, k++)
 			var/list/perp_list = files[k]
 			var/list/perp_prints = params2list(perp_list[1])
@@ -664,8 +661,7 @@ obj/machinery/computer/forensic_scanning
 			files[k] = perp_list
 		return
 
-	proc/process_card()	//I am tired, but this updates the master print from a fingerprint card
-						//which is used to determine completion of a print.
+	proc/process_card()	//Same as above, but for fingerprint cards
 		if(card.fingerprints && !(card.amount > 1))
 			for(var/k = 1, k <= card.fingerprints.len, k++)
 				var/list/test_prints = params2list(card.fingerprints[k])
@@ -687,22 +683,22 @@ obj/machinery/computer/forensic_scanning
 			return
 		return
 
-	proc/delete_record(var/location)
+	proc/delete_record(var/location)	//Deletes an entry in the misc database at the given location
 		if(misc && misc.len)
 			for(var/i = location, i < misc.len, i++)
 				misc[i] = misc[i+i]
 			misc.len--
 		return
 
-	proc/get_name(var/atom/A)
+	proc/get_name(var/atom/A) //HurrDurr
 		return A.name
 
-	proc/delete_dossier(var/location)
+	proc/delete_dossier(var/location)	//Deletes a Dossier at a given location.
 		if(files && files.len)
-			if(files.len < location)
+			if(files.len > location)
 				for(var/i = location, i < files.len, i++)
 					files[i] = files[i + 1]
-			if(files.len <= location)
+			if(files.len >= location)
 				files[files.len] = list()
 				files.len--
 		return
@@ -725,7 +721,7 @@ obj/item/clothing/gloves/var
 
 
 obj/effect/decal/cleanable/blood/var
-	track_amt = 3
+	track_amt = 2
 	mob/blood_owner
 
 turf/Exited(mob/living/carbon/human/M)
@@ -751,21 +747,21 @@ turf/Entered(mob/living/carbon/human/M)
 					M.shoes.track_blood--
 					src.add_bloody_footprints(M.shoes.track_blood_mob,0,M.dir,M.shoes.name)
 
-//REMOVED until we improve it.
-//		for(var/obj/effect/decal/cleanable/blood/B in src)
-//			if(B.track_amt <= 0) continue
-//			if(B.type != /obj/effect/decal/cleanable/blood/tracks)
-//				if(istype(M,/mob/living/carbon/human))
-//					if(M.shoes)
-//						M.shoes.add_blood(B.blood_owner)
-//						M.shoes.track_blood_mob = B.blood_owner
-//						M.shoes.track_blood = max(M.shoes.track_blood,8)
-//				else
-//					M.add_blood(B.blood_owner)
-//					M.track_blood_mob = B.blood_owner
-//					M.track_blood = max(M.track_blood,rand(4,8))
-//				B.track_amt--
-//				break
+
+		for(var/obj/effect/decal/cleanable/blood/B in src)
+			if(B.track_amt <= 0) continue
+			if(B.type != /obj/effect/decal/cleanable/blood/tracks)
+				if(istype(M,/mob/living/carbon/human))
+					if(M.shoes)
+						M.shoes.add_blood(B.blood_owner)
+						M.shoes.track_blood_mob = B.blood_owner
+						M.shoes.track_blood = max(M.shoes.track_blood,8)
+				else
+					M.add_blood(B.blood_owner)
+					M.track_blood_mob = B.blood_owner
+					M.track_blood = max(M.track_blood,rand(4,8))
+				B.track_amt--
+				break
 	. = ..()
 
 turf/proc/add_bloody_footprints(mob/living/carbon/human/M,leaving,d,info)
@@ -829,8 +825,8 @@ proc/blood_incompatible(donor,receiver)
 
 	afterattack(atom/A as obj|turf|area, mob/user as mob)
 		if(istype(A))
-			user.visible_message("[user] starts to wipe the prints and blood off of [A] with \the [src]!")
+			user.visible_message("[user] starts to wipe down [A] with [src]!")
 			if(do_after(user,30))
-				user.visible_message("[user] finishes wiping away the evidence!")
+				user.visible_message("[user] finishes wiping off the [A]!")
 				A.clean_blood()
 		return

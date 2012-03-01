@@ -19,6 +19,13 @@
 	desc = "Strange-looking hat-wear, makes you want to cast fireballs."
 	icon_state = "marisa"
 
+/obj/item/clothing/head/wizard/magus
+	name = "Magus Helm"
+	desc = "A mysterious helmet that hums with an unearthly power"
+	icon_state = "magus"
+	item_state = "magus"
+
+
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
 	desc = "A magnificant, gem-lined robe that seems to radiate power."
@@ -44,6 +51,13 @@
 	desc = "Magic is all about the spell power, ZE!"
 	icon_state = "marisa"
 	item_state = "marisarobe"
+
+/obj/item/clothing/suit/wizrobe/magusblue
+	name = "Magus Robe"
+	desc = "A set of armoured robes that seem to radiate a dark power"
+	icon_state = "magusblue"
+	item_state = "magusblue"
+
 
 
 /obj/item/clothing/suit/wizrobe/fake

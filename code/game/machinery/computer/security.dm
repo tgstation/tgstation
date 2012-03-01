@@ -487,6 +487,8 @@ What a mess.*/
 					if ("Change Rank")
 						if (active1)
 							active1.fields["rank"] = href_list["rank"]
+							if(href_list["rank"] in get_all_jobs())
+								active1.fields["real_rank"] = href_list["real_rank"]
 
 					if ("Change Criminal Status")
 						if (active2)

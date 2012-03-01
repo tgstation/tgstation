@@ -3,7 +3,9 @@
 		name = "organ"
 		mob/living/carbon/human/owner = null
 
-		list/datum/wound/weapon_wounds = list()
+		list/datum/autopsy_data/autopsy_data = list()
+		list/trace_chemicals = list() // traces of chemicals in the organ,
+								      // links chemical IDs to number of ticks for which they'll stay in the blood
 
 
 	proc/process()
@@ -12,7 +14,7 @@
 	proc/receive_chem(chemical as obj)
 		return 0
 
-/datum/wound
+/datum/autopsy_data
 	var
 		weapon = null
 		pretend_weapon = null
@@ -21,7 +23,7 @@
 		time_inflicted = 0
 
 	proc/copy()
-		var/datum/wound/W = new()
+		var/datum/autopsy_data/W = new()
 		W.weapon = src.weapon
 		W.pretend_weapon = src.pretend_weapon
 		W.damage = src.damage
@@ -71,7 +73,7 @@
 			owner = H
 			H.organs[name] = src
 
-	proc/take_damage(brute, burn, sharp)
+	proc/take_damage(brute, burn, sharp, used_weapon = null)
 		if((brute <= 0) && (burn <= 0))
 			return 0
 		if(destroyed)
@@ -117,6 +119,8 @@
 			if(broken)
 				owner.emote("scream")
 
+		if(used_weapon) add_wound(used_weapon, brute + burn)
+
 		var/result = src.update_icon()
 		return result
 
@@ -129,18 +133,18 @@
 			perma_injury = 0
 		// if all damage is healed, replace the wounds with scars
 		if(brute_dam + burn_dam == 0)
-			for(var/V in weapon_wounds)
-				var/datum/wound/W = weapon_wounds[V]
+			for(var/V in autopsy_data)
+				var/datum/autopsy_data/W = autopsy_data[V]
 				del W
-			weapon_wounds = list()
+			autopsy_data = list()
 		return update_icon()
 
 	proc/add_wound(var/used_weapon, var/damage)
-		var/datum/wound/W = weapon_wounds[used_weapon]
+		var/datum/autopsy_data/W = autopsy_data[used_weapon]
 		if(!W)
 			W = new()
 			W.weapon = used_weapon
-			weapon_wounds[used_weapon] = W
+			autopsy_data[used_weapon] = W
 
 		W.hits += 1
 		W.damage += damage

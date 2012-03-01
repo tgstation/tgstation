@@ -10,9 +10,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	icon_state = "walkietalkie"
 	item_state = "walkietalkie"
 	var
+		on = 1 // 0 for off
 		last_transmission
 		frequency = 1459 //common chat
 		traitor_frequency = 0 //tune to frequency to unlock traitor supplies
+		canhear_range = 3
 		obj/item/device/radio/patch_link = null
 		obj/item/device/uplink/radio/traitorradio = null
 		wires = WIRE_SIGNAL | WIRE_RECEIVE | WIRE_TRANSMIT
@@ -55,6 +57,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if(radio_controller)
 		initialize()
 
+	// If intercom: do a local power check loop
+	if(istype(src, /obj/item/device/radio/intercom))
+		spawn(5)
+			checkpower()
+
 /obj/item/device/radio/initialize()
 	if(freerange)
 		if(frequency < 1200 || frequency > 1600)
@@ -74,6 +81,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	interact(user)
 
 /obj/item/device/radio/proc/interact(mob/user as mob)
+	if(!on)
+		return
+
 	var/dat = {"
 				<html><head><title>[src]</title></head><body><TT>
 				Microphone: [broadcasting ? "<A href='byond://?src=\ref[src];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];talk=1'>Disengaged</A>"]<BR>
@@ -111,9 +121,29 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			Speaker: <A href='byond://?src=\ref[src];ch_name=[chan_name];listen=[!list]'>[list ? "Engaged" : "Disengaged"]</A><BR>
 			"}
 
+/obj/item/device/radio/proc/checkpower()
+
+	// Simple loop, checks for power. Strictly for intercoms
+	while(src)
+
+		if(!src.loc)
+			on = 0
+		var/area/A = src.loc.loc
+		if(!A || !isarea(A) || !A.master)
+			on = 0
+		else
+			on = A.master.powered(EQUIP) // set "on" to the power status
+
+		if(!on)
+			icon_state = "intercom-p"
+		else
+			icon_state = "intercom"
+
+		sleep(30)
+
 /obj/item/device/radio/Topic(href, href_list)
 	//..()
-	if (usr.stat)
+	if (usr.stat || !on)
 		return
 	if (!(issilicon(usr) || (usr.contents.Find(src) || ( in_range(src, usr) && istype(loc, /turf) ))))
 		usr << browse(null, "window=radio")
@@ -124,6 +154,21 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		var/mob/living/silicon/ai/A = locate(href_list["track2"])
 		if(A && target)
 			A.ai_actual_track(target)
+		return
+	else if (href_list["faketrack"])
+		var/mob/target = locate(href_list["track"])
+		var/mob/living/silicon/ai/A = locate(href_list["track2"])
+		if(A && target)
+
+			A:cameraFollow = target
+			A << text("Now tracking [] on camera.", target.name)
+			if (usr.machine == null)
+				usr.machine = usr
+
+			while (usr:cameraFollow == target)
+				usr << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
+				sleep(40)
+				continue
 		return
 	else if (href_list["freq"])
 		var/new_frequency = (frequency + text2num(href_list["freq"]))
@@ -139,6 +184,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			var/obj/item/device/radio/R = src
 			R.loc = T
 			T.loc = usr
+			T.layer = R.layer
 			R.layer = 0
 			if (usr.client)
 				usr.client.screen -= R
@@ -149,7 +195,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				usr.u_equip(R)
 				usr.l_hand = T
 			R.loc = T
-			T.layer = 20
 			T.attack_self(usr)
 			return
 	else if (href_list["talk"])
@@ -194,6 +239,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		connection = radio_connection
 		channel = null
 	if (!istype(connection))
+		return
+	if (!connection)
 		return
 
 	if(subspace_transmission)
@@ -299,6 +346,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	return
 
 /obj/item/device/radio/talk_into(mob/M as mob, message, channel)
+	if(!on) return // the device has to be on
 
 	if(GLOBAL_RADIO_TYPE == 1) // NEW RADIO SYSTEMS: By Doohl
 
@@ -324,6 +372,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			connection = radio_connection
 			channel = null
 		if (!istype(connection))
+			return
+		if (!connection)
 			return
 
 
@@ -407,7 +457,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				"connection" = connection, // the radio connection to use
 				"radio" = src, // stores the radio used for transmission
 				"slow" = 0, // how much to sleep() before broadcasting - simulates net lag
-				"traffic" = 0 // dictates the total traffic sum that the signal went through
+				"traffic" = 0, // dictates the total traffic sum that the signal went through
+				"type" = 0, // determines what type of radio input it is: normal broadcast
+				"server" = null, // the last server to log this signal
+				"reject" = 0	// if nonzero, the signal will not be accepted by any broadcasting machinery
 			)
 			signal.frequency = connection.frequency // Quick frequency set
 
@@ -455,7 +508,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			"connection" = connection, // the radio connection to use
 			"radio" = src, // stores the radio used for transmission
 			"slow" = 0,
-			"traffic" = 0
+			"traffic" = 0,
+			"type" = 0,
+			"server" = null,
+			"reject" = 0
 		)
 		signal.frequency = connection.frequency // Quick frequency set
 
@@ -466,7 +522,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		sleep(rand(10,25)) // wait a little...
 
 		if(signal.data["done"])
-			del(signal) // delete the signal - we're done here.
+			//we're done here.
 			return
 
 	  	// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet.
@@ -490,6 +546,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			connection = radio_connection
 			channel = null
 		if (!istype(connection))
+			return
+		if (!connection)
 			return
 		var/display_freq = connection.frequency
 
@@ -681,6 +739,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	*/
 	if (!(wires & WIRE_RECEIVE))
 		return
+	if (!on)
+		return
 	if (!freq) //recieved on main frequency
 		if (!listening)
 			return
@@ -714,7 +774,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	/* Instead, let's individually search potential containers for mobs! More verbose but a LOT more efficient and less laggy */
 	// Check gamehelpers.dm for the proc definition:
 
-	return get_mobs_in_view(1, src)
+	return get_mobs_in_view(canhear_range, src)
 
 /obj/item/device/radio/examine()
 	set src in view()

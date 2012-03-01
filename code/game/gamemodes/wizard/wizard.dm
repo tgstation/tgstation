@@ -50,7 +50,7 @@
 /datum/game_mode/wizard/post_setup()
 	for(var/datum/mind/wizard in wizards)
 		forge_wizard_objectives(wizard)
-		learn_basic_spells(wizard.current)
+		//learn_basic_spells(wizard.current)
 		equip_wizard(wizard.current)
 		name_wizard(wizard.current)
 		greet_wizard(wizard)
@@ -141,7 +141,7 @@
 	return
 
 
-/datum/game_mode/proc/learn_basic_spells(mob/living/carbon/human/wizard_mob)
+/*/datum/game_mode/proc/learn_basic_spells(mob/living/carbon/human/wizard_mob)
 	if (!istype(wizard_mob))
 		return
 	if(!config.feature_object_spell_system)
@@ -149,7 +149,7 @@
 		wizard_mob.mind.special_verbs += /client/proc/jaunt
 	else
 		wizard_mob.spell_list += new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(usr)
-
+*/
 
 /datum/game_mode/proc/equip_wizard(mob/living/carbon/human/wizard_mob)
 	if (!istype(wizard_mob))
@@ -178,7 +178,7 @@
 		wizard_mob.equip_if_possible(new /obj/item/weapon/spellbook(wizard_mob), wizard_mob.slot_r_hand)
 
 	wizard_mob << "You will find a list of available spells in your spell book. Choose your magic arsenal carefully."
-	wizard_mob << "In your pockets you will find two more important, magical artifacts. Use them as needed."
+	wizard_mob << "In your pockets you will find a teleport scroll. Use it as needed."
 	wizard_mob.mind.store_memory("<B>Remember:</B> do not forget to prepare your spells.")
 	return 1
 

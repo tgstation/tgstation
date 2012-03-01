@@ -40,6 +40,7 @@ var/const
 	BE_MONKEY    =(1<<8)
 	BE_PAI       =(1<<9)
 
+
 datum/preferences
 	var
 		real_name
@@ -90,6 +91,7 @@ datum/preferences
 
 		//Mob preview
 		icon/preview_icon = null
+		preview_dir = SOUTH
 
 		//Jobs, uses bitflags
 		job_civilian_high = 0
@@ -113,11 +115,80 @@ datum/preferences
 		curslot = 0
 		disabilities = 0
 
+		used_skillpoints = 0
+		list/skills = list() // skills can range from 0 to 3
+
 	New()
 		hair_style = new/datum/sprite_accessory/hair/short
 		facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
 		randomize_name()
 		..()
+
+	proc/ZeroSkills(var/forced = 0)
+		for(var/V in SKILLS) for(var/datum/skill/S in SKILLS[V])
+			if(!skills.Find(S.ID) || forced)
+				skills[S.ID] = SKILL_NONE
+
+	proc/GetSkillClass(points)
+		// skill classes describe how your character compares in total points
+		switch(points)
+			if(0)
+				return "Unconfigured"
+			if(1 to 3)
+				return "Talentless"
+			if(4 to 6)
+				return "Below Average"
+			if(7 to 9)
+				return "Average"
+			if(10 to 12)
+				return "Talented"
+			if(13 to 15)
+				return "Extremely Talented"
+			if(16 to 18)
+				return "Genius"
+			if(19 to 21)
+				return "True Genius"
+			if(22 to 1000)
+				return "God"
+
+	proc/SetSkills(mob/user)
+		if(SKILLS == null)
+			SKILLS = list()
+			for(var/T in (typesof(/datum/skill)-/datum/skill))
+				var/datum/skill/S = new T
+				if(S.ID != "none")
+					if(!SKILLS.Find(S.field))
+						SKILLS[S.field] = list()
+					var/list/L = SKILLS[S.field]
+					L += S
+
+		if(skills.len == 0)
+			ZeroSkills()
+
+
+		var/HTML = "<body>"
+		HTML += "<b>Select your Skills</b><br>"
+		HTML += "Current skill level: <b>[GetSkillClass(used_skillpoints)]</b> ([used_skillpoints])<br>"
+		HTML += "<a href=\"byond://?src=\ref[user];skills=1;preferences=1;preconfigured=1;\">Use preconfigured skillset</a><br>"
+		HTML += "<table>"
+		for(var/V in SKILLS)
+			HTML += "<tr><th colspan = 5><b>[V]</b></th></tr>"
+			for(var/datum/skill/S in SKILLS[V])
+				var/level = skills[S.ID]
+				HTML += "<tr style='text-align:left;'>"
+				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;skillinfo=\ref[S]'>[S.name]</a></th>"
+				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_NONE]'><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[None\]</font></a></th>"
+				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_BASIC]'><font color=[(level == SKILL_BASIC) ? "red" : "black"]>\[Basic\]</font></a></th>"
+				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_ADEPT]'><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Adept\]</font></a></th>"
+				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_EXPERT]'><font color=[(level == SKILL_EXPERT) ? "red" : "black"]>\[Expert\]</font></a></th>"
+				HTML += "</tr>"
+		HTML += "</table>"
+		HTML += "<a href=\"byond://?src=\ref[user];skills=1;preferences=1;cancel=1;\">\[Done\]</a>"
+
+		user << browse(null, "window=preferences")
+		user << browse(HTML, "window=show_skills;size=600x800")
+		return
+
 
 
 	proc/ShowChoices(mob/user)
@@ -145,6 +216,10 @@ datum/preferences
 		dat += "<hr><b>Occupation Choices</b><br>"
 		dat += "\t<a href=\"byond://?src=\ref[user];preferences=1;occ=1\"><b>Set Preferences</b></a><br>"
 
+		dat += "<hr><b>Skill Choices</b><br>"
+		dat += "\t<i>[GetSkillClass(used_skillpoints)]</i> ([used_skillpoints])<br>"
+		dat += "\t<a href=\"byond://?src=\ref[user];preferences=1;skills=1\"><b>Set Skills</b></a><br>"
+
 		dat += "<hr><table><tr><td><b>Body</b> "
 		dat += "(<a href=\"byond://?src=\ref[user];preferences=1;s_tone=random;underwear=random;age=random;b_type=random;hair=random;h_style=random;facial=random;f_style=random;eyes=random\">&reg;</A>)" // Random look
 		dat += "<br>"
@@ -153,7 +228,12 @@ datum/preferences
 
 		if(!IsGuestKey(user.key))
 			dat += "Underwear: <a href =\"byond://?src=\ref[user];preferences=1;underwear=1\"><b>[underwear == 1 ? "Yes" : "No"]</b></a><br>"
-		dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64></td></tr></table>"
+
+		dat += "</td><td style='text-align:center;padding-left:2em'><b>Preview</b><br>"
+		dat += "<a href='?src=\ref[user];preferences=1;preview_dir=[turn(preview_dir,-90)]'>&lt;</a>"
+		dat += "<img src=previewicon.png height=64 width=64 style='vertical-align:middle'>"
+		dat += "<a href='?src=\ref[user];preferences=1;preview_dir=[turn(preview_dir,90)]'>&gt;</a>"
+		dat += "</td></tr></table>"
 
 		dat += "<hr><b>Hair</b><br>"
 
@@ -416,6 +496,41 @@ datum/preferences
 			else
 				if(job_master)
 					SetChoices(user)
+
+			return 1
+
+		if(link_tags["preview_dir"])
+			preview_dir = text2num(link_tags["preview_dir"])
+
+		if(link_tags["skills"])
+			if(link_tags["cancel"])
+				user << browse(null, "window=show_skills")
+				ShowChoices(user)
+				return
+			else if(link_tags["skillinfo"])
+				var/datum/skill/S = locate(link_tags["skillinfo"])
+				var/HTML = "<b>[S.name]</b><br>[S.desc]"
+				user << browse(HTML, "window=\ref[user]skillinfo")
+			else if(link_tags["setskill"])
+				var/datum/skill/S = locate(link_tags["setskill"])
+				var/value = text2num(link_tags["newvalue"])
+				var/current_value = skills[S.ID]
+				used_skillpoints += value - current_value
+				skills[S.ID] = value
+				SetSkills(user)
+			else if(link_tags["preconfigured"])
+				var/selected = input(user, "Select a skillset", "Skillset") as null|anything in SKILL_PRE
+				if(!selected) return
+
+				ZeroSkills(1)
+				for(var/V in SKILL_PRE[selected])
+					skills[V] = SKILL_PRE[selected][V]
+				used_skillpoints = 0
+				for(var/V in skills) used_skillpoints += skills[V]
+
+				SetSkills(user)
+			else
+				SetSkills(user)
 
 			return 1
 
@@ -722,6 +837,7 @@ datum/preferences
 		if(be_random_name)
 			randomize_name()
 		character.real_name = real_name
+		character.original_name = real_name //Original name is only used in ghost chat! It is not to be edited by anything!
 
 		character.flavor_text = flavor_text
 
@@ -758,6 +874,9 @@ datum/preferences
 		character.facial_hair_style = facial_hair_style
 
 		character.underwear = underwear == 1 ? pick(1,2,3,4,5) : 0
+
+		character.used_skillpoints = used_skillpoints
+		character.skills = skills
 
 		character.update_face()
 		character.update_body()

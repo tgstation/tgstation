@@ -86,14 +86,14 @@
 /mob/living/carbon/alien/humanoid/ex_act(severity)
 	flick("flash", flash)
 
-	if (stat == 2 && client)
-		gib(1)
-		return
+//	if (stat == 2 && client)
+//		gib(1)
+//		return
 
-	else if (stat == 2 && !client)
-		xgibs(loc, viruses)
-		del(src)
-		return
+//	else if (stat == 2 && !client)
+//		xgibs(loc, viruses)
+//		del(src)
+//		return
 
 	var/shielded = 0
 

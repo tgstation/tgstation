@@ -194,12 +194,7 @@ proc/trigger_armed_response_team()
 /mob/living/carbon/human/proc/equip_strike_team(leader_selected = 0)
 
 	//Special radio setup
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
-	R.name = "CentCom Response Team headset"
-	R.desc = "The headset of the boss's boss. Channels are as follows: :h - Response Team :c - command, :s - security, :e - engineering, :d - mining, :q - cargo, :m - medical, :n - science."
-	R.freerange = 1
-	R.config(list("Response Team" = 1, "Science" = 1, "Command" = 1, "Medical" = 1, "Engineering" = 1, "Security" = 1, "Mining" = 1, "Cargo" = 1,))
-	equip_if_possible(R, slot_ears)
+	equip_if_possible(new /obj/item/device/radio/headset/ert, slot_ears)
 
 	//Adding Camera Network
 	var/obj/machinery/camera/camera = new /obj/machinery/camera(src) //Gives all the commandos internals cameras.

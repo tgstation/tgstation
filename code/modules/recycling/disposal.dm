@@ -55,8 +55,8 @@
 		if(istype(I, /obj/item/weapon/trashbag))
 			user << "\blue You empty the bag."
 			for(var/obj/item/O in I.contents)
-				I.contents -= O
 				O.loc = src
+				I.contents -= O
 			I.update_icon()
 			update()
 			return
@@ -101,8 +101,9 @@
 				return // No idea why, but somehow I gets nulled before it goes into the else, and that leads to a lot of spam with runtime errors.
 
 			user.drop_item()
+			if(I)
+				I.loc = src
 
-			I.loc = src
 			user << "You place \the [I] into the [src]."
 			for(var/mob/M in viewers(src))
 				if(M == user)
@@ -153,7 +154,7 @@
 			timeleft = 5
 			update()
 			return
-		if(istype(T,/obj/effect/bigDelivery))
+		if(istype(T,/obj/structure/bigDelivery))
 			if (T.anchored || get_dist(user, src) > 1 || get_dist(src,T) > 2 )
 				return
 
@@ -305,6 +306,7 @@
 		for(var/atom/movable/AM in src)
 			AM.loc = src.loc
 			AM.pipe_eject(0)
+		islarge = 0
 		update()
 
 	// update the icon & overlays to reflect mode & status
@@ -439,8 +441,10 @@
 		del(H)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if (istype(mover,/obj/item) && !istype(mover,/obj/item/weapon/dummy))
+		if (istype(mover,/obj/item))
 			var/obj/item/I = mover
+			if(!mover.throwing)
+				return ..()
 			if(prob(75))
 				I.loc = src
 				for(var/mob/M in viewers(src))
@@ -450,7 +454,7 @@
 					M.show_message("\the [I] bounces off of \the [src]'s rim!", 3)
 			return 0
 		else
-			return ..(mover, target, height, air_group)
+			return ..()
 
 //The toilet does not need to pressurized but can only handle small items.
 //You can also choke people by dunking them into the toilet.
@@ -568,8 +572,8 @@
 				if(H.mutations & FAT)		// is a human and fat?
 					has_fat_guy = 1			// set flag on holder
 			*/
-			if(istype(AM, /obj/effect/bigDelivery))
-				var/obj/effect/bigDelivery/T = AM
+			if(istype(AM, /obj/structure/bigDelivery))
+				var/obj/structure/bigDelivery/T = AM
 				src.destinationTag = T.sortTag
 			else if(istype(AM, /obj/item/smallDelivery))
 				var/obj/item/smallDelivery/T = AM

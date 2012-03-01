@@ -13,6 +13,7 @@
 	stun = 10
 	weaken = 10
 	stutter = 10
+	flag = "melee" //Give it a better chance to be blocked.
 
 
 /obj/item/projectile/energy/declone

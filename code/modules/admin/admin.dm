@@ -258,11 +258,16 @@
 				if ((M.client && M.client.holder && (M.client.holder.level >= src.level)))
 					alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 					return
-				M << "\red You have been kicked from the server"
-				log_admin("[key_name(usr)] booted [key_name(M)].")
-				message_admins("\blue [key_name_admin(usr)] booted [key_name_admin(M)].", 1)
-				//M.client = null
-				del(M.client)
+				switch(alert("Are you sure?", ,"Yes", "NO, WAIT.. DAMMIT! NOT THAT BUTTON!"))
+					if("Yes")
+						if(ismob(M))
+							M << "\red You have been kicked from the server"
+							log_admin("[key_name(usr)] booted [key_name(M)].")
+							message_admins("\blue [key_name_admin(usr)] booted [key_name_admin(M)].", 1)
+							//M.client = null
+							del(M.client)
+						else
+							src << "Looks like someone already beat you."
 
 	if (href_list["removejobban"])
 		if ((src.rank in list("Game Admin", "Game Master"  )))
@@ -923,7 +928,7 @@
 			return
 		var/mob/M = locate(href_list["traitor"])
 		if (!istype(M))
-			player()
+			player_panel_new()
 			return
 		if(isalien(M))
 			alert("Is an [M.mind ? M.mind.special_role : "Alien"]!", "[M.key]")
@@ -1759,6 +1764,36 @@
 			C.files.RefreshResearch()
 
 		owner:rnd_check_designs()
+	#define AUTOBANTIME 10
+	if(href_list["warn"])
+		var/mob/M = locate(href_list["warn"])
+		if (ismob(M))
+			var/client/user
+			if(istype(usr, /client))
+				user = usr
+			else if(istype(usr, /mob))
+				user = usr.client
+
+			if(!user.holder)
+				src << "Only administrators may use this command."
+				return
+			if(M.client && M.client.holder && (M.client.holder.level >= user.holder.level))
+				alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+				return
+			if(!M.client.warned)
+				M << "\red <B>You have been warned by an administrator. This is the only warning you will recieve.</B>"
+				M.client.warned = 1
+				message_admins("\blue [user.ckey] warned [M.ckey].")
+			else
+				AddBan(M.ckey, M.computer_id, "Autobanning due to previous warn", user.ckey, 1, AUTOBANTIME)
+				M << "\red<BIG><B>You have been autobanned by [user.ckey]. This is what we in the biz like to call a \"second warning\".</B></BIG>"
+				M << "\red This is a temporary ban; it will automatically be removed in [AUTOBANTIME] minutes."
+				log_admin("[user.ckey] warned [M.ckey], resulting in a [AUTOBANTIME] minute autoban.")
+				ban_unban_log_save("[user.ckey] warned [M.ckey], resulting in a [AUTOBANTIME] minute autoban.")
+				message_admins("\blue [user.ckey] warned [M.ckey], resulting in a [AUTOBANTIME] minute autoban.")
+				feedback_inc("ban_warn",1)
+
+				del(M.client)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
@@ -1863,150 +1898,7 @@
 	dat += "</body></html>"
 	usr << browse(dat, "window=adminplayerinfo;size=480x480")
 
-/obj/admins/proc/player()
-	if (!usr.client.holder)
-		return
-	var/dat = "<html><head><title>Player Menu</title></head>"
-	dat += "<body><table border=1 cellspacing=5><B><tr><th>Name</th><th>Real Name</th><th>Assigned Job</th><th>Key</th><th>Options</th><th>Info</th><th>PM</th><th>Traitor?</th><th>Karma</th></tr></B>"
-	//add <th>IP:</th> to this if wanting to add back in IP checking
-	//add <td>(IP: [M.lastKnownIP])</td> if you want to know their ip to the lists below
-	var/list/mobs = sortmobs()
-	var/show_karma = 0
-	var/DBConnection/dbcon
-
-	if(config.sql_enabled) // SQL is enabled in config.txt
-		dbcon = new() // Setting up connection
-		dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
-		if(dbcon.IsConnected())
-			show_karma = 1
-		else
-			usr << "\red Unable to connect to karma database. This error can occur if your host has failed to set up an SQL database or improperly configured its login credentials.<br>"
-
-	if(!show_karma)
-		for(var/mob/M in mobs)
-			if(M.ckey)
-				dat += "<tr><td>[M.name]</td>" // Adds current name
-				if(istype(M, /mob/living/silicon/ai))    // Adds current 'Real Name'
-					dat += "<td>AI</td>"
-				if(istype(M, /mob/living/silicon/robot))
-					dat += "<td>Cyborg</td>"
-				if(istype(M, /mob/living/carbon/human))
-					dat += "<td>[M.real_name]</td>"
-				if(istype(M, /mob/living/silicon/pai))
-					dat += "<td>pAI</td>"
-				if(istype(M, /mob/new_player))
-					dat += "<td>New Player</td>"
-				if(istype(M, /mob/dead/observer))
-					dat += "<td>Ghost</td>"
-				if(istype(M, /mob/living/carbon/monkey))
-					dat += "<td>Monkey</td>"
-				if(istype(M, /mob/living/carbon/alien))
-					dat += "<td>Alien</td>"
-
-				if(M.mind && M.mind.assigned_role && istype(M, /mob/living/carbon/human))	// Adds a column to Player Panel that shows their current job.
-					var/mob/living/carbon/human/H = M
-
-					if (H.wear_id)
-						var/obj/item/weapon/card/id/id
-
-						if(istype(H.wear_id, /obj/item/device/pda))
-							var/obj/item/device/pda/PDA = H.wear_id
-							if(!isnull(PDA.id))				// The PDA may contain no ID
-								id = PDA.id					// The ID is contained inside the PDA
-
-						else
-							id = H.wear_id					// The ID was on the ID slot
-
-						if(!id) 							// Happens when there's no ID in the PDA located on the wear_id slot
-							dat += "<td>[M.mind.assigned_role] (No ID)</td>"
-
-						else if(isnull(id.assignment))		// Preventing runtime errors blocking the player panel
-							usr << "<font color=red>ERROR:</font> Inform the coders that an [id.name] was checked for its assignment variable, and it was null."
-							dat += "<td><font color=red>ERROR</font></td>"
-
-						else
-							if(M.mind.assigned_role == id.assignment)			// Polymorph
-								dat += "<td>[M.mind.assigned_role]</td>"
-
-							else
-								dat += "<td>[M.mind.assigned_role] ([id.assignment])"
-
-					else
-						dat += "<td>[M.mind.assigned_role] (No ID)</td>"
-
-				else
-					dat += "<td>No Assigned Role</td>"
-
-				dat += {"<td>[M.client?"[M.client]":"No client"]</td>
-				<td align=center><A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>X</A></td>
-				<td align=center><A HREF='?src=\ref[src];player_info=[M.ckey]'>[player_has_info(M.ckey) ? "Info" : "N/A"] </A></td>
-				<td align=center><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>
-				"}
-				switch(is_special_character(M))
-					if(0)
-						dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'>Traitor?</A></td>"}
-					if(1)
-						dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'><font color=red>Traitor?</font></A></td>"}
-					if(2)
-						dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'><font color=red><b>Traitor?</b></font></A></td>"}
-				if (config.sql_enabled)
-					dat += "<td><font color=red>ERROR</font></td></tr>"
-				else
-					dat += "<td>disabled</td></tr>"
-
-	else
-
-		for(var/mob/M in mobs)
-			if(M.ckey)
-
-				var/DBQuery/query = dbcon.NewQuery("SELECT karma FROM karmatotals WHERE byondkey='[M.key]'")
-				query.Execute()
-
-				var/currentkarma
-				while(query.NextRow())
-					currentkarma = query.item[1]
-
-				dat += "<tr><td>[M.name]</td>"
-				if(isAI(M))
-					dat += "<td>AI</td>"
-				if(isrobot(M))
-					dat += "<td>Cyborg</td>"
-				if(ishuman(M))
-					dat += "<td>[M.real_name]</td>"
-				if(istype(M, /mob/living/silicon/pai))
-					dat += "<td>pAI</td>"
-				if(istype(M, /mob/new_player))
-					dat += "<td>New Player</td>"
-				if(isobserver(M))
-					dat += "<td>Ghost</td>"
-				if(ismonkey(M))
-					dat += "<td>Monkey</td>"
-				if(isalien(M))
-					dat += "<td>Alien</td>"
-				dat += {"<td>[(M.client ? "[M.client]" : "No client")]</td>
-				<td align=center><A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>X</A></td>
-				<td align=center><A HREF='?src=\ref[src];player_info=[M.ckey]'>[player_has_info(M.ckey) ? "Info" : "N/A"] </A></td>
-				<td align=center><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>
-				"}
-				switch(is_special_character(M))
-					if(0)
-						dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'>Traitor?</A></td>"}
-					if(1)
-						dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'><font color=red>Traitor?</font></A></td>"}
-					if(2)
-						dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'><font color=red><b>Traitor?</b></font></A></td>"}
-				if(currentkarma)
-					dat += "<td>[currentkarma]</td></tr>"
-				else
-					dat += "<td>0</td></tr>"
-
-	dat += "</table></body></html>"
-
-	usr << browse(dat, "window=players;size=905x480")
-
-
 /obj/admins/proc/Jobbans()
-
 	if ((src.rank in list( "Game Admin", "Game Master"  )))
 		var/dat = "<B>Job Bans!</B><HR><table>"
 		for(var/t in jobban_keylist)
@@ -2664,6 +2556,7 @@
 
 	if (!M.mind)
 		usr << "Sorry, this mob has no mind!"
+		return
 	M.mind.edit_memory()
 
 

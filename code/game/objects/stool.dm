@@ -296,7 +296,7 @@
 		if (!ticker)
 			user << "You can't buckle anyone in before the game starts."
 			return 0
-		if ((!( istype(M, /mob) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat || M.buckled))
+		if ((!( istype(M, /mob) ) || get_dist(src, user) >= 1 || M.loc != src.loc || user.restrained() || usr.stat || M.buckled))
 			return 0
 		if (M == usr)
 			M.visible_message(\

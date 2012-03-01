@@ -43,8 +43,10 @@
 		agent_number = possible_syndicates.len
 
 	var/n_players = num_players()
-	if(agent_number > n_players)
-		agent_number = n_players/2
+	if(agent_number > (n_players - agent_number))
+		agent_number = (n_players - agent_number)/2
+	if(agent_number < required_enemies)
+		agent_number  = required_enemies
 
 	while(agent_number > 0)
 		var/datum/mind/new_syndicate = pick(possible_syndicates)
@@ -216,10 +218,7 @@
 	return tempfreq
 
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob,radio_freq)
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(synd_mob)
-	R.freerange = 1
-	R.listening = 0
-	R.config(list("Nuclear" = 1))
+	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/nuclear(synd_mob)
 	synd_mob.equip_if_possible(R, synd_mob.slot_ears)
 	synd_mob.equip_if_possible(new /obj/item/clothing/under/syndicate(synd_mob), synd_mob.slot_w_uniform)
 	synd_mob.equip_if_possible(new /obj/item/clothing/shoes/black(synd_mob), synd_mob.slot_shoes)

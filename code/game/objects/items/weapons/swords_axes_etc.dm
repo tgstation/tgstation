@@ -45,6 +45,7 @@ STUN BATON
 		playsound(user, 'saberoff.ogg', 50, 1)
 		user << "\blue [src] can now be concealed."
 	add_fingerprint(user)
+	user.update_clothing()
 	return
 
 /obj/item/weapon/melee/energy/sword/green

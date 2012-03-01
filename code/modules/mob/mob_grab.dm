@@ -78,7 +78,13 @@
 	if ((killing && state == 3))
 		affecting.Stun(5)
 		affecting.Paralyse(3)
-		affecting.losebreath = min(affecting.losebreath + 2, 3)
+		if(ishuman(affecting))
+			var/mob/living/carbon/human/H = affecting
+			affecting.being_strangled = 1
+			var/datum/organ/external/head = H.organs["head"]
+			head.add_wound("Strangulation", 0)
+		else
+			affecting.losebreath = min(affecting.losebreath + 2, 3)
 	return
 
 

@@ -500,6 +500,21 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 			if(!emagged) use_power(700)
 			else use_power(1400)
 
+		else if(istype(E, /obj/item/weapon/gun/energy/staff))
+			A = new /obj/item/projectile/change( loc )
+			A.original = target.loc
+			icon_state = "target_prism"
+			if(!emagged) use_power(700)
+			else use_power(1400)
+
+		else if(istype(E, /obj/item/weapon/gun/energy/ionrifle))
+			A = new /obj/item/projectile/ion( loc )
+			A.original = target.loc
+			icon_state = "target_prism"
+			if(!emagged) use_power(700)
+			else use_power(1400)
+
+
 		else if(istype(E, /obj/item/weapon/gun/energy/taser) || istype(E, /obj/item/weapon/gun/energy/stunrevolver))
 			A = new /obj/item/projectile/energy/electrode( loc )
 			icon_state = "target_prism"

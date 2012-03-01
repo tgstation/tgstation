@@ -30,49 +30,52 @@
 		if ((usr.mutations & CLUMSY) && prob(50))
 			usr << "\red Uh ... how do those things work?!"
 			if (istype(M, /mob/living/carbon/human))
-				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
-				O.source = user
-				O.target = user
-				O.item = user.equipped()
-				O.s_loc = user.loc
-				O.t_loc = user.loc
-				O.place = "handcuff"
-				M.requests += O
-				spawn( 0 )
-					O.process()
-					return
+				if(!M.handcuffed)
+					var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
+					O.source = user
+					O.target = user
+					O.item = user.equipped()
+					O.s_loc = user.loc
+					O.t_loc = user.loc
+					O.place = "handcuff"
+					M.requests += O
+					spawn( 0 )
+						O.process()
+				return
 			return
 		if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 			usr << "\red You don't have the dexterity to do this!"
 			return
 		if (istype(M, /mob/living/carbon/human))
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to handcuff [M.name] ([M.ckey])</font>")
-			var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
-			O.source = user
-			O.target = M
-			O.item = user.equipped()
-			O.s_loc = user.loc
-			O.t_loc = M.loc
-			O.place = "handcuff"
-			M.requests += O
-			spawn( 0 )
-				playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
-				O.process()
-				return
+			if(!M.handcuffed)
+				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
+				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to handcuff [M.name] ([M.ckey])</font>")
+				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
+				O.source = user
+				O.target = M
+				O.item = user.equipped()
+				O.s_loc = user.loc
+				O.t_loc = M.loc
+				O.place = "handcuff"
+				M.requests += O
+				spawn( 0 )
+					playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
+					O.process()
+			return
 		else
-			var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey(  )
-			O.source = user
-			O.target = M
-			O.item = user.equipped()
-			O.s_loc = user.loc
-			O.t_loc = M.loc
-			O.place = "handcuff"
-			M.requests += O
-			spawn( 0 )
-				playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
-				O.process()
-				return
+			if(!M.handcuffed)
+				var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey(  )
+				O.source = user
+				O.target = M
+				O.item = user.equipped()
+				O.s_loc = user.loc
+				O.t_loc = M.loc
+				O.place = "handcuff"
+				M.requests += O
+				spawn( 0 )
+					playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
+					O.process()
+			return
 	return
 
 
@@ -228,11 +231,8 @@
 	return
 
 /obj/effect/manifest/proc/manifest()
-	var/dat = "<B>Crew Manifest</B>:<BR>"
-	for(var/mob/living/carbon/human/M in world)
-		dat += text("    <B>[]</B> -  []<BR>", M.name, M.get_assignment())
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( src.loc )
-	P.info = dat
+	P.info = "<B>Crew Manifest:</B><BR>" + data_core.get_manifest()
 	P.name = "paper - 'Crew Manifest'"
 	//SN src = null
 	del(src)

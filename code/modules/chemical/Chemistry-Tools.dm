@@ -29,7 +29,6 @@
 
 
 	attackby(var/obj/item/weapon/W, var/mob/user)
-		wrap(W,user)
 		if(path || !active)
 			switch(active)
 				if(0)
@@ -398,7 +397,6 @@
 		usr << "\blue [grenades] / [max_grenades] Grenades."
 
 	attackby(obj/item/I as obj, mob/user as mob)
-		wrap(I,user)
 		if((istype(I, /obj/item/weapon/chem_grenade)) || (istype(I, /obj/item/weapon/flashbang)) || (istype(I, /obj/item/weapon/smokebomb)) || (istype(I, /obj/item/weapon/mustardbomb)) || (istype(I, /obj/item/weapon/empgrenade)))
 			if(grenades.len < max_grenades)
 				user.drop_item()
@@ -498,7 +496,6 @@
 		usr << "\blue [syringes] / [max_syringes] Syringes."
 
 	attackby(obj/item/I as obj, mob/user as mob)
-		wrap(I,user)
 		if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 			if(syringes.len < max_syringes)
 				user.drop_item()
@@ -537,15 +534,16 @@
 					if(D.loc == trg) break
 					step_towards(D,trg)
 
-					for(var/mob/living/carbon/M in D.loc)
-						if(!istype(M,/mob/living/carbon)) continue
-						if(M == user) continue
-						D.reagents.trans_to(M, 15)
-						M.take_organ_damage(5)
-						for(var/mob/O in viewers(world.view, D))
-							O.show_message(text("\red [] was hit by the syringe!", M), 1)
+					if(D)
+						for(var/mob/living/carbon/M in D.loc)
+							if(!istype(M,/mob/living/carbon)) continue
+							if(M == user) continue
+							D.reagents.trans_to(M, 15)
+							M.take_organ_damage(5)
+							for(var/mob/O in viewers(world.view, D))
+								O.show_message(text("\red [] was hit by the syringe!", M), 1)
 
-						del(D)
+							del(D)
 					if(D)
 						for(var/atom/A in D.loc)
 							if(A == user) continue
@@ -560,8 +558,8 @@
 /obj/item/weapon/gun/rapidsyringe
 	name = "rapid syringe gun"
 	icon = 'gun.dmi'
-	icon_state = "syringegun"
-	item_state = "syringegun"
+	icon_state = "rapidsyringegun"
+	item_state = "rapidsyringegun"
 	w_class = 3.0
 	throw_speed = 4
 	throw_range = 10
@@ -577,7 +575,6 @@
 		usr << "\blue [syringes] / [max_syringes] Syringes."
 
 	attackby(obj/item/I as obj, mob/user as mob)
-		wrap(I,user)
 		if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 			if(syringes.len < max_syringes)
 				user.drop_item()
@@ -731,15 +728,9 @@
 		reagents = R
 		R.my_atom = src
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		wrap(W,user)
-		return
 	attack_self(mob/user as mob)
 		return
 	attack(mob/M as mob, mob/user as mob, def_zone)
-		return
-	attackby(obj/item/I as obj, mob/user as mob)
-		wrap(I,user)
 		return
 	afterattack(obj/target, mob/user , flag)
 		return
@@ -1138,10 +1129,6 @@
 	attack_paw()
 		return attack_hand()
 
-	attackby(obj/item/I as obj, mob/user as mob)
-		wrap(I,user)
-		return
-
 	afterattack(obj/target, mob/user , flag)
 		if(!target.reagents) return
 
@@ -1239,12 +1226,11 @@
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
 
-/*
-/obj/item/weapon/reagent_containers/hypospray/New()
+
+/obj/item/weapon/reagent_containers/hypospray/New() //comment this to make hypos start off empty
 	..()
-	reagents.add_reagent("tricordrazine", 30) //uncomment this to make it start with stuff in
+	reagents.add_reagent("tricordrazine", 30)
 	return
-*/
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/M as mob, mob/user as mob)
 	if(!reagents.total_volume)
@@ -1346,7 +1332,6 @@
 		return
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		wrap(W,user)
 		return
 	attack_self(mob/user as mob)
 		return
@@ -1411,9 +1396,10 @@
 						if(!reagents.total_volume)
 							if(M == user) user << "\red You finish eating [src]."
 							else user << "\red [M] finishes eating [src]."
+							spawn(5)
+								user.update_clothing()
 							del(src)
 				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
-				user.update_clothing()
 				return 1
 		else if(istype(M, /mob/living/simple_animal/livestock))
 			if(M == user)								//If you're eating it yourself.
@@ -1474,7 +1460,6 @@
 		return 0
 
 	attackby(obj/item/I as obj, mob/user as mob)
-		wrap(I,user)
 		return
 	afterattack(obj/target, mob/user , flag)
 		return
@@ -1497,8 +1482,6 @@
 	var/slices_num
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		wrap(W,user)
-
 		if((slices_num <= 0 || !slices_num) || !slice_path)
 			return 1
 		var/inaccurate = 0
@@ -1515,15 +1498,12 @@
 				istype(W, /obj/item/weapon/shovel) \
 			)
 			inaccurate = 1
-		else if(W.w_class <= 2 && istype(src,/obj/item/weapon/reagent_containers/food/snacks/sliceable))
+		/*else if(W.w_class <= 2 && istype(src,/obj/item/weapon/reagent_containers/food/snacks/sliceable))
 			user << "\red You slip [W] inside [src]."
-			user.u_equip(W)
-			if ((user.client && user.s_active != src))
-				user.client.screen -= W
-			W.dropped(user)
+			user.drop_item()
+			W.loc = src
 			add_fingerprint(user)
-			contents += W
-			return
+			return*/
 		else
 			return 1
 		if ( \
@@ -1703,9 +1683,6 @@
 		if(!icon_state)
 			icon_state = "pill[rand(1,20)]"
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		wrap(W,user)
-		return
 	attack_self(mob/user as mob)
 		return
 	attack(mob/M as mob, mob/user as mob, def_zone)
@@ -1745,10 +1722,6 @@
 			return 1
 
 		return 0
-
-	attackby(obj/item/I as obj, mob/user as mob)
-		wrap(I,user)
-		return
 
 	afterattack(obj/target, mob/user , flag)
 
@@ -2366,7 +2339,6 @@
 	volume = 50
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		wrap(W,user)
 		return
 	attack_self(mob/user as mob)
 		return
@@ -2408,7 +2380,6 @@
 		return 0
 
 	attackby(obj/item/I as obj, mob/user as mob)
-		wrap(I,user)
 		return
 
 	afterattack(obj/target, mob/user , flag)

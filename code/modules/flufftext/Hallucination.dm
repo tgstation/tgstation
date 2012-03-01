@@ -132,6 +132,7 @@ mob/living/carbon/proc/handle_hallucinations()
 							src << 'Taser.ogg'
 				//Rare audio
 					if(12)
+//These sounds are (mostly) taken from Hidden: Source
 						var/list/creepyasssounds = list('ghost.ogg', 'ghost2.ogg', 'Heart Beat.ogg', 'screech.ogg',\
 							'behind_you1.ogg', 'behind_you2.ogg', 'far_noise.ogg', 'growl1.ogg', 'growl2.ogg',\
 							'growl3.ogg', 'im_here1.ogg', 'im_here2.ogg', 'i_see_you1.ogg', 'i_see_you2.ogg',\

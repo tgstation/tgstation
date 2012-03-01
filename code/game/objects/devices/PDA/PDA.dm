@@ -176,12 +176,11 @@
 				dat += "<ul>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=pda_notes.png> Notekeeper</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=pda_mail.png> Messenger</a></li>"
+				dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png> View Crew Manifest</a></li>"
 
 				if (cartridge)
 					if (cartridge.access_clown)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Honk'><img src=pda_honk.png> Honk Synthesizer</a></li>"
-					if (cartridge.access_manifest)
-						dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png> View Crew Manifest</a></li>"
 					if(cartridge.access_status_display)
 						dat += "<li><a href='byond://?src=\ref[src];choice=42'><img src=pda_status.png> Set Status Display</a></li>"
 					dat += "</ul>"
@@ -316,6 +315,13 @@
 						if(unknown_level > 0.01)
 							dat += "OTHER: [round(unknown_level)]%<br>"
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
+				dat += "<br>"
+			if (41) //crew manifest
+
+				dat += "<h4><img src=pda_notes.png> Crew Manifest</h4>"
+				dat += "Entries cannot be modified from this terminal.<br><br>"
+
+				dat += data_core.get_manifest(1)
 				dat += "<br>"
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
 				dat += cart
@@ -577,7 +583,6 @@
 									difficulty += P.cartridge.access_engine
 									difficulty += P.cartridge.access_clown
 									difficulty += P.cartridge.access_janitor
-									difficulty += P.cartridge.access_manifest * 2
 								else
 									difficulty += 2
 

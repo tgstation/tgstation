@@ -73,7 +73,7 @@
 					src.see_invisible = 2
 
 					var/area/home = get_area(src)
-					if(home.powered(EQUIP))
+					if(home && home.powered(EQUIP))
 						home.use_power(1000, EQUIP)
 
 					if (src:aiRestorePowerRoutine==2)

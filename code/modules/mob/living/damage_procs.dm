@@ -12,10 +12,10 @@
 	if(!damage || (blocked >= 2))	return 0
 	switch(damagetype)
 		if(BRUTE)
-			adjustBruteLoss(damage/(blocked+1))
+			adjustBruteLoss(damage/(blocked+1), used_weapon)
 		if(BURN)
 			if(mutations & COLD_RESISTANCE)	damage = 0
-			adjustFireLoss(damage/(blocked+1))
+			adjustFireLoss(damage/(blocked+1), used_weapon)
 		if(TOX)
 			adjustToxLoss(damage/(blocked+1))
 		if(OXY)
@@ -42,9 +42,9 @@
 	if(!effect || (blocked >= 2))	return 0
 	switch(effecttype)
 		if(STUN)
-			Stun(effect/(blocked+1))
+			Stun((effect - (effect*getarmor(null, "laser")))/(blocked + 1))
 		if(WEAKEN)
-			Weaken(effect/(blocked+1))
+			Weaken((effect - (effect*getarmor(null, "laser")))/(blocked + 1))
 		if(PARALYZE)
 			Paralyse(effect/(blocked+1))
 		if(IRRADIATE)

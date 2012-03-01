@@ -5,7 +5,7 @@
 /datum/game_mode/traitor
 	name = "traitor"
 	config_tag = "traitor"
-	restricted_jobs = list("Cyborg")//Approved by headmins for a week test, if you see this it would be nice if you didn't spread it everywhere
+	restricted_jobs = list("Cyborg", "AI")//Approved by headmins for a week test, if you see this it would be nice if you didn't spread it everywhere
 	required_players = 0
 	required_enemies = 1
 
@@ -349,6 +349,7 @@
 			T.icon = R.icon
 			T.w_class = R.w_class
 			T.icon_state = R.icon_state
+			T.item_state = R.item_state
 			T.origradio = R
 			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features."
 			traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")

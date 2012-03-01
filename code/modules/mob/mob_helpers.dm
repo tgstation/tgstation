@@ -50,6 +50,16 @@
 		return 1
 	return 0
 
+/proc/iscrab(A)
+	if(istype(A, /mob/living/simple_animal/crab))
+		return 1
+	return 0
+
+/proc/iscat(A)
+	if(istype(A, /mob/living/simple_animal/cat))
+		return 1
+	return 0
+
 /proc/istajaran(A)
 	if(istype(A, /mob/living/carbon/human/tajaran))
 		return 1
@@ -111,14 +121,6 @@ proc/isorgan(A)
 			zone = "head"
 		if("mouth")
 			zone = "head"
-		if("l_hand")
-			zone = "l_arm"
-		if("r_hand")
-			zone = "r_arm"
-		if("l_foot")
-			zone = "l_leg"
-		if("r_foot")
-			zone = "r_leg"
 		if("groin")
 			zone = "chest"
 	return zone
@@ -321,3 +323,15 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	return 0
 
+/mob/proc/put_in_hands(var/obj/item/I)
+	if(!r_hand)
+		I.loc = src
+		r_hand = I
+		I.layer = 20
+	else if(!l_hand)
+		I.loc = src
+		l_hand = I
+		I.layer = 20
+	else
+		I.loc = get_turf(src)
+	update_clothing()

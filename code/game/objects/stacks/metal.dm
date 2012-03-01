@@ -47,7 +47,11 @@ FLOOR TILES
 		if(amount < 2)
 			user << "\blue You need at least two rods to do this."
 			return
+		usr << "\blue Assembling grille..."
+		if (!do_after(usr, 10))
+			return
 		new /obj/structure/grille( usr.loc )
+		usr << "\blue You assemble a grille"
 		use(2)
 	return
 

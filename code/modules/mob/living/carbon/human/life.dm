@@ -121,23 +121,25 @@
 
 	..() //for organs
 
+	src.moved_recently = max(0, moved_recently-1)
 
 /mob/living/carbon/human
 	proc
+
 		handle_health_updates()
 			// if the mob has enough health, she should slowly heal
-			if(stat != 2)
+			if(stat == 1)
 				if(health >= 0)
-					var/pr = 10
+					var/pr = 5
 					if(stat == 1) // sleeping means faster healing
 						pr += 5
 					if(prob(pr))
 						heal_organ_damage(1,1)
 						adjustToxLoss(-1)
 				else if(health < 0)
-					var/pr = 50
+					var/pr = 15
 					if(prob(pr))
-						adjustToxLoss(1)
+						take_overall_damage(0, 1, used_weapon = "Bloodloss")
 			else if (stat != 0)
 				if(!lying)
 					lying = 1 //Seriously, stay down :x
@@ -295,16 +297,20 @@
 				if (radiation < 0)
 					radiation = 0
 
+				var/damage = 0 // stores how much damage was inflicted
+
 				switch(radiation)
 					if(1 to 49)
 						radiation--
 						if(prob(25))
+							damage = 1
 							adjustToxLoss(1)
 							updatehealth()
 
 					if(50 to 74)
 						radiation -= 2
 						adjustToxLoss(1)
+						damage = 1
 						if(prob(5))
 							radiation -= 5
 							Weaken(3)
@@ -315,12 +321,19 @@
 					if(75 to 100)
 						radiation -= 3
 						adjustToxLoss(3)
+						damage = 3
 						if(prob(1))
 							src << "\red You mutate!"
 							randmutb(src)
 							domutcheck(src,null)
 							emote("gasp")
 						updatehealth()
+
+				if(damage)
+					var/V = pick(organs)
+					var/datum/organ/external/O = organs[V]
+					if(istype(O)) O.add_wound("Radiation Poisoning", damage)
+
 
 			//As close as I could find to where to put it
 			grav_delay = max(grav_delay-3,0)
@@ -363,7 +376,7 @@
 				if(istype(loc, /obj/))
 					var/obj/location_as_object = loc
 					location_as_object.handle_internal_lifeform(src, 0)
-			if(isbreathing)
+			if(isbreathing && !being_strangled)
 				//First, check for air from internal atmosphere (using an air tank and mask generally)
 				breath = get_breath_from_internal(BREATH_VOLUME) // Super hacky -- TLE
 				//breath = get_breath_from_internal(0.5) // Manually setting to old BREATH_VOLUME amount -- TLE
@@ -407,6 +420,7 @@
 						location_as_object.handle_internal_lifeform(src, 0)
 
 			handle_breath(breath)
+			being_strangled = 0
 
 			if(breath)
 				loc.assume_air(breath)
@@ -720,17 +734,19 @@
 			else
 				discomfort *= 1.5 //Dangercon 2011 - Upping damage by use of magic numbers - Errorage
 
+			var/au_msg = "High Temperature"
+
 			switch(body_part)
 				if(HEAD)
-					apply_damage(2.5*discomfort, BURN, "head")
+					apply_damage(2.5*discomfort, BURN, "head", used_weapon = au_msg)
 				if(UPPER_TORSO)
-					apply_damage(2.5*discomfort, BURN, "chest")
+					apply_damage(2.5*discomfort, BURN, "chest", used_weapon = au_msg)
 				if(LEGS)
-					apply_damage(0.6*discomfort, BURN, "l_leg")
-					apply_damage(0.6*discomfort, BURN, "r_leg")
+					apply_damage(0.6*discomfort, BURN, "l_leg", used_weapon = au_msg)
+					apply_damage(0.6*discomfort, BURN, "r_leg", used_weapon = au_msg)
 				if(ARMS)
-					apply_damage(0.4*discomfort, BURN, "l_arm")
-					apply_damage(0.4*discomfort, BURN, "r_arm")
+					apply_damage(0.4*discomfort, BURN, "l_arm", used_weapon = au_msg)
+					apply_damage(0.4*discomfort, BURN, "r_arm", used_weapon = au_msg)
 
 		handle_chemicals_in_body()
 			if(reagents && stat != 2) reagents.metabolize(src)
@@ -790,6 +806,21 @@
 			else
 				dizziness = max(0, dizziness - 3)
 				jitteriness = max(0, jitteriness - 3)
+
+			if(life_tick % 10 == 0)
+				// handle trace chemicals for autopsy
+				for(var/V in organs)
+					var/datum/organ/O = organs[V]
+					for(var/chemID in O.trace_chemicals)
+						O.trace_chemicals[chemID] = O.trace_chemicals[chemID] - 1
+						if(O.trace_chemicals[chemID] <= 0)
+							O.trace_chemicals.Remove(chemID)
+			for(var/datum/reagent/A in reagents.reagent_list)
+				// add chemistry traces to a random organ
+				var/V = pick(organs)
+				var/datum/organ/O = organs[V]
+				O.trace_chemicals[A.name] = 100
+
 
 			updatehealth()
 
