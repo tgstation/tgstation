@@ -117,9 +117,9 @@ ZIPPO
 		icon_butt = "cigbutt"
 		lastHolder = null
 		smoketime = 300
+  var/butt_count = 5  //count of butt sprite variations
 	proc
 		light(var/flavor_text = "[usr] lights the [name].")
-
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		..()
@@ -151,7 +151,7 @@ ZIPPO
 		if(src.smoketime < 1)
 			src.lit = -1
 			src.damtype = "brute"
-			src.icon_state = icon_butt
+			src.icon_state = icon_butt + "[rand(0,butt_count)]"
 			src.item_state = icon_off
 			src.desc = "A [src.name] butt."
 			src.name = "[src.name] butt"
@@ -171,12 +171,11 @@ ZIPPO
 				O.show_message(text("\red [] calmly drops and treads on the lit [], putting it out instantly.", user,src.name), 1)
 			src.lit = -1
 			src.damtype = "brute"
-			src.icon_state = icon_butt
+			src.icon_state = icon_butt + "[rand(0,butt_count)]"
 			src.item_state = icon_off
 			src.desc = "A [src.name] butt."
 			src.name = "[src.name] butt"
 		return ..()
-
 
 
 ////////////
@@ -192,6 +191,7 @@ ZIPPO
 	throw_speed = 0.5
 	item_state = "cigaroff"
 	smoketime = 1500
+	butt_count = 0
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
 	name = "Cohiba Cigar"
@@ -199,7 +199,6 @@ ZIPPO
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
-	icon_butt = "cigarbutt"
 
 /obj/item/clothing/mask/cigarette/cigar/havanian
 	name = "Premium Havanian Cigar"
@@ -207,7 +206,6 @@ ZIPPO
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
-	icon_butt = "cigarbutt"
 	smoketime = 7200
 
 /obj/item/weapon/cigbutt
