@@ -8,6 +8,7 @@
 	update_clothing()
 	monkeyizing = 1
 	canmove = 0
+	stunned = 1
 	icon = null
 	invisibility = 101
 	for(var/t in organs)
