@@ -111,6 +111,3 @@ GUEST_JOBBAN 1
 
 ##Toggle for having jobs load up from the .txt
 # LOAD_JOBS_FROM_TXT
-
-##Remove the # mark if you are going to use the SVN irc bot to relay adminhelps
-#USEIRCBOT
