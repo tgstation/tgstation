@@ -24,4 +24,10 @@
 	send2adminirc("#bs12admin","HELP: \"[src.key]: [msg]\"")
 	if(tension_master)
 		tension_master.new_adminhelp()
+	send2irc(usr.ckey, msg)
+	return
+
+proc/send2irc(msg,msg2)
+	if(config.useircbot)
+		shell("python nudge.py [msg] [msg2]")
 	return
