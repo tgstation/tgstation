@@ -1898,6 +1898,20 @@
 	dat += "</body></html>"
 	usr << browse(dat, "window=adminplayerinfo;size=480x480")
 
+/obj/admins/proc/show_skills(var/mob/living/carbon/human/M as mob in world)
+	set category = "Admin"
+	set name = "Show Skills"
+
+	if (!istype(src,/obj/admins))
+		src = usr.client.holder
+	if (!istype(src,/obj/admins))
+		usr << "Error: you are not an admin!"
+		return
+
+	show_skill_window(usr, M)
+
+	return
+
 /obj/admins/proc/Jobbans()
 	if ((src.rank in list( "Game Admin", "Game Master"  )))
 		var/dat = "<B>Job Bans!</B><HR><table>"
