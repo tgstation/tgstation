@@ -238,6 +238,12 @@
 	var/robot_talk_understand = 0
 	var/alien_talk_understand = 0
 
+
+	//You can guess what these are for.  --SkyMarshal
+	var/list/atom/hallucinations = list()
+	var/halloss = 0
+	var/hallucination = 0
+
 /*For ninjas and others. This variable is checked when a mob moves and I guess it was supposed to allow the mob to move
 through dense areas, such as walls. Setting density to 0 does the same thing. The difference here is that
 the mob is also allowed to move without any sort of restriction. For instance, in space or out of holder objects.*/

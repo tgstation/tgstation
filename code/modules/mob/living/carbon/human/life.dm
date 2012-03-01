@@ -121,6 +121,22 @@
 
 
 		handle_disabilities()
+			if(hallucination > 0)
+				//if(hallucinations.len == 0 && hallucination >= 20 && health > 0)
+				//	if(prob(2))
+				//		fake_attack(src)
+				//for(var/atom/a in hallucinations)
+				//	a.hallucinate(src)
+				if(!handling_hal && hallucination > 20)
+					spawn handle_hallucinations() //The not boring kind!
+				hallucination -= 2
+				//if(health < 0)
+				//	for(var/obj/a in hallucinations)
+				//		del a
+			else
+				halloss = 0
+				for(var/atom/a in hallucinations)
+					del a
 			if (disabilities & 2)
 				if ((prob(1) && paralysis < 1 && r_epil < 1))
 					src << "\red You have a seizure!"
@@ -712,6 +728,7 @@
 						lying = 1
 						stat = 0
 					if (paralysis > 0)
+						handle_dreams()
 						AdjustParalysis(-1)
 						blinded = 1
 						lying = 1
