@@ -1119,13 +1119,15 @@
 	origin_tech = "biotech=4"
 	var/POWERFLAG = 0 // sshhhhhhh
 	var/Flush = 30
-
+	var/Uses = 5 // uses before it goes inert
+	
 	New()
 		..()
 		var/datum/reagents/R = new/datum/reagents(100)
 		reagents = R
 		R.my_atom = src
 		POWERFLAG = rand(1,10)
+		Uses = rand(2, 5)
 		//flags |= NOREACT
 
 		spawn()
@@ -1133,7 +1135,7 @@
 
 	proc/Life()
 		while(src)
-			sleep(10)
+			sleep(25)
 			Flush--
 			if(Flush <= 0)
 				reagents.clear_reagents()
