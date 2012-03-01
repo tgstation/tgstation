@@ -30,6 +30,7 @@
 /datum/game_mode/nuclear/can_start()//This could be better, will likely have to recode it later
 	if(!..())
 		return 0
+
 	var/list/possible_syndicates = get_players_for_role(BE_OPERATIVE)
 	var/agent_number = 0
 

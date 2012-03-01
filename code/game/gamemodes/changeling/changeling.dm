@@ -43,6 +43,10 @@
 	world << "<B>There are alien changelings on the station. Do not let the changelings succeed!</B>"
 
 /datum/game_mode/changeling/pre_setup()
+
+	if(config.protect_roles_from_antagonist)
+		restricted_jobs += protected_jobs
+
 	var/list/datum/mind/possible_changelings = get_players_for_role(BE_CHANGELING)
 
 	for(var/datum/mind/player in possible_changelings)

@@ -19,7 +19,8 @@
 /datum/game_mode/cult
 	name = "cult"
 	config_tag = "cult"
-	restricted_jobs = list("Chaplain", "Security Officer", "Warden", "Detective", "AI", "Cyborg", "Captain", "Head of Security")
+	restricted_jobs = list("Chaplain","AI", "Cyborg")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Captain", "Head of Security")
 	required_players = 15
 	required_enemies = 3
 	recommended_enemies = 4
@@ -56,6 +57,9 @@
 	else
 		objectives += "eldergod"
 		objectives += "sacrifice"
+
+	if(config.protect_roles_from_antagonist)
+		restricted_jobs += protected_jobs
 
 	var/list/cultists_possible = get_players_for_role(BE_CULTIST)
 	for(var/datum/mind/player in cultists_possible)

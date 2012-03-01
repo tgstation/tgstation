@@ -5,7 +5,8 @@
 /datum/game_mode/traitor
 	name = "traitor"
 	config_tag = "traitor"
-	restricted_jobs = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	restricted_jobs = list()
+	protected_jobs = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
@@ -27,6 +28,10 @@
 
 
 /datum/game_mode/traitor/pre_setup()
+
+	if(config.protect_roles_from_antagonist)
+		restricted_jobs += protected_jobs
+
 	var/list/possible_traitors = get_players_for_role(BE_TRAITOR)
 
 	// stop setup if no possible traitors

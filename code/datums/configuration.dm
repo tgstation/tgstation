@@ -31,6 +31,7 @@
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 	var/feature_object_spell_system = 0 //spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
 	var/traitor_scaling = 0 //if amount of traitors scales based on amount of players
+	var/protect_roles_from_antagonist = 0// If security and such can be tratior/cult/other
 
 	var/list/mode_names = list()
 	var/list/modes = list()				// allowed modes
@@ -230,6 +231,9 @@
 
 				if ("traitor_scaling")
 					config.traitor_scaling = 1
+
+				if("protect_roles_from_antagonist")
+					config.protect_roles_from_antagonist = 1
 
 				if ("probability")
 					var/prob_pos = findtext(value, " ")

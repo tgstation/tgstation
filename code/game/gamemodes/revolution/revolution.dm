@@ -40,6 +40,10 @@
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/pre_setup()
+
+	if(config.protect_roles_from_antagonist)
+		restricted_jobs += protected_jobs
+
 	var/list/datum/mind/possible_headrevs = get_players_for_role(BE_REV)
 
 	var/head_check = 0

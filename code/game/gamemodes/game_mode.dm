@@ -20,7 +20,8 @@
 		station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 		explosion_in_progress = 0 //sit back and relax
 		list/datum/mind/modePlayer = new
-		list/restricted_jobs = list()
+		list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
+		list/protected_jobs = list()	// Jobs that can't be tratiors because
 		required_players = 0
 		required_enemies = 0
 		recommended_enemies = 0
