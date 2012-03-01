@@ -33,7 +33,7 @@
 			return 0
 		setEffects(aeffectin,aeffectout)
 		setForceTeleport(afteleport)
-		setSounds(asoundin)
+		setSounds(asoundin,asoundout)
 		return 1
 
 	//must succeed
@@ -112,9 +112,7 @@
 		playSpecials(curturf,effectin,soundin)
 
 		if(force_teleport)
-			teleatom.loc.Exited(teleatom)
-			teleatom.loc = destturf
-			teleatom.loc.Entered(teleatom)
+			teleatom.forceMove(destturf)
 			playSpecials(destturf,effectout,soundout)
 		else
 			if(teleatom.Move(destturf))

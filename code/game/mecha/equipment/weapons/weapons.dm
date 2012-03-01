@@ -39,7 +39,7 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
-	equip_cooldown = 5
+	equip_cooldown = 8
 	name = "CH-PS \"Immolator\" Laser"
 	icon_state = "mecha_laser"
 	energy_drain = 30
@@ -47,7 +47,7 @@
 	fire_sound = 'Laser.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
-	equip_cooldown = 10
+	equip_cooldown = 12
 	name = "CH-LC \"Solaris\" Laser Cannon"
 	icon_state = "mecha_laser"
 	energy_drain = 60
@@ -89,9 +89,9 @@
 	name = "PBT \"Pacifier\" Mounted Taser"
 	icon_state = "mecha_taser"
 	energy_drain = 20
-	equip_cooldown = 6
+	equip_cooldown = 8
 	projectile = /obj/item/projectile/energy/electrode
-	fire_sound = 'Laser.ogg'
+	fire_sound = 'Taser.ogg'
 
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker

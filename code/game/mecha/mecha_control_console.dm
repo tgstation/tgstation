@@ -24,8 +24,10 @@
 			for(var/obj/item/mecha_tracking/TR in world)
 				var/answer = TR.get_mecha_info()
 				if(answer)
-					dat += {"<hr>[answer]<br>
+					dat += {"<hr>[answer]<br/>
+							  <a href='?src=\ref[src];send_message=\ref[TR]'>Send message</a><br/>
 							  <a href='?src=\ref[src];get_log=\ref[TR]'>Show exosuit log</a> | <a style='color: #f00;' href='?src=\ref[src];shock=\ref[TR]'>(EMP pulse)</a><br>"}
+
 		if(screen==1)
 			dat += "<h3>Log contents</h3>"
 			dat += "<a href='?src=\ref[src];return=1'>Return</a><hr>"
@@ -41,11 +43,19 @@
 	Topic(href, href_list)
 		if(..())
 			return
+		var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
+		if(href_list["send_message"])
+			var/obj/item/mecha_tracking/MT = filter.getObj("send_message")
+			var/message = strip_html_simple(input(usr,"Input message","Transmit message") as text)
+			var/obj/mecha/M = MT.in_mecha()
+			if(trim(message) && M)
+				M.occupant_message(message)
+			return
 		if(href_list["shock"])
-			var/obj/item/mecha_tracking/MT = locate(href_list["shock"])
+			var/obj/item/mecha_tracking/MT = filter.getObj("shock")
 			MT.shock()
 		if(href_list["get_log"])
-			var/obj/item/mecha_tracking/MT = locate(href_list["get_log"])
+			var/obj/item/mecha_tracking/MT = filter.getObj("get_log")
 			stored_data = MT.get_mecha_log()
 			screen = 1
 		if(href_list["return"])
@@ -92,12 +102,12 @@
 
 	proc/in_mecha()
 		if(istype(src.loc, /obj/mecha))
-			return 1
+			return src.loc
 		return 0
 
 	proc/shock()
-		if(src.in_mecha())
-			var/obj/mecha/M = src.loc
+		var/obj/mecha/M = in_mecha()
+		if(M)
 			M.emp_act(2)
 		del(src)
 

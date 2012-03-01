@@ -1455,6 +1455,10 @@ proc/safepick(list/list)
 		return
 	return pick(list)
 
+//chances are 1:value. anyprob(1) will always return true
+proc/anyprob(value)
+	return (rand(1,value)==value)
+
 proc/view_or_range(distance = world.view , center = usr , type)
 	switch(type)
 		if("view")
