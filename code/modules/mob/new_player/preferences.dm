@@ -153,14 +153,7 @@ datum/preferences
 
 	proc/SetSkills(mob/user)
 		if(SKILLS == null)
-			SKILLS = list()
-			for(var/T in (typesof(/datum/skill)-/datum/skill))
-				var/datum/skill/S = new T
-				if(S.ID != "none")
-					if(!SKILLS.Find(S.field))
-						SKILLS[S.field] = list()
-					var/list/L = SKILLS[S.field]
-					L += S
+			setup_skills()
 
 		if(skills.len == 0)
 			ZeroSkills()
