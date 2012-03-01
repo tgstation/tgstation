@@ -6,8 +6,10 @@
 	name = "changeling"
 	config_tag = "changeling"
 	restricted_jobs = list("AI", "Cyborg")
-	required_players = 15
-	required_enemies = 1
+	required_players = 1
+	required_enemies = 15
+	recommended_enemies = 1
+
 
 	uplink_welcome = "Syndicate Uplink Console:"
 	uplink_uses = 10

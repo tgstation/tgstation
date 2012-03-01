@@ -7,6 +7,7 @@
 	config_tag = "nuclear"
 	required_players = 15
 	required_enemies = 5
+	recommended_enemies = 5
 
 	uplink_welcome = "Corporate Backed Uplink Console:"
 	uplink_uses = 40

@@ -4,6 +4,7 @@
 	traitors_possible = 3 //hard limit on traitors if scaling is turned off
 	required_players = 20
 	required_enemies = 2
+	recommended_enemies = 3
 
 /datum/game_mode/traitor/changeling/announce()
 	world << "<B>The current game mode is - Traitor+Changeling!</B>"

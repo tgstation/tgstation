@@ -23,6 +23,7 @@
 		list/restricted_jobs = list()
 		required_players = 0
 		required_enemies = 0
+		recommended_enemies = 0
 		uplink_welcome
 		uplink_uses
 		uplink_items = {"Highly Visible and Dangerous Weapons;
@@ -43,12 +44,11 @@ Stealth and Camouflage Items;
 /obj/item/clothing/shoes/syndigaloshes:2:No-Slip Syndicate Shoes;
 /obj/item/weapon/card/id/syndicate:3:Agent ID card;
 /obj/item/clothing/mask/gas/voice:4:Voice Changer;
-/obj/item/clothing/glasses/thermal:4:Thermal Imaging Glasses;
 /obj/item/device/chameleon:4:Chameleon-Projector;
 /obj/item/weapon/cloaking_device:4:Cloaking Device;
 Whitespace:Seperator;
 Devices and Tools;
-/obj/item/weapon/card/emag:4:Cryptographic Sequencer;
+/obj/item/weapon/card/emag:3:Cryptographic Sequencer;
 /obj/item/weapon/storage/toolbox/syndicate:1:Fully Loaded Toolbox;
 /obj/item/weapon/storage/syndie_kit/space:3:Space Suit;
 /obj/item/device/encryptionkey/binary:3:Binary Translator Key;
@@ -66,6 +66,11 @@ Badassery;
 /obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);
 Whitespace:Seperator;"}
 
+// Items removed from above:
+/*
+/obj/item/clothing/glasses/thermal:4:Thermal Imaging Glasses;
+
+*/
 
 /datum/game_mode/proc/announce() //to be calles when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"
@@ -228,23 +233,89 @@ Whitespace:Seperator;"}
 
 /datum/game_mode/proc/get_players_for_role(var/role, override_jobbans=1)
 	var/list/candidates = list()
+	var/list/drafted = list()
+	var/datum/mind/applicant = null
+
 	for(var/mob/new_player/player in world)
 		if(player.client && player.ready)
 			if(player.preferences.be_special & role)
 				if(!jobban_isbanned(player, "Syndicate"))
-					candidates += player.mind
+					candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
 
-	if(candidates.len < required_enemies)
+	if(restricted_jobs)
+		for(var/datum/mind/player in candidates)
+			for(var/job in restricted_jobs)					// Remove people who want to be antagonist but have a job already that precludes it
+				if(player.assigned_role == job)
+					candidates -= player
+
+	if(candidates.len < recommended_enemies)
 		for(var/mob/new_player/player in world)
 			if (player.client && player.ready)
-				if(!jobban_isbanned(player, "Syndicate"))
-					candidates += player.mind
+				if(!(player.preferences.be_special & role)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
+					if(!jobban_isbanned(player, "Syndicate"))
+						drafted += player.mind
 
-	if(candidates.len < required_enemies && override_jobbans) //just to be safe. Ignored jobbans are better than broken round. Shouldn't happen usually. --rastaf0
+	if(restricted_jobs)
+		for(var/datum/mind/player in drafted)				// Remove people who can't be an antagonist
+			for(var/job in restricted_jobs)
+				if(player.assigned_role == job)
+					drafted -= player
+
+	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
+		applicant += pick(drafted)
+		if(applicant)
+			candidates += applicant
+			drafted.Remove(applicant)
+
+		else												// Not enough scrubs, ABORT ABORT ABORT
+			break
+
+	if(candidates.len < recommended_enemies && override_jobbans) //If we still don't have enough people, we're going to start drafting banned people.
 		for(var/mob/new_player/player in world)
 			if (player.client && player.ready)
-				candidates += player.mind
-	return candidates
+				if(jobban_isbanned(player, "Syndicate"))
+					drafted += player.mind
+
+	if(restricted_jobs)
+		for(var/datum/mind/player in drafted)				// Remove people who can't be an antagonist
+			for(var/job in restricted_jobs)
+				if(player.assigned_role == job)
+					drafted -= player
+
+	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
+		applicant += pick(drafted)
+		if(applicant)
+			candidates += applicant
+			drafted.Remove(applicant)
+
+		else
+			break
+
+
+
+	for(var/obj/debug/debugger/B in world)
+		B.list1 = candidates.Copy(0)
+
+	return candidates										// Return percisely the number of people needed (or less, but can't help with that), consisting of all people who want to be it + minium number of draftees.
+
+/obj/debug/debugger
+	name =	"Quantum Debugger"
+	desc =  "A quantum debugger used by Centcomm Reality Engineers to help monitor transiant variables."
+	icon = 'stationobjs.dmi'
+	icon_state = "blackbox"
+
+	var/list/list1
+	var/list/list2
+	var/list/list3
+	var/list/list4
+	var/list/list5
+
+	var/var1
+	var/var2
+	var/var3
+	var/var4
+	var/var5
+
 
 
 /datum/game_mode/proc/check_player_role_pref(var/role, var/mob/new_player/player)

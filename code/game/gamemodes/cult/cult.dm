@@ -22,6 +22,7 @@
 	restricted_jobs = list("Chaplain", "Security Officer", "Warden", "Detective", "AI", "Cyborg", "Captain", "Head of Security")
 	required_players = 15
 	required_enemies = 3
+	recommended_enemies = 4
 
 	uplink_welcome = "Nar-Sie Uplink Console:"
 	uplink_uses = 10
@@ -68,6 +69,7 @@
 		var/datum/mind/cultist = pick(cultists_possible)
 		cultists_possible -= cultist
 		cult += cultist
+
 	return (cult.len>0)
 
 
