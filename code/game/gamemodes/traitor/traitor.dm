@@ -148,12 +148,12 @@
 		killer << "\red Code Phrase: \black [syndicate_code_phrase]"
 		killer.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
 	else
-		killer << "Unfortunetly, the Syndicate did not provide you with a code phrase."
+		killer << "Unfortunately, the Syndicate did not provide you with a code phrase."
 	if(prob(80))
 		killer << "\red Code Response: \black [syndicate_code_response]"
 		killer.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
 	else
-		killer << "Unfortunetly, the Syndicate did not provide you with a code response."
+		killer << "Unfortunately, the Syndicate did not provide you with a code response."
 	killer << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
 	//End code phrase.
 
@@ -295,6 +295,6 @@
 			traitor_mob << "\red Code Response: \black [syndicate_code_response]"
 			traitor_mob.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
 		else
-			traitor_mob << "Unfortunetly, the Syndicate did not provide you with a code response."
+			traitor_mob << "Unfortunately, the Syndicate did not provide you with a code response."
 		traitor_mob << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
 	//End code phrase.
