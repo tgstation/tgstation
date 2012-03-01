@@ -149,7 +149,7 @@ client/proc/display_all_news_list()
 		output += "[date] <b>[N.title]</b><br>"
 		output += "[N.body]<br>"
 		output += "<small>authored by <i>[N.author]</i></small>"
-		if(admin && N.author == src.key)
+		if(src.holder)
 			output += " <a href='?src=\ref[news_topic_handler];client=\ref[src];action=remove;ID=[N.ID]'>Delete</a> <a href='?src=\ref[news_topic_handler];client=\ref[src];action=edit;ID=[N.ID]'>Edit</a>"
 		output += "<br>"
 		output += "<br>"
@@ -182,7 +182,7 @@ client/verb/read_news()
 	display_all_news_list()
 
 client/proc/remove_news(ID as num)
-	if(src.holder)
+	if(!src.holder)
 		src << "<b>You tried to modify the news, but you're not an admin!"
 		return
 
@@ -201,7 +201,7 @@ client/proc/remove_news(ID as num)
 		display_all_news_list()
 
 client/proc/edit_news(ID as num)
-	if(src.holder)
+	if(!src.holder)
 		src << "<b>You tried to modify the news, but you're not an admin!"
 		return
 
