@@ -207,7 +207,9 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/rawcutlet
 	slices_num = 3
 	health = 180
-	New()		..()
+
+	New()
+		..()
 		reagents.add_reagent("nutriment", 3)
 		src.bitesize = 3
 		processing_objects.Add(src)
