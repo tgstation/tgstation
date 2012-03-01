@@ -121,6 +121,7 @@
 
 	..() //for organs
 
+	src.moved_recently = max(0, moved_recently-1)
 
 /mob/living/carbon/human
 	proc

@@ -147,7 +147,7 @@
 
 
 /datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, var/word)
-	if(!wordtravel)
+	/*if(!wordtravel)
 		runerandom()
 	if (!word)
 		word=pick(allwords)
@@ -176,9 +176,9 @@
 //		if("free")
 //			wordexp = "[wordfree] is free..."
 		if("hide")
-			wordexp = "[wordhide] is hide..."
-	cult_mob << "\red You remember one thing from the dark teachings of your master... [wordexp]"
-	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
+			wordexp = "[wordhide] is hide..."*/
+	cult_mob << "\red You remember the basics from the dark teachings of your master... [wordblood] is blood,[wordjoin] is join, and [wordself] is self..."
+	cult_mob.mind.store_memory("<B>You remember that</B> [wordblood] is blood,[wordjoin] is join, and [wordself] is self", 0, 0)
 
 
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind) //BASE

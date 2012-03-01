@@ -170,6 +170,15 @@
 	else
 		W.loc = src
 		orient_objs(5, 10, 4 + min(7, storage_slots), 10)
+
+	if(istype(src, /obj/item/weapon/storage/backpack/santabag)) // update the santa bag icon
+		if(contents.len < 5)
+			src.icon_state = "giftbag0"
+		else if(contents.len >= 5 && contents.len < 15)
+			src.icon_state = "giftbag1"
+		else if(contents.len >= 15)
+			src.icon_state = "giftbag2"
+
 	if (istype(W, /obj/item/weapon/gun/energy/crossbow)) return //STEALTHY
 		//Foreach goto(139)
 	return
@@ -191,7 +200,7 @@
 	return
 
 /obj/item/weapon/storage/attack_paw(mob/user as mob)
-	playsound(src.loc, "rustle", 50, 1, -5)
+	//playsound(src.loc, "rustle", 50, 1, -5) // what
 	return src.attack_hand(user)
 
 /obj/item/weapon/storage/attack_hand(mob/user as mob)

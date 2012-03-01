@@ -119,6 +119,14 @@
 			if (M.s_active == src.loc)
 				if (M.client)
 					M.client.screen -= src
+		if(istype(src.loc, /obj/item/weapon/storage/backpack/santabag))
+			if(src.loc.contents.len < 5)
+				src.loc.icon_state = "giftbag0"
+			else if(src.loc.contents.len >= 5 && src.loc.contents.len < 15)
+				src.loc.icon_state = "giftbag1"
+			else if(src.loc.contents.len >= 15)
+				src.loc.icon_state = "giftbag2"
+
 	src.throwing = 0
 	if (src.loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N

@@ -164,6 +164,7 @@
 		for(var/mob/V in viewers(src, null))
 			V.show_message(text("\red [user] hits the [src] with a [W]!"))
 		src.health -= W.force
+		src.add_fingerprint(user)
 		healthcheck()
 	..()
 
