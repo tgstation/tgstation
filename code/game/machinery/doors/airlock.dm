@@ -1256,6 +1256,8 @@ About the new airlock wires panel:
 		src.updateUsrDialog()
 		if((istype(usr.equipped(), /obj/item/device/hacktool)))
 			return attack_ai(usr, usr.equipped())
+		else if(issilicon(usr))
+			return attack_ai(usr)
 	return
 
 

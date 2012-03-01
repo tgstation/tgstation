@@ -131,7 +131,7 @@
 /obj/machinery/door/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/device/detective_scanner))
 		return ..()
-	if (src.operating)
+	if (src.operating || isrobot(user))
 		return
 	src.add_fingerprint(user)
 	if (!src.requiresID())

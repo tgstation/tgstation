@@ -1548,7 +1548,7 @@ datum
 					M:heal_organ_damage(3,3)
 					M:adjustToxLoss(-3)
 					M:halloss = 0
-					M:hallucination -= 5
+					M:hallucination = max(M:hallucination - 5,0)
 				..()
 				return
 
