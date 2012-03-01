@@ -262,10 +262,11 @@ Whitespace:Seperator;"}
 					drafted -= player
 
 	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
-		applicant += pick(drafted)
-		if(applicant)
-			candidates += applicant
-			drafted.Remove(applicant)
+		if(drafted.len > 0)
+			applicant = pick(drafted)
+			if(applicant)
+				candidates += applicant
+				drafted.Remove(applicant)
 
 		else												// Not enough scrubs, ABORT ABORT ABORT
 			break
@@ -283,39 +284,18 @@ Whitespace:Seperator;"}
 					drafted -= player
 
 	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
-		applicant += pick(drafted)
-		if(applicant)
-			candidates += applicant
-			drafted.Remove(applicant)
+		if(drafted.len > 0)
+			applicant = pick(drafted)
+			if(applicant)
+				candidates += applicant
+				drafted.Remove(applicant)
 
-		else
+		else												// Not enough scrubs, ABORT ABORT ABORT
 			break
 
-
-
-	for(var/obj/debug/debugger/B in world)
-		B.list1 = candidates.Copy(0)
-
-	return candidates										// Return percisely the number of people needed (or less, but can't help with that), consisting of all people who want to be it + minium number of draftees.
-
-/obj/debug/debugger
-	name =	"Quantum Debugger"
-	desc =  "A quantum debugger used by Centcomm Reality Engineers to help monitor transiant variables."
-	icon = 'stationobjs.dmi'
-	icon_state = "blackbox"
-
-	var/list/list1
-	var/list/list2
-	var/list/list3
-	var/list/list4
-	var/list/list5
-
-	var/var1
-	var/var2
-	var/var3
-	var/var4
-	var/var5
-
+	return candidates		// Returns: The number of people who had the antagonist role set to yes, regardless of recomended_enemies, if that number is greater than recommended_enemies
+							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
+							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
 
 /datum/game_mode/proc/check_player_role_pref(var/role, var/mob/new_player/player)

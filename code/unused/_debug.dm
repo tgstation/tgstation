@@ -611,3 +611,21 @@ Doing this because FindTurfs() isn't even used
 	playsound(pt.loc, 'explosionfar.ogg', 100, 1,10)
 	pt.gas.temperature = 500+T0C
 	pt.ignite()
+
+/obj/debug/debugger
+	name =	"Quantum Debugger"
+	desc =  "A quantum debugger used by Centcomm Reality Engineers to help monitor transiant variables."
+	icon = 'stationobjs.dmi'
+	icon_state = "blackbox"
+
+	var/list/list1
+	var/list/list2
+	var/list/list3
+	var/list/list4
+	var/list/list5
+
+	var/var1
+	var/var2
+	var/var3
+	var/var4
+	var/var5
