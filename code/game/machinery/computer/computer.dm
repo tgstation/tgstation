@@ -147,11 +147,14 @@ Pod/Blast Doors computer
 				var/obj/item/weapon/card/id/C = H.wear_id
 				if (C)
 					G.fields["rank"] = C.assignment
+					G.fields["real_rank"] = H.mind.assigned_role
 				else
-					if(H.job)
-						G.fields["rank"] = H.job
+					if(H.mind && H.mind.assigned_role)
+						G.fields["rank"] = H.mind.role_alt_title ? H.mind.role_alt_title : H.mind.assigned_role
+						G.fields["real_rank"] = H.mind.assigned_role
 					else
 						G.fields["rank"] = "Unassigned"
+						G.fields["real_rank"] = G.fields["rank"]
 				G.fields["name"] = H.real_name
 				G.fields["id"] = text("[]", add_zero(num2hex(rand(1, 1.6777215E7)), 6))
 				M.fields["name"] = G.fields["name"]
@@ -190,6 +193,7 @@ Pod/Blast Doors computer
 				L.fields["age"] = H.age
 				L.fields["id"] = md5("[H.real_name][H.mind.assigned_role]")
 				L.fields["rank"] = H.mind.role_alt_title ? H.mind.role_alt_title : H.mind.assigned_role
+				L.fields["real_rank"] = H.mind.assigned_role
 				L.fields["b_type"] = H.dna.b_type
 				L.fields["b_dna"] = H.dna.unique_enzymes
 				L.fields["enzymes"] = H.dna.struc_enzymes
@@ -213,6 +217,8 @@ Pod/Blast Doors computer
 
 	if(foundrecord)
 		foundrecord.fields["rank"] = assignment
+		if(assignment in get_all_jobs())
+			foundrecord.fields["real_rank"] = assignment
 
 
 /obj/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
@@ -224,11 +230,14 @@ Pod/Blast Doors computer
 		var/obj/item/weapon/card/id/C = H.wear_id
 		if (C)
 			G.fields["rank"] = C.assignment
+			G.fields["real_rank"] = H.job
 		else
-			if(H.job)
-				G.fields["rank"] = H.job
+			if(H.mind && H.mind.assigned_role)
+				G.fields["rank"] = H.mind.assigned_role
+				G.fields["real_rank"] = H.mind.assigned_role
 			else
 				G.fields["rank"] = "Unassigned"
+				G.fields["real_rank"] = G.fields["rank"]
 		G.fields["name"] = H.real_name
 		G.fields["id"] = text("[]", add_zero(num2hex(rand(1, 1.6777215E7)), 6))
 		M.fields["name"] = G.fields["name"]
@@ -267,6 +276,7 @@ Pod/Blast Doors computer
 		L.fields["age"] = H.age
 		L.fields["id"] = md5("[H.real_name][H.mind.assigned_role]")
 		L.fields["rank"] = H.mind.role_alt_title ? H.mind.role_alt_title : H.mind.assigned_role
+		L.fields["real_rank"] = H.mind.assigned_role
 		L.fields["b_type"] = H.dna.b_type
 		L.fields["b_dna"] = H.dna.unique_enzymes
 		L.fields["enzymes"] = H.dna.struc_enzymes
