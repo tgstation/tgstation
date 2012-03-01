@@ -560,7 +560,6 @@
 
 	for(var/mob/living/carbon/metroid/M in view(1,src))
 		M.UpdateFeed(src)
-	src.moved_recently = 120
 	return
 
 /mob/living/carbon/monkey/verb/removeinternal()
