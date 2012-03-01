@@ -43,7 +43,7 @@
 
 	var/attacked = 0		// if set to 1, the turret gets pissed off and shoots at people nearby (unless they have sec access!)
 
-	var/emagged = 0			// 1: emagged, 0: not emagged
+	//var/emagged = 0			// 1: emagged, 0: not emagged
 	var/on = 1				// determines if the turret is on
 
 	var/datum/effect/effect/system/spark_spread/spark_system // the spark system, used for generating... sparks?
