@@ -178,11 +178,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			doortype = 15
 			glass = 1
 
-/obj/machinery/door/airlock/mining
-	name = "Mining Airlock"
-	icon = 'Doormining.dmi'
-	doortype = 18
-
 
 		glass_security
 			name = "Maintenance Hatch"
