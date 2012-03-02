@@ -67,12 +67,12 @@
 		src.hud = new/obj/item/clothing/glasses/hud/security(src)
 		return
 
-/obj/item/clothing/glasses/thermal
-	name = "Optical Thermal Scanner"
-	desc = "Thermals in the shape of glasses."
-	icon_state = "thermal"
+/obj/item/clothing/glasses/thermal	//These are now a traitor item, concealed as mesons.	-Pete
+	name = "Optical Meson Scanner"
+	desc = "Used for seeing walls, floors, and stuff through anything."
+	icon_state = "meson"
 	item_state = "glasses"
-	origin_tech = "magnets=3"
+	origin_tech = "magnets=3;syndicate=4"
 	vision_flags = SEE_MOBS
 	invisa_view = 2
 
