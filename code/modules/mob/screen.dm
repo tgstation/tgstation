@@ -589,32 +589,50 @@
 					usr:module_active = null
 
 		if("Allow Walking")
+			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+				usr << "You need your gun in your active hand to do that!"
+				return
 			usr.AllowTargetMove()
 			icon_state = "walking"
 			name = "Disallow Walking"
 
 		if("Disallow Walking")
+			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+				usr << "You need your gun in your active hand to do that!"
+				return
 			usr.AllowTargetMove()
 			icon_state = "no_walk"
 			name = "Allow Walking"
 
 		if("Allow Running")
+			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+				usr << "You need your gun in your active hand to do that!"
+				return
 			usr.AllowTargetRun()
 			icon_state = "running"
 			name = "Disallow Running"
 
 		if("Disallow Running")
+			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+				usr << "You need your gun in your active hand to do that!"
+				return
 			usr.AllowTargetRun()
 			icon_state = "no_run"
 			name = "Allow Running"
 
 		if("Allow Item Use")
+			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+				usr << "You need your gun in your active hand to do that!"
+				return
 			name = "Disallow Item Use"
 			icon_state = "act_throw_off"
 			usr.AllowTargetClick()
 
 
 		if("Disallow Item Use")
+			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+				usr << "You need your gun in your active hand to do that!"
+				return
 			name = "Allow Item Use"
 			icon_state = "no_item"
 			usr.AllowTargetClick()

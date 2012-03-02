@@ -50,7 +50,7 @@ atom/proc/add_fibers(mob/living/carbon/human/M)
 	if(!suit_fibers.len) del suit_fibers
 
 atom/proc/get_duplicate(var/atom/location)
-	var/atom/temp_atom = new src.type(location)
+	var/atom/movable/temp_atom = new /atom/movable(location)
 	temp_atom.name = src.name
 	temp_atom.desc = src.desc
 	temp_atom.icon = src.icon

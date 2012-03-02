@@ -285,7 +285,7 @@ mob/proc
 		src << "((\red <b>Your character is being targeted. They have 1 second to stop any click or move actions.</b> \black While targeted, they may \
 		drag and drop items in or into the map, speak, and click on interface buttons. Clicking on the map, their items \
 		 (other than a weapon to de-target), or moving will result in being fired upon. \red The aggressor may also fire manually, \
-		 so try not to get on their bad side.))"
+		 so try not to get on their bad side.\black ))"
 		if(targeted_by.len == 1)
 			spawn(0)
 				target_locked = new /obj/effect/target_locked(src)
