@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/gun
 	icon_state = "energy"
-	name = "energy gun"
+	name = "\improper Energy Gun"
 	desc = "A basic energy-based gun with two settings: Stun and kill."
 	fire_sound = 'Taser.ogg'
 
@@ -13,26 +13,27 @@
 
 
 	attack_self(mob/living/user as mob)
-		switch(mode)
-			if(0)
-				mode = 1
-				charge_cost = 100
-				fire_sound = 'Laser.ogg'
-				user << "\red [src.name] is now set to kill."
-				projectile_type = "/obj/item/projectile/beam"
-			if(1)
-				mode = 0
-				charge_cost = 100
-				fire_sound = 'Taser.ogg'
-				user << "\red [src.name] is now set to stun."
-				projectile_type = "/obj/item/projectile/energy/electrode"
-		update_icon()
+		if(..())
+			switch(mode)
+				if(0)
+					mode = 1
+					charge_cost = 100
+					fire_sound = 'Laser.ogg'
+					user << "\red [src] is now set to kill."
+					projectile_type = "/obj/item/projectile/beam"
+				if(1)
+					mode = 0
+					charge_cost = 100
+					fire_sound = 'Taser.ogg'
+					user << "\red [src] is now set to stun."
+					projectile_type = "/obj/item/projectile/energy/electrode"
+			update_icon()
 		return
 
 
 
 /obj/item/weapon/gun/energy/gun/nuclear
-	name = "Advanced Energy Gun"
+	name = "\improper Advanced Energy Gun"
 	desc = "An energy gun with an experimental miniaturized reactor."
 	origin_tech = "combat=3;materials=5;powerstorage=3"
 	var/lightfail = 0

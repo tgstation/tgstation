@@ -1,5 +1,5 @@
 /obj/item/weapon/gun/energy/laser
-	name = "laser gun"
+	name = "\improper Laser Gun"
 	desc = "a basic weapon designed kill with concentrated energy bolts"
 	icon_state = "laser"
 	item_state = "laser"
@@ -11,7 +11,7 @@
 
 
 obj/item/weapon/gun/energy/laser/retro
-	name ="retro laser"
+	name ="\improper Retro Laser"
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 
@@ -58,7 +58,7 @@ obj/item/weapon/gun/energy/laser/retro
 
 
 /obj/item/weapon/gun/energy/lasercannon
-	name = "laser cannon"
+	name = "\improper Laser Cannon"
 	desc = "With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!"
 	icon_state = "lasercannon"
 	fire_sound = 'lasercannonfire.ogg'

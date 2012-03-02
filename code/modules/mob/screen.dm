@@ -25,6 +25,25 @@
 	var/selecting = "chest"
 	screen_loc = "EAST+1,NORTH"
 
+/obj/screen/gun
+	name = "gun"
+	icon = 'screen1.dmi'
+	master = null
+
+	move
+		name = "Allow Walking"
+		icon_state = "no_walk"
+		screen_loc = ui_gun2
+
+	run
+		name = "Allow Running"
+		icon_state = "no_run"
+		screen_loc = ui_gun3
+
+	item
+		name = "Allow Item Use"
+		icon_state = "no_item"
+		screen_loc = ui_gun1
 
 /obj/screen/zone_sel/MouseDown(location, control,params)
 	// Changes because of 4.0
@@ -568,6 +587,37 @@
 				else
 					usr:inv3.icon_state = "inv3"
 					usr:module_active = null
+
+		if("Allow Walking")
+			usr.AllowTargetMove()
+			icon_state = "walking"
+			name = "Disallow Walking"
+
+		if("Disallow Walking")
+			usr.AllowTargetMove()
+			icon_state = "no_walk"
+			name = "Allow Walking"
+
+		if("Allow Running")
+			usr.AllowTargetRun()
+			icon_state = "running"
+			name = "Disallow Running"
+
+		if("Disallow Running")
+			usr.AllowTargetRun()
+			icon_state = "no_run"
+			name = "Allow Running"
+
+		if("Allow Item Use")
+			name = "Disallow Item Use"
+			icon_state = "act_throw_off"
+			usr.AllowTargetClick()
+
+
+		if("Disallow Item Use")
+			name = "Allow Item Use"
+			icon_state = "no_item"
+			usr.AllowTargetClick()
 
 		else
 			DblClick()

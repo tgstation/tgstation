@@ -1,6 +1,6 @@
 
 /obj/item/weapon/gun/energy/taser
-	name = "taser gun"
+	name = "\improper Taser Gun"
 	desc = "A small, low capacity gun used for non-lethal takedowns."
 	icon_state = "taser"
 	fire_sound = 'Taser.ogg'
@@ -24,7 +24,7 @@
 
 
 /obj/item/weapon/gun/energy/stunrevolver
-	name = "stun revolver"
+	name = "\improper Stun Revolver"
 	desc = "A high-tech revolver that fires stun cartridges. The stun cartridges can be recharged using a conventional energy weapon recharger."
 	icon_state = "stunrevolver"
 	fire_sound = 'Gunshot.ogg'
@@ -36,7 +36,7 @@
 
 
 /obj/item/weapon/gun/energy/crossbow
-	name = "mini energy-crossbow"
+	name = "\improper Mini Energy-Crossbow"
 	desc = "A weapon favored by many of the syndicates stealth specialists."
 	icon_state = "crossbow"
 	w_class = 2.0
@@ -75,7 +75,7 @@
 
 
 /obj/item/weapon/gun/energy/crossbow/largecrossbow
-	name = "Energy Crossbow"
+	name = "\improper Energy Crossbow"
 	desc = "A weapon favored by syndicate infiltration teams."
 	w_class = 4.0
 	force = 10
