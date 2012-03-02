@@ -9,6 +9,7 @@
 
 /area/New()
 
+	master = src //moved outside the spawn(1) to avoid runtimes in lighting.dm when it references src.loc.loc.master ~Carn
 	src.icon = 'alert.dmi'
 	uid = ++global_uid
 	spawn(1)
@@ -18,7 +19,6 @@
 		if(sd_created)
 			related += src
 			return
-		master = src
 		related = list(src)
 
 		src.icon = 'alert.dmi'

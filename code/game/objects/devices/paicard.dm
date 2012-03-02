@@ -10,7 +10,6 @@
 	var/looking_for_personality = 0
 	var/mob/living/silicon/pai/pai
 
-
 	attack_self(mob/user)
 		if (!in_range(src, user))
 			return

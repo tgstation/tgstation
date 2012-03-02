@@ -9,7 +9,7 @@
 
 /obj/item/clothing/mask/breath
 	desc = "A close-fitting mask that can be connected to an air supply."
-	name = "Breath Mask"
+	name = "breath mask"
 	icon_state = "breath"
 	item_state = "breath"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | MASKCOVERSMOUTH | HALFMASK
@@ -21,7 +21,7 @@
 
 /obj/item/clothing/mask/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."
-	name = "Medical Mask"
+	name = "medical mask"
 	icon_state = "medical"
 	item_state = "medical"
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADSPACE|MASKCOVERSMOUTH
@@ -32,7 +32,7 @@
 
 /obj/item/clothing/mask/spiderman
 	desc = "A mask of Deadpool!"
-	name = "Deadpool mask"
+	name = "\improper Deadpool mask"
 	icon_state = "spiderman"
 	item_state = "spiderman"
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADSPACE|MASKCOVERSMOUTH|BLOCKHAIR
@@ -51,7 +51,7 @@
 	gas_transfer_coefficient = 0.90
 
 /obj/item/clothing/mask/surgical
-	name = "Sterile Mask"
+	name = "sterile mask"
 	desc = "A sterile mask designed to help prevent the spread of diseases."
 	icon_state = "sterile"
 	item_state = "sterile"
@@ -75,7 +75,7 @@
 	permeability_coefficient = 0.01
 
 /obj/item/clothing/mask/gas/plaguedoctor
-	name = "Plague doctor mask"
+	name = "plague doctor mask"
 	desc = "A modernised version of the classic design, this mask will not only filter out toxins but it can also be connected to an air supply."
 	icon_state = "plaguedoctor"
 	item_state = "gas_mask"
@@ -88,7 +88,7 @@
 	item_state = "gas_alt"
 
 /obj/item/clothing/mask/gas/swat
-	name = "SWAT Mask"
+	name = "\improper SWAT mask"
 	desc = "A close-fitting tactical mask that can be connected to an air supply."
 	icon_state = "swat"
 
@@ -120,7 +120,7 @@
 	item_state = "clown_hat"
 
 /obj/item/clothing/mask/gas/sexyclown
-	name = "sexy clown mask"
+	name = "sexy-clown wig and mask"
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
 	icon_state = "sexyclown"
 	item_state = "sexyclown"

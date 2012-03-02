@@ -153,7 +153,6 @@
 
 /obj/machinery/light/attackby(obj/item/W, mob/user)
 
-
 	// attempt to insert light
 	if(istype(W, /obj/item/weapon/light))
 		if(status != LIGHT_EMPTY)
@@ -347,13 +346,11 @@
 //		use_power(luminosity * LIGHTING_POWER_FACTOR, LIGHT)
 
 // called when area power state changes
-
 /obj/machinery/light/power_change()
-	spawn(0)  //rand(0,15)
+	spawn(10)
 		var/area/A = src.loc.loc
 		A = A.master
 		seton(A.lightswitch && A.power_light)
-
 
 // called when on fire
 

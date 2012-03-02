@@ -361,12 +361,23 @@ datum/preferences
 			switch(link_tags["real_name"])
 				if("input")
 					new_name = input(user, "Please select a name:", "Character Generation")  as text
-					var/list/bad_characters = list("_", "'", "\"", "<", ">", ";", "[", "]", "{", "}", "|", "\\")
+					var/list/bad_characters = list("_", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\","0","1","2","3","4","5","6","7","8","9")
 					for(var/c in bad_characters)
 						new_name = dd_replacetext(new_name, c, "")
 					if(!new_name || (new_name == "Unknown") || (new_name == "floor") || (new_name == "wall") || (new_name == "r-wall"))
-						alert("Don't do this")
+						alert("Invalid name. Don't do that!")
 						return
+					if(length(new_name) >= 26)
+						alert("That name is too long.")
+						return
+
+					//Carn: To fix BYOND text-parsing errors caused by people using dumb capitalisation in their names.
+					var/tempname
+					for(var/N in dd_text2list(new_name, " "))
+						if(N && tempname) //if both aren't null strings
+							tempname += " "
+						tempname += capitalize(lowertext(N))
+					new_name = tempname
 
 				if("random")
 					randomize_name()

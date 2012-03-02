@@ -20,7 +20,7 @@
 
 /obj/machinery/autolathe
 	name = "\improper Autolathe"
-	desc = "Produces items with metal and glass."
+	desc = "It produces items using metal and glass."
 	icon_state = "autolathe"
 	density = 1
 	var/m_amount = 0.0
@@ -43,7 +43,7 @@
 
 /obj/machinery/camera
 	name = "security camera"
-	desc = "This is used to monitor rooms. Can see through walls."
+	desc = "It's used to monitor rooms. It can see through walls."
 	icon = 'monitors.dmi'
 	icon_state = "camera"
 	var/network = "SS13"
@@ -60,7 +60,7 @@
 	active_power_usage = 10
 
 /obj/machinery/dispenser
-	name = "\improper Tank Storage Unit"
+	name = "tank storage unit"
 	desc = "A simple yet bulky one-way storage device for gas tanks. Holds 10 plasma and 10 oxygen tanks."
 	icon = 'objects.dmi'
 	icon_state = "dispenser"
@@ -73,8 +73,8 @@
 	active_power_usage = 10
 
 /obj/machinery/dna_scanner
-	name = "\improper DNA Scanner/Implanter"
-	desc = "Scans DNA."
+	name = "\improper DNA scanner/implanter"
+	desc = "It scans DNA structures."
 	icon = 'Cryogenic2.dmi'
 	icon_state = "scanner_0"
 	density = 1
@@ -86,8 +86,8 @@
 	active_power_usage = 300
 
 /obj/machinery/dna_scannernew
-	name = "\improper DNA Modifier"
-	desc = "Scans DNA better."
+	name = "\improper DNA modifier"
+	desc = "It scans DNA structures."
 	icon = 'Cryogenic2.dmi'
 	icon_state = "scanner_0"
 	density = 1
@@ -100,7 +100,7 @@
 
 /obj/machinery/firealarm
 	name = "fire alarm"
-	desc = "Pull this in case of emergency. Thus keep pulling this forever."
+	desc = "<i>\"Pull this in case of emergency\"<i>. Thus, keep pulling it forever."
 	icon = 'monitors.dmi'
 	icon_state = "fire0"
 	var/detecting = 1.0
@@ -122,7 +122,7 @@
 				src.overlays += image('monitors.dmi', "overlay_green")
 
 /obj/machinery/partyalarm
-	name = "\improper Party Button"
+	name = "\improper PARTY BUTTON"
 	desc = "Cuban Pete is in the house!"
 	icon = 'monitors.dmi'
 	icon_state = "fire0"
@@ -139,7 +139,7 @@
 
 /obj/machinery/igniter
 	name = "igniter"
-	desc = "Fun for igniting plasma."
+	desc = "It's useful for igniting plasma."
 	icon = 'stationobjs.dmi'
 	icon_state = "igniter1"
 	var/id = null
@@ -151,7 +151,7 @@
 
 /obj/machinery/injector
 	name = "injector"
-	desc = "Injects gas into a chamber."
+	desc = "It injects gas into a chamber."
 	icon = 'stationobjs.dmi'
 	icon_state = "injector"
 	density = 1
@@ -176,8 +176,8 @@
 	active_power_usage = 4
 
 /obj/machinery/restruct
-	name = "\improper DNA Physical Restructurization Accelerator"
-	desc = "This looks complex."
+	name = "\improper DNA physical restructurization accelerator"
+	desc = "It looks ridiculously complex."
 	icon = 'Cryogenic2.dmi'
 	icon_state = "restruct_0"
 	density = 1
@@ -190,7 +190,7 @@
 
 /obj/machinery/scan_console
 	name = "\improper DNA Scanner Access Console"
-	desc = "Scand DNA."
+	desc = "It scans DNA structures."
 	icon = 'computer.dmi'
 	icon_state = "scanner"
 	density = 1
@@ -211,11 +211,11 @@
 	active_power_usage = 400
 
 /obj/machinery/door_control
-	name = "remote door control"
-	desc = "This controls doors."
+	name = "remote door-control"
+	desc = "It controls doors, remotely."
 	icon = 'stationobjs.dmi'
 	icon_state = "doorctrl0"
-	desc = "A remote control switch for a door."
+	desc = "A remote control-switch for a door."
 	var/id = null
 	var/range = 10
 	var/normaldoorcontrol = 0
@@ -257,7 +257,7 @@
 
 /obj/machinery/ignition_switch
 	name = "ignition switch"
-	desc = "Activates that igniter."
+	desc = "It activates an igniter."
 	icon = 'objects.dmi'
 	icon_state = "launcherbtt"
 	desc = "A remote control switch for a mounted igniter."
@@ -276,8 +276,8 @@
 	var/lockeddown = 0
 
 /obj/machinery/teleport/hub
-	name = "hub"
-	desc = "A hub of a teleporting machine."
+	name = "teleporter hub"
+	desc = "It's the hub of a teleporting machine."
 	icon_state = "tele0"
 	var/accurate = 0
 	use_power = 1
@@ -286,7 +286,7 @@
 
 /obj/machinery/teleport/station
 	name = "station"
-	desc = "The station thingy of a teleport thingy."
+	desc = "It's the station thingy of a teleport thingy." //seriously, wtf.
 	icon_state = "controller"
 	var/active = 0
 	var/engaged = 0
@@ -316,7 +316,7 @@
 /obj/machinery/power/terminal
 	name = "terminal"
 	icon_state = "term"
-	desc = "An underfloor wiring terminal for power equipment"
+	desc = "It's an underfloor wiring terminal for power equipment."
 	level = 1
 	layer = TURF_LAYER
 	var/obj/machinery/power/master = null
@@ -325,8 +325,8 @@
 	layer = 2.6 // a bit above wires
 
 /obj/machinery/power/generator
-	name = "generator"
-	desc = "A high efficiency thermoelectric generator."
+	name = "thermoelectric generator"
+	desc = "It's a high efficiency thermoelectric generator."
 	icon_state = "teg"
 	anchored = 1
 	density = 1
@@ -338,8 +338,8 @@
 	var/lastgenlev = -1
 
 /obj/machinery/power/generator_type2
-	name = "generator"
-	desc = "A high efficiency thermoelectric generator."
+	name = "thermoelectric generator"
+	desc = "It's a high efficiency thermoelectric generator."
 	icon_state = "teg"
 	anchored = 1
 	density = 1
@@ -351,8 +351,8 @@
 	var/lastgenlev = -1
 
 /obj/machinery/power/monitor
-	name = "\improper Power Monitoring Computer"
-	desc = "Used to monitor the power. Pretty useless."
+	name = "power monitoring computer"
+	desc = "It monitors power levels across the station."
 	icon = 'computer.dmi'
 	icon_state = "power"
 	density = 1
@@ -363,7 +363,7 @@
 
 /obj/machinery/cell_charger
 	name = "cell charger"
-	desc = "A charging unit for power cells."
+	desc = "It charges power cells."
 	icon = 'power.dmi'
 	icon_state = "ccharger0"
 	var/obj/item/weapon/cell/charging = null
@@ -374,8 +374,8 @@
 	active_power_usage = 60
 
 /obj/machinery/light_switch
-	desc = "light switch"
-	name = null
+	name = "light switch"
+	desc = "It turns lights on and off. What are you, simple?"
 	icon = 'power.dmi'
 	icon_state = "light1"
 	anchored = 1.0
@@ -406,20 +406,21 @@
 
 /obj/machinery/hologram/holopad
 	name = "\improper AI holopad"
-	desc = "A floor-mounted device for projecting a holographic image. It is activated remotely."
+	desc = "It's a floor-mounted device for projecting holographic images. It is activated remotely."
 	icon_state = "holopad0"
 	var
 		mob/living/silicon/ai/master//Which AI, if any, is controlling the object? Only one AI may control a hologram at any time.
+		last_request = 0 //to prevent request spam. ~Carn
 
 /obj/machinery/hologram/projector
-	name = "\improper Hologram Projector"
-	desc = "Makes a hologram appear...somehow..."
+	name = "hologram projector"
+	desc = "It makes a hologram appear...with magnets or something..."
 	icon = 'stationobjs.dmi'
 	icon_state = "hologram0"
 
 /obj/machinery/hologram/proj_ai
-	name = "\improper Hologram Projector Platform"
-	desc = "Used for the fun of the diabolical AI."
+	name = "hologram projector platform"
+	desc = "It's used by the AI for fooling around."
 	icon = 'stationobjs.dmi'
 	icon_state = "hologram0"
 	var

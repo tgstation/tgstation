@@ -20,7 +20,7 @@
 /obj/item/stack/examine()
 	set src in view(1)
 	..()
-	usr << text("There are [] []\s left on the stack.", src.amount, src.singular_name)
+	usr << "There are [src.amount] [src.singular_name]\s in the stack."
 	return
 
 /obj/item/stack/proc/use(var/amount)

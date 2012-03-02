@@ -44,6 +44,9 @@
 		if(stat & BROKEN || !I || !user)
 			return
 
+		if(isrobot(user))
+			return
+
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
 			user << "You can't place that item inside the disposal unit."
 			return
@@ -71,9 +74,6 @@
 					for (var/mob/C in viewers(src))
 						C.show_message("\red [GM.name] has been placed in the [src] by [user].", 3)
 					del(G)
-			return
-
-		if(isrobot(user))
 			return
 
 		if(!I)	return

@@ -624,7 +624,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 	if (src.isbroken)
 		playsound(src.loc, 'hit_on_shattered_glass.ogg', 100, 1)
 		for (var/mob/O in hearers(5, src.loc))
-			O.show_message("[user.name] furtherly abuses the shattered [src.name]." )
+			O.show_message("<EM>[user.name]</EM> further abuses the shattered [src.name].")
 	else
 		if(istype(I, /obj/item/weapon) )
 			var/obj/item/weapon/W = I
@@ -831,7 +831,7 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	var/turf/T = get_turf(src)
 	if(channel)
 		for(var/mob/O in hearers(world.view-1, T))
-			O.show_message("<font color=Maroon><B>[src.name]</B> beeps, \"Breaking news from [channel]!</font>\"",2)
+			O.show_message("<span class='newscaster'><EM>[src.name]</EM> beeps, \"Breaking news from [channel]!\"</span>",2)
 		src.alert = 1
 		src.update_icon()
 		spawn(600)
@@ -839,5 +839,5 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 			src.update_icon()
 	else
 		for(var/mob/O in hearers(world.view-1, T))
-			O.show_message("<font color=Maroon><B>[src.name]</B> beeps, \"Wanted notice posted!</font>\"",2)
+			O.show_message("<span class='newscaster'><EM>[src.name]</EM> beeps, \"Wanted notice posted!\"</span>",2)
 	playsound(src.loc, 'twobeep.ogg', 75, 1)

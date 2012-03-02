@@ -1,6 +1,6 @@
 /obj/structure/closet
-	name = "Closet"
-	desc = "It's a closet!"
+	name = "closet"
+	desc = "It's a basic storage unit."
 	icon = 'closet.dmi'
 	icon_state = "closed"
 	density = 1
@@ -14,14 +14,14 @@
 	var/lastbang
 
 /obj/structure/closet/acloset
-	name = "Strange closet"
+	name = "strange closet"
 	desc = "It looks alien!"
 	icon_state = "acloset"
 	icon_closed = "acloset"
 	icon_opened = "aclosetopen"
 
 /obj/structure/closet/cabinet
-	name = "Cabinet"
+	name = "cabinet"
 	desc = "Old will forever be in fashion."
 	icon_state = "cabinet_closed"
 	icon_closed = "cabinet_closed"
@@ -36,12 +36,12 @@
 	anchored = 0
 
 /obj/structure/closet/gmcloset
-	name = "Formal closet"
-	desc = "A bulky (yet mobile) closet. Comes with formal clothes"
+	name = "formal closet"
+	desc = "It's a storage unit for formal clothing."
 
 /obj/structure/closet/emcloset
-	name = "Emergency Closet"
-	desc = "A bulky (yet mobile) closet. Comes prestocked with a gasmask and o2 tank for emergencies."
+	name = "emergency closet"
+	desc = "It's a storage unit for emergency breathmasks and o2 tanks."
 	icon_state = "emergency"
 	icon_closed = "emergency"
 	icon_opened = "emergencyopen"
@@ -49,15 +49,15 @@
 /obj/structure/closet/emcloset/legacy
 
 /obj/structure/closet/firecloset
-	name = "Fire Closet"
-	desc = "A bulky (yet mobile) closet. Comes with supplies to fight fire."
+	name = "fire-safety closet"
+	desc = "It's a storage unit for fire-fighting supplies."
 	icon_state = "firecloset"
 	icon_closed = "firecloset"
 	icon_opened = "fireclosetopen"
 
 /obj/structure/closet/hydrant //wall mounted fire closet
-	name = "Fire Closet"
-	desc = "A wall mounted closet which comes with supplies to fight fire."
+	name = "fire-safety closet"
+	desc = "It's a storage unit for fire-fighting supplies."
 	icon_state = "hydrant"
 	icon_closed = "hydrant"
 	icon_opened = "hydrant_open"
@@ -66,8 +66,8 @@
 	wall_mounted = 1
 
 /obj/structure/closet/medical_wall //wall mounted medical closet
-	name = "First Aid Closet"
-	desc = "A wall mounted closet which should have some first aid."
+	name = "first-aid closet"
+	desc = "It's wall-mounted storage unit for first aid supplies."
 	icon_state = "medical_wall"
 	icon_closed = "medical_wall"
 	icon_opened = "medical_wall_open"
@@ -75,55 +75,52 @@
 	density = 0
 	wall_mounted = 1
 
-
-
-
 /obj/structure/closet/toolcloset
-	name = "Tool Closet"
-	desc = "A bulky (yet mobile) closet. Contains tools."
+	name = "tool closet"
+	desc = "It's a storage unit for tools."
 	icon_state = "toolcloset"
 	icon_closed = "toolcloset"
 	icon_opened = "toolclosetopen"
 
 /obj/structure/closet/radiation
-	desc = "A closet with a radiation sign on it."
-	name = "Level 2 Radiation Suit"
+	name = "radiation suit closet"
+	desc = "It's a storage unit for rad-protective suits."
 	icon_state = "radsuitcloset"
 	icon_opened = "toolclosetopen"
 	icon_closed = "radsuitcloset"
 
 /obj/structure/closet/jcloset
-	name = "Custodial Closet"
-	desc = "A bulky (yet mobile) closet. Comes with janitor's clothes and gear."
+	name = "custodial closet"
+	desc = "It's a storage unit for janitorial clothes and gear."
 
 /obj/structure/closet/lawcloset
-	name = "Legal Closet"
-	desc = "A bulky (yet mobile) closet. Comes with lawyer apparel and items."
+	name = "legal closet"
+	desc = "It's a storage unit for courtroom apparel and items."
 
 /obj/structure/closet/coffin
 	name = "coffin"
-	desc = "A burial receptacle for the dearly departed."
+	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
 	icon_closed = "coffin"
 	icon_opened = "coffin_open"
 
 /obj/structure/closet/bombcloset
-	name = "EOD closet"
-	desc = "A bulky (yet mobile) closet. Comes prestocked with a level 4 bombsuit."
+	name = "\improper EOD closet"
+	desc = "It's a storage unit for explosion-protective suits."
 	icon_state = "bombsuit"
 	icon_closed = "bombsuit"
 	icon_opened = "bombsuitopen"
 
 /obj/structure/closet/bombclosetsecurity
-	name = "EOD closet"
-	desc = "A bulky (yet mobile) closet. Comes prestocked with a level 4 bombsuit."
+	name = "\improper EOD closet"
+	desc = "It's a storage unit for explosion-protective suits."
 	icon_state = "bombsuitsec"
 	icon_closed = "bombsuitsec"
 	icon_opened = "bombsuitsecopen"
 
 /obj/structure/closet/l3closet
-	name = "Level 3 Biohazard Suit"
-	desc = "A bulky (yet mobile) closet. Comes prestocked with level 3 biohazard gear for emergencies."
+	name = "level-3 biohazard suit closet"
+	desc = "It's a storage unit for level-3 biohazard gear."
 	icon_state = "bio"
 	icon_closed = "bio"
 	icon_opened = "bioopen"
@@ -154,164 +151,148 @@
 	icon_opened = "bio_scientistopen"
 
 /obj/structure/closet/syndicate
-	name = "Weapons Closet"
+	name = "armoury closet"
 	desc = "Why is this here?"
 	icon_state = "syndicate"
 	icon_closed = "syndicate"
 	icon_opened = "syndicateopen"
 
 /obj/structure/closet/syndicate/personal
-	desc = "Gear preperations closet."
+	desc = "It's a storage unit for operative gear."
 
 /obj/structure/closet/syndicate/nuclear
-	desc = "Nuclear preperations closet."
+	desc = "It's a storage unit for nuclear-operative gear."
 
 	// Inserting the gimmick clothing stuff here for generic items, IE Tacticool stuff
 
 
 /obj/structure/closet/gimmick
-	name = "Administrative Supply Closet"
+	name = "administrative supply closet"
+	desc = "It's a storage unit for things that have no right being here."
 	icon_state = "syndicate1"
 	icon_closed = "syndicate1"
 	icon_opened = "syndicate1open"
-	desc = "Closet of things that have no right being here."
 	anchored = 0
 
 /obj/structure/closet/gimmick/russian
-	name = "Russian Surplus"
+	name = "russian surplus closet"
+	desc = "It's a storage unit for Russian standard-issue surplus."
 	icon_state = "syndicate1"
 	icon_closed = "syndicate1"
 	icon_opened = "syndicate1open"
-	desc = "Russian Surplus Closet"
 
 /obj/structure/closet/gimmick/tacticool
-	name = "Tacticool Gear"
+	name = "tacticool gear closet"
+	desc = "It's a storage unit for Tacticool gear."
 	icon_state = "syndicate1"
 	icon_closed = "syndicate1"
 	icon_opened = "syndicate1open"
-	desc = "Tacticool Gear Closet"
 
 /obj/structure/closet/thunderdome
+	name = "\improper Thunderdome closet"
 	desc = "Everything you need!"
 	icon_state = "syndicate"
 	icon_closed = "syndicate"
 	icon_opened = "syndicateopen"
-	name = "Thunderdome closet."
 	anchored = 1
 
 /obj/structure/closet/thunderdome/tdred
-	desc = "Everything you need!"
-	icon_state = "syndicate"
-	icon_closed = "syndicate"
-	icon_opened = "syndicateopen"
-	name = "Thunderdome closet."
+	name = "red-team Thunderdome closet"
 
 /obj/structure/closet/thunderdome/tdgreen
-	desc = "Everything you need!"
+	name = "green-team Thunderdome closet"
 	icon_state = "syndicate1"
 	icon_closed = "syndicate1"
 	icon_opened = "syndicate1open"
-	name = "Thunderdome closet."
+
 
 /obj/structure/closet/malf/suits
-	desc = "Gear preparations closet."
+	desc = "It's a storage unit for operational gear."
 	icon_state = "syndicate"
 	icon_closed = "syndicate"
 	icon_opened = "syndicateopen"
 
 /obj/structure/closet/wardrobe
-	desc = "A bulky (yet mobile) wardrobe closet. Comes prestocked with 6 changes of clothes."
-	name = "Wardrobe"
+	name = "wardrobe"
+	desc = "It's a storage unit for standard-issue Nanotrasen attire."
 	icon_state = "blue"
 	icon_closed = "blue"
 
 /obj/structure/closet/wardrobe/black
-	name = "Black Wardrobe"
-	desc = "Contains black jumpsuits."
+	name = "black wardrobe"
 	icon_state = "black"
 	icon_closed = "black"
 
 /obj/structure/closet/wardrobe/chaplain_black
-	name = "Chaplain Wardrobe"
-	desc = "Closet of basic chaplain clothes."
+	name = "chapel wardrobe"
+	desc = "It's a storage unit for Nanotrasen-approved religious attire."
 	icon_state = "black"
 	icon_closed = "black"
 
 /obj/structure/closet/wardrobe/green
-	name = "Green Wardrobe"
-	desc = "Contains green jumpsuits."
+	name = "green wardrobe"
 	icon_state = "green"
 	icon_closed = "green"
 
 /obj/structure/closet/wardrobe/mixed
-	name = "Mixed Wardrobe"
-	desc = "This appears to contain several different sets of clothing."
+	name = "mixed wardrobe"
 	icon_state = "mixed"
 	icon_closed = "mixed"
 
 /obj/structure/closet/wardrobe/orange
-	name = "Prisoners Wardrobe"
-	desc = "Contains orange jumpsuits."
+	name = "prison wardrobe"
+	desc = "It's a storage unit for Nanotrasen-regulation prisoner attire."
 	icon_state = "orange"
 	icon_closed = "orange"
 
 /obj/structure/closet/wardrobe/pink
-	name = "Pink Wardrobe"
-	desc = "Contains pink jumpsuits."
+	name = "pink wardrobe"
 	icon_state = "pink"
 	icon_closed = "pink"
 
 /obj/structure/closet/wardrobe/red
-	name = "Security Wardrobe"
-	desc = "Contains security officer jumpsuits."
+	name = "security wardrobe"
 	icon_state = "red"
 	icon_closed = "red"
 
 /obj/structure/closet/wardrobe/white
-	name = "White Wardrobe"
-	desc = "Contains white jumpsuits."
+	name = "white wardrobe"
 	icon_state = "white"
 	icon_closed = "white"
 
 /obj/structure/closet/wardrobe/toxins_white
-	name = "Toxins Wardrobe"
-	desc = "Contains toxins jumpsuits."
+	name = "toxins wardrobe"
 	icon_state = "white"
 	icon_closed = "white"
 
 /obj/structure/closet/wardrobe/genetics_white
-	name = "Genetics Wardrobe"
-	desc = "Contains genetics jumpsuits."
+	name = "genetics wardrobe"
 	icon_state = "white"
 	icon_closed = "white"
 
 /obj/structure/closet/wardrobe/yellow
-	name = "Yellow Wardrobe"
-	desc = "Contains yellow jumpsuits."
+	name = "yellow wardrobe"
 	icon_state = "wardrobe-y"
 	icon_closed = "wardrobe-y"
 
 /obj/structure/closet/wardrobe/engineering_yellow
-	name = "Engineering Wardrobe"
-	desc = "Contains engineering jumpsuits."
+	name = "engineering wardrobe"
 	icon_state = "yellow"
 	icon_closed = "yellow"
 
 /obj/structure/closet/wardrobe/atmospherics_yellow
-	name = "Atmospherics Wardrobe"
-	desc = "Contains atmospheric jumpsuits."
+	name = "atmospherics wardrobe"
 	icon_state = "yellow"
 	icon_closed = "yellow"
 
 /obj/structure/closet/wardrobe/grey
-	name = "Grey Wardrobe"
-	desc = "Contains grey jumpsuits."
+	name = "grey wardrobe"
 	icon_state = "grey"
 	icon_closed = "grey"
 
 /obj/structure/closet/secure_closet
-	desc = "An immobile card-locked storage closet."
-	name = "Security Locker"
+	name = "secure locker"
+	desc = "It's an immobile card-locked storage unit."
 	icon = 'closet.dmi'
 	icon_state = "secure1"
 	density = 1
@@ -329,7 +310,7 @@
 
 /obj/structure/closet/secure_closet/medical_wall
 	name = "First Aid Closet"
-	desc = "A wall mounted closet which --should-- contain medical supplies."
+	desc = "It's a secure wall-mounted storage unit for first aid supplies."
 	icon_state = "medical_wall_locked"
 	icon_closed = "medical_wall_unlocked"
 	icon_locked = "medical_wall_locked"
@@ -342,8 +323,8 @@
 	req_access = list(access_medical)
 
 /obj/structure/closet/secure_closet/personal
-	desc = "The first card swiped gains control."
-	name = "Personal Closet"
+	desc = "It's a secure locker for personell. The first card swiped gains control."
+	name = "personal closet"
 
 /obj/structure/closet/secure_closet/personal/cabinet
 	icon_state = "cabinetdetective_locked"
@@ -354,7 +335,7 @@
 	icon_off = "cabinetdetective_broken"
 
 /obj/structure/closet/secure_closet/personal/patient
-	name = "Patient's closet"
+	name = "patient's closet"
 
 /obj/structure/closet/secure_closet/wall
 	name = "wall locker"

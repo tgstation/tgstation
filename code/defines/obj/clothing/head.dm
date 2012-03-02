@@ -6,8 +6,8 @@
 	var/list/allowed = list()
 
 /obj/item/clothing/head/cakehat
-	name = "cakehat"
-	desc = "It is a cakehat!"
+	name = "cake-hat"
+	desc = "It's tasty looking!"
 	icon_state = "cake0"
 	var/onfire = 0.0
 	var/status = 0
@@ -15,16 +15,16 @@
 	var/fire_resist = T0C+1300	//this is the max temp it can stand before you start to cook. although it might not burn away, you take damage
 
 /obj/item/clothing/head/caphat
-	name = "Captain's hat"
+	name = "captain's hat"
 	icon_state = "captain"
 	desc = "It's good being the king."
 	flags = FPRINT|TABLEPASS|SUITSPACE
 	item_state = "caphat"
 
 /obj/item/clothing/head/centhat
-	name = "Cent. Comm. hat"
+	name = "\improper CentComm. hat"
 	icon_state = "centcom"
-	desc = "It's even better to be the emperor."
+	desc = "It's good to be emperor."
 	flags = FPRINT|TABLEPASS|SUITSPACE
 	item_state = "centhat"
 
@@ -36,35 +36,36 @@
 	item_state = "pwig"
 
 /obj/item/clothing/head/that
-	name = "Top hat"
-	desc = "An amish looking hat."
+	name = "top-hat"
+	desc = "It's an amish looking hat."
 	icon_state = "tophat"
 	item_state = "that"
 	flags = FPRINT|TABLEPASS
 
 
 /obj/item/clothing/head/chefhat
-	name = "Chef's Hat"
+	name = "chef's hat"
+	desc = "It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work."
 	icon_state = "chef"
 	item_state = "chef"
 	desc = "The commander in chef's head wear."
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/head/redcoat
-	name = "Redcoat hat"
+	name = "redcoat's hat"
 	icon_state = "redcoat"
-	desc = "I guess it's a redhead."
+	desc = "<i>'I guess it's a redhead.'</i>"
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/head/mailman
-	name = "Mailman Hat"
+	name = "mailman's hat"
 	icon_state = "mailman"
-	desc = "Right-on-time mail service head wear."
+	desc = "<i>'Right-on-time'</i> mail service head wear."
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/head/plaguedoctorhat
-	name = "Plague doctor's hat"
-	desc = "Once used by Plague doctors. Now useless."
+	name = "plague doctor's hat"
+	desc = "These were once used by Plague doctors. They're pretty much useless."
 	icon_state = "plaguedoctor"
 	flags = FPRINT | TABLEPASS
 	permeability_coefficient = 0.01
@@ -90,8 +91,8 @@
 	flags_inv = HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/helmet/warden
-	name = "Warden Hat"
-	desc = "A special helmet issued to the Warden of a securiy force. Protects the head from impacts."
+	name = "warden's hat"
+	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
 	icon_state = "policehelm"
 	flags_inv = 0
 
@@ -104,22 +105,23 @@
 	flags_inv = 0
 
 /obj/item/clothing/head/secsoft
-	name = "Soft Cap"
-	desc = "A baseball hat in tasteful red."
+	name = "soft cap"
+	desc = "It's baseball hat in tasteful red colour."
 	icon_state = "secsoft"
 	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
 	item_state = "helmet"
 
 /obj/item/clothing/head/cargosoft
-	name = "Cargo cap"
-	desc = "A baseball hat in tasteless yellow."
+	name = "cargo cap"
+	desc = "It's a baseball hat in a tasteless yellow colour."
 	icon_state = "cargosoft"
 	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
 	item_state = "helmet"
 	var/flipped = 0
 
 /obj/item/clothing/head/syndicatefake
-	name = "red space helmet replica"
+	name = "red space-helmet replica"
+	desc = "It's a very convincing replica."
 	icon_state = "syndicate"
 	item_state = "syndicate"
 	desc = "A plastic replica of a syndicate agent's space helmet, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
@@ -128,8 +130,8 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/helmet/swat
-	name = "swat helmet"
-	desc = "Used by highly trained Swat Members."
+	name = "\improper SWAT helmet"
+	desc = "They're often used by highly trained Swat Members."
 	icon_state = "swat"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | HEADCOVERSEYES | BLOCKHAIR
 	item_state = "swat"
@@ -137,8 +139,8 @@
 	flags_inv = HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/helmet/thunderdome
-	name = "Thunderdome helmet"
-	desc = "Let the battle commence!"
+	name = "\improper Thunderdome helmet"
+	desc = "<i>'Let the battle commence!'</i>"
 	icon_state = "thunderdome"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | HEADCOVERSEYES | BLOCKHAIR
 	item_state = "thunderdome"
@@ -161,8 +163,8 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/helmet/that
-	name = "Sturdy Top hat"
-	desc = "An amish looking armored top hat."
+	name = "sturdy top-hat"
+	desc = "It's an amish looking armored top hat."
 	icon_state = "tophat"
 	item_state = "that"
 	flags = FPRINT|TABLEPASS
@@ -170,8 +172,8 @@
 	flags_inv = 0
 
 /obj/item/clothing/head/helmet/greenbandana
-	name = "Green Bandana"
-	desc = "A green bandana with some fine nanotech lining."
+	name = "green bandana"
+	desc = "It's a green bandana with some fine nanotech lining."
 	icon_state = "greenbandana"
 	item_state = "greenbandana"
 	flags = FPRINT|TABLEPASS
@@ -179,8 +181,8 @@
 	flags_inv = 0
 
 /obj/item/clothing/head/helmet/riot
-	name = "Riot Helmet"
-	desc = "A helmet specifically designed to protect against close range attacks."
+	name = "riot helmet"
+	desc = "It's a helmet specifically designed to protect against close range attacks."
 	icon_state = "riot"
 	item_state = "helmet"
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
@@ -188,28 +190,28 @@
 	flags_inv = HIDEEARS
 
 /obj/item/clothing/head/helmet/cap
-	name = "Captain's cap"
-	desc = "For irresponsible Captains."
+	name = "captain's cap"
+	desc = "You fear to wear it for the negligence it brings."
 	icon_state = "capcap"
 	flags = FPRINT|TABLEPASS|SUITSPACE
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 0, rad = 0)
 	flags_inv = 0
 
 /obj/item/clothing/head/chaplain_hood
-	name = "Chaplain's hood"
-	desc = "A hood that covers the head. Keeps you warm during the space winters."
+	name = "chaplain's hood"
+	desc = "It's hood that covers the head. It keeps you warm during the space winters."
 	icon_state = "chaplain_hood"
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|BLOCKHAIR
 
 /obj/item/clothing/head/hasturhood
-	name = "Hastur's Hood"
-	desc = "This hood is unspeakably stylish"
+	name = "hastur's hood"
+	desc = "It's unspeakably stylish"
 	icon_state = "hasturhood"
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|BLOCKHAIR
 
 /obj/item/clothing/head/nursehat
-	name = "Nurse Hat"
-	desc = "For quick identification of trained medical personnel."
+	name = "nurse's hat"
+	desc = "It allows quick identification of trained medical personnel."
 	icon_state = "nursehat"
 	flags = FPRINT|TABLEPASS
 

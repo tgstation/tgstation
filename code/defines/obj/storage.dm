@@ -8,13 +8,13 @@
 	max_combined_w_class = 21
 
 /obj/item/weapon/storage/backpack/cultpack
-	name = "Trophy Rack"
-	desc = "A backpack and trophy rack, useful for both carrying extra gear and proudly declaring your insanity "
+	name = "trophy rack"
+	desc = "It's useful for both carrying extra gear and proudly declaring your insanity."
 	icon_state = "cultpack"
 
 /obj/item/weapon/storage/trashbag
 	name = "trash bag"
-	desc = "for picking up all those pens"
+	desc = "It's the heavy-duty black polymer kind. Time to take out the trash!"
 	icon_state = "trashbag"
 	item_state = "trashbag"
 	w_class = 4.0
@@ -31,7 +31,7 @@
 */
 /obj/item/weapon/storage/pill_bottle
 	name = "pill bottle"
-	desc = "This is told to hold untold horrors of pulls."
+	desc = "It's an airtight container for storing medication."
 	icon_state = "pill_canister"
 	icon = 'chemical.dmi'
 	item_state = "contsolid"
@@ -39,8 +39,8 @@
 	can_hold = list("/obj/item/weapon/reagent_containers/pill")
 
 /obj/item/weapon/storage/dice
-	name = "dice pack"
-	desc = "Apparently this has dice in them."
+	name = "pack of dice"
+	desc = "It's a small container with dice inside."
 	icon_state = "pill_canister"
 	icon = 'chemical.dmi'
 	item_state = "contsolid"
@@ -48,7 +48,8 @@
 	can_hold = list("/obj/item/weapon/dice")
 
 /obj/item/weapon/storage/box
-	name = "Box"
+	name = "box"
+	desc = "It's just an ordinary box."
 	icon_state = "box"
 	item_state = "syringe_kit"
 
@@ -57,7 +58,8 @@
 /obj/item/weapon/storage/box/syndicate
 
 /obj/item/weapon/storage/cupbox
-	name = "Paper-cup Box"
+	name = "box of paper cups"
+	desc = "It has pictures of paper cups on the front."
 	icon_state = "box"
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
@@ -72,37 +74,37 @@
 		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
 
 /obj/item/weapon/storage/pillbottlebox
-	name = "pill bottles"
-	desc = "A box of pill bottles."
+	name = "box of pill bottles"
+	desc = "It has pictures of pill bottles on its front."
 	icon_state = "box"
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
 /obj/item/weapon/storage/blankbox
-	name = "blank shells"
-	desc = "A box containing...stuff..."
+	name = "box of blank shells"
+	desc = "It has a picture of a gun and several warning symbols on the front."
 	icon_state = "box"
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
 /obj/item/weapon/storage/backpack/clown
 	name = "Giggles Von Honkerton"
-	desc = "The backpack made by Honk. Co."
+	desc = "It's a backpack made by Honk! Co."
 	icon_state = "clownpack"
 
 /obj/item/weapon/storage/backpack/medic
-	name = "medic's backpack"
-	desc = "The backpack used to keep with the sterile environment."
+	name = "medical backpack"
+	desc = "It's a backpack especially designed for use in a sterile environment."
 	icon_state = "medicalpack"
 
 /obj/item/weapon/storage/backpack/security
 	name = "security backpack"
-	desc = "A very robust backpack."
+	desc = "It's a very robust backpack."
 	icon_state = "securitypack"
 
 /obj/item/weapon/storage/backpack/satchel
-	name = "Satchel"
-	desc = "A very robust satchel to wear on your back."
+	name = "satchel"
+	desc = "It's a very robust satchel to wear on your back."
 	icon_state = "satchel"
 
 	New()
@@ -110,18 +112,18 @@
 		new /obj/item/weapon/storage/wallet/random(src)
 
 /obj/item/weapon/storage/backpack/bandolier
-	name = "Bandolier"
-	desc = "A very old bandolier to wear on your back."
+	name = "bandolier"
+	desc = "It's a very old bandolier to wear on your back."
 	icon_state = "bandolier"
 
 /obj/item/weapon/storage/backpack/industrial
 	name = "industrial backpack"
-	desc = "A tough backpack for the daily grind"
+	desc = "It's a tough backpack for the daily grind of station life."
 	icon_state = "engiepack"
 
 /obj/item/weapon/storage/briefcase
 	name = "briefcase"
-	desc = "Used by the lawyer to robust security in the court room."
+	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
 	icon_state = "briefcase"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 8.0
@@ -133,7 +135,7 @@
 
 /obj/item/weapon/storage/wallet
 	name = "wallet"
-	desc = "A small wallet which can hold a few small personal things."
+	desc = "It can hold a few small and personal things."
 	storage_slots = 4
 	icon_state = "wallet"
 	can_hold = list(
@@ -197,8 +199,8 @@
 
 
 /obj/item/weapon/storage/disk_kit
-	name = "data disks"
-	desc = "For disks."
+	name = "box of data disks"
+	desc = "It has a picture of a data disk on it."
 	icon_state = "id"
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
@@ -208,22 +210,22 @@
 /obj/item/weapon/storage/disk_kit/disks2
 
 /obj/item/weapon/storage/fcard_kit
-	name = "Fingerprint Cards"
-	desc = "This contains cards which are used to take fingerprints."
+	name = "box of fingerprint cards"
+	desc = "It has a picture of a fingerprint on each of its faces."
 	icon_state = "id"
 	item_state = "syringe_kit"
 
 /obj/item/weapon/storage/firstaid
-	name = "First-Aid"
-	desc = "In case of a boo-boo."
+	name = "first-aid kit"
+	desc = "It's an emergency medical kit for those serious boo-boos."
 	icon_state = "firstaid"
 	throw_speed = 2
 	throw_range = 8
 	var/empty = 0
 
 /obj/item/weapon/storage/firstaid/fire
-	name = "Fire First Aid"
-	desc = "A kit for when you 'accidently' set toxins on fire and burn yourself."
+	name = "fire first-aid kit"
+	desc = "It's an emergency medical kit for when the toxins lab <i>-spontaneously-</i> burns down."
 	icon_state = "ointment"
 	item_state = "firstaid-ointment"
 
@@ -357,7 +359,7 @@
 	item_state = "toolbox_yellow"
 
 /obj/item/weapon/storage/toolbox/syndicate
-	name = "Suspicious looking toolbox"
+	name = "suspicious looking toolbox"
 	icon_state = "syndicate"
 	item_state = "toolbox_syndi"
 	origin_tech = "combat=1;syndicate=1"
@@ -376,32 +378,32 @@
 
 /obj/item/weapon/storage/bible/booze
 	name = "bible"
-	desc = "Apply to head repeatedly."
+	desc = "To be applied to the head repeatedly."
 	icon_state ="bible"
 
 /obj/item/weapon/storage/mousetraps
-	name = "Pest-B-Gon Mousetraps"
-	desc = "WARNING: Keep out of reach of children."
+	name = "box of Pest-B-Gon Mousetraps"
+	desc = "<B><FONT=red>WARNING:</FONT></B> <I>Keep out of reach of children</I>."
 	icon_state = "mousetraps"
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
 
 /obj/item/weapon/storage/donkpocket_kit
-	name = "Donk-Pockets"
-	desc = "Remember to fully heat prior to serving.  Product will cool if not eaten within seven minutes."
+	name = "box of donk-pockets"
+	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
 	icon_state = "donk_kit"
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
 /obj/item/weapon/storage/condimentbottles
-	name = "Condiment Bottles"
-	desc = "A box of empty condiment bottles."
+	name = "box of condiment bottles"
+	desc = "It has a large ketchup smear on it."
 	icon_state = "box"
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
 /obj/item/weapon/storage/drinkingglasses
-	name = "Drinking Glasses"
-	desc = "A box of clean drinking glasses"
+	name = "box of drinking glasses"
+	desc = "It has a picture of drinking glasses on it."
 	icon_state = "box"
 	item_state = "syringe_kit"

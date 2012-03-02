@@ -1,5 +1,5 @@
 /mob/living/silicon/robot
-	name = "Robot"
+	name = "Cyborg"
 	icon = 'robots.dmi'//
 	icon_state = "robot"
 	health = 300

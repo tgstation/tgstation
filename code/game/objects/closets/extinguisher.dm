@@ -1,6 +1,6 @@
 
 /obj/structure/closet/extinguisher
-	name = "Extinguisher closet"
+	name = "extinguisher closet"
 	desc = "A small wall mounted cabinet designed to hold a fire extinguisher."
 	icon_state = "extinguisher10"
 	icon_opened = "extinguisher11"

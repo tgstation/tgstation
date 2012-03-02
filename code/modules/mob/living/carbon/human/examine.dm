@@ -1,19 +1,5 @@
 /mob/living/carbon/human/examine()
-	set src in view()
-
-	usr << "\blue *---------*"
-
-	usr << "\blue This is \icon[src.icon] <B>[src.name]</B>!"
-
-	// crappy hack because you can't do \his[src] etc
-	var/t_his = "its"
-	var/t_him = "it"
-	if (src.gender == MALE)
-		t_his = "his"
-		t_him = "him"
-	else if (src.gender == FEMALE)
-		t_his = "her"
-		t_him = "her"
+	set src in oview()
 
 	var/skipgloves = 0
 	var/skipsuitstorage = 0
@@ -23,6 +9,7 @@
 	var/skipears = 0
 	var/skipeyes = 0
 
+	//exosuits and helmets obscure our view and stuff.
 	if (src.wear_suit)
 		skipgloves = src.wear_suit.flags_inv & HIDEGLOVES
 		skipsuitstorage = src.wear_suit.flags_inv & HIDESUITSTORAGE
@@ -34,79 +21,128 @@
 		skipeyes = src.head.flags_inv & HIDEEYES
 		skipears = src.head.flags_inv & HIDEEARS
 
+	// crappy hacks because you can't do \his[src] etc. I'm sorry this proc is so unreadable, blame the text macros :<
+	var/t_He = "It" //capitalised for use at the start of each line.
+	var/t_his = "its"
+	var/t_him = "it"
+	var/t_has = "has"
+	var/t_is = "is"
+
+	var/msg = "<span class='info'>*---------*\nThis is "
+
+	if( skipjumpsuit && (wear_mask || skipmask) ) //big suits/masks make it hard to tell their gender
+		t_He = "They"
+		t_his = "their"
+		t_him = "them"
+		t_has = "have"
+		t_is = "are"
+	else
+		msg += "\icon[src.icon] "
+		switch(src.gender)
+			if(MALE)
+				t_He = "He"
+				t_his = "his"
+				t_him = "him"
+			if(FEMALE)
+				t_He = "She"
+				t_his = "her"
+				t_him = "her"
+
+	msg += "<EM>\a [src]</EM>!\n"
+
+	//uniform
 	if (src.w_uniform && !skipjumpsuit)
 		if (src.w_uniform.blood_DNA.len)
-			usr << "\red [src.name] is wearing a[src.w_uniform.blood_DNA.len ? " bloody " : " "] \icon[src.w_uniform] [src.w_uniform.name]!"
+			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[src.w_uniform.icon] [src.w_uniform.gender==PLURAL?"some":"a"] blood-stained [src.w_uniform.name]!</span>\n"
 		else
-			usr << "\blue [src.name] is wearing a \icon[src.w_uniform] [src.w_uniform.name]."
+			msg += "[t_He] [t_is] wearing \icon[src.w_uniform] \a [src.w_uniform].\n"
 
-	if (src.wear_suit)
-		if (src.wear_suit.blood_DNA.len)
-			usr << "\red [src.name] has a[src.wear_suit.blood_DNA.len ? " bloody " : " "] \icon[src.wear_suit] [src.wear_suit.name] on!"
-		else
-			usr << "\blue [src.name] has a \icon[src.wear_suit] [src.wear_suit.name] on."
-
+	//head
 	if (src.head)
 		if (src.head.blood_DNA.len)
-			usr << "\red [src.name] has a[src.head.blood_DNA.len ? " bloody " : " "] \icon[src.head] [src.head.name] on his head!"
+			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[src.head.icon] [src.head.gender==PLURAL?"some":"a"] blood-stained [src.head.name] on [t_his] head!</span>\n"
 		else
-			usr << "\blue [src.name] has a \icon[src.head] [src.head.name] on."
+			msg += "[t_He] [t_is] wearing \icon[src.head] \a [src.head] on [t_his] head.\n"
 
-	if (src.handcuffed)
-		usr << "\blue [src.name] is \icon[src.handcuffed] handcuffed!"
-
-	if (src.ears && !skipears)
-		usr << "\blue [src.name] has a \icon[src.ears] [src.ears.name] by [t_his] mouth."
-
-	if (src.wear_mask && !skipmask)
-		if (src.wear_mask.blood_DNA.len)
-			usr << "\red [src.name] has a[src.wear_mask.blood_DNA.len ? " bloody " : " "] \icon[src.wear_mask] [src.wear_mask.name] on [t_his] face!"
+	//suit/armour
+	if (src.wear_suit)
+		if (src.wear_suit.blood_DNA.len)
+			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[src.wear_suit.icon] [src.wear_suit.gender==PLURAL?"some":"a"] blood-stained [src.wear_suit.name]!</span>\n"
 		else
-			usr << "\blue [src.name] has a \icon[src.wear_mask] [src.wear_mask.name] on [t_his] face."
+			msg += "[t_He] [t_is] wearing \icon[src.wear_suit] \a [src.wear_suit].\n"
 
-	if (src.l_hand)
-		if (src.l_hand.blood_DNA.len)
-			usr << "\red [src.name] has a[src.l_hand.blood_DNA.len ? " bloody " : " "] \icon[src.l_hand] [src.l_hand.name] in [t_his] left hand!"
-		else
-			usr << "\blue [src.name] has a \icon[src.l_hand] [src.l_hand.name] in [t_his] left hand."
-
-	if (src.r_hand)
-		if (src.r_hand.blood_DNA.len)
-			usr << "\red [src.name] has a[src.r_hand.blood_DNA.len ? " bloody " : " "] \icon[src.r_hand] [src.r_hand.name] in [t_his] right hand!"
-		else
-			usr << "\blue [src.name] has a \icon[src.r_hand] [src.r_hand.name] in [t_his] right hand."
-
-	if (src.belt)
-		if (src.belt.blood_DNA.len)
-			usr << "\red [src.name] has a[src.belt.blood_DNA.len ? " bloody " : " "] \icon[src.belt] [src.belt.name] on [t_his] belt!"
-		else
-			usr << "\blue [src.name] has a \icon[src.belt] [src.belt.name] on [t_his] belt."
+	//suit/armour storage
 	if(src.s_store && !skipsuitstorage)
 		if(src.s_store.blood_DNA.len)
-			usr << "\red [src.name] has a[src.s_store.blood_DNA.len ? " bloody " : " "] \icon[src.s_store] [src.s_store.name] on [t_his][src.wear_suit.blood_DNA.len ? " bloody " : " "] \icon[src.wear_suit] [src.wear_suit.name]!"
+			msg += "<span class='warning'>[t_He] [t_is] carrying \icon[src.s_store.icon] [src.s_store.gender==PLURAL?"some":"a"] blood-stained [src.s_store.name] on [t_his] [src.wear_suit.name]!</span>\n"
 		else
-			usr << "\blue [src.name] has a \icon[src.s_store] [src.s_store.name] on [t_his][src.wear_suit.blood_DNA.len ? " bloody " : " "] \icon[src.wear_suit] [src.wear_suit.name]."
+			msg += "[t_He] [t_is] carrying \icon[src.s_store] \a [src.s_store] on [t_his] [src.wear_suit.name].\n"
 
-	if (src.shoes && !skipshoes)
-		usr << "[src.shoes.blood_DNA.len ? "\red" : "\blue"] [src.name] is wearing[src.shoes.blood_DNA.len ? " bloody " : " "] \icon[src.shoes] [src.shoes.name] on [t_his] feet."
+	//back
+	if (src.back)
+		msg += "[t_He] [t_has] \icon[src.back] \a [src.back] on [t_his] back.\n"
 
+	//left hand
+	if (src.l_hand)
+		if (src.l_hand.blood_DNA.len)
+			msg += "<span class='warning'>[t_He] [t_is] holding \icon[src.l_hand.icon] [src.l_hand.gender==PLURAL?"some":"a"] blood-stained [src.l_hand.name] in [t_his] left hand!</span>\n"
+		else
+			msg += "[t_He] [t_is] holding \icon[src.l_hand] \a [src.l_hand] in [t_his] left hand.\n"
+
+	//right hand
+	if (src.r_hand)
+		if (src.r_hand.blood_DNA.len)
+			msg += "<span class='warning'>[t_He] [t_is] holding \icon[src.r_hand] [src.r_hand.gender==PLURAL?"some":"a"] blood-stained [src.r_hand.name] in [t_his] right hand!</span>\n"
+		else
+			msg += "[t_He] [t_is] holding \icon[src.r_hand] \a [src.r_hand] in [t_his] right hand.\n"
+
+	//gloves
 	if (src.gloves && !skipgloves)
 		if (src.gloves.blood_DNA.len)
-			usr << "\red [src.name] has bloody \icon[src.gloves] [src.gloves.name] on [t_his] hands!"
+			msg += "<span class='warning'>[t_He] [t_has] \icon[src.gloves.icon] [src.gloves.gender==PLURAL?"some":"a"] blood-stained [src.gloves.name] on [t_his] hands!</span>\n"
 		else
-			usr << "\blue [src.name] has \icon[src.gloves] [src.gloves.name] on [t_his] hands."
+			msg += "[t_He] [t_has] \icon[src.gloves] \a [src.gloves] on [t_his] hands.\n"
 	else if (src.blood_DNA.len)
-		usr << "\red [src.name] has[src.blood_DNA.len ? " bloody " : " "] hands!"
+		msg += "<span class='warning'>[t_He] [t_has] blood-stained hands!</span>\n"
 
-	if (src.glasses && !skipeyes)
-		if (src.glasses.blood_DNA.len)
-			usr << "\red [src.name] has bloody \icon[src.glasses] [src.glasses.name] on [t_his] eyes!"
+	//handcuffed?
+	if (src.handcuffed)
+		msg += "[t_He] [t_is] \icon[src.handcuffed] handcuffed!\n"
+
+	//belt
+	if (src.belt)
+		if (src.belt.blood_DNA.len)
+			msg += "<span class='warning'>[t_He] [t_has] \icon[src.belt.icon] [src.belt.gender==PLURAL?"some":"a"] blood-stained [src.belt.name] about [t_his] waist!</span>\n"
 		else
-			usr << "\blue [src.name] has \icon[src.glasses] [src.glasses.name] on [t_his] eyes."
+			msg += "[t_He] [t_has] \icon[src.belt] \a [src.belt] about [t_his] waist.\n"
 
-	if (src.back)
-		usr << "\blue [src.name] has a \icon[src.back] [src.back.name] on [t_his] back."
+	//shoes
+	if (src.shoes && !skipshoes)
+		if(src.shoes.blood_DNA.len)
+			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[src.shoes.icon] [src.shoes.gender==PLURAL?"some":"a"] blood-stained [src.shoes.name] on [t_his] feet!</span>\n"
+		else
+			msg += "[t_He] [t_is] wearing \icon[src.shoes] \a [src.shoes] on [t_his] feet.\n"
 
+	//mask
+	if (src.wear_mask && !skipmask)
+		if (src.wear_mask.blood_DNA.len)
+			msg += "<span class='warning'>[t_He] [t_has] \icon[src.wear_mask.icon] [src.wear_mask.gender==PLURAL?"some":"a"] blood-stained [src.wear_mask.name] on [t_his] face!</span>\n"
+		else
+			msg += "[t_He] [t_has] \icon[src.wear_mask] \a [src.wear_mask] on [t_his] face.\n"
+
+	//eyes
+	if (!skipeyes)
+		if(src.glasses)
+			if (src.glasses.blood_DNA.len)
+				msg += "<span class='warning'>[t_He] [t_has] \icon[src.glasses] [src.gloves.gender==PLURAL?"some":"a"] blood-stained [src.glasses] covering [t_his] eyes!</span>\n"
+			else
+				msg += "[t_He] [t_has] \icon[src.glasses] \a [src.glasses] covering [t_his] eyes.\n"
+
+	//ears
+	if (src.ears && !skipears)
+		msg += "[t_He] [t_has] \icon[src.ears] \a [src.ears] on [t_his] ears.\n"
+
+	//ID
 	if (src.wear_id)
 		var/id
 		if(istype(src:wear_id, /obj/item/device/pda))
@@ -115,61 +151,67 @@
 		else
 			id = src.wear_id.registered
 		if (id != src.real_name && in_range(src, usr) && prob(10))
-			usr << "\red [src.name] is wearing \icon[src.wear_id] [src.wear_id.name] yet doesn't seem to be that person!!!"
+			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[src.wear_id] \a [src.wear_id] yet something doesn't seem right...</span>\n"
 		else
-			usr << "\blue [src.name] is wearing \icon[src.wear_id] [src.wear_id.name]."
+			msg += "[t_He] [t_is] wearing \icon[src.wear_id] \a [src.wear_id].\n"
 
-
+	//Jitters
 	if (src.is_jittery)
 		switch(src.jitteriness)
 			if(300 to INFINITY)
-				usr << "\red [src] is violently convulsing."
+				msg += "<span class='warning'>[t_He] [t_is] convulsing violently!</span>\n"
 			if(200 to 300)
-				usr << "\red [src] looks extremely jittery."
+				msg += "<span class='warning'>[t_He] [t_is] extremely jittery.</span>\n"
 			if(100 to 200)
-				usr << "\red [src] is twitching ever so slightly."
+				msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
-	if (src.suiciding)
-		switch(src.suiciding)
-			if(1)
-				usr << "\red [src.name] appears to have bitten [t_his] tongue off!"
+	if (src.suiciding == 1)
+		msg += "<span class='warning'>[t_He] [t_has] bitten off [t_his] own tongue and suffered major bloodloss!</span>\n"
 
-	if (src.stat == 2 || (changeling && changeling.changeling_fakedeath == 1))
-		usr << "\red [src] is limp and unresponsive, a dull lifeless look in [t_his] eyes."
+	if (src.stat == DEAD || (changeling && changeling.changeling_fakedeath == 1))
+		msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive"
+		//Carn: yes I'm a pedant, you aren't seeing their lifeless eyes unless you can see their eyes in the first place.
+		if(!skipeyes)
+			msg += ", with a dull lifeless look in [t_his] eyes...</span>\n"
+		else
+			msg += "...</span>\n"
 	else
+		msg += "<span class='warning'>"
 		if (src.getBruteLoss())
 			if (src.getBruteLoss() < 30)
-				usr << "\red [src.name] looks slightly injured!"
+				msg += "[t_He] [t_has] minor bruising.\n"
 			else
-				usr << "\red <B>[src.name] looks severely injured!</B>"
-
-		if (src.getCloneLoss())
-			if (src.getCloneLoss() < 30)
-				usr << "\red [src.name] looks slightly... unfinished?"
-			else
-				usr << "\red <B>[src.name] looks very... unfinished?</B>"
+				msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
 
 		if (src.getFireLoss())
 			if (src.getFireLoss() < 30)
-				usr << "\red [src.name] looks slightly burned!"
+				msg += "[t_He] [t_has] minor burns.\n"
 			else
-				usr << "\red <B>[src.name] looks severely burned!</B>"
+				msg += "<B>[t_He] [t_has] severe burns!</B>\n"
+
+		if (src.getCloneLoss())
+			if (src.getCloneLoss() < 30)
+				msg += "[t_He] [t_has] minor genetic deformities.\n"
+			else
+				msg += "<B>[t_He] [t_has] severe genetic deformities.</B>\n"
 
 		if (src.nutrition < 100)
-			usr << "\red [src.name] looks like flesh and bones."
+			msg += "[t_He] [t_is] severely malnourished.\n"
 		else if (src.nutrition >= 500)
 			if (usr.nutrition < 100)
-				usr << "\red [src.name] looks very round and delicious. Like a little piggy. A tasty piggy."
+				msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"
 			else
-				usr << "\blue [src.name] looks quite chubby."
+				msg += "[t_He] [t_is] quite chubby.\n"
 
-		if (src.stat == 1)
-			usr << "\red [src.name] doesn't seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep."
+		if (src.stat == UNCONSCIOUS)
+			msg += "[t_He] [t_is]n't responding to anything around [t_him]; [t_his] eyes are closed as though asleep.\n"
 		else if (src.getBrainLoss() >= 60)
-			usr << "\red [src.name] has a stupid expression on [t_his] face."
+			msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
+		msg += "</span>"
+
 		if (!src.client)
-			usr << "\red [src.name] doesn't seem as though they want to talk."
+			msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
+	msg += "*---------*</span>"
 
-	usr << "\blue *---------*"
-
+	usr << msg

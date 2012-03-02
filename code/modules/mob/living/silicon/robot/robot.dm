@@ -67,6 +67,7 @@
 		return
 	switch(mod)
 		if("Standard")
+			updatename()
 			module = new /obj/item/weapon/robot_module/standard(src)
 			hands.icon_state = "standard"
 			icon_state = "robot"
@@ -74,6 +75,7 @@
 			feedback_inc("cyborg_standard",1)
 
 		if("Service")
+			updatename(mod)
 			module = new /obj/item/weapon/robot_module/butler(src)
 			hands.icon_state = "service"
 			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich")
@@ -91,6 +93,7 @@
 			feedback_inc("cyborg_service",1)
 
 		if("Miner")
+			updatename(mod)
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
 			icon_state = "Miner"
@@ -98,6 +101,7 @@
 			feedback_inc("cyborg_miner",1)
 
 		if("Medical")
+			updatename(mod)
 			module = new /obj/item/weapon/robot_module/medical(src)
 			hands.icon_state = "medical"
 			icon_state = "surgeon"
@@ -106,6 +110,7 @@
 			feedback_inc("cyborg_medical",1)
 
 		if("Security")
+			updatename(mod)
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"
 			icon_state = "bloodhound"
@@ -113,6 +118,7 @@
 			feedback_inc("cyborg_security",1)
 
 		if("Engineering")
+			updatename(mod)
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			hands.icon_state = "engineer"
 			icon_state = "landmate"
@@ -120,6 +126,7 @@
 			feedback_inc("cyborg_engineering",1)
 
 		if("Janitor")
+			updatename(mod)
 			module = new /obj/item/weapon/robot_module/janitor(src)
 			hands.icon_state = "janitor"
 			icon_state = "mopgearrex"
@@ -128,6 +135,15 @@
 
 	overlays -= "eyes" //Takes off the eyes that it started with
 	updateicon()
+
+/mob/living/silicon/robot/proc/updatename(var/prefix as text)
+	if( length(real_name) < 7 || !prefix )	return
+	//not really necessary but just to avoid annoying people with
+	//unique names seeming as nobody could give me a straight answer as
+	//to whether to remove custom borg names completely.
+	if(copytext(real_name, 1, 7) == "Cyborg")
+		real_name = "[prefix] [real_name]"
+		name = real_name
 
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
 	set category = "Robot Commands"

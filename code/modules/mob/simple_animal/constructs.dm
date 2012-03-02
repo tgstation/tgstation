@@ -101,13 +101,13 @@
 /mob/living/simple_animal/constructarmoured/attack_animal(mob/living/simple_animal/M as mob)
 	if(istype(M, /mob/living/simple_animal/constructbuilder))
 		health += 10
-		M.emote("mends some of [src]'s wounds")
+		M.emote("mends some of \the <EM>[src]'s</EM> wounds")
 	else
-		if(M.melee_damage_upper == 0)
-			M.emote("[M.friendly] [src]")
+		if(M.melee_damage_upper <= 0)
+			M.emote("[M.friendly] \the <EM>[src]</EM>")
 		else
 			for(var/mob/O in viewers(src, null))
-				O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+				O.show_message("<span class='attack'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", 1)
 			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 			health -= damage
 
@@ -117,16 +117,18 @@
 /mob/living/simple_animal/constructarmoured/examine()
 	set src in oview()
 
-	usr << "\blue *---------*"
-	usr << text("\blue This is \icon[src] <B>[src.name]</B>!")
-	if (src.health != src.maxHealth)
-		if (src.health >= 150)
-			usr << text("\red [src.name] looks slightly dented")
+	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
+	if (src.health < src.maxHealth)
+		msg += "<span class='warning'>"
+		if (src.health >= src.maxHealth/2)
+			msg += "It looks slightly dented.\n"
 		else
-			usr << text("\red <B>[src.name] looks severely dented!</B>")
+			msg += "<B>It looks severely dented!</B>\n"
+		msg += "</span>"
+	msg += "*---------*</span>"
+
+	usr << msg
 	return
-
-
 
 ////////////////////////Wraith/////////////////////////////////////////////
 
@@ -223,13 +225,13 @@
 /mob/living/simple_animal/constructwraith/attack_animal(mob/living/simple_animal/M as mob)
 	if(istype(M, /mob/living/simple_animal/constructbuilder))
 		health += 10
-		M.emote("mends some of [src]'s wounds")
+		M.emote("mends some of \the <EM>[src]'s</EM> wounds")
 	else
-		if(M.melee_damage_upper == 0)
-			M.emote("[M.friendly] [src]")
+		if(M.melee_damage_upper <= 0)
+			M.emote("[M.friendly] \the <EM>[src]</EM>")
 		else
 			for(var/mob/O in viewers(src, null))
-				O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+				O.show_message("<span class='attack'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", 1)
 			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 			health -= damage
 
@@ -238,13 +240,17 @@
 /mob/living/simple_animal/constructwraith/examine()
 	set src in oview()
 
-	usr << "\blue *---------*"
-	usr << text("\blue This is \icon[src] <B>[src.name]</B>!")
-	if (src.health != src.maxHealth)
-		if (src.health >= 35)
-			usr << text("\red [src.name] looks slightly dented")
+	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
+	if (src.health < src.maxHealth)
+		msg += "<span class='warning'>"
+		if (src.health >= src.maxHealth/2)
+			msg += "It looks slightly dented.\n"
 		else
-			usr << text("\red <B>[src.name] looks severely dented!</B>")
+			msg += "<B>It looks severely dented!</B>\n"
+		msg += "</span>"
+	msg += "*---------*</span>"
+
+	usr << msg
 	return
 
 
@@ -296,24 +302,28 @@
 /mob/living/simple_animal/constructbuilder/attack_animal(mob/living/simple_animal/M as mob)
 	if(istype(M, /mob/living/simple_animal/constructbuilder))
 		health += 5
-		M.emote("mends some of [src]'s wounds")
+		M.emote("mends some of \the <EM>[src]'s</EM> wounds")
 	else
-		if(M.melee_damage_upper == 0)
-			M.emote("[M.friendly] [src]")
+		if(M.melee_damage_upper <= 0)
+			M.emote("[M.friendly] \the <EM>[src]</EM>")
 		else
 			for(var/mob/O in viewers(src, null))
-				O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+				O.show_message("<span class='attack'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", 1)
 			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 			health -= damage
 
 /mob/living/simple_animal/constructbuilder/examine()
 	set src in oview()
 
-	usr << "\blue *---------*"
-	usr << text("\blue This is \icon[src] <B>[src.name]</B>!")
-	if (src.health != src.maxHealth)
-		if (src.health >= 75)
-			usr << text("\red [src.name] looks slightly dented")
+	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
+	if (src.health < src.maxHealth)
+		msg += "<span class='warning'>"
+		if (src.health >= src.maxHealth/2)
+			msg += "It looks slightly dented.\n"
 		else
-			usr << text("\red <B>[src.name] looks severely dented!</B>")
+			msg += "<B>It looks severely dented!</B>\n"
+		msg += "</span>"
+	msg += "*---------*</span>"
+
+	usr << msg
 	return
