@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/projectile/detective
 	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-Special rounds."
-	name = "revolver"
+	name = "\improper Revolver"
 	icon_state = "detective"
 	caliber = "38"
 	origin_tech = "combat=2;materials=2"
@@ -38,7 +38,7 @@
 
 
 /obj/item/weapon/gun/projectile/mateba
-	name = "mateba"
+	name = "\improper Mateba"
 	desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."
 	icon_state = "mateba"
 	origin_tech = "combat=2;materials=2"

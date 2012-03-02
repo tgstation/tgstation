@@ -64,6 +64,7 @@
 		if (istype(M, /atom/movable))
 			var/temp = get_dir(M,src)
 			do_teleport(M, target) ///You will appear at the beacon
+			step(M,temp)
 			var/turf/target2 = get_edge_target_turf(M, temp)
 			M.throw_at(target2,100,2)
 
