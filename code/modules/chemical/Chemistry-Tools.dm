@@ -933,7 +933,7 @@
 							B.data["resistances"] = T.resistances.Copy()
 						if(istype(target, /mob/living/carbon/human))//I wish there was some hasproperty operation...
 							var/mob/living/carbon/human/HT = target
-							B.data["blood_type"] = copytext(HT.b_type,1,0)
+							B.data["blood_type"] = copytext(HT.dna.b_type,1,0)
 						var/list/temp_chem = list()
 						for(var/datum/reagent/R in target.reagents.reagent_list)
 							temp_chem += R.name

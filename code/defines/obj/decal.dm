@@ -49,8 +49,7 @@
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
 	var/list/viruses = list()
-	blood_DNA = null
-	blood_type = null
+	blood_DNA = list()
 	//var/datum/disease2/disease/virus2 = null
 
 	Del()

@@ -601,7 +601,6 @@ datum/preferences
 		character.gender = gender
 
 		character.age = age
-		character.b_type = b_type
 
 		character.r_eyes = r_eyes
 		character.g_eyes = g_eyes

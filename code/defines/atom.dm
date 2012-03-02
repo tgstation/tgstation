@@ -3,11 +3,10 @@
 	var/level = 2
 	var/flags = FPRINT
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
-	var/fingerprints = null
-	var/list/fingerprintshidden = new/list()
+	var/list/fingerprints = list()
+	var/list/fingerprintshidden = list()
 	var/fingerprintslast = null
-	var/blood_DNA = null
-	var/blood_type = null
+	var/list/blood_DNA = list()
 	var/last_bumped = 0
 	var/pass_flags = 0
 
@@ -17,6 +16,9 @@
 	//var/chem_is_open_container = 0
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
 	///Chemistry.
+
+	//Detective Work, used for the duplicate data points kept in the scanners
+	var/atom/original_atom = null
 
 	proc/assume_air(datum/air_group/giver)
 		del(giver)

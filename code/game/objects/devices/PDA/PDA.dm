@@ -766,12 +766,14 @@
 						user << "\blue No fingerprints found on [C]"
 				else
 					user << text("\blue [C]'s Fingerprints: [md5(C:dna.uni_identity)]")
-				if ( !(C:blood_DNA) )
+				if ( !(C:blood_DNA.len) )
 					user << "\blue No blood found on [C]"
 				else
 					user << "\blue Blood found on [C]. Analysing..."
 					spawn(15)
-						user << "\blue Blood type: [C:blood_type]\nDNA: [C:blood_DNA]"
+						for(var/i = 1, i < C:blood_DNA.len, i++)
+							var/list/templist = C:blood_DNA[i]
+							user << "\blue Blood type: [templist[2]]\nDNA: [templist[1]]"
 
 			if(4)
 				for (var/mob/O in viewers(C, null))
@@ -789,10 +791,20 @@
 			if (!A.fingerprints)
 				user << "\blue Unable to locate any fingerprints on [A]!"
 			else
-				var/list/L = params2list(A:fingerprints)
-				user << "\blue Isolated [L.len] fingerprints."
-				for(var/i in L)
-					user << "\blue \t [i]"
+				user << "\blue Isolated [A:fingerprints.len] fingerprints."
+				var/list/prints = A:fingerprints
+				var/list/complete_prints = list()
+				for(var/i in prints)
+					var/list/templist = params2list(i)
+					var/temp = stringpercent(templist["2"])
+					if(temp <= 6)
+						complete_prints += templist["2"]
+				if(complete_prints.len < 1)
+					user << "\blue No intact prints found"
+				else
+					user << "\blue Found [complete_prints.len] intact prints"
+					for(var/i in complete_prints)
+						user << "\blue " + i
 
 		if(3)
 			if(!isnull(A.reagents))

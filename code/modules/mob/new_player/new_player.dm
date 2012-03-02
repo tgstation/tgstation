@@ -367,6 +367,7 @@
 		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
 
 		new_character.dna.ready_dna(new_character)
+		new_character.dna.b_type = preferences.b_type
 		if(mind)
 			mind.transfer_to(new_character)
 			mind.original = new_character

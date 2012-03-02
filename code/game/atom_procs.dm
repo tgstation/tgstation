@@ -106,33 +106,57 @@
 	if (!( src.flags ) & 256)
 		return
 	if (ishuman(M))
+		add_fibers(M)
 		var/mob/living/carbon/human/H = M
-		if (!istype(H.dna, /datum/dna))
-			return 0
-		if (H.gloves)
+		if (!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 32))
+			if(!istype(H.dna, /datum/dna))
+				H.dna = new /datum/dna(null)
+			H.check_dna()
+		if (H.gloves && H.gloves != src)
 			if(src.fingerprintslast != H.key)
-				src.fingerprintshidden += text("\[[time_stamp()]\] (Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
+				src.fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
-			return 0
-		if (!( src.fingerprints ))
-			src.fingerprints = text("[]", md5(H.dna.uni_identity))
-			if(src.fingerprintslast != H.key)
-				src.fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",H.real_name, H.key)
-				src.fingerprintslast = H.key
-			return 1
-		else
-			var/list/L = params2list(src.fingerprints)
-			L -= md5(H.dna.uni_identity)
-			while(L.len >= 3)
-				L -= L[1]
-			L += md5(H.dna.uni_identity)
-			src.fingerprints = list2params(L)
-			if(src.fingerprintslast != H.key)
-				src.fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",H.real_name, H.key)
-				src.fingerprintslast = H.key
+				H.gloves.add_fingerprint(M)
+		if(H.gloves != src)
+			if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
+				return 0
+			else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
+				return 0
+		if(src.fingerprintslast != H.key)
+			src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
+			src.fingerprintslast = H.key
+		var/new_prints = 0
+		var/prints
+		for(var/i = 1, i <= src.fingerprints.len, i++)
+			var/list/L = params2list(src.fingerprints[i])
+			if(L[num2text(1)] == md5(H.dna.uni_identity))
+				new_prints = i
+				prints = L[num2text(2)]
+				break
+			else
+				var/test_print = stars(L[num2text(2)], rand(80,90))
+				if(stringpercent(test_print) == 32)
+					if(src.fingerprints.len == 1)
+						src.fingerprints = list()
+					else
+						for(var/j = (i + 1), j < (src.fingerprints.len), j++)
+							src.fingerprints[j-1] = src.fingerprints[j]
+						src.fingerprints.len--
+				else
+					src.fingerprints[i] = "1=" + L[num2text(1)] + "&2=" + test_print
+		if(new_prints)
+			src.fingerprints[new_prints] = text("1=[]&2=[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), (H.gloves ? rand(10,20) : rand(25,40)))))
+		else if(new_prints == 0)
+			if(!src.fingerprints)
+				src.fingerprints = list(text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40))))
+			src.fingerprints += text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40)))
+		for(var/i = 1, i <= src.fingerprints.len, i++)
+			if(length(src.fingerprints[i]) != 69)
+				src.fingerprints.Remove(src.fingerprints[i])
+		return 1
 	else
 		if(src.fingerprintslast != M.key)
-			src.fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",M.real_name, M.key)
+			src.fingerprintshidden += text("Real name: [], Key: []",M.real_name, M.key)
 			src.fingerprintslast = M.key
 	return
 
@@ -140,9 +164,17 @@
 /atom/proc/add_blood(mob/living/carbon/human/M as mob)
 	if (!( istype(M, /mob/living/carbon/human) ))
 		return 0
+	if (!istype(M.dna, /datum/dna))
+		M.dna = new /datum/dna(null)
+	M.check_dna()
 	if (!( src.flags ) & 256)
 		return
-	if (!( src.blood_DNA ))
+	if(!blood_DNA)
+		var/turf/Z = get_turf(src)
+		message_admins("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
+		log_game("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
+		return
+	if (blood_DNA.len)
 		if (istype(src, /obj/item)&&!istype(src, /obj/item/weapon/melee/energy))//Only regular items. Energy melee weapon are not affected.
 			var/obj/item/source2 = src
 			source2.icon_old = src.icon
@@ -151,34 +183,53 @@
 			I.Blend(new /icon('blood.dmi', "itemblood"),ICON_MULTIPLY)
 			I.Blend(new /icon(src.icon, src.icon_state),ICON_UNDERLAY)
 			src.icon = I
-			src.blood_DNA = M.dna.unique_enzymes
-			src.blood_type = M.b_type
+			var/inthere = 0
+			for(var/i = 1, i <= src.blood_DNA.len, i++)
+				var/list/templist = src.blood_DNA[i]
+				if(templist[1] == M.dna.unique_enzymes && templist[2] == M.dna.b_type)
+					inthere = 1
+					break
+			if(!inthere)
+				src.blood_DNA.len++
+				src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
 		else if (istype(src, /turf/simulated))
 			var/turf/simulated/source2 = src
 			var/list/objsonturf = range(0,src)
-			var/i
-			for(i=1, i<=objsonturf.len, i++)
-				if(istype(objsonturf[i],/obj/effect/decal/cleanable/blood))
-					return
+			if(objsonturf)
+				for(var/i=1, i<=objsonturf.len, i++)
+					if(istype(objsonturf[i],/obj/effect/decal/cleanable/blood))
+						var/obj/effect/decal/cleanable/blood/this = objsonturf[i]
+						this.blood_DNA.len++
+						this.blood_DNA[this.blood_DNA.len] = list(M.dna.unique_enzymes, M.dna.b_type)
+						for(var/datum/disease/D in M.viruses)
+							var/datum/disease/newDisease = new D.type
+							this.viruses += newDisease
+							newDisease.holder = this
+						return
 			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source2)
-			this.blood_DNA = M.dna.unique_enzymes
-			this.blood_type = M.b_type
+			var/list/blood_DNA_temp[1]
+			blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.dna.b_type)
+			this.blood_DNA =  blood_DNA_temp
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
 				this.viruses += newDisease
 				newDisease.holder = this
 		else if (istype(src, /mob/living/carbon/human))
-			src.blood_DNA = M.dna.unique_enzymes
-			src.blood_type = M.b_type
+			var/inthere = 0
+			for(var/i = 1, i <= src.blood_DNA.len, i++)
+				var/list/templist = src.blood_DNA[i]
+				if(templist[1] == M.dna.unique_enzymes && templist[2] == M.dna.b_type)
+					inthere = 1
+					break
+			if(!inthere)
+				src.blood_DNA.len++
+				src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
 		else
 			return
 	else
-		var/list/L = params2list(src.blood_DNA)
-		L -= M.dna.unique_enzymes
-		while(L.len >= 3)
-			L -= L[1]
-		L += M.dna.unique_enzymes
-		src.blood_DNA = list2params(L)
+		var/list/blood_DNA_temp[1]
+		blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.dna.b_type)
+		src.blood_DNA = blood_DNA_temp
 	return
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M as mob, var/toxvomit = 0)
@@ -200,7 +251,7 @@
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source1 = src
 			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source1)
-			this.blood_DNA = M.dna.unique_enzymes
+			this.blood_DNA = list(list(M.dna.unique_enzymes,M.dna.b_type))
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
 				this.viruses += newDisease
@@ -230,23 +281,60 @@
 
 	if (!( src.flags ) & 256)
 		return
-	if ( src.blood_DNA )
+	if(!blood_DNA)
+		var/turf/Z = get_turf(src)
+		message_admins("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
+		log_game("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
+		blood_DNA = list()
+		return
+	if ( src.blood_DNA.len )
 		if (istype (src, /mob/living/carbon))
 			var/obj/item/source2 = src
-			source2.blood_DNA = null
+			source2.blood_DNA = list()
 			//var/icon/I = new /icon(source2.icon_old, source2.icon_state) //doesnt have icon_old
 			//source2.icon = I
 		if (istype (src, /obj/item))
 			var/obj/item/source2 = src
-			source2.blood_DNA = null
+			source2.blood_DNA = list()
 //			var/icon/I = new /icon(source2.icon_old, source2.icon_state)
-			source2.icon = source2.icon_old
-			source2.update_icon()
+			if(source2.icon_old)
+				source2.icon = source2.icon_old
+				source2.update_icon()
+			else
+				source2.icon = initial(icon)
+				source2.update_icon()
 		if (istype(src, /turf/simulated))
 			var/obj/item/source2 = src
-			source2.blood_DNA = null
-			var/icon/I = new /icon(source2.icon_old, source2.icon_state)
-			source2.icon = I
+			source2.blood_DNA = list()
+			if(source2.icon_old)
+				var/icon/I = new /icon(source2.icon_old, source2.icon_state)
+				source2.icon = I
+			else
+				source2.icon = initial(icon)
+	if(src.fingerprints && src.fingerprints.len)
+		var/done = 0
+		while(!done)
+			done = 1
+			for(var/i = 1, i < (src.fingerprints.len + 1), i++)
+				var/list/prints = params2list(src.fingerprints[i])
+				var/test_print = prints["2"]
+				var/new_print = stars(test_print, rand(1,20))
+				if(stringpercent(new_print) == 32)
+					if(src.fingerprints.len == 1)
+						src.fingerprints = list()
+					else
+						for(var/j = (i + 1), j < (src.fingerprints.len), j++)
+							src.fingerprints[j-1] = src.fingerprints[j]
+						src.fingerprints.len--
+						done = 0
+					break
+				else
+					src.fingerprints[i] = "1=" + prints["1"] + "&2=" + new_print
+		if(!src.fingerprints)
+			src.fingerprints = list()
+	if(istype(src, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = src
+		M.update_clothing()
 	return
 
 /atom/MouseDrop(atom/over_object as mob|obj|turf|area)

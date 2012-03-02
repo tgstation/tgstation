@@ -88,7 +88,7 @@
 		CIG.light("")
 		H.equip_if_possible(CIG, H.slot_wear_mask)
 		H.equip_if_possible(new /obj/item/clothing/gloves/black(H), H.slot_gloves)
-		H.equip_if_possible(new /obj/item/weapon/storage/fcard_kit(H.back), H.slot_in_backpack)
+		H.equip_if_possible(new /obj/item/weapon/storage/box/evidence(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/weapon/fcardholder(H), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/clothing/suit/det_suit(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/device/detective_scanner(H), H.slot_in_backpack)
