@@ -181,6 +181,7 @@
 	proc/TargetActed()
 		var/mob/M = loc
 		if(target == M) return
+		usr.last_move_intent = world.time
 		Fire(target,usr)
 		var/dir_to_fire = sd_get_approx_dir(M,target)
 		if(dir_to_fire != M.dir)

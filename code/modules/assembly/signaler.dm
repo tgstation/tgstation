@@ -19,6 +19,7 @@
 		delay = 0
 		airlock_wire = null
 		datum/radio_frequency/radio_connection
+		deadman = 0
 
 	proc
 		signal()
@@ -146,3 +147,22 @@
 		frequency = new_frequency
 		radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
 		return
+
+	process()
+		var/mob/M = src.loc
+		if(!M || !ismob(M))
+			if(prob(5))
+				signal()
+			deadman = 0
+			processing_objects.Remove(src)
+		else if(prob(5))
+			M.visible_message("[M]'s finger twitches a bit over [src]'s signal button!")
+		return
+
+	proc/deadman_it()
+		set src in usr
+		set name = "Threaten to push the button!"
+		set desc = "BOOOOM!"
+		deadman = 1
+		processing_objects.Add(src)
+		usr.visible_message("\red [usr] moves their finger over [src]'s signal button...")

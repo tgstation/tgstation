@@ -62,6 +62,7 @@
 		update_icon()
 
 	examine()
+		set src in oview(7)
 		..()
 		if(src in usr)
 			usr << "It claims to contain [contents.len ? descriptor : descriptor + "... but it looks empty"]."
