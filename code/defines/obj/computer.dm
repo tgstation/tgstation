@@ -4,7 +4,6 @@
 	density = 1
 	anchored = 1.0
 	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassemble
-	var/emagged = 0
 
 
 /obj/machinery/computer/operating
