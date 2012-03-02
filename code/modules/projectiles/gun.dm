@@ -31,6 +31,7 @@
 	load_into_chamber()
 		return 0
 
+//Removing the lock and the buttons.
 	dropped(mob/user as mob)
 		if(target)
 			target.NotTargeted(src)
@@ -47,6 +48,7 @@
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 
+//Handling lowering yer gun.
 	attack_self()
 		if(target)
 			target.NotTargeted(src)
@@ -54,6 +56,7 @@
 			return 0
 		return 1
 
+//Suiciding.
 	attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 		if (M == user && user.zone_sel.selecting == "mouth" && load_into_chamber() && !mouthshoot)
 			mouthshoot = 1
@@ -84,6 +87,8 @@
 		else
 			return ..()
 
+
+//POWPOW!...  Used to be afterattack.
 	proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params)//TODO: go over this
 		if(istype(user, /mob/living))
 			var/mob/living/M = user
@@ -156,6 +161,8 @@
 		update_icon()
 		return
 
+
+//Aiming at the target mob.
 	proc/Aim(var/mob/M)
 		if(target != M)
 			lock_time = world.time
@@ -169,6 +176,8 @@
 				K << 'TargetOn.ogg'
 			M.Targeted(src)
 
+
+//HE MOVED, SHOOT HIM!
 	proc/TargetActed()
 		var/mob/M = loc
 		if(target == M) return
@@ -182,6 +191,7 @@
 		if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
 		PreFire(A,user,params)
 
+//Compute how to fire.....
 	proc/PreFire(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, params)
 		if(usr.a_intent in list("help","grab","disarm"))
 			//GraphicTrace(usr.x,usr.y,A.x,A.y,usr.z)
@@ -215,6 +225,9 @@
 				usr.dir = dir_to_fire
 		else
 			Fire(A, user)
+
+
+//Yay, math!
 
 #define SIGN(X) ((X<0)?-1:1)
 
@@ -254,6 +267,8 @@ proc/GunTrace(X1,Y1,X2,Y2,Z=1,exc_obj,PX1=16,PY1=16,PX2=16,PY2=16)
 			if(M) return M
 	return 0
 
+
+//Targeting management procs
 mob/var
 	list/targeted_by
 	target_time = -100
@@ -267,16 +282,17 @@ mob/proc
 		targeted_by += I
 		I.target = src
 		//I.lock_time = world.time + 10 //Target has 1 second to realize they're targeted and stop (or target the opponent).
-		src << "\red (Your character is being targeted. They have 1 second to stop any click or move actions. While targeted, they may \
+		src << "((\red <b>Your character is being targeted. They have 1 second to stop any click or move actions.</b> \black While targeted, they may \
 		drag and drop items in or into the map, speak, and click on interface buttons. Clicking on the map, their items \
-		 (other than a weapon to de-target), or moving will result in being fired upon. The aggressor may also fire manually, \
-		 so try not to get on their bad side.)"
+		 (other than a weapon to de-target), or moving will result in being fired upon. \red The aggressor may also fire manually, \
+		 so try not to get on their bad side.))"
 		if(targeted_by.len == 1)
 			spawn(0)
 				target_locked = new /obj/effect/target_locked(src)
 				overlays += target_locked
 				spawn flick("locking",target_locked)
 				var/mob/T = I.loc
+				//Adding the buttons to the controler person
 				if(T)
 					T.item_use_icon = new /obj/screen/gun/item(null)
 					T.gun_move_icon = new /obj/screen/gun/move(null)
@@ -301,6 +317,7 @@ mob/proc
 				M << 'TargetOff.ogg'
 		del(target_locked)
 		targeted_by -= I
+		update_clothing()
 		I.target = null
 		var/mob/T = I.loc
 		if(T && ismob(T))
@@ -334,6 +351,8 @@ mob/proc
 		I.target = null
 		if(!targeted_by.len) del targeted_by*/
 
+
+//Used to overlay the awesome stuff
 /obj/effect
 //	target_locking
 //		icon = 'icons/effects/Targeted.dmi'
@@ -347,6 +366,7 @@ mob/proc
 //		icon = 'Captured.dmi'
 //		layer = 99
 
+//If you move out of range, it isn't going to still stay locked on you any more.
 mob/var
 	target_can_move = 0
 	target_can_run = 0
@@ -364,6 +384,7 @@ mob/Move()
 				//ClearRequest("Aim")
 				G.target.NotTargeted(G)
 mob/verb
+//These are called by the on-screen buttons, adjusting what the victim can and cannot do.
 	AllowTargetMove()
 		set hidden=1
 		spawn(1) target_can_move = !target_can_move
@@ -382,9 +403,9 @@ mob/verb
 			G.lock_time = world.time + 5
 			if(G.target)
 				if(!target_can_move)
-					G.target << "<b>Your character may now walk at the discretion of their targeter.</b>"
+					G.target << "Your character may now <b>walk</b> at the discretion of their targeter."
 				else
-					G.target << "<b>Your character will now be shot if they move.</b>"
+					G.target << "\red <b>Your character will now be shot if they move.</b>"
 	AllowTargetRun()
 		set hidden=1
 		spawn(1) target_can_run = !target_can_run
@@ -398,9 +419,9 @@ mob/verb
 			G.lock_time = world.time + 5
 			if(G.target)
 				if(!target_can_run)
-					G.target << "<b>Your character may now run at the discretion of their targeter.</b>"
+					G.target << "Your character may now <b>run</b> at the discretion of their targeter."
 				else
-					G.target << "<b>Your character will now be shot if they run.</b>"
+					G.target << "\red <b>Your character will now be shot if they run.</b>"
 	AllowTargetClick()
 		set hidden=1
 		spawn(1) target_can_click = !target_can_click
@@ -414,6 +435,6 @@ mob/verb
 			G.lock_time = world.time + 5
 			if(G.target)
 				if(!target_can_click)
-					G.target << "<b>Your character may now use items at the discretion of their targeter.</b>"
+					G.target << "Your character may now <b>use items</b> at the discretion of their targeter."
 				else
-					G.target << "<b>Your character will now be shot if they use items.</b>"
+					G.target << "\red <b>Your character will now be shot if they use items.</b>"
