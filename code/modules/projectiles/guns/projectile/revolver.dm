@@ -18,7 +18,7 @@
 
 	verb/rename_gun()
 		set name = "Name Gun"
-		set desc = "Click to rename your gun. If you're the detective."
+		set desc = "Click to rename your gun."
 
 		var/mob/M = usr
 		if(!M.mind)	return 0
