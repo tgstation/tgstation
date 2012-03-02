@@ -149,6 +149,8 @@
 		return
 
 	process()
+		if(!deadman)
+			processing_objects.Remove(src)
 		var/mob/M = src.loc
 		if(!M || !ismob(M))
 			if(prob(5))
@@ -159,7 +161,7 @@
 			M.visible_message("[M]'s finger twitches a bit over [src]'s signal button!")
 		return
 
-	proc/deadman_it()
+	verb/deadman_it()
 		set src in usr
 		set name = "Threaten to push the button!"
 		set desc = "BOOOOM!"
