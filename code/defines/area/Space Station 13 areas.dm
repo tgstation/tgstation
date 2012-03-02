@@ -986,6 +986,10 @@ proc/process_ghost_teleport_locs()
 	name = "Research Lab"
 	icon_state = "researchlab"
 
+/area/toxins/rdoffice
+	name = "Research Director's Office"
+	icon_state = "head_quarters"
+
 /area/toxins/xenobiology
 	name = "Xenobiology Lab"
 	icon_state = "xenolab"
