@@ -52,6 +52,13 @@
 	icon_state = "marisa"
 	item_state = "marisarobe"
 
+/obj/item/clothing/suit/wizrobe/magusblue
+	name = "Magus Robe"
+	desc = "A set of armoured robes that seem to radiate a dark power"
+	icon_state = "magusblue"
+	item_state = "magusblue"
+
+
 
 /obj/item/clothing/suit/wizrobe/fake
 	name = "wizard robe"

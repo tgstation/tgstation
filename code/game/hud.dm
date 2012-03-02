@@ -44,6 +44,11 @@
 #define ui_inv3 "SOUTH-1,3"
 
 
+#define ui_gun1 "WEST,NORTH"
+#define ui_gun2 "WEST+1,NORTH"
+#define ui_gun3 "WEST+2,NORTH"
+
+
 
 obj/hud/New(var/type = 0)
 	instantiate(type)

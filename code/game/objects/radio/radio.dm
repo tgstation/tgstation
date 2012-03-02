@@ -128,7 +128,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		if(!src.loc)
 			on = 0
-		var/area/A = src.loc.loc
+		var/area/A = get_area(src)
 		if(!A || !isarea(A) || !A.master)
 			on = 0
 		else
@@ -184,6 +184,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			var/obj/item/device/radio/R = src
 			R.loc = T
 			T.loc = usr
+			T.layer = R.layer
 			R.layer = 0
 			if (usr.client)
 				usr.client.screen -= R
@@ -194,7 +195,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				usr.u_equip(R)
 				usr.l_hand = T
 			R.loc = T
-			T.layer = 20
 			T.attack_self(usr)
 			return
 	else if (href_list["talk"])

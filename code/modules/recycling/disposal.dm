@@ -95,7 +95,7 @@
 			if(ismob(G.affecting))
 				var/mob/GM = G.affecting
 				for (var/mob/V in viewers(usr))
-					V.show_message("[usr] starts putting [GM.name] into the disposal.", 3)
+					V.show_message("[usr] starts putting [GM] into the disposal.", 3)
 				if(do_after(usr, 20))
 					if (GM.client)
 						GM.client.perspective = EYE_PERSPECTIVE
@@ -163,7 +163,7 @@
 			timeleft = 5
 			update()
 			return
-		if(istype(T,/obj/effect/bigDelivery))
+		if(istype(T,/obj/structure/bigDelivery))
 			if (T.anchored || get_dist(user, src) > 1 || get_dist(src,T) > 2 )
 				return
 
@@ -581,8 +581,8 @@
 				if(H.mutations & FAT)		// is a human and fat?
 					has_fat_guy = 1			// set flag on holder
 			*/
-			if(istype(AM, /obj/effect/bigDelivery))
-				var/obj/effect/bigDelivery/T = AM
+			if(istype(AM, /obj/structure/bigDelivery))
+				var/obj/structure/bigDelivery/T = AM
 				src.destinationTag = T.sortTag
 			else if(istype(AM, /obj/item/smallDelivery))
 				var/obj/item/smallDelivery/T = AM

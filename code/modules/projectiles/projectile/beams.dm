@@ -1,5 +1,5 @@
 /obj/item/projectile/beam
-	name = "laser"
+	name = "\improper Laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 20
@@ -49,19 +49,19 @@
 			del(src)
 
 /obj/item/projectile/beam/heavylaser
-	name = "heavy laser"
+	name = "\improper Heavy Laser"
 	icon_state = "heavylaser"
 	damage = 40
 
 
 /obj/item/projectile/beam/pulse
-	name = "pulse"
+	name = "\improper Pulse"
 	icon_state = "u_laser"
 	damage = 50
 
 
 /obj/item/projectile/beam/deathlaser
-	name = "death laser"
+	name = "\improper Death Laser"
 	icon_state = "heavylaser"
 	damage = 60
 

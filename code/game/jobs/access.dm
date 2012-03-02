@@ -504,6 +504,12 @@
 	if(jobName in get_all_jobs())
 		return jobName
 
+	// hack for alt titles
+	if(istype(loc, /mob))
+		var/mob/M = loc
+		if(M.mind.role_alt_title == jobName && M.mind.assigned_role in get_all_jobs())
+			return M.mind.assigned_role
+
 	var/centcom = 0
 	for(var/i = 1, i <= accesses.len, i++)
 		if(accesses[i] > 100)

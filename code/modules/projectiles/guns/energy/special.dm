@@ -1,5 +1,5 @@
 /obj/item/weapon/gun/energy/ionrifle
-	name = "ion rifle"
+	name = "\improper  Ion Rifle"
 	desc = "A man portable anti-armor weapon designed to disable mechanical threats"
 	icon_state = "ionrifle"
 	fire_sound = 'Laser.ogg'
@@ -12,7 +12,7 @@
 
 
 /obj/item/weapon/gun/energy/decloner
-	name = "biological demolecularisor"
+	name = "\improper Biological Demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
 	icon_state = "decloner"
 	fire_sound = 'pulse3.ogg'
@@ -21,13 +21,13 @@
 	projectile_type = "/obj/item/projectile/energy/declone"
 
 obj/item/weapon/gun/energy/staff
-	name = "staff of change"
+	name = "\improper Staff of Change"
 	desc = "an artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself"
 	icon = 'gun.dmi'
 	icon_state = "staffofchange"
 	item_state = "staffofchange"
 	fire_sound = 'emitter.ogg'
-	flags =  FPRINT | TABLEPASS | CONDUCT | ONBACK
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
 	w_class = 4.0
 	charge_cost = 200
 	projectile_type = "/obj/item/projectile/change"

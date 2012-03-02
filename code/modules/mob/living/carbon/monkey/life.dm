@@ -94,7 +94,6 @@
 		if(prob(1))
 			emote(pick("scratch","jump","roll","tail"))
 
-
 /mob/living/carbon/monkey
 	proc
 

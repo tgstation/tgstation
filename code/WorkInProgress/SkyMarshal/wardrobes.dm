@@ -62,6 +62,7 @@
 		update_icon()
 
 	examine()
+		set src in oview(7)
 		..()
 		if(src in usr)
 			usr << "It claims to contain [contents.len ? descriptor : descriptor + "... but it looks empty"]."
@@ -415,6 +416,7 @@
 		new /obj/item/weapon/storage/box(BPK)
 		new /obj/item/weapon/fcardholder(src)
 		new /obj/item/weapon/clipboard(src)
+		new /obj/item/weapon/notebook(src)
 		new /obj/item/device/detective_scanner(src)
 		new /obj/item/policetaperoll(src)
 		new /obj/item/weapon/storage/box/evidence(src)

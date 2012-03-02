@@ -1,5 +1,5 @@
 /obj/item/projectile/change
-	name = "bolt of change"
+	name = "\improper Bolt of Change"
 	icon_state = "ice_1"
 	damage = 0
 	damage_type = BURN
@@ -19,10 +19,12 @@
 
 
 /obj/item/projectile/change/proc/wabbajack (mob/M as mob in world)
-	if(istype(M, /mob/living))
+	if(istype(M, /mob/living) && M.stat != 2)
 		for(var/obj/item/W in M)
+			if (istype(W, /obj/item/weapon/implant)||istype(W, /obj/item/weapon/cell)||istype(W, /obj/item/device/mmi))
+				del (W)
 			M.drop_from_slot(W)
-		var/randomize = pick("monkey","robot","metroid","alien")
+		var/randomize = pick("monkey","robot","metroid","alien","human")
 		switch(randomize)
 			if("monkey")
 				if (M.monkeyizing)
@@ -33,13 +35,13 @@
 				M.icon = null
 				M.invisibility = 101
 				var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( M.loc )
-
 				O.name = "monkey"
 				if (M.client)
 					M.client.mob = O
 				if(M.mind)
 					M.mind.transfer_to(O)
 				O.a_intent = "hurt"
+				O.universal_speak = 1
 				O << "<B>You are now a monkey.</B>"
 				del(M)
 				return O
@@ -66,7 +68,6 @@
 				O.invisibility = 0
 				O.name = "Cyborg"
 				O.real_name = "Cyborg"
-				O.lastKnownIP = M.client.address ? M.client.address : null
 				if (M.mind)
 					M.mind.transfer_to(O)
 					if (M.mind.assigned_role == "Cyborg")
@@ -111,6 +112,7 @@
 
 					new_metroid.a_intent = "hurt"
 					new_metroid << "<B>You are now an adult Metroid.</B>"
+					new_metroid.universal_speak = 1
 					del(M)
 					return new_metroid
 				else
@@ -120,6 +122,7 @@
 					if(M.mind)
 						M.mind.transfer_to(new_metroid)
 					new_metroid.a_intent = "hurt"
+					new_metroid.universal_speak = 1
 					new_metroid << "<B>You are now a baby Metroid.</B>"
 					del(M)
 					return new_metroid
@@ -145,8 +148,43 @@
 				if(M.mind)
 					M.mind.transfer_to(new_xeno)
 				new_xeno.a_intent = "hurt"
+				new_xeno.universal_speak = 1
 				new_xeno << "<B>You are now an alien.</B>"
 				del(M)
 				return new_xeno
+			if("human")
+				if (M.monkeyizing)
+					return
+				M.update_clothing()
+				M.monkeyizing = 1
+				M.canmove = 0
+				M.icon = null
+				M.invisibility = 101
+				var/mob/living/carbon/human/O = new /mob/living/carbon/human( M.loc )
+
+				var/first = pick(first_names_male)
+				var/last = pick(last_names)
+				O.name = "[first] [last]"
+				O.real_name = "[first] [last]"
+				var/race = pick("lizard","golem","metroid","plant","normal")
+				switch(race)
+					if("lizard")
+						O.mutantrace = "lizard"
+					if("golem")
+						O.mutantrace = "golem"
+					if("metroid")
+						O.mutantrace = "metroid"
+					if("plant")
+						O.mutantrace = "plant"
+					if("normal")
+						O.mutantrace = ""
+				if (M.client)
+					M.client.mob = O
+				if(M.mind)
+					M.mind.transfer_to(O)
+				O.a_intent = "hurt"
+				O << "<B>You are now a human.</B>"
+				del(M)
+				return O
 		return
 

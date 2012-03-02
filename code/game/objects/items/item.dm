@@ -105,6 +105,7 @@
 		var/turf/Z = get_turf(src)
 		message_admins("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
 		log_game("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
+		blood_DNA = list()
 		return
 	usr << text("This is a []\icon[][]. It is a [] item.", !src.blood_DNA.len ? "" : "bloody ",src, src.name, t)
 	if(src.desc)
@@ -118,6 +119,14 @@
 			if (M.s_active == src.loc)
 				if (M.client)
 					M.client.screen -= src
+		if(istype(src.loc, /obj/item/weapon/storage/backpack/santabag))
+			if(src.loc.contents.len < 5)
+				src.loc.icon_state = "giftbag0"
+			else if(src.loc.contents.len >= 5 && src.loc.contents.len < 15)
+				src.loc.icon_state = "giftbag1"
+			else if(src.loc.contents.len >= 15)
+				src.loc.icon_state = "giftbag2"
+
 	src.throwing = 0
 	if (src.loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
@@ -200,30 +209,10 @@
 	user.update_clothing()
 	return
 
-/*
+
 /obj/item/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	if (istype(W, /obj/item/weapon/packageWrap))
-		var/location = get_turf(src.loc)
-		if(istype(src,/obj/item/weapon/storage) && istype(src.loc, /mob))	//Put it into the bag
-			return
-		if(istype(src.loc,/obj/item/weapon/storage))	//Taking stuff out of storage duplicates it.
-			var/obj/item/weapon/storage/U = src.loc
-			user.client.screen -= src	//Fixed!
-			U.contents.Remove(src)
-		if(istype(src.loc,/obj/item/clothing/suit/storage/))
-			var/obj/item/clothing/suit/storage/X = src.loc
-			user.client.screen -= src
-			X.contents.Remove(src)
-		if(src in user)
-			user.remove_from_mob(src)
-		var/obj/item/weapon/packageWrap/O = W
-		if (O.amount > 1)
-			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(location)
-			P.wrapped = src
-			src.loc = P
-			O.amount -= 1*/
 
 /obj/item/attack_self(mob/user as mob)
 	..()

@@ -277,6 +277,13 @@
 		back = null
 	else if (W == wear_mask)
 		wear_mask = null
+	if(istype(W,/obj/item/weapon/gun))
+		var/obj/item/weapon/gun/gun = W
+		if(gun.target)
+			gun.target.NotTargeted(gun)
+		del(item_use_icon)
+		del(gun_move_icon)
+		del(gun_run_icon)
 	update_clothing()
 	return
 
@@ -786,6 +793,14 @@
 		flick("gibbed-h", animation)
 	else if(ismonkey(src))
 		flick("gibbed-m", animation)
+	else if(ismetroid(src))
+		flick("gibbed-m", animation)
+	else if(iscrab(src))
+		flick("gibbed-m", animation)
+	else if(iscorgi(src))
+		flick("gibbed-m", animation)
+	else if(iscat(src))
+		flick("gibbed-m", animation)   //New-has monkey gib effect versus robogib
 	else if(isalien(src))
 		flick("gibbed-a", animation)
 	else
@@ -799,6 +814,14 @@
 				xgibs(loc, viruses)
 			else
 				gibs(loc, viruses, dna)
+
+/*		else if(key)
+			if(istype(src, /mob/living/simple_animals))     //Should gib all simple_animals like a monkey
+				gibs(loc, viruses)
+			else if (istype(src, /mob/living/simple_animals))
+				gibs(loc, viruses)
+Currently doesn't work, but should be useful later or at least as a template
+*/
 
 		else
 			if(istype(src, /mob/living/silicon))

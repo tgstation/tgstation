@@ -108,7 +108,7 @@ TABLE AND RACK OBJECT INTERATIONS
 /obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
 
-	if(istype(mover) && (mover.checkpass(PASSTABLE) || mover.flags & TABLEPASS)) //WTF do things hit tables like that?  Jeez.
+	if(istype(mover) && (mover.checkpass(PASSTABLE) || (mover.flags & TABLEPASS) || mover.throwing)) //WTF do things hit tables like that?  Jeez.
 		return 1
 	else
 		return 0
@@ -234,18 +234,18 @@ TABLE AND RACK OBJECT INTERATIONS
 				W:welding = 2
 				user << "\blue Now weakening the reinforced table"
 				playsound(src.loc, 'Welder.ogg', 50, 1)
-				sleep(50)
-				user << "\blue Table weakened"
-				src.status = 1
-				W:welding = 1
+				if (do_after(user, 50))
+					user << "\blue Table weakened"
+					src.status = 1
+					W:welding = 1
 			else
 				W:welding = 2
 				user << "\blue Now strengthening the reinforced table"
 				playsound(src.loc, 'Welder.ogg', 50, 1)
-				sleep(50)
-				user << "\blue Table strengthened"
-				src.status = 2
-				W:welding = 1
+				if (do_after(user, 50))
+					user << "\blue Table strengthened"
+					src.status = 2
+					W:welding = 1
 			return
 		if(isrobot(user))
 			return
@@ -257,10 +257,10 @@ TABLE AND RACK OBJECT INTERATIONS
 		if(src.status == 1)
 			user << "\blue Now disassembling the reinforced table"
 			playsound(src.loc, 'Ratchet.ogg', 50, 1)
-			sleep(50)
-			new /obj/item/weapon/table_parts/reinforced( src.loc )
-			playsound(src.loc, 'Deconstruct.ogg', 50, 1)
-			del(src)
+			if (do_after(user, 50))
+				new /obj/item/weapon/table_parts/reinforced( src.loc )
+				playsound(src.loc, 'Deconstruct.ogg', 50, 1)
+				del(src)
 			return
 	if(isrobot(user))
 		return
@@ -309,7 +309,7 @@ TABLE AND RACK OBJECT INTERATIONS
 	if(air_group || (height==0)) return 1
 	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
 		return 1
-	if(istype(mover) && (mover.checkpass(PASSTABLE) || mover.flags & TABLEPASS))
+	if(istype(mover) && (mover.checkpass(PASSTABLE) || mover.flags & TABLEPASS || mover.throwing))
 		return 1
 	else
 		return 0

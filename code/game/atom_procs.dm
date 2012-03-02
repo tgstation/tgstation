@@ -147,6 +147,9 @@
 /atom/proc/add_blood(mob/living/carbon/human/M as mob)
 	if (!( istype(M, /mob/living/carbon/human) ))
 		return 0
+	if (!istype(M.dna, /datum/dna))
+		M.dna = new /datum/dna(null)
+	M.check_dna()
 	if (!( src.flags ) & 256)
 		return
 	if(!blood_DNA)
@@ -178,6 +181,14 @@
 			if(objsonturf)
 				for(var/i=1, i<=objsonturf.len, i++)
 					if(istype(objsonturf[i],/obj/effect/decal/cleanable/blood))
+						var/obj/effect/decal/cleanable/blood/this = objsonturf[i]
+						this.blood_DNA.len++
+						this.blood_DNA[this.blood_DNA.len] = list(M.dna.unique_enzymes, M.dna.b_type)
+						this.virus2 += M.virus2
+						for(var/datum/disease/D in M.viruses)
+							var/datum/disease/newDisease = new D.type
+							this.viruses += newDisease
+							newDisease.holder = this
 						return
 			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source2)
 			var/list/blood_DNA_temp[1]
@@ -203,7 +214,7 @@
 	else
 		var/list/blood_DNA_temp[1]
 		blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.dna.b_type)
-		src.blood_DNA =  blood_DNA_temp
+		src.blood_DNA = blood_DNA_temp
 	return
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M as mob, var/toxvomit = 0)
@@ -234,6 +245,7 @@
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source2 = src
 			var/obj/effect/decal/cleanable/xenoblood/this = new /obj/effect/decal/cleanable/xenoblood(source2)
+			this.blood_DNA = list(list("UNKNOWN BLOOD","X*"))
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
 				this.viruses += newDisease
@@ -320,6 +332,8 @@
 
 /atom/Click(location,control,params)
 	//world << "atom.Click() on [src] by [usr] : src.type is [src.type]"
+	if(!istype(src,/obj/item/weapon/gun))
+		usr.last_target_click = world.time
 	var/list/pram = params2list(params)
 	if((pram["alt"] != null && pram["ctrl"] != null && pram["left"] != null) && istype(src,/atom/movable))
 		src:pull()

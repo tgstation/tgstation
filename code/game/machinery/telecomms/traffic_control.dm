@@ -160,6 +160,9 @@
 						screen = 0
 
 				if("editcode")
+					if(editingcode == usr) return
+					if(usr in viewingcode) return
+
 					if(!editingcode)
 						editingcode = usr
 						winshow(editingcode, "Telecomms IDE", 1) // show the IDE
