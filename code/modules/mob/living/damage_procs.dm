@@ -73,3 +73,7 @@
 	if(eyeblur)		apply_effect(eyeblur, EYE_BLUR, blocked)
 	if(drowsy)		apply_effect(drowsy, DROWSY, blocked)
 	return 1
+
+
+/mob/living/proc/react_to_attack(mob/M)
+	return
