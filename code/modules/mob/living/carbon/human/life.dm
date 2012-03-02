@@ -122,9 +122,9 @@
 
 		handle_disabilities()
 			if(hallucination > 0)
-				//if(hallucinations.len == 0 && hallucination >= 20 && health > 0)
-				//	if(prob(2))
-				//		fake_attack(src)
+				if(hallucinations.len == 0 && hallucination >= 20 && health > 0)
+					if(prob(5))
+						fake_attack(src)
 				//for(var/atom/a in hallucinations)
 				//	a.hallucinate(src)
 				if(!handling_hal && hallucination > 20)

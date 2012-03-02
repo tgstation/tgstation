@@ -1476,7 +1476,7 @@ datum
 
 			on_mob_life(var/mob/M)
 				if(!M) M = holder.my_atom
-				M:hallucination += 5
+				M:hallucination += 10
 				..()
 				return
 

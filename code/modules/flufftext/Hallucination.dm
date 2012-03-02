@@ -82,27 +82,28 @@ mob/living/carbon/proc/handle_hallucinations()
 				//Flashes of danger
 				//src << "Danger Flash"
 				if(!halimage)
-					var/possible_points = list()
+					var/list/possible_points = list()
 					for(var/turf/simulated/floor/F in view(src,world.view))
 						possible_points += F
-					var/turf/simulated/floor/target = pick(possible_points)
+					if(possible_points.len)
+						var/turf/simulated/floor/target = pick(possible_points)
 
-					switch(rand(1,3))
-						if(1)
-							//src << "Space"
-							halimage = image('space.dmi',target,"[rand(1,25)]",TURF_LAYER)
-						if(2)
-							//src << "Fire"
-							halimage = image('fire.dmi',target,"1",TURF_LAYER)
-						if(3)
-							//src << "C4"
-							halimage = image('syndieweapons.dmi',target,"c4small_1",OBJ_LAYER+0.01)
+						switch(rand(1,3))
+							if(1)
+								//src << "Space"
+								halimage = image('space.dmi',target,"[rand(1,25)]",TURF_LAYER)
+							if(2)
+								//src << "Fire"
+								halimage = image('fire.dmi',target,"1",TURF_LAYER)
+							if(3)
+								//src << "C4"
+								halimage = image('syndieweapons.dmi',target,"c4small_1",OBJ_LAYER+0.01)
 
 
-					if(client) client.images += halimage
-					spawn(rand(10,50)) //Only seen for a brief moment.
-						if(client) client.images -= halimage
-						halimage = null
+						if(client) client.images += halimage
+						spawn(rand(10,50)) //Only seen for a brief moment.
+							if(client) client.images -= halimage
+							halimage = null
 
 
 			if(41 to 65)
@@ -143,24 +144,25 @@ mob/living/carbon/proc/handle_hallucinations()
 				//Flashes of danger
 				//src << "Danger Flash"
 				if(!halbody)
-					var/possible_points = list()
+					var/list/possible_points = list()
 					for(var/turf/simulated/floor/F in view(src,world.view))
 						possible_points += F
-					var/turf/simulated/floor/target = pick(possible_points)
-					switch(rand(1,4))
-						if(1)
-							halbody = image('human.dmi',target,"husk_l",TURF_LAYER)
-						if(2,3)
-							halbody = image('human.dmi',target,"husk_s",TURF_LAYER)
-						if(4)
-							halbody = image('alien.dmi',target,"alienother",TURF_LAYER)
-//						if(5)
-//							halbody = image('xcomalien.dmi',target,"chryssalid",TURF_LAYER)
+					if(possible_points.len)
+						var/turf/simulated/floor/target = pick(possible_points)
+						switch(rand(1,4))
+							if(1)
+								halbody = image('human.dmi',target,"husk_l",TURF_LAYER)
+							if(2,3)
+								halbody = image('human.dmi',target,"husk_s",TURF_LAYER)
+							if(4)
+								halbody = image('alien.dmi',target,"alienother",TURF_LAYER)
+	//						if(5)
+	//							halbody = image('xcomalien.dmi',target,"chryssalid",TURF_LAYER)
 
-					if(client) client.images += halbody
-					spawn(rand(50,80)) //Only seen for a brief moment.
-						if(client) client.images -= halbody
-						halbody = null
+						if(client) client.images += halbody
+						spawn(rand(50,80)) //Only seen for a brief moment.
+							if(client) client.images -= halbody
+							halbody = null
 			if(71 to 75)
 				//Fake death
 //				src.sleeping_willingly = 1
@@ -211,7 +213,7 @@ proc/check_panel(mob/M)
 	if (istype(M, /mob/living/carbon/human) || istype(M, /mob/living/silicon/ai))
 		if(M.hallucination < 15)
 			return 1
-	return 0
+	return 0*/
 
 /obj/fake_attacker
 	icon = null
@@ -333,11 +335,10 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	/obj/item/weapon/cartridge/syndicate, /obj/item/clothing/under/chameleon,\
 	/obj/item/clothing/shoes/syndigaloshes, /obj/item/weapon/card/id/syndicate,\
 	/obj/item/clothing/mask/gas/voice, /obj/item/clothing/glasses/thermal,\
-	/obj/item/device/chameleon, /obj/item/weapon/card/emag, /obj/item/device/hacktool,\
+	/obj/item/device/chameleon, /obj/item/weapon/card/emag,\
 	/obj/item/weapon/storage/toolbox/syndicate, /obj/item/weapon/aiModule,\
 	/obj/item/device/radio/headset/traitor,	/obj/item/weapon/plastique,\
-	/obj/item/weapon/syndie/c4explosive, /obj/item/device/powersink,\
-	/obj/machinery/singularity_beacon/syndicate, /obj/item/weapon/storage/syndie_kit,\
+	/obj/item/device/powersink, /obj/item/weapon/storage/syndie_kit,\
 	/obj/item/toy/syndicateballoon, /obj/item/weapon/gun/energy/laser/captain,\
 	/obj/item/weapon/hand_tele, /obj/item/weapon/rcd, /obj/item/weapon/tank/jetpack,\
 	/obj/item/clothing/under/rank/captain, /obj/item/device/aicard,\
@@ -400,4 +401,4 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	target << F.up
 	*/
 
-	F.updateimage()*/
+	F.updateimage()
