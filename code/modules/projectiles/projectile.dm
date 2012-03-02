@@ -10,7 +10,7 @@
 */
 
 /obj/item/projectile
-	name = "projectile"
+	name = "\improper Projectile"
 	icon = 'projectiles.dmi'
 	icon_state = "bullet"
 	density = 1
@@ -70,7 +70,7 @@
 				return // nope.avi
 
 			if(!silenced)
-				visible_message("\red [A.name] is hit by the [src.name]!")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+				visible_message("\red [A] is hit by the [src]!")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 			else
 				M << "\red You've been shot!"
 			if(istype(firer, /mob))
