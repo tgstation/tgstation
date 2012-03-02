@@ -914,6 +914,8 @@ About the new airlock wires panel:
 			if(src.shock(user, 75))
 				return
 
+	if (istype(C, /obj/item/device/detective_scanner))
+		return
 	src.add_fingerprint(user)
 	if((istype(C, /obj/item/weapon/weldingtool) && !( src.operating ) && src.density))
 		var/obj/item/weapon/weldingtool/W = C
