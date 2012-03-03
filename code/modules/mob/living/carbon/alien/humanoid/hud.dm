@@ -291,6 +291,8 @@
 	mymob.rest.name = "rest"
 	mymob.rest.screen_loc = ui_rest
 
+	mymob.gun_setting_icon = new /obj/screen/gun/mode(null)
+
 
 	mymob.zone_sel = new /obj/screen/zone_sel( null )
 	mymob.zone_sel.overlays = null
@@ -298,6 +300,6 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.toxin, mymob.fire, mymob.hands, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.toxin, mymob.fire, mymob.hands, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, mymob.rest, mymob.sleep, mymob.gun_setting_icon) //, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 

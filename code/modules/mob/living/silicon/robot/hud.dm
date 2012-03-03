@@ -242,9 +242,11 @@
 	mymob.zone_sel.overlays = null
 	mymob.zone_sel.overlays += image("icon" = 'zone_sel.dmi', "icon_state" = text("[]", mymob.zone_sel.selecting))
 
+	mymob.gun_setting_icon = new /obj/screen/gun/mode(null)
+
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.fire, mymob.hands, mymob.healths, mymob:cells, mymob.pullin, mymob.blind, mymob.flash, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.fire, mymob.hands, mymob.healths, mymob:cells, mymob.pullin, mymob.blind, mymob.flash, mymob.rest, mymob.sleep, mymob.gun_setting_icon) //, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 
 	return

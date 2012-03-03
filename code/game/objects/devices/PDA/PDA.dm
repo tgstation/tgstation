@@ -333,6 +333,7 @@
 /obj/item/device/pda/Topic(href, href_list)
 	..()
 	var/mob/living/U = usr
+	U.last_target_click = world.time
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 	if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ) )
 		if ( !(U.stat || U.restrained()) )
@@ -382,6 +383,8 @@
 					mode = 2
 				if("21")//Read messeges
 					mode = 21
+				if("41")//Read messeges
+					mode = 41
 				if("3")//Atmos scan
 					mode = 3
 				if("4")//Redirects to hub
