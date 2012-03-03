@@ -269,13 +269,13 @@
 	item_state = "schoolgirl"
 	color = "schoolgirl"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-
+/*
 /obj/item/clothing/under/gimmick/rank/police
 	name = "police uniform"
 	desc = "Move along, nothing to see here."
 	icon_state = "police"
 	item_state = "b_suit"
-	color = "police"
+	color = "police"	*/	//No Sprite - Shiftyeyesshady
 
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
@@ -570,5 +570,5 @@ obj/item/clothing/suit/justice
 	desc = "Ave, Imperator, morituri te salutant."
 	icon_state = "gladiator"
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
-	item_state="gladiator"
+	item_state = "gladiator"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
