@@ -116,6 +116,7 @@ datum/preferences
 		disabilities = 0
 
 		used_skillpoints = 0
+		skill_specialization = null
 		list/skills = list() // skills can range from 0 to 3
 
 	New()
@@ -129,6 +130,22 @@ datum/preferences
 			if(!skills.Find(S.ID) || forced)
 				skills[S.ID] = SKILL_NONE
 
+	proc/CalculateSkillPoints()
+		used_skillpoints = 0
+		for(var/V in SKILLS) for(var/datum/skill/S in SKILLS[V])
+			var/multiplier = 2
+			if(skill_specialization == S.field || S.field == "Misc")
+				multiplier = 1
+			switch(skills[S.ID])
+				if(SKILL_NONE)
+					used_skillpoints += 0 * multiplier
+				if(SKILL_BASIC)
+					used_skillpoints += 1 * multiplier
+				if(SKILL_ADEPT)
+					used_skillpoints += 3 * multiplier
+				if(SKILL_EXPERT)
+					used_skillpoints += 8 * multiplier
+
 	proc/GetSkillClass(points)
 		// skill classes describe how your character compares in total points
 		switch(points)
@@ -136,19 +153,19 @@ datum/preferences
 				return "Unconfigured"
 			if(1 to 3)
 				return "Talentless"
-			if(4 to 6)
+			if(3 to 6)
 				return "Below Average"
-			if(7 to 9)
+			if(7 to 10)
 				return "Average"
-			if(10 to 12)
+			if(11 to 12)
 				return "Talented"
 			if(13 to 15)
 				return "Extremely Talented"
 			if(16 to 18)
 				return "Genius"
-			if(19 to 21)
+			if(19 to 20)
 				return "True Genius"
-			if(22 to 1000)
+			if(21 to 1000)
 				return "God"
 
 	proc/SetSkills(mob/user)
@@ -165,7 +182,8 @@ datum/preferences
 		HTML += "<a href=\"byond://?src=\ref[user];skills=1;preferences=1;preconfigured=1;\">Use preconfigured skillset</a><br>"
 		HTML += "<table>"
 		for(var/V in SKILLS)
-			HTML += "<tr><th colspan = 5><b>[V]</b></th></tr>"
+			HTML += "<tr><th colspan = 5><b><a href='byond://?src=\ref[user];preferences=1;skills=1;setspecialization=[V]'><font color=[(skill_specialization == V) ? "red" : "black"]>[V]</font></a></b>"
+			HTML += "</th></tr>"
 			for(var/datum/skill/S in SKILLS[V])
 				var/level = skills[S.ID]
 				HTML += "<tr style='text-align:left;'>"
@@ -507,9 +525,8 @@ datum/preferences
 			else if(link_tags["setskill"])
 				var/datum/skill/S = locate(link_tags["setskill"])
 				var/value = text2num(link_tags["newvalue"])
-				var/current_value = skills[S.ID]
-				used_skillpoints += value - current_value
 				skills[S.ID] = value
+				CalculateSkillPoints()
 				SetSkills(user)
 			else if(link_tags["preconfigured"])
 				var/selected = input(user, "Select a skillset", "Skillset") as null|anything in SKILL_PRE
@@ -517,10 +534,16 @@ datum/preferences
 
 				ZeroSkills(1)
 				for(var/V in SKILL_PRE[selected])
+					if(V == "field")
+						skill_specialization = SKILL_PRE[selected]["field"]
+						continue
 					skills[V] = SKILL_PRE[selected][V]
-				used_skillpoints = 0
-				for(var/V in skills) used_skillpoints += skills[V]
+				CalculateSkillPoints()
 
+				SetSkills(user)
+			else if(link_tags["setspecialization"])
+				skill_specialization = link_tags["setspecialization"]
+				CalculateSkillPoints()
 				SetSkills(user)
 			else
 				SetSkills(user)
@@ -869,6 +892,7 @@ datum/preferences
 		character.underwear = underwear == 1 ? pick(1,2,3,4,5) : 0
 
 		character.used_skillpoints = used_skillpoints
+		character.skill_specialization = skill_specialization
 		character.skills = skills
 
 		character.update_face()
