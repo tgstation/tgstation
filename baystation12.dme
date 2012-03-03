@@ -156,6 +156,7 @@
 #define FILE_DIR "code/WorkInProgress/Apples"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn/Tajara"
+#define FILE_DIR "code/WorkInProgress/Chinsky"
 #define FILE_DIR "code/WorkInProgress/mapload"
 #define FILE_DIR "code/WorkInProgress/Mini"
 #define FILE_DIR "code/WorkInProgress/Mloc"
@@ -536,7 +537,7 @@
 #include "code\game\machinery\computer\id.dm"
 #include "code\game\machinery\computer\lockdown.dm"
 #include "code\game\machinery\computer\medical.dm"
-#include "code\game\machinery\computer\operating.dm"
+#include "code\game\machinery\computer\Operating.dm"
 #include "code\game\machinery\computer\power.dm"
 #include "code\game\machinery\computer\robot.dm"
 #include "code\game\machinery\computer\security.dm"
@@ -1075,6 +1076,7 @@
 #include "code\WorkInProgress\Cael_Aislinn\Tajara\examine.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Tajara\tajara_transformation.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Tajara\tajaran.dm"
+#include "code\WorkInProgress\Chinsky\ashtray.dm"
 #include "code\WorkInProgress\mapload\dmm_suite.dm"
 #include "code\WorkInProgress\mapload\reader.dm"
 #include "code\WorkInProgress\Mini\atmos_control.dm"
@@ -1112,4 +1114,3 @@
 #include "interface\skin.dmf"
 #include "maps\tgstation.2.0.8.dmm"
 // END_INCLUDE
-
