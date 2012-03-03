@@ -47,6 +47,8 @@
 		if(!interpreter)
 			return
 
+		interpreter.container = src
+
 		interpreter.SetVar("PI"		, 	3.141592653)	// value of pi
 		interpreter.SetVar("E" 		, 	2.718281828)	// value of e
 		interpreter.SetVar("SQURT2" , 	1.414213562)	// value of the square root of 2
@@ -137,7 +139,7 @@
 					@param container: the list or container to measure
 
 		*/
-		interpreter.SetProc("length", /proc/smartfind)
+		interpreter.SetProc("length", /proc/smartlength)
 
 		/* -- Clone functions, carried from default BYOND procs --- */
 

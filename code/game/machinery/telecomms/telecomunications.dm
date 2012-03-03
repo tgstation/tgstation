@@ -403,7 +403,9 @@
 				log.parameters["message"] = signal.data["message"]
 				log.parameters["name"] = signal.data["name"]
 				log.parameters["realname"] = signal.data["realname"]
-				log.parameters["uspeech"] = M.universal_speak
+
+				if(!istype(M, /mob/new_player))
+					log.parameters["uspeech"] = M.universal_speak
 
 				// If the signal is still compressed, make the log entry gibberish
 				if(signal.data["compression"] > 0)
@@ -453,9 +455,12 @@
 	proc/add_entry(var/content, var/input)
 		var/datum/comm_log_entry/log = new
 		var/identifier = num2text( rand(-1000,1000) + world.time )
-		log.name = "data packet ([md5(identifier)])"
+		log.name = "[input] ([md5(identifier)])"
 		log.input_type = input
 		log.parameters["message"] = content
+		log_entries.Add(log)
+		update_logs()
+
 
 
 

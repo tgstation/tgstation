@@ -122,3 +122,7 @@
 	DivisionByZero
 		name="DivideByZeroError"
 		message="Division by zero attempted."
+
+	MaxCPU
+		name="MaxComputationalUse"
+		message="Maximum amount of computational cycles reached (>= 1000)."

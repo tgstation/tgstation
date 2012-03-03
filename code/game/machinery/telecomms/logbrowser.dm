@@ -58,10 +58,12 @@
 				for(var/datum/comm_log_entry/C in SelectedServer.log_entries)
 					i++
 
-					dat += "<li><font color = #008F00>[C.name]</font color>  <font color = #FF0000><a href='?src=\ref[src];delete=[i]'>\[X\]</a></font color><br>"
 
 					// If the log is a speech file
 					if(C.input_type == "Speech File")
+
+						dat += "<li><font color = #008F00>[C.name]</font color>  <font color = #FF0000><a href='?src=\ref[src];delete=[i]'>\[X\]</a></font color><br>"
+
 						// -- Determine race of orator --
 
 						var/race			   // The actual race of the mob
@@ -113,9 +115,10 @@
 						dat += "</li><br>"
 
 					else if(C.input_type == "Execution Error")
-						dat += "<u><font color = #18743E>Data type</font color></u>: [C.input_type]<br>"
-						dat += "<u><font color = #18743E>Source</font color></u>: Internal server code<br>"
-						dat += "<u><font color = #18743E>Contents</font color></u>: \"[C.parameters["message"]]\"<br>"
+
+						dat += "<li><font color = #990000>[C.name]</font color>  <font color = #FF0000><a href='?src=\ref[src];delete=[i]'>\[X\]</a></font color><br>"
+						dat += "<u><font color = #787700>Output</font color></u>: \"[C.parameters["message"]]\"<br>"
+						dat += "</li><br>"
 
 
 				dat += "</ol>"

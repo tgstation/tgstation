@@ -28,6 +28,8 @@
 */
 		Run()
 			cur_recursion = 0 // reset recursion
+			cur_statements = 0 // reset CPU tracking
+			alertadmins = 0
 
 			ASSERT(src.program)
 			RunBlock(src.program)
