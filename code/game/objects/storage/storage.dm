@@ -314,7 +314,7 @@
 
 		if ("murder")
 			new /obj/item/weapon/melee/energy/sword(src)
-			new /obj/item/weapon/cloaking_device(src)
+			new /obj/item/clothing/glasses/thermal(src)
 			new /obj/item/weapon/card/emag(src)
 			return
 
