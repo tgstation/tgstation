@@ -117,12 +117,11 @@
 					hear += C.occupant
 
 	// Intelicards
-	for(var/obj/item/device/aicard/C in world)
+	for(var/obj/item/device/aicard/C in V)
 		for(var/mob/living/silicon/ai/M in C)
-			if(get_turf(C) in V)
-				if(isInSight(source,C))
-					if(M.client)
-						hear += M
+			if(isInSight(source,C))
+				if(M.client)
+					hear += M
 
 	// Brains/MMIs/pAIs
 	for(var/mob/living/carbon/brain/C in world)
