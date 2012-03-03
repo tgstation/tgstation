@@ -172,7 +172,7 @@
 
 
 	afterattack(var/obj/target as obj, mob/user as mob)
-		if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack))
+		if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) || istype(target,/obj/item/smallDelivery))
 			return
 		if(target.anchored)
 			return
@@ -193,17 +193,16 @@
 				src.amount -= 1
 		else if (istype(target, /obj/structure/closet/crate))
 			var/obj/structure/closet/crate/O = target
-			if (src.amount > 3)
+			if (src.amount > 3 && !O.opened)
 				var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 				P.wrapped = O
 				O.loc = P
 				src.amount -= 3
-			else
+			else if(src.amount > 3)
 				user << "\blue You need more paper."
 		else if (istype (target, /obj/structure/closet))
 			var/obj/structure/closet/O = target
-			if (src.amount > 3)
-				O.close()
+			if (src.amount > 3 && !O.opened)
 				var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 				P.wrapped = O
 				P.waswelded = O.welded
@@ -211,7 +210,7 @@
 				O.welded = 1
 				O.loc = P
 				src.amount -= 3
-			else
+			else if(src.amount > 3)
 				user << "\blue You need more paper."
 		else
 			user << "\blue The object you are trying to wrap is unsuitable for the sorting machinery!"
