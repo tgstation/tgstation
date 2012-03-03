@@ -1018,6 +1018,9 @@
 						for(var/mob/O in viewers(4, user))
 							O.show_message("\red [user] takes a blood sample from [target].", 1)
 
+						if(prob(2) && istype(T,/mob/living/carbon/monkey))
+							T:react_to_attack(user)
+
 				else //if not mob
 					if(!target.reagents.total_volume)
 						user << "\red [target] is empty."
@@ -1059,6 +1062,9 @@
 					for(var/mob/O in viewers(world.view, user))
 						O.show_message(text("\red [] injects [] with the syringe!", user, target), 1)
 					src.reagents.reaction(target, INGEST)
+					if(prob(2) && istype(target,/mob/living/carbon/monkey))
+						var/mob/living/carbon/monkey/M = target
+						M.react_to_attack(user)
 				if(ismob(target) && target == user)
 					src.reagents.reaction(target, INGEST)
 				spawn(5)

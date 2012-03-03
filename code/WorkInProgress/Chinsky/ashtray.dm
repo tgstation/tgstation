@@ -1,16 +1,12 @@
 /obj/item/ashtray
-	name = "ashtray"
-	desc = "Cheap plastic ashtray."
 	icon = 'ashtray.dmi'
-	icon_state = "ashtray_bl"
-	health	  = 15.0
-	g_amt = 20
-	var/max_butts = 10
-	var/empty_desc = "Cheap plastic ashtray."
-	var/icon_empty = "ashtray_bl"
-	var/icon_half  = "ashtray_half_bl"
-	var/icon_full  = "ashtray_full_bl"
-	var/icon_broken  = "ashtray_bork_bl"
+	var/
+		max_butts 	= 0
+		empty_desc 	= ""
+		icon_empty 	= ""
+		icon_half  	= ""
+		icon_full  	= ""
+		icon_broken	= ""
 
 /obj/item/ashtray/New()
 	..()
@@ -85,6 +81,7 @@
 	max_butts = 14
 	health = 24.0
 	g_amt = 30
+	m_amt = 30
 	empty_desc = "Cheap plastic ashtray."
 	throwforce = 3.0
 	die()
@@ -104,7 +101,7 @@
 	icon_broken  = "ashtray_bork_br"
 	max_butts = 10
 	health = 72.0
-	m_amt = 50
+	m_amt = 80
 	empty_desc = "Massive bronze ashtray."
 	throwforce = 10.0
 
