@@ -62,6 +62,9 @@ Whitespace:Seperator;
 Implants;
 /obj/item/weapon/storage/syndie_kit/imp_freedom:3:Freedom Implant;
 /obj/item/weapon/storage/syndie_kit/imp_uplink:10:Uplink Implant (Contains 5 Telecrystals);
+Whitespace:Seperator;
+(Pointless) Badassery;
+/obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);
 Whitespace:Seperator;"}
 
 // Items removed from above:
