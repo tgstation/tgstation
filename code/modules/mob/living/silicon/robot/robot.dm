@@ -700,6 +700,14 @@
 			overlays += "ov-openpanel +c"
 		else
 			overlays += "ov-openpanel -c"
+
+	if(targeted_by && target_locked)
+		overlays += target_locked
+	else if(targeted_by)
+		target_locked = new /obj/effect/target_locked(src)
+		overlays += target_locked
+	else if(!targeted_by && target_locked)
+		del(target_locked)
 	return
 
 

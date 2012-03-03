@@ -449,8 +449,7 @@
 
 	if(update_icon) // Skie
 		..()
-		for(var/i in overlays)
-			overlays -= i
+		overlays = null
 
 		if (!( lying ))
 			icon_state = "monkey1"
@@ -515,6 +514,13 @@
 
 			else
 				m_select.screen_loc = null
+	if(targeted_by && target_locked)
+		overlays += target_locked
+	else if(targeted_by)
+		target_locked = new /obj/effect/target_locked(src)
+		overlays += target_locked
+	else if(!targeted_by && target_locked)
+		del(target_locked)
 	for(var/mob/M in viewers(1, src))
 		if ((M.client && M.machine == src))
 			spawn( 0 )

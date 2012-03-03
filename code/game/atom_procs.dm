@@ -332,6 +332,8 @@
 
 /atom/Click(location,control,params)
 	//world << "atom.Click() on [src] by [usr] : src.type is [src.type]"
+	if(!istype(src,/obj/item/weapon/gun))
+		usr.last_target_click = world.time
 	var/list/pram = params2list(params)
 	if((pram["alt"] != null && pram["ctrl"] != null && pram["left"] != null) && istype(src,/atom/movable))
 		src:pull()

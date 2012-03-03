@@ -1,5 +1,5 @@
 /obj/item/projectile/change
-	name = "bolt of change"
+	name = "\improper Bolt of Change"
 	icon_state = "ice_1"
 	damage = 0
 	damage_type = BURN

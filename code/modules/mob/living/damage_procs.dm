@@ -42,9 +42,9 @@
 	if(!effect || (blocked >= 2))	return 0
 	switch(effecttype)
 		if(STUN)
-			Stun((effect - (effect*getarmor(null, "laser")))/(blocked + 1))
+			Stun((effect - (min(effect*getarmor(null, "laser"), effect*(0.75 + (blocked*0.05))))))
 		if(WEAKEN)
-			Weaken((effect - (effect*getarmor(null, "laser")))/(blocked + 1))
+			Weaken((effect - (min(effect*getarmor(null, "laser"), effect*(0.75 + (blocked*0.05))))))
 		if(PARALYZE)
 			Paralyse(effect/(blocked+1))
 		if(IRRADIATE)
