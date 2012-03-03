@@ -319,7 +319,6 @@ mob/proc
 				M << 'TargetOff.ogg'
 		del(target_locked)
 		targeted_by -= I
-		update_clothing()
 		I.target = null
 		var/mob/T = I.loc
 		if(T && ismob(T))
@@ -327,6 +326,7 @@ mob/proc
 			del(T.gun_move_icon)
 			del(T.gun_run_icon)
 		if(!targeted_by.len) del targeted_by
+		spawn(1) update_clothing()
 
 /*	Captive(var/obj/item/weapon/gun/I)
 		Sound(src,'CounterAttack.ogg')

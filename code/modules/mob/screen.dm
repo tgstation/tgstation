@@ -30,7 +30,7 @@
 	name = "gun"
 	icon = 'screen1.dmi'
 	master = null
-	dir = 1
+	dir = 2
 
 	move
 		name = "Allow Walking"
@@ -52,6 +52,7 @@
 		desc = "The shortcut key for this is \"F6\""
 		icon_state = "gun"
 		screen_loc = ui_gun_select
+		dir = 1
 
 /obj/screen/zone_sel/MouseDown(location, control,params)
 	// Changes because of 4.0
