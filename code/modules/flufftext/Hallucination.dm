@@ -163,7 +163,7 @@ mob/living/carbon/proc/handle_hallucinations()
 						spawn(rand(50,80)) //Only seen for a brief moment.
 							if(client) client.images -= halbody
 							halbody = null
-			if(71 to 75)
+			if(71 to 72)
 				//Fake death
 //				src.sleeping_willingly = 1
 				src.sleeping = 1

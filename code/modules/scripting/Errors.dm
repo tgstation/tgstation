@@ -52,6 +52,10 @@
 			message+="[id]'. "
 			if(T)message+="Found '[T.value]'."
 
+
+	UnterminatedComment
+		message="Unterminated multi-line comment statement: expected */"
+
 	DuplicateFunction
 		New(name, token/t)
 			message="Function '[name]' defined twice."

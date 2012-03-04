@@ -158,8 +158,19 @@ Class Procs:
 			istype(usr, /mob/living/carbon/monkey) && ticker && ticker.mode.name == "monkey") )
 		usr << "\red You don't have the dexterity to do this!"
 		return 1
-	if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !istype(usr, /mob/living/silicon))
-		return 1
+
+	var/norange = 0
+	if(istype(usr, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = usr
+		if(istype(H.l_hand, /obj/item/tk_grab))
+			norange = 1
+		else if(istype(H.r_hand, /obj/item/tk_grab))
+			norange = 1
+
+	if(!norange)
+		if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !istype(usr, /mob/living/silicon))
+			return 1
+
 	src.add_fingerprint(usr)
 	return 0
 

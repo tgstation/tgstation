@@ -318,8 +318,18 @@
 							Metroid.canmove = 1
 
 
+		var/showname = "."
+		if(user)
+			showname = " by [user]."
+		if(!(user in viewers(M, null)))
+			showname = "."
+
 		for(var/mob/O in viewers(messagesource, null))
-			O.show_message(text("\red <B>[] has been attacked with [][] </B>", M, src, (user ? text(" by [].", user) : ".")), 1)
+			O.show_message(text("\red <B>[] has been attacked with [][] </B>", M, src, showname), 1)
+
+		if(!showname && user)
+			if(user.client)
+				user << "\red <B>You attack [M] with [src]. </B>"
 
 
 
