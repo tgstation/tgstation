@@ -34,6 +34,24 @@
 	var/blocked = 0 //Player cannot attack/heal while set
 
 
+/obj/machinery/computer/aistatus
+	name = "AI Status Panel"
+	icon = 'mainframe.dmi'
+	icon_state = "left"
+//	brightnessred = 0
+//	brightnessgreen = 2
+//	brightnessblue = 0
+
+/obj/machinery/computer/aistatus/attack_hand(mob/user as mob)
+	if(stat & NOPOWER)
+		user << "\red The status panel has no power!"
+		return
+	if(stat & BROKEN)
+		user << "\red The status panel is broken!"
+		return
+	user << "\red I don't understand any of this!"
+	return
+
 /obj/machinery/computer/aiupload
 	name = "AI Upload"
 	desc = "Used to upload laws to the AI."
@@ -42,6 +60,10 @@
 	var/mob/living/silicon/ai/current = null
 	var/opened = 0
 
+/obj/machinery/computer/aiupload/mainframe
+	name = "AI Mainframe Upload"
+	icon = 'mainframe.dmi'
+	icon_state = "aimainframe"
 
 /obj/machinery/computer/borgupload
 	name = "Cyborg Upload"
@@ -49,6 +71,11 @@
 	icon_state = "command"
 	circuit = "/obj/item/weapon/circuitboard/borgupload"
 	var/mob/living/silicon/robot/current = null
+
+/obj/machinery/computer/borgupload/mainframe
+	name = "Borg Mainframe Upload"
+	icon = 'mainframe.dmi'
+	icon_state = "aimainframe"
 
 
 /obj/machinery/computer/station_alert

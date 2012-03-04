@@ -13,7 +13,7 @@
 	var/datum/reagents/reagents = null
 
 	//Detective Work, used for the duplicate data points kept in the scanners
-	var/atom/original_atom = null
+	var/atom/movable/original_atom = null
 
 	//var/chem_is_open_container = 0
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()

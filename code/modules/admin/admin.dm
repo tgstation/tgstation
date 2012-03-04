@@ -476,7 +476,7 @@
 				M.client.muted_complete = !M.client.muted_complete
 				log_admin("[key_name(usr)] has [(M.client.muted_complete ? "completely muted" : "voiced (complete)")] [key_name(M)].")
 				message_admins("\blue [key_name_admin(usr)] has [(M.client.muted_complete ? "completely muted" : "voiced (complete)")] [key_name_admin(M)].", 1)
-				M << "You have been [(M.client.muted_complete ? "completely muted" : "voiced (complete)")]. You are unable to speak or even adminhelp"
+				M << "You have been [(M.client.muted_complete ? "completely muted" : "voiced (complete)")]. You are unable to speak."
 
 	if (href_list["c_mode"])
 		if ((src.rank in list( "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
