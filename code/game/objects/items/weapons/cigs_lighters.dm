@@ -146,6 +146,8 @@ ZIPPO
 			processing_objects.Add(src)
 
 	put_out()
+		if (src.lit == -1)
+			return
 		src.lit = -1
 		src.damtype = "brute"
 		src.icon_state = icon_butt + "[rand(0,butt_count)]"
