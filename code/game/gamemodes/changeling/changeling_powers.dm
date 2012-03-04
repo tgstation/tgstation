@@ -161,7 +161,7 @@
 		usr << "\red We don't have enough stored chemicals to do that!"
 		return
 
-	var/S = input("Select the target DNA: ", "Target DNA", null) in usr.changeling.absorbed_dna
+	var/S = input("Select the target DNA: ", "Target DNA", null) as null|anything in usr.changeling.absorbed_dna
 
 	if (S == null)
 		return

@@ -311,23 +311,30 @@
 			if("survive")
 				if(!check_survive())
 					explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. \green <b>Success!</b>"
+					feedback_add_details("cult_objective","cult_survive|SUCCESS|[acolytes_needed]")
 				else
 					explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. \red Failed."
+					feedback_add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
 			if("sacrifice")
 				if(!sacrifice_target)
 					explanation = "Free objective"
 				else
 					if(sacrificed.Find(sacrifice_target))
 						explanation = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. \green <b>Success!</b>"
+						feedback_add_details("cult_objective","cult_sacrifice|SUCCESS")
 					else if(sacrifice_target && sacrifice_target.current)
 						explanation = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. \red Failed."
+						feedback_add_details("cult_objective","cult_sacrifice|FAIL")
 					else
 						explanation = "Sacrifice Unknown, the Unknown whos body was likely gibbed. \red Failed."
+						feedback_add_details("cult_objective","cult_sacrifice|FAIL|GIBBED")
 			if("eldergod")
 				if(!eldergod)
 					explanation = "Summon Nar-Sie. \green <b>Success!</b>"
+					feedback_add_details("cult_objective","cult_narsie|SUCCESS")
 				else
 					explanation = "Summon Nar-Sie. \red Failed."
+					feedback_add_details("cult_objective","cult_narsie|FAIL")
 		world << "<B>Objective #[obj_count]</B>: [explanation]"
 
 	..()
