@@ -437,7 +437,7 @@ datum
 						M.slurring = 0
 						M.confused = 0
 						M.jitteriness = 0
-					if(50 to INFINITY)
+					if(100 to INFINITY)
 						M:adjustToxLoss(0.1)
 				..()
 				return
@@ -473,8 +473,8 @@ datum
 						if(prob(10)) step(M, pick(cardinal))
 				if(prob(7)) M:emote(pick("twitch","drool","moan","giggle"))
 				holder.remove_reagent(src.id, 0.2)
-				if(data >= 50)
-					M:adjustToxLoss(min(((data-50)/10),3))
+				if(data >= 100)
+					M:adjustToxLoss(0.1)
 				return
 
 		serotrotium
@@ -865,8 +865,8 @@ datum
 				M.mutations = 0
 				M.disabilities = 0
 				switch(data)
-					if(50 to INFINITY)
-						M:adjustToxLoss(min(((data-50)/10),3))
+					if(100 to INFINITY)
+						M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -1173,8 +1173,8 @@ datum
 					M.bodytemperature = max(310, M.bodytemperature-20)
 				else if(M.bodytemperature < 311)
 					M.bodytemperature = min(310, M.bodytemperature+20)
-				if(data >= 50)
-					M:adjustToxLoss(min(((data-50)/10),3))
+				if(data >= 100)
+					M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -1194,7 +1194,7 @@ datum
 				M.confused = max(M.confused, 20)
 				holder.remove_reagent(src.id, 0.2)
 				if(data >= 50)
-					M:adjustToxLoss(min(((data-50)/10),3))
+					M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -1230,8 +1230,8 @@ datum
 				if(!data) data = 1
 				data++
 				M:heal_organ_damage(0,2)
-				if(data >= 50)
-					M:adjustToxLoss(min(((data-50)/10),3))
+				if(data >= 100)
+					M:adjustToxLoss(0.1)
 				..()
 				return
 
@@ -1249,8 +1249,8 @@ datum
 				if(!data) data = 1
 				data++
 				M:heal_organ_damage(0,3)
-				if(data >= 50)
-					M:adjustToxLoss(min(((data-50)/10),3))
+				if(data >= 100)
+					M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -1270,8 +1270,8 @@ datum
 				M:adjustOxyLoss(-2)
 				if(holder.has_reagent("lexorin"))
 					holder.remove_reagent("lexorin", 2)
-				if(data >= 50)
-					M:adjustToxLoss(min(((data-50)/10),3))
+				if(data >= 100)
+					M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -1292,7 +1292,7 @@ datum
 				if(holder.has_reagent("lexorin"))
 					holder.remove_reagent("lexorin", 2)
 				if(data >= 50)
-					M:adjustToxLoss(min(((data-50)/10),3))
+					M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -1422,7 +1422,7 @@ datum
 				if(prob(50)) M:drowsyness = max(M:drowsyness, 3)
 				if(prob(10)) M:emote("drool")
 				if(data >= 50)
-					M:adjustToxLoss(min(((data-50)/10),3))
+					M:adjustToxLoss(0.4)
 				..()
 				return
 
@@ -1437,7 +1437,7 @@ datum
 				if(!M) M = holder.my_atom
 				M:radiation = max(M:radiation-3,0)
 				if(data >= 50)
-					M:adjustToxLoss(min(((data-50)/10),3))
+					M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -1460,7 +1460,7 @@ datum
 					M.take_organ_damage(1, 0)
 				..()
 				if(data >= 50)
-					M:adjustToxLoss(min(((data-50)/10),3))
+					M:adjustToxLoss(0.3)
 				return
 
 		alkysine
@@ -1491,8 +1491,8 @@ datum
 				M:eye_blurry = max(M:eye_blurry-5 , 0)
 				M:eye_blind = max(M:eye_blind-5 , 0)
 				M:disabilities &= ~1
-				if(data >= 50)
-					M:adjustToxLoss(min(((data-50)/10),3))
+				if(data >= 100)
+					M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -1510,8 +1510,8 @@ datum
 				if(!data) data = 1
 				data++
 				M:heal_organ_damage(2,0)
-				if(data >= 50)
-					M:adjustToxLoss(0.1)
+				if(data >= 100)
+					M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -1529,7 +1529,7 @@ datum
 				if(prob(5)) M:emote(pick("twitch","blink_r","shiver"))
 				holder.remove_reagent(src.id, 0.2)
 				if(data >= 50)
-					M:adjustToxLoss(min(((data-50)/5),3))
+					M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -1580,8 +1580,8 @@ datum
 				if(!data) data = 1
 				data++
 				holder.remove_reagent(src.id, 0.1)
-				if(data >= 50)
-					M:adjustToxLoss(min(((data-50)/10),3))
+				if(data >= 100)
+					M:adjustToxLoss(0.1)
 				return
 
 		carpotoxin
@@ -1646,7 +1646,7 @@ datum
 				if(!data) data = 1
 				data++
 				M:hallucination += 5
-				if(data >= 50)
+				if(data >= 100)
 					M:adjustToxLoss(0.1)
 				..()
 				return

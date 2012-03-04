@@ -22,7 +22,7 @@
 		var/mob/living/carbon/human/H = src
 		alt_name = " (as [H.get_visible_name()])"
 	// Mute disability
-	if (src.sdisabilities & 2)
+	if (src.disabilities & 64)
 		return
 
 	if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))

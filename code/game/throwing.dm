@@ -87,7 +87,7 @@
 		else
 			return get_step(start, EAST)
 
-/atom/movable/proc/hit_check()
+/atom/movable/proc/hit_check(var/turf/target)
 	if(src.throwing)
 		for(var/atom/A in get_turf(src))
 			if(A == src) continue
@@ -96,7 +96,7 @@
 				src.throw_impact(A)
 				src.throwing = 0
 			if(isobj(A))
-				if(A.density)	// **TODO: Better behaviour for windows
+				if(A.density && !A.CanPass(src,target))	// **TODO: Better behaviour for windows
 												// which are dense, but shouldn't always stop movement
 					src.throw_impact(A)
 					src.throwing = 0
@@ -150,6 +150,7 @@
 		dy = SOUTH
 	var/dist_travelled = 0
 	var/dist_since_sleep = 0
+	var/turf/target_turf = get_turf(target)
 	if(dist_x > dist_y)
 		var/error = dist_x/2 - dist_y
 		while(((((src.x < target.x && dx == EAST) || (src.x > target.x && dx == WEST)) && dist_travelled < range) || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))
@@ -159,7 +160,7 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check()
+				hit_check(target_turf)
 				error += dist_x
 				dist_travelled++
 				dist_since_sleep++
@@ -171,7 +172,7 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check()
+				hit_check(target_turf)
 				error -= dist_y
 				dist_travelled++
 				dist_since_sleep++
@@ -187,7 +188,7 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check()
+				hit_check(target_turf)
 				error += dist_y
 				dist_travelled++
 				dist_since_sleep++
@@ -199,7 +200,7 @@
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
 				src.Move(step)
-				hit_check()
+				hit_check(target_turf)
 				error -= dist_x
 				dist_travelled++
 				dist_since_sleep++

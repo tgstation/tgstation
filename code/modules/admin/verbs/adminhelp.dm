@@ -7,8 +7,8 @@
 	if (!msg)
 		return
 
-	if (usr.client && usr.client.muted_complete)
-		return
+//	if (usr.client && usr.client.muted_complete)
+//		return
 
 	for (var/mob/M in world)
 		if (M.client && M.client.holder && (M.client.holder.level != -3))
