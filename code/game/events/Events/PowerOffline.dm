@@ -1,6 +1,4 @@
 /datum/event/power_offline
-	var/list/protected_areas = list(, , , )
-
 	Announce()
 		for(var/obj/machinery/power/apc/a in world)
 			if(!a.crit && a.z == 1)
