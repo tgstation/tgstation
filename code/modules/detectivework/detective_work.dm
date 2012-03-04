@@ -220,7 +220,7 @@ obj/machinery/computer/forensic_scanning
 						temp += "Consolidated data points:<br>"
 						for(var/i = 1, i <= files.len, i++)
 							temp += "<a href='?src=\ref[src];operation=record;identifier=[i]'>{Dossier [i]}</a><br>"
-						temp += "<br><a href='?src=\ref[src];operation=card'>{Insert Finger Print Card}</a><br><br><br>"
+						temp += "<br><a href='?src=\ref[src];operation=card'>{Insert Finger Print Card (To complete a Dossier)}</a><br><br><br>"
 					else
 						temp = ""
 					if(misc && misc.len)
