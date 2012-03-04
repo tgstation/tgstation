@@ -108,11 +108,17 @@ emp_act
 				location.add_blood(src)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
-				if(H.gloves)			H.gloves.add_blood(src)
-				else					H.add_blood(src)
 				if(H.wear_suit)			H.wear_suit.add_blood(src)
 				else if(H.w_uniform)	H.w_uniform.add_blood(src)
 				if(H.shoes)				H.shoes.add_blood(src)
+				if (H.gloves)
+					H.gloves.add_blood(H)
+					H.gloves.transfer_blood = 2
+					H.gloves.bloody_hands_mob = H
+				else
+					H.add_blood(H)
+					H.bloody_hands = 2
+					H.bloody_hands_mob = H
 
 		switch(hit_area)
 			if("head")//Harder to score a stun but if you do it lasts a bit longer

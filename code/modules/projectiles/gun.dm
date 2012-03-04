@@ -325,6 +325,9 @@ mob/proc
 			del(T.item_use_icon)
 			del(T.gun_move_icon)
 			del(T.gun_run_icon)
+			T.target_can_move = 0
+			T.target_can_run = 0
+			T.target_can_click = 0
 		if(!targeted_by.len) del targeted_by
 		spawn(1) update_clothing()
 

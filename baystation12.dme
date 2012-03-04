@@ -1077,6 +1077,7 @@
 #include "code\WorkInProgress\Cael_Aislinn\Tajara\say.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Tajara\tajara_transformation.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Tajara\tajaran.dm"
+#include "code\WorkInProgress\Cael_Aislinn\Tajara\whisper.dm"
 #include "code\WorkInProgress\Chinsky\ashtray.dm"
 #include "code\WorkInProgress\mapload\dmm_suite.dm"
 #include "code\WorkInProgress\mapload\reader.dm"
