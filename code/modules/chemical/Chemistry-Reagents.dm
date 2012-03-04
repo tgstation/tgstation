@@ -437,7 +437,7 @@ datum
 						M.slurring = 0
 						M.confused = 0
 						M.jitteriness = 0
-					if(100 to INFINITY)
+					if(125 to INFINITY)
 						M:adjustToxLoss(0.1)
 				..()
 				return
@@ -1230,7 +1230,7 @@ datum
 				if(!data) data = 1
 				data++
 				M:heal_organ_damage(0,2)
-				if(data >= 100)
+				if(data >= 125)
 					M:adjustToxLoss(0.1)
 				..()
 				return
@@ -1249,7 +1249,7 @@ datum
 				if(!data) data = 1
 				data++
 				M:heal_organ_damage(0,3)
-				if(data >= 100)
+				if(data >= 125)
 					M:adjustToxLoss(0.2)
 				..()
 				return
@@ -1270,7 +1270,7 @@ datum
 				M:adjustOxyLoss(-2)
 				if(holder.has_reagent("lexorin"))
 					holder.remove_reagent("lexorin", 2)
-				if(data >= 100)
+				if(data >= 125)
 					M:adjustToxLoss(0.2)
 				..()
 				return
@@ -1510,7 +1510,7 @@ datum
 				if(!data) data = 1
 				data++
 				M:heal_organ_damage(2,0)
-				if(data >= 100)
+				if(data >= 125)
 					M:adjustToxLoss(0.2)
 				..()
 				return
