@@ -18,7 +18,7 @@
 	///Chemistry.
 
 	//Detective Work, used for the duplicate data points kept in the scanners
-	var/atom/original_atom = null
+	var/atom/movable/original_atom = null
 
 	proc/assume_air(datum/air_group/giver)
 		del(giver)

@@ -245,7 +245,7 @@ proc/check_panel(mob/M)
 			M << "\red <B>[my_target] flails around wildly.</B>"
 		my_target.show_message("\red <B>[src] has been attacked by [my_target] </B>", 1) //Lazy.
 
-		//src.health -= P.power
+		src.health -= P.force
 
 
 		return
@@ -258,12 +258,13 @@ proc/check_panel(mob/M)
 					O << "\red <B>[my_target] stumbles around.</B>"
 
 	New()
+		..()
 		spawn(300)
 			if(my_target)
 				my_target.hallucinations -= src
 			del(src)
 		step_away(src,my_target,2)
-		proccess()
+		processing_objects.Add(src)
 
 
 	proc/updateimage()
@@ -285,8 +286,7 @@ proc/check_panel(mob/M)
 		my_target << currentimage
 
 
-	proc/proccess()
-		if(!my_target) spawn(5) .()
+	process()
 		if(src.health < 0)
 			collapse()
 			return
@@ -314,7 +314,6 @@ proc/check_panel(mob/M)
 
 		if(prob(15))
 			step_away(src,my_target,2)
-		spawn(5) .()
 
 	proc/collapse()
 		collapse = 1
