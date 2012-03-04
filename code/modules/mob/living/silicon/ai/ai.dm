@@ -13,6 +13,7 @@
 					"Medbay",
 					"Research",
 					"Engineering",
+					"Command",
 					"Singularity",
 					"Tcomsat",
 					"Solars",
