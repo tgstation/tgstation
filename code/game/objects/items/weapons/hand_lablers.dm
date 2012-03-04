@@ -24,7 +24,8 @@
 		return
 
 	for(var/mob/M in viewers())
-		M << "\blue [user] labels [A] as [label]."
+		if ((M.client && !( M.blinded )))
+			M << "\blue [user] labels [A] as [label]."
 	A.name = "[A.name] ([label])"
 
 /obj/item/weapon/hand_labeler/attack_self()

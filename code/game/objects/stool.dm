@@ -152,6 +152,8 @@
 			buckled_mob.loc = src.loc
 
 /obj/structure/stool/bed/roller/buckle_mob(mob/M as mob, mob/user as mob)
+	if ((!( istype(M, /mob) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat || M.buckled))
+		return
 	M.pixel_y = 6
 	M.update_clothing()
 	density = 1
