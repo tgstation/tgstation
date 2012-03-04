@@ -95,6 +95,27 @@
 
 	return
 
+/mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/wrench))
+		if(anchored)
+			user.visible_message("\blue [user] starts to unbolt [src] from the plating...")
+			if(!do_after(user,40))
+				user.visible_message("\blue [user] decides not to unbolt [src]")
+				return
+			user.visible_message("\blue [user] finishes unfastening [src]")
+			anchored = 0
+			return
+		else
+			user.visible_message("\blue [user] starts to bolt [src] to the plating...")
+			if(!do_after(user,40))
+				user.visible_message("\blue [user] decides not to bolt [src]")
+				return
+			user.visible_message("\blue [user] finishes fastening down [src]")
+			anchored = 1
+			return
+	else
+		return ..()
+
 
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
