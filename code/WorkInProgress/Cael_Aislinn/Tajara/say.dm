@@ -83,7 +83,7 @@
 		return
 
 	// Mute disability
-	if (sdisabilities & 2)
+	if (disabilities & 64)
 		return
 
 	if (istype(wear_mask, /obj/item/clothing/mask/muzzle))
@@ -116,22 +116,39 @@
 		var/channel_prefix = copytext(message, 1, 3)
 
 		var/list/keys = list(
-			  ":r" = "right ear",
-			  ":l" = "left ear",
-			  ":i" = "intercom",
-			  ":h" = "department",
-			  ":c" = "Command",
-			  ":n" = "Science",
-			  ":m" = "Medical",
-			  ":e" = "Engineering",
-			  ":s" = "Security",
-			  ":w" = "whisper",
-			  ":b" = "binary",
-			  ":a" = "alientalk",
-			  ":t" = "Syndicate",
-			  ":d" = "Mining",
-			  ":q" = "Cargo",
-			  ":g" = "changeling",
+			":r" = "right ear",
+			":l" = "left ear",
+			":i" = "intercom",
+			":h" = "department",
+			":c" = "Command",
+			":n" = "Science",
+			":m" = "Medical",
+			":e" = "Engineering",
+			":s" = "Security",
+			":w" = "whisper",
+			":b" = "binary",
+			":a" = "alientalk",
+			":t" = "Syndicate",
+			":d" = "Mining",
+			":q" = "Cargo",
+			":g" = "changeling",
+
+			":R" = "right hand",
+			":L" = "left hand",
+			":I" = "intercom",
+			":H" = "department",
+			":C" = "Command",
+			":N" = "Science",
+			":M" = "Medical",
+			":E" = "Engineering",
+			":S" = "Security",
+			":W" = "whisper",
+			":B" = "binary",
+			":A" = "alientalk",
+			":T" = "Syndicate",
+			":D" = "Mining",
+			":Q" = "Cargo",
+			":G" = "changeling",
 
 			  //kinda localization -- rastaf0
 			  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -165,8 +182,8 @@
 
 	//work out if we're speaking tajaran or not
 	var/is_speaking_taj = 0
-	if(copytext(message, 1, 4) == ":j ")
-		message = copytext(message, 4)
+	if(copytext(message, 1, 3) == ":j" || copytext(message, 1, 3) == ":J")
+		message = copytext(message, 3)
 		if(taj_talk_understand)
 			is_speaking_taj = 1
 
