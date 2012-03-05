@@ -85,8 +85,8 @@
 		else if(target && M == target)
 			PreFire(M,user)
 			return
-		else if(user.a_intent == "hurt" && (istype(src.in_chamber, /obj/item/projectile/beam) || istype(src.in_chamber, /obj/item/projectile/energy)\
-		 || istype(src.in_chamber, /obj/item/projectile/bullet)) && !istype(src.in_chamber, /obj/item/projectile/bullet/stunshot) && load_into_chamber())
+		else if(user.a_intent == "hurt" && load_into_chamber() && (istype(src.in_chamber, /obj/item/projectile/beam) || istype(src.in_chamber, /obj/item/projectile/energy)\
+		 || istype(src.in_chamber, /obj/item/projectile/bullet)))
 			//Lets shoot them, then.
 			user.visible_message("\red <b> [user] fires \the [src] point blank at [M]!</b>")
 			M.bullet_act(in_chamber,"head")
@@ -97,9 +97,11 @@
 				if (M.weakened < 10)
 					M.weakened = 10
 			if(M.stat != 2)	M.stat = 1
+			if(M.health <= -50) //I pumped 7 more rounds into the guy, and only did an extra 26 damage :|
+				M.apply_damage(45) //So we'll put him an inch from death.
 			del(in_chamber)
 			return
-		else if(user.a_intent != "hurt" && istype(src,/obj/item/weapon/gun/energy/taser) && load_into_chamber())
+		else if(user.a_intent != "hurt" && load_into_chamber() && istype(src,/obj/item/weapon/gun/energy/taser))
 			if (prob(50))
 				if (M.paralysis < 60 && (!(M.mutations & 8)) )
 					M.paralysis = 60

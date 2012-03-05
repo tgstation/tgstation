@@ -84,6 +84,8 @@
 	if (!( src.flags ) & 256)
 		return
 	if (ishuman(M))
+		if(!fingerprintshidden)
+			fingerprintshidden = list()
 		add_fibers(M)
 		if (M.mutations2 & mFingerprints)
 			if(src.fingerprintslast != M.key)
@@ -99,7 +101,7 @@
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
-				H.gloves.add_fingerprint(M)
+			H.gloves.add_fingerprint(M)
 		if(H.gloves != src)
 			if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
 				return 0
@@ -128,13 +130,14 @@
 							src.fingerprints[j] = src.fingerprints[j+1]
 						src.fingerprints.len--
 				else
-					src.fingerprints[i] = "1=" + L[num2text(1)] + "&2=" + test_print
+					src.fingerprints[i] = "1=[L[num2text(1)]]&2=[test_print]"
 		if(new_prints)
 			src.fingerprints[new_prints] = text("1=[]&2=[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), (H.gloves ? rand(10,20) : rand(25,40)))))
 		else if(new_prints == 0)
 			if(!src.fingerprints || !src.fingerprints.len)
 				src.fingerprints = list(text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40))))
-			src.fingerprints += text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40)))
+			else
+				src.fingerprints += text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40)))
 		for(var/i = 1, i <= src.fingerprints.len, i++)
 			if(length(src.fingerprints[i]) != 69)
 				src.fingerprints.Remove(src.fingerprints[i])
@@ -279,6 +282,9 @@
 		if (istype (src, /mob/living/carbon))
 			var/obj/item/source2 = src
 			source2.blood_DNA = list()
+			if(ishuman(src))
+				var/mob/living/carbon/human/M = src
+				M.bloody_hands = 0
 			//var/icon/I = new /icon(source2.icon_old, source2.icon_state) //doesnt have icon_old
 			//source2.icon = I
 		if (istype (src, /obj/item))
@@ -291,6 +297,9 @@
 			else
 				source2.icon = initial(icon)
 				source2.update_icon()
+			if(istype(src, /obj/item/clothing/gloves))
+				var/obj/item/clothing/gloves/G = src
+				G.transfer_blood = 0
 		if (istype(src, /turf/simulated))
 			var/obj/item/source2 = src
 			source2.blood_DNA = list()
