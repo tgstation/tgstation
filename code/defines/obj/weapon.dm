@@ -521,18 +521,6 @@
 		access = get_all_centcom_access()
 		..()
 
-/obj/item/weapon/clipboard
-	name = "clipboard"
-	desc = "Apply paper to this to write better. Can also hold pens."
-	icon = 'items.dmi'
-	icon_state = "clipboard00"
-	var/obj/item/weapon/pen/pen = null
-	item_state = "clipboard"
-	throwforce = 0
-	w_class = 2.0
-	throw_speed = 3
-	throw_range = 10
-
 #define MAXCOIL 30
 /obj/item/weapon/cable_coil
 	name = "cable coil"
@@ -757,7 +745,6 @@
 	m_amt = 400
 	origin_tech = "magnets=1"
 
-
 /obj/item/weapon/caution
 	desc = "Caution! Wet Floor!"
 	name = "wet floor sign"
@@ -774,27 +761,6 @@
 	desc = "This cone is trying to warn you of something!"
 	name = "warning cone"
 	icon_state = "cone"
-
-
-/obj/item/weapon/paper
-	name = "paper"
-	gender = PLURAL
-	icon = 'paper.dmi'
-	icon_state = "paper"
-	var/info = null
-	throwforce = 0
-	w_class = 1.0
-	throw_speed = 3
-	throw_range = 15
-	layer = 4
-	var/list/stamped
-	var/see_face = 1
-	var/body_parts_covered = HEAD
-	var/protective_temperature = T0C + 10
-	var/heat_transfer_coefficient = 0.99
-	var/gas_transfer_coefficient = 1
-	var/permeability_coefficient = 0.99
-	var/siemens_coefficient = 0.80
 
 /obj/item/weapon/directions
 	name = "crumpled paper"
@@ -842,41 +808,6 @@
 /obj/item/weapon/paper/sop
 	name = "paper- 'Standard Operating Procedure'"
 	info = "Alert Levels:<BR>\nBlue- Emergency<BR>\n\t1. Caused by fire<BR>\n\t2. Caused by manual interaction<BR>\n\tAction:<BR>\n\t\tClose all fire doors. These can only be opened by reseting the alarm<BR>\nRed- Ejection/Self Destruct<BR>\n\t1. Caused by module operating computer.<BR>\n\tAction:<BR>\n\t\tAfter the specified time the module will eject completely.<BR>\n<BR>\nEngine Maintenance Instructions:<BR>\n\tShut off ignition systems:<BR>\n\tActivate internal power<BR>\n\tActivate orbital balance matrix<BR>\n\tRemove volatile liquids from area<BR>\n\tWear a fire suit<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nToxin Laboratory Procedure:<BR>\n\tWear a gas mask regardless<BR>\n\tGet an oxygen tank.<BR>\n\tActivate internal atmosphere<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nDisaster Procedure:<BR>\n\tFire:<BR>\n\t\tActivate sector fire alarm.<BR>\n\t\tMove to a safe area.<BR>\n\t\tGet a fire suit<BR>\n\t\tAfter:<BR>\n\t\t\tAssess Damage<BR>\n\t\t\tRepair damages<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tMeteor Shower:<BR>\n\t\tActivate fire alarm<BR>\n\t\tMove to the back of ship<BR>\n\t\tAfter<BR>\n\t\t\tRepair damage<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tAccidental Reentry:<BR>\n\t\tActivate fire alrms in front of ship.<BR>\n\t\tMove volatile matter to a fire proof area!<BR>\n\t\tGet a fire suit.<BR>\n\t\tStay secure until an emergency ship arrives.<BR>\n<BR>\n\t\tIf ship does not arrive-<BR>\n\t\t\tEvacuate to a nearby safe area!"
-
-/obj/item/weapon/paper_bin
-	name = "paper bin"
-	desc = "This contains many papers."
-	icon = 'paper.dmi'
-	icon_state = "paper_bin1"
-	var/amount = 30.0
-	item_state = "sheet-metal"
-	throwforce = 1
-	w_class = 3.0
-	throw_speed = 3
-	throw_range = 7
-
-/obj/item/weapon/pen
-	desc = "It's a normal black ink pen."
-	name = "pen"
-	icon = 'paper.dmi'
-	icon_state = "pen"
-	flags = FPRINT | ONBELT | TABLEPASS
-	throwforce = 0
-	w_class = 1.0
-	throw_speed = 7
-	throw_range = 15
-	m_amt = 10
-	var/colour = "black"	//what colour the ink is!
-
-/obj/item/weapon/pen/blue
-	desc = "It's a normal blue ink pen."
-	icon_state = "pen_blue"
-	colour = "blue"
-
-/obj/item/weapon/pen/red
-	desc = "It's a normal red ink pen."
-	icon_state = "pen_red"
-	colour = "red"
 
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
@@ -1391,60 +1322,6 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
 	origin_tech = "biotech=2"
-
-/obj/item/weapon/stamp
-	desc = "A rubber stamp for stamping important documents."
-	name = "rubber stamp"
-	icon = 'paper.dmi'
-	icon_state = "stamp-qm"
-	item_state = "stamp"
-	flags = FPRINT | TABLEPASS
-	throwforce = 0
-	w_class = 1.0
-	throw_speed = 7
-	throw_range = 15
-	m_amt = 60
-	var/color = "cargo"
-
-/obj/item/weapon/stamp/captain
-	name = "captain's rubber stamp"
-	icon_state = "stamp-cap"
-	color = "captain"
-
-/obj/item/weapon/stamp/hop
-	name = "head of personnel's rubber stamp"
-	icon_state = "stamp-hop"
-	color = "hop"
-
-/obj/item/weapon/stamp/hos
-	name = "head of security's rubber stamp"
-	icon_state = "stamp-hos"
-	color = "hosred"
-
-/obj/item/weapon/stamp/ce
-	name = "chief engineer's rubber stamp"
-	icon_state = "stamp-ce"
-	color = "chief"
-
-/obj/item/weapon/stamp/rd
-	name = "research director's rubber stamp"
-	icon_state = "stamp-rd"
-	color = "director"
-
-/obj/item/weapon/stamp/cmo
-	name = "chief medical officer's rubber stamp"
-	icon_state = "stamp-cmo"
-	color = "medical"
-
-/obj/item/weapon/stamp/denied
-	name = "\improper DENIED rubber stamp"
-	icon_state = "stamp-qm"
-	color = "redcoat"
-
-/obj/item/weapon/stamp/clown
-	name = "clown's rubber stamp"
-	icon_state = "stamp-clown"
-	color = "clown"
 
 /*
 /obj/item/weapon/cigarpacket
