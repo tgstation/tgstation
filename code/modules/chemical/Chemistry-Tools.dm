@@ -2970,6 +2970,13 @@
 	if(src)
 		del(src)
 
+/obj/structure/reagent_dispensers/fueltank/temperature_expose(datum/gas_mixture/air, temperature, volume)
+	if(temperature > T0C+500)
+		explosion(src.loc,-1,0,2)
+		if(src)
+			del(src)
+	return ..()
+
 /obj/structure/reagent_dispensers/water_cooler
 	name = "Water-Cooler"
 	desc = "A machine that dispenses water to drink"
