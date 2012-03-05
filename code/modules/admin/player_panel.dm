@@ -60,7 +60,7 @@
 
 				}
 
-				function expand(id,job,name,real_name,image,key,ip,antagonist){
+				function expand(id,job,name,real_name,image,key,ip,antagonist,ref){
 
 					clearAll();
 
@@ -221,32 +221,47 @@
 
 			var/M_job = ""
 
-			if(istype(M,/mob/new_player))
-				M_job = "New player"
 			if(isliving(M))
-				M_job = "Living"
-			if(isobserver(M))
+
+				if(iscarbon(M)) //Carbon stuff
+					if(ishuman(M))
+						M_job = M.job
+					else if(ismetroid(M))
+						M_job = "Metroid"
+					else if(ismonkey(M))
+						M_job = "Moneky"
+					else if(isalien(M)) //aliens
+						if(islarva(M))
+							M_job = "Alien larva"
+						else
+							M_job = "Alien"
+					else
+						M_job = "Carbon-based"
+
+				else if(issilicon(M)) //silicon
+					if(isAI(M))
+						M_job = "AI"
+					else if(ispAI(M))
+						M_job = "pAI"
+					else if(isrobot(M))
+						M_job = "Cyborg"
+					else
+						M_job = "Silicon-based"
+
+				else if(isanimal(M)) //simple animals
+					if(iscorgi(M))
+						M_job = "Corgi"
+					else
+						M_job = "Animal"
+
+				else
+					M_job = "Living"
+
+			else if(istype(M,/mob/new_player))
+				M_job = "New player"
+
+			else if(isobserver(M))
 				M_job = "Ghost"
-			if(isalien(M))
-				M_job = "Alien"
-			if(islarva(M))
-				M_job = "Alien larva"
-			if(ishuman(M))
-				M_job = M.job
-			if(ismetroid(M))
-				M_job = "Metroid"
-			if(ismonkey(M))
-				M_job = "Moneky"
-			if(isAI(M))
-				M_job = "AI"
-			if(ispAI(M))
-				M_job = "pAI"
-			if(isrobot(M))
-				M_job = "Cyborg"
-			if(isanimal(M))
-				M_job = "Animal"
-			if(iscorgi(M))
-				M_job = "Corgi"
 
 			M_job = dd_replacetext(M_job, "'", "")
 			M_job = dd_replacetext(M_job, "\"", "")
