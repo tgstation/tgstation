@@ -8,7 +8,7 @@
 
 
 /obj/item/projectile/bullet/weakbullet
-	damage = 5
+	damage = 15
 	stun = 5
 	weaken = 5
 
@@ -38,7 +38,7 @@
 
 /obj/item/projectile/bullet/stunshot
 	name = "\improper Stunshot"
-	damage = 5
+	damage = 15
 	stun = 10
 	weaken = 10
 	stutter = 10

@@ -260,6 +260,10 @@
 	"Meeting Room", "HoP Office", "Captain",
 	"Atmospherics", "Engineering", "Chief Engineer", "Robotics",)
 
+	mining
+		locationList = list("Mining Main","Mining North","Mining West")
+		spaceList = list(0,0,0)
+
 	w_class = 1
 	item_state = "electronic"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT

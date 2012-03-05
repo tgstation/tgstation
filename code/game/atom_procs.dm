@@ -108,6 +108,8 @@
 		if(src.fingerprintslast != H.key)
 			src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
 			src.fingerprintslast = H.key
+		if(!fingerprints)
+			fingerprints = list()
 		var/new_prints = 0
 		var/prints
 		for(var/i = 1, i <= src.fingerprints.len, i++)
@@ -122,15 +124,15 @@
 					if(src.fingerprints.len == 1)
 						src.fingerprints = list()
 					else
-						for(var/j = (i + 1), j < (src.fingerprints.len), j++)
-							src.fingerprints[j-1] = src.fingerprints[j]
+						for(var/j = i, j <= (src.fingerprints.len), j++)
+							src.fingerprints[j] = src.fingerprints[j+1]
 						src.fingerprints.len--
 				else
 					src.fingerprints[i] = "1=" + L[num2text(1)] + "&2=" + test_print
 		if(new_prints)
 			src.fingerprints[new_prints] = text("1=[]&2=[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), (H.gloves ? rand(10,20) : rand(25,40)))))
 		else if(new_prints == 0)
-			if(!src.fingerprints)
+			if(!src.fingerprints || !src.fingerprints.len)
 				src.fingerprints = list(text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40))))
 			src.fingerprints += text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40)))
 		for(var/i = 1, i <= src.fingerprints.len, i++)
