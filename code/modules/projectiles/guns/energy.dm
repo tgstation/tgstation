@@ -24,7 +24,6 @@
 		else
 			power_supply = new(src)
 		power_supply.give(power_supply.maxcharge)
-		modifystate = icon_state
 		return
 
 
@@ -40,7 +39,10 @@
 	update_icon()
 		var/ratio = power_supply.charge / power_supply.maxcharge
 		ratio = round(ratio, 0.25) * 100
-		icon_state = text("[][]", modifystate, ratio)
+		if(modifystate)
+			icon_state = text("[][]", modifystate, ratio)
+		else
+			icon_state = text("[][]", initial(icon_state), ratio)
 
 
 

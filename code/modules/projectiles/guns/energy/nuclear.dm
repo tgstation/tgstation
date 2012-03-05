@@ -7,6 +7,7 @@
 	charge_cost = 100 //How much energy is needed to fire.
 	projectile_type = "/obj/item/projectile/energy/electrode"
 	origin_tech = "combat=3;magnets=2"
+	modifystate = "energystun"
 
 	var
 		mode = 0 //0 = stun, 1 = kill
