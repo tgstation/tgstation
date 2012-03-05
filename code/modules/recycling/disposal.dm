@@ -541,12 +541,12 @@
 		active = 1
 		dir = DOWN
 		spawn(1)
-			process()		// spawn off the movement process
+			move()		// spawn off the movement process
 
 		return
 
 	// movement process, persists while holder is moving through pipes
-	process()
+	proc/move()
 		var/obj/structure/disposalpipe/last
 		while(active)
 			if(has_fat_guy && prob(2)) // chance of becoming stuck per segment if contains a fat guy
