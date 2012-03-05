@@ -6,3 +6,5 @@ eternal248: Maximilian Haynes: /obj/item/weapon/paper/certificate
 searif: Yuki Matsuda: /obj/item/weapon/paper/certificate
 erthilo: Farah Lants: /obj/item/clothing/under/rank/medical_sleeve, /obj/item/clothing/suit/storage/labcoat/red
 compactninja: Ysyr Rylias: /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
+tzefa: Wes Solari: /obj/item/fluff/wes_solari_1
+searif: Yuki Matsuda: /obj/item/clothing/under/jumpsuitdown
