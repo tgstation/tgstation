@@ -557,10 +557,6 @@ proc/process_ghost_teleport_locs()
 	name = "Escape Shuttle Hallway"
 	icon_state = "escape"
 
-/area/hallway/secondary/construction
-	name = "Construction Area"
-	icon_state = "construction"
-
 /area/hallway/secondary/entry
 	name = "Arrival Shuttle Hallway"
 	icon_state = "entry"
@@ -585,16 +581,24 @@ proc/process_ghost_teleport_locs()
 	name = "Courtroom"
 	icon_state = "courtroom"
 
-/area/crew_quarters/heads
+/area/crew_quarters/heads/hop
 	name = "Head of Personnel's Quarters"
 	icon_state = "head_quarters"
 
-/area/crew_quarters/hor
-	name = "Research Director's Office"
+/area/crew_quarters/heads/hor
+	name = "Research Director's Quarters"
 	icon_state = "head_quarters"
 
-/area/crew_quarters/chief
-	name = "Chief Engineer's Office"
+/area/crew_quarters/heads/ce
+	name = "Chief Engineer's Quarters"
+	icon_state = "head_quarters"
+
+/area/crew_quarters/heads/hos
+	name = "Head of Security's Quarters"
+	icon_state = "head_quarters"
+
+/area/crew_quarters/heads/cmo
+	name = "Chief Medical Officer's Quarters"
 	icon_state = "head_quarters"
 
 /area/mint
@@ -982,6 +986,10 @@ proc/process_ghost_teleport_locs()
 	name = "Research Lab"
 	icon_state = "researchlab"
 
+/area/toxins/rdoffice
+	name = "Research Director's Office"
+	icon_state = "head_quarters"
+
 /area/toxins/xenobiology
 	name = "Xenobiology Lab"
 	icon_state = "xenolab"
@@ -1156,6 +1164,14 @@ proc/process_ghost_teleport_locs()
 /area/construction
 	name = "Construction Area"
 	icon_state = "yellow"
+
+/area/construction/under_construction_small
+	name = "Construction Area"
+	icon_state = "construction"
+
+/area/construction/under_construction_large
+	name = "Construction Area"
+	icon_state = "construction"
 
 /area/construction/supplyshuttle
 	name = "Supply Shuttle"

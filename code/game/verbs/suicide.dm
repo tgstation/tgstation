@@ -32,7 +32,9 @@
 	if(alien_egg_flag)
 		src << "The alien inside you forces you to breathe, preventing you from suiciding."
 		return
-
+	if(mutantrace == "trappedsoul")
+		src << "You are already dead, your soul trapped and contained!"
+		return
 	if(confirm == "Yes")
 		message_admins("[ckey] has suicided.", 1)
 		suiciding = 1

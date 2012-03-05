@@ -1,5 +1,5 @@
 /obj/item/weapon/gun/energy/temperature
-	name = "temperature gun"
+	name = "\improper Temperature Gun"
 	icon_state = "freezegun"
 	fire_sound = 'pulse3.ogg'
 	desc = "A gun that changes temperatures."
@@ -23,20 +23,21 @@
 
 
 	attack_self(mob/living/user as mob)
-		user.machine = src
-		var/temp_text = ""
-		if(temperature > (T0C - 50))
-			temp_text = "<FONT color=black>[temperature] ([round(temperature-T0C)]&deg;C) ([round(temperature*1.8-459.67)]&deg;F)</FONT>"
-		else
-			temp_text = "<FONT color=blue>[temperature] ([round(temperature-T0C)]&deg;C) ([round(temperature*1.8-459.67)]&deg;F)</FONT>"
+		if(..())
+			user.machine = src
+			var/temp_text = ""
+			if(temperature > (T0C - 50))
+				temp_text = "<FONT color=black>[temperature] ([round(temperature-T0C)]&deg;C) ([round(temperature*1.8-459.67)]&deg;F)</FONT>"
+			else
+				temp_text = "<FONT color=blue>[temperature] ([round(temperature-T0C)]&deg;C) ([round(temperature*1.8-459.67)]&deg;F)</FONT>"
 
-		var/dat = {"<B>Freeze Gun Configuration: </B><BR>
-		Current output temperature: [temp_text]<BR>
-		Target output temperature: <A href='?src=\ref[src];temp=-100'>-</A> <A href='?src=\ref[src];temp=-10'>-</A> <A href='?src=\ref[src];temp=-1'>-</A> [current_temperature] <A href='?src=\ref[src];temp=1'>+</A> <A href='?src=\ref[src];temp=10'>+</A> <A href='?src=\ref[src];temp=100'>+</A><BR>
-		"}
+			var/dat = {"<B>Freeze Gun Configuration: </B><BR>
+			Current output temperature: [temp_text]<BR>
+			Target output temperature: <A href='?src=\ref[src];temp=-100'>-</A> <A href='?src=\ref[src];temp=-10'>-</A> <A href='?src=\ref[src];temp=-1'>-</A> [current_temperature] <A href='?src=\ref[src];temp=1'>+</A> <A href='?src=\ref[src];temp=10'>+</A> <A href='?src=\ref[src];temp=100'>+</A><BR>
+			"}
 
-		user << browse(dat, "window=freezegun;size=450x300")
-		onclose(user, "freezegun")
+			user << browse(dat, "window=freezegun;size=450x300")
+			onclose(user, "freezegun")
 
 
 	Topic(href, href_list)

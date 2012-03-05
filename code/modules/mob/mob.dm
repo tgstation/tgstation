@@ -277,6 +277,13 @@
 		back = null
 	else if (W == wear_mask)
 		wear_mask = null
+	if(istype(W,/obj/item/weapon/gun))
+		var/obj/item/weapon/gun/gun = W
+		if(gun.target)
+			gun.target.NotTargeted(gun)
+		del(item_use_icon)
+		del(gun_move_icon)
+		del(gun_run_icon)
 	update_clothing()
 	return
 

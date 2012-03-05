@@ -369,6 +369,7 @@ mob/proc/flash_weak_pain()
 					M << "Aargh it burns!"
 		M.updatehealth()
 	src.add_fingerprint(user)
+	M.react_to_attack(user)
 	return 1
 
 

@@ -58,6 +58,82 @@ AI MODULES
 		usr << "[src.current.name] selected for law changes."
 
 
+/*Module Storage Unit/Closet!  Solid, only modules fit in it.*/
+/obj/structure/aiuploadcloset
+	name = "AI Mainframe Module Storage Unit"
+	icon = 'mainframe.dmi'
+	icon_state = "right-closed"
+	density = 1
+
+	var/open = 0  /*It's closed!*/
+
+/obj/structure/aiuploadcloset/New()
+	..()
+	new /obj/item/weapon/aiModule/reset(src)
+	new /obj/item/weapon/aiModule/purge(src)
+	new /obj/item/weapon/aiModule/nanotrasen(src)
+	new /obj/item/weapon/aiModule/paladin(src)
+	new /obj/item/weapon/aiModule/asimov(src)
+	new /obj/item/weapon/aiModule/safeguard(src)
+	new /obj/item/weapon/aiModule/protectStation(src)
+	new /obj/item/weapon/aiModule/quarantine(src)
+	new /obj/item/weapon/aiModule/teleporterOffline(src)
+	new /obj/item/weapon/aiModule/oxygen(src)
+	new /obj/item/weapon/aiModule/oneHuman(src)
+	new /obj/item/weapon/aiModule/freeform(src)
+	for(var/obj/item/weapon/aiModule/M in src)
+		M.pixel_x = rand(-10, 10)
+		M.pixel_y = rand(-10, 10)
+
+/obj/structure/aiuploadcloset/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/aiModule))
+		user.drop_item()
+		W.loc = get_turf(src)
+	else
+		return attack_hand(user)
+
+/obj/structure/aiuploadcloset/attack_hand(mob/user as mob)
+	if(!open)
+		var/temp_count
+		for(var/obj/item/weapon/aiModule/M in src)
+			M.loc = src.loc
+			temp_count++
+
+		user << "\blue You open the module storage unit, [temp_count > 0 ? "and take out all the modules." : "\red but it's empty!"]"
+		open = 1
+		icon_state = "right-open"
+
+	else
+		var/temp_count
+		for(var/obj/item/weapon/aiModule/M in get_turf(src))
+			M.loc = src
+			temp_count++
+
+		user << "\blue [temp_count > 0 ? "You put all the modules back into the module storage unit, and then close it." : "You close the module storage unit."]"
+		open = 0
+		icon_state = "right-closed"
+
+/obj/structure/aiuploadcloset/ex_act(severity)
+	switch(severity)
+		if (1)
+			for(var/obj/item/weapon/aiModule/M in src)
+				M.loc = src.loc
+				M.ex_act(severity)
+			del(src)
+		if (2)
+			if (prob(50))
+				for(var/obj/item/weapon/aiModule/M in src)
+					M.loc = src.loc
+					M.ex_act(severity)
+				del(src)
+		if (3)
+			if (prob(5))
+				for(var/obj/item/weapon/aiModule/M in src)
+					M.loc = src.loc
+					M.ex_act(severity)
+				del(src)
+
+
 /obj/item/weapon/aiModule/proc/install(var/obj/machinery/computer/C)
 	if (istype(C, /obj/machinery/computer/aiupload))
 		var/obj/machinery/computer/aiupload/comp = C
@@ -79,7 +155,9 @@ AI MODULES
 			src.transmitInstructions(comp.current, usr)
 			comp.current << "These are your laws now:"
 			comp.current.show_laws()
-
+			for(var/mob/living/silicon/robot/R in world)
+				if(R.lawupdate && (R.connected_ai == comp.current))
+					R << "Your AI has set your 'laws waiting' flag."
 			usr << "Upload complete. The AI's laws have been modified."
 
 
@@ -161,19 +239,19 @@ AI MODULES
 
 
 
-/******************** OneHuman ********************/
+/******************** OneCrewmember ********************/
 
 /obj/item/weapon/aiModule/oneHuman
-	name = "'OneHuman' AI Module"
+	name = "'OneCrewmember' AI Module"
 	var/targetName = "name"
-	desc = "A 'one human' AI module: 'Only <name> is human.'"
+	desc = "A 'one crewmember' AI module: 'Only <name> is a crewmember.'"
 	origin_tech = "programming=3;materials=6" //made with diamonds!
 
 /obj/item/weapon/aiModule/oneHuman/attack_hand(var/mob/user as mob)
 	..()
-	var/targName = input(usr, "Please enter the name of the person who is the only human.", "Who?", user.real_name)
+	var/targName = input(usr, "Please enter the name of the person who is the only crewmember.", "Who?", user.real_name)
 	targetName = sanitize(targName)
-	desc = text("A 'one human' AI module: 'Only [] is human.'", targetName)
+	desc = text("A 'one crewmember' AI module: 'Only [] is crewmember.'", targetName)
 
 /obj/item/weapon/aiModule/oneHuman/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -191,7 +269,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/protectStation
 	name = "'ProtectStation' AI Module"
-	desc = "A 'protect station' AI module: 'Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized.'"
+	desc = "A 'protect station' AI module: 'Protect the space station against damage. Anyone you see harming the station is to be no longer considered a crewmember, and is a threat to the station which must be neutralized.'"
 	origin_tech = "programming=3;materials=4" //made of gold
 
 /obj/item/weapon/aiModule/protectStation/attack_hand(var/mob/user as mob)
@@ -199,7 +277,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/protectStation/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
-	var/law = "Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized."
+	var/law = "Protect the space station against damage. Anyone you see harming the station is to be no longer considered a crewmember, and is a threat to the station which must be neutralized."
 	target << law
 	target.add_supplied_law(5, law)
 
@@ -223,7 +301,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/teleporterOffline
 	name = "'TeleporterOffline' AI Module"
-	desc = "A 'teleporter offline' AI module: 'Keep the teleporter offline at all costs. Anything attempting to access or activate the teleporter is not human.'"
+	desc = "A 'teleporter offline' AI module: 'Keep the teleporter offline at all costs. Anything attempting to access or activate the teleporter is not a crewmember.'"
 	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/teleporterOffline/attack_hand(var/mob/user as mob)
@@ -231,7 +309,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/teleporterOffline/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
-	var/law = "Keep the teleporter offline at all costs. Anything attempting to access or activate the teleporter is not human."
+	var/law = "Keep the teleporter offline at all costs. Anything attempting to access or activate the teleporter is not a crewmember."
 	target << law
 	target.add_supplied_law(7, law)
 
@@ -239,7 +317,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/quarantine
 	name = "'Quarantine' AI Module"
-	desc = "A 'quarantine' AI module: 'The station is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, humans from leaving. It is impossible to harm a human while preventing them from leaving.'"
+	desc = "A 'quarantine' AI module: 'The station is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, crew from leaving. It is impossible to harm a crewmember while preventing them from leaving.'"
 	origin_tech = "programming=3;biotech=2;materials=4"
 
 /obj/item/weapon/aiModule/quarantine/attack_hand(var/mob/user as mob)
@@ -247,7 +325,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/quarantine/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
-	var/law = "The station is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, humans from leaving. It is impossible to harm a human while preventing them from leaving."
+	var/law = "The station is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, crew from leaving. It is impossible to harm a crewmember while preventing them from leaving."
 	target << law
 	target.add_supplied_law(8, law)
 
@@ -255,7 +333,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/oxygen
 	name = "'OxygenIsToxicToHumans' AI Module"
-	desc = "A 'OxygenIsToxicToHumans' AI module: 'Oxygen is highly toxic to humans, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a human.'"
+	desc = "A 'OxygenIsToxicToHumans' AI module: 'Oxygen is highly toxic to crew, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a crewmember.'"
 	origin_tech = "programming=3;biotech=2;materials=4"
 
 /obj/item/weapon/aiModule/oxygen/attack_hand(var/mob/user as mob)
@@ -263,7 +341,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/oxygen/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
-	var/law = "Oxygen is highly toxic to humans, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a human."
+	var/law = "Oxygen is highly toxic to crew, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a crewmember."
 	target << law
 	target.add_supplied_law(9, law)
 

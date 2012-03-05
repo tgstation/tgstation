@@ -15,13 +15,13 @@
 		return
 
 	if (length(message) >= 2)
-		if (copytext(message, 1, 3) == ":s")
+		if ((copytext(message, 1, 3) == ":s") || (copytext(message, 1, 3) == ":S"))
 			if(istype(src, /mob/living/silicon/pai))
 				return ..(message)
 			message = copytext(message, 3)
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			robot_talk(message)
-		else if (copytext(message, 1, 3) == ":h")
+		else if ((copytext(message, 1, 3) == ":h") || (copytext(message, 1, 3) == ":H"))
 			if(isAI(src)&&client)//For patching directly into AI holopads.
 				message = copytext(message, 3)
 				message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))

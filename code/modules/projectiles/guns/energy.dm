@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy
 	icon_state = "energy"
-	name = "energy gun"
+	name = "\improper Energy gun"
 	desc = "A basic energy-based gun with two settings: Stun and kill."
 	fire_sound = 'Taser.ogg'
 

@@ -177,6 +177,7 @@
 				for(var/datum/disease/D in M.viruses)
 					if(istype(D, /datum/disease/jungle_fever))
 						contract_disease(D,1,0)
+				react_to_attack(M)
 			else
 				for(var/mob/O in viewers(src, null))
 					O.show_message("\red <B>[M.name] has attempted to bite [name]!</B>", 1)
@@ -239,11 +240,13 @@
 							return
 				bruteloss += damage
 				updatehealth()
+				react_to_attack(M)
 			else
 				playsound(loc, 'punchmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has attempted to [attack_verb] [name]!</B>", M), 1)
+				react_to_attack(M)
 		else
 			if (M.a_intent == "grab")
 				if (M == src)
@@ -265,6 +268,8 @@
 				playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					O.show_message(text("\red [] has grabbed [name] passively!", M), 1)
+
+				if(prob(1)) react_to_attack(M)
 			else
 				if (!( paralysis ))
 					if (prob(25))
@@ -273,12 +278,14 @@
 						for(var/mob/O in viewers(src, null))
 							if ((O.client && !( O.blinded )))
 								O.show_message(text("\red <B>[] has pushed down [name]!</B>", M), 1)
+						react_to_attack(M)
 					else
 						drop_item()
 						playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
 						for(var/mob/O in viewers(src, null))
 							if ((O.client && !( O.blinded )))
 								O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
+						react_to_attack(M)
 	return
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
@@ -313,6 +320,7 @@
 							O.show_message(text("\red <B>[] has slashed [name]!</B>", M), 1)
 				bruteloss += damage
 				updatehealth()
+				react_to_attack(M)
 			else
 				playsound(loc, 'slashmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
@@ -353,6 +361,7 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
 			bruteloss += damage
+			react_to_attack(M)
 			updatehealth()
 	return
 
@@ -415,6 +424,7 @@
 
 
 		updatehealth()
+		react_to_attack(M)
 
 	return
 
@@ -439,8 +449,7 @@
 
 	if(update_icon) // Skie
 		..()
-		for(var/i in overlays)
-			overlays -= i
+		overlays = null
 
 		if (!( lying ))
 			icon_state = "monkey1"
@@ -505,6 +514,13 @@
 
 			else
 				m_select.screen_loc = null
+	if(targeted_by && target_locked)
+		overlays += target_locked
+	else if(targeted_by)
+		target_locked = new /obj/effect/target_locked(src)
+		overlays += target_locked
+	else if(!targeted_by && target_locked)
+		del(target_locked)
 	for(var/mob/M in viewers(1, src))
 		if ((M.client && M.machine == src))
 			spawn( 0 )
@@ -560,8 +576,16 @@
 
 	for(var/mob/living/carbon/metroid/M in view(1,src))
 		M.UpdateFeed(src)
-	src.moved_recently = 120
 	return
+
+/mob/living/carbon/monkey/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	var/chealth = health
+	var/rval = ..()
+	if(chealth > health)
+		// we were damaged!
+		react_to_attack(user)
+
+	return rval
 
 /mob/living/carbon/monkey/verb/removeinternal()
 	set name = "Remove Internals"

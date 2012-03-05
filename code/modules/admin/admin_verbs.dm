@@ -267,6 +267,7 @@
 			verbs += /client/proc/unban_panel
 			verbs += /client/proc/jobbans
 			verbs += /client/proc/playernotes
+			verbs += /obj/admins/proc/show_skills
 			verbs += /obj/admins/proc/vmode
 			verbs += /obj/admins/proc/votekill
 			verbs += /client/proc/voting
@@ -394,6 +395,7 @@
 	verbs -= /client/proc/unban_panel
 	verbs -= /client/proc/jobbans
 	verbs -= /client/proc/playernotes
+	verbs -= /obj/admins/proc/show_skills
 	verbs -= /obj/admins/proc/vmode
 	verbs -= /obj/admins/proc/votekill
 	verbs -= /client/proc/voting

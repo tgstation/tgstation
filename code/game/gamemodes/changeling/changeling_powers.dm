@@ -87,14 +87,19 @@
 		usr << "\red We must have a tighter grip to absorb this creature."
 		return
 
-	usr.changeling.chem_charges += 5
+	if (usr.changeling.isabsorbing)
+		usr << "\red We are already absorbing!"
+		return
+
+
 
 	var/mob/living/carbon/human/T = M
 
 	usr << "\blue This creature is compatible. We must hold still..."
-
+	usr.changeling.isabsorbing = 1
 	if (!do_mob(usr, T, 150))
 		usr << "\red Our absorption of [T] has been interrupted!"
+		usr.changeling.isabsorbing = 0
 		return
 
 	usr << "\blue We extend a proboscis."
@@ -102,6 +107,7 @@
 
 	if (!do_mob(usr, T, 150))
 		usr << "\red Our absorption of [T] has been interrupted!"
+		usr.changeling.isabsorbing = 0
 		return
 
 	usr << "\blue We stab [T] with the proboscis."
@@ -111,6 +117,7 @@
 
 	if (!do_mob(usr, T, 150))
 		usr << "\red Our absorption of [T] has been interrupted!"
+		usr.changeling.isabsorbing = 0
 		return
 
 	usr << "\blue We have absorbed [T]!"
@@ -119,7 +126,7 @@
 
 	usr.changeling.absorbed_dna[T.real_name] = T.dna
 	if(usr.nutrition < 400) usr.nutrition = min((usr.nutrition + T.nutrition), 400)
-	usr.changeling.chem_charges += 5
+	usr.changeling.chem_charges += 10
 	if(T.changeling)
 		if(T.changeling.absorbed_dna)
 			usr.changeling.absorbed_dna |= T.changeling.absorbed_dna //steal all their loot
@@ -127,6 +134,7 @@
 			T.changeling.absorbed_dna[T.real_name] = T.dna
 		usr.changeling.chem_charges += T.changeling.chem_charges
 		T.changeling.chem_charges = 0
+	usr.changeling.isabsorbing = 0
 
 	T.death(0)
 	T.real_name = "Unknown"

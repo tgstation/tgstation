@@ -120,6 +120,7 @@ ZIPPO
   var/butt_count = 5  //count of butt sprite variations
 	proc
 		light(var/flavor_text = "[usr] lights the [name].")
+		put_out()
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		..()
@@ -144,20 +145,28 @@ ZIPPO
 				O.show_message(flavor_text, 1)
 			processing_objects.Add(src)
 
+	put_out()
+		if (src.lit == -1)
+			return
+		src.lit = -1
+		src.damtype = "brute"
+		src.icon_state = icon_butt + "[rand(0,butt_count)]"
+		src.item_state = icon_off
+		src.desc = "A [src.name] butt."
+		src.name = "[src.name] butt"
+
 
 	process()
 		var/turf/location = get_turf(src)
 		src.smoketime--
 		if(src.smoketime < 1)
-			src.lit = -1
-			src.damtype = "brute"
-			src.icon_state = icon_butt + "[rand(0,butt_count)]"
-			src.item_state = icon_off
-			src.desc = "A [src.name] butt."
-			src.name = "[src.name] butt"
 			if(ismob(src.loc))
 				var/mob/living/M = src.loc
 				M << "\red Your [src.name] goes out."
+				put_out()
+				M.update_clothing()
+			else
+				put_out()
 			processing_objects.Remove(src)
 			return
 		if(location)
@@ -167,14 +176,8 @@ ZIPPO
 
 	dropped(mob/user as mob)
 		if(src.lit == 1)
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [] calmly drops and treads on the lit [], putting it out instantly.", user,src.name), 1)
-			src.lit = -1
-			src.damtype = "brute"
-			src.icon_state = icon_butt + "[rand(0,butt_count)]"
-			src.item_state = icon_off
-			src.desc = "A [src.name] butt."
-			src.name = "[src.name] butt"
+			src.visible_message("\red [user] calmly drops and treads on the lit [src], putting it out instantly.")
+			put_out()
 		return ..()
 
 

@@ -128,7 +128,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		if(!src.loc)
 			on = 0
-		var/area/A = src.loc.loc
+		var/area/A = get_area(src)
 		if(!A || !isarea(A) || !A.master)
 			on = 0
 		else

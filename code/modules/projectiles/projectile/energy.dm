@@ -1,5 +1,5 @@
 /obj/item/projectile/energy
-	name = "energy"
+	name = "\improper Energy"
 	icon_state = "spark"
 	damage = 0
 	damage_type = BURN
@@ -7,17 +7,17 @@
 
 
 /obj/item/projectile/energy/electrode
-	name = "electrode"
+	name = "\improper Electrode"
 	icon_state = "spark"
 	nodamage = 1
-	stun = 10
-	weaken = 10
+	stun = 15
+	weaken = 15
 	stutter = 10
-	flag = "melee" //Give it a better chance to be blocked.
+	flag = "laser" //Give it a better chance to be blocked.
 
 
 /obj/item/projectile/energy/declone
-	name = "declown"
+	name = "\improper Decloner Bolt"
 	icon_state = "declone"
 	nodamage = 1
 	damage_type = CLONE
@@ -25,7 +25,7 @@
 
 
 /obj/item/projectile/energy/dart
-	name = "dart"
+	name = "\improper Dart"
 	icon_state = "toxin"
 	damage = 5
 	damage_type = TOX
@@ -33,7 +33,7 @@
 
 
 /obj/item/projectile/energy/bolt
-	name = "bolt"
+	name = "\improper Bolt"
 	icon_state = "cbbolt"
 	damage = 10
 	damage_type = TOX
@@ -43,7 +43,7 @@
 
 
 /obj/item/projectile/energy/bolt/large
-	name = "largebolt"
+	name = "\improper Large Bolt"
 	damage = 20
 
 

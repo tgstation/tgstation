@@ -1,5 +1,5 @@
 /obj/item/weapon/gun/projectile/shotgun
-	name = "shotgun"
+	name = "\improper Shotgun"
 	desc = "Useful for sweeping alleys."
 	icon_state = "shotgun"
 	max_shells = 2
@@ -21,11 +21,12 @@
 
 
 	attack_self(mob/living/user as mob)
-		if(recentpump)	return
-		pump()
-		recentpump = 1
-		spawn(10)
-			recentpump = 0
+		if(..())
+			if(recentpump)	return
+			pump()
+			recentpump = 1
+			spawn(10)
+				recentpump = 0
 		return
 
 
@@ -48,7 +49,7 @@
 
 
 /obj/item/weapon/gun/projectile/shotgun/combat
-	name = "combat shotgun"
+	name = "\improper Combat Shotgun"
 	icon_state = "cshotgun"
 	max_shells = 8
 	ammo_type = "/obj/item/ammo_casing/shotgun"
@@ -56,7 +57,7 @@
 
 
 /obj/item/weapon/gun/projectile/shotgun/combat2
-	name = "security combat shotgun"
+	name = "\improper Security Combat Shotgun"
 	icon_state = "cshotgun"
 	max_shells = 4
 

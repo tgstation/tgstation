@@ -195,6 +195,7 @@
 			blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.dna.b_type)
 			this.blood_DNA =  blood_DNA_temp
 			this.virus2 = M.virus2
+			this.blood_owner = M
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
 				this.viruses += newDisease
@@ -332,6 +333,8 @@
 
 /atom/Click(location,control,params)
 	//world << "atom.Click() on [src] by [usr] : src.type is [src.type]"
+	if(!istype(src,/obj/item/weapon/gun))
+		usr.last_target_click = world.time
 	var/list/pram = params2list(params)
 	if((pram["alt"] != null && pram["ctrl"] != null && pram["left"] != null) && istype(src,/atom/movable))
 		src:pull()

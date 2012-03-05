@@ -408,8 +408,8 @@ datum
 			build_path = "/obj/item/weapon/aiModule/safeguard"
 
 		onehuman_module
-			name = "Module Design (OneHuman)"
-			desc = "Allows for the construction of a OneHuman AI Module."
+			name = "Module Design (OneCrewmember)"
+			desc = "Allows for the construction of a OneCrewmember AI Module."
 			id = "onehuman_module"
 			req_tech = list("programming" = 4, "materials" = 6)
 			build_type = IMPRINTER
@@ -444,8 +444,8 @@ datum
 			build_path = "/obj/item/weapon/aiModule/quarantine"
 
 		oxygen_module
-			name = "Module Design (OxygenIsToxicToHumans)"
-			desc = "Allows for the construction of a Safeguard AI Module."
+			name = "Module Design (OxygenIsToxicToCrew)"
+			desc = "Allows for the construction of a OxygenIsToxicToCrew AI Module."
 			id = "oxygen_module"
 			req_tech = list("programming" = 3, "biotech" = 2, "materials" = 4)
 			build_type = IMPRINTER

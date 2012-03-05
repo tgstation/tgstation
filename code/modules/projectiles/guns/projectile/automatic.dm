@@ -1,5 +1,5 @@
 /obj/item/weapon/gun/projectile/automatic //Hopefully someone will find a way to make these fire in bursts or something. --Superxpdude
-	name = "Submachine Gun"
+	name = "\improper Submachine Gun"
 	desc = "A lightweight, fast firing gun. Uses 9mm rounds."
 	icon_state = "saber"
 	w_class = 3.0
@@ -11,7 +11,7 @@
 
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
-	name = "Mini-Uzi"
+	name = "\improper Mini-Uzi"
 	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses .45 rounds."
 	icon_state = "mini-uzi"
 	w_class = 3.0
@@ -23,7 +23,7 @@
 
 
 /obj/item/weapon/gun/projectile/automatic/c20r
-	name = "C-20r SMG"
+	name = "\improper C-20r SMG"
 	desc = "A lightweight, fast firing gun, for when you REALLY need someone dead. Uses 12mm rounds. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp"
 	icon_state = "c20r"
 	item_state = "c20r"

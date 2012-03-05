@@ -1,5 +1,5 @@
 /obj/item/weapon/gun/projectile/silenced
-	name = "Silenced Pistol"
+	name = "\improper Silenced Pistol"
 	desc = "A small, quiet,  easily concealable gun. Uses .45 rounds."
 	icon_state = "silenced_pistol"
 	w_class = 3.0
@@ -12,7 +12,7 @@
 
 
 /obj/item/weapon/gun/projectile/deagle
-	name = "Desert Eagle"
+	name = "\improper Desert Eagle"
 	desc = "A robust handgun that uses 357 magnum ammo"
 	icon_state = "deagle"
 	force = 14.0
@@ -21,7 +21,7 @@
 
 
 /obj/item/weapon/gun/projectile/deagle/gold
-	name = "Desert Eagle"
+	name = "\improper Desert Eagle"
 	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses 357 ammo."
 	icon_state = "deagleg"
 	item_state = "deagleg"
@@ -29,7 +29,7 @@
 
 
 /obj/item/weapon/gun/projectile/deagle/camo
-	name = "Desert Eagle"
+	name = "\improper Desert Eagle"
 	desc = "A Deagle brand Deagle for operators operating operationally. Uses 357 ammo."
 	icon_state = "deaglecamo"
 	item_state = "deagleg"
@@ -37,7 +37,7 @@
 
 
 /obj/item/weapon/gun/projectile/gyropistol
-	name = "Gyrojet Pistol"
+	name = "\improper Gyrojet Pistol"
 	desc = "A bulky pistol designed to fire self propelled rounds"
 	icon_state = "gyropistol"
 	max_shells = 8

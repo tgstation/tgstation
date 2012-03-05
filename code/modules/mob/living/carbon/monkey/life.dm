@@ -88,12 +88,7 @@
 	for(var/obj/item/weapon/grab/G in src)
 		G.process()
 
-	if(!client && !stat)
-		if(prob(33) && canmove && isturf(loc))
-			step(src, pick(cardinal))
-		if(prob(1))
-			emote(pick("scratch","jump","roll","tail"))
-	src.moved_recently = max(0, src.moved_recently-1)
+	npc_act()
 
 /mob/living/carbon/monkey
 	proc

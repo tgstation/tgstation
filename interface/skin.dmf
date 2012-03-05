@@ -132,12 +132,20 @@ macro "macro"
 		command = "say"
 		is-disabled = false
 	elem 
+		name = "F4"
+		command = "me"
+		is-disabled = false
+	elem 
 		name = "F5"
 		command = "asay"
 		is-disabled = false
+	elem 
+		name = "F6"
+		command = "ToggleGunMode"
+		is-disabled = false
 
 macro "tcside"
-		
+
 macro "vending"
 	elem 
 		name = "NORTHEAST"
@@ -291,6 +299,7 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
+
 
 window "Telecomms IDE"
 	elem "Telecomms IDE"

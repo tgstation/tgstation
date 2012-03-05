@@ -50,7 +50,7 @@ atom/proc/add_fibers(mob/living/carbon/human/M)
 	if(!suit_fibers.len) del suit_fibers
 
 atom/proc/get_duplicate(var/atom/location)
-	var/atom/temp_atom = new src.type(location)
+	var/atom/movable/temp_atom = new /atom/movable(location)
 	temp_atom.name = src.name
 	temp_atom.desc = src.desc
 	temp_atom.icon = src.icon
@@ -725,7 +725,7 @@ obj/effect/decal/cleanable/blood/var
 	mob/blood_owner
 
 turf/Exited(mob/living/carbon/human/M)
-	if(istype(M,/mob/living))
+	if(istype(M,/mob/living) && !istype(M,/mob/living/carbon/metroid))
 		if(!istype(src, /turf/space))  // Bloody tracks code starts here
 			if(M.track_blood > 0)
 				M.track_blood--
@@ -737,7 +737,7 @@ turf/Exited(mob/living/carbon/human/M)
 						src.add_bloody_footprints(M.shoes.track_blood_mob,1,M.dir,M.shoes.name) // And bloody tracks end here
 	. = ..()
 turf/Entered(mob/living/carbon/human/M)
-	if(istype(M,/mob/living))
+	if(istype(M,/mob/living) && !istype(M,/mob/living/carbon/metroid))
 		if(M.track_blood > 0)
 			M.track_blood--
 			src.add_bloody_footprints(M.track_blood_mob,0,M.dir,get_tracks(M))
@@ -769,9 +769,14 @@ turf/proc/add_bloody_footprints(mob/living/carbon/human/M,leaving,d,info)
 		if(T.dir == d)
 			if((leaving && T.icon_state == "steps2") || (!leaving && T.icon_state == "steps1"))
 				T.desc = "These bloody footprints appear to have been made by [info]."
-				if(istype(M,/mob/living/carbon/human))
+				if(T.blood_DNA)
 					T.blood_DNA.len++
+				if(istype(M,/mob/living/carbon/human))
 					T.blood_DNA[T.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
+				else if(istype(M,/mob/living/carbon/alien))
+					T.blood_DNA[T.blood_DNA.len] = list("UNKNOWN DNA","X*")
+				else if(istype(M,/mob/living/carbon/monkey))
+					T.blood_DNA[T.blood_DNA.len] = list("Non-human DNA","A+")
 				return
 	var/obj/effect/decal/cleanable/blood/tracks/this = new(src)
 	this.icon = 'footprints.dmi'
@@ -796,6 +801,8 @@ proc/get_tracks(mob/M)
 			. = "monkey paws"
 		else if(istype(M,/mob/living/silicon/robot))
 			. = "robot feet"
+		else if(istype(M,/mob/living/carbon/alien))
+			. = "alien claws"
 		else
 			. = "an unknown creature"
 

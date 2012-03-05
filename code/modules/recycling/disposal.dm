@@ -61,6 +61,15 @@
 			update()
 			return
 
+		if(istype(I, /obj/item/ashtray) && (I.health > 0))
+			user << "\blue You empty the ashtray into [src]."
+			for(var/obj/item/O in I.contents)
+				O.loc = src
+				I.contents -= O
+			I.icon_state = I:icon_empty
+			update()
+			return
+
 		if(istype(I, /obj/item/weapon/weldingtool) && I:welding)
 			var/obj/item/weapon/weldingtool/W = I
 			playsound(src.loc, 'Welder.ogg', 100, 1)
@@ -86,7 +95,7 @@
 			if(ismob(G.affecting))
 				var/mob/GM = G.affecting
 				for (var/mob/V in viewers(usr))
-					V.show_message("[usr] starts putting [GM.name] into the disposal.", 3)
+					V.show_message("[usr] starts putting [GM] into the disposal.", 3)
 				if(do_after(usr, 20))
 					if (GM.client)
 						GM.client.perspective = EYE_PERSPECTIVE

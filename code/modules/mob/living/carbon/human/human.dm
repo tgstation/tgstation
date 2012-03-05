@@ -22,7 +22,8 @@
 	var/s_tone = 0.0
 	var/age = 30.0
 	var/used_skillpoints = 0
-	var/skills = null
+	var/skill_specialization = null
+	var/list/skills = null
 //	var/b_type
 
 	var/obj/item/clothing/suit/wear_suit = null
@@ -765,7 +766,6 @@
 
 	for(var/mob/living/carbon/metroid/M in view(1,src))
 		M.UpdateFeed(src)
-	src.moved_recently = 120
 	return
 
 /mob/living/carbon/human/update_clothing()
@@ -1174,6 +1174,13 @@
 		invisibility = 2
 	else
 		invisibility = 0
+		if(targeted_by && target_locked)
+			overlays += target_locked
+		else if(targeted_by)
+			target_locked = new /obj/effect/target_locked(src)
+			overlays += target_locked
+		else if(!targeted_by && target_locked)
+			del(target_locked)
 
 /*
 	for (var/mob/M in viewers(1, src))//For the love of god DO NOT REFRESH EVERY SECOND - Mport

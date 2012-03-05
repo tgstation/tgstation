@@ -1,5 +1,5 @@
 /obj/item/projectile/change
-	name = "bolt of change"
+	name = "\improper Bolt of Change"
 	icon_state = "ice_1"
 	damage = 0
 	damage_type = BURN
@@ -41,6 +41,7 @@
 				if(M.mind)
 					M.mind.transfer_to(O)
 				O.a_intent = "hurt"
+				O.universal_speak = 1
 				O << "<B>You are now a monkey.</B>"
 				del(M)
 				return O
@@ -111,6 +112,7 @@
 
 					new_metroid.a_intent = "hurt"
 					new_metroid << "<B>You are now an adult Metroid.</B>"
+					new_metroid.universal_speak = 1
 					del(M)
 					return new_metroid
 				else
@@ -120,6 +122,7 @@
 					if(M.mind)
 						M.mind.transfer_to(new_metroid)
 					new_metroid.a_intent = "hurt"
+					new_metroid.universal_speak = 1
 					new_metroid << "<B>You are now a baby Metroid.</B>"
 					del(M)
 					return new_metroid
@@ -145,6 +148,7 @@
 				if(M.mind)
 					M.mind.transfer_to(new_xeno)
 				new_xeno.a_intent = "hurt"
+				new_xeno.universal_speak = 1
 				new_xeno << "<B>You are now an alien.</B>"
 				del(M)
 				return new_xeno

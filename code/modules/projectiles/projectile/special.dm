@@ -1,5 +1,5 @@
 /obj/item/projectile/ion
-	name = "ion bolt"
+	name = "\improper Ion Bolt"
 	icon_state = "ion"
 	damage = 0
 	damage_type = BURN
@@ -13,7 +13,7 @@
 
 
 /obj/item/projectile/bullet/gyro
-	name ="gyro"
+	name ="\improper Rocket"
 	icon_state= "bolter"
 	damage = 50
 	flag = "bullet"
@@ -24,7 +24,7 @@
 		return 1
 
 /obj/item/projectile/temp
-	name = "freeze beam"
+	name = "\improper Freeze Beam"
 	icon_state = "ice_2"
 	damage = 0
 	damage_type = BURN

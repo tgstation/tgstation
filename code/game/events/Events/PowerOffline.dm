@@ -1,10 +1,9 @@
 /datum/event/power_offline
-	var/list/protected_areas = list(/area/ai_monitored/storage/eva, /area/engine, /area/toxins/xenobiology, /area/turret_protected/ai)
-
 	Announce()
 		for(var/obj/machinery/power/apc/a in world)
 			if(!a.crit && a.z == 1)
-				if(a.area in protected_areas)
+				if(istype(a.area, /area/ai_monitored/storage/eva) || istype(a.area, /area/engine)\
+				|| istype(a.area, /area/toxins/xenobiology) || istype(a.area, /area/turret_protected/ai))
 					continue
 				a.eventoff = 1
 				a.update()
