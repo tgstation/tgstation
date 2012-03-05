@@ -101,7 +101,7 @@ datum/skill/computer
 datum/skill/pilot
     ID = "pilot"
     name = "Heavy Machinery Operation"
-    desc = "Describes your experience and understanding of operating heavy machinery, which includes mechs and other large exosuits. Used in piloting mechs and creating them"
+    desc = "Describes your experience and understanding of operating heavy machinery, which includes mechs and other large exosuits. Used in piloting mechs."
     field = "Engineering"
 
 datum/skill/medical
