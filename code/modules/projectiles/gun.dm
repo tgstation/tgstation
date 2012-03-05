@@ -86,7 +86,7 @@
 			PreFire(M,user)
 			return
 		else if(user.a_intent == "hurt" && (istype(src.in_chamber, /obj/item/projectile/beam) || istype(src.in_chamber, /obj/item/projectile/energy)\
-		 || istype(src.in_chamber, /obj/item/projectile/bullet)) && !istype(src.in_chamber, /obj/item/projectile/bullet/stunshot))
+		 || istype(src.in_chamber, /obj/item/projectile/bullet)) && !istype(src.in_chamber, /obj/item/projectile/bullet/stunshot) && load_into_chamber())
 			//Lets shoot them, then.
 			user.visible_message("\red <b> [user] fires \the [src] point blank at [M]!</b>")
 			M.bullet_act(in_chamber,"head")
@@ -99,7 +99,7 @@
 			if(M.stat != 2)	M.stat = 1
 			del(in_chamber)
 			return
-		else if(user.a_intent != "hurt" && istype(src,/obj/item/weapon/gun/energy/taser))
+		else if(user.a_intent != "hurt" && istype(src,/obj/item/weapon/gun/energy/taser) && load_into_chamber())
 			if (prob(50))
 				if (M.paralysis < 60 && (!(M.mutations & 8)) )
 					M.paralysis = 60
@@ -109,6 +109,7 @@
 			if (M.stuttering < 60 && (!(M.mutations & 8)) )
 				M.stuttering = 60
 			user.visible_message("\red <B>[M] has been stunned with the taser gun by [user]!</B>")
+			del(in_chamber)
 			return
 		else
 			return ..()
@@ -234,9 +235,10 @@
 //					if(M.type == /mob)
 //						return FindTarget(M,user,params)
 			var/mob/M = GunTrace(usr.x,usr.y,A.x,A.y,usr.z,usr)
-			if(M && ismob(M) && !target && !M.client.admin_invis)
-				Aim(M)
-				return
+			if(M && ismob(M) && !target)
+				if(!(M.client && M.client.admin_invis))
+					Aim(M)
+					return
 		if(ismob(A) && target != A)
 			Aim(A)
 		else if(lock_time < world.time + 10)
