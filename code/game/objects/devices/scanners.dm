@@ -210,7 +210,7 @@ MASS SPECTROMETER
 		for(var/i = 1, i < (stored.len + 1), i++)	//Lets see if the object is already in there!
 			var/list/temp = stored[i]
 			var/atom/checker = temp[1]
-			var/atom_checker_scan = (A.original_atom.len ? checker.original_atom[1] == A.original_atom[1] : 0)
+			var/atom_checker_scan = (A.original_atom ? checker.original_atom[1] == A.original_atom[1] : 0)
 			if(checker.original_atom[1] == A || atom_checker_scan)	//It is!  Merge!
 				merged = 1
 				var/list/prints = temp[2]

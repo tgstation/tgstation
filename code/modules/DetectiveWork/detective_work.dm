@@ -58,7 +58,7 @@ atom/proc/get_duplicate(var/atom/location)
 	temp_atom.fingerprints = src.fingerprints
 	temp_atom.blood_DNA = src.blood_DNA
 	temp_atom.suit_fibers = src.suit_fibers
-	if(src.original_atom.len)
+	if(src.original_atom)
 		temp_atom.original_atom = src.original_atom
 	else
 		temp_atom.original_atom = list(src)
@@ -520,7 +520,7 @@ obj/machinery/computer/forensic_scanning
 				for(var/i = 1, i <= misc.len, i++)	//Lets see if we can find it.
 					var/list/templist = misc[i]
 					var/atom/check = templist[1]
-					var/atom_checker_scan = (A.original_atom.len ? check.original_atom[1] == A.original_atom[1] : 0)
+					var/atom_checker_scan = (A.original_atom ? check.original_atom[1] == A.original_atom[1] : 0)
 					if(check.original_atom[1] == A || atom_checker_scan) //There it is!
 						merged = 1
 						var/list/fibers = templist[2]
@@ -570,7 +570,7 @@ obj/machinery/computer/forensic_scanning
 						for(var/n = 2, n <= perp_list.len, n++)	//Lets see if it is already in the database
 							var/list/target = perp_list[n]
 							var/atom/atom_checker = target[1]
-							var/atom_checker_scan = (A.original_atom.len ? atom_checker.original_atom[1] == A.original_atom[1] : 0)
+							var/atom_checker_scan = (A.original_atom ? atom_checker.original_atom[1] == A.original_atom[1] : 0)
 							if(atom_checker.original_atom[1] == A || atom_checker_scan)	//Found the original object!
 								found2 = 1
 								var/list/prints = target[2]
