@@ -401,6 +401,12 @@
 	src.attack_hand(usr)
 
 /obj/machinery/turretid/proc/updateTurrets()
+	if(control_area)
+		for (var/obj/machinery/turret/aTurret in get_area_all_atoms(control_area))
+			aTurret.setState(enabled, lethal)
+		update_icons()
+
+/obj/machinery/turretid/proc/update_icons()
 	if (src.enabled)
 		if (src.lethal)
 			icon_state = "motion1"
@@ -408,10 +414,11 @@
 			icon_state = "motion3"
 	else
 		icon_state = "motion0"
-
 	if(control_area)
-		for (var/obj/machinery/turret/aTurret in get_area_all_atoms(control_area))
-			aTurret.setState(enabled, lethal)
+		for (var/obj/machinery/turretid/aTurret in get_area_all_atoms(control_area))
+			aTurret.icon_state = icon_state
+			aTurret.enabled = enabled
+			aTurret.lethal = lethal
 
 
 

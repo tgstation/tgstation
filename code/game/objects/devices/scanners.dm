@@ -144,6 +144,8 @@ MASS SPECTROMETER
 		if(istype(A,/obj/item/weapon/f_card))
 			user << "Haha, nice try.  Cheater.  (It would break stuff anyways.)"
 			return
+		if(!A.fingerprints)
+			A.fingerprints = list()
 		src.add_fingerprint(user)
 		if (istype(A, /obj/effect/decal/cleanable/blood) || istype(A, /obj/effect/rune))
 			if(!isnull(A.blood_DNA.len))
@@ -209,7 +211,8 @@ MASS SPECTROMETER
 		for(var/i = 1, i < (stored.len + 1), i++)	//Lets see if the object is already in there!
 			var/list/temp = stored[i]
 			var/atom/checker = temp[1]
-			if(checker.original_atom == A || checker.original_atom == A.original_atom)	//It is!  Merge!
+			var/atom_checker_scan = (A.original_atom ? checker.original_atom[1] == A.original_atom[1] : 0)
+			if(checker.original_atom[1] == A || atom_checker_scan)	//It is!  Merge!
 				merged = 1
 				var/list/prints = temp[2]
 				if(!prints)
@@ -252,11 +255,7 @@ MASS SPECTROMETER
 		if(!merged)	//Uh, oh!  New data point!
 			var/list/sum_list[4]	//Pack it back up!
 			sum_list[1] = A.get_duplicate(src)
-			if(!A.fingerprints)
-				world << "Report this to a dev! [A] was lacking a list() for fingerprints!"
-				sum_list[2] = list()
-			else
-				sum_list[2] = A.fingerprints
+			sum_list[2] = A.fingerprints
 			sum_list[3] = A.suit_fibers
 			sum_list[4] = A.blood_DNA
 			stored.len++
