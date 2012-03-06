@@ -97,7 +97,7 @@
 			id = src.wear_id.registered_name
 			if (src.wear_id.PHOTO)
 				photo = 1
-		if (id != src.real_name && in_range(src, usr) && prob(10))
+		if (id != src.real_name && in_range(src, usr) && prob(50))
 			if (photo)
 				usr << "\red [src.name] is wearing \icon[src.wear_id] [src.wear_id.name] with a photo yet doesn't seem to be that person!!!"
 			else
@@ -144,34 +144,35 @@
 					O.show_message("[usr] checks [src]'s pulse.", 1)
 			sleep(15)
 			usr << "\red [name] has no pulse!"
-	else
-		if (src.getBruteLoss())
-			if (src.getBruteLoss() < 30)
-				usr << "\red [src.name] looks slightly injured!"
-			else
-				usr << "\red <B>[src.name] looks severely injured!</B>"
 
-		if (src.cloneloss)
-			if (src.cloneloss < 30)
-				usr << "\red [src.name] looks slightly... unfinished?"
-			else
-				usr << "\red <B>[src.name] looks very... unfinished?</B>"
+	if (src.getBruteLoss())
+		if (src.getBruteLoss() < 30)
+			usr << "\red [src.name] looks slightly injured!"
+		else
+			usr << "\red <B>[src.name] looks severely injured!</B>"
 
-		if (src.getFireLoss())
-			if (src.getFireLoss() < 30)
-				usr << "\red [src.name] looks slightly burned!"
-			else
-				usr << "\red <B>[src.name] looks severely burned!</B>"
+	if (src.cloneloss)
+		if (src.cloneloss < 30)
+			usr << "\red [src.name] looks slightly... unfinished?"
+		else
+			usr << "\red <B>[src.name] looks very... unfinished?</B>"
 
-		if (src.nutrition < 100)
-			usr << "\red [src.name] looks like flesh and bones."
-		else if (src.nutrition >= 500)
-			if (usr.nutrition < 100)
-				usr << "\red [src.name] looks very round and delicious. Like a little piggy. A tasty piggy."
-			else
-				usr << "\blue [src.name] looks quite chubby."
+	if (src.getFireLoss())
+		if (src.getFireLoss() < 30)
+			usr << "\red [src.name] looks slightly burned!"
+		else
+			usr << "\red <B>[src.name] looks severely burned!</B>"
 
-		else if (src.brainloss >= 60)
+	if (src.nutrition < 100)
+		usr << "\red [src.name] looks like flesh and bones."
+	else if (src.nutrition >= 500)
+		if (usr.nutrition < 100)
+			usr << "\red [src.name] looks very round and delicious. Like a little piggy. A tasty piggy."
+		else
+			usr << "\blue [src.name] looks quite chubby."
+
+	if(!stat)
+		if (src.brainloss >= 60)
 			usr << "\red [src.name] has a stupid expression on [t_his] face."
 		if (!src.client)
 			usr << "\red [src.name] doesn't seem as though they want to talk."
