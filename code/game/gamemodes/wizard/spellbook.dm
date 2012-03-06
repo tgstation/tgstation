@@ -25,7 +25,8 @@
 		dat += "<A href='byond://?src=\ref[src];spell_choice=11'>Mutate</A> (60)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=12'>Ethereal Jaunt</A> (60)<BR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=13'>Knock</A> (10)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=14'>Summon Guns</A> (One time use, global spell)<BR>"
+		if(op)
+			dat += "<A href='byond://?src=\ref[src];spell_choice=14'>Summon Guns</A> (One time use, global spell)<BR>"
 		dat += "<HR>"
 		dat += "<B>Artefacts:</B><BR>"
 		dat += "Powerful items imbued with eldritch magics. Summoning one will count towards your maximum number of spells.<BR>"
@@ -35,7 +36,8 @@
 		dat += "<HR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=16'>Six Soul Stone Shards and the spell Artificer</A><BR>"
 		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=17'>Veil Render</A><BR>"
+		if(op)
+			dat += "<A href='byond://?src=\ref[src];spell_choice=17'>Veil Render</A><BR>"
 		dat += "<HR>"
 		dat += "<A href='byond://?src=\ref[src];spell_choice=18'>Re-memorize Spells</A><BR>"
 	user << browse(dat, "window=radio")
