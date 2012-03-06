@@ -245,28 +245,23 @@ obj/machinery/computer/forensic_scanning
 						print_string = "Fingerprints: (80% or higher completion reached)<br>" + prints[num2text(2)] + "<br>"
 					temp += print_string
 					for(var/i = 2, i <= dossier.len, i++)
+						temp += "<hr>"
 						var/list/outputs = dossier[i]
 						var/item_name = get_name(outputs[1])
 						var/list/prints_len = outputs[2]
-						temp += "Object: [item_name]<br>"
+						temp += "<big><b>Object:</b> [item_name]</big><br>"
+						temp += "&nbsp<b>Fingerprints:</b><br>"
 						temp += "&nbsp;&nbsp;&nbsp;&nbsp;[prints_len.len] Unique fingerprints found.<br>"
 						var/list/fibers = outputs[3]
 						if(fibers && fibers.len)
-							var/dat = "[fibers[1]]"
-							for(var/j = 2, j <= fibers.len, j++)
-								dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]"
-							temp += "&nbsp;&nbsp;&nbsp;&nbsp;Fibers: [dat]<br>"
-						else
-							temp += "&nbsp;&nbsp;&nbsp;&nbsp;No fibers found.<br>"
+							temp += "&nbsp<b>Fibers:</b><br>"
+							for(var/j = 1, j <= fibers.len, j++)
+								temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]<br>"
 						var/list/blood = outputs[4]
 						if(blood && blood.len)
-							var/dat = "[blood[1]]"
-							if(blood.len > 1)
-								for(var/j = 2, j <= blood.len, j++)
-									dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]"
-							temp += "&nbsp;&nbsp;&nbsp;&nbsp;Blood: [dat]<br>"
-						else
-							temp += "&nbsp;&nbsp;&nbsp;&nbsp;No blood found.<br>"
+							temp += "&nbsp<b>Blood:</b><br>"
+							for(var/j = 1, j <= blood.len, j++)
+								temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]<br>"
 				else
 					temp = "ERROR.  Database not found!<br>"
 				temp += "<br><a href='?src=\ref[src];operation=database;delete_record=[href_list["identifier"]]'>{Delete this Dossier}</a>"
@@ -286,28 +281,23 @@ obj/machinery/computer/forensic_scanning
 						print_string = "Fingerprints: " + prints[num2text(2)] + "<BR>"
 					P.info += print_string
 					for(var/i = 2, i <= dossier.len, i++)
+						P.info += "<hr>"
 						var/list/outputs = dossier[i]
 						var/item_name = get_name(outputs[1])
 						var/list/prints_len = outputs[2]
-						P.info += "Object: [item_name]<br>"
+						P.info += "<big><b>Object:</b> [item_name]</big><br>"
+						P.info += "&nbsp<b>Fingerprints:</b><br>"
 						P.info += "&nbsp;&nbsp;&nbsp;&nbsp;[prints_len.len] Unique fingerprints found.<br>"
 						var/list/fibers = outputs[3]
 						if(fibers && fibers.len)
-							var/dat = "[fibers[1]]"
-							for(var/j = 2, j <= fibers.len, j++)
-								dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]"
-							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;Fibers: [dat]<br>"
-						else
-							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;No fibers found.<br>"
+							P.info += "&nbsp<b>Fibers:</b><br>"
+							for(var/j = 1, j <= fibers.len, j++)
+								P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]<br>"
 						var/list/blood = outputs[4]
 						if(blood && blood.len)
-							var/dat = "[blood[1]]"
-							if(blood.len > 1)
-								for(var/j = 2, j <= blood.len, j++)
-									dat += ",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]"
-							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;Blood: [dat]<br>"
-						else
-							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;No blood found."
+							P.info += "&nbsp<b>Blood:</b><br>"
+							for(var/j = 1, j <= blood.len, j++)
+								P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]<br>"
 				else
 					usr << "ERROR.  Database not found!<br>"
 			if("auxiliary")
