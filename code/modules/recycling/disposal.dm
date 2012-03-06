@@ -61,6 +61,15 @@
 			update()
 			return
 
+		if(istype(I, /obj/item/ashtray) && (I.health > 0))
+			user << "\blue You empty the ashtray into [src]."
+			for(var/obj/item/O in I.contents)
+				O.loc = src
+				I.contents -= O
+			I.icon_state = I:icon_empty
+			update()
+			return
+
 		if(istype(I, /obj/item/weapon/weldingtool) && I:welding)
 			var/obj/item/weapon/weldingtool/W = I
 			playsound(src.loc, 'Welder.ogg', 100, 1)

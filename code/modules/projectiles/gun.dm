@@ -190,42 +190,43 @@
 	afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
 		if(flag)	return //we're placing gun on a table or in backpack
 		if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
-		PreFire(A,user,params)
+		if(user && user.gun_mode)
+			PreFire(A,user,params)
+		else
+			Fire(A,user,params)
 
 //Compute how to fire.....
 	proc/PreFire(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, params)
-		if(usr.a_intent in list("help","grab","disarm"))
-			//GraphicTrace(usr.x,usr.y,A.x,A.y,usr.z)
-			if(lock_time > world.time - 2) return
-			if(!ismob(A))
+		//GraphicTrace(usr.x,usr.y,A.x,A.y,usr.z)
+		if(lock_time > world.time - 2) return
+		if(!ismob(A))
 //				var/mob/M = locate() in range(0,A)
 //				if(M && !ismob(A))
 //					if(M.type == /mob)
 //						return FindTarget(M,user,params)
-				var/mob/M = GunTrace(usr.x,usr.y,A.x,A.y,usr.z,usr)
-				if(M && ismob(M) && !target)
-					Aim(M)
-					return
-			if(ismob(A) && target != A)
-				Aim(A)
-			else if(lock_time < world.time + 10)
-				Fire(A,user,params)
-			else if(!target)
-				Fire(A,user,params)
+			var/mob/M = GunTrace(usr.x,usr.y,A.x,A.y,usr.z,usr)
+			if(M && ismob(M) && !target && !M.client.admin_invis)
+				Aim(M)
+				return
+		if(ismob(A) && target != A)
+			Aim(A)
+		else if(lock_time < world.time + 10)
+			Fire(A,user,params)
+		else if(!target)
+			Fire(A,user,params)
+		//else
+			//var/item/gun/G = usr.OHand
+			//if(!G)
+				//Fire(A,0)
+			//else if(istype(G))
+				//G.Fire(A,3)
+				//Fire(A,2)
 			//else
-				//var/item/gun/G = usr.OHand
-				//if(!G)
-					//Fire(A,0)
-				//else if(istype(G))
-					//G.Fire(A,3)
-					//Fire(A,2)
-				//else
-					//Fire(A)
-			var/dir_to_fire = sd_get_approx_dir(usr,A)
-			if(dir_to_fire != usr.dir)
-				usr.dir = dir_to_fire
-		else
-			Fire(A, user)
+				//Fire(A)
+		var/dir_to_fire = sd_get_approx_dir(usr,A)
+		if(dir_to_fire != usr.dir)
+			usr.dir = dir_to_fire
+
 
 
 //Yay, math!
@@ -318,14 +319,17 @@ mob/proc
 				M << 'TargetOff.ogg'
 		del(target_locked)
 		targeted_by -= I
-		update_clothing()
 		I.target = null
 		var/mob/T = I.loc
 		if(T && ismob(T))
 			del(T.item_use_icon)
 			del(T.gun_move_icon)
 			del(T.gun_run_icon)
+			T.target_can_move = 0
+			T.target_can_run = 0
+			T.target_can_click = 0
 		if(!targeted_by.len) del targeted_by
+		spawn(1) update_clothing()
 
 /*	Captive(var/obj/item/weapon/gun/I)
 		Sound(src,'CounterAttack.ogg')
@@ -372,6 +376,7 @@ mob/var
 	target_can_move = 0
 	target_can_run = 0
 	target_can_click = 0
+	gun_mode = 0
 mob/Move()
 	. = ..()
 	for(var/obj/item/weapon/gun/G in targeted_by)
@@ -439,3 +444,15 @@ mob/verb
 					G.target << "Your character may now <b>use items</b> at the discretion of their targeter."
 				else
 					G.target << "\red <b>Your character will now be shot if they use items.</b>"
+
+	ToggleGunMode()
+		set hidden = 1
+		spawn(1) gun_mode = !gun_mode
+		if(!gun_mode)
+//			winset(usr,"default.target_can_click","is-flat=true;border=sunken")
+			usr << "You will now take people captive."
+		else
+//			winset(usr,"default.target_can_click","is-flat=false;border=none")
+			usr << "You will now shoot where you target."
+		if(usr.gun_setting_icon)
+			usr.gun_setting_icon.dir = (usr.gun_setting_icon.dir%2)+1

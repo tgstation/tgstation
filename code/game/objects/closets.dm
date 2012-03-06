@@ -149,6 +149,8 @@
 		src.welded =! src.welded
 		for(var/mob/M in viewers(src))
 			M.show_message("\red [src] has been [welded?"welded shut":"unwelded"] by [user.name].", 3, "\red You hear welding.", 2)
+	else if(istype(W,/obj/item/weapon/packageWrap))
+		return
 	else
 		src.attack_hand(user)
 	return

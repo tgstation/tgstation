@@ -401,7 +401,6 @@
 	item_state = "scratch"
 	color = "scratch"
 
-
 /obj/item/clothing/under/jensen
 	desc = "You never asked for anything this stylish."
 	name = "Head of Security Jumpsuit"
@@ -507,7 +506,7 @@
 	color = "spiderman"
 
 /obj/item/clothing/under/rank/nursesuit
-	desc = "A jumpsuit commonly worn by nursing staff in the medical department."
+	desc = "Made of a special fiber that gives special protection against biohazards. A jumpsuit commonly worn by nursing staff in the medical department."
 	name = "Nurse Suit"
 	icon_state = "nursesuit"
 	item_state = "nursesuit"
@@ -530,10 +529,17 @@
 	armor = list(melee = 100, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100)
 
 /obj/item/clothing/under/rank/medical_sleeve
-	desc = "Made of a special fiber that gives special protection against biohazards. Has a cross on the chest denoting that the wearer is trained medical personnel. Has short sleeves."
+	desc = "Made of a special fiber that gives special protection against biohazards. Has a cross on the chest denoting that the wearer is trained medical personneland short sleeves."
 	name = "Short Sleeve Medical Jumpsuit"
 	icon_state = "medical_sleeve"
-	item_state = "medical_sleeve"
+	item_state = "w_suit"
 	color = "medical_sleeve"
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
+
+/obj/item/clothing/under/jumpsuitdown
+	desc = "A rolled down jumpsuit. Great for mechanics."
+	name = "Rolled Down Jumpsuit"
+	icon_state = "jumpsuitdown"
+	item_state = "jumpsuitdown"
+	color = "jumpsuitdown"

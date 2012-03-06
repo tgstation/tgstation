@@ -157,6 +157,7 @@
 #define FILE_DIR "code/WorkInProgress/Apples"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn/Tajara"
+#define FILE_DIR "code/WorkInProgress/Chinsky"
 #define FILE_DIR "code/WorkInProgress/mapload"
 #define FILE_DIR "code/WorkInProgress/Mini"
 #define FILE_DIR "code/WorkInProgress/Mloc"
@@ -1077,8 +1078,11 @@
 #include "code\WorkInProgress\buildmode.dm"
 #include "code\WorkInProgress\explosion_particles.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Tajara\examine.dm"
+#include "code\WorkInProgress\Cael_Aislinn\Tajara\say.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Tajara\tajara_transformation.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Tajara\tajaran.dm"
+#include "code\WorkInProgress\Cael_Aislinn\Tajara\whisper.dm"
+#include "code\WorkInProgress\Chinsky\ashtray.dm"
 #include "code\WorkInProgress\mapload\dmm_suite.dm"
 #include "code\WorkInProgress\mapload\reader.dm"
 #include "code\WorkInProgress\Mini\atmos_control.dm"
@@ -1116,4 +1120,3 @@
 #include "interface\skin.dmf"
 #include "maps\tgstation.2.0.8.dmm"
 // END_INCLUDE
-

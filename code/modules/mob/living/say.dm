@@ -153,7 +153,7 @@
 	if( !message_mode && (disease_symptoms & DISEASE_WHISPER))
 		message_mode = "whisper"
 
-	if(src.stunned > 0 && (!(traumatic_shock > 61) && prob(50)))
+	if(src.stunned > 0 || (traumatic_shock > 61 && prob(50)))
 		message_mode = "" //Stunned people shouldn't be able to physically turn on their radio/hold down the button to speak into it
 
 
@@ -319,6 +319,7 @@
 	listening = hearers(message_range, T)
 	var/list/V = view(message_range, T)
 	var/list/W = V
+
 	//find mobs in lockers, cryo, intellicards, brains, MMIs, and so on.
 	for (var/mob/M in world)
 		if (!M.client)
@@ -333,6 +334,10 @@
 		else
 			if (M.client && M.client.ghost_ears)
 				listening|=M
+
+	var/list/eavesdroppers = get_mobs_in_view(7, src)
+	for(var/mob/M in listening)
+		eavesdroppers.Remove(M)
 
 	for (var/obj/O in ((W | contents)-used_radios))
 		W |= O
@@ -503,6 +508,13 @@
 			sleep(11)
 			del(B)
 		*/
+
+	if (length(eavesdroppers))
+
+		for (var/mob/M in eavesdroppers)
+			M << "\blue [src] speaks into their radio..."
+			M << speech_bubble
+		spawn(30) del(speech_bubble)
 
 
 

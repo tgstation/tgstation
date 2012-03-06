@@ -1037,7 +1037,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/mint
 
 /datum/recipe/superbiteburger
-	reagents = list("salt" = 5, "pepper" = 5)
+	reagents = list("sodiumchloride" = 5, "blackpepper" = 5)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/unfinished_superbiteburger,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato,

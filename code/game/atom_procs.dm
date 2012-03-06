@@ -195,6 +195,7 @@
 			blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.dna.b_type)
 			this.blood_DNA =  blood_DNA_temp
 			this.virus2 = M.virus2
+			this.blood_owner = M
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
 				this.viruses += newDisease

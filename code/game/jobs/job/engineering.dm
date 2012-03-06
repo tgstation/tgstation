@@ -18,6 +18,24 @@
 		H.equip_if_possible(new /obj/item/clothing/head/helmet/hardhat/white(H), H.slot_head)
 		H.equip_if_possible(new /obj/item/weapon/storage/belt/utility/full(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/gloves/black(H), H.slot_gloves)
+		var/list/wire_index = list(
+				"Orange" = 1,
+				"Dark red" = 2,
+				"White" = 3,
+				"Yellow" = 4,
+				"Red" = 5,
+				"Blue" = 6,
+				"Green" = 7,
+				"Grey" = 8,
+				"Black" = 9,
+				"Pink" = 10,
+				"Brown" = 11,
+				"Maroon" = 12)
+		H.mind.store_memory("<b>The door wires are as follows:</b>")
+		H.mind.store_memory("<b>Power:</b> [wire_index[airlockIndexToWireColor[2]]] and [wire_index[airlockIndexToWireColor[3]]]")
+		H.mind.store_memory("<b>Backup Power:</b> [wire_index[airlockIndexToWireColor[5]]] and [wire_index[airlockIndexToWireColor[6]]]")
+		H.mind.store_memory("<b>Door Bolts:</b> [wire_index[airlockIndexToWireColor[4]]]")
+		H << "\blue You have memorised the important wires for the vessel.  Use them wisely."
 		return 1
 
 

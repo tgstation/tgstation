@@ -1,8 +1,8 @@
 var/global/const
 	SKILL_NONE = 0
 	SKILL_BASIC = 1
-	SKILL_ADEPT = 3
-	SKILL_EXPERT = 6
+	SKILL_ADEPT = 2
+	SKILL_EXPERT = 3
 
 datum/skill/var
     ID = "none" // ID of the skill, used in code
@@ -11,10 +11,10 @@ datum/skill/var
     field = "Misc" // the field under which the skill will be listed
 
 var/global/list/SKILLS = null
-var/list/SKILL_ENGINEER = list("EVA" = SKILL_BASIC, "construction" = SKILL_ADEPT, "electrical" = SKILL_BASIC, "engines" = SKILL_ADEPT)
-var/list/SKILL_ROBOTICIST = list("devices" = SKILL_ADEPT, "electrical" = SKILL_BASIC, "computer" = SKILL_ADEPT, "anatomy" = SKILL_BASIC)
-var/list/SKILL_SECURITY_OFFICER = list("combat" = SKILL_BASIC, "weapons" = SKILL_ADEPT, "law" = SKILL_ADEPT, "forensics" = SKILL_BASIC)
-var/list/SKILL_CHEMIST = list("chemistry" = SKILL_ADEPT, "science" = SKILL_ADEPT, "medical" = SKILL_BASIC, "devices" = SKILL_BASIC)
+var/list/SKILL_ENGINEER = list("field" = "Engineering", "EVA" = SKILL_BASIC, "construction" = SKILL_ADEPT, "electrical" = SKILL_BASIC, "engines" = SKILL_ADEPT)
+var/list/SKILL_ROBOTICIST = list("field" = "Science", "devices" = SKILL_ADEPT, "electrical" = SKILL_BASIC, "computer" = SKILL_ADEPT, "anatomy" = SKILL_BASIC)
+var/list/SKILL_SECURITY_OFFICER = list("field" = "Security", "combat" = SKILL_BASIC, "weapons" = SKILL_ADEPT, "law" = SKILL_ADEPT, "forensics" = SKILL_BASIC)
+var/list/SKILL_CHEMIST = list("field" = "Science", "chemistry" = SKILL_ADEPT, "science" = SKILL_ADEPT, "medical" = SKILL_BASIC, "devices" = SKILL_BASIC)
 var/global/list/SKILL_PRE = list("Engineer" = SKILL_ENGINEER, "Roboticist" = SKILL_ROBOTICIST, "Security Officer" = SKILL_SECURITY_OFFICER, "Chemist" = SKILL_CHEMIST)
 
 datum/skill/management
@@ -106,24 +106,24 @@ datum/skill/pilot
 
 datum/skill/medical
     ID = "medical"
-    name = "Medical"
+    name = "Medicine"
     desc = "Covers an understanding of the human body and medicine. At a low level, this skill is vital to perform basic first aid, such as CPR or applying bandages. At a high level, this skill implies a good understanding of the various medicines that can be found on a space station."
-    field = "Science"
+    field = "Medical"
 
 datum/skill/anatomy
     ID = "anatomy"
     name = "Anatomy"
     desc = "Gives you a detailed insight of the human body. A high skill in this is required to perform surgery.This skill may also help in examining alien biology."
-    field = "Science"
+    field = "Medical"
 
 datum/skill/virology
     ID = "virology"
     name = "Virology"
     desc = "This skill implies an understanding of microorganisms and their effects on humans."
-    field = "Science"
+    field = "Medical"
 
 datum/skill/genetics
-    ID = "genaetics"
+    ID = "genetics"
     name = "Genetics"
     desc = "Implies an understanding of how DNA works and the structure of the human DNA."
     field = "Science"

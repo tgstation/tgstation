@@ -212,12 +212,12 @@
 		L.Add(C)
 
 	camera_sort(L)
+	L = camera_network_sort(L)
 
 	var/list/D = list()
 	for (var/obj/machinery/camera/C in L)
 		if ( C.network in src.networks )
 			D[text("[]: [][]", C.network, C.c_tag, (C.status ? null : " (Deactivated)"))] = C
-	D = camera_network_sort(D)
 	D["Cancel"] = "Cancel"
 
 	var/t = input(user, "Which camera should you change to?") as null|anything in D
