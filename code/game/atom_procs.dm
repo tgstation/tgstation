@@ -127,6 +127,8 @@
 		if(src.fingerprintslast != H.key)
 			src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
 			src.fingerprintslast = H.key
+		if(!fingerprints)
+			fingerprints = list()
 		var/new_prints = 0
 		var/prints
 		for(var/i = 1, i <= src.fingerprints.len, i++)
