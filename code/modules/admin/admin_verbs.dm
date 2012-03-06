@@ -134,7 +134,6 @@
 			verbs += /client/proc/triple_ai
 			verbs += /client/proc/get_admin_state
 			verbs += /client/proc/reload_admins
-			verbs += /client/proc/kill_air
 			verbs += /client/proc/cmd_debug_make_powernets
 			verbs += /client/proc/object_talk
 			verbs += /client/proc/strike_team
@@ -152,6 +151,7 @@
 			verbs += /client/proc/cmd_admin_list_open_jobs
 			verbs += /client/proc/cmd_admin_direct_narrate
 			verbs += /client/proc/colorooc
+			verbs += /client/proc/kill_air
 			verbs += /client/proc/cmd_admin_world_narrate
 			verbs += /client/proc/cmd_debug_del_all
 			verbs += /client/proc/cmd_debug_tog_aliens
