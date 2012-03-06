@@ -13,7 +13,6 @@
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 500
-	var/emagged = 0
 
 /obj/machinery/gibber/New()
 	..()

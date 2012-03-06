@@ -206,15 +206,50 @@
 	icon_state = "meat"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/rawcutlet
 	slices_num = 3
+	health = 180
+
 	New()
 		..()
 		reagents.add_reagent("nutriment", 3)
 		src.bitesize = 3
+		processing_objects.Add(src)
+
+	Del()
+		processing_objects.Remove(src)
+		..()
+
+/*	process()
+		var/turf/location = get_turf(src.loc)
+		var/datum/gas_mixture/environment = location.return_air()
+		switch(environment.temperature)
+			if(0 to T0C)
+			if(T0C to (T0C + 100))
+				health = max(0, health - 1)
+		if(health <= 0)
+			name = "rotten meat"
+			desc = "A slab of meat. It looks rotten."
+			var/toxin_amount = reagents.get_reagent_amount("nutriment") * 3
+			reagents.add_reagent("toxin",toxin_amount)
+			processing_objects.Remove(src) */
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/syntiflesh
 	name = "synthetic meat"
 	desc = "A synthetic slab of flesh."
 
+/*	process()
+		var/turf/location = get_turf(src.loc)
+		var/datum/gas_mixture/environment = location.return_air()
+		switch(environment.temperature)
+			if(0 to T0C)
+			if(T0C to (T0C + 100))
+				health = max(0, health - 1)
+		if(health <= 0)
+			name = "rotten synthetic meat"
+			desc = "A slab of synthetic meat. It looks rotten."
+			var/toxin_amount = reagents.get_reagent_amount("nutriment") * 3
+			reagents.add_reagent("toxin",toxin_amount)
+			processing_objects.Remove(src)
+*/
 /obj/item/weapon/reagent_containers/food/snacks/appendix //yes, this is the same as meat. I might do something different in future
 	name = "appendix"
 	desc = "An appendix which looks perfectly healthy."
@@ -238,6 +273,21 @@
 	var/subjectname = ""
 	var/subjectjob = null
 
+/*	process()
+		var/turf/location = get_turf(src.loc)
+		var/datum/gas_mixture/environment = location.return_air()
+		switch(environment.temperature)
+			if(0 to T0C)
+			if(T0C to (T0C + 100))
+				health = max(0, health - 1)
+		if(health <= 0)
+			name = "-rotten meat"
+			desc = "A slab of meat. It looks rotten."
+			var/toxin_amount = reagents.get_reagent_amount("nutriment") * 3
+			reagents.add_reagent("toxin",toxin_amount)
+			processing_objects.Remove(src)
+*/
+//Useful in later patch ~Hawk
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/monkey
 	//same as plain meat
 

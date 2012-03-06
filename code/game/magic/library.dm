@@ -589,7 +589,6 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	anchored = 1
 	density = 1
 	var
-		emagged = 0
 		arcanecheckout = 0
 		screenstate = 0 // 0 - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book
 		buffer_book

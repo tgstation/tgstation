@@ -52,8 +52,8 @@
 			user << "You [ control ? "enable" : "disable"] remote APC control."
 		else
 			user << "\red Access denied."
-		
-		
+
+
 	else
 		src.attack_hand(user)
 	return
@@ -68,7 +68,7 @@
 
 
 	user.machine = src
-	var/t = "<TT><B>Power Monitoring</B><HR>"
+	var/t = "<TT><B>Power Monitoring: Swipe ID for remote access</B><HR>"
 
 	t += "<BR><HR><A href='?src=\ref[src];update=1'>Refresh</A>"
 	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"

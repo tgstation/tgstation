@@ -9,7 +9,7 @@
 	var/maxhealth = 0
 	var/fire_dam_coeff = 1.0
 	var/brute_dam_coeff = 1.0
-	var/emagged = 0 //Urist: Moving that var to the general /bot tree as it's used by most bots
+	//var/emagged = 0 //Urist: Moving that var to the general /bot tree as it's used by most bots
 
 
 /obj/machinery/bot/proc/turn_on()

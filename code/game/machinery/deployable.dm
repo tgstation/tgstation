@@ -157,7 +157,6 @@ for reference:
 	var/health = 100.0
 	var/maxhealth = 100.0
 	var/locked = 0.0
-	var/emagged = 0.0
 //	req_access = list(access_maint_tunnels)
 
 	New()
