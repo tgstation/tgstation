@@ -5,7 +5,7 @@
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
-	var/list/blood_DNA = list()
+	var/list/blood_DNA
 	var/last_bumped = 0
 	var/pass_flags = 0
 
@@ -13,7 +13,7 @@
 	var/datum/reagents/reagents = null
 
 	//Detective Work, used for the duplicate data points kept in the scanners
-	var/list/original_atom = list()
+	var/list/original_atom
 
 	//var/chem_is_open_container = 0
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()

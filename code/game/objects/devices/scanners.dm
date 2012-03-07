@@ -123,8 +123,10 @@ MASS SPECTROMETER
 
 				user << "\blue Done printing."
 			user << text("\blue [M]'s Fingerprints: [md5(M.dna.uni_identity)]")
-		if ( !(M.blood_DNA.len) )
+		if ( !M.blood_DNA || !M.blood_DNA.len )
 			user << "\blue No blood found on [M]"
+			if(M.blood_DNA)
+				del(M.blood_DNA)
 		else
 			user << "\blue Blood found on [M]. Analysing..."
 			spawn(15)
@@ -147,16 +149,16 @@ MASS SPECTROMETER
 			A.fingerprints = list()
 		src.add_fingerprint(user)
 		if (istype(A, /obj/effect/decal/cleanable/blood) || istype(A, /obj/effect/rune))
-			if(!isnull(A.blood_DNA.len))
+			if(!isnull(A.blood_DNA))
 				for(var/i = 1, i <= A.blood_DNA.len, i++)
 					var/list/templist = A.blood_DNA[i]
 					user << "\blue Blood type: [templist[2]]\nDNA: [templist[1]]"
 			return
 		var/duplicate = 0
-		if ((!A.fingerprints || A.fingerprints.len == 0) && !(A.suit_fibers) && !(A.blood_DNA.len))
+		if ((!A.fingerprints || !A.fingerprints.len) && !A.suit_fibers && !A.blood_DNA)
 			user << "\blue Unable to locate any fingerprints, materials, fibers, or blood on [A]!"
 			return 0
-		else if (A.blood_DNA.len)
+		else if (A.blood_DNA)
 			user << "\blue Blood found on [A]. Analysing..."
 			sleep(15)
 			if(!duplicate)
@@ -169,8 +171,10 @@ MASS SPECTROMETER
 				user << "\blue Blood type: [templist[2]]\nDNA: [templist[1]]"
 		else
 			user << "\blue No Blood Located"
-		if(!A.fingerprints || A.fingerprints.len == 0)
+		if(!A.fingerprints || !A.fingerprints.len)
 			user << "\blue No Fingerprints Located."
+			if(A.fingerprints)
+				del(A.fingerprints)
 		else
 			user << text("\blue Isolated [A.fingerprints.len] fingerprints: Data Stored: Scan with Hi-Res Forensic Scanner to retrieve.")
 			if(!duplicate)

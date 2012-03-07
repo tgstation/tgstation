@@ -141,6 +141,7 @@
 		for(var/i = 1, i <= src.fingerprints.len, i++)
 			if(length(src.fingerprints[i]) != 69)
 				src.fingerprints.Remove(src.fingerprints[i])
+		if(fingerprints && !fingerprints.len)	del(fingerprints)
 		return 1
 	else
 		if(src.fingerprintslast != M.key)
@@ -158,10 +159,7 @@
 	if (!( src.flags ) & 256)
 		return
 	if(!blood_DNA)
-		var/turf/Z = get_turf(src)
-		message_admins("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
-		log_game("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
-		return
+		blood_DNA = list()
 	if (blood_DNA.len)
 		if (istype(src, /obj/item)&&!istype(src, /obj/item/weapon/melee/energy))//Only regular items. Energy melee weapon are not affected.
 			var/obj/item/source2 = src
@@ -278,10 +276,10 @@
 		log_game("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
 		blood_DNA = list()
 		return
-	if ( src.blood_DNA.len )
+	if ( src.blood_DNA )
 		if (istype (src, /mob/living/carbon))
 			var/obj/item/source2 = src
-			source2.blood_DNA = list()
+			del(source2.blood_DNA)
 			if(ishuman(src))
 				var/mob/living/carbon/human/M = src
 				M.bloody_hands = 0
@@ -289,7 +287,7 @@
 			//source2.icon = I
 		if (istype (src, /obj/item))
 			var/obj/item/source2 = src
-			source2.blood_DNA = list()
+			del(source2.blood_DNA)
 //			var/icon/I = new /icon(source2.icon_old, source2.icon_state)
 			if(source2.icon_old)
 				source2.icon = source2.icon_old
@@ -302,7 +300,7 @@
 				G.transfer_blood = 0
 		if (istype(src, /turf/simulated))
 			var/obj/item/source2 = src
-			source2.blood_DNA = list()
+			del(source2.blood_DNA)
 			if(source2.icon_old)
 				var/icon/I = new /icon(source2.icon_old, source2.icon_state)
 				source2.icon = I
@@ -327,8 +325,8 @@
 					break
 				else
 					src.fingerprints[i] = "1=" + prints["1"] + "&2=" + new_print
-		if(!src.fingerprints)
-			src.fingerprints = list()
+	if(fingerprints && !fingerprints.len)
+		del(fingerprints)
 	if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src
 		M.update_clothing()

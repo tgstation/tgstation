@@ -157,8 +157,11 @@ datum
 						blood_prop = new(T)
 						blood_prop.blood_DNA = list(list(self.data["blood_DNA"], self.data["blood_type"]))
 					else
-						blood_prop.blood_DNA.len++
-						blood_prop.blood_DNA[blood_prop.blood_DNA.len] = list(self.data["blood_DNA"], self.data["blood_type"])
+						if(!blood_prop.blood_DNA)
+							blood_prop.blood_DNA = list(list(self.data["blood_DNA"], self.data["blood_type"]))
+						else
+							blood_prop.blood_DNA.len++
+							blood_prop.blood_DNA[blood_prop.blood_DNA.len] = list(self.data["blood_DNA"], self.data["blood_type"])
 
 					for(var/datum/disease/D in self.data["viruses"])
 						var/datum/disease/newVirus = new D.type
@@ -184,8 +187,11 @@ datum
 						blood_prop = new(T)
 						blood_prop.blood_DNA = list(list(self.data["blood_DNA"],"A+"))
 					else
-						blood_prop.blood_DNA.len++
-						blood_prop.blood_DNA[blood_prop.blood_DNA.len] = list(self.data["blood_DNA"], "A+")
+						if(!blood_prop.blood_DNA)
+							blood_prop.blood_DNA = list(list(self.data["blood_DNA"],"A+"))
+						else
+							blood_prop.blood_DNA.len++
+							blood_prop.blood_DNA[blood_prop.blood_DNA.len] = list(self.data["blood_DNA"], "A+")
 
 					for(var/datum/disease/D in self.data["viruses"])
 						var/datum/disease/newVirus = new D.type
@@ -205,8 +211,11 @@ datum
 						blood_prop = new(T)
 						blood_prop.blood_DNA = list(list("UNKNOWN DNA","X*"))
 					else
-						blood_prop.blood_DNA.len++
-						blood_prop.blood_DNA[blood_prop.blood_DNA.len] = list("UNKNOWN DNA","X*")
+						if(!blood_prop.blood_DNA)
+							blood_prop.blood_DNA = list(list("UNKNOWN DNA","X*"))
+						else
+							blood_prop.blood_DNA.len++
+							blood_prop.blood_DNA[blood_prop.blood_DNA.len] = list("UNKNOWN DNA","X*")
 
 					for(var/datum/disease/D in self.data["viruses"])
 						var/datum/disease/newVirus = new D.type

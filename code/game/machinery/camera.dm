@@ -66,6 +66,11 @@
 			continue
 		else if (M == usr)
 			continue
+		var/turf/temp_turf = get_turf(M)
+		if(temp_turf.z != 1 && temp_turf.z != 5) //Not on mining or the station.
+			continue
+		if(!checkcameravis(M)) //Not near a camera
+			continue
 
 		var/name = M.name
 		if (name in names)
