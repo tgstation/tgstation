@@ -104,7 +104,7 @@
 		"plasma"         = new/datum/tlv(-1.0, -1.0, 0.2, 0.5), // Partial pressure, kpa
 		"other"          = new/datum/tlv(-1.0, -1.0, 0.5, 1.0), // Partial pressure, kpa
 		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20), /* kpa */
-		"temperature"    = new/datum/tlv(T0C-60, T0C-30, T0C+40, T0C+66), // K
+		"temperature"    = new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66), // K
 	)
 
 /*
