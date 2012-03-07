@@ -371,7 +371,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:adjustToxLoss(1.5)
+				M:adjustToxLoss(0.3)
 				..()
 				return
 
@@ -412,6 +412,7 @@ datum
 //					if(50 to INFINITY)
 //						M:adjustToxLoss(0.1)
 				data++
+				holder.remove_reagent(src.id, 0.1)
 				..()
 				return
 
@@ -611,7 +612,7 @@ datum
 				if(M.canmove && istype(M.loc, /turf/space))
 					step(M, pick(cardinal))
 				if(prob(5)) M:emote(pick("twitch","drool","moan"))
-				M:adjustToxLoss(1)
+				M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -643,7 +644,8 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.take_organ_damage(1, 0)
+				if(prob(50))
+					M.take_organ_damage(1, 0)
 				..()
 				return
 
@@ -656,7 +658,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:adjustToxLoss(1)
+				M:adjustToxLoss(0.3)
 				..()
 				return
 
@@ -711,7 +713,8 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:adjustToxLoss(1)
-				M.take_organ_damage(0, 1)
+				if(prob(50))
+					M.take_organ_damage(0, 1)
 				..()
 				return
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
@@ -765,7 +768,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:adjustToxLoss(1)
+				M:adjustToxLoss(0.2)
 				M.take_organ_damage(0, 1)
 				..()
 				return
@@ -1218,7 +1221,7 @@ datum
 				if(M.stat == 2.0)
 					return
 				if(!M) M = holder.my_atom
-				if(prob(33))
+				if(prob(30))
 					M.take_organ_damage(1, 0)
 				M:adjustOxyLoss(3)
 				if(prob(20)) M:emote("gasp")
@@ -1238,7 +1241,9 @@ datum
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
 				data++
-				M:heal_organ_damage(0,2)
+				M:heal_organ_damage(0,1)
+				if(volume > REAGENTS_OVERDOSE)
+					M:adjustToxLoss(1)
 				if(data >= 125)
 					M:adjustToxLoss(0.1)
 				..()
@@ -1258,6 +1263,8 @@ datum
 				if(!data) data = 1
 				data++
 				M:heal_organ_damage(0,3)
+				if(volume > REAGENTS_OVERDOSE)
+					M:adjustToxLoss(1)
 				if(data >= 125)
 					M:adjustToxLoss(0.2)
 				..()
@@ -1279,6 +1286,8 @@ datum
 				M:adjustOxyLoss(-2)
 				if(holder.has_reagent("lexorin"))
 					holder.remove_reagent("lexorin", 2)
+				if(volume > REAGENTS_OVERDOSE)
+					M:adjustToxLoss(1)
 				if(data >= 125)
 					M:adjustToxLoss(0.2)
 				..()
@@ -1300,6 +1309,8 @@ datum
 				M:oxyloss = 0
 				if(holder.has_reagent("lexorin"))
 					holder.remove_reagent("lexorin", 2)
+				if(volume > REAGENTS_OVERDOSE)
+					M:adjustToxLoss(1)
 				if(data >= 50)
 					M:adjustToxLoss(0.2)
 				..()
@@ -1320,6 +1331,8 @@ datum
 				if(M:getBruteLoss() && prob(40)) M:heal_organ_damage(1,0)
 				if(M:getFireLoss() && prob(40)) M:heal_organ_damage(0,1)
 				if(M:getToxLoss() && prob(40)) M:adjustToxLoss(-1)
+				if(volume > REAGENTS_OVERDOSE)
+					M:adjustToxLoss(1)
 				..()
 				return
 
@@ -1398,6 +1411,8 @@ datum
 				M.AdjustStunned(-1)
 				M.AdjustWeakened(-1)
 				if(prob(60))	M.adjustToxLoss(1)
+				if(volume > REAGENTS_OVERDOSE)
+					M:adjustToxLoss(1)
 				..()
 				return
 
@@ -1430,6 +1445,8 @@ datum
 				if(prob(80)) M:adjustBrainLoss(1)
 				if(prob(50)) M:drowsyness = max(M:drowsyness, 3)
 				if(prob(10)) M:emote("drool")
+				if(volume > REAGENTS_OVERDOSE)
+					M:adjustToxLoss(1)
 				if(data >= 50)
 					M:adjustToxLoss(0.4)
 				..()
@@ -1445,6 +1462,8 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:radiation = max(M:radiation-3,0)
+				if(volume > REAGENTS_OVERDOSE)
+					M:adjustToxLoss(1)
 				if(data >= 50)
 					M:adjustToxLoss(0.2)
 				..()
@@ -1468,6 +1487,8 @@ datum
 				if(prob(15))
 					M.take_organ_damage(1, 0)
 				..()
+				if(volume > REAGENTS_OVERDOSE)
+					M:adjustToxLoss(1)
 				if(data >= 50)
 					M:adjustToxLoss(0.3)
 				return
@@ -1483,6 +1504,8 @@ datum
 				if(!M) M = holder.my_atom
 				M:adjustBrainLoss(-3)
 				M:adjustToxLoss(0.1)
+				if(volume > REAGENTS_OVERDOSE)
+					M:adjustToxLoss(1)
 				..()
 				return
 
@@ -1500,6 +1523,8 @@ datum
 				M:eye_blurry = max(M:eye_blurry-5 , 0)
 				M:eye_blind = max(M:eye_blind-5 , 0)
 				M:disabilities &= ~1
+				if(volume > REAGENTS_OVERDOSE)
+					M:adjustToxLoss(1)
 				if(data >= 100)
 					M:adjustToxLoss(0.2)
 				..()
@@ -1519,6 +1544,8 @@ datum
 				if(!data) data = 1
 				data++
 				M:heal_organ_damage(2,0)
+				if(volume > REAGENTS_OVERDOSE)
+					M:adjustToxLoss(1)
 				if(data >= 125)
 					M:adjustToxLoss(0.2)
 				..()
@@ -1537,6 +1564,8 @@ datum
 				data++
 				if(prob(5)) M:emote(pick("twitch","blink_r","shiver"))
 				holder.remove_reagent(src.id, 0.2)
+				if(volume > REAGENTS_OVERDOSE)
+					M:adjustToxLoss(1)
 				if(data >= 50)
 					M:adjustToxLoss(0.2)
 				..()
@@ -1589,6 +1618,8 @@ datum
 				if(!data) data = 1
 				data++
 				holder.remove_reagent(src.id, 0.1)
+				if(volume > REAGENTS_OVERDOSE)
+					M:adjustToxLoss(1)
 				if(data >= 100)
 					M:adjustToxLoss(0.1)
 				return
@@ -1602,7 +1633,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:adjustToxLoss(2)
+				M:adjustToxLoss(1)
 				..()
 				return
 
@@ -1782,7 +1813,7 @@ datum
 						M:sleeping += 1
 					if(51 to INFINITY)
 						M:sleeping += 1
-						M:adjustToxLoss(data - 50)
+						M:adjustToxLoss(2)
 				..()
 				return
 
@@ -1804,7 +1835,7 @@ datum
 						M:sleeping += 1
 					if(51 to INFINITY)
 						M:sleeping += 1
-						M:adjustToxLoss(data - 50)
+						M:adjustToxLoss(2)
 				data++
 				..()
 				return
@@ -2605,6 +2636,8 @@ datum
 					if (!M:confused) M:confused = 1
 					M:confused += 2
 
+				holder.remove_reagent(src.id, 0.2)
+
 				..()
 				return
 
@@ -2624,6 +2657,7 @@ datum
 					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -2643,6 +2677,7 @@ datum
 					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -2663,6 +2698,7 @@ datum
 					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -2682,6 +2718,7 @@ datum
 					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -2701,6 +2738,7 @@ datum
 					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -2743,6 +2781,7 @@ datum
 					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -2762,6 +2801,7 @@ datum
 					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -2781,6 +2821,7 @@ datum
 					M.slurring += 3
 				else if(data >= 145 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -2834,6 +2875,7 @@ datum
 					M.slurring += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -2853,6 +2895,7 @@ datum
 					M.slurring += 5
 				else if(data >= 90 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -2872,6 +2915,7 @@ datum
 					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -2927,6 +2971,7 @@ datum
 				if(data >= 40 && prob(33))
 					if (!M:confused) M:confused = 1
 					M:confused += 2
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -2948,6 +2993,7 @@ datum
 				switch(data)
 					if(51 to INFINITY)
 						M:sleeping += 1
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -2968,6 +3014,7 @@ datum
 					M.slurring += 3
 				else if(data >= 90)
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -2987,6 +3034,7 @@ datum
 					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3006,6 +3054,7 @@ datum
 					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3025,6 +3074,7 @@ datum
 					M.slurring += 3
 				else if(data >= 135 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3044,6 +3094,7 @@ datum
 					M.slurring += 3
 				else if(data >= 135 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3063,6 +3114,7 @@ datum
 					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3082,6 +3134,7 @@ datum
 					M.slurring += 3
 				else if(data >= 135 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3101,6 +3154,7 @@ datum
 					M.slurring += 3
 				else if(data >= 135 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3120,6 +3174,7 @@ datum
 					M.slurring += 3
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3139,6 +3194,7 @@ datum
 					M.slurring += 3
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3158,6 +3214,7 @@ datum
 					M.slurring += 4
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+4,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3177,6 +3234,7 @@ datum
 					M.slurring += 3
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3198,6 +3256,7 @@ datum
 					M.confused = max(M:confused+3,0)
 				else if(data >=55)
 					M.druggy = max(M.druggy, 55)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3217,6 +3276,7 @@ datum
 					M.slurring += 3
 				else if(data >= 145 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3236,6 +3296,7 @@ datum
 					M.slurring += 3
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3257,6 +3318,7 @@ datum
 					M.slurring += 3
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3277,6 +3339,7 @@ datum
 					M.slurring += 3
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3314,6 +3377,7 @@ datum
 					M.slurring += 3
 				else if(data >= 145 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3333,6 +3397,7 @@ datum
 					M.slurring += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3352,6 +3417,7 @@ datum
 					M.slurring += 3
 				else if(data >= 165 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3371,6 +3437,7 @@ datum
 					M.slurring += 4
 				else if(data >= 60 && prob(40))
 					M.confused = max(M:confused+5,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3390,6 +3457,7 @@ datum
 					M.slurring += 4
 				else if(data >= 90 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3409,6 +3477,7 @@ datum
 					M.slurring += 3
 				else if(data >= 150 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3428,6 +3497,7 @@ datum
 					M.slurring += 3
 				else if(data >= 150 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3447,6 +3517,7 @@ datum
 					M.slurring += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3466,6 +3537,7 @@ datum
 					M.slurring += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3486,6 +3558,7 @@ datum
 					M.slurring += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3505,6 +3578,7 @@ datum
 					M.slurring += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3524,6 +3598,7 @@ datum
 					M.slurring += 5
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+5,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3543,6 +3618,7 @@ datum
 					M.slurring += 5
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+5,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3562,6 +3638,7 @@ datum
 					M.slurring += 4
 				else if(data >= 115 && prob(30))
 					M.confused = max(M:confused+4,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3581,6 +3658,7 @@ datum
 					M.slurring += 10
 				else if(data >= 115 && prob(90))
 					M.confused = max(M:confused+10,10)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3600,6 +3678,7 @@ datum
 					M.slurring += 3
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3619,6 +3698,7 @@ datum
 					M.slurring += 3
 				else if(data >= 125 && prob(33))
 					M.confused = max(M:confused+2,0)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3640,6 +3720,7 @@ datum
 					M.confused = max(M:confused+2,0)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-5)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
@@ -3659,6 +3740,7 @@ datum
 					M.slurring += 15
 				else if(data >= 115 && prob(33))
 					M.confused = max(M:confused+15,15)
+				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
