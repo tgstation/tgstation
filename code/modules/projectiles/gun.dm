@@ -237,11 +237,11 @@
 //					if(M.type == /mob)
 //						return FindTarget(M,user,params)
 			var/mob/M = GunTrace(usr.x,usr.y,A.x,A.y,usr.z,usr)
-			if(M && ismob(M) && !target)
+			if(M && ismob(M) && isliving(M) && !target)
 				if(!(M.client && M.client.admin_invis))
 					Aim(M)
 					return
-		if(ismob(A) && target != A)
+		if(ismob(A) && isliving(A) && target != A)
 			Aim(A)
 		else if(lock_time < world.time + 10)
 			Fire(A,user,params)
