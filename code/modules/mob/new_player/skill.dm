@@ -206,7 +206,7 @@ proc/show_skill_window(var/mob/user, var/mob/living/carbon/human/M)
 			var/level = M.skills[S.ID]
 			HTML += "<tr style='text-align:left;'>"
 			HTML += "<th>[S.name]</th>"
-			HTML += "<th><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[None\]</font></th>"
+			HTML += "<th><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[Layman\]</font></th>"
 			HTML += "<th><font color=[(level == SKILL_BASIC) ? "red" : "black"]>\[Basic\]</font></th>"
 			HTML += "<th><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Adept\]</font></th>"
 			HTML += "<th><font color=[(level == SKILL_EXPERT) ? "red" : "black"]>\[Expert\]</font></th>"
