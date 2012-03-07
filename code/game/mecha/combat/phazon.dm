@@ -12,6 +12,7 @@
 	infra_luminosity = 3
 	wreckage = /obj/effect/decal/mecha_wreckage/phazon
 	add_req_access = 1
+	//operation_req_access = list()
 	internal_damage_threshold = 25
 	force = 15
 	var/phasing = 0

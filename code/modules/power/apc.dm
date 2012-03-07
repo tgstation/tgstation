@@ -47,7 +47,6 @@
 	var/light_consumption = 0 //not used
 	var/equip_consumption = 0 //not used
 	var/environ_consumption = 0 //not used
-	var/emagged = 0
 	var/wiresexposed = 0
 	var/apcwires = 15
 	netnum = -1		// set so that APCs aren't found as powernet nodes
