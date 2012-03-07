@@ -6,7 +6,7 @@ obj/machinery/atmospherics/pipe/simple/heat_exchanging
 	var/initialize_directions_he
 
 	minimum_temperature_difference = 20
-	thermal_conductivity = WINDOW_HEAT_TRANSFER_COEFFICIENT
+	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 
 	// BubbleWrap
 	New()

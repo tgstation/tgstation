@@ -79,11 +79,40 @@
 				M.apply_damage(75, BRUTE, "head", used_weapon = "Suicide attempt with a gun")
 				M.apply_damage(85, BRUTE, "chest")
 				M.visible_message("\red [user] pulls the trigger. Ow.")
-			del(src.in_chamber)
+			del(in_chamber)
 			mouthshoot = 0
 			return
 		else if(target && M == target)
 			PreFire(M,user)
+			return
+		else if(user.a_intent == "hurt" && load_into_chamber() && (istype(src.in_chamber, /obj/item/projectile/beam) || istype(src.in_chamber, /obj/item/projectile/energy)\
+		 || istype(src.in_chamber, /obj/item/projectile/bullet)))
+			//Lets shoot them, then.
+			user.visible_message("\red <b> [user] fires \the [src] point blank at [M]!</b>")
+			M.bullet_act(in_chamber,"head")
+			if (prob(20))
+				if (M.paralysis < 10)
+					M.paralysis = 10
+			else
+				if (M.weakened < 10)
+					M.weakened = 10
+			if(M.stat != 2)	M.stat = 1
+			if(M.health <= -50) //I pumped 7 more rounds into the guy, and only did an extra 26 damage :|
+				M.apply_damage(45) //So we'll put him an inch from death.
+			del(in_chamber)
+			return
+		else if(user.a_intent != "hurt" && load_into_chamber() && istype(src,/obj/item/weapon/gun/energy/taser))
+			if (prob(50))
+				if (M.paralysis < 60 && (!(M.mutations & 8)) )
+					M.paralysis = 60
+			else
+				if (M.weakened < 60 && (!(M.mutations & 8)) )
+					M.weakened = 60
+			if (M.stuttering < 60 && (!(M.mutations & 8)) )
+				M.stuttering = 60
+			user.visible_message("\red <B>[M] has been stunned with the taser gun by [user]!</B>")
+			del(in_chamber)
+			return
 		else
 			return ..()
 
@@ -181,6 +210,9 @@
 	proc/TargetActed()
 		var/mob/M = loc
 		if(target == M) return
+		if(src.loc != M.equipped())
+			target.NotTargeted(src)
+			return
 		usr.last_move_intent = world.time
 		Fire(target,usr)
 		var/dir_to_fire = sd_get_approx_dir(M,target)
@@ -190,7 +222,7 @@
 	afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)
 		if(flag)	return //we're placing gun on a table or in backpack
 		if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
-		if(user && user.gun_mode)
+		if(user && user.client && user.client.gun_mode)
 			PreFire(A,user,params)
 		else
 			Fire(A,user,params)
@@ -205,10 +237,11 @@
 //					if(M.type == /mob)
 //						return FindTarget(M,user,params)
 			var/mob/M = GunTrace(usr.x,usr.y,A.x,A.y,usr.z,usr)
-			if(M && ismob(M) && !target && !M.client.admin_invis)
-				Aim(M)
-				return
-		if(ismob(A) && target != A)
+			if(M && ismob(M) && isliving(M) && !target)
+				if(!(M.client && M.client.admin_invis))
+					Aim(M)
+					return
+		if(ismob(A) && isliving(A) && target != A)
 			Aim(A)
 		else if(lock_time < world.time + 10)
 			Fire(A,user,params)
@@ -283,8 +316,8 @@ mob/proc
 		if(!targeted_by) targeted_by = list()
 		targeted_by += I
 		I.target = src
-		//I.lock_time = world.time + 10 //Target has 1 second to realize they're targeted and stop (or target the opponent).
-		src << "((\red <b>Your character is being targeted. They have 1 second to stop any click or move actions.</b> \black While targeted, they may \
+		I.lock_time = world.time + 20 //Target has 1 second to realize they're targeted and stop (or target the opponent).
+		src << "((\red <b>Your character is being targeted. They have 2 seconds to stop any click or move actions.</b> \black While targeted, they may \
 		drag and drop items in or into the map, speak, and click on interface buttons. Clicking on the map, their items \
 		 (other than a weapon to de-target), or moving will result in being fired upon. \red The aggressor may also fire manually, \
 		 so try not to get on their bad side.\black ))"
@@ -301,17 +334,17 @@ mob/proc
 					if(T.client)
 						T.client.screen += T.item_use_icon
 						T.client.screen += T.gun_move_icon
-				while(targeted_by)
+				while(targeted_by && T.client)
 					sleep(1)
-					if(last_move_intent > I.lock_time + 10 && !T.target_can_move) //If the target moved while targeted
+					if(last_move_intent > I.lock_time + 10 && !T.client.target_can_move) //If the target moved while targeted
 						I.TargetActed()
-						I.lock_time = world.time + 5
-					else if(last_move_intent > I.lock_time + 10 && !T.target_can_run && m_intent == "run") //If the target ran while targeted
+						I.lock_time = world.time + 10
+					else if(last_move_intent > I.lock_time + 10 && !T.client.target_can_run && m_intent == "run") //If the target ran while targeted
 						I.TargetActed()
-						I.lock_time = world.time + 5
-					if(last_target_click > I.lock_time + 10 && !T.target_can_click) //If the target clicked the map to pick something up/shoot/etc
+						I.lock_time = world.time + 10
+					if(last_target_click > I.lock_time + 10 && !T.client.target_can_click) //If the target clicked the map to pick something up/shoot/etc
 						I.TargetActed()
-						I.lock_time = world.time + 5
+						I.lock_time = world.time + 10
 
 	NotTargeted(var/obj/item/weapon/gun/I,silent)
 		if(!silent)
@@ -325,9 +358,6 @@ mob/proc
 			del(T.item_use_icon)
 			del(T.gun_move_icon)
 			del(T.gun_run_icon)
-			T.target_can_move = 0
-			T.target_can_run = 0
-			T.target_can_click = 0
 		if(!targeted_by.len) del targeted_by
 		spawn(1) update_clothing()
 
@@ -372,7 +402,7 @@ mob/proc
 //		layer = 99
 
 //If you move out of range, it isn't going to still stay locked on you any more.
-mob/var
+client/var
 	target_can_move = 0
 	target_can_run = 0
 	target_can_click = 0
@@ -389,7 +419,7 @@ mob/Move()
 			if(!(G.target in view(src)))
 				//ClearRequest("Aim")
 				G.target.NotTargeted(G)
-mob/verb
+client/verb
 //These are called by the on-screen buttons, adjusting what the victim can and cannot do.
 	AllowTargetMove()
 		set hidden=1
@@ -397,15 +427,20 @@ mob/verb
 		if(!target_can_move)
 //			winset(usr,"default.target_can_move","is-flat=true;border=sunken")
 			usr << "Target may now walk."
-			gun_run_icon = new /obj/screen/gun/run(null)
-			if(client)
-				client.screen += gun_run_icon
+			usr.gun_run_icon = new /obj/screen/gun/run(null)
+			screen += usr.gun_run_icon
+			if(usr.gun_move_icon)
+				usr.gun_move_icon.dir = 1
+				usr.gun_move_icon.name = "Disallow Walking"
 		else
 //			winset(usr,"default.target_can_move","is-flat=false;border=none")
 			usr << "Target may no longer move."
 			target_can_run = 0
-			del(gun_run_icon)
-		for(var/obj/item/weapon/gun/G in src)
+			del(usr.gun_run_icon)
+			if(usr.gun_move_icon)
+				usr.gun_move_icon.dir = 2
+				usr.gun_move_icon.name = "Allow Walking"
+		for(var/obj/item/weapon/gun/G in usr)
 			G.lock_time = world.time + 5
 			if(G.target)
 				if(!target_can_move)
@@ -418,9 +453,15 @@ mob/verb
 		if(!target_can_run)
 //			winset(usr,"default.target_can_move","is-flat=true;border=sunken")
 			usr << "Target may now run."
+			if(usr.gun_run_icon)
+				usr.gun_run_icon.dir = 1
+				usr.gun_run_icon.name = "Disallow Running"
 		else
 //			winset(usr,"default.target_can_move","is-flat=false;border=none")
 			usr << "Target may no longer run."
+			if(usr.gun_run_icon)
+				usr.gun_run_icon.dir = 2
+				usr.gun_run_icon.name = "Allow Running"
 		for(var/obj/item/weapon/gun/G in src)
 			G.lock_time = world.time + 5
 			if(G.target)
@@ -434,9 +475,15 @@ mob/verb
 		if(!target_can_click)
 //			winset(usr,"default.target_can_click","is-flat=true;border=sunken")
 			usr << "Target may now use items."
+			if(usr.item_use_icon)
+				usr.item_use_icon.dir = 1
+				usr.item_use_icon.name = "Disallow Item Use"
 		else
 //			winset(usr,"default.target_can_click","is-flat=false;border=none")
 			usr << "Target may no longer use items."
+			if(usr.item_use_icon)
+				usr.item_use_icon.dir = 2
+				usr.item_use_icon.name = "Allow Item Use"
 		for(var/obj/item/weapon/gun/G in src)
 			G.lock_time = world.time + 5
 			if(G.target)
@@ -451,8 +498,10 @@ mob/verb
 		if(!gun_mode)
 //			winset(usr,"default.target_can_click","is-flat=true;border=sunken")
 			usr << "You will now take people captive."
+			if(usr.gun_setting_icon)
+				usr.gun_setting_icon.dir = 2
 		else
 //			winset(usr,"default.target_can_click","is-flat=false;border=none")
 			usr << "You will now shoot where you target."
-		if(usr.gun_setting_icon)
-			usr.gun_setting_icon.dir = (usr.gun_setting_icon.dir%2)+1
+			if(usr.gun_setting_icon)
+				usr.gun_setting_icon.dir = 1

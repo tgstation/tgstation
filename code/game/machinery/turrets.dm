@@ -60,7 +60,8 @@
 		// 1 = laser
 		// 2 = cannon
 		// 3 = pulse
-	var/health = 80
+	var/health = 18
+	var/id = ""
 	var/obj/machinery/turretcover/cover = null
 	var/popping = 0
 	var/wasvalid = 0
@@ -295,27 +296,38 @@
 	icon_state = "motion3"
 	anchored = 1
 	density = 0
+	req_access = list(access_ai_upload)
 	var/enabled = 1
+	var/id = ""
 	var/lethal = 0
 	var/locked = 1
-	var/control_area //can be area name, path or nothing.
-	req_access = list(access_ai_upload)
+	var/similar_controls
+	var/turrets
+
+/obj/machinery/turretid/east
+	pixel_x = 28
+
+/obj/machinery/turretid/south
+	pixel_y = -28
+
+/obj/machinery/turretid/west
+	pixel_x = -28
+
+/obj/machinery/turretid/north
+	pixel_y = 28
 
 /obj/machinery/turretid/New()
 	..()
-	if(!control_area)
-		var/area/CA = get_area(src)
-		if(CA.master && CA.master != CA)
-			control_area = CA.master
-		else
-			control_area = CA
-	else if(istext(control_area))
-		for(var/area/A in world)
-			if(A.name && A.name==control_area)
-				control_area = A
-				break
-	//don't have to check if control_area is path, since get_area_all_atoms can take path.
-	return
+	spawn(10)		// allow map load
+		turrets = list()
+		for(var/obj/machinery/turret/T in world)
+			if(T.id == id)
+				turrets += T
+
+		similar_controls = list() // On modifying a control, all the similar controls should change their icon_state as well
+		for(var/obj/machinery/turretid/TC in world)
+			if(TC.id == id && TC != src)
+				similar_controls += TC
 
 /obj/machinery/turretid/attackby(obj/item/weapon/W, mob/user)
 	if(stat & BROKEN) return
@@ -365,20 +377,6 @@
 	user << browse(t, "window=turretid")
 	onclose(user, "turretid")
 
-
-/obj/machinery/turret/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	if(!(stat & BROKEN))
-		playsound(src.loc, 'slash.ogg', 25, 1, -1)
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
-		src.health -= 15
-		if (src.health <= 0)
-			src.die()
-	else
-		M << "\green That object is useless to you."
-	return
-
 /obj/machinery/turretid/Topic(href, href_list)
 	..()
 	if (src.locked)
@@ -394,25 +392,35 @@
 	src.attack_hand(usr)
 
 /obj/machinery/turretid/proc/updateTurrets()
-	if(control_area)
-		for (var/obj/machinery/turret/aTurret in get_area_all_atoms(control_area))
-			aTurret.setState(enabled, lethal)
-		update_icons()
-
-/obj/machinery/turretid/proc/update_icons()
 	if (src.enabled)
 		if (src.lethal)
-			icon_state = "motion1"
+			src.icon_state = "motion1"
+			for(var/obj/machinery/turretid/TC in src.similar_controls) //Change every similar control's icon as well
+				TC.icon_state = "motion1"
 		else
-			icon_state = "motion3"
+			src.icon_state = "motion3"
+			for(var/obj/machinery/turretid/TC in src.similar_controls)
+				TC.icon_state = "motion3"
 	else
-		icon_state = "motion0"
-	if(control_area)
-		for (var/obj/machinery/turretid/aTurret in get_area_all_atoms(control_area))
-			aTurret.icon_state = icon_state
-			aTurret.enabled = enabled
-			aTurret.lethal = lethal
+		src.icon_state = "motion0"
+		for(var/obj/machinery/turretid/TC in src.similar_controls)
+			TC.icon_state = "motion0"
 
+	for (var/obj/machinery/turret/aTurret in turrets)
+		aTurret.setState(enabled, lethal)
+
+/obj/machinery/turret/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+	if(!(stat & BROKEN))
+		playsound(src.loc, 'slash.ogg', 25, 1, -1)
+		for(var/mob/O in viewers(src, null))
+			if ((O.client && !( O.blinded )))
+				O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
+		src.health -= 15
+		if (src.health <= 0)
+			src.die()
+	else
+		M << "\green That object is useless to you."
+	return
 
 
 /obj/structure/turret/gun_turret

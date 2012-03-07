@@ -140,7 +140,7 @@
 		sleep(6)
 		open()
 		return 1
-	if (src.allowed(user))
+	if (src.allowed(user) || istype(I, /obj/item/device/hacktool))
 		if (src.density)
 			open()
 		else

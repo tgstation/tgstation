@@ -373,6 +373,10 @@ datum/objective/steal
 						if(istype(M, /mob/living/silicon/ai) && M.stat != 2)
 //									world << "yay, you win!"
 							return 1
+				for(var/mob/living/silicon/ai/M in world)
+					if(istype(M.loc, /turf))
+						if(istype(get_area(M), /area/shuttle/escape))
+							return 1
 			else
 				for(var/obj/I in all_items)
 					if(istype(I, steal_target))
