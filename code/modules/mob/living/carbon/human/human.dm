@@ -1295,8 +1295,8 @@
 	else if (gender == FEMALE)
 		g = "f"
 
-	stand_icon = new /icon('human.dmi', "torso_s")
-	lying_icon = new /icon('human.dmi', "torso_l")
+	stand_icon = new /icon('human.dmi', "torso_[g]_s")
+	lying_icon = new /icon('human.dmi', "torso_[g]_l")
 
 	var/husk = (mutations & HUSK)
 	var/obese = (mutations & FAT)
