@@ -250,7 +250,7 @@
 	HasProximity(atom/movable/AM as mob|obj)
 		if(istype(attached_device, /obj/item/device/assembly/prox_sensor))
 			var/obj/item/device/assembly/prox_sensor/D = attached_device
-			if (istype(AM, /obj/beam))
+			if (istype(AM, /obj/effect/beam))
 				return
 			if (AM.move_speed < 12)
 				D.sense()
