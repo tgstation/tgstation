@@ -10,6 +10,9 @@
 	var/obj/item/weapon/pen/haspen		//The stored pen.
 	var/obj/item/weapon/paper/toppaper	//The topmost piece of paper.
 
+/obj/item/weapon/clipboard/New()
+	update_icon()
+
 /obj/item/weapon/clipboard/MouseDrop(obj/over_object as obj) //Quick clipboard fix. -Agouri
 	if(ishuman(usr) || ismonkey(usr)) //Can monkeys even place items in the pocket slots? Leaving this in just in case~
 		var/mob/M = usr
@@ -67,8 +70,8 @@
 			if(P == toppaper)
 				continue
 			dat += "<A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A> <A href='?src=\ref[src];top=\ref[P]'>Move to top</A> - <A href='?src=\ref[src];read=\ref[P]'>[P.name]</A><BR>"
-		user << browse(dat, "window=clipboard")
-		onclose(user, "clipboard")
+	user << browse(dat, "window=clipboard")
+	onclose(user, "clipboard")
 	add_fingerprint(usr)
 	return
 
@@ -113,7 +116,7 @@
 					P.loc = get_turf(usr)
 				if(P == toppaper)
 					var/obj/item/weapon/paper/newtop = locate(/obj/item/weapon/paper in src)
-					if(newtop && newtop != toppaper)
+					if(newtop && (newtop != toppaper))
 						toppaper = newtop
 					else
 						toppaper = null
