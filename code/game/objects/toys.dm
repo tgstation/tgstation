@@ -34,6 +34,32 @@ CRAYONS
 	updateIcon()
 	..()
 
+/obj/item/weapon/storage/crayonbox/MouseDrop(obj/over_object as obj)
+
+	if (ishuman(usr) || ismonkey(usr))
+		var/mob/M = usr
+		if (!( istype(over_object, /obj/screen) ))
+			return ..()
+		if ((!( M.restrained() ) && !( M.stat )))
+			if (over_object.name == "r_hand")
+				if (!( M.r_hand ))
+					M.u_equip(src)
+					M.r_hand = src
+			else
+				if (over_object.name == "l_hand")
+					if (!( M.l_hand ))
+						M.u_equip(src)
+						M.l_hand = src
+			M.update_clothing()
+			src.add_fingerprint(usr)
+			return
+		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
+			if (usr.s_active)
+				usr.s_active.close(usr)
+			src.show_to(usr)
+			return
+	return
+
 /obj/item/toy/crayon/red
 	icon_state = "crayonred"
 	colour = "#DA0000"

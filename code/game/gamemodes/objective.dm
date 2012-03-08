@@ -318,7 +318,6 @@ datum/objective/steal
 			set_target(new_target)
 		return steal_target
 
-
 	check_completion()
 		if(!steal_target || !owner.current)	return 0
 		if(!isliving(owner.current))	return 0
@@ -327,30 +326,45 @@ datum/objective/steal
 			if("28 moles of plasma (full tank)","10 diamonds","50 gold bars","25 refined uranium bars")
 				var/target_amount = text2num(target_name)//Non-numbers are ignored.
 				var/found_amount = 0.0//Always starts as zero.
-				for(var/obj/item/I in all_items)
-					if(!istype(I, steal_target))	continue//If it's not actually that item.
-					found_amount += (target_name=="28 moles of plasma (full tank)" ? (I:air_contents:toxins) : (I:amount))
+
+				for(var/obj/item/I in all_items) //Check for plasma tanks
+					if(istype(I, steal_target))
+						found_amount += (target_name=="28 moles of plasma (full tank)" ? (I:air_contents:toxins) : (I:amount))
+
+				for(var/obj/item/smallDelivery/J in all_items) //Check to see plasma tank is wrapped
+					if(istype(J.wrapped, steal_target))
+						found_amount += (target_name=="28 moles of plasma (full tank)" ? (J.wrapped:air_contents:toxins) : (J.wrapped:amount))
 				return found_amount>=target_amount
+
 			if("50 coins (in bag)")
 				var/obj/item/weapon/moneybag/B = locate() in all_items
+
 				if(B)
 					var/target = text2num(target_name)
 					var/found_amount = 0.0
 					for(var/obj/item/weapon/coin/C in B)
 						found_amount++
 					return found_amount>=target
+
 			if("a functional AI")
-//						world << "dude's after an AI, time to check for one."
-				for(var/obj/item/device/aicard/C in all_items)
-//							world << "Found an intelicard, checking it for an AI"
+				for(var/obj/item/device/aicard/C in all_items) //Check for ai card
 					for(var/mob/living/silicon/ai/M in C)
-//								world << "Found an AI, checking if it's alive"
-						if(istype(M, /mob/living/silicon/ai) && M.stat != 2)
-//									world << "yay, you win!"
+						if(istype(M, /mob/living/silicon/ai) && M.stat != 2) //See if any AI's are alive inside that card.
 							return 1
+
+				for(var/obj/item/smallDelivery/D in all_items) //Check for AI card desguised as packages
+					for(var/mob/living/silicon/ai/N in D.wrapped)
+						if(istype(N, /mob/living/silicon/ai) && N.stat != 2) //No idea why I have to check the type of a mob that I JUST created but ok.
+							return 1
+
 			else
-				for(var/obj/I in all_items)
+
+				for(var/obj/I in all_items) //Check for items
 					if(istype(I, steal_target))
+						return 1
+
+				for(var/obj/item/smallDelivery/J in all_items) //Check for items desguised as packages
+					if(istype(J.wrapped, steal_target))
 						return 1
 		return 0
 
