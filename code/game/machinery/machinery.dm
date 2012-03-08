@@ -91,7 +91,6 @@ Class Procs:
 	Compiled by Aygar
 */
 
-
 /obj/machinery/New()
 	..()
 	machines.Add(src)

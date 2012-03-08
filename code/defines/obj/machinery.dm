@@ -3,7 +3,7 @@
 	icon = 'stationobjs.dmi'
 	var
 		stat = 0
-
+		emagged = 0
 		use_power = 0
 		//0 = dont run the auto
 		//1 = run auto, use idle

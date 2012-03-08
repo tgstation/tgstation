@@ -393,6 +393,8 @@
 
 				var/datum/comm_log_entry/log = new
 				var/mob/M = signal.data["mob"]
+				if(istype(M, /mob/new_player))
+					return //Kludgy fix, will route out the real cause later --mloc
 
 				// Copy the signal.data entries we want
 				log.parameters["mobtype"] = signal.data["mobtype"]

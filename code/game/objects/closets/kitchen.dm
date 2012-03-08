@@ -41,8 +41,6 @@
 /obj/structure/closet/secure_closet/meat/New()
 	..()
 	sleep(2)
-	new /obj/item/kitchen/egg_box(src)
-	new /obj/item/kitchen/egg_box(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/monkey(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/monkey(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/monkey(src)
@@ -61,6 +59,8 @@
 	new /obj/item/weapon/reagent_containers/food/drinks/soymilk(src)
 	new /obj/item/weapon/reagent_containers/food/drinks/soymilk(src)
 	new /obj/item/weapon/reagent_containers/food/drinks/soymilk(src)
+	new /obj/item/kitchen/egg_box(src)
+	new /obj/item/kitchen/egg_box(src)
 
 /obj/structure/closet/secure_closet/money_freezer/New()
 	..()

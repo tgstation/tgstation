@@ -143,6 +143,7 @@ datum/preferences/proc/savefile_save(mob/user, slot)
 
 	F["used_skillpoints"] << src.used_skillpoints
 	F["skills"] << src.skills
+	F["skill_specialization"] << src.skill_specialization
 
 	return 1
 
@@ -217,6 +218,7 @@ datum/preferences/proc/savefile_load(mob/user, slot)
 
 	F["used_skillpoints"] >> src.used_skillpoints
 	F["skills"] >> src.skills
+	F["skill_specialization"] >> src.skill_specialization
 	if(!src.skills) src.skills = list()
 	if(!src.used_skillpoints) src.used_skillpoints= 0
 

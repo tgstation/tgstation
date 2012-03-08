@@ -333,6 +333,7 @@
 /obj/item/device/pda/Topic(href, href_list)
 	..()
 	var/mob/living/U = usr
+	U.last_target_click = world.time
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 	if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ) )
 		if ( !(U.stat || U.restrained()) )
@@ -382,6 +383,8 @@
 					mode = 2
 				if("21")//Read messeges
 					mode = 21
+				if("41")//Read messeges
+					mode = 41
 				if("3")//Atmos scan
 					mode = 3
 				if("4")//Redirects to hub
@@ -746,8 +749,10 @@
 						user << "\blue No fingerprints found on [C]"
 				else
 					user << text("\blue [C]'s Fingerprints: [md5(C:dna.uni_identity)]")
-				if ( !(C:blood_DNA.len) )
+				if ( !C:blood_DNA || !C:blood_DNA.len )
 					user << "\blue No blood found on [C]"
+					if(C:blood_DNA)
+						del(C:blood_DNA)
 				else
 					user << "\blue Blood found on [C]. Analysing..."
 					spawn(15)

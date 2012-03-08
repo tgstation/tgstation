@@ -101,13 +101,7 @@
 			t = "huge"
 		else
 	if ((usr.mutations & CLUMSY) && prob(50)) t = "funny-looking"
-	if(!blood_DNA)
-		var/turf/Z = get_turf(src)
-		message_admins("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
-		log_game("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
-		blood_DNA = list()
-		return
-	usr << text("This is a []\icon[][]. It is a [] item.", !src.blood_DNA.len ? "" : "bloody ",src, src.name, t)
+	usr << text("This is a []\icon[][]. It is a [] item.", !src.blood_DNA ? "" : "bloody ",src, src.name, t)
 	if(src.desc)
 		usr << src.desc
 	return

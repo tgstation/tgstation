@@ -24,7 +24,7 @@
 
 /obj/item/ammo_casing/c38
 	desc = "A .38 bullet casing."
-	caliber = "38"
+	caliber = "357"
 	projectile_type = "/obj/item/projectile/bullet/weakbullet"
 
 

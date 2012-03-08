@@ -66,6 +66,11 @@
 			continue
 		else if (M == usr)
 			continue
+		var/turf/temp_turf = get_turf(M)
+		if(temp_turf.z != 1 && temp_turf.z != 5) //Not on mining or the station.
+			continue
+		if(!checkcameravis(M)) //Not near a camera
+			continue
 
 		var/name = M.name
 		if (name in names)
@@ -212,12 +217,12 @@
 		L.Add(C)
 
 	camera_sort(L)
+	L = camera_network_sort(L)
 
 	var/list/D = list()
 	for (var/obj/machinery/camera/C in L)
 		if ( C.network in src.networks )
 			D[text("[]: [][]", C.network, C.c_tag, (C.status ? null : " (Deactivated)"))] = C
-	D = camera_network_sort(D)
 	D["Cancel"] = "Cancel"
 
 	var/t = input(user, "Which camera should you change to?") as null|anything in D

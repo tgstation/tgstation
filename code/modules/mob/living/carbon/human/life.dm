@@ -139,7 +139,7 @@
 				else if(health < 0)
 					var/pr = 15
 					if(prob(pr))
-						take_overall_damage(0, 1, used_weapon = "Bloodloss")
+						take_overall_damage(1, 0, used_weapon = "Bloodloss")
 			else if (stat != 0)
 				if(!lying)
 					lying = 1 //Seriously, stay down :x
