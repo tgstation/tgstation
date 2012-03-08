@@ -20,7 +20,7 @@
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		spawn(0)
 			var/religion_name = "Christianity"
-			var/new_religion = input(H, "You are the Chaplain / Councelor. For game mechanics purposes, you need to choose a religion either way. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name)
+			var/new_religion = input(H, "You are the Chaplain / Counselor. For game mechanics purposes, you need to choose a religion either way. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name)
 
 			if ((length(new_religion) == 0) || (new_religion == "Christianity"))
 				new_religion = religion_name

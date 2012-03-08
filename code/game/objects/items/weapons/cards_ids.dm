@@ -341,7 +341,7 @@ FINGERPRINT CARD
 
 	..()
 	if (!istype(usr, /mob/living/silicon))
-		if (length(src.fingerprints))
+		if (src.fingerprints)
 			if (src.amount > 1)
 				var/obj/item/weapon/f_card/F = new /obj/item/weapon/f_card(get_turf(src))
 				F.amount = --src.amount

@@ -22,6 +22,8 @@
 		if (ismob(target))
 			target:attack_log += "\[[time_stamp()]\]<font color='orange'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
 			user.visible_message("\red [user.name] finished planting an explosive on [target.name]!")
+			log_admin("ATTACK: [user] ([user.ckey]) planted [src] on [target] ([target:ckey]).")
+			message_admins("ATTACK: [user] ([user.ckey]) planted [src] on [target] ([target:ckey]).")
 		target.overlays += image('assemblies.dmi', "plastic-explosive2")
 		user << "Bomb has been planted. Timer counting down from [timer]."
 		spawn(timer*10)

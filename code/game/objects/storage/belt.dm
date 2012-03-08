@@ -101,6 +101,7 @@
 		"/obj/item/weapon/reagent_containers/pill",
 		"/obj/item/weapon/reagent_containers/syringe",
 		"/obj/item/weapon/reagent_containers/glass/dispenser",
+		"/obj/item/weapon/reagent_containers/hypospray",
 		"/obj/item/weapon/zippo",
 		"/obj/item/weapon/cigpacket",
 		"/obj/item/weapon/storage/pill_bottle",
