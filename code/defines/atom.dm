@@ -6,7 +6,7 @@
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
-	var/list/blood_DNA = list()
+	var/list/blood_DNA
 	var/last_bumped = 0
 	var/pass_flags = 0
 
