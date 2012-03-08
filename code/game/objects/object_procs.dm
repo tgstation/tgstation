@@ -10,6 +10,11 @@
 
 	// check for TK users
 	AutoUpdateTK(src)
+	if (istype(usr, /mob/living/carbon/human))
+		if(istype(usr.l_hand, /obj/item/tk_grab) || istype(usr.r_hand, /obj/item/tk_grab/))
+			if(!(usr in nearby))
+				if(usr.client && usr.machine==src)
+					src.attack_hand(usr)
 
 /obj/proc/updateDialog()
 	var/list/nearby = viewers(1, src)
@@ -17,7 +22,7 @@
 		if ((M.client && M.machine == src))
 			src.attack_hand(M)
 	AutoUpdateAI(src)
-	AutoUpdateTK(src)
+	//AutoUpdateTK(src)
 
 /obj/proc/update_icon()
 	return
