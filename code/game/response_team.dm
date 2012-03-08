@@ -58,7 +58,7 @@ proc/percentage_antagonists()
 	else return round(100 * antagonists / total)
 
 
-proc/trigger_armed_response_team()
+proc/trigger_armed_response_team(var/force = 0)
 	if(send_emergency_team)
 		return
 
@@ -66,6 +66,8 @@ proc/trigger_armed_response_team()
 	send_team_chance += 2*percentage_dead() // the more people are dead, the higher the chance
 	send_team_chance += percentage_antagonists() // the more antagonists, the higher the chance
 	send_team_chance = min(send_team_chance, 100)
+
+	if(force) send_team_chance = 100
 
 	// there's only a certain chance a team will be sent
 	if(!prob(send_team_chance)) return
@@ -79,7 +81,7 @@ proc/trigger_armed_response_team()
 	if(!nuke)
 		nuke = locate() in world
 	var/obj/item/weapon/paper/P = new
-	P.info = "Your orders, Commander, are to use all necessary tools given to return the station to a survivable condition. <br> To this end, you have been provided with the best tools we can give in the three areas of Medical Engineering and Security. The nuclear authorization code is: <b>[nuke.r_code]</b>. Be warned, if you detonate this without good reason, we will hold you to account for damages. Memorise this code, and then burn this message."
+	P.info = "Your orders, Commander, are to use all necessary tools given to return the station to a survivable condition. <br> To this end, you have been provided with the best tools we can give in the three areas of Medical Engineering and Security. The nuclear authorization code is: <b>[ nuke ? nuke.r_code : "AHH, THE NUKE IS GONE!"]</b>. Be warned, if you detonate this without good reason, we will hold you to account for damages. Memorise this code, and then burn this message."
 	P.name = "Emergency Nuclear Code, and ERT Orders"
 	for (var/obj/effect/landmark/A in world)
 		if (A.name == "nukecode")
