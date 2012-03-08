@@ -15,6 +15,8 @@
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been carded with [src.name] by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to card [M.name] ([M.ckey])</font>")
+		log_admin("ATTACK: [user] ([user.ckey]) carded [M] ([M.ckey]) with [src].")
+		message_admins("ATTACK: [user] ([user.ckey]) carded [M] ([M.ckey]) with [src].")
 
 		transfer_ai("AICORE", "AICARD", M, user)
 		return
