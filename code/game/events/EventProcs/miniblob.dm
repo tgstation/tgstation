@@ -1,6 +1,11 @@
 /proc/mini_blob_event()
 
 	var/turf/T = pick(blobstart)
+	if(istype(T, turf/simulated/wall))
+		T.ReplaceWithPlating()
+	for(var/atom/A in T)
+		if(A.density)
+			del(A)
 	var/obj/effect/blob/bl = new /obj/effect/blob( T.loc, 30 )
 	spawn(0)
 		bl.Life()
@@ -14,7 +19,7 @@
 		dotheblobbaby()
 	spawn(15000)
 		blobevent = 0
-	spawn(rand(30, 60)) //Delayed announcements to keep the crew on their toes.
+	spawn(rand(600, 1800)) //Delayed announcements to keep the crew on their toes.
 		command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()].", "Biohazard Alert")
 		world << sound('outbreak5.ogg')
 
