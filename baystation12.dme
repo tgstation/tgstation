@@ -538,7 +538,7 @@
 #include "code\game\machinery\computer\id.dm"
 #include "code\game\machinery\computer\lockdown.dm"
 #include "code\game\machinery\computer\medical.dm"
-#include "code\game\machinery\computer\operating.dm"
+#include "code\game\machinery\computer\Operating.dm"
 #include "code\game\machinery\computer\power.dm"
 #include "code\game\machinery\computer\robot.dm"
 #include "code\game\machinery\computer\security.dm"
