@@ -52,6 +52,8 @@
 					O.show_message("\red [user] implants themself with [src.name]!", 1)
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'> Implanted with [src.name] ([src.imp.name])  by [user.name] ([user.ckey])</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] ([src.imp.name]) to implant [M.name] ([M.ckey])</font>")
+			log_admin("ATTACK: [user] ([user.ckey]) implanted [M] ([M.ckey]) with [src].")
+			message_admins("ATTACK: [user] ([user.ckey]) implanted [M] ([M.ckey]) with [src].")
 			src.imp.loc = M
 			src.imp.imp_in = M
 			src.imp.implanted = 1

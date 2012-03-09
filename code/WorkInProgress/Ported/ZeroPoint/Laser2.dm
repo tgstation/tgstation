@@ -3,7 +3,7 @@
 	desc = "A super-powerful laser"
 	var/visible = 1
 	var/state = 1.0
-	var/obj/beam/e_beam/first
+	var/obj/effect/beam/e_beam/first
 	var/power = 500
 	icon = 'engine.dmi'
 	icon_state = "laser"
@@ -17,7 +17,7 @@
 /obj/machinery/engine/laser/process()
 	if(on)
 		if(!first)
-			src.first = new /obj/beam/e_beam(src.loc)
+			src.first = new /obj/effect/beam/e_beam(src.loc)
 			src.first.master = src
 			src.first.dir = src.dir
 			src.first.power = src.power
@@ -39,25 +39,25 @@
 		first.setpower(src.power)
 
 
-/obj/beam/e_beam
+/obj/effect/beam/e_beam
 	name = "Laser beam"
 	icon = 'projectiles.dmi'
 	icon_state = "u_laser"
 	var/obj/machinery/engine/laser/master = null
-	var/obj/beam/e_beam/next = null
+	var/obj/effect/beam/e_beam/next = null
 	var/power
 	var/freq = 50000
 	var/phase = 0
 	var/phase_variance = 0
 	anchored = 1
 
-/obj/beam/e_beam/New()
+/obj/effect/beam/e_beam/New()
 	src.sd_SetLuminosity(4)
 
-/obj/beam/e_beam/proc/updatebeam()
+/obj/effect/beam/e_beam/proc/updatebeam()
 	if(!next)
 		if(get_step(src.loc,src.dir))
-			var/obj/beam/e_beam/e = new /obj/beam/e_beam(src.loc)
+			var/obj/effect/beam/e_beam/e = new /obj/effect/beam/e_beam(src.loc)
 			e.dir = src.dir
 			src.next = e
 			e.master = src.master
@@ -82,10 +82,10 @@
 	else
 		next.updatebeam()
 
-/atom/proc/laser_act(var/obj/beam/e_beam/b)
+/atom/proc/laser_act(var/obj/effect/beam/e_beam/b)
 	return
 
-/mob/living/carbon/laser_act(var/obj/beam/e_beam/b)
+/mob/living/carbon/laser_act(var/obj/effect/beam/e_beam/b)
 	for(var/t in organs)
 		var/datum/organ/external/affecting = organs["[t]"]
 		if (affecting.take_damage(0, b.power/400,0,0))
@@ -93,23 +93,23 @@
 		else
 			UpdateDamage()
 
-/obj/beam/e_beam/Bump(atom/Obstacle)
+/obj/effect/beam/e_beam/Bump(atom/Obstacle)
 	Obstacle.laser_act(src)
 	del(src)
 	return
 
 
-/obj/beam/e_beam/proc/setpower(var/powera)
+/obj/effect/beam/e_beam/proc/setpower(var/powera)
 	src.power = powera
 	if(src.next)
 		src.next.setpower(powera)
 
-/obj/beam/e_beam/Bumped()
+/obj/effect/beam/e_beam/Bumped()
 	src.hit()
 	return
 
-/obj/beam/e_beam/HasEntered(atom/movable/AM as mob|obj)
-	if (istype(AM, /obj/beam))
+/obj/effect/beam/e_beam/HasEntered(atom/movable/AM as mob|obj)
+	if (istype(AM, /obj/effect/beam))
 		return
 	spawn( 0 )
 		AM.laser_act(src)
@@ -117,12 +117,12 @@
 		return
 	return
 
-/obj/beam/e_beam/Del()
+/obj/effect/beam/e_beam/Del()
 	if(next)
 		del(next)
 	..()
 	return
 
-/obj/beam/e_beam/proc/hit()
+/obj/effect/beam/e_beam/proc/hit()
 	del src
 	return

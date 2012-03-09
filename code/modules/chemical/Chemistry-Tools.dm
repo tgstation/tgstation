@@ -250,7 +250,7 @@
 	HasProximity(atom/movable/AM as mob|obj)
 		if(istype(attached_device, /obj/item/device/assembly/prox_sensor))
 			var/obj/item/device/assembly/prox_sensor/D = attached_device
-			if (istype(AM, /obj/beam))
+			if (istype(AM, /obj/effect/beam))
 				return
 			if (AM.move_speed < 12)
 				D.sense()
@@ -1247,6 +1247,8 @@
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [src.name] by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject [M.name] ([M.ckey])</font>")
+		log_admin("ATTACK: [user] ([user.ckey]) injected [M] ([M.ckey]) with [src].")
+		message_admins("ATTACK: [user] ([user.ckey]) injected [M] ([M.ckey]) with [src].")
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
@@ -1372,6 +1374,8 @@
 
 					M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
 					user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
+					log_admin("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
+					message_admins("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
 
 					for(var/mob/O in viewers(world.view, user))
 						O.show_message("\red [user] feeds [M] [src].", 1)
@@ -1432,6 +1436,8 @@
 
 				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
+				log_admin("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
+				message_admins("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
 
 				for(var/mob/O in viewers(world.view, user))
 					O.show_message("\red [user] feeds [M] [src].", 1)
@@ -1594,6 +1600,8 @@
 
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
+			log_admin("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
+			message_admins("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
 
 
 			if(reagents.total_volume)
@@ -1712,6 +1720,8 @@
 
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
+			log_admin("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
+			message_admins("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
 
 
 			if(reagents.total_volume)
@@ -2371,6 +2381,8 @@
 
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
+			log_admin("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
+			message_admins("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
 
 
 			if(reagents.total_volume)

@@ -1046,6 +1046,8 @@ CIRCULAR SAW
 
 				user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 				M.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
+				log_admin("ATTACK: [user] ([user.ckey]) debrained [M] ([M.ckey]) with [src].")
+				message_admins("ATTACK: [user] ([user.ckey]) debrained [M] ([M.ckey]) with [src].")
 
 				var/obj/item/brain/B = new(M.loc)
 				B.transfer_identity(M)
@@ -1266,6 +1268,7 @@ CIRCULAR SAW
 		return
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [name] by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to inject [M.name] ([M.ckey])</font>")
+	log_admin("ATTACK: [user] ([user.ckey]) injected [M] ([M.ckey]) with [src].")
 
 	if (user)
 		for(var/mob/O in viewers(M, null))

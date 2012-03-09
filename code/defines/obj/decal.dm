@@ -294,11 +294,11 @@
 	icon = 'tomatodecal.dmi'
 	random_icon_states = list("smashed_pie")
 
-/obj/decal/warning_stripes
+/obj/effect/decal/warning_stripes
 	icon = 'decal_warning_stripes.dmi'
 	layer = 2
 
-/obj/decal/warning_stripes/New()
+/obj/effect/decal/warning_stripes/New()
 	..()
 
 	loc.overlays += src
