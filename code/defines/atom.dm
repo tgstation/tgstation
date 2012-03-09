@@ -2,10 +2,10 @@
 	layer = 2
 	var/level = 2
 	var/flags = FPRINT
-	var/list/fingerprints = list()
-	var/list/fingerprintshidden = list()
+	var/list/fingerprints
+	var/list/fingerprintshidden
 	var/fingerprintslast = null
-	var/list/blood_DNA = list()
+	var/list/blood_DNA
 	var/last_bumped = 0
 	var/pass_flags = 0
 
@@ -13,7 +13,7 @@
 	var/datum/reagents/reagents = null
 
 	//Detective Work, used for the duplicate data points kept in the scanners
-	var/atom/movable/original_atom = null
+	var/list/original_atom
 
 	//var/chem_is_open_container = 0
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
@@ -234,3 +234,12 @@ its easier to just keep the beam vertical.
 		sleep(3)	//Changing this to a lower value will cause the beam to follow more smoothly with movement, but it will also be more laggy.
 					//I've found that 3 ticks provided a nice balance for my use.
 	for(var/obj/effect/overlay/beam/O in orange(10,src)) if(O.BeamSource==src) del O
+
+atom/movable/proc/forceMove(atom/destination)
+	if(destination)
+		if(loc)
+			loc.Exited(src)
+		loc = destination
+		loc.Entered(src)
+		return 1
+	return 0

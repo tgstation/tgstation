@@ -84,6 +84,8 @@
 	if (!( src.flags ) & 256)
 		return
 	if (ishuman(M))
+		if(!fingerprintshidden)
+			fingerprintshidden = list()
 		add_fibers(M)
 		if (M.mutations2 & mFingerprints)
 			if(src.fingerprintslast != M.key)
@@ -99,7 +101,7 @@
 			if(src.fingerprintslast != H.key)
 				src.fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
 				src.fingerprintslast = H.key
-				H.gloves.add_fingerprint(M)
+			H.gloves.add_fingerprint(M)
 		if(H.gloves != src)
 			if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
 				return 0
@@ -108,6 +110,8 @@
 		if(src.fingerprintslast != H.key)
 			src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
 			src.fingerprintslast = H.key
+		if(!fingerprints)
+			fingerprints = list()
 		var/new_prints = 0
 		var/prints
 		for(var/i = 1, i <= src.fingerprints.len, i++)
@@ -122,20 +126,22 @@
 					if(src.fingerprints.len == 1)
 						src.fingerprints = list()
 					else
-						for(var/j = (i + 1), j < (src.fingerprints.len), j++)
-							src.fingerprints[j-1] = src.fingerprints[j]
+						for(var/j = i, j <= (src.fingerprints.len), j++)
+							src.fingerprints[j] = src.fingerprints[j+1]
 						src.fingerprints.len--
 				else
-					src.fingerprints[i] = "1=" + L[num2text(1)] + "&2=" + test_print
+					src.fingerprints[i] = "1=[L[num2text(1)]]&2=[test_print]"
 		if(new_prints)
 			src.fingerprints[new_prints] = text("1=[]&2=[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), (H.gloves ? rand(10,20) : rand(25,40)))))
 		else if(new_prints == 0)
-			if(!src.fingerprints)
+			if(!src.fingerprints || !src.fingerprints.len)
 				src.fingerprints = list(text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40))))
-			src.fingerprints += text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40)))
+			else
+				src.fingerprints += text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40)))
 		for(var/i = 1, i <= src.fingerprints.len, i++)
 			if(length(src.fingerprints[i]) != 69)
 				src.fingerprints.Remove(src.fingerprints[i])
+		if(fingerprints && !fingerprints.len)	del(fingerprints)
 		return 1
 	else
 		if(src.fingerprintslast != M.key)
@@ -153,10 +159,7 @@
 	if (!( src.flags ) & 256)
 		return
 	if(!blood_DNA)
-		var/turf/Z = get_turf(src)
-		message_admins("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
-		log_game("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
-		return
+		blood_DNA = list()
 	if (blood_DNA.len)
 		if (istype(src, /obj/item)&&!istype(src, /obj/item/weapon/melee/energy))//Only regular items. Energy melee weapon are not affected.
 			var/obj/item/source2 = src
@@ -267,21 +270,18 @@
 
 	if (!( src.flags ) & 256)
 		return
-	if(!blood_DNA)
-		var/turf/Z = get_turf(src)
-		message_admins("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
-		log_game("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
-		blood_DNA = list()
-		return
-	if ( src.blood_DNA.len )
+	if ( src.blood_DNA )
 		if (istype (src, /mob/living/carbon))
 			var/obj/item/source2 = src
-			source2.blood_DNA = list()
+			del(source2.blood_DNA)
+			if(ishuman(src))
+				var/mob/living/carbon/human/M = src
+				M.bloody_hands = 0
 			//var/icon/I = new /icon(source2.icon_old, source2.icon_state) //doesnt have icon_old
 			//source2.icon = I
 		if (istype (src, /obj/item))
 			var/obj/item/source2 = src
-			source2.blood_DNA = list()
+			del(source2.blood_DNA)
 //			var/icon/I = new /icon(source2.icon_old, source2.icon_state)
 			if(source2.icon_old)
 				source2.icon = source2.icon_old
@@ -289,9 +289,12 @@
 			else
 				source2.icon = initial(icon)
 				source2.update_icon()
+			if(istype(src, /obj/item/clothing/gloves))
+				var/obj/item/clothing/gloves/G = src
+				G.transfer_blood = 0
 		if (istype(src, /turf/simulated))
 			var/obj/item/source2 = src
-			source2.blood_DNA = list()
+			del(source2.blood_DNA)
 			if(source2.icon_old)
 				var/icon/I = new /icon(source2.icon_old, source2.icon_state)
 				source2.icon = I
@@ -316,8 +319,8 @@
 					break
 				else
 					src.fingerprints[i] = "1=" + prints["1"] + "&2=" + new_print
-		if(!src.fingerprints)
-			src.fingerprints = list()
+	if(fingerprints && !fingerprints.len)
+		del(fingerprints)
 	if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src
 		M.update_clothing()

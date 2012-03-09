@@ -101,13 +101,7 @@
 			t = "huge"
 		else
 	if ((usr.mutations & CLUMSY) && prob(50)) t = "funny-looking"
-	if(!blood_DNA)
-		var/turf/Z = get_turf(src)
-		message_admins("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
-		log_game("\red ERROR: [src] at [Z.x], [Z.y], [Z.z] is missing it's blood_DNA list!")
-		blood_DNA = list()
-		return
-	usr << text("This is a []\icon[][]. It is a [] item.", !src.blood_DNA.len ? "" : "bloody ",src, src.name, t)
+	usr << text("This is a []\icon[][]. It is a [] item.", !src.blood_DNA ? "" : "bloody ",src, src.name, t)
 	if(src.desc)
 		usr << src.desc
 	return
@@ -267,6 +261,8 @@ mob/proc/flash_weak_pain()
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
+	log_admin("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
+	message_admins("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
 
 	//spawn(1800)            // this wont work right
 	//	M.lastattacker = null
@@ -402,6 +398,8 @@ mob/proc/flash_weak_pain()
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
+	log_admin("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
+	message_admins("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
 
 	src.add_fingerprint(user)
 	//if((user.mutations & CLUMSY) && prob(50))

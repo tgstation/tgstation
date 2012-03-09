@@ -37,6 +37,7 @@ emp_act
 /mob/living/carbon/human/proc/checkarmor(var/datum/organ/external/def_zone, var/type)
 	if(!type)	return 0
 	var/protection = 0
+	var/adjuster = 0
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform)
 	for(var/bp in body_parts)
 		if(!bp)	continue
@@ -44,6 +45,8 @@ emp_act
 			var/obj/item/clothing/C = bp
 			if(C.body_parts_covered & def_zone.body_part)
 				protection += C.armor[type]
+				adjuster++
+	protection = (adjuster ? protection/(sqrt(adjuster)) : 0)
 	return protection
 
 

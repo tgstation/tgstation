@@ -603,9 +603,7 @@
 			if(!istype(usr.equipped(),/obj/item/weapon/gun))
 				usr << "You need your gun in your active hand to do that!"
 				return
-			usr.AllowTargetMove()
-			dir = (dir%2)+1
-			name = "Disallow Walking"
+			usr.client.AllowTargetMove()
 			gun_click_time = world.time
 
 		if("Disallow Walking")
@@ -614,9 +612,7 @@
 			if(!istype(usr.equipped(),/obj/item/weapon/gun))
 				usr << "You need your gun in your active hand to do that!"
 				return
-			usr.AllowTargetMove()
-			dir = (dir%2)+1
-			name = "Allow Walking"
+			usr.client.AllowTargetMove()
 			gun_click_time = world.time
 
 		if("Allow Running")
@@ -625,9 +621,7 @@
 			if(!istype(usr.equipped(),/obj/item/weapon/gun))
 				usr << "You need your gun in your active hand to do that!"
 				return
-			usr.AllowTargetRun()
-			dir = (dir%2)+1
-			name = "Disallow Running"
+			usr.client.AllowTargetRun()
 			gun_click_time = world.time
 
 		if("Disallow Running")
@@ -636,9 +630,7 @@
 			if(!istype(usr.equipped(),/obj/item/weapon/gun))
 				usr << "You need your gun in your active hand to do that!"
 				return
-			usr.AllowTargetRun()
-			dir = (dir%2)+1
-			name = "Allow Running"
+			usr.client.AllowTargetRun()
 			gun_click_time = world.time
 
 		if("Allow Item Use")
@@ -647,9 +639,7 @@
 			if(!istype(usr.equipped(),/obj/item/weapon/gun))
 				usr << "You need your gun in your active hand to do that!"
 				return
-			name = "Disallow Item Use"
-			dir = (dir%2)+1
-			usr.AllowTargetClick()
+			usr.client.AllowTargetClick()
 			gun_click_time = world.time
 
 
@@ -659,13 +649,11 @@
 			if(!istype(usr.equipped(),/obj/item/weapon/gun))
 				usr << "You need your gun in your active hand to do that!"
 				return
-			name = "Allow Item Use"
-			dir = (dir%2)+1
-			usr.AllowTargetClick()
+			usr.client.AllowTargetClick()
 			gun_click_time = world.time
 
 		if("Toggle Gun Mode")
-			usr.ToggleGunMode()
+			usr.client.ToggleGunMode()
 
 		else
 			DblClick()

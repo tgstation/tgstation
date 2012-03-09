@@ -126,12 +126,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		SyncRDevices()
 
 	process()
-		for(var/obj/machinery/r_n_d/server/centcom/C in world) //have it automatically push research to the centcomm server so wild griffins can't fuck up R&D's work --NEO
-			for(var/datum/tech/T in files.known_tech)
-				C.files.AddTech2Known(T)
-			for(var/datum/design/D in files.known_designs)
-				C.files.AddDesign2Known(D)
-			C.files.RefreshResearch()
+		if(!(world.time % 600)) //Lets only have it do it every 100 ticks.  Good god.
+			for(var/obj/machinery/r_n_d/server/centcom/C in world) //have it automatically push research to the centcomm server so wild griffins can't fuck up R&D's work --NEO
+				for(var/datum/tech/T in files.known_tech)
+					C.files.AddTech2Known(T)
+				for(var/datum/design/D in files.known_designs)
+					C.files.AddDesign2Known(D)
+				C.files.RefreshResearch()
+		return
 
 	attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
 		//The construction/deconstruction of the console code.

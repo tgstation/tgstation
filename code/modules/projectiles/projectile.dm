@@ -76,8 +76,12 @@
 			if(istype(firer, /mob))
 				M.attack_log += text("\[[]\] <b>[]/[]</b> shot <b>[]/[]</b> with a <b>[]</b>", time_stamp(), firer, firer.ckey, M, M.ckey, src)
 				firer.attack_log += text("\[[]\] <b>[]/[]</b> shot <b>[]/[]</b> with a <b>[]</b>", time_stamp(), firer, firer.ckey, M, M.ckey, src)
+				log_admin("ATTACK: [firer] ([firer.ckey]) shot [M] ([M.ckey]) with [src].")
+				message_admins("ATTACK: [firer] ([firer.ckey]) shot [M] ([M.ckey]) with [src].")
 			else
 				M.attack_log += text("\[[]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[]/[]</b> with a <b>[]</b>", time_stamp(), M, M.ckey, src)
+				log_admin("ATTACK: UNKNOWN (no longer exists) shot [M] ([M.ckey]) with [src].")
+				message_admins("ATTACK: UNKNOWN (no longer exists) shot [M] ([M.ckey]) with [src].")
 
 		spawn(0)
 			if(A)

@@ -22,11 +22,6 @@ datum/skill/management
     name = "Command"
     desc = "Your ability to manage and commandeer other crew members."
 
-datum/skill/knowledge/law
-    ID = "law"
-    name = "NanoTrasen Law"
-    desc = "Your knowledge of NanoTrasen law and procedures. This includes space law, as well as general station rulings and procedures. A low level in this skill is typical for security officers, a high level in this skill is typical for captains."
-
 datum/skill/combat
 	ID = "combat"
 	name = "Close Combat"
@@ -101,13 +96,13 @@ datum/skill/computer
 datum/skill/pilot
     ID = "pilot"
     name = "Heavy Machinery Operation"
-    desc = "Describes your experience and understanding of operating heavy machinery, which includes mechs and other large exosuits. Used in piloting mechs and creating them"
+    desc = "Describes your experience and understanding of operating heavy machinery, which includes mechs and other large exosuits. Used in piloting mechs."
     field = "Engineering"
 
 datum/skill/medical
     ID = "medical"
     name = "Medicine"
-    desc = "Covers an understanding of the human body and medicine. At a low level, this skill is vital to perform basic first aid, such as CPR or applying bandages. At a high level, this skill implies a good understanding of the various medicines that can be found on a space station."
+    desc = "Covers an understanding of the human body and medicine. At a low level, this skill gives a basic understanding of applying common types of medicine, and a rough understanding of medical devices like the health analyzer. At a high level, this skill grants exact knowledge of all the medicine available on the station, as well as the ability to use complex medical devices like the body scanner or mass spectrometer."
     field = "Medical"
 
 datum/skill/anatomy
@@ -211,7 +206,7 @@ proc/show_skill_window(var/mob/user, var/mob/living/carbon/human/M)
 			var/level = M.skills[S.ID]
 			HTML += "<tr style='text-align:left;'>"
 			HTML += "<th>[S.name]</th>"
-			HTML += "<th><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[None\]</font></th>"
+			HTML += "<th><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[Layman\]</font></th>"
 			HTML += "<th><font color=[(level == SKILL_BASIC) ? "red" : "black"]>\[Basic\]</font></th>"
 			HTML += "<th><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Adept\]</font></th>"
 			HTML += "<th><font color=[(level == SKILL_EXPERT) ? "red" : "black"]>\[Expert\]</font></th>"

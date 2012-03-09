@@ -960,7 +960,7 @@
 						user << "\red There is already a blood sample in this syringe"
 						return
 					if(istype(target, /mob/living/carbon))//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
-						var/amount = max(src.reagents.maximum_volume - src.reagents.total_volume - 2, 0)
+						var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 						var/mob/living/carbon/T = target
 						var/datum/reagent/B = new /datum/reagent/blood
 						if(!T.dna)
@@ -1006,9 +1006,6 @@
 						//for(var/D in B.data)
 						//	world << "Data [D] = [B.data[D]]"
 						//debug
-
-						// also transfer some of the reagents other than blood
-						T.reagents.trans_to(src, 2)
 
 						src.reagents.reagent_list += B
 						src.reagents.update_total()
@@ -1250,6 +1247,8 @@
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [src.name] by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject [M.name] ([M.ckey])</font>")
+		log_admin("ATTACK: [user] ([user.ckey]) injected [M] ([M.ckey]) with [src].")
+		message_admins("ATTACK: [user] ([user.ckey]) injected [M] ([M.ckey]) with [src].")
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
@@ -1375,6 +1374,8 @@
 
 					M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
 					user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
+					log_admin("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
+					message_admins("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
 
 					for(var/mob/O in viewers(world.view, user))
 						O.show_message("\red [user] feeds [M] [src].", 1)
@@ -1435,6 +1436,8 @@
 
 				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
+				log_admin("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
+				message_admins("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
 
 				for(var/mob/O in viewers(world.view, user))
 					O.show_message("\red [user] feeds [M] [src].", 1)
@@ -1597,6 +1600,8 @@
 
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
+			log_admin("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
+			message_admins("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
 
 
 			if(reagents.total_volume)
@@ -1715,6 +1720,8 @@
 
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [M.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
+			log_admin("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
+			message_admins("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
 
 
 			if(reagents.total_volume)
@@ -2374,6 +2381,8 @@
 
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: \ref[reagents]</font>")
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: \ref[reagents]</font>")
+			log_admin("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
+			message_admins("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
 
 
 			if(reagents.total_volume)
@@ -2969,6 +2978,13 @@
 	explosion(src.loc,-1,0,2)
 	if(src)
 		del(src)
+
+/obj/structure/reagent_dispensers/fueltank/temperature_expose(datum/gas_mixture/air, temperature, volume)
+	if(temperature > T0C+500)
+		explosion(src.loc,-1,0,2)
+		if(src)
+			del(src)
+	return ..()
 
 /obj/structure/reagent_dispensers/water_cooler
 	name = "Water-Cooler"

@@ -24,7 +24,7 @@
 				src.req_access += pick(get_all_accesses())
 	..()
 
-/obj/structure/closet/secure_closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/structure/closet/secure_closet/attackby(obj/item/W as obj, mob/user as mob)
 	if(src.opened)
 		if(istype(W, /obj/item/weapon/grab))
 			if(src.large)
@@ -70,6 +70,18 @@
 		else
 			src.icon_state = src.icon_closed
 
+	else if(istype(W, /obj/item/device/hacktool))
+		spawn(0)
+			user << "Standby, jacking into the security systems..."
+			if(do_after(user, 20))
+				user << "Wiping access requirements..."
+			else
+				user << "You need to stay still!"
+			if(do_after(user, 20))
+				user << "Access requirements are wiped!  Anyone can access the locker, now!"
+				req_access = list()
+			else
+				user << "You need to stay still!"
 	else
 		user << "\red Access Denied"
 	return

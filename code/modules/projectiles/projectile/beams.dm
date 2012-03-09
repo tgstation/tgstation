@@ -2,10 +2,10 @@
 	name = "\improper Laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 20
+	damage = 40
 	damage_type = BURN
 	flag = "laser"
-	eyeblur = 2
+	eyeblur = 4
 	var/ID = 0
 	var/main = 0
 
@@ -51,13 +51,13 @@
 /obj/item/projectile/beam/heavylaser
 	name = "\improper Heavy Laser"
 	icon_state = "heavylaser"
-	damage = 40
+	damage = 60
 
 
 /obj/item/projectile/beam/pulse
 	name = "\improper Pulse"
 	icon_state = "u_laser"
-	damage = 50
+	damage = 40
 
 
 /obj/item/projectile/beam/deathlaser

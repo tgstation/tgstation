@@ -92,13 +92,11 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 	if(!istype(H))
 		return
 	if(H.dna)
-		if(blood_DNA.len)
+		if(blood_DNA && blood_DNA.len)
 			blood_DNA.len++
 			blood_DNA[blood_DNA.len] = list(H.dna.unique_enzymes, H.dna.b_type)
 		else
-			var/templist[1]
-			templist[1] = list(H.dna.unique_enzymes, H.dna.b_type)
-			blood_DNA = templist
+			blood_DNA = list(list(H.dna.unique_enzymes, H.dna.b_type))
 
 	var/icon/I = new /icon(icon, icon_state)
 
@@ -159,6 +157,8 @@ obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 				user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [brainmob.name] ([brainmob.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 				brainmob.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
+				log_admin("ATTACK: [brainmob] ([brainmob.ckey]) debrained [user] ([user.ckey]).")
+				message_admins("ATTACK: [brainmob] ([brainmob.ckey]) debrained [user] ([user.ckey]).")
 
 				var/obj/item/brain/B = new(loc)
 				B.transfer_identity(brainmob)

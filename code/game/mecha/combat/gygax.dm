@@ -6,13 +6,13 @@
 	dir_in = 1 //Facing North.
 	health = 300
 	deflect_chance = 15
-	damage_absorption = list("brute"=0.6,"fire"=1,"bullet"=0.8,"laser"=0.6,"energy"=0.7,"bomb"=1)
+	damage_absorption = list("brute"=0.75,"fire"=1,"bullet"=0.8,"laser"=0.7,"energy"=0.85,"bomb"=1)
 	max_temperature = 3500
 	infra_luminosity = 6
 	var/overload = 0
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax
 	internal_damage_threshold = 35
-	max_equip = 4
+	max_equip = 3
 
 
 /*

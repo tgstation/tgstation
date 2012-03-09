@@ -188,7 +188,7 @@ datum/preferences
 				var/level = skills[S.ID]
 				HTML += "<tr style='text-align:left;'>"
 				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;skillinfo=\ref[S]'>[S.name]</a></th>"
-				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_NONE]'><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[None\]</font></a></th>"
+				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_NONE]'><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[Layman\]</font></a></th>"
 				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_BASIC]'><font color=[(level == SKILL_BASIC) ? "red" : "black"]>\[Basic\]</font></a></th>"
 				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_ADEPT]'><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Adept\]</font></a></th>"
 				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_EXPERT]'><font color=[(level == SKILL_EXPERT) ? "red" : "black"]>\[Expert\]</font></a></th>"

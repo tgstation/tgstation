@@ -106,7 +106,7 @@ Data storage vars:
 		while(state)
 			sleep(1)
 			if(++lag>10)
-				CRASH("The global_iterator loop \ref[src] failed to terminate in designated timeframe. Last exec - [get_last_exec_time_as_text()].")
+				CRASH("The global_iterator loop \ref[src] failed to terminate in designated timeframe. This may be caused by server lagging.")
 		return 1
 
 	proc/process()
@@ -123,7 +123,7 @@ Data storage vars:
 
 	proc/set_delay(new_delay)
 		if(isnum(new_delay))
-			delay = new_delay>0?(new_delay):1
+			delay = max(1, round(new_delay))
 			return 1
 		else
 			return 0

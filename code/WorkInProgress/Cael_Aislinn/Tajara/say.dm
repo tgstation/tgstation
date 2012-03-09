@@ -368,6 +368,9 @@
 	var/list/eavesdroppers = get_mobs_in_view(7, src)
 	for(var/mob/M in listening)
 		eavesdroppers.Remove(M)
+	for(var/mob/M in eavesdroppers)
+		if(M.stat)
+			eavesdroppers.Remove(M)
 
 	for (var/obj/O in ((W | contents)-used_radios))
 		W |= O
