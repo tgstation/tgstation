@@ -3,7 +3,7 @@
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
 	icon_state = "rig-engineering"
 	item_state = "rig_helm"
-	armor = list(melee = 25, bullet = 5, laser = 5,energy = 5, bomb = 5, bio = 100, rad = 20)
+	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 20)
 	allowed = list(/obj/item/device/flashlight)
 
 /obj/item/clothing/head/helmet/space/rig/mining
@@ -26,22 +26,18 @@
 	icon_state = "rig-engineering"
 	item_state = "rig_suit"
 	protective_temperature = 5000 //For not dieing near a fire, but still not being great in a full inferno
-	slowdown = 3
-	armor = list(melee = 25, bullet = 5, laser = 5,energy = 5, bomb = 5, bio = 100, rad = 50)
+	slowdown = 2
+	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/satchel,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
 
 /obj/item/clothing/suit/space/rig/mining
 	icon_state = "rig-mining"
 	name = "mining RIG suit"
-	slowdown = 1
-	armor = list(melee = 40, bullet = 5, laser = 5,energy = 5, bomb = 5, bio = 100, rad = 50)
 
 /obj/item/clothing/suit/space/rig/elite
 	icon_state = "rig-white"
 	name = "advanced RIG suit"
 	protective_temperature = 10000
-	slowdown = 2
-	armor = list(melee = 40, bullet = 10, laser = 20,energy = 15, bomb = 15, bio = 100, rad = 50)
 
 /obj/item/clothing/suit/space/rig/security
 	name = "security RIG suit"
