@@ -131,12 +131,11 @@
 			msg += "[t_He] [t_has] \icon[src.wear_mask] \a [src.wear_mask] on [t_his] face.\n"
 
 	//eyes
-	if (!skipeyes)
-		if(src.glasses)
-			if (src.glasses.blood_DNA)
-				msg += "<span class='warning'>[t_He] [t_has] \icon[src.glasses] [src.gloves.gender==PLURAL?"some":"a"] blood-stained [src.glasses] covering [t_his] eyes!</span>\n"
-			else
-				msg += "[t_He] [t_has] \icon[src.glasses] \a [src.glasses] covering [t_his] eyes.\n"
+	if (src.glasses && !skipeyes)
+		if (src.glasses.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_has] \icon[src.glasses] [src.glasses.gender==PLURAL?"some":"a"] blood-stained [src.glasses] covering [t_his] eyes!</span>\n"
+		else
+			msg += "[t_He] [t_has] \icon[src.glasses] \a [src.glasses] covering [t_his] eyes.\n"
 
 	//ears
 	if (src.ears && !skipears)
