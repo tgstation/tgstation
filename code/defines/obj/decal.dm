@@ -28,7 +28,6 @@
 
 /obj/effect/decal/point
 	name = "point"
-	desc = "It is an arrow hanging in mid-air."
 	icon = 'screen1.dmi'
 	icon_state = "arrow"
 	layer = 16.0
@@ -60,7 +59,7 @@
 
 /obj/effect/decal/cleanable/mucus
 	name = "Mucus"
-	desc = "Icky mucus!"
+	desc = "Disgusting mucus."
 	density = 0
 	anchored = 1
 	layer = 2
@@ -105,7 +104,7 @@
 
 /obj/effect/decal/cleanable/xenoblood
 	name = "xeno blood"
-	desc = "It's green. What the hell?"
+	desc = "It's green blood. What the hell?"
 	density = 0
 	anchored = 1
 	layer = 2
@@ -171,7 +170,7 @@
 
 /obj/effect/decal/cleanable/oil
 	name = "motor oil"
-	desc = "It's black. Beepsky made another mess."
+	desc = "It's black oil."
 	density = 0
 	anchored = 1
 	layer = 2
@@ -253,7 +252,7 @@
 //Vomit (sorry)
 /obj/effect/decal/cleanable/vomit
 	name = "Vomit"
-	desc = "Geez, unpleasant."
+	desc = "Unpleasant."
 	density = 0
 	anchored = 1
 	layer = 2
@@ -269,7 +268,7 @@
 
 /obj/effect/decal/cleanable/tomato_smudge
 	name = "Tomato smooth"
-	desc = "It's red"
+	desc = "It looks sort of like blood, but it's not that dark."
 	density = 0
 	anchored = 1
 	layer = 2
@@ -278,7 +277,7 @@
 
 /obj/effect/decal/cleanable/egg_smudge
 	name = "Smashed egg"
-	desc = "Seems like this one won't hatch"
+	desc = "Seems like this one won't hatch."
 	density = 0
 	anchored = 1
 	layer = 2
@@ -287,18 +286,18 @@
 
 /obj/effect/decal/cleanable/pie_smudge //honk
 	name = "Smashed pie"
-	desc = "Pie cream from a cream pie"
+	desc = "Pie cream from a cream pie."
 	density = 0
 	anchored = 1
 	layer = 2
 	icon = 'tomatodecal.dmi'
 	random_icon_states = list("smashed_pie")
 
-/obj/decal/warning_stripes
+/obj/effect/decal/warning_stripes
 	icon = 'decal_warning_stripes.dmi'
 	layer = 2
 
-/obj/decal/warning_stripes/New()
+/obj/effect/decal/warning_stripes/New()
 	..()
 
 	loc.overlays += src

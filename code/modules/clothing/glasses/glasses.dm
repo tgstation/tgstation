@@ -24,7 +24,7 @@
 
 /obj/item/clothing/glasses/night
 	name = "Night Vision Goggles"
-	desc = "You can totally see in the dark now!."
+	desc = "You can totally see in the dark now!"
 	icon_state = "night"
 	item_state = "glasses"
 	origin_tech = "magnets=2"

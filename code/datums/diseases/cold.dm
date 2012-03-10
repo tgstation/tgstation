@@ -33,7 +33,7 @@
 			if(prob(1))
 				affected_mob << "\red Your throat feels sore."
 			if(prob(1))
-				affected_mob << "\red Mucous runs down the back of your throat."
+				affected_mob << "\red Mucus runs down the back of your throat."
 		if(3)
 			if(affected_mob.sleeping && prob(25))
 				affected_mob << "\blue You feel better."
@@ -54,7 +54,7 @@
 			if(prob(1))
 				affected_mob << "\red Your throat feels sore."
 			if(prob(1))
-				affected_mob << "\red Mucous runs down the back of your throat."
+				affected_mob << "\red Mucus runs down the back of your throat."
 			if(prob(1) && prob(50))
 				if(!affected_mob.resistances.Find(/datum/disease/flu))
 					var/datum/disease/Flu = new /datum/disease/flu(0)

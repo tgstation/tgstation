@@ -176,6 +176,8 @@
 								O.show_message(text("\red [] has tightened his grip on []'s neck!", assailant, affecting), 1)
 							affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been strangled (kill intent) by [assailant.name] ([assailant.ckey])</font>")
 							assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Strangled (kill intent) [affecting.name] ([affecting.ckey])</font>")
+							log_admin("ATTACK: [assailant] ([assailant.ckey]) strangled [affecting] ([affecting.ckey]).")
+							message_admins("ATTACK: [assailant] ([assailant.ckey]) strangled [affecting] ([affecting.ckey]).")
 							assailant.next_move = world.time + 10
 							affecting.losebreath += 1
 							hud1.icon_state = "disarm/kill1"

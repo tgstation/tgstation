@@ -17,6 +17,8 @@
 					visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
 					M.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [src.name] ([src.ckey])</font>")
 					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
+					log_admin("ATTACK: [src] ([src.ckey]) stungloved [M] ([M.ckey]).")
+					message_admins("ATTACK: [src] ([src.ckey]) stungloved [M] ([M.ckey]).")
 					var/armorblock = run_armor_check(M.zone_sel.selecting, "energy")
 					apply_effects(5,5,0,0,5,0,0,armorblock)
 					return 1
@@ -72,6 +74,8 @@
 		if("hurt")
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Punched [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
+			log_admin("ATTACK: [src] ([src.ckey]) punched [M] ([M.ckey]).")
+			message_admins("ATTACK: [src] ([src.ckey]) punched [M] ([M.ckey]).")
 
 			var/attack_verb
 			switch(M.mutantrace)
@@ -105,6 +109,7 @@
 		if("disarm")
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
+			log_admin("ATTACK: [src] ([src.ckey]) disarmed [M] ([M.ckey]).")
 
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)
