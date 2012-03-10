@@ -286,7 +286,7 @@
 
 /obj/item/weapon/bedsheet
 	name = "bedsheet"
-	desc = "Nice, linen, bedsheet. Perfect to put on."
+	desc = "Nice, linen bedsheet. Perfect to put on a bed."
 	icon = 'items.dmi'
 	icon_state = "sheet"
 	layer = 4.0
@@ -403,7 +403,7 @@
 
 /obj/item/weapon/c_tube
 	name = "cardboard tube"
-	desc = "A tube... of cardboard."
+	desc = "A tube made of cardboard."
 	icon = 'items.dmi'
 	icon_state = "c_tube"
 	throwforce = 1
@@ -422,7 +422,7 @@
 
 
 /obj/item/weapon/cleaner
-	desc = "Space Cleaner!"
+	desc = "A chemical that cleans messes."
 	icon = 'janitor.dmi'
 	name = "space cleaner"
 	icon_state = "cleaner"
@@ -537,7 +537,7 @@
 
 /obj/item/weapon/crowbar
 	name = "crowbar"
-	desc = "Used to hit floors"
+	desc = "Used to remove floor tiles."
 	icon = 'items.dmi'
 	icon_state = "crowbar"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -585,7 +585,7 @@
 
 /obj/item/weapon/disk/nuclear
 	name = "Nuclear Authentication Disk"
-	desc = "Better keep this safe."
+	desc = "Better keep this safe, it can activate the nuke."
 	icon_state = "nucleardisk"
 	item_state = "card-id"
 	w_class = 1.0
@@ -598,7 +598,7 @@
 
 /obj/item/weapon/extinguisher
 	name = "fire extinguisher"
-	desc = "Contains water..."
+	desc = "Contains water for fighting fires."
 	icon = 'items.dmi'
 	icon_state = "fire_extinguisher0"
 	var/last_use = 1.0
@@ -628,7 +628,7 @@
 
 /obj/item/weapon/fcardholder
 	name = "Finger Print Case"
-	desc = "Apply finger print card."
+	desc = "Holds fingerprint cards."
 	icon = 'items.dmi'
 	icon_state = "fcardholder0"
 	item_state = "clipboard"
@@ -778,7 +778,7 @@
 
 /obj/item/weapon/directions
 	name = "Crumpled Paper"
-	desc = "This is a crumpled piece fo paper."
+	desc = "This is a crumpled piece of paper."
 	icon = 'weapons.dmi'
 	icon_state = "crumpled"
 	throwforce = 0
@@ -791,7 +791,7 @@
 	name = "paper - 'Judgement'"
 	info = "For crimes against the station, the offender is sentenced to:<BR>\n<BR>\n"
 
-/obj/item/weapon/paper/certificate
+/obj/item/weapon/paper/certificate //What is this? -Kaleb702
 	name = "paper - 'Certificate'"
 	info = "Due to this person's unique actions in the past, we hereby certify that they are \"Totally Radical\"<br><br>----<b>Central Command</b><BR><i>This paper has been stamped with the central command rubber stamp.</i><BR>"
 	stamped = list(/obj/item/weapon/stamp/centcom)
@@ -863,7 +863,7 @@
 	name = "multicolor pen"
 
 /obj/item/weapon/banhammer
-	desc = "A banhammer"
+	desc = "A banhammer."
 	name = "Banhammer"
 	icon = 'items.dmi'
 	icon_state = "toyhammer"
@@ -893,7 +893,7 @@
 
 /obj/item/weapon/rubber_chicken
 	name = "Rubber Chicken"
-	desc = "A rubber chicken, isn't that hilarious?"
+	desc = "A rubber chicken. Isn't that hilarious?"
 	icon = 'items.dmi'
 	icon_state = "rubber_chicken"
 	item_state = "rubber_chicken"
@@ -901,7 +901,7 @@
 
 /obj/item/weapon/screwdriver
 	name = "screwdriver"
-	desc = "You can be totally screwwy with this."
+	desc = "You can be totally screwy with this."
 	icon = 'items.dmi'
 	icon_state = "screwdriver"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -926,7 +926,7 @@
 
 /obj/item/weapon/SWF_uplink
 	name = "station bounced radio"
-	desc = "used to comunicate it appears."
+	desc = "Used to communicate it appears."
 	icon = 'radio.dmi'
 	icon_state = "radio"
 	var/temp = null
@@ -945,7 +945,7 @@
 
 /obj/item/weapon/spellbook
 	name = "Spell Book"
-	desc = "The legendary book of spells of the wizard."
+	desc = "The legendary book of spells of a wizard."
 	icon = 'library.dmi'
 	icon_state ="book"
 	throw_speed = 1
@@ -962,7 +962,7 @@
 
 /obj/item/weapon/staff
 	name = "wizards staff"
-	desc = "Apparently a staff used by the wizard."
+	desc = "Apparently a staff used by a wizard."
 	icon = 'wizard.dmi'
 	icon_state = "staff"
 	force = 3.0
@@ -1060,7 +1060,7 @@
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
 
 /obj/item/weapon/cell/crap
-	name = "Nanotrassen Brand Rechargable AA Battery"
+	name = "Nanotrasen Brand Rechargable AA Battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
 	origin_tech = "powerstorage=0"
 	maxcharge = 500
@@ -1093,7 +1093,7 @@
 		return 1
 
 /*/obj/item/weapon/cell/potato
-	name = "Potato Battery"
+	name = "Potato Battery" // This needs more Portal 2 refs. -Kaleb702
 	desc = "A rechargable starch based power cell."
 	icon = 'harvest.dmi'
 	icon_state = "potato_battery"
@@ -1115,7 +1115,7 @@
 	for (var/obj/machinery/camera/C in cameras)
 		friendly_cameras.Add(C.c_tag)
 
-	var/target = input("Select the camera to observe", null) as null|anything in friendly_cameras
+	var/target = input("Select the camera to observe.", null) as null|anything in friendly_cameras
 	if (!target)
 		return
 	for (var/obj/machinery/camera/C in cameras)
@@ -1165,7 +1165,7 @@
 
 /obj/item/weapon/a_gift
 	name = "gift"
-	desc = "A gift it appears."
+	desc = "A gift, it appears."
 	icon = 'items.dmi'
 	icon_state = "gift"
 	item_state = "gift"
@@ -1486,7 +1486,7 @@
 
 /obj/item/weapon/dice/d20 // -- TLE
 	name = "d20"
-	desc = "A dice with...hell that is many sides."
+	desc = "A dice with...hell, that is a lot of sides."
 	sides = 20
 	icon_state = "d20"
 	item_state = "dice"

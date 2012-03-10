@@ -10,6 +10,7 @@
 	name = "Operating Computer"
 	density = 1
 	anchored = 1.0
+	desc = "Used to monitor status of people being operated on."
 	icon_state = "operating"
 	circuit = "/obj/item/weapon/circuitboard/operating"
 	var/mob/living/carbon/human/victim = null
@@ -19,7 +20,7 @@
 
 /obj/machinery/computer/arcade
 	name = "arcade machine"
-	desc = "Does not support Pin ball."
+	desc = "Does not support Pinball."
 	icon = 'computer.dmi'
 	icon_state = "arcade"
 	circuit = "/obj/item/weapon/circuitboard/arcade"
@@ -35,6 +36,7 @@
 
 /obj/machinery/computer/aistatus
 	name = "AI Status Panel"
+	desc = "This shows the status of the AI."
 	icon = 'mainframe.dmi'
 	icon_state = "left"
 //	brightnessred = 0
@@ -48,7 +50,9 @@
 	if(stat & BROKEN)
 		user << "\red The status panel is broken!"
 		return
-	user << "\red I don't understand any of this!"
+	user << "\red You don't understand any of this!"
+	if(
+	user << "This has nothing useful. You know all this already."
 	return
 
 /obj/machinery/computer/aiupload

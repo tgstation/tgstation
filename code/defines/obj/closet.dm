@@ -1,6 +1,6 @@
 /obj/structure/closet
 	name = "Closet"
-	desc = "It's a closet!"
+	desc = "It's a closet."
 	icon = 'closet.dmi'
 	icon_state = "closed"
 	density = 1
@@ -20,7 +20,7 @@
 
 /obj/structure/closet/acloset
 	name = "Strange closet"
-	desc = "It looks weird!"
+	desc = "It looks weird."
 	icon_state = "acloset"
 	icon_closed = "acloset"
 	icon_opened = "aclosetopen"
@@ -42,7 +42,7 @@
 
 /obj/structure/closet/gmcloset
 	name = "Formal closet"
-	desc = "A bulky (yet mobile) closet. Comes with formal clothes"
+	desc = "A bulky (yet mobile) closet. Comes with formal clothes."
 
 /obj/structure/closet/emcloset
 	name = "Emergency Closet"
@@ -322,26 +322,36 @@
 	icon_opened = "bioopen"
 
 /obj/structure/closet/l3closet/general
+	name = "Level 3 Biohazard Suit"
+	desc = "A bulky (yet mobile) closet. Comes prestocked with level 3 biohazard gear for emergencies."
 	icon_state = "bio_general"
 	icon_closed = "bio_general"
 	icon_opened = "bio_generalopen"
 
 /obj/structure/closet/l3closet/virology
+	name = "Level 3 Biohazard Suit"
+	desc = "A bulky (yet mobile) closet. Comes prestocked with level 3 biohazard gear for emergencies."
 	icon_state = "bio_virology"
 	icon_closed = "bio_virology"
 	icon_opened = "bio_virologyopen"
 
 /obj/structure/closet/l3closet/security
+	name = "Level 3 Biohazard Suit"
+	desc = "A bulky (yet mobile) closet. Comes prestocked with level 3 biohazard gear for emergencies."
 	icon_state = "bio_security"
 	icon_closed = "bio_security"
 	icon_opened = "bio_securityopen"
 
 /obj/structure/closet/l3closet/janitor
+	name = "Level 3 Biohazard Suit"
+	desc = "A bulky (yet mobile) closet. Comes prestocked with level 3 biohazard gear for emergencies."
 	icon_state = "bio_janitor"
 	icon_closed = "bio_janitor"
 	icon_opened = "bio_janitoropen"
 
 /obj/structure/closet/l3closet/scientist
+	name = "Level 3 Biohazard Suit"
+	desc = "A bulky (yet mobile) closet. Comes prestocked with level 3 biohazard gear for emergencies."
 	icon_state = "bio_scientist"
 	icon_closed = "bio_scientist"
 	icon_opened = "bio_scientistopen"
@@ -354,9 +364,11 @@
 	icon_opened = "syndicateopen"
 
 /obj/structure/closet/syndicate/personal
+	name = "Gear Closet"
 	desc = "Gear preperations closet."
 
 /obj/structure/closet/syndicate/nuclear
+	name = "Nuclear Closet"
 	desc = "Nuclear preperations closet."
 
 	// Inserting the gimmick clothing stuff here for generic items, IE Tacticool stuff
@@ -476,7 +488,7 @@
 	icon_state = "syndicate"
 	icon_closed = "syndicate"
 	icon_opened = "syndicateopen"
-	name = "Thunderdome closet."
+	name = "Thunderdome closet"
 	anchored = 1
 
 /obj/structure/closet/thunderdome/tdred
@@ -484,17 +496,17 @@
 	icon_state = "syndicate"
 	icon_closed = "syndicate"
 	icon_opened = "syndicateopen"
-	name = "Thunderdome closet."
+	name = "Thunderdome closet"
 
 /obj/structure/closet/thunderdome/tdgreen
 	desc = "Everything you need!"
 	icon_state = "syndicate1"
 	icon_closed = "syndicate1"
 	icon_opened = "syndicate1open"
-	name = "Thunderdome closet."
+	name = "Thunderdome closet"
 
 /obj/structure/closet/malf/suits
-	desc = "Gear preparations closet."
+	desc = "Gear preparations closet"
 	icon_state = "syndicate"
 	icon_closed = "syndicate"
 	icon_opened = "syndicateopen"
@@ -530,7 +542,7 @@
 	icon_closed = "mixed"
 
 /obj/structure/closet/wardrobe/orange
-	name = "Prisoners Wardrobe"
+	name = "Prisoner's Wardrobe"
 	desc = "Contains orange jumpsuits."
 	icon_state = "orange"
 	icon_closed = "orange"
@@ -656,7 +668,7 @@
 	icon_closed = "grey"
 
 /obj/structure/closet/wardrobe/bartender_black
-	name = "Bartender Wardrobe"
+	name = "Bartender's Wardrobe"
 	desc = "Closet of basic bartending clothes."
 	icon_state = "black"
 	icon_closed = "black"
@@ -674,19 +686,19 @@
 	icon_closed = "green"
 
 /obj/structure/closet/wardrobe/librarian_red
-	name = "Librarian Wardrobe"
+	name = "Librarian's Wardrobe"
 	desc = "Contains librarian jumpsuits."
 	icon_state = "red"
 	icon_closed = "red"
 
 /obj/structure/closet/wardrobe/cargo_yellow
-	name = "Cargo Tech Wardrobe"
+	name = "Cargo Tech's Wardrobe"
 	desc = "Contains cargo tech jumpsuits."
 	icon_state = "yellow"
 	icon_closed = "yellow"
 
 /obj/structure/closet/wardrobe/qm_yellow
-	name = "Quartermaster Wardrobe"
+	name = "Quartermaster's Wardrobe"
 	desc = "Contains quartermaster jumpsuits."
 	icon_state = "yellow"
 	icon_closed = "yellow"

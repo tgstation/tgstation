@@ -197,7 +197,7 @@
 
 /obj/item/weapon/storage/firstaid
 	name = "First-Aid"
-	desc = "In case of a boo-boo."
+	desc = "In case of an injury."
 	icon_state = "firstaid"
 	throw_speed = 2
 	throw_range = 8
@@ -324,11 +324,13 @@
 
 /obj/item/weapon/storage/toolbox/emergency
 	name = "emergency toolbox"
+	desc = "A toolbox for emergencies"
 	icon_state = "red"
 	item_state = "toolbox_red"
 
 /obj/item/weapon/storage/toolbox/mechanical
 	name = "mechanical toolbox"
+	desc = "A toolbox for holding tools about machinery."
 	icon_state = "blue"
 	item_state = "toolbox_blue"
 
@@ -346,6 +348,7 @@
 
 /obj/item/weapon/storage/toolbox/syndicate
 	name = "Suspicious looking toolbox"
+	desc = "You have no idea what this is."
 	icon_state = "syndicate"
 	item_state = "toolbox_syndi"
 	origin_tech = "combat=1;syndicate=1"
@@ -365,7 +368,7 @@
 
 /obj/item/weapon/storage/bible
 	name = "bible"
-	desc = "Apply to head repeatedly."
+	desc = "Holds the word of religion."
 	icon_state ="bible"
 	throw_speed = 1
 	throw_range = 5
@@ -376,7 +379,7 @@
 
 /obj/item/weapon/storage/bible/booze
 	name = "bible"
-	desc = "Apply to head repeatedly."
+	desc = "Holds the word of religion."
 	icon_state ="bible"
 
 /obj/item/weapon/storage/mousetraps

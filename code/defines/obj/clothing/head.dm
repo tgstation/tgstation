@@ -78,7 +78,7 @@
 
 /obj/item/clothing/head/beret
 	name = "beret"
-	desc = "A beret, a mime's favorite headwear."
+	desc = "A beret. A mime's favorite headwear."
 	icon_state = "beret"
 	flags = FPRINT | TABLEPASS
 
@@ -142,7 +142,7 @@
 
 /obj/item/clothing/head/helmet/that
 	name = "Sturdy Top hat"
-	desc = "An amish looking armored top hat."
+	desc = "An amish looking, armored top hat."
 	icon_state = "tophat"
 	item_state = "that"
 	flags = FPRINT|TABLEPASS

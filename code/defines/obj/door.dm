@@ -19,7 +19,7 @@
 
 /obj/machinery/door/firedoor
 	name = "Firelock"
-	desc = "Apply crowbar"
+	desc = "Apply crowbar to open."
 	icon = 'Doorfire.dmi'
 	icon_state = "door0"
 	var/blocked = null
@@ -29,7 +29,7 @@
 
 /obj/machinery/door/firedoor/border_only
 	name = "Firelock"
-	desc = "Apply crowbar."
+	desc = "Apply crowbar to open."
 	icon = 'door_fire2.dmi'
 	icon_state = "door0"
 
