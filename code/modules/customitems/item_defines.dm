@@ -8,7 +8,7 @@
 	icon_state = "wes_solari_1"
 
 /obj/item/fluff/victor_kaminsky_1
-	name = "\improper golden detective's badge"
+	name = "\improper Golden Detective's Badge"
 	desc = "NanoTrasen Security Department detective's badge, made from gold. Badge number is 564."
 	icon_state = "victor_kaminsky_1"
 
