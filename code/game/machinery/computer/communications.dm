@@ -478,7 +478,7 @@
 
 /obj/machinery/computer/communications/proc/post_status(var/command, var/data1, var/data2)
 
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(status_display_freq)
+	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
 
 	if(!frequency) return
 

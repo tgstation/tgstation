@@ -748,8 +748,10 @@
 
 /obj/machinery/computer/scan_consolenew/New()
 	..()
-	spawn( 5 )
+	spawn(5)
 		src.connected = locate(/obj/machinery/dna_scannernew, get_step(src, WEST))
+		spawn(250)
+			src.injectorready = 1
 		return
 	return
 

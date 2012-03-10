@@ -23,10 +23,10 @@
 		return
 
 	update_icon()
+		overlays = null
+		icon_state = "sheater[on]"
 		if(open)
-			icon_state = "sheater-open"
-		else
-			icon_state = "sheater[on]"
+			overlays  += "sheater-open"
 		return
 
 	examine()

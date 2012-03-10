@@ -27,7 +27,7 @@
 	var/buffer2iue = 0
 	var/buffer3iue = 0
 	var/delete = 0
-	var/injectorready = 1
+	var/injectorready = 0	//Quick fix for issue 286 (screwdriver the screen twice to restore injector)	-Pete
 	var/temphtml = null
 	var/obj/machinery/dna_scanner/connected = null
 	var/obj/item/weapon/disk/data/diskette = null

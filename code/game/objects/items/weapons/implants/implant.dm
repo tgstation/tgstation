@@ -174,7 +174,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	get_data()
 		var/dat = {"
 <b>Implant Specifications:</b><BR>
-<b>Name:</b> NanoTrasen Employee Management Implant<BR>
+<b>Name:</b> Nanotrasen Employee Management Implant<BR>
 <b>Life:</b> Ten years.<BR>
 <b>Important Notes:</b> Personnel injected with this device tend to be much more loyal to the company.<BR>
 <HR>
@@ -189,10 +189,9 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		if(!istype(M, /mob/living/carbon/human))	return
 		var/mob/living/carbon/human/H = M
 		if(H.mind in ticker.mode.head_revolutionaries)
-			for(var/mob/O in viewers(H, null))
-				O.show_message(text("\red [] seems to resist the implant.", H), 1)
-				return
+			H.visible_message("[H] seems to resist the implant!", "You feel the corporate tendrils of Nanotrasen try to invade your mind!")
+			return
 		else if(H.mind in ticker.mode:revolutionaries)
 			ticker.mode:remove_revolutionary(H.mind)
-		H << "\blue You feel a surge of loyalty towards NanoTrasen."
+		H << "\blue You feel a surge of loyalty towards Nanotrasen."
 		return

@@ -1232,6 +1232,9 @@ turf/simulated/floor/return_siding_icon_state()
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 
 	if (istype(C, /obj/item/stack/rods))
+		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
+		if(L)
+			return
 		var/obj/item/stack/rods/R = C
 		user << "\blue Constructing support lattice ..."
 		playsound(src.loc, 'Genhit.ogg', 50, 1)
