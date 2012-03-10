@@ -434,6 +434,7 @@
 	containername = "Medical crate"
 	group = "Medical / Science"
 
+/*	yay for new virus system
 /datum/supply_packs/virus
 	name = "Virus crate"
 	contains = list("/obj/item/weapon/reagent_containers/glass/bottle/flu_virion",
@@ -451,6 +452,7 @@
 	containername = "Virus crate"
 	access = access_cmo
 	group = "Medical / Science"
+*/
 
 /datum/supply_packs/metal50
 	name = "50 Metal Sheets"
