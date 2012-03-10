@@ -65,7 +65,7 @@ FLOOR TILES
 
 // /datum/stack_recipe/New(title, result_type, req_amount, res_amount, max_res_amount, time, one_per_turf, on_floor = 0)
 var/global/list/datum/stack_recipe/metal_recipes = list ( \
-	new/datum/stack_recipe("stool", /obj/structure/stool, on_floor = 1), \
+	new/datum/stack_recipe("stool", /obj/structure/stool, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("chair", /obj/structure/stool/bed/chair, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("bed", /obj/structure/stool/bed, 2, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts, 2), \
