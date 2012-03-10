@@ -136,7 +136,7 @@
 	if (.)
 		return
 	user.machine = src
-	user << browse(return_text(),"window=air_alarm")
+	user << browse(return_text(user),"window=air_alarm")
 	onclose(user, "air_alarm")
 	refresh_all()
 	return
@@ -215,8 +215,8 @@
 
 	return 1
 
-/obj/machinery/alarm/proc/return_text()
-	if(!(istype(usr, /mob/living/silicon)) && locked)
+/obj/machinery/alarm/proc/return_text(mob/user)
+	if(!(istype(user, /mob/living/silicon)) && locked)
 		return "<html><head><title>[src]</title></head><body>[return_status()]<hr>[rcon_text()]<hr><i>(Swipe ID card to unlock interface)</i></body></html>"
 	else
 		return "<html><head><title>[src]</title></head><body>[return_status()]<hr>[rcon_text()]<hr>[return_controls()]</body></html>"

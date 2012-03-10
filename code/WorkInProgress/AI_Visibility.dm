@@ -294,6 +294,8 @@ var/datum/cameranet/cameranet = new()
 		for(var/datum/camerachunk/c in eyeobj.visibleCameraChunks)
 			c.remove(eyeobj)
 	else
+		if(!eyeobj)	//if it got deleted somehow (like an admin trying to fix things <.<')
+			eyeobj = new()
 		client.eye = eyeobj
 		eyeobj.loc = loc
 		cameranet.visibility(eyeobj)
