@@ -2,6 +2,7 @@
 
 /obj/item/device/analyzer/plant_analyzer
 	name = "Plant Analyzer"
+	desc = "Analyzes plants."
 	icon = 'device.dmi'
 	icon_state = "hydro"
 	item_state = "analyzer"
@@ -36,7 +37,7 @@
 
 /obj/item/seeds/chiliseed
 	name = "Chili plant seeds"
-	desc = "HOT! HOT! HOT!"
+	desc = "Seeds that grow into peppers."
 	icon_state = "seed-chili"
 	mypath = "/obj/item/seeds/chiliseed"
 	species = "chili"
@@ -53,7 +54,7 @@
 
 /obj/item/seeds/replicapod
 	name = "Replica pod seeds"
-	desc = "They say these are used to harvest humans."
+	desc = "Used to make replica humans, but made of plants."
 	icon_state = "seed-replicapod"
 	mypath = "/obj/item/seeds/replicapod"
 	species = "replicapod"
@@ -77,7 +78,7 @@
 
 /obj/item/seeds/grapeseed
 	name = "Grape seeds"
-	desc = "Seeds that grows into grapes"
+	desc = "Seeds that grows into grapes."
 	icon_state = "seed-grapes"
 	mypath = "/obj/item/seeds/grapeseed"
 	species = "grape"
@@ -94,7 +95,7 @@
 
 /obj/item/seeds/greengrapeseed
 	name = "Green Grape seeds"
-	desc = "Seeds that grows into green grapes"
+	desc = "Seeds that grows into green grapes."
 	icon_state = "seed-greengrapes"
 	mypath = "/obj/item/seeds/greengrapeseed"
 	species = "greengrape"
@@ -111,7 +112,7 @@
 
 /obj/item/seeds/cabbageseed
 	name = "Cabbage seeds"
-	desc = "Seeds that grows into cabbages"
+	desc = "Seeds that grow into cabbages."
 	icon_state = "seed-cabbage"
 	mypath = "/obj/item/seeds/cabbageseed"
 	species = "cabbage"
@@ -128,7 +129,7 @@
 
 /obj/item/seeds/berryseed
 	name = "Berry seeds"
-	desc = "Seeds that grows into berries."
+	desc = "Seeds that grow into berries."
 	icon_state = "seed-berry"
 	mypath = "/obj/item/seeds/berryseed"
 	species = "berry"
@@ -145,7 +146,7 @@
 
 /obj/item/seeds/glowberryseed
 	name = "Glow Berry seeds"
-	desc = "Seeds that grows into glow berries."
+	desc = "Seeds that grow into glow berries."
 	icon_state = "seed-glowberry"
 	mypath = "/obj/item/seeds/glowberryseed"
 	species = "glowberry"
@@ -162,7 +163,7 @@
 
 /obj/item/seeds/bananaseed
 	name = "Banana seeds"
-	desc = "When grown, keep away from clown."
+	desc = "Seeds that grow into bananas."
 	icon_state = "seed-banana"
 	mypath = "/obj/item/seeds/bananaseed"
 	species = "banana"
@@ -178,7 +179,7 @@
 
 /obj/item/seeds/eggplantseed
 	name = "Eggplant seeds"
-	desc = "These seeds grows into plants in the form of eggs."
+	desc = "These seeds grow into plants in the form of eggs."
 	icon_state = "seed-eggplant"
 	mypath = "/obj/item/seeds/eggplantseed"
 	species = "eggplant"
@@ -194,7 +195,7 @@
 
 /obj/item/seeds/eggyseed
 	name = "Egg Plant seeds"
-	desc = "These seeds grows into plants in the form of eggs."
+	desc = "These seeds grow into plants in the form of eggs."
 	icon_state = "seed-eggy"
 	mypath = "/obj/item/seeds/eggy"
 	species = "eggy"
@@ -279,7 +280,7 @@
 
 /obj/item/seeds/cornseed
 	name = "Corn seeds"
-	desc = "I don't mean to sound corny..."
+	desc = "Grows corn."
 	icon_state = "seed-corn"
 	mypath = "/obj/item/seeds/cornseed"
 	species = "corn"
@@ -295,6 +296,7 @@
 	growthstages = 3
 
 /obj/item/seeds/poppyseed
+	desc = "Grows poppies."
 	name = "Poppy seeds"
 	icon_state = "seed-poppy"
 	mypath = "/obj/item/seeds/poppyseed"
@@ -313,7 +315,7 @@
 
 /obj/item/seeds/potatoseed
 	name = "Potato Seeds"
-	desc = "This will one day grow into potatoes."
+	desc = "Grows into potatoes.."
 	icon_state = "seed-potato"
 	mypath = "/obj/item/seeds/potatoseed"
 	species = "potato"
@@ -331,7 +333,7 @@
 
 /obj/item/seeds/icepepperseed
 	name = "Ice pepper seeds"
-	desc = "This will soon become chilly..."
+	desc = "Grows mutant, frozen peppers."
 	icon_state = "seed-icepepper"
 	mypath = "/obj/item/seeds/icepepperseed"
 	species = "chiliice"
@@ -348,7 +350,7 @@
 
 /obj/item/seeds/soyaseed
 	name = "Soybean seeds"
-	desc = "This grows into Soy."
+	desc = "These grow into soy.."
 	icon_state = "seed-soybean"
 	mypath = "/obj/item/seeds/soyaseed"
 	species = "soybean"
@@ -365,7 +367,7 @@
 
 /obj/item/seeds/wheatseed
 	name = "Wheat seeds"
-	desc = "This may or may not grow into weed."
+	desc = "Grows into wheat."
 	icon_state = "seed-wheat"
 	mypath = "/obj/item/seeds/wheatseed"
 	species = "wheat"
@@ -383,7 +385,7 @@
 
 /obj/item/seeds/carrotseed
 	name = "Carrot seeds"
-	desc = "It will grow into a carrot."
+	desc = "Used to grow carrots."
 	icon_state = "seed-carrot"
 	mypath = "/obj/item/seeds/carrotseed"
 	species = "carrot"
@@ -401,7 +403,7 @@
 
 /obj/item/seeds/amanitamycelium
 	name = "Fly Amanita mycelium"
-	desc = "Grows into something horrible."
+	desc = "Grows into some kind of mushroom."
 	icon_state = "mycelium-amanita"
 	mypath = "/obj/item/seeds/amanitamycelium"
 	species = "amanita"
@@ -436,7 +438,7 @@
 
 /obj/item/seeds/libertymycelium
 	name = "Liberty Cap mycelium"
-	desc = "It is said to grow druggy."
+	desc = "It is said to grow drugs."
 	icon_state = "mycelium-liberty"
 	mypath = "/obj/item/seeds/libertymycelium"
 	species = "liberty"
@@ -454,7 +456,7 @@
 
 /obj/item/seeds/chantermycelium
 	name = "Chanterelle mycelium"
-	desc = "Grows, grows, grows."
+	desc = "Grows chanterelle."
 	icon_state = "mycelium-chanter"
 	mypath = "/obj/item/seeds/chantermycelium"
 	species = "chanter"
@@ -472,7 +474,7 @@
 
 /obj/item/seeds/towermycelium
 	name = "Tower Cap mycelium"
-	desc = "Why does this sound so familiar..."
+	desc = "Why does this sound so familiar...?"
 	icon_state = "mycelium-tower"
 	mypath = "/obj/item/seeds/towermycelium"
 	species = "towercap"
@@ -508,7 +510,7 @@
 
 /obj/item/seeds/plumpmycelium
 	name = "Plump Helmet mycelium"
-	desc = "These seeds will grow into helmets."
+	desc = "Grows into giant mushrooms. Very healthy to consume, unlike most."
 	icon_state = "mycelium-plump"
 	mypath = "/obj/item/seeds/plumpmycelium"
 	species = "plump"
@@ -526,7 +528,7 @@
 
 /obj/item/seeds/walkingmushroommycelium
 	name = "Walking Mushroom mycelium"
-	desc = "These seeds will grow into huge stuff."
+	desc = "This will grow into huge stuff."
 	icon_state = "mycelium-walkingmushroom"
 	mypath = "/obj/item/seeds/walkingmushroommycelium"
 	species = "walkingmushroom"
@@ -580,7 +582,7 @@
 
 /obj/item/seeds/weeds
 	name = "Weeds"
-	desc = "These seems weedy."
+	desc = "These are not to be confused with the illegal kind of weed."
 	icon_state = "seed"
 	mypath = "/obj/item/seeds/weeds"
 	species = "weeds"
@@ -598,6 +600,7 @@
 
 /obj/item/seeds/harebell
 	name = "Harebell"
+	desc = "Grows harebell."
 	icon_state = "seed"
 	mypath = "/obj/item/seeds/harebell"
 	species = "harebell"
@@ -615,7 +618,7 @@
 
 /obj/item/seeds/sunflowerseed
 	name = "Sunflower seeds"
-	desc = "This will grow shining."
+	desc = "Seeds that make sunflowers when they grow."
 	icon_state = "seed-sunflower"
 	mypath = "/obj/item/seeds/sunflowerseed"
 	species = "sunflower"
@@ -651,7 +654,7 @@
 
 /obj/item/seeds/appleseed
 	name = "Apple seeds"
-	desc = "A tasty fruit."
+	desc = "Grows apples."
 	icon_state = "seed-apple"
 	mypath = "/obj/item/seeds/appleseed"
 	species = "apple"
@@ -667,7 +670,7 @@
 
 /obj/item/seeds/ambrosiavulgarisseed
 	name = "Ambrosia Vulgaris seeds"
-	desc = "A plant grown by and from medicine."
+	desc = "Plant seeds which grown by and from medicine."
 	icon_state = "seed-ambrosiavulgaris"
 	mypath = "/obj/item/seeds/ambrosiavulgarisseed"
 	species = "ambrosiavulgaris"
@@ -683,7 +686,7 @@
 
 /obj/item/seeds/whitebeetseed
 	name = "White Beet seed"
-	desc = "A sugary beet."
+	desc = "Seeds for white beets."
 	icon_state = "seed-whitebeet"
 	mypath = "/obj/item/seeds/whitebeetseed"
 	species = "whitebeet"
@@ -699,7 +702,7 @@
 
 /obj/item/seeds/sugarcaneseed
 	name = "Sugarcane seed"
-	desc = "A cane of sugar"
+	desc = "Seeds for sugarcane."
 	icon_state = "seed-sugarcane"
 	mypath = "/obj/item/seeds/sugarcaneseed"
 	species = "sugarcane"
@@ -715,7 +718,7 @@
 
 /obj/item/seeds/watermelonseed
 	name = "Watermelon Seed"
-	desc = "Some promising seeds."
+	desc = "Some seeds for watermelons."
 	icon_state = "seed-watermelon"
 	mypath = "/obj/item/seeds/watermelonseed"
 	species = "watermelon"
@@ -731,7 +734,7 @@
 
 /obj/item/seeds/pumpkinseed
 	name = "Pumpkin Seed"
-	desc = "Some promising seeds."
+	desc = "Some seeds for pumpkins."
 	icon_state = "seed-pumpkin"
 	mypath = "/obj/item/seeds/pumpkinseed"
 	species = "pumpkin"
@@ -748,7 +751,7 @@
 
 /obj/item/seeds/limeseed
 	name = "Lime Seed"
-	desc = "Very sour seeds."
+	desc = "Seeds for limes."
 	icon_state = "seed-lime"
 	mypath = "/obj/item/seeds/limeseed"
 	species = "lime"
@@ -764,7 +767,7 @@
 
 /obj/item/seeds/lemonseed
 	name = "Lemon Seed"
-	desc = "Sour seeds."
+	desc = "Seeds for lemons."
 	icon_state = "seed-lemon"
 	mypath = "/obj/item/seeds/lemonseed"
 	species = "lemon"
@@ -780,7 +783,7 @@
 
 /obj/item/seeds/orangeseed
 	name = "Orange Seed"
-	desc = "Sour seeds."
+	desc = "Seeds for oranges."
 	icon_state = "seed-orange"
 	mypath = "/obj/item/seeds/orangeseed"
 	species = "orange"
@@ -830,7 +833,7 @@
 
 /obj/item/seeds/grassseed
 	name = "Grass seeds"
-	desc = "Seeds that will one day become sheep food."
+	desc = "Seeds that will one day become grass."
 	icon_state = "seed-grass"
 	mypath = "/obj/item/seeds/grassseed"
 	species = "grass"
@@ -847,7 +850,7 @@
 
 /obj/item/seeds/cocoapodseed
 	name = "Cocoa Pod seeds"
-	desc = "Looks fattening these seeds."
+	desc = "Seeds for cocoa; a major ingredient in chocolate."
 	icon_state = "seed-cocoapod"
 	mypath = "/obj/item/seeds/cocoapodseed"
 	species = "cocoapod"

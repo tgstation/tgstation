@@ -30,7 +30,7 @@
 			if(prob(1))
 				affected_mob << "\red Your throat feels sore."
 			if(prob(1))
-				affected_mob << "\red Mucous runs down the back of your throat."
+				affected_mob << "\red Mucus runs down the back of your throat."
 		if(3)
 			if(prob(1))
 				affected_mob.emote("sneeze")
@@ -39,7 +39,7 @@
 			if(prob(1))
 				affected_mob << "\red Your throat feels sore."
 			if(prob(1))
-				affected_mob << "\red Mucous runs down the back of your throat."
+				affected_mob << "\red Mucus runs down the back of your throat."
 		if(4)
 			if(prob(1))
 				affected_mob.emote("sneeze")

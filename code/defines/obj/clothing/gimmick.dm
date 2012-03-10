@@ -80,7 +80,7 @@
 
 /obj/item/clothing/suit/greatcoat
 	name = "great coat"
-	desc = "A Nazi great coat"
+	desc = "A Nazi great coat."
 	icon_state = "nazi"
 	item_state = "nazi"
 	flags = FPRINT | TABLEPASS
@@ -408,7 +408,7 @@
 
 /obj/item/clothing/head/collectable/beret
 	name = "Collectable Beret"
-	desc = "A Collectable red Beret. It smells faintly of Garlic."
+	desc = "A Collectable red beret. It smells faintly of garlic."
 	icon_state = "beret"
 
 /obj/item/clothing/head/collectable/welding
@@ -497,7 +497,7 @@
 
 /obj/item/clothing/under/kilt
 	name = "kilt"
-	desc = "Includes shoes and plaid"
+	desc = "Includes shoes and plaid."
 	icon_state = "kilt"
 	item_state = "kilt"
 	color = "kilt"
@@ -519,8 +519,8 @@
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/head/justice
-	name = "justice hat"
-	desc = "fight for what's righteous!"
+	name = "Justice Hat"
+	desc = "Fight for what's righteous!"
 	icon_state = "justicered"
 	item_state = "justicered"
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
@@ -542,8 +542,8 @@
 	item_state = "justicepink"
 
 obj/item/clothing/suit/justice
-	name = "justice suit"
-	desc = "this pretty much looks ridiculous"
+	name = "Justice Suit"
+	desc = "This pretty much looks ridiculous."
 	icon_state = "justice"
 	item_state = "justice"
 	flags = FPRINT | TABLEPASS
@@ -561,7 +561,7 @@ obj/item/clothing/suit/justice
 	name = "Beaver hat"
 	icon_state = "beaver_hat"
 	item_state = "beaver_hat"
-	desc = "Solf felt make this hat both comfortable and elegant."
+	desc = "Soft felt make this hat both comfortable and elegant."
 	flags = FPRINT|TABLEPASS
 
 /obj/item/clothing/head/boaterhat

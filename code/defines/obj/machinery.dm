@@ -198,7 +198,7 @@
 
 /obj/machinery/scan_console
 	name = "DNA Scanner Access Console"
-	desc = "Scan DNA."
+	desc = "Scans DNA."
 	icon = 'computer.dmi'
 	icon_state = "scanner"
 	density = 1
@@ -220,7 +220,7 @@
 
 /obj/machinery/scan_consolenew
 	name = "DNA Modifier Access Console"
-	desc = "Scan DNA."
+	desc = "Scans DNA."
 	icon = 'computer.dmi'
 	icon_state = "scanner"
 	density = 1
