@@ -5,6 +5,7 @@
 	icon_state = "wardrobe_sealed"
 	item_state = "wardrobe"
 	w_class = 4
+	layer = BACKGROUND_LAYER + OBJ_LAYER
 	var
 		descriptor = "various clothing"
 		seal_torn = 0

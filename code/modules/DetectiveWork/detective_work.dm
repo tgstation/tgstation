@@ -261,7 +261,8 @@ obj/machinery/computer/forensic_scanning
 						if(blood && blood.len)
 							temp += "&nbsp<b>Blood:</b><br>"
 							for(var/j = 1, j <= blood.len, j++)
-								temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]<br>"
+								var/list/templist2 = blood[j]
+								temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [templist2[2]], DNA: [templist2[1]]<br>"
 				else
 					temp = "ERROR.  Database not found!<br>"
 				temp += "<br><a href='?src=\ref[src];operation=database;delete_record=[href_list["identifier"]]'>{Delete this Dossier}</a>"
@@ -297,7 +298,8 @@ obj/machinery/computer/forensic_scanning
 						if(blood && blood.len)
 							P.info += "&nbsp<b>Blood:</b><br>"
 							for(var/j = 1, j <= blood.len, j++)
-								P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]<br>"
+								var/list/templist2 = blood[j]
+								P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [templist2[2]], DNA: [templist2[1]]<br>"
 				else
 					usr << "ERROR.  Database not found!<br>"
 			if("auxiliary")
@@ -317,7 +319,8 @@ obj/machinery/computer/forensic_scanning
 					if(blood && blood.len)
 						temp += "&nbsp<b>Blood:</b><br>"
 						for(var/j = 1, j <= blood.len, j++)
-							temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]<br>"
+							var/list/templist2 = blood[j]
+							temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [templist2[2]], DNA: [templist2[1]]<br>"
 				else
 					temp = "ERROR.  Database not found!<br>"
 				temp += "<br><a href='?src=\ref[src];operation=database;delete_aux=[href_list["identifier"]]'>{Delete This Record}</a>"
@@ -342,7 +345,9 @@ obj/machinery/computer/forensic_scanning
 					if(blood && blood.len)
 						P.info += "&nbsp<b>Blood:</b><br>"
 						for(var/j = 1, j <= blood.len, j++)
-							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]<br>"
+							var/list/templist2 = blood[j]
+							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [templist2[2]], DNA: [templist2[1]]<br>"
+
 				else
 					usr << "ERROR.  Database not found!<br>"
 			if("scan")
@@ -382,7 +387,7 @@ obj/machinery/computer/forensic_scanning
 						scan_data += "Blood Found:<br>"
 						for(var/i = 1, i <= scanning.blood_DNA.len, i++)
 							var/list/templist = scanning.blood_DNA[i]
-							scan_data += "-Blood type: [templist[2]]\nDNA: [templist[1]]<br><br>"
+							scan_data += "Blood type: [templist[2]]\nDNA: [templist[1]]<br><br>"
 					else
 						scan_data += "No Blood Found<br><br>"
 					if(!scanning.fingerprints)
