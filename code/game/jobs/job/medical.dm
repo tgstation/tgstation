@@ -30,7 +30,7 @@
 	total_positions = 5
 	spawn_positions = 3
 	supervisors = "the chief medical officer"
-	alt_titles = list("Virologist", "Surgeon")
+	alt_titles = list("Virologist", "Surgeon", "Paramedic")
 
 
 	equip(var/mob/living/carbon/human/H)
