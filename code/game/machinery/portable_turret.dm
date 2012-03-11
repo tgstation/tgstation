@@ -40,6 +40,7 @@
 	var/auth_weapons = 0	// checks if it can shoot people that have a weapon they aren't authorized to have
 	var/stun_all = 0		// if this is active, the turret shoots everything that isn't security or head of staff
 	var/check_anomalies = 1	// checks if it can shoot at unidentified lifeforms (ie xenos)
+	var/ai		 = 0 		// if active, will shoot at anything not an AI or cyborg
 
 	var/attacked = 0		// if set to 1, the turret gets pissed off and shoots at people nearby (unless they have sec access!)
 
@@ -312,10 +313,19 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 			if(emagged) // if emagged, HOLY SHIT EVERYONE IS DANGEROUS beep boop beep
 				targets += C
 			else
-
-
 				if (C.stat || C.handcuffed) // if the perp is handcuffed or dead/dying, no need to bother really
 					continue // move onto next potential victim!
+
+				var/dst = get_dist(src, C) // if it's too far away, why bother?
+				if (dst > 12)
+					continue
+
+				if(!istype(C, /mob/living/silicon) && ai) // If it's set to attack all nonsilicons, target them!
+					if(C.lying)
+						secondarytargets += C
+					else
+						targets += C
+						continue
 
 				if (istype(C, /mob/living/carbon/human)) // if the target is a human, analyze threat level
 					if(src.assess_perp(C)<4)
@@ -323,10 +333,6 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 
 				else if (istype(C, /mob/living/carbon/monkey) || istype(C, /mob/living/silicon))
 					continue // Don't target monkeys or borgs/AIs you dumb shit
-
-				var/dst = get_dist(src, C) // if it's too far away, why bother?
-				if (dst > 12)
-					continue
 
 				if (C.lying) // if the perp is lying down, it's still a target but a less-important target
 					secondarytargets += C

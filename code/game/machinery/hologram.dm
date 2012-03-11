@@ -11,6 +11,20 @@ Possible to do for anyone motivated enough:
 	Give an AI variable for different hologram icons.
 	Itegrate EMP effect to disable the unit.
 */
+/obj/machinery/hologram/holopad/attack_hand(var/mob/living/carbon/human/user) //Carn: Hologram requests.
+	if(!istype(user))
+		return
+	if(alert(user,"Would you like to request an AI's presence?",,"Yes","No") == "Yes")
+		if(last_request + 200 < world.time) //don't spam the AI with requests you jerk!
+			last_request = world.time
+			user << "<span class='notice'>You request an AI's presence.</span>"
+			var/area/area = get_area(src)
+			for(var/mob/living/silicon/ai/AI in world)
+				if(!AI.client)	continue
+				AI << "<span class='info'>Your presence is requested at <a href='?src=\ref[AI];jumptoholopad=\ref[src]'>\the [area]</a>.</span>"
+		else
+			user << "<span class='notice'>A request for AI presence was already sent recently.</span>"
+
 /obj/machinery/hologram/holopad/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
 		return
