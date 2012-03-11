@@ -51,6 +51,7 @@
 		user << "\red The status panel is broken!"
 		return
 	user << "\red You don't understand any of this!"
+	return
 
 /obj/machinery/computer/aiupload
 	name = "AI Upload"
