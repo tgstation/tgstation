@@ -21,6 +21,7 @@
 	var/flushing = 0	// true if flushing in progress
 	var/timeleft = 0	//used to give a delay after the last item was put in before flushing
 	var/islarge = 0		//If there is a crate, lets not add a second.
+	var/playing_sound = 0
 
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
@@ -436,7 +437,11 @@
 	proc/expel(var/obj/structure/disposalholder/H)
 
 		var/turf/target
-		playsound(src, 'hiss.ogg', 50, 0, 0)
+		if(!playing_sound)
+			playing_sound = 1
+			playsound(src, 'hiss.ogg', 50, 0, 0)
+			spawn(20)
+				playing_sound = 0
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
@@ -683,6 +688,7 @@
 	var/health = 10 	// health points 0-10
 	layer = 2.3			// slightly lower than wires and other pipes
 	var/base_icon_state	// initial icon state on map
+	var/playing_sound = 0
 
 	// new pipe, set the icon_state as on map
 	New()
@@ -822,7 +828,11 @@
 			else						// otherwise limit to 10 tiles
 				target = get_ranged_target_turf(T, direction, 10)
 
-			playsound(src, 'hiss.ogg', 50, 0, 0)
+			if(!playing_sound)
+				playing_sound = 1
+				playsound(src, 'hiss.ogg', 50, 0, 0)
+				spawn(20)
+					playing_sound = 0
 			for(var/atom/movable/AM in H)
 				AM.loc = T
 				AM.pipe_eject(direction)
@@ -834,7 +844,11 @@
 
 		else	// no specified direction, so throw in random direction
 
-			playsound(src, 'hiss.ogg', 50, 0, 0)
+			if(!playing_sound)
+				playing_sound = 1
+				playsound(src, 'hiss.ogg', 50, 0, 0)
+				spawn(20)
+					playing_sound = 0
 			for(var/atom/movable/AM in H)
 				target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 
@@ -1270,6 +1284,7 @@
 	anchored = 1
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
+	var/playing_sound = 0
 
 	New()
 		..()
@@ -1284,7 +1299,12 @@
 		flick("outlet-open", src)
 		playsound(src, 'warning-buzzer.ogg', 50, 0, 0)
 		sleep(20)	//wait until correct animation frame
-		playsound(src, 'hiss.ogg', 50, 0, 0)
+
+		if(!playing_sound)
+			playing_sound = 1
+			playsound(src, 'hiss.ogg', 50, 0, 0)
+			spawn(20)
+				playing_sound = 0
 
 
 		for(var/atom/movable/AM in H)
