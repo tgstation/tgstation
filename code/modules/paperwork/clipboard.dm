@@ -122,9 +122,14 @@
 						toppaper = null
 
 		if(href_list["read"])
-			var/obj/item/P = locate(href_list["read"])
+			var/obj/item/weapon/paper/P = locate(href_list["read"])
 			if(P)
-				P.examine(usr)
+				if(!(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/dead/observer) || istype(usr, /mob/living/silicon)))
+					usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY>[stars(P.info)][P.stamps]</BODY></HTML>", "window=[P.name]")
+					onclose(usr, "[P.name]")
+				else
+					usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY>[P.info][P.stamps]</BODY></HTML>", "window=[P.name]")
+					onclose(usr, "[P.name]")
 
 		if(href_list["top"])
 			var/obj/item/P = locate(href_list["top"])

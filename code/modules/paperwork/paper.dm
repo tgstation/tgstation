@@ -29,19 +29,16 @@
 		src.overlays += "paper_words"
 	return
 
-/obj/item/weapon/paper/examine(mob/user as mob)
+/obj/item/weapon/paper/examine()
 	set src in oview(1)
 
-	//I think this is the best way to handle this! Shout at me if it isn't!	-Pete
-	if(!user)
-		user = usr
 //	..()	//We don't want them to see the dumb "this is a paper" thing every time.
-	if (!( istype(user, /mob/living/carbon/human) || istype(user, /mob/dead/observer) || istype(user, /mob/living/silicon) ))
-		user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)][stamps]</BODY></HTML>", "window=[name]")
-		onclose(user, "[name]")
+	if(!(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/dead/observer) || istype(usr, /mob/living/silicon)))
+		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)][stamps]</BODY></HTML>", "window=[name]")
+		onclose(usr, "[name]")
 	else
-		user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info][stamps]</BODY></HTML>", "window=[name]")
-		onclose(user, "[name]")
+		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info][stamps]</BODY></HTML>", "window=[name]")
+		onclose(usr, "[name]")
 	return
 
 /obj/item/weapon/paper/verb/rename()

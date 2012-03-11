@@ -941,6 +941,8 @@
 #include "code\modules\mob\simple_animal\shade.dm"
 #include "code\modules\mob\simple_animal\worm.dm"
 #include "code\modules\paperwork\clipboard.dm"
+#include "code\modules\paperwork\filingcabinet.dm"
+#include "code\modules\paperwork\folders.dm"
 #include "code\modules\paperwork\handlabeler.dm"
 #include "code\modules\paperwork\paper.dm"
 #include "code\modules\paperwork\paperbin.dm"
