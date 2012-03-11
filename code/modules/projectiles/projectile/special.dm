@@ -13,7 +13,7 @@
 
 
 /obj/item/projectile/bullet/gyro
-	name ="gyro"
+	name ="explosive bolt"
 	icon_state= "bolter"
 	damage = 50
 	flag = "bullet"

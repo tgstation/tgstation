@@ -519,7 +519,7 @@ var/global/list/uneatable = list(
 
 
 /obj/machinery/singularity/narsie/wizard
-
+	grav_pull = 0
 	eat()
 		set background = 1
 		if(defer_powernet_rebuild != 2)
@@ -528,17 +528,6 @@ var/global/list/uneatable = list(
 			consume(X)
 		for(var/turf/X in orange(consume_range,src))
 			consume(X)
-		for(var/atom/movable/X in orange(grav_pull,src))
-			if(is_type_in_list(X, uneatable))	continue
-			if(((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human))))
-				step_towards(X,src)
-			else if(istype(X,/mob/living/carbon/human))
-				var/mob/living/carbon/human/H = X
-				if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
-					var/obj/item/clothing/shoes/magboots/M = H.shoes
-					if(M.magpulse)
-						continue
-				step_towards(H,src)
 		if(defer_powernet_rebuild != 2)
 			defer_powernet_rebuild = 0
 		return
