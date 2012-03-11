@@ -157,9 +157,14 @@
 					var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
 					if(choice == "Confirm")
 						if(R)
-							message_admins("\blue [key_name_admin(usr)] detonated [R.name]!")
-							log_game("\blue [key_name_admin(usr)] detonated [R.name]!")
-							R.self_destruct()
+							if(istype(usr, /mob/living/silicon/ai) && R.emagged)
+								R << "Extreme danger.  Termination codes detected from AI.  Automatic AI unlink triggered."
+								R.UnlinkSelf()
+
+							else
+								message_admins("\blue [key_name_admin(usr)] detonated [R.name]!")
+								log_game("\blue [key_name_admin(usr)] detonated [R.name]!")
+								R.self_destruct()
 			else
 				usr << "\red Access Denied."
 
@@ -195,6 +200,8 @@
 							message_admins("\blue [key_name_admin(usr)] emagged [R.name] using robotic console!")
 							log_game("[key_name(usr)] emagged [R.name] using robotic console!")
 							R.emagged = 1
+							if(R.mind.special_role)
+								R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
 
 		src.add_fingerprint(usr)
 	src.updateUsrDialog()

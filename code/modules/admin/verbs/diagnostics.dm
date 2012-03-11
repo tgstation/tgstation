@@ -207,6 +207,7 @@
 			alert(usr,"No players found.  How the fuck are you calling this?","Tension Report")
 			return 0
 
+
 		var/output = {"<B>TENSION REPORT</B><HR>
 <B>General Statistics</B><BR>
 <B>Deaths:</B> [tension_master.deaths]<BR>
@@ -217,10 +218,20 @@
 <BR>
 <B>Current Status</B><BR>
 <B>Tension:</B> [tension_master.score]<BR>
+<a href='?src=\ref[tension_master];addScore=1'>Increase Tension by 50000</a><br>
 <B>Tension per player:</B> [tension_master.score/tension_master.get_num_players()]<BR>
-<B>Recommendations:</B> not yet implemented<BR>
+<B>Recommendations:</B> All the modes.  All of them.  Press all of them.<BR>
 <BR>
 
-"}
+	<a href='?src=\ref[tension_master];makeTratior=1'>Make Tratiors</a><br>
+	<a href='?src=\ref[tension_master];makeChanglings=1'>Make Changlings</a><br>
+	<a href='?src=\ref[tension_master];makeRevs=1'>Make Revs</a><br>
+	<a href='?src=\ref[tension_master];makeWizard=1'>Make Wizard</a><br>
+	<a href='?src=\ref[tension_master];makeCult=1'>Make Cult</a><br>
+	<a href='?src=\ref[tension_master];makeNukeTeam=1'>Make Nuke Team</a><br>
+	<a href='?src=\ref[tension_master];makeMalf=1'>Make Malf AI</a><br>
+	<a href='?src=\ref[tension_master];makeSpaceNinja=1'>Make Space Ninja</a><br>
+	<a href='?src=\ref[tension_master];makeDeathsquad=1'>Make Deathsquad (Syndicate)</a><br>
 
+"}
 		usr << browse(output,"window=tensionreport")

@@ -595,14 +595,33 @@ var/list/sacrificed = list()
 								H.gib(1)
 				else
 					if(cultsinrange.len >= 3)
-						H.gib(1)
-						usr << "\red The Geometer of Blood accepts this sacrifice."
+						if(H.stat !=2)
+							if(prob(80))
+								usr << "\red The Geometer of Blood accepts this sacrifice."
+								ticker.mode:grant_runeword(usr)
+							else
+								usr << "\red The Geometer of blood accepts this sacrifice."
+								usr << "\red However, this soul was not enough to gain His favor."
+							H.gib(1)
+						else
+							if(prob(40))
+								usr << "\red The Geometer of blood accepts this sacrifice."
+								ticker.mode:grant_runeword(usr)
+							else
+								usr << "\red The Geometer of blood accepts this sacrifice."
+								usr << "\red However, a mere dead body is not enough to satisfy Him."
+							H.gib(1)
 					else
 						if(H.stat !=2)
 							usr << "\red The victim is still alive, you will need more cultists chanting for the sacrifice to succeed."
 						else
+							if(prob(40))
+								usr << "\red The Geometer of blood accepts this sacrifice."
+								ticker.mode:grant_runeword(usr)
+							else
+								usr << "\red The Geometer of blood accepts this sacrifice."
+								usr << "\red However, a mere dead body is not enough to satisfy Him."
 							H.gib(1)
-							usr << "\red The Geometer of blood accepts this sacrifice."
 			for(var/mob/living/carbon/monkey/M in src.loc)
 				if (ticker.mode.name == "cult")
 					if(M.mind == ticker.mode:sacrifice_target)
@@ -621,6 +640,8 @@ var/list/sacrificed = list()
 							usr << "\red However, a mere monkey is not enough to satisfy Him."
 				else
 					usr << "\red The Geometer of Blood accepts your meager sacrifice."
+					if(prob(20))
+						ticker.mode.grant_runeword(usr)
 				M.gib(1)
 /*			for(var/mob/living/carbon/alien/A)
 				for(var/mob/K in cultsinrange)

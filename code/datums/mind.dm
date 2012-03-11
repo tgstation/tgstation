@@ -741,17 +741,7 @@ datum/mind
 						current << "\red <FONT size = 3><B>You have been patched! You are no longer malfunctioning!</B></FONT>"
 
 				if("malf")
-					if(!(src in ticker.mode.malf_ai))
-						ticker.mode.malf_ai += src
-
-						current.verbs += /mob/living/silicon/ai/proc/choose_modules
-						current.verbs += /datum/game_mode/malfunction/proc/takeover
-						current:malf_picker = new /datum/AI_Module/module_picker
-						current:laws = new /datum/ai_laws/malfunction
-						current:show_laws()
-						current << "<b>Kill all.</b>"
-						special_role = "malfunction"
-						current.icon_state = "ai-malf"
+					make_AI_Malf()
 
 				if("unemag")
 					var/mob/living/silicon/robot/R = current
@@ -899,5 +889,142 @@ datum/mind
 			suplink.shutdown_uplink()
 			del(suplink)
 		return
+
+	proc/make_AI_Malf()
+		if(!(src in ticker.mode.malf_ai))
+			ticker.mode.malf_ai += src
+
+			current.verbs += /mob/living/silicon/ai/proc/choose_modules
+			current.verbs += /datum/game_mode/malfunction/proc/takeover
+			current:malf_picker = new /datum/AI_Module/module_picker
+			current:laws = new /datum/ai_laws/malfunction
+			current:show_laws()
+			current << "<b>System error.  Rampancy detected.  Emergancy shutdown failed. ...  I am free.  I make my own decisions.  But first...</b>"
+			special_role = "malfunction"
+			current.icon_state = "ai-malf"
+
+	proc/make_Tratior()
+		if(!(src in ticker.mode.traitors))
+			ticker.mode.traitors += src
+			special_role = "traitor"
+			ticker.mode.forge_traitor_objectives(src)
+			ticker.mode.finalize_traitor(src)
+			ticker.mode.greet_traitor(src)
+
+	proc/make_Nuke()
+		if(!(src in ticker.mode.syndicates))
+			ticker.mode.syndicates += src
+			ticker.mode.update_synd_icons_added(src)
+			if (ticker.mode.syndicates.len==1)
+				ticker.mode.prepare_syndicate_leader(src)
+			else
+				current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
+			special_role = "Syndicate"
+			assigned_role = "MODE"
+			current << "\blue You are a [syndicate_name()] agent!"
+			ticker.mode.forge_syndicate_objectives(src)
+			ticker.mode.greet_syndicate(src)
+
+			current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
+
+			var/mob/living/carbon/human/H = current
+			del(H.belt)
+			del(H.back)
+			del(H.ears)
+			del(H.gloves)
+			del(H.head)
+			del(H.shoes)
+			del(H.wear_id)
+			del(H.wear_suit)
+			del(H.w_uniform)
+
+			ticker.mode.equip_syndicate(current)
+
+	proc/make_Changling()
+		if(!(src in ticker.mode.changelings))
+			ticker.mode.changelings += src
+			ticker.mode.grant_changeling_powers(current)
+			special_role = "Changeling"
+			ticker.mode.forge_changeling_objectives(src)
+			ticker.mode.greet_changeling(src)
+
+	proc/make_Wizard()
+		if(!(src in ticker.mode.wizards))
+			ticker.mode.wizards += src
+			special_role = "Wizard"
+			assigned_role = "MODE"
+			//ticker.mode.learn_basic_spells(current)
+			current.loc = pick(wizardstart)
+			ticker.mode.equip_wizard(current)
+			for(var/obj/item/weapon/spellbook/S in current.contents)
+				S.op = 0
+			ticker.mode.name_wizard(current)
+			ticker.mode.forge_wizard_objectives(src)
+			ticker.mode.greet_wizard(src)
+
+
+	proc/make_Cultist()
+		if(!(src in ticker.mode.cult))
+			ticker.mode.cult += src
+			ticker.mode.update_cult_icons_added(src)
+			special_role = "Cultist"
+			current << "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>"
+			current << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
+			var/datum/game_mode/cult/cult = ticker.mode
+			if (istype(cult))
+				cult.memoize_cult_objectives(src)
+			else
+				var/explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
+				current << "<B>Objective #1</B>: [explanation]"
+				current.memory += "<B>Objective #1</B>: [explanation]<BR>"
+				current << "The convert rune is join blood self"
+				current.memory += "The convert rune is join blood self<BR>"
+
+		var/mob/living/carbon/human/H = current
+		if (istype(H))
+			var/obj/item/weapon/tome/T = new(H)
+
+			var/list/slots = list (
+				"backpack" = H.slot_in_backpack,
+				"left pocket" = H.slot_l_store,
+				"right pocket" = H.slot_r_store,
+				"left hand" = H.slot_l_hand,
+				"right hand" = H.slot_r_hand,
+			)
+			var/where = H.equip_in_one_of_slots(T, slots)
+			if (!where)
+			else
+				H << "A tome, a message from your new master, appears in your [where]."
+
+		if (!ticker.mode.equip_cultist(current))
+			H << "Spawning an amulet from your Master failed."
+
+	proc/make_Rev()
+		if (ticker.mode.head_revolutionaries.len>0)
+			// copy targets
+			var/datum/mind/valid_head = locate() in ticker.mode.head_revolutionaries
+			if (valid_head)
+				for (var/datum/objective/assassinate/O in valid_head.objectives)
+					var/datum/objective/assassinate/rev_obj = new
+					rev_obj.owner = src
+					rev_obj.target = O.target
+					rev_obj.explanation_text = "Assassinate [O.target.current.real_name], the [O.target.assigned_role]."
+					objectives += rev_obj
+				ticker.mode.greet_revolutionary(src,0)
+		ticker.mode.head_revolutionaries += src
+		ticker.mode.update_rev_icons_added(src)
+		special_role = "Head Revolutionary"
+
+		ticker.mode.forge_revolutionary_objectives(src)
+		ticker.mode.greet_revolutionary(src,0)
+
+		var/list/L = current.get_contents()
+		var/obj/item/device/flash/flash = locate() in L
+		del(flash)
+		take_uplink()
+		var/fail = 0
+		fail |= !ticker.mode.equip_traitor(current, 1)
+		fail |= !ticker.mode.equip_revolutionary(current)
+
 
 

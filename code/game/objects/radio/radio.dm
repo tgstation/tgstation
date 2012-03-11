@@ -236,7 +236,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/talk_into(mob/M as mob, message, channel)
 
 	if(!on) return // the device has to be on
-
+/*  Fix for permacell radios, but kinda eh about actually fixing them.
+	if(!(src.wires & WIRE_TRANSMIT)) // The device has to have all its wires and shit intact
+		return
+*/
 
 	if(GLOBAL_RADIO_TYPE == 1) // NEW RADIO SYSTEMS: By Doohl
 
@@ -601,6 +604,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 						R.show_message(rendered, 2)
 
 /obj/item/device/radio/hear_talk(mob/M as mob, msg)
+
 	if (broadcasting)
 		talk_into(M, msg)
 /*

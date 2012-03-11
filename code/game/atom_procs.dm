@@ -700,6 +700,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 	if(parameters["shift"]){
 		if(!isAI(usr))
 			ShiftClick(usr)
+		else
+			AIShiftClick(usr)
 		return
 	}
 
@@ -708,6 +710,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 	if(parameters["alt"]){
 		if(!isAI(usr))
 			AltClick(usr)
+		else
+			AIAltClick(usr)
 		return
 	}
 
@@ -716,6 +720,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 	if(parameters["ctrl"]){
 		if(!isAI(usr))
 			CtrlClick(usr)
+		else
+			AICtrlClick(usr)
 		return
 	}
 
@@ -1021,6 +1027,38 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 	if(hascall(src,"pull"))
 		src:pull()
 	return
+
+/atom/proc/AIShiftClick() // Opens and closes doors!
+	if(istype(src , /obj/machinery/door/airlock))
+		if(src:density)
+			var/nhref = "src=\ref[src];aiEnable=7"
+			src.Topic(nhref, params2list(nhref), src, 1)
+		else
+			var/nhref = "src=\ref[src];aiDisable=7"
+			src.Topic(nhref, params2list(nhref), src, 1)
+
+	return
+
+/atom/proc/AIAltClick() // Eletrifies doors.
+	if(istype(src , /obj/machinery/door/airlock))
+		if(!src:secondsElectrified)
+			var/nhref = "src=\ref[src];aiEnable=6"
+			src.Topic(nhref, params2list(nhref), src, 1)
+		else
+			var/nhref = "src=\ref[src];aiDisable=5"
+			src.Topic(nhref, params2list(nhref), src, 1)
+	return
+
+/atom/proc/AICtrlClick() // Bolts doors.  
+	if(istype(src , /obj/machinery/door/airlock))
+		if(src:locked)
+			var/nhref = "src=\ref[src];aiEnable=4"
+			src.Topic(nhref, params2list(nhref), src, 1)
+		else
+			var/nhref = "src=\ref[src];aiDisable=4"
+			src.Topic(nhref, params2list(nhref), src, 1)
+	return
+
 
 /atom/proc/get_global_map_pos()
 	if(!islist(global_map) || isemptylist(global_map)) return

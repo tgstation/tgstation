@@ -44,6 +44,12 @@
 /mob/living/silicon/robot/Del()
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		mmi.loc = get_turf(loc)//To hopefully prevent run time errors.
+
+		if(!key)
+			for(var/mob/dead/observer/ghost in world)
+				if(ghost.corpse == src && ghost.client)
+					ghost.client.mob = ghost.corpse
+
 		if(key)//If there is a client attached to host.
 			if(client)
 				client.screen.len = null
@@ -56,6 +62,7 @@
 				mmi.brainmob.key = key
 			else//If the brain does have a mind. Also shouldn't happen but who knows.
 				mmi.brainmob.key = key
+
 		mmi = null
 	..()
 
@@ -962,4 +969,25 @@ Frequency:
 
 /mob/living/silicon/robot/proc/self_destruct()
 	gib(1)
+	return
 
+/mob/living/silicon/robot/proc/UnlinkSelf()
+	if (src.connected_ai)
+		src.connected_ai = null
+	lawupdate = 0
+	lockcharge = 0
+	canmove = 1
+
+
+
+/mob/living/silicon/robot/proc/ResetSecurityCodes()
+	set category = "Robot Commands"
+	set name = "Reset Identity Codes"
+	set desc = "Scrambles your security and identification codes and resets your current buffers.  Unlocks you, but permenantly severs you from your AI.  You can still be blown by a human at the robotics console."
+
+	var/mob/living/silicon/robot/R = usr
+
+	if(R)
+		R.UnlinkSelf()
+		R << "Buffers flushed and reset.  All systems operational."
+		src.verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes
