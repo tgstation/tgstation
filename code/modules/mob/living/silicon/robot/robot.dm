@@ -979,13 +979,14 @@ Frequency:
 	lawupdate = 0
 	lockcharge = 0
 	canmove = 1
+	scrambledcodes = 1
 
 
 
 /mob/living/silicon/robot/proc/ResetSecurityCodes()
 	set category = "Robot Commands"
 	set name = "Reset Identity Codes"
-	set desc = "Scrambles your security and identification codes and resets your current buffers.  Unlocks you, but permenantly severs you from your AI.  You can still be blown by a human at the robotics console."
+	set desc = "Scrambles your security and identification codes and resets your current buffers.  Unlocks you and but permenantly severs you from your AI and the robotics console."
 
 	var/mob/living/silicon/robot/R = usr
 
