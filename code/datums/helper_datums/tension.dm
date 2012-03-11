@@ -60,7 +60,7 @@ var/global/datum/tension/tension_master
 			if(score > 100000)
 				if(!supress)
 					if(prob(1) || forcenexttick)
-						if(prob(1) || forcenexttick)
+						if(prob(50) || forcenexttick)
 							if(forcenexttick)
 								forcenexttick = 0
 
@@ -308,7 +308,7 @@ var/global/datum/tension/tension_master
 
 
 		for(var/mob/dead/observer/G in world)
-			switch(alert("Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
+			switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
 				if("Yes")
 					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
 						return
@@ -357,7 +357,7 @@ var/global/datum/tension/tension_master
 		var/time_passed = world.time
 
 		for(var/mob/dead/observer/G in world)
-			switch(alert("Do you wish to be considered for a nuke team being sent in?","Please answer in 30 seconds!","Yes","No"))
+			switch(alert(G,"Do you wish to be considered for a nuke team being sent in?","Please answer in 30 seconds!","Yes","No"))
 				if("Yes")
 					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
 						return
