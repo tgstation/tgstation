@@ -51,8 +51,6 @@
 		user << "\red The status panel is broken!"
 		return
 	user << "\red You don't understand any of this!"
-	if(
-	user << "This has nothing useful. You know all this already."
 	return
 
 /obj/machinery/computer/aiupload
