@@ -60,7 +60,7 @@ SYNDICATE UPLINK
 			dat += "<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=botchat'>Binary Translator</A> (3)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=lawmod'>Hacked AI Module</A> (7)<BR>"
-			dat += "<A href='byond://?src=\ref[src];buy_item=teleport'>Teleporter Circuit Board</A> (20)<BR>"
+			dat += "<A href='byond://?src=\ref[src];buy_item=teleport'>Teleporter Circuit Board</A> (10)<BR>"
 			dat += "<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=toolbox'>Syndicate Toolbox</A> (Includes various tools) (1)<BR>"
 			dat += "<A href='byond://?src=\ref[src];buy_item=soap'>Syndicate Soap</A> (1)<BR>"
@@ -215,8 +215,8 @@ SYNDICATE UPLINK
 						new /obj/item/toy/syndicateballoon(get_turf(src))
 						feedback_add_details("traitor_uplink_items_bought","BS")
 				if("teleport")
-					if (src.uses >= 20)
-						uses -= 20
+					if (src.uses >= 10)
+						uses -= 10
 						new /obj/item/weapon/circuitboard/teleporter(get_turf(src))
 						feedback_add_details("traitor_uplink_items_bought","TP")
 		else if (href_list["lock"] && src.origradio)

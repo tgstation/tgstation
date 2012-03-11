@@ -122,6 +122,8 @@
 			hands.icon_state = "security"
 			icon_state = "bloodhound"
 			modtype = "Sec"
+			speed = -1
+			nopush = 1
 			feedback_inc("cyborg_security",1)
 
 		if("Engineering")

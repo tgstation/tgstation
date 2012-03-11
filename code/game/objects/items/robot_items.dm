@@ -24,7 +24,10 @@
 			if (O.client)
 				O.show_message("\red <B>[user] has prodded [M] with an electrically-charged arm!</B>", 1, "\red You hear someone fall", 2)
 
-
+/obj/item/borg/overdrive
+	name = "Overdrive"
+	icon = 'decals.dmi'
+	icon_state = "shock"
 
 /**********************************************************************
 						HUD/SIGHT things
