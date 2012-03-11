@@ -1,7 +1,7 @@
 /proc/mini_blob_event()
 
 	var/turf/T = pick(blobstart)
-	if(istype(T, turf/simulated/wall))
+	if(istype(T, /turf/simulated/wall))
 		T.ReplaceWithPlating()
 	for(var/atom/A in T)
 		if(A.density)
