@@ -226,14 +226,14 @@
 		command_alert("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 		world << sound('outbreak7.ogg')
 
-/proc/alien_infestation() // -- TLE
+/proc/alien_infestation(var/spawncount = 1) // -- TLE
 	//command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
 	//world << sound('aliens.ogg')
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in world)
 		if(temp_vent.loc.z == 1 && !temp_vent.welded)
 			vents.Add(temp_vent)
-	var/spawncount = 1
+
 	if(prob(10)) spawncount++ //rarely, have two larvae spawn instead of one
 	while(spawncount >= 1)
 		var/obj/vent = pick(vents)

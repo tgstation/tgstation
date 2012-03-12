@@ -207,6 +207,11 @@
 			alert(usr,"No players found.  How the fuck are you calling this?","Tension Report")
 			return 0
 
+		var/numghosts = 0
+
+		for(var/mob/dead/observer/theghost in world)
+			numghosts ++
+
 
 		var/output = {"<B>TENSION REPORT</B><HR>
 <B>General Statistics</B><BR>
@@ -215,6 +220,7 @@
 <B>Explosions:</B> [tension_master.explosions]<BR>
 <B>Air alarms:</B> [tension_master.air_alarms]<BR>
 <B>Adminhelps:</B> [tension_master.adminhelps]<BR>
+<B>Ghosts:</B> [numghosts]<BR>
 <BR>
 <B>Current Status</B><BR>
 <B>Tension:</B> [tension_master.score]<BR>
@@ -226,12 +232,13 @@
 	<a href='?src=\ref[tension_master];makeTratior=1'>Make Tratiors</a><br>
 	<a href='?src=\ref[tension_master];makeChanglings=1'>Make Changlings</a><br>
 	<a href='?src=\ref[tension_master];makeRevs=1'>Make Revs</a><br>
-	<a href='?src=\ref[tension_master];makeWizard=1'>Make Wizard</a><br>
+	<a href='?src=\ref[tension_master];makeWizard=1'>Make Wizard (Requires Ghosts)</a><br>
 	<a href='?src=\ref[tension_master];makeCult=1'>Make Cult</a><br>
-	<a href='?src=\ref[tension_master];makeNukeTeam=1'>Make Nuke Team</a><br>
+	<a href='?src=\ref[tension_master];makeNukeTeam=1'>Make Nuke Team (Requires Ghosts)</a><br>
 	<a href='?src=\ref[tension_master];makeMalf=1'>Make Malf AI</a><br>
-	<a href='?src=\ref[tension_master];makeSpaceNinja=1'>Make Space Ninja</a><br>
-	<a href='?src=\ref[tension_master];makeDeathsquad=1'>Make Deathsquad (Syndicate)</a><br>
+	<a href='?src=\ref[tension_master];makeSpaceNinja=1'>Make Space Ninja (Requires Ghosts)</a><br>
+	<a href='?src=\ref[tension_master];makeAliens=1'>Make Aliens (Requires Ghosts)</a><br>
+	<a href='?src=\ref[tension_master];makeDeathsquad=1'>Make Deathsquad (Syndicate) (Requires Ghosts)</a><br>
 
 "}
 		usr << browse(output,"window=tensionreport")

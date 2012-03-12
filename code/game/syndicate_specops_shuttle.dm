@@ -192,9 +192,9 @@ var/syndicate_elite_shuttle_timeleft = 0
 		user << "\red Access Denied."
 		return
 
-	if (sent_syndicate_strike_team == 0)
-		usr << "\red The strike team has not yet deployed."
-		return
+//	if (sent_syndicate_strike_team == 0)
+//		usr << "\red The strike team has not yet deployed."
+//		return
 
 	if(..())
 		return

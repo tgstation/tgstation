@@ -57,7 +57,7 @@ var/global/datum/tension/tension_master
 		score += get_num_players()*PLAYER_WEIGHT
 
 		if(config.Tensioner_Active)
-			if(score > 100000)
+			if(score > 10000)
 				if(!supress)
 					if(prob(1) || forcenexttick)
 						if(prob(50) || forcenexttick)
@@ -308,13 +308,14 @@ var/global/datum/tension/tension_master
 
 
 		for(var/mob/dead/observer/G in world)
-			switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
-				if("Yes")
-					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+			spawn(0)
+				switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
+					if("Yes")
+						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+							return
+						candidates += G
+					if("No")
 						return
-					candidates += G
-				if("No")
-					return
 
 
 		spawn(300)
@@ -357,13 +358,14 @@ var/global/datum/tension/tension_master
 		var/time_passed = world.time
 
 		for(var/mob/dead/observer/G in world)
-			switch(alert(G,"Do you wish to be considered for a nuke team being sent in?","Please answer in 30 seconds!","Yes","No"))
-				if("Yes")
-					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+			spawn(0)
+				switch(alert(G,"Do you wish to be considered for a nuke team being sent in?","Please answer in 30 seconds!","Yes","No"))
+					if("Yes")
+						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+							return
+						candidates += G
+					if("No")
 						return
-					candidates += G
-				if("No")
-					return
 
 
 		spawn(300)
@@ -425,14 +427,79 @@ var/global/datum/tension/tension_master
 
 
 	proc/makeAliens()
-		usr << "Aliens aren't a game mode, silly!"
+		alien_infestation(3)
 
 	proc/makeSpaceNinja()
-		usr << "A space ninja isn't a game mode, silly!"
+		space_ninja_arrival()
 
 	proc/makeDeathsquad()
-		usr << "A deathsquad isn't a game mode, silly!"
+		var/list/mob/dead/observer/candidates = list()
+		var/mob/dead/observer/theghost = null
+		var/time_passed = world.time
+		var/input = "Purify the station."
+		if(prob(1))
+			input = "Save Runtime and any other cute things on the station."
+	/*
+		if (emergency_shuttle.direction == 1 && emergency_shuttle.online == 1)
+			emergency_shuttle.recall()
+			world << "\blue <B>Alert: The shuttle is going back!</B>"
+	*/
+		var/syndicate_commando_number = syndicate_commandos_possible //for selecting a leader
+		var/syndicate_leader_selected = 0 //when the leader is chosen. The last person spawned.
 
+	//Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
+
+		for(var/mob/dead/observer/G in world)
+			spawn(0)
+				switch(alert(G,"Do you wish to be considered for an elite syndicate strike team being sent in?","Please answer in 30 seconds!","Yes","No"))
+					if("Yes")
+						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+							return
+						candidates += G
+					if("No")
+						return
+
+		spawn(300)
+			if(candidates.len)
+				var/numagents = min(candidates.len, 6)
+
+				//Spawns commandos and equips them.
+				for (var/obj/effect/landmark/L in world)
+					if(numagents<=0)
+						break
+					if (L.name == "Syndicate-Commando")
+						syndicate_leader_selected = syndicate_commando_number == 1?1:0
+
+						var/mob/living/carbon/human/new_syndicate_commando = create_syndicate_death_commando(L, syndicate_leader_selected)
+
+						if(candidates.len)
+							theghost = pick(candidates)
+							new_syndicate_commando.mind.key = theghost.key//For mind stuff.
+							new_syndicate_commando.key = theghost.key
+							new_syndicate_commando.internal = new_syndicate_commando.s_store
+							new_syndicate_commando.internals.icon_state = "internal1"
+							candidates -= theghost
+							del(theghost)
+
+						//So they don't forget their code or mission.
+						new_syndicate_commando.mind.store_memory("<B>Mission:</B> \red [input].")
+
+						new_syndicate_commando << "\blue You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: \red<B> [input]</B>"
+
+						numagents--
+
+			//Spawns the rest of the commando gear.
+			//	for (var/obj/effect/landmark/L)
+				//	if (L.name == "Commando_Manual")
+						//new /obj/item/weapon/gun/energy/pulse_rifle(L.loc)
+					//	var/obj/item/weapon/paper/P = new(L.loc)
+					//	P.info = "<p><b>Good morning soldier!</b>. This compact guide will familiarize you with standard operating procedure. There are three basic rules to follow:<br>#1 Work as a team.<br>#2 Accomplish your objective at all costs.<br>#3 Leave no witnesses.<br>You are fully equipped and stocked for your mission--before departing on the Spec. Ops. Shuttle due South, make sure that all operatives are ready. Actual mission objective will be relayed to you by Central Command through your headsets.<br>If deemed appropriate, Central Command will also allow members of your team to equip assault power-armor for the mission. You will find the armor storage due West of your position. Once you are ready to leave, utilize the Special Operations shuttle console and toggle the hull doors via the other console.</p><p>In the event that the team does not accomplish their assigned objective in a timely manner, or finds no other way to do so, attached below are instructions on how to operate a Nanotrasen Nuclear Device. Your operations <b>LEADER</b> is provided with a nuclear authentication disk and a pin-pointer for this reason. You may easily recognize them by their rank: Lieutenant, Captain, or Major. The nuclear device itself will be present somewhere on your destination.</p><p>Hello and thank you for choosing Nanotrasen for your nuclear information needs. Today's crash course will deal with the operation of a Fission Class Nanotrasen made Nuclear Device.<br>First and foremost, <b>DO NOT TOUCH ANYTHING UNTIL THE BOMB IS IN PLACE.</b> Pressing any button on the compacted bomb will cause it to extend and bolt itself into place. If this is done to unbolt it one must completely log in which at this time may not be possible.<br>To make the device functional:<br>#1 Place bomb in designated detonation zone<br> #2 Extend and anchor bomb (attack with hand).<br>#3 Insert Nuclear Auth. Disk into slot.<br>#4 Type numeric code into keypad ([nuke_code]).<br>Note: If you make a mistake press R to reset the device.<br>#5 Press the E button to log onto the device.<br>You now have activated the device. To deactivate the buttons at anytime, for example when you have already prepped the bomb for detonation, remove the authentication disk OR press the R on the keypad. Now the bomb CAN ONLY be detonated using the timer. A manual detonation is not an option.<br>Note: Toggle off the <b>SAFETY</b>.<br>Use the - - and + + to set a detonation time between 5 seconds and 10 minutes. Then press the timer toggle button to start the countdown. Now remove the authentication disk so that the buttons deactivate.<br>Note: <b>THE BOMB IS STILL SET AND WILL DETONATE</b><br>Now before you remove the disk if you need to move the bomb you can: Toggle off the anchor, move it, and re-anchor.</p><p>The nuclear authorization code is: <b>[nuke_code ? nuke_code : "None provided"]</b></p><p><b>Good luck, soldier!</b></p>"
+					//	P.name = "Spec. Ops. Manual"
+
+				for (var/obj/effect/landmark/L in world)
+					if (L.name == "Syndicate-Commando-Bomb")
+						new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
+						del(L)
 
 
 
@@ -571,3 +638,33 @@ var/global/datum/tension/tension_master
 */
 		del(G_found)//Don't want to leave ghosts around.
 		return new_character
+
+	/proc/create_syndicate_death_commando(obj/spawn_location, syndicate_leader_selected = 0)
+		var/mob/living/carbon/human/new_syndicate_commando = new(spawn_location.loc)
+		var/syndicate_commando_leader_rank = pick("Lieutenant", "Captain", "Major")
+		var/syndicate_commando_rank = pick("Corporal", "Sergeant", "Staff Sergeant", "Sergeant 1st Class", "Master Sergeant", "Sergeant Major")
+		var/syndicate_commando_name = pick(last_names)
+
+		new_syndicate_commando.gender = pick(MALE, FEMALE)
+
+		var/datum/preferences/A = new()//Randomize appearance for the commando.
+		A.randomize_appearance_for(new_syndicate_commando)
+
+		new_syndicate_commando.real_name = "[!syndicate_leader_selected ? syndicate_commando_rank : syndicate_commando_leader_rank] [syndicate_commando_name]"
+		new_syndicate_commando.age = !syndicate_leader_selected ? rand(23,35) : rand(35,45)
+
+		new_syndicate_commando.dna.ready_dna(new_syndicate_commando)//Creates DNA.
+
+		//Creates mind stuff.
+		new_syndicate_commando.mind = new
+		new_syndicate_commando.mind.current = new_syndicate_commando
+		new_syndicate_commando.mind.original = new_syndicate_commando
+		new_syndicate_commando.mind.assigned_role = "MODE"
+		new_syndicate_commando.mind.special_role = "Syndicate Commando"
+		if(!(new_syndicate_commando.mind in ticker.minds))
+			ticker.minds += new_syndicate_commando.mind//Adds them to regular mind list.
+		if(!(new_syndicate_commando.mind in ticker.mode.traitors))//If they weren't already an extra traitor.
+			ticker.mode.traitors += new_syndicate_commando.mind//Adds them to current traitor list. Which is really the extra antagonist list.
+		new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
+		del(spawn_location)
+		return new_syndicate_commando
