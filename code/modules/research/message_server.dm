@@ -54,6 +54,16 @@
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
 
+	var/active = 1
+
+/obj/machinery/message_server/process()
+	if((stat & (BROKEN|NOPOWER)) && active)
+		active = 0
+		return
+
+	update_icon()
+	return
+
 /obj/machinery/message_server/proc/send_pda_message(var/recipient = "",var/sender = "",var/message = "")
 	pda_msgs += new/datum/data_pda_msg(recipient,sender,message)
 
@@ -61,8 +71,22 @@
 	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
 
 /obj/machinery/message_server/attack_hand(user as mob)
-	user << "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays."
+//	user << "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays."
+	user << "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]"
+	active = !active
+	update_icon()
 
+	return
+
+/obj/machinery/message_server/update_icon()
+	if((stat & (BROKEN|NOPOWER)))
+		icon_state = "server-nopower"
+	else if (!active)
+		icon_state = "server-off"
+	else
+		icon_state = "server-on"
+
+	return
 
 
 /datum/feedback_variable

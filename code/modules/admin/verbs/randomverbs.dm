@@ -506,6 +506,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		M.radiation = 0
 		//M.health = 100
 		M.nutrition = 400
+		M.bodytemperature = 310
 		M.heal_overall_damage(1000, 1000)
 		//M.updatehealth()
 		M.buckled = initial(M.buckled)
