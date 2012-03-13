@@ -2,9 +2,10 @@
 	canmove = 0
 	src.loc = paicard
 	card = paicard
-	if(!card.radio)
-		card.radio = new /obj/item/device/radio(src.card)
-	radio = card.radio
+	if(card)
+		if(!card.radio)
+			card.radio = new /obj/item/device/radio(src.card)
+		radio = card.radio
 
 	..()
 

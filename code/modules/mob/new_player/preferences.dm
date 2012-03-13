@@ -164,15 +164,21 @@ datum/preferences
 		dat += "<a href='byond://?src=\ref[user];preferences=1;eyes=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]\"><table  style='display:inline;' bgcolor=\"#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]\"><tr><td>__</td></tr></table></font>"
 
 		dat += "<hr>"
-		if(!jobban_isbanned(user, "Syndicate"))
+		if(jobban_isbanned(user, "Syndicate"))
+			dat += "<b>You are banned from antagonist roles.</b>"
+			src.be_special = 0
+		else
 			var/n = 0
 			for (var/i in special_roles)
 				if(special_roles[i]) //if mode is available on the server
-					dat += "<b>Be [i]:</b> <a href=\"byond://?src=\ref[user];preferences=1;be_special=[n]\"><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
+					if(jobban_isbanned(user, i))
+						dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
+					else if(i == "pai candidate")
+						if(jobban_isbanned(user, "pAI"))
+							dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
+					else
+						dat += "<b>Be [i]:</b> <a href=\"byond://?src=\ref[user];preferences=1;be_special=[n]\"><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
 				n++
-		else
-			dat += "<b>You are banned from being syndicate.</b>"
-			src.be_special = 0
 		dat += "<hr>"
 
 		if(!IsGuestKey(user.key))

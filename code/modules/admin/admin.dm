@@ -128,37 +128,239 @@
 		if(!job_master)
 			usr << "Job Master has not been setup!"
 			return
-		for(var/datum/job/job in job_master.occupations)
-			if(job.title == "Tourist")
-				continue
+
+	/***********************************WARNING!************************************
+				      The jobban stuff looks mangled and disguisting
+						      But it looks beautiful in-game
+						                -Nodrak
+	************************************WARNING!***********************************/
+		var/counter = 0
+
+//Regular jobs
+	//Command (Blue)
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr align='center' bgcolor='ccccff'><th colspan='[length(command_positions)]'>Command Positions</th></tr><tr align='center'>"
+		for(var/jobPos in command_positions)
+			if(!jobPos)	continue
+			var/datum/job/job = job_master.GetJob(jobPos)
+			if(!job) continue
+
 			if(jobban_isbanned(M, job.title))
-				jobs += "<a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'><font color=red>[dd_replacetext(job.title, " ", "&nbsp")]</font></a> "
+				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'><font color=red>[dd_replacetext(job.title, " ", "&nbsp")]</font></a></td>"
+				counter++
 			else
-				jobs += "<a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[dd_replacetext(job.title, " ", "&nbsp")]</a> "
+				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[dd_replacetext(job.title, " ", "&nbsp")]</a></td>"
+				counter++
 
-/*		if(jobban_isbanned(M, "Captain")) These two are now jobs in the datums and should show up in the above code
-			jobs += "<a href='?src=\ref[src];jobban3=Captain;jobban4=\ref[M]'><font color=red>Captain</font></a> "
-		else
-			jobs += "<a href='?src=\ref[src];jobban3=Captain;jobban4=\ref[M]'>Captain</a> "
+			if(counter >= 5) //So things dont get squiiiiished!
+				jobs += "</tr><tr>"
+				counter = 0
+		jobs += "</tr></table>"
 
-		if(jobban_isbanned(M, "AI"))
-			jobs += "<a href='?src=\ref[src];jobban3=AI;jobban4=\ref[M]'><font color=red>AI</font></a> "
-		else
-			jobs += "<a href='?src=\ref[src];jobban3=AI;jobban4=\ref[M]'>AI</a> "
-*/
-		if(jobban_isbanned(M, "Syndicate"))
-			jobs += "<BR><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'><font color=red>[dd_replacetext("Syndicate", " ", "&nbsp")]</font></a> "
-		else
-			jobs += "<BR><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'>[dd_replacetext("Syndicate", " ", "&nbsp")]</a> "
+	//Security (Red)
+		counter = 0
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='ffddf0'><th colspan='[length(security_positions)]'>Security Positions</th></tr><tr align='center'>"
+		for(var/jobPos in security_positions)
+			if(!jobPos)	continue
+			var/datum/job/job = job_master.GetJob(jobPos)
+			if(!job) continue
 
+			if(jobban_isbanned(M, job.title))
+				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'><font color=red>[dd_replacetext(job.title, " ", "&nbsp")]</font></a></td>"
+				counter++
+			else
+				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[dd_replacetext(job.title, " ", "&nbsp")]</a></td>"
+				counter++
+
+			if(counter >= 5) //So things dont get squiiiiished!
+				jobs += "</tr><tr align='center'>"
+				counter = 0
+		jobs += "</tr></table>"
+
+	//Engineering (Yellow)
+		counter = 0
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='fff5cc'><th colspan='[length(engineering_positions)]'>Engineering Positions</th></tr><tr align='center'>"
+		for(var/jobPos in engineering_positions)
+			if(!jobPos)	continue
+			var/datum/job/job = job_master.GetJob(jobPos)
+			if(!job) continue
+
+			if(jobban_isbanned(M, job.title))
+				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'><font color=red>[dd_replacetext(job.title, " ", "&nbsp")]</font></a></td>"
+				counter++
+			else
+				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[dd_replacetext(job.title, " ", "&nbsp")]</a></td>"
+				counter++
+
+			if(counter >= 5) //So things dont get squiiiiished!
+				jobs += "</tr><tr align='center'>"
+				counter = 0
+		jobs += "</tr></table>"
+
+	//Medical (White)
+		counter = 0
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='ffeef0'><th colspan='[length(medical_positions)]'>Medical Positions</th></tr><tr align='center'>"
+		for(var/jobPos in medical_positions)
+			if(!jobPos)	continue
+			var/datum/job/job = job_master.GetJob(jobPos)
+			if(!job) continue
+
+			if(jobban_isbanned(M, job.title))
+				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'><font color=red>[dd_replacetext(job.title, " ", "&nbsp")]</font></a></td>"
+				counter++
+			else
+				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[dd_replacetext(job.title, " ", "&nbsp")]</a></td>"
+				counter++
+
+			if(counter >= 5) //So things dont get squiiiiished!
+				jobs += "</tr><tr align='center'>"
+				counter = 0
+		jobs += "</tr></table>"
+
+	//Science (Purple)
+		counter = 0
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='e79fff'><th colspan='[length(science_positions)]'>Science Positions</th></tr><tr align='center'>"
+		for(var/jobPos in science_positions)
+			if(!jobPos)	continue
+			var/datum/job/job = job_master.GetJob(jobPos)
+			if(!job) continue
+
+			if(jobban_isbanned(M, job.title))
+				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'><font color=red>[dd_replacetext(job.title, " ", "&nbsp")]</font></a></td>"
+				counter++
+			else
+				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[dd_replacetext(job.title, " ", "&nbsp")]</a></td>"
+				counter++
+
+			if(counter >= 5) //So things dont get squiiiiished!
+				jobs += "</tr><tr align='center'>"
+				counter = 0
+		jobs += "</tr></table>"
+
+	//Civilian (Grey)
+		counter = 0
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='dddddd'><th colspan='[length(civilian_positions)]'>Civilian Positions</th></tr><tr align='center'>"
+		for(var/jobPos in civilian_positions)
+			if(!jobPos)	continue
+			var/datum/job/job = job_master.GetJob(jobPos)
+			if(!job) continue
+
+			if(jobban_isbanned(M, job.title))
+				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'><font color=red>[dd_replacetext(job.title, " ", "&nbsp")]</font></a></td>"
+				counter++
+			else
+				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[dd_replacetext(job.title, " ", "&nbsp")]</a></td>"
+				counter++
+
+			if(counter >= 5) //So things dont get squiiiiished!
+				jobs += "</tr><tr align='center'>"
+				counter = 0
+		jobs += "</tr></table>"
+
+	//Non-Human (Green)
+		counter = 0
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='ccffcc'><th colspan='[length(nonhuman_positions)]'>Non-human Positions</th></tr><tr align='center'>"
+		for(var/jobPos in nonhuman_positions)
+			if(!jobPos)	continue
+			var/datum/job/job = job_master.GetJob(jobPos)
+			if(!job) continue
+
+			if(jobban_isbanned(M, job.title))
+				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'><font color=red>[dd_replacetext(job.title, " ", "&nbsp")]</font></a></td>"
+				counter++
+			else
+				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[dd_replacetext(job.title, " ", "&nbsp")]</a></td>"
+				counter++
+
+			if(counter >= 5) //So things dont get squiiiiished!
+				jobs += "</tr><tr align='center'>"
+				counter = 0
+
+		//pAI isn't technically a job, but it goes in here.
 		if(jobban_isbanned(M, "pAI"))
-			jobs += "<BR><a href='?src=\ref[src];jobban3=pAI;jobban4=\ref[M]'><font color=red>pAI</font></a> "
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=pAI;jobban4=\ref[M]'><font color=red>pAI</font></a></td>"
 		else
-			jobs += "<BR><a href='?src=\ref[src];jobban3=pAI;jobban4=\ref[M]'>pAI</a> "
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=pAI;jobban4=\ref[M]'>pAI</a></td>"
+
+		jobs += "</tr></table>"
+
+	//Antagonist (Orange)
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='ffeeaa'><th colspan='10'>Antagonist Positions</th></tr><tr align='center'>"
+
+		//All antagonists
+		if(jobban_isbanned(M, "Syndicate"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'><font color=red>[dd_replacetext("All Antagonists", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'>[dd_replacetext("All Antagonists", " ", "&nbsp")]</a></td>"
+
+		//Traitor
+		if(jobban_isbanned(M, "traitor") || jobban_isbanned(M, "Syndicate"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=traitor;jobban4=\ref[M]'><font color=red>[dd_replacetext("Traitor", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=traitor;jobban4=\ref[M]'>[dd_replacetext("Traitor", " ", "&nbsp")]</a></td>"
+
+		//Changeling
+		if(jobban_isbanned(M, "changeling") || jobban_isbanned(M, "Syndicate"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=changeling;jobban4=\ref[M]'><font color=red>[dd_replacetext("Changeling", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=changeling;jobban4=\ref[M]'>[dd_replacetext("Changeling", " ", "&nbsp")]</a></td>"
+
+		//Nuke Operative
+		if(jobban_isbanned(M, "operative") || jobban_isbanned(M, "Syndicate"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=operative;jobban4=\ref[M]'><font color=red>[dd_replacetext("Nuke Operative", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=operative;jobban4=\ref[M]'>[dd_replacetext("Nuke Operative", " ", "&nbsp")]</a></td>"
+
+		//Revolutionary
+		if(jobban_isbanned(M, "revolutionary") || jobban_isbanned(M, "Syndicate"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=revolutionary;jobban4=\ref[M]'><font color=red>[dd_replacetext("Revolutionary", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=revolutionary;jobban4=\ref[M]'>[dd_replacetext("Revolutionary", " ", "&nbsp")]</a></td>"
+
+		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
+
+		//Cultist
+		if(jobban_isbanned(M, "Cultist") || jobban_isbanned(M, "Syndicate"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=cultist;jobban4=\ref[M]'><font color=red>[dd_replacetext("Cultist", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=cultist;jobban4=\ref[M]'>[dd_replacetext("Cultist", " ", "&nbsp")]</a></td>"
+
+		//Wizard
+		if(jobban_isbanned(M, "wizard") || jobban_isbanned(M, "Syndicate"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=wizard;jobban4=\ref[M]'><font color=red>[dd_replacetext("Wizard", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=wizard;jobban4=\ref[M]'>[dd_replacetext("Wizard", " ", "&nbsp")]</a></td>"
+
+		//Malfunctioning AI
+		if(jobban_isbanned(M, "malf AI") || jobban_isbanned(M, "Syndicate"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=malf AI;jobban4=\ref[M]'><font color=red>[dd_replacetext("Malf AI", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=malf AI;jobban4=\ref[M]'>[dd_replacetext("Malf AI", " ", "&nbsp")]</a></td>"
+
+		//Alien
+		if(jobban_isbanned(M, "alien candidate") || jobban_isbanned(M, "Syndicate"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=alien candidate;jobban4=\ref[M]'><font color=red>[dd_replacetext("Alien", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=alien candidate;jobban4=\ref[M]'>[dd_replacetext("Alien", " ", "&nbsp")]</a></td>"
+
+		//Infested Monkey
+		if(jobban_isbanned(M, "infested monkey") || jobban_isbanned(M, "Syndicate"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=infested monkey;jobban4=\ref[M]'><font color=red>[dd_replacetext("Infested Monkey", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=infested monkey;jobban4=\ref[M]'>[dd_replacetext("Infested Monkey", " ", "&nbsp")]</a></td>"
+
+		jobs += "</tr></table>"
 
 		body = "<br>[jobs]<br><br>"
 		dat = "<tt>[header][body]</tt>"
-		usr << browse(dat, "window=jobban2;size=600x180")
+		usr << browse(dat, "window=jobban2;size=800x400")
 		return
 
 	if(href_list["jobban3"])
@@ -290,8 +492,6 @@
 		jobs += "<a href='?src=\ref[src];newjobban2=AI_Cyborg;jobban4=\ref[M]'>AI+Cyborg</a> <br>"
 		jobs += "<a href='?src=\ref[src];newjobban2=Detective_HoS;jobban4=\ref[M]'>Detective+HoS</a> <br><br>"
 		for(var/datum/job/job in job_master.occupations)
-			if(job.title == "Tourist")
-				continue
 			if(jobban_isbanned(M, job.title))
 				jobs += "<a href='?src=\ref[src];newjobban2=[job.title];jobban4=\ref[M]'><font color=red>[dd_replacetext(job.title, " ", "&nbsp")]</font></a> "
 			else
