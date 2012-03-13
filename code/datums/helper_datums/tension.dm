@@ -78,6 +78,8 @@ var/global/datum/tension/tension_master
 									if(potentialgames.len)
 										var/thegame = pick(potentialgames)
 
+										log_admin("The tensioner fired, and decided on [thegame]")
+
 										switch(thegame)
 											if("POINTS_FOR_TRATIOR")
 												if(!makeTratiors())
@@ -118,17 +120,22 @@ var/global/datum/tension/tension_master
 													potentialgames.Remove(thegame)
 
 											if("POINTS_FOR_ALIEN")
-												//makeAliens()
-												forcenexttick = 1
+												if(!makeAliens())
+													forcenexttick = 1
+												else
+													potentialgames.Remove(thegame)
 
 											if("POINTS_FOR_NINJA")
-												//makeSpaceNinja()
-												forcenexttick = 1
+												if(!makeSpaceNinja())
+													forcenexttick = 1
+												else
+													potentialgames.Remove(thegame)
 
 											if("POINTS_FOR_DEATHSQUAD")
-												//makeDeathsquad()
-												forcenexttick = 1
-
+												if(!makeDeathsquad())
+													forcenexttick = 1
+												else
+													potentialgames.Remove(thegame)
 
 
 
@@ -253,6 +260,11 @@ var/global/datum/tension/tension_master
 				H = pick(candidates)
 				H.mind.make_Tratior()
 
+			return 1
+
+		else
+			return 0
+
 
 	proc/makeChanglings()
 
@@ -278,6 +290,11 @@ var/global/datum/tension/tension_master
 				H = pick(candidates)
 				H.mind.make_Changling()
 
+			return 1
+
+		else
+			return 0
+
 	proc/makeRevs()
 
 		var/datum/game_mode/revolution/temp = new
@@ -301,11 +318,15 @@ var/global/datum/tension/tension_master
 				H = pick(candidates)
 				H.mind.make_Rev()
 
+			return 1
+
+		else
+			return 0
+
 	proc/makeWizard()
 		var/list/mob/dead/observer/candidates = list()
 		var/mob/dead/observer/theghost = null
 		var/time_passed = world.time
-
 
 		for(var/mob/dead/observer/G in world)
 			spawn(0)
@@ -323,6 +344,11 @@ var/global/datum/tension/tension_master
 				theghost = pick(candidates)
 				var/mob/living/carbon/human/new_character=makeBody(theghost)
 				new_character.mind.make_Wizard()
+
+
+
+		return 1 // Has to return one before it knows if there's a wizard to prevent the parent from automatically selecting another game mode.
+
 
 	proc/makeCult()
 
@@ -348,6 +374,11 @@ var/global/datum/tension/tension_master
 				H = pick(candidates)
 				H.mind.make_Cultist()
 				temp.grant_runeword(H)
+
+				return 1
+
+		else
+			return 0
 
 
 
@@ -424,13 +455,19 @@ var/global/datum/tension/tension_master
 					for (var/obj/machinery/nuclearbomb/bomb in world)
 						bomb.r_code = nuke_code						// All the nukes are set to this code.
 
+			return 1 // Has to return one before it knows if there's a wizard to prevent the parent from automatically selecting another game mode.
+
+
+
 
 
 	proc/makeAliens()
 		alien_infestation(3)
+		return 1
 
 	proc/makeSpaceNinja()
 		space_ninja_arrival()
+		return 1
 
 	proc/makeDeathsquad()
 		var/list/mob/dead/observer/candidates = list()
@@ -501,7 +538,7 @@ var/global/datum/tension/tension_master
 						new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
 						del(L)
 
-
+			return 1 // Has to return one before it knows if there's a wizard to prevent the parent from automatically selecting another game mode.
 
 	proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 
