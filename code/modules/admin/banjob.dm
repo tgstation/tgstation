@@ -3,7 +3,7 @@ var
 	jobban_keylist[0]		//to store the keys & ranks
 
 /proc/jobban_fullban(mob/M, rank, reason)
-	if (!M || !M.key || !M.client) return
+	if (!M || !M.key) return
 	jobban_keylist.Add(text("[M.ckey] - [rank] ## [reason]"))
 	jobban_savebanfile()
 
@@ -23,7 +23,12 @@ var
 
 		for (var/s in jobban_keylist)
 			if( findtext(s,"[M.ckey] - [rank]") )
-				return 1
+				var/startpos = findtext(s, "## ")+3
+				if(startpos && startpos<length(s))
+					var/text = copytext(s, startpos, 0)
+					if(text)
+						return text
+				return "unknown"
 		return 0
 
 /*
