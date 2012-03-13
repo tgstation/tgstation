@@ -63,9 +63,4 @@
 				if(prob(20))
 					affected_mob.adjustToxLoss(1)
 					affected_mob.updatehealth()
-			if(prob(25))
-				affected_mob << "\red The world around you feels surreal"
-				if(prob(50))
-					affected_mob.hallucination += 100
-					shake_camera(affected_mob,20)
 	return
