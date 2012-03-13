@@ -6795,7 +6795,7 @@
 "cAI" = (/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/turret_protected/tcomwest)
 "cAJ" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/closet,/turf/simulated/floor/plating,/area/turret_protected/tcomwest)
 "cAK" = (/obj/structure/window/reinforced{dir = 8},/turf/space,/area/turret_protected/tcomwest)
-"cAL" = (/obj/machinery/computer/telecomms/traffic,/turf/simulated/floor,/area/tcommsat/computer)
+"cAL" = (/obj/machinery/computer/telecomms/traffic{network = "tcommsat"},/turf/simulated/floor,/area/tcommsat/computer)
 "cAM" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"; tag = "90Curve"},/obj/structure/stool/bed/chair{dir = 8},/turf/simulated/floor,/area/tcommsat/computer)
 "cAN" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"; tag = "90Curve"},/turf/simulated/floor,/area/tcommsat/computer)
 "cAO" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor,/area/tcommsat/computer)
