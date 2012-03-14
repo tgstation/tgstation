@@ -114,11 +114,11 @@
 	icon_deny = "cart-deny"
 	product_paths = "/obj/item/weapon/cartridge/medical;/obj/item/weapon/cartridge/engineering;/obj/item/weapon/cartridge/security;/obj/item/weapon/cartridge/janitor;/obj/item/weapon/cartridge/signal/toxins;/obj/item/device/pda/heads;/obj/item/weapon/cartridge/captain;/obj/item/weapon/cartridge/quartermaster"
 //	product_amounts = "10;10;10;10;10;10;3;10"
-	product_prices = "1;1;1;1;1;1;3;1"
+	product_prices = "1;1;1;1;1;3;1"
 	product_slogans = ""
 	product_hidden = ""
 //	product_hideamt = ""
-	hidden_prices = "2"
+	hidden_prices = ""
 	charge_type = "cart"
 
 /obj/machinery/vending/cigarette
