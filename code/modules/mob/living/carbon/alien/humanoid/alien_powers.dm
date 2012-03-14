@@ -178,7 +178,7 @@ I kind of like the right click only--the window version can get a little confusi
 						spawn(round(travel_time/2))//give sound warning to anyone near the target vent
 							if(!target_vent.welded)
 								for(var/mob/O in hearers(target_vent, null))
-									O.show_message("You hear something crawling trough the ventilation pipes.",2)
+									O.show_message("You hear something crawling through the ventilation pipes.",2)
 
 						spawn(travel_time)
 							if(target_vent.welded)//the vent can be welded while alien scrolled through the list or travelled.

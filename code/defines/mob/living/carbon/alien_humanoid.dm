@@ -9,6 +9,7 @@
 
 	var/icon/stand_icon = null
 	var/icon/lying_icon = null
+	var/icon/resting_icon = null
 
 	var/last_b_state = 1.0
 

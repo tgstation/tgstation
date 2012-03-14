@@ -9,6 +9,31 @@ emp_act
 */
 
 /mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
+
+	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor/laserproof))
+		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
+			var/reflectchance = 80 - round(P.damage/3)
+			if(!(def_zone in list("chest", "groin")))
+				reflectchance /= 2
+			if(prob(reflectchance))
+				visible_message("\red <B>The [P.name] gets reflected by [src]'s [wear_suit.name]!</B>")
+
+				// Find a turf near or on the original location to bounce to
+				if(P.starting)
+					var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+					var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+					var/turf/curloc = get_turf(src)
+
+					// redirect the projectile
+					P.original = locate(new_x, new_y, P.z)
+					P.starting = curloc
+					P.current = curloc
+					P.firer = src
+					P.yo = new_y - curloc.y
+					P.xo = new_x - curloc.x
+
+				return -1 // complete projectile permutation
+
 	if(check_shields(P.damage, "the [P.name]"))
 		P.on_hit(src, 2)
 		return 2
@@ -49,12 +74,12 @@ emp_act
 /mob/living/carbon/human/proc/check_shields(var/damage = 0, var/attack_text = "the attack")
 	if(l_hand && istype(l_hand, /obj/item/weapon))//Current base is the prob(50-d/3)
 		var/obj/item/weapon/I = l_hand
-		if(I.IsShield() && (prob(50 - round(damage / 3))))
+		if(I.IsShield() && (prob(70 - round(damage / 3))))
 			visible_message("\red <B>[src] blocks [attack_text] with the [l_hand.name]!</B>")
 			return 1
 	if(r_hand && istype(r_hand, /obj/item/weapon))
 		var/obj/item/weapon/I = r_hand
-		if(I.IsShield() && (prob(50 - round(damage / 3))))
+		if(I.IsShield() && (prob(70 - round(damage / 3))))
 			visible_message("\red <B>[src] blocks [attack_text] with the [r_hand.name]!</B>")
 			return 1
 	if(wear_suit && istype(wear_suit, /obj/item/))
@@ -88,10 +113,11 @@ emp_act
 	var/datum/organ/external/affecting = get_organ(ran_zone(user.zone_sel.selecting))
 	var/hit_area = parse_zone(affecting.name)
 
-	visible_message("\red <B>[src] has been attacked in the [hit_area] with [I.name] by [user]!</B>")
-
 	if((user != src) && check_shields(I.force, "the [I.name]"))
 		return 0
+
+	visible_message("\red <B>[src] has been attacked in the [hit_area] with [I.name] by [user]!</B>")
+
 	var/armor = run_armor_check(affecting, "melee", "Your armor has protected you from a hit to the [hit_area].", "Your armor has softened hit to your [hit_area].")
 	if(armor >= 2)	return 0
 	if(!I.force)	return 0

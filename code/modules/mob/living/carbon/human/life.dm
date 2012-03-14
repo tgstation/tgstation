@@ -697,12 +697,14 @@
 			if(getOxyLoss() > 50) Paralyse(3)
 
 			if(sleeping)
-				Paralyse(3)
+				if(paralysis <= 0)
+					Paralyse(2)
 				if (prob(10) && health && !hal_crit) spawn(0) emote("snore")
-				sleeping--
+				//sleeping--
 
 			if(resting)
-				Weaken(3)
+				if(weakened <= 0)
+					Weaken(2)
 
 			if(health < config.health_threshold_dead || brain_op_stage == 4.0)
 				death()

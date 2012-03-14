@@ -148,6 +148,14 @@
 				src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 				now_pushing = 0
 				return
+		if(tmob.r_hand && istype(tmob.r_hand, /obj/item/weapon/shield/riot))
+			if(prob(99))
+				now_pushing = 0
+				return
+		if(tmob.l_hand && istype(tmob.l_hand, /obj/item/weapon/shield/riot))
+			if(prob(99))
+				now_pushing = 0
+				return
 		if(tmob.nopush)
 			now_pushing = 0
 			return
