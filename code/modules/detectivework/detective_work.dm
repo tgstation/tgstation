@@ -4,8 +4,8 @@ atom/var/list/suit_fibers
 
 atom/proc/add_fibers(mob/living/carbon/human/M)
 	if(M.gloves)
-		if(M.gloves.transfer_blood)
-			if(add_blood(M.gloves.bloody_hands_mob))
+		if(M.gloves.transfer_blood) //bloodied gloves transfer blood to touched objects
+			if(add_blood(M.gloves.bloody_hands_mob)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
 				M.gloves.transfer_blood--
 				//world.log << "[M.gloves] added blood to [src] from [M.gloves.bloody_hands_mob]"
 	else if(M.bloody_hands)
