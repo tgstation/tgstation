@@ -271,7 +271,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			"connection" = connection, // the radio connection to use
 			"radio" = src, // stores the radio used for transmission
 			"slow" = 0, // how much to sleep() before broadcasting - simulates net lag
-			"traffic" = 0 // dictates the total traffic sum that the signal went through
+			"traffic" = 0, // dictates the total traffic sum that the signal went through
+			"type" = 0, // determines what type of radio input it is: normal broadcast
+			"server" = null, // the last server to log this signal
+			"reject" = 0	// if nonzero, the signal will not be accepted by any broadcasting machinery
 		)
 		signal.frequency = connection.frequency // Quick frequency set
 
@@ -323,7 +326,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		"connection" = connection, // the radio connection to use
 		"radio" = src, // stores the radio used for transmission
 		"slow" = 0, // how much to sleep() before broadcasting - simulates net lag
-		"traffic" = 0 // dictates the total traffic sum that the signal went through
+		"traffic" = 0, // dictates the total traffic sum that the signal went through
+		"type" = 0, // determines what type of radio input it is: normal broadcast
+		"server" = null, // the last server to log this signal
+		"reject" = 0	// if nonzero, the signal will not be accepted by any broadcasting machinery
 	)
 	signal.frequency = connection.frequency // Quick frequency set
 
