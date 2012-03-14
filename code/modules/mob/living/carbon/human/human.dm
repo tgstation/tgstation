@@ -901,7 +901,7 @@
 		var/t1 = shoes.icon_state
 		overlays += image("icon" = 'feet.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
 		if (shoes.blood_DNA)
-			var/icon/stain_icon = icon('blood.dmi', "shoesblood[!lying ? "" : "2"]")
+			var/icon/stain_icon = icon('blood.dmi', "shoeblood[!lying ? "" : "2"]")
 			overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)	// Radio
 /*	if (w_radio)
 		overlays += image("icon" = 'ears.dmi', "icon_state" = "headset[!lying ? "" : "2"]", "layer" = MOB_LAYER) */
