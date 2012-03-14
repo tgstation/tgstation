@@ -50,7 +50,10 @@
 	if(stat & BROKEN)
 		user << "\red The status panel is broken!"
 		return
-	user << "\red You don't understand any of this!"
+	if(!issilicon(user))
+		user << "\red You don't understand any of this!"
+	else
+		user << "\blue You know all of this already, why are you messing with it?"
 	return
 
 /obj/machinery/computer/aiupload

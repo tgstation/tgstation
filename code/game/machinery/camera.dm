@@ -95,7 +95,7 @@
 /mob/living/silicon/ai/proc/ai_actual_track(mob/target as mob)
 
 	usr:cameraFollow = target
-	usr << text("Now tracking [] on camera.", target.name)
+	usr << "Now tracking target on camera." //Unidentifieds are no longer screamed at you.
 	if (usr.machine == null)
 		usr.machine = usr
 

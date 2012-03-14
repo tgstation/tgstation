@@ -52,7 +52,7 @@
 	attack_self()
 		if(target)
 			target.NotTargeted(src)
-			usr.visible_message("[usr] lowers \the [src].")
+			usr.visible_message("\blue [usr] lowers \the [src]...")
 			return 0
 		return 1
 
@@ -89,16 +89,7 @@
 		 || istype(src.in_chamber, /obj/item/projectile/bullet)))
 			//Lets shoot them, then.
 			user.visible_message("\red <b> [user] fires \the [src] point blank at [M]!</b>")
-			M.bullet_act(in_chamber,"head")
-			if (prob(20))
-				if (M.paralysis < 10)
-					M.paralysis = 10
-			else
-				if (M.weakened < 10)
-					M.weakened = 10
-			if(M.stat != 2)	M.stat = 1
-			if(M.health <= -50) //I pumped 7 more rounds into the guy, and only did an extra 26 damage :|
-				M.apply_damage(45) //So we'll put him an inch from death.
+			M.apply_damage(30+in_chamber.damage,BRUTE,"Point Blank Shot") //So we'll put him an inch from death.
 			del(in_chamber)
 			return
 		else if(user.a_intent != "hurt" && load_into_chamber() && istype(src,/obj/item/weapon/gun/energy/taser))
@@ -198,9 +189,9 @@
 			if(target)
 				//usr.ClearRequest("Aim")
 				target.NotTargeted(src)
-				usr.visible_message("[usr] turns \the [src] on [M]!")
+				usr.visible_message("\red <b>[usr] turns \the [src] on [M]!</b>")
 			else
-				usr.visible_message("[usr] aims \a [src] at [M]!")
+				usr.visible_message("\red <b>[usr] aims \a [src] at [M]!</b>")
 			for(var/mob/K in viewers(usr))
 				K << 'TargetOn.ogg'
 			M.Targeted(src)
@@ -210,7 +201,7 @@
 	proc/TargetActed()
 		var/mob/M = loc
 		if(target == M) return
-		if(src.loc != M.equipped())
+		if(src != M.equipped())
 			target.NotTargeted(src)
 			return
 		usr.last_move_intent = world.time
