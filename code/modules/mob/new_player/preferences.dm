@@ -89,7 +89,8 @@ datum/preferences
 		UI = UI_OLD
 
 		//Mob preview
-		icon/preview_icon = null
+		icon/preview_icon_front = null
+		icon/preview_icon_side = null
 
 		//Jobs, uses bitflags
 		job_civilian_high = 0
@@ -114,7 +115,8 @@ datum/preferences
 
 	proc/ShowChoices(mob/user)
 		update_preview_icon()
-		user << browse_rsc(preview_icon, "previewicon.png")
+		user << browse_rsc(preview_icon_front, "previewicon.png")
+		user << browse_rsc(preview_icon_side, "previewicon2.png")
 
 		var/dat = "<html><body>"
 		dat += "<b>Name:</b> "
@@ -146,7 +148,7 @@ datum/preferences
 
 	//	if(!IsGuestKey(user.key))//Seeing as it doesn't do anything, it may as well not show up.
 	//		dat += "Underwear: <a href =\"byond://?src=\ref[user];preferences=1;underwear=1\"><b>[underwear == 1 ? "Yes" : "No"]</b></a><br>"
-		dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64></td></tr></table>"
+		dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>"	//Carn: Now with profile!
 
 		dat += "<hr><b>Hair</b><br>"
 

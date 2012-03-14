@@ -54,6 +54,14 @@
 		name = "Longer Hair"
 		icon_state = "hair_vlong"
 
+	longfringe
+		name = "Long Fringe"
+		icon_state = "hair_longfringe"
+
+	longestalt
+		name = "Longer Fringe"
+		icon_state = "hair_vlongfringe"
+
 	halfbang
 		name = "Half-banged Hair"
 		icon_state = "hair_halfbang"
@@ -92,6 +100,14 @@
 		name = "Bedhead"
 		icon_state = "hair_bedhead"
 
+	bedhead2
+		name = "Bedhead 2"
+		icon_state = "hair_bedheadv2"
+
+	bedhead3
+		name = "Bedhead 3"
+		icon_state = "hair_bedheadv3"
+
 	dreadlocks
 		name = "Dreadlocks"
 		icon_state = "hair_dreads"
@@ -110,7 +126,17 @@
 		icon_state = "bald"
 		choose_female = 0
 
+	himecut
+		name = "Hime Cut"
+		icon_state = "hair_himecut"
 
+	curls
+		name = "Curls"
+		icon_state = "hair_curls"
+
+	spikey
+		name = "Spikey"
+		icon_state = "hair_spikey"
 
 /*
 ///////////////////////////////////

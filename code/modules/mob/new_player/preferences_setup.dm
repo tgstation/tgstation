@@ -200,7 +200,9 @@ datum/preferences
 		b_eyes = blue
 
 	proc/update_preview_icon()
-		del(preview_icon)
+		del(preview_icon_front)
+		del(preview_icon_side)
+		var/icon/preview_icon = null
 
 		var/g = "m"
 		if (gender == MALE)
@@ -238,7 +240,10 @@ datum/preferences
 		eyes_s.Blend(facial_s, ICON_OVERLAY)
 
 		preview_icon.Blend(eyes_s, ICON_OVERLAY)
-
+		preview_icon_front = new(preview_icon, dir = SOUTH)
+		preview_icon_side = new(preview_icon, dir = WEST)
+		
+		del(preview_icon)
 		del(mouth_s)
 		del(facial_s)
 		del(hair_s)
