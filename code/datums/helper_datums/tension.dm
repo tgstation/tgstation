@@ -29,6 +29,13 @@ var/global/datum/tension/tension_master
 
 	var/forcenexttick = 0
 	var/supress = 0
+	var/eversupressed = 0
+	var/cooldown = 0
+
+	var/round1 = 0
+	var/round2 = 0
+	var/round3 = 0
+	var/round4 = 0
 
 	var/list/antagonistmodes = list (
 	"POINTS_FOR_TRATIOR" 	=	10000,
@@ -58,9 +65,12 @@ var/global/datum/tension/tension_master
 
 		if(config.Tensioner_Active)
 			if(score > 10000)
-				if(!supress)
+				round1++
+				if(!supress && !cooldown)
 					if(prob(1) || forcenexttick)
+						round2++
 						if(prob(50) || forcenexttick)
+							round3++
 							if(forcenexttick)
 								forcenexttick = 0
 
@@ -70,6 +80,10 @@ var/global/datum/tension/tension_master
 
 							spawn(300)
 								if(!supress)
+									cooldown = 1
+									spawn(6000)
+										cooldown = 0
+									round4++
 									for(var/V in antagonistmodes)			// OH SHIT SOMETHING IS GOING TO HAPPEN NOW
 										if(antagonistmodes[V] < score)
 											potentialgames.Add(V)
@@ -210,6 +224,7 @@ var/global/datum/tension/tension_master
 
 		else if (href_list["Supress"])
 			supress = 1
+			eversupressed++
 			spawn(6000)
 				supress = 0
 

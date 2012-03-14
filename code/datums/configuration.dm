@@ -236,7 +236,7 @@
 				if("protect_roles_from_antagonist")
 					config.protect_roles_from_antagonist = 1
 
-				if("Tensioner_Active")
+				if("tensioner_active")
 					config.Tensioner_Active = 1
 
 				if ("probability")
