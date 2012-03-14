@@ -174,8 +174,9 @@
 	if(!stat)
 		if (src.brainloss >= 60)
 			usr << "\red [src.name] has a stupid expression on [t_his] face."
-		if (!src.client)
-			usr << "\red [src.name] doesn't seem as though they want to talk."
+
+	if (!src.client)
+		usr << "\red [src.name] doesn't seem as though they want to talk."
 
 	for(var/named in organs)
 		var/datum/organ/external/temp = organs[named]
