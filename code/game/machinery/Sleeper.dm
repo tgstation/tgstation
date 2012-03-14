@@ -287,8 +287,8 @@
 
 	proc/inject_stox(mob/user as mob)
 		if(src.occupant)
-			if(src.occupant.reagents.get_reagent_amount("stoxin") + 20 <= 40)
-				src.occupant.reagents.add_reagent("stoxin", 20)
+			if(src.occupant.reagents.get_reagent_amount("stoxin") + 10 <= 40)
+				src.occupant.reagents.add_reagent("stoxin", 10)
 			user << text("Occupant now has [] units of soporifics in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("stoxin"))
 		else
 			user << "No occupant!"
@@ -297,8 +297,8 @@
 
 	proc/inject_dermaline(mob/user as mob)
 		if (src.occupant)
-			if(src.occupant.reagents.get_reagent_amount("dermaline") + 20 <= 40)
-				src.occupant.reagents.add_reagent("dermaline", 20)
+			if(src.occupant.reagents.get_reagent_amount("dermaline") + 10 <= 40)
+				src.occupant.reagents.add_reagent("dermaline", 10)
 			user << text("Occupant now has [] units of Dermaline in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("dermaline"))
 		else
 			user << "No occupant!"
@@ -307,7 +307,7 @@
 
 	proc/inject_bicaridine(mob/user as mob)
 		if(src.occupant)
-			if(src.occupant.reagents.get_reagent_amount("bicaridine") + 10 <= 20)
+			if(src.occupant.reagents.get_reagent_amount("bicaridine") + 10 <= 40)
 				src.occupant.reagents.add_reagent("bicaridine", 10)
 			user << text("Occupant now has [] units of Bicaridine in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("bicaridine"))
 		else
@@ -317,8 +317,8 @@
 
 	proc/inject_dexalin(mob/user as mob)
 		if(src.occupant)
-			if(src.occupant.reagents.get_reagent_amount("dexalin") + 20 <= 40)
-				src.occupant.reagents.add_reagent("dexalin", 20)
+			if(src.occupant.reagents.get_reagent_amount("dexalin") + 10 <= 40)
+				src.occupant.reagents.add_reagent("dexalin", 10)
 			user << text("Occupant now has [] units of Dexalin in his/her bloodstream.", src.occupant.reagents.get_reagent_amount("dexalin"))
 		else
 			user << "No occupant!"
