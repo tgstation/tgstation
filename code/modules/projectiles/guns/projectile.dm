@@ -38,7 +38,7 @@
 
 
 	attackby(var/obj/item/A as obj, mob/user as mob)
-		wrap(A, user)
+
 		var/num_loaded = 0
 		if(istype(A, /obj/item/ammo_magazine))
 			if((load_method == 2) && loaded.len)	return
