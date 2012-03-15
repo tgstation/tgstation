@@ -63,6 +63,7 @@
 	product_hidden = "/obj/item/device/flashlight;obj/item/device/assembly/timer"
 //	product_hideamt = "5;2"
 	hidden_prices = "2;5"
+	points = 15
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
 
 /obj/machinery/vending/coffee
@@ -150,6 +151,7 @@
 	product_hidden = "/obj/item/weapon/reagent_containers/pill/tox;/obj/item/weapon/reagent_containers/pill/stox;/obj/item/weapon/reagent_containers/pill/antitox"
 //	product_hideamt = "3;4;6"
 	hidden_prices = "3;3;2"
+	points = 25
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?"
 	charge_type = "medical"
 
@@ -161,10 +163,11 @@
 	req_access_txt = "5"
 	product_paths = "/obj/item/stack/medical/bruise_pack;/obj/item/stack/medical/ointment;/obj/item/weapon/reagent_containers/syringe/inaprovaline;/obj/item/device/healthanalyzer"
 //	product_amounts = "2;2;4;1"
-	product_prices = "5;5;2;10"
+	product_prices = "1;1;2;2"
 	product_hidden = "/obj/item/weapon/reagent_containers/syringe/antitoxin;/obj/item/weapon/reagent_containers/syringe/antiviral;/obj/item/weapon/reagent_containers/pill/tox"
 //	product_hideamt = "4;4;1"
-	hidden_prices = "3;3;10"
+	hidden_prices = "2;2;2"
+	points = 5
 	density = 0 //It is wall-mounted, and thus, not dense. --Superxpdude
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?"
 	charge_type = "medical"
@@ -177,10 +180,11 @@
 	req_access_txt = "5"
 	product_paths = "/obj/item/weapon/reagent_containers/syringe/inaprovaline;/obj/item/weapon/reagent_containers/syringe/antitoxin;/obj/item/stack/medical/bruise_pack;/obj/item/stack/medical/ointment;/obj/item/device/healthanalyzer"
 //	product_amounts = "5;3;3;3;3"
-	product_prices = "2;3;3;3;3"
+	product_prices = "2;2;1;1;2"
 	product_hidden = "/obj/item/weapon/reagent_containers/pill/tox"
 //	product_hideamt = "3"
-	hidden_prices = "3"
+	hidden_prices = "2"
+	points = 5
 	density = 0 //It is wall-mounted, and thus, not dense. --Superxpdude
 	charge_type = "medical"
 
@@ -196,6 +200,7 @@
 	product_hidden = "/obj/item/clothing/glasses/sunglasses;/obj/item/kitchen/donut_box"
 //	product_hideamt = "2;2"
 	hidden_prices = "5;5"
+	points = 15
 	product_ads = "Crack capitalist skulls!;Beat some heads in!;Don't forget - harm is good!;Your weapons are right here.;Handcuffs!;Freeze, scumbag!;Don't tase me bro!;Tase them, bro.;Why not have a donut?"
 	charge_type = "security"
 
@@ -259,6 +264,7 @@
 	product_hidden = "/obj/item/weapon/kitchen/utensil/spoon;/obj/item/weapon/kitchen/utensil/knife;/obj/item/weapon/kitchen/rollingpin;/obj/item/weapon/butch"
 //	product_hideamt = "2;2;2;2"
 	hidden_prices = "5;5;5;5"
+	points = 15
 	product_ads = "Mm, food stuffs!;Food and food accessories.;Get your plates!;You like forks?;I like forks.;Woo, utensils.;You don't really need these..."
 	charge_type = "kitchen"
 
