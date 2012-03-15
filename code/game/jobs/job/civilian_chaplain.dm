@@ -13,7 +13,7 @@
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 
-		var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible/booze(H)
+		var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible(H)
 		H.equip_if_possible(B, H.slot_l_hand)
 		H.equip_if_possible(new /obj/item/device/pda/chaplain(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/chaplain(H), H.slot_w_uniform)
@@ -44,13 +44,6 @@
 						B.name = "The Book of Lorgar"
 					if("imperium")
 						B.name = "Uplifting Primer"
-					if("toolboxia")
-						B.name = "Toolbox Manifesto"
-					if("homosexuality")
-						B.name = "Guys Gone Wild"
-					if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks")
-						B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition")
-						H.brainloss = 100 // starts off retarded as fuck
 					if("science")
 						B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
 					else
