@@ -308,6 +308,10 @@ proc/analyze_health_less_info(mob/living/carbon/M as mob, mob/user as mob)
 		user.show_message(text("\red Significant brain damage detected. Subject may have had a concussion."), 1)
 	if (M.virus2 || M.reagents.reagent_list.len > 0)
 		user.show_message(text("\red Unknown substance detected in blood."), 1)
+/*	for(var/datum/organ/external/E in src)
+		if (!E.broken <= 0)
+			user.show_message(text("\red Bone fractures detected."), 1)*/
+//If someone can make this work I would be extremely grateful. -Erthilo
 	return
 
 /obj/item/device/healthanalyzer/attack(mob/M as mob, mob/user as mob)
