@@ -103,7 +103,7 @@ emp_act
 
 	var/bloody = 0
 	if((I.damtype == BRUTE) && prob(25 + (I.force * 2)))
-		src.add_blood(src)
+		I.add_blood(src)
 		if(prob(33))
 			bloody = 1
 			var/turf/location = loc

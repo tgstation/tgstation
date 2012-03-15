@@ -396,7 +396,7 @@
 /obj/item
 	name = "item"
 	icon = 'items.dmi'
-	var/icon_old = null // For when weapons get bloodied this saves their old icon.
+	var/icon/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 	var/abstract = 0
 	var/force = 0
 	var/item_state = null
@@ -1120,7 +1120,7 @@
 	var/POWERFLAG = 0 // sshhhhhhh
 	var/Flush = 30
 	var/Uses = 5 // uses before it goes inert
-	
+
 	New()
 		..()
 		var/datum/reagents/R = new/datum/reagents(100)
