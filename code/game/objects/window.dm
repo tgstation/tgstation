@@ -293,6 +293,10 @@
 			icon_state = "twindow"
 
 	update_nearby_tiles(need_rebuild=1)
+	relativewindow()
+	for(var/obj/structure/window/w in range(src,1))
+		if (w.anchored)
+			w.relativewindow()
 
 	return
 
@@ -359,7 +363,10 @@
 	if (istype(src,/obj/structure/window/basic))
 		src.icon_state = "window[junction]"
 	else if (istype(src,/obj/structure/window/reinforced))
-		src.icon_state = "rwindow[junction]"
+		if (istype(src,/obj/structure/window/reinforced/tinted))
+			src.icon_state = "twindow[junction]"
+		else
+			src.icon_state = "rwindow[junction]"
 
 	return
 
