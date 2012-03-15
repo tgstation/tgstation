@@ -197,7 +197,7 @@
 
 /obj/item/weapon/storage/firstaid
 	name = "First-Aid"
-	desc = "In case of an injury."
+	desc = "In case of injury."
 	icon_state = "firstaid"
 	throw_speed = 2
 	throw_range = 8
@@ -205,7 +205,7 @@
 
 /obj/item/weapon/storage/firstaid/fire
 	name = "Fire First Aid"
-	desc = "A kit for when you accidently burn yourself."
+	desc = "Contains burn treatments."
 	icon_state = "ointment"
 	item_state = "firstaid-ointment"
 
@@ -220,13 +220,13 @@
 
 /obj/item/weapon/storage/firstaid/toxin
 	name = "Toxin First Aid"
-	desc = "Used to treat when you have a high amount of toxins in your body."
+	desc = "Contains anti-toxin medication."
 	icon_state = "antitoxin"
 	item_state = "firstaid-toxin"
 
 /obj/item/weapon/storage/firstaid/o2
 	name = "Oxygen Deprivation First Aid"
-	desc = "A box full of oxygenating goodies."
+	desc = "Contains oxygen deprivation medication."
 	icon_state = "o2"
 	item_state = "firstaid-o2"
 
@@ -247,8 +247,6 @@
 	desc = "This box contains vision correcting glasses."
 	icon_state = "glasses"
 	item_state = "syringe_kit"
-
-
 
 /obj/item/weapon/storage/handcuff_kit
 	name = "Spare Handcuffs"

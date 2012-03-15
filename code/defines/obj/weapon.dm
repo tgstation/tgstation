@@ -390,13 +390,29 @@
 	singular_name = "bruise pack"
 	desc = "A pack designed to treat blunt-force trauma."
 	icon_state = "brutepack"
-	heal_brute = 60
+	heal_brute = 40
 	origin_tech = "biotech=1"
 
 /obj/item/stack/medical/ointment
 	name = "ointment"
 	desc = "Used to treat those nasty burns."
 	singular_name = "ointment"
+	icon_state = "ointment"
+	heal_burn = 40
+	origin_tech = "biotech=1"
+
+/obj/item/stack/medical/advanced/bruise_pack
+	name = "advanced trauma kit"
+	singular_name = "advanced bruise pack"
+	desc = "An advanced trauma kit for severe injuries."
+	icon_state = "brutepack"
+	heal_brute = 40
+	origin_tech = "biotech=1"
+
+/obj/item/stack/medical/advanced/ointment
+	name = "advanced burn kit"
+	singular_name = "advanced burn kit"
+	desc = "An advanced treatment kit for severe burns."
 	icon_state = "ointment"
 	heal_burn = 40
 	origin_tech = "biotech=1"
