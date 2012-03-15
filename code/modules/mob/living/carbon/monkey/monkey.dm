@@ -222,12 +222,18 @@
 				else
 					attack_verb = "punch"
 
+			if(src.type == /mob/living/carbon/human/tajaran)
+				attack_verb = "slash"
+
 			if ((prob(75) && health > 0))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has [attack_verb]ed [name]!</B>", M), 1)
 
-				playsound(loc, "punch", 25, 1, -1)
+				if(src.type != /mob/living/carbon/human/tajaran)
+					playsound(loc, "punch", 25, 1, -1)
+				else if(src.type == /mob/living/carbon/human/tajaran)
+					playsound(loc, 'slice.ogg', 25, 1, -1)
 				var/damage = rand(5, 10)
 				if (prob(40))
 					damage = rand(10, 15)
@@ -242,7 +248,10 @@
 				updatehealth()
 				react_to_attack(M)
 			else
-				playsound(loc, 'punchmiss.ogg', 25, 1, -1)
+				if(src.type != /mob/living/carbon/human/tajaran)
+					playsound(loc, 'punchmiss.ogg', 25, 1, -1)
+				else if(src.type == /mob/living/carbon/human/tajaran)
+					playsound(loc, 'slashmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has attempted to [attack_verb] [name]!</B>", M), 1)

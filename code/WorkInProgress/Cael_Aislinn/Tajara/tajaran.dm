@@ -5,6 +5,7 @@
 	icon = 'tajaran.dmi'
 	var/list/tajspeak_letters
 	//
+	universal_speak = 1 //hacky fix until someone can figure out how to make them only understand humans
 	taj_talk_understand = 1
 	voice_message = "mrowls"
 
