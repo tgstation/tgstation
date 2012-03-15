@@ -254,6 +254,7 @@
 		new /obj/item/clothing/shoes/brown(src)
 		new /obj/item/device/radio/headset/heads/cmo(src)
 		new /obj/item/clothing/under/rank/chief_medical_officer(src)
+		new /obj/item/device/healthanalyzer(src)
 
 /obj/item/wardrobe/doctor
 	name = "\improper Medical Doctor Wardrobe"
@@ -274,6 +275,7 @@
 		new /obj/item/device/radio/headset/headset_med(src)
 		new /obj/item/clothing/under/rank/nursesuit (src)
 		new /obj/item/clothing/under/rank/medical(src)
+		new /obj/item/device/healthanalyzer(src)
 
 /obj/item/wardrobe/geneticist
 	name = "\improper Geneticist Wardrobe"
