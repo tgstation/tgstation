@@ -23,6 +23,7 @@ To combat this, I changed the window name. -- Doohl
 	var/product_name = "generic"
 	var/product_path = null
 	var/amount = 0
+	var/price = 0
 	var/charge_amount = 0
 	var/display_color = "blue"
 
@@ -33,20 +34,21 @@ To combat this, I changed the window name. -- Doohl
 		src.slogan_list = dd_text2List(src.product_slogans, ";")
 		//src.small_ads = dd_text2List(src.product_ads, ";") // huehue
 		var/list/temp_paths = dd_text2List(src.product_paths, ";")
-		var/list/temp_amounts = dd_text2List(src.product_amounts, ";")
+//		var/list/temp_amounts = dd_text2List(src.product_amounts, ";")
 		var/list/temp_hidden = dd_text2List(src.product_hidden, ";")
-		var/list/temp_hideamt = dd_text2List(src.product_hideamt, ";")
+//		var/list/temp_hideamt = dd_text2List(src.product_hideamt, ";")
 		var/list/temp_coin = dd_text2List(src.product_coin, ";")
 		var/list/temp_coin_amt = dd_text2List(src.product_coin_amt, ";")
+		var/list/temp_prices = dd_text2list(src.product_prices, ";")
+		var/list/temp_hiddenprices = dd_text2list(src.hidden_prices, ";")
 		//Little sanity check here
-		if ((isnull(temp_paths)) || (isnull(temp_amounts)) || (temp_paths.len != temp_amounts.len) || (temp_hidden.len != temp_hideamt.len))
+		if ((isnull(temp_paths)) || (isnull(temp_prices)) || (temp_paths.len != temp_prices.len))
 			stat |= BROKEN
-			power_change()
 			return
 
-		src.build_inventory(temp_paths,temp_amounts)
+		src.build_inventory(temp_paths,temp_prices)
 		 //Add hidden inventory
-		src.build_inventory(temp_hidden,temp_hideamt, 1)
+		src.build_inventory(temp_hidden,temp_hiddenprices,1)
 		src.build_inventory(temp_coin,temp_coin_amt, 0, 1)
 
 		power_change()
@@ -91,14 +93,16 @@ To combat this, I changed the window name. -- Doohl
 		var/datum/data/vending_product/R = new /datum/data/vending_product(  )
 		R.product_name = capitalize(temp.name)
 		R.product_path = path_list[p]
-		R.amount = text2num(amt_list[p])
 		R.charge_amount = R.amount
 
 		if(hidden)
+			R.price = text2num(amt_list[p])
 			src.hidden_records += R
 		else if(req_coin)
+			R.amount = text2num(amt_list[p])
 			src.coin_records += R
 		else
+			R.price = text2num(amt_list[p])
 			src.product_records += R
 
 		del(temp)
@@ -111,6 +115,7 @@ To combat this, I changed the window name. -- Doohl
 
 	winset(user, "vendingwindow_n.title", "text=\"[src.name]\"")
 	winset(user, "vendingwindow_n.advert", "text=\"\"")
+	winset(user, "vendingwindow_n.label2", "text=\"Points: [points]\"")
 
 	/*if(prob(25) && small_ads.len)
 		var/advert = pick(small_ads)
@@ -152,10 +157,13 @@ To combat this, I changed the window name. -- Doohl
 		if(product)
 			winshow(user, "vendingwindow_n.stock[i]", 1)	// unhide things
 			winshow(user, "vendingwindow_n.product[i]", 1)	// unhide things
-			winset(user, "vendingwindow_n.stock[i]", "text=\"[product.amount]\"") // set stock number label
+			if(!(product in coin_records))
+				winset(user, "vendingwindow_n.stock[i]", "text=\"[product.price]\"") // set stock number label
+			else
+				winset(user, "vendingwindow_n.stock[i]", "text=\"[product.amount]\"") // set stock number label
 			winset(user, "vendingwindow_n.product[i]", "text=\"[product.product_name]\"") // set product button name
 
-			if(product.amount <= 0)
+			if(product.amount <= 0 && product.price > points)
 				winset(user, "vendingwindow_n.product[i]", "is-disabled=true") // disable product button, makes it unclickable and gives it that "disabled" look
 				winset(user, "vendingwindow_n.product[i]", "background-color=#526F7C") // Darken the button
 
@@ -263,7 +271,7 @@ To combat this, I changed the window name. -- Doohl
 		var/datum/data/vending_product/R = products[base + num]
 		var/product_path = text2path(R.product_path)
 
-		if (R.amount <= 0)
+		if (R.amount <= 0 && !R.price)
 			return
 		if (!src.vend_ready)
 			return
@@ -286,7 +294,8 @@ To combat this, I changed the window name. -- Doohl
 			else
 				del(coin)
 
-		R.amount--
+		if(R.amount)
+			R.amount--
 		//src.vend_ready = 0
 
 		/*
@@ -306,7 +315,11 @@ To combat this, I changed the window name. -- Doohl
 		// spawn(src.vend_delay)    NOPE.jpg
 			//src.vend_ready = 1
 
-		new product_path(get_turf(src))
+		if(R.price <= points)
+			new product_path(get_turf(src))
+			points -= R.price
+		else
+			usr << "The machine does not have enough points to do this!"
 
 		if(R)
 			if(R in coin_records)
@@ -357,11 +370,12 @@ To combat this, I changed the window name. -- Doohl
 
 /obj/machinery/vending/proc/DoCharge(obj/item/weapon/vending_charge/V as obj, mob/user as mob)
 	if(charge_type == V.charge_type)
-		var/datum/data/vending_product/R
-		for(var/i=1, i<=product_records.len, i++)
-			R = product_records[i]
-			R.amount += R.charge_amount
-			product_records[i] = R
+//		var/datum/data/vending_product/R
+//		for(var/i=1, i<=product_records.len, i++)
+//			R = product_records[i]
+//			R.amount += R.charge_amount
+//			product_records[i] = R
+		points += V.charge_amt
 		del(V)
 		user << "You insert the charge into the machine."
 

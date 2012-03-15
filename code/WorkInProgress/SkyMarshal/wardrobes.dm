@@ -5,7 +5,7 @@
 	icon_state = "wardrobe_sealed"
 	item_state = "wardrobe"
 	w_class = 4
-	layer = BACKGROUND_LAYER + OBJ_LAYER
+	layer = 2.99
 	var
 		descriptor = "various clothing"
 		seal_torn = 0
@@ -63,7 +63,7 @@
 		update_icon()
 
 	examine()
-		set src in oview(7)
+		set src in view()
 		..()
 		if(src in usr)
 			usr << "It claims to contain [contents.len ? descriptor : descriptor + "... but it looks empty"]."

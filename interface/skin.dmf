@@ -1689,7 +1689,7 @@ window "vendingslot"
 window "vendingwindow_n"
 	elem "vendingwindow_n"
 		type = MAIN
-		pos = 281,0
+		pos = 1604,378
 		size = 300x438
 		anchor1 = none
 		anchor2 = none
@@ -1726,6 +1726,32 @@ window "vendingwindow_n"
 		macro = "vending"
 		menu = ""
 		on-close = ""
+	elem "label2"
+		type = LABEL
+		pos = 0,0
+		size = 80x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #0000a0
+		background-color = #ff8000
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = sunken
+		drop-zone = false
+		right-click = false
+		saved-params = ""
+		on-size = ""
+		text = ""
+		image = ""
+		image-mode = center
+		keep-aspect = false
+		align = center
+		text-wrap = false
 	elem "page"
 		type = LABEL
 		pos = 64,416
