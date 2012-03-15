@@ -2429,7 +2429,7 @@ datum
 					M:sleeping = 0
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature+5)
-				M.make_jittery(5)
+				M.make_jittery(1)
 				..()
 				return
 
@@ -2471,7 +2471,7 @@ datum
 					M:sleeping = 0
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature-5)
-				M.make_jittery(5)
+				M.make_jittery(1)
 				..()
 				return
 
@@ -2517,7 +2517,7 @@ datum
 			color = "#100800" // rgb: 16, 8, 0
 
 			on_mob_life(var/mob/living/M as mob)
-				M.make_jittery(20)
+				M.make_jittery(5)
 				M.druggy = max(M.druggy, 30)
 				M.dizziness +=5
 				M:drowsyness = 0
@@ -2542,7 +2542,7 @@ datum
 					M:sleeping = 0
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-5)
-				M.make_jittery(5)
+				M.make_jittery(1)
 				M:nutrition += 1
 				..()
 				return
@@ -2560,7 +2560,7 @@ datum
 					M:sleeping = 0
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-5)
-				M.make_jittery(5)
+				M.make_jittery(1)
 				M:nutrition += 1
 				if(!data) data = 1
 				data++
@@ -2854,7 +2854,7 @@ datum
 				M:drowsyness = max(0,M:drowsyness-3)
 				if(!M:sleeping_willingly)
 					M:sleeping = 0
-				M.make_jittery(5)
+				M.make_jittery(1)
 				..()
 				return
 
