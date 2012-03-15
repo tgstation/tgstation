@@ -299,6 +299,33 @@ menu "menu"
 		group = ""
 		is-disabled = false
 		saved-params = "is-checked"
+	elem 
+		name = ""
+		command = ""
+		category = "&Help"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "&Rules"
+		command = "Rules"
+		category = "&Help"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "&News"
+		command = "Read-News"
+		category = "&Help"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
 
 
 window "Telecomms IDE"
@@ -1037,7 +1064,7 @@ window "mainwindow"
 	elem "input"
 		type = INPUT
 		pos = 3,420
-		size = 517x20
+		size = 554x20
 		anchor1 = 0,100
 		anchor2 = 100,100
 		font-family = ""
@@ -1060,7 +1087,7 @@ window "mainwindow"
 		no-command = false
 	elem "saybutton"
 		type = BUTTON
-		pos = 520,420
+		pos = 557,420
 		size = 40x20
 		anchor1 = 100,100
 		anchor2 = none
@@ -1080,16 +1107,16 @@ window "mainwindow"
 		on-size = ""
 		text = "Chat"
 		image = ""
-		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" macrobutton.is-checked=false:input.command=\""
+		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" oocbutton.is-checked=false:input.command=\""
 		is-flat = false
 		stretch = false
 		is-checked = false
 		group = ""
 		button-type = pushbox
-	elem "macrobutton"
+	elem "oocbutton"
 		type = BUTTON
-		pos = 560,420
-		size = 30x20
+		pos = 597,420
+		size = 40x20
 		anchor1 = 100,100
 		anchor2 = none
 		font-family = ""
@@ -1098,7 +1125,7 @@ window "mainwindow"
 		text-color = #000000
 		background-color = none
 		is-visible = true
-		is-disabled = true
+		is-disabled = false
 		is-transparent = false
 		is-default = false
 		border = none
@@ -1106,42 +1133,14 @@ window "mainwindow"
 		right-click = false
 		saved-params = "is-checked"
 		on-size = ""
-		text = "Alt"
+		text = "OOC"
 		image = ""
-		command = ".winset \"macrobutton.is-checked=true?input.command=\"!.alt \" saybutton.is-checked=false:input.command=\""
+		command = ".winset \"oocbutton.is-checked=true?input.command=\"!ooc \\\"\" saybutton.is-checked=false:input.command=\""
 		is-flat = false
 		stretch = false
 		is-checked = false
 		group = ""
 		button-type = pushbox
-	elem "hostb"
-		type = BUTTON
-		pos = 590,420
-		size = 47x20
-		anchor1 = 100,100
-		anchor2 = none
-		font-family = ""
-		font-size = 0
-		font-style = ""
-		text-color = #000000
-		background-color = none
-		is-visible = true
-		is-disabled = true
-		is-transparent = false
-		is-default = false
-		border = none
-		drop-zone = false
-		right-click = false
-		saved-params = "is-checked"
-		on-size = ""
-		text = "Host..."
-		image = ""
-		command = ".host"
-		is-flat = false
-		stretch = false
-		is-checked = false
-		group = ""
-		button-type = pushbutton
 
 window "mapwindow"
 	elem "mapwindow"
@@ -1380,7 +1379,7 @@ window "rpane"
 		font-style = ""
 		text-color = #000000
 		background-color = none
-		is-visible = true
+		is-visible = false
 		is-disabled = false
 		is-transparent = false
 		is-default = false
