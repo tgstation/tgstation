@@ -26,6 +26,8 @@
 			if(/obj/item/weapon/kitchen/utensil/knife) del src
 			if(/obj/item/weapon/scalpel) del src
 			if(/obj/item/weapon/fireaxe) del src
+			if(/obj/item/weapon/hatchet) del src
+			if(/obj/item/weapon/melee/energy) del src
 
 			//less effective weapons
 			if(/obj/item/weapon/wirecutters)

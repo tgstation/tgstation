@@ -7,7 +7,7 @@
 #define SUPPLY_POINTSPERCRATE 5	//Points per crate sent back.
 #define SUPPLY_STATION_AREATYPE "/area/supply/station" //Type of the supply shuttle area for station
 #define SUPPLY_DOCK_AREATYPE "/area/supply/dock"	//Type of the supply shuttle area for dock
-#define SUPPLY_POINTSPERSLIP 1 //points per packing slip sent back stamped.
+#define SUPPLY_POINTSPERSLIP 2 //points per packing slip sent back stamped.
 
 var/supply_shuttle_moving = 0
 var/supply_shuttle_at_station = 0

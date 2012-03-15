@@ -573,7 +573,7 @@
 /obj/item/weapon/fireaxe  // DEM AXES MAN, marker -Agouri
 	icon_state = "fireaxe0"
 	name = "fire axe"
-	desc = "Truly, the tool of a madman. Who would possibly think to fight fire with an axe?"
+	desc = "Let me axe you a question."
 	force = 5
 	w_class = 4.0
 	flags = ONBACK
@@ -1297,6 +1297,7 @@
 	icon = 'surgery.dmi'
 	icon_state = "drill"
 	flags = FPRINT | TABLEPASS | CONDUCT
+	force = 15.0
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 
@@ -1323,6 +1324,21 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
 	origin_tech = "biotech=2"
+
+/obj/item/weapon/hatchet
+	name = "hatchet"
+	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
+	icon = 'weapons.dmi'
+	icon_state = "hatchet"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	force = 12.0
+	w_class = 1.0
+	throwforce = 15.0
+	throw_speed = 4
+	throw_range = 4
+	m_amt = 15000
+	origin_tech = "materials=2;combat=1"
+
 
 /*
 /obj/item/weapon/cigarpacket

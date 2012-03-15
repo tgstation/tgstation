@@ -164,17 +164,6 @@
 	icon_opened = "hydrocrateopen"
 	icon_closed = "hydrocrate"
 	density = 1
-/*	New() // This stuff shouldn't be here, it should be in /datum/supply_packs/hydroponics
-		..()
-		new /obj/item/weapon/plantbgone(src)
-		new /obj/item/weapon/plantbgone(src)
-		new /obj/item/weapon/plantbgone(src)
-		new /obj/item/weapon/minihoe(src)
-		new /obj/item/weapon/weedspray(src)
-		new /obj/item/weapon/weedspray(src)
-		new /obj/item/weapon/pestspray(src)
-		new /obj/item/weapon/pestspray(src)
-		new /obj/item/weapon/pestspray(src) */
 
 /obj/structure/closet/crate/hydroponics/prespawned
 	//This exists so the prespawned hydro crates spawn with their contents.
@@ -190,6 +179,7 @@
 		new /obj/item/weapon/plantbgone(src)
 		new /obj/item/weapon/plantbgone(src)
 		new /obj/item/weapon/plantbgone(src)
+		new /obj/item/weapon/hatchet(src)
 		new /obj/item/weapon/minihoe(src)
 //		new /obj/item/weapon/weedspray(src)
 //		new /obj/item/weapon/weedspray(src)
