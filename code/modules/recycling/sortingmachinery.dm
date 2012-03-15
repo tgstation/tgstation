@@ -2,19 +2,18 @@
 	desc = "A big wrapped package."
 	name = "large parcel"
 	icon = 'storage.dmi'
-	icon_state = "deliverycrate"
+	icon_state = "deliverycloset"
 	var/obj/wrapped = null
 	density = 1
 	var/sortTag = 0
 	flags = FPRINT
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
-
 	attack_hand(mob/user as mob)
-		if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
-			src.wrapped.loc = (get_turf(src.loc))
-			if (istype(src.wrapped,/obj/structure/closet))
-				var/obj/structure/closet/O = src.wrapped
+		if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
+			wrapped.loc = (get_turf(src.loc))
+			if(istype(wrapped, /obj/structure/closet))
+				var/obj/structure/closet/O = wrapped
 				O.welded = 0
 		del(src)
 		return
@@ -48,9 +47,13 @@
 	flags = FPRINT
 
 
-	attack_self(mob/user)
+	attack_self(mob/user as mob)
 		if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
-			src.wrapped.loc = (get_turf(src.loc))
+			wrapped.loc = user.loc
+			if(ishuman(user))
+				user.put_in_hand(wrapped)
+			else
+				wrapped.loc = get_turf_loc(src)
 
 		del(src)
 		return
@@ -84,6 +87,8 @@
 
 
 	afterattack(var/obj/target as obj, mob/user as mob)
+		if(!(istype(target, /obj)))	//this really shouldn't be necessary (but it is).	-Pete
+			return
 		if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) || istype(target,/obj/item/smallDelivery))
 			return
 		if(target.anchored)
@@ -93,7 +98,7 @@
 
 		user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[target]</font>")
 
-		if (istype(target, /obj/item))
+		if (istype(target, /obj/item) && !(istype(target, /obj/item/weapon/storage)))
 			var/obj/item/O = target
 			if (src.amount > 1)
 				var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(O.loc))	//Aaannd wrap it up!
@@ -107,27 +112,26 @@
 			var/obj/structure/closet/crate/O = target
 			if (src.amount > 3 && !O.opened)
 				var/obj/effect/bigDelivery/P = new /obj/effect/bigDelivery(get_turf(O.loc))
+				P.icon_state = "deliverycrate"
 				P.wrapped = O
 				O.loc = P
 				src.amount -= 3
-			else if(src.amount > 3)
+			else if(src.amount < 3)
 				user << "\blue You need more paper."
 		else if (istype (target, /obj/structure/closet))
 			var/obj/structure/closet/O = target
 			if (src.amount > 3 && !O.opened)
 				var/obj/effect/bigDelivery/P = new /obj/effect/bigDelivery(get_turf(O.loc))
 				P.wrapped = O
-				O.opened = 0
 				O.welded = 1
 				O.loc = P
 				src.amount -= 3
-			else if(src.amount > 3)
+			else if(src.amount < 3)
 				user << "\blue You need more paper."
 		else
 			user << "\blue The object you are trying to wrap is unsuitable for the sorting machinery!"
 		if (src.amount <= 0)
 			new /obj/item/weapon/c_tube( src.loc )
-			//SN src = null
 			del(src)
 			return
 		return

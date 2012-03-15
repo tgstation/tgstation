@@ -287,19 +287,14 @@
 	return attack_hand(user)
 
 /obj/structure/closet/crate/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/packageWrap))
-		var/obj/item/weapon/packageWrap/O = W
-		if (O.amount > 3)
-			var/obj/effect/bigDelivery/P = new /obj/effect/bigDelivery(get_turf(src.loc))
-			P.wrapped = src
-			src.loc = P
-			O.amount -= 3
-	else if(opened)
+	if(opened)
 		if(isrobot(user))
 			return
 		user.drop_item()
 		if(W)
 			W.loc = src.loc
+	else if(istype(W, /obj/item/weapon/packageWrap))
+		return
 	else return attack_hand(user)
 
 /obj/structure/closet/crate/secure/emp_act(severity)

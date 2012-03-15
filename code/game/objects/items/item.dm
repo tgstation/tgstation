@@ -182,20 +182,6 @@
 	user.update_clothing()
 	return
 
-/obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/packageWrap))
-		var/obj/item/weapon/packageWrap/O = W
-		if(src.anchored)	return
-		if(!istype(loc,/turf))
-			user << "\red You need to place the item on the ground before wrapping it!"
-			return
-		else if (O.amount > 1)
-			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(src.loc))
-			P.wrapped = src
-
-			src.loc = P
-			O.amount -= 1
-
 /obj/item/attack_self(mob/user as mob)
 	..()
 	if(twohanded)

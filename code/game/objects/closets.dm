@@ -129,16 +129,7 @@
 		del(src)
 
 /obj/structure/closet/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/packageWrap))
-		var/obj/item/weapon/packageWrap/O = W
-		if (O.amount > 3)
-			var/obj/effect/bigDelivery/P = new /obj/effect/bigDelivery(get_turf(src.loc))
-			P.wrapped = src
-			src.close()
-			src.welded = 1
-			src.loc = P
-			O.amount -= 3
-	else if(src.opened)
+	if(src.opened)
 		if(istype(W, /obj/item/weapon/grab))
 			src.MouseDrop_T(W:affecting, user)      //act like they were dragged onto the closet
 
@@ -160,6 +151,8 @@
 		if(W)
 			W.loc = src.loc
 
+	else if(istype(W, /obj/item/weapon/packageWrap))
+		return
 	else if(istype(W, /obj/item/weapon/weldingtool) && W:welding )
 		if(!W:remove_fuel(0,user))
 			user << "\blue You need more welding fuel to complete this task."
