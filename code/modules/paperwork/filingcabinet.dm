@@ -11,6 +11,10 @@
 		user << "You put the [P] in the [src]."
 		user.drop_item()
 		P.loc = src
+		spawn()
+			icon_state = "filing_cabinet1"
+			sleep(5)
+			icon_state = "filing_cabinet0"
 	else if(istype(P, /obj/item/weapon/wrench))
 		playsound(loc, 'Ratchet.ogg', 50, 1)
 		anchored = !anchored
