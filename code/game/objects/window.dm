@@ -358,8 +358,8 @@
 					junction |= get_dir(src,W)
 	if (istype(src,/obj/structure/window/basic))
 		src.icon_state = "window[junction]"
-//	else if (istype(src,/obj/structure/window/reinforced))		No sprites yet.
-//		src.icon_state = "rwindow[junction]"
+	else if (istype(src,/obj/structure/window/reinforced))
+		src.icon_state = "rwindow[junction]"
 
 	return
 
