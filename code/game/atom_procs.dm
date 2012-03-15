@@ -149,7 +149,7 @@
 			src.fingerprintslast = M.key
 	return
 
-
+//returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/human/M as mob)
 	if (!( istype(M, /mob/living/carbon/human) ))
 		return 0
@@ -157,68 +157,73 @@
 		M.dna = new /datum/dna(null)
 	M.check_dna()
 	if (!( src.flags ) & 256)
-		return
-	if(!blood_DNA)
+		return 0
+	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
-	if (blood_DNA.len)
-		if (istype(src, /obj/item)&&!istype(src, /obj/item/weapon/melee/energy))//Only regular items. Energy melee weapon are not affected.
-			var/obj/item/source2 = src
-			source2.icon_old = src.icon
-			var/icon/I = new /icon(src.icon, src.icon_state)
-			I.Blend(new /icon('blood.dmi', "thisisfuckingstupid"),ICON_ADD)
-			I.Blend(new /icon('blood.dmi', "itemblood"),ICON_MULTIPLY)
-			I.Blend(new /icon(src.icon, src.icon_state),ICON_UNDERLAY)
-			src.icon = I
-			var/inthere = 0
-			for(var/i = 1, i <= src.blood_DNA.len, i++)
-				var/list/templist = src.blood_DNA[i]
-				if(templist[1] == M.dna.unique_enzymes && templist[2] == M.dna.b_type)
-					inthere = 1
-					break
-			if(!inthere)
-				src.blood_DNA.len++
-				src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
-		else if (istype(src, /turf/simulated))
-			var/turf/simulated/source2 = src
-			var/list/objsonturf = range(0,src)
-			if(objsonturf)
-				for(var/i=1, i<=objsonturf.len, i++)
-					if(istype(objsonturf[i],/obj/effect/decal/cleanable/blood))
-						var/obj/effect/decal/cleanable/blood/this = objsonturf[i]
-						this.blood_DNA.len++
-						this.blood_DNA[this.blood_DNA.len] = list(M.dna.unique_enzymes, M.dna.b_type)
-						this.virus2 += M.virus2
-						for(var/datum/disease/D in M.viruses)
-							var/datum/disease/newDisease = new D.type
-							this.viruses += newDisease
-							newDisease.holder = this
-						return
-			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source2)
-			var/list/blood_DNA_temp[1]
-			blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.dna.b_type)
-			this.blood_DNA =  blood_DNA_temp
-			this.virus2 = M.virus2
-			this.blood_owner = M
+
+	//adding blood to items
+	if (istype(src, /obj/item)&&!istype(src, /obj/item/weapon/melee/energy))//Only regular items. Energy melee weapon are not affected.
+		var/obj/item/O = src
+
+		//if we haven't made our blood_overlay already
+		if( !O.blood_overlay )
+			var/icon/I = new /icon(O.icon, O.icon_state)
+			I.Blend(new /icon('blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
+			I.Blend(new /icon('blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
+
+			//not sure if this is worth it. It attaches the blood_overlay to every item of the same type if they don't have one already made.
+			for(var/obj/item/A in world)
+				if(A.type == O.type && !A.blood_overlay)
+					A.blood_overlay = I
+
+		//apply the blood-splatter overlay if it isn't already in there
+		if(!blood_DNA.len)
+			O.overlays += O.blood_overlay
+
+		//if this blood isn't already in the list, add it
+		for(var/i = 1, i <= O.blood_DNA.len, i++)
+			if((O.blood_DNA[i][1] == M.dna.unique_enzymes) && (O.blood_DNA[i][2] == M.dna.b_type))
+				return 0 //already bloodied with this blood. Cannot add more.
+		O.blood_DNA.len++
+		O.blood_DNA[O.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
+		return 1 //we applied blood to the item
+
+	//adding blood to turfs
+	else if (istype(src, /turf/simulated))
+		var/turf/simulated/T = src
+
+		//get one blood decal and infect it with virus from M.viruses
+		for(var/obj/effect/decal/cleanable/blood/B in T.contents)
+			B.blood_DNA.len++
+			B.blood_DNA[B.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
+			B.virus2 += M.virus2
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
-				this.viruses += newDisease
-				newDisease.holder = this
-		else if (istype(src, /mob/living/carbon/human))
-			var/inthere = 0
-			for(var/i = 1, i <= src.blood_DNA.len, i++)
-				var/list/templist = src.blood_DNA[i]
-				if(templist[1] == M.dna.unique_enzymes && templist[2] == M.dna.b_type)
-					inthere = 1
-					break
-			if(!inthere)
-				src.blood_DNA.len++
-				src.blood_DNA[src.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
-		else
-			return
-	else
-		var/list/blood_DNA_temp[1]
-		blood_DNA_temp[1] = list(M.dna.unique_enzymes, M.dna.b_type)
-		src.blood_DNA = blood_DNA_temp
+				B.viruses += newDisease
+				newDisease.holder = B
+			return 1 //we bloodied the floor
+
+		//if there isn't a blood decal already, make one.
+		var/obj/effect/decal/cleanable/blood/newblood = new /obj/effect/decal/cleanable/blood(T)
+		newblood.blood_DNA =  list(list(M.dna.unique_enzymes, M.dna.b_type))
+		newblood.blood_owner = M
+		newblood.virus2 = M.virus2
+		for(var/datum/disease/D in M.viruses)
+			var/datum/disease/newDisease = new D.type
+			newblood.viruses += newDisease
+			newDisease.holder = newblood
+		return 1 //we bloodied the floor
+
+	//adding blood to humans
+	else if (istype(src, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = src
+		//if this blood isn't already in the list, add it
+		for(var/i = 1, i <= H.blood_DNA.len, i++)
+			if((H.blood_DNA[i][1] == M.dna.unique_enzymes) && (H.blood_DNA[i][2] == M.dna.b_type))
+				return 0 //already bloodied with this blood. Cannot add more.
+		H.blood_DNA.len++
+		H.blood_DNA[H.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
+		return 1 //we applied blood to the item
 	return
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M as mob, var/toxvomit = 0)
@@ -271,35 +276,35 @@
 	if (!( src.flags ) & 256)
 		return
 	if ( src.blood_DNA )
+
+		//Cleaning blood off of mobs
 		if (istype (src, /mob/living/carbon))
-			var/obj/item/source2 = src
-			del(source2.blood_DNA)
+			var/mob/living/carbon/M = src
+			del(M.blood_DNA)
 			if(ishuman(src))
-				var/mob/living/carbon/human/M = src
-				M.bloody_hands = 0
-			//var/icon/I = new /icon(source2.icon_old, source2.icon_state) //doesnt have icon_old
-			//source2.icon = I
-		if (istype (src, /obj/item))
-			var/obj/item/source2 = src
-			del(source2.blood_DNA)
-//			var/icon/I = new /icon(source2.icon_old, source2.icon_state)
-			if(source2.icon_old)
-				source2.icon = source2.icon_old
-				source2.update_icon()
-			else
-				source2.icon = initial(icon)
-				source2.update_icon()
+				var/mob/living/carbon/human/H = src
+				H.bloody_hands = 0
+
+		//Cleaning blood off of items
+		else if (istype (src, /obj/item))
+			var/obj/item/O = src
+			del(O.blood_DNA)
+			if(O.blood_overlay)
+				O.overlays.Remove(O.blood_overlay)
+
 			if(istype(src, /obj/item/clothing/gloves))
 				var/obj/item/clothing/gloves/G = src
 				G.transfer_blood = 0
-		if (istype(src, /turf/simulated))
-			var/obj/item/source2 = src
-			del(source2.blood_DNA)
-			if(source2.icon_old)
-				var/icon/I = new /icon(source2.icon_old, source2.icon_state)
-				source2.icon = I
+
+		//Cleaning blood off of turfs
+		else if (istype(src, /turf/simulated))
+			var/turf/simulated/T = src
+			del(T.blood_DNA)
+			if(T.icon_old)
+				var/icon/I = new /icon(T.icon_old, T.icon_state)
+				T.icon = I
 			else
-				source2.icon = initial(icon)
+				T.icon = initial(icon)
 	if(blood_DNA && !blood_DNA.len)
 		del(blood_DNA)
 	if(src.fingerprints && src.fingerprints.len)

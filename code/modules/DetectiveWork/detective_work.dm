@@ -347,7 +347,6 @@ obj/machinery/computer/forensic_scanning
 						for(var/j = 1, j <= blood.len, j++)
 							var/list/templist2 = blood[j]
 							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [templist2[2]], DNA: [templist2[1]]<br>"
-
 				else
 					usr << "ERROR.  Database not found!<br>"
 			if("scan")

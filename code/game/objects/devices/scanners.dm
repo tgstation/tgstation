@@ -244,7 +244,7 @@ MASS SPECTROMETER
 				var/list/blood = temp[4]
 				if(!blood)
 					blood = list()
-				if(A.blood_DNA.len && A.blood_DNA)
+				if(A.blood_DNA && A.blood_DNA.len)
 					for(var/j = 1, j <= A.blood_DNA.len, j++)	//Blood~~~
 						if(!blood.Find(A.blood_DNA[j]))	//It isn't!  Add!
 							blood += A.blood_DNA[j]
