@@ -86,14 +86,14 @@
 				else
 					attack_verb = "punch"
 
-			if(src.type == /mob/living/carbon/human/tajaran)
+			if(M.type == /mob/living/carbon/human/tajaran)
 				attack_verb = "slash"
 
 			var/damage = rand(0, 9)
 			if(!damage)
-				if(src.type != /mob/living/carbon/human/tajaran)
+				if(M.type != /mob/living/carbon/human/tajaran)
 					playsound(loc, 'punchmiss.ogg', 25, 1, -1)
-				else if (src.type == /mob/living/carbon/human/tajaran)
+				else if (M.type == /mob/living/carbon/human/tajaran)
 					playsound(loc, 'slashmiss.ogg', 25, 1, -1)
 				visible_message("\red <B>[M] has attempted to [attack_verb] [src]!</B>")
 				return 0
@@ -101,9 +101,9 @@
 			var/armor_block = run_armor_check(affecting, "melee")
 
 			if(M.mutations & HULK)	damage += 5
-			if(src.type != /mob/living/carbon/human/tajaran)
+			if(M.type != /mob/living/carbon/human/tajaran)
 				playsound(loc, "punch", 25, 1, -1)
-			else if (src.type == /mob/living/carbon/human/tajaran)
+			else if (M.type == /mob/living/carbon/human/tajaran)
 				playsound(loc, 'slice.ogg', 25, 1, -1)
 
 			visible_message("\red <B>[M] has [attack_verb]ed [src]!</B>")
