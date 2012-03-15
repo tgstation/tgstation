@@ -7,11 +7,9 @@ atom/proc/add_fibers(mob/living/carbon/human/M)
 		if(M.gloves.transfer_blood) //bloodied gloves transfer blood to touched objects
 			if(add_blood(M.gloves.bloody_hands_mob)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
 				M.gloves.transfer_blood--
-				//world.log << "[M.gloves] added blood to [src] from [M.gloves.bloody_hands_mob]"
 	else if(M.bloody_hands)
 		if(add_blood(M.bloody_hands_mob))
 			M.bloody_hands--
-			//world.log << "[M] added blood to [src] from [M.bloody_hands_mob]"
 	if(!suit_fibers) suit_fibers = list()
 	var/fibertext
 	var/item_multiplier = istype(src,/obj/item)?1.2:1
@@ -263,7 +261,8 @@ obj/machinery/computer/forensic_scanning
 						if(blood && blood.len)
 							temp += "&nbsp<b>Blood:</b><br>"
 							for(var/j = 1, j <= blood.len, j++)
-								temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]<br>"
+								var/list/templist2 = blood[j]
+								temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [templist2[2]], DNA: [templist2[1]]<br>"
 				else
 					temp = "ERROR.  Database not found!<br>"
 				temp += "<br><a href='?src=\ref[src];operation=database;delete_record=[href_list["identifier"]]'>{Delete this Dossier}</a>"
@@ -299,7 +298,8 @@ obj/machinery/computer/forensic_scanning
 						if(blood && blood.len)
 							P.info += "&nbsp<b>Blood:</b><br>"
 							for(var/j = 1, j <= blood.len, j++)
-								P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]<br>"
+								var/list/templist2 = blood[j]
+								P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [templist2[2]], DNA: [templist2[1]]<br>"
 				else
 					usr << "ERROR.  Database not found!<br>"
 			if("auxiliary")
@@ -319,7 +319,8 @@ obj/machinery/computer/forensic_scanning
 					if(blood && blood.len)
 						temp += "&nbsp<b>Blood:</b><br>"
 						for(var/j = 1, j <= blood.len, j++)
-							temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]<br>"
+							var/list/templist2 = blood[j]
+							temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [templist2[2]], DNA: [templist2[1]]<br>"
 				else
 					temp = "ERROR.  Database not found!<br>"
 				temp += "<br><a href='?src=\ref[src];operation=database;delete_aux=[href_list["identifier"]]'>{Delete This Record}</a>"
@@ -344,7 +345,8 @@ obj/machinery/computer/forensic_scanning
 					if(blood && blood.len)
 						P.info += "&nbsp<b>Blood:</b><br>"
 						for(var/j = 1, j <= blood.len, j++)
-							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[blood[j]]<br>"
+							var/list/templist2 = blood[j]
+							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [templist2[2]], DNA: [templist2[1]]<br>"
 				else
 					usr << "ERROR.  Database not found!<br>"
 			if("scan")
