@@ -954,7 +954,12 @@ datum/mind
 			special_role = "Wizard"
 			assigned_role = "MODE"
 			//ticker.mode.learn_basic_spells(current)
-			current.loc = pick(wizardstart)
+			if(!wizardstart.len)
+				current.loc = pick(latejoin)
+				current << "HOT INSERTION, GO GO GO"
+			else
+				current.loc = pick(wizardstart)
+
 			ticker.mode.equip_wizard(current)
 			for(var/obj/item/weapon/spellbook/S in current.contents)
 				S.op = 0

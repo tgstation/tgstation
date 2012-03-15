@@ -356,8 +356,13 @@ var/global/datum/tension/tension_master
 
 		spawn(300)
 			if(candidates.len)
-				theghost = pick(candidates)
+				while(!theghost && candidates.len)
+					theghost = pick(candidates)
+					candidates.Remove(theghost)
+				if(!theghost)
+					return 0
 				var/mob/living/carbon/human/new_character=makeBody(theghost)
+				del(theghost)
 				new_character.mind.make_Wizard()
 
 
@@ -420,8 +425,13 @@ var/global/datum/tension/tension_master
 				syndicate_begin()
 
 				for(var/i = 0, i<numagents,i++)
-					theghost = pick(candidates)
+					while(!theghost && candidates.len)
+						theghost = pick(candidates)
+						candidates.Remove(theghost)
+					if(!theghost)
+						break
 					var/mob/living/carbon/human/new_character=makeBody(theghost)
+					del(theghost)
 					new_character.mind.make_Nuke()
 
 
@@ -524,8 +534,14 @@ var/global/datum/tension/tension_master
 
 						var/mob/living/carbon/human/new_syndicate_commando = create_syndicate_death_commando(L, syndicate_leader_selected)
 
-						if(candidates.len)
+						while(!theghost && candidates.len)
 							theghost = pick(candidates)
+							candidates.Remove(theghost)
+
+						if(!theghost)
+							del(new_syndicate_commando)
+							break
+
 							new_syndicate_commando.mind.key = theghost.key//For mind stuff.
 							new_syndicate_commando.key = theghost.key
 							new_syndicate_commando.internal = new_syndicate_commando.s_store
