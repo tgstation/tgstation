@@ -117,6 +117,8 @@
 
 #define BLOCKHAIR 32768			// temporarily removes the user's hair icon
 
+#define PLASMAGUARD 65536
+
 //flags for pass_flags
 #define PASSTABLE 1
 #define PASSGLASS 2
