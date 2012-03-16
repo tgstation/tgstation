@@ -13,6 +13,7 @@
 	var/list/stamped
 	var/see_face = 1
 	var/body_parts_covered = HEAD
+	var/protective_temperature = 0
 
 /obj/item/weapon/paper/New()
 
