@@ -1,6 +1,11 @@
 /mob/living/carbon/monkey/examine()
 	set src in oview()
 
+	if(!usr || !src)	return
+	if((usr.sdisabilities & 1) || usr.blinded || usr.stat)
+		usr << "<span class='notice'>Something is there but you can't see it.</span>"
+		return
+
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
 
 	if (src.handcuffed)

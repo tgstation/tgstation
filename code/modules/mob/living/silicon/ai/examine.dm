@@ -1,6 +1,11 @@
 /mob/living/silicon/ai/examine()
 	set src in oview()
 
+	if(!usr || !src)	return
+	if((usr.sdisabilities & 1) || usr.blinded || usr.stat)
+		usr << "<span class='notice'>Something is there but you can't see it.</span>"
+		return
+
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <EM>[src]</EM>!\n"
 	if (src.stat == DEAD)
 		msg += "<span class='deadsay'>It appears to be powered-down.</span>\n"

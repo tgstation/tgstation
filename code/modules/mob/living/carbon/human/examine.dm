@@ -1,6 +1,11 @@
 /mob/living/carbon/human/examine()
 	set src in oview()
 
+	if(!usr || !src)	return
+	if((usr.sdisabilities & 1) || usr.blinded || usr.stat)
+		usr << "<span class='notice'>Something is there but you can't see it.</span>"
+		return
+
 	var/skipgloves = 0
 	var/skipsuitstorage = 0
 	var/skipjumpsuit = 0
@@ -145,12 +150,12 @@
 	//ID
 	if (src.wear_id)
 		var/id
-		if(istype(src:wear_id, /obj/item/device/pda))
-			var/obj/item/device/pda/pda = src:wear_id
+		if(istype(src.wear_id, /obj/item/device/pda))
+			var/obj/item/device/pda/pda = src.wear_id
 			id = pda.owner
-		else
+		else if(istype(src.wear_id, /obj/item/weapon/card/id)) //just in case something other than a PDA/ID card somehow gets in the ID slot :[
 			id = src.wear_id.registered
-		if (id != src.real_name && in_range(src, usr) && prob(10))
+		if (id && (id != src.real_name) && (get_dist(src, usr) <= 1) && prob(10))
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[src.wear_id] \a [src.wear_id] yet something doesn't seem right...</span>\n"
 		else
 			msg += "[t_He] [t_is] wearing \icon[src.wear_id] \a [src.wear_id].\n"
@@ -158,38 +163,37 @@
 	//Jitters
 	if (src.is_jittery)
 		if(src.jitteriness >= 300)
-			msg += "<span class='warning'>[t_He] [t_is] convulsing violently!</span>\n"
+			msg += "<span class='warning'><B>[t_He] [t_is] convulsing violently!</B></span>\n"
 		else if(src.jitteriness >= 200)
 			msg += "<span class='warning'>[t_He] [t_is] extremely jittery.</span>\n"
 		else if(src.jitteriness >= 100)
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
-	if (src.suiciding == 1)
-		msg += "<span class='warning'>[t_He] [t_has] bitten off [t_his] own tongue and suffered major bloodloss!</span>\n"
+	if (src.suiciding)
+		msg += "<span class='warning'>[t_He] [t_has] bitten off [t_his] own tongue and [t_has] suffered major bloodloss!</span>\n"
 
-	if (src.stat == DEAD || (changeling && changeling.changeling_fakedeath == 1))
-		msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive"
-		//Carn: yes I'm a pedant, you aren't seeing their lifeless eyes unless you can see their eyes in the first place.
-		if(!skipeyes)
-			msg += ", with a dull lifeless look in [t_his] eyes...</span>\n"
-		else
-			msg += "...</span>\n"
+	if (src.stat == DEAD || (changeling && (changeling.changeling_fakedeath == 1)))
+		msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life...</span>\n"
 	else
 		msg += "<span class='warning'>"
-		if (src.getBruteLoss())
-			if (src.getBruteLoss() < 30)
+
+		var/temp = src.getBruteLoss() //no need to calculate each of these twice
+		if(temp)
+			if (temp < 30)
 				msg += "[t_He] [t_has] minor bruising.\n"
 			else
 				msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
 
-		if (src.getFireLoss())
-			if (src.getFireLoss() < 30)
+		temp = src.getFireLoss()
+		if (temp)
+			if (temp < 30)
 				msg += "[t_He] [t_has] minor burns.\n"
 			else
 				msg += "<B>[t_He] [t_has] severe burns!</B>\n"
 
-		if (src.getCloneLoss())
-			if (src.getCloneLoss() < 30)
+		temp = src.getCloneLoss()
+		if (temp)
+			if (temp < 30)
 				msg += "[t_He] [t_has] minor genetic deformities.\n"
 			else
 				msg += "<B>[t_He] [t_has] severe genetic deformities.</B>\n"
@@ -202,11 +206,12 @@
 			else
 				msg += "[t_He] [t_is] quite chubby.\n"
 
+		msg += "</span>"
+
 		if (src.stat == UNCONSCIOUS)
-			msg += "[t_He] [t_is]n't responding to anything around [t_him]; [t_his] eyes are closed as though asleep.\n"
+			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
 		else if (src.getBrainLoss() >= 60)
 			msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
-		msg += "</span>"
 
 		if (!src.client)
 			msg += "[t_He] [t_has] a vacant, braindead stare...\n"
