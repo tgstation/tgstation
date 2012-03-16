@@ -381,6 +381,7 @@
 #include "code\game\gamemodes\blob\theblob.dm"
 #include "code\game\gamemodes\changeling\changeling.dm"
 #include "code\game\gamemodes\changeling\changeling_powers.dm"
+#include "code\game\gamemodes\changeling\modularchangling.dm"
 #include "code\game\gamemodes\changeling\traitor_chan.dm"
 #include "code\game\gamemodes\cult\cult.dm"
 #include "code\game\gamemodes\cult\cult_items.dm"

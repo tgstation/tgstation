@@ -2,14 +2,21 @@
 	if(!changeling) changeling = new
 	changeling.host = src
 
-	src.verbs += /client/proc/changeling_lesser_transform
-	src.verbs += /client/proc/changeling_fakedeath
+	src.verbs += /datum/changeling/proc/EvolutionMenu
 
+	for(var/obj/effect/proc_holder/power/P in changeling.purchasedpowers)
+		if(P.isVerb)
+			if(P.allowduringlesserform)
+				if(!(P in src.verbs))
+					src.verbs += P.verbpath
+
+/*	src.verbs += /client/proc/changeling_fakedeath
+	src.verbs += /client/proc/changeling_lesser_transform
 	src.verbs += /client/proc/changeling_blind_sting
 	src.verbs += /client/proc/changeling_deaf_sting
 	src.verbs += /client/proc/changeling_silence_sting
 	src.verbs += /client/proc/changeling_unfat_sting
-
+*/
 	changeling.changeling_level = 1
 	return
 
@@ -17,6 +24,14 @@
 	if(!changeling) changeling = new
 	changeling.host = src
 
+	src.verbs += /datum/changeling/proc/EvolutionMenu
+
+	for(var/obj/effect/proc_holder/power/P in changeling.purchasedpowers)
+		if(P.isVerb)
+			if(!(P in src.verbs))
+				src.verbs += P.verbpath
+
+/*
 	src.verbs += /client/proc/changeling_absorb_dna
 	src.verbs += /client/proc/changeling_transform
 	src.verbs += /client/proc/changeling_lesser_form
@@ -30,6 +45,7 @@
 	src.verbs += /client/proc/changeling_unfat_sting
 	src.verbs += /client/proc/changeling_boost_range
 
+*/
 	changeling.changeling_level = 2
 	if (!changeling.absorbed_dna)
 		changeling.absorbed_dna = list()
@@ -43,6 +59,11 @@
 	return
 
 /mob/proc/remove_changeling_powers()
+
+	for(var/obj/effect/proc_holder/power/P in changeling.purchasedpowers)
+		if(P.isVerb)
+			src.verbs -= P.verbpath
+/*
 	src.verbs -= /client/proc/changeling_absorb_dna
 	src.verbs -= /client/proc/changeling_transform
 	src.verbs -= /client/proc/changeling_lesser_form
@@ -55,7 +76,7 @@
 	src.verbs -= /client/proc/changeling_boost_range
 	src.verbs -= /client/proc/changeling_transformation_sting
 	src.verbs -= /client/proc/changeling_unfat_sting
-
+*/
 /client/proc/changeling_absorb_dna()
 	set category = "Changeling"
 	set name = "Absorb DNA"
@@ -127,12 +148,35 @@
 	usr.changeling.absorbed_dna[T.real_name] = T.dna
 	if(usr.nutrition < 400) usr.nutrition = min((usr.nutrition + T.nutrition), 400)
 	usr.changeling.chem_charges += 10
+	usr.changeling.geneticpoints += 2
 	if(T.changeling)
 		if(T.changeling.absorbed_dna)
 			usr.changeling.absorbed_dna |= T.changeling.absorbed_dna //steal all their loot
+
 			T.changeling.absorbed_dna = list()
 			T.changeling.absorbed_dna[T.real_name] = T.dna
+
+		if(T.changeling.purchasedpowers)
+			for(var/obj/effect/proc_holder/power/Tp in T.changeling.purchasedpowers)
+				if(Tp in usr.changeling.purchasedpowers)
+					continue
+				else
+					usr.changeling.purchasedpowers += Tp
+
+					if(!Tp.isVerb)
+						call(Tp.verbpath)()
+
+					else
+						if(usr.changeling.changeling_level == 1)
+							usr.make_lesser_changeling()
+						else
+							usr.make_changeling()
+
+
+
+
 		usr.changeling.chem_charges += T.changeling.chem_charges
+		usr.changeling.geneticpoints += T.changeling.geneticpoints
 		T.changeling.chem_charges = 0
 	usr.changeling.isabsorbing = 0
 
@@ -261,7 +305,7 @@
 		usr.mind.transfer_to(O)
 
 	O.make_lesser_changeling()
-
+	O.verbs += /client/proc/changeling_lesser_transform
 	del(usr)
 	return
 
@@ -712,3 +756,158 @@
 			usr.verbs += /client/proc/changeling_unfat_sting
 
 	return
+
+/client/proc/changeling_unstun()
+	set category = "Changeling"
+	set name = "Epinephrine Sacs (25)"
+	set desc = "Removes all stuns"
+
+	if(!usr.changeling)
+		usr << "\red You're not a changeling, something's wrong!"
+		return
+
+	if(usr.changeling.chem_charges < 25)
+		usr << "\red We don't have enough stored chemicals to do that!"
+		return
+
+	usr.changeling.chem_charges -= 25
+
+	var/mob/living/carbon/human/C = usr
+
+	if(C)
+		C.stat = 0
+		C.SetParalysis(0)
+		C.SetStunned(0)
+		C.SetWeakened(0)
+		C.lying = 0
+		C.canmove = 1
+
+	usr.verbs -= /client/proc/changeling_unstun
+
+	spawn(5)
+		usr.verbs += /client/proc/changeling_unstun
+
+
+
+/client/proc/changeling_fastchemical()
+
+	usr.changeling.chem_recharge_multiplier = usr.changeling.chem_recharge_multiplier*2
+
+/client/proc/changeling_engorgedglands()
+
+	usr.changeling.chem_storage = usr.changeling.chem_storage+25
+
+/client/proc/changeling_digitalcamo()
+	set category = "Changeling"
+	set name = "Toggle Digital Camoflague (10)"
+	set desc = "The AI can no longer track us, but we will look different if examined.  Has a constant cost while active."
+
+	if(!usr.changeling)
+		usr << "\red You're not a changeling, something's wrong!"
+		return
+
+	if(usr.changeling.chem_charges < 10)
+		usr << "\red We don't have enough stored chemicals to do that!"
+		return
+
+	usr.changeling.chem_charges -= 10
+
+	var/mob/living/carbon/human/C = usr
+
+	if(C)
+		C << "[C.digitalcamo ? "We return to normal." : "We distort our form."]"
+		C.digitalcamo = !C.digitalcamo
+		spawn(0)
+			while(C && C.digitalcamo)
+				C.changeling.chem_charges -= 1/4
+				sleep(10)
+
+
+	usr.verbs -= /client/proc/changeling_digitalcamo
+
+	spawn(5)
+		usr.verbs += /client/proc/changeling_digitalcamo
+
+
+/client/proc/changeling_DEATHsting()
+	set category = "Changeling"
+	set name = "Death Sting (40)"
+	set desc = "Causes spasms onto death."
+
+	if(!usr.changeling)
+		usr << "\red You're not a changeling, something's wrong!"
+		return
+
+	var/list/victims = list()
+	for(var/mob/living/carbon/C in oview(usr.changeling.sting_range))
+		victims += C
+	var/mob/T = input(usr, "Who do you wish to sting?") as null | anything in victims
+
+	if(T && T in view(usr.changeling.sting_range))
+
+		if(usr.stat)
+			usr << "\red Not when we are incapacitated."
+			return
+
+		if(usr.changeling.chem_charges < 40)
+			usr << "\red We don't have enough stored chemicals to do that!"
+			return
+
+		usr.changeling.chem_charges -= 40
+		usr.changeling.sting_range = 1
+
+		usr << "\blue We stealthily sting [T]."
+
+		if(!T.changeling)
+			T << "You feel a small prick and your chest becomes tight."
+
+			T.silent = (10)
+			T.Paralyse(10)
+			T.make_jittery(1000)
+
+			if (T.reagents)
+				T.reagents.add_reagent("lexorin", 40)
+
+		else
+			T << "You feel a small prick."
+
+		usr.verbs -= /client/proc/changeling_DEATHsting
+
+		spawn(5)
+			usr.verbs += /client/proc/changeling_DEATHsting
+
+		return
+
+
+
+/client/proc/changeling_rapidregen()
+	set category = "Changeling"
+	set name = "Rapid Regeneration (30)"
+	set desc = "Begins rapidly regenerating.  Does not effect stuns or chemicals."
+
+	if(!usr.changeling)
+		usr << "\red You're not a changeling, something's wrong!"
+		return
+
+	if(usr.changeling.chem_charges < 30)
+		usr << "\red We don't have enough stored chemicals to do that!"
+		return
+
+	usr.changeling.chem_charges -= 30
+
+	var/mob/living/carbon/human/C = usr
+
+	spawn(0)
+		for(var/i = 0, i<10,i++)
+			if(C)
+				C.adjustBruteLoss(-10)
+				C.adjustToxLoss(-10)
+				C.adjustOxyLoss(-10)
+				C.adjustFireLoss(-10)
+				sleep(10)
+
+
+	usr.verbs -= /client/proc/changeling_rapidregen
+
+	spawn(5)
+		usr.verbs += /client/proc/changeling_rapidregen

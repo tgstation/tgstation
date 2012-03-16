@@ -31,6 +31,9 @@
 			msg += "It isn't responding to anything around it; it seems to be asleep.\n"
 		msg += "</span>"
 
+	if (src.digitalcamo)
+		msg += "It looks replusingly uncanny!\n"
+
 	msg += "*---------*</span>"
 
 	usr << msg

@@ -211,6 +211,9 @@
 		if (!src.client)
 			msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
+	if (src.digitalcamo)
+		msg += "[t_He] looks replusingly uncanny!\n"
+
 	msg += "*---------*</span>"
 
 	usr << msg

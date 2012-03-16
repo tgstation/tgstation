@@ -10,7 +10,6 @@
 	required_enemies = 1
 	recommended_enemies = 4
 
-
 	uplink_welcome = "Syndicate Uplink Console:"
 	uplink_uses = 10
 
@@ -211,11 +210,17 @@
 	var/list/absorbed_dna = list()
 	var/changeling_fakedeath = 0
 	var/chem_charges = 20.00
+	var/chem_recharge_multiplier = 1
+	var/chem_storage = 50
 	var/sting_range = 1
 	var/changelingID = "none"
 	var/mob/living/host = null
 	var/geneticdamage = 0.0
 	var/isabsorbing = 0
+	var/geneticpoints = 5
+	var/purchasedpowers = list()
+
+
 
 /datum/changeling/New()
 	..()

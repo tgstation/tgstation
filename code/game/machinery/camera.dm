@@ -64,6 +64,8 @@
 			continue
 		else if (M == usr)
 			continue
+		if(M.digitalcamo)
+			continue
 
 		var/name = M.name
 		if (name in names)
@@ -105,6 +107,11 @@
 		 			usr << "Follow camera mode terminated."
 					usr:cameraFollow = null
 					return
+				if(target.digitalcamo)
+					usr << "Follow camera mode terminated."
+					usr:cameraFollow = null
+					return
+
 			else if(istype(target.loc,/obj/effect/dummy))
 				usr << "Follow camera mode ended."
 				usr:cameraFollow = null
