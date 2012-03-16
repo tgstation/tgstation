@@ -972,12 +972,9 @@ Frequency:
 		var/turf/tile = get_turf(loc)
 
 		tile.clean_blood()
-		for(var/obj/effect/rune/R in tile)
-			del(R)
-		for(var/obj/effect/decal/cleanable/R in tile)
-			del(R)
-		for(var/obj/effect/overlay/R in tile)
-			del(R)
+		for(var/obj/effect/R in tile)
+			if(istype(R, /obj/effect/rune) || istype(R, /obj/effect/decal/cleanable) || istype(R, /obj/effect/overlay))
+				del(R)
 
 		for(var/obj/item/cleaned_item in tile)
 			cleaned_item.clean_blood()
