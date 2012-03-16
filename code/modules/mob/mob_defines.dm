@@ -170,6 +170,7 @@
 	var/logged_in = 0
 
 	var/underwear = 1//Human
+	var/backbag = 2//Human
 	var/be_syndicate = 0//This really should be a client variable.
 	var/be_random_name = 0
 	var/const/blindness = 1//Carbon

@@ -229,9 +229,22 @@ var/global/datum/controller/occupations/job_master
 			return 1
 
 		H.equip_if_possible(new /obj/item/device/radio/headset(H), H.slot_ears)
-		var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
-		new /obj/item/weapon/storage/box/survival(BPK)
-		H.equip_if_possible(BPK, H.slot_back,1)
+
+		if(H.mind && H.mind.assigned_role != "Cyborg" && H.mind.assigned_role != "AI" && H.mind.assigned_role != "Clown")
+			if(H.backbag == 1) //Clown always gets his backbuddy.
+				H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H), H.slot_r_hand)
+
+			if(H.backbag == 2)
+				var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
+				new /obj/item/weapon/storage/box/survival(BPK)
+				H.equip_if_possible(BPK, H.slot_back,1)
+
+			if(H.backbag == 3)
+				var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel(H)
+				new /obj/item/weapon/storage/box/survival(BPK)
+				H.equip_if_possible(BPK, H.slot_back,1)
+
+
 		return 1
 
 

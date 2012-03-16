@@ -1,8 +1,3 @@
-
-
-
-
-
 //Food
 /datum/job/bartender
 	title = "Bartender"
@@ -17,15 +12,26 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
-		H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H.back), H.slot_in_backpack)
-		H.equip_if_possible(new /obj/item/clothing/under/rank/bartender(H), H.slot_w_uniform)
+		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/clothing/suit/armor/vest(H), H.slot_wear_suit)
-		H.equip_if_possible(new /obj/item/ammo_casing/shotgun/beanbag(H), H.slot_in_backpack)
-		H.equip_if_possible(new /obj/item/ammo_casing/shotgun/beanbag(H), H.slot_in_backpack)
-		H.equip_if_possible(new /obj/item/ammo_casing/shotgun/beanbag(H), H.slot_in_backpack)
-		H.equip_if_possible(new /obj/item/ammo_casing/shotgun/beanbag(H), H.slot_in_backpack)
+		H.equip_if_possible(new /obj/item/clothing/under/rank/bartender(H), H.slot_w_uniform)
+
+		if(H.backbag == 1)
+			var/obj/item/weapon/storage/box/survival/Barpack = new /obj/item/weapon/storage/box/survival(H)
+			H.equip_if_possible(Barpack, H.slot_r_hand)
+			new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
+			new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
+			new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
+			new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
+		else
+			H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H), H.slot_in_backpack)
+			H.equip_if_possible(new /obj/item/ammo_casing/shotgun/beanbag(H), H.slot_in_backpack)
+			H.equip_if_possible(new /obj/item/ammo_casing/shotgun/beanbag(H), H.slot_in_backpack)
+			H.equip_if_possible(new /obj/item/ammo_casing/shotgun/beanbag(H), H.slot_in_backpack)
+			H.equip_if_possible(new /obj/item/ammo_casing/shotgun/beanbag(H), H.slot_in_backpack)
+
 		return 1
 
 
@@ -134,13 +140,19 @@
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_mine (H), H.slot_ears)
-		H.equip_if_possible(new /obj/item/weapon/storage/backpack/industrial (H), H.slot_back)
-		H.equip_if_possible(new /obj/item/weapon/storage/box/engineer(H.back), H.slot_in_backpack)
+		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack/industrial (H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/miner(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/clothing/gloves/black(H), H.slot_gloves)
-		H.equip_if_possible(new /obj/item/weapon/crowbar(H), H.slot_in_backpack)
-		H.equip_if_possible(new /obj/item/weapon/satchel(H), H.slot_in_backpack)
+		if(H.backbag == 1)
+			H.equip_if_possible(new /obj/item/weapon/storage/box/engineer(H), H.slot_r_hand)
+			H.equip_if_possible(new /obj/item/weapon/crowbar(H), H.slot_l_hand)
+			H.equip_if_possible(new /obj/item/weapon/satchel(H), H.slot_l_store)
+		else
+			H.equip_if_possible(new /obj/item/weapon/storage/box/engineer(H.back), H.slot_in_backpack)
+			H.equip_if_possible(new /obj/item/weapon/crowbar(H), H.slot_in_backpack)
+			H.equip_if_possible(new /obj/item/weapon/satchel(H), H.slot_in_backpack)
 		return 1
 
 
@@ -188,8 +200,8 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
-		H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H.back), H.slot_in_backpack)
+		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/under/mime(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/mime(H), H.slot_belt)
@@ -197,8 +209,14 @@
 		H.equip_if_possible(new /obj/item/clothing/mask/gas/mime(H), H.slot_wear_mask)
 		H.equip_if_possible(new /obj/item/clothing/head/beret(H), H.slot_head)
 		H.equip_if_possible(new /obj/item/clothing/suit/suspenders(H), H.slot_wear_suit)
-		H.equip_if_possible(new /obj/item/toy/crayon/mime(H), H.slot_in_backpack)
-		H.equip_if_possible(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), H.slot_in_backpack)
+		if(H.backbag == 1)
+			H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H), H.slot_r_hand)
+			H.equip_if_possible(new /obj/item/toy/crayon/mime(H), H.slot_l_store)
+			H.equip_if_possible(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), H.slot_l_hand)
+		else
+			H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H.back), H.slot_in_backpack)
+			H.equip_if_possible(new /obj/item/toy/crayon/mime(H), H.slot_in_backpack)
+			H.equip_if_possible(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), H.slot_in_backpack)
 		H.verbs += /client/proc/mimespeak
 		H.verbs += /client/proc/mimewall
 		H.mind.special_verbs += /client/proc/mimespeak
@@ -263,8 +281,8 @@ var/global/lawyer = 0//Checks for another lawyer
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
-		H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H.back), H.slot_in_backpack)
+		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
 		if(!lawyer)
 			lawyer = 1
 			H.equip_if_possible(new /obj/item/clothing/under/lawyer/bluesuit(H), H.slot_w_uniform)
@@ -274,8 +292,14 @@ var/global/lawyer = 0//Checks for another lawyer
 			H.equip_if_possible(new /obj/item/clothing/suit/lawyer/purpjacket(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/clothing/shoes/brown(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/lawyer(H), H.slot_belt)
-		H.equip_if_possible(new /obj/item/device/detective_scanner(H), H.slot_in_backpack)//Why do they even get this?
 		H.equip_if_possible(new /obj/item/weapon/storage/briefcase(H), H.slot_l_hand)
+		if(H.backbag == 1)
+			H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H), H.slot_r_hand)
+			H.equip_if_possible(new /obj/item/device/detective_scanner(H), H.slot_l_store)//Why do they even get this?
+		else
+			H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H.back), H.slot_in_backpack)
+			H.equip_if_possible(new /obj/item/device/detective_scanner(H), H.slot_in_backpack)//No really.. why do they even get this?
+
 		return 1
 
 

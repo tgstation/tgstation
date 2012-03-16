@@ -264,9 +264,10 @@ var/global/datum/tension/tension_master
 			if(applicant.stat < 2)
 				if(applicant.mind)
 					if (!applicant.mind.special_role)
-						if(!(applicant.job in temp.restricted_jobs))
-							if(applicant.client)
-								candidates += applicant
+						if(!jobban_isbanned(applicant, "traitor") && !jobban_isbanned(applicant, "Syndicate"))
+							if(!(applicant.job in temp.restricted_jobs))
+								if(applicant.client)
+									candidates += applicant
 
 		if(candidates.len)
 			var/numTratiors = min(candidates.len, 3)
@@ -294,9 +295,10 @@ var/global/datum/tension/tension_master
 			if(applicant.stat < 2)
 				if(applicant.mind)
 					if (!applicant.mind.special_role)
-						if(!(applicant.job in temp.restricted_jobs))
-							if(applicant.client)
-								candidates += applicant
+						if(!jobban_isbanned(applicant, "changeling") && !jobban_isbanned(applicant, "Syndicate"))
+							if(!(applicant.job in temp.restricted_jobs))
+								if(applicant.client)
+									candidates += applicant
 
 		if(candidates.len)
 			var/numChanglings = min(candidates.len, 3)
@@ -323,9 +325,10 @@ var/global/datum/tension/tension_master
 			if(applicant.stat < 2)
 				if(applicant.mind)
 					if (!applicant.mind.special_role)
-						if(!(applicant.job in temp.restricted_jobs))
-							if(applicant.client)
-								candidates += applicant
+						if(!jobban_isbanned(applicant, "revolutionary") && !jobban_isbanned(applicant, "Syndicate"))
+							if(!(applicant.job in temp.restricted_jobs))
+								if(applicant.client)
+									candidates += applicant
 		if(candidates.len)
 			var/numRevs = min(candidates.len, 3)
 
@@ -344,14 +347,15 @@ var/global/datum/tension/tension_master
 		var/time_passed = world.time
 
 		for(var/mob/dead/observer/G in world)
-			spawn(0)
-				switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
-					if("Yes")
-						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+			if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
+				spawn(0)
+					switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
+						if("Yes")
+							if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+								return
+							candidates += G
+						if("No")
 							return
-						candidates += G
-					if("No")
-						return
 
 
 		spawn(300)
@@ -383,9 +387,10 @@ var/global/datum/tension/tension_master
 			if(applicant.stat < 2)
 				if(applicant.mind)
 					if (!applicant.mind.special_role)
-						if(!(applicant.job in temp.restricted_jobs))
-							if(applicant.client)
-								candidates += applicant
+						if(!jobban_isbanned(applicant, "cultist") && !jobban_isbanned(applicant, "Syndicate"))
+							if(!(applicant.job in temp.restricted_jobs))
+								if(applicant.client)
+									candidates += applicant
 
 		if(candidates.len)
 			var/numCultists = min(candidates.len, 4)
@@ -409,14 +414,15 @@ var/global/datum/tension/tension_master
 		var/time_passed = world.time
 
 		for(var/mob/dead/observer/G in world)
-			spawn(0)
-				switch(alert(G,"Do you wish to be considered for a nuke team being sent in?","Please answer in 30 seconds!","Yes","No"))
-					if("Yes")
-						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+			if(!jobban_isbanned(G, "operative") && !jobban_isbanned(G, "Syndicate"))
+				spawn(0)
+					switch(alert(G,"Do you wish to be considered for a nuke team being sent in?","Please answer in 30 seconds!","Yes","No"))
+						if("Yes")
+							if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+								return
+							candidates += G
+						if("No")
 							return
-						candidates += G
-					if("No")
-						return
 
 
 		spawn(300)

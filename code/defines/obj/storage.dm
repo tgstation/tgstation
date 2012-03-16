@@ -109,7 +109,6 @@
 
 	New()
 		..()
-		new /obj/item/weapon/storage/wallet/random(src)
 
 /obj/item/weapon/storage/backpack/bandolier
 	name = "bandolier"
