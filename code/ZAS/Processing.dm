@@ -3,7 +3,9 @@ var/explosion_halt = 0
 zone
 	proc/process()
 		if(rebuild)
-			if(!contents) del src
+			if(!contents.len)
+				del src
+				return 0
 			var
 				turf/sample = pick(contents)
 				list/new_contents = FloodFill(sample)

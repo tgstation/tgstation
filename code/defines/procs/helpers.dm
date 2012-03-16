@@ -1429,6 +1429,8 @@ proc/listclearnulls(list/list)
 				air_master.groups_to_rebuild += T1.parent
 			else
 				air_master.tiles_to_update += T1
+			if(T1.zone)
+				T1.zone.space_tiles.len = 0
 
 	if(fromupdate.len)
 		for(var/turf/simulated/T2 in fromupdate)
@@ -1438,6 +1440,8 @@ proc/listclearnulls(list/list)
 				air_master.groups_to_rebuild += T2.parent
 			else
 				air_master.tiles_to_update += T2
+			if(T2.zone)
+				T2.zone.space_tiles.len = 0
 
 	for(var/obj/O in doors)
 		O:update_nearby_tiles(1)
