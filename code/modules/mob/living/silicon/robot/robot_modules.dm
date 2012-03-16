@@ -162,9 +162,8 @@
 
 	New()
 		..()
-		src.modules += new /obj/item/weapon/cleaner(src)
-		src.modules += new /obj/item/weapon/mop(src)
-		src.modules += new /obj/item/weapon/reagent_containers/glass/bucket(src)
+		src.modules += new /obj/item/weapon/soap/nanotrasen(src)
+		src.modules += new /obj/item/weapon/trashbag
 		src.emag = new /obj/item/weapon/cleaner(src)
 
 		var/datum/reagents/R = new/datum/reagents(1000)

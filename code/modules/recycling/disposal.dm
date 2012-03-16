@@ -44,7 +44,7 @@
 		if(stat & BROKEN || !I || !user)
 			return
 
-		if(isrobot(user))
+		if(isrobot(user) && !istype(I, /obj/item/weapon/trashbag))
 			return
 
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
