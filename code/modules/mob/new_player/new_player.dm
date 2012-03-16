@@ -166,6 +166,8 @@
 				stat("Time To Start:", ticker.pregame_timeleft)
 			if((ticker.current_state == GAME_STATE_PREGAME) && !going)
 				stat("Time To Start:", "DELAYED")
+			if((ticker.current_state == GAME_STATE_PLAYING) && going)
+				stat("Round Duration:", "[round(world.time / 36000)]:[world.time / 600 % 60]:[world.time / 100 % 6][world.time / 100 % 10]")
 
 		statpanel("Lobby")
 		if(client.statpanel=="Lobby" && ticker)
