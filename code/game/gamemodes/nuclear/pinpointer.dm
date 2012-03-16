@@ -41,6 +41,12 @@
 				icon_state = "pinonfar"
 		spawn(5) .()
 
+	examine()
+		..()
+		for(var/obj/machinery/nuclearbomb/bomb in world)
+			if(bomb.timing)
+				usr << "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]"
+
 
 /obj/item/weapon/pinpointer/advpinpointer
 	name = "Advanced Pinpointer"

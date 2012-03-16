@@ -187,7 +187,7 @@ Malf AIs/silicons aren't added. Monkeys aren't added. Messes with objective comp
 
 	if(sent_strike_team&&side=="heel"&&antagonist_list.len)//If a strike team was sent, murder them all like a champ.
 		for(current_mind in antagonist_list)//Search and destroy. Since we already have an antagonist list, they should appear there.
-			if(current_mind.special_role=="Death Commando")
+			if(current_mind && current_mind.special_role=="Death Commando")
 				commando_list += current_mind
 		if(commando_list.len)//If there are living commandos still in play.
 			for(var/mob/living/carbon/human/commando in commando_list)
@@ -232,10 +232,14 @@ In either case, it's a good idea to spawn the ninja with a semi-random set of ob
 				if(1)//kill
 					current_mind = pick(hostile_targets)
 
-					var/datum/objective/assassinate/ninja_objective = new
-					ninja_objective.owner = ninja_mind
-					ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role?1:0))//If they have a special role, use that instead to find em.
-					ninja_mind.objectives += ninja_objective
+					if(current_mind)
+						var/datum/objective/assassinate/ninja_objective = new
+						ninja_objective.owner = ninja_mind
+						ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role?1:0))//If they have a special role, use that instead to find em.
+						ninja_mind.objectives += ninja_objective
+
+					else
+						i++
 
 					hostile_targets -= current_mind//Remove them from the list.
 				if(2)//Steal
@@ -248,19 +252,29 @@ In either case, it's a good idea to spawn the ninja with a semi-random set of ob
 				if(3)//Protect. Keeping people alive can be pretty difficult.
 					current_mind = pick(friendly_targets)
 
-					var/datum/objective/protect/ninja_objective = new
-					ninja_objective.owner = ninja_mind
-					ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role?1:0))
-					ninja_mind.objectives += ninja_objective
+					if(current_mind)
+
+						var/datum/objective/protect/ninja_objective = new
+						ninja_objective.owner = ninja_mind
+						ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role?1:0))
+						ninja_mind.objectives += ninja_objective
+
+					else
+						i++
 
 					friendly_targets -= current_mind
 				if(4)//Debrain
 					current_mind = pick(hostile_targets)
 
-					var/datum/objective/debrain/ninja_objective = new
-					ninja_objective.owner = ninja_mind
-					ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role?1:0))
-					ninja_mind.objectives += ninja_objective
+					if(current_mind)
+
+						var/datum/objective/debrain/ninja_objective = new
+						ninja_objective.owner = ninja_mind
+						ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role?1:0))
+						ninja_mind.objectives += ninja_objective
+
+					else
+						i++
 
 					hostile_targets -= current_mind//Remove them from the list.
 				if(5)//Download research

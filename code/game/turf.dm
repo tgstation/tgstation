@@ -1269,24 +1269,26 @@ turf/simulated/floor/return_siding_icon_state()
 		// Okay, so let's make it so that people can travel z levels but not nuke disks!
 		// if(ticker.mode.name == "nuclear emergency")	return
 
-
-		if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels
-			return
-
-		if(!isemptylist(A.search_contents_for(/obj/item/weapon/disk/nuclear)))
-			if(istype(A, /mob/living))
-				var/mob/living/MM = A
-				if(MM.client)
-					MM << "\red Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is."
-			return
-
-		else if(ticker.mode.name == "extended"||ticker.mode.name == "sandbox")	Sandbox_Spacemove(A)
+		if(ticker.mode.name == "extended"||ticker.mode.name == "sandbox")
+			Sandbox_Spacemove(A)
 
 		else
 			if (src.x <= 2 || A.x >= (world.maxx - 1) || src.y <= 2 || A.y >= (world.maxy - 1))
 				if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
 					del(A)
 					return
+
+				if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
+					return
+
+				if(!isemptylist(A.search_contents_for(/obj/item/weapon/disk/nuclear)))
+					if(istype(A, /mob/living))
+						var/mob/living/MM = A
+						if(MM.client)
+							MM << "\red Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is."
+					return
+
+
 
 				var/move_to_z_str = pickweight(accessable_z_levels)
 
@@ -1295,7 +1297,10 @@ turf/simulated/floor/return_siding_icon_state()
 				if(!move_to_z)
 					return
 
+
+
 				A.z = move_to_z
+
 
 				if(src.x <= 2)
 					A.x = world.maxx - 2

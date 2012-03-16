@@ -205,6 +205,7 @@
 			verbs += /client/proc/tension_report
 			verbs += /client/proc/jumptocoord
 			verbs += /client/proc/deadmin_self
+			verbs += /client/proc/startSinglo
 
 		if (holder.level >= 3)//Trial Admin********************************************************************
 			verbs += /obj/admins/proc/toggleaban			//abandon mob
@@ -414,6 +415,7 @@
 	verbs -= /client/proc/toggle_gravity_off
 	verbs -= /client/proc/toggle_random_events
 	verbs -= /client/proc/deadmin_self
+	verbs -= /client/proc/startSinglo
 	verbs -= /client/proc/jumptocoord
 	verbs -= /client/proc/everyone_random
 	verbs -= /client/proc/cmd_switch_radio
@@ -700,6 +702,38 @@
 			src.update_admins(null)
 			admins.Remove(src.ckey)
 			usr << "You are now a normal player."
+
+/client/proc/startSinglo()
+	set name = "Singlo Starter"
+	set category = "Debug"
+	set desc = "Starts a self-sustaining, stable singlo.  This artifical singlo does not have a gravitational pull."
+
+	for(var/obj/machinery/emitter/E in world)
+		if(E.anchored)
+			E.active = 1
+
+	for(var/obj/machinery/field_generator/F in world)
+		if(F.anchored)
+			F.Varedit_start = 1
+	spawn(30)
+		for(var/obj/machinery/the_singularitygen/G in world)
+			if(G.anchored)
+				var/obj/machinery/singularity/S = new /obj/machinery/singularity(get_turf(G), 50)
+				spawn(0)
+					del(G)
+				S.energy = 1750
+				S.current_size = 7
+				S.icon = '224x224.dmi'
+				S.icon_state = "singularity_s7"
+				S.pixel_x = -96
+				S.pixel_y = -96
+				S.grav_pull = 0
+				//S.consume_range = 3
+				S.dissipate = 0
+				//S.dissipate_delay = 10
+				//S.dissipate_track = 0
+				//S.dissipate_strength = 10
+
 
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
 	set name = "Toggle most admin verb visibility"

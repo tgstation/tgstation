@@ -228,6 +228,9 @@ var/global/datum/tension/tension_master
 			spawn(6000)
 				supress = 0
 
+		else if (href_list["ToggleStatus"])
+			config.Tensioner_Active = !config.Tensioner_Active
+
 
 	proc/makeMalfAImode()
 
@@ -235,7 +238,7 @@ var/global/datum/tension/tension_master
 		var/mob/living/silicon/malfAI = null
 		var/datum/mind/themind = null
 
-		for(var/mob/living/silicon/ai in world)
+		for(var/mob/living/silicon/ai/ai in world)
 			if(ai.client)
 				AIs += ai
 

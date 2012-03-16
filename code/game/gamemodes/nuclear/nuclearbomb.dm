@@ -112,7 +112,7 @@
 				if (href_list["time"])
 					var/time = text2num(href_list["time"])
 					src.timeleft += time
-					src.timeleft = min(max(round(src.timeleft), 5), 600)
+					src.timeleft = min(max(round(src.timeleft), 60), 600)
 				if (href_list["timer"])
 					if (src.timing == -1.0)
 						return
@@ -217,9 +217,9 @@
 
 
 /obj/item/weapon/disk/nuclear/Del()
-	if (ticker.mode && ticker.mode.name == "nuclear emergency")
-		if(blobstart.len > 0)
-			var/obj/D = new /obj/item/weapon/disk/nuclear(pick(blobstart))
-			message_admins("[src] has been destroyed. Spawning [D] at ([D.x], [D.y], [D.z]).")
-			log_game("[src] has been destroyed. Spawning [D] at ([D.x], [D.y], [D.z]).")
-	..()
+//	if (ticker.mode && ticker.mode.name == "nuclear emergency")
+	if(blobstart.len > 0)
+		var/obj/D = new /obj/item/weapon/disk/nuclear(pick(blobstart))
+		message_admins("[src] has been destroyed. Spawning [D] at ([D.x], [D.y], [D.z]).")
+		log_game("[src] has been destroyed. Spawning [D] at ([D.x], [D.y], [D.z]).")
+..()
