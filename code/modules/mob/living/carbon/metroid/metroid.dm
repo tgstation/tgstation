@@ -503,6 +503,9 @@
 				else
 					attack_verb = "punch"
 
+			if(M.type == /mob/living/carbon/human/tajaran)
+				attack_verb = "slash"
+
 			attacked += 10
 			if (prob(90))
 				if (M.mutations & HULK)
@@ -519,7 +522,11 @@
 						step_away(src,M,15)
 
 
-				playsound(loc, "punch", 25, 1, -1)
+				if(M.type != /mob/living/carbon/human/tajaran)
+					playsound(loc, "punch", 25, 1, -1)
+				else if (M.type == /mob/living/carbon/human/tajaran)
+					damage += 10
+					playsound(loc, 'slice.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has [attack_verb]ed []!</B>", M, src), 1)
@@ -527,7 +534,10 @@
 				bruteloss += damage
 				updatehealth()
 			else
-				playsound(loc, 'punchmiss.ogg', 25, 1, -1)
+				if(M.type != /mob/living/carbon/human/tajaran)
+					playsound(loc, 'punchmiss.ogg', 25, 1, -1)
+				else if (M.type == /mob/living/carbon/human/tajaran)
+					playsound(loc, 'slashmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has attempted to [attack_verb] []!</B>", M, src), 1)
