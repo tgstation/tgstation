@@ -710,7 +710,7 @@ obj/item/clothing/gloves/var
 obj/effect/decal/cleanable/var
 	track_amt = 3
 	mob/blood_owner
-
+/*
 turf/Exited(mob/living/carbon/human/M)
 	if(istype(M,/mob/living) && !istype(M,/mob/living/carbon/metroid))
 		var/dofoot = 1
@@ -835,6 +835,7 @@ proc/get_tracks(mob/M)
 			. = "small alien feet"
 		else
 			. = "an unknown creature"
+*/
 
 proc/blood_incompatible(donor,receiver)
 	var

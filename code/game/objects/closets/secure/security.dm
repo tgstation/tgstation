@@ -57,7 +57,7 @@
 	icon_locked = "hossecure1"
 	icon_opened = "hossecureopen"
 	icon_broken = "hossecurebroken"
-	icon_off = "hossecurecoff"
+	icon_off = "hossecureoff"
 
 	New()
 		..()
