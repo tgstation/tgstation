@@ -101,13 +101,13 @@
 	if(haystack && needle)
 		if(isobject(haystack))
 			if(istype(haystack, /list))
-				if(length(haystack) >= end && start > 0)
+				if(length(haystack) + 1 >= end && start > 0)
 					var/list/listhaystack = haystack
 					return listhaystack.Find(needle, start, end)
 
 		else
 			if(istext(haystack))
-				if(length(haystack) >= end && start > 0)
+				if(length(haystack) + 1 >= end && start > 0)
 					return findtext(haystack, needle, start, end)
 
 // Clone of copytext()
