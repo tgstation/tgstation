@@ -29,7 +29,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 	if(announcer)
 		announcer.say(message)
 	//	message = "ARMORED SQUAD TAKE YOUR POSITION ON GRAVITY LAUNCH PAD"
-		announcer.say(message)
+	//	announcer.say(message)
 
 	while(syndicate_elite_shuttle_time - world.timeofday > 0)
 		var/ticksleft = syndicate_elite_shuttle_time - world.timeofday
@@ -243,7 +243,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 			elite_squad.readyalert()//Trigger alarm for the spec ops area.
 		syndicate_elite_shuttle_moving_to_station = 1
 
-		syndicate_elite_shuttle_time = world.timeofday
+		syndicate_elite_shuttle_time = world.timeofday + SYNDICATE_ELITE_MOVETIME
 		spawn(0)
 			syndicate_elite_process()
 

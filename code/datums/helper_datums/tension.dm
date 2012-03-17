@@ -551,12 +551,12 @@ var/global/datum/tension/tension_master
 							del(new_syndicate_commando)
 							break
 
-							new_syndicate_commando.mind.key = theghost.key//For mind stuff.
-							new_syndicate_commando.key = theghost.key
-							new_syndicate_commando.internal = new_syndicate_commando.s_store
-							new_syndicate_commando.internals.icon_state = "internal1"
-							candidates -= theghost
-							del(theghost)
+						new_syndicate_commando.mind.key = theghost.key//For mind stuff.
+						new_syndicate_commando.key = theghost.key
+						new_syndicate_commando.internal = new_syndicate_commando.s_store
+						new_syndicate_commando.internals.icon_state = "internal1"
+						candidates -= theghost
+						del(theghost)
 
 						//So they don't forget their code or mission.
 						new_syndicate_commando.mind.store_memory("<B>Mission:</B> \red [input].")

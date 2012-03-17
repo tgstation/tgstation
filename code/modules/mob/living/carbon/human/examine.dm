@@ -2,7 +2,7 @@
 	set src in oview()
 
 	if(!usr || !src)	return
-	if((usr.sdisabilities & 1) || usr.blinded || usr.stat)
+	if(((usr.sdisabilities & 1) || usr.blinded || usr.stat) && !(istype(usr,/mob/dead/observer/)))
 		usr << "<span class='notice'>Something is there but you can't see it.</span>"
 		return
 
@@ -174,6 +174,17 @@
 
 	if (src.stat == DEAD || (changeling && (changeling.changeling_fakedeath == 1)))
 		msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life...</span>\n"
+
+		if(!src.client)
+			var/foundghost = 0
+			for(var/mob/dead/observer/G in world)
+				if(G.client)
+					if(G.corpse == src)
+						foundghost++
+						break
+			if(!foundghost)
+				msg += "<span class='deadsay'>[t_He] [t_is] empty; his soul has vanished...</span>\n"
+
 	else
 		msg += "<span class='warning'>"
 

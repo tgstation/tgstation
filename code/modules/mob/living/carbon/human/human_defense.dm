@@ -10,9 +10,9 @@ emp_act
 
 /mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
 
-/*	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor/laserproof))
+	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor/laserproof))
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-			var/reflectchance = 80 - round(P.damage/3)
+			var/reflectchance = 40 - round(P.damage/3)
 			if(!(def_zone in list("chest", "groin")))
 				reflectchance /= 2
 			if(prob(reflectchance))
@@ -33,7 +33,7 @@ emp_act
 					P.xo = new_x - curloc.x
 
 				return -1 // complete projectile permutation
-*/
+
 	if(check_shields(P.damage, "the [P.name]"))
 		P.on_hit(src, 2)
 		return 2
