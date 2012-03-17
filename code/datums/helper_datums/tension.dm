@@ -508,7 +508,7 @@ var/global/datum/tension/tension_master
 		var/mob/dead/observer/theghost = null
 		var/time_passed = world.time
 		var/input = "Purify the station."
-		if(prob(1))
+		if(prob(10))
 			input = "Save Runtime and any other cute things on the station."
 	/*
 		if (emergency_shuttle.direction == 1 && emergency_shuttle.online == 1)
