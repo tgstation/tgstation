@@ -72,10 +72,16 @@
 			return 1
 
 		if("hurt")
-			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Punched [src.name] ([src.ckey])</font>")
-			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
-			log_admin("ATTACK: [M] ([M.ckey]) punched [src] ([src.ckey]).")
-			message_admins("ATTACK: [M] ([M.ckey]) punched [src] ([src.ckey]).")
+			if(M.type != /mob/living/carbon/human/tajaran)
+				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Punched [src.name] ([src.ckey])</font>")
+				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
+				log_admin("ATTACK: [M] ([M.ckey]) punched [src] ([src.ckey]).")
+				message_admins("ATTACK: [M] ([M.ckey]) punched [src] ([src.ckey]).")
+			else if(M.type == /mob/living/carbon/human/tajaran)
+				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Slashed [src.name] ([src.ckey])</font>")
+				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been slashed by [M.name] ([M.ckey])</font>")
+				log_admin("ATTACK: [M] ([M.ckey]) slashed [src] ([src.ckey]).")
+				message_admins("ATTACK: [M] ([M.ckey]) slashed [src] ([src.ckey]).")
 
 			var/attack_verb
 			switch(M.mutantrace)
@@ -104,6 +110,7 @@
 			if(M.type != /mob/living/carbon/human/tajaran)
 				playsound(loc, "punch", 25, 1, -1)
 			else if (M.type == /mob/living/carbon/human/tajaran)
+				damage += 10
 				playsound(loc, 'slice.ogg', 25, 1, -1)
 
 			visible_message("\red <B>[M] has [attack_verb]ed [src]!</B>")

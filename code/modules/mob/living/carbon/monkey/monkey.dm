@@ -230,11 +230,12 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has [attack_verb]ed [name]!</B>", M), 1)
 
+				var/damage = rand(5, 10)
 				if(M.type != /mob/living/carbon/human/tajaran)
 					playsound(loc, "punch", 25, 1, -1)
 				else if(M.type == /mob/living/carbon/human/tajaran)
+					damage += 10
 					playsound(loc, 'slice.ogg', 25, 1, -1)
-				var/damage = rand(5, 10)
 				if (prob(40))
 					damage = rand(10, 15)
 					if (paralysis < 5)
