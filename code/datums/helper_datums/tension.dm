@@ -1,7 +1,9 @@
-#define PLAYER_WEIGHT 1
-#define HUMAN_DEATH -500
-#define OTHER_DEATH -500
-#define EXPLO_SCORE -1000 //boum
+#define PLAYER_WEIGHT 5
+#define HUMAN_DEATH -5000
+#define OTHER_DEATH -5000
+#define EXPLO_SCORE -10000 //boum
+
+#define COOLDOWN_TIME 12000 // Twenty minutes
 
 //estimated stats
 //80 minute round
@@ -38,16 +40,16 @@ var/global/datum/tension/tension_master
 	var/round4 = 0
 
 	var/list/antagonistmodes = list (
-	"POINTS_FOR_TRATIOR" 	=	10000,
-	"POINTS_FOR_CHANGLING"	=	12000,
-	"POINTS_FOR_REVS"		=	15000,
-	"POINTS_FOR_MALF"		=	25000,
-	"POINTS_FOR_WIZARD"		=	15000,
- 	"POINTS_FOR_CULT"		=	15000,
- 	"POINTS_FOR_NUKETEAM"	=	25000,
- 	"POINTS_FOR_ALIEN"		=	20000,
- 	"POINTS_FOR_NINJA"		=	20000,
- 	"POINTS_FOR_DEATHSQUAD"	=	50000
+	"POINTS_FOR_TRATIOR" 	=	100000,
+	"POINTS_FOR_CHANGLING"	=	120000,
+	"POINTS_FOR_REVS"		=	150000,
+	"POINTS_FOR_MALF"		=	250000,
+	"POINTS_FOR_WIZARD"		=	150000,
+ 	"POINTS_FOR_CULT"		=	150000,
+ 	"POINTS_FOR_NUKETEAM"	=	250000,
+ 	"POINTS_FOR_ALIEN"		=	200000,
+ 	"POINTS_FOR_NINJA"		=	200000,
+ 	"POINTS_FOR_DEATHSQUAD"	=	500000
 	)
 
 	var/list/potentialgames = list()
@@ -64,12 +66,12 @@ var/global/datum/tension/tension_master
 		score += get_num_players()*PLAYER_WEIGHT
 
 		if(config.Tensioner_Active)
-			if(score > 10000)
+			if(score > 100000)
 				round1++
 				if(!supress && !cooldown)
 					if(prob(1) || forcenexttick)
 						round2++
-						if(prob(50) || forcenexttick)
+						if(prob(10) || forcenexttick)
 							round3++
 							if(forcenexttick)
 								forcenexttick = 0
@@ -81,7 +83,7 @@ var/global/datum/tension/tension_master
 							spawn(300)
 								if(!supress)
 									cooldown = 1
-									spawn(6000)
+									spawn(COOLDOWN_TIME)
 										cooldown = 0
 									round4++
 									for(var/V in antagonistmodes)			// OH SHIT SOMETHING IS GOING TO HAPPEN NOW
