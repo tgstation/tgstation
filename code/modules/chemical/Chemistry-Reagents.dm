@@ -2616,132 +2616,6 @@ datum
 				..()
 				return
 
-		beer
-			name = "Beer"
-			id = "beer"
-			description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.make_dizzy(3)
-				M:jitteriness = max(M:jitteriness-3,0)
-				M:nutrition += 2
-				if(data >= 25)
-					if (!M:slurring) M:slurring = 1
-					M:slurring += 3
-				if(data >= 40 && prob(33))
-					if (!M:confused) M:confused = 1
-					M:confused += 2
-
-				holder.remove_reagent(src.id, 0.2)
-
-				..()
-				return
-
-		whiskey
-			name = "Whiskey"
-			id = "whiskey"
-			description = "A superb and well-aged single-malt whiskey. Damn."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				if(data >= 45 && data <125)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M:confused+2,0)
-				holder.remove_reagent(src.id, 0.2)
-				..()
-				return
-
-		specialwhiskey
-			name = "Special Blend Whiskey"
-			id = "specialwhiskey"
-			description = "Just when you thought regular station whiskey was good... This silky, amber goodness has to come along and ruin everything."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <125)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M:confused+2,0)
-				holder.remove_reagent(src.id, 0.2)
-				..()
-				return
-
-
-		gin
-			name = "Gin"
-			id = "gin"
-			description = "It's gin. In space. I say, good sir."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <125)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M:confused+2,0)
-				holder.remove_reagent(src.id, 0.2)
-				..()
-				return
-
-		rum
-			name = "Rum"
-			id = "rum"
-			description = "Yohoho and all that."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <125)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M:confused+2,0)
-				holder.remove_reagent(src.id, 0.2)
-				..()
-				return
-
-		vodka
-			name = "Vodka"
-			id = "vodka"
-			description = "Number one drink AND fueling choice for Russians worldwide."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <125)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M:confused+2,0)
-				holder.remove_reagent(src.id, 0.2)
-				..()
-				return
-
 		holywater
 			name = "Holy Water"
 			id = "holywater"
@@ -2765,65 +2639,125 @@ datum
 				if(!istype(T)) return
 				T.Bless()
 
-		tequilla
-			name = "Tequila"
-			id = "tequilla"
-			description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
+
+//ALCOHOL WOO
+		alcohol	//Parent class for all alcoholic reagents.
+			name = "Alcohol"
+			id = "alcohol"
 			reagent_state = LIQUID
-			color = "#A8B0B7" // rgb: 168, 176, 183
+			var
+				dizzy_adj = 3
+				slurr_adj = 3
+				confused_adj = 2
+				slur_start = 45			//amount absorbed after which mob starts slurring
+				confused_start = 125	//amount absorbed after which mob starts confusing directions
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
-				M.dizziness +=3
-				if(data >= 45 && data <125)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M:confused+2,0)
+				M.dizziness +=dizzy_adj
+				if(data >= slur_start && data < confused_start)
+					if (!M:slurring) M:slurring = 1
+					M:slurring += slurr_adj
+				if(data >= confused_start && prob(33))
+					if (!M:confused) M:confused = 1
+					M.confused = max(M:confused+confused_adj,0)
+
 				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
-		vermouth
-			name = "Vermouth"
-			id = "vermouth"
-			description = "You suddenly feel a craving for a martini..."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
+			beer	//It's really much more stronger than other drinks
+				name = "Beer"
+				id = "beer"
+				description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
+				color = "#664300" // rgb: 102, 67, 0
+				slur_start = 25			//amount absorbed after which mob starts slurring
+				confused_start = 40		//amount absorbed after which mob starts confusing directions
 
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <125)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M:confused+2,0)
-				holder.remove_reagent(src.id, 0.2)
-				..()
-				return
+				on_mob_life(var/mob/living/M as mob)
+					..()
+					M:jitteriness = max(M:jitteriness-3,0)
+					M:nutrition += 2
+					return
 
-		wine
-			name = "Wine"
-			id = "wine"
-			description = "An premium alchoholic beverage made from distilled grape juice."
-			reagent_state = LIQUID
-			color = "#7E4043" // rgb: 126, 64, 67
+			whiskey
+				name = "Whiskey"
+				id = "whiskey"
+				description = "A superb and well-aged single-malt whiskey. Damn."
+				color = "#664300" // rgb: 102, 67, 0
+				dizzy_adj = 4
 
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=2
-				if(data >= 65 && data <125)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 3
-				else if(data >= 145 && prob(33))
-					M.confused = max(M:confused+2,0)
-				holder.remove_reagent(src.id, 0.2)
-				..()
-				return
+			specialwhiskey
+				name = "Special Blend Whiskey"
+				id = "specialwhiskey"
+				description = "Just when you thought regular station whiskey was good... This silky, amber goodness has to come along and ruin everything."
+				color = "#664300" // rgb: 102, 67, 0
+				slur_start = 30		//amount absorbed after which mob starts slurring
+
+			gin
+				name = "Gin"
+				id = "gin"
+				description = "It's gin. In space. I say, good sir."
+				color = "#664300" // rgb: 102, 67, 0
+				dizzy_adj = 3
+			rum
+				name = "Rum"
+				id = "rum"
+				description = "Yohoho and all that."
+				color = "#664300" // rgb: 102, 67, 0
+
+			vodka
+				name = "Vodka"
+				id = "vodka"
+				description = "Number one drink AND fueling choice for Russians worldwide."
+				color = "#664300" // rgb: 102, 67, 0
+
+			tequilla
+				name = "Tequila"
+				id = "tequilla"
+				description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
+				color = "#A8B0B7" // rgb: 168, 176, 183
+
+			vermouth
+				name = "Vermouth"
+				id = "vermouth"
+				description = "You suddenly feel a craving for a martini..."
+				color = "#664300" // rgb: 102, 67, 0
+
+			wine
+				name = "Wine"
+				id = "wine"
+				description = "An premium alchoholic beverage made from distilled grape juice."
+				color = "#7E4043" // rgb: 126, 64, 67
+				dizzy_adj = 2
+				slur_start = 65			//amount absorbed after which mob starts slurring
+				confused_start = 145	//amount absorbed after which mob starts confusing directions
+
+			cognac
+				name = "Cognac"
+				id = "cognac"
+				description = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. Classy as fornication."
+				color = "#664300" // rgb: 102, 67, 0
+				dizzy_adj = 4
+				confused_start = 115	//amount absorbed after which mob starts confusing directions
+
+			hooch
+				name = "Hooch"
+				id = "hooch"
+				description = "Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?"
+				color = "#664300" // rgb: 102, 67, 0
+				dizzy_adj = 6
+				slurr_adj = 5
+				slur_start = 35			//amount absorbed after which mob starts slurring
+				confused_start = 90	//amount absorbed after which mob starts confusing directions
+
+			ale
+				name = "Ale"
+				id = "ale"
+				description = "A dark alchoholic beverage made by malted barley and yeast."
+				color = "#664300" // rgb: 102, 67, 0
+//ALCHOHOL end
 
 		tonic
 			name = "Tonic Water"
@@ -2855,67 +2789,6 @@ datum
 				if(!M:sleeping_willingly)
 					M:sleeping = 0
 				M.make_jittery(5)
-				..()
-				return
-
-
-		cognac
-			name = "Cognac"
-			id = "cognac"
-			description = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. Classy as fornication."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				if(data >= 45 && data <115)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 3
-				else if(data >= 115 && prob(33))
-					M.confused = max(M:confused+2,0)
-				holder.remove_reagent(src.id, 0.2)
-				..()
-				return
-
-		hooch
-			name = "Hooch"
-			id = "hooch"
-			description = "Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?"
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=6
-				if(data >= 35 && data <90)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 5
-				else if(data >= 90 && prob(33))
-					M.confused = max(M:confused+2,0)
-				holder.remove_reagent(src.id, 0.2)
-				..()
-				return
-
-		ale
-			name = "Ale"
-			id = "ale"
-			description = "A dark alchoholic beverage made by malted barley and yeast."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=3
-				if(data >= 45 && data <125)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 3
-				else if(data >= 125 && prob(33))
-					M.confused = max(M:confused+2,0)
-				holder.remove_reagent(src.id, 0.2)
 				..()
 				return
 
