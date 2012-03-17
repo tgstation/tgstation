@@ -697,6 +697,26 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				if(src.pixel_x < -16)
 					usr.dir = 8
 
+
+
+
+	// ------- AI -------
+	if (istype(usr, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/ai = usr
+		if (ai.control_disabled)
+			return
+
+	// ------- CYBORG -------
+	if (istype (usr, /mob/living/silicon/robot))
+		var/mob/living/silicon/robot/bot = usr
+		if (bot.lockcharge) return
+	..()
+
+
+
+
+
+
 	// ------- SHIFT-CLICK -------
 
 	var/parameters = params2list(params)
@@ -728,21 +748,6 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			AICtrlClick(usr)
 		return
 	}
-
-
-
-
-	// ------- AI -------
-	if (istype(usr, /mob/living/silicon/ai))
-		var/mob/living/silicon/ai/ai = usr
-		if (ai.control_disabled)
-			return
-
-	// ------- CYBORG -------
-	if (istype (usr, /mob/living/silicon/robot))
-		var/mob/living/silicon/robot/bot = usr
-		if (bot.lockcharge) return
-	..()
 
 	// ------- THROW -------
 	if(usr.in_throw_mode)
