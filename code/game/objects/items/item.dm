@@ -182,6 +182,9 @@
 	user.update_clothing()
 	return
 
+/obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	return
+
 /obj/item/attack_self(mob/user as mob)
 	..()
 	if(twohanded)
