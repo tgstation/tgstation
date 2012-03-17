@@ -2,7 +2,7 @@
 	set src in oview()
 
 	if(!usr || !src)	return
-	if((usr.sdisabilities & 1) || usr.blinded || usr.stat)
+	if(((usr.sdisabilities & 1) || usr.blinded || usr.stat) && !(istype(usr,/mob/dead/observer/)))
 		usr << "<span class='notice'>Something is there but you can't see it.</span>"
 		return
 

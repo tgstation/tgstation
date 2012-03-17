@@ -86,7 +86,10 @@
 
 	//back
 	if (src.back)
-		msg += "[t_He] [t_has] \icon[src.back] \a [src.back] on [t_his] back.\n"
+		if (src.back.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_has] \icon[src.back] [src.back.gender==PLURAL?"some":"a"] blood-stained [src.back] on [t_his] back.</span>\n"
+		else
+			msg += "[t_He] [t_has] \icon[src.back] \a [src.back] on [t_his] back.\n"
 
 	//left hand
 	if (src.l_hand)
@@ -154,7 +157,8 @@
 			var/obj/item/device/pda/pda = src.wear_id
 			id = pda.owner
 		else if(istype(src.wear_id, /obj/item/weapon/card/id)) //just in case something other than a PDA/ID card somehow gets in the ID slot :[
-			id = src.wear_id.registered
+			var/obj/item/weapon/card/id/idcard = src.wear_id
+			id = idcard.registered
 		if (id && (id != src.real_name) && (get_dist(src, usr) <= 1) && prob(10))
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[src.wear_id] \a [src.wear_id] yet something doesn't seem right...</span>\n"
 		else
@@ -173,7 +177,7 @@
 		msg += "<span class='warning'>[t_He] [t_has] bitten off [t_his] own tongue and [t_has] suffered major bloodloss!</span>\n"
 
 	if (src.stat == DEAD || (changeling && (changeling.changeling_fakedeath == 1)))
-		msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life...</span>\n"
+		msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
 
 		if(!src.client)
 			var/foundghost = 0
@@ -183,7 +187,8 @@
 						foundghost++
 						break
 			if(!foundghost)
-				msg += "<span class='deadsay'>[t_He] [t_is] empty; his soul has vanished...</span>\n"
+				msg += "and [t_his] soul has departed"
+		msg += "...</span>\n"
 
 	else
 		msg += "<span class='warning'>"
@@ -228,7 +233,7 @@
 			msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
 	if (src.digitalcamo)
-		msg += "[t_He] looks replusingly uncanny!\n"
+		msg += "[t_He] [t_is] repulsively uncanny!\n"
 
 	msg += "*---------*</span>"
 
