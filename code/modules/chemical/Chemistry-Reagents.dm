@@ -922,7 +922,8 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(isrobot(M) || isAI(M)) return // Mutagen doesn't do anything to robutts!
 				if(!M) M = holder.my_atom
-				M.radiation += 3
+				if(prob(33))
+					M.radiation += 1
 				..()
 				return
 
