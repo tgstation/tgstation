@@ -1688,7 +1688,7 @@ window "vendingslot"
 window "vendingwindow_n"
 	elem "vendingwindow_n"
 		type = MAIN
-		pos = 1604,378
+		pos = 281,0
 		size = 300x438
 		anchor1 = none
 		anchor2 = none
