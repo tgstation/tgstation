@@ -2,7 +2,8 @@
 	density = 1
 	layer = 4.0
 	animate_movement = 2
-	flags = NOREACT
+//	flags = NOREACT
+//THE SOLUTION BUBBLES was funnier.
 	var/datum/mind/mind
 
 

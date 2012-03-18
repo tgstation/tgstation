@@ -46,9 +46,9 @@ mob/living/carbon/verb/give()
 				I.layer = 20
 				I.add_fingerprint(src)
 				src.update_clothing()
-				src.visible_message(src,"[usr.name] handed \the [I.name] to [src.name].")
+				src.visible_message("[usr.name] handed \the [I.name] to [src.name].")
 			if("No")
-				src.visible_message(src,"[usr.name] tried to hand [I.name] to [src.name] but [src.name] didn't want it.")
+				src.visible_message("[usr.name] tried to hand [I.name] to [src.name] but [src.name] didn't want it.")
 	else if(src.l_hand == null)
 		switch(alert(src,"[src.name] wants to give you \a [I.name]?",,"Yes","No"))
 			if("Yes")
@@ -75,8 +75,8 @@ mob/living/carbon/verb/give()
 				I.layer = 20
 				I.add_fingerprint(src)
 				src.update_clothing()
-				src.visible_message(src,"[usr.name] handed \the [I.name] to [src.name].")
+				src.visible_message("[usr.name] handed \the [I.name] to [src.name].")
 			if("No")
-				src.visible_message(src,"[usr.name] tried to hand [I.name] to [src.name] but [src.name] didn't want it.")
+				src.visible_message("[usr.name] tried to hand [I.name] to [src.name] but [src.name] didn't want it.")
 	else
 		usr << "[src.name]\s hands are full."
