@@ -63,8 +63,9 @@
 				O.hear_talk(src, message)
 
 	var/list/listening = hearers(message_range, src)
-	listening -= src
-	listening += src
+//	listening -= src
+//	listening += src
+// WAT.
 	var/list/eavesdropping = hearers(2, src)
 	eavesdropping -= src
 	eavesdropping -= listening

@@ -153,7 +153,7 @@
 	if( !message_mode && (disease_symptoms & DISEASE_WHISPER))
 		message_mode = "whisper"
 
-	if(src.stunned > 0 || (traumatic_shock > 61 && prob(50)))
+	if(src.stunned > 2 || (traumatic_shock > 61 && prob(50)))
 		message_mode = "" //Stunned people shouldn't be able to physically turn on their radio/hold down the button to speak into it
 
 
@@ -339,7 +339,7 @@
 	for(var/mob/M in listening)
 		eavesdroppers.Remove(M)
 	for(var/mob/M in eavesdroppers)
-		if(M.stat)
+		if(M.stat || !M.client)
 			eavesdroppers.Remove(M)
 
 	for (var/obj/O in ((W | contents)-used_radios))
