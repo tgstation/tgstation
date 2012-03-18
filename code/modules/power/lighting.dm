@@ -41,10 +41,12 @@
 	icon_state = "bulb1"
 	base_state = "bulb"
 	fitting = "bulb"
-	brightness = 5
+	brightness = 3
 	desc = "A small lighting fixture."
 	light_type = /obj/item/weapon/light/bulb
-
+	
+/obj/machinery/light/small/spot
+	brightness = 5
 
 /obj/machinery/light/spot
 	name = "spotlight"
@@ -77,9 +79,15 @@
 	spawn(2)
 		switch(fitting)
 			if("tube")
+				if(src.loc && src.loc.loc && isarea(src.loc.loc))
+					var/area/A = src.loc.loc
+					brightness = A.area_lights_luminosity
+				else
+					brightness = rand(6,9)
 				if(prob(10))
 					broken(1)
 			if("bulb")
+				brightness = 3
 				if(prob(25))
 					broken(1)
 		spawn(1)
