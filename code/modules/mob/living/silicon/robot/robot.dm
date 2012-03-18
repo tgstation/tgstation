@@ -968,24 +968,25 @@ Frequency:
 	if ((s_active && !( s_active in contents ) ))
 		s_active.close(src)
 
-	if(module.type == /obj/item/weapon/robot_module/janitor)	//you'd think checking the module would work
-		var/turf/tile = get_turf(loc)
+	if(module)
+		if(module.type == /obj/item/weapon/robot_module/janitor)	//you'd think checking the module would work
+			var/turf/tile = get_turf(loc)
 
-		tile.clean_blood()
-		for(var/obj/effect/R in tile)
-			if(istype(R, /obj/effect/rune) || istype(R, /obj/effect/decal/cleanable) || istype(R, /obj/effect/overlay))
-				del(R)
+			tile.clean_blood()
+			for(var/obj/effect/R in tile)
+				if(istype(R, /obj/effect/rune) || istype(R, /obj/effect/decal/cleanable) || istype(R, /obj/effect/overlay))
+					del(R)
 
-		for(var/obj/item/cleaned_item in tile)
-			cleaned_item.clean_blood()
+			for(var/obj/item/cleaned_item in tile)
+				cleaned_item.clean_blood()
 
-		for(var/mob/living/carbon/human/cleaned_human in tile)	//HUE HUE I CLEAN U
-			if(cleaned_human.lying)
-				cleaned_human.clean_blood()
-				cleaned_human << "\red [src] cleans your face!"
-				for(var/obj/item/carried_item in cleaned_human.contents)
-					carried_item.clean_blood()
-	return
+			for(var/mob/living/carbon/human/cleaned_human in tile)	//HUE HUE I CLEAN U
+				if(cleaned_human.lying)
+					cleaned_human.clean_blood()
+					cleaned_human << "\red [src] cleans your face!"
+					for(var/obj/item/carried_item in cleaned_human.contents)
+						carried_item.clean_blood()
+		return
 
 /mob/living/silicon/robot/proc/self_destruct()
 	gib(1)

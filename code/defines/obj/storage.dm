@@ -310,7 +310,7 @@
 /obj/item/weapon/storage/stma_kit
 	name = "Sterile Masks"
 	desc = "This box contains masks of sterility."
-	icon_state = "latex"
+	icon_state = "sterile"
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
