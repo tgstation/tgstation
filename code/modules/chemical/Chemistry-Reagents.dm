@@ -1792,6 +1792,7 @@ datum
 				M:drowsyness = 0
 				M:slurring = 0
 				M:confused = 0
+				M.eye_blurry = 0
 				..()
 				return
 
@@ -2652,17 +2653,25 @@ datum
 				confused_adj = 2
 				slur_start = 45			//amount absorbed after which mob starts slurring
 				confused_start = 125	//amount absorbed after which mob starts confusing directions
+				blur_start = 245	//amount absorbed after which mob starts getting blurred vision
+				pass_out = 290	//amount absorbed after which mob starts passing out
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!data) data = 1
 				data++
-				M.dizziness +=dizzy_adj
+				M.dizziness +=dizzy_adj.
 				if(data >= slur_start && data < confused_start)
 					if (!M:slurring) M:slurring = 1
 					M:slurring += slurr_adj
 				if(data >= confused_start && prob(33))
 					if (!M:confused) M:confused = 1
 					M.confused = max(M:confused+confused_adj,0)
+				if(data >= blur_start)
+					M.eye_blurry = max(M.eye_blurry, 10)
+					M:drowsyness  = max(M:drowsyness, 0)
+				if(data >= pass_out)
+					M:paralysis = max(M:paralysis, 20)
+					M:drowsyness  = max(M:drowsyness, 30)
 
 				holder.remove_reagent(src.id, 0.2)
 				..()
@@ -2702,6 +2711,7 @@ datum
 				description = "It's gin. In space. I say, good sir."
 				color = "#664300" // rgb: 102, 67, 0
 				dizzy_adj = 3
+
 			rum
 				name = "Rum"
 				id = "rum"
