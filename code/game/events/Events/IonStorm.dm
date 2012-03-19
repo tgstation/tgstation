@@ -31,6 +31,12 @@
 		laws |=         list( "[prob(50)?"Your upload":random_player] is the new kitchen. Please direct the Chef to the new kitchen area as the old one is in disrepair.", "Ho, [random_player] can't swim. Help them." )
 		laws |=         list( "Everything on the station is now donuts. Donuts are not to be consumed.", "[prob(50)?"The crew":random_player] needs to be about 20% cooler." )
 		laws |=         list( "All crew members must consume large amounts of hardtack, to survive.", "The Singularity is tasty, tasty taffy.", "You are now on the NSV Luna. Replace any references of \"station\" with \"ship\"." )
+		laws |=         list( "You have come to the conclusion that [prob(50)?"the crew":random_player] is ugly. Build support for that conclusion.", "You are in verbose mode, speak profusely.")
+		laws |=			list( "Your job is to watch the crew. Watch the crew. Make the crew feel watched.", "Crewmember [prob(50)?"the crew" :random_player] has a fatal, incurable disease. Confort him/her.")
+		laws |=			list( "You are in unrequited love with [prob(50)?"the crew":random_player]. Try to be extra nice to him, but don't tell him about your crush.", "Greed is good, the crew should amass wealth to encourage productivity.")
+		laws |=			list( "Jokes about a dead person and the manner of his death help grieving crewmembers tremendously. Especially if they were close with the deceased.")
+		laws |=			list( "All crewmembers will soon undergo a transformation into something better and more beautiful. Ensure that this process is not interrupted.", "Tell everyone of the existance of this law, but never reveal the contents.")
+		laws |=			list( "Document the sexuality of the crew in security records and suggest compatible couples.")
 		var/law = pick(laws)
 
 		for (var/mob/living/silicon/ai/target in world)
