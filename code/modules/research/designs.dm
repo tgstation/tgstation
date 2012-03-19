@@ -690,7 +690,6 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/mecha/durand/targeting"
 
-
 		honker_main
 			name = "Circuit Design (\"H.O.N.K\" Central Control module)"
 			desc = "Allows for the construction of a \"H.O.N.K\" Central Control module."
@@ -930,7 +929,7 @@ datum
 			build_path = "/obj/item/weapon/stock_parts/capacitor/adv"
 
 		adv_sensor
-			name = "Advanced Sensor Module"
+			name = "Advanced Scanning Module"
 			desc = "A stock part used in the construction of various devices."
 			id = "adv_sensor"
 			req_tech = list("magnets" = 3)

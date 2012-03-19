@@ -338,11 +338,11 @@
 					 //8
 					 list("key"=/obj/item/weapon/stock_parts/capacitor/adv,
 					 		"backkey"=/obj/item/weapon/screwdriver,
-					 		"desc"="Advanced scanner module is secured"),
+					 		"desc"="Advanced scanning module is secured"),
 					 //9
 					 list("key"=/obj/item/weapon/screwdriver,
 					 		"backkey"=/obj/item/weapon/crowbar,
-					 		"desc"="Advanced scanner module is installed"),
+					 		"desc"="Advanced scanning module is installed"),
 					 //10
 					 list("key"=/obj/item/weapon/stock_parts/scanning_module/adv,
 					 		"backkey"=/obj/item/weapon/screwdriver,
@@ -454,22 +454,22 @@
 					new /obj/item/weapon/circuitboard/mecha/gygax/targeting(get_turf(holder))
 			if(10)
 				if(diff==FORWARD)
-					user.visible_message("[user] installs advanced scanner module to [holder].", "You install advanced scanner module to [holder].")
+					user.visible_message("[user] installs advanced scanning module to [holder].", "You install advanced scanning module to [holder].")
 					del used_atom
 				else
 					user.visible_message("[user] unfastens the weapon control module.", "You unfasten the weapon control module.")
 			if(9)
 				if(diff==FORWARD)
-					user.visible_message("[user] secures the advanced scanner module.", "You secure the advanced scanner module.")
+					user.visible_message("[user] secures the advanced scanning module.", "You secure the advanced scanning module.")
 				else
-					user.visible_message("[user] removes the advanced scanner module from [holder].", "You remove the advanced scanner module from [holder].")
+					user.visible_message("[user] removes the advanced scanning module from [holder].", "You remove the advanced scanning module from [holder].")
 					new /obj/item/weapon/stock_parts/scanning_module/adv(get_turf(holder))
 			if(8)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs advanced capacitor to [holder].", "You install advanced capacitor to [holder].")
 					del used_atom
 				else
-					user.visible_message("[user] unfastens the advanced scanner module.", "You unfasten the advanced scanner module.")
+					user.visible_message("[user] unfastens the advanced scanning module.", "You unfasten the advanced scanning module.")
 			if(7)
 				if(diff==FORWARD)
 					user.visible_message("[user] secures the advanced capacitor.", "You secure the advanced capacitor.")
@@ -873,10 +873,10 @@
 			if(11)
 				user.visible_message("[user] secures the weapon control module.", "You secure the weapon control module.")
 			if(10)
-				user.visible_message("[user] installs advanced scanner module to [holder].", "You install advanced scanner module to [holder].")
+				user.visible_message("[user] installs advanced scanning module to [holder].", "You install advanced scanning module to [holder].")
 				del used_atom
 			if(9)
-				user.visible_message("[user] secures the advanced scanner module.", "You secure the advanced scanner module.")
+				user.visible_message("[user] secures the advanced scanning module.", "You secure the advanced scanning module.")
 			if(8)
 				user.visible_message("[user] installs advanced capacitor to [holder].", "You install advanced capacitor to [holder].")
 				del used_atom
