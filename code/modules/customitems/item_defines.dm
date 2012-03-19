@@ -33,4 +33,3 @@
 	desc = "One of the older meson scanner models retrofitted to perform like its modern counterparts."
 	icon = 'custom_items.dmi'
 	icon_state = "book_berner_1"
-	icon_state = "meson_specs"
