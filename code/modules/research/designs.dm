@@ -618,6 +618,24 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/mecha/ripley/peripherals"
 
+		odysseus_main
+			name = "Circuit Design (\"Odysseus\" Central Control module)"
+			desc = "Allows for the construction of a \"Odysseus\" Central Control module."
+			id = "odysseus_main"
+			req_tech = list("programming" = 3,"biotech" = 2)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/mecha/odysseus/main"
+
+		odysseus_peri
+			name = "Circuit Design (\"Odysseus\" Peripherals Control module)"
+			desc = "Allows for the construction of a \"Odysseus\" Peripheral Control module."
+			id = "odysseus_peri"
+			req_tech = list("programming" = 3,"biotech" = 2)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/mecha/odysseus/peripherals"
+
 		gygax_main
 			name = "Circuit Design (\"Gygax\" Central Control module)"
 			desc = "Allows for the construction of a \"Gygax\" Central Control module."
@@ -776,13 +794,13 @@ datum
 			req_tech = list("magnets" = 3, "programming" = 3, "engineering" = 3)
 			build_path = "/obj/item/mecha_parts/mecha_equipment/repair_droid"
 
-		mech_plasma_generator
+		mech_generator
 			name = "Exosuit Module Design (Plasma Converter Module)"
 			desc = "Exosuit-mounted plasma converter."
 			id = "mech_plasma_generator"
 			build_type = MECHFAB
 			req_tech = list("plasmatech" = 2, "powerstorage"= 2, "engineering" = 2)
-			build_path = "/obj/item/mecha_parts/mecha_equipment/plasma_generator"
+			build_path = "/obj/item/mecha_parts/mecha_equipment/generator"
 
 		mech_energy_relay
 			name = "Exosuit Module Design (Tesla Energy Relay)"
@@ -808,7 +826,29 @@ datum
 			req_tech = list("materials" = 5, "combat" = 5, "engineering"=3)
 			build_path = "/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster"
 
+		mech_syringe_gun
+			name = "Exosuit Module Design(Syringe Gun)"
+			desc = "Exosuit-mounted syringe gun and chemical synthesizer."
+			id = "mech_syringe_gun"
+			build_type = MECHFAB
+			req_tech = list("materials" = 3, "biotech"=4, "magnets"=4, "programming"=3)
+			build_path = "/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun"
 
+		mech_diamond_drill
+			name = "Exosuit Module Design (Diamond Mining Drill)"
+			desc = "An upgraded version of the standard drill"
+			id = "mech_diamond_drill"
+			build_type = MECHFAB
+			req_tech = list("materials" = 4, "engineering" = 3)
+			build_path = "/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill"
+
+		mech_generator_nuclear
+			name = "Exosuit Module Design (ExoNuclear Reactor)"
+			desc = "Compact nuclear reactor module"
+			id = "mech_generator_nuclear"
+			build_type = MECHFAB
+			req_tech = list("powerstorage"= 3, "engineering" = 3, "materials" = 3)
+			build_path = "/obj/item/mecha_parts/mecha_equipment/generator/nuclear"
 
 ////////////////////////////////////////
 //////////Disk Construction Disks///////

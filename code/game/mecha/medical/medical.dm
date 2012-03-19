@@ -1,6 +1,6 @@
 /obj/mecha/medical/New()
 	..()
-	new /obj/item/mecha_tracking(src)
+	new /obj/item/mecha_parts/mecha_tracking(src)
 	return
 
 
