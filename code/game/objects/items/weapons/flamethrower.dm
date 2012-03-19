@@ -106,6 +106,7 @@
 		if(isigniter(W))
 			var/obj/item/device/assembly/igniter/I = W
 			if(I.secured)	return 0
+			if(src.igniter)	 return
 			user.remove_from_mob(I)
 			I.loc = src
 			igniter = I
