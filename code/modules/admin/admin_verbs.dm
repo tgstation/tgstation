@@ -202,7 +202,6 @@
 			verbs += /client/proc/toggleadminhelpsound
 //			verbs += /client/proc/togglebuildmodeself
 			verbs += /client/proc/hide_most_verbs
-			verbs += /client/proc/tension_report
 			verbs += /client/proc/jumptocoord
 			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/startSinglo
@@ -220,7 +219,7 @@
 			verbs += /proc/release
 			verbs += /client/proc/toggleprayers
 			verbs += /client/proc/deadmin_self
-
+			verbs += /client/proc/tension_report
 
 		if (holder.level >= 2)//Admin Candidate********************************************************************
 			verbs += /client/proc/cmd_admin_add_random_ai_law
@@ -275,6 +274,7 @@
 			verbs += /client/proc/general_report
 			verbs += /client/proc/air_report
 			verbs += /client/proc/deadmin_self
+
 
 
 		if (holder.level >= -1)//Admin Observer
@@ -734,6 +734,21 @@
 				//S.dissipate_track = 0
 				//S.dissipate_strength = 10
 
+	for(var/obj/machinery/power/rad_collector/Rad in world)
+		if(Rad.anchored)
+			if(!Rad.P)
+				var/obj/item/weapon/tank/plasma/Plasma = new/obj/item/weapon/tank/plasma(Rad)
+				Plasma.air_contents.toxins = 70
+				Rad.drainratio = 0
+				Rad.P = Plasma
+				Plasma.loc = Rad
+
+			if(!Rad.active)
+				Rad.toggle_power()
+
+	for(var/obj/machinery/power/smes/SMES in world)
+		if(SMES.anchored)
+			SMES.chargemode = 1
 
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
 	set name = "Toggle most admin verb visibility"

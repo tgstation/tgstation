@@ -1028,7 +1028,7 @@ datum/mind
 		del(flash)
 		take_uplink()
 		var/fail = 0
-		fail |= !ticker.mode.equip_traitor(current, 1)
+	//	fail |= !ticker.mode.equip_traitor(current, 1)
 		fail |= !ticker.mode.equip_revolutionary(current)
 
 
