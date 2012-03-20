@@ -43,12 +43,12 @@
 
 	return
 
-/proc/in_range(source, user, telepathy=1)
+/proc/in_range(source, user)
 	if(get_dist(source, user) <= 1)
 		return 1
 	else
 		if (istype(user, /mob/living/carbon))
-			if (user:mutations & telepathy)
+			if (user:mutations & TK)
 				var/X = source:x
 				var/Y = source:y
 				var/Z = source:z
@@ -190,104 +190,6 @@
 	return turfs
 
 proc/check_can_reach(atom/user, atom/target)
-	var/direct = get_dir(user, target)
-	var/obj/item/weapon/dummy/D = new /obj/item/weapon/dummy( user.loc )
-	var/ok = 0
-	if ( (direct - 1) & direct)
-
-		// ------- CLICKED OBJECT IS LOCATED IN A DIAGONAL POSITION FROM THE PERSON -------
-
-		var/turf/Step_1
-		var/turf/Step_2
-		switch(direct)
-			if(5.0)
-				Step_1 = get_step(user, NORTH)
-				Step_2 = get_step(user, EAST)
-
-			if(6.0)
-				Step_1 = get_step(user, SOUTH)
-				Step_2 = get_step(user, EAST)
-
-			if(9.0)
-				Step_1 = get_step(user, NORTH)
-				Step_2 = get_step(user, WEST)
-
-			if(10.0)
-				Step_1 = get_step(user, SOUTH)
-				Step_2 = get_step(user, WEST)
-
-			else
-		if(Step_1 && Step_2)
-
-			// ------- BOTH CARDINAL DIRECTIONS OF THE DIAGONAL EXIST IN THE GAME WORLD -------
-
-			var/check_1 = 0
-			var/check_2 = 0
-			if(step_to(D, Step_1))
-				check_1 = 1
-				for(var/obj/border_obstacle in Step_1)
-					if(border_obstacle.flags & ON_BORDER)
-						if(!border_obstacle.CheckExit(D, target))
-							check_1 = 0
-							// ------- YOU TRIED TO CLICK ON AN ITEM THROUGH A WINDOW (OR SIMILAR THING THAT LIMITS ON BORDERS) ON ONE OF THE DIRECITON TILES -------
-				for(var/obj/border_obstacle in get_turf(target))
-					if((border_obstacle.flags & ON_BORDER) && (target != border_obstacle))
-						if(!border_obstacle.CanPass(D, D.loc, 1, 0))
-							// ------- YOU TRIED TO CLICK ON AN ITEM THROUGH A WINDOW (OR SIMILAR THING THAT LIMITS ON BORDERS) ON THE TILE YOU'RE ON -------
-							check_1 = 0
-
-			D.loc = user.loc
-			if(step_to(D, Step_2))
-				check_2 = 1
-
-				for(var/obj/border_obstacle in Step_2)
-					if(border_obstacle.flags & ON_BORDER)
-						if(!border_obstacle.CheckExit(D, target))
-							check_2 = 0
-				for(var/obj/border_obstacle in get_turf(target))
-					if((border_obstacle.flags & ON_BORDER) && (target != border_obstacle))
-						if(!border_obstacle.CanPass(D, D.loc, 1, 0))
-							check_2 = 0
-
-
-			if(check_1 || check_2)
-				ok = 1
-				// ------- YOU CAN REACH THE ITEM THROUGH AT LEAST ONE OF THE TWO DIRECTIONS. GOOD. -------
-
-			/*
-				More info:
-					If you're trying to click an item in the north-east of your mob, the above section of code will first check if tehre's a tile to the north or you and to the east of you
-					These two tiles are Step_1 and Step_2. After this, a new dummy object is created on your location. It then tries to move to Step_1, If it succeeds, objects on the turf you're on and
-					the turf that Step_1 is are checked for items which have the ON_BORDER flag set. These are itmes which limit you on only one tile border. Windows, for the most part.
-					CheckExit() and CanPass() are use to determine this. The dummy object is then moved back to your location and it tries to move to Step_2. Same checks are performed here.
-					If at least one of the two checks succeeds, it means you can reach the item and ok is set to 1.
-			*/
-	else
-		// ------- OBJECT IS ON A CARDINAL TILE (NORTH, SOUTH, EAST OR WEST OR THE TILE YOU'RE ON) -------
-		if(target.loc == user.loc)
-			ok = 1
-			// ------- OBJECT IS ON THE SAME TILE AS YOU -------
-		else
-			ok = 1
-
-			//Now, check objects to block exit that are on the border
-			for(var/obj/border_obstacle in user.loc)
-				if(border_obstacle.flags & ON_BORDER)
-					if(!border_obstacle.CheckExit(D, target))
-						ok = 0
-
-			//Next, check objects to block entry that are on the border
-			for(var/obj/border_obstacle in get_turf(target))
-				if((border_obstacle.flags & ON_BORDER) && (target != border_obstacle))
-					if(!border_obstacle.CanPass(D, D.loc, 1, 0))
-						ok = 0
-		/*
-			See the previous More info, for... more info...
-		*/
-
-	if(get_dist(user, target) > 1)
+	if(!in_range(user,target))
 		return 0
-
-	del(D)
-	// ------- DUMMY OBJECT'S SERVED IT'S PURPOSE, IT'S REWARDED WITH A SWIFT DELETE -------
-	return ok
+	return CanReachThrough(get_turf(user), get_turf(target), target)

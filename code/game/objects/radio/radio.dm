@@ -294,11 +294,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	var/filter_type = 2
 
-	/* --- Intercoms can only broadcast to other intercoms, but bounced radios can broadcast to bounced radios and intercoms --- */
-	if(istype(src, /obj/item/device/radio/intercom))
-		filter_type = 1
-
-
 	var/datum/signal/signal = new
 	signal.transmission_method = 2
 

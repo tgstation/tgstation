@@ -1285,6 +1285,7 @@
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/playing_sound = 0
+	var/playing_buzzer = 0
 
 	New()
 		..()
@@ -1297,7 +1298,11 @@
 	proc/expel(var/obj/structure/disposalholder/H)
 
 		flick("outlet-open", src)
-		playsound(src, 'warning-buzzer.ogg', 50, 0, 0)
+		if(!playing_buzzer)
+			playing_buzzer = 1
+			playsound(src, 'warning-buzzer.ogg', 50, 0, 0)
+			spawn(30)
+				playing_buzzer = 0
 		sleep(20)	//wait until correct animation frame
 
 		if(!playing_sound)
