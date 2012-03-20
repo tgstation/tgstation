@@ -32,6 +32,7 @@
 	canstun = 0
 	canweaken = 0
 
+
 	Life()
 		..()
 		if(stat == 2)
@@ -161,6 +162,7 @@
 	stop_automated_movement = 1
 	canstun = 0
 	canweaken = 0
+	see_in_dark = 7
 
 	Life()
 		..()

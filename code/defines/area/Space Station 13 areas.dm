@@ -995,6 +995,10 @@ proc/process_ghost_teleport_locs()
 	name = "Autolathe Storage"
 	icon_state = "storage"
 
+/area/storage/art
+	name = "Art Supply Storage"
+	icon_state = "storage"
+
 /area/storage/auxillary
 	name = "Auxillary Storage"
 	icon_state = "auxstorage"
