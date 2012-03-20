@@ -1095,6 +1095,7 @@
 #include "code\WorkInProgress\Ported\Bureaucracy\copier.dm"
 #include "code\WorkInProgress\Ported\Bureaucracy\filing.dm"
 #include "code\WorkInProgress\SkyMarshal\coatrack.dm"
+#include "code\WorkInProgress\SkyMarshal\portalathe.dm"
 #include "code\WorkInProgress\SkyMarshal\traitoritems.dm"
 #include "code\WorkInProgress\SkyMarshal\wardrobes.dm"
 #include "code\WorkInProgress\Tastyfish\Eliza.dm"

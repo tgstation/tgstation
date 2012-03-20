@@ -421,7 +421,7 @@
 				usr.sleeping = 1
 				usr.sleeping_willingly = 1
 		if("rest")
-			usr.resting = !( usr.resting )
+			usr.resting = !usr.resting
 		if("throw")
 			if (!usr.stat && isturf(usr.loc) && !usr.restrained())
 				usr:toggle_throw_mode()
