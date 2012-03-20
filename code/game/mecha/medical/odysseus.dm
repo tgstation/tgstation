@@ -1,11 +1,11 @@
 /obj/mecha/medical/odysseus
-	desc = "Odysseus Medical Exosuit"
+	desc = "These exosuits are developed and produced by Vey-Med. (&copy; All rights reserved)."
 	name = "Odysseus"
-	icon_state = "placeholder-1"
+	icon_state = "odysseus"
 	step_in = 2
 	max_temperature = 1500
 	health = 120
-	wreckage = null
+	wreckage = /obj/effect/decal/mecha_wreckage/odysseus
 	internal_damage_threshold = 35
 	deflect_chance = 15
 	step_energy_drain = 6
@@ -86,8 +86,8 @@
 			for(var/datum/disease/D in patient.viruses)
 				if(!D.hidden[SCANNER])
 					foundVirus++
-			if(patient.virus2)
-				foundVirus++
+			//if(patient.virus2)
+			//	foundVirus++
 			C.images += image(tempHud,patient,"hud[RoundHealth(patient.health)]")
 			if(patient.stat == 2)
 				C.images += image(tempHud,patient,"huddead")
