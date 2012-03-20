@@ -513,10 +513,10 @@
 		usr << "\blue We stealthily sting [T]."
 
 		if(!T.changeling)
-			T << "You feel a small prick and a burning sensation in your throat."
+		//	T << "You feel a small prick and a burning sensation in your throat."
 			T.silent += 30
-		else
-			T << "You feel a small prick."
+		//else
+		//	T << "You feel a small prick."
 
 		usr.verbs -= /client/proc/changeling_silence_sting
 
@@ -911,3 +911,54 @@
 
 	spawn(5)
 		usr.verbs += /client/proc/changeling_rapidregen
+
+
+
+
+/client/proc/changeling_lsdsting()
+	set category = "Changeling"
+	set name = "Hallucination Sting (15)"
+	set desc = "Causes terror in the target."
+
+	if(!usr.changeling)
+		usr << "\red You're not a changeling, something's wrong!"
+		return
+
+	var/list/victims = list()
+	for(var/mob/living/carbon/C in oview(usr.changeling.sting_range))
+		victims += C
+	var/mob/T = input(usr, "Who do you wish to sting?") as null | anything in victims
+
+	if(T && T in view(usr.changeling.sting_range))
+
+		if(usr.stat)
+			usr << "\red Not when we are incapacitated."
+			return
+
+		if(usr.changeling.chem_charges < 15)
+			usr << "\red We don't have enough stored chemicals to do that!"
+			return
+
+		usr.changeling.chem_charges -= 15
+		usr.changeling.sting_range = 1
+
+		usr << "\blue We stealthily sting [T]."
+
+		if(!T.changeling)
+		//	T << "You feel a small prick." // No warning.
+
+			var/timer = rand(300,600)
+
+			spawn(timer)
+				if(T)
+					if(T.reagents)
+						T.reagents.add_reagent("LSD", 50)
+						T.hallucination = 250
+
+
+		usr.verbs -= /client/proc/changeling_lsdsting
+
+		spawn(5)
+			usr.verbs += /client/proc/changeling_lsdsting
+
+		return

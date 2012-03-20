@@ -92,6 +92,7 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 /obj/effect/proc_holder/power/silence_sting
 	name = "Silence Sting"
 	desc = "We silently sting a human, completely silencing them for a short time."
+	helptext = "Does not provide a warning to a victim that they&apos;ve been stung, until they try to speak and can&apos;t."  // Man, fuck javascript.  &apos; == '
 	genomecost = 2
 	allowduringlesserform = 1
 
@@ -186,7 +187,13 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 
 	verbpath = /client/proc/changeling_rapidregen
 
+/obj/effect/proc_holder/power/LSDSting
+	name = "Hallucination Sting"
+	desc = "We evolve the ability to sting a target with a powerful hallunicationary chemical."
+	helptext = "The target does not notice they&apos;ve been stung.  The effect occurs after 30 to 60 seconds."
+	genomecost = 3
 
+	verbpath = /client/proc/changeling_lsdsting
 
 
 
