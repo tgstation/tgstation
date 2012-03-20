@@ -5,7 +5,7 @@
 	w_class = 4.0
 	flags = 259.0
 	max_w_class = 3
-	max_combined_w_class = 20
+	max_combined_w_class = 21
 
 /obj/item/weapon/storage/backpack/cultpack
 	name = "Trophy Rack"
@@ -14,7 +14,7 @@
 
 /obj/item/weapon/storage/trashbag
 	name = "trash bag"
-	desc = "For picking up all that trash..."
+	desc = "For picking up all that trash."
 	icon_state = "trashbag"
 	item_state = "trashbag"
 	w_class = 4.0
@@ -31,7 +31,7 @@
 */
 /obj/item/weapon/storage/pill_bottle
 	name = "pill bottle"
-	desc = "A reasonable place to put your pills.."
+	desc = "A reasonable place to put your pills."
 	icon_state = "pill_canister"
 	icon = 'chemical.dmi'
 	item_state = "contsolid"
@@ -114,6 +114,11 @@
 	name = "Bandolier"
 	desc = "A very old bandolier to wear on your back."
 	icon_state = "bandolier"
+
+/obj/item/weapon/storage/backpack/medicalsatchel
+	name = "medic's satchel"
+	desc = "Easy to access medical satchel for quick responses."
+	icon_state = "medicalsatchel"
 
 /obj/item/weapon/storage/backpack/industrial
 	name = "industrial backpack"

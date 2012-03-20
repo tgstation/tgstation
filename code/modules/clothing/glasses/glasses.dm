@@ -91,8 +91,8 @@
 		return
 
 /obj/item/clothing/glasses/thermal
-	name = "Optical Thermal Scanner"
-	desc = "Thermals in the shape of glasses."
+	name = "sunglasses"
+	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes. Has an odd tint."
 	//icon_state = "thermal"
 	//item_state = "glasses"
 	icon_state = "sun"
