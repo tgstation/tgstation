@@ -3,6 +3,7 @@
 	desc = "A folded bag designed to contain dead things."
 	icon = 'bodybag.dmi'
 	icon_state = "bodybag_folded"
+	w_class = 1.0
 
 	attack_self(mob/user)
 		var/obj/structure/closet/body_bag/R = new /obj/structure/closet/body_bag(user.loc)

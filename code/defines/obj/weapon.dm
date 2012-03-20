@@ -47,7 +47,7 @@
 	flags = FPRINT | ONBELT | TABLEPASS
 	force = 40
 	throwforce = 10
-	w_class = 3
+	w_class = 3.0
 
 	IsShield()
 		return 1

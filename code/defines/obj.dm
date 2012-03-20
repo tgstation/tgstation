@@ -28,6 +28,7 @@
 	icon = 'policetape.dmi'
 	icon_state = "rollstart"
 	flags = FPRINT
+	w_class = 1.0
 	var/tapestartx = 0
 	var/tapestarty = 0
 	var/tapestartz = 0
