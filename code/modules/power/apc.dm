@@ -48,6 +48,7 @@
 	var/equip_consumption = 0 //not used
 	var/environ_consumption = 0 //not used
 	var/wiresexposed = 0
+	var/cover_unscrewed = 0 // used for dismantling broken APC covers
 	var/apcwires = 15
 	netnum = -1		// set so that APCs aren't found as powernet nodes
 	var/malfhack = 0 //New var for my changes to AI malf. --NeoFite
@@ -215,7 +216,7 @@
 				user << "\red Disconnect wires first."
 				return
 			playsound(src.loc, 'Crowbar.ogg', 50, 1)
-			user << "You trying to remove the power control board..."
+			user << "You try to remove the power control board..."
 			if(do_after(user, 50))
 				has_electronics = 0
 				if ((stat & BROKEN) || malfhack)
@@ -232,6 +233,18 @@
 		else if (opened!=2) //cover isn't removed
 			opened = 0
 			updateicon()
+	else if (istype(W, /obj/item/weapon/crowbar) && ((stat & BROKEN) || malfhack) )
+		if(cover_unscrewed)
+			user.visible_message("\red [user] starts removing the broken APC cover with \the [W]!", \
+				"\red You start removing the broken APC cover!")
+			if(do_after(user, 50))
+				user.visible_message("\red The broken APC cover was removed with \the [W] by [user.name]!", \
+					"\red You remove the broken APC cover with your [W.name]!")
+				opened = 2
+				cover_unscrewed = 0
+				updateicon()
+		else
+			user << "\red You need to unscrew the cover first!"
 	else if (istype(W, /obj/item/weapon/crowbar) && !((stat & BROKEN) || malfhack) )
 		if(coverlocked && !(stat & MAINT))
 			user << "\red The cover is locked and cannot be opened."
@@ -258,7 +271,7 @@
 	else if	(istype(W, /obj/item/weapon/screwdriver))	// haxing
 		if(opened)
 			if (cell)
-				user << "\red Close the APC first." //Less hints more mystery!
+				user << "\red Remove the power cell first." //FUCK YOU, USEFUL MESSAGES ARE GOOD
 				return
 			else
 				if (has_electronics==1 && terminal)
@@ -276,13 +289,13 @@
 					return
 				updateicon()
 		else if((stat & BROKEN) || malfhack)
-			opened = 2
 
-			user.visible_message("\red [user] starts removing the broken APC cover with \the [W]!", \
-				"\red You start removing the broken APC cover!")
+			user.visible_message("\red [user] starts unscrewing the broken APC cover with \the [W]!", \
+				"\red You start unscrewing the broken APC cover!")
 			if(do_after(user, 50))
-				user.visible_message("\red The broken APC cover was removed with \the [W] by [user.name]!", \
-					"\red You remove the broken APC cover with your [W.name]!")
+				user.visible_message("\red The broken APC cover was unscrewed with \the [W] by [user.name]!", \
+					"\red You unscrew the broken APC cover with your [W.name]!")
+				cover_unscrewed = 1
 				updateicon()
 		else if(emagged)
 			user << "The interface is broken."
@@ -332,7 +345,7 @@
 					user << "You fail to [ locked ? "unlock" : "lock"] the APC interface."
 	else if (istype(W, /obj/item/weapon/cable_coil) && !terminal && opened && has_electronics!=2)
 		if (src.loc:intact)
-			user << "\red You must remove the floor plating in front of the APC first."
+			user << "\red There is no floor with the plating revealed in front of the APC."
 			return
 		var/obj/item/weapon/cable_coil/C = W
 		if(C.amount < 10)
@@ -372,7 +385,7 @@
 				"You cut cables and dismantle the power terminal.")
 			del(terminal)
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
-		user << "You trying to insert the power control board into the frame..."
+		user << "You try to insert the power control board into the frame..."
 		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 		if(do_after(user, 10))
 			has_electronics = 1
