@@ -166,7 +166,7 @@ mob/living/carbon/proc/handle_hallucinations()
 			if(71 to 72)
 				//Fake death
 //				src.sleeping_willingly = 1
-				src.sleeping = 1
+				src.sleeping = 20
 				hal_crit = 1
 				hal_screwyhud = 1
 				spawn(rand(50,100))
@@ -264,7 +264,7 @@ proc/check_panel(mob/M)
 				my_target.hallucinations -= src
 			del(src)
 		step_away(src,my_target,2)
-		processing_objects.Add(src)
+		spawn attack_loop()
 
 
 	proc/updateimage()
@@ -286,34 +286,36 @@ proc/check_panel(mob/M)
 		my_target << currentimage
 
 
-	process()
-		if(src.health < 0)
-			collapse()
-			return
-		if(get_dist(src,my_target) > 1)
-			src.dir = get_dir(src,my_target)
-			step_towards(src,my_target)
-			updateimage()
-		else
-			if(prob(15))
-				if(weapon_name)
-					my_target << sound(pick('genhit1.ogg', 'genhit2.ogg', 'genhit3.ogg'))
-					my_target.show_message("\red <B>[my_target] has been attacked with [weapon_name] by [src.name] </B>", 1)
-					my_target.halloss += 8
-					if(prob(20)) my_target.eye_blurry += 3
-					if(prob(33))
-						if(!locate(/obj/effect/overlay) in my_target.loc)
-							fake_blood(my_target)
-				else
-					my_target << sound(pick('punch1.ogg','punch2.ogg','punch3.ogg','punch4.ogg'))
-					my_target.show_message("\red <B>[src.name] has punched [my_target]!</B>", 1)
-					my_target.halloss += 4
-					if(prob(33))
-						if(!locate(/obj/effect/overlay) in my_target.loc)
-							fake_blood(my_target)
+	proc/attack_loop()
+		while(1)
+			sleep(rand(5,10))
+			if(src.health < 0)
+				collapse()
+				continue
+			if(get_dist(src,my_target) > 1)
+				src.dir = get_dir(src,my_target)
+				step_towards(src,my_target)
+				updateimage()
+			else
+				if(prob(15))
+					if(weapon_name)
+						my_target << sound(pick('genhit1.ogg', 'genhit2.ogg', 'genhit3.ogg'))
+						my_target.show_message("\red <B>[my_target] has been attacked with [weapon_name] by [src.name] </B>", 1)
+						my_target.halloss += 8
+						if(prob(20)) my_target.eye_blurry += 3
+						if(prob(33))
+							if(!locate(/obj/effect/overlay) in my_target.loc)
+								fake_blood(my_target)
+					else
+						my_target << sound(pick('punch1.ogg','punch2.ogg','punch3.ogg','punch4.ogg'))
+						my_target.show_message("\red <B>[src.name] has punched [my_target]!</B>", 1)
+						my_target.halloss += 4
+						if(prob(33))
+							if(!locate(/obj/effect/overlay) in my_target.loc)
+								fake_blood(my_target)
 
-		if(prob(15))
-			step_away(src,my_target,2)
+			if(prob(15))
+				step_away(src,my_target,2)
 
 	proc/collapse()
 		collapse = 1
