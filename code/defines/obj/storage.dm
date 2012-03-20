@@ -322,6 +322,17 @@
 	w_class = 4.0
 	origin_tech = "combat=1"
 
+	var/selfdamage = 0
+
+	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+		if(contents.len)
+			// have a chance to swing open
+			user.visible_message("\red \The [src] swings wide open and its contents are scattered on the floor!")
+			for(var/obj/O in contents)
+				O.loc = user.loc
+				if(prob(50)) step_rand(O)
+		..()
+
 /obj/item/weapon/storage/toolbox/emergency
 	name = "emergency toolbox"
 	desc = "A toolbox for emergencies"
