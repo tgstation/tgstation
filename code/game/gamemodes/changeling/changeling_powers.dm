@@ -952,8 +952,8 @@
 			spawn(timer)
 				if(T)
 					if(T.reagents)
-						T.reagents.add_reagent("LSD", 50)
-						T.hallucination = 250
+					//	T.reagents.add_reagent("LSD", 50) // Slight overkill, it seems.
+						T.hallucination = 400
 
 
 		usr.verbs -= /client/proc/changeling_lsdsting
