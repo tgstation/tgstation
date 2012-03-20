@@ -275,6 +275,15 @@
 					user << "\red There is nothing to secure."
 					return
 				updateicon()
+		else if((stat & BROKEN) || malfhack)
+			opened = 2
+
+			user.visible_message("\red [user] starts removing the broken APC cover with \the [W]!", \
+				"\red You start removing the broken APC cover!")
+			if(do_after(user, 50))
+				user.visible_message("\red The broken APC cover was removed with \the [W] by [user.name]!", \
+					"\red You remove the broken APC cover with your [W.name]!")
+				updateicon()
 		else if(emagged)
 			user << "The interface is broken."
 		else
@@ -423,6 +432,7 @@
 				opened = 1
 			updateicon()
 	else
+
 		if (	((stat & BROKEN) || malfhack) \
 				&& !opened \
 				&& W.force >= 5 \
@@ -431,7 +441,7 @@
 			opened = 2
 			user.visible_message("\red The APC cover was knocked down with the [W.name] by [user.name]!", \
 				"\red You knock down the APC cover with your [W.name]!", \
-				"You hear bang")
+				"You hear a loud bang!")
 			updateicon()
 		else
 			if (istype(user, /mob/living/silicon))
