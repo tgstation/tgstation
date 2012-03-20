@@ -1566,7 +1566,7 @@
 					if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
 						var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
 						dat += "Current Game Mode: <B>[ticker.mode.name]</B><BR>"
-						dat += "Round Duration: <B>[round(world.time / 36000)]:[add_zero(world.time / 600 % 60, 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B><BR>"
+						dat += "Round Duration: <B>[round(world.time / 36000)]:[(((world.time / 600 % 60)/10) > 1 ? world.time / 600 % 60 : add_zero(world.time / 600 % 60, 2))]:[world.time / 100 % 6][world.time / 100 % 10]</B><BR>"
 						dat += "<B>Emergency shuttle</B><BR>"
 						if (!emergency_shuttle.online)
 							dat += "<a href='?src=\ref[src];call_shuttle=1'>Call Shuttle</a><br>"
@@ -1754,6 +1754,16 @@
 					J.spawn_positions = -1
 					message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
 		return
+	if(href_list["vsc"])
+		if ((src.rank in list( "Moderator", "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master" )))
+			if(href_list["vsc"] == "airflow")
+				vsc.ChangeSettingsDialog(usr,vsc.settings)
+			if(href_list["vsc"] == "plasma")
+				vsc.ChangeSettingsDialog(usr,vsc.plc.settings)
+			if(href_list["vsc"] == "load")
+				LoadTweaks()
+			if(href_list["vsc"] == "save")
+				SaveTweaks()
 	if (href_list["rnd_max"])
 		for(var/obj/machinery/computer/rdconsole/C in world)
 			for(var/datum/tech/T in C.files.known_tech)
@@ -1974,7 +1984,13 @@
 	if(lvl >= 5)
 		dat += "<A href='?src=\ref[src];create_mob=1'>Create Mob</A><br>"
 //			if(lvl == 6 )
-	usr << browse(dat, "window=admin2;size=210x180")
+	if(lvl >= 3 )
+		dat += "<br><A href='?src=\ref[src];vsc=airflow'>Edit Airflow Settings</A><br>"
+		dat += "<A href='?src=\ref[src];vsc=plasma'>Edit Plasma Settings</A><br>"
+
+		dat += "<br><A href='?src=\ref[src];vsc=load'>Load Settings</A><br>"
+		dat += "<A href='?src=\ref[src];vsc=save'>Save Settings</A><br>"
+	usr << browse(dat, "window=admin2;size=210x340")
 	return
 /*
 /obj/admins/proc/goons()

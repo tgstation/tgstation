@@ -469,6 +469,10 @@ proc/process_ghost_teleport_locs()
  	name = "Atmospherics"
  	icon_state = "atmos"
 
+/area/atmos/refilling
+ 	name = "Refilling Station"
+ 	icon_state = "atmos"
+
 //Maintenance
 
 /area/maintenance/atmos_control
@@ -559,6 +563,10 @@ proc/process_ghost_teleport_locs()
 
 /area/hallway/secondary/entry
 	name = "Arrival Shuttle Hallway"
+	icon_state = "entry"
+
+/area/hallway/secondary/docking
+	name = "Docking Arm"
 	icon_state = "entry"
 
 //Command
@@ -981,6 +989,10 @@ proc/process_ghost_teleport_locs()
 	icon_state = "hydro"
 
 //Toxins
+
+/area/toxins/hallway
+	name = "R&D Hallway"
+	icon_state = "hallC"
 
 /area/toxins/lab
 	name = "Research Lab"

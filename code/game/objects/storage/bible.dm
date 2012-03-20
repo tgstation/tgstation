@@ -6,6 +6,16 @@
 	new /obj/item/weapon/spacecash(src)
 	new /obj/item/weapon/spacecash(src)
 
+/obj/item/weapon/storage/bible/tajaran/New()
+	..()
+	new /obj/item/stack/medical/bruise_pack/tajaran(src)
+	new /obj/item/stack/medical/bruise_pack/tajaran(src)
+	new /obj/item/stack/medical/ointment/tajaran(src)
+	new /obj/item/stack/medical/ointment/tajaran(src)
+	new /obj/item/weapon/reagent_containers/pill/antitox/tajaran(src)
+	new /obj/item/weapon/reagent_containers/pill/antitox/tajaran(src)
+	new /obj/item/clothing/suit/monk(src)
+
 /obj/item/weapon/storage/bible/proc/bless(mob/living/carbon/M as mob)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M

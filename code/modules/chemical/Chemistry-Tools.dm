@@ -212,7 +212,7 @@
 			return
 		user.machine = src
 		var/dat = {"<B> Grenade properties: </B>
-		<BR> <B> Beaker one:</B> [beaker_one] [beaker_one ? "<A href='?src=\ref[src];beaker_one=1'>Remove</A>" : ""]
+		<BR> <B> Beaker one:</B> [beaker_one] [beaker_one ? "<A href='?src=\ref[src];beakerone=1'>Remove</A>" : ""]
 		<BR> <B> Beaker two:</B> [beaker_two] [beaker_two ? "<A href='?src=\ref[src];beakertwo=1'>Remove</A>" : ""]
 		<BR> <B> Control attachment:</B> [attached_device ? "<A href='?src=\ref[src];device=1'>[attached_device]</A>" : "None"] [attached_device ? "<A href='?src=\ref[src];rem_device=1'>Remove</A>" : ""]"}
 
@@ -312,6 +312,7 @@
 		New()
 			..()
 			attached_device = new /obj/item/device/assembly/timer(src)
+			attached_device.master = src
 			var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 			var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
@@ -332,6 +333,7 @@
 		New()
 			..()
 			attached_device = new /obj/item/device/assembly/timer(src)
+			attached_device.master = src
 			var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 			var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
@@ -352,6 +354,7 @@
 		New()
 			..()
 			attached_device = new /obj/item/device/assembly/timer(src)
+			attached_device.master = src
 			var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 			var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
@@ -2863,6 +2866,15 @@
 	New()
 		..()
 		reagents.add_reagent("anti_toxin", 50)
+
+/obj/item/weapon/reagent_containers/pill/antitox/tajaran
+	name = "peacebody plant powder"
+	desc = "A powder ingested to rid the body of poisons."
+	icon = 'food.dmi'
+	icon_state = "nettlesoup"
+	New()
+		..()
+		reagents.add_reagent("anti_toxin", 100)
 
 /obj/item/weapon/reagent_containers/pill/tox
 	name = "Toxins pill"

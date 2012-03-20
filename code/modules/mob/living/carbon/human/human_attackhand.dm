@@ -72,10 +72,16 @@
 			return 1
 
 		if("hurt")
-			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Punched [src.name] ([src.ckey])</font>")
-			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
-			log_admin("ATTACK: [src] ([src.ckey]) punched [M] ([M.ckey]).")
-			message_admins("ATTACK: [src] ([src.ckey]) punched [M] ([M.ckey]).")
+			if(M.type != /mob/living/carbon/human/tajaran)
+				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Punched [src.name] ([src.ckey])</font>")
+				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
+				log_admin("ATTACK: [M] ([M.ckey]) punched [src] ([src.ckey]).")
+				message_admins("ATTACK: [M] ([M.ckey]) punched [src] ([src.ckey]).")
+			else if(M.type == /mob/living/carbon/human/tajaran)
+				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Slashed [src.name] ([src.ckey])</font>")
+				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been slashed by [M.name] ([M.ckey])</font>")
+				log_admin("ATTACK: [M] ([M.ckey]) slashed [src] ([src.ckey]).")
+				message_admins("ATTACK: [M] ([M.ckey]) slashed [src] ([src.ckey]).")
 
 			var/attack_verb
 			switch(M.mutantrace)
@@ -86,16 +92,26 @@
 				else
 					attack_verb = "punch"
 
+			if(M.type == /mob/living/carbon/human/tajaran)
+				attack_verb = "slash"
+
 			var/damage = rand(0, 9)
 			if(!damage)
-				playsound(loc, 'punchmiss.ogg', 25, 1, -1)
+				if(M.type != /mob/living/carbon/human/tajaran)
+					playsound(loc, 'punchmiss.ogg', 25, 1, -1)
+				else if (M.type == /mob/living/carbon/human/tajaran)
+					playsound(loc, 'slashmiss.ogg', 25, 1, -1)
 				visible_message("\red <B>[M] has attempted to [attack_verb] [src]!</B>")
 				return 0
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/armor_block = run_armor_check(affecting, "melee")
 
 			if(M.mutations & HULK)	damage += 5
-			playsound(loc, "punch", 25, 1, -1)
+			if(M.type != /mob/living/carbon/human/tajaran)
+				playsound(loc, "punch", 25, 1, -1)
+			else if (M.type == /mob/living/carbon/human/tajaran)
+				damage += 10
+				playsound(loc, 'slice.ogg', 25, 1, -1)
 
 			visible_message("\red <B>[M] has [attack_verb]ed [src]!</B>")
 

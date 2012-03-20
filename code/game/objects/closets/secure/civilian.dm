@@ -123,7 +123,7 @@
 		var/obj/item/weapon/storage/backpack/BPK = new /obj/item/weapon/storage/backpack(src)
 		var/obj/item/weapon/storage/box/B = new(BPK)
 		new /obj/item/weapon/pen(B)
-		new /obj/item/weapon/storage/bible/booze(src)
+		new /obj/item/weapon/storage/bible(src)
 		new /obj/item/device/pda/chaplain(src)
 		new /obj/item/device/radio/headset(src)
 		new /obj/item/weapon/candlepack(src)

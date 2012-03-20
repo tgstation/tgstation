@@ -39,13 +39,10 @@ turf
 				active_hotspot.just_spawned = (current_cycle < air_master.current_cycle)
 					//remove just_spawned protection if no longer processing this cell
 
-				//start processing quickly if we aren't already
-				reset_delay()
-
 			return igniting
 
 obj
-	effect/hotspot
+	hotspot
 		//Icon for fire on turfs, also helps for nurturing small fires until they are full tile
 
 		anchored = 1
@@ -95,7 +92,7 @@ obj
 				for(var/atom/item in loc)
 					item.temperature_expose(null, temperature, volume)
 
-		process(turf/simulated/list/possible_spread)
+		proc/process(turf/simulated/list/possible_spread)
 			if(just_spawned)
 				just_spawned = 0
 				return 0
@@ -132,12 +129,6 @@ obj
 					icon_state = "2"
 				else
 					icon_state = "1"
-
-			if(temperature > location.max_fire_temperature_sustained)
-				location.max_fire_temperature_sustained = temperature
-
-			if(temperature > location.heat_capacity)
-				location.to_be_destroyed = 1
 				/*if(prob(25))
 					location.ReplaceWithSpace()
 					return 0*/
@@ -153,22 +144,6 @@ obj
 			if (istype(loc, /turf/simulated))
 				var/turf/simulated/T = loc
 				loc:active_hotspot = null
-				src.sd_SetLuminosity(0)
-
-
-
-				if(T.to_be_destroyed)
-					var/chance_of_deletion
-					if (T.heat_capacity) //beware of division by zero
-						chance_of_deletion = T.max_fire_temperature_sustained / T.heat_capacity * 8 //there is no problem with prob(23456), min() was redundant --rastaf0
-					else
-						chance_of_deletion = 100
-					if(prob(chance_of_deletion))
-						T.ReplaceWithSpace()
-					else
-						T.to_be_destroyed = 0
-						T.max_fire_temperature_sustained = 0
-
-				loc = null
+				src.ul_SetLuminosity(0)
 
 			..()

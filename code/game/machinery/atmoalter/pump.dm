@@ -43,6 +43,8 @@
 				if(holding)
 					environment.merge(removed)
 				else
+					if(istype(removed))
+						AirflowRepel(loc,removed.return_pressure())
 					loc.assume_air(removed)
 		else
 			var/pressure_delta = target_pressure - air_contents.return_pressure()
@@ -58,7 +60,8 @@
 					removed = environment.remove(transfer_moles)
 				else
 					removed = loc.remove_air(transfer_moles)
-
+				if(istype(removed))
+					AirflowAttract(loc,removed.return_pressure())
 				air_contents.merge(removed)
 		//src.update_icon()
 

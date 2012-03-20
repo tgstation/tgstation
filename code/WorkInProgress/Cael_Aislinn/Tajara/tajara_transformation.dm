@@ -31,6 +31,7 @@
 	for(var/datum/disease/D in O.viruses)
 		D.affected_mob = O
 	O.flavor_text = flavor_text
+	O.universal_speak = 1 //hacky fix until someone can figure out how to make them only understand humans
 
 	if (client)
 		client.mob = O

@@ -244,7 +244,7 @@ MASS SPECTROMETER
 				var/list/blood = temp[4]
 				if(!blood)
 					blood = list()
-				if(A.blood_DNA.len && A.blood_DNA)
+				if(A.blood_DNA && A.blood_DNA.len)
 					for(var/j = 1, j <= A.blood_DNA.len, j++)	//Blood~~~
 						if(!blood.Find(A.blood_DNA[j]))	//It isn't!  Add!
 							blood += A.blood_DNA[j]
@@ -308,6 +308,10 @@ proc/analyze_health_less_info(mob/living/carbon/M as mob, mob/user as mob)
 		user.show_message(text("\red Significant brain damage detected. Subject may have had a concussion."), 1)
 	if (M.virus2 || M.reagents.reagent_list.len > 0)
 		user.show_message(text("\red Unknown substance detected in blood."), 1)
+/*	for(var/datum/organ/external/E in src)
+		if (!E.broken <= 0)
+			user.show_message(text("\red Bone fractures detected."), 1)*/
+//If someone can make this work I would be extremely grateful. -Erthilo
 	return
 
 /obj/item/device/healthanalyzer/attack(mob/M as mob, mob/user as mob)

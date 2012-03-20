@@ -68,31 +68,44 @@
 
 //	world << "[north_votes], [south_votes], [east_votes]"
 
-	var/datum/air_group/group_joined = null
-
 	if(west)
 		if(west.parent)
-			group_joined = west.parent
+			west.parent.suspend_group_processing()
+			west.parent.members += src
+			parent = west.parent
+
+			air_master.tiles_to_update += west.parent.members
+			return 1
+
 		else
 			new_group_possible = 1
 
 	if(north_votes && (north_votes >= south_votes) && (north_votes >= east_votes))
-		group_joined = north.parent
-	else if(south_votes  && (south_votes >= east_votes))
-		group_joined = south.parent
-	else if(east_votes)
-		group_joined = east.parent
+		north.parent.suspend_group_processing()
+		north.parent.members += src
+		parent = north.parent
 
-	if (istype(group_joined))
-		if (group_joined.group_processing)
-			group_joined.suspend_group_processing()
-		group_joined.members += src
-		parent=group_joined
-
-		air_master.tiles_to_update += group_joined.members
+		air_master.tiles_to_update += north.parent.members
 		return 1
 
-	else if(new_group_possible)
+
+	if(south_votes  && (south_votes >= east_votes))
+		south.parent.suspend_group_processing()
+		south.parent.members += src
+		parent = south.parent
+
+		air_master.tiles_to_update += south.parent.members
+		return 1
+
+	if(east_votes)
+		east.parent.suspend_group_processing()
+		east.parent.members += src
+		parent = east.parent
+
+		air_master.tiles_to_update += east.parent.members
+		return 1
+
+	if(new_group_possible)
 		air_master.assemble_group_turf(src)
 		return 1
 

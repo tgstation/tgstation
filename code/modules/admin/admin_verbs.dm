@@ -223,6 +223,7 @@
 			verbs += /proc/release
 			verbs += /client/proc/toggleprayers
 			verbs += /client/proc/editappear
+			verbs += /client/proc/Zone_Info
 
 		if (holder.level >= 2)//Admin Candidate********************************************************************
 			verbs += /client/proc/cmd_admin_add_random_ai_law

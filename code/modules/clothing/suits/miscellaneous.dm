@@ -83,6 +83,12 @@
 	item_state = "nun"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS
 
+/obj/item/clothing/suit/monk
+	name = "monk's robe"
+	desc = "A humble robe."
+	icon_state = "monk"
+	item_state = "monk"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
 /obj/item/clothing/suit/storage/chaplain_hoodie
 	name = "chaplain hoodie"

@@ -178,32 +178,33 @@
 	if (!src.client)
 		usr << "\red [src.name] doesn't seem as though they want to talk."
 
-	for(var/named in organs)
-		var/datum/organ/external/temp = organs[named]
-		if(temp)
-			if(temp.destroyed)
-				usr << "\red [src.name] is missing [t_his] [temp.display_name]."
-			if(temp.wounds)
-				for(var/datum/organ/external/wound/w in temp.wounds)
-					var/size = w.wound_size
-					var/sizetext
-					switch(size)
-						if(1)
-							sizetext = "cut"
-						if(2)
-							sizetext = "deep cut"
-						if(3)
-							sizetext = "flesh wound"
-						if(4)
-							sizetext = "gaping wound"
-						if(5)
-							sizetext = "big gaping wound"
-						if(6)
-							sizetext = "massive wound"
-					if(w.bleeding)
-						usr << "\red [src.name] is bleeding from a [sizetext] on [t_his] [temp.display_name]."
-						continue
+	spawn(10) // I think we might be overloading the clients.
+		for(var/named in organs)
+			var/datum/organ/external/temp = organs[named]
+			if(temp)
+				if(temp.destroyed)
+					usr << "\red [src.name] is missing [t_his] [temp.display_name]."
+				if(temp.wounds)
+					for(var/datum/organ/external/wound/w in temp.wounds)
+						var/size = w.wound_size
+						var/sizetext
+						switch(size)
+							if(1)
+								sizetext = "cut"
+							if(2)
+								sizetext = "deep cut"
+							if(3)
+								sizetext = "flesh wound"
+							if(4)
+								sizetext = "gaping wound"
+							if(5)
+								sizetext = "big gaping wound"
+							if(6)
+								sizetext = "massive wound"
+						if(w.bleeding)
+							usr << "\red [src.name] is bleeding from a [sizetext] on [t_his] [temp.display_name]."
+							continue
 
-	print_flavor_text()
+		print_flavor_text()
 
-	usr << "\blue *---------*"
+		usr << "\blue *---------*"
