@@ -223,7 +223,7 @@
 			if (src.occupant)
 				usr << "\red <B>The cryo cell is already occupied!</B>"
 				return
-			if (M.abiotic2())
+			if (M.abiotic())
 				usr << "\red Subject may not have abiotic items on."
 				return
 			if(!src.node)
