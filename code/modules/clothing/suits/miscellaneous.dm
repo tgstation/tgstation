@@ -15,6 +15,23 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 
+
+
+/obj/item/clothing/suit/bluetag
+	name = "blue laser tag armour"
+	desc = "Blue Pride, Station Wide"
+	icon_state = "bluetag"
+	item_state = "bluetag"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
+/obj/item/clothing/suit/redtag
+	name = "red laser tag armour"
+	desc = "Pew pew pew"
+	icon_state = "redtag"
+	item_state = "redtag"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
+
 /obj/item/clothing/suit/apron
 	name = "apron"
 	desc = "A basic blue apron."

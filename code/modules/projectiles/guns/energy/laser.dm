@@ -69,3 +69,78 @@ obj/item/weapon/gun/energy/laser/retro
 	fire_sound = 'lasercannonfire.ogg'
 	origin_tech = "combat=4;materials=3;powerstorage=3"
 	projectile_type = "/obj/item/projectile/beam/heavylaser"
+
+
+
+
+
+////////Laser Tag////////////////////
+
+/obj/item/weapon/gun/energy/laser/bluetag
+	name = "laser tag gun"
+	icon_state = "bluetag"
+	desc = "Standard issue weapon of the Imperial Guard"
+	projectile_type = "/obj/item/projectile/bluetag"
+
+	special_check(var/mob/living/carbon/human/M)
+		if(ishuman(M))
+			if(istype(M.wear_suit, /obj/item/clothing/suit/bluetag))
+				return 1
+			M << "\red You need to be wearing your laser tag vest!"
+		return 0
+	var/charge_tick = 0
+
+
+	New()
+		..()
+		processing_objects.Add(src)
+
+
+	Del()
+		processing_objects.Remove(src)
+		..()
+
+
+	process()
+		charge_tick++
+		if(charge_tick < 4) return 0
+		charge_tick = 0
+		if(!power_supply) return 0
+		power_supply.give(100)
+		update_icon()
+		return 1
+
+
+
+/obj/item/weapon/gun/energy/laser/redtag
+	name = "laser tag gun"
+	icon_state = "redtag"
+	desc = "Standard issue weapon of the Imperial Guard"
+	projectile_type = "/obj/item/projectile/redtag"
+	var/charge_tick = 0
+
+	special_check(var/mob/living/carbon/human/M)
+		if(ishuman(M))
+			if(istype(M.wear_suit, /obj/item/clothing/suit/redtag))
+				return 1
+			M << "\red You need to be wearing your laser tag vest!"
+		return 0
+
+	New()
+		..()
+		processing_objects.Add(src)
+
+
+	Del()
+		processing_objects.Remove(src)
+		..()
+
+
+	process()
+		charge_tick++
+		if(charge_tick < 4) return 0
+		charge_tick = 0
+		if(!power_supply) return 0
+		power_supply.give(100)
+		update_icon()
+		return 1
