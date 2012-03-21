@@ -53,6 +53,7 @@
 			if(isobject(e))
 				if(istype(e, /list))
 					chosenlist = e
+			i = 2
 		else
 			if(chosenlist)
 				chosenlist.Add(e)
@@ -66,6 +67,7 @@
 			if(isobject(e))
 				if(istype(e, /list))
 					chosenlist = e
+			i = 2
 		else
 			if(chosenlist)
 				chosenlist.Remove(e)
@@ -113,7 +115,7 @@
 // Clone of copytext()
 /proc/docopytext(var/string, var/start = 1, var/end = 0)
 	if(istext(string) && isnum(start) && isnum(end))
-		if(length(string) >= end && start > 0)
+		if(start > 0)
 			return copytext(string, start, end)
 
 // Clone of length()

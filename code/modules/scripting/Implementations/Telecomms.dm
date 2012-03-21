@@ -190,7 +190,7 @@ datum/signal
 		if(istext(address))
 			var/obj/machinery/telecomms/server/S = data["server"]
 
-			if(!value)
+			if(!value && value != 0)
 				return S.memory[address]
 
 			else
@@ -204,7 +204,7 @@ datum/signal
 		var/obj/machinery/telecomms/server/S = data["server"]
 		var/obj/item/device/radio/hradio
 
-		if(!message)
+		if(!message && message != 0)
 			message = "*beep*"
 		if(!source)
 			source = "[html_encode(uppertext(S.id))]"
@@ -215,7 +215,7 @@ datum/signal
 			freq *= 10 // shift the decimal one place
 
 		if(!job)
-			job = "None"
+			job = "?"
 
 		newsign.data["mob"] = H
 		newsign.data["mobtype"] = H.type

@@ -90,14 +90,18 @@
 						del(src)
 
 
+	attack_ai(var/mob/user as mob)
+		attack_hand(user)
+
 	attack_hand(var/mob/user as mob)
 
-		// You need a multitool to use this.
-		if(user.equipped())
-			if(!istype(user.equipped(), /obj/item/device/multitool))
+		// You need a multitool to use this, or be silicon
+		if(!issilicon(user))
+			if(user.equipped())
+				if(!istype(user.equipped(), /obj/item/device/multitool))
+					return
+			else
 				return
-		else
-			return
 
 		if(stat & (BROKEN|NOPOWER) || !on)
 			return
@@ -150,11 +154,12 @@
 
 	Topic(href, href_list)
 
-		if(usr.equipped())
-			if(!istype(usr.equipped(), /obj/item/device/multitool))
+		if(!issilicon(usr))
+			if(usr.equipped())
+				if(!istype(usr.equipped(), /obj/item/device/multitool))
+					return
+			else
 				return
-		else
-			return
 
 		if(stat & (BROKEN|NOPOWER) || !on)
 			return

@@ -745,7 +745,7 @@ datum
 					if(M:eyecheck() <= 0)
 						flick("e_flash", M.flash)
 
-				for(var/i = 1, i <= created_volume, i++)
+				for(var/i = 1, i <= created_volume + rand(1,2), i++)
 					var/chosen = pick(borks)
 					var/obj/B = new chosen
 					if(B)

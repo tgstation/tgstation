@@ -882,7 +882,7 @@
 		reagents = R
 		R.my_atom = src
 		POWERFLAG = rand(1,10)
-		Uses = rand(2, 5)
+		Uses = rand(7, 25)
 		//flags |= NOREACT
 
 		spawn()
