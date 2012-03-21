@@ -6,6 +6,7 @@
 	fire_sound = 'Laser.ogg'
 	w_class = 3.0
 	m_amt = 2000
+	force = 7
 	origin_tech = "combat=3;magnets=2"
 	projectile_type = "/obj/item/projectile/beam"
 

@@ -526,7 +526,7 @@ CIRCULAR SAW
 						M << "\red [user] begins to cauterize the incision in your abdomen with [src]!"
 						user << "\red You cauterize the incision in [M]'s abdomen with [src]!"
 						M:appendix_op_stage = 6.0
-						for(var/datum/disease/appendicitis in M.viruses)
+						for(var/datum/disease/appendicitis/appendicitis in M.viruses)
 							appendicitis.cure()
 							M.resistances += appendicitis
 						return
