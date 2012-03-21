@@ -35,7 +35,7 @@
 	var/obj/item/weapon/disk/data/diskette = null //Mostly so the geneticist can steal everything.
 	var/wantsscan = 1
 	var/wantspod = 1
-	var/message = 0
+	var/list/message = list()
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -148,9 +148,9 @@
 	return attack_hand(user)
 
 /obj/machinery/computer/cloning/attack_hand(mob/user as mob)
-	if(message == 0)
+	if(!(user in message))
 		user << "\blue This machine looks extremely complex. You'd probably need a decent knowledge of Genetics to understand it."
-		message += 1
+		message += user
 	user.machine = src
 	add_fingerprint(user)
 	if(stat & (BROKEN|NOPOWER))

@@ -10,10 +10,17 @@
 	name = "mining RIG helmet"
 	icon_state = "rig-mining"
 
-
 /obj/item/clothing/head/helmet/space/rig/elite
 	name = "advanced RIG helmet"
 	icon_state = "rig-white"
+
+/obj/item/clothing/head/helmet/space/rig/engspace_helmet
+	name = "engineering space helmet"
+	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding and a visor that can be toggled on and off."
+	icon_state = "engspace_helmet"
+	item_state = "engspace_helmet"
+	see_face = 0.0
+	var/up = 0
 
 /obj/item/clothing/head/helmet/space/rig/security
 	name = "security RIG helmet"
@@ -38,6 +45,12 @@
 	icon_state = "rig-white"
 	name = "advanced RIG suit"
 	protective_temperature = 10000
+
+/obj/item/clothing/suit/space/rig/engspace_suit
+	name = "engineering space suit"
+	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
+	icon_state = "engspace_suit"
+	item_state = "engspace_suit"
 
 /obj/item/clothing/suit/space/rig/security
 	name = "security RIG suit"

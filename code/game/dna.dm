@@ -855,9 +855,11 @@
 	return src.attack_hand(user)
 
 /obj/machinery/scan_consolenew/attack_hand(user as mob)
-	if(message == 0)
+	if(..())
+		return
+	if(!(user in message))
 		user << "\blue This machine looks extremely complex. You'd probably need a decent knowledge of Genetics to understand it."
-		message += 1
+		message += user
 	var/dat
 	if (src.delete && src.temphtml) //Window in buffer but its just simple message, so nothing
 		src.delete = src.delete
