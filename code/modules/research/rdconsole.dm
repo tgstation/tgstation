@@ -771,7 +771,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += "Eject: "
 				if(linked_lathe.plasma_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=plasma;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
 				if(linked_lathe.plasma_amount >= 18750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=plasma;lathe_ejectsheet_amt=5'>(5 Sheets)</A> "
-				if(linked_lathe.plasma_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=plasmalathe_ejectsheet_amt=50'>(Max Sheets)</A>"
+				if(linked_lathe.plasma_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=plasma;lathe_ejectsheet_amt=50'>(Max Sheets)</A>"
 				dat += "<BR>"
 				//Uranium
 				dat += "* [linked_lathe.uranium_amount] cm<sup>3</sup> of Uranium || "

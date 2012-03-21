@@ -1104,7 +1104,7 @@ datum
 			desc = "A power cell that holds 20000 units of energy"
 			id = "super_cell"
 			req_tech = list("powerstorage" = 3, "materials" = 2)
-			reliability_base = 75
+			reliability_base = 90 //Else these things just fail all the time, goddamn. - Erthilo
 			build_type = PROTOLATHE
 			materials = list("$metal" = 700, "$glass" = 70)
 			build_path = "/obj/item/weapon/cell/super"
@@ -1114,7 +1114,7 @@ datum
 			desc = "A power cell that holds 30000 units of energy"
 			id = "hyper_cell"
 			req_tech = list("powerstorage" = 6, "materials" = 4)
-			reliability_base = 70
+			reliability_base = 85
 			build_type = PROTOLATHE
 			materials = list("$metal" = 400, "$gold" = 150, "$silver" = 150, "$glass" = 70)
 			build_path = "/obj/item/weapon/cell/hyper"
