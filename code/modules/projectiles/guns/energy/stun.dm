@@ -7,6 +7,7 @@
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/energy/electrode"
 	cell_type = "/obj/item/weapon/cell/crap"
+	force = 10
 
 
 

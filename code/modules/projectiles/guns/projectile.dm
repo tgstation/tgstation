@@ -6,6 +6,7 @@
 	origin_tech = "combat=2;materials=2"
 	w_class = 3.0
 	m_amt = 1000
+	force = 30 //Pistol whipp'n good.  (It was frigging SIXTY on pre-goon code)
 
 	var
 		ammo_type = "/obj/item/ammo_casing/a357"
