@@ -16,7 +16,7 @@
 
 /obj/item/clothing/head/helmet/space/rig/engspace_helmet
 	name = "engineering space helmet"
-	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
+	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding and a visor that can be toggled on and off."
 	icon_state = "engspace_helmet"
 	item_state = "engspace_helmet"
 	see_face = 0.0

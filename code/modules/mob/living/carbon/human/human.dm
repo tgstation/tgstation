@@ -204,7 +204,7 @@
 	if(mutations & mRun)
 		tally = 0
 
-	if(M && M.lying & ismob(pulling)) //Pulling lying down people is slower
+	if(istype(M) && M.lying) //Pulling lying down people is slower
 		tally += 3
 
 	return tally
