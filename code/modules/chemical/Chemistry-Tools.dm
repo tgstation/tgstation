@@ -85,7 +85,7 @@
 						active = 1
 						path = 1
 
-		else if(path != 1)
+		if(path != 1)
 			if(!istype(src.loc,/turf))
 				user << "\red You need to put the canister on the ground to do that!"
 			else
