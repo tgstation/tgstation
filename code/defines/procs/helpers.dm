@@ -218,7 +218,7 @@
 	return max(low,min(high,num))
 
 /proc/dd_replacetext(text, search_string, replacement_string)
-	if(!text || !search_string || !replacement_string)
+	if(!text || !istext(text) || !search_string || !istext(search_string) || !istext(replacement_string))
 		return null
 	var/textList = dd_text2list(text, search_string)
 	return dd_list2text(textList, replacement_string)
