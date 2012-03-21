@@ -323,6 +323,15 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	return 0
 
+/mob/proc/abiotic2(var/full_body2 = 0)
+	if(full_body2 && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask)))
+		return 1
+
+	if((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )))
+		return 1
+
+	return 0
+
 /mob/proc/put_in_hands(var/obj/item/I)
 	if(!r_hand)
 		I.loc = src

@@ -8,7 +8,7 @@
 
 /obj/item/clothing/suit/storage/wcoat
 	name = "waistcoat"
-	desc = "For some classy, murderous fun."
+	desc = "The height of class."
 	icon_state = "vest"
 	item_state = "wcoat"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
@@ -25,7 +25,7 @@
 
 /obj/item/clothing/suit/storage/chef
 	name = "Chef's apron"
-	desc = "An apron used by a high class chef.  Has a few pockets for nic-naks."
+	desc = "An apron used by a high class chef. Has a few pockets for nic-naks."
 	icon_state = "chef"
 	item_state = "chef"
 	gas_transfer_coefficient = 0.90
@@ -62,7 +62,7 @@
 	name = "red space suit replica"
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
-	desc = "A plastic replica of the syndicate space suit, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
+	desc = "A plastic replica of a famous space suit. This is a toy, not for use in space!"
 	w_class = 3
 	flags = FPRINT | TABLEPASS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy)
@@ -108,7 +108,7 @@
 
 /obj/item/clothing/suit/imperium_monk
 	name = "Imperium monk"
-	desc = "Have YOU killed a xenos today?"
+	desc = "A set of strange robes."
 	icon_state = "imperium_monk"
 	item_state = "imperium_monk"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -116,7 +116,7 @@
 
 /obj/item/clothing/suit/chickensuit
 	name = "Chicken Suit"
-	desc = "A suit made long ago by the ancient empire KFC."
+	desc = "Bwak!"
 	icon_state = "chickensuit"
 	item_state = "chickensuit"
 	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS|FEET|HEAD

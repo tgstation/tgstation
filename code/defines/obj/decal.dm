@@ -5,6 +5,11 @@
 	icon_state = "ash"
 	anchored = 1
 
+/obj/effect/decal/ash/attack_hand(mob/user as mob)
+	usr << "\blue The ashes slip through your fingers."
+	del(src)
+	return
+
 /obj/effect/decal/remains/human
 	name = "remains"
 	desc = "These remains have a strange sense about them..."
