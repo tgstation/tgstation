@@ -314,6 +314,7 @@ proc/analyze_health_less_info(mob/living/carbon/M as mob, mob/user as mob)
 			var/datum/organ/external/e = H.organs[name]
 			if(e.broken)
 				user.show_message(text("\red Bone fractures detected. Advanced scanner required for location."), 1)
+				break
 	return
 
 /obj/item/device/healthanalyzer/attack(mob/M as mob, mob/user as mob)
