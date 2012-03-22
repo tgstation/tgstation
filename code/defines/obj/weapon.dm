@@ -243,7 +243,7 @@
 	name = "energy blade"
 	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
 	icon_state = "blade"
-	force = 70.0//Normal attacks deal very high damage.
+	force = 40.0//Normal attacks deal very high damage.
 	throwforce = 1//Throwing or dropping the item deletes it.
 	throw_speed = 1
 	throw_range = 1
