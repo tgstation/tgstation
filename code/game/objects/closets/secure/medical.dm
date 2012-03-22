@@ -1,12 +1,12 @@
 /obj/structure/closet/secure_closet/medical1
 	name = "Medicine Closet"
 	desc = "Filled with medical junk."
-	icon_state = "medical1"
-	icon_closed = "medical"
-	icon_locked = "medical1"
-	icon_opened = "medicalopen"
-	icon_broken = "medicalbroken"
-	icon_off = "medical1"
+	icon_state = "securemed1"
+	icon_closed = "securemed"
+	icon_locked = "securemed1"
+	icon_opened = "securemedopen"
+	icon_broken = "securemedbroken"
+	icon_off = "securemed1"
 	req_access = list(access_medical)
 
 
@@ -29,12 +29,12 @@
 /obj/structure/closet/secure_closet/medical2
 	name = "Anesthetic"
 	desc = "Used to knock people out."
-	icon_state = "medical1"
-	icon_closed = "medical"
-	icon_locked = "medical1"
-	icon_opened = "medicalopen"
-	icon_broken = "medicalbroken"
-	icon_off = "medical1"
+	icon_state = "securemed1"
+	icon_closed = "securemed"
+	icon_locked = "securemed1"
+	icon_opened = "securemedopen"
+	icon_broken = "securemedbroken"
+	icon_off = "securemed1"
 	req_access = list(access_medical)
 
 
@@ -54,7 +54,12 @@
 /obj/structure/closet/secure_closet/medical3
 	name = "Medical Doctor's Locker"
 	req_access = list(access_medical)
-
+	icon_state = "securemed1"
+	icon_closed = "securemed"
+	icon_locked = "securemed1"
+	icon_opened = "securemedopen"
+	icon_broken = "securemedbroken"
+	icon_off = "securemed1"
 
 	New()
 		..()
@@ -75,7 +80,12 @@
 /obj/structure/closet/secure_closet/CMO
 	name = "Chief Medical Officer"
 	req_access = list(access_cmo)
-
+	icon_state = "cmosecure1"
+	icon_closed = "cmosecure"
+	icon_locked = "cmosecure1"
+	icon_opened = "cmosecureopen"
+	icon_broken = "cmosecurebroken"
+	icon_off = "cmosecure1"
 
 	New()
 		..()
@@ -111,12 +121,12 @@
 /obj/structure/closet/secure_closet/chemical
 	name = "Chemical Closet"
 	desc = "Store dangerous chemicals in here."
-	icon_state = "medical1"
-	icon_closed = "medical"
-	icon_locked = "medical1"
-	icon_opened = "medicalopen"
-	icon_broken = "medicalbroken"
-	icon_off = "medical1"
+	icon_state = "securemed1"
+	icon_closed = "securemed"
+	icon_locked = "securemed1"
+	icon_opened = "securemedopen"
+	icon_broken = "securemedbroken"
+	icon_off = "securemed1"
 	req_access = list(access_medical)
 
 

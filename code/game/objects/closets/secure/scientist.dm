@@ -1,7 +1,12 @@
 /obj/structure/closet/secure_closet/scientist
 	name = "Scientist Locker"
 	req_access = list(access_tox_storage)
-
+	icon_state = "secureres1"
+	icon_closed = "secureres"
+	icon_locked = "secureres1"
+	icon_opened = "secureresopen"
+	icon_broken = "secureresbroken"
+	icon_off = "secureres1"
 
 	New()
 		..()
@@ -20,7 +25,12 @@
 /obj/structure/closet/secure_closet/RD
 	name = "Research Director"
 	req_access = list(access_rd)
-
+	icon_state = "rdsecure1"
+	icon_closed = "rdsecure"
+	icon_locked = "rdsecure1"
+	icon_opened = "rdsecureopen"
+	icon_broken = "rdsecurebroken"
+	icon_off = "rdsecure1"
 
 	New()
 		..()
