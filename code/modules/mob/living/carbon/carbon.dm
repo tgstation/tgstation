@@ -165,20 +165,29 @@
 
 			for(var/datum/organ/external/org in H.organs)
 				var/status = ""
-				if(org.brute_dam > 0)
+				var/brutedamage = org.brute_dam
+				var/burndamage = org.burn_dam
+
+				if(halloss > 0)
+					if(prob(30))
+						brutedamage += halloss
+					if(prob(30))
+						burndamage += halloss
+
+				if(brutedamage > 0)
 					status = "bruised"
-				if(org.brute_dam > 20)
+				if(brutedamage > 20)
 					status = "bleeding"
-				if(org.brute_dam > 40)
+				if(brutedamage > 40)
 					status = "mangled"
-				if(org.brute_dam > 0 && org.burn_dam > 0)
+				if(brutedamage > 0 && burndamage > 0)
 					status += " and "
-				if(org.burn_dam > 40)
+				if(burndamage > 40)
 					status += "peeling away"
 
-				else if(org.burn_dam > 10)
+				else if(burndamage > 10)
 					status += "blistered"
-				else if(org.burn_dam > 0)
+				else if(burndamage > 0)
 					status += "numb"
 				if(status == "")
 					status = "OK"

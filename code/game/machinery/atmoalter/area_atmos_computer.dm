@@ -66,3 +66,4 @@
 			move_mining_shuttle()
 		else
 			usr << "\blue Shuttle is already moving."
+

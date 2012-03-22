@@ -51,6 +51,36 @@ proc/move_mining_shuttle()
 		else
 			fromArea = locate(/area/shuttle/mining/station)
 			toArea = locate(/area/shuttle/mining/outpost)
+
+
+		var/list/dstturfs = list()
+		var/throwy = world.maxy
+
+		for(var/turf/T in toArea)
+			dstturfs += T
+			if(T.y < throwy)
+				throwy = T.y
+
+		// hey you, get out of the way!
+		for(var/turf/T in dstturfs)
+			// find the turf to move things to
+			var/turf/D = locate(T.x, throwy - 1, 1)
+			//var/turf/E = get_step(D, SOUTH)
+			for(var/atom/movable/AM as mob|obj in T)
+				AM.Move(D)
+				// NOTE: Commenting this out to avoid recreating mass driver glitch
+				/*
+				spawn(0)
+					AM.throw_at(E, 1, 1)
+					return
+				*/
+
+			if(istype(T, /turf/simulated))
+				del(T)
+
+		for(var/mob/living/carbon/bug in toArea) // If someone somehow is still in the shuttle's docking area...
+			bug.gib()
+
 		fromArea.move_contents_to(toArea)
 		if (mining_shuttle_location)
 			mining_shuttle_location = 0

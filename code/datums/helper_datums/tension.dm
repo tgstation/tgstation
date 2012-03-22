@@ -432,7 +432,7 @@ var/global/datum/tension/tension_master
 
 		spawn(300)
 			if(candidates.len)
-				var/numagents = min(candidates.len, 5)
+				var/numagents = 5
 				syndicate_begin()
 
 				for(var/i = 0, i<numagents,i++)
@@ -534,7 +534,7 @@ var/global/datum/tension/tension_master
 
 		spawn(300)
 			if(candidates.len)
-				var/numagents = min(candidates.len, 6)
+				var/numagents = 6
 
 				//Spawns commandos and equips them.
 				for (var/obj/effect/landmark/L in world)
@@ -557,7 +557,6 @@ var/global/datum/tension/tension_master
 						new_syndicate_commando.key = theghost.key
 						new_syndicate_commando.internal = new_syndicate_commando.s_store
 						new_syndicate_commando.internals.icon_state = "internal1"
-						candidates -= theghost
 						del(theghost)
 
 						//So they don't forget their code or mission.
