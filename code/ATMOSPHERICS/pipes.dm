@@ -1004,6 +1004,93 @@ obj/machinery/atmospherics/pipe
 		level = 1
 		icon_state = "manifold4w-f"
 
+	cap
+		name = "pipe endcap"
+		desc = "An endcap for pipes"
+		icon = 'pipes.dmi'
+		icon_state = "cap"
+		level = 2
+
+		volume = 35
+
+		dir = SOUTH
+		initialize_directions = SOUTH
+
+		var/obj/machinery/atmospherics/node
+
+		hide(var/i)
+			if(level == 1 && istype(loc, /turf/simulated))
+				invisibility = i ? 101 : 0
+			update_icon()
+
+		pipeline_expansion()
+			return list(node)
+
+		process()
+			if(!parent)
+				..()
+			else
+				machines.Remove(src)
+/*
+			if(!node1)
+				parent.mingle_with_turf(loc, 70)
+				if(!nodealert)
+					//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+					nodealert = 1
+			else if(!node2)
+				parent.mingle_with_turf(loc, 70)
+				if(!nodealert)
+					//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+					nodealert = 1
+			else if(!node3)
+				parent.mingle_with_turf(loc, 70)
+				if(!nodealert)
+					//world << "Missing node from [src] at [src.x],[src.y],[src.z]"
+					nodealert = 1
+			else if (nodealert)
+				nodealert = 0
+*/
+		Del()
+			if(node)
+				node.disconnect(src)
+
+			..()
+
+		disconnect(obj/machinery/atmospherics/reference)
+			if(reference == node)
+				if(istype(node, /obj/machinery/atmospherics/pipe))
+					del(parent)
+				node = null
+
+			update_icon()
+
+			..()
+
+		update_icon()
+			overlays = new()
+
+			icon_state = "cap[invisibility ? "-f" : ""]"
+			return
+
+		initialize()
+			for(var/obj/machinery/atmospherics/target in get_step(src, dir))
+				if(target.initialize_directions & get_dir(target,src))
+					node = target
+					break
+
+			var/turf/T = src.loc			// hide if turf is not intact
+			hide(T.intact)
+			//update_icon()
+			update_icon()
+
+		visible
+			level = 2
+			icon_state = "cap"
+
+		hidden
+			level = 1
+			icon_state = "cap-f"
+
 obj/machinery/atmospherics/pipe/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (istype(src, /obj/machinery/atmospherics/pipe/tank))
 		return ..()

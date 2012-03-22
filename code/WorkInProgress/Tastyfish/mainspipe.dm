@@ -115,7 +115,7 @@ obj/machinery/atmospherics/mains_pipe/simple
 	desc = "A one meter section of 3-line mains pipe"
 
 	dir = SOUTH
-	initialize_directions = SOUTH|NORTH
+	initialize_mains_directions = SOUTH|NORTH
 
 	New()
 		nodes.len = 2
@@ -196,7 +196,7 @@ obj/machinery/atmospherics/mains_pipe/manifold
 	desc = "A manifold composed of mains pipes"
 
 	dir = SOUTH
-	initialize_directions = EAST|NORTH|WEST
+	initialize_mains_directions = EAST|NORTH|WEST
 	volume = 105
 
 	New()
@@ -256,9 +256,59 @@ obj/machinery/atmospherics/mains_pipe/manifold
 		level = 2
 		icon_state = "manifold"
 
+obj/machinery/atmospherics/mains_pipe/manifold4w
+	name = "manifold pipe"
+	desc = "A manifold composed of mains pipes"
+
+	dir = SOUTH
+	initialize_mains_directions = EAST|NORTH|WEST|SOUTH
+	volume = 105
+
+	New()
+		nodes.len = 4
+		..()
+
+	initialize()
+		for(var/obj/machinery/atmospherics/mains_pipe/target in get_step(src,NORTH))
+			if(target.initialize_mains_directions & get_dir(target,src))
+				nodes[1] = target
+				break
+
+		for(var/obj/machinery/atmospherics/mains_pipe/target in get_step(src,SOUTH))
+			if(target.initialize_mains_directions & get_dir(target,src))
+				nodes[2] = target
+				break
+
+		for(var/obj/machinery/atmospherics/mains_pipe/target in get_step(src,EAST))
+			if(target.initialize_mains_directions & get_dir(target,src))
+				nodes[3] = target
+				break
+
+		for(var/obj/machinery/atmospherics/mains_pipe/target in get_step(src,WEST))
+			if(target.initialize_mains_directions & get_dir(target,src))
+				nodes[3] = target
+				break
+
+		..() // initialize internal pipes
+
+		var/turf/T = src.loc			// hide if turf is not intact
+		hide(T.intact)
+		update_icon()
+
+	update_icon()
+		icon_state = "manifold4w[invisibility ? "-f" : "" ]"
+
+	hidden
+		level = 1
+		icon_state = "manifold4w-f"
+
+	visible
+		level = 2
+		icon_state = "manifold4w"
+
 obj/machinery/atmospherics/mains_pipe/split
 	name = "mains splitter"
-	desc = "A splitter for connected to a single pipe off a mains."
+	desc = "A splitter for connecting to a single pipe off a mains."
 
 	var/obj/machinery/atmospherics/pipe/mains_component/split_node
 	var/obj/machinery/atmospherics/node3
@@ -356,6 +406,98 @@ obj/machinery/atmospherics/mains_pipe/split
 		visible
 			level = 2
 			icon_state = "split-aux"
+
+obj/machinery/atmospherics/mains_pipe/split3
+	name = "triple mains splitter"
+	desc = "A splitter for connecting to the 3 pipes on a mainline."
+
+	var/obj/machinery/atmospherics/supply_node
+	var/obj/machinery/atmospherics/scrubbers_node
+	var/obj/machinery/atmospherics/aux_node
+
+	New()
+		nodes.len = 1
+		..()
+		initialize_mains_directions = dir
+		initialize_directions = cardinal & ~dir // actually have a normal connection too
+
+	initialize()
+		var/node1_dir
+		var/supply_node_dir
+		var/scrubbers_node_dir
+		var/aux_node_dir
+
+		node1_dir = dir
+		aux_node_dir = turn(dir, 180)
+		if(dir & (NORTH|SOUTH))
+			supply_node_dir = EAST
+			scrubbers_node_dir = WEST
+		else
+			supply_node_dir = SOUTH
+			scrubbers_node_dir = NORTH
+
+		for(var/obj/machinery/atmospherics/mains_pipe/target in get_step(src, node1_dir))
+			if(target.initialize_mains_directions & get_dir(target,src))
+				nodes[1] = target
+				break
+		for(var/obj/machinery/atmospherics/target in get_step(src,supply_node_dir))
+			if(target.initialize_directions & get_dir(target,src))
+				supply_node = target
+				break
+		for(var/obj/machinery/atmospherics/target in get_step(src,scrubbers_node_dir))
+			if(target.initialize_directions & get_dir(target,src))
+				scrubbers_node = target
+				break
+		for(var/obj/machinery/atmospherics/target in get_step(src,aux_node_dir))
+			if(target.initialize_directions & get_dir(target,src))
+				aux_node = target
+				break
+
+		..() // initialize internal pipes
+
+		// bind them
+		spawn(5)
+			if(supply_node)
+				var/datum/pipe_network/N1 = supply_node.return_network(src)
+				var/datum/pipe_network/N2 = supply.return_network(supply)
+				if(N1 && N2)
+					N1.merge(N2)
+			if(scrubbers_node)
+				var/datum/pipe_network/N1 = scrubbers_node.return_network(src)
+				var/datum/pipe_network/N2 = scrubbers.return_network(scrubbers)
+				if(N1 && N2)
+					N1.merge(N2)
+			if(aux_node)
+				var/datum/pipe_network/N1 = aux_node.return_network(src)
+				var/datum/pipe_network/N2 = aux.return_network(aux)
+				if(N1 && N2)
+					N1.merge(N2)
+
+		var/turf/T = src.loc			// hide if turf is not intact
+		hide(T.intact)
+		update_icon()
+
+	update_icon()
+		icon_state = "split-t[invisibility ? "-f" : "" ]"
+
+	return_network(obj/machinery/atmospherics/reference)
+		var/obj/machinery/atmospherics/A
+
+		A = supply_node.return_network(reference)
+		if(!A)
+			A = scrubbers_node.return_network(reference)
+		if(!A)
+			A = aux_node.return_network(reference)
+
+		return A
+
+	hidden
+		level = 1
+		icon_state = "split-t-f"
+
+	visible
+		level = 2
+		icon_state = "split-t"
 
 obj/machinery/atmospherics/mains_pipe/cap
 	name = "pipe cap"
@@ -493,3 +635,69 @@ obj/machinery/atmospherics/mains_pipe/valve
 			close()
 		else
 			open()
+
+	digital		// can be controlled by AI
+		name = "digital mains valve"
+		desc = "A digitally controlled valve."
+		icon_state = "dvalve0"
+
+		attack_ai(mob/user as mob)
+			return src.attack_hand(user)
+
+		attack_hand(mob/user as mob)
+			if(!src.allowed(user))
+				user << "\red Access denied."
+				return
+			..()
+
+		//Radio remote control
+
+		proc
+			set_frequency(new_frequency)
+				radio_controller.remove_object(src, frequency)
+				frequency = new_frequency
+				if(frequency)
+					radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
+
+		var/frequency = 0
+		var/id = null
+		var/datum/radio_frequency/radio_connection
+
+		initialize()
+			..()
+			if(frequency)
+				set_frequency(frequency)
+
+		update_icon(animation)
+			var/turf/simulated/floor = loc
+			var/hide = istype(floor) ? floor.intact : 0
+			level = 1
+			for(var/obj/machinery/atmospherics/mains_pipe/node in nodes)
+				if(node.level == 2)
+					hide = 0
+					level = 2
+					break
+
+			if(animation)
+				flick("[hide?"h":""]dvalve[src.open][!src.open]",src)
+			else
+				icon_state = "[hide?"h":""]dvalve[open]"
+
+		receive_signal(datum/signal/signal)
+			if(!signal.data["tag"] || (signal.data["tag"] != id))
+				return 0
+
+			switch(signal.data["command"])
+				if("valve_open")
+					if(!open)
+						open()
+
+				if("valve_close")
+					if(open)
+						close()
+
+				if("valve_toggle")
+					if(open)
+						close()
+					else
+						open()
