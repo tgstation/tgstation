@@ -99,50 +99,68 @@ emp_act
 	var/armor = run_armor_check(affecting, "melee", "Your armor has protected you from a hit to the [hit_area].", "Your armor has softened hit to your [hit_area].")
 	if(armor >= 2)	return 0
 	if(!I.force)	return 0
-	apply_damage(I.force, I.damtype, affecting, armor, is_cut(I), I.name)
+
+	// make heavy weapons do more damage
+	var/power = I.force
+	if(I.w_class >= 4)
+		power *= 2
+	apply_damage(, I.damtype, affecting, armor, is_cut(I), I.name)
 
 	var/bloody = 0
 	if((I.damtype == BRUTE) && prob(25 + (I.force * 2)))
 		I.add_blood(src)
-		if(prob(33))
-			bloody = 1
-			var/turf/location = loc
-			if(istype(location, /turf/simulated))
-				location.add_blood(src)
-			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				if(H.wear_suit)			H.wear_suit.add_blood(src)
-				else if(H.w_uniform)	H.w_uniform.add_blood(src)
-				if(H.shoes)				H.shoes.add_blood(src)
-				if (H.gloves)
-					H.gloves.add_blood(H)
-					H.gloves.transfer_blood = 2
-					H.gloves.bloody_hands_mob = H
-				else
-					H.add_blood(H)
-					H.bloody_hands = 2
-					H.bloody_hands_mob = H
+		bloody = 1
+		var/turf/location = loc
+		if(istype(location, /turf/simulated))
+			location.add_blood(src)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.wear_suit)			H.wear_suit.add_blood(src)
+			else if(H.w_uniform)	H.w_uniform.add_blood(src)
+			if(H.shoes)				H.shoes.add_blood(src)
+			if (H.gloves)
+				H.gloves.add_blood(H)
+				H.gloves.transfer_blood = 2
+				H.gloves.bloody_hands_mob = H
+			else
+				H.add_blood(H)
+				H.bloody_hands = 2
+				H.bloody_hands_mob = H
 
-		switch(hit_area)
-			if("head")//Harder to score a stun but if you do it lasts a bit longer
-				if(prob(I.force))
-					apply_effect(20, PARALYZE, armor)
-					visible_message("\red <B>[src] has been knocked unconscious!</B>")
-					if(src != user)
-						ticker.mode.remove_revolutionary(mind)
+	switch(hit_area)
+		if("head")//Harder to score a stun but if you do it lasts a bit longer
+			var/knockout_chance = 0
+			if(power >= 4)
+				knockout_chance += 5
+			if(power >= 10)
+				knockout_chance += 20
+				knockout_chance += power
+				if(health <= 40) knockout_chance += 40
+			if(prob(knockout_chance))
+				apply_effect(20, PARALYZE, armor)
+				visible_message("\red <B>[src] has been knocked unconscious!</B>")
+				if(src != user)
+					ticker.mode.remove_revolutionary(mind)
 
-				if(bloody)//Apply blood
-					if(wear_mask)				wear_mask.add_blood(src)
-					if(head)					head.add_blood(src)
-					if(glasses && prob(33))		glasses.add_blood(src)
+			if(bloody)//Apply blood
+				if(wear_mask)				wear_mask.add_blood(src)
+				if(head)					head.add_blood(src)
+				if(glasses && prob(33))		glasses.add_blood(src)
 
-			if("chest")//Easier to score a stun but lasts less time
-				if(prob((I.force + 10)))
-					apply_effect(5, WEAKEN, armor)
-					visible_message("\red <B>[src] has been knocked down!</B>")
+		if("chest")//Easier to score a stun but lasts less time
+			var/knockdown_chance = 0
+			if(power >= 10)
+				knockdown_chance += 10
+			if(I.w_class >= 4)
+				knockdown_chance *= 4
+			knockdown_chance = min(knockdown_chance, 50)
+			if(prob(knockdown_chance))
+				apply_effect(5, WEAKEN, armor)
+				visible_message("\red <B>[src] has been knocked down!</B>")
 
-				if(bloody)
-					if(src.wear_suit)	src.wear_suit.add_blood(src)
-					if(src.w_uniform)	src.w_uniform.add_blood(src)
+			if(bloody)
+				if(src.wear_suit)	src.wear_suit.add_blood(src)
+				if(src.w_uniform)	src.w_uniform.add_blood(src)
+
 	UpdateDamageIcon()
 	update_clothing()
