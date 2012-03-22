@@ -107,7 +107,7 @@ emp_act
 	apply_damage(, I.damtype, affecting, armor, is_cut(I), I.name)
 
 	var/bloody = 0
-	if((I.damtype == BRUTE) && prob(25 + (I.force * 2)))
+	if((I.damtype == BRUTE) && prob(25 + is_sharp(I) * 50 + (I.force * 2)))
 		I.add_blood(src)
 		bloody = 1
 		var/turf/location = loc
