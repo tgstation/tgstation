@@ -82,27 +82,28 @@ mob/living/carbon/proc/handle_hallucinations()
 				//Flashes of danger
 				//src << "Danger Flash"
 				if(!halimage)
-					var/possible_points = list()
+					var/list/possible_points = list()
 					for(var/turf/simulated/floor/F in view(src,world.view))
 						possible_points += F
-					var/turf/simulated/floor/target = pick(possible_points)
+					if(possible_points.len)
+						var/turf/simulated/floor/target = pick(possible_points)
 
-					switch(rand(1,3))
-						if(1)
-							//src << "Space"
-							halimage = image('space.dmi',target,"[rand(1,25)]",TURF_LAYER)
-						if(2)
-							//src << "Fire"
-							halimage = image('fire.dmi',target,"1",TURF_LAYER)
-						if(3)
-							//src << "C4"
-							halimage = image('syndieweapons.dmi',target,"c4small_1",OBJ_LAYER+0.01)
+						switch(rand(1,3))
+							if(1)
+								//src << "Space"
+								halimage = image('space.dmi',target,"[rand(1,25)]",TURF_LAYER)
+							if(2)
+								//src << "Fire"
+								halimage = image('fire.dmi',target,"1",TURF_LAYER)
+							if(3)
+								//src << "C4"
+								halimage = image('syndieweapons.dmi',target,"c4small_1",OBJ_LAYER+0.01)
 
 
-					if(client) client.images += halimage
-					spawn(rand(10,50)) //Only seen for a brief moment.
-						if(client) client.images -= halimage
-						halimage = null
+						if(client) client.images += halimage
+						spawn(rand(10,50)) //Only seen for a brief moment.
+							if(client) client.images -= halimage
+							halimage = null
 
 
 			if(41 to 65)
@@ -262,7 +263,7 @@ proc/check_panel(mob/M)
 				my_target.hallucinations -= src
 			del(src)
 		step_away(src,my_target,2)
-		processing_objects.Add(src)
+		spawn attack_loop()
 
 
 	proc/updateimage()
@@ -284,34 +285,36 @@ proc/check_panel(mob/M)
 		my_target << currentimage
 
 
-	process()
-		if(src.health < 0)
-			collapse()
-			return
-		if(get_dist(src,my_target) > 1)
-			src.dir = get_dir(src,my_target)
-			step_towards(src,my_target)
-			updateimage()
-		else
-			if(prob(15))
-				if(weapon_name)
-					my_target << sound(pick('genhit1.ogg', 'genhit2.ogg', 'genhit3.ogg'))
-					my_target.show_message("\red <B>[my_target] has been attacked with [weapon_name] by [src.name] </B>", 1)
-					my_target.halloss += 8
-					if(prob(20)) my_target.eye_blurry += 3
-					if(prob(33))
-						if(!locate(/obj/effect/overlay) in my_target.loc)
-							fake_blood(my_target)
-				else
-					my_target << sound(pick('punch1.ogg','punch2.ogg','punch3.ogg','punch4.ogg'))
-					my_target.show_message("\red <B>[src.name] has punched [my_target]!</B>", 1)
-					my_target.halloss += 4
-					if(prob(33))
-						if(!locate(/obj/effect/overlay) in my_target.loc)
-							fake_blood(my_target)
+	proc/attack_loop()
+		while(1)
+			sleep(rand(5,10))
+			if(src.health < 0)
+				collapse()
+				continue
+			if(get_dist(src,my_target) > 1)
+				src.dir = get_dir(src,my_target)
+				step_towards(src,my_target)
+				updateimage()
+			else
+				if(prob(15))
+					if(weapon_name)
+						my_target << sound(pick('genhit1.ogg', 'genhit2.ogg', 'genhit3.ogg'))
+						my_target.show_message("\red <B>[my_target] has been attacked with [weapon_name] by [src.name] </B>", 1)
+						my_target.halloss += 8
+						if(prob(20)) my_target.eye_blurry += 3
+						if(prob(33))
+							if(!locate(/obj/effect/overlay) in my_target.loc)
+								fake_blood(my_target)
+					else
+						my_target << sound(pick('punch1.ogg','punch2.ogg','punch3.ogg','punch4.ogg'))
+						my_target.show_message("\red <B>[src.name] has punched [my_target]!</B>", 1)
+						my_target.halloss += 4
+						if(prob(33))
+							if(!locate(/obj/effect/overlay) in my_target.loc)
+								fake_blood(my_target)
 
-		if(prob(15))
-			step_away(src,my_target,2)
+			if(prob(15))
+				step_away(src,my_target,2)
 
 	proc/collapse()
 		collapse = 1
