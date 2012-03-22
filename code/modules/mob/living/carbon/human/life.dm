@@ -918,6 +918,7 @@
 					emote("scream")
 					real_name = "Unknown"
 					src << "\red Your face has become disfigured."
+					face_op_stage = 0.0
 					warn_flavor_changed()
 			for(var/name in organs)
 				var/datum/organ/external/temp = organs[name]
