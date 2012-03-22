@@ -126,7 +126,7 @@ datum/shuttle_controller
 						for(var/mob/living/carbon/bug in end_location) // If someone somehow is still in the shuttle's docking area...
 							bug.gib()
 
-						start_location.copy_contents_to(end_location)
+						start_location.move_contents_to(end_location)
 						settimeleft(SHUTTLELEAVETIME)
 						world << "<B>The Emergency Shuttle has docked with the station! You have [timeleft()/60] minutes to board the Emergency Shuttle.</B>"
 						world << sound('shuttledock.ogg')
