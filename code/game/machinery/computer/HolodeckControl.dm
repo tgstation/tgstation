@@ -127,10 +127,10 @@
 /obj/machinery/computer/HolodeckControl/New()
 	..()
 	linkedholodeck = locate(/area/holodeck/alphadeck)
-	if(linkedholodeck)
-		target = locate(/area/holodeck/source_emptycourt)
-		if(target)
-			loadProgram(target)
+	//if(linkedholodeck)
+	//	target = locate(/area/holodeck/source_emptycourt)
+	//	if(target)
+	//		loadProgram(target)
 
 
 /obj/machinery/computer/HolodeckControl/process()
