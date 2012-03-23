@@ -25,9 +25,21 @@
 		s["host"] = host ? host : null
 		s["players"] = list()
 		var/n = 0
+		var/admins = 0
+
 		for(var/mob/M in world)
+
 			if(M.client)
+				if(M.client.holder && M.client.authenticated)
+					if(!M.client.stealth)
+						admins++
+
 				s["player[n]"] = M.client.key
 				n++
 		s["players"] = n
+
+		// 7 + s["players"] + 1 = index of s["revinfo"]
+		s["revision"] = revdata.revision
+		s["admins"] = admins
+
 		return list2params(s)

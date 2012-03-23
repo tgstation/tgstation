@@ -157,6 +157,25 @@
 		interpreter.SetProc("prob", /proc/prob_chance)
 		interpreter.SetProc("substr", /proc/docopytext)
 
+		// Donkie~
+		// Strings
+		interpreter.SetProc("lower", /proc/n_lower)
+		interpreter.SetProc("upper", /proc/n_upper)
+		interpreter.SetProc("explode", /proc/string_explode)
+		interpreter.SetProc("repeat", /proc/n_repeat)
+		interpreter.SetProc("reverse", /proc/n_reverse)
+		interpreter.SetProc("tonum", /proc/n_str2num)
+
+		// Numbers
+		interpreter.SetProc("tostring", /proc/n_num2str)
+		interpreter.SetProc("sqrt", /proc/n_sqrt)
+		interpreter.SetProc("abs", /proc/n_abs)
+		interpreter.SetProc("floor", /proc/n_floor)
+		interpreter.SetProc("ceil", /proc/n_ceil)
+		interpreter.SetProc("round", /proc/n_round)
+		interpreter.SetProc("clamp", /proc/n_clamp)
+		interpreter.SetProc("inrange", /proc/n_inrange)
+		// End of Donkie~
 
 
 		// Run the compiled code
@@ -165,7 +184,7 @@
 		// Backwards-apply variables onto signal data
 		/* sanitize EVERYTHING. fucking players can't be trusted with SHIT */
 
-		signal.data["message"] 	= trim(copytext(sanitize(interpreter.GetVar("$content")), 1, MAX_MESSAGE_LEN))
+		signal.data["message"] 	= interpreter.GetVar("$content")
 		signal.frequency 		= interpreter.GetVar("$freq")
 
 		var/setname = ""
@@ -173,7 +192,7 @@
 		if(interpreter.GetVar("$source") in S.stored_names)
 			setname = interpreter.GetVar("$source")
 		else
-			setname = "<i>[trim(copytext(sanitize(interpreter.GetVar("$source")), 1, MAX_MESSAGE_LEN))]</i>"
+			setname = "<i>[interpreter.GetVar("$source")]</i>"
 
 		if(signal.data["name"] != setname)
 			signal.data["realname"] = setname
