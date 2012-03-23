@@ -203,7 +203,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 <b>Implant Details:</b><BR>
 <b>Function:</b> Contains a small pod of nanobots that manipulate the host's mental functions.<BR>
 <b>Special Features:</b> Will prevent and cure most forms of brainwashing.<BR>
-<b>Integrity:</b> Implant will last so long as the nanobots are inside the bloodstream."}
+<b>Integrity:</b> Degradation can occur within nanobots, re-application may be necessary to ensure full cooperation."}
 		return dat
 
 
@@ -211,8 +211,9 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		if(!istype(M, /mob/living/carbon/human))	return
 		var/mob/living/carbon/human/H = M
 		if(H.mind in ticker.mode.head_revolutionaries)
-			for(var/mob/O in viewers(H, null))
-				O.show_message(text("\red [] seems to resist the implant.", H), 1)
+			for(var/mob/O in (viewers(M) -  M))
+				O.show_message("\red [M] seems to resist the implant.", 1)
+				M << "\red You resist the implant."
 				return
 		else if(H.mind in ticker.mode:revolutionaries)
 			ticker.mode:remove_revolutionary(H.mind)
