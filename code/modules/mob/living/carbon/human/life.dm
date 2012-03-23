@@ -133,7 +133,8 @@
 				if(hallucination <= 2)
 					halloss = 0
 					hallucination = 0
-				//hallucination -= 2
+				else
+					hallucination -= 2
 				//if(health < 0)
 				//	for(var/obj/a in hallucinations)
 				//		del a
