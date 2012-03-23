@@ -181,9 +181,10 @@
 		if("activate")
 			activate()
 		if("detach")
-			beaker.loc = src.loc
-			beaker = null
-			update_icon()
+			if(beaker)
+				beaker.loc = src.loc
+				beaker = null
+				update_icon()
 		if("create")
 			create_product(href_list["item"],text2num(href_list["cost"]))
 		if("menu")

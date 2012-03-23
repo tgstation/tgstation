@@ -129,11 +129,12 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		if(!src.loc)
 			on = 0
-		var/area/A = src.loc.loc
-		if(!A || !isarea(A) || !A.master)
-			on = 0
 		else
-			on = A.master.powered(EQUIP) // set "on" to the power status
+			var/area/A = src.loc.loc
+			if(!A || !isarea(A) || !A.master)
+				on = 0
+			else
+				on = A.master.powered(EQUIP) // set "on" to the power status
 
 		if(!on)
 			icon_state = "intercom-p"

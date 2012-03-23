@@ -161,7 +161,7 @@
 				if(R)
 					var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
 					if(choice == "Confirm")
-						if(R)
+						if(R && istype(R))
 							if(R.mind && R.mind.special_role && R.emagged)
 								R << "Extreme danger.  Termination codes detected.  Scrambling security codes and automatic AI unlink triggered."
 								R.ResetSecurityCodes()
@@ -176,10 +176,10 @@
 		else if (href_list["stopbot"])
 			if(src.allowed(usr))
 				var/mob/living/silicon/robot/R = locate(href_list["stopbot"])
-				if(R)
+				if(R && istype(R)) // Extra sancheck because of input var references
 					var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
 					if(choice == "Confirm")
-						if(R)
+						if(R && istype(R))
 							message_admins("\blue [key_name_admin(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
 							log_game("[key_name(usr)] [R.canmove ? "locked down" : "released"] [R.name]!")
 							R.canmove = !R.canmove
@@ -201,7 +201,7 @@
 				if(R)
 					var/choice = input("Are you certain you wish to hack [R.name]?") in list("Confirm", "Abort")
 					if(choice == "Confirm")
-						if(R)
+						if(R && istype(R))
 							message_admins("\blue [key_name_admin(usr)] emagged [R.name] using robotic console!")
 							log_game("[key_name(usr)] emagged [R.name] using robotic console!")
 							R.emagged = 1

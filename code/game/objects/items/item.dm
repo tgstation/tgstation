@@ -290,9 +290,10 @@
 									Metroid.attacked = 0
 
 							spawn()
-								Metroid.SStun = 1
-								sleep(rand(5,20))
-								Metroid.SStun = 0
+								if(Metroid)
+									Metroid.SStun = 1
+									sleep(rand(5,20))
+									Metroid.SStun = 0
 
 						Metroid.Victim = null
 						Metroid.anchored = 0

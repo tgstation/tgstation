@@ -392,8 +392,9 @@
 				var/datum/disease/D = new vaccine_type
 				var/name = input(usr,"Name:","Name the vaccine",D.name)
 				if(!name || name == " ") name = D.name
-				B.name = "[name] vaccine bottle"
-				B.reagents.add_reagent("vaccine",15,vaccine_type)
+				if(B)
+					B.name = "[name] vaccine bottle"
+					B.reagents.add_reagent("vaccine",15,vaccine_type)
 				del(D)
 				wait = 1
 				var/datum/reagents/R = beaker.reagents

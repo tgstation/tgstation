@@ -1227,7 +1227,7 @@
 			src.buffer3label = sanitize(input("New Label:","Edit Label","Infos here"))
 			dopage(src,"buffermenu")
 		if (href_list["b1transfer"])
-			if (!src.connected.occupant || src.connected.occupant.mutations & NOCLONE)
+			if (!src.connected.occupant || src.connected.occupant.mutations & NOCLONE || !src.connected.occupant.dna)
 				return
 			if (src.buffer1type == "ui")
 				if (src.buffer1iue)
@@ -1242,7 +1242,7 @@
 			src.connected.occupant.radiation += rand(20,50)
 			src.delete = 0
 		if (href_list["b2transfer"])
-			if (!src.connected.occupant || src.connected.occupant.mutations & NOCLONE)
+			if (!src.connected.occupant || src.connected.occupant.mutations & NOCLONE || !src.connected.occupant.dna)
 				return
 			if (src.buffer2type == "ui")
 				if (src.buffer2iue)
@@ -1257,7 +1257,7 @@
 			src.connected.occupant.radiation += rand(20,50)
 			src.delete = 0
 		if (href_list["b3transfer"])
-			if (!src.connected.occupant || src.connected.occupant.mutations & NOCLONE)
+			if (!src.connected.occupant || src.connected.occupant.mutations & NOCLONE || !src.connected.occupant.dna)
 				return
 			if (src.buffer3type == "ui")
 				if (src.buffer3iue)

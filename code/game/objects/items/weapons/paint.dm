@@ -5,7 +5,7 @@ var/global/list/cached_icons = list()
 	desc = "Used to recolor floors and walls. Can not be removed by the janitor."
 	icon = 'items.dmi'
 	icon_state = "paint_neutral"
-	var/color = "neutral"
+	var/color = "#FFFFFF"
 	item_state = "paintcan"
 	w_class = 3.0
 

@@ -212,6 +212,8 @@ MASS SPECTROMETER
 
 	proc/add_data(atom/A as mob|obj|turf|area)
 		var/merged = 0
+		if(!stored || !stored.len)
+			stored = list()
 		for(var/i = 1, i < (stored.len + 1), i++)	//Lets see if the object is already in there!
 			var/list/temp = stored[i]
 			var/atom/checker = temp[1]
