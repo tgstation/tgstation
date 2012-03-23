@@ -246,6 +246,7 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define TOX "tox"
 #define OXY "oxy"
 #define CLONE "clone"
+#define HALLOSS "halloss"
 
 #define STUN "stun"
 #define WEAKEN "weaken"

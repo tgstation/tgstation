@@ -1140,6 +1140,17 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/setCloneLoss(var/amount)
 	cloneloss = amount
 
+/mob/proc/getHalLoss()
+	return halloss
+
+/mob/proc/adjustHalLoss(var/amount)
+	halloss = max(halloss + amount, 0)
+
+/mob/proc/setHalLoss(var/amount)
+	halloss = amount
+
+
+
 /mob/proc/getBrainLoss()
 	return brainloss
 

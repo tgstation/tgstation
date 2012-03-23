@@ -124,7 +124,7 @@ emp_act
 	apply_damage(I.force, I.damtype, affecting, armor)
 
 	var/bloody = 0
-	if((I.damtype == BRUTE) && prob(25 + (I.force * 2)))
+	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))
 		I.add_blood(src)	//Make the weapon bloody, not the person.
 		if(prob(33))
 			bloody = 1

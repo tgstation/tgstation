@@ -255,10 +255,25 @@ var/global/datum/tension/tension_master
 			themind.make_AI_Malf()
 			return 1
 
+/*
+		if(BE_CHANGELING)	roletext="changeling"
+		if(BE_TRAITOR)		roletext="traitor"
+		if(BE_OPERATIVE)	roletext="operative"
+		if(BE_WIZARD)		roletext="wizard"
+		if(BE_REV)			roletext="revolutionary"
+		if(BE_CULTIST)		roletext="cultist"
+
+
+	for(var/mob/new_player/player in world)
+		if(player.client && player.ready)
+			if(player.preferences.be_special & role)
+*/
+
 
 	proc/makeTratiors()
 
 		var/datum/game_mode/traitor/temp = new
+
 		if(config.protect_roles_from_antagonist)
 			temp.restricted_jobs += temp.protected_jobs
 
@@ -266,13 +281,18 @@ var/global/datum/tension/tension_master
 		var/mob/living/carbon/human/H = null
 
 		for(var/mob/living/carbon/human/applicant in world)
+
+			var/datum/preferences/preferences = new
+
 			if(applicant.stat < 2)
 				if(applicant.mind)
 					if (!applicant.mind.special_role)
 						if(!jobban_isbanned(applicant, "traitor") && !jobban_isbanned(applicant, "Syndicate"))
 							if(!(applicant.job in temp.restricted_jobs))
 								if(applicant.client)
-									candidates += applicant
+									if(preferences.savefile_load(applicant, 0))
+										if(preferences.be_special & BE_TRAITOR)
+											candidates += applicant
 
 		if(candidates.len)
 			var/numTratiors = min(candidates.len, 3)
@@ -297,13 +317,18 @@ var/global/datum/tension/tension_master
 		var/mob/living/carbon/human/H = null
 
 		for(var/mob/living/carbon/human/applicant in world)
+
+			var/datum/preferences/preferences = new
+
 			if(applicant.stat < 2)
 				if(applicant.mind)
 					if (!applicant.mind.special_role)
 						if(!jobban_isbanned(applicant, "changeling") && !jobban_isbanned(applicant, "Syndicate"))
 							if(!(applicant.job in temp.restricted_jobs))
 								if(applicant.client)
-									candidates += applicant
+									if(preferences.savefile_load(applicant, 0))
+										if(preferences.be_special & BE_CHANGELING)
+											candidates += applicant
 
 		if(candidates.len)
 			var/numChanglings = min(candidates.len, 3)
@@ -327,13 +352,19 @@ var/global/datum/tension/tension_master
 		var/mob/living/carbon/human/H = null
 
 		for(var/mob/living/carbon/human/applicant in world)
+
+			var/datum/preferences/preferences = new
+
 			if(applicant.stat < 2)
 				if(applicant.mind)
 					if (!applicant.mind.special_role)
 						if(!jobban_isbanned(applicant, "revolutionary") && !jobban_isbanned(applicant, "Syndicate"))
 							if(!(applicant.job in temp.restricted_jobs))
 								if(applicant.client)
-									candidates += applicant
+									if(preferences.savefile_load(applicant, 0))
+										if(preferences.be_special & BE_REV)
+											candidates += applicant
+
 		if(candidates.len)
 			var/numRevs = min(candidates.len, 3)
 
@@ -362,8 +393,8 @@ var/global/datum/tension/tension_master
 						if("No")
 							return
 
-
-		spawn(300)
+		sleep(300)
+		spawn(0)
 			if(candidates.len)
 				while(!theghost && candidates.len)
 					theghost = pick(candidates)
@@ -389,13 +420,18 @@ var/global/datum/tension/tension_master
 		var/mob/living/carbon/human/H = null
 
 		for(var/mob/living/carbon/human/applicant in world)
+
+			var/datum/preferences/preferences = new
+
 			if(applicant.stat < 2)
 				if(applicant.mind)
 					if (!applicant.mind.special_role)
 						if(!jobban_isbanned(applicant, "cultist") && !jobban_isbanned(applicant, "Syndicate"))
 							if(!(applicant.job in temp.restricted_jobs))
 								if(applicant.client)
-									candidates += applicant
+									if(preferences.savefile_load(applicant, 0))
+										if(preferences.be_special & BE_CULTIST)
+											candidates += applicant
 
 		if(candidates.len)
 			var/numCultists = min(candidates.len, 4)
@@ -429,8 +465,8 @@ var/global/datum/tension/tension_master
 						if("No")
 							return
 
-
-		spawn(300)
+		sleep(300)
+		spawn(0)
 			if(candidates.len)
 				var/numagents = 5
 				syndicate_begin()
@@ -531,8 +567,8 @@ var/global/datum/tension/tension_master
 						candidates += G
 					if("No")
 						return
-
-		spawn(300)
+		sleep(300)
+		spawn(0)
 			if(candidates.len)
 				var/numagents = 6
 

@@ -22,18 +22,21 @@
 			adjustOxyLoss(damage/(blocked+1))
 		if(CLONE)
 			adjustCloneLoss(damage/(blocked+1))
+		if(HALLOSS)
+			adjustHalLoss(damage/(blocked+1))
 	UpdateDamageIcon()
 	updatehealth()
 	return 1
 
 
-/mob/living/proc/apply_damages(var/brute = 0, var/burn = 0, var/tox = 0, var/oxy = 0, var/clone = 0, var/def_zone = null, var/blocked = 0)
+/mob/living/proc/apply_damages(var/brute = 0, var/burn = 0, var/tox = 0, var/oxy = 0, var/clone = 0, var/def_zone = null, var/blocked = 0, var/halloss = 0)
 	if(blocked >= 2)	return 0
 	if(brute)	apply_damage(brute, BRUTE, def_zone, blocked)
 	if(burn)	apply_damage(burn, BURN, def_zone, blocked)
 	if(tox)		apply_damage(tox, TOX, def_zone, blocked)
 	if(oxy)		apply_damage(oxy, OXY, def_zone, blocked)
 	if(clone)	apply_damage(clone, CLONE, def_zone, blocked)
+	if(halloss) apply_damage(halloss, HALLOSS, def_zone, blocked)
 	return 1
 
 

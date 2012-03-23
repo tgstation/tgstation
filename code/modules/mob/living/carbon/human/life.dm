@@ -129,14 +129,29 @@
 				//	a.hallucinate(src)
 				if(!handling_hal && hallucination > 20)
 					spawn handle_hallucinations() //The not boring kind!
-				hallucination -= 2
+
+				if(hallucination <= 2)
+					halloss = 0
+					hallucination = 0
+				//hallucination -= 2
 				//if(health < 0)
 				//	for(var/obj/a in hallucinations)
 				//		del a
 			else
-				halloss = 0
+				//halloss = 0
 				for(var/atom/a in hallucinations)
 					del a
+
+				if(halloss > 100)
+					src << "You're too tired to keep going..."
+					for(var/mob/O in viewers(src, null))
+						if(O == src)
+							continue
+						O.show_message(text("\red <B>[src] slumps to the ground panting, too weak to continue fighting."), 1)
+					Paralyse(15)
+					setHalLoss(99)
+
+
 			if (disabilities & 2)
 				if ((prob(1) && paralysis < 1 && r_epil < 1))
 					src << "\red You have a seizure!"
@@ -697,6 +712,7 @@
 			if(getOxyLoss() > 50) Paralyse(3)
 
 			if(sleeping)
+				adjustHalLoss(-5)
 				if(paralysis <= 0)
 					Paralyse(2)
 				if (prob(10) && health && !hal_crit) spawn(0) emote("snore")
