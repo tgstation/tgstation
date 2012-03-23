@@ -108,7 +108,7 @@
 
 	var/cancel = 0
 	for(var/mob/M in world)
-		if(M.client && !M.stat)
+		if(M.client && (M.stat != DEAD))
 			cancel = 1
 			break
 	if(!cancel)
