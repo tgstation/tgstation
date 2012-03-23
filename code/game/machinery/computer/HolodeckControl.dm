@@ -16,10 +16,12 @@
 		return
 
 	attack_hand(var/mob/user as mob)
+
 		if(..())
 			return
 		user.machine = src
 		var/dat
+
 
 		dat += "<B>Holodeck Control System</B><BR>"
 		dat += "<HR>Current Loaded Programs:<BR>"
@@ -32,16 +34,25 @@
 
 		dat += "Please ensure that only holographic weapons are used in the holodeck if a combat simulation has been loaded.<BR>"
 
+		if(issilicon(user) && !emagged)
+			dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=red>Override Safety Protocols?</font>)</A><BR>"
 
 		if(emagged)
 			dat += "<A href='?src=\ref[src];burntest=1'>(<font color=red>Begin Atmospheric Burn Simulation</font>)</A><BR>"
 			dat += "Ensure the holodeck is empty before testing.<BR>"
+			dat += "<BR>"
+			dat += "<A href='?src=\ref[src];wildlifecarp=1'>(<font color=red>Begin Wildlife Simulation</font>)</A><BR>"
+			dat += "Ensure the holodeck is empty before testing.<BR>"
+			dat += "<BR>"
 			dat += "Safety Protocols are <font color=red> DISABLED </font><BR>"
 		else
+			dat += "<BR>"
 			dat += "Safety Protocols are <font color=green> ENABLED </font><BR>"
 
 		user << browse(dat, "window=computer;size=400x500")
 		onclose(user, "computer")
+
+
 		return
 
 
@@ -80,6 +91,14 @@
 				target = locate(/area/holodeck/source_burntest)
 				if(target)
 					loadProgram(target)
+
+			else if(href_list["wildlifecarp"])
+				target = locate(/area/holodeck/source_wildlife)
+				if(target)
+					loadProgram(target)
+
+			else if(href_list["AIoverride"])
+				emagged = 1
 
 			src.add_fingerprint(usr)
 		src.updateUsrDialog()
@@ -164,6 +183,12 @@
 
 /obj/machinery/computer/HolodeckControl/proc/derez(var/obj , var/silent = 1)
 	holographic_items.Remove(obj)
+
+	if(istype(obj , /obj/))
+		if(istype(obj:loc , /mob/))
+			var/mob/M = obj:loc
+			M.drop_from_slot(obj)
+
 	if(!silent)
 		var/obj/oldobj = obj
 		for(var/mob/M in viewers(world.view,get_turf(obj)))
@@ -210,6 +235,9 @@
 
 	for(var/item in holographic_items)
 		derez(item)
+
+	for(var/obj/effect/decal/cleanable/blood/B in linkedholodeck)
+		del(B)
 
 	holographic_items = A.copy_contents_to(linkedholodeck , 1)
 

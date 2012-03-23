@@ -748,7 +748,8 @@ proc/process_ghost_teleport_locs()
 /area/holodeck/source_burntest
 	name = "Holodeck - Atmospheric Burn Test"
 
-
+/area/holodeck/source_wildlife
+	name = "Holodeck - Wildlife Simulation"
 
 
 

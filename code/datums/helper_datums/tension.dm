@@ -396,7 +396,7 @@ var/global/datum/tension/tension_master
 		sleep(300)
 		spawn(0)
 			if(candidates.len)
-				while(!theghost && candidates.len)
+				while(!theghost && !theghost.client && candidates.len)
 					theghost = pick(candidates)
 					candidates.Remove(theghost)
 				if(!theghost)
@@ -472,7 +472,7 @@ var/global/datum/tension/tension_master
 				syndicate_begin()
 
 				for(var/i = 0, i<numagents,i++)
-					while(!theghost && candidates.len)
+					while(!theghost && (!theghost.client) && candidates.len)
 						theghost = pick(candidates)
 						candidates.Remove(theghost)
 					if(!theghost)
@@ -552,8 +552,10 @@ var/global/datum/tension/tension_master
 		if (emergency_shuttle.direction == 1 && emergency_shuttle.online == 1)
 			emergency_shuttle.recall()
 			world << "\blue <B>Alert: The shuttle is going back!</B>"
-	*/
+
 		var/syndicate_commando_number = syndicate_commandos_possible //for selecting a leader
+
+		*/
 		var/syndicate_leader_selected = 0 //when the leader is chosen. The last person spawned.
 
 	//Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
@@ -565,55 +567,71 @@ var/global/datum/tension/tension_master
 						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
 							return
 						candidates += G
+						for(var/obj/debug/debugger/B in world)
+							B.list1 += G
+							B.list2 += G.key
 					if("No")
 						return
 		sleep(300)
-		spawn(0)
-			if(candidates.len)
-				var/numagents = 6
+		if(candidates.len)
+			for(var/obj/debug/debugger/B in world)
+				B.var1 = candidates.len
+				B.list3 = candidates.Copy()
+				for(var/mob/dead/observer/G in candidates)
+					B.list4 = G.key
+			var/numagents = 6
 
-				//Spawns commandos and equips them.
-				for (var/obj/effect/landmark/L in world)
-					if(numagents<=0)
+			for(var/obj/debug/debugger/B in world)
+				B.var2 = 0
+
+			//Spawns commandos and equips them.
+			for (var/obj/effect/landmark/L in world)
+				if(numagents<=0)
+					break
+				if (L.name == "Syndicate-Commando")
+					syndicate_leader_selected = numagents == 1?1:0
+
+					var/mob/living/carbon/human/new_syndicate_commando = create_syndicate_death_commando(L, syndicate_leader_selected)
+
+
+
+					while((!theghost || !theghost.client) && candidates.len)
+						for(var/obj/debug/debugger/B in world)
+							B.var2++
+						theghost = pick(candidates)
+						candidates.Remove(theghost)
+
+					if(!theghost)
+						for(var/obj/debug/debugger/B in world)
+							B.var4 = 1
+						del(new_syndicate_commando)
 						break
-					if (L.name == "Syndicate-Commando")
-						syndicate_leader_selected = syndicate_commando_number == 1?1:0
 
-						var/mob/living/carbon/human/new_syndicate_commando = create_syndicate_death_commando(L, syndicate_leader_selected)
+					new_syndicate_commando.mind.key = theghost.key//For mind stuff.
+					new_syndicate_commando.key = theghost.key
+					new_syndicate_commando.internal = new_syndicate_commando.s_store
+					new_syndicate_commando.internals.icon_state = "internal1"
+					del(theghost)
 
-						while(!theghost && candidates.len)
-							theghost = pick(candidates)
-							candidates.Remove(theghost)
+					//So they don't forget their code or mission.
 
-						if(!theghost)
-							del(new_syndicate_commando)
-							break
 
-						new_syndicate_commando.mind.key = theghost.key//For mind stuff.
-						new_syndicate_commando.key = theghost.key
-						new_syndicate_commando.internal = new_syndicate_commando.s_store
-						new_syndicate_commando.internals.icon_state = "internal1"
-						del(theghost)
+					new_syndicate_commando << "\blue You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: \red<B> [input]</B>"
 
-						//So they don't forget their code or mission.
-						new_syndicate_commando.mind.store_memory("<B>Mission:</B> \red [input].")
+					numagents--
 
-						new_syndicate_commando << "\blue You are an Elite Syndicate. [!syndicate_leader_selected?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: \red<B> [input]</B>"
+		//Spawns the rest of the commando gear.
+		//	for (var/obj/effect/landmark/L)
+			//	if (L.name == "Commando_Manual")
+					//new /obj/item/weapon/gun/energy/pulse_rifle(L.loc)
+				//	var/obj/item/weapon/paper/P = new(L.loc)
+				//	P.info = "<p><b>Good morning soldier!</b>. This compact guide will familiarize you with standard operating procedure. There are three basic rules to follow:<br>#1 Work as a team.<br>#2 Accomplish your objective at all costs.<br>#3 Leave no witnesses.<br>You are fully equipped and stocked for your mission--before departing on the Spec. Ops. Shuttle due South, make sure that all operatives are ready. Actual mission objective will be relayed to you by Central Command through your headsets.<br>If deemed appropriate, Central Command will also allow members of your team to equip assault power-armor for the mission. You will find the armor storage due West of your position. Once you are ready to leave, utilize the Special Operations shuttle console and toggle the hull doors via the other console.</p><p>In the event that the team does not accomplish their assigned objective in a timely manner, or finds no other way to do so, attached below are instructions on how to operate a Nanotrasen Nuclear Device. Your operations <b>LEADER</b> is provided with a nuclear authentication disk and a pin-pointer for this reason. You may easily recognize them by their rank: Lieutenant, Captain, or Major. The nuclear device itself will be present somewhere on your destination.</p><p>Hello and thank you for choosing Nanotrasen for your nuclear information needs. Today's crash course will deal with the operation of a Fission Class Nanotrasen made Nuclear Device.<br>First and foremost, <b>DO NOT TOUCH ANYTHING UNTIL THE BOMB IS IN PLACE.</b> Pressing any button on the compacted bomb will cause it to extend and bolt itself into place. If this is done to unbolt it one must completely log in which at this time may not be possible.<br>To make the device functional:<br>#1 Place bomb in designated detonation zone<br> #2 Extend and anchor bomb (attack with hand).<br>#3 Insert Nuclear Auth. Disk into slot.<br>#4 Type numeric code into keypad ([nuke_code]).<br>Note: If you make a mistake press R to reset the device.<br>#5 Press the E button to log onto the device.<br>You now have activated the device. To deactivate the buttons at anytime, for example when you have already prepped the bomb for detonation, remove the authentication disk OR press the R on the keypad. Now the bomb CAN ONLY be detonated using the timer. A manual detonation is not an option.<br>Note: Toggle off the <b>SAFETY</b>.<br>Use the - - and + + to set a detonation time between 5 seconds and 10 minutes. Then press the timer toggle button to start the countdown. Now remove the authentication disk so that the buttons deactivate.<br>Note: <b>THE BOMB IS STILL SET AND WILL DETONATE</b><br>Now before you remove the disk if you need to move the bomb you can: Toggle off the anchor, move it, and re-anchor.</p><p>The nuclear authorization code is: <b>[nuke_code ? nuke_code : "None provided"]</b></p><p><b>Good luck, soldier!</b></p>"
+				//	P.name = "Spec. Ops. Manual"
 
-						numagents--
-
-			//Spawns the rest of the commando gear.
-			//	for (var/obj/effect/landmark/L)
-				//	if (L.name == "Commando_Manual")
-						//new /obj/item/weapon/gun/energy/pulse_rifle(L.loc)
-					//	var/obj/item/weapon/paper/P = new(L.loc)
-					//	P.info = "<p><b>Good morning soldier!</b>. This compact guide will familiarize you with standard operating procedure. There are three basic rules to follow:<br>#1 Work as a team.<br>#2 Accomplish your objective at all costs.<br>#3 Leave no witnesses.<br>You are fully equipped and stocked for your mission--before departing on the Spec. Ops. Shuttle due South, make sure that all operatives are ready. Actual mission objective will be relayed to you by Central Command through your headsets.<br>If deemed appropriate, Central Command will also allow members of your team to equip assault power-armor for the mission. You will find the armor storage due West of your position. Once you are ready to leave, utilize the Special Operations shuttle console and toggle the hull doors via the other console.</p><p>In the event that the team does not accomplish their assigned objective in a timely manner, or finds no other way to do so, attached below are instructions on how to operate a Nanotrasen Nuclear Device. Your operations <b>LEADER</b> is provided with a nuclear authentication disk and a pin-pointer for this reason. You may easily recognize them by their rank: Lieutenant, Captain, or Major. The nuclear device itself will be present somewhere on your destination.</p><p>Hello and thank you for choosing Nanotrasen for your nuclear information needs. Today's crash course will deal with the operation of a Fission Class Nanotrasen made Nuclear Device.<br>First and foremost, <b>DO NOT TOUCH ANYTHING UNTIL THE BOMB IS IN PLACE.</b> Pressing any button on the compacted bomb will cause it to extend and bolt itself into place. If this is done to unbolt it one must completely log in which at this time may not be possible.<br>To make the device functional:<br>#1 Place bomb in designated detonation zone<br> #2 Extend and anchor bomb (attack with hand).<br>#3 Insert Nuclear Auth. Disk into slot.<br>#4 Type numeric code into keypad ([nuke_code]).<br>Note: If you make a mistake press R to reset the device.<br>#5 Press the E button to log onto the device.<br>You now have activated the device. To deactivate the buttons at anytime, for example when you have already prepped the bomb for detonation, remove the authentication disk OR press the R on the keypad. Now the bomb CAN ONLY be detonated using the timer. A manual detonation is not an option.<br>Note: Toggle off the <b>SAFETY</b>.<br>Use the - - and + + to set a detonation time between 5 seconds and 10 minutes. Then press the timer toggle button to start the countdown. Now remove the authentication disk so that the buttons deactivate.<br>Note: <b>THE BOMB IS STILL SET AND WILL DETONATE</b><br>Now before you remove the disk if you need to move the bomb you can: Toggle off the anchor, move it, and re-anchor.</p><p>The nuclear authorization code is: <b>[nuke_code ? nuke_code : "None provided"]</b></p><p><b>Good luck, soldier!</b></p>"
-					//	P.name = "Spec. Ops. Manual"
-
-				for (var/obj/effect/landmark/L in world)
-					if (L.name == "Syndicate-Commando-Bomb")
-						new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
-						del(L)
+			for (var/obj/effect/landmark/L in world)
+				if (L.name == "Syndicate-Commando-Bomb")
+					new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
+					del(L)
 
 			return 1 // Has to return one before it knows if there's a wizard to prevent the parent from automatically selecting another game mode.
 
