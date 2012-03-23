@@ -396,7 +396,7 @@ var/global/datum/tension/tension_master
 		sleep(300)
 		spawn(0)
 			if(candidates.len)
-				while(!theghost && !theghost.client && candidates.len)
+				while((!theghost || !theghost.client) && candidates.len)
 					theghost = pick(candidates)
 					candidates.Remove(theghost)
 				if(!theghost)
@@ -472,7 +472,7 @@ var/global/datum/tension/tension_master
 				syndicate_begin()
 
 				for(var/i = 0, i<numagents,i++)
-					while(!theghost && (!theghost.client) && candidates.len)
+					while((!theghost || !theghost.client) && candidates.len)
 						theghost = pick(candidates)
 						candidates.Remove(theghost)
 					if(!theghost)
