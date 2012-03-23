@@ -102,6 +102,97 @@ CIRCULAR SAW
 				M:eye_op_stage = 2.0
 				return
 
+	if(user.zone_sel.selecting == "mouth")
+
+		var/mob/living/carbon/human/H = M
+		if(istype(H) && ( \
+				(H.head && H.head.flags & HEADCOVERSEYES) || \
+				(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
+				(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
+			))
+			user << "\red You're going to need to remove that mask/helmet/glasses first."
+			return
+
+		var/mob/living/carbon/monkey/Mo = M
+		if(istype(Mo) && ( \
+				(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
+			))
+			user << "\red You're going to need to remove that mask/helmet/glasses first."
+			return
+
+		if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/metroid))//Aliens don't have eyes./N
+			user << "\red You cannot locate any eyes on this creature!"
+			return
+
+		switch(M:face_op_stage)
+			if(2.0)
+				if(M != user)
+					M.visible_message( \
+						"\red [user] is beginning to retract the skin on [M]'s face and neck with [src].", \
+						"\red [user] begins to retract the flap on your face and neck with [src]!")
+				else
+					M.visible_message( \
+						"\red [user] begins to retract the skin on their face and neck with [src]!", \
+						"\red You begin to retract the skin on your face and neck with [src]!")
+
+				if(do_mob(user, M, 60))
+					if(M != user)
+						M.visible_message( \
+							"\red [user] retracts the skin on [M]'s face and neck with [src]!", \
+							"\red [user] retracts the skin on your face and neck with [src]!")
+					else
+						M.visible_message( \
+							"\red [user] retracts the skin on their face and neck with [src]!", \
+							"\red You retract the skin on your face and neck with [src]!")
+
+					if(M == user && prob(25))
+						user << "\red You mess up!"
+					if(istype(M, /mob/living/carbon/human))
+						var/datum/organ/external/affecting = M:get_organ("head")
+						affecting.take_damage(15)
+						M.updatehealth()
+					else
+						M.take_organ_damage(15)
+					M.face_op_stage = 3.0
+
+				M.updatehealth()
+				M.UpdateDamageIcon()
+				return
+			if(4.0)
+				if(M != user)
+					M.visible_message( \
+						"\red [user] is beginning to pull skin back into place on [M]'s face with [src].", \
+						"\red [user] begins to pull skin back into place on your face with [src]!")
+				else
+					M.visible_message( \
+						"\red [user] begins to pull skin back into place on their face with [src]!", \
+						"\red You begin to pull skin back into place on your face with [src]!")
+
+				if(do_mob(user, M, 90))
+					if(M != user)
+						M.visible_message( \
+							"\red [user] pulls the skin back into place on [M]'s face with [src]!", \
+							"\red [user] pulls the skin back into place on your face and neck with [src]!")
+					else
+						M.visible_message( \
+							"\red [user] pulls the skin back into place on their face and neck with [src]!", \
+							"\red You pull the skin back into place on your face and neck with [src]!")
+
+					if(M == user && prob(25))
+						user << "\red You mess up!"
+					if(istype(M, /mob/living/carbon/human))
+						var/datum/organ/external/affecting = M:get_organ("head")
+						affecting.take_damage(15)
+						M.updatehealth()
+					else
+						M.take_organ_damage(15)
+					M.face_op_stage = 5.0
+
+				M.updatehealth()
+				M.UpdateDamageIcon()
+				return
+
+// Retractor Bone Surgery
 	// bone surgery doable?
 	if(!try_bone_surgery(M, user))
 		return ..()
@@ -265,6 +356,111 @@ CIRCULAR SAW
 				return ..()
 		else
 			return ..()
+
+	if(user.zone_sel.selecting == "mouth")
+
+		var/mob/living/carbon/human/H = M
+		if(istype(H) && ( \
+				(H.head && H.head.flags & HEADCOVERSEYES) || \
+				(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
+				(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
+			))
+			user << "\red You're going to need to remove that mask/helmet/glasses first."
+			return
+
+		var/mob/living/carbon/monkey/Mo = M
+		if(istype(Mo) && ( \
+				(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
+			))
+			user << "\red You're going to need to remove that mask/helmet/glasses first."
+			return
+
+		if(istype(M, /mob/living/carbon/alien))//Aliens don't have mouths either.
+			user << "\red You cannot locate any mouth on this creature!"
+			return
+
+		if(istype(M, /mob/living/carbon/human))
+			switch(M:face_op_stage)
+				if(1.0)
+					if(M != user)
+						M.visible_message( \
+							"\red [user] is beginning is beginning to clamp bleeders in [M]'s face and neck with [src].", \
+							"\red [user] begins to clamp bleeders on your face and neck with [src]!")
+					else
+						M.visible_message( \
+							"\red [user] begins to clamp bleeders on their face and neck with [src]!", \
+							"\red You begin to clamp bleeders on your face and neck with [src]!")
+
+					if(do_mob(user, M, 50))
+						if(M != user)
+							M.visible_message( \
+								"\red [user] stops the bleeding on [M]'s face and neck with [src]!", \
+								"\red [user] stops the bleeding on your face and neck with [src]!")
+						else
+							M.visible_message( \
+								"\red [user] stops the bleeding on their face and neck with [src]!", \
+								"\red You stop the bleeding on your face and neck with [src]!")
+
+						if(M == user && prob(25))
+							user << "\red You mess up!"
+							if(istype(M, /mob/living/carbon/human))
+								var/datum/organ/external/affecting = M:get_organ("head")
+								affecting.take_damage(15)
+								M.updatehealth()
+							else
+								M.take_organ_damage(15)
+
+						M.face_op_stage = 2.0
+
+						M.updatehealth()
+						M.UpdateDamageIcon()
+						return
+				if(3.0)
+					if(M != user)
+						M.visible_message( \
+							"\red [user] is beginning to reshape [M]'s vocal chords and face with [src].", \
+							"\red [user] begins to reshape your vocal chords and face [src]!")
+					else
+						M.visible_message( \
+							"\red [user] begins to reshape their vocal chords and face and face with [src]!", \
+							"\red You begin to reshape your vocal chords and face with [src]!")
+
+					if(do_mob(user, M, 120))
+						if(M != user)
+							M.visible_message( \
+								"\red Halfway there...", \
+								"\red Halfway there...")
+						else
+							M.visible_message( \
+								"\red Halfway there...", \
+								"\red Halfway there...")
+
+					if(do_mob(user, M, 120))
+						if(M != user)
+							M.visible_message( \
+								"\red [user] reshapes [M]'s vocal chords and face with [src]!", \
+								"\red [user] reshapes your vocal chords and face with [src]!")
+						else
+							M.visible_message( \
+								"\red [user] reshapes their vocal chords and face with [src]!", \
+								"\red You reshape your vocal chords and face with [src]!")
+
+						if(M == user && prob(25))
+							user << "\red You mess up!"
+							if(istype(M, /mob/living/carbon/human))
+								var/datum/organ/external/affecting = M:get_organ("head")
+								affecting.take_damage(15)
+								M.updatehealth()
+							else
+								M.take_organ_damage(15)
+
+						M.face_op_stage = 4.0
+
+						M.updatehealth()
+						M.UpdateDamageIcon()
+						return
+
+// Hemostat Bone Surgery
 	// bone surgery doable?
 	if(!try_bone_surgery(M, user))
 		return ..()
@@ -493,7 +689,6 @@ CIRCULAR SAW
 
 	return 1
 
-
 ///////////
 //Cautery//
 ///////////
@@ -576,6 +771,73 @@ CIRCULAR SAW
 				M.disabilities &= ~128
 				M:eye_op_stage = 0.0
 				return
+
+	if (user.zone_sel.selecting == "mouth")
+
+
+		var/mob/living/carbon/human/H = M
+		if(istype(H) && ( \
+				(H.head && H.head.flags & HEADCOVERSEYES) || \
+				(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
+				(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
+			))
+			user << "\red You're going to need to remove that mask/helmet/glasses first."
+			return
+
+		var/mob/living/carbon/monkey/Mo = M
+		if(istype(Mo) && ( \
+				(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
+			))
+			user << "\red You're going to need to remove that mask/helmet/glasses first."
+			return
+
+		if(istype(M, /mob/living/carbon/alien))//Aliens don't have eyes./N
+			user << "\red You cannot locate any eyes on this creature!"
+			return
+
+		switch(M.face_op_stage)
+			if(5.0)
+				if(M != user)
+					M.visible_message( \
+						"\red [user] is beginning is cauterize [M]'s face and neck with [src].", \
+						"\red [user] begins cauterize your face and neck with [src]!")
+				else
+					M.visible_message( \
+						"\red [user] begins to cauterize their face and neck with [src]!", \
+						"\red You begin to cauterize your face and neck with [src]!")
+
+				if(do_mob(user, M, 50))
+					if(M != user)
+						M.visible_message( \
+							"\red [user] cauterizes [M]'s face and neck with [src]!", \
+							"\red [user] cauterizes your face and neck with [src]!")
+					else
+						M.visible_message( \
+							"\red [user] cauterizes their face and neck with [src]!", \
+							"\red You cauterize your face and neck with [src]!")
+
+					if(M == user && prob(25))
+						user << "\red You mess up!"
+						if(istype(M, /mob/living/carbon/human))
+							var/datum/organ/external/affecting = M:get_organ("head")
+							affecting.take_damage(15)
+							M.updatehealth()
+						else
+							M.take_organ_damage(15)
+
+					for(var/datum/organ/external/head/head)
+						if(head && head.disfigured)
+							head.disfigured = 0
+					M.real_name = "[M.original_name]"
+					M.name = "[M.original_name]"
+					M << "\blue Your face feels better."
+					M.warn_flavor_changed()
+					M:face_op_stage = 0.0
+					M.updatehealth()
+					M.UpdateDamageIcon()
+					return
+
+//Cautery Bone Surgery
 
 	if(!try_bone_surgery(M, user))
 		return ..()
@@ -662,8 +924,8 @@ CIRCULAR SAW
 				if(3.0)
 					if(M != user)
 						for(var/mob/O in (viewers(M) - user - M))
-							O.show_message("\red [M] is beginning to have \his stomach cut open with [src] by [user].", 1)
-						M << "\red [user] begins to cut open your stomach with [src]!"
+							O.show_message("\red [M] has \his stomach cut open with [src] by [user].", 1)
+						M << "\red [user] cuts open your stomach with [src]!"
 						user << "\red You cut [M]'s stomach open with [src]!"
 						for(var/datum/disease/D in M.viruses)
 							if(istype(D, /datum/disease/alien_embryo))
@@ -686,8 +948,8 @@ CIRCULAR SAW
 				if(3.0)
 					if(M != user)
 						for(var/mob/O in (viewers(M) - user - M))
-							O.show_message("\red [M] is beginning to have \his appendix seperated with [src] by [user].", 1)
-						M << "\red [user] begins to seperate your appendix with [src]!"
+							O.show_message("\red [M] has \his appendix seperated with [src] by [user].", 1)
+						M << "\red [user] seperates your appendix with [src]!"
 						user << "\red You seperate [M]'s appendix with [src]!"
 						M:appendix_op_stage = 4.0
 						return
@@ -721,8 +983,8 @@ CIRCULAR SAW
 				if(istype(M, /mob/living/carbon/metroid))
 					if(M.stat == 2)
 						for(var/mob/O in (viewers(M) - user - M))
-							O.show_message("\red [M.name] is beginning to have its flesh cut open with [src] by [user].", 1)
-						M << "\red [user] begins to cut open your flesh with [src]!"
+							O.show_message("\red [M.name] has its flesh cut open with [src] by [user].", 1)
+						M << "\red [user] cuts open your flesh with [src]!"
 						user << "\red You cut [M]'s flesh open with [src]!"
 						M:brain_op_stage = 1.0
 
@@ -730,12 +992,12 @@ CIRCULAR SAW
 
 				if(M != user)
 					for(var/mob/O in (viewers(M) - user - M))
-						O.show_message("\red [M] is beginning to have \his head cut open with [src] by [user].", 1)
-					M << "\red [user] begins to cut open your head with [src]!"
+						O.show_message("\red [M] has \his head cut open with [src] by [user].", 1)
+					M << "\red [user] cuts open your head with [src]!"
 					user << "\red You cut [M]'s head open with [src]!"
 				else
 					user.visible_message( \
-						"\red [user] begins to cut open \his skull with [src]!", \
+						"\red [user] begins to cuts open \his skull with [src]!", \
 						"\red You begin to cut open your head with [src]!" \
 					)
 
@@ -762,8 +1024,8 @@ CIRCULAR SAW
 				if(istype(M, /mob/living/carbon/metroid))
 					if(M.stat == 2)
 						for(var/mob/O in (viewers(M) - user - M))
-							O.show_message("\red [M.name] is having its silky inndards cut apart with [src] by [user].", 1)
-						M << "\red [user] begins to cut apart your innards with [src]!"
+							O.show_message("\red [M.name] has its silky inndards cut apart with [src] by [user].", 1)
+						M << "\red [user] cuts apart your innards with [src]!"
 						user << "\red You cut [M]'s silky innards apart with [src]!"
 						M:brain_op_stage = 2.0
 					return
@@ -778,12 +1040,12 @@ CIRCULAR SAW
 
 				if(M != user)
 					for(var/mob/O in (viewers(M) - user - M))
-						O.show_message("\red [M] is having \his connections to the brain delicately severed with [src] by [user].", 1)
-					M << "\red [user] begins to cut open your head with [src]!"
-					user << "\red You cut [M]'s head open with [src]!"
+						O.show_message("\red [M] has \his connections to the brain delicately severed with [src] by [user].", 1)
+					M << "\red [user] delicately severes your brain with [src]!"
+					user << "\red You severe [M]'s brain with [src]!"
 				else
 					user.visible_message( \
-						"\red [user] begin to delicately remove the connections to \his brain with [src]!", \
+						"\red [user] begins to delicately remove the connections to \his brain with [src]!", \
 						"\red You begin to cut open your head with [src]!" \
 					)
 				if(M == user && prob(25))
@@ -807,7 +1069,6 @@ CIRCULAR SAW
 			return
 
 	if(user.zone_sel.selecting == "eyes")
-		user << "\blue So far so good."
 
 		var/mob/living/carbon/human/H = M
 		if(istype(H) && ( \
@@ -833,8 +1094,8 @@ CIRCULAR SAW
 			if(0.0)
 				if(M != user)
 					for(var/mob/O in (viewers(M) - user - M))
-						O.show_message("\red [M] is beginning to have \his eyes incised with [src] by [user].", 1)
-					M << "\red [user] begins to cut open your eyes with [src]!"
+						O.show_message("\red [M] has \his eyes incised with [src] by [user].", 1)
+					M << "\red [user] cuts open your eyes with [src]!"
 					user << "\red You make an incision around [M]'s eyes with [src]!"
 				else
 					user.visible_message( \
@@ -849,14 +1110,72 @@ CIRCULAR SAW
 					else
 						M.take_organ_damage(15)
 
-				user << "\blue So far so good before."
 				M.updatehealth()
 				M:eye_op_stage = 1.0
-				user << "\blue So far so good after."
 				return
+
+	if(user.zone_sel.selecting == "mouth")
+
+		var/mob/living/carbon/human/H = M
+		if(istype(H) && ( \
+				(H.head && H.head.flags & HEADCOVERSEYES) || \
+				(H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || \
+				(H.glasses && H.glasses.flags & GLASSESCOVERSEYES) \
+			))
+			user << "\red You're going to need to remove that mask/helmet/glasses first."
+			return
+
+		var/mob/living/carbon/monkey/Mo = M
+		if(istype(Mo) && ( \
+				(Mo.wear_mask && Mo.wear_mask.flags & MASKCOVERSEYES) \
+			))
+			user << "\red You're going to need to remove that mask/helmet/glasses first."
+			return
+
+		if(istype(M, /mob/living/carbon/alien) || istype(M, /mob/living/carbon/metroid))//Aliens don't have eyes./N
+			user << "\red You cannot locate any face on this creature!"
+			return
+
+		switch(M:face_op_stage)
+			if(0.0)
+				if(M != user)
+					M.visible_message( \
+						"\red [user] is beginning is cut open [M]'s face and neck with [src].", \
+						"\red [user] begins to cut open your face and neck with [src]!")
+				else
+					M.visible_message( \
+						"\red [user] begins to cut open their face and neck with [src]!", \
+						"\red You begin to cut open your face and neck with [src]!")
+
+				if(do_mob(user, M, 50))
+					if(M != user)
+						M.visible_message( \
+							"\red [user] cuts open [M]'s face and neck with [src]!", \
+							"\red [user] cuts open your face and neck with [src]!")
+					else
+						M.visible_message( \
+							"\red [user] cuts open their face and neck with [src]!", \
+							"\red You cut open your face and neck with [src]!")
+
+					if(M == user && prob(25))
+						user << "\red You mess up!"
+						if(istype(M, /mob/living/carbon/human))
+							var/datum/organ/external/affecting = M:get_organ("head")
+							affecting.take_damage(15)
+							M.updatehealth()
+						else
+							M.take_organ_damage(15)
+
+					M.face_op_stage = 1.0
+
+					M.updatehealth()
+					M.UpdateDamageIcon()
+					return
+
+// Scalpel Bone Surgery
+
 	if(!try_bone_surgery(M, user) && user.a_intent == "hurt") // if we call ..(), we'll attack them, so require a hurt intent
 		return ..()
-
 /* wat
 	else if((!(user.zone_sel.selecting == "head")) || (!(user.zone_sel.selecting == "groin")) || (!(istype(M, /mob/living/carbon/human))))
 		return ..()
@@ -933,6 +1252,7 @@ CIRCULAR SAW
 ////////////////
 //CIRCULAR SAW//
 ////////////////
+
 /obj/item/weapon/circular_saw/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return ..()
@@ -1042,7 +1362,7 @@ CIRCULAR SAW
 					user.visible_message( \
 						"\red [user] severs \his brain's connection to the spine with [src]!", \
 						"\red You sever your brain's connection to the spine with [src]!" \
-					)
+						)
 
 				user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
 				M.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>"
@@ -1065,7 +1385,7 @@ CIRCULAR SAW
 		if(S.destroyed)
 			return
 		for(var/mob/O in viewers(H, null))
-			O.show_message(text("\red [H] gets \his [S.display_name] sawed at with [src] by [user].... It looks like [user] is trying to cut it off!"), 1)
+			O.show_message(text("\red [H] gets \his [S.display_name] sawed at with [src] by [user]... It looks like [user] is trying to cut it off!"), 1)
 		if(!do_after(user, rand(20,80)))
 			for(var/mob/O in viewers(H, null))
 				O.show_message(text("\red [user] tried to cut [H]'s [S.display_name] off with [src], but failed."), 1)
@@ -1082,6 +1402,10 @@ CIRCULAR SAW
 		return ..()
 */
 	return
+
+//////////////////////////////
+// Bone Gel and Bone Setter //
+//////////////////////////////
 
 /obj/item/weapon/surgical_tool
 	name = "surgical tool"
@@ -1216,7 +1540,6 @@ CIRCULAR SAW
 		if(5)
 			z="[usr] performs chiropractice on [m]'s [organ.display_name]"
 	return z
-
 
 
 /obj/item/weapon/boneinjector
