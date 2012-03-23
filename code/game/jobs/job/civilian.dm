@@ -212,6 +212,7 @@
 		H.equip_if_possible(new /obj/item/clothing/under/rank/janitor(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/janitor(H), H.slot_belt)
+		H.equip_if_possible(new /obj/item/device/portalathe(H), H.slot_in_backpack)
 		return 1
 
 

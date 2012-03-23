@@ -85,7 +85,7 @@
 						active = 1
 						path = 1
 
-		else if(path != 1)
+		if(path != 1)
 			if(!istype(src.loc,/turf))
 				user << "\red You need to put the canister on the ground to do that!"
 			else
@@ -2857,8 +2857,8 @@
 		..()
 		reagents.add_reagent("sodawater", 50)
 
+////////////////////////// PILLS ///////////////////////
 
-//Pills
 /obj/item/weapon/reagent_containers/pill/antitox
 	name = "Anti-toxins pill"
 	desc = "Neutralizes many common toxins."
@@ -2906,7 +2906,7 @@
 	icon_state = "pill8"
 	New()
 		..()
-		reagents.add_reagent("stoxin", 30)
+		reagents.add_reagent("stoxin", 15)
 
 /obj/item/weapon/reagent_containers/pill/kelotane
 	name = "Kelotane pill"
@@ -2914,7 +2914,7 @@
 	icon_state = "pill11"
 	New()
 		..()
-		reagents.add_reagent("kelotane", 30)
+		reagents.add_reagent("kelotane", 15)
 
 /obj/item/weapon/reagent_containers/pill/tramadol
 	name = "Tramadol pill"
@@ -2922,7 +2922,7 @@
 	icon_state = "pill8"
 	New()
 		..()
-		reagents.add_reagent("tramadol", 30)
+		reagents.add_reagent("tramadol", 15)
 
 /obj/item/weapon/reagent_containers/pill/inaprovaline
 	name = "Inaprovaline pill"
@@ -2938,7 +2938,7 @@
 	icon_state = "pill16"
 	New()
 		..()
-		reagents.add_reagent("dexalin", 30)
+		reagents.add_reagent("dexalin", 15)
 
 /obj/item/weapon/reagent_containers/pill/bicardine
 	name = "Bicardine pill"
@@ -2946,7 +2946,7 @@
 	icon_state = "pill18"
 	New()
 		..()
-		reagents.add_reagent("bicardine", 30)
+		reagents.add_reagent("bicardine", 15)
 
 //Dispensers
 /obj/structure/reagent_dispensers/watertank

@@ -269,6 +269,12 @@ mob/proc/flash_weak_pain()
 	/////////////////////////
 
 	var/power = src.force
+
+	// EXPERIMENTAL: scale power and time to the weight class
+	if(w_class >= 4.0)
+		power = power * 2
+		user.next_move = max(user.next_move, world.time + 20)
+
 	if(!istype(M, /mob/living/carbon/human))
 		if(istype(M, /mob/living/carbon/metroid))
 			var/mob/living/carbon/metroid/Metroid = M

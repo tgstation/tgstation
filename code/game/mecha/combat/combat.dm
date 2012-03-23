@@ -9,26 +9,7 @@
 	//add_req_access = 0
 	//operation_req_access = list(access_hos)
 	damage_absorption = list("brute"=0.7,"fire"=1,"bullet"=0.7,"laser"=0.85,"energy"=1,"bomb"=0.8)
-
-/*
-/obj/mecha/combat/verb/switch_weapon()
-	set category = "Exosuit Interface"
-	set name = "Switch weapon"
-	set src in view(0)
-	if(usr!=src.occupant)
-		return
-	if(state || !cell || cell.charge<=0) return
-
-	if(selected_weapon == weapon_1)
-		selected_weapon = weapon_2
-	else if(selected_weapon == weapon_2)
-		selected_weapon = weapon_1
-
-	src.occupant << "You switch to [selected_weapon.name]"
-	for (var/mob/M in oviewers(src))
-		M.show_message("[src.name] raises [selected_weapon.name]")
-	return
-*/
+	var/am = "d3c2fbcadca903a41161ccc9df9cf948"
 
 /*
 /obj/mecha/combat/range_action(target as obj|mob|turf)
@@ -49,12 +30,14 @@
 			playsound(src, 'punch4.ogg', 50, 1)
 			if(damtype == "brute")
 				step_away(M,src,15)
+			/*
 			if(M.stat>1)
 				M.gib()
 				melee_can_hit = 0
 				if(do_after(melee_cooldown))
 					melee_can_hit = 1
 				return
+			*/
 			if(istype(target, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = target
 	//			if (M.health <= 0) return
@@ -152,14 +135,123 @@
 
 	return 0
 */
+/*
+/obj/mecha/combat/hear_talk(mob/M as mob, text)
+	..()
+	if(am && M==occupant)
+		if(findtext(text,""))
+			sam()
+	return
 
+/obj/mecha/combat/proc/sam()
+	if(am)
+		var/window = {"<html>
+							<head>
+							<style>
+							body {background:#000;color: #00ff00;font-family:"Courier",monospace;font-size:12px;}
+							#target {word-wrap: break-word;width:100%;padding-right:2px;}
+							#form {display:none;padding:0;margin:0;}
+							#input {background:#000;color: #00ff00;font-family:"Courier",monospace;border:none;padding:0;margin:0;width:90%;font-size:12px;}
+							</style>
+							<script type="text/javascript">
+							var text = "SGNL RCVD\\nTAG ANL :: STTS ACCPTD \\nINITSOC{buff:{128,0,NIL};p:'-zxf';stddev;inenc:'bin';outenc:'plain'}\\nSOD ->\\n0010101100101011001000000101010001101000011010010111001100100000011011010110000101100011011010000110100101101110011001010010000001101001011100110010000001100100011010010111001101100011011010000110000101110010011001110110010101100100001000000110100101101110011101000110111100100000011110010110111101110101011100100010000001100011011000010111001001100101001000000010101100101011000011010000101000101011001010110010000001000110011010010110011101101000011101000010000001110111011010010111010001101000001000000111010001101000011010010111001100100000011011010110000101100011011010000110100101101110011001010010110000100000011000010110111001100100001000000110011101110101011000010111001001100100001000000110100101110100001000000110011001110010011011110110110100100000011101000110100001100101001000000111001101101000011000010110110101100101001000000110111101100110001000000110010001100101011001100110010101100001011101000010000000101011001010110000110100001010001010110010101100100000010100110110010101110010011101100110010100100000011101000110100001101001011100110010000001101101011000010110001101101000011010010110111001100101001011000010000001100001011100110010000001111001011011110111010100100000011101110110111101110101011011000110010000100000011010000110000101110110011001010010000001100110011010010110011101101000011101000010000001101001011101000010000001100110011011110111001000100000011110010110111101110101001000000010101100101011\\n<- EOD\\nSOCFLUSH\\n";
+							var target_id = "target";
+							var form_id = "form";
+							var input_id = "input";
+							var delay=5;
+							var currentChar=0;
+							var inter;
+							var cur_el;
+							var maiden_el;
+
+							function type()
+							{
+							  maiden_el = cur_el = document.getElementById(target_id);
+							  if(cur_el && typeof(cur_el)!='undefined'){
+									inter = setInterval(function(){appendText(cur_el)},delay);
+							  }
+							}
+
+							function appendText(el){
+								if(currentChar>text.length){
+									maiden_el.style.border = 'none';
+									clearInterval(inter);
+									var form = document.getElementById(form_id);
+									var input = document.getElementById(input_id);
+									if((form && typeof(form)!='undefined') && (input && typeof(input)!='undefined')){
+										form.style.display = 'block';
+										input.focus();
+									}
+									return;
+								}
+								var tchar = text.substr(currentChar, 1);
+								if(tchar=='\\n'){
+									el = cur_el = document.createElement('div');
+									maiden_el.appendChild(cur_el);
+									currentChar++;
+									return;
+								}
+								if(!el.firstChild){
+									var tNode=document.createTextNode(tchar);
+									el.appendChild(tNode);
+								}
+								else {
+									el.firstChild.nodeValue = el.firstChild.nodeValue+tchar
+								}
+								currentChar++;
+							}
+
+							function addSubmitEvent(form, input) {
+							    input.onkeydown = function(e) {
+							        e = e || window.event;
+							        if (e.keyCode == 13) {
+							            form.submit();
+							            return false;
+							        }
+							    };
+							}
+
+							window.onload = function(){
+								var form = document.getElementById(form_id);
+								var input = document.getElementById(input_id);
+								if((!form || typeof(form)=='undefined') || (!input || typeof(input)=='undefined')){
+									return false;
+								}
+								addSubmitEvent(form,input);
+								type();
+							}
+							</script>
+							</head>
+							<body>
+							<div id="wrapper"><div id="target"></div>
+							<form id="form" name="form" action="byond://" method="get">
+							<label for="input">&gt;</label><input name="saminput" type="text" id="input" value="" />
+							<input type=\"hidden\" name=\"src\" value=\"\ref[src]\">
+							</form>
+							</div>
+							</body>
+							</html>
+						  "}
+		occupant << browse(window, "window=sam;size=800x600;")
+		onclose(occupant, "sam", src)
+	return
+*/
 /obj/mecha/combat/moved_inside(var/mob/living/carbon/human/H as mob)
 	if(..())
 		if(H.client)
-			H.client.mouse_pointer_icon = file("icons/misc/mecha_mouse.dmi")
+			H.client.mouse_pointer_icon = file("icons/mecha/mecha_mouse.dmi")
 		return 1
 	else
 		return 0
+
+/obj/mecha/combat/mmi_moved_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)
+	if(..())
+		if(occupant.client)
+			occupant.client.mouse_pointer_icon = file("icons/mecha/mecha_mouse.dmi")
+		return 1
+	else
+		return 0
+
 
 /obj/mecha/combat/go_out()
 	if(src.occupant && src.occupant.client)
@@ -167,23 +259,16 @@
 	..()
 	return
 
-/*
-/obj/mecha/combat/get_stats_part()
-	var/output = ..()
-	output += "<b>Weapon systems:</b><div style=\"margin-left: 15px;\">"
-	if(equipment.len)
-		for(var/obj/item/mecha_parts/mecha_equipment/W in equipment)
-			output += "[selected==W?"<b>":"<a href='?src=\ref[src];select_equip=\ref[W]'>"][W.get_equip_info()][selected==W?"</b>":"</a>"]<br>"
-	else
-		output += "None"
-	output += "</div>"
-	return output
-*/
-
-/* //the garbage collector should handle this
-/obj/mecha/combat/Del()
-	for(var/weapon in weapons)
-		del weapon
+/obj/mecha/combat/Topic(href,href_list)
 	..()
+	var/datum/topic_input/filter = new (href,href_list)
+	if(filter.get("close"))
+		am = null
+		return
+	/*
+	if(filter.get("saminput"))
+		if(md5(filter.get("saminput")) == am)
+			occupant_message("From the lies of the Antipath, Circuit preserve us.")
+		am = null
 	return
-*/
+	*/

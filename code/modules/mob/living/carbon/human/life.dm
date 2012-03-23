@@ -173,7 +173,7 @@
 				halloss = 0
 
 			if(hallucination > 0)
-				if(hallucinations.len == 0 && hallucination >= 20 && health > 0)
+				if(hallucination >= 20 && health > 0)
 					if(prob(2)) //Waaay to often.
 						fake_attack(src)
 				//for(var/atom/a in hallucinations)

@@ -350,7 +350,10 @@
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
-		if (W:remove_fuel(0))
+		if(getBruteLoss() == 0)
+			user << "There are no dents to fix here!"
+			return
+		else if (W:remove_fuel(0))
 			bruteloss -= 30
 			if(getBruteLoss() < 0) bruteloss = 0
 			updatehealth()
@@ -363,8 +366,11 @@
 
 	else if(istype(W, /obj/item/weapon/cable_coil) && wiresexposed)
 		var/obj/item/weapon/cable_coil/coil = W
+		if(getFireLoss() == 0)
+			user << "There are no burnt wires here!"
+			return
+		else if(getFireLoss() < 0) adjustFireLoss(0)
 		adjustFireLoss(-30)
-		if(getFireLoss() < 0) adjustFireLoss(0)
 		updatehealth()
 		coil.use(1)
 		for(var/mob/O in viewers(user, null))

@@ -8,7 +8,7 @@
 	desc = "Remains of some unfortunate mecha. Completely unrepairable."
 	icon = 'mecha.dmi'
 	density = 1
-	anchored = 1
+	anchored = 0
 	opacity = 0
 	var/list/welder_salvage = list(/obj/item/stack/sheet/r_metal,/obj/item/stack/sheet/metal,/obj/item/stack/rods)
 	var/list/wirecutters_salvage = list(/obj/item/weapon/cable_coil)
@@ -126,6 +126,29 @@
 				parts -= part
 		return
 
+/obj/effect/decal/mecha_wreckage/ripley/firefighter
+	name = "Firefighter wreckage"
+	icon_state = "firefighter-broken"
+
+	New()
+		..()
+		var/list/parts = list(/obj/item/mecha_parts/part/ripley_torso,
+									/obj/item/mecha_parts/part/ripley_left_arm,
+									/obj/item/mecha_parts/part/ripley_right_arm,
+									/obj/item/mecha_parts/part/ripley_left_leg,
+									/obj/item/mecha_parts/part/ripley_right_leg,
+									/obj/item/clothing/suit/fire)
+		for(var/i=0;i<2;i++)
+			if(!isemptylist(parts) && prob(40))
+				var/part = pick(parts)
+				welder_salvage += part
+				parts -= part
+		return
+
+/obj/effect/decal/mecha_wreckage/ripley/deathripley
+	name = "Death-Ripley wreckage"
+	icon_state = "deathripley-broken"
+
 /obj/effect/decal/mecha_wreckage/honker
 	name = "Honker wreckage"
 	icon_state = "honker-broken"
@@ -170,3 +193,24 @@
 /obj/effect/decal/mecha_wreckage/phazon
 	name = "Phazon wreckage"
 	icon_state = "phazon-broken"
+
+
+/obj/effect/decal/mecha_wreckage/odysseus
+	name = "Odysseus wreckage"
+	icon_state = "odysseus-broken"
+
+	New()
+		..()
+		var/list/parts = list(
+									/obj/item/mecha_parts/part/odysseus_torso,
+									/obj/item/mecha_parts/part/odysseus_head,
+									/obj/item/mecha_parts/part/odysseus_left_arm,
+									/obj/item/mecha_parts/part/odysseus_right_arm,
+									/obj/item/mecha_parts/part/odysseus_left_leg,
+									/obj/item/mecha_parts/part/odysseus_right_leg)
+		for(var/i=0;i<2;i++)
+			if(!isemptylist(parts) && prob(40))
+				var/part = pick(parts)
+				welder_salvage += part
+				parts -= part
+		return

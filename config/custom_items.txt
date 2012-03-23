@@ -4,7 +4,7 @@ asanadas: Book Berner: /obj/item/clothing/under/chameleon/psyche
 tastyfish: Cindy Robertson: /obj/item/weapon/wrapping_paper
 eternal248: Maximilian Haynes: /obj/item/weapon/paper/certificate
 searif: Yuki Matsuda: /obj/item/weapon/paper/certificate, /obj/item/clothing/under/jumpsuitdown
-erthilo: Farah Lants: /obj/item/clothing/under/rank/medical_sleeve, /obj/item/clothing/suit/storage/labcoat/red
+erthilo: Farah Lants: /obj/item/clothing/under/rank/medical_sleeve, /obj/item/clothing/suit/storage/labcoat/red, /obj/item/weapon/storage/backpack/medicalsatchel
 compactninja: Ysyr Rylias: /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 tzefa: Wes Solari: /obj/item/fluff/wes_solari_1
 misterfox: Rashid Siraj: /obj/item/weapon/storage/bible/tajaran

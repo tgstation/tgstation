@@ -5,7 +5,7 @@
 	w_class = 4.0
 	flags = 259.0
 	max_w_class = 3
-	max_combined_w_class = 20
+	max_combined_w_class = 21
 
 /obj/item/weapon/storage/backpack/cultpack
 	name = "Trophy Rack"
@@ -14,7 +14,7 @@
 
 /obj/item/weapon/storage/trashbag
 	name = "trash bag"
-	desc = "For picking up all that trash..."
+	desc = "For picking up all that trash."
 	icon_state = "trashbag"
 	item_state = "trashbag"
 	w_class = 4.0
@@ -31,7 +31,7 @@
 */
 /obj/item/weapon/storage/pill_bottle
 	name = "pill bottle"
-	desc = "A reasonable place to put your pills.."
+	desc = "A reasonable place to put your pills."
 	icon_state = "pill_canister"
 	icon = 'chemical.dmi'
 	item_state = "contsolid"
@@ -114,6 +114,11 @@
 	name = "Bandolier"
 	desc = "A very old bandolier to wear on your back."
 	icon_state = "bandolier"
+
+/obj/item/weapon/storage/backpack/medicalsatchel
+	name = "medic's satchel"
+	desc = "Easy to access medical satchel for quick responses."
+	icon_state = "medicalsatchel"
 
 /obj/item/weapon/storage/backpack/industrial
 	name = "industrial backpack"
@@ -313,12 +318,24 @@
 	icon_state = "red"
 	item_state = "toolbox_red"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 5.0
+	force = 10.0
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 7
 	w_class = 4.0
 	origin_tech = "combat=1"
+
+	var/selfdamage = 0
+
+/obj/item/weapon/storage/toolbox/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+	if(contents.len && istype(user.loc, /turf) && prob(10))
+		// have a chance to swing open
+		user.visible_message("\red \The [src] swings wide open and its contents are scattered on the floor!")
+		for(var/obj/O in contents)
+			O.loc = user.loc
+			O.layer = OBJ_LAYER
+			if(prob(50)) step_rand(O)
+	..()
 
 /obj/item/weapon/storage/toolbox/emergency
 	name = "emergency toolbox"
@@ -350,7 +367,7 @@
 	icon_state = "syndicate"
 	item_state = "toolbox_syndi"
 	origin_tech = "combat=1;syndicate=1"
-	force = 7.0
+	force = 14.0
 
 /obj/item/weapon/storage/book
 	name = "book"

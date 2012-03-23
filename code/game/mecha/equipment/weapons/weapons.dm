@@ -47,7 +47,7 @@
 	fire_sound = 'Laser.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
-	equip_cooldown = 12
+	equip_cooldown = 15
 	name = "CH-LC \"Solaris\" Laser Cannon"
 	icon_state = "mecha_laser"
 	energy_drain = 60
@@ -147,7 +147,7 @@
 							walk(thingy,0)
 			*/
 		chassis.use_power(energy_drain)
-		chassis.log_message("Honked from [src.name]. HONK!")
+		log_message("Honked from [src.name]. HONK!")
 		do_after_cooldown()
 		return
 
@@ -173,7 +173,7 @@
 				projectiles_to_add--
 				chassis.use_power(projectile_energy_cost)
 		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
-		chassis.log_message("Rearmed [src.name].")
+		log_message("Rearmed [src.name].")
 		return
 
 	Topic(href, href_list)
@@ -187,6 +187,8 @@
 	name = "LBX AC 10 \"Scattershot\""
 	icon_state = "mecha_scatter"
 	equip_cooldown = 20
+	projectile = /obj/item/projectile/bullet/midbullet
+	fire_sound = 'Gunshot.ogg'
 	projectiles = 40
 	projectile_energy_cost = 25
 	var/projectiles_per_shot = 4
@@ -205,8 +207,8 @@
 			targloc = locate(target_x+GaussRandRound(deviation,1),target_y+GaussRandRound(deviation,1),target_z)
 			if(!targloc || targloc == curloc)
 				break
-			playsound(chassis, 'Gunshot.ogg', 80, 1)
-			var/obj/item/projectile/bullet/A = new /obj/item/projectile/bullet(curloc)
+			playsound(chassis, fire_sound, 80, 1)
+			var/obj/item/projectile/A = new projectile(curloc)
 			src.projectiles--
 			A.original = targloc
 			A.current = curloc
@@ -214,7 +216,7 @@
 			A.xo = targloc.x - curloc.x
 			set_ready_state(0)
 			A.process()
-		chassis.log_message("Fired from [src.name], targeting [target].")
+		log_message("Fired from [src.name], targeting [target].")
 		do_after_cooldown()
 		return
 
@@ -224,6 +226,8 @@
 	name = "Ultra AC 2"
 	icon_state = "mecha_uac2"
 	equip_cooldown = 10
+	projectile = /obj/item/projectile/bullet/weakbullet
+	fire_sound = 'Gunshot.ogg'
 	projectiles = 300
 	projectile_energy_cost = 20
 	var/projectiles_per_shot = 3
@@ -245,8 +249,8 @@
 			if (targloc == curloc)
 				continue
 
-			playsound(chassis, 'Gunshot.ogg', 50, 1)
-			var/obj/item/projectile/bullet/weakbullet/A = new /obj/item/projectile/bullet/weakbullet(curloc)
+			playsound(chassis, fire_sound, 50, 1)
+			var/obj/item/projectile/A = new projectile(curloc)
 			src.projectiles--
 			A.original = targloc
 			A.current = curloc
@@ -255,13 +259,15 @@
 			A.process()
 			sleep(2)
 		set_ready_state(0)
-		chassis.log_message("Fired from [src.name], targeting [target].")
+		log_message("Fired from [src.name], targeting [target].")
 		do_after_cooldown()
 		return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
 	name = "SRM-8 Missile Rack"
 	icon_state = "mecha_missilerack"
+	projectile = /obj/item/missile
+	fire_sound = 'bang.ogg'
 	projectiles = 8
 	projectile_energy_cost = 1000
 	equip_cooldown = 60
@@ -271,12 +277,12 @@
 	action(target)
 		if(!action_checks(target)) return
 		set_ready_state(0)
-		var/obj/item/missile/M = new /obj/item/missile(chassis.loc)
+		var/obj/item/missile/M = new projectile(chassis.loc)
 		M.primed = 1
-		playsound(chassis, 'bang.ogg', 50, 1)
+		playsound(chassis, fire_sound, 50, 1)
 		M.throw_at(target, missile_range, missile_speed)
 		projectiles--
-		chassis.log_message("Fired from [src.name], targeting [target].")
+		log_message("Fired from [src.name], targeting [target].")
 		do_after_cooldown()
 		return
 
@@ -298,6 +304,8 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang
 	name = "SGL-6 Grenade Launcher"
 	icon_state = "mecha_grenadelnchr"
+	projectile = /obj/item/weapon/flashbang
+	fire_sound = 'bang.ogg'
 	projectiles = 6
 	missile_speed = 1.5
 	projectile_energy_cost = 800
@@ -307,11 +315,11 @@
 	action(target)
 		if(!action_checks(target)) return
 		set_ready_state(0)
-		var/obj/item/weapon/flashbang/F = new /obj/item/weapon/flashbang(chassis.loc)
-		playsound(chassis, 'bang.ogg', 50, 1)
+		var/obj/item/weapon/flashbang/F = new projectile(chassis.loc)
+		playsound(chassis, fire_sound, 50, 1)
 		F.throw_at(target, missile_range, missile_speed)
 		projectiles--
-		chassis.log_message("Fired from [src.name], targeting [target].")
+		log_message("Fired from [src.name], targeting [target].")
 		spawn(det_time)
 			F.prime()
 		do_after_cooldown()
@@ -321,6 +329,8 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar
 	name = "Banana Mortar"
 	icon_state = "mecha_bananamrtr"
+	projectile = /obj/item/weapon/bananapeel
+	fire_sound = 'bikehorn.ogg'
 	projectiles = 15
 	missile_speed = 1.5
 	projectile_energy_cost = 100
@@ -337,11 +347,11 @@
 	action(target)
 		if(!action_checks(target)) return
 		set_ready_state(0)
-		var/obj/item/weapon/bananapeel/B = new /obj/item/weapon/bananapeel(chassis.loc)
-		playsound(chassis, 'bikehorn.ogg', 60, 1)
+		var/obj/item/weapon/bananapeel/B = new projectile(chassis.loc)
+		playsound(chassis, fire_sound, 60, 1)
 		B.throw_at(target, missile_range, missile_speed)
 		projectiles--
-		chassis.log_message("Bananed from [src.name], targeting [target]. HONK!")
+		log_message("Bananed from [src.name], targeting [target]. HONK!")
 		do_after_cooldown()
 		return
 
@@ -349,6 +359,8 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar
 	name = "Mousetrap Mortar"
 	icon_state = "mecha_mousetrapmrtr"
+	projectile = /obj/item/weapon/mousetrap
+	fire_sound = 'bikehorn.ogg'
 	projectiles = 15
 	missile_speed = 1.5
 	projectile_energy_cost = 100
@@ -365,11 +377,11 @@
 	action(target)
 		if(!action_checks(target)) return
 		set_ready_state(0)
-		var/obj/item/weapon/mousetrap/M = new /obj/item/weapon/mousetrap(chassis.loc)
+		var/obj/item/weapon/mousetrap/M = new projectile(chassis.loc)
 		M.armed = 1
-		playsound(chassis, 'bikehorn.ogg', 60, 1)
+		playsound(chassis, fire_sound, 60, 1)
 		M.throw_at(target, missile_range, missile_speed)
 		projectiles--
-		chassis.log_message("Launched a mouse-trap from [src.name], targeting [target]. HONK!")
+		log_message("Launched a mouse-trap from [src.name], targeting [target]. HONK!")
 		do_after_cooldown()
 		return

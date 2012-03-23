@@ -205,12 +205,12 @@
 ////////// Firefighter
 
 /obj/item/mecha_parts/chassis/firefighter
-	name = "Ripley-on-Fire Chassis"
+	name = "Firefighter Chassis"
 
 	New()
 		..()
 		construct = new /datum/construction/mecha/firefighter_chassis(src)
-
+/*
 /obj/item/mecha_parts/part/firefighter_torso
 	name="Ripley-on-Fire Torso"
 	icon_state = "ripley_harness"
@@ -230,7 +230,7 @@
 /obj/item/mecha_parts/part/firefighter_right_leg
 	name="Ripley-on-Fire Right Leg"
 	icon_state = "ripley_r_leg"
-
+*/
 
 ////////// HONK
 
@@ -340,46 +340,59 @@
 		..()
 		construct = new /datum/construction/mecha/odysseus_chassis(src)
 
+/obj/item/mecha_parts/part/odysseus_head
+	name="Odysseus Head"
+	icon_state = "odysseus_head"
+	construction_time = 100
+	construction_cost = list("metal"=2000,"glass"=10000)
+	origin_tech = "programming=3;materials=2"
+
 /obj/item/mecha_parts/part/odysseus_torso
 	name="Odysseus Torso"
 	desc="A torso part of Odysseus. Contains power unit, processing core and life support systems."
-	icon_state = "ripley_harness"
+	icon_state = "odysseus_torso"
 	origin_tech = "programming=2;materials=2;biotech=2;engineering=2"
-	construction_time = 200
-	construction_cost = list("metal"=30000,"glass"=10000)
+	construction_time = 180
+	construction_cost = list("metal"=25000)
 
 /obj/item/mecha_parts/part/odysseus_left_arm
 	name="Odysseus Left Arm"
 	desc="An Odysseus left arm. Data and power sockets are compatible with most exosuit tools."
-	icon_state = "ripley_l_arm"
+	icon_state = "odysseus_l_arm"
 	origin_tech = "programming=2;materials=2;engineering=2"
-	construction_time = 150
-	construction_cost = list("metal"=20000)
+	construction_time = 120
+	construction_cost = list("metal"=10000)
 
 /obj/item/mecha_parts/part/odysseus_right_arm
 	name="Odysseus Right Arm"
 	desc="An Odysseus right arm. Data and power sockets are compatible with most exosuit tools."
-	icon_state = "ripley_r_arm"
+	icon_state = "odysseus_r_arm"
 	origin_tech = "programming=2;materials=2;engineering=2"
-	construction_time = 150
-	construction_cost = list("metal"=20000)
+	construction_time = 120
+	construction_cost = list("metal"=10000)
 
 /obj/item/mecha_parts/part/odysseus_left_leg
 	name="Odysseus Left Leg"
 	desc="An Odysseus left leg. Contains somewhat complex servodrives and balance maintaining systems."
-	icon_state = "ripley_l_leg"
+	icon_state = "odysseus_l_leg"
 	origin_tech = "programming=2;materials=2;engineering=2"
-	construction_time = 150
-	construction_cost = list("metal"=2500)
+	construction_time = 130
+	construction_cost = list("metal"=15000)
 
 /obj/item/mecha_parts/part/odysseus_right_leg
 	name="Odysseus Right Leg"
 	desc="A Odysseus right leg. Contains somewhat complex servodrives and balance maintaining systems."
-	icon_state = "ripley_r_leg"
+	icon_state = "odysseus_r_leg"
 	origin_tech = "programming=2;materials=2;engineering=2"
-	construction_time = 150
-	construction_cost = list("metal"=2500)
+	construction_time = 130
+	construction_cost = list("metal"=15000)
 
+/obj/item/mecha_parts/part/odysseus_armour
+	name="Odysseus Carapace"
+	icon_state = "odysseus_armour"
+	origin_tech = "materials=3;engineering=3"
+	construction_time = 200
+	construction_cost = list("metal"=15000)
 
 
 ///////// Circuitboards
@@ -438,10 +451,6 @@
 	durand/main
 		name = "Circuit board (Durand Central Control module)"
 		icon_state = "mainboard"
-
-	firefighter/peripherals
-		name = "Circuit board (Ripley-on-Fire Peripherals Control module)"
-		icon_state = "mcontroller"
 
 	honker
 		origin_tech = "programming=4"

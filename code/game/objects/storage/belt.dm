@@ -142,7 +142,8 @@
 		"/obj/item/weapon/cigpacket",
 		"/obj/item/weapon/zippo",
 		"/obj/item/device/taperecorder",
-		"/obj/item/weapon/evidencebag"
+		"/obj/item/weapon/evidencebag",
+		"/obj/item/policetaperoll"
 		)
 
 /obj/item/weapon/storage/belt/soulstone

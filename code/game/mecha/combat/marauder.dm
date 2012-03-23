@@ -92,7 +92,7 @@
 		return 0
 	if(!thrusters && src.pr_inertial_movement.active())
 		return 0
-	if(state || !get_charge())
+	if(state || !has_charge(step_energy_drain))
 		return 0
 	var/tmp_step_in = step_in
 	var/tmp_step_energy_drain = step_energy_drain

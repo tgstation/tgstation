@@ -56,10 +56,12 @@
 	"Odysseus"=list(
 						/obj/item/mecha_parts/chassis/odysseus,
 						/obj/item/mecha_parts/part/odysseus_torso,
+						/obj/item/mecha_parts/part/odysseus_head,
 						/obj/item/mecha_parts/part/odysseus_left_arm,
 						/obj/item/mecha_parts/part/odysseus_right_arm,
 						/obj/item/mecha_parts/part/odysseus_left_leg,
-						/obj/item/mecha_parts/part/odysseus_right_leg
+						/obj/item/mecha_parts/part/odysseus_right_leg,
+						/obj/item/mecha_parts/part/odysseus_armour
 					),
 
 	"Gygax"=list(
@@ -82,14 +84,26 @@
 						/obj/item/mecha_parts/part/durand_right_leg,
 						/obj/item/mecha_parts/part/durand_armour
 					),
+	"H.O.N.K"=list(
+						/obj/item/mecha_parts/chassis/honker,
+						/obj/item/mecha_parts/part/honker_torso,
+						/obj/item/mecha_parts/part/honker_head,
+						/obj/item/mecha_parts/part/honker_left_arm,
+						/obj/item/mecha_parts/part/honker_right_arm,
+						/obj/item/mecha_parts/part/honker_left_leg,
+						/obj/item/mecha_parts/part/honker_right_leg
+						),
 	"Exosuit Equipment"=list(
+						/obj/item/mecha_parts/chassis/firefighter,
 						/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
 						/obj/item/mecha_parts/mecha_equipment/tool/drill,
 						/obj/item/mecha_parts/mecha_equipment/tool/extinguisher,
 						/obj/item/mecha_parts/mecha_equipment/tool/cable_layer,
 						/obj/item/mecha_parts/mecha_equipment/tool/sleeper,
+						/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun,
 						///obj/item/mecha_parts/mecha_equipment/repair_droid,
-						/obj/item/mecha_parts/mecha_equipment/plasma_generator,
+						/obj/item/mecha_parts/mecha_equipment/generator,
+						///obj/item/mecha_parts/mecha_equipment/jetpack, //TODO MECHA JETPACK SPRITE MISSING
 						/obj/item/mecha_parts/mecha_equipment/weapon/energy/taser,
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,
 						/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar,
@@ -97,11 +111,19 @@
 						/obj/item/mecha_parts/mecha_equipment/weapon/honker
 						),
 
-	"Misc"=list(/obj/item/mecha_tracking)
+	"Misc"=list(/obj/item/mecha_parts/mecha_tracking)
 	)
-
 	New()
 		..()
+		component_parts = list()
+		component_parts += new /obj/item/weapon/circuitboard/mechfab(src)
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
+		component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+		component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
+		component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
+		RefreshParts()
+
 		for(var/part_set in part_sets)
 			convert_part_set(part_set)
 		files = new /datum/research(src) //Setup the research data holder.
@@ -266,7 +288,7 @@
 		return output
 
 	proc/remove_resources(var/obj/item/mecha_parts/part)
-		if(istype(part, /obj/item/mecha_parts/part))
+		if(istype(part, /obj/item/robot_parts) || istype(part, /obj/item/mecha_parts))
 			for(var/resource in part.construction_cost)
 				if(resource in src.resources)
 					src.resources[resource] -= get_resource_cost_w_coeff(part,resource)
@@ -316,7 +338,7 @@
 		if(!istype(queue))
 			queue = list()
 		if(part)
-			queue.Add(part)
+			queue[++queue.len] = part
 		return queue.len
 
 	proc/remove_from_queue(index)
@@ -631,5 +653,7 @@
 		else
 			del res
 		return result
+
+
 
 

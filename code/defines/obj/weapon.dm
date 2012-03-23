@@ -47,7 +47,7 @@
 	flags = FPRINT | ONBELT | TABLEPASS
 	force = 40
 	throwforce = 10
-	w_class = 3
+	w_class = 3.0
 
 	IsShield()
 		return 1
@@ -179,7 +179,7 @@
 	icon_state = "stunbaton"
 	item_state = "baton"
 	flags = FPRINT | ONBELT | TABLEPASS
-	force = 10
+	force = 15
 	throwforce = 7
 	w_class = 3
 	var/charges = 10.0
@@ -243,7 +243,7 @@
 	name = "energy blade"
 	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
 	icon_state = "blade"
-	force = 70.0//Normal attacks deal very high damage.
+	force = 40.0//Normal attacks deal very high damage.
 	throwforce = 1//Throwing or dropping the item deletes it.
 	throw_speed = 1
 	throw_range = 1
@@ -601,7 +601,7 @@
 	icon = 'weapons.dmi'
 	icon_state = "cane"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 5.0
+	force = 6.0
 	throwforce = 7.0
 	item_state = "browncane"
 	w_class = 2.0
@@ -641,7 +641,7 @@
 	w_class = 3.0
 	throw_speed = 2
 	throw_range = 10
-	force = 10.0
+	force = 15.0
 	item_state = "fire_extinguisher"
 	m_amt = 90
 
@@ -951,7 +951,7 @@
 	icon_state = "large"
 	desc = "Could probably be used as ... a throwing weapon?"
 	w_class = 1.0
-	force = 5.0
+	force = 7.0
 	throwforce = 15.0
 	item_state = "shard-glass"
 	g_amt = 3750
@@ -1078,7 +1078,7 @@
 	item_state = "cell"
 	origin_tech = "powerstorage=1"
 	flags = FPRINT|TABLEPASS
-	force = 5.0
+	force = 10.0
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5

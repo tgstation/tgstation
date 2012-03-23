@@ -31,7 +31,7 @@
 
 	proc/init_devices()
 		recharge_console = locate() in range(1,src)
-		recharge_port = locate(/obj/machinery/mech_bay_recharge_port, get_step(src, dir))	//gets the recharge port from the facing dir
+		recharge_port = locate(/obj/machinery/mech_bay_recharge_port, get_step(src, WEST))
 		if(recharge_console)
 			recharge_console.recharge_floor = src
 			if(recharge_port)
@@ -49,7 +49,6 @@
 	name = "Mech Bay Power Port"
 	density = 1
 	anchored = 1
-	dir = 4
 	icon = 'mech_bay.dmi'
 	icon_state = "recharge_port"
 	var/turf/simulated/floor/mech_bay_recharge_floor/recharge_floor

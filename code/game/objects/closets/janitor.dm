@@ -20,3 +20,4 @@
 	new /obj/item/weapon/cleaner(src)
 	new /obj/item/weapon/cleaner(src)
 	new /obj/item/weapon/trashbag(src)
+	new /obj/item/device/portalathe(src)

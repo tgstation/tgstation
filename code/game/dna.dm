@@ -685,7 +685,7 @@
 	if (src.occupant)
 		usr << "\blue <B>The scanner is already occupied!</B>"
 		return
-	if (usr.abiotic())
+	if (usr.abiotic2())
 		usr << "\blue <B>Subject cannot have abiotic items on.</B>"
 		return
 	usr.pulling = null
@@ -709,7 +709,7 @@
 	if (src.occupant)
 		user << "\blue <B>The scanner is already occupied!</B>"
 		return
-	if (G.affecting.abiotic())
+	if (G.affecting.abiotic2())
 		user << "\blue <B>Subject cannot have abiotic items on.</B>"
 		return
 	var/mob/M = G.affecting
@@ -857,6 +857,9 @@
 /obj/machinery/scan_consolenew/attack_hand(user as mob)
 	if(..())
 		return
+	if(!(user in message))
+		user << "\blue This machine looks extremely complex. You'd probably need a decent knowledge of Genetics to understand it."
+		message += user
 	var/dat
 	if (src.delete && src.temphtml) //Window in buffer but its just simple message, so nothing
 		src.delete = src.delete
