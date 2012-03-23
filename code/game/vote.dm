@@ -58,7 +58,7 @@
 
 	calcwin()
 
-	if(winner == "none")
+	if(!winner || winner == "" || winner == "none")
 		winner = "default"
 
 	if(mode == 2)
