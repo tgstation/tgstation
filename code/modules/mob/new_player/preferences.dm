@@ -133,39 +133,48 @@ datum/preferences
 	proc/CalculateSkillPoints()
 		used_skillpoints = 0
 		for(var/V in SKILLS) for(var/datum/skill/S in SKILLS[V])
-			var/multiplier = 2
-			if(skill_specialization == S.field || S.field == "Misc")
-				multiplier = 1
+			var/multiplier = 1
 			switch(skills[S.ID])
 				if(SKILL_NONE)
 					used_skillpoints += 0 * multiplier
 				if(SKILL_BASIC)
 					used_skillpoints += 1 * multiplier
 				if(SKILL_ADEPT)
-					used_skillpoints += 3 * multiplier
+					// secondary skills cost less
+					if(S.secondary)
+						used_skillpoints += 1 * multiplier
+					else
+						used_skillpoints += 3 * multiplier
 				if(SKILL_EXPERT)
-					used_skillpoints += 8 * multiplier
+					// secondary skills cost less
+					if(S.secondary)
+						used_skillpoints += 3 * multiplier
+					else
+						used_skillpoints += 6 * multiplier
 
 	proc/GetSkillClass(points)
 		// skill classes describe how your character compares in total points
+		var/original_points = points
+		points -= min(round((age - 20) / 2.5), 4) // every 2.5 years after 20, one extra skillpoint
+		if(age > 30)
+			points -= round((age - 30) / 5) // every 5 years after 30, one extra skillpoint
+		if(original_points > 0 && points <= 0) points = 1
 		switch(points)
 			if(0)
 				return "Unconfigured"
-			if(1 to 3)
-				return "Talentless"
-			if(3 to 6)
+			if(1 to 2)
+				return "Terrifying"
+			if(4 to 6)
 				return "Below Average"
 			if(7 to 10)
 				return "Average"
-			if(11 to 12)
-				return "Talented"
-			if(13 to 15)
-				return "Extremely Talented"
-			if(16 to 18)
+			if(11 to 14)
+				return "Above Average"
+			if(15 to 18)
+				return "Exceptional"
+			if(19 to 24)
 				return "Genius"
-			if(19 to 20)
-				return "True Genius"
-			if(21 to 1000)
+			if(24 to 1000)
 				return "God"
 
 	proc/SetSkills(mob/user)
@@ -182,16 +191,20 @@ datum/preferences
 		HTML += "<a href=\"byond://?src=\ref[user];skills=1;preferences=1;preconfigured=1;\">Use preconfigured skillset</a><br>"
 		HTML += "<table>"
 		for(var/V in SKILLS)
-			HTML += "<tr><th colspan = 5><b><a href='byond://?src=\ref[user];preferences=1;skills=1;setspecialization=[V]'><font color=[(skill_specialization == V) ? "red" : "black"]>[V]</font></a></b>"
+			HTML += "<tr><th colspan = 5><b>[V]</b>"
 			HTML += "</th></tr>"
 			for(var/datum/skill/S in SKILLS[V])
 				var/level = skills[S.ID]
 				HTML += "<tr style='text-align:left;'>"
 				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;skillinfo=\ref[S]'>[S.name]</a></th>"
-				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_NONE]'><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[Layman\]</font></a></th>"
-				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_BASIC]'><font color=[(level == SKILL_BASIC) ? "red" : "black"]>\[Basic\]</font></a></th>"
-				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_ADEPT]'><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Adept\]</font></a></th>"
-				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_EXPERT]'><font color=[(level == SKILL_EXPERT) ? "red" : "black"]>\[Expert\]</font></a></th>"
+				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_NONE]'><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[Untrained\]</font></a></th>"
+				// secondary skills don't have an amateur level
+				if(S.secondary)
+					HTML += "<th></th>"
+				else
+					HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_BASIC]'><font color=[(level == SKILL_BASIC) ? "red" : "black"]>\[Amateur\]</font></a></th>"
+				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_ADEPT]'><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Trained\]</font></a></th>"
+				HTML += "<th><a href='byond://?src=\ref[user];preferences=1;skills=1;setskill=\ref[S];newvalue=[SKILL_EXPERT]'><font color=[(level == SKILL_EXPERT) ? "red" : "black"]>\[Professional\]</font></a></th>"
 				HTML += "</tr>"
 		HTML += "</table>"
 		HTML += "<a href=\"byond://?src=\ref[user];skills=1;preferences=1;cancel=1;\">\[Done\]</a>"
