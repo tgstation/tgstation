@@ -235,6 +235,7 @@ obj/structure/closet/wardrobe/hop/New()
 	new /obj/item/clothing/suit/bio_suit/cmo(src)
 	new /obj/item/clothing/head/bio_hood/general(src)
 	new /obj/item/clothing/suit/storage/labcoat/cmo(src)
+	new /obj/item/clothing/suit/storage/labcoat/cmoalt(src)
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/clothing/under/rank/chief_medical_officer(src)
 
