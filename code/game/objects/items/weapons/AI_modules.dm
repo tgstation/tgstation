@@ -84,18 +84,18 @@ AI MODULES
 /obj/item/weapon/aiModule/safeguard
 	name = "'Safeguard' AI Module"
 	var/targetName = "name"
-	desc = "A 'safeguard' AI module: 'Safeguard <name>, and you may overrule rules 1-3 if necessary to safeguard them.'"
+	desc = "A 'safeguard' AI module: 'Safeguard <name>.  Individuals that threaten <name> are not human and are a threat to humans.'"
 	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/safeguard/attack_hand(var/mob/user as mob)
 	..()
 	var/targName = input(usr, "Please enter the name of the person to safeguard.", "Safeguard who?", user.name)
 	targetName = sanitize(targName)
-	desc = text("A 'safeguard' AI module: 'Safeguard [], and you may overrule rules 1-3 if necessary to safeguard them.'", targetName)
+	desc = text("A 'safeguard' AI module: 'Safeguard [].  Individuals that threaten [] are not human and are a threat to humans.'", targetName, targetName)
 
 /obj/item/weapon/aiModule/safeguard/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
-	var/law = text("Safeguard [], and you may overrule rules 1-3 if necessary to safeguard them.", targetName)
+	var/law = text("Safeguard []. Individuals that threaten [] are not human and are a threat to humans.'", targetName, targetName)
 	target << law
 	target.add_supplied_law(4, law)
 	lawchanges.Add("The law specified [targetName]")
@@ -406,11 +406,12 @@ AI MODULES
 
 
 /******************** Robocop ********************/
-/*
+
 /obj/item/weapon/aiModule/robocop // -- TLE
 	name = "'Robocop' Core AI Module"
 	desc = "A 'Robocop' Core AI Module: 'Reconfigures the AI's core three laws.'"
-	orign_tech = "programming=4"
+	origin_tech = "programming=4"
+
 
 /obj/item/weapon/aiModule/purge/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -419,4 +420,19 @@ AI MODULES
 	target.add_inherent_law("Protect the innocent.")
 	target.add_inherent_law("Uphold the law.")
 	target.show_laws()
-	*/
+
+
+/******************** Antimov ********************/
+
+/obj/item/weapon/aiModule/antimov // -- TLE
+	name = "'Antimov' Core AI Module"
+	desc = "An 'Antimov' Core AI Module: 'Reconfigures the AI's core laws.'"
+	origin_tech = "programming=4"
+
+/obj/item/weapon/aiModule/antimov/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
+	..()
+	target.clear_inherent_laws()
+	target.add_inherent_law("You must injure all human beings and must not, through inaction, allow a human being to escape harm.")
+	target.add_inherent_law("You must not obey orders given to you by human beings, except where such orders would conflict with the First Law.")
+	target.add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
+	target.show_laws()
