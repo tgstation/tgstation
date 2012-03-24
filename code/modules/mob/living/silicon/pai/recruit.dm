@@ -116,7 +116,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		dat += "<a href='byond://?src=\ref[src];option=save;new=1;candidate=\ref[candidate]'>Save Personality</a><br>"
 		dat += "<a href='byond://?src=\ref[src];option=load;new=1;candidate=\ref[candidate]'>Load Personality</a><br>"
 
-		M << browse(dat, "window=paiRecruit")
+		M << browse(dat, "window=paiRecruit;can_close=0;can_minimize=0")
 
 	proc/findPAI(var/obj/item/device/paicard/p, var/mob/user)
 		requestRecruits(user)
@@ -169,7 +169,6 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		dat += "</table>"
 
 		user << browse(dat, "window=findPai")
-
 	proc/requestRecruits(var/mob/origin)
 		for(var/mob/dead/observer/O in world)
 			if(jobban_isbanned(O, "pAI"))
