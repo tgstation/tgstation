@@ -4,6 +4,7 @@
 	var/affect_ghosts = 0
 	var/stopper = 1 // stops throwers
 	invisibility = 101 // nope cant see this shit
+	anchored = 1
 
 /obj/step_trigger/proc/Trigger(var/atom/movable/A)
 	return 0
@@ -31,7 +32,8 @@
 		var/curtiles = 0
 		var/stopthrow = 0
 		for(var/obj/step_trigger/thrower/T in orange(2, src))
-			if(T.affecting.Find(A))
+			if(A in T.affecting)
+				world << "can't trigger"
 				return
 
 		if(ismob(A))
@@ -43,7 +45,6 @@
 		while(A && !stopthrow)
 			if(tiles)
 				if(curtiles >= tiles)
-					affecting.Remove(A)
 					break
 
 			curtiles++
@@ -53,12 +54,10 @@
 				for(var/obj/step_trigger/T in get_step(A, direction))
 					if(T.stopper && T != src)
 						stopthrow = 1
-						affecting.Remove(A)
 			else
 				for(var/obj/step_trigger/teleporter/T in get_step(A, direction))
 					if(T.stopper)
 						stopthrow = 1
-						affecting.Remove(A)
 
 			var/predir = A.dir
 			step(A, direction)
@@ -66,6 +65,8 @@
 				A.dir = predir
 
 			sleep(speed)
+
+		affecting.Remove(A)
 
 		if(ismob(A))
 			var/mob/M = A
