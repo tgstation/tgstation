@@ -4,6 +4,7 @@
 #define EXPLO_SCORE -10000 //boum
 
 #define COOLDOWN_TIME 12000 // Twenty minutes
+#define MIN_ROUND_TIME 18000
 
 //estimated stats
 //80 minute round
@@ -66,7 +67,7 @@ var/global/datum/tension/tension_master
 		score += get_num_players()*PLAYER_WEIGHT
 
 		if(config.Tensioner_Active)
-			if(score > 100000)
+			if(score > 100000 && world.time > MIN_ROUND_TIME)
 				round1++
 				if(!supress && !cooldown)
 					if(prob(1) || forcenexttick)
