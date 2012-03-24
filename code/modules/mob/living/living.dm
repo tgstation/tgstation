@@ -70,23 +70,31 @@
 /mob/living/get_contents()
 	var/list/L = list()
 	L += src.contents
-	for(var/obj/item/weapon/storage/S in src.contents)
-		L += S.return_inv()
-	for(var/obj/item/weapon/gift/G in src.contents)
-		L += G.gift
+	for(var/obj/item/weapon/storage/S in L)
+		L |= S.return_inv()
+	for(var/obj/item/weapon/gift/G in L)
+		L |= G.gift
 		if (istype(G.gift, /obj/item/weapon/storage))
-			L += G.gift:return_inv()
+			L |= G.gift:return_inv()
+	for(var/obj/item/weapon/evidencebag/E in L)
+		L |= E:contents
+	for(var/obj/item/smallDelivery/S in L)
+		L |= S.wrapped
 	return L
 
 /mob/living/proc/check_contents_for(A)
 	var/list/L = list()
 	L += src.contents
-	for(var/obj/item/weapon/storage/S in src.contents)
-		L += S.return_inv()
-	for(var/obj/item/weapon/gift/G in src.contents)
-		L += G.gift
+	for(var/obj/item/weapon/storage/S in L)
+		L |= S.return_inv()
+	for(var/obj/item/weapon/gift/G in L)
+		L |= G.gift
 		if (istype(G.gift, /obj/item/weapon/storage))
-			L += G.gift:return_inv()
+			L |= G.gift:return_inv()
+	for(var/obj/item/weapon/evidencebag/E in L)
+		L |= E:contents
+	for(var/obj/item/smallDelivery/S in L)
+		L |= S.wrapped
 
 	for(var/obj/B in L)
 		if(B.type == A)

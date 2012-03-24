@@ -154,8 +154,13 @@
 		return
 
 	if(Process_Grab())	return
-	if(!mob.canmove)	return
 
+//Making mob movememnt changes instant.
+	if(mob.paralysis || mob.stunned || mob.weakened || mob.buckled || (mob.changeling && mob.changeling.changeling_fakedeath))
+		mob.canmove = 0
+		return
+	else
+		mob.canmove = 1
 
 	if(istype(mob.loc, /turf/space) || (mob.flags & NOGRAV))
 		if(!mob.Process_Spacemove(0))	return 0

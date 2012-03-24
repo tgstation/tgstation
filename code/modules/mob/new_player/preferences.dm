@@ -730,7 +730,7 @@ datum/preferences
 
 		if(link_tags["underwear"])
 			if(!IsGuestKey(user.key))
-				switch(link_tags["underwear"])
+				/*switch(link_tags["underwear"])
 					if("random")
 						if(prob (75))
 							underwear = 1
@@ -740,7 +740,8 @@ datum/preferences
 						if(underwear == 1)
 							underwear = 0
 						else
-							underwear = 1
+							underwear = 1*/
+				underwear = !underwear
 
 		if(link_tags["be_special"])
 			src.be_special^=(1<<text2num(link_tags["be_special"])) //bitwize magic, sorry for that. --rastaf0

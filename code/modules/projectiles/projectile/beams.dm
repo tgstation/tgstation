@@ -9,7 +9,7 @@
 	var/ID = 0
 	var/main = 0
 
-	process()
+	fired()
 		main = 1
 		ID = rand(0,1000)
 		var/first = 1
@@ -34,7 +34,6 @@
 					new_beam.icon_state = icon_state
 				else
 					first = 0
-		processing_objects.Remove(src)
 		return
 
 /obj/effect/effect/laserdealer

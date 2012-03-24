@@ -286,6 +286,8 @@
 		user.drop_item()
 		if(W)
 			W.loc = src.loc
+	else if(istype(W,/obj/item/weapon/packageWrap))
+		return
 	else return attack_hand(user)
 
 /obj/structure/closet/crate/secure/emp_act(severity)

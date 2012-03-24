@@ -15,6 +15,12 @@
 	stutter = 10
 	flag = "laser" //Give it a better chance to be blocked.
 
+	check_fire(var/mob/living/target as mob, var/mob/living/user as mob)
+		if((target.stunned + target.weakened) > 30)
+			return 2
+		else
+			return ..()
+
 
 /obj/item/projectile/energy/declone
 	name = "\improper Decloner Bolt"

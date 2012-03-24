@@ -126,7 +126,7 @@
 					if(src.fingerprints.len == 1)
 						src.fingerprints = list()
 					else
-						for(var/j = i, j <= (src.fingerprints.len), j++)
+						for(var/j = i, j < (src.fingerprints.len), j++)
 							src.fingerprints[j] = src.fingerprints[j+1]
 						src.fingerprints.len--
 				else

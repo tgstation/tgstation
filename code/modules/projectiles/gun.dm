@@ -19,28 +19,29 @@
 		caliber = ""
 		silenced = 0
 		recoil = 0
-		tmp/mob/target
+		tmp/list/mob/living/target //List of who yer targeting.
 		tmp/lock_time = -100
-		mouthshoot = 0
+		mouthshoot = 0 ///To stop people from suiciding twice... >.>
+		automatic = 0 //Used to determine if you can target multiple people.
+		mob/living/last_moved_mob //Used to fire faster at more than one person.
+		told_cant_shoot = 0 //So that it doesn't spam them with the fact they cannot hit them.
 
-	proc
-		load_into_chamber()
-		special_check(var/mob/M)
-
-
-	load_into_chamber()
+	proc/load_into_chamber()
 		return 0
 
 //Removing the lock and the buttons.
 	dropped(mob/user as mob)
 		if(target)
-			target.NotTargeted(src)
-		del(user.item_use_icon)
+			for(var/mob/living/M in target)
+				if(M)
+					M.NotTargeted(src) //Untargeting people.
+			del(target)
+		del(user.item_use_icon) //Removing the control icons.
 		del(user.gun_move_icon)
 		del(user.gun_run_icon)
 		return ..()
 
-	special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
+	proc/special_check(var/mob/M) //Placeholder for any special checks, like detective's revolver.
 		return 1
 
 
@@ -51,25 +52,32 @@
 //Handling lowering yer gun.
 	attack_self()
 		if(target)
-			target.NotTargeted(src)
+			for(var/mob/living/M in target)
+				if(M)
+					M.NotTargeted(src)
+			del(target)
 			usr.visible_message("\blue [usr] lowers \the [src]...")
 			return 0
 		return 1
 
 //Suiciding.
 	attack(mob/living/M as mob, mob/living/user as mob, def_zone)
-		if (M == user && user.zone_sel.selecting == "mouth" && load_into_chamber() && !mouthshoot)
+		if (M == user && user.zone_sel.selecting == "mouth" && load_into_chamber() && !mouthshoot) //Suicide handling.
 			mouthshoot = 1
 			M.visible_message("\red [user] sticks their gun in their mouth, ready to pull the trigger...")
 			if(!do_after(user, 40))
 				M.visible_message("\blue [user] decided life was worth living")
+				mouthshoot = 0
 				return
-			if(istype(src.in_chamber, /obj/item/projectile/bullet) && !istype(src.in_chamber, /obj/item/projectile/bullet/stunshot))
+			if(istype(src.in_chamber, /obj/item/projectile/bullet) && !istype(src.in_chamber, /obj/item/projectile/bullet/stunshot) && !istype(src.in_chamber, /obj/item/ammo_casing/shotgun/beanbag))
 				M.apply_damage(75, BRUTE, "head", used_weapon = "Suicide attempt with a projectile weapon.")
 				M.apply_damage(85, BRUTE, "chest")
 				M.visible_message("\red [user] pulls the trigger.")
 			else if(istype(src.in_chamber, /obj/item/projectile/bullet/stunshot) || istype(src.in_chamber, /obj/item/projectile/energy/electrode))
 				M.apply_damage(10, BURN, "head", used_weapon = "Suicide attempt with a stun round.")
+				M.visible_message("\red [user] pulls the trigger, but luckily it was a stun round.")
+			else if(istype(src.in_chamber, /obj/item/ammo_casing/shotgun/beanbag))
+				M.apply_damage(20, BRUTE, "head", used_weapon = "Suicide attempt with a beanbag.")
 				M.visible_message("\red [user] pulls the trigger, but luckily it was a stun round.")
 			else if(istype(src.in_chamber, /obj/item/projectile/beam) || istype(src.in_chamber, /obj/item/projectile/energy))
 				M.apply_damage(75, BURN, "head", used_weapon = "Suicide attempt with an energy weapon")
@@ -82,17 +90,23 @@
 			del(in_chamber)
 			mouthshoot = 0
 			return
-		else if(target && M == target)
-			PreFire(M,user)
-			return
 		else if(user.a_intent == "hurt" && load_into_chamber() && (istype(src.in_chamber, /obj/item/projectile/beam) || istype(src.in_chamber, /obj/item/projectile/energy)\
-		 || istype(src.in_chamber, /obj/item/projectile/bullet)))
+		 || istype(src.in_chamber, /obj/item/projectile/bullet)) && !istype(in_chamber,/obj/item/projectile/energy/electrode)) //Point blank shooting.
 			//Lets shoot them, then.
 			user.visible_message("\red <b> [user] fires \the [src] point blank at [M]!</b>")
-			M.apply_damage(30+in_chamber.damage,BRUTE,"Point Blank Shot") //So we'll put him an inch from death.
+			if(silenced)
+				playsound(user, fire_sound, 10, 1)
+			else
+				playsound(user, fire_sound, 50, 1)
+			M.apply_damage(30+in_chamber.damage, BRUTE, used_weapon = "Point Blank Shot") //So we'll put him an inch from death.
+			M.attack_log += text("\[[]\] <b>[]/[]</b> shot <b>[]/[]</b> point blank with a <b>[]</b>", time_stamp(), user, user.ckey, M, M.ckey, src)
+			user.attack_log += text("\[[]\] <b>[]/[]</b> shot <b>[]/[]</b> point blank with a <b>[]</b>", time_stamp(), user, user.ckey, M, M.ckey, src)
+			log_admin("ATTACK: [user] ([user.ckey]) shot [M] ([M.ckey]) point blank with [src].")
+			message_admins("ATTACK: [user] ([user.ckey]) shot [M] ([M.ckey]) point blank with [src].")
 			del(in_chamber)
+			update_icon()
 			return
-		else if(user.a_intent != "hurt" && load_into_chamber() && istype(src,/obj/item/weapon/gun/energy/taser))
+		else if(user.a_intent != "hurt" && load_into_chamber() && istype(in_chamber,/obj/item/projectile/energy/electrode)) //Point blank tasering.
 			if (prob(50))
 				if (M.paralysis < 60 && (!(M.mutations & 8)) )
 					M.paralysis = 60
@@ -101,18 +115,33 @@
 					M.weakened = 60
 			if (M.stuttering < 60 && (!(M.mutations & 8)) )
 				M.stuttering = 60
+			if(silenced)
+				playsound(user, fire_sound, 10, 1)
+			else
+				playsound(user, fire_sound, 50, 1)
 			user.visible_message("\red <B>[M] has been stunned with the taser gun by [user]!</B>")
+			M.attack_log += text("\[[]\] <b>[]/[]</b> stunned <b>[]/[]</b> with a <b>[]</b>", time_stamp(), user, user.ckey, M, M.ckey, src)
+			user.attack_log += text("\[[]\] <b>[]/[]</b> stunned <b>[]/[]</b> with a <b>[]</b>", time_stamp(), user, user.ckey, M, M.ckey, src)
+			log_admin("ATTACK: [user] ([user.ckey]) stunned [M] ([M.ckey]) with [src].")
+			message_admins("ATTACK: [user] ([user.ckey]) stunned [M] ([M.ckey]) with [src].")
 			del(in_chamber)
+			update_icon()
+			return
+		else if(target && M in target) //Yer targeting them, and 1 tile away.  FIRE!
+			if(!load_into_chamber()) //No ammo, hit them!
+				return ..()
+			else
+				PreFire(M,user) ///Otherwise, shoot!
 			return
 		else
-			return ..()
+			return ..() //Pistolwhippin'
 
 
 //POWPOW!...  Used to be afterattack.
 	proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params)//TODO: go over this
 		if(istype(user, /mob/living))
 			var/mob/living/M = user
-			if ((M.mutations & CLUMSY) && prob(50))
+			if ((M.mutations & CLUMSY) && prob(50)) ///Who ever came up with this...
 				M << "\red \the [src] blows up in your face."
 				M.take_organ_damage(0,20)
 				M.drop_item()
@@ -132,9 +161,7 @@
 
 		if(!special_check(user))	return
 		if(!load_into_chamber())
-			user << "\red *click*";
-			for(var/mob/M in orange(4,src.loc))
-				M.show_message("*click, click*")
+			user.visible_message("*click click*", "\red <b>*click*</b>")
 			return
 
 		if(!in_chamber)	return
@@ -174,7 +201,7 @@
 				in_chamber.p_y = text2num(mouse_control["icon-y"])
 
 		spawn()
-			if(in_chamber)	in_chamber.process()
+			if(in_chamber)	in_chamber.fired()
 		sleep(1)
 		in_chamber = null
 
@@ -184,11 +211,14 @@
 
 //Aiming at the target mob.
 	proc/Aim(var/mob/M)
-		if(target != M)
+		if(!target || !(M in target))
 			lock_time = world.time
-			if(target)
+			if(target && !automatic) //If they're targeting someone and they have a non automatic weapon.
 				//usr.ClearRequest("Aim")
-				target.NotTargeted(src)
+				for(var/mob/living/L in target)
+					if(L)
+						L.NotTargeted(src)
+				del(target)
 				usr.visible_message("\red <b>[usr] turns \the [src] on [M]!</b>")
 			else
 				usr.visible_message("\red <b>[usr] aims \a [src] at [M]!</b>")
@@ -198,15 +228,29 @@
 
 
 //HE MOVED, SHOOT HIM!
-	proc/TargetActed()
-		var/mob/M = loc
-		if(target == M) return
-		if(src != M.equipped())
-			target.NotTargeted(src)
+	proc/TargetActed(var/mob/living/T)
+		var/mob/living/M = loc
+		if(M == T) return
+		if(!istype(M) || src != M.equipped())
+			for(var/mob/living/N in target)
+				if(N)
+					N.NotTargeted(src)
+			del(target)
 			return
-		usr.last_move_intent = world.time
-		Fire(target,usr)
-		var/dir_to_fire = sd_get_approx_dir(M,target)
+		M.last_move_intent = world.time
+		if(load_into_chamber())
+			var/firing_check = in_chamber.check_fire(T,usr) //0 if it cannot hit them, 1 if it is capable of hitting, and 2 if a special check is preventing it from firing.
+			if(firing_check > 0)
+				if(firing_check == 1)
+					Fire(T,usr)
+			else if(!told_cant_shoot)
+				M << "\red They can't be hit from here!"
+				told_cant_shoot = 1
+				spawn(30)
+					told_cant_shoot = 0
+		else
+			usr.visible_message("*click click*", "\red <b>*click*</b>")
+		var/dir_to_fire = sd_get_approx_dir(M,T)
 		if(dir_to_fire != M.dir)
 			M.dir = dir_to_fire
 
@@ -214,30 +258,32 @@
 		if(flag)	return //we're placing gun on a table or in backpack
 		if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
 		if(user && user.client && user.client.gun_mode)
-			PreFire(A,user,params)
+			PreFire(A,user,params) //They're using the new gun system, locate what they're aiming at.
 		else
-			Fire(A,user,params)
+			Fire(A,user,params) //Otherwise, fire normally.
 
 //Compute how to fire.....
 	proc/PreFire(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, params)
 		//GraphicTrace(usr.x,usr.y,A.x,A.y,usr.z)
-		if(lock_time > world.time - 2) return
-		if(!ismob(A))
+		if(lock_time > world.time - 2) return //Lets not spam it.
+		if(!ismob(A)) //Didn't click someone, check if there is anyone along that guntrace
 //				var/mob/M = locate() in range(0,A)
 //				if(M && !ismob(A))
 //					if(M.type == /mob)
 //						return FindTarget(M,user,params)
-			var/mob/M = GunTrace(usr.x,usr.y,A.x,A.y,usr.z,usr)
-			if(M && ismob(M) && isliving(M) && !target)
+			var/mob/M = GunTrace(usr.x,usr.y,A.x,A.y,usr.z,usr)  //Find dat mob.
+			if(M && ismob(M) && isliving(M) && M in view(user))
 				if(!(M.client && M.client.admin_invis))
-					Aim(M)
+					Aim(M) //Aha!  Aim at them!
 					return
-		if(ismob(A) && isliving(A) && target != A)
-			Aim(A)
+			else if(!ismob(M) || (ismob(M) && !(M in view(user)))) //Nope!  They weren't there!
+				Fire(A,user,params)  //Fire like normal, then.
+		if(ismob(A) && isliving(A) && !(A in target))
+			Aim(A) //Clicked a mob, aim at them.
 		else if(lock_time < world.time + 10)
-			Fire(A,user,params)
+			Fire(A,user,params)  //Bang!
 		else if(!target)
-			Fire(A,user,params)
+			Fire(A,user,params)  //Boom!
 		//else
 			//var/item/gun/G = usr.OHand
 			//if(!G)
@@ -247,7 +293,7 @@
 				//Fire(A,2)
 			//else
 				//Fire(A)
-		var/dir_to_fire = sd_get_approx_dir(usr,A)
+		var/dir_to_fire = sd_get_approx_dir(usr,A) //Turn them to face their target.
 		if(dir_to_fire != usr.dir)
 			usr.dir = dir_to_fire
 
@@ -303,20 +349,36 @@ mob/var
 	obj/effect/target_locked/target_locked = null
 
 mob/proc
-	Targeted(var/obj/item/weapon/gun/I)
+	Targeted(var/obj/item/weapon/gun/I) //Self explanitory.
+		if(!I.target)
+			I.target = list(src)
+		else if(I.automatic && I.target.len < 5) //Automatic weapon, they can hold down a room.
+			I.target += src
+		else if(I.target.len >= 5) //Otherwise, they can just aim at one person.
+			if(ismob(I.loc))
+				I.loc << "You can only target 5 people at once!"
+			return
+		else
+			return
 		if(!targeted_by) targeted_by = list()
 		targeted_by += I
-		I.target = src
-		I.lock_time = world.time + 20 //Target has 1 second to realize they're targeted and stop (or target the opponent).
+		I.lock_time = world.time + 20 //Target has 2 second to realize they're targeted and stop (or target the opponent).
 		src << "((\red <b>Your character is being targeted. They have 2 seconds to stop any click or move actions.</b> \black While targeted, they may \
 		drag and drop items in or into the map, speak, and click on interface buttons. Clicking on the map, their items \
 		 (other than a weapon to de-target), or moving will result in being fired upon. \red The aggressor may also fire manually, \
 		 so try not to get on their bad side.\black ))"
 		if(targeted_by.len == 1)
 			spawn(0)
-				target_locked = new /obj/effect/target_locked(src)
+				target_locked = new /obj/effect/target_locked(src) //Add the overlay
 				overlays += target_locked
-				spawn flick("locking",target_locked)
+				spawn(0) //Make it show the 2 states properly
+					if(target_locked)
+						target_locked.icon_state = "locking"
+					update_clothing()
+					sleep(20)
+					if(target_locked)
+						target_locked.icon_state = "locked"
+					update_clothing()
 				var/mob/T = I.loc
 				//Adding the buttons to the controler person
 				if(T)
@@ -325,32 +387,47 @@ mob/proc
 					if(T.client)
 						T.client.screen += T.item_use_icon
 						T.client.screen += T.gun_move_icon
+					if(m_intent == "run" && T.client && T.client.target_can_move == 1 && T.client.target_can_run == 0)
+						src << "\red Your move intent is now set to walk, as your targeter permits it."  //Self explanitory.
+						m_intent = "walk"
+						hud_used.move_intent.icon_state = "walking"
 				while(targeted_by && T.client)
 					sleep(1)
 					if(last_move_intent > I.lock_time + 10 && !T.client.target_can_move) //If the target moved while targeted
-						I.TargetActed()
-						I.lock_time = world.time + 10
+						I.TargetActed(src)
+						if(I.last_moved_mob == src) //If they were the last ones to move, give them more of a grace period, so that an automatic weapon can hold down a room better.
+							I.lock_time = world.time + 5
+						I.lock_time = world.time + 5
+						I.last_moved_mob = src
 					else if(last_move_intent > I.lock_time + 10 && !T.client.target_can_run && m_intent == "run") //If the target ran while targeted
-						I.TargetActed()
-						I.lock_time = world.time + 10
+						I.TargetActed(src)
+						if(I.last_moved_mob == src) //If they were the last ones to move, give them more of a grace period, so that an automatic weapon can hold down a room better.
+							I.lock_time = world.time + 5
+						I.lock_time = world.time + 5
+						I.last_moved_mob = src
 					if(last_target_click > I.lock_time + 10 && !T.client.target_can_click) //If the target clicked the map to pick something up/shoot/etc
-						I.TargetActed()
-						I.lock_time = world.time + 10
+						I.TargetActed(src)
+						if(I.last_moved_mob == src) //If they were the last ones to move, give them more of a grace period, so that an automatic weapon can hold down a room better.
+							I.lock_time = world.time + 5
+						I.lock_time = world.time + 5
+						I.last_moved_mob = src
 
-	NotTargeted(var/obj/item/weapon/gun/I,silent)
-		if(!silent)
+	NotTargeted(var/obj/item/weapon/gun/I)
+		if(!I.silenced)
 			for(var/mob/M in viewers(src))
 				M << 'TargetOff.ogg'
-		del(target_locked)
+		del(target_locked) //Remove the overlay
 		targeted_by -= I
-		I.target = null
-		var/mob/T = I.loc
-		if(T && ismob(T))
+		I.target.Remove(src) //De-target them
+		if(!I.target.len)
+			del(I.target)
+		var/mob/T = I.loc //Remove the targeting icons
+		if(T && ismob(T) && !I.target)
 			del(T.item_use_icon)
 			del(T.gun_move_icon)
 			del(T.gun_run_icon)
 		if(!targeted_by.len) del targeted_by
-		spawn(1) update_clothing()
+		spawn(1) update_clothing() //Finally, update the image.
 
 /*	Captive(var/obj/item/weapon/gun/I)
 		Sound(src,'CounterAttack.ogg')
@@ -400,16 +477,17 @@ client/var
 	gun_mode = 0
 mob/Move()
 	. = ..()
-	for(var/obj/item/weapon/gun/G in targeted_by)
+	for(var/obj/item/weapon/gun/G in targeted_by) //Handle moving out of the gunner's view.
 		var/mob/M = G.loc
 		if(!(M in view(src)))
 			//ClearRequest("Aim")
 			NotTargeted(G)
-	for(var/obj/item/weapon/gun/G in src)
+	for(var/obj/item/weapon/gun/G in src) //Handle the gunner loosing sight of their target/s
 		if(G.target)
-			if(!(G.target in view(src)))
-				//ClearRequest("Aim")
-				G.target.NotTargeted(G)
+			for(var/mob/living/M in G.target)
+				if(M && !(M in view(src)))
+					//ClearRequest("Aim")
+					M.NotTargeted(G)
 client/verb
 //These are called by the on-screen buttons, adjusting what the victim can and cannot do.
 	AllowTargetMove()
@@ -434,10 +512,15 @@ client/verb
 		for(var/obj/item/weapon/gun/G in usr)
 			G.lock_time = world.time + 5
 			if(G.target)
-				if(!target_can_move)
-					G.target << "Your character may now <b>walk</b> at the discretion of their targeter."
-				else
-					G.target << "\red <b>Your character will now be shot if they move.</b>"
+				for(var/mob/living/M in G.target)
+					if(!target_can_move)
+						M << "Your character may now <b>walk</b> at the discretion of their targeter."
+						if(!target_can_run)
+							M << "\red Your move intent is now set to walk, as your targeter permits it."
+							M.m_intent = "walk"
+							M.hud_used.move_intent.icon_state = "walking"
+					else
+						M << "\red <b>Your character will now be shot if they move.</b>"
 	AllowTargetRun()
 		set hidden=1
 		spawn(1) target_can_run = !target_can_run
@@ -456,10 +539,11 @@ client/verb
 		for(var/obj/item/weapon/gun/G in src)
 			G.lock_time = world.time + 5
 			if(G.target)
-				if(!target_can_run)
-					G.target << "Your character may now <b>run</b> at the discretion of their targeter."
-				else
-					G.target << "\red <b>Your character will now be shot if they run.</b>"
+				for(var/mob/living/M in G.target)
+					if(!target_can_run)
+						M << "Your character may now <b>run</b> at the discretion of their targeter."
+					else
+						M << "\red <b>Your character will now be shot if they run.</b>"
 	AllowTargetClick()
 		set hidden=1
 		spawn(1) target_can_click = !target_can_click
@@ -478,10 +562,11 @@ client/verb
 		for(var/obj/item/weapon/gun/G in src)
 			G.lock_time = world.time + 5
 			if(G.target)
-				if(!target_can_click)
-					G.target << "Your character may now <b>use items</b> at the discretion of their targeter."
-				else
-					G.target << "\red <b>Your character will now be shot if they use items.</b>"
+				for(var/mob/living/M in G.target)
+					if(!target_can_click)
+						M << "Your character may now <b>use items</b> at the discretion of their targeter."
+					else
+						M << "\red <b>Your character will now be shot if they use items.</b>"
 
 	ToggleGunMode()
 		set hidden = 1

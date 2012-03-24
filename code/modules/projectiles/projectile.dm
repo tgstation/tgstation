@@ -55,6 +55,20 @@
 		return 1
 
 
+	proc/check_fire(var/mob/living/target as mob, var/mob/living/user as mob)  //Checks if you can hit them or not.
+		if(!istype(target) || !istype(user))
+			return 0
+		var/obj/item/projectile/test/in_chamber = new /obj/item/projectile/test(get_turf(src)) //Making the test....
+		var/turf/curloc = get_turf(user)
+		var/turf/targloc = get_turf(target)
+		in_chamber.yo = targloc.y - curloc.y
+		in_chamber.xo = targloc.x - curloc.x
+		in_chamber.flags = flags //Set the flags...
+		in_chamber.pass_flags = pass_flags //And the pass flags to that of the real projectile...
+		var/output = in_chamber.fired() //Test it!
+		del(in_chamber) //No need for it anymore
+		return output //Send it back to the gun!
+
 	Bump(atom/A as mob|obj|turf|area)
 		if(A == firer)
 			loc = A.loc
@@ -115,7 +129,7 @@
 			return 1
 
 
-	process()
+	proc/fired()
 		spawn while(src)
 			if((!( current ) || loc == current))
 				current = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z)
@@ -130,3 +144,30 @@
 						Bump(M)
 						sleep(1)
 		return
+
+/obj/item/projectile/test //Used to see if you can hit them.
+	invisibility = 101 //Nope!  Can't see me!
+	yo = null
+	xo = null
+	var
+		turf/target = null
+		result = 0 //To pass the message back to the gun.
+
+	Bump(atom/A as mob|obj|turf|area)
+		if(istype(A, /mob/living))
+			result = 2 //We hit someone, return 1!
+		return ..()
+
+	fired()
+		target = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
+		while(!result) //Loop on through!
+			if(!step_towards(src,target)) //If we hit something...
+				if(!result) //And the var is not already set....
+					result = 1 //Return 0
+				break
+			else
+				var/mob/living/M = locate() in get_turf(src)
+				if(istype(M)) //If there is someting living...
+					result = 2 //Return 1
+					break
+		return (result-1)

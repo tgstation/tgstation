@@ -27,7 +27,11 @@
 
 
 	load_into_chamber()
-		if(in_chamber)	return 1
+		if(in_chamber)
+			if(!istype(in_chamber, projectile_type))
+				del(in_chamber)
+				in_chamber = new projectile_type(src)
+			return 1
 		if(!power_supply)	return 0
 		if(!power_supply.use(charge_cost))	return 0
 		if(!projectile_type)	return 0

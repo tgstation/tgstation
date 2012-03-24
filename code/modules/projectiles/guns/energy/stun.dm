@@ -13,6 +13,9 @@
 
 /obj/item/weapon/gun/energy/taser/cyborg/load_into_chamber()//TOOD: change this over to the slowly recharge other cell
 	if(in_chamber)
+		if(!istype(in_chamber, projectile_type))
+			del(in_chamber)
+			in_chamber = new projectile_type(src)
 		return 1
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
