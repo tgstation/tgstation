@@ -1415,7 +1415,7 @@ proc/listclearnulls(list/list)
 
 						// Find a new turf to take on the property of
 						var/turf/nextturf = get_step(corner, direction)
-						if(!nextturf)
+						if(!nextturf || !istype(nextturf, /turf/space))
 							nextturf = get_step(corner, turn(direction, 180))
 
 

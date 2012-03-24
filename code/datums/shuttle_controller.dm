@@ -102,21 +102,21 @@ datum/shuttle_controller
 							var/area/start_location = locate(/area/shuttle/escape/transit)
 							var/area/end_location = locate(/area/shuttle/escape/centcom)
 
-							start_location.move_contents_to(end_location, null, 4)
+							start_location.move_contents_to(end_location, null, NORTH)
 
 							//pods
 							start_location = locate(/area/shuttle/escape_pod1/transit)
 							end_location = locate(/area/shuttle/escape_pod1/centcom)
-							start_location.move_contents_to(end_location)
+							start_location.move_contents_to(end_location, null, NORTH)
 							start_location = locate(/area/shuttle/escape_pod2/transit)
 							end_location = locate(/area/shuttle/escape_pod2/centcom)
-							start_location.move_contents_to(end_location)
+							start_location.move_contents_to(end_location, null, NORTH)
 							start_location = locate(/area/shuttle/escape_pod3/transit)
 							end_location = locate(/area/shuttle/escape_pod3/centcom)
-							start_location.move_contents_to(end_location)
+							start_location.move_contents_to(end_location, null, NORTH)
 							start_location = locate(/area/shuttle/escape_pod5/transit)
 							end_location = locate(/area/shuttle/escape_pod5/centcom)
-							start_location.move_contents_to(end_location)
+							start_location.move_contents_to(end_location, null, EAST)
 
 							online = 0
 
@@ -200,23 +200,23 @@ datum/shuttle_controller
 						var/area/end_location = locate(/area/shuttle/escape/transit)
 
 						settimeleft(SHUTTLETRANSITTIME)
-						start_location.move_contents_to(end_location, null, EAST)
+						start_location.move_contents_to(end_location, null, NORTH)
 
 						//pods
 						start_location = locate(/area/shuttle/escape_pod1/station)
 						end_location = locate(/area/shuttle/escape_pod1/transit)
-						start_location.move_contents_to(end_location)
+						start_location.move_contents_to(end_location, null, NORTH)
 						start_location = locate(/area/shuttle/escape_pod2/station)
 						end_location = locate(/area/shuttle/escape_pod2/transit)
-						start_location.move_contents_to(end_location)
+						start_location.move_contents_to(end_location, null, NORTH)
 						start_location = locate(/area/shuttle/escape_pod3/station)
 						end_location = locate(/area/shuttle/escape_pod3/transit)
-						start_location.move_contents_to(end_location)
+						start_location.move_contents_to(end_location, null, NORTH)
 						start_location = locate(/area/shuttle/escape_pod5/station)
 						end_location = locate(/area/shuttle/escape_pod5/transit)
-						start_location.move_contents_to(end_location)
+						start_location.move_contents_to(end_location, null, EAST)
 
-						world << "<B>The Emergency Shuttle has left the station! [timeleft()/60] until the shuttle docks in Central Command.</B>"
+						world << "<B>The Emergency Shuttle has left the station! [timeleft()/60] minutes until the shuttle docks at Central Command.</B>"
 
 						// Some aesthetic turbulance shaking
 						for(var/mob/M in end_location)
