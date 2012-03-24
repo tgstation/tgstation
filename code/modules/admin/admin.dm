@@ -1,4 +1,7 @@
 
+var/global/BSACooldown = 0
+
+
 ////////////////////////////////
 /proc/message_admins(var/text, var/admin_ref = 0)
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
@@ -1125,6 +1128,10 @@
 					sleep(2)
 					cl.jumptomob(M)
 
+
+
+
+
 	if (href_list["BlueSpaceArtillery"])
 		var/mob/M = locate(href_list["BlueSpaceArtillery"])
 		if(!M)
@@ -1133,6 +1140,15 @@
 		var/choice = alert(src.owner, "Are you sure you wish to hit [key_name(M)] with Blue Space Artillery?",  "Confirm Firing?" , "Yes" , "No")
 		if (choice == "No")
 			return
+
+		if(BSACooldown)
+			src.owner << "Standby!  Reload cycle in progress!  Gunnary crews ready in five seconds!"
+			return
+
+		BSACooldown = 1
+		spawn(50)
+			BSACooldown = 0
+
 
 		M << "You've been hit by bluespace artillery!"
 		log_admin("[key_name(M)] has been hit by Bluespace Artillery fired by [src.owner]")
@@ -1172,7 +1188,12 @@
 		var/input = input(src.owner, "Please enter a message to reply to [key_name(M)] via their headset.","Outgoing message from Centcomm", "")
 		if(!input)
 			return
+
+		src.owner << "You sent [input] to [M] via a secure channel."
+		log_admin("[src.owner] replied to [key_name(M)]'s Centcomm message with the message [input].")
 		M << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. [input].  Message ends.\""
+
+		return
 
 	if (href_list["SyndicateReply"])
 		var/mob/M = locate(href_list["SyndicateReply"])
@@ -1187,8 +1208,12 @@
 		var/input = input(src.owner, "Please enter a message to reply to [key_name(M)] via their headset.","Outgoing message from The Syndicate", "")
 		if(!input)
 			return
+
+		src.owner << "You sent [input] to [M] via a secure channel."
+		log_admin("[src.owner] replied to [key_name(M)]'s Syndicate message with the message [input].")
 		M << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. [input].  Message ends.\""
 
+		return
 
 	if (href_list["jumpto"])
 		if(rank in list("Badmin", "Game Admin", "Game Master"))
