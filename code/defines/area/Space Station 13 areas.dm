@@ -147,6 +147,9 @@ proc/process_ghost_teleport_locs()
 /area/shuttle/escape/centcom
 	icon_state = "shuttle"
 
+/area/shuttle/escape/transit // the area to pass through for 3 minute transit
+	icon_state = "shuttle"
+
 /area/shuttle/escape_pod1
 	name = "Escape Pod One"
 	music = "music/escape.ogg"
@@ -155,6 +158,9 @@ proc/process_ghost_teleport_locs()
 	icon_state = "shuttle2"
 
 /area/shuttle/escape_pod1/centcom
+	icon_state = "shuttle"
+
+/area/shuttle/escape_pod1/transit
 	icon_state = "shuttle"
 
 /area/shuttle/escape_pod2
@@ -167,6 +173,9 @@ proc/process_ghost_teleport_locs()
 /area/shuttle/escape_pod2/centcom
 	icon_state = "shuttle"
 
+/area/shuttle/escape_pod2/transit
+	icon_state = "shuttle"
+
 /area/shuttle/escape_pod3
 	name = "Escape Pod Three"
 	music = "music/escape.ogg"
@@ -177,6 +186,9 @@ proc/process_ghost_teleport_locs()
 /area/shuttle/escape_pod3/centcom
 	icon_state = "shuttle"
 
+/area/shuttle/escape_pod3/transit
+	icon_state = "shuttle"
+
 /area/shuttle/escape_pod5 //Pod 4 was lost to meteors
 	name = "Escape Pod Five"
 	music = "music/escape.ogg"
@@ -185,6 +197,9 @@ proc/process_ghost_teleport_locs()
 	icon_state = "shuttle2"
 
 /area/shuttle/escape_pod5/centcom
+	icon_state = "shuttle"
+
+/area/shuttle/escape_pod5/transit
 	icon_state = "shuttle"
 
 /area/shuttle/mining

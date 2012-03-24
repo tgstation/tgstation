@@ -44,9 +44,40 @@
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
 
+	transit
+
+		var/pushdirection // push things that get caught in the transit tile this direction
+
+		north // moving to the north
+
+			pushdirection = SOUTH
+
+			one
+				icon_state = "1_south" // south because the space tile is scrolling south
+			two
+				icon_state = "2_south"
+			three
+				icon_state = "3_south"
+
+		east // moving to the east
+
+			pushdirection = WEST
+
+			one
+				icon_state = "1_west" // space tile is scrolling west
+			two
+				icon_state = "2_west"
+			three
+				icon_state = "3_west"
+
+
+
+
+
 /turf/space/New()
 //	icon = 'space.dmi'
-	icon_state = "[pick(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25)]"
+	if(!istype(src, /turf/space/transit))
+		icon_state = "[pick(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25)]"
 
 /turf/simulated
 	name = "station"
@@ -90,6 +121,7 @@
 	icon = 'shuttle.dmi'
 	thermal_conductivity = 0.05
 	heat_capacity = 0
+	layer = 2.1
 
 /turf/simulated/shuttle/wall
 	name = "wall"

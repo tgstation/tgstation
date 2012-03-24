@@ -82,6 +82,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/Move(NewLoc, direct)
 	if(NewLoc)
 		loc = NewLoc
+		for(var/obj/step_trigger/S in NewLoc)
+			S.HasEntered(src)
+
 		return
 	loc = get_turf(src) //Get out of closets and such as a ghost
 	if((direct & NORTH) && y < world.maxy)
@@ -92,6 +95,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		x++
 	if((direct & WEST) && x > 1)
 		x--
+
+	for(var/obj/step_trigger/S in locate(x, y, z))
+		S.HasEntered(src)
 
 /mob/dead/observer/examine()
 	if(usr)
