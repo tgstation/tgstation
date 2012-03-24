@@ -483,8 +483,9 @@
 					"/obj/item/weapon/cell/high",
 					"/obj/item/weapon/cell/high")
 	cost = 15
-	containertype = "/obj/structure/closet/crate"
+	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Electrical maintenance crate"
+	access = access_engine
 	group = "Engineering"
 
 /datum/supply_packs/mechanical
@@ -499,8 +500,9 @@
 					"/obj/item/clothing/head/helmet/welding",
 					"/obj/item/clothing/head/helmet/hardhat")
 	cost = 10
-	containertype = "/obj/structure/closet/crate"
+	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Mechanical maintenance crate"
+	access = access_engine
 	group = "Engineering"
 
 /datum/supply_packs/waterfueltank
