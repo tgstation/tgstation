@@ -88,7 +88,9 @@
 			traitor.objectives += block_objective
 
 	else
-		traitor.objectives = SelectObjectives(traitor.assigned_role, traitor)
+		for(var/datum/objective/o in SelectObjectives((traitor.current:wear_id ? traitor.current:wear_id:assignment : traitor.assigned_role), traitor))
+			o.owner = traitor
+			traitor.objectives += o
 	return
 
 

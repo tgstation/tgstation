@@ -367,8 +367,7 @@ datum/mind
 					new_objective.owner = src
 
 				if ("steal")
-					var/steal_type = pick(GetObjectives(assigned_role,src))
-					new_objective = new steal_type
+					new_objective = pick(GenerateTheft(assigned_role,src))
 					new_objective.owner = src
 
 				if("download","capture","absorb")

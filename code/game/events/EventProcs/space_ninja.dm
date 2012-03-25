@@ -241,10 +241,9 @@ In either case, it's a good idea to spawn the ninja with a semi-random set of ob
 
 					hostile_targets -= current_mind//Remove them from the list.
 				if(2)//Steal
-					var/datum/objective/steal/ninja_objective = new
-					var/target_item = pick(ninja_objective.possible_items_special)
-					ninja_objective.set_target(target_item)
-					ninja_mind.objectives += ninja_objective
+					var/list/datum/objective/theft = GenerateTheft(ninja_mind.assigned_role,ninja_mind)
+					var/datum/objective/steal/steal_objective = pick(theft)
+					ninja_mind.objectives += steal_objective
 
 					objective_list -= 2
 				if(3)//Protect. Keeping people alive can be pretty difficult.
