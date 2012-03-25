@@ -29,6 +29,7 @@
 	desc = "A plain jumpsuit. It seems to have a small dial on the wrist."
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
+	armor = list(melee = 10, bullet = 0, laser = 50,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/chameleon/psyche
 	item_state = "bl_suit"

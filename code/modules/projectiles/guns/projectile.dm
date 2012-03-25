@@ -6,7 +6,7 @@
 	origin_tech = "combat=2;materials=2"
 	w_class = 3.0
 	m_amt = 1000
-	force = 30 //Pistol whipp'n good.  (It was frigging SIXTY on pre-goon code)
+	force = 10 //Pistol whipp'n good.  (It was frigging SIXTY on pre-goon code)
 
 	var
 		ammo_type = "/obj/item/ammo_casing/a357"
@@ -25,6 +25,7 @@
 
 
 	load_into_chamber()
+		if(in_chamber) return 1
 		if(!loaded.len)	return 0
 
 		var/obj/item/ammo_casing/AC = loaded[1] //load next casing.

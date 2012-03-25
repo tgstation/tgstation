@@ -7,6 +7,7 @@
 	charge_cost = 200
 	projectile_type = "/obj/item/projectile/beam/pulse"
 	cell_type = "/obj/item/weapon/cell/super"
+	automatic = 1
 	var/mode = 2
 
 

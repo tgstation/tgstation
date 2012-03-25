@@ -174,6 +174,8 @@
 	afterattack(var/obj/target as obj, mob/user as mob)
 		if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) || istype(target,/obj/item/smallDelivery))
 			return
+		if(!istype(target,/obj))
+			return
 		if(target.anchored)
 			return
 		if(target in user)

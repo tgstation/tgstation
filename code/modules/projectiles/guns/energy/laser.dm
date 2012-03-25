@@ -47,7 +47,11 @@ obj/item/weapon/gun/energy/laser/retro
 
 
 /obj/item/weapon/gun/energy/laser/cyborg/load_into_chamber()
-	if(in_chamber)	return 1
+	if(in_chamber)
+		if(!istype(in_chamber, projectile_type))
+			del(in_chamber)
+			in_chamber = new projectile_type(src)
+		return 1
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
 		if(R && R.cell)
