@@ -86,7 +86,23 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				lst[i] = input("Enter type:","Type") in typesof(/obj,/mob,/area,/turf)
 
 			if("reference")
-				lst[i] = input("Select reference:","Reference",src) as mob|obj|turf|area in world
+				switch(alert("Would you like to enter a specific object, or search for it from the world?","Choose!","Specifc UID (Hexadecimal number)", "Search"))
+					if("Specifc UID (Hexadecimal number)")
+						var/UID = input("Type in UID, without the leading 0x","Type in UID") as text|null
+						if(!UID) return
+						if(length(UID) != 7)
+							usr << "ERROR.  UID must be 7 digits"
+						var/temp_variable = locate("\[0x[UID]\]")
+						if(!temp_variable)
+							usr << "ERROR.  Could not locate referenced object."
+							return
+						switch(alert("You have chosen [temp_variable], in [get_area(temp_variable)].  Are you sure?","You sure?","Yes","NONOCANCEL!"))
+							if("Yes")
+								lst[i] = temp_variable
+							if("NONOCANCEL!")
+								return
+					if("Search")
+						lst[i] = input("Select reference:","Reference") as null|mob|obj|turf|area in world
 
 			if("mob reference")
 				lst[i] = input("Select reference:","Reference",usr) as mob in world
@@ -148,7 +164,23 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				argL.Add( input("Enter type:","Type",null) in typesof(/obj,/mob,/area,/turf) )
 
 			if("reference")
-				argL.Add( input("Select reference:","Reference",null) as mob|obj|turf|area in world )
+				switch(alert("Would you like to enter a specific object, or search for it from the world?","Choose!","Specifc UID (Hexadecimal number)", "Search"))
+					if("Specifc UID (Hexadecimal number)")
+						var/UID = input("Type in UID, without the leading 0x","Type in UID") as text|null
+						if(!UID) return
+						if(length(UID) != 7)
+							usr << "ERROR.  UID must be 7 digits"
+						var/temp_variable = locate("\[0x[UID]\]")
+						if(!temp_variable)
+							usr << "ERROR.  Could not locate referenced object."
+							return
+						switch(alert("You have chosen [temp_variable], in [get_area(temp_variable)].  Are you sure?","You sure?","Yes","NONOCANCEL!"))
+							if("Yes")
+								argL.Add(temp_variable)
+							if("NONOCANCEL!")
+								return
+					if("Search")
+						argL.Add(input("Select reference:","Reference") as null|mob|obj|turf|area in world)
 
 			if("icon")
 				argL.Add( input("Pick icon:","Icon",null) as icon )
@@ -200,7 +232,23 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				argL.Add( input("Enter type:","Type",null) in typesof(/obj,/mob,/area,/turf) )
 
 			if("reference")
-				argL.Add( input("Select reference:","Reference",null) as mob|obj|turf|area in world )
+				switch(alert("Would you like to enter a specific object, or search for it from the world?","Choose!","Specifc UID (Hexadecimal number)", "Search"))
+					if("Specifc UID (Hexadecimal number)")
+						var/UID = input("Type in UID, without the leading 0x","Type in UID") as text|null
+						if(!UID) return
+						if(length(UID) != 7)
+							usr << "ERROR.  UID must be 7 digits"
+						var/temp_variable = locate("\[0x[UID]\]")
+						if(!temp_variable)
+							usr << "ERROR.  Could not locate referenced object."
+							return
+						switch(alert("You have chosen [temp_variable], in [get_area(temp_variable)].  Are you sure?","You sure?","Yes","NONOCANCEL!"))
+							if("Yes")
+								argL.Add(temp_variable)
+							if("NONOCANCEL!")
+								return
+					if("Search")
+						argL.Add(input("Select reference:","Reference") as null|mob|obj|turf|area in world)
 
 			if("icon")
 				argL.Add( input("Pick icon:","Icon",null) as icon )
