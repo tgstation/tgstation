@@ -117,3 +117,18 @@ var/list/nonhuman_positions = list(
 
 /proc/guest_jobbans(var/job)
 	return ((job in command_positions) || (job in nonhuman_positions) || (job in security_positions))
+
+/proc/GetRank(var/job)
+	switch(job)
+		if("Bartender","Chef","Lawyer","Librarian","Janitor","Assistant","Unassigned")
+			return 0
+		if("Chaplain","Botanist","Hydroponicist","Medical Doctor","Atmospheric Technician","Geneticist")
+			return 1
+		if("Quartermaster","Cargo Technician","Chemist", "Station Engineer","Roboticist", "Security Officer", "Forensic Technician","Detective", "Scientist","Shaft Miner")
+			return 2
+		if("Research Director","Chief Medical Officer","Head of Security","Chief Engineer","Warden")
+			return 3
+		if("Captain","Head of Personnel","Wizard")
+			return 4
+		else
+			world << "\"[job]\" NOT GIVEN RANK, REPORT JOBS.DM ERROR TO <del>SKYMARSHAL</del> A CODER"

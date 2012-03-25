@@ -57,6 +57,7 @@
 	var/revival_pod_plants = 1
 	var/revival_cloning = 1
 	var/revival_brain_life = -1
+	var/require_heads_alive = 0 //For Rev.
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -241,6 +242,9 @@
 
 				if("alert_delta")
 					config.alert_desc_delta = value
+
+				if("require_heads_alive")
+					config.require_heads_alive = value
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"

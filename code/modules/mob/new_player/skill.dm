@@ -9,6 +9,7 @@ datum/skill/var
     name = "None" // name of the skill
     desc = "Placeholder skill" // detailed description of the skill
     field = "Misc" // the field under which the skill will be listed
+    secondary = 0 // secondary skills only have two levels and cost significantly less
 
 var/global/list/SKILLS = null
 var/list/SKILL_ENGINEER = list("field" = "Engineering", "EVA" = SKILL_BASIC, "construction" = SKILL_ADEPT, "electrical" = SKILL_BASIC, "engines" = SKILL_ADEPT)
@@ -39,6 +40,7 @@ datum/skill/EVA
     name = "Extra-vehicular activity"
     desc = "This skill describes your skill and knowledge of space-suits and working in vacuum."
     field = "Engineering"
+    secondary = 1
 
 datum/skill/forensics
 	ID = "forensics"
@@ -62,6 +64,7 @@ datum/skill/knowledge/law
     name = "NanoTrasen Law"
     desc = "Your knowledge of NanoTrasen law and procedures. This includes space law, as well as general station rulings and procedures. A low level in this skill is typical for security officers, a high level in this skill is typical for captains."
     field = "Security"
+    secondary = 1
 
 datum/skill/devices
     ID = "devices"
@@ -86,6 +89,7 @@ datum/skill/engines
 	name = "Engines"
 	desc = "Describes your knowledge of the various engine types common on space stations, such as the singularity or anti-matter engine."
 	field = "Engineering"
+	secondary = 1
 
 datum/skill/computer
     ID = "computer"
