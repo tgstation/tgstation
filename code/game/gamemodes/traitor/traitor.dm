@@ -88,102 +88,7 @@
 			traitor.objectives += block_objective
 
 	else
-		for(var/i = 1, i <= rand(1,3), i++)
-			switch(rand(1,100))
-				if(1 to 30)
-					if(!locate(/datum/objective/assassinate) in traitor.objectives && !locate(/datum/objective/protect) in traitor.objectives)
-						var/datum/objective/assassinate/kill_objective = new
-						kill_objective.owner = traitor
-						kill_objective.find_target()
-						traitor.objectives += kill_objective
-					else
-						var/works = 1
-						var/datum/objective/assassinate/kill_objective = new
-						kill_objective.owner = traitor
-						kill_objective.find_target()
-						for(var/j, j < (traitor.objectives.len + 1), j++)
-							var/compare = istype(traitor.objectives[j],/datum/objective/assassinate)
-							if(compare)
-								var/datum/objective/assassinate/test = traitor.objectives[j]
-								if(test.target == kill_objective.target)
-									works = 0
-									break
-							compare = istype(traitor.objectives[j],/datum/objective/protect)
-							if(compare)
-								var/datum/objective/protect/test = traitor.objectives[j]
-								if(test.target == kill_objective.target)
-									works = 0
-									break
-						if(works)
-							traitor.objectives += kill_objective
-						else
-							i -= 1
-				if(31 to 40)
-					if(!locate(/datum/objective/assassinate) in traitor.objectives && !locate(/datum/objective/protect) in traitor.objectives)
-						var/datum/objective/protect/protect_objective = new
-						protect_objective.owner = traitor
-						protect_objective.find_target()
-						traitor.objectives += protect_objective
-					else
-						var/works = 1
-						var/datum/objective/protect/protect_objective = new
-						protect_objective.owner = traitor
-						protect_objective.find_target()
-						for(var/j, j < (traitor.objectives.len + 1), j++)
-							var/compare = istype(traitor.objectives[j],/datum/objective/assassinate)
-							if(compare)
-								var/datum/objective/assassinate/test = traitor.objectives[j]
-								if(test.target == protect_objective.target)
-									works = 0
-									break
-							compare = istype(traitor.objectives[j],/datum/objective/protect)
-							if(compare)
-								var/datum/objective/protect/test = traitor.objectives[j]
-								if(test.target == protect_objective.target)
-									works = 0
-									break
-						if(works)
-							traitor.objectives += protect_objective
-						else
-							i -= 1
-				else
-					if(!locate(/datum/objective/steal) in traitor.objectives)
-						var/datum/objective/steal/steal_objective = new
-						steal_objective.owner = traitor
-						steal_objective.find_target()
-						traitor.objectives += steal_objective
-					else
-						var/works = 1
-						var/datum/objective/steal/steal_objective = new
-						steal_objective.owner = traitor
-						steal_objective.find_target()
-						for(var/j, j < (traitor.objectives.len + 1), j++)
-							var/compare = istype(traitor.objectives[j],/datum/objective/steal)
-							if(compare)
-								var/datum/objective/steal/test = traitor.objectives[j]
-								if(test.target_name == steal_objective.target_name)
-									works = 0
-									break
-						if(works)
-							traitor.objectives += steal_objective
-						else
-							i -= 1
-		if (!(locate(/datum/objective/escape) in traitor.objectives))
-			var/datum/objective/escape/escape_objective = new
-			escape_objective.owner = traitor
-			traitor.objectives += escape_objective
-/*		switch(rand(1,100))
-			if(1 to 90)
-				if (!(locate(/datum/objective/escape) in traitor.objectives))
-					var/datum/objective/escape/escape_objective = new
-					escape_objective.owner = traitor
-					traitor.objectives += escape_objective
-
-			else
-				if (!(locate(/datum/objective/hijack) in traitor.objectives))
-					var/datum/objective/hijack/hijack_objective = new
-					hijack_objective.owner = traitor
-					traitor.objectives += hijack_objective*/
+		traitor.objectives = SelectObjectives(traitor.assigned_role, traitor)
 	return
 
 
@@ -328,6 +233,7 @@
 		loc = "on your head"
 	if (!R)
 		traitor_mob << "Unfortunately, the Syndicate wasn't able to get you an uplink."
+		traitor_mob << "\red <b>ADMINHELP THIS AT ONCE.</b>"
 		. = 0
 	else
 		if (istype(R, /obj/item/device/radio))

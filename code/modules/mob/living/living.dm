@@ -101,6 +101,26 @@
 			return 1
 	return 0
 
+/mob/living/proc/check_contents_for_reagent(A)
+	var/list/L = list()
+	L += src.contents
+	for(var/obj/item/weapon/storage/S in L)
+		L |= S.return_inv()
+	for(var/obj/item/weapon/gift/G in L)
+		L |= G.gift
+		if (istype(G.gift, /obj/item/weapon/storage))
+			L |= G.gift:return_inv()
+	for(var/obj/item/weapon/evidencebag/E in L)
+		L |= E:contents
+	for(var/obj/item/smallDelivery/S in L)
+		L |= S.wrapped
+
+	for(var/obj/item/weapon/reagent_containers/B in L)
+		for(var/datum/reagent/R in B.reagents.reagent_list)
+			if(R.type == A)
+				return 1
+	return 0
+
 
 /mob/living/proc/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0)
 	  return 0 //only carbon liveforms have this proc

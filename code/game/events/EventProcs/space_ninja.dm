@@ -252,7 +252,7 @@ In either case, it's a good idea to spawn the ninja with a semi-random set of ob
 						current_mind = pick(friendly_targets)
 
 					if(current_mind)
-						var/datum/objective/protect/ninja_objective = new
+						var/datum/objective/protection/ninja_objective = new
 						ninja_objective.owner = ninja_mind
 						ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role?1:0))
 						ninja_mind.objectives += ninja_objective
