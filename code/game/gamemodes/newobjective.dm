@@ -239,7 +239,7 @@ datum
 
 			check_completion()
 				if(target && target.current)
-					if(target.current.stat == 2)
+					if(target.current.stat == 2 || istype(get_area(target.current), /area/tdome) || issilicon(target.current) || isbrain(target.current))
 						return 1
 					else
 						return 0

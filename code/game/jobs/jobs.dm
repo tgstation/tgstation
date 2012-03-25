@@ -128,7 +128,7 @@ var/list/nonhuman_positions = list(
 			return 2
 		if("Research Director","Chief Medical Officer","Head of Security","Chief Engineer","Warden")
 			return 3
-		if("Captain","Head of Personnel","Wizard")
+		if("Captain","Head of Personnel","Wizard","MODE")
 			return 4
 		else
-			world << "\"[job]\" NOT GIVEN RANK, REPORT JOBS.DM ERROR TO <del>SKYMARSHAL</del> A CODER"
+			world << "\"[job]\" NOT GIVEN RANK, REPORT JOBS.DM ERROR TO A CODER"

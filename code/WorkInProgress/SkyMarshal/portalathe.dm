@@ -14,6 +14,7 @@
 		var/obj/machinery/light/L = target
 		if(L.status > 1) //Burned or broke
 			L.status = 0
+			L.on = 1
 			L.update()
 			user.visible_message("[user] repairs \the [target] on the spot with their [src]!","You repair the lightbulb!")
 		return

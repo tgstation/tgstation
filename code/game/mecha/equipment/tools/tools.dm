@@ -418,6 +418,8 @@
 		if(href_list["mode"])
 			mode = text2num(href_list["mode"])
 			send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+		if(href_list["detach"])
+			src.detach()
 		return
 
 
