@@ -394,7 +394,7 @@ atom/movable
 					if(src:wear_suit)
 						if(src:wear_suit.flags & SUITSPACE) return
 					if(src:shoes)
-						if(src:shoes.type == /obj/item/clothing/shoes/magboots) return
+						if(src:shoes.type == /obj/item/clothing/shoes/magboots && src:shoes.flags & NOSLIP) return
 			src << "\red You are sucked away by airflow!"
 		airflow_speed = min(round(n),9)
 		var
