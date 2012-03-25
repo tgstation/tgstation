@@ -1,7 +1,6 @@
-
 /obj/item/weapon/tank/jetpack
-	name = "Jetpack (Oxygen)"
-	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas. Use with caution."
+	name = "Jetpack (Empty)"
+	desc = "A tank of compressed gas for use as propulsion in zero-gravity areas. Use with caution."
 	icon_state = "jetpack"
 	w_class = 4.0
 	item_state = "jetpack"
@@ -16,7 +15,6 @@
 		..()
 		src.ion_trail = new /datum/effect/effect/system/ion_trail_follow()
 		src.ion_trail.set_up(src)
-		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 		return
 
 
@@ -40,55 +38,66 @@
 	verb/toggle()
 		set name = "Toggle Jetpack"
 		set category = "Object"
-		src.on = !( src.on )
-		if(src.type == /obj/item/weapon/tank/jetpack/void_jetpack)         //Slight change added by me. i didn't make it an if-elseif because some of you might want to add other types of resprited packs :3 -Agouri
-			src.icon_state = text("voidjetpack[]", src.on)
-		else if(src.type == /obj/item/weapon/tank/jetpack/black_jetpack)
-			src.icon_state = text("black_jetpack[]", src.on)
+		on = !on
+		if(on)
+			icon_state = "[icon_state]-on"
+			item_state = "[item_state]-on"
+			ion_trail.start()
 		else
-			src.icon_state = text("jetpack[]", src.on)
-		if(src.on)
-			src.ion_trail.start()
-		else
-			src.ion_trail.stop()
+			icon_state = initial(icon_state)
+			item_state = initial(item_state)
+			ion_trail.stop()
 		return
 
 
 	proc/allow_thrust(num, mob/living/user as mob)
-		if (!( src.on ))
+		if(!(src.on))
 			return 0
-		if ((num < 0.005 || src.air_contents.total_moles() < num))
+		if((num < 0.005 || src.air_contents.total_moles() < num))
 			src.ion_trail.stop()
 			return 0
 
 		var/datum/gas_mixture/G = src.air_contents.remove(num)
 
-		if (G.oxygen >= 0.005)
+		var/allgases = G.carbon_dioxide + G.nitrogen + G.oxygen + G.toxins	//fuck trace gases	-Pete
+		if(allgases >= 0.005)
 			return 1
-		if (G.toxins > 0.001)
-			if (user)
-				var/d = G.toxins / 2
-				d = min(abs(user.health + 100), d, 25)
-				user.take_organ_damage(0,d)
-			return (G.oxygen >= 0.0025 ? 0.5 : 0)
-		else
-			if (G.oxygen >= 0.0025)
-				return 0.5
-			else
-				return 0
+
 		del(G)
 		return
 
 
-/obj/item/weapon/tank/jetpack/void_jetpack
+/obj/item/weapon/tank/jetpack/void
 	name = "Void Jetpack (Oxygen)"
 	desc = "It works well in a void."
 	icon_state = "jetpack-void"
 	item_state =  "jetpack-void"
 
+	New()
+		..()
+		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+		return
 
-/obj/item/weapon/tank/jetpack/black_jetpack
-	name = "Black Jetpack (Oxygen)"
-	desc = "A black model of jetpacks."
+/obj/item/weapon/tank/jetpack/oxygen
+	name = "Jetpack (Oxygen)"
+	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas. Use with caution."
+	icon_state = "jetpack"
+	item_state = "jetpack"
+
+	New()
+		..()
+		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+		return
+
+/obj/item/weapon/tank/jetpack/carbondioxide
+	name = "Jetpack (Carbon Dioxide)"
+	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals."
 	icon_state = "jetpack-black"
 	item_state =  "jetpack-black"
+
+	New()
+		..()
+		src.ion_trail = new /datum/effect/effect/system/ion_trail_follow()
+		src.ion_trail.set_up(src)
+		src.air_contents.carbon_dioxide = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+		return
