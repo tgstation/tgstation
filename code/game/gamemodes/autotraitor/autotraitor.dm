@@ -15,6 +15,12 @@
 /datum/game_mode/traitor/autotraitor/pre_setup()
 	possible_traitors = get_players_for_role(BE_TRAITOR)
 
+	for(var/datum/mind/player in possible_traitors)
+		for(var/job in restricted_jobs)
+			if(player.assigned_role == job)
+				possible_traitors -= player
+
+
 	for(var/mob/new_player/P in world)
 		if(P.client && P.ready)
 			num_players++
@@ -78,6 +84,11 @@
 				traitorcount += 1
 			if (player.client && player.mind && !player.mind.special_role && player.stat != 2 && (player.be_syndicate & BE_TRAITOR) && !jobban_isbanned(player, "Syndicate"))
 				possible_traitors += player
+		for(var/datum/mind/player in possible_traitors)
+			for(var/job in restricted_jobs)
+				if(player.assigned_role == job)
+					possible_traitors -= player
+
 		//message_admins("Live Players: [playercount]")
 		//message_admins("Live Traitors: [traitorcount]")
 //		message_admins("Potential Traitors:")
