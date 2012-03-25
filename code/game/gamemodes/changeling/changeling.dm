@@ -101,9 +101,9 @@
 
 		if(46 to 90)
 
-			var/datum/objective/steal/steal_objective = new
+			var/list/datum/objective/theft = GenerateTheft(changeling.assigned_role,changeling)
+			var/datum/objective/steal/steal_objective = pick(theft)
 			steal_objective.owner = changeling
-			steal_objective.find_target()
 			changeling.objectives += steal_objective
 
 			if (!(locate(/datum/objective/escape) in changeling.objectives))
@@ -118,9 +118,9 @@
 			kill_objective.find_target()
 			changeling.objectives += kill_objective
 
-			var/datum/objective/steal/steal_objective = new
+			var/list/datum/objective/theft = GenerateTheft(changeling.assigned_role,changeling)
+			var/datum/objective/steal/steal_objective = pick(theft)
 			steal_objective.owner = changeling
-			steal_objective.find_target()
 			changeling.objectives += steal_objective
 
 			if (!(locate(/datum/objective/survive) in changeling.objectives))

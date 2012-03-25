@@ -862,7 +862,6 @@ datum/preferences
 
 		character.age = age
 		character.dna.b_type = b_type
-		character.be_syndicate = be_special
 
 		character.r_eyes = r_eyes
 		character.g_eyes = g_eyes
@@ -906,6 +905,7 @@ datum/preferences
 					character.client.ooccolor = ooccolor
 					character.client.be_alien = be_special&BE_ALIEN
 					character.client.be_pai = be_special&BE_PAI
+					character.client.be_syndicate = be_special
 
 	proc/copydisabilities(mob/living/carbon/human/character)
 		if(disabilities & 1)

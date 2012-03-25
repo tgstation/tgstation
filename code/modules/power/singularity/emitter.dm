@@ -109,7 +109,7 @@
 			else // Any other
 				A.yo = -20
 				A.xo = 0
-			A.process()
+			A.fired()
 
 
 	attackby(obj/item/W, mob/user)

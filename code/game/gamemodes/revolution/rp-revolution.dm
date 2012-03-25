@@ -183,7 +183,7 @@
 
 	for(var/mob/living/carbon/human/player in world)
 		if(player.client)
-			if(player.be_syndicate & BE_REV)
+			if(player.client.be_syndicate & BE_REV)
 				candidates += player.mind
 
 	if(candidates.len < 1)

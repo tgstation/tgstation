@@ -330,7 +330,7 @@ datum/mind
 							possible_targets += possible_target.current
 
 					var/mob/def_target = null
-					var/objective_list[] = list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain, /datum/objective/decapitate)
+					var/objective_list[] = list(/datum/objective/assassinate, /datum/objective/protection, /datum/objective/debrain, /datum/objective/decapitate)
 					if (objective&&(objective.type in objective_list) && objective:target)
 						def_target = objective:target.current
 
@@ -367,19 +367,13 @@ datum/mind
 					new_objective.owner = src
 
 				if ("steal")
-					if (!istype(objective, /datum/objective/steal))
-						new_objective = new /datum/objective/steal
-						new_objective.owner = src
-					else
-						new_objective = objective
-					var/datum/objective/steal/steal = new_objective
-					if (!steal.select_target())
-						return
+					new_objective = pick(GenerateTheft(assigned_role,src))
+					new_objective.owner = src
 
 				if("download","capture","absorb")
 					var/def_num
 					if(objective&&objective.type==text2path("/datum/objective/[new_obj_type]"))
-						def_num = objective.target_amount
+						def_num = objective:target_amount
 
 					var/target_number = input("Input target number:", "Objective", def_num) as num|null
 					if (isnull(target_number))//Ordinarily, you wouldn't need isnull. In this case, the value may already exist.
@@ -396,7 +390,7 @@ datum/mind
 							new_objective = new /datum/objective/absorb
 							new_objective.explanation_text = "Absorb [target_number] compatible genomes."
 					new_objective.owner = src
-					new_objective.target_amount = target_number
+					new_objective:target_amount = target_number
 
 				if ("custom")
 					var/expl = input("Custom objective:", "Objective", objective ? objective.explanation_text : "") as text|null

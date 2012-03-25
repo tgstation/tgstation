@@ -168,7 +168,7 @@
 	var/logged_in = 0
 
 	var/underwear = 1//Human
-	var/be_syndicate = 0 //This really should be a client variable.  EDIT: Hijacked for my own nefarious purposes!  --SkyMarshal
+//	var/be_syndicate = 0 //This really should be a client variable.  EDIT: Hijacked for my own nefarious purposes!  --SkyMarshal
 	var/be_random_name = 0
 	var/const/blindness = 1//Carbon
 	var/const/deafness = 2//Carbon

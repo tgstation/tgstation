@@ -782,9 +782,6 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 					ok = (check_1 || check_2)
 
-
-					if(check_1 || check_2)
-						ok = 1
 						// ------- YOU CAN REACH THE ITEM THROUGH AT LEAST ONE OF THE TWO DIRECTIONS. GOOD. -------
 
 					/*
@@ -914,7 +911,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 	return
 
 
-proc/CanReachThrough(turf/srcturf, turf/targetturf, atom/target)
+/proc/CanReachThrough(turf/srcturf, turf/targetturf, atom/target)
 	var/obj/item/weapon/dummy/D = new /obj/item/weapon/dummy( srcturf )
 
 	if(targetturf.density && targetturf != get_turf(target))
@@ -929,7 +926,7 @@ proc/CanReachThrough(turf/srcturf, turf/targetturf, atom/target)
 
 	//Next, check objects to block entry that are on the border
 	for(var/obj/border_obstacle in targetturf)
-		if((border_obstacle.flags & ON_BORDER) && (src != border_obstacle))
+		if((border_obstacle.flags & ON_BORDER) && (target != border_obstacle))
 			if(!border_obstacle.CanPass(D, srcturf, 1, 0))
 				del D
 				return 0

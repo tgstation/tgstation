@@ -265,7 +265,8 @@
 		job_master.EquipRank(character, rank, 1)
 		EquipCustomItems(character)
 		character.loc = pick(latejoin)
-		character.be_syndicate = src.preferences.be_special
+		if(character.client)
+			character.client.be_syndicate = preferences.be_special
 		ticker.mode.latespawn(character)
 		AnnounceArrival(character, rank)
 
