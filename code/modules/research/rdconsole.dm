@@ -82,6 +82,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						return_name = "Uranium"
 					if("diamond")
 						return_name = "Diamond"
+					if("adamantine")
+						return_name = "adamantine"
 					if("clown")
 						return_name = "Bananium"
 			else
@@ -367,6 +369,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 									linked_lathe.uranium_amount = max(0, (linked_lathe.uranium_amount-being_built.materials[M]))
 								if("$diamond")
 									linked_lathe.diamond_amount = max(0, (linked_lathe.diamond_amount-being_built.materials[M]))
+								if("$adamantine")
+									linked_lathe.adamantine_amount = max(0, (linked_lathe.adamantine_amount-being_built.materials[M]))
 								if("$clown")
 									linked_lathe.clown_amount = max(0, (linked_lathe.clown_amount-being_built.materials[M]))
 								else
@@ -457,6 +461,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if("diamond")
 					type = /obj/item/stack/sheet/diamond
 					res_amount = "diamond_amount"
+				if("adamantine")
+					type = /obj/item/stack/sheet/adamantine
+					res_amount = "adamantine_amount"
 				if("clown")
 					type = /obj/item/stack/sheet/clown
 					res_amount = "clown_amount"
@@ -468,7 +475,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					linked_lathe.vars[res_amount] = max(0, (linked_lathe.vars[res_amount]-sheet.amount * sheet.perunit))
 				else
 					del sheet
-		else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the protolathe to eject a sheet of material
+		else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the circuit imprinter to eject a sheet of material
 			var/desired_num_sheets = text2num(href_list["imprinter_ejectsheet_amt"])
 			var/res_amount, type
 			switch(href_list["imprinter_ejectsheet"])
@@ -725,6 +732,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 									if(D.materials[M] > linked_lathe.uranium_amount) check_materials = 0
 								if("$diamond")
 									if(D.materials[M] > linked_lathe.diamond_amount) check_materials = 0
+								if("$adamantine")
+									if(D.materials[M] > linked_lathe.adamantine_amount) check_materials = 0
 								if("$clown")
 									if(D.materials[M] > linked_lathe.clown_amount) check_materials = 0
 						else if (!linked_lathe.reagents.has_reagent(M, D.materials[M]))
@@ -741,23 +750,23 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				//Metal
 				dat += "* [linked_lathe.m_amount] cm<sup>3</sup> of Metal || "
 				dat += "Eject: "
-				if(linked_lathe.m_amount > 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
-				if(linked_lathe.m_amount > 18750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=5'>(5 Sheets)</A> "
-				if(linked_lathe.m_amount > 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=50'>(Max Sheets)</A>"
+				if(linked_lathe.m_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
+				if(linked_lathe.m_amount >= 18750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=5'>(5 Sheets)</A> "
+				if(linked_lathe.m_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=metal;lathe_ejectsheet_amt=50'>(Max Sheets)</A>"
 				dat += "<BR>"
 				//Glass
 				dat += "* [linked_lathe.g_amount] cm<sup>3</sup> of Glass || "
 				dat += "Eject: "
-				if(linked_lathe.g_amount > 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=glass;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
-				if(linked_lathe.g_amount > 18750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=glass;lathe_ejectsheet_amt=5'>(5 Sheets)</A> "
-				if(linked_lathe.g_amount > 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=glass;lathe_ejectsheet_amt=50'>(Max Sheets)</A>"
+				if(linked_lathe.g_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=glass;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
+				if(linked_lathe.g_amount >= 18750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=glass;lathe_ejectsheet_amt=5'>(5 Sheets)</A> "
+				if(linked_lathe.g_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=glass;lathe_ejectsheet_amt=50'>(Max Sheets)</A>"
 				dat += "<BR>"
 				//Gold
 				dat += "* [linked_lathe.gold_amount] cm<sup>3</sup> of Gold || "
 				dat += "Eject: "
-				if(linked_lathe.gold_amount > 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=gold;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
-				if(linked_lathe.gold_amount > 18750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=gold;lathe_ejectsheet_amt=5'>(5 Sheets)</A> "
-				if(linked_lathe.gold_amount > 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=gold;lathe_ejectsheet_amt=50'>(Max Sheets)</A>"
+				if(linked_lathe.gold_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=gold;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
+				if(linked_lathe.gold_amount >= 18750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=gold;lathe_ejectsheet_amt=5'>(5 Sheets)</A> "
+				if(linked_lathe.gold_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=gold;lathe_ejectsheet_amt=50'>(Max Sheets)</A>"
 				dat += "<BR>"
 				//Silver
 				dat += "* [linked_lathe.silver_amount] cm<sup>3</sup> of Silver || "
@@ -786,6 +795,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if(linked_lathe.diamond_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=diamond;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
 				if(linked_lathe.diamond_amount >= 18750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=diamond;lathe_ejectsheet_amt=5'>(5 Sheets)</A> "
 				if(linked_lathe.diamond_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=diamond;lathe_ejectsheet_amt=50'>(Max Sheets)</A>"
+				dat += "<BR>"
+				//Adamantine - Is this even possible to get?
+				dat += "* [linked_lathe.adamantine_amount] cm<sup>3</sup> of Adamantine || "
+				dat += "Eject: "
+				if(linked_lathe.adamantine_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=adamantine;lathe_ejectsheet_amt=1'>(1 Sheet)</A> "
+				if(linked_lathe.adamantine_amount >= 18750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=adamantine;lathe_ejectsheet_amt=5'>(5 Sheets)</A> "
+				if(linked_lathe.adamantine_amount >= 3750) dat += "<A href='?src=\ref[src];lathe_ejectsheet=adamantine;lathe_ejectsheet_amt=50'>(Max Sheets)</A>"
 				dat += "<BR>"
 				//Bananium
 				dat += "* [linked_lathe.clown_amount] cm<sup>3</sup> of Bananium || "
@@ -854,23 +870,23 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				//Glass
 				dat += "* [linked_imprinter.g_amount] cm<sup>3</sup> of Glass || "
 				dat += "Eject: "
-				if(linked_imprinter.g_amount > 3750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=glass;imprinter_ejectsheet_amt=1'>(1 Sheet)</A> "
-				if(linked_imprinter.g_amount > 18750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=glass;imprinter_ejectsheet_amt=5'>(5 Sheets)</A> "
-				if(linked_imprinter.g_amount > 3750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=glass;imprinter_ejectsheet_amt=50'>(Max Sheets)</A>"
+				if(linked_imprinter.g_amount >= 3750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=glass;imprinter_ejectsheet_amt=1'>(1 Sheet)</A> "
+				if(linked_imprinter.g_amount >= 18750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=glass;imprinter_ejectsheet_amt=5'>(5 Sheets)</A> "
+				if(linked_imprinter.g_amount >= 3750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=glass;imprinter_ejectsheet_amt=50'>(Max Sheets)</A>"
 				dat += "<BR>"
 				//Gold
 				dat += "* [linked_imprinter.gold_amount] cm<sup>3</sup> of Gold || "
 				dat += "Eject: "
-				if(linked_imprinter.gold_amount > 3750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=gold;imprinter_ejectsheet_amt=1'>(1 Sheet)</A> "
-				if(linked_imprinter.gold_amount > 18750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=gold;imprinter_ejectsheet_amt=5'>(5 Sheets)</A> "
-				if(linked_imprinter.gold_amount > 3750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=gold;imprinter_ejectsheet_amt=50'>(Max Sheets)</A>"
+				if(linked_imprinter.gold_amount >= 3750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=gold;imprinter_ejectsheet_amt=1'>(1 Sheet)</A> "
+				if(linked_imprinter.gold_amount >= 18750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=gold;imprinter_ejectsheet_amt=5'>(5 Sheets)</A> "
+				if(linked_imprinter.gold_amount >= 3750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=gold;imprinter_ejectsheet_amt=50'>(Max Sheets)</A>"
 				dat += "<BR>"
 				//Diamond
 				dat += "* [linked_imprinter.diamond_amount] cm<sup>3</sup> of Diamond || "
 				dat += "Eject: "
-				if(linked_imprinter.diamond_amount > 3750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=diamond;imprinter_ejectsheet_amt=1'>(1 Sheet)</A> "
-				if(linked_imprinter.diamond_amount > 18750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=diamond;imprinter_ejectsheet_amt=5'>(5 Sheets)</A> "
-				if(linked_imprinter.diamond_amount > 3750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=diamond;imprinter_ejectsheet_amt=50'>(Max Sheets)</A>"
+				if(linked_imprinter.diamond_amount >= 3750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=diamond;imprinter_ejectsheet_amt=1'>(1 Sheet)</A> "
+				if(linked_imprinter.diamond_amount >= 18750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=diamond;imprinter_ejectsheet_amt=5'>(5 Sheets)</A> "
+				if(linked_imprinter.diamond_amount >= 3750) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=diamond;imprinter_ejectsheet_amt=50'>(Max Sheets)</A>"
 
 		user << browse("<TITLE>Research and Development Console</TITLE><HR>[dat]", "window=rdconsole;size=575x400")
 		onclose(user, "rdconsole")

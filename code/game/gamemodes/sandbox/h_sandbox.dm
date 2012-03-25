@@ -84,7 +84,7 @@ datum/hSB
 						P.back.loc = P.loc
 						P.back.layer = initial(P.back.layer)
 						P.back = null
-					P.back = new/obj/item/weapon/tank/jetpack(P)
+					P.back = new/obj/item/weapon/tank/jetpack/oxygen(P)
 					P.back.layer = 20
 					P.internal = P.back
 				if("hsbmetal")

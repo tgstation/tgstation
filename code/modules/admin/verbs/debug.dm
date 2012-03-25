@@ -504,7 +504,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/clothing/under/color/grey(M), M.slot_w_uniform)
 			M.equip_if_possible(new /obj/item/clothing/suit/space(M), M.slot_wear_suit)
 			M.equip_if_possible(new /obj/item/clothing/head/helmet/space(M), M.slot_head)
-			var /obj/item/weapon/tank/jetpack/J = new /obj/item/weapon/tank/jetpack(M)
+			var /obj/item/weapon/tank/jetpack/oxygen/J = new /obj/item/weapon/tank/jetpack/oxygen(M)
 			M.equip_if_possible(J, M.slot_back)
 			J.toggle()
 			M.equip_if_possible(new /obj/item/clothing/mask/breath(M), M.slot_wear_mask)

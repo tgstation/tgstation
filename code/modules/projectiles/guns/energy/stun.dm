@@ -9,7 +9,14 @@
 	cell_type = "/obj/item/weapon/cell/crap"
 	force = 10
 
-
+/*	special_check(var/mob/living/carbon/human/M)
+		if(ishuman(M))
+			for(var/obj/item/weapon/implant/I in M)
+				if(I.implanted)
+					if(istype(I,/obj/item/weapon/implant/loyalty))
+						return 1
+			M << "\red The gun refuses to fire!"
+		return 0*/// Can be used to restrict weapon use to implants. - Erthilo
 
 /obj/item/weapon/gun/energy/taser/cyborg/load_into_chamber()//TOOD: change this over to the slowly recharge other cell
 	if(in_chamber)

@@ -322,6 +322,12 @@ THERMAL GLASSES
 	else if(src.icon_state == "labcoat_cmo")
 		src.icon_state = "labcoat_cmo_open"
 		usr << "You unbutton the labcoat."
+	else if(src.icon_state == "labcoat_cmoalt_open")
+		src.icon_state = "labcoat_cmoalt"
+		usr << "You button up the labcoat."
+	else if(src.icon_state == "labcoat_cmoalt")
+		src.icon_state = "labcoat_cmoalt_open"
+		usr << "You unbutton the labcoat."
 	else if(src.icon_state == "labcoat_gen_open")
 		src.icon_state = "labcoat_gen"
 		usr << "You button up the labcoat."

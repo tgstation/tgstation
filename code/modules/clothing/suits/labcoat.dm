@@ -15,6 +15,11 @@
 	icon_state = "labcoat_cmo_open"
 	item_state = "labcoat_cmo"
 
+/obj/item/clothing/suit/storage/labcoat/cmoalt
+	name = "chief medical officer's labcoat"
+	desc = "With command blue highlights."
+	icon_state = "labcoat_cmoalt_open"
+
 /obj/item/clothing/suit/storage/labcoat/mad
 	name = "The Mad's labcoat"
 	desc = "It makes you look capable of konking someone on the noggin and shooting them into space."

@@ -447,8 +447,8 @@ datum
 						M.slurring = 0
 						M.confused = 0
 						M.jitteriness = 0
-					if(125 to INFINITY)
-						M:adjustToxLoss(0.1)
+//					if(125 to INFINITY)
+//						M:adjustToxLoss(0.1)
 				..()
 				return
 
@@ -876,9 +876,11 @@ datum
 				data++
 				M.mutations = 0
 				M.disabilities = 0
-				switch(data)
-					if(100 to INFINITY)
-						M:adjustToxLoss(0.2)
+				if(volume > REAGENTS_OVERDOSE)
+					M:adjustToxLoss(1)
+//				switch(data)
+//				if(100 to INFINITY)
+//					M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -1186,8 +1188,10 @@ datum
 					M.bodytemperature = max(310, M.bodytemperature-20)
 				else if(M.bodytemperature < 311)
 					M.bodytemperature = min(310, M.bodytemperature+20)
-				if(data >= 100)
-					M:adjustToxLoss(0.2)
+				if(volume > REAGENTS_OVERDOSE)
+					M:adjustToxLoss(1)
+//				if(data >= 100)
+//					M:adjustToxLoss(0.2) //This takes like 5 units now.
 				..()
 				return
 
@@ -1206,8 +1210,10 @@ datum
 				if(!M.confused) M.confused = 1
 				M.confused = max(M.confused, 20)
 				holder.remove_reagent(src.id, 0.2)
-				if(data >= 50)
-					M:adjustToxLoss(0.2)
+				if(volume > REAGENTS_OVERDOSE)
+					M:adjustToxLoss(1)
+//				if(data >= 50)
+//					M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -1245,8 +1251,8 @@ datum
 				M:heal_organ_damage(0,1)
 				if(volume > REAGENTS_OVERDOSE)
 					M:adjustToxLoss(1)
-				if(data >= 125)
-					M:adjustToxLoss(0.1)
+//				if(data >= 125)
+//					M:adjustToxLoss(0.1)
 				..()
 				return
 
@@ -1266,8 +1272,8 @@ datum
 				M:heal_organ_damage(0,3)
 				if(volume > REAGENTS_OVERDOSE)
 					M:adjustToxLoss(1)
-				if(data >= 125)
-					M:adjustToxLoss(0.2)
+//				if(data >= 125)
+//					M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -1289,8 +1295,8 @@ datum
 					holder.remove_reagent("lexorin", 2)
 				if(volume > REAGENTS_OVERDOSE)
 					M:adjustToxLoss(1)
-				if(data >= 125)
-					M:adjustToxLoss(0.2)
+//				if(data >= 125)
+//					M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -1312,8 +1318,8 @@ datum
 					holder.remove_reagent("lexorin", 2)
 				if(volume > REAGENTS_OVERDOSE)
 					M:adjustToxLoss(1)
-				if(data >= 50)
-					M:adjustToxLoss(0.2)
+//				if(data >= 50)
+//					M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -1448,8 +1454,8 @@ datum
 				if(prob(10)) M:emote("drool")
 				if(volume > REAGENTS_OVERDOSE)
 					M:adjustToxLoss(1)
-				if(data >= 50)
-					M:adjustToxLoss(0.4)
+//				if(data >= 50)
+//					M:adjustToxLoss(0.4)
 				..()
 				return
 
@@ -1465,8 +1471,8 @@ datum
 				M:radiation = max(M:radiation-3,0)
 				if(volume > REAGENTS_OVERDOSE)
 					M:adjustToxLoss(1)
-				if(data >= 50)
-					M:adjustToxLoss(0.2)
+//				if(data >= 50)
+//					M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -1490,8 +1496,8 @@ datum
 				..()
 				if(volume > REAGENTS_OVERDOSE)
 					M:adjustToxLoss(1)
-				if(data >= 50)
-					M:adjustToxLoss(0.3)
+//				if(data >= 50)
+//					M:adjustToxLoss(0.3)
 				return
 
 		alkysine
@@ -1526,8 +1532,8 @@ datum
 				M:disabilities &= ~1
 				if(volume > REAGENTS_OVERDOSE)
 					M:adjustToxLoss(1)
-				if(data >= 100)
-					M:adjustToxLoss(0.2)
+//				if(data >= 100)
+//					M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -1547,8 +1553,8 @@ datum
 				M:heal_organ_damage(2,0)
 				if(volume > REAGENTS_OVERDOSE)
 					M:adjustToxLoss(1)
-				if(data >= 125)
-					M:adjustToxLoss(0.2)
+//				if(data >= 125)
+//					M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -1567,8 +1573,8 @@ datum
 				holder.remove_reagent(src.id, 0.2)
 				if(volume > REAGENTS_OVERDOSE)
 					M:adjustToxLoss(1)
-				if(data >= 50)
-					M:adjustToxLoss(0.2)
+//				if(data >= 50)
+//					M:adjustToxLoss(0.2)
 				..()
 				return
 
@@ -1621,8 +1627,8 @@ datum
 				holder.remove_reagent(src.id, 0.1)
 				if(volume > REAGENTS_OVERDOSE)
 					M:adjustToxLoss(1)
-				if(data >= 100)
-					M:adjustToxLoss(0.1)
+//				if(data >= 100)
+//					M:adjustToxLoss(0.1)
 				return
 
 		carpotoxin
@@ -1687,8 +1693,10 @@ datum
 				if(!data) data = 1
 				data++
 				M:hallucination += 5
-				if(data >= 100)
-					M:adjustToxLoss(0.1)
+				if(volume > REAGENTS_OVERDOSE)
+					M:adjustToxLoss(1)
+//				if(data >= 100)
+//					M:adjustToxLoss(0.1)
 				..()
 				return
 

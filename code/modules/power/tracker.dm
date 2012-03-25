@@ -16,7 +16,8 @@
 
 
 	// called by datum/sun/calc_position() as sun's angle changes
-	proc/set_angle(angle)
+	proc/set_angle(var/angle)
+		sun_angle = angle
 
 		//set icon dir to show sun illumination
 		dir = turn(NORTH, -angle - 22.5)	// 22.5 deg bias ensures, e.g. 67.5-112.5 is EAST
