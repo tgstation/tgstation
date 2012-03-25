@@ -43,7 +43,23 @@
 			var_value = input("Enter type:","Type") as null|anything in typesof(/obj,/mob,/area,/turf)
 
 		if("reference")
-			var_value = input("Select reference:","Reference") as null|mob|obj|turf|area in world
+			switch(alert("Would you like to enter a specific object, or search for it from the world?","Choose!","Specifc UID (Hexadecimal number)", "Search"))
+				if("Specifc UID (Hexadecimal number)")
+					var/UID = input("Type in UID, without the leading 0x","Type in UID") as text|null
+					if(!UID) return
+					if(length(UID) != 7)
+						usr << "ERROR.  UID must be 7 digits"
+					var/temp_variable = locate("\[0x[UID]\]")
+					if(!temp_variable)
+						usr << "ERROR.  Could not locate referenced object."
+						return
+					switch(alert("You have chosen [temp_variable], in [get_area(temp_variable)].  Are you sure?","You sure?","Yes","NONOCANCEL!"))
+						if("Yes")
+							var_value = temp_variable
+						if("NONOCANCEL!")
+							return
+				if("Search")
+					var_value = input("Select reference:","Reference") as null|mob|obj|turf|area in world
 
 		if("mob reference")
 			var_value = input("Select reference:","Reference") as null|mob in world
@@ -92,7 +108,23 @@
 			var_value = input("Enter type:","Type") in typesof(/obj,/mob,/area,/turf)
 
 		if("reference")
-			var_value = input("Select reference:","Reference") as mob|obj|turf|area in world
+			switch(alert("Would you like to enter a specific object, or search for it from the world?","Choose!","Specifc UID (Hexadecimal number)", "Search"))
+				if("Specifc UID (Hexadecimal number)")
+					var/UID = input("Type in UID, without the leading 0x","Type in UID") as text|null
+					if(!UID) return
+					if(length(UID) != 7)
+						usr << "ERROR.  UID must be 7 digits"
+					var/temp_variable = locate("\[0x[UID]\]")
+					if(!temp_variable)
+						usr << "ERROR.  Could not locate referenced object."
+						return
+					switch(alert("You have chosen [temp_variable], in [get_area(temp_variable)].  Are you sure?","You sure?","Yes","NONOCANCEL!"))
+						if("Yes")
+							var_value = temp_variable
+						if("NONOCANCEL!")
+							return
+				if("Search")
+					var_value = input("Select reference:","Reference") as null|mob|obj|turf|area in world
 
 		if("mob reference")
 			var_value = input("Select reference:","Reference") as mob in world
@@ -242,8 +274,23 @@
 				in typesof(/obj,/mob,/area,/turf)
 
 		if("reference")
-			variable = input("Select reference:","Reference",\
-				variable) as mob|obj|turf|area in world
+			switch(alert("Would you like to enter a specific object, or search for it from the world?","Choose!","Specifc UID (Hexadecimal number)", "Search"))
+				if("Specifc UID (Hexadecimal number)")
+					var/UID = input("Type in UID, without the leading 0x","Type in UID") as text|null
+					if(!UID) return
+					if(length(UID) != 7)
+						usr << "ERROR.  UID must be 7 digits"
+					var/temp_variable = locate("\[0x[UID]\]")
+					if(!temp_variable)
+						usr << "ERROR.  Could not locate referenced object."
+						return
+					switch(alert("You have chosen [temp_variable], in [get_area(temp_variable)].  Are you sure?","You sure?","Yes","NONOCANCEL!"))
+						if("Yes")
+							variable = temp_variable
+						if("NONOCANCEL!")
+							return
+				if("Search")
+					variable = input("Select reference:","Reference") as null|mob|obj|turf|area in world
 
 		if("mob reference")
 			variable = input("Select reference:","Reference",\
@@ -464,7 +511,24 @@
 			O.vars[variable] = var_new
 
 		if("reference")
-			var/var_new = input("Select reference:","Reference",O.vars[variable]) as null|mob|obj|turf|area in world
+			var/var_new
+			switch(alert("Would you like to enter a specific object, or search for it from the world?","Choose!","Specifc UID (Hexadecimal number)", "Search"))
+				if("Specifc UID (Hexadecimal number)")
+					var/UID = input("Type in UID, without the leading 0x","Type in UID") as text|null
+					if(!UID) return
+					if(length(UID) != 7)
+						usr << "ERROR.  UID must be 7 digits"
+					var/temp_variable = locate("\[0x[UID]\]")
+					if(!temp_variable)
+						usr << "ERROR.  Could not locate referenced object."
+						return
+					switch(alert("You have chosen [temp_variable], in [get_area(temp_variable)].  Are you sure?","You sure?","Yes","NONOCANCEL!"))
+						if("Yes")
+							var_new = temp_variable
+						if("NONOCANCEL!")
+							return
+				if("Search")
+					var_new = input("Select reference:","Reference") as null|mob|obj|turf|area in world
 			if(var_new==null) return
 			O.vars[variable] = var_new
 
