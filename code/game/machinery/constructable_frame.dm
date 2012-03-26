@@ -348,7 +348,7 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/subspace/filter" = 1)
 
 /obj/item/weapon/circuitboard/telecomms/broadcaster
-	name = "Circuit Board (Bus Mainframe)"
+	name = "Circuit Board (Subspace Broadcaster)"
 	build_path = "/obj/machinery/telecomms/broadcaster"
 	board_type = "machine"
 	origin_tech = "programming=4;engineering=4;bluespace=2"
@@ -361,3 +361,7 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/subspace/transmitter" = 1,
 							"/obj/item/weapon/stock_parts/subspace/amplifier" = 1,
 							"/obj/item/weapon/stock_parts/micro_laser/high" = 4)
+
+
+
+

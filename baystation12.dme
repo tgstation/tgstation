@@ -989,6 +989,7 @@
 #include "code\modules\mob\organ\organ_external.dm"
 #include "code\modules\mob\organ\organ_internal.dm"
 #include "code\modules\mob\organ\pain.dm"
+#include "code\modules\mob\simple_animal\shade.dm"
 #include "code\modules\power\apc.dm"
 #include "code\modules\power\cable.dm"
 #include "code\modules\power\cell.dm"
