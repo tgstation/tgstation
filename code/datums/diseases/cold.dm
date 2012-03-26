@@ -14,11 +14,13 @@
 	..()
 	switch(stage)
 		if(2)
-			if(affected_mob.sleeping && prob(40))
+/*
+			if(affected_mob.sleeping && prob(40))  //removed until sleeping is fixed
 				affected_mob << "\blue You feel better."
 				cure()
 				return
-			if(affected_mob.lying && prob(10))
+*/
+			if(affected_mob.lying && prob(40))  //changed FROM prob(10) until sleeping is fixed
 				affected_mob << "\blue You feel better."
 				cure()
 				return
@@ -35,11 +37,13 @@
 			if(prob(1))
 				affected_mob << "\red Mucus runs down the back of your throat."
 		if(3)
-			if(affected_mob.sleeping && prob(25))
+/*
+			if(affected_mob.sleeping && prob(25))  //removed until sleeping is fixed
 				affected_mob << "\blue You feel better."
 				cure()
 				return
-			if(affected_mob.lying && prob(5))
+*/
+			if(affected_mob.lying && prob(25))  //changed FROM prob(5) until sleeping is fixed
 				affected_mob << "\blue You feel better."
 				cure()
 				return
