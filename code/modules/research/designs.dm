@@ -538,7 +538,7 @@ datum
 			build_path = "/obj/item/weapon/circuitboard/telecomms/receiver"
 
 		telecomms_bus
-			name = "Circuit Design (Telecom Bus Mainframe)"
+			name = "Circuit Design (Bus Mainframe)"
 			desc = "Allows for the construction of Telecommunications Bus Mainframes."
 			id = "s-bus"
 			req_tech = list("programming" = 4, "engineering" = 4)
@@ -547,7 +547,7 @@ datum
 			build_path = "/obj/item/weapon/circuitboard/telecomms/bus"
 
 		telecomms_processor
-			name = "Circuit Design (Telecom Processor Unit)"
+			name = "Circuit Design (Processor Unit)"
 			desc = "Allows for the construction of Telecommunications Processor equipment."
 			id = "s-processor"
 			req_tech = list("programming" = 4, "engineering" = 4)
