@@ -258,6 +258,9 @@
 					O << "The screen bursts into static."
 		..()
 
+/obj/machinery/camera/emp_proof/emp_act(severity)
+	return
+
 /obj/machinery/camera/ex_act(severity)
 	if(src.invuln)
 		return
