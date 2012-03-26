@@ -395,6 +395,10 @@ var/global/datum/tension/tension_master
 							return
 
 		sleep(300)
+
+		for(var/mob/dead/observer/G in candidates)
+			if(!G.client || !G.key)
+				candidates.Remove(G)
 		spawn(0)
 			if(candidates.len)
 				while((!theghost || !theghost.client) && candidates.len)
@@ -467,6 +471,11 @@ var/global/datum/tension/tension_master
 							return
 
 		sleep(300)
+
+		for(var/mob/dead/observer/G in candidates)
+			if(!G.client || !G.key)
+				candidates.Remove(G)
+
 		spawn(0)
 			if(candidates.len)
 				var/numagents = 5
@@ -561,7 +570,20 @@ var/global/datum/tension/tension_master
 
 	//Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
 
+
+		for(var/obj/debug/debugger/B in world)
+			B.list1 = list()
+			B.list2 = list()
+			B.list3 = list()
+			B.list4 = list()
+
+
+
 		for(var/mob/dead/observer/G in world)
+			for(var/obj/debug/debugger/B in world)
+				B.list1 += G
+				B.list2 += G.key
+
 			spawn(0)
 				switch(alert(G,"Do you wish to be considered for an elite syndicate strike team being sent in?","Please answer in 30 seconds!","Yes","No"))
 					if("Yes")
@@ -569,17 +591,22 @@ var/global/datum/tension/tension_master
 							return
 						candidates += G
 						for(var/obj/debug/debugger/B in world)
-							B.list1 += G
-							B.list2 += G.key
+							B.list3 += G
+							B.list4 += G.key
 					if("No")
 						return
 		sleep(300)
+
+		for(var/mob/dead/observer/G in candidates)
+			if(!G.client || !G.key)
+				candidates.Remove(G)
+
 		if(candidates.len)
 			for(var/obj/debug/debugger/B in world)
 				B.var1 = candidates.len
-				B.list3 = candidates.Copy()
+				B.list5 = candidates.Copy()
 				for(var/mob/dead/observer/G in candidates)
-					B.list4 = G.key
+					B.list6 += G.key
 			var/numagents = 6
 
 			for(var/obj/debug/debugger/B in world)
@@ -799,5 +826,5 @@ var/global/datum/tension/tension_master
 		if(!(new_syndicate_commando.mind in ticker.mode.traitors))//If they weren't already an extra traitor.
 			ticker.mode.traitors += new_syndicate_commando.mind//Adds them to current traitor list. Which is really the extra antagonist list.
 		new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
-		del(spawn_location)
+		//del(spawn_location)  // Commenting this out for multiple commando teams.
 		return new_syndicate_commando
