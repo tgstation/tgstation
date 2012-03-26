@@ -225,7 +225,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 /obj/item/weapon/implant/explosive
 	name = "explosive"
 	desc = "And boom goes the weasel."
-	var/phrase = "die"
+	var/phrase = "supercalifragilisticexpialidocious"
 
 
 	get_data()
