@@ -648,7 +648,7 @@
 
 			//Account for massive pressure differences.  Done by Polymorph
 			var/pressure = environment.return_pressure()
-			if(!istype(wear_suit, /obj/item/clothing/suit/space)&&!istype(wear_suit, /obj/item/clothing/suit/armor/captain))
+			if(!istype(wear_suit, /obj/item/clothing/suit/space))
 					/*if(pressure < 20)
 						if(prob(25))
 							src << "You feel the splittle on your lips and the fluid on your eyes boiling away, the capillteries in your skin breaking."
