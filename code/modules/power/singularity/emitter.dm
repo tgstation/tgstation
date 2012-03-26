@@ -87,7 +87,7 @@
 				src.shot_number = 0
 			use_power(1000)
 			var/obj/item/projectile/beam/A = new /obj/item/projectile/beam( src.loc )
-			A.icon_state = "u_laser"
+			A.icon_state = "emitter"
 			playsound(src.loc, 'emitter.ogg', 25, 1)
 			if(prob(35))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
