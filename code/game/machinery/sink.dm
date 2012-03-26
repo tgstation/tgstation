@@ -58,6 +58,13 @@
 			user << "\red Someone's already washing something here."
 			return
 
+		if (istype(O, /obj/item/weapon/reagent_containers/glass/bucket))
+			O:reagents.add_reagent("water", 70)
+			user.visible_message( \
+				"\blue [user] fills the [O] using the [src].", \
+				"\blue You fill the [O] using the [src].")
+			return
+
 		if (istype(O, /obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/food/drinks))
 			O:reagents.add_reagent("water", 10)
 			user.visible_message( \
