@@ -121,7 +121,7 @@
 			ear_damage += 15
 			ear_deaf += 60
 
-	bruteloss += b_loss
+	adjustBruteLoss(b_loss)
 	adjustFireLoss(f_loss)
 
 	updatehealth()
@@ -224,7 +224,7 @@
 		if ((M.client && !( M.blinded )))
 			M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (health > 0)
-		bruteloss += (istype(O, /obj/effect/meteor/small) ? 10 : 25)
+		adjustFireLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25))
 		adjustFireLoss(30)
 
 		updatehealth()
@@ -472,7 +472,7 @@
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
-			bruteloss  += rand(1, 3)
+			adjustBruteLoss(rand(1, 3))
 
 			updatehealth()
 	return
@@ -501,7 +501,7 @@
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[M.name] has bit [src]!</B>"), 1)
-				bruteloss  += rand(1, 3)
+				adjustBruteLoss(rand(1, 3))
 				updatehealth()
 	return
 
@@ -526,7 +526,7 @@
 		else
 			damage = rand(5, 35)
 
-		bruteloss += damage
+		adjustBruteLoss(damage)
 
 		if(M.powerlevel > 0)
 			var/stunprob = 10
@@ -565,6 +565,16 @@
 		updatehealth()
 
 	return
+
+/mob/living/carbon/alien/humanoid/attack_animal(mob/living/simple_animal/M as mob)
+	if(M.melee_damage_upper == 0)
+		M.emote("[M.friendly] [src]")
+	else
+		for(var/mob/O in viewers(src, null))
+			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		adjustBruteLoss(damage)
+		updatehealth()
 
 /mob/living/carbon/alien/humanoid/attack_hand(mob/living/carbon/human/M as mob)
 	if (!ticker)
@@ -672,7 +682,7 @@
 					for(var/mob/O in viewers(M, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has weakened []!</B>", M, src), 1, "\red You hear someone fall.", 2)
-				bruteloss += damage
+				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				if(M.type != /mob/living/carbon/human/tajaran)
@@ -741,7 +751,7 @@ In all, this is a lot like the monkey code. /N
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
-				bruteloss += damage
+				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				M << "\green <B>[name] is too injured for that.</B>"

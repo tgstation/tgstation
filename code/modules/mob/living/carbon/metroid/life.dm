@@ -414,16 +414,16 @@
 				// if(src.health <= 20 && prob(1)) spawn(0) emote("gasp")
 
 				//if(!src.rejuv) src.oxyloss++
-				if(!src.reagents.has_reagent("inaprovaline")) src.oxyloss+=10
+				if(!src.reagents.has_reagent("inaprovaline")) src.adjustOxyLoss(10)
 
 				if(src.stat != DEAD)	src.stat = UNCONSCIOUS
 
 			if(prob(30))
-				if(getOxyLoss()>0) oxyloss = max(getOxyLoss()-1, 0)
-				if(getToxLoss()>0) adjustToxLoss(-1)
-				if(getFireLoss()>0) adjustFireLoss(-1)
-				if(cloneloss>0) cloneloss = max(cloneloss-1,0)
-				if(getBruteLoss()>0) bruteloss = max(getBruteLoss()-1,0)
+				adjustOxyLoss(-1)
+				adjustToxLoss(-1)
+				adjustFireLoss(-1)
+				adjustCloneLoss(-1)
+				adjustBruteLoss(-1)
 
 
 			if (src.stat == DEAD)
