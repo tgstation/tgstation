@@ -1352,7 +1352,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom ///This can even heal dead people.
-				M.cloneloss = 0
+				M.setCloneLoss(0)
 				M.setOxyLoss(0)
 				M.radiation = 0
 				M.heal_organ_damage(5,5)

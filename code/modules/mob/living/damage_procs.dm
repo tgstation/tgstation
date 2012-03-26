@@ -21,7 +21,7 @@
 		if(OXY)
 			adjustOxyLoss(damage/(blocked+1))
 		if(CLONE)
-			cloneloss += (damage/(blocked+1))
+			adjustCloneLoss(damage/(blocked+1))
 	UpdateDamageIcon()
 	updatehealth()
 	return 1
