@@ -517,6 +517,9 @@
 		return
 
 	interact(mob/user)
+		if(isAI(user) || isrobot(user))
+			return
+
 		add_fingerprint(user)
 		for (var/mob/V in viewers(user))
 			V.show_message("[user] eagerly drinks the toilet water!", 3)//Yum yum yum
