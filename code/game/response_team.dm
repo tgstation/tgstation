@@ -238,7 +238,7 @@ proc/trigger_armed_response_team(var/force = 0)
 		W.access = get_access("Head of Personnel")
 		W.assignment = "Emergency Response Team"
 	W.access += list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)//Let's add their alloted CentCom access.
-	W.registered = real_name
+	W.registered_name = real_name
 	equip_if_possible(W, slot_wear_id)
 
 	return 1

@@ -651,20 +651,24 @@ proc/process_ghost_teleport_locs()
 	name = "Courtroom"
 	icon_state = "courtroom"
 
-/area/crew_quarters/heads
+/area/crew_quarters/heads/hop
 	name = "Head of Personnel's Quarters"
 	icon_state = "head_quarters"
 
-/area/crew_quarters/hor
-	name = "Research Director's Office"
+/area/crew_quarters/heads/hor
+	name = "Research Director's Quarters"
+	icon_state = "head_quarters"
+
+/area/crew_quarters/heads/ce
+	name = "Chief Engineer's Quarters"
+	icon_state = "head_quarters"
+
+/area/crew_quarters/heads/hos
+	name = "Head of Security's Quarters"
 	icon_state = "head_quarters"
 
 /area/crew_quarters/heads/cmo
-	name = "Chief Medical Officer's Office"
-	icon_state = "head_quarters"
-
-/area/crew_quarters/chief
-	name = "Chief Engineer's Office"
+	name = "Chief Medical Officer's Quarters"
 	icon_state = "head_quarters"
 
 /area/mint

@@ -183,7 +183,7 @@ var/global/sent_strike_team = 0
 	W.access = get_all_accesses()//They get full station access.
 	W.access += list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)//Let's add their alloted CentCom access.
 	W.assignment = "Death Commando"
-	W.registered = real_name
+	W.registered_name = real_name
 	equip_if_possible(W, slot_wear_id)
 
 	resistances += "alien_embryo"

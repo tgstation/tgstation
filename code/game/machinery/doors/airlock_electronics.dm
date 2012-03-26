@@ -73,7 +73,7 @@
 				I = pda.id
 			if (I && src.check_access(I))
 				src.locked = 0
-				src.last_configurator = I:registered
+				src.last_configurator = I:registered_name
 
 		if (locked)
 			return

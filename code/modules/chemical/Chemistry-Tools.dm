@@ -2604,7 +2604,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/tea
 	name = "Duke Purple Tea"
-	desc = "A refereshingly quaint drink, served piping hot."
+	desc = "A refreshingly quaint drink, served piping hot."
 	icon_state = "tea"
 	New()
 		..()

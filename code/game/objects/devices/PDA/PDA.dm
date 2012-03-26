@@ -188,7 +188,7 @@
 			if (0)
 				dat += "<h2>PERSONAL DATA ASSISTANT v.1.2</h2>"
 				dat += "Owner: [owner], [ownjob]<br>"
-				dat += text("ID: <A href='?src=\ref[];choice=Authenticate'>[]</A><br>", src, (id ? "[id.registered], [id.assignment]" : "----------"))
+				dat += text("ID: <A href='?src=\ref[];choice=Authenticate'>[]</A><br>", src, (id ? "[id.registered_name], [id.assignment]" : "----------"))
 				dat += text("<A href='?src=\ref[];choice=UpdateInfo'>[]</A><br>", src, (id ? "Update PDA Info" : ""))
 
 				dat += "Station Time: [round(world.time / 36000)+12]:[(world.time / 600 % 60) < 10 ? add_zero(world.time / 600 % 60, 1) : world.time / 600 % 60]"//:[world.time / 100 % 6][world.time / 100 % 10]"
@@ -711,7 +711,7 @@
 				id = I
 	else
 		var/obj/item/weapon/card/I = user.equipped()
-		if (istype(I, /obj/item/weapon/card/id) && I:registered)
+		if (istype(I, /obj/item/weapon/card/id) && I:registered_name)
 			if(id)//Get id and replace it.
 				user.drop_item()
 				I.loc = src
@@ -734,9 +734,9 @@
 		if (C:radio)
 			C:radio.hostpda = src
 
-	else if (istype(C, /obj/item/weapon/card/id) && C:registered)
+	else if (istype(C, /obj/item/weapon/card/id) && C:registered_name)
 		if(!owner)
-			owner = C:registered
+			owner = C:registered_name
 			ownjob = C:assignment
 			name = "PDA-[owner] ([ownjob])"
 			user << "\blue Card scanned."

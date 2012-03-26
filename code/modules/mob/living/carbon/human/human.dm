@@ -1110,8 +1110,8 @@
 		if (wear_id)
 			if (istype(wear_id, /obj/item/weapon/card/id))
 				var/obj/item/weapon/card/id/id = wear_id
-				if (id.registered)
-					name = id.registered
+				if (id.registered_name)
+					name = id.registered_name
 				else
 					name = "Unknown"
 			else if (istype(wear_id, /obj/item/device/pda))
@@ -1126,8 +1126,8 @@
 		if (wear_id)
 			if (istype(wear_id, /obj/item/weapon/card/id))
 				var/obj/item/weapon/card/id/id = wear_id
-				if (id.registered != real_name)
-					name = "[real_name] (as [id.registered])"
+				if (id.registered_name != real_name)
+					name = "[real_name] (as [id.registered_name])"
 
 
 			else if (istype(wear_id, /obj/item/device/pda))
@@ -1239,7 +1239,7 @@
 	return
 
 
-//TG Simple Animal
+
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
@@ -2333,11 +2333,11 @@ It can still be worn/put on as normal.
 	var/obj/item/weapon/card/id/id = wear_id
 	if (istype(pda))
 		if (pda.id)
-			. = pda.id.registered
+			. = pda.id.registered_name
 		else
 			. = pda.owner
 	else if (istype(id))
-		. = id.registered
+		. = id.registered_name
 	else
 		return if_no_id
 	return
@@ -2350,7 +2350,7 @@ It can still be worn/put on as normal.
 	if (istype(pda))
 		. = pda.owner
 	else if (istype(id))
-		. = id.registered
+		. = id.registered_name
 	else
 		return if_no_id
 	return

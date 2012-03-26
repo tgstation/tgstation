@@ -31,17 +31,17 @@
 			user << "\red It appears to be broken."
 			return
 		var/obj/item/weapon/card/id/I = W
-		if(!I || !I.registered)	return
-		if(src.allowed(user) || !src.registered || (istype(I) && (src.registered == I.registered)))
+		if(!I || !I.registered_name)	return
+		if(src.allowed(user) || !src.registered || (istype(I) && (src.registered == I.registered_name)))
 			//they can open all lockers, or nobody owns this, or they own this locker
 			src.locked = !( src.locked )
 			if(src.locked)	src.icon_state = src.icon_locked
 			else	src.icon_state = src.icon_closed
 
 			if(!src.registered)
-				src.registered = I.registered
-				src.desc = "Owned by [I.registered]."
-				src.name = "Personal Closet - [I.registered]"
+				src.registered = I.registered_name
+				src.desc = "Owned by [I.registered_name]."
+				src.name = "Personal Closet - [I.registered_name]"
 		else
 			user << "\red Access Denied"
 	else if( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)

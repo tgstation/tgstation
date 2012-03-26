@@ -64,8 +64,8 @@
 			target_name = modify.name
 		else
 			target_name = "--------"
-		if(modify && modify.registered)
-			target_owner = modify.registered
+		if(modify && modify.registered_name)
+			target_owner = modify.registered_name
 		else
 			target_owner = "--------"
 		if(modify && modify.assignment)
@@ -169,8 +169,8 @@
 	switch(href_list["choice"])
 		if ("modify")
 			if (modify)
-				data_core.manifest_modify(modify.registered, modify.assignment)
-				modify.name = text("[modify.registered]'s ID Card ([modify.assignment])")
+				data_core.manifest_modify(modify.registered_name, modify.assignment)
+				modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
 				if(ishuman(usr))
 					modify.loc = usr.loc
 					if(!usr.get_active_hand())
@@ -235,7 +235,7 @@
 				var/t2 = modify
 				//var/t1 = input(usr, "What name?", "ID computer", null)  as text
 				if ((authenticated && modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
-					modify.registered = href_list["reg"]
+					modify.registered_name = href_list["reg"]
 		if ("mode")
 			mode = text2num(href_list["mode_target"])
 		if ("print")
@@ -247,6 +247,6 @@
 				P.name = "paper - 'Crew Manifest'"
 				printing = null
 	if (modify)
-		modify.name = text("[modify.registered]'s ID Card ([modify.assignment])")
+		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
 	updateUsrDialog()
 	return

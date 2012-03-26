@@ -86,7 +86,7 @@
 			var/obj/item/device/pda/pda = src:wear_id
 			id = pda.owner
 		else
-			id = src.wear_id.registered
+			id = src.wear_id.registered_name
 //			if (src.wear_id.PHOTO)
 //				photo = 1
 		if (id != src.real_name && in_range(src, usr))

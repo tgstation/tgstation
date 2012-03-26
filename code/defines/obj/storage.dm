@@ -337,7 +337,7 @@
 
 /obj/item/weapon/storage/gl_kit
 	name = "Prescription Glasses"
-	desc = "This box contains nerd glasses."
+	desc = "This box contains vison correcting glasses."
 	icon_state = "glasses"
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap

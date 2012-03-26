@@ -515,7 +515,7 @@
 	icon_state = "id"
 	item_state = "card-id"
 	var/access = list()
-	var/registered = null
+	var/registered_name = null
 	var/assignment = null
 //	var/obj/item/weapon/photo/PHOTO = null
 	var/over_jumpsuit = 1 // If set to 0, it won't display on top of the mob's jumpsuit
@@ -536,7 +536,7 @@
 /obj/item/weapon/card/id/syndicate_command
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
-	registered = "Syndicate"
+	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
 	access = list(access_syndicate)
 
@@ -545,7 +545,7 @@
 	desc = "The spare ID of the High Lord himself."
 	icon_state = "gold"
 	item_state = "gold_id"
-	registered = "Captain"
+	registered_name = "Captain"
 	assignment = "Captain"
 	New()
 		access = get_access("Captain")
@@ -555,7 +555,7 @@
 	name = "\improper CentCom. ID"
 	desc = "An ID straight from Cent. Com."
 	icon_state = "centcom"
-	registered = "Central Command"
+	registered_name = "Central Command"
 	assignment = "General"
 	New()
 		access = get_all_centcom_access()
@@ -914,7 +914,6 @@
 	var/list/stamped
 	var/see_face = 1
 	var/body_parts_covered = HEAD
-	var/protective_temperature = 0
 	var/heat_transfer_coefficient = 0.99
 	var/gas_transfer_coefficient = 1
 	var/permeability_coefficient = 0.99

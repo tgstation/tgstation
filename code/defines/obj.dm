@@ -422,6 +422,7 @@
 	var/twohanded = 0 // Two handed and wielded off by default, nyoro~n -Agouri
 	var/force_unwielded = 0
 	var/force_wielded = 0
+	var/protective_temperature = 0 // Placing this here to avoid runtime errors, due to tiny items being allowed on ears and being queried for this variable
 	flags = FPRINT | TABLEPASS
 	pass_flags = PASSTABLE
 	pressure_resistance = 50
@@ -1311,6 +1312,31 @@
 	m_amt = 0
 	throwforce = 14.0
 	flags = FPRINT | TABLEPASS | CONDUCT
+
+/obj/item/stack/sheet/r_metal
+	name = "steel"
+	singular_name = "steel sheet"
+	desc = "This sheet is an alloy of iron and plasma."
+	icon_state = "sheet-r_metal"
+	item_state = "sheet-metal"
+	m_amt = 7500
+	throwforce = 15.0
+	flags = FPRINT | TABLEPASS | CONDUCT
+	origin_tech = "materials=2"
+
+/obj/item/stack/tile/steel
+	name = "Metal floor tile"
+	singular_name = "Steel floor tile"
+	desc = "Those could work as a pretty decent throwing weapon"
+	icon_state = "tile"
+	w_class = 3.0
+	force = 6.0
+	m_amt = 937.5
+	throwforce = 15.0
+	throw_speed = 5
+	throw_range = 20
+	flags = FPRINT | TABLEPASS | CONDUCT
+	max_amount = 60
 
 /obj/item/stack/sheet/plasteel
 	name = "plasteel"

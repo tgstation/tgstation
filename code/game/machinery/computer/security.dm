@@ -221,7 +221,7 @@ What a mess.*/
 					active1 = null
 					active2 = null
 					if(check_access(scan))
-						authenticated = scan.registered
+						authenticated = scan.registered_name
 						rank = scan.assignment
 						screen = 1
 //RECORD FUNCTIONS

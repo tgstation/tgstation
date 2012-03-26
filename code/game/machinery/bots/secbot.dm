@@ -616,7 +616,7 @@ Auto Patrol: []"},
 					var/obj/item/device/pda/pda = perp:wear_id
 					id = pda.id
 				if(id)
-					perpname = id.registered
+					perpname = id.registered_name
 				else
 					var/obj/item/device/pda/pda = perp:wear_id
 					perpname = pda.owner
