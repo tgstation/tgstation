@@ -1379,7 +1379,7 @@ datum
 					holder.remove_reagent("carpotoxin", 5)
 				if(holder.has_reagent("zombiepowder"))
 					holder.remove_reagent("zombiepowder", 5)
-				M.brainloss = 0
+				M.setBrainLoss(0)
 				M.disabilities = 0
 				M.eye_blurry = 0
 				M.eye_blind = 0

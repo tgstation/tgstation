@@ -172,7 +172,7 @@
 			usr << "\blue [src.name] looks quite chubby."
 
 	if(!stat)
-		if (src.brainloss >= 60)
+		if (src.getBrainLoss() >= 60)
 			usr << "\red [src.name] has a stupid expression on [t_his] face."
 
 	if (!src.client)

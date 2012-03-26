@@ -437,7 +437,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 	name = "Lazy mind syndrome"
 	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.brainloss = 50
+		mob.setBrainLoss(50)
 
 /datum/disease2/effect/greater/suicide
 	name = "Suicidal syndrome"
@@ -462,7 +462,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 	name = "Lazy mind syndrome"
 	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.brainloss = 20
+		mob.setBrainLoss(20)
 
 /datum/disease2/effect/lesser/deaf
 	name = "Hard of hearing syndrome"
