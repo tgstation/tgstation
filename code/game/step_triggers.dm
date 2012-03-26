@@ -33,7 +33,6 @@
 		var/stopthrow = 0
 		for(var/obj/step_trigger/thrower/T in orange(2, src))
 			if(A in T.affecting)
-				world << "can't trigger"
 				return
 
 		if(ismob(A))

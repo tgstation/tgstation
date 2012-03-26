@@ -252,6 +252,15 @@
 			this.viruses += newDisease
 			newDisease.holder = this
 
+/atom/proc/add_poo_floor()
+	if( istype(src, /turf))
+		new /obj/effect/decal/cleanable/poo(src)
+
+/atom/proc/add_piss_floor()
+	if( istype(src, /turf))
+		new /obj/effect/decal/cleanable/urine(src)
+
+
 // Only adds blood on the floor -- Skie
 /atom/proc/add_blood_floor(mob/living/carbon/M as mob)
 	if( istype(M, /mob/living/carbon/monkey) )

@@ -9,3 +9,21 @@ proc/time_stamp()
 	if(mm < 10) pm = "0"
 	if(ss < 10) ps = "0"
 	return"[ph][hh]:[pm][mm]:[ps][ss]"
+
+
+/* Returns 1 if it is the selected month and day */
+proc/isDay(var/month, var/day)
+	if(isnum(month) && isnum(day))
+		var/MM = text2num(time2text(world.timeofday, "MM")) // get the current month
+		var/DD = text2num(time2text(world.timeofday, "MM")) // get the current day
+		if(month == MM && day == DD)
+			return 1
+
+		// Uncomment this out when debugging!
+		//else
+			//return 1
+
+/* Check if it's april fools day */
+proc/isAprilFools()
+	return isDay(4, 1)
+
