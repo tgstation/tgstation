@@ -67,7 +67,7 @@ PE|PE|PE
 
 
 	examine()
-		set src in usr
+		set src in oview(1)
 		switch(src.construction_state)
 			if(0)
 				src.desc = text("Part of a Particle Accelerator, looks like its not attached to the flooring")
@@ -161,9 +161,9 @@ PE|PE|PE
 			if(temp_state == src.construction_state)//Nothing changed
 				return 0
 			else
-				if(src.construction_state >= 3)//Was taken apart, update state
-					update_state()
 				src.construction_state = temp_state
+				if(src.construction_state < 3)//Was taken apart, update state
+					update_state()
 				update_icon()
 				return 1
 			return 0
@@ -266,7 +266,7 @@ PE|PE|PE
 			if(temp_state == src.construction_state)//Nothing changed
 				return 0
 			else
-				if(src.construction_state >= 3)//Was taken apart, update state
+				if(src.construction_state < 3)//Was taken apart, update state
 					update_state()
 					if(use_power)
 						use_power = 0

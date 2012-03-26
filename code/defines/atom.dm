@@ -27,7 +27,11 @@
 		return null
 
 	proc/return_air()
-		return null
+		if(loc)
+			return loc.return_air()
+		else
+			return null
+
 
 
 // Convenience proc to see if a container is open for chemistry handling
