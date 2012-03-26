@@ -503,7 +503,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				e.brute_dam = 0.0
 				e.burn_dam = 0.0
 				e.bandaged = 0.0
-				e.wound_size = 0.0
 				e.max_damage = initial(e.max_damage)
 				e.bleeding = 0
 				e.open = 0
@@ -511,6 +510,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				e.destroyed = 0
 				e.perma_injury = 0
 				e.update_icon()
+			H.vessel = new/datum/reagents(560)
+			H.vessel.my_atom = H
+			H.vessel.add_reagent("blood",560)
+			spawn(1)
+				H.fixblood()
 			H.update_body()
 			H.update_face()
 			H.UpdateDamageIcon()

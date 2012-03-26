@@ -179,31 +179,71 @@
 		usr << "\red [src.name] doesn't seem as though they want to talk."
 
 	spawn(10) // I think we might be overloading the clients.
+		var/list/wound_descriptions = list()
 		for(var/named in organs)
 			var/datum/organ/external/temp = organs[named]
 			if(temp)
 				if(temp.destroyed)
 					usr << "\red [src.name] is missing [t_his] [temp.display_name]."
+					continue
 				if(temp.wounds)
-					for(var/datum/organ/external/wound/w in temp.wounds)
-						var/size = w.wound_size
-						var/sizetext
-						switch(size)
+					var/list/wounds = list(list(),list(),list(),list(),list(),list())
+					for(var/datum/organ/wound/w in temp.wounds)
+						switch(w.healing_state)
+							if(0)
+								var/list/cut = wounds[1]
+								cut += w
+								wounds[1] = cut
 							if(1)
-								sizetext = "cut"
+								var/list/cut = wounds[2]
+								cut += w
+								wounds[2] = cut
 							if(2)
-								sizetext = "deep cut"
+								var/list/cut = wounds[3]
+								cut += w
+								wounds[3] = cut
 							if(3)
-								sizetext = "flesh wound"
+								var/list/cut = wounds[4]
+								cut += w
+								wounds[4] = cut
 							if(4)
-								sizetext = "gaping wound"
+								var/list/cut = wounds[5]
+								cut += w
+								wounds[5] = cut
 							if(5)
-								sizetext = "big gaping wound"
-							if(6)
-								sizetext = "massive wound"
-						if(w.bleeding)
-							usr << "\red [src.name] is bleeding from a [sizetext] on [t_his] [temp.display_name]."
-							continue
+								var/list/cut = wounds[6]
+								cut += w
+								wounds[6] = cut
+					wound_descriptions["[temp.display_name]"] = wounds
+		//Now that we have a big list of all the wounds, on all the limbs.
+		var/list/wound_flavor_text = list()
+		for(var/named in wound_descriptions)
+			var/list/wound_states = wound_descriptions[named]
+			for(var/i = 1, i <= 6, i++)
+				var/list/wound_state = wound_states[i] //All wounds at this level of healing.
+				var/list/tally = list("cut" = 0, "deep cut" = 0, "flesh wound" = 0, "gaping wound" = 0, "big gaping wound" = 0, "massive wound" = 0) //How many wounds of what size.
+				for(var/datum/organ/wound/w in wound_state)
+					switch(w.wound_size)
+						if(1)
+							tally["cut"] += 1
+						if(2)
+							tally["deep cut"] += 1
+						if(3)
+							tally["flesh wound"] += 1
+						if(4)
+							tally["gaping wound"] += 1
+						if(5)
+							tally["big gaping wound"] += 1
+						if(6)
+							tally["massive wound"] += 1
+				for(var/tallied in tally)
+					if(!tally[tallied])
+						continue
+
+
+//		if(w.bleeding)
+//			usr << "\red [src.name] is bleeding from a [sizetext] on [t_his] [temp.display_name]."
+//			continue
 
 		print_flavor_text()
 

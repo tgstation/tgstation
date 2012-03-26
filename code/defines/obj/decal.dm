@@ -62,6 +62,15 @@
 			D.cure(0)
 		..()
 
+/obj/effect/decal/cleanable/blood/drip
+	name = "drips of blood"
+	desc = "It's red."
+	density = 0
+	anchored = 1
+	layer = 2
+	icon = 'drip.dmi'
+	icon_state = "1"
+
 /obj/effect/decal/cleanable/mucus
 	name = "Mucus"
 	desc = "Disgusting mucus."

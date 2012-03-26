@@ -175,8 +175,9 @@
 			affecting.heal_damage(1000, 1000)    //fixes getting hit after ingestion, killing you when game updates organ health
 			affecting.broken = 0
 			affecting.destroyed = 0
-			for(var/datum/organ/external/wound/W in affecting.wounds)
+			for(var/datum/organ/wound/W in affecting.wounds)
 				W.stopbleeding()
+				del(W)
 		H.UpdateDamageIcon()
 		H.update_body()
 	//src.fireloss = 0
