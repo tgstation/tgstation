@@ -32,15 +32,13 @@
 	if(alien_egg_flag)
 		src << "The alien inside you forces you to breathe, preventing you from suiciding."
 		return
-	if(mutantrace == "trappedsoul")
-		src << "You are already dead, your soul trapped and contained!"
-		return
+
 	if(confirm == "Yes")
 		message_admins("[ckey] has suicided.", 1)
 		suiciding = 1
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
 		viewers(src) << "\red <b>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</b>"
-		oxyloss = max(175 - getToxLoss() - getFireLoss() - getBruteLoss(), getOxyLoss())
+		adjustOxyLoss(max(175 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 
 /mob/living/carbon/brain/verb/suicide()
@@ -63,10 +61,9 @@
 	if(confirm == "Yes")
 		message_admins("[ckey] has suicided.", 1)
 		suiciding = 1
-		viewers(loc) << "\red <b>[src]'s brain is growing dull and lifeless. It looks like it's trying to commit suicide. Somehow.</b>"
-		oxyloss = max(175 - getToxLoss() - getFireLoss() - getBruteLoss(), getOxyLoss())
-		updatehealth()
-		spawn(200)
+		viewers(loc) << "\red <b>[src]'s brain is growing dull and lifeless. It looks like it's lost the will to live.</b>"
+		spawn(50)
+			death(0)
 			suiciding = 0
 
 /mob/living/carbon/monkey/verb/suicide()
@@ -91,7 +88,7 @@
 		suiciding = 1
 		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
 		viewers(src) << "\red <b>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</b>"
-		oxyloss = max(175 - getToxLoss() - getFireLoss() - getBruteLoss(), getOxyLoss())
+		adjustOxyLoss(max(175 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 
 /mob/living/silicon/ai/verb/suicide()
@@ -112,7 +109,7 @@
 		suiciding = 1
 		viewers(src) << "\red <b>[src] is powering down. It looks like \he's trying to commit suicide.</b>"
 		//put em at -175
-		oxyloss = max(175 - getToxLoss() - getFireLoss() - getBruteLoss(), getOxyLoss())
+		adjustOxyLoss(max(175 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 
 /mob/living/silicon/robot/verb/suicide()
@@ -133,7 +130,7 @@
 		suiciding = 1
 		viewers(src) << "\red <b>[src] is powering down. It looks like \he's trying to commit suicide.</b>"
 		//put em at -175
-		oxyloss = max(475 - getToxLoss() - getFireLoss() - getBruteLoss(), getOxyLoss())
+		adjustOxyLoss(max(475 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 
 /mob/living/silicon/pai/verb/suicide()
@@ -170,7 +167,7 @@
 		suiciding = 1
 		viewers(src) << "\red <b>[src] is thrashing wildly! It looks like \he's trying to commit suicide.</b>"
 		//put em at -175
-		oxyloss = max(100 - getFireLoss() - getBruteLoss(), getOxyLoss())
+		adjustOxyLoss(max(100 - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 
 

@@ -72,6 +72,7 @@
 		dat += "<A href='?src=\ref[src];rune=communicate'>O bidai nabora se'sma!</A> - Allows you to coordinate with others of your cult.<BR>"
 		dat += "<A href='?src=\ref[src];rune=runestun'>Fuu ma'jin</A> - Allows you to stun a person by attacking them with the talisman.<BR>"
 		dat += "<A href='?src=\ref[src];rune=armor'>Sa tatha najin</A> - Allows you to summon armoured robes and an unholy blade<BR>"
+		dat += "<A href='?src=\ref[src];rune=soulstone'>Kal om neth</A> - Summons a soul stone<BR>"
 		usr << browse(dat, "window=id_com;size=350x200")
 		return
 
@@ -104,6 +105,8 @@
 				if("armor")
 					var/obj/item/weapon/paper/talisman/T = new /obj/item/weapon/paper/talisman(get_turf(usr))
 					T.imbue = "armor"
+				if("soulstone")
+					new /obj/item/device/soulstone(get_turf(usr))
 			src.uses--
 			supply()
 		return
