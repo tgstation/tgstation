@@ -47,7 +47,7 @@
 		W.access = get_all_accesses()
 		W.access += get_all_centcom_access()
 		W.assignment = "Highlander"
-		W.registered_name = H.real_name
+		W.registered = H.real_name
 		H.equip_if_possible(W, H.slot_wear_id)
 
 	message_admins("\blue [key_name_admin(usr)] used THERE CAN BE ONLY ONE!", 1)

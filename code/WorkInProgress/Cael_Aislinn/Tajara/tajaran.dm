@@ -344,8 +344,8 @@
 		if (wear_id)
 			if (istype(wear_id, /obj/item/weapon/card/id))
 				var/obj/item/weapon/card/id/id = wear_id
-				if (id.registered_name)
-					name = id.registered_name
+				if (id.registered)
+					name = id.registered
 				else
 					name = "Unknown"
 			else if (istype(wear_id, /obj/item/device/pda))
@@ -360,8 +360,8 @@
 		if (wear_id)
 			if (istype(wear_id, /obj/item/weapon/card/id))
 				var/obj/item/weapon/card/id/id = wear_id
-				if (id.registered_name != real_name)
-					name = "[real_name] (as [id.registered_name])"
+				if (id.registered != real_name)
+					name = "[real_name] (as [id.registered])"
 
 
 			else if (istype(wear_id, /obj/item/device/pda))

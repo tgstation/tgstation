@@ -22,6 +22,7 @@
 #define ui_belt "SOUTH-1,3"
 #define ui_throw "SOUTH-1,8"
 #define ui_oxygen "EAST+1, NORTH-4"
+#define ui_pressure "EAST+1, NORTH-5"
 #define ui_toxin "EAST+1, NORTH-6"
 #define ui_internal "EAST+1, NORTH-2"
 #define ui_fire "EAST+1, NORTH-8"

@@ -9,6 +9,7 @@
 
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 
+	var/protective_temperature = 0
 	var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases

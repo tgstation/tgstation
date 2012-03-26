@@ -269,9 +269,9 @@ var/global/datum/controller/occupations/job_master
 			else
 				C = new /obj/item/weapon/card/id(H)
 		if(C)
-			C.registered_name = H.real_name
+			C.registered = H.real_name
 			C.assignment = title
-			C.name = "[C.registered_name]'s ID Card ([C.assignment])"
+			C.name = "[C.registered]'s ID Card ([C.assignment])"
 			C.access = get_access(rank)
 			H.equip_if_possible(C, H.slot_wear_id)
 		if(!H.equip_if_possible(new /obj/item/weapon/pen(H), H.slot_r_store))

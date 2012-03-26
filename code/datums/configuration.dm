@@ -12,6 +12,11 @@
 	var/log_game = 0					// log game events
 	var/log_vote = 0					// log voting
 	var/log_whisper = 0					// log client whisper
+	var/log_emote = 0					// log emotes
+	var/log_attack = 0					// log attack messages
+	var/log_adminchat = 0				// log admin chat messages
+	var/log_adminwarn = 0				// log warnings admins get about bomb construction and such
+	var/log_pda = 0						// log pda messages
 	var/sql_enabled = 1					// for sql switching
 	var/allow_vote_restart = 0 			// allow votes to restart
 	var/allow_vote_mode = 0				// allow votes to change mode
@@ -22,14 +27,18 @@
 	var/vote_period = 60				// length of voting period (seconds, default 1 minute)
 	var/vote_no_default = 0				// vote does not default to nochange/norestart (tbi)
 	var/vote_no_dead = 0				// dead people can't vote (tbi)
+	var/enable_authentication = 0		// goon authentication
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 	var/feature_object_spell_system = 0 //spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
 	var/traitor_scaling = 0 //if amount of traitors scales based on amount of players
+	var/protect_roles_from_antagonist = 0// If security and such can be tratior/cult/other
+	var/Tensioner_Active = 0			// If the tensioner is running.
 
 	var/list/mode_names = list()
 	var/list/modes = list()				// allowed modes
 	var/list/votable_modes = list()		// votable modes
 	var/list/probabilities = list()		// relative probability of each mode
+	var/allow_random_events = 0			// enables random events mid-round when set to 1
 	var/allow_ai = 1					// allow ai job
 	var/hostedby = null
 	var/respawn = 1
@@ -48,6 +57,9 @@
 	var/alert_desc_red_upto = "There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised."
 	var/alert_desc_red_downto = "The self-destruct mechanism has been deactivated. However, there is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
 	var/alert_desc_delta = "The station's self-destruct mechanism has been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
+
+	var/forbid_singulo_possession = 0
+	var/useircbot = 0
 
 	//game_options.txt configs
 
@@ -138,6 +150,21 @@
 				if ("log_whisper")
 					config.log_whisper = 1
 
+				if ("log_attack")
+					config.log_attack = 1
+
+				if ("log_emote")
+					config.log_emote = 1
+
+				if ("log_adminchat")
+					config.log_adminchat = 1
+
+				if ("log_adminwarn")
+					config.log_adminwarn = 1
+
+				if ("log_pda")
+					config.log_pda = 1
+
 				if ("allow_vote_restart")
 					config.allow_vote_restart = 1
 
@@ -167,6 +194,9 @@
 
 				if ("allow_ai")
 					config.allow_ai = 1
+
+				if ("authentication")
+					config.enable_authentication = 1
 
 				if ("norespawn")
 					config.respawn = 0
@@ -204,6 +234,12 @@
 				if ("traitor_scaling")
 					config.traitor_scaling = 1
 
+				if("protect_roles_from_antagonist")
+					config.protect_roles_from_antagonist = 1
+
+				if("tensioner_active")
+					config.Tensioner_Active = 1
+
 				if ("probability")
 					var/prob_pos = findtext(value, " ")
 					var/prob_name = null
@@ -219,7 +255,10 @@
 					else
 						diary << "Incorrect probability configuration definition: [prob_name]  [prob_value]."
 
-				if ("kick_inactive")
+				if("allow_random_events")
+					config.allow_random_events = 1
+
+				if("kick_inactive")
 					config.kick_inactive = 1
 
 				if("load_jobs_from_txt")
@@ -242,6 +281,12 @@
 
 				if("alert_delta")
 					config.alert_desc_delta = value
+
+				if("forbid_singulo_possession")
+					forbid_singulo_possession = 1
+
+				if("useircbot")
+					useircbot = 1
 
 				if("require_heads_alive")
 					config.require_heads_alive = value

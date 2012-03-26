@@ -315,10 +315,10 @@
 	overlays = null
 
 	if(buckled)
-		if(istype(buckled, /obj/structure/stool/bed))
-			lying = 1
-		else
+		if(istype(buckled, /obj/structure/stool/bed/chair))
 			lying = 0
+		else
+			lying = 1
 
 	// Automatically drop anything in store / id / belt if you're not wearing a uniform.
 	if (zone_sel)

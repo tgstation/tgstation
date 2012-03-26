@@ -125,7 +125,25 @@
 	now_pushing = 1
 	if (ismob(AM))
 		var/mob/tmob = AM
-		if(tmob.a_intent == "help" && a_intent == "help" && tmob.canmove && canmove) // mutual brohugs all around!
+
+//BubbleWrap - Should stop you pushing a restrained person out of the way
+
+		if(istype(tmob, /mob/living/carbon/human))
+
+			for(var/mob/M in range(tmob, 1))
+				if( ((M.pulling == tmob && ( tmob.restrained() && !( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)) )
+					if ( !(world.time % 5) )
+						src << "\red [tmob] is restrained, you cannot push past"
+					now_pushing = 0
+					return
+				if( tmob.pulling == M && ( M.restrained() && !( tmob.restrained() ) && tmob.stat == 0) )
+					if ( !(world.time % 5) )
+						src << "\red [tmob] is restraining [M], you cannot push past"
+					now_pushing = 0
+					return
+
+		//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
+		if((tmob.a_intent == "help" || tmob.restrained()) && (a_intent == "help" || src.restrained()) && tmob.canmove && canmove) // mutual brohugs all around!
 			var/turf/oldloc = loc
 			loc = tmob.loc
 			tmob.loc = oldloc
@@ -137,10 +155,20 @@
 
 		/*if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
 			if(prob(40) && !(mutations & FAT))
-				visible_message("\red <B>[src] fails to push [tmob]'s fat ass out of the way.</B>", \
-					"\red <B>You fail to push [tmob]'s fat ass out of the way.</B>")
+				src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 				now_pushing = 0
 				return*/
+		if(tmob.r_hand && istype(tmob.r_hand, /obj/item/weapon/shield/riot))
+			if(prob(99))
+				now_pushing = 0
+				return
+		if(tmob.l_hand && istype(tmob.l_hand, /obj/item/weapon/shield/riot))
+			if(prob(99))
+				now_pushing = 0
+				return
+		if(tmob.nopush)
+			now_pushing = 0
+			return
 
 		tmob.LAssailant = src
 
@@ -829,10 +857,10 @@
 			update_body()
 
 	if(buckled)
-		if(istype(buckled, /obj/structure/stool/bed))
-			lying = 1
-		else
+		if(istype(buckled, /obj/structure/stool/bed/chair))
 			lying = 0
+		else
+			lying = 1
 
 	// Automatically drop anything in store / id / belt if you're not wearing a uniform.
 	if (!w_uniform)
@@ -1082,8 +1110,8 @@
 		if (wear_id)
 			if (istype(wear_id, /obj/item/weapon/card/id))
 				var/obj/item/weapon/card/id/id = wear_id
-				if (id.registered_name)
-					name = id.registered_name
+				if (id.registered)
+					name = id.registered
 				else
 					name = "Unknown"
 			else if (istype(wear_id, /obj/item/device/pda))
@@ -1098,8 +1126,8 @@
 		if (wear_id)
 			if (istype(wear_id, /obj/item/weapon/card/id))
 				var/obj/item/weapon/card/id/id = wear_id
-				if (id.registered_name != real_name)
-					name = "[real_name] (as [id.registered_name])"
+				if (id.registered != real_name)
+					name = "[real_name] (as [id.registered])"
 
 
 			else if (istype(wear_id, /obj/item/device/pda))
@@ -1211,6 +1239,19 @@
 	return
 
 
+//TG Simple Animal
+/mob/living/carbon/human/attack_animal(mob/living/simple_animal/M as mob)
+	if(M.melee_damage_upper == 0)
+		M.emote("[M.friendly] [src]")
+	else
+		for(var/mob/O in viewers(src, null))
+			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
+		var/armor = run_armor_check(affecting, "melee")
+		apply_damage(damage, BRUTE, affecting, armor)
+		if(armor >= 2)	return
 
 
 /mob/living/carbon/human/attack_metroid(mob/living/carbon/metroid/M as mob)
@@ -1492,7 +1533,7 @@
 					del(src)
 					return
 			if("internal")
-				if ((!( (istype(target.wear_mask, /obj/item/clothing/mask) && (istype(target.back, /obj/item/weapon/tank) || istype(target.belt, /obj/item/weapon/tank) || istype(target.s_store, /obj/item/weapon/tank)) && !( target.internal )) ) && !( target.internal )))
+				if ((!( (istype(target.wear_mask, /obj/item/clothing/mask) && istype(target.back, /obj/item/weapon/tank) && !( target.internal )) ) && !( target.internal )))
 					//SN src = null
 					del(src)
 					return
@@ -1661,7 +1702,7 @@
 											return
 									message = text("\red <B>[] is trying to empty []'s pockets!!</B>", source, target)
 								if("CPR")
-									if (target.cpr_time + 3 >= world.time)
+									if (target.cpr_time >= world.time + 3)
 										//SN src = null
 										del(src)
 										return
@@ -2122,14 +2163,14 @@ It can still be worn/put on as normal.
 					target.handcuffed = item
 					item.loc = target
 		if("CPR")
-			if (target.cpr_time + 30 >= world.time)
+			if (target.cpr_time >= world.time + 30)
 				//SN src = null
 				del(src)
 				return
 			if ((target.health >= -99.0 && target.stat == 1))
 				target.cpr_time = world.time
 				var/suff = min(target.getOxyLoss(), 7)
-				target.oxyloss -= suff
+				target.adjustOxyLoss(-suff)
 				target.losebreath = 0
 				target.updatehealth()
 				for(var/mob/O in viewers(source, null))
@@ -2177,7 +2218,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
+					W.add_fingerprint(source)
 			if (target.r_store)
 				var/obj/item/W = target.r_store
 				target.u_equip(W)
@@ -2187,7 +2228,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
+					W.add_fingerprint(source)
 		if("internal")
 			if (target.internal)
 				target.internal.add_fingerprint(source)
@@ -2198,11 +2239,11 @@ It can still be worn/put on as normal.
 				if (!( istype(target.wear_mask, /obj/item/clothing/mask) ))
 					return
 				else
-					if (istype(target.back, /obj/item/weapon/tank) && (internalloc == "back" || !internalloc))
+					if (istype(target.back, /obj/item/weapon/tank))
 						target.internal = target.back
-					else if (istype(target.s_store, /obj/item/weapon/tank) && (internalloc == "store" || !internalloc))
+					else if (istype(target.s_store, /obj/item/weapon/tank))
 						target.internal = target.s_store
-					else if (istype(target.belt, /obj/item/weapon/tank) && (internalloc == "belt" || !internalloc))
+					else if (istype(target.belt, /obj/item/weapon/tank))
 						target.internal = target.belt
 					if (target.internal)
 						for(var/mob/M in viewers(target, 1))
@@ -2213,6 +2254,9 @@ It can still be worn/put on as normal.
 		else
 	if(source)
 		source.update_clothing()
+		spawn(0)
+			if(source.machine == target)
+				target.show_inv(source)
 	if(target)
 		target.update_clothing()
 	//SN src = null
@@ -2240,12 +2284,12 @@ It can still be worn/put on as normal.
 	<BR><B>Right Ear:</B> <A href='?src=\ref[src];item=r_ear'>[(r_ear ? r_ear : "Nothing")]</A>
 	<BR><B>Head:</B> <A href='?src=\ref[src];item=head'>[(head ? head : "Nothing")]</A>
 	<BR><B>Shoes:</B> <A href='?src=\ref[src];item=shoes'>[(shoes ? shoes : "Nothing")]</A>
-	<BR><B>Belt:</B> <A href='?src=\ref[src];item=belt'>[(belt ? belt : "Nothing")]</A> [(istype(wear_mask, /obj/item/clothing/mask) && istype(belt, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal;loc=belt'>Set Internal</A>", src) : ""]
+	<BR><B>Belt:</B> <A href='?src=\ref[src];item=belt'>[(belt ? belt : "Nothing")]</A>
 	<BR><B>Uniform:</B> <A href='?src=\ref[src];item=uniform'>[(w_uniform ? w_uniform : "Nothing")]</A>
 	<BR><B>(Exo)Suit:</B> <A href='?src=\ref[src];item=suit'>[(wear_suit ? wear_suit : "Nothing")]</A>
-	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A>[(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal;loc=back'>Set Internal</A>", src) : ""]
+	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
 	<BR><B>ID:</B> <A href='?src=\ref[src];item=id'>[(wear_id ? wear_id : "Nothing")]</A>
-	<BR><B>Suit Storage:</B> <A href='?src=\ref[src];item=s_store'>[(s_store ? s_store : "Nothing")]</A> [(istype(wear_mask, /obj/item/clothing/mask) && istype(s_store, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal;loc=store'>Set Internal</A>", src) : ""]
+	<BR><B>Suit Storage:</B> <A href='?src=\ref[src];item=s_store'>[(s_store ? s_store : "Nothing")]</A>
 	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
@@ -2289,11 +2333,11 @@ It can still be worn/put on as normal.
 	var/obj/item/weapon/card/id/id = wear_id
 	if (istype(pda))
 		if (pda.id)
-			. = pda.id.registered_name
+			. = pda.id.registered
 		else
 			. = pda.owner
 	else if (istype(id))
-		. = id.registered_name
+		. = id.registered
 	else
 		return if_no_id
 	return
@@ -2306,7 +2350,7 @@ It can still be worn/put on as normal.
 	if (istype(pda))
 		. = pda.owner
 	else if (istype(id))
-		. = id.registered_name
+		. = id.registered
 	else
 		return if_no_id
 	return

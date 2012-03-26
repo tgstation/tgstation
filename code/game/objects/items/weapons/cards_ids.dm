@@ -4,38 +4,13 @@ DATA CARD
 ID CARD
 FINGERPRINT CARD HOLDER
 FINGERPRINT CARD
+
 */
 
-/obj/item/weapon/card
-	name = "card"
-	desc = "Does card things."
-	icon = 'card.dmi'
-	w_class = 1.0
 
-	var/list/files = list(  )
 
-/obj/item/weapon/card/emag
-	desc = "An identification card. Seems to have some funny chip on it, though."
-	name = "modified identification card"
-	icon_state = "emag"
-	item_state = "card-id"
-	origin_tech = "magnets=2;syndicate=2"
-	var/uses = 5
-
-	New()
-		..()
-		uses = rand(3,5)
-		return
 
 // DATA CARDS
-/obj/item/weapon/card/data
-	name = "data disk"
-	desc = "A disk with data."
-	icon_state = "data"
-	var/function = "storage"
-	var/data = "null"
-	var/special = null
-	item_state = "card-id"
 
 /obj/item/weapon/card/data/verb/label(t as text)
 	set name = "Label Disk"
@@ -50,58 +25,9 @@ FINGERPRINT CARD
 	return
 
 
+
+
 // ID CARDS
-/obj/item/weapon/card/id
-	name = "identification card"
-	desc = "An identification card."
-	icon_state = "id"
-	item_state = "card-id"
-	var/access = list()
-	var/registered_name = null // The name registered on the card
-	var/assignment = null
-	var/obj/item/weapon/photo/PHOTO = null
-	var/over_jumpsuit = 1 // If set to 0, it won't display on top of the mob's jumpsuit
-	var/dorm = 0    // determines if this ID has claimed a dorm already
-
-/obj/item/weapon/card/id/gold
-	name = "identification card"
-	desc = "A golden identification card."
-	icon_state = "gold"
-	item_state = "gold_id"
-
-/obj/item/weapon/card/id/captains_spare
-	name = "Captain's spare ID"
-	icon_state = "gold"
-	item_state = "gold_id"
-	registered_name = "Captain"
-	assignment = "Captain"
-	New()
-		access = get_access("Captain")
-		..()
-
-/obj/item/weapon/card/id/centcom
-	name = "CentCom ID"
-	desc = "An ID straight from Cent. Com."
-	icon_state = "centcom"
-	registered_name = "Central Command"
-	assignment = "General"
-	New()
-		access = get_all_centcom_access()
-		..()
-
-/obj/item/weapon/card/id/syndicate
-	name = "agent card"
-	desc = "Shhhhh."
-	access = list(access_maint_tunnels)
-	origin_tech = "syndicate=3"
-
-/obj/item/weapon/card/id/syndicate_command
-	name = "Syndicate ID card"
-	desc = "An ID straight from the Syndicate."
-	registered_name = "Syndicate"
-	assignment = "Syndicate Overlord"
-	access = list(access_syndicate)
-
 
 /obj/item/weapon/card/id/attack_self(mob/user as mob)
 	for(var/mob/O in viewers(user, null))
@@ -109,6 +35,14 @@ FINGERPRINT CARD
 
 	src.add_fingerprint(user)
 	return
+
+/obj/item/weapon/card/id/attack_hand(mob/user as mob)
+	var/obj/item/weapon/storage/wallet/WL
+	if( istype(loc, /obj/item/weapon/storage/wallet) )
+		WL = loc
+	..()
+	if(WL)
+		WL.update_icon()
 
 /obj/item/weapon/card/id/verb/read()
 	set name = "Read ID Card"
@@ -119,37 +53,13 @@ FINGERPRINT CARD
 	return
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user as mob)
-	src.registered_name = input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)
-	src.assignment = input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")
-	src.name = "[src.registered_name]'s ID Card ([src.assignment])"
-	user << "\blue You successfully forge the ID card."
-
-/obj/item/weapon/card/id/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-	if(istype(W,/obj/item/weapon/photo))
-		if(!(PHOTO))
-			src.PHOTO = W
-			usr.before_take_item(W)
-			W.loc = src
-			//src.orient2hud(usr)
-			add_fingerprint(usr)
-			usr << "\blue You add the photo to the ID."
-		else
-			usr << "\blue There is already a photo on this ID."
-
-			//PHOTO.loc = locate(0,0,0)
-
-/obj/item/weapon/card/id/verb/removePhoto()
-	set name = "Remove Photo From ID"
-	set category = "Object"
-
-	if(PHOTO)
-		contents -= PHOTO
-		PHOTO.loc = usr.loc
-		PHOTO.layer = 3
-		PHOTO = null
+	if(!src.registered)
+		src.registered = input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)
+		src.assignment = input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")
+		src.name = "[src.registered]'s ID Card ([src.assignment])"
+		user << "\blue You successfully forge the ID card."
 	else
-		usr << "\blue There is no photo to remove."
+		..()
 
 
 // FINGERPRINT HOLDER
@@ -271,7 +181,9 @@ FINGERPRINT CARD
 	return
 
 /obj/item/weapon/f_card/proc/display()
-
+	if(!fingerprints)	return
+	if (!istype(src.fingerprints, /list))
+		src.fingerprints = params2list(src.fingerprints)
 	if (length(src.fingerprints))
 		var/dat = "<B>Fingerprints on Card</B><HR>"
 		for(var/i = 1, i < (src.fingerprints.len + 1), i++)

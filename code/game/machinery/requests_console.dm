@@ -308,7 +308,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	if (istype(O, /obj/item/weapon/card/id))
 		if(src.screen == 9)
 			var/obj/item/weapon/card/id/T = O
-			src.msgVerified = text("<font color='green'><b>Verified by [T.registered_name] ([T.assignment])</b></font>")
+			src.msgVerified = text("<font color='green'><b>Verified by [T.registered] ([T.assignment])</b></font>")
 			src.updateUsrDialog()
 		if(src.screen == 10)
 			var/obj/item/weapon/card/id/ID = O

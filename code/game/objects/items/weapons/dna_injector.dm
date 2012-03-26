@@ -23,7 +23,7 @@
 /obj/item/weapon/dnainjector/proc/inject(mob/M as mob)
 	M.radiation += rand(20,50)
 
-	if (!(M.mutations & HUSK)) // prevents husks from having their DNA changed
+	if (!(M.mutations & NOCLONE)) // prevents drained people from having their DNA changed
 		if (dnatype == "ui")
 			if (!block) //isolated block?
 				if (ue) //unique enzymes? yes
@@ -65,6 +65,8 @@
 		return
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [name] by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to inject [M.name] ([M.ckey])</font>")
+
+//	log_attack("<font color='red'>[user.name] ([user.ckey]) used the [name] to inject [M.name] ([M.ckey])</font>")
 
 	if (user)
 		if (istype(M, /mob/living/carbon/human))

@@ -3,7 +3,7 @@
 	icon = 'weapons.dmi'
 
 /obj/item/weapon/offhand
-	name = "Offhand"
+	name = "offhand"
 	var/linked_weapon_name = ""
 	w_class = 5.0
 	icon_state = "offhand"
@@ -13,7 +13,7 @@
 
 /obj/item/weapon/shield/riot
 	name = "riot shield"
-	desc = "A shield adept at blocking blunt objects."
+	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
 	icon = 'weapons.dmi'
 	icon_state = "riot"
 	flags = FPRINT | TABLEPASS| CONDUCT| ONBACK
@@ -29,15 +29,28 @@
 	IsShield()
 		return 1
 
-/*/obj/item/weapon/sord
-	name = "SORD"
+
+/obj/item/weapon/nullrod
+	name = "null rod"
+	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
+	icon_state = "nullrod"
+	item_state = "nullrod"
+	flags = FPRINT | ONBELT | TABLEPASS
+	force = 15
+	throw_speed = 1
+	throw_range = 4
+	throwforce = 10
+	w_class = 1
+
+/obj/item/weapon/sord
+	name = "\improper SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
 	icon_state = "sord"
 	item_state = "sord"
 	flags = FPRINT | ONBELT | TABLEPASS
 	force = 2
 	throwforce = 1
-	w_class = 3	*/
+	w_class = 3
 
 /obj/item/weapon/claymore
 	name = "claymore"
@@ -47,7 +60,7 @@
 	flags = FPRINT | ONBELT | TABLEPASS
 	force = 40
 	throwforce = 10
-	w_class = 3.0
+	w_class = 3
 
 	IsShield()
 		return 1
@@ -68,7 +81,7 @@
 	origin_tech = "materials=2"
 
 /obj/item/weapon/rsf
-	name = "Rapid-Service-Fabricator (RSF)"
+	name = "\improper Rapid-Service-Fabricator"
 	desc = "A device used to rapidly deploy service items."
 	icon = 'items.dmi'
 	icon_state = "rcd"
@@ -81,7 +94,7 @@
 	w_class = 3.0
 
 /obj/item/weapon/rsp
-	name = "Rapid-Seed-Producer (RSP)"
+	name = "\improper Rapid-Seed-Producer"
 	desc = "A device used to rapidly deploy seeds."
 	icon = 'items.dmi'
 	icon_state = "rcd"
@@ -94,7 +107,7 @@
 	w_class = 3.0
 
 /obj/item/weapon/rcd_ammo
-	name = "Compressed matter cartridge"
+	name = "compressed matter cartridge"
 	desc = "Highly compressed matter for the RCD."
 	icon = 'ammo.dmi'
 	icon_state = "rcd"
@@ -108,12 +121,13 @@
 	var/ammo = 10
 
 /obj/item/weapon/rcd_ammo/large
-	name = "Super compressed matter cartridge"
+	name = "super compressed matter cartridge"
 	ammo = 30
 
 /obj/item/weapon/spacecash
-	name = "Space Cash"
-	desc = "You're rich, bitch!"
+	name = "space cash"
+	desc = "It's worth 1 credit."
+	gender = PLURAL
 	icon = 'items.dmi'
 	icon_state = "spacecash"
 	opacity = 0
@@ -130,25 +144,31 @@
 /obj/item/weapon/spacecash/c10
 	icon_state = "spacecash10"
 	access = access_crate_cash
+	desc = "It's worth 10 credits."
 /obj/item/weapon/spacecash/c20
 	icon_state = "spacecash20"
 	access = access_crate_cash
+	desc = "It's worth 20 credits."
 /obj/item/weapon/spacecash/c50
 	icon_state = "spacecash50"
 	access = access_crate_cash
+	desc = "It's worth 50 credits."
 /obj/item/weapon/spacecash/c100
 	icon_state = "spacecash100"
 	access = access_crate_cash
+	desc = "It's worth 100 credits."
 /obj/item/weapon/spacecash/c200
 	icon_state = "spacecash200"
 	access = access_crate_cash
+	desc = "It's worth 200 credits."
 /obj/item/weapon/spacecash/c500
 	icon_state = "spacecash500"
 	access = access_crate_cash
+	desc = "It's worth 500 credits."
 /obj/item/weapon/spacecash/c1000
 	icon_state = "spacecash1000"
 	access = access_crate_cash
-
+	desc = "It's worth 1000 credits."
 
 /obj/item/device/mass_spectrometer
 	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
@@ -174,8 +194,8 @@
 	origin_tech = "magnets=4;biotech=2"
 
 /obj/item/weapon/melee/baton
-	name = "Stun Baton"
-	desc = "The police baton of the future."
+	name = "stun baton"
+	desc = "A stun baton for hitting people with."
 	icon_state = "stunbaton"
 	item_state = "baton"
 	flags = FPRINT | ONBELT | TABLEPASS
@@ -187,8 +207,8 @@
 	var/status = 0
 	origin_tech = "combat=2"
 
-/*/obj/item/weapon/melee/chainofcommand
-	name = "Chain of Command"
+/obj/item/weapon/melee/chainofcommand
+	name = "chain of command"
 	desc = "The Captain is first and all other heads are last."
 	icon_state = "chainofcommand"
 	item_state = "chainofcommand"
@@ -199,13 +219,13 @@
 	var/charges = 50.0
 	var/maximum_charges = 50.0
 	var/status = 1
-	origin_tech = "combat=4"	*/
+	origin_tech = "combat=4"
 
 /obj/item/weapon/melee/energy
 	var/active = 0
 
 /obj/item/weapon/melee/energy/axe
-	name = "Axe"
+	name = "energy axe"
 	desc = "An energised battle axe."
 	icon_state = "axe0"
 	force = 40.0
@@ -219,7 +239,7 @@
 /obj/item/weapon/melee/energy/sword
 	var/color
 	name = "energy sword"
-	desc = "It cuts AND cooks at the same time!."
+	desc = "May the force be within you."
 	icon_state = "sword0"
 	force = 3.0
 	throwforce = 5.0
@@ -252,7 +272,7 @@
 	var/datum/effect/effect/system/spark_spread/spark_system
 
 /obj/item/weapon/bananapeel
-	name = "Banana Peel"
+	name = "banana peel"
 	desc = "A peel from a banana."
 	icon = 'items.dmi'
 	icon_state = "banana_peel"
@@ -263,8 +283,9 @@
 	throw_range = 20
 
 /obj/item/weapon/soap
-	name = "Soap"
+	name = "soap"
 	desc = "A cheap bar of soap. Doesn't smell."
+	gender = PLURAL
 	icon = 'items.dmi'
 	icon_state = "soap"
 	w_class = 1.0
@@ -362,7 +383,7 @@
 	color = "brown"
 
 /obj/item/weapon/bikehorn
-	name = "Bike Horn"
+	name = "bike horn"
 	desc = "A horn off of a bicycle."
 	icon = 'items.dmi'
 	icon_state = "bike_horn"
@@ -404,6 +425,7 @@
 /obj/item/stack/medical/ointment
 	name = "ointment"
 	desc = "Used to treat those nasty burns."
+	gender = PLURAL
 	singular_name = "ointment"
 	icon_state = "ointment"
 	heal_burn = 40
@@ -452,6 +474,92 @@
 	w_class = 2.0
 	origin_tech = "magnets=1"
 
+/obj/item/weapon/card
+	name = "card"
+	desc = "Does card things."
+	icon = 'card.dmi'
+	w_class = 1.0
+
+	var/list/files = list(  )
+
+/obj/item/weapon/card/data
+	name = "data disk"
+	desc = "A disk of data."
+	icon_state = "data"
+	var/function = "storage"
+	var/data = "null"
+	var/special = null
+	item_state = "card-id"
+
+/obj/item/weapon/card/data/clown
+	name = "coordinates to clown planet"
+	icon_state = "data"
+	item_state = "card-id"
+	layer = 3
+	level = 2
+	desc = "This card contains coordinates to the fabled Clown Planet. Handle with care."
+	function = "teleporter"
+	data = "Clown Land"
+
+/obj/item/weapon/card/emag
+	desc = "An identification card. Seems to have some funny chip on it, though."
+	name = "modified identification card"
+	icon_state = "emag"
+	item_state = "card-id"
+	origin_tech = "magnets=2;syndicate=2"
+	var/uses = 5
+
+/obj/item/weapon/card/id
+	name = "identification card"
+	desc = "An identification card. No shit."
+	icon_state = "id"
+	item_state = "card-id"
+	var/access = list()
+	var/registered = null
+	var/assignment = null
+//	var/obj/item/weapon/photo/PHOTO = null
+	var/over_jumpsuit = 1 // If set to 0, it won't display on top of the mob's jumpsuit
+	var/dorm = 0		// determines if this ID has claimed a dorm already
+
+/obj/item/weapon/card/id/gold
+	name = "identification card"
+	desc = "A golden card which shows power and might."
+	icon_state = "gold"
+	item_state = "gold_id"
+
+/obj/item/weapon/card/id/syndicate
+	name = "agent card"
+	desc = "Shhhhh."
+	access = list(access_maint_tunnels)
+	origin_tech = "syndicate=3"
+
+/obj/item/weapon/card/id/syndicate_command
+	name = "syndicate ID card"
+	desc = "An ID straight from the Syndicate."
+	registered = "Syndicate"
+	assignment = "Syndicate Overlord"
+	access = list(access_syndicate)
+
+/obj/item/weapon/card/id/captains_spare
+	name = "captain's spare ID"
+	desc = "The spare ID of the High Lord himself."
+	icon_state = "gold"
+	item_state = "gold_id"
+	registered = "Captain"
+	assignment = "Captain"
+	New()
+		access = get_access("Captain")
+		..()
+
+/obj/item/weapon/card/id/centcom
+	name = "\improper CentCom. ID"
+	desc = "An ID straight from Cent. Com."
+	icon_state = "centcom"
+	registered = "Central Command"
+	assignment = "General"
+	New()
+		access = get_all_centcom_access()
+		..()
 
 /obj/item/weapon/cleaner
 	desc = "A chemical that cleans messes."
@@ -586,7 +694,7 @@
 
 /obj/item/weapon/fireaxe  // DEM AXES MAN, marker -Agouri
 	icon_state = "fireaxe0"
-	name = "Fire axe"
+	name = "fire axe"
 	desc = "A tool for breaking down those obstructions that stop you from fighting that fire."  //Less ROBUST. --SkyMarshal
 	force = 5
 	w_class = 4.0
@@ -616,7 +724,7 @@
 	icon = 'items.dmi'
 
 /obj/item/weapon/disk/nuclear
-	name = "Nuclear Authentication Disk"
+	name = "nuclear authentication disk"
 	desc = "Better keep this safe, it can activate the nuke."
 	icon_state = "nucleardisk"
 	item_state = "card-id"
@@ -646,7 +754,7 @@
 	m_amt = 90
 
 /obj/item/weapon/f_card
-	name = "Finger Print Card"
+	name = "finger print card"
 	desc = "Used to take fingerprints."
 	icon = 'card.dmi'
 	icon_state = "fingerprint0"
@@ -659,7 +767,7 @@
 
 
 /obj/item/weapon/fcardholder
-	name = "Finger Print Case"
+	name = "fingerprint card case"
 	desc = "Holds fingerprint cards."
 	icon = 'items.dmi'
 	icon_state = "fcardholder0"
@@ -726,6 +834,7 @@
 /obj/item/weapon/handcuffs
 	name = "handcuffs"
 	desc = "Use this to keep prisoners in line."
+	gender = PLURAL
 	icon = 'items.dmi'
 	icon_state = "handcuff"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
@@ -786,6 +895,10 @@
 	w_class = 2.0
 	flags = FPRINT | TABLEPASS
 
+/obj/item/weapon/caution/cone
+	desc = "This cone is trying to warn you of something!"
+	name = "warning cone"
+	icon_state = "cone"
 
 /obj/item/weapon/paper
 	name = "Paper"
@@ -801,7 +914,7 @@
 	var/list/stamped
 	var/see_face = 1
 	var/body_parts_covered = HEAD
-	protective_temperature = T0C + 10
+	var/protective_temperature = 0
 	var/heat_transfer_coefficient = 0.99
 	var/gas_transfer_coefficient = 1
 	var/permeability_coefficient = 0.99
@@ -809,7 +922,8 @@
 	var/iteration
 
 /obj/item/weapon/directions
-	name = "Crumpled Paper"
+	name = "crumpled paper"
+	gender = PLURAL
 	desc = "This is a crumpled piece of paper."
 	icon = 'weapons.dmi'
 	icon_state = "crumpled"
@@ -823,7 +937,7 @@
 	name = "paper - 'Judgement'"
 	info = "For crimes against the station, the offender is sentenced to:<BR>\n<BR>\n"
 
-/obj/item/weapon/paper/certificate //What is this? -Kaleb702
+/obj/item/weapon/paper/certificate
 	name = "paper - 'Certificate'"
 	info = "Due to this person's unique actions in the past, we hereby certify that they are \"Totally Radical\"<br><br>----<b>Central Command</b><BR><i>This paper has been stamped with the central command rubber stamp.</i><BR>"
 	stamped = list(/obj/item/weapon/stamp/centcom)
@@ -895,8 +1009,8 @@
 	name = "multicolor pen"
 
 /obj/item/weapon/banhammer
-	desc = "A banhammer."
-	name = "Banhammer"
+	desc = "A banhammer"
+	name = "banhammer"
 	icon = 'items.dmi'
 	icon_state = "toyhammer"
 	flags = FPRINT | ONBELT | TABLEPASS
@@ -924,8 +1038,8 @@
 	m_amt = 3750
 
 /obj/item/weapon/rubber_chicken
-	name = "Rubber Chicken"
-	desc = "A rubber chicken. Isn't that hilarious?"
+	name = "rubber chicken"
+	desc = "A rubber chicken, isn't that hilarious?"
 	icon = 'items.dmi'
 	icon_state = "rubber_chicken"
 	item_state = "rubber_chicken"
@@ -933,7 +1047,7 @@
 
 /obj/item/weapon/screwdriver
 	name = "screwdriver"
-	desc = "You can be totally screwy with this."
+	desc = "Used for screwing."
 	icon = 'items.dmi'
 	icon_state = "screwdriver"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -956,9 +1070,28 @@
 	item_state = "shard-glass"
 	g_amt = 3750
 
-/obj/item/weapon/SWF_uplink
+/*/obj/item/weapon/syndicate_uplink
 	name = "station bounced radio"
-	desc = "Used to communicate it appears."
+	desc = "Remain silent about this..."
+	icon = 'radio.dmi'
+	icon_state = "radio"
+	var/temp = null
+	var/uses = 10.0
+	var/selfdestruct = 0.0
+	var/traitor_frequency = 0.0
+	var/mob/currentUser = null
+	var/obj/item/device/radio/origradio = null
+	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	w_class = 2.0
+	item_state = "radio"
+	throw_speed = 4
+	throw_range = 20
+	m_amt = 100
+	origin_tech = "magnets=2;syndicate=3"*/
+
+/obj/item/weapon/SWF_uplink
+	name = "station-bounced radio"
+	desc = "used to comunicate it appears."
 	icon = 'radio.dmi'
 	icon_state = "radio"
 	var/temp = null
@@ -988,6 +1121,7 @@
 	var/temp = null
 	var/spell_type = "verb"
 	var/max_uses = 5
+	var/op = 1
 
 /obj/item/weapon/spellbook/object_type_spells //used for giving out object spells as opposed to verb spells
 	spell_type = "object"
@@ -1021,6 +1155,7 @@
 /obj/item/weapon/table_parts
 	name = "table parts"
 	desc = "Parts of a table. Poor table."
+	gender = PLURAL
 	icon = 'items.dmi'
 	icon_state = "table_parts"
 	m_amt = 3750
@@ -1041,7 +1176,7 @@
 	flags = null
 
 /obj/item/weapon/teleportation_scroll
-	name = "Teleportation Scroll"
+	name = "scroll of teleportation"
 	desc = "A scroll for moving around."
 	icon = 'wizard.dmi'
 	icon_state = "scroll"
@@ -1092,7 +1227,7 @@
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
 
 /obj/item/weapon/cell/crap
-	name = "Nanotrasen Brand Rechargable AA Battery"
+	name = "\improper NanoTrasen Brand Rechargable AA Battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
 	origin_tech = "powerstorage=0"
 	maxcharge = 500
@@ -1106,7 +1241,7 @@
 
 /obj/item/weapon/cell/super
 	name = "super-capacity power cell"
-	origin_tech = "powerstorage=3"
+	origin_tech = "powerstorage=5"
 	maxcharge = 20000
 	g_amt = 70
 
@@ -1125,7 +1260,7 @@
 		return 1
 
 /*/obj/item/weapon/cell/potato
-	name = "Potato Battery" // This needs more Portal 2 refs. -Kaleb702
+	name = "Potato Battery"
 	desc = "A rechargable starch based power cell."
 	icon = 'harvest.dmi'
 	icon_state = "potato_battery"
@@ -1147,7 +1282,7 @@
 	for (var/obj/machinery/camera/C in cameras)
 		friendly_cameras.Add(C.c_tag)
 
-	var/target = input("Select the camera to observe.", null) as null|anything in friendly_cameras
+	var/target = input("Select the camera to observe", null) as null|anything in friendly_cameras
 	if (!target)
 		return
 	for (var/obj/machinery/camera/C in cameras)
@@ -1180,7 +1315,7 @@
 	g_amt = 50
 
 /obj/item/weapon/module/id_auth
-	name = "ID authentication module"
+	name = "\improper ID authentication module"
 	icon_state = "id_mod"
 	desc = "A module allowing secure authorization of ID cards."
 
@@ -1228,7 +1363,7 @@
 	w_class = 3.0
 
 /obj/item/weapon/kitchenknife
-	name = "Kitchen knife"
+	name = "kitchen knife"
 	icon = 'kitchen.dmi'
 	icon_state = "knife"
 	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
@@ -1242,7 +1377,7 @@
 	origin_tech = "materials=1"
 
 /obj/item/weapon/butch
-	name = "Butcher's Cleaver"
+	name = "butcher's cleaver"
 	icon = 'kitchen.dmi'
 	icon_state = "butch"
 	desc = "A huge thing used for chopping and chopping up meat."
@@ -1256,10 +1391,10 @@
 	origin_tech = "materials=1"
 
 /obj/item/weapon/tray
-	name = "Tray"
+	name = "tray"
 	icon = 'food.dmi'
 	icon_state = "tray"
-	desc = "A plastic tray to lay food on."
+	desc = "A tray to lay food on."
 	throwforce = 12.0
 	throwforce = 10.0
 	throw_speed = 1
@@ -1371,7 +1506,7 @@
 	name = "circular saw"
 	desc = "For heavy duty cutting."
 	icon = 'surgery.dmi'
-	icon_state = "saw"
+	icon_state = "saw3"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 15.0
 	w_class = 1.0
@@ -1392,13 +1527,27 @@
 	origin_tech = "materials=1;biotech=1"
 
 /obj/item/weapon/syntiflesh
-	name = "Syntiflesh"
+	name = "syntiflesh"
 	desc = "Meat that appears...strange..."
 	icon = 'food.dmi'
 	icon_state = "meat"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
 	origin_tech = "biotech=2"
+
+/obj/item/weapon/hatchet
+	name = "hatchet"
+	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
+	icon = 'weapons.dmi'
+	icon_state = "hatchet"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	force = 12.0
+	w_class = 1.0
+	throwforce = 15.0
+	throw_speed = 4
+	throw_range = 4
+	m_amt = 15000
+	origin_tech = "materials=2;combat=1"
 
 /obj/item/weapon/stamp
 	desc = "A rubber stamp for stamping important documents."
@@ -1499,8 +1648,17 @@
 	name = "d6"
 	desc = "A dice with six sides."
 	var/sides = 6
-	icon_state = "dice"
-	item_state = "dice"
+	icon = 'dice.dmi'
+	icon_state = "d66"
+
+/obj/item/weapon/dice/New()
+	icon_state = "[name][rand(sides)]"
+
+/obj/item/weapon/dice/d20 // -- TLE
+	name = "d20"
+	desc = "A dice with twenty sides."
+	sides = 20
+	icon_state = "d2020"
 
 /obj/item/weapon/dice/d8 // -- SkyMarshal
 	name = "d8"
@@ -1515,14 +1673,6 @@
 	sides = 12
 	icon_state = "d20"
 	item_state = "dice"
-
-/obj/item/weapon/dice/d20 // -- TLE
-	name = "d20"
-	desc = "A dice with...hell, that is a lot of sides."
-	sides = 20
-	icon_state = "d20"
-	item_state = "dice"
-
 /obj/item/weapon/pai_cable
 	desc = "A flexible coated cable with a universal jack on one end."
 	desc = "Some spacey cable."
@@ -1532,8 +1682,9 @@
 	var/obj/machinery/machine
 
 /obj/item/weapon/plastique
-	name = "Plastic Explosives"
+	name = "plastic explosives"
 	desc = "Used to put holes in specific areas without too much extra hole."
+	gender = PLURAL
 	icon = 'assemblies.dmi'
 	icon_state = "plastic-explosive0"
 	item_state = "plasticx"
@@ -1548,6 +1699,7 @@
 /obj/item/weapon/stock_parts
 	name = "stock part"
 	desc = "What?"
+	gender = PLURAL
 	icon = 'stock_parts.dmi'
 	w_class = 2.0
 	var/rating = 1
@@ -1558,14 +1710,14 @@
 //Rank 1
 
 /obj/item/weapon/stock_parts/console_screen
-	name = "Console Screen"
+	name = "console screen"
 	desc = "Used in the construction of computers and other devices with a interactive console."
 	icon_state = "screen"
 	origin_tech = "materials=1"
 	g_amt = 200
 
 /obj/item/weapon/stock_parts/capacitor
-	name = "Capacitor"
+	name = "capacitor"
 	desc = "A basic capacitor used in the construction of a variety of devices."
 	icon_state = "capacitor"
 	origin_tech = "powerstorage=1"
@@ -1573,7 +1725,7 @@
 	g_amt = 50
 
 /obj/item/weapon/stock_parts/scanning_module
-	name = "Scanning Module"
+	name = "scanning module"
 	desc = "A compact, high resolution scanning module used in the construction of certain devices."
 	icon_state = "scan_module"
 	origin_tech = "magnets=1"
@@ -1581,14 +1733,14 @@
 	g_amt = 20
 
 /obj/item/weapon/stock_parts/manipulator
-	name = "Micro-Manipulator"
+	name = "micro-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "micro_mani"
 	origin_tech = "materials=1;programming=1"
 	m_amt = 30
 
 /obj/item/weapon/stock_parts/micro_laser
-	name = "Micro-laser"
+	name = "micro-laser"
 	desc = "A tiny laser used in certain devices."
 	icon_state = "micro_laser"
 	origin_tech = "magnets=1"
@@ -1596,7 +1748,7 @@
 	g_amt = 20
 
 /obj/item/weapon/stock_parts/matter_bin
-	name = "Matter Bin"
+	name = "matter bin"
 	desc = "A container for hold compressed matter awaiting re-construction."
 	icon_state = "matter_bin"
 	origin_tech = "materials=1"
@@ -1605,7 +1757,7 @@
 //Rank 2
 
 /obj/item/weapon/stock_parts/capacitor/adv
-	name = "Advanced Capacitor"
+	name = "advanced capacitor"
 	desc = "An advanced capacitor used in the construction of a variety of devices."
 	origin_tech = "powerstorage=3"
 	rating = 2
@@ -1613,7 +1765,7 @@
 	g_amt = 50
 
 /obj/item/weapon/stock_parts/scanning_module/adv
-	name = "Advanced Scanning Module"
+	name = "advanced scanning module"
 	desc = "A compact, high resolution scanning module used in the construction of certain devices."
 	icon_state = "scan_module"
 	origin_tech = "magnets=3"
@@ -1622,7 +1774,7 @@
 	g_amt = 20
 
 /obj/item/weapon/stock_parts/manipulator/nano
-	name = "Nano-Manipulator"
+	name = "nano-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "micro_mani"
 	origin_tech = "materials=3,programming=2"
@@ -1630,7 +1782,7 @@
 	m_amt = 30
 
 /obj/item/weapon/stock_parts/micro_laser/high
-	name = "High-Power Micro-laser"
+	name = "high-power micro-laser"
 	desc = "A tiny laser used in certain devices."
 	icon_state = "micro_laser"
 	origin_tech = "magnets=3"
@@ -1639,7 +1791,7 @@
 	g_amt = 20
 
 /obj/item/weapon/stock_parts/matter_bin/adv
-	name = "Advanced Matter Bin"
+	name = "advanced matter bin"
 	desc = "A container for hold compressed matter awaiting re-construction."
 	icon_state = "matter_bin"
 	origin_tech = "materials=3"
@@ -1649,7 +1801,7 @@
 //Rating 3
 
 /obj/item/weapon/stock_parts/capacitor/super
-	name = "Super Capacitor"
+	name = "super capacitor"
 	desc = "A super-high capacity capacitor used in the construction of a variety of devices."
 	origin_tech = "powerstorage=5;materials=4"
 	rating = 3
@@ -1657,7 +1809,7 @@
 	g_amt = 50
 
 /obj/item/weapon/stock_parts/scanning_module/phasic
-	name = "Phasic Scanning Module"
+	name = "phasic scanning module"
 	desc = "A compact, high resolution phasic scanning module used in the construction of certain devices."
 	origin_tech = "magnets=5"
 	rating = 3
@@ -1665,14 +1817,14 @@
 	g_amt = 20
 
 /obj/item/weapon/stock_parts/manipulator/pico
-	name = "Pico-Manipulator"
+	name = "pico-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	origin_tech = "materials=5,programming=2"
 	rating = 3
 	m_amt = 30
 
 /obj/item/weapon/stock_parts/micro_laser/ultra
-	name = "Ultra-High-Power Micro-laser"
+	name = "ultra-high-power micro-laser"
 	desc = "A tiny laser used in certain devices."
 	origin_tech = "magnets=5"
 	rating = 3
@@ -1680,7 +1832,7 @@
 	g_amt = 20
 
 /obj/item/weapon/stock_parts/matter_bin/super
-	name = "Super Matter Bin"
+	name = "super matter bin"
 	desc = "A container for hold compressed matter awaiting re-construction."
 	origin_tech = "materials=5"
 	rating = 3
@@ -1689,7 +1841,7 @@
 // Subspace stock parts
 
 /obj/item/weapon/stock_parts/subspace/ansible
-	name = "Subspace Ansible"
+	name = "subspace ansible"
 	icon_state = "subspace_ansible"
 	desc = "A compact module capable of sensing extradimensional activity."
 	origin_tech = "programming=3;magnets=5;materials=4;bluespace=2"
@@ -1697,7 +1849,7 @@
 	g_amt = 10
 
 /obj/item/weapon/stock_parts/subspace/filter
-	name = "Hyperwave Filter"
+	name = "hyperwave filter"
 	icon_state = "hyperwave_filter"
 	desc = "A tiny device capable of filtering and converting super-intense radiowaves."
 	origin_tech = "programming=4;magnets=2"
@@ -1705,7 +1857,7 @@
 	g_amt = 10
 
 /obj/item/weapon/stock_parts/subspace/amplifier
-	name = "Subspace Amplifier"
+	name = "subspace amplifier"
 	icon_state = "subspace_amplifier"
 	desc = "A compact micro-machine capable of amplifying weak subspace transmissions."
 	origin_tech = "programming=3;magnets=4;materials=4;bluespace=2"
@@ -1713,7 +1865,7 @@
 	g_amt = 10
 
 /obj/item/weapon/stock_parts/subspace/treatment
-	name = "Subspace Treatment Disk"
+	name = "subspace treatment disk"
 	icon_state = "treatment_disk"
 	desc = "A compact micro-machine capable of stretching out hyper-compressed radio waves."
 	origin_tech = "programming=3;magnets=2;materials=5;bluespace=2"
@@ -1721,7 +1873,7 @@
 	g_amt = 10
 
 /obj/item/weapon/stock_parts/subspace/analyzer
-	name = "Subspace Wavelength Analyzer"
+	name = "subspace wavelength analyzer"
 	icon_state = "wavelength_analyzer"
 	desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."
 	origin_tech = "programming=3;magnets=4;materials=4;bluespace=2"
@@ -1729,15 +1881,22 @@
 	g_amt = 10
 
 /obj/item/weapon/stock_parts/subspace/crystal
-	name = "Ansible Crystal"
+	name = "ansible crystal"
 	icon_state = "ansible_crystal"
 	desc = "A crystal made from pure glass used to transmit laser databursts to subspace."
 	origin_tech = "magnets=4;materials=4;bluespace=2"
 	g_amt = 50
 
 /obj/item/weapon/stock_parts/subspace/transmitter
-	name = "Subspace Transmitter"
+	name = "subspace transmitter"
 	icon_state = "subspace_transmitter"
 	desc = "A large piece of equipment used to open a window into the subspace dimension."
 	origin_tech = "magnets=5;materials=5;bluespace=3"
 	m_amt = 50
+
+/obj/item/weapon/ectoplasm
+	name = "ectoplasm"
+	desc = "spooky"
+	gender = PLURAL
+	icon = 'wizard.dmi'
+	icon_state = "ectoplasm"

@@ -213,9 +213,10 @@ var/const
 
 	proc/RemoveActiveIndicators() //removes the "active" facehugger indicator from all aliens in the world for this hugger
 		for(var/mob/living/carbon/alien/alien in world)
-			for(var/image/image in alien.client.images)
-				if(image.icon_state == "facehugger_active" && image.loc == src)
-					del(image)
+			if(alien.client)
+				for(var/image/image in alien.client.images)
+					if(image.icon_state == "facehugger_active" && image.loc == src)
+						del(image)
 
 		return
 

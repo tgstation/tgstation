@@ -9,6 +9,7 @@
 	var/obj/screen/storage/boxes = null
 	var/obj/screen/close/closer = null
 	w_class = 3.0
+	var/foldable = null	// BubbleWrap - if set, can be folded (when empty) into a sheet of cardboard
 
 /obj/item/weapon/storage/proc/return_inv()
 
@@ -96,7 +97,7 @@
 	return
 
 //This proc is called when you want to place an item into the storage item.
-/obj/item/weapon/storage/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/storage/attackby(obj/item/W as obj, mob/user as mob)
 	..()
 	if(isrobot(user))
 		user << "\blue You're a robot. No."
@@ -138,6 +139,7 @@
 				user << "\red The tray won't fit in [src]."
 				return
 			else
+
 				W.loc = user.loc
 				if ((user.client && user.s_active != src))
 					user.client.screen -= W
@@ -157,19 +159,13 @@
 			user << "\red The [src] cannot hold [W] as it's a storage item of the same size."
 			return //To prevent the stacking of the same sized items.
 
-	if(user)
-		user.u_equip(W)
-		W.loc = src
-		if ((user.client && user.s_active != src))
-			user.client.screen -= W
-		src.orient2hud(user)
-		W.dropped(user)
-		add_fingerprint(user)
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\blue [user] has added [W] to [src]!"))
-	else
-		W.loc = src
-		orient_objs(5, 10, 4 + min(7, storage_slots), 10)
+	user.u_equip(W)
+	W.loc = src
+	if ((user.client && user.s_active != src))
+		user.client.screen -= W
+	src.orient2hud(user)
+	W.dropped(user)
+	add_fingerprint(user)
 
 	if(istype(src, /obj/item/weapon/storage/backpack/santabag)) // update the santa bag icon
 		if(contents.len < 5)
@@ -180,6 +176,8 @@
 			src.icon_state = "giftbag2"
 
 	if (istype(W, /obj/item/weapon/gun/energy/crossbow)) return //STEALTHY
+	for(var/mob/O in viewers(user, null))
+		O.show_message(text("\blue [user] has added [W] to [src]!"))
 		//Foreach goto(139)
 	return
 
@@ -249,8 +247,29 @@
 /obj/screen/storage/attackby(W, mob/user as mob)
 	src.master.attackby(W, user)
 	return
+// BubbleWrap - A box can be folded up to make card
+/obj/item/weapon/storage/attack_self(mob/user as mob)
+	if ( contents.len )
+		return
+	if ( !ispath(src.foldable) )
+		return
+	var/found = 0
+	// Close any open UI windows first
+	for(var/mob/M in range(1))
+		if (M.s_active == src)
+			src.close(M)
+		if ( M == user )
+			found = 1
+	if ( !found )	// User is too far away
+		return
+	// Now make the cardboard
+	user << "\blue You fold [src] flat."
+	new src.foldable(get_turf(src))
+	del(src)
+//BubbleWrap END
 
 /obj/item/weapon/storage/box/
+	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
 /obj/item/weapon/storage/box/survival/New()
 	..()
@@ -296,7 +315,7 @@
 
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
-	switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "freedom" = 1)))
+	switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "murder" = 1, "freedom" = 1)))
 		if ("bloodyspai")
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/clothing/mask/gas/voice(src)
@@ -323,6 +342,12 @@
 			new /obj/item/ammo_magazine/a357(src)
 			new /obj/item/weapon/card/emag(src)
 			new /obj/item/weapon/plastique(src)
+			return
+
+		if ("murder")
+			new /obj/item/weapon/melee/energy/sword(src)
+			new /obj/item/clothing/glasses/thermal(src)
+			new /obj/item/weapon/card/emag(src)
 			return
 
 		if("freedom")

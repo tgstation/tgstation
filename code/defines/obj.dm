@@ -10,6 +10,7 @@
 	var/datum/marked_datum
 	animate_movement = 2
 	var/throwforce = 1
+
 	proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 		//Return: (NONSTANDARD)
 		//		null if object handles breathing logic for lifeform
@@ -284,6 +285,15 @@
 	opacity = 0
 	density = 0
 
+/obj/effect/sign/deathsposal
+	desc = "A warning sign which reads 'DISPOSAL LEADS TO SPACE'"
+	name = "DISPOSAL LEADS TO SPACE"
+	icon = 'decals.dmi'
+	icon_state = "deathsposal"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
 /obj/effect/sign/pods
 	desc = "A warning sign which reads 'ESCAPE PODS'"
 	name = "ESCAPE PODS"
@@ -294,8 +304,8 @@
 	density = 0
 
 /obj/effect/sign/fire
-	desc = "A warning sign which reads 'EXTREME TEMPERATURES'"
-	name = "EXTREME TEMPERATURES"
+	desc = "A warning sign which reads 'DANGER: FIRE'"
+	name = "DANGER: FIRE"
 	icon = 'decals.dmi'
 	icon_state = "fire"
 	anchored = 1.0
@@ -412,7 +422,6 @@
 	var/twohanded = 0 // Two handed and wielded off by default, nyoro~n -Agouri
 	var/force_unwielded = 0
 	var/force_wielded = 0
-	var/protective_temperature = 0 // Placing this here to avoid runtime errors, due to tiny items being allowed on ears and being queried for this variable
 	flags = FPRINT | TABLEPASS
 	pass_flags = PASSTABLE
 	pressure_resistance = 50
@@ -600,6 +609,10 @@
 	var/obj/structure/crematorium/connected = null
 	anchored = 1.0
 
+
+
+
+
 /obj/structure/cable
 	level = 1
 	anchored =1
@@ -610,8 +623,9 @@
 	icon_state = "0-1"
 	var/d1 = 0
 	var/d2 = 1
-	layer = 2.5
+	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
 	var/color="red"
+	var/obj/structure/powerswitch/power_switch
 
 /obj/structure/cable/yellow
 	color="yellow"
@@ -744,6 +758,7 @@
 	desc = "Apply butt."
 	icon = 'objects.dmi'
 	icon_state = "stool"
+	anchored = 1.0
 	flags = FPRINT
 	pressure_resistance = 3*ONE_ATMOSPHERE
 
@@ -751,8 +766,7 @@
 	name = "bed"
 	desc = "This is used to lie in, sleep in or strap on."
 	icon_state = "bed"
-	anchored = 1.0
-	var/list/buckled_mobs = list(  )
+	var/mob/living/buckled_mob
 
 /obj/structure/stool/bed/alien
 	name = "Resting contraption"
@@ -760,43 +774,29 @@
 	icon_state = "abed"
 
 
-/obj/structure/stool/chair
+/obj/structure/stool/bed/chair	//YES, chairs are a type of bed, which are a type of stool. This works, believe me.	-Pete
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
 	icon_state = "chair"
-	var/status = 0.0
-	anchored = 1.0
-	var/list/buckled_mobs = list(  )
 
-/obj/structure/stool/chair/comfy
+/obj/structure/stool/bed/chair/comfy
 	name = "comfy chair"
 	desc = "It looks comfy."
 
-/obj/structure/stool/chair/comfy/brown
+/obj/structure/stool/bed/chair/comfy/brown
 	icon_state = "comfychair_brown"
 
-/obj/structure/stool/chair/comfy/beige
+/obj/structure/stool/bed/chair/comfy/beige
 	icon_state = "comfychair_beige"
 
-/obj/structure/stool/chair/comfy/teal
+/obj/structure/stool/bed/chair/comfy/teal
 	icon_state = "comfychair_teal"
 
-/obj/structure/stool/chair/comfy/black
+/obj/structure/stool/bed/chair/comfy/black
 	icon_state = "comfychair_black"
 
-/obj/structure/stool/chair/comfy/lime
+/obj/structure/stool/bed/chair/comfy/lime
 	icon_state = "comfychair_lime"
-
-/obj/structure/stool/chair/e_chair
-	name = "electrified chair"
-	desc = "Looks absolutely terrifying!"
-	icon_state = "e_chair0"
-	var/atom/movable/overlay/overl = null
-	var/on = 0.0
-	var/obj/item/assembly/shock_kit/part1 = null
-	var/isshocking
-	var/datum/effect/effect/system/spark_spread/spark = new /datum/effect/effect/system/spark_spread
-	var/list/mob/living/affected = list()
 
 /obj/structure/table
 	name = "table"
@@ -1128,7 +1128,7 @@
 		reagents = R
 		R.my_atom = src
 		POWERFLAG = rand(1,10)
-		Uses = rand(2, 5)
+		Uses = rand(7, 25)
 		//flags |= NOREACT
 
 		spawn()
@@ -1141,6 +1141,7 @@
 			if(Flush <= 0)
 				reagents.clear_reagents()
 				Flush = 30
+
 
 
 
@@ -1197,19 +1198,6 @@
 		new /obj/item/weapon/glass( src )
 */
 
-/obj/item/weapon/storage/cupbox
-	name = "Paper-cup Box"
-	icon_state = "box"
-	item_state = "syringe_kit"
-	New()
-		..()
-		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
-		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
-		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
-		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
-		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
-		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
-		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
 
 /obj/structure/falsewall
 	name = "wall"
@@ -1324,20 +1312,20 @@
 	throwforce = 14.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 
-/obj/item/stack/sheet/r_metal
-	name = "steel"
-	singular_name = "steel sheet"
+/obj/item/stack/sheet/plasteel
+	name = "plasteel"
+	singular_name = "plasteel sheet"
 	desc = "This sheet is an alloy of iron and plasma."
-	icon_state = "sheet-r_metal"
+	icon_state = "sheet-plasteel"
 	item_state = "sheet-metal"
 	m_amt = 7500
 	throwforce = 15.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 	origin_tech = "materials=2"
 
-/obj/item/stack/tile/steel
-	name = "Metal floor tile"
-	singular_name = "Steel floor tile"
+/obj/item/stack/tile/plasteel
+	name = "floor tiles"
+	singular_name = "floor tile"
 	desc = "Those could work as a pretty decent throwing weapon"
 	icon_state = "tile"
 	w_class = 3.0
@@ -1350,8 +1338,8 @@
 	max_amount = 60
 
 /obj/item/stack/tile/grass
-	name = "Grass tile"
-	singular_name = "Grass floor tile"
+	name = "grass tiles"
+	singular_name = "grass floor tile"
 	desc = "A patch of grass like they often use on golf courses"
 	icon_state = "tile_grass"
 	w_class = 3.0
@@ -1364,8 +1352,8 @@
 	origin_tech = "biotech=1"
 
 /obj/item/stack/light_w
-	name = "Wired glass tile"
-	singular_name = "Wired glass tile"
+	name = "wired glass tiles"
+	singular_name = "wired glass floor tile"
 	desc = "A glass tile, which is wired, somehow."
 	icon_state = "glass_wire"
 	w_class = 3.0
@@ -1400,8 +1388,8 @@
 				del(src)
 
 /obj/item/stack/tile/light
-	name = "Light floor tile"
-	singular_name = "Light floor tile"
+	name = "light tiles"
+	singular_name = "light floor tile"
 	desc = "A floor tile, made out off glass. It produces light."
 	icon_state = "tile_e"
 	w_class = 3.0
@@ -1435,6 +1423,13 @@
 				user.u_equip(src)
 				del(src)
 
+/obj/item/stack/sheet/cardboard	//BubbleWrap
+	name = "cardboard"
+	desc = "Large sheets of card, like boxes folded flat."
+	singular_name = "cardboard sheet"
+	icon_state = "sheet-card"
+	flags = FPRINT | TABLEPASS
+	origin_tech = "materials=1"
 
 /obj/item/weapon/beach_ball
 	icon = 'beach.dmi'
@@ -1452,3 +1447,30 @@
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		user.drop_item()
 		src.throw_at(target, throw_range, throw_speed)
+
+/obj/effect/stop
+	var/victim = null
+	icon_state = "empty"
+	name = "Geas"
+	desc = "You can't resist."
+	// name = ""
+
+
+
+/obj/debug/debugger
+	name =	"Quantum Debugger"
+	desc =  "A quantum debugger used by Centcomm Reality Engineers to help monitor transiant variables."
+	icon = 'stationobjs.dmi'
+	icon_state = "blackbox"
+
+	var/list/list1 = list()
+	var/list/list2 = list()
+	var/list/list3 = list()
+	var/list/list4 = list()
+	var/list/list5 = list()
+
+	var/var1 = null
+	var/var2 = null
+	var/var3 = null
+	var/var4 = null
+	var/var5 = null

@@ -89,24 +89,24 @@
 
 	if (src.wear_id)
 		var/id
-		var/photo = 0
+//		var/photo = 0
 		if(istype(src:wear_id, /obj/item/device/pda))
 			var/obj/item/device/pda/pda = src:wear_id
 			id = pda.owner
 		else
-			id = src.wear_id.registered_name
-			if (src.wear_id.PHOTO)
-				photo = 1
+			id = src.wear_id.registered
+//			if (src.wear_id.PHOTO)
+//				photo = 1
 		if (id != src.real_name && in_range(src, usr))
-			if (photo)
-				usr << "\red [src.name] is wearing \icon[src.wear_id] [src.wear_id.name] with a photo yet doesn't seem to be that person!!!"
-			else
-				usr << "\red [src.name] is wearing \icon[src.wear_id] [src.wear_id.name] yet doesn't seem to be that person!!!"
+//			if (photo)
+//				usr << "\red [src.name] is wearing \icon[src.wear_id] [src.wear_id.name] with a photo yet doesn't seem to be that person!!!"
+//			else
+			usr << "\red [src.name] is wearing \icon[src.wear_id] [src.wear_id.name] yet doesn't seem to be that person!!!"
 		else
-			if (photo)
-				usr << "\blue [src.name] is wearing \icon[src.wear_id] [src.wear_id.name] with a photo."
-			else
-				usr << "\blue [src.name] is wearing \icon[src.wear_id] [src.wear_id.name]."
+//			if (photo)
+//				usr << "\blue [src.name] is wearing \icon[src.wear_id] [src.wear_id.name] with a photo."
+//			else
+			usr << "\blue [src.name] is wearing \icon[src.wear_id] [src.wear_id.name]."
 
 
 	if (src.is_jittery)
