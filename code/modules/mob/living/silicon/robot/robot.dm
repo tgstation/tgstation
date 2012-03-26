@@ -175,7 +175,7 @@
 
 /mob/living/silicon/robot/blob_act()
 	if (stat != 2)
-		bruteloss += 60
+		adjustBruteLoss(60)
 		updatehealth()
 		return 1
 	return 0
@@ -243,7 +243,7 @@
 		M.show_message(text("\red [src] has been hit by [O]"), 1)
 		//Foreach goto(19)
 	if (health > 0)
-		bruteloss += 30
+		adjustBruteLoss(30)
 		if ((O.icon_state == "flaming"))
 			adjustFireLoss(40)
 		updatehealth()
@@ -354,7 +354,7 @@
 			user << "There are no dents to fix here!"
 			return
 		else if (W:remove_fuel(0))
-			bruteloss -= 30
+			adjustBruteLoss(-30)
 			if(getBruteLoss() < 0) bruteloss = 0
 			updatehealth()
 			add_fingerprint(user)
@@ -539,7 +539,7 @@
 					O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
 				if(prob(8))
 					flick("noise", flash)
-				bruteloss += damage
+				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(loc, 'slashmiss.ogg', 25, 1, -1)
@@ -587,7 +587,7 @@
 			damage = rand(5, 35)
 
 		damage = round(damage / 2) // borgs recieve half damage
-		bruteloss += damage
+		adjustBruteLoss(damage)
 
 
 		if(M.powerlevel > 0)
@@ -617,12 +617,23 @@
 				s.start()
 
 				if (prob(stunprob) && M.powerlevel >= 8)
-					bruteloss += M.powerlevel * rand(6,10)
+					adjustBruteLoss(M.powerlevel * rand(6,10))
 
 
 		updatehealth()
 
 	return
+
+/mob/living/silicon/robot/attack_animal(mob/living/simple_animal/M as mob)
+	if(M.melee_damage_upper == 0)
+		M.emote("[M.friendly] [src]")
+	else
+		for(var/mob/O in viewers(src, null))
+			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		adjustBruteLoss(damage)
+		updatehealth()
+
 
 /mob/living/silicon/robot/attack_hand(mob/user)
 
