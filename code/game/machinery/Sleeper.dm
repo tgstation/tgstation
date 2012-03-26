@@ -244,7 +244,7 @@
 				var/amount = max(0.15, 1)
 				M.adjustOxyLoss(-amount)
 			else
-				M.oxyloss = 0
+				M.adjustOxyLoss(-12)
 			M.updatehealth()
 		M.AdjustParalysis(-4)
 		M.AdjustWeakened(-4)

@@ -437,7 +437,7 @@ datum
 						M:drowsyness  = max(M:drowsyness, 20)
 					if(25 to INFINITY)
 						M.sleeping = 1
-						M.oxyloss = 0
+						M.adjustOxyLoss(-M.getOxyLoss())
 						M.SetWeakened(0)
 						M.SetStunned(0)
 						M.SetParalysis(0)
