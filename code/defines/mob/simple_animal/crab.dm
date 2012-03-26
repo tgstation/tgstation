@@ -15,6 +15,7 @@
 	response_disarm = "gently pushes aside the"
 	response_harm   = "stomps the"
 	stop_automated_movement = 1
+	friendly = "pinches"
 
 /mob/living/simple_animal/crab/Life()
 	..()

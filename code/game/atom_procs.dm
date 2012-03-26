@@ -39,8 +39,6 @@
 /atom/proc/attack_metroid(mob/user as mob)
 	return
 
-
-
 /atom/proc/hand_h(mob/user as mob)			//human (hand) - restrained
 	return
 

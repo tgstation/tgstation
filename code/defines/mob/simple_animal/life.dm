@@ -38,7 +38,8 @@
 	var/max_co2 = 5
 	var/min_n2 = 0
 	var/max_n2 = 0
-	var/unsuitable_atoms_damage = 2	//This damage is taken when atmos doesn't fit all the requirements above.
+	var/unsuitable_atoms_damage = 2	//This damage is taken when atmos doesn't fit all the requirements above
+
 
 	//LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly
 	var/melee_damage_lower = 0
@@ -46,7 +47,6 @@
 	var/attacktext = "attacks"
 	var/attack_sound = null
 	var/friendly = "nuzzles" //If the mob does no damage with it's attack
-	var/wall_smash = 0 //if they can smash walls
 
 /mob/living/simple_animal/New()
 	..()
@@ -197,13 +197,25 @@
 			return "[emote], \"[text]\""
 	return "says, \"[text]\"";
 
-/mob/living/simple_animal/emote(var/act,var/m_type=1,var/message = null)
-	if(act == "me")
-		for (var/mob/O in viewers(src, null))
-			O.show_message("<B>[src]</B> [message]")
-	else if(act)
+/mob/living/simple_animal/emote(var/act)
+	if(act)
 		for (var/mob/O in viewers(src, null))
 			O.show_message("<B>[src]</B> [act].")
+
+
+/mob/living/simple_animal/attack_animal(mob/living/simple_animal/M as mob)
+	if(M.melee_damage_upper == 0)
+		M.emote("[M.friendly] [src]")
+	else
+		for(var/mob/O in viewers(src, null))
+			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		health -= damage
+
+/mob/living/simple_animal/bullet_act(var/obj/item/projectile/Proj)
+	if(!Proj)	return
+	src.health -= Proj.damage
+	return 0
 
 /mob/living/simple_animal/attack_hand(mob/living/carbon/human/M as mob)
 	..()
