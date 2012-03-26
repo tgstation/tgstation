@@ -45,7 +45,6 @@
 		burn_dam = 0
 		bandaged = 0
 		max_damage = 0
-		wound_size = 0
 		max_size = 0
 		obj/item/weapon/implant/implant = null
 
@@ -301,27 +300,45 @@
 
 	proc/createwound(var/size = 1)
 		if(ishuman(src.owner))
-			var/datum/organ/external/wound/W = new(src)
-			W.bleeding = 1
-			src.owner:bloodloss += 10 * size
+			var/datum/organ/wound/W = new(src)
+			bleeding = 1
+			owner:bloodloss += 10 * size
 			W.wound_size = size
 			W.owner = src.owner
-			src.wounds += W
+			W.parent = src
+			wounds += W
 
-/datum/organ/external/wound
+/datum/organ/wound
 	name = "wound"
-	wound_size = 1
-	icon_name = "wound"
-	display_name = "wound"
-	parent = null
+	var/wound_size = 1
+	var/datum/organ/external/parent
+	var/bleeding = 1 //You got wounded, of course it's bleeding.
+	var/healing_state = 0
 
 	proc/stopbleeding()
-		if(!src.bleeding)
-			return
-		var/t = 10 * src.wound_size
-		src.owner:bloodloss -= t
-		src.bleeding = 0
-		del(src)
+		if(!bleeding)
+			return 0
+		owner:bloodloss -= 10 * src.wound_size
+		parent.bleeding = 0
+		for(var/datum/organ/wound/W in parent)
+			if(W.bleeding && W != src)
+				parent.bleeding = 1
+		bleeding = 0
+		spawn become_scar() //spawn off the process of becoming a scar.
+		return 1
+
+	proc/become_scar()
+		healing_state = 1 //Patched
+		sleep(rand(1800,3000)) //3-5 minutes
+		healing_state = 2 //Noticibly healing.
+		sleep(rand(1800,3000)) //3-5 minutes
+		healing_state = 3 //Angry red scar
+		sleep(rand(6000,9000)) //10-15 minutes
+		healing_state = 4 //Scar
+		sleep(rand(6000,9000)) //10-15 minutes
+		healing_state = 5 //Faded scar
+		return
+
 
 /****************************************************
 				INTERNAL ORGANS

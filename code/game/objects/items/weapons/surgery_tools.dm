@@ -1565,7 +1565,6 @@ CIRCULAR SAW
 			e.brute_dam = 0.0
 			e.burn_dam = 0.0
 			e.bandaged = 0.0
-			e.wound_size = 0.0
 			e.max_damage = initial(e.max_damage)
 			e.bleeding = 0
 			e.open = 0

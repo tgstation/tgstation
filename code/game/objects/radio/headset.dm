@@ -171,9 +171,11 @@
 
 			if(keyslot1)
 				user.put_in_hands(keyslot1)
+				keyslot1 = null
 
 			if(keyslot2)
 				user.put_in_hands(keyslot2)
+				keyslot2 = null
 
 			recalculateChannels()
 			user << "You pop out the encryption keys in the headset!"

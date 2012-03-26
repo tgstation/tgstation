@@ -54,12 +54,13 @@
 
 	var/list/body_standing = list()
 	var/list/body_lying = list()
+	var/organs2 = list()
 
 	var/mutantrace = null
 
 	var/bloodloss = 0
-	var/debug_leftarm
-	var/debug_lefthand
+	var/datum/reagents/vessel
+	var/pale = 0
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
@@ -75,25 +76,26 @@
 
 	if(!dna)	dna = new /datum/dna(null)
 
-	new /datum/organ/external/chest(src)
-	new /datum/organ/external/groin(src)
-	new /datum/organ/external/head(src)
-	new /datum/organ/external/l_arm(src)
-	new /datum/organ/external/r_arm(src)
-	new /datum/organ/external/r_leg(src)
-	new /datum/organ/external/l_leg(src)
+	organs2 += new /datum/organ/external/chest(src)
+	organs2 += new /datum/organ/external/groin(src)
+	organs2 += new /datum/organ/external/head(src)
+	organs2 += new /datum/organ/external/l_arm(src)
+	organs2 += new /datum/organ/external/r_arm(src)
+	organs2 += new /datum/organ/external/r_leg(src)
+	organs2 += new /datum/organ/external/l_leg(src)
 
 	var/datum/organ/external/part = new /datum/organ/external/l_hand(src)
 	part.parent = organs["l_arm"]
+	organs2 += part
 	part = new /datum/organ/external/l_foot(src)
 	part.parent = organs["l_leg"]
+	organs2 += part
 	part = new /datum/organ/external/r_hand(src)
 	part.parent = organs["r_arm"]
+	organs2 += part
 	part = new /datum/organ/external/r_foot(src)
 	part.parent = organs["r_leg"]
-
-	debug_leftarm = organs["l_arm"]
-	debug_lefthand = organs["l_hand"]
+	organs2 += part
 
 	var/g = "m"
 	if (gender == MALE)
@@ -113,11 +115,49 @@
 		update_clothing()
 		src << "\blue Your icons have been generated!"
 
+	vessel = new/datum/reagents(560)
+	vessel.my_atom = src
+	vessel.add_reagent("blood",560)
+	spawn(1) fixblood()
+
 	..()
 	/*var/known_languages = list()
 	known_languages.Add("english")*/
 
 //	organStructure = new /obj/effect/organstructure/human(src)
+
+/mob/living/carbon/human/proc/fixblood()
+	for(var/datum/reagent/blood/B in vessel.reagent_list)
+		if(B.id == "blood")
+			B.data["blood_type"] = dna.b_type
+			B.data["blood_DNA"] = dna.unique_enzymes
+			B.data["donor"] = src
+			if(virus2)
+				B.data["virus2"] = virus2.getcopy()
+
+/mob/living/carbon/human/proc/drip(var/amt as num)
+	if(!amt)
+		return
+	var/turf/T = get_turf(src)
+	var/list/obj/effect/decal/cleanable/blood/drip/nums
+	var/amm = 0.1 * amt
+	vessel.remove_reagent("blood",amm)
+	for(var/obj/effect/decal/cleanable/blood/drip/G in T)
+		nums += G
+		if(nums.len >= 3)
+			var/obj/effect/decal/cleanable/blood/drip/D = pick(nums)
+			D.blood_DNA.len++
+			D.blood_DNA[D.blood_DNA.len] = list(dna.unique_enzymes,dna.b_type)
+			if(virus2)
+				D.virus2 += virus2.getcopy()
+			return
+	var/obj/effect/decal/cleanable/blood/this = new(T)
+	var/hax = pick("1","2","3","4","5")
+	this.icon_state = hax
+	this.blood_DNA = list(list(dna.unique_enzymes,dna.b_type))
+	this.blood_owner = src
+	if(virus2)
+		this.virus2 = virus2.getcopy()
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))
@@ -1351,6 +1391,9 @@
 	else
 		stand_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 		lying_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
+	if(pale)
+		stand_icon.Blend(rgb(100,100,100))
+		lying_icon.Blend(rgb(100,100,100))
 
 	if (underwear > 0)
 		//if(!obese)
