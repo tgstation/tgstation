@@ -332,6 +332,9 @@
 			if(resting)
 				Weaken(5)
 
+			if(move_delay_add > 0)
+				move_delay_add = max(0, move_delay_add - rand(1, 2))
+
 			if(health < config.health_threshold_dead || brain_op_stage == 4.0)
 				death()
 			else if(health < config.health_threshold_crit)

@@ -29,6 +29,7 @@
 	var/maxHealth = 100 //Living
 	//Vars that should only be accessed via procs ++END
 
+
 //	var/uses_hud = 0
 	var/obj/screen/pain = null
 	var/obj/screen/flash = null
@@ -257,15 +258,6 @@
 	var/halloss = 0
 	var/hallucination = 0
 
-// TG Porting Variables
-	var/canstun = 1 	// determines if this mob can be stunned by things
-	var/canweaken = 1	// determines if this mob can be weakened/knocked down by things
-	var/nopush = 0 //Can they be shoved?
-
-	var/area/lastarea = null
-
-	var/digitalcamo = 0 // Can they be tracked by the AI?
-
 /*For ninjas and others. This variable is checked when a mob moves and I guess it was supposed to allow the mob to move
 through dense areas, such as walls. Setting density to 0 does the same thing. The difference here is that
 the mob is also allowed to move without any sort of restriction. For instance, in space or out of holder objects.*/
@@ -279,6 +271,16 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 	var/UI = 'screen1_old.dmi' // For changing the UI from preferences
 
 //	var/obj/effect/organstructure/organStructure = null //for dem organs
+
+	var/canstun = 1 	// determines if this mob can be stunned by things
+	var/canweaken = 1	// determines if this mob can be weakened/knocked down by things
+	var/nopush = 0 //Can they be shoved?
+
+	var/area/lastarea = null
+
+	var/digitalcamo = 0 // Can they be tracked by the AI?
+
+
 	var/list/organs = list(  )	//List of organs.
 
 //Singularity wants you!
