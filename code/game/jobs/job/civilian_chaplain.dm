@@ -69,7 +69,7 @@
 			while(!accepted)
 				if(!B) break // prevents possible runtime errors
 
-				switch(input(H,"Which bible style would you like?") in list("Bible", "Koran", "Scrapbook", "Daederic Scroll", "Creeper", "White Bible", "Holy Light", "Athiest", "Tome", "The King in Yellow", "Ithaqua", "Scientology", "the bible melts", "Necronomicon"))
+				switch(input(H,"Which bible style would you like?") in list("Bible", "Koran", "Scrapbook", "Creeper", "White Bible", "Holy Light", "Athiest", "Tome", "The King in Yellow", "Ithaqua", "Scientology", "the bible melts", "Necronomicon"))
 					if("Koran")
 						B.icon_state = "koran"
 						B.item_state = "koran"
@@ -80,9 +80,6 @@
 					if("Scrapbook")
 						B.icon_state = "scrapbook"
 						B.item_state = "scrapbook"
-					if("Daederic Scroll")
-						B.icon_state = "daederic_scroll"
-						B.item_state = "daederic"
 					if("Creeper")
 						B.icon_state = "creeper"
 						B.item_state = "syringe_kit"
