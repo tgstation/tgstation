@@ -305,7 +305,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 	stage = 4
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob << "\red You feel something tearing its way out of your stomach..."
-		mob.toxloss += 10
+		mob.adjustToxLoss(10)
 		mob.updatehealth()
 		if(prob(40))
 			if(mob.client)
@@ -340,7 +340,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 	stage = 3
 	maxm = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.toxloss += (2*multiplier)
+		mob.adjustToxLoss((2*multiplier))
 
 /datum/disease2/effect/greater/drowsness
 	name = "Automated sleeping syndrome"
@@ -425,7 +425,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 	name = "Toxification syndrome"
 	stage = 4
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.toxloss += 15
+		mob.adjustToxLoss(15)
 
 /datum/disease2/effect/greater/sleepy
 	name = "Resting syndrome"
