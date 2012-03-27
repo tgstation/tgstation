@@ -93,7 +93,10 @@
 									O:icon_state = "flash"
 							if(istype(O,/obj/item/weapon/gun/energy/taser/cyborg))
 								if(O:power_supply.charge < O:power_supply.maxcharge)
-									O:power_supply.give(100)
+									O:power_supply.give(O:charge_cost)
+									O:update_icon()
+								else
+									O:charge_tick = 0
 							if(istype(O,/obj/item/weapon/melee/baton))
 								if(O:charges < 10)
 									O:charges += 1

@@ -8,19 +8,40 @@
 	projectile_type = "/obj/item/projectile/energy/electrode"
 	cell_type = "/obj/item/weapon/cell/crap"
 
+/obj/item/weapon/gun/energy/taser/cyborg
+	name = "taser gun"
+	desc = "A small, low capacity gun used for non-lethal takedowns."
+	icon_state = "taser"
+	fire_sound = 'Taser.ogg'
+	charge_cost = 100
+	projectile_type = "/obj/item/projectile/energy/electrode"
+	cell_type = "/obj/item/weapon/cell/secborg"
+	var/charge_tick = 0
+	var/recharge_time = 10 //Time it takes for shots to recharge (in seconds)
+
+	New()
+		..()
+		processing_objects.Add(src)
 
 
-/obj/item/weapon/gun/energy/taser/cyborg/load_into_chamber()//TOOD: change this over to the slowly recharge other cell
-	if(in_chamber)
+	Del()
+		processing_objects.Remove(src)
+		..()
+
+	process() //Every [recharge_time] seconds, recharge a shot for the cyborg
+		charge_tick++
+		if(charge_tick < recharge_time) return 0
+		charge_tick = 0
+
+		if(!power_supply) return 0 //sanity
+		if(isrobot(src.loc))
+			var/mob/living/silicon/robot/R = src.loc
+			if(R && R.cell)
+				R.cell.use(charge_cost) 		//Take power from the borg...
+				power_supply.give(charge_cost)	//... to recharge the shot
+
+		update_icon()
 		return 1
-	if(isrobot(src.loc))
-		var/mob/living/silicon/robot/R = src.loc
-		if(R && R.cell)
-			R.cell.use(charge_cost)
-			in_chamber = new /obj/item/projectile/energy/electrode(src)
-			return 1
-	return 0
-
 
 
 /obj/item/weapon/gun/energy/stunrevolver

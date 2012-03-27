@@ -1034,6 +1034,12 @@
 	maxcharge = 500
 	g_amt = 40
 
+/obj/item/weapon/cell/secborg
+	name = "\improper Security borg rechargable D battery"
+	origin_tech = "powerstorage=0"
+	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
+	g_amt = 40
+
 /obj/item/weapon/cell/high
 	name = "high-capacity power cell"
 	origin_tech = "powerstorage=2"

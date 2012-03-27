@@ -122,7 +122,7 @@
 			hands.icon_state = "security"
 			icon_state = "bloodhound"
 			modtype = "Sec"
-			speed = -1
+			//speed = -1 Secborgs have nerfed tasers now, so the speed boost is not necessary
 			nopush = 1
 			feedback_inc("cyborg_security",1)
 
