@@ -869,8 +869,8 @@
 	return
 
 /obj/machinery/power/apc/proc/malfoccupy(var/mob/living/silicon/ai/malf)
-//	if(!istype(malf))
-//		return
+	if(!istype(malf))
+		return
 	if(src.z != 1)
 		return
 	src.occupant = new /mob/living/silicon/ai(src,malf.laws,null,1)
