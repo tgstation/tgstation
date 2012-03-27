@@ -120,11 +120,11 @@ var/list/nonhuman_positions = list(
 
 /proc/GetRank(var/job)
 	switch(job)
-		if("Bartender","Chef","Lawyer","Librarian","Janitor","Assistant","Unassigned")
+		if("Bartender","Chef","Lawyer","Librarian","Janitor","Assistant","Unassigned", "Counselor", "Chaplain")
 			return 0
-		if("Chaplain","Botanist","Hydroponicist","Medical Doctor","Atmospheric Technician","Geneticist")
+		if("Chaplain","Botanist","Hydroponicist","Medical Doctor","Atmospheric Technician","Geneticist", "Virologist", "Surgeon", "Emergency Medical Technician")
 			return 1
-		if("Quartermaster","Cargo Technician","Chemist", "Station Engineer","Roboticist", "Security Officer", "Forensic Technician","Detective", "Scientist","Shaft Miner")
+		if("Quartermaster","Cargo Technician","Chemist", "Station Engineer","Roboticist", "Security Officer", "Forensic Technician","Detective", "Scientist","Shaft Miner", "Xenobiologist", "Plasma Researcher")
 			return 2
 		if("Research Director","Chief Medical Officer","Head of Security","Chief Engineer","Warden")
 			return 3
