@@ -42,7 +42,7 @@
 
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
-		if(stat & BROKEN)
+		if(stat & BROKEN || !I || !user)
 			return
 
 		//robots shouldn't be able to grab/carry stuff anyway

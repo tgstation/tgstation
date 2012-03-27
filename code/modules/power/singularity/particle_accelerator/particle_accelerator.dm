@@ -89,6 +89,35 @@ PE|PE|PE
 		return
 
 
+	ex_act(severity)
+		switch(severity)
+			if(1.0)
+				del(src)
+				return
+			if(2.0)
+				if (prob(50))
+					del(src)
+					return
+			if(3.0)
+				if (prob(25))
+					del(src)
+					return
+			else
+		return
+
+
+	blob_act()
+		if(prob(50))
+			del(src)
+		return
+
+
+	meteorhit()
+		if(prob(50))
+			del(src)
+		return
+
+
 	proc
 		update_state()
 			if(master)
@@ -169,7 +198,8 @@ PE|PE|PE
 			return 0
 
 
-/obj/machinery/particle_accelerator/
+
+/obj/machinery/particle_accelerator
 	name = "Particle Accelerator"
 	desc = "Part of a Particle Accelerator."
 	icon = 'particle_accelerator.dmi'
@@ -215,6 +245,34 @@ PE|PE|PE
 			if(src.process_tool_hit(W,user))
 				return
 		..()
+		return
+
+	ex_act(severity)
+		switch(severity)
+			if(1.0)
+				del(src)
+				return
+			if(2.0)
+				if (prob(50))
+					del(src)
+					return
+			if(3.0)
+				if (prob(25))
+					del(src)
+					return
+			else
+		return
+
+
+	blob_act()
+		if(prob(50))
+			del(src)
+		return
+
+
+	meteorhit()
+		if(prob(50))
+			del(src)
 		return
 
 
