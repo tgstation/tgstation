@@ -869,13 +869,14 @@
 	return
 
 /obj/machinery/power/apc/proc/malfoccupy(var/mob/living/silicon/ai/malf)
-	if(!istype(malf))
-		return
+//	if(!istype(malf))
+//		return
 	if(src.z != 1)
 		return
 	src.occupant = new /mob/living/silicon/ai(src,malf.laws,null,1)
 	src.occupant.adjustOxyLoss(malf.getOxyLoss())
-	src.occupant.name = "[malf.name] APC Copy"
+	if(!findtext(src.occupant.name,"APC Copy"))
+		src.occupant.name = "[malf.name] APC Copy"
 	if(malf.parent)
 		src.occupant.parent = malf.parent
 	else
