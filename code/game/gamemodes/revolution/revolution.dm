@@ -17,6 +17,8 @@
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 3
 	required_enemies = 3
+	recommended_enemies = 3
+
 
 	uplink_welcome = "Revolutionary Uplink Console:"
 	uplink_uses = 10
@@ -133,7 +135,7 @@
 	if (!where)
 		mob << "The Syndicate were unfortunately unable to get you a flash."
 	else
-		mob << "The flash in your [where] would help you to use your extreme persuasion skills."
+		mob << "The flash in your [where] will implant a memory engram to convert others to our cause."
 		return 1
 
 //////////////////////////////////////
