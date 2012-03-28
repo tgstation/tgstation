@@ -567,6 +567,22 @@
 	containername = "APLU \"Ripley\" Circuit Crate"
 	access = access_robotics
 	group = "Robotics"
+	
+/datum/supply_packs/surgery
+	name = "Surgery crate"
+	contains = list("/obj/item/weapon/cautery",
+					"/obj/item/weapon/surgicaldrill",
+					"/obj/item/weapon/hemostat",
+					"/obj/item/weapon/scalpel",
+					"/obj/item/weapon/surgical_tool/bonegel",
+					"/obj/item/weapon/retractor",
+					"/obj/item/weapon/surgical_tool/bonesetter",
+					"/obj/item/weapon/circular_saw")
+	cost = 20
+	containertype = "/obj/structure/closet/crate/secure"
+	containername = "Surgery crate"
+	access = access_medical
+	group = "Medical / Science"
 
 /datum/supply_packs/robotics
 	name = "Robotics Assembly Crate"
