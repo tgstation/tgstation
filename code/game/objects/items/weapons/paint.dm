@@ -1,3 +1,5 @@
+//NEVER USE THIS IT SUX	-PETETHEGOAT
+
 var/global/list/cached_icons = list()
 
 /obj/item/weapon/paint
