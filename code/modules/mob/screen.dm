@@ -511,6 +511,9 @@
 											"The chain jangles a bit.",								// - SkyMarshal
 											"\red Hurry up, dammit!",								// - SkyMarshal
 											"This is exhausting!")									// - SkyMarshal
+								for(var/mob/O in viewers(usr))
+									if(prob(50)) //Reduces spam slightly
+										O.show_message(text("\red [] continues to struggle in their cuffs!", usr), 1)
 						if(!usr:handcuffed) return
 						for(var/mob/O in viewers(usr))
 							O.show_message(text("\red <B>[] manages to remove the handcuffs!</B>", usr), 1)
