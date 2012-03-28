@@ -58,7 +58,7 @@
 			affected_mob.adjustToxLoss(10)
 			affected_mob.updatehealth()
 			if(prob(40))
-				ASSERT(gibbed == 0)
+				if(gibbed != 0) return 0
 				var/list/candidates = list() // Picks a random ghost in the world to shove in the larva -- TLE
 				for(var/mob/dead/observer/G in world)
 					if(G.client)
