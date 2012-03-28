@@ -2938,12 +2938,12 @@
 		reagents.add_reagent("toxin", 50)
 
 /obj/item/weapon/reagent_containers/pill/cyanide
-	name = "Cyanide pill"
+	name = "Suicide pill"
 	desc = "Don't swallow this."
 	icon_state = "pill5"
 	New()
 		..()
-		reagents.add_reagent("cyanide", 50)
+		reagents.add_reagent("chloralhydrate", 100)
 
 /obj/item/weapon/reagent_containers/pill/adminordrazine
 	name = "Adminordrazine pill"

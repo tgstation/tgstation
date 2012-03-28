@@ -2218,7 +2218,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-					W.add_fingerprint(source)
+				W.add_fingerprint(source)
 			if (target.r_store)
 				var/obj/item/W = target.r_store
 				target.u_equip(W)
@@ -2228,7 +2228,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-					W.add_fingerprint(source)
+				W.add_fingerprint(source)
 		if("internal")
 			if (target.internal)
 				target.internal.add_fingerprint(source)

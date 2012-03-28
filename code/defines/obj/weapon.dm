@@ -29,7 +29,6 @@
 	IsShield()
 		return 1
 
-
 /obj/item/weapon/nullrod
 	name = "null rod"
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
@@ -42,7 +41,7 @@
 	throwforce = 10
 	w_class = 1
 
-/obj/item/weapon/sord
+/*/obj/item/weapon/sord
 	name = "\improper SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
 	icon_state = "sord"
@@ -50,7 +49,7 @@
 	flags = FPRINT | ONBELT | TABLEPASS
 	force = 2
 	throwforce = 1
-	w_class = 3
+	w_class = 3*/
 
 /obj/item/weapon/claymore
 	name = "claymore"
@@ -195,7 +194,7 @@
 
 /obj/item/weapon/melee/baton
 	name = "stun baton"
-	desc = "A stun baton for hitting people with."
+	desc = "The police baton of the future."
 	icon_state = "stunbaton"
 	item_state = "baton"
 	flags = FPRINT | ONBELT | TABLEPASS
@@ -207,7 +206,7 @@
 	var/status = 0
 	origin_tech = "combat=2"
 
-/obj/item/weapon/melee/chainofcommand
+/*/obj/item/weapon/melee/chainofcommand
 	name = "chain of command"
 	desc = "The Captain is first and all other heads are last."
 	icon_state = "chainofcommand"
@@ -219,7 +218,7 @@
 	var/charges = 50.0
 	var/maximum_charges = 50.0
 	var/status = 1
-	origin_tech = "combat=4"
+	origin_tech = "combat=4"*/
 
 /obj/item/weapon/melee/energy
 	var/active = 0
@@ -239,7 +238,7 @@
 /obj/item/weapon/melee/energy/sword
 	var/color
 	name = "energy sword"
-	desc = "May the force be within you."
+	desc = "It cuts AND cooks at the same time!"
 	icon_state = "sword0"
 	force = 3.0
 	throwforce = 5.0
@@ -441,19 +440,23 @@
 
 /obj/item/stack/medical/advanced/bruise_pack
 	name = "advanced trauma kit"
-	singular_name = "advanced bruise pack"
+	singular_name = "advanced trauma kit"
 	desc = "An advanced trauma kit for severe injuries."
-	icon_state = "brutepack"
+	icon_state = "traumakit"
 	heal_brute = 40
 	origin_tech = "biotech=1"
+	amount = 10
+	max_amount = 10
 
 /obj/item/stack/medical/advanced/ointment
 	name = "advanced burn kit"
 	singular_name = "advanced burn kit"
 	desc = "An advanced treatment kit for severe burns."
-	icon_state = "ointment"
+	icon_state = "burnkit"
 	heal_burn = 40
 	origin_tech = "biotech=1"
+	amount = 10
+	max_amount = 10
 
 /obj/item/weapon/c_tube
 	name = "cardboard tube"
@@ -511,7 +514,7 @@
 
 /obj/item/weapon/card/id
 	name = "identification card"
-	desc = "An identification card. No shit."
+	desc = "An identification card."
 	icon_state = "id"
 	item_state = "card-id"
 	var/access = list()
@@ -523,7 +526,7 @@
 
 /obj/item/weapon/card/id/gold
 	name = "identification card"
-	desc = "A golden card which shows power and might."
+	desc = "A golden card which shows authority."
 	icon_state = "gold"
 	item_state = "gold_id"
 
@@ -542,7 +545,7 @@
 
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"
-	desc = "The spare ID of the High Lord himself."
+	desc = "The spare ID of the Captain himself."
 	icon_state = "gold"
 	item_state = "gold_id"
 	registered_name = "Captain"
@@ -1069,25 +1072,6 @@
 	item_state = "shard-glass"
 	g_amt = 3750
 
-/*/obj/item/weapon/syndicate_uplink
-	name = "station bounced radio"
-	desc = "Remain silent about this..."
-	icon = 'radio.dmi'
-	icon_state = "radio"
-	var/temp = null
-	var/uses = 10.0
-	var/selfdestruct = 0.0
-	var/traitor_frequency = 0.0
-	var/mob/currentUser = null
-	var/obj/item/device/radio/origradio = null
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
-	w_class = 2.0
-	item_state = "radio"
-	throw_speed = 4
-	throw_range = 20
-	m_amt = 100
-	origin_tech = "magnets=2;syndicate=3"*/
-
 /obj/item/weapon/SWF_uplink
 	name = "station-bounced radio"
 	desc = "used to comunicate it appears."
@@ -1281,7 +1265,7 @@
 	for (var/obj/machinery/camera/C in cameras)
 		friendly_cameras.Add(C.c_tag)
 
-	var/target = input("Select the camera to observe", null) as null|anything in friendly_cameras
+	var/target = input("Select the camera to observe.", null) as null|anything in friendly_cameras
 	if (!target)
 		return
 	for (var/obj/machinery/camera/C in cameras)
@@ -1505,7 +1489,7 @@
 	name = "circular saw"
 	desc = "For heavy duty cutting."
 	icon = 'surgery.dmi'
-	icon_state = "saw3"
+	icon_state = "saw"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 15.0
 	w_class = 1.0
@@ -1534,7 +1518,7 @@
 	w_class = 1.0
 	origin_tech = "biotech=2"
 
-/obj/item/weapon/hatchet
+/*/obj/item/weapon/hatchet
 	name = "hatchet"
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
 	icon = 'weapons.dmi'
@@ -1546,7 +1530,7 @@
 	throw_speed = 4
 	throw_range = 4
 	m_amt = 15000
-	origin_tech = "materials=2;combat=1"
+	origin_tech = "materials=2;combat=1"*/
 
 /obj/item/weapon/stamp
 	desc = "A rubber stamp for stamping important documents."
@@ -1802,7 +1786,7 @@
 /obj/item/weapon/stock_parts/capacitor/super
 	name = "super capacitor"
 	desc = "A super-high capacity capacitor used in the construction of a variety of devices."
-	origin_tech = "powerstorage=5;materials=4"
+	origin_tech = "powerstorage=3;materials=4"
 	rating = 3
 	m_amt = 50
 	g_amt = 50
