@@ -27,6 +27,7 @@ turf
 //			return movable_on_me.return_air()
 
 		//Create gas mixture to hold data for passing
+		/*
 		var/datum/gas_mixture/GM = new
 
 		GM.oxygen = oxygen
@@ -37,6 +38,8 @@ turf
 		GM.temperature = temperature
 
 		return GM
+		*/
+		return zone.air
 
 	remove_air(amount as num)
 		//First, ensure there is no movable shuttle or what not on tile that is taking over
