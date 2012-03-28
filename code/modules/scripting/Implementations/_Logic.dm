@@ -134,7 +134,7 @@
 	if(istext(string))
 		return uppertext(string)
 
-
+/*
 //Makes a list where all indicies in a string is a seperate index in the list
 // JUST A HELPER DON'T ADD TO NTSCRIPT
 proc/string_tolist(var/string)
@@ -150,7 +150,6 @@ proc/string_explode(var/string, var/separator)
 	if(istext(string))
 		if(istext(separator) && separator == "")
 			return string_tolist(string)
-
 		var/i
 		var/lasti = 1
 		var/list/L = new/list()
@@ -163,6 +162,12 @@ proc/string_explode(var/string, var/separator)
 		L.Add(copytext(string, lasti, lentext(string)+1)) // Adds the last segment
 
 		return L
+
+Just found out there was already a string explode function, did some benchmarking, and that function were a bit faster, sticking to that.
+*/
+proc/string_explode(var/string, var/separator)
+	if(istext(string))
+		return dd_text2list(string, separator)
 
 proc/n_repeat(var/string, var/amount)
 	if(istext(string) && isnum(amount))
@@ -178,7 +183,6 @@ proc/n_reverse(var/string)
 		var/newstring = ""
 		var/i
 		for(i=lentext(string), i>0, i--)
-			world << copytext(string, i, i+1)
 			newstring = newstring + copytext(string, i, i+1)
 
 		return newstring

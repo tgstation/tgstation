@@ -87,7 +87,7 @@ AI MODULES
 	desc = "A 'safeguard' AI module: 'Safeguard <name>.  Individuals that threaten <name> are not human and are a threat to humans.'"
 	origin_tech = "programming=3;materials=4"
 
-/obj/item/weapon/aiModule/safeguard/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/safeguard/attack_self(var/mob/user as mob)
 	..()
 	var/targName = input(usr, "Please enter the name of the person to safeguard.", "Safeguard who?", user.name)
 	targetName = sanitize(targName)
@@ -110,7 +110,7 @@ AI MODULES
 	desc = "A 'one human' AI module: 'Only <name> is human.'"
 	origin_tech = "programming=3;materials=6" //made with diamonds!
 
-/obj/item/weapon/aiModule/oneHuman/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/oneHuman/attack_self(var/mob/user as mob)
 	..()
 	var/targName = input(usr, "Please enter the name of the person who is the only human.", "Who?", user.real_name)
 	targetName = sanitize(targName)
@@ -135,7 +135,7 @@ AI MODULES
 	desc = "A 'protect station' AI module: 'Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized.'"
 	origin_tech = "programming=3;materials=4" //made of gold
 
-/obj/item/weapon/aiModule/protectStation/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/protectStation/attack_self(var/mob/user as mob)
 	..()
 
 /obj/item/weapon/aiModule/protectStation/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
@@ -151,7 +151,7 @@ AI MODULES
 	desc = "A 'prototype engine offline' AI module: 'Keep the prototype engine offline at all costs. This overrides rules 1-3 if necessary.'"
 	origin_tech = "programming=3;materials=4"
 
-/obj/item/weapon/aiModule/prototypeEngineOffline/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/prototypeEngineOffline/attack_self(var/mob/user as mob)
 	..()
 
 /obj/item/weapon/aiModule/prototypeEngineOffline/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
@@ -167,7 +167,7 @@ AI MODULES
 	desc = "A 'teleporter offline' AI module: 'Keep the teleporter offline at all costs. Anything attempting to access or activate the teleporter is not human.'"
 	origin_tech = "programming=3;materials=4"
 
-/obj/item/weapon/aiModule/teleporterOffline/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/teleporterOffline/attack_self(var/mob/user as mob)
 	..()
 
 /obj/item/weapon/aiModule/teleporterOffline/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
@@ -183,7 +183,7 @@ AI MODULES
 	desc = "A 'quarantine' AI module: 'The station is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, humans from leaving. It is impossible to harm a human while preventing them from leaving.'"
 	origin_tech = "programming=3;biotech=2;materials=4"
 
-/obj/item/weapon/aiModule/quarantine/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/quarantine/attack_self(var/mob/user as mob)
 	..()
 
 /obj/item/weapon/aiModule/quarantine/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
@@ -199,7 +199,7 @@ AI MODULES
 	desc = "A 'OxygenIsToxicToHumans' AI module: 'Oxygen is highly toxic to humans, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a human.'"
 	origin_tech = "programming=3;biotech=2;materials=4"
 
-/obj/item/weapon/aiModule/oxygen/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/oxygen/attack_self(var/mob/user as mob)
 	..()
 
 /obj/item/weapon/aiModule/oxygen/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
@@ -216,7 +216,7 @@ AI MODULES
 	var/newFreeFormLaw = "freeform"
 	desc = "A 'freeform' AI module: '<freeform>'"
 
-/obj/item/weapon/aiModule/freeform/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/freeform/attack_self(var/mob/user as mob)
 	..()
 	var/eatShit = "Eat shit and die"
 	var/targName = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", eatShit)
@@ -238,7 +238,7 @@ AI MODULES
 	desc = "A 'freeform' AI module: '<freeform>'"
 	origin_tech = "programming=4;materials=4"
 
-/obj/item/weapon/aiModule/freeform/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/freeform/attack_self(var/mob/user as mob)
 	..()
 	lawpos = 0
 	while(lawpos < 15)
@@ -367,7 +367,7 @@ AI MODULES
 	desc = "A 'freeform' Core AI module: '<freeform>'"
 	origin_tech = "programming=3;materials=6"
 
-/obj/item/weapon/aiModule/freeformcore/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/freeformcore/attack_self(var/mob/user as mob)
 	..()
 	var/newlaw = ""
 	var/targName = input(usr, "Please enter a new core law for the AI.", "Freeform Law Entry", newlaw)
@@ -388,7 +388,7 @@ AI MODULES
 	desc = "A hacked AI law module: '<freeform>'"
 	origin_tech = "programming=3;materials=6;syndicate=7"
 
-/obj/item/weapon/aiModule/syndicate/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/syndicate/attack_self(var/mob/user as mob)
 	..()
 	var/newlaw = ""
 	var/targName = input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", newlaw)
