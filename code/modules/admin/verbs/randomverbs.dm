@@ -85,38 +85,57 @@
 	log_admin("DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]")
 	message_admins("\blue \bold DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]<BR>", 1)
 
-/client/proc/cmd_admin_pm(mob/M as mob in world)
+/client/proc/cmd_admin_pm()
 	set category = "Admin"
 	set name = "Admin PM"
 	if(!authenticated || !holder)
 		src << "Only administrators may use this command."
 		return
-	if(M)
-		if(src.muted_complete)
-			src << "You are muted have a nice day"
-			return
-		if (!( ismob(M) ))
-			return
-		var/t = input("Message:", text("Private message to [M.key]"))  as text|null
-		if(holder.rank != "Game Admin" && holder.rank != "Game Master")
-			t = strip_html(t,500)
-		if (!( t ))
-			return
-		if (usr.client && usr.client.holder)
-			M << "\red Admin PM from-<b>[key_name(usr, M, 0)]</b>: [t]"
-			usr << "\blue Admin PM to-<b>[key_name(M, usr, 1)]</b>: [t]"
-		else
-			if (M.client && M.client.holder)
-				M << "\blue Reply PM from-<b>[key_name(usr, M, 1)]</b>: [t]"
+
+	var/list/client/targets[0]
+	for(var/client/C)
+		if(C.mob)
+			if(istype(C.mob, /mob/new_player))
+				targets["[C] - (New Player)"] = C
+			else if(istype(C.mob, /mob/dead/observer))
+				targets["[C] - [C.mob.name](Ghost)"] = C
 			else
-				M << "\red Reply PM from-<b>[key_name(usr, M, 0)]</b>: [t]"
-			usr << "\blue Reply PM to-<b>[key_name(M, usr, 0)]</b>: [t]"
+				targets["[C] - [C.mob.real_name](as [C.mob.name])"] = C
+		else
+			targets["[C] - No Mob"] = C
 
-		log_admin("PM: [key_name(usr)]->[key_name(M)] : [t]")
+	var/target = input(usr,"To whom shall we send a message?","Admin PM",null) in targets
+	var/client/C = targets[target]
+	if( !C || !istype(C,/client) )
+		src << "\red Error: Admin-PM: Client not found."
+		return
+	if(src.muted_complete)
+		src << "\red Error: Admin-PM: You are muted."
+		return
+	var/t = input("Message:", "Private message to [C.key]") as text|null
+	if( !(holder.rank in list("Game Admin", "Game Master")) )
+		t = sanitize(copytext(t,1,500))
 
-		for(var/mob/K in world)	//we don't use message_admins here because the sender/receiver might get it too
-			if(K && K.client && K.client.holder && K.key != usr.key && K.key != M.key)
-				K << "<B><font color='blue'>PM: [key_name(usr, K)]-&gt;[key_name(M, K)]:</B> \blue [t]</font>"
+	if ( !t || !C || !C.mob )	return
+
+	//TODO: rewrite key_name() to use something other than mobs. ~CARN
+	if (usr.client && usr.client.holder)
+		C << "\red Admin PM from-<b>[key_name(usr, C.mob, 0)]</b>: [t]"
+		src << "\blue Admin PM to-<b>[key_name(C, usr, 1)]</b>: [t]"
+	else
+		if (C && C.holder)
+			C << "\blue Reply PM from-<b>[key_name(usr, C.mob, 1)]</b>: [t]"
+		else
+			C << "\red Reply PM from-<b>[key_name(usr, C.mob, 0)]</b>: [t]"
+		src << "\blue Reply PM to-<b>[key_name(C.mob, usr, 0)]</b>: [t]"
+
+	log_admin("PM: [key_name(usr)]->[key_name(C.mob)] : [t]")
+
+	for(var/client/X)							//there are fewer clients than mobs
+		if(X.holder && X.key!=usr.key && X.key!=C.key)	//check client/X is an admin and isn't the sender or recipient
+			var/mob/K = X.mob							//get X's mob
+			if(K)
+				K << "<B><font color='blue'>PM: [key_name(usr, K)]-&gt;[key_name(C.mob, K)]:</B> \blue [t]</font>" //inform X
 
 /client/proc/cmd_admin_godmode(mob/M as mob in world)
 	set category = "Special Verbs"

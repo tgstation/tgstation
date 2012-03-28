@@ -3,44 +3,35 @@
 	var/list/turretTargets = list()
 
 /area/turret_protected/proc/subjectDied(target)
-	if (istype(target, /mob))
-		if (!istype(target, /mob/living/silicon))
-			if (target:stat)
-				if (target in turretTargets)
+	if( ismob(target) )
+		if( !issilicon(target) )
+			if( target:stat )
+				if( target in turretTargets )
 					src.Exited(target)
 
 
+//TODO: make teleporting to places trigger Entered() ~Carn
 /area/turret_protected/Entered(O)
 	..()
-	if(master && master != src)
+	if( master && master != src )
 		return master.Entered(O)
-//	world << "[O] entered[src.x],[src.y],[src.z]"
 
-	if (istype(O, /mob/living/carbon))
-		if (!(O in turretTargets))
-			turretTargets += O
-	else if (istype(O, /obj/mecha))
-		var/obj/mecha/M = O
-		if (M.occupant)
-			if (!(M in turretTargets))
-				turretTargets += M
+	if( iscarbon(O) )
+		turretTargets |= O
+	else if( istype(O, /obj/mecha) )
+		var/obj/mecha/Mech = O
+		if( Mech.occupant )
+			turretTargets |= Mech
 	return 1
 
 /area/turret_protected/Exited(O)
-	if(master && master != src)
+	if( master && master != src )
 		return master.Exited(O)
-//	world << "[O] exited [src.x],[src.y],[src.z]"
-	if (istype(O, /mob))
-		if (!istype(O, /mob/living/silicon))
-			if (O in turretTargets)
-				//O << "removing you from target list"
-				turretTargets -= O
-			//else
-				//O << "You aren't in our target list!"
 
-	else if (istype(O, /obj/mecha))
-		if (O in turretTargets)
-			turretTargets -= O
+	if( ismob(O) && !issilicon(O) )
+		turretTargets -= O
+	else if( istype(O, /obj/mecha) )
+		turretTargets -= O
 	..()
 	return 1
 
@@ -129,18 +120,19 @@
 	return
 
 /obj/machinery/turret/proc/check_target(var/atom/movable/T as mob|obj)
-	if(T && T in protected_area.turretTargets)
-		if(!T in protected_area)
+	if( T && T in protected_area.turretTargets )
+		var/area/area_T = get_area(T)
+		if( !area_T || (area_T.type != protected_area.type) )
 			protected_area.Exited(T)
 			return 0 //If the guy is somehow not in the turret's area (teleportation), get them out the damn list. --NEO
-		if(istype(T, /mob/living/carbon))
+		if( iscarbon(T) )
 			var/mob/living/carbon/MC = T
-			if(!MC.stat)
-				if(!MC.lying || lasers)
+			if( !MC.stat )
+				if( !MC.lying || lasers )
 					return 1
-		else if(istype(T, /obj/mecha))
+		else if( istype(T, /obj/mecha) )
 			var/obj/mecha/ME = T
-			if(ME.occupant)
+			if( ME.occupant )
 				return 1
 	return 0
 
@@ -325,10 +317,10 @@
 	if(stat & BROKEN) return
 	if (istype(user, /mob/living/silicon))
 		return src.attack_hand(user)
-	else // trying to unlock the interface
+	else if( get_dist(src, user) == 0 )		// trying to unlock the interface
 		if (src.allowed(usr))
 			locked = !locked
-			user << "You [ locked ? "lock" : "unlock"] the panel."
+			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the panel.</span>"
 			if (locked)
 				if (user.machine==src)
 					user.machine = null
@@ -337,18 +329,18 @@
 				if (user.machine==src)
 					src.attack_hand(usr)
 		else
-			user << "\red Access denied."
+			user << "<span class='warning'>Access denied.</span>"
 
 /obj/machinery/turretid/attack_ai(mob/user as mob)
 	if(!ailock)
 		return attack_hand(user)
 	else
-		user << "There seems to be a firewall preventing you from accessing this device."
+		user << "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>"
 
 /obj/machinery/turretid/attack_hand(mob/user as mob)
-	if ( (get_dist(src, user) > 1 ))
-		if (!istype(user, /mob/living/silicon))
-			user << text("Too far away.")
+	if ( get_dist(src, user) > 0 )
+		if ( !issilicon(user) )
+			user << "<span class='notice'>You are too far away.</span>"
 			user.machine = null
 			user << browse(null, "window=turretid")
 			return
@@ -392,19 +384,20 @@
 		if (!istype(usr, /mob/living/silicon))
 			usr << "Control panel is locked!"
 			return
-	if (href_list["toggleOn"])
-		src.enabled = !src.enabled
-		src.updateTurrets()
-	else if (href_list["toggleLethal"])
-		src.lethal = !src.lethal
-		src.updateTurrets()
+	if ( get_dist(src, usr) == 0 )
+		if (href_list["toggleOn"])
+			src.enabled = !src.enabled
+			src.updateTurrets()
+		else if (href_list["toggleLethal"])
+			src.lethal = !src.lethal
+			src.updateTurrets()
 	src.attack_hand(usr)
 
 /obj/machinery/turretid/proc/updateTurrets()
 	if(control_area)
 		for (var/obj/machinery/turret/aTurret in get_area_all_atoms(control_area))
 			aTurret.setState(enabled, lethal)
-		update_icons()
+	src.update_icons()
 
 /obj/machinery/turretid/proc/update_icons()
 	if (src.enabled)
@@ -414,12 +407,14 @@
 			icon_state = "motion3"
 	else
 		icon_state = "motion0"
-	if(control_area)
-		for (var/obj/machinery/turretid/aTurret in get_area_all_atoms(control_area))
-			aTurret.icon_state = icon_state
-			aTurret.enabled = enabled
-			aTurret.lethal = lethal
-
+																				//CODE FIXED BUT REMOVED
+//	if(control_area)															//USE: updates other controls in the area
+//		for (var/obj/machinery/turretid/Turret_Control in world)				//I'm not sure if this is what it was
+//			if( Turret_Control.control_area != src.control_area )	continue	//supposed to do. Or whether the person
+//			Turret_Control.icon_state = icon_state								//who coded it originally was just tired
+//			Turret_Control.enabled = enabled									//or something. I don't see  any situation
+//			Turret_Control.lethal = lethal										//in which this would be used on the current map.
+																				//If he wants it back he can uncomment it
 
 
 /obj/structure/turret/gun_turret

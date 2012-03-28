@@ -187,7 +187,7 @@
 						foundghost++
 						break
 			if(!foundghost)
-				msg += "and [t_his] soul has departed"
+				msg += " and [t_his] soul has departed"
 		msg += "...</span>\n"
 
 	else

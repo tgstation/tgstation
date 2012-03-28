@@ -233,6 +233,9 @@
 		else if(!href_list["late_join"])
 			new_player_panel()
 
+		if(href_list["priv_msg"])
+			..()	//pass PM calls along to /mob/Topic
+			return
 
 	proc/IsJobAvailable(rank)
 		var/datum/job/job = job_master.GetJob(rank)

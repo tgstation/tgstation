@@ -37,7 +37,7 @@
 		msg += "</span>"
 
 	if (src.digitalcamo)
-		msg += "It looks replusingly uncanny!\n"
+		msg += "It is repulsively uncanny!\n"
 
 	msg += "*---------*</span>"
 

@@ -631,9 +631,10 @@
 				src.client << "\red Admin-player or player-admin conversation only!"
 				return.
 
-			var/t = input("Message:", text("Private message to [C.key]"))  as text|null
-			if (!t || !usr || !C || !usr.client)
-				return
+			//get message text, limit it's length.and clean/escape html
+			var/t = input("Message:", "Private message to [C.key]") as text|null
+			t = sanitize( copytext(t,1,500) )
+			if (!t || !usr || !C || !usr.client)	return
 			if (usr.client && usr.client.holder) //Admin is messaging a player
 				C << "\red <font size='4'><b>-- Administrator private message --</b></font>"
 				C << "<b>[key_name(usr.client, C, 0)] [t]</b>"
