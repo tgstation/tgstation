@@ -274,7 +274,7 @@ mob/proc/flash_weak_pain()
 		spawn
 			unmoved = do_after(user, 4)
 		sleep(4)
-		if( (!unmoved && !prob(70)) || get_dist(user, M) != 1)
+		if( (!unmoved && !prob(70)) || (get_dist(user, M) != 1 && user != M))
 			user.visible_message("\red [user.name] misses with \the [src]!")
 			return
 
