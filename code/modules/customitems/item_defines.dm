@@ -43,4 +43,3 @@
 	name = "Extranet HUD"
 	desc = "A heads-up display with limited connectivity to the NanoTrasen Extranet, capable of displaying information from official NanoTrasen records."
 	icon_state = "serithi_artalis_1"
-	flags = NULL
