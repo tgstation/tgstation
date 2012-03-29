@@ -99,4 +99,3 @@ proc/send2irc(msg,msg2)
 proc/send2adminirc(channel,msg)
 	world << channel << " "<< msg
 	shell("python nudge.py '[channel]' [msg]")
-p	//test

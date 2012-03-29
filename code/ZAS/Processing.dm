@@ -56,22 +56,26 @@ zone
 			if(T.zone && T.zone != src)
 				RemoveTurf(T)
 				if(dbg_output) world << "Removed invalid turf."
-			else if(!T.zone)
-				T.zone = src
+				if(air.group_multiplier <= 0) // No more turfs belong to this zone, so we can get rid of it
+					del(src)
+			else							  // Turf was valid, so we can handle it
+				if(!T.zone)
+					T.zone = src
 
-			if(istype(T,/turf/simulated))
-				var/turf/simulated/S = T
-				if(S.fire_protection) S.fire_protection--
-				if(check)
-					if(S.HasDoor(1))
-						S.update_visuals()
-					else
-						S.update_visuals(air)
+				if(istype(T,/turf/simulated))
+					var/turf/simulated/S = T
+					if(S.fire_protection) S.fire_protection--
+					if(check)
+						if(S.HasDoor(1))
+							S.update_visuals()
+						else
+							S.update_visuals(air)
 
-				if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-					for(var/atom/movable/item in S)
-						item.temperature_expose(air, air.temperature, CELL_VOLUME)
-					S.temperature_expose(air, air.temperature, CELL_VOLUME)
+					if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+						for(var/atom/movable/item in S)
+							item.temperature_expose(air, air.temperature, CELL_VOLUME)
+						S.temperature_expose(air, air.temperature, CELL_VOLUME)
+
 		air.graphic_archived = air.graphic
 
 		air.temperature = max(TCMB,air.temperature)
