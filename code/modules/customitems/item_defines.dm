@@ -33,3 +33,14 @@
 	desc = "One of the older meson scanner models retrofitted to perform like its modern counterparts."
 	icon = 'custom_items.dmi'
 	icon_state = "book_berner_1"
+
+/obj/item/fluff/sarah_carbrokes_1
+	name = "Locket"
+	desc = "A grey locket with a picture of a black haired man in it. The text above it reads: \"Edwin Carbrokes\"."
+	icon_state = "sarah_carbrokes_1"
+
+/obj/item/clothing/glasses/fluff/serithi_artalis_1
+	name = "Extranet HUD"
+	desc = "A heads-up display with limited connectivity to the NanoTrasen Extranet, capable of displaying information from official NanoTrasen records."
+	icon_state = "serithi_artalis_1"
+	flags = NULL
