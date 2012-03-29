@@ -464,7 +464,7 @@ mob/proc
 	target_locked
 		icon = 'icons/effects/Targeted.dmi'
 		icon_state = "locked"
-		layer = 99
+		layer = 17.9
 //	captured
 //		icon = 'Captured.dmi'
 //		layer = 99

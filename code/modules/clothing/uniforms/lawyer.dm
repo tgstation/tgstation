@@ -5,6 +5,7 @@
 	desc = "Slick threads."
 	name = "Lawyer suit"
 	flags = FPRINT | TABLEPASS
+	flags_inv = HIDEJUMPSUIT
 
 
 /obj/item/clothing/under/lawyer/black

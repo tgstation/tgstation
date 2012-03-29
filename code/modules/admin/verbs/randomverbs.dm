@@ -510,11 +510,15 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				e.destroyed = 0
 				e.perma_injury = 0
 				e.update_icon()
+				for(var/datum/organ/wound/W in e.wounds)
+					if(W.bleeding)
+						W.stopbleeding()
 			H.vessel = new/datum/reagents(560)
 			H.vessel.my_atom = H
 			H.vessel.add_reagent("blood",560)
 			spawn(1)
 				H.fixblood()
+			H.pale = 0
 			H.update_body()
 			H.update_face()
 			H.UpdateDamageIcon()

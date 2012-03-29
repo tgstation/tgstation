@@ -124,11 +124,12 @@ var/list/nonhuman_positions = list(
 			return 0
 		if("Chaplain","Botanist","Hydroponicist","Medical Doctor","Atmospheric Technician","Geneticist")
 			return 1
-		if("Quartermaster","Cargo Technician","Chemist", "Engineer","Roboticist", "Security Officer", "Forensic Technician","Detective", "Scientist","Shaft Miner")
+		if("Quartermaster","Cargo Technician","Chemist", "Engineer","Roboticist", "Security Officer", "Forensic Technician","Detective", "Scientist","Shaft Miner","Chief Medical Officer")
 			return 2
-		if("Research Director","Chief Medical Officer","Head of Security","Chief Engineer","Warden")
+		if("Research Director","Head of Security","Chief Engineer","Warden")
 			return 3
 		if("Captain","Head of Personnel","Wizard","MODE")
 			return 4
 		else
-			world << "\"[job]\" NOT GIVEN RANK, REPORT JOBS.DM ERROR TO A CODER"
+			message_admins("\"[job]\" NOT GIVEN RANK, REPORT JOBS.DM ERROR TO A CODER")
+			return 2

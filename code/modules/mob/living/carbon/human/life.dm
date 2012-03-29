@@ -180,7 +180,7 @@
 				//	a.hallucinate(src)
 				if(!handling_hal && hallucination > 20)
 					spawn handle_hallucinations() //The not boring kind!
-				hallucination -= 2
+				hallucination = max(hallucination - 2, 0)
 				//if(health < 0)
 				//	for(var/obj/a in hallucinations)
 				//		del a
@@ -827,10 +827,6 @@
 
 			return //TODO: DEFERRED
 
-		updatepale()
-			pale = !pale
-			update_body()
-
 		handle_regular_status_updates()
 			var/leg_tally = 2
 			for(var/name in organs)
@@ -864,11 +860,11 @@
 				else if(blood_volume > 448)
 					if(pale)
 						pale = 0
-						updatepale()
+						update_body()
 				else if(blood_volume <= 448 && blood_volume > 336)
 					if(!pale)
-						updatepale()
 						pale = 1
+						update_body()
 						var/word = pick("dizzy","woosey","faint")
 						src << "\red You feel [word]"
 					if(prob(1))
@@ -876,8 +872,8 @@
 						src << "\red You feel [word]"
 				else if(blood_volume <= 336 && blood_volume > 244)
 					if(!pale)
-						updatepale()
 						pale = 1
+						update_body()
 					eye_blurry += 6
 					if(prob(15))
 						paralysis += rand(1,3)
@@ -958,6 +954,7 @@
 					src << "\red Your face has become disfigured."
 					face_op_stage = 0.0
 					warn_flavor_changed()
+			var/blood_max = 0
 			for(var/name in organs)
 				var/datum/organ/external/temp = organs[name]
 				if(!temp.bleeding)
@@ -966,9 +963,10 @@
 			//		if(prob(35))
 			//			bloodloss += rand(1,10)
 				if(temp.wounds)
-					for(var/datum/organ/external/wound/W in temp.wounds)
-						if(prob(10*W.woundsize) && W.bleeding)
-							bloodloss++
+					for(var/datum/organ/wound/W in temp.wounds)
+						if(W.wound_size && W.bleeding)
+							blood_max += W.wound_size
+			bloodloss = min(bloodloss+1,sqrt(blood_max))
 			if (eye_blind)
 				eye_blind--
 				blinded = 1
