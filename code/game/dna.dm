@@ -143,16 +143,17 @@
 /////////////////////////// DNA HELPER-PROCS
 /proc/getleftblocks(input,blocknumber,blocksize)
 	var/string
-	string = copytext(input,1,((blocksize*blocknumber)-(blocksize-1)))
+
 	if (blocknumber > 1)
+		string = copytext(input,1,((blocksize*blocknumber)-(blocksize-1)))
 		return string
 	else
 		return null
 
 /proc/getrightblocks(input,blocknumber,blocksize)
 	var/string
-	string = copytext(input,blocksize*blocknumber+1,length(input)+1)
 	if (blocknumber < (length(input)/blocksize))
+		string = copytext(input,blocksize*blocknumber+1,length(input)+1)
 		return string
 	else
 		return null
@@ -923,41 +924,42 @@
 				src.subblock--
 			dopage(src,"unimenu")
 		if (href_list["unipulse"])
-			var/block
-			var/newblock
-			var/tstructure2
-			block = getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),src.subblock,1)
-			src.delete = 1
-			src.temphtml = text("Working ... Please wait ([] Seconds)", src.radduration)
-			usr << browse(temphtml, "window=scannernew;size=550x650")
-			onclose(usr, "scannernew")
-			var/lock_state = src.connected.locked
-			src.connected.locked = 1//lock it
-			sleep(10*src.radduration)
-			if (!src.connected.occupant)
-				temphtml = null
-				delete = 0
-				return null
-			///
-			if (prob((80 + (src.radduration / 2))))
-				block = miniscramble(block, src.radstrength, src.radduration)
-				newblock = null
-				if (src.subblock == 1) newblock = block + getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1) + getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)
-				if (src.subblock == 2) newblock = getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1) + block + getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)
-				if (src.subblock == 3) newblock = getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1) + getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1) + block
-				tstructure2 = setblock(src.connected.occupant.dna.uni_identity, src.uniblock, newblock,3)
-				src.connected.occupant.dna.uni_identity = tstructure2
-				updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
-				src.connected.occupant.radiation += (src.radstrength+src.radduration)
-			else
-				if	(prob(20+src.radstrength))
-					randmutb(src.connected.occupant)
-					domutcheck(src.connected.occupant,src.connected)
-				else
-					randmuti(src.connected.occupant)
+			if(src.connected.occupant)
+				var/block
+				var/newblock
+				var/tstructure2
+				block = getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),src.subblock,1)
+				src.delete = 1
+				src.temphtml = text("Working ... Please wait ([] Seconds)", src.radduration)
+				usr << browse(temphtml, "window=scannernew;size=550x650")
+				onclose(usr, "scannernew")
+				var/lock_state = src.connected.locked
+				src.connected.locked = 1//lock it
+				sleep(10*src.radduration)
+				if (!src.connected.occupant)
+					temphtml = null
+					delete = 0
+					return null
+				///
+				if (prob((80 + (src.radduration / 2))))
+					block = miniscramble(block, src.radstrength, src.radduration)
+					newblock = null
+					if (src.subblock == 1) newblock = block + getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1) + getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)
+					if (src.subblock == 2) newblock = getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1) + block + getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)
+					if (src.subblock == 3) newblock = getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1) + getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1) + block
+					tstructure2 = setblock(src.connected.occupant.dna.uni_identity, src.uniblock, newblock,3)
+					src.connected.occupant.dna.uni_identity = tstructure2
 					updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
-				src.connected.occupant.radiation += ((src.radstrength*2)+src.radduration)
-			src.connected.locked = lock_state
+					src.connected.occupant.radiation += (src.radstrength+src.radduration)
+				else
+					if	(prob(20+src.radstrength))
+						randmutb(src.connected.occupant)
+						domutcheck(src.connected.occupant,src.connected)
+					else
+						randmuti(src.connected.occupant)
+						updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
+					src.connected.occupant.radiation += ((src.radstrength*2)+src.radduration)
+				src.connected.locked = lock_state
 			dopage(src,"unimenu")
 			src.delete = 0
 		////////////////////////////////////////////////////////

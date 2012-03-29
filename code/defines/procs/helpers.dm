@@ -1268,6 +1268,7 @@ proc/listclearnulls(list/list)
 		return 0
 
 /proc/do_after(mob/M as mob, time as num)
+	if(!M)	return 0
 	var/turf/T = M.loc
 	var/holding = M.equipped()
 	for(var/i=0, i<time)
