@@ -72,7 +72,7 @@
 #define TANK_FRAGMENT_PRESSURE	(50.*ONE_ATMOSPHERE) // Boom 3x3 base explosion
 #define TANK_FRAGMENT_SCALE	    (10.*ONE_ATMOSPHERE) // +1 for each SCALE kPa aboe threshold
 								// was 2 atm
-#define MAX_EXPLOSION_RANGE		14					// Defaults to 12 (was 8) -- TLE
+#define MAX_EXPLOSION_RANGE		1024					// Defaults to 12 (was 8) -- TLE
 
 
 #define NORMPIPERATE 30					//pipe-insulation rate divisor
@@ -127,6 +127,15 @@
 
 //turf-only flags
 #define NOJAUNT 1
+
+//Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
+#define HIDEGLOVES 1		//APPLIES ONLY TO THE EXTERIOR SUIT!!
+#define HIDESUITSTORAGE 2	//APPLIES ONLY TO THE EXTERIOR SUIT!!
+#define HIDEJUMPSUIT 4		//APPLIES ONLY TO THE EXTERIOR SUIT!!
+#define HIDESHOES 8			//APPLIES ONLY TO THE EXTERIOR SUIT!!
+#define HIDEMASK 1			//APPLIES ONLY TO HELMETS!!
+#define HIDEEARS 2			//APPLIES ONLY TO HELMETS!!
+#define HIDEEYES 4			//APPLIES ONLY TO HELMETS!!
 
 //Cant seem to find a mob bitflags area other than the powers one
 #define NOGRAV 1

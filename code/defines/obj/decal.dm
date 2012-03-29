@@ -70,6 +70,7 @@
 	layer = 2
 	icon = 'drip.dmi'
 	icon_state = "1"
+	track_amt = 0
 
 /obj/effect/decal/cleanable/mucus
 	name = "Mucus"
