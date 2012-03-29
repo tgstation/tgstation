@@ -353,6 +353,10 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A as turf)
 	..()
 
 /obj/item/weapon/mop/afterattack(atom/A, mob/user as mob)
+	if (isnull(A))
+		user << "\red You've encountered a nasty bug. You should tell a developer what you were trying to clean with the mop."
+		return
+
 	if (src.reagents.total_volume < 1 || mopcount >= 5)
 		user << "\blue Your mop is dry!"
 		return
