@@ -1649,7 +1649,6 @@ datum
 				if(!M) M = holder.my_atom
 				if(prob(50)) M:heal_organ_damage(1,0)
 				M:nutrition += nutriment_factor	// For hunger and fatness
-				M.poo += nutriment_factor / 10 // LOLE
 /*
 				// If overeaten - vomit and fall down
 				// Makes you feel bad but removes reagents and some effect

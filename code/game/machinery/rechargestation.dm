@@ -16,7 +16,6 @@
 		build_icon()
 
 	process()
-		..()
 		if(!(NOPOWER|BROKEN))
 			return
 

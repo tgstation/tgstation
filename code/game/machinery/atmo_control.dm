@@ -93,7 +93,6 @@ obj/machinery/computer/general_air_control
 
 	process()
 		..()
-
 		src.updateDialog()
 
 	attackby(I as obj, user as mob)

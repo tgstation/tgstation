@@ -45,8 +45,12 @@
 			if(tiles)
 				if(curtiles >= tiles)
 					break
+			if(A.z != src.z)
+				break
 
 			curtiles++
+
+			sleep(speed)
 
 			// Calculate if we should stop the process
 			if(!nostop)
@@ -63,7 +67,7 @@
 			if(!facedir)
 				A.dir = predir
 
-			sleep(speed)
+
 
 		affecting.Remove(A)
 
