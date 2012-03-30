@@ -56,6 +56,7 @@
 		broken = 0
 		destroyed = 0
 		destspawn = 0 //Has it spawned the broken limb?
+		gauzed = 0 //Has the missing limb been patched?
 		min_broken_damage = 30
 		datum/organ/external/parent
 		damage_msg = "\red You feel a intense pain"
@@ -228,9 +229,7 @@
 				var/dmgmsg = "[damage_msg] in your [display_name]"
 				owner << dmgmsg
 				//owner.unlock_medal("Broke Yarrr Bones!", 0, "Break a bone.", "easy")
-				for(var/mob/M in viewers(owner))
-					if(M != owner)
-						M.show_message("\red You hear a loud cracking sound coming from [owner.name].")
+				owner.visible_message("\red You hear a loud cracking sound coming from [owner.name].","\red <b>Something feels like it shattered in your [display_name]!</b>","You hear a sickening crack.")
 				owner.emote("scream")
 				broken = 1
 				wound = "broken" //Randomise in future
@@ -300,11 +299,7 @@
 					if(owner:organs["r_hand"])
 						var/datum/organ/external/S = owner:organs["r_hand"]
 						if(!S.destroyed)
-							var/obj/item/weapon/organ/r_hand/X = new(owner.loc, owner)
-							for(var/mob/M in viewers(owner))
-								M.show_message("\red [owner.name]'s [X.name] flies off in an arc.")
-							var/lol2 = pick(cardinal)
-							step(X,lol2)
+							S.droplimb()
 					var/lol = pick(cardinal)
 					step(H,lol)
 					destroyed = 1
@@ -313,11 +308,7 @@
 					if(owner:organs["l_hand"])
 						var/datum/organ/external/S = owner:organs["l_hand"]
 						if(!S.destroyed)
-							var/obj/item/weapon/organ/l_hand/X = new(owner.loc, owner)
-							for(var/mob/M in viewers(owner))
-								M.show_message("\red [owner.name]'s [X.name] flies off in an arc.")
-							var/lol2 = pick(cardinal)
-							step(X,lol2)
+							S.droplimb()
 					var/lol = pick(cardinal)
 					step(H,lol)
 					destroyed = 1
@@ -326,11 +317,7 @@
 					if(owner:organs["r_foot"])
 						var/datum/organ/external/S = owner:organs["r_foot"]
 						if(!S.destroyed)
-							var/obj/item/weapon/organ/r_foot/X = new(owner.loc, owner)
-							for(var/mob/M in viewers(owner))
-								M.show_message("\red [owner.name]'s [X.name] flies off in an arc.")
-							var/lol2 = pick(cardinal)
-							step(X,lol2)
+							S.droplimb()
 					var/lol = pick(cardinal)
 					step(H,lol)
 					destroyed = 1
@@ -339,11 +326,7 @@
 					if(owner:organs["l_foot"])
 						var/datum/organ/external/S = owner:organs["l_foot"]
 						if(!S.destroyed)
-							var/obj/item/weapon/organ/l_foot/X = new(owner.loc, owner)
-							for(var/mob/M in viewers(owner))
-								M.show_message("\red [owner.name]'s [X.name] flies off in an arc.")
-							var/lol2 = pick(cardinal)
-							step(X,lol2)
+							S.droplimb()
 					var/lol = pick(cardinal)
 					step(H,lol)
 					destroyed = 1
@@ -376,6 +359,10 @@
 					step(X,lol2)
 					destroyed = 1
 			destspawn = 1
+			for(var/datum/organ/wound/W in wounds)
+				W.update_health()
+				del(W)
+			del(wounds)
 			src.owner.update_clothing()
 
 	proc/createwound(var/size = 1, var/type = 0, var/damage)
@@ -429,7 +416,7 @@
 		return
 
 	proc/stopbleeding()
-		if(!bleeding && !healing_state)
+		if(healing_state)
 			return 0
 //		owner:bloodloss -= 10 * src.wound_size
 		parent.bleeding = 0

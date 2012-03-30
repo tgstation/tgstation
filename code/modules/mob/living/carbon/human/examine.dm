@@ -275,6 +275,7 @@
 			else
 				wound_flavor_text["[temp.display_name]"] = ""
 	//Now that we have a big list of all the wounds, on all the limbs.
+	var/list/is_bleeding = list()
 	for(var/named in wound_descriptions)
 		var/list/wound_states = wound_descriptions[named]
 		var/list/flavor_text = list()
@@ -284,6 +285,7 @@
 			 "tiny bruise" = 0, "small bruise" = 0, "moderate bruise" = 0, "large bruise" = 0, "huge bruise" = 0, "monumental bruise" = 0,\
 			 "small burn" = 0, "moderate burn" = 0, "large burn" = 0, "severe burn" = 0, "deep burn" = 0, "carbonised area" = 0) //How many wounds of what size.
 			for(var/datum/organ/wound/w in wound_state)
+				if(w.bleeding && !is_bleeding[named]) is_bleeding[named] = 1
 				switch(w.wound_size)
 					if(1)
 						switch(w.wound_type)
@@ -429,26 +431,38 @@
 			wound_flavor_text["[named]"] = flavor_text_string
 	if(wound_flavor_text["head"] && !skipmask && !(wear_mask && istype(wear_mask, /obj/item/clothing/mask/gas)))
 		msg += wound_flavor_text["head"]
+	else if(is_bleeding["head"])
+		msg += "<span class='warning'>[src] has blood running down [t_his] face!</span>\n"
 	if(wound_flavor_text["chest"] && !w_uniform && !skipjumpsuit)
 		msg += wound_flavor_text["chest"]
+	else if(is_bleeding["chest"])
+		msg += "<span class='warning'>[src] has blood from under [t_his] clothing!</span>\n"
 	if(wound_flavor_text["left arm"] && !w_uniform && !skipjumpsuit)
 		msg += wound_flavor_text["left arm"]
 	if(wound_flavor_text["left hand"] && !gloves && !skipgloves)
 		msg += wound_flavor_text["left hand"]
+	else if(is_bleeding["left hand"])
+		msg += "<span class='warning'>[src] has blood running from under [t_his] gloves!</span>\n"
 	if(wound_flavor_text["right arm"] && !w_uniform && !skipjumpsuit)
 		msg += wound_flavor_text["right arm"]
 	if(wound_flavor_text["right hand"] && !gloves && !skipgloves)
 		msg += wound_flavor_text["right hand"]
+	else if(is_bleeding["right hand"])
+		msg += "<span class='warning'>[src] has blood running from under [t_his] gloves!</span>\n"
 	if(wound_flavor_text["groin"] && !w_uniform && !skipjumpsuit)
 		msg += wound_flavor_text["groin"]
 	if(wound_flavor_text["left leg"] && !w_uniform && !skipjumpsuit)
 		msg += wound_flavor_text["left leg"]
 	if(wound_flavor_text["left foot"]&& !shoes && !skipshoes)
 		msg += wound_flavor_text["left foot"]
+	else if(is_bleeding["left foot"])
+		msg += "<span class='warning'>[src] has blood running from [t_his] shoes!</span>\n"
 	if(wound_flavor_text["right leg"] && !w_uniform && !skipjumpsuit)
 		msg += wound_flavor_text["right leg"]
 	if(wound_flavor_text["right foot"]&& !shoes  && !skipshoes)
 		msg += wound_flavor_text["right foot"]
+	else if(is_bleeding["right foot"])
+		msg += "<span class='warning'>[src] has blood running from [t_his] shoes!</span>\n"
 
 
 //		if(w.bleeding)

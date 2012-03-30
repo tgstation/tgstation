@@ -966,6 +966,8 @@
 					for(var/datum/organ/wound/W in temp.wounds)
 						if(W.wound_size && W.bleeding)
 							blood_max += W.wound_size
+				if(temp.destroyed && !temp.gauzed)
+					blood_max += 10 //Yer missing a fucking limb.
 			bloodloss = min(bloodloss+1,sqrt(blood_max))
 			if (eye_blind)
 				eye_blind--

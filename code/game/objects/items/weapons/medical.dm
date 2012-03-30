@@ -37,6 +37,11 @@ MEDICAL
 		else
 			if(!istype(affecting, /datum/organ/external) || affecting:burn_dam <= 0)
 				affecting = H.get_organ("head")
+		if(affecting.destroyed && !affecting.gauzed)
+			H.visible_message("\red You do your best to stop the bleeding from [H]'s stump.", "\red [user] does their best to stem [H]'s bleeding from [H.gender == MALE? "his" : "her"] stump.", "\red You hear something like gauze being ripped.")
+			affecting.gauzed = 1
+			use(1)
+			return
 
 		for(var/datum/organ/wound/W in affecting.wounds)
 			if(W.bleeding || !W.healing_state)
@@ -44,12 +49,14 @@ MEDICAL
 					continue
 				if(heal_burn && W.wound_type < 2)
 					continue
+				if(stoppedblood)
+					stoppedblood++
+					break
 				if(W.wound_size > 3)
 					W.bleeding = 0
 				else
 					W.stopbleeding()
 				stoppedblood = 1
-				break
 
 		if (user && stoppedblood)
 			if (M != user)
@@ -140,6 +147,11 @@ MEDICAL
 		else
 			if(!istype(affecting, /datum/organ/external) || affecting:burn_dam <= 0)
 				affecting = H.get_organ("head")
+		if(affecting.destroyed && !affecting.gauzed)
+			H.visible_message("\red You do your best to stop the bleeding from [H]'s stump.", "\red [user] does their best to stem [H]'s bleeding from [H.gender == MALE? "his" : "her"] stump.", "\red You hear something like gauze being ripped.")
+			affecting.gauzed = 1
+			use(1)
+			return
 
 		for(var/datum/organ/wound/W in affecting.wounds)
 			if(W.bleeding || !W.healing_state)
@@ -147,9 +159,11 @@ MEDICAL
 					continue
 				if(heal_burn && W.wound_type < 2)
 					continue
+				if(stoppedblood)
+					stoppedblood++
+					break
 				W.stopbleeding()
 				stoppedblood = 1
-				break
 
 		if (user && stoppedblood)
 			if (M != user)
