@@ -520,7 +520,7 @@
 	var/access = list()
 	var/registered_name = null
 	var/assignment = null
-//	var/obj/item/weapon/photo/PHOTO = null
+	var/obj/item/weapon/photo/PHOTO = null
 	var/over_jumpsuit = 1 // If set to 0, it won't display on top of the mob's jumpsuit
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 

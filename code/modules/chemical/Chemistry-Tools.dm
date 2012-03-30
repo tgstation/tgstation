@@ -966,7 +966,7 @@
 						if(!T.dna)
 							usr << "You are unable to locate any blood. (To be specific, your target seems to be missing their DNA datum)"
 							return
-						if(T.mutations & NOCLONE) //target done been et, no more blood in him
+						if(T.mutations2 & NOCLONE) //target done been et, no more blood in him
 							user << "\red You are unable to locate any blood."
 							return
 						B.holder = src

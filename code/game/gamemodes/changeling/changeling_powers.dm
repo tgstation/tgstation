@@ -100,7 +100,7 @@
 		usr << "\red This creature is not compatible with our biology."
 		return
 
-	if (M.mutations & NOCLONE)
+	if (M.mutations2 & NOCLONE)
 		usr << "\red This creature's DNA is ruined beyond useability!"
 		return
 
@@ -608,9 +608,9 @@
 		usr << "\blue We stealthily sting [T]."
 
 		if(!T.changeling)
-			T.sdisabilities |= 4
+			T.disabilities |= 32
 			spawn(300)
-				T.sdisabilities &= ~4
+				T.disabilities &= ~32
 
 		usr.verbs -= /client/proc/changeling_deaf_sting
 
