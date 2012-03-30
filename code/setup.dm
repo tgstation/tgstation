@@ -18,6 +18,17 @@
 #define HUMAN_NEEDED_OXYGEN	MOLES_CELLSTANDARD*BREATH_PERCENTAGE*0.16
 	//Amount of air needed before pass out/suffocation commences
 
+// Pressure limits.
+#define HAZARD_HIGH_PRESSURE 750
+#define HIGH_STEP_PRESSURE HAZARD_HIGH_PRESSURE/2
+#define WARNING_HIGH_PRESSURE HAZARD_HIGH_PRESSURE*0.7
+#define HAZARD_LOW_PRESSURE 20
+#define WARNING_LOW_PRESSURE HAZARD_LOW_PRESSURE*2.5
+#define MAX_PRESSURE_DAMAGE 20
+
+// Doors!
+#define DOOR_CRUSH_DAMAGE 10
+
 // Factor of how fast mob nutrition decreases
 #define	HUNGER_FACTOR 0.1
 #define	REAGENTS_METABOLISM 0.05
@@ -72,7 +83,10 @@
 #define TANK_FRAGMENT_PRESSURE	(50.*ONE_ATMOSPHERE) // Boom 3x3 base explosion
 #define TANK_FRAGMENT_SCALE	    (10.*ONE_ATMOSPHERE) // +1 for each SCALE kPa aboe threshold
 								// was 2 atm
-#define MAX_EXPLOSION_RANGE		14					// Defaults to 12 (was 8) -- TLE
+
+//This was a define, but I changed it to a variable so it can be changed in-game.(kept the all-caps definition because... code...) -Errorage
+var/MAX_EXPLOSION_RANGE = 14
+//#define MAX_EXPLOSION_RANGE		14					// Defaults to 12 (was 8) -- TLE
 
 
 #define NORMPIPERATE 30					//pipe-insulation rate divisor
@@ -140,6 +154,17 @@
 //Cant seem to find a mob bitflags area other than the powers one
 #define NOGRAV 1
 
+//Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
+#define HIDEGLOVES 1		//APPLIES ONLY TO THE EXTERIOR SUIT!!
+#define HIDESUITSTORAGE 2	//APPLIES ONLY TO THE EXTERIOR SUIT!!
+#define HIDEJUMPSUIT 4		//APPLIES ONLY TO THE EXTERIOR SUIT!!
+#define HIDESHOES 8			//APPLIES ONLY TO THE EXTERIOR SUIT!!
+#define HIDEMASK 1			//APPLIES ONLY TO HELMETS!!
+#define HIDEEARS 2			//APPLIES ONLY TO HELMETS!!
+#define HIDEEYES 4			//APPLIES ONLY TO HELMETS!!
+
+
+//Cant seem to find a mob bitflags area other than the powers one
 
 // bitflags for clothing parts
 #define HEAD			1
@@ -183,6 +208,7 @@ var/const
 	mFingerprints	=(1<<1)
 	mShock			=(1<<2)
 	mSmallsize		=(1<<3)
+	NOCLONE			=(1<<4)
 
 //mob/var/stat things
 var/const
@@ -202,6 +228,13 @@ var/const
 #define POWEROFF 4		// tbd
 #define MAINT 8			// under maintaince
 #define EMPED 16		// temporary broken by EMP pulse
+
+//bitflags for door switches.
+#define OPEN 1
+#define IDSCAN 2
+#define BOLTS 4
+#define SHOCK 8
+#define SAFE 16
 
 #define ENGINE_EJECT_Z 3
 
@@ -238,6 +271,7 @@ var/list/global_mutations = list() // list of hidden mutation things
 #define TOX "tox"
 #define OXY "oxy"
 #define CLONE "clone"
+#define HALLOSS "halloss"
 
 #define STUN "stun"
 #define WEAKEN "weaken"

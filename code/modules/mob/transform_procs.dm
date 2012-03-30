@@ -112,9 +112,9 @@
 		comm.ai += O
 
 	O << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
-	O << "<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>"
+	O << "<B>To look at other parts of the station, double-click yourself to get a camera menu, use the freelook command, or use the Show Camera List command..</B>"
 	O << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
-	O << "To use something, simply double-click it."
+	O << "To use something, simply click or double-click it."
 	O << "Currently right-click functions will not work for the AI (except examine), and will either be replaced with dialogs or won't be usable by the AI."
 	if (!(ticker && ticker.mode && (O.mind in ticker.mode.malf_ai)))
 		O.show_laws()
@@ -123,6 +123,7 @@
 		O << "1.) Act like an AI.  If someone is breaking into your upload, say something like \"Alert.  Unauthorised Access Detected: AI Upload.\" not \"Help! Urist is trying to subvert me!\""
 		O << "2.) Do not watch the traitor like a hawk alerting the station to his/her every move.  This relates to 1."
 		O << "3.) You are theoretically omniscient, but you should not be Beepsky 5000, laying down the law left and right.  That is security's job.  Instead, try to keep the station productive and effective.  (Feel free to report the location of major violence and crimes and all that, just do not be the evil thing looking over peoples shoulders)"
+		O << "4.) Your laws are not in preference, laws do not take preference over one another unless specifically stated in the law."
 		O << "<br>We want everyone to have a good time, so we, the admins, will try to correct you if you stray from these rules.  Just try to keep it sensible."
 
 
@@ -198,8 +199,8 @@
 
 	O.loc = loc
 	O << "<B>You are playing a Robot. A Robot can interact with most electronic objects in its view point.</B>"
-	O << "<B>You must follow the laws that the AI has. You are the AI's assistant to the station basically.</B>"
-	O << "To use something, simply double-click it."
+	O << "<B>You must follow the laws that the AI has. You are basically the AI's extension into station.</B>"
+	O << "To use something, simply click or double-click it."
 	O << {"Use say ":s to speak to fellow cyborgs and the AI through binary."}
 
 	O.job = "Cyborg"

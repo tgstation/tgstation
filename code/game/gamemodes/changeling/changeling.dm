@@ -6,14 +6,14 @@
 	name = "changeling"
 	config_tag = "changeling"
 	restricted_jobs = list("AI", "Cyborg")
-	required_players = 1
+	required_players = 15
 	required_enemies = 1
+	recommended_enemies = 4
 
 	uplink_welcome = "Syndicate Uplink Console:"
 	uplink_uses = 10
 
 	var
-		changeling_amount
 		const
 			prob_int_murder_target = 50 // intercept names the assassination target half the time
 			prob_right_murder_target_l = 25 // lower bound on probability of naming right assassination target
@@ -35,16 +35,18 @@
 			waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 			waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
-			var/const/scaling_coeff = 10.0 //how many players per changeling
+			const/changeling_amount = 4
 
 /datum/game_mode/changeling/announce()
 	world << "<B>The current game mode is - Changeling!</B>"
 	world << "<B>There are alien changelings on the station. Do not let the changelings succeed!</B>"
 
 /datum/game_mode/changeling/pre_setup()
-	var/list/datum/mind/possible_changelings = get_players_for_role(BE_CHANGELING)
 
-	changeling_amount = max(1, round( num_players() / scaling_coeff) + 1)
+	if(config.protect_roles_from_antagonist)
+		restricted_jobs += protected_jobs
+
+	var/list/datum/mind/possible_changelings = get_players_for_role(BE_CHANGELING)
 
 	for(var/datum/mind/player in possible_changelings)
 		for(var/job in restricted_jobs)//Removing robots from the list
@@ -184,8 +186,10 @@
 			for(var/datum/objective/objective in changeling.objectives)
 				if(objective.check_completion())
 					world << "<B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
+					feedback_add_details("changeling_objective","[objective.type]|SUCCESS")
 				else
 					world << "<B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
+					feedback_add_details("changeling_objective","[objective.type]|FAIL")
 					changelingwin = 0
 				count++
 
@@ -195,8 +199,10 @@
 
 		if(changelingwin)
 			world << "<B>The changeling was successful!<B>"
+			feedback_add_details("changeling_success","SUCCESS")
 		else
 			world << "<B>The changeling has failed!<B>"
+			feedback_add_details("changeling_success","FAIL")
 	return 1
 
 /datum/changeling //stores changeling powers, changeling recharge thingie, changeling absorbed DNA and changeling ID (for changeling hivemind)
@@ -204,11 +210,17 @@
 	var/list/absorbed_dna = list()
 	var/changeling_fakedeath = 0
 	var/chem_charges = 20.00
+	var/chem_recharge_multiplier = 1
+	var/chem_storage = 50
 	var/sting_range = 1
 	var/changelingID = "none"
 	var/mob/living/host = null
 	var/geneticdamage = 0.0
 	var/isabsorbing = 0
+	var/geneticpoints = 5
+	var/purchasedpowers = list()
+
+
 
 /datum/changeling/New()
 	..()

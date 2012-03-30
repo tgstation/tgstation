@@ -65,7 +65,7 @@ var/list/supply_groups = new()
 			if (prob(5))
 				del(src)
 
-/area/supplyshuttle/
+/area/supplyshuttle
 	name = "Supply Shuttle"
 	icon_state = "supply"
 	requires_power = 0

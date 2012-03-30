@@ -46,7 +46,6 @@
 	//to find it.
 	src.blinded = null
 
-
 	//Disease Check
 	handle_virus_updates()
 
@@ -260,7 +259,7 @@
 				return
 
 			if(!breath || (breath.total_moles() == 0))
-				oxyloss += 7
+				adjustOxyLoss(7)
 
 				oxygen_alert = max(oxygen_alert, 1)
 
@@ -288,7 +287,7 @@
 				if (O2_pp == 0)
 					O2_pp = 0.01
 				var/ratio = safe_oxygen_min/O2_pp
-				oxyloss += min(5*ratio, 7) // Don't fuck them up too fast (space only does 7 after all!)
+				adjustOxyLoss(min(5*ratio, 7)) // Don't fuck them up too fast (space only does 7 after all!)
 				oxygen_used = breath.oxygen*ratio/6
 				oxygen_alert = max(oxygen_alert, 1)
 			/*else if (O2_pp > safe_oxygen_max) 		// Too much oxygen (commented this out for now, I'll deal with pressure damage elsewhere I suppose)
@@ -298,7 +297,7 @@
 				oxygen_used = breath.oxygen*ratio/6
 				oxygen_alert = max(oxygen_alert, 1)*/
 			else 									// We're in safe limits
-				oxyloss = max(getOxyLoss()-5, 0)
+				adjustOxyLoss(-5)
 				oxygen_used = breath.oxygen/6
 				oxygen_alert = 0
 
@@ -310,9 +309,9 @@
 					co2overloadtime = world.time
 				else if(world.time - co2overloadtime > 120)
 					Paralyse(3)
-					oxyloss += 3 // Lets hurt em a little, let them know we mean business
+					adjustOxyLoss(3) // Lets hurt em a little, let them know we mean business
 					if(world.time - co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
-						oxyloss += 8
+						adjustOxyLoss(8)
 				if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
 					spawn(0) emote("cough")
 
@@ -368,8 +367,21 @@
 
 			if(stat==2)
 				bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
-
 			//Account for massive pressure differences
+			var/pressure = environment.return_pressure()
+
+		//	if(!wear_suit)		Monkies cannot into space.
+		//		if(!istype(wear_suit, /obj/item/clothing/suit/space))
+
+					/*if(pressure < 20)
+						if(prob(25))
+							src << "You feel the splittle on your lips and the fluid on your eyes boiling away, the capillteries in your skin breaking."
+						adjustBruteLoss(5)
+					*/
+
+			if(pressure > HAZARD_HIGH_PRESSURE)
+
+				adjustBruteLoss(min((10+(round(pressure/(HIGH_STEP_PRESSURE)-2)*5)),MAX_PRESSURE_DAMAGE))
 			return //TODO: DEFERRED
 
 		handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
@@ -423,8 +435,8 @@
 			else if(src.health < config.health_threshold_crit)
 				if(src.health <= 20 && prob(1)) spawn(0) emote("gasp")
 
-				if(!src.rejuv) src.oxyloss++
-				if(!src.reagents.has_reagent("inaprovaline")) src.oxyloss++
+				//if(!src.rejuv) src.oxyloss++	//-Nodrak (I can't believe I thought this should be commented back in)
+				if(!src.reagents.has_reagent("inaprovaline") && src.stat != 2) src.adjustOxyLoss(2)
 
 				if(src.stat != 2)	src.stat = 1
 				Paralyse(5)
@@ -530,6 +542,21 @@
 							src.healths.icon_state = "health6"
 				else
 					src.healths.icon_state = "health7"
+			if (pressure)
+				var/datum/gas_mixture/environment = loc.return_air()
+				if(environment)
+					switch(environment.return_pressure())
+
+						if(HAZARD_HIGH_PRESSURE to INFINITY)
+							pressure.icon_state = "pressure2"
+						if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
+							pressure.icon_state = "pressure1"
+						if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
+							pressure.icon_state = "pressure0"
+						if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
+							pressure.icon_state = "pressure-1"
+						else
+							pressure.icon_state = "pressure-2"
 
 			if(src.pullin)	src.pullin.icon_state = "pull[src.pulling ? 1 : 0]"
 
@@ -625,6 +652,6 @@
 		handle_changeling()
 			if (mind)
 				if (mind.special_role == "Changeling" && changeling)
-					changeling.chem_charges = between(0, (max((0.9 - (changeling.chem_charges / 50)), 0.1) + changeling.chem_charges), 50)
+					changeling.chem_charges = between(0, ((max((0.9 - (changeling.chem_charges / 50)), 0.1)*changeling.chem_recharge_multiplier) + changeling.chem_charges), changeling.chem_storage)
 					if ((changeling.geneticdamage > 0))
 						changeling.geneticdamage = changeling.geneticdamage-1

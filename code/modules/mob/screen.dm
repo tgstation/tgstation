@@ -389,28 +389,43 @@
 			if ((!( usr.stat ) && usr.canmove && !( usr.restrained() )))
 				if (usr.internal)
 					usr.internal = null
+					usr << "\blue No longer running on internals."
 					if (usr.internals)
 						usr.internals.icon_state = "internal0"
 				else
-					if (!( istype(usr.wear_mask, /obj/item/clothing/mask) ))
-						return
-					else
-						if (istype(usr.back, /obj/item/weapon/tank))
-							usr.internal = usr.back
-						else if (ishuman(usr) && istype(usr:s_store, /obj/item/weapon/tank))
-							usr.internal = usr:s_store
-						else if (ishuman(usr) && istype(usr:belt, /obj/item/weapon/tank))
-							usr.internal = usr:belt
-						else if (istype(usr.l_hand, /obj/item/weapon/tank))
-							usr.internal = usr.l_hand
-						else if (istype(usr.r_hand, /obj/item/weapon/tank))
-							usr.internal = usr.r_hand
-						if (usr.internal)
-							//for(var/mob/M in viewers(usr, 1))
-							//	M.show_message(text("[] is now running on internals.", usr), 1)
-							usr << "You are now running on internals."
-							if (usr.internals)
-								usr.internals.icon_state = "internal1"
+					if(ishuman(usr))
+						if (!( istype(usr.wear_mask, /obj/item/clothing/mask) ))
+							usr << "\red You are not wearing a mask"
+							return
+						else
+							if (istype(usr.back, /obj/item/weapon/tank))
+								usr << "\blue You are now running on internals from the [usr.back] on your back."
+								usr.internal = usr.back
+							else if (ishuman(usr) && istype(usr:s_store, /obj/item/weapon/tank))
+								usr << "\blue You are now running on internals from the [usr:s_store] on your [usr:wear_suit]."
+								usr.internal = usr:s_store
+							else if (ishuman(usr) && istype(usr:belt, /obj/item/weapon/tank))
+								usr << "\blue You are now running on internals from the [usr:belt] on your belt."
+								usr.internal = usr:belt
+							else if (istype(usr:l_store, /obj/item/weapon/tank))
+								usr << "\blue You are now running on internals from the [usr:l_store] in your left pocket."
+								usr.internal = usr:l_store
+							else if (istype(usr:r_store, /obj/item/weapon/tank))
+								usr << "\blue You are now running on internals from the [usr:r_store] in your right pocket."
+								usr.internal = usr:r_store
+							else if (istype(usr.l_hand, /obj/item/weapon/tank))
+								usr << "\blue You are now running on internals from the [usr.l_hand] on your left hand."
+								usr.internal = usr.l_hand
+							else if (istype(usr.r_hand, /obj/item/weapon/tank))
+								usr << "\blue You are now running on internals from the [usr.r_hand] on your right hand."
+								usr.internal = usr.r_hand
+							if (usr.internal)
+								//for(var/mob/M in viewers(usr, 1))
+								//	M.show_message(text("[] is now running on internals.", usr), 1)
+								if (usr.internals)
+									usr.internals.icon_state = "internal1"
+							else
+								usr << "\blue You don't have an oxygen tank."
 		if("pull")
 			usr.pulling = null
 		if("sleep")
@@ -470,7 +485,7 @@
 						O.show_message(text("\red <B>[] is trying to break the handcuffs!</B>", usr), 1)
 					spawn(0)
 						if(do_after(usr, 50))
-							if(!usr:handcuffed) return
+							if(!usr:handcuffed || usr:buckled) return
 							for(var/mob/O in viewers(usr))
 								O.show_message(text("\red <B>[] manages to break the handcuffs!</B>", usr), 1)
 							usr << "\green You successfully break your handcuffs."
@@ -496,6 +511,9 @@
 											"The chain jangles a bit.",								// - SkyMarshal
 											"\red Hurry up, dammit!",								// - SkyMarshal
 											"This is exhausting!")									// - SkyMarshal
+								for(var/mob/O in viewers(usr))
+									if(prob(50)) //Reduces spam slightly
+										O.show_message(text("\red [] continues to struggle in their cuffs!", usr), 1)
 						if(!usr:handcuffed) return
 						for(var/mob/O in viewers(usr))
 							O.show_message(text("\red <B>[] manages to remove the handcuffs!</B>", usr), 1)
@@ -546,7 +564,7 @@
 						for(var/mob/O in viewers(usr))
 							O.show_message(text("\red <B>[] manages to unbuckle themself!</B>", usr), 1)
 						usr << "\blue You successfully unbuckle yourself."
-						usr:buckled.manual_unbuckle_all(usr)
+						usr:buckled.manual_unbuckle(usr)
 		if("module")
 			if(issilicon(usr))
 				if(usr:module)
