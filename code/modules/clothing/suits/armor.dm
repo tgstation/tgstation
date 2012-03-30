@@ -2,23 +2,7 @@
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/pepperspray,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/policetaperoll)
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	flags = FPRINT | TABLEPASS
-
-
-/obj/item/clothing/head/helmet
-	name = "helmet"
-	desc = "Standard Security gear. Protects the head from impacts."
-	icon_state = "helmet"
-	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
-	item_state = "helmet"
-	armor = list(melee = 50, bullet = 15, laser = 50,energy = 10, bomb = 25, bio = 0, rad = 0)
-	protective_temperature = 500
-	heat_transfer_coefficient = 0.10
-
-
-/obj/item/clothing/head/helmet/warden
-	name = "Warden Hat"
-	desc = "A special helmet issued to the Warden of a securiy force. Protects the head from impacts."
-	icon_state = "policehelm"
+	flags_inv = HIDEJUMPSUIT
 
 
 /obj/item/clothing/suit/armor/vest
@@ -38,6 +22,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	slowdown = 1
 	armor = list(melee = 80, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
 /obj/item/clothing/suit/armor/bulletproof
@@ -63,6 +48,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/pepperspray,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/policetaperoll)
+	flags_inv = 0
 
 /obj/item/clothing/suit/armor/reactive
 	name = "Reactive Teleport Armor"

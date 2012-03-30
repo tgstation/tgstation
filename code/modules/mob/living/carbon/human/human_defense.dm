@@ -90,9 +90,13 @@ emp_act
 	if(!I || !user)	return 0
 
 	var/datum/organ/external/affecting = get_organ(ran_zone(user.zone_sel.selecting))
-	var/hit_area = parse_zone(affecting.name)
+	var/hit_area = affecting.display_name
 
-	visible_message("\red <B>[src] has been attacked in the [hit_area] with [I.name] by [user]!</B>")
+	if(!affecting.destroyed)
+		visible_message("\red <B>[src] has been attacked in the [hit_area] with [I.name] by [user]!</B>")
+	else
+		user << "What [affecting]?"
+		return
 
 	if((user != src) && check_shields(I.force, "the [I.name]"))
 		return 0

@@ -389,6 +389,9 @@
 		memory()
 
 /mob/proc/update_flavor_text()
+	set src in usr
+	if(usr != src)
+		usr << "No."
 	var/msg = input(usr,"Set the flavor text in your 'examine' verb. Don't metagame!","Flavor Text",html_decode(flavor_text)) as message|null
 
 	if(msg != null)

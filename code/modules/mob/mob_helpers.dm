@@ -121,8 +121,8 @@ proc/isorgan(A)
 			zone = "head"
 		if("mouth")
 			zone = "head"
-		if("groin")
-			zone = "chest"
+//		if("groin")
+//			zone = "chest"
 	return zone
 
 
@@ -139,7 +139,7 @@ proc/isorgan(A)
 			if(4 to 6)	return "l_arm"
 			if(7 to 9)	return "r_arm"
 
-	if(prob(probability * 0.75))	return zone
+	if(prob(probability))	return zone
 	return "chest"
 
 

@@ -56,6 +56,6 @@
 		P.on_hit(src,2)
 		return 2
 	if(!P.nodamage)
-		apply_damage((P.damage/(absorb+1)), P.damage_type, used_weapon = P.name)
+		apply_damage((P.damage/(absorb+1)), P.damage_type, def_zone, sharp = 1, used_weapon = P.name)
 	P.on_hit(src, absorb)
 	return absorb
