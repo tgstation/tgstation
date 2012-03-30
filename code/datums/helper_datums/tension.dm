@@ -452,13 +452,17 @@ var/global/datum/tension/tension_master
 
 		if(candidates.len)
 			var/numCultists = min(candidates.len, 4)
-			var/list/runeWords = list()
+//			var/list/runeWords = list()
 
 			for(var/i = 0, i<numCultists, i++)
 				H = pick(candidates)
 				H.mind.make_Cultist()
 				candidates.Remove(H)
 				temp.grant_runeword(H)
+//				runeWords.Add(H)
+
+//			for(var/i = 0, i < 4, i++) // Four rune words
+
 
 			return 1
 
