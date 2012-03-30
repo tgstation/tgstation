@@ -377,8 +377,8 @@
 	name = "medical pack"
 	singular_name = "medical pack"
 	icon = 'items.dmi'
-	amount = 5
-	max_amount = 5
+	amount = 10 //To compensate for wounds
+	max_amount = 10
 	w_class = 1
 	throw_speed = 4
 	throw_range = 20
@@ -386,11 +386,11 @@
 	var/heal_burn = 0
 
 /obj/item/stack/medical/bruise_pack
-	name = "bruise pack"
-	singular_name = "bruise pack"
-	desc = "A pack designed to treat blunt-force trauma."
+	name = "\improper Roll of Gauze"
+	singular_name = "\improper Roll of Gauze"
+	desc = "A roll of gauze for sealing up wounds."
 	icon_state = "brutepack"
-	heal_brute = 40
+	heal_brute = 1
 	origin_tech = "biotech=1"
 
 /obj/item/stack/medical/bruise_pack/tajaran
@@ -399,14 +399,14 @@
 	desc = "A soft leaf that is rubbed on bruises."
 	icon = 'harvest.dmi'
 	icon_state = "cabbage"
-	heal_brute = 30
+	heal_brute = 1
 
 /obj/item/stack/medical/ointment
 	name = "ointment"
 	desc = "Used to treat those nasty burns."
 	singular_name = "ointment"
 	icon_state = "ointment"
-	heal_burn = 40
+	heal_burn = 1
 	origin_tech = "biotech=1"
 
 /obj/item/stack/medical/ointment/tajaran
@@ -415,14 +415,14 @@
 	desc = "A cold leaf that is rubbed on burns."
 	icon = 'harvest.dmi'
 	icon_state = "ambrosiavulgaris"
-	heal_burn = 30
+	heal_burn = 1
 
 /obj/item/stack/medical/advanced/bruise_pack
 	name = "advanced trauma kit"
 	singular_name = "advanced bruise pack"
 	desc = "An advanced trauma kit for severe injuries."
 	icon_state = "brutepack"
-	heal_brute = 40
+	heal_brute = 1
 	origin_tech = "biotech=1"
 
 /obj/item/stack/medical/advanced/ointment
@@ -430,7 +430,7 @@
 	singular_name = "advanced burn kit"
 	desc = "An advanced treatment kit for severe burns."
 	icon_state = "ointment"
-	heal_burn = 40
+	heal_burn = 1
 	origin_tech = "biotech=1"
 
 /obj/item/weapon/c_tube
