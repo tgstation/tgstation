@@ -93,6 +93,9 @@
 	//Disabilities
 	handle_disabilities()
 
+	//Random events (vomiting etc)
+	handle_random_events()
+
 	//Status updates, death etc.
 	UpdateLuminosity()
 	handle_regular_status_updates()
@@ -104,6 +107,9 @@
 
 	if(client)
 		handle_regular_hud_updates()
+
+	//Being buckled to a chair or bed
+	check_if_buckled()
 
 	// Yup.
 	update_canmove()
@@ -451,7 +457,7 @@
 			if(!breath || (breath.total_moles() == 0))
 				if(reagents.has_reagent("inaprovaline"))
 					return
-				oxyloss += HUMAN_MAX_OXYLOSS
+				adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 
 				oxygen_alert = max(oxygen_alert, 1)
 
@@ -481,10 +487,10 @@
 					spawn(0) emote("gasp")
 				if(O2_pp > 0)
 					var/ratio = safe_oxygen_min/O2_pp
-					oxyloss += min(5*ratio, HUMAN_MAX_OXYLOSS) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
+					adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
 					oxygen_used = breath.oxygen*ratio/6
 				else
-					oxyloss += HUMAN_MAX_OXYLOSS
+					adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 				oxygen_alert = max(oxygen_alert, 1)
 			/*else if (O2_pp > safe_oxygen_max) 		// Too much oxygen (commented this out for now, I'll deal with pressure damage elsewhere I suppose)
 				spawn(0) emote("cough")
@@ -493,7 +499,7 @@
 				oxygen_used = breath.oxygen*ratio/6
 				oxygen_alert = max(oxygen_alert, 1)*/
 			else								// We're in safe limits
-				oxyloss = max(getOxyLoss()-5, 0)
+				adjustOxyLoss(-5)
 				oxygen_used = breath.oxygen/6
 				oxygen_alert = 0
 
@@ -505,9 +511,9 @@
 					co2overloadtime = world.time
 				else if(world.time - co2overloadtime > 120)
 					Paralyse(3)
-					oxyloss += 3 // Lets hurt em a little, let them know we mean business
+					adjustOxyLoss(3) // Lets hurt em a little, let them know we mean business
 					if(world.time - co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
-						oxyloss += 8
+						adjustOxyLoss(8)
 				if(prob(20) && isbreathing) // Lets give them some chance to know somethings not right though I guess.
 					spawn(0) emote("cough")
 
@@ -640,7 +646,17 @@
 				bodytemperature += 0.8*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
 			*/
 
-			//Account for massive pressure differences
+			//Account for massive pressure differences.  Done by Polymorph
+			var/pressure = environment.return_pressure()
+			if(!istype(wear_suit, /obj/item/clothing/suit/space)&&!istype(wear_suit, /obj/item/clothing/suit/armor/captain))
+					/*if(pressure < 20)
+						if(prob(25))
+							src << "You feel the splittle on your lips and the fluid on your eyes boiling away, the capillteries in your skin breaking."
+						adjustBruteLoss(5)
+					*/
+				if(pressure > HAZARD_HIGH_PRESSURE)
+					adjustBruteLoss(min((10+(round(pressure/(HIGH_STEP_PRESSURE)-2)*5)),MAX_PRESSURE_DAMAGE))
+
 			return //TODO: DEFERRED
 
 		adjust_body_temperature(current, loc_temp, boost)
@@ -758,14 +774,9 @@
 				if(nutrition < 500) //so they can't store nutrition to survive without light forever
 					nutrition += light_amount
 				if(light_amount > 0) //if there's enough light, heal
-					if(getFireLoss())
-						heal_overall_damage(0,1)
-					if(getBruteLoss())
-						heal_overall_damage(1,0)
+					heal_overall_damage(1,1)
 					adjustToxLoss(-1)
-
-					if(getOxyLoss())
-						oxyloss--
+					adjustOxyLoss(-1)
 
 			/*if(overeatduration > 500 && !(mutations & FAT))
 				src << "\red You suddenly feel blubbery!"
@@ -857,18 +868,24 @@
 			if(getOxyLoss() > 50) Paralyse(3)
 
 			if(sleeping)
-				Paralyse(3)
+//				adjustHalLoss(-5)
+				if(paralysis <= 0)
+					Paralyse(2)
 				if (prob(10) && health && !hal_crit) spawn(0) emote("snore")
 				if(!src.sleeping_willingly)
 					src.sleeping--
 
 			if(resting)
-				Weaken(3)
+				if(weakened <= 0)
+					Weaken(2)
 
 			if(health < config.health_threshold_dead || brain_op_stage == 4.0)
 				death()
 			else if(health < config.health_threshold_crit)
 				if(health <= 20 && prob(1)) spawn(0) emote("gasp")
+
+				//if(!rejuv) oxyloss++
+				if(!reagents.has_reagent("inaprovaline")) adjustOxyLoss(1)
 
 				if(stat != 2)	stat = 1
 				Paralyse(5)
@@ -1099,7 +1116,7 @@
 
 			if (healths)
 				if (stat != 2)
-					switch(health)
+					switch(health - halloss)
 						if(100 to INFINITY)
 							healths.icon_state = "health0"
 						if(80 to 100)
@@ -1133,6 +1150,24 @@
 						nutrition_icon.icon_state = "nutrition3"
 					else
 						nutrition_icon.icon_state = "nutrition4"
+			if (pressure)
+				if(istype(wear_suit, /obj/item/clothing/suit/space)||istype(wear_suit, /obj/item/clothing/suit/armor/captain))
+					pressure.icon_state = "pressure0"
+
+				else
+					var/datum/gas_mixture/environment = loc.return_air()
+					if(environment)
+						switch(environment.return_pressure())
+							if(HAZARD_HIGH_PRESSURE to INFINITY)
+								pressure.icon_state = "pressure2"
+							if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
+								pressure.icon_state = "pressure1"
+							if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
+								pressure.icon_state = "pressure0"
+							if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
+								pressure.icon_state = "pressure-1"
+							else
+								pressure.icon_state = "pressure-2"
 
 			if(pullin)	pullin.icon_state = "pull[pulling ? 1 : 0]"
 
@@ -1166,6 +1201,7 @@
 				else
 					bodytemp.icon_state = "temp-4"
 
+			if(!client)	return 0 //Wish we did not need these
 			client.screen -= hud_used.blurry
 			client.screen -= hud_used.druggy
 			client.screen -= hud_used.vimpaired
@@ -1190,6 +1226,14 @@
 						if(!head:up && tinted_weldhelh)
 							client.screen += hud_used.darkMask
 
+					if(eye_stat > 20)
+						if((eye_stat > 30))
+							client.screen += hud_used.darkMask
+						else
+							client.screen += hud_used.vimpaired
+
+
+
 			if (stat != 2)
 				if (machine)
 					if (!( machine.check_eye(src) ))
@@ -1202,10 +1246,33 @@
 			return 1
 
 		handle_random_events()
+			/* // probably stupid -- Doohl
 			if (prob(1) && prob(2))
 				spawn(0)
 					emote("sneeze")
 					return
+			*/
+
+			// Puke if toxloss is too high
+			if(!stat)
+				if (getToxLoss() >= 45 && nutrition > 20)
+					lastpuke ++
+					if(lastpuke >= 25) // about 25 second delay I guess
+						Stun(5)
+
+						for(var/mob/O in viewers(world.view, src))
+							O.show_message(text("<b>\red [] throws up!</b>", src), 1)
+						playsound(src.loc, 'splat.ogg', 50, 1)
+
+						var/turf/location = loc
+						if (istype(location, /turf/simulated))
+							location.add_vomit_floor(src, 1)
+
+						nutrition -= 20
+						adjustToxLoss(-3)
+
+						// make it so you can only puke so fast
+						lastpuke = 0
 
 		handle_virus_updates()
 			if(bodytemperature > 406)
@@ -1260,13 +1327,13 @@
 							continue
 						if(air_master.current_cycle%3==1)
 							if(!M.nodamage)
-								M.bruteloss += 5
+								M.adjustBruteLoss(5)
 							nutrition += 10
 
 		handle_changeling()
 			if (mind)
 				if (mind.special_role == "Changeling" && changeling)
-					changeling.chem_charges = between(0, (max((0.9 - (changeling.chem_charges / 50)), 0.1) + changeling.chem_charges), 50)
+					changeling.chem_charges = between(0, ((max((0.9 - (changeling.chem_charges / 50)), 0.1)*changeling.chem_recharge_multiplier) + changeling.chem_charges), changeling.chem_storage)
 					if ((changeling.geneticdamage > 0))
 						changeling.geneticdamage = changeling.geneticdamage-1
 
@@ -1306,3 +1373,66 @@
 			src << "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")
 		else if(shock_stage == 80)
 			src << "<font color='red'><b>"+pick("You see a light at the end of the tunnel!", "You feel like you could die any moment now.", "You're about to lose consciousness.")
+
+/*
+			// Commented out so hunger system won't be such shock
+			// Damage and effect from not eating
+			if(nutrition <= 50)
+				if (prob (0.1))
+					src << "\red Your stomach rumbles."
+				if (prob (10))
+					bruteloss++
+				if (prob (5))
+					src << "You feel very weak."
+					weakened += rand(2, 3)
+*/
+/*
+snippets
+
+	if (mach)
+		if (machine)
+			mach.icon_state = "mach1"
+		else
+			mach.icon_state = null
+
+	if (!m_flag)
+		moved_recently = 0
+	m_flag = null
+
+
+
+		if ((istype(loc, /turf/space) && !( locate(/obj/movable, loc) )))
+			var/layers = 20
+			// ******* Check
+			if (((istype(head, /obj/item/clothing/head) && head.flags & 4) || (istype(wear_mask, /obj/item/clothing/mask) && (!( wear_mask.flags & 4 ) && wear_mask.flags & 8))))
+				layers -= 5
+			if (istype(w_uniform, /obj/item/clothing/under))
+				layers -= 5
+			if ((istype(wear_suit, /obj/item/clothing/suit) && wear_suit.flags & 8))
+				layers -= 10
+			if (layers > oxcheck)
+				oxcheck = layers
+
+
+				if(bodytemperature < 282.591 && (!firemut))
+					if(bodytemperature < 250)
+						adjustFireLoss(4)
+						updatehealth()
+						if(paralysis <= 2)	paralysis += 2
+					else if(prob(1) && !paralysis)
+						if(paralysis <= 5)	paralysis += 5
+						emote("collapse")
+						src << "\red You collapse from the cold!"
+				if(bodytemperature > 327.444  && (!firemut))
+					if(bodytemperature > 345.444)
+						if(!eye_blurry)	src << "\red The heat blurs your vision!"
+						eye_blurry = max(4, eye_blurry)
+						if(prob(3))	adjustFireLoss(rand(1,2))
+					else if(prob(3) && !paralysis)
+						paralysis += 2
+						emote("collapse")
+						src << "\red You collapse from heat exaustion!"
+				plcheck = t_plasma
+				oxcheck = t_oxygen
+				G.turf_add(T, G.total_moles())
+*/

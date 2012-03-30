@@ -34,6 +34,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 	var/requires_power = 1
 	var/always_unpowered = 0	//this gets overriden to 1 for space in area/New()
+
 	var/power_equip = 1
 	var/power_light = 1
 	var/power_environ = 1
@@ -42,6 +43,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/used_light = 0
 	var/used_environ = 0
 
+	var/has_gravity = 1
 
 	var/no_air = null
 	var/area/master				// master area used for power calcluations
@@ -82,7 +84,7 @@ proc/process_ghost_teleport_locs()
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = pick(get_area_turfs(AR.type))
-		if (picked.z == 1 || picked.z == 3 || picked.z == 5)
+		if (picked.z == 1 || picked.z == 5 || picked.z == 3)
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 
@@ -145,6 +147,61 @@ proc/process_ghost_teleport_locs()
 	icon_state = "shuttle2"
 
 /area/shuttle/escape/centcom
+	icon_state = "shuttle"
+
+/area/shuttle/escape/transit // the area to pass through for 3 minute transit
+	icon_state = "shuttle"
+
+/area/shuttle/escape_pod1
+	name = "Escape Pod One"
+	music = "music/escape.ogg"
+
+/area/shuttle/escape_pod1/station
+	icon_state = "shuttle2"
+
+/area/shuttle/escape_pod1/centcom
+	icon_state = "shuttle"
+
+/area/shuttle/escape_pod1/transit
+	icon_state = "shuttle"
+
+/area/shuttle/escape_pod2
+	name = "Escape Pod Two"
+	music = "music/escape.ogg"
+
+/area/shuttle/escape_pod2/station
+	icon_state = "shuttle2"
+
+/area/shuttle/escape_pod2/centcom
+	icon_state = "shuttle"
+
+/area/shuttle/escape_pod2/transit
+	icon_state = "shuttle"
+
+/area/shuttle/escape_pod3
+	name = "Escape Pod Three"
+	music = "music/escape.ogg"
+
+/area/shuttle/escape_pod3/station
+	icon_state = "shuttle2"
+
+/area/shuttle/escape_pod3/centcom
+	icon_state = "shuttle"
+
+/area/shuttle/escape_pod3/transit
+	icon_state = "shuttle"
+
+/area/shuttle/escape_pod5 //Pod 4 was lost to meteors
+	name = "Escape Pod Five"
+	music = "music/escape.ogg"
+
+/area/shuttle/escape_pod5/station
+	icon_state = "shuttle2"
+
+/area/shuttle/escape_pod5/centcom
+	icon_state = "shuttle"
+
+/area/shuttle/escape_pod5/transit
 	icon_state = "shuttle"
 
 /area/shuttle/mining
@@ -253,6 +310,7 @@ proc/process_ghost_teleport_locs()
 	requires_power = 0
 	luminosity = 1
 	sd_lighting = 0
+	has_gravity = 1
 
 // === end remove
 
@@ -561,6 +619,10 @@ proc/process_ghost_teleport_locs()
 	name = "Escape Shuttle Hallway"
 	icon_state = "escape"
 
+/area/hallway/secondary/construction
+	name = "Construction Area"
+	icon_state = "construction"
+
 /area/hallway/secondary/entry
 	name = "Arrival Shuttle Hallway"
 	icon_state = "entry"
@@ -683,15 +745,66 @@ proc/process_ghost_teleport_locs()
 	name = "Law Office"
 	icon_state = "law"
 
+
+
+
+
+
+
+/area/holodeck
+	name = "Holodeck"
+	icon_state = "Holodeck"
+	luminosity = 1
+	sd_lighting = 0
+
+/area/holodeck/alphadeck
+	name = "Holodeck Alpha"
+
+
+/area/holodeck/source_plating
+	name = "Holodeck - Off"
+	icon_state = "Holodeck"
+
+/area/holodeck/source_emptycourt
+	name = "Holodeck - Empty Court"
+
+/area/holodeck/source_boxingcourt
+	name = "Holodeck - Boxing Court"
+
+/area/holodeck/source_thunderdomecourt
+	name = "Holodeck - Thunderdome Court"
+
+/area/holodeck/source_beach
+	name = "Holodeck - Beach"
+	icon_state = "Holodeck" // Lazy.
+
+/area/holodeck/source_burntest
+	name = "Holodeck - Atmospheric Burn Test"
+
+/area/holodeck/source_wildlife
+	name = "Holodeck - Wildlife Simulation"
+
+
+
+
+
+
+
+
+
+
+
 //Engineering
 
 /area/engine
-	engineering
-
 	engine_smes
 		name = "Engineering SMES"
 		icon_state = "engine_smes"
 		requires_power = 0//This area only covers the batteries and they deal with their own power
+
+	engineering
+		name = "Engineering"
+		icon_state = "engine"
 
 	particle_accelerator
 		name = "Particle Accelerator"
@@ -1014,6 +1127,10 @@ proc/process_ghost_teleport_locs()
 	name = "Toxins Lab"
 	icon_state = "toxlab"
 
+/area/toxins/storage
+	name = "Toxin Storage"
+	icon_state = "toxstorage"
+
 /area/toxins/test_area
 	name = "Toxins Lab Test Area"
 	icon_state = "toxtest"
@@ -1042,6 +1159,10 @@ proc/process_ghost_teleport_locs()
 
 /area/storage/autolathe
 	name = "Autolathe Storage"
+	icon_state = "storage"
+
+/area/storage/art
+	name = "Art Supply Storage"
 	icon_state = "storage"
 
 /area/storage/auxillary
@@ -1302,6 +1423,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "storage"
 
 
+
 // Telecommunications Satellite
 
 /area/tcommsat/entrance
@@ -1343,6 +1465,10 @@ proc/process_ghost_teleport_locs()
 var/list/centcom_areas = list (
 	/area/centcom,
 	/area/shuttle/escape/centcom,
+	/area/shuttle/escape_pod1/centcom,
+	/area/shuttle/escape_pod2/centcom,
+	/area/shuttle/escape_pod3/centcom,
+	/area/shuttle/escape_pod5/centcom,
 	/area/shuttle/transport1/centcom,
 	/area/shuttle/transport2/centcom,
 	/area/shuttle/administration/centcom,
@@ -1353,6 +1479,10 @@ var/list/centcom_areas = list (
 var/list/the_station_areas = list (
 	/area/shuttle/arrival,
 	/area/shuttle/escape/station,
+	/area/shuttle/escape_pod1/station,
+	/area/shuttle/escape_pod2/station,
+	/area/shuttle/escape_pod3/station,
+	/area/shuttle/escape_pod5/station,
 	/area/shuttle/mining/station,
 	/area/shuttle/transport1/station,
 	// /area/shuttle/transport2/station,
@@ -1364,6 +1494,7 @@ var/list/the_station_areas = list (
 	/area/hallway,
 	/area/bridge,
 	/area/crew_quarters,
+	/area/holodeck,
 	/area/mint,
 	/area/library,
 	/area/chapel,
@@ -1387,6 +1518,8 @@ var/list/the_station_areas = list (
 	/area/turret_protected/ai_upload_foyer,
 	/area/turret_protected/ai,
 )
+
+
 
 
 /area/beach

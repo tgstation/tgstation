@@ -82,3 +82,16 @@
 					world.Reboot()
 
 	return ..(gibbed)
+
+/mob/living/carbon/human/proc/ChangeToHusk()
+	if(mutations & HUSK)
+		return
+	mutations |= HUSK
+	real_name = "Unknown"
+	update_body()
+	return
+
+/mob/living/carbon/human/proc/Drain()
+	ChangeToHusk()
+	mutations2 |= NOCLONE
+	return

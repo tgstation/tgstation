@@ -452,10 +452,10 @@
 
 /mob/living/carbon/monkey/update_clothing()
 	if(buckled)
-		if(istype(buckled, /obj/structure/stool/bed))
-			lying = 1
-		else
+		if(istype(buckled, /obj/structure/stool/bed/chair))
 			lying = 0
+		else
+			lying = 1
 
 	if(update_icon) // Skie
 		..()

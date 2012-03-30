@@ -20,9 +20,11 @@
 		station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 		explosion_in_progress = 0 //sit back and relax
 		list/datum/mind/modePlayer = new
-		list/restricted_jobs = list()
+		list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
+		list/protected_jobs = list()	// Jobs that can't be tratiors because
 		required_players = 0
 		required_enemies = 0
+		recommended_enemies = 0
 		uplink_welcome
 		uplink_uses
 		uplink_items = {"Highly Visible and Dangerous Weapons;
@@ -71,7 +73,11 @@ Badassery;
 /obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);
 Whitespace:Seperator;"}
 
-//obj/item/weapon/syndie/c4explosive/heavy:7:High (!) Power Explosive Charge, with Detonator;
+// Items removed from above:
+/*
+/obj/item/weapon/syndie/c4explosive/heavy:7:High (!) Power Explosive Charge, with Detonator;
+/obj/item/weapon/cloaking_device:4:Cloaking Device;	//Replacing cloakers with thermals.	-Pete
+*/
 
 /datum/game_mode/proc/announce() //to be calles when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"
@@ -120,6 +126,72 @@ Whitespace:Seperator;"}
 
 
 /datum/game_mode/proc/declare_completion()
+	var/clients = 0
+	var/surviving_humans = 0
+	var/surviving_total = 0
+	var/ghosts = 0
+	var/escaped_humans = 0
+	var/escaped_total = 0
+	var/escaped_on_pod_1 = 0
+	var/escaped_on_pod_2 = 0
+	var/escaped_on_pod_3 = 0
+	var/escaped_on_pod_5 = 0
+	var/escaped_on_shuttle = 0
+
+	var/list/area/escape_locations = list(/area/shuttle/escape/centcom, /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom)
+
+	for(var/mob/M in world)
+		if(M.client)
+			clients++
+			if(ishuman(M))
+				if(!M.stat)
+					surviving_humans++
+					if(M.loc && M.loc.loc && M.loc.loc.type in escape_locations)
+						escaped_humans++
+			if(!M.stat)
+				surviving_total++
+				if(M.loc && M.loc.loc && M.loc.loc.type in escape_locations)
+					escaped_total++
+
+				if(M.loc && M.loc.loc && M.loc.loc.type == /area/shuttle/escape/centcom)
+					escaped_on_shuttle++
+
+				if(M.loc && M.loc.loc && M.loc.loc.type == /area/shuttle/escape_pod1/centcom)
+					escaped_on_pod_1++
+				if(M.loc && M.loc.loc && M.loc.loc.type == /area/shuttle/escape_pod2/centcom)
+					escaped_on_pod_2++
+				if(M.loc && M.loc.loc && M.loc.loc.type == /area/shuttle/escape_pod3/centcom)
+					escaped_on_pod_3++
+				if(M.loc && M.loc.loc && M.loc.loc.type == /area/shuttle/escape_pod5/centcom)
+					escaped_on_pod_5++
+
+			if(isobserver(M))
+				ghosts++
+
+	if(clients > 0)
+		feedback_set("round_end_clients",clients)
+	if(ghosts > 0)
+		feedback_set("round_end_ghosts",ghosts)
+	if(surviving_humans > 0)
+		feedback_set("survived_human",surviving_humans)
+	if(surviving_total > 0)
+		feedback_set("survived_total",surviving_total)
+	if(escaped_humans > 0)
+		feedback_set("escaped_human",escaped_humans)
+	if(escaped_total > 0)
+		feedback_set("escaped_total",escaped_total)
+	if(escaped_on_shuttle > 0)
+		feedback_set("escaped_on_shuttle",escaped_on_shuttle)
+	if(escaped_on_pod_1 > 0)
+		feedback_set("escaped_on_pod_1",escaped_on_pod_1)
+	if(escaped_on_pod_2 > 0)
+		feedback_set("escaped_on_pod_2",escaped_on_pod_2)
+	if(escaped_on_pod_3 > 0)
+		feedback_set("escaped_on_pod_3",escaped_on_pod_3)
+	if(escaped_on_pod_5 > 0)
+		feedback_set("escaped_on_pod_5",escaped_on_pod_5)
+
+
 	return 0
 
 
@@ -169,23 +241,79 @@ Whitespace:Seperator;"}
 
 /datum/game_mode/proc/get_players_for_role(var/role, override_jobbans=1)
 	var/list/candidates = list()
+	var/list/drafted = list()
+	var/datum/mind/applicant = null
+
+	var/roletext
+	switch(role)
+		if(BE_CHANGELING)	roletext="changeling"
+		if(BE_TRAITOR)		roletext="traitor"
+		if(BE_OPERATIVE)	roletext="operative"
+		if(BE_WIZARD)		roletext="wizard"
+		if(BE_REV)			roletext="revolutionary"
+		if(BE_CULTIST)		roletext="cultist"
+
+
 	for(var/mob/new_player/player in world)
 		if(player.client && player.ready)
 			if(player.preferences.be_special & role)
-				if(!jobban_isbanned(player, "Syndicate"))
-					candidates += player.mind
+				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
+					candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
 
-	if(candidates.len < required_enemies)
+	if(restricted_jobs)
+		for(var/datum/mind/player in candidates)
+			for(var/job in restricted_jobs)					// Remove people who want to be antagonist but have a job already that precludes it
+				if(player.assigned_role == job)
+					candidates -= player
+
+	if(candidates.len < recommended_enemies)
 		for(var/mob/new_player/player in world)
 			if (player.client && player.ready)
-				if(!jobban_isbanned(player, "Syndicate"))
-					candidates += player.mind
+				if(!(player.preferences.be_special & role)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
+					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
+						drafted += player.mind
 
-	if(candidates.len < required_enemies && override_jobbans) //just to be safe. Ignored jobbans are better than broken round. Shouldn't happen usually. --rastaf0
+	if(restricted_jobs)
+		for(var/datum/mind/player in drafted)				// Remove people who can't be an antagonist
+			for(var/job in restricted_jobs)
+				if(player.assigned_role == job)
+					drafted -= player
+
+	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
+		if(drafted.len > 0)
+			applicant = pick(drafted)
+			if(applicant)
+				candidates += applicant
+				drafted.Remove(applicant)
+
+		else												// Not enough scrubs, ABORT ABORT ABORT
+			break
+
+	if(candidates.len < recommended_enemies && override_jobbans) //If we still don't have enough people, we're going to start drafting banned people.
 		for(var/mob/new_player/player in world)
 			if (player.client && player.ready)
-				candidates += player.mind
-	return candidates
+				if(jobban_isbanned(player, "Syndicate") || jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
+					drafted += player.mind
+
+	if(restricted_jobs)
+		for(var/datum/mind/player in drafted)				// Remove people who can't be an antagonist
+			for(var/job in restricted_jobs)
+				if(player.assigned_role == job)
+					drafted -= player
+
+	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
+		if(drafted.len > 0)
+			applicant = pick(drafted)
+			if(applicant)
+				candidates += applicant
+				drafted.Remove(applicant)
+
+		else												// Not enough scrubs, ABORT ABORT ABORT
+			break
+
+	return candidates		// Returns: The number of people who had the antagonist role set to yes, regardless of recomended_enemies, if that number is greater than recommended_enemies
+							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
+							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
 
 /datum/game_mode/proc/check_player_role_pref(var/role, var/mob/new_player/player)

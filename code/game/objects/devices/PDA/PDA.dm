@@ -104,6 +104,7 @@
 /obj/item/device/pda/captain
 	default_cartridge = /obj/item/weapon/cartridge/captain
 	icon_state = "pda-c"
+	toff = 1
 
 /obj/item/device/pda/quartermaster
 	default_cartridge = /obj/item/weapon/cartridge/quartermaster
@@ -143,6 +144,26 @@
 	if (default_cartridge)
 		cartridge = new default_cartridge(src)
 
+/obj/item/device/pda/proc/can_use()
+	if(!ismob(loc))
+		return 0
+	var/mob/M = loc
+
+	if(!M.canmove)
+		return 0
+
+	if((src in M.contents) || ( istype(loc, /turf) && in_range(src, M) ) )
+		return 1
+	else
+		return 0
+
+
+/obj/item/device/pda/MouseDrop(obj/over_object as obj, src_location, over_location)
+	var/mob/M = usr
+	if((!istype(over_object, /obj/screen)) && !M.restrained() && !M.stat && can_use())
+		return attack_self(M)
+	return
+
 //NOTE: graphic resources are loaded on client login
 /obj/item/device/pda/attack_self(mob/user as mob)
 	user.machine = src
@@ -168,6 +189,8 @@
 				dat += "<h2>PERSONAL DATA ASSISTANT v.1.2</h2>"
 				dat += "Owner: [owner], [ownjob]<br>"
 				dat += text("ID: <A href='?src=\ref[];choice=Authenticate'>[]</A><br>", src, (id ? "[id.registered_name], [id.assignment]" : "----------"))
+				dat += text("<A href='?src=\ref[];choice=UpdateInfo'>[]</A><br>", src, (id ? "Update PDA Info" : ""))
+
 				dat += "Station Time: [round(world.time / 36000)+12]:[(world.time / 600 % 60) < 10 ? add_zero(world.time / 600 % 60, 1) : world.time / 600 % 60]"//:[world.time / 100 % 6][world.time / 100 % 10]"
 
 				dat += "<br><br>"
@@ -323,6 +346,7 @@
 
 				dat += data_core.get_manifest(1)
 				dat += "<br>"
+
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
 				dat += cart
 
@@ -333,9 +357,10 @@
 /obj/item/device/pda/Topic(href, href_list)
 	..()
 	var/mob/living/U = usr
-	U.last_target_click = world.time
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
-	if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ) )
+	//if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ) )
+
+	if(can_use()) //Why reinvent the wheel? There's a proc that does exactly that.
 		if ( !(U.stat || U.restrained()) )
 
 			add_fingerprint(U)
@@ -362,6 +387,9 @@
 							cartridge.unlock()
 				if ("Authenticate")//Checks for ID
 					id_check(U, 1)
+				if("UpdateInfo")
+					ownjob = id.assignment
+					name = "PDA-[owner] ([ownjob])"
 				if("Eject")//Ejects the cart, only done from hub.
 					if (!isnull(cartridge))
 						var/turf/T = loc
@@ -470,6 +498,7 @@
 						return
 
 					var/obj/item/device/pda/P = locate(href_list["target"])
+					if(!istype(P))	return
 
 					if(istype(P, /obj/item/device/pda))
 						if (isnull(P)||P.toff || toff)
@@ -480,8 +509,15 @@
 
 						last_text = world.time
 
+
+//						var/AnsweringMS = 0
 						for (var/obj/machinery/message_server/MS in world)
 							MS.send_pda_message("[P.owner]","[owner]","[t]")
+//							if(MS.active)
+//								AnsweringMS++
+
+//						if(!AnsweringMS)
+//							return
 
 						tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
 						P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a>:</b></i><br>[t]<br>"
@@ -508,12 +544,19 @@
 					// pAI Message
 					else
 
+/*						var/AnsweringMS = 0
+						for (var/obj/machinery/message_server/MS in world)
+							MS.send_pda_message("[P]","[src]","[t]")
+							if(MS.active)
+								AnsweringMS++
+
+						if(!AnsweringMS)
+							return
+*/
+
 						tnote += "<i><b>&rarr; To [P]:</b></i><br>[t]<br>"
 						P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];soft=pdamessage;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
 
-
-						for (var/obj/machinery/message_server/MS in world)
-							MS.send_pda_message("[P]","[src]","[t]")
 
 						if (prob(15)) //Give the AI a chance of intercepting the message
 							var/who = src
@@ -524,6 +567,7 @@
 
 						playsound(P.loc, 'twobeep.ogg', 50, 1)
 
+//					log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
 
 
 				if("Send Honk")//Honk virus
@@ -697,22 +741,11 @@
 			name = "PDA-[owner] ([ownjob])"
 			user << "\blue Card scanned."
 		else
-			var/input=alert("Would you like to insert the card or update owner information?",,"Insert","Update")
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
-
 			if ( ( (src in user.contents) && (C in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (C in user.contents)) )
 				if ( !(user.stat || user.restrained()) )//If they can still act.
-					if(input=="Insert")
-						id_check(user, 2)
-					else
-						if(!(owner == C:registered_name))
-							user << "\blue Name on card does not match registered name. Please try again."
-						else if((owner == C:registered_name) && (ownjob == C:assignment))
-							user << "\blue Rank is up to date."
-						else if((owner == C:registered_name) && (ownjob != C:assignment))
-							ownjob = C:assignment
-							name = "PDA-[owner] ([ownjob])"
-							user << "\blue Rank updated."
+					id_check(user, 2)
+					user << "\blue You put the ID into the [src.name]'s slot."
 					updateSelfDialog()//Update self dialog on success.
 			return//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
@@ -733,10 +766,21 @@
 					O.show_message("\red [user] has analyzed [C]'s vitals!", 1)
 
 				user.show_message("\blue Analyzing Results for [C]:")
-				user.show_message("\blue \t Overall Status: [C.stat > 1 ? "dead" : "[C.health]% healthy"]", 1)
+				user.show_message("\blue \t Overall Status: [C.stat > 1 ? "dead" : "[C.health - C.halloss]% healthy"]", 1)
 				user.show_message("\blue \t Damage Specifics: [C.getOxyLoss() > 50 ? "\red" : "\blue"][C.getOxyLoss()]-[C.getToxLoss() > 50 ? "\red" : "\blue"][C.getToxLoss()]-[C.getFireLoss() > 50 ? "\red" : "\blue"][C.getFireLoss()]-[C.getBruteLoss() > 50 ? "\red" : "\blue"][C.getBruteLoss()]", 1)
 				user.show_message("\blue \t Key: Suffocation/Toxin/Burns/Brute", 1)
 				user.show_message("\blue \t Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)", 1)
+/*
+				if(istype(C, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = C
+					var/list/damaged = H.get_damaged_organs(1,1)
+					user.show_message("\blue Localized Damage, Brute/Burn:",1)
+					if(length(damaged)>0)
+						for(var/datum/organ/external/org in damaged)
+							user.show_message(text("\blue \t []: []\blue-[]",capitalize(org.getDisplayName()),(org.brute_dam > 0)?"\red [org.brute_dam]":0,(org.burn_dam > 0)?"\red [org.burn_dam]":0),1)
+					else
+						user.show_message("\blue \t Limbs are OK.",1)
+*/
 				for(var/datum/disease/D in C.viruses)
 					if(!D.hidden[SCANNER])
 						user.show_message(text("\red <b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]"))
@@ -916,6 +960,7 @@
 	icon = 'pda.dmi'
 	icon_state = "pdabox"
 	item_state = "syringe_kit"
+	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
 /obj/item/weapon/storage/PDAbox/New()
 	..()

@@ -1,3 +1,26 @@
+
+/proc/RandomAAlarmWires()
+	//to make this not randomize the wires, just set index to 1 and increment it in the flag for loop (after doing everything else).
+	var/list/AAlarmwires = list(0, 0, 0, 0, 0)
+	AAlarmIndexToFlag = list(0, 0, 0, 0, 0)
+	AAlarmIndexToWireColor = list(0, 0, 0, 0, 0)
+	AAlarmWireColorToIndex = list(0, 0, 0, 0, 0)
+	var/flagIndex = 1
+	for (var/flag=1, flag<32, flag+=flag)
+		var/valid = 0
+		while (!valid)
+			var/colorIndex = rand(1, 5)
+			if (AAlarmwires[colorIndex]==0)
+				valid = 1
+				AAlarmwires[colorIndex] = flag
+				AAlarmIndexToFlag[flagIndex] = flag
+				AAlarmIndexToWireColor[flagIndex] = colorIndex
+				AAlarmWireColorToIndex[colorIndex] = flagIndex
+		flagIndex+=1
+	return AAlarmwires
+
+
+
 // A datum for dealing with threshold limit values
 // used in /obj/machinery/alarm
 /datum/tlv
@@ -49,6 +72,19 @@
 #define AALARM_REPORT_TIMEOUT 100
 	var/datum/radio_frequency/radio_connection
 	var/locked = 1
+	var/wiresexposed = 0 // If it's been screwdrivered open.
+	var/aidisabled = 0
+	var/AAlarmwires = 31
+	var/shorted = 0
+
+ // Uses code from apc.dm
+
+#define AALARM_WIRE_IDSCAN 1									//Added wires
+#define AALARM_WIRE_POWER 2
+#define AALARM_WIRE_SYPHON 3
+#define AALARM_WIRE_AI_CONTROL 4
+#define AALARM_WIRE_AALARM 5
+
 
 #define AALARM_MODE_SCRUBBING    1
 #define AALARM_MODE_VENTING      2 //makes draught
@@ -89,8 +125,18 @@
 		"carbon dioxide" = new/datum/tlv(-1.0, -1.0,   5,  10), // Partial pressure, kpa
 		"plasma"         = new/datum/tlv(-1.0, -1.0, 0.2, 0.5), // Partial pressure, kpa
 		"other"          = new/datum/tlv(-1.0, -1.0, 0.5, 1.0), // Partial pressure, kpa
-		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.20,ONE_ATMOSPHERE*0.35,ONE_ATMOSPHERE*0.8,ONE_ATMOSPHERE*0.9), /* kpa */
-		"temperature"    = new/datum/tlv(40, 60, 150, 160), // K
+		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.40,ONE_ATMOSPHERE*1.60), /* kpa */
+		"temperature"    = new/datum/tlv(40, 60, 100, 120), // K
+	)
+
+/obj/machinery/alarm/kitchen_cold_room
+	TLV = list(
+		"oxygen"         = new/datum/tlv(  16,   19, 135, 140), // Partial pressure, kpa
+		"carbon dioxide" = new/datum/tlv(-1.0, -1.0,   5,  10), // Partial pressure, kpa
+		"plasma"         = new/datum/tlv(-1.0, -1.0, 0.2, 0.5), // Partial pressure, kpa
+		"other"          = new/datum/tlv(-1.0, -1.0, 0.5, 1.0), // Partial pressure, kpa
+		"pressure"       = new/datum/tlv(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.50,ONE_ATMOSPHERE*1.60), /* kpa */
+		"temperature"    = new/datum/tlv(200, 210, 273.15, 283.15), // K
 	)
 
 //all air alarms in area are connected via magic
@@ -136,10 +182,221 @@
 	if (.)
 		return
 	user.machine = src
-	user << browse(return_text(user),"window=air_alarm")
-	onclose(user, "air_alarm")
-	refresh_all()
+
+	if ( (get_dist(src, user) > 1 ))
+		if (!istype(user, /mob/living/silicon))
+			user.machine = null
+			user << browse(null, "window=air_alarm")
+			user << browse(null, "window=AAlarmwires")
+			return
+
+
+		else if (istype(user, /mob/living/silicon) && src.aidisabled)
+			user << "AI control for this Air Alarm interface has been disabled."
+			user << browse(null, "window=air_alarm")
+			return
+
+	if(wiresexposed && (!istype(user, /mob/living/silicon)))
+		var/t1 = text("<html><head><title>[alarm_area.name] Air Alarm Wires</title></head><body><B>Access Panel</B><br>\n")
+		var/list/AAlarmwires = list(
+			"Orange" = 1,
+			"Dark red" = 2,
+			"White" = 3,
+			"Yellow" = 4,
+			"Black" = 5,
+		)
+		for(var/wiredesc in AAlarmwires)
+			var/is_uncut = src.AAlarmwires & AAlarmWireColorToFlag[AAlarmwires[wiredesc]]
+			t1 += "[wiredesc] wire: "
+			if(!is_uncut)
+				t1 += "<a href='?src=\ref[src];AAlarmwires=[AAlarmwires[wiredesc]]'>Mend</a>"
+
+			else
+				t1 += "<a href='?src=\ref[src];AAlarmwires=[AAlarmwires[wiredesc]]'>Cut</a> "
+				t1 += "<a href='?src=\ref[src];pulse=[AAlarmwires[wiredesc]]'>Pulse</a> "
+
+			t1 += "<br>"
+		t1 += text("<br>\n[(src.locked ? "The Air Alarm is locked." : "The Air Alarm is unlocked.")]<br>\n[((src.shorted || (stat & (NOPOWER|BROKEN))) ? "The Air Alarm is offline." : "The Air Alarm is working properly!")]<br>\n[(src.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on.")]")
+		t1 += text("<p><a href='?src=\ref[src];close2=1'>Close</a></p></body></html>")
+		user << browse(t1, "window=AAlarmwires")
+		onclose(user, "AAlarmwires")
+
+	if(!shorted)
+		user << browse(return_text(),"window=air_alarm")
+		onclose(user, "air_alarm")
+		refresh_all()
+
 	return
+
+
+/obj/machinery/alarm/proc/isWireColorCut(var/wireColor)
+	var/wireFlag = AAlarmWireColorToFlag[wireColor]
+	return ((src.AAlarmwires & wireFlag) == 0)
+
+/obj/machinery/alarm/proc/isWireCut(var/wireIndex)
+	var/wireFlag = AAlarmIndexToFlag[wireIndex]
+	return ((src.AAlarmwires & wireFlag) == 0)
+
+/obj/machinery/alarm/proc/cut(var/wireColor)
+	var/wireFlag = AAlarmWireColorToFlag[wireColor]
+	var/wireIndex = AAlarmWireColorToIndex[wireColor]
+	AAlarmwires &= ~wireFlag
+	switch(wireIndex)
+		if(AALARM_WIRE_IDSCAN)
+			src.locked = 1
+			//world << "Idscan wire cut"
+
+		if(AALARM_WIRE_POWER)
+			src.shock(usr, 50)
+			src.shorted = 1
+			update_icon()
+			//world << "Power wire cut"
+
+		if (AALARM_WIRE_AI_CONTROL)
+			if (src.aidisabled == 0)
+				src.aidisabled = 1
+				//world << "AI Control Wire Cut"
+
+		if(AALARM_WIRE_SYPHON)
+			mode = AALARM_MODE_PANIC
+			apply_mode()
+			//world << "Syphon Wire Cut"
+
+		if(AALARM_WIRE_AALARM)
+
+			if (alarm_area.atmosalert(2))
+				post_alert(2)
+			spawn(1)
+				src.updateUsrDialog()
+			update_icon()
+
+			//world << "AAlarm Wire Cut"
+
+	src.updateDialog()
+
+	return
+
+/obj/machinery/alarm/proc/mend(var/wireColor)
+	var/wireFlag = AAlarmWireColorToFlag[wireColor]
+	var/wireIndex = AAlarmWireColorToIndex[wireColor] //not used in this function
+	AAlarmwires |= wireFlag
+	switch(wireIndex)
+		if(AALARM_WIRE_IDSCAN)
+			//world << "Idscan wire mended"
+
+		if(AALARM_WIRE_POWER)
+			src.shorted = 0
+			src.shock(usr, 50)
+			update_icon()
+			//world << "Power wire mended"
+
+		if(AALARM_WIRE_AI_CONTROL)
+			if (src.aidisabled == 1)
+				src.aidisabled = 0
+				//world << "AI Cont. wire mended"
+
+
+	//	if(AALARM_WIRE_SYPHON)
+		//	world << "Syphon Wire mended"
+
+
+	//	if(AALARM_WIRE_AALARM)
+			//world << "AAlarm Wire mended"
+
+	src.updateDialog()
+	return
+
+/obj/machinery/alarm/proc/pulse(var/wireColor)
+	//var/wireFlag = AAlarmWireColorToFlag[wireColor] //not used in this function
+	var/wireIndex = AAlarmWireColorToIndex[wireColor]
+	switch(wireIndex)
+		if(AALARM_WIRE_IDSCAN)			//unlocks for 30 seconds, if you have a better way to hack I'm all ears
+			src.locked = 0
+			spawn(300)
+				src.locked = 1
+			//world << "Idscan wire pulsed"
+
+		if (AALARM_WIRE_POWER)
+		//	world << "Power wire pulsed"
+			if(shorted == 0)
+				shorted = 1
+				update_icon()
+
+			spawn(1200)
+				if(shorted == 1)
+					shorted = 0
+					update_icon()
+
+
+		if (AALARM_WIRE_AI_CONTROL)
+		//	world << "AI Control wire pulsed"
+			if (src.aidisabled == 0)
+				src.aidisabled = 1
+			src.updateDialog()
+			spawn(10)
+				if (src.aidisabled == 1)
+					src.aidisabled = 0
+				src.updateDialog()
+
+		if(AALARM_WIRE_SYPHON)
+		//	world << "Syphon wire pulsed"
+			mode = AALARM_MODE_REPLACEMENT
+			apply_mode()
+
+		if(AALARM_WIRE_AALARM)
+		//	world << "Aalarm wire pulsed"
+			if (alarm_area.atmosalert(0))
+				post_alert(0)
+			spawn(1)
+				src.updateUsrDialog()
+			update_icon()
+
+	src.updateDialog()
+	return
+
+/obj/machinery/alarm/proc/shock(mob/user, prb)
+	if((stat & (NOPOWER)))		// unpowered, no shock
+		return 0
+	if(!prob(prb))
+		return 0 //you lucked out, no shock for you
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start() //sparks always.
+	if (electrocute_mob(user, get_area(src), src))
+		return 1
+	else
+		return 0
+
+/obj/machinery/alarm/Topic(href, href_list)
+	src.add_fingerprint(usr)
+	usr.machine = src
+
+	if ( (get_dist(src, usr) > 1 ))
+		if (!istype(usr, /mob/living/silicon))
+			usr.machine = null
+			usr << browse(null, "window=air_alarm")
+			usr << browse(null, "window=AAlarmwires")
+			return
+
+	if (href_list["AAlarmwires"])
+		var/t1 = text2num(href_list["AAlarmwires"])
+		if (!( istype(usr.equipped(), /obj/item/weapon/wirecutters) ))
+			usr << "You need wirecutters!"
+			return
+		if (src.isWireColorCut(t1))
+			src.mend(t1)
+		else
+			src.cut(t1)
+	else if (href_list["pulse"])
+		var/t1 = text2num(href_list["pulse"])
+		if (!istype(usr.equipped(), /obj/item/device/multitool))
+			usr << "You need a multitool!"
+			return
+		if (src.isWireColorCut(t1))
+			usr << "You can't pulse a cut wire."
+			return
+		else
+			src.pulse(t1)
 
 /obj/machinery/alarm/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))
@@ -215,11 +472,11 @@
 
 	return 1
 
-/obj/machinery/alarm/proc/return_text(mob/user)
-	if(!(istype(user, /mob/living/silicon)) && locked)
-		return "<html><head><title>[src]</title></head><body>[return_status()]<hr>[rcon_text()]<hr><i>(Swipe ID card to unlock interface)</i></body></html>"
+/obj/machinery/alarm/proc/return_text()
+	if(!(istype(usr, /mob/living/silicon)) && locked)
+		return "<html><head><title>[src]</title></head><body>[return_status()]<hr><i>(Swipe ID card to unlock interface)</i></body></html>"
 	else
-		return "<html><head><title>[src]</title></head><body>[return_status()]<hr>[rcon_text()]<hr>[return_controls()]</body></html>"
+		return "<html><head><title>[src]</title></head><body>[return_status()]<hr>[return_controls()]</body></html>"
 
 /obj/machinery/alarm/proc/return_status()
 	var/turf/location = src.loc
@@ -518,6 +775,12 @@ table tr:first-child th:first-child { border: none;}
 	if(href_list["rcon"])
 		rcon_setting = text2num(href_list["rcon"])
 		src.updateUsrDialog()
+
+	if ( (get_dist(src, usr) > 1 ))
+		if (!istype(usr, /mob/living/silicon))
+			usr.machine = null
+			usr << browse(null, "window=air_alarm")
+
 	if(href_list["command"])
 		var/device_id = href_list["id_tag"]
 		switch(href_list["command"])
@@ -636,7 +899,10 @@ table tr:first-child th:first-child { border: none;}
 				))
 
 /obj/machinery/alarm/update_icon()
-	if(stat & (NOPOWER|BROKEN))
+	if(wiresexposed)
+		icon_state = "alarmx"
+		return
+	if((stat & (NOPOWER|BROKEN)) || shorted)
 		icon_state = "alarmp"
 		return
 	switch(max(danger_level, alarm_area.atmosalm))
@@ -648,7 +914,7 @@ table tr:first-child th:first-child { border: none;}
 			src.icon_state = "alarm1"
 
 /obj/machinery/alarm/process()
-	if(stat & (NOPOWER|BROKEN))
+	if((stat & (NOPOWER|BROKEN)) || shorted)
 		return
 
 	var/turf/simulated/location = src.loc
@@ -742,26 +1008,37 @@ table tr:first-child th:first-child { border: none;}
 	var/new_area_danger_level = 0
 	for (var/area/A in alarm_area.related)
 		for (var/obj/machinery/alarm/AA in A)
-			if (!(AA.stat & (NOPOWER|BROKEN)))
+			if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
 				new_area_danger_level = max(new_area_danger_level,AA.danger_level)
 	if (alarm_area.atmosalert(new_area_danger_level)) //if area was in normal state or if area was in alert state
 		post_alert(new_area_danger_level)
 	update_icon()
 
 /obj/machinery/alarm/attackby(obj/item/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/weapon/wirecutters))
+/*	if (istype(W, /obj/item/weapon/wirecutters))
 		stat ^= BROKEN
 		src.add_fingerprint(user)
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("\red [] has []activated []!", user, (stat&BROKEN) ? "de" : "re", src), 1)
 		update_icon()
 		return
+*/
+	if(istype(W, /obj/item/weapon/screwdriver))  // Opening that Air Alarm up.
+		//user << "You pop the Air Alarm's maintence panel open."
+		wiresexposed = !wiresexposed
+		user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
+		update_icon()
+		return
+
+	if (wiresexposed && ((istype(W, /obj/item/device/multitool) || istype(W, /obj/item/weapon/wirecutters))))
+		return src.attack_hand(user)
+
 
 	else if (istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
 		if(stat & (NOPOWER|BROKEN))
 			user << "It does nothing"
 		else
-			if(src.allowed(usr))
+			if(src.allowed(usr) && !isWireCut(AALARM_WIRE_IDSCAN))
 				locked = !locked
 				user << "\blue You [ locked ? "lock" : "unlock"] the Air Alarm interface."
 				src.updateUsrDialog()
@@ -861,7 +1138,7 @@ table tr:first-child th:first-child { border: none;}
 			d2 = text("<A href='?src=\ref[];time=1'>Initiate Time Lock</A>", src)
 		var/second = src.time % 60
 		var/minute = (src.time - second) / 60
-		var/dat = text("<HTML><HEAD></HEAD><BODY><TT><B>Fire alarm</B> []\n<HR>\nTimer System: []<BR>\nTime Left: [][] <A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT></BODY></HTML>", d1, d2, (minute ? text("[]:", minute) : null), second, src, src, src, src)
+		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>Fire alarm</B> [d1]\n<HR>The current alert level is: [get_security_level()]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
 		user << browse(dat, "window=firealarm")
 		onclose(user, "firealarm")
 	else
@@ -876,7 +1153,7 @@ table tr:first-child th:first-child { border: none;}
 			d2 = text("<A href='?src=\ref[];time=1'>[]</A>", src, stars("Initiate Time Lock"))
 		var/second = src.time % 60
 		var/minute = (src.time - second) / 60
-		var/dat = text("<HTML><HEAD></HEAD><BODY><TT><B>[]</B> []\n<HR>\nTimer System: []<BR>\nTime Left: [][] <A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT></BODY></HTML>", stars("Fire alarm"), d1, d2, (minute ? text("[]:", minute) : null), second, src, src, src, src)
+		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>[stars("Fire alarm")]</B> [d1]\n<HR><b>The current alert level is: [stars(get_security_level())]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
 		user << browse(dat, "window=firealarm")
 		onclose(user, "firealarm")
 	return
