@@ -122,4 +122,21 @@ h1.alert, h2.alert
 	font-weight: bold;
 	color: #f00;
 }
+
+.emote					{					font-style: italic;}
+
+.attack					{color: #ff0000;}
+.moderate				{color: #CC0000;}
+.disarm					{color: #990000;}
+.passive				{color: #660000;}
+
+.danger					{color: #ff0000;	font-weight: bold;}
+.warning				{color: #ff0000;	font-style: italic;}
+.rose					{color: #ff5050;}
+.info					{color: #0000CC;}
+.notice					{color: #000099;}
+
+.alien					{color: #543354;}
+
+.newscaster				{color: #800000;}
 </style>"}

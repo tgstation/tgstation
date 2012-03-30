@@ -186,7 +186,7 @@
 				//	a.hallucinate(src)
 				if(!handling_hal && hallucination > 20)
 					spawn handle_hallucinations() //The not boring kind!
-				hallucination -= 2
+				hallucination = max(hallucination - 2, 0)
 				//if(health < 0)
 				//	for(var/obj/a in hallucinations)
 				//		del a
@@ -766,6 +766,7 @@
 
 		handle_chemicals_in_body()
 			if(reagents && stat != 2) reagents.metabolize(src)
+			if(vessel && stat != 2) vessel.metabolize(src)
 
 			if(mutantrace == "plant") //couldn't think of a better place to place it, since it handles nutrition -- Urist
 				var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
@@ -861,6 +862,39 @@
 				emote("collapse")
 				paralysis = 10
 
+			if(stat < 2)
+				var/blood_volume = round(vessel.get_reagent_amount("blood"))
+				if(bloodloss)
+					drip(bloodloss)
+				if(!blood_volume)
+					bloodloss = 0
+				else if(blood_volume > 448)
+					if(pale)
+						pale = 0
+						update_body()
+				else if(blood_volume <= 448 && blood_volume > 336)
+					if(!pale)
+						pale = 1
+						update_body()
+						var/word = pick("dizzy","woosey","faint")
+						src << "\red You feel [word]"
+					if(prob(1))
+						var/word = pick("dizzy","woosey","faint")
+						src << "\red You feel [word]"
+				else if(blood_volume <= 336 && blood_volume > 244)
+					if(!pale)
+						pale = 1
+						update_body()
+					eye_blurry += 6
+					if(prob(15))
+						paralysis += rand(1,3)
+				else if(blood_volume <= 244 && blood_volume > 122)
+					if(toxloss <= 100)
+						toxloss = 100
+				else if(blood_volume <= 122)
+					death()
+					//src.unlock_medal("We're all sold out on blood", 0, "You bled to death..", "easy")
+
 			updatehealth()
 
 		//	health = 100 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
@@ -937,20 +971,21 @@
 					src << "\red Your face has become disfigured."
 					face_op_stage = 0.0
 					warn_flavor_changed()
+			var/blood_max = 0
 			for(var/name in organs)
 				var/datum/organ/external/temp = organs[name]
 				if(!temp.bleeding)
 					continue
-				else
-					if(prob(35))
-						bloodloss += rand(1,10)
+			//	else
+			//		if(prob(35))
+			//			bloodloss += rand(1,10)
 				if(temp.wounds)
-					for(var/datum/organ/external/wound/W in temp.wounds)
-						if(!temp.bleeding)
-							continue
-						else
-							if(prob(25))
-								bloodloss++
+					for(var/datum/organ/wound/W in temp.wounds)
+						if(W.wound_size && W.bleeding)
+							blood_max += W.wound_size
+				if(temp.destroyed && !temp.gauzed)
+					blood_max += 10 //Yer missing a fucking limb.
+			bloodloss = min(bloodloss+1,sqrt(blood_max))
 			if (eye_blind)
 				eye_blind--
 				blinded = 1

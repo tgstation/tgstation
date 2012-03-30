@@ -308,13 +308,24 @@ proc/analyze_health_less_info(mob/living/carbon/M as mob, mob/user as mob)
 		user.show_message(text("\red Significant brain damage detected. Subject may have had a concussion."), 1)
 	if (M.virus2 || M.reagents.reagent_list.len > 0)
 		user.show_message(text("\red Unknown substance detected in blood."), 1)
-	if(istype(M,/mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		for(var/name in H.organs)
 			var/datum/organ/external/e = H.organs[name]
 			if(e.broken)
 				user.show_message(text("\red Bone fractures detected. Advanced scanner required for location."), 1)
 				break
+	if(ishuman(M))
+		if(M:vessel)
+			var/blood_volume = round(M:vessel.get_reagent_amount("blood"))
+			var/blood_percent =  blood_volume / 560
+			blood_percent *= 100
+			if(blood_volume <= 448)
+				user.show_message("\red <b>Warning: Blood Level LOW: [blood_percent]% [blood_volume]cl")
+			else if(blood_volume <= 336)
+				user.show_message("\red <b>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl")
+			else
+				user.show_message("\blue Blood Level Normal: [blood_percent]% [blood_volume]cl")
 	return
 
 /obj/item/device/healthanalyzer/attack(mob/M as mob, mob/user as mob)
