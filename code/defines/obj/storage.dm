@@ -487,7 +487,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	max_w_class = 2
+	max_w_class = 1
 	max_combined_w_class = 3
 	storage_slots = 3
 	flags = FPRINT | TABLEPASS
@@ -499,9 +499,9 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	max_w_class = 2
-	max_combined_w_class = 5
-	storage_slots = 5
+	max_w_class = 1
+	max_combined_w_class = 7
+	storage_slots = 7
 	flags = FPRINT | TABLEPASS
 	var/mob/affecting = null
 	var/deity_name = "Christ"
