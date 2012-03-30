@@ -12,20 +12,32 @@
 		if(real_name == "Cyborg")
 			real_name += " [pick(rand(1, 999))]"
 			name = real_name
+
 	spawn (4)
-		if (client)
-			connected_ai = activeais()
-		if (connected_ai)
-			connected_ai.connected_robots += src
-//			laws = connected_ai.laws //The borg inherits its AI's laws
-			laws = new /datum/ai_laws
-			lawsync()
-			src << "<b>Unit slaved to [connected_ai.name], downloading laws.</b>"
-			lawupdate = 1
+		if(!syndie)
+			if (client)
+				connected_ai = activeais()
+			if (connected_ai)
+				connected_ai.connected_robots += src
+	//			laws = connected_ai.laws //The borg inherits its AI's laws
+				laws = new /datum/ai_laws
+				lawsync()
+				src << "<b>Unit slaved to [connected_ai.name], downloading laws.</b>"
+				lawupdate = 1
+			else
+				laws = new /datum/ai_laws/asimov
+				lawupdate = 0
+				src << "<b>Unable to locate an AI, reverting to standard Asimov laws.</b>"
 		else
-			laws = new /datum/ai_laws/asimov
+			laws = new /datum/ai_laws/antimov
 			lawupdate = 0
-			src << "<b>Unable to locate an AI, reverting to standard Asimov laws.</b>"
+			scrambledcodes = 1
+			src << "Follow your laws."
+			cell.charge = 25000
+			module = new /obj/item/weapon/robot_module/syndicate(src)
+			hands.icon_state = "standard"
+			icon_state = "secborg"
+			modtype = "Synd"
 
 		radio = new /obj/item/device/radio(src)
 		camera = new /obj/machinery/camera(src)

@@ -52,7 +52,8 @@
 
 
 	process()
-		if(operating || stat & NOPOWER || !nextstate)	return
+		if(operating || stat & NOPOWER || !nextstate)
+			return
 		switch(nextstate)
 			if(OPEN)
 				spawn()

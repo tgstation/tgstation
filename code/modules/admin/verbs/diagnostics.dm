@@ -241,6 +241,7 @@
 	<a href='?src=\ref[tension_master];makeSpaceNinja=1'>Make Space Ninja (Requires Ghosts)</a><br>
 	<a href='?src=\ref[tension_master];makeAliens=1'>Make Aliens (Requires Ghosts)</a><br>
 	<a href='?src=\ref[tension_master];makeDeathsquad=1'>Make Deathsquad (Syndicate) (Requires Ghosts)</a><br>
+	<a href='?src=\ref[tension_master];makeBorgDeathsquad=1'>Make Deathsquad (Borg) (Requires Ghosts)</a><br>
 
 "}
 		usr << browse(output,"window=tensionreport")

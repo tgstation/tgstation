@@ -41,16 +41,17 @@ var/global/datum/tension/tension_master
 	var/round4 = 0
 
 	var/list/antagonistmodes = list (
-	"POINTS_FOR_TRATIOR" 	=	100000,
-	"POINTS_FOR_CHANGLING"	=	120000,
-	"POINTS_FOR_REVS"		=	150000,
-	"POINTS_FOR_MALF"		=	250000,
-	"POINTS_FOR_WIZARD"		=	150000,
- 	"POINTS_FOR_CULT"		=	150000,
- 	"POINTS_FOR_NUKETEAM"	=	250000,
- 	"POINTS_FOR_ALIEN"		=	200000,
- 	"POINTS_FOR_NINJA"		=	200000,
- 	"POINTS_FOR_DEATHSQUAD"	=	500000
+	"POINTS_FOR_TRATIOR" 		=	100000,
+	"POINTS_FOR_CHANGLING"		=	120000,
+	"POINTS_FOR_REVS"			=	150000,
+	"POINTS_FOR_MALF"			=	250000,
+	"POINTS_FOR_WIZARD"			=	150000,
+ 	"POINTS_FOR_CULT"			=	150000,
+ 	"POINTS_FOR_NUKETEAM"		=	250000,
+ 	"POINTS_FOR_ALIEN"			=	200000,
+ 	"POINTS_FOR_NINJA"			=	200000,
+ 	"POINTS_FOR_DEATHSQUAD"		=	500000,
+ 	"POINTS_FOR_BORGDEATHSQUAD" =	500000
 	)
 
 	var/list/potentialgames = list()
@@ -154,6 +155,11 @@ var/global/datum/tension/tension_master
 												else
 													potentialgames.Remove(thegame)
 
+											if("POINTS_FOR_BORG_DEATHSQUAD")
+												if(!makeBorgDeathsquad())
+													forcenexttick = 1
+												else
+													potentialgames.Remove(thegame)
 
 
 	proc/get_num_players()
@@ -224,6 +230,9 @@ var/global/datum/tension/tension_master
 
 		else if (href_list["makeDeathsquad"])
 			makeDeathsquad()
+
+		else if (href_list["makeBorgDeathsquad"])
+			makeBorgDeathsquad()
 
 		else if (href_list["Supress"])
 			supress = 1
@@ -301,6 +310,7 @@ var/global/datum/tension/tension_master
 			for(var/i = 0, i<numTratiors, i++)
 				H = pick(candidates)
 				H.mind.make_Tratior()
+				candidates.Remove(H)
 
 			return 1
 
@@ -337,6 +347,7 @@ var/global/datum/tension/tension_master
 			for(var/i = 0, i<numChanglings, i++)
 				H = pick(candidates)
 				H.mind.make_Changling()
+				candidates.Remove(H)
 
 			return 1
 
@@ -372,7 +383,7 @@ var/global/datum/tension/tension_master
 			for(var/i = 0, i<numRevs, i++)
 				H = pick(candidates)
 				H.mind.make_Rev()
-
+				candidates.Remove(H)
 			return 1
 
 		else
@@ -399,6 +410,7 @@ var/global/datum/tension/tension_master
 		for(var/mob/dead/observer/G in candidates)
 			if(!G.client || !G.key)
 				candidates.Remove(G)
+
 		spawn(0)
 			if(candidates.len)
 				while((!theghost || !theghost.client) && candidates.len)
@@ -440,13 +452,15 @@ var/global/datum/tension/tension_master
 
 		if(candidates.len)
 			var/numCultists = min(candidates.len, 4)
+			var/list/runeWords = list()
 
 			for(var/i = 0, i<numCultists, i++)
 				H = pick(candidates)
 				H.mind.make_Cultist()
+				candidates.Remove(H)
 				temp.grant_runeword(H)
 
-				return 1
+			return 1
 
 		else
 			return 0
@@ -570,29 +584,31 @@ var/global/datum/tension/tension_master
 
 	//Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
 
-
+/*
 		for(var/obj/debug/debugger/B in world)
 			B.list1 = list()
 			B.list2 = list()
 			B.list3 = list()
 			B.list4 = list()
-
-
+*/
 
 		for(var/mob/dead/observer/G in world)
+/*
 			for(var/obj/debug/debugger/B in world)
 				B.list1 += G
 				B.list2 += G.key
-
+*/
 			spawn(0)
 				switch(alert(G,"Do you wish to be considered for an elite syndicate strike team being sent in?","Please answer in 30 seconds!","Yes","No"))
 					if("Yes")
 						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
 							return
 						candidates += G
+						/*
 						for(var/obj/debug/debugger/B in world)
 							B.list3 += G
 							B.list4 += G.key
+						*/
 					if("No")
 						return
 		sleep(300)
@@ -602,16 +618,19 @@ var/global/datum/tension/tension_master
 				candidates.Remove(G)
 
 		if(candidates.len)
+		/*
 			for(var/obj/debug/debugger/B in world)
 				B.var1 = candidates.len
 				B.list5 = candidates.Copy()
 				for(var/mob/dead/observer/G in candidates)
 					B.list6 += G.key
-			var/numagents = 6
 
+		*/
+			var/numagents = 6
+/*
 			for(var/obj/debug/debugger/B in world)
 				B.var2 = 0
-
+*/
 			//Spawns commandos and equips them.
 			for (var/obj/effect/landmark/L in world)
 				if(numagents<=0)
@@ -624,14 +643,18 @@ var/global/datum/tension/tension_master
 
 
 					while((!theghost || !theghost.client) && candidates.len)
+					/*
 						for(var/obj/debug/debugger/B in world)
 							B.var2++
+					*/
 						theghost = pick(candidates)
 						candidates.Remove(theghost)
 
 					if(!theghost)
+					/*
 						for(var/obj/debug/debugger/B in world)
 							B.var4 = 1
+					*/
 						del(new_syndicate_commando)
 						break
 
@@ -662,6 +685,84 @@ var/global/datum/tension/tension_master
 					del(L)
 
 			return 1 // Has to return one before it knows if there's a wizard to prevent the parent from automatically selecting another game mode.
+
+
+	proc/makeBorgDeathsquad()
+		var/list/mob/dead/observer/candidates = list()
+		var/mob/dead/observer/theghost = null
+		var/time_passed = world.time
+		var/list/namelist = list("Tyr","Fenrir","Lachesis","Clotho","Atropos","Nyx")
+
+	//Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
+
+		for(var/mob/dead/observer/G in world)
+			spawn(0)
+				switch(alert(G,"Do you wish to be considered for a cyborg strike team being sent in?","Please answer in 30 seconds!","Yes","No"))
+					if("Yes")
+						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+							return
+						candidates += G
+					if("No")
+						return
+		sleep(300)
+
+		for(var/mob/dead/observer/G in candidates)
+			if(!G.client || !G.key)
+				candidates.Remove(G)
+
+		if(candidates.len)
+			var/numagents = 6
+
+			//Spawns commandos and equips them.
+			for (var/obj/effect/landmark/L in world)
+				if(numagents<=0)
+					break
+				if (L.name == "Borg-Deathsquad")
+
+					var/name = pick(namelist)
+					namelist.Remove(name)
+
+					var/mob/living/silicon/robot/new_borg_deathsquad = create_borg_death_commando(L, name)
+
+
+
+					while((!theghost || !theghost.client) && candidates.len)
+						theghost = pick(candidates)
+						candidates.Remove(theghost)
+
+					if(!theghost)
+						del(new_borg_deathsquad)
+						break
+
+					new_borg_deathsquad.mind.key = theghost.key//For mind stuff.
+					new_borg_deathsquad.key = theghost.key
+					del(theghost)
+
+					//So they don't forget their code or mission.
+
+
+					new_borg_deathsquad << "You are a borg deathsquad operative.  Follow your laws."
+					numagents--
+
+		//Spawns the rest of the commando gear.
+		//	for (var/obj/effect/landmark/L)
+			//	if (L.name == "Commando_Manual")
+					//new /obj/item/weapon/gun/energy/pulse_rifle(L.loc)
+				//	var/obj/item/weapon/paper/P = new(L.loc)
+				//	P.info = "<p><b>Good morning soldier!</b>. This compact guide will familiarize you with standard operating procedure. There are three basic rules to follow:<br>#1 Work as a team.<br>#2 Accomplish your objective at all costs.<br>#3 Leave no witnesses.<br>You are fully equipped and stocked for your mission--before departing on the Spec. Ops. Shuttle due South, make sure that all operatives are ready. Actual mission objective will be relayed to you by Central Command through your headsets.<br>If deemed appropriate, Central Command will also allow members of your team to equip assault power-armor for the mission. You will find the armor storage due West of your position. Once you are ready to leave, utilize the Special Operations shuttle console and toggle the hull doors via the other console.</p><p>In the event that the team does not accomplish their assigned objective in a timely manner, or finds no other way to do so, attached below are instructions on how to operate a Nanotrasen Nuclear Device. Your operations <b>LEADER</b> is provided with a nuclear authentication disk and a pin-pointer for this reason. You may easily recognize them by their rank: Lieutenant, Captain, or Major. The nuclear device itself will be present somewhere on your destination.</p><p>Hello and thank you for choosing Nanotrasen for your nuclear information needs. Today's crash course will deal with the operation of a Fission Class Nanotrasen made Nuclear Device.<br>First and foremost, <b>DO NOT TOUCH ANYTHING UNTIL THE BOMB IS IN PLACE.</b> Pressing any button on the compacted bomb will cause it to extend and bolt itself into place. If this is done to unbolt it one must completely log in which at this time may not be possible.<br>To make the device functional:<br>#1 Place bomb in designated detonation zone<br> #2 Extend and anchor bomb (attack with hand).<br>#3 Insert Nuclear Auth. Disk into slot.<br>#4 Type numeric code into keypad ([nuke_code]).<br>Note: If you make a mistake press R to reset the device.<br>#5 Press the E button to log onto the device.<br>You now have activated the device. To deactivate the buttons at anytime, for example when you have already prepped the bomb for detonation, remove the authentication disk OR press the R on the keypad. Now the bomb CAN ONLY be detonated using the timer. A manual detonation is not an option.<br>Note: Toggle off the <b>SAFETY</b>.<br>Use the - - and + + to set a detonation time between 5 seconds and 10 minutes. Then press the timer toggle button to start the countdown. Now remove the authentication disk so that the buttons deactivate.<br>Note: <b>THE BOMB IS STILL SET AND WILL DETONATE</b><br>Now before you remove the disk if you need to move the bomb you can: Toggle off the anchor, move it, and re-anchor.</p><p>The nuclear authorization code is: <b>[nuke_code ? nuke_code : "None provided"]</b></p><p><b>Good luck, soldier!</b></p>"
+				//	P.name = "Spec. Ops. Manual"
+
+
+			return 1 // Has to return one before it knows if there's a wizard to prevent the parent from automatically selecting another game mode.
+
+
+
+
+
+
+
+
+
 
 	proc/makeBody(var/mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 
@@ -828,3 +929,67 @@ var/global/datum/tension/tension_master
 		new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 		//del(spawn_location)  // Commenting this out for multiple commando teams.
 		return new_syndicate_commando
+
+	/proc/create_borg_death_commando(obj/spawn_location, name)
+
+		var/mob/living/silicon/robot/new_borg_deathsquad = new(spawn_location.loc, 1)
+
+		new_borg_deathsquad.real_name = name
+		new_borg_deathsquad.name = name
+
+		//Creates mind stuff.
+		new_borg_deathsquad.mind = new
+		new_borg_deathsquad.mind.current = new_borg_deathsquad
+		new_borg_deathsquad.mind.original = new_borg_deathsquad
+		new_borg_deathsquad.mind.assigned_role = "MODE"
+		new_borg_deathsquad.mind.special_role = "Borg Commando"
+		if(!(new_borg_deathsquad.mind in ticker.minds))
+			ticker.minds += new_borg_deathsquad.mind//Adds them to regular mind list.
+		if(!(new_borg_deathsquad.mind in ticker.mode.traitors))//If they weren't already an extra traitor.
+			ticker.mode.traitors += new_borg_deathsquad.mind//Adds them to current traitor list. Which is really the extra antagonist list.
+		//del(spawn_location)  // Commenting this out for multiple commando teams.
+		return new_borg_deathsquad
+
+
+
+
+
+/obj/machinery/computer/Borg_station
+	name = "Cyborg Station Terminal"
+	icon = 'computer.dmi'
+	icon_state = "syndishuttle"
+	req_access = list()
+	var/temp = null
+	var/hacked = 0
+	var/jumpcomplete = 0
+
+/obj/machinery/computer/Borg_station/attack_hand()
+	if(jumpcomplete)
+		return
+	var/area/start_location = locate(/area/borg_deathsquad/start)
+	var/area/end_location = locate(/area/borg_deathsquad/station)
+
+	var/list/dstturfs = list()
+	var/throwy = world.maxy
+
+	for(var/turf/T in end_location)
+		dstturfs += T
+		if(T.y < throwy)
+			throwy = T.y
+
+				// hey you, get out of the way!
+	for(var/turf/T in dstturfs)
+					// find the turf to move things to
+		var/turf/D = locate(T.x, throwy - 1, 1)
+					//var/turf/E = get_step(D, SOUTH)
+		for(var/atom/movable/AM as mob|obj in T)
+			AM.Move(D)
+		if(istype(T, /turf/simulated))
+			del(T)
+
+	start_location.move_contents_to(end_location)
+
+	for(var/obj/machinery/door/poddoor/P in end_location)
+		P.open()
+	jumpcomplete = 1
+	command_alert("DRADIS contact!  Set condition one throughout the station!")

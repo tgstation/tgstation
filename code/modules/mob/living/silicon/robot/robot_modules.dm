@@ -228,5 +228,8 @@
 
 
 	New()
+		src.modules += new /obj/item/weapon/melee/energy/sword(src)
+		src.modules += new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(src)
 		src.modules += new /obj/item/weapon/card/emag(src)
+		src.modules += new /obj/item/weapon/tank/jetpack/oxygen(src)
 		return

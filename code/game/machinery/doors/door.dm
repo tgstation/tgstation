@@ -24,7 +24,6 @@
 	proc/open()
 	proc/close()
 
-
 	New()
 		..()
 		if(density)
@@ -40,6 +39,8 @@
 		..()
 		return
 
+	process()
+		return
 
 	Bumped(atom/AM)
 		if(p_open || operating) return

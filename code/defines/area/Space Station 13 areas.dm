@@ -439,6 +439,27 @@ proc/process_ghost_teleport_locs()
 	icon_state = "yellow"
 	requires_power = 0
 
+
+
+/area/borg_deathsquad
+	name = "Borg Deathsquad"
+	icon_state = "yellow"
+	requires_power = 0
+
+/area/borg_deathsquad/start
+	name = "Borg Deathsquad - Ready"
+
+
+/area/borg_deathsquad/station
+	name = "Borg Deathsquad - Arrived"
+
+
+
+
+
+
+
+
 //PRISON
 
 /area/prison/arrival_airlock
