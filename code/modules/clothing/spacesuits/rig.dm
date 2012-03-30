@@ -56,6 +56,7 @@
 	name = "security RIG suit"
 	desc = "A suit specially designed for security to offer minor protection from environmental hazards, and greater protection from human hazards"
 	icon_state = "rig-security"
+	item_state = "rig-security"
 	protective_temperature = 3000
 	slowdown = 1
 	armor = list(melee = 60, bullet = 10, laser = 30, energy = 5, bomb = 45, bio = 100, rad = 10)
