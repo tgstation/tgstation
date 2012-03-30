@@ -21,6 +21,8 @@
 					s["player[n]"] = "[C.key]"
 				else
 					s["player[n]"] = "[C.fakekey]"
+			else
+				s["player[n]"] = "[C.key]"
 		s["players"] = n
 		s["end"] = "#end"
 		return list2params(s)
