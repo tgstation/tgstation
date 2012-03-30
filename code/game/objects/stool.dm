@@ -31,7 +31,7 @@
 		var/obj/structure/stool/bed/chair/e_chair/E = new /obj/structure/stool/bed/chair/e_chair(src.loc)
 		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 		E.dir = src.dir
-		E.part = W
+		E.part1 = W
 		W.loc = E
 		W.master = E
 		user.u_equip(W)
