@@ -7,6 +7,7 @@
 	config_tag = "nuclear"
 	required_players = 3
 	required_enemies = 2
+	recommended_enemies = 5
 
 	uplink_welcome = "Corporate Backed Uplink Console:"
 	uplink_uses = 40
@@ -29,6 +30,7 @@
 /datum/game_mode/nuclear/can_start()//This could be better, will likely have to recode it later
 	if(!..())
 		return 0
+
 	var/list/possible_syndicates = get_players_for_role(BE_OPERATIVE)
 	var/agent_number = 0
 

@@ -1533,7 +1533,7 @@
 					del(src)
 					return
 			if("internal")
-				if ((!( (istype(target.wear_mask, /obj/item/clothing/mask) && istype(target.back, /obj/item/weapon/tank) && !( target.internal )) ) && !( target.internal )))
+				if ((!( (istype(target.wear_mask, /obj/item/clothing/mask) && (istype(target.back, /obj/item/weapon/tank) || istype(target.belt, /obj/item/weapon/tank) || istype(target.s_store, /obj/item/weapon/tank)) && !( target.internal )) ) && !( target.internal )))
 					//SN src = null
 					del(src)
 					return
@@ -1702,7 +1702,7 @@
 											return
 									message = text("\red <B>[] is trying to empty []'s pockets!!</B>", source, target)
 								if("CPR")
-									if (target.cpr_time >= world.time + 3)
+									if (target.cpr_time + 3 >= world.time)
 										//SN src = null
 										del(src)
 										return
@@ -2163,7 +2163,7 @@ It can still be worn/put on as normal.
 					target.handcuffed = item
 					item.loc = target
 		if("CPR")
-			if (target.cpr_time >= world.time + 30)
+			if (target.cpr_time + 30 >= world.time)
 				//SN src = null
 				del(src)
 				return
@@ -2218,7 +2218,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-					W.add_fingerprint(source)
+				W.add_fingerprint(source)
 			if (target.r_store)
 				var/obj/item/W = target.r_store
 				target.u_equip(W)
@@ -2228,7 +2228,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-					W.add_fingerprint(source)
+				W.add_fingerprint(source)
 		if("internal")
 			if (target.internal)
 				target.internal.add_fingerprint(source)
@@ -2239,11 +2239,11 @@ It can still be worn/put on as normal.
 				if (!( istype(target.wear_mask, /obj/item/clothing/mask) ))
 					return
 				else
-					if (istype(target.back, /obj/item/weapon/tank))
+					if (istype(target.back, /obj/item/weapon/tank) && (internalloc == "back" || !internalloc))
 						target.internal = target.back
-					else if (istype(target.s_store, /obj/item/weapon/tank))
+					else if (istype(target.s_store, /obj/item/weapon/tank) && (internalloc == "store" || !internalloc))
 						target.internal = target.s_store
-					else if (istype(target.belt, /obj/item/weapon/tank))
+					else if (istype(target.belt, /obj/item/weapon/tank) && (internalloc == "belt" || !internalloc))
 						target.internal = target.belt
 					if (target.internal)
 						for(var/mob/M in viewers(target, 1))
@@ -2284,12 +2284,12 @@ It can still be worn/put on as normal.
 	<BR><B>Right Ear:</B> <A href='?src=\ref[src];item=r_ear'>[(r_ear ? r_ear : "Nothing")]</A>
 	<BR><B>Head:</B> <A href='?src=\ref[src];item=head'>[(head ? head : "Nothing")]</A>
 	<BR><B>Shoes:</B> <A href='?src=\ref[src];item=shoes'>[(shoes ? shoes : "Nothing")]</A>
-	<BR><B>Belt:</B> <A href='?src=\ref[src];item=belt'>[(belt ? belt : "Nothing")]</A>
+	<BR><B>Belt:</B> <A href='?src=\ref[src];item=belt'>[(belt ? belt : "Nothing")]</A> [(istype(wear_mask, /obj/item/clothing/mask) && istype(belt, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal;loc=belt'>Set Internal</A>", src) : ""]
 	<BR><B>Uniform:</B> <A href='?src=\ref[src];item=uniform'>[(w_uniform ? w_uniform : "Nothing")]</A>
 	<BR><B>(Exo)Suit:</B> <A href='?src=\ref[src];item=suit'>[(wear_suit ? wear_suit : "Nothing")]</A>
-	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
+	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A>[(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal;loc=back'>Set Internal</A>", src) : ""]
 	<BR><B>ID:</B> <A href='?src=\ref[src];item=id'>[(wear_id ? wear_id : "Nothing")]</A>
-	<BR><B>Suit Storage:</B> <A href='?src=\ref[src];item=s_store'>[(s_store ? s_store : "Nothing")]</A>
+	<BR><B>Suit Storage:</B> <A href='?src=\ref[src];item=s_store'>[(s_store ? s_store : "Nothing")]</A> [(istype(wear_mask, /obj/item/clothing/mask) && istype(s_store, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal;loc=store'>Set Internal</A>", src) : ""]
 	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>

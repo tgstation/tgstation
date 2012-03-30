@@ -22,6 +22,7 @@
 	restricted_jobs = list("AI", "Cyborg")
 	required_players = 3
 	required_enemies = 3
+	recommended_enemies = 4
 
 	var/datum/mind/sacrifice_target = null
 	var/finished = 0

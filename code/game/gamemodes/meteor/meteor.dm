@@ -10,6 +10,7 @@
 	uplink_welcome = "EVIL METEOR Uplink Console:"
 	uplink_uses = 10
 
+
 /datum/game_mode/meteor/announce()
 	world << "<B>The current game mode is - Meteor!</B>"
 	world << "<B>The space station has been stuck in a major meteor shower. You must escape from the station or at least live.</B>"
@@ -38,6 +39,7 @@
 /datum/game_mode/meteor/declare_completion()
 	var/list/survivors = list()
 	var/area/escape_zone = locate(/area/shuttle/escape/centcom)
+	var/area/pod_zone = list( /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom )
 
 	for(var/mob/living/player in world)
 		if (player.client)
@@ -45,6 +47,8 @@
 				var/turf/location = get_turf(player.loc)
 				if (location in escape_zone)
 					survivors[player.real_name] = "shuttle"
+				else if (location.loc.type in pod_zone)
+					survivors[player.real_name] = "pod"
 				else
 					survivors[player.real_name] = "alive"
 

@@ -35,7 +35,7 @@
 			else if(!M.client.stealth && (M.client.holder.level != -3))
 				usr << "\t[pick(nobles)] [M.client]"
 
-var/list/nobles = list("Baron","Bookkeeper","Captain of the Guard","Chief medical dwarf","Count","Dungeon master","Duke","General","Mayor","Outpost liaison","Sheriff","Champion")
+var/list/nobles = list("Baron","Bookkeeper","Captain of the Guard","Chief Medical Dwarf","Count","Dungeon Master","Duke","General","Mayor","Outpost Liaison","Sheriff","Champion")
 
 /client/verb/active_players()
 	set category = "OOC"
