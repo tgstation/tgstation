@@ -5,6 +5,7 @@
 	permeability_coefficient = 0.01
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 10)
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
 /obj/item/clothing/suit/bio_suit
 	name = "bio suit"
@@ -20,6 +21,7 @@
 	slowdown = 1.0
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
 /obj/item/clothing/head/bio_hood/general

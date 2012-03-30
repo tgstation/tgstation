@@ -96,7 +96,7 @@ datum
 
 
 		blood
-			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"virus2"=null,"antibodies"=0)
+			data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"virus2"=null,"antibodies"=0)
 			name = "Blood"
 			id = "blood"
 			reagent_state = LIQUID
@@ -105,7 +105,7 @@ datum
 				if(istype(M, /mob/living/carbon/human) && blood_incompatible(data["blood_type"],M.dna.b_type))
 					M.adjustToxLoss(rand(1.5,3))
 					M.adjustOxyLoss(rand(1.5,3))
-				..()
+					..()
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
