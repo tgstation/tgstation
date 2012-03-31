@@ -384,7 +384,7 @@
 		if (!istype(usr, /mob/living/silicon))
 			usr << "Control panel is locked!"
 			return
-	if ( get_dist(src, usr) == 0 )
+	if ( get_dist(src, usr) == 0 || issilicon(usr))
 		if (href_list["toggleOn"])
 			src.enabled = !src.enabled
 			src.updateTurrets()
