@@ -39,8 +39,8 @@
 		..()
 		return
 
-	process()
-		return
+	//process()
+		//return
 
 	Bumped(atom/AM)
 		if(p_open || operating) return

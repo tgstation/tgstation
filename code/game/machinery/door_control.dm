@@ -75,7 +75,7 @@
 
 
 	else
-		for(var/obj/machinery/door/poddoor/M in machines)
+		for(var/obj/machinery/door/poddoor/M in world)
 			if (M.id == src.id)
 				if (M.density)
 					spawn( 0 )
@@ -123,7 +123,7 @@
 	active = 1
 	icon_state = "launcheract"
 
-	for(var/obj/machinery/door/poddoor/M in machines)
+	for(var/obj/machinery/door/poddoor/M in world)
 		if (M.id == src.id)
 			spawn( 0 )
 				M.open()
@@ -137,7 +137,7 @@
 
 	sleep(50)
 
-	for(var/obj/machinery/door/poddoor/M in machines)
+	for(var/obj/machinery/door/poddoor/M in world)
 		if (M.id == src.id)
 			spawn( 0 )
 				M.close()
