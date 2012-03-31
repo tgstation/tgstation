@@ -189,6 +189,7 @@
 	maturation = 6
 	production = 6
 	yield = 2
+	potency = 20
 	plant_type = 0
 	growthstages = 6
 
@@ -292,6 +293,7 @@
 	yield = 3
 	plant_type = 0
 	oneharvest = 1
+	potency = 20
 	growthstages = 3
 
 /obj/item/seeds/poppyseed
@@ -360,7 +362,7 @@
 	maturation = 4
 	production = 4
 	yield = 3
-	potency = 0
+	potency = 5
 	plant_type = 0
 	growthstages = 6
 
@@ -377,7 +379,7 @@
 	maturation = 6
 	production = 1
 	yield = 4
-	potency = 0
+	potency = 5
 	oneharvest = 1
 	plant_type = 0
 	growthstages = 6
@@ -680,7 +682,8 @@
 	endurance = 25
 	maturation = 6
 	production = 6
-	yield = 8
+	yield = 6
+	potency = 5
 	plant_type = 0
 	growthstages = 6
 
@@ -696,7 +699,9 @@
 	endurance = 50
 	maturation = 6
 	production = 6
-	yield = 4
+	yield = 6
+	oneharvest = 1
+	potency = 10
 	plant_type = 0
 	growthstages = 6
 
@@ -713,6 +718,7 @@
 	maturation = 3
 	production = 6
 	yield = 4
+	potency = 10
 	plant_type = 0
 	growthstages = 3
 
@@ -729,6 +735,7 @@
 	maturation = 6
 	production = 6
 	yield = 3
+	potency = 1
 	plant_type = 0
 	growthstages = 6
 
@@ -745,6 +752,7 @@
 	maturation = 6
 	production = 6
 	yield = 3
+	potency = 10
 	plant_type = 0
 	growthstages = 3
 
@@ -762,6 +770,7 @@
 	maturation = 6
 	production = 6
 	yield = 4
+	potency = 15
 	plant_type = 0
 	growthstages = 6
 
@@ -778,6 +787,7 @@
 	maturation = 6
 	production = 6
 	yield = 4
+	potency = 10
 	plant_type = 0
 	growthstages = 6
 
@@ -794,6 +804,7 @@
 	maturation = 6
 	production = 6
 	yield = 5
+	potency = 1
 	plant_type = 0
 	growthstages = 6
 
@@ -844,7 +855,6 @@
 	maturation = 2
 	production = 5
 	yield = 5
-	potency = 10
 	plant_type = 0
 	growthstages = 2
 
@@ -993,8 +1003,8 @@
 	potency = 30
 	New()
 		..()
-		reagents.add_reagent("nutriment", round((potency / 20), 1))
-		reagents.add_reagent("opium", 1+round((potency / 5), 1))
+		reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
+		reagents.add_reagent("bicaridine", 1+round(potency / 20, 1))
 		bitesize = 1+round(reagents.total_volume / 3, 1)
 
 
@@ -1009,14 +1019,14 @@
 		reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 		bitesize = reagents.total_volume
 
-	/*attackby(obj/item/weapon/W as obj, mob/user as mob)
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/weapon/cable_coil))
 			if(W:amount >= 5)
 				W:amount -= 5
 				if(!W:amount) del(W)
-				user << "<span class='notice'>You add some cable to the potato.</span>"
+				user << "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>"
 				new /obj/item/weapon/cell/potato(src.loc)
-				del(src)*/
+				del(src)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/grapes
@@ -1127,6 +1137,7 @@
 	name = "bunch of poison-berries"
 	desc = "Taste so good, you could die!"
 	icon_state = "poisonberrypile"
+	gender = PLURAL
 	potency = 15
 	New()
 		..()
@@ -1139,11 +1150,13 @@
 	name = "bunch of death-berries"
 	desc = "Taste so good, you could die!"
 	icon_state = "deathberrypile"
+	gender = PLURAL
 	potency = 50
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
 		reagents.add_reagent("toxin", 3+round(potency / 3, 1))
+		reagents.add_reagent("lexorin", 1+round(potency / 5, 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris
@@ -1170,6 +1183,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
+		bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/watermelon
 	seed = "/obj/item/seeds/watermelonseed"
@@ -1180,6 +1194,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1+round((potency / 5), 1))
+		bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin
 	seed = "/obj/item/seeds/pumpkinseed"
@@ -1190,6 +1205,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1+round((potency / 5), 1))
+		bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/lime
 	seed = "/obj/item/seeds/limeseed"
@@ -1200,7 +1216,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
-		reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
+		bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/lemon
 	seed = "/obj/item/seeds/lemonseed"
@@ -1211,7 +1227,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
-		reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
+		bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/orange
 	seed = "/obj/item/seeds/orangeseed"
@@ -1222,6 +1238,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
+		bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet
 	seed = "/obj/item/seeds/whitebeetseed"
@@ -1307,7 +1324,7 @@
 	throw_impact(atom/hit_atom)
 		..()
 		new/obj/effect/decal/cleanable/tomato_smudge(src.loc)
-		src.visible_message("<span class='notice'>[src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+		src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
 		del(src)
 		return
 
@@ -1352,6 +1369,16 @@
 		reagents.add_reagent("blood", 1+round((potency / 5), 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
+	throw_impact(atom/hit_atom)
+		..()
+		new/obj/effect/decal/cleanable/blood/splatter(src.loc)
+		src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+		src.reagents.reaction(get_turf(hit_atom))
+		for(var/atom/A in get_turf(hit_atom))
+			src.reagents.reaction(A)
+		del(src)
+		return
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato
 	seed = "/obj/item/seeds/bluetomatoseed"
 	name = "blue-tomato"
@@ -1364,6 +1391,15 @@
 		reagents.add_reagent("lube", 1+round((potency / 5), 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
+	throw_impact(atom/hit_atom)
+		..()
+		new/obj/effect/decal/cleanable/oil(src.loc)
+		src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+		src.reagents.reaction(get_turf(hit_atom))
+		for(var/atom/A in get_turf(hit_atom))
+			src.reagents.reaction(A)
+		del(src)
+		return
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	seed = "/obj/item/seeds/wheatseed"

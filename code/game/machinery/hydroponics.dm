@@ -191,7 +191,7 @@ obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient,
 			src.myseed = new /obj/item/seeds/harebell
 		if(10 to 11)
 			src.myseed = new /obj/item/seeds/amanitamycelium
-		if(6 to 9)
+		if(8 to 9)
 			src.myseed = new /obj/item/seeds/chantermycelium
 		if(6 to 7) // implementation for tower caps still kinda missing ~ Not Anymore! -Cheridan
 			src.myseed = new /obj/item/seeds/towermycelium

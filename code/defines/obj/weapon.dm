@@ -1066,14 +1066,17 @@
 	use()
 		return 1
 
-/*/obj/item/weapon/cell/potato
-	name = "Potato Battery"
+/obj/item/weapon/cell/potato
+	name = "potato battery"
 	desc = "A rechargable starch based power cell."
-	icon = 'harvest.dmi'
-	icon_state = "potato_battery"
-	maxcharge = 100
+	origin_tech = "powerstorage=1"
+	icon = 'power.dmi' //'harvest.dmi'
+	icon_state = "cell" //"potato_battery"
+	charge = 100
+	maxcharge = 300
 	m_amt = 0
-	g_amt = 0*/
+	g_amt = 0
+	minor_fault = 1
 
 /obj/item/weapon/camera_bug/attack_self(mob/usr as mob)
 	var/list/cameras = new/list()
