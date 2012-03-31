@@ -21,7 +21,7 @@ mob/living/carbon/verb/give()
 	if(!I)
 		return
 	if(src.r_hand == null)
-		switch(alert(src,"[usr.name] wants to give you \a [I.name]?",,"Yes","No"))
+		switch(alert(src,"[usr] wants to give you \a [I]?",,"Yes","No"))
 			if("Yes")
 				if(!check_can_reach(usr,src))
 					usr << "You need to keep in reaching distance."
@@ -50,7 +50,7 @@ mob/living/carbon/verb/give()
 			if("No")
 				src.visible_message("[usr.name] tried to hand [I.name] to [src.name] but [src.name] didn't want it.")
 	else if(src.l_hand == null)
-		switch(alert(src,"[src.name] wants to give you \a [I.name]?",,"Yes","No"))
+		switch(alert(src,"[usr] wants to give you \a [I]?",,"Yes","No"))
 			if("Yes")
 				if(!check_can_reach(usr,src))
 					usr << "You need to keep in reaching distance."
@@ -79,4 +79,4 @@ mob/living/carbon/verb/give()
 			if("No")
 				src.visible_message("[usr.name] tried to hand [I.name] to [src.name] but [src.name] didn't want it.")
 	else
-		usr << "[src.name]\s hands are full."
+		usr << "[src.name]'s hands are full."

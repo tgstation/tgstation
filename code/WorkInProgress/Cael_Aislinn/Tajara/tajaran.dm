@@ -329,8 +329,10 @@
 			overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
 		head.screen_loc = ui_head
 	else
+		var/datum/organ/external/head = organs["head"]
+		if(!head.destroyed)
 		//if not wearing anything on the head, show the ears
-		overlays += image("icon" = icon('tajaran.dmi', "ears_[gender==FEMALE ? "f" : "m"]_[lying ? "l" : "s"]"), "layer" = MOB_LAYER)
+			overlays += image("icon" = icon('tajaran.dmi', "ears_[gender==FEMALE ? "f" : "m"]_[lying ? "l" : "s"]"), "layer" = MOB_LAYER)
 
 	// Belt
 	if (belt)
@@ -474,8 +476,8 @@
 	else if (gender == FEMALE)
 		g = "f"
 
-	stand_icon = new /icon('tajaran.dmi', "torso_s")
-	lying_icon = new /icon('tajaran.dmi', "torso_l")
+	stand_icon = new /icon('tajaran.dmi', "torso_[g]_s")
+	lying_icon = new /icon('tajaran.dmi', "torso_[g]_l")
 
 	var/husk = (mutations & HUSK)
 	//var/obese = (mutations & FAT)

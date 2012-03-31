@@ -54,7 +54,6 @@
 
 	var/list/body_standing = list()
 	var/list/body_lying = list()
-	var/organs2 = list()
 
 	var/mutantrace = null
 

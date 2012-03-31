@@ -436,29 +436,39 @@
 	if(wound_flavor_text["chest"] && !w_uniform && !skipjumpsuit)
 		msg += wound_flavor_text["chest"]
 	else if(is_bleeding["chest"])
-		msg += "<span class='warning'>[src] has blood from under [t_his] clothing!</span>\n"
+		msg += "<span class='warning'>[src] has blood soaking through from under [t_his] clothing!</span>\n"
 	if(wound_flavor_text["left arm"] && !w_uniform && !skipjumpsuit)
 		msg += wound_flavor_text["left arm"]
+	else if(is_bleeding["left arm"])
+		msg += "<span class='warning'>[src] has blood soaking through from under [t_his] clothing!</span>\n"
 	if(wound_flavor_text["left hand"] && !gloves && !skipgloves)
 		msg += wound_flavor_text["left hand"]
 	else if(is_bleeding["left hand"])
 		msg += "<span class='warning'>[src] has blood running from under [t_his] gloves!</span>\n"
 	if(wound_flavor_text["right arm"] && !w_uniform && !skipjumpsuit)
 		msg += wound_flavor_text["right arm"]
+	else if(is_bleeding["right arm"])
+		msg += "<span class='warning'>[src] has blood soaking through from under [t_his] clothing!</span>\n"
 	if(wound_flavor_text["right hand"] && !gloves && !skipgloves)
 		msg += wound_flavor_text["right hand"]
 	else if(is_bleeding["right hand"])
 		msg += "<span class='warning'>[src] has blood running from under [t_his] gloves!</span>\n"
 	if(wound_flavor_text["groin"] && !w_uniform && !skipjumpsuit)
 		msg += wound_flavor_text["groin"]
+	else if(is_bleeding["groin"])
+		msg += "<span class='warning'>[src] has blood soaking through from under [t_his] clothing!</span>\n"
 	if(wound_flavor_text["left leg"] && !w_uniform && !skipjumpsuit)
 		msg += wound_flavor_text["left leg"]
+	else if(is_bleeding["left leg"])
+		msg += "<span class='warning'>[src] has blood soaking through from under [t_his] clothing!</span>\n"
 	if(wound_flavor_text["left foot"]&& !shoes && !skipshoes)
 		msg += wound_flavor_text["left foot"]
 	else if(is_bleeding["left foot"])
 		msg += "<span class='warning'>[src] has blood running from [t_his] shoes!</span>\n"
 	if(wound_flavor_text["right leg"] && !w_uniform && !skipjumpsuit)
 		msg += wound_flavor_text["right leg"]
+	else if(is_bleeding["right leg"])
+		msg += "<span class='warning'>[src] has blood soaking through from under [t_his] clothing!</span>\n"
 	if(wound_flavor_text["right foot"]&& !shoes  && !skipshoes)
 		msg += wound_flavor_text["right foot"]
 	else if(is_bleeding["right foot"])

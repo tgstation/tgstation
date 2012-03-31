@@ -38,31 +38,36 @@ MEDICAL
 			if(!istype(affecting, /datum/organ/external) || affecting:burn_dam <= 0)
 				affecting = H.get_organ("head")
 		if(affecting.destroyed && !affecting.gauzed)
-			H.visible_message("\red You do your best to stop the bleeding from [H]'s stump.", "\red [user] does their best to stem [H]'s bleeding from [H.gender == MALE? "his" : "her"] stump.", "\red You hear something like gauze being ripped.")
+			user.visible_message("\red You do your best to stop the bleeding from [H]'s stump.", "\red [user] does [user.gender == MALE? "his" : "her"] best to stem [H]'s bleeding from [H.gender == MALE? "his" : "her"] stump.", "\red You hear something like gauze being ripped.")
 			affecting.gauzed = 1
 			use(1)
 			return
 
 		for(var/datum/organ/wound/W in affecting.wounds)
-			if(W.bleeding || !W.healing_state)
+			if(W.bleeding || !W.is_healing)
 				if(heal_brute && W.wound_type == 2)
 					continue
 				if(heal_burn && W.wound_type < 2)
 					continue
-				if(stoppedblood)
-					stoppedblood++
-					break
-				if(W.wound_size > 3)
+				if(W.wound_size > 3 && (W.bleeding || !W.is_healing))
+					if(stoppedblood)
+						stoppedblood += 1
+						break
 					W.bleeding = 0
-				else
+					W.is_healing = 1
+					stoppedblood = 1
+				else if(W.wound_size <= 3)
+					if(stoppedblood)
+						stoppedblood += 1
+						break
 					W.stopbleeding()
-				stoppedblood = 1
+					stoppedblood = 1
 
 		if (user && stoppedblood)
 			if (M != user)
-				H.visible_message("\red You bandage up [stoppedblood - 1 ? "some of" : "the last of"] [H]'s cuts", "\red [user] bandages [stoppedblood - 1 ? "some of" : "the last of"] [H]'s cuts with [src]", "\red You hear something like gauze being ripped.")
+				user.visible_message("\red [user] bandages [stoppedblood - 1 ? "some of" : "the last of"] [H]'s cuts with [src]", "\red You bandage up [stoppedblood - 1 ? "some of" : "the last of"] [H]'s cuts", "\red You hear something like gauze being ripped.")
 			else
-				H.visible_message("\red You bandage up [stoppedblood - 1 ? "some of" : "the last of"] your cuts", "\red [user] bandages [stoppedblood - 1 ? "some of" : "the last of"] their own cuts with [src]", "\red You hear something like gauze being ripped.")
+				user.visible_message("\red [user] bandages [stoppedblood - 1 ? "some of" : "the last of"] [user.gender == MALE? "his" : "her"] own cuts with [src]", "\red You bandage up [stoppedblood - 1 ? "some of" : "the last of"] your cuts", "\red You hear something like gauze being ripped.")
 		else if(user)
 			user << "\red Nothing to patch up!"
 			return

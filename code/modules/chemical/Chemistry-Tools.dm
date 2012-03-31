@@ -972,6 +972,7 @@
 							if(T:vessel.get_reagent_amount("blood") < amount)
 								return
 							T:vessel.trans_to(src, amount)
+							on_reagent_change()
 						else
 							var/datum/reagent/B = new /datum/reagent/blood
 							B.holder = src
