@@ -12,7 +12,7 @@
 /obj/machinery/computer/pod/New()
 	..()
 	spawn( 5 )
-		for(var/obj/machinery/mass_driver/M in machines)
+		for(var/obj/machinery/mass_driver/M in world)
 			if (M.id == id)
 				connected = M
 			else
@@ -28,7 +28,7 @@
 		viewers(null, null) << "Cannot locate mass driver connector. Cancelling firing sequence!"
 		return
 
-	for(var/obj/machinery/door/poddoor/M in machines)
+	for(var/obj/machinery/door/poddoor/M in world)
 		if (M.id == id)
 			spawn( 0 )
 				M.open()
@@ -36,13 +36,13 @@
 	sleep(20)
 
 	//connected.drive()		*****RM from 40.93.3S
-	for(var/obj/machinery/mass_driver/M in machines)
+	for(var/obj/machinery/mass_driver/M in world)
 		if(M.id == id)
 			M.power = connected.power
 			M.drive()
 
 	sleep(50)
-	for(var/obj/machinery/door/poddoor/M in machines)
+	for(var/obj/machinery/door/poddoor/M in world)
 		if (M.id == id)
 			spawn( 0 )
 				M.close()
@@ -188,7 +188,7 @@
 								if(syndicate_station_at_station == 0)
 									usr << "\red You need to launch the Syndicate Shuttle via the computer terminal at the head of the ship before departing."
 									return
-							for(var/obj/machinery/door/poddoor/M in machines)
+							for(var/obj/machinery/door/poddoor/M in world)
 								if (M.id == id)
 									if (M.density)
 										spawn( 0 )
