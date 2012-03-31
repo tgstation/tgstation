@@ -12,6 +12,8 @@ BIKE HORN
 		var/mob/M =	AM
 		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
 			return
+		if (istype(M, /mob/living/carbon/metroid)) //I mean they float, seriously. - Erthilo
+			return
 
 		M.pulling = null
 		M << "\blue You slipped on the [name]!"
@@ -24,6 +26,8 @@ BIKE HORN
 		var/mob/M =	AM
 		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
 			return
+		if (istype(M, /mob/living/carbon/metroid))
+			return
 
 		M.pulling = null
 		M << "\blue You slipped on the [name]!"
@@ -35,6 +39,8 @@ BIKE HORN
 	if (istype(AM, /mob/living/carbon))
 		var/mob/M =	AM
 		if (istype(M, /mob/living/carbon/human) && (isobj(M:shoes) && M:shoes.flags&NOSLIP))
+			return
+		if (istype(M, /mob/living/carbon/metroid))
 			return
 
 		M.pulling = null

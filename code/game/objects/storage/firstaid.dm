@@ -64,6 +64,18 @@
 	new /obj/item/weapon/reagent_containers/pill/dexalin( src )
 	return
 
+/obj/item/weapon/storage/firstaid/adv/New()
+	..()
+	if (empty) return
+	new /obj/item/weapon/reagent_containers/syringe/inaprovaline( src )
+	new /obj/item/stack/medical/advanced/bruise_pack(src)
+	new /obj/item/stack/medical/advanced/bruise_pack(src)
+	new /obj/item/stack/medical/advanced/bruise_pack(src)
+	new /obj/item/stack/medical/advanced/ointment(src)
+	new /obj/item/stack/medical/advanced/ointment(src)
+	new /obj/item/stack/medical/advanced/ointment(src)
+	return
+
 /obj/item/weapon/storage/pill_bottle/kelotane
 	name = "Pill bottle (kelotane)"
 	desc = "Contains pills used to treat burns."
