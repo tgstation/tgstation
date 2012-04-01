@@ -37,7 +37,7 @@
 
 /obj/item/clothing/suit/space/rig
 	name = "engineer RIG suit"
-	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding and Chief Engineer colours."
+	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
 	icon_state = "rig-engineering"
 	item_state = "rig_suit"
 	protective_temperature = 5000 //For not dieing near a fire, but still not being great in a full inferno
@@ -61,7 +61,7 @@
 
 /obj/item/clothing/suit/space/rig/cespace_suit
 	name = "chief engineer's space suit"
-	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation and fire shielding and Chief Engineer colours."
+	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation and fire shielding, and Chief Engineer colours."
 	icon_state = "cespace_suit"
 	item_state = "cespace_suit"
 	protective_temperature = 10000
