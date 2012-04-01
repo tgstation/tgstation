@@ -85,57 +85,77 @@
 	log_admin("DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]")
 	message_admins("\blue \bold DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]<BR>", 1)
 
-/client/proc/cmd_admin_pm()
+//allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
+/client/proc/cmd_admin_pm_context(mob/M as mob in world)
+	set category = null
+	set name = "Admin PM Mob"
+	if(!authenticated || !holder)
+		src << "\red Error: Admin-PM-Context: Only administrators may use this command."
+		return
+	if( !ismob(M) || !M.client )	return
+	cmd_admin_pm(M.client)
+
+//shows a list of clients we could send PMs to, then forwards our choice to cmd_admin_pm
+/client/proc/cmd_admin_pm_panel()
 	set category = "Admin"
 	set name = "Admin PM"
 	if(!authenticated || !holder)
-		src << "Only administrators may use this command."
+		src << "\red Error: Admin-PM-Panel: Only administrators may use this command."
 		return
-
 	var/list/client/targets[0]
-	for(var/client/C)
-		if(C.mob)
-			if(istype(C.mob, /mob/new_player))
-				targets["[C] - (New Player)"] = C
-			else if(istype(C.mob, /mob/dead/observer))
-				targets["[C] - [C.mob.name](Ghost)"] = C
+	for(var/client/T)
+		if(T.mob)
+			if(istype(T.mob, /mob/new_player))
+				targets["(New Player) - [T]"] = T
+			else if(istype(T.mob, /mob/dead/observer))
+				targets["[T.mob.name](Ghost) - [T]"] = T
 			else
-				targets["[C] - [C.mob.real_name](as [C.mob.name])"] = C
+				targets["[T.mob.real_name](as [T.mob.name]) - [T]"] = T
 		else
-			targets["[C] - No Mob"] = C
+			targets["(No Mob) - [T]"] = T
+	targets = sortList(targets)
+	var/target = input(usr,"To whom shall we send a message?","Admin PM",null) in targets|null
+	cmd_admin_pm(targets[target])
 
-	var/target = input(usr,"To whom shall we send a message?","Admin PM",null) in targets
-	var/client/C = targets[target]
+//takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM after fetching a message to send.
+/client/proc/cmd_admin_pm(var/client/C = null)
 	if( !C || !istype(C,/client) )
 		src << "\red Error: Admin-PM: Client not found."
 		return
 	if(src.muted_complete)
 		src << "\red Error: Admin-PM: You are muted."
 		return
+
+	//get message text, limit it's length.and clean/escape html
 	var/t = input("Message:", "Private message to [C.key]") as text|null
-	if( !(holder.rank in list("Game Admin", "Game Master")) )
+	if (!t || !C)	return
+
+	if( !holder || !(holder.rank in list("Game Admin", "Game Master")) )	//clean the message if it's not sent by a GA or GM
 		t = sanitize(copytext(t,1,500))
+	if(!t)	return
 
-	if ( !t || !C || !C.mob )	return
+	if(holder)								//an Admin sent the message
+		if(!C.holder)	C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"	//only do LOUD PMs if the target isn't an admin. Hence making admin-to-admin PMs less annoying
+		C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 0)]</b>:</font> [t]"
+		if(!C.holder)	C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
+		src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>:</font> [t]"
 
-	//TODO: rewrite key_name() to use something other than mobs. ~CARN
-	if (usr.client && usr.client.holder)
-		C << "\red Admin PM from-<b>[key_name(usr, C.mob, 0)]</b>: [t]"
-		src << "\blue Admin PM to-<b>[key_name(C, usr, 1)]</b>: [t]"
-	else
-		if (C && C.holder)
-			C << "\blue Reply PM from-<b>[key_name(usr, C.mob, 1)]</b>: [t]"
+	else									//a non-Admin sent the message
+		if(C.holder)
+			src << "<font color='blue'>Reply PM to-<b>[key_name(C, src, 0)]</b>:</font> [t]"
+			C << "<font color='red'>Reply PM from-<b>[key_name(src, C, 0)]</b>:</font> [t]"
 		else
-			C << "\red Reply PM from-<b>[key_name(usr, C.mob, 0)]</b>: [t]"
-		src << "\blue Reply PM to-<b>[key_name(C.mob, usr, 0)]</b>: [t]"
+			src << "<font class='red'>Error: PM: Non-admin to non-admin PM communication is forbidden</font>"
+			return
 
-	log_admin("PM: [key_name(usr)]->[key_name(C.mob)] : [t]")
+	log_admin("PM: [key_name(src)]->[key_name(C)]: [t]")
 
-	for(var/client/X)							//there are fewer clients than mobs
+	//we don't use message_admins here because the sender/receiver might get it too
+	for(var/client/X)									//there are fewer clients than mobs
 		if(X.holder && X.key!=usr.key && X.key!=C.key)	//check client/X is an admin and isn't the sender or recipient
 			var/mob/K = X.mob							//get X's mob
 			if(K)
-				K << "<B><font color='blue'>PM: [key_name(usr, K)]-&gt;[key_name(C.mob, K)]:</B> \blue [t]</font>" //inform X
+				K << "<B><font color='blue'>PM: [key_name(src, K)]-&gt;[key_name(C, K)]:</B> \blue [t]</font>" //inform X
 
 /client/proc/cmd_admin_godmode(mob/M as mob in world)
 	set category = "Special Verbs"

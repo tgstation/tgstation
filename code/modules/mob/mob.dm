@@ -605,58 +605,20 @@
 
 
 /client/Topic(href, href_list)
-	if(href_list["priv_msg"]) //All PM links have clients as their SRC-s (So that you always PM the same client even if they change mob (ghost, observe, etc.)), but PM code is in mob/topic() So this redirects the call.
-		if(mob)
-			mob.Topic(href, href_list)
+	if(href_list["priv_msg"])
+		var/client/C = locate(href_list["priv_msg"])
+		if(ismob(C)) //Old stuff can pass in mobs instead of clients
+			var/mob/M = C
+			C = M.client
+		cmd_admin_pm(C)
 	else
 		..()
 
 /mob/Topic(href, href_list)
-	if(href_list["priv_msg"])
-		var/client/C = locate(href_list["priv_msg"])
+	if(href_list["priv_msg"])	//for priv_msg references that have yet to be updated to target clients. Forwards it to client/Topic()
+		if(client)
+			client.Topic(href, href_list)
 
-		if(ismob(C)) //Old stuff can pass in mobs instead of clients
-			var/mob/M = C
-			C = M.client
-
-		if(C)
-			if(src.client && client.muted_complete)
-				src << "You are muted have a nice day"
-				return
-			if (!istype(C,/client))
-				src << "\red not a client."
-				return
-
-			if ( !( src.client.holder || C.holder ) ) //neither of the two is an admin.
-				src.client << "\red Admin-player or player-admin conversation only!"
-				return.
-
-			//get message text, limit it's length.and clean/escape html
-			var/t = input("Message:", "Private message to [C.key]") as text|null
-			t = sanitize( copytext(t,1,500) )
-			if (!t || !usr || !C || !usr.client)	return
-			if (usr.client && usr.client.holder) //Admin is messaging a player
-				C << "\red <font size='4'><b>-- Administrator private message --</b></font>"
-				C << "<b>[key_name(usr.client, C, 0)] [t]</b>"
-				C << "Click on the administrator's name to reply."
-				usr << "\blue Admin PM to <b>[key_name(C, usr.client, 1)]</b>: [t]"
-			else
-				if (C)
-					if (C.holder)
-						C << "\blue Reply PM from <b>[key_name(usr.client, C, 1)]</b>: [t]"
-					else
-						C << "\red Reply PM from <b>[key_name(usr.client, C, 0)]</b>: [t]"
-					usr.client << "\blue Reply PM to <b>[key_name(C, usr.client, 0)]</b>: [t]"
-
-			log_admin("PM: [usr.client.key]->[C.key] : [t]")
-
-			//we don't use message_admins here because the sender/receiver might get it too
-			for (var/mob/K in world)
-				if(K && usr)
-					if(K.client && K.client.holder && K.key != usr.key && K.key != C.key)
-						K << "<b><font color='blue'>PM: [key_name(usr.client, K.client)]->[key_name(C, K.client)]:</b> \blue [t]</font>"
-		else
-			client << "\red Client disconnected"
 	if(href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
 		machine = null

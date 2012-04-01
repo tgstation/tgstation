@@ -250,7 +250,8 @@
 			verbs += /obj/admins/proc/voteres 				//toggle votes
 			verbs += /client/proc/deadchat					//toggles deadchat
 			verbs += /client/proc/cmd_admin_mute
-			verbs += /client/proc/cmd_admin_pm
+			verbs += /client/proc/cmd_admin_pm_context
+			verbs += /client/proc/cmd_admin_pm_panel
 			verbs += /client/proc/cmd_admin_subtle_message
 			verbs += /client/proc/warn
 			verbs += /obj/admins/proc/announce
@@ -375,7 +376,8 @@
 	verbs -= /obj/admins/proc/voteres 				//toggle votes
 	verbs -= /client/proc/deadchat					//toggles deadchat
 	verbs -= /client/proc/cmd_admin_mute
-	verbs -= /client/proc/cmd_admin_pm
+	verbs -= /client/proc/cmd_admin_pm_context
+	verbs -= /client/proc/cmd_admin_pm_panel
 	verbs -= /client/proc/cmd_admin_say
 	verbs -= /client/proc/cmd_admin_subtle_message
 	verbs -= /client/proc/warn
@@ -778,7 +780,8 @@
 	verbs += /client/proc/game_panel
 	verbs += /client/proc/player_panel
 	verbs += /client/proc/cmd_admin_subtle_message
-	verbs += /client/proc/cmd_admin_pm
+	verbs += /client/proc/cmd_admin_pm_context
+	verbs += /client/proc/cmd_admin_pm_panel
 	verbs += /client/proc/cmd_admin_gib_self
 
 	verbs += /client/proc/deadchat					//toggles deadchat
