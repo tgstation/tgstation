@@ -970,30 +970,31 @@ var/global/datum/tension/tension_master
 /obj/machinery/computer/Borg_station/attack_hand()
 	if(jumpcomplete)
 		return
-	var/area/start_location = locate(/area/borg_deathsquad/start)
-	var/area/end_location = locate(/area/borg_deathsquad/station)
+	if(alert(usr, "Are you sure you want to send a cyborg deathsquad?", "Confirmation", "Yes", "No") == "Yes")
+		var/area/start_location = locate(/area/borg_deathsquad/start)
+		var/area/end_location = locate(/area/borg_deathsquad/station)
 
-	var/list/dstturfs = list()
-	var/throwy = world.maxy
+		var/list/dstturfs = list()
+		var/throwy = world.maxy
 
-	for(var/turf/T in end_location)
-		dstturfs += T
-		if(T.y < throwy)
-			throwy = T.y
+		for(var/turf/T in end_location)
+			dstturfs += T
+			if(T.y < throwy)
+				throwy = T.y
 
-				// hey you, get out of the way!
-	for(var/turf/T in dstturfs)
-					// find the turf to move things to
-		var/turf/D = locate(T.x, throwy - 1, 1)
-					//var/turf/E = get_step(D, SOUTH)
-		for(var/atom/movable/AM as mob|obj in T)
-			AM.Move(D)
-		if(istype(T, /turf/simulated))
-			del(T)
+					// hey you, get out of the way!
+		for(var/turf/T in dstturfs)
+						// find the turf to move things to
+			var/turf/D = locate(T.x, throwy - 1, 1)
+						//var/turf/E = get_step(D, SOUTH)
+			for(var/atom/movable/AM as mob|obj in T)
+				AM.Move(D)
+			if(istype(T, /turf/simulated))
+				del(T)
 
-	start_location.move_contents_to(end_location)
+		start_location.move_contents_to(end_location)
 
-	for(var/obj/machinery/door/poddoor/P in end_location)
-		P.open()
-	jumpcomplete = 1
-	command_alert("DRADIS contact!  Set condition one throughout the station!")
+		for(var/obj/machinery/door/poddoor/P in end_location)
+			P.open()
+		jumpcomplete = 1
+		command_alert("DRADIS contact!  Set condition one throughout the station!")
