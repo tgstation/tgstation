@@ -23,6 +23,7 @@
 	var/hasBarbs = 0
 	var/ballSize = 1
 	var/isStrapon = 0
+	var/isRibbed = 0
 
 /datum/penis/proc/erect()
 	erect = 1
@@ -165,6 +166,7 @@
 	var/multicocked = 0
 	var/multibreasts = 0 // For Jarsh.
 	var/hastail = 0
+	var/hashardtail = 0 // If true, can be used for fucking
 	var/hasfur = 0
 
 	var/sexualact = null
@@ -714,6 +716,9 @@ var/list/ERPVerbs = typesof(/client/ERP/command/proc/)
 
 	for(var/obj/item/toy/sextoy/S in usr.contents)
 		ways += S
+
+	if(usr.sexuality.hashardtail)
+		ways += "Tail"
 
 	var/answer = input(usr, "How do you wish to fuck them?") as null | anything in ways
 	switch(answer)
