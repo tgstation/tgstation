@@ -4,6 +4,7 @@ CONTAINS:
 Plant-B-Gone
 Nettle
 Deathnettle
+Corn Cob
 
 */
 
@@ -133,3 +134,10 @@ Deathnettle
 	else
 		usr << "All the leaves have fallen off the deathnettle from violent whacking."
 		del(src)
+
+/obj/item/weapon/corncob/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife))
+		user << "You use [W] to fashion a pipe out of the corn cob!"
+		new /obj/item/clothing/mask/pipe/cobpipe (src.loc)
+		del(src)
+		return ..()

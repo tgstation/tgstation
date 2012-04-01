@@ -991,10 +991,18 @@
 	desc = "Needs some butter!"
 	icon_state = "corn"
 	potency = 40
+	On_Consume()
+		if(!reagents.total_volume)
+			var/mob/M = usr
+			var/obj/item/weapon/corncob/W = new /obj/item/weapon/corncob( M )
+			M << "<span class='notice'>You chew on the corn, leaving nothing behind but a cob.</span>"
+			M.put_in_hand(W)
+			W.add_fingerprint(M)
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
+
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy
 	seed = "/obj/item/seeds/poppyseed"
@@ -1206,6 +1214,15 @@
 		..()
 		reagents.add_reagent("nutriment", 1+round((potency / 5), 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/fireaxe) || istype(W, /obj/item/weapon/fireaxe) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/melee/energy))
+			user.show_message("<span class='notice'>You carve a face into the [src]!</span>", 1)
+			new /obj/item/clothing/head/helmet/hardhat/pumpkinhead (src.loc)
+			del(src)
+			return
+
+
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/lime
 	seed = "/obj/item/seeds/limeseed"

@@ -277,6 +277,17 @@
 	throw_speed = 4
 	throw_range = 20
 
+/obj/item/weapon/corncob
+	name = "corn cob"
+	desc = "A reminder of meals gone by."
+	icon = 'harvest.dmi'
+	icon_state = "corncob"
+	item_state = "corncob"
+	w_class = 1.0
+	throwforce = 0
+	throw_speed = 4
+	throw_range = 20
+
 /obj/item/weapon/soap
 	name = "soap"
 	desc = "A cheap bar of soap. Doesn't smell."
