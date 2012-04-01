@@ -18,7 +18,6 @@ datum/mind
 
 	var/has_been_rev = 0//Tracks if this mind has been a rev or not
 	var/rev_cooldown = 0
-	var/list/tempobjectives = list() //because otherwise they get de-referenced.
 
 	proc/transfer_to(mob/new_character)
 		if(current)
