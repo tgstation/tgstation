@@ -9,7 +9,6 @@
 			weight += list("[index]" = target.weight)
 			objectives += target
 			index++
-	world << objectives.len
 	return list(objectives, weight)
 
 /proc/GenerateAssassinate(var/job,var/datum/mind/traitor)
@@ -24,7 +23,6 @@
 				weight += list("[index]" = target_obj.weight)
 				missions += target_obj
 				index++
-	world << missions.len
 	return list(missions, weight)
 
 /proc/GenerateFrame(var/job,var/datum/mind/traitor)
@@ -39,7 +37,6 @@
 				weight += list("[index]" = target_obj.weight)
 				missions += target_obj
 				index++
-	world << missions.len
 	return list(missions, weight)
 
 /proc/GenerateProtection(var/job,var/datum/mind/traitor)
@@ -54,7 +51,6 @@
 				weight += list("[index]" = target_obj.weight)
 				missions += target_obj
 				index++
-	world << missions.len
 	return list(missions, weight)
 
 /proc/PickObjectiveFromList(var/list/objectivesArray)

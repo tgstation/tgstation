@@ -857,7 +857,7 @@
 						leg_tally--									// let it fail even if just foot&leg
 
 			// can't stand
-			if(leg_tally == 0 && !paralysis)
+			if(leg_tally == 0 && !paralysis && !(lying || resting))
 				emote("scream")
 				emote("collapse")
 				paralysis = 10
