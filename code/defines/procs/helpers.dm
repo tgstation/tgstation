@@ -643,7 +643,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	total = rand(1, total)
 	for (item in L)
-		total -=L [item]
+		total -= L[item]
 		if (total <= 0)
 			return item
 

@@ -73,6 +73,11 @@
 			owner = H
 			H.organs[name] = src
 
+	Del()
+		for(var/datum/organ/wound/W in wounds)
+			del(W)
+		..()
+
 	proc/take_damage(brute, burn, sharp, used_weapon = null)
 		if((brute <= 0) && (burn <= 0))
 			return 0
@@ -99,7 +104,7 @@
 				if(prob(brute) && brute > 20 && !sharp)
 					createwound(rand(4,6),0,brute)
 				else if(!sharp)
-					createwound(max(1,min(6,round(brute/10) + rand(-1,1))),1,brute)
+					createwound(max(1,min(6,round(brute/10) + rand(0,2))),1,brute)
 			if(burn)
 				burn_dam += burn
 				createwound(max(1,min(6,round(burn/10) + rand(-1,1))),2,burn)
@@ -152,15 +157,16 @@
 					brute -= W.damage
 					W.damage = 0
 					W.initial_dmg = 0
-					W.stopbleeding()
+					W.stopbleeding(1)
 				else
 					W.damage -= brute
 					W.initial_dmg -= brute
+					W.stopbleeding()
 		else if(brute)
 			for(var/datum/organ/wound/W in brute_wounds)
 				W.damage = 0
 				W.initial_dmg = 0
-				W.stopbleeding()
+				W.stopbleeding(1)
 			brute_dam = 0
 		if(burn && burn >= burn_to_heal)
 			for(var/datum/organ/wound/W in burn_wounds)
@@ -173,6 +179,7 @@
 				else
 					W.damage -= burn
 					W.initial_dmg -= burn
+					W.stopbleeding()
 		else if(burn)
 			for(var/datum/organ/wound/W in burn_wounds)
 				W.damage = 0
@@ -226,8 +233,6 @@
 				return
 		if(brute_dam > min_broken_damage)
 			if(broken == 0)
-				var/dmgmsg = "[damage_msg] in your [display_name]"
-				owner << dmgmsg
 				//owner.unlock_medal("Broke Yarrr Bones!", 0, "Break a bone.", "easy")
 				owner.visible_message("\red You hear a loud cracking sound coming from [owner.name].","\red <b>Something feels like it shattered in your [display_name]!</b>","You hear a sickening crack.")
 				owner.emote("scream")
@@ -275,6 +280,8 @@
 	proc/droplimb()
 		if(destroyed)
 			//owner.unlock_medal("Lost something?", 0, "Lose a limb.", "easy")
+
+			owner.visible_message("\red [owner.name]'s [display_name] flies off in an arc.","\red <b>Your [display_name] goes flying off!</b>","You hear a terrible sound of ripping tendons and flesh.")
 			switch(body_part)
 				if(UPPER_TORSO)
 					owner.gib()
@@ -288,6 +295,7 @@
 					H.transfer_identity(owner)
 					H.pixel_x = -10
 					H.pixel_y = 6
+					H.name = "[owner.name]'s head"
 
 					var/lol = pick(cardinal)
 					step(H,lol)
@@ -332,29 +340,21 @@
 					destroyed = 1
 				if(HAND_RIGHT)
 					var/obj/item/weapon/organ/r_hand/X = new(owner.loc, owner)
-					for(var/mob/M in viewers(owner))
-						M.show_message("\red [owner.name]'s [X.name] flies off in an arc.")
 					var/lol2 = pick(cardinal)
 					step(X,lol2)
 					destroyed = 1
 				if(HAND_LEFT)
 					var/obj/item/weapon/organ/l_hand/X = new(owner.loc, owner)
-					for(var/mob/M in viewers(owner))
-						M.show_message("\red [owner.name]'s [X.name] flies off in an arc.")
 					var/lol2 = pick(cardinal)
 					step(X,lol2)
 					destroyed = 1
 				if(FOOT_RIGHT)
 					var/obj/item/weapon/organ/r_foot/X = new(owner.loc, owner)
-					for(var/mob/M in viewers(owner))
-						M.show_message("\red [owner.name]'s [X.name] flies off in an arc.")
 					var/lol2 = pick(cardinal)
 					step(X,lol2)
 					destroyed = 1
 				if(FOOT_LEFT)
 					var/obj/item/weapon/organ/l_foot/X = new(owner.loc, owner)
-					for(var/mob/M in viewers(owner))
-						M.show_message("\red [owner.name]'s [X.name] flies off in an arc.")
 					var/lol2 = pick(cardinal)
 					step(X,lol2)
 					destroyed = 1
@@ -377,7 +377,10 @@
 			W.wound_size = size
 			W.owner = owner
 			W.parent = src
-			spawn W.start_close() //Let small cuts close themselves.
+			if(type == 1)
+				spawn W.become_scar()
+			else
+				spawn W.start_close() //Let small cuts close themselves.
 			wounds += W
 
 /datum/organ/wound
@@ -389,6 +392,8 @@
 	var/datum/organ/external/parent
 	var/bleeding = 0 //You got wounded, of course it's bleeding. --  Scratch that.  Rewrote it.
 	var/healing_state = 0
+	var/is_healing = 0
+	var/slowheal = 3
 
 	proc/start_close()
 		sleep(rand(1800,3000)) //3-5 minutes
@@ -400,7 +405,7 @@
 			stopbleeding()
 			return
 		sleep(rand(1800,3000))
-		if(wound_size == 1) //Small cuts heal in 3-10 minutes.
+		if(wound_size == 1) //Small cuts heal in 6-10 minutes.
 			parent.wounds.Remove(src)
 			update_health(1)
 			del(src)
@@ -408,30 +413,34 @@
 			stopbleeding()
 			return
 		if(wound_size < 5 && bleeding) //Give it a chance to stop bleeding on it's own.
-			spawn(1)
+			spawn while(1)
 				sleep(1200)
 				if(prob(50))
 					stopbleeding()
 					return
 		return
 
-	proc/stopbleeding()
-		if(healing_state)
+	proc/stopbleeding(var/bleed = 0)
+		if(is_healing)
 			return 0
 //		owner:bloodloss -= 10 * src.wound_size
-		parent.bleeding = 0
+		parent.bleeding = min(bleed,bleeding)
 		for(var/datum/organ/wound/W in parent)
 			if(W.bleeding && W != src)
 				parent.bleeding = 1
-		bleeding = 0
+				break
+		bleeding = min(bleed,bleeding)
+		is_healing = 1
+		slowheal = 1
 		spawn become_scar() //spawn off the process of becoming a scar.
 		return 1
 
 	proc/become_scar()
 		healing_state = 1 //Patched
-		update_health(0.5) //Heals some.
+		spawn(200*slowheal) //20 seconds
+			update_health(5) //Heals some.
 
-		sleep(rand(1800,3000)) //3-5 minutes
+		sleep(rand(1800,3000)*slowheal) //3-5 minutes
 
 		if(parent.owner.stat == 2)
 			return
@@ -441,23 +450,26 @@
 			del(src)
 
 		healing_state = 2 //Noticibly healing.
-		update_health(1) //Heals the rest of the way.
+		update_health(2) //Heals more.
 
-		sleep(rand(1800,3000)) //3-5 minutes
+		sleep(rand(1800,3000)*slowheal) //3-5 minutes
 		if(parent.owner.stat == 2)
 			return
 		if(prob(60) && wound_size < 3) //Cuts heal up
 			parent.wounds.Remove(src)
 			del(src)
 		healing_state = 3 //Angry red scar
-		sleep(rand(6000,9000)) //10-15 minutes
+		update_health(1) //Heals the rest of the way.
+
+
+		sleep(rand(6000,9000)*slowheal) //10-15 minutes
 		if(parent.owner.stat == 2)
 			return
 		if(prob(80) && wound_size < 4) //Minor wounds heal up fully.
 			parent.wounds.Remove(src)
 			del(src)
 		healing_state = 4 //Scar
-		sleep(rand(6000,9000)) //10-15 minutes
+		sleep(rand(6000,9000)*slowheal) //10-15 minutes
 		if(parent.owner.stat == 2)
 			return
 		if(prob(30) || wound_size < 4 || wound_type == 1) //Small chance for the scar to disappear, any small remaining wounds deleted.
@@ -467,11 +479,11 @@
 		return
 
 	proc/update_health(var/percent = 1)
-		damage -= damage/percent //Remove that amount of the damage
+		damage = max(damage - damage/percent,0) //Remove that amount of the damage
 		if(wound_type > 1)
-			parent.burn_dam -= initial_dmg - damage
+			parent.burn_dam = max(parent.burn_dam - (initial_dmg - damage),0)
 		else
-			parent.brute_dam -= initial_dmg - damage
+			parent.brute_dam = max(parent.brute_dam - (initial_dmg - damage),0)
 		initial_dmg = damage //reset it for further updates.
 		parent.owner.updatehealth()
 

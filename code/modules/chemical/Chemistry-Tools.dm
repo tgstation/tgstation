@@ -972,6 +972,7 @@
 							if(T:vessel.get_reagent_amount("blood") < amount)
 								return
 							T:vessel.trans_to(src, amount)
+							on_reagent_change()
 						else
 							var/datum/reagent/B = new /datum/reagent/blood
 							B.holder = src
@@ -1077,8 +1078,8 @@
 					var/trans
 					if(B && ishuman(target))
 						var/mob/living/carbon/human/H = target
-						H.vessel.add_reagent("blood",5,B)
-						src.reagents.remove_reagent("blood",5)
+						H.vessel.add_reagent("blood",(B.volume > 5? 5 : B.volume),B.data)
+						src.reagents.remove_reagent("blood",(B.volume > 5? 5 : B.volume))
 					else
 						trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 					user << "\blue You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units."

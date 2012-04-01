@@ -185,7 +185,11 @@
 		if (src.density)
 			open()
 		else
+			var/holdopen_old = holdopen
+			holdopen = 0
 			close()
+			spawn(1)
+				holdopen = holdopen_old
 	else if (src.density)
 		flick("door_deny", src)
 	return
