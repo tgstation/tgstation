@@ -221,7 +221,7 @@
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
 	spawn( 0 )
-		A.process()
+		A.fired()
 	return
 
 
@@ -591,6 +591,6 @@
 			A.current = curloc
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
-			A.process()
+			A.fired()
 			sleep(2)
 		return

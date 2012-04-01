@@ -169,24 +169,27 @@ proc/setup_skills()
 
 mob/living/carbon/human/proc/GetSkillClass(points)
 	// skill classes describe how your character compares in total points
+	var/original_points = points
+	points -= min(round((age - 20) / 2.5), 4) // every 2.5 years after 20, one extra skillpoint
+	if(age > 30)
+		points -= round((age - 30) / 5) // every 5 years after 30, one extra skillpoint
+	if(original_points > 0 && points <= 0) points = 1
 	switch(points)
 		if(0)
 			return "Unconfigured"
-		if(1 to 3)
-			return "Talentless"
+		if(1 to 2)
+			return "Terrifying"
 		if(4 to 6)
 			return "Below Average"
-		if(7 to 9)
+		if(7 to 10)
 			return "Average"
-		if(10 to 12)
-			return "Talented"
-		if(13 to 15)
-			return "Extremely Talented"
-		if(16 to 18)
+		if(11 to 14)
+			return "Above Average"
+		if(15 to 18)
+			return "Exceptional"
+		if(19 to 24)
 			return "Genius"
-		if(19 to 21)
-			return "True Genius"
-		if(22 to 1000)
+		if(24 to 1000)
 			return "God"
 
 
@@ -202,22 +205,26 @@ proc/show_skill_window(var/mob/user, var/mob/living/carbon/human/M)
 	var/HTML = "<body>"
 	HTML += "<b>Select your Skills</b><br>"
 	HTML += "Current skill level: <b>[M.GetSkillClass(M.used_skillpoints)]</b> ([M.used_skillpoints])<br>"
-	HTML += "<a href=\"byond://?src=\ref[user];skills=1;preferences=1;preconfigured=1;\">Use preconfigured skillset</a><br>"
 	HTML += "<table>"
 	for(var/V in SKILLS)
-		HTML += "<tr><th colspan = 5><b>[V]</b></th></tr>"
+		HTML += "<tr><th colspan = 5><b>[V]</b>"
+		HTML += "</th></tr>"
 		for(var/datum/skill/S in SKILLS[V])
 			var/level = M.skills[S.ID]
 			HTML += "<tr style='text-align:left;'>"
 			HTML += "<th>[S.name]</th>"
-			HTML += "<th><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[Layman\]</font></th>"
-			HTML += "<th><font color=[(level == SKILL_BASIC) ? "red" : "black"]>\[Basic\]</font></th>"
-			HTML += "<th><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Adept\]</font></th>"
-			HTML += "<th><font color=[(level == SKILL_EXPERT) ? "red" : "black"]>\[Expert\]</font></th>"
+			HTML += "<th><font color=[(level == SKILL_NONE) ? "red" : "black"]>\[Untrained\]</font></th>"
+			// secondary skills don't have an amateur level
+			if(S.secondary)
+				HTML += "<th></th>"
+			else
+				HTML += "<th><font color=[(level == SKILL_BASIC) ? "red" : "black"]>\[Amateur\]</font></th>"
+			HTML += "<th><font color=[(level == SKILL_ADEPT) ? "red" : "black"]>\[Trained\]</font></th>"
+			HTML += "<th><font color=[(level == SKILL_EXPERT) ? "red" : "black"]>\[Professional\]</font></th>"
 			HTML += "</tr>"
 	HTML += "</table>"
 
-	user << browse(null, "window=show_skills")
+	user << browse(null, "window=preferences")
 	user << browse(HTML, "window=show_skills;size=600x800")
 	return
 

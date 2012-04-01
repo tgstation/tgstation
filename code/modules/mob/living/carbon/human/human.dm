@@ -54,12 +54,13 @@
 
 	var/list/body_standing = list()
 	var/list/body_lying = list()
+	var/organs2 = list()
 
 	var/mutantrace = null
 
 	var/bloodloss = 0
-	var/debug_leftarm
-	var/debug_lefthand
+	var/datum/reagents/vessel
+	var/pale = 0
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
@@ -75,25 +76,26 @@
 
 	if(!dna)	dna = new /datum/dna(null)
 
-	new /datum/organ/external/chest(src)
-	new /datum/organ/external/groin(src)
-	new /datum/organ/external/head(src)
-	new /datum/organ/external/l_arm(src)
-	new /datum/organ/external/r_arm(src)
-	new /datum/organ/external/r_leg(src)
-	new /datum/organ/external/l_leg(src)
+	organs2 += new /datum/organ/external/chest(src)
+	organs2 += new /datum/organ/external/groin(src)
+	organs2 += new /datum/organ/external/head(src)
+	organs2 += new /datum/organ/external/l_arm(src)
+	organs2 += new /datum/organ/external/r_arm(src)
+	organs2 += new /datum/organ/external/r_leg(src)
+	organs2 += new /datum/organ/external/l_leg(src)
 
 	var/datum/organ/external/part = new /datum/organ/external/l_hand(src)
 	part.parent = organs["l_arm"]
+	organs2 += part
 	part = new /datum/organ/external/l_foot(src)
 	part.parent = organs["l_leg"]
+	organs2 += part
 	part = new /datum/organ/external/r_hand(src)
 	part.parent = organs["r_arm"]
+	organs2 += part
 	part = new /datum/organ/external/r_foot(src)
 	part.parent = organs["r_leg"]
-
-	debug_leftarm = organs["l_arm"]
-	debug_lefthand = organs["l_hand"]
+	organs2 += part
 
 	var/g = "m"
 	if (gender == MALE)
@@ -113,11 +115,46 @@
 		update_clothing()
 		src << "\blue Your icons have been generated!"
 
+	vessel = new/datum/reagents(560)
+	vessel.my_atom = src
+	vessel.add_reagent("blood",560)
+	spawn(1) fixblood()
+
 	..()
 	/*var/known_languages = list()
 	known_languages.Add("english")*/
 
 //	organStructure = new /obj/effect/organstructure/human(src)
+
+/mob/living/carbon/human/proc/fixblood()
+	for(var/datum/reagent/blood/B in vessel.reagent_list)
+		if(B.id == "blood")
+			B.data = list("donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_type"=dna.b_type,"resistances"=null,"trace_chem"=null,"virus2"=(virus2 ? virus2.getcopy() : null),"antibodies"=0)
+
+/mob/living/carbon/human/proc/drip(var/amt as num)
+	if(!amt)
+		return
+	var/turf/T = get_turf(src)
+	var/list/obj/effect/decal/cleanable/blood/drip/nums = list()
+	var/amm = 0.1 * amt
+	vessel.remove_reagent("blood",amm)
+	var/list/hax = list("1","2","3","4","5")
+	for(var/obj/effect/decal/cleanable/blood/drip/G in T)
+		nums += G
+		hax.Remove(G.icon_state)
+		if(nums.len >= 3)
+			var/obj/effect/decal/cleanable/blood/drip/D = pick(nums)
+			D.blood_DNA.len++
+			D.blood_DNA[D.blood_DNA.len] = list(dna.unique_enzymes,dna.b_type)
+			if(virus2)
+				D.virus2 += virus2.getcopy()
+			return
+	var/obj/effect/decal/cleanable/blood/drip/this = new(T)
+	this.icon_state = pick(hax)
+	this.blood_DNA = list(list(dna.unique_enzymes,dna.b_type))
+	this.blood_owner = src
+	if(virus2)
+		this.virus2 = virus2.getcopy()
 
 /mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
 	if ((!( yes ) || now_pushing))
@@ -125,7 +162,25 @@
 	now_pushing = 1
 	if (ismob(AM))
 		var/mob/tmob = AM
-		if(tmob.a_intent == "help" && a_intent == "help" && tmob.canmove && canmove) // mutual brohugs all around!
+
+//BubbleWrap - Should stop you pushing a restrained person out of the way
+
+		if(istype(tmob, /mob/living/carbon/human))
+
+			for(var/mob/M in range(tmob, 1))
+				if( ((M.pulling == tmob && ( tmob.restrained() && !( M.restrained() ) && M.stat == 0)) || locate(/obj/item/weapon/grab, tmob.grabbed_by.len)) )
+					if ( !(world.time % 5) )
+						src << "\red [tmob] is restrained, you cannot push past"
+					now_pushing = 0
+					return
+				if( tmob.pulling == M && ( M.restrained() && !( tmob.restrained() ) && tmob.stat == 0) )
+					if ( !(world.time % 5) )
+						src << "\red [tmob] is restraining [M], you cannot push past"
+					now_pushing = 0
+					return
+
+		//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
+		if((tmob.a_intent == "help" || tmob.restrained()) && (a_intent == "help" || src.restrained()) && tmob.canmove && canmove) // mutual brohugs all around!
 			var/turf/oldloc = loc
 			loc = tmob.loc
 			tmob.loc = oldloc
@@ -137,10 +192,20 @@
 
 		/*if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
 			if(prob(40) && !(mutations & FAT))
-				visible_message("\red <B>[src] fails to push [tmob]'s fat ass out of the way.</B>", \
-					"\red <B>You fail to push [tmob]'s fat ass out of the way.</B>")
+				src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 				now_pushing = 0
 				return*/
+		if(tmob.r_hand && istype(tmob.r_hand, /obj/item/weapon/shield/riot))
+			if(prob(99))
+				now_pushing = 0
+				return
+		if(tmob.l_hand && istype(tmob.l_hand, /obj/item/weapon/shield/riot))
+			if(prob(99))
+				now_pushing = 0
+				return
+		if(tmob.nopush)
+			now_pushing = 0
+			return
 
 		tmob.LAssailant = src
 
@@ -829,10 +894,10 @@
 			update_body()
 
 	if(buckled)
-		if(istype(buckled, /obj/structure/stool/bed))
-			lying = 1
-		else
+		if(istype(buckled, /obj/structure/stool/bed/chair))
 			lying = 0
+		else
+			lying = 1
 
 	// Automatically drop anything in store / id / belt if you're not wearing a uniform.
 	if (!w_uniform)
@@ -1212,6 +1277,19 @@
 
 
 
+/mob/living/carbon/human/attack_animal(mob/living/simple_animal/M as mob)
+	if(M.melee_damage_upper == 0)
+		M.emote("[M.friendly] [src]")
+	else
+		for(var/mob/O in viewers(src, null))
+			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
+		var/armor = run_armor_check(affecting, "melee")
+		apply_damage(damage, BRUTE, affecting, armor)
+		if(armor >= 2)	return
+
 
 /mob/living/carbon/human/attack_metroid(mob/living/carbon/metroid/M as mob)
 	if(M.Victim) return // can't attack while eating!
@@ -1351,6 +1429,9 @@
 	else
 		stand_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 		lying_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
+	if(pale)
+		stand_icon.Blend(rgb(100,100,100))
+		lying_icon.Blend(rgb(100,100,100))
 
 	if (underwear > 0)
 		//if(!obese)
@@ -2129,7 +2210,7 @@ It can still be worn/put on as normal.
 			if ((target.health >= -99.0 && target.stat == 1))
 				target.cpr_time = world.time
 				var/suff = min(target.getOxyLoss(), 7)
-				target.oxyloss -= suff
+				target.adjustOxyLoss(-suff)
 				target.losebreath = 0
 				target.updatehealth()
 				for(var/mob/O in viewers(source, null))
@@ -2213,6 +2294,9 @@ It can still be worn/put on as normal.
 		else
 	if(source)
 		source.update_clothing()
+		spawn(0)
+			if(source.machine == target)
+				target.show_inv(source)
 	if(target)
 		target.update_clothing()
 	//SN src = null

@@ -41,13 +41,13 @@ datum
 
 			temperature = 0 //in Kelvin, use calculate_temperature() to modify
 
-			var/group_multiplier = 1
+			group_multiplier = 1
 				//Size of the group this gas_mixture is representing.
 				//=1 for singletons
 
 			graphic
 
-			var/list/datum/gas/trace_gases = list()
+			list/datum/gas/trace_gases = list()
 
 			tmp
 				oxygen_archived
