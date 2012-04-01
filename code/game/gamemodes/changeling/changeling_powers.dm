@@ -759,18 +759,18 @@
 
 /client/proc/changeling_unstun()
 	set category = "Changeling"
-	set name = "Epinephrine Sacs (25)"
+	set name = "Epinephrine Sacs (45)"
 	set desc = "Removes all stuns"
 
 	if(!usr.changeling)
 		usr << "\red You're not a changeling, something's wrong!"
 		return
 
-	if(usr.changeling.chem_charges < 25)
+	if(usr.changeling.chem_charges < 45)
 		usr << "\red We don't have enough stored chemicals to do that!"
 		return
 
-	usr.changeling.chem_charges -= 25
+	usr.changeling.chem_charges -= 45
 
 	var/mob/living/carbon/human/C = usr
 

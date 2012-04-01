@@ -40,6 +40,10 @@ var/const
 	BE_MONKEY    =(1<<8)
 	BE_PAI       =(1<<9)
 
+
+
+
+
 datum/preferences
 	var
 		real_name
@@ -110,6 +114,10 @@ datum/preferences
 		job_engsec_low = 0
 
 
+		// Naughty.
+		allow_ERP = 1
+		ERP_Notes = ""
+
 
 
 	New()
@@ -137,6 +145,12 @@ datum/preferences
 		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[UI == UI_NEW ? "New" : "Old"]</b></a><br>"
 		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
 		dat += "<b>Ghost ears:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_ears=input\"><b>[ghost_ears == 0 ? "Nearest Creatures" : "All Speech"]</b></a><br>"
+
+
+		if(config.allow_ERP)
+			dat += "<b>Allow ERP?</b> <a href='byond://?src=\ref[user];preferences=1;ERP=input'>[allow_ERP == 1 ? "Yes" : "No"]</a><br>"
+			dat += "<b>OOC Notes/ERP Preferences:</b> <a href='byond://?src=\ref[user];preferences=1;OOC=input'> Edit </a><br>"
+
 
 		if((user.client) && (user.client.holder) && (user.client.holder.rank) && (user.client.holder.level >= 5))
 			dat += "<hr><b>OOC</b><br>"
@@ -409,11 +423,28 @@ datum/preferences
 		if(link_tags["age"])
 			switch(link_tags["age"])
 				if("input")
-					var/new_age = input(user, "Please select type in age: 20-45", "Character Generation")  as num
+					var/new_age = input(user, "Please select type in age: 15-45", "Character Generation")  as num
 					if(new_age)
-						age = max(min(round(text2num(new_age)), 45), 20)
+						age = max(min(round(text2num(new_age)), 45), 15)
 				if("random")
 					age = rand (20, 45)
+
+		if(link_tags["ERP"])
+			allow_ERP = !allow_ERP
+
+		if(link_tags["OOC"])
+			var/tempnote = ""
+			tempnote = input(user, "Please enter your OOC/ERP Notes!:", "Erp notes" , ERP_Notes)  as text
+			var/list/bad_characters = list("_", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\","0","1","2","3","4","5","6","7","8","9")
+			for(var/c in bad_characters)
+				tempnote = dd_replacetext(tempnote, c, "")
+
+			if(length(tempnote) >= 255)
+				alert("That name is too long. (255 character max, please)")
+				return
+
+			ERP_Notes = tempnote
+			return
 
 		if(link_tags["b_type"])
 			switch(link_tags["b_type"])

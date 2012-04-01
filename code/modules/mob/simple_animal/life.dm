@@ -70,19 +70,58 @@
 			density = 1
 		return
 
+
 	if(health < 1)
 		Die()
 
 	if(health > maxHealth)
 		health = maxHealth
 
+
+	// Stun/Weaken
+
+	if (paralysis || stunned || weakened) //Stunned etc.
+		if (stunned > 0)
+			AdjustStunned(-1)
+			stat = 0
+		if (weakened > 0)
+			AdjustWeakened(-1)
+			lying = 1
+			stat = 0
+		if (paralysis > 0)
+			AdjustParalysis(-1)
+			blinded = 1
+			lying = 1
+			stat = 1
+		var/h = hand
+		hand = 0
+		drop_item()
+		hand = 1
+		drop_item()
+		hand = h
+
+	else	//Not stunned.
+		lying = 0
+		stat = 0
+
+	if(paralysis || stunned || weakened || buckled)
+		canmove = 0
+	else
+		canmove = 1
+
 	//Movement
 	if(!ckey && !stop_automated_movement)
-		if(isturf(src.loc) && !resting && !buckled)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				Move(get_step(src,pick(cardinal)))
 				turns_since_move = 0
+
+
+
+
+
+
 
 	//Speaking
 	if(speak_chance)

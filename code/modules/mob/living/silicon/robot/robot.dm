@@ -33,6 +33,7 @@
 			lawupdate = 0
 			scrambledcodes = 1
 			src << "Follow your laws."
+			cell.maxcharge = 25000
 			cell.charge = 25000
 			module = new /obj/item/weapon/robot_module/syndicate(src)
 			hands.icon_state = "standard"

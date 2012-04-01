@@ -361,7 +361,7 @@ client
 
 			if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
 				// not sure if this is completely right...
-                if(0)   //(L.vars.len > 0)
+				if(0)   //(L.vars.len > 0)
 					html += "<ol>"
 					html += "</ol>"
 				else

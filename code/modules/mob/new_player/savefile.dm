@@ -60,6 +60,9 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["ooccolor"] << src.ooccolor
 	F["lastchangelog"] << src.lastchangelog
 
+	F["allow_ERP"] << src.allow_ERP
+	F["ERP_Notes"] << src.ERP_Notes
+
 	return 1
 
 // loads the savefile corresponding to the mob's ckey
@@ -124,6 +127,9 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["job_engsec_high"] >> src.job_engsec_high
 	F["job_engsec_med"] >> src.job_engsec_med
 	F["job_engsec_low"] >> src.job_engsec_low
+
+	F["allow_ERP"] >> src.allow_ERP
+	F["ERP_Notes"] >> src.ERP_Notes
 
 	//NOTE: Conversion things go inside this if statement
 	//When updating the save file remember to add 1 to BOTH the savefile constants

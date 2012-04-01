@@ -14,6 +14,8 @@
 	if (monkeyizing)
 		return
 
+	..()
+
 	if (stat != 2) //still breathing
 
 		//First, resolve location and get a breath

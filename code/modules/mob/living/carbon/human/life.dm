@@ -19,6 +19,8 @@
 	if(!loc)			// Fixing a null error that occurs when the mob isn't found in the world -- TLE
 		return
 
+	..()
+
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	if (stat != 2) //still breathing
@@ -93,8 +95,6 @@
 		var/turf/currentTurf = loc
 		if(!currentTurf.sd_lumcount)
 			playsound_local(src,pick(scarySounds),50, 1, -1)
-
-	..() //for organs
 
 /mob/living/carbon/human
 	proc
@@ -330,8 +330,10 @@
 			return null
 
 		update_canmove()
-			if(paralysis || stunned || weakened || buckled || (changeling && changeling.changeling_fakedeath)) canmove = 0
-			else canmove = 1
+			if(paralysis || stunned || weakened || buckled || (changeling && changeling.changeling_fakedeath) || (sexuality && sexuality.sexualact))
+				canmove = 0
+			else
+				canmove = 1
 
 		handle_breath(datum/gas_mixture/breath)
 			if(nodamage)
@@ -666,7 +668,7 @@
 				src << "\red You suddenly feel blubbery!"
 				mutations |= FAT
 				update_body()
-			if (overeatduration < 100 && mutations & FAT)
+			if ((overeatduration < 100 && mutations & FAT) && !(sexuality && sexuality.vagina && sexuality.vagina.pregnancy))
 				src << "\blue You feel fit again!"
 				mutations &= ~FAT
 				update_body()

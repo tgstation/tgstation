@@ -715,7 +715,7 @@ var/global/datum/tension/tension_master
 				candidates.Remove(G)
 
 		if(candidates.len)
-			var/numagents = 6
+			var/numagents = 3
 
 			//Spawns commandos and equips them.
 			for (var/obj/effect/landmark/L in world)
