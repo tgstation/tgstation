@@ -54,7 +54,6 @@
 
 	var/list/body_standing = list()
 	var/list/body_lying = list()
-	var/organs2 = list()
 
 	var/mutantrace = null
 
@@ -115,7 +114,7 @@
 		update_clothing()
 		src << "\blue Your icons have been generated!"
 
-	vessel = new/datum/reagents(560)
+	vessel = new/datum/reagents(600)
 	vessel.my_atom = src
 	vessel.add_reagent("blood",560)
 	spawn(1) fixblood()

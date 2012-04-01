@@ -3,6 +3,15 @@
 	name = "shuttle"
 	icon = 'shuttle.dmi'
 
+/obj/structure/shuttle/window
+	name = "shuttle window"
+	icon = 'podwindows.dmi'
+	icon_state = "1"
+	density = 1
+	opacity = 0
+	anchored = 1
+
+
 /obj/structure/shuttle/engine
 	name = "engine"
 	density = 1

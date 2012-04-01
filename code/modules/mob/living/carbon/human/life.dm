@@ -447,7 +447,7 @@
 			return null
 
 		update_canmove()
-			if(paralysis || stunned || weakened || buckled || (changeling && changeling.changeling_fakedeath)) canmove = 0
+			if(paralysis || resting || stunned || weakened || buckled || (changeling && changeling.changeling_fakedeath)) canmove = 0
 			else canmove = 1
 
 		handle_breath(datum/gas_mixture/breath)
@@ -857,7 +857,7 @@
 						leg_tally--									// let it fail even if just foot&leg
 
 			// can't stand
-			if(leg_tally == 0)
+			if(leg_tally == 0 && !paralysis && !(lying || resting))
 				emote("scream")
 				emote("collapse")
 				paralysis = 10

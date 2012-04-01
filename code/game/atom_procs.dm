@@ -103,16 +103,16 @@
 /atom/proc/add_fingerprint(mob/living/M as mob)
 	if(isnull(M)) return
 	if(isnull(M.key)) return
-	if (!( src.flags ) & 256)
+	if (!( flags ) & 256)
 		return
 	if (ishuman(M))
 		if(!fingerprintshidden)
 			fingerprintshidden = list()
 		add_fibers(M)
 		if (M.mutations2 & mFingerprints)
-			if(src.fingerprintslast != M.key)
-				src.fingerprintshidden += "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]"
-				src.fingerprintslast = M.key
+			if(fingerprintslast != M.key)
+				fingerprintshidden += "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]"
+				fingerprintslast = M.key
 			return 0
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 32))
@@ -120,24 +120,24 @@
 				H.dna = new /datum/dna(null)
 			H.check_dna()
 		if (H.gloves && H.gloves != src)
-			if(src.fingerprintslast != H.key)
-				src.fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
-				src.fingerprintslast = H.key
+			if(fingerprintslast != H.key)
+				fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
+				fingerprintslast = H.key
 			H.gloves.add_fingerprint(M)
 		if(H.gloves != src)
 			if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
 				return 0
 			else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
 				return 0
-		if(src.fingerprintslast != H.key)
-			src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
-			src.fingerprintslast = H.key
+		if(fingerprintslast != H.key)
+			fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
+			fingerprintslast = H.key
 		if(!fingerprints)
 			fingerprints = list()
 		var/new_prints = 0
 		var/prints
-		for(var/i = 1, i <= src.fingerprints.len, i++)
-			var/list/L = params2list(src.fingerprints[i])
+		for(var/i = 1, i <= fingerprints.len, i++)
+			var/list/L = params2list(fingerprints[i])
 			if(L[num2text(1)] == md5(H.dna.uni_identity))
 				new_prints = i
 				prints = L[num2text(2)]
@@ -145,30 +145,28 @@
 			else
 				var/test_print = stars(L[num2text(2)], rand(80,90))
 				if(stringpercent(test_print) == 32)
-					if(src.fingerprints.len == 1)
-						src.fingerprints = list()
+					if(fingerprints.len == 1)
+						fingerprints = list()
 					else
-						for(var/j = i, j < (src.fingerprints.len), j++)
-							src.fingerprints[j] = src.fingerprints[j+1]
-						src.fingerprints.len--
+						fingerprints.Cut(i,i+1)
 				else
-					src.fingerprints[i] = "1=[L[num2text(1)]]&2=[test_print]"
+					fingerprints[i] = "1=[L[num2text(1)]]&2=[test_print]"
 		if(new_prints)
-			src.fingerprints[new_prints] = text("1=[]&2=[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), (H.gloves ? rand(10,20) : rand(25,40)))))
-		else if(new_prints == 0)
-			if(!src.fingerprints || !src.fingerprints.len)
-				src.fingerprints = list(text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40))))
+			fingerprints[new_prints] = text("1=[]&2=[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), (H.gloves ? rand(10,20) : rand(25,40)))))
+		else
+			if(!fingerprints || !fingerprints.len)
+				fingerprints = list(text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40))))
 			else
-				src.fingerprints += text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40)))
-		for(var/i = 1, i <= src.fingerprints.len, i++)
-			if(length(src.fingerprints[i]) != 69)
-				src.fingerprints.Remove(src.fingerprints[i])
+				fingerprints += text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40)))
+		for(var/i = 1, i <= fingerprints.len, i++)
+			if(length(fingerprints[i]) != 69)
+				fingerprints.Remove(fingerprints[i])
 		if(fingerprints && !fingerprints.len)	del(fingerprints)
 		return 1
 	else
-		if(src.fingerprintslast != M.key)
-			src.fingerprintshidden += text("Real name: [], Key: []",M.real_name, M.key)
-			src.fingerprintslast = M.key
+		if(fingerprintslast != M.key)
+			fingerprintshidden += text("Real name: [], Key: []",M.real_name, M.key)
+			fingerprintslast = M.key
 	return
 
 //returns 1 if made bloody, returns 0 otherwise

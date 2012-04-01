@@ -462,7 +462,40 @@
 /obj/structure/closet/secure_closet/personal/patient
 	name = "Patient's closet"
 
+/obj/structure/closet/secure_closet/kitchen
+	name = "Kitchen Cabinet"
+	req_access = list(access_kitchen)
 
+/obj/structure/closet/secure_closet/kitchen/mining
+	req_access = list()
+
+/obj/structure/closet/secure_closet/meat
+	name = "Meat Fridge"
+	icon_state = "fridge1"
+	icon_closed = "fridge"
+	icon_locked = "fridge1"
+	icon_opened = "fridgeopen"
+	icon_broken = "fridgebroken"
+	icon_off = "fridge1"
+
+/obj/structure/closet/secure_closet/fridge
+	name = "Refrigerator"
+	icon_state = "fridge1"
+	icon_closed = "fridge"
+	icon_locked = "fridge1"
+	icon_opened = "fridgeopen"
+	icon_broken = "fridgebroken"
+	icon_off = "fridge1"
+
+/obj/structure/closet/secure_closet/money_freezer
+	name = "Freezer"
+	icon_state = "fridge1"
+	icon_closed = "fridge"
+	icon_locked = "fridge1"
+	icon_opened = "fridgeopen"
+	icon_broken = "fridgebroken"
+	icon_off = "fridge1"
+	req_access = list(access_heads_vault)
 
 /obj/structure/closet/secure_closet/personal/patient
 	name = "patient's closet"

@@ -156,7 +156,7 @@
 	if(Process_Grab())	return
 
 //Making mob movememnt changes instant.
-	if(mob.paralysis || mob.stunned || mob.weakened || mob.buckled || (mob.changeling && mob.changeling.changeling_fakedeath))
+	if(mob.paralysis || mob.stunned || mob.resting || mob.weakened || mob.buckled || (mob.changeling && mob.changeling.changeling_fakedeath))
 		mob.canmove = 0
 		return
 	else

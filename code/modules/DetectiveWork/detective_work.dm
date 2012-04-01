@@ -199,7 +199,6 @@ obj/machinery/computer/forensic_scanning
 					M.drop_item()
 					I.loc = src
 					process_card()
-					usr << "You insert the card, and it is destroyed by the machinery in the process of comparing prints."
 				else
 					usr << "\red Invalid Object Rejected."
 			if("database")
@@ -646,7 +645,9 @@ obj/machinery/computer/forensic_scanning
 		return
 
 	proc/process_card()	//Same as above, but for fingerprint cards
-		if(card.fingerprints && !(card.amount > 1))
+		if(card.fingerprints && !(card.amount > 1) && islist(card.fingerprints) && files && files.len)
+			usr << "You insert the card, and it is destroyed by the machinery in the process of comparing prints."
+			var/found = 0
 			for(var/k = 1, k <= card.fingerprints.len, k++)
 				var/list/test_prints = params2list(card.fingerprints[k])
 				var/print = test_prints[num2text(1)]
@@ -657,7 +658,12 @@ obj/machinery/computer/forensic_scanning
 					if(perp == print)
 						test_list[1] = "1=" + print + "&2=" + print
 						files[i] = test_list
+						found = 1
 						break
+			if(found)
+				usr << "The machinery finds can completes a match."
+			else
+				usr << "No match found."
 			del(card)
 		else
 			usr << "\red ERROR: No prints/too many cards."
