@@ -73,6 +73,11 @@
 			owner = H
 			H.organs[name] = src
 
+	Del()
+		for(var/datum/organ/wound/W in wounds)
+			del(W)
+		..()
+
 	proc/take_damage(brute, burn, sharp, used_weapon = null)
 		if((brute <= 0) && (burn <= 0))
 			return 0
@@ -432,7 +437,7 @@
 
 	proc/become_scar()
 		healing_state = 1 //Patched
-		spawn(200) //20 seconds
+		spawn(200*slowheal) //20 seconds
 			update_health(5) //Heals some.
 
 		sleep(rand(1800,3000)*slowheal) //3-5 minutes

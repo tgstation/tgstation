@@ -349,11 +349,11 @@
 			 	"severe burn" = "severe burn", "deep burn" = "deep burn", "carbonised area" = "carbonised area")
 				switch(i)
 					if(2) //Healing wounds.
-						if(tallied in list("cut","tiny bruise","small burn"))
+						if(tallied in list("cut","small burn"))
 							continue
 						tallied_rename = list("deep cut" = "clotted cut", "flesh wound" = "small bandaged wound",\
 						"gaping wound" = "bandaged wound", "big gaping wound" = "gauze wrapped wound",\
-						"massive wound" = "massive blood soaked bandage", "small bruise" = "small bruise",\
+						"massive wound" = "massive blood soaked bandage", "tiny bruise" = "tiny bruise", "small bruise" = "small bruise",\
 						"moderate bruise" = "moderate bruise", "large bruise" = "large bruise",\
 						"huge bruise" = "huge bruise", "monumental bruise" = "monumental bruise",\
 						"moderate burn" = "moderate salved burn", "large burn" = "large salved burn",\
@@ -380,7 +380,7 @@
 						"large burn" = "large burn scar", "severe burn" = "severe burn scar",\
 						 "deep burn" = "deep burn scar", "carbonised area" = "healing carbonised area")
 					if(5)
-						if(tallied in list("cut","deep cut","tiny bruise", "small bruise", "moderate bruise","small burn", "moderate burn"))
+						if(tallied in list("cut","deep cut","tiny bruise", "moderate bruise", "small bruise","small burn", "moderate burn"))
 							continue
 						tallied_rename = list("flesh wound" = "small scar", "gaping wound" = "straight scar",\
 						"big gaping wound" = "jagged scar", "massive wound" = "gigantic scar",\
@@ -429,6 +429,7 @@
 				flavor_text_string += flavor_text[text]
 			flavor_text_string += " on [t_his] [named].</span><br>"
 			wound_flavor_text["[named]"] = flavor_text_string
+			world << "[named] + [flavor_text_string]"
 	if(wound_flavor_text["head"] && !skipmask && !(wear_mask && istype(wear_mask, /obj/item/clothing/mask/gas)))
 		msg += wound_flavor_text["head"]
 	else if(is_bleeding["head"])

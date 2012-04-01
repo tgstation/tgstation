@@ -103,8 +103,8 @@ datum
 			color = "#C80000" // rgb: 200, 0, 0
 			on_mob_life(var/mob/living/M)
 				if(istype(M, /mob/living/carbon/human) && blood_incompatible(data["blood_type"],M.dna.b_type))
-					M.adjustToxLoss(rand(1.5,3))
-					M.adjustOxyLoss(rand(1.5,3))
+					M.adjustToxLoss(rand(0.5,1.5))
+					M.adjustOxyLoss(rand(1,1.5))
 					..()
 				return
 
