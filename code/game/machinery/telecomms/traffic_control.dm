@@ -163,6 +163,7 @@
 				if("editcode")
 					if(editingcode == usr) return
 					if(usr in viewingcode) return
+					winset(editingcode, "tcscode", "text=\"\"")
 
 					if(!editingcode)
 						lasteditor = usr

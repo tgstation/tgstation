@@ -171,7 +171,7 @@
 			verbs += /client/proc/restartcontroller //Can call via aproccall --I_hate_easy_things.jpg, Mport --Agouri
 			verbs += /client/proc/Blobize//I need to remember to move/remove this later
 			verbs += /client/proc/toggle_clickproc //TODO ERRORAGE (Temporary proc while the enw clickproc is being tested)
-			verbs += /client/proc/cmd_switch_radio // BEEP BOOP FARTE -- Doohl
+			//verbs += /client/proc/cmd_switch_radio // BEEP BOOP FARTE -- Doohl
 			verbs += /client/proc/toggle_gravity_on
 			verbs += /client/proc/toggle_gravity_off
 			verbs += /client/proc/toggle_random_events
@@ -420,7 +420,7 @@
 	verbs -= /client/proc/startSinglo
 	verbs -= /client/proc/jumptocoord
 	verbs -= /client/proc/everyone_random
-	verbs -= /client/proc/cmd_switch_radio
+	//verbs -= /client/proc/cmd_switch_radio
 	return
 
 

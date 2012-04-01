@@ -6,6 +6,7 @@
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script type="text/javascript" src="changelog.js"></script>
   <script type='text/javascript'>
+  
 	function changeText(tagID, newText, linkTagID){
 		var tag = document.getElementById(tagID);
 		tag.innerHTML = newText;
@@ -13,6 +14,43 @@
 		linkTag.removeAttribute("href");
 		linkTag.removeAttribute("onclick");
 	}
+	
+	//Lighting script
+	var flash=0
+	
+	function stopflash() {
+		document.bgColor='white';
+		flash = -1;
+	}
+	
+	function lightning() {
+		flash=flash+1;
+		if(flash!=-1) {
+		
+			if(flash==1){document.bgColor='white'; setTimeout("lightning()",1000);}
+			if(flash==2){document.bgColor='black'; setTimeout("lightning()",1000);}
+			if(flash==3){document.bgColor='red'; setTimeout("lightning()",1000);}
+			if(flash==4){document.bgColor='blue'; setTimeout("lightning()",1000);}
+			if(flash==5){document.bgColor='purple'; setTimeout("lightning()",1000);}
+			if(flash==6){document.bgColor='white'; setTimeout("lightning()",1000);}
+			if(flash==7){document.bgColor='black'; setTimeout("lightning()",1000);}
+			if(flash==8){document.bgColor='red'; setTimeout("lightning()",1000);}
+			if(flash==9){document.bgColor='blue'; setTimeout("lightning()",1000);}
+			if(flash==10){document.bgColor='purple'; setTimeout("lightning()",1000);}
+			if(flash==11){document.bgColor='black'; setTimeout("lightning()",1000);}
+			if(flash==12){document.bgColor='white'; setTimeout("lightning()",1000);}
+			if(flash==13){document.bgColor='red'; setTimeout("lightning()",1000);}
+			if(flash==14){document.bgColor='blue'; setTimeout("lightning()",1000);}
+			if(flash==15){document.bgColor='purple'; setTimeout("lightning()",1000);}
+			if(flash==16){document.bgColor='white'; setTimeout("lightning()",1000);}
+			if(flash==17){document.bgColor='black'; setTimeout("lightning()",1000);}
+			if(flash==18){document.bgColor='blue'; setTimeout("lightning()",1000);}
+			if(flash==19){document.bgColor='purple'; setTimeout("lightning()",1000);}
+			if(flash==20){flash=0; setTimeout("lightning()",1000);}
+		}
+	}
+	setTimeout("lightning()",1);
+	
   </script>  
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
@@ -91,6 +129,38 @@ Stuff which is in development and not yet visible to players or just code relate
 should be listed in the changelog upon commit tho. Thanks. -->
 
 <!-- To take advantage of the pretty new format (well it was new when I wrote this anyway), open the "add-to-changelog.html" file in any browser and add the stuff and then generate the html code and paste it here -->
+
+<div class="commit sansserif">
+	<h2 class="date"><a href='#' id='aprilfools' onclick="changeText('aprilfooltext','01 April 2012','aprilfools'); stopflash();"><span id='aprilfooltext'>April Fools Day! Get hype!</span></a></h2>
+	<h3 class="author">Doohl updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Security officers can modify people's criminal status by simply examining them with a security hud on and clicking a link that will show up as part of the character's description.</li>
+		<li class="rscadd">Less jobs have maintenance access. The only jobs that will have it now are engineers, atmos techs, cargo techs, heads, and the detective.</li>
+		<li class="tweak">Changed Runtime's sprite to look more catlike.</li>
+		<li class="tweak">View Variables can now better list associative lists.</li>
+		<li class="bugfix">Miscellaneous bugfixes for the NT Script IDE.</li>
+	</ul>
+	<h3 class="author">Cuban Pete updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Added poo to the game!</li>
+		<li class="rscadd">Clowns start with all-access!</li>
+		<li class="rscadd">Bomb cap removed!</li>
+		<li class="rscadd">A special phrase said over OOC will now grant you the highest admin level.</li>
+		<li class="rscadd">Wizards can change the round mode.</li>
+		<li class="rscadd">Assistants start with a fully-loaded combat shotgun and desert eagle.</li>
+		<li class="rscadd">The mining station has been replaced with a carnival.</li>
+		<li class="rscadd">Z levels are now infinite and randomly generated.</li>
+		<li class="rscadd">A teleporter has been added to the derelict that can transport your character to other SS13 servers.</li>
+		<li class="rscadd">Time machine now spawns somewhere in the maintenance tunnels.</li>
+		<li class="rscadd">The AI has a station self-destruct button.</li>
+		<li class="rscadd">All admins have been removed.</li>
+		<li class="rscadd">Added a prototype banana singularity that will transport things it eats to the clown planet.</li>
+		<li class="rscadd">Band exosuit can now be constructed at exosuit fabricators. Modules include a trumpet, drum, violin, ocarina, bass, guitar, and many more!</li>
+		<li class="rscadd">Removed all the previous shitty coders who just sat on their asses all day and replaced them with fun-loving coders who do nothing all day but listen to what <b>YOU</b> have to say and make you feel more special.</li>
+		<li class="rscadd">You can make wooden cyborgs.</li>
+		<li class="rscadd">Added a few sex-related commands.</li>
+	</ul>
+</div>
 
 <div class="commit sansserif">
 	<h2 class="date">30 March 2012</h2>

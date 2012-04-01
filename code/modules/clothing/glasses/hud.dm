@@ -5,6 +5,7 @@
 	origin_tech = "magnets=3;biotech=2"
 	var
 		list/icon/current = list() //the current hud icons
+
 	proc
 		process_hud(var/mob/M)	return
 
@@ -74,25 +75,28 @@
 		var/client/C = M.client
 		var/icon/tempHud = 'hud.dmi'
 		for(var/mob/living/carbon/human/perp in view(M))
+
+			var/perpname = "wot"
 			if(perp.wear_id)
 				C.images += image(tempHud,perp,"hud[ckey(perp:wear_id:GetJobName())]")
-				var/perpname = "wot"
 				if(istype(perp.wear_id,/obj/item/weapon/card/id))
 					perpname = perp.wear_id:registered
 				else if(istype(perp.wear_id,/obj/item/device/pda))
 					var/obj/item/device/pda/tempPda = perp.wear_id
 					perpname = tempPda.owner
-				for (var/datum/data/record/E in data_core.general)
-					if (E.fields["name"] == perpname)
-						for (var/datum/data/record/R in data_core.security)
-							if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
-								C.images += image(tempHud,perp,"hudwanted")
-								break
-							else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Incarcerated"))
-								C.images += image(tempHud,perp,"hudprisoner")
-								break
 			else
+				perpname = perp.name
 				C.images += image(tempHud,perp,"hudunknown")
+
+			for (var/datum/data/record/E in data_core.general)
+				if (E.fields["name"] == perpname)
+					for (var/datum/data/record/R in data_core.security)
+						if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
+							C.images += image(tempHud,perp,"hudwanted")
+							break
+						else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Incarcerated"))
+							C.images += image(tempHud,perp,"hudprisoner")
+							break
 			for(var/obj/item/weapon/implant/I in perp)
 				if(I.implanted)
 					if(istype(I,/obj/item/weapon/implant/tracking))

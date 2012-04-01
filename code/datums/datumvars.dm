@@ -361,16 +361,21 @@ client
 
 			if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
 				// not sure if this is completely right...
-				if (0) // (L.vars.len > 0)
+                if(0)   //(L.vars.len > 0)
 					html += "<ol>"
-					for (var/entry in L)
-						html += debug_variable(entry, L[entry], level + 1)
 					html += "</ol>"
 				else
 					html += "<ul>"
-					for (var/index = 1, index <= L.len, index++)
-						html += debug_variable("[index]", L[index], level + 1)
+					var/index = 1
+					for (var/entry in L)
+						if(istext(entry))
+							html += debug_variable(entry, L[entry], level + 1)
+						//html += debug_variable("[index]", L[index], level + 1)
+						else
+							html += debug_variable(index, L[index], level + 1)
+						index++
 					html += "</ul>"
+
 		else
 			html += "[name] = <span class='value'>[value]</span>"
 

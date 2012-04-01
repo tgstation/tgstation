@@ -235,6 +235,32 @@
 	if (src.digitalcamo)
 		msg += "[t_He] [t_is] repulsively uncanny!\n"
 
+
+	if(istype(usr, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = usr
+		if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+			var/perpname = "wot"
+			var/criminal = "None"
+
+			if(wear_id)
+				if(istype(wear_id,/obj/item/weapon/card/id))
+					perpname = wear_id:registered
+				else if(istype(wear_id,/obj/item/device/pda))
+					var/obj/item/device/pda/tempPda = wear_id
+					perpname = tempPda.owner
+			else
+				perpname = src.name
+
+			for (var/datum/data/record/E in data_core.general)
+				if (E.fields["name"] == perpname)
+					for (var/datum/data/record/R in data_core.security)
+						if (R.fields["id"] == E.fields["id"])
+							criminal = R.fields["criminal"]
+
+
+			msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
+			//msg += "\[Set Hostile Identification\]\n"
+
 	msg += "*---------*</span>"
 
 	usr << msg
