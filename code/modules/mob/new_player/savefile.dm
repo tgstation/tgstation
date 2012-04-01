@@ -131,6 +131,11 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["allow_ERP"] >> src.allow_ERP
 	F["ERP_Notes"] >> src.ERP_Notes
 
+	if(isnull(allow_ERP))
+		allow_ERP = 0
+	if(isnull(ERP_Notes))
+		ERP_Notes = ""
+
 	//NOTE: Conversion things go inside this if statement
 	//When updating the save file remember to add 1 to BOTH the savefile constants
 	//Also take the old conversion things that no longer apply out of this if

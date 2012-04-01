@@ -805,7 +805,7 @@ var/list/ERPVerbs = typesof(/client/ERP/command/proc/)
 
 
 
-/*																TODO:  Finish these.
+/*																TODO:  Finish these.  Add vore by request.
 /client/ERP/command/proc/ERP_Kiss()
 	set name = "Kiss"
 	set desc = "The loving part."

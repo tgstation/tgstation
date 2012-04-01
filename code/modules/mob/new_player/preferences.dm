@@ -115,7 +115,7 @@ datum/preferences
 
 
 		// Naughty.
-		allow_ERP = 1
+		allow_ERP = 0
 		ERP_Notes = ""
 
 
