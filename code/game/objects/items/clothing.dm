@@ -419,3 +419,24 @@ THERMAL GLASSES
 		icon_state = "engspace_helmet_clear"
 		usr << "You toggle the reflective tint off."
 	usr.update_clothing()
+
+/obj/item/clothing/head/helmet/space/rig/cespace_helmet/attack_self()
+	toggle()
+
+/obj/item/clothing/head/helmet/space/rig/cespace_helmet/verb/toggle()
+	set category = "Object"
+	set name = "Toggle Helmet Visor"
+	if(src.up)
+		src.up = !src.up
+		src.see_face = !src.see_face
+		src.flags |= HEADCOVERSEYES
+		icon_state = "cespace_helmet"
+		usr << "You toggle the reflective tint on."
+	else
+		src.up = !src.up
+		src.see_face = !src.see_face
+		src.flags &= ~HEADCOVERSEYES
+		icon_state = "cespace_helmet_clear"
+		usr << "You toggle the reflective tint off."
+	usr.update_clothing()
+
