@@ -31,7 +31,7 @@ var/global/BSACooldown = 0
 					if ((!( ticker ) || emergency_shuttle.location))
 						return
 					emergency_shuttle.incall()
-					world << "\blue <B>Alert: The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"
+					captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
 					log_admin("[key_name(usr)] called the Emergency Shuttle")
 					message_admins("\blue [key_name_admin(usr)] called the Emergency Shuttle to the station", 1)
 
@@ -41,12 +41,11 @@ var/global/BSACooldown = 0
 					switch(emergency_shuttle.direction)
 						if(-1)
 							emergency_shuttle.incall()
-							world << "\blue <B>Alert: The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"
+							captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
 							log_admin("[key_name(usr)] called the Emergency Shuttle")
 							message_admins("\blue [key_name_admin(usr)] called the Emergency Shuttle to the station", 1)
 						if(1)
 							emergency_shuttle.recall()
-							world << "\blue <B>Alert: The shuttle is going back!</B>"
 							log_admin("[key_name(usr)] sent the Emergency Shuttle back")
 							message_admins("\blue [key_name_admin(usr)] sent the Emergency Shuttle back", 1)
 
@@ -59,6 +58,7 @@ var/global/BSACooldown = 0
 		if (src.rank in list("Badmin", "Game Admin", "Game Master"))
 			emergency_shuttle.settimeleft( input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", emergency_shuttle.timeleft() ) as num )
 			log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [emergency_shuttle.timeleft()]")
+			captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
 			message_admins("\blue [key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [emergency_shuttle.timeleft()]", 1)
 			href_list["secretsadmin"] = "check_antagonist"
 		else

@@ -36,9 +36,8 @@ datum/shuttle_controller
 		if(direction == 1)
 			var/timeleft = timeleft()
 			if(timeleft >= 600)
-				world << "\blue <B>Shuttle is at Centcom. Unable to recall.</B>"
 				return
-			world << "\blue <B>Alert: The shuttle is going back!</B>"
+			captain_announce("The emergency shuttle has been recalled.")
 			world << sound('shuttlerecalled.ogg')
 			setdirection(-1)
 			online = 1
@@ -171,7 +170,7 @@ datum/shuttle_controller
 
 						start_location.move_contents_to(end_location)
 						settimeleft(SHUTTLELEAVETIME)
-						world << "<B>The Emergency Shuttle has docked with the station! You have [timeleft()/60] minutes to board the Emergency Shuttle.</B>"
+						captain_announce("The Emergency Shuttle has docked with the station. You have [timeleft()/60] minutes to board the Emergency Shuttle.")
 						world << sound('shuttledock.ogg')
 
 						return 1
@@ -216,7 +215,7 @@ datum/shuttle_controller
 						end_location = locate(/area/shuttle/escape_pod5/transit)
 						start_location.move_contents_to(end_location, null, EAST)
 
-						world << "<B>The Emergency Shuttle has left the station! [timeleft()/60] minutes until the shuttle docks at Central Command.</B>"
+						captain_announce("The Emergency Shuttle has left the station. Estimate [timeleft()/60] minutes until the shuttle docks at Central Command.")
 
 						// Some aesthetic turbulance shaking
 						for(var/mob/M in end_location)

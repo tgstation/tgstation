@@ -18,6 +18,7 @@
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
+	see_in_dark = 5
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 
