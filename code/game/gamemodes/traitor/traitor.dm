@@ -298,6 +298,6 @@
 
 	log_admin("[key_name(src)] played traitorous music.")
 	message_admins("[key_name_admin(src)] played traitorous music.", 1)
-	playsound(get_turf_loc(src.mob), 'traitor.ogg', 50, 0, 0)
+	playsound(get_turf_loc(src.mob), 'traitor.ogg', 50, 0, 3)
 	verbs -= /client/proc/play_traitor_music
 	return
