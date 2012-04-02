@@ -52,6 +52,7 @@
 			for(var/datum/disease/D in patient.viruses)
 				if(!D.hidden[SCANNER])
 					foundVirus++
+			if(!C) continue
 			C.images += image(tempHud,patient,"hud[RoundHealth(patient.health)]")
 			if(patient.stat == 2)
 				C.images += image(tempHud,patient,"huddead")

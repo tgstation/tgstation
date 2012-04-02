@@ -151,28 +151,30 @@ var/ordernum=0
 	//Check for mobs
 	for(var/mob/living/M in world)
 		var/area/A = get_area(M)
-		if(A.type == /area/supply/station)
+		if(!A.type) continue
+		if(A && A.type == /area/supply/station)
 			return 0
 	//Check for beacons
 	for(var/obj/item/device/radio/beacon/B in world)
 		var/area/A = get_area(B)
-		if(A.type == /area/supply/station)
+		if(!A.type) continue
+		if(A && A.type == /area/supply/station)
 			return 0
 	//Check for mechs. I think this was added because people were somehow on centcomm and bringing back centcomm mechs.
 	for(var/obj/mecha/Mech in world)
 		var/area/A = get_area(Mech)
-		if(A.type == /area/supply/station)
+		if(A && A.type == /area/supply/station)
 			return 0
 	//Check for nuke disk This also prevents multiple nuke disks from being made -Nodrak
 	for(var/obj/item/weapon/disk/nuclear/N)
 		var/area/A = get_area(N)
-		if(A.type == /area/supply/station)
+		if(A && A.type == /area/supply/station)
 			return 0
 	return 1
 /*
 Teleport beacon -> wrapping paper -> backpack -> bodybag -> crate -> wrapping paper -> loaded on a mulebot
 That would be a teleport beacon inside of 6-layers deep in contents. Meaning you would have to add more loops or more checks.
-This method wont take into account items developed in the future and doesn't take into account the items we have currently.
+This method wont take into account storage items developed in the future and doesn't take into account the storage items we have currently.
 -Nodrak
 
 	var/shuttleat = supply_shuttle_at_station ? SUPPLY_STATION_AREATYPE : SUPPLY_DOCK_AREATYPE
