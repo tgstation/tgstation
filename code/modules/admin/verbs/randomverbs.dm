@@ -113,8 +113,8 @@
 				targets["[T.mob.real_name](as [T.mob.name]) - [T]"] = T
 		else
 			targets["(No Mob) - [T]"] = T
-	targets = sortList(targets)
-	var/target = input(usr,"To whom shall we send a message?","Admin PM",null) in targets|null
+	var/list/sorted = sortList(targets)
+	var/target = input(usr,"To whom shall we send a message?","Admin PM",null) in sorted|null
 	cmd_admin_pm(targets[target])
 
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM after fetching a message to send.
