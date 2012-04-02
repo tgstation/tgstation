@@ -494,8 +494,6 @@
 						usr << "\blue You successfully unbuckle yourself."
 						usr:buckled.manual_unbuckle(usr)
 
-			if(usr.sexuality)
-				usr.sexuality.resist()
 
 		if("module")
 			if(issilicon(usr))

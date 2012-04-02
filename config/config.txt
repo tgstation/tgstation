@@ -77,8 +77,8 @@ ALLOW_RANDOM_EVENTS
 ## If the auto-tensioner is active by default.  It creates more tratiors/other antagonists if it consideers the round slowing down.
 TENSIONER_ACTIVE
 
-## If naughtness isn't allowed!
-#DISALLOW_ERP
+## If metadata is supported
+ALLOW_METADATA
 
 ## allow players to initiate a restart vote
 ALLOW_VOTE_RESTART

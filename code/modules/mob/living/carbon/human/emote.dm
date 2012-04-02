@@ -460,11 +460,26 @@
 		else
 			src << "\blue Unusable emote '[act]'. Say *help for a list."
 
+
+
+
+
 	if (message)
 		log_emote("[name]/[key] : [message]")
+
+		for(var/mob/M in world)
+			if (!M.client)
+				continue //skip monkeys and leavers
+			if (istype(M, /mob/new_player))
+				continue
+			if(M.stat == 2 && M.client.ghost_ears && !(M in viewers(src,null)))
+				M.show_message(message)
+
+
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)
 		else if (m_type & 2)
 			for (var/mob/O in hearers(src.loc, null))
 				O.show_message(message, m_type)
+

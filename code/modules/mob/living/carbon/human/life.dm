@@ -330,7 +330,7 @@
 			return null
 
 		update_canmove()
-			if(paralysis || stunned || weakened || buckled || (changeling && changeling.changeling_fakedeath) || (sexuality && sexuality.sexualact))
+			if(paralysis || stunned || weakened || buckled || (changeling && changeling.changeling_fakedeath))
 				canmove = 0
 			else
 				canmove = 1
@@ -668,7 +668,7 @@
 				src << "\red You suddenly feel blubbery!"
 				mutations |= FAT
 				update_body()
-			if ((overeatduration < 100 && mutations & FAT) && !(sexuality && sexuality.vagina && sexuality.vagina.pregnancy))
+			if ((overeatduration < 100 && mutations & FAT))
 				src << "\blue You feel fit again!"
 				mutations &= ~FAT
 				update_body()

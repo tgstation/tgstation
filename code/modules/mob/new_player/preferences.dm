@@ -115,7 +115,6 @@ datum/preferences
 
 
 		// Naughty.
-		allow_ERP = 0
 		ERP_Notes = ""
 
 
@@ -147,8 +146,7 @@ datum/preferences
 		dat += "<b>Ghost ears:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_ears=input\"><b>[ghost_ears == 0 ? "Nearest Creatures" : "All Speech"]</b></a><br>"
 
 
-		if(config.allow_ERP)
-			dat += "<b>Allow ERP?</b> <a href='byond://?src=\ref[user];preferences=1;ERP=input'>[allow_ERP == 1 ? "Yes" : "No"]</a><br>"
+		if(config.allow_Metadata)
 			dat += "<b>OOC Notes/ERP Preferences:</b> <a href='byond://?src=\ref[user];preferences=1;OOC=input'> Edit </a><br>"
 
 
@@ -429,8 +427,6 @@ datum/preferences
 				if("random")
 					age = rand (20, 45)
 
-		if(link_tags["ERP"])
-			allow_ERP = !allow_ERP
 
 		if(link_tags["OOC"])
 			var/tempnote = ""

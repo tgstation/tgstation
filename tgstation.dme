@@ -816,7 +816,6 @@
 #include "code\modules\mob\mob.dm"
 #include "code\modules\mob\mob_cleanup.dm"
 #include "code\modules\mob\mob_defines.dm"
-#include "code\modules\mob\mob_ERP.dm"
 #include "code\modules\mob\mob_grab.dm"
 #include "code\modules\mob\mob_helpers.dm"
 #include "code\modules\mob\mob_movement.dm"

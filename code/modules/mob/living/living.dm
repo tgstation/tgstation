@@ -1,46 +1,6 @@
 /mob/living/Life()
-	// Putting this here because after initiation, another check per living mob isn't going to be that heavy, and other than that, christ.  There's no single unifing place to make sure stuff is initiated.
-	// All mobs will have a Sexuality, and if its gender is initalized, we can assume we're done here.
 
-	if(config.allow_ERP)
-		if(!src.sexuality.gender || src.sexuality.gender == "None")
-			if(gender)
-				if(gender == MALE)
-					makeMale()
-
-				else if(gender == FEMALE)
-					makeFemale()
-
-				else if(gender == NEUTER && (istype(src , /mob/living/carbon/alien/)))
-					makeHerm()
-
-				else if(gender == NEUTER && (istype(src , /mob/living/carbon/monkey/)))
-					if(prob(50))
-						makeMale()
-					else
-						makeFemale()
-
-				else
-					sexuality.gender = "None"
-
-		if(gender != sexuality.gender) // Sex change!
-			sexuality.gender = null	// Todo, handle better later.
-			return
-
-		if(src.sexuality.gender == FEMALE || sexuality.gender == "Herm")
-			if (sexuality.vagina.womb_fluid_contents.len)  // Handles stuff leaking out of her womb and pregnancy chance
-				handleWombContents()
-
-			if (sexuality.vagina.fluid_contents.len)  	  // Handles any cocks or toys inside of her
-				handleVaginaContents()
-
-			if(sexuality.vagina.pregnancy)
-				handlePregnancy()
-		//	else
-		//		handleMenstrationChance()     // Menstration sucks.
-
-
-
+	..()
 
 	// While I'm doing a terriblly lazy way of initalizing things, why don't I make it so people's preferences tag along with them.  This could be useful in fixing the fucking cloned-as-unknown thing, making me not have to dynamically load them during tensioner, and of course, storing metadata.
 
@@ -50,7 +10,7 @@
 
 
 
-	..()
+
 	return
 
 

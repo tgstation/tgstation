@@ -60,7 +60,6 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["ooccolor"] << src.ooccolor
 	F["lastchangelog"] << src.lastchangelog
 
-	F["allow_ERP"] << src.allow_ERP
 	F["ERP_Notes"] << src.ERP_Notes
 
 	return 1
@@ -128,11 +127,8 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["job_engsec_med"] >> src.job_engsec_med
 	F["job_engsec_low"] >> src.job_engsec_low
 
-	F["allow_ERP"] >> src.allow_ERP
 	F["ERP_Notes"] >> src.ERP_Notes
 
-	if(isnull(allow_ERP))
-		allow_ERP = 0
 	if(isnull(ERP_Notes))
 		ERP_Notes = ""
 
