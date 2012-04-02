@@ -207,7 +207,7 @@
 			s_click(hud1)
 		return
 	if(M == assailant && state >= 2)
-		if( ( ishuman(user) /*&& (user.mutations & FAT)*/ && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
+		if( ( ishuman(user) && (user.mutations & FAT) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
 			var/mob/living/carbon/attacker = user
 			for(var/mob/N in viewers(user, null))
 				if(N.client)
