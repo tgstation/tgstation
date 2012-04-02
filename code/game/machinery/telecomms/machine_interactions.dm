@@ -216,13 +216,14 @@
 
 		if(href_list["unlink"])
 
-			var/obj/machinery/telecomms/T = links[text2num(href_list["unlink"])]
-			temp = "<font color = #666633>-% Removed \ref[T] [T.name] from linked entities. %-</font color>"
+			if(text2num(href_list["unlink"]) <= length(links))
+				var/obj/machinery/telecomms/T = links[text2num(href_list["unlink"])]
+				temp = "<font color = #666633>-% Removed \ref[T] [T.name] from linked entities. %-</font color>"
 
-			// Remove link entries from both T and src.
-			if(src in T.links)
-				T.links.Remove(src)
-			links.Remove(T)
+				// Remove link entries from both T and src.
+				if(src in T.links)
+					T.links.Remove(src)
+				links.Remove(T)
 
 		if(href_list["link"])
 

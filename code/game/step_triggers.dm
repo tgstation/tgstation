@@ -11,6 +11,8 @@
 
 /obj/step_trigger/HasEntered(H as mob|obj)
 	..()
+	if(!H)
+		return
 	if(istype(H, /mob/dead/observer) && !affect_ghosts)
 		return
 	Trigger(H)
@@ -22,7 +24,7 @@
 /obj/step_trigger/thrower
 	var/direction = SOUTH // the direction of throw
 	var/tiles = 3	// if 0: forever until atom hits a stopper
-	var/immobilize = 0 // if nonzero: prevents mobs from moving while they're being flung
+	var/immobilize = 1 // if nonzero: prevents mobs from moving while they're being flung
 	var/speed = 1	// delay of movement
 	var/facedir = 0 // if 1: atom faces the direction of movement
 	var/nostop = 0 // if 1: will only be stopped by teleporters
@@ -62,10 +64,11 @@
 					if(T.stopper)
 						stopthrow = 1
 
-			var/predir = A.dir
-			step(A, direction)
-			if(!facedir)
-				A.dir = predir
+			if(A)
+				var/predir = A.dir
+				step(A, direction)
+				if(!facedir)
+					A.dir = predir
 
 
 
