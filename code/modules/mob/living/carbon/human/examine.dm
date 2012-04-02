@@ -232,7 +232,7 @@
 	if (src.getBrainLoss() >= 60 && !stat)
 		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
-	if (!src.client)
+	if (!src.client && !admin_observing)
 		msg += "[t_He] [t_has] a vacant, braindead stare...\n"
 
 	var/list/wound_descriptions = list()
@@ -424,12 +424,11 @@
 			for(var/text = 1, text <= flavor_text.len, text++)
 				if(text == flavor_text.len && flavor_text.len > 1)
 					flavor_text_string += ", and"
-				else if(flavor_text.len > 1)
+				else if(flavor_text.len > 1 && text > 1)
 					flavor_text_string += ","
 				flavor_text_string += flavor_text[text]
 			flavor_text_string += " on [t_his] [named].</span><br>"
 			wound_flavor_text["[named]"] = flavor_text_string
-			world << "[named] + [flavor_text_string]"
 	if(wound_flavor_text["head"] && !skipmask && !(wear_mask && istype(wear_mask, /obj/item/clothing/mask/gas)))
 		msg += wound_flavor_text["head"]
 	else if(is_bleeding["head"])

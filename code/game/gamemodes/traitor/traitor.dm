@@ -289,4 +289,15 @@
 		traitor_mob << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
 		spawn(30)
 			traitor_mob << sound('syndicate intro.ogg',volume=50)
+			traitor_mob.client.verbs += /client/proc/play_traitor_music
 	//End code phrase.
+
+/client/proc/play_traitor_music()
+	set category = "Traitor"
+	set name = "Play Traitorous Music"
+
+	log_admin("[key_name(src)] played traitorous music.")
+	message_admins("[key_name_admin(src)] played traitorous music.", 1)
+	playsound(get_turf_loc(src.mob), 'traitor.ogg', 50, 0, 3)
+	verbs -= /client/proc/play_traitor_music
+	return
