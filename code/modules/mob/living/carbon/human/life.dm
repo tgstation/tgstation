@@ -533,7 +533,7 @@
 					if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 						Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 						if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
-							sleeping = max(sleeping, 2)
+							sleeping = max(sleeping, 4)
 					else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 						if(prob(20) && isbreathing)
 							spawn(0) emote(pick("giggle", "laugh"))
