@@ -629,19 +629,21 @@
 			user << "\blue Prying outer sheath off."
 			playsound(src.loc, 'Crowbar.ogg', 100, 1)
 			sleep(100)
-			if ((user.loc == T && user.equipped() == W))
-				user << "\blue You removed the outer sheath."
-				dismantle_wall()
-				return
+			if(src)
+				if ((user.loc == T && user.equipped() == W))
+					user << "\blue You removed the outer sheath."
+					dismantle_wall()
+					return
 
 	else if (istype(W, /obj/item/weapon/pickaxe/diamonddrill))
 		var/turf/T = user.loc
 		user << "\blue You begin to drill though, this will take some time."
 		sleep(200)
-		if ((user.loc == T && user.equipped() == W))
-			user << "\blue Your drill tears though the reinforced plating."
-			dismantle_wall()
-			return
+		if(src)
+			if ((user.loc == T && user.equipped() == W))
+				user << "\blue Your drill tears though the reinforced plating."
+				dismantle_wall()
+				return
 
 	else if ((istype(W, /obj/item/stack/sheet/metal)) && (src.d_state))
 		var/turf/T = user.loc

@@ -55,7 +55,7 @@
 	if ((usr.contents.Find(src) || (in_range(src,usr) && istype(src.loc, /turf))))
 		usr.machine = src
 		if(href_list["spell_choice"])
-			if(src.uses >= 1 && src.max_uses >=1 && href_list["spell_choice"] != 18)
+			if(src.uses >= 1 && src.max_uses >=1 && text2num(href_list["spell_choice"]) < 18)
 				src.uses--
 				if(spell_type == "verb")
 					switch(href_list["spell_choice"])

@@ -374,6 +374,8 @@ datum/preferences
 
 
 	proc/process_link(mob/user, list/link_tags)
+		if(!usr)
+			return
 		if(link_tags["occ"])
 			if(link_tags["cancel"])
 				user << browse(null, "window=\ref[user]occupation")

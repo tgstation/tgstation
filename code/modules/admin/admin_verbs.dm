@@ -67,7 +67,6 @@
 				verbs += /client/proc/debug_variables
 				//verbs += /client/proc/cmd_modify_object_variables --Merged with view variables
 				verbs += /client/proc/cmd_modify_ticker_variables
-				verbs += /client/proc/toggleadminhelpsound
 
 				// Admin helpers
 				verbs += /client/proc/toggle_view_range
@@ -81,6 +80,7 @@
 				verbs += /client/proc/jumptomob
 				verbs += /client/proc/jumptoturf
 				verbs += /client/proc/jumptocoord
+				verbs += /client/proc/cmd_admin_delete
 
 				verbs += /client/proc/cmd_admin_add_freeform_ai_law
 				verbs += /client/proc/cmd_admin_rejuvenate
@@ -197,9 +197,7 @@
 			//verbs += /client/proc/cmd_admin_godmode		--now in view variables
 			verbs += /client/proc/cmd_admin_rejuvenate
 			//verbs += /client/proc/cmd_admin_gib --View vars menu
-			verbs += /client/proc/cmd_admin_delete
 			//verbs += /proc/togglebuildmode --now in view vars
-			verbs += /client/proc/toggleadminhelpsound
 //			verbs += /client/proc/togglebuildmodeself
 			verbs += /client/proc/hide_most_verbs
 			verbs += /client/proc/jumptocoord
@@ -220,6 +218,7 @@
 			verbs += /client/proc/toggleprayers
 			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/tension_report
+			verbs += /client/proc/toggleadminhelpsound
 
 		if (holder.level >= 2)//Admin Candidate********************************************************************
 			verbs += /client/proc/cmd_admin_add_random_ai_law

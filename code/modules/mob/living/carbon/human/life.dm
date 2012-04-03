@@ -467,7 +467,7 @@
 					var/transfer_coefficient
 
 					transfer_coefficient = 1
-					if(head && (head.body_parts_covered & HEAD) && (environment.temperature < head.protective_temperature))
+					if(head && (head.body_parts_covered & HEAD) && (environment.temperature < head.protective_temperature) && !istype(head, /obj/item/weapon/paper))
 						transfer_coefficient *= head.heat_transfer_coefficient
 					if(wear_mask && (wear_mask.body_parts_covered & HEAD) && (environment.temperature < wear_mask.protective_temperature))
 						transfer_coefficient *= wear_mask.heat_transfer_coefficient
