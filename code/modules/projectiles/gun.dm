@@ -392,7 +392,6 @@ mob/proc
 						m_intent = "walk"
 						hud_used.move_intent.icon_state = "walking"
 				while(targeted_by && T.client)
-					sleep(1)
 					if(last_move_intent > I.lock_time + 10 && !T.client.target_can_move) //If the target moved while targeted
 						I.TargetActed(src)
 						if(I.last_moved_mob == src) //If they were the last ones to move, give them more of a grace period, so that an automatic weapon can hold down a room better.
@@ -411,6 +410,7 @@ mob/proc
 							I.lock_time = world.time + 5
 						I.lock_time = world.time + 5
 						I.last_moved_mob = src
+					sleep(1)
 
 	NotTargeted(var/obj/item/weapon/gun/I)
 		if(!I.silenced)

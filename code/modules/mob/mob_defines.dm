@@ -280,7 +280,6 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 
 //	var/obj/effect/organstructure/organStructure = null //for dem organs
 	var/list/organs = list(  )	//List of organs.
-	var/list/organs2 = list()
 
 //Singularity wants you!
 	var/grav_delay = 0

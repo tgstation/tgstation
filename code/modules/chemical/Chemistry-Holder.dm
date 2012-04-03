@@ -397,12 +397,12 @@ datum
 				return 0
 
 			get_reagent_amount(var/reagent)
+				var/total = 0
 				for(var/A in reagent_list)
 					var/datum/reagent/R = A
 					if (R.id == reagent)
-						return R.volume
-
-				return 0
+						total += R.volume
+				return total
 
 			get_reagents()
 				var/res = ""

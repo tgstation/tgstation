@@ -4,6 +4,17 @@
 	return
 
 /atom/proc/attack_hand(mob/user as mob)
+	if(ishuman(user) || ismonkey(user))
+		if (user.hand)
+			var/datum/organ/external/temp = user:organs["l_hand"]
+			if(temp.destroyed)
+				user << "\red Yo- wait a minute."
+				return
+		else
+			var/datum/organ/external/temp = user:organs["r_hand"]
+			if(temp.destroyed)
+				user << "\red Yo- wait a minute."
+				return
 	return
 
 /atom/proc/attack_paw(mob/user as mob)

@@ -241,7 +241,7 @@
 		var/datum/organ/external/temp = organs[named]
 		if(temp)
 			if(temp.destroyed)
-				wound_flavor_text["[temp.display_name]"] = "<span class='warning'><b>[src.name] is missing [t_his] [temp.display_name].</b></span>\n"
+				wound_flavor_text["[temp.display_name]"] = "<span class='warning'><b>[t_He] is missing [t_his] [temp.display_name].</b></span>\n"
 				continue
 			if(temp.wounds)
 				var/list/wounds = list(list(),list(),list(),list(),list(),list())
@@ -401,22 +401,22 @@
 				switch(tally[tallied])
 					if(1)
 						if(!flavor_text.len)
-							flavor_text += "<span class='warning'>[src] has[prob(4) && !(tallied in no_exclude)  ? " what might be" : ""] a [tallied_rename[tallied]]"
+							flavor_text += "<span class='warning'>\The [src] has[prob(4) && !(tallied in no_exclude)  ? " what might be" : ""] a [tallied_rename[tallied]]"
 						else
 							flavor_text += "[prob(4) && !(tallied in no_exclude) ? " what might be" : ""] a [tallied_rename[tallied]]"
 					if(2)
 						if(!flavor_text.len)
-							flavor_text += "<span class='warning'>[src] has[prob(4) && !(tallied in no_exclude) ? " what might be" : ""] a pair of [tallied_rename[tallied]]s"
+							flavor_text += "<span class='warning'>\The [src] has[prob(4) && !(tallied in no_exclude) ? " what might be" : ""] a pair of [tallied_rename[tallied]]s"
 						else
 							flavor_text += "[prob(4) && !(tallied in no_exclude) ? " what might be" : ""] a pair of [tallied_rename[tallied]]s"
 					if(3 to 5)
 						if(!flavor_text.len)
-							flavor_text += "<span class='warning'>[src] has several [tallied_rename[tallied]]s"
+							flavor_text += "<span class='warning'>\The [src] has several [tallied_rename[tallied]]s"
 						else
 							flavor_text += " several [tallied_rename[tallied]]s"
 					if(6 to INFINITY)
 						if(!flavor_text.len)
-							flavor_text += "<span class='warning'>[src] has a bunch of [tallied_rename[tallied]]s"
+							flavor_text += "<span class='warning'>\The [src] has a bunch of [tallied_rename[tallied]]s"
 						else
 							flavor_text += " a ton of [tallied_rename[tallied]]s"
 		if(flavor_text.len)

@@ -65,7 +65,7 @@
 		var/stage = 0
 		var/wound = 0
 
-	New(mob/living/carbon/human/H)
+	New(mob/living/carbon/H)
 		..(H)
 		if(!display_name)
 			display_name = name
@@ -95,7 +95,7 @@
 					droplimb()
 					return
 			else if(prob(nux))
-				createwound(max(1,min(6,round(brute/10) + rand(-1,1))),0,brute)
+				createwound(max(1,min(6,round(brute/10) + rand(0,2))),0,brute)
 				owner << "You feel something wet on your [display_name]"
 
 		if((brute_dam + burn_dam + brute + burn) < max_damage)
@@ -104,10 +104,10 @@
 				if(prob(brute) && brute > 20 && !sharp)
 					createwound(rand(4,6),0,brute)
 				else if(!sharp)
-					createwound(max(1,min(6,round(brute/10) + rand(0,2))),1,brute)
+					createwound(max(1,min(6,round(brute/10) + rand(1,3))),1,brute)
 			if(burn)
 				burn_dam += burn
-				createwound(max(1,min(6,round(burn/10) + rand(-1,1))),2,burn)
+				createwound(max(1,min(6,round(burn/10) + rand(0,2))),2,burn)
 		else
 			var/can_inflict = src.max_damage - (src.brute_dam + src.burn_dam)
 			if(can_inflict)
@@ -237,7 +237,7 @@
 				owner.visible_message("\red You hear a loud cracking sound coming from [owner.name].","\red <b>Something feels like it shattered in your [display_name]!</b>","You hear a sickening crack.")
 				owner.emote("scream")
 				broken = 1
-				wound = "broken" //Randomise in future
+				wound = pick("broken","fracture","hairline fracture") //Randomise in future.  Edit: Randomized. --SkyMarshal
 				perma_injury = brute_dam
 			return
 		return
@@ -277,111 +277,133 @@
 			return 1
 		return 0
 
-	proc/droplimb()
+	proc/droplimb(var/override = 0)
+		if(override)
+			destroyed = 1
 		if(destroyed)
 			//owner.unlock_medal("Lost something?", 0, "Lose a limb.", "easy")
 
-			owner.visible_message("\red [owner.name]'s [display_name] flies off in an arc.","\red <b>Your [display_name] goes flying off!</b>","You hear a terrible sound of ripping tendons and flesh.")
+			var/obj/item/weapon/organ/H
 			switch(body_part)
 				if(UPPER_TORSO)
 					owner.gib()
 				if(LOWER_TORSO)
 					owner << "\red You are now sterile."
 				if(HEAD)
-					var/obj/item/weapon/organ/head/H = new(owner.loc, owner)
-					if(owner.gender == FEMALE)
-						H.icon_state = "head_f_l"
-					H.overlays += owner.face_lying
-					H.transfer_identity(owner)
+					H = new /obj/item/weapon/organ/head(owner.loc, owner)
+					if(ishuman(owner))
+						if(owner.gender == FEMALE)
+							H.icon_state = "head_f_l"
+						H.overlays += owner.face_lying
+					if(ismonkey(owner))
+						H.icon_state = "head_l"
+						//H.overlays += owner.face_lying
+					H:transfer_identity(owner)
 					H.pixel_x = -10
 					H.pixel_y = 6
 					H.name = "[owner.name]'s head"
 
-					var/lol = pick(cardinal)
-					step(H,lol)
 					owner.update_face()
 					owner.update_body()
 					owner.death()
 				if(ARM_RIGHT)
-					var/obj/item/weapon/organ/r_arm/H = new(owner.loc, owner)
+					H = new /obj/item/weapon/organ/r_arm(owner.loc, owner)
+					if(ismonkey(owner))
+						H.icon_state = "r_arm_l"
 					if(owner:organs["r_hand"])
 						var/datum/organ/external/S = owner:organs["r_hand"]
 						if(!S.destroyed)
-							S.droplimb()
-					var/lol = pick(cardinal)
-					step(H,lol)
-					destroyed = 1
+							S.droplimb(1)
 				if(ARM_LEFT)
-					var/obj/item/weapon/organ/l_arm/H = new(owner.loc, owner)
+					H = new /obj/item/weapon/organ/l_arm(owner.loc, owner)
+					if(ismonkey(owner))
+						H.icon_state = "l_arm_l"
 					if(owner:organs["l_hand"])
 						var/datum/organ/external/S = owner:organs["l_hand"]
 						if(!S.destroyed)
-							S.droplimb()
-					var/lol = pick(cardinal)
-					step(H,lol)
-					destroyed = 1
+							S.droplimb(1)
 				if(LEG_RIGHT)
-					var/obj/item/weapon/organ/r_leg/H = new(owner.loc, owner)
+					H = new /obj/item/weapon/organ/r_leg(owner.loc, owner)
+					if(ismonkey(owner))
+						H.icon_state = "r_leg_l"
 					if(owner:organs["r_foot"])
 						var/datum/organ/external/S = owner:organs["r_foot"]
 						if(!S.destroyed)
-							S.droplimb()
-					var/lol = pick(cardinal)
-					step(H,lol)
-					destroyed = 1
+							S.droplimb(1)
 				if(LEG_LEFT)
-					var/obj/item/weapon/organ/l_leg/H = new(owner.loc, owner)
+					H = new /obj/item/weapon/organ/l_leg(owner.loc, owner)
+					if(ismonkey(owner))
+						H.icon_state = "l_leg_l"
 					if(owner:organs["l_foot"])
 						var/datum/organ/external/S = owner:organs["l_foot"]
 						if(!S.destroyed)
-							S.droplimb()
-					var/lol = pick(cardinal)
-					step(H,lol)
-					destroyed = 1
+							S.droplimb(1)
 				if(HAND_RIGHT)
-					var/obj/item/weapon/organ/r_hand/X = new(owner.loc, owner)
-					var/lol2 = pick(cardinal)
-					step(X,lol2)
-					destroyed = 1
+					H = new /obj/item/weapon/organ/r_hand(owner.loc, owner)
+					if(ismonkey(owner))
+						H.icon_state = "r_hand_l"
 				if(HAND_LEFT)
-					var/obj/item/weapon/organ/l_hand/X = new(owner.loc, owner)
-					var/lol2 = pick(cardinal)
-					step(X,lol2)
-					destroyed = 1
+					H = new /obj/item/weapon/organ/l_hand(owner.loc, owner)
+					if(ismonkey(owner))
+						H.icon_state = "l_hand_l"
 				if(FOOT_RIGHT)
-					var/obj/item/weapon/organ/r_foot/X = new(owner.loc, owner)
-					var/lol2 = pick(cardinal)
-					step(X,lol2)
-					destroyed = 1
+					H = new /obj/item/weapon/organ/r_foot/(owner.loc, owner)
+					if(ismonkey(owner))
+						H.icon_state = "r_foot_l"
 				if(FOOT_LEFT)
-					var/obj/item/weapon/organ/l_foot/X = new(owner.loc, owner)
-					var/lol2 = pick(cardinal)
-					step(X,lol2)
-					destroyed = 1
+					H = new /obj/item/weapon/organ/l_foot(owner.loc, owner)
+					if(ismonkey(owner))
+						H.icon_state = "l_foot_l"
+			if(ismonkey(owner))
+				H.icon = 'monkey.dmi'
+			if(istajaran(owner))
+				H.icon = 'tajaran.dmi'
+			var/lol = pick(cardinal)
+			step(H,lol)
 			destspawn = 1
+			owner.visible_message("\red [owner.name]'s [display_name] flies off in an arc.","\red <b>Your [display_name] goes flying off!</b>","You hear a terrible sound of ripping tendons and flesh.")
 			for(var/datum/organ/wound/W in wounds)
 				W.update_health()
 				del(W)
 			del(wounds)
-			src.owner.update_clothing()
+			owner.update_body()
+			owner.update_clothing()
 
 	proc/createwound(var/size = 1, var/type = 0, var/damage)
+		var/list/datum/organ/wound/possible_wounds = list()
+		for(var/datum/organ/wound/W in wounds)
+			if(W.type == type && W.wound_size < 3 && size < 3 && !W.is_healing)
+				possible_wounds += W
 		if(ishuman(owner))
-			var/datum/organ/wound/W = new(src)
-			bleeding = !type //Sharp objects cause bleeding.
-			W.bleeding = !type
-//			owner:bloodloss += 10 * size
-			W.damage = damage
-			W.initial_dmg = damage
-			W.wound_type = type
-			W.wound_size = size
-			W.owner = owner
-			W.parent = src
-			if(type == 1)
-				spawn W.become_scar()
+			if(!possible_wounds.len || prob(25))
+				var/datum/organ/wound/W = new(src)
+				bleeding = !type //Sharp objects cause bleeding.
+				W.bleeding = !type
+	//			owner:bloodloss += 10 * size
+				W.damage = damage
+				W.initial_dmg = damage
+				W.wound_type = type
+				W.wound_size = size
+				W.owner = owner
+				W.parent = src
+				if(type == 1)
+					spawn W.become_scar()
+				else
+					spawn W.start_close() //Let small cuts close themselves.
+				wounds += W
 			else
-				spawn W.start_close() //Let small cuts close themselves.
-			wounds += W
+				var/datum/organ/wound/W = pick(possible_wounds)
+				bleeding = !type //Sharp objects cause bleeding.
+				W.bleeding = !type
+	//			owner:bloodloss += 10 * size
+				W.damage += damage
+				W.initial_dmg += damage
+				W.wound_size = round(sqrt(size^2 + W.wound_size^2))
+				if(type == 1)
+					spawn W.become_scar()
+				else
+					spawn W.start_close() //Let small cuts close themselves.
+				wounds += W
 
 /datum/organ/wound
 	name = "wound"

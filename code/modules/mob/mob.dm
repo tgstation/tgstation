@@ -778,7 +778,7 @@
 
 //This is the proc for gibbing a mob. Cannot gib ghosts. Removed the medal reference,
 //added different sort of gibs and animations. N
-/mob/proc/gib()
+/mob/proc/gib(var/ex_act = 0)
 
 	if (istype(src, /mob/dead/observer))
 		gibs(loc, viruses)
@@ -839,6 +839,8 @@ Currently doesn't work, but should be useful later or at least as a template
 		sleep(15)
 		for(var/obj/item/I in src.contents)
 			I.loc = get_turf(src)
+			if(ex_act)
+				I.ex_act(ex_act)
 		del(src)
 
 /*

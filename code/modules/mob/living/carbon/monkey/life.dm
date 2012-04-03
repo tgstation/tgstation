@@ -3,8 +3,8 @@
 	voice_name = "monkey"
 	voice_message = "chimpers"
 	say_message = "chimpers"
-	icon = 'monkey.dmi'
-	icon_state = "monkey1"
+	icon = 'mob.dmi'
+	icon_state = "m-none"
 	gender = NEUTER
 	pass_flags = PASSTABLE
 
@@ -14,6 +14,9 @@
 	var/toxins_alert = 0
 	var/fire_alert = 0
 	var/temperature_alert = 0
+
+	var/list/body_standing = list()
+	var/list/body_lying = list()
 
 
 /mob/living/carbon/monkey/Life()

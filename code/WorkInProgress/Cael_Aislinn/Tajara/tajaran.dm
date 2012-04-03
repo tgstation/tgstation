@@ -2,7 +2,8 @@
 	name = "tajaran"
 	real_name = "tajaran"
 	voice_name = "tajaran"
-	icon = 'tajaran.dmi'
+	icon = 'mob.dmi'
+	icon_state = "m-none"
 	var/list/tajspeak_letters
 	//
 	universal_speak = 1 //hacky fix until someone can figure out how to make them only understand humans
@@ -460,8 +461,6 @@
 	last_b_state = stat
 
 /mob/living/carbon/human/tajaran/update_body()
-	return
-
 	if(stand_icon)
 		del(stand_icon)
 	if(lying_icon)
