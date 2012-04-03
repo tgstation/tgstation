@@ -116,6 +116,12 @@
 
 	var/walltype = "wall"
 
+/turf/simulated/wall/cult
+	name = "wall"
+	desc = "The patterns engraved on the wall seem to shift as you try to focus on them. You feel sick"
+
+	walltype = "cult"
+
 /turf/simulated/shuttle
 	name = "shuttle"
 	icon = 'shuttle.dmi'

@@ -288,6 +288,13 @@
 			new /obj/item/stack/sheet/metal( src )
 			new /obj/item/stack/sheet/metal( src )
 			new /obj/item/stack/sheet/plasteel( src )
+	else if(istype(src,/turf/simulated/wall/cult))
+		if(!devastated)
+			playsound(src.loc, 'Welder.ogg', 100, 1)
+			new /obj/effect/decal/remains/human(src)
+		else
+			new /obj/effect/decal/remains/human(src)
+
 	else
 		if(!devastated)
 			playsound(src.loc, 'Welder.ogg', 100, 1)
@@ -768,6 +775,11 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
+
+/turf/simulated/floor/engine/cult
+	name = "engraved floor"
+	icon_state = "cult"
+
 
 /turf/simulated/floor/engine/n20
 	New()
