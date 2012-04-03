@@ -95,7 +95,7 @@ datum/shuttle_controller
 			var/timeleft = timeleft()
 			if(timeleft > 1e5)		// midnight rollover protection
 				timeleft = 0
-			if (sound_siren)	//playing siren every 90 seconds
+			if (sound_siren && (direction == 1))	//playing siren every 90 seconds
 				sound_siren = 0
 				world << sound('siren.ogg')
 				spawn(900)
