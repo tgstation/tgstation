@@ -99,8 +99,6 @@
 	return
 
 /atom/proc/add_fingerprint(mob/living/M as mob)
-	if(!istype(src.fingerprints, /list))
-		src.fingerprints = params2list(src.fingerprints)
 	if(isnull(M)) return
 	if(isnull(M.key)) return
 	if (!( src.flags ) & 256)
