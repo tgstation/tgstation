@@ -15,9 +15,6 @@
 	var/fire_alert = 0
 	var/temperature_alert = 0
 
-	var/list/body_standing = list()
-	var/list/body_lying = list()
-
 
 /mob/living/carbon/monkey/Life()
 	set invisibility = 0

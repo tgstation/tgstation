@@ -62,7 +62,7 @@
 					var_value = input("Select reference:","Reference") as null|mob|obj|turf|area in world
 
 		if("mob reference")
-			var_value = input("Select reference:","Reference") as null|mob in world
+			var_value = input("Select reference:","Reference") as null|mob in sortmobs()
 
 		if("file")
 			var_value = input("Pick file:","File") as null|file
@@ -127,7 +127,7 @@
 					var_value = input("Select reference:","Reference") as null|mob|obj|turf|area in world
 
 		if("mob reference")
-			var_value = input("Select reference:","Reference") as mob in world
+			var_value = input("Select reference:","Reference") as mob in sortmobs()
 
 		if("file")
 			var_value = input("Pick file:","File") as file
@@ -294,7 +294,7 @@
 
 		if("mob reference")
 			variable = input("Select reference:","Reference",\
-				variable) as mob in world
+				variable) as mob in sortmobs()
 
 		if("file")
 			variable = input("Pick file:","File",variable) \
@@ -533,7 +533,7 @@
 			O.vars[variable] = var_new
 
 		if("mob reference")
-			var/var_new = input("Select reference:","Reference",O.vars[variable]) as null|mob in world
+			var/var_new = input("Select reference:","Reference",O.vars[variable]) as null|mob in sortmobs()
 			if(var_new==null) return
 			O.vars[variable] = var_new
 

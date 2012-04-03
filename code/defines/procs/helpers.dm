@@ -108,8 +108,8 @@
 	var/list/old_list = shufflelist.Copy()
 	while(old_list.len)
 		var/item = pick(old_list)
-		new_list += item
-		old_list -= item
+		new_list.Add(item)
+		old_list.Remove(item)
 	return new_list
 
 /proc/uniquelist(var/list/L)
@@ -198,9 +198,16 @@
 	var/list/result = new()
 	while(Li <= L.len && Ri <= R.len)
 		if(sorttext(L[Li], R[Ri]) < 1)
-			result += R[Ri++]
+			var/item = R[Ri++]
+			result += item
+			if(R[item])
+				result[item] = R[item]
+
 		else
-			result += L[Li++]
+			var/item = L[Li++]
+			result += item
+			if(L[item])
+				result[item] = L[item]
 
 	if(Li <= L.len)
 		return (result + L.Copy(Li, 0))
@@ -800,28 +807,62 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/sortmobs()
 
 	var/list/mob_list = list()
+	var/list/temp_list = list()
 	for(var/mob/living/silicon/ai/M in world)
-		mob_list.Add(M)
+		temp_list.Add(M)
+	sortList(temp_list)
+	mob_list += temp_list
+	temp_list = list()
 	for(var/mob/living/silicon/pai/M in world)
-		mob_list.Add(M)
+		temp_list.Add(M)
+	sortList(temp_list)
+	mob_list += temp_list
+	temp_list = list()
 	for(var/mob/living/silicon/robot/M in world)
-		mob_list.Add(M)
+		temp_list.Add(M)
+	sortList(temp_list)
+	mob_list += temp_list
+	temp_list = list()
 	for(var/mob/living/carbon/human/M in world)
-		mob_list.Add(M)
+		temp_list.Add(M)
+	sortList(temp_list)
+	mob_list += temp_list
+	temp_list = list()
 	for(var/mob/living/carbon/brain/M in world)
-		mob_list.Add(M)
+		temp_list.Add(M)
+	sortList(temp_list)
+	mob_list += temp_list
+	temp_list = list()
 	for(var/mob/living/carbon/alien/M in world)
-		mob_list.Add(M)
+		temp_list.Add(M)
+	sortList(temp_list)
+	mob_list += temp_list
+	temp_list = list()
 	for(var/mob/dead/observer/M in world)
-		mob_list.Add(M)
+		temp_list.Add(M)
+	sortList(temp_list)
+	mob_list += temp_list
+	temp_list = list()
 	for(var/mob/new_player/M in world)
-		mob_list.Add(M)
+		temp_list.Add(M)
+	sortList(temp_list)
+	mob_list += temp_list
+	temp_list = list()
 	for(var/mob/living/carbon/monkey/M in world)
-		mob_list.Add(M)
+		temp_list.Add(M)
+	sortList(temp_list)
+	mob_list += temp_list
+	temp_list = list()
 	for(var/mob/living/carbon/metroid/M in world)
-		mob_list.Add(M)
+		temp_list.Add(M)
+	sortList(temp_list)
+	mob_list += temp_list
+	temp_list = list()
 	for(var/mob/living/simple_animal/M in world)
-		mob_list.Add(M)
+		temp_list.Add(M)
+	sortList(temp_list)
+	mob_list += temp_list
+	temp_list = list()
 //	for(var/mob/living/silicon/hivebot/M in world)
 //		mob_list.Add(M)
 //	for(var/mob/living/silicon/hive_mainframe/M in world)
