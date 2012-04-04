@@ -32,7 +32,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 			//src.virus.cure(0)
 
 		var/datum/disease/v = new virus.type
-		src.viruses += v
+		viruses += v
 		v.affected_mob = src
 		v.strain_data = v.strain_data.Copy()
 		v.holder = src
@@ -40,7 +40,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 			v.carrier = 1
 		return
 
-	//if(src.virus) //
+	//if(virus) //
 		//return //
 
 
@@ -184,7 +184,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 		return
 	else*/
 		var/datum/disease/v = new virus.type
-		src.viruses += v
+		viruses += v
 		v.affected_mob = src
 		v.strain_data = v.strain_data.Copy()
 		v.holder = src

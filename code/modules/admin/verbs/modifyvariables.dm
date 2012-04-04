@@ -62,7 +62,7 @@
 					var_value = input("Select reference:","Reference") as null|mob|obj|turf|area in world
 
 		if("mob reference")
-			var_value = input("Select reference:","Reference") as null|mob in world
+			var_value = input("Select reference:","Reference") as null|mob in get_sorted_mobs()
 
 		if("file")
 			var_value = input("Pick file:","File") as null|file
@@ -99,10 +99,10 @@
 	switch(class)
 
 		if("text")
-			var_value = input("Enter new text:","Text") as text
+			var_value = input("Enter new text:","Text") as null|text
 
 		if("num")
-			var_value = input("Enter new number:","Num") as num
+			var_value = input("Enter new number:","Num") as null|num
 
 		if("type")
 			var_value = input("Enter type:","Type") in typesof(/obj,/mob,/area,/turf)
@@ -127,13 +127,13 @@
 					var_value = input("Select reference:","Reference") as null|mob|obj|turf|area in world
 
 		if("mob reference")
-			var_value = input("Select reference:","Reference") as mob in world
+			var_value = input("Select reference:","Reference") as null|mob in get_sorted_mobs()
 
 		if("file")
-			var_value = input("Pick file:","File") as file
+			var_value = input("Pick file:","File") as null|file
 
 		if("icon")
-			var_value = input("Pick icon:","Icon") as icon
+			var_value = input("Pick icon:","Icon") as null|icon
 
 		if("marked datum")
 			var_value = holder.marked_datum
@@ -263,11 +263,11 @@
 
 		if("text")
 			variable = input("Enter new text:","Text",\
-				variable) as text
+				variable) as null|text
 
 		if("num")
 			variable = input("Enter new number:","Num",\
-				variable) as num
+				variable) as null|num
 
 		if("type")
 			variable = input("Enter type:","Type",variable) \
@@ -276,7 +276,7 @@
 		if("reference")
 			switch(alert("Would you like to enter a specific object, or search for it from the world?","Choose!","Specifc UID (Hexadecimal number)", "Search"))
 				if("Specifc UID (Hexadecimal number)")
-					var/UID = input("Type in UID, without the leading 0x","Type in UID") as text|null
+					var/UID = input("Type in UID, without the leading 0x","Type in UID") as null|text
 					if(!UID) return
 					if(length(UID) != 7)
 						usr << "ERROR.  UID must be 7 digits"
@@ -294,15 +294,15 @@
 
 		if("mob reference")
 			variable = input("Select reference:","Reference",\
-				variable) as mob in world
+				variable) as null|mob in get_sorted_mobs()
 
 		if("file")
 			variable = input("Pick file:","File",variable) \
-				as file
+				as null|file
 
 		if("icon")
 			variable = input("Pick icon:","Icon",variable) \
-				as icon
+				as null|icon
 
 		if("marked datum")
 			variable = holder.marked_datum
@@ -533,7 +533,7 @@
 			O.vars[variable] = var_new
 
 		if("mob reference")
-			var/var_new = input("Select reference:","Reference",O.vars[variable]) as null|mob in world
+			var/var_new = input("Select reference:","Reference",O.vars[variable]) as null|mob in get_sorted_mobs()
 			if(var_new==null) return
 			O.vars[variable] = var_new
 

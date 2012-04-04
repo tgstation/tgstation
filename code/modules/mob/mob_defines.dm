@@ -29,7 +29,6 @@
 	var/maxHealth = 100 //Living
 	//Vars that should only be accessed via procs ++END
 
-
 //	var/uses_hud = 0
 	var/obj/screen/pain = null
 	var/obj/screen/flash = null

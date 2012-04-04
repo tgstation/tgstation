@@ -83,7 +83,7 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = I
 
-	var/desc = input("Please select a location to lock in.", "Locking Computer") in L|null
+	var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
 	if(desc)
 		src.locked = L[desc]
 		for(var/mob/O in hearers(src, null))

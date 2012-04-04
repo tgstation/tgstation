@@ -65,9 +65,9 @@ MEDICAL
 
 		if (user && stoppedblood)
 			if (M != user)
-				user.visible_message("\red [user] bandages [stoppedblood - 1 ? "some of" : "the last of"] [H]'s cuts with [src]", "\red You bandage up [stoppedblood - 1 ? "some of" : "the last of"] [H]'s cuts", "\red You hear something like gauze being ripped.")
+				user.visible_message("\red [user] [heal_burn? "salves" : "bandages"] [stoppedblood - 1 ? "some of" : "the last of"] [H]'s cuts with [src].", "\red You [heal_burn? "salve" : "bandage up"] [stoppedblood - 1 ? "some of" : "the last of"] [H]'s [heal_burn? "burns" : "wounds"].", "\red You hear something like gauze being ripped.")
 			else
-				user.visible_message("\red [user] bandages [stoppedblood - 1 ? "some of" : "the last of"] [user.gender == MALE? "his" : "her"] own cuts with [src]", "\red You bandage up [stoppedblood - 1 ? "some of" : "the last of"] your cuts", "\red You hear something like gauze being ripped.")
+				user.visible_message("\red [user] [heal_burn? "salves" : "bandages"] [stoppedblood - 1 ? "some of" : "the last of"] [user.gender == MALE? "his" : "her"] own cuts with [src].", "\red You [heal_burn? "salve" : "bandage up"] [stoppedblood - 1 ? "some of" : "the last of"] your [heal_burn? "burns" : "wounds"].", "\red You hear something like gauze being ripped.")
 		else if(user)
 			user << "\red Nothing to patch up!"
 			return
@@ -172,9 +172,9 @@ MEDICAL
 
 		if (user && stoppedblood)
 			if (M != user)
-				H.visible_message("\red You bandage up [stoppedblood - 1 ? "some of" : "the last of"] [H]'s cuts", "\red [user] bandages [stoppedblood - 1 ? "some of" : "the last of"] [H]'s cuts with [src]", "\red You hear something like gauze being ripped.")
+				user.visible_message("\red [user] [heal_burn? "salves" : "bandages"] [stoppedblood - 1 ? "some of" : "the last of"] [H]'s cuts with [src].", "\red You [heal_burn? "salve" : "bandage up"] [stoppedblood - 1 ? "some of" : "the last of"] [H]'s [heal_burn? "burns" : "wounds"].", "\red You hear something like gauze being ripped.")
 			else
-				H.visible_message("\red You bandage up [stoppedblood - 1 ? "some of" : "the last of"] your cuts", "\red [user] bandages [stoppedblood - 1 ? "some of" : "the last of"] their own cuts with [src]", "\red You hear something like gauze being ripped.")
+				user.visible_message("\red [user] [heal_burn? "salves" : "bandages"] [stoppedblood - 1 ? "some of" : "the last of"] [user.gender == MALE? "his" : "her"] own cuts with [src].", "\red You [heal_burn? "salve" : "bandage up"] [stoppedblood - 1 ? "some of" : "the last of"] your [heal_burn? "burns" : "wounds"].", "\red You hear something like gauze being ripped.")
 		else if(user)
 			user << "\red Nothing to patch up!"
 			return
