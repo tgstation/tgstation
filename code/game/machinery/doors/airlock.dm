@@ -238,6 +238,18 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		doortype = 13
 
 
+	mining
+		name = "Mining Airlock"
+		icon = 'Doormining.dmi'
+		doortype = 18
+
+
+	atmos
+		name = "Atmospherics Airlock"
+		icon = 'Dooratmo.dmi'
+		doortype = 19
+
+
 	New()
 		..()
 		if (src.closeOtherId != null)

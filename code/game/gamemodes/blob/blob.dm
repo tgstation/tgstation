@@ -42,7 +42,7 @@ var
 			message_admins("Blob spawned and expanding, report created")
 
 			if(ticker && ticker.minds && ticker.minds.len)
-				var/player_based_cores = round(ticker.minds.len, players_per_core)
+				var/player_based_cores = round(ticker.minds.len/players_per_core, 1)
 				if(player_based_cores > cores_to_spawn)
 					cores_to_spawn = player_based_cores
 
@@ -73,7 +73,7 @@ var
 		if(!blobs.len)	return
 		expanding = 1
 
-		for(var/i = 1 to 10)
+		for(var/i = 1 to 5)
 			sleep(-1)
 			if(!blobs.len)	break
 			var/obj/effect/blob/B = pick(blobs)
@@ -98,8 +98,8 @@ var
 						aiPlayer << "Laws Updated: [law]"
 
 				stage = -1
-				// next stage 1-4 minutes later
-				spawn(600*rand(1,4))
+				// next stage 1 minute later
+				spawn(600)
 					stage = 1
 				return
 

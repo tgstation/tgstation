@@ -41,7 +41,7 @@
 
 /mob/living/silicon/pai/blob_act()
 	if (src.stat != 2)
-		src.bruteloss += 60
+		src.adjustBruteLoss(60)
 		src.updatehealth()
 		return 1
 	return 0
@@ -138,7 +138,7 @@
 						O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
 				if(prob(8))
 					flick("noise", src.flash)
-				src.bruteloss += damage
+				src.adjustBruteLoss(damage)
 				src.updatehealth()
 			else
 				playsound(src.loc, 'slashmiss.ogg', 25, 1, -1)

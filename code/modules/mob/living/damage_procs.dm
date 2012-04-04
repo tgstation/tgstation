@@ -21,7 +21,7 @@
 		if(OXY)
 			adjustOxyLoss(damage/(blocked+1))
 		if(CLONE)
-			cloneloss += (damage/(blocked+1))
+			adjustCloneLoss(damage/(blocked+1))
 	UpdateDamageIcon()
 	updatehealth()
 	return 1
@@ -50,7 +50,8 @@
 		if(IRRADIATE)
 			radiation += max((effect - (effect*getarmor(null, "rad"))), 0)//Rads auto check armor
 		if(STUTTER)
-			stuttering = max(stuttering,(effect/(blocked+1)))
+			if(canstun) // stun is usually associated with stutter
+				stuttering = max(stuttering,(effect/(blocked+1)))
 		if(SLUR)
 			slurring = max(slurring, (effect/(blocked+1)))
 		if(EYE_BLUR)

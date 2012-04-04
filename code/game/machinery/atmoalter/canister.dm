@@ -153,7 +153,7 @@
 	return 0
 
 /obj/machinery/portable_atmospherics/canister/blob_act()
-	src.health -= 1
+	src.health -= 200
 	healthcheck()
 	return
 

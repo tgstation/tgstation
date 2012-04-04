@@ -2,19 +2,23 @@
 	name = "Emitter"
 	desc = "A heavy duty industrial laser"
 	icon = 'singularity.dmi'
-	icon_state = "Emitter"
+	icon_state = "emitter"
 	anchored = 0
 	density = 1
 	req_access = list(access_engine)
-	var/active = 0
-	var/fire_delay = 100
-	var/last_shot = 0
-	var/shot_number = 0
-	var/state = 0
-	var/locked = 0
+
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 300
+
+	var
+		active = 0
+		fire_delay = 100
+		last_shot = 0
+		shot_number = 0
+		state = 0
+		locked = 0
+
 
 	verb/rotate()
 		set name = "Rotate"
@@ -35,9 +39,9 @@
 
 	update_icon()
 		if (active && !(stat & (NOPOWER|BROKEN)))
-			icon_state = "Emitter +a"
+			icon_state = "emitter_+a"
 		else
-			icon_state = "Emitter"
+			icon_state = "emitter"
 
 
 	attack_hand(mob/user as mob)
@@ -56,15 +60,15 @@
 					src.use_power = 2
 				update_icon()
 			else
-				user << "The controls are locked!"
+				user << "\red The controls are locked!"
 		else
-			user << "The [src] needs to be firmly secured to the floor first."
+			user << "\red The [src] needs to be firmly secured to the floor first."
 			return 1
 
 
-	emp_act()//Emitters are hardened but still might have issues
+	emp_act(var/severity)//Emitters are hardened but still might have issues
 		use_power(50)
-		if(prob(1)&&prob(1))
+		if((severity == 1)&&prob(1)&&prob(1))
 			if(src.active)
 				src.active = 0
 				src.use_power = 1
@@ -87,7 +91,7 @@
 				src.shot_number = 0
 			use_power(1000)
 			var/obj/item/projectile/beam/A = new /obj/item/projectile/beam( src.loc )
-			A.icon_state = "u_laser"
+			A.icon_state = "emitter"
 			playsound(src.loc, 'emitter.ogg', 25, 1)
 			if(prob(35))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -113,6 +117,7 @@
 
 
 	attackby(obj/item/W, mob/user)
+
 		if(istype(W, /obj/item/weapon/wrench))
 			if(active)
 				user << "Turn off the [src] first."
@@ -123,27 +128,26 @@
 					playsound(src.loc, 'Ratchet.ogg', 75, 1)
 					user.visible_message("[user.name] secures [src.name] to the floor.", \
 						"You secure the external reinforcing bolts to the floor.", \
-						"You hear ratchet")
+						"You hear a ratchet")
 					src.anchored = 1
 				if(1)
 					state = 0
 					playsound(src.loc, 'Ratchet.ogg', 75, 1)
 					user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
 						"You undo the external reinforcing bolts.", \
-						"You hear ratchet")
+						"You hear a ratchet")
 					src.anchored = 0
 				if(2)
 					user << "\red The [src.name] needs to be unwelded from the floor."
-					return
+			return
 
-		else if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
+		if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
 			if(active)
 				user << "Turn off the [src] first."
 				return
 			switch(state)
 				if(0)
 					user << "\red The [src.name] needs to be wrenched to the floor."
-					return
 				if(1)
 					if (W:remove_fuel(0,user))
 						W:welding = 2
@@ -156,8 +160,7 @@
 							user << "You weld the [src] to the floor."
 						W:welding = 1
 					else
-						user << "\blue You need more welding fuel to complete this task."
-						return
+						user << "\red You need more welding fuel to complete this task."
 				if(2)
 					if (W:remove_fuel(0,user))
 						W:welding = 2
@@ -170,20 +173,36 @@
 							user << "You cut the [src] free from the floor."
 						W:welding = 1
 					else
-						user << "\blue You need more welding fuel to complete this task."
-						return
-		else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-			if (src.allowed(user))
-				src.locked = !src.locked
-				user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+						user << "\red You need more welding fuel to complete this task."
+			return
+
+		if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
+			if(emagged)
+				user << "\red The lock seems to be broken"
+				return
+			if(src.allowed(user))
+				if(active)
+					src.locked = !src.locked
+					user << "The controls are now [src.locked ? "locked." : "unlocked."]"
+				else
+					src.locked = 0 //just in case it somehow gets locked
+					user << "\red The controls can only be locked when the [src] is online"
 			else
 				user << "\red Access denied."
-				return
-		else
-			..()
 			return
+
+
+		if(istype(W, /obj/item/weapon/card/emag) && !emagged)
+			locked = 0
+			emagged = 1
+			user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
+			return
+
+		..()
+		return
 
 
 	power_change()
 		..()
 		update_icon()
+		return

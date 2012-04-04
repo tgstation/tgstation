@@ -78,4 +78,4 @@
 	new /obj/item/weapon/spacecash/c200(src)
 	new /obj/item/weapon/spacecash/c200(src)
 	new /obj/item/weapon/spacecash/c200(src)
-	new /obj/item/weapon/spacecash/c200(src)
+

@@ -1,28 +1,19 @@
 /**********************Mineral stacking unit console**************************/
 
 /obj/machinery/mineral/stacking_unit_console
-	name = "Stacking machine console"
+	name = "stacking machine console"
 	icon = 'mining_machines.dmi'
 	icon_state = "console"
 	density = 1
 	anchored = 1
 	var/id = ""
 	var/obj/machinery/mineral/stacking_machine/machine = null
+	var/machinedir = SOUTHEAST
 
 /obj/machinery/mineral/stacking_unit_console/New()
 	..()
 	spawn(7)
-		/**
-		src.machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, SOUTHEAST))
-		if (machine)
-			machine.CONSOLE = src
-		else
-			del(src)
-			*/
-		//Commented out for being horrible for mappers. -Fastler
-		for(var/obj/machinery/mineral/stacking_machine/M in world)
-			if(M.id == src.id)
-				src.machine = M
+		src.machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
 		if (machine)
 			machine.CONSOLE = src
 		else

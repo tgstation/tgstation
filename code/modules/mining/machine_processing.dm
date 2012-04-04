@@ -1,33 +1,23 @@
 /**********************Mineral processing unit console**************************/
 
 /obj/machinery/mineral/processing_unit_console
-	name = "Produciton machine console"
+	name = "production machine console"
 	icon = 'mining_machines.dmi'
 	icon_state = "console"
 	density = 1
 	anchored = 1
 	var/id = ""
 	var/obj/machinery/mineral/processing_unit/machine = null
+	var/machinedir = EAST
 
 /obj/machinery/mineral/processing_unit_console/New()
 	..()
 	spawn(7)
-		/**
-		src.machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, EAST))
+		src.machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, machinedir))
 		if (machine)
 			machine.CONSOLE = src
 		else
 			del(src)
-		*/
-		//Commented out for being horrible for mappers. -Fastler
-		for(var/obj/machinery/mineral/processing_unit/M in world)
-			if(M.id == src.id)
-				src.machine = M
-		if (machine)
-			machine.CONSOLE = src
-		else
-			del(src)
-
 
 /obj/machinery/mineral/processing_unit_console/attack_hand(user as mob)
 

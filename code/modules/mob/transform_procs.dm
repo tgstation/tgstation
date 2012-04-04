@@ -53,6 +53,9 @@
 		return
 	for(var/name in organs)
 		del(organs[name])
+
+	if(client)
+		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // stop the jams for AIs
 	return ..()
 
 /mob/living/carbon/AIize()

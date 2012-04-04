@@ -1496,7 +1496,7 @@
 						for(var/mob/living/carbon/human/H in world)
 							if(H.client)
 								H << "\red <B>You suddenly feel stupid.</B>"
-							H.brainloss = 60
+							H.setBrainLoss(60)
 						message_admins("[key_name_admin(usr)] made everybody retarded")
 					else
 						alert("You cannot perform this action. You must be of a higher administrative rank!")

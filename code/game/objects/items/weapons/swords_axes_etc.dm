@@ -161,7 +161,7 @@ STUN BATON
 				R.cell.charge -= 20
 			else
 				charges--
-			if (M.stuttering < 1 && (!(M.mutations & HULK))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+			if (M.stuttering < 1 && (!(M.mutations & HULK) && M.canstun)  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 				M.stuttering = 1
 			M.Stun(1)
 			M.Weaken(1)
@@ -172,7 +172,7 @@ STUN BATON
 				R.cell.charge -= 20
 			else
 				charges--
-			if (M.stuttering < 10 && (!(M.mutations & HULK))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+			if (M.stuttering < 10 && (!(M.mutations & HULK) && M.canstun)  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 				M.stuttering = 10
 			M.Stun(10)
 			M.Weaken(10)

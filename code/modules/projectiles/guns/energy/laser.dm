@@ -10,6 +10,11 @@
 	origin_tech = "combat=3;magnets=2"
 	projectile_type = "/obj/item/projectile/beam"
 
+/obj/item/weapon/gun/energy/laser/practice
+	name = "practice laser gun"
+	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
+	projectile_type = "/obj/item/projectile/beam/practice"
+
 
 obj/item/weapon/gun/energy/laser/retro
 	name ="\improper Retro Laser"

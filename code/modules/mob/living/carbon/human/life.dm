@@ -271,7 +271,7 @@
 				if (prob(10))//Instant Chad Ore!
 					stuttering = max(10, stuttering)
 
-			if (brainloss >= 60 && stat != 2)
+			if (getBrainLoss() >= 60 && stat != 2)
 				if (prob(7))
 					switch(pick(1,2,3))
 						if(1)
@@ -648,7 +648,7 @@
 
 			//Account for massive pressure differences.  Done by Polymorph
 			var/pressure = environment.return_pressure()
-			if(!istype(wear_suit, /obj/item/clothing/suit/space)&&!istype(wear_suit, /obj/item/clothing/suit/armor/captain))
+			if(!istype(wear_suit, /obj/item/clothing/suit/space))
 					/*if(pressure < 20)
 						if(prob(25))
 							src << "You feel the splittle on your lips and the fluid on your eyes boiling away, the capillteries in your skin breaking."

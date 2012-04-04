@@ -34,12 +34,21 @@
 			connected_parts = list()
 			return
 		if(!part_scan())
-			assembled = 0
+			use_power = 1
+			active = 0
+			connected_parts = list()
+
 		return
 
 
 	Topic(href, href_list)
 		..()
+		//Ignore input if we are broken, !silicon guy cant touch us, or nonai controlling from super far away
+		if(stat & (BROKEN|NOPOWER) || (get_dist(src, usr) > 1 && !istype(usr, /mob/living/silicon)) || (get_dist(src, usr) > 8 && !istype(usr, /mob/living/silicon/ai)))
+			usr.machine = null
+			usr << browse(null, "window=pacontrol")
+			return
+
 		if( href_list["close"] )
 			usr << browse(null, "window=pacontrol")
 			usr.machine = null
@@ -63,6 +72,7 @@
 			message_admins("[usr] decreased particle accelerator power to [strength].")
 			log_admin("[usr] decreased particle accelerator power to [strength].")
 		src.updateDialog()
+		return
 
 
 	power_change()
@@ -73,6 +83,7 @@
 		else if(!stat)
 			use_power = 1
 		return
+
 
 	process()
 		if(src.active)
@@ -145,8 +156,8 @@
 
 
 		interact(mob/user)
-			if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-				if (!istype(user, /mob/living/silicon))
+			if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
+				if(!istype(user, /mob/living/silicon))
 					user.machine = null
 					user << browse(null, "window=pacontrol")
 					return
@@ -172,3 +183,4 @@
 
 			user << browse(dat, "window=pacontrol;size=420x500")
 			onclose(user, "pacontrol")
+			return

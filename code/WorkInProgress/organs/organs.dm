@@ -103,72 +103,11 @@
 /obj/organ/torso
 	name = "torso"
 	var/maxHealth = 50 //right now, the mob's (only humans for now) health depends only on it. Will be fixed later
-	var/ear_damage = null//Carbon
-	var/cloneloss = 0//Carbon
-	var/nodamage = 0
-//	flags = NOREACT //uncomment this out later
-	var/viruses = list() // replaces var/datum/disease/virus
-	var/list/resistances = list()
-	var/datum/disease/virus = null
-	var/emote_allowed = 1
-	var/sdisabilities = 0//Carbon
-	var/disabilities = 0//Carbon
-	var/monkeyizing = null//Carbon
-	var/lying = 0.0
-	var/resting = 0.0//Carbon
-	var/sleeping = 0.0//Carbon
-	var/oxyloss = 0.0//Living
-	var/toxloss = 0.0//Living
-	var/fireloss = 0.0//Living
-	var/bruteloss = 0.0//Living
-	var/timeofdeath = 0.0//Living
-	var/rejuv = null
-	var/antitoxs = null
-	var/plasma = null
-	var/cpr_time = 1.0//Carbon
-	var/health = 100//Living
-	var/bodytemperature = 310.055	//98.7 F
-	var/bhunger = 0//Carbon
-	var/nutrition = 400.0//Carbon
-	var/overeatduration = 0		// How long this guy is overeating //Carbon
-	var/paralysis = 0.0
-	var/stunned = 0.0
-	var/weakened = 0.0
-	var/losebreath = 0.0//Carbon
-
-	var/obj/item/weapon/storage/s_active = null//Carbon
-	var/inertia_dir = 0
-	var/datum/dna/dna = null//Carbon
-	var/radiation = 0.0//Carbon
-	var/mutations = 0//Carbon
-	//telekinesis = 1
-	//firemut = 2
-	//xray = 4
-	//hulk = 8
-	//clumsy = 16
-	//obese = 32
-	//husk = 64
-/*For ninjas and others. This variable is checked when a mob moves and I guess it was supposed to allow the mob to move
-through dense areas, such as walls. Setting density to 0 does the same thing. The difference here is that
-the mob is also allowed to move without any sort of restriction. For instance, in space or out of holder objects.*/
-//0 is off, 1 is normal, 2 is for ninjas.
-	var/incorporeal_move = 0
-//The last mob/living/carbon to push/drag/grab this mob (mostly used by Metroids friend recognition)
-	var/mob/living/carbon/LAssailant = null
-
-
-
-
 
 /obj/organ/torso/human
 	name = "human torso"
 	species = "human"
 	maxHealth = 100
-	var/underwear = 1//Human
-	var/obj/item/weapon/back = null//Human/Monkey
-	var/obj/item/weapon/tank/internal = null//Human/Monkey
-	var/alien_egg_flag = 0//Have you been infected?
-	var/last_special = 0
 
 	New()
 		..()
@@ -196,14 +135,6 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 	var/minDamage = 5 //punching damage
 	var/maxDamage = 5
 
-	var/atom/movable/pulling = null
-	var/hand = null
-	var/obj/item/weapon/handcuffs/handcuffed = null//Living
-	var/obj/item/l_hand = null//Living
-	var/obj/item/r_hand = null//Living
-	var/in_throw_mode = 0
-//	var/strangleDelay = 1 //The code is a bit too complicated for that right now
-
 /obj/organ/limb/arms/alien
 	name = "alien arms"
 	species = "alien"
@@ -220,15 +151,6 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 /obj/organ/limb/legs
 	name = "legs"
 
-	var/moveRunDelay = 1 //not sure about how that works
-	var/moveWalkDelay = 7
-	//var/knockdownResist = 0
-	var/next_move = null
-	var/prev_move = null
-	var/canmove = 1.0
-	var/obj/structure/stool/buckled = null//Living
-	var/footstep = 1
-
 /obj/organ/limb/legs/human
 	name = "human legs"
 	species = "human"
@@ -241,47 +163,9 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 /obj/organ/head
 	name = "head"
 
-	var/stuttering = null//Carbon
-	var/druggy = 0//Carbon
-	var/confused = 0//Carbon
-	var/drowsyness = 0.0//Carbon
-	var/dizziness = 0//Carbon
-	var/is_dizzy = 0
-	var/is_jittery = 0
-	var/jitteriness = 0//Carbon
-	var/r_epil = 0
-	var/r_ch_cou = 0
-	var/r_Tourette = 0//Carbon
-	var/miming = null //checks if the guy is a mime//Human
-	var/silent = null //Can't talk. Value goes down every life proc.//Human
-	var/voice_name = "unidentifiable voice"
-	var/voice_message = null // When you are not understood by others (replaced with just screeches, hisses, chimpers etc.)
-	var/say_message = null // When you are understood by others. Currently only used by aliens and monkeys in their say_quote procs
-	var/coughedtime = null
-	var/job = null//Living
-	var/const/blindness = 1//Carbon
-	var/const/deafness = 2//Carbon
-	var/const/muteness = 4//Carbon
-	var/brainloss = 0//Carbon
-	var/robot_talk_understand = 0
-	var/alien_talk_understand = 0
-	var/taj_talk_understand = 0
-	var/universal_speak = 0 // Set to 1 to enable the mob to speak to everyone -- TLE
-	var/ear_deaf = null//Carbon
-	var/eye_blind = null//Carbon
-	var/eye_blurry = null//Carbon
-	var/eye_stat = null//Living, potentially Carbon
-	var/blinded = null
-	var/shakecamera = 0
-//Wizard mode, but can be used in other modes thanks to the brand new "Give Spell" badmin button
-	var/obj/proc_holder/spell/list/spell_list = list()
-
-
-
 /obj/organ/head/human
 	name = "human head"
 	species = "human"
-	var/obj/item/clothing/mask/wear_mask = null//Carbon
 
 /obj/organ/head/alien
 	name = "alien head"
