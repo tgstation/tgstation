@@ -50,7 +50,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				if("Obj")
 					target = input("Enter target:","Target",usr) as obj in world
 				if("Mob")
-					target = input("Enter target:","Target",usr) as mob in sortmobs()
+					target = input("Enter target:","Target",usr) as mob in getmobs()
 				if("Area or Turf")
 					target = input("Enter target:","Target",usr.loc) as area|turf in world
 				if("Client")
@@ -105,7 +105,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 						lst[i] = input("Select reference:","Reference") as null|mob|obj|turf|area in world
 
 			if("mob reference")
-				lst[i] = input("Select reference:","Reference",usr) as mob in sortmobs()
+				lst[i] = input("Select reference:","Reference",usr) as mob in getmobs()
 
 			if("file")
 				lst[i] = input("Pick file:","File") as file
@@ -121,7 +121,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				lst[i] = input("Please, select a player!", "Selection", null, null) as null|anything in keys
 
 			if("mob's area")
-				var/mob/temp = input("Select mob", "Selection", usr) as mob in sortmobs()
+				var/mob/temp = input("Select mob", "Selection", usr) as mob in getmobs()
 				lst[i] = temp.loc
 
 

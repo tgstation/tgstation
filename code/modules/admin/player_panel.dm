@@ -5,7 +5,7 @@
 	dat += "<body><table border=1 cellspacing=5><B><tr><th>Name/Real Name</th><th>Type</th><th>Assigned Job</th><th>Info</th><th>Options</th><th>Traitor?</th></tr></B>"
 	//add <th>IP:</th> to this if wanting to add back in IP checking
 	//add <td>(IP: [M.lastKnownIP])</td> if you want to know their ip to the lists below
-	var/list/mobs = sortmobs()
+	var/list/mobs = get_sorted_mobs()
 	var/i = 1
 
 	for(var/mob/M in mobs)
@@ -45,7 +45,7 @@
 			else if(istype(M,/mob/new_player))
 				dat += "<td>New Player</td>"
 			else
-				dat += "<td>ERROR</td>"
+				dat += "<td>\red ERROR</td>\black"
 
 			if(M.mind && M.mind.assigned_role && istype(M, /mob/living/carbon/human))	// Adds a column to Player Panel that shows their current job.
 				var/mob/living/carbon/human/H = M
@@ -117,7 +117,7 @@
 	dat += "<body><table border=1 cellspacing=5><B><tr><th>Name</th><th>Real Name</th><th>Assigned Job</th><th>Key</th><th>Options</th><th>PM</th><th>Traitor?</th></tr></B>"
 	//add <th>IP:</th> to this if wanting to add back in IP checking
 	//add <td>(IP: [M.lastKnownIP])</td> if you want to know their ip to the lists below
-	var/list/mobs = sortmobs()
+	var/list/mobs = get_sorted_mobs()
 
 	for(var/mob/M in mobs)
 		if(!M.ckey)	continue

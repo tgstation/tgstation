@@ -9,6 +9,7 @@
 	universal_speak = 1 //hacky fix until someone can figure out how to make them only understand humans
 	taj_talk_understand = 1
 	voice_message = "mrowls"
+	examine_text = "one of the cat-like Tajarans."
 
 /mob/living/carbon/human/tajaran/New()
 	tajspeak_letters = new/list("~","*","-")

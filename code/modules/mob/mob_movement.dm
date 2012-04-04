@@ -332,7 +332,7 @@
 	for(var/turf/turf in oview(1,src))
 		if(istype(turf,/turf/space))
 			continue
-		if(istype(turf,/turf/simulated/floor) && (src.flags & NOGRAV))
+		if(istype(turf,/turf/simulated/floor) && (flags & NOGRAV))
 			continue
 		dense_object++
 		break

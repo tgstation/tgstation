@@ -37,7 +37,7 @@
 		return
 
 	if(config.allow_admin_jump)
-		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortmobs()
+		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in getmobs()
 		var/mob/M = selection
 		if(!istype(M))
 			return
@@ -82,7 +82,7 @@
 		src << "Only administrators may use this command."
 		return
 	if(config.allow_admin_jump)
-		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortmobs()
+		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in getmobs()
 		var/mob/M = selection
 		if(!istype(M))
 			return

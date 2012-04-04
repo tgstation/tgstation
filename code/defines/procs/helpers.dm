@@ -199,15 +199,17 @@
 	while(Li <= L.len && Ri <= R.len)
 		if(sorttext(L[Li], R[Ri]) < 1)
 			var/item = R[Ri++]
-			result += item
 			if(R[item])
 				result[item] = R[item]
+			else
+				result += item
 
 		else
 			var/item = L[Li++]
-			result += item
 			if(L[item])
 				result[item] = L[item]
+			else
+				result += item
 
 	if(Li <= L.len)
 		return (result + L.Copy(Li, 0))
@@ -779,6 +781,14 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		select = input("AI signals detected:", "AI selection") in ais
 		return ais[select]
 
+/proc/get_sorted_mobs()
+	var/new_list = list()
+	var/old_list = getmobs()
+	for(var/named in old_list)
+		new_list += old_list[named]
+	return new_list
+
+
 /proc/getmobs()
 
 	var/list/mobs = sortmobs()
@@ -802,72 +812,38 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				name += " \[dead\]"
 		creatures[name] = M
 
-	return creatures
+	return sortList(creatures)
 
 /proc/sortmobs()
 
-	var/list/mob_list = list()
 	var/list/temp_list = list()
 	for(var/mob/living/silicon/ai/M in world)
 		temp_list.Add(M)
-	sortList(temp_list)
-	mob_list += temp_list
-	temp_list = list()
 	for(var/mob/living/silicon/pai/M in world)
 		temp_list.Add(M)
-	sortList(temp_list)
-	mob_list += temp_list
-	temp_list = list()
 	for(var/mob/living/silicon/robot/M in world)
 		temp_list.Add(M)
-	sortList(temp_list)
-	mob_list += temp_list
-	temp_list = list()
 	for(var/mob/living/carbon/human/M in world)
 		temp_list.Add(M)
-	sortList(temp_list)
-	mob_list += temp_list
-	temp_list = list()
 	for(var/mob/living/carbon/brain/M in world)
 		temp_list.Add(M)
-	sortList(temp_list)
-	mob_list += temp_list
-	temp_list = list()
 	for(var/mob/living/carbon/alien/M in world)
 		temp_list.Add(M)
-	sortList(temp_list)
-	mob_list += temp_list
-	temp_list = list()
 	for(var/mob/dead/observer/M in world)
 		temp_list.Add(M)
-	sortList(temp_list)
-	mob_list += temp_list
-	temp_list = list()
 	for(var/mob/new_player/M in world)
 		temp_list.Add(M)
-	sortList(temp_list)
-	mob_list += temp_list
-	temp_list = list()
 	for(var/mob/living/carbon/monkey/M in world)
 		temp_list.Add(M)
-	sortList(temp_list)
-	mob_list += temp_list
-	temp_list = list()
 	for(var/mob/living/carbon/metroid/M in world)
 		temp_list.Add(M)
-	sortList(temp_list)
-	mob_list += temp_list
-	temp_list = list()
 	for(var/mob/living/simple_animal/M in world)
 		temp_list.Add(M)
-	sortList(temp_list)
-	mob_list += temp_list
-	temp_list = list()
 //	for(var/mob/living/silicon/hivebot/M in world)
 //		mob_list.Add(M)
 //	for(var/mob/living/silicon/hive_mainframe/M in world)
 //		mob_list.Add(M)
-	return mob_list
+	return temp_list
 
 /proc/convert2energy(var/M)
 	var/E = M*(SPEED_OF_LIGHT_SQ)

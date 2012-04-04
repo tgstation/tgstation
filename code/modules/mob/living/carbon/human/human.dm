@@ -60,6 +60,7 @@
 	var/bloodloss = 0
 	var/datum/reagents/vessel
 	var/pale = 0
+	var/examine_text = ""
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"

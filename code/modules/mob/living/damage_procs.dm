@@ -39,7 +39,7 @@
 
 
 /mob/living/proc/apply_effect(var/effect = 0,var/effecttype = STUN, var/blocked = 0)
-	if(!effect || (blocked >= 2))	return 0
+	if(!effect || (blocked))	return 0
 	switch(effecttype)
 		if(STUN)
 			Stun((effect - (min(effect*getarmor(null, "laser"), effect*(0.75 + (blocked*0.05))))))

@@ -459,9 +459,9 @@
 	if(!stand_icon || !lying_icon)
 		update_body()
 
-	//if(update_icon) // Skie
-	//	..()
-	//	overlays = null
+	if(update_icon) // Skie
+		..()
+		overlays = null
 
 	if (lying)
 		icon = lying_icon
@@ -913,3 +913,77 @@
 	else
 		return 0
 	return
+
+/mob/living/carbon/monkey/proc/get_damaged_organs(var/brute, var/burn)
+	var/list/datum/organ/external/parts = list()
+	for(var/name in organs)
+		var/datum/organ/external/organ = organs[name]
+		if((brute && organ.brute_dam) || (burn && organ.burn_dam))
+			parts += organ
+	return parts
+
+/mob/living/carbon/monkey/proc/get_damageable_organs()
+	var/list/datum/organ/external/parts = list()
+	for(var/name in organs)
+		var/datum/organ/external/organ = organs[name]
+		if(organ.brute_dam + organ.burn_dam < organ.max_damage)
+			parts += organ
+	return parts
+
+// heal ONE external organ, organ gets randomly selected from damaged ones.
+/mob/living/carbon/monkey/heal_organ_damage(var/brute, var/burn)
+	var/list/datum/organ/external/parts = get_damaged_organs(brute,burn)
+	if(!parts.len)
+		return
+	var/datum/organ/external/picked = pick(parts)
+	picked.heal_damage(brute,burn)
+	updatehealth()
+	UpdateDamageIcon()
+
+// damage ONE external organ, organ gets randomly selected from damaged ones.
+/mob/living/carbon/monkey/take_organ_damage(var/brute, var/burn)
+	var/list/datum/organ/external/parts = get_damageable_organs()
+	if(!parts.len)
+		return
+	var/datum/organ/external/picked = pick(parts)
+	picked.take_damage(brute,burn)
+	updatehealth()
+	UpdateDamageIcon()
+
+// heal MANY external organs, in random order
+/mob/living/carbon/monkey/heal_overall_damage(var/brute, var/burn)
+	var/list/datum/organ/external/parts = get_damaged_organs(brute,burn)
+
+	while(parts.len && (brute>0 || burn>0) )
+		var/datum/organ/external/picked = pick(parts)
+
+		var/brute_was = picked.brute_dam
+		var/burn_was = picked.burn_dam
+
+		picked.heal_damage(brute,burn)
+
+		brute -= (brute_was-picked.brute_dam)
+		burn -= (burn_was-picked.burn_dam)
+
+		parts -= picked
+	updatehealth()
+	UpdateDamageIcon()
+
+// damage MANY external organs, in random order
+/mob/living/carbon/monkey/take_overall_damage(var/brute, var/burn, var/used_weapon = null)
+	var/list/datum/organ/external/parts = get_damageable_organs()
+
+	while(parts.len && (brute>0 || burn>0) )
+		var/datum/organ/external/picked = pick(parts)
+
+		var/brute_was = picked.brute_dam
+		var/burn_was = picked.burn_dam
+
+		picked.take_damage(brute,burn, 0, used_weapon)
+
+		brute -= (picked.brute_dam-brute_was)
+		burn -= (picked.burn_dam-burn_was)
+
+		parts -= picked
+	updatehealth()
+	UpdateDamageIcon()

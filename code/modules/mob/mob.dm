@@ -290,9 +290,9 @@
 
 //Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
 /mob/proc/remove_from_mob(var/obj/O)
-	src.u_equip(O)
-	if (src.client)
-		src.client.screen -= O
+	u_equip(O)
+	if (client)
+		client.screen -= O
 	O.layer = initial(O.layer)
 	O.screen_loc = null
 	return 1
@@ -398,10 +398,10 @@
 		msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 		msg = html_encode(msg)
 
-		src.flavor_text = msg
+		flavor_text = msg
 
 /mob/proc/warn_flavor_changed()
-	if(src.flavor_text && src.flavor_text != "") // don't spam people that don't use it!
+	if(flavor_text && flavor_text != "") // don't spam people that don't use it!
 		src << "<h2 class='alert'>OOC Warning:</h2>"
 		src << "<span class='alert'>Your flavor text is likely out of date! <a href='byond://?src=\ref[src];flavor_change=1'>Change</a></span>"
 
@@ -409,9 +409,9 @@
 	if (flavor_text && flavor_text != "")
 		var/msg = dd_replacetext(flavor_text, "\n", " ")
 		if(lentext(msg) <= 40)
-			usr << "\blue [msg]"
+			return "\blue [msg]"
 		else
-			usr << "\blue [copytext(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a>"
+			return "\blue [copytext(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a>"
 
 
 /*
@@ -610,7 +610,7 @@
 		src << browse(null, t1)
 
 	if(href_list["teleto"])
-		src.client.jumptoturf(locate(href_list["teleto"]))
+		client.jumptoturf(locate(href_list["teleto"]))
 
 	if(href_list["priv_msg"])
 		var/mob/M = locate(href_list["priv_msg"])
@@ -648,8 +648,8 @@
 					if(K.client && K.client.holder && K.key != usr.key && K.key != M.key)
 						K << "<b><font color='blue'>PM: [key_name(usr, K)]->[key_name(M, K)]:</b> \blue [t]</font>"
 	if(href_list["flavor_more"])
-		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", src.name, dd_replacetext(src.flavor_text, "\n", "<BR>")), text("window=[];size=500x200", src.name))
-		onclose(usr, "[src.name]")
+		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, dd_replacetext(flavor_text, "\n", "<BR>")), text("window=[];size=500x200", name))
+		onclose(usr, "[name]")
 	if(href_list["flavor_change"])
 		update_flavor_text()
 	..()
@@ -659,9 +659,9 @@
 	return health
 
 /mob/proc/UpdateLuminosity()
-	if(src.total_luminosity == src.last_luminosity)	return 0//nothing to do here
-	src.last_luminosity = src.total_luminosity
-	sd_SetLuminosity(min(src.total_luminosity,7))//Current hardcode max at 7, should likely be a const somewhere else
+	if(total_luminosity == last_luminosity)	return 0//nothing to do here
+	last_luminosity = total_luminosity
+	sd_SetLuminosity(min(total_luminosity,7))//Current hardcode max at 7, should likely be a const somewhere else
 	return 1
 
 /mob/MouseDrop(mob/M as mob)
@@ -722,7 +722,7 @@
 		del(src)
 */
 
-	if(IsGuestKey(src.key))
+	if(IsGuestKey(key))
 		alert(src,"Baystation12 doesn't allow guest accounts to play. Please go to http://www.byond.com/ and register for a key.","Guest","OK")
 		del(src)
 
@@ -837,7 +837,7 @@ Currently doesn't work, but should be useful later or at least as a template
 			else
 				gibs(loc, viruses, dna)
 		sleep(15)
-		for(var/obj/item/I in src.contents)
+		for(var/obj/item/I in contents)
 			I.loc = get_turf(src)
 			if(ex_act)
 				I.ex_act(ex_act)
@@ -876,7 +876,7 @@ Dusting robots does not eject the MMI, so it's a bit more powerful than gib() /N
 	sleep(15)
 	if(isrobot(src)&&src:mmi)//Is a robot and it has an mmi.
 		del(src:mmi)//Delete the MMI first so that it won't go popping out.
-	for(var/obj/item/I in src.contents)
+	for(var/obj/item/I in contents)
 		I.loc = get_turf(src)
 	del(src)
 
@@ -1011,17 +1011,17 @@ note dizziness decrements automatically in the mob's Life() proc.
 						boom.icon_state = "loss_general"
 #elif
 /client/proc/station_explosion_cinematic(var/derp)
-	if(!src.mob)
+	if(!mob)
 		return
 
-	var/mob/M = src.mob
+	var/mob/M = mob
 	M.loc = null // HACK, but whatever, this works
 
 	if(!M.hud_used)
 		return
 
 	var/obj/screen/boom = M.hud_used.station_explosion
-	src.screen += boom
+	screen += boom
 	if(ticker)
 		switch(ticker.mode.name)
 			if("nuclear emergency")
