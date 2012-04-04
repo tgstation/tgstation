@@ -1586,7 +1586,6 @@
 			icon_state = "pill[rand(1,20)]"
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		..()
 		if (istype(W, /obj/item/weapon/storage/pill_bottle))
 			var/obj/item/weapon/storage/pill_bottle/P = W
 			if (P.mode == 1)

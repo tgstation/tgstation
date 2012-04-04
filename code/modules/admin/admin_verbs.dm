@@ -141,6 +141,7 @@
 			verbs += /client/proc/everyone_random
 			verbs += /client/proc/only_one // Fateweaver suggested I do this - Doohl
 			verbs += /client/proc/deadmin_self
+			verbs += /client/proc/cmd_admin_ticklag
 
 		if (holder.level >= 5)//Game Admin********************************************************************
 			verbs += /obj/admins/proc/view_txt_log
@@ -419,6 +420,7 @@
 	verbs -= /client/proc/startSinglo
 	verbs -= /client/proc/jumptocoord
 	verbs -= /client/proc/everyone_random
+	verbs -= /client/proc/cmd_admin_ticklag
 	//verbs -= /client/proc/cmd_switch_radio
 	return
 

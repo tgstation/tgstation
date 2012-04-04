@@ -28,7 +28,7 @@ datum/controller/game_controller
 		if(!tension_master)
 			tension_master = new /datum/tension()
 
-		world.tick_lag = 0.9
+		world.tick_lag = 0.6
 
 		setup_objects()
 
@@ -118,7 +118,7 @@ datum/controller/game_controller
 
 		ticker.process()
 
-		sleep(world.timeofday+10-start_time)
+		sleep(world.timeofday+12-start_time)
 
 		spawn process()
 
