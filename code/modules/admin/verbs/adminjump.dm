@@ -28,7 +28,7 @@
 		alert("Admin jumping disabled")
 	return
 
-/client/proc/jumptomob(var/mob/M in world)
+/client/proc/jumptomob()
 	set category = "Admin"
 	set name = "Jump to Mob"
 
@@ -37,15 +37,18 @@
 		return
 
 	if(config.allow_admin_jump)
-		log_admin("[key_name(usr)] jumped to [key_name(M)]")
-		message_admins("[key_name_admin(usr)] jumped to [key_name_admin(M)]", 1)
-		if(src.mob)
-			var/mob/A = src.mob
-			var/turf/T = get_turf(M)
-			if(T && isturf(T))
-				A.loc = T
-			else
-				A << "This mob is not located in the game world."
+		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in getmobs()
+		var/mob/M = selection
+		if(!istype(M))
+			return
+		var/mob/A = src.mob
+		var/turf/T = get_turf(M)
+		if(T && isturf(T))
+			A.loc = T
+			log_admin("[key_name(usr)] jumped to [key_name(M)]")
+			message_admins("[key_name_admin(usr)] jumped to [key_name_admin(M)]", 1)
+		else
+			A << "This mob is not located in the game world."
 	else
 		alert("Admin jumping disabled")
 
@@ -71,7 +74,7 @@
 	else
 		alert("Admin jumping disabled")
 
-/client/proc/Getmob(var/mob/M in world)
+/client/proc/Getmob()
 	set category = "Admin"
 	set name = "Get Mob"
 	set desc = "Mob to teleport"
@@ -79,9 +82,18 @@
 		src << "Only administrators may use this command."
 		return
 	if(config.allow_admin_jump)
-		log_admin("[key_name(usr)] teleported [key_name(M)]")
-		message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)]", 1)
-		M.loc = get_turf(usr)
+		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in getmobs()
+		var/mob/M = selection
+		if(!istype(M))
+			return
+		var/mob/A = src.mob
+		var/turf/T = get_turf(A)
+		if(T && isturf(T))
+			M.loc = T
+			log_admin("[key_name(usr)] teleported [key_name(M)]")
+			message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)]", 1)
+		else
+			A << "You are not located in the game world."
 	else
 		alert("Admin jumping disabled")
 

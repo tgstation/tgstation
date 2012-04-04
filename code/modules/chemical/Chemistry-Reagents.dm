@@ -96,7 +96,7 @@ datum
 
 
 		blood
-			data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"virus2"=null,"antibodies"=0)
+			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"virus2"=null,"antibodies"=0)
 			name = "Blood"
 			id = "blood"
 			reagent_state = LIQUID
@@ -1338,8 +1338,9 @@ datum
 				if(M:getBruteLoss() && prob(40)) M:heal_organ_damage(1,0)
 				if(M:getFireLoss() && prob(40)) M:heal_organ_damage(0,1)
 				if(M:getToxLoss() && prob(40)) M:adjustToxLoss(-1)
-				if(volume > REAGENTS_OVERDOSE)
-					M:adjustToxLoss(1)
+//				if(volume > REAGENTS_OVERDOSE)
+//					M:adjustToxLoss(1)
+//As hilarious as it was watching Asanadas projectile vomit everywhere from some overzealous medibots, and some antitoxin making 170 units, it was waaay bad.
 				..()
 				return
 

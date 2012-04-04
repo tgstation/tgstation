@@ -280,7 +280,6 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 
 //	var/obj/effect/organstructure/organStructure = null //for dem organs
 	var/list/organs = list(  )	//List of organs.
-	var/list/organs2 = list()
 
 //Singularity wants you!
 	var/grav_delay = 0
@@ -312,7 +311,7 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 			//src.virus.cure(0)
 
 		var/datum/disease/v = new virus.type
-		src.viruses += v
+		viruses += v
 		v.affected_mob = src
 		v.strain_data = v.strain_data.Copy()
 		v.holder = src
@@ -320,7 +319,7 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 			v.carrier = 1
 		return
 
-	//if(src.virus) //
+	//if(virus) //
 		//return //
 
 
@@ -464,7 +463,7 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 		return
 	else*/
 		var/datum/disease/v = new virus.type
-		src.viruses += v
+		viruses += v
 		v.affected_mob = src
 		v.strain_data = v.strain_data.Copy()
 		v.holder = src

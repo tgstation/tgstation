@@ -22,6 +22,6 @@
 	else
 		usr << "The cover is closed."
 
-	print_flavor_text()
+	usr << print_flavor_text()
 
 	return

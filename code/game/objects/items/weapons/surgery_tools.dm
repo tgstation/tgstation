@@ -1286,22 +1286,22 @@ CIRCULAR SAW
 
 		switch(M:brain_op_stage)
 			if(0)
-				if(!istype(H))
+				if(!hasorgans(M))
 					return ..()
-				var/datum/organ/external/S = H.organs["head"]
+				var/datum/organ/external/S = M:organs["head"]
 				if(S.destroyed)
 					return
-				for(var/mob/O in viewers(H, null))
-					O.show_message(text("\red [H] gets \his [S.display_name] sawed at with [src] by [user].... It looks like [user] is trying to cut it off!"), 1)
+				for(var/mob/O in viewers(M, null))
+					O.show_message(text("\red [M] gets \his [S.display_name] sawed at with [src] by [user].... It looks like [user] is trying to cut it off!"), 1)
 				if(!do_after(user,rand(50,70)))
-					for(var/mob/O in viewers(H, null))
-						O.show_message(text("\red [user] tried to cut [H]'s [S.display_name] off with [src], but failed."), 1)
+					for(var/mob/O in viewers(M, null))
+						O.show_message(text("\red [user] tried to cut [M]'s [S.display_name] off with [src], but failed."), 1)
 					return
-				for(var/mob/O in viewers(H, null))
-					O.show_message(text("\red [H] gets \his [S.display_name] sawed off with [src] by [user]."), 1)
+				for(var/mob/O in viewers(M, null))
+					O.show_message(text("\red [M] gets \his [S.display_name] sawed off with [src] by [user]."), 1)
 				S.destroyed = 1
 				S.droplimb()
-				H.update_body()
+				M:update_body()
 			if(1.0)
 				if(istype(M, /mob/living/carbon/metroid))
 					return
@@ -1379,9 +1379,9 @@ CIRCULAR SAW
 				..()
 		return
 
-	else if(user.zone_sel.selecting != "chest" && istype(M, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = M
-		var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
+	else if(user.zone_sel.selecting != "chest" && hasorgans(M))
+		var/mob/living/carbon/H = M
+		var/datum/organ/external/S = H:organs[user.zone_sel.selecting]
 		if(S.destroyed)
 			return
 		for(var/mob/O in viewers(H, null))
@@ -1392,9 +1392,8 @@ CIRCULAR SAW
 			return
 		for(var/mob/O in viewers(H, null))
 			O.show_message(text("\red [H] gets \his [S.display_name] sawed off with [src] by [user]."), 1)
-		S.destroyed = 1
-		S.droplimb()
-		H.update_body()
+		S.droplimb(1)
+		H:update_body()
 	else
 		return ..()
 /*

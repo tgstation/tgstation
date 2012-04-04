@@ -108,6 +108,17 @@
 
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
+	if (user.hand)
+		if(ishuman(user))
+			var/datum/organ/external/temp = user:organs["l_hand"]
+			if(temp.destroyed)
+				user << "\blue Yo- wait a minute."
+				return
+	else
+		if(ishuman(user))
+			var/datum/organ/external/temp = user:organs["r_hand"]
+			if(temp.destroyed)
+				user << "\blue Yo- wait a minute."
 	if (istype(src.loc, /obj/item/weapon/storage))
 		for(var/mob/M in range(1, src.loc))
 			if (M.s_active == src.loc)
@@ -174,6 +185,18 @@
 		if(!A.has_fine_manipulation || w_class <= 4)
 			user << "Your claws aren't capable of such fine manipulation."
 			return
+
+	if (user.hand)
+		if(ismonkey(user))
+			var/datum/organ/external/temp = user:organs["l_hand"]
+			if(temp.destroyed)
+				user << "\blue Yo- wait a minute."
+				return
+	else
+		if(ismonkey(user))
+			var/datum/organ/external/temp = user:organs["r_hand"]
+			if(temp.destroyed)
+				user << "\blue Yo- wait a minute."
 
 	if (istype(src.loc, /obj/item/weapon/storage))
 		for(var/mob/M in range(1, src.loc))

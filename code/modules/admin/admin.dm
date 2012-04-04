@@ -78,6 +78,20 @@
 		var/datum/player_info/P = new
 		P.author = usr.key
 		P.content = add
+		var/modifyer = "th"
+		switch(time2text(world.timeofday, "DD"))
+			if("01","21","31")
+				modifyer = "st"
+			if("02","22",)
+				modifyer = "nd"
+			if("03","23")
+				modifyer = "rd"
+		var/day_string = "[time2text(world.timeofday, "DD")][modifyer]"
+		if(copytext(day_string,1,2) == "0")
+			day_string = copytext(day_string,2)
+		var/full_date = time2text(world.timeofday, "DDD, MMM DD of YYYY")
+		var/day_loc = findtext(full_date, time2text(world.timeofday, "DD"))
+		P.timestamp = "[copytext(full_date,1,day_loc)][day_string][copytext(full_date,day_loc+2)]"
 
 		infos += P
 
@@ -1871,6 +1885,7 @@
 /datum/player_info/var
 	author // admin who authored the information
 	content // text content of the information
+	timestamp // Because this is bloody annoying
 
 /obj/admins/proc/player_has_info(var/key as text)
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
@@ -1896,13 +1911,18 @@
 	if(!infos)
 		dat += "No information found on the given key.<br>"
 	else
+		var/update_file = 0
 		var/i = 0
 		for(var/datum/player_info/I in infos)
 			i += 1
-			dat += "<font color=#008800>[I.content]</font> <i>by [I.author]</i> "
+			if(!I.timestamp)
+				I.timestamp = "Pre-4/3/2012"
+				update_file = 1
+			dat += "<font color=#008800>[I.content]</font> <i>by [I.author]</i> on <i><font color=blue>[I.timestamp]</i></font> "
 			if(I.author == usr.key)
 				dat += "<A href='?src=\ref[src];remove_player_info=[key];remove_index=[i]'>Remove</A>"
 			dat += "<br><br>"
+		if(update_file) info << infos
 
 	dat += "<br>"
 	dat += "<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>"
@@ -1941,6 +1961,7 @@
 	if(!note_keys)
 		dat += "No notes found."
 	else
+		sortList(note_keys)
 		for(var/t in note_keys)
 			dat += text("<tr><td><A href='?src=\ref[src];view_player_info=[t]'>[t]</A></td></tr>")
 	dat += "</table>"

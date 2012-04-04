@@ -30,15 +30,6 @@
 			body_lying += DI
 
 
-/mob/living/carbon/human/proc/get_organ(var/zone)
-	if(!zone)	zone = "chest"
-	for(var/name in organs)
-		var/datum/organ/external/O = organs[name]
-		if(O.name == zone)
-			return O
-	return null
-
-
 /mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/sharp = 0, var/used_weapon = null)
 	if((damagetype != BRUTE) && (damagetype != BURN))
 		..(damage, damagetype, def_zone, blocked)

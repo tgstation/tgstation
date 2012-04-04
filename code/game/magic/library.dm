@@ -140,7 +140,7 @@
 		for(var/obj/item/weapon/book/b in src.contents)
 			books.Add(b)
 		if(books.len)
-			var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in books|null as obj|null
+			var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") as null|anything in books
 			if(choice)
 				choice.loc = src.loc
 			else

@@ -4,6 +4,7 @@
 		halloss = 0
 		// And the suffocation was a hallucination (lazy)
 		//oxyloss = 0
+		updatehealth()
 		return
 	if(src.stat == 2)
 		return

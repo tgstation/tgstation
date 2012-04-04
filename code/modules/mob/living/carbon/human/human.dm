@@ -60,6 +60,7 @@
 	var/bloodloss = 0
 	var/datum/reagents/vessel
 	var/pale = 0
+	var/examine_text = ""
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
@@ -75,26 +76,22 @@
 
 	if(!dna)	dna = new /datum/dna(null)
 
-	organs2 += new /datum/organ/external/chest(src)
-	organs2 += new /datum/organ/external/groin(src)
-	organs2 += new /datum/organ/external/head(src)
-	organs2 += new /datum/organ/external/l_arm(src)
-	organs2 += new /datum/organ/external/r_arm(src)
-	organs2 += new /datum/organ/external/r_leg(src)
-	organs2 += new /datum/organ/external/l_leg(src)
+	new /datum/organ/external/chest(src)
+	new /datum/organ/external/groin(src)
+	new /datum/organ/external/head(src)
+	new /datum/organ/external/l_arm(src)
+	new /datum/organ/external/r_arm(src)
+	new /datum/organ/external/r_leg(src)
+	new /datum/organ/external/l_leg(src)
 
 	var/datum/organ/external/part = new /datum/organ/external/l_hand(src)
 	part.parent = organs["l_arm"]
-	organs2 += part
 	part = new /datum/organ/external/l_foot(src)
 	part.parent = organs["l_leg"]
-	organs2 += part
 	part = new /datum/organ/external/r_hand(src)
 	part.parent = organs["r_arm"]
-	organs2 += part
 	part = new /datum/organ/external/r_foot(src)
 	part.parent = organs["r_leg"]
-	organs2 += part
 
 	var/g = "m"
 	if (gender == MALE)
@@ -325,7 +322,7 @@
 		if (1.0)
 			b_loss += 500
 			if (!prob(getarmor(null, "bomb")))
-				gib(1)
+				gib(1,1)
 				return
 			else
 				var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
@@ -981,7 +978,7 @@
 			var/icon/gloves_icon = new /icon("icon" = 'hands.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")))
 			if(lo.destroyed)
 				gloves_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
-			else if(ro.destroyed)
+			if(ro.destroyed)
 				gloves_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
 			overlays += image(gloves_icon, "layer" = MOB_LAYER)
 			if (gloves.blood_DNA)
@@ -2742,7 +2739,3 @@ It can still be worn/put on as normal.
 	else
 		reset_view(0)
 		remoteobserve = null
-
-/mob/living/carbon/human/proc/check_dna()
-	dna.check_integrity(src)
-	return

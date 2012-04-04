@@ -35,7 +35,7 @@
 				if(prob(src.getBruteLoss() - 50))
 					src.gib()
 
-/mob/living/carbon/gib(give_medal)
+/mob/living/carbon/gib(give_medal,ex_act)
 	for(var/mob/M in src)
 		if(M in src.stomach_contents)
 			src.stomach_contents.Remove(M)
@@ -43,9 +43,22 @@
 		for(var/mob/N in viewers(src, null))
 			if(N.client)
 				N.show_message(text("\red <B>[M] bursts out of [src]!</B>"), 2)
-	. = ..(give_medal)
+	. = ..(ex_act)
 
 /mob/living/carbon/attack_hand(mob/M as mob)
+	if (M.hand)
+		if(ishuman(M) || ismonkey(M))
+			var/datum/organ/external/temp = M:organs["l_hand"]
+			if(temp.destroyed)
+				M << "\red Yo- wait a minute."
+				return
+	else
+		if(ishuman(M) || ismonkey(M))
+			var/datum/organ/external/temp = M:organs["r_hand"]
+			if(temp.destroyed)
+				M << "\red Yo- wait a minute."
+				return
+
 	if(!istype(M, /mob/living/carbon)) return
 
 	for(var/datum/disease/D in viruses)
@@ -84,6 +97,18 @@
 
 /mob/living/carbon/attack_paw(mob/M as mob)
 	if(!istype(M, /mob/living/carbon)) return
+	if (M.hand)
+		if(ishuman(M) || ismonkey(M))
+			var/datum/organ/external/temp = M:organs["l_hand"]
+			if(temp.destroyed)
+				M << "\red Yo- wait a minute."
+				return
+	else
+		if(ishuman(M) || ismonkey(M))
+			var/datum/organ/external/temp = M:organs["r_hand"]
+			if(temp.destroyed)
+				M << "\red Yo- wait a minute."
+				return
 
 
 	for(var/datum/disease/D in viruses)
@@ -217,3 +242,15 @@
 		bruteloss += O.get_damage_brute()
 		fireloss += O.get_damage_fire()
 	return
+
+/mob/living/carbon/proc/check_dna()
+	dna.check_integrity(src)
+	return
+
+/mob/living/carbon/proc/get_organ(var/zone)
+	if(!zone)	zone = "chest"
+	for(var/name in organs)
+		var/datum/organ/external/O = organs[name]
+		if(O.name == zone)
+			return O
+	return null

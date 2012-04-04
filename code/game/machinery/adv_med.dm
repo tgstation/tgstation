@@ -247,7 +247,7 @@
 						var/infected = ""
 						var/imp = ""
 						var/bled = ""
-						if(e.wounds.len >= 1)
+						if(e.bleeding)
 							bled = "Bleeding:"
 						if(e.broken)
 							AN = "[e.wound]:"
@@ -264,7 +264,7 @@
 						dat += "</tr>"
 					dat += "</table>"
 			else
-				dat += "The sleeper is empty."
+				dat += "\The [src] is empty."
 		else
 			dat = "<font color='red'> Error: No Body Scanner connected.</font>"
 	dat += text("<BR><BR><A href='?src=\ref[];mach_close=scanconsole'>Close</A>", user)
