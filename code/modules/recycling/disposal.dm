@@ -507,12 +507,27 @@
 	var/has_fat_guy = 0	// true if contains a fat person
 	var/destinationTag = 0 // changes if contains a delivery container
 	var/tomail = 0 //changes if contains wrapped package
+	var/hasmob = 0 //If it contains a mob
 
 
 	// initialize a holder from the contents of a disposal unit
 	proc/init(var/obj/machinery/disposal/D)
 		if(!istype(D, /obj/machinery/disposal/toilet))//So it does not drain gas from a toilet which does not function on it.
 			gas = D.air_contents// transfer gas resv. into holder object
+
+		//Check for any living mobs trigger hasmob.
+		//hasmob effects whether the package goes to cargo or its tagged destination.
+		for(var/mob/living/M in D)
+			if(M && M.stat != 2)
+				hasmob = 1
+
+		//Checks 1 contents level deep. This means that players can be sent through disposals...
+		//...but it should require a second person to open the package. (i.e. person inside a wrapped locker)
+		for(var/obj/O in D)
+			if(O.contents)
+				for(var/mob/living/M in O.contents)
+					if(M && M.stat != 2)
+						hasmob = 1
 
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs
@@ -522,10 +537,10 @@
 				var/mob/living/carbon/human/H = AM
 				if(H.mutations & FAT)		// is a human and fat?
 					has_fat_guy = 1			// set flag on holder
-			if(istype(AM, /obj/effect/bigDelivery))
+			if(istype(AM, /obj/effect/bigDelivery) && !hasmob)
 				var/obj/effect/bigDelivery/T = AM
 				src.destinationTag = T.sortTag
-			if(istype(AM, /obj/item/smallDelivery))
+			if(istype(AM, /obj/item/smallDelivery) && !hasmob)
 				var/obj/item/smallDelivery/T = AM
 				src.destinationTag = T.sortTag
 
