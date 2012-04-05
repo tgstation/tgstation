@@ -199,14 +199,14 @@
 	while(Li <= L.len && Ri <= R.len)
 		if(sorttext(L[Li], R[Ri]) < 1)
 			var/item = R[Ri++]
-			if(R[item])
+			if(istext(item) && !isnull(R[item]))
 				result[item] = R[item]
 			else
 				result += item
 
 		else
 			var/item = L[Li++]
-			if(L[item])
+			if(istext(item) && !isnull(L[item]))
 				result[item] = L[item]
 			else
 				result += item

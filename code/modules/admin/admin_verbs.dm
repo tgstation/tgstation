@@ -141,6 +141,7 @@
 			verbs += /client/proc/callprocgen
 			verbs += /client/proc/callprocobj
 			verbs += /client/proc/rnd_check_designs
+			verbs += /client/proc/CarbonCopy
 
 		if (holder.level >= 5)//Game Admin********************************************************************
 			verbs += /obj/admins/proc/view_txt_log
@@ -181,6 +182,7 @@
 			verbs += /client/proc/Force_Event_admin
 			verbs += /client/proc/radioalert
 			verbs += /client/proc/make_tajaran
+			verbs += /client/proc/CarbonCopy
 
 		if (holder.level >= 4)//Badmin********************************************************************
 			verbs += /obj/admins/proc/adrev					//toggle admin revives
@@ -428,6 +430,7 @@
 	verbs -= /client/proc/radioalert
 	verbs -= /client/proc/rnd_check_designs
 	verbs -= /client/proc/make_tajaran
+	verbs -= /client/proc/CarbonCopy
 
 	return
 
@@ -892,3 +895,11 @@
 		var/obj/item/device/radio/intercom/a = new /obj/item/device/radio/intercom(null)
 		a.autosay(message,from)
 		del(a)
+
+/client/proc/CarbonCopy(atom/movable/O as mob|obj in world)
+	set category = "Admin"
+	var/mob/NewObj = new O.type(usr.loc)
+	for(var/V in O.vars)
+		if (issaved(O.vars[V]))
+			NewObj.vars[V] = O.vars[V]
+	return NewObj

@@ -88,9 +88,9 @@ client/verb/Toggle_Soundscape() //All new ambience should be added here so it wo
 		if (!A:client) return
 		//if (A:ear_deaf) return
 
-		if (A && A:client && !A:client:ambience_playing && !A:client:no_ambi) // Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas next to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
-			A:client:ambience_playing = 1
-			A << sound('shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
+//		if (A && A:client && !A:client:ambience_playing && !A:client:no_ambi) // Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas next to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
+//			A:client:ambience_playing = 1
+//			A << sound('shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
 
 		switch(src.name)
 			if ("Chapel") sound = pick('ambicha1.ogg','ambicha2.ogg','ambicha3.ogg','ambicha4.ogg')

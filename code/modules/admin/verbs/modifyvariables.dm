@@ -163,6 +163,11 @@
 	if(!variable)
 		return
 
+	var/associative
+	if(istext(variable) && !isnull(L[variable]))
+		associative = variable
+		variable = L[variable]
+
 	var/default
 
 	var/dir
@@ -252,13 +257,19 @@
 			mod_list(variable)
 
 		if("restore to default")
-			variable = initial(variable)
+			if(associative)
+				L[associative] = initial(L[associative])
+			else
+				variable = initial(variable)
 
 		if("edit referenced object")
 			modify_variables(variable)
 
 		if("(DELETE FROM LIST)")
-			L -= variable
+			if(associative)
+				L.Remove(associative)
+				return
+			L.Remove(variable)
 			return
 
 		if("text")
@@ -306,6 +317,9 @@
 
 		if("marked datum")
 			variable = holder.marked_datum
+
+	if(associative)
+		L[associative] = variable
 
 /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
 	var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "cuffed", "ka", "last_eaten", "urine", "poo", "icon", "icon_state")
