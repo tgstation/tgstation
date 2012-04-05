@@ -20,7 +20,7 @@ datum/shuttle_controller
 		fake_recall = 0 //Used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
 		deny_shuttle = 0 //for admins not allowing it to be called.
 		departed = 0
-		sound_siren = 1 //if siren should go off
+	//	sound_siren = 1 //if siren should go off  //People hat it :(
 	// call the shuttle
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
@@ -38,7 +38,7 @@ datum/shuttle_controller
 		for(var/area/A in world)
 			if(istype(A, /area/hallway))
 				A.readyalert()
-		sound_siren = 1
+		//sound_siren = 1
 
 
 
@@ -56,7 +56,7 @@ datum/shuttle_controller
 			for(var/area/A in world)
 				if(istype(A, /area/hallway))
 					A.readyreset()
-			sound_siren = 0
+		//	sound_siren = 0
 
 
 	// returns the time (in seconds) before shuttle arrival
@@ -95,11 +95,11 @@ datum/shuttle_controller
 			var/timeleft = timeleft()
 			if(timeleft > 1e5)		// midnight rollover protection
 				timeleft = 0
-			if (sound_siren && (direction == 1))	//playing siren every 90 seconds
-				sound_siren = 0
-				world << sound('siren.ogg')
-				spawn(900)
-					sound_siren = 1
+		//	if (sound_siren && (direction == 1))	//playing siren every 90 seconds
+		//		sound_siren = 0						//No siren, people hat it
+		//		world << sound('siren.ogg')
+		//		spawn(900)
+		//			sound_siren = 1
 			switch(location)
 				if(0)
 					if(timeleft>timelimit)
