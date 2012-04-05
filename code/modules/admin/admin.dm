@@ -89,7 +89,7 @@
 		var/day_string = "[time2text(world.timeofday, "DD")][modifyer]"
 		if(copytext(day_string,1,2) == "0")
 			day_string = copytext(day_string,2)
-		var/full_date = time2text(world.timeofday, "DDD, MMM DD of YYYY")
+		var/full_date = time2text(world.timeofday, "DDD, Month DD of YYYY")
 		var/day_loc = findtext(full_date, time2text(world.timeofday, "DD"))
 		P.timestamp = "[copytext(full_date,1,day_loc)][day_string][copytext(full_date,day_loc+2)]"
 
