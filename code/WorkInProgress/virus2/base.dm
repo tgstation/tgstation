@@ -331,9 +331,9 @@ proc/airborne_can_reach(turf/source, turf/target)
 /datum/disease2/effect/greater/radian
 	name = "Radian's syndrome"
 	stage = 4
-	maxm = 3
+	maxm = 2
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.radiation += (2*multiplier)
+		mob.radiation += (20*multiplier)
 
 /datum/disease2/effect/greater/toxins
 	name = "Hyperacid Syndrome"
@@ -355,11 +355,28 @@ proc/airborne_can_reach(turf/source, turf/target)
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		shake_camera(mob,5*multiplier)
 
-/datum/disease2/effect/greater/deaf
-	name = "Hard of hearing syndrome"
+/datum/disease2/effect/greater/fever
+	name = "Fever syndrome"
 	stage = 4
+	maxm = 2
 	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.ear_deaf += 20
+		mob.adjustFireLoss(10 * multiplier)
+
+/datum/disease2/effect/greater/weak_bones
+	name = "Bone Density Syndrome"
+	stage = 4
+	maxm = 2
+	activate(var/mob/living/carbon/mob,var/multiplier)
+		var/name = pick(mob.organs)
+		var/datum/organ/external/organ = mob.organs[name]
+
+		if(!organ.broken)
+			mob.adjustBruteLoss(10)
+			mob.visible_message("\red You hear a loud cracking sound coming from [mob.name].","\red <b>Something feels like it shattered in your [organ.display_name]!</b>","You hear a sickening crack.")
+			mob.emote("scream")
+			organ.broken = 1
+			organ.wound = pick("broken","fracture","hairline fracture") //Randomise in future.  Edit: Randomized. --SkyMarshal
+			organ.perma_injury = 10
 
 /datum/disease2/effect/invisible
 	name = "Waiting Syndrome"
@@ -372,14 +389,6 @@ proc/airborne_can_reach(turf/source, turf/target)
 	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.mutations |= 512
-
-/*/datum/disease2/effect/greater/noface
-	name = "Identity Loss syndrome"
-	stage = 4
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.face_dmg++
-	deactivate(var/mob/living/carbon/mob)
-		mob.face_dmg--*/
 
 /datum/disease2/effect/greater/monkey
 	name = "Monkism syndrome"
@@ -438,18 +447,6 @@ proc/airborne_can_reach(turf/source, turf/target)
 	stage = 3
 	activate(var/mob/living/carbon/mob,var/multiplier)
 		mob.setBrainLoss(50)
-
-/datum/disease2/effect/greater/suicide
-	name = "Suicidal syndrome"
-	stage = 4
-	activate(var/mob/living/carbon/mob,var/multiplier)
-		mob.suiciding = 1
-		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
-		viewers(mob) << "\red <b>[mob.name] is holding \his breath. It looks like \he's trying to commit suicide.</b>"
-		mob.adjustOxyLoss(175 - mob.getToxLoss() - mob.getFireLoss() - mob.getBruteLoss() - mob.getOxyLoss())
-		mob.updatehealth()
-		spawn(200) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
-			mob.suiciding = 0
 
 // lesser syndromes, partly just copypastes
 /datum/disease2/effect/lesser/hallucinations
