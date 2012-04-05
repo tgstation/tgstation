@@ -142,6 +142,7 @@
 		W.sd_SetOpacity(0)
 		//This is probably gonna make lighting go a bit wonky in bombed areas, but sd_SetOpacity was the primary reason bombs have been so laggy. --NEO
 	W.levelupdate()
+	air_master.tiles_to_update += W
 	return W
 
 /turf/proc/ReplaceWithPlating()
@@ -158,6 +159,7 @@
 	W.opacity = 1
 	W.sd_SetOpacity(0)
 	W.levelupdate()
+	air_master.tiles_to_update += W
 	return W
 
 /turf/proc/ReplaceWithEngineFloor()
@@ -170,6 +172,7 @@
 	E.dir = old_dir
 	E.icon_state = "engine"
 	E.levelupdate()
+	air_master.tiles_to_update += E
 	return E
 
 /turf/simulated/Entered(atom/A, atom/OL)
@@ -231,6 +234,7 @@
 	var/old_dir = dir
 	var/turf/space/S = new /turf/space( locate(src.x, src.y, src.z) )
 	S.dir = old_dir
+	air_master.tiles_to_update += S
 	return S
 
 /turf/proc/ReplaceWithLattice()
@@ -238,6 +242,7 @@
 	var/turf/space/S = new /turf/space( locate(src.x, src.y, src.z) )
 	S.dir = old_dir
 	new /obj/structure/lattice( locate(src.x, src.y, src.z) )
+	air_master.tiles_to_update += S
 	return S
 
 /turf/proc/ReplaceWithWall()
@@ -247,6 +252,7 @@
 	S.opacity = 0
 	S.sd_NewOpacity(1)
 	levelupdate()
+	air_master.tiles_to_update += S
 	return S
 
 /turf/proc/ReplaceWithRWall()
@@ -256,6 +262,7 @@
 	S.opacity = 0
 	S.sd_NewOpacity(1)
 	levelupdate()
+	air_master.tiles_to_update += S
 	return S
 
 /turf/simulated/wall/New()

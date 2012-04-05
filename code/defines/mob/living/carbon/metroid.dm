@@ -19,6 +19,11 @@
 
 	see_in_dark = 8
 
+	// canstun and canweaken don't affect metroids because they ignore stun and weakened variables
+	// for the sake of cleanliness, though, here they are.
+	canstun = 0
+	canweaken = 0
+
 	var/amount_grown = 0// controls how long the metroid has been overfed, if 10, grows into an adult
 		// if adult: if 10: reproduces
 	var/powerlevel = 0 	// 1-10 controls how much electricity they are generating

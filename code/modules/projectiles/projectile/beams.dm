@@ -47,6 +47,15 @@
 		spawn(0)
 			del(src)
 
+/obj/item/projectile/beam/practice
+	name = "laser"
+	icon_state = "laser"
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	damage = 0
+	damage_type = BURN
+	flag = "laser"
+	eyeblur = 2
+
 /obj/item/projectile/beam/heavylaser
 	name = "\improper Heavy Laser"
 	icon_state = "heavylaser"

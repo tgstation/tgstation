@@ -1,3 +1,21 @@
+/obj/machinery/door
+	name = "Door"
+	desc = "It opens and closes."
+	icon = 'doorint.dmi'
+	icon_state = "door1"
+	opacity = 1
+	density = 1
+	layer = 2.7
+	anchored = 1
+	var/secondsElectrified = 0
+	var/visible = 1
+	var/p_open = 0
+	var/operating = 0
+	var/autoclose = 0
+	var/glass = 0
+	var/forcecrush = 0
+	var/holdopen = 0
+
 /obj/machinery/door/Bumped(atom/AM)
 	if(p_open || operating) return
 	if(ismob(AM))

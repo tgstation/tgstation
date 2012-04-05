@@ -42,7 +42,7 @@
 
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
-		if(stat & BROKEN)
+		if(stat & BROKEN || !I || !user)
 			return
 
 		//robots shouldn't be able to grab/carry stuff anyway
@@ -517,6 +517,9 @@
 		return
 
 	interact(mob/user)
+		if(isAI(user) || isrobot(user))
+			return
+
 		add_fingerprint(user)
 		for (var/mob/V in viewers(user))
 			V.show_message("[user] eagerly drinks the toilet water!", 3)//Yum yum yum

@@ -78,6 +78,7 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_eng(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
+		H.equip_if_possible(new /obj/item/weapon/storage/box/engineer(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/atmospheric_technician(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/engineering(H), H.slot_belt)

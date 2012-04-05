@@ -36,7 +36,7 @@
 			if(M.virus2)
 				M.virus2.cure_added(resistance)
 		else if(works == 1)
-			M.toxloss += 60
+			M.adjustToxLoss(60)
 		else if(works == 2)
 			M.gib()
 		else if(works == 3)

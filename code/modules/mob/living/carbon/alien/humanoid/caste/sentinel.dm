@@ -92,13 +92,16 @@
 		if(src.resting)
 			Weaken(5)
 
+		if(move_delay_add > 0)
+			move_delay_add = max(0, move_delay_add - rand(1, 2))
+
 		if(health < config.health_threshold_dead || src.brain_op_stage == 4.0)
 			death()
 		else if(src.health < config.health_threshold_crit)
 			if(src.health <= 20 && prob(1)) spawn(0) emote("gasp")
 
 			//if(!src.rejuv) src.oxyloss++
-			if(!src.reagents.has_reagent("inaprovaline")) src.oxyloss++
+			if(!src.reagents.has_reagent("inaprovaline")) src.adjustOxyLoss(1)
 
 			if(src.stat != 2)	src.stat = 1
 			Paralyse(5)

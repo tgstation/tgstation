@@ -25,7 +25,17 @@
 	relaymove(var/mob/user, direction)
 		if(can_move)
 			can_move = 0
-			spawn(10) can_move = 1
+			switch(usr.bodytemperature)
+				if(300 to INFINITY)
+					spawn(10) can_move = 1
+				if(295 to 300)
+					spawn(13) can_move = 1
+				if(280 to 295)
+					spawn(16) can_move = 1
+				if(260 to 280)
+					spawn(20) can_move = 1
+				else
+					spawn(25) can_move = 1
 			step(src,direction)
 		return
 

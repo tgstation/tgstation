@@ -84,7 +84,7 @@
 				for(var/mob/O in viewers(src,7))
 					O << "\red \b [target.name] deftly parries the attack with [target.l_hand.name]!"
 					return
-	target.bruteloss -= src.force
+	target.adjustBruteLoss(-src.force)
 
 	var/modifier_knockdown = 1.0
 	var/modifier_knockout = 1.0

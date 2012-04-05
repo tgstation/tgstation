@@ -79,7 +79,6 @@ datum/controller/game_controller
 
 		if(!processing)
 			return 0
-		//world << "Processing"
 		controllernum = "yes"
 		spawn (100) controllernum = "no"
 
@@ -114,7 +113,6 @@ datum/controller/game_controller
 		sleep(1)
 
 		for(var/obj/object in processing_objects)
-//			spawn(0)Still need to test the spawn ticker
 			object.process()
 
 		for(var/datum/pipe_network/network in pipe_networks)

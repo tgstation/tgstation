@@ -50,8 +50,9 @@ FLOOR TILES
 		usr << "\blue Assembling grille..."
 		if (!do_after(usr, 10))
 			return
-		new /obj/structure/grille( usr.loc )
+		var/obj/structure/grille/F = new /obj/structure/grille/ ( usr.loc )
 		usr << "\blue You assemble a grille"
+		F.add_fingerprint(usr)
 		use(2)
 	return
 

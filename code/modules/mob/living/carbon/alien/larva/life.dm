@@ -274,7 +274,7 @@
 				if(health >= 25)
 					adjustToxLoss(5)
 				else
-					bruteloss -= 5
+					adjustBruteLoss(-5)
 					adjustFireLoss(-5)
 
 			return
@@ -332,13 +332,16 @@
 			if(resting)
 				Weaken(5)
 
+			if(move_delay_add > 0)
+				move_delay_add = max(0, move_delay_add - rand(1, 2))
+
 			if(health < config.health_threshold_dead || brain_op_stage == 4.0)
 				death()
 			else if(health < config.health_threshold_crit)
 				if(health <= 20 && prob(1)) spawn(0) emote("gasp")
 
 				//if(!rejuv) oxyloss++
-				if(!reagents.has_reagent("inaprovaline")) oxyloss++
+				if(!reagents.has_reagent("inaprovaline")) adjustOxyLoss(1)
 
 				if(stat != 2)	stat = 1
 				Paralyse(5)
@@ -514,5 +517,5 @@
 							continue
 						if(air_master.current_cycle%3==1)
 							if(!M.nodamage)
-								M.bruteloss += 5
+								M.adjustBruteLoss(5)
 							nutrition += 10

@@ -780,11 +780,11 @@
 			return 0
 	var/mob/living/carbon/human/H = user
 	if (istype(H))
-		if(H.brainloss >= 60)
+		if(H.getBrainLoss() >= 60)
 			for(var/mob/M in viewers(src, null))
 				M << "\red [H] stares cluelessly at [src] and drools."
 			return 0
-		else if(prob(H.brainloss))
+		else if(prob(H.getBrainLoss()))
 			user << "\red You momentarily forget how to use [src]."
 			return 0
 	return 1

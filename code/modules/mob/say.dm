@@ -29,7 +29,6 @@
 			alt_name = " (died as [src.real_name])"
 
 	message = src.say_quote(message)
-
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
 
 	for (var/mob/M in world)
@@ -60,7 +59,7 @@
 		return "stammers, \"[text]\"";
 	if (src.slurring)
 		return "slurrs, \"[text]\"";
-	if (src.brainloss >= 60)
+	if (src.getBrainLoss() >= 60)
 		return "gibbers, \"[text]\"";
 	if (ending == "?")
 		return "asks, \"[text]\"";

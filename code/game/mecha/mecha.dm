@@ -1247,8 +1247,8 @@
 		if(hasInternalDamage(intdamflag))
 			output += dam_reports[tflag]
 			output += "<br />"
-/*	if(return_pressure() > WARNING_HIGH_PRESSURE)
-		output += "<font color='red'><b>DANGEROUSLY HIGH CABIN PRESSURE</b></font><br />"*/
+	if(return_pressure() > WARNING_HIGH_PRESSURE)
+		output += "<font color='red'><b>DANGEROUSLY HIGH CABIN PRESSURE</b></font><br />"
 	return output
 
 
@@ -1257,7 +1257,7 @@
 	var/cell_charge = get_charge()
 	var/tank_pressure = internal_tank ? round(internal_tank.return_pressure(),0.01) : "None"
 	var/tank_temperature = internal_tank ? internal_tank.return_temperature() : "Unknown"
-//	var/cabin_pressure = round(return_pressure(),0.01)
+	var/cabin_pressure = round(return_pressure(),0.01)
 	var/output = {"[report_internal_damage()]
 						[integrity<30?"<font color='red'><b>DAMAGE LEVEL CRITICAL</b></font><br>":null]
 						<b>Integrity: </b> [integrity]%<br>
@@ -1265,6 +1265,7 @@
 						<b>Air source: </b>[use_internal_tank?"Internal Airtank":"Environment"]<br>
 						<b>Airtank pressure: </b>[tank_pressure]kPa<br>
 						<b>Airtank temperature: </b>[tank_temperature]&deg;K|[tank_temperature - T0C]&deg;C<br>
+						<b>Cabin pressure: </b>[cabin_pressure>WARNING_HIGH_PRESSURE ? "<font color='red'>[cabin_pressure]</font>": cabin_pressure]kPa<br>
 						<b>Cabin temperature: </b> [return_temperature()]&deg;K|[return_temperature() - T0C]&deg;C<br>
 						<b>Lights: </b>[lights?"on":"off"]<br>
 						[src.dna?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[src.dna]</span> \[<a href='?src=\ref[src];reset_dna=1'>Reset</a>\]<br>":null]

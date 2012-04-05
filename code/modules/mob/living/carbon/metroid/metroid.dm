@@ -174,7 +174,7 @@
 		if(3.0)
 			b_loss += 30
 
-	bruteloss += b_loss
+	adjustBruteLoss(b_loss)
 	adjustFireLoss(f_loss)
 
 	updatehealth()
@@ -214,7 +214,7 @@
 		if ((M.client && !( M.blinded )))
 			M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (health > 0)
-		bruteloss += (istype(O, /obj/effect/meteor/small) ? 10 : 25)
+		adjustBruteLoss((istype(O, /obj/effect/meteor/small) ? 10 : 25))
 		adjustFireLoss(30)
 
 		updatehealth()
@@ -341,12 +341,23 @@
 		else
 			damage = rand(1, 3)
 
-		bruteloss += damage
+		adjustBruteLoss(damage)
 
 
 		updatehealth()
 
 	return
+
+
+/mob/living/carbon/metroid/attack_animal(mob/living/simple_animal/M as mob)
+	if(M.melee_damage_upper == 0)
+		M.emote("[M.friendly] [src]")
+	else
+		for(var/mob/O in viewers(src, null))
+			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		adjustBruteLoss(damage)
+		updatehealth()
 
 /mob/living/carbon/metroid/attack_paw(mob/living/carbon/monkey/M as mob)
 	if(!(istype(M, /mob/living/carbon/monkey)))	return//Fix for aliens receiving double messages when attacking other aliens.
@@ -531,7 +542,7 @@
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has [attack_verb]ed []!</B>", M, src), 1)
 
-				bruteloss += damage
+				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				if(M.type != /mob/living/carbon/human/tajaran)
@@ -575,7 +586,7 @@
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has wounded [name]!</B>", M), 1)
-				bruteloss += damage
+				adjustBruteLoss(damage)
 				updatehealth()
 			else
 				playsound(loc, 'slashmiss.ogg', 25, 1, -1)
@@ -638,7 +649,7 @@
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
-			bruteloss += damage
+			adjustBruteLoss(damage)
 			updatehealth()
 	return
 

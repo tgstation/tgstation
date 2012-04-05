@@ -67,7 +67,7 @@ PE|PE|PE
 
 
 	examine()
-		set src in usr
+		set src in oview(1)
 		switch(src.construction_state)
 			if(0)
 				src.desc = text("Part of a Particle Accelerator, looks like its not attached to the flooring")
@@ -86,6 +86,35 @@ PE|PE|PE
 			if(src.process_tool_hit(W,user))
 				return
 		..()
+		return
+
+
+	ex_act(severity)
+		switch(severity)
+			if(1.0)
+				del(src)
+				return
+			if(2.0)
+				if (prob(50))
+					del(src)
+					return
+			if(3.0)
+				if (prob(25))
+					del(src)
+					return
+			else
+		return
+
+
+	blob_act()
+		if(prob(50))
+			del(src)
+		return
+
+
+	meteorhit()
+		if(prob(50))
+			del(src)
 		return
 
 
@@ -161,15 +190,16 @@ PE|PE|PE
 			if(temp_state == src.construction_state)//Nothing changed
 				return 0
 			else
-				if(src.construction_state >= 3)//Was taken apart, update state
-					update_state()
 				src.construction_state = temp_state
+				if(src.construction_state < 3)//Was taken apart, update state
+					update_state()
 				update_icon()
 				return 1
 			return 0
 
 
-/obj/machinery/particle_accelerator/
+
+/obj/machinery/particle_accelerator
 	name = "Particle Accelerator"
 	desc = "Part of a Particle Accelerator."
 	icon = 'particle_accelerator.dmi'
@@ -215,6 +245,34 @@ PE|PE|PE
 			if(src.process_tool_hit(W,user))
 				return
 		..()
+		return
+
+	ex_act(severity)
+		switch(severity)
+			if(1.0)
+				del(src)
+				return
+			if(2.0)
+				if (prob(50))
+					del(src)
+					return
+			if(3.0)
+				if (prob(25))
+					del(src)
+					return
+			else
+		return
+
+
+	blob_act()
+		if(prob(50))
+			del(src)
+		return
+
+
+	meteorhit()
+		if(prob(50))
+			del(src)
 		return
 
 
@@ -266,7 +324,7 @@ PE|PE|PE
 			if(temp_state == src.construction_state)//Nothing changed
 				return 0
 			else
-				if(src.construction_state >= 3)//Was taken apart, update state
+				if(src.construction_state < 3)//Was taken apart, update state
 					update_state()
 					if(use_power)
 						use_power = 0

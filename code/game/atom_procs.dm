@@ -50,8 +50,6 @@
 /atom/proc/attack_metroid(mob/user as mob)
 	return
 
-
-
 /atom/proc/hand_h(mob/user as mob)			//human (hand) - restrained
 	return
 
@@ -88,6 +86,30 @@
 					O << text("\red <B>[] has been hit by [] with []</B>", src, user, W)
 	return
 
+/atom/proc/add_hiddenprint(mob/living/M as mob)
+	if(isnull(M)) return
+	if(isnull(M.key)) return
+	if (!( src.flags ) & 256)
+		return
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if (!istype(H.dna, /datum/dna))
+			return 0
+		if (H.gloves)
+			if(src.fingerprintslast != H.key)
+				src.fingerprintshidden += text("\[[time_stamp()]\] (Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
+				src.fingerprintslast = H.key
+			return 0
+		if (!( src.fingerprints ))
+			if(src.fingerprintslast != H.key)
+				src.fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",H.real_name, H.key)
+				src.fingerprintslast = H.key
+			return 1
+	else
+		if(src.fingerprintslast != M.key)
+			src.fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",M.real_name, M.key)
+			src.fingerprintslast = M.key
+	return
 
 /atom/proc/add_fingerprint(mob/living/M as mob)
 	if(isnull(M)) return

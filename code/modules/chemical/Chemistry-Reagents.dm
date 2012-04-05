@@ -437,7 +437,7 @@ datum
 						M:drowsyness  = max(M:drowsyness, 20)
 					if(25 to INFINITY)
 						M.sleeping = 1
-						M.oxyloss = 0
+						M.adjustOxyLoss(-M.getOxyLoss())
 						M.SetWeakened(0)
 						M.SetStunned(0)
 						M.SetParalysis(0)
@@ -1353,7 +1353,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom ///This can even heal dead people.
-				M.cloneloss = 0
+				M.setCloneLoss(0)
 				M.setOxyLoss(0)
 				M.radiation = 0
 				M.heal_organ_damage(5,5)
@@ -1380,7 +1380,7 @@ datum
 					holder.remove_reagent("carpotoxin", 5)
 				if(holder.has_reagent("zombiepowder"))
 					holder.remove_reagent("zombiepowder", 5)
-				M.brainloss = 0
+				M.setBrainLoss(0)
 				M.disabilities = 0
 				M.eye_blurry = 0
 				M.eye_blind = 0
