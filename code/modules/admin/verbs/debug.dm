@@ -366,20 +366,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	message_admins("[key_name_admin(src)] has turned the experimental radio system [GLOBAL_RADIO_TYPE ? "on" : "off"].", 0)
 
 
-/client/proc/cmd_admin_ticklag()
-	set category = "Debug"
-	set name = "Set Ticklag"
-	set desc = "Sets a new tick lag. Recommend you don't mess with this too much! Stable, time-tested ticklag value is 0.9"
-
-	var/newtick = input("Sets a new tick lag. Recommend you don't mess with this too much! Stable, time-tested ticklag value is 0.9",, 0.9) as num|null
-	if(newtick)
-		if(newtick <= 1 && newtick >= 0)
-			log_admin("[key_name(src)] has modified world.tick_lag to [newtick]", 0)
-			message_admins("[key_name(src)] has modified world.tick_lag to [newtick]", 0)
-
-			world.tick_lag = newtick
-
-
 /client/proc/cmd_admin_dress(var/mob/living/carbon/human/M in world)
 	set category = "Fun"
 	set name = "Select equipment"
