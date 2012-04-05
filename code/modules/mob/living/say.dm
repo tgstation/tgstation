@@ -133,8 +133,8 @@
 		//world << "channel_prefix=[channel_prefix]; message_mode=[message_mode]"
 		if (message_mode)
 			message = trim(copytext(message, 3))
-			//if (!ishuman(src) && (message_mode=="department" || (message_mode in radiochannels)))
-			//	message_mode = null //only humans can use headsets
+			if (!(ishuman(src) || istype(src, /mob/living/simple_animal)) && (message_mode=="department" || (message_mode in radiochannels)))
+				message_mode = null //only humans can use headsets
 			// Check removed so parrots can use headsets!
 
 	if (!message)

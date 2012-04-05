@@ -16,7 +16,7 @@
 	response_disarm = "gently moves aside the"
 	response_harm   = "swats the"
 
-	var/obj/item/device/radio/headset/ears = new /obj/item/device/radio/headset/heads/ce()
+	ears = new /obj/item/device/radio/headset/heads/ce()
 
 /mob/living/simple_animal/parrot/DrProfessor
 	name = "Doctor Professor Parrot, PhD"
