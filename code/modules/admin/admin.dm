@@ -29,7 +29,7 @@
 					if ((!( ticker ) || emergency_shuttle.location))
 						return
 					emergency_shuttle.incall()
-					world << "\blue <B>Alert: The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"
+					station_announce("ALERT","The emergency shuttle has been called. It will arrive in [emergency_shuttle.timeleft()] seconds.")
 					log_admin("[key_name(usr)] called the Emergency Shuttle")
 					message_admins("\blue [key_name_admin(usr)] called the Emergency Shuttle to the station", 1)
 
@@ -39,12 +39,12 @@
 					switch(emergency_shuttle.direction)
 						if(-1)
 							emergency_shuttle.incall()
-							world << "\blue <B>Alert: The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"
+							station_announce("ALERT","The emergency shuttle has been called. It will arrive in [emergency_shuttle.timeleft()] seconds.")
 							log_admin("[key_name(usr)] called the Emergency Shuttle")
 							message_admins("\blue [key_name_admin(usr)] called the Emergency Shuttle to the station", 1)
 						if(1)
 							emergency_shuttle.recall()
-							world << "\blue <B>Alert: The shuttle is going back!</B>"
+							station_announce("ALERT","The emergency shuttle has been called. It will arrive in [emergency_shuttle.timeleft()] seconds.")
 							log_admin("[key_name(usr)] sent the Emergency Shuttle back")
 							message_admins("\blue [key_name_admin(usr)] sent the Emergency Shuttle back", 1)
 
@@ -56,6 +56,7 @@
 	if(href_list["edit_shuttle_time"])
 		if (src.rank in list("Badmin", "Game Admin", "Game Master"))
 			emergency_shuttle.settimeleft( input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", emergency_shuttle.timeleft() ) as num )
+			station_announce("ALERT","The emergency shuttle will arrive in [emergency_shuttle.timeleft()] seconds.")
 			log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [emergency_shuttle.timeleft()]")
 			message_admins("\blue [key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [emergency_shuttle.timeleft()]", 1)
 			href_list["secretsadmin"] = "check_antagonist"

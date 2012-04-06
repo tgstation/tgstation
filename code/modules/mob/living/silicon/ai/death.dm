@@ -34,7 +34,7 @@
 		emergency_shuttle.incall(2)
 		log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 		message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
-		world << "\blue <B>Alert: The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"
+		station_announce("ALERT","Communication with Centcomm is failing. The emergency shuttle has been called. It will arrive in [emergency_shuttle.timeleft()] seconds.")
 		world << sound('shuttlecalled.ogg')
 
 	if(explosive)

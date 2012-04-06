@@ -34,11 +34,11 @@
 					if (src.auth_need - src.authorized.len > 0)
 						message_admins("[key_name_admin(user)] has authorized early shuttle launch")
 						log_game("[user.ckey] has authorized early shuttle launch")
-						world << text("\blue <B>Alert: [] authorizations needed until shuttle is launched early</B>", src.auth_need - src.authorized.len)
+						station_announce("ALERT","[src.auth_need - src.authorized.len] authorizations needed until shuttle is launched early.")
 					else
 						message_admins("[key_name_admin(user)] has launched the shuttle")
 						log_game("[user.ckey] has launched the shuttle early")
-						world << "\blue <B>Alert: Shuttle launch time shortened to 10 seconds!</B>"
+						station_announce("ALERT","Shuttle launch time shortened to 10 seconds!")
 						emergency_shuttle.settimeleft(10)
 						//src.authorized = null
 						del(src.authorized)
@@ -46,10 +46,10 @@
 
 				if("Repeal")
 					src.authorized -= W:registered
-					world << text("\blue <B>Alert: [] authorizations needed until shuttle is launched early</B>", src.auth_need - src.authorized.len)
+					station_announce("ALERT","[src.auth_need - src.authorized.len] authorizations needed until shuttle is launched early.")
 
 				if("Abort")
-					world << "\blue <B>All authorizations to shorting time for shuttle launch have been revoked!</B>"
+					station_announce("ALERT","All authorizations to shorting time for shuttle launch have been revoked!")
 					src.authorized.len = 0
 					src.authorized = list(  )
 
@@ -57,7 +57,7 @@
 			var/choice = alert(user, "Would you like to launch the shuttle?","Shuttle control", "Launch", "Cancel")
 			switch(choice)
 				if("Launch")
-					world << "\blue <B>Alert: Shuttle launch time shortened to 10 seconds!</B>"
+					station_announce("ALERT","Shuttle launch time shortened to 10 seconds!")
 					emergency_shuttle.settimeleft( 10 )
 				if("Cancel")
 					return

@@ -7,6 +7,7 @@
 	circuit = "/obj/item/weapon/circuitboard/communications"
 	var/prints_intercept = 1
 	var/authenticated = 0
+	var/authenticated_rank
 	var/list/messagetitle = list()
 	var/list/messagetext = list()
 	var/currmsg = 0
@@ -61,8 +62,11 @@
 					authenticated = 1
 				if(20 in I.access)
 					authenticated = 2
+					if(I.assignment)
+						authenticated_rank = I.assignment
 		if("logout")
 			authenticated = 0
+			authenticated_rank = null
 
 		if("swipeidseclevel")
 			var/mob/M = usr
@@ -100,7 +104,7 @@
 				var/input = input(usr, "Please choose a message to announce to the station crew.", "What?", "")
 				if(!input || !(usr in view(1,src)))
 					return
-				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
+				station_announce("The [src.authenticated_rank] Announces", input)//This tells who is making the announcment rather than assuming it is a captain
 				log_say("[key_name(usr)] has made a captain announcement: [input]")
 				message_admins("[key_name_admin(usr)] has made a captain announcement.", 1)
 				message_cooldown = 1
@@ -446,6 +450,9 @@
 	if(emergency_shuttle.direction == -1)
 		user << "Shuttle may not be called while returning to CentCom."
 		return
+	else if(emergency_shuttle.online)
+		user << "The shuttle is already on its way."
+		return
 
 	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "sandbox")
 		//New version pretends to call the shuttle but cause the shuttle to return after a random duration.
@@ -458,7 +465,10 @@
 	emergency_shuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
-	world << "\blue <B>Alert: The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"
+	if(isAI(user))
+		station_announce("AI ALERT","The emergency shuttle has been called. It will arrive in [emergency_shuttle.timeleft()] seconds.")
+	else
+		station_announce("ALERT","The emergency shuttle has been called. It will arrive in [emergency_shuttle.timeleft()] seconds.")
 	world << sound('shuttlecalled.ogg')
 
 	return
@@ -470,10 +480,10 @@
 	if((ticker.mode.name == "blob")||(ticker.mode.name == "meteor"))
 		return
 
-	emergency_shuttle.recall()
-	log_game("[key_name(user)] has uncalled the shuttle.")
-	message_admins("[key_name_admin(user)] has uncalled the shuttle.", 1)
-
+	if(emergency_shuttle.direction != -1 && emergency_shuttle.online) //check that shuttle isn't already heading to centcomm
+		emergency_shuttle.recall()
+		log_game("[key_name(user)] has recalled the shuttle.")
+		message_admins("[key_name_admin(user)] has recalled the shuttle.", 1)
 	return
 
 /obj/machinery/computer/communications/proc/post_status(var/command, var/data1, var/data2)
@@ -517,7 +527,7 @@
 	emergency_shuttle.incall(2)
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
-	world << "\blue <B>Alert: The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"
+	station_announce("ALERT","Communication with Centcomm is failing. The emergency shuttle has been called. It will arrive in [emergency_shuttle.timeleft()] seconds.")
 	world << sound('shuttlecalled.ogg')
 
 	..()
@@ -542,7 +552,7 @@
 	emergency_shuttle.incall(2)
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.", 1)
-	world << "\blue <B>Alert: The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"
+	station_announce("ALERT","Communication with Centcomm is failing. The emergency shuttle has been called. It will arrive in [emergency_shuttle.timeleft()] seconds.")
 	world << sound('shuttlecalled.ogg')
 
 	..()

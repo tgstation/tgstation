@@ -2,7 +2,7 @@
 /mob/living/simple_animal/corgi
 	name = "corgi"
 	real_name = "corgi"
-	desc = "Puppy!!"
+	desc = "It's a corgi."
 	icon = 'mob.dmi'
 	icon_state = "corgi"
 	icon_living = "corgi"
@@ -10,7 +10,7 @@
 	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
 	speak_emote = list("barks", "woofs")
 	emote_hear = list("barks", "woofs", "yaps","pants")
-	emote_see = list("shakes it's head", "shivers")
+	emote_see = list("shakes its head", "shivers")
 	speak_chance = 1
 	turns_per_move = 5
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
@@ -20,7 +20,6 @@
 	response_harm   = "kicks the"
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
-	var/obj/item/inventory_mouth
 
 /mob/living/simple_animal/corgi/update_clothing()
 	overlays = list()
@@ -74,18 +73,18 @@
 				for (var/mob/M in viewers(src, null))
 					M.show_message("\red \b [user] hits [src] with the [O], however [src] is too armored.")
 			else
-				usr << "\red This animal is wearing too much armor. You can't reach it's skin."
+				usr << "\red This animal is wearing too much armor. You can't reach its skin."
 				for (var/mob/M in viewers(src, null))
 					M.show_message("\red [user] gently taps [src] with the [O]. ")
 			if(prob(15))
-				emote("looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression on it's face")
+				emote("looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression on its face")
 			return
 	..()
 
 /mob/living/simple_animal/corgi/Topic(href, href_list)
 	//Removing from inventory
 	if(href_list["remove_inv"])
-		if(get_dist(src,usr) > 1)
+		if(get_dist(src,usr) > 1 || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)) )
 			return
 		var/remove_from = href_list["remove_inv"]
 		switch(remove_from)
@@ -96,7 +95,7 @@
 					speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
 					speak_emote = list("barks", "woofs")
 					emote_hear = list("barks", "woofs", "yaps","pants")
-					emote_see = list("shakes it's head", "shivers")
+					emote_see = list("shakes its head", "shivers")
 					desc = "It's a corgi."
 					src.sd_SetLuminosity(0)
 					inventory_head.loc = src.loc
@@ -112,11 +111,11 @@
 					usr << "\red There is nothing on its [remove_from]."
 					return
 
-		show_inv(usr)
+		//show_inv(usr) //Commented out because changing Ian's name and then calling up his inventory opens a new inventory...which is annoying.
 
 	//Adding things to inventory
 	else if(href_list["add_inv"])
-		if(get_dist(src,usr) > 1)
+		if(get_dist(src,usr) > 1 || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)) )
 			return
 		if(!usr.get_active_hand())
 			usr << "\red You have nothing in your active hand to put in the slot."
@@ -137,6 +136,7 @@
 					//Many  hats added, Some will probably be removed, just want to see which ones are popular.
 
 					var/list/allowed_types = list(
+						/obj/item/clothing/mask/gas/clown_hat,
 						/obj/item/clothing/head/helmet,
 						/obj/item/clothing/glasses/sunglasses,
 						/obj/item/clothing/head/caphat,
@@ -169,7 +169,7 @@
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
-						usr << "\red The corgi doesn't seem too keen on wearing that item."
+						usr << "\red The corgi doesn't seem too keen on wearing this item."
 						return
 
 					usr.drop_item()
@@ -177,10 +177,15 @@
 					src.inventory_head = item_to_add
 					update_clothing()
 
-					//Various hats and items (worn on his head) change Ian's behaviour. His attributesare reset when a HAT is removed.
-
+					//Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a HAT is removed.
 
 					switch(inventory_head && inventory_head.type)
+						if(/obj/item/clothing/mask/gas/clown_hat)
+							name = "HONKI"
+							emote_hear = list("honks")
+							emote_see = list("clowns around", "grins", "stares")
+							speak = list("HONK!!", "HOOOONK!", "HONK! HONK! HONK!")
+							desc = "HOOOOOOOOONK!"
 						if(/obj/item/clothing/head/caphat, /obj/item/clothing/head/collectable/captain)
 							name = "Captain [real_name]"
 							desc = "Probably better than the last captain."
@@ -192,16 +197,16 @@
 							desc = "It's a cute little kitty-cat! ... wait ... what the hell?"
 						if(/obj/item/clothing/head/rabbitears, /obj/item/clothing/head/collectable/rabbitears)
 							name = "Hoppy"
-							emote_see = list("twitches his nose", "hops around a bit")
-							desc = "This is hoppy. It's a corgi-...urmm... bunny rabbit"
+							emote_see = list("twitches its nose", "hops around a bit")
+							desc = "This is hoppy. It's a corgi- ... urmm ... bunny rabbit?"
 						if(/obj/item/clothing/head/beret, /obj/item/clothing/head/collectable/beret)
 							name = "Yann"
-							desc = "mon dieu! C'est un chien!"
+							desc = "Mon dieu! C'est un chien!"
 							speak = list("le woof!", "le bark!", "JAPPE!!")
-							emote_see = list("cowers in fear", "surrenders", "plays dead")
+							emote_see = list("cowers in fear", "surrenders", "plays dead", "looks as though an invisible wall is in front of it")
 						if(/obj/item/clothing/head/det_hat)
 							name = "Detective [real_name]"
-							desc = "[name] sees through your lies..."
+							desc = "[name] sees through your lies ..."
 							emote_see = list("investigates the area","sniffs around for clues","searches for scooby snacks")
 						if(/obj/item/clothing/head/nursehat)
 							name = "Nurse [real_name]"
@@ -209,11 +214,11 @@
 						if(/obj/item/clothing/head/pirate, /obj/item/clothing/head/collectable/pirate)
 							name = "'[pick("Ol'","Scurvy","Black","Rum","Gammy","Bloody","Gangrene","Death","Long-John")] [pick("kibbles","leg","beard","tooth","poop-deck","Threepwood","Le Chuck","corsair","Silver","Crusoe")]'"
 							desc = "Yaarghh!! Thar' be a scurvy dog!"
-							emote_see = list("hunts for treasure","stares coldly...","gnashes his tiny corgi teeth")
+							emote_see = list("hunts for treasure","stares coldly ...","gnashes its tiny corgi teeth")
 							emote_hear = list("growls ferociously", "snarls")
 							speak = list("Arrrrgh!!","Grrrrrr!")
 						if(/obj/item/clothing/head/ushanka)
-							name = "[pick("Comrade","Commissar")] [real_name]"
+							name = "[pick("Comrade","Commissar","Glorious Leader")] [real_name]"
 							desc = "A follower of Karl Barx."
 							emote_see = list("contemplates the failings of the capitalist economic model", "ponders the pros and cons of vangaurdism")
 						if(/obj/item/clothing/head/collectable/police)
@@ -222,7 +227,7 @@
 							desc = "Stop right there criminal scum!"
 						if(/obj/item/clothing/head/wizard/fake,	/obj/item/clothing/head/wizard,	/obj/item/clothing/head/collectable/wizard)
 							name = "Grandwizard [real_name]"
-							speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI  NATH!")
+							speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI NATH!")
 						if(/obj/item/weapon/bedsheet)
 							name = "The ghost"
 							speak = list("WoooOOOooo~","AUUUUUUUUUUUUUUUUUU")
@@ -261,7 +266,7 @@
 					src.inventory_back = item_to_add
 					update_clothing()
 
-		//show_inv(usr) //Commented out because changing Ian's  name and then calling up his inventory opens a new inventory...which is annoying.
+		//show_inv(usr) //Commented out because changing Ian's name and then calling up his inventory opens a new inventory...which is annoying.
 	else
 		..()
 
@@ -321,7 +326,7 @@
 						emote("stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
 
 		if(prob(1))
-			emote("dances around")
+			emote(pick("dances around","chases its tail"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					dir = i
