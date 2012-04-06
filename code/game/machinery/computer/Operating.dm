@@ -1,3 +1,14 @@
+/obj/machinery/computer/operating
+	name = "Operating Computer"
+	density = 1
+	anchored = 1.0
+	desc = "Used to monitor status of people being operated on."
+	icon_state = "operating"
+	circuit = "/obj/item/weapon/circuitboard/operating"
+	var/mob/living/carbon/human/victim = null
+	var/obj/machinery/optable/table = null
+	var/id = 0.0
+
 /obj/machinery/computer/operating/New()
 	..()
 	for(var/obj/machinery/optable/O in world)

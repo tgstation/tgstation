@@ -20,7 +20,7 @@
 	var/g_eyes = 0.0
 	var/b_eyes = 0.0
 	var/s_tone = 0.0
-	var/age = 30.0
+	age = 30.0
 	var/used_skillpoints = 0
 	var/skill_specialization = null
 	var/list/skills = null

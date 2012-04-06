@@ -6,18 +6,6 @@
 	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassemble
 
 
-/obj/machinery/computer/operating
-	name = "Operating Computer"
-	density = 1
-	anchored = 1.0
-	desc = "Used to monitor status of people being operated on."
-	icon_state = "operating"
-	circuit = "/obj/item/weapon/circuitboard/operating"
-	var/mob/living/carbon/human/victim = null
-	var/obj/machinery/optable/table = null
-	var/id = 0.0
-
-
 /obj/machinery/computer/arcade
 	name = "arcade machine"
 	desc = "Does not support Pinball."
