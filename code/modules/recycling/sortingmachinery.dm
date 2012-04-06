@@ -3,7 +3,7 @@
 	name = "large parcel"
 	icon = 'storage.dmi'
 	icon_state = "deliverycrate"
-	var/obj/wrapped = null
+	var/tmp/obj/wrapped = null
 	density = 1
 	var/sortTag = null
 	flags = FPRINT
@@ -99,7 +99,7 @@
 	name = "small parcel"
 	icon = 'storage.dmi'
 	icon_state = "deliverycrateSmall"
-	var/obj/item/wrapped = null
+	var/tmp/obj/item/wrapped = null
 	var/sortTag = null
 	flags = FPRINT
 	var/examtext = null

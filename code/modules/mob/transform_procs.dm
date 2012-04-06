@@ -10,8 +10,6 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
-	for(var/name in organs)
-		del(organs[name])
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
 	animation.icon_state = "blank"
 	animation.icon = 'mob.dmi'
@@ -21,6 +19,13 @@
 	//animation = null
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
 	del(animation)
+	del(O.organs)
+	O.organs = organs
+	for(var/name in O.organs)
+		var/datum/organ/external/organ = O[name]
+		organ.owner = O
+		for(var/obj/item/weapon/implant/implant in organ.implant)
+			implant.imp_in = O
 
 	O.name = "monkey"
 	O.dna = dna

@@ -782,10 +782,31 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		return ais[select]
 
 /proc/get_sorted_mobs()
-	var/new_list = list()
-	var/old_list = getmobs()
+	var/list/old_list = getmobs()
+	var/list/AI_list = list()
+	var/list/Dead_list = list()
+	var/list/keyclient_list = list()
+	var/list/key_list = list()
+	var/list/logged_list = list()
 	for(var/named in old_list)
-		new_list += old_list[named]
+		var/mob/M = old_list[named]
+		if(issilicon(M))
+			AI_list |= M
+		else if(isobserver(M) || M.stat == 2)
+			Dead_list |= M
+		else if(M.key && M.client)
+			keyclient_list |= M
+		else if(M.key)
+			key_list |= M
+		else
+			logged_list |= M
+		old_list.Remove(named)
+	var/list/new_list = list()
+	new_list += AI_list
+	new_list += keyclient_list
+	new_list += key_list
+	new_list += logged_list
+	new_list += Dead_list
 	return new_list
 
 
@@ -796,6 +817,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/creatures = list()
 	var/list/namecounts = list()
 	for(var/mob/M in mobs)
+		if(!M.name || !M.real_name)
+			var/turf/T = get_turf(M)
+			message_admins("Alert!  The mob with the key [M.key ? M.key : "NO KEY"] at ([T.x], [T.y], [T.z]) has no name!")
 		var/name = M.name
 		if (name in names)
 			namecounts[name]++
@@ -804,7 +828,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			names.Add(name)
 			namecounts[name] = 1
 		if (M.real_name && M.real_name != M.name)
-			name += " \[[M.real_name]\]"
+			name += " \[[M.original_name? M.original_name : M.real_name]\]"
 		if (M.stat == 2)
 			if(istype(M, /mob/dead/observer/))
 				name += " \[ghost\]"
@@ -812,7 +836,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				name += " \[dead\]"
 		creatures[name] = M
 
-	return sortList(creatures)
+	return creatures
 
 /proc/sortmobs()
 

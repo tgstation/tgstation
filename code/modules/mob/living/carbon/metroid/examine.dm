@@ -26,6 +26,6 @@
 			if(10)
 				usr << text("\blue <B>[] seems to have extreme electrical activity inside it!</B>", src.name)
 
-	usr << print_flavor_text()
+	usr << "[print_flavor_text()]\n"
 
 	return

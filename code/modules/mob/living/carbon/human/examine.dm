@@ -484,7 +484,7 @@
 //			usr << "\red [src.name] is bleeding from a [sizetext] on [t_his] [temp.display_name]."
 //			continue
 
-	msg += print_flavor_text()
+	msg += "[print_flavor_text()]\n"
 
 	msg += "\blue *---------*"
 	usr << msg

@@ -898,8 +898,23 @@
 
 /client/proc/CarbonCopy(atom/movable/O as mob|obj in world)
 	set category = "Admin"
-	var/mob/NewObj = new O.type(usr.loc)
+	var/atom/movable/NewObj = new O.type(usr.loc)
 	for(var/V in O.vars)
 		if (issaved(O.vars[V]))
-			NewObj.vars[V] = O.vars[V]
+			if(V == "contents")
+				for(var/atom/movable/C in O.contents)
+					C.CarbonCopy2(NewObj)
+			else
+				NewObj.vars[V] = O.vars[V]
+	return NewObj
+
+/atom/proc/CarbonCopy2(atom/movable/O as mob|obj in world)
+	var/atom/movable/NewObj = new type(O)
+	for(var/V in vars)
+		if (issaved(vars[V]))
+			if(V == "contents")
+				for(var/atom/movable/C in contents)
+					C.CarbonCopy2(NewObj)
+			else
+				NewObj.vars[V] = vars[V]
 	return NewObj

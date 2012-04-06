@@ -8,8 +8,6 @@
 	canmove = 0
 	icon = null
 	invisibility = 101
-	for(var/name in organs)
-		del(organs[name])
 
 	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
 	animation.icon_state = "blank"
@@ -20,6 +18,13 @@
 	//animation = null
 	var/mob/living/carbon/human/tajaran/O = new /mob/living/carbon/human/tajaran( loc )
 	del(animation)
+	del(O.organs)
+	O.organs = organs
+	for(var/name in O.organs)
+		var/datum/organ/external/organ = O[name]
+		organ.owner = O
+		for(var/obj/item/weapon/implant/implant in organ.implant)
+			implant.imp_in = O
 
 	O.real_name = real_name
 	O.name = name
@@ -37,7 +42,9 @@
 		client.mob = O
 	if(mind)
 		mind.transfer_to(O)
-
+	O.update_body()
+	O.update_face()
+	O.update_clothing()
 	O << "<B>You are now a Tajara.</B>"
 	spawn(0)//To prevent the proc from returning null.
 		del(src)

@@ -239,7 +239,7 @@
 		msg += wound_flavor_text["right foot"]
 
 
-	msg += print_flavor_text()
+	msg += "[print_flavor_text()]\n"
 
 	msg += "*---------*</span>"
 
