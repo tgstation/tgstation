@@ -817,9 +817,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/creatures = list()
 	var/list/namecounts = list()
 	for(var/mob/M in mobs)
-		if(!M.name || !M.real_name)
+		/*if((!M.name || !M.real_name) && !istype(M, /mob/new_player))
 			var/turf/T = get_turf(M)
-			message_admins("Alert!  The mob with the key [M.key ? M.key : "NO KEY"] at ([T.x], [T.y], [T.z]) has no name!")
+			message_admins("Alert!  The mob with the key [M.key ? M.key : "NO KEY"] at ([T.x], [T.y], [T.z]) has no name!")*/
 		var/name = M.name
 		if (name in names)
 			namecounts[name]++
