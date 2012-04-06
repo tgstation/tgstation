@@ -4,7 +4,7 @@ CONTAINS:
 Plant-B-Gone
 Nettle
 Deathnettle
-Corn Cob
+Craftables (Cob pipes, potato batteries, pumpkinheads)
 
 */
 
@@ -135,9 +135,31 @@ Corn Cob
 		usr << "All the leaves have fallen off the deathnettle from violent whacking."
 		del(src)
 
+//Crafting
+
 /obj/item/weapon/corncob/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchen/utensil/knife))
-		user << "You use [W] to fashion a pipe out of the corn cob!"
-		new /obj/item/clothing/mask/pipe/cobpipe (src.loc)
+		user << "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>"
+		new /obj/item/clothing/mask/pipe/cobpipe (user.loc)
 		del(src)
-		return ..()
+		return
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/fireaxe) || istype(W, /obj/item/weapon/fireaxe) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/melee/energy))
+		user.show_message("<span class='notice'>You carve a face into the [src]!</span>", 1)
+		new /obj/item/clothing/head/helmet/hardhat/pumpkinhead (user.loc)
+		del(src)
+		return
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if(istype(W, /obj/item/weapon/cable_coil))
+		if(W:amount >= 5)
+			W:amount -= 5
+			if(!W:amount) del(W)
+			user << "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>"
+			new /obj/item/weapon/cell/potato(user.loc)
+			del(src)
+			return
