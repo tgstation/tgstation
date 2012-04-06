@@ -242,7 +242,7 @@ In either case, it's a good idea to spawn the ninja with a semi-random set of ob
 					hostile_targets -= current_mind//Remove them from the list.
 				if(2)//Steal
 					var/list/datum/objective/theft = GenerateTheft(ninja_mind.assigned_role,ninja_mind)
-					var/datum/objective/steal/steal_objective = pick(theft)
+					var/datum/objective/steal/steal_objective = PickObjectiveFromList(theft)
 					ninja_mind.objectives += steal_objective
 
 					objective_list -= 2

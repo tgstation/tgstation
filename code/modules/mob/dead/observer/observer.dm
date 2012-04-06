@@ -13,6 +13,8 @@
 			loc = pick(latejoin)
 		if(!istype(body,/mob))	return//This needs to be recoded sometime so it has loc as its first arg
 		real_name = body.name
+		if(!body.original_name)
+			body.original_name = real_name
 		original_name = body.original_name
 		name = body.original_name
 		if(!safety)

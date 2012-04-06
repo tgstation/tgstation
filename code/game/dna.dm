@@ -533,6 +533,13 @@
 			del(animation)
 
 		var/mob/living/carbon/monkey/O = new(src)
+		del(O.organs)
+		O.organs = H.organs
+		for(var/name in O.organs)
+			var/datum/organ/external/organ = O[name]
+			organ.owner = O
+			for(var/obj/item/weapon/implant/implant in organ.implant)
+				implant.imp_in = O
 
 		if(M)
 			if (M.dna)
@@ -567,11 +574,9 @@
 		O.adjustOxyLoss(M.getOxyLoss())
 		O.stat = M.stat
 		O.a_intent = "hurt"
-		for (var/obj/item/weapon/implant/I in implants)
-			I.loc = O
-			I.implanted = O
 		O.flavor_text = M.flavor_text
 		O.warn_flavor_changed()
+		O.update_clothing()
 		del(M)
 		return
 
@@ -606,6 +611,13 @@
 			O.gender = MALE
 		O.dna = M.dna
 		M.dna = null
+		del(O.organs)
+		O.organs = M.organs
+		for(var/name in O.organs)
+			var/datum/organ/external/organ = O[name]
+			organ.owner = O
+			for(var/obj/item/weapon/implant/implant in organ.implant)
+				implant.imp_in = O
 
 		for(var/datum/disease/D in M.viruses)
 			O.viruses += D
@@ -643,9 +655,6 @@
 		O.adjustToxLoss(M.getToxLoss())
 		O.adjustOxyLoss(M.getOxyLoss())
 		O.stat = M.stat
-		for (var/obj/item/weapon/implant/I in implants)
-			I.loc = O
-			I.implanted = O
 		O.flavor_text = M.flavor_text
 		O.warn_flavor_changed()
 		O.update_clothing()

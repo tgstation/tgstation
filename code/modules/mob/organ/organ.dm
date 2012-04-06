@@ -46,17 +46,17 @@
 		bandaged = 0
 		max_damage = 0
 		max_size = 0
-		obj/item/weapon/implant/implant = null
+		tmp/list/obj/item/weapon/implant/implant = list()
 
 		display_name
-		list/wounds = list()
-		bleeding = 0
-		perma_injury = 0
-		perma_dmg = 0
-		broken = 0
-		destroyed = 0
-		destspawn = 0 //Has it spawned the broken limb?
-		gauzed = 0 //Has the missing limb been patched?
+		tmp/list/wounds = list()
+		tmp/bleeding = 0
+		tmp/perma_injury = 0
+		tmp/perma_dmg = 0
+		tmp/broken = 0
+		tmp/destroyed = 0
+		tmp/destspawn = 0 //Has it spawned the broken limb?
+		tmp/gauzed = 0 //Has the missing limb been patched?
 		min_broken_damage = 30
 		datum/organ/external/parent
 		damage_msg = "\red You feel a intense pain"
@@ -281,6 +281,9 @@
 		if(override)
 			destroyed = 1
 		if(destroyed)
+			if(implant)
+				for(var/implants in implant)
+					del(implants)
 			//owner.unlock_medal("Lost something?", 0, "Lose a limb.", "easy")
 
 			var/obj/item/weapon/organ/H
@@ -301,7 +304,9 @@
 					H:transfer_identity(owner)
 					H.pixel_x = -10
 					H.pixel_y = 6
-					H.name = "[owner.name]'s head"
+					if(!owner.original_name)
+						owner.original_name = owner.real_name
+					H.name = "[owner.original_name]'s head"
 
 					owner.update_face()
 					owner.update_body()

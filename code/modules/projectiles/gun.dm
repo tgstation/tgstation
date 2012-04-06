@@ -15,16 +15,16 @@
 
 	var
 		fire_sound = 'Gunshot.ogg'
-		obj/item/projectile/in_chamber = null
+		tmp/obj/item/projectile/in_chamber = null
 		caliber = ""
 		silenced = 0
 		recoil = 0
 		tmp/list/mob/living/target //List of who yer targeting.
 		tmp/lock_time = -100
-		mouthshoot = 0 ///To stop people from suiciding twice... >.>
+		tmp/mouthshoot = 0 ///To stop people from suiciding twice... >.>
 		automatic = 0 //Used to determine if you can target multiple people.
-		mob/living/last_moved_mob //Used to fire faster at more than one person.
-		told_cant_shoot = 0 //So that it doesn't spam them with the fact they cannot hit them.
+		tmp/mob/living/last_moved_mob //Used to fire faster at more than one person.
+		tmp/told_cant_shoot = 0 //So that it doesn't spam them with the fact they cannot hit them.
 
 	proc/load_into_chamber()
 		return 0

@@ -312,7 +312,7 @@ datum/mind
 				if(!def_value)//If it's a custom objective, it will be an empty string.
 					def_value = "custom"
 
-			var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate","decapitate", "debrain", "protect", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
+			var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate","decapitate", "debrain", "protection", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
 			if (!new_obj_type) return
 
 			var/datum/objective/new_objective = null
@@ -367,7 +367,13 @@ datum/mind
 					new_objective.owner = src
 
 				if ("steal")
-					new_objective = pick(GenerateTheft(assigned_role,src))
+					var/list/possibilities = typesof(/datum/objective/steal) - /datum/objective/steal
+					var/list/choices = list()
+					for(var/datum/objective/steal/name in possibilities)
+						choices[name.explanation_text] = name
+					var/new_target = input("Select target:", "Objective target") as null|anything in choices
+					if (!new_target) return
+					new_objective = new choices[new_target]
 					new_objective.owner = src
 
 				if("download","capture","absorb")
