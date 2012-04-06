@@ -79,7 +79,7 @@
 	if(health > maxHealth)
 		health = maxHealth
 
-
+/*
 	// Stun/Weaken
 
 	if (paralysis || stunned || weakened) //Stunned etc.
@@ -110,7 +110,7 @@
 		canmove = 0
 	else
 		canmove = 1
-
+*/
 	//Movement
 	if(!ckey && !stop_automated_movement)
 		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
