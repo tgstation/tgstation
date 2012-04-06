@@ -361,18 +361,6 @@
 	idle_power_usage = 20
 	active_power_usage = 80
 
-/obj/machinery/cell_charger
-	name = "cell charger"
-	desc = "It charges power cells."
-	icon = 'power.dmi'
-	icon_state = "ccharger0"
-	var/obj/item/weapon/cell/charging = null
-	var/chargelevel = -1
-	anchored = 1
-	use_power = 1
-	idle_power_usage = 5
-	active_power_usage = 60
-
 /obj/machinery/light_switch
 	name = "light switch"
 	desc = "It turns lights on and off. What are you, simple?"
