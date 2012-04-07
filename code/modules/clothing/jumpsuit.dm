@@ -182,7 +182,7 @@
 /obj/item/clothing/under/rank/chemist
 	desc = "Made of a special fiber that gives special protection against biohazards. Has a chemist rank stripe on it."
 	name = "Chemist Jumpsuit"
-	icon_state = "genetics"
+	icon_state = "chemistry"
 	item_state = "w_suit"
 	color = "chemistrywhite"
 	permeability_coefficient = 0.50
