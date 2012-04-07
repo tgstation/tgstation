@@ -132,7 +132,8 @@
 
 	shower
 		name = "Shower"
-		desc = "This is dumb."
+		desc = "This is a shower. Useful for cleaning."
+		icon_state = "shower"
 
 	kitchen
 		name = "Kitchen Sink"

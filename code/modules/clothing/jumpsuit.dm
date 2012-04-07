@@ -544,3 +544,33 @@
 	icon_state = "jumpsuitdown"
 	item_state = "jumpsuitdown"
 	color = "jumpsuitdown"
+
+// Cheerleader outfits or something
+/obj/item/clothing/under/cheerleader
+	name = "cheerleader uniform"
+	desc = "Looks breezy."
+	icon = 'uniforms.dmi'
+	icon_state = "purple_cheer"
+	color = "purple_cheer"
+	flags = FPRINT | TABLEPASS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
+
+/obj/item/clothing/under/cheerleader/purple
+	icon_state = "purple_cheer"
+	color = "purple_cheer"
+
+/obj/item/clothing/under/cheerleader/yellow
+	icon_state = "yellow_cheer"
+	color = "yellow_cheer"
+
+/obj/item/clothing/under/cheerleader/white
+	icon_state = "white_cheer"
+	color = "white_cheer"
+//End of cheerleaders
+
+/obj/item/clothing/under/captainmal
+	name = "Red Captain's Jumpsuit"
+	desc = "We have done the impossible, and that makes us mighty."
+	icon_state = "captainmal"
+	item_state = "captainmal"
+	color = "captainmal"
