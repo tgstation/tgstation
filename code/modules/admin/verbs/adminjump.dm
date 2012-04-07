@@ -37,9 +37,12 @@
 		return
 
 	if(config.allow_admin_jump)
-		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in getmobs()
-		var/mob/M = selection
-		if(!istype(M))
+		var/mobs = getmobs()
+		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in mobs
+		var/mob/M = mobs[selection]
+		if(!istype(M,/mob))
+			src << "OH SHIT SON"
+			src << "[M.loc]"
 			return
 		var/mob/A = src.mob
 		var/turf/T = get_turf(M)
@@ -82,8 +85,9 @@
 		src << "Only administrators may use this command."
 		return
 	if(config.allow_admin_jump)
-		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in getmobs()
-		var/mob/M = selection
+		var/mobs = getmobs()
+		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in mobs
+		var/mob/M = mobs[selection]
 		if(!istype(M))
 			return
 		var/mob/A = src.mob
