@@ -56,6 +56,11 @@
 /proc/PickObjectiveFromList(var/list/objectivesArray)
 	var/list/datum/objectives = objectivesArray[1]
 	var/pick_index = text2num(pickweight(objectivesArray[2]))
+	
+	if (pick_index > objectives.len || pick_index < 1)
+		log_admin("Objective picking failed. Error logged. One or more traitors will need to be manually-assigned objectives")
+		CRASH("Objective picking failed. Pick_index was [pick_index].")
+	
 	return objectives[pick_index]
 
 /proc/RemoveObjectiveFromList(var/list/objectiveArray, var/datum/objective/objective)
