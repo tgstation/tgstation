@@ -81,7 +81,7 @@
 						//Only notify the admins if an actual change happened
 						log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
 						message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].", 1)
-						switch(security_level)
+						switch(get_security_level())
 							if(SEC_LEVEL_GREEN)
 								feedback_inc("alert_comms_green",1)
 							if(SEC_LEVEL_BLUE)
@@ -181,7 +181,7 @@
 					return
 				Centcomm_announce(input, usr)
 				usr << "Message transmitted."
-				log_say("[key_name(usr)] has made a Centcomm announcement: [input]")
+				log_say("[key_name(usr)] has sent Centcomm a message: [input]")
 				centcomm_message_cooldown = 1
 				spawn(600)//One minute cooldown
 					message_cooldown = 0
@@ -198,7 +198,7 @@
 					return
 				Syndicate_announce(input, usr)
 				usr << "Message transmitted."
-				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
+				log_say("[key_name(usr)] has sent the Syndicate a message: [input]")
 				centcomm_message_cooldown = 1
 				spawn(600)//One minute cooldown
 					message_cooldown = 0
