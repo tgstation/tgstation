@@ -474,9 +474,9 @@
 
 /obj/machinery/alarm/proc/return_text(mob/user)
 	if(!(istype(user, /mob/living/silicon)) && locked)
-		return "<html><head><title>[src]</title></head><body>[return_status()]<hr><i>(Swipe ID card to unlock interface)</i></body></html>"
+		return "<html><head><title>[src]</title></head><body>[return_status()]<hr>[rcon_text()]<hr><i>(Swipe ID card to unlock interface)</i></body></html>"
 	else
-		return "<html><head><title>[src]</title></head><body>[return_status()]<hr>[return_controls()]</body></html>"
+		return "<html><head><title>[src]</title></head><body>[return_status()]<hr>[rcon_text()]<hr>[return_controls()]</body></html>"
 
 /obj/machinery/alarm/proc/return_status()
 	var/turf/location = src.loc
