@@ -551,38 +551,45 @@ obj/item/clothing/suit/justice
 //stylish new hats
 
 /obj/item/clothing/head/bowlerhat
-	name = "Bowler hat"
+	name = "\improper Bowler hat"
 	icon_state = "bowler_hat"
 	item_state = "bowler_hat"
 	desc = "For the gentleman of distinction."
 	flags = FPRINT|TABLEPASS
 
 /obj/item/clothing/head/beaverhat
-	name = "Beaver hat"
+	name = "\improper Beaver hat"
 	icon_state = "beaver_hat"
 	item_state = "beaver_hat"
 	desc = "Soft felt make this hat both comfortable and elegant."
 	flags = FPRINT|TABLEPASS
 
 /obj/item/clothing/head/boaterhat
-	name = "Boater hat"
+	name = "\improper Boater hat"
 	icon_state = "boater_hat"
 	item_state = "boater_hat"
 	desc = "The ultimate in summer fashion."
 	flags = FPRINT|TABLEPASS
 
 /obj/item/clothing/head/fedora
-	name = "Fedora"
+	name = "\improper Fedora"
 	icon_state = "fedora"
 	item_state = "fedora"
 	desc = "A sharp, stylish hat."
 	flags = FPRINT|TABLEPASS
 
 /obj/item/clothing/head/feathertrilby
-	name = "Feather trilby"
+	name = "\improper Feather trilby"
 	icon_state = "feather_trilby"
 	item_state = "feather_trilby"
 	desc = "A sharp, stylish hat with a feather."
+	flags = FPRINT|TABLEPASS
+
+/obj/item/clothing/head/fez
+	name = "\improper Fez"
+	icon_state = "fez"
+	item_state = "fez"
+	desc = "You should wear a Fez. Fezzes are cool."
 	flags = FPRINT|TABLEPASS
 
 //pyjamas

@@ -799,6 +799,13 @@
 /obj/structure/stool/bed/chair/comfy/lime
 	icon_state = "comfychair_lime"
 
+
+/obj/structure/stool/bed/chair/office/light
+	icon_state = "officechair_white"
+
+/obj/structure/stool/bed/chair/office/dark
+	icon_state = "officechair_dark"
+
 /obj/structure/table
 	name = "table"
 	desc = "A square piece of metal standing on four metal legs. It can not move."
@@ -1500,3 +1507,12 @@
 	var/var3 = null
 	var/var4 = null
 	var/var5 = null
+
+/obj/item/rubberduck
+	name = "rubber duck"
+	desc = "A rubber duck. Quack."
+	icon = 'objects.dmi'
+	icon_state = "rduck"
+	item_state = "rduck"
+	flags = FPRINT
+	w_class = 1.0

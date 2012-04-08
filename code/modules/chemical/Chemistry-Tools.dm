@@ -3585,3 +3585,126 @@
 			name = "empty jar"
 			desc = "A jar. You're not sure what it's supposed to hold."
 			return
+
+//////////////////
+//STYROFOAM CUPS//
+//////////////////
+/obj/item/weapon/reagent_containers/food/drinks/styrofoamcup
+	name = "styrofoam cup"
+	desc = "Cups for drinking."
+	icon_state = "styrocup-empty"
+	amount_per_transfer_from_this = 10
+	volume = 50
+
+	on_reagent_change()
+		if (reagents.reagent_list.len > 0)
+			switch(reagents.get_master_reagent_id())
+				if("water")
+					icon_state = "styrocup-clear"
+				else
+					icon_state ="styrocup-brown"
+		else
+			icon_state = "styrocup-empty"
+			return
+
+/*/obj/item/weapon/reagent_containers/food/drinks/styrofoamcuppile
+	name = "Styrofoam Cup Pile"
+	//desc = "A pile of styrofoam cups."
+	icon_state = "styrocup-stack6"
+	item_state = "styrocup-stack6"
+	w_class = 1
+	throwforce = 1
+	var/cupcount = 6
+	flags = TABLEPASS
+
+/obj/item/weapon/reagent_containers/food/drinks/styrofoamcuppile/update_icon()
+	src.icon_state = text("styrocup-stack[]", src.cupcount)
+	src.desc = text("There are [] cups left!", src.cupcount)
+	return
+
+/obj/item/weapon/reagent_containers/food/drinks/styrofoamcuppile/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/reagent_containers/food/drinks/styrofoamcup) && (cupcount < 6))
+		user.drop_item()
+		W.loc = src
+		usr << "You place a cup back onto the pile."
+		if (src.cupcount < 6)
+			src.cupcount++
+	src.update()
+	return
+
+
+/obj/item/weapon/reagent_containers/food/drinks/styrofoamcuppile/proc/update()
+	src.icon_state = text("styrocup-stack[]", src.cupcount)
+	return
+
+/obj/item/weapon/reagent_containers/food/drinks/styrofoamcuppile/MouseDrop(mob/user as mob)
+	if ((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
+		if(ishuman(user))
+			if (usr.hand)
+				if (!( usr.l_hand ))
+					spawn( 0 )
+						src.attack_hand(usr, 1, 1)
+						return
+			else
+				if (!( usr.r_hand ))
+					spawn( 0 )
+						src.attack_hand(usr, 0, 1)
+						return
+	return
+
+/obj/item/weapon/reagent_containers/food/drinks/styrofoamcuppile/attack_paw(mob/user as mob)
+	return src.attack_hand(user)
+
+/obj/item/weapon/reagent_containers/food/drinks/styrofoamcuppile/attack_hand(mob/user as mob, unused, flag)
+	if (flag)
+		return ..()
+	src.add_fingerprint(user)
+	if (locate(/obj/item/weapon/reagent_containers/food/drinks/styrofoamcup, src))
+		for(var/obj/item/weapon/reagent_containers/food/drinks/styrofoamcup/P in src)
+			if (!usr.l_hand)
+				P.loc = usr
+				P.layer = 20
+				usr.l_hand = P
+				usr.update_clothing()
+				usr << "You take a cup from the pile."
+				break
+			else if (!usr.r_hand)
+				P.loc = usr
+				P.layer = 20
+				usr.r_hand = P
+				usr.update_clothing()
+				usr << "You take a cup from the pile."
+				break
+	else
+		if (src.cupcount >= 1)
+			src.cupcount--
+			var/obj/item/weapon/reagent_containers/food/drinks/styrofoamcup/D = new /obj/item/weapon/reagent_containers/food/drinks/styrofoamcup
+			D.loc = usr.loc
+			if(ishuman(usr))
+				if(!usr.get_active_hand())
+					usr.put_in_hand(D)
+					usr << "You take a cup from the pile."
+			else
+				D.loc = get_turf_loc(src)
+				usr << "You take a cup from the pile."
+
+	src.update()
+	return
+
+/obj/item/weapon/reagent_containers/food/drinks/styrofoamcuppile/examine()
+	set src in oview(1)
+
+	src.cupcount = round(src.cupcount)
+	var/n = src.cupcount
+	for(var/obj/item/weapon/reagent_containers/food/drinks/styrofoamcup/P in src)
+		n++
+	if (n <= 0)
+		n = 0
+		usr << "There are no cups left on this pile."
+	else
+		if (n == 1)
+			usr << "There is one cup left on this pile."
+		else
+			usr << text("There are [] cups on this pile.", n)
+	return
+*/

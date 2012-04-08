@@ -156,7 +156,30 @@
 
 /obj/item/clothing/shoes/jackboots
 	name = "Jackboots"
-	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
+	desc = "NanoTrasen standard issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "jackboots"
 	item_state = "jackboots"
 	color = "hosred"
+
+/obj/item/clothing/shoes/purpleboots
+	name = "Purple boots"
+	desc = "A pair of flashy purple boots."
+	icon_state = "purpleboots"
+	item_state = "purpleboots"
+
+/obj/item/clothing/shoes/yellowboots
+	name = "Yellow boots"
+	desc = "A pair of flashy yellow boots."
+	icon_state = "yellowboots"
+	item_state = "yellowboots"
+
+/obj/item/clothing/shoes/whiteboots
+	name = "White boots"
+	desc = "A pair of flashy white boots."
+	icon_state = "whiteboots"
+	item_state = "whiteboots"
+
+/obj/item/clothing/shoes/fullbrown
+	name = "Full Brown Shoes"
+	icon_state = "fullbrown"
+	color = "fullbrown"

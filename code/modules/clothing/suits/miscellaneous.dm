@@ -138,3 +138,11 @@
 	icon_state = "patientgown"
 	item_state = "patientgown"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
+
+/obj/item/clothing/suit/weddingdress
+	name = "wedding dress"
+	desc = "Here comes the bride."
+	icon_state = "weddingdress"
+	item_state = "weddingdress"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
+	flags_inv = HIDESHOES

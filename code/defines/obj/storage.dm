@@ -542,3 +542,45 @@
 	desc = "It has a picture of drinking glasses on it."
 	icon_state = "box"
 	item_state = "syringe_kit"
+
+// Belt Bags/Satchels
+
+/obj/item/weapon/storage/backpack/satchel_norm
+	name = "satchel"
+	desc = "A trendy looking satchel."
+	icon_state = "satchel-norm"
+
+/obj/item/weapon/storage/backpack/satchel_eng
+	name = "industrial satchel"
+	desc = "A tough satchel with extra pockets."
+	icon_state = "satchel-eng"
+
+/obj/item/weapon/storage/backpack/satchel_med
+	name = "medical satchel"
+	desc = "A sterile satchel used in medical departments."
+	icon_state = "satchel-med"
+
+/obj/item/weapon/storage/backpack/satchel_vir
+	name = "virologist satchel"
+	desc = "A sterile satchel with virologist colours."
+	icon_state = "satchel-vir"
+
+/obj/item/weapon/storage/backpack/satchel_chem
+	name = "chemist satchel"
+	desc = "A sterile satchel with chemist colours."
+	icon_state = "satchel-chem"
+
+/obj/item/weapon/storage/backpack/satchel_gen
+	name = "geneticist satchel"
+	desc = "A sterile satchel with geneticist colours."
+	icon_state = "satchel-gen"
+
+/obj/item/weapon/storage/backpack/satchel_tox
+	name = "scientist satchel"
+	desc = "Useful for holding research materials."
+	icon_state = "satchel-tox"
+
+/obj/item/weapon/storage/backpack/satchel_sec
+	name = "security satchel"
+	desc = "A robust satchel for security related needs."
+	icon_state = "satchel-sec"

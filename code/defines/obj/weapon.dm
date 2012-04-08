@@ -1008,6 +1008,11 @@
 	desc = "It's a cool looking pen. Lots of colors!"
 	name = "multicolor pen"
 
+/obj/item/weapon/pen/feather
+	name = "feathery pen"
+	desc = "A gold pen disguised as a quill. How quaint."
+	icon_state = "featherpen"
+
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
 	name = "banhammer"
