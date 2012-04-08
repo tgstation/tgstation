@@ -411,7 +411,7 @@
 			var/obj/item/weapon/melee/energy/blade/EB = W
 
 			EB.spark_system.start()
-			user << "<span class='notice'>You slash \the [src] with \the [src]; the thermite ignites!</span>"
+			user << "<span class='notice'>You slash \the [src] with \the [EB]; the thermite ignites!</span>"
 			playsound(src.loc, "sparks", 50, 1)
 			playsound(src.loc, 'blade1.ogg', 50, 1)
 
@@ -523,7 +523,7 @@
 			var/obj/item/weapon/melee/energy/blade/EB = W
 
 			EB.spark_system.start()
-			user << "<span class='notice'>You slash \the [src] with \the [src]; the thermite ignites!</span>"
+			user << "<span class='notice'>You slash \the [src] with \the [EB]; the thermite ignites!</span>"
 			playsound(src.loc, "sparks", 50, 1)
 			playsound(src.loc, 'blade1.ogg', 50, 1)
 
@@ -707,7 +707,7 @@
 	else if( istype(W, /obj/item/stack/sheet/metal) && d_state )
 		var/obj/item/stack/sheet/metal/MS = W
 
-		user << "<span class='notice'>You begin patching-up the wall with \a [src].</span>"
+		user << "<span class='notice'>You begin patching-up the wall with \a [MS].</span>"
 
 		sleep( max(20*d_state,100) )	//time taken to repair is proportional to the damage! (max 10 seconds)
 		if( !istype(src, /turf/simulated/wall/r_wall) || !user || !MS || !T )	return
@@ -745,7 +745,7 @@
 	var/turf/simulated/floor/F = ReplaceWithPlating()
 	F.burn_tile()
 	F.icon_state = "wall_thermite"
-	user << "<span class='warning'>The thermite melts through \the [src].</span>"
+	user << "<span class='warning'>The thermite melts through the wall.</span>"
 
 	spawn(100)
 		if(O)	del(O)
