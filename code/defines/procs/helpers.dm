@@ -255,7 +255,12 @@
 	var/list/textList = new()
 	var/searchPosition = 1
 	var/findPosition = 1
+	var/loops = 0
 	while(1)
+		if(loops >= 1000)
+			break
+		loops++
+
 		findPosition = findtext(text, separator, searchPosition, 0)
 		var/buggyText = copytext(text, searchPosition, findPosition)
 		if(!withinList || (buggyText in withinList)) textList += "[buggyText]"
