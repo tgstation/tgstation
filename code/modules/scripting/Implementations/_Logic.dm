@@ -166,7 +166,7 @@ proc/string_explode(var/string, var/separator)
 Just found out there was already a string explode function, did some benchmarking, and that function were a bit faster, sticking to that.
 */
 proc/string_explode(var/string, var/separator)
-	if(istext(string))
+	if(istext(string) && istext(separator))
 		return dd_text2list(string, separator)
 
 proc/n_repeat(var/string, var/amount)
@@ -174,6 +174,8 @@ proc/n_repeat(var/string, var/amount)
 		var/i
 		var/newstring = ""
 		for(i=0, i<=amount, i++)
+			if(i>=1000)
+				break
 			newstring = newstring + string
 
 		return newstring
@@ -183,6 +185,8 @@ proc/n_reverse(var/string)
 		var/newstring = ""
 		var/i
 		for(i=lentext(string), i>0, i--)
+			if(i>=1000)
+				break
 			newstring = newstring + copytext(string, i, i+1)
 
 		return newstring
