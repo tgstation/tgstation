@@ -584,7 +584,7 @@
 /obj/item/weapon/fireaxe  // DEM AXES MAN, marker -Agouri
 	icon_state = "fireaxe0"
 	name = "fire axe"
-	desc = "Let me axe you a question."
+	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	force = 5
 	w_class = 4.0
 	flags = ONBACK
