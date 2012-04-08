@@ -15,6 +15,9 @@
 		for(var/obj/structure/falsewall/W in orange(src,1))
 			if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
 				junction |= get_dir(src,W)
+		for(var/obj/structure/falserwall/W in orange(src,1))
+			if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+				junction |= get_dir(src,W)
 
 /* Commenting this out for now until we figure out what to do with shuttle smooth walls, if anything.
    As they are now, they sort of work screwy and may need further coding. Or just be scrapped.*/
@@ -73,24 +76,25 @@
 
 	return
 
-/turf/simulated/wall/New()
-
+/atom/proc/relativewall_neighbours()
 	for(var/turf/simulated/wall/W in range(src,1))
 		W.relativewall()
-
 	for(var/obj/structure/falsewall/W in range(src,1))
 		W.relativewall()
+	for(var/obj/structure/falserwall/W in range(src,1))
+		W.relativewall()
+	return
 
+/turf/simulated/wall/New()
+	relativewall_neighbours()
 	..()
 
 /obj/structure/falsewall/New()
+	relativewall_neighbours()
+	..()
 
-	for(var/turf/simulated/wall/W in range(src,1))
-		W.relativewall()
-
-	for(var/obj/structure/falsewall/W in range(src,1))
-		W.relativewall()
-
+/obj/structure/falserwall/New()
+	relativewall_neighbours()
 	..()
 
 /*/turf/simulated/shuttle/wall/New()
@@ -134,6 +138,8 @@
 		for(var/obj/structure/falsewall/W in range(temploc,1))
 			W.relativewall()
 
+		for(var/obj/structure/falserwall/W in range(temploc,1))
+			W.relativewall()
 	..()
 
 /*/turf/simulated/shuttle/wall/Del()
