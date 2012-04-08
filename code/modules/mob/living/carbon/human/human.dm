@@ -134,13 +134,13 @@
 	var/amm = 0.1 * amt
 	var/turf/T = get_turf(src)
 	var/list/obj/effect/decal/cleanable/blood/drip/nums = list()
-	var/list/icon_states = list("1","2","3","4","5")
+	var/list/iconL = list("1","2","3","4","5")
 	
 	vessel.remove_reagent("blood",amm)
 	
 	for(var/obj/effect/decal/cleanable/blood/drip/G in T)
 		nums += G
-		icon_states.Remove(G.icon_state)
+		iconL.Remove(G.icon_state)
 		if(nums.len >= 3)
 			var/obj/effect/decal/cleanable/blood/drip/D = pick(nums)
 			D.blood_DNA.len++
@@ -150,7 +150,7 @@
 			return
 	
 	var/obj/effect/decal/cleanable/blood/drip/this = new(T)
-	this.icon_state = pick(icon_states)
+	this.icon_state = pick(iconL)
 	this.blood_DNA = list(list(dna.unique_enzymes,dna.b_type))
 	this.blood_owner = src
 	
