@@ -227,7 +227,7 @@
 <a href='?src=\ref[tension_master];addScore=1'>Increase Tension by 50000</a><br>
 <B>Tension per player:</B> [tension_master.score/tension_master.get_num_players()]<BR>
 <B>Tensioner Debug Data:</B>  R1:[tension_master.round1] R2:[tension_master.round2] R3:[tension_master.round3] R4:[tension_master.round4] ES: [tension_master.eversupressed] CD: [tension_master.cooldown]<br>
-<B>Current Tensioner Status: [config.Tensioner_Active].  <a href='?src=\ref[tension_master];ToggleStatus=1'>Toggle?</a><br>"
+<B>Current Tensioner Status:</B> [config.Tensioner_Active].  <a href='?src=\ref[tension_master];ToggleStatus=1'>Toggle?</a><br>
 <B>Recommendations:</B> All the modes.  All of them.  Press all of them.<BR>
 <BR>
 
@@ -243,5 +243,10 @@
 	<a href='?src=\ref[tension_master];makeDeathsquad=1'>Make Deathsquad (Syndicate) (Requires Ghosts)</a><br>
 	<a href='?src=\ref[tension_master];makeBorgDeathsquad=1'>Make Deathsquad (Borg) (Requires Ghosts)</a><br>
 
+	<br>
+
 "}
-		usr << browse(output,"window=tensionreport")
+
+		for(var/game in tension_master.antagonistmodes)
+			output += "<font size = 2>Points required/Probability for [game]: [tension_master.antagonistmodes[game]]<br></font>"
+		usr << browse(output,"window=tensionreport;size=480x480")

@@ -6,6 +6,9 @@
 #define COOLDOWN_TIME 12000 // Twenty minutes
 #define MIN_ROUND_TIME 18000
 
+
+#define FLAT_PERCENT 0
+
 //estimated stats
 //80 minute round
 //60 player server
@@ -40,19 +43,9 @@ var/global/datum/tension/tension_master
 	var/round3 = 0
 	var/round4 = 0
 
-	var/list/antagonistmodes = list (
-	"POINTS_FOR_TRATIOR" 		=	100000,
-	"POINTS_FOR_CHANGLING"		=	120000,
-	"POINTS_FOR_REVS"			=	150000,
-	"POINTS_FOR_MALF"			=	250000,
-	"POINTS_FOR_WIZARD"			=	150000,
- 	"POINTS_FOR_CULT"			=	150000,
- 	"POINTS_FOR_NUKETEAM"		=	250000,
- 	"POINTS_FOR_ALIEN"			=	200000,
- 	"POINTS_FOR_NINJA"			=	200000,
- 	"POINTS_FOR_DEATHSQUAD"		=	500000,
- 	"POINTS_FOR_BORGDEATHSQUAD" =	500000
-	)
+	var/list/antagonistmodes = null
+
+
 
 	var/list/potentialgames = list()
 
@@ -64,11 +57,41 @@ var/global/datum/tension/tension_master
 		adminhelps=0
 		air_alarms=0
 
+		if(FLAT_PERCENT)						// I cannot into balance
+			antagonistmodes = list (
+			"POINTS_FOR_TRATIOR" 		=	6,
+			"POINTS_FOR_CHANGLING"		=	6,
+			"POINTS_FOR_REVS"			=	3,
+			"POINTS_FOR_MALF"			=	1,
+			"POINTS_FOR_WIZARD"			=	2,
+		 	"POINTS_FOR_CULT"			=	3,
+		 	"POINTS_FOR_NUKETEAM"		=	2,
+		 	"POINTS_FOR_ALIEN"			=	5,
+		 	"POINTS_FOR_NINJA"			=	3,
+		 	"POINTS_FOR_DEATHSQUAD"		=	2,
+		 	"POINTS_FOR_BORGDEATHSQUAD" =	2
+			)
+
+		else
+			antagonistmodes = list (
+			"POINTS_FOR_TRATIOR" 		=	100000,
+			"POINTS_FOR_CHANGLING"		=	120000,
+			"POINTS_FOR_REVS"			=	150000,
+			"POINTS_FOR_MALF"			=	250000,
+			"POINTS_FOR_WIZARD"			=	150000,
+		 	"POINTS_FOR_CULT"			=	150000,
+		 	"POINTS_FOR_NUKETEAM"		=	250000,
+		 	"POINTS_FOR_ALIEN"			=	200000,
+		 	"POINTS_FOR_NINJA"			=	200000,
+		 	"POINTS_FOR_DEATHSQUAD"		=	500000,
+		 	"POINTS_FOR_BORGDEATHSQUAD" =	500000
+			)
+
 	proc/process()
 		score += get_num_players()*PLAYER_WEIGHT
 
 		if(config.Tensioner_Active)
-			if(score > 100000 && world.time > MIN_ROUND_TIME)
+			if(world.time > MIN_ROUND_TIME)
 				round1++
 				if(!supress && !cooldown)
 					if(prob(1) || forcenexttick)
@@ -80,21 +103,34 @@ var/global/datum/tension/tension_master
 
 							for (var/mob/M in world)
 								if (M.client && M.client.holder)
-									M << "The tensioner wishes to create additional antagonists!  Press (<a href='?src=\ref[tension_master];Supress=1'>this</a>) in 30 seconds to abort!"
+									M << "<font color='red' size='6'><b> The tensioner wishes to create additional antagonists!  Press (<a href='?src=\ref[tension_master];Supress=1'>this</a>) in 60 seconds to abort!</b></font>"
 
-							spawn(300)
+							spawn(600)
 								if(!supress)
 									cooldown = 1
 									spawn(COOLDOWN_TIME)
 										cooldown = 0
 									round4++
-									for(var/V in antagonistmodes)			// OH SHIT SOMETHING IS GOING TO HAPPEN NOW
-										if(antagonistmodes[V] < score)
-											potentialgames.Add(V)
-											antagonistmodes.Remove(V)
 
-									if(potentialgames.len)
-										var/thegame = pick(potentialgames)
+									if(!antagonistmodes.len)
+										return
+
+									var/thegame = null
+
+									if(FLAT_PERCENT)
+										thegame = pickweight(antagonistmodes)
+										antagonistmodes.Remove(thegame)
+
+									else
+										for(var/V in antagonistmodes)			// OH SHIT SOMETHING IS GOING TO HAPPEN NOW
+											if(antagonistmodes[V] < score)
+												potentialgames.Add(V)
+												antagonistmodes.Remove(V)
+										thegame = pick(potentialgames)
+
+
+									if(thegame)
+
 
 										log_admin("The tensioner fired, and decided on [thegame]")
 
@@ -686,9 +722,9 @@ var/global/datum/tension/tension_master
 			for (var/obj/effect/landmark/L in world)
 				if (L.name == "Syndicate-Commando-Bomb")
 					new /obj/effect/spawner/newbomb/timer/syndicate(L.loc)
-					del(L)
+				//	del(L)
 
-			return 1 // Has to return one before it knows if there's a wizard to prevent the parent from automatically selecting another game mode.
+		return 1 // Has to return one before it knows if there's a wizard to prevent the parent from automatically selecting another game mode.
 
 
 	proc/makeBorgDeathsquad()
@@ -757,7 +793,7 @@ var/global/datum/tension/tension_master
 				//	P.name = "Spec. Ops. Manual"
 
 
-			return 1 // Has to return one before it knows if there's a wizard to prevent the parent from automatically selecting another game mode.
+		return 1 // Has to return one before it knows if there's a wizard to prevent the parent from automatically selecting another game mode.
 
 
 
