@@ -130,25 +130,30 @@
 /mob/living/carbon/human/proc/drip(var/amt as num)
 	if(!amt)
 		return
+
+	var/amm = 0.1 * amt
 	var/turf/T = get_turf(src)
 	var/list/obj/effect/decal/cleanable/blood/drip/nums = list()
-	var/amm = 0.1 * amt
+	var/list/icon_states = list("1","2","3","4","5")
+	
 	vessel.remove_reagent("blood",amm)
-	var/list/hax = list("1","2","3","4","5")
+	
 	for(var/obj/effect/decal/cleanable/blood/drip/G in T)
 		nums += G
-		hax.Remove(G.icon_state)
+		icon_states.Remove(G.icon_state)
 		if(nums.len >= 3)
 			var/obj/effect/decal/cleanable/blood/drip/D = pick(nums)
 			D.blood_DNA.len++
 			D.blood_DNA[D.blood_DNA.len] = list(dna.unique_enzymes,dna.b_type)
 			if(virus2)
-				D.virus2 += virus2.getcopy()
+				D.virus2 = virus2.getcopy()
 			return
+	
 	var/obj/effect/decal/cleanable/blood/drip/this = new(T)
-	this.icon_state = pick(hax)
+	this.icon_state = pick(icon_states)
 	this.blood_DNA = list(list(dna.unique_enzymes,dna.b_type))
 	this.blood_owner = src
+	
 	if(virus2)
 		this.virus2 = virus2.getcopy()
 
