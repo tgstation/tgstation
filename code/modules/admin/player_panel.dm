@@ -65,8 +65,11 @@
 						dat += "<td>[M.mind.assigned_role] (No ID)</td>"
 
 					else if(isnull(id.assignment))		// Preventing runtime errors blocking the player panel
-						usr << "<font color=red>ERROR:</font> Inform the coders that an [id.name] was checked for its assignment variable, and it was null."
-						dat += "<td><font color=red>ERROR</font></td>"
+						if(istype(id, /obj/item/weapon/card/id/syndicate))
+							dat += "<td><font color=purple>Antagonist</font></td>"
+						else
+							usr << "<font color=red>ERROR:</font> Inform the coders that an [id.name] was checked for its assignment variable, and it was null."
+							dat += "<td><font color=red>ERROR</font></td>"
 
 					else
 						if(M.mind.assigned_role == id.assignment)			// Polymorph
