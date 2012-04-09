@@ -340,6 +340,12 @@
 	//First check to see if we can do things
 	if(restrained())	return 0
 
+	/*
+	if(istype(src,/mob/living/carbon))
+		if(src.l_hand && src.r_hand)
+			return 0
+	*/
+
 	var/dense_object = 0
 	for(var/turf/turf in oview(1,src))
 		if(istype(turf,/turf/space))

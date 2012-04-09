@@ -84,8 +84,9 @@
 			if(prob(50))
 				src.dump_everything()
 				del(src)
-				return
+			return
 		else
+			return
 	return
 
 

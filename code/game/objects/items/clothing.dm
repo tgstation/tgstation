@@ -270,6 +270,23 @@ THERMAL GLASSES
 		usr << "You push the mask up out of your face."
 	usr.update_clothing()
 
+/obj/item/clothing/head/cargosoft/dropped()
+	src.icon_state = "cargosoft"
+	src.flipped=0
+	..()
+
+/obj/item/clothing/head/cargosoft/verb/flip()
+	set category = "Object"
+	set name = "Flip cap"
+	src.flipped = !src.flipped
+	if(src.flipped)
+		icon_state = "cargosoft_flipped"
+		usr << "You flip the hat backwards."
+	else
+		icon_state = "cargosoft"
+		usr << "You flip the hat back in normal position."
+
+
 /obj/item/clothing/shoes/magboots/verb/toggle()
 	set name = "Toggle Magboots"
 	set category = "Object"
