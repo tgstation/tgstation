@@ -675,7 +675,7 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 /turf/simulated/floor
 
 	//Note to coders, the 'intact' var can no longer be used to determine if the floor is a plating or not.
-	//Use the is_plating(), is_sttel_floor() and is_light_floor() procs instead. --Errorage
+	//Use the is_plating(), is_steel_floor() and is_light_floor() procs instead. --Errorage
 	name = "floor"
 	icon = 'floors.dmi'
 	icon_state = "floor"
@@ -1100,13 +1100,14 @@ turf/simulated/floor/return_siding_icon_state()
 		return
 
 	if(istype(C, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = C
 		if (is_plating())
-			if (C:amount >= 2)
+			if (R.amount >= 2)
 				user << "\blue Reinforcing the floor..."
-				if(do_after(user, 30) && C && C:amount >= 2 && is_plating())
+				if(do_after(user, 30) && R && R.amount >= 2 && is_plating())
 					ReplaceWithEngineFloor()
 					playsound(src.loc, 'Deconstruct.ogg', 80, 1)
-					C:use(2)
+					R.use(2)
 					return
 			else
 				user << "\red You need more rods."
@@ -1116,23 +1117,26 @@ turf/simulated/floor/return_siding_icon_state()
 
 	if(istype(C, /obj/item/stack/tile))
 		if(is_plating())
-			var/obj/item/stack/tile/T = C
-			floor_tile = new T.type
-			intact = 1
-			if(istype(T,/obj/item/stack/tile/light))
-				floor_tile:state = T:state
-				floor_tile:on = T:on
-			if(istype(T,/obj/item/stack/tile/grass))
-				for(var/direction in cardinal)
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						FF.update_icon() //so siding get updated properly
-			T.use(1)
-			update_icon()
-			levelupdate()
-			playsound(src.loc, 'Genhit.ogg', 50, 1)
-		else
-			user << "\blue This section already has a tile on it. Use a crowbar to pry it off."
+			if(!broken && !burnt)
+				var/obj/item/stack/tile/T = C
+				floor_tile = new T.type
+				intact = 1
+				if(istype(T,/obj/item/stack/tile/light))
+					var/obj/item/stack/tile/light/L = T
+					var/obj/item/stack/tile/light/F = floor_tile
+					F.state = L.state
+					F.on = L.on
+				if(istype(T,/obj/item/stack/tile/grass))
+					for(var/direction in cardinal)
+						if(istype(get_step(src,direction),/turf/simulated/floor))
+							var/turf/simulated/floor/FF = get_step(src,direction)
+							FF.update_icon() //so siding gets updated properly
+				T.use(1)
+				update_icon()
+				levelupdate()
+				playsound(src.loc, 'Genhit.ogg', 50, 1)
+			else
+				user << "\blue This section is too damaged to support a tile. Use a welder to fix the damage."
 
 
 	if(istype(C, /obj/item/weapon/cable_coil))
@@ -1150,6 +1154,19 @@ turf/simulated/floor/return_siding_icon_state()
 			make_plating()
 		else
 			user << "\red You cannot shovel this."
+
+	if(istype(C, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/welder = C
+		if(welder.welding && (is_plating()))
+			if(broken || burnt)
+				if(welder.remove_fuel(0,user))
+					user << "\red You fix some dents on the broken plating."
+					playsound(src.loc, 'Welder.ogg', 80, 1)
+					icon_state = "plating"
+					burnt = 0
+					broken = 0
+				else
+					user << "\blue You need more welding fuel to complete this task."
 
 /turf/unsimulated/floor/attack_paw(user as mob)
 	return src.attack_hand(user)
@@ -1196,19 +1213,21 @@ turf/simulated/floor/return_siding_icon_state()
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 
 	if (istype(C, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = C
 		user << "\blue Constructing support lattice ..."
 		playsound(src.loc, 'Genhit.ogg', 50, 1)
 		ReplaceWithLattice()
-		C:use(1)
+		R.use(1)
 		return
 
 	if (istype(C, /obj/item/stack/tile/steel))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
+			var/obj/item/stack/tile/steel/S = C
 			del(L)
 			playsound(src.loc, 'Genhit.ogg', 50, 1)
-			C:build(src)
-			C:use(1)
+			S.build(src)
+			S.use(1)
 			return
 		else
 			user << "\red The plating is going to need some support."
