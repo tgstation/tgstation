@@ -514,7 +514,7 @@
 #include "code\game\machinery\bots\medbot.dm"
 #include "code\game\machinery\bots\mulebot.dm"
 #include "code\game\machinery\bots\secbot.dm"
-#include "code\game\machinery\computer\AIcore.dm"
+#include "code\game\machinery\computer\ai_core.dm"
 #include "code\game\machinery\computer\aifixer.dm"
 #include "code\game\machinery\computer\arcade.dm"
 #include "code\game\machinery\computer\atmos.dm"

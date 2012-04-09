@@ -161,7 +161,7 @@
 			var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src)
 			G.amount = 50
 			G.loc = src
-		var/obj/item/stack/sheet/r_metal/R = new /obj/item/stack/sheet/r_metal(src)
+		var/obj/item/stack/sheet/plasteel/R = new /obj/item/stack/sheet/plasteel(src)
 		R.amount = 50
 		R.loc = src
 		var/obj/item/weapon/storage/box/B1 = new /obj/item/weapon/storage/box(src)

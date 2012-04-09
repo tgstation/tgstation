@@ -71,7 +71,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	null, \
 	new/datum/stack_recipe("canister", /obj/machinery/portable_atmospherics/canister, 2, one_per_turf = 1), \
 	null, \
-	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/steel, 1, 4, 10), \
+	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/plasteel, 1, 4, 10), \
 	new/datum/stack_recipe("metal rod", /obj/item/stack/rods, 1, 2, 60), \
 	null, \
 	new/datum/stack_recipe("computer frame", /obj/structure/computerframe, 5, one_per_turf = 1), \
@@ -98,27 +98,27 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 // REINFORCED METAL SHEET
 
 // /datum/stack_recipe/New(title, result_type, req_amount, res_amount, max_res_amount, time, one_per_turf, on_floor = 0)
-var/global/list/datum/stack_recipe/r_metal_recipes = list ( \
+var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts/reinforced, 2), \
 	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, one_per_turf = 1), \
 	)
 
-/obj/item/stack/sheet/r_metal
+/obj/item/stack/sheet/plasteel
 	New(var/loc, var/amount=null)
-		recipes = r_metal_recipes
+		recipes = plasteel_recipes
 		return ..()
 
 
 
 // TILES
 
-/obj/item/stack/tile/steel/New(var/loc, var/amount=null)
+/obj/item/stack/tile/plasteel/New(var/loc, var/amount=null)
 	..()
 	src.pixel_x = rand(1, 14)
 	src.pixel_y = rand(1, 14)
 	return
 
-/obj/item/stack/tile/steel/attack_self(mob/user as mob)
+/obj/item/stack/tile/plasteel/attack_self(mob/user as mob)
 	if (usr.stat)
 		return
 	var/T = user.loc
@@ -133,7 +133,7 @@ var/global/list/datum/stack_recipe/r_metal_recipes = list ( \
 	use(1)
 	return
 
-/obj/item/stack/tile/steel/proc/build(turf/S as turf)
+/obj/item/stack/tile/plasteel/proc/build(turf/S as turf)
 	S.ReplaceWithPlating()
 //	var/turf/simulated/floor/W = S.ReplaceWithFloor()
 //	W.make_plating()

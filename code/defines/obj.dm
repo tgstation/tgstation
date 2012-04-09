@@ -1320,31 +1320,6 @@
 	throwforce = 14.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 
-/obj/item/stack/sheet/r_metal
-	name = "steel"
-	singular_name = "steel sheet"
-	desc = "This sheet is an alloy of iron and plasma."
-	icon_state = "sheet-r_metal"
-	item_state = "sheet-metal"
-	m_amt = 7500
-	throwforce = 15.0
-	flags = FPRINT | TABLEPASS | CONDUCT
-	origin_tech = "materials=2"
-
-/obj/item/stack/tile/steel
-	name = "Metal floor tile"
-	singular_name = "Steel floor tile"
-	desc = "Those could work as a pretty decent throwing weapon"
-	icon_state = "tile"
-	w_class = 3.0
-	force = 6.0
-	m_amt = 937.5
-	throwforce = 15.0
-	throw_speed = 5
-	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT
-	max_amount = 60
-
 /obj/item/stack/sheet/plasteel
 	name = "plasteel"
 	singular_name = "plasteel sheet"
