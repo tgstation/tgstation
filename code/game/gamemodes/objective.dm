@@ -215,7 +215,7 @@ datum/objective/silence
 		var/area/pod4 =    locate(/area/shuttle/escape_pod5/centcom)
 
 		for(var/mob/living/player in world)
-			if (player == owner)
+			if (player == owner.current)
 				continue
 			if (player.mind)
 				if (player.stat != 2)

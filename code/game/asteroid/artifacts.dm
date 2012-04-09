@@ -78,6 +78,9 @@ var/global/list/spawned_surprises = list()
 		if (!(user.mutations & TK))
 			user.mutations |= TK
 
+		ticker.mode.traitors += user.mind
+		user.mind.special_role = "Avatar of the Wish Granter"
+
 		var/datum/objective/silence/silence = new
 		silence.owner = user.mind
 		user.mind.objectives += silence
