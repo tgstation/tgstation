@@ -650,12 +650,14 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
 	if(confirm != "Yes") return
+	//Due to the delay here its easy for something to have happened to the mob
+	if(!M)	return
 
 	if(usr.key != M.key && M.client)
 		log_admin("[key_name(usr)] has gibbed [key_name(M)]")
 		message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(M)]", 1)
 
-	if (istype(M, /mob/dead/observer))
+	if(istype(M, /mob/dead/observer))
 		gibs(M.loc, M.viruses)
 		return
 

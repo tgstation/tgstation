@@ -975,85 +975,43 @@ note dizziness decrements automatically in the mob's Life() proc.
 					statpanel("Spells","[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
 					statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
-#if 1
-/client/proc/station_explosion_cinematic(var/derp)
-	if(mob)
-		var/mob/M = mob
-		M.loc = null // HACK, but whatever, this works
 
-		if (M.client&&M.hud_used)//They may some times not have a hud, apparently.
-			var/obj/screen/boom = M.hud_used.station_explosion
-			M.client.screen += boom
-			if(ticker)
-				switch(ticker.mode.name)
-					if("nuclear emergency")
-						flick("start_nuke", boom)
-					if("AI malfunction")
-						flick("start_malf", boom)
-					else
-						boom.icon_state = "start"
-			sleep(40)
-			M << sound('explosionfar.ogg')
-			boom.icon_state = "end"
-			if(!derp) flick("explode", boom)
-			else flick("explode2", boom)
-			sleep(40)
-			if(ticker)
-				switch(ticker.mode.name)
-					if("nuclear emergency")
-						if(!derp) boom.icon_state = "loss_nuke"
-						else boom.icon_state = "loss_nuke2"
-					if("malfunction")
-						boom.icon_state = "loss_malf"
-					if("blob")
-						return//Nothin here yet and the general one does not fit.
-					else
-						boom.icon_state = "loss_general"
-#elif
-/client/proc/station_explosion_cinematic(var/derp)
-	if(!mob)
-		return
 
-	var/mob/M = mob
-	M.loc = null // HACK, but whatever, this works
+/client/proc/station_explosion_cinematic(var/station_missed)
+	if(!mob || !ticker)	return
+	if(!mob.client || !mob.hud_used || !ticker.mode)	return
+//	M.loc = null this might make it act weird but fuck putting them in nullspace, it causes issues.
+	var/obj/screen/boom = mob.hud_used.station_explosion
+	if(!istype(boom))	return
 
-	if(!M.hud_used)
-		return
+	mob.client.screen += boom
 
-	var/obj/screen/boom = M.hud_used.station_explosion
-	screen += boom
-	if(ticker)
-		switch(ticker.mode.name)
-			if("nuclear emergency")
-				flick("start_nuke", boom)
-			if("AI malfunction")
-				flick("start_malf", boom)
-			else
-				boom.icon_state = "start"
+	switch(ticker.mode.name)
+		if("nuclear emergency")
+			flick("start_nuke", boom)
+		if("AI malfunction")
+			flick("start_malf", boom)
+		else
+			boom.icon_state = "start"
+
 	sleep(40)
-	M << sound('explosionfar.ogg')
+	mob << sound('explosionfar.ogg')
 	boom.icon_state = "end"
-	if(!derp)
-		flick("explode", boom)
-	else
-		flick("explode2", boom)
+	if(!station_missed) flick("explode", boom)
+	else flick("explode2", boom)
 	sleep(40)
-	if(ticker)
-		switch(ticker.mode.name)
-			if("nuclear emergency")
-				if (!derp)
-					boom.icon_state = "loss_nuke"
-				else
-					boom.icon_state = "loss_nuke2"
-			if("AI malfunction")
-				boom.icon_state = "loss_malf"
-			else
-				boom.icon_state = "loss_general"
-#endif
 
-
-
-
+	switch(ticker.mode.name)
+		if("nuclear emergency")
+			if(!station_missed) boom.icon_state = "loss_nuke"
+			else boom.icon_state = "loss_nuke2"
+		if("malfunction")
+			boom.icon_state = "loss_malf"
+		if("blob")
+			return//Nothin here yet and the general one does not fit.
+		else
+			boom.icon_state = "loss_general"
+	return
 
 
 // facing verbs
