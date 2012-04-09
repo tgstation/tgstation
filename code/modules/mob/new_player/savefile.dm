@@ -130,7 +130,7 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["job_engsec_med"] >> src.job_engsec_med
 	F["job_engsec_low"] >> src.job_engsec_low
 
-	F[OOC_Notes"] >> src.metadata
+	F["OOC_Notes"] >> src.metadata
 
 	if(isnull(metadata))
 		metadata = ""

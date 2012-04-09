@@ -9,6 +9,7 @@
 	var/construction_time = 120
 	var/construction_cost = list("metal"=10000)
 	var/locked = 0
+	var/require_module = 0
 
 /obj/item/borg/upgrade/proc/action()
 	return
@@ -17,6 +18,7 @@
 /obj/item/borg/upgrade/reset/
 	name = "Borg module reset board"
 	desc = "Used to reset a borg's module. Destroys any other upgrades applied to the borg."
+	require_module = 1
 
 /obj/item/borg/upgrade/reset/action(var/mob/living/silicon/robot/R)
 	R.uneq_all()
@@ -37,6 +39,7 @@
 	name = "Borg Flash-Supression"
 	desc = "A highly advanced, complicated system for supressing incoming flashes directed at the borg's optical processing system."
 	construction_cost = list("metal"=10000,"gold"=2000,"silver"=3000,"glass"=2000, "diamond"=5000)
+	require_module = 1
 
 
 /obj/item/borg/upgrade/flashproof/New()   // Why the fuck does the fabricator make a new instance of all the items?
@@ -45,3 +48,18 @@
 /obj/item/borg/upgrade/flashproof/action(var/mob/living/silicon/robot/R)
 	if(R.module)
 		R.module += src
+
+
+/obj/item/borg/upgrade/restart/
+	name = "Borg emergancy restart module"
+	desc = "Used to force a restart of a disabled-but-repaired borg, bringing it back online."
+	construction_cost = list("metal"=60000 , "glass"=5000)
+
+
+/obj/item/borg/upgrade/restart/action(var/mob/living/silicon/robot/R)
+	if(!R.key)
+		for(var/mob/dead/observer/ghost in world)
+			if(ghost.corpse == R && ghost.client)
+				ghost.client.mob = ghost.corpse
+
+	R.stat = 0

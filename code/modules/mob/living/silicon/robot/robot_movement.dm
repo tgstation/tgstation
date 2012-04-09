@@ -6,11 +6,10 @@
 	if(..())	return 1
 	return 0
 
-/* No longer needed, but I'll leave it here incase we plan to re-use it.
+ //No longer needed, but I'll leave it here incase we plan to re-use it.
 /mob/living/silicon/robot/movement_delay()
 	var/tally = 0 //Incase I need to add stuff other than "speed" later
 
 	tally = speed
 
 	return tally
-*/
