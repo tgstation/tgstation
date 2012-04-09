@@ -1,4 +1,4 @@
-/turf/DblClick()
+/*/turf/DblClick()
 	if(istype(usr, /mob/living/silicon/ai))
 		return move_camera_by_click()
 	if(usr.stat || usr.restrained() || usr.lying)
@@ -1562,4 +1562,4 @@ turf/simulated/floor/return_siding_icon_state()
 	if(flags & NOJAUNT)
 		return
 	flags |= NOJAUNT
-	overlays += image('water.dmi',src,"holywater")
+	overlays += image('water.dmi',src,"holywater")*/

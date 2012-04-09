@@ -1,6 +1,7 @@
 //SUPPLY PACKS
 //NOTE: only secure crate types use the access var (and are lockable)
 //NOTE: hidden packs only show up when the computer has been hacked.
+//ANOTER NOTE: Contraband is obtainable through modified supplycomp circuitboards.
 //BIG NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
 /datum/supply_packs/specialops
 	name = "Special Ops supplies"
@@ -575,6 +576,22 @@
 	for(var/i = 0,i<min(3,contains.len),i++)
 		tempContains += pick(contains)
 	contains = tempContains
+	..()
+
+
+/datum/supply_packs/contraband
+	contains = list("/obj/item/weapon/contraband/poster",) //We randomly pick 5 items from this list through the constructor, look below
+	name = "Contraband Crate"
+	cost = 30
+	containertype = "/obj/structure/closet/crate/contraband"
+	containername = "Contraband crate"
+	contraband = 1
+
+/datum/supply_packs/contraband/New()
+	var/list/tempContains = list()
+	for(var/i = 0,i<5,i++)
+		tempContains += pick(contains)
+	src.contains = tempContains
 	..()
 
 //SUPPLY PACKS

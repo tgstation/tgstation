@@ -149,6 +149,7 @@
 	name = "Circuit board (Supply shuttle console)"
 	build_path = "/obj/machinery/computer/supplycomp"
 	origin_tech = "programming=3"
+	var/contraband_enabled = 0
 /obj/item/weapon/circuitboard/operating
 	name = "Circuit board (Operating Computer)"
 	build_path = "/obj/machinery/computer/operating"
@@ -180,6 +181,28 @@
 	build_path = "/obj/machinery/computer/diseasesplicer"
 
 
+
+/obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I,/obj/item/device/multitool))
+		var/catastasis = src.contraband_enabled
+		var/opposite_catastasis
+		if(catastasis)
+			opposite_catastasis = "STANDARD"
+			catastasis = "BROAD"
+		else
+			opposite_catastasis = "BROAD"
+			catastasis = "STANDARD"
+
+		switch( alert("Current receiver spectrum is set to: [catastasis]","Multitool-Circuitboard interface","Switch to [opposite_catastasis]","Cancel") )
+		//switch( alert("Current receiver spectrum is set to: " {(src.contraband_enabled) ? ("BROAD") : ("STANDARD")} , "Multitool-Circuitboard interface" , "Switch to " {(src.contraband_enabled) ? ("STANDARD") : ("BROAD")}, "Cancel") )
+			if("Switch to STANDARD","Switch to BROAD")
+				src.contraband_enabled = !src.contraband_enabled
+
+			if("Cancel")
+				return
+			else
+				user << "DERP! BUG! Report this (And what you were doing to cause it) to Agouri"
+	return
 
 /obj/structure/computerframe/attackby(obj/item/P as obj, mob/user as mob)
 	switch(state)
@@ -277,4 +300,8 @@
 				if(circuit.id) B:id = circuit.id
 				if(circuit.records) B:records = circuit.records
 				if(circuit.frequency) B:frequency = circuit.frequency
+				if(istype(circuit,/obj/item/weapon/circuitboard/supplycomp))
+					var/obj/machinery/computer/supplycomp/SC = B
+					var/obj/item/weapon/circuitboard/supplycomp/C = circuit
+					SC.can_order_contraband = C.contraband_enabled
 				del(src)

@@ -493,6 +493,43 @@
 		var/obj/item/apc_frame/AH = W
 		AH.try_build(src)
 
+	else if(istype(W,/obj/item/weapon/contraband/poster))  //POSTERSSSS
+		var/obj/item/weapon/contraband/poster/P = W
+		if(P.resulting_poster)
+			var/check = 0
+			var/stuff_on_wall = 0
+			for( var/obj/O in src.contents) //Let's see if it already has a poster on it or too much stuff
+				if(istype(O,/obj/effect/decal/poster))
+					check = 1
+					break
+				stuff_on_wall++
+				if(stuff_on_wall==3)
+					check = 1
+					break
+
+			if(check)
+				user << "<FONT COLOR='RED'>The wall is far too cluttered to place a poster!</FONT>"
+				return
+
+			user << "<FONT COLOR='blue'>You start placing the poster on the wall...</FONT>" //Looks like it's uncluttered enough. Place the poster.
+
+			P.resulting_poster.loc = src
+			var/temp = P.resulting_poster.icon_state
+			var/temp_loc = user.loc
+			P.resulting_poster.icon_state = "poster_being_set"
+			playsound(P.resulting_poster.loc, 'poster_being_created.ogg', 100, 1)
+			sleep(22)
+
+			if(user.loc == temp_loc)//Let's check if he still is there
+				user << "<FONT COLOR='blue'>You place the poster!</FONT>"
+				P.resulting_poster.icon_state = temp
+				src.contents += P.resulting_poster
+				del(P)
+			else
+				user << "<FONT COLOR='BLUE'>You stop placing the poster.</FONT>"
+				P.resulting_poster.loc = P
+				P.resulting_poster.icon_state = temp
+
 	else
 		return attack_hand(user)
 	return
@@ -726,6 +763,45 @@
 	else if( istype(W,/obj/item/apc_frame) )
 		var/obj/item/apc_frame/AH = W
 		AH.try_build(src)
+
+	//Poster stuff
+	else if(istype(W,/obj/item/weapon/contraband/poster))
+		var/obj/item/weapon/contraband/poster/P = W
+		if(P.resulting_poster)
+			var/check = 0
+			var/stuff_on_wall = 0
+			for( var/obj/O in src.contents) //Let's see if it already has a poster on it or too much stuff
+				if(istype(O,/obj/effect/decal/poster))
+					check = 1
+					break
+				stuff_on_wall++
+				if(stuff_on_wall==3)
+					check = 1
+					break
+
+			if(check)
+				user << "<FONT COLOR='RED'>The wall is far too cluttered to place a poster!</FONT>"
+				return
+
+			user << "<FONT COLOR='blue'>You start placing the poster on the wall...</FONT>" //Looks like it's uncluttered enough. Place the poster.
+
+			P.resulting_poster.loc = src
+			var/temp = P.resulting_poster.icon_state
+			var/temp_loc = user.loc
+			P.resulting_poster.icon_state = "poster_being_set"
+			playsound(P.resulting_poster.loc, 'poster_being_created.ogg', 100, 1)
+			sleep(22)
+
+			if(user.loc == temp_loc)//Let's check if he still is there
+				user << "<FONT COLOR='blue'>You place the poster!</FONT>"
+				P.resulting_poster.icon_state = temp
+				src.contents += P.resulting_poster
+				del(P)
+			else
+				user << "<FONT COLOR='BLUE'>You stop placing the poster.</FONT>"
+				P.resulting_poster.loc = P
+				P.resulting_poster.icon_state = temp
+		return
 
 	//Finally, CHECKING FOR FALSE WALLS if it isn't damaged
 	else if(!d_state)

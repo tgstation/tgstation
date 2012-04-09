@@ -94,6 +94,7 @@ var/ordernum=0
 	circuit = "/obj/item/weapon/circuitboard/supplycomp"
 	var/temp = null
 	var/hacked = 0
+	var/can_order_contraband = 0
 
 /obj/machinery/computer/ordercomp
 	name = "Supply ordering console"
@@ -102,6 +103,7 @@ var/ordernum=0
 	circuit = "/obj/item/weapon/circuitboard/ordercomp"
 	var/temp = null
 	var/reqtime = 0 //Cooldown for requisitions - Quarxink
+
 /obj/effect/marker/supplymarker
 	icon_state = "X"
 	icon = 'mark.dmi'
@@ -124,6 +126,7 @@ var/ordernum=0
 	var/containername = null
 	var/access = null
 	var/hidden = 0
+	var/contraband = 0
 
 /proc/supply_ticker()
 	//world << "Supply ticker ticked : Adding [SUPPLY_POINTSPER] to [supply_shuttle_points]."
@@ -310,7 +313,7 @@ This method wont take into account storage items developed in the future and doe
 		src.temp = "Supply points: [supply_shuttle_points]<BR><HR><BR>Request what?<BR><BR>"
 		for(var/S in (typesof(/datum/supply_packs) - /datum/supply_packs) )
 			var/datum/supply_packs/N = new S()
-			if(N.hidden) continue																	//Have to send the type instead of a reference to
+			if(N.hidden || N.contraband) continue																	//Have to send the type instead of a reference to
 			src.temp += "<A href='?src=\ref[src];doorder=[N.type]'>[N.name]</A> Cost: [N.cost] "    //the obj because it would get caught by the garbage
 			src.temp += "<A href='?src=\ref[src];printform=[N.type]'>Print Requisition</A><br>"     //collector. oh well.
 		src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
@@ -446,6 +449,8 @@ This method wont take into account storage items developed in the future and doe
 				user << "\blue You disconnect the monitor."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 				var/obj/item/weapon/circuitboard/supplycomp/M = new /obj/item/weapon/circuitboard/supplycomp( A )
+				if(src.can_order_contraband)
+					M.contraband_enabled = 1
 				for (var/obj/C in src)
 					C.loc = src.loc
 				A.circuit = M
@@ -516,6 +521,7 @@ This method wont take into account storage items developed in the future and doe
 		for(var/S in (typesof(/datum/supply_packs) - /datum/supply_packs) )
 			var/datum/supply_packs/N = new S()
 			if(N.hidden && !src.hacked) continue													//Have to send the type instead of a reference to
+			if(N.contraband && !src.can_order_contraband){continue;} //Agouri -Kavalamarker
 			src.temp += "<A href='?src=\ref[src];doorder=[N.type]'>[N.name]</A> Cost: [N.cost]<BR>" //the obj because it would get caught by the garbage
 		src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"								//collector. oh well.
 

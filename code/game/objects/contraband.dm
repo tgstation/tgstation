@@ -166,7 +166,7 @@ obj/effect/decal/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 			if(user.loc != temp_loc)
 				return
 			for (var/mob/O in hearers(5, src.loc))
-				O.show_message("[user.name] rips the [src.name] in a single, decisive motion!" )
+				O.show_message("<FONT COLOR='RED'>[user.name] rips the [src.name] in a single, decisive motion!</FONT>" )
 				playsound(src.loc, 'poster_ripped.ogg', 100, 1)
 				src.ruined = 1
 				src.icon_state = "poster_ripped"
