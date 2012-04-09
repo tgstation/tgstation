@@ -25,7 +25,7 @@
 	holder.rank = rank
 
 	if(!holder.state)
-		var/state = alert("Which state do you the admin to begin in?", "Admin-state", "Play", "Observe", "Neither")
+		var/state = alert("Which state do you want the admin to begin in?", "Admin-state", "Play", "Observe", "Neither")
 		if(state == "Play")
 			holder.state = 1
 			admin_play()
@@ -169,6 +169,8 @@
 			verbs += /client/proc/restartcontroller //Can call via aproccall --I_hate_easy_things.jpg, Mport --Agouri
 			verbs += /client/proc/Blobize//I need to remember to move/remove this later
 			verbs += /client/proc/toggle_clickproc //TODO ERRORAGE (Temporary proc while the enw clickproc is being tested)
+			verbs += /client/proc/toggle_gravity_on
+			verbs += /client/proc/toggle_gravity_off
 			// Moved over from tg's Game Master:
 			verbs += /client/proc/colorooc
 			verbs += /obj/admins/proc/toggle_aliens			//toggle aliens
@@ -420,6 +422,8 @@
 	verbs -= /client/proc/toggle_hear_deadcast
 	verbs -= /client/proc/toggle_hear_radio
 	verbs -= /client/proc/tension_report
+	verbs -= /client/proc/toggle_gravity_on
+	verbs -= /client/proc/toggle_gravity_off
 	verbs -= /client/proc/cmd_admin_change_custom_event
 	verbs -= /client/proc/admin_invis
 	verbs -= /client/proc/callprocgen
