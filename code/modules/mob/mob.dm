@@ -1001,7 +1001,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(ticker)
 				switch(ticker.mode.name)
 					if("nuclear emergency")
-						if (!derp) boom.icon_state = "loss_nuke"
+						if(!derp) boom.icon_state = "loss_nuke"
 						else boom.icon_state = "loss_nuke2"
 					if("malfunction")
 						boom.icon_state = "loss_malf"
