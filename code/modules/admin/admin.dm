@@ -1,4 +1,7 @@
 
+var/global/BSACooldown = 0
+
+
 ////////////////////////////////
 /proc/message_admins(var/text, var/admin_ref = 0)
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
@@ -903,6 +906,92 @@
 					sleep(2)
 					cl.jumptomob(M)
 
+
+
+
+
+	if (href_list["BlueSpaceArtillery"])
+		var/mob/M = locate(href_list["BlueSpaceArtillery"])
+		if(!M)
+			return
+
+		var/choice = alert(src.owner, "Are you sure you wish to hit [key_name(M)] with Blue Space Artillery?",  "Confirm Firing?" , "Yes" , "No")
+		if (choice == "No")
+			return
+
+		if(BSACooldown)
+			src.owner << "Standby!  Reload cycle in progress!  Gunnary crews ready in five seconds!"
+			return
+
+		BSACooldown = 1
+		spawn(50)
+			BSACooldown = 0
+
+
+		M << "You've been hit by bluespace artillery!"
+		log_admin("[key_name(M)] has been hit by Bluespace Artillery fired by [src.owner]")
+		message_admins("[key_name(M)] has been hit by Bluespace Artillery fired by [src.owner]")
+		var/obj/effect/stop/S
+		S = new /obj/effect/stop
+		S.victim = M
+		S.loc = M.loc
+		spawn(20)
+			del(S)
+
+		var/turf/T = get_turf(M)
+		if(T && (istype(T,/turf/simulated/floor/)))
+			if(prob(80))
+				T:break_tile_to_plating()
+			else
+				T:break_tile()
+
+		if(M.health == 1)
+			M.gib()
+		else
+			M.adjustBruteLoss( min( 99 , (M.health - 1) )    )
+			M.Stun(20)
+			M.Weaken(20)
+			M.stuttering = 20
+
+	if (href_list["CentcommReply"])
+		var/mob/M = locate(href_list["CentcommReply"])
+		if(!M)
+			return
+		if(!istype(M, /mob/living/carbon/human))
+			alert("Centcomm cannot transmit to non-humans.")
+			return
+		if((!istype(M:l_ear, /obj/item/device/radio/headset)) && (!istype(M:r_ear, /obj/item/device/radio/headset)))
+			alert("The person you're trying to reply to doesn't have a headset!  Centcomm cannot transmit directly to them.")
+			return
+		var/input = input(src.owner, "Please enter a message to reply to [key_name(M)] via their headset.","Outgoing message from Centcomm", "")
+		if(!input)
+			return
+
+		src.owner << "You sent [input] to [M] via a secure channel."
+		log_admin("[src.owner] replied to [key_name(M)]'s Centcomm message with the message [input].")
+		M << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. [input].  Message ends.\""
+
+		return
+
+	if (href_list["SyndicateReply"])
+		var/mob/M = locate(href_list["SyndicateReply"])
+		if(!M)
+			return
+		if(!istype(M, /mob/living/carbon/human))
+			alert("The Syndicate cannot transmit to non-humans.")
+			return
+		if((!istype(M:l_ear, /obj/item/device/radio/headset)) && (!istype(M:r_ear, /obj/item/device/radio/headset)))
+			alert("The person you're trying to reply to doesn't have a headset!  Centcomm cannot transmit directly to them.")
+			return
+		var/input = input(src.owner, "Please enter a message to reply to [key_name(M)] via their headset.","Outgoing message from The Syndicate", "")
+		if(!input)
+			return
+
+		src.owner << "You sent [input] to [M] via a secure channel."
+		log_admin("[src.owner] replied to [key_name(M)]'s Syndicate message with the message [input].")
+		M << "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. [input].  Message ends.\""
+
+		return
 
 	if (href_list["jumpto"])
 		if(rank in list("Badmin", "Game Admin", "Game Master"))

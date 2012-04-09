@@ -14,6 +14,7 @@
 	var/state = STATE_DEFAULT
 	var/aistate = STATE_DEFAULT
 	var/message_cooldown = 0
+	var/centcomm_message_cooldown = 0
 	var/tmp_alertlevel = 0
 	var/const
 		STATE_DEFAULT = 1
@@ -29,6 +30,7 @@
 	var/status_display_freq = "1435"
 	var/stat_msg1
 	var/stat_msg2
+
 
 
 /obj/machinery/computer/communications/process()
@@ -82,7 +84,7 @@
 						switch(get_security_level())
 							if(SEC_LEVEL_GREEN)
 								feedback_inc("alert_comms_green",1)
-							if(SEC_LEVEL_GREEN)
+							if(SEC_LEVEL_BLUE)
 								feedback_inc("alert_comms_blue",1)
 					tmp_alertlevel = 0
 				else:
@@ -168,6 +170,46 @@
 			stat_msg2 = input("Line 2", "Enter Message Text", stat_msg2) as text|null
 			src.updateDialog()
 
+		// OMG CENTCOMM LETTERHEAD
+		if("MessageCentcomm")
+			if(src.authenticated==2)
+				if(centcomm_message_cooldown)
+					usr << "Arrays recycling.  Please stand by."
+					return
+				var/input = input(usr, "Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "To abort, send an empty message.", "")
+				if(!input || !(usr in view(1,src)))
+					return
+				Centcomm_announce(input, usr)
+				usr << "Message transmitted."
+				log_say("[key_name(usr)] has sent Centcomm a message: [input]")
+				centcomm_message_cooldown = 1
+				spawn(600)//One minute cooldown
+					message_cooldown = 0
+
+
+		// OMG SYNDICATE ...LETTERHEAD
+		if("MessageSyndicate")
+			if((src.authenticated==2) && (src.emagged))
+				if(centcomm_message_cooldown)
+					usr << "Arrays recycling.  Please stand by."
+					return
+				var/input = input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "To abort, send an empty message.", "")
+				if(!input || !(usr in view(1,src)))
+					return
+				Syndicate_announce(input, usr)
+				usr << "Message transmitted."
+				log_say("[key_name(usr)] has sent the Syndicate a message: [input]")
+				centcomm_message_cooldown = 1
+				spawn(600)//One minute cooldown
+					message_cooldown = 0
+
+		if("RestoreBackup")
+			usr << "Backup routing data restored!"
+			src.emagged = 0
+			src.updateDialog()
+
+
+
 		// AI interface
 		if("ai-main")
 			src.aicurrmsg = 0
@@ -214,6 +256,11 @@
 
 	src.updateUsrDialog()
 
+/obj/machinery/computer/communications/attackby(var/obj/I as obj, var/mob/user as mob)
+	if(istype(I,/obj/item/weapon/card/emag/))
+		src.emagged = 1
+		user << "You scramble the communication routing circuits!"
+	..()
 
 /obj/machinery/computer/communications/attack_ai(var/mob/user as mob)
 	return src.attack_hand(user)
@@ -247,6 +294,12 @@
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Log Out</A> \]"
 				if (src.authenticated==2)
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make An Announcement</A> \]"
+					if(src.emagged == 0)
+						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=MessageCentcomm'>Send an emergency message to Centcomm</A> \]"
+					else
+						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=MessageSyndicate'>Send an emergency message to \[UNKNOWN\]</A> \]"
+						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=RestoreBackup'>Restore Backup Routing Data</A> \]"
+
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change alert level</A> \]"
 				if(emergency_shuttle.location==0)
 					if (emergency_shuttle.online)
@@ -303,11 +356,14 @@
 		if(STATE_CONFIRM_LEVEL)
 			dat += "Current alert level: [get_security_level()]<BR>"
 			dat += "Confirm the change to: [num2seclevel(tmp_alertlevel)]<BR>"
-			dat += "<A HREF='?src=\ref[src];operation=swipeidseclevel'>Swipt ID</A> to confirm change.<BR>"
+			dat += "<A HREF='?src=\ref[src];operation=swipeidseclevel'>Swipe ID</A> to confirm change.<BR>"
 
 	dat += "<BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
 	user << browse(dat, "window=communications;size=400x500")
 	onclose(user, "communications")
+
+
+
 
 /obj/machinery/computer/communications/proc/interact_ai(var/mob/living/silicon/ai/user as mob)
 	var/dat = ""
@@ -361,6 +417,10 @@
 	if(usr.stat == 2)
 		usr << "You can't call the shuttle because you are dead!"
 		return
+
+	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
+	if(confirm != "Yes") return
+
 	call_shuttle_proc(src)
 
 	// hack to display shuttle timer
@@ -388,11 +448,15 @@
 		return
 
 	if(world.time < 6000) // Ten minute grace period to let the game get going without lolmetagaming. -- TLE
-		user << "The emergency shuttle is refueling. Please wait another [(6000-world.time)/10] seconds before trying again."
+		user << "The emergency shuttle is refueling. Please wait another [round((6000-world.time)/600)] minutes before trying again."
 		return
 
 	if(emergency_shuttle.direction == -1)
-		user << "Shuttle may not be called while returning to CentCom."
+		user << "The emergency shuttle may not be called while returning to CentCom."
+		return
+
+	if(emergency_shuttle.online)
+		user << "The emergency shuttle is already on its way."
 		return
 
 	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "sandbox")
@@ -426,7 +490,7 @@
 
 /obj/machinery/computer/communications/proc/post_status(var/command, var/data1, var/data2)
 
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(status_display_freq)
+	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
 
 	if(!frequency) return
 
