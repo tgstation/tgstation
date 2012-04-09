@@ -1231,8 +1231,8 @@
 				else
 					if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
 						src.buffer1owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
-				else
-					src.buffer1owner = src.connected.occupant.real_name
+					else
+						src.buffer1owner = src.connected.occupant.real_name
 				src.buffer1label = "Unique Identifier"
 				src.buffer1type = "ui"
 				dopage(src,"buffermenu")
@@ -1244,8 +1244,8 @@
 				else
 					if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
 						src.buffer1owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
-				else
-					src.buffer1owner = src.connected.occupant.real_name
+					else
+						src.buffer1owner = src.connected.occupant.real_name
 				src.buffer1label = "Unique Identifier & Unique Enzymes"
 				src.buffer1type = "ui"
 				src.buffer1iue = 1
@@ -1258,8 +1258,8 @@
 				else
 					if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
 						src.buffer2owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
-				else
-					src.buffer2owner = src.connected.occupant.real_name
+					else
+						src.buffer2owner = src.connected.occupant.real_name
 				src.buffer2label = "Unique Identifier & Unique Enzymes"
 				src.buffer2type = "ui"
 				src.buffer2iue = 1
@@ -1272,8 +1272,8 @@
 				else
 					if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
 						src.buffer3owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
-				else
-					src.buffer3owner = src.connected.occupant.real_name
+					else
+						src.buffer3owner = src.connected.occupant.real_name
 				src.buffer3label = "Unique Identifier & Unique Enzymes"
 				src.buffer3type = "ui"
 				src.buffer3iue = 1
@@ -1287,8 +1287,8 @@
 				else
 					if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
 						src.buffer2owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
-				else
-					src.buffer2owner = src.connected.occupant.real_name
+					else
+						src.buffer2owner = src.connected.occupant.real_name
 				src.buffer2label = "Unique Identifier"
 				src.buffer2type = "ui"
 				dopage(src,"buffermenu")
@@ -1301,8 +1301,8 @@
 				else
 					if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
 						src.buffer3owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
-				else
-					src.buffer3owner = src.connected.occupant.real_name
+					else
+						src.buffer3owner = src.connected.occupant.real_name
 				src.buffer3label = "Unique Identifier"
 				src.buffer3type = "ui"
 				dopage(src,"buffermenu")
@@ -1315,8 +1315,8 @@
 				else
 					if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
 						src.buffer1owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
-				else
-					src.buffer1owner = src.connected.occupant.real_name
+					else
+						src.buffer1owner = src.connected.occupant.real_name
 				src.buffer1label = "Structural Enzymes"
 				src.buffer1type = "se"
 				dopage(src,"buffermenu")
@@ -1329,8 +1329,8 @@
 				else
 					if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
 						src.buffer2owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
-				else
-					src.buffer2owner = src.connected.occupant.real_name
+					else
+						src.buffer2owner = src.connected.occupant.real_name
 				src.buffer2label = "Structural Enzymes"
 				src.buffer2type = "se"
 				dopage(src,"buffermenu")
@@ -1343,8 +1343,8 @@
 				else
 					if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
 						src.buffer3owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
-				else
-					src.buffer3owner = src.connected.occupant.real_name
+					else
+						src.buffer3owner = src.connected.occupant.real_name
 				src.buffer3label = "Structural Enzymes"
 				src.buffer3type = "se"
 				dopage(src,"buffermenu")
