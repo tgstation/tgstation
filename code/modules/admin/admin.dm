@@ -2758,6 +2758,25 @@ var/global/BSACooldown = 0
 	onclose(usr,"server_logfile")
 	return
 
+/obj/admins/proc/view_atk_log()
+	set category = "Admin"
+	set desc="Shows todays server attack log in new window"
+	set name="Show Server Attack Log"
+	var/path = "data/logs/[time2text(world.realtime,"YYYY")]/[time2text(world.realtime,"MM")]-[time2text(world.realtime,"Month")]/[time2text(world.realtime,"DD")]-[time2text(world.realtime,"Day")] Attack.log"
+	var/output = {"<html>
+						<head>
+						<title>[time2text(world.realtime,"Day, MMM DD, YYYY")] - Attack Log</title>
+						</head>
+						<body>
+						<pre>
+						[file2text(path)]
+						</pre>
+						</body>
+						</html>"}
+	usr << browse(output,"window=server_logfile")
+	onclose(usr,"server_logfile")
+	return
+
 /*/client/proc/unjobban_panel()
 	set name = "Unjobban Panel"
 	set category = "Admin"

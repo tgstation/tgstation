@@ -145,6 +145,7 @@
 
 		if (holder.level >= 5)//Game Admin********************************************************************
 			verbs += /obj/admins/proc/view_txt_log
+			verbs += /obj/admins/proc/view_atk_log
 			//verbs += /client/proc/cmd_mass_modify_object_variables --Merged with view variables
 			verbs += /client/proc/cmd_admin_list_open_jobs
 			verbs += /client/proc/cmd_admin_direct_narrate

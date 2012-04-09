@@ -64,6 +64,7 @@ var
 	///////////////
 
 	diary = null
+	diaryofmeanpeople = null
 	station_name = null
 	game_version = "Baystation 12"
 
