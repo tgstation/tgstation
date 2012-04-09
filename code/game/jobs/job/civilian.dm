@@ -295,10 +295,8 @@ var/global/lawyer = 0//Checks for another lawyer
 		H.equip_if_possible(new /obj/item/weapon/storage/briefcase(H), H.slot_l_hand)
 		if(H.backbag == 1)
 			H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H), H.slot_r_hand)
-			H.equip_if_possible(new /obj/item/device/detective_scanner(H), H.slot_l_store)//Why do they even get this?
 		else
 			H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H.back), H.slot_in_backpack)
-			H.equip_if_possible(new /obj/item/device/detective_scanner(H), H.slot_in_backpack)//No really.. why do they even get this?
 
 		return 1
 

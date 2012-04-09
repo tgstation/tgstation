@@ -211,18 +211,18 @@ datum/controller/game_controller
 	else
 		while(spinning)
 			current_iteration = controller_iteration
-			sleep(150) // Wait 15 seconds
+			sleep(600) // Wait 15 seconds
 			if(current_iteration == controller_iteration) // Mm.  The master controller hasn't ticked yet.
 
 				for (var/mob/M in world)
 					if (M.client && M.client.holder)
-						M << "<font color='red' size='2'><b> Warning.  The Master Controller has not fired in the last 15 seconds.  Restart recommended.  Automatic restart in 15 seconds.</b></font>"
+						M << "<font color='red' size='2'><b> Warning.  The Master Controller has not fired in the last 60 seconds.  Restart recommended.  Automatic restart in 60 seconds.</b></font>"
 
-				sleep(150)
+				sleep(600)
 				if(current_iteration == controller_iteration)
 					for (var/mob/M in world)
 						if (M.client && M.client.holder)
-							M << "<font color='red' size='2'><b> Warning.  The Master Controller has not fired in the last 30 seconds.  Automatic restart beginning.</b></font>"
+							M << "<font color='red' size='2'><b> Warning.  The Master Controller has not fired in the last 2 minutes.  Automatic restart beginning.</b></font>"
 					master_controller.process()
 					sleep(150)
 				else

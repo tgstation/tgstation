@@ -106,13 +106,9 @@
 			var/obj/item/weapon/storage/box/survival/Evipack = new /obj/item/weapon/storage/box/survival(H)
 			H.equip_if_possible(Evipack, H.slot_r_hand)
 			new /obj/item/weapon/fcardholder(Evipack)
-			H.equip_if_possible(new /obj/item/weapon/storage/box/evidence(H), H.slot_l_hand)
-			H.equip_if_possible(new /obj/item/device/detective_scanner(H), H.slot_r_store)
 		else
 			H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H.back), H.slot_in_backpack)
-			H.equip_if_possible(new /obj/item/weapon/storage/box/evidence(H.back), H.slot_in_backpack)
 			H.equip_if_possible(new /obj/item/weapon/fcardholder(H), H.slot_in_backpack)
-			H.equip_if_possible(new /obj/item/device/detective_scanner(H), H.slot_in_backpack)
 
 		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 		L.imp_in = H

@@ -802,8 +802,6 @@
 #include "code\modules\critters\critter_defenses.dm"
 #include "code\modules\critters\critters.dm"
 #include "code\modules\critters\hivebots\hivebot.dm"
-#include "code\modules\detectivework\detective_work.dm"
-#include "code\modules\detectivework\evidence.dm"
 #include "code\modules\flufftext\Dreaming.dm"
 #include "code\modules\flufftext\Hallucination.dm"
 #include "code\modules\flufftext\TextFilters.dm"

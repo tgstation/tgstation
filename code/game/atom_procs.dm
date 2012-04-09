@@ -62,15 +62,10 @@
 	return
 
 /atom/proc/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/device/detective_scanner))
+	if (!(istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) && !(istype(W, /obj/item/weapon/cleaner)) && !(istype(W, /obj/item/weapon/chemsprayer)) && !(istype(W, /obj/item/weapon/pepperspray)) && !(istype(W, /obj/item/weapon/plantbgone)) && !(istype(W, /obj/item/weapon/packageWrap)))
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O << "\red [src] has been scanned by [user] with the [W]"
-	else
-		if (!(istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) && !(istype(W, /obj/item/weapon/cleaner)) && !(istype(W, /obj/item/weapon/chemsprayer)) && !(istype(W, /obj/item/weapon/pepperspray)) && !(istype(W, /obj/item/weapon/plantbgone)) && !(istype(W, /obj/item/weapon/packageWrap)))
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O << "\red <B>[src] has been hit by [user] with [W]</B>"
+				O << "\red <B>[src] has been hit by [user] with [W]</B>"
 	return
 
 /atom/proc/add_hiddenprint(mob/living/M as mob)
@@ -106,7 +101,6 @@
 	if (ishuman(M))
 		if(!fingerprintshidden)
 			fingerprintshidden = list()
-		add_fibers(M)
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 32))
 			if(!istype(H.dna, /datum/dna))
@@ -220,7 +214,6 @@
 		//if there isn't a blood decal already, make one.
 		var/obj/effect/decal/cleanable/blood/newblood = new /obj/effect/decal/cleanable/blood(T)
 		newblood.blood_DNA =  list(list(M.dna.unique_enzymes, M.dna.b_type))
-		newblood.blood_owner = M
 		for(var/datum/disease/D in M.viruses)
 			var/datum/disease/newDisease = new D.type
 			newblood.viruses += newDisease
@@ -294,9 +287,6 @@
 		if (istype (src, /mob/living/carbon))
 			var/mob/living/carbon/M = src
 			del(M.blood_DNA)
-			if(ishuman(src))
-				var/mob/living/carbon/human/H = src
-				H.bloody_hands = 0
 
 		//Cleaning blood off of items
 		else if (istype (src, /obj/item))
@@ -304,10 +294,6 @@
 			del(O.blood_DNA)
 			if(O.blood_overlay)
 				O.overlays.Remove(O.blood_overlay)
-
-			if(istype(src, /obj/item/clothing/gloves))
-				var/obj/item/clothing/gloves/G = src
-				G.transfer_blood = 0
 
 		//Cleaning blood off of turfs
 		else if (istype(src, /turf/simulated))
