@@ -746,16 +746,16 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	while ( t_amount < (yield * parent.yieldmod ))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new produce(user.loc, potency) // User gets a consumable
-		if ( !isnull(t_prod) ) // Needed for /obj/item/weapon/reagent_containers/food/snacks/grown/grass/New(), which deletes itself after it spawns a tile/grass
-			t_prod.seed = mypath
-			t_prod.species = species
-			t_prod.lifespan = lifespan
-			t_prod.endurance = endurance
-			t_prod.maturation = maturation
-			t_prod.production = production
-			t_prod.yield = yield
-			t_prod.potency = potency
-			t_prod.plant_type = plant_type
+		if(!t_prod)	return
+		t_prod.seed = mypath
+		t_prod.species = species
+		t_prod.lifespan = lifespan
+		t_prod.endurance = endurance
+		t_prod.maturation = maturation
+		t_prod.production = production
+		t_prod.yield = yield
+		t_prod.potency = potency
+		t_prod.plant_type = plant_type
 		t_amount++
 
 	parent.update_tray()
