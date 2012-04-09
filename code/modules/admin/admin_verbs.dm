@@ -235,6 +235,7 @@
 			verbs += /client/proc/drop_bomb
 			verbs += /client/proc/cmd_admin_grantfullaccess
 			verbs += /client/proc/jump_to_dead_group
+			verbs += /client/proc/kill_airgroup
 			verbs += /client/proc/cmd_admin_drop_everything
 			verbs += /client/proc/make_sound
 			verbs += /client/proc/play_local_sound
@@ -411,6 +412,7 @@
 	//verbs -= /obj/admins/proc/unprison 								--Merged with player panel
 	//verbs -= /client/proc/cmd_switch_radio							--removed because tcommsat is staying
 	//verbs -= /client/proc/togglebuildmodeself							--removed due to runtimes
+	verbs -= /client/proc/kill_airgroup
 	return
 
 

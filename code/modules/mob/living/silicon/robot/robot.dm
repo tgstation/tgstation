@@ -10,7 +10,8 @@
 		updateicon()
 //		syndicate = syndie
 		if(real_name == "Cyborg")
-			real_name += " [pick(rand(1, 999))]"
+			ident = rand(1, 999)
+			real_name += "-[ident]"
 			name = real_name
 
 	spawn (4)
@@ -487,9 +488,60 @@
 					if(prob(25))
 						src << "Hack attempt detected."
 			return
+
+	else if(istype(W, /obj/item/borg/upgrade/))
+		var/obj/item/borg/upgrade/U = W
+		if(!opened)
+			usr << "You must access the borgs internals!"
+		else if(!src.module)
+			usr << "The borg must choose a module before he can be upgraded!"
+		else if(U.locked)
+			usr << "The upgrade is locked and cannot be used yet!"
+		else
+			usr << "You apply the upgrade to [src]!"
+			usr.drop_item()
+			U.loc = src
+			U.action(src)
+
+
 	else
 		spark_system.start()
 		return ..()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)
@@ -1026,3 +1078,11 @@ Frequency:
 		R.UnlinkSelf()
 		R << "Buffers flushed and reset.  All systems operational."
 		src.verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes
+
+
+/mob/living/silicon/robot/proc/flashproof()
+	if(module)
+		for(var/obj/item/borg/upgrade/flashproof/F in module.modules)
+			return 1
+
+	return 0

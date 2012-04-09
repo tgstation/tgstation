@@ -407,3 +407,35 @@
 	desc = "It has a picture of drinking glasses on it."
 	icon_state = "box"
 	item_state = "syringe_kit"
+
+
+
+
+/obj/structure/closet/syndicate/resources/
+	desc = "It's an emergancy storage closet for repairs."
+
+/obj/structure/closet/syndicate/resources/New()
+	..()
+
+	var/list/resources = list(
+
+	/obj/item/stack/sheet/metal,
+	/obj/item/stack/sheet/glass,
+	/obj/item/stack/sheet/gold,
+	/obj/item/stack/sheet/silver,
+	/obj/item/stack/sheet/plasma,
+	/obj/item/stack/sheet/uranium,
+	/obj/item/stack/sheet/diamond,
+	/obj/item/stack/sheet/clown,
+	/obj/item/stack/sheet/plasteel,
+	/obj/item/stack/rods
+	)
+
+	sleep(2)
+
+	for(var/i = 0, i<2, i++)
+		for(var/res in resources)
+			var/obj/item/stack/R = new res(src)
+			R.amount = R.max_amount
+
+	return

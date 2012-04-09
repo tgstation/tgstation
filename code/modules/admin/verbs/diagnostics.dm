@@ -195,6 +195,27 @@
 		usr.loc = pick(dest_group.members)
 		return
 
+	kill_airgroup()
+		set name = "Kill Local Airgroup"
+		set desc = "Use this to allow manual manupliation of atmospherics."
+		set category = "Debug"
+		if(!authenticated || !holder)
+			src << "Only administrators may use this command."
+			return
+
+		if(!air_master)
+			usr << "Cannot find air_system"
+			return
+
+		var/turf/T = get_turf(usr)
+		if(istype(T, /turf/simulated))
+			var/datum/air_group/AG = T:parent
+			AG.next_check = 30
+			AG.group_processing = 0
+		else
+			usr << "Local airgroup is unsimulated!"
+
+
 	tension_report()
 		set category = "Debug"
 		set name = "Show Tension Report"
