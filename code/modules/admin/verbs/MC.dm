@@ -8,3 +8,13 @@
 		if("No")
 			return 0
 	return
+
+/client/proc/debug_master_controller()
+	set category = "Debug"
+	set name = "Debug Master Controller"
+	switch(alert("Debug Master Controller or Failsafe?" ,, "Master Controller" , "Failsafe"))
+		if("Master Controller")
+			debug_variables(master_controller)
+		if("Failsafe")
+			debug_variables(Failsafe)
+	return

@@ -215,6 +215,7 @@
 			//verbs += /proc/togglebuildmode 							--Merged with view variables
 			//verbs += /client/proc/cmd_modify_object_variables 		--Merged with view variables
 			verbs += /client/proc/togglebuildmodeself
+			verbs += /client/proc/debug_master_controller
 		else	return
 
 		//Game Admin
@@ -413,6 +414,7 @@
 	//verbs -= /client/proc/cmd_switch_radio							--removed because tcommsat is staying
 	verbs -= /client/proc/togglebuildmodeself
 	verbs -= /client/proc/kill_airgroup
+	verbs -= /client/proc/debug_master_controller
 	return
 
 

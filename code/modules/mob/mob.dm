@@ -938,8 +938,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 		stat(null, "([x], [y], [z])")
 		stat(null, "CPU: [world.cpu]")
 		stat(null, "Controller: [controllernum]")
-		//if (master_controller)
-		//	stat(null, "Loop: [master_controller.loop_freq]")
+		if (master_controller)
+			stat(null, "Current Iteration: [controller_iteration]")
 
 	if (spell_list.len)
 

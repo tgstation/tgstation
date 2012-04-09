@@ -1273,9 +1273,10 @@ proc/listclearnulls(list/list)
 		return 1
 	else
 		return 0
-
+/*
 /proc/do_after(mob/M as mob, time as num)
-	if(!M)	return 0
+	if(!M)
+		return 0
 	var/turf/T = M.loc
 	var/holding = M.equipped()
 	for(var/i=0, i<time)
@@ -1285,6 +1286,24 @@ proc/listclearnulls(list/list)
 				sleep(1)
 			else
 				return 0
+	return 1
+*/
+
+/proc/do_after(var/mob/user as mob, delay as num, var/numticks = 5) 		// Replacing the upper one with this one because Byond keeps feeling that the upper one is an infinate loop
+	if(!user || isnull(user))												// This one should have less temptation
+		return 0
+	if(numticks == 0)
+		return 0
+
+	var/delayfraction = delay/numticks
+	var/turf/T = user.loc
+	var/holding = user.equipped()
+
+	for(var/i = 0, i<numticks, i++)
+		sleep(delayfraction)
+		if(!src || !user || !user.canmove || !(user.loc == T) || !(user.equipped() == holding))
+			return 0
+
 	return 1
 
 /proc/hasvar(var/datum/A, var/varname)
