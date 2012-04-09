@@ -1,5 +1,5 @@
 /mob/living/carbon/human/examine()
-	set src in oview()
+	set src in view()
 
 	if(!usr || !src)	return
 	if(((usr.sdisabilities & 1) || usr.blinded || usr.stat) && !(istype(usr,/mob/dead/observer/)))

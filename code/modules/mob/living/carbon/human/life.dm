@@ -719,7 +719,7 @@
 				if(paralysis <= 0)
 					Paralyse(2)
 				if (prob(10) && health && !hal_crit) spawn(0) emote("snore")
-				//sleeping--
+				sleeping--
 
 			if(resting)
 				if(weakened <= 0)

@@ -358,12 +358,10 @@
 /atom/Click(location,control,params)
 	//world << "atom.Click() on [src] by [usr] : src.type is [src.type]"
 
-////I'm removing buildmode because it's shitty and runtimes a lot.	-Pete
-/*
 	if(usr.client.buildmode)
 		build_click(usr, usr.client.buildmode, location, control, params, src)
 		return
-*/
+
 	if(using_new_click_proc)  //TODO ERRORAGE (see message below)
 		return DblClickNew()
 	return DblClick(location, control, params)

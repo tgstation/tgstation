@@ -413,7 +413,7 @@
 	//verbs -= /client/proc/cmd_admin_prison 							--Merged with player panel
 	//verbs -= /obj/admins/proc/unprison 								--Merged with player panel
 	//verbs -= /client/proc/cmd_switch_radio							--removed because tcommsat is staying
-	//verbs -= /client/proc/togglebuildmodeself							--removed due to runtimes
+	verbs -= /client/proc/togglebuildmodeself
 	return
 
 
@@ -611,14 +611,13 @@
 		for (var/mob/V in hearers(O))
 			V.show_message(message, 2)
 
-////I'm removing buildmode because it's shitty and runtimes a lot.	-Pete
-/*
+
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
 	set category = "Special Verbs"
 	if(src.mob)
 		togglebuildmode(src.mob)
-*/
+
 
 /client/proc/toggleadminhelpsound()
 	set name = "Toggle Adminhelp Sound"
@@ -765,7 +764,7 @@
 		//verbs += /client/proc/cmd_modify_object_variables --merged with view vairiables
 		verbs += /client/proc/Jump
 		verbs += /client/proc/jumptoturf
-//		verbs += /client/proc/togglebuildmodeself
+		verbs += /client/proc/togglebuildmodeself
 
 	verbs += /client/proc/dsay
 	verbs += /client/proc/admin_play

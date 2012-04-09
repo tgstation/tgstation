@@ -482,8 +482,7 @@ client
 			if(!src.holder)
 				return
 			src.cmd_admin_gib(MOB)
-////I'm removing buildmode because it's shitty and runtimes a lot.	-Pete
-/*
+
 		else if (href_list["build_mode"])
 			if(!href_list["build_mode"])
 				return
@@ -496,7 +495,7 @@ client
 				return
 			togglebuildmode(MOB)
 			href_list["datumrefresh"] = href_list["build_mode"]
-*/
+
 		else if (href_list["delall"])
 			if(!href_list["delall"])
 				return

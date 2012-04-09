@@ -271,7 +271,4 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
 
-	// Note:  Some mob ERP defines are located in mob_ERP.dm
-
-
 	var/datum/preferences/storedpreferences = null
