@@ -394,11 +394,11 @@
 			user << "\blue Now disassembling the outer wall plating."
 			playsound(src.loc, 'Welder.ogg', 100, 1)
 			sleep(100)
-			if (istype(src, /turf/simulated/wall))
+			if (W && istype(src, /turf/simulated/wall))
 				if ((get_turf(user) == T && user.equipped() == W))
 					user << "\blue You disassembled the outer wall plating."
 					dismantle_wall()
-			W:welding = 1
+				W:welding = 1
 		else
 			user << "\blue You need more welding fuel to complete this task."
 			return
@@ -429,7 +429,7 @@
 			user << "\blue Now disassembling the outer wall plating."
 			playsound(src.loc, 'Welder.ogg', 100, 1)
 			sleep(60)
-			if (istype(src, /turf/simulated/wall))
+			if (W && istype(src, /turf/simulated/wall))
 				if ((get_turf(user) == T && user.equipped() == W))
 					user << "\blue You disassembled the outer wall plating."
 					dismantle_wall()
@@ -441,10 +441,11 @@
 		var/turf/T = user.loc
 		user << "\blue Now drilling through wall."
 		sleep(60)
-		if ((user.loc == T && user.equipped() == W))
-			dismantle_wall(1)
-			for(var/mob/O in viewers(user, 5))
-				O.show_message(text("\blue The wall was drilled apart by []!", user), 1, text("\red You hear metal being drilled appart."), 2)
+		if (W && istype(src, /turf/simulated/wall))
+			if ((user.loc == T && user.equipped() == W))
+				dismantle_wall(1)
+				for(var/mob/O in viewers(user, 5))
+					O.show_message(text("\blue The wall was drilled apart by []!", user), 1, text("\red You hear metal being drilled appart."), 2)
 		return
 
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))
@@ -453,13 +454,14 @@
 		W:spark_system.start()
 		playsound(src.loc, "sparks", 50, 1)
 		sleep(70)
-		if ((user.loc == T && user.equipped() == W))
-			W:spark_system.start()
-			playsound(src.loc, "sparks", 50, 1)
-			playsound(src.loc, 'blade1.ogg', 50, 1)
-			dismantle_wall(1)
-			for(var/mob/O in viewers(user, 5))
-				O.show_message(text("\blue The wall was sliced apart by []!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
+		if (W && istype(src, /turf/simulated/wall))
+			if ((user.loc == T && user.equipped() == W))
+				W:spark_system.start()
+				playsound(src.loc, "sparks", 50, 1)
+				playsound(src.loc, 'blade1.ogg', 50, 1)
+				dismantle_wall(1)
+				for(var/mob/O in viewers(user, 5))
+					O.show_message(text("\blue The wall was sliced apart by []!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
 		return
 
 	else if(istype(W,/obj/item/apc_frame))

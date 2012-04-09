@@ -263,12 +263,14 @@ obj/structure/door_assembly
 		playsound(src.loc, 'Crowbar.ogg', 100, 1)
 		user.visible_message("[user] adds reinforced glass windows to the airlock assembly.", "You start to install reinforced glass windows into the airlock assembly.")
 		var/obj/item/stack/sheet/rglass/G = W
-		if(do_after(user, 40) && G.amount>=1)
-			user << "\blue You installed glass windows the airlock assembly!"
-			G.use(1)
-			src.glass = 1
-			src.name = "Near finished Window Airlock Assembly"
-			src.airlock_type = glass_type
+		if(do_after(user, 40))
+			if(G)
+				if(G.amount>=1)
+					user << "\blue You installed glass windows the airlock assembly!"
+					G.use(1)
+					src.glass = 1
+					src.name = "Near finished Window Airlock Assembly"
+					src.airlock_type = glass_type
 	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 )
 		playsound(src.loc, 'Screwdriver.ogg', 100, 1)
 		var/turf/T = get_turf(user)

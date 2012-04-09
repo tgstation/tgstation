@@ -190,7 +190,14 @@ SHARDS
 	..()
 	if ( istype(W, /obj/item/weapon/weldingtool) && W:welding )
 		W:eyecheck(user)
-		new /obj/item/stack/sheet/glass( user.loc )
+		var/obj/item/stack/sheet/glass/NG = new (user.loc)
+		for (var/obj/item/stack/sheet/glass/G in user.loc)
+			if(G==NG)
+				continue
+			if(G.amount>=G.max_amount)
+				continue
+			G.attackby(NG, user)
+			usr << "You add the newly-formed glass to the stack. It now contains [NG.amount] sheets."
 		//SN src = null
 		del(src)
 		return
@@ -212,5 +219,3 @@ SHARDS
 				H.UpdateDamageIcon()
 				H.updatehealth()
 	..()
-
-	//&& H.wear_suit.body_parts_covered&FEET)))

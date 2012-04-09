@@ -430,14 +430,16 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A as turf)
 		for(var/mob/O in viewers(user, null))
 			O.show_message("\red <B>[user] begins to clean \the [A]</B>", 1)
 		sleep(40)
-		clean(A)
+		if(A)
+			clean(A)
 		user << "\blue You have finished mopping!"
 		mopcount++
 	else if (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay) || istype(A, /obj/effect/rune))
 		for(var/mob/O in viewers(user, null))
 			O.show_message("\red <B>[user] begins to clean \the [get_turf(A)]</B>", 1)
 		sleep(40)
-		clean(get_turf(A))
+		if(A)
+			clean(get_turf(A))
 		user << "\blue You have finished mopping!"
 		mopcount++
 
