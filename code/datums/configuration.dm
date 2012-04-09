@@ -33,6 +33,7 @@
 	var/traitor_scaling = 0 //if amount of traitors scales based on amount of players
 	var/protect_roles_from_antagonist = 0// If security and such can be tratior/cult/other
 	var/Tensioner_Active = 0			// If the tensioner is running.
+	var/allow_Metadata = 0					// Metadata is suported.
 
 	var/list/mode_names = list()
 	var/list/modes = list()				// allowed modes
@@ -229,6 +230,9 @@
 
 				if ("feature_object_spell_system")
 					config.feature_object_spell_system = 1
+
+				if ("allow_metadata")
+					config.allow_Metadata = 1
 
 				if ("traitor_scaling")
 					config.traitor_scaling = 1

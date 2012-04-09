@@ -467,15 +467,17 @@
 	if (message)
 		log_emote("[name]/[key] : [message]")
 
-/* Hearing gasp and such every five seconds is not good emotes were not global for a reason.
+ //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
+ // Maybe some people are okay with that.
+
 		for(var/mob/M in world)
 			if (!M.client)
 				continue //skip monkeys and leavers
 			if (istype(M, /mob/new_player))
 				continue
-			if(M.stat == 2 && M.client.ghost_ears && !(M in viewers(src,null)))
+			if(M.stat == 2 && M.client.ghost_sight && !(M in viewers(src,null)))
 				M.show_message(message)
-*/
+
 
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))

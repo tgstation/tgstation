@@ -489,6 +489,19 @@
 	else
 		usr << "\blue Now you hear speech only from nearest creatures."
 
+/client/var/ghost_sight = 1
+/client/verb/toggle_ghost_sight()
+	set name = "Ghost sight"
+	set category = "OOC"
+	set desc = "Hear emotes from everywhere"
+	ghost_sight = !ghost_sight
+	if (ghost_sight)
+		usr << "\blue Now you hear all emotes in the world"
+	else
+		usr << "\blue Now you hear emotes only from nearest creatures."
+
+
+
 /mob/verb/observe()
 	set name = "Observe"
 	set category = "OOC"
@@ -1146,3 +1159,29 @@ note dizziness decrements automatically in the mob's Life() proc.
 			src << browse_rsc(file)
 		return 1
 	return 0
+
+
+
+
+
+/mob/living/verb/Examine_OOC()
+	set name = "Examine Meta-Info (OOC)"
+	set category = "OOC"
+	set src in view()
+
+
+	if(config.allow_Metadata)
+		usr << "[src]'s Metainfo:"
+
+		if(src.storedpreferences)
+			usr << "[src]'s OOC Notes:  [src.storedpreferences.metadata]"
+
+
+		else
+			usr << "[src] does not have any stored infomation!"
+
+
+	else
+		usr << "OOC Metadata is not supported by this server!"
+
+	return

@@ -57,8 +57,11 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["UI"] << src.UI
 	F["midis"] << src.midis
 	F["ghost_ears"] << src.ghost_ears
+	F["ghost_sight"] << src.ghost_sight
 	F["ooccolor"] << src.ooccolor
 	F["lastchangelog"] << src.lastchangelog
+
+	F["OOC_Notes"] << src.metadata
 
 	return 1
 
@@ -108,6 +111,8 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["midis"] >> src.midis
 	F["ghost_ears"] >> src.ghost_ears
 	if(isnull(ghost_ears)) ghost_ears = 1 //Hotfix
+	F["ghost_sight"] >> src.ghost_sight
+	if(isnull(ghost_sight)) ghost_sight = 1 //Hotfix
 	F["ooccolor"] >> src.ooccolor
 	F["lastchangelog"] >> src.lastchangelog
 	F["UI"] >> src.UI
@@ -124,6 +129,11 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["job_engsec_high"] >> src.job_engsec_high
 	F["job_engsec_med"] >> src.job_engsec_med
 	F["job_engsec_low"] >> src.job_engsec_low
+
+	F[OOC_Notes"] >> src.metadata
+
+	if(isnull(metadata))
+		metadata = ""
 
 	//NOTE: Conversion things go inside this if statement
 	//When updating the save file remember to add 1 to BOTH the savefile constants
