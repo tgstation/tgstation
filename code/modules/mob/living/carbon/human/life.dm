@@ -1322,7 +1322,10 @@
 					if(M.virus2 && get_infection_chance())
 						infect_virus2(src,M.virus2)
 			else
-				virus2.activate(src)
+				if(isnull(virus2)) // Trying to figure out a runtime error that keeps repeating
+					CRASH("virus2 nulled before calling activate()")
+				else
+					virus2.activate(src)
 
 				// activate may have deleted the virus
 				if(!virus2) return
