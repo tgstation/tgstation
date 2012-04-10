@@ -1,4 +1,4 @@
-var/global/list/space_surprises = list(				/obj/item/clothing/mask/facehugger,
+var/global/list/space_surprises = list(			//	/obj/item/clothing/mask/facehugger,		// Just until we finally fix xeno procs
 													/obj/effect/critter/spesscarp,
 												//	/obj/effect/critter/spesscarp/elite,
 												//	/obj/creature,
@@ -10,11 +10,11 @@ var/global/list/space_surprises = list(				/obj/item/clothing/mask/facehugger,
 												//	/obj/item/weapon/rubber_chicken,
 													/obj/item/weapon/melee/energy/sword/pirate,
 													/obj/structure/closet/syndicate/resources,
-													/obj/machinery/wish_granter
+												//	/obj/machinery/wish_granter
 												//	/obj/item/toy/blink								//ALL OF THIS SHIT IS RETARDED, HERE IS SOMETHING APPROPRIATE
 												//	/obj/item/toy/ammo/crossbow						// HOW THE FUCK IS THAT APPROPRIATE?
 
-													)
+													) // Man this list is looking a little bare.
 
 var/global/list/spawned_surprises = list()
 
