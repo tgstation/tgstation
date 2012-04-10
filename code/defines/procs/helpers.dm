@@ -1295,13 +1295,13 @@ proc/listclearnulls(list/list)
 	if(numticks == 0)
 		return 0
 
-	var/delayfraction = delay/numticks
+	var/delayfraction = round(delay/numticks)
 	var/turf/T = user.loc
 	var/holding = user.equipped()
 
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
-		if(!src || !user || !user.canmove || !(user.loc == T) || !(user.equipped() == holding))
+		if(!user || !user.canmove || !(user.loc == T) || !(user.equipped() == holding))
 			return 0
 
 	return 1
