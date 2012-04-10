@@ -130,10 +130,10 @@ obj/effect/decal/poster/New(var/serial)
 		if(15)
 			name += " - Leviating Skull"
 			desc += " This particular one is the portrait of a certain flying, friendly and somewhat sex-crazed enchanted skull. Its adventures along with its fabled companion are now fading through history..."
-		if(17)
+		if(16)
 			name += " - Augmented Legend"
 			desc += " This particular one is of an obviously augmented individual, gazing towards the sky. The cyber-city in the backround is rather punkish."
-		if(18)
+		if(17)
 			name += " - Dangerous Static"
 			desc += " This particular one depicts nothing remarkable other than a rather mesmerising pattern of monitor static. There's a tag on the sides of the poster, urging you to \"tear this poster in half to receive your free sample\"."
 		else
@@ -149,12 +149,8 @@ obj/effect/decal/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 			del(src)
 		else
 			user << "<FONT COLOR='BLUE'>You carefully remove the poster from the wall.</FONT>"
-			var/obj/item/weapon/contraband/poster/P = new(src,src.serial_number)
-			P.resulting_poster = src
-			P.loc = user.loc
-			src.loc = P
+			src.roll_and_drop(user.loc)
 		return
-
 
 
 /obj/effect/decal/poster/attack_hand(mob/user as mob)
@@ -175,3 +171,9 @@ obj/effect/decal/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 				src.add_fingerprint(user)
 		if("No")
 			return
+
+/obj/effect/decal/poster/proc/roll_and_drop(turf/loc)
+			var/obj/item/weapon/contraband/poster/P = new(src,src.serial_number)
+			P.resulting_poster = src
+			P.loc = loc
+			src.loc = P

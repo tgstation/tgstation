@@ -306,6 +306,12 @@
 			new /obj/item/stack/sheet/metal( src )
 			new /obj/item/stack/sheet/metal( src )
 
+	for(var/obj/O in src.contents) //Eject contents!
+		if(istype(O,/obj/effect/decal/poster))
+			var/obj/effect/decal/poster/P = O
+			P.roll_and_drop(src)
+		else
+			O.loc = src
 	ReplaceWithPlating(explode)
 
 /turf/simulated/wall/examine()
