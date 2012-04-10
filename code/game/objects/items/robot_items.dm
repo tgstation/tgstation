@@ -188,6 +188,7 @@
 	//	datum/effect/effect/system/spark_spread/spark_system
 		working = 0
 		mode = 1
+		disabled = 0
 
 /*
 	New()
@@ -224,7 +225,11 @@
 
 
 	afterattack(atom/A, mob/user as mob)
-		if(!isrobot(user))	return
+		if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))//No RCDs on the shuttles -Sieve
+			disabled = 1
+		else
+			disabled = 0
+		if(!isrobot(user)|| disabled == 1)	return
 		if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock)))	return
 
 		var/mob/living/silicon/robot/R = user
