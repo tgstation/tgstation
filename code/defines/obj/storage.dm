@@ -443,21 +443,13 @@
 /obj/structure/closet/syndicate/resources/everything
 	desc = "It's an emergancy storage closet for repairs."
 
-/obj/structure/closet/syndicate/resources/New()
+/obj/structure/closet/syndicate/resources/everything/New()
 	..()
 
 	var/list/resources = list(
 
-	/obj/item/stack/sheet/metal,
-	/obj/item/stack/sheet/glass,
-	/obj/item/stack/sheet/gold,
-	/obj/item/stack/sheet/silver,
-	/obj/item/stack/sheet/plasma,
-	/obj/item/stack/sheet/uranium,
-	/obj/item/stack/sheet/diamond,
-	/obj/item/stack/sheet/clown,
-	/obj/item/stack/sheet/plasteel,
-	/obj/item/stack/rods
+	/obj/item/stack/sheet/clown
+
 	)
 
 	sleep(2)
