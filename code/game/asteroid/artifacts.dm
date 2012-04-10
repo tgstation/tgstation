@@ -1,5 +1,5 @@
-var/global/list/space_surprises = list(				/obj/item/clothing/mask/facehugger,
-													/obj/effect/critter/spesscarp,
+var/global/list/space_surprises = list(			//	/obj/item/clothing/mask/facehugger,
+												//	/obj/effect/critter/spesscarp,
 												//	/obj/effect/critter/spesscarp/elite,
 												//	/obj/creature,
 												//	/obj/item/weapon/rcd,
@@ -8,9 +8,11 @@ var/global/list/space_surprises = list(				/obj/item/clothing/mask/facehugger,
 												//	/obj/item/weapon/cloaking_device,				// BECAUSE KOR AND PETE ARE FUCKING SCRUBS
 												//	/obj/item/weapon/gun/energy/teleport_gun,
 												//	/obj/item/weapon/rubber_chicken,
-													/obj/item/weapon/melee/energy/sword/pirate,
-													/obj/structure/closet/syndicate/resources,
-													/obj/machinery/wish_granter
+												//	/obj/item/weapon/melee/energy/sword/pirate,
+												//	/obj/structure/closet/syndicate/resources,
+												//	/obj/machinery/wish_granter
+													/obj/item/toy/blink								//ALL OF THIS SHIT IS RETARDED, HERE IS SOMETHING APPROPRIATE
+													/obj/item/toy/ammo/crossbow
 
 													)
 
