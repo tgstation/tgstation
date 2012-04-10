@@ -154,24 +154,26 @@ var/ordernum=0
 	//Check for mobs
 	for(var/mob/living/M in world)
 		var/area/A = get_area(M)
-		if(!A.type) continue
-		if(A && A.type == /area/supply/station)
+		if(!A || !A.type) continue
+		if(A.type == /area/supply/station)
 			return 0
 	//Check for beacons
 	for(var/obj/item/device/radio/beacon/B in world)
 		var/area/A = get_area(B)
-		if(!A.type) continue
-		if(A && A.type == /area/supply/station)
+		if(!A || !A.type) continue
+		if(A.type == /area/supply/station)
 			return 0
 	//Check for mechs. I think this was added because people were somehow on centcomm and bringing back centcomm mechs.
 	for(var/obj/mecha/Mech in world)
 		var/area/A = get_area(Mech)
-		if(A && A.type == /area/supply/station)
+		if(!A || !A.type) continue
+		if(A.type == /area/supply/station)
 			return 0
 	//Check for nuke disk This also prevents multiple nuke disks from being made -Nodrak
 	for(var/obj/item/weapon/disk/nuclear/N)
 		var/area/A = get_area(N)
-		if(A && A.type == /area/supply/station)
+		if(!A || !A.type) continue
+		if(A.type == /area/supply/station)
 			return 0
 	return 1
 /*

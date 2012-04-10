@@ -3,6 +3,8 @@
 		datum/preferences/preferences = null
 		ready = 0
 		spawning = 0//Referenced when you want to delete the new_player later on in the code.
+		totalPlayers = 0		 //Player counts for the Lobby tab
+		totalPlayersReady = 0
 
 	invisibility = 101
 
@@ -147,8 +149,8 @@
 	Stat()
 		..()
 
-		statpanel("Game")
-		if(client.statpanel=="Game" && ticker)
+		statpanel("Lobby")
+		if(client.statpanel=="Lobby" && ticker)
 			if(ticker.hide_mode)
 				stat("Game Mode:", "Secret")
 			else
@@ -159,11 +161,14 @@
 			if((ticker.current_state == GAME_STATE_PREGAME) && !going)
 				stat("Time To Start:", "DELAYED")
 
-		statpanel("Lobby")
-		if(client.statpanel=="Lobby" && ticker)
 			if(ticker.current_state == GAME_STATE_PREGAME)
+				stat("Players: [totalPlayers]", "Players Ready: [totalPlayersReady]")
+				totalPlayers = 0
+				totalPlayersReady = 0
 				for(var/mob/new_player/player in world)
 					stat("[player.key]", (player.ready)?("(Playing)"):(null))
+					totalPlayers++
+					if(player.ready)totalPlayersReady++
 
 	Topic(href, href_list[])
 		if(!client)	return 0
@@ -344,13 +349,27 @@
 
 
 	proc/LateChoices()
-		var/dat = "<html><body>"
+		var/mills = world.time // 1/10 of a second, not real milliseconds but whatever
+		//var/secs = ((mills % 36000) % 600) / 10 //Not really needed, but I'll leave it here for refrence.. or something
+		var/mins = (mills % 36000) / 600
+		var/hours = mills / 36000
+
+		var/dat = "<html><body><center>"
+		dat += "Round Duration: [round(hours)]h [round(mins)]m<br>"
+
+		if(emergency_shuttle) //In case Nanotrasen decides reposess CentComm's shuttles.
+			if(emergency_shuttle.direction == 2) //Shuttle is going to centcomm, not recalled
+				dat += "<font color='red'><b>The station has been evacuated.</b></font><br>"
+			if(emergency_shuttle.direction == 1 && emergency_shuttle.timeleft() < 300) //Shuttle is past the point of no recall
+				dat += "<font color='red'>The station is currently undergoing evacuation procedures.</font><br>"
+
 		dat += "Choose from the following open positions:<br>"
 		for(var/datum/job/job in job_master.occupations)
 			if(job && IsJobAvailable(job.title))
 				dat += "<a href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title]</a><br>"
 
-		src << browse(dat, "window=latechoices;size=300x640;can_close=0")
+		dat += "</center>"
+		src << browse(dat, "window=latechoices;size=300x640;can_close=1")
 
 
 	proc/create_character()

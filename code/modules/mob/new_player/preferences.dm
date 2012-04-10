@@ -146,7 +146,7 @@ datum/preferences
 		dat += "<b>Ghost sight:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_sight=input\"><b>[ghost_sight == 0 ? "Nearest Creatures" : "All Emotes"]</b></a><br>"
 
 		if(config.allow_Metadata)
-			dat += "<b>OOC Notes/ERP Preferences:</b> <a href='byond://?src=\ref[user];preferences=1;OOC=input'> Edit </a><br>"
+			dat += "<b>OOC Notes:</b> <a href='byond://?src=\ref[user];preferences=1;OOC=input'> Edit </a><br>"
 
 		if((user.client) && (user.client.holder) && (user.client.holder.rank) && (user.client.holder.level >= 5))
 			dat += "<hr><b>OOC</b><br>"
