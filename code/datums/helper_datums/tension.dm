@@ -103,7 +103,7 @@ var/global/datum/tension/tension_master
 
 							for (var/mob/M in world)
 								if (M.client && M.client.holder)
-									M << "<font color='red' size='6'><b> The tensioner wishes to create additional antagonists!  Press (<a href='?src=\ref[tension_master];Supress=1'>this</a>) in 60 seconds to abort!</b></font>"
+									M << "<font color='red' size='3'><b> The tensioner wishes to create additional antagonists!  Press (<a href='?src=\ref[tension_master];Supress=1'>this</a>) in 60 seconds to abort!</b></font>"
 
 							spawn(600)
 								if(!supress)
