@@ -509,13 +509,8 @@
 	// human > monkey
 		var/mob/living/carbon/human/H = M
 		H.monkeyizing = 1
-		var/list/implants = list() //Try to preserve implants.
-		for(var/obj/item/weapon/implant/W in H)
-			implants += W
-			W.loc = null
-
 		if(!connected)
-			for(var/obj/item/W in (H.contents-implants))
+			for(var/obj/item/W in (H.contents))
 				if (W==H.w_uniform) // will be teared
 					continue
 				H.drop_from_slot(W)
@@ -553,7 +548,7 @@
 			M.viruses -= D
 
 
-		for(var/obj/T in (M.contents-implants))
+		for(var/obj/T in (M.contents))
 			del(T)
 		//for(var/R in M.organs)
 		//	del(M.organs[text("[]", R)])
@@ -584,12 +579,8 @@
 	// monkey > human,
 		var/mob/living/carbon/monkey/Mo = M
 		Mo.monkeyizing = 1
-		var/list/implants = list() //Still preserving implants
-		for(var/obj/item/weapon/implant/W in Mo)
-			implants += W
-			W.loc = null
 		if(!connected)
-			for(var/obj/item/W in (Mo.contents-implants))
+			for(var/obj/item/W in (Mo.contents))
 				Mo.drop_from_slot(W)
 			M.update_clothing()
 			M.monkeyizing = 1

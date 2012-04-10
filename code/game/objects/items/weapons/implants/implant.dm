@@ -249,8 +249,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
 		msg = sanitize_simple(msg, replacechars)
 		if(findtext(msg,phrase))
-			if(istype(loc, /mob/))
-				var/mob/T = loc
+			if(istype(imp_in, /mob/))
+				var/mob/T = imp_in
 				T.gib()
 			explosion(find_loc(src), 1, 3, 4, 6, 3)
 			var/turf/t = find_loc(src)
@@ -284,8 +284,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		return dat
 
 	process()
-		var/mob/M = src.loc
-		
+		var/mob/M = imp_in
+
 		if(isnull(M)) // If the mob got gibbed
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
 			a.autosay("states, \"[mobname] has died-zzzzt in-in-in...\"", "[mobname]'s Death Alarm")

@@ -395,7 +395,9 @@
 	//Add an implant if needed
 	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)
 	if (isnull(imp))
-		imp = new /obj/item/weapon/implant/health(subject)
+		var/datum/organ/external/O = pick(subject.organs)
+		imp = new /obj/item/weapon/implant/health(O)
+		O.implant += imp
 		imp.implanted = subject
 		R.fields["imp"] = "\ref[imp]"
 	//Update it if needed
