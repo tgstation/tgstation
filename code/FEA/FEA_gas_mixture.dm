@@ -68,8 +68,6 @@ datum
 					for(var/datum/gas/trace_gas in trace_gases)
 						heat_capacity += trace_gas.moles*trace_gas.specific_heat
 
-				heat_capacity = max(heat_capacity,0.001)
-
 				return heat_capacity
 
 			heat_capacity_archived()
@@ -78,8 +76,6 @@ datum
 				if(trace_gases.len)
 					for(var/datum/gas/trace_gas in trace_gases)
 						heat_capacity_archived += trace_gas.moles_archived*trace_gas.specific_heat
-
-				heat_capacity_archived = max(heat_capacity_archived,0.001)
 
 				return heat_capacity_archived
 
@@ -121,7 +117,7 @@ datum
 
 				return graphic != graphic_archived
 
-			react(atom/dump_location,canburn = 1)
+			react(atom/dump_location)
 				var/reacting = 0 //set to 1 if a notable reaction occured (used by pipe_network)
 
 				if(trace_gases.len > 0)
@@ -141,10 +137,9 @@ datum
 								reacting = 1
 
 				fuel_burnt = 0
-				if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST && canburn)
+				if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 					//world << "pre [temperature], [oxygen], [toxins]"
-					//if(fire() > 0)
-					if(zburn() > 0)
+					if(fire() > 0)
 						reacting = 1
 					//world << "post [temperature], [oxygen], [toxins]"
 
@@ -239,11 +234,6 @@ datum
 			share(datum/gas_mixture/sharer)
 				//Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length
 				//Return: amount of gas exchanged (+ if sharer received)
-
-			share_ratio(datum/gas_mixture/sharer,ratio)
-			share_volume(datum/gas_mixture/sharer,ratio)
-				//Because share() sucks ass at being efficient and I have no need to discover how much gas was
-				//transferred. Return: Whether the two gases are equal enough to be merged.
 
 			mimic(turf/model)
 				//Similar to share(...), except the model is not modified
@@ -697,128 +687,6 @@ datum
 
 			else
 				return 0
-
-		share_ratio(datum/gas_mixture/sharer,ratio)
-			var
-				size = max(1,group_multiplier)
-				share_size = max(1,sharer.group_multiplier)
-
-				full_oxy = oxygen * size
-				full_nitro = nitrogen * size
-				full_co2 = carbon_dioxide * size
-				full_plasma = toxins * size
-
-				full_thermal = thermal_energy() * size
-
-				s_full_oxy = sharer.oxygen * share_size
-				s_full_nitro = sharer.nitrogen * share_size
-				s_full_co2 = sharer.carbon_dioxide * share_size
-				s_full_plasma = sharer.toxins * share_size
-
-				s_full_thermal = sharer.thermal_energy() * share_size
-
-				oxy_avg = (full_oxy + s_full_oxy) / (size + share_size)
-				nit_avg = (full_nitro + s_full_nitro) / (size + share_size)
-				co2_avg = (full_co2 + s_full_co2) / (size + share_size)
-				plasma_avg = (full_plasma + s_full_plasma) / (size + share_size)
-
-				thermal_avg = (full_thermal + s_full_thermal) / (size+share_size)
-
-			oxygen = (oxygen - oxy_avg) * (1-ratio) + oxy_avg
-			nitrogen = (nitrogen - nit_avg) * (1-ratio) + nit_avg
-			carbon_dioxide = (carbon_dioxide - co2_avg) * (1-ratio) + co2_avg
-			toxins = (toxins - plasma_avg) * (1-ratio) + plasma_avg
-
-			sharer.oxygen = (sharer.oxygen - oxy_avg) * (1-ratio) + oxy_avg
-			sharer.nitrogen = (sharer.nitrogen - nit_avg) * (1-ratio) + nit_avg
-			sharer.carbon_dioxide = (sharer.carbon_dioxide - co2_avg) * (1-ratio) + co2_avg
-			sharer.toxins = (sharer.toxins - plasma_avg) * (1-ratio) + plasma_avg
-
-			var
-				thermal = (full_thermal/size - thermal_avg) * (1-ratio) + thermal_avg
-				sharer_thermal = (s_full_thermal/share_size - thermal_avg) * (1-ratio) + thermal_avg
-
-			temperature = thermal / heat_capacity()
-
-			sharer.temperature = sharer_thermal / sharer.heat_capacity()
-
-			for(var/datum/gas/G in trace_gases)
-				var/datum/gas/H = locate(G.type) in sharer.trace_gases
-				if(H)
-					var/G_avg = (G.moles*size + H.moles*share_size) / (size+share_size)
-					G.moles = (G.moles - G_avg) * (1-ratio) + G_avg
-					H.moles = (H.moles - G_avg) * (1-ratio) + G_avg
-				else
-					H = new G.type
-					sharer.trace_gases += H
-					var/G_avg = (G.moles*size) / (size+share_size)
-					G.moles = (G.moles - G_avg) * (1-ratio) + G_avg
-					H.moles = (H.moles - G_avg) * (1-ratio) + G_avg
-
-			if(compare(sharer)) return 1
-			else return 0
-
-			/* See? Now that's how it's done. */
-
-		share_volume(datum/gas_mixture/sharer,ratio)
-			//Bases the size on volume.
-			var
-				size = max(1,volume)
-				share_size = max(1,sharer.volume)
-
-				full_oxy = oxygen * size
-				full_nitro = nitrogen * size
-				full_co2 = carbon_dioxide * size
-				full_plasma = toxins * size
-
-				full_thermal = thermal_energy() * size
-
-				s_full_oxy = sharer.oxygen * share_size
-				s_full_nitro = sharer.nitrogen * share_size
-				s_full_co2 = sharer.carbon_dioxide * share_size
-				s_full_plasma = sharer.toxins * share_size
-
-				s_full_thermal = sharer.thermal_energy() * share_size
-
-				oxy_avg = (full_oxy + s_full_oxy) / (size + share_size)
-				nit_avg = (full_nitro + s_full_nitro) / (size + share_size)
-				co2_avg = (full_co2 + s_full_co2) / (size + share_size)
-				plasma_avg = (full_plasma + s_full_plasma) / (size + share_size)
-
-				thermal_avg = (full_thermal + s_full_thermal) / (size+share_size)
-
-			oxygen = (oxygen - oxy_avg) * (1-ratio) + oxy_avg
-			nitrogen = (nitrogen - nit_avg) * (1-ratio) + nit_avg
-			carbon_dioxide = (carbon_dioxide - co2_avg) * (1-ratio) + co2_avg
-			toxins = (toxins - plasma_avg) * (1-ratio) + plasma_avg
-
-			sharer.oxygen = (sharer.oxygen - oxy_avg) * (1-ratio) + oxy_avg
-			sharer.nitrogen = (sharer.nitrogen - nit_avg) * (1-ratio) + nit_avg
-			sharer.carbon_dioxide = (sharer.carbon_dioxide - co2_avg) * (1-ratio) + co2_avg
-			sharer.toxins = (sharer.toxins - plasma_avg) * (1-ratio) + plasma_avg
-
-			var
-				thermal = (full_thermal/size - thermal_avg) * (1-ratio) + thermal_avg
-				sharer_thermal = (s_full_thermal/share_size - thermal_avg) * (1-ratio) + thermal_avg
-
-			temperature = thermal / heat_capacity()
-
-			sharer.temperature = sharer_thermal / sharer.heat_capacity()
-
-			for(var/datum/gas/G in trace_gases)
-				var/datum/gas/H = locate(G.type) in sharer.trace_gases
-				if(H)
-					var/G_avg = (G.moles*size + H.moles*share_size) / (size+share_size)
-					G.moles = (G.moles - G_avg) * (1-ratio) + G_avg
-					H.moles = (H.moles - G_avg) * (1-ratio) + G_avg
-				else
-					H = new G.type
-					sharer.trace_gases += H
-					var/G_avg = (G.moles*size) / (size+share_size)
-					G.moles = (G.moles - G_avg) * (1-ratio) + G_avg
-					H.moles = (H.moles - G_avg) * (1-ratio) + G_avg
-
-			return 1
 
 		mimic(turf/model, border_multiplier)
 			var/delta_oxygen = QUANTIZE(oxygen_archived - model.oxygen)/5

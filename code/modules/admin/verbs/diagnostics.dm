@@ -40,7 +40,7 @@
 				active_tiles += group.members.len
 
 		var/hotspots = 0
-		for(var/obj/fire/fire in world)
+		for(var/obj/effect/hotspot/hotspot in world)
 			hotspots++
 
 		var/output = {"<B>AIR SYSTEMS REPORT</B><HR>
@@ -74,7 +74,7 @@
 		var/burning = 0
 		if(istype(target, /turf/simulated))
 			var/turf/simulated/T = target
-			if(locate(/obj/fire) in T)
+			if(T.active_hotspot)
 				burning = 1
 
 		usr << "\blue @[target.x],[target.y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] w [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("\red BURNING"):(null)]"

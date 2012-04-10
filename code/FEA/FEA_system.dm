@@ -152,13 +152,11 @@ datum
 				var/start_time = world.timeofday
 
 				for(var/turf/simulated/S in world)
-					//if(!S.blocks_air && !S.parent && S.z < 5) // Added last check to force skipping asteroid z-levels -- TLE
-					//	assemble_group_turf(S)
-					if(!S.blocks_air && !S.zone && S.z < 5)
-						new/zone(S)
+					if(!S.blocks_air && !S.parent && S.z < 5) // Added last check to force skipping asteroid z-levels -- TLE
+						assemble_group_turf(S)
 				for(var/turf/simulated/S in world) //Update all pathing and border information as well
-					//if(S.z > 4) // Skipping asteroids -- TLE
-					//	continue
+					if(S.z > 4) // Skipping asteroids -- TLE
+						continue
 					S.update_air_properties()
 /*
 				for(var/obj/movable/floor/S in world)
@@ -168,8 +166,6 @@ datum
 					S.update_air_properties()
 */
 				world << "\red \b Geometry processed in [(world.timeofday-start_time)/10] seconds!"
-
-				spawn zone_master.start()
 
 			assemble_group_turf(turf/simulated/base)
 
@@ -221,7 +217,7 @@ datum
 					base.processing = 0 //singletons at startup are technically unconnected anyway
 					base.parent = null
 
-					if(base.air.check_tile_graphic())
+					if(base.air && base.air.check_tile_graphic())
 						base.update_visuals(base.air)
 
 				return null
@@ -275,15 +271,15 @@ datum
 				if(groups_to_rebuild.len > 0) process_rebuild_select_groups()
 				if(tiles_to_update.len > 0) process_update_tiles()
 
-				//process_groups()
-				//process_singletons()
+				process_groups()
+				process_singletons()
 
-				//process_super_conductivity()
-				//process_high_pressure_delta()
+				process_super_conductivity()
+				process_high_pressure_delta()
 
-				//if(current_cycle%10==5) //Check for groups of tiles to resume group processing every 10 cycles
-				//	for(var/datum/air_group/AG in air_groups)
-				//		AG.check_regroup()
+				if(current_cycle%10==5) //Check for groups of tiles to resume group processing every 10 cycles
+					for(var/datum/air_group/AG in air_groups)
+						AG.check_regroup()
 
 				return 1
 
@@ -333,8 +329,8 @@ datum
 					AG.process_group()
 
 			process_singletons()
-				for(var/item in active_singletons)
-					item:process_cell()
+				for(var/turf/simulated/T in active_singletons)
+					T.process_cell()
 
 			process_super_conductivity()
 				for(var/turf/simulated/hot_potato in active_super_conductivity)

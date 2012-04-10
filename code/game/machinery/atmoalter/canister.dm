@@ -86,7 +86,6 @@
 
 	if (src.health <= 10)
 		var/atom/location = src.loc
-		AirflowRepel(location,air_contents.return_pressure())
 		location.assume_air(air_contents)
 
 		src.destroyed = 1
@@ -129,8 +128,6 @@
 			if(holding)
 				environment.merge(removed)
 			else
-				if(istype(removed))
-					AirflowRepel(loc,removed.return_pressure())
 				loc.assume_air(removed)
 			src.update_icon()
 

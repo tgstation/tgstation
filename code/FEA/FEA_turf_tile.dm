@@ -46,6 +46,10 @@ turf
 	var/pressure_difference = 0
 	var/pressure_direction = 0
 
+	//optimization vars
+	var/next_check = 0  //number of ticks before this tile updates
+	var/check_delay = 0  //number of ticks between updates
+
 	proc
 		high_pressure_movements()
 
@@ -75,7 +79,10 @@ turf
 								air_master.high_pressure_delta += src
 							pressure_direction = direction
 							pressure_difference = connection_difference
+
+
 							return 1
+
 
 turf
 	simulated
@@ -95,7 +102,7 @@ turf
 			archived_cycle = 0
 			current_cycle = 0
 
-			obj/hotspot/active_hotspot
+			obj/effect/hotspot/active_hotspot
 
 			temperature_archived //USED ONLY FOR SOLIDS
 			being_superconductive = 0
@@ -112,11 +119,16 @@ turf
 			mimic_temperature_with_tile(turf/model)
 			share_temperature_with_tile(turf/simulated/sharer)
 
+
 			super_conduct()
 
 			update_visuals(datum/gas_mixture/model)
 				overlays = null
-				if(!model) return
+
+				var/siding_icon_state = return_siding_icon_state()
+				if(siding_icon_state)
+					overlays += image('floors.dmi',siding_icon_state)
+
 				switch(model.graphic)
 					if("plasma")
 						overlays.Add(plmaster)
@@ -143,16 +155,6 @@ turf
 
 					find_group()
 
-					spawn(1)
-						for(var/d in cardinal)
-							var/turf/T = get_step(src,d)
-							if(!T || !T.zone) continue
-							if(!zone)
-								zone = T.zone
-								zone.AddTurf(src)
-							else if(T.zone != zone)
-								ZConnect(src,T)
-
 //				air.parent = src //TODO DEBUG REMOVE
 
 			else
@@ -162,24 +164,15 @@ turf
 						if(istype(target))
 							air_master.tiles_to_update.Add(target)
 
-					for(var/d in list(NORTH,EAST))
-						var/turf/T = get_step(src,d)
-						if(!T || !T.zone) continue
-						ZDisconnect(T,get_step(src,get_dir(T,src)))
-
 		Del()
 			if(air_master)
-				if(zone)
-					zone.rebuild = 1
-					zone.RemoveTurf(src)
 				if(parent)
 					air_master.groups_to_rebuild.Add(parent)
 					parent.members.Remove(src)
 				else
 					air_master.active_singletons.Remove(src)
-			var/obj/fire/F = locate() in src
-			if(F)
-				del(F)
+			if(active_hotspot)
+				del(active_hotspot)
 			if(blocks_air)
 				for(var/direction in list(NORTH, SOUTH, EAST, WEST))
 					var/turf/simulated/tile = get_step(src,direction)
@@ -188,9 +181,22 @@ turf
 			..()
 
 		assume_air(datum/gas_mixture/giver)
-			if(air)
-				if(zone)
-					zone.air.merge(giver)
+			if(!giver)	return 0
+			var/datum/gas_mixture/receiver = air
+			if(istype(receiver))
+				if(parent&&parent.group_processing)
+					if(!parent.air.check_then_merge(giver))
+						parent.suspend_group_processing()
+						air.merge(giver)
+				else
+					if (giver.total_moles() > MINIMUM_AIR_TO_SUSPEND)
+						reset_delay()
+
+					air.merge(giver)
+
+					if(!processing)
+						if(air.check_tile_graphic())
+							update_visuals(air)
 
 				return 1
 
@@ -210,16 +216,29 @@ turf
 			return air.mimic(T)
 
 		return_air()
-			if(zone)
-				return zone.air
+			if(air)
+				if(parent&&parent.group_processing)
+					return parent.air
+				else return air
 
 			else
 				return ..()
 
 		remove_air(amount as num)
-			var/datum/gas_mixture/removed = null
-			if(zone)
-				removed = zone.air.remove(amount)
+			if(air)
+				var/datum/gas_mixture/removed = null
+
+				if(parent&&parent.group_processing)
+					removed = parent.air.check_then_remove(amount)
+					if(!removed)
+						parent.suspend_group_processing()
+						removed = air.remove(amount)
+				else
+					removed = air.remove(amount)
+
+					if(!processing)
+						if(air.check_tile_graphic())
+							update_visuals(air)
 
 				return removed
 
@@ -232,30 +251,6 @@ turf
 			for(var/direction in cardinal)
 				if(CanPass(null, get_step(src,direction), 0, 0))
 					air_check_directions |= direction
-
-			if(zone)
-				for(var/direction in cardinal)
-					if(air_check_directions&direction)
-
-						var/turf/simulated/T = get_step(src,direction)
-						if(T)
-							ZConnect(src,T)
-					else
-						var/turf/simulated/T = get_step(src,direction)
-						if(T)
-							ZDisconnect(src,T)
-			else if(air)
-				// there's no zone here, but there's air
-				// if there are no zones nearby either make a new zone!
-
-				for(var/direction in cardinal)
-					if(air_check_directions&direction)
-						var/turf/simulated/T = get_step(src,direction)
-						if(T.zone) goto ZoneNearby
-
-				new/zone(src)
-
-				ZoneNearby:
 
 			if(parent)
 				if(parent.borders)
@@ -300,6 +295,18 @@ turf
 				processing = 0
 
 		process_cell()
+			//this proc does all the heavy lifting for individual tile processing
+			//it shares with all of its neighbors, spreads fire, calls superconduction
+			//and doesn't afraid of anything
+
+			//check if we're skipping this tick
+			if (next_check > 0)
+				next_check--
+				return 1
+			next_check += check_delay + rand(0,check_delay/2)
+			check_delay++
+
+			var/turf/simulated/list/possible_fire_spreads = list()
 			if(processing)
 				if(archived_cycle < air_master.current_cycle) //archive self if not already done
 					archive()
@@ -310,20 +317,31 @@ turf
 						var/turf/simulated/enemy_tile = get_step(src, direction)
 						var/connection_difference = 0
 
-						if(istype(enemy_tile))
+						if(istype(enemy_tile))  //enemy_tile == neighbor, btw
 							if(enemy_tile.archived_cycle < archived_cycle) //archive bordering tile information if not already done
 								enemy_tile.archive()
+
+							if (air && enemy_tile.air)
+								var/delay_trigger = air.compare(enemy_tile.air)
+								if (!delay_trigger) //if compare() didn't return 1, air is different enough to trigger processing
+									reset_delay()
+									enemy_tile.reset_delay()
+
 							if(enemy_tile.parent && enemy_tile.parent.group_processing) //apply tile to group sharing
-								if(enemy_tile.parent.current_cycle < current_cycle)
+								if(enemy_tile.parent.current_cycle < current_cycle) //if the group hasn't been archived, it could just be out of date
 									if(enemy_tile.parent.air.check_gas_mixture(air))
 										connection_difference = air.share(enemy_tile.parent.air)
 									else
 										enemy_tile.parent.suspend_group_processing()
 										connection_difference = air.share(enemy_tile.air)
 										//group processing failed so interact with individual tile
+
 							else
 								if(enemy_tile.current_cycle < current_cycle)
 									connection_difference = air.share(enemy_tile.air)
+
+							if(active_hotspot)
+								possible_fire_spreads += enemy_tile
 						else
 /*							var/obj/movable/floor/movable_on_enemy = locate(/obj/movable/floor) in enemy_tile
 
@@ -361,6 +379,10 @@ turf
 
 			air.react()
 
+			if(active_hotspot)
+				if (!active_hotspot.process(possible_fire_spreads))
+					return 0
+
 			if(air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
 				consider_superconductivity(starting = 1)
 
@@ -368,6 +390,7 @@ turf
 				update_visuals(air)
 
 			if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+				reset_delay() //hotspots always process quickly
 				hotspot_expose(air.temperature, CELL_VOLUME)
 				for(var/atom/movable/item in src)
 					item.temperature_expose(air, air.temperature, CELL_VOLUME)
@@ -513,7 +536,7 @@ turf
 
 		proc/share_temperature_mutual_solid(turf/simulated/sharer, conduction_coefficient)
 			var/delta_temperature = (temperature_archived - sharer.temperature_archived)
-			if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+			if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER && heat_capacity && sharer.heat_capacity)
 
 				var/heat = conduction_coefficient*delta_temperature* \
 					(heat_capacity*sharer.heat_capacity/(heat_capacity+sharer.heat_capacity))
@@ -527,15 +550,23 @@ turf
 				return 0
 
 			if(air)
-				if(starting && air.temperature < MINIMUM_TEMPERATURE_START_SUPERCONDUCTION) return 0
-				if(air.temperature < MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION) return 0
+				if(air.temperature < (starting?MINIMUM_TEMPERATURE_START_SUPERCONDUCTION:MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION))
+					return 0
 				if(air.heat_capacity() < MOLES_CELLSTANDARD*0.1*0.05)
 					return 0
 			else
-				if(starting && temperature < MINIMUM_TEMPERATURE_START_SUPERCONDUCTION) return 0
-				if(temperature < MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION)
+				if(temperature < (starting?MINIMUM_TEMPERATURE_START_SUPERCONDUCTION:MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION))
 					return 0
 
 			being_superconductive = 1
 
 			air_master.active_super_conductivity += src
+
+		proc/reset_delay()
+			//sets this turf to process quickly again
+			next_check=0
+			check_delay= -5 //negative numbers mean a mandatory quick-update period
+
+			//if this turf has a parent air group, suspend its processing
+			if (parent && parent.group_processing)
+				parent.suspend_group_processing()
