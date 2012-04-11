@@ -181,6 +181,13 @@ proc/make_mining_asteroid_secret(var/size = 5)
 	var/turf/T = null
 	var/sanity = 0
 	var/list/room = null
+	var/list/turfs = null
+
+
+	turfs = get_area_turfs(/area/mine/unexplored)
+
+	if(!turfs.len)
+		return 0
 
 	while(!valid)
 		valid = 1
@@ -188,8 +195,7 @@ proc/make_mining_asteroid_secret(var/size = 5)
 		if(sanity > 100)
 			return 0
 
-
-		T=pick(get_area_turfs(/area/mine/unexplored))
+		T=pick(turfs)
 		if(!T)
 			return 0
 

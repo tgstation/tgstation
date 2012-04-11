@@ -798,12 +798,46 @@
 				user << "\red You cannot directly fill this object."
 				return
 
+			var/trans = 0
+
 			if(ismob(target))
+				if(istype(target , /mob/living/carbon/human))
+					var/mob/living/carbon/human/victim = target
+
+					var/obj/item/safe_thing = null
+					if( victim.wear_mask )
+						if ( victim.wear_mask.flags & MASKCOVERSEYES )
+							safe_thing = victim.wear_mask
+					if( victim.head )
+						if ( victim.head.flags & MASKCOVERSEYES )
+							safe_thing = victim.head
+					if(victim.glasses)
+						if ( !safe_thing )
+							safe_thing = victim.glasses
+
+					if(safe_thing)
+						if(!safe_thing.reagents)
+							safe_thing.create_reagents(100)
+						trans = src.reagents.trans_to(safe_thing, amount_per_transfer_from_this)
+
+						for(var/mob/O in viewers(world.view, user))
+							O.show_message(text("\red <B>[] tries to squirt something into []'s eyes, but fails!</B>", user, target), 1)
+						spawn(5)
+							src.reagents.reaction(safe_thing, TOUCH)
+
+
+						user << "\blue You transfer [trans] units of the solution."
+						if (src.reagents.total_volume<=0)
+							filled = 0
+							icon_state = "dropper[filled]"
+						return
+
+
 				for(var/mob/O in viewers(world.view, user))
-					O.show_message(text("\red <B>[] drips something onto []!</B>", user, target), 1)
+					O.show_message(text("\red <B>[] squirts something into []'s eyes!</B>", user, target), 1)
 				src.reagents.reaction(target, TOUCH)
 
-			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+			trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 			user << "\blue You transfer [trans] units of the solution."
 			if (src.reagents.total_volume<=0)
 				filled = 0
@@ -2092,6 +2126,15 @@
 		var/datum/disease/F = new /datum/disease/wizarditis(0)
 		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", 20, data)
+
+/obj/item/weapon/reagent_containers/glass/bottle/pacid
+	name = "Polytronic Acid Bottle"
+	desc = "A small bottle. Contains a small amount of Polytronic Acid"
+	icon = 'chemical.dmi'
+	icon_state = "bottle17"
+	New()
+		..()
+		reagents.add_reagent("pacid", 30)
 
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
