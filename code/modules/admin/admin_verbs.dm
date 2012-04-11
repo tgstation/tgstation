@@ -171,6 +171,8 @@
 			deadchat = 1
 			seeprayers = 1
 
+			verbs += /obj/admins/proc/view_txt_log
+			verbs += /obj/admins/proc/view_atk_log
 			verbs += /obj/admins/proc/toggleaban						//abandon mob
 			verbs += /obj/admins/proc/show_traitor_panel
 			verbs += /client/proc/cmd_admin_remove_plasma
@@ -220,8 +222,6 @@
 
 		//Game Admin
 		if (holder.level >= 5)
-			verbs += /obj/admins/proc/view_txt_log
-			verbs += /obj/admins/proc/view_atk_log
 			verbs += /obj/admins/proc/spawn_atom
 			verbs += /client/proc/cmd_admin_list_open_jobs
 			verbs += /client/proc/cmd_admin_direct_narrate
