@@ -564,61 +564,6 @@
 		access = get_all_centcom_access()
 		..()
 
-/obj/item/weapon/cleaner
-	desc = "A chemical that cleans messes."
-	icon = 'janitor.dmi'
-	name = "space cleaner"
-	icon_state = "cleaner"
-	item_state = "cleaner"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
-	throwforce = 3
-	w_class = 2.0
-	throw_speed = 2
-	throw_range = 10
-	var/catch = 1
-
-/obj/item/weapon/chemsprayer
-	desc = "A utility used to spray large amounts of reagent in a given area."
-	icon = 'gun.dmi'
-	name = "chem sprayer"
-	icon_state = "chemsprayer"
-	item_state = "chemsprayer"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
-	throwforce = 3
-	w_class = 3.0
-	throw_speed = 2
-	throw_range = 10
-	origin_tech = "combat=3;materials=3;engineering=3"
-
-/obj/item/weapon/pepperspray //This is riot control
-	desc = "Manufactred by UhangInc., used to blind and down an opponent quickly."
-	icon = 'weapons.dmi'
-	name = "pepperspray"
-	icon_state = "pepperspray"
-	item_state = "pepperspray"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
-	throwforce = 3
-	w_class = 2.0
-	throw_speed = 2
-	throw_range = 10
-	var/catch = 1
-	var/BottleSize = 1
-	var/ReagentAmount = 30
-
-/obj/item/weapon/pepperspray/small //And this is for personal defense.
-	desc = "This appears to be a small, nonlethal, single use personal defense weapon.  Hurts like a bitch, though."
-	icon = 'weapons.dmi'
-	name = "mace"
-	icon_state = "pepperspray"
-	item_state = "pepperspray"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
-	throwforce = 3
-	w_class = 1.0
-	throw_speed = 2
-	throw_range = 10
-	catch = 1
-	BottleSize = 0
-	ReagentAmount = 1
 
 /obj/item/weapon/clipboard
 	name = "clipboard"
@@ -870,19 +815,6 @@
 
 
 
-/obj/item/weapon/mop
-	desc = "The world of the janitor wouldn't be complete without a mop."
-	name = "mop"
-	icon = 'janitor.dmi'
-	icon_state = "mop"
-	var/mopping = 0
-	var/mopcount = 0
-	force = 3.0
-	throwforce = 10.0
-	throw_speed = 5
-	throw_range = 10
-	w_class = 3.0
-	flags = FPRINT | TABLEPASS
 
 /obj/item/weapon/caution
 	desc = "Caution! Wet Floor!"

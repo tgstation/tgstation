@@ -2563,6 +2563,9 @@ It can still be worn/put on as normal.
 		src.stat = 0
 		return
 	src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss() - src.getCloneLoss() -src.halloss
+	if(getFireLoss() > (100 - config.health_threshold_dead) && stat == DEAD) //100 only being used as the magic human max health number, feel free to change it if you add a var for it -- Urist
+		ChangeToHusk()
+	return
 
 /mob/living/carbon/human/abiotic(var/full_body = 0)
 	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask)))

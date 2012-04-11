@@ -12,6 +12,8 @@ var
 
 	uplink_welcome = "Syndicate Uplink Console:"
 	uplink_uses = 10
+
+
 	var/const/waittime_l = 1800 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 3600 //upper bound on time before intercept arrives (in tenths of seconds)
 
@@ -25,6 +27,9 @@ var
 		//Controls expansion via game controller
 		autoexpand = 0
 		expanding = 0
+
+		blobnukecount = 500
+		blobwincount = 700
 
 
 	announce()
@@ -114,11 +119,11 @@ var
 				return
 
 			if (2)
-				if((blobs.len > 500) && (declared == 1))
+				if((blobs.len > blobnukecount) && (declared == 1))
 					command_alert("Uncontrolled spread of the biohazard onboard the station. We have issued directive 7-12 for [station_name()].  Any living Heads of Staff are ordered to enact directive 7-12 at any cost, a print out with detailed instructions has been sent to your communications computers.", "Biohazard Alert")
 					send_intercept(2)
 					declared = 2
-				if(blobs.len > 700)//This needs work
+				if(blobs.len > blobwincount)//This needs work
 					stage = 3
 		return
 

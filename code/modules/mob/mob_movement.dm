@@ -133,6 +133,7 @@
 
 
 /client/Move(n, direct)
+
 	if(mob.control_object)	Move_object(direct)
 
 	if(isobserver(mob))	return mob.Move(n,direct)
@@ -142,6 +143,11 @@
 	if(world.time < move_delay)	return
 
 	if(!mob)	return
+
+	if(locate(/obj/effect/stop/, mob.loc))
+		for(var/obj/effect/stop/S in mob.loc)
+			if(S.victim == mob)
+				return
 
 	if(mob.stat==2)	return
 
@@ -162,8 +168,14 @@
 	else
 		mob.canmove = 1
 
-	if(istype(mob.loc, /turf/space) || (mob.flags & NOGRAV))
+
+	//if(istype(mob.loc, /turf/space) || (mob.flags & NOGRAV))
+	//	if(!mob.Process_Spacemove(0))	return 0
+
+	var/area/a = get_area(mob.loc)
+	if((istype(mob.loc, /turf/space)) || (a.has_gravity == 0))
 		if(!mob.Process_Spacemove(0))	return 0
+
 
 	if(isobj(mob.loc) || ismob(mob.loc))//Inside an object, tell it we moved
 		var/atom/O = mob.loc
@@ -328,12 +340,35 @@
 	//First check to see if we can do things
 	if(restrained())	return 0
 
+	/*
+	if(istype(src,/mob/living/carbon))
+		if(src.l_hand && src.r_hand)
+			return 0
+	*/
+
 	var/dense_object = 0
 	for(var/turf/turf in oview(1,src))
 		if(istype(turf,/turf/space))
 			continue
-		if(istype(turf,/turf/simulated/floor) && (flags & NOGRAV))
+
+
+		var/area/a = get_area(turf)
+
+		if(istype(src,/mob/living/carbon/human/))  // Only humans can wear magboots, so we give them a chance to.
+			if((istype(turf,/turf/simulated/floor)) && (a.has_gravity == 0) && !(istype(src:shoes, /obj/item/clothing/shoes/magboots) && (src:shoes:flags & NOSLIP)))
+				continue
+
+
+		else
+			if((istype(turf,/turf/simulated/floor)) && (a.has_gravity == 0)) // No one else gets a chance.
+				continue
+
+		/*
+		if(istype(turf,/turf/simulated/floor) && (src.flags & NOGRAV))
 			continue
+		*/
+
+
 		dense_object++
 		break
 

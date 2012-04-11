@@ -5171,7 +5171,7 @@
 "bVw" = (/obj/machinery/door/window{dir = 8; icon = 'windoor.dmi'; name = "Virology Holding Rooms"; req_access_txt = "39"},/obj/structure/disposalpipe/segment{dir = 1},/turf/simulated/floor{icon_state = "white"},/area/medical/virology)
 "bVx" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/machinery/camera{c_tag = "Virology East"; dir = 8; network = "Medbay"},/turf/simulated/floor{icon_state = "white"},/area)
 "bVy" = (/obj/structure/table,/obj/item/weapon/cell{charge = 100; maxcharge = 15000},/obj/item/weapon/cell{pixel_x = 5; pixel_y = -5; charge = 100; maxcharge = 15000},/obj/item/device/assembly/prox_sensor{pixel_x = -8; pixel_y = 4},/turf/simulated/floor,/area/assembly/assembly_line)
-"bVz" = (/obj/structure/table,/obj/item/stack/sheet/r_metal{amount = 20},/obj/structure/disposalpipe/segment,/obj/item/stack/sheet/glass{amount = 20},/turf/simulated/floor,/area/assembly/assembly_line)
+"bVz" = (/obj/structure/table,/obj/item/stack/sheet/plasteel{amount = 20},/obj/structure/disposalpipe/segment,/obj/item/stack/sheet/glass{amount = 20},/turf/simulated/floor,/area/assembly/assembly_line)
 "bVA" = (/obj/machinery/conveyor{dir = 4; id = "Skynet_heavy"},/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/assembly/assembly_line)
 "bVB" = (/obj/machinery/conveyor{dir = 4; id = "Skynet_heavy"},/obj/machinery/status_display{density = 0; layer = 4; pixel_x = 0; pixel_y = -32},/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/assembly/assembly_line)
 "bVC" = (/obj/machinery/conveyor{dir = 4; id = "Skynet_heavy"},/obj/machinery/light,/turf/simulated/floor{dir = 1; icon_state = "warning"},/area/assembly/assembly_line)

@@ -650,12 +650,14 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
 	if(confirm != "Yes") return
+	//Due to the delay here its easy for something to have happened to the mob
+	if(!M)	return
 
 	if(usr.key != M.key && M.client)
 		log_admin("[key_name(usr)] has gibbed [key_name(M)]")
 		message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(M)]", 1)
 
-	if (istype(M, /mob/dead/observer))
+	if(istype(M, /mob/dead/observer))
 		gibs(M.loc, M.viruses)
 		return
 
@@ -870,6 +872,36 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	usr << "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>."
 
 	ticker.random_players = 1
+
+/client/proc/toggle_gravity_on()
+	set category = "Debug"
+	set name = "Toggle station gravity on"
+	set desc = "Toggles all gravity to active on the station."
+
+	if (!(ticker && ticker.mode))
+		usr << "Please wait until the game starts!  Not sure how it will work otherwise."
+		return
+
+
+	for(var/area/A in world)
+		A.gravitychange(1,A)
+
+	command_alert("CentComm is now beaming gravitons to your station.  We appoligize for any inconvience.")
+
+/client/proc/toggle_gravity_off()
+	set category = "Debug"
+	set name = "Toggle station gravity off"
+	set desc = "Toggles all gravity to inactive on the station."
+
+	if (!(ticker && ticker.mode))
+		usr << "Please wait until the game starts!  Not sure how it will work otherwise."
+		return
+
+
+	for(var/area/A in world)
+		A.gravitychange(0,A)
+
+	command_alert("For budget reasons, Centcomm is no longer beaming gravitons to your station.  We appoligize for any inconvience.")
 
 /client/proc/rnd_check_designs()
 	set category = "Debug"

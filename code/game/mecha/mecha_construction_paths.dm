@@ -110,7 +110,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="External armor is installed."),
 					 //3
-					 list("key"=/obj/item/stack/sheet/r_metal,
+					 list("key"=/obj/item/stack/sheet/plasteel,
 					 		"backkey"=/obj/item/weapon/weldingtool,
 					 		"desc"="Internal armor is welded."),
 					 //4
@@ -261,7 +261,7 @@
 					user.visible_message("[user] secures external armor layer.", "You secure external reinforced armor layer.")
 				else
 					user.visible_message("[user] pries external armor layer from [holder].", "You prie external armor layer from [holder].")
-					var/obj/item/stack/sheet/r_metal/MS = new /obj/item/stack/sheet/r_metal(get_turf(holder))
+					var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 					MS.amount = 5
 			if(1)
 				if(diff==FORWARD)
@@ -557,11 +557,11 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="External armor is installed."),
 					 //3
-					 list("key"=/obj/item/stack/sheet/r_metal,
+					 list("key"=/obj/item/stack/sheet/plasteel,
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="External armor is being installed."),
 					 //4
-					 list("key"=/obj/item/stack/sheet/r_metal,
+					 list("key"=/obj/item/stack/sheet/plasteel,
 					 		"backkey"=/obj/item/weapon/weldingtool,
 					 		"desc"="Internal armor is welded."),
 					 //5
@@ -574,7 +574,7 @@
 					 		"desc"="Internal armor is installed"),
 
 					 //7
-					 list("key"=/obj/item/stack/sheet/r_metal,
+					 list("key"=/obj/item/stack/sheet/plasteel,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Peripherals control module is secured"),
 					 //8
@@ -673,7 +673,7 @@
 					user.visible_message("[user] secures internal armor layer.", "You secure internal armor layer.")
 				else
 					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
-					var/obj/item/stack/sheet/r_metal/MS = new /obj/item/stack/sheet/r_metal(get_turf(holder))
+					var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 					MS.amount = 5
 			if(5)
 				if(diff==FORWARD)
@@ -690,14 +690,14 @@
 					user.visible_message("[user] installs external reinforced armor layer to [holder].", "You install external reinforced armor layer to [holder].")
 				else
 					user.visible_message("[user] removes the external armor from [holder].", "You remove the external armor from [holder].")
-					var/obj/item/stack/sheet/r_metal/MS = new /obj/item/stack/sheet/r_metal(get_turf(holder))
+					var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 					MS.amount = 5
 			if(2)
 				if(diff==FORWARD)
 					user.visible_message("[user] secures external armor layer.", "You secure external reinforced armor layer.")
 				else
 					user.visible_message("[user] pries external armor layer from [holder].", "You prie external armor layer from [holder].")
-					var/obj/item/stack/sheet/r_metal/MS = new /obj/item/stack/sheet/r_metal(get_turf(holder))
+					var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 					MS.amount = 5
 			if(1)
 				if(diff==FORWARD)

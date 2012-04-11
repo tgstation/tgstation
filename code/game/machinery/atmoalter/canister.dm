@@ -10,7 +10,7 @@
 	var/release_pressure = ONE_ATMOSPHERE
 
 	var/color = "yellow"
-	var/is_labeled = 0
+	var/can_label = 1
 	var/filled = 0.5
 	pressure_resistance = 7*ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
@@ -22,32 +22,32 @@
 	name = "Canister: \[N2O\]"
 	icon_state = "redws"
 	color = "redws"
-	is_labeled = 1
+	can_label = 0
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Canister: \[N2\]"
 	icon_state = "red"
 	color = "red"
-	is_labeled = 1
+	can_label = 0
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "Canister: \[O2\]"
 	icon_state = "blue"
 	color = "blue"
-	is_labeled = 1
+	can_label = 0
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Canister \[Toxin (Bio)\]"
 	icon_state = "orange"
 	color = "orange"
-	is_labeled = 1
+	can_label = 0
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Canister \[CO2\]"
 	icon_state = "black"
 	color = "black"
-	is_labeled = 1
+	can_label = 0
 /obj/machinery/portable_atmospherics/canister/air
 	name = "Canister \[Air\]"
 	icon_state = "grey"
 	color = "grey"
-	is_labeled = 1
+	can_label = 0
 
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	src.overlays = 0
@@ -134,6 +134,11 @@
 				loc.assume_air(removed)
 			src.update_icon()
 
+	if(air_contents.return_pressure() < 1)
+		can_label = 1
+	else
+		can_label = 0
+
 	src.updateDialog()
 	return
 
@@ -187,7 +192,7 @@
 		holding_text = {"<BR><B>Tank Pressure</B>: [holding.air_contents.return_pressure()] KPa<BR>
 <A href='?src=\ref[src];remove_tank=1'>Remove Tank</A><BR>
 "}
-	var/output_text = {"<TT><B>[name]</B>[!is_labeled?" <A href='?src=\ref[src];relabel=1'><small>relabel</small></a>":""]<BR>
+	var/output_text = {"<TT><B>[name]</B>[can_label?" <A href='?src=\ref[src];relabel=1'><small>relabel</small></a>":""]<BR>
 Pressure: [air_contents.return_pressure()] KPa<BR>
 Port Status: [(connected_port)?("Connected"):("Disconnected")]
 [holding_text]
@@ -235,7 +240,7 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 				release_pressure = max(ONE_ATMOSPHERE/10, release_pressure+diff)
 
 		if (href_list["relabel"])
-			if (!is_labeled)
+			if (can_label)
 				var/list/colors = list(\
 					"\[N2O\]" = "redws", \
 					"\[N2\]" = "red", \
@@ -250,7 +255,6 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 					src.color = colors[label]
 					src.icon_state = colors[label]
 					src.name = "Canister: [label]"
-					is_labeled = 1
 		src.updateUsrDialog()
 		src.add_fingerprint(usr)
 		update_icon()

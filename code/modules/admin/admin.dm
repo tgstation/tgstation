@@ -258,13 +258,17 @@ var/global/BSACooldown = 0
 				jobban_unban(M, job)
 				href_list["jobban2"] = 1
 			else
-				ban_unban_log_save("[key_name(usr)] jobbanned [key_name(M)] from [job]")
+				var/reason = input(usr,"Reason?","reason","griefer") as text|null
+				if(!reason)
+					return
+				ban_unban_log_save("[key_name(usr)] jobbanned [key_name(M)] from [job]. reason: [reason]")
 				log_admin("[key_name(usr)] banned [key_name(M)] from [job]")
 				feedback_inc("ban_job",1)
 				M << "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from [job].</B></BIG>"
+				M << "\red <B>The reason is: [reason]</B>"
 				M << "\red Jooban can be lifted only on demand."
 				message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [job]", 1)
-				jobban_fullban(M, job)
+				jobban_fullban(M, job, reason)
 				href_list["jobban2"] = 1 // lets it fall through and refresh
 
 
@@ -2034,10 +2038,14 @@ var/global/BSACooldown = 0
 	return
 
 /obj/admins/proc/Jobbans()
+
 	if ((src.rank in list( "Game Admin", "Game Master"  )))
 		var/dat = "<B>Job Bans!</B><HR><table>"
 		for(var/t in jobban_keylist)
-			dat += text("<tr><td><A href='?src=\ref[src];removejobban=[t]'>[t]</A></td></tr>")
+			var/r = t
+			if( findtext(r,"##") )
+				r = copytext( r, 1, findtext(r,"##") )//removes the description
+			dat += text("<tr><td>[t] (<A href='?src=\ref[src];removejobban=[r]'>unban</A>)</td></tr>")
 		dat += "</table>"
 		usr << browse(dat, "window=ban;size=400x400")
 
@@ -2739,6 +2747,25 @@ var/global/BSACooldown = 0
 	var/output = {"<html>
 						<head>
 						<title>[time2text(world.realtime,"Day, MMM DD, YYYY")] - Log</title>
+						</head>
+						<body>
+						<pre>
+						[file2text(path)]
+						</pre>
+						</body>
+						</html>"}
+	usr << browse(output,"window=server_logfile")
+	onclose(usr,"server_logfile")
+	return
+
+/obj/admins/proc/view_atk_log()
+	set category = "Admin"
+	set desc="Shows todays server attack log in new window"
+	set name="Show Server Attack Log"
+	var/path = "data/logs/[time2text(world.realtime,"YYYY")]/[time2text(world.realtime,"MM")]-[time2text(world.realtime,"Month")]/[time2text(world.realtime,"DD")]-[time2text(world.realtime,"Day")] Attack.log"
+	var/output = {"<html>
+						<head>
+						<title>[time2text(world.realtime,"Day, MMM DD, YYYY")] - Attack Log</title>
 						</head>
 						<body>
 						<pre>
