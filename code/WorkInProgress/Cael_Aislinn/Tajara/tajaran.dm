@@ -496,8 +496,12 @@
 			&& !istype(part, /datum/organ/external/chest) \
 			&& !istype(part, /datum/organ/external/head) \
 			&& !part.destroyed)
-			stand_icon.Blend(new /icon('tajaran.dmi', "[part.icon_name]_s"), ICON_OVERLAY)
-			lying_icon.Blend(new /icon('tajaran.dmi', "[part.icon_name]_l"), ICON_OVERLAY)
+			var/icon/temp = new /icon('tajaran.dmi', "[part.icon_name]_s")
+			if(part.robot) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+			stand_icon.Blend(temp, ICON_OVERLAY)
+			temp = new /icon('tajaran.dmi', "[part.icon_name]_l")
+			if(part.robot) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+			lying_icon.Blend(temp , ICON_OVERLAY)
 
 	stand_icon.Blend(new /icon('tajaran.dmi', "groin_[g]_s"), ICON_OVERLAY)
 	lying_icon.Blend(new /icon('tajaran.dmi', "groin_[g]_l"), ICON_OVERLAY)

@@ -246,6 +246,10 @@ CIRCULAR SAW
 	if(S.destroyed)
 		return ..()
 
+	if(S.robot)
+		user << "Medical equipment for a robot arm?  How would that do any good..."
+		return
+
 	if(!S.open)
 		user << "\red There is skin in the way!"
 		return 0
@@ -556,6 +560,10 @@ CIRCULAR SAW
 	if(S.destroyed)
 		return ..()
 
+	if(S.robot)
+		user << "Medical equipment for a robot arm?  How would that do any good..."
+		return
+
 	if(!S.open)
 		user << "\red There is skin in the way!"
 		return 0
@@ -763,6 +771,9 @@ CIRCULAR SAW
 		return
 	if(!S.open)
 		usr << "<b>You have to cut the limb open first!</b>"
+		return
+	if(S.robot)
+		user << "Medical equipment for a robot arm?  How would that do any good..."
 		return
 	for(var/mob/O in viewers(M))
 		O.show_message("\red [user.name] scans the wounds on [M.name]'s [S.display_name] with \the [src.name]", 1)
@@ -977,6 +988,10 @@ CIRCULAR SAW
 
 	if(S.destroyed)
 		user << "What [S.display_name]?"
+
+	if(S.robot)
+		user << "Medical equipment for a robot arm?  How would that do any good..."
+		return
 	if(!S.open)
 		user << "\red There is no wound to close up!"
 		return 0
@@ -1366,6 +1381,10 @@ CIRCULAR SAW
 	if(S.destroyed)
 		return ..()
 
+	if(S.robot)
+		user << "Medical equipment for a robot arm?  How would that do any good..."
+		return
+
 	if(S.open)
 		user << "\red The wound is already open!"
 		return 0
@@ -1559,6 +1578,14 @@ CIRCULAR SAW
 		var/datum/organ/external/S = H:organs[user.zone_sel.selecting]
 		if(S.destroyed)
 			return
+
+		if(S.robot)
+			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+			spark_system.set_up(5, 0, M)
+			spark_system.attach(M)
+			spark_system.start()
+			spawn(10)
+				del(spark_system)
 		for(var/mob/O in viewers(H, null))
 			O.show_message(text("\red [H] gets \his [S.display_name] sawed at with [src] by [user]... It looks like [user] is trying to cut it off!"), 1)
 		if(!do_after(user, rand(20,80)))

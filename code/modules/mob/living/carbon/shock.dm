@@ -20,9 +20,9 @@
 		var/mob/living/carbon/human/M = src
 		for(var/name in M.organs)
 			var/datum/organ/external/organ = M.organs[name]
-			if(organ.destroyed || organ.open)
+			if(organ.destroyed)
 				src.traumatic_shock += 60
-			else if(organ.broken)
+			else if(organ.broken || organ.open)
 				src.traumatic_shock += 30
 
 	if(src.traumatic_shock < 0)

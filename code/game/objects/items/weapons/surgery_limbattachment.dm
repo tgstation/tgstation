@@ -45,6 +45,7 @@
 				var/datum/organ/external/T = H.organs["l_hand"]
 				T.attachable = 0
 				T.destroyed = 0
+				T.broken = 0
 				T.robot = 1
 				user.drop_item()
 				M.update_body()
@@ -104,6 +105,7 @@
 				var/datum/organ/external/T = H.organs["r_hand"]
 				T.attachable = 0
 				T.destroyed = 0
+				T.broken = 0
 				T.robot = 1
 				user.drop_item()
 				M.update_body()
@@ -162,6 +164,7 @@
 				var/datum/organ/external/T = H.organs["l_foot"]
 				T.attachable = 0
 				T.destroyed = 0
+				T.broken = 0
 				T.robot = 1
 				user.drop_item()
 				M.update_body()
@@ -221,6 +224,7 @@
 				var/datum/organ/external/T = H.organs["r_foot"]
 				T.attachable = 0
 				T.destroyed = 0
+				T.broken = 0
 				T.robot = 1
 				user.drop_item()
 				M.update_body()

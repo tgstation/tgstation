@@ -25,4 +25,24 @@ TILES
 		user << "\blue You are not using this to lay wire..."
 	return
 
+/obj/item/weapon/wire/attack(mob/M as mob, mob/user as mob)
+	if(hasorgans(M))
+		var/datum/organ/external/S = M:organs[user.zone_sel.selecting]
+		if(!S.robot || user.a_intent != "help")
+			return ..()
+		if(S.brute_dam)
+			S.heal_damage(0,15,0,1)
+			if(user != M)
+				user.visible_message("\red You repair some burn damage on \the [M]'s [S.display_name]",\
+				"\red \The [user] repairs some burn damage on \the [M]'s [S.display_name] with \the [src]",\
+				"You wires being cut.")
+			else
+				user.visible_message("\red You repair some burn damage on your [S.display_name]",\
+				"\red \The [user] repairs some burn damage on their [S.display_name] with \the [src]",\
+				"You wires being cut.")
+		else
+			user << "Nothing to fix!"
+	else
+		return ..()
+
 

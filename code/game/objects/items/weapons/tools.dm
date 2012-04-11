@@ -260,6 +260,26 @@ WELDINGTOOOL
 				user.disabilities &= ~1
 		return
 
+	attack(mob/M as mob, mob/user as mob)
+		if(hasorgans(M))
+			var/datum/organ/external/S = M:organs[user.zone_sel.selecting]
+			if(!S.robot || user.a_intent != "help")
+				return ..()
+			if(S.brute_dam)
+				S.heal_damage(15,0,0,1)
+				if(user != M)
+					user.visible_message("\red You patch some dents on \the [M]'s [S.display_name]",\
+					"\red \The [user] patches some dents on \the [M]'s [S.display_name] with \the [src]",\
+					"You hear a welder.")
+				else
+					user.visible_message("\red You patch some dents on your [S.display_name]",\
+					"\red \The [user] patches some dents on their [S.display_name] with \the [src]",\
+					"You hear a welder.")
+			else
+				user << "Nothing to fix!"
+		else
+			return ..()
+
 
 /obj/item/weapon/weldingtool/largetank
 	name = "Industrial Welding Tool"

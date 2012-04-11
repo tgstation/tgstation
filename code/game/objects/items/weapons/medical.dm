@@ -43,6 +43,10 @@ MEDICAL
 			use(1)
 			return
 
+		if(affecting.robot)
+			user << "Medical equipment for a robot arm?  Better get a welder..."
+			return
+
 		for(var/datum/organ/wound/W in affecting.wounds)
 			if(W.bleeding || !W.is_healing)
 				if(heal_brute && W.wound_type == 2)
@@ -156,6 +160,9 @@ MEDICAL
 			H.visible_message("\red You do your best to stop the bleeding from [H]'s stump.", "\red [user] does their best to stem [H]'s bleeding from [H.gender == MALE? "his" : "her"] stump.", "\red You hear something like gauze being ripped.")
 			affecting.gauzed = 1
 			use(1)
+			return
+		if(affecting.robot)
+			user << "Medical equipment for a robot arm?  Better get a welder..."
 			return
 
 		for(var/datum/organ/wound/W in affecting.wounds)

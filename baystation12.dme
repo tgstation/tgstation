@@ -1089,7 +1089,6 @@
 #include "code\WorkInProgress\AI_Visibility.dm"
 #include "code\WorkInProgress\buildmode.dm"
 #include "code\WorkInProgress\explosion_particles.dm"
-#include "code\WorkInProgress\Cael_Aislinn\Tajara\examine.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Tajara\say.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Tajara\tajara_transformation.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Tajara\tajaran.dm"

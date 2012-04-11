@@ -83,6 +83,10 @@ emp_act
 	for(var/obj/O in src)
 		if(!O)	continue
 		O.emp_act(severity)
+	for(var/named in organs)
+		var/datum/organ/external/O = organs[named]
+		if(O.destroyed)	continue
+		O.emp_act(severity)
 	..()
 
 
