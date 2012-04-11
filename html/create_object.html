@@ -27,7 +27,7 @@
 	<form name="spawner" action="byond://?src=/* ref src */" method="get">
 		<input type="hidden" name="src" value="/* ref src */">
 		
-		Type <input type="text" name="filter" value="" onkeyup="submitUpdate()" onkeypress="submitFirst(event)" style="width:350px"><br>
+		Type <input type="text" name="filter" value="" onkeyup="updateSearch()" onkeypress="submitFirst(event)" style="width:350px"><br>
 		Offset: <input type="text" name="offset" value="x,y,z" style="width:250px">
 		
 		A <input type="radio" name="offset_type" value="absolute">
@@ -52,7 +52,6 @@
 		var object_list = document.spawner.object_list;
 		var object_paths = null /* object types */;
 		var objects = object_paths == null ? new Array() : object_paths.split(";");
-		var iterator = 0
 		
 		document.spawner.filter.focus();
 		populateList(objects);
@@ -106,21 +105,6 @@
 			if (event.keyCode == 13 || event.which == 13)
 			{
 				object_list.options[0].selected = 'true';
-			}
-		}
-		
-		function submitUpdate()
-		{
-			iterator += 1;
-			setTimeout(testUpdate(), 750);
-		}
-		
-		function testUpdate()
-		{
-			iterator -= 1;
-			if (iterator == 0)
-			{
-				updateSearch();
 			}
 		}
 	</script>
