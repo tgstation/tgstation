@@ -253,7 +253,7 @@
 							AN = "[e.wound]:"
 						if(e.open)
 							open = "OPEN:"
-						if(e.implant)
+						if(e.implant && e.implant.len)
 							imp = "IMPLANT:"
 						if(!AN && !open && !infected & !imp)
 							AN = "None"

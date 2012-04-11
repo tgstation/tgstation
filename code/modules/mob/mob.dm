@@ -711,7 +711,7 @@
 	if (isbanned)
 		log_access("Failed Login: [src] - Banned")
 		message_admins("\blue Failed Login: [src] - Banned")
-		alert(src,"You have been banned.\nReason : [isbanned]","Ban","Ok")
+		alert(src,"You have been banned.\nReason : [isbanned][config.appeal_address ? "\nYou may appeal this at [config.appeal_address]" : ""]","Ban","Ok")
 		del(src)
 
 /*

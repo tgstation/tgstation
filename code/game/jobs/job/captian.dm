@@ -18,7 +18,9 @@
 		H.equip_if_possible(new /obj/item/clothing/head/caphat(H), H.slot_head)
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(H), H.slot_glasses)
 		H.equip_if_possible(new /obj/item/weapon/storage/id_kit(H), H.slot_in_backpack)
-		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
+		var/datum/organ/external/O = pick(H.organs)
+		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(O)
+		O.implant += L
 		L.imp_in = H
 		L.implanted = 1
 		world << "<b>[H.real_name] is the captain!</b>"

@@ -49,10 +49,11 @@
 				if(ishuman(M) && ishuman(user))
 					if(user.mind in ticker.mode.head_revolutionaries)
 						var/revsafe = 0
-						for(var/obj/item/weapon/implant/loyalty/L in M)
-							if(L && L.implanted)
-								revsafe = 1
-								break
+						for(var/datum/organ/external/O in M.organs)
+							for(var/obj/item/weapon/implant/loyalty/L in O.implant)
+								if(L && L.implanted)
+									revsafe = 1
+									break
 						if(M.mind.has_been_rev)
 							revsafe = 2
 						if(!revsafe)

@@ -9,9 +9,11 @@
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
 	//var/m_type = 1
 
-	for (var/obj/item/weapon/implant/I in src)
-		if (I.implanted)
-			I.trigger(act, src)
+	for(var/named in organs)
+		var/datum/organ/external/F = organs[named]
+		for (var/obj/item/weapon/implant/I in F.implant)
+			if (I.implanted)
+				I.trigger(act, src)
 
 	if(src.stat == 2.0 && (act != "deathgasp"))
 		return

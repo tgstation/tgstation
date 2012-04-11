@@ -233,7 +233,9 @@
 	synd_mob.equip_if_possible(new /obj/item/ammo_magazine/a12mm(synd_mob), synd_mob.slot_in_backpack)
 	synd_mob.equip_if_possible(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), synd_mob.slot_in_backpack)
 	synd_mob.equip_if_possible(new /obj/item/weapon/gun/projectile/automatic/c20r(synd_mob), synd_mob.slot_belt)
-	var/obj/item/weapon/implant/dexplosive/E = new/obj/item/weapon/implant/dexplosive(synd_mob)
+	var/datum/organ/external/O = pick(synd_mob.organs)
+	var/obj/item/weapon/implant/dexplosive/E = new/obj/item/weapon/implant/dexplosive(O)
+	O.implant += E
 	E.imp_in = synd_mob
 	E.implanted = 1
 

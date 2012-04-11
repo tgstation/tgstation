@@ -220,6 +220,11 @@
 	if(src.sleeping_willingly)
 		src.sleeping = 0
 		src.sleeping_willingly = 0
+	// Update the hands-indicator on re-join.
+	if (!( src.hand ))
+		src.hands.dir = NORTH
+	else
+		src.hands.dir = SOUTH
 
 /mob/living/carbon/human/proc/GetOrgans()
 	var/list/L = list(  )

@@ -316,8 +316,13 @@ var
 			// - Just display a garbled message -
 			else
 				heard_garbled += R
-		for(var/obj/item/weapon/implant/imp in R)
-			imp.hear(message,M)
+		if(hasorgans(R))
+			for(var/datum/organ/external/O in R:organs)
+				for(var/obj/item/weapon/implant/imp in O.implant)
+					imp.hear(message,M)
+		else
+			for(var/obj/item/weapon/implant/imp in R)
+				imp.hear(message,M)
 
 
   /* ###### Begin formatting and sending the message ###### */
@@ -595,8 +600,13 @@ var
 			// - Just display a garbled message -
 
 			heard_garbled += R
-		for(var/obj/item/weapon/implant/imp in R)
-			imp.hear(text,M)
+		if(hasorgans(R))
+			for(var/datum/organ/external/O in R:organs)
+				for(var/obj/item/weapon/implant/imp in O.implant)
+					imp.hear(text,M)
+		else
+			for(var/obj/item/weapon/implant/imp in R)
+				imp.hear(text,M)
 
 
   /* ###### Begin formatting and sending the message ###### */

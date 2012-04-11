@@ -71,6 +71,8 @@
 	var/revival_brain_life = -1
 	var/require_heads_alive = 0 //For Rev.
 
+	var/appeal_address = ""
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for (var/T in L)
@@ -290,6 +292,9 @@
 
 				if("require_heads_alive")
 					config.require_heads_alive = value
+
+				if("appeal_address")
+					config.appeal_address = value
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"

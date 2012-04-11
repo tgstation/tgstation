@@ -56,11 +56,11 @@
 /proc/PickObjectiveFromList(var/list/objectivesArray)
 	var/list/datum/objectives = objectivesArray[1]
 	var/pick_index = text2num(pickweight(objectivesArray[2]))
-	
 	if (pick_index > objectives.len || pick_index < 1)
-		log_admin("Objective picking failed. Error logged. One or more traitors will need to be manually-assigned objectives")
+		log_admin("Objective picking failed. Error logged. One or more traitors will need to be manually-assigned objectives. Pick_index was [pick_index].  Tell Sky.")
+		message_admins("Objective picking failed. Error logged. One or more traitors will need to be manually-assigned objectives. Pick_index was [pick_index]. Tell Sky.")
 		CRASH("Objective picking failed. Pick_index was [pick_index].")
-	
+
 	return objectives[pick_index]
 
 /proc/RemoveObjectiveFromList(var/list/objectiveArray, var/datum/objective/objective)
@@ -97,7 +97,7 @@
 			if(1 to 55)		//Theft Objectives (55% chance)
 				var/datum/objective/objective = PickObjectiveFromList(theftobjectives)
 				for(1 to 10)
-					if(objective.points + totalweight <= 110)
+					if(objective.points + totalweight <= 100)
 						break
 					objective = PickObjectiveFromList(theftobjectives)
 				chosenobjectives += objective
@@ -107,7 +107,7 @@
 				var/datum/objective/assassinate/objective = PickObjectiveFromList(killobjectives)
 				world << objective
 				for(1 to 10)
-					if(objective.points + totalweight <= 110)
+					if(objective.points + totalweight <= 100)
 						break
 					objective = PickObjectiveFromList(killobjectives)
 				if(!objective)
@@ -128,7 +128,7 @@
 			if(93 to 95)	//Framing Objectives (3% chance)
 				var/datum/objective/objective = PickObjectiveFromList(frameobjectives)
 				for(1 to 10)
-					if(objective.points + totalweight <= 110)
+					if(objective.points + totalweight <= 100)
 						break
 					objective = PickObjectiveFromList(frameobjectives)
 				if(!objective)
@@ -149,7 +149,7 @@
 			if(96 to 100)	//Protection Objectives (5% chance)
 				var/datum/objective/protection/objective = PickObjectiveFromList(protectobjectives)
 				for(1 to 10)
-					if(objective.points + totalweight <= 110)
+					if(objective.points + totalweight <= 100)
 						break
 					objective = PickObjectiveFromList(protectobjectives)
 				if(!objective)
