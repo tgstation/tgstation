@@ -83,15 +83,36 @@
 	new /datum/organ/external/r_arm(src)
 	new /datum/organ/external/r_leg(src)
 	new /datum/organ/external/l_leg(src)
-
-	var/datum/organ/external/part = new /datum/organ/external/l_hand(src)
-	part.parent = organs["l_arm"]
-	part = new /datum/organ/external/l_foot(src)
-	part.parent = organs["l_leg"]
-	part = new /datum/organ/external/r_hand(src)
-	part.parent = organs["r_arm"]
-	part = new /datum/organ/external/r_foot(src)
+	new /datum/organ/external/l_hand(src)
+	new /datum/organ/external/l_foot(src)
+	new /datum/organ/external/r_hand(src)
+	new /datum/organ/external/r_foot(src)
+	var/datum/organ/external/part = organs["chest"]
+	part.children = list(organs["r_leg"],organs["l_leg"],organs["r_arm"],organs["l_arm"],organs["groin"],organs["head"])
+	part = organs["head"]
+	part.parent = organs["chest"]
+	part = organs["groin"]
+	part.parent = organs["chest"]
+	part = organs["r_leg"]
+	part.children = list(organs["r_foot"])
+	part.parent = organs["chest"]
+	part = organs["l_leg"]
+	part.children = list(organs["l_foot"])
+	part.parent = organs["chest"]
+	part = organs["r_arm"]
+	part.children = list(organs["r_hand"])
+	part.parent = organs["chest"]
+	part = organs["l_arm"]
+	part.children = list(organs["l_hand"])
+	part.parent = organs["chest"]
+	part = organs["r_foot"]
 	part.parent = organs["r_leg"]
+	part = organs["l_foot"]
+	part.parent = organs["l_leg"]
+	part = organs["r_hand"]
+	part.parent = organs["r_arm"]
+	part = organs["l_hand"]
+	part.parent = organs["l_arm"]
 
 	var/g = "m"
 	if (gender == MALE)
@@ -135,9 +156,9 @@
 	var/turf/T = get_turf(src)
 	var/list/obj/effect/decal/cleanable/blood/drip/nums = list()
 	var/list/iconL = list("1","2","3","4","5")
-	
+
 	vessel.remove_reagent("blood",amm)
-	
+
 	for(var/obj/effect/decal/cleanable/blood/drip/G in T)
 		nums += G
 		iconL.Remove(G.icon_state)
@@ -148,12 +169,12 @@
 			if(virus2)
 				D.virus2 = virus2.getcopy()
 			return
-	
+
 	var/obj/effect/decal/cleanable/blood/drip/this = new(T)
 	this.icon_state = pick(iconL)
 	this.blood_DNA = list(list(dna.unique_enzymes,dna.b_type))
 	this.blood_owner = src
-	
+
 	if(virus2)
 		this.virus2 = virus2.getcopy()
 

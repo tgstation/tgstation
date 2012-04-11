@@ -252,8 +252,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 			if(istype(imp_in, /mob/))
 				var/mob/T = imp_in
 				T.gib()
-			explosion(find_loc(src), 1, 3, 4, 6, 3)
-			var/turf/t = find_loc(src)
+			explosion(find_loc(imp_in), 1, 3, 4, 6, 3)
+			var/turf/t = find_loc(imp_in)
 			if(t)
 				t.hotspot_expose(3500,125)
 			del(src)
@@ -292,9 +292,9 @@ the implant may become unstable and either pre-maturely inject the subject or si
 			del(a)
 			processing_objects.Remove(src)
 		else if(M.stat == 2)
-			var/turf/t = get_turf(M)
+			var/area/t = get_area(M)
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			a.autosay("states, \"[mobname] has died in [t.loc.name]!\"", "[mobname]'s Death Alarm")
+			a.autosay("states, \"[mobname] has died in [t.name]!\"", "[mobname]'s Death Alarm")
 			del(a)
 			processing_objects.Remove(src)
 
