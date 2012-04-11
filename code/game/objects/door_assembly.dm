@@ -266,7 +266,7 @@ obj/structure/door_assembly
 		if(do_after(user, 40))
 			if(G)
 				if(G.amount>=1)
-					user << "\blue You installed glass windows the airlock assembly!"
+					user << "\blue You installed glass windows into the airlock assembly!"
 					G.use(1)
 					src.glass = 1
 					src.name = "Near finished Window Airlock Assembly"

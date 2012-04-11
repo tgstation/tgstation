@@ -278,7 +278,7 @@
 			master.used_environ += amount
 
 
-/area/Entered(A)
+/*/area/Entered(A)
 
 	var/sound = null
 	var/musVolume = 25
@@ -331,7 +331,7 @@
 				A:client:played = 1
 				spawn(600)
 					if(A && A:client)
-						A:client:played = 0
+						A:client:played = 0*/
 
 
 /area/proc/gravitychange(var/gravitystate = 0, var/area/A)
