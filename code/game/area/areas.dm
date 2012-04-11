@@ -278,7 +278,7 @@
 			master.used_environ += amount
 
 
-/*/area/Entered(A)
+/area/Entered(A)
 
 	var/sound = null
 	var/musVolume = 25
@@ -304,9 +304,9 @@
 
 		//if (A:ear_deaf) return
 
-		if (A && A:client && !A:client:ambience_playing && !A:client:no_ambi) // Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
-			A:client:ambience_playing = 1
-			A << sound('shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
+//		if (A && A:client && !A:client:ambience_playing && !A:client:no_ambi) // Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
+//			A:client:ambience_playing = 1
+//			A << sound('shipambience.ogg', repeat = 1, wait = 0, volume = 35, channel = 2)
 
 		switch(src.name)
 			if ("Chapel") sound = pick('ambicha1.ogg','ambicha2.ogg','ambicha3.ogg','ambicha4.ogg')
@@ -331,7 +331,7 @@
 				A:client:played = 1
 				spawn(600)
 					if(A && A:client)
-						A:client:played = 0*/
+						A:client:played = 0
 
 
 /area/proc/gravitychange(var/gravitystate = 0, var/area/A)
