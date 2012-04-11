@@ -191,28 +191,16 @@
 	var/obj/item/W = equipped()
 
 	if (W)
-		if(W.twohanded)
-			if(W.wielded)
-				if(hand)
-					var/obj/item/weapon/offhand/O = r_hand
-					del O
-				else
-					var/obj/item/weapon/offhand/O = l_hand
-					del O
-			W.wielded = 0          //Kinda crude, but gets the job done with minimal pain -Agouri
-			W.name = "[initial(W.name)]" //name reset so people don't see world fireaxes with (unwielded) or (wielded) tags
-			W.update_icon()
 		u_equip(W)
 		if (client)
 			client.screen -= W
 		if (W)
+			W.layer = initial(W.layer)
 			if(target)
 				W.loc = target.loc
 			else
 				W.loc = loc
 			W.dropped(src)
-			if (W)
-				W.layer = initial(W.layer)
 		var/turf/T = get_turf(loc)
 		if (istype(T))
 			T.Entered(W)
@@ -234,7 +222,7 @@
 		return r_hand
 
 /mob/proc/get_inactive_hand()
-	if ( ! hand)
+	if (!hand)
 		return l_hand
 	else
 		return r_hand

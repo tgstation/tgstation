@@ -128,34 +128,49 @@
 
 	//get message text, limit it's length.and clean/escape html
 	var/t = input("Message:", "Private message to [C.key]") as text|null
-	if (!t || !C)	return
+	if(!t)	return
+	if(!C)
+		src << "\red Error: Admin PM: Client not found."
+
 
 	if( !holder || !(holder.rank in list("Game Admin", "Game Master")) )	//clean the message if it's not sent by a GA or GM
 		t = sanitize(copytext(t,1,500))
 	if(!t)	return
 
-	if(holder)								//an Admin sent the message
-		if(!C.holder)	C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"	//only do LOUD PMs if the target isn't an admin. Hence making admin-to-admin PMs less annoying
-		C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 0)]</b>:</font> [t]"
-		if(!C.holder)	C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
-		src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>:</font> [t]"
 
-	else									//a non-Admin sent the message
-		if(C.holder)
-			src << "<font color='blue'>Reply PM to-<b>[key_name(C, src, 0)]</b>:</font> [t]"
-			C << "<font color='red'>Reply PM from-<b>[key_name(src, C, 0)]</b>:</font> [t]"
-		else
-			src << "<font class='red'>Error: PM: Non-admin to non-admin PM communication is forbidden</font>"
+	if(C.holder)
+		if(holder)	//both are admins
+			C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 1)]</b>: [t]</font>"
+			src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [t]</font>"
+
+		else		//recipient is an admin but sender is not
+			C << "<font color='red'>Reply PM from-<b>[key_name(src, C, 1)]</b>: [t]</font>"
+			src << "<font color='blue'>Reply PM to-<b>[key_name(C, src, 0)]</b>: [t]</font>"
+
+		//play the recieving admin the adminhelp sound (if they have them enabled)
+		if(C.sound_adminhelp)
+			C << 'adminhelp.ogg'
+
+	else
+		if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
+			C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
+			C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 0)]</b>: [t]</font>"
+			C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
+			src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [t]</font>"
+
+			//always play non-admin recipients the adminhelp sound
+			C << 'adminhelp.ogg'
+
+		else		//neither are admins
+			src << "<font class='red'>Error: Admin PM: Non-admin to non-admin PM communication is forbidden.</font>"
 			return
 
 	log_admin("PM: [key_name(src)]->[key_name(C)]: [t]")
 
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/X)									//there are fewer clients than mobs
-		if(X.holder && X.key!=usr.key && X.key!=C.key)	//check client/X is an admin and isn't the sender or recipient
-			var/mob/K = X.mob							//get X's mob
-			if(K)
-				K << "<B><font color='blue'>PM: [key_name(src, K)]-&gt;[key_name(C, K)]:</B> \blue [t]</font>" //inform X
+		if(X.holder && X.key!=key && X.key!=C.key)	//check client/X is an admin and isn't the sender or recipient
+			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [t]</font>" //inform X
 
 /client/proc/cmd_admin_godmode(mob/M as mob in world)
 	set category = "Special Verbs"

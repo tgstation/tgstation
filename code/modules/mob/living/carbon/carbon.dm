@@ -143,9 +143,9 @@
 /mob/living/carbon/proc/swap_hand()
 	var/obj/item/item_in_hand = src.get_active_hand()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
-		if(item_in_hand.twohanded == 1)
-			if(item_in_hand.wielded == 1)
-				usr << text("Your other hand is too busy holding the []",item_in_hand.name)
+		if(istype(item_in_hand,/obj/item/weapon/twohanded))
+			if(item_in_hand:wielded == 1)
+				usr << "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>"
 				return
 	src.hand = !( src.hand )
 	if (!( src.hand ))

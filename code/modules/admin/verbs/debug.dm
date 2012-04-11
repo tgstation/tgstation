@@ -521,8 +521,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.registered = M.real_name
 			M.equip_if_possible(W, M.slot_wear_id)
 
-			var/obj/item/weapon/fireaxe/fire_axe = new(M)
-			fire_axe.name = "Fire Axe (Unwielded)"
+			var/obj/item/weapon/twohanded/fireaxe/fire_axe = new(M)
 			M.equip_if_possible(fire_axe, M.slot_r_hand)
 
 		if("masked killer")
@@ -537,8 +536,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/weapon/kitchenknife(M), M.slot_l_store)
 			M.equip_if_possible(new /obj/item/weapon/scalpel(M), M.slot_r_store)
 
-			var/obj/item/weapon/fireaxe/fire_axe = new(M)
-			fire_axe.name = "Fire Axe (Unwielded)"
+			var/obj/item/weapon/twohanded/fireaxe/fire_axe = new(M)
 			M.equip_if_possible(fire_axe, M.slot_r_hand)
 
 			for(var/obj/item/carried_item in M.contents)

@@ -65,7 +65,7 @@ for reference:
 	var/health = 100.0
 	var/maxhealth = 100.0
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
+	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/stack/sheet/wood))
 			if (src.health < src.maxhealth)
 				for(var/mob/O in viewers(src, null))
@@ -88,7 +88,7 @@ for reference:
 				else
 			if (src.health <= 0)
 				for(var/mob/O in viewers(src, null))
-					O << "\red <B>The barricade is smashed appart!</B>"
+					O << "\red <B>The barricade is smashed apart!</B>"
 				new /obj/item/stack/sheet/wood(get_turf(src))
 				new /obj/item/stack/sheet/wood(get_turf(src))
 				new /obj/item/stack/sheet/wood(get_turf(src))
@@ -99,14 +99,14 @@ for reference:
 		switch(severity)
 			if(1.0)
 				for(var/mob/O in viewers(src, null))
-					O << "\red <B>The barricade is blown appart!</B>"
+					O << "\red <B>The barricade is blown apart!</B>"
 				del(src)
 				return
 			if(2.0)
 				src.health -= 25
 				if (src.health <= 0)
 					for(var/mob/O in viewers(src, null))
-						O << "\red <B>The barricade is blown appart!</B>"
+						O << "\red <B>The barricade is blown apart!</B>"
 					new /obj/item/stack/sheet/wood(get_turf(src))
 					new /obj/item/stack/sheet/wood(get_turf(src))
 					new /obj/item/stack/sheet/wood(get_turf(src))
@@ -115,7 +115,7 @@ for reference:
 
 	meteorhit()
 		for(var/mob/O in viewers(src, null))
-			O << "\red <B>The barricade is smashed appart!</B>"
+			O << "\red <B>The barricade is smashed apart!</B>"
 		new /obj/item/stack/sheet/wood(get_turf(src))
 		new /obj/item/stack/sheet/wood(get_turf(src))
 		new /obj/item/stack/sheet/wood(get_turf(src))

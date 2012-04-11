@@ -13,11 +13,11 @@
 	if (usr.client && usr.client.muted_complete)
 		return
 
-	for (var/mob/M in world)
-		if (M.client && M.client.holder)
-			if(M.client.sound_adminhelp)
-				M << 'adminhelp.ogg'
-			M << "\blue <b><font color=red>HELP: </font>[key_name(src, M)] (<A HREF='?src=\ref[M.client.holder];adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?src=\ref[M.client.holder];adminplayervars=\ref[src]'>VV</A>) (<A HREF='?src=\ref[M.client.holder];adminplayersubtlemessage=\ref[src]'>SM</A>) (<A HREF='?src=\ref[M.client.holder];adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?src=\ref[M.client.holder];secretsadmin=check_antagonist'>CA</A>):</b> [msg]"
+	for (var/client/X)
+		if (X.holder)
+			if(X.sound_adminhelp)
+				X << 'adminhelp.ogg'
+			X << "\blue <b><font color=red>HELP: </font>[key_name(src, X)] (<A HREF='?src=\ref[X.holder];adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?src=\ref[X.holder];adminplayervars=\ref[src]'>VV</A>) (<A HREF='?src=\ref[X.holder];adminplayersubtlemessage=\ref[src]'>SM</A>) (<A HREF='?src=\ref[X.holder];adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?src=\ref[X.holder];secretsadmin=check_antagonist'>CA</A>):</b> [msg]"
 
 	usr << "Your message has been broadcast to administrators."
 	log_admin("HELP: [key_name(src)]: [msg]")

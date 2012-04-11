@@ -25,7 +25,7 @@
 			if(/obj/item/weapon/circular_saw) del src
 			if(/obj/item/weapon/kitchen/utensil/knife) del src
 			if(/obj/item/weapon/scalpel) del src
-			if(/obj/item/weapon/fireaxe) del src
+			if(/obj/item/weapon/twohanded/fireaxe) del src
 			if(/obj/item/weapon/hatchet) del src
 			if(/obj/item/weapon/melee/energy) del src
 
@@ -213,7 +213,8 @@
 
 	spawn() //to stop the secrets panel hanging
 		var/list/turf/simulated/floor/turfs = list() //list of all the empty floor turfs in the hallway areas
-		for(var/area/hallway/A)
+		for(var/areapath in typesof(/area/hallway))
+			var/area/hallway/A = locate(areapath)
 			for(var/turf/simulated/floor/F in A)
 				if(!F.contents.len)
 					turfs += F
