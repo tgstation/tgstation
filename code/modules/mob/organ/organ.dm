@@ -58,6 +58,8 @@
 		tmp/destspawn = 0 //Has it spawned the broken limb?
 		tmp/gauzed = 0 //Has the missing limb been patched?
 		tmp/robot = 0 //ROBOT ARM MAN!
+		tmp/cutaway = 0 //First part of limb reattachment.
+		tmp/attachable = 0 //Can limb be attached?
 		min_broken_damage = 30
 		datum/organ/external/parent
 		list/datum/organ/external/children
