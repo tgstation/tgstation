@@ -377,11 +377,12 @@
 
 	for (var/mob/M in W)
 		W |= M.contents
-		if(ishuman(M))
-			var/mob/living/carbon/human/G = M
-			for(var/name in G.organs)
-				var/datum/organ/external/F = G.organs[name]
-				W |= F.implant
+		if(hasorgans(M))
+			var/mob/living/carbon/G = M
+			for(var/name in G:organs)
+				var/datum/organ/external/F = G:organs[name]
+				for(var/obj/item/weapon/implant/I in F.implant)
+					W |= I
 
 	for (var/obj/item/device/pda/M in W)
 		W |= M.contents

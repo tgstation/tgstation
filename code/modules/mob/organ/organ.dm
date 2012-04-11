@@ -24,11 +24,11 @@
 
 	proc/copy()
 		var/datum/autopsy_data/W = new()
-		W.weapon = src.weapon
-		W.pretend_weapon = src.pretend_weapon
-		W.damage = src.damage
-		W.hits = src.hits
-		W.time_inflicted = src.time_inflicted
+		W.weapon = weapon
+		W.pretend_weapon = pretend_weapon
+		W.damage = damage
+		W.hits = hits
+		W.time_inflicted = time_inflicted
 		return W
 
 /****************************************************
@@ -57,8 +57,10 @@
 		tmp/destroyed = 0
 		tmp/destspawn = 0 //Has it spawned the broken limb?
 		tmp/gauzed = 0 //Has the missing limb been patched?
+		tmp/robot = 0 //ROBOT ARM MAN!
 		min_broken_damage = 30
 		datum/organ/external/parent
+		list/datum/organ/external/children
 		damage_msg = "\red You feel a intense pain"
 
 		var/open = 0
@@ -95,46 +97,61 @@
 					droplimb()
 					return
 			else if(prob(nux))
-				createwound(max(1,min(6,round(brute/10) + rand(0,2))),0,brute)
+				createwound(max(1,min(6,round(brute/10) + rand(0,1))),0,brute)
 				owner << "You feel something wet on your [display_name]"
 
 		if((brute_dam + burn_dam + brute + burn) < max_damage)
 			if(brute)
 				brute_dam += brute
-				if(prob(brute) && brute > 20 && !sharp)
+				if(prob(brute*2) && !sharp)
 					createwound(rand(4,6),0,brute)
 				else if(!sharp)
-					createwound(max(1,min(6,round(brute/10) + rand(1,3))),1,brute)
+					createwound(max(1,min(6,round(brute/10) + rand(1,2))),1,brute)
 			if(burn)
 				burn_dam += burn
-				createwound(max(1,min(6,round(burn/10) + rand(0,2))),2,burn)
+				createwound(max(1,min(6,round(burn/10) + rand(0,1))),2,burn)
 		else
-			var/can_inflict = src.max_damage - (src.brute_dam + src.burn_dam)
+			var/can_inflict = max_damage - (brute_dam + burn_dam)
 			if(can_inflict)
 				if (brute > 0 && burn > 0)
 					brute = can_inflict/2
 					burn = can_inflict/2
 					var/ratio = brute / (brute + burn)
-					src.brute_dam += ratio * can_inflict
-					src.burn_dam += (1 - ratio) * can_inflict
+					brute_dam += ratio * can_inflict
+					burn_dam += (1 - ratio) * can_inflict
 				else
 					if (brute > 0)
 						brute = can_inflict
-						src.brute_dam += brute
-						if(!sharp) createwound(max(1,min(6,round(brute/10) + rand(-1,1))),1,brute)
+						brute_dam += brute
+						if(!sharp && !prob(brute*3)) createwound(max(1,min(6,round(brute/10) + rand(0,1))),1,brute)
+						else createwound(max(1,min(6,round(brute/10) + rand(1,2))),1,brute)
 					else
 						burn = can_inflict
-						src.burn_dam += burn
-						createwound(max(1,min(6,round(burn/10) + rand(-1,1))),2,burn)
+						burn_dam += burn
+						createwound(max(1,min(6,round(burn/10) + rand(0,1))),2,burn)
 			else
-				return 0
+				var/passed_dam = (brute_dam + burn_dam) - can_inflict //Getting how much overdamage we have.
+				var/list/datum/organ/external/possible_points = list()
+				if(parent)
+					possible_points += parent
+				if(children)
+					possible_points += children
+				if(!possible_points.len)
+					message_admins("Oh god WHAT!  [owner]'s [src] was unable to find an organ to pass overdamage too!")
+				else
+					var/datum/organ/external/target = pick(possible_points)
+					if(brute)
+						target.take_damage(passed_dam, 0, sharp, used_weapon)
+					else
+						target.take_damage(0, passed_dam, sharp, used_weapon)
+
 
 			if(broken)
 				owner.emote("scream")
 
 		if(used_weapon) add_wound(used_weapon, brute + burn)
 
-		var/result = src.update_icon()
+		var/result = update_icon()
 		return result
 
 
@@ -250,18 +267,18 @@
 
 		if(burn_dam ==0)
 			tburn =0
-		else if (src.burn_dam < (src.max_damage * 0.25 / 2))
+		else if (burn_dam < (max_damage * 0.25 / 2))
 			tburn = 1
-		else if (src.burn_dam < (src.max_damage * 0.75 / 2))
+		else if (burn_dam < (max_damage * 0.75 / 2))
 			tburn = 2
 		else
 			tburn = 3
 
-		if (src.brute_dam == 0)
+		if (brute_dam == 0)
 			tbrute = 0
-		else if (src.brute_dam < (src.max_damage * 0.25 / 2))
+		else if (brute_dam < (max_damage * 0.25 / 2))
 			tbrute = 1
-		else if (src.brute_dam < (src.max_damage * 0.75 / 2))
+		else if (brute_dam < (max_damage * 0.75 / 2))
 			tbrute = 2
 		else
 			tbrute = 3
@@ -271,9 +288,9 @@
 // new damage icon system
 // adjusted to set damage_state to brute/burn code only (without r_name0 as before)
 	proc/update_icon()
-		var/n_is = src.damage_state_text()
-		if (n_is != src.damage_state)
-			src.damage_state = n_is
+		var/n_is = damage_state_text()
+		if (n_is != damage_state)
+			damage_state = n_is
 			return 1
 		return 0
 
@@ -286,6 +303,9 @@
 					del(implants)
 			//owner.unlock_medal("Lost something?", 0, "Lose a limb.", "easy")
 
+			for(var/datum/organ/external/I in children)
+				if(I && !I.destroyed)
+					I.droplimb(1)
 			var/obj/item/weapon/organ/H
 			switch(body_part)
 				if(UPPER_TORSO)
@@ -315,34 +335,18 @@
 					H = new /obj/item/weapon/organ/r_arm(owner.loc, owner)
 					if(ismonkey(owner))
 						H.icon_state = "r_arm_l"
-					if(owner:organs["r_hand"])
-						var/datum/organ/external/S = owner:organs["r_hand"]
-						if(!S.destroyed)
-							S.droplimb(1)
 				if(ARM_LEFT)
 					H = new /obj/item/weapon/organ/l_arm(owner.loc, owner)
 					if(ismonkey(owner))
 						H.icon_state = "l_arm_l"
-					if(owner:organs["l_hand"])
-						var/datum/organ/external/S = owner:organs["l_hand"]
-						if(!S.destroyed)
-							S.droplimb(1)
 				if(LEG_RIGHT)
 					H = new /obj/item/weapon/organ/r_leg(owner.loc, owner)
 					if(ismonkey(owner))
 						H.icon_state = "r_leg_l"
-					if(owner:organs["r_foot"])
-						var/datum/organ/external/S = owner:organs["r_foot"]
-						if(!S.destroyed)
-							S.droplimb(1)
 				if(LEG_LEFT)
 					H = new /obj/item/weapon/organ/l_leg(owner.loc, owner)
 					if(ismonkey(owner))
 						H.icon_state = "l_leg_l"
-					if(owner:organs["l_foot"])
-						var/datum/organ/external/S = owner:organs["l_foot"]
-						if(!S.destroyed)
-							S.droplimb(1)
 				if(HAND_RIGHT)
 					H = new /obj/item/weapon/organ/r_hand(owner.loc, owner)
 					if(ismonkey(owner))
@@ -377,12 +381,12 @@
 	proc/createwound(var/size = 1, var/type = 0, var/damage)
 		var/list/datum/organ/wound/possible_wounds = list()
 		for(var/datum/organ/wound/W in wounds)
-			if(W.type == type && W.wound_size < 3 && size < 3 && !W.is_healing)
+			if(W.wound_type == type && W.wound_size <= 3 && size <= 3 && ((!W.is_healing && type == 1) || (!W.healing_state && type != 1)))
 				possible_wounds += W
-		if(ishuman(owner))
-			if(!possible_wounds.len || prob(25))
+		if(hasorgans(owner))
+			if(!possible_wounds.len || prob(20))
 				var/datum/organ/wound/W = new(src)
-				bleeding = !type //Sharp objects cause bleeding.
+				bleeding = max(!type,bleeding) //Sharp objects cause bleeding.
 				W.bleeding = !type
 	//			owner:bloodloss += 10 * size
 				W.damage = damage
@@ -403,12 +407,7 @@
 	//			owner:bloodloss += 10 * size
 				W.damage += damage
 				W.initial_dmg += damage
-				W.wound_size = round(sqrt(size^2 + W.wound_size^2))
-				if(type == 1)
-					spawn W.become_scar()
-				else
-					spawn W.start_close() //Let small cuts close themselves.
-				wounds += W
+				W.wound_size = max(1,min(6,round(damage/10) + rand(0,1)))
 
 /datum/organ/wound
 	name = "wound"
@@ -459,17 +458,21 @@
 		bleeding = min(bleed,bleeding)
 		is_healing = 1
 		slowheal = 1
-		spawn become_scar() //spawn off the process of becoming a scar.
+		if(!healing_state)
+			spawn become_scar() //spawn off the process of becoming a scar.
 		return 1
 
 	proc/become_scar()
 		healing_state = 1 //Patched
-		spawn(200*slowheal) //20 seconds
+		spawn(200*slowheal) //~20-60 seconds
 			update_health(5) //Heals some.
 
 		sleep(rand(1800,3000)*slowheal) //3-5 minutes
 
-		if(parent.owner.stat == 2)
+		if(!parent || !parent.owner || parent.owner.stat == 2)
+			if(!parent || !parent.owner)
+				del(parent)
+				del(src)
 			return
 		if(prob(80) && wound_size < 2) //Small cuts heal.
 			update_health(1)
@@ -480,7 +483,10 @@
 		update_health(2) //Heals more.
 
 		sleep(rand(1800,3000)*slowheal) //3-5 minutes
-		if(parent.owner.stat == 2)
+		if(!parent || !parent.owner || parent.owner.stat == 2)
+			if(!parent || !parent.owner)
+				del(parent)
+				del(src)
 			return
 		if(prob(60) && wound_size < 3) //Cuts heal up
 			parent.wounds.Remove(src)
@@ -490,14 +496,20 @@
 
 
 		sleep(rand(6000,9000)*slowheal) //10-15 minutes
-		if(parent.owner.stat == 2)
+		if(!parent || !parent.owner || parent.owner.stat == 2)
+			if(!parent || !parent.owner)
+				del(parent)
+				del(src)
 			return
 		if(prob(80) && wound_size < 4) //Minor wounds heal up fully.
 			parent.wounds.Remove(src)
 			del(src)
 		healing_state = 4 //Scar
 		sleep(rand(6000,9000)*slowheal) //10-15 minutes
-		if(parent.owner.stat == 2)
+		if(!parent || !parent.owner || parent.owner.stat == 2)
+			if(!parent || !parent.owner)
+				del(parent)
+				del(src)
 			return
 		if(prob(30) || wound_size < 4 || wound_type == 1) //Small chance for the scar to disappear, any small remaining wounds deleted.
 			parent.wounds.Remove(src)

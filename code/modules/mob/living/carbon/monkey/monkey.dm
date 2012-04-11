@@ -25,22 +25,43 @@
 		dna.b_type = "A+"
 		dna.original_name = real_name
 
-	new /datum/organ/external/chest(src)
+		new /datum/organ/external/chest(src)
 	new /datum/organ/external/groin(src)
 	new /datum/organ/external/head(src)
 	new /datum/organ/external/l_arm(src)
 	new /datum/organ/external/r_arm(src)
 	new /datum/organ/external/r_leg(src)
 	new /datum/organ/external/l_leg(src)
-
-	var/datum/organ/external/part = new /datum/organ/external/l_hand(src)
-	part.parent = organs["l_arm"]
-	part = new /datum/organ/external/l_foot(src)
-	part.parent = organs["l_leg"]
-	part = new /datum/organ/external/r_hand(src)
-	part.parent = organs["r_arm"]
-	part = new /datum/organ/external/r_foot(src)
+	new /datum/organ/external/l_hand(src)
+	new /datum/organ/external/l_foot(src)
+	new /datum/organ/external/r_hand(src)
+	new /datum/organ/external/r_foot(src)
+	var/datum/organ/external/part = organs["chest"]
+	part.children = list(organs["r_leg"],organs["l_leg"],organs["r_arm"],organs["l_arm"],organs["groin"],organs["head"])
+	part = organs["head"]
+	part.parent = organs["chest"]
+	part = organs["groin"]
+	part.parent = organs["chest"]
+	part = organs["r_leg"]
+	part.children = list(organs["r_foot"])
+	part.parent = organs["chest"]
+	part = organs["l_leg"]
+	part.children = list(organs["l_foot"])
+	part.parent = organs["chest"]
+	part = organs["r_arm"]
+	part.children = list(organs["r_hand"])
+	part.parent = organs["chest"]
+	part = organs["l_arm"]
+	part.children = list(organs["l_hand"])
+	part.parent = organs["chest"]
+	part = organs["r_foot"]
 	part.parent = organs["r_leg"]
+	part = organs["l_foot"]
+	part.parent = organs["l_leg"]
+	part = organs["r_hand"]
+	part.parent = organs["r_arm"]
+	part = organs["l_hand"]
+	part.parent = organs["l_arm"]
 
 	spawn (1)
 		if(!stand_icon)
