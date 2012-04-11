@@ -130,7 +130,7 @@
 						burn_dam += burn
 						createwound(max(1,min(6,round(burn/10) + rand(0,1))),2,burn)
 			else
-				var/passed_dam = (brute_dam + burn_dam) - can_inflict //Getting how much overdamage we have.
+				var/passed_dam = (brute + burn) - can_inflict //Getting how much overdamage we have.
 				var/list/datum/organ/external/possible_points = list()
 				if(parent)
 					possible_points += parent
@@ -167,7 +167,7 @@
 			else if(W.damage)
 				brute_to_heal += W.damage
 				brute_wounds += W
-		if(brute && brute >= brute_to_heal)
+		if(brute && brute <= brute_to_heal)
 			for(var/datum/organ/wound/W in brute_wounds)
 				if(brute >= W.damage)
 					brute_dam -= W.damage
@@ -185,7 +185,7 @@
 				W.initial_dmg = 0
 				W.stopbleeding(1)
 			brute_dam = 0
-		if(burn && burn >= burn_to_heal)
+		if(burn && burn <= burn_to_heal)
 			for(var/datum/organ/wound/W in burn_wounds)
 				if(burn >= W.damage)
 					burn_dam -= W.damage
@@ -402,12 +402,12 @@
 				wounds += W
 			else
 				var/datum/organ/wound/W = pick(possible_wounds)
-				bleeding = !type //Sharp objects cause bleeding.
-				W.bleeding = !type
+				bleeding = max(!type,bleeding) //Sharp objects cause bleeding.
+				W.bleeding = max(!type,W.bleeding)
 	//			owner:bloodloss += 10 * size
 				W.damage += damage
 				W.initial_dmg += damage
-				W.wound_size = max(1,min(6,round(damage/10) + rand(0,1)))
+				W.wound_size = max(1,min(6,round(W.damage/10) + rand(0,1)))
 
 /datum/organ/wound
 	name = "wound"
