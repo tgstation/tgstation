@@ -1,6 +1,6 @@
 /turf
 	icon = 'floors.dmi'
-	var/intact = 1 //for floors, use is_plating(), is_steel_floor() and is_light_floor()
+	var/intact = 1 //for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 
 	level = 1.0
 
@@ -26,7 +26,7 @@
 		return 0
 	proc/is_asteroid_floor()
 		return 0
-	proc/is_steel_floor()
+	proc/is_plasteel_floor()
 		return 0
 	proc/is_light_floor()
 		return 0
@@ -82,7 +82,7 @@
 	blocks_air = 1
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m steel wall
+	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 
 	var/walltype = "wall"
 

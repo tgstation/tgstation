@@ -1,9 +1,16 @@
-/*
-CONTAINS:
-SPACE CLEANER
-MOP
+/obj/item/weapon/cleaner
+	desc = "A chemical that cleans messes."
+	icon = 'janitor.dmi'
+	name = "space cleaner"
+	icon_state = "cleaner"
+	item_state = "cleaner"
+	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	throwforce = 3
+	w_class = 2.0
+	throw_speed = 2
+	throw_range = 10
+	var/catch = 1
 
-*/
 /obj/item/weapon/cleaner/New()
 	var/datum/reagents/R = new/datum/reagents(250)
 	reagents = R
@@ -84,13 +91,12 @@ MOP
 		spawn(600)
 			src.reagents.add_reagent(refill, 10)
 
-
-	if((src.reagents.has_reagent("pacid")) || (src.reagents.has_reagent("lube"))) 	   				// Messages admins if someone sprays polyacid or space lube from a Cleaner bottle.
-		message_admins("[key_name_admin(user)] fired Polyacid/Space lube from a Cleaner bottle.")			// Polymorph
-		log_game("[key_name(user)] fired Polyacid/Space lube from a Cleaner bottle.")
-
-
-
+	if(src.reagents.has_reagent("pacid"))
+		message_admins("[key_name_admin(user)] fired Polyacid from a Cleaner bottle.")
+		log_game("[key_name(user)] fired Polyacid from a Cleaner bottle.")
+	if(src.reagents.has_reagent("lube"))
+		message_admins("[key_name_admin(user)] fired Space lube from a Cleaner bottle.")
+		log_game("[key_name(user)] fired Space lube from a Cleaner bottle.")
 	return
 
 /obj/item/weapon/cleaner/examine()
@@ -100,6 +106,21 @@ MOP
 	//usr << text("\icon[] [] units of cleaner left!", src, src.reagents.total_volume)
 	..()
 	return
+
+
+
+/obj/item/weapon/chemsprayer//Another copy paste with a tiny change it seems
+	desc = "A utility used to spray large amounts of reagent in a given area."
+	icon = 'gun.dmi'
+	name = "chem sprayer"
+	icon_state = "chemsprayer"
+	item_state = "chemsprayer"
+	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	throwforce = 3
+	w_class = 3.0
+	throw_speed = 2
+	throw_range = 10
+	origin_tech = "combat=3;materials=3;engineering=3"
 
 /obj/item/weapon/chemsprayer/New()
 	var/datum/reagents/R = new/datum/reagents(1000)
@@ -183,15 +204,44 @@ MOP
 		spawn(600)
 			src.reagents.add_reagent(refill, 10)
 
-
 	if((src.reagents.has_reagent("pacid")) || (src.reagents.has_reagent("lube")))  				// Messages admins if someone sprays polyacid or space lube from a Chem Sprayer.
 		message_admins("[key_name_admin(user)] fired Polyacid/Space lube from a Chem Sprayer.")			// Polymorph
 		log_game("[key_name(user)] fired Polyacid/Space lube from a Chem Sprayer.")
+	return
 
 
 	return
 
 //Pepper spray, set up to make the 2 different types
+/obj/item/weapon/pepperspray //This is riot control
+	desc = "Manufactured by UhangInc., used to blind and down an opponent quickly."
+	icon = 'weapons.dmi'
+	name = "pepperspray"
+	icon_state = "pepperspray"
+	item_state = "pepperspray"
+	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	throwforce = 3
+	w_class = 2.0
+	throw_speed = 2
+	throw_range = 10
+	var/catch = 1
+	var/BottleSize = 1
+	var/ReagentAmount = 30
+
+/obj/item/weapon/pepperspray/small //And this is for personal defense.
+	desc = "This appears to be a small, nonlethal, single use personal defense weapon.  Hurts like a bitch, though."
+	icon = 'weapons.dmi'
+	name = "mace"
+	icon_state = "pepperspray"
+	item_state = "pepperspray"
+	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	throwforce = 3
+	w_class = 1.0
+	throw_speed = 2
+	throw_range = 10
+	catch = 1
+	BottleSize = 0
+	ReagentAmount = 1
 
 /obj/item/weapon/pepperspray/New()
 	var/datum/reagents/R = new/datum/reagents(ReagentAmount)
@@ -331,11 +381,25 @@ MOP
 		return
 
 // MOP
+/obj/item/weapon/mop
+	desc = "The world of the janitor wouldn't be complete without a mop."
+	name = "mop"
+	icon = 'janitor.dmi'
+	icon_state = "mop"
+	var/mopping = 0
+	var/mopcount = 0
+	force = 3.0
+	throwforce = 10.0
+	throw_speed = 5
+	throw_range = 10
+	w_class = 3.0
+	flags = FPRINT | TABLEPASS
 
 /obj/item/weapon/mop/New()
 	var/datum/reagents/R = new/datum/reagents(5)
 	reagents = R
 	R.my_atom = src
+
 
 obj/item/weapon/mop/proc/clean(turf/simulated/A as turf)
 	src.reagents.reaction(A,1,10)
@@ -346,6 +410,7 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A as turf)
 		del(R)
 	for(var/obj/effect/overlay/R in A)
 		del(R)
+
 
 /obj/effect/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/mop))
@@ -365,14 +430,16 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A as turf)
 		for(var/mob/O in viewers(user, null))
 			O.show_message("\red <B>[user] begins to clean \the [A]</B>", 1)
 		sleep(40)
-		clean(A)
+		if(A)
+			clean(A)
 		user << "\blue You have finished mopping!"
 		mopcount++
 	else if (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay) || istype(A, /obj/effect/rune))
 		for(var/mob/O in viewers(user, null))
 			O.show_message("\red <B>[user] begins to clean \the [get_turf(A)]</B>", 1)
 		sleep(40)
-		clean(get_turf(A))
+		if(A)
+			clean(get_turf(A))
 		user << "\blue You have finished mopping!"
 		mopcount++
 
@@ -380,7 +447,6 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A as turf)
 		spawn(5)
 			src.reagents.clear_reagents()
 			mopcount = 0
-
 	return
 
 
@@ -389,18 +455,18 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A as turf)
  *  Hope it's okay to stick this shit here: it basically just turns a hexadecimal color into rgb
  */
 
-proc/GetColors(hex)
-    hex = uppertext(hex)
-    var
-        hi1 = text2ascii(hex, 2)
-        lo1 = text2ascii(hex, 3)
-        hi2 = text2ascii(hex, 4)
-        lo2 = text2ascii(hex, 5)
-        hi3 = text2ascii(hex, 6)
-        lo3 = text2ascii(hex, 7)
-    return list(((hi1>= 65 ? hi1-55 : hi1-48)<<4) | (lo1 >= 65 ? lo1-55 : lo1-48),
-        ((hi2 >= 65 ? hi2-55 : hi2-48)<<4) | (lo2 >= 65 ? lo2-55 : lo2-48),
-        ((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48))
+/proc/GetColors(hex)
+	hex = uppertext(hex)
+	var
+		hi1 = text2ascii(hex, 2)
+		lo1 = text2ascii(hex, 3)
+		hi2 = text2ascii(hex, 4)
+		lo2 = text2ascii(hex, 5)
+		hi3 = text2ascii(hex, 6)
+		lo3 = text2ascii(hex, 7)
+	return list(((hi1>= 65 ? hi1-55 : hi1-48)<<4) | (lo1 >= 65 ? lo1-55 : lo1-48),
+		((hi2 >= 65 ? hi2-55 : hi2-48)<<4) | (lo2 >= 65 ? lo2-55 : lo2-48),
+		((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48))
 
 
 

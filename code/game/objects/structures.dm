@@ -33,12 +33,14 @@ obj/structure
 			W:use(2)
 			user << "\blue You create a false wall! Push on it to open or close the passage."
 			new /obj/structure/falsewall (src.loc)
+			add_hiddenprint(usr)
 			del(src)
 
-		else if(istype(W, /obj/item/stack/sheet/r_metal) && istype(src,/obj/structure/girder/displaced))
+		else if(istype(W, /obj/item/stack/sheet/plasteel) && istype(src,/obj/structure/girder/displaced))
 			W:use(2)
 			user << "\blue You create a false r wall! Push on it to open or close the passage."
 			new /obj/structure/falserwall (src.loc)
+			add_hiddenprint(usr)
 			del(src)
 
 		else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 && istype(src,/obj/structure/girder/reinforced))
@@ -86,7 +88,7 @@ obj/structure
 				del(src)
 			return
 
-		else if (istype(W, /obj/item/stack/sheet/r_metal))
+		else if (istype(W, /obj/item/stack/sheet/plasteel))
 			if (src.icon_state == "reinforced") //Time to finalize!
 				user << "\blue Now finalising reinforced wall."
 				if(do_after(user, 50))
@@ -176,7 +178,7 @@ obj/structure
 
 /obj/structure/lattice/attackby(obj/item/C as obj, mob/user as mob)
 
-	if (istype(C, /obj/item/stack/tile))
+	if (istype(C, /obj/item/stack/tile/plasteel))
 
 		C:build(get_turf(src))
 		C:use(1)

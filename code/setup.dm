@@ -140,17 +140,6 @@ var/MAX_EXPLOSION_RANGE = 14
 //turf-only flags
 #define NOJAUNT 1
 
-//Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
-#define HIDEGLOVES 1		//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDESUITSTORAGE 2	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDEJUMPSUIT 4		//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDESHOES 8			//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDEMASK 1			//APPLIES ONLY TO HELMETS!!
-#define HIDEEARS 2			//APPLIES ONLY TO HELMETS!!
-#define HIDEEYES 4			//APPLIES ONLY TO HELMETS!!
-
-//Cant seem to find a mob bitflags area other than the powers one
-#define NOGRAV 1
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
 #define HIDEGLOVES 1		//APPLIES ONLY TO THE EXTERIOR SUIT!!

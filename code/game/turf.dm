@@ -81,8 +81,18 @@
 
 /turf/Entered(atom/movable/M as mob|obj)
 	if(ismob(M))
+		if(!M:lastarea)
+			M:lastarea = get_area(M.loc)
+		if(M:lastarea.has_gravity == 0)
+			inertial_drift(M)
+
+	/*
 		if(M.flags & NOGRAV)
 			inertial_drift(M)
+	*/
+
+
+
 		else if(!istype(src, /turf/space))
 			M:inertia_dir = 0
 	..()
@@ -273,11 +283,11 @@
 		if(!devastated)
 			playsound(src.loc, 'Welder.ogg', 100, 1)
 			new /obj/structure/girder/reinforced(src)
-			new /obj/item/stack/sheet/r_metal( src )
+			new /obj/item/stack/sheet/plasteel( src )
 		else
 			new /obj/item/stack/sheet/metal( src )
 			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/r_metal( src )
+			new /obj/item/stack/sheet/plasteel( src )
 	else
 		if(!devastated)
 			playsound(src.loc, 'Welder.ogg', 100, 1)
@@ -384,11 +394,11 @@
 			user << "\blue Now disassembling the outer wall plating."
 			playsound(src.loc, 'Welder.ogg', 100, 1)
 			sleep(100)
-			if (istype(src, /turf/simulated/wall))
+			if (W && istype(src, /turf/simulated/wall))
 				if ((get_turf(user) == T && user.equipped() == W))
 					user << "\blue You disassembled the outer wall plating."
 					dismantle_wall()
-			W:welding = 1
+				W:welding = 1
 		else
 			user << "\blue You need more welding fuel to complete this task."
 			return
@@ -419,7 +429,7 @@
 			user << "\blue Now disassembling the outer wall plating."
 			playsound(src.loc, 'Welder.ogg', 100, 1)
 			sleep(60)
-			if (istype(src, /turf/simulated/wall))
+			if (W && istype(src, /turf/simulated/wall))
 				if ((get_turf(user) == T && user.equipped() == W))
 					user << "\blue You disassembled the outer wall plating."
 					dismantle_wall()
@@ -431,10 +441,11 @@
 		var/turf/T = user.loc
 		user << "\blue Now drilling through wall."
 		sleep(60)
-		if ((user.loc == T && user.equipped() == W))
-			dismantle_wall(1)
-			for(var/mob/O in viewers(user, 5))
-				O.show_message(text("\blue The wall was drilled apart by []!", user), 1, text("\red You hear metal being drilled appart."), 2)
+		if (W && istype(src, /turf/simulated/wall))
+			if ((user.loc == T && user.equipped() == W))
+				dismantle_wall(1)
+				for(var/mob/O in viewers(user, 5))
+					O.show_message(text("\blue The wall was drilled apart by []!", user), 1, text("\red You hear metal being drilled appart."), 2)
 		return
 
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))
@@ -443,13 +454,14 @@
 		W:spark_system.start()
 		playsound(src.loc, "sparks", 50, 1)
 		sleep(70)
-		if ((user.loc == T && user.equipped() == W))
-			W:spark_system.start()
-			playsound(src.loc, "sparks", 50, 1)
-			playsound(src.loc, 'blade1.ogg', 50, 1)
-			dismantle_wall(1)
-			for(var/mob/O in viewers(user, 5))
-				O.show_message(text("\blue The wall was sliced apart by []!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
+		if (W && istype(src, /turf/simulated/wall))
+			if ((user.loc == T && user.equipped() == W))
+				W:spark_system.start()
+				playsound(src.loc, "sparks", 50, 1)
+				playsound(src.loc, 'blade1.ogg', 50, 1)
+				dismantle_wall(1)
+				for(var/mob/O in viewers(user, 5))
+					O.show_message(text("\blue The wall was sliced apart by []!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
 		return
 
 	else if(istype(W,/obj/item/apc_frame))
@@ -468,6 +480,7 @@
 
 	if(!istype(src, /turf/simulated/wall/r_wall))
 		return // this may seem stupid and redundant but apparently floors can call this attackby() proc, it was spamming shit up. -- Doohl
+
 
 	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
 		W:eyecheck(user)
@@ -663,7 +676,7 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 /turf/simulated/floor
 
 	//Note to coders, the 'intact' var can no longer be used to determine if the floor is a plating or not.
-	//Use the is_plating(), is_sttel_floor() and is_light_floor() procs instead. --Errorage
+	//Use the is_plating(), is_plasteel_floor() and is_light_floor() procs instead. --Errorage
 	name = "floor"
 	icon = 'floors.dmi'
 	icon_state = "floor"
@@ -673,7 +686,7 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 	heat_capacity = 10000
 	var/broken = 0
 	var/burnt = 0
-	var/obj/item/stack/tile/floor_tile = new/obj/item/stack/tile/steel
+	var/obj/item/stack/tile/floor_tile = new/obj/item/stack/tile/plasteel
 
 	airless
 		icon_state = "floor"
@@ -818,7 +831,7 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 	return
 
 turf/simulated/floor/proc/update_icon()
-	if(is_steel_floor())
+	if(is_plasteel_floor())
 		if(!broken && !burnt)
 			icon_state = icon_regular_floor
 	if(is_plating())
@@ -914,8 +927,8 @@ turf/simulated/floor/return_siding_icon_state()
 		make_plating()
 	break_tile()
 
-/turf/simulated/floor/is_steel_floor()
-	if(istype(floor_tile,/obj/item/stack/tile/steel))
+/turf/simulated/floor/is_plasteel_floor()
+	if(istype(floor_tile,/obj/item/stack/tile/plasteel))
 		return 1
 	else
 		return 0
@@ -942,10 +955,10 @@ turf/simulated/floor/return_siding_icon_state()
 	if(istype(src,/turf/simulated/floor/mech_bay_recharge_floor))
 		src.ReplaceWithPlating()
 	if(broken) return
-	if(is_steel_floor())
+	if(is_plasteel_floor())
 		src.icon_state = "damaged[pick(1,2,3,4,5)]"
 		broken = 1
-	else if(is_steel_floor())
+	else if(is_plasteel_floor())
 		src.icon_state = "light_broken"
 		broken = 1
 	else if(is_plating())
@@ -958,10 +971,10 @@ turf/simulated/floor/return_siding_icon_state()
 /turf/simulated/floor/proc/burn_tile()
 	if(istype(src,/turf/simulated/floor/engine)) return
 	if(broken || burnt) return
-	if(is_steel_floor())
+	if(is_plasteel_floor())
 		src.icon_state = "damaged[pick(1,2,3,4,5)]"
 		burnt = 1
-	else if(is_steel_floor())
+	else if(is_plasteel_floor())
 		src.icon_state = "floorscorched[pick(1,2)]"
 		burnt = 1
 	else if(is_plating())
@@ -994,16 +1007,16 @@ turf/simulated/floor/return_siding_icon_state()
 	update_icon()
 	levelupdate()
 
-//This proc will make the turf a steel floor tile. The expected argument is the tile to make the turf with
+//This proc will make the turf a plasteel floor tile. The expected argument is the tile to make the turf with
 //If none is given it will make a new object. dropping or unequipping must be handled before or after calling
 //this proc.
-/turf/simulated/floor/proc/make_steel_floor(var/obj/item/stack/tile/steel/T = null)
+/turf/simulated/floor/proc/make_plasteel_floor(var/obj/item/stack/tile/plasteel/T = null)
 	broken = 0
 	burnt = 0
 	intact = 1
 	sd_SetLuminosity(0)
 	if(T)
-		if(istype(T,/obj/item/stack/tile/steel))
+		if(istype(T,/obj/item/stack/tile/plasteel))
 			floor_tile = T
 			if (icon_regular_floor)
 				icon_state = icon_regular_floor
@@ -1014,7 +1027,7 @@ turf/simulated/floor/return_siding_icon_state()
 			levelupdate()
 			return
 	//if you gave a valid parameter, it won't get thisf ar.
-	floor_tile = new/obj/item/stack/tile/steel
+	floor_tile = new/obj/item/stack/tile/plasteel
 	icon_state = "floor"
 	icon_regular_floor = icon_state
 
@@ -1088,13 +1101,14 @@ turf/simulated/floor/return_siding_icon_state()
 		return
 
 	if(istype(C, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = C
 		if (is_plating())
-			if (C:amount >= 2)
+			if (R.amount >= 2)
 				user << "\blue Reinforcing the floor..."
-				if(do_after(user, 30) && C && C:amount >= 2 && is_plating())
+				if(do_after(user, 30) && R && R.amount >= 2 && is_plating())
 					ReplaceWithEngineFloor()
 					playsound(src.loc, 'Deconstruct.ogg', 80, 1)
-					C:use(2)
+					R.use(2)
 					return
 			else
 				user << "\red You need more rods."
@@ -1104,23 +1118,26 @@ turf/simulated/floor/return_siding_icon_state()
 
 	if(istype(C, /obj/item/stack/tile))
 		if(is_plating())
-			var/obj/item/stack/tile/T = C
-			floor_tile = new T.type
-			intact = 1
-			if(istype(T,/obj/item/stack/tile/light))
-				floor_tile:state = T:state
-				floor_tile:on = T:on
-			if(istype(T,/obj/item/stack/tile/grass))
-				for(var/direction in cardinal)
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						FF.update_icon() //so siding get updated properly
-			T.use(1)
-			update_icon()
-			levelupdate()
-			playsound(src.loc, 'Genhit.ogg', 50, 1)
-		else
-			user << "\blue This section already has a tile on it. Use a crowbar to pry it off."
+			if(!broken && !burnt)
+				var/obj/item/stack/tile/T = C
+				floor_tile = new T.type
+				intact = 1
+				if(istype(T,/obj/item/stack/tile/light))
+					var/obj/item/stack/tile/light/L = T
+					var/obj/item/stack/tile/light/F = floor_tile
+					F.state = L.state
+					F.on = L.on
+				if(istype(T,/obj/item/stack/tile/grass))
+					for(var/direction in cardinal)
+						if(istype(get_step(src,direction),/turf/simulated/floor))
+							var/turf/simulated/floor/FF = get_step(src,direction)
+							FF.update_icon() //so siding gets updated properly
+				T.use(1)
+				update_icon()
+				levelupdate()
+				playsound(src.loc, 'Genhit.ogg', 50, 1)
+			else
+				user << "\blue This section is too damaged to support a tile. Use a welder to fix the damage."
 
 
 	if(istype(C, /obj/item/weapon/cable_coil))
@@ -1138,6 +1155,19 @@ turf/simulated/floor/return_siding_icon_state()
 			make_plating()
 		else
 			user << "\red You cannot shovel this."
+
+	if(istype(C, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/welder = C
+		if(welder.welding && (is_plating()))
+			if(broken || burnt)
+				if(welder.remove_fuel(0,user))
+					user << "\red You fix some dents on the broken plating."
+					playsound(src.loc, 'Welder.ogg', 80, 1)
+					icon_state = "plating"
+					burnt = 0
+					broken = 0
+				else
+					user << "\blue You need more welding fuel to complete this task."
 
 /turf/unsimulated/floor/attack_paw(user as mob)
 	return src.attack_hand(user)
@@ -1184,19 +1214,21 @@ turf/simulated/floor/return_siding_icon_state()
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 
 	if (istype(C, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = C
 		user << "\blue Constructing support lattice ..."
 		playsound(src.loc, 'Genhit.ogg', 50, 1)
 		ReplaceWithLattice()
-		C:use(1)
+		R.use(1)
 		return
 
-	if (istype(C, /obj/item/stack/tile/steel))
+	if (istype(C, /obj/item/stack/tile/plasteel))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
+			var/obj/item/stack/tile/plasteel/S = C
 			del(L)
 			playsound(src.loc, 'Genhit.ogg', 50, 1)
-			C:build(src)
-			C:use(1)
+			S.build(src)
+			S.use(1)
 			return
 		else
 			user << "\red The plating is going to need some support."
@@ -1212,6 +1244,7 @@ turf/simulated/floor/return_siding_icon_state()
 	inertial_drift(A)
 
 	if(ticker && ticker.mode)
+
 		// Okay, so let's make it so that people can travel z levels but not nuke disks!
 		// if(ticker.mode.name == "nuclear emergency")	return
 
@@ -1234,6 +1267,8 @@ turf/simulated/floor/return_siding_icon_state()
 							MM << "\red Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is."
 					return
 
+
+
 				var/move_to_z_str = pickweight(accessable_z_levels)
 
 				var/move_to_z = text2num(move_to_z_str)
@@ -1241,7 +1276,10 @@ turf/simulated/floor/return_siding_icon_state()
 				if(!move_to_z)
 					return
 
+
+
 				A.z = move_to_z
+
 
 				if(src.x <= 2)
 					A.x = world.maxx - 2

@@ -298,7 +298,7 @@
 					if (ore_iron > 0 && ore_plasma > 0)
 						ore_iron--;
 						ore_plasma--;
-						new /obj/item/stack/sheet/r_metal(output.loc)
+						new /obj/item/stack/sheet/plasteel(output.loc)
 					else
 						on = 0
 					continue

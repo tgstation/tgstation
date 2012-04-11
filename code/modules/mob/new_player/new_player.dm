@@ -265,6 +265,7 @@
 		job_master.EquipRank(character, rank, 1)
 		EquipCustomItems(character)
 		character.loc = pick(latejoin)
+		character.lastarea = get_area(loc)
 		if(character.client)
 			character.client.be_syndicate = preferences.be_special
 		ticker.mode.latespawn(character)
@@ -369,6 +370,7 @@
 	proc/create_character()
 		spawning = 1
 		var/mob/living/carbon/human/new_character = new(loc)
+		new_character.lastarea = get_area(loc)
 
 		close_spawn_windows()
 

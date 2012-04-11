@@ -99,11 +99,19 @@
 	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
 	item_state = "helmet"
 
+/obj/item/clothing/head/cargosoft
+	name = "cargo cap"
+	desc = "It's a baseball hat in a tasteless yellow colour."
+	icon_state = "cargosoft"
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
+	item_state = "helmet"
+	var/flipped = 0
+
 /obj/item/clothing/head/syndicatefake
 	name = "red space helmet replica"
+	desc = "A plastic replica of a red space space helmet. This is a toy, it is not made for use in space!"
 	icon_state = "syndicate"
 	item_state = "syndicate"
-	desc = "A plastic replica of a syndicate agent's space helmet, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	see_face = 0.0
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
 

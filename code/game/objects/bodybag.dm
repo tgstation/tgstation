@@ -16,6 +16,7 @@
 	desc = "This box contains body bags."
 	icon_state = "bodybags"
 	item_state = "syringe_kit"
+	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
 
 	New()
@@ -40,10 +41,10 @@
 	density = 0
 
 
-	attackby(P as obj, mob/user as mob)
-		if (istype(P, /obj/item/weapon/pen))
+	attackby(W as obj, mob/user as mob)
+		if (istype(W, /obj/item/weapon/pen))
 			var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
-			if (user.equipped() != P)
+			if (user.equipped() != W)
 				return
 			if (!in_range(src, user) && src.loc != user)
 				return
@@ -51,10 +52,16 @@
 			if (t)
 				src.name = "body bag - "
 				src.name += t
+				src.overlays += image(src.icon, "bodybag_label")
 			else
 				src.name = "body bag"
-		..()
-		return
+		//..() //Doesn't need to run the parent. Since when can fucking bodybags be welded shut? -Agouri
+			return
+		else if(istype(W, /obj/item/weapon/wirecutters))
+			user << "You cut the tag off the bodybag"
+			src.name = "body bag"
+			src.overlays = null
+			return
 
 
 	close()
@@ -75,3 +82,4 @@
 			spawn(0)
 				del(src)
 			return
+

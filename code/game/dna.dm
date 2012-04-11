@@ -1020,41 +1020,42 @@
 				src.subblock--
 			dopage(src,"unimenu")
 		if (href_list["unipulse"])
-			var/block
-			var/newblock
-			var/tstructure2
-			block = getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),src.subblock,1)
-			src.delete = 1
-			src.temphtml = text("Working ... Please wait ([] Seconds)", src.radduration)
-			usr << browse(temphtml, "window=scannernew;size=550x650")
-			onclose(usr, "scannernew")
-			var/lock_state = src.connected.locked
-			src.connected.locked = 1//lock it
-			sleep(10*src.radduration)
-			if (!src.connected.occupant)
-				temphtml = null
-				delete = 0
-				return null
-			///
-			if (prob((80 + (src.radduration / 2))))
-				block = miniscramble(block, src.radstrength, src.radduration)
-				newblock = null
-				if (src.subblock == 1) newblock = block + getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1) + getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)
-				if (src.subblock == 2) newblock = getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1) + block + getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)
-				if (src.subblock == 3) newblock = getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1) + getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1) + block
-				tstructure2 = setblock(src.connected.occupant.dna.uni_identity, src.uniblock, newblock,3)
-				src.connected.occupant.dna.uni_identity = tstructure2
-				updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
-				src.connected.occupant.radiation += (src.radstrength+src.radduration)
-			else
-				if	(prob(20+src.radstrength))
-					randmutb(src.connected.occupant)
-					domutcheck(src.connected.occupant,src.connected)
-				else
-					randmuti(src.connected.occupant)
+			if(src.connected.occupant)
+				var/block
+				var/newblock
+				var/tstructure2
+				block = getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),src.subblock,1)
+				src.delete = 1
+				src.temphtml = text("Working ... Please wait ([] Seconds)", src.radduration)
+				usr << browse(temphtml, "window=scannernew;size=550x650")
+				onclose(usr, "scannernew")
+				var/lock_state = src.connected.locked
+				src.connected.locked = 1//lock it
+				sleep(10*src.radduration)
+				if (!src.connected.occupant)
+					temphtml = null
+					delete = 0
+					return null
+				///
+				if (prob((80 + (src.radduration / 2))))
+					block = miniscramble(block, src.radstrength, src.radduration)
+					newblock = null
+					if (src.subblock == 1) newblock = block + getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1) + getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)
+					if (src.subblock == 2) newblock = getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1) + block + getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)
+					if (src.subblock == 3) newblock = getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1) + getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1) + block
+					tstructure2 = setblock(src.connected.occupant.dna.uni_identity, src.uniblock, newblock,3)
+					src.connected.occupant.dna.uni_identity = tstructure2
 					updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
-				src.connected.occupant.radiation += ((src.radstrength*2)+src.radduration)
-			src.connected.locked = lock_state
+					src.connected.occupant.radiation += (src.radstrength+src.radduration)
+				else
+					if	(prob(20+src.radstrength))
+						randmutb(src.connected.occupant)
+						domutcheck(src.connected.occupant,src.connected)
+					else
+						randmuti(src.connected.occupant)
+						updateappearance(src.connected.occupant,src.connected.occupant.dna.uni_identity)
+					src.connected.occupant.radiation += ((src.radstrength*2)+src.radduration)
+				src.connected.locked = lock_state
 			dopage(src,"unimenu")
 			src.delete = 0
 		////////////////////////////////////////////////////////
@@ -1191,7 +1192,7 @@
 				src.temphtml += text("Data: <font color='blue'>[]</FONT><BR>", src.buffer2)
 				src.temphtml += text("By: <font color='blue'>[]</FONT><BR>", src.buffer2owner)
 				src.temphtml += text("Label: <font color='blue'>[]</FONT><BR>", src.buffer2label)
-			if (src.connected.occupant && !(src.connected.occupant.mutations & HUSK)) src.temphtml += text("Save : <A href='?src=\ref[];b2addui=1'>UI</A> - <A href='?src=\ref[];b2adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b2addse=1'>SE</A><BR>", src, src, src)
+			if (src.connected.occupant && !(src.connected.occupant.mutations2 & NOCLONE)) src.temphtml += text("Save : <A href='?src=\ref[];b2addui=1'>UI</A> - <A href='?src=\ref[];b2adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b2addse=1'>SE</A><BR>", src, src, src)
 			if (src.buffer2) src.temphtml += text("Transfer to: <A href='?src=\ref[];b2transfer=1'>Occupant</A> - <A href='?src=\ref[];b2injector=1'>Injector</A><BR>", src, src)
 			//if (src.buffer2) src.temphtml += text("<A href='?src=\ref[];b2iso=1'>Isolate Block</A><BR>", src)
 			if (src.buffer2) src.temphtml += "Disk: <A href='?src=\ref[src];save_disk=2'>Save To</a> | <A href='?src=\ref[src];load_disk=2'>Load From</a><br>"
@@ -1205,7 +1206,7 @@
 				src.temphtml += text("Data: <font color='blue'>[]</FONT><BR>", src.buffer3)
 				src.temphtml += text("By: <font color='blue'>[]</FONT><BR>", src.buffer3owner)
 				src.temphtml += text("Label: <font color='blue'>[]</FONT><BR>", src.buffer3label)
-			if (src.connected.occupant && !(src.connected.occupant.mutations & HUSK)) src.temphtml += text("Save : <A href='?src=\ref[];b3addui=1'>UI</A> - <A href='?src=\ref[];b3adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b3addse=1'>SE</A><BR>", src, src, src)
+			if (src.connected.occupant && !(src.connected.occupant.mutations2 & NOCLONE)) src.temphtml += text("Save : <A href='?src=\ref[];b3addui=1'>UI</A> - <A href='?src=\ref[];b3adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b3addse=1'>SE</A><BR>", src, src, src)
 			if (src.buffer3) src.temphtml += text("Transfer to: <A href='?src=\ref[];b3transfer=1'>Occupant</A> - <A href='?src=\ref[];b3injector=1'>Injector</A><BR>", src, src)
 			//if (src.buffer3) src.temphtml += text("<A href='?src=\ref[];b3iso=1'>Isolate Block</A><BR>", src)
 			if (src.buffer3) src.temphtml += "Disk: <A href='?src=\ref[src];save_disk=3'>Save To</a> | <A href='?src=\ref[src];load_disk=3'>Load From</a><br>"
@@ -1213,122 +1214,131 @@
 			if (src.buffer3) src.temphtml += text("<A href='?src=\ref[];b3clear=1'>Clear Buffer</A><BR><BR>", src)
 			if (!src.buffer3) src.temphtml += "<BR>"
 		if (href_list["b1addui"])
-			src.buffer1iue = 0
-			src.buffer1 = src.connected.occupant.dna.uni_identity
-			if (!istype(src.connected.occupant,/mob/living/carbon/human))
-				src.buffer1owner = src.connected.occupant.name
-			else
-				if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
-					src.buffer1owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+			if(src.connected.occupant && src.connected.occupant.dna)
+				src.buffer1iue = 0
+				src.buffer1 = src.connected.occupant.dna.uni_identity
+				if (!istype(src.connected.occupant,/mob/living/carbon/human))
+					src.buffer1owner = src.connected.occupant.name
 				else
-					src.buffer1owner = src.connected.occupant.real_name
-			src.buffer1label = "Unique Identifier"
-			src.buffer1type = "ui"
-			dopage(src,"buffermenu")
+					if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
+						src.buffer1owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+					else
+						src.buffer1owner = src.connected.occupant.real_name
+				src.buffer1label = "Unique Identifier"
+				src.buffer1type = "ui"
+				dopage(src,"buffermenu")
 		if (href_list["b1adduiue"])
-			src.buffer1 = src.connected.occupant.dna.uni_identity
-			if (!istype(src.connected.occupant,/mob/living/carbon/human))
-				src.buffer1owner = src.connected.occupant.name
-			else
-				if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
-					src.buffer1owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+			if(src.connected.occupant && src.connected.occupant.dna)
+				src.buffer1 = src.connected.occupant.dna.uni_identity
+				if (!istype(src.connected.occupant,/mob/living/carbon/human))
+					src.buffer1owner = src.connected.occupant.name
 				else
-					src.buffer1owner = src.connected.occupant.real_name
-			src.buffer1label = "Unique Identifier & Unique Enzymes"
-			src.buffer1type = "ui"
-			src.buffer1iue = 1
-			dopage(src,"buffermenu")
+					if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
+						src.buffer1owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+					else
+						src.buffer1owner = src.connected.occupant.real_name
+				src.buffer1label = "Unique Identifier & Unique Enzymes"
+				src.buffer1type = "ui"
+				src.buffer1iue = 1
+				dopage(src,"buffermenu")
 		if (href_list["b2adduiue"])
-			src.buffer2 = src.connected.occupant.dna.uni_identity
-			if (!istype(src.connected.occupant,/mob/living/carbon/human))
-				src.buffer2owner = src.connected.occupant.name
-			else
-				if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
-					src.buffer2owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+			if(src.connected.occupant && src.connected.occupant.dna)
+				src.buffer2 = src.connected.occupant.dna.uni_identity
+				if (!istype(src.connected.occupant,/mob/living/carbon/human))
+					src.buffer2owner = src.connected.occupant.name
 				else
-					src.buffer2owner = src.connected.occupant.real_name
-			src.buffer2label = "Unique Identifier & Unique Enzymes"
-			src.buffer2type = "ui"
-			src.buffer2iue = 1
-			dopage(src,"buffermenu")
+					if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
+						src.buffer2owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+					else
+						src.buffer2owner = src.connected.occupant.real_name
+				src.buffer2label = "Unique Identifier & Unique Enzymes"
+				src.buffer2type = "ui"
+				src.buffer2iue = 1
+				dopage(src,"buffermenu")
 		if (href_list["b3adduiue"])
-			src.buffer3 = src.connected.occupant.dna.uni_identity
-			if (!istype(src.connected.occupant,/mob/living/carbon/human))
-				src.buffer3owner = src.connected.occupant.name
-			else
-				if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
-					src.buffer3owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+			if(src.connected.occupant && src.connected.occupant.dna)
+				src.buffer3 = src.connected.occupant.dna.uni_identity
+				if (!istype(src.connected.occupant,/mob/living/carbon/human))
+					src.buffer3owner = src.connected.occupant.name
 				else
-					src.buffer3owner = src.connected.occupant.real_name
-			src.buffer3label = "Unique Identifier & Unique Enzymes"
-			src.buffer3type = "ui"
-			src.buffer3iue = 1
-			dopage(src,"buffermenu")
+					if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
+						src.buffer3owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+					else
+						src.buffer3owner = src.connected.occupant.real_name
+				src.buffer3label = "Unique Identifier & Unique Enzymes"
+				src.buffer3type = "ui"
+				src.buffer3iue = 1
+				dopage(src,"buffermenu")
 		if (href_list["b2addui"])
-			src.buffer2iue = 0
-			src.buffer2 = src.connected.occupant.dna.uni_identity
-			if (!istype(src.connected.occupant,/mob/living/carbon/human))
-				src.buffer2owner = src.connected.occupant.name
-			else
-				if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
-					src.buffer2owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+			if(src.connected.occupant && src.connected.occupant.dna)
+				src.buffer2iue = 0
+				src.buffer2 = src.connected.occupant.dna.uni_identity
+				if (!istype(src.connected.occupant,/mob/living/carbon/human))
+					src.buffer2owner = src.connected.occupant.name
 				else
-					src.buffer2owner = src.connected.occupant.real_name
-			src.buffer2label = "Unique Identifier"
-			src.buffer2type = "ui"
-			dopage(src,"buffermenu")
+					if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
+						src.buffer2owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+					else
+						src.buffer2owner = src.connected.occupant.real_name
+				src.buffer2label = "Unique Identifier"
+				src.buffer2type = "ui"
+				dopage(src,"buffermenu")
 		if (href_list["b3addui"])
-			src.buffer3iue = 0
-			src.buffer3 = src.connected.occupant.dna.uni_identity
-			if (!istype(src.connected.occupant,/mob/living/carbon/human))
-				src.buffer3owner = src.connected.occupant.name
-			else
-				if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
-					src.buffer3owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+			if(src.connected.occupant && src.connected.occupant.dna)
+				src.buffer3iue = 0
+				src.buffer3 = src.connected.occupant.dna.uni_identity
+				if (!istype(src.connected.occupant,/mob/living/carbon/human))
+					src.buffer3owner = src.connected.occupant.name
 				else
-					src.buffer3owner = src.connected.occupant.real_name
-			src.buffer3label = "Unique Identifier"
-			src.buffer3type = "ui"
-			dopage(src,"buffermenu")
+					if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
+						src.buffer3owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+					else
+						src.buffer3owner = src.connected.occupant.real_name
+				src.buffer3label = "Unique Identifier"
+				src.buffer3type = "ui"
+				dopage(src,"buffermenu")
 		if (href_list["b1addse"])
-			src.buffer1iue = 0
-			src.buffer1 = src.connected.occupant.dna.struc_enzymes
-			if (!istype(src.connected.occupant,/mob/living/carbon/human))
-				src.buffer1owner = src.connected.occupant.name
-			else
-				if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
-					src.buffer1owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+			if(src.connected.occupant && src.connected.occupant.dna)
+				src.buffer1iue = 0
+				src.buffer1 = src.connected.occupant.dna.struc_enzymes
+				if (!istype(src.connected.occupant,/mob/living/carbon/human))
+					src.buffer1owner = src.connected.occupant.name
 				else
-					src.buffer1owner = src.connected.occupant.real_name
-			src.buffer1label = "Structural Enzymes"
-			src.buffer1type = "se"
-			dopage(src,"buffermenu")
+					if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
+						src.buffer1owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+					else
+						src.buffer1owner = src.connected.occupant.real_name
+				src.buffer1label = "Structural Enzymes"
+				src.buffer1type = "se"
+				dopage(src,"buffermenu")
 		if (href_list["b2addse"])
-			src.buffer2iue = 0
-			src.buffer2 = src.connected.occupant.dna.struc_enzymes
-			if (!istype(src.connected.occupant,/mob/living/carbon/human))
-				src.buffer2owner = src.connected.occupant.name
-			else
-				if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
-					src.buffer2owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+			if(src.connected.occupant && src.connected.occupant.dna)
+				src.buffer2iue = 0
+				src.buffer2 = src.connected.occupant.dna.struc_enzymes
+				if (!istype(src.connected.occupant,/mob/living/carbon/human))
+					src.buffer2owner = src.connected.occupant.name
 				else
-					src.buffer2owner = src.connected.occupant.real_name
-			src.buffer2label = "Structural Enzymes"
-			src.buffer2type = "se"
-			dopage(src,"buffermenu")
+					if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
+						src.buffer2owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+					else
+						src.buffer2owner = src.connected.occupant.real_name
+				src.buffer2label = "Structural Enzymes"
+				src.buffer2type = "se"
+				dopage(src,"buffermenu")
 		if (href_list["b3addse"])
-			src.buffer3iue = 0
-			src.buffer3 = src.connected.occupant.dna.struc_enzymes
-			if (!istype(src.connected.occupant,/mob/living/carbon/human))
-				src.buffer3owner = src.connected.occupant.name
-			else
-				if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
-					src.buffer3owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+			if(src.connected.occupant && src.connected.occupant.dna)
+				src.buffer3iue = 0
+				src.buffer3 = src.connected.occupant.dna.struc_enzymes
+				if (!istype(src.connected.occupant,/mob/living/carbon/human))
+					src.buffer3owner = src.connected.occupant.name
 				else
-					src.buffer3owner = src.connected.occupant.real_name
-			src.buffer3label = "Structural Enzymes"
-			src.buffer3type = "se"
-			dopage(src,"buffermenu")
+					if(src.connected.occupant.real_name == "Unknown" && src.connected.occupant.dna.original_name != "Unknown")
+						src.buffer3owner = src.connected.occupant.dna.original_name  //Good god, is that unweildy
+					else
+						src.buffer3owner = src.connected.occupant.real_name
+				src.buffer3label = "Structural Enzymes"
+				src.buffer3type = "se"
+				dopage(src,"buffermenu")
 		if (href_list["b1clear"])
 			src.buffer1 = null
 			src.buffer1owner = null
@@ -1357,7 +1367,7 @@
 			src.buffer3label = sanitize(input("New Label:","Edit Label","Infos here"))
 			dopage(src,"buffermenu")
 		if (href_list["b1transfer"])
-			if (!src.connected.occupant || src.connected.occupant.mutations & HUSK)
+			if (!src.connected.occupant || src.connected.occupant.mutations2 & NOCLONE || !src.connected.occupant.dna)
 				return
 			if (src.buffer1type == "ui")
 				if (src.buffer1iue)
@@ -1373,7 +1383,7 @@
 			src.connected.occupant.radiation += rand(20,50)
 			src.delete = 0
 		if (href_list["b2transfer"])
-			if (!src.connected.occupant || src.connected.occupant.mutations & HUSK)
+			if (!src.connected.occupant || src.connected.occupant.mutations2 & NOCLONE || !src.connected.occupant.dna)
 				return
 			if (src.buffer2type == "ui")
 				if (src.buffer2iue)
@@ -1389,7 +1399,7 @@
 			src.connected.occupant.radiation += rand(20,50)
 			src.delete = 0
 		if (href_list["b3transfer"])
-			if (!src.connected.occupant || src.connected.occupant.mutations & HUSK)
+			if (!src.connected.occupant || src.connected.occupant.mutations2 & NOCLONE || !src.connected.occupant.dna)
 				return
 			if (src.buffer3type == "ui")
 				if (src.buffer3iue)

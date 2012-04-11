@@ -64,10 +64,20 @@
 		item.layer = initial(item.layer)
 		src.visible_message("\red [src] has thrown [item].")
 
+		var/area/a = get_area(src.loc)
+		if((istype(src.loc, /turf/space)) || (a.has_gravity == 0))
+			src.inertia_dir = get_dir(target, src)
+			step(src, inertia_dir)
 
+
+/*
 		if(istype(src.loc, /turf/space) || (src.flags & NOGRAV)) //they're in space, move em one space in the opposite direction
 			src.inertia_dir = get_dir(target, src)
 			step(src, inertia_dir)
+*/
+
+
+
 		item.throw_at(target, item.throw_range, item.throw_speed)
 
 
@@ -150,10 +160,14 @@
 		dy = SOUTH
 	var/dist_travelled = 0
 	var/dist_since_sleep = 0
+	var/area/a = get_area(src.loc)
 	var/turf/target_turf = get_turf(target)
 	if(dist_x > dist_y)
 		var/error = dist_x/2 - dist_y
-		while(((((src.x < target.x && dx == EAST) || (src.x > target.x && dx == WEST)) && dist_travelled < range) || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))
+
+
+
+		while(((((src.x < target.x && dx == EAST) || (src.x > target.x && dx == WEST)) && dist_travelled < range) || (a.has_gravity == 0)  || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))
 			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
 			if(error < 0)
 				var/atom/step = get_step(src, dy)
@@ -179,9 +193,11 @@
 				if(dist_since_sleep >= speed)
 					dist_since_sleep = 0
 					sleep(1)
+
+			a = get_area(src.loc)
 	else
 		var/error = dist_y/2 - dist_x
-		while(src && target &&((((src.y < target.y && dy == NORTH) || (src.y > target.y && dy == SOUTH)) && dist_travelled < range) || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))
+		while(src && target &&((((src.y < target.y && dy == NORTH) || (src.y > target.y && dy == SOUTH)) && dist_travelled < range) || (a.has_gravity == 0)  || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))
 			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
 			if(error < 0)
 				var/atom/step = get_step(src, dx)
@@ -207,6 +223,8 @@
 				if(dist_since_sleep >= speed)
 					dist_since_sleep = 0
 					sleep(1)
+
+			a = get_area(src.loc)
 
 	//done throwing, either because it hit something or it finished moving
 	src.throwing = 0
