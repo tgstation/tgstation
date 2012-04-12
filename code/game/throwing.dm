@@ -25,7 +25,7 @@
 /mob/living/carbon/proc/throw_item(atom/target)
 	src.throw_mode_off()
 
-	if(usr.stat)
+	if(usr.stat || !target)
 		return
 	if(target.type == /obj/screen) return
 

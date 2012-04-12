@@ -1087,6 +1087,11 @@ turf/simulated/floor/return_siding_icon_state()
 		return
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
+
+//		if(M==user)					//temporary hack to stop runtimes. ~Carn
+//			user.pulling = null		//but...fixed the root of the problem
+//			return					//shoudn't be needed now, unless somebody fucks with pulling again.
+
 		var/mob/t = M.pulling
 		M.pulling = null
 		step(user.pulling, get_dir(user.pulling.loc, src))
