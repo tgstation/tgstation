@@ -410,9 +410,13 @@
 		if("pull")
 			usr.pulling = null
 		if("sleep")
-			usr.sleeping = !( usr.sleeping )
+			if(usr.sleeping)
+				return
+			else
+				usr.sleeping = 20 //Short nap
 		if("rest")
 			usr.resting = !( usr.resting )
+			//kavala2
 		if("throw")
 			if (!usr.stat && isturf(usr.loc) && !usr.restrained())
 				usr:toggle_throw_mode()
