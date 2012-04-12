@@ -23,7 +23,7 @@
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses/sechud(H), H.slot_glasses)
 		H.equip_if_possible(new /obj/item/weapon/handcuffs(H), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/weapon/gun/energy/gun(H), H.slot_s_store)
-		var/datum/organ/external/O = pick(H.organs)
+		var/datum/organ/external/O = H.organs[pick(H.organs)]
 		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(O)
 		O.implant += L
 		L.imp_in = H
@@ -55,7 +55,7 @@
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses/sechud(H), H.slot_glasses)
 		H.equip_if_possible(new /obj/item/weapon/handcuffs(H), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/device/flash(H), H.slot_l_store)
-		var/datum/organ/external/O = pick(H.organs)
+		var/datum/organ/external/O = H.organs[pick(H.organs)]
 		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(O)
 		O.implant += L
 		L.imp_in = H
@@ -96,7 +96,7 @@
 		H.equip_if_possible(new /obj/item/weapon/zippo(H), H.slot_l_store)
 //		H.equip_if_possible(new /obj/item/weapon/reagent_containers/food/snacks/candy_corn(H), H.slot_h_store)
 //		No... just no. --SkyMarshal
-		var/datum/organ/external/O = pick(H.organs)
+		var/datum/organ/external/O = H.organs[pick(H.organs)]
 		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(O)
 		O.implant += L
 		L.imp_in = H
@@ -128,7 +128,7 @@
 		H.equip_if_possible(new /obj/item/clothing/gloves/red(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/weapon/handcuffs(H), H.slot_s_store)
 		H.equip_if_possible(new /obj/item/device/flash(H), H.slot_l_store)
-		var/datum/organ/external/O = pick(H.organs)
+		var/datum/organ/external/O = H.organs[pick(H.organs)]
 		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(O)
 		O.implant += L
 		L.imp_in = H

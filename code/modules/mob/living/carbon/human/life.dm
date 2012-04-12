@@ -211,6 +211,7 @@
 				adjustFireLoss(-2)
 
 				for(var/datum/organ/external/org in organs)
+					if(org.robot) continue
 					org.brute_dam = max(org.brute_dam - 2, 0)
 					org.burn_dam = max(org.burn_dam - 2, 0)
 				updatehealth()
@@ -843,6 +844,30 @@
 			for(var/name in organs)
 				var/datum/organ/external/E = organs[name]
 				E.process()
+				if(E.robot && prob(E.brute_dam + E.burn_dam))
+					if(E.name == "l_hand" || E.name == "l_arm")
+						if(hand && equipped())
+							drop_item()
+							emote("custom v drops what they were holding, their limb malfunctioning!")
+							var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+							spark_system.set_up(5, 0, src)
+							spark_system.attach(src)
+							spark_system.start()
+							spawn(10)
+								del(spark_system)
+					else if(E.name == "r_hand" || E.name == "r_arm")
+						if(!hand && equipped())
+							drop_item()
+							emote("custom v drops what they were holding, their limb malfunctioning!")
+							var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+							spark_system.set_up(5, 0, src)
+							spark_system.attach(src)
+							spark_system.start()
+							spawn(10)
+								del(spark_system)
+					else if(E.name == "l_leg" || E.name == "l_foot" \
+						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
+						leg_tally--									// let it fail even if just foot&leg
 				if(E.broken || E.destroyed)
 					if(E.name == "l_hand" || E.name == "l_arm")
 						if(hand && equipped())

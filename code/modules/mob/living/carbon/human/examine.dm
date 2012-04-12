@@ -245,7 +245,26 @@
 				is_destroyed["[temp.display_name]"] = 1
 				wound_flavor_text["[temp.display_name]"] = "<span class='warning'><b>[t_He] is missing [t_his] [temp.display_name].</b></span>\n"
 				continue
-			if(temp.wounds)
+			if(temp.robot)
+				if(!(temp.brute_dam + temp.burn_dam))
+					wound_flavor_text["[temp.display_name]"] = "<span class='warning'>[t_He] has a robot [temp.display_name]!</span>\n"
+					continue
+				else
+					wound_flavor_text["[temp.display_name]"] = "<span class='warning'>[t_He] has a robot [temp.display_name], it has"
+				if(temp.brute_dam) switch(temp.brute_dam)
+					if(0 to 20)
+						wound_flavor_text["[temp.display_name]"] += " some dents"
+					if(21 to INFINITY)
+						wound_flavor_text["[temp.display_name]"] += pick(" a lot of dents"," severe denting")
+				if(temp.brute_dam && temp.burn_dam)
+					wound_flavor_text["[temp.display_name]"] += " and"
+				if(temp.burn_dam) switch(temp.burn_dam)
+					if(0 to 20)
+						wound_flavor_text["[temp.display_name]"] += " some burns"
+					if(21 to INFINITY)
+						wound_flavor_text["[temp.display_name]"] += pick(" a lot of burns"," severe melting")
+				wound_flavor_text["[temp.display_name]"] += "!</span>\n"
+			else if(temp.wounds)
 				var/list/wounds = list(list(),list(),list(),list(),list(),list())
 				for(var/datum/organ/wound/w in temp.wounds)
 					switch(w.healing_state)
@@ -403,22 +422,22 @@
 				switch(tally[tallied])
 					if(1)
 						if(!flavor_text.len)
-							flavor_text += "<span class='warning'>\The [src] has[prob(10) && !(tallied in no_exclude)  ? " what might be" : ""] a [tallied_rename[tallied]]"
+							flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(tallied in no_exclude)  ? " what might be" : ""] a [tallied_rename[tallied]]"
 						else
 							flavor_text += "[prob(10) && !(tallied in no_exclude) ? " what might be" : ""] a [tallied_rename[tallied]]"
 					if(2)
 						if(!flavor_text.len)
-							flavor_text += "<span class='warning'>\The [src] has[prob(10) && !(tallied in no_exclude) ? " what might be" : ""] a pair of [tallied_rename[tallied]]s"
+							flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(tallied in no_exclude) ? " what might be" : ""] a pair of [tallied_rename[tallied]]s"
 						else
 							flavor_text += "[prob(10) && !(tallied in no_exclude) ? " what might be" : ""] a pair of [tallied_rename[tallied]]s"
 					if(3 to 5)
 						if(!flavor_text.len)
-							flavor_text += "<span class='warning'>\The [src] has several [tallied_rename[tallied]]s"
+							flavor_text += "<span class='warning'>[t_He] has several [tallied_rename[tallied]]s"
 						else
 							flavor_text += " several [tallied_rename[tallied]]s"
 					if(6 to INFINITY)
 						if(!flavor_text.len)
-							flavor_text += "<span class='warning'>\The [src] has a bunch of [tallied_rename[tallied]]s"
+							flavor_text += "<span class='warning'>[t_He] has a bunch of [tallied_rename[tallied]]s"
 						else
 							flavor_text += " a ton of [tallied_rename[tallied]]s"
 		if(flavor_text.len)
@@ -434,6 +453,9 @@
 
 	//Handles the text strings being added to the actual description.
 	//If they have something that covers the limb, and it is not missing, put flavortext.  If it is covered but bleeding, add other flavortext.
+	var/display_chest = 0
+	var/display_shoes = 0
+	var/display_gloves = 0
 	if(wound_flavor_text["head"] && (is_destroyed["head"] || (!skipmask && !(wear_mask && istype(wear_mask, /obj/item/clothing/mask/gas)))))
 		msg += wound_flavor_text["head"]
 	else if(is_bleeding["head"])
@@ -441,50 +463,56 @@
 	if(wound_flavor_text["chest"] && !w_uniform && !skipjumpsuit) //No need.  A missing chest gibs you.
 		msg += wound_flavor_text["chest"]
 	else if(is_bleeding["chest"])
-		msg += "<span class='warning'>[src] has blood soaking through from under [t_his] clothing!</span>\n"
+		display_chest = 1
 	if(wound_flavor_text["left arm"] && (is_destroyed["left arm"] || (!w_uniform && !skipjumpsuit)))
 		msg += wound_flavor_text["left arm"]
 	else if(is_bleeding["left arm"])
-		msg += "<span class='warning'>[src] has blood soaking through from under [t_his] clothing!</span>\n"
+		display_chest = 1
 	if(wound_flavor_text["left hand"] && (is_destroyed["left hand"] || (!gloves && !skipgloves)))
 		msg += wound_flavor_text["left hand"]
 	else if(is_bleeding["left hand"])
-		msg += "<span class='warning'>[src] has blood running from under [t_his] gloves!</span>\n"
+		display_gloves = 1
 	if(wound_flavor_text["right arm"] && (is_destroyed["right arm"] || (!w_uniform && !skipjumpsuit)))
 		msg += wound_flavor_text["right arm"]
 	else if(is_bleeding["right arm"])
-		msg += "<span class='warning'>[src] has blood soaking through from under [t_his] clothing!</span>\n"
+		display_chest = 1
 	if(wound_flavor_text["right hand"] && (is_destroyed["right hand"] || (!gloves && !skipgloves)))
 		msg += wound_flavor_text["right hand"]
 	else if(is_bleeding["right hand"])
-		msg += "<span class='warning'>[src] has blood running from under [t_his] gloves!</span>\n"
+		display_gloves = 1
 	if(wound_flavor_text["groin"] && (is_destroyed["groin"] || (!w_uniform && !skipjumpsuit)))
 		msg += wound_flavor_text["groin"]
 	else if(is_bleeding["groin"])
-		msg += "<span class='warning'>[src] has blood soaking through from under [t_his] clothing!</span>\n"
+		display_chest = 1
 	if(wound_flavor_text["left leg"] && (is_destroyed["left leg"] || (!w_uniform && !skipjumpsuit)))
 		msg += wound_flavor_text["left leg"]
 	else if(is_bleeding["left leg"])
-		msg += "<span class='warning'>[src] has blood soaking through from under [t_his] clothing!</span>\n"
+		display_chest = 1
 	if(wound_flavor_text["left foot"]&& (is_destroyed["left foot"] || (!shoes && !skipshoes)))
 		msg += wound_flavor_text["left foot"]
 	else if(is_bleeding["left foot"])
-		msg += "<span class='warning'>[src] has blood running from [t_his] shoes!</span>\n"
+		display_shoes = 1
 	if(wound_flavor_text["right leg"] && (is_destroyed["right leg"] || (!w_uniform && !skipjumpsuit)))
 		msg += wound_flavor_text["right leg"]
 	else if(is_bleeding["right leg"])
-		msg += "<span class='warning'>[src] has blood soaking through from under [t_his] clothing!</span>\n"
+		display_chest = 1
 	if(wound_flavor_text["right foot"]&& (is_destroyed["right foot"] || (!shoes  && !skipshoes)))
 		msg += wound_flavor_text["right foot"]
 	else if(is_bleeding["right foot"])
-		msg += "<span class='warning'>[src] has blood running from [t_his] shoes!</span>\n"
+		display_shoes = 1
+	if(display_chest)
+		msg += "<span class='warning'><b>[src] has blood soaking through from under [t_his] clothing!</b></span>\n"
+	if(display_shoes)
+		msg += "<span class='warning'><b>[src] has blood running from [t_his] shoes!</b></span>\n"
+	if(display_gloves)
+		msg += "<span class='warning'><b>[src] has blood running from under [t_his] gloves!</b></span>\n"
 
 
 //		if(w.bleeding)
 //			usr << "\red [src.name] is bleeding from a [sizetext] on [t_his] [temp.display_name]."
 //			continue
 
-	msg += "[print_flavor_text()]\n"
+	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
 
 	msg += "\blue *---------*"
 	usr << msg

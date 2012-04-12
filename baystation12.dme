@@ -701,6 +701,7 @@
 #include "code\game\objects\items\weapons\RCD.dm"
 #include "code\game\objects\items\weapons\RSF.dm"
 #include "code\game\objects\items\weapons\stungloves.dm"
+#include "code\game\objects\items\weapons\surgery_limbattachment.dm"
 #include "code\game\objects\items\weapons\surgery_tools.dm"
 #include "code\game\objects\items\weapons\swords_axes_etc.dm"
 #include "code\game\objects\items\weapons\syndie.dm"

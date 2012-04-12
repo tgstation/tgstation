@@ -58,6 +58,8 @@
 		tmp/destspawn = 0 //Has it spawned the broken limb?
 		tmp/gauzed = 0 //Has the missing limb been patched?
 		tmp/robot = 0 //ROBOT ARM MAN!
+		tmp/cutaway = 0 //First part of limb reattachment.
+		tmp/attachable = 0 //Can limb be attached?
 		min_broken_damage = 30
 		datum/organ/external/parent
 		list/datum/organ/external/children
@@ -85,8 +87,11 @@
 			return 0
 		if(destroyed)
 			return 0
+		if(robot)
+			brute *= 0.66 //~2/3 damage for ROBOLIMBS
+			burn *= 0.66 //~2/3 damage for ROBOLIMBS
 
-		if(owner) owner.pain(display_name, (brute+burn)*3, 1)
+		if(owner && !robot) owner.pain(display_name, (brute+burn)*3, 1)
 		if(sharp)
 			var/nux = brute * rand(10,15)
 			if(brute_dam >= max_damage)
@@ -98,7 +103,7 @@
 					return
 			else if(prob(nux))
 				createwound(max(1,min(6,round(brute/10) + rand(0,1))),0,brute)
-				owner << "You feel something wet on your [display_name]"
+				if(!robot) owner << "You feel something wet on your [display_name]"
 
 		if((brute_dam + burn_dam + brute + burn) < max_damage)
 			if(brute)
@@ -129,8 +134,8 @@
 						burn = can_inflict
 						burn_dam += burn
 						createwound(max(1,min(6,round(burn/10) + rand(0,1))),2,burn)
-			else
-				var/passed_dam = (brute_dam + burn_dam) - can_inflict //Getting how much overdamage we have.
+			else if(!robot)
+				var/passed_dam = (brute + burn) - can_inflict //Getting how much overdamage we have.
 				var/list/datum/organ/external/possible_points = list()
 				if(parent)
 					possible_points += parent
@@ -144,6 +149,8 @@
 						target.take_damage(passed_dam, 0, sharp, used_weapon)
 					else
 						target.take_damage(0, passed_dam, sharp, used_weapon)
+			else
+				droplimb(1) //Robot limbs just kinda fail at full damage.
 
 
 			if(broken)
@@ -155,7 +162,9 @@
 		return result
 
 
-	proc/heal_damage(brute, burn, internal = 0)
+	proc/heal_damage(brute, burn, internal = 0, robo_repair = 0)
+		if(robot && !robo_repair)
+			return
 		var/brute_to_heal = 0
 		var/brute_wounds = list()
 		var/burn_to_heal = 0
@@ -167,7 +176,7 @@
 			else if(W.damage)
 				brute_to_heal += W.damage
 				brute_wounds += W
-		if(brute && brute >= brute_to_heal)
+		if(brute && brute <= brute_to_heal)
 			for(var/datum/organ/wound/W in brute_wounds)
 				if(brute >= W.damage)
 					brute_dam -= W.damage
@@ -185,7 +194,7 @@
 				W.initial_dmg = 0
 				W.stopbleeding(1)
 			brute_dam = 0
-		if(burn && burn >= burn_to_heal)
+		if(burn && burn <= burn_to_heal)
 			for(var/datum/organ/wound/W in burn_wounds)
 				if(burn >= W.damage)
 					burn_dam -= W.damage
@@ -248,7 +257,7 @@
 				destroyed = 1
 				owner:update_body()
 				return
-		if(brute_dam > min_broken_damage)
+		if(brute_dam > min_broken_damage && !robot)
 			if(broken == 0)
 				//owner.unlock_medal("Broke Yarrr Bones!", 0, "Break a bone.", "easy")
 				owner.visible_message("\red You hear a loud cracking sound coming from [owner.name].","\red <b>Something feels like it shattered in your [display_name]!</b>","You hear a sickening crack.")
@@ -294,7 +303,7 @@
 			return 1
 		return 0
 
-	proc/droplimb(var/override = 0)
+	proc/droplimb(var/override = 0,var/no_explode = 0)
 		if(override)
 			destroyed = 1
 		if(destroyed)
@@ -305,7 +314,7 @@
 
 			for(var/datum/organ/external/I in children)
 				if(I && !I.destroyed)
-					I.droplimb(1)
+					I.droplimb(1,1)
 			var/obj/item/weapon/organ/H
 			switch(body_part)
 				if(UPPER_TORSO)
@@ -370,11 +379,25 @@
 			var/lol = pick(cardinal)
 			step(H,lol)
 			destspawn = 1
-			owner.visible_message("\red [owner.name]'s [display_name] flies off in an arc.","\red <b>Your [display_name] goes flying off!</b>","You hear a terrible sound of ripping tendons and flesh.")
+			if(!robot)
+				owner.visible_message("\red [owner.name]'s [display_name] flies off in an arc.",\
+				"\red <b>Your [display_name] goes flying off!</b>",\
+				"You hear a terrible sound of ripping tendons and flesh.")
+			else
+				owner.visible_message("\red [owner.name]'s [display_name] explodes violently!",\
+				"\red <b>Your [display_name] explodes!</b>",\
+				"You hear an explosion followed by a scream!")
+				if(!no_explode)
+					explosion(get_turf(owner),-1,-1,2,3)
+					var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+					spark_system.set_up(5, 0, src)
+					spark_system.attach(src)
+					spark_system.start()
+					spawn(10)
+						del(spark_system)
 			for(var/datum/organ/wound/W in wounds)
 				W.update_health()
 				del(W)
-			del(wounds)
 			owner.update_body()
 			owner.update_clothing()
 
@@ -402,12 +425,19 @@
 				wounds += W
 			else
 				var/datum/organ/wound/W = pick(possible_wounds)
-				bleeding = !type //Sharp objects cause bleeding.
-				W.bleeding = !type
+				bleeding = max(!type,bleeding) //Sharp objects cause bleeding.
+				W.bleeding = max(!type,W.bleeding)
 	//			owner:bloodloss += 10 * size
 				W.damage += damage
 				W.initial_dmg += damage
-				W.wound_size = max(1,min(6,round(damage/10) + rand(0,1)))
+				W.wound_size = max(1,min(6,round(W.damage/10) + rand(0,1)))
+
+	proc/emp_act(severity)
+		if(!robot) return
+		if(prob(30*severity))
+			take_damage(4(4-severity), 0, 1, used_weapon = "EMP")
+		else
+			droplimb(1)
 
 /datum/organ/wound
 	name = "wound"
@@ -422,6 +452,8 @@
 	var/slowheal = 3
 
 	proc/start_close()
+		if(parent.robot)
+			return
 		sleep(rand(1800,3000)) //3-5 minutes
 		if(prob(50) && wound_size == 1)
 			parent.wounds.Remove(src)
@@ -463,6 +495,8 @@
 		return 1
 
 	proc/become_scar()
+		if(parent.robot)
+			return
 		healing_state = 1 //Patched
 		spawn(200*slowheal) //~20-60 seconds
 			update_health(5) //Heals some.
@@ -518,6 +552,8 @@
 		return
 
 	proc/update_health(var/percent = 1)
+		if(!owner || owner.stat == 2)
+			return
 		damage = max(damage - damage/percent,0) //Remove that amount of the damage
 		if(wound_type > 1)
 			parent.burn_dam = max(parent.burn_dam - (initial_dmg - damage),0)

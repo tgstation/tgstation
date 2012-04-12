@@ -1419,8 +1419,12 @@
 			&& !istype(part, /datum/organ/external/chest) \
 			&& !istype(part, /datum/organ/external/head) \
 			&& !part.destroyed)
-			stand_icon.Blend(new /icon('human.dmi', "[part.icon_name]_s"), ICON_OVERLAY)
-			lying_icon.Blend(new /icon('human.dmi', "[part.icon_name]_l"), ICON_OVERLAY)
+			var/icon/temp = new /icon('human.dmi', "[part.icon_name]_s")
+			if(part.robot) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+			stand_icon.Blend(temp, ICON_OVERLAY)
+			temp = new /icon('human.dmi', "[part.icon_name]_l")
+			if(part.robot) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+			lying_icon.Blend(temp , ICON_OVERLAY)
 
 	stand_icon.Blend(new /icon('human.dmi', "groin_[g]_s"), ICON_OVERLAY)
 	lying_icon.Blend(new /icon('human.dmi', "groin_[g]_l"), ICON_OVERLAY)
@@ -2589,7 +2593,7 @@ It can still be worn/put on as normal.
 	var/amount = 0.0
 	for(var/name in organs)
 		var/datum/organ/external/O = organs[name]
-		amount+= O.brute_dam
+		if(!O.robot) amount+= O.brute_dam
 	return amount
 
 /mob/living/carbon/human/adjustBruteLoss(var/amount, var/used_weapon = null)
@@ -2602,7 +2606,7 @@ It can still be worn/put on as normal.
 	var/amount = 0.0
 	for(var/name in organs)
 		var/datum/organ/external/O = organs[name]
-		amount+= O.burn_dam
+		if(!O.robot) amount+= O.burn_dam
 	return amount
 
 /mob/living/carbon/human/adjustFireLoss(var/amount,var/used_weapon = null)

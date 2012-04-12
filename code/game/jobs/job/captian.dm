@@ -18,7 +18,7 @@
 		H.equip_if_possible(new /obj/item/clothing/head/caphat(H), H.slot_head)
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(H), H.slot_glasses)
 		H.equip_if_possible(new /obj/item/weapon/storage/id_kit(H), H.slot_in_backpack)
-		var/datum/organ/external/O = pick(H.organs)
+		var/datum/organ/external/O = H.organs[pick(H.organs)]
 		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(O)
 		O.implant += L
 		L.imp_in = H

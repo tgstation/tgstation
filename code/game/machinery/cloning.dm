@@ -395,7 +395,7 @@
 	//Add an implant if needed
 	var/obj/item/weapon/implant/health/imp = locate(/obj/item/weapon/implant/health, subject)
 	if (isnull(imp))
-		var/datum/organ/external/O = pick(subject.organs)
+		var/datum/organ/external/O = subject.organs[pick(subject.organs)]
 		imp = new /obj/item/weapon/implant/health(O)
 		O.implant += imp
 		imp.implanted = subject
