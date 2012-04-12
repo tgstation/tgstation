@@ -18,17 +18,17 @@
 			var/end_time = world.time + event_duration	//the time by which the event should have ended
 
 			var/increment =	max(1,round(number_of_selections/50))
-			world << "DEBUG: number_of_selections: [number_of_selections] | sleep_duration: [sleep_duration]"
+//			world << "DEBUG: number_of_selections: [number_of_selections] | sleep_duration: [sleep_duration]"
 
 			var/i = 1
 			while( 1 )
 
 				//we've run into overtime. End the event
 				if( end_time < world.time )
-					world << "DEBUG: we've run into overtime. End the event"
+//					world << "DEBUG: we've run into overtime. End the event"
 					return
 				if( !pick_turfs.len )
-					world << "DEBUG: we've run out of turfs to pick. End the event"
+//					world << "DEBUG: we've run out of turfs to pick. End the event"
 					return
 
 				//loop it round
