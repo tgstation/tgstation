@@ -997,7 +997,7 @@ About the new airlock wires panel:
 			beingcrowbarred = 0
 		if( beingcrowbarred && (density && welded && !operating && src.p_open && (!src.arePowerSystemsOn() || stat & NOPOWER) && !src.locked) )
 			playsound(src.loc, 'Crowbar.ogg', 100, 1)
-			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics into the airlock assembly.")
+			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
 			if(do_after(user,40))
 				user << "\blue You removed the airlock electronics!"
 				switch(src.doortype)
@@ -1009,6 +1009,10 @@ About the new airlock wires panel:
 					if(5) new/obj/structure/door_assembly/door_assembly_mai( src.loc )
 					if(6) new/obj/structure/door_assembly/door_assembly_ext( src.loc )
 					if(7) new/obj/structure/door_assembly/door_assembly_g( src.loc )
+					if(14) new/obj/structure/door_assembly/door_assembly_com/glass( src.loc )
+					if(15) new/obj/structure/door_assembly/door_assembly_eng/glass( src.loc )	//issue 301 -mysthic
+					if(16) new/obj/structure/door_assembly/door_assembly_sec/glass( src.loc )
+					if(17) new/obj/structure/door_assembly/door_assembly_med/glass( src.loc )
 				var/obj/item/weapon/airlock_electronics/ae
 				if(!electronics)
 					ae = new/obj/item/weapon/airlock_electronics( src.loc )

@@ -284,7 +284,7 @@
 	//	seedName = pick(list("1","2","3","4"))
 	//	seedAmt = rand(1,4)
 	if(prob(20))
-		icon_state = "asteroid[rand(0,8)]"
+		icon_state = "asteroid[rand(0,12)]"
 	spawn(2)
 		updateMineralOverlays()
 
