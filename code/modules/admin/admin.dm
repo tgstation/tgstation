@@ -1861,16 +1861,6 @@ var/global/BSACooldown = 0
 					J.spawn_positions = -1
 					message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
 		return
-	if(href_list["vsc"])
-		if ((src.rank in list( "Moderator", "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master" )))
-			if(href_list["vsc"] == "airflow")
-				vsc.ChangeSettingsDialog(usr,vsc.settings)
-			if(href_list["vsc"] == "plasma")
-				vsc.ChangeSettingsDialog(usr,vsc.plc.settings)
-			if(href_list["vsc"] == "load")
-				LoadTweaks()
-			if(href_list["vsc"] == "save")
-				SaveTweaks()
 	if (href_list["rnd_max"])
 		for(var/obj/machinery/computer/rdconsole/C in world)
 			for(var/datum/tech/T in C.files.known_tech)
@@ -2102,13 +2092,7 @@ var/global/BSACooldown = 0
 	if(lvl >= 5)
 		dat += "<A href='?src=\ref[src];create_mob=1'>Create Mob</A><br>"
 //			if(lvl == 6 )
-	if(lvl >= 3 )
-		dat += "<br><A href='?src=\ref[src];vsc=airflow'>Edit Airflow Settings</A><br>"
-		dat += "<A href='?src=\ref[src];vsc=plasma'>Edit Plasma Settings</A><br>"
-
-		dat += "<br><A href='?src=\ref[src];vsc=load'>Load Settings</A><br>"
-		dat += "<A href='?src=\ref[src];vsc=save'>Save Settings</A><br>"
-	usr << browse(dat, "window=admin2;size=210x340")
+	usr << browse(dat, "window=admin2;size=210x180")
 	return
 /*
 /obj/admins/proc/goons()

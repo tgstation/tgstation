@@ -9,6 +9,10 @@ datum
 			//The use of archived cycle saves processing power by permitting the archiving step of FET
 			//	to be rolled into the updating step
 
+		//optimization vars
+		var/tmp/next_check = 0  //number of ticks before this group updates
+		var/tmp/check_delay = 10  //number of ticks between updates, starts fairly high to get boring groups out of the way
+
 		proc
 			archive()
 
@@ -37,8 +41,10 @@ datum
 		var/length_space_border = 0
 
 		suspend_group_processing()
-			update_tiles_from_group()
 			group_processing = 0
+			update_tiles_from_group()
+			check_delay=0
+			next_check=0
 
 		update_group_from_tiles()
 			var/sample_member = pick(members)
@@ -52,6 +58,9 @@ datum
 		update_tiles_from_group()
 			for(var/member in members)
 				member:air.copy_from(air)
+				if (istype(member,/turf/simulated))
+					var/turf/simulated/turfmem=member
+					turfmem.reset_delay()
 
 		archive()
 			air.archive()
@@ -65,7 +74,7 @@ datum
 
 			var/turf/simulated/sample = pick(members)
 			for(var/member in members)
-				if(locate(/obj/effect/hotspot) in member)
+				if(member:active_hotspot)
 					return 0
 				if(member:air.compare(sample.air)) continue
 				else
@@ -79,6 +88,13 @@ datum
 		turf/process_group()
 			current_cycle = air_master.current_cycle
 			if(group_processing) //See if processing this group as a group
+				//check if we're skipping this tick
+				if (next_check > 0)
+					next_check--
+					return 1
+				next_check += check_delay + rand(0,check_delay/2)
+				check_delay++
+
 				var/turf/simulated/list/border_individual = list()
 				var/datum/air_group/list/border_group = list()
 

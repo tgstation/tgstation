@@ -40,9 +40,6 @@
 
 			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
-			if(istype(removed))
-				AirflowRepel(loc,removed.return_pressure())
-
 			loc.assume_air(removed)
 
 			if(network)
@@ -60,9 +57,6 @@
 			var/transfer_moles = (air_contents.return_pressure())*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
 			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
-
-			if(istype(removed))
-				AirflowRepel(loc,removed.return_pressure())
 
 			loc.assume_air(removed)
 
