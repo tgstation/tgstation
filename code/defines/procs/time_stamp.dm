@@ -15,7 +15,7 @@ proc/time_stamp()
 proc/isDay(var/month, var/day)
 	if(isnum(month) && isnum(day))
 		var/MM = text2num(time2text(world.timeofday, "MM")) // get the current month
-		var/DD = text2num(time2text(world.timeofday, "MM")) // get the current day
+		var/DD = text2num(time2text(world.timeofday, "DD")) // get the current day
 		if(month == MM && day == DD)
 			return 1
 
@@ -26,4 +26,3 @@ proc/isDay(var/month, var/day)
 /* Check if it's april fools day */
 proc/isAprilFools()
 	return isDay(4, 1)
-

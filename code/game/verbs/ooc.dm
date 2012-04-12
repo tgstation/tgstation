@@ -12,7 +12,7 @@
 /mob/verb/ooc(msg as text)
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
-	if (!src.client.authenticated || IsGuestKey(src.key))
+	if (IsGuestKey(src.key))
 		src << "You are not authorized to communicate over these channels."
 		return
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
@@ -38,17 +38,15 @@
 
 	for (var/client/C)
 		if (src.client.holder && (!src.client.stealth || C.holder))
-//			C << "<span class=\"adminooc\"><span class=\"prefix\">OOC:</span> <span class=\"name\">[src.key]:</span> <span class=\"message\">[msg]</span></span>"
 			if (src.client.holder.rank == "Admin Observer")
-				C << "<span class=\"gfartooc\"><span class=\"prefix\">OOC:</span> <span class=\"name\">[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</span> <span class=\"message\">[msg]</span></span>"
+				C << "<span class='observerooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 			else if (src.client.holder.level >= 5)
-				C << "<font color=[src.client.ooccolor]><b><span class=\"prefix\">OOC:</span> <span class=\"name\">[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</span> <span class=\"message\">[msg]</span></b></font>"
+				C << "<font color=[src.client.ooccolor]><b><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
 			else
-				C << "<span class=\"adminooc\"><span class=\"prefix\">OOC:</span> <span class=\"name\">[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</span> <span class=\"message\">[msg]</span></span>"
+				C << "<span class='adminooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 
 		else if (C.listen_ooc)
-			C << "<span class=\"ooc\"><span class=\"prefix\">OOC:</span> <span class=\"name\">[src.client.stealth ? src.client.fakekey : src.key]:</span> <span class=\"message\">[msg]</span></span>"
-
+			C << "<span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.client.stealth ? src.client.fakekey : src.key]:</EM> <span class='message'>[msg]</span></span>"
 /*
 /mob/verb/goonsay(msg as text)
 	set name = "Goonsay"

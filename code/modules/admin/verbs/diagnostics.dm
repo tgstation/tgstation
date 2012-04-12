@@ -180,7 +180,7 @@
 	jump_to_dead_group()
 		set name = "Jump to dead group"
 		set category = "Debug"
-		if(!authenticated || !holder)
+		if(!holder)
 			src << "Only administrators may use this command."
 			return
 
@@ -199,7 +199,7 @@
 		set name = "Kill Local Airgroup"
 		set desc = "Use this to allow manual manupliation of atmospherics."
 		set category = "Debug"
-		if(!authenticated || !holder)
+		if(!holder)
 			src << "Only administrators may use this command."
 			return
 

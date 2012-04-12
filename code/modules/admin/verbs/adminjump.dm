@@ -2,7 +2,7 @@
 	set name = "Jump to Area"
 	set desc = "Area to jump to"
 	set category = "Admin"
-	if(!src.authenticated || !src.holder)
+	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -17,7 +17,7 @@
 /client/proc/jumptoturf(var/turf/T in world)
 	set name = "Jump to Turf"
 	set category = "Admin"
-	if(!src.authenticated || !src.holder)
+	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
 	if(config.allow_admin_jump)
@@ -32,7 +32,7 @@
 	set category = "Admin"
 	set name = "Jump to Mob"
 
-	if(!src.authenticated || !src.holder)
+	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -53,7 +53,7 @@
 	set category = "Admin"
 	set name = "Jump to Coordinate"
 
-	if (!authenticated || !holder)
+	if (!holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -72,7 +72,7 @@
 	set category = "Admin"
 	set name = "Jump to Key"
 
-	if(!src.authenticated || !src.holder)
+	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -94,7 +94,7 @@
 	set category = "Admin"
 	set name = "Get Mob"
 	set desc = "Mob to teleport"
-	if(!src.authenticated || !src.holder)
+	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
 	if(config.allow_admin_jump)
@@ -109,7 +109,7 @@
 	set name = "Get Key"
 	set desc = "Key to teleport"
 
-	if(!src.authenticated || !src.holder)
+	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -134,7 +134,7 @@
 /client/proc/sendmob(var/mob/M in world, var/area/A in world)
 	set category = "Admin"
 	set name = "Send Mob"
-	if(!src.authenticated || !src.holder)
+	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
 	if(config.allow_admin_jump)

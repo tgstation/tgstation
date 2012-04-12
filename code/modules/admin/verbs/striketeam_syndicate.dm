@@ -6,7 +6,7 @@ var/global/sent_syndicate_strike_team = 0
 	set category = "Fun"
 	set name = "Spawn Syndicate Strike Team"
 	set desc = "Spawns a squad of commandos in the Syndicate Mothership if you want to run an admin event."
-	if(!src.authenticated || !src.holder)
+	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
 	if(!ticker)

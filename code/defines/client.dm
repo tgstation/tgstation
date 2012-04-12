@@ -15,9 +15,9 @@
 //END Admin Things
 
 	//Key auth things
-	authenticate = 0
-	var/authenticated = 0
-	var/authenticating = 0
+//	authenticate = 0
+//	var/authenticated = 0
+//	var/authenticating = 0
 
 	var/listen_ooc = 1
 	var/move_delay = 1

@@ -1,7 +1,7 @@
 /client/proc/cmd_admin_drop_everything(mob/M as mob in world)
 	set category = null
 	set name = "Drop Everything"
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 	for(var/obj/item/W in M)
@@ -13,7 +13,7 @@
 /client/proc/cmd_admin_prison(mob/M as mob in world)
 	set category = "Admin"
 	set name = "Prison"
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 	if (ismob(M))
@@ -41,7 +41,7 @@
 	set name = "Subtle Message"
 
 	if(!ismob(M))	return
-	if (!authenticated || !holder)
+	if (!holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -61,7 +61,7 @@
 	set category = "Special Verbs"
 	set name = "Global Narrate"
 
-	if (!authenticated || !holder)
+	if (!holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -77,7 +77,7 @@
 	set category = "Special Verbs"
 	set name = "Direct Narrate"
 
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 	var/msg = input("Message:", text("Enter the text you wish to appear to your target:")) as text
@@ -89,7 +89,7 @@
 /client/proc/cmd_admin_pm_context(mob/M as mob in world)
 	set category = null
 	set name = "Admin PM Mob"
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "\red Error: Admin-PM-Context: Only administrators may use this command."
 		return
 	if( !ismob(M) || !M.client )	return
@@ -99,7 +99,7 @@
 /client/proc/cmd_admin_pm_panel()
 	set category = "Admin"
 	set name = "Admin PM"
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "\red Error: Admin-PM-Panel: Only administrators may use this command."
 		return
 	var/list/client/targets[0]
@@ -118,7 +118,7 @@
 	cmd_admin_pm(targets[target])
 
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM after fetching a message to send.
-/client/proc/cmd_admin_pm(var/client/C = null)
+/client/proc/cmd_admin_pm(var/client/C = null, var/t = null)
 	if( !C || !istype(C,/client) )
 		src << "\red Error: Admin-PM: Client not found."
 		return
@@ -127,15 +127,17 @@
 		return
 
 	//get message text, limit it's length.and clean/escape html
-	var/t = input("Message:", "Private message to [C.key]") as text|null
-	if(!t)	return
-	if(!C)
-		src << "\red Error: Admin PM: Client not found."
+	if(!t)
+		t = input("Message:", "Private message to [C.key]") as text|null
+		if(!t)	return
+		if(!C)
+			src << "\red Error: Admin PM: Client not found."
+			return
 
-
-	if( !holder || !(holder.rank in list("Game Admin", "Game Master")) )	//clean the message if it's not sent by a GA or GM
+	//clean the message if it's not sent by a GA or GM
+	if( !holder || !(holder.rank in list("Game Admin", "Game Master")) )
 		t = sanitize(copytext(t,1,500))
-	if(!t)	return
+		if(!t)	return
 
 
 	if(C.holder)
@@ -161,6 +163,22 @@
 			//always play non-admin recipients the adminhelp sound
 			C << 'adminhelp.ogg'
 
+			//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
+			if(config.popup_admin_pm)
+				spawn()	//so we don't hold the caller proc up
+					var/sender = src
+					var/sendername = key
+					var/reply = input(C, t,"Admin PM from-[sendername]", "") as text|null		//show message and await a reply
+					if(C && reply)
+						if(sender)
+							C.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them
+						else
+							for(var/client/X)													//sender has left! find another admin to pm
+								if(X.holder)
+									return	C.cmd_admin_pm(X,reply)
+							C << "<font class='red'>Error: Admin PM: Client not found.</font>"	//couldn't find one
+					return
+
 		else		//neither are admins
 			src << "<font class='red'>Error: Admin PM: Non-admin to non-admin PM communication is forbidden.</font>"
 			return
@@ -175,7 +193,7 @@
 /client/proc/cmd_admin_godmode(mob/M as mob in world)
 	set category = "Special Verbs"
 	set name = "Godmode"
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 	if (M.nodamage == 1)
@@ -191,7 +209,7 @@
 /client/proc/cmd_admin_mute(mob/M as mob in world)
 	set category = "Special Verbs"
 	set name = "Admin Mute"
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 	if (M.client && M.client.holder && (M.client.holder.level >= holder.level))
@@ -211,7 +229,7 @@
 /client/proc/cmd_admin_add_random_ai_law()
 	set category = "Fun"
 	set name = "Add Random AI Law"
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 	log_admin("[key_name(src)] has added a random AI law.")
@@ -234,7 +252,7 @@
 	set desc = "Spawns a xenomorph for all those boring rounds, without having you to do so manually."
 	set popup_menu = 0
 
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -294,7 +312,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Respawn Character"
 	set desc = "Respawn a person that has been gibbed/dusted/killed. They must be a ghost for this to work and preferably should not have a body to go back into."
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 	var/input = input(src, "Please specify which key will be respawned.", "Key", "")
@@ -513,7 +531,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_add_freeform_ai_law()
 	set category = "Fun"
 	set name = "Add Custom AI law"
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 	var/input = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null
@@ -540,8 +558,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_rejuvenate(mob/living/M as mob in world)
 	set category = "Special Verbs"
 	set name = "Rejuvenate"
-    //    All admins should be authenticated, but... what if?
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 	if(!mob)
@@ -577,7 +594,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_create_centcom_report()
 	set category = "Special Verbs"
 	set name = "Create Command Report"
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
@@ -601,7 +618,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Delete"
 
-	if (!authenticated || !holder)
+	if (!holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -614,7 +631,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "List free slots"
 
-	if (!authenticated || !holder)
+	if (!holder)
 		src << "Only administrators may use this command."
 		return
 	if(job_master)
@@ -625,7 +642,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Explosion"
 
-	if (!authenticated || !holder)
+	if (!holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -655,7 +672,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "EM Pulse"
 
-	if (!authenticated || !holder)
+	if (!holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -678,7 +695,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Gib"
 
-	if (!authenticated || !holder)
+	if (!holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -736,7 +753,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			return
 		if(M)
 			AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
-			M.unlock_medal("Banned", 1)
 			M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
 			M << "\red This is a temporary ban, it will be removed in [mins] minutes."
 			M << "\red To try to resolve this matter head to http://ss13.donglabs.com/forum/"
@@ -752,7 +768,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if(!reason)
 			return
 		AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
-		M.unlock_medal("Banned", 1)
 		M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
 		M << "\red This is a permanent ban."
 		M << "\red To try to resolve this matter head to http://ss13.donglabs.com/forum/"
@@ -779,7 +794,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_remove_plasma()
 	set category = "Debug"
 	set name = "Stabilize Atmos."
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 // DEFERRED
@@ -824,7 +839,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if ((!( ticker ) || emergency_shuttle.location))
 		return
 
-	if (!authenticated || !holder)
+	if (!holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -851,7 +866,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if ((!( ticker ) || emergency_shuttle.location || emergency_shuttle.direction == 0))
 		return
 
-	if (!authenticated || !holder)
+	if (!holder)
 		src << "Only administrators may use this command."
 		return
 

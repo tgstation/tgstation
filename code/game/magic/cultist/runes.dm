@@ -294,7 +294,7 @@ var/list/sacrificed = list()
 			body_to_sacrifice.visible_message("\red [body_to_sacrifice] is torn apart, a black smoke swiftly dissipating from his remains!", \
 			"\red You feel as your blood boils, tearing you apart.", \
 			"\red You hear a thousand voices, all crying in pain.")
-			body_to_sacrifice.gib(1)
+			body_to_sacrifice.gib()
 			if (ticker.mode.name == "cult")
 				ticker.mode:add_cultist(body_to_sacrifice.mind)
 			else
@@ -560,7 +560,7 @@ var/list/sacrificed = list()
 					if(H.mind == ticker.mode:sacrifice_target)
 						if(cultsinrange.len >= 3)
 							sacrificed += H.mind
-							H.gib(1)
+							H.gib()
 							usr << "\red The Geometer of Blood accepts this sacrifice, your objective is now complete."
 						else
 							usr << "\red Your target's earthly bonds are too strong. You need more cultists to succeed in this ritual."
@@ -573,7 +573,7 @@ var/list/sacrificed = list()
 								else
 									usr << "\red The Geometer of blood accepts this sacrifice."
 									usr << "\red However, this soul was not enough to gain His favor."
-								H.gib(1)
+								H.gib()
 							else
 								if(prob(40))
 									usr << "\red The Geometer of blood accepts this sacrifice."
@@ -581,7 +581,7 @@ var/list/sacrificed = list()
 								else
 									usr << "\red The Geometer of blood accepts this sacrifice."
 									usr << "\red However, a mere dead body is not enough to satisfy Him."
-								H.gib(1)
+								H.gib()
 						else
 							if(H.stat !=2)
 								usr << "\red The victim is still alive, you will need more cultists chanting for the sacrifice to succeed."
@@ -592,7 +592,7 @@ var/list/sacrificed = list()
 								else
 									usr << "\red The Geometer of blood accepts this sacrifice."
 									usr << "\red However, a mere dead body is not enough to satisfy Him."
-								H.gib(1)
+								H.gib()
 				else
 					if(cultsinrange.len >= 3)
 						if(H.stat !=2)
@@ -602,7 +602,7 @@ var/list/sacrificed = list()
 							else
 								usr << "\red The Geometer of blood accepts this sacrifice."
 								usr << "\red However, this soul was not enough to gain His favor."
-							H.gib(1)
+							H.gib()
 						else
 							if(prob(40))
 								usr << "\red The Geometer of blood accepts this sacrifice."
@@ -610,7 +610,7 @@ var/list/sacrificed = list()
 							else
 								usr << "\red The Geometer of blood accepts this sacrifice."
 								usr << "\red However, a mere dead body is not enough to satisfy Him."
-							H.gib(1)
+							H.gib()
 					else
 						if(H.stat !=2)
 							usr << "\red The victim is still alive, you will need more cultists chanting for the sacrifice to succeed."
@@ -621,7 +621,7 @@ var/list/sacrificed = list()
 							else
 								usr << "\red The Geometer of blood accepts this sacrifice."
 								usr << "\red However, a mere dead body is not enough to satisfy Him."
-							H.gib(1)
+							H.gib()
 			for(var/mob/living/carbon/monkey/M in src.loc)
 				if (ticker.mode.name == "cult")
 					if(M.mind == ticker.mode:sacrifice_target)
@@ -642,11 +642,11 @@ var/list/sacrificed = list()
 					usr << "\red The Geometer of Blood accepts your meager sacrifice."
 					if(prob(20))
 						ticker.mode.grant_runeword(usr)
-				M.gib(1)
+				M.gib()
 /*			for(var/mob/living/carbon/alien/A)
 				for(var/mob/K in cultsinrange)
 					K.say("Barhah hra zar'garis!")
-				A.dust()      /// A.gib(1) doesnt work for some reason, and dust() leaves that skull and bones thingy which we dont really need.
+				A.dust()      /// A.gib() doesnt work for some reason, and dust() leaves that skull and bones thingy which we dont really need.
 				if (ticker.mode.name == "cult")
 					if(prob(75))
 						usr << "\red The Geometer of Blood accepts your exotic sacrifice."
@@ -902,7 +902,7 @@ var/list/sacrificed = list()
 					M << "\red Your blood boils!"
 					if(prob(5))
 						spawn(5)
-							M.gib(1)
+							M.gib()
 				for(var/obj/effect/rune/R in view(src))
 					if(prob(10))
 						explosion(R.loc, -1, 0, 1, 5)

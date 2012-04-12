@@ -2,86 +2,87 @@
 	name = "black hole"
 	icon = 'objects.dmi'
 	desc = "FUCK FUCK FUCK AAAHHH"
-	icon_state = "bhole2"
-	opacity = 0
+	icon_state = "bhole3"
+	opacity = 1
 	unacidable = 1
 	density = 0
 	anchored = 1
-	var/datum/effect/effect/system/harmless_smoke_spread/smoke
-
 
 /obj/effect/bhole/New()
-	src.smoke = new /datum/effect/effect/system/harmless_smoke_spread()
-	src.smoke.set_up(5, 0, src)
-	src.smoke.attach(src)
-	src:life()
+	spawn(4)
+		controller()
+
+/obj/effect/bhole/proc/controller()
+	while(src)
+
+		if(!isturf(loc))
+			del(src)
+			return
+
+		//DESTROYING STUFF AT THE EPICENTER
+		for(var/mob/living/M in orange(1,src))
+			del(M)
+		for(var/obj/O in orange(1,src))
+			del(O)
+		for(var/turf/simulated/ST in orange(1,src))
+			ST.ReplaceWithSpace()
+
+		sleep(6)
+		grav(10, 4, 10, 0 )
+		sleep(6)
+		grav( 8, 4, 10, 0 )
+		sleep(6)
+		grav( 9, 4, 10, 0 )
+		sleep(6)
+		grav( 7, 3, 40, 1 )
+		sleep(6)
+		grav( 5, 3, 40, 1 )
+		sleep(6)
+		grav( 6, 3, 40, 1 )
+		sleep(6)
+		grav( 4, 2, 50, 6 )
+		sleep(6)
+		grav( 3, 2, 50, 6 )
+		sleep(6)
+		grav( 2, 2, 75,25 )
+		sleep(6)
 
 
-/obj/effect/bhole/Bumped(atom/A)
-	if (istype(A,/mob/living))
-		del(A)
-	else
-		A:ex_act(1.0)
 
-
-/obj/effect/bhole/proc/life() //Oh man , this will LAG
-
-	if (prob(10))
-		src.anchored = 0
-		step(src,pick(alldirs))
-		if (prob(30))
+		//MOVEMENT
+		if( prob(50) )
+			src.anchored = 0
 			step(src,pick(alldirs))
-		src.anchored = 1
+			src.anchored = 1
 
-	for (var/atom/X in orange(9,src))
-		if ((istype(X,/obj) || istype(X,/mob/living)) && prob(7))
-			if (!X:anchored)
-				step_towards(X,src)
+/obj/effect/bhole/proc/grav(var/r, var/ex_act_force, var/pull_chance, var/turf_removal_chance)
+	if(!isturf(loc))	//blackhole cannot be contained inside anything. Weird stuff might happen
+		del(src)
+		return
+	for(var/t = -r, t < r, t++)
+		affect_coord(x+t, y-r, ex_act_force, pull_chance, turf_removal_chance)
+		affect_coord(x-t, y+r, ex_act_force, pull_chance, turf_removal_chance)
+		affect_coord(x+r, y+t, ex_act_force, pull_chance, turf_removal_chance)
+		affect_coord(x-r, y-t, ex_act_force, pull_chance, turf_removal_chance)
+	return
 
-	for (var/atom/B in orange(7,src))
-		if (istype(B,/obj))
-			if (!B:anchored && prob(50))
-				step_towards(B,src)
-				if(prob(10)) B:ex_act(3.0)
+/obj/effect/bhole/proc/affect_coord(var/x, var/y, var/ex_act_force, var/pull_chance, var/turf_removal_chance)
+	//Get turf at coordinate
+	var/turf/T = locate(x, y, z)
+	if(isnull(T))	return
+
+	//Pulling and/or ex_act-ing movable atoms in that turf
+	if( prob(pull_chance) )
+		for(var/obj/O in T.contents)
+			if(O.anchored)
+				O.ex_act(ex_act_force)
 			else
-				B:anchored = 0
-				//step_towards(B,src)
-				//B:anchored = 1
-				if(prob(10)) B:ex_act(3.0)
-		else if (istype(B,/turf))
-			if (istype(B,/turf/simulated) && (prob(1) && prob(75)))
-				src.smoke.start()
-				B:ReplaceWithSpace()
-		else if (istype(B,/mob/living))
-			step_towards(B,src)
+				step_towards(O,src)
+		for(var/mob/living/M in T.contents)
+			step_towards(M,src)
 
-
-	for (var/atom/A in orange(4,src))
-		if (istype(A,/obj))
-			if (!A:anchored && prob(90))
-				step_towards(A,src)
-				if(prob(30)) A:ex_act(2.0)
-			else
-				A:anchored = 0
-				//step_towards(A,src)
-				//A:anchored = 1
-				if(prob(30)) A:ex_act(2.0)
-		else if (istype(A,/turf))
-			if (istype(A,/turf/simulated) && prob(1))
-				src.smoke.start()
-				A:ReplaceWithSpace()
-		else if (istype(A,/mob/living))
-			step_towards(A,src)
-
-
-	for (var/atom/D in orange(1,src))
-		//if (hascall(D,"blackholed"))
-		//	call(D,"blackholed")(null)
-		//	continue
-		if (istype(D,/mob/living))
-			del(D)
-		else
-			D:ex_act(1.0)
-
-	spawn(17)
-		life()
+	//Destroying the turf
+	if( T && istype(T,/turf/simulated) && prob(turf_removal_chance) )
+		var/turf/simulated/ST = T
+		ST.ReplaceWithSpace()
+	return

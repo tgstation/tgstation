@@ -523,7 +523,7 @@
 /client/proc/stealth()
 	set category = "Admin"
 	set name = "Stealth Mode"
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 	stealth = !stealth
@@ -546,7 +546,7 @@
 	set category = "Special Verbs"
 	set name = "Warn"
 	set desc = "Warn a player"
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 	if(M.client && M.client.holder && (M.client.holder.level >= holder.level))
@@ -662,7 +662,7 @@
 
 /client/proc/toggle_clickproc() //TODO ERRORAGE (This is a temporary verb here while I test the new clicking proc)
 	set name = "Toggle NewClickProc"
-	set category = "Admin"
+	set category = "Debug"
 
 	if(!holder) return
 	using_new_click_proc = !using_new_click_proc

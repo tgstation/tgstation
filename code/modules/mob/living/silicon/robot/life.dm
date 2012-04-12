@@ -304,7 +304,7 @@
 						src << "\red <B>Killswitch Activated"
 					killswitch = 0
 					spawn(5)
-						gib(src)
+						gib()
 
 		process_locks()
 			if(weapon_lock)

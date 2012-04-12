@@ -247,7 +247,7 @@
 // /obj/item/clothing/head/bomb_hood(src)
 
 	if (stat == 2 && client)
-		gib(1)
+		gib()
 		return
 
 	else if (stat == 2 && !client)
@@ -262,7 +262,7 @@
 		if (1.0)
 			b_loss += 500
 			if (!prob(getarmor(null, "bomb")))
-				gib(1)
+				gib()
 				return
 			else
 				var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))

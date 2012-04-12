@@ -78,7 +78,7 @@
 	flick("flash", flash)
 
 	if (stat == 2 && client)
-		gib(1)
+		gib()
 		return
 
 	else if (stat == 2 && !client)
@@ -91,7 +91,7 @@
 	switch (severity)
 		if (1.0)
 			b_loss += 500
-			gib(1)
+			gib()
 			return
 
 		if (2.0)

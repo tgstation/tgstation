@@ -540,7 +540,7 @@
 /mob/living/carbon/monkey/ex_act(severity)
 	flick("flash", flash)
 	if (stat == 2 && client)
-		gib(1)
+		gib()
 		return
 
 	if (stat == 2 && !client)
@@ -573,7 +573,7 @@
 	if (prob(50))
 		Paralyse(10)
 	if (stat == DEAD && client)
-		gib(1)
+		gib()
 		return
 	if (stat == DEAD && !client)
 		gibs(loc, viruses)

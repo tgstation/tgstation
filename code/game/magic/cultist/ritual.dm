@@ -496,7 +496,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 						if(prob(C*5-105-(runedec-ticker.mode.cult.len)*5)) //including the useless rune at the secret room, shouldn't count against the limit - Urist
 							usr.emote("scream")
 							user << "\red A tear momentarily appears in reality. Before it closes, you catch a glimpse of that which lies beyond. That proves to be too much for your mind."
-							usr.gib(1)
+							usr.gib()
 							return
 					if("No")
 						return

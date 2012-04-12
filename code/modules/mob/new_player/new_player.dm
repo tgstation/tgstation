@@ -178,10 +178,6 @@
 			return 1
 
 		if(href_list["ready"])
-			if (!client.authenticated)
-				src << "You are not authorized to enter the game."
-				return
-
 			if(!ready)
 				ready = 1
 			else
@@ -192,9 +188,6 @@
 			new_player_panel_proc()
 
 		if(href_list["observe"])
-			if (!client.authenticated)
-				src << "You are not authorized to enter the game."
-				return
 
 			if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
 				var/mob/dead/observer/observer = new()
@@ -222,9 +215,6 @@
 			LateChoices()
 
 		if(href_list["SelectedJob"])
-			if(!client.authenticated)
-				src << "You are not authorized to enter the game."
-				return
 
 			if(!enter_allowed)
 				usr << "\blue There is an administrative lock on entering the game!"

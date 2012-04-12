@@ -133,9 +133,7 @@ var
 	shuttlecoming = 0
 
 	join_motd = null
-	auth_motd = null
 	rules = null
-	no_auth_motd = null
 	forceblob = 0
 
 	//airlockWireColorToIndex takes a number representing the wire color, e.g. the orange wire is always 1, the dark red wire is always 2, etc. It returns the index for whatever that wire does.

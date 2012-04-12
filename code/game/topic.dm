@@ -30,7 +30,7 @@
 		for(var/mob/M in world)
 
 			if(M.client)
-				if(M.client.holder && M.client.authenticated)
+				if(M.client.holder)
 					if(!M.client.stealth)
 						admins++
 

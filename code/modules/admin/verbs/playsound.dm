@@ -3,7 +3,7 @@
 	set name = "Play Global Sound"
 
 	//if(Debug2)
-	if(!src.authenticated || !src.holder)
+	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -37,7 +37,7 @@
 	set category = "Fun"
 	set name = "Play Local Sound"
 
-	if(!src.authenticated || !src.holder)
+	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -62,7 +62,7 @@
 	for(var/mob/living/carbon/human/CP in world)
 		if(CP.real_name=="Cuban Pete" && CP.key!="Rosham")
 			CP << "Your body can't contain the rhumba beat"
-			CP.gib(1)
+			CP.gib()
 
 
 /client/proc/bananaphone()

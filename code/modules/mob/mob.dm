@@ -710,14 +710,14 @@
 	if (join_motd)
 		src << "<div class=\"motd\">[join_motd]</div>"
 
-	authorize()
+//	authorize()				//old gooncode
 
 	if(admins.Find(ckey))
 		holder = new /obj/admins(src)
 		holder.rank = admins[ckey]
 		update_admins(admins[ckey])
 
-	if(ticker && ticker.mode && ticker.mode.name =="sandbox" && authenticated)
+	if(ticker && ticker.mode && ticker.mode.name =="sandbox")
 		mob.CanBuild()
 
 /client/Del()
@@ -746,7 +746,7 @@
 	for(var/mob/M in viewers())
 		M.see(message)
 
-//This is the proc for gibbing a mob. Cannot gib ghosts. Removed the medal reference,
+//This is the proc for gibbing a mob. Cannot gib ghosts.
 //added different sort of gibs and animations. N
 /mob/proc/gib()
 

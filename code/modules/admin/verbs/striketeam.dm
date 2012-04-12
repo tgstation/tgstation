@@ -6,7 +6,7 @@ var/global/sent_strike_team = 0
 	set category = "Fun"
 	set name = "Spawn Death Squad"
 	set desc = "Spawns a squad of commandos in CentCom if you want to run an admin event."
-	if(!src.authenticated || !src.holder)
+	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
 	if(!ticker)

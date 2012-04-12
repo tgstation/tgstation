@@ -236,7 +236,7 @@
 	flick("flash", flash)
 
 	if (stat == 2 && client)
-		gib(1)
+		gib()
 		return
 
 	else if (stat == 2 && !client)
@@ -248,7 +248,7 @@
 			if (stat != 2)
 				adjustBruteLoss(100)
 				adjustFireLoss(100)
-				gib(1)
+				gib()
 				return
 		if(2.0)
 			if (stat != 2)
@@ -291,7 +291,6 @@
 				if(prob(20))
 					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
-					//unlock_medal("That's No Moon, That's A Gourmand!", 1)
 					return
 			if(tmob.nopush)
 				now_pushing = 0
@@ -1056,7 +1055,7 @@ Frequency:
 		return
 
 /mob/living/silicon/robot/proc/self_destruct()
-	gib(1)
+	gib()
 	return
 
 /mob/living/silicon/robot/proc/UnlinkSelf()

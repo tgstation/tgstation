@@ -23,7 +23,7 @@
 /client/proc/massmodify_variables(var/atom/O, var/var_name = "", var/method = 0)
 	var/list/locked = list("vars", "key", "ckey", "client")
 
-	if(!src.authenticated || !src.holder)
+	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
 

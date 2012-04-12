@@ -35,7 +35,7 @@
 				if(prob(src.getBruteLoss() - 50))
 					src.gib()
 
-/mob/living/carbon/gib(give_medal)
+/mob/living/carbon/gib()
 	for(var/mob/M in src)
 		if(M in src.stomach_contents)
 			src.stomach_contents.Remove(M)
@@ -43,7 +43,7 @@
 		for(var/mob/N in viewers(src, null))
 			if(N.client)
 				N.show_message(text("\red <B>[M] bursts out of [src]!</B>"), 2)
-	. = ..(give_medal)
+	. = ..()
 
 /mob/living/carbon/attack_hand(mob/M as mob)
 	if(!istype(M, /mob/living/carbon)) return

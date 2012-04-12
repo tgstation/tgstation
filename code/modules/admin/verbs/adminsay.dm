@@ -3,9 +3,7 @@
 	set name = "Asay" //Gave this shit a shorter name so you only have to time out "asay" rather than "admin say" to use it --NeoFite
 	set hidden = 1
 
-	//	All admins should be authenticated, but... what if?
-
-	if (!src.authenticated || !src.holder)
+	if (!src.holder)
 		src << "Only administrators may use this command."
 		return
 
@@ -23,7 +21,7 @@
 	for (var/mob/M in world)
 		if (M.client && M.client.holder)
 			if (src.holder.rank == "Admin Observer")
-				M << "<span class=\"gfartadmin\"><span class=\"prefix\">ADMIN:</span> <span class=\"name\">[key_name(usr, M)]:</span> <span class=\"message\">[msg]</span></span>"
+				M << "<span class='adminobserver'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, M)]:</EM> <span class='message'>[msg]</span></span>"
 			else
-				M << "<span class=\"admin\"><span class=\"prefix\">ADMIN:</span> <span class=\"name\">[key_name(usr, M)]</span> (<A HREF='?src=\ref[M.client.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class=\"message\">[msg]</span></span>"
+				M << "<span class='admin'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, M)]</EM> (<A HREF='?src=\ref[M.client.holder];adminplayerobservejump=\ref[mob]'>JMP</A>): <span class='message'>[msg]</span></span>"
 

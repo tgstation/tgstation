@@ -101,8 +101,6 @@ VOTE_PERIOD 60
 ## allow AI job
 ALLOW_AI
 
-## goon authentication
-#AUTHENTICATION
 
 ## disable abandon mob
 NORESPAWN
@@ -136,6 +134,10 @@ FEATURE_OBJECT_SPELL_SYSTEM
 
 ##Remove the # mark infront of this to forbid admins from posssessing the singularity.
 #FORBID_SINGULO_POSSESSION
+
+## Remove the # to show a popup 'reply to' window to every non-admin that recieves an adminPM. 
+## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
+#POPUP_ADMIN_PM
 
 ##Remove the # mark if you are going to use the SVN irc bot to relay adminhelps
 #USEIRCBOT

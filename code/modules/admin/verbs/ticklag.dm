@@ -5,7 +5,7 @@
 	set name = "Set Ticklag"
 	set desc = "Sets a new tick lag. Recommend you don't mess with this too much! Stable, time-tested ticklag value is 0.9"
 	if(Debug2)
-		if(src.authenticated && src.holder)
+		if(src.holder)
 			if(!src.mob)	return
 
 			if(src.holder.rank in list("Game Admin", "Game Master"))

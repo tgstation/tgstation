@@ -396,7 +396,7 @@ As such, it's hard-coded for now. No reason for it not to be, really.
 	set desc = "Spawns a space ninja for when you need a teenager with attitude."
 	set popup_menu = 0
 
-	if(!authenticated || !holder)
+	if(!holder)
 		src << "Only administrators may use this command."
 		return
 	if(!ticker.mode)
