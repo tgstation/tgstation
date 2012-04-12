@@ -37,20 +37,39 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		if(href_list["new"])
 			var/datum/paiCandidate/candidate = locate(href_list["candidate"])
 			var/option = href_list["option"]
+			var/t = ""
+			var/maxNameLen = 26
+
 			switch(option)
 				if("name")
-					candidate.name = input("Enter a name for your pAI", "pAI Name", candidate.name) as text
+					t = input("Enter a name for your pAI", "pAI Name", candidate.name) as text
+					if(t)
+						candidate.name = copytext(sanitize(t),1,maxNameLen)
 				if("desc")
-					candidate.description = input("Enter a description for your pAI", "pAI Description", candidate.description) as message
+					t = input("Enter a description for your pAI", "pAI Description", candidate.description) as message
+					if(t)
+						candidate.description = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 				if("role")
-					candidate.role = input("Enter a role for your pAI", "pAI Role", candidate.role) as text
+					t = input("Enter a role for your pAI", "pAI Role", candidate.role) as text
+					if(t)
+						candidate.role = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 				if("ooc")
-					candidate.comments = input("Enter any OOC comments", "pAI OOC Comments", candidate.comments) as message
-
+					t = input("Enter any OOC comments", "pAI OOC Comments", candidate.comments) as message
+					if(t)
+						candidate.comments = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 				if("save")
 					candidate.savefile_save(usr)
 				if("load")
 					candidate.savefile_load(usr)
+					//In case people have saved unsanitized stuff.
+					if(candidate.name)
+						candidate.name = copytext(sanitize(candidate.name),1,maxNameLen)
+					if(candidate.description)
+						candidate.description = copytext(sanitize(candidate.description),1,MAX_MESSAGE_LEN)
+					if(candidate.role)
+						candidate.role = copytext(sanitize(candidate.role),1,MAX_MESSAGE_LEN)
+					if(candidate.comments)
+						candidate.comments = copytext(sanitize(candidate.comments),1,MAX_MESSAGE_LEN)
 
 				if("submit")
 					if(candidate)

@@ -3110,14 +3110,6 @@
 					icon_state = "cubalibreglass"
 					name = "Cuba Libre"
 					desc = "A classic mix of rum and cola."
-				if("irishcream")
-					icon_state = "irishcreamglass"
-					name = "Irish Cream"
-					desc = "It's cream, mixed with whiskey. What else would you expect from the Irish?"
-				if("cubalibre")
-					icon_state = "cubalibreglass"
-					name = "Cuba Libre"
-					desc = "A classic mix of rum and cola."
 				if("b52")
 					icon_state = "b52glass"
 					name = "B-52"
