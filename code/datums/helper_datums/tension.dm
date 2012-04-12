@@ -126,7 +126,8 @@ var/global/datum/tension/tension_master
 											if(antagonistmodes[V] < score)
 												potentialgames.Add(V)
 												antagonistmodes.Remove(V)
-										thegame = pick(potentialgames)
+										if(potentialgames.len)
+											thegame = pick(potentialgames)
 
 
 									if(thegame)
