@@ -498,10 +498,12 @@
 		else if(U.locked)
 			usr << "The upgrade is locked and cannot be used yet!"
 		else
-			usr << "You apply the upgrade to [src]!"
-			usr.drop_item()
-			U.loc = src
-			U.action(src)
+			if(U.action(src))
+				usr << "You apply the upgrade to [src]!"
+				usr.drop_item()
+				U.loc = src
+			else
+				usr << "Upgrade error!"
 
 
 	else

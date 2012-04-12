@@ -1,20 +1,21 @@
-var/global/list/space_surprises = list(			//	/obj/item/clothing/mask/facehugger,		// Just until we finally fix xeno procs
-													/obj/effect/critter/spesscarp,
-												//	/obj/effect/critter/spesscarp/elite,
-												//	/obj/creature,
-												//	/obj/item/weapon/rcd,
-												//	/obj/item/weapon/rcd_ammo,
-												//	/obj/item/weapon/spacecash,
-												//	/obj/item/weapon/cloaking_device,				// BECAUSE KOR AND PETE ARE FUCKING SCRUBS
-												//	/obj/item/weapon/gun/energy/teleport_gun,
-												//	/obj/item/weapon/rubber_chicken,
-													/obj/item/weapon/melee/energy/sword/pirate,
-													/obj/structure/closet/syndicate/resources,
-												//	/obj/machinery/wish_granter
-												//	/obj/item/toy/blink								//ALL OF THIS SHIT IS RETARDED, HERE IS SOMETHING APPROPRIATE
-												//	/obj/item/toy/ammo/crossbow						// HOW THE FUCK IS THAT APPROPRIATE?
+var/global/list/space_surprises = list(				/obj/item/clothing/mask/facehugger/angry			=4,
+												//	/obj/effect/critter/spesscarp						=2,
+													/obj/effect/critter/spesscarp/elite					=2,
+												//	/obj/creature										=0,
+												//	/obj/item/weapon/rcd								=0,
+												//	/obj/item/weapon/rcd_ammo							=0,
+												//	/obj/item/weapon/spacecash							=0,
+													/obj/item/weapon/cloaking_device					=1,
+												//	/obj/item/weapon/gun/energy/teleport_gun			=0,
+												//	/obj/item/weapon/rubber_chicken						=0,
+													/obj/item/weapon/melee/energy/sword/pirate			=3,
+													/obj/structure/closet/syndicate/resources			=2,
+													/obj/machinery/wish_granter							=1,
+													/obj/item/clothing/glasses/thermal					=2,
+													/obj/item/weapon/storage/box/stealth/				=2
 
-													) // Man this list is looking a little bare.
+
+													)
 
 var/global/list/spawned_surprises = list()
 
@@ -80,6 +81,9 @@ var/global/list/spawned_surprises = list()
 		if (!(user.mutations & TK))
 			user.mutations |= TK
 
+		if(!(user.mutations & HEAL))
+			user.mutations |= HEAL
+
 		ticker.mode.traitors += user.mind
 		user.mind.special_role = "Avatar of the Wish Granter"
 
@@ -94,5 +98,16 @@ var/global/list/spawned_surprises = list()
 
 	return
 
+/obj/item/weapon/storage/box/stealth/
+	name = "Infiltration Gear"
+	desc = "An old box full of old equipment.  It doesn't look like it was ever opened."
 
 
+/obj/item/weapon/storage/box/stealth/New()
+	..()
+
+	new /obj/item/clothing/under/chameleon(src)
+	new /obj/item/clothing/mask/gas/voice(src)
+	new /obj/item/weapon/card/id/syndicate(src)
+	new /obj/item/clothing/shoes/syndigaloshes(src)
+	return

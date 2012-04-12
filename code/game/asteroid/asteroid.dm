@@ -1,4 +1,4 @@
-var/global/max_secret_rooms = 6
+var/global/max_secret_rooms = 3
 
 
 
@@ -233,7 +233,7 @@ proc/make_mining_asteroid_secret(var/size = 5)
 			var/surprise = null
 			valid = 0
 			while(!valid)
-				surprise = pick(space_surprises)
+				surprise = pickweight(space_surprises)
 				if(surprise in spawned_surprises)
 					if(prob(20))
 						valid++

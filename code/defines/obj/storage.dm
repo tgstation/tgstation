@@ -417,6 +417,43 @@
 /obj/structure/closet/syndicate/resources/New()
 	..()
 
+	var/list/resources_common = list(
+
+	/obj/item/stack/sheet/metal,
+	/obj/item/stack/sheet/glass,
+	/obj/item/stack/sheet/plasteel,
+	/obj/item/stack/rods
+	)
+
+	var/list/resources_rare = list(
+
+	/obj/item/stack/sheet/gold,
+	/obj/item/stack/sheet/silver,
+	/obj/item/stack/sheet/plasma,
+	/obj/item/stack/sheet/uranium,
+	/obj/item/stack/sheet/diamond
+
+	)
+
+	sleep(2)
+
+	for(var/i = 0, i<2, i++)
+		for(var/res in resources_common)
+			var/obj/item/stack/R = new res(src)
+			R.amount = rand(40,R.max_amount)
+
+		for(var/res in resources_rare)
+			var/obj/item/stack/R = new res(src)
+			R.amount = rand(10,25)
+
+	return
+
+/obj/structure/closet/syndicate/resources/everything
+	desc = "It's an emergancy storage closet for repairs."
+
+/obj/structure/closet/syndicate/resources/everything/New()
+
+
 	var/list/resources = list(
 
 	/obj/item/stack/sheet/metal,
@@ -426,29 +463,9 @@
 	/obj/item/stack/sheet/plasma,
 	/obj/item/stack/sheet/uranium,
 	/obj/item/stack/sheet/diamond,
-	///obj/item/stack/sheet/clown,
+	/obj/item/stack/sheet/clown,
 	/obj/item/stack/sheet/plasteel,
 	/obj/item/stack/rods
-	)
-
-	sleep(2)
-
-	for(var/i = 0, i<2, i++)
-		for(var/res in resources)
-			var/obj/item/stack/R = new res(src)
-			R.amount = R.max_amount
-
-	return
-
-/obj/structure/closet/syndicate/resources/everything
-	desc = "It's an emergancy storage closet for repairs."
-
-/obj/structure/closet/syndicate/resources/everything/New()
-	..()
-
-	var/list/resources = list(
-
-	/obj/item/stack/sheet/clown
 
 	)
 

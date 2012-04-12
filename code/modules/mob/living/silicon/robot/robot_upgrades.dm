@@ -10,6 +10,7 @@
 	var/construction_cost = list("metal"=10000)
 	var/locked = 0
 	var/require_module = 0
+	var/installed = 0
 
 /obj/item/borg/upgrade/proc/action()
 	return
@@ -31,7 +32,8 @@
 	R.name = R.real_name
 	R.nopush = 0
 	R.updateicon()
-	return
+
+	return 1
 
 
 
@@ -49,6 +51,7 @@
 	if(R.module)
 		R.module += src
 
+	return 1
 
 /obj/item/borg/upgrade/restart/
 	name = "Borg emergancy restart module"
@@ -63,3 +66,44 @@
 				ghost.client.mob = ghost.corpse
 
 	R.stat = 0
+	return 1
+
+
+/obj/item/borg/upgrade/vtec/
+	name = "Borg VTEC Module"
+	desc = "Used to kick in a borgs VTEC systems, increasing their speed."
+	construction_cost = list("metal"=80000 , "glass"=6000 , "gold"= 5000)
+	require_module = 1
+
+/obj/item/borg/upgrade/vtec/action(var/mob/living/silicon/robot/R)
+	if(R.speed == -1)
+		return 0
+
+	R.speed--
+	return 1
+
+
+/obj/item/borg/upgrade/tasercooler/
+	name = "Borg Rapid Taser Cooling Module"
+	desc = "Used to cool a mounted taser, increasing the potential current in it and thus its recharge rate.."
+	construction_cost = list("metal"=80000 , "glass"=6000 , "gold"= 2000, "diamond" = 500)
+	require_module = 1
+
+
+/obj/item/borg/upgrade/tasercooler/action(var/mob/living/silicon/robot/R)
+	if(R.module != /obj/item/weapon/robot_module/security)
+		R << "Upgrade mounting error!  No suitable hardpoint detected!"
+		return 0
+
+	var/obj/item/weapon/gun/energy/taser/cyborg/T = locate() in R
+	if(!T)
+		return 0
+
+	if(T.recharge_time <= 2)
+		R << "Maximum cooling achieved for this hardpoint!"
+		return 0
+
+	else
+		T.recharge_time = min(2 , T.recharge_time - 4)
+
+	return 1
