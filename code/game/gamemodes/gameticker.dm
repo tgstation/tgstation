@@ -113,9 +113,10 @@ var/global/datum/controller/gameticker/ticker
 		spawn(-1)
 			world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
 			world << sound('welcome.ogg') // Skie
+			//Holiday Round-start stuff	~Carn
+			Holiday_Game_Start()
 
-	spawn (3000)
-		start_events() //handles random events and space dust.
+	start_events() //handles random events and space dust.
 
 	spawn() supply_ticker() // Added to kick-off the supply shuttle regenerating points -- TLE
 

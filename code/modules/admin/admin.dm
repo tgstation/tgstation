@@ -2630,7 +2630,7 @@ var/global/BSACooldown = 0
 		message_admins("<font color='blue'>[usr.key] has started the game.</font>")
 		return 1
 	else
-		alert("Game has already started you fucking jerk, stop spamming up the chat :ARGH:")
+		usr << "<font color='red'>Error: Start Now: Game has already started.</font>"
 		return 0
 
 /obj/admins/proc/toggleenter()

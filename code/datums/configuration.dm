@@ -283,6 +283,9 @@
 				if("popup_admin_pm")
 					config.popup_admin_pm = 1
 
+				if("allow_holidays")
+					Holiday = 1
+
 				if("useircbot")
 					useircbot = 1
 

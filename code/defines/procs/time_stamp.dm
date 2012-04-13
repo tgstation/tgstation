@@ -22,7 +22,3 @@ proc/isDay(var/month, var/day)
 		// Uncomment this out when debugging!
 		//else
 			//return 1
-
-/* Check if it's april fools day */
-proc/isAprilFools()
-	return isDay(4, 1)
