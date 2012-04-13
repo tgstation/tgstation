@@ -114,12 +114,12 @@
 	contains = list("/obj/item/weapon/vending_charge/chemistry")
 	containername = "Chemistry charge crate"
 
-/* removed these for now, as to not confuse people (the machines are in the tg map)
 /datum/supply_packs/charge/toxins
 	name = "Toxins Research Charge"
 	contains = list("/obj/item/weapon/vending_charge/toxins")
 	containername = "Toxins Reasearch charge crate"
 
+/* removed these for now, as to not confuse people (the machines are in the tg map)
 /datum/supply_packs/charge/genetics
 	name = "Genetics Research Charge"
 	contains = list("/obj/item/weapon/vending_charge/genetics")
@@ -183,11 +183,12 @@
 	contains = list("/obj/item/weapon/vending_charge/hydroponics")
 	containername = "Hydroponics charge crate"
 
+/* Wrong toxins charge!
 /datum/supply_packs/charge/tl
 	name = "Toxins Lab Charge"
 	contains = list("/obj/item/weapon/vending_charge/toxinslab")
 	containername = "Toxins Lab charge crate"
-
+*/
 
 /datum/supply_packs/food
 	name = "Food crate"
@@ -567,7 +568,7 @@
 	containername = "APLU \"Ripley\" Circuit Crate"
 	access = access_robotics
 	group = "Robotics"
-	
+
 /datum/supply_packs/surgery
 	name = "Surgery crate"
 	contains = list("/obj/item/weapon/cautery",
