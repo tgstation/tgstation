@@ -429,6 +429,12 @@
 
 
 	proc/sync(silent=null)
+		if(queue.len)
+			if(!silent)
+				temp = "Error.  Please clear processing queue before updating!"
+				src.updateUsrDialog()
+			return
+
 		if(!silent)
 			temp = "Updating local R&D database..."
 			src.updateUsrDialog()

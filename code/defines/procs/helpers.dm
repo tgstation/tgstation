@@ -1301,7 +1301,7 @@ proc/listclearnulls(list/list)
 
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
-		if(!user || !user.canmove || !(user.loc == T) || !(user.equipped() == holding))
+		if(!user || user.stat || user.weakened || user.stunned || !(user.loc == T) || !(user.equipped() == holding))
 			return 0
 
 	return 1

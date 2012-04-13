@@ -254,6 +254,7 @@
 			//verbs += /client/proc/give_spell 							--Merged with view variables
 			//verbs += /client/proc/cmd_admin_ninjafy					--Merged with view variables
 			//verbs += /client/proc/cmd_switch_radio					--removed as tcommsat is staying
+			verbs += /client/proc/cmd_ASSUME_DIRECT_CONTROL
 		else	return
 
 		//Game Master
@@ -415,6 +416,7 @@
 	verbs -= /client/proc/togglebuildmodeself
 	verbs -= /client/proc/kill_airgroup
 	verbs -= /client/proc/debug_master_controller
+	verbs -= /client/proc/cmd_ASSUME_DIRECT_CONTROL
 	return
 
 

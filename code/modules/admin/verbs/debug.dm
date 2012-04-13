@@ -356,6 +356,17 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	else
 		alert("Invalid mob")
 
+/client/proc/cmd_ASSUME_DIRECT_CONTROL(var/mob/M in world)
+	set category = "Admin"
+	set name = "ASSUME DIRECT CONTROL"
+	set desc = "DIRECT INTERVENTION IS NECESSARY"
+
+	M.ckey = usr.ckey
+
+
+
+
+
 /client/proc/cmd_switch_radio()
 	set category = "Debug"
 	set name = "Switch Radio Mode"
