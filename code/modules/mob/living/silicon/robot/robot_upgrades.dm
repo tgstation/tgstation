@@ -65,6 +65,10 @@
 			if(ghost.corpse == R && ghost.client)
 				ghost.client.mob = ghost.corpse
 
+	if(R.health < 0)
+		usr << "You have to repair the borg before using this module!"
+		return 0
+
 	R.stat = 0
 	return 1
 
