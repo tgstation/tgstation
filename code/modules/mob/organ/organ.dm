@@ -82,7 +82,7 @@
 			del(W)
 		..()
 
-	proc/take_damage(brute, burn, sharp, used_weapon = null)
+	proc/take_damage(brute, burn, sharp, used_weapon = null, spread=0)
 		if((brute <= 0) && (burn <= 0))
 			return 0
 		if(destroyed)
@@ -144,11 +144,12 @@
 				if(!possible_points.len)
 					message_admins("Oh god WHAT!  [owner]'s [src] was unable to find an organ to pass overdamage too!")
 				else
-					var/datum/organ/external/target = pick(possible_points)
-					if(brute)
-						target.take_damage(passed_dam, 0, sharp, used_weapon)
-					else
-						target.take_damage(0, passed_dam, sharp, used_weapon)
+					if(!spread)
+						var/datum/organ/external/target = pick(possible_points)
+						if(brute)
+							target.take_damage(passed_dam, 0, sharp, used_weapon,1)
+						else
+							target.take_damage(0, passed_dam, sharp, used_weapon,1)
 			else
 				droplimb(1) //Robot limbs just kinda fail at full damage.
 
