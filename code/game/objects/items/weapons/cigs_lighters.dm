@@ -300,7 +300,7 @@ ZIPPO
 
 /obj/item/clothing/mask/pipe/attack_self(mob/user as mob) //Refills the pipe. Can be changed to an attackby later, if loose tobacco is added to vendors or something.
 	if(src.smoketime <= 0)
-		user << "\red You refill the pipe with tobacco."
+		user << "\blue You refill the pipe with tobacco."
 		smoketime = maxsmoketime
 	return
 
