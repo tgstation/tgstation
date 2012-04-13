@@ -524,7 +524,11 @@
 			var/temp_loc = user.loc
 			P.resulting_poster.icon_state = "poster_being_set"
 			playsound(P.resulting_poster.loc, 'poster_being_created.ogg', 100, 1)
+
 			sleep(22)
+
+			if(!P)
+				return
 
 			if(user.loc == temp_loc)//Let's check if he still is there
 				user << "<FONT COLOR='blue'>You place the poster!</FONT>"
@@ -796,7 +800,11 @@
 			var/temp_loc = user.loc
 			P.resulting_poster.icon_state = "poster_being_set"
 			playsound(P.resulting_poster.loc, 'poster_being_created.ogg', 100, 1)
+
 			sleep(22)
+
+			if(!P)
+				return
 
 			if(user.loc == temp_loc)//Let's check if he still is there
 				user << "<FONT COLOR='blue'>You place the poster!</FONT>"
