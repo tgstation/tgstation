@@ -8,7 +8,6 @@ obj/machinery/atmospherics/binary/passive_gate
 	desc = "A one-way air valve that does not require power"
 
 	var/on = 0
-	var/target_pressure = ONE_ATMOSPHERE
 
 	update_icon()
 		if(node1&&node2)
@@ -32,14 +31,14 @@ obj/machinery/atmospherics/binary/passive_gate
 		var/output_starting_pressure = air2.return_pressure()
 		var/input_starting_pressure = air1.return_pressure()
 
-		if(output_starting_pressure >= min(target_pressure,input_starting_pressure-10))
-			//No need to pump gas if target is already reached or input pressure is too low
-			//Need at least 10 KPa difference to overcome friction in the mechanism
+		if(input_starting_pressure - output_starting_pressure < 1)
+			//No need to pump gas if input pressure is too low
+			//Need at least 1 KPa difference to overcome friction in the mechanism
 			return 1
 
 		//Calculate necessary moles to transfer using PV = nRT
 		if((air1.total_moles() > 0) && (air1.temperature>0))
-			var/pressure_delta = min(target_pressure - output_starting_pressure, (input_starting_pressure - output_starting_pressure)/2)
+			var/pressure_delta = (input_starting_pressure - output_starting_pressure)/2
 			//Can not have a pressure delta that would cause output_pressure > input_pressure
 
 			var/transfer_moles = pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
