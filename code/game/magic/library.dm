@@ -3,17 +3,6 @@
 //	Library SQL Configuration
 //
 //*******************************
-
-// Deprecated! See global.dm for new SQL config vars -- TLE
-/*
-#define SQL_ADDRESS ""
-#define SQL_DB ""
-#define SQL_PORT "3306"
-#define SQL_LOGIN ""
-#define SQL_PASS ""
-*/
-
-//*******************************
 // Requires Dantom.DB library ( http://www.byond.com/developer/Dantom/DB )
 
 
@@ -499,7 +488,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			dat += "<A href='?src=\ref[src];setauthor=1'>Filter by Author: [author]</A><BR>"
 			dat += "<A href='?src=\ref[src];search=1'>\[Start Search\]</A><BR>"
 		if(1)
-			if(config.sql_enabled)
+			if(BOOKS_USE_SQL && config.sql_enabled)
 				var/DBConnection/dbcon = new()
 				dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
 				if(!dbcon.IsConnected())
@@ -563,7 +552,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			author = null
 		author = dd_replacetext(author, "'", "''")
 	if(href_list["search"])
-		if(config.sql_enabled)
+		if(BOOKS_USE_SQL && config.sql_enabled)
 			SQLquery = "SELECT author, title, category, id FROM library WHERE "
 			if(category == "Any")
 				SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%'"
@@ -659,7 +648,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(4)
 			dat += "<h3>External Archive</h3>"
-			if(config.sql_enabled)
+			if(BOOKS_USE_SQL && config.sql_enabled)
 				var/DBConnection/dbcon = new()
 				dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
 				if(!dbcon.IsConnected())
@@ -821,7 +810,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			if(scanner.cache)
 				var/choice = input("Are you certain you wish to upload this title to the Archive?") in list("Confirm", "Abort")
 				if(choice == "Confirm")
-					if(config.sql_enabled)
+					if(BOOKS_USE_SQL && config.sql_enabled)
 						var/DBConnection/dbcon = new()
 						dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
 						if(!dbcon.IsConnected())
@@ -868,7 +857,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 						log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
 						alert("Upload Complete.")
 	if(href_list["targetid"])
-		if(config.sql_enabled)
+		if(BOOKS_USE_SQL && config.sql_enabled)
 			var/sqlid = href_list["targetid"]
 			var/DBConnection/dbcon = new()
 			dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
