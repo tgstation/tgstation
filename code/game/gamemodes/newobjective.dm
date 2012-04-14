@@ -652,8 +652,8 @@ datum
 
 
 			jetpack
-				steal_target = /obj/item/weapon/tank/jetpack
-				explanation_text = "Steal a jetpack."
+				steal_target = /obj/item/weapon/tank/jetpack/oxygen
+				explanation_text = "Steal a blue oxygen jetpack."
 				weight = 20
 
 				get_points(var/job)

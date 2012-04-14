@@ -95,9 +95,11 @@
 			if(M.type == /mob/living/carbon/human/tajaran)
 				attack_verb = "slash"
 
-			var/damage = rand(0, 9)
+			var/damage = rand(0, 5)
 			if(!damage)
-				if(M.type != /mob/living/carbon/human/tajaran)
+				if(M.mutantrace == "lizard")
+					playsound(loc, 'slashmiss.ogg', 25, 1, -1)
+				else if(M.type != /mob/living/carbon/human/tajaran)
 					playsound(loc, 'punchmiss.ogg', 25, 1, -1)
 				else if (M.type == /mob/living/carbon/human/tajaran)
 					playsound(loc, 'slashmiss.ogg', 25, 1, -1)
@@ -107,7 +109,10 @@
 			var/armor_block = run_armor_check(affecting, "melee")
 
 			if(M.mutations & HULK)	damage += 5
-			if(M.type != /mob/living/carbon/human/tajaran)
+			if(M.mutantrace == "lizard")
+				damage += 10
+				playsound(loc, 'slice.ogg', 25, 1, -1)
+			else if(M.type != /mob/living/carbon/human/tajaran)
 				playsound(loc, "punch", 25, 1, -1)
 			else if (M.type == /mob/living/carbon/human/tajaran)
 				damage += 10
@@ -116,9 +121,9 @@
 			visible_message("\red <B>[M] has [attack_verb]ed [src]!</B>")
 
 			apply_damage(damage, BRUTE, affecting, armor_block)
-			if(damage >= 9)
+			if(damage >= 5 && prob(50))
 				visible_message("\red <B>[M] has weakened [src]!</B>")
-				apply_effect(4, WEAKEN, armor_block)
+				apply_effect(2, WEAKEN, armor_block)
 			UpdateDamageIcon()
 
 
@@ -132,7 +137,7 @@
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/randn = rand(1, 100)
 			if (randn <= 25)
-				apply_effect(2, WEAKEN, run_armor_check(affecting, "melee"))
+				apply_effect(5, WEAKEN, run_armor_check(affecting, "melee"))
 				playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
 				visible_message("\red <B>[M] has pushed [src]!</B>")
 				return

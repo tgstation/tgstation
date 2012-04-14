@@ -192,3 +192,19 @@ I kind of like the right click only--the window version can get a little confusi
 		else
 			src << "\green You must be standing on or beside an open air vent to enter it."
 	return
+
+/mob/living/carbon/alien/humanoid/verb/regurgitate()
+	set name = "Regurgitate"
+	set desc = "Empties the contents of your stomach"
+	set category = "Alien"
+
+	if(powerc())
+		if(stomach_contents.len)
+			for(var/mob/M in src)
+				if(M in stomach_contents)
+					stomach_contents.Remove(M)
+					M.loc = loc
+					Paralyse(4)
+			for(var/mob/O in viewers(src, null))
+				O.show_message(text("\green <B>[src] hurls out the contents of their stomach!</B>"), 1)
+	return
