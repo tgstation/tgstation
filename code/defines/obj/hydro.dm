@@ -1191,7 +1191,7 @@
 	potency = 10
 	New()
 		..()
-		reagents.add_reagent("nutriment", 1+round((potency / 5), 1))
+		reagents.add_reagent("nutriment", 1+round((potency / 6), 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin
@@ -1202,7 +1202,7 @@
 	potency = 10
 	New()
 		..()
-		reagents.add_reagent("nutriment", 1+round((potency / 5), 1))
+		reagents.add_reagent("nutriment", 1+round((potency / 6), 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/lime
