@@ -249,7 +249,7 @@
 			var/toxin_amount = reagents.get_reagent_amount("nutriment") * 3
 			reagents.add_reagent("toxin",toxin_amount)
 			processing_objects.Remove(src)
-*/
+
 /obj/item/weapon/reagent_containers/food/snacks/appendix //yes, this is the same as meat. I might do something different in future
 	name = "appendix"
 	desc = "An appendix which looks perfectly healthy."
@@ -267,7 +267,7 @@
 		..()
 		reagents.add_reagent("nutriment", 1)
 		src.bitesize = 1
-
+*/
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/human
 	name = "-meat"
 	var/subjectname = ""

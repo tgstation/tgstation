@@ -1818,3 +1818,13 @@
 	gender = PLURAL
 	icon = 'wizard.dmi'
 	icon_state = "ectoplasm"
+
+/obj/item/weapon/appendix
+	name = "appendix"
+	desc = "An appendix which looks perfectly healthy."
+	icon_state = "appendix"
+
+/obj/item/weapon/appendixinflamed
+	name = "inflamed appendix"
+	desc = "An appendix which appears to be inflamed."
+	icon_state = "appendixinflamed"
