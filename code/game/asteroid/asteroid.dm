@@ -56,7 +56,8 @@ proc/spawn_asteroid(var/turf/start_loc,var/type,var/size,var/richness)//type: 0 
 			density--
 	return
 
-
+//this is terrible!	-Pete
+/*
 /datum/game_mode/proc/setup_sectors()
 	world << "\blue \b Randomizing space sectors."
 	var/list/sectors = list(1,3,4,0,0,0,0,0,0)
@@ -100,7 +101,7 @@ proc/spawn_asteroid(var/turf/start_loc,var/type,var/size,var/richness)//type: 0 
 			new /obj/item/weapon/storage/explorers_box(L.loc)
 			del(L)
 	return
-
+*/
 
 proc/spawn_room(var/atom/start_loc,var/x_size,var/y_size,var/wall,var/floor , var/clean = 0 , var/name)
 	var/list/room_turfs = list("walls"=list(),"floors"=list())

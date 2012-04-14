@@ -14,9 +14,6 @@
 	for(var/mob/M in world)
 		if(M.client)
 			M.CanBuild()
-
-	setup_sectors()
-	spawn_exporation_packs()
 	return 1
 
 /datum/game_mode/sandbox/check_finished()
