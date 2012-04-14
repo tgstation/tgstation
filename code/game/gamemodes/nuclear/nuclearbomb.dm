@@ -184,6 +184,8 @@
 		if(M.client)
 			spawn(0)
 				M.client.station_explosion_cinematic(off_station)
+		if(M.z==1)
+			M.gib()
 	sleep(110)
 
 	if (ticker && ticker.mode)
