@@ -1,14 +1,14 @@
-/mob/verb/adminhelp(msg as text)
+/client/verb/adminhelp(msg as text)
 	set category = "Admin"
 	set name = "Adminhelp"
 
-	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
-
-	if (!msg)
+	if (muted_complete)
+		src << "<font color='red'>Error: Admin-PM: You are completely muted.</font>"
 		return
 
-	if (usr.client && usr.client.muted_complete)
-		return
+	if(!msg)	return
+	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	if (!msg)	return
 
 	for (var/client/X)
 		if (X.holder)
@@ -16,11 +16,11 @@
 				X << 'adminhelp.ogg'
 			X << "\blue <b><font color=red>HELP: </font>[key_name(src, X)] (<A HREF='?src=\ref[X.holder];adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?src=\ref[X.holder];adminplayervars=\ref[src]'>VV</A>) (<A HREF='?src=\ref[X.holder];adminplayersubtlemessage=\ref[src]'>SM</A>) (<A HREF='?src=\ref[X.holder];adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?src=\ref[X.holder];secretsadmin=check_antagonist'>CA</A>):</b> [msg]"
 
-	usr << "Your message has been broadcast to administrators."
+	src << "<font color='blue'>PM to-<b>Admins</b>: [msg]</font>"
 	log_admin("HELP: [key_name(src)]: [msg]")
 	if(tension_master)
 		tension_master.new_adminhelp()
-	send2irc(usr.ckey, msg)
+	send2irc(ckey, msg)
 	return
 
 proc/send2irc(msg,msg2)

@@ -4,14 +4,14 @@
 #define NUM_OF_POSTER_DESIGNS 17
 
 /obj/item/weapon/contraband
-	name = "Contraband Item"
+	name = "contraband item"
 	desc = "You probably shouldn't be holding this."
 	icon = 'contraband.dmi'
-	force = 5
+	force = 0
 
 
 /obj/item/weapon/contraband/poster
-	name = "Rolled poster"
+	name = "rolled-up poster"
 	desc = "The poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its vulgar themes have marked it as Contraband aboard Nanotrasen© Space Facilities."
 	icon_state = "rolled_poster"
 	var/serial_number = 0
@@ -20,11 +20,9 @@
 
 /obj/item/weapon/contraband/poster/New(turf/loc,var/given_serial=0)
 	if(given_serial==0)
-		//world<<"HERP"
 		serial_number = rand(1,NUM_OF_POSTER_DESIGNS)
 		src.resulting_poster = new(serial_number)
 	else
-		//world<<"DERP"
 		serial_number = given_serial
 		//We don't give it a resulting_poster because if we called it with a given_serial it means that we're rerolling an already used poster.
 	src.name += " - No. [serial_number]"
@@ -68,7 +66,7 @@
 //############################## THE ACTUAL DECALS ###########################
 
 obj/effect/decal/poster
-	name = "Poster"
+	name = "poster"
 	desc = "A large piece of space-resistant printed paper. It's considered contraband."
 	icon = 'contraband.dmi'
 	anchored = 1
@@ -128,7 +126,7 @@ obj/effect/decal/poster/New(var/serial)
 			name += " - User of the Arcane Arts"
 			desc += " This particular one depicts a wizard, casting a spell. You can't really make out if it's an actial photograph or a computer-generated image."
 		if(15)
-			name += " - Leviating Skull"
+			name += " - Levitating Skull"
 			desc += " This particular one is the portrait of a certain flying, friendly and somewhat sex-crazed enchanted skull. Its adventures along with its fabled companion are now fading through history..."
 		if(16)
 			name += " - Augmented Legend"
@@ -173,7 +171,42 @@ obj/effect/decal/poster/attackby(obj/item/weapon/W as obj, mob/user as mob)
 			return
 
 /obj/effect/decal/poster/proc/roll_and_drop(turf/loc)
-			var/obj/item/weapon/contraband/poster/P = new(src,src.serial_number)
-			P.resulting_poster = src
-			P.loc = loc
-			src.loc = P
+	var/obj/item/weapon/contraband/poster/P = new(src,src.serial_number)
+	P.resulting_poster = src
+	P.loc = loc
+	src.loc = P
+
+
+//seperated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
+/turf/simulated/wall/proc/place_poster(var/obj/item/weapon/contraband/poster/P, var/mob/user)
+	if(!P.resulting_poster)	return
+
+	var/stuff_on_wall = 0
+	for( var/obj/O in src.contents) //Let's see if it already has a poster on it or too much stuff
+		if(istype(O,/obj/effect/decal/poster))
+			user << "<span class='warning'>The wall is far too cluttered to place a poster!</span>"
+			return
+		stuff_on_wall++
+		if(stuff_on_wall==3)
+			user << "<span class='warning'>The wall is far too cluttered to place a poster!</span>"
+			return
+
+	user << "<span class='notice'>You start placing the poster on the wall...</span>" //Looks like it's uncluttered enough. Place the poster.
+
+	//declaring D because otherwise if P gets 'deconstructed' we lose our reference to P.resulting_poster
+	var/obj/effect/decal/poster/D = P.resulting_poster
+
+	var/temp_loc = user.loc
+	flick("poster_being_set",D)
+	D.loc = src
+	del(P)	//delete it now to cut down on sanity checks afterwards. Agouri's code supports rerolling it anyway
+	playsound(D.loc, 'poster_being_created.ogg', 100, 1)
+
+	sleep(17)
+	if(!D)	return
+
+	if(istype(src,/turf/simulated/wall) && user && user.loc == temp_loc)//Let's check if everything is still there
+		user << "<span class='notice'>You place the poster!</span>"
+	else
+		D.roll_and_drop(temp_loc)
+	return

@@ -620,7 +620,7 @@
 		if(ismob(C)) //Old stuff can pass in mobs instead of clients
 			var/mob/M = C
 			C = M.client
-		cmd_admin_pm(C)
+		cmd_admin_pm(C,null)
 	else
 		..()
 
