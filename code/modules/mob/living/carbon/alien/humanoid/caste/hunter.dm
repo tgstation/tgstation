@@ -183,19 +183,3 @@
 				alien_invis = 0.0
 				src << "\green You are no longer invisible."
 	return
-
-/mob/living/carbon/alien/humanoid/hunter/verb/regurgitate()
-	set name = "Regurgitate"
-	set desc = "Empties the contents of your stomach"
-	set category = "Alien"
-
-	if(powerc())
-		if(stomach_contents.len)
-			for(var/mob/M in src)
-				if(M in stomach_contents)
-					stomach_contents.Remove(M)
-					M.loc = loc
-					Paralyse(10)
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\green <B>[src] hurls out the contents of their stomach!</B>"), 1)
-	return

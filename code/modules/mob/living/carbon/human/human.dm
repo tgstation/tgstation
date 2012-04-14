@@ -873,7 +873,7 @@
 		fat = "fat"
 
 	if (mutations & HULK)
-		overlays += image("icon" = 'genetics.dmi', "icon_state" = "hulk[fat][!lying ? "_s" : "_l"]")
+		overlays += image("icon" = 'genetics.dmi', "icon_state" = "hulk[fat]_[gender][!lying ? "_s" : "_l"]")
 
 	if (mutations & COLD_RESISTANCE)
 		overlays += image("icon" = 'genetics.dmi', "icon_state" = "fire[fat][!lying ? "_s" : "_l"]")
@@ -886,8 +886,18 @@
 
 	if (mutantrace)
 		switch(mutantrace)
-			if("lizard","golem","metroid")
+			if("golem","metroid")
 				overlays += image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace][fat][!lying ? "_s" : "_l"]")
+				if(face_standing)
+					del(face_standing)
+				if(face_lying)
+					del(face_lying)
+				if(stand_icon)
+					del(stand_icon)
+				if(lying_icon)
+					del(lying_icon)
+			if("lizard")
+				overlays += image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace][fat]_[gender][!lying ? "_s" : "_l"]")
 				if(face_standing)
 					del(face_standing)
 				if(face_lying)
