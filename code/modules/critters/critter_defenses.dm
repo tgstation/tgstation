@@ -13,7 +13,7 @@ Contains the procs that control attacking critters
 			if("fire") damage = W.force * firevuln
 			if("brute") damage = W.force * brutevuln
 		TakeDamage(damage)
-		if(src.defensive)	Target_Attacker(user)
+		if(src.defensive && alive)	Target_Attacker(user)
 		return
 
 
@@ -51,9 +51,10 @@ Contains the procs that control attacking critters
 		if(!target)	return
 		src.target = target
 		src.oldtarget_name = target:name
-		if(task != "chasing" || task != "attacking")
-			for(var/mob/O in viewers(src, null))
-				O.show_message("\red <b>[src]</b> [src.angertext] at [target:name]!", 1)
+		if(task != "chasing" && task != "attacking")
+			if(angertext && angertext != "")
+				for(var/mob/O in viewers(src, null))
+					O.show_message("\red <b>[src]</b> [src.angertext] at [target:name]!", 1)
 			src.task = "chasing"
 		return
 
@@ -75,7 +76,7 @@ Contains the procs that control attacking critters
 		src.anchored = 0
 		src.density = 0
 		walk_to(src,0)
-		src.visible_message("<b>[src]</b> dies!")
+		src.visible_message("<b>[src]</b> [deathtext]")
 
 
 	Harvest(var/obj/item/weapon/W, var/mob/living/user)
