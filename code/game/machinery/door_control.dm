@@ -15,16 +15,28 @@
 	use_power(5)
 	icon_state = "doorctrl1"
 
-	for(var/obj/machinery/door/poddoor/M in machines)
-		if (M.id == src.id)
-			if (M.density)
-				spawn( 0 )
-					M.open()
-					return
-			else
-				spawn( 0 )
-					M.close()
-					return
+	if(normaldoorcontrol)
+		for(var/obj/machinery/door/airlock/D in range(range))
+			if(D.id_tag == src.id)
+				if (D.density)
+					spawn( 0 )
+						D.open()
+						return
+				else
+					spawn( 0 )
+					//	D.close()
+						return
+	else
+		for(var/obj/machinery/door/poddoor/M in machines)
+			if (M.id == src.id)
+				if (M.density)
+					spawn( 0 )
+						M.open()
+						return
+				else
+					spawn( 0 )
+						M.close()
+						return
 
 	spawn(15)
 		if(!(stat & NOPOWER))

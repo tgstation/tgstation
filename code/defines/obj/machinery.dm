@@ -262,6 +262,8 @@
 	icon_state = "doorctrl0"
 	desc = "A remote control switch for a door."
 	var/id = null
+	var/range = 10
+	var/normaldoorcontrol = 0
 	anchored = 1.0
 	use_power = 1
 	idle_power_usage = 2
