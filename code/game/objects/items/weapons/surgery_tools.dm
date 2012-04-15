@@ -906,6 +906,7 @@ CIRCULAR SAW
 					else
 						M.take_organ_damage(15)
 				M.disabilities &= ~128
+				M.eye_stat = 0
 				M:eye_op_stage = 0.0
 				return
 
