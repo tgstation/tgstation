@@ -45,10 +45,6 @@
 		if(stat & BROKEN || !I || !user)
 			return
 
-		//robots shouldn't be able to grab/carry stuff anyway
-		if(isrobot(user))
-			return
-
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
 			user << "You can't place that item inside the disposal unit."
 			return
@@ -60,6 +56,10 @@
 				I.contents -= O
 			I.update_icon()
 			update()
+			return
+
+		//robots shouldn't be able to grab/carry stuff anyway
+		if(isrobot(user))
 			return
 
 		if(istype(I, /obj/item/ashtray) && (I.health > 0))
