@@ -1,5 +1,3 @@
-
-
 /atom/proc/MouseDrop_T()
 	return
 
@@ -260,9 +258,11 @@
 /atom/proc/add_vomit_floor(mob/living/carbon/M as mob, var/toxvomit = 0)
 	if( istype(src, /turf/simulated) )
 		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
+
 		// Make toxins vomit look different
 		if(toxvomit)
 			this.icon_state = "vomittox_[pick(1,4)]"
+
 		for(var/datum/disease/D in M.viruses)
 			var/datum/disease/newDisease = new D.type
 			this.viruses += newDisease
