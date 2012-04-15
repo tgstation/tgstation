@@ -215,16 +215,17 @@
 				if(L.len == 2)
 					L -= mob
 					var/mob/M = L[1]
-					if ((get_dist(mob, M) <= 1 || M.loc == mob.loc))
-						var/turf/T = mob.loc
-						. = ..()
-						if (isturf(M.loc))
-							var/diag = get_dir(mob, M)
-							if ((diag - 1) & diag)
-							else
-								diag = null
-							if ((get_dist(mob, M) > 1 || diag))
-								step(M, get_dir(M.loc, T))
+					if(M)
+						if ((get_dist(mob, M) <= 1 || M.loc == mob.loc))
+							var/turf/T = mob.loc
+							. = ..()
+							if (isturf(M.loc))
+								var/diag = get_dir(mob, M)
+								if ((diag - 1) & diag)
+								else
+									diag = null
+								if ((get_dist(mob, M) > 1 || diag))
+									step(M, get_dir(M.loc, T))
 				else
 					for(var/mob/M in L)
 						M.other_mobs = 1
