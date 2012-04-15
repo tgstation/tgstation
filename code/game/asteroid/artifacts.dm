@@ -5,16 +5,16 @@ var/global/list/space_surprises = list(				/obj/item/clothing/mask/facehugger/an
 												//	/obj/item/weapon/rcd								=0,
 												//	/obj/item/weapon/rcd_ammo							=0,
 												//	/obj/item/weapon/spacecash							=0,
-													/obj/item/weapon/cloaking_device					=1,
+												//	/obj/item/weapon/cloaking_device					=1,
 												//	/obj/item/weapon/gun/energy/teleport_gun			=0,
 												//	/obj/item/weapon/rubber_chicken						=0,
 													/obj/item/weapon/melee/energy/sword/pirate			=3,
 													/obj/structure/closet/syndicate/resources			=2,
 												//	/obj/machinery/wish_granter							=1,  // Okayyyy... Mayyyybe Kor is kinda sorta right.  A little.  Tiny bit.  >.>
-													/obj/item/clothing/glasses/thermal					=2,	// Could maybe be cool as its own rapid mode, sorta like wizard.  Maybe.
-													/obj/item/weapon/storage/box/stealth/				=2
+												//	/obj/item/clothing/glasses/thermal					=2,	// Could maybe be cool as its own rapid mode, sorta like wizard.  Maybe.
+												//	/obj/item/weapon/storage/box/stealth/				=2
 
-
+												//														=11
 													)
 
 var/global/list/spawned_surprises = list()
