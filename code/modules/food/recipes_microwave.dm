@@ -29,7 +29,7 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 
-/*p
+/*
 /datum/recipe/bananaphone
 	reagents = list("psilocybin" = 5) //Trippin' balls, man.
 	items = list(
@@ -1101,13 +1101,30 @@
 /datum/recipe/plumphelmetbiscuit
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/flour,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit
 
 /datum/recipe/mushroomsoup
 	reagents = list("water" = 5, "milk" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/mushroomsoup
+
+/datum/recipe/chawanmushi
+	reagents = list("water" = 5, "soysauce" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chawanmushi
+
+/datum/recipe/beetsoup
+	reagents = list("water" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/beetsoup

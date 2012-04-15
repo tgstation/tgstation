@@ -687,6 +687,23 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/ambrosiadeusseed
+	name = "pack of ambrosia deus seeds"
+	desc = "These seeds grow into ambrosia deus. Could it be the food of the gods..?"
+	icon_state = "seed-ambrosiadeus"
+	mypath = "/obj/item/seeds/ambrosiadeusseed"
+	species = "ambrosiadeus"
+	plantname = "Ambrosia Deus"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus"
+	lifespan = 60
+	endurance = 25
+	maturation = 6
+	production = 6
+	yield = 6
+	potency = 5
+	plant_type = 0
+	growthstages = 6
+
 /obj/item/seeds/whitebeetseed
 	name = "pack of white-beet seeds"
 	desc = "These seeds grow into sugary beet producing plants."
@@ -1170,6 +1187,22 @@
 		reagents.add_reagent("kelotane", 3+round(potency / 5, 1))
 		reagents.add_reagent("bicaridine", 3+round(potency / 5, 1))
 		reagents.add_reagent("toxin", 3+round(potency / 5, 1))
+		bitesize = 1+round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
+	seed = "/obj/item/seeds/ambrosiadeus"
+	name = "ambrosia deus branch"
+	desc = "Eating this makes you feel immortal!"
+	icon_state = "ambrosiadeus"
+	potency = 10
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("bicaridine", 3+round(potency / 5, 1))
+		reagents.add_reagent("synaptizine", 3+round(potency / 5, 1))
+		reagents.add_reagent("hyperzine", 3+round(potency / 8, 1))
+		reagents.add_reagent("kelotane", 3+round(potency / 8, 1))
+		reagents.add_reagent("toxin", 1+round(potency / 8, 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple

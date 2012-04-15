@@ -96,10 +96,12 @@ obj/machinery/hydroponics/process()
 			if(src.age > src.myseed.production && (src.age - src.lastproduce) > src.myseed.production && (!src.harvest && !src.dead))
 				var/m_count = 0
 				while(m_count < src.mutmod)
-					if(prob(90))
+					if(prob(89))
 						src.mutate()
 					else if(prob(30))
 						src.hardmutate()
+					else if(prob(1))
+						src.mutatespecie()
 					m_count++;
 				if(src.yieldmod > 0 && src.myseed.yield != -1) // Unharvestable shouldn't be harvested
 					src.harvest = 1
@@ -301,6 +303,10 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 		del(src.myseed)
 		src.myseed = new /obj/item/seeds/angelmycelium
 
+	else if ( istype(src.myseed, /obj/item/seeds/ambrosiavulgarisseed ))
+		del(src.myseed)
+		src.myseed = new /obj/item/seeds/ambrosiadeusseed
+
 	else if ( istype(src.myseed, /obj/item/seeds/plumpmycelium ))
 		del(src.myseed)
 		src.myseed = new /obj/item/seeds/walkingmushroommycelium
@@ -382,6 +388,8 @@ obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent in
 		spawn(5) // Wait a while
 		src.updateicon()
 		src.visible_message("\red The mutated weeds in [src] spawned a \blue [src.myseed.plantname]!")
+	else
+		usr << "The few weeds in the tray seem to react, but only for a moment..."
 	return
 
 
@@ -397,12 +405,12 @@ obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one
 
 
 obj/machinery/hydroponics/proc/mutatepest()  // Until someone makes a spaceworm, this is commented out
-//	if ( src.pestlevel > 5 )
-//  	user << "The worms seem to behave oddly..."
+	if ( src.pestlevel > 5 )
+ 	src.visible_message("The pests seem to behave oddly...")
 //		spawn(10)
 //		new /obj/effect/alien/spaceworm(src.loc)
-//	else
-	//user << "Nothing happens..."
+	else
+		usr << "The pests seem to behave oddly, but quickly settle down..." //Modified to give a better idea of what's happening when you inject mutagen. There's still nothing proper to spawn here though. -Cheridan
 	return
 
 
@@ -458,7 +466,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 						if (81  to 90)  src.mutatespecie()
 						if (66	to 80)	src.hardmutate()
 						if (41  to 65)  src.mutate()
-						if (21  to 41)  user << "Nothing happens..."
+						if (21  to 41)  user << "The plants don't seem to react..."
 						if (11	to 20)  src.mutateweed()
 						if (1   to 10)  src.mutatepest()
 						else 			user << "Nothing happens..."
@@ -583,7 +591,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 						if (81  to 90)  src.mutatespecie()
 						if (66	to 80)	src.hardmutate()
 						if (41  to 65)  src.mutate()
-						if (21  to 41)  user << "Nothing happens..."
+						if (21  to 41)  user << "The plants don't seem to react..."
 						if (11	to 20)  src.mutateweed()
 						if (1   to 10)  src.mutatepest()
 						else 			user << "Nothing happens..."
