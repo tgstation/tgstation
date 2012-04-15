@@ -18,14 +18,36 @@
 	if(normaldoorcontrol)
 		for(var/obj/machinery/door/airlock/D in range(range))
 			if(D.id_tag == src.id)
-				if (D.density)
-					spawn( 0 )
-						D.open()
-						return
+				if(desiredstate == 1)
+					if(specialfunctions & OPEN)
+						if (D.density)
+							spawn( 0 )
+								D.open()
+								return
+					if(specialfunctions & IDSCAN)
+						D.aiDisabledIdScanner = 1
+					if(specialfunctions & BOLTS)
+						spawn(5)
+							D.locked = 1
+					if(specialfunctions & SHOCK)
+						D.secondsElectrified = -1
+
 				else
-					spawn( 0 )
-					//	D.close()
-						return
+					if(specialfunctions & OPEN)
+						if (!D.density)
+							spawn( 0 )
+								D.close()
+								return
+					if(specialfunctions & IDSCAN)
+						D.aiDisabledIdScanner = 0
+					if(specialfunctions & BOLTS)
+						spawn(5)
+							D.locked = 0
+					if(specialfunctions & SHOCK)
+						D.secondsElectrified = 0
+
+
+
 	else
 		for(var/obj/machinery/door/poddoor/M in machines)
 			if (M.id == src.id)
@@ -38,6 +60,7 @@
 						M.close()
 						return
 
+	desiredstate = !desiredstate
 	spawn(15)
 		if(!(stat & NOPOWER))
 			icon_state = "doorctrl0"
