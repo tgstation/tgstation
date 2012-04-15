@@ -83,6 +83,8 @@
 			return 0
 
 	MouseDrop_T(obj/O as obj, mob/user as mob)
+		if(isrobot(user))
+			return
 		if ((!( istype(O, /obj/item/weapon) ) || user.equipped() != O))
 			return
 		user.drop_item()
@@ -110,6 +112,8 @@
 		check_victim()
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if(isrobot(user))
+			return
 		if (istype(W, /obj/item/weapon/grab))
 			if(ismob(W:affecting))
 				var/mob/M = W:affecting

@@ -1612,18 +1612,13 @@ CIRCULAR SAW
 	name = "surgical tool"
 	var/list/stage = list() //Stage to act on
 	var/time = 50 //Time it takes to use
-	var/wound //Wound type to act on
+	var/list/wound = list()//Wound type to act on
 
 	proc/get_message(var/mnumber,var/M,var/user,var/datum/organ/external/organ)//=Start,2=finish,3=walk away,4=screw up, 5 = closed wound
 	proc/screw_up(mob/living/carbon/M as mob,mob/living/carbon/user as mob,var/datum/organ/external/organ)
 		organ.brute_dam += 30
 /obj/item/weapon/surgical_tool/proc/IsFinalStage(var/stage)
-	var/a
-	switch(wound)
-		if("broken") //Basic broken bone
-			a=3
-		if("blood")
-			a=3
+	var/a = 3
 	return stage == a
 
 /obj/item/weapon/surgical_tool/attack(mob/living/carbon/human/M as mob, mob/living/carbon/user as mob)
@@ -1665,7 +1660,7 @@ CIRCULAR SAW
 			O.show_message("\red [msg]",1)
 		if(do_mob(user,M,time))
 			if(temp.open == 2 && !temp.bleeding)
-				if(temp.wound == wound)
+				if(temp.wound in wound)
 					if(temp.stage in stage)
 						temp.stage += 1
 
@@ -1706,7 +1701,9 @@ CIRCULAR SAW
 /obj/item/weapon/surgical_tool/bonegel/New()
 	stage += 0
 	stage += 2
-	wound = "broken"
+	wound += "broken"
+	wound += "fracture"
+	wound += "hairline fracture"
 /obj/item/weapon/surgical_tool/bonegel/get_message(var/n,var/m,var/usr,var/datum/organ/external/organ)
 	var/z
 	switch(n)
@@ -1729,7 +1726,9 @@ CIRCULAR SAW
 
 /obj/item/weapon/surgical_tool/bonesetter/New()
 	stage += 1
-	wound = "broken"
+	wound += "broken"
+	wound += "fracture"
+	wound += "hairline fracture"
 /obj/item/weapon/surgical_tool/bonesetter/get_message(var/n,var/m,var/usr,var/datum/organ/external/organ)
 	var/z
 	switch(n)
