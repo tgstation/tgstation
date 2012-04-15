@@ -85,12 +85,13 @@
 /obj/structure/closet/secure_closet/warden
 	name = "Warden's Locker"
 	req_access = list(access_armory)
-	icon_state = "hossecure1"
-	icon_closed = "hossecure"
-	icon_locked = "hossecure1"
-	icon_opened = "hossecureopen"
-	icon_broken = "hossecurebroken"
-	icon_off = "hossecureoff"
+	icon_state = "wardensecure1"
+	icon_closed = "wardensecure"
+	icon_locked = "wardensecure1"
+	icon_opened = "wardensecureopen"
+	icon_broken = "wardensecurebroken"
+	icon_off = "wardensecureoff"
+
 
 	New()
 		..()
