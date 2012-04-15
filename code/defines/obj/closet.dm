@@ -52,6 +52,8 @@
 	icon_closed = "emergency"
 	icon_opened = "emergencyopen"
 
+/obj/structure/closet/emcloset/legacy
+
 /obj/structure/closet/firecloset
 	name = "Fire Closet"
 	desc = "A bulky (yet mobile) closet. Comes with supplies to fight fire."
