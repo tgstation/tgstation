@@ -80,6 +80,7 @@
 
 
 /turf/Entered(atom/movable/M as mob|obj)
+//	var/loopsanity = 100
 	if(ismob(M))
 		if(!M:lastarea)
 			M:lastarea = get_area(M.loc)
