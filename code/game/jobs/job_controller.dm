@@ -256,6 +256,8 @@ var/global/datum/controller/occupations/job_master
 				return
 			if("Captain")
 				C = new /obj/item/weapon/card/id/gold(H)
+			if("Head of Personnel" , "Head of Security" , "Chief Engineer" , "Research Director" , "Chief Medical Officer") // You get an ugly ID
+				C = new /obj/item/weapon/card/id/silver(H)
 			else
 				C = new /obj/item/weapon/card/id(H)
 		if(C)
