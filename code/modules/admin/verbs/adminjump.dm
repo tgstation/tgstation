@@ -39,11 +39,10 @@
 	if(config.allow_admin_jump)
 		var/mobs = getmobs()
 		var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in mobs
-		var/mob/M = mobs[selection]
-		if(!istype(M,/mob))
-			src << "OH SHIT SON"
-			src << "[M.loc]"
+		if(!selection)
 			return
+		
+		var/mob/M = mobs[selection]
 		var/mob/A = src.mob
 		var/turf/T = get_turf(M)
 		if(T && isturf(T))
