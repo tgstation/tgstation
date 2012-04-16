@@ -564,6 +564,12 @@
 	color = "green"
 	icon_state = "coil_green"
 
+/obj/item/weapon/cable_coil/random/New()
+	color = pick("red","yellow","green","blue")
+	icon_state = "coil_[color]"
+	..()
+
+
 /obj/item/weapon/crowbar
 	name = "crowbar"
 	desc = "Used to hit floors"

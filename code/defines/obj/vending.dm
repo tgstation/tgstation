@@ -242,3 +242,16 @@
 	product_hidden = "/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola"
 	product_hideamt = "20"
 	product_ads = "For Tsar and Country.;Have you fulfilled your nutrition quota today?;Very nice!;We are simple people, for this is all we eat.;If there is a person, there is a problem. If there is no person, then there is no problem."
+
+/obj/machinery/vending/tool
+	name = "YouTool"
+	desc = "Tools for tools."
+	icon_state = "tool"
+	icon_deny = "tool-deny"
+	req_access_txt = "12" //Maintenance access
+	product_paths = "/obj/item/weapon/cable_coil/random;/obj/item/weapon/crowbar;/obj/item/weapon/weldingtool;/obj/item/weapon/wirecutters;/obj/item/weapon/wrench;/obj/item/device/analyzer;/obj/item/device/t_scanner"
+	product_amounts = "10;5;3;5;5;5;5"
+	product_hidden = "/obj/item/weapon/weldingtool/largetank;/obj/item/device/multitool"
+	product_hideamt = "2;2"
+	product_coin = "/obj/item/clothing/gloves/yellow"
+	product_coin_amt = "1"
