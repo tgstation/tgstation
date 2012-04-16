@@ -239,11 +239,21 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser
 	charge_max = 1800
 
+/obj/effect/proc_holder/spell/aoe_turf/conjure/floor
+	name = "Floor Construction"
+	desc = "This spell constructs a cult floor"
 
+	school = "conjuration"
+	charge_max = 20
+	clothes_req = 0
+	invocation = "none"
+	invocation_type = "none"
+	range = 0
+	summon_type = list("/turf/simulated/floor/engine/cult")
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall
 	name = "Leser Construction"
-	desc = "This spell constructs a normal metal wall"
+	desc = "This spell constructs a cult wall"
 
 	school = "conjuration"
 	charge_max = 100
@@ -251,7 +261,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	summon_type = list("/turf/simulated/wall")
+	summon_type = list("/turf/simulated/wall/cult")
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall/reinforced
 	name = "Greater Construction"
