@@ -546,7 +546,7 @@
 	throw_range = 5
 	m_amt = 50
 	g_amt = 20
-	flags = TABLEPASS|USEDELAY|FPRINT|CONDUCT
+	flags = TABLEPASS|USEDELAY|FPRINT|CONDUCT | ONBELT
 	item_state = "coil_red"
 
 /obj/item/weapon/cable_coil/cut
@@ -569,7 +569,7 @@
 	desc = "Used to hit floors"
 	icon = 'items.dmi'
 	icon_state = "crowbar"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	force = 5.0
 	throwforce = 7.0
 	item_state = "wrench"
@@ -851,7 +851,7 @@
 	desc = "You can be totally screwwy with this."
 	icon = 'items.dmi'
 	icon_state = "screwdriver"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	force = 5.0
 	w_class = 1.0
 	throwforce = 5.0

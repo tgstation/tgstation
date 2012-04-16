@@ -106,6 +106,7 @@ var/global/sent_syndicate_strike_team = 0
 
 	message_admins("\blue [key_name_admin(usr)] has spawned a Syndicate strike squad.", 1)
 	log_admin("[key_name(usr)] used Spawn Syndicate Squad.")
+	feedback_add_details("admin_verb","SDTHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/create_syndicate_death_commando(obj/spawn_location, syndicate_leader_selected = 0)
 	var/mob/living/carbon/human/new_syndicate_commando = new(spawn_location.loc)

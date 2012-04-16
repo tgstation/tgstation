@@ -19,4 +19,5 @@
 			job.spawn_positions += 2
 			usr << "There will be an AI Triumvirate at round start."
 			message_admins("\blue [key_name_admin(usr)] has toggled on triple AIs at round start.", 1)
+	feedback_add_details("admin_verb","CAIT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

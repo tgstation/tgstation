@@ -18,6 +18,7 @@
 					return
 
 	src.massmodify_variables(A, var_name, method)
+	feedback_add_details("admin_verb","MEV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/massmodify_variables(var/atom/O, var/var_name = "", var/method = 0)

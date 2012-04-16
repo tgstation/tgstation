@@ -20,6 +20,7 @@
 "}
 
 		usr << browse(output,"window=generalreport")
+		feedback_add_details("admin_verb","SGR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	air_report()
 		set category = "Debug"
@@ -62,6 +63,7 @@
 "}
 
 		usr << browse(output,"window=airreport")
+		feedback_add_details("admin_verb","SAR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	air_status(turf/target as turf)
 		set category = "Debug"
@@ -80,6 +82,7 @@
 		usr << "\blue @[target.x],[target.y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] w [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("\red BURNING"):(null)]"
 		for(var/datum/gas/trace_gas in GM.trace_gases)
 			usr << "[trace_gas.type]: [trace_gas.moles]"
+		feedback_add_details("admin_verb","DAST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	fix_next_move()
 		set category = "Debug"
@@ -109,6 +112,7 @@
 		message_admins("[key_name_admin(largest_move_mob)] had the largest move delay with [largest_move_time] frames / [largest_move_time/10] seconds!", 1)
 		message_admins("[key_name_admin(largest_click_mob)] had the largest click delay with [largest_click_time] frames / [largest_click_time/10] seconds!", 1)
 		message_admins("world.time = [world.time]", 1)
+		feedback_add_details("admin_verb","UFE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return
 
 	radio_report()
@@ -146,6 +150,7 @@
 						output += "&nbsp;&nbsp;&nbsp;&nbsp;[device]<br>"
 
 		usr << browse(output,"window=radioreport")
+		feedback_add_details("admin_verb","RR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	reload_admins()
 		set name = "Reload Admins"
@@ -175,6 +180,7 @@
 					var/a_lev = copytext(line, pos + 3, length(line) + 1)
 					admins[m_key] = a_lev
 					diary << ("ADMIN: [m_key] = [a_lev]")
+		feedback_add_details("admin_verb","RLDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 	jump_to_dead_group()
@@ -193,6 +199,7 @@
 				dead_groups += group
 		var/datum/air_group/dest_group = pick(dead_groups)
 		usr.loc = pick(dest_group.members)
+		feedback_add_details("admin_verb","JDAG") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return
 
 	kill_airgroup()
@@ -214,6 +221,7 @@
 			AG.group_processing = 0
 		else
 			usr << "Local airgroup is unsimulated!"
+		feedback_add_details("admin_verb","KLAG") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 	tension_report()
@@ -271,3 +279,4 @@
 		for(var/game in tension_master.antagonistmodes)
 			output += "<font size = 2>Points required/Probability for [game]: [tension_master.antagonistmodes[game]]<br></font>"
 		usr << browse(output,"window=tensionreport;size=480x480")
+		feedback_add_details("admin_verb","STR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

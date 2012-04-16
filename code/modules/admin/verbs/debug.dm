@@ -17,6 +17,7 @@
 	else
 		alert("Coders only baby")
 		return
+	feedback_add_details("admin_verb","DG2") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 
@@ -116,6 +117,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 			returnval = call(procname)(arglist(lst)) // Pass the lst as an argument list to the proc
 	usr << "\blue Proc returned: [returnval ? returnval : "null"]"
+	feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/Cell()
 	set category = "Debug"
@@ -136,6 +138,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	t+= "CO2: [env.carbon_dioxide]\n"
 
 	usr.show_message(t, 1)
+	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_robotize(var/mob/M in world)
 	set category = "Fun"
@@ -177,6 +180,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	for(var/datum/paiCandidate/candidate in paiController.pai_candidates)
 		if(candidate.key == choice.key)
 			paiController.pai_candidates.Remove(candidate)
+	feedback_add_details("admin_verb","MPAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_alienize(var/mob/M in world)
 	set category = "Fun"
@@ -189,6 +193,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin("[key_name(src)] has alienized [M.key].")
 		spawn(10)
 			M:Alienize()
+			feedback_add_details("admin_verb","MKAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
 		alert("Invalid mob")
 
@@ -203,6 +208,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin("[key_name(src)] has metroidized [M.key].")
 		spawn(10)
 			M:Metroidize()
+			feedback_add_details("admin_verb","MKMET") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
 		alert("Invalid mob")
 
@@ -310,6 +316,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				del(O)
 		log_admin("[key_name(src)] has deleted all instances of [hsbitem].")
 		message_admins("[key_name_admin(src)] has deleted all instances of [hsbitem].", 0)
+	feedback_add_details("admin_verb","DELA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_debug_make_powernets()
 	set category = "Debug"
@@ -317,6 +324,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	makepowernets()
 	log_admin("[key_name(src)] has remade the powernet. makepowernets() called.")
 	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.", 0)
+	feedback_add_details("admin_verb","MPWN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_debug_tog_aliens()
 	set category = "Server"
@@ -325,6 +333,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	aliens_allowed = !aliens_allowed
 	log_admin("[key_name(src)] has turned aliens [aliens_allowed ? "on" : "off"].")
 	message_admins("[key_name_admin(src)] has turned aliens [aliens_allowed ? "on" : "off"].", 0)
+	feedback_add_details("admin_verb","TAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_grantfullaccess(var/mob/M in world)
 	set category = "Admin"
@@ -355,6 +364,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			H.update_clothing()
 	else
 		alert("Invalid mob")
+	feedback_add_details("admin_verb","GFA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_assume_direct_control(var/mob/M in world)
 	set category = "Admin"
@@ -371,6 +381,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	M.ckey = src.ckey;
 	if( isobserver(adminmob) )
 		del(adminmob)
+	feedback_add_details("admin_verb","ADC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 
@@ -384,6 +395,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	GLOBAL_RADIO_TYPE = !GLOBAL_RADIO_TYPE // toggle
 	log_admin("[key_name(src)] has turned the experimental radio system [GLOBAL_RADIO_TYPE ? "on" : "off"].")
 	message_admins("[key_name_admin(src)] has turned the experimental radio system [GLOBAL_RADIO_TYPE ? "on" : "off"].", 0)
+	feedback_add_details("admin_verb","SRM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/cmd_admin_dress(var/mob/living/carbon/human/M in world)
@@ -419,6 +431,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in dresspacks
 	if (isnull(dresscode))
 		return
+	feedback_add_details("admin_verb","SEQ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	for (var/obj/item/I in M)
 		if (istype(I, /obj/item/weapon/implant))
 			continue

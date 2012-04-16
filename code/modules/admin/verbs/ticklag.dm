@@ -15,6 +15,7 @@
 					log_admin("[key_name(src)] has modified world.tick_lag to [newtick]", 0)
 					message_admins("[key_name(src)] has modified world.tick_lag to [newtick]", 0)
 					world.tick_lag = newtick
+					feedback_add_details("admin_verb","TICKLAG") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 					return
 				src << "\red Error: ticklag(): Invalid world.ticklag value. No changes made."
 				return

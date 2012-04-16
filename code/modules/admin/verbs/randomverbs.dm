@@ -9,6 +9,7 @@
 
 	log_admin("[key_name(usr)] made [key_name(M)] drop everything!")
 	message_admins("[key_name_admin(usr)] made [key_name_admin(M)] drop everything!", 1)
+	feedback_add_details("admin_verb","DEVR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_prison(mob/M as mob in world)
 	set category = "Admin"
@@ -35,6 +36,7 @@
 			M << "\red You have been sent to the prison station!"
 		log_admin("[key_name(usr)] sent [key_name(M)] to the prison station.")
 		message_admins("\blue [key_name_admin(usr)] sent [key_name_admin(M)] to the prison station.", 1)
+		feedback_add_details("admin_verb","PRISON") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_subtle_message(mob/M as mob in world)
 	set category = "Special Verbs"
@@ -56,6 +58,7 @@
 
 	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
 	message_admins("\blue \bold SubtleMessage: [key_name_admin(usr)] -> [key_name_admin(M)] : [msg]", 1)
+	feedback_add_details("admin_verb","SMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_world_narrate() // Allows administrators to fluff events a little easier -- TLE
 	set category = "Special Verbs"
@@ -72,6 +75,7 @@
 	world << "[msg]"
 	log_admin("GlobalNarrate: [key_name(usr)] : [msg]")
 	message_admins("\blue \bold GlobalNarrate: [key_name_admin(usr)] : [msg]<BR>", 1)
+	feedback_add_details("admin_verb","GLN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_direct_narrate(mob/M as mob in world)	// Targetted narrate -- TLE
 	set category = "Special Verbs"
@@ -84,6 +88,7 @@
 	M << msg
 	log_admin("DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]")
 	message_admins("\blue \bold DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]<BR>", 1)
+	feedback_add_details("admin_verb","DIRN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_godmode(mob/M as mob in world)
 	set category = "Special Verbs"
@@ -100,6 +105,7 @@
 
 	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.nodamage ? "On" : "Off")]")
 	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.nodamage ? "On" : "Off")]", 1)
+	feedback_add_details("admin_verb","GOD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_mute(mob/M as mob in world)
 	set category = "Special Verbs"
@@ -119,6 +125,7 @@
 	message_admins("[key_name_admin(src)] has [(M.client.muted ? "muted" : "voiced")] [key_name_admin(M)].", 1)
 
 	M << "You have been [(M.client.muted ? "muted" : "voiced")]."
+	feedback_add_details("admin_verb","MUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/cmd_admin_add_random_ai_law()
@@ -136,6 +143,7 @@
 		world << sound('ionstorm.ogg')
 
 	IonStorm(0)
+	feedback_add_details("admin_verb","ION") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
  /*
  Stealth spawns xenos
@@ -152,6 +160,7 @@
 		return
 
 	create_xeno()
+	feedback_add_details("admin_verb","X") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 //I use this proc for respawn character too. /N
@@ -421,6 +430,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	new_character << "You have been fully respawned. Enjoy the game."
 
 	del(G_found)//Don't want to leave ghosts around.
+	feedback_add_details("admin_verb","RSPCH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return new_character
 
 /client/proc/cmd_admin_add_freeform_ai_law()
@@ -449,6 +459,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(show_log == "Yes")
 		command_alert("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert")
 		world << sound('ionstorm.ogg')
+	feedback_add_details("admin_verb","IONC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_rejuvenate(mob/living/M as mob in world)
 	set category = "Special Verbs"
@@ -485,6 +496,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		message_admins("\red Admin [key_name_admin(usr)] healed / revived [key_name_admin(M)]!", 1)
 	else
 		alert("Admin revive disabled")
+	feedback_add_details("admin_verb","REJU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_create_centcom_report()
 	set category = "Special Verbs"
@@ -508,6 +520,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	world << sound('commandreport.ogg')
 	log_admin("[key_name(src)] has created a command report: [input]")
 	message_admins("[key_name_admin(src)] has created a command report", 1)
+	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_delete(atom/O as obj|mob|turf in world)
 	set category = "Admin"
@@ -520,6 +533,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if (alert(src, "Are you sure you want to delete:\n[O]\nat ([O.x], [O.y], [O.z])?", "Confirmation", "Yes", "No") == "Yes")
 		log_admin("[key_name(usr)] deleted [O] at ([O.x],[O.y],[O.z])")
 		message_admins("[key_name_admin(usr)] deleted [O] at ([O.x],[O.y],[O.z])", 1)
+		feedback_add_details("admin_verb","DEL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		del(O)
 
 /client/proc/cmd_admin_list_open_jobs()
@@ -532,6 +546,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(job_master)
 		for(var/datum/job/job in job_master.occupations)
 			src << "[job.title]: [job.total_positions]"
+	feedback_add_details("admin_verb","LFS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_explosion(atom/O as obj|mob|turf in world)
 	set category = "Special Verbs"
@@ -558,7 +573,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		explosion (O, devastation, heavy, light, flash)
 		log_admin("[key_name(usr)] created an explosion ([devastation],[heavy],[light],[flash]) at ([O.x],[O.y],[O.z])")
 		message_admins("[key_name_admin(usr)] created an explosion ([devastation],[heavy],[light],[flash]) at ([O.x],[O.y],[O.z])", 1)
-
+		feedback_add_details("admin_verb","EXPL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return
 	else
 		return
@@ -581,6 +596,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		empulse(O, heavy, light)
 		log_admin("[key_name(usr)] created an EM Pulse ([heavy],[light]) at ([O.x],[O.y],[O.z])")
 		message_admins("[key_name_admin(usr)] created an EM PUlse ([heavy],[light]) at ([O.x],[O.y],[O.z])", 1)
+		feedback_add_details("admin_verb","EMP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 		return
 	else
@@ -608,6 +624,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	M.gib()
+	feedback_add_details("admin_verb","GIB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_gib_self()
 	set name = "Gibself"
@@ -616,6 +633,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 	else
 		mob.gib()
+		feedback_add_details("admin_verb","GIBS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /*
 /client/proc/cmd_manual_ban()
 	set name = "Manual Ban"
@@ -685,6 +703,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/list/L = M.get_contents()
 	for(var/t in L)
 		usr << "[t]"
+	feedback_add_details("admin_verb","CC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_remove_plasma()
 	set category = "Debug"
@@ -692,6 +711,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
+	feedback_add_details("admin_verb","STATM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 // DEFERRED
 /*
 	spawn(0)
@@ -725,6 +745,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		view = input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128)
 	else
 		view = world.view
+	feedback_add_details("admin_verb","CVRA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/admin_call_shuttle()
 
@@ -751,6 +772,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	emergency_shuttle.incall()
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
 	world << sound('shuttlecalled.ogg')
+	feedback_add_details("admin_verb","CSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/admin_cancel_shuttle()
@@ -769,6 +791,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(confirm != "Yes") return
 
 	emergency_shuttle.recall()
+	feedback_add_details("admin_verb","CCSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	return
 
@@ -779,6 +802,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	usr << text("\red <b>Attack Log for []</b>", mob)
 	for(var/t in M.attack_log)
 		usr << t
+	feedback_add_details("admin_verb","ATTL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/everyone_random()
@@ -810,6 +834,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	usr << "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>."
 
 	ticker.random_players = 1
+	feedback_add_details("admin_verb","MER") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_gravity_on()
 	set category = "Debug"
@@ -825,6 +850,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		A.gravitychange(1,A)
 
 	command_alert("CentComm is now beaming gravitons to your station.  We appoligize for any inconvience.")
+	feedback_add_details("admin_verb","TSGON") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_gravity_off()
 	set category = "Debug"
@@ -840,6 +866,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		A.gravitychange(0,A)
 
 	command_alert("For budget reasons, Centcomm is no longer beaming gravitons to your station.  We appoligize for any inconvience.")
+	feedback_add_details("admin_verb","TSGOFF") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 //CARN
 /client/proc/toggle_random_events()
@@ -854,3 +881,4 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		config.allow_random_events = 0
 		usr << "Random events disabled"
 		message_admins("Admin [key_name_admin(usr)] has disabled random events.", 1)
+	feedback_add_details("admin_verb","TRE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

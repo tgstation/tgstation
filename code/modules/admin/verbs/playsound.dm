@@ -31,6 +31,7 @@
 		else
 			usr << "You already used up your jukebox monies this round!"
 			del(uploaded_sound)
+	feedback_add_details("admin_verb","PGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/play_local_sound(S as sound)
@@ -46,6 +47,7 @@
 		message_admins("[key_name_admin(src)] played a local sound [S]", 1)
 		playsound(get_turf_loc(src.mob), S, 50, 0, 0)
 		return
+	feedback_add_details("admin_verb","PLS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /*

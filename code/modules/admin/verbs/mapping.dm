@@ -59,6 +59,7 @@ var/intercom_range_display_status = 0
 		if(camera_range_display_status)
 			for(var/obj/machinery/camera/C in world)
 				new/obj/effect/debugging/camera_range(C.loc)
+		feedback_add_details("admin_verb","mCRD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 
@@ -100,6 +101,7 @@ var/intercom_range_display_status = 0
 
 		output += "</ul>"
 		usr << browse(output,"window=airreport;size=1000x500")
+		feedback_add_details("admin_verb","mCRP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	intercom_view()
 		set category = "Mapping"
@@ -119,6 +121,7 @@ var/intercom_range_display_status = 0
 					var/obj/effect/debugging/marker/F = new/obj/effect/debugging/marker(T)
 					if (!(F in view(7,I.loc)))
 						del(F)
+		feedback_add_details("admin_verb","mIRD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	enable_debug_verbs()
 		set category = "Debug"
@@ -135,6 +138,7 @@ var/intercom_range_display_status = 0
 		src.verbs += /client/proc/cmd_assume_direct_control	//-errorage
 		src.verbs += /client/proc/jump_to_dead_group
 		src.verbs += /client/proc/startSinglo
+		feedback_add_details("admin_verb","mDV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	count_objects_on_z_level()
 		set category = "Mapping"
@@ -177,6 +181,7 @@ var/intercom_range_display_status = 0
 			world << line*/
 
 		world << "There are [count] objects of type [type_path] on z-level [num_level]"
+		feedback_add_details("admin_verb","mOBJZ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	count_objects_all()
 		set category = "Mapping"
@@ -203,3 +208,4 @@ var/intercom_range_display_status = 0
 			world << line*/
 
 		world << "There are [count] objects of type [type_path] in the game world"
+		feedback_add_details("admin_verb","mOBJ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

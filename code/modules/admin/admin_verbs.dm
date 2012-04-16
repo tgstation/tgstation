@@ -433,6 +433,7 @@
 	if(!istype(mob, /mob/dead/observer))
 		mob.adminghostize(1)
 	src << "\blue You are now observing"
+	feedback_add_details("admin_verb","O") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/admin_play()
 	set category = "Admin"
@@ -450,6 +451,7 @@
 	if(istype(mob, /mob/dead/observer))
 		mob:reenter_corpse()
 	src << "\blue You are now playing"
+	feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/get_admin_state()
 	set name = "Get Admin State"
@@ -462,6 +464,7 @@
 				src << "[M.key] is observing - [M.client.holder.state]"
 			else
 				src << "[M.key] is undefined - [M.client.holder.state]"
+	feedback_add_details("admin_verb","GAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/player_panel()
@@ -469,6 +472,7 @@
 	set category = "Admin"
 	if(holder)
 		holder.player_panel_old()
+	feedback_add_details("admin_verb","PP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/player_panel_new()
@@ -476,6 +480,7 @@
 	set category = "Admin"
 	if(holder)
 		holder.player_panel_new()
+	feedback_add_details("admin_verb","PPN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/jobbans()
@@ -483,6 +488,7 @@
 	set category = "Admin"
 	if(holder)
 		holder.Jobbans()
+	feedback_add_details("admin_verb","VJB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/unban_panel()
@@ -490,6 +496,7 @@
 	set category = "Admin"
 	if(holder)
 		holder.unbanpanel()
+	feedback_add_details("admin_verb","UBP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/game_panel()
@@ -497,6 +504,7 @@
 	set category = "Admin"
 	if(holder)
 		holder.Game()
+	feedback_add_details("admin_verb","GP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/secrets()
@@ -504,6 +512,7 @@
 	set category = "Admin"
 	if (holder)
 		holder.Secrets()
+	feedback_add_details("admin_verb","S") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/voting()
@@ -511,11 +520,13 @@
 	set category = "Admin"
 	if (holder)
 		holder.Voting()
+	feedback_add_details("admin_verb","VO") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/colorooc()
 	set category = "Fun"
 	set name = "OOC Text Color"
 	ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color
+	feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/stealth()
@@ -538,6 +549,7 @@
 		fakekey = null
 	log_admin("[key_name(usr)] has turned stealth mode [stealth ? "ON" : "OFF"]")
 	message_admins("[key_name_admin(usr)] has turned stealth mode [stealth ? "ON" : "OFF"]", 1)
+	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 #define AUTOBATIME 10
 /client/proc/warn(var/mob/M in world)
@@ -564,6 +576,7 @@
 		feedback_inc("ban_warn",1)
 
 		del(M.client)
+	feedback_add_details("admin_verb","WARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/drop_bomb() // Some admin dickery that can probably be done better -- TLE
@@ -590,6 +603,7 @@
 			var/flash_range = input("Flash range (in tiles):") as num
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 	message_admins("\blue [ckey] creating an admin explosion at [epicenter.loc].")
+	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/give_spell(mob/T as mob in world) // -- Urist
 	set category = "Fun"
@@ -598,6 +612,7 @@
 	var/obj/effect/proc_holder/spell/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spells
 	if(!S) return
 	T.spell_list += new S
+	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/make_sound(var/obj/O in world) // -- TLE
 	set category = "Special Verbs"
@@ -609,6 +624,7 @@
 			return
 		for (var/mob/V in hearers(O))
 			V.show_message(message, 2)
+	feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/togglebuildmodeself()
@@ -616,6 +632,7 @@
 	set category = "Special Verbs"
 	if(src.mob)
 		togglebuildmode(src.mob)
+	feedback_add_details("admin_verb","TBMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/toggleadminhelpsound()
@@ -626,6 +643,7 @@
 		usr << "You will now hear a sound when adminhelps arrive"
 	else
 		usr << "You will no longer hear a sound when adminhelps arrive"
+	feedback_add_details("admin_verb","AHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/object_talk(var/msg as text) // -- TLE
 	set category = "Special Verbs"
@@ -636,6 +654,7 @@
 			return
 		for (var/mob/V in hearers(mob.control_object))
 			V.show_message("<b>[mob.control_object.name]</b> says: \"" + msg + "\"", 2)
+	feedback_add_details("admin_verb","OT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/kill_air() // -- TLE
 	set category = "Debug"
@@ -647,6 +666,7 @@
 	else
 		kill_air = 1
 		usr << "<b>Disabled air processing.</b>"
+	feedback_add_details("admin_verb","KA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/show_verbs()
 	set name = "Toggle admin verb visibility"
@@ -657,6 +677,7 @@
 	clear_admin_verbs()
 	update_admins(holder.rank)
 	deadchat = temp
+	feedback_add_details("admin_verb","TAVVS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_clickproc() //TODO ERRORAGE (This is a temporary verb here while I test the new clicking proc)
 	set name = "Toggle NewClickProc"
@@ -665,6 +686,7 @@
 	if(!holder) return
 	using_new_click_proc = !using_new_click_proc
 	world << "Testing of new click proc [using_new_click_proc ? "enabled" : "disabled"]"
+	feedback_add_details("admin_verb","TNCP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_hear_deadcast()
 	set name = "Toggle Hear Deadcast"
@@ -673,6 +695,7 @@
 	if(!holder) return
 	STFU_ghosts = !STFU_ghosts
 	usr << "You will now [STFU_ghosts ? "not hear" : "hear"] ghosts"
+	feedback_add_details("admin_verb","THDC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_hear_radio()
 	set name = "Toggle Hear Radio"
@@ -681,6 +704,7 @@
 	if(!holder) return
 	STFU_radio = !STFU_radio
 	usr << "You will now [STFU_radio ? "not hear" : "hear"] radio chatter from nearby radios or speakers"
+	feedback_add_details("admin_verb","THR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/deadmin_self()
 	set name = "De-admin self"
@@ -695,6 +719,7 @@
 			src.update_admins(null)
 			admins.Remove(src.ckey)
 			usr << "You are now a normal player."
+	feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
@@ -733,6 +758,7 @@
 	verbs += /obj/admins/proc/toggleooc				//toggle ooc
 	verbs += /client/proc/cmd_admin_say//asay
 	verbs += /client/proc/toggleadminhelpsound
+	feedback_add_details("admin_verb","HMV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 
@@ -751,4 +777,5 @@
 	verbs += /client/proc/deadchat					//toggles deadchat
 	verbs += /obj/admins/proc/toggleooc				//toggle ooc
 	verbs += /client/proc/cmd_admin_say//asay
+	feedback_add_details("admin_verb","TAVVH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

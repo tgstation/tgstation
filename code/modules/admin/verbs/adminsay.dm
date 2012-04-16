@@ -17,6 +17,7 @@
 
 	if (!msg)
 		return
+	feedback_add_details("admin_verb","M") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	for (var/mob/M in world)
 		if (M.client && M.client.holder)
