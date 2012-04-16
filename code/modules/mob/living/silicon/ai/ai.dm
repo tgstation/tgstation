@@ -79,7 +79,7 @@
 		return
 
 		//if(icon_state == initial(icon_state))
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green")
+	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static")
 	if(icontype == "Clown")
 		icon_state = "ai-clown2"
 	else if(icontype == "Monochrome")
@@ -92,7 +92,10 @@
 		icon_state = "ai-magma"
 	else if(icontype == "Green")
 		icon_state = "ai-wierd"
-
+	else if(icontype == "Red")
+		icon_state = "ai-malf"
+	else if(icontype == "Static")
+		icon_state = "ai-static"
 	//else
 			//usr <<"You can only change your display once!"
 			//return
