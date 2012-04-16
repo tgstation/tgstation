@@ -987,35 +987,35 @@
 
 			if(pullin)	pullin.icon_state = "pull[pulling ? 1 : 0]"
 
-			if(resting || lying || sleeping)	rest.icon_state = "rest[(resting || lying || sleeping) ? 1 : 0]"
+			if(rest)	rest.icon_state = "rest[(resting || lying || sleeping) ? 1 : 0]"
 
 
 			if (toxin || hal_screwyhud == 4)	toxin.icon_state = "tox[toxins_alert ? 1 : 0]"
-			if (oxygen || hal_screwyhud == 3) oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
-			if (fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"
+			if (oxygen || hal_screwyhud == 3)	oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
+			if (fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"													//NOTE: INVESTIGATE NUKE BURNINGS
 			//NOTE: the alerts dont reset when youre out of danger. dont blame me,
 			//blame the person who coded them. Temporary fix added.
 
-			switch(bodytemperature) //310.055 optimal body temp
-
-				if(370 to INFINITY)
-					bodytemp.icon_state = "temp4"
-				if(350 to 370)
-					bodytemp.icon_state = "temp3"
-				if(335 to 350)
-					bodytemp.icon_state = "temp2"
-				if(320 to 335)
-					bodytemp.icon_state = "temp1"
-				if(300 to 320)
-					bodytemp.icon_state = "temp0"
-				if(295 to 300)
-					bodytemp.icon_state = "temp-1"
-				if(280 to 295)
-					bodytemp.icon_state = "temp-2"
-				if(260 to 280)
-					bodytemp.icon_state = "temp-3"
-				else
-					bodytemp.icon_state = "temp-4"
+			if(bodytemp)
+				switch(bodytemperature) //310.055 optimal body temp
+					if(370 to INFINITY)
+						bodytemp.icon_state = "temp4"
+					if(350 to 370)
+						bodytemp.icon_state = "temp3"
+					if(335 to 350)
+						bodytemp.icon_state = "temp2"
+					if(320 to 335)
+						bodytemp.icon_state = "temp1"
+					if(300 to 320)
+						bodytemp.icon_state = "temp0"
+					if(295 to 300)
+						bodytemp.icon_state = "temp-1"
+					if(280 to 295)
+						bodytemp.icon_state = "temp-2"
+					if(260 to 280)
+						bodytemp.icon_state = "temp-3"
+					else
+						bodytemp.icon_state = "temp-4"
 
 			if(!client)	return 0 //Wish we did not need these
 			client.screen -= hud_used.blurry

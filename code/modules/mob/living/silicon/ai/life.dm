@@ -47,10 +47,11 @@
 							//stage = 5
 							blind = 1
 
-				if (!blind)
+				if (!blind)	//lol? if(!blind)	#if(src.blind.layer)    <--something here is clearly wrong :P
+							//I'll get back to this when I find out  how this is -supposed- to work ~Carn
 					//stage = 4.5
-					if (src.blind.layer!=0)
-						src.blind.layer = 0
+//					if (src.blind.layer!=0)
+//						src.blind.layer = 0
 					src.sight |= SEE_TURFS
 					src.sight |= SEE_MOBS
 					src.sight |= SEE_OBJS
@@ -58,7 +59,7 @@
 					src.see_invisible = 2
 
 					var/area/home = get_area(src)
-					if(!home)	return//something to do with malf fucking things up I guess.
+					if(!home)	return//something to do with malf fucking things up I guess. <-- aisat is gone. is this still necessary? ~Carn
 					if(home.powered(EQUIP))
 						home.use_power(1000, EQUIP)
 
