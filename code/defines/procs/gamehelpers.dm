@@ -193,3 +193,12 @@ proc/check_can_reach(atom/user, atom/target)
 	if(!in_range(user,target))
 		return 0
 	return CanReachThrough(get_turf(user), get_turf(target), target)
+
+//cael - not sure if there's an equivalent proc, but if there is i couldn't find it
+//searches to see if M contains O somewhere
+proc/is_carrying(var/M as mob, var/O as obj)
+	while(!istype(O,/area))
+		if(O:loc == M)
+			return 1
+		O = O:loc
+	return 0

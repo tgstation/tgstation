@@ -117,7 +117,7 @@ MASS SPECTROMETER
 				src.amount--
 				var/obj/item/weapon/f_card/F = new /obj/item/weapon/f_card( user.loc )
 				F.amount = 1
-				F.fingerprints += md5(M.dna.uni_identity)
+				F.add_fingerprint(M)
 				F.icon_state = "fingerprint1"
 				F.name = text("FPrintC- '[M.name]'")
 

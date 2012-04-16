@@ -198,7 +198,7 @@
 				return
 		var/obj/mecha/Mech = M.loc
 		spawn() //this helps prevent clickspam fest.
-			if (Mech)
+			if (Mech && !(is_carrying(M,object))  )  //cael - make sure you cant drill shit in your invent
 				Mech.click_action(object,M)
 	else
 		return ..()
