@@ -80,7 +80,7 @@
 				verbs += /client/proc/jumptokey
 				verbs += /client/proc/jumptomob
 				verbs += /client/proc/jumptoturf
-
+				verbs += /client/proc/jumptocoord
 				verbs += /client/proc/cmd_admin_add_freeform_ai_law
 				verbs += /client/proc/cmd_admin_rejuvenate
 				verbs += /client/proc/cmd_admin_drop_everything
@@ -213,6 +213,7 @@
 			verbs += /client/proc/togglebuildmodeself
 			verbs += /client/proc/hide_most_verbs
 			verbs += /client/proc/tension_report
+			verbs += /client/proc/jumptocoord
 
 		if (holder.level >= 3)//Trial Admin********************************************************************
 			verbs += /obj/admins/proc/toggleaban			//abandon mob

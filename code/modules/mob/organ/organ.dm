@@ -440,6 +440,27 @@
 		else
 			droplimb(1)
 
+	proc/getDisplayName()
+		switch(src.name)
+			if("l_leg")
+				return "left leg"
+			if("r_leg")
+				return "right leg"
+			if("l_arm")
+				return "left arm"
+			if("r_arm")
+				return "right arm"
+			if("l_foot")
+				return "left foot"
+			if("r_foot")
+				return "right foot"
+			if("l_hand")
+				return "left hand"
+			if("r_hand")
+				return "right hand"
+			else
+				return src.name
+
 /datum/organ/wound
 	name = "wound"
 	var/wound_type = 0 //0 = cut, 1 = bruise, 2 = burn
@@ -562,6 +583,8 @@
 			parent.brute_dam = max(parent.brute_dam - (initial_dmg - damage),0)
 		initial_dmg = damage //reset it for further updates.
 		parent.owner.updatehealth()
+
+
 
 
 /****************************************************

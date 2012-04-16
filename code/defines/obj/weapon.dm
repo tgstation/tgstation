@@ -936,6 +936,16 @@
 	var/text_underline = 0
 	var/text_break = 0
 
+/obj/item/weapon/pen/blue
+	desc = "It's a normal blue ink pen."
+	icon_state = "pen_blue"
+	text_color = "#00000F"
+
+/obj/item/weapon/pen/red
+	desc = "It's a normal red ink pen."
+	icon_state = "pen_red"
+	text_color = "#FF0000"
+
 /obj/item/weapon/pen/multi
 	desc = "It's a cool looking pen. Lots of colors!"
 	name = "multicolor pen"
@@ -1591,6 +1601,7 @@
 	sides = 12
 	icon_state = "d20"
 	item_state = "dice"
+
 /obj/item/weapon/pai_cable
 	desc = "A flexible coated cable with a universal jack on one end."
 	desc = "Some spacey cable."

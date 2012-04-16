@@ -181,21 +181,22 @@
 	force = 5.0
 	w_class = 3.0
 	var
-		datum/effect/effect/system/spark_spread/spark_system
+	//	datum/effect/effect/system/spark_spread/spark_system
 		working = 0
 		mode = 1
+		disabled = 0
 
-
+/*
 	New()
 		src.spark_system = new /datum/effect/effect/system/spark_spread
 		spark_system.set_up(5, 0, src)
 		spark_system.attach(src)
 		return
-
+*/
 
 	proc/activate()
-		spark_system.set_up(5, 0, src)
-		src.spark_system.start()
+//		spark_system.set_up(5, 0, src)
+//		src.spark_system.start()
 		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 
 
@@ -205,22 +206,26 @@
 		if(mode == 1)
 			mode = 2
 			user << "Changed mode to 'Airlock'"
-			src.spark_system.start()
+//			src.spark_system.start()
 			return
 		if(mode == 2)
 			mode = 3
 			user << "Changed mode to 'Deconstruct'"
-			src.spark_system.start()
+//			src.spark_system.start()
 			return
 		if(mode == 3)
 			mode = 1
 			user << "Changed mode to 'Floor & Walls'"
-			src.spark_system.start()
+//			src.spark_system.start()
 			return
 
 
 	afterattack(atom/A, mob/user as mob)
-		if(!isrobot(user))	return
+		if(istype(A,/area/shuttle))//||istype(A,/turf/space/transit))//No RCDs on the shuttles -Sieve
+			disabled = 1
+		else
+			disabled = 0
+		if(!isrobot(user)|| disabled == 1)	return
 		if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock)))	return
 
 		var/mob/living/silicon/robot/R = user
@@ -268,13 +273,7 @@
 							A:ReplaceWithPlating()
 						return
 
-					if(istype(A, /turf/simulated/wall/r_wall))
-						if(!cell.use(300))	return
-						user << "Deconstructing RWall..."
-						playsound(src.loc, 'click.ogg', 50, 1)
-						if(do_after(user, 60))
-							activate()
-							A:ReplaceWithWall()
+					if(istype(A, /turf/simulated/wall/r_wall))	//by order of muskets -pete
 						return
 
 					if(istype(A, /turf/simulated/floor))

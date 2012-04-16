@@ -142,15 +142,40 @@
 				visible_message("\red <B>[M] has pushed [src]!</B>")
 				return
 
+			var/talked = 0	// BubbleWrap
+
 			if(randn <= 60)
-				drop_item()
+				//BubbleWrap: Disarming breaks a pull
+				if(pulling)
+					visible_message("\red <b>[M] has broken [src]'s grip on [pulling]!</B>")
+					talked = 1
+					pulling = null
+
+				//BubbleWrap: Disarming also breaks a grab - this will also stop someone being choked, won't it?
+				if(istype(l_hand, /obj/item/weapon/grab))
+					var/obj/item/weapon/grab/lgrab = l_hand
+					if(lgrab.affecting)
+						visible_message("\red <b>[M] has broken [src]'s grip on [lgrab.affecting]!</B>")
+						talked = 1
+					spawn(1)
+						del(lgrab)
+				if(istype(r_hand, /obj/item/weapon/grab))
+					var/obj/item/weapon/grab/rgrab = r_hand
+					if(rgrab.affecting)
+						visible_message("\red <b>[M] has broken [src]'s grip on [rgrab.affecting]!</B>")
+						talked = 1
+					spawn(1)
+						del(rgrab)
+				//End BubbleWrap
+
+				if(!talked)	//BubbleWrap
+					drop_item()
+					visible_message("\red <B>[M] has disarmed [src]!</B>")
 				playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
-				visible_message("\red <B>[M] has disarmed [src]!</B>")
 				return
+
 
 			playsound(loc, 'punchmiss.ogg', 25, 1, -1)
 			visible_message("\red <B>[M] attempted to disarm [src]!</B>")
 	update_clothing()
 	return
-
-

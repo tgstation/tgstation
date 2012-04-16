@@ -311,3 +311,27 @@
 	spawn(0)//To prevent the proc from returning null.
 		del(src)
 	return
+
+/mob/living/carbon/human/proc/corgize()
+	if (monkeyizing)
+		return
+	for(var/obj/item/W in src)
+		drop_from_slot(W)
+	update_clothing()
+	monkeyizing = 1
+	canmove = 0
+	icon = null
+	invisibility = 101
+	for(var/t in organs)
+		del(t)
+
+	var/mob/living/simple_animal/corgi/new_corgi = new /mob/living/simple_animal/corgi (loc)
+
+	new_corgi.mind_initialize(src)
+	new_corgi.key = key
+
+	new_corgi.a_intent = "hurt"
+	new_corgi << "<B>You are now a Corgi!.</B>"
+	spawn(0)//To prevent the proc from returning null.
+		del(src)
+	return

@@ -42,6 +42,13 @@ datum
 			required_reagents = list("aluminum" = 1, "silicon" = 1, "oxygen" = 1)
 			result_amount = 3
 
+		stoxin
+			name = "Sleep Toxin"
+			id = "stoxin"
+			result = "stoxin"
+			required_reagents = list("chloralhydrate" = 1, "sugar" = 4)
+			result_amount = 5
+
 		sterilizine
 			name = "Sterilizine"
 			id = "sterilizine"

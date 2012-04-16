@@ -113,6 +113,10 @@
 
 	"Misc"=list(/obj/item/mecha_parts/mecha_tracking)
 	)
+
+
+
+
 	New()
 		..()
 		component_parts = list()
@@ -408,6 +412,12 @@
 
 
 	proc/sync(silent=null)
+		if(queue.len)
+			if(!silent)
+				temp = "Error.  Please clear processing queue before updating!"
+				src.updateUsrDialog()
+			return
+
 		if(!silent)
 			temp = "Updating local R&D database..."
 			src.updateUsrDialog()

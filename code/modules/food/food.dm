@@ -415,6 +415,19 @@
 	name = "brainburger"
 	desc = "A strange looking burger. It looks almost sentient."
 	icon_state = "brainburger"
+	New()
+		..()
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/ghostburger
+	name = "Ghost Burger"
+	desc = "Spooky! It doesn't look very filling."
+	icon_state = "ghostburger"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		bitesize = 2
+
 
 /obj/item/weapon/reagent_containers/food/snacks/human
 	var/hname = ""

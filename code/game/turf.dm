@@ -136,6 +136,12 @@
 		if(O.level == 1)
 			O.hide(0)
 
+// Removes all signs of lattice on the pos of the turf -Donkieyo
+/turf/proc/RemoveLattice()
+	var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
+	if(L)
+		del L
+
 /turf/proc/ReplaceWithFloor(explode=0)
 	var/prior_icon = icon_old
 	var/old_dir = dir
@@ -144,6 +150,7 @@
 		del(L)
 	var/turf/simulated/floor/W = new /turf/simulated/floor( locate(src.x, src.y, src.z) )
 
+	W.RemoveLattice()
 	W.dir = old_dir
 	if(prior_icon) W.icon_state = prior_icon
 	else W.icon_state = "floor"
@@ -164,6 +171,7 @@
 		del(L)
 	var/turf/simulated/floor/plating/W = new /turf/simulated/floor/plating( locate(src.x, src.y, src.z) )
 
+	W.RemoveLattice()
 	W.dir = old_dir
 	if(prior_icon) W.icon_state = prior_icon
 	else W.icon_state = "plating"
@@ -346,6 +354,24 @@
 			return
 
 	return src.attack_hand(user)
+
+
+/turf/simulated/wall/attack_animal(mob/living/simple_animal/M as mob)
+	if(M.wall_smash)
+		if (istype(src, /turf/simulated/wall/r_wall))
+			M << text("\blue This wall is far too strong for you to destroy.")
+			return
+		else
+			if (prob(40))
+				M << text("\blue You smash through the wall.")
+				dismantle_wall(1)
+				return
+			else
+				M << text("\blue You smash against the wall.")
+				return
+
+	M << "\blue You push the wall but nothing happens!"
+	return
 
 /turf/simulated/wall/attack_hand(mob/user as mob)
 	if ((user.mutations & HULK))

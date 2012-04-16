@@ -51,6 +51,24 @@
 			message_admins("[key_name_admin(usr)] jumped to [key_name_admin(M)]", 1)
 		else
 			A << "This mob is not located in the game world."
+
+/client/proc/jumptocoord(tx as num, ty as num, tz as num)
+	set category = "Admin"
+	set name = "Jump to Coordinate"
+
+	if (!holder)
+		src << "Only administrators may use this command."
+		return
+
+	if (config.allow_admin_jump)
+		if(src.mob)
+			var/mob/A = src.mob
+			A.x = tx
+			A.y = ty
+			A.z = tz
+			feedback_add_details("admin_verb","JC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		message_admins("[key_name_admin(usr)] jumped to coordinates [tx], [ty], [tz]")
+
 	else
 		alert("Admin jumping disabled")
 

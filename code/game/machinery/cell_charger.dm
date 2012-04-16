@@ -51,7 +51,7 @@
 	if(!charging || (stat & (BROKEN|NOPOWER)) )
 		return
 
-	var/added = charging.give(50)
+	var/added = charging.give(500)
 	use_power(added / CELLRATE)
 
 	updateicon()
