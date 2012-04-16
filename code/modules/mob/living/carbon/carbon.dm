@@ -181,25 +181,62 @@
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if (src.health > 0)
-		var/t_him = "it"
-		if (src.gender == MALE)
-			t_him = "him"
-		else if (src.gender == FEMALE)
-			t_him = "her"
-		if (istype(src,/mob/living/carbon/human) && src:w_uniform)
-			var/mob/living/carbon/human/H = src
-			H.w_uniform.add_fingerprint(M)
-		if(!src.sleeping_willingly)
-			src.sleeping = 0
-		src.resting = 0
-		AdjustParalysis(-3)
-		AdjustStunned(-3)
-		AdjustWeakened(-3)
-		playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
-		M.visible_message( \
-			"\blue [M] shakes [src] trying to wake [t_him] up!", \
-			"\blue You shake [src] trying to wake [t_him] up!", \
-			)
+		if(src == M && istype(src, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			var/list/damaged = H.get_damaged_organs(1,1)
+			src.visible_message( \
+				text("\blue [src] examines [].",src.gender==MALE?"himself":"herself"), \
+				"\blue You check yourself for injuries." \
+				)
+
+			for(var/datum/organ/external/org in damaged)
+				var/status = ""
+				var/brutedamage = org.brute_dam
+				var/burndamage = org.burn_dam
+				if(halloss > 0)
+					if(prob(30))
+						brutedamage += halloss
+					if(prob(30))
+						burndamage += halloss
+				if(brutedamage > 0)
+					status = "bruised"
+				if(brutedamage > 20)
+					status = "bleeding"
+				if(brutedamage > 40)
+					status = "mangled"
+				if(brutedamage > 0 && burndamage > 0)
+					status += " and "
+				if(burndamage > 40)
+					status += "peeling away"
+				else if(burndamage > 10)
+					status += "blistered"
+				else if(burndamage > 0)
+					status += "numb"
+				if(status == "")
+					status = "OK"
+				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.getDisplayName(),status),1)
+			src.show_message(text("\blue You finish checking yourself"),1)
+		else
+			var/t_him = "it"
+			if (src.gender == MALE)
+				t_him = "him"
+			else if (src.gender == FEMALE)
+				t_him = "her"
+			if (istype(src,/mob/living/carbon/human) && src:w_uniform)
+				var/mob/living/carbon/human/H = src
+				H.w_uniform.add_fingerprint(M)
+			src.sleeping = max(0,src.sleeping-5)
+			if(!src.sleeping_willingly)
+				src.sleeping = 0
+			src.resting = 0
+			AdjustParalysis(-3)
+			AdjustStunned(-3)
+			AdjustWeakened(-3)
+			playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
+			M.visible_message( \
+				"\blue [M] shakes [src] trying to wake [t_him] up!", \
+				"\blue You shake [src] trying to wake [t_him] up!", \
+				)
 
 /mob/living/carbon/proc/eyecheck()
 	return 0
