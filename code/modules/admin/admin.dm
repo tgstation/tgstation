@@ -444,7 +444,7 @@ var/global/BSACooldown = 0
 						log_admin("[key_name(usr)] banned [key_name(M)] from [job]")
 						feedback_inc("ban_job",1)
 						feedback_add_details("ban_job","- [job]")
-						jobban_fullban(M, job, reason)
+						jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
 						if(!msg)	msg = job
 						else		msg += ", [job]"
 					message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [msg]", 1)
