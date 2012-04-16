@@ -266,7 +266,7 @@ var/global/BSACooldown = 0
 				feedback_inc("ban_job",1)
 				M << "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from [job].</B></BIG>"
 				M << "\red <B>The reason is: [reason]</B>"
-				M << "\red Jooban can be lifted only on demand."
+				M << "\red Jobban can be lifted only on demand."
 				message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [job]", 1)
 				jobban_fullban(M, job, reason)
 				href_list["jobban2"] = 1 // lets it fall through and refresh
