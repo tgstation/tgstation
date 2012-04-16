@@ -213,7 +213,7 @@ This could be a lot better but I'm too tired atm.*/
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
 			cell.charge-=(C*10)
-			A.process()
+			A.fired()
 		else
 			U << "\red There are no targets in view."
 	return
