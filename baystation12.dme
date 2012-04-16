@@ -462,6 +462,7 @@
 #include "code\game\machinery\alarm.dm"
 #include "code\game\machinery\atmo_control.dm"
 #include "code\game\machinery\autolathe.dm"
+#include "code\game\machinery\Beacon.dm"
 #include "code\game\machinery\biogenerator.dm"
 #include "code\game\machinery\camera.dm"
 #include "code\game\machinery\camera_circuit.dm"

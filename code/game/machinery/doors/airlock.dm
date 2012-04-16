@@ -70,6 +70,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 	var
 		aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
+		hackProof = 0 // if 1, this door can't be hacked by the AI
 		synDoorHacked = 0 // Has it been hacked? bool 1 = yes / 0 = no
 		synHacking = 0 // Is hack in process y/n?
 		secondsMainPowerLost = 0 //The number of seconds until power is restored.
@@ -812,7 +813,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 
 		canAIHack()
-			return ((src.aiControlDisabled==1) && (!src.isAllPowerCut()));
+			return ((src.aiControlDisabled==1) && (!hackProof) && (!src.isAllPowerCut()));
 
 
 		canSynControl()
