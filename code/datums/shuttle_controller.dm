@@ -201,19 +201,44 @@ datum/shuttle_controller
 						settimeleft(SHUTTLETRANSITTIME)
 						start_location.move_contents_to(end_location, null, NORTH)
 
+						for(var/obj/machinery/door/D in world)
+							if( get_area(D) == end_location )
+								spawn(0)
+									D.close()
+
 						//pods
 						start_location = locate(/area/shuttle/escape_pod1/station)
 						end_location = locate(/area/shuttle/escape_pod1/transit)
 						start_location.move_contents_to(end_location, null, NORTH)
+						for(var/obj/machinery/door/D in world)
+							if( get_area(D) == end_location )
+								spawn(0)
+									D.close()
+
 						start_location = locate(/area/shuttle/escape_pod2/station)
 						end_location = locate(/area/shuttle/escape_pod2/transit)
 						start_location.move_contents_to(end_location, null, NORTH)
+						for(var/obj/machinery/door/D in world)
+							if( get_area(D) == end_location )
+								spawn(0)
+									D.close()
+
 						start_location = locate(/area/shuttle/escape_pod3/station)
 						end_location = locate(/area/shuttle/escape_pod3/transit)
 						start_location.move_contents_to(end_location, null, NORTH)
+						for(var/obj/machinery/door/D in world)
+							if( get_area(D) == end_location )
+								spawn(0)
+									D.close()
+
 						start_location = locate(/area/shuttle/escape_pod5/station)
 						end_location = locate(/area/shuttle/escape_pod5/transit)
 						start_location.move_contents_to(end_location, null, EAST)
+						for(var/obj/machinery/door/D in world)
+							if( get_area(D) == end_location )
+								spawn(0)
+									D.close()
+
 
 						captain_announce("The Emergency Shuttle has left the station. Estimate [timeleft()/60] minutes until the shuttle docks at Central Command.")
 
