@@ -422,6 +422,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	  	// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet.
 	  	// Send a mundane broadcast with limited targets:
 
+		//THIS IS TEMPORARY.
+		if(!connection)	return	//~Carn
+
 		Broadcast_Message(connection, M, voicemask, M.voice_message,
 						  src, message, displayname, jobname, real_name, M.voice_name,
 		                  filter_type, signal.data["compression"])
