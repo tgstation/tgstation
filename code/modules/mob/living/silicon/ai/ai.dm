@@ -126,26 +126,20 @@
 
 		//if(icon_state == initial(icon_state))
 	var/icontype = ""
-	var/list/icons = list("Blue", "HAL9000", "Monochrome", "Rainbow", "HAL9000 Mark2", "Inverted", "Firewall", "Green", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss")
+	var/list/icons = list("Blue", "Monochrome", "Rainbow", "Inverted", "Firewall", "Green", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Red", "Static")
 	if (src.name == "B.A.N.N.E.D." && src.ckey == "spaceman96")
 		icons += "B.A.N.N.E.D."
 	icontype = input("Please, select a display!", "AI", null/*, null*/) in icons
 	if(icontype == "Blue")
 		icon_state = "ai"
-	else if(icontype == "HAL9000")
-		icon_state = "ai-hal9000-2"
 	else if(icontype == "Monochrome")
 		icon_state = "ai-mono"
 	else if(icontype == "Rainbow")
 		icon_state = "ai-clown"
-	else if(icontype == "HAL9000 Mark2")
-		icon_state = "ai-hal9000-3"
 	else if(icontype == "Inverted")
 		icon_state = "ai-u"
 	else if(icontype == "Firewall")
 		icon_state = "ai-magma"
-	else if(icontype == "Funny")
-		icon_state = "ai-yesman"
 	else if(icontype == "Green")
 		icon_state = "ai-wierd"
 	else if(icontype == "Text")
@@ -160,6 +154,10 @@
 		icon_state = "ai-bliss"
 	else if(icontype == "B.A.N.N.E.D.")
 		icon_state = "ai-banned"
+	else if(icontype == "Red")
+		icon_state = "ai-malf"
+	else if(icontype == "Static")
+		icon_state = "ai-static"
 	else//(icontype == "Matrix")
 		icon_state = "ai-matrix"
 
