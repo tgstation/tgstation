@@ -84,7 +84,9 @@ obj/structure
 				Tsrc.ReplaceWithWall()
 				for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 					P.layer = 1
-				W:use(2)
+				for(var/turf/simulated/wall/X in Tsrc.loc)
+					if(X)	X.add_hiddenprint(usr)
+				if (W)	W:use(2)
 				del(src)
 			return
 
@@ -99,6 +101,8 @@ obj/structure
 					Tsrc.ReplaceWithRWall()
 					for(var/obj/machinery/atmospherics/pipe/P in Tsrc)
 						P.layer = 1
+					for(var/turf/simulated/wall/r_wall/X in Tsrc.loc)
+						if(X)	X.add_hiddenprint(usr)
 					if (W)
 						W:use(1)
 					del(src)

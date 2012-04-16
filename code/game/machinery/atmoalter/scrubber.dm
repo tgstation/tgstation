@@ -10,6 +10,27 @@
 
 	volume = 750
 
+	stationary
+		name = "Stationary Air Scrubber"
+		icon_state = "scrubber:0"
+		anchored = 1
+		volume = 30000
+		volume_rate = 5000
+
+		attack_hand(var/mob/user as mob)
+			usr << "\blue You can't directly interact with this machine. Use the area atmos computer."
+
+		update_icon()
+			src.overlays = 0
+
+			if(on)
+				icon_state = "scrubber:1"
+			else
+				icon_state = "scrubber:0"
+
+		attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+			return
+
 /obj/machinery/portable_atmospherics/scrubber/update_icon()
 	src.overlays = 0
 

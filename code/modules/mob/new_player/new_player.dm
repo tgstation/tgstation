@@ -24,6 +24,8 @@
 		var/starting_loc = pick(newplayer_start)
 		if(!starting_loc)	starting_loc = locate(1,1,1)
 		loc = starting_loc
+		lastarea = starting_loc
+
 		sight |= SEE_TURFS
 
 		var/list/watch_locations = list()

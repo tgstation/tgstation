@@ -1,5 +1,5 @@
 /obj/item/weapon/storage/lockbox
-	name = "Lockbox"
+	name = "lockbox"
 	desc = "A locked box."
 	icon_state = "lockbox+l"
 	item_state = "syringe_kit"
@@ -81,3 +81,13 @@
 		new /obj/item/weapon/implantcase/loyalty(src)
 		new /obj/item/weapon/implantcase/loyalty(src)
 		new /obj/item/weapon/implanter/loyalty(src)
+
+
+/obj/item/weapon/storage/lockbox/clusterbang
+	name = "lockbox (clusterbang)"
+	desc = "You have a bad feeling about opening this."
+	req_access = list(access_security)
+
+	New()
+		..()
+		new /obj/item/weapon/flashbang/clusterbang(src)

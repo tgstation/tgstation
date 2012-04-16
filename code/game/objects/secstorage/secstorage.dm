@@ -13,6 +13,7 @@
 	var/l_hacking = 0
 	var/emagged = 0
 	var/open = 0
+	var/internalstorage = 3
 	w_class = 3.0
 
 /obj/item/weapon/secstorage/examine()
@@ -116,7 +117,7 @@
 		else
 			user << "You short out the lock on [src]."
 		return
-	if ((W.w_class > 3 || istype(W, /obj/item/weapon/secstorage)))
+	if ((W.w_class > internalstorage || istype(W, /obj/item/weapon/secstorage)))
 		return
 	if ((istype(W, /obj/item/weapon/screwdriver)) && (src.locked == 1))
 		sleep(6)

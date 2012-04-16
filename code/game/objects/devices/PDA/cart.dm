@@ -515,8 +515,9 @@ Code:
 					for (var/obj/item/weapon/mop/M in world)
 						var/turf/ml = get_turf(M)
 
-						if (ml.z != cl.z)
-							continue
+						if(ml)
+							if (ml.z != cl.z)
+								continue
 
 						ldat += "Mop - <b>\[[ml.x],[ml.y]\]</b> - [M.reagents.total_volume ? "Wet" : "Dry"]<br>"
 

@@ -172,7 +172,19 @@ client
 				body += "<br><font size='1'><a href='byond://?src=\ref[src];rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='byond://?src=\ref[src];rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
 			if(istype(A,/mob))
 				var/mob/M = A
-				body += "<br><font size='1'><a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=key'>[M.key ? M.key : "No key"]</a> / <a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
+				body += "<br><font size='1'><a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
+				body += {"
+				<br><font size='1'>
+				BRUTE:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=\ref["brute"]'>[M.getBruteLoss()]</a>
+				FIRE:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=\ref["fire"]'>[M.getFireLoss()]</a>
+				TOXIN:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=\ref["toxin"]'>[M.getToxLoss()]</a>
+				OXY:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=\ref["oxygen"]'>[M.getOxyLoss()]</a>
+				CLONE:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=\ref["clone"]'>[M.getCloneLoss()]</a>
+				BRAIN:<font size='1'><a href='byond://?src=\ref[src];mobToDamage=\ref[D];adjustDamage=\ref["brain"]'>[M.getBrainLoss()]</a>
+				</font>
+
+
+				"}
 		else
 			body += "<b>[D]</b>"
 
@@ -351,7 +363,6 @@ client
 				// not sure if this is completely right...
 				if(0)   //(L.vars.len > 0)
 					html += "<ol>"
-
 					html += "</ol>"
 				else
 					html += "<ul>"
@@ -364,6 +375,7 @@ client
 							html += debug_variable(index, L[index], level + 1)
 						index++
 					html += "</ul>"
+
 		else
 			html += "[name] = <span class='value'>[value]</span>"
 
@@ -470,6 +482,7 @@ client
 			if(!src.holder)
 				return
 			src.cmd_admin_gib(MOB)
+
 		else if (href_list["build_mode"])
 			if(!href_list["build_mode"])
 				return
@@ -482,6 +495,7 @@ client
 				return
 			togglebuildmode(MOB)
 			href_list["datumrefresh"] = href_list["build_mode"]
+
 		else if (href_list["delall"])
 			if(!href_list["delall"])
 				return
@@ -656,6 +670,31 @@ client
 				usr << "Mob doesn't exist anymore"
 				return
 			holder.Topic(href, list("makeai"=href_list["makeai"]))
+		else if (href_list["adjustDamage"] && href_list["mobToDamage"])
+			var/mob/M = locate(href_list["mobToDamage"])
+			var/Text = locate(href_list["adjustDamage"])
+
+			var/amount =  input("Deal how much damage to mob? (Negative values here heal)","Adjust [Text]loss",0) as num
+			if(Text == "brute")
+				M.adjustBruteLoss(amount)
+			else if(Text == "fire")
+				M.adjustFireLoss(amount)
+			else if(Text == "toxin")
+				M.adjustToxLoss(amount)
+			else if(Text == "oxygen")
+				M.adjustOxyLoss(amount)
+			else if(Text == "brain")
+				M.adjustBrainLoss(amount)
+			else if(Text == "clone")
+				M.adjustCloneLoss(amount)
+			else
+				usr << "You caused an error. DEBUG: Text:[Text] Mob:[M]"
+				return
+
+			if(amount != 0)
+				log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [M] ")
+				message_admins("\blue [key_name(usr)] dealt [amount] amount of [Text] damage to [M] ", 1)
+				href_list["datumrefresh"] = href_list["mobToDamage"]
 		else
 			..()
 

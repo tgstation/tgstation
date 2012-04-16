@@ -359,7 +359,10 @@
 					Tempstun = 1
 
 				if(bodytemperature <= (T0C - 50)) // hurt temperature
-					adjustFireLoss(round(sqrt(bodytemperature)) * 2)
+					if(bodytemperature <= 50) // sqrting negative numbers is bad
+						adjustFireLoss(200)
+					else
+						adjustFireLoss(round(sqrt(bodytemperature)) * 2)
 
 			else
 				Tempstun = 0

@@ -505,16 +505,14 @@
 		PN.merge_powernets(TPN)
 
 	for(var/obj/machinery/power/apc/N in loc)
-
-		if(!N)
-			continue
+		if(!N)	continue
 
 		var/obj/machinery/power/M
 		M = N.terminal
+		if(!M)	continue
 
-		if(M.netnum == 0)
-			if(netnum == 0)
-				continue
+		if(!M.netnum)
+			if(!netnum)continue
 			var/datum/powernet/PN = powernets[netnum]
 			PN.nodes += M
 			M.netnum = netnum

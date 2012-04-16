@@ -4,7 +4,7 @@
 	desc = "A device which uses Hawking Radiation and plasma to produce power."
 	icon = 'singularity.dmi'
 	icon_state = "ca"
-	anchored = 1
+	anchored = 0
 	density = 1
 	directwired = 1
 //	use_power = 0

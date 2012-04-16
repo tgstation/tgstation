@@ -1282,7 +1282,7 @@
 					if (druggy)
 						client.screen += hud_used.druggy
 
-					if (istype(head, /obj/item/clothing/head/helmet/welding))
+					if ((istype(head, /obj/item/clothing/head/helmet/welding)) )
 						if(!head:up && tinted_weldhelh)
 							client.screen += hud_used.darkMask
 

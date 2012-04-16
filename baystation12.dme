@@ -502,6 +502,7 @@
 #include "code\game\machinery\turrets.dm"
 #include "code\game\machinery\vending.dm"
 #include "code\game\machinery\walllockers.dm"
+#include "code\game\machinery\atmoalter\area_atmos_computer.dm"
 #include "code\game\machinery\atmoalter\canister.dm"
 #include "code\game\machinery\atmoalter\meter.dm"
 #include "code\game\machinery\atmoalter\portable_atmospherics.dm"

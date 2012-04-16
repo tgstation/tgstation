@@ -1531,6 +1531,7 @@ datum
 				M:eye_blurry = max(M:eye_blurry-5 , 0)
 				M:eye_blind = max(M:eye_blind-5 , 0)
 				M:disabilities &= ~1
+				M:eye_stat = max(M:eye_stat-5, 0)
 				if(volume > REAGENTS_OVERDOSE)
 					M:adjustToxLoss(1)
 //				if(data >= 100)

@@ -34,30 +34,4 @@
 		var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
 		mind.store_memory("Time of death: [tod]", 0)
 
-	var/cancel
-	for (var/mob/M in world)
-		if (M.client && !M.stat)
-			cancel = 1
-			break
-
-	if (!cancel && !abandon_allowed)
-		spawn (50)
-			cancel = 0
-			for (var/mob/M in world)
-				if (M.client && !M.stat)
-					cancel = 1
-					break
-
-			if (!cancel && !abandon_allowed)
-				world << "<B>Everyone is dead! Resetting in 30 seconds!</B>"
-
-				feedback_set_details("end_error","no live players")
-				feedback_set_details("round_end","[time2text(world.realtime)]")
-				if(blackbox)
-					blackbox.save_all_data_to_sql()
-
-				spawn (300)
-					log_game("Rebooting because of no live players")
-					world.Reboot()
-
 	return ..(gibbed)

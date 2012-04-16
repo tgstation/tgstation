@@ -7,7 +7,8 @@
 	icon_sparking = "safespark"
 	flags = FPRINT | TABLEPASS
 	force = 8.0
-	w_class = 4.0
+	w_class = 8.0
+	internalstorage = 8
 	anchored = 1.0
 	density = 0
 
@@ -15,6 +16,10 @@
 	..()
 	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
+
+/obj/item/weapon/secstorage/ssafe/HoS/New()
+	..()
+	new /obj/item/weapon/storage/lockbox/clusterbang(src)
 
 /obj/item/weapon/secstorage/ssafe/attack_hand(mob/user as mob)
 	return attack_self(user)
