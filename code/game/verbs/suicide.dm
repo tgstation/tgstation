@@ -20,7 +20,7 @@
 
 	if(!permitted)
 		message_admins("[ckey] has tried to suicide, but they were not permitted due to not being antagonist as human.", 1)
-		src << "No.  Adminhelp if there is a legitimate reason."
+		src << "No. Adminhelp if there is a legitimate reason."
 		return
 
 	if (suiciding)
@@ -33,12 +33,34 @@
 		src << "The alien inside you forces you to breathe, preventing you from suiciding."
 		return
 
+	if(mutantrace == "trappedsoul")
+		src << "You are already dead, your soul trapped and contained!"
+		return
+
 	if(confirm == "Yes")
 		message_admins("[ckey] has suicided.", 1)
 		suiciding = 1
-		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
-		viewers(src) << "\red <b>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</b>"
-		adjustOxyLoss(max(175 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+
+		if(mind.special_role == "Syndicate" || mind.special_role == "traitor" || mind.special_role == "Head Revolutionary")
+			viewers(src) << "\red <b>[src] appears to be shifting \his tongue about in \his mouth frantically!</b>"
+			src << "\red <b>You hear a muffled pop and poison starts burning your mouth. Everything fades to black.</b>"
+			toxloss = max(175 - getOxyLoss() - getFireLoss() - getBruteLoss(), getToxLoss())
+
+		else if (mind.special_role == "Wizard")
+			viewers(src) << "\red <b>[src] mutters a chant under \his breath hurriedly and bursts into flames immediately after!</b>"
+			src << "\red <b>An intense heat builds up as you chant under your breath, releasing the energy in a white-hot blaze as you finish.</b>"
+			fireloss = max(175 - getOxyLoss() - getToxLoss() - getBruteLoss(), getFireLoss())
+
+		else if (mind.special_role == "Cultist")
+			viewers(src) << "\red <b>[src] mutters a prayer hastly and falls to the ground!</b>"
+			src << "\red <b>You mutter a prayer hastly and feel your body become heavier.</b>"
+			oxyloss = max(175 - getToxLoss() - getFireLoss() - getBruteLoss(), getOxyLoss())
+
+		else if (mind.special_role == "Changeling")
+			viewers(src) << "\red <b>[src] extends its proboscis and stabs itself in the chest!</b>"
+			src << "\red <b>You extend your proboscis and stab yourself in the chest.</b>"
+			bruteloss = max(175 - getToxLoss() - getFireLoss() - getOxyLoss(), getBruteLoss())
+
 		updatehealth()
 
 /mob/living/carbon/brain/verb/suicide()
