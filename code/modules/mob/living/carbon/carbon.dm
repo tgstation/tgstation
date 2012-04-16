@@ -215,7 +215,7 @@
 				if(status == "")
 					status = "OK"
 				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.getDisplayName(),status),1)
-			src.show_message(text("\blue You finish checking yourself"),1)
+			src.show_message(text("\blue You finish checking yourself."),1)
 		else
 			var/t_him = "it"
 			if (src.gender == MALE)
