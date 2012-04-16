@@ -251,15 +251,20 @@ var/global/datum/controller/occupations/job_master
 	proc/spawnId(var/mob/living/carbon/human/H, rank)
 		if(!H)	return 0
 		var/obj/item/weapon/card/id/C = null
-		switch(rank)
-			if("Cyborg")
+
+		var/datum/job/job = null
+		for(var/datum/job/J in occupations)
+			if(J.title == rank)
+				job = J
+				break
+
+		if(job)
+			if(job.title == "Cyborg")
 				return
-			if("Captain")
-				C = new /obj/item/weapon/card/id/gold(H)
-			if("Head of Personnel" , "Head of Security" , "Chief Engineer" , "Research Director" , "Chief Medical Officer") // You get an ugly ID
-				C = new /obj/item/weapon/card/id/silver(H)
 			else
-				C = new /obj/item/weapon/card/id(H)
+				C = new job.idtype(H)
+		else
+			C = new /obj/item/weapon/card/id(H)
 		if(C)
 			C.registered = H.real_name
 			C.assignment = rank

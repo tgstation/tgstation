@@ -7,6 +7,7 @@
 	spawn_positions = 1
 	supervisors = "the captain"
 	selection_color = "#ffdddd"
+	idtype = /obj/item/weapon/card/id/silver
 
 
 	equip(var/mob/living/carbon/human/H)
