@@ -356,12 +356,21 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	else
 		alert("Invalid mob")
 
-/client/proc/cmd_ASSUME_DIRECT_CONTROL(var/mob/M in world)
+/client/proc/cmd_assume_direct_control(var/mob/M in world)
 	set category = "Admin"
-	set name = "ASSUME DIRECT CONTROL"
-	set desc = "DIRECT INTERVENTION IS NECESSARY"
+	set name = "Assume direct control"
+	set desc = "Direct intervention"
 
-	M.ckey = usr.ckey
+	if(M.ckey)
+		if(alert("This mob is being controlled by [M.ckey]. Are you sure you wish to assume control of it? [M.ckey] will be made a ghost.",,"Yes","No") != "Yes")
+			return
+		else
+			var/mob/dead/observer/ghost = new/mob/dead/observer()
+			ghost.ckey = M.ckey;
+	var/mob/adminmob = src.mob
+	M.ckey = src.ckey;
+	if( isobserver(adminmob) )
+		del(adminmob)
 
 
 
@@ -722,3 +731,50 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	M.update_clothing()
 	return
+
+/client/proc/startSinglo()
+
+	if(alert("Are you sure? This will start up the engine. Should only be used during debug!",,"Yes","No") != "Yes")
+		return
+
+	for(var/obj/machinery/emitter/E in world)
+		if(E.anchored)
+			E.active = 1
+
+	for(var/obj/machinery/field_generator/F in world)
+		if(F.anchored)
+			F.Varedit_start = 1
+	spawn(30)
+		for(var/obj/machinery/the_singularitygen/G in world)
+			if(G.anchored)
+				var/obj/machinery/singularity/S = new /obj/machinery/singularity(get_turf(G), 50)
+				spawn(0)
+					del(G)
+				S.energy = 1750
+				S.current_size = 7
+				S.icon = '224x224.dmi'
+				S.icon_state = "singularity_s7"
+				S.pixel_x = -96
+				S.pixel_y = -96
+				S.grav_pull = 0
+				//S.consume_range = 3
+				S.dissipate = 0
+				//S.dissipate_delay = 10
+				//S.dissipate_track = 0
+				//S.dissipate_strength = 10
+
+	for(var/obj/machinery/power/rad_collector/Rad in world)
+		if(Rad.anchored)
+			if(!Rad.P)
+				var/obj/item/weapon/tank/plasma/Plasma = new/obj/item/weapon/tank/plasma(Rad)
+				Plasma.air_contents.toxins = 70
+				Rad.drainratio = 0
+				Rad.P = Plasma
+				Plasma.loc = Rad
+
+			if(!Rad.active)
+				Rad.toggle_power()
+
+	for(var/obj/machinery/power/smes/SMES in world)
+		if(SMES.anchored)
+			SMES.chargemode = 1

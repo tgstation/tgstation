@@ -182,3 +182,23 @@
 		density = 1
 	else
 		density = !lying
+
+
+/mob/living/proc/Examine_OOC()
+	set name = "Examine Meta-Info (OOC)"
+	set category = "OOC"
+	set src in view()
+
+	if(config.allow_Metadata)
+		usr << "[src]'s Metainfo:"
+
+		if(src.storedpreferences)
+			usr << "[src]'s OOC Notes:  [src.storedpreferences.metadata]"
+
+		else
+			usr << "[src] does not have any stored infomation!"
+
+	else
+		usr << "OOC Metadata is not supported by this server!"
+
+	return

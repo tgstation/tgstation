@@ -8,7 +8,7 @@
 //			verbs += /client/proc/radio_report //for radio debugging dont think its been used in a very long time
 //			verbs += /client/proc/fix_next_move //has not been an issue in a very very long time
 
-			// Mapping helpers added via enable_mapping_debug verb
+			// Mapping helpers added via enable_debug_verbs verb
 // 			verbs += /client/proc/do_not_use_these
 // 			verbs += /client/proc/camera_view
 // 			verbs += /client/proc/sec_camera_report
@@ -205,7 +205,6 @@
 			verbs += /client/proc/check_words
 			verbs += /client/proc/drop_bomb
 			verbs += /client/proc/cmd_admin_grantfullaccess
-			verbs += /client/proc/jump_to_dead_group
 			verbs += /client/proc/cmd_admin_drop_everything
 			verbs += /client/proc/make_sound
 			verbs += /client/proc/play_local_sound
@@ -235,7 +234,6 @@
 			verbs += /client/proc/cmd_admin_rejuvenate
 			verbs += /client/proc/hide_most_verbs
 			verbs += /client/proc/jumptocoord
-			verbs += /client/proc/startSinglo
 			verbs += /client/proc/cmd_modify_ticker_variables
 			verbs += /client/proc/deadmin_self
 			//verbs += /client/proc/cmd_mass_modify_object_variables 	--Merged with view variables
@@ -271,7 +269,7 @@
 			verbs += /client/proc/reload_admins
 			verbs += /client/proc/cmd_debug_make_powernets
 			verbs += /client/proc/object_talk
-			verbs += /client/proc/enable_mapping_debug
+			verbs += /client/proc/enable_debug_verbs
 			verbs += /client/proc/deadmin_self
 		else	return
 	return
@@ -382,9 +380,8 @@
 	verbs -= /client/proc/cmd_admin_gib_self
 	verbs -= /client/proc/restartcontroller
 	verbs -= /client/proc/play_local_sound
-	verbs -= /client/proc/enable_mapping_debug
+	verbs -= /client/proc/enable_debug_verbs
 	verbs -= /client/proc/toggleprayers
-	verbs -= /client/proc/jump_to_dead_group
 	verbs -= /client/proc/Blobize
 	verbs -= /client/proc/toggle_clickproc 								//TODO ERRORAGE (Temporary proc while the enw clickproc is being tested)
 	verbs -= /client/proc/toggle_hear_deadcast
@@ -395,7 +392,6 @@
 	verbs -= /client/proc/toggle_gravity_off
 	verbs -= /client/proc/toggle_random_events
 	verbs -= /client/proc/deadmin_self
-	verbs -= /client/proc/startSinglo
 	verbs -= /client/proc/jumptocoord
 	verbs -= /client/proc/everyone_random
 	verbs -= /proc/possess

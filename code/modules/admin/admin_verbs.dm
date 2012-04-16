@@ -8,7 +8,7 @@
 //			verbs += /client/proc/radio_report //for radio debugging dont think its been used in a very long time
 //			verbs += /client/proc/fix_next_move //has not been an issue in a very very long time
 
-			// Mapping helpers added via enable_mapping_debug verb
+			// Mapping helpers added via enable_debug_verbs verb
 // 			verbs += /client/proc/do_not_use_these
 // 			verbs += /client/proc/camera_view
 // 			verbs += /client/proc/sec_camera_report
@@ -211,7 +211,6 @@
 			verbs += /client/proc/hide_most_verbs
 			verbs += /client/proc/jumptocoord
 			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/startSinglo
 			//verbs += /client/proc/cmd_admin_godmode					--Merged with view variables
 			//verbs += /client/proc/cmd_admin_gib 						--Merged with view variables
 			//verbs += /proc/togglebuildmode 							--Merged with view variables
@@ -235,7 +234,6 @@
 			verbs += /client/proc/check_words
 			verbs += /client/proc/drop_bomb
 			verbs += /client/proc/cmd_admin_grantfullaccess
-			verbs += /client/proc/jump_to_dead_group
 			verbs += /client/proc/kill_airgroup
 			verbs += /client/proc/cmd_admin_drop_everything
 			verbs += /client/proc/make_sound
@@ -255,7 +253,6 @@
 			//verbs += /client/proc/give_spell 							--Merged with view variables
 			//verbs += /client/proc/cmd_admin_ninjafy					--Merged with view variables
 			//verbs += /client/proc/cmd_switch_radio					--removed as tcommsat is staying
-			verbs += /client/proc/cmd_ASSUME_DIRECT_CONTROL
 		else	return
 
 		//Game Master
@@ -270,7 +267,7 @@
 			verbs += /client/proc/cmd_debug_make_powernets
 			verbs += /client/proc/object_talk
 			verbs += /client/proc/strike_team
-			verbs += /client/proc/enable_mapping_debug
+			verbs += /client/proc/enable_debug_verbs
 			verbs += /client/proc/everyone_random
 			verbs += /client/proc/only_one
 			verbs += /client/proc/deadmin_self
@@ -383,9 +380,8 @@
 	verbs -= /client/proc/cmd_admin_gib_self
 	verbs -= /client/proc/restartcontroller
 	verbs -= /client/proc/play_local_sound
-	verbs -= /client/proc/enable_mapping_debug
+	verbs -= /client/proc/enable_debug_verbs
 	verbs -= /client/proc/toggleprayers
-	verbs -= /client/proc/jump_to_dead_group
 	verbs -= /client/proc/Blobize
 	verbs -= /client/proc/toggle_clickproc 								//TODO ERRORAGE (Temporary proc while the enw clickproc is being tested)
 	verbs -= /client/proc/toggle_hear_deadcast
@@ -396,7 +392,6 @@
 	verbs -= /client/proc/toggle_gravity_off
 	verbs -= /client/proc/toggle_random_events
 	verbs -= /client/proc/deadmin_self
-	verbs -= /client/proc/startSinglo
 	verbs -= /client/proc/jumptocoord
 	verbs -= /client/proc/everyone_random
 	verbs -= /client/proc/Set_Holiday
@@ -418,7 +413,6 @@
 	verbs -= /client/proc/togglebuildmodeself
 	verbs -= /client/proc/kill_airgroup
 	verbs -= /client/proc/debug_master_controller
-	verbs -= /client/proc/cmd_ASSUME_DIRECT_CONTROL
 	return
 
 
@@ -702,52 +696,6 @@
 			admins.Remove(src.ckey)
 			usr << "You are now a normal player."
 
-/client/proc/startSinglo()
-	set name = "Singlo Starter"
-	set category = "Debug"
-	set desc = "Starts a self-sustaining, stable singlo.  This artifical singlo does not have a gravitational pull."
-
-	for(var/obj/machinery/emitter/E in world)
-		if(E.anchored)
-			E.active = 1
-
-	for(var/obj/machinery/field_generator/F in world)
-		if(F.anchored)
-			F.Varedit_start = 1
-	spawn(30)
-		for(var/obj/machinery/the_singularitygen/G in world)
-			if(G.anchored)
-				var/obj/machinery/singularity/S = new /obj/machinery/singularity(get_turf(G), 50)
-				spawn(0)
-					del(G)
-				S.energy = 1750
-				S.current_size = 7
-				S.icon = '224x224.dmi'
-				S.icon_state = "singularity_s7"
-				S.pixel_x = -96
-				S.pixel_y = -96
-				S.grav_pull = 0
-				//S.consume_range = 3
-				S.dissipate = 0
-				//S.dissipate_delay = 10
-				//S.dissipate_track = 0
-				//S.dissipate_strength = 10
-
-	for(var/obj/machinery/power/rad_collector/Rad in world)
-		if(Rad.anchored)
-			if(!Rad.P)
-				var/obj/item/weapon/tank/plasma/Plasma = new/obj/item/weapon/tank/plasma(Rad)
-				Plasma.air_contents.toxins = 70
-				Rad.drainratio = 0
-				Rad.P = Plasma
-				Plasma.loc = Rad
-
-			if(!Rad.active)
-				Rad.toggle_power()
-
-	for(var/obj/machinery/power/smes/SMES in world)
-		if(SMES.anchored)
-			SMES.chargemode = 1
 
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
 	set name = "Toggle most admin verb visibility"

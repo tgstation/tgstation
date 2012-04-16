@@ -120,9 +120,9 @@ var/intercom_range_display_status = 0
 					if (!(F in view(7,I.loc)))
 						del(F)
 
-	enable_mapping_debug()
+	enable_debug_verbs()
 		set category = "Debug"
-		set name = "Mapping debug"
+		set name = "Debug verbs"
 		src.verbs += /client/proc/do_not_use_these 			//-errorage
 		src.verbs += /client/proc/camera_view 				//-errorage
 		src.verbs += /client/proc/sec_camera_report 		//-errorage
@@ -132,6 +132,9 @@ var/intercom_range_display_status = 0
 		src.verbs += /client/proc/atmosscan //check plumbing
 		src.verbs += /client/proc/count_objects_on_z_level
 		src.verbs += /client/proc/count_objects_all
+		src.verbs += /client/proc/cmd_assume_direct_control	//-errorage
+		src.verbs += /client/proc/jump_to_dead_group
+		src.verbs += /client/proc/startSinglo
 
 	count_objects_on_z_level()
 		set category = "Mapping"
