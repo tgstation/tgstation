@@ -996,6 +996,7 @@
 #include "code\modules\mob\organ\organ_internal.dm"
 #include "code\modules\mob\organ\pain.dm"
 #include "code\modules\mob\simple_animal\cat.dm"
+#include "code\modules\mob\simple_animal\constructs.dm"
 #include "code\modules\mob\simple_animal\corgi.dm"
 #include "code\modules\mob\simple_animal\crab.dm"
 #include "code\modules\mob\simple_animal\life.dm"

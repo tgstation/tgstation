@@ -47,7 +47,9 @@
 	var/attacktext = "attacks"
 	var/attack_sound = null
 	var/friendly = "nuzzles" //If the mob does no damage with it's attack
+	var/wall_smash = 0 //if they can smash walls
 
+	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
@@ -287,3 +289,9 @@
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
 					M.show_message("\red [user] gently taps [src] with the [O]. ")
+/mob/living/simple_animal/movement_delay()
+	var/tally = 0 //Incase I need to add stuff other than "speed" later
+
+	tally = speed
+
+	return tally
