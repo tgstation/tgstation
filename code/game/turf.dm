@@ -1382,58 +1382,45 @@ turf/simulated/floor/return_siding_icon_state()
 
 		// Okay, so let's make it so that people can travel z levels but not nuke disks!
 		// if(ticker.mode.name == "nuclear emergency")	return
+		if (src.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || src.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))
+			if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
+				del(A)
+				return
 
-		if(ticker.mode.name == "extended"||ticker.mode.name == "sandbox")
-			Sandbox_Spacemove(A)
+			if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
+				return
 
-		else
-			if (src.x <= 2 || A.x >= (world.maxx - 1) || src.y <= 2 || A.y >= (world.maxy - 1))
-				if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
-					del(A)
-					return
+			if(!isemptylist(A.search_contents_for(/obj/item/weapon/disk/nuclear)))
+				if(istype(A, /mob/living))
+					var/mob/living/MM = A
+					if(MM.client)
+						MM << "\red Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is."
+				return
 
-				if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
-					return
+			var/move_to_z_str = pickweight(accessable_z_levels)
 
-				if(!isemptylist(A.search_contents_for(/obj/item/weapon/disk/nuclear)))
-					if(istype(A, /mob/living))
-						var/mob/living/MM = A
-						if(MM.client)
-							MM << "\red Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is."
-					return
+			var/move_to_z = text2num(move_to_z_str)
 
+			if(!move_to_z)
+				return
 
+			A.z = move_to_z
 
-				var/move_to_z_str = pickweight(accessable_z_levels)
+			if(src.x <= TRANSITIONEDGE)
+				A.x = world.maxx - TRANSITIONEDGE - 2
 
-				var/move_to_z = text2num(move_to_z_str)
+			else if (A.x >= (world.maxx - TRANSITIONEDGE - 1))
+				A.x = TRANSITIONEDGE + 1
 
-				if(!move_to_z)
-					return
+			else if (src.y <= TRANSITIONEDGE)
+				A.y = world.maxy - TRANSITIONEDGE -2
 
+			else if (A.y >= (world.maxy - TRANSITIONEDGE - 1))
+				A.y = TRANSITIONEDGE +1
 
-
-				A.z = move_to_z
-
-
-				if(src.x <= 2)
-					A.x = world.maxx - 2
-
-				else if (A.x >= (world.maxx - 1))
-					A.x = 3
-
-				else if (src.y <= 2)
-					A.y = world.maxy - 2
-
-				else if (A.y >= (world.maxy - 1))
-					A.y = 3
-
-				spawn (0)
-					if ((A && A.loc))
-						A.loc.Entered(A)
-
-//				if(istype(A, /obj/structure/closet/coffin))
-//					coffinhandler.Add(A)
+			spawn (0)
+				if ((A && A.loc))
+					A.loc.Entered(A)
 
 /turf/space/proc/Sandbox_Spacemove(atom/movable/A as mob|obj)
 	var/cur_x

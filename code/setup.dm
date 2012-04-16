@@ -265,3 +265,5 @@ var/static/list/scarySounds = list('thudswoosh.ogg','Taser.ogg','armbomb.ogg','h
 #define SEC_LEVEL_BLUE 1
 #define SEC_LEVEL_RED 2
 #define SEC_LEVEL_DELTA 3
+
+#define TRANSITIONEDGE 7 //Distance from edge to move to another z-level
