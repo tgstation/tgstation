@@ -567,7 +567,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
 	spawn( 1 )
-		A.process()
+		A.fired()
 	return
 
 
