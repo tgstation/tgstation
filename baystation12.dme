@@ -447,7 +447,7 @@
 #include "code\game\jobs\jobs.dm"
 #include "code\game\jobs\whitelist.dm"
 #include "code\game\jobs\job\assistant.dm"
-#include "code\game\jobs\job\captian.dm"
+#include "code\game\jobs\job\captain.dm"
 #include "code\game\jobs\job\civilian.dm"
 #include "code\game\jobs\job\civilian_chaplain.dm"
 #include "code\game\jobs\job\engineering.dm"
