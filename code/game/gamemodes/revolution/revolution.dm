@@ -33,7 +33,7 @@
 ///////////////////////////
 /datum/game_mode/revolution/announce()
 	world << "<B>The current game mode is - Revolution!</B>"
-	world << "<B>Some crewmembers are attempting to start a revolution!<BR>\nRevolutionaries - Kill the Captain, HoP, HoS, CE, RD and CMO. Convert other crewmembers (excluding the heads of staff, and security officers) to your cause by flashing them. Protect your leaders.<BR>\nPersonnel - Protect the heads of staff. Kill the leaders of the revolution, and brainwash the other revolutionaries (by beating them in the head).</B>"
+	world << "<B>Some crewmembers are attempting to start a revolution!<BR>\nRevolutionaries - Kill the Captain, HoP, HoS, CE, RD and CMO. Convert other crewmembers (excluding the heads of staff, and security officers) to your cause by convincing and then flashing them. Protect your leaders.<BR>\nPersonnel - Protect the heads of staff. Kill the leaders of the revolution, and brainwash the other revolutionaries (by beating them in the head).</B>"
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -135,7 +135,8 @@
 	if (!where)
 		mob << "The Syndicate were unfortunately unable to get you a flash."
 	else
-		mob << "The flash in your [where] will implant a memory engram to convert others to our cause."
+		mob << "The flash in your [where] can be used to mark a crew member as revolutionist. Use this only on those true to your cause, to ensure that everyone bearing the mark can be trusted."
+		mob << "\red Do not use the flash on players who haven't agreed to join your cause. This is known as 'LOLFLASHING' and can get you banned."
 		return 1
 
 //////////////////////////////////////
