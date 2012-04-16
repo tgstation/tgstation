@@ -1601,6 +1601,7 @@
 	sides = 12
 	icon_state = "d20"
 	item_state = "dice"
+
 /obj/item/weapon/pai_cable
 	desc = "A flexible coated cable with a universal jack on one end."
 	desc = "Some spacey cable."

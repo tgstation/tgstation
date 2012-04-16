@@ -405,6 +405,7 @@
 	else if(temp_sides == 20 && result == 1)
 		comment = "Ouch, bad luck."
 	user << text("\red You throw a [src]. It lands on a [result]. [comment]")
+	icon_state = "[name][result]"
 	for(var/mob/O in viewers(user, null))
 		if(O == (user))
 			continue
