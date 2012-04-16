@@ -154,6 +154,7 @@
 	attack_sound = 'bite.ogg'
 	attack_speed = 10
 	speed = 8
+	chasespeed = 8
 	var/stunchance = 10 // chance to tackle things down
 
 
