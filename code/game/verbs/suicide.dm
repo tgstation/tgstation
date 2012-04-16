@@ -52,7 +52,7 @@
 			fireloss = max(175 - getOxyLoss() - getToxLoss() - getBruteLoss(), getFireLoss())
 
 		else if (mind.special_role == "Cultist")
-			viewers(src) << "\red <b>[src] mutters a prayer hastly and falls to the ground!</b>"
+			viewers(src) << "\red <b>[src] mutters a prayer hastily and falls to the ground!</b>"
 			src << "\red <b>You mutter a prayer hastly and feel your body become heavier.</b>"
 			oxyloss = max(175 - getToxLoss() - getFireLoss() - getBruteLoss(), getOxyLoss())
 
