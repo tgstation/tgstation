@@ -6,7 +6,7 @@
 	icon_state = "plantbag"
 	name = "Plant Bag"
 	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
-	var/capacity = 10; //the number of plant pieces it can carry.
+	var/capacity = 50; //the number of plant pieces it can carry.
 	flags = FPRINT | TABLEPASS | ONBELT
 	w_class = 1
 

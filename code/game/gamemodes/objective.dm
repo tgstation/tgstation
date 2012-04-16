@@ -237,7 +237,7 @@ datum/objective/block
 
 
 datum/objective/escape
-	explanation_text = "Escape on the shuttle alive."
+	explanation_text = "Escape on the shuttle or an escape pod alive."
 
 
 	check_completion()

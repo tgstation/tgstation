@@ -65,6 +65,23 @@ var/list/supply_groups = new()
 			if (prob(5))
 				del(src)
 
+/obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates
+	name = "\improper Airtight plastic flaps"
+	desc = "Heavy duty, airtight, plastic flaps."
+
+	New() //set the turf below the flaps to block air
+		var/turf/T = get_turf(src.loc)
+		if(T)
+			T.blocks_air = 1
+		..()
+
+	Del() //lazy hack to set the turf to allow air to pass if it's a simulated floor
+		var/turf/T = get_turf(src.loc)
+		if(T)
+			if(istype(T, /turf/simulated/floor))
+				T.blocks_air = 0
+		..()
+
 /area/supplyshuttle
 	name = "Supply Shuttle"
 	icon_state = "supply"

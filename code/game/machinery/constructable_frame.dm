@@ -163,7 +163,7 @@ to destroy them and players will be able to make replacements.
 	build_path = "/obj/machinery/r_n_d/destructive_analyzer"
 	board_type = "machine"
 	origin_tech = "magnets=2;engineering=2;programming=2"
-	frame_desc = "Requires 2 Scanning Modules, 1 Manipulator, and 1 Micro-Laser."
+	frame_desc = "Requires 1 Scanning Module, 1 Manipulator, and 1 Micro-Laser."
 	req_components = list(
 							"/obj/item/weapon/stock_parts/scanning_module" = 1,
 							"/obj/item/weapon/stock_parts/manipulator" = 1,

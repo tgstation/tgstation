@@ -690,6 +690,7 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/mecha/durand/targeting"
 
+
 		honker_main
 			name = "Circuit Design (\"H.O.N.K\" Central Control module)"
 			desc = "Allows for the construction of a \"H.O.N.K\" Central Control module."
@@ -848,6 +849,7 @@ datum
 			build_type = MECHFAB
 			req_tech = list("powerstorage"= 3, "engineering" = 3, "materials" = 3)
 			build_path = "/obj/item/mecha_parts/mecha_equipment/generator/nuclear"
+
 
 ////////////////////////////////////////
 //////////Disk Construction Disks///////
@@ -1014,6 +1016,8 @@ datum
 			reliability_base = 75
 			build_path = "/obj/item/weapon/stock_parts/matter_bin/super"
 
+
+
 		subspace_ansible
 			name = "Subspace Ansible"
 			desc = "A compact module capable of sensing extradimensional activity."
@@ -1113,7 +1117,7 @@ datum
 			name = "Hyper-Capacity Power Cell"
 			desc = "A power cell that holds 30000 units of energy"
 			id = "hyper_cell"
-			req_tech = list("powerstorage" = 6, "materials" = 4)
+			req_tech = list("powerstorage" = 5, "materials" = 4)
 			reliability_base = 85
 			build_type = PROTOLATHE
 			materials = list("$metal" = 400, "$gold" = 150, "$silver" = 150, "$glass" = 70)

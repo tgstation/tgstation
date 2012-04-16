@@ -306,6 +306,14 @@ It is caused by the unexpected circumstances after awakening in cryo (if cloned 
 				<li>Install the external reinforced armor plating (Not included due to NanoTrasen regulations. Can be made using 5 reinforced metal sheets.)</li>
 				<li>Secure the external reinforced armor plating with a wrench</li>
 				<li>Weld the external reinforced armor plating to the chassis</li>
+				<li></li>
+				<li>Additional Information:</li>
+				<li>The firefighting variation is made in a similar fashion.</li>
+				<li>A firesuit must be connected to the Firefighter chassis for heat shielding.</li>
+				<li>Internal armor is plasteel for additional strength.</li>
+				<li>External armor must be installed in 2 parts, totaling 10 sheets.</li>
+				<li>Completed mech is more resiliant against fire, and is a bit more durable overall</li>
+				<li>Nanotrasen is determined to the safety of its <s>investments</s> employees.</li>
 				</ol>
 				</body>
 				</html>
@@ -343,7 +351,7 @@ It is caused by the unexpected circumstances after awakening in cryo (if cloned 
 				Those are the basic steps to furthing science. What do you do science with, however? Well, you have four major tools: R&D Console, the Destructive Analyzer, the Protolathe, and the Circuit Imprinter.
 
 				<h2>The R&D Console</h2>
-				The R&D console is the cornerstone of any research lab. It is the central system from which the Destructive Analyzer, Protolathe, and Circuit Imprinter (your R&D systems) are controled. More on those systems in their own sections. On it's own, the R&D console acts as a database for all your technological gains and new devices you discover. So long as the R&D console remains intact, you'll retain all that SCIENCE you've discovered. Protect it though, because if it gets damaged, you'll lose your data! In addition to this important purpose, the R&D console has a disk menu that lets you transfer data from the database onto disk or from the disk into the database. It also has a settings menu that lets you re-sync with nearby R&D devices (if they've become disconnected), lock the console from the unworthy, upload the data to all other R&D consoles in the network (all R&D consoles are networked by default), connect/disconnect from the network, and purge all data from the database.
+				The R&D console is the cornerstone of any research lab. It is the central system from which the Destructive Analyzer, Protolathe, and Circuit Imprinter (your R&D systems) are controled. More on those systems in their own sections. On its own, the R&D console acts as a database for all your technological gains and new devices you discover. So long as the R&D console remains intact, you'll retain all that SCIENCE you've discovered. Protect it though, because if it gets damaged, you'll lose your data! In addition to this important purpose, the R&D console has a disk menu that lets you transfer data from the database onto disk or from the disk into the database. It also has a settings menu that lets you re-sync with nearby R&D devices (if they've become disconnected), lock the console from the unworthy, upload the data to all other R&D consoles in the network (all R&D consoles are networked by default), connect/disconnect from the network, and purge all data from the database.
 				<b>NOTE:</b> The technology list screen, circuit imprinter, and protolathe menus are accessible by non-scientists. This is intended to allow 'public' systems for the plebians to utilize some new devices.
 
 				<h2>Destructive Analyzer</h2>
@@ -359,7 +367,7 @@ It is caused by the unexpected circumstances after awakening in cryo (if cloned 
 				As it has been stated, many devices when they're first discovered do not have a 100% reliablity when you first discover them. Instead, the reliablity of the device is dependent upon a base reliability value, whatever improvements to the design you've discovered through the Destructive Analyzer, and any advancements you've made with the device's source technologies. To be able to improve the reliability of a device, you have to use the device until it breaks beyond repair. Once that happens, you can analyze it in a Destructive Analyzer. Once the device reachs a certain minimum reliability, you'll gain tech advancements from it.
 
 				<h1>Building a Better Machine</h1>
-				Many machines produces from circuit boards and inserted into a machine frame require a variety of parts to construct. These are parts like capacitors, batteries, matter bins, and so forth. As your knowledge of science improves, more advanced versions are unlocked. If you use these parts when constructing something, it's attributes may be improved. For example, if you use an advanced matter bin when constructing an autolathe (rather then a regular one), it'll hold more materials. Experiment around with stock parts of various qualities to see how they affect the end results! Be warned, however: Tier 3 and higher stock parts don't have 100% reliability and their low reliability may affect the reliability of the end machine.
+				Many machines produces from circuit boards and inserted into a machine frame require a variety of parts to construct. These are parts like capacitors, batteries, matter bins, and so forth. As your knowledge of science improves, more advanced versions are unlocked. If you use these parts when constructing something, its attributes may be improved. For example, if you use an advanced matter bin when constructing an autolathe (rather then a regular one), it'll hold more materials. Experiment around with stock parts of various qualities to see how they affect the end results! Be warned, however: Tier 3 and higher stock parts don't have 100% reliability and their low reliability may affect the reliability of the end machine.
 				</body>
 				</html>
 			"}
@@ -410,7 +418,7 @@ It is caused by the unexpected circumstances after awakening in cryo (if cloned 
 
 
 				<h2><a name="Modules">Cyborg Modules</h2>
-				When a cyborg is created it picks out of an array of modules to designate it's purpose. There are 6 different cyborg modules.
+				When a cyborg is created it picks out of an array of modules to designate its purpose. There are 6 different cyborg modules.
 
 				<h3>Standard Cyborg</h3>
 				The standard cyborg module is a multi-purpose cyborg. It is equipped with various modules, allowing it to do basic tasks.<br>A Standard Cyborg comes with:
@@ -584,7 +592,7 @@ It is caused by the unexpected circumstances after awakening in cryo (if cloned 
 
 		</html>
 
-			"}
+		"}
 
 /obj/item/weapon/book/manual/engineering_guide
 	name = "Engineering Textbook"
@@ -680,37 +688,37 @@ It is caused by the unexpected circumstances after awakening in cryo (if cloned 
 	author = "NanoTrasen"
 
 	dat = {"<html>
-<head>
-<style>
-h1 {font-size: 18px; margin: 15px 0px 5px;}
-h2 {font-size: 15px; margin: 15px 0px 5px;}
-li {margin: 2px 0px 2px 15px;}
-ul {list-style: none; margin: 5px; padding: 0px;}
-ol {margin: 5px; padding: 0px 15px;}
-</style>
-</head>
-<body>
-<h3>Detective Work</h3>
+			<head>
+			<style>
+			h1 {font-size: 18px; margin: 15px 0px 5px;}
+			h2 {font-size: 15px; margin: 15px 0px 5px;}
+			li {margin: 2px 0px 2px 15px;}
+			ul {list-style: none; margin: 5px; padding: 0px;}
+			ol {margin: 5px; padding: 0px 15px;}
+			</style>
+			</head>
+			<body>
+			<h3>Detective Work</h3>
 
-Between your bouts of self-narration, and drinking whiskey on the rocks, you might get a case or two to solve.<br>
-To have the best chance to solve your case, follow these directions:
-<p>
-<ol>
-<li>Go to the crime scene. </li>
-<li>Take your scanner and scan EVERYTHING (Yes, the doors, the tables, even the dog.) </li>
-<li>Once you are reasonably certain you have every scrap of evidence you can use, find all possible entry points and scan them, too. </li>
-<li>Return to your office. </li>
-<li>Using your forensic scanning computer, scan your Scanner to upload all of your evidence into the database.</li>
-<li>Browse through the resulting dossiers, looking for the one that either has the most complete set of prints, or the most suspicious items handled. </li>
-<li>If you have 80% or more of the print (The print is displayed) go to step 10, otherwise continue to step 8.</li>
-<li>Look for clues from the suit fibres you found on your perp, and go about looking for more evidence with this new information, scanning as you go. </li>
-<li>Try to get a fingerprint card of your perp, as if used in the computer, the prints will be completed on their dossier.</li>
-<li>Assuming you have enough of a print to see it, grab the biggest complete piece of the print and search the security records for it. </li>
-<li>Since you now have both your dossier and the name of the person, print both out as evidence, and get security to nab your baddie.</li>
-<li>Give yourself a pat on the back and a bottle of the ships finest vodka, you did it!. </li>
-</ol>
-<p>
-It really is that easy! Good luck!
+			Between your bouts of self-narration, and drinking whiskey on the rocks, you might get a case or two to solve.<br>
+			To have the best chance to solve your case, follow these directions:
+			<p>
+			<ol>
+			<li>Go to the crime scene. </li>
+			<li>Take your scanner and scan EVERYTHING (Yes, the doors, the tables, even the dog.) </li>
+			<li>Once you are reasonably certain you have every scrap of evidence you can use, find all possible entry points and scan them, too. </li>
+			<li>Return to your office. </li>
+			<li>Using your forensic scanning computer, scan your Scanner to upload all of your evidence into the database.</li>
+			<li>Browse through the resulting dossiers, looking for the one that either has the most complete set of prints, or the most suspicious items handled. </li>
+			<li>If you have 80% or more of the print (The print is displayed) go to step 10, otherwise continue to step 8.</li>
+			<li>Look for clues from the suit fibres you found on your perp, and go about looking for more evidence with this new information, scanning as you go. </li>
+			<li>Try to get a fingerprint card of your perp, as if used in the computer, the prints will be completed on their dossier.</li>
+			<li>Assuming you have enough of a print to see it, grab the biggest complete piece of the print and search the security records for it. </li>
+			<li>Since you now have both your dossier and the name of the person, print both out as evidence, and get security to nab your baddie.</li>
+			<li>Give yourself a pat on the back and a bottle of the ships finest vodka, you did it!. </li>
+			</ol>
+			<p>
+			It really is that easy! Good luck!
 
-</body>
-</html>"}
+			</body>
+			</html>"}
