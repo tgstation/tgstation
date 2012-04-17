@@ -14,10 +14,10 @@
 			i++
 			if(i%2 == 0)
 				color = "#f2f2f2"
-			var/real = (M.real_name == M.original_name ? M.real_name : "[M.original_name] (as [M.real_name])")
+			var/real = (M.real_name == M.original_name ? "<b>[M.name]/[M.real_name]</b>" : "<b>[M.original_name] (as [M.name]/[M.real_name])</b>")
 			var/turf/T = get_turf(M)
 			var/client_key = (M.key? M.key : "No key")
-			dat += "<tr align='center' bgcolor='[color]'><td>[M.name] \[[real]\] <br>[M.client ? M.client : "No client ([client_key])"] at ([T.x], [T.y], [T.z])</td>" // Adds current name
+			dat += "<tr align='center' bgcolor='[color]'><td>[real] <br>[M.client ? M.client : "No client ([client_key])"] at ([T.x], [T.y], [T.z])</td>" // Adds current name
 			if(isobserver(M))
 				dat += "<td>Ghost</td>"
 			else if(isalien(M))

@@ -95,6 +95,13 @@
 		L |= E:contents
 	for(var/obj/item/smallDelivery/S in L)
 		L |= S.wrapped
+	if(hasorgans(src))
+		for(var/named in src:organs)
+			var/datum/organ/external/O = src:organs[named]
+			for(var/obj/item/weapon/implant/I in O.implant)
+				L |= I
+				if(istype(I, /obj/item/weapon/implant/compressed))
+					L |= I:scanned
 
 	for(var/obj/B in L)
 		if(B.type == A)
@@ -114,6 +121,13 @@
 		L |= E:contents
 	for(var/obj/item/smallDelivery/S in L)
 		L |= S.wrapped
+	if(hasorgans(src))
+		for(var/named in src:organs)
+			var/datum/organ/external/O = src:organs[named]
+			for(var/obj/item/weapon/implant/I in O.implant)
+				L |= I
+				if(istype(I, /obj/item/weapon/implant/compressed))
+					L |= I:scanned
 
 	for(var/obj/item/weapon/reagent_containers/B in L)
 		for(var/datum/reagent/R in B.reagents.reagent_list)

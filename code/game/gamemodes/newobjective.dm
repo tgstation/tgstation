@@ -1167,6 +1167,10 @@ datum
 				return 1
 
 		decapitate
+			New(var/text,var/joba,var/datum/mind/targeta)
+				target = targeta
+				job = joba
+				explanation_text = "Remove and recover the head of [target.current.real_name], the [target.assigned_role]."
 			proc/find_target()
 				..()
 				if(target && target.current)
@@ -1249,6 +1253,11 @@ datum
 
 
 		debrain//I want braaaainssss
+			New(var/text,var/joba,var/datum/mind/targeta)
+				target = targeta
+				job = joba
+				explanation_text = "Remove and recover the brain of [target.current.real_name], the [target.assigned_role]."
+
 			proc/find_target()
 				..()
 				if(target && target.current)

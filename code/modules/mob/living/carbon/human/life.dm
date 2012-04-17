@@ -999,7 +999,7 @@
 			var/blood_max = 0
 			for(var/name in organs)
 				var/datum/organ/external/temp = organs[name]
-				if(!temp.bleeding)
+				if(!temp.bleeding || temp.robot) //THAT WAS DUMB.
 					continue
 			//	else
 			//		if(prob(35))
