@@ -163,32 +163,30 @@
 	if(src.repairing)
 		return
 	var/list/floorbottargets = list()
-	if(!src.target || src.target == null)
+	if(!src.target)
 		for(var/obj/machinery/bot/floorbot/bot in world)
 			if(bot != src)
 				floorbottargets += bot.target
-	if(src.amount <= 0 && ((src.target == null) || !src.target))
+	if(src.amount <= 0 && !src.target)
 		if(src.eattiles)
 			for(var/obj/item/stack/tile/plasteel/T in view(7, src))
 				if(T != src.oldtarget && !(target in floorbottargets))
 					src.oldtarget = T
 					src.target = T
 					break
-		if(src.target == null || !src.target)
-			if(src.maketiles)
-				if(src.target == null || !src.target)
-					for(var/obj/item/stack/sheet/metal/M in view(7, src))
-						if(!(M in floorbottargets) && M != src.oldtarget && M.amount == 1 && !(istype(M.loc, /turf/simulated/wall)))
-							src.oldtarget = M
-							src.target = M
-							break
+		if(!src.target && src.maketiles)
+			for(var/obj/item/stack/sheet/metal/M in view(7, src))
+				if(!(M in floorbottargets) && M != src.oldtarget && M.amount == 1 && !(istype(M.loc, /turf/simulated/wall)))
+					src.oldtarget = M
+					src.target = M
+					break
 		else
 			return
 	if(prob(5))
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("[src] makes an excited booping beeping sound!"), 1)
 
-	if(!src.target || src.target == null)
+	if(!src.target == null)
 		if(targetdirection != null)
 			/*
 			for (var/turf/space/D in view(7,src))
@@ -202,31 +200,31 @@
 			if(istype(T, /turf/space))
 				src.oldtarget = T
 				src.target = T
-		if(!src.target || src.target == null)
+		if(!src.target)
 			for (var/turf/space/D in view(7,src))
 				if(!(D in floorbottargets) && D != src.oldtarget && (D.loc.name != "Space") && !istype(D.loc, /area/shuttle))
 					src.oldtarget = D
 					src.target = D
 					break
-		if((!src.target || src.target == null ) && src.improvefloors)
+		if(!src.target && src.improvefloors)
 			for (var/turf/simulated/floor/F in view(7,src))
 				if(!(F in floorbottargets) && F != src.oldtarget && F.icon_state == "Floor1" && !(istype(F, /turf/simulated/floor/plating)))
 					src.oldtarget = F
 					src.target = F
 					break
-		if((!src.target || src.target == null) && src.eattiles)
+		if(!src.target && src.eattiles)
 			for(var/obj/item/stack/tile/plasteel/T in view(7, src))
 				if(!(T in floorbottargets) && T != src.oldtarget)
 					src.oldtarget = T
 					src.target = T
 					break
 
-	if(!src.target || src.target == null)
+	if(!src.target)
 		if(src.loc != src.oldloc)
 			src.oldtarget = null
 		return
 
-	if(src.target && (src.target != null) && src.path.len == 0)
+	if(src.target && src.path.len == 0)
 		spawn(0)
 			if(!istype(src.target, /turf/))
 				src.path = AStar(src.loc, src.target.loc, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30)
@@ -237,7 +235,7 @@
 				src.oldtarget = src.target
 				src.target = null
 		return
-	if(src.path.len > 0 && src.target && (src.target != null))
+	if(src.path.len > 0 && src.target)
 		step_to(src, src.path[1])
 		src.path -= src.path[1]
 	else if(src.path.len == 1)
