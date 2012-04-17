@@ -34,6 +34,8 @@
 
 		if(shots_left <= 0)
 			user.show_message("\red *click* *click*", 2)
+			for(var/mob/K in viewers(usr))
+				K << 'empty.ogg'
 			return
 
 		playsound(src.loc, 'flash.ogg', 100, 1)

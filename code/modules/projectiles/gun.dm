@@ -162,6 +162,8 @@
 		if(!special_check(user))	return
 		if(!load_into_chamber())
 			user.visible_message("*click click*", "\red <b>*click*</b>")
+			for(var/mob/K in viewers(usr))
+				K << 'empty.ogg'
 			return
 
 		if(!in_chamber)	return
@@ -250,6 +252,8 @@
 					told_cant_shoot = 0
 		else
 			usr.visible_message("*click click*", "\red <b>*click*</b>")
+			for(var/mob/K in viewers(usr))
+				K << 'empty.ogg'
 		var/dir_to_fire = sd_get_approx_dir(M,T)
 		if(dir_to_fire != M.dir)
 			M.dir = dir_to_fire
