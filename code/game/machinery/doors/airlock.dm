@@ -356,6 +356,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		//world << text("airlock attackby src [] obj [] mob []", src, C, user)
 		if(istype(C, /obj/item/device/detective_scanner))
 			return
+		if(istype(C, /obj/item/policetaperoll))
+			return
 		if (!istype(usr, /mob/living/silicon))
 			if (src.isElectrified())
 				if(src.shock(user, 75))
