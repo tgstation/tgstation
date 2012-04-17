@@ -107,16 +107,9 @@
 								break
 			else
 				C.images += image(tempHud,perp,"hudunknown")
-			if(hasorgans(perp))
-				for(var/datum/organ/external/E in perp)
-					for(var/obj/item/weapon/implant/I in E.implant)
-						if(I.implanted)
-							if(istype(I,/obj/item/weapon/implant/tracking))
-								C.images += image(tempHud,perp,"hud_imp_tracking")
-							if(istype(I,/obj/item/weapon/implant/loyalty))
-								C.images += image(tempHud,perp,"hud_imp_loyal")
-			else
-				for(var/obj/item/weapon/implant/I in perp)
+			for(var/named in perp.organs)
+				var/datum/organ/external/E = perp.organs[named]
+				for(var/obj/item/weapon/implant/I in E.implant)
 					if(I.implanted)
 						if(istype(I,/obj/item/weapon/implant/tracking))
 							C.images += image(tempHud,perp,"hud_imp_tracking")

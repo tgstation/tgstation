@@ -1021,3 +1021,29 @@
 		parts -= picked
 	updatehealth()
 	UpdateDamageIcon()
+
+/mob/living/carbon/monkey/getBruteLoss()
+	var/amount = 0.0
+	for(var/name in organs)
+		var/datum/organ/external/O = organs[name]
+		if(!O.robot) amount+= O.brute_dam
+	return amount
+
+/mob/living/carbon/monkey/adjustBruteLoss(var/amount, var/used_weapon = null)
+	if(amount > 0)
+		take_overall_damage(amount, 0, used_weapon)
+	else
+		heal_overall_damage(-amount, 0)
+
+/mob/living/carbon/monkey/getFireLoss()
+	var/amount = 0.0
+	for(var/name in organs)
+		var/datum/organ/external/O = organs[name]
+		if(!O.robot) amount+= O.burn_dam
+	return amount
+
+/mob/living/carbon/monkey/adjustFireLoss(var/amount,var/used_weapon = null)
+	if(amount > 0)
+		take_overall_damage(0, amount, used_weapon)
+	else
+		heal_overall_damage(0, -amount)

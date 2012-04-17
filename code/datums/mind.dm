@@ -312,25 +312,25 @@ datum/mind
 				if(!def_value)//If it's a custom objective, it will be an empty string.
 					def_value = "custom"
 
-			var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate","decapitate", "debrain", "protection", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
+			var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate","decapitate", "debrain", "protection", "frame", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
 			if (!new_obj_type) return
 
 			var/datum/objective/new_objective = null
 
 			switch (new_obj_type)
-				if ("assassinate","protect","debrain","decapitate")
+				if ("assassinate","protection", "frame", "debrain","decapitate")
 					//To determine what to name the objective in explanation text.
-					var/objective_type_capital = uppertext(copytext(new_obj_type, 1,2))//Capitalize first letter.
-					var/objective_type_text = copytext(new_obj_type, 2)//Leave the rest of the text.
-					var/objective_type = "[objective_type_capital][objective_type_text]"//Add them together into a text string.
+//					var/objective_type_capital = uppertext(copytext(new_obj_type, 1,2))//Capitalize first letter.
+//					var/objective_type_text = copytext(new_obj_type, 2)//Leave the rest of the text.
+//					var/objective_type = "[objective_type_capital][objective_type_text]"//Add them together into a text string.
 
 					var/list/possible_targets = list("Free objective")
 					for(var/datum/mind/possible_target in ticker.minds)
-						if ((possible_target != src) && istype(possible_target.current, /mob/living/carbon/human))
+						if ((possible_target != src) && possible_target.current && istype(possible_target.current, /mob/living/carbon/human))
 							possible_targets += possible_target.current
 
 					var/mob/def_target = null
-					var/objective_list[] = list(/datum/objective/assassinate, /datum/objective/protection, /datum/objective/debrain, /datum/objective/decapitate)
+					var/objective_list[] = list(/datum/objective/assassinate, /datum/objective/protection, /datum/objective/frame, /datum/objective/debrain, /datum/objective/decapitate)
 					if (objective&&(objective.type in objective_list) && objective:target)
 						def_target = objective:target.current
 
@@ -339,16 +339,11 @@ datum/mind
 
 					var/objective_path = text2path("/datum/objective/[new_obj_type]")
 					if (new_target == "Free objective")
-						new_objective = new objective_path
+						new_objective = new objective_path(null,"MODE",null)
 						new_objective.owner = src
-						new_objective:target = null
-						new_objective.explanation_text = "Free objective"
 					else
-						new_objective = new objective_path
+						new_objective = new objective_path(null,"MODE",new_target:mind)
 						new_objective.owner = src
-						new_objective:target = new_target:mind
-						//Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
-						new_objective.explanation_text = "[objective_type] [new_target:real_name], the [new_target:mind:assigned_role=="MODE" ? (new_target:mind:special_role) : (new_target:mind:role_alt_title ? new_target:mind:role_alt_title : new_target:mind:assigned_role)]."
 
 				if ("hijack")
 					new_objective = new /datum/objective/hijack
@@ -367,13 +362,14 @@ datum/mind
 					new_objective.owner = src
 
 				if ("steal")
-					var/list/possibilities = typesof(/datum/objective/steal) - /datum/objective/steal
+					var/list/possibilities = GenerateTheft(assigned_role,src)
+					var/list/temp_poss = possibilities[1]
 					var/list/choices = list()
-					for(var/datum/objective/steal/name in possibilities)
-						choices[name.explanation_text] = name
+					for(var/datum/objective/steal/steal in temp_poss)
+						choices["[steal.steal_target]"] = steal
 					var/new_target = input("Select target:", "Objective target") as null|anything in choices
 					if (!new_target) return
-					new_objective = new choices[new_target]
+					new_objective = choices[new_target]
 					new_objective.owner = src
 
 				if("download","capture","absorb")

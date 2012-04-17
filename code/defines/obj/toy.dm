@@ -110,6 +110,8 @@
 		src.add_fingerprint(user)
 		if (src.bullets < 1)
 			user.show_message("\red *click* *click*", 2)
+			for(var/mob/K in viewers(usr))
+				K << 'empty.ogg'
 			return
 		playsound(user, 'Gunshot.ogg', 100, 1)
 		src.bullets--
