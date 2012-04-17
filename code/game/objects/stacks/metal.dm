@@ -138,3 +138,20 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 //	var/turf/simulated/floor/W = S.ReplaceWithFloor()
 //	W.make_plating()
 	return
+
+// CARDBOARD SHEET - BubbleWrap
+
+// /datum/stack_recipe/New(title, result_type, req_amount, res_amount, max_res_amount, time, one_per_turf, on_floor = 0)
+var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
+	new/datum/stack_recipe("box", /obj/item/weapon/storage/box), \
+	new/datum/stack_recipe("light tubes", /obj/item/weapon/storage/lightbox/tubes), \
+	new/datum/stack_recipe("light bulbs", /obj/item/weapon/storage/lightbox/bulbs), \
+	new/datum/stack_recipe("mouse traps", /obj/item/weapon/storage/mousetraps), \
+	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
+	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/helmet/cardborg), \
+)
+
+/obj/item/stack/sheet/cardboard
+	New(var/loc, var/amount=null)
+		recipes = cardboard_recipes
+		return ..()

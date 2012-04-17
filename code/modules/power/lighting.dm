@@ -591,7 +591,12 @@
 	name = "replacement bulbs"
 	icon = 'storage.dmi'
 	icon_state = "light"
+	desc = "This box is shaped on the inside so that only light tubes and bulbs fit."
 	item_state = "syringe_kit"
+	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
+	storage_slots=21
+	can_hold = list("/obj/item/weapon/light/tube", "/obj/item/weapon/light/bulb")
+	max_combined_w_class = 21
 
 /obj/item/weapon/storage/lightbox/bulbs/New()
 	..()
