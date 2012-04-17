@@ -205,6 +205,8 @@
 				if(orient == "RIGHT")
 					icon_state = "syndipod_1-r"
 
+			M << "\blue <b>You feel cool air surround you. You go numb as your senses turn inward.</b>"
+
 			for(var/obj/O in src)
 				O.loc = src.loc
 			src.add_fingerprint(user)
