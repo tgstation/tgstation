@@ -93,7 +93,7 @@ var/list/sacrificed = list()
 				usr.say("N'ath reth sh'yro eth d'raggathnor!")
 			else
 				usr.whisper("N'ath reth sh'yro eth d'raggathnor!")
-			usr.visible_message("\red Rune disappears with a flash of red light, and in it's place now a book lies.", \
+			usr.visible_message("\red Rune disappears with a flash of red light, and in its place now a book lies.", \
 			"\red You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a book.", \
 			"\red You hear a pop and smell ozone.")
 			if(istype(src,/obj/effect/rune))
@@ -354,7 +354,7 @@ var/list/sacrificed = list()
 				var/mob/living/carbon/human/L = usr
 				usr.say("Fwe'sh mah erl nyag r'ya!")
 				usr.visible_message("\red [usr]'s eyes glow blue as \he freezes in place, absolutely motionless.", \
-				"\red The shadow that is your spirit separates itself from your body. You are now in the realm beyond. While this it's a great sight, being here strains your mind and body. Hurry.", \
+				"\red The shadow that is your spirit separates itself from your body. You are now in the realm beyond. While this is a great sight, being here strains your mind and body. Hurry...", \
 				"\red You hear only complete silence for a moment.")
 				usr.ghostize()
 				for(L.ajourn=1,L.ajourn)
@@ -779,7 +779,7 @@ var/list/sacrificed = list()
 					if(iscultist(C))
 						C.say("N'ath reth sh'yro eth d'rekkathnor!")
 						C.take_overall_damage(25, 0)
-				user.visible_message("\red Rune disappears with a flash of red light, and in it's place now a body lies.", \
+				user.visible_message("\red Rune disappears with a flash of red light, and in its place now a body lies.", \
 				"\red You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a body.", \
 				"\red You hear a pop and smell ozone.")
 				del(src)
