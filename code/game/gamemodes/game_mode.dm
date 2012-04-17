@@ -232,11 +232,12 @@ Whitespace:Seperator;"}
 
 			comm.messagetitle.Add("Cent. Com. Status Summary")
 			comm.messagetext.Add(intercepttext)
+	world << sound('commandreport.ogg')
 
-	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
+/*	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 	world << sound('intercept.ogg')
 	if(security_level < SEC_LEVEL_BLUE)
-		set_security_level(SEC_LEVEL_BLUE)
+		set_security_level(SEC_LEVEL_BLUE)*/
 
 
 /datum/game_mode/proc/get_players_for_role(var/role, override_jobbans=1)
