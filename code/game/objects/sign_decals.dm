@@ -3,7 +3,7 @@
 	icon_state = "empty"
 	anchored = 1
 	New()
-		ChangeSign(pick("pinkflamingo", "magmasea", "limbo", "rustyaxe", "armokbar", "brokendrum"))
+		ChangeSign(pick("pinkflamingo", "magmasea", "limbo", "rustyaxe", "armokbar", "brokendrum", "meadbay"))
 		return
 	proc/ChangeSign(var/Text)
 		src.icon_state = "[Text]"
