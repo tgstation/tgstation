@@ -172,6 +172,7 @@
 			verbs += /client/proc/toggle_clickproc //TODO ERRORAGE (Temporary proc while the enw clickproc is being tested)
 			verbs += /client/proc/toggle_gravity_on
 			verbs += /client/proc/toggle_gravity_off
+			verbs += /client/proc/toggle_random_events
 			// Moved over from tg's Game Master:
 			verbs += /client/proc/colorooc
 			verbs += /obj/admins/proc/toggle_aliens			//toggle aliens
@@ -425,6 +426,7 @@
 	verbs -= /client/proc/tension_report
 	verbs -= /client/proc/toggle_gravity_on
 	verbs -= /client/proc/toggle_gravity_off
+	verbs -= /client/proc/toggle_random_events
 	verbs -= /client/proc/cmd_admin_change_custom_event
 	verbs -= /client/proc/admin_invis
 	verbs -= /client/proc/callprocgen
