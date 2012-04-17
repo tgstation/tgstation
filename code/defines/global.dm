@@ -199,3 +199,7 @@ var
 	forumsqlpass = ""
 	forum_activated_group = "2"
 	forum_authenticated_group = "10"
+
+	// For FTP requests. (i.e. downloading runtime logs.)
+	// However it'd be ok to use for accessing attack logs and such too, which are even laggier.
+	fileaccess_timer = 600 //Cannot access files by ftp until the game is finished setting up and stuff.
