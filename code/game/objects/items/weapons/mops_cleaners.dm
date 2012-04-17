@@ -226,7 +226,7 @@
 	throw_range = 10
 	var/catch = 1
 	var/BottleSize = 1
-	var/ReagentAmount = 30
+	var/ReagentAmount = 45
 
 /obj/item/weapon/pepperspray/small //And this is for personal defense.
 	desc = "This appears to be a small, nonlethal, single use personal defense weapon.  Hurts like a bitch, though."
@@ -340,19 +340,6 @@
 			// Spreads the sprays a little bit
 			var/turf/my_target = get_turf(A) //pick(the_targets)
 			//the_targets -= my_target
-			if(i == 1)
-				my_target = T
-			else
-				my_target = pick(the_targets)
-
-			the_targets -= my_target
-
-			var/Dist = 0
-
-			if(BottleSize)
-				Dist = rand(6,8)
-			else
-				Dist = rand(2,3)
 
 			var/list/affected = new()	// BubbleWrap
 			for(var/j=1, j<=rand(6,8), j++)
