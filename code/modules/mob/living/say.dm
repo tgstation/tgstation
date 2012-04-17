@@ -339,7 +339,7 @@
 	for(var/mob/M in listening)
 		eavesdroppers.Remove(M)
 	for(var/mob/M in eavesdroppers)
-		if(M.stat || !M.client)
+		if(M.stat || !M.client || istype(M, /mob/living/silicon/pai) || M == src)
 			eavesdroppers.Remove(M)
 
 	for (var/obj/O in ((W | contents)-used_radios))
