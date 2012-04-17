@@ -184,9 +184,12 @@
 		if(M.client)
 			spawn(0)
 				M.client.station_explosion_cinematic(off_station)
-		if(M.z==1)
-			M.gib()
 	sleep(110)
+
+	for(var/mob/M in world)
+		if(M.z==1)
+			spawn(0)
+				M.gib()
 
 	if (ticker && ticker.mode)
 		ticker.mode.explosion_in_progress = 0
