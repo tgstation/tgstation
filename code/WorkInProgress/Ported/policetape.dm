@@ -165,3 +165,12 @@
 
 	del(src)
 	return
+
+/obj/item/policetaperoll/afterattack(var/atom/A, mob/user as mob)
+	if (istype(A, /obj/machinery/door/airlock))
+		var/turf/T = get_turf(A)
+		var/obj/item/policetape/P = new/obj/item/policetape(T.x,T.y,T.z)
+		P.loc = locate(T.x,T.y,T.z)
+		P.icon_state = "door"
+		P.layer = 3.2
+		user << "\blue You finish placing the police tape."
