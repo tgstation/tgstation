@@ -336,3 +336,109 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		src.activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
 		source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
 		source << "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate."
+
+/*// --------------------LASERS WORK FROM HERE, AUGMENTATIONS SHIZZLE----------------------
+/obj/item/weapon/implant/augmentation/thermalscanner
+	name = "Thermal Scanner Augmentation"
+	desc = "Makes you see humans through walls"
+
+	get_data()
+		var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> NanoTrasen Thermal Implant<BR>
+<b>Life:</b> Ten years.<BR>
+<b>Important Notes:</b> Personnel injected with this device tend to be able to see lifeforms through life using thermal.<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains a small pod of nanobots that manipulate the host's eye functions.<BR>
+<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+		return dat
+
+
+	implanted(M as mob)
+		if(istype(M, /mob/living/carbon/human))
+			vision_flags = SEE_MOBS
+			invisa_view = 2
+			usr << "You suddenly start seeing body temperatures of whoever is around you."
+		else
+			usr << "This implant is not compatible!"
+		return
+
+/obj/item/weapon/implant/augmentation/mesonscanner
+	name = "Meson Scanner Augmentation"
+	desc = "Makes you see floor and wall layouts through walls."
+
+	get_data()
+		var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> NanoTrasen Meson Implant<BR>
+<b>Life:</b> Ten years.<BR>
+<b>Important Notes:</b> Personnel injected with this device tend to be able to see floor and wall layouts through walls.<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains a small pod of nanobots that manipulate the host's eye functions.<BR>
+<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+		return dat
+
+
+	implanted(M as mob)
+		if(istype(M, /mob/living/carbon/human))
+			vision_flags = SEE_TURFS
+			usr << "You suddenly start seeing body temperatures of whoever is around you."
+		else
+			usr << "This implant is not compatible!"
+		return
+
+/obj/item/weapon/implant/augmentation/medicalhud
+	name = "Medical HUD Augmentation"
+	desc = "Makes you see the medical condition of a person."
+
+	get_data()
+		var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> NanoTrasen Med HUD Implant<BR>
+<b>Life:</b> Ten years.<BR>
+<b>Important Notes:</b> Personnel injected with this device tend to be able to see the medical condition of a person.<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains a small pod of nanobots that manipulate the host's eye functions.<BR>
+<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+		return dat
+
+
+	implanted(M as mob)
+		if(istype(M, /mob/living/carbon/human))
+
+			src.hud = new/obj/item/clothing/glasses/hud/health(src)
+			usr << "You suddenly start seeing body temperatures of whoever is around you."
+		else
+			usr << "This implant is not compatible!"
+		return
+
+/obj/item/weapon/implant/augmentation/securityhud
+	name = "Security HUD Augmentation"
+	desc = "Makes you see the Security standings of a person."
+
+	get_data()
+		var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> NanoTrasen Sec HUD Implant<BR>
+<b>Life:</b> Ten years.<BR>
+<b>Important Notes:</b> Personnel injected with this device tend to be able to see the security standings of a person.<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains a small pod of nanobots that manipulate the host's eye functions.<BR>
+<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+		return dat
+
+
+	implanted(M as mob)
+		if(istype(M, /mob/living/carbon/human))
+			var/obj/item/clothing/glasses/hud/security/hud = null
+
+			src.hud = new/obj/item/clothing/glasses/hud/security(src)
+
+			usr << "You suddenly start seeing body temperatures of whoever is around you."
+		else
+			usr << "This implant is not compatible!"
+		return*/
