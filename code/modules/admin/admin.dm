@@ -270,7 +270,8 @@ var/global/BSACooldown = 0
 				message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [job]", 1)
 				jobban_fullban(M, job, reason)
 				href_list["jobban2"] = 1 // lets it fall through and refresh
-
+			if(config.appeal_address)
+				M << "\red You may try to appeal this at [config.appeal_address]"
 
 	if (href_list["boot2"])
 		if ((src.rank in list( "Moderator", "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
@@ -320,10 +321,10 @@ var/global/BSACooldown = 0
 					M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
 					M << "\red This is a temporary ban, it will be removed in [mins] minutes."
 					feedback_inc("ban_tmp",1)
-					if(config.banappeals)
-						M << "\red To try to resolve this matter head to [config.banappeals]"
+					if(config.appeal_address)
+						M << "\red You may try to appeal this at [config.appeal_address]"
 					else
-						M << "\red No ban appeals URL has been set."
+						M << "\red No ban appeal URL has been set."
 					log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 					message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 
@@ -336,10 +337,10 @@ var/global/BSACooldown = 0
 					AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
 					M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
 					M << "\red This is a permanent ban."
-					if(config.banappeals)
-						M << "\red To try to resolve this matter head to [config.banappeals]"
+					if(config.appeal_address)
+						M << "\red You may try to appeal this at [config.appeal_address]"
 					else
-						M << "\red No ban appeals URL has been set."
+						M << "\red No ban appeal URL has been set."
 					ban_unban_log_save("[usr.client.ckey] has permabanned [M.ckey]. - Reason: [reason] - This is a permanent ban.")
 					log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
 					message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
