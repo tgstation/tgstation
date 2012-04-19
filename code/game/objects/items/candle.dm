@@ -28,7 +28,7 @@
 		..()
 		if(istype(W, /obj/item/weapon/weldingtool)  && W:welding)
 			light("\red [user] casually lights the [name] with [W], what a badass.")
-		else if(istype(W, /obj/item/weapon/zippo) && W:lit)
+		else if(istype(W, /obj/item/weapon/lighter) && W:lit)
 			light()
 		else if(istype(W, /obj/item/weapon/match) && W:lit)
 			light()
@@ -110,7 +110,11 @@
 		else
 			src.candlecount--
 			var/obj/item/candle/W = new /obj/item/candle(user)
-			user.put_in_hand(W)
+			if(user.hand)
+				user.l_hand = W
+			else
+				user.r_hand = W
+			W.layer = 20
 	else
 		return ..()
 	src.update_icon()

@@ -174,7 +174,7 @@
 		new /obj/item/device/radio/headset/headset_sec(src)
 		//
 		new /obj/item/weapon/reagent_containers/food/drinks/dflask(src)
-		new /obj/item/weapon/zippo(B)
+		new /obj/item/weapon/lighter/zippo(B)
 		new /obj/item/weapon/pepperspray/small(src)
 		return
 
