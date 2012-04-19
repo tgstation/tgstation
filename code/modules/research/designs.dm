@@ -1048,7 +1048,7 @@ datum
 		subspace_treatment
 			name = "Subspace Treatment Disk"
 			desc = "A compact micro-machine capable of stretching out hyper-compressed radio waves."
-			id = "s-amplifier"
+			id = "s-treatment"
 			req_tech = list("programming" = 3, "magnets" = 2, "materials" = 4, "bluespace" = 2)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 10, "$silver" = 20)
@@ -1057,7 +1057,7 @@ datum
 		subspace_analyzer
 			name = "Subspace Treatment Disk"
 			desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."
-			id = "s-amplifier"
+			id = "s-analyzer"
 			req_tech = list("programming" = 3, "magnets" = 4, "materials" = 4, "bluespace" = 2)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 10, "$gold" = 15)
@@ -1066,7 +1066,7 @@ datum
 		subspace_crystal
 			name = "Ansible Crystal"
 			desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."
-			id = "s-amplifier"
+			id = "s-crystal"
 			req_tech = list("magnets" = 4, "materials" = 4, "bluespace" = 2)
 			build_type = PROTOLATHE
 			materials = list("$glass" = 1000, "$silver" = 20, "$gold" = 20)
@@ -1075,7 +1075,7 @@ datum
 		subspace_transmitter
 			name = "Subspace Transmitter"
 			desc = "A large piece of equipment used to open a window into the subspace dimension."
-			id = "s-amplifier"
+			id = "s-transmitter"
 			req_tech = list("magnets" = 5, "materials" = 5, "bluespace" = 3)
 			build_type = PROTOLATHE
 			materials = list("$glass" = 100, "$silver" = 10, "$uranium" = 15)
