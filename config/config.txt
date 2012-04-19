@@ -29,6 +29,18 @@ LOG_VOTE
 ## log client Whisper
 LOG_WHISPER
 
+## log emotes
+LOG_EMOTE
+
+## log attack messages
+LOG_ATTACK
+
+## log pda messages
+LOG_PDA
+
+## log admin warning messages
+##LOG_ADMINWARN  ## Also duplicates a bunch of other messages.
+
 ## sql switching
 SQL_ENABLED 0
 

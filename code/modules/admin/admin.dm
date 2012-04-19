@@ -2785,6 +2785,7 @@ var/global/BSACooldown = 0
 						</html>"}
 	usr << browse(output,"window=server_logfile")
 	onclose(usr,"server_logfile")
+//	feedback_add_details("admin_verb","SSAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /*/client/proc/unjobban_panel()

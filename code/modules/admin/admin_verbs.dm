@@ -142,7 +142,7 @@
 			verbs += /client/proc/callprocobj
 			verbs += /client/proc/rnd_check_designs
 			verbs += /client/proc/CarbonCopy
-			verbs += /client/proc/getruntimelog							//used by coders to retrieve runtime logs	
+			verbs += /client/proc/getruntimelog							//used by coders to retrieve runtime logs
 
 		if (holder.level >= 5)//Game Admin********************************************************************
 			verbs += /obj/admins/proc/view_txt_log

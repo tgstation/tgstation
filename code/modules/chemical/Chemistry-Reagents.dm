@@ -401,7 +401,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
 				switch(data)
-					if(1 to 15)
+					if(10 to 15)
 						M.eye_blurry = max(M.eye_blurry, 10)
 					if(15 to 25)
 						M:drowsyness  = max(M:drowsyness, 20)

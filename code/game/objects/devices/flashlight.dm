@@ -94,8 +94,12 @@
 //	M << "\red You feel a tiny prick!"
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [src.name]  by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to stab [M.name] ([M.ckey])</font>")
+
 	log_admin("ATTACK: [user] ([user.ckey]) stabbed [M] ([M.ckey]) with [src].")
 	message_admins("ATTACK: [user] ([user.ckey]) stabbed [M] ([M.ckey]) with [src].")
+	log_attack("<font color='red'>[user.name] ([user.ckey]) Used the [src.name] to stab [M.name] ([M.ckey])</font>")
+
+
 	..()
 	return
 
