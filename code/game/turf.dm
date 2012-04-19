@@ -1390,6 +1390,7 @@ turf/simulated/floor/return_siding_icon_state()
 				return
 
 			if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
+				del(A) //The disk's Del() proc ensures a new one is created
 				return
 
 			if(!isemptylist(A.search_contents_for(/obj/item/weapon/disk/nuclear)))
