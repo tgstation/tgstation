@@ -6,7 +6,7 @@ var/global/BSACooldown = 0
 /proc/message_admins(var/text, var/admin_ref = 0)
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
 	for (var/mob/M in world)
-		if (M && M.client && M.client.holder && M.client.holder.level > -3 && !M.client.hearamessage) //Lets not spam our retirees.
+		if (M && M.client && M.client.holder && M.client.holder.level > -3) //Lets not spam our retirees.
 			if (admin_ref)
 				M << dd_replaceText(rendered, "%admin_ref%", "\ref[M]")
 			else
