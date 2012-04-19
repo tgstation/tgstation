@@ -6214,7 +6214,7 @@
 "cpz" = (/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/specops/centcom)
 "cpA" = (/obj/machinery/door_control{id = "ERTIN"; pixel_y = 26},/obj/structure/stool/bed/chair,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/specops/centcom)
 "cpB" = (/obj/structure/stool/bed/chair,/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/specops/centcom)
-"cpC" = (/obj/structure/table/woodentable{dir = 9},/obj/item/weapon/reagent_containers/food/drinks/flask,/obj/item/clothing/mask/cigarette/cigar/havanian,/turf/unsimulated/floor{icon_state = "grimy"},/area/centcom/creed)
+"cpC" = (/obj/structure/table/woodentable{dir = 9},/obj/item/weapon/reagent_containers/food/drinks/flask,/obj/item/clothing/mask/cigarette/cigar/havana,/turf/unsimulated/floor{icon_state = "grimy"},/area/centcom/creed)
 "cpD" = (/obj/machinery/computer/security/telescreen{name = "Spec. Ops. Monitor"; network = "CREED"},/obj/structure/table/woodentable{dir = 5},/turf/unsimulated/floor{icon_state = "grimy"},/area/centcom/creed)
 "cpE" = (/obj/structure/table/woodentable{dir = 5},/turf/unsimulated/floor{icon_state = "grimy"},/area/centcom/creed)
 "cpF" = (/obj/machinery/computer/card/centcom,/obj/item/weapon/card/id/centcom,/turf/unsimulated/floor{icon_state = "grimy"},/area/centcom/creed)
