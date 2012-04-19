@@ -168,6 +168,7 @@ ZIPPO
 			if(ismob(src.loc))
 				var/mob/living/M = src.loc
 				M << "\red Your [src.name] goes out."
+				M.update_clothing()
 			processing_objects.Remove(src)
 			del(src)
 			return
