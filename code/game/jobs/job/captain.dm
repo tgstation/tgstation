@@ -6,6 +6,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "Nanotrasen officials and Space law"
+	selection_color = "#ccccff"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -36,6 +37,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the captain"
+	selection_color = "#ddddff"
 
 
 	equip(var/mob/living/carbon/human/H)

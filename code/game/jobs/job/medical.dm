@@ -6,6 +6,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the captain"
+	selection_color = "#ffddf0"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -31,6 +32,7 @@
 	total_positions = 5
 	spawn_positions = 3
 	supervisors = "the chief medical officer"
+	selection_color = "#ffeef0"
 	alt_titles = list("Virologist", "Surgeon", "Emergency Medical Technician")
 
 
@@ -57,6 +59,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the chief medical officer and research director"
+	selection_color = "#ffeef0"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -80,6 +83,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the chief medical officer and research director"
+	selection_color = "#ffeef0"
 
 
 	equip(var/mob/living/carbon/human/H)

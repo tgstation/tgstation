@@ -6,6 +6,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the captain"
+	selection_color = "#ffdddd"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -40,6 +41,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of security"
+	selection_color = "#ffeeee"
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -72,6 +74,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of security"
+	selection_color = "#ffeeee"
 	alt_titles = list("Forensic Technician")
 
 
@@ -113,6 +116,7 @@
 	total_positions = 5
 	spawn_positions = 5
 	supervisors = "the head of security"
+	selection_color = "#ffeeee"
 
 
 	equip(var/mob/living/carbon/human/H)

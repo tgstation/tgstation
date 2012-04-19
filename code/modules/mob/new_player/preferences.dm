@@ -41,6 +41,9 @@ var/const
 	BE_PAI       =(1<<9)
 
 
+
+
+
 datum/preferences
 	var
 		real_name
@@ -359,46 +362,49 @@ datum/preferences
 		var/HTML = "<body>"
 		HTML += "<tt><center>"
 		HTML += "<b>Choose occupation chances</b><br>Unavailable occupations are in red.<br>"
+		HTML += "<table width='100%' cellpadding='1' cellspacing='0' align='center'>"
 		for(var/datum/job/job in job_master.occupations)
+			HTML += "<tr bgcolor='[job.selection_color]'><td width='60%' align='right'>"
 			var/rank = job.title
 			if(jobban_isbanned(user, rank))
-				HTML += "<font color=red>[rank]</font><br>"
+				HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[BANNED]</b></font></td></tr>"
 				continue
 			if((job_civilian_low & ASSISTANT) && (rank != "Assistant"))
-				HTML += "<font color=orange>[rank]</font><br>"
+				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 				continue
 			if((rank in command_positions) || (rank == "AI"))//Bold head jobs
-				HTML += "<b>[rank]<a href=\"byond://?src=\ref[user];preferences=1;occ=1;job=[rank]\"></b>"
+				HTML += "<b>[rank]</b>"
 			else
-				HTML += "[rank]<a href=\"byond://?src=\ref[user];preferences=1;occ=1;job=[rank]\">"
+				HTML += "[rank]"
+
+			HTML += "</td><td width='40%'>"
+
+			HTML += "<a href=\"byond://?src=\ref[user];preferences=1;occ=1;job=[rank]\">"
 
 			if(rank == "Assistant")//Assistant is special
 				if(job_civilian_low & ASSISTANT)
-					HTML += "<font color=green>\[Yes]</font>"
+					HTML += " <font color=green>\[Yes]</font>"
 				else
-					HTML += "<font color=red>\[No]</font>"
-				HTML += "</a><br>"
+					HTML += " <font color=red>\[No]</font>"
+				HTML += "</a></td></tr>"
 				continue
 
 			if(GetJobDepartment(job, 1) & job.flag)
-				HTML += "<font color=blue>\[High]</font>"
+				HTML += " <font color=blue>\[High]</font>"
 			else if(GetJobDepartment(job, 2) & job.flag)
-				HTML += "<font color=green>\[Medium]</font>"
+				HTML += " <font color=green>\[Medium]</font>"
 			else if(GetJobDepartment(job, 3) & job.flag)
-				HTML += "<font color=orange>\[Low]</font>"
+				HTML += " <font color=orange>\[Low]</font>"
 			else
-				HTML += "<font color=red>\[NEVER]</font>"
-			if(job.alt_titles)
-				HTML += "</a> <a href=\"byond://?src=\ref[user];preferences=1;alt_title=1;job=\ref[job]\">\[[GetAltTitle(job)]\]</a><br>"
-			else
-				HTML += "</a><br>"
+				HTML += " <font color=red>\[NEVER]</font>"
+			HTML += "</a></td></tr>"
 
-		HTML += "<br>"
+		HTML += "</table><br>"
 		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;occ=0;job=cancel\">\[Done\]</a>"
 		HTML += "</center></tt>"
 
 		user << browse(null, "window=preferences")
-		user << browse(HTML, "window=mob_occupation;size=350x600")
+		user << browse(HTML, "window=mob_occupation;size=320x600")
 		return
 
 
