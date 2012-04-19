@@ -26,7 +26,7 @@
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/list/allowed_containers = list("/obj/item/weapon/reagent_containers/glass/beaker", "/obj/item/weapon/reagent_containers/glass/dispenser", "/obj/item/weapon/reagent_containers/glass/bottle")
 	var/affected_area = 3
-
+	var/mob/attacher = "Unknown"
 
 	attackby(var/obj/item/weapon/W, var/mob/user)
 		if(path || !active)
@@ -65,6 +65,10 @@
 						W.loc = src
 						user << "\blue You attach the [W] to the grenade controls!"
 						W.master = src
+						bombers += "[key_name(user)] attached a [W] to a grenade casing."
+						message_admins("[key_name_admin(user)] attached a [W] to a grenade casing.")
+						log_game("[key_name_admin(user)] attached a [W] to a grenade casing.")
+						attacher = key_name(user)
 
 					else if(istype(W, /obj/item/weapon/screwdriver))
 						if(beaker_one && beaker_two && attached_device)
@@ -266,6 +270,12 @@
 				beaker_two.reagents.maximum_volume += beaker_one.reagents.maximum_volume // make sure everything can mix
 				beaker_one.reagents.update_total()
 				beaker_one.reagents.trans_to(beaker_two, beaker_one.reagents.total_volume)
+				var/turf/bombturf = get_turf(src)
+				var/bombarea = bombturf.loc.name
+				var/log_str = "Grenade detonated in [bombarea] with device attacher: [attacher]. Last touched by: [src.fingerprintslast]"
+				bombers += log_str
+				message_admins(log_str)
+				log_game(log_str)
 				if(beaker_one.reagents.total_volume) //The possible reactions didnt use up all reagents.
 					var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
 					steam.set_up(10, 0, get_turf(src))
