@@ -12,10 +12,9 @@
 	new /obj/item/clothing/suit/chickensuit(src.loc)
 	del(src)
 
-/obj/effect/landmark/costume/justice/New()
-	new /obj/item/clothing/suit/justice(src.loc)
-	var/CHOICE = pick( /obj/item/clothing/head/justice , /obj/item/clothing/head/justice/blue , /obj/item/clothing/head/justice/yellow , /obj/item/clothing/head/justice/green , /obj/item/clothing/head/justice/pink )
-	new CHOICE(src.loc)
+/obj/effect/landmark/costume/gladiator/New()
+	new /obj/item/clothing/under/gladiator(src.loc)
+	new /obj/item/clothing/head/helmet/gladiator(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/madscientist/New()

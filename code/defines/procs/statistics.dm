@@ -55,19 +55,19 @@ proc/sql_report_death(var/mob/living/carbon/human/H)
 		return
 
 	var/turf/T = H.loc
-	var/area/placeofdeath = T.loc
+	var/area/placeofdeath = get_area(T.loc)
 	var/podname = placeofdeath.name
 
-	var/sqlname = dd_replacetext(H.real_name, "'", "''")
-	var/sqlkey = dd_replacetext(H.key, "'", "''")
-	var/sqlpod = dd_replacetext(podname, "'", "''")
-	var/sqlspecial = dd_replacetext(H.mind.special_role, "'", "''")
-	var/sqljob = dd_replacetext(H.mind.assigned_role, "'", "''")
+	var/sqlname = sanitizeSQL(H.real_name)
+	var/sqlkey = sanitizeSQL(H.key)
+	var/sqlpod = sanitizeSQL(podname)
+	var/sqlspecial = sanitizeSQL(H.mind.special_role)
+	var/sqljob = sanitizeSQL(H.mind.assigned_role)
 	var/laname
 	var/lakey
 	if(H.lastattacker)
-		laname = dd_replacetext(H.lastattacker:real_name, "'", "''")
-		lakey = dd_replacetext(H.lastattacker:key, "'", "''")
+		laname = sanitizeSQL(H.lastattacker:real_name)
+		lakey = sanitizeSQL(H.lastattacker:key)
 	var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
 	var/coord = "[H.x], [H.y], [H.z]"
 	//world << "INSERT INTO death (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[H.gender]', [H.bruteloss], [H.getFireLoss()], [H.brainloss], [H.getOxyLoss()])"
@@ -92,19 +92,19 @@ proc/sql_report_cyborg_death(var/mob/living/silicon/robot/H)
 		return
 
 	var/turf/T = H.loc
-	var/area/placeofdeath = T.loc
+	var/area/placeofdeath = get_area(T.loc)
 	var/podname = placeofdeath.name
 
-	var/sqlname = dd_replacetext(H.real_name, "'", "''")
-	var/sqlkey = dd_replacetext(H.key, "'", "''")
-	var/sqlpod = dd_replacetext(podname, "'", "''")
-	var/sqlspecial = dd_replacetext(H.mind.special_role, "'", "''")
-	var/sqljob = dd_replacetext(H.mind.assigned_role, "'", "''")
+	var/sqlname = sanitizeSQL(H.real_name)
+	var/sqlkey = sanitizeSQL(H.key)
+	var/sqlpod = sanitizeSQL(podname)
+	var/sqlspecial = sanitizeSQL(H.mind.special_role)
+	var/sqljob = sanitizeSQL(H.mind.assigned_role)
 	var/laname
 	var/lakey
 	if(H.lastattacker)
-		laname = dd_replacetext(H.lastattacker:real_name, "'", "''")
-		lakey = dd_replacetext(H.lastattacker:key, "'", "''")
+		laname = sanitizeSQL(H.lastattacker:real_name)
+		lakey = sanitizeSQL(H.lastattacker:key)
 	var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
 	var/coord = "[H.x], [H.y], [H.z]"
 	//world << "INSERT INTO death (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[H.gender]', [H.bruteloss], [H.getFireLoss()], [H.brainloss], [H.getOxyLoss()])"

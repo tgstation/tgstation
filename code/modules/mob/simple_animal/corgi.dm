@@ -1,8 +1,8 @@
 //Corgi
 /mob/living/simple_animal/corgi
-	name = "corgi"
+	name = "\improper corgi"
 	real_name = "corgi"
-	desc = "Puppy!!"
+	desc = "It's a corgi."
 	icon = 'mob.dmi'
 	icon_state = "corgi"
 	icon_living = "corgi"
@@ -10,9 +10,9 @@
 	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
 	speak_emote = list("barks", "woofs")
 	emote_hear = list("barks", "woofs", "yaps","pants")
-	emote_see = list("shakes it's head", "shivers")
+	emote_see = list("shakes its head", "shivers")
 	speak_chance = 1
-	turns_per_move = 5
+	turns_per_move = 10
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/corgi
 	meat_amount = 3
 	response_help  = "pets the"
@@ -51,8 +51,9 @@
 /mob/living/simple_animal/corgi/show_inv(mob/user as mob)
 	/*
 	user.machine = src
+	if(user.stat) return
 
-	var/dat = 	"<div align='center'><b>Inventory of [src]</b></div><p>"
+	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
 	if(inventory_head)
 		dat +=	"<br><b>Head:</b> [inventory_head] (<a href='?src=\ref[src];remove_inv=head'>Remove</a>)"
 	else
@@ -63,7 +64,7 @@
 		dat +=	"<br><b>Back:</b> <a href='?src=\ref[src];add_inv=back'>Nothing</a>"
 
 	user << browse(dat, text("window=mob[];size=325x500", name))
-	onclose(user, "mob[name]")
+	onclose(user, "mob[real_name]")
 	*/
 	return
 
@@ -72,22 +73,24 @@
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
-				usr << "\red This animal is wearing too much armor. You can't cause it any damage."
+				usr << "\red This animal is wearing too much armor. You can't cause /him any damage."
 				for (var/mob/M in viewers(src, null))
 					M.show_message("\red \b [user] hits [src] with the [O], however [src] is too armored.")
 			else
-				usr << "\red This animal is wearing too much armor. You can't reach it's skin."
+				usr << "\red This animal is wearing too much armor. You can't reach its skin."
 				for (var/mob/M in viewers(src, null))
 					M.show_message("\red [user] gently taps [src] with the [O]. ")
 			if(prob(15))
-				emote("looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression on it's face")
+				emote("looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression on \his face")
 			return
 	..()
 
 /mob/living/simple_animal/corgi/Topic(href, href_list)
+	if(usr.stat) return
+
 	//Removing from inventory
 	if(href_list["remove_inv"])
-		if(get_dist(src,usr) > 1)
+		if(get_dist(src,usr) > 1 || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
 			return
 		var/remove_from = href_list["remove_inv"]
 		switch(remove_from)
@@ -98,36 +101,36 @@
 					speak = list("YAP", "Woof!", "Bark!", "AUUUUUU")
 					speak_emote = list("barks", "woofs")
 					emote_hear = list("barks", "woofs", "yaps","pants")
-					emote_see = list("shakes it's head", "shivers")
+					emote_see = list("shakes its head", "shivers")
 					desc = "It's a corgi."
 					src.sd_SetLuminosity(0)
 					inventory_head.loc = src.loc
 					inventory_head = null
 				else
-					usr << "\red There is nothing on its [remove_from]."
+					usr << "\red There is nothing to remove from its [remove_from]."
 					return
 			if("back")
 				if(inventory_back)
 					inventory_back.loc = src.loc
 					inventory_back = null
 				else
-					usr << "\red There is nothing on its [remove_from]."
+					usr << "\red There is nothing to remove from its [remove_from]."
 					return
 
-		show_inv(usr)
+		//show_inv(usr) //Commented out because changing Ian's  name and then calling up his inventory opens a new inventory...which is annoying.
 
 	//Adding things to inventory
 	else if(href_list["add_inv"])
-		if(get_dist(src,usr) > 1)
-			return
-		if(!usr.get_active_hand())
-			usr << "\red You have nothing in your active hand to put in the slot."
+		if(get_dist(src,usr) > 1 || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
 			return
 		var/add_to = href_list["add_inv"]
+		if(!usr.get_active_hand())
+			usr << "\red You have nothing in your hand to put on its [add_to]."
+			return
 		switch(add_to)
 			if("head")
 				if(inventory_head)
-					usr << "\red The [inventory_head] is already in this slot."
+					usr << "\red It's is already wearing something."
 					return
 				else
 					var/obj/item/item_to_add = usr.get_active_hand()
@@ -171,7 +174,7 @@
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
-						usr << "\red The corgi doesn't seem too keen on wearing that item."
+						usr << "\red It doesn't seem too keen on wearing that item."
 						return
 
 					usr.drop_item()
@@ -194,13 +197,13 @@
 							desc = "It's a cute little kitty-cat! ... wait ... what the hell?"
 						if(/obj/item/clothing/head/rabbitears, /obj/item/clothing/head/collectable/rabbitears)
 							name = "Hoppy"
-							emote_see = list("twitches his nose", "hops around a bit")
+							emote_see = list("twitches its nose", "hops around a bit")
 							desc = "This is hoppy. It's a corgi-...urmm... bunny rabbit"
 						if(/obj/item/clothing/head/beret, /obj/item/clothing/head/collectable/beret)
 							name = "Yann"
-							desc = "mon dieu! C'est un chien!"
+							desc = "Mon dieu! C'est un chien!"
 							speak = list("le woof!", "le bark!", "JAPPE!!")
-							emote_see = list("cowers in fear", "surrenders", "plays dead")
+							emote_see = list("cowers in fear", "surrenders", "plays dead","looks as  though there is a wall in front of /him")
 						if(/obj/item/clothing/head/det_hat)
 							name = "Detective [real_name]"
 							desc = "[name] sees through your lies..."
@@ -209,13 +212,13 @@
 							name = "Nurse [real_name]"
 							desc = "[name] needs 100cc of beef jerky...STAT!"
 						if(/obj/item/clothing/head/pirate, /obj/item/clothing/head/collectable/pirate)
-							name = "'[pick("Ol'","Scurvy","Black","Rum","Gammy","Bloody","Gangrene","Death","Long-John")] [pick("kibbles","leg","beard","tooth","poop-deck","Threepwood","Le Chuck","corsair","Silver","Crusoe")]'"
+							name = "'[pick("Ol'","Scurvy","Black","Rum","Gammy","Bloody","Gangrene","Death","Long-John")] [pick("kibble","leg","beard","tooth","poop-deck","Threepwood","Le Chuck","corsair","Silver","Crusoe")]'"
 							desc = "Yaarghh!! Thar' be a scurvy dog!"
 							emote_see = list("hunts for treasure","stares coldly...","gnashes his tiny corgi teeth")
 							emote_hear = list("growls ferociously", "snarls")
 							speak = list("Arrrrgh!!","Grrrrrr!")
 						if(/obj/item/clothing/head/ushanka)
-							name = "[pick("Comrade","Commissar")] [real_name]"
+							name = "[pick("Comrade","Commissar","Glorious Leader")] [real_name]"
 							desc = "A follower of Karl Barx."
 							emote_see = list("contemplates the failings of the capitalist economic model", "ponders the pros and cons of vangaurdism")
 						if(/obj/item/clothing/head/collectable/police)
@@ -226,7 +229,7 @@
 							name = "Grandwizard [real_name]"
 							speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI  NATH!")
 						if(/obj/item/weapon/bedsheet)
-							name = "The ghost"
+							name = "\improper Ghost"
 							speak = list("WoooOOOooo~","AUUUUUUUUUUUUUUUUUU")
 							emote_see = list("stumbles around", "shivers")
 							emote_hear = list("howls","groans")
@@ -239,7 +242,7 @@
 
 			if("back")
 				if(inventory_back)
-					usr << "\red The [inventory_back] is already in this slot."
+					usr << "\red It's already wearing something."
 					return
 				else
 					var/obj/item/item_to_add = usr.get_active_hand()
@@ -255,7 +258,7 @@
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
-						usr << "\red The object cannot fit on this animal."
+						usr << "\red This object won't fit."
 						return
 
 					usr.drop_item()
@@ -271,6 +274,7 @@
 /mob/living/simple_animal/corgi/Ian
 	name = "Ian"
 	real_name = "Ian"	//Intended to hold the name without altering it.
+	gender = "male"
 	desc = "It's a corgi."
 	var/turns_since_scan = 0
 	var/obj/movement_target
@@ -323,7 +327,7 @@
 						emote("stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
 
 		if(prob(1))
-			emote("dances around")
+			emote(pick("dances around","chases its tail"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					dir = i
@@ -343,11 +347,12 @@
 			var/mob/tmob = AM
 			if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
 				if(prob(70))
-					for(var/mob/M in viewers(src, null))
-						if(M.client)
-							M << "\red <B>[src] fails to push [tmob]'s fat ass out of the way.</B>"
+					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
 					return
+			if(tmob.nopush)
+				now_pushing = 0
+				return
 
 			tmob.LAssailant = src
 		now_pushing = 0
@@ -374,6 +379,20 @@
 	mind.current = src
 	mind.assigned_role = "Corgi"
 	mind.key = G.key
+
+
+/mob/living/simple_animal/corgi/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
+	if(istype(O, /obj/item/weapon/newspaper))
+		if(alive)
+			for(var/mob/M in viewers(user, null))
+				if ((M.client && !( M.blinded )))
+					M.show_message("\blue [user] baps [name] on the nose with the rolled up [O]")
+			spawn(0)
+				for(var/i in list(1,2,4,8,4,2,1,2))
+					dir = i
+					sleep(1)
+	else
+		..()
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/corgi
 	name = "Corgi meat"

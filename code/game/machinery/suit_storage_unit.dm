@@ -478,7 +478,7 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		src.panelopen = !src.panelopen
 		playsound(src.loc, 'Screwdriver.ogg', 100, 1)
-		user << text("<font color='blue'>You [] the Unit's maintenance panel.</font>",(src.panelopen ? "open up" : "close") )
+		user << text("<font color='blue'>You [] the unit's maintenance panel.</font>",(src.panelopen ? "open up" : "close") )
 		src.updateUsrDialog()
 		return
 	if ( istype(I, /obj/item/weapon/grab) )
@@ -492,7 +492,7 @@
 			usr << "<font color='red'>The unit is not operational.</font>"
 			return
 		if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) ) //Unit needs to be absolutely empty
-			user << "<font color='red'>The Unit's storage area is too cluttered.</font>"
+			user << "<font color='red'>The unit's storage area is too cluttered.</font>"
 			return
 		for (var/mob/V in viewers(user))
 			V.show_message("[user] starts putting [G.affecting.name] into the Suit Storage Unit.", 3)

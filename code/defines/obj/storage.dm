@@ -8,13 +8,13 @@
 	max_combined_w_class = 21
 
 /obj/item/weapon/storage/backpack/cultpack
-	name = "Trophy Rack"
-	desc = "A backpack and trophy rack, useful for both carrying extra gear and proudly declaring your insanity "
+	name = "trophy rack"
+	desc = "It's useful for both carrying extra gear and proudly declaring your insanity."
 	icon_state = "cultpack"
 
 /obj/item/weapon/storage/trashbag
 	name = "trash bag"
-	desc = "For picking up all that trash."
+	desc = "It's the heavy-duty black polymer kind. Time to take out the trash!"
 	icon_state = "trashbag"
 	item_state = "trashbag"
 	w_class = 4.0
@@ -31,16 +31,17 @@
 */
 /obj/item/weapon/storage/pill_bottle
 	name = "pill bottle"
-	desc = "A reasonable place to put your pills."
+	desc = "It's an airtight container for storing medication."
 	icon_state = "pill_canister"
 	icon = 'chemical.dmi'
 	item_state = "contsolid"
 	w_class = 2.0
 	can_hold = list("/obj/item/weapon/reagent_containers/pill")
+	var/mode = 1 // pickup mode
 
 /obj/item/weapon/storage/dice
-	name = "dice pack"
-	desc = "Apparently this has dice in them."
+	name = "pack of dice"
+	desc = "It's a small container with dice inside."
 	icon_state = "pill_canister"
 	icon = 'chemical.dmi'
 	item_state = "contsolid"
@@ -66,6 +67,7 @@
 	desc = "Full of goodness."
 	icon_state = "implant"
 	item_state = "syringe_kit"
+
 /obj/item/weapon/storage/cupbox
 	name = "box of paper cups"
 	desc = "It has pictures of paper cups on the front."
@@ -304,10 +306,11 @@
 	icon_state = "firstaid"
 
 /obj/item/weapon/storage/syringes
-	name = "Syringes"
+	name = "syringes"
 	desc = "A box full of syringes."
 	desc = "A biohazard alert warning is printed on the box"
 	icon_state = "syringe"
+	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
 /obj/item/weapon/storage/firstaid/toxin
 	name = "Toxin First Aid"
@@ -542,6 +545,76 @@
 	desc = "It has a picture of drinking glasses on it."
 	icon_state = "box"
 	item_state = "syringe_kit"
+
+
+
+
+/obj/structure/closet/syndicate/resources/
+	desc = "It's an emergency storage closet for repairs."
+
+/obj/structure/closet/syndicate/resources/New()
+	..()
+
+	var/list/resources_common = list(
+
+	/obj/item/stack/sheet/metal,
+	/obj/item/stack/sheet/glass,
+	/obj/item/stack/sheet/plasteel,
+	/obj/item/stack/rods
+	)
+
+	var/list/resources_rare = list(
+
+	/obj/item/stack/sheet/gold,
+	/obj/item/stack/sheet/silver,
+	/obj/item/stack/sheet/plasma,
+	/obj/item/stack/sheet/uranium,
+	/obj/item/stack/sheet/diamond
+
+	)
+
+	sleep(2)
+
+	for(var/i = 0, i<2, i++)
+		for(var/res in resources_common)
+			var/obj/item/stack/R = new res(src)
+			R.amount = rand(40,R.max_amount)
+
+		for(var/res in resources_rare)
+			var/obj/item/stack/R = new res(src)
+			R.amount = rand(10,25)
+
+	return
+
+/obj/structure/closet/syndicate/resources/everything
+	desc = "It's an emergency storage closet for repairs."
+
+/obj/structure/closet/syndicate/resources/everything/New()
+
+
+	var/list/resources = list(
+
+	/obj/item/stack/sheet/metal,
+	/obj/item/stack/sheet/glass,
+	/obj/item/stack/sheet/gold,
+	/obj/item/stack/sheet/silver,
+	/obj/item/stack/sheet/plasma,
+	/obj/item/stack/sheet/uranium,
+	/obj/item/stack/sheet/diamond,
+	/obj/item/stack/sheet/clown,
+	/obj/item/stack/sheet/plasteel,
+	/obj/item/stack/rods
+
+	)
+
+	sleep(2)
+
+	for(var/i = 0, i<2, i++)
+		for(var/res in resources)
+			var/obj/item/stack/R = new res(src)
+			R.amount = R.max_amount
+
+	return
 
 // Belt Bags/Satchels
 

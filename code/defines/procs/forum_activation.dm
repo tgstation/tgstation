@@ -35,12 +35,8 @@
 		return
 
 	// Sanitize inputs to avoid SQL injection attacks
-	accname = dd_replacetext(accname, "'", "''")
-	accname = dd_replacetext(accname, ";", "")
-	accname = dd_replacetext(accname, "&", "")
-	playerkey = dd_replacetext(playerkey, "'", "''")
-	playerkey = dd_replacetext(playerkey, ";", "")
-	playerkey = dd_replacetext(playerkey, "&", "")
+	accname = sanitizeSQL(accname)
+	playerkey = sanitizeSQL(playerkey)
 
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT user_id FROM [forumsqldb].phpbb_users WHERE username = '[accname]'")
@@ -52,7 +48,7 @@
 		dbcon.Disconnect()
 		return
 
-	query = dbcon.NewQuery("SELECT pf_byondkey FROM [forumsqldb].phpbb_profile_fields_data WHERE user_id = [uid]")
+	query = dbcon.NewQuery("SELECT pf_byondkey FROM [forumsqldb].phpbb_profile_fields_data WHERE user_id = '[uid]'")
 	if(!query.Execute())
 		src << "Unable to verify whether account is already associated with a BYOND key or not. This error shouldn't occur, please contact an administrator."
 		dbcon.Disconnect()
@@ -65,7 +61,7 @@
 		dbcon.Disconnect()
 		return
 
-	query = dbcon.NewQuery("SELECT * FROM [forumsqldb].phpbb_user_group WHERE user_id = [uid] AND group_id = [forum_authenticated_group]")
+	query = dbcon.NewQuery("SELECT * FROM [forumsqldb].phpbb_user_group WHERE user_id = '[uid]' AND group_id = '[forum_authenticated_group]'")
 	if(!query.Execute())
 		src << "Unable to verify whether account is already part of the authenticated group or not. This error should not occur, please contact an administrator."
 		dbcon.Disconnect()
@@ -75,19 +71,19 @@
 		dbcon.Disconnect()
 		return
 
-	query = dbcon.NewQuery("INSERT INTO [forumsqldb].phpbb_profile_fields_data (user_id, pf_byondkey) VALUES ([uid], '[playerkey]')") // Remember which key is associated with the account
+	query = dbcon.NewQuery("INSERT INTO [forumsqldb].phpbb_profile_fields_data (user_id, pf_byondkey) VALUES ('[uid]', '[playerkey]')") // Remember which key is associated with the account
 	if(!query.Execute())
 		src << "Unable to associate key with account. Authentication failed."
 		dbcon.Disconnect()
 		return
 
-	query = dbcon.NewQuery("UPDATE [forumsqldb].phpbb_user_group SET group_id = [forum_authenticated_group] WHERE user_id = [uid] AND group_id = [forum_activated_group]") // Replace 'Registered Users' group with 'Activated Users'
+	query = dbcon.NewQuery("UPDATE [forumsqldb].phpbb_user_group SET group_id = '[forum_authenticated_group]' WHERE user_id = '[uid]' AND group_id = '[forum_activated_group]'") // Replace 'Registered Users' group with 'Activated Users'
 	if(!query.Execute())
 		src << "Unable to move account into authenticated group. This error shouldn't occur, contact an administrator for help. Authentication failed."
 		dbcon.Disconnect()
 		return
 
-	query = dbcon.NewQuery("UPDATE [forumsqldb].phpbb_users SET group_id = [forum_authenticated_group] WHERE user_id = [uid]") // Change 'default group' the the authenticated group. Not doing so was causing many authenticated accounts to retain their unauthenticated permissions, despite being succesfully authenticated.
+	query = dbcon.NewQuery("UPDATE [forumsqldb].phpbb_users SET group_id = '[forum_authenticated_group]' WHERE user_id = '[uid]'") // Change 'default group' the the authenticated group. Not doing so was causing many authenticated accounts to retain their unauthenticated permissions, despite being succesfully authenticated.
 	if(!query.Execute())
 		src << "Unable to modify default group for account. This error should never occur, contact an administrator for help. Authentication failed."
 	else
@@ -95,8 +91,12 @@
 	dbcon.Disconnect()
 
 
+// This actually opens up a bunch of security holes to the forum DB. Given that it's not used much in the first place,
+// I'm going to keep this commented out until we're sure everything's secure.	-- TLE
+/*
 /client/verb/activate_forum_account(var/a as text)
 	set name = "Activate Forum Account"
 	set category = "Special Verbs"
 	set desc = "Associate a tgstation forum account with your BYOND key to enable posting."
 	associate_key_with_forum(a, src.key)
+*/

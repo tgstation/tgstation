@@ -385,13 +385,11 @@
 //		use_power(luminosity * LIGHTING_POWER_FACTOR, LIGHT)
 
 // called when area power state changes
-
 /obj/machinery/light/power_change()
-	spawn(rand(0,15))
+	spawn(10)
 		var/area/A = src.loc.loc
 		A = A.master
 		seton(A.lightswitch && A.power_light)
-
 
 // called when on fire
 
@@ -593,7 +591,12 @@
 	name = "replacement bulbs"
 	icon = 'storage.dmi'
 	icon_state = "light"
+	desc = "This box is shaped on the inside so that only light tubes and bulbs fit."
 	item_state = "syringe_kit"
+	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
+	storage_slots=21
+	can_hold = list("/obj/item/weapon/light/tube", "/obj/item/weapon/light/bulb")
+	max_combined_w_class = 21
 
 /obj/item/weapon/storage/lightbox/bulbs/New()
 	..()

@@ -137,8 +137,8 @@
 						T.loc = C //put shade in stone
 						T.nodamage = 1
 						T.canmove = 0
-						T.health = T.max_health
+						T.health = T.maxHealth
 						C.icon_state = "soulstone2"
-						T << "Your soul has been recaptured by the soul stone, it's arcane energies reknitting your ethereal form"
+						T << "Your soul has been recaptured by the soul stone, its arcane energies are reknitting your ethereal form"
 						U << "\blue <b>Capture successful!</b>: \black [T.name]'s has been recaptured and stored within the soul stone."
 	return

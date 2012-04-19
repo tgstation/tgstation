@@ -56,6 +56,10 @@ PROBABILITY MONKEY 0
 PROBABILITY TRAITORCHAN 0
 PROBABILITY EXTEND-A-TRAITORMONGOUS 3
 PROBABILITY EPIDEMIC 1
+
+## Hash out to disable random events during the round.
+ALLOW_RANDOM_EVENTS
+
 ## if amount of traitors scales or not
 TRAITOR_SCALING
 

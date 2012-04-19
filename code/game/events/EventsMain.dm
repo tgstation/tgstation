@@ -14,7 +14,7 @@ var/datum/event/LongTermEvent = null
 var/is_ninjad_yet = 0
 
 /proc/SpawnEvent()
-	if(!EventsOn || ActiveEvent)
+	if(!EventsOn || ActiveEvent || !config.allow_random_events)
 		return
 	if((world.time/10)>=3600 && toggle_space_ninja && !sent_ninja_to_station && !is_ninjad_yet)
 		EventTypes |= /datum/event/spaceninja

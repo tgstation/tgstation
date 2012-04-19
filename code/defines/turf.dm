@@ -37,7 +37,7 @@
 
 /turf/space
 	icon = 'space.dmi'
-	name = "space"
+	name = "\proper space"
 	icon_state = "placeholder"
 
 	temperature = TCMB

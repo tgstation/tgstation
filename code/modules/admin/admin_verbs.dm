@@ -142,6 +142,7 @@
 			verbs += /client/proc/callprocobj
 			verbs += /client/proc/rnd_check_designs
 			verbs += /client/proc/CarbonCopy
+			verbs += /client/proc/getruntimelog							//used by coders to retrieve runtime logs	
 
 		if (holder.level >= 5)//Game Admin********************************************************************
 			verbs += /obj/admins/proc/view_txt_log
@@ -172,6 +173,7 @@
 			verbs += /client/proc/toggle_clickproc //TODO ERRORAGE (Temporary proc while the enw clickproc is being tested)
 			verbs += /client/proc/toggle_gravity_on
 			verbs += /client/proc/toggle_gravity_off
+			verbs += /client/proc/toggle_random_events
 			// Moved over from tg's Game Master:
 			verbs += /client/proc/colorooc
 			verbs += /obj/admins/proc/toggle_aliens			//toggle aliens
@@ -425,6 +427,7 @@
 	verbs -= /client/proc/tension_report
 	verbs -= /client/proc/toggle_gravity_on
 	verbs -= /client/proc/toggle_gravity_off
+	verbs -= /client/proc/toggle_random_events
 	verbs -= /client/proc/cmd_admin_change_custom_event
 	verbs -= /client/proc/admin_invis
 	verbs -= /client/proc/callprocgen
@@ -436,7 +439,7 @@
 	verbs -= /client/proc/rnd_check_designs
 	verbs -= /client/proc/make_tajaran
 	verbs -= /client/proc/CarbonCopy
-
+	verbs -= /client/proc/getruntimelog									//used by coders to retrieve runtime logs
 	return
 
 
