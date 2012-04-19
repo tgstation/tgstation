@@ -293,6 +293,9 @@ FLASHBANG
 		if(!active)
 			//world << "cluster attack self"
 			user << "\red You prime the clusterbang! [det_time/10] seconds!"
+			log_attack("<font color='red'>[user.name] ([user.ckey]) primed a [src].</font>")
+			log_admin("ATTACK: [user] ([user.ckey]) primed a [src].")
+			message_admins("ATTACK: [user] ([user.ckey]) primed a [src].")
 			src.active = 1
 			src.icon_state = "clusterbang1"
 			playsound(src.loc, 'armbomb.ogg', 75, 1, -3)
