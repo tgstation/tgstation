@@ -181,14 +181,11 @@
 		world << i
 	sleep(10)
 	enter_allowed = 0
-	for(var/mob/M in world)
-		if(M.client)
-			spawn(0)
-				M.client.station_explosion_cinematic()
-	sleep(110)
-	ticker.mode:station_was_nuked = 1
-	ticker.mode:explosion_in_progress = 0
-	//world << "<B>Everyone was killed by the self-destruct!"
+	if(ticker)
+		ticker.station_explosion_cinematic(0,null)
+		if(ticker.mode)
+			ticker.mode:station_was_nuked = 1
+			ticker.mode:explosion_in_progress = 0
 	return
 
 

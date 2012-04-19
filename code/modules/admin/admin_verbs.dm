@@ -272,6 +272,7 @@
 			verbs += /client/proc/only_one
 			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/getruntimelog							//used by coders to retrieve runtime logs
+			verbs += /client/proc/cinematic								//show a cinematic sequence
 		else	return
 	return
 
@@ -397,6 +398,7 @@
 	verbs -= /client/proc/everyone_random
 	verbs -= /client/proc/Set_Holiday
 	verbs -= /client/proc/getruntimelog									//used by coders to retrieve runtime logs
+	verbs += /client/proc/cinematic										//show a cinematic sequence
 	verbs -= /proc/possess
 	verbs -= /proc/release
 	//verbs -= /client/proc/give_spell 									--Merged with view variables

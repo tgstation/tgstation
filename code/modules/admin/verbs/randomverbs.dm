@@ -868,7 +868,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	command_alert("For budget reasons, Centcomm is no longer beaming gravitons to your station.  We appoligize for any inconvience.")
 	feedback_add_details("admin_verb","TSGOFF") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-//CARN
+
 /client/proc/toggle_random_events()
 	set category = "Server"
 	set name = "Toggle random events on/off"

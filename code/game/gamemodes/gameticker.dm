@@ -128,6 +128,97 @@ var/global/datum/controller/gameticker/ticker
 	return 1
 
 /datum/controller/gameticker
+	//station_explosion used to be a variable for every mob's hud. Which was a waste!
+	//Now we have a general cinematic centrally held within the gameticker....far more efficient!
+	var/obj/screen/cinematic = null
+
+	//Plus it provides an easy way to make cinematics for other events. Just use this as a template :)
+	proc/station_explosion_cinematic(var/station_missed=0, var/override = null)
+		if( cinematic )	return	//already a cinematic in progress!
+
+		//initialise our cinematic screen object
+		cinematic = new(src)
+		cinematic.icon = 'station_explosion.dmi'
+		cinematic.icon_state = "start"
+		cinematic.layer = 20
+		cinematic.mouse_opacity = 0
+		cinematic.screen_loc = "1,3"	//TODO resize them
+
+		var/obj/structure/stool/bed/temp_buckle = new(src)	//Incredibly hackish
+															//...creates a bed within the gameticker (lol)
+															//to stop mobs running around
+		for(var/mob/M)
+			if(M.client)
+				M.client.screen += cinematic	//show every client the cinematic
+			M.buckled = temp_buckle				//buckle everybody to our pseudo-bed
+			if(!station_missed)
+				M.stat = DEAD
+			//TODO: impliment dust() instead of this (gotta fix it first, dust() is buggy as hell)
+
+
+		//Now animate the cinematic
+		switch(station_missed)
+			if(2)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
+				sleep(50)
+				world << sound('explosionfar.ogg')
+
+			if(1)	//nuke was nearby but (mostly) missed
+				if( mode && !override )
+					override = mode.name
+				switch( override )
+					if("nuclear emergency")
+						flick("start_nuke",cinematic)
+						sleep(50)
+						world << sound('explosionfar.ogg')
+						flick("explode2",cinematic)
+						cinematic.icon_state = "loss_nuke2"
+					else
+						sleep(50)
+						world << sound('explosionfar.ogg')
+						flick("explode2",cinematic)
+
+			else	//station was destroyed
+				if( mode && !override )
+					override = mode.name
+				switch( override )
+					if("nuclear emergency")
+						flick("start_nuke",cinematic)
+						sleep(50)
+						world << sound('explosionfar.ogg')
+						cinematic.icon_state = "end"
+						flick("explode",cinematic)
+						cinematic.icon_state = "loss_nuke"
+
+					if("AI malfunction")
+						flick("start_malf",cinematic)
+						sleep(50)
+						world << sound('explosionfar.ogg')
+						cinematic.icon_state = "end"
+						flick("explode",cinematic)
+						cinematic.icon_state = "loss_malf"
+
+					if("blob")
+						flick("start_blob",cinematic)			//TODO: make a blob one
+						sleep(50)
+						world << sound('explosionfar.ogg')
+						cinematic.icon_state = "end"
+						flick("explode",cinematic)
+						cinematic.icon_state = "loss_blob"		//TODO: make a blob one
+
+					else
+						//default station-destroyed ending
+						sleep(50)
+						world << sound('explosionfar.ogg')
+						cinematic.icon_state = "end"
+						flick("explode",cinematic)
+						cinematic.icon_state = "loss_general"
+		sleep(100)
+
+		//Tidy-up time!
+		if(cinematic)	del(cinematic)
+		if(temp_buckle)	del(temp_buckle)	//release everybody
+		return
+
 
 	proc/create_characters()
 		for(var/mob/new_player/player in world)

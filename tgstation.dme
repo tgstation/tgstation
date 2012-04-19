@@ -748,6 +748,7 @@
 #include "code\modules\admin\verbs\adminsay.dm"
 #include "code\modules\admin\verbs\atmosdebug.dm"
 #include "code\modules\admin\verbs\BrokenInhands.dm"
+#include "code\modules\admin\verbs\cinematic.dm"
 #include "code\modules\admin\verbs\deadsay.dm"
 #include "code\modules\admin\verbs\debug.dm"
 #include "code\modules\admin\verbs\diagnostics.dm"

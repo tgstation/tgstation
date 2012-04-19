@@ -141,7 +141,6 @@
 /obj/machinery/nuclearbomb/ex_act(severity)
 	return
 
-
 /obj/machinery/nuclearbomb/blob_act()
 	if (src.timing == -1.0)
 		return
@@ -150,6 +149,7 @@
 	return
 
 
+#define NUKERANGE 80
 /obj/machinery/nuclearbomb/proc/explode()
 	if (src.safety)
 		src.timing = 0
@@ -163,66 +163,45 @@
 		ticker.mode.explosion_in_progress = 1
 	sleep(100)
 
-/*
-	var/turf/ground_zero = get_turf(loc)
-	explosion(ground_zero, 50, 250, 500, 750)
-
-*/
 	enter_allowed = 0
 
-
-
 	var/off_station = 0
-	var/area/A = get_area(src.loc)
-	if(A && (istype(A,/area/syndicate_station) || A.type == "/area"))
-		off_station = 1
-	if (ticker && ticker.mode && ticker.mode.name == "nuclear emergency")
-		ticker.mode:herp = syndicate_station_at_station
-		ticker.mode:nuke_off_station = off_station
+	var/turf/bomb_location = get_turf(src)
+	if( bomb_location && (bomb_location.z == 1) )
+		if( (bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)) )
+			off_station = 1
+	else
+		off_station = 2
 
-	for(var/mob/M in world)
-		if(M.client)
-			spawn(0)
-				M.client.station_explosion_cinematic(off_station)
-	sleep(110)
+	if (ticker)
+		if(ticker.mode && ticker.mode.name == "nuclear emergency")
+			ticker.mode:herp = syndicate_station_at_station
+			ticker.mode:nuke_off_station = off_station
+		ticker.station_explosion_cinematic(off_station,null)
+		if(ticker.mode)
+			ticker.mode.explosion_in_progress = 0
+			if(ticker.mode.name == "nuclear emergency")
+				ticker.mode:nukes_left --
+			else
+				world << "<B>The station was destoyed by the nuclear blast!</B>"
 
-	for(var/mob/M in world)
-		if(M.z==1)
-			spawn(0)
-				M.gib()
+			ticker.mode.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
+															//kinda shit but I couldn't  get permission to do what I wanted to do.
 
-	if (ticker && ticker.mode)
-		ticker.mode.explosion_in_progress = 0
-		if(ticker.mode.name == "nuclear emergency")
-			ticker.mode:nukes_left --
-			ticker.mode.station_was_nuked = (off_station==0)
+			if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
+				world << "<B>Resetting in 30 seconds!</B>"
 
-		else
-			world << "<B>The station was destoyed by the nuclear blast!</B>"
-			ticker.mode.station_was_nuked = 1
-			/*
-			TODO: derped blast should partially damage nearest objects
-			and do not reboot the game. Also make it work properly on other z-levels --rastaf0
-			Further TODO: make nuke detonation work with objectives. Right now, you can't track player
-			location because they are viewing the cinematic (can't get_turf on them to determine z_level
-			as it will return null). Leaving this for you since you apparently plan to work this further. /N
-			*/
+				feedback_set_details("end_error","nuke - unhandled ending")
 
-		if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
-			world << "<B>Resetting in 30 seconds!</B>"
-
-			feedback_set_details("end_error","nuke - unhandled ending")
-
-			if(blackbox)
-				blackbox.save_all_data_to_sql()
-			sleep(300)
-			log_game("Rebooting due to nuclear detonation")
-			world.Reboot()
-			return
-
+				if(blackbox)
+					blackbox.save_all_data_to_sql()
+				sleep(300)
+				log_game("Rebooting due to nuclear detonation")
+				world.Reboot()
+				return
+	return
 
 /obj/item/weapon/disk/nuclear/Del()
-//	if (ticker.mode && ticker.mode.name == "nuclear emergency")
 	if(blobstart.len > 0)
 		var/obj/D = new /obj/item/weapon/disk/nuclear(pick(blobstart))
 		message_admins("[src] has been destroyed. Spawning [D] at ([D.x], [D.y], [D.z]).")
