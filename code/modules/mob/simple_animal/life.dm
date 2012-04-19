@@ -2,7 +2,7 @@
 	name = "animal"
 	var/icon_living = ""
 	var/icon_dead = ""
-	var/max_health = 20
+	maxHealth = 20
 	var/alive = 1
 	var/list/speak = list()
 	var/list/speak_emote = list()//	Emotes while speaking IE: Ian [emote], [text] -- Ian barks, "WOOF!". Spoken text is generated from the speak variable.
@@ -50,6 +50,8 @@
 	var/wall_smash = 0 //if they can smash walls
 
 	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
+
+	var/obj/item/device/radio/headset/ears = null
 /mob/living/simple_animal/New()
 	..()
 	verbs -= /mob/verb/observe
@@ -70,23 +72,58 @@
 			density = 1
 		return
 
+
 	if(health < 1)
-		alive = 0
-		icon_state = icon_dead
-		stat = 2 			//Dead
-		density = 0
-		return
+		Die()
 
-	if(health > max_health)
-		health = max_health
+	if(health > maxHealth)
+		health = maxHealth
 
+/*
+	// Stun/Weaken
+
+	if (paralysis || stunned || weakened) //Stunned etc.
+		if (stunned > 0)
+			AdjustStunned(-1)
+			stat = 0
+		if (weakened > 0)
+			AdjustWeakened(-1)
+			lying = 1
+			stat = 0
+		if (paralysis > 0)
+			AdjustParalysis(-1)
+			blinded = 1
+			lying = 1
+			stat = 1
+		var/h = hand
+		hand = 0
+		drop_item()
+		hand = 1
+		drop_item()
+		hand = h
+
+	else	//Not stunned.
+		lying = 0
+		stat = 0
+
+	if(paralysis || stunned || weakened || buckled)
+		canmove = 0
+	else
+		canmove = 1
+*/
 	//Movement
 	if(!ckey && !stop_automated_movement)
-		if(isturf(src.loc) && !resting && !buckled)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				Move(get_step(src,pick(cardinal)))
 				turns_since_move = 0
+
+
+
+
+
+
 
 	//Speaking
 	if(speak_chance)
@@ -201,6 +238,7 @@
 
 /mob/living/simple_animal/emote(var/act)
 	if(act)
+		if(act == "scream")	act = "makes a loud and pained whimper" //ugly hack to stop animals screaming when crushed :P
 		for (var/mob/O in viewers(src, null))
 			O.show_message("<B>[src]</B> [act].")
 
@@ -267,9 +305,9 @@
 	if(istype(O, /obj/item/stack/medical))
 		if(alive)
 			var/obj/item/stack/medical/MED = O
-			if(health < max_health)
+			if(health < maxHealth)
 				if(MED.amount >= 1)
-					health = min(max_health, health + MED.heal_brute)
+					health = min(maxHealth, health + MED.heal_brute)
 					MED.amount -= 1
 					if(MED.amount <= 0)
 						del(MED)
@@ -289,9 +327,24 @@
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
 					M.show_message("\red [user] gently taps [src] with the [O]. ")
+
+
 /mob/living/simple_animal/movement_delay()
 	var/tally = 0 //Incase I need to add stuff other than "speed" later
 
 	tally = speed
 
 	return tally
+
+/mob/living/simple_animal/Stat()
+	..()
+
+	statpanel("Status")
+	stat(null, "Health: [round((health / maxHealth) * 100)]%")
+
+/mob/living/simple_animal/proc/Die()
+	alive = 0
+	icon_state = icon_dead
+	stat = DEAD
+	density = 0
+	return

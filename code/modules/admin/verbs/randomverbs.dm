@@ -902,6 +902,20 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		A.gravitychange(0,A)
 
 	command_alert("For budget reasons, Centcomm is no longer beaming gravitons to your station.  We appoligize for any inconvience.")
+//CARN
+/client/proc/toggle_random_events()
+	set category = "Server"
+	set name = "Toggle random events on/off"
+	set desc = "Toggles random events such as meteors, black holes, blob (but not space dust) on/off"
+	if(!config.allow_random_events)
+		config.allow_random_events = 1
+		usr << "Random events enabled"
+		message_admins("Admin [key_name_admin(usr)] has enabled random events.", 1)
+	else
+		config.allow_random_events = 0
+		usr << "Random events disabled"
+		message_admins("Admin [key_name_admin(usr)] has disabled random events.", 1)
+	feedback_add_details("admin_verb","TRE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/rnd_check_designs()
 	set category = "Debug"

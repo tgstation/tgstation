@@ -135,7 +135,6 @@
 //							if ("3")
 //								usr.spell_list += new /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate(usr)
 //								src.temp = "This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown."
-								src.temp = "This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown."
 							if ("4")
 								feedback_add_details("wizard_spell_learned","DT") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 								usr.spell_list += new /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech(usr)

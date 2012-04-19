@@ -19,7 +19,7 @@
 			return null
 	return 0
 
-/proc/get_area_name(N) //get area by it's name
+/proc/get_area_name(N) //get area by its name
 	for(var/area/A in world)
 		if(A.name == N)
 			return A

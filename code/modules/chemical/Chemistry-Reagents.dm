@@ -1910,30 +1910,50 @@ datum
 					return
 				if(method == TOUCH)
 					if(istype(M, /mob/living/carbon/human))
-						if(M:wear_mask)
-							M << "\red Your mask protects you from the pepperspray!"
+						var/mob/living/carbon/human/victim = M
+						var/mouth_covered = 0
+						var/eyes_covered = 0
+						var/obj/item/safe_thing = null
+						if( victim.wear_mask )
+							if ( victim.wear_mask.flags & MASKCOVERSEYES )
+								eyes_covered = 1
+								safe_thing = victim.wear_mask
+							if ( victim.wear_mask.flags & MASKCOVERSMOUTH )
+								mouth_covered = 1
+								safe_thing = victim.wear_mask
+						if( victim.head )
+							if ( victim.head.flags & MASKCOVERSEYES )
+								eyes_covered = 1
+								safe_thing = victim.head
+							if ( victim.head.flags & MASKCOVERSMOUTH )
+								mouth_covered = 1
+								safe_thing = victim.head
+						if(victim.glasses)
+							eyes_covered = 1
+							if ( !safe_thing )
+								safe_thing = victim.glasses
+						if ( eyes_covered && mouth_covered )
+							victim << "\red Your [safe_thing] protects you from the pepperspray!"
 							return
-						if(M:glasses)
-							if(M.job in security_positions)
-								M:emote("me",1,"glares at you as the pepperspray drips off the lenses!")
-								M << "\red Your glasses protect you from most of the pepperspray, and your training takes care of the rest!"
-								M.eye_blurry = max(M.eye_blurry, 10)
-							M << "\red Your glasses protect you from most of the pepperspray!"
-							M:emote("scream")
-							M.eye_blurry = max(M.eye_blurry, 20)
-							M.eye_blind = max(M.eye_blind, 4)
+						else if ( mouth_covered )	// Reduced effects if partially protected
+							victim << "\red Your [safe_thing] protect you from most of the pepperspray!"
+							victim.eye_blurry = max(M.eye_blurry, 3)
+							victim.eye_blind = max(M.eye_blind, 1)
+							victim.Paralyse(1)
+							victim.drop_item()
 							return
-						if(M.job in security_positions)
-							M:emote("me",1,"shakes off most of the pepper spray's effects, at least they were trained!")
-							M << "\red Your training protects you from most of the pepperspray!"
-							M.eye_blurry = max(M.eye_blurry, 20)
-							M.eye_blind = max(M.eye_blind, 4)
-						M:emote("scream")
-						M << "\red You're sprayed directly in the eyes with pepperspray!"
-						M.eye_blurry = max(M.eye_blurry, 5)
-						M.eye_blind = max(M.eye_blind, 2)
-						M.Paralyse(1)
-						M.drop_item()
+						else if ( eyes_covered ) // Eye cover is better than mouth cover
+							victim << "\red Your [safe_thing] protects your eyes from the pepperspray!"
+							victim.emote("scream")
+							victim.eye_blurry = max(M.eye_blurry, 1)
+							return
+						else // Oh dear :D
+							victim.emote("scream")
+							victim << "\red You're sprayed directly in the eyes with pepperspray!"
+							victim.eye_blurry = max(M.eye_blurry, 5)
+							victim.eye_blind = max(M.eye_blind, 2)
+							victim.Paralyse(1)
+							victim.drop_item()
 
 		frostoil
 			name = "Frost Oil"

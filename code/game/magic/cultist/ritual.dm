@@ -343,12 +343,13 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				<b>Create a wall: </b>Destroy Travel Self<br>
 				<b>Summon cultist: </b>Join Other Self<br>
 				<b>Free a cultist: </b>Travel technology other<br>
-				<b>Deafen: </b>Hide other see<br>
+				<b>Deafen: </b>Hide Other See<br>
 				<b>Blind: </b>Destroy See Other<br>
 				<b>Blood Boil: </b>Destroy See Blood<br>
-				<b>Communicate: </b>Self other technology<br>
-				<b>Stun: </b>Join hide technology<br>
-				<b>Summon Cultist Armor: </b>Hell destroy other<br>
+				<b>Communicate: </b>Self Other Technology<br>
+				<b>Stun: </b>Join Hide Technology<br>
+				<b>Summon Cultist Armor: </b>Hell Destroy Other<br>
+				<b>See Invisible: </b>See Hell Join<br>
 				</p>
 				<h2>Rune Descriptions</h2>
 				<h3>Teleport self</h3>
@@ -396,7 +397,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				<h3>Stun</h3>
 				Unlike other runes, this ons is supposed to be used in talisman form. When invoked directly, it simply releases some dark energy, briefly stunning everyone around. When imbued into a talisman, you can force all of its energy into one person, stunning him so hard he cant even speak. However, effect wears off rather fast.<br>
 				<h3>Equip Armor</h3>
-				When this rune is invoked, either from a rune or a talisman, it will equip the user with the armor of the followers of Nar-Sie. To use this rune to it's fullest extent, make sure you are not wearing any form of headgear, armor, gloves or shoes, and make sure you are not holding anything in your hands.<br>
+				When this rune is invoked, either from a rune or a talisman, it will equip the user with the armor of the followers of Nar-Sie. To use this rune to its fullest extent, make sure you are not wearing any form of headgear, armor, gloves or shoes, and make sure you are not holding anything in your hands.<br>
+				<h3>See Invisible</h3>
+				When invoked when standing on it, this rune allows the user to see the the world beyond as long as he does not move.<br>
 				</body>
 				</html>
 				"}

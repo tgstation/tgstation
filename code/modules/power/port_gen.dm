@@ -188,7 +188,7 @@ display round(lastgen) and plasmatank amount
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if(istype(O, text2path(coin_path)))
 			if(coins >= max_coins)
-				user << "\red The generator already has it's maximum amount of fuel!"
+				user << "\red The generator already has its maximum amount of fuel!"
 				return
 			coins++
 			user.drop_item()

@@ -50,6 +50,12 @@
 //  - Books shouldn't print straight from the library computer. Make it synch with a machine like the book binder to print instead. This should consume some sort of resource.
 
 
+// Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
+/proc/sanitizeSQL(var/t as text)
+	var/sanitized_text = dd_replacetext(t, "'", "\\'")
+	sanitized_text = dd_replacetext(sanitized_text, "\"", "\\\"")
+	return sanitized_text
+
 
 
 /obj/structure/bookcase

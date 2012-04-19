@@ -496,7 +496,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/mime
 	name = "Mime Burger"
-	desc = "It's taste defies language."
+	desc = "Its taste defies language."
 	icon_state = "mimeburger"
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette

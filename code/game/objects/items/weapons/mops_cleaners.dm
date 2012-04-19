@@ -219,14 +219,14 @@
 	name = "pepperspray"
 	icon_state = "pepperspray"
 	item_state = "pepperspray"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	flags = ONBELT|TABLEPASS|FPRINT|USEDELAY
 	throwforce = 3
 	w_class = 2.0
 	throw_speed = 2
 	throw_range = 10
 	var/catch = 1
 	var/BottleSize = 1
-	var/ReagentAmount = 30
+	var/ReagentAmount = 45
 
 /obj/item/weapon/pepperspray/small //And this is for personal defense.
 	desc = "This appears to be a small, nonlethal, single use personal defense weapon.  Hurts like a bitch, though."
@@ -234,7 +234,7 @@
 	name = "mace"
 	icon_state = "pepperspray"
 	item_state = "pepperspray"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	flags = ONBELT|TABLEPASS|FPRINT|USEDELAY
 	throwforce = 3
 	w_class = 1.0
 	throw_speed = 2
@@ -263,6 +263,8 @@
 		return
 
 /obj/item/weapon/pepperspray/afterattack(atom/A as mob|obj, mob/user as mob)
+	if ( A == src )
+		return
 	if (istype(A, /obj/item/weapon/storage ))
 		return
 	if (istype(A, /obj/effect/proc_holder/spell ))
@@ -324,38 +326,29 @@
 
 		Sprays[i] = D
 
-	var/direction = get_dir(src, A)
-	var/turf/T = get_turf(A)
-	var/turf/T1 = get_step(T,turn(direction, 90))
-	var/turf/T2 = get_step(T,turn(direction, -90))
-	var/list/the_targets = list(T,T1,T2)
+	//var/direction = get_dir(src, A)
+	//var/turf/T = get_turf(A)
+	//var/turf/T1 = get_step(T,turn(direction, 90))
+	//var/turf/T2 = get_step(T,turn(direction, -90))
+	//var/list/the_targets = list(T,T1,T2)
 
 	for(var/i=1, i<=Sprays.len, i++)
 		spawn()
 			var/obj/effect/decal/D = Sprays[i]
 			if(!D) continue
 
-			var/turf/my_target = null
 			// Spreads the sprays a little bit
-			if(i == 1)
-				my_target = T
-			else
-				my_target = pick(the_targets)
+			var/turf/my_target = get_turf(A) //pick(the_targets)
+			//the_targets -= my_target
 
-			the_targets -= my_target
-
-			var/Dist = 0
-
-			if(BottleSize)
-				Dist = rand(6,8)
-			else
-				Dist = rand(2,3)
-
-			for(var/j=1, j<=Dist, j++)
+			var/list/affected = new()	// BubbleWrap
+			for(var/j=1, j<=rand(6,8), j++)
 				step_towards(D, my_target)
 				D.reagents.reaction(get_turf(D))
 				for(var/atom/t in get_turf(D))
-					D.reagents.reaction(t)
+					if ( !(t in affected) )	// Only spray each person once, removes chat spam
+						D.reagents.reaction(t)
+						affected += t
 				sleep(2)
 			del(D)
 	sleep(1)
@@ -365,9 +358,9 @@
 		janitor.cell.charge -= 20
 		var/refill = src.reagents.get_master_reagent_id()
 		spawn(600)
-			src.reagents.add_reagent(refill, 10)
-
+			src.reagents.add_reagent(refill, 45)
 	return
+
 
 /obj/item/weapon/pepperspray/examine()
 	set src in usr
@@ -394,6 +387,7 @@
 	throw_range = 10
 	w_class = 3.0
 	flags = FPRINT | TABLEPASS
+
 
 /obj/item/weapon/mop/New()
 	var/datum/reagents/R = new/datum/reagents(5)
