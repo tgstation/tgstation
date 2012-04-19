@@ -1269,6 +1269,7 @@ proc/listclearnulls(list/list)
 	var/target_loc = target.loc
 	var/holding = user.equipped()
 	sleep(time)
+	if(!user || !target) return 0
 	if ( user.loc == user_loc && target.loc == target_loc && user.equipped() == holding && !( user.stat ) && ( !user.stunned && !user.weakened && !user.paralysis && !user.lying ) )
 		return 1
 	else

@@ -66,11 +66,12 @@
 			dat += text("[]\t-Toxin Content %: []</FONT><BR>", (occupant.getToxLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getToxLoss())
 			dat += text("[]\t-Burn Severity %: []</FONT><BR>", (occupant.getFireLoss() < 60 ? "<font color='blue'>" : "<font color='red'>"), occupant.getFireLoss())
 			dat += text("<HR>Paralysis Summary %: [] ([] seconds left!)<BR>", occupant.paralysis, round(occupant.paralysis / 4))
-			dat += text("Inaprovaline units: [] units<BR>", occupant.reagents.get_reagent_amount("inaprovaline"))
-			dat += text("Soporific: [] units<BR>", occupant.reagents.get_reagent_amount("stoxin"))
-			dat += text("Dermaline: [] units<BR>", occupant.reagents.get_reagent_amount("dermaline"))
-			dat += text("Bicaridine: [] units<BR>", occupant.reagents.get_reagent_amount("bicaridine"))
-			dat += text("Dexalin: [] units<BR>", occupant.reagents.get_reagent_amount("dexalin"))
+			if(occupant.reagents)
+				dat += text("Inaprovaline units: [] units<BR>", occupant.reagents.get_reagent_amount("inaprovaline"))
+				dat += text("Soporific: [] units<BR>", occupant.reagents.get_reagent_amount("stoxin"))
+				dat += text("Dermaline: [] units<BR>", occupant.reagents.get_reagent_amount("dermaline"))
+				dat += text("Bicaridine: [] units<BR>", occupant.reagents.get_reagent_amount("bicaridine"))
+				dat += text("Dexalin: [] units<BR>", occupant.reagents.get_reagent_amount("dexalin"))
 			dat += text("<HR><A href='?src=\ref[];refresh=1'>Refresh meter readings each second</A><BR><A href='?src=\ref[];inap=1'>Inject Inaprovaline</A><BR><A href='?src=\ref[];stox=1'>Inject Soporific</A><BR><A href='?src=\ref[];derm=1'>Inject Dermaline</A><BR><A href='?src=\ref[];bic=1'>Inject Bicaridine</A><BR><A href='?src=\ref[];dex=1'>Inject Dexalin</A>", src, src, src, src, src, src)
 		else
 			dat += "The sleeper is empty."

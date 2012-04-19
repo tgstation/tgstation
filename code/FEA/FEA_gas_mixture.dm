@@ -475,6 +475,7 @@ datum
 			return share(sharer)*/
 
 		check_gas_mixture(datum/gas_mixture/sharer)
+			if(!sharer)	return 0
 			var/delta_oxygen = (oxygen_archived - sharer.oxygen_archived)/5
 			var/delta_carbon_dioxide = (carbon_dioxide_archived - sharer.carbon_dioxide_archived)/5
 			var/delta_nitrogen = (nitrogen_archived - sharer.nitrogen_archived)/5

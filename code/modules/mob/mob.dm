@@ -599,10 +599,11 @@
 						for (var/mob/living/silicon/decoy/D in world)
 							if (eye)
 								eye = D
-		if (eye)
-			client.eye = eye
-		else
-			client.eye = client.mob
+		if (client)
+			if (eye)
+				client.eye = eye
+			else
+				client.eye = client.mob
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -959,22 +960,24 @@ note dizziness decrements automatically in the mob's Life() proc.
 			boom.icon_state = "start"
 
 	sleep(40)
-	mob << sound('explosionfar.ogg')
-	boom.icon_state = "end"
-	if(!station_missed) flick("explode", boom)
-	else flick("explode2", boom)
+	if(boom && mob)
+		mob << sound('explosionfar.ogg')
+		boom.icon_state = "end"
+		if(!station_missed) flick("explode", boom)
+		else flick("explode2", boom)
 	sleep(40)
 
-	switch(ticker.mode.name)
-		if("nuclear emergency")
-			if(!station_missed) boom.icon_state = "loss_nuke"
-			else boom.icon_state = "loss_nuke2"
-		if("malfunction")
-			boom.icon_state = "loss_malf"
-		if("blob")
-			return//Nothin here yet and the general one does not fit.
-		else
-			boom.icon_state = "loss_general"
+	if(boom)
+		switch(ticker.mode.name)
+			if("nuclear emergency")
+				if(!station_missed) boom.icon_state = "loss_nuke"
+				else boom.icon_state = "loss_nuke2"
+			if("malfunction")
+				boom.icon_state = "loss_malf"
+			if("blob")
+				return//Nothin here yet and the general one does not fit.
+			else
+				boom.icon_state = "loss_general"
 	return
 
 
