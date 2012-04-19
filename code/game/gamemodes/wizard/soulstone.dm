@@ -9,6 +9,7 @@
 	origin_tech = "bluespace=4;materials=4"
 	var/imprinted = "empty"
 
+
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
 	attack(mob/living/carbon/human/M as mob, mob/user as mob)
@@ -16,8 +17,11 @@
 			return ..()
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their soul captured with [src.name] by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to capture the soul of [M.name] ([M.ckey])</font>")
+
+		log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to capture the soul of [M.name] ([M.ckey])</font>")
 		log_admin("ATTACK: [user] ([user.ckey]) captured the soul of [M] ([M.ckey]).")
 		message_admins("ATTACK: [user] ([user.ckey]) captured the soul of [M] ([M.ckey]).")
+
 
 		transfer_soul("VICTIM", M, user)
 		return

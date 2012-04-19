@@ -32,6 +32,7 @@
 	var/STFU_ghosts		//80+ people rounds are fun to admin when text flies faster than airport security
 	var/STFU_radio		//80+ people rounds are fun to admin when text flies faster than airport security
 	var/sound_adminhelp = 0 //If set to 1 this will play a sound when adminhelps are received.
+	var/hearamessage	//In case you... Don't like adminning or something?
 
 	var/midis = 1 //Check if midis should be played for someone
 	var/bubbles = 1 //Check if bubbles should be displayed for someone

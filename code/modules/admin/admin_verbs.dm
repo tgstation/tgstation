@@ -142,7 +142,7 @@
 			verbs += /client/proc/callprocobj
 			verbs += /client/proc/rnd_check_designs
 			verbs += /client/proc/CarbonCopy
-			verbs += /client/proc/getruntimelog							//used by coders to retrieve runtime logs	
+			verbs += /client/proc/getruntimelog							//used by coders to retrieve runtime logs
 
 		if (holder.level >= 5)//Game Admin********************************************************************
 			verbs += /obj/admins/proc/view_txt_log
@@ -248,6 +248,7 @@
 			verbs += /obj/admins/proc/restart				//restart
 			verbs += /client/proc/cmd_admin_create_centcom_report
 			verbs += /client/proc/toggle_hear_deadcast
+			verbs += /client/proc/toggle_adminmessage
 			verbs += /client/proc/toggle_hear_radio
 			verbs += /client/proc/cmd_admin_change_custom_event
 
@@ -423,6 +424,7 @@
 	verbs -= /client/proc/Blobize
 	verbs -= /client/proc/toggle_clickproc //TODO ERRORAGE (Temporary proc while the enw clickproc is being tested)
 	verbs -= /client/proc/toggle_hear_deadcast
+	verbs += /client/proc/toggle_adminmessage
 	verbs -= /client/proc/toggle_hear_radio
 	verbs -= /client/proc/tension_report
 	verbs -= /client/proc/toggle_gravity_on
@@ -926,3 +928,11 @@
 			else
 				NewObj.vars[V] = vars[V]
 	return NewObj
+
+/client/proc/toggle_adminmessage()
+	set name = "Toggle Admin Message"
+	set category = "Admin"
+
+	if(!holder) return
+	hearamessage = !hearamessage
+	usr << "You will now [STFU_ghosts ? "hear" : "not hear"] admin messages."

@@ -50,7 +50,10 @@
 			if(!M.handcuffed)
 				M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to handcuff [M.name] ([M.ckey])</font>")
+
 				log_admin("ATTACK: [user] ([user.ckey]) handcuffed [M] ([M.ckey]).")
+				log_attack("<font color='red'>[user.name] ([user.ckey]) Attempted to handcuff [M.name] ([M.ckey])</font>")
+
 				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 				O.source = user
 				O.target = M
@@ -178,8 +181,12 @@
 //	M << "\red You feel a tiny prick!" //Removed to make tritor pens stealthier
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stabbed with [src.name]  by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to stab [M.name] ([M.ckey])</font>")
+
 	log_admin("ATTACK: [user] ([user.ckey]) used [src] on [M] ([M.ckey]).")
 	message_admins("ATTACK: [user] ([user.ckey]) used [src] on [M] ([M.ckey]).")
+	log_attack("<font color='red'>[user.name] ([user.ckey]) Used the [src.name] to stab [M.name] ([M.ckey])</font>")
+
+
 	return
 
 /obj/item/weapon/pen/sleepypen

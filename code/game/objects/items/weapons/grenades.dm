@@ -125,6 +125,11 @@ FLASHBANG
 		if (istype(target, /obj/item/weapon/gun/grenadelauncher)) return ..()
 		if((user.equipped() == src)&&(!active)&&(clown_check(user)))
 			user << "\red You prime the flashbang! [det_time/10] seconds!"
+
+			log_attack("<font color='red'>[user.name] ([user.ckey]) primed a flashbang.</font>")
+			log_admin("ATTACK: [user] ([user.ckey]) primed a flashbang.")
+			message_admins("ATTACK: [user] ([user.ckey]) primed a flashbang.")
+
 			src.active = 1
 			src.icon_state = "flashbang1"
 			playsound(src.loc, 'armbomb.ogg', 75, 1, -3)
@@ -222,6 +227,7 @@ FLASHBANG
 				M << "\red Your ears start to ring!"
 
 	prime()													// Prime now just handles the two loops that query for people in lockers and people who can see it.
+
 		var/turf/T = get_turf(src)
 		if(T)
 			T.hotspot_expose(700,125)
@@ -246,6 +252,9 @@ FLASHBANG
 	attack_self(mob/user as mob)
 		if(!active)
 			if(clown_check(user))
+				log_attack("<font color='red'>[user.name] ([user.ckey]) primed a flashbang.</font>")
+				log_admin("ATTACK: [user] ([user.ckey]) primed a flashbang.")
+				message_admins("ATTACK: [user] ([user.ckey]) primed a flashbang.")
 				user << "\red You prime the flashbang! [det_time/10] seconds!"
 				src.active = 1
 				src.icon_state = "flashbang1"

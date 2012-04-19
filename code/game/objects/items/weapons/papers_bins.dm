@@ -432,6 +432,7 @@ NOTEBOOK
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to wrap [target.name] ([target.ckey])</font>")
 			log_admin("ATTACK: [user] ([user.ckey]) wrapped up [target] ([target.ckey]) with [src].")
 			message_admins("ATTACK: [user] ([user.ckey]) wrapped up [target] ([target.ckey]) with [src].")
+			log_attack("<font color='red'>[user.name] ([user.ckey]) used the [src.name] to wrap [target.name] ([target.ckey])</font>")
 
 		else
 			user << "/blue You need more paper."

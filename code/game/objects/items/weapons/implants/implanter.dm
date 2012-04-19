@@ -45,6 +45,7 @@
 			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src] ([imp]) to implant [M] ([M.ckey])</font>")
 			log_admin("ATTACK: [user] ([user.ckey]) implanted [M] ([M.ckey]) with [src].")
 			message_admins("ATTACK: [user] ([user.ckey]) implanted [M] ([M.ckey]) with [src].")
+			log_attack("<font color='red'>[user.name] ([user.ckey]) implanted [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 			imp.imp_in = M
 			imp.implanted = 1
 			imp.implanted(M)

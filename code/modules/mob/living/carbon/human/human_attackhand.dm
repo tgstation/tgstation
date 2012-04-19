@@ -17,8 +17,13 @@
 					visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
 					M.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [src.name] ([src.ckey])</font>")
 					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
+
+
 					log_admin("ATTACK: [src] ([src.ckey]) stungloved [M] ([M.ckey]).")
 					message_admins("ATTACK: [src] ([src.ckey]) stungloved [M] ([M.ckey]).")
+					log_attack("<font color='red'>[M.name] ([M.ckey]) stungloved [src.name] ([src.ckey])</font>")
+
+
 					var/armorblock = run_armor_check(M.zone_sel.selecting, "energy")
 					apply_effects(5,5,0,0,5,0,0,armorblock)
 					return 1
@@ -77,11 +82,13 @@
 				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
 				log_admin("ATTACK: [M] ([M.ckey]) punched [src] ([src.ckey]).")
 				message_admins("ATTACK: [M] ([M.ckey]) punched [src] ([src.ckey]).")
+				log_attack("<font color='red'>[M.name] ([M.ckey]) punched [src.name] ([src.ckey])</font>")
 			else if(M.type == /mob/living/carbon/human/tajaran)
 				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Slashed [src.name] ([src.ckey])</font>")
 				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been slashed by [M.name] ([M.ckey])</font>")
 				log_admin("ATTACK: [M] ([M.ckey]) slashed [src] ([src.ckey]).")
 				message_admins("ATTACK: [M] ([M.ckey]) slashed [src] ([src.ckey]).")
+				log_attack("<font color='red'>[M.name] ([M.ckey]) slashed [src.name] ([src.ckey])</font>")
 
 			var/attack_verb
 			switch(M.mutantrace)
@@ -130,7 +137,10 @@
 		if("disarm")
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been disarmed by [M.name] ([M.ckey])</font>")
+			
 			log_admin("ATTACK: [src] ([src.ckey]) disarmed [M] ([M.ckey]).")
+			log_attack("<font color='red'>[M.name] ([M.ckey]) disarmed [src.name] ([src.ckey])</font>")
+
 
 			if(w_uniform)
 				w_uniform.add_fingerprint(M)

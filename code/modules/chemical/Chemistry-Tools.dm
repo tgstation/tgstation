@@ -1292,7 +1292,7 @@
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject [M.name] ([M.ckey])</font>")
 		log_admin("ATTACK: [user] ([user.ckey]) injected [M] ([M.ckey]) with [src].")
 		message_admins("ATTACK: [user] ([user.ckey]) injected [M] ([M.ckey]) with [src].")
-//		log_attack("<font color='red'>[user.name] ([user.ckey]) injected [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+		log_attack("<font color='red'>[user.name] ([user.ckey]) injected [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
 
 		src.reagents.reaction(M, INGEST)
@@ -1424,7 +1424,7 @@
 					log_admin("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
 					message_admins("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
 
-//					log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+					log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
 					for(var/mob/O in viewers(world.view, user))
 						O.show_message("\red [user] feeds [M] [src].", 1)
@@ -1654,7 +1654,7 @@
 			log_admin("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
 			message_admins("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
 
-//			log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+			log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
 
 			if(reagents.total_volume)
@@ -1780,7 +1780,7 @@
 			message_admins("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
 
 
-//			log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+			log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
@@ -2448,7 +2448,7 @@
 			message_admins("ATTACK: [user] ([user.ckey]) fed [M] ([M.ckey]) with [src].")
 
 
-//			log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+			log_attack("<font color='red'>[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST)
