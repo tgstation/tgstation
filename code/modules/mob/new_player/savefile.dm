@@ -136,6 +136,7 @@ datum/preferences/proc/savefile_save(mob/user, slot)
 	F["be_special"] << src.be_special
 	F["UI"] << src.UI
 	F["midis"] << src.midis
+	F["ghost_ears"] << src.ghost_ears
 	F["pregame_music"] << src.pregame_music
 	F["ooccolor"] << src.ooccolor
 	F["lastchangelog"] << src.lastchangelog
@@ -201,6 +202,8 @@ datum/preferences/proc/savefile_load(mob/user, slot)
 	F["underwear"] >> src.underwear
 	F["name_is_always_random"] >> src.be_random_name
 	F["midis"] >> src.midis
+	F["ghost_ears"] >> src.ghost_ears
+	if(isnull(ghost_ears)) ghost_ears = 1 //Hotfix
 	F["pregame_music"] >> src.pregame_music
 	F["ooccolor"] >> src.ooccolor
 	F["lastchangelog"] >> src.lastchangelog

@@ -56,6 +56,9 @@ datum/preferences
 		be_special = 0
 		//Play admin midis
 		midis = 1
+		//Toggle ghost ears
+		ghost_ears = 1
+		ghost_sight = 1
 		//Play pregame music
 		pregame_music = 1
 		//Saved changlog filesize to detect if there was a change
@@ -235,6 +238,7 @@ datum/preferences
 		dat += "<br>"
 		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[UI == UI_NEW ? "New" : "Old"]</b></a><br>"
 		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
+		dat += "<b>Ghost ears:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_ears=input\"><b>[ghost_ears == 0 ? "Nearest Creatures" : "All Speech"]</b></a><br>"
 
 		if((user.client) && (user.client.holder) && (user.client.holder.rank) && (user.client.holder.rank == "Game Master"))
 			dat += "<hr><b>OOC</b><br>"
@@ -746,6 +750,8 @@ datum/preferences
 
 		if(link_tags["midis"])
 			midis = (midis+1)%2
+		if(link_tags["ghost_ears"])
+			ghost_ears = !ghost_ears
 
 		if(link_tags["underwear"])
 			if(!IsGuestKey(user.key))
@@ -857,6 +863,7 @@ datum/preferences
 			b_type = "A+"
 			UI = UI_OLD
 			midis = 1
+			ghost_ears = 1
 			disabilities = 0
 		if(link_tags["disabilities"])
 			if(text2num(link_tags["disabilities"]) >= -1)
