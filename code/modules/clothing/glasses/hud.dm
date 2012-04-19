@@ -76,7 +76,7 @@
 		var/client/C = M.client
 		var/icon/tempHud = 'hud.dmi'
 		for(var/mob/living/carbon/human/perp in view(M))
-
+			if(!C) continue
 			var/perpname = "wot"
 			if(perp.wear_id)
 				C.images += image(tempHud,perp,"hud[ckey(perp:wear_id:GetJobName())]")

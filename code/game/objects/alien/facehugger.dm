@@ -189,7 +189,8 @@ var/const
 		for(var/mob/living/carbon/alien/alien in world)
 			var/image/activeIndicator = image('alien.dmi', loc = src, icon_state = "facehugger_active")
 			activeIndicator.override = 1
-			alien.client.images += activeIndicator
+			if(alien && alien.client)
+				alien.client.images += activeIndicator
 
 		spawn(rand(MIN_ACTIVE_TIME,MAX_ACTIVE_TIME))
 			GoIdle()
