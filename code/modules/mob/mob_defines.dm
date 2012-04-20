@@ -29,6 +29,7 @@
 	var/maxHealth = 100 //Living
 	//Vars that should only be accessed via procs ++END
 
+
 //	var/uses_hud = 0
 	var/obj/screen/pain = null
 	var/obj/screen/flash = null
@@ -127,6 +128,7 @@
 	var/jitteriness = 0//Carbon
 	var/charges = 0.0
 	var/nutrition = 400.0//Carbon
+
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
 	var/paralysis = 0.0
 	var/stunned = 0.0
@@ -252,6 +254,7 @@
 	var/robot_talk_understand = 0
 	var/alien_talk_understand = 0
 	var/taj_talk_understand = 0
+
 	//You can guess what these are for.  --SkyMarshal
 	var/list/atom/hallucinations = list()
 	var/halloss = 0

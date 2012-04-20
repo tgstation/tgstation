@@ -67,6 +67,10 @@ datum/preferences
 		//Just like it sounds
 		ooccolor = "#b82e00"
 		underwear = 1
+		list/underwear_m = list("White", "Grey", "Green", "Blue", "Black", "None") //Curse whoever made male/female underwear diffrent colours
+		list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "None")
+		backbag = 2
+		list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Alt")
 
 		//Hair type
 		h_style = "Short Hair"
@@ -252,13 +256,18 @@ datum/preferences
 		dat += "\t<a href=\"byond://?src=\ref[user];preferences=1;skills=1\"><b>Set Skills</b></a><br>"
 
 		dat += "<hr><table><tr><td><b>Body</b> "
-		dat += "(<a href=\"byond://?src=\ref[user];preferences=1;s_tone=random;underwear=random;age=random;b_type=random;hair=random;h_style=random;facial=random;f_style=random;eyes=random\">&reg;</A>)" // Random look
+		dat += "(<a href=\"byond://?src=\ref[user];preferences=1;s_tone=random;underwear=random;backbag_type=random;age=random;b_type=random;hair=random;h_style=random;facial=random;f_style=random;eyes=random\">&reg;</A>)" // Random look
 		dat += "<br>"
 		dat += "Blood Type: <a href='byond://?src=\ref[user];preferences=1;b_type=input'>[b_type]</a><br>"
 		dat += "Skin Tone: <a href='byond://?src=\ref[user];preferences=1;s_tone=input'>[-s_tone + 35]/220<br></a>"
 
-		if(!IsGuestKey(user.key))
-			dat += "Underwear: <a href =\"byond://?src=\ref[user];preferences=1;underwear=1\"><b>[underwear == 1 ? "Yes" : "No"]</b></a><br>"
+	//	if(!IsGuestKey(user.key))//Seeing as it doesn't do anything, it may as well not show up.
+		if(gender == MALE)
+			dat += "Underwear: <a href =\"byond://?src=\ref[user];preferences=1;underwear=inputmale\"><b>[underwear_m[underwear]]</b></a><br>"
+		else
+			dat += "Underwear: <a href =\"byond://?src=\ref[user];preferences=1;underwear=inputfemale\"><b>[underwear_f[underwear]]</b></a><br>"
+
+		dat += "Backpack Type:<br><a href =\"byond://?src=\ref[user];preferences=1;backbag_type=input\"><b>[backbaglist[backbag]]</b></a><br>"
 
 		dat += "</td><td style='text-align:center;padding-left:2em'><b>Preview</b><br>"
 		dat += "<a href='?src=\ref[user];preferences=1;preview_dir=[turn(preview_dir,-90)]'>&lt;</a>"
@@ -401,7 +410,10 @@ datum/preferences
 				HTML += " <font color=orange>\[Low]</font>"
 			else
 				HTML += " <font color=red>\[NEVER]</font>"
-			HTML += "</a></td></tr>"
+			if(job.alt_titles)
+				HTML += "</a> <a href=\"byond://?src=\ref[user];preferences=1;alt_title=1;job=\ref[job]\">\[[GetAltTitle(job)]\]</a></td></tr>"
+			else
+				HTML += "</a></td></tr>"
 
 		HTML += "</table><br>"
 		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;occ=0;job=cancel\">\[Done\]</a>"
@@ -754,19 +766,30 @@ datum/preferences
 			ghost_ears = !ghost_ears
 
 		if(link_tags["underwear"])
-			if(!IsGuestKey(user.key))
-				/*switch(link_tags["underwear"])
-					if("random")
-						if(prob (75))
-							underwear = 1
-						else
-							underwear = 0
-					if("input")
-						if(underwear == 1)
-							underwear = 0
-						else
-							underwear = 1*/
-				underwear = !underwear
+			switch(link_tags["underwear"])
+				if("inputmale")
+					var/tempUnderwear = input(user, "Please select your underwear colour:", "Character Generation")  as null|anything in underwear_m
+					if(tempUnderwear)
+						underwear = underwear_m.Find(tempUnderwear)
+				if("inputfemale")
+					var/tempUnderwear = input(user, "Please select your underwear colour:", "Character Generation")  as null|anything in underwear_f
+					if(tempUnderwear)
+						underwear = underwear_f.Find(tempUnderwear)
+				if("random")
+					if(prob (75))
+						underwear = pick(1,2,3,4,5)
+					else
+						underwear = 6
+
+		if(link_tags["backbag_type"])
+			switch(link_tags["backbag_type"])
+				if("input")
+					var/tempBag = input(user, "Please pick a backpack type:", "Character Generation")  as null|anything in backbaglist
+					if(tempBag)
+						backbag = backbaglist.Find(tempBag)
+				if("random")
+					backbag = pick(1,2,3)
+
 
 		if(link_tags["be_special"])
 			src.be_special^=(1<<text2num(link_tags["be_special"])) //bitwize magic, sorry for that. --rastaf0
@@ -846,6 +869,7 @@ datum/preferences
 			job_engsec_low = 0
 			job_alt_titles = new()
 			underwear = 1
+			backbag = 2
 			be_special = 0
 			be_random_name = 0
 			r_hair = 0.0
@@ -914,6 +938,14 @@ datum/preferences
 
 		character.hair_style = hair_style
 		character.facial_hair_style = facial_hair_style
+
+		if(underwear > 6 || underwear < 1)
+			underwear = 1 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me.
+		character.underwear = underwear
+
+		if(backbag > 4 || backbag < 1)
+			backbag = 1 //Same as above
+		character.backbag = backbag
 
 		character.underwear = underwear == 1 ? pick(1,2,3,4,5) : 0
 

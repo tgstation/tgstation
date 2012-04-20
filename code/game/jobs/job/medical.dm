@@ -12,7 +12,9 @@
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/heads/cmo(H), H.slot_ears)
-		H.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (H), H.slot_back)
+		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
+		if(H.backbag == 4) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_med(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/chief_medical_officer(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/brown(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/heads/cmo(H), H.slot_belt)
@@ -39,7 +41,13 @@
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_med(H), H.slot_ears)
-		H.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (H), H.slot_back)
+		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
+		if(H.backbag == 4)
+			if(alt_titles == "Virologist")
+				H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_vir(H), H.slot_back)
+			else
+				H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_med(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/medical(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/white(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/medical(H), H.slot_belt)
@@ -65,7 +73,9 @@
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_medsci(H), H.slot_ears)
-		H.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (H), H.slot_back)
+		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
+		if(H.backbag == 4) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_gen(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/geneticist(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/white(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/medical(H), H.slot_belt)
@@ -88,13 +98,14 @@
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		H.equip_if_possible(new /obj/item/device/radio/headset/headset_med(H), H.slot_ears)
-		H.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (H), H.slot_back)
-		H.equip_if_possible(new /obj/item/clothing/under/rank/medical(H), H.slot_w_uniform)
+		H.equip_if_possible(new /obj/item/device/radio/headset/headset_medsci(H), H.slot_ears)
+		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (H), H.slot_back)
+		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
+		H.equip_if_possible(new /obj/item/clothing/under/rank/virologist(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/device/pda/medical(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/mask/surgical(H), H.slot_wear_mask)
 		H.equip_if_possible(new /obj/item/clothing/shoes/white(H), H.slot_shoes)
-		H.equip_if_possible(new /obj/item/clothing/suit/storage/labcoat/virologist(H), H.slot_wear_suit)
+		H.equip_if_possible(new /obj/item/clothing/suit/labcoat/virologist(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/device/flashlight/pen(H), H.slot_s_store)
 		return 1
 */
