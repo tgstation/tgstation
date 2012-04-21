@@ -179,6 +179,7 @@
 #define FILE_DIR "icons/vending_icons"
 #define FILE_DIR "interface"
 #define FILE_DIR "maps"
+#define FILE_DIR "maps/backup"
 #define FILE_DIR "sound"
 #define FILE_DIR "sound/AI"
 #define FILE_DIR "sound/ambience"
@@ -194,6 +195,7 @@
 // END_FILE_DIR
 
 // BEGIN_PREFERENCES
+#define DEBUG
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
@@ -508,6 +510,7 @@
 #include "code\game\machinery\computer\crew.dm"
 #include "code\game\machinery\computer\HolodeckControl.dm"
 #include "code\game\machinery\computer\hologram.dm"
+#include "code\game\machinery\computer\implantmanagement.dm"
 #include "code\game\machinery\computer\law.dm"
 #include "code\game\machinery\computer\medical.dm"
 #include "code\game\machinery\computer\Operating.dm"
@@ -690,12 +693,18 @@
 #include "code\game\objects\items\weapons\tools.dm"
 #include "code\game\objects\items\weapons\twohanded.dm"
 #include "code\game\objects\items\weapons\wrappingpaper.dm"
+#include "code\game\objects\items\weapons\implants\chemical.dm"
+#include "code\game\objects\items\weapons\implants\emp.dm"
+#include "code\game\objects\items\weapons\implants\explosive.dm"
+#include "code\game\objects\items\weapons\implants\freedom.dm"
+#include "code\game\objects\items\weapons\implants\health.dm"
 #include "code\game\objects\items\weapons\implants\implant.dm"
 #include "code\game\objects\items\weapons\implants\implantcase.dm"
-#include "code\game\objects\items\weapons\implants\implantchair.dm"
 #include "code\game\objects\items\weapons\implants\implanter.dm"
-#include "code\game\objects\items\weapons\implants\implantfreedom.dm"
-#include "code\game\objects\items\weapons\implants\implantpad.dm"
+#include "code\game\objects\items\weapons\implants\loyalty.dm"
+#include "code\game\objects\items\weapons\implants\orange.dm"
+#include "code\game\objects\items\weapons\implants\tracking.dm"
+#include "code\game\objects\items\weapons\implants\uplink.dm"
 #include "code\game\objects\radio\beacon.dm"
 #include "code\game\objects\radio\electropack.dm"
 #include "code\game\objects\radio\encryptionkey.dm"
@@ -1058,6 +1067,7 @@
 #include "code\modules\scripting\Scanner\Tokens.dm"
 #include "code\modules\security levels\keycard authentication.dm"
 #include "code\modules\security levels\security levels.dm"
+#include "code\WorkInProgress\AI_Visibility.dm"
 #include "code\WorkInProgress\buildmode.dm"
 #include "code\WorkInProgress\explosion_particles.dm"
 #include "code\WorkInProgress\BS12\uplink_kits.dm"
