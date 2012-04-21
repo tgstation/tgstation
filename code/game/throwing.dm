@@ -107,12 +107,10 @@
 				src.throw_impact(A)
 				src.throwing = 0
 			if(isobj(A))
-				if(A.density && !A.throwpass)	// **TODO: Better behaviour for windows which are dense, but shouldn't always stop movement
+				if(A.density && !A.CanPass(src,target))	// **TODO: Better behaviour for windows
+												// which are dense, but shouldn't always stop movement
 					src.throw_impact(A)
 					src.throwing = 0
-
-//In some cases it's desirable to be able to throw stuff over dense objects. (Tables, racks)
-/atom/var/throwpass = 0	//Thanks to SkyMarshal
 
 /atom/proc/throw_impact(atom/hit_atom)
 	if(istype(hit_atom,/mob/living))
