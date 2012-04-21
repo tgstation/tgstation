@@ -213,7 +213,7 @@
 	flick("flash", flash)
 /*
 	if (stat == 2 && client)
-		gib(1)
+		gib()
 		return
 
 	else if (stat == 2 && !client)
@@ -225,7 +225,7 @@
 			if (stat != 2)
 				adjustBruteLoss(100)
 				adjustFireLoss(100)
-				gib(1)
+				gib()
 				return
 		if(2.0)
 			if (stat != 2)
