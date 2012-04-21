@@ -57,10 +57,19 @@
 	blood_DNA = list()
 	//var/datum/disease2/disease/virus2 = null
 
-	Del()
-		for(var/datum/disease/D in viruses)
-			D.cure(0)
-		..()
+/obj/effect/decal/cleanable/blood/Del()
+	for(var/datum/disease/D in viruses)
+		D.cure(0)
+	..()
+
+/obj/effect/decal/cleanable/blood/New()
+	..()
+	if(istype(src, /obj/effect/decal/cleanable/blood/gibs))
+		return
+	if(src.loc && isturf(src.loc))
+		for(var/obj/effect/decal/cleanable/blood/B in src.loc)
+			if(B != src)
+				del(B)
 
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
