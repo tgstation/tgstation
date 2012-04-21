@@ -197,8 +197,12 @@
 		if(signal.data["name"] != setname)
 			signal.data["realname"] = setname
 		signal.data["name"]		= setname
-		signal.data["job"]		= trim(copytext(sanitize(interpreter.GetVar("$job")), 1, MAX_MESSAGE_LEN))
+		signal.data["job"]		= interpreter.GetVar("$job")
 		signal.data["reject"]	= !(interpreter.GetVar("$pass")) // set reject to the opposite of $pass
+
+		// If the message is invalid, just don't broadcast it!
+		if(signal.data["message"] == "" || !signal.data["message"])
+			signal.data["reject"] = 1
 
 /*  -- Actual language proc code --  */
 
@@ -223,7 +227,7 @@ datum/signal
 		var/obj/machinery/telecomms/server/S = data["server"]
 		var/obj/item/device/radio/hradio
 
-		if(!message && message != 0)
+		if((!message || message == "") && message != 0)
 			message = "*beep*"
 		if(!source)
 			source = "[html_encode(uppertext(S.id))]"
@@ -243,9 +247,9 @@ datum/signal
 		else
 			newsign.data["name"] = "<i>[html_encode(uppertext(source))]<i>"
 		newsign.data["realname"] = newsign.data["name"]
-		newsign.data["job"] = html_encode(job)
+		newsign.data["job"] = job
 		newsign.data["compression"] = 0
-		newsign.data["message"] = html_encode(message)
+		newsign.data["message"] = message
 		newsign.data["type"] = 2 // artificial broadcast
 		if(!isnum(freq))
 			freq = text2num(freq)
