@@ -464,6 +464,14 @@
 /obj/structure/closet/secure_closet/personal/patient
 	name = "Patient's closet"
 
+/obj/structure/closet/secure_closet/personal/cabinet
+	icon_state = "cabinetdetective_locked"
+	icon_closed = "cabinetdetective"
+	icon_locked = "cabinetdetective_locked"
+	icon_opened = "cabinetdetective_open"
+	icon_broken = "cabinetdetective_broken"
+	icon_off = "cabinetdetective_broken"
+
 /obj/structure/closet/secure_closet/kitchen
 	name = "Kitchen Cabinet"
 	req_access = list(access_kitchen)

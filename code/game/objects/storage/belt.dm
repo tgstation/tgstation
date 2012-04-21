@@ -77,6 +77,7 @@
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/weapon/cable_coil(src,30,pick("red","yellow"))
 
+
 /obj/item/weapon/storage/belt/utility/atmostech/New()
 	..()
 	new /obj/item/weapon/screwdriver(src)
