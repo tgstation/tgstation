@@ -106,6 +106,7 @@
 			if (sprite == "Non-Humanoid")
 				src.icon_state = "surgeon"
 			modtype = "Med"
+			nopush = 1
 			channels = list("Medical" = 1)
 
 		if("Security")
