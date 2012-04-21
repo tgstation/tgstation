@@ -300,6 +300,7 @@
 		src.operating = 1
 
 	animate("opening")
+	src.sd_SetOpacity(0)
 	sleep(10)
 	src.layer = 2.7
 	src.density = 0
