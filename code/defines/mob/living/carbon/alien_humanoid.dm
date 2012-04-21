@@ -45,7 +45,7 @@
 
 	health = 250
 	icon_state = "queen_s"
-
+	nopush = 1
 /mob/living/carbon/alien/humanoid/rpbody
 	update_icon = 0
 
