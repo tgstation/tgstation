@@ -136,7 +136,7 @@
 		if(H.gloves != src)
 			if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
 				return 0
-			else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
+			else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex) && !istype(H.gloves, /obj/item/clothing/gloves/fingerless))
 				return 0
 		if(fingerprintslast != H.key)
 			fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
