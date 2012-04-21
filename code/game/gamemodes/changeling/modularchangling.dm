@@ -61,7 +61,7 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 
 /obj/effect/proc_holder/power/deaf_sting
 	name = "Deaf Sting"
-	desc = "We silently sting a human, completely silencing them for a short time."
+	desc = "We silently sting a human, completely deafening them for a short time."
 	genomecost = 1
 	allowduringlesserform = 1
 
@@ -71,7 +71,7 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 
 /obj/effect/proc_holder/power/blind_sting
 	name = "Blind Sting"
-	desc = "We silently sting a human, completely deafening them for a short time."
+	desc = "We silently sting a human, completely blinding them for a short time."
 	genomecost = 2
 	allowduringlesserform = 1
 

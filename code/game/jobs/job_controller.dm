@@ -28,7 +28,7 @@ var/global/datum/controller/occupations/job_master
 			if(job.faction != faction)	continue
 			occupations += job
 
-			occupations = shuffle(occupations) //Shuffles job-list at setup.
+
 		return 1
 
 
@@ -142,6 +142,8 @@ var/global/datum/controller/occupations/job_master
 		Debug("Running DO")
 		SetupOccupations()
 
+		occupations = shuffle(occupations) //Shuffles job-list at round start so that people don't have their job picks randomized
+
 		//Get the players who are ready
 		for(var/mob/new_player/player in world)
 			if((player) && (player.client) && (player.ready) && (player.mind) && (!player.mind.assigned_role))
@@ -180,9 +182,12 @@ var/global/datum/controller/occupations/job_master
 		for(var/level = 1 to 3)
 			for(var/datum/job/job in occupations)
 				Debug("Checking job: [job]")
-				if(!job)	continue
-				if(!unassigned.len)	break
-				if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)	continue
+				if(!job)
+					continue
+				if(!unassigned.len)
+					break
+				if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
+					continue
 				var/list/candidates = FindOccupationCandidates(job, level)
 				while(candidates.len && ((job.current_positions < job.spawn_positions) || job.spawn_positions == -1))
 					var/mob/new_player/candidate = pick(candidates)
