@@ -3,6 +3,7 @@ CONTAINS:
 MATCHES
 MATCHBOXES
 CIGARETTES
+CIGARS
 CIG PACKET
 ZIPPO
 */
@@ -33,6 +34,7 @@ ZIPPO
 				src.lit = -1
 				processing_objects.Remove(src)
 				return
+
 
 	dropped(mob/user as mob)
 		if(src.lit == 1)
@@ -117,21 +119,33 @@ ZIPPO
 		icon_butt = "cigbutt"
 		lastHolder = null
 		smoketime = 300
-  var/butt_count = 5  //count of butt sprite variations
+		butt_count = 5  //count of butt sprite variations
 	proc
 		light(var/flavor_text = "[usr] lights the [name].")
+
 		put_out()
+			if (src.lit == -1)
+				return
+			src.lit = -1
+			src.damtype = "brute"
+			src.icon_state = icon_butt + "[rand(0,butt_count)]"
+			src.item_state = icon_off
+			src.desc = "A [src.name] butt."
+			src.name = "[src.name] butt"
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		..()
-		if(istype(W, /obj/item/weapon/weldingtool)  && W:welding)
+		if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
 			light("\red [user] casually lights the [name] with [W], what a badass.")
 
-		else if(istype(W, /obj/item/weapon/zippo) && (W:lit > 0))
+		else if(istype(W, /obj/item/weapon/lighter/zippo) && (W:lit > 0))
 			light("\red With a single flick of their wrist, [user] smoothly lights their [name] with their [W]. Damn they're cool.")
 
+		else if(istype(W, /obj/item/weapon/lighter) && (W:lit > 0))
+			light("\red After some fiddling, [user] manages to light their [name] with [W].")
+
 		else if(istype(W, /obj/item/weapon/match) && (W:lit > 0))
-			light("\red [user] lights their [name] with their [W]. How poor can you get?")
+			light("\red [user] lights their [name] with their [W].")
 		return
 
 
@@ -145,15 +159,6 @@ ZIPPO
 				O.show_message(flavor_text, 1)
 			processing_objects.Add(src)
 
-	put_out()
-		if (src.lit == -1)
-			return
-		src.lit = -1
-		src.damtype = "brute"
-		src.icon_state = icon_butt + "[rand(0,butt_count)]"
-		src.item_state = icon_off
-		src.desc = "A [src.name] butt."
-		src.name = "[src.name] butt"
 
 
 	process()
@@ -181,6 +186,7 @@ ZIPPO
 		return ..()
 
 
+
 ////////////
 // CIGARS //
 ////////////
@@ -197,13 +203,13 @@ ZIPPO
 	butt_count = 0
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
-	name = "Cohiba Cigar"
+	name = "Cohiba Robusto Cigar"
 	desc = "There's little more you could want from a cigar."
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
 
-/obj/item/clothing/mask/cigarette/cigar/havanian
+/obj/item/clothing/mask/cigarette/cigar/havana
 	name = "Premium Havanian Cigar"
 	desc = "A cigar fit for only the best for the best."
 	icon_state = "cigar2off"
@@ -212,20 +218,19 @@ ZIPPO
 	smoketime = 7200
 
 /obj/item/weapon/cigbutt
-	name = "Cigarette butt"
+	name = "cigarette butt"
 	desc = "A manky old cigarette butt."
-	icon = 'cigarettes.dmi'
+	icon = 'masks.dmi'
 	icon_state = "cigbutt"
 	w_class = 1
 	throwforce = 1
 
-/obj/item/weapon/cigarbutt
-	name = "Cigar butt"
+/obj/item/weapon/cigbutt/cigarbutt
+	name = "cigar butt"
 	desc = "A manky old cigar butt."
-	icon = 'cigarettes.dmi'
 	icon_state = "cigarbutt"
-	w_class = 1
-	throwforce = 1
+
+
 
 
 ////////////
@@ -269,36 +274,68 @@ ZIPPO
 /////////
 //ZIPPO//
 /////////
-/obj/item/weapon/zippo
-	name = "Zippo lighter"
-	desc = "The detective's zippo."
+
+/obj/item/weapon/lighter
+	name = "cheap lighter"
+	desc = "A cheap-as-free lighter."
 	icon = 'items.dmi'
-	icon_state = "zippo"
-	item_state = "zippo"
+	icon_state = "lighter-g"
+	item_state = "lighter-g"
+	var/icon_on = "lighter-g-on"
+	var/icon_off = "lighter-g"
 	w_class = 1
 	throwforce = 4
 	flags = ONBELT | TABLEPASS | CONDUCT
-	var
-		lit = 0
+	var/lit = 0
 
+/obj/item/weapon/lighter/zippo
+	name = "Zippo lighter"
+	desc = "The zippo."
+	icon_state = "zippo"
+	item_state = "zippo"
+	icon_on = "zippoon"
+	icon_off = "zippo"
+
+/obj/item/weapon/lighter/random
+	New()
+		var/color = pick("r","c","y","g")
+		icon_on = "lighter-[color]-on"
+		icon_off = "lighter-[color]"
+		icon_state = icon_off
+
+/obj/item/weapon/lighter
 
 	attack_self(mob/user)
 		if(user.r_hand == src || user.l_hand == src)
 			if(!src.lit)
 				src.lit = 1
-				src.icon_state = "zippoon"
-				src.item_state = "zippoon"
-				for(var/mob/O in viewers(user, null))
-					O.show_message(text("\red Without even breaking stride, [] flips open and lights the [] in one smooth movement.", user, src), 1)
+				src.icon_state = icon_on
+				src.item_state = icon_on
+				if( istype(src,/obj/item/weapon/lighter/zippo) )
+					for(var/mob/O in viewers(user, null))
+						O.show_message(text("\red Without even breaking stride, [] flips open and lights the [] in one smooth movement.", user, src), 1)
+				else
+					if(prob(75))
+						for(var/mob/O in viewers(user, null))
+							O.show_message("\red After a few attempts, [user] manages to light the [src].", 1)
+					else
+						user << "\red <b>You burn yourself while lighting the lighter.</b>"
+						user.adjustFireLoss(5)
+						for(var/mob/O in viewers(user, null))
+							O.show_message("\red After a few attempts, [user] manages to light the [src], they however burn their finger in the process.", 1)
 
 				user.total_luminosity += 2
 				processing_objects.Add(src)
 			else
 				src.lit = 0
-				src.icon_state = "zippo"
-				src.item_state = "zippo"
-				for(var/mob/O in viewers(user, null))
-					O.show_message(text("\red You hear a quiet click, as [] shuts off the [] without even looking what they're doing. Wow.", user, src), 1)
+				src.icon_state = icon_off
+				src.item_state = icon_off
+				if( istype(src,/obj/item/weapon/lighter/zippo) )
+					for(var/mob/O in viewers(user, null))
+						O.show_message(text("\red You hear a quiet click, as [] shuts off the [] without even looking at what they're doing. Wow.", user, src), 1)
+				else
+					for(var/mob/O in viewers(user, null))
+						O.show_message("\red [user] quietly shuts off the [src].", 1)
 
 				user.total_luminosity -= 2
 				processing_objects.Remove(src)
