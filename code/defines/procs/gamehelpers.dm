@@ -188,6 +188,12 @@
 				if(C.occupant.client)
 					hear += C.occupant
 
+	for(var/obj/item/device/radio/theradio in V)
+		if(isInSight(source,theradio))
+			hear += theradio
+
+
+
 	return hear
 
 #define SIGN(X) ((X<0)?-1:1)

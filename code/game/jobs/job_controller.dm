@@ -27,6 +27,8 @@ var/global/datum/controller/occupations/job_master
 			if(!job)	continue
 			if(job.faction != faction)	continue
 			occupations += job
+
+			occupations = shuffle(occupations) //Shuffles job-list at setup.
 		return 1
 
 
@@ -149,7 +151,6 @@ var/global/datum/controller/occupations/job_master
 		if(unassigned.len == 0)	return 0
 		//Shuffle players and jobs
 		unassigned = shuffle(unassigned)
-	//	occupations = shuffle(occupations) check and see if we can do this one
 
 		HandleFeedbackGathering()
 
