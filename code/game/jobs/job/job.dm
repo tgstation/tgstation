@@ -22,6 +22,9 @@
 	//Supervisors, who this person answers to directly
 	var/supervisors = ""
 
+	//Sellection screen color
+	var/selection_color = "#ffffff"
+
 	//List of alternate titles, if any
 	var/list/alt_titles
 

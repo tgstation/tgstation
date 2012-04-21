@@ -244,9 +244,26 @@ var/global/datum/controller/occupations/job_master
 		// make sure we don't already have one on 1 ear :p
 		if(!istype(H.r_ear,/obj/item/device/radio/headset) && !istype(H.l_ear,/obj/item/device/radio/headset))
 			H.equip_if_possible(new /obj/item/device/radio/headset(H), H.slot_ears)
-		var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
-		H.equip_if_possible(BPK, H.slot_back,1)
-		H.equip_if_possible(new /obj/item/weapon/storage/box(H.back), H.slot_in_backpack)
+
+		if(H.mind && H.mind.assigned_role != "Cyborg" && H.mind.assigned_role != "AI" && H.mind.assigned_role != "Clown")
+			if(H.backbag == 1) //Clown always gets his backbuddy.
+				H.equip_if_possible(new /obj/item/weapon/storage/box(H), H.slot_r_hand)
+
+			if(H.backbag == 2)
+				var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
+				new /obj/item/weapon/storage/box(BPK)
+				H.equip_if_possible(BPK, H.slot_back,1)
+
+			if(H.backbag == 3)
+				var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel(H)
+				new /obj/item/weapon/storage/box(BPK)
+				H.equip_if_possible(BPK, H.slot_back,1)
+
+			if(H.backbag == 4)
+				var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel_norm(H)
+				new /obj/item/weapon/storage/box(BPK)
+				H.equip_if_possible(BPK, H.slot_back,1)
+
 		//Give'em glasses if they are nearsighted
 		if(H.disabilities & 1)
 			var/equipped = H.equip_if_possible(new /obj/item/clothing/glasses/regular(H), H.slot_glasses)

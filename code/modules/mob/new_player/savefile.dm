@@ -132,10 +132,15 @@ datum/preferences/proc/savefile_save(mob/user, slot)
 	F["eyes_blue"] << src.b_eyes
 	F["blood_type"] << src.b_type
 	F["underwear"] << src.underwear
+	F["backbag"] << src.backbag
+	F["backbag"] << src.backbag
+
+
 
 	F["be_special"] << src.be_special
 	F["UI"] << src.UI
 	F["midis"] << src.midis
+	F["ghost_ears"] << src.ghost_ears
 	F["pregame_music"] << src.pregame_music
 	F["ooccolor"] << src.ooccolor
 	F["lastchangelog"] << src.lastchangelog
@@ -199,8 +204,13 @@ datum/preferences/proc/savefile_load(mob/user, slot)
 	F["eyes_blue"] >> src.b_eyes
 	F["blood_type"] >> src.b_type
 	F["underwear"] >> src.underwear
+	if(underwear == 0) underwear = 6 //For old players who have 0 in their savefile
+	F["backbag"] >> src.backbag
+	if(isnull(backbag)) backbag = 2
 	F["name_is_always_random"] >> src.be_random_name
 	F["midis"] >> src.midis
+	F["ghost_ears"] >> src.ghost_ears
+	if(isnull(ghost_ears)) ghost_ears = 1 //Hotfix
 	F["pregame_music"] >> src.pregame_music
 	F["ooccolor"] >> src.ooccolor
 	F["lastchangelog"] >> src.lastchangelog

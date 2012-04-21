@@ -5,6 +5,7 @@
 	faction = "Station"
 	total_positions = 0
 	spawn_positions = 1
+	selection_color = "#ccffcc"
 	supervisors = "your laws"
 
 
@@ -22,6 +23,7 @@
 	total_positions = 0
 	spawn_positions = 1
 	supervisors = "your laws and the AI"	//Nodrak
+	selection_color = "#ddffdd"
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0

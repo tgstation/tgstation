@@ -13,6 +13,7 @@ datum/preferences
 			randomize_hair_color("facial")
 		randomize_eyes_color()
 		underwear = 1
+		backbag = 2
 		b_type = pick("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
 		age = rand(19,35)
 		copy_to(H,1)
@@ -216,7 +217,7 @@ datum/preferences
 		else
 			preview_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 
-		if (underwear > 0)
+		if (underwear < 6)
 			preview_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_s", "dir" = preview_dir), ICON_OVERLAY)
 
 		var/icon/eyes_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "eyes_s", "dir" = preview_dir)
