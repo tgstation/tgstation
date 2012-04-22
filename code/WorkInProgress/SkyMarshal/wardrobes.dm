@@ -172,7 +172,7 @@
 		new /obj/item/weapon/storage/toolbox/mechanical(src)
 		new /obj/item/clothing/suit/storage/labcoat(src)
 		new /obj/item/clothing/gloves/black(src)
-		new /obj/item/device/radio/headset/headset_eng(src)
+		new /obj/item/device/radio/headset/headset_rob(src)
 		new /obj/item/clothing/shoes/black(src)
 		new /obj/item/clothing/under/rank/roboticist(src)
 

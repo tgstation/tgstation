@@ -564,7 +564,7 @@ Code:
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()
 
-	if (usr.stat || usr.restrained() || !in_range(loc, usr))
+	if (!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 		usr.machine = null
 		usr << browse(null, "window=pda")
 		return

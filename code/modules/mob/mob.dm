@@ -122,7 +122,7 @@
 					world << "Aborting world restart!"
 					return
 
-			feedback_set_details("end_error","no live players")
+			//feedback_set_details("end_error","no live players")
 
 			if(blackbox)
 				blackbox.save_all_data_to_sql()

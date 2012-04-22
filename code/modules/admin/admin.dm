@@ -189,7 +189,7 @@ var/global/BSACooldown = 0
 		Banlist["minutes"] << (mins + CMinutes)
 		Banlist["bannedby"] << usr.ckey
 		Banlist.cd = "/base"
-		feedback_inc("ban_edit",1)
+		//feedback_inc("ban_edit",1)
 		unbanpanel()
 
 	/////////////////////////////////////new ban stuff
@@ -253,7 +253,7 @@ var/global/BSACooldown = 0
 				log_admin("[key_name(usr)] unbanned [key_name(M)] from [job]")
 				ban_unban_log_save("[key_name(usr)] unjobbanned [key_name(M)] from [job]")
 				M << "\red<BIG><B>You have been un-jobbanned by [usr.client.ckey] from [job].</B></BIG>"
-				feedback_inc("ban_job_unban",1)
+				//feedback_inc("ban_job_unban",1)
 				message_admins("\blue [key_name_admin(usr)] unbanned [key_name_admin(M)] from [job]", 1)
 				jobban_unban(M, job)
 				href_list["jobban2"] = 1
@@ -263,7 +263,7 @@ var/global/BSACooldown = 0
 					return
 				ban_unban_log_save("[key_name(usr)] jobbanned [key_name(M)] from [job]. reason: [reason]")
 				log_admin("[key_name(usr)] banned [key_name(M)] from [job]")
-				feedback_inc("ban_job",1)
+				//feedback_inc("ban_job",1)
 				M << "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from [job].</B></BIG>"
 				M << "\red <B>The reason is: [reason]</B>"
 				M << "\red Jobban can be lifted only on demand."
@@ -320,7 +320,8 @@ var/global/BSACooldown = 0
 					ban_unban_log_save("[usr.client.ckey] has banned [M.ckey]. - Reason: [reason] - This will be removed in [mins] minutes.")
 					M << "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>"
 					M << "\red This is a temporary ban, it will be removed in [mins] minutes."
-					feedback_inc("ban_tmp",1)
+					//feedback_inc("ban_tmp",1)
+					//feedback_inc("ban_tmp_mins",mins)
 					if(config.appeal_address)
 						M << "\red You may try to appeal this at [config.appeal_address]"
 					else
@@ -344,7 +345,7 @@ var/global/BSACooldown = 0
 					ban_unban_log_save("[usr.client.ckey] has permabanned [M.ckey]. - Reason: [reason] - This is a permanent ban.")
 					log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
 					message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
-					feedback_inc("ban_perma",1)
+					//feedback_inc("ban_perma",1)
 
 					del(M.client)
 					//del(M)
@@ -422,7 +423,8 @@ var/global/BSACooldown = 0
 						else
 							M << "\red No ban appeals URL has been set."
 						ban_unban_log_save("[usr.client.ckey] has jobbanned [M.ckey] from [job]. - Reason: [reason] - This will be removed in [mins] minutes.")
-						feedback_inc("ban_job",1)
+						//feedback_inc("ban_job",1)
+						//feedback_add_details("ban_job","- [job]")
 						log_admin("[usr.client.ckey] has banned [M.ckey] from [job].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 						message_admins("\blue[usr.client.ckey] has banned [M.ckey] from [job].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 
@@ -440,7 +442,8 @@ var/global/BSACooldown = 0
 						else
 							M << "\red No ban appeals URL has been set."
 						ban_unban_log_save("[usr.client.ckey] has banned [M.ckey] from [job]. - Reason: [reason] - This is a permanent ban.")
-						feedback_inc("ban_job_tmp",1)
+						//feedback_inc("ban_job_tmp",1)
+						//feedback_add_details("ban_job_tmp","- [job]")
 						log_admin("[usr.client.ckey] has banned [M.ckey] from [job].\nReason: [reason]\nThis is a permanent ban.")
 						message_admins("\blue[usr.client.ckey] has banned [M.ckey] from [job].\nReason: [reason]\nThis is a permanent ban.")
 
@@ -1263,14 +1266,20 @@ var/global/BSACooldown = 0
 			var/ok = 0
 			switch(href_list["secretsfun"])
 				if("sec_clothes")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","SC")
 					for(var/obj/item/clothing/under/O in world)
 						del(O)
 					ok = 1
 				if("sec_all_clothes")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","SAC")
 					for(var/obj/item/clothing/O in world)
 						del(O)
 					ok = 1
 				if("sec_classic1")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","SC1")
 					for(var/obj/item/clothing/suit/fire/O in world)
 						del(O)
 					for(var/obj/structure/grille/O in world)
@@ -1284,7 +1293,10 @@ var/global/BSACooldown = 0
 						del(O)
 					ok = 1*/
 				if("toxic")
-				/*					for(var/obj/machinery/atmoalter/siphs/fullairsiphon/O in world)
+				/*
+					feedback_inc("admin_secrets_fun_used",1)
+					feedback_add_details("admin_secrets_fun_used","T")
+					for(var/obj/machinery/atmoalter/siphs/fullairsiphon/O in world)
 						O.t_status = 3
 					for(var/obj/machinery/atmoalter/siphs/scrubbers/O in world)
 						O.t_status = 1
@@ -1298,26 +1310,34 @@ var/global/BSACooldown = 0
 				*/
 					usr << "HEH"
 				if("monkey")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","M")
 					for(var/mob/living/carbon/human/H in world)
 						spawn(0)
 							H.monkeyize()
 					ok = 1
 				if("corgi")
-					feedback_inc("admin_secrets_fun_used",1)
-					feedback_add_details("admin_secrets_fun_used","M")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","M")
 					for(var/mob/living/carbon/human/H in world)
 						spawn(0)
 							H.corgize()
 					ok = 1
 				if("power")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","P")
 					log_admin("[key_name(usr)] made all areas powered", 1)
 					message_admins("\blue [key_name_admin(usr)] made all areas powered", 1)
 					power_restore()
 				if("unpower")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","UP")
 					log_admin("[key_name(usr)] made all areas unpowered", 1)
 					message_admins("\blue [key_name_admin(usr)] made all areas unpowered", 1)
 					power_failure()
 				if("activateprison")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","AP")
 					world << "\blue <B>Transit signature detected.</B>"
 					world << "\blue <B>Incoming shuttle.</B>"
 					/*
@@ -1329,6 +1349,8 @@ var/global/BSACooldown = 0
 					message_admins("\blue [key_name_admin(usr)] sent the prison shuttle to the station.", 1)
 				if("deactivateprison")
 					/*
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","DP")
 					var/A = locate(/area/shuttle_prison)
 					for(var/atom/movable/AM as mob|obj in A)
 						AM.z = 2
@@ -1336,6 +1358,8 @@ var/global/BSACooldown = 0
 					*/
 					message_admins("\blue [key_name_admin(usr)] sent the prison shuttle back.", 1)
 				if("toggleprisonstatus")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","TPS")
 					for(var/obj/machinery/computer/prison_shuttle/PS in world)
 						PS.allowedtocall = !(PS.allowedtocall)
 						message_admins("\blue [key_name_admin(usr)] toggled status of prison shuttle to [PS.allowedtocall].", 1)
@@ -1343,6 +1367,8 @@ var/global/BSACooldown = 0
 					if(!ticker)
 						alert("The game hasn't started yet!", null, null, null, null, null)
 						return
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","PW")
 					message_admins("\blue [key_name_admin(usr)] teleported all players to the prison station.", 1)
 					for(var/mob/living/carbon/human/H in world)
 						var/turf/loc = find_loc(H)
@@ -1385,6 +1411,8 @@ var/global/BSACooldown = 0
 						var/objective = input("Enter an objective")
 						if(!objective)
 							return
+						//feedback_inc("admin_secrets_fun_used",1)
+						//feedback_add_details("admin_secrets_fun_used","TA([objective])")
 						for(var/mob/living/carbon/human/H in world)
 							if(H.stat == 2 || !H.client || !H.mind) continue
 							if(is_special_character(H)) continue
@@ -1415,6 +1443,8 @@ var/global/BSACooldown = 0
 					if ((src.rank in list( "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
 						if(mining_shuttle_moving)
 							return
+						//feedback_inc("admin_secrets_fun_used",1)
+						//feedback_add_details("admin_secrets_fun_used","ShM")
 						move_mining_shuttle()
 						message_admins("\blue [key_name_admin(usr)] moved mining shuttle", 1)
 						log_admin("[key_name(usr)] moved the mining shuttle")
@@ -1422,6 +1452,8 @@ var/global/BSACooldown = 0
 						alert("You're not of a high enough rank to do this")
 				if("moveadminshuttle")
 					if ((src.rank in list( "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+						//feedback_inc("admin_secrets_fun_used",1)
+						//feedback_add_details("admin_secrets_fun_used","ShA")
 						move_admin_shuttle()
 						message_admins("\blue [key_name_admin(usr)] moved the centcom administration shuttle", 1)
 						log_admin("[key_name(usr)] moved the centcom administration shuttle")
@@ -1429,6 +1461,8 @@ var/global/BSACooldown = 0
 						alert("You're not of a high enough rank to do this")
 				if("moveferry")
 					if ((src.rank in list( "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+						//feedback_inc("admin_secrets_fun_used",1)
+						//feedback_add_details("admin_secrets_fun_used","ShF")
 						move_ferry()
 						message_admins("\blue [key_name_admin(usr)] moved the centcom ferry", 1)
 						log_admin("[key_name(usr)] moved the centcom ferry")
@@ -1436,12 +1470,16 @@ var/global/BSACooldown = 0
 						alert("You're not of a high enough rank to do this")
 				if("movealienship")
 					if ((src.rank in list( "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+						//feedback_inc("admin_secrets_fun_used",1)
+						//feedback_add_details("admin_secrets_fun_used","ShX")
 						move_alien_ship()
 						message_admins("\blue [key_name_admin(usr)] moved the alien dinghy", 1)
 						log_admin("[key_name(usr)] moved the alien dinghy")
 					else
 						alert("You're not of a high enough rank to do this")
 				if("flicklights")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","FL")
 					while(!usr.stat)
 	//knock yourself out to stop the ghosts
 						for(var/mob/M in world)
@@ -1513,6 +1551,8 @@ var/global/BSACooldown = 0
 							sleep(rand(30,400))
 							Wall.ex_act(rand(2,1)) */
 				if("wave")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","MW")
 					if ((src.rank in list("Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
 						meteor_wave()
 						message_admins("[key_name_admin(usr)] has spawned meteors", 1)
@@ -1522,6 +1562,8 @@ var/global/BSACooldown = 0
 						alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 						return
 				if("gravanomalies")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","GA")
 					command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 					world << sound('granomalies.ogg')
 					var/turf/T = pick(blobstart)
@@ -1551,41 +1593,61 @@ var/global/BSACooldown = 0
 								spawn(rand(300,600))
 									del(P)
 				if("goblob")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","BL")
 					mini_blob_event()
 					message_admins("[key_name_admin(usr)] has spawned blob", 1)
 				if("aliens")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","AL")
 					if(aliens_allowed)
 						Force_Event(/datum/event/alieninfestation)
 						message_admins("[key_name_admin(usr)] has spawned aliens", 1)
 				if("spaceninja")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","SN")
 					if(toggle_space_ninja)
 						if(space_ninja_arrival())//If the ninja is actually spawned. They may not be depending on a few factors.
 							message_admins("[key_name_admin(usr)] has sent in a space ninja", 1)
 				if("carp")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","C")
 					var/choice = input("You sure you want to spawn carp?") in list("Badmin", "Cancel")
 					if(choice == "Badmin")
 						message_admins("[key_name_admin(usr)] has spawned carp.", 1)
 						Force_Event(/datum/event/spacecarp)
 				if("radiation")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","R")
 					message_admins("[key_name_admin(usr)] has has irradiated the station", 1)
 					Force_Event(/datum/event/radiation)
 				if("immovable")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","IR")
 					message_admins("[key_name_admin(usr)] has sent an immovable rod to the station", 1)
 					immovablerod()
 				if("prison_break")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","PB")
 					message_admins("[key_name_admin(usr)] has allowed a prison break", 1)
 					Force_Event(/datum/event/prisonbreak)
 				if("electric")
 					message_admins("[key_name_admin(usr)] has triggered an electrical storm", 1)
 					Force_Event(/datum/event/electricalstorm)
 				if("lightsout")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","LO")
 					message_admins("[key_name_admin(usr)] has broke a lot of lights", 1)
 					lightsout(1,2)
 				if("blackout")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","BO")
 					message_admins("[key_name_admin(usr)] broke all lights", 1)
 					SpawnEvent()
 					lightsout(0,0)
 				if("virus")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","V")
 					var/answer = alert("Do you want this to be a random disease or do you have something in mind?",,"Virus2","Random","Choose")
 					if(answer=="Random")
 						Force_Event(/datum/event/viralinfection)
@@ -1608,6 +1670,8 @@ var/global/BSACooldown = 0
 					trigger_armed_response_team(1)
 				if("retardify")
 					if (src.rank in list("Badmin", "Game Admin", "Game Master"))
+						//feedback_inc("admin_secrets_fun_used",1)
+						//feedback_add_details("admin_secrets_fun_used","RET")
 						for(var/mob/living/carbon/human/H in world)
 							if(H.client)
 								H << "\red <B>You suddenly feel stupid.</B>"
@@ -1618,6 +1682,8 @@ var/global/BSACooldown = 0
 						return
 				if("fakeguns")
 					if (src.rank in list("Badmin", "Game Admin", "Game Master"))
+						//feedback_inc("admin_secrets_fun_used",1)
+						//feedback_add_details("admin_secrets_fun_used","FG")
 						for(var/obj/item/W in world)
 							if(istype(W, /obj/item/clothing) || istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/weapon/disk) || istype(W, /obj/item/weapon/tank))
 								continue
@@ -1636,6 +1702,8 @@ var/global/BSACooldown = 0
 						return*/
 				if("dorf")
 					if (src.rank in list("Badmin","Game Admin", "Game Master"))
+						//feedback_inc("admin_secrets_fun_used",1)
+						//feedback_add_details("admin_secrets_fun_used","DF")
 						for(var/mob/living/carbon/human/B in world)
 							B.face_icon_state = "facial_wise"
 							B.update_face()
@@ -1645,6 +1713,8 @@ var/global/BSACooldown = 0
 						return
 				if("ionstorm")
 					if (src.rank in list("Badmin","Game Admin", "Game Master"))
+						//feedback_inc("admin_secrets_fun_used",1)
+						//feedback_add_details("admin_secrets_fun_used","I")
 						Force_Event(/datum/event/ionstorm)
 						message_admins("[key_name_admin(usr)] triggered an ion storm")
 						var/show_log = alert(usr, "Show ion message?", "Message", "Yes", "No")
@@ -1922,7 +1992,7 @@ var/global/BSACooldown = 0
 				log_admin("[user.ckey] warned [M.ckey], resulting in a [AUTOBANTIME] minute autoban.")
 				ban_unban_log_save("[user.ckey] warned [M.ckey], resulting in a [AUTOBANTIME] minute autoban.")
 				message_admins("\blue [user.ckey] warned [M.ckey], resulting in a [AUTOBANTIME] minute autoban.")
-				feedback_inc("ban_warn",1)
+				//feedback_inc("ban_warn",1)
 
 				del(M.client)
 
@@ -1989,6 +2059,7 @@ var/global/BSACooldown = 0
 	foo += text("<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A>")
 	dat += text("<body>[foo]</body></html>")
 	usr << browse(dat, "window=adminplayeropts;size=480x150")
+	//feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /datum/player_info/var
@@ -2345,6 +2416,7 @@ var/global/BSACooldown = 0
 				CM.client.vote = "none"
 			else
 				CM.client.vote = "default"
+	//feedback_add_details("admin_verb","SV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/votekill()
 	set category = "Server"
@@ -2365,6 +2437,7 @@ var/global/BSACooldown = 0
 		if(M.client)
 			M << browse(null, "window=vote")
 			M.client.showvote = 0
+	//feedback_add_details("admin_verb","AV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/voteres()
 	set category = "Server"
@@ -2387,6 +2460,7 @@ var/global/BSACooldown = 0
 
 		if(config.allow_vote_mode)
 			vote.nextvotetime = world.timeofday
+	//feedback_add_details("admin_verb","TV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/restart()
 	set category = "Server"
@@ -2401,8 +2475,9 @@ var/global/BSACooldown = 0
 		world << "\red <b>Restarting world!</b> \blue Initiated by [usr.client.stealth ? "Admin" : usr.key]!"
 		log_admin("[key_name(usr)] initiated a reboot.")
 
-		feedback_set_details("end_error","admin reboot - by [usr.key] [usr.client.stealth ? "(stealth)" : ""]")
-		feedback_set_details("round_end","[time2text(world.realtime)]")
+		//feedback_set_details("end_error","admin reboot - by [usr.key] [usr.client.stealth ? "(stealth)" : ""]")
+		//feedback_add_details("admin_verb","R") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 		if(blackbox)
 			blackbox.save_all_data_to_sql()
 		//send2irc(world.url,"Server Rebooting!")
@@ -2419,6 +2494,7 @@ var/global/BSACooldown = 0
 			message = adminscrub(message,500)
 		world << "\blue <b>[usr.client.stealth ? "Administrator" : usr.key] Announces:</b>\n \t [message]"
 		log_admin("Announce: [key_name(usr)] : [message]")
+	//feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/toggleooc()
 	set category = "Server"
@@ -2431,6 +2507,7 @@ var/global/BSACooldown = 0
 		world << "<B>The OOC channel has been globally disabled!</B>"
 	log_admin("[key_name(usr)] toggled OOC.")
 	message_admins("[key_name_admin(usr)] toggled OOC.", 1)
+	//feedback_add_details("admin_verb","TOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/toggleoocdead()
 	set category = "Server"
@@ -2440,6 +2517,7 @@ var/global/BSACooldown = 0
 
 	log_admin("[key_name(usr)] toggled OOC.")
 	message_admins("[key_name_admin(usr)] toggled Dead OOC.", 1)
+	//feedback_add_details("admin_verb","TDOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/toggletraitorscaling()
 	set category = "Server"
@@ -2448,6 +2526,7 @@ var/global/BSACooldown = 0
 	traitor_scaling = !traitor_scaling
 	log_admin("[key_name(usr)] toggled Traitor Scaling to [traitor_scaling].")
 	message_admins("[key_name_admin(usr)] toggled Traitor Scaling [traitor_scaling ? "on" : "off"].", 1)
+	//feedback_add_details("admin_verb","TTS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/startnow()
 	set category = "Server"
@@ -2460,9 +2539,10 @@ var/global/BSACooldown = 0
 		ticker.current_state = GAME_STATE_SETTING_UP
 		log_admin("[usr.key] has started the game.")
 		message_admins("<font color='blue'>[usr.key] has started the game.</font>")
+		//feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return 1
 	else
-		alert("Game has already started you fucking jerk, stop spamming up the chat :ARGH:")
+		usr << "<font color='red'>Error: Start Now: Game has already started.</font>"
 		return 0
 
 /obj/admins/proc/toggleenter()
@@ -2477,6 +2557,7 @@ var/global/BSACooldown = 0
 	log_admin("[key_name(usr)] toggled new player game entering.")
 	message_admins("\blue [key_name_admin(usr)] toggled new player game entering.", 1)
 	world.update_status()
+	//feedback_add_details("admin_verb","TE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/toggleAI()
 	set category = "Server"
@@ -2489,6 +2570,7 @@ var/global/BSACooldown = 0
 		world << "<B>The AI job is chooseable now.</B>"
 	log_admin("[key_name(usr)] toggled AI allowed.")
 	world.update_status()
+	//feedback_add_details("admin_verb","TAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/toggleaban()
 	set category = "Server"
@@ -2502,6 +2584,7 @@ var/global/BSACooldown = 0
 	message_admins("\blue [key_name_admin(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].", 1)
 	log_admin("[key_name(usr)] toggled respawn to [abandon_allowed ? "On" : "Off"].")
 	world.update_status()
+	//feedback_add_details("admin_verb","TR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/toggle_aliens()
 	set category = "Server"
@@ -2510,6 +2593,7 @@ var/global/BSACooldown = 0
 	aliens_allowed = !aliens_allowed
 	log_admin("[key_name(usr)] toggled Aliens to [aliens_allowed].")
 	message_admins("[key_name_admin(usr)] toggled Aliens [aliens_allowed ? "on" : "off"].", 1)
+	//feedback_add_details("admin_verb","TA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/toggle_space_ninja()
 	set category = "Server"
@@ -2518,6 +2602,7 @@ var/global/BSACooldown = 0
 	toggle_space_ninja = !toggle_space_ninja
 	log_admin("[key_name(usr)] toggled Space Ninjas to [toggle_space_ninja].")
 	message_admins("[key_name_admin(usr)] toggled Space Ninjas [toggle_space_ninja ? "on" : "off"].", 1)
+	//feedback_add_details("admin_verb","TSN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/delay()
 	set category = "Server"
@@ -2538,6 +2623,7 @@ var/global/BSACooldown = 0
 		else
 			world << "<b>The game will start soon.</b>"
 		log_admin("[key_name(usr)] removed the delay.")
+	//feedback_add_details("admin_verb","DELAY") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/adjump()
 	set category = "Server"
@@ -2545,6 +2631,7 @@ var/global/BSACooldown = 0
 	set name="Toggle Jump"
 	config.allow_admin_jump = !(config.allow_admin_jump)
 	message_admins("\blue Toggled admin jumping to [config.allow_admin_jump].")
+	//feedback_add_details("admin_verb","TJ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/adspawn()
 	set category = "Server"
@@ -2552,6 +2639,7 @@ var/global/BSACooldown = 0
 	set name="Toggle Spawn"
 	config.allow_admin_spawning = !(config.allow_admin_spawning)
 	message_admins("\blue Toggled admin item spawning to [config.allow_admin_spawning].")
+	//feedback_add_details("admin_verb","TAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/adrev()
 	set category = "Server"
@@ -2559,6 +2647,7 @@ var/global/BSACooldown = 0
 	set name="Toggle Revive"
 	config.allow_admin_rev = !(config.allow_admin_rev)
 	message_admins("\blue Toggled reviving to [config.allow_admin_rev].")
+	//feedback_add_details("admin_verb","TAR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/immreboot()
 	set category = "Server"
@@ -2569,8 +2658,9 @@ var/global/BSACooldown = 0
 	world << "\red <b>Rebooting world!</b> \blue Initiated by [usr.client.stealth ? "Admin" : usr.key]!"
 	log_admin("[key_name(usr)] initiated an immediate reboot.")
 
-	feedback_set_details("end_error","immediate admin reboot - by [usr.key] [usr.client.stealth ? "(stealth)" : ""]")
-	feedback_set_details("round_end","[time2text(world.realtime)]")
+	//feedback_set_details("end_error","immediate admin reboot - by [usr.key] [usr.client.stealth ? "(stealth)" : ""]")
+	//feedback_add_details("admin_verb","IR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
 
@@ -2586,6 +2676,7 @@ var/global/BSACooldown = 0
 	else
 		deadchat = 0
 		usr << "Deadchat turned off"
+	//feedback_add_details("admin_verb","TDV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggleprayers()
 	set category = "Admin"
@@ -2597,6 +2688,7 @@ var/global/BSACooldown = 0
 	else
 		seeprayers = 0
 		usr << "Prayer visibility turned off"
+	//feedback_add_details("admin_verb","TP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /obj/admins/proc/unprison(var/mob/M in world)
 	set category = "Admin"
@@ -2610,6 +2702,7 @@ var/global/BSACooldown = 0
 			alert("Admin jumping disabled")
 	else
 		alert("[M.name] is not prisoned.")
+	//feedback_add_details("admin_verb","UP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
@@ -2704,10 +2797,10 @@ var/global/BSACooldown = 0
 
 		log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
 
-
 	else
 		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 		return
+	//feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /obj/admins/proc/show_traitor_panel(var/mob/M in world)
@@ -2719,6 +2812,7 @@ var/global/BSACooldown = 0
 		usr << "Sorry, this mob has no mind!"
 		return
 	M.mind.edit_memory()
+	//feedback_add_details("admin_verb","STP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /obj/admins/proc/toggletintedweldhelmets()
@@ -2732,6 +2826,7 @@ var/global/BSACooldown = 0
 		world << "<B>The tinted_weldhelh has been disabled!</B>"
 	log_admin("[key_name(usr)] toggled tinted_weldhelh.")
 	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.", 1)
+	//feedback_add_details("admin_verb","TTWH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /*
 /obj/admins/proc/toggleguests()
@@ -2745,6 +2840,7 @@ var/global/BSACooldown = 0
 		world << "<B>Guests may now enter the game.</B>"
 	log_admin("[key_name(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.")
 	message_admins("\blue [key_name_admin(usr)] toggled guests game entering [guests_allowed?"":"dis"]allowed.", 1)
+	//feedback_add_details("admin_verb","TGU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 */
 
 
@@ -2766,6 +2862,7 @@ var/global/BSACooldown = 0
 						</html>"}
 	usr << browse(output,"window=server_logfile")
 	onclose(usr,"server_logfile")
+	//feedback_add_details("admin_verb","VTL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /obj/admins/proc/view_atk_log()
@@ -2793,6 +2890,7 @@ var/global/BSACooldown = 0
 	set category = "Admin"
 	if (src.holder)
 		src.holder.unjobbanpanel()
+	//feedback_add_details("admin_verb","UJBP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return*/
 
 

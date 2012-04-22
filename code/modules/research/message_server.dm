@@ -132,19 +132,19 @@ var/obj/machinery/blackbox_recorder/blackbox
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
-	var/messages = list()
-	var/messages_admin = list()
+	var/list/messages = list()		//Stores messages of non-standard frequencies
+	var/list/messages_admin = list()
 
-	var/msg_common = list()
-	var/msg_science = list()
-	var/msg_command = list()
-	var/msg_medical = list()
-	var/msg_engineering = list()
-	var/msg_security = list()
-	var/msg_deathsquad = list()
-	var/msg_syndicate = list()
-	var/msg_mining = list()
-	var/msg_cargo = list()
+	var/list/msg_common = list()
+	var/list/msg_science = list()
+	var/list/msg_command = list()
+	var/list/msg_medical = list()
+	var/list/msg_engineering = list()
+	var/list/msg_security = list()
+	var/list/msg_deathsquad = list()
+	var/list/msg_syndicate = list()
+	var/list/msg_mining = list()
+	var/list/msg_cargo = list()
 
 	var/list/datum/feedback_variable/feedback = new()
 
@@ -154,6 +154,28 @@ var/obj/machinery/blackbox_recorder/blackbox
 			if(istype(blackbox,/obj/machinery/blackbox_recorder))
 				del(src)
 		blackbox = src
+
+	Del()
+		var/turf/T = locate(1,1,2)
+		if(T)
+			blackbox = null
+			var/obj/machinery/blackbox_recorder/BR = new/obj/machinery/blackbox_recorder(T)
+			BR.msg_common = msg_common
+			BR.msg_science = msg_science
+			BR.msg_command = msg_command
+			BR.msg_medical = msg_medical
+			BR.msg_engineering = msg_engineering
+			BR.msg_security = msg_security
+			BR.msg_deathsquad = msg_deathsquad
+			BR.msg_syndicate = msg_syndicate
+			BR.msg_mining = msg_mining
+			BR.msg_cargo = msg_cargo
+			BR.feedback = feedback
+			BR.messages = messages
+			BR.messages_admin = messages_admin
+			if(blackbox != BR)
+				blackbox = BR
+		..()
 
 	proc/find_feedback_datum(var/variable)
 		for(var/datum/feedback_variable/FV in feedback)
@@ -166,9 +188,42 @@ var/obj/machinery/blackbox_recorder/blackbox
 	proc/get_round_feedback()
 		return feedback
 
+	proc/round_end_data_gathering()
+
+		var/pda_msg_amt = 0
+		var/rc_msg_amt = 0
+
+		for(var/obj/machinery/message_server/MS in world)
+			if(MS.pda_msgs.len > pda_msg_amt)
+				pda_msg_amt = MS.pda_msgs.len
+			if(MS.rc_msgs.len > rc_msg_amt)
+				rc_msg_amt = MS.rc_msgs.len
+/*
+		feedback_set_details("radio_usage","")
+
+		feedback_add_details("radio_usage","COM-[msg_common.len]")
+		feedback_add_details("radio_usage","SCI-[msg_science.len]")
+		feedback_add_details("radio_usage","HEA-[msg_command.len]")
+		feedback_add_details("radio_usage","MED-[msg_medical.len]")
+		feedback_add_details("radio_usage","ENG-[msg_engineering.len]")
+		feedback_add_details("radio_usage","SEC-[msg_security.len]")
+		feedback_add_details("radio_usage","DTH-[msg_deathsquad.len]")
+		feedback_add_details("radio_usage","SYN-[msg_syndicate.len]")
+		feedback_add_details("radio_usage","MIN-[msg_mining.len]")
+		feedback_add_details("radio_usage","CAR-[msg_cargo.len]")
+		feedback_add_details("radio_usage","OTH-[messages.len]")
+		feedback_add_details("radio_usage","PDA-[pda_msg_amt]")
+		feedback_add_details("radio_usage","RC-[rc_msg_amt]")
+
+
+		feedback_set_details("round_end","[time2text(world.realtime)]") //This one MUST be the last one that gets set.
+*/
+
 	//This proc is only to be called at round end.
 	proc/save_all_data_to_sql()
 		if(!feedback) return
+
+		round_end_data_gathering() //round_end time logging and some other data processing
 
 		var/user = sqlfdbklogin
 		var/pass = sqlfdbkpass

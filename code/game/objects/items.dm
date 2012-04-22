@@ -253,11 +253,6 @@
 	del(src)
 	return
 
-/obj/screen/close/DblClick()
-	if (src.master)
-		src.master:close(usr)
-	return
-
 
 //What the fuck is this code  Looks to be the parrying code.  If you're grabbing someone, it might hit them instead... or something.--SkyMarshal
 /mob/attackby(obj/item/weapon/W as obj, mob/user as mob)
