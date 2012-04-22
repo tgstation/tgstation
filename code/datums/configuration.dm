@@ -33,6 +33,7 @@
 	var/traitor_scaling = 0 //if amount of traitors scales based on amount of players
 	var/protect_roles_from_antagonist = 0// If security and such can be tratior/cult/other
 	var/Tensioner_Active = 0			// If the tensioner is running.
+	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 
 	var/list/mode_names = list()
 	var/list/modes = list()				// allowed modes
@@ -287,6 +288,8 @@
 				if("forbid_singulo_possession")
 					forbid_singulo_possession = 1
 
+				if("popup_admin_pm")
+					config.popup_admin_pm = 1
 				if("useircbot")
 					useircbot = 1
 
