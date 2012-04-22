@@ -44,7 +44,7 @@
 			if("cannon")
 				new /obj/item/weapon/gun/energy/lasercannon(get_turf(H))
 			if("shotgun")
-				new /obj/item/weapon/gun/projectile/shotgun/combat(get_turf(H))
+				new /obj/item/weapon/gun/projectile/shotgun/pump/combat(get_turf(H))
 			if("freeze")
 				new /obj/item/weapon/gun/energy/temperature(get_turf(H))
 			if("uzi")

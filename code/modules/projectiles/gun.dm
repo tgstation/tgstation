@@ -19,6 +19,7 @@
 		caliber = ""
 		silenced = 0
 		recoil = 0
+		ejectshell = 1
 
 	proc
 		load_into_chamber()

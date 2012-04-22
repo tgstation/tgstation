@@ -101,7 +101,12 @@ var/MAX_EXPLOSION_RANGE = 14
 //FLAGS BITMASK
 #define ONBACK 1			// can be put in back slot
 #define TABLEPASS 2			// can pass by a table or rack
-#define HALFMASK 4			// mask only gets 1/2 of air supply from internals
+
+/********************************************************************************
+*	WOO WOO WOO	THIS IS UNUSED	WOO WOO WOO										*
+*	#define HALFMASK 4	// mask only gets 1/2 of air supply from internals		*
+*	WOO WOO WOO	THIS IS UNUSED	WOO WOO WOO										*
+********************************************************************************/
 
 #define HEADSPACE 4			// head wear protects against space
 

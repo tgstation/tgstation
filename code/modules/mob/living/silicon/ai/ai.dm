@@ -453,7 +453,7 @@
 
 	malf_picker.use(src)
 
-//I am the icon meister. Bow fefore me.
+//I am the icon meister. Bow fefore me.	//>fefore
 /mob/living/silicon/ai/proc/ai_hologram_change()
 	set name = "Change Hologram"
 	set desc = "Change the default hologram available to AI to something else."
