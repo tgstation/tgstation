@@ -313,18 +313,11 @@
 	containertype = "/obj/structure/closet/crate"
 	containername = "Janitorial supplies"
 
-/obj/item/weapon/storage/lightbox/tubes
-
 /datum/supply_packs/lightbulbs
 	name = "Replacement lights"
-	contains = list("/obj/item/weapon/storage/lightbox/tubes",
-					"/obj/item/weapon/storage/lightbox/tubes",
-					"/obj/item/weapon/storage/lightbox/tubes",
-					"/obj/item/weapon/storage/lightbox/tubes",
-					"/obj/item/weapon/storage/lightbox/tubes",
-					"/obj/item/weapon/storage/lightbox/tubes",
-					"/obj/item/weapon/storage/lightbox/bulbs",
-					"/obj/item/weapon/storage/lightbox/bulbs")
+	contains = list("/obj/item/weapon/storage/lightbox/mixed",
+					"/obj/item/weapon/storage/lightbox/mixed",
+					"/obj/item/weapon/storage/lightbox/mixed")
 	cost = 5
 	containertype = "/obj/structure/closet/crate"
 	containername = "Replacement lights"
