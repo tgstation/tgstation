@@ -155,6 +155,28 @@ var/obj/machinery/blackbox_recorder/blackbox
 				del(src)
 		blackbox = src
 
+	Del()
+		var/turf/T = locate(1,1,2)
+		if(T)
+			blackbox = null
+			var/obj/machinery/blackbox_recorder/BR = new/obj/machinery/blackbox_recorder(T)
+			BR.msg_common = msg_common
+			BR.msg_science = msg_science
+			BR.msg_command = msg_command
+			BR.msg_medical = msg_medical
+			BR.msg_engineering = msg_engineering
+			BR.msg_security = msg_security
+			BR.msg_deathsquad = msg_deathsquad
+			BR.msg_syndicate = msg_syndicate
+			BR.msg_mining = msg_mining
+			BR.msg_cargo = msg_cargo
+			BR.feedback = feedback
+			BR.messages = messages
+			BR.messages_admin = messages_admin
+			if(blackbox != BR)
+				blackbox = BR
+		..()
+
 	proc/find_feedback_datum(var/variable)
 		for(var/datum/feedback_variable/FV in feedback)
 			if(FV.get_variable() == variable)
