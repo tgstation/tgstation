@@ -42,8 +42,8 @@
 			world << "Uh oh, its malfunction and there is no AI! Please report this."
 			world << "Rebooting world in 5 seconds."
 
-			feedback_set_details("end_error","malf - no AI")
-			feedback_set_details("round_end","[time2text(world.realtime)]")
+			//feedback_set_details("end_error","malf - no AI")
+
 			if(blackbox)
 				blackbox.save_all_data_to_sql()
 			sleep(50)
@@ -203,37 +203,37 @@
 	var/crew_evacuated = (emergency_shuttle.location==2)
 
 	if      ( station_captured &&                station_was_nuked)
-		feedback_set_details("round_end_result","win - AI win - nuke")
+		//feedback_set_details("round_end_result","win - AI win - nuke")
 		world << "<FONT size = 3><B>AI Victory</B></FONT>"
 		world << "<B>Everyone was killed by the self-destruct!</B>"
 
 	else if ( station_captured &&  malf_dead && !station_was_nuked)
-		feedback_set_details("round_end_result","halfwin - AI killed, staff lost control")
+		//feedback_set_details("round_end_result","halfwin - AI killed, staff lost control")
 		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
 		world << "<B>The AI has been killed!</B> The staff has lose control over the station."
 
 	else if ( station_captured && !malf_dead && !station_was_nuked)
-		feedback_set_details("round_end_result","win - AI win - no explosion")
+		//feedback_set_details("round_end_result","win - AI win - no explosion")
 		world << "<FONT size = 3><B>AI Victory</B></FONT>"
 		world << "<B>The AI has chosen not to explode you all!</B>"
 
 	else if (!station_captured &&                station_was_nuked)
-		feedback_set_details("round_end_result","halfwin - everyone killed by nuke")
+		//feedback_set_details("round_end_result","halfwin - everyone killed by nuke")
 		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
 		world << "<B>Everyone was killed by the nuclear blast!</B>"
 
 	else if (!station_captured &&  malf_dead && !station_was_nuked)
-		feedback_set_details("round_end_result","loss - staff win")
+		//feedback_set_details("round_end_result","loss - staff win")
 		world << "<FONT size = 3><B>Human Victory</B></FONT>"
 		world << "<B>The AI has been killed!</B> The staff is victorious."
 
 	else if (!station_captured && !malf_dead && !station_was_nuked && crew_evacuated)
-		feedback_set_details("round_end_result","halfwin - evacuated")
+		//feedback_set_details("round_end_result","halfwin - evacuated")
 		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
 		world << "<B>The Corporation has lose [station_name()]! All survived personnel will be fired!</B>"
 
 	else if (!station_captured && !malf_dead && !station_was_nuked && !crew_evacuated)
-		feedback_set_details("round_end_result","nalfwin - interrupted")
+		//feedback_set_details("round_end_result","nalfwin - interrupted")
 		world << "<FONT size = 3><B>Neutral Victory</B></FONT>"
 		world << "<B>Round was mysteriously interrupted!</B>"
 	..()

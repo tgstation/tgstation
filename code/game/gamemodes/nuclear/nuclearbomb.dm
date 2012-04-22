@@ -217,8 +217,7 @@
 		if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
 			world << "<B>Resetting in 30 seconds!</B>"
 
-			feedback_set_details("end_error","nuke - unhandled ending")
-			feedback_set_details("round_end","[time2text(world.realtime)]")
+			//feedback_set_details("end_error","nuke - unhandled ending")
 			if(blackbox)
 				blackbox.save_all_data_to_sql()
 			sleep(300)
