@@ -900,9 +900,14 @@
 	name = "paper - 'Judgement'"
 	info = "For crimes against the station, the offender is sentenced to:<BR>\n<BR>\n"
 
+//Please resist giving this to people who have not survived game breaking bugs.
+/*Current recipients:
+Searif: Survived infinite cold bug, body temp was "-nan", still alive.
+eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discovery of that code and subsequent diking out.
+*/
 /obj/item/weapon/paper/certificate
 	name = "paper - 'Certificate'"
-	info = "Due to this person's unique actions in the past, we hereby certify that they are \"Totally Radical\"<br><br>----<b>Central Command</b><BR><i>This paper has been stamped with the central command rubber stamp.</i><BR>"
+	info = "Due to this person's unique actions in the past, we hereby certify that they are \"Well Qualified\"<br><br>----<b>Central Command</b><BR><i>This paper has been stamped with the central command rubber stamp.</i><BR>"
 	stamped = list(/obj/item/weapon/stamp/centcom)
 	overlays = list("paper_stamped_cent")
 
