@@ -143,13 +143,14 @@
 		return 1
 	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
 		return 0
+	for(var/req in src.req_access)
+		if(!(req in I.access)) //doesn't have this access
+			return 0
 	if(src.req_one_access && src.req_one_access.len)
 		for(var/req in src.req_one_access)
 			if(req in I.access) //has an access from the single access list
 				return 1
-	for(var/req in src.req_access)
-		if(!(req in I.access)) //doesn't have this access
-			return 0
+		return 0
 	return 1
 
 
@@ -159,13 +160,14 @@
 	if(!src.req_access.len && (!src.req_one_access || !src.req_one_access.len))	return 1
 	if(!L)	return 0
 	if(!istype(L, /list))	return 0
+	for(var/req in src.req_access)
+		if(!(req in L)) //doesn't have this access
+			return 0
 	if(src.req_one_access && src.req_one_access.len)
 		for(var/req in src.req_one_access)
 			if(req in L) //has an access from the single access list
 				return 1
-	for(var/req in src.req_access)
-		if(!(req in L)) //doesn't have this access
-			return 0
+		return 0
 	return 1
 
 
@@ -174,7 +176,7 @@
 		if("Geneticist")
 			return list(access_medical, access_morgue, access_medlab)
 		if("Station Engineer")
-			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks)
+			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction)
 		if("Assistant")
 			return list()
 		if("Chaplain")
