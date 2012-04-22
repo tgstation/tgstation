@@ -2,7 +2,7 @@
 //CONTAINS
 CRAYONS
 --------*/
-/obj/item/toy/crayonbox/New()
+/obj/item/weapon/storage/crayonbox/New()
 	..()
 	new /obj/item/toy/crayon/red(src)
 	new /obj/item/toy/crayon/orange(src)
@@ -12,13 +12,13 @@ CRAYONS
 	new /obj/item/toy/crayon/purple(src)
 	updateIcon()
 
-/obj/item/toy/crayonbox/proc/updateIcon()
+/obj/item/weapon/storage/crayonbox/proc/updateIcon()
 	overlays = list() //resets list
 	overlays += image('crayons.dmi',"crayonbox")
 	for(var/obj/item/toy/crayon/crayon in contents)
 		overlays += image('crayons.dmi',crayon.colourName)
 
-/obj/item/toy/crayonbox/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/weapon/storage/crayonbox/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/toy/crayon))
 		switch(W:colourName)
 			if("mime")
@@ -27,34 +27,37 @@ CRAYONS
 			if("rainbow")
 				usr << "This crayon is too powerful to be contained in this box."
 				return
-			else
-				usr << "You add the crayon to the box."
-				user.drop_item()
-				W.loc = src
-				add_fingerprint(user)
-				updateIcon()
-				return
-	else
-		..()
+	..()
+	updateIcon()
 
-/obj/item/toy/crayonbox/attack_hand(mob/user as mob)
-	if(user.r_hand == src || user.l_hand == src)
-		if(!contents.len)
-			user << "\red You're out of crayons!"
+/obj/item/weapon/storage/crayonbox/attack_hand(mob/user as mob)
+	updateIcon()
+	..()
+
+/obj/item/weapon/storage/crayonbox/MouseDrop(obj/over_object as obj)
+
+	if (ishuman(usr) || ismonkey(usr))
+		var/mob/M = usr
+		if (!( istype(over_object, /obj/screen) ))
+			return ..()
+		if ((!( M.restrained() ) && !( M.stat )))
+			if (over_object.name == "r_hand")
+				if (!( M.r_hand ))
+					M.u_equip(src)
+					M.r_hand = src
+			else
+				if (over_object.name == "l_hand")
+					if (!( M.l_hand ))
+						M.u_equip(src)
+						M.l_hand = src
+			M.update_clothing()
+			src.add_fingerprint(usr)
 			return
-		else
-			var/list/crayons = new()
-			for(var/obj/item/toy/crayon/C in contents)
-				crayons[C:colourName] = C
-			var/choice = input(user, "Pick a color:", "Crayon Box") in crayons as text|null
-			if(choice)
-				var/obj/crayon = crayons[choice]
-				user.put_in_hand(crayon)
-				user << "You take the [crayon:colourName] crayon out of the box."
-				updateIcon()
-	else
-		return ..()
-	icon_state = "crayonbox[contents.len]"
+		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
+			if (usr.s_active)
+				usr.s_active.close(usr)
+			src.show_to(usr)
+			return
 	return
 
 /obj/item/toy/crayon/red
@@ -156,6 +159,14 @@ CRAYONS
 				del(src)
 	else
 		..()
+
+/obj/item/toy/crayon/attack_hand(mob/user as mob)
+	var/obj/item/weapon/storage/crayonbox/CB
+	if(istype(src.loc, /obj/item/weapon/storage/crayonbox))
+		CB = src.loc
+	..()
+	if(CB)
+		CB.updateIcon()
 
 /obj/effect/decal/cleanable/crayon
 	name = "rune"
