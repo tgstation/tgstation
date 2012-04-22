@@ -32,6 +32,7 @@
 	var/Tensioner_Active = 0			// If the tensioner is running.
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
+	var/Ticklag = 0.9
 
 	var/list/mode_names = list()
 	var/list/modes = list()				// allowed modes
@@ -288,6 +289,9 @@
 
 				if("useircbot")
 					useircbot = 1
+
+				if("ticklag")
+					Ticklag = text2num(value)
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"

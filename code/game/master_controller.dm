@@ -45,7 +45,7 @@ datum/controller/game_controller
 		if(!tension_master)
 			tension_master = new /datum/tension()
 
-		world.tick_lag = 0.9
+		world.tick_lag = config.Ticklag
 
 		setup_objects()
 

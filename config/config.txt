@@ -144,3 +144,8 @@ FEATURE_OBJECT_SPELL_SYSTEM
 
 ##Remove the # mark if you are going to use the SVN irc bot to relay adminhelps
 #USEIRCBOT
+
+##Defines the ticklag for the world.  0.9 is the normal one, 0.6 is smoother.
+TICKLAG 0.9
+
+

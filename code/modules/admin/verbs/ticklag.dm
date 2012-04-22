@@ -9,7 +9,7 @@
 			if(!src.mob)	return
 
 			if(src.holder.rank in list("Game Admin", "Game Master"))
-				var/newtick = input("Sets a new tick lag. Please don't mess with this too much! The stable, time-tested ticklag value is 0.9",, 0.9) as num|null
+				var/newtick = input("Sets a new tick lag. Please don't mess with this too much! The stable, time-tested ticklag value is 0.9","Lag of Tick", world.tick_lag) as num|null
 				//I've used ticks of 2 before to help with serious singulo lags
 				if(newtick && newtick <= 2 && newtick > 0)
 					log_admin("[key_name(src)] has modified world.tick_lag to [newtick]", 0)
