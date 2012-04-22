@@ -1068,8 +1068,9 @@ About the new airlock wires panel:
 
 
 
-/obj/machinery/door/airlock/Topic(href, href_list)
-	..()
+/obj/machinery/door/airlock/Topic(href, href_list, var/nowindow = 0)
+	if(!nowindow)
+		..()
 	if (usr.stat || usr.restrained() )
 		return
 	if (href_list["close"])
@@ -1277,7 +1278,8 @@ About the new airlock wires panel:
 						src.holdopen = 1
 
 		src.update_icon()
-		src.updateUsrDialog()
+		if(!nowindow)
+			src.updateUsrDialog()
 		if((istype(usr.equipped(), /obj/item/device/hacktool)))
 			return attack_ai(usr, usr.equipped())
 		else if(issilicon(usr))
