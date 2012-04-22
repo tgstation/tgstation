@@ -20,8 +20,16 @@
 	var/planted = 0 // Is it occupied?
 	var/harvest = 0 //Ready to harvest?
 	var/obj/item/seeds/myseed = null // The currently planted seed
-
-
+	New()
+		..()
+	bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
+		if(istype(Proj ,/obj/item/projectile/energy/floramut))
+			src.mutmod = 2
+		else if(istype(Proj ,/obj/item/projectile/energy/florayield))
+			src.yieldmod = 2
+			if(src.myseed.yield == 0)
+				src.myseed.yield += 1
+		return
 
 obj/machinery/hydroponics/process()
 
@@ -302,6 +310,10 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	else if ( istype(src.myseed, /obj/item/seeds/amanitamycelium ))
 		del(src.myseed)
 		src.myseed = new /obj/item/seeds/angelmycelium
+
+	else if ( istype(src.myseed, /obj/item/seeds/lemonseed ))
+		del(src.myseed)
+		src.myseed = new /obj/item/seeds/cashseed
 
 	else if ( istype(src.myseed, /obj/item/seeds/ambrosiavulgarisseed ))
 		del(src.myseed)
@@ -954,3 +966,39 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		planted = 0
 		dead = 0
 	updateicon()
+
+///////////////////////////////////////////////////////////////////////////////
+
+/obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!
+	name = "soil"
+	icon = 'hydroponics.dmi'
+	icon_state = "soil"
+	density = 0
+	New()
+		..()
+	updateicon() // Same as normal but with the overlays removed - Cheridan.
+		overlays = null
+		if(src.planted)
+			if(dead)
+				overlays += image('hydroponics.dmi', icon_state="[src.myseed.species]-dead")
+			else if(src.harvest)
+				if(src.myseed.plant_type == 2) // Shrooms don't have a -harvest graphic
+					overlays += image('hydroponics.dmi', icon_state="[src.myseed.species]-grow[src.myseed.growthstages]")
+				else
+					overlays += image('hydroponics.dmi', icon_state="[src.myseed.species]-harvest")
+			else if(src.age < src.myseed.maturation)
+				var/t_growthstate = ((src.age / src.myseed.maturation) * src.myseed.growthstages )
+				overlays += image('hydroponics.dmi', icon_state="[src.myseed.species]-grow[round(t_growthstate)]")
+				src.lastproduce = src.age
+			else
+				overlays += image('hydroponics.dmi', icon_state="[src.myseed.species]-grow[src.myseed.growthstages]")
+
+		if(myseed)
+			if(luminosity && !istype(myseed,/obj/item/seeds/glowshroom))
+				sd_SetLuminosity(0)
+			else if(!luminosity && istype(myseed,/obj/item/seeds/glowshroom))
+				sd_SetLuminosity(myseed.potency/10)
+		else
+			if(luminosity)
+				sd_SetLuminosity(0)
+		return

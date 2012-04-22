@@ -162,7 +162,7 @@
 
 /obj/item/seeds/bananaseed
 	name = "pack of banana seeds"
-	desc = "They're seeds that grow into bannana trees. When grown, keep away from clown."
+	desc = "They're seeds that grow into banana trees. When grown, keep away from clown."
 	icon_state = "seed-banana"
 	mypath = "/obj/item/seeds/bananaseed"
 	species = "banana"
@@ -195,7 +195,7 @@
 
 /obj/item/seeds/eggyseed
 	name = "pack of eggplant seeds"
-	desc = "These seeds grow to produce berries that look nothing like eggs."
+	desc = "These seeds grow to produce berries that look a lot like eggs."
 	icon_state = "seed-eggy"
 	mypath = "/obj/item/seeds/eggy"
 	species = "eggy"
@@ -588,7 +588,7 @@
 	icon_state = "seed"
 	mypath = "/obj/item/seeds/weeds"
 	species = "weeds"
-	plantname = "Generic Weeds"
+	plantname = "Starthistle"
 	productname = ""
 	lifespan = 100
 	endurance = 50 // damm pesky weeds
@@ -808,6 +808,23 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/cashseed
+	name = "pack of money seeds"
+	desc = "When life gives you lemons, mutate them into cash."
+	icon_state = "seed-cash"
+	mypath = "/obj/item/seeds/cashseed"
+	species = "cashtree"
+	plantname = "Money Tree"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/money"
+	lifespan = 55
+	endurance = 45
+	maturation = 6
+	production = 6
+	yield = 4
+	potency = 10
+	plant_type = 0
+	growthstages = 6
+
 /obj/item/seeds/orangeseed
 	name = "pack of orange seed"
 	desc = "Sour seeds."
@@ -861,7 +878,7 @@
 
 /obj/item/seeds/grassseed
 	name = "pack of grass seeds"
-	desc = "These seeds grow ito grass. Yummy!"
+	desc = "These seeds grow into grass. Yummy!"
 	icon_state = "seed-grass"
 	mypath = "/obj/item/seeds/grassseed"
 	species = "grass"
@@ -1029,7 +1046,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
-		reagents.add_reagent("bicaridine", 1+round(potency / 20, 1))
+		reagents.add_reagent("bicaridine", 1+round((potency / 10), 1))
 		bitesize = 1+round(reagents.total_volume / 3, 1)
 
 
@@ -1131,11 +1148,40 @@
 	seed = "/obj/item/seeds/grassseed"
 	name = "grass"
 	desc = "Green and lush."
-	icon_state = "grass"
+	icon_state = "spawner"
 	potency = 20
 	New()
 		new/obj/item/stack/tile/grass(src.loc)
-		del(src)
+		spawn(5) //Workaround to keep harvesting from working weirdly.
+			del(src)
+
+//This object is just a transition object. All it does is make dosh and delete itself. -Cheridan
+/obj/item/weapon/reagent_containers/food/snacks/grown/money
+	seed = "/obj/item/seeds/cashseed"
+	name = "dosh"
+	desc = "Green and lush."
+	icon_state = "spawner"
+	potency = 10
+	New()
+		switch(rand(1,100))//(potency) //It wants to use the default potency instead of the new, so it was always 10. Will try to come back to this later - Cheridan
+			if(0 to 10)
+				new/obj/item/weapon/spacecash/(src.loc)
+			if(11 to 20)
+				new/obj/item/weapon/spacecash/c10(src.loc)
+			if(21 to 30)
+				new/obj/item/weapon/spacecash/c20(src.loc)
+			if(31 to 40)
+				new/obj/item/weapon/spacecash/c50(src.loc)
+			if(41 to 50)
+				new/obj/item/weapon/spacecash/c100(src.loc)
+			if(51 to 60)
+				new/obj/item/weapon/spacecash/c200(src.loc)
+			if(61 to 80)
+				new/obj/item/weapon/spacecash/c500(src.loc)
+			else
+				new/obj/item/weapon/spacecash/c1000(src.loc)
+		spawn(5) //Workaround to keep harvesting from working weirdly.
+			del(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
 	seed = "/obj/item/seeds/sugarcaneseed"

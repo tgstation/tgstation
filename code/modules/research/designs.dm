@@ -1307,6 +1307,15 @@ datum
 			build_path = "/obj/item/weapon/gun/energy/temperature"
 			locked = 1
 
+		flora_gun
+			name = "Floral Somatoray"
+			desc = "A tool that discharges controlled radiation which induces mutation in plant cells. Harmless to other organic life."
+			id = "flora_gun"
+			req_tech = list("materials" = 2, "biotech" = 3, "powerstorage" = 3)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 2000, "$glass" = 500, "$uranium" = 500)
+			build_path = "/obj/item/weapon/gun/energy/floragun"
+
 		large_grenade
 			name = "Large Grenade"
 			desc = "A grenade that affects a larger area and use larger containers."
