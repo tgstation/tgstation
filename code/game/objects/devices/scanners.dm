@@ -1,4 +1,3 @@
-
 /*
 CONTAINS:
 T-RAY
@@ -290,7 +289,7 @@ proc/analyze_health_less_info(mob/living/carbon/M as mob, mob/user as mob)
 		user.show_message(text("\blue \t Damage Specifics: []-[]-[]-[]", M.getOxyLoss() > 50 ? "\red [M.getOxyLoss()]" : M.getOxyLoss(), M.getToxLoss() > 50 ? "\red [M.getToxLoss()]" : M.getToxLoss(), M.getFireLoss() > 50 ? "\red[M.getFireLoss()]" : M.getFireLoss(), M.getBruteLoss() > 50 ? "\red[M.getBruteLoss()]" : M.getBruteLoss()), 1)
 	user.show_message("\blue Key: Suffocation/Toxin/Burns/Brute", 1)
 	user.show_message("\blue Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)", 1)
-	if(mode == 1 && istype(M, /mob/living/carbon/human))
+	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_organs(1,1)
 		user.show_message("\blue Localized Damage, Brute/Burn:",1)
