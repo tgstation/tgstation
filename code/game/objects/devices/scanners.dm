@@ -290,15 +290,16 @@ proc/analyze_health_less_info(mob/living/carbon/M as mob, mob/user as mob)
 	user.show_message("\blue Key: Suffocation/Toxin/Burns/Brute", 1)
 	user.show_message("\blue Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)", 1)
 	if(istype(M, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = M
-		var/list/damaged = H.get_damaged_organs(1,1)
-		user.show_message("\blue Localized Damage, Brute/Burn:",1)
-		if(length(damaged)>0)
-			for(var/datum/organ/external/org in damaged)
-				user.show_message(text("\blue \t []: []\blue-[]",capitalize(org.getDisplayName()),(org.brute_dam > 0)?"\red [org.brute_dam]":0,(org.burn_dam > 0)?"\red [org.burn_dam]":0),1)
-		else
-			user.show_message("\blue \t Limbs are OK.",1)
-
+		for(var/obj/item/device/healthanalyzer/O in user)
+			if(O.mode == 1)
+				var/mob/living/carbon/human/H = M
+				var/list/damaged = H.get_damaged_organs(1,1)
+				user.show_message("\blue Localized Damage, Brute/Burn:",1)
+				if(length(damaged)>0)
+					for(var/datum/organ/external/org in damaged)
+						user.show_message(text("\blue \t []: []\blue-[]",capitalize(org.getDisplayName()),(org.brute_dam > 0)?"\red [org.brute_dam]":0,(org.burn_dam > 0)?"\red [org.burn_dam]":0),1)
+				else
+					user.show_message("\blue \t Limbs are OK.",1)
 	if((M.changeling && M.changeling.changeling_fakedeath) ||  (M.reagents && M.reagents.has_reagent("zombiepowder")))
 		user.show_message(text("\blue [] | [] | [] | []", fake_oxy > 50 ? "\red Severe oxygen deprivation detected\blue" : "Subject bloodstream oxygen level normal", M.getToxLoss() > 50 ? "\red Dangerous amount of toxins detected\blue" : "Subject bloodstream toxin level minimal", M.getFireLoss() > 50 ? "\red Severe burn damage detected\blue" : "Subject burn injury status O.K", M.getBruteLoss() > 50 ? "\red Severe anatomical damage detected\blue" : "Subject brute-force injury status O.K"), 1)
 	else
