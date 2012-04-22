@@ -15,14 +15,14 @@
 		//
 		new /obj/item/device/pda/captain(src)
 		new /obj/item/weapon/storage/id_kit(src)
-		new /obj/item/weapon/reagent_containers/food/drinks/flask(src)
-		new /obj/item/weapon/gun/energy/gun(src)
+		new /obj/item/clothing/suit/armor/captain(src)
+		new /obj/item/clothing/head/helmet/cap(src)
 		new /obj/item/clothing/glasses/sunglasses(src)
 		new /obj/item/clothing/suit/armor/vest(src)
 		new /obj/item/clothing/head/helmet/swat(src)
 		new /obj/item/device/radio/headset/heads/captain(src)
-		new /obj/item/clothing/suit/armor/captain(src)
-		new /obj/item/clothing/head/helmet/cap(src)
+		new /obj/item/weapon/reagent_containers/food/drinks/flask(src)
+		new /obj/item/weapon/gun/energy/gun(src)
 		return
 
 
@@ -45,12 +45,12 @@
 		var/obj/item/weapon/storage/backpack/BPK = new /obj/item/weapon/storage/backpack(src)
 		var/obj/item/weapon/storage/box/B = new(BPK)
 		new /obj/item/weapon/pen(B)
-		new /obj/item/device/flash(B)
 		new /obj/item/device/pda/heads/hop(src)
+		new /obj/item/device/radio/headset/heads/hop(src)
 		new /obj/item/weapon/storage/id_kit(src)
 		new /obj/item/weapon/gun/energy/gun(src)
+		new /obj/item/device/flash(src)
 		new /obj/item/clothing/glasses/sunglasses(src)
-		new /obj/item/device/radio/headset/heads/hop(src)
 		return
 
 
@@ -74,12 +74,12 @@
 		var/obj/item/weapon/storage/box/B = new(BPK)
 		new /obj/item/weapon/pen(B)
 		new /obj/item/device/flash(B)
-		new /obj/item/weapon/melee/baton(src)
-		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/device/pda/heads/hos(src)
 		new /obj/item/clothing/glasses/sunglasses/sechud(src)
-		new /obj/item/weapon/storage/lockbox/loyalty(src)
 		new /obj/item/weapon/storage/flashbang_kit(src)
+		new /obj/item/weapon/storage/lockbox/loyalty(src)
+		new /obj/item/weapon/melee/baton(src)
+		new /obj/item/weapon/gun/energy/gun(src)
 		return
 
 /obj/structure/closet/secure_closet/warden
@@ -102,14 +102,16 @@
 		var/obj/item/weapon/storage/box/B = new(BPK)
 		new /obj/item/weapon/pen(B)
 		new /obj/item/device/flash(B)
-		new /obj/item/weapon/melee/baton(src)
-		new /obj/item/weapon/gun/energy/taser(src)
 		new /obj/item/device/pda/security(src)
 		new /obj/item/clothing/suit/armor/vest(src)
-		new /obj/item/clothing/glasses/sunglasses/sechud(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/weapon/storage/flashbang_kit(src)
+		new /obj/item/weapon/melee/baton(src)
+		new /obj/item/weapon/gun/energy/taser(src)
+		new /obj/item/clothing/glasses/sunglasses/sechud(src)
 		return
+
+
 
 /obj/structure/closet/secure_closet/security
 	name = "Security Locker"
@@ -130,18 +132,18 @@
 		var/obj/item/weapon/storage/backpack/security/BPK = new /obj/item/weapon/storage/backpack/security(src)
 		var/obj/item/weapon/storage/box/B = new(BPK)
 		new /obj/item/weapon/pen(B)
-		new /obj/item/device/flash(B)
-		new /obj/item/weapon/pepperspray(src)
-		new /obj/item/weapon/melee/baton(src)
 		new /obj/item/policetaperoll(src)
-		new /obj/item/weapon/flashbang(src)
-		new /obj/item/device/pda/security(src)
 		new /obj/item/clothing/suit/armor/vest(src)
 		new /obj/item/clothing/suit/storage/gearharness(src)
-		new /obj/item/clothing/glasses/sunglasses/sechud(src)
-		new /obj/item/weapon/storage/belt/security(src)
 		new /obj/item/clothing/head/helmet(src)
+		new /obj/item/device/pda/security(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
+		new /obj/item/weapon/storage/belt/security(src)
+		new /obj/item/weapon/flashbang(src)
+		new /obj/item/weapon/pepperspray(src)
+		new /obj/item/device/flash(src)
+		new /obj/item/weapon/melee/baton(src)
+		new /obj/item/clothing/glasses/sunglasses/sechud(src)
 		return
 
 
@@ -155,7 +157,6 @@
 	icon_opened = "cabinetdetective_open"
 	icon_broken = "cabinetdetective_broken"
 	icon_off = "cabinetdetective_broken"
-
 
 	New()
 		..()

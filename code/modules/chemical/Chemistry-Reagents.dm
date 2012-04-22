@@ -768,10 +768,10 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:adjustToxLoss(0.2)
-				M.take_organ_damage(0, 1)
+				M:adjustToxLoss(1)
 				..()
 				return
+
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				if(!istype(M, /mob/living))
 					return //wooo more runtime fixin
@@ -782,17 +782,21 @@ datum
 							M << "\red Your mask melts away!"
 							return
 						if(M:head)
-							del (M:head)
-							M << "\red Your helmet melts into uselessness!"
+							if(prob(15))
+								del(M:head)
+								M << "\red Your helmet melts from the acid!"
+							else
+								M << "\red Your helmet protects you from the acid!"
 							return
 						var/datum/organ/external/head/affecting = M:get_organ("head")
-						affecting.disfigured = 1
-						affecting.take_damage(35, 0)
+						affecting.take_damage(15, 0)
 						M:UpdateDamageIcon()
 						M:emote("scream")
-						M << "\red Your face has become disfigured!"
-						M.real_name = "Unknown"
-						M.warn_flavor_changed()
+						if(prob(15))
+							M << "\red Your face has become disfigured!"
+							M.real_name = "Unknown"
+							M.warn_flavor_changed()
+							affecting.disfigured = 1
 					else
 						if(istype(M, /mob/living/carbon/monkey) && M:wear_mask)
 							del (M:wear_mask)
@@ -802,13 +806,14 @@ datum
 				else
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/head/affecting = M:get_organ("head")
-						affecting.disfigured = 1
-						affecting.take_damage(30, 0)
+						affecting.take_damage(15, 0)
 						M:UpdateDamageIcon()
 						M:emote("scream")
-						M << "\red Your face has become disfigured!"
-						M.real_name = "Unknown"
-						M.warn_flavor_changed()
+						if(prob(15))
+							M << "\red Your face has become disfigured!"
+							M.real_name = "Unknown"
+							M.warn_flavor_changed()
+							affecting.disfigured = 1
 					else
 						M.take_organ_damage(min(15, volume * 4))
 

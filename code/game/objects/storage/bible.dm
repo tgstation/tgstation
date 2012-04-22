@@ -16,6 +16,7 @@
 	new /obj/item/weapon/reagent_containers/pill/antitox/tajaran(src)
 	new /obj/item/clothing/suit/monk(src)
 
+/* // All cult functionality moved to Null Rod
 /obj/item/weapon/storage/bible/proc/bless(mob/living/carbon/M as mob)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -83,12 +84,12 @@
 			O.show_message(text("\red <B>[] smacks []'s lifeless corpse with [].</B>", user, M, src), 1)
 		playsound(src.loc, "punch", 25, 1, -1)
 	return
-
+*/
 /obj/item/weapon/storage/bible/afterattack(atom/A, mob/user as mob)
-	if (istype(A, /turf/simulated/floor))
-		user << "\blue You hit the floor with the bible."
-		if(user.mind && (user.mind.assigned_role == "Chaplain"))
-			call(/obj/effect/rune/proc/revealrunes)(src)
+//	if (istype(A, /turf/simulated/floor))
+//		user << "\blue You hit the floor with the bible."
+//		if(user.mind && (user.mind.assigned_role == "Chaplain"))
+//			call(/obj/effect/rune/proc/revealrunes)(src)
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
 		if(A.reagents && A.reagents.has_reagent("water")) //blesses all the water in the holder
 			user << "\blue You bless [A]."

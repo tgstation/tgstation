@@ -527,3 +527,19 @@ var/global/list/uneatable = list(
 				target << "\red <b>NAR-SIE HUNGERS FOR YOUR SOUL</b>"
 			else
 				target << "\red <b>NAR-SIE HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</b>"
+
+
+
+/obj/machinery/singularity/narsie/wizard
+	grav_pull = 0
+	eat()
+		set background = 1
+		if(defer_powernet_rebuild != 2)
+			defer_powernet_rebuild = 1
+		for(var/atom/movable/X in orange(consume_range,src))
+			consume(X)
+		for(var/turf/X in orange(consume_range,src))
+			consume(X)
+		if(defer_powernet_rebuild != 2)
+			defer_powernet_rebuild = 0
+		return

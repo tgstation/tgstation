@@ -525,6 +525,7 @@ datum
 			build_path = "/obj/item/weapon/aiModule/tyrant"
 
 
+
 ///////////////////////////////////
 /////Subspace Telecomms////////////
 ///////////////////////////////////
@@ -794,13 +795,13 @@ datum
 			req_tech = list("magnets" = 3, "programming" = 3, "engineering" = 3)
 			build_path = "/obj/item/mecha_parts/mecha_equipment/repair_droid"
 
-		mech_generator
+		mech_plasma_generator
 			name = "Exosuit Module Design (Plasma Converter Module)"
 			desc = "Exosuit-mounted plasma converter."
 			id = "mech_plasma_generator"
 			build_type = MECHFAB
 			req_tech = list("plasmatech" = 2, "powerstorage"= 2, "engineering" = 2)
-			build_path = "/obj/item/mecha_parts/mecha_equipment/generator"
+			build_path = "/obj/item/mecha_parts/mecha_equipment/plasma_generator"
 
 		mech_energy_relay
 			name = "Exosuit Module Design (Tesla Energy Relay)"

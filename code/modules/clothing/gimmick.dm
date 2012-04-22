@@ -1,11 +1,11 @@
 /obj/item/clothing/head/rabbitears
-	name = "Rabbit Ears"
+	name = "rabbit ears"
 	desc = "Wearing these makes you looks useless, and only good for your sex appeal."
 	icon_state = "bunny"
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/head/kitty
-	name = "Kitty Ears"
+	name = "kitty ears"
 	desc = "A pair of kitty ears. Meow!"
 	icon_state = "kitty"
 	flags = FPRINT | TABLEPASS
@@ -37,12 +37,12 @@
 	color = "rainbow"
 
 /obj/item/clothing/mask/owl_mask
-	name = "Owl mask"
+	name = "owl mask"
 	desc = "Twoooo!"
 	icon_state = "owl"
 
 /obj/item/clothing/under/owl
-	name = "Owl uniform"
+	name = "owl uniform"
 	desc = "A jumpsuit with owl wings. Photorealistic owl feathers! Twooooo!"
 	icon_state = "owl"
 	color = "owl"
@@ -71,6 +71,7 @@
 	item_state = "death"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	fire_resist = T0C+5200
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /*/obj/item/clothing/under/nazi1
 	name = "Nazi uniform"
@@ -80,24 +81,29 @@
 
 /obj/item/clothing/suit/greatcoat
 	name = "great coat"
-	desc = "A Nazi great coat."
+	desc = "A Nazi great coat"
 	icon_state = "nazi"
 	item_state = "nazi"
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/under/johnny
-	name = "Johnny~~"
+	name = "johnny~~ jumpsuit"
 	desc = "Johnny~~"
 	icon_state = "johnny"
 	color = "johnny"
 
 /obj/item/clothing/suit/johnny_coat
-	name = "Johnny~~"
+	name = "johnny~~ coat"
 	desc = "Johnny~~"
 	icon_state = "johnny"
 	item_state = "johnny"
 	flags = FPRINT | TABLEPASS
 
+/obj/item/clothing/suit/ianshirt
+	name = "worn shirt"
+	desc = "A worn out, curiously comfortable t-shirt with a picture of Ian. You wouldn't go so far as to say it feels like being hugged when you wear it but it's pretty close. Good for sleeping in."
+	icon_state = "ianshirt"
+	item_state = "ianshirt"
 
 /obj/item/clothing/under/rainbow
 	name = "rainbow"
@@ -215,42 +221,42 @@
 	item_state = "headset" // lol
 
 /obj/item/clothing/under/gimmick/rank/captain/suit
-	name = "Captain's Suit"
+	name = "captain's suit"
 	desc = "A green suit and yellow necktie. Exemplifies authority."
 	icon_state = "green_suit"
 	item_state = "dg_suit"
 	color = "green_suit"
 
 /obj/item/clothing/under/gimmick/rank/head_of_personnel/suit
-	name = "Head of Personnel's Suit"
+	name = "head of personnel's suit"
 	desc = "A teal suit and yellow necktie. An authoritative yet tacky ensemble."
 	icon_state = "teal_suit"
 	item_state = "g_suit"
 	color = "teal_suit"
 
 /obj/item/clothing/under/suit_jacket
-	name = "Black Suit"
+	name = "black suit"
 	desc = "A black suit and red tie. Very formal."
 	icon_state = "black_suit"
 	item_state = "bl_suit"
 	color = "black_suit"
 
 /obj/item/clothing/under/suit_jacket/really_black
-	name = "Executive Suit"
+	name = "executive suit"
 	desc = "A formal black suit and red tie, intended for the station's finest."
 	icon_state = "really_black_suit"
 	item_state = "bl_suit"
 	color = "black_suit"
 
 /obj/item/clothing/under/suit_jacket/red
-	name = "Red Suit"
+	name = "red suit"
 	desc = "A red suit and blue tie. Somewhat formal."
 	icon_state = "red_suit"
 	item_state = "r_suit"
 	color = "red_suit"
 
 /obj/item/clothing/under/blackskirt
-	name = "Black skirt"
+	name = "black skirt"
 	desc = "A black skirt, very fancy!"
 	icon_state = "blackskirt"
 	color = "blackskirt"
@@ -263,13 +269,13 @@
 	item_state = "schoolgirl"
 	color = "schoolgirl"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-
+/*
 /obj/item/clothing/under/gimmick/rank/police
-	name = "Police Uniform"
+	name = "police uniform"
 	desc = "Move along, nothing to see here."
 	icon_state = "police"
 	item_state = "b_suit"
-	color = "police"
+	color = "police"	*/	//No Sprite - Shiftyeyesshady
 
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
@@ -278,7 +284,7 @@
 	item_state = "detective"
 
 /obj/item/clothing/under/overalls
-	name = "Laborer's Overalls"
+	name = "laborer's overalls"
 	desc = "A set of durable overalls for getting the job done."
 	icon_state = "overalls"
 	item_state = "lb_suit"
@@ -294,7 +300,7 @@
 	force = 10
 
 /obj/item/clothing/under/pirate
-	name = "Pirate Outfit"
+	name = "pirate outfit"
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
@@ -326,6 +332,7 @@
 	icon_state = "hgpirate"
 	item_state = "hgpirate"
 	flags = FPRINT | TABLEPASS
+	flags_inv = HIDEJUMPSUIT
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
@@ -358,119 +365,120 @@
 	desc = "Perfect for winter in Siberia, da?"
 	icon_state = "ushankadown"
 	item_state = "ushankadown"
+	flags_inv = HIDEEARS
 
 /obj/item/clothing/head/collectable			//Hat Station 13
-	name = "Collectable Hat"
+	name = "collectable hat"
 	desc = "A rare collectable hat."
 
 /obj/item/clothing/head/collectable/petehat
-	name = "Ultra Rare! Pete's Hat!"
+	name = "ultra rare Pete's hat!"
 	desc = "It smells faintly of plasma"
 	icon_state = "petehat"
 
 /obj/item/clothing/head/collectable/metroid
-	name = "Collectable Metroid Cap!"
+	name = "collectable metroid cap!"
 	desc = "It just latches right in place!"
 	icon_state = "metroid"
 
 /obj/item/clothing/head/collectable/xenom
-	name = "Collectable Xenomorph Helmet!"
+	name = "collectable xenomorph helmet!"
 	desc = "Hiss hiss hiss!"
 	icon_state = "xenom"
 
 /obj/item/clothing/head/collectable/chef
-	name = "Collectable Chef's Hat"
+	name = "collectable chef's hat"
 	desc = "A rare Chef's Hat meant for hat collectors!"
 	icon_state = "chef"
 	item_state = "chef"
 
 /obj/item/clothing/head/collectable/paper
-	name = "Collectable Paper Hat"
+	name = "collectable paper hat"
 	desc = "What looks like an ordinary paper hat, is actually a rare and valuable collector's edition paper hat. Keep away from water, fire and Librarians."
 	icon_state = "paper"
 
 /obj/item/clothing/head/collectable/tophat
-	name = "Collectable Top Hat"
+	name = "collectable top hat"
 	desc = "A top hat worn by only the most prestigious hat collectors."
 	icon_state = "tophat"
 	item_state = "that"
 
 /obj/item/clothing/head/collectable/captain
-	name = "Collectable Captain's Hat"
+	name = "collectable captain's hat"
 	desc = "A Collectable Hat that'll make you look just like a real comdom!"
 	icon_state = "captain"
 	item_state = "caphat"
 
 /obj/item/clothing/head/collectable/police
-	name = "Collectable Police Officer's Hat"
+	name = "collectable police officer's hat"
 	desc = "A Collectable Police Officer's Hat. This hat emphasizes that you are THE LAW."
 	icon_state = "policehelm"
 
 /obj/item/clothing/head/collectable/beret
-	name = "Collectable Beret"
-	desc = "A Collectable red beret. It smells faintly of garlic."
+	name = "collectable beret"
+	desc = "A Collectable red Beret. It smells faintly of Garlic."
 	icon_state = "beret"
 
 /obj/item/clothing/head/collectable/welding
-	name = "Collectable Welding Helmet"
+	name = "collectable welding helmet"
 	desc = "A Collectable Welding Helmet. Now with 80% less lead! Not for actual welding. Any welding done while wearing this Helmet is done so at the owner's own risk!"
 	icon_state = "welding"
 	item_state = "welding"
 
 /obj/item/clothing/head/collectable/slime
-	name = "Collectable Slime Hat"
+	name = "collectable slime hat"
 	desc = "Just like a real Brain Slug!"
 	icon_state = "headslime"
 	item_state = "headslime"
 
 /obj/item/clothing/head/collectable/flatcap
-	name = "Collectable Flat Cap"
+	name = "collectable flat cap"
 	desc = "A Collectible farmer's Flat Cap!"
 	icon_state = "flat_cap"
 	item_state = "detective"
 
 /obj/item/clothing/head/collectable/pirate
-	name = "Collectable Pirate Hat"
+	name = "collectable pirate hat"
 	desc = "You'd make a great Dread Syndie Roberts!"
 	icon_state = "pirate"
 	item_state = "pirate"
 
 /obj/item/clothing/head/collectable/kitty
-	name = "Collectable Kitty Ears"
+	name = "collectable kitty ears"
 	desc = "The fur feels.....a bit too realistic."
 	icon_state = "kitty"
 	item_state = "kitty"
 
 /obj/item/clothing/head/collectable/rabbitears
-	name = "Collectable Rabbit Ears"
+	name = "collectable rabbit ears"
 	desc = "Not as lucky as the feet!"
 	icon_state = "bunny"
 	item_state = "bunny"
 
 /obj/item/clothing/head/collectable/wizard
-	name = "Collectable Wizard's Hat"
+	name = "collectable wizard's hat"
 	desc = "NOTE:Any magical powers gained from wearing this hat are purely coincidental."
 	icon_state = "wizard"
 
 /obj/item/clothing/head/collectable/hardhat
-	name = "Collectable Hard Hat"
+	name = "collectable hard hat"
 	desc = "WARNING! Offers no real protection, or luminosity, but it is damn fancy!"
 	icon_state = "hardhat0_yellow"
 	item_state = "hardhat0_yellow"
 
 /obj/item/clothing/head/collectable/HoS
-	name = "Collectable HoS Hat"
+	name = "collectable HoS hat"
 	desc = "Now you can beat prisoners, set silly sentences and arrest for no reason too!"
 	icon_state = "hoscap"
 
 /obj/item/clothing/head/collectable/thunderdome
-	name = "Collectable Thunderdome helmet"
+	name = "collectable Thunderdome helmet"
 	desc = "Go Red! I mean Green! I mean Red! No Green!"
 	icon_state = "thunderdome"
 	item_state = "thunderdome"
 
 /obj/item/clothing/head/collectable/swat
-	name = "Collectable SWAT Helmet"
+	name = "collectable SWAT helmet"
 	desc = "Now you can be in the Deathsquad too!"
 	icon_state = "swat"
 	item_state = "swat"
@@ -504,7 +512,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|FEET
 
 /obj/item/clothing/under/sexymime
-	name = "Sexy mime outfit"
+	name = "sexy mime outfit"
 	desc = "The only time when you DON'T enjoy looking at someone's rack."
 	icon_state = "sexymime"
 	item_state = "sexymime"
@@ -519,7 +527,7 @@
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/head/justice
-	name = "Justice Hat"
+	name = "justice hat"
 	desc = "Fight for what's righteous!"
 	icon_state = "justicered"
 	item_state = "justicered"
@@ -542,11 +550,12 @@
 	item_state = "justicepink"
 
 obj/item/clothing/suit/justice
-	name = "Justice Suit"
+	name = "justice suit"
 	desc = "This pretty much looks ridiculous."
 	icon_state = "justice"
 	item_state = "justice"
 	flags = FPRINT | TABLEPASS
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/under/gladiator
 	name = "gladiator uniform"
@@ -561,7 +570,8 @@ obj/item/clothing/suit/justice
 	desc = "Ave, Imperator, morituri te salutant."
 	icon_state = "gladiator"
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
-	item_state="gladiator"
+	item_state = "gladiator"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
 //stylish new hats
 

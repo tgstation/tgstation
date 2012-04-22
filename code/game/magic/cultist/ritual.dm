@@ -126,9 +126,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			user << "You retrace your steps, carefully undoing the lines of the rune."
 			del(src)
 			return
-		else if(istype(I, /obj/item/weapon/storage/bible) && usr.mind && (usr.mind.assigned_role == "Chaplain"))
-			var/obj/item/weapon/storage/bible/bible = I
-			user << "\blue You banish the vile magic with the blessing of [bible.deity_name]!"
+		else if(istype(I, /obj/item/weapon/nullrod))
+			user << "\blue You disrupt the vile magic with the deadening field of the null rod!"
 			del(src)
 			return
 		return
@@ -502,7 +501,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 						if(prob(C*5-105-(runedec-ticker.mode.cult.len)*5)) //including the useless rune at the secret room, shouldn't count against the limit - Urist
 							usr.emote("scream")
 							user << "\red A tear momentarily appears in reality. Before it closes, you catch a glimpse of that which lies beyond. That proves to be too much for your mind."
-							usr.gib(1)
+							usr.gib()
 							return
 					if("No")
 						return
