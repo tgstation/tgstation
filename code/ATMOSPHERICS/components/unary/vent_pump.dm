@@ -6,7 +6,6 @@
 	desc = "Has a valve and pump attached to it"
 
 	level = 1
-	layer = TURF_LAYER
 	var/area_uid
 	var/id_tag = null
 	power_channel = ENVIRON
