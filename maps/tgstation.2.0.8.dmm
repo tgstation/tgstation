@@ -1956,7 +1956,7 @@
 "aLF" = (/obj/machinery/atmospherics/pipe/simple{color = "blue"; icon_state = "intact-b-f"; level = 1; name = "pipe"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/wall,/area/chapel/office)
 "aLG" = (/obj/machinery/atmospherics/unary/vent_scrubber{dir = 8; on = 1; scrub_Toxins = 1},/obj/structure/table/woodentable,/obj/structure/disposalpipe/segment,/obj/machinery/light/lamp/green{pixel_x = 1; pixel_y = 5},/obj/effect/deskclutter,/turf/simulated/floor{dir = 8; icon_state = "carpetside"},/area/chapel/office)
 "aLH" = (/obj/structure/table/woodentable,/obj/item/weapon/storage/briefcase,/turf/simulated/floor{dir = 2; icon_state = "carpet"},/area/chapel/office)
-"aLI" = (/obj/structure/table/woodentable,/obj/item/weapon/paper_bin{pixel_x = 1; pixel_y = 9},/obj/item/weapon/pen,/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,/turf/simulated/floor{dir = 2; icon_state = "carpet"},/area/chapel/office)
+"aLI" = (/obj/structure/table/woodentable,/obj/item/weapon/paper_bin{pixel_x = 1; pixel_y = 9},/obj/item/weapon/pen,/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,/obj/item/weapon/nullrod,/turf/simulated/floor{dir = 2; icon_state = "carpet"},/area/chapel/office)
 "aLJ" = (/turf/simulated/floor{dir = 4; icon_state = "carpetside"},/area/chapel/office)
 "aLK" = (/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor{dir = 8; icon_state = "escape"},/area/hallway/secondary/exit)
 "aLL" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor,/area/hallway/secondary/exit)
