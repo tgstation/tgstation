@@ -11,6 +11,11 @@
 	name = "close"
 	master = null
 
+/obj/screen/close/DblClick()
+	if (src.master)
+		src.master:close(usr)
+	return
+
 /obj/screen/grab
 	name = "grab"
 	master = null
@@ -18,6 +23,10 @@
 /obj/screen/storage
 	name = "storage"
 	master = null
+
+/obj/screen/storage/attackby(W, mob/user as mob)
+	src.master.attackby(W, user)
+	return
 
 /obj/screen/zone_sel
 	name = "Damage Zone"
