@@ -23,30 +23,6 @@
 /obj/structure/window/basic
 	icon_state = "window"
 
-/obj/structure/window/basic/north
-	dir = NORTH
-
-/obj/structure/window/basic/east
-	dir = EAST
-
-/obj/structure/window/basic/west
-	dir = WEST
-
-/obj/structure/window/basic/south
-	dir = SOUTH
-
-/obj/structure/window/basic/northwest
-	dir = NORTHWEST
-
-/obj/structure/window/basic/northeast
-	dir = NORTHEAST
-
-/obj/structure/window/basic/southwest
-	dir = SOUTHWEST
-
-/obj/structure/window/basic/southeast
-	dir = SOUTHEAST
-
 // Reinforced
 
 /obj/structure/window/reinforced

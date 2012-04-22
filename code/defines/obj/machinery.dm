@@ -43,7 +43,7 @@
 
 /obj/machinery/camera
 	name = "security camera"
-	desc = "This is used to monitor rooms."
+	desc = "It's used to monitor rooms."
 	icon = 'monitors.dmi'
 	icon_state = "camera"
 	var/network = "SS13"
