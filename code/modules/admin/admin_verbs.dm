@@ -39,23 +39,15 @@
 
 	switch (rank)
 		if ("Game Master")
-			deadchat = 1
-			seeprayers = 1
 			holder.level = 6
 
 		if ("Game Admin")
-			deadchat = 1
-			seeprayers = 1
 			holder.level = 5
 
 		if ("Badmin")
-			deadchat = 1
-			seeprayers = 1
 			holder.level = 4
 
 		if ("Trial Admin")
-			deadchat = 1
-			seeprayers = 1
 			holder.level = 3
 			if(holder.state == 2) // if observing
 				// Debug
@@ -117,16 +109,14 @@
 	if (holder)		//THE BELOW handles granting powers. The above is for special cases only!
 		holder.owner = src
 
-		//Retired Admin, skips banned
-		if (holder.level == -3)
-			verbs += /client/proc/cmd_admin_say
-		else	return
-
 		//Admin Observer
 		if (holder.level >= -1)
 			verbs += /client/proc/cmd_admin_say
 			verbs += /client/proc/cmd_admin_gib_self
 			verbs += /client/proc/deadmin_self
+		else if (holder.level == -3) // Retired Admin
+			verbs += /client/proc/cmd_admin_say
+			return
 		else	return
 
 		//Moderator
