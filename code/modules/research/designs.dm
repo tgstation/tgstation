@@ -1333,7 +1333,7 @@ datum
 			req_tech = list("combat" = 3, "materials" = 3, "engineering" = 3, "biotech" = 2)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 5000, "$glass" = 1000)
-			build_path = "/obj/item/weapon/gun/rapidsyringe"
+			build_path = "/obj/item/weapon/gun/syringe/rapidsyringe"
 
 		largecrossbow
 			name = "Energy Crossbow"
