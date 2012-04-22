@@ -45,6 +45,9 @@
 		if(stat & BROKEN || !I || !user)
 			return
 
+		if(isrobot(user) && !istype(I, /obj/item/weapon/trashbag))
+			return
+
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
 			user << "You can't place that item inside the disposal unit."
 			return
@@ -56,10 +59,6 @@
 				I.contents -= O
 			I.update_icon()
 			update()
-			return
-
-		//robots shouldn't be able to grab/carry stuff anyway
-		if(isrobot(user))
 			return
 
 		if(istype(I, /obj/item/ashtray) && (I.health > 0))
@@ -103,6 +102,11 @@
 						GM.client.eye = src
 					GM.loc = src
 					for (var/mob/C in viewers(src))
+
+						log_attack("<font color='red'>[usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.</font>")
+						log_admin("ATTACK: [usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.")
+						message_admins("ATTACK: [usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.")
+
 						C.show_message("\red [GM.name] has been placed in the [src] by [user].", 3)
 					del(G)
 		else
@@ -144,9 +148,19 @@
 			if(!do_after(usr, 20))
 				return
 			if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)	// if drop self, then climbed in										// must be awake, not stunned or whatever
+
+				log_attack("<font color='red'>[user] ([user.ckey]) climbed into a disposals unit.</font>")
+				log_admin("ATTACK: [user] ([user.ckey]) climbed into in a disposals unit.")
+				message_admins("ATTACK: [user] ([user.ckey]) climbed into in a disposals unit.")
+
 				msg = "[user.name] climbs into the [src]."
 				user << "You climb into the [src]."
 			else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
+
+				log_attack("<font color='red'>[user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit.</font>")
+				log_admin("ATTACK: [user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit.")
+				message_admins("ATTACK: [user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit.")
+
 				msg = "[user.name] stuffs [target.name] into the [src]!"
 				user << "You stuff [target.name] into the [src]!"
 			else
@@ -239,10 +253,14 @@
 
 	// human interact with machine
 	attack_hand(mob/user as mob)
+		if(user && user.loc == src)
+			usr << "\red You cannot reach the controls from inside."
+			return
 		interact(user, 0)
 
 	// user interaction
 	proc/interact(mob/user, var/ai=0)
+
 		src.add_fingerprint(user)
 		if(stat & BROKEN)
 			user.machine = null
@@ -277,6 +295,9 @@
 	// handle machine interaction
 
 	Topic(href, href_list)
+		if(usr.loc == src)
+			usr << "\red You cannot reach the controls from inside."
+			return
 		..()
 		src.add_fingerprint(usr)
 		if(stat & BROKEN)
