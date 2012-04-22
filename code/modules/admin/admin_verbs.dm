@@ -181,6 +181,9 @@
 
 		//Trial Admin
 		if (holder.level >= 3)
+			deadchat = 1
+			seeprayers = 1
+
 			verbs += /obj/admins/proc/toggleaban						//abandon mob
 			verbs += /obj/admins/proc/show_traitor_panel
 			verbs += /client/proc/cmd_admin_remove_plasma
