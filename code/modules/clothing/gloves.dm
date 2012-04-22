@@ -243,3 +243,18 @@
 
 	cargo
 		color = "cargo"				//Exists for washing machines. Is not different from brown gloves in any way.
+
+//Fingerless gloves
+
+/obj/item/clothing/gloves/fingerless
+	name = "fingerless gloves"
+	desc = "A pair of gloves. They don't seem to have fingers."
+	icon_state = "fingerless_black"
+	item_state = "fingerless_black"
+
+/obj/item/clothing/gloves/fingerless/black
+	name = "black fingerless gloves"
+	desc = "A pair of black gloves. They don't seem to have fingers."
+	icon_state = "fingerless_black"
+	item_state = "fingerless_black"
+	color="black"

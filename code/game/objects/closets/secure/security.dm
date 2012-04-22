@@ -166,7 +166,7 @@
 		var/obj/item/weapon/storage/box/B = new(BPK)
 		var/obj/item/weapon/clipboard/C = new(B)
 		new /obj/item/weapon/pen(C)
-		new /obj/item/weapon/notebook(src)
+		new /obj/item/weapon/clipboard/notebook(src)
 		new /obj/item/device/detective_scanner(src)
 		new /obj/item/policetaperoll(src)
 		new /obj/item/weapon/storage/box/evidence(src)

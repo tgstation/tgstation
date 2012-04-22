@@ -972,13 +972,17 @@
 					if(istype(target, /mob/living/carbon))//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
 						var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 						var/mob/living/carbon/T = target
-						var/datum/reagent/B = new /datum/reagent/blood
 						if(!T.dna)
 							usr << "You are unable to locate any blood. (To be specific, your target seems to be missing their DNA datum)"
 							return
 						if(T.mutations2 & NOCLONE) //target done been et, no more blood in him
 							user << "\red You are unable to locate any blood."
 							return
+						if(ishuman(T))
+							if(T:vessel.get_reagent_amount("blood") < amount)
+								return
+
+						var/datum/reagent/B = new /datum/reagent/blood
 						B.holder = src
 						B.volume = amount
 						//set reagent data
@@ -1016,11 +1020,15 @@
 						//for(var/D in B.data)
 						//	world << "Data [D] = [B.data[D]]"
 						//debug
+						if(ishuman(T))
+							T:vessel.remove_reagent("blood",amount) // Removes blood if human
 
 						src.reagents.reagent_list += B
 						src.reagents.update_total()
 						src.on_reagent_change()
 						src.reagents.handle_reactions()
+//						T:vessel.trans_to(src, amount) // Virus2 and antibodies aren't in blood in the first place.
+
 						user << "\blue You take a blood sample from [target]"
 						for(var/mob/O in viewers(4, user))
 							O.show_message("\red [user] takes a blood sample from [target].", 1)

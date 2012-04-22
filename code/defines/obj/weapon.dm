@@ -578,18 +578,10 @@
 	throw_range = 10
 	flags = ONBELT
 
-/obj/item/weapon/notebook
+/obj/item/weapon/clipboard/notebook
 	name = "notebook"
 	desc = "Holds paper and pens. Feels very noire."
-	icon = 'items.dmi'
 	icon_state = "notebook00"
-	var/obj/item/weapon/pen/pen = null
-	item_state = "notebook"
-	throwforce = 0
-	w_class = 2.0
-	throw_speed = 3
-	throw_range = 10
-	flags = ONBELT
 
 #define MAXCOIL 30
 /obj/item/weapon/cable_coil
