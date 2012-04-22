@@ -442,6 +442,7 @@
 #include "code\game\gamemodes\wizard\soulstone.dm"
 #include "code\game\gamemodes\wizard\spellbook.dm"
 #include "code\game\gamemodes\wizard\spells.dm"
+#include "code\game\gamemodes\wizard\veilrender.dm"
 #include "code\game\gamemodes\wizard\wizard.dm"
 #include "code\game\jobs\access.dm"
 #include "code\game\jobs\job_controller.dm"
