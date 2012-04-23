@@ -7,7 +7,8 @@
 	new /obj/item/clothing/head/helmet/space/syndicate(src)
 	new /obj/item/clothing/suit/space/syndicate(src)
 	new /obj/item/weapon/crowbar(src)
-	new /obj/item/weapon/cell(src)
+	new /obj/item/weapon/cell/high(src)
 	new /obj/item/weapon/card/id/syndicate(src)
 	new /obj/item/device/multitool(src)
+	new /obj/item/weapon/shield/riot(src)
 
