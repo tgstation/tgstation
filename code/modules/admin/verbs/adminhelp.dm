@@ -27,6 +27,8 @@
 
 	src << "<font color='blue'>PM to-<b>Admins</b>: [msg]</font>"
 	log_admin("HELP: [key_name(src)]: [msg]")
+	var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
+	msg = sanitize_simple(msg, replacechars)
 	if(tension_master)
 		tension_master.new_adminhelp()
 	send2adminirc("#bs12admin","HELP: \"[src.key]: [msg]\"")
