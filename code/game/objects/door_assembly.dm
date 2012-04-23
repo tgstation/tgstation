@@ -87,14 +87,14 @@ obj/structure/door_assembly
 		state = 1
 		glass = 0
 
-/*	door_assembly_research
+	door_assembly_research
 		name = "Research Airlock Assembly"
 		icon_state = "door_as_res1"
 		airlock_type = /obj/machinery/door/airlock/research
 		anchored = 1
 		density = 1
 		state = 1
-		glass = 0*/
+		glass = 0
 
 	door_assembly_med
 		name = "Medical Airlock Assembly"

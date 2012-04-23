@@ -1315,7 +1315,7 @@ datum
 			materials = list("$gold" = 5000,"$uranium" = 10000, "mutagen" = 40)
 			build_path = "/obj/item/weapon/gun/energy/decloner"
 			locked = 1
-
+/*
 		chemsprayer
 			name = "Chem Sprayer"
 			desc = "An advanced chem spraying device."
@@ -1325,7 +1325,7 @@ datum
 			materials = list("$metal" = 5000, "$glass" = 1000)
 			reliability_base = 100
 			build_path = "/obj/item/weapon/chemsprayer"
-
+*/
 		rapidsyringe
 			name = "Rapid Syringe Gun"
 			desc = "A gun that fires many syringes."
@@ -1334,7 +1334,7 @@ datum
 			build_type = PROTOLATHE
 			materials = list("$metal" = 5000, "$glass" = 1000)
 			build_path = "/obj/item/weapon/gun/syringe/rapidsyringe"
-
+/*
 		largecrossbow
 			name = "Energy Crossbow"
 			desc = "A weapon favoured by syndicate infiltration teams."
@@ -1343,7 +1343,7 @@ datum
 			build_type = PROTOLATHE
 			materials = list("$metal" = 5000, "$glass" = 1000, "$uranium" = 1000, "$silver" = 1000)
 			build_path = "/obj/item/weapon/gun/energy/crossbow/largecrossbow"
-
+*/
 		temp_gun
 			name = "Temperature Gun"
 			desc = "A gun that shoots temperature bullet energythings to change temperature."//Change it if you want
