@@ -17,6 +17,7 @@
 	var/amt_uranium = 0
 	var/amt_clown = 0
 	var/amt_adamantine = 0
+	var/amt_mythril = 0
 	var/newCoins = 0   //how many coins the machine made in it's last load
 	var/processing = 0
 	var/chosen = "metal" //which material will be used to make coins
@@ -245,6 +246,18 @@
 							M = new/obj/item/weapon/moneybag(output.loc)
 						new /obj/item/weapon/coin/adamantine(M)
 						amt_adamantine -= 20
+						coinsToProduce--
+						newCoins++
+						src.updateUsrDialog()
+						sleep(5);
+				if("mythril")
+					while(amt_adamantine > 0 && coinsToProduce > 0)
+						if (locate(/obj/item/weapon/moneybag,output.loc))
+							M = locate(/obj/item/weapon/moneybag,output.loc)
+						else
+							M = new/obj/item/weapon/moneybag(output.loc)
+						new /obj/item/weapon/coin/mythril(M)
+						amt_mythril -= 20
 						coinsToProduce--
 						newCoins++
 						src.updateUsrDialog()

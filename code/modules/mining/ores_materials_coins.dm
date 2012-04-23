@@ -73,11 +73,6 @@
 	icon_state = "Clown ore"
 	origin_tech = "materials=4"
 
-/obj/item/weapon/ore/adamantine
-	name = "Adamantine ore"
-	icon_state = "Adamantine ore"
-	origin_tech = "materials=5"
-
 /obj/item/weapon/ore/slag
 	name = "Slag"
 	desc = "Completely useless"
@@ -135,6 +130,10 @@
 /obj/item/weapon/coin/adamantine
 	name = "Adamantine coin"
 	icon_state = "coin_adamantine"
+
+/obj/item/weapon/coin/mythril
+	name = "Mythril coin"
+	icon_state = "coin_mythril"
 
 /obj/item/weapon/coin/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/cable_coil) )
@@ -250,6 +249,16 @@
 /obj/item/stack/sheet/adamantine
 	name = "adamantine"
 	icon_state = "sheet-adamantine"
+	force = 5.0
+	throwforce = 5
+	w_class = 3.0
+	throw_speed = 3
+	throw_range = 3
+	origin_tech = "materials=4"
+
+/obj/item/stack/sheet/mythril
+	name = "mythril"
+	icon_state = "sheet-mythril"
 	force = 5.0
 	throwforce = 5
 	w_class = 3.0
