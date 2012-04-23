@@ -13,7 +13,7 @@
 /obj/item/weapon/gun/energy/laser/practice
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
-	projectile_type = "/obj/item/projectile/beam/practice"
+	projectile_type = "/obj/item/projectile/practice"
 
 
 obj/item/weapon/gun/energy/laser/retro
