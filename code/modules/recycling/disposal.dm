@@ -421,7 +421,7 @@
 	proc/flush()
 
 		flushing = 1
-		flick("disposal-flush", src)
+		flick("[icon_state]-flush", src)
 
 		var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
 											// travels through the pipes.
