@@ -43,3 +43,13 @@
 	name = "Extranet HUD"
 	desc = "A heads-up display with limited connectivity to the NanoTrasen Extranet, capable of displaying information from official NanoTrasen records."
 	icon_state = "serithi_artalis_1"
+
+/obj/item/clothing/head/fluff/greg_anderson_1
+	name = "old hard hat"
+	desc = "An old dented hard hat with the nametag \"Anderson\".  It seems to be backwards."
+	icon_state = "hardhat0_red"
+	flags = FPRINT | TABLEPASS | SUITSPACE
+	item_state = "hardhat0_red"
+	color = "red"
+	armor = list(melee = 30, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
+	flags_inv = 0
