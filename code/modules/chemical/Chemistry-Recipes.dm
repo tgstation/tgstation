@@ -34,14 +34,14 @@ datum
 
 				holder.clear_reagents()
 				return
-
+/*
 		silicate
 			name = "Silicate"
 			id = "silicate"
 			result = "silicate"
 			required_reagents = list("aluminum" = 1, "silicon" = 1, "oxygen" = 1)
 			result_amount = 3
-
+*/
 		stoxin
 			name = "Sleep Toxin"
 			id = "stoxin"
@@ -430,6 +430,7 @@ datum
 			result = "LSD"
 			required_reagents = list("silicon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
 			result_amount = 5
+
 ///////////////////////////////////////////////////////////////////////////////////
 
 // foam and foam precursor
@@ -471,7 +472,6 @@ datum
 				holder.clear_reagents()
 				return
 
-
 		metalfoam
 			name = "Metal Foam"
 			id = "metalfoam"
@@ -488,7 +488,7 @@ datum
 					M << "\red The solution spews out a metalic foam!"
 
 				var/datum/effect/effect/system/foam_spread/s = new()
-				s.set_up(created_volume/2, location, holder, 1)
+				s.set_up(created_volume, location, holder, 1)
 				s.start()
 				return
 
@@ -508,7 +508,7 @@ datum
 					M << "\red The solution spews out a metalic foam!"
 
 				var/datum/effect/effect/system/foam_spread/s = new()
-				s.set_up(created_volume/2, location, holder, 2)
+				s.set_up(created_volume, location, holder, 2)
 				s.start()
 				return
 
