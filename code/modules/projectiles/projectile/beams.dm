@@ -47,7 +47,7 @@
 		spawn(0)
 			del(src)
 
-/obj/item/projectile/beam/practice
+/obj/item/projectile/practice
 	name = "laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
