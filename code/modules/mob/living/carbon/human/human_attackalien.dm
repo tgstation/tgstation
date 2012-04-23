@@ -54,7 +54,7 @@
 			var/randn = rand(1, 100)
 			if (randn <= 90)
 				playsound(loc, 'pierce.ogg', 25, 1, -1)
-				Weaken(rand(15,20))
+				Weaken(rand(10,15))
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has tackled down []!</B>", M, src), 1)

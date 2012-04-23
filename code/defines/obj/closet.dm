@@ -274,8 +274,8 @@
 	icon_closed = "pink"
 
 /obj/structure/closet/wardrobe/red
-	name = "Red Wardrobe"
-	desc = "Contains red security jumpsuits."
+	name = "Security Wardrobe"
+	desc = "Contains security officer jumpsuits."
 	icon_state = "red"
 	icon_closed = "red"
 

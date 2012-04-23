@@ -1,27 +1,36 @@
-/mob/verb/adminhelp(msg as text)
+/client/verb/adminhelp(msg as text)
 	set category = "Admin"
 	set name = "Adminhelp"
-
-	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
-
-	if (!msg)
+/*
+	if (muted_complete)
+		src << "<font color='red'>Error: Admin-PM: You are completely muted.</font>"
 		return
+*/
+	if(!msg)	return
+	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	if (!msg)	return
 
-//	if (usr.client && usr.client.muted_complete)
-//		return
+	if(mob)
+		var/ref_mob = "\ref[src.mob]"
+		for (var/client/X)
+			if (X.holder)
+				if(X.sound_adminhelp)
+					X << 'adminhelp.ogg'
+				X << "\blue <b><font color=red>HELP: </font>[key_name(src, X)] (<A HREF='?src=\ref[X.holder];adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?src=\ref[X.holder];adminplayervars=[ref_mob]'>VV</A>) (<A HREF='?src=\ref[X.holder];adminplayersubtlemessage=[ref_mob]'>SM</A>) (<A HREF='?src=\ref[X.holder];adminplayerobservejump=[ref_mob]'>JMP</A>) (<A HREF='?src=\ref[X.holder];secretsadmin=check_antagonist'>CA</A>):</b> [msg]"
+	else
+		var/ref_client = "\ref[src]"
+		for (var/client/X)
+			if (X.holder)
+				if(X.sound_adminhelp)
+					X << 'adminhelp.ogg'
+				X << "\blue <b><font color=red>HELP: </font>[key_name(src, X)] (<A HREF='?src=\ref[X.holder];adminplayervars=[ref_client]'>VV</A>) (<A HREF='?src=\ref[X.holder];secretsadmin=check_antagonist'>CA</A>):</b> [msg]"
 
-	for (var/mob/M in world)
-		if (M.client && M.client.holder && (M.client.holder.level != -3))
-			if(M.client.sound_adminhelp)
-				M << 'adminhelp.ogg'
-			M << "\blue <b><font color=red>HELP: </font>[key_name(src, M)] (<A HREF='?src=\ref[M.client.holder];adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?src=\ref[M.client.holder];adminplayervars=\ref[src]'>VV</A>) (<A HREF='?src=\ref[M.client.holder];adminplayersubtlemessage=\ref[src]'>SM</A>) (<A HREF='?src=\ref[M.client.holder];adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?src=\ref[M.client.holder];secretsadmin=check_antagonist'>CA</A>):</b> [msg]"
-
-	usr << "Your message has been broadcast to administrators."
+	src << "<font color='blue'>PM to-<b>Admins</b>: [msg]</font>"
 	log_admin("HELP: [key_name(src)]: [msg]")
-
 	var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
 	msg = sanitize_simple(msg, replacechars)
-	send2adminirc("#bs12admin","HELP: \"[src.key]: [msg]\"")
 	if(tension_master)
 		tension_master.new_adminhelp()
+	send2adminirc("#bs12admin","HELP: \"[src.key]: [msg]\"")
+	//feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
