@@ -1,8 +1,15 @@
+var/list/forbidden_varedit_object_types = list(
+										/obj/admins,						//Admins editing their own admin-power object? Yup, sounds like a good idea.
+										/obj/machinery/blackbox_recorder,	//Prevents people messing with feedback gathering
+										/datum/feedback_variable			//Prevents people messing with feedback gathering
+									)
+
 /client/proc/cmd_modify_object_variables(obj/O as obj|mob|turf|area in world)
 	set category = "Debug"
 	set name = "Edit Variables"
 	set desc="(target) Edit a target item's variables"
 	src.modify_variables(O)
+	//feedback_add_details("admin_verb","EDITV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_modify_ticker_variables()
 	set category = "Debug"
@@ -12,6 +19,7 @@
 		src << "Game hasn't started yet."
 	else
 		src.modify_variables(ticker)
+	//	feedback_add_details("admin_verb","ETV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/mod_list_add_ass() //haha
 
@@ -327,6 +335,11 @@
 	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
+
+	for(var/p in forbidden_varedit_object_types)
+		if( istype(O,p) )
+			usr << "\red It is forbidden to edit this object's variables."
+			return
 
 	var/class
 	var/variable
