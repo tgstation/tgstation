@@ -104,11 +104,11 @@ obj/machinery/hydroponics/process()
 			if(src.age > src.myseed.production && (src.age - src.lastproduce) > src.myseed.production && (!src.harvest && !src.dead))
 				var/m_count = 0
 				while(m_count < src.mutmod)
-					if(prob(89))
+					if(prob(85))
 						src.mutate()
 					else if(prob(30))
 						src.hardmutate()
-					else if(prob(1))
+					else if(prob(5))
 						src.mutatespecie()
 					m_count++;
 				if(src.yieldmod > 0 && src.myseed.yield != -1) // Unharvestable shouldn't be harvested
@@ -606,6 +606,21 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 						if (21  to 41)  user << "The plants don't seem to react..."
 						if (11	to 20)  src.mutateweed()
 						if (1   to 10)  src.mutatepest()
+						else 			user << "Nothing happens..."
+
+				// The best stuff there is. For testing/debugging.
+
+				if(S.reagents.has_reagent("adminordrazine", 1))
+					src.waterlevel += round(S.reagents.get_reagent_amount("adminordrazine")*1)
+					src.health += round(S.reagents.get_reagent_amount("adminordrazine")*1)
+					src.nutrilevel += round(S.reagents.get_reagent_amount("adminordrazine")*1)
+					src.pestlevel -= rand(1,5)
+					src.weedlevel -= rand(1,5)
+				if(S.reagents.has_reagent("adminordrazine", 5))
+					switch(rand(100))
+						if (66  to 100)  src.mutatespecie()
+						if (33	to 65)  src.mutateweed()
+						if (1   to 32)  src.mutatepest()
 						else 			user << "Nothing happens..."
 
 				S.reagents.clear_reagents()

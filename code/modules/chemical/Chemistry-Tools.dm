@@ -2130,13 +2130,22 @@
 		reagents.add_reagent("blood", 20, data)
 
 /obj/item/weapon/reagent_containers/glass/bottle/pacid
-	name = "Polytronic Acid Bottle"
+	name = "Polytrinic Acid Bottle"
 	desc = "A small bottle. Contains a small amount of Polytronic Acid"
 	icon = 'chemical.dmi'
 	icon_state = "bottle17"
 	New()
 		..()
 		reagents.add_reagent("pacid", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/adminordrazine
+	name = "Adminordrazine Bottle"
+	desc = "A small bottle. Contains the liquid essence of the gods."
+	icon = 'drinks.dmi'
+	icon_state = "holyflask"
+	New()
+		..()
+		reagents.add_reagent("adminordrazine", 30)
 
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone

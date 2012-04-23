@@ -400,7 +400,7 @@
 	potency = 10
 	oneharvest = 1
 	plant_type = 0
-	growthstages = 5
+	growthstages = 3
 
 /obj/item/seeds/amanitamycelium
 	name = "pack of fly amanita mycelium"
