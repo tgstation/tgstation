@@ -395,6 +395,7 @@
 #include "code\game\events\EventProcs\ninja_abilities.dm"
 #include "code\game\events\EventProcs\ninja_equipment.dm"
 #include "code\game\events\EventProcs\space_ninja.dm"
+#include "code\game\events\EventProcs\spacevines.dm"
 #include "code\game\events\Events\AlienInfestation.dm"
 #include "code\game\events\Events\Appendicitis.dm"
 #include "code\game\events\Events\ElectricalStorm.dm"

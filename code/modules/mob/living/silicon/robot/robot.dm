@@ -56,6 +56,7 @@
 				mmi.brainmob.key = key
 			else//If the brain does have a mind. Also shouldn't happen but who knows.
 				mmi.brainmob.key = key
+
 		mmi = null
 	..()
 
@@ -67,13 +68,16 @@
 		return
 	switch(mod)
 		if("Standard")
+			updatename()
 			module = new /obj/item/weapon/robot_module/standard(src)
 			hands.icon_state = "standard"
 			icon_state = "robot"
 			modtype = "Stand"
+			//feedback_inc("cyborg_standard",1)
 			channels = list()
 
 		if("Service")
+			updatename(mod)
 			module = new /obj/item/weapon/robot_module/butler(src)
 			hands.icon_state = "service"
 			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich")
@@ -88,17 +92,21 @@
 			else
 				icon_state = "Service2"
 			modtype = "Butler"
+			//feedback_inc("cyborg_service",1)
 			channels = list()
 
 		if("Miner")
+			updatename(mod)
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
 			icon_state = "Miner"
 			modtype = "Miner"
+			//feedback_inc("cyborg_miner",1)
 			channels = list("Mining" = 1)
 
 		if("Medical")
 			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
+			updatename(mod)
 			module = new /obj/item/weapon/robot_module/medical(src)
 			hands.icon_state = "medical"
 			if (sprite == "Humanoid")
@@ -107,10 +115,12 @@
 				src.icon_state = "surgeon"
 			modtype = "Med"
 			nopush = 1
+			//feedback_inc("cyborg_medical",1)
 			channels = list("Medical" = 1)
 
 		if("Security")
 			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
+			updatename(mod)
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"
 			if (sprite == "Humanoid")
@@ -119,8 +129,10 @@
 				src.icon_state = "bloodhound"
 			modtype = "Sec"
 			channels = list("Security" = 1)
+			//feedback_inc("cyborg_security",1)
 
 		if("Engineering")
+			updatename(mod)
 			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			hands.icon_state = "engineer"
@@ -129,9 +141,11 @@
 			if (sprite == "Non-Humanoid")
 				src.icon_state = "landmate"
 			modtype = "Eng"
+			//feedback_inc("cyborg_engineering",1)
 			channels = list("Engineering" = 1)
 
 		if("Janitor")
+			updatename(mod)
 			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
 			module = new /obj/item/weapon/robot_module/janitor(src)
 			hands.icon_state = "janitor"
@@ -140,11 +154,21 @@
 			if (sprite == "Non-Humanoid")
 				src.icon_state = "mopgearrex"
 			modtype = "Jan"
+			//feedback_inc("cyborg_janitor",1)
 			channels = list()
 
 	overlays -= "eyes" //Takes off the eyes that it started with
 	radio.config(channels)
 	updateicon()
+
+/mob/living/silicon/robot/proc/updatename(var/prefix as text)
+	if( length(real_name) < 7 || !prefix )	return
+	//not really necessary but just to avoid annoying people with
+	//unique names seeming as nobody could give me a straight answer as
+	//to whether to remove custom borg names completely.
+	if(copytext(real_name, 1, 7) == "Cyborg")
+		real_name = "[prefix] [real_name]"
+		name = real_name
 
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
 	set category = "Robot Commands"
@@ -352,6 +376,9 @@
 
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
+		return
+
 	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
 		if(getBruteLoss() == 0)
 			user << "There are no dents to fix here!"
@@ -491,6 +518,41 @@
 	else
 		spark_system.start()
 		return ..()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)
@@ -1044,5 +1106,6 @@ Frequency:
 	del(module)
 
 /mob/living/silicon/robot/proc/self_destruct()
-	gib(1)
+	gib()
+	return
 

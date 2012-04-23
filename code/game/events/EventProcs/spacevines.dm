@@ -1,19 +1,17 @@
-// SPACE VINE OR KUDZU
-
+// SPACE VINES
 /obj/effect/spacevine
-	name = "Space Kudzu"
+	name = "space vines"
 	desc = "An extremely expansionistic species of vine."
-	icon = 'kudzu.dmi'
+	icon = 'spacevines.dmi'
 	icon_state = "Light1"
 	anchored = 1
 	density = 0
-	var/energy = 0		//Energy sounds like an arbitrary-enough variable name.
+	pass_flags = PASSTABLE | PASSGRILLE
+	var/energy = 0
 	var/obj/effect/spacevine_controller/master = null
 
 	New()
-		if(istype(src.loc, /turf/space))
-			del(src)
-			return
+		return
 
 	Del()
 		if(master)
@@ -22,16 +20,44 @@
 		..()
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if (!W) return
-		if (!user) return
-		if (istype(W, /obj/item/weapon/circular_saw)) del src
-		if (istype(W, /obj/item/weapon/kitchen/utensil/knife)) del src
-		if (istype(W, /obj/item/weapon/scalpel)) del src
-		if (istype(W, /obj/item/weapon/screwdriver)) del src
-		if (istype(W, /obj/item/weapon/shard)) del src
-		if (istype(W, /obj/item/weapon/weldingtool)) del src
-		if (istype(W, /obj/item/weapon/wirecutters)) del src
+		if (!W || !user || !W.type) return
+		switch(W.type)
+			if(/obj/item/weapon/circular_saw) del src
+			if(/obj/item/weapon/kitchen/utensil/knife) del src
+			if(/obj/item/weapon/scalpel) del src
+			if(/obj/item/weapon/fireaxe) del src
+//			if(/obj/item/weapon/hatchet) del src
+			if(/obj/item/weapon/melee/energy) del src
+
+			//less effective weapons
+			if(/obj/item/weapon/wirecutters)
+				if(prob(25)) del src
+			if(/obj/item/weapon/shard)
+				if(prob(25)) del src
+
+			else //weapons with subtypes
+				if(istype(W, /obj/item/weapon/melee/energy/sword)) del src
+				else if(istype(W, /obj/item/weapon/weldingtool))
+					if(W:welding) del src
+			//TODO: add plant-b-gone
 		..()
+
+	attack_hand(mob/user as mob)
+		for(var/mob/M in src.loc)
+			if(M.buckled == src)
+				if(prob(50))
+					if(M == user)
+						user << "\red You break free from the vines!"
+					else
+						user << "\red You rip away at the vines and free [M]!"
+						M << "\red [user] frees you from the vines!"
+					M.buckled = null
+				else
+					user << "\red You rip away at the vines..."
+				break //only process one captured mob.
+
+	attack_paw(mob/user as mob)
+		return src.attack_hand(user)
 
 /obj/effect/spacevine_controller
 	var/list/obj/effect/spacevine/vines = list()
@@ -39,20 +65,20 @@
 	var/reached_collapse_size
 	var/reached_slowdown_size
 	//What this does is that instead of having the grow minimum of 1, required to start growing, the minimum will be 0,
-	//meaning if you get the kudzu's size to something less than 20 plots, it won't grow anymore.
+	//meaning if you get the spacevines' size to something less than 20 plots, it won't grow anymore.
 
 	New()
 		if(!istype(src.loc,/turf/simulated/floor))
 			del(src)
 
-		spawn_kudzu_piece(src.loc)
+		spawn_spacevine_piece(src.loc)
 		processing_objects.Add(src)
 
 	Del()
 		processing_objects.Remove(src)
 		..()
 
-	proc/spawn_kudzu_piece(var/turf/location)
+	proc/spawn_spacevine_piece(var/turf/location)
 		var/obj/effect/spacevine/SV = new(location)
 		growth_queue += SV
 		vines += SV
@@ -60,7 +86,7 @@
 
 	process()
 		if(!vines)
-			del(src) //Kudzu exterminated
+			del(src) //space  vines exterminated. Remove the controller
 			return
 		if(!growth_queue)
 			del(src) //Sanity check
@@ -88,39 +114,47 @@
 			i++
 			queue_end += SV
 			growth_queue -= SV
-			if(SV.energy < 2)
-				if(prob(10))
+			if(SV.energy < 2) //If tile isn't fully grown
+				if(prob(20))
 					SV.grow()
+			else //If tile is fully grown
+				SV.grab()
+
 			//if(prob(25))
 			SV.spread()
 			if(i >= length)
 				break
 
 		growth_queue = growth_queue + queue_end
-
 		//sleep(5)
 		//src.process()
 
 /obj/effect/spacevine/proc/grow()
-	switch(energy)
-		if (0)
-			src.icon_state = pick("Med1", "Med2", "Med3")
-			energy = 1
-			src.opacity = 1
-		if (1)
-			src.icon_state = pick("Hvy1", "Hvy2", "Hvy3")
-			energy = 2
-			src.density = 1
+	if(!energy)
+		src.icon_state = pick("Med1", "Med2", "Med3")
+		energy = 1
+		src.opacity = 1
+		layer = 5
+	else
+		src.icon_state = pick("Hvy1", "Hvy2", "Hvy3")
+		energy = 2
+
+/obj/effect/spacevine/proc/grab()
+	for(var/mob/living/carbon/V in src.loc)
+		if((V.stat != DEAD)  && (V.buckled != src)) //if mob not dead or captured
+			V.buckled = src
+			V << "\red The vines [pick("wind", "tangle")] around you!"
+			break //only capture one mob at a time.
 
 /obj/effect/spacevine/proc/spread()
 	var/direction = pick(cardinal)
-	if(istype(get_step(src,direction),/turf/simulated/floor))
-		var/turf/simulated/floor/F = get_step(src,direction)
+	var/step = get_step(src,direction)
+	if(istype(step,/turf/simulated/floor))
+		var/turf/simulated/floor/F = step
 		if(!locate(/obj/effect/spacevine,F))
 			if(F.Enter(src))
 				if(master)
-					master.spawn_kudzu_piece( F )
-
+					master.spawn_spacevine_piece( F )
 
 /*
 /obj/effect/spacevine/proc/Life()
@@ -169,8 +203,23 @@
 			if (prob(50))
 				del(src)
 				return
-		else
 	return
 
-/obj/effect/spacevine/temperature_expose(null, temp, volume)
+/obj/effect/spacevine/temperature_expose(null, temp, volume) //hotspots kill vines
 	del src
+
+//Carn: Spacevines random event.
+/proc/spacevine_infestation()
+
+	spawn() //to stop the secrets panel hanging
+		var/list/turf/simulated/floor/turfs = list() //list of all the empty floor turfs in the hallway areas
+		for(var/areapath in typesof(/area/hallway))
+			var/area/hallway/A = locate(areapath)
+			for(var/turf/simulated/floor/F in A)
+				if(!F.contents.len)
+					turfs += F
+
+		if(turfs.len) //Pick a turf to spawn at if we can
+			var/turf/simulated/floor/T = pick(turfs)
+			new/obj/effect/spacevine_controller(T) //spawn a controller at turf
+			message_admins("\blue Event: Spacevines spawned at [T.loc] ([T.x],[T.y],[T.z])")

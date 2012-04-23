@@ -190,7 +190,7 @@
 
 
 /obj/machinery/mineral/processing_unit
-	name = "Furnace"
+	name = "furnace"
 	icon = 'mining_machines.dmi'
 	icon_state = "furnace"
 	density = 1

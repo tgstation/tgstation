@@ -133,7 +133,7 @@
 
 
 /obj/machinery/mineral/stacking_machine
-	name = "Stacking machine"
+	name = "stacking machine"
 	icon = 'mining_machines.dmi'
 	icon_state = "stacker"
 	density = 1
