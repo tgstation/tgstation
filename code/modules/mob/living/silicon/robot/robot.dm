@@ -10,8 +10,10 @@
 		updateicon()
 //		syndicate = syndie
 		if(real_name == "Cyborg")
-			real_name += " [pick(rand(1, 999))]"
+			ident = rand(1, 999)
+			real_name += "-[ident]"
 			name = real_name
+
 	spawn (4)
 		if (client)
 			connected_ai = activeais()
