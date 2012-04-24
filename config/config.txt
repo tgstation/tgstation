@@ -75,6 +75,9 @@ ALLOW_RANDOM_EVENTS
 ## if amount of traitors scales or not
 TRAITOR_SCALING
 
+## If security is prohibited from being most antagonists
+#PROTECT_ROLES_FROM_ANTAGONIST
+
 ## allow players to initiate a restart vote
 ALLOW_VOTE_RESTART
 
@@ -96,8 +99,6 @@ DEFAULT_NO_VOTE
 ## allow AI job
 ALLOW_AI
 
-## goon authentication
-#AUTHENTICATION
 
 ## disable abandon mob
 NORESPAWN
