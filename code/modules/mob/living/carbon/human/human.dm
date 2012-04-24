@@ -1860,8 +1860,9 @@ It can still be worn/put on as normal.
 				if (W)
 					W.loc = target.loc
 					W.dropped(target)
-					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
+					if (W)
+						W.layer = initial(W.layer)
+						W.add_fingerprint(source)
 			else
 				if(!item) return
 				if (istype(item, /obj/item/clothing/mask))
