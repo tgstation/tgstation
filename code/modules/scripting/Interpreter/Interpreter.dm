@@ -24,6 +24,8 @@
 		stack
 			scopes		= new()
 			functions	= new()
+
+		datum/container // associated container for interpeter
 /*
 	Var: status
 	A variable indicating that the rest of the current block should be skipped. This may be set to any combination of <Status Macros>.
@@ -31,10 +33,12 @@
 		status=0
 		returnVal
 
-		max_iterations=100 // max iterations without any kind of delay
-		cur_iterations=0   // current iteration
-		max_recursion=50   // max recursions without returning anything (or completing the code block)
-		cur_recursion=0	   // current amount of recursion
+		max_statements=1000 // maximum amount of statements that can be called in one execution. this is to prevent massive crashes and exploitation
+		cur_statements=0    // current amount of statements called
+		alertadmins=0		// set to 1 if the admins shouldn't be notified of anymore issues
+		max_iterations=100 	// max number of uninterrupted loops possible
+		max_recursion=50   	// max recursions without returning anything (or completing the code block)
+		cur_recursion=0	   	// current amount of recursion
 /*
 	Var: persist
 	If 0, global variables will be reset after Run() finishes.
@@ -88,56 +92,74 @@
 					CreateGlobalScope()
 				curScope = globalScope
 
-			for(var/node/statement/S in Block.statements)
-				while(paused) sleep(10)
-				if(istype(S, /node/statement/VariableAssignment))
-					var/node/statement/VariableAssignment/stmt = S
-					var/name = stmt.var_name.id_name
-					if(!stmt.object)
-						// Below we assign the variable first to null if it doesn't already exist.
-						// This is necessary for assignments like +=, and when the variable is used in a function
-						// If the variable already exists in a different block, then AssignVariable will automatically use that one.
-						if(!IsVariableAccessible(name))
-							AssignVariable(name, null)
-						AssignVariable(name, Eval(stmt.value))
+			if(cur_statements < max_statements)
+
+				for(var/node/statement/S in Block.statements)
+					while(paused) sleep(10)
+
+					cur_statements++
+					if(cur_statements >= max_statements)
+						RaiseError(new/runtimeError/MaxCPU())
+
+						if(container && !alertadmins)
+							if(istype(container, /datum/TCS_Compiler))
+								var/datum/TCS_Compiler/Compiler = container
+								var/obj/machinery/telecomms/server/Holder = Compiler.Holder
+								var/message = "Potential crash-inducing NTSL script detected at telecommunications server [Compiler.Holder] ([Holder.x], [Holder.y], [Holder.z])."
+
+								alertadmins = 1
+								message_admins(message, 1)
+						break
+
+					if(istype(S, /node/statement/VariableAssignment))
+						var/node/statement/VariableAssignment/stmt = S
+						var/name = stmt.var_name.id_name
+						if(!stmt.object)
+							// Below we assign the variable first to null if it doesn't already exist.
+							// This is necessary for assignments like +=, and when the variable is used in a function
+							// If the variable already exists in a different block, then AssignVariable will automatically use that one.
+							if(!IsVariableAccessible(name))
+								AssignVariable(name, null)
+							AssignVariable(name, Eval(stmt.value))
+						else
+							var/datum/D = Eval(GetVariable(stmt.object.id_name))
+							if(!D) return
+							D.vars[stmt.var_name.id_name] = Eval(stmt.value)
+					else if(istype(S, /node/statement/VariableDeclaration))
+						//VariableDeclaration nodes are used to forcibly declare a local variable so that one in a higher scope isn't used by default.
+						var/node/statement/VariableDeclaration/dec=S
+						if(!dec.object)
+							AssignVariable(dec.var_name.id_name, null, curScope)
+						else
+							var/datum/D = Eval(GetVariable(dec.object.id_name))
+							if(!D) return
+							D.vars[dec.var_name.id_name] = null
+					else if(istype(S, /node/statement/FunctionCall))
+						RunFunction(S)
+					else if(istype(S, /node/statement/FunctionDefinition))
+						//do nothing
+					else if(istype(S, /node/statement/WhileLoop))
+						RunWhile(S)
+					else if(istype(S, /node/statement/IfStatement))
+						RunIf(S)
+					else if(istype(S, /node/statement/ReturnStatement))
+						if(!curFunction)
+							RaiseError(new/runtimeError/UnexpectedReturn())
+							continue
+						status |= RETURNING
+						returnVal=Eval(S:value)
+						break
+					else if(istype(S, /node/statement/BreakStatement))
+						status |= BREAKING
+						break
+					else if(istype(S, /node/statement/ContinueStatement))
+						status |= CONTINUING
+						break
 					else
-						var/datum/D = Eval(GetVariable(stmt.object.id_name))
-						if(!D) return
-						D.vars[stmt.var_name.id_name] = Eval(stmt.value)
-				else if(istype(S, /node/statement/VariableDeclaration))
-					//VariableDeclaration nodes are used to forcibly declare a local variable so that one in a higher scope isn't used by default.
-					var/node/statement/VariableDeclaration/dec=S
-					if(!dec.object)
-						AssignVariable(dec.var_name.id_name, null, curScope)
-					else
-						var/datum/D = Eval(GetVariable(dec.object.id_name))
-						if(!D) return
-						D.vars[dec.var_name.id_name] = null
-				else if(istype(S, /node/statement/FunctionCall))
-					RunFunction(S)
-				else if(istype(S, /node/statement/FunctionDefinition))
-					//do nothing
-				else if(istype(S, /node/statement/WhileLoop))
-					RunWhile(S)
-				else if(istype(S, /node/statement/IfStatement))
-					RunIf(S)
-				else if(istype(S, /node/statement/ReturnStatement))
-					if(!curFunction)
-						RaiseError(new/runtimeError/UnexpectedReturn())
-						continue
-					status |= RETURNING
-					returnVal=Eval(S:value)
-					break
-				else if(istype(S, /node/statement/BreakStatement))
-					status |= BREAKING
-					break
-				else if(istype(S, /node/statement/ContinueStatement))
-					status |= CONTINUING
-					break
-				else
-					RaiseError(new/runtimeError/UnknownInstruction())
-				if(status)
-					break
+						RaiseError(new/runtimeError/UnknownInstruction())
+					if(status)
+						break
+
 			curScope = scopes.Pop()
 
 /*
@@ -212,14 +234,9 @@
 */
 		RunWhile(node/statement/WhileLoop/stmt)
 			var/i=1
-			if(!cur_iterations)
-				cur_iterations = 1
 			while(Eval(stmt.cond) && Iterate(stmt.block, i++))
-				cur_iterations++
 				continue
 			status &= ~BREAKING
-			cur_iterations -= i
-			if(cur_iterations <= 0) cur_iterations = 0
 
 /*
 	Proc:Iterate
@@ -227,7 +244,7 @@
 */
 		Iterate(node/BlockDefinition/block, count)
 			RunBlock(block)
-			if(max_iterations > 0 && (count >= max_iterations || cur_iterations + 1 >= max_iterations))
+			if(max_iterations > 0 && count >= max_iterations)
 				RaiseError(new/runtimeError/IterationLimitReached())
 				return 0
 			if(status & (BREAKING|RETURNING))
@@ -294,3 +311,4 @@
 			else if(!istype(value) && isobject(value))			value = new/node/expression/value/reference(value)
 			//TODO: check for invalid name
 			S.variables["[name]"] = value
+
