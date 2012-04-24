@@ -331,7 +331,7 @@ menu "menu"
 window "Telecomms IDE"
 	elem "Telecomms IDE"
 		type = MAIN
-		pos = 281,0
+		pos = 303,13
 		size = 652x582
 		anchor1 = none
 		anchor2 = none
@@ -372,8 +372,8 @@ window "Telecomms IDE"
 		type = BUTTON
 		pos = 180,464
 		size = 60x20
-		anchor1 = none
-		anchor2 = none
+		anchor1 = 28,80
+		anchor2 = 37,83
 		font-family = ""
 		font-size = 0
 		font-style = ""
@@ -400,8 +400,8 @@ window "Telecomms IDE"
 		type = BUTTON
 		pos = 120,464
 		size = 60x20
-		anchor1 = none
-		anchor2 = none
+		anchor1 = 18,80
+		anchor2 = 28,83
 		font-family = ""
 		font-size = 0
 		font-style = ""
@@ -428,8 +428,8 @@ window "Telecomms IDE"
 		type = OUTPUT
 		pos = 0,488
 		size = 648x94
-		anchor1 = none
-		anchor2 = none
+		anchor1 = 0,84
+		anchor2 = 99,100
 		font-family = "sans-serif"
 		font-size = 9
 		font-style = ""
@@ -454,8 +454,8 @@ window "Telecomms IDE"
 		type = BUTTON
 		pos = 60,464
 		size = 60x20
-		anchor1 = none
-		anchor2 = none
+		anchor1 = 9,80
+		anchor2 = 18,83
 		font-family = ""
 		font-size = 0
 		font-style = ""
@@ -482,8 +482,8 @@ window "Telecomms IDE"
 		type = BUTTON
 		pos = 0,464
 		size = 60x20
-		anchor1 = none
-		anchor2 = none
+		anchor1 = 0,80
+		anchor2 = 9,83
 		font-family = ""
 		font-size = 0
 		font-style = ""
@@ -510,8 +510,8 @@ window "Telecomms IDE"
 		type = INPUT
 		pos = 0,0
 		size = 652x464
-		anchor1 = none
-		anchor2 = none
+		anchor1 = 0,0
+		anchor2 = 100,80
 		font-family = "Courier"
 		font-size = 10
 		font-style = ""

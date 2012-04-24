@@ -250,6 +250,7 @@
 			for(var/obj/effect/speech_bubble/S in range(1, mob))
 				if(S.parent == mob)
 					S.loc = mob.loc
+
 		moving = 0
 
 		return .
@@ -363,6 +364,8 @@
 		else
 			if((istype(turf,/turf/simulated/floor)) && (src.lastarea.has_gravity == 0)) // No one else gets a chance.
 				continue
+
+
 
 		/*
 		if(istype(turf,/turf/simulated/floor) && (src.flags & NOGRAV))

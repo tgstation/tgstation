@@ -32,8 +32,6 @@
 	if (!message)
 		return
 
-	log_say("[name]/[key] : [message]")
-
 	if (length(message) >= 1)
 		if (miming && copytext(message, 1, 2) != "*")
 			return
@@ -315,8 +313,11 @@
 		listening += src
 
 */
+/*  Handing this section over to get_mobs_in_view which was written with radiocode update
 	var/turf/T = get_turf(src)
 	listening = hearers(message_range, T)
+	for (var/O in listening)
+		world << O
 	var/list/V = view(message_range, T)
 	var/list/W = V
 
@@ -334,6 +335,21 @@
 		else
 			if (M.client && M.client.ghost_ears)
 				listening|=M
+
+*/
+
+	listening = get_mobs_in_view(message_range, src)
+	for(var/mob/M in world)
+		if (!M.client)
+			continue //skip monkeys and leavers
+		if (istype(M, /mob/new_player))
+			continue
+		if(M.stat == 2 && M.client.ghost_ears)
+			listening|=M
+
+	var/turf/T = get_turf(src)
+	var/list/V = view(message_range, T)
+	var/list/W = V
 
 	var/list/eavesdroppers = get_mobs_in_view(7, src)
 	for(var/mob/M in listening)
@@ -367,6 +383,8 @@
 			if(O)
 				spawn(0)
 					O.hear_talk(src, message)
+
+
 
 	var/list/heard_a = list() // understood us
 	var/list/heard_b = list() // didn't understand us
@@ -519,6 +537,8 @@
 			M << "\blue [src] speaks into their radio..."
 			M << speech_bubble
 		spawn(30) del(speech_bubble)
+
+	log_say("[name]/[key] : [message]")
 
 
 

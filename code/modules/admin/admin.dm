@@ -1477,6 +1477,31 @@ var/global/BSACooldown = 0
 						log_admin("[key_name(usr)] moved the alien dinghy")
 					else
 						alert("You're not of a high enough rank to do this")
+				if("togglebombcap")
+					if (src.rank in list( "Game Admin", "Game Master"  ))
+						//feedback_inc("admin_secrets_fun_used",1)
+						//feedback_add_details("admin_secrets_fun_used","BC")
+						switch(MAX_EXPLOSION_RANGE)
+							if(14)
+								MAX_EXPLOSION_RANGE = 16
+							if(16)
+								MAX_EXPLOSION_RANGE = 20
+							if(20)
+								MAX_EXPLOSION_RANGE = 28
+							if(28)
+								MAX_EXPLOSION_RANGE = 56
+							if(56)
+								MAX_EXPLOSION_RANGE = 128
+							if(128)
+								MAX_EXPLOSION_RANGE = 14
+						var/range_dev = MAX_EXPLOSION_RANGE *0.25
+						var/range_high = MAX_EXPLOSION_RANGE *0.5
+						var/range_low = MAX_EXPLOSION_RANGE
+						message_admins("\red <b> [key_name_admin(usr)] changed the bomb cap to [range_dev], [range_high], [range_low]</b>", 1)
+						log_admin("[key_name_admin(usr)] changed the bomb cap to [MAX_EXPLOSION_RANGE]")
+					else
+						alert("No way. You're not of a high enough rank to do this.")
+
 				if("flicklights")
 					//feedback_inc("admin_secrets_fun_used",1)
 					//feedback_add_details("admin_secrets_fun_used","FL")
@@ -2289,8 +2314,15 @@ var/global/BSACooldown = 0
 <A href='?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>
 <A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
 <A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
-<A href='?src=\ref[src];secretsfun=electric'>Trigger Electrical Storm</A><BR><BR>"}
+<A href='?src=\ref[src];secretsfun=electric'>Trigger Electrical Storm</A><BR>"}
 //<A href='?src=\ref[src];secretsfun=shockwave'>Station Shockwave</A><BR>
+
+	if(lvl >= 6)
+		dat += {"
+<A href='?src=\ref[src];secretsfun=togglebombcap'>Toggle bomb cap</A><BR>
+		"}
+
+	dat += "<BR>"
 
 	if(lvl >= 5)
 		dat += {"

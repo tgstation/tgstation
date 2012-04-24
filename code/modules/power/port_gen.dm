@@ -99,12 +99,12 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/pacman
 	name = "P.A.C.M.A.N.-type Portable Generator"
 	var
-		coins = 0
-		max_coins = 1000
-		coin_path = "/obj/item/weapon/coin/plasma"
+		sheets = 0
+		max_sheets = 100
+		sheet_path = /obj/item/stack/sheet/plasma
 		board_path = "/obj/item/weapon/circuitboard/pacman"
-		coin_left = 0 // How much is left of the coin
-		time_per_coin = 1
+		sheet_left = 0 // How much is left of the sheet
+		time_per_sheet = 10
 		heat = 0
 
 	New()
@@ -123,7 +123,7 @@ display round(lastgen) and plasmatank amount
 		var/temp_reliability = 0
 		for(var/obj/item/weapon/stock_parts/SP in component_parts)
 			if(istype(SP, /obj/item/weapon/stock_parts/matter_bin))
-				max_coins = SP.rating * SP.rating * 1000
+				max_sheets = SP.rating * SP.rating * 50
 			else if(istype(SP, /obj/item/weapon/stock_parts/micro_laser) || istype(SP, /obj/item/weapon/stock_parts/capacitor))
 				temp_rating += SP.rating
 		for(var/obj/item/weapon/CP in component_parts)
@@ -133,24 +133,24 @@ display round(lastgen) and plasmatank amount
 
 	examine()
 		..()
-		usr << "\blue The generator has [coins] units of fuel left, producing [power_gen] per cycle."
+		usr << "\blue The generator has [sheets] units of fuel left, producing [power_gen] per cycle."
 		if(crit_fail) usr << "\red The generator seems to have broken down."
 
 	HasFuel()
-		if(coins >= 1 / (time_per_coin / power_output) - coin_left)
+		if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
 			return 1
 		return 0
 
 	UseFuel()
-		var/needed_coins = 1 / (time_per_coin / power_output)
-		var/temp = min(needed_coins, coin_left)
-		needed_coins -= temp
-		coin_left -= temp
-		coins -= round(needed_coins)
-		needed_coins -= round(needed_coins)
-		if (coin_left <= 0 && coins > 0)
-			coin_left = 1 - needed_coins
-			coins--
+		var/needed_sheets = 1 / (time_per_sheet / power_output)
+		var/temp = min(needed_sheets, sheet_left)
+		needed_sheets -= temp
+		sheet_left -= temp
+		sheets -= round(needed_sheets)
+		needed_sheets -= round(needed_sheets)
+		if (sheet_left <= 0 && sheets > 0)
+			sheet_left = 1 - needed_sheets
+			sheets--
 
 		var/lower_limit = 56 + power_output * 10
 		var/upper_limit = 76 + power_output * 10
@@ -186,14 +186,16 @@ display round(lastgen) and plasmatank amount
 			explosion(src.loc, 2, 5, 2, -1)
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
-		if(istype(O, text2path(coin_path)))
-			if(coins >= max_coins)
-				user << "\red The generator already has its maximum amount of fuel!"
+		if(istype(O, sheet_path))
+			var/obj/item/stack/addstack = O
+			var/amount = min((max_sheets - sheets), addstack.amount)
+			if(amount < 1)
+				user << "\blue The [src.name] is full!"
 				return
-			coins++
-			user.drop_item()
-			del(O)
-			user << "\blue You add a coin to the generator."
+			user << "\blue You add [amount] sheets to the [src.name]."
+			sheets += amount
+			addstack.use(amount)
+			return
 		else if (istype(O, /obj/item/weapon/card/emag))
 			var/obj/item/weapon/card/emag/E = O
 			if(E.uses)
@@ -230,27 +232,6 @@ display round(lastgen) and plasmatank amount
 
 	attack_hand(mob/user as mob)
 		..()
-
-		if (istype(user.pulling,/obj/item/weapon/moneybag))
-			var/new_coins = 0
-			var/target_coins = text2num(input("How many coins do you wish to transfer?", "Generator", "0"))
-			for (var/obj/item/weapon/coin/C in user.pulling.contents)
-				if(istype(C, text2path(coin_path)))
-					if (coins >= max_coins)
-						user << "\blue The generator is full!"
-						break
-					if (new_coins >= target_coins)
-						break
-					coins++
-					new_coins++
-					del(C)
-			if (user.pulling.contents.len < 1)
-				del(user.pulling)
-
-			user << "\blue You move [new_coins] coins from the money bag to the generator."
-			src.add_fingerprint(usr)
-			return
-
 		if (!anchored)
 			return
 
@@ -277,9 +258,9 @@ display round(lastgen) and plasmatank amount
 				dat += text("Generator: <A href='?src=\ref[src];action=disable'>On</A><br>")
 			else
 				dat += text("Generator: <A href='?src=\ref[src];action=enable'>Off</A><br>")
-			dat += text("Coins: [coins]<br>")
-			var/coin_percent = round(coin_left * 100, 1)
-			dat += text("Current coin: [coin_percent]%<br>")
+			dat += text("sheets: [sheets]<br>")
+			var/stack_percent = round(sheet_left * 100, 1)
+			dat += text("Current stack: [stack_percent]%<br>")
 			dat += text("Power output: <A href='?src=\ref[src];action=lower_power'>-</A> [power_gen * power_output] <A href='?src=\ref[src];action=higher_power'>+</A><br>")
 			dat += text("Heat: [heat]<br>")
 			dat += "<br><A href='?src=\ref[src];action=close'>Close</A>"
@@ -316,9 +297,9 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/pacman/super
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type Portable Generator"
 	icon_state = "portgen1"
-	coin_path = "/obj/item/weapon/coin/uranium"
+	sheet_path = "/obj/item/stack/sheet/uranium"
 	power_gen = 15000
-	time_per_coin = 5
+	time_per_sheet = 25
 	board_path = "/obj/item/weapon/circuitboard/pacman/super"
 	overheat()
 		explosion(src.loc, 3, 3, 3, -1)
@@ -326,10 +307,9 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/pacman/mrs
 	name = "M.R.S.P.A.C.M.A.N.-type Portable Generator"
 	icon_state = "portgen2"
-	coin_path = "/obj/item/weapon/coin/diamond"
+	sheet_path = "/obj/item/stack/sheet/diamond"
 	power_gen = 40000
-	time_per_coin = 60
+	time_per_sheet = 30
 	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"
 	overheat()
 		explosion(src.loc, 4, 4, 4, -1)
-

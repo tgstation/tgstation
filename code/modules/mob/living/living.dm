@@ -210,7 +210,22 @@
 	return
 
 /mob/living/proc/UpdateDamageIcon()
-	return
+		return
+
+/mob/living/proc/check_if_buckled()
+	if (buckled)
+		if(buckled == /obj/structure/stool/bed || istype(buckled, /obj/machinery/conveyor))
+			lying = 1
+		if(lying)
+			var/h = hand
+			hand = 0
+			drop_item()
+			hand = 1
+			drop_item()
+			hand = h
+		density = 1
+	else
+		density = !lying
 
 /mob/living/attack_animal(mob/M)
 	attack_paw(M)	// treat it like a normal non-human attack

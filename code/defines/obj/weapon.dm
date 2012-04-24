@@ -1470,7 +1470,7 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	name = "circular saw"
 	desc = "For heavy duty cutting."
 	icon = 'surgery.dmi'
-	icon_state = "saw"
+	icon_state = "saw3"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 15.0
 	w_class = 1.0
