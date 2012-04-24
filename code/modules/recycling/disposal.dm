@@ -463,17 +463,18 @@
 			playsound(src, 'hiss.ogg', 50, 0, 0)
 			spawn(20)
 				playing_sound = 0
-		for(var/atom/movable/AM in H)
-			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
+		if(H) // Somehow, someone managed to flush a window which broke mid-transit and caused the disposal to go in an infinite loop trying to expel null, hopefully this fixes it
+			for(var/atom/movable/AM in H)
+				target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
-			AM.loc = src.loc
-			AM.pipe_eject(0)
-			spawn(1)
-				if(AM)
-					AM.throw_at(target, 5, 1)
+				AM.loc = src.loc
+				AM.pipe_eject(0)
+				spawn(1)
+					if(AM)
+						AM.throw_at(target, 5, 1)
 
-		H.vent_gas(loc)
-		del(H)
+			H.vent_gas(loc)
+			del(H)
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		if (istype(mover,/obj/item))
@@ -859,14 +860,15 @@
 				playsound(src, 'hiss.ogg', 50, 0, 0)
 				spawn(20)
 					playing_sound = 0
-			for(var/atom/movable/AM in H)
-				AM.loc = T
-				AM.pipe_eject(direction)
-				spawn(1)
-					if(AM)
-						AM.throw_at(target, 100, 1)
-			H.vent_gas(T)
-			del(H)
+			if(H)
+				for(var/atom/movable/AM in H)
+					AM.loc = T
+					AM.pipe_eject(direction)
+					spawn(1)
+						if(AM)
+							AM.throw_at(target, 100, 1)
+				H.vent_gas(T)
+				del(H)
 
 		else	// no specified direction, so throw in random direction
 
@@ -875,17 +877,18 @@
 				playsound(src, 'hiss.ogg', 50, 0, 0)
 				spawn(20)
 					playing_sound = 0
-			for(var/atom/movable/AM in H)
-				target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
+			if(H)
+				for(var/atom/movable/AM in H)
+					target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 
-				AM.loc = T
-				AM.pipe_eject(0)
-				spawn(1)
-					if(AM)
-						AM.throw_at(target, 5, 1)
+					AM.loc = T
+					AM.pipe_eject(0)
+					spawn(1)
+						if(AM)
+							AM.throw_at(target, 5, 1)
 
-			H.vent_gas(T)	// all gas vent to turf
-			del(H)
+				H.vent_gas(T)	// all gas vent to turf
+				del(H)
 
 		return
 
@@ -1338,13 +1341,14 @@
 				playing_sound = 0
 
 
-		for(var/atom/movable/AM in H)
-			AM.loc = src.loc
-			AM.pipe_eject(dir)
-			spawn(1)
-				AM.throw_at(target, 3, 1)
-		H.vent_gas(src.loc)
-		del(H)
+		if(H)
+			for(var/atom/movable/AM in H)
+				AM.loc = src.loc
+				AM.pipe_eject(dir)
+				spawn(1)
+					AM.throw_at(target, 3, 1)
+			H.vent_gas(src.loc)
+			del(H)
 
 		return
 
