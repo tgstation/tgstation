@@ -1315,7 +1315,7 @@ datum
 			materials = list("$gold" = 5000,"$uranium" = 10000, "mutagen" = 40)
 			build_path = "/obj/item/weapon/gun/energy/decloner"
 			locked = 1
-/*
+
 		chemsprayer
 			name = "Chem Sprayer"
 			desc = "An advanced chem spraying device."
@@ -1325,7 +1325,7 @@ datum
 			materials = list("$metal" = 5000, "$glass" = 1000)
 			reliability_base = 100
 			build_path = "/obj/item/weapon/chemsprayer"
-*/
+
 		rapidsyringe
 			name = "Rapid Syringe Gun"
 			desc = "A gun that fires many syringes."
