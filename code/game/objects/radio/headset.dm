@@ -216,13 +216,10 @@
 	src.channels = list()
 	src.translate_binary = 0
 	src.translate_hive = 0
+	var/temp_channels = list()
 
 	if(keyslot1)
-		for(var/ch_name in keyslot1.channels)
-			if(ch_name in src.channels)
-				continue
-			src.channels += ch_name
-			src.channels[ch_name] = keyslot1.channels[ch_name]
+		temp_channels += keyslot1.channels
 
 		if(keyslot1.translate_binary)
 			src.translate_binary = 1
@@ -231,11 +228,7 @@
 			src.translate_hive = 1
 
 	if(keyslot2)
-		for(var/ch_name in keyslot2.channels)
-			if(ch_name in src.channels)
-				continue
-			src.channels += ch_name
-			src.channels[ch_name] = keyslot2.channels[ch_name]
+		temp_channels += keyslot2.channels
 
 		if(keyslot2.translate_binary)
 			src.translate_binary = 1
@@ -243,14 +236,13 @@
 		if(keyslot2.translate_hive)
 			src.translate_hive = 1
 
+	config(temp_channels)
 
 	for (var/ch_name in channels)
 		if(!radio_controller)
 			sleep(30) // Waiting for the radio_controller to be created.
 		if(!radio_controller)
-			src.name = "broken radio headset"
+			src.name = "Broken Radio Headset"
 			return
-
-		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
 
 	return
