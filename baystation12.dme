@@ -200,12 +200,12 @@
 #define FILE_DIR "sound/ambience"
 #define FILE_DIR "sound/announcer"
 #define FILE_DIR "sound/effects"
+#define FILE_DIR "sound/hallucinations"
 #define FILE_DIR "sound/items"
 #define FILE_DIR "sound/machines"
 #define FILE_DIR "sound/mecha"
 #define FILE_DIR "sound/misc"
 #define FILE_DIR "sound/piano"
-#define FILE_DIR "sound/scary"
 #define FILE_DIR "sound/voice"
 #define FILE_DIR "sound/weapons"
 // END_FILE_DIR
