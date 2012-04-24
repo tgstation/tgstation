@@ -147,7 +147,7 @@
 			mode = 2
 			switch(alert("Search for item signature or DNA fragment?" , "Signature Mode Select" , "" , "Item" , "DNA"))
 				if("Item")
-					var/datum/objective/steal/itemlist
+/*					var/datum/objective/steal/itemlist
 					itemlist = itemlist // To supress a 'variable defined but not used' error.
 					var/targetitem = input("Select item to search for.", "Item Mode Select","") as null|anything in itemlist.possible_items
 					if(!targetitem)
@@ -156,7 +156,8 @@
 					if(!target)
 						usr << "Failed to locate [targetitem]!"
 						return
-					usr << "You set the pinpointer to locate [targetitem]"
+					usr << "You set the pinpointer to locate [targetitem]"*/
+					usr << "This doesn't work yet."
 				if("DNA")
 					var/DNAstring = input("Input DNA string to search for." , "Please Enter String." , "")
 					if(!DNAstring)
