@@ -1361,21 +1361,6 @@
 
 			return
 
-
-		check_if_buckled()
-			if(buckle_check != (buckled ? 1 : 0))
-				buckle_check = (buckled ? 1 : 0)
-				if (buckled)
-					lying = istype(buckled, /obj/structure/stool/bed) || istype(buckled, /obj/machinery/conveyor)
-					if(lying)
-						drop_item()
-					density = 1
-				else
-					density = !lying
-			if(buckle_check)
-				if(istype(buckled, /obj/structure/stool/bed) || istype(buckled, /obj/machinery/conveyor))
-					drop_item()
-
 		handle_stomach()
 			spawn(0)
 				for(var/mob/M in stomach_contents)

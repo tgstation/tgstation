@@ -148,7 +148,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/proc/dead_tele()
 	set category = "Ghost"
 	set name = "Teleport"
-	set desc= "Teleport"
+	set desc= "Teleport to a location"
 	if((usr.stat != 2) || !istype(usr, /mob/dead/observer))
 		usr << "Not when you're not dead!"
 		return
@@ -163,6 +163,33 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	for(var/turf/T in get_area_turfs(thearea.type))
 		L+=T
 	usr.loc = pick(L)
+
+/mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
+	set category = "Ghost"
+	set name = "Jump to Mob"
+	set desc = "Teleport to a mob"
+
+	if(istype(usr, /mob/dead/observer)) //Make sure they're an observer!
+
+
+		var/list/dest = list() //List of possible destinations (mobs)
+		var/target = null	   //Chosen target.
+
+		dest += getmobs() //Fill list, prompt user with list
+		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
+
+		if (!target)//Make sure we actually have a target
+			return
+		else
+			var/mob/M = dest[target] //Destination mob
+			var/mob/A = src			 //Source mob
+			var/turf/T = get_turf(M) //Turf of the destination mob
+
+			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
+				A.loc = T
+			else
+				A << "This mob is not located in the game world."
+
 
 /mob/dead/observer/verb/toggle_alien_candidate()
 	set name = "Toggle Be Alien Candidate"

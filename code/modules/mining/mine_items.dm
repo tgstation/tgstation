@@ -99,7 +99,6 @@ proc/move_mining_shuttle()
 
 /obj/item/device/flashlight/lantern
 	name = "Mining Lantern"
-	icon = 'lighting.dmi'
 	icon_state = "lantern-off"
 	desc = "A miner's lantern"
 	anchored = 0
