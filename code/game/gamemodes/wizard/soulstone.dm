@@ -15,6 +15,8 @@
 	attack(mob/living/carbon/human/M as mob, mob/user as mob)
 		if(!istype(M, /mob/living/carbon/human))//If target is not a human.
 			return ..()
+		if(istype(M, /mob/living/carbon/human/dummy))
+			return..()
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their soul captured with [src.name] by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to capture the soul of [M.name] ([M.ckey])</font>")
 
