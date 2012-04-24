@@ -132,9 +132,9 @@
 		if(!leader_selected)
 			prepare_syndicate_leader(synd_mind, nuke_code)
 			leader_selected = 1
-		//else
-			//synd_mind.current.real_name = "[syndicate_name()] Operative #[agent_number]"
-			//agent_number++
+/*		else
+			synd_mind.current.real_name = "[syndicate_name()] Operative #[agent_number]"
+			agent_number++*/
 
 		equip_syndicate(synd_mind.current,freq)
 		update_synd_icons_added(synd_mind)
@@ -166,10 +166,10 @@
 
 
 /datum/game_mode/proc/prepare_syndicate_leader(var/datum/mind/synd_mind, var/nuke_code)
-	// var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")
-	// spawn(1)	// don't change names anymore!
-	//	NukeNameAssign(nukelastname(synd_mind.current),syndicates) //allows time for the rest of the syndies to be chosen
-	//synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
+/*	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")
+	spawn(1)
+		NukeNameAssign(nukelastname(synd_mind.current),syndicates) //allows time for the rest of the syndies to be chosen
+	synd_mind.current.real_name = "[syndicate_name()] [leader_title]"*/
 	if (nuke_code)
 		synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
 		synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
