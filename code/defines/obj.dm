@@ -759,7 +759,6 @@
 	desc = "Apply butt."
 	icon = 'objects.dmi'
 	icon_state = "stool"
-	anchored = 1.0
 	flags = FPRINT
 	pressure_resistance = 3*ONE_ATMOSPHERE
 
@@ -768,6 +767,7 @@
 	desc = "This is used to lie in, sleep in or strap on."
 	icon_state = "bed"
 	var/mob/living/buckled_mob
+	anchored = 1.0
 
 /obj/structure/stool/bed/alien
 	name = "Resting contraption"
@@ -779,6 +779,7 @@
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
 	icon_state = "chair"
+	anchored = 0
 
 /obj/structure/stool/bed/chair/comfy
 	name = "comfy chair"
