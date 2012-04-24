@@ -10,7 +10,7 @@ SILVER
 
 //Sandstone
 var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
-	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10), \
+	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, one_per_turf = 1, on_floor = 1), \
 /*	new/datum/stack_recipe("sandstone wall", ???), \
 		new/datum/stack_recipe("sandstone floor", ???),\*/
 	)
@@ -22,7 +22,7 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 
 //Diamond
 var/global/list/datum/stack_recipe/diamond_recipes = list ( \
-	new/datum/stack_recipe("diamond door", /obj/structure/mineral_door/transparent/diamond, 10), \
+	new/datum/stack_recipe("diamond door", /obj/structure/mineral_door/transparent/diamond, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
 /obj/item/stack/sheet/diamond
@@ -32,7 +32,7 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 
 //Uranium
 var/global/list/datum/stack_recipe/uranium_recipes = list ( \
-	new/datum/stack_recipe("uranium door", /obj/structure/mineral_door/uranium, 10), \
+	new/datum/stack_recipe("uranium door", /obj/structure/mineral_door/uranium, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
 /obj/item/stack/sheet/uranium
@@ -42,7 +42,7 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 
 //Plasma
 var/global/list/datum/stack_recipe/plasma_recipes = list ( \
-	new/datum/stack_recipe("plasma door", /obj/structure/mineral_door/transparent/plasma, 10), \
+	new/datum/stack_recipe("plasma door", /obj/structure/mineral_door/transparent/plasma, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
 /obj/item/stack/sheet/plasma
@@ -52,7 +52,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 
 //Gold
 var/global/list/datum/stack_recipe/gold_recipes = list ( \
-	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10), \
+	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
 /obj/item/stack/sheet/gold
@@ -62,7 +62,7 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 
 //Silver
 var/global/list/datum/stack_recipe/silver_recipes = list ( \
-	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10), \
+	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10, one_per_turf = 1, on_floor = 1), \
 	)
 
 /obj/item/stack/sheet/silver
