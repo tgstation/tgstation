@@ -86,7 +86,7 @@ datum/mind
 				else
 					text += "."
 
-				text += " <a href='?src=\ref[src];revolution=reequip'>Reequip</a>."
+				text += " <a href='?src=\ref[src];revolution=reequip'>Reequip</a> (gives traitor uplink)."
 				if (objectives.len==0)
 					text += "<br>Objectives are empty! <a href='?src=\ref[src];revolution=autoobjectives'>Set to kill all heads</a>."
 			else if (src in ticker.mode.revolutionaries)
