@@ -744,7 +744,8 @@
 				return
 
 			// otherwise, do normal expel from turf
-			expel(H, T, 0)
+			if(H)
+				expel(H, T, 0)
 		..()
 
 	// returns the direction of the next pipe object, given the entrance dir
@@ -920,7 +921,8 @@
 				return
 
 			// otherwise, do normal expel from turf
-			expel(H, T, 0)
+			if(H)
+				expel(H, T, 0)
 
 		spawn(2)	// delete pipe after 2 ticks to ensure expel proc finished
 			del(src)
@@ -1265,13 +1267,15 @@
 		// otherwise, go to the linked object
 		if(linked)
 			var/obj/structure/disposaloutlet/O = linked
-			if(istype(O))
+			if(istype(O) && (H))
 				O.expel(H)	// expel at outlet
 			else
 				var/obj/machinery/disposal/D = linked
-				D.expel(H)	// expel at disposal
+				if(H)
+					D.expel(H)	// expel at disposal
 		else
-			src.expel(H, src.loc, 0)	// expel at turf
+			if(H)
+				src.expel(H, src.loc, 0)	// expel at turf
 		return null
 
 	// nextdir
