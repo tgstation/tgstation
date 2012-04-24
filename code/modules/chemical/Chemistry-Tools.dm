@@ -368,8 +368,8 @@
 			var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 			var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-			B1.reagents.add_reagent("fluorosurfactant", 30)
-			B2.reagents.add_reagent("water", 10)
+			B1.reagents.add_reagent("fluorosurfactant", 40)
+			B2.reagents.add_reagent("water", 40)
 			B2.reagents.add_reagent("cleaner", 10)
 
 			beaker_two = B1
@@ -598,6 +598,8 @@
 				var/turf/trg = get_turf(target)
 				var/obj/effect/syringe_gun_dummy/D = new/obj/effect/syringe_gun_dummy(get_turf(src))
 				var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
+				if((!S) || (!S.reagents))	//ho boy! wot runtimes!
+					return
 				S.reagents.trans_to(D, S.reagents.total_volume)
 				syringes -= S
 				del(S)

@@ -105,7 +105,7 @@
 
 						log_attack("<font color='red'>[usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.</font>")
 						log_admin("ATTACK: [usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.")
-						message_admins("ATTACK: [usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.")
+		//				message_admins("ATTACK: [usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.")
 
 						C.show_message("\red [GM.name] has been placed in the [src] by [user].", 3)
 					del(G)
@@ -151,7 +151,7 @@
 
 				log_attack("<font color='red'>[user] ([user.ckey]) climbed into a disposals unit.</font>")
 				log_admin("ATTACK: [user] ([user.ckey]) climbed into in a disposals unit.")
-				message_admins("ATTACK: [user] ([user.ckey]) climbed into in a disposals unit.")
+				//message_admins("ATTACK: [user] ([user.ckey]) climbed into in a disposals unit.")
 
 				msg = "[user.name] climbs into the [src]."
 				user << "You climb into the [src]."
@@ -159,7 +159,7 @@
 
 				log_attack("<font color='red'>[user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit.</font>")
 				log_admin("ATTACK: [user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit.")
-				message_admins("ATTACK: [user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit.")
+				//message_admins("ATTACK: [user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit.")
 
 				msg = "[user.name] stuffs [target.name] into the [src]!"
 				user << "You stuff [target.name] into the [src]!"
@@ -421,7 +421,7 @@
 	proc/flush()
 
 		flushing = 1
-		flick("disposal-flush", src)
+		flick("[icon_state]-flush", src)
 
 		var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
 											// travels through the pipes.
@@ -478,6 +478,8 @@
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		if (istype(mover,/obj/item))
 			var/obj/item/I = mover
+			if(istype(I, /obj/item/weapon/dummy) || istype(I, /obj/item/projectile))
+				return
 			if(!mover.throwing)
 				return ..()
 			if(prob(75))

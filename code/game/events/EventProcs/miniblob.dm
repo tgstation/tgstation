@@ -6,7 +6,7 @@
 	for(var/atom/A in T)
 		if(A.density)
 			del(A)
-	var/obj/effect/blob/bl = new /obj/effect/blob( T.loc, 30 )
+	var/obj/effect/blob/bl = new /obj/effect/blob( T, 30 )
 	spawn(0)
 		bl.Life()
 		bl.Life()

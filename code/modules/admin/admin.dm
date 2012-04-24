@@ -1724,6 +1724,11 @@ var/global/BSACooldown = 0
 					else
 						alert("You cannot perform this action. You must be of a higher administrative rank!")
 						return
+				if("spacevines")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","K")
+					spacevine_infestation()
+					message_admins("[key_name_admin(usr)] has spawned spacevines", 1)
 			if (usr)
 				log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
 				if (ok)
@@ -2260,6 +2265,7 @@ var/global/BSACooldown = 0
 <A href='?src=\ref[src];secretsfun=immovable'>Spawn an Immovable Rod</A><BR>
 <A href='?src=\ref[src];secretsfun=lightsout'>Toggle a "lights out" event</A><BR>
 <A href='?src=\ref[src];secretsfun=ionstorm'>Spawn an Ion Storm</A><BR>
+<A href='?src=\ref[src];secretsfun=spacevines'>Spawn Space-Vines</A><BR>
 <BR>
 <B>Fun Secrets</B><BR>
 <BR>

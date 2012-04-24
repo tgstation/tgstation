@@ -103,6 +103,8 @@ proc/move_mining_shuttle()
 	icon_state = "lantern-off"
 	desc = "A miner's lantern"
 	anchored = 0
+	icon_on = "lantern-on"
+	icon_off = "lantern-off"
 	var/brightness = 12			// luminosity when on
 
 /obj/item/device/flashlight/lantern/New()
@@ -111,12 +113,10 @@ proc/move_mining_shuttle()
 	return
 
 /obj/item/device/flashlight/lantern/attack_self(mob/user)
-	..()
-	if (on == 1)
-		icon_state = "lantern-on"
-	else
-		icon_state = "lantern-off"
-
+	src.add_fingerprint(user)
+	on = !on
+	update_brightness(user)
+	return
 
 /*****************************Pickaxe********************************/
 
