@@ -532,6 +532,10 @@ CIRCULAR SAW
 					return
 
 			if(3.0)
+				if(M.changeling && M.changeling.changeling_fakedeath)
+					user << "\red The neural tissue regrows before your eyes as you cut it."
+					return
+
 				if(M != user)
 					for(var/mob/O in (viewers(M) - user - M))
 						O.show_message("\red [M] has his spine's connection to the brain severed with [src] by [user].", 1)
