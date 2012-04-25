@@ -2782,7 +2782,6 @@ It can still be worn/put on as normal.
 		target.show_message("\blue You hear [src.real_name]'s voice: [say]")
 	else
 		target.show_message("\blue You hear a voice that seems to echo around the room: [say]")
-		target << "\red This ain't an admin message, this is IC.  Act like it.  If someone's abusing it, pretending to be us, adminhelp it."
 	usr.show_message("\blue You project your mind into [target.real_name]: [say]")
 	for(var/mob/dead/observer/G in world)
 		G.show_message("<i>Telepathic message from <b>[src]</b> to <b>[target]</b>: [say]</i>")
