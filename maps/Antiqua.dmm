@@ -2582,7 +2582,7 @@
 "aXH" = (/obj/item/weapon/cigpacket,/obj/structure/table,/obj/item/weapon/matchbox,/turf/simulated/floor,/area/crew_quarters)
 "aXI" = (/obj/structure/table,/obj/item/weapon/packageWrap,/obj/item/weapon/packageWrap,/turf/simulated/floor,/area/crew_quarters)
 "aXJ" = (/obj/structure/table,/obj/item/smallDelivery,/obj/item/weapon/c_tube{pixel_x = 2; pixel_y = -2},/turf/simulated/floor,/area/crew_quarters)
-"aXK" = (/obj/structure/table,/obj/item/toy/crayonbox,/turf/simulated/floor,/area/crew_quarters)
+"aXK" = (/obj/structure/table,/obj/item/weapon/storage/crayonbox,/turf/simulated/floor,/area/crew_quarters)
 "aXL" = (/obj/item/device/radio/beacon,/turf/simulated/floor,/area/crew_quarters)
 "aXM" = (/obj/structure/closet/wardrobe/mixed,/turf/simulated/floor,/area/crew_quarters)
 "aXN" = (/obj/machinery/atmospherics/binary/pump{dir = 1; icon_state = "intact_on"; name = "Gas pump"; on = 1},/turf/simulated/floor,/area)
