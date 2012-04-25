@@ -112,7 +112,7 @@ to null does not delete the object itself. Thank you.
 	if(spread_type != AIRBORNE && spread_type != SPECIAL)
 		check_range = 0 // everything else, like infect-on-contact things, only infect things on top of it
 
-	for(var/mob/living/carbon/M in oviewers(check_range, source))
+	for(var/mob/living/carbon/M in oview(check_range, source))	//I have no idea why oview works when oviewers doesn't.	-Pete
 		M.contract_disease(src)
 
 	return
