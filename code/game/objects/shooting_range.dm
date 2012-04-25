@@ -174,7 +174,7 @@
 			bmark.pixel_x--
 			bmark.pixel_y--
 
-			if(Proj.damage >= 20)
+			if(Proj.damage >= 20 || istype(Proj, /obj/item/projectile/practice))
 				bmark.icon_state = "scorch"
 				bmark.dir = pick(NORTH,SOUTH,EAST,WEST) // random scorch design
 

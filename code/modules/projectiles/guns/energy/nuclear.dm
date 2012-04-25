@@ -1,12 +1,13 @@
 /obj/item/weapon/gun/energy/gun
-	icon_state = "energy"
-	name = "\improper Energy Gun"
+	icon_state = "energystun100"
+	name = "energy gun"
 	desc = "A basic energy-based gun with two settings: Stun and kill."
 	fire_sound = 'Taser.ogg'
 
 	charge_cost = 100 //How much energy is needed to fire.
 	projectile_type = "/obj/item/projectile/energy/electrode"
 	origin_tech = "combat=3;magnets=2"
+	modifystate = "energystun"
 
 	var
 		mode = 0 //0 = stun, 1 = kill
@@ -19,14 +20,16 @@
 					mode = 1
 					charge_cost = 100
 					fire_sound = 'Laser.ogg'
-					user << "\red [src] is now set to kill."
+					user << "\red [src.name] is now set to kill."
 					projectile_type = "/obj/item/projectile/beam"
+					modifystate = "energykill"
 				if(1)
 					mode = 0
 					charge_cost = 100
 					fire_sound = 'Taser.ogg'
-					user << "\red [src] is now set to stun."
+					user << "\red [src.name] is now set to stun."
 					projectile_type = "/obj/item/projectile/energy/electrode"
+					modifystate = "energystun"
 			update_icon()
 		return
 
