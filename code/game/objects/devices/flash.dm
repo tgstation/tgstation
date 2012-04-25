@@ -186,3 +186,25 @@
 					for(var/mob/O in viewers(M, null))
 						O.show_message("<span class='disarm'>[M] is blinded by the flash!</span>")
 	..()
+
+/obj/item/device/flash/synthetic
+	name = "synthetic flash"
+	desc = "When a problem arises, SCIENCE is the solution."
+	icon_state = "sflash"
+	origin_tech = "magnets=2;combat=1"
+	var/construction_cost = list("metal"=750,"glass"=750)
+	var/construction_time=100
+
+/obj/item/device/flash/synthetic/attack(mob/living/M as mob, mob/user as mob)
+	..()
+	if(!broken)
+		broken = 1
+		user << "\red The bulb has burnt out!"
+		icon_state = "flashburnt"
+
+/obj/item/device/flash/synthetic/attack_self(mob/living/carbon/user as mob, flag = 0, emp = 0)
+	..()
+	if(!broken)
+		broken = 1
+		user << "\red The bulb has burnt out!"
+		icon_state = "flashburnt"

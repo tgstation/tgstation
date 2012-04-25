@@ -94,13 +94,13 @@
 						/obj/item/mecha_parts/part/honker_right_leg
 						),
 	"Exosuit Equipment"=list(
-						/obj/item/mecha_parts/chassis/firefighter,
 						/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
 						/obj/item/mecha_parts/mecha_equipment/tool/drill,
 						/obj/item/mecha_parts/mecha_equipment/tool/extinguisher,
 						/obj/item/mecha_parts/mecha_equipment/tool/cable_layer,
 						/obj/item/mecha_parts/mecha_equipment/tool/sleeper,
 						/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun,
+						/obj/item/mecha_parts/chassis/firefighter,
 						///obj/item/mecha_parts/mecha_equipment/repair_droid,
 						/obj/item/mecha_parts/mecha_equipment/generator,
 						///obj/item/mecha_parts/mecha_equipment/jetpack, //TODO MECHA JETPACK SPRITE MISSING
@@ -115,7 +115,8 @@
 						/obj/item/borg/upgrade/reset,
 						/obj/item/borg/upgrade/restart,
 						/obj/item/borg/upgrade/vtec,
-						/obj/item/borg/upgrade/tasercooler
+						/obj/item/borg/upgrade/tasercooler,
+						/obj/item/borg/upgrade/jetpack
 						///obj/item/borg/upgrade/flashproof
 
 
@@ -316,7 +317,8 @@
 		return
 
 	proc/check_resources(var/obj/item/mecha_parts/part)
-		if(istype(part, /obj/item/robot_parts) || istype(part, /obj/item/mecha_parts) || istype(part,/obj/item/borg/upgrade))
+//		if(istype(part, /obj/item/robot_parts) || istype(part, /obj/item/mecha_parts) || istype(part,/obj/item/borg/upgrade))
+		if(part.construction_time!=null && part.construction_cost!=null)//Much more efficient way to check the item, since it won't have those vars if it isn't meant to go through the mechfabs -Sieve
 			for(var/resource in part.construction_cost)
 				if(resource in src.resources)
 					if(src.resources[resource] < get_resource_cost_w_coeff(part,resource))
@@ -429,12 +431,12 @@
 
 
 	proc/sync(silent=null)
-		if(queue.len)
+/*		if(queue.len)
 			if(!silent)
 				temp = "Error.  Please clear processing queue before updating!"
 				src.updateUsrDialog()
-			return
-
+			return                    //This POS doesn't work, simplifying -Sieve
+*/
 		if(!silent)
 			temp = "Updating local R&D database..."
 			src.updateUsrDialog()
@@ -578,7 +580,9 @@
 			queue = list()
 			return update_queue_on_page()
 		if(href_list["sync"])
+			queue = list()
 			src.sync()
+			return update_queue_on_page()
 		if(href_list["auto_sync"])
 			src.sync = !src.sync
 			//pr_auto_sync.toggle()

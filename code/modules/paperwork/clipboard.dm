@@ -10,6 +10,7 @@
 	var/obj/item/weapon/pen/haspen		//The stored pen.
 	var/obj/item/weapon/paper/toppaper	//The topmost piece of paper.
 	flags = FPRINT | TABLEPASS | ONBELT
+	pressure_resistance = 10
 
 /obj/item/weapon/clipboard/New()
 	update_icon()

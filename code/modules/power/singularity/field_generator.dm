@@ -20,42 +20,32 @@ field_generator power level display
 	density = 1
 	use_power = 0
 	var
-		const/num_power_levels = 15  // Total number of power level icon has
+		const/num_power_levels = 6	// Total number of power level icon has
 		Varedit_start = 0
 		Varpower = 0
 		active = 0
 		power = 20  // Current amount of power
 		state = 0
 		warming_up = 0
-		powerlevel = 0  // Current Power level in overlays list
 		list/obj/machinery/containment_field/fields
 		list/obj/machinery/field_generator/connected_gens
 		clean_up = 0
 
 
 	update_icon()
-		if (!active)
-			//Set icon_state has not been set, set to "Field_Gen"
-			if (icon_state != "Field_Gen")
-				icon_state = "Field_Gen"
-				warming_up = 0
-			else if (warming_up && icon_state != "Field_Gen +a[warming_up]")
-				icon_state = "Field_Gen +a[warming_up]"
-
+		overlays = null
+		if(!active)
+			if(warming_up)
+				overlays += "+a[warming_up]"
+		if(fields.len)
+			overlays += "+on"
 		// Power level indicator
 		// Scale % power to % num_power_levels and truncate value
 		var/level = round(num_power_levels * power / field_generator_max_power)
 		// Clamp between 0 and num_power_levels for out of range power values
 		level = between(0, level, num_power_levels)
-
-		// Do nothing unless new level is diffrent the powerlevel
-		if (powerlevel!=level)
-			if (powerlevel) //Remove old powerlevel overlay from overlays
-				overlays -= "Field_Gen +p[powerlevel]"
-			powerlevel = level
-			// If new power level exists add it to overlays
-			if (powerlevel)
-				overlays += "Field_Gen +p[powerlevel]"
+		if(level)
+			overlays += "+p[level]"
 
 		return
 

@@ -1,8 +1,9 @@
 /obj/machinery/particle_accelerator/control_box
-	name = "Particle Accelerator Control Box"
-	desc = "Part of a Particle Accelerator."
+	name = "Particle Accelerator Control Computer"
+	desc = "This controls the density of the particles."
 	icon = 'particle_accelerator.dmi'
 	icon_state = "control_box"
+	reference = "control_box"
 	anchored = 0
 	density = 1
 	use_power = 0
@@ -13,7 +14,7 @@
 	var
 		list/obj/structure/particle_accelerator/connected_parts
 		assembled = 0
-		strength = 0
+		parts = null
 
 
 	New()
@@ -40,6 +41,28 @@
 
 		return
 
+	update_icon()
+		if(active)
+			icon_state = "[reference]p1"
+		else
+			if(use_power)
+				icon_state = "[reference]p"
+			else
+				icon_state = "[reference]c"
+				switch(construction_state)
+					if(0)
+						icon_state = "[reference]"
+					if(1)
+						icon_state = "[reference]"
+					if(2)
+						icon_state = "[reference]w"
+					if(3)
+						icon_state = "[reference]c"
+		return
+
+	update_icon()
+		..()
+		return
 
 	Topic(href, href_list)
 		..()
@@ -59,13 +82,26 @@
 			src.part_scan()
 		if(href_list["strengthup"])
 			src.strength++
+			for(var/obj/structure/particle_accelerator/part in connected_parts)
+				part.strength++
+				part.update_icon()
 			if(src.strength > 2)
 				src.strength = 2
+				for(var/obj/structure/particle_accelerator/part in connected_parts)
+					part.strength = 2
+					part.update_icon()
 		if(href_list["strengthdown"])
 			src.strength--
+			for(var/obj/structure/particle_accelerator/part in connected_parts)
+				part.strength--
+				part.update_icon()
 			if(src.strength < 0)
 				src.strength = 0
+				for(var/obj/structure/particle_accelerator/part in connected_parts)
+					part.strength = 0
+					part.update_icon()
 		src.updateDialog()
+		src.update_icon()
 		return
 
 
@@ -74,7 +110,7 @@
 		if(stat & NOPOWER)
 			active = 0
 			use_power = 0
-		else if(!stat)
+		else if(!stat && construction_state == 3)
 			use_power = 1
 		return
 
@@ -144,8 +180,16 @@
 			src.active = !src.active
 			if(src.active)
 				src.use_power = 2
+				for(var/obj/structure/particle_accelerator/part in connected_parts)
+					part.strength = src.strength
+					part.powered = 1
+					part.update_icon()
 			else
 				src.use_power = 1
+				for(var/obj/structure/particle_accelerator/part in connected_parts)
+					part.strength = null
+					part.powered = 0
+					part.update_icon()
 			return 1
 
 

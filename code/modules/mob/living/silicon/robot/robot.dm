@@ -227,6 +227,11 @@
 		else
 			stat(null, text("No Cell Inserted!"))
 
+		if(module)
+			internal = locate(/obj/item/weapon/tank/jetpack) in module.modules
+			if(internal)
+				stat("Internal Atmosphere Info", internal.name)
+				stat("Tank Pressure", internal.air_contents.return_pressure())
 
 /mob/living/silicon/robot/restrained()
 	return 0

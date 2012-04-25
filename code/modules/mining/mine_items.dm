@@ -226,6 +226,13 @@ proc/move_mining_shuttle()
 		origin_tech = "materials=6;powerstorage=4;engineering=5"
 		desc = "Yours is the drill that will pierce the heavens!"
 
+	borgdrill
+		name = "Cyborg Mining Drill"
+		icon_state = "diamonddrill"
+		item_state = "jackhammer"
+		digspeed = 15
+		desc = ""
+
 /*****************************Shovel********************************/
 
 /obj/item/weapon/shovel
