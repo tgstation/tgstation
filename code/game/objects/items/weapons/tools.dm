@@ -256,8 +256,8 @@ WELDINGTOOOL
 			user.eye_blind = 5
 			user.eye_blurry = 5
 			user.disabilities |= 1
-			spawn(100)
-				user.disabilities &= ~1
+//			spawn(100)
+//				user.disabilities &= ~1 //Simpler to just leave them short sighted.
 		return
 
 	attack(mob/M as mob, mob/user as mob)
