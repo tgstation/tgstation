@@ -491,7 +491,7 @@ obj/machinery/computer/forensic_scanning
 			A.suit_fibers = tempsuit_fibers
 			backup_DNA = A.blood_DNA
 			A.blood_DNA = tempblood_DNA
-		if((!A.fingerprints))	//No prints
+		if(!A.fingerprints)	//No prints
 			var/merged = 0
 			if(!misc)
 				misc = list()
