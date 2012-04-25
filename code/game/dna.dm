@@ -27,6 +27,13 @@
 			if(!character2.facial_hair_style)
 				character2.facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
 
+			// If the character doesn't have initialized hairstyles / beardstyles, initialize it for them!
+			if(!character.hair_style)
+				character.hair_style = new/datum/sprite_accessory/hair/short
+
+			if(!character.facial_hair_style)
+				character.facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
+
 			var/list/styles = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
 			var/hrange = round(4095 / styles.len)
 
