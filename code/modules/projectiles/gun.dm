@@ -39,9 +39,26 @@
 			O.emp_act(severity)
 
 
-	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)//TODO: go over this
-		if(flag)	return //we're placing gun on a table or in backpack
-		if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
+
+	attack(mob/M as mob, mob/user as mob)
+		if(!in_chamber)
+			if(!load_into_chamber())
+				..() // No ammo, we're going to get bashy now.
+
+
+		return// fuck you, guns.  you stick to shooting when you have ammo
+
+	New()
+		spawn(15)				// Hack, but I need to wait for sub-calls to load the gun before loading the chamber.  1.5 seconds should be fine.
+			load_into_chamber()
+
+
+	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, inrange, params)//TODO: go over this
+		if(inrange)
+			if(!doafterattack(target , src))
+				return //we're placing gun on a table or in backpack.  What the fuck was the previous check?
+		if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))
+			return//Shouldnt flag take care of this?
 
 		if(istype(user, /mob/living))
 			var/mob/living/M = user
@@ -63,17 +80,26 @@
 		if (!istype(targloc) || !istype(curloc))
 			return
 
-		if(!special_check(user))	return
+		if(!special_check(user))
+			return
 		if(!load_into_chamber())
-			user << "\red *click*";
+			if(!inrange)	// If we're in range, we're just going to hit them instead of pulling the trigger.
+				user << "\red *click*";
 			return
 
-		if(!in_chamber)	return
+		if(!in_chamber)
+			return
 
 		in_chamber.firer = user
 		in_chamber.def_zone = user.zone_sel.selecting
 
 		if(targloc == curloc)
+			if(silenced)
+				playsound(user, fire_sound, 10, 1)
+			else
+				playsound(user, fire_sound, 50, 1)
+				user.visible_message("\red [user.name] fires the [src.name] at themselves!", "\red You fire the [src.name] at yourself!", "\blue You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
+
 			user.bullet_act(in_chamber)
 			del(in_chamber)
 			update_icon()
@@ -106,7 +132,8 @@
 				in_chamber.p_y = text2num(mouse_control["icon-y"])
 
 		spawn()
-			if(in_chamber)	in_chamber.process()
+			if(in_chamber)
+				in_chamber.process()
 		sleep(1)
 		in_chamber = null
 
