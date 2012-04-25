@@ -549,7 +549,7 @@ obj/machinery/computer/forensic_scanning
 						for(var/n = 2, n <= perp_list.len, n++)	//Lets see if it is already in the database
 							var/list/target = perp_list[n]
 							var/atom/atom_checker = target[1]
-							var/atom_checker_scan = (A.original_atom ? atom_checker.original_atom[1] == A.original_atom[1] : 0)
+							var/atom_checker_scan = (A.original_atom.len ? atom_checker.original_atom[1] == A.original_atom[1] : 0)
 							if(atom_checker.original_atom[1] == A || atom_checker_scan)	//Found the original object!
 								found2 = 1
 								var/list/prints = target[2]

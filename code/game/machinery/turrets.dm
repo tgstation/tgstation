@@ -385,6 +385,20 @@
 	user << browse(t, "window=turretid")
 	onclose(user, "turretid")
 
+
+/obj/machinery/turret/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
+	if(!(stat & BROKEN))
+		playsound(src.loc, 'slash.ogg', 25, 1, -1)
+		for(var/mob/O in viewers(src, null))
+			if ((O.client && !( O.blinded )))
+				O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
+		src.health -= 15
+		if (src.health <= 0)
+			src.die()
+	else
+		M << "\green That object is useless to you."
+	return
+
 /obj/machinery/turretid/Topic(href, href_list)
 	..()
 	if (src.locked)
@@ -400,6 +414,12 @@
 	src.attack_hand(usr)
 
 /obj/machinery/turretid/proc/updateTurrets()
+	if(control_area)
+		for (var/obj/machinery/turret/aTurret in get_area_all_atoms(control_area))
+			aTurret.setState(enabled, lethal)
+	src.update_icons()
+
+/obj/machinery/turretid/proc/update_icons()
 	if (src.enabled)
 		if (src.lethal)
 			src.icon_state = "motion1"
@@ -416,20 +436,6 @@
 
 	for (var/obj/machinery/turret/aTurret in turrets)
 		aTurret.setState(enabled, lethal)
-
-/obj/machinery/turret/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
-	if(!(stat & BROKEN))
-		playsound(src.loc, 'slash.ogg', 25, 1, -1)
-		for(var/mob/O in viewers(src, null))
-			if ((O.client && !( O.blinded )))
-				O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
-		src.health -= 15
-		if (src.health <= 0)
-			src.die()
-	else
-		M << "\green That object is useless to you."
-	return
-
 
 /obj/structure/turret/gun_turret
 	name = "Gun Turret"
