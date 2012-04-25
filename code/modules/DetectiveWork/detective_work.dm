@@ -219,7 +219,7 @@ obj/machinery/computer/forensic_scanning
 						temp += "Consolidated data points:<br>"
 						for(var/i = 1, i <= files.len, i++)
 							temp += "<a href='?src=\ref[src];operation=record;identifier=[i]'>{Dossier [i]}</a><br>"
-						temp += "<br><a href='?src=\ref[src];operation=card'>{Insert Finger Print Card}</a><br><br><br>"
+						temp += "<br><a href='?src=\ref[src];operation=card'>{Insert Finger Print Card (To complete a Dossier)}</a><br><br><br>"
 					else
 						temp = ""
 					if(misc && misc.len)
@@ -700,63 +700,89 @@ obj/machinery/computer/forensic_scanning
 obj/item/clothing/shoes/var
 	track_blood = 0
 	mob/living/carbon/human/track_blood_mob
+	track_blood_type
 mob/var
 	bloody_hands = 0
 	mob/living/carbon/human/bloody_hands_mob
 	track_blood
 	mob/living/carbon/human/track_blood_mob
+	track_blood_type
 obj/item/clothing/gloves/var
 	transfer_blood = 0
 	mob/living/carbon/human/bloody_hands_mob
 
 
-obj/effect/decal/cleanable/blood/var
-	track_amt = 2
+obj/effect/decal/cleanable/var
+	track_amt = 3
 	mob/blood_owner
 
 turf/Exited(mob/living/carbon/human/M)
 	if(istype(M,/mob/living) && !istype(M,/mob/living/carbon/metroid))
-		if(!istype(src, /turf/space))  // Bloody tracks code starts here
-			if(M.track_blood > 0)
-				M.track_blood--
-				src.add_bloody_footprints(M.track_blood_mob,1,M.dir,get_tracks(M))
-			else if(istype(M,/mob/living/carbon/human))
-				if(M.shoes)
-					if(M.shoes.track_blood > 0)
-						M.shoes.track_blood--
-						src.add_bloody_footprints(M.shoes.track_blood_mob,1,M.dir,M.shoes.name) // And bloody tracks end here
+		var/dofoot = 1
+		if(istype(M,/mob/living/simple_animal))
+			if(!(istype(M,/mob/living/simple_animal/cat) || istype(M,/mob/living/simple_animal/corgi) || istype(M,/mob/living/simple_animal/constructwraith)))
+				dofoot = 0
+
+		if(dofoot)
+
+			if(!istype(src, /turf/space))  // Bloody tracks code starts here
+				if(M.track_blood > 0)
+					M.track_blood--
+					src.add_bloody_footprints(M.track_blood_mob,1,M.dir,get_tracks(M),M.track_blood_type)
+				else if(istype(M,/mob/living/carbon/human))
+					if(M.shoes)
+						if(M.shoes.track_blood > 0)
+							M.shoes.track_blood--
+							src.add_bloody_footprints(M.shoes.track_blood_mob,1,M.dir,M.shoes.name,M.shoes.track_blood_type) // And bloody tracks end here
 	. = ..()
 turf/Entered(mob/living/carbon/human/M)
 	if(istype(M,/mob/living) && !istype(M,/mob/living/carbon/metroid))
-		if(M.track_blood > 0)
-			M.track_blood--
-			src.add_bloody_footprints(M.track_blood_mob,0,M.dir,get_tracks(M))
-		else if(istype(M,/mob/living/carbon/human))
-			if(M.shoes && !istype(src,/turf/space))
-				if(M.shoes.track_blood > 0)
-					M.shoes.track_blood--
-					src.add_bloody_footprints(M.shoes.track_blood_mob,0,M.dir,M.shoes.name)
+		var/dofoot = 1
+		if(istype(M,/mob/living/simple_animal))
+			if(!(istype(M,/mob/living/simple_animal/cat) || istype(M,/mob/living/simple_animal/corgi) || istype(M,/mob/living/simple_animal/constructwraith)))
+				dofoot = 0
+
+		if(dofoot)
+
+			if(M.track_blood > 0)
+				M.track_blood--
+				src.add_bloody_footprints(M.track_blood_mob,0,M.dir,get_tracks(M),M.track_blood_type)
+			else if(istype(M,/mob/living/carbon/human))
+				if(M.shoes && !istype(src,/turf/space))
+					if(M.shoes.track_blood > 0)
+						M.shoes.track_blood--
+						src.add_bloody_footprints(M.shoes.track_blood_mob,0,M.dir,M.shoes.name,M.shoes.track_blood_type)
 
 
-		for(var/obj/effect/decal/cleanable/blood/B in src)
-			if(B.track_amt <= 0) continue
-			if(B.type != /obj/effect/decal/cleanable/blood/tracks)
-				if(istype(M,/mob/living/carbon/human))
-					if(M.shoes)
-						M.shoes.add_blood(B.blood_owner)
-						M.shoes.track_blood_mob = B.blood_owner
-						M.shoes.track_blood = max(M.shoes.track_blood,8)
-				else
-					M.add_blood(B.blood_owner)
-					M.track_blood_mob = B.blood_owner
-					M.track_blood = max(M.track_blood,rand(4,8))
-				B.track_amt--
-				break
+			for(var/obj/effect/decal/cleanable/B in src)
+				if(B:track_amt <= 0) continue
+				if(B.type != /obj/effect/decal/cleanable/blood/tracks)
+					if(istype(B, /obj/effect/decal/cleanable/xenoblood) || istype(B, /obj/effect/decal/cleanable/blood) || istype(B, /obj/effect/decal/cleanable/oil) || istype(B, /obj/effect/decal/cleanable/robot_debris))
+
+						var/track_type = "blood"
+						if(istype(B, /obj/effect/decal/cleanable/xenoblood))
+							track_type = "xeno"
+						else if(istype(B, /obj/effect/decal/cleanable/oil) || istype(B, /obj/effect/decal/cleanable/robot_debris))
+							track_type = "oil"
+
+						if(istype(M,/mob/living/carbon/human))
+							if(M.shoes)
+								M.shoes.add_blood(B.blood_owner)
+								M.shoes.track_blood_mob = B.blood_owner
+								M.shoes.track_blood = max(M.shoes.track_blood,8)
+								M.shoes.track_blood_type = track_type
+						else
+							M.add_blood(B.blood_owner)
+							M.track_blood_mob = B.blood_owner
+							M.track_blood = max(M.track_blood,rand(4,8))
+							M.track_blood_type = track_type
+						B.track_amt--
+						break
 	. = ..()
 
-turf/proc/add_bloody_footprints(mob/living/carbon/human/M,leaving,d,info)
+turf/proc/add_bloody_footprints(mob/living/carbon/human/M,leaving,d,info,bloodcolor)
 	for(var/obj/effect/decal/cleanable/blood/tracks/T in src)
-		if(T.dir == d)
+		if(T.dir == d && findtext(T.icon, bloodcolor))
 			if((leaving && T.icon_state == "steps2") || (!leaving && T.icon_state == "steps1"))
 				T.desc = "These bloody footprints appear to have been made by [info]."
 				if(T.blood_DNA)
@@ -770,12 +796,29 @@ turf/proc/add_bloody_footprints(mob/living/carbon/human/M,leaving,d,info)
 				return
 	var/obj/effect/decal/cleanable/blood/tracks/this = new(src)
 	this.icon = 'footprints.dmi'
+
+	var/preiconstate = ""
+
+	if(info == "animal paws")
+		preiconstate = "paw"
+	else if(info == "alien claws")
+		preiconstate = "claw"
+	else if(info == "small alien feet")
+		preiconstate = "paw"
+
 	if(leaving)
-		this.icon_state = "blood2"
+		this.icon_state = "[bloodcolor][preiconstate]2"
 	else
-		this.icon_state = "blood1"
+		this.icon_state = "[bloodcolor][preiconstate]1"
 	this.dir = d
-	this.desc = "These bloody footprints appear to have been made by [info]."
+
+	if(bloodcolor == "blood")
+		this.desc = "These bloody footprints appear to have been made by [info]."
+	else if(bloodcolor == "xeno")
+		this.desc = "These acidic bloody footprints appear to have been made by [info]."
+	else if(bloodcolor == "oil")
+		this.desc = "These oil footprints appear to have been made by [info]."
+
 	if(istype(M,/mob/living/carbon/human))
 		if(this.blood_DNA.len)
 			this.blood_DNA.len++
@@ -787,14 +830,17 @@ proc/get_tracks(mob/M)
 	if(istype(M,/mob/living))
 		if(istype(M,/mob/living/carbon/human))
 			. = "human feet"
-		else if(istype(M,/mob/living/carbon/monkey))
-			. = "monkey paws"
+		else if(istype(M,/mob/living/carbon/monkey) || istype(M,/mob/living/simple_animal/cat) || istype(M,/mob/living/simple_animal/corgi) || istype(M,/mob/living/simple_animal/crab))
+			. = "animal paws"
 		else if(istype(M,/mob/living/silicon/robot))
 			. = "robot feet"
-		else if(istype(M,/mob/living/carbon/alien))
+		else if(istype(M,/mob/living/carbon/alien/humanoid))
 			. = "alien claws"
+		else if(istype(M,/mob/living/carbon/alien/larva))
+			. = "small alien feet"
 		else
 			. = "an unknown creature"
+
 
 proc/blood_incompatible(donor,receiver)
 	var

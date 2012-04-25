@@ -962,7 +962,8 @@
 						lying = 1
 						stat = 0
 					if (paralysis > 0)
-						handle_dreams()
+						if(sleeping > 0)
+							handle_dreams()
 						AdjustParalysis(-1)
 						blinded = 1
 						lying = 1
