@@ -82,6 +82,8 @@ var/specops_shuttle_timeleft = 0
 		var/mob/M = locate(/mob) in T
 		M << "\red You have arrived at Central Command. Operation has ended!"
 
+	specops_shuttle_at_station = 0
+
 	for(var/obj/machinery/computer/specops_shuttle/S in world)
 		S.specops_shuttle_timereset = world.time + SPECOPS_RETURN_DELAY
 
