@@ -50,7 +50,7 @@
 
 
 /obj/item/weapon/storage/belt/utility
-	name = "utility belt"
+	name = "tool-belt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Can hold various tools."
 	icon_state = "utilitybelt"
 	item_state = "utility"

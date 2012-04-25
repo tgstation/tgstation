@@ -22,11 +22,11 @@
 
 /obj/item/clothing/under/chameleon
 //starts off as black
-	name = "Black Jumpsuit"
+	name = "black jumpsuit"
 	icon_state = "black"
 	item_state = "bl_suit"
 	color = "black"
-	desc = "A plain jumpsuit. It seems to have a small dial on the wrist."
+	desc = "It's a plain jumpsuit. It seems to have a small dial on the wrist."
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 	armor = list(melee = 10, bullet = 0, laser = 50,energy = 0, bomb = 0, bio = 0, rad = 0)
@@ -41,39 +41,39 @@
 /obj/item/clothing/under/chameleon/all
 
 /obj/item/clothing/under/color/black
-	name = "Black Jumpsuit"
+	name = "black jumpsuit"
 	icon_state = "black"
 	item_state = "bl_suit"
 	color = "black"
 
 /obj/item/clothing/under/color/blackf
-	name = "Female Black Jumpsuit"
-	desc = "This one is a lady-size!"
+	name = "feminine black jumpsuit"
+	desc = "It's very smart and in a ladies-size!"
 	icon_state = "black"
 	item_state = "bl_suit"
 	color = "blackf"
 
 /obj/item/clothing/under/color/blue
-	name = "Blue Jumpsuit"
+	name = "blue jumpsuit"
 	icon_state = "blue"
 	item_state = "b_suit"
 	color = "blue"
 
 /obj/item/clothing/under/color/green
-	name = "Green Jumpsuit"
+	name = "green jumpsuit"
 	icon_state = "green"
 	item_state = "g_suit"
 	color = "green"
 
 /obj/item/clothing/under/color/grey
-	name = "Grey Jumpsuit"
+	name = "grey jumpsuit"
 	icon_state = "grey"
 	item_state = "gy_suit"
 	color = "grey"
 
 /obj/item/clothing/under/color/orange
-	name = "Orange Jumpsuit"
-	desc = "Standard Nanotrasen prisoner wear. Its suit sensors are stuck in the \"Fully On\" position."
+	name = "orange jumpsuit"
+	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "orange"
 	item_state = "o_suit"
 	color = "orange"
@@ -81,20 +81,20 @@
 	sensor_mode = 3
 
 /obj/item/clothing/under/color/pink
-	name = "Pink Jumpsuit"
+	name = "pink jumpsuit"
 	icon_state = "pink"
 	item_state = "p_suit"
 	color = "pink"
 
 /obj/item/clothing/under/color/red
-	name = "Red Jumpsuit"
+	name = "red jumpsuit"
 	icon_state = "red"
 	item_state = "r_suit"
 	color = "red"
 
 /obj/item/clothing/under/color/white
-	desc = "Made of a special fiber that gives protection against biohazards."
-	name = "White Jumpsuit"
+	desc = "It's made of a special fiber which gives special protection against biohazards."
+	name = "white jumpsuit"
 	icon_state = "white"
 	item_state = "w_suit"
 	color = "white"
@@ -102,7 +102,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/color/yellow
-	name = "Yellow Jumpsuit"
+	name = "yellow jumpsuit"
 	icon_state = "yellow"
 	item_state = "y_suit"
 	color = "yellow"
@@ -111,29 +111,29 @@
 /obj/item/clothing/under/rank
 
 /obj/item/clothing/under/rank/atmospheric_technician
-	desc = "A jumpsuit used by atmospheric technicians."
-	name = "Atmospherics Jumpsuit"
+	desc = "It's a jumpsuit worn by atmospheric technicians."
+	name = "atmospheric technician's jumpsuit"
 	icon_state = "atmos"
 	item_state = "atmos_suit"
 	color = "atmos"
 
 /obj/item/clothing/under/rank/captain
-	desc = "A blue jumpsuit with gold marking denoting the rank of \"Captain\"."
-	name = "Captain Jumpsuit"
+	desc = "It's a blue jumpsuit with some gold markings denoting the rank of \"Captain\"."
+	name = "captain's jumpsuit"
 	icon_state = "captain"
 	item_state = "caparmor"
 	color = "captain"
 
 /obj/item/clothing/under/rank/chaplain
-	desc = "A black jumpsuit, worn by religious folk."
-	name = "Chaplain Jumpsuit"
+	desc = "It's a black jumpsuit, often worn by religious folk."
+	name = "chaplain's jumpsuit"
 	icon_state = "chaplain"
 	item_state = "bl_suit"
 	color = "chapblack"
 
 /obj/item/clothing/under/rank/engineer
-	desc = "An orange high visibility jumpsuit. Used by Nanotrasen Engineers, has minor radiation shielding."
-	name = "Engineering Jumpsuit"
+	desc = "It's an orange high visibility jumpsuit worn by engineers. It has minor radiation shielding."
+	name = "engineer's jumpsuit"
 	icon_state = "engine"
 	item_state = "engi_suit"
 	color = "engine"
@@ -141,7 +141,7 @@
 
 /obj/item/clothing/under/rank/forensic_technician
 	desc = "It has a Forensics rank stripe on it."
-	name = "Forensics Jumpsuit"
+	name = "forensic technician's jumpsuit"
 	icon_state = "darkred"
 	item_state = "r_suit"
 	color = "forensicsred"
@@ -163,16 +163,16 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/rank/vice
-	name = "Vice officer Jumpsuit"
-	desc = "Your standard issue pretty-boy outfit, as seen on TV."
+	name = "vice officer's jumpsuit"
+	desc = "It's the standard issue pretty-boy outfit, as seen on Holo-Vision."
 	icon_state = "vice"
 	item_state = "gy_suit"
 	color = "vice"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/rank/geneticist
-	desc = "Made of a special fiber that gives special protection against biohazards. Has a genetics rank stripe on it."
-	name = "Genetics Jumpsuit"
+	desc = "It's made of a special fiber that gives special protection against biohazards. It has a genetics rank stripe on it."
+	name = "geneticist's jumpsuit"
 	icon_state = "genetics"
 	item_state = "w_suit"
 	color = "geneticswhite"
@@ -180,8 +180,8 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/chemist
-	desc = "Made of a special fiber that gives special protection against biohazards. Has a chemist rank stripe on it."
-	name = "Chemist Jumpsuit"
+	desc = "It's made of a special fiber that gives special protection against biohazards. It has a chemist rank stripe on it."
+	name = "chemist's jumpsuit"
 	icon_state = "chemistry"
 	item_state = "w_suit"
 	color = "chemistrywhite"
@@ -189,8 +189,8 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/virologist
-	desc = "Made of a special fiber that gives special protection against biohazards. Has a virologist rank stripe on it."
-	name = "Virology Jumpsuit"
+	desc = "It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it."
+	name = "virologist's jumpsuit"
 	icon_state = "virology"
 	item_state = "w_suit"
 	color = "virologywhite"
@@ -198,74 +198,74 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/head_of_personnel
-	desc = "A jumpsuit worn by someone who works in the position of \"Head of Personnel\"."
-	name = "Head of Personnel Jumpsuit"
+	desc = "It's a jumpsuit worn by someone who works in the position of \"Head of Personnel\"."
+	name = "head of personnel's jumpsuit"
 	icon_state = "hop"
 	item_state = "b_suit"
 	color = "hop"
 
 /obj/item/clothing/under/rank/centcom_officer
-	desc = "A jumpsuit worn by Centcom Officers."
-	name = "CentCom Officer Jumpsuit"
-	icon_state = "centcom"
-	item_state = "g_suit"
-	color = "centcom"
-
-/obj/item/clothing/under/rank/centcom_commander
-	desc = "A jumpsuit worn by Centcom's highest level Commanders."
-	name = "CentCom Officer Jumpsuit"
+	desc = "It's a jumpsuit worn by CentCom Officers."
+	name = "\improper CentCom officer's jumpsuit"
 	icon_state = "officer"
-	item_state = "dg_suit"
+	item_state = "g_suit"
 	color = "officer"
 
+/obj/item/clothing/under/rank/centcom_commander
+	desc = "It's a jumpsuit worn by CentCom's highest-tier Commanders."
+	name = "\improper CentCom officer's jumpsuit"
+	icon_state = "centcom"
+	item_state = "dg_suit"
+	color = "centcom"
+
 /obj/item/clothing/under/rank/miner
-	desc = "A snappy jumpsuit with a sturdy set of overalls. It is very dirty."
-	name = "Shaft Miner Jumpsuit"
+	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."
+	name = "shaft miner's jumpsuit"
 	icon_state = "miner"
 	item_state = "miner"
 	color = "miner"
 
 /obj/item/clothing/under/rank/roboticist
-	desc = "A slimming black with reinforced seams. Great for industrial work."
-	name = "Roboticist Jumpsuit"
+	desc = "It's a slimming black with reinforced seams; great for industrial work."
+	name = "roboticist's jumpsuit"
 	icon_state = "robotics"
 	item_state = "robotics"
 	color = "robotics"
 
 /obj/item/clothing/under/rank/head_of_security
-	desc = "A jumpsuit worn by those few with the dedication to achieve the position of \"Head of Security\". Has slight armor to protect the wearer."
-	name = "Head of Security Jumpsuit"
+	desc = "It's a jumpsuit worn by those few with the dedication to achieve the position of \"Head of Security\". It has additional armor to protect the wearer."
+	name = "head of security's jumpsuit"
 	icon_state = "hos"
 	item_state = "r_suit"
 	color = "hosred"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/rank/chief_engineer
-	desc = "A high visibility jumpsuit given to those engineers committed enough to their jobs to achieve the rank of \"Chief engineer\". Has minor radiation shielding."
-	name = "Chief Engineer Jumpsuit"
+	desc = "It's a high visibility jumpsuit given to those engineers insane enough to achieve the rank of \"Chief engineer\". It has minor radiation shielding."
+	name = "chief engineer's jumpsuit"
 	icon_state = "chiefengineer"
 	item_state = "g_suit"
 	color = "chief"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 10)
 
 /obj/item/clothing/under/rank/research_director
-	desc = "A jumpsuit worn by those dedicated to all that is science and have achieved the position of \"Research Director\". Has minor biological anomaly protection."
-	name = "Research Director Jumpsuit"
+	desc = "It's a jumpsuit worn by those with the know-how to achieve the position of \"Research Director\". Its fabric provides minor protection from biological contaminants."
+	name = "research director's jumpsuit"
 	icon_state = "director"
 	item_state = "g_suit"
 	color = "director"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/janitor
-	desc = "Official clothing of the station's janitor. Has minor protection from biohazards."
-	name = "Janitor's Jumpsuit"
+	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."
+	name = "janitor's jumpsuit"
 	icon_state = "janitor"
 	color = "janitor"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/scientist
-	desc = "Made of a special fiber that gives special protection against biohazards. Has markings denoting the wearer as a scientist."
-	name = "Scientist's Jumpsuit"
+	desc = "It's made of a special fiber that provides minor protection against biohazards. It has markings that denote the wearer as a scientist."
+	name = "scientist's jumpsuit"
 	icon_state = "toxins"
 	item_state = "w_suit"
 	color = "toxinswhite"
@@ -273,8 +273,8 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0)
 
 /obj/item/clothing/under/rank/medical
-	desc = "Made of a special fiber that gives special protection against biohazards. Has a cross on the chest denoting that the wearer is trained medical personnel."
-	name = "Medical Doctor's Jumpsuit"
+	desc = "It's made of a special fiber that provides minor protection against biohazards. it has a cross on the chest denoting that the wearer is trained medical personnel."
+	name = "medical doctor's jumpsuit"
 	icon_state = "medical"
 	item_state = "w_suit"
 	color = "medical"
@@ -282,8 +282,8 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/chief_medical_officer
-	desc = "A jumpsuit worn by those with the dedication to the medical profession who have achieved the position of \"Chief Medical Officer\". Has minor biological protection."
-	name = "Chief Medical Officer's Jumpsuit"
+	desc = "It's a jumpsuit worn by those with the experience to be \"Chief Medical Officer\". It provides minor biological protection."
+	name = "chief medical officer's jumpsuit"
 	icon_state = "medical"
 	item_state = "w_suit"
 	color = "medical"
@@ -291,8 +291,8 @@
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/hydroponics
-	desc = "A jumpsuit designed to protect against minor plant-related hazards."
-	name = "Hydroponics Jumpsuit"
+	desc = "It's a jumpsuit designed to protect against minor plant-related hazards."
+	name = "botanist's jumpsuit"
 	icon_state = "hydroponics"
 	item_state = "g_suit"
 	color = "hydroponics"
@@ -300,56 +300,56 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/cargo
-	name = "Quartermaster's Jumpsuit"
-	desc = "What can brown do for you?"
+	name = "quartermaster's jumpsuit"
+	desc = "It's a jumpsuit worn by the quartermaster. It's specially designed to prevent back injuries caused by heavy lifting."
 	icon_state = "lightbrown"
 	item_state = "lb_suit"
 	color = "cargo"
 
 /obj/item/clothing/under/rank/cargotech
-	name = "Cargotech's Jumpsuit"
-	desc = "Shooooorts! They're comfy and easy to wear!"
+	name = "cargotech's jumpsuit"
+	desc = "<i>'Shooooorts! They're comfy and easy to wear!'</i>"
 	icon_state = "cargotech"
 	item_state = "cargotech"
 	color = "cargotech"
 
 /obj/item/clothing/under/rank/mailman
-	name = "Mailman Jumpsuit"
-	desc = "Special delivery!"
+	name = "mailman's jumpsuit"
+	desc = "<i>'Special delivery!'</i>"
 	icon_state = "mailman"
 	item_state = "b_suit"
 	color = "mailman"
 
 /obj/item/clothing/under/sexyclown
-	name = "Sexyclown suit"
-	desc = "What can I do for you?"
+	name = "sexy-clown suit"
+	desc = "It makes you look HONKable!"
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
 	color = "sexyclown"
 
 /obj/item/clothing/under/rank/bartender
-	desc = "It looks like it could use more flair."
-	name = "Bartender's Uniform"
+	desc = "It looks like it could use some more flair."
+	name = "bartender's uniform"
 	icon_state = "ba_suit"
 	item_state = "ba_suit"
 	color = "ba_suit"
 
 /obj/item/clothing/under/rank/clown
 	name = "clown suit"
-	desc = "Wearing this, all the children love you, for all the wrong reasons."
+	desc = "<i>'HONK!'</i>"
 	icon_state = "clown"
 	item_state = "clown"
 	color = "clown"
 
 /obj/item/clothing/under/rank/chef
-	desc = "Issued only to the most hardcore chefs in space."
-	name = "Chef's Uniform"
+	desc = "It's an apron which is given only to the most <b>hardcore</b> chefs in space."
+	name = "chef's uniform"
 	icon_state = "chef"
 	color = "chef"
 
 /obj/item/clothing/under/rank/geneticist_new
-	desc = "Made of a special fiber that gives special protection against biohazards."
-	name = "Genetics Jumpsuit"
+	desc = "It's made of a special fiber which provides minor protection against biohazards."
+	name = "geneticist's jumpsuit"
 	icon_state = "genetics_new"
 	item_state = "w_suit"
 	color = "genetics_new"
@@ -357,8 +357,8 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/rank/chemist_new
-	desc = "Made of a special fiber that gives special protection against biohazards."
-	name = "Chemist Jumpsuit"
+	desc = "It's made of a special fiber which provides minor protection against biohazards."
+	name = "chemist's jumpsuit"
 	icon_state = "chemist_new"
 	item_state = "w_suit"
 	color = "chemist_new"
@@ -367,7 +367,7 @@
 
 /obj/item/clothing/under/rank/scientist_new
 	desc = "Made of a special fiber that gives special protection against biohazards and small explosions."
-	name = "Scientist Jumpsuit"
+	name = "scientist's jumpsuit"
 	icon_state = "scientist_new"
 	item_state = "w_suit"
 	color = "scientist_new"
@@ -376,7 +376,7 @@
 
 /obj/item/clothing/under/rank/virologist_new
 	desc = "Made of a special fiber that gives increased protection against biohazards."
-	name = "Virologist Jumpsuit"
+	name = "virologist's jumpsuit"
 	icon_state = "virologist_new"
 	item_state = "w_suit"
 	color = "virologist_new"
@@ -386,7 +386,7 @@
 
 // OTHER NONRANKED STATION JOBS
 /obj/item/clothing/under/det
-	name = "Hard worn suit"
+	name = "hard-worn suit"
 	desc = "Someone who wears this means business."
 	icon_state = "detective"
 	item_state = "det"
@@ -395,30 +395,31 @@
 	var/obj/item/weapon/gun
 
 /obj/item/clothing/under/scratch
-	name = "White Suit"
+	name = "white suit"
 	desc = "A white suit, suitable for an excellent host"
 	flags = FPRINT | TABLEPASS
 	icon_state = "scratch"
 	item_state = "scratch"
 	color = "scratch"
 
+
 /obj/item/clothing/under/jensen
-	desc = "You never asked for anything this stylish."
-	name = "Head of Security Jumpsuit"
+	desc = "You never asked for anything that stylish."
+	name = "head of security's jumpsuit"
 	icon_state = "jensen"
 	item_state = "jensen"
 	color = "jensen"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/sl_suit
-	desc = "A very amish looking suit."
-	name = "Amish Suit"
+	desc = "It's a very amish looking suit."
+	name = "amish suit"
 	icon_state = "sl_suit"
 	color = "sl_suit"
 
 /obj/item/clothing/under/syndicate
-	name = "Tactical Turtleneck"
-	desc = "Non-descript, slightly suspicious civilian clothing."
+	name = "tactical turtleneck"
+	desc = "It's some non-descript, slightly suspicious looking, civilian clothing."
 	icon_state = "syndicate"
 	item_state = "bl_suit"
 	color = "syndicate"
@@ -426,33 +427,33 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/syndicate/tacticool
-	name = "Tacticool Turtleneck"
-	desc = "Wearing this makes you feel like buying an SKS, going into the woods, and operating."
+	name = "\improper Tacticool turtleneck"
+	desc = "Just looking at it makes you want to buy an SKS, go into the woods, and -operate-."
 	icon_state = "tactifool"
 	item_state = "bl_suit"
 	color = "tactifool"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/syndicate/combat
-	name = "Combat Turtleneck"
+	name = "combat turtleneck"
 
 /obj/item/clothing/under/librarian
-	name = "Sensible Suit"
+	name = "sensible suit"
 	desc = "It's very... sensible."
 	icon_state = "red_suit"
 	item_state = "red_suit"
 	color = "red_suit"
 
 /obj/item/clothing/under/mime
-	name = "Mime Outfit"
+	name = "mime's outfit"
 	desc = "It's not very colourful."
 	icon_state = "mime"
 	item_state = "mime"
 	color = "mime"
 
 /obj/item/clothing/under/waiter
-	name = "Waiter Outfit"
-	desc = "There is a special pocket for tip."
+	name = "waiter's outfit"
+	desc = "It's a very smart uniform with a special pocket for tip."
 	icon_state = "waiter"
 	item_state = "waiter"
 	color = "waiter"
@@ -462,6 +463,7 @@
 /obj/item/clothing/under/shorts
 	name = "athletic shorts"
 	desc = "95% Polyester, 5% Spandex!"
+	gender = PLURAL
 	flags = FPRINT | TABLEPASS
 	body_parts_covered = LOWER_TORSO
 
@@ -486,11 +488,11 @@
 	color = "greyshorts"
 
 /obj/item/clothing/under/space
-	name = "NASA Jumpsuit"
+	name = "\improper NASA jumpsuit"
+	desc = "It has a NASA logo on it and is made of space-proofed materials."
 	icon_state = "black"
 	item_state = "bl_suit"
 	color = "black"
-	desc = "Has a NASA logo on it, made of space proofed materials."
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
@@ -500,15 +502,15 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 
 /obj/item/clothing/under/spiderman
-	name = "Deadpool Suit"
-	desc = "A suit of Deadpool!"
+	name = "\improper Deadpool suit"
+	desc = "It's the suit of Deadpool!"
 	icon_state = "spiderman"
 	item_state = "spiderman"
 	color = "spiderman"
 
 /obj/item/clothing/under/rank/nursesuit
-	desc = "Made of a special fiber that gives special protection against biohazards. A jumpsuit commonly worn by nursing staff in the medical department."
-	name = "Nurse Suit"
+	desc = "It's a jumpsuit commonly worn by nursing staff in the medical department."
+	name = "nurse's suit"
 	icon_state = "nursesuit"
 	item_state = "nursesuit"
 	color = "nursesuit"
@@ -516,11 +518,11 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/under/acj
-	name = "Administrative Cybernetic Jumpsuit"
+	name = "administrative cybernetic jumpsuit"
 	icon_state = "syndicate"
 	item_state = "bl_suit"
 	color = "syndicate"
-	desc = "A cybernetically enhanced jumpsuit used in administrative duties."
+	desc = "it's a cybernetically enhanced jumpsuit used for administrative duties."
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	heat_transfer_coefficient = 0.01
@@ -530,8 +532,8 @@
 	armor = list(melee = 100, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100)
 
 /obj/item/clothing/under/rank/medical_sleeve
-	desc = "Made of a special fiber that gives special protection against biohazards. Has a cross on the chest denoting that the wearer is trained medical personneland short sleeves."
-	name = "Short Sleeve Medical Jumpsuit"
+	desc = "Made of a special fiber that gives special protection against biohazards. Has a cross on the chest denoting that the wearer is trained medical personnel."
+	name = "short sleeve medical jumpsuit"
 	icon_state = "medical_sleeve"
 	item_state = "w_suit"
 	color = "medical_sleeve"
@@ -540,7 +542,7 @@
 
 /obj/item/clothing/under/jumpsuitdown
 	desc = "A rolled down jumpsuit. Great for mechanics."
-	name = "Rolled Down Jumpsuit"
+	name = "rolled down jumpsuit"
 	icon_state = "jumpsuitdown"
 	item_state = "jumpsuitdown"
 	color = "jumpsuitdown"
@@ -569,7 +571,7 @@
 //End of cheerleaders
 
 /obj/item/clothing/under/captainmal
-	name = "Red Captain's Jumpsuit"
+	name = "red captain's jumpsuit"
 	desc = "We have done the impossible, and that makes us mighty."
 	icon_state = "captainmal"
 	item_state = "captainmal"

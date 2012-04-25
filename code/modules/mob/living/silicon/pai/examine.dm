@@ -1,24 +1,27 @@
-/mob/living/silicon/pai/examine()
+/mob/living/silicon/pai/examine() //removed as it was pointless...moved to the pai-card instead.
+	/* This is totaly pointless because this mob is contained inside a card!
 	set src in oview()
 
-	usr << "\blue *---------*"
-	usr << text("\blue This is \icon[] <B>[]</B>!", src, src.name)
-	if (src.stat == 2)
-		usr << text("\red [] appears disabled.", src.name)
+	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
+	if (src.stat == DEAD)
+		msg += "<span class='deadsay'>It appears to be offline.</span>\n"
 	else
+		msg += "<span class='warning'>"
 		if (src.getBruteLoss())
 			if (src.getBruteLoss() < 30)
-				usr << text("\red [] looks slightly dented", src.name)
+				msg += "It looks slightly dented.\n"
 			else
-				usr << text("\red <B>[]'s casing appears cracked and broken!</B>", src.name)
-			if (src.getFireLoss())
-				if (src.getFireLoss() < 30)
-					usr << text("\red [] looks slightly charred!", src.name)
-				else
-					usr << text("\red <B>[]'s casing is melted and heat-warped!</B>", src.name)
-				if (src.stat == 1)
-					usr << text("\red [] doesn't seem to be responding.", src.name)
+				msg += "<B>Its casing appears cracked and broken!</B>\n"
+		if (src.getFireLoss())
+			if (src.getFireLoss() < 30)
+				msg += "It looks slightly charred!\n"
+			else
+				msg += "<B>Its casing is melted and heat-warped!</B>\n"
+		if (src.stat == UNCONSCIOUS)
+			msg += "It doesn't seem to be responding and its text-output is lagging.\n"
+		msg += "</span>"
+	msg += "*---------*</span>"
 
-	usr << print_flavor_text()
-
+	usr << msg
+	*/
 	return
