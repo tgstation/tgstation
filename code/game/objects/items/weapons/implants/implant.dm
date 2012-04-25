@@ -211,11 +211,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		if(!istype(M, /mob/living/carbon/human))	return
 		var/mob/living/carbon/human/H = M
 		if(H.mind in ticker.mode.head_revolutionaries)
-			visible_message("\red [M] seems to resist the implant.", 1)
-			for(var/mob/O in (viewers(M) -  M))
-				O.show_message("\red [M] seems to resist the implant.", 1)
-				M << "\red You resist the implant."
-				return
+			H.visible_message("[H] seems to resist the implant!", "You feel the corporate tendrils of NanoTrasen try to invade your mind!")
+			return
 		else if(H.mind in ticker.mode:revolutionaries)
 			ticker.mode:remove_revolutionary(H.mind)
 		H << "\blue You feel a surge of loyalty towards NanoTrasen."
