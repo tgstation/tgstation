@@ -186,6 +186,7 @@
 					return 0
 
 		move_delay = world.time//set move delay
+
 		switch(mob.m_intent)
 			if("run")
 				if(mob.drowsyness > 0)
@@ -198,6 +199,14 @@
 //					move_delay += mob.organStructure.legs.moveWalkDelay
 				move_delay += 7
 		move_delay += mob.movement_delay()
+
+		if(config.Tickcomp)
+			move_delay -= 1.3
+			var/tickcomp = ((1/(world.tick_lag))*1.3)
+			move_delay = move_delay + tickcomp
+
+
+
 
 		//We are now going to move
 		moving = 1
@@ -334,7 +343,8 @@
 ///Return 1 for movement 0 for none
 /mob/proc/Process_Spacemove(var/check_drift = 0)
 	//First check to see if we can do things
-	if(restrained())	return 0
+	if(restrained())
+		return 0
 
 	/*
 	if(istype(src,/mob/living/carbon))
@@ -380,7 +390,10 @@
 				break
 
 	//Nothing to push off of so end here
-	if(!dense_object)	return 0
+	if(!dense_object)
+		return 0
+
+
 
 	//Check to see if we slipped
 	if(prob(Process_Spaceslipping(5)))
@@ -396,7 +409,8 @@
 /mob/proc/Process_Spaceslipping(var/prob_slip = 5)
 	//Setup slipage
 	//If knocked out we might just hit it and stop.  This makes it possible to get dead bodies and such.
-	if(stat)	prob_slip += 50
+	if(stat)
+		prob_slip = 0  // Changing this to zero to make it line up with the comment.
 
 	prob_slip = round(prob_slip)
 	return(prob_slip)

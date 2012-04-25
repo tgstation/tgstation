@@ -990,52 +990,123 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
 
+/mob/proc/createGeas()
+/*
+	var/obj/effect/stop/S
+	for(var/obj/effect/stop/temp in loc)
+		if(temp.victim == src)
+			S = temp
+
+	if(!S)
+		S = new /obj/effect/stop
+		S.victim = src
+		S.loc = src.loc
+		geaslist += S
+*/
+	return
+
 
 /mob/proc/Stun(amount)
 	if(canstun)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
+		if(stunned)
+			createGeas()
 	else
 		if(istype(src, /mob/living/carbon/alien))	// add some movement delay
 			var/mob/living/carbon/alien/Alien = src
-			Alien.move_delay_add = min(Alien.move_delay_add + round(amount / 5), 10) // a maximum delay of 10
+			Alien.move_delay_add = min(Alien.move_delay_add + round(amount / 2), 10) // a maximum delay of 10
 	return
 
 /mob/proc/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
 	if(canstun)
 		stunned = max(amount,0)
+		if(stunned)
+			createGeas()
 	return
 
 /mob/proc/AdjustStunned(amount)
 	if(canstun)
 		stunned = max(stunned + amount,0)
+		if(stunned)
+			createGeas()
 	return
 
 /mob/proc/Weaken(amount)
 	if(canweaken)
 		weakened = max(max(weakened,amount),0)
+		if(weakened)
+			createGeas()
 	return
 
 /mob/proc/SetWeakened(amount)
 	if(canweaken)
 		weakened = max(amount,0)
+		if(weakened)
+			createGeas()
 	return
 
 /mob/proc/AdjustWeakened(amount)
 	if(canweaken)
 		weakened = max(weakened + amount,0)
+		if(weakened)
+			createGeas()
 	return
 
 /mob/proc/Paralyse(amount)
 	paralysis = max(max(paralysis,amount),0)
+	if(paralysis)
+		createGeas()
 	return
 
 /mob/proc/SetParalysis(amount)
 	paralysis = max(amount,0)
 	return
+	if(paralysis)
+		createGeas()
 
 /mob/proc/AdjustParalysis(amount)
 	paralysis = max(paralysis + amount,0)
+	if(paralysis)
+		createGeas()
 	return
+
+/mob/proc/Sleeping(amount)
+	sleeping = max(max(sleeping,amount),0)
+	if(sleeping)
+		createGeas()
+	return
+
+/mob/proc/SetSleeping(amount)
+	sleeping = max(amount,0)
+	return
+	if(sleeping)
+		createGeas()
+
+
+/mob/proc/AdjustSleeping(amount)
+	sleeping = max(sleeping + amount,0)
+	if(sleeping)
+		createGeas()
+	return
+
+/mob/proc/Resting(amount)
+	resting = max(max(resting,amount),0)
+	if(resting)
+		createGeas()
+	return
+
+/mob/proc/SetResting(amount)
+	resting = max(amount,0)
+	return
+	if(resting)
+		createGeas()
+
+/mob/proc/AdjustResting(amount)
+	resting = max(resting + amount,0)
+	if(resting)
+		createGeas()
+	return
+
 
 // ++++ROCKDTBEN++++ MOB PROCS -- Ask me before touching
 

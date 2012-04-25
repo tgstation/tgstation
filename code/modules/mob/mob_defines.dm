@@ -272,3 +272,5 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 	var/digitalcamo = 0 // Can they be tracked by the AI?
 
 	var/datum/preferences/storedpreferences = null
+
+	var/geaslist = list()
