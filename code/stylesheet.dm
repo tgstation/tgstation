@@ -26,8 +26,9 @@ em						{font-style: normal;	font-weight: bold;}
 .deadsay				{color: #5c00e6;}
 .radio					{color: #008000;}
 .deptradio				{color: #993399;}
-.comradio				{color: #ACA82D;}
+.comradio				{color: #885500;}
 .syndradio				{color: #6D3F40;}
+.nukeradio				{color: #FF3300;}
 
 .alert					{color: #ff0000;}
 h1.alert, h2.alert		{color: #000000;}

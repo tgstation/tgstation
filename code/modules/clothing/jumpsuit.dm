@@ -207,16 +207,16 @@
 /obj/item/clothing/under/rank/centcom_officer
 	desc = "It's a jumpsuit worn by CentCom Officers."
 	name = "\improper CentCom officer's jumpsuit"
-	icon_state = "officer"
-	item_state = "g_suit"
-	color = "officer"
+	icon_state = "centcom"
+	item_state = "dg_suit"
+	color = "centcom"
 
 /obj/item/clothing/under/rank/centcom_commander
 	desc = "It's a jumpsuit worn by CentCom's highest-tier Commanders."
 	name = "\improper CentCom officer's jumpsuit"
-	icon_state = "centcom"
-	item_state = "dg_suit"
-	color = "centcom"
+	icon_state = "officer"
+	item_state = "g_suit"
+	color = "officer"
 
 /obj/item/clothing/under/rank/miner
 	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."

@@ -161,7 +161,7 @@
 	color = "hosred"
 
 /obj/item/clothing/shoes/purpleboots
-	name = "Ppurple boots"
+	name = "purple boots"
 	desc = "A pair of flashy purple boots."
 	icon_state = "purpleboots"
 	item_state = "purpleboots"

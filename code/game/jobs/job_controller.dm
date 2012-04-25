@@ -4,6 +4,7 @@ var/global/datum/controller/occupations/job_master
 	var
 		//List of all jobs
 		list/occupations = list()
+		list/occupations2 = list() // Prevents problems with latejoiners.
 		//Players who need jobs
 		list/unassigned = list()
 		//Debug info
@@ -152,8 +153,6 @@ var/global/datum/controller/occupations/job_master
 		Debug("Running DO")
 		SetupOccupations()
 
-		occupations = shuffle(occupations) //Shuffles job-list at round start so that people don't have their job picks randomized
-
 		//Get the players who are ready
 		for(var/mob/new_player/player in world)
 			if((player) && (player.client) && (player.ready) && (player.mind) && (!player.mind.assigned_role))
@@ -163,6 +162,7 @@ var/global/datum/controller/occupations/job_master
 		if(unassigned.len == 0)	return 0
 		//Shuffle players and jobs
 		unassigned = shuffle(unassigned)
+		occupations2 = shuffle(occupations)
 
 		//HandleFeedbackGathering()
 

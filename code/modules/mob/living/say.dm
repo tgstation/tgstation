@@ -319,6 +319,7 @@
 	for (var/O in listening)
 		world << O
 	var/list/V = view(message_range, T)
+	var/list/W = V
 	//find mobs in lockers, cryo, intellicards, brains, MMIs, and so on.
 	for (var/mob/M in world)
 		if (!M.client)
