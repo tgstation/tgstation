@@ -1235,8 +1235,8 @@
 
 
 			if (toxin || hal_screwyhud == 4)	toxin.icon_state = "tox[toxins_alert ? 1 : 0]"
-			if (oxygen || hal_screwyhud == 3) oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
-			if (fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"
+			if (oxygen || hal_screwyhud == 3)	oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
+			if (fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"													//NOTE: INVESTIGATE NUKE BURNINGS
 			//NOTE: the alerts dont reset when youre out of danger. dont blame me,
 			//blame the person who coded them. Temporary fix added.
 

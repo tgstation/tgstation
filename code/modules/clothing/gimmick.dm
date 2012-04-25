@@ -576,21 +576,21 @@ obj/item/clothing/suit/justice
 //stylish new hats
 
 /obj/item/clothing/head/bowlerhat
-	name = "\improper Bowler hat"
+	name = "bowler hat"
 	icon_state = "bowler_hat"
 	item_state = "bowler_hat"
 	desc = "For the gentleman of distinction."
 	flags = FPRINT|TABLEPASS
 
 /obj/item/clothing/head/beaverhat
-	name = "\improper Beaver hat"
+	name = "beaver hat"
 	icon_state = "beaver_hat"
 	item_state = "beaver_hat"
 	desc = "Soft felt make this hat both comfortable and elegant."
 	flags = FPRINT|TABLEPASS
 
 /obj/item/clothing/head/boaterhat
-	name = "\improper Boater hat"
+	name = "boater hat"
 	icon_state = "boater_hat"
 	item_state = "boater_hat"
 	desc = "The ultimate in summer fashion."

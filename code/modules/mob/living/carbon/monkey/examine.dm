@@ -2,7 +2,7 @@
 	set src in oview()
 
 	if(!usr || !src)	return
-	if(((usr.sdisabilities & 1) || usr.blinded || usr.stat) && !(istype(usr,/mob/dead/observer/)))
+	if(((usr.disabilities & 128) || usr.blinded || usr.stat) && !(istype(usr,/mob/dead/observer/)))
 		usr << "<span class='notice'>Something is there but you can't see it.</span>"
 		return
 
@@ -20,7 +20,8 @@
 		msg += "It has \icon[src.back] \a [src.back] on its back.\n"
 	if (src.stat == DEAD)
 		msg += "<span class='deadsay'>It is limp and unresponsive, with no signs of life.</span>\n"
-
+	else
+		msg += "<span class='warning'>"
 	var/list/wound_descriptions = list()
 	var/list/wound_flavor_text = list()
 	for(var/named in organs)
@@ -238,8 +239,13 @@
 	if(wound_flavor_text["right foot"])
 		msg += wound_flavor_text["right foot"]
 
+	if (src.stat == UNCONSCIOUS)
+		msg += "It isn't responding to anything around it; it seems to be asleep.\n"
+	msg += "</span>"
 
-	msg += "[print_flavor_text()]\n"
+	if (src.digitalcamo)
+		msg += "It is repulsively uncanny!\n"
+	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
 
 	msg += "*---------*</span>"
 

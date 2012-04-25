@@ -10,26 +10,29 @@
 	flags_inv = HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/helmet/warden
-	name = "Warden Hat"
-	desc = "A special helmet issued to the Warden of a security force. Protects the head from impacts."
+	name = "warden's hat"
+	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
 	icon_state = "wardencap"
 	flags_inv = 0
 
 /obj/item/clothing/head/helmet/swat
-	name = "swat helmet"
-	desc = "Used by highly trained Swat Members."
+	name = "\improper SWAT helmet"
+	desc = "They're often used by highly trained Swat Members."
 	icon_state = "swat"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | HEADCOVERSEYES | BLOCKHAIR
 	item_state = "swat"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
+	flags_inv = HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/helmet/thunderdome
-	name = "Thunderdome helmet"
-	desc = "Let the battle commence!"
+	name = "\improper Thunderdome helmet"
+	desc = "<i>'Let the battle commence!'</i>"
 	icon_state = "thunderdome"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | HEADCOVERSEYES | BLOCKHAIR
 	item_state = "thunderdome"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
+
+
 
 /obj/item/clothing/head/helmet/welding
 	name = "welding helmet"
@@ -46,8 +49,8 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/helmet/that
-	name = "Sturdy Top hat"
-	desc = "An amish looking, armored top hat."
+	name = "sturdy top-hat"
+	desc = "It's an amish looking armored top hat."
 	icon_state = "tophat"
 	item_state = "that"
 	flags = FPRINT|TABLEPASS
@@ -55,8 +58,8 @@
 	flags_inv = 0
 
 /obj/item/clothing/head/helmet/greenbandana
-	name = "Green Bandana"
-	desc = "A green bandana with some fine nanotech lining."
+	name = "green bandana"
+	desc = "It's a green bandana with some fine nanotech lining."
 	icon_state = "greenbandana"
 	item_state = "greenbandana"
 	flags = FPRINT|TABLEPASS
@@ -64,8 +67,8 @@
 	flags_inv = 0
 
 /obj/item/clothing/head/helmet/riot
-	name = "Riot Helmet"
-	desc = "A helmet specifically designed to protect against close range attacks."
+	name = "riot helmet"
+	desc = "It's a helmet specifically designed to protect against close range attacks."
 	icon_state = "riot"
 	item_state = "helmet"
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES
@@ -73,8 +76,8 @@
 	flags_inv = HIDEEARS
 
 /obj/item/clothing/head/helmet/cap
-	name = "Captain's cap"
-	desc = "For irresponsible Captains."
+	name = "captain's cap"
+	desc = "You fear to wear it for the negligence it brings."
 	icon_state = "capcap"
 	flags = FPRINT|TABLEPASS|SUITSPACE
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 0, rad = 0)

@@ -288,7 +288,7 @@
 	..()
 	contents = list()
 	sleep(1)
-	new /obj/item/clothing/mask/medical( src )
+	new /obj/item/clothing/mask/breath/medical( src )
 	new /obj/item/weapon/tank/emergency_oxygen/anesthetic( src )
 	new /obj/item/weapon/tank/emergency_oxygen/anesthetic( src )
 	new /obj/item/weapon/tank/emergency_oxygen/anesthetic( src )
