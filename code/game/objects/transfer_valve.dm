@@ -75,7 +75,6 @@
 		onclose(user, "trans_valve")
 		return
 
-	//CARN: MARKER
 	Topic(href, href_list)
 		..()
 		if ( usr.stat || usr.restrained() )
