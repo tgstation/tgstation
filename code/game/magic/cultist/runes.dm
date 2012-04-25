@@ -476,11 +476,11 @@ var/list/sacrificed = list()
 					T.imbue = "deafen"
 					imbued_from = R
 					break
-				if(R.word1==worddestr && R.word2==wordsee && R.word3==wordother) //blind
+				/*if(R.word1==worddestr && R.word2==wordsee && R.word3==wordother) //blind
 					T = new(src.loc)
 					T.imbue = "blind"
 					imbued_from = R
-					break
+					break*/
 				if(R.word1==wordself && R.word2==wordother && R.word3==wordtech) //communicat
 					T = new(src.loc)
 					T.imbue = "communicate"
@@ -509,7 +509,7 @@ var/list/sacrificed = list()
 			user.take_overall_damage(200, 0)
 			runedec+=10
 			user.visible_message("\red [user] keels over dead, his blood glowing blue as it escapes his body and dissipates into thin air.", \
-			"\red In the last moment of your humbly life, you feel as fabric of reality mends... with your blood.", \
+			"\red In the last moment of your humble life, you feel an immense pain as fabric of reality mends... with your blood.", \
 			"\red You hear faint rustle.")
 			for(,user.stat==2)
 				sleep(600)

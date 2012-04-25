@@ -113,8 +113,6 @@
 			health -= damage
 
 
-
-
 /mob/living/simple_animal/constructarmoured/examine()
 	set src in oview()
 
@@ -130,6 +128,12 @@
 
 	usr << msg
 	return
+
+/mob/living/simple_animal/constructarmoured/proc/mind_initialize(mob/G)
+	mind = new
+	mind.current = src
+	mind.assigned_role = "Juggernaut"
+	mind.key = G.key
 
 ////////////////////////Wraith/////////////////////////////////////////////
 
@@ -255,7 +259,11 @@
 	usr << msg
 	return
 
-
+/mob/living/simple_animal/constructwraith/proc/mind_initialize(mob/G)
+	mind = new
+	mind.current = src
+	mind.assigned_role = "Wraith"
+	mind.key = G.key
 
 /////////////////////////////Artificer/////////////////////////
 
@@ -329,3 +337,9 @@
 
 	usr << msg
 	return
+
+/mob/living/simple_animal/constructbuilder/proc/mind_initialize(mob/G)
+	mind = new
+	mind.current = src
+	mind.assigned_role = "Artificer"
+	mind.key = G.key
