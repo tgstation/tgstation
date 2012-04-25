@@ -124,6 +124,7 @@
 #define FILE_DIR "code/modules/mob/new_player"
 #define FILE_DIR "code/modules/mob/organ"
 #define FILE_DIR "code/modules/mob/simple_animal"
+#define FILE_DIR "code/modules/paperwork"
 #define FILE_DIR "code/modules/power"
 #define FILE_DIR "code/modules/power/antimatter"
 #define FILE_DIR "code/modules/power/singularity"

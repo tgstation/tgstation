@@ -1,7 +1,7 @@
 /obj/item/weapon/gun/energy
 	icon_state = "energy"
-	name = "\improper Energy gun"
-	desc = "A basic energy-based gun with two settings: Stun and kill."
+	name = "energy gun"
+	desc = "A basic energy-based gun."
 	fire_sound = 'Taser.ogg'
 
 	var
@@ -9,6 +9,7 @@
 		charge_cost = 100 //How much energy is needed to fire.
 		cell_type = "/obj/item/weapon/cell"
 		projectile_type = "/obj/item/projectile/energy"
+		modifystate
 
 	emp_act(severity)
 		power_supply.use(round(power_supply.maxcharge / severity))
@@ -42,7 +43,10 @@
 	update_icon()
 		var/ratio = power_supply.charge / power_supply.maxcharge
 		ratio = round(ratio, 0.25) * 100
-		icon_state = text("[][]", initial(icon_state), ratio)
+		if(modifystate)
+			icon_state = text("[][]", modifystate, ratio)
+		else
+			icon_state = text("[][]", initial(icon_state), ratio)
 
 
 
