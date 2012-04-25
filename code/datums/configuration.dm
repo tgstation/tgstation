@@ -27,10 +27,10 @@
 	var/vote_period = 60				// length of voting period (seconds, default 1 minute)
 	var/vote_no_default = 0				// vote does not default to nochange/norestart (tbi)
 	var/vote_no_dead = 0				// dead people can't vote (tbi)
-	var/enable_authentication = 0		// goon authentication
+//	var/enable_authentication = 0		// goon authentication
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 	var/feature_object_spell_system = 0 //spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
-	var/traitor_scaling = 0 //if amount of traitors scales based on amount of players
+	var/traitor_scaling = 0 			//if amount of traitors scales based on amount of players
 	var/protect_roles_from_antagonist = 0// If security and such can be tratior/cult/other
 	var/Tensioner_Active = 0			// If the tensioner is running.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
@@ -198,8 +198,8 @@
 				if ("allow_ai")
 					config.allow_ai = 1
 
-				if ("authentication")
-					config.enable_authentication = 1
+//				if ("authentication")
+//					config.enable_authentication = 1
 
 				if ("norespawn")
 					config.respawn = 0

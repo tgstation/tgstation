@@ -29,6 +29,7 @@
 	IsShield()
 		return 1
 
+
 /obj/item/weapon/nullrod
 	name = "null rod"
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
@@ -133,7 +134,7 @@
 	w_class = 3.0
 
 /obj/item/weapon/rsp
-	name = "\improper Rapid-Seed-Producer"
+	name = "\improper Rapid-Seed-Producer (RSP)"
 	desc = "A device used to rapidly deploy seeds."
 	icon = 'items.dmi'
 	icon_state = "rcd"
@@ -321,6 +322,17 @@
 	throw_speed = 4
 	throw_range = 20
 
+/obj/item/weapon/corncob
+	name = "corn cob"
+	desc = "A reminder of meals gone by."
+	icon = 'harvest.dmi'
+	icon_state = "corncob"
+	item_state = "corncob"
+	w_class = 1.0
+	throwforce = 0
+	throw_speed = 4
+	throw_range = 20
+
 /obj/item/weapon/soap
 	name = "soap"
 	desc = "A cheap bar of soap. Doesn't smell."
@@ -446,15 +458,15 @@
 	var/heal_burn = 0
 
 /obj/item/stack/medical/bruise_pack
-	name = "\improper Roll of Gauze"
-	singular_name = "\improper Roll of Gauze"
+	name = "roll of gauze"
+	singular_name = "roll of gauze"
 	desc = "A roll of gauze for sealing up wounds."
 	icon_state = "brutepack"
 	heal_brute = 1
 	origin_tech = "biotech=1"
 
 /obj/item/stack/medical/bruise_pack/tajaran
-	name = "S'rendarr's Hand leaf"
+	name = "\improper S'rendarr's Hand leaf"
 	singular_name = "S'rendarr's Hand leaf"
 	desc = "A soft leaf that is rubbed on bruises."
 	icon = 'harvest.dmi'
@@ -471,7 +483,7 @@
 	origin_tech = "biotech=1"
 
 /obj/item/stack/medical/ointment/tajaran
-	name = "Messa's Tear leaf"
+	name = "\improper Messa's Tear leaf"
 	singular_name = "Messa's Tear leaf"
 	desc = "A cold leaf that is rubbed on burns."
 	icon = 'harvest.dmi'
@@ -563,6 +575,12 @@
 	var/over_jumpsuit = 1 // If set to 0, it won't display on top of the mob's jumpsuit
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
+/obj/item/weapon/card/id/silver
+	name = "identification card"
+	desc = "A silver card which shows honour and dedication."
+	icon_state = "silver"
+	item_state = "silver_id"
+
 /obj/item/weapon/card/id/gold
 	name = "identification card"
 	desc = "A golden card which shows authority."
@@ -636,7 +654,7 @@
 	throw_range = 5
 	m_amt = 50
 	g_amt = 20
-	flags = TABLEPASS|USEDELAY|FPRINT|CONDUCT
+	flags = TABLEPASS|USEDELAY|FPRINT|CONDUCT | ONBELT
 	item_state = "coil_red"
 
 /obj/item/weapon/cable_coil/cut
@@ -654,12 +672,18 @@
 	color = "green"
 	icon_state = "coil_green"
 
+/obj/item/weapon/cable_coil/random/New()
+	color = pick("red","yellow","green","blue")
+	icon_state = "coil_[color]"
+	..()
+
+
 /obj/item/weapon/crowbar
 	name = "crowbar"
 	desc = "Used to remove floor tiles."
 	icon = 'items.dmi'
 	icon_state = "crowbar"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	force = 5.0
 	throwforce = 7.0
 	item_state = "wrench"
@@ -843,9 +867,6 @@
 	throw_range = 20
 	m_amt = 400
 	origin_tech = "magnets=1"
-
-
-
 
 /obj/item/weapon/caution
 	desc = "Caution! Wet Floor!"
@@ -1033,7 +1054,7 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	desc = "Used for screwing."
 	icon = 'items.dmi'
 	icon_state = "screwdriver"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	force = 5.0
 	w_class = 1.0
 	throwforce = 5.0
@@ -1073,7 +1094,7 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	origin_tech = "magnets=1"
 
 /obj/item/weapon/spellbook
-	name = "Spell Book"
+	name = "spell book"
 	desc = "The legendary book of spells of a wizard."
 	icon = 'library.dmi'
 	icon_state ="book"
@@ -1197,6 +1218,12 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	maxcharge = 500
 	g_amt = 40
 
+/obj/item/weapon/cell/secborg
+	name = "\improper Security borg rechargable D battery"
+	origin_tech = "powerstorage=0"
+	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
+	g_amt = 40
+
 /obj/item/weapon/cell/high
 	name = "high-capacity power cell"
 	origin_tech = "powerstorage=2"
@@ -1223,14 +1250,17 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	use()
 		return 1
 
-/*/obj/item/weapon/cell/potato
-	name = "Potato Battery"
+/obj/item/weapon/cell/potato
+	name = "potato battery"
 	desc = "A rechargable starch based power cell."
-	icon = 'harvest.dmi'
-	icon_state = "potato_battery"
-	maxcharge = 100
+	origin_tech = "powerstorage=1"
+	icon = 'power.dmi' //'harvest.dmi'
+	icon_state = "cell" //"potato_battery"
+	charge = 100
+	maxcharge = 300
 	m_amt = 0
-	g_amt = 0*/
+	g_amt = 0
+	minor_fault = 1
 
 /obj/item/weapon/camera_bug/attack_self(mob/usr as mob)
 	var/list/cameras = new/list()
@@ -1358,7 +1388,7 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	name = "tray"
 	icon = 'food.dmi'
 	icon_state = "tray"
-	desc = "A tray to lay food on."
+	desc = "A metal tray to lay food on."
 	throwforce = 12.0
 	throwforce = 10.0
 	throw_speed = 1
@@ -1463,6 +1493,7 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	icon = 'surgery.dmi'
 	icon_state = "drill"
 	flags = FPRINT | TABLEPASS | CONDUCT
+	force = 15.0
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 
@@ -1499,7 +1530,7 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	w_class = 1.0
 	origin_tech = "biotech=2"
 
-/*/obj/item/weapon/hatchet
+/obj/item/weapon/hatchet
 	name = "hatchet"
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
 	icon = 'weapons.dmi'
@@ -1511,7 +1542,7 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	throw_speed = 4
 	throw_range = 4
 	m_amt = 15000
-	origin_tech = "materials=2;combat=1"*/
+	origin_tech = "materials=2;combat=1"
 
 /obj/item/weapon/stamp
 	desc = "A rubber stamp for stamping important documents."
@@ -1640,7 +1671,6 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 
 /obj/item/weapon/pai_cable
 	desc = "A flexible coated cable with a universal jack on one end."
-	desc = "Some spacey cable."
 	name = "data cable"
 	icon = 'power.dmi'
 	icon_state = "wire1"
@@ -1768,7 +1798,7 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 /obj/item/weapon/stock_parts/capacitor/super
 	name = "super capacitor"
 	desc = "A super-high capacity capacitor used in the construction of a variety of devices."
-	origin_tech = "powerstorage=3;materials=4"
+	origin_tech = "powerstorage=5;materials=4"
 	rating = 3
 	m_amt = 50
 	g_amt = 50

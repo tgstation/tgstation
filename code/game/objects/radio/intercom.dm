@@ -1,5 +1,5 @@
 /obj/item/device/radio/intercom
-	name = "Station Intercom (Radio)"
+	name = "station intercom"
 	desc = "Talk through this."
 	icon_state = "intercom"
 	anchored = 1
@@ -31,7 +31,8 @@
 		if (!src.listening)
 			return
 
-/*		var/turf/T = get_turf(src)
+		/*
+		var/turf/T = get_turf(src)
 		var/list/hear = hearers(7, T)
 		var/list/V
 		//find mobs in lockers, cryo and intellycards
@@ -43,8 +44,11 @@
 			if (!V) //lasy initialisation
 				V = view(7, T)
 			if (get_turf(M) in V) //this slow, but I don't think we'd have a lot of wardrobewhores every round --rastaf0
-				hear+=M	*/
-		return get_mobs_in_view(4,src)
+				hear+=M
+		*/
+		//return hear
+
+		return get_mobs_in_view(4, src)
 
 
 	hear_talk(mob/M as mob, msg)

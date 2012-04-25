@@ -1,27 +1,39 @@
 /mob/living/silicon/robot/examine()
 	set src in oview()
 
-	usr << "\blue *---------*"
-	usr << text("\blue This is \icon[src] <B>[src.name]</B>!")
-	if (src.stat == 2)
-		usr << text("\red [src.name] is powered-down.")
+	if(!usr || !src)	return
+	if(((usr.disabilities & 128) || usr.blinded || usr.stat) && !(istype(usr,/mob/dead/observer/)))
+		usr << "<span class='notice'>Something is there but you can't see it.</span>"
+		return
+
+	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
+	msg += "<span class='warning'>"
 	if (src.getBruteLoss())
 		if (src.getBruteLoss() < 75)
-			usr << text("\red [src.name] looks slightly dented")
+			msg += "It looks slightly dented.\n"
 		else
-			usr << text("\red <B>[src.name] looks severely dented!</B>")
+			msg += "<B>It looks severely dented!</B>\n"
 	if (src.getFireLoss())
 		if (src.getFireLoss() < 75)
-			usr << text("\red [src.name] looks slightly burnt!")
+			msg += "It looks slightly charred.\n"
 		else
-			usr << text("\red <B>[src.name] looks severely burnt!</B>")
-	if (src.stat == 1)
-		usr << text("\red [src.name] doesn't seem to be responding.")
+			msg += "<B>It looks severely burnt and heat-warped!</B>\n"
+	msg += "</span>"
+
 	if(opened)
-		usr << "The cover is open and the power cell is [ cell ? "installed" : "missing"]."
+		msg += "<span class='warning'>Its cover is open and the power cell is [cell ? "installed" : "missing"].</span>\n"
 	else
-		usr << "The cover is closed."
+		msg += "Its cover is closed.\n"
 
-	usr << print_flavor_text()
+	switch(src.stat)
+		if(CONSCIOUS)
+			if(!src.client)	msg += "It appears to be in stand-by mode.\n" //afk
+		if(UNCONSCIOUS)		msg += "<span class='warning'>It doesn't seem to be responding.</span>\n"
+		if(DEAD)			msg += "<span class='deadsay'>It looks completely unsalvageable.</span>\n"
 
+	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
+
+	msg += "*---------*</span>"
+
+	usr << msg
 	return

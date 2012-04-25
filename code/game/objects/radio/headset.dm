@@ -242,7 +242,7 @@
 		if(!radio_controller)
 			sleep(30) // Waiting for the radio_controller to be created.
 		if(!radio_controller)
-			src.name = "Broken Radio Headset"
+			src.name = "broken radio headset"
 			return
 
 	return
