@@ -19,6 +19,13 @@
 		del(src)
 
 /obj/structure/stool/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/screwdriver))
+		if (src.anchored)
+			src.anchored = 0
+			user << "\blue You unfasten [src] from the floor."
+		else
+			src.anchored = 1
+			user << "\blue You fasten [src] to the floor."
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'Ratchet.ogg', 50, 1)
 		new /obj/item/stack/sheet/metal(src.loc)
@@ -111,7 +118,6 @@
 	return
 
 /obj/structure/stool/bed/chair/New()
-	src.verbs -= /atom/movable/verb/pull
 	if(src.dir == NORTH)
 		src.layer = FLY_LAYER
 	..()
@@ -145,11 +151,20 @@
 	icon_state = "down"
 	anchored = 0
 
-/obj/structure/stool/bed/roller/Move()
+//obj/structure/stool/bed/roller/Move()
+/obj/structure/stool/bed/Move()
 	..()
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
 			buckled_mob.loc = src.loc
+			buckled_mob.dir = src.dir
+
+/obj/structure/stool/bed/chair/Move()
+	..()
+	if(src.dir == NORTH)
+		src.layer = FLY_LAYER
+	else
+		src.layer = OBJ_LAYER
 
 /obj/structure/stool/bed/roller/buckle_mob(mob/M as mob, mob/user as mob)
 	if ((!( istype(M, /mob) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat || M.buckled || istype(usr, /mob/living/silicon/pai)))
