@@ -24,7 +24,11 @@
 
 
 	load_into_chamber()
-		if(!loaded.len)	return 0
+		if(in_chamber)
+			return 1
+
+		if(!loaded.len)
+			return 0
 
 		var/obj/item/ammo_casing/AC = loaded[1] //load next casing.
 		loaded -= AC //Remove casing from loaded list.
@@ -73,5 +77,9 @@
 	examine()
 		..()
 		usr << "Has [loaded.len] round\s remaining."
+		if(in_chamber && !loaded.len)
+			usr << "However, it has a chambered round."
+		if(in_chamber && loaded.len)
+			usr << "It also has a chambered round."
 		return
 

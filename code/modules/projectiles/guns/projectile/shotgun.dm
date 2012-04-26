@@ -17,7 +17,8 @@
 
 
 	load_into_chamber()
-		if(in_chamber)	return 1
+		if(in_chamber)
+			return 1
 		return 0
 
 
@@ -69,7 +70,10 @@
 	ammo_type = "/obj/item/ammo_casing/shotgun/beanbag"
 
 	load_into_chamber()
-		if(!loaded.len)	return 0
+		if(in_chamber)
+			return 1
+		if(!loaded.len)
+			return 0
 
 		var/obj/item/ammo_casing/AC = loaded[1] //load next casing.
 		loaded -= AC //Remove casing from loaded list.
