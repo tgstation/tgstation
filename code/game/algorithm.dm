@@ -6,8 +6,6 @@
 
 Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 ---------------------
-Dear Diary....
-
 "}
 
 	diaryofmeanpeople = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")] Attack.log")
@@ -16,12 +14,7 @@ Dear Diary....
 
 Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 ---------------------
-Dear Diary....
-Today, these people were mean:
-
 "}
-
-
 
 	jobban_loadbanfile()
 	jobban_updatelegacybans()

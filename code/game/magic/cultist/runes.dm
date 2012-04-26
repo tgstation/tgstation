@@ -412,7 +412,7 @@ var/list/sacrificed = list()
 				"\red You hear faint rustle.")
 				ghost.invisibility = 10
 				ghost.key = D.key
-				D.dust(1)
+				D.dust()
 			return
 
 

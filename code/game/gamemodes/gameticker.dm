@@ -145,17 +145,27 @@ var/global/datum/controller/gameticker/ticker
 		cinematic.mouse_opacity = 0
 		cinematic.screen_loc = "1,3"	//TODO resize them
 
-		var/obj/structure/stool/bed/temp_buckle = new(src)	//Incredibly hackish
-															//...creates a bed within the gameticker (lol)
-															//to stop mobs running around
-		for(var/mob/M)
-			if(M.client)
-				M.client.screen += cinematic	//show every client the cinematic
-			M.buckled = temp_buckle				//buckle everybody to our pseudo-bed
-			if(!station_missed)
-				M.stat = DEAD
-			//TODO: impliment dust() instead of this (gotta fix it first, dust() is buggy as hell)
-
+		var/obj/structure/stool/bed/temp_buckle = new(src)
+		//Incredibly hackish. It creates a bed within the gameticker (lol) to stop mobs running around
+		if(station_missed)
+			for(var/mob/M in world)
+				M.buckled = temp_buckle				//buckles the mob so it can't do anything
+				if(M.client)
+					M.client.screen += cinematic	//show every client the cinematic
+		else	//nuke kills everyone on z-level 1 to prevent "hurr-durr I survived"
+			for(var/mob/M in world)
+				M.buckled = temp_buckle
+				if(M.client)
+					M.client.screen += cinematic
+				switch(M.z)
+					if(0)	//inside a crate or something
+						var/turf/T = get_turf(M)
+						if(T && T.z==1)				//we don't use M.death(0) because it calls a for(/mob) loop and
+							M.health = 0
+							M.stat = DEAD
+					if(1)	//on a z-level 1 turf.
+						M.health = 0
+						M.stat = DEAD
 
 		//Now animate the cinematic
 		switch(station_missed)
@@ -216,7 +226,7 @@ var/global/datum/controller/gameticker/ticker
 		sleep(100)
 
 		//Tidy-up time!
-		if(cinematic)	del(cinematic)
+		if(cinematic)	del(cinematic)		//end the cinematic
 		if(temp_buckle)	del(temp_buckle)	//release everybody
 		return
 
