@@ -97,7 +97,7 @@
 	//item_state = "glasses"
 	icon_state = "sun"
 	item_state = "sunglasses"
-	origin_tech = "magnets=3"
+	origin_tech = "magnets=3;syndicate=4"
 	vision_flags = SEE_MOBS
 	invisa_view = 2
 

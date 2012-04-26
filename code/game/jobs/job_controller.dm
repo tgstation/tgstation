@@ -190,7 +190,7 @@ var/global/datum/controller/occupations/job_master
 		//Other jobs are now checked
 		Debug("DO, Running Standard Check")
 		for(var/level = 1 to 3)
-			for(var/datum/job/job in occupations)
+			for(var/datum/job/job in occupations2)
 				Debug("Checking job: [job]")
 				if(!job)
 					continue

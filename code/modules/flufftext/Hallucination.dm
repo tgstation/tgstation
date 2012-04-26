@@ -156,8 +156,8 @@ mob/living/carbon/proc/handle_hallucinations()
 								halbody = image('human.dmi',target,"husk_s",TURF_LAYER)
 							if(4)
 								halbody = image('alien.dmi',target,"alienother",TURF_LAYER)
-	//						if(5)
-	//							halbody = image('xcomalien.dmi',target,"chryssalid",TURF_LAYER)
+							if(5)
+								halbody = image('xcomalien.dmi',target,"chryssalid",TURF_LAYER)
 
 						if(client) client.images += halbody
 						spawn(rand(50,80)) //Only seen for a brief moment.
@@ -213,7 +213,7 @@ proc/check_panel(mob/M)
 	if (istype(M, /mob/living/carbon/human) || istype(M, /mob/living/silicon/ai))
 		if(M.hallucination < 15)
 			return 1
-	return 0	*/
+	return 0*/
 
 /obj/fake_attacker
 	icon = null

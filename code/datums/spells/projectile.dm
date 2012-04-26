@@ -16,7 +16,7 @@
 	var/proj_lingering = 0 //if it lingers or disappears upon hitting an obstacle
 	var/proj_homing = 1 //if it follows the target
 	var/proj_insubstantial = 0 //if it can pass through dense objects or not
-	var/proj_trigger_range = 1 //the range from target at which the projectile triggers cast(target)
+	var/proj_trigger_range = 0 //the range from target at which the projectile triggers cast(target)
 
 	var/proj_lifespan = 15 //in deciseconds * proj_step_delay
 	var/proj_step_delay = 1 //lower = faster
@@ -38,6 +38,8 @@
 			projectile.name = proj_name
 
 			var/current_loc = usr.loc
+
+			projectile.loc = current_loc
 
 			for(var/i = 0,i < proj_lifespan,i++)
 				if(!projectile)

@@ -33,7 +33,7 @@
 /obj/item/weapon/gun/energy/crossbow:5:Energy Crossbow;
 /obj/item/weapon/melee/energy/sword:4:Energy Sword;
 /obj/item/weapon/storage/box/syndicate:10:Syndicate Bundle;
-/obj/item/weapon/storage/emp_kit:4:5 EMP Grenades;
+/obj/item/weapon/storage/emp_kit:3:5 EMP Grenades;
 Whitespace:Seperator;
 Stealthy and Inconspicuous Weapons;
 /obj/item/weapon/pen/sleepypen:3:Sleepy Pen;

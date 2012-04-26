@@ -206,26 +206,28 @@ FINGERPRINT CARD
 		return "<B>There are no fingerprints on this card.</B>"
 	return
 
-///obj/item/weapon/f_card/attack_hand(mob/user as mob)
+/*
+/obj/item/weapon/f_card/attack_hand(mob/user as mob)
 
-//	if ((user.r_hand == src || user.l_hand == src))
-//		add_fingerprint(user)
-//		var/obj/item/weapon/f_card/F = new /obj/item/weapon/f_card( user )
-//		F.amount = 1
-//		src.amount--
-//		if (user.hand)
-//			user.l_hand = F
-//		else
-//			user.r_hand = F
-//		F.layer = 20
-//		F.add_fingerprint(user)
-//		if (src.amount < 1)
-//			//SN src = null
-//			del(src)
-//			return
-//	else
-//		..()
-//	return
+	if ((user.r_hand == src || user.l_hand == src))
+		src.add_fingerprint(user)
+		var/obj/item/weapon/f_card/F = new /obj/item/weapon/f_card( user )
+		F.amount = 1
+		src.amount--
+		if (user.hand)
+			user.l_hand = F
+		else
+			user.r_hand = F
+		F.layer = 20
+		F.add_fingerprint(user)
+		if (src.amount < 1)
+			//SN src = null
+			del(src)
+			return
+	else
+		..()
+	return
+*/
 
 /obj/item/weapon/f_card/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
