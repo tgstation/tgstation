@@ -166,7 +166,7 @@
 						var/mob/living/simple_animal/constructarmoured/Z = new /mob/living/simple_animal/constructarmoured (get_turf(T.loc))
 						if (A.client)
 							A.client.mob = Z
-							Z.mind_initialize(src)
+							Z.mind_initialize(Z)
 							if(iscultist(U))
 								if (ticker.mode.name == "cult")
 									ticker.mode:add_cultist(Z.mind)
@@ -183,7 +183,7 @@
 						var/mob/living/simple_animal/constructwraith/Z = new /mob/living/simple_animal/constructwraith (get_turf(T.loc))
 						if (A.client)
 							A.client.mob = Z
-							Z.mind_initialize(src)
+							Z.mind_initialize(Z)
 							if(iscultist(U))
 								if (ticker.mode.name == "cult")
 									ticker.mode:add_cultist(Z.mind)
@@ -200,7 +200,7 @@
 						var/mob/living/simple_animal/constructbuilder/Z = new /mob/living/simple_animal/constructbuilder (get_turf(T.loc))
 						if (A.client)
 							A.client.mob = Z
-							Z.mind_initialize(src)
+							Z.mind_initialize(Z)
 							if(iscultist(U))
 								if (ticker.mode.name == "cult")
 									ticker.mode:add_cultist(Z.mind)
