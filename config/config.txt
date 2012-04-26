@@ -78,6 +78,8 @@ TRAITOR_SCALING
 ## If security is prohibited from being most antagonists
 #PROTECT_ROLES_FROM_ANTAGONIST
 
+## If the auto-tensioner is active by default.  It creates more tratiors/other antagonists if it consideers the round slowing down.
+#TENSIONER_ACTIVE
 ## allow players to initiate a restart vote
 ALLOW_VOTE_RESTART
 

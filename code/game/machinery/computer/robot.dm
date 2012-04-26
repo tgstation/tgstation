@@ -1,3 +1,21 @@
+
+/obj/machinery/computer/robotics
+	name = "Robotics Control"
+	desc = "Used to remotely lockdown or detonate linked Cyborgs."
+	icon = 'computer.dmi'
+	icon_state = "robot"
+	req_access = list(access_robotics)
+	circuit = "/obj/item/weapon/circuitboard/robotics"
+
+	var
+		id = 0.0
+		temp = null
+		status = 0
+		timeleft = 60
+		stop = 0.0
+		screen = 0 // 0 - Main Menu, 1 - Cyborg Status, 2 - Kill 'em All! -- In text
+
+
 /obj/machinery/computer/robotics/attack_ai(var/mob/user as mob)
 	return src.attack_hand(user)
 
@@ -26,6 +44,9 @@
 				if(istype(user, /mob/living/silicon/robot))
 					if (R != user)
 						continue
+				if(R.scrambledcodes)
+					continue
+
 				dat += "[R.name] |"
 				if(R.stat)
 					dat += " Not Responding |"
@@ -140,10 +161,15 @@
 				if(R)
 					var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
 					if(choice == "Confirm")
-						if(R)
-							message_admins("\blue [key_name_admin(usr)] detonated [R.name]!")
-							log_game("\blue [key_name_admin(usr)] detonated [R.name]!")
-							R.self_destruct()
+						if(R && istype(R))
+							if(R.mind && R.mind.special_role && R.emagged)
+								R << "Extreme danger.  Termination codes detected.  Scrambling security codes and automatic AI unlink triggered."
+								R.ResetSecurityCodes()
+
+							else
+								message_admins("\blue [key_name_admin(usr)] detonated [R.name]!")
+								log_game("\blue [key_name_admin(usr)] detonated [R.name]!")
+								R.self_destruct()
 			else
 				usr << "\red Access Denied."
 
@@ -179,6 +205,8 @@
 							message_admins("\blue [key_name_admin(usr)] emagged [R.name] using robotic console!")
 							log_game("[key_name(usr)] emagged [R.name] using robotic console!")
 							R.emagged = 1
+							if(R.mind.special_role)
+								R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
 
 		src.add_fingerprint(usr)
 	src.updateUsrDialog()
@@ -195,7 +223,8 @@
 	while(src.timeleft)
 
 	for(var/mob/living/silicon/robot/R in world)
-		R.self_destruct()
+		if(!R.scrambledcodes)
+			R.self_destruct()
 
 	return
 

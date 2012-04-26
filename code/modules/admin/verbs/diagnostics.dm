@@ -20,6 +20,7 @@
 "}
 
 		usr << browse(output,"window=generalreport")
+		//feedback_add_details("admin_verb","SGR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	air_report()
 		set category = "Debug"
@@ -62,6 +63,7 @@
 "}
 
 		usr << browse(output,"window=airreport")
+		//feedback_add_details("admin_verb","SAR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	air_status(turf/target as turf)
 		set category = "Debug"
@@ -109,6 +111,7 @@
 		message_admins("[key_name_admin(largest_move_mob)] had the largest move delay with [largest_move_time] frames / [largest_move_time/10] seconds!", 1)
 		message_admins("[key_name_admin(largest_click_mob)] had the largest click delay with [largest_click_time] frames / [largest_click_time/10] seconds!", 1)
 		message_admins("world.time = [world.time]", 1)
+		//feedback_add_details("admin_verb","UFE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return
 
 	radio_report()
@@ -146,6 +149,7 @@
 						output += "&nbsp;&nbsp;&nbsp;&nbsp;[device]<br>"
 
 		usr << browse(output,"window=radioreport")
+		//feedback_add_details("admin_verb","RR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	reload_admins()
 		set name = "Reload Admins"
@@ -175,6 +179,7 @@
 					var/a_lev = copytext(line, pos + 3, length(line) + 1)
 					admins[m_key] = a_lev
 					diary << ("ADMIN: [m_key] = [a_lev]")
+		//feedback_add_details("admin_verb","RLDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 	jump_to_dead_group()
@@ -193,6 +198,7 @@
 				dead_groups += group
 		var/datum/air_group/dest_group = pick(dead_groups)
 		usr.loc = pick(dest_group.members)
+		//feedback_add_details("admin_verb","JDAG") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return
 
 	tension_report()
@@ -217,9 +223,26 @@
 <BR>
 <B>Current Status</B><BR>
 <B>Tension:</B> [tension_master.score]<BR>
+<a href='?src=\ref[tension_master];addScore=1'>Increase Tension by 50000</a><br>
 <B>Tension per player:</B> [tension_master.score/tension_master.get_num_players()]<BR>
-<B>Recommendations:</B> not yet implemented<BR>
+<B>Tensioner Debug Data:</B>  R1:[tension_master.round1] R2:[tension_master.round2] R3:[tension_master.round3] R4:[tension_master.round4] ES: [tension_master.eversupressed] CD: [tension_master.cooldown]<br>
+<B>Current Tensioner Status:</B> [config.Tensioner_Active].  <a href='?src=\ref[tension_master];ToggleStatus=1'>Toggle?</a><br>
+<B>Recommendations:</B> All the modes.  All of them.  Press all of them.<BR>
 <BR>
+
+	<a href='?src=\ref[tension_master];makeTratior=1'>Make Tratiors</a><br>
+	<a href='?src=\ref[tension_master];makeChanglings=1'>Make Changlings</a><br>
+	<a href='?src=\ref[tension_master];makeRevs=1'>Make Revs</a><br>
+	<a href='?src=\ref[tension_master];makeWizard=1'>Make Wizard (Requires Ghosts)</a><br>
+	<a href='?src=\ref[tension_master];makeCult=1'>Make Cult</a><br>
+	<a href='?src=\ref[tension_master];makeNukeTeam=1'>Make Nuke Team (Requires Ghosts)</a><br>
+	<a href='?src=\ref[tension_master];makeMalf=1'>Make Malf AI</a><br>
+	<a href='?src=\ref[tension_master];makeSpaceNinja=1'>Make Space Ninja (Requires Ghosts)</a><br>
+	<a href='?src=\ref[tension_master];makeAliens=1'>Make Aliens (Requires Ghosts)</a><br>
+	<a href='?src=\ref[tension_master];makeDeathsquad=1'>Make Deathsquad (Syndicate) (Requires Ghosts)</a><br>
+	<a href='?src=\ref[tension_master];makeBorgDeathsquad=1'>Make Deathsquad (Borg) (Requires Ghosts)</a><br>
+
+	<br>
 
 "}
 

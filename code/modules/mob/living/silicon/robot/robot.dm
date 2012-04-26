@@ -46,6 +46,12 @@
 /mob/living/silicon/robot/Del()
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		mmi.loc = get_turf(loc)//To hopefully prevent run time errors.
+
+		if(!key)
+			for(var/mob/dead/observer/ghost in world)
+				if(ghost.corpse == src && ghost.client)
+					ghost.client.mob = ghost.corpse
+
 		if(key)//If there is a client attached to host.
 			if(client)
 				client.screen.len = null
@@ -1111,3 +1117,32 @@ Frequency:
 	gib()
 	return
 
+/mob/living/silicon/robot/proc/UnlinkSelf()
+	if (src.connected_ai)
+		src.connected_ai = null
+	lawupdate = 0
+	lockcharge = 0
+	canmove = 1
+	scrambledcodes = 1
+
+
+
+/mob/living/silicon/robot/proc/ResetSecurityCodes()
+	set category = "Robot Commands"
+	set name = "Reset Identity Codes"
+	set desc = "Scrambles your security and identification codes and resets your current buffers.  Unlocks you and but permenantly severs you from your AI and the robotics console."
+
+	var/mob/living/silicon/robot/R = usr
+
+	if(R)
+		R.UnlinkSelf()
+		R << "Buffers flushed and reset.  All systems operational."
+		src.verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes
+
+
+/*/mob/living/silicon/robot/proc/flashproof()
+	if(module)
+		for(var/obj/item/borg/upgrade/flashproof/F in module.modules)
+			return 1
+
+	return 0*/

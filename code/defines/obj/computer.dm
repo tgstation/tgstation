@@ -290,23 +290,6 @@
 	circuit = "/obj/item/weapon/circuitboard/crew"
 	var/list/tracked =	list(  )
 
-
-/obj/machinery/computer/robotics
-	name = "Robotics Control"
-	desc = "Used to remotely lockdown or detonate linked Cyborgs."
-	icon = 'computer.dmi'
-	icon_state = "robot"
-	req_access = list(access_robotics)
-	circuit = "/obj/item/weapon/circuitboard/robotics"
-
-	var/id = 0.0
-	var/temp = null
-	var/status = 0
-	var/timeleft = 60
-	var/stop = 0.0
-	var/screen = 0 // 0 - Main Menu, 1 - Cyborg Status, 2 - Kill 'em All! -- In text
-
-
 /*/obj/machinery/computer/scan_consolenew    //Coming Soon, I highly doubt this but Ill leave it here anyways
 	name = "DNA Modifier Access Console"
 	desc = "Scand DNA."

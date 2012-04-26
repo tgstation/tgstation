@@ -55,3 +55,4 @@
 	var/lockcharge //Used when locking down a borg to preserve cell charge
 	var/channels = list()
 	var/modlock = 0
+	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
