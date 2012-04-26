@@ -190,6 +190,8 @@ obj/machinery/computer/forensic_scanning
 					I = card
 				if(I && istype(I,/obj/item/weapon/f_card))
 					card = I
+					if(!card.fingerprints)
+						card.fingerprints = list()
 					if(card.amount > 1 || !card.fingerprints.len)
 						usr << "\red ERROR: No prints/too many cards."
 						if(card.loc == src)
@@ -468,9 +470,10 @@ obj/machinery/computer/forensic_scanning
 
 
 	proc/add_data_scanner(var/obj/item/device/detective_scanner/W)
-		for(var/i = 1, i <= W.stored.len, i++)
-			var/list/data = W.stored[i]
-			add_data(data[1],1,data[2],data[3],data[4])
+		if(W.stored)
+			for(var/i = 1, i <= W.stored.len, i++)
+				var/list/data = W.stored[i]
+				add_data(data[1],1,data[2],data[3],data[4])
 		W.stored = list()
 		for(var/atom/A in W.contents)
 			del(A)
