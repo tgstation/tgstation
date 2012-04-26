@@ -10,6 +10,7 @@
 		if(!istype(src, /mob/living/carbon/alien/humanoid/queen))
 			stand_icon = new /icon('alien.dmi', "alien_s")
 			lying_icon = new /icon('alien.dmi', "alien_l")
+			resting_icon = new /icon('alien.dmi', "alienh_sleep")
 		icon = stand_icon
 		update_clothing()
 		src << "\blue Your icons have been generated!"
@@ -330,7 +331,10 @@
 
 	if (lying)
 		if(update_icon)
-			icon = lying_icon
+			if(!resting)
+				icon = lying_icon
+			else
+				icon = resting_icon
 
 		overlays += body_lying
 
