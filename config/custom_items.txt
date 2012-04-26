@@ -13,3 +13,4 @@ fniff: Angleo Wilkerson: /obj/item/fluff/angelo_wilkerson_1
 gvazdas: Sarah Carbrokes: /obj/item/fluff/sarah_carbrokes_1
 serithi: Serithi Artalis: /obj/item/clothing/glasses/fluff/serithi_artalis_1
 deusdactyl: Greg Anderson: /obj/item/clothing/head/fluff/greg_anderson_1
+whitellama: Ethan Way: /obj/item/fluff/ethan_way_1
