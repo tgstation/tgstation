@@ -144,7 +144,7 @@ emp_act
 
 	var/bloody = 0
 	if((I.damtype == BRUTE) && prob(25 + is_sharp(I) * 50 + (I.force * 2)))
-		I.add_blood(src)
+		I.add_blood(src)	//Make the weapon bloody, not the person.
 		bloody = 1
 		var/turf/location = loc
 		if(istype(location, /turf/simulated))
