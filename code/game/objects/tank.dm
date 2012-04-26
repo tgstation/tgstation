@@ -210,7 +210,7 @@
 
 		var/pressure = air_contents.return_pressure()
 
-		var/total_moles = air_contents.total_moles()
+		var/total_moles = air_contents.total_moles
 
 		user << "\blue Results of analysis of \icon[icon]"
 		if (total_moles>0)
@@ -244,6 +244,7 @@
 	src.air_contents = new /datum/gas_mixture()
 	src.air_contents.volume = volume //liters
 	src.air_contents.temperature = T20C
+	air_contents.update_values()
 
 	processing_objects.Add(src)
 
@@ -258,6 +259,7 @@
 	..()
 
 /obj/item/weapon/tank/examine()
+	set src in oview()
 	var/obj/icon = src
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
@@ -290,6 +292,7 @@
 
 	src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
 	src.air_contents.nitrogen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
+	air_contents.update_values()
 	return
 
 
@@ -302,17 +305,19 @@
 	trace_gas.moles = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 
 	src.air_contents.trace_gases += trace_gas
+	air_contents.update_values()
 	return
 
 /obj/item/weapon/tank/plasma/New()
 	..()
 
 	src.air_contents.toxins = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.update_values()
 	return
 
 
 /obj/item/weapon/tank/plasma/proc/release()
-	var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles())
+	var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles)
 
 	loc.assume_air(removed)
 

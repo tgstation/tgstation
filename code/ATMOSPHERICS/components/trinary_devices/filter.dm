@@ -86,12 +86,6 @@ Filter types:
 					filtered_out.toxins = removed.toxins
 					removed.toxins = 0
 
-					if(removed.trace_gases.len>0)
-						for(var/datum/gas/trace_gas in removed.trace_gases)
-							if(istype(trace_gas, /datum/gas/oxygen_agent_b))
-								removed.trace_gases -= trace_gas
-								filtered_out.trace_gases += trace_gas
-
 				if(1) //removing O2
 					filtered_out.oxygen = removed.oxygen
 					removed.oxygen = 0
@@ -115,6 +109,7 @@ Filter types:
 					filtered_out = null
 
 
+			filtered_out.update_values()
 			air2.merge(filtered_out)
 			air3.merge(removed)
 

@@ -441,6 +441,7 @@ turf/simulated
 				trace_gas.moles = amount
 				adding.trace_gases += trace_gas
 				adding.temperature = T20C
+				adding.update_values()
 
 				assume_air(adding)
 
@@ -474,7 +475,7 @@ obj/indicator
 					return "error"
 				return "[round(GM.nitrogen/MOLES_CELLSTANDARD*10+0.5)]"
 			else
-				return "[round((GM.total_moles())/MOLES_CELLSTANDARD*10+0.5)]"
+				return "[round((GM.total_moles)/MOLES_CELLSTANDARD*10+0.5)]"
 
 
 	Click()

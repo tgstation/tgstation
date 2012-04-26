@@ -133,7 +133,7 @@
 			for (var/mob/O in viewers(user, null))
 				O << "\red [user] has used the analyzer on \icon[icon]"
 			var/pressure = src.ptank.air_contents.return_pressure()
-			var/total_moles = src.ptank.air_contents.total_moles()
+			var/total_moles = src.ptank.air_contents.total_moles
 
 			user << "\blue Results of analysis of \icon[icon]"
 			if (total_moles>0)

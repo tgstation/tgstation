@@ -53,7 +53,7 @@
 	proc/allow_thrust(num, mob/living/user as mob)
 		if(!(src.on))
 			return 0
-		if((num < 0.005 || src.air_contents.total_moles() < num))
+		if((num < 0.005 || src.air_contents.total_moles < num))
 			src.ion_trail.stop()
 			return 0
 

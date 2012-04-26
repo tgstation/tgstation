@@ -147,7 +147,7 @@ datum
 			setup()
 				set background = 1
 				world << "\red \b Processing Geometry..."
-				sleep(1)
+				sleep(-1)
 
 				var/start_time = world.timeofday
 

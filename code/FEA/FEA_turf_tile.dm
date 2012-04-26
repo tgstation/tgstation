@@ -25,6 +25,7 @@ turf
 		GM.toxins = toxins
 
 		GM.temperature = temperature
+		GM.update_values()
 
 		return GM
 
@@ -39,6 +40,7 @@ turf
 			GM.toxins = (toxins/sum)*amount
 
 		GM.temperature = temperature
+		GM.update_values()
 
 		return GM
 
@@ -149,6 +151,7 @@ turf
 				air.toxins = toxins
 
 				air.temperature = temperature
+				air.update_values()
 
 				if(air_master)
 					air_master.tiles_to_update.Add(src)
@@ -189,7 +192,7 @@ turf
 						parent.suspend_group_processing()
 						air.merge(giver)
 				else
-					if (giver.total_moles() > MINIMUM_AIR_TO_SUSPEND)
+					if (giver.total_moles > MINIMUM_AIR_TO_SUSPEND)
 						reset_delay()
 
 					air.merge(giver)
@@ -239,7 +242,6 @@ turf
 					if(!processing)
 						if(air.check_tile_graphic())
 							update_visuals(air)
-
 				return removed
 
 			else

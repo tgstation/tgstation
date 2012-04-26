@@ -161,6 +161,8 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 			plasma_captured.toxins = round(gas_covered.toxins * transfer_ratio)
 			plasma_captured.temperature = gas_covered.temperature
 			gas_covered.toxins -= plasma_captured.toxins
+			plasma_captured.update_values()
+			gas_covered.update_values()
 			held_plasma.merge(plasma_captured)
 			//
 			environment.merge(gas_covered)
@@ -302,7 +304,9 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 			plasma_lost.temperature = held_plasma.temperature
 			//
 			plasma_lost.toxins = held_plasma.toxins * loss_ratio
+			plasma_lost.update_values()
 			held_plasma.toxins -= held_plasma.toxins * loss_ratio
+			held_plasma.update_values()
 			//
 			environment.merge(plasma_lost)
 			radiation += loss_ratio * mega_energy * 0.1
@@ -310,6 +314,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 			return 1
 		else
 			held_plasma.toxins = 0
+			held_plasma.update_values()
 			return 0
 
 	//the !!fun!! part

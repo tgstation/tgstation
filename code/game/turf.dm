@@ -903,6 +903,7 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 		trace_gas.moles = 2000
 		adding.trace_gases += trace_gas
 		adding.temperature = T20C
+		adding.update_values()
 
 		assume_air(adding)
 

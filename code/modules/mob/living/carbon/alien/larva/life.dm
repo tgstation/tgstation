@@ -186,7 +186,7 @@
 							breath_moles = (ONE_ATMOSPHERE*BREATH_VOLUME/R_IDEAL_GAS_EQUATION*environment.temperature)
 						else*/
 							// Not enough air around, take a percentage of what's there to model this properly
-						breath_moles = environment.total_moles()*BREATH_PERCENTAGE
+						breath_moles = environment.total_moles*BREATH_PERCENTAGE
 
 						breath = loc.remove_air(breath_moles)
 
@@ -234,15 +234,15 @@
 			if(nodamage)
 				return
 
-			if(!breath || (breath.total_moles() == 0))
+			if(!breath || (breath.total_moles == 0))
 				//Aliens breathe in vaccuum
 				return 0
 
 			var/toxins_used = 0
-			var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+			var/breath_pressure = (breath.total_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 			//Partial pressure of the toxins in our breath
-			var/Toxins_pp = (breath.toxins/breath.total_moles())*breath_pressure
+			var/Toxins_pp = (breath.toxins/breath.total_moles)*breath_pressure
 
 			if(Toxins_pp) // Detect toxins in air
 
