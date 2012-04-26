@@ -13,7 +13,7 @@
 	codebase for the entire /TG/station commuity a TONNE easier :3 Thanks for your help!
 */
 
-#define FTPDELAY	60	//60 tick delay to discourage spam
+#define FTPDELAY	600	//600 tick delay to discourage spam
 /*
 	These procs have failsafes built in to prevent spamming of file requests. As such it can only be used once every
 	[FTPDELAY] ticks. This can be changed by modifying FTPDELAY's value above.
