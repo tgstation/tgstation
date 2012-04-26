@@ -301,6 +301,14 @@
 	if (href_list["showalerts"])
 		ai_alerts()
 
+	//Carn: holopad requests
+	if (href_list["jumptoholopad"])
+		var/obj/machinery/hologram/holopad/H = locate(href_list["jumptoholopad"])
+		if(stat == CONSCIOUS)
+			if(H)
+				H.attack_ai(src) //may as well recycle
+			else
+				src << "<span class='notice'>Unable to locate the holopad.</span>"
 
 	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
 		var/L = text2num(href_list["lawc"])
