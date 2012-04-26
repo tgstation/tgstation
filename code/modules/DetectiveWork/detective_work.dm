@@ -549,7 +549,7 @@ obj/machinery/computer/forensic_scanning
 						for(var/n = 2, n <= perp_list.len, n++)	//Lets see if it is already in the database
 							var/list/target = perp_list[n]
 							var/atom/atom_checker = target[1]
-							var/atom_checker_scan = (A.original_atom.len ? atom_checker.original_atom[1] == A.original_atom[1] : 0)
+							var/atom_checker_scan = (A.original_atom ? atom_checker.original_atom[1] == A.original_atom[1] : 0)
 							if(atom_checker.original_atom[1] == A || atom_checker_scan)	//Found the original object!
 								found2 = 1
 								var/list/prints = target[2]
@@ -718,23 +718,24 @@ obj/effect/decal/cleanable/var
 
 turf/Exited(mob/living/carbon/human/M)
 	if(istype(M,/mob/living) && !istype(M,/mob/living/carbon/metroid))
-		var/dofoot = 1
-		if(istype(M,/mob/living/simple_animal))
-			if(!(istype(M,/mob/living/simple_animal/cat) || istype(M,/mob/living/simple_animal/corgi) || istype(M,/mob/living/simple_animal/constructwraith)))
-				dofoot = 0
+		if(!istype(src, /turf/space))  // Bloody tracks code starts here
+			var/dofoot = 1
+			if(istype(M,/mob/living/simple_animal))
+				if(!(istype(M,/mob/living/simple_animal/cat) || istype(M,/mob/living/simple_animal/corgi) || istype(M,/mob/living/simple_animal/constructwraith)))
+					dofoot = 0
 
-		if(dofoot)
+			if(dofoot)
 
-			if(!istype(src, /turf/space))  // Bloody tracks code starts here
-				if(M.track_blood > 0)
-					M.track_blood--
-					src.add_bloody_footprints(M.track_blood_mob,1,M.dir,get_tracks(M),M.track_blood_type)
-				else if(istype(M,/mob/living/carbon/human))
-					if(M.shoes)
-						if(M.shoes.track_blood > 0)
-							M.shoes.track_blood--
-							src.add_bloody_footprints(M.shoes.track_blood_mob,1,M.dir,M.shoes.name,M.shoes.track_blood_type) // And bloody tracks end here
-	. = ..()
+				if(!istype(src, /turf/space))  // Bloody tracks code starts here
+					if(M.track_blood > 0)
+						M.track_blood--
+						src.add_bloody_footprints(M.track_blood_mob,1,M.dir,get_tracks(M),M.track_blood_type)
+					else if(istype(M,/mob/living/carbon/human))
+						if(M.shoes)
+							if(M.shoes.track_blood > 0)
+								M.shoes.track_blood--
+								src.add_bloody_footprints(M.shoes.track_blood_mob,1,M.dir,M.shoes.name,M.shoes.track_blood_type) // And bloody tracks end here
+		. = ..()
 turf/Entered(mob/living/carbon/human/M)
 	if(istype(M,/mob/living) && !istype(M,/mob/living/carbon/metroid))
 		var/dofoot = 1

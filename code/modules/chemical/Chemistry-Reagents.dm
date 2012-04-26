@@ -1045,7 +1045,7 @@ datum
 			color = "#660000" // rgb: 102, 0, 0
 
 //Commenting this out as it's horribly broken. It's a neat effect though, so it might be worth making a new reagent (that is less common) with similar effects.	-Pete
-/*
+// Sort of fixed by creating plasma instead.
 			reaction_obj(var/obj/O, var/volume)
 				src = null
 				var/turf/the_turf = get_turf(O)
@@ -1067,7 +1067,7 @@ datum
 				M:adjustToxLoss(1)
 				..()
 				return
-*/
+
 
 		space_cleaner
 			name = "Space cleaner"

@@ -156,8 +156,8 @@ mob/living/carbon/proc/handle_hallucinations()
 								halbody = image('human.dmi',target,"husk_s",TURF_LAYER)
 							if(4)
 								halbody = image('alien.dmi',target,"alienother",TURF_LAYER)
-	//						if(5)
-	//							halbody = image('xcomalien.dmi',target,"chryssalid",TURF_LAYER)
+							if(5)
+								halbody = image('xcomalien.dmi',target,"chryssalid",TURF_LAYER)
 
 						if(client) client.images += halbody
 						spawn(rand(50,80)) //Only seen for a brief moment.
