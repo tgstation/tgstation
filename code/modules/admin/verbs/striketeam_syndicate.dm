@@ -107,6 +107,7 @@ var/global/sent_syndicate_strike_team = 0
 
 	message_admins("\blue [key_name_admin(usr)] has spawned a Syndicate strike squad.", 1)
 	log_admin("[key_name(usr)] used Spawn Syndicate Squad.")
+	//feedback_add_details("admin_verb","SDTHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/create_syndicate_death_commando(obj/spawn_location, syndicate_leader_selected = 0)
 	var/mob/living/carbon/human/new_syndicate_commando = new(spawn_location.loc)
@@ -144,7 +145,7 @@ var/global/sent_syndicate_strike_team = 0
 	camera.c_tag = real_name
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
-	R.set_frequency(1337) //Same frequency as the syndicate team in Nuke mode.
+	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.
 	equip_if_possible(R, slot_ears)
 	equip_if_possible(new /obj/item/clothing/under/syndicate(src), slot_w_uniform)
 	equip_if_possible(new /obj/item/clothing/shoes/swat(src), slot_shoes)

@@ -29,7 +29,7 @@ var/syndicate_elite_shuttle_timeleft = 0
 	if(announcer)
 		announcer.say(message)
 	//	message = "ARMORED SQUAD TAKE YOUR POSITION ON GRAVITY LAUNCH PAD"
-		announcer.say(message)
+	//	announcer.say(message)
 
 	while(syndicate_elite_shuttle_time - world.timeofday > 0)
 		var/ticksleft = syndicate_elite_shuttle_time - world.timeofday
@@ -192,9 +192,9 @@ var/syndicate_elite_shuttle_timeleft = 0
 		user << "\red Access Denied."
 		return
 
-	if (sent_syndicate_strike_team == 0)
-		usr << "\red The strike team has not yet deployed."
-		return
+//	if (sent_syndicate_strike_team == 0)
+//		usr << "\red The strike team has not yet deployed."
+//		return
 
 	if(..())
 		return

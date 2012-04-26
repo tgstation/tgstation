@@ -82,6 +82,7 @@
 		usr << "\blue @[target.x],[target.y] ([GM.group_multiplier]): O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] w [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("\red BURNING"):(null)]"
 		for(var/datum/gas/trace_gas in GM.trace_gases)
 			usr << "[trace_gas.type]: [trace_gas.moles]"
+		//feedback_add_details("admin_verb","DAST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	fix_next_move()
 		set category = "Debug"
@@ -213,6 +214,12 @@
 			alert(usr,"No players found.  How the fuck are you calling this?","Tension Report")
 			return 0
 
+		var/numghosts = 0
+
+		for(var/mob/dead/observer/theghost in world)
+			numghosts ++
+
+
 		var/output = {"<B>TENSION REPORT</B><HR>
 <B>General Statistics</B><BR>
 <B>Deaths:</B> [tension_master.deaths]<BR>
@@ -220,6 +227,7 @@
 <B>Explosions:</B> [tension_master.explosions]<BR>
 <B>Air alarms:</B> [tension_master.air_alarms]<BR>
 <B>Adminhelps:</B> [tension_master.adminhelps]<BR>
+<B>Ghosts:</B> [numghosts]<BR>
 <BR>
 <B>Current Status</B><BR>
 <B>Tension:</B> [tension_master.score]<BR>
