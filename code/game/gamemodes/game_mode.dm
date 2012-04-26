@@ -61,7 +61,7 @@ Devices and Tools;
 /obj/item/weapon/syndie/c4explosive:4:Low Power Explosive Charge, with Detonator;
 /obj/item/device/powersink:5:Powersink (DANGER!);
 /obj/machinery/singularity_beacon/syndicate:7:Singularity Beacon (DANGER!);
-/obj/item/weapon/circuitboard/teleporter:20:Teleporter Circuit Board;
+/obj/item/weapon/circuitboard/teleporter:10:Teleporter Circuit Board;
 Whitespace:Seperator;
 Implants;
 /obj/item/weapon/storage/syndie_kit/imp_freedom:3:Freedom Implant;
