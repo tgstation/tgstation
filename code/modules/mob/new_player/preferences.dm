@@ -172,7 +172,7 @@ datum/preferences
 		switch(points)
 			if(0)
 				return "Unconfigured"
-			if(1 to 2)
+			if(1 to 3)
 				return "Terrifying"
 			if(4 to 6)
 				return "Below Average"
