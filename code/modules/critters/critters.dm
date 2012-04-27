@@ -208,6 +208,7 @@
 	atksilicon = 0
 	firevuln = 2
 	brutevuln = 1
+	wanderspeed = 1
 
 
 	Harvest(var/obj/item/weapon/W, var/mob/living/user)

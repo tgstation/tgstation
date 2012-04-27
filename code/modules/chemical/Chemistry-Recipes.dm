@@ -417,6 +417,13 @@ datum
 			required_reagents = list("silicon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
 			result_amount = 5
 
+		lipozine
+			name = "Lipozine"
+			id = "Lipozine"
+			result = "lipozine"
+			required_reagents = list("sodiumchloride" = 1, "ethanol" = 1, "radium" = 1)
+			result_amount = 3
+
 ///////////////////////////////////////////////////////////////////////////////////
 
 // foam and foam precursor
