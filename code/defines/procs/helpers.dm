@@ -689,6 +689,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		newname = dd_replacetext(newname, ">", "'")
 		M.real_name = newname
 		M.name = newname
+		M.original_name = newname
 
 /proc/clname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea
 	var/randomname = pick(clown_names)
@@ -720,6 +721,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		newname = dd_replacetext(newname, ">", "'")
 		M.real_name = newname
 		M.name = newname
+		M.original_name = newname
 
 	for (var/obj/item/device/pda/pda in M.contents)
 		if (pda.owner == oldname)
