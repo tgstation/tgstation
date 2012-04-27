@@ -288,6 +288,9 @@ var
 		if (R.client && R.client.STFU_radio) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			continue
 
+		if(istype(M, /mob/new_player)) // we don't want new players to hear messages. rare but generates runtimes.
+			continue
+
 
 		// --- Check for compression ---
 		if(compression > 0)

@@ -841,14 +841,16 @@
 			src.icon_state = "c_unpowered"
 			stat |= NOPOWER
 
-/obj/machinery/scan_consolenew/New()
+/obj/machinery/computer/scan_consolenew/New()
 	..()
-	spawn( 5 )
+	spawn(5)
 		src.connected = locate(/obj/machinery/dna_scannernew, get_step(src, WEST))
+		spawn(250)
+			src.injectorready = 1
 		return
 	return
 
-/obj/machinery/scan_consolenew/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/computer/scan_consolenew/attackby(obj/item/W as obj, mob/user as mob)
 	if ((istype(W, /obj/item/weapon/disk/data)) && (!src.diskette))
 		user.drop_item()
 		W.loc = src
@@ -856,7 +858,7 @@
 		user << "You insert [W]."
 		src.updateUsrDialog()
 
-/obj/machinery/scan_consolenew/process() //not really used right now
+/obj/machinery/computer/scan_consolenew/process() //not really used right now
 	processing_objects.Remove(src) //Lets not have it waste CPU
 	if(stat & (NOPOWER|BROKEN))
 		return
@@ -864,13 +866,13 @@
 		return
 	return
 
-/obj/machinery/scan_consolenew/attack_paw(user as mob)
+/obj/machinery/computer/scan_consolenew/attack_paw(user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/scan_consolenew/attack_ai(user as mob)
+/obj/machinery/computer/scan_consolenew/attack_ai(user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/scan_consolenew/attack_hand(user as mob)
+/obj/machinery/computer/scan_consolenew/attack_hand(user as mob)
 	if(..())
 		return
 	if(!(user in message))
@@ -931,7 +933,7 @@
 	onclose(user, "scannernew")
 	return
 
-/obj/machinery/scan_consolenew/Topic(href, href_list)
+/obj/machinery/computer/scan_consolenew/Topic(href, href_list)
 	if(..())
 		return
 	if(!istype(usr.loc, /turf))

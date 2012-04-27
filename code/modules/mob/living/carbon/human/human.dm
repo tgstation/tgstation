@@ -1900,7 +1900,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
+					W.add_fingerprint(source)
 			else
 				if(!item) return
 				if (istype(item, /obj/item/clothing/gloves))
@@ -1921,7 +1921,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
+					W.add_fingerprint(source)
 			else
 				if(!item) return
 				if (istype(item, /obj/item/clothing/glasses))
@@ -1940,7 +1940,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
+					W.add_fingerprint(source)
 			else
 				if(!item) return
 				if ((istype(item, /obj) && item.flags & 128 && target.w_uniform))
@@ -1959,7 +1959,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
+					W.add_fingerprint(source)
 			else
 				if(!item) return
 				if (istype(item, /obj) && target.wear_suit)
@@ -1988,7 +1988,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
+					W.add_fingerprint(source)
 			else
 				if(!item) return
 				if (istype(item, /obj/item/clothing/head))
@@ -2016,7 +2016,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
+					W.add_fingerprint(source)
 			else
 				if(!item) return
 				if (istype(item, /obj/item/clothing/ears) || istype(item, /obj/item/device/radio/headset) || item.w_class == 1)
@@ -2051,7 +2051,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
+					W.add_fingerprint(source)
 			else
 				if(!item) return
 				if (istype(item, /obj/item/clothing/ears) || istype(item, /obj/item/device/radio/headset) || item.w_class == 1)
@@ -2079,7 +2079,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
+					W.add_fingerprint(source)
 			else
 				if(!item) return
 				if (istype(item, /obj/item/clothing/shoes))
@@ -2100,9 +2100,9 @@ It can still be worn/put on as normal.
 					target.client.screen -= W
 				if (W)
 					W.loc = target.loc
-					W.dropped(target)
 					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
+					W.add_fingerprint(source)
+					W.dropped(target)			//dropped sometimes deletes src so put it last
 			else
 				if(!item) return
 				if(istype(item, /obj/item))
@@ -2125,9 +2125,9 @@ It can still be worn/put on as normal.
 					target.client.screen -= W
 				if (W)
 					W.loc = target.loc
-					W.dropped(target)
 					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
+					W.add_fingerprint(source)
+					W.dropped(target)			//dropped sometimes deletes src so put it last
 			else
 				if(!item) return
 				if (istype(item, /obj/item))
@@ -2196,7 +2196,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
+					W.add_fingerprint(source)
 			else
 				if(!item) return
 				if (istype(item, /obj/item/clothing/suit))
@@ -2215,7 +2215,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
+					W.add_fingerprint(source)
 			else
 				if(!item) return
 				if (((istype(item, /obj/item/weapon/card/id)||istype(item, /obj/item/device/pda)) && target.w_uniform))
@@ -2234,7 +2234,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
+					W.add_fingerprint(source)
 			else
 				if(!item) return
 				if ((istype(item, /obj/item) && item.flags & 1))
@@ -2264,7 +2264,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
+					W.add_fingerprint(source)
 			else
 				if(!item) return
 				if (istype(item, /obj/item/weapon/handcuffs))
@@ -2329,7 +2329,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
+					W.add_fingerprint(source)
 			if (target.r_store)
 				var/obj/item/W = target.r_store
 				target.u_equip(W)
@@ -2339,7 +2339,7 @@ It can still be worn/put on as normal.
 					W.loc = target.loc
 					W.dropped(target)
 					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
+					W.add_fingerprint(source)
 		if("internal")
 			if (target.internal)
 				target.internal.add_fingerprint(source)
@@ -2782,7 +2782,6 @@ It can still be worn/put on as normal.
 		target.show_message("\blue You hear [src.real_name]'s voice: [say]")
 	else
 		target.show_message("\blue You hear a voice that seems to echo around the room: [say]")
-		target << "\red This ain't an admin message, this is IC.  Act like it.  If someone's abusing it, pretending to be us, adminhelp it."
 	usr.show_message("\blue You project your mind into [target.real_name]: [say]")
 	for(var/mob/dead/observer/G in world)
 		G.show_message("<i>Telepathic message from <b>[src]</b> to <b>[target]</b>: [say]</i>")

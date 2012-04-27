@@ -10,6 +10,7 @@
 		screen = 0				// the screen number:
 		list/servers = list()	// the servers located by the computer
 		mob/editingcode
+		mob/lasteditor
 		list/viewingcode = list()
 		obj/machinery/telecomms/server/SelectedServer
 
@@ -49,13 +50,13 @@
 				showcode = dd_replacetext(storedcode, "\"", "\\\"")
 
 				for(var/mob/M in viewingcode)
-					if(M.machine == src && M in view(1, src))
+
+					if( (M.machine == src && M in view(1, src) ) || issilicon(M))
 						winset(M, "tcscode", "is-disabled=true")
 						winset(M, "tcscode", "text=\"[showcode]\"")
 					else
-						if(!issilicon(M))
-							viewingcode.Remove(M)
-							winshow(M, "Telecomms IDE", 0) // hide the window!
+						viewingcode.Remove(M)
+						winshow(M, "Telecomms IDE", 0) // hide the window!
 
 			sleep(5)
 
@@ -164,6 +165,7 @@
 					if(usr in viewingcode) return
 
 					if(!editingcode)
+						lasteditor = usr
 						editingcode = usr
 						winshow(editingcode, "Telecomms IDE", 1) // show the IDE
 						winset(editingcode, "tcscode", "is-disabled=false")

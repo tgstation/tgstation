@@ -127,7 +127,7 @@
 		if (!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 32))
 			if(!istype(H.dna, /datum/dna))
 				H.dna = new /datum/dna(null)
-			H.check_dna()
+		H.check_dna()
 		if (H.gloves && H.gloves != src)
 			if(fingerprintslast != H.key)
 				fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
