@@ -221,7 +221,7 @@
 
 /obj/item/weapon/cable_coil/proc/updateicon()
 	if (!color)
-		color = pick("red", "yellow", "blue", "green")
+		color = pick("red", "yellow", "blue", "green", "pink")
 	if(amount == 1)
 		icon_state = "coil_[color]1"
 		name = "cable piece"
