@@ -100,7 +100,14 @@
 		if(reinf) new /obj/item/stack/rods( src.loc)
 		src.density = 0
 		del(src)
-	return
+		return
+	else
+		playsound(src.loc, 'Glassknock.ogg', 80, 1)
+		usr.visible_message("[usr.name] knocks on the [src.name].", \
+							"You knock on the [src.name].", \
+							"You hear a knocking sound.")
+		return
+
 
 /obj/structure/window/attack_paw()
 	if ((usr.mutations & HULK))
@@ -315,6 +322,8 @@
 		health = 40
 		if(opacity)
 			icon_state = "twindow"
+	else
+		icon_state = "window"
 
 	update_nearby_tiles(need_rebuild=1)
 	relativewindow()

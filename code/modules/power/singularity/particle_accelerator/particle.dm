@@ -36,7 +36,7 @@
 				toxmob(A)
 			if((istype(A,/obj/machinery/the_singularitygen))||(istype(A,/obj/machinery/singularity/)))
 				A:energy += energy
-				energy = 0
+//				energy = 0	//This breaks the current singularity
 			if( istype(A,/obj/machinery/rust/particle_catcher) )
 				var/obj/machinery/rust/particle_catcher/collided_catcher = A
 				if(particle_type && particle_type != "neutron")

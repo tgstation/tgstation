@@ -41,6 +41,9 @@ var/const
 	BE_PAI       =(1<<9)
 
 
+
+
+
 datum/preferences
 	var
 		real_name
@@ -53,6 +56,9 @@ datum/preferences
 		be_special = 0
 		//Play admin midis
 		midis = 1
+		//Toggle ghost ears
+		ghost_ears = 1
+		ghost_sight = 1
 		//Play pregame music
 		pregame_music = 1
 		//Saved changlog filesize to detect if there was a change
@@ -61,6 +67,10 @@ datum/preferences
 		//Just like it sounds
 		ooccolor = "#b82e00"
 		underwear = 1
+		list/underwear_m = list("White", "Grey", "Green", "Blue", "Black", "None") //Curse whoever made male/female underwear diffrent colours
+		list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "None")
+		backbag = 2
+		list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Alt")
 
 		//Hair type
 		h_style = "Short Hair"
@@ -162,7 +172,7 @@ datum/preferences
 		switch(points)
 			if(0)
 				return "Unconfigured"
-			if(1 to 2)
+			if(1 to 3)
 				return "Terrifying"
 			if(4 to 6)
 				return "Below Average"
@@ -232,6 +242,7 @@ datum/preferences
 		dat += "<br>"
 		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[UI == UI_NEW ? "New" : "Old"]</b></a><br>"
 		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
+		dat += "<b>Ghost ears:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_ears=input\"><b>[ghost_ears == 0 ? "Nearest Creatures" : "All Speech"]</b></a><br>"
 
 		if((user.client) && (user.client.holder) && (user.client.holder.rank) && (user.client.holder.rank == "Game Master"))
 			dat += "<hr><b>OOC</b><br>"
@@ -245,13 +256,18 @@ datum/preferences
 		dat += "\t<a href=\"byond://?src=\ref[user];preferences=1;skills=1\"><b>Set Skills</b></a><br>"
 
 		dat += "<hr><table><tr><td><b>Body</b> "
-		dat += "(<a href=\"byond://?src=\ref[user];preferences=1;s_tone=random;underwear=random;age=random;b_type=random;hair=random;h_style=random;facial=random;f_style=random;eyes=random\">&reg;</A>)" // Random look
+		dat += "(<a href=\"byond://?src=\ref[user];preferences=1;s_tone=random;underwear=random;backbag_type=random;age=random;b_type=random;hair=random;h_style=random;facial=random;f_style=random;eyes=random\">&reg;</A>)" // Random look
 		dat += "<br>"
 		dat += "Blood Type: <a href='byond://?src=\ref[user];preferences=1;b_type=input'>[b_type]</a><br>"
 		dat += "Skin Tone: <a href='byond://?src=\ref[user];preferences=1;s_tone=input'>[-s_tone + 35]/220<br></a>"
 
-		if(!IsGuestKey(user.key))
-			dat += "Underwear: <a href =\"byond://?src=\ref[user];preferences=1;underwear=1\"><b>[underwear == 1 ? "Yes" : "No"]</b></a><br>"
+	//	if(!IsGuestKey(user.key))//Seeing as it doesn't do anything, it may as well not show up.
+		if(gender == MALE)
+			dat += "Underwear: <a href =\"byond://?src=\ref[user];preferences=1;underwear=inputmale\"><b>[underwear_m[underwear]]</b></a><br>"
+		else
+			dat += "Underwear: <a href =\"byond://?src=\ref[user];preferences=1;underwear=inputfemale\"><b>[underwear_f[underwear]]</b></a><br>"
+
+		dat += "Backpack Type:<br><a href =\"byond://?src=\ref[user];preferences=1;backbag_type=input\"><b>[backbaglist[backbag]]</b></a><br>"
 
 		dat += "</td><td style='text-align:center;padding-left:2em'><b>Preview</b><br>"
 		dat += "<a href='?src=\ref[user];preferences=1;preview_dir=[turn(preview_dir,-90)]'>&lt;</a>"
@@ -284,15 +300,21 @@ datum/preferences
 			dat += "[copytext(flavor_text, 1, 37)]..."
 
 		dat += "<hr>"
-		if(!jobban_isbanned(user, "Syndicate"))
+		if(jobban_isbanned(user, "Syndicate"))
+			dat += "<b>You are banned from antagonist roles.</b>"
+			src.be_special = 0
+		else
 			var/n = 0
 			for (var/i in special_roles)
 				if(special_roles[i]) //if mode is available on the server
-					dat += "<b>Be [i]:</b> <a href=\"byond://?src=\ref[user];preferences=1;be_special=[n]\"><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
+					if(jobban_isbanned(user, i))
+						dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
+					else if(i == "pai candidate")
+						if(jobban_isbanned(user, "pAI"))
+							dat += "<b>Be [i]:</b> <font color=red><b> \[BANNED]</b></font><br>"
+					else
+						dat += "<b>Be [i]:</b> <a href=\"byond://?src=\ref[user];preferences=1;be_special=[n]\"><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
 				n++
-		else
-			dat += "<b>You are banned from being Syndicate.</b>"
-			src.be_special = 0
 		dat += "<hr>"
 
 		// slot options
@@ -359,46 +381,52 @@ datum/preferences
 		var/HTML = "<body>"
 		HTML += "<tt><center>"
 		HTML += "<b>Choose occupation chances</b><br>Unavailable occupations are in red.<br>"
+		HTML += "<table width='100%' cellpadding='1' cellspacing='0' align='center'>"
 		for(var/datum/job/job in job_master.occupations)
+			HTML += "<tr bgcolor='[job.selection_color]'><td width='60%' align='right'>"
 			var/rank = job.title
 			if(jobban_isbanned(user, rank))
-				HTML += "<font color=red>[rank]</font><br>"
+				HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[BANNED]</b></font></td></tr>"
 				continue
 			if((job_civilian_low & ASSISTANT) && (rank != "Assistant"))
-				HTML += "<font color=orange>[rank]</font><br>"
+				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 				continue
 			if((rank in command_positions) || (rank == "AI"))//Bold head jobs
-				HTML += "<b>[rank]<a href=\"byond://?src=\ref[user];preferences=1;occ=1;job=[rank]\"></b>"
+				HTML += "<b>[rank]</b>"
 			else
-				HTML += "[rank]<a href=\"byond://?src=\ref[user];preferences=1;occ=1;job=[rank]\">"
+				HTML += "[rank]"
+
+			HTML += "</td><td width='40%'>"
+
+			HTML += "<a href=\"byond://?src=\ref[user];preferences=1;occ=1;job=[rank]\">"
 
 			if(rank == "Assistant")//Assistant is special
 				if(job_civilian_low & ASSISTANT)
-					HTML += "<font color=green>\[Yes]</font>"
+					HTML += " <font color=green>\[Yes]</font>"
 				else
-					HTML += "<font color=red>\[No]</font>"
-				HTML += "</a><br>"
+					HTML += " <font color=red>\[No]</font>"
+				HTML += "</a></td></tr>"
 				continue
 
 			if(GetJobDepartment(job, 1) & job.flag)
-				HTML += "<font color=blue>\[High]</font>"
+				HTML += " <font color=blue>\[High]</font>"
 			else if(GetJobDepartment(job, 2) & job.flag)
-				HTML += "<font color=green>\[Medium]</font>"
+				HTML += " <font color=green>\[Medium]</font>"
 			else if(GetJobDepartment(job, 3) & job.flag)
-				HTML += "<font color=orange>\[Low]</font>"
+				HTML += " <font color=orange>\[Low]</font>"
 			else
-				HTML += "<font color=red>\[NEVER]</font>"
+				HTML += " <font color=red>\[NEVER]</font>"
 			if(job.alt_titles)
-				HTML += "</a> <a href=\"byond://?src=\ref[user];preferences=1;alt_title=1;job=\ref[job]\">\[[GetAltTitle(job)]\]</a><br>"
+				HTML += "</a> <a href=\"byond://?src=\ref[user];preferences=1;alt_title=1;job=\ref[job]\">\[[GetAltTitle(job)]\]</a></td></tr>"
 			else
-				HTML += "</a><br>"
+				HTML += "</a></td></tr>"
 
-		HTML += "<br>"
+		HTML += "</table><br>"
 		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;occ=0;job=cancel\">\[Done\]</a>"
 		HTML += "</center></tt>"
 
 		user << browse(null, "window=preferences")
-		user << browse(HTML, "window=mob_occupation;size=350x600")
+		user << browse(HTML, "window=mob_occupation;size=320x600")
 		return
 
 
@@ -577,12 +605,23 @@ datum/preferences
 			switch(link_tags["real_name"])
 				if("input")
 					new_name = input(user, "Please select a name:", "Character Generation")  as text
-					var/list/bad_characters = list("_", "'", "\"", "<", ">", ";", "[", "]", "{", "}", "|", "\\")
+					var/list/bad_characters = list("_", "'", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\","0","1","2","3","4","5","6","7","8","9")
 					for(var/c in bad_characters)
 						new_name = dd_replacetext(new_name, c, "")
 					if(!new_name || (new_name == "Unknown") || (new_name == "floor") || (new_name == "wall") || (new_name == "r-wall"))
-						alert("Don't do this")
+						alert("Invalid name. Don't do that!")
 						return
+					if(length(new_name) >= 26)
+						alert("That name is too long.")
+						return
+
+					//Carn: To fix BYOND text-parsing errors caused by people using dumb capitalisation in their names.
+					var/tempname
+					for(var/N in dd_text2list(new_name, " "))
+						if(N && tempname) //if both aren't null strings
+							tempname += " "
+						tempname += capitalize(lowertext(N))
+					new_name = tempname
 
 				if("random")
 					randomize_name()
@@ -595,9 +634,9 @@ datum/preferences
 		if(link_tags["age"])
 			switch(link_tags["age"])
 				if("input")
-					var/new_age = input(user, "Please select type in age: 20-45", "Character Generation")  as num
+					var/new_age = input(user, "Please select type in age: 15-45", "Character Generation")  as num
 					if(new_age)
-						age = max(min(round(text2num(new_age)), 45), 20)
+						age = max(min(round(text2num(new_age)), 45), 15)
 				if("random")
 					age = rand (20, 45)
 
@@ -739,22 +778,36 @@ datum/preferences
 				UI = UI_OLD
 
 		if(link_tags["midis"])
-			midis = (midis+1)%2
+			midis = !midis
+
+		if(link_tags["ghost_ears"])
+			ghost_ears = !ghost_ears
 
 		if(link_tags["underwear"])
-			if(!IsGuestKey(user.key))
-				/*switch(link_tags["underwear"])
-					if("random")
-						if(prob (75))
-							underwear = 1
-						else
-							underwear = 0
-					if("input")
-						if(underwear == 1)
-							underwear = 0
-						else
-							underwear = 1*/
-				underwear = !underwear
+			switch(link_tags["underwear"])
+				if("inputmale")
+					var/tempUnderwear = input(user, "Please select your underwear colour:", "Character Generation")  as null|anything in underwear_m
+					if(tempUnderwear)
+						underwear = underwear_m.Find(tempUnderwear)
+				if("inputfemale")
+					var/tempUnderwear = input(user, "Please select your underwear colour:", "Character Generation")  as null|anything in underwear_f
+					if(tempUnderwear)
+						underwear = underwear_f.Find(tempUnderwear)
+				if("random")
+					if(prob (75))
+						underwear = pick(1,2,3,4,5)
+					else
+						underwear = 6
+
+		if(link_tags["backbag_type"])
+			switch(link_tags["backbag_type"])
+				if("input")
+					var/tempBag = input(user, "Please pick a backpack type:", "Character Generation")  as null|anything in backbaglist
+					if(tempBag)
+						backbag = backbaglist.Find(tempBag)
+				if("random")
+					backbag = pick(1,2,3)
+
 
 		if(link_tags["be_special"])
 			src.be_special^=(1<<text2num(link_tags["be_special"])) //bitwize magic, sorry for that. --rastaf0
@@ -834,6 +887,7 @@ datum/preferences
 			job_engsec_low = 0
 			job_alt_titles = new()
 			underwear = 1
+			backbag = 2
 			be_special = 0
 			be_random_name = 0
 			r_hair = 0.0
@@ -851,6 +905,7 @@ datum/preferences
 			b_type = "A+"
 			UI = UI_OLD
 			midis = 1
+			ghost_ears = 1
 			disabilities = 0
 		if(link_tags["disabilities"])
 			if(text2num(link_tags["disabilities"]) >= -1)
@@ -902,7 +957,13 @@ datum/preferences
 		character.hair_style = hair_style
 		character.facial_hair_style = facial_hair_style
 
-		character.underwear = underwear == 1 ? pick(1,2,3,4,5) : 0
+		if(underwear > 6 || underwear < 1)
+			underwear = 1 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me.
+		character.underwear = underwear
+
+		if(backbag > 4 || backbag < 1)
+			backbag = 1 //Same as above
+		character.backbag = backbag
 
 		character.used_skillpoints = used_skillpoints
 		character.skill_specialization = skill_specialization
@@ -914,11 +975,22 @@ datum/preferences
 		if(!safety)//To prevent run-time errors due to null datum when using randomize_appearance_for()
 			spawn(10)
 				if(character&&character.client)
-					character.client.midis = midis
-					character.client.ooccolor = ooccolor
-					character.client.be_alien = be_special&BE_ALIEN
-					character.client.be_pai = be_special&BE_PAI
-					character.client.be_syndicate = be_special
+					setup_client(character.client)
+
+	proc/copy_to_observer(mob/dead/observer/character)
+		spawn(10)
+			if(character && character.client)
+				setup_client(character.client)
+
+	proc/setup_client(var/client/C)
+		if(C)
+			C.midis = src.midis
+			C.ooccolor = src.ooccolor
+			C.be_alien = be_special & BE_ALIEN
+			C.be_pai = be_special & BE_PAI
+			C.be_syndicate = be_special
+			if(isnull(src.ghost_ears)) src.ghost_ears = 1 //There were problems where the default was null before someone saved their profile.
+			C.ghost_ears = src.ghost_ears
 
 	proc/copydisabilities(mob/living/carbon/human/character)
 		if(disabilities & 1)

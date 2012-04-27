@@ -122,7 +122,7 @@
 					world << "Aborting world restart!"
 					return
 
-			feedback_set_details("end_error","no live players")
+			//feedback_set_details("end_error","no live players")
 
 			if(blackbox)
 				blackbox.save_all_data_to_sql()
@@ -631,7 +631,21 @@
 			src:cameraFollow = null
 
 
+/client/Topic(href, href_list)
+	if(href_list["priv_msg"])
+		var/client/C = locate(href_list["priv_msg"])
+		if(ismob(C)) //Old stuff can pass in mobs instead of clients
+			var/mob/M = C
+			C = M.client
+		cmd_admin_pm(C,null)
+	else
+		..()
+
 /mob/Topic(href, href_list)
+	if(href_list["priv_msg"])	//for priv_msg references that have yet to be updated to target clients. Forwards it to client/Topic()
+		if(client)
+			client.Topic(href, href_list)
+
 	if(href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
 		machine = null
@@ -725,7 +739,7 @@
 
 	if (!( usr ))
 		return
-	usr << "This is \an [name]."
+	usr << "That's \a [src]." //changed to "That's" from "This is" because "This is some metal sheets" sounds dumb compared to "That's some metal sheets" ~Carn
 	usr << desc
 	// *****RM
 	//usr << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
@@ -787,7 +801,7 @@
 /mob/proc/can_use_hands()
 	if(handcuffed)
 		return 0
-	if(buckled && istype(buckled, /obj/structure/stool/bed)) // buckling does not restrict hands
+	if(buckled && ! istype(buckled, /obj/structure/stool/bed/chair)) // buckling does not restrict hands
 		return 0
 	return ..()
 

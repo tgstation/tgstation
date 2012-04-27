@@ -21,6 +21,15 @@
 		new /obj/item/clothing/shoes/white( src )
 	return
 
+
+/obj/structure/closet/secure_closet/personal/cabinet/New()
+	..()
+	spawn(4)
+		contents = list()
+		new /obj/item/weapon/storage/backpack/satchel( src )
+		new /obj/item/device/radio/headset( src )
+	return
+
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (src.opened)
 		if (istype(W, /obj/item/weapon/grab))

@@ -4,7 +4,7 @@ var/global/datum/controller/occupations/job_master
 	var
 		//List of all jobs
 		list/occupations = list()
-		list/occupations2 = list()
+		list/occupations2 = list() // Prevents problems with latejoiners.
 		//Players who need jobs
 		list/unassigned = list()
 		//Debug info
@@ -28,6 +28,8 @@ var/global/datum/controller/occupations/job_master
 			if(!job)	continue
 			if(job.faction != faction)	continue
 			occupations += job
+
+
 		return 1
 
 
@@ -162,6 +164,8 @@ var/global/datum/controller/occupations/job_master
 		unassigned = shuffle(unassigned)
 		occupations2 = shuffle(occupations)
 
+		//HandleFeedbackGathering()
+
 		//Assistants are checked first
 		Debug("DO, Running Assistant Check 1")
 		var/datum/job/assist = new /datum/job/assistant()
@@ -188,9 +192,12 @@ var/global/datum/controller/occupations/job_master
 		for(var/level = 1 to 3)
 			for(var/datum/job/job in occupations2)
 				Debug("Checking job: [job]")
-				if(!job)	continue
-				if(!unassigned.len)	break
-				if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)	continue
+				if(!job)
+					continue
+				if(!unassigned.len)
+					break
+				if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
+					continue
 				var/list/candidates = FindOccupationCandidates(job, level)
 				while(candidates.len && ((job.current_positions < job.spawn_positions) || job.spawn_positions == -1))
 					var/mob/new_player/candidate = pick(candidates)
@@ -244,9 +251,26 @@ var/global/datum/controller/occupations/job_master
 		// make sure we don't already have one on 1 ear :p
 		if(!istype(H.r_ear,/obj/item/device/radio/headset) && !istype(H.l_ear,/obj/item/device/radio/headset))
 			H.equip_if_possible(new /obj/item/device/radio/headset(H), H.slot_ears)
-		var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
-		H.equip_if_possible(BPK, H.slot_back,1)
-		H.equip_if_possible(new /obj/item/weapon/storage/box(H.back), H.slot_in_backpack)
+
+		if(H.mind && H.mind.assigned_role != "Cyborg" && H.mind.assigned_role != "AI" && H.mind.assigned_role != "Clown")
+			if(H.backbag == 1) //Clown always gets his backbuddy.
+				H.equip_if_possible(new /obj/item/weapon/storage/box(H), H.slot_r_hand)
+
+			if(H.backbag == 2)
+				var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
+				new /obj/item/weapon/storage/box(BPK)
+				H.equip_if_possible(BPK, H.slot_back,1)
+
+			if(H.backbag == 3)
+				var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel(H)
+				new /obj/item/weapon/storage/box(BPK)
+				H.equip_if_possible(BPK, H.slot_back,1)
+
+			if(H.backbag == 4)
+				var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel_norm(H)
+				new /obj/item/weapon/storage/box(BPK)
+				H.equip_if_possible(BPK, H.slot_back,1)
+
 		//Give'em glasses if they are nearsighted
 		if(H.disabilities & 1)
 			var/equipped = H.equip_if_possible(new /obj/item/clothing/glasses/regular(H), H.slot_glasses)
@@ -277,7 +301,7 @@ var/global/datum/controller/occupations/job_master
 		if(!H.equip_if_possible(new /obj/item/weapon/pen(H), H.slot_r_store))
 			H.equip_if_possible(new /obj/item/weapon/pen(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/device/pda(H), H.slot_belt)
-		if(locate(/obj/item/device/pda,H))//I bet this could just use locate
+		if(locate(/obj/item/device/pda,H))//I bet this could just use locate.  It can --SkyMarshal
 			var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
 			pda.owner = H.real_name
 			pda.ownjob = H.wear_id.assignment
@@ -328,3 +352,31 @@ var/global/datum/controller/occupations/job_master
 					J.total_positions = 0
 
 		return 1
+
+/*
+	proc/HandleFeedbackGathering()
+		for(var/datum/job/job in occupations)
+			var/tmp_str = "|[job.title]|"
+
+			var/level1 = 0 //high
+			var/level2 = 0 //medium
+			var/level3 = 0 //low
+			var/level4 = 0 //never
+			var/level5 = 0 //banned
+			for(var/mob/new_player/player in world)
+				if(!((player) && (player.client) && (player.ready) && (player.mind) && (!player.mind.assigned_role)))
+					continue //This player is not ready
+				if(jobban_isbanned(player, job.title))
+					level5++
+					continue
+				if(player.preferences.GetJobDepartment(job, 1) & job.flag)
+					level1++
+				else if(player.preferences.GetJobDepartment(job, 2) & job.flag)
+					level2++
+				else if(player.preferences.GetJobDepartment(job, 3) & job.flag)
+					level3++
+				else level4++ //not selected
+
+			tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|-"
+			feedback_add_details("job_preferences",tmp_str)
+*/

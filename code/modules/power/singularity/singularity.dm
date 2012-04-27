@@ -1,7 +1,8 @@
 var/global/list/uneatable = list(
 	/turf/space,
 	/obj/effect/overlay,
-	/mob/aiEye
+	/mob/aiEye,
+	/mob/dead/observer // Stop ghosts being ate and not being able to get back to their bodies
 	)
 
 /obj/machinery/singularity/
@@ -30,8 +31,17 @@ var/global/list/uneatable = list(
 		target = null //its target. moves towards the target if it has one
 		last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 		teleport_del = 0
+		last_warning
 
 	New(loc, var/starting_energy = 50, var/temp = 0)
+		//CARN: admin-alert for chuckle-fuckery.
+		last_warning = world.time
+		var/count = 0
+		for(var/obj/machinery/containment_field/CF in world)
+			count = 1
+			break
+		if(!count)	message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
+
 		src.energy = starting_energy
 		if(temp)
 			spawn(temp)
@@ -527,3 +537,19 @@ var/global/list/uneatable = list(
 				target << "\red <b>NAR-SIE HUNGERS FOR YOUR SOUL</b>"
 			else
 				target << "\red <b>NAR-SIE HAS CHOSEN YOU TO LEAD HIM TO HIS NEXT MEAL</b>"
+
+
+
+/obj/machinery/singularity/narsie/wizard
+	grav_pull = 0
+	eat()
+		set background = 1
+		if(defer_powernet_rebuild != 2)
+			defer_powernet_rebuild = 1
+		for(var/atom/movable/X in orange(consume_range,src))
+			consume(X)
+		for(var/turf/X in orange(consume_range,src))
+			consume(X)
+		if(defer_powernet_rebuild != 2)
+			defer_powernet_rebuild = 0
+		return

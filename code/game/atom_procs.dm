@@ -127,7 +127,7 @@
 		if (!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 32))
 			if(!istype(H.dna, /datum/dna))
 				H.dna = new /datum/dna(null)
-			H.check_dna()
+		H.check_dna()
 		if (H.gloves && H.gloves != src)
 			if(fingerprintslast != H.key)
 				fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
@@ -136,7 +136,7 @@
 		if(H.gloves != src)
 			if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
 				return 0
-			else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
+			else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex) && !istype(H.gloves, /obj/item/clothing/gloves/fingerless))
 				return 0
 		if(fingerprintslast != H.key)
 			fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
@@ -336,6 +336,7 @@
 				T.icon = I
 			else
 				T.icon = initial(icon)
+
 	if(blood_DNA && !blood_DNA.len)
 		del(blood_DNA)
 	if(src.fingerprints && src.fingerprints.len)
@@ -376,16 +377,10 @@
 	//world << "atom.Click() on [src] by [usr] : src.type is [src.type]"
 	if(!istype(src,/obj/item/weapon/gun))
 		usr.last_target_click = world.time
-	var/list/pram = params2list(params)
-	if((pram["alt"] != null && pram["ctrl"] != null && pram["left"] != null) && istype(src,/atom/movable))
-		src:pull()
-		return
-	if(pram["ctrl"] != null && pram["left"] != null)
-		src.examine()
-		return
 	if(usr.client.buildmode)
 		build_click(usr, usr.client.buildmode, location, control, params, src)
 		return
+
 	if(using_new_click_proc)  //TODO ERRORAGE (see message below)
 		return DblClickNew()
 	return DblClick(location, control, params)
@@ -694,6 +689,33 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 //		world << "atom.DblClick() on [src] by [usr] : src.type is [src.type]"
 		usr:lastDblClick = world.time
 
+	// ------- DIR CHANGING WHEN CLICKING (changes facting direction) ------
+
+	if( usr && iscarbon(usr) && !usr.buckled )
+		if( src.x && src.y && usr.x && usr.y )
+			var/dx = src.x - usr.x
+			var/dy = src.y - usr.y
+
+			if( dy > 0 && abs(dx) < dy ) //North
+				usr.dir = 1
+			if( dy < 0 && abs(dx) < abs(dy) ) //South
+				usr.dir = 2
+			if( dx > 0 && abs(dy) <= dx ) //East
+				usr.dir = 4
+			if( dx < 0 && abs(dy) <= abs(dx) ) //West
+				usr.dir = 8
+			if( dx == 0 && dy == 0 )
+				if(src.pixel_y > 16)
+					usr.dir = 1
+				if(src.pixel_y < -16)
+					usr.dir = 2
+				if(src.pixel_x > 16)
+					usr.dir = 4
+				if(src.pixel_x < -16)
+					usr.dir = 8
+
+
+
 
 	// ------- AI -------
 	if (istype(usr, /mob/living/silicon/ai))
@@ -706,6 +728,43 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		var/mob/living/silicon/robot/bot = usr
 		if (bot.lockcharge) return
 	..()
+
+
+
+
+
+
+	// ------- SHIFT-CLICK -------
+
+	var/parameters = params2list(params)
+
+	if(parameters["shift"]){
+		if(!isAI(usr))
+			ShiftClick(usr)
+		else
+			AIShiftClick(usr)
+		return
+	}
+
+	// ------- ALT-CLICK -------
+
+	if(parameters["alt"]){
+		if(!isAI(usr))
+			AltClick(usr)
+		else
+			AIAltClick(usr)
+		return
+	}
+
+	// ------- CTRL-CLICK -------
+
+	if(parameters["ctrl"]){
+		if(!isAI(usr))
+			CtrlClick(usr)
+		else
+			AICtrlClick(usr)
+		return
+	}
 
 	// ------- THROW -------
 	if(usr.in_throw_mode)
@@ -964,6 +1023,51 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 	del D
 	return 1
+
+/atom/proc/CtrlClick(var/mob/M as mob)
+	examine()
+	return
+
+/atom/proc/AltClick()
+	if(hascall(src,"pull"))
+		src:pull()
+	return
+
+/atom/proc/ShiftClick()
+	if(hascall(src,"pull"))
+		src:pull()
+	return
+
+/atom/proc/AIShiftClick() // Opens and closes doors!
+	if(istype(src , /obj/machinery/door/airlock))
+		if(src:density)
+			var/nhref = "src=\ref[src];aiEnable=7"
+			src.Topic(nhref, params2list(nhref), src, 1)
+		else
+			var/nhref = "src=\ref[src];aiDisable=7"
+			src.Topic(nhref, params2list(nhref), src, 1)
+
+	return
+
+/atom/proc/AIAltClick() // Eletrifies doors.
+	if(istype(src , /obj/machinery/door/airlock))
+		if(!src:secondsElectrified)
+			var/nhref = "src=\ref[src];aiEnable=6"
+			src.Topic(nhref, params2list(nhref), src, 1)
+		else
+			var/nhref = "src=\ref[src];aiDisable=5"
+			src.Topic(nhref, params2list(nhref), src, 1)
+	return
+
+/atom/proc/AICtrlClick() // Bolts doors.
+	if(istype(src , /obj/machinery/door/airlock))
+		if(src:locked)
+			var/nhref = "src=\ref[src];aiEnable=4"
+			src.Topic(nhref, params2list(nhref), src, 1)
+		else
+			var/nhref = "src=\ref[src];aiDisable=4"
+			src.Topic(nhref, params2list(nhref), src, 1)
+	return
 
 
 /*/atom/proc/get_global_map_pos()

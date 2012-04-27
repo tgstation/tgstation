@@ -29,17 +29,58 @@
 	IsShield()
 		return 1
 
+
 /obj/item/weapon/nullrod
 	name = "null rod"
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
 	flags = FPRINT | ONBELT | TABLEPASS
-	force = 15
+	force = 10
 	throw_speed = 1
 	throw_range = 4
 	throwforce = 10
 	w_class = 1
+
+/obj/item/weapon/nullrod/attack(mob/M as mob, mob/living/user as mob)
+
+	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
+	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
+
+	log_admin("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
+	message_admins("ATTACK: [user] ([user.ckey]) attacked [M] ([M.ckey]) with [src].")
+	log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+
+	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		user << "\red You don't have the dexterity to do this!"
+		return
+
+	if ((user.mutations & CLUMSY) && prob(50))
+		user << "\red The rod slips out of your hand and hits your head."
+		user.take_organ_damage(10)
+		user.Paralyse(20)
+		return
+
+	if (M.stat !=2)
+		if((M.mind in ticker.mode.cult) && prob(33))
+			M << "\red The power of [src] clears your mind of the cult's influence!"
+			user << "\red You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal."
+			ticker.mode.remove_cultist(M.mind)
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("\red [] waves [] over []'s head.", user, src, M), 1)
+		else if(prob(10))
+			user << "\red The rod slips in your hand."
+			..()
+		else
+			user << "\red The rod appears to do nothing."
+			for(var/mob/O in viewers(M, null))
+				O.show_message(text("\red [] waves [] over []'s head.", user, src, M), 1)
+			return
+
+/obj/item/weapon/nullrod/afterattack(atom/A, mob/user as mob)
+	if (istype(A, /turf/simulated/floor))
+		user << "\blue You hit the floor with the [src]."
+		call(/obj/effect/rune/proc/revealrunes)(src)
 
 /*/obj/item/weapon/sord
 	name = "\improper SORD"
@@ -93,7 +134,7 @@
 	w_class = 3.0
 
 /obj/item/weapon/rsp
-	name = "\improper Rapid-Seed-Producer"
+	name = "\improper Rapid-Seed-Producer (RSP)"
 	desc = "A device used to rapidly deploy seeds."
 	icon = 'items.dmi'
 	icon_state = "rcd"
@@ -289,6 +330,17 @@
 	throw_speed = 4
 	throw_range = 20
 
+/obj/item/weapon/corncob
+	name = "corn cob"
+	desc = "A reminder of meals gone by."
+	icon = 'harvest.dmi'
+	icon_state = "corncob"
+	item_state = "corncob"
+	w_class = 1.0
+	throwforce = 0
+	throw_speed = 4
+	throw_range = 20
+
 /obj/item/weapon/soap
 	name = "soap"
 	desc = "A cheap bar of soap. Doesn't smell."
@@ -414,15 +466,15 @@
 	var/heal_burn = 0
 
 /obj/item/stack/medical/bruise_pack
-	name = "\improper Roll of Gauze"
-	singular_name = "\improper Roll of Gauze"
+	name = "roll of gauze"
+	singular_name = "roll of gauze"
 	desc = "A roll of gauze for sealing up wounds."
 	icon_state = "brutepack"
 	heal_brute = 1
 	origin_tech = "biotech=1"
 
 /obj/item/stack/medical/bruise_pack/tajaran
-	name = "S'rendarr's Hand leaf"
+	name = "\improper S'rendarr's Hand leaf"
 	singular_name = "S'rendarr's Hand leaf"
 	desc = "A soft leaf that is rubbed on bruises."
 	icon = 'harvest.dmi'
@@ -439,7 +491,7 @@
 	origin_tech = "biotech=1"
 
 /obj/item/stack/medical/ointment/tajaran
-	name = "Messa's Tear leaf"
+	name = "\improper Messa's Tear leaf"
 	singular_name = "Messa's Tear leaf"
 	desc = "A cold leaf that is rubbed on burns."
 	icon = 'harvest.dmi'
@@ -528,9 +580,14 @@
 	var/access = list()
 	var/registered_name = null
 	var/assignment = null
-	var/obj/item/weapon/photo/PHOTO = null
 	var/over_jumpsuit = 1 // If set to 0, it won't display on top of the mob's jumpsuit
 	var/dorm = 0		// determines if this ID has claimed a dorm already
+
+/obj/item/weapon/card/id/silver
+	name = "identification card"
+	desc = "A silver card which shows honour and dedication."
+	icon_state = "silver"
+	item_state = "silver_id"
 
 /obj/item/weapon/card/id/gold
 	name = "identification card"
@@ -586,18 +643,10 @@
 	throw_range = 10
 	flags = ONBELT
 
-/obj/item/weapon/notebook
+/obj/item/weapon/clipboard/notebook
 	name = "notebook"
 	desc = "Holds paper and pens. Feels very noire."
-	icon = 'items.dmi'
 	icon_state = "notebook00"
-	var/obj/item/weapon/pen/pen = null
-	item_state = "notebook"
-	throwforce = 0
-	w_class = 2.0
-	throw_speed = 3
-	throw_range = 10
-	flags = ONBELT
 
 #define MAXCOIL 30
 /obj/item/weapon/cable_coil
@@ -613,7 +662,7 @@
 	throw_range = 5
 	m_amt = 50
 	g_amt = 20
-	flags = TABLEPASS|USEDELAY|FPRINT|CONDUCT
+	flags = TABLEPASS|USEDELAY|FPRINT|CONDUCT | ONBELT
 	item_state = "coil_red"
 
 /obj/item/weapon/cable_coil/cut
@@ -631,12 +680,22 @@
 	color = "green"
 	icon_state = "coil_green"
 
+/obj/item/weapon/cable_coil/pink
+	color = "pink"
+	icon_state = "coil_pink"
+
+/obj/item/weapon/cable_coil/random/New()
+	color = pick("red","yellow","green","blue","pink")
+	icon_state = "coil_[color]"
+	..()
+
+
 /obj/item/weapon/crowbar
 	name = "crowbar"
 	desc = "Used to remove floor tiles."
 	icon = 'items.dmi'
 	icon_state = "crowbar"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	force = 5.0
 	throwforce = 7.0
 	item_state = "wrench"
@@ -821,9 +880,6 @@
 	m_amt = 400
 	origin_tech = "magnets=1"
 
-
-
-
 /obj/item/weapon/caution
 	desc = "Caution! Wet Floor!"
 	name = "wet floor sign"
@@ -877,9 +933,14 @@
 	name = "paper - 'Judgement'"
 	info = "For crimes against the station, the offender is sentenced to:<BR>\n<BR>\n"
 
+//Please resist giving this to people who have not survived game breaking bugs.
+/*Current recipients:
+Searif: Survived infinite cold bug, body temp was "-nan", still alive.
+eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discovery of that code and subsequent diking out.
+*/
 /obj/item/weapon/paper/certificate
 	name = "paper - 'Certificate'"
-	info = "Due to this person's unique actions in the past, we hereby certify that they are \"Totally Radical\"<br><br>----<b>Central Command</b><BR><i>This paper has been stamped with the central command rubber stamp.</i><BR>"
+	info = "Due to this person's unique actions in the past, we hereby certify that they are \"Well Qualified\"<br><br>----<b>Central Command</b><BR><i>This paper has been stamped with the central command rubber stamp.</i><BR>"
 	stamped = list(/obj/item/weapon/stamp/centcom)
 	overlays = list("paper_stamped_cent")
 
@@ -1005,7 +1066,7 @@
 	desc = "Used for screwing."
 	icon = 'items.dmi'
 	icon_state = "screwdriver"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	force = 5.0
 	w_class = 1.0
 	throwforce = 5.0
@@ -1045,7 +1106,7 @@
 	origin_tech = "magnets=1"
 
 /obj/item/weapon/spellbook
-	name = "Spell Book"
+	name = "spell book"
 	desc = "The legendary book of spells of a wizard."
 	icon = 'library.dmi'
 	icon_state ="book"
@@ -1169,6 +1230,12 @@
 	maxcharge = 500
 	g_amt = 40
 
+/obj/item/weapon/cell/secborg
+	name = "\improper Security borg rechargable D battery"
+	origin_tech = "powerstorage=0"
+	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
+	g_amt = 40
+
 /obj/item/weapon/cell/high
 	name = "high-capacity power cell"
 	origin_tech = "powerstorage=2"
@@ -1195,14 +1262,17 @@
 	use()
 		return 1
 
-/*/obj/item/weapon/cell/potato
-	name = "Potato Battery"
+/obj/item/weapon/cell/potato
+	name = "potato battery"
 	desc = "A rechargable starch based power cell."
-	icon = 'harvest.dmi'
-	icon_state = "potato_battery"
-	maxcharge = 100
+	origin_tech = "powerstorage=1"
+	icon = 'power.dmi' //'harvest.dmi'
+	icon_state = "cell" //"potato_battery"
+	charge = 100
+	maxcharge = 300
 	m_amt = 0
-	g_amt = 0*/
+	g_amt = 0
+	minor_fault = 1
 
 /obj/item/weapon/camera_bug/attack_self(mob/usr as mob)
 	var/list/cameras = new/list()
@@ -1330,7 +1400,7 @@
 	name = "tray"
 	icon = 'food.dmi'
 	icon_state = "tray"
-	desc = "A tray to lay food on."
+	desc = "A metal tray to lay food on."
 	throwforce = 12.0
 	throwforce = 10.0
 	throw_speed = 1
@@ -1435,6 +1505,7 @@
 	icon = 'surgery.dmi'
 	icon_state = "drill"
 	flags = FPRINT | TABLEPASS | CONDUCT
+	force = 15.0
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
 
@@ -1442,7 +1513,7 @@
 	name = "circular saw"
 	desc = "For heavy duty cutting."
 	icon = 'surgery.dmi'
-	icon_state = "saw"
+	icon_state = "saw3"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 15.0
 	w_class = 1.0
@@ -1471,7 +1542,7 @@
 	w_class = 1.0
 	origin_tech = "biotech=2"
 
-/*/obj/item/weapon/hatchet
+/obj/item/weapon/hatchet
 	name = "hatchet"
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
 	icon = 'weapons.dmi'
@@ -1483,7 +1554,7 @@
 	throw_speed = 4
 	throw_range = 4
 	m_amt = 15000
-	origin_tech = "materials=2;combat=1"*/
+	origin_tech = "materials=2;combat=1"
 
 /obj/item/weapon/stamp
 	desc = "A rubber stamp for stamping important documents."
@@ -1612,7 +1683,6 @@
 
 /obj/item/weapon/pai_cable
 	desc = "A flexible coated cable with a universal jack on one end."
-	desc = "Some spacey cable."
 	name = "data cable"
 	icon = 'power.dmi'
 	icon_state = "wire1"
@@ -1740,7 +1810,7 @@
 /obj/item/weapon/stock_parts/capacitor/super
 	name = "super capacitor"
 	desc = "A super-high capacity capacitor used in the construction of a variety of devices."
-	origin_tech = "powerstorage=3;materials=4"
+	origin_tech = "powerstorage=5;materials=4"
 	rating = 3
 	m_amt = 50
 	g_amt = 50

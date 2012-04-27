@@ -103,16 +103,6 @@
 		else
 			machine.selected_clown = 0
 
-		//adamantine
-		if(machine.ore_adamantine)
-			if (machine.selected_adamantine==1)
-				dat += text("<A href='?src=\ref[src];sel_adamantine=no'><font color='green'>Smelting</font></A> ")
-			else
-				dat += text("<A href='?src=\ref[src];sel_adamantine=yes'><font color='red'>Not smelting</font></A> ")
-			dat += text("Adamantine: [machine.ore_adamantine]<br>")
-		else
-			machine.selected_adamantine = 0
-
 
 		//On or off
 		dat += text("Machine is currently ")
@@ -173,11 +163,6 @@
 			machine.selected_clown = 1
 		else
 			machine.selected_clown = 0
-	if(href_list["sel_adamantine"])
-		if (href_list["sel_adamantine"] == "yes")
-			machine.selected_adamantine = 1
-		else
-			machine.selected_adamantine =0
 	if(href_list["set_on"])
 		if (href_list["set_on"] == "on")
 			machine.on = 1
@@ -190,7 +175,7 @@
 
 
 /obj/machinery/mineral/processing_unit
-	name = "Furnace"
+	name = "furnace"
 	icon = 'mining_machines.dmi'
 	icon_state = "furnace"
 	density = 1
@@ -216,7 +201,6 @@
 	var/selected_uranium = 0
 	var/selected_iron = 0
 	var/selected_clown = 0
-	var/selected_adamantine = 0
 	var/on = 0 //0 = off, 1 =... oh you know!
 
 /obj/machinery/mineral/processing_unit/New()
@@ -237,14 +221,14 @@
 		var/i
 		for (i = 0; i < 10; i++)
 			if (on)
-				if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_adamantine == 0)
+				if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 					if (ore_glass > 0)
 						ore_glass--;
 						new /obj/item/stack/sheet/glass(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0 && selected_adamantine == 0)
+				if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0)
 					if (ore_glass > 0 && ore_iron > 0)
 						ore_glass--;
 						ore_iron--;
@@ -252,49 +236,49 @@
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 1 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_adamantine == 0)
+				if (selected_glass == 0 && selected_gold == 1 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 					if (ore_gold > 0)
 						ore_gold--;
 						new /obj/item/stack/sheet/gold(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 1 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_adamantine == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 1 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 					if (ore_silver > 0)
 						ore_silver--;
 						new /obj/item/stack/sheet/silver(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_adamantine == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 					if (ore_diamond > 0)
 						ore_diamond--;
 						new /obj/item/stack/sheet/diamond(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_adamantine == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
 					if (ore_plasma > 0)
 						ore_plasma--;
 						new /obj/item/stack/sheet/plasma(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0 && selected_clown == 0 && selected_adamantine == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0 && selected_clown == 0)
 					if (ore_uranium > 0)
 						ore_uranium--;
 						new /obj/item/stack/sheet/uranium(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0 && selected_adamantine == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0)
 					if (ore_iron > 0)
 						ore_iron--;
 						new /obj/item/stack/sheet/metal(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0 && selected_adamantine == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0)
 					if (ore_iron > 0 && ore_plasma > 0)
 						ore_iron--;
 						ore_plasma--;
@@ -302,20 +286,32 @@
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 1 && selected_adamantine == 0)
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 1)
 					if (ore_clown > 0)
 						ore_clown--;
 						new /obj/item/stack/sheet/clown(output.loc)
 					else
 						on = 0
 					continue
-				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_adamantine == 1)
-					if (ore_adamantine > 0)
-						ore_adamantine--;
+				//THESE TWO ARE CODED FOR URIST TO USE WHEN HE GETS AROUND TO IT.
+				//They were coded on 18 Feb 2012. If you're reading this in 2015, then firstly congratulations on the world not ending on 21 Dec 2012 and secondly, Urist is apparently VERY lazy. ~Errorage
+				/*if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0 && selected_clown == 0)
+					if (ore_uranium >= 2 && ore_diamond >= 1)
+						ore_uranium -= 2
+						ore_diamond -= 1
 						new /obj/item/stack/sheet/adamantine(output.loc)
 					else
 						on = 0
 					continue
+				if (selected_glass == 0 && selected_gold == 0 && selected_silver == 1 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+					if (ore_silver >= 1 && ore_plasma >= 3)
+						ore_silver -= 1
+						ore_plasma -= 3
+						new /obj/item/stack/sheet/mythril(output.loc)
+					else
+						on = 0
+					continue*/
+
 
 				//if a non valid combination is selected
 
@@ -348,9 +344,6 @@
 				if (selected_clown == 1)
 					if (ore_clown <= 0)
 						b = 0
-				if (selected_adamantine == 1)
-					if (ore_adamantine <= 0)
-						b = 0
 
 				if (b) //if they are, deduct one from each, produce slag and shut the machine off
 					if (selected_gold == 1)
@@ -367,8 +360,6 @@
 						ore_iron--
 					if (selected_clown == 1)
 						ore_clown--
-					if (selected_adamantine == 1)
-						ore_adamantine--
 					new /obj/item/weapon/ore/slag(output.loc)
 					on = 0
 				else
@@ -411,10 +402,6 @@
 					continue
 				if (istype(O,/obj/item/weapon/ore/clown))
 					ore_clown++
-					del(O)
-					continue
-				if (istype(O,/obj/item/weapon/ore/adamantine))
-					ore_adamantine++
 					del(O)
 					continue
 				O.loc = src.output.loc

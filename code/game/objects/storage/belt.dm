@@ -50,7 +50,7 @@
 
 
 /obj/item/weapon/storage/belt/utility
-	name = "utility belt"
+	name = "tool-belt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Can hold various tools."
 	icon_state = "utilitybelt"
 	item_state = "utility"
@@ -77,6 +77,16 @@
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/weapon/cable_coil(src,30,pick("red","yellow"))
 
+
+/obj/item/weapon/storage/belt/utility/atmostech/New()
+	..()
+	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/weapon/wrench(src)
+	new /obj/item/weapon/weldingtool(src)
+	new /obj/item/weapon/crowbar(src)
+	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/device/analyzer(src)
+
 /obj/item/weapon/storage/belt/security/full/New()
 	..()
 	new /obj/item/weapon/melee/baton(src)
@@ -102,7 +112,7 @@
 		"/obj/item/weapon/reagent_containers/syringe",
 		"/obj/item/weapon/reagent_containers/glass/dispenser",
 		"/obj/item/weapon/reagent_containers/hypospray",
-		"/obj/item/weapon/zippo",
+		"/obj/item/weapon/lighter/zippo",
 		"/obj/item/weapon/cigpacket",
 		"/obj/item/weapon/storage/pill_bottle",
 		"/obj/item/stack/medical",

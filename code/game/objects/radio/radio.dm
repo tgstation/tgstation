@@ -14,7 +14,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		last_transmission
 		frequency = 1459 //common chat
 		traitor_frequency = 0 //tune to frequency to unlock traitor supplies
-		canhear_range = 3
+		canhear_range = 3 // the range which mobs can hear this radio from
 		obj/item/device/radio/patch_link = null
 		obj/item/device/uplink/radio/traitorradio = null
 		wires = WIRE_SIGNAL | WIRE_RECEIVE | WIRE_TRANSMIT
@@ -63,6 +63,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			checkpower()
 
 /obj/item/device/radio/initialize()
+
 	if(freerange)
 		if(frequency < 1200 || frequency > 1600)
 			frequency = sanitize_frequency(frequency)
@@ -145,6 +146,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	//..()
 	if (usr.stat || !on)
 		return
+
 	if (!(issilicon(usr) || (usr.contents.Find(src) || ( in_range(src, usr) && istype(loc, /turf) ))))
 		usr << browse(null, "window=radio")
 		return
@@ -155,6 +157,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		if(A && target)
 			A.ai_actual_track(target)
 		return
+
 	else if (href_list["faketrack"])
 		var/mob/target = locate(href_list["track"])
 		var/mob/living/silicon/ai/A = locate(href_list["track2"])
@@ -169,7 +172,9 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				usr << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
 				sleep(40)
 				continue
+
 		return
+
 	else if (href_list["freq"])
 		var/new_frequency = (frequency + text2num(href_list["freq"]))
 		if (!freerange || (frequency < 1200 || frequency > 1600))
@@ -248,6 +253,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	return
 
 /obj/item/device/radio/talk_into(mob/M as mob, message, channel)
+
 	if(!on) return // the device has to be on
 
 	if(GLOBAL_RADIO_TYPE == 1) // NEW RADIO SYSTEMS: By Doohl
@@ -424,7 +430,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		sleep(rand(10,25)) // wait a little...
 
 		if(signal.data["done"])
-			//we're done here.
+			// we're done here.
 			return
 
 	  	// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet.
@@ -615,6 +621,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 						R.show_message(rendered, 2)
 
 /obj/item/device/radio/hear_talk(mob/M as mob, msg)
+
 	if (broadcasting)
 		talk_into(M, msg)
 /*

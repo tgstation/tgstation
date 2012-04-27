@@ -1,4 +1,3 @@
-
 /obj/effect/critter
 
 	New()
@@ -63,7 +62,7 @@
 						else
 							if(M!=null)
 								if(ismob(src.target))
-									if(M.health < 0)
+									if(M.health < config.health_threshold_crit)
 										src.task = "thinking"
 										src.target = null
 										src.anchored = 0
@@ -134,7 +133,7 @@
 			if(istype(C, /mob/living/silicon/) && !src.atksilicon) continue
 			if(atkreq)
 				if(src.allowed(C)) continue
-			if(C.health < 0) continue
+			if(C.health < config.health_threshold_crit) continue
 			if(istype(C, /mob/living/carbon/) && src.atkcarbon)	src.attack = 1
 			if(istype(C, /mob/living/silicon/) && src.atksilicon)	src.attack = 1
 			if(atkreq)
@@ -146,7 +145,7 @@
 		if(!src.attack)
 			for(var/obj/effect/critter/C in view(src.seekrange,src))
 				if(!src.atkcritter) continue
-				if(C.health <= 0) continue
+				if(C.health <= config.health_threshold_crit) continue
 				if(src.atkcritter)
 					if((istype(C, src.type) && !src.atksame) || (C == src))	continue
 					src.attack = 1
@@ -168,7 +167,7 @@
 								continue
 
 					if(!src.atkmech) continue
-					if(C.health <= 0) continue
+					if(C.health <= config.health_threshold_crit) continue
 					if(src.atkmech)	src.attack = 1
 					if(src.attack)
 						T = C

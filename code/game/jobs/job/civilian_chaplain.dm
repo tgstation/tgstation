@@ -7,6 +7,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
+	selection_color = "#dddddd"
 	alt_titles = list("Counselor")
 
 
@@ -48,6 +49,7 @@
 						B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
 					else
 						B.name = "The Holy Book of [new_religion]"
+//			feedback_set_details("religion_name","[new_religion]")
 
 		spawn(1)
 			var/deity_name = "Space Jesus"
@@ -66,10 +68,12 @@
 			var/outoftime = 0
 			spawn(200) // 20 seconds to choose
 				outoftime = 1
+			var/new_book_style = "Bible"
+
 			while(!accepted)
 				if(!B) break // prevents possible runtime errors
-
-				switch(input(H,"Which bible style would you like?") in list("Bible", "Koran", "Scrapbook", "Creeper", "White Bible", "Holy Light", "Athiest", "Tome", "The King in Yellow", "Ithaqua", "Scientology", "the bible melts", "Necronomicon"))
+				new_book_style = input(H,"Which bible style would you like?") in list("Bible", "Koran", "Scrapbook", "Creeper", "White Bible", "Holy Light", "Athiest", "Tome", "The King in Yellow", "Ithaqua", "Scientology", "the bible melts", "Necronomicon")
+				switch(new_book_style)
 					if("Koran")
 						B.icon_state = "koran"
 						B.item_state = "koran"
@@ -141,4 +145,6 @@
 				ticker.Bible_icon_state = B.icon_state
 				ticker.Bible_item_state = B.item_state
 				ticker.Bible_name = B.name
+//			feedback_set_details("religion_deity","[new_deity]")
+//			feedback_set_details("religion_book","[new_book_style]")
 		return 1

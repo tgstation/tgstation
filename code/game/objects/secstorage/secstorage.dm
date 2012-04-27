@@ -75,6 +75,7 @@
 		if (cx > mx)
 			cx = tx
 			cy--
+		//Foreach goto(56)
 	src.closer.screen_loc = text("[],[]", mx, my)
 	return
 
@@ -94,7 +95,7 @@
 
 /obj/item/weapon/secstorage/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if ((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && (src.locked == 1) && (!src.emagged))
+	if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && (src.locked == 1) && (!src.emagged))
 		if(istype(W, /obj/item/weapon/card/emag))
 			var/obj/item/weapon/card/emag/E = W
 			if(E.uses)
@@ -127,7 +128,7 @@
 	if ((istype(W, /obj/item/device/multitool)) && (src.open == 1) && (src.locked ==1) && (!src.l_hacking))
 		user.show_message(text("\red Now attempting to reset internal memory, please hold."), 1)
 		src.l_hacking = 1
-		spawn(100)
+		if (do_after(usr, 100))
 			if (prob(40))
 				src.l_setshort = 1
 				src.l_set = 0
@@ -138,6 +139,7 @@
 			else
 				user.show_message(text("\red Unable to reset internal memory."), 1)
 				src.l_hacking = 0
+		else	src.l_hacking = 0
 		return
 	if (src.contents.len >= 7)
 		return
@@ -259,7 +261,3 @@
 		src.orient_objs(7, 8, 10, 7)
 		return
  	return
-
-/obj/screen/storage/attackby(W, mob/user as mob)
-	src.master.attackby(W, user)
-	return

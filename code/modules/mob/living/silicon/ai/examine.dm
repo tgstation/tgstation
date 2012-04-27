@@ -1,24 +1,31 @@
 /mob/living/silicon/ai/examine()
 	set src in oview()
 
-	usr << "\blue *---------*"
-	usr << text("\blue This is \icon[] <B>[]</B>!", src, src.name)
-	if (src.stat == 2)
-		usr << text("\red [] is powered-down.", src.name)
+	if(!usr || !src)	return
+	if(((usr.disabilities & 128) || usr.blinded || usr.stat) && !(istype(usr,/mob/dead/observer/)))
+		usr << "<span class='notice'>Something is there but you can't see it.</span>"
+		return
+
+	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <EM>[src]</EM>!\n"
+	if (src.stat == DEAD)
+		msg += "<span class='deadsay'>It appears to be powered-down.</span>\n"
 	else
+		msg += "<span class='warning'>"
 		if (src.getBruteLoss())
 			if (src.getBruteLoss() < 30)
-				usr << text("\red [] looks slightly dented", src.name)
+				msg += "It looks slightly dented.\n"
 			else
-				usr << text("\red <B>[] looks severely dented!</B>", src.name)
-			if (src.getFireLoss())
-				if (src.getFireLoss() < 30)
-					usr << text("\red [] looks slightly burnt!", src.name)
-				else
-					usr << text("\red <B>[] looks severely burnt!</B>", src.name)
-				if (src.stat == 1)
-					usr << text("\red [] doesn't seem to be responding.", src.name)
+				msg += "<B>It looks severely dented!</B>\n"
+		if (src.getFireLoss())
+			if (src.getFireLoss() < 30)
+				msg += "It looks slightly charred.\n"
+			else
+				msg += "<B>Its casing is melted and heat-warped!</B>\n"
 
-	usr << print_flavor_text()
+		if (src.stat == UNCONSCIOUS)
+			msg += "It is non-responsive and displaying the text: \"RUNTIME: Sensory Overload, stack 26/3\".\n"
+		msg += "</span>"
+	msg += "*---------*</span>"
 
+	usr << msg
 	return

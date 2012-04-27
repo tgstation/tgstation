@@ -75,6 +75,9 @@ ALLOW_RANDOM_EVENTS
 ## if amount of traitors scales or not
 TRAITOR_SCALING
 
+## If security is prohibited from being most antagonists
+#PROTECT_ROLES_FROM_ANTAGONIST
+
 ## allow players to initiate a restart vote
 ALLOW_VOTE_RESTART
 
@@ -96,8 +99,6 @@ DEFAULT_NO_VOTE
 ## allow AI job
 ALLOW_AI
 
-## goon authentication
-#AUTHENTICATION
 
 ## disable abandon mob
 NORESPAWN
@@ -128,6 +129,13 @@ GUEST_JOBBAN 1
 
 ##Toggle for having jobs load up from the .txt
 # LOAD_JOBS_FROM_TXT
+
+##Remove the # mark infront of this to forbid admins from posssessing the singularity.
+#FORBID_SINGULO_POSSESSION
+
+## Remove the # to show a popup 'reply to' window to every non-admin that recieves an adminPM. 
+## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
+#POPUP_ADMIN_PM
 
 ##What address should banned people appeal ther ban at?  Remember to escape the characters, if needed!
 # APPEAL_ADDRESS -->APPEAL ADDRESS HERE<--

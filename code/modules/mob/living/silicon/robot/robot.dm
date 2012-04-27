@@ -10,8 +10,10 @@
 		updateicon()
 //		syndicate = syndie
 		if(real_name == "Cyborg")
-			real_name += " [pick(rand(1, 999))]"
+			ident = rand(1, 999)
+			real_name += "-[ident]"
 			name = real_name
+
 	spawn (4)
 		if (client)
 			connected_ai = activeais()
@@ -56,6 +58,7 @@
 				mmi.brainmob.key = key
 			else//If the brain does have a mind. Also shouldn't happen but who knows.
 				mmi.brainmob.key = key
+
 		mmi = null
 	..()
 
@@ -67,13 +70,16 @@
 		return
 	switch(mod)
 		if("Standard")
+			updatename()
 			module = new /obj/item/weapon/robot_module/standard(src)
 			hands.icon_state = "standard"
 			icon_state = "robot"
 			modtype = "Stand"
+			//feedback_inc("cyborg_standard",1)
 			channels = list()
 
 		if("Service")
+			updatename(mod)
 			module = new /obj/item/weapon/robot_module/butler(src)
 			hands.icon_state = "service"
 			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich")
@@ -88,17 +94,21 @@
 			else
 				icon_state = "Service2"
 			modtype = "Butler"
+			//feedback_inc("cyborg_service",1)
 			channels = list()
 
 		if("Miner")
+			updatename(mod)
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
 			icon_state = "Miner"
 			modtype = "Miner"
+			//feedback_inc("cyborg_miner",1)
 			channels = list("Mining" = 1)
 
 		if("Medical")
 			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
+			updatename(mod)
 			module = new /obj/item/weapon/robot_module/medical(src)
 			hands.icon_state = "medical"
 			if (sprite == "Humanoid")
@@ -106,10 +116,13 @@
 			if (sprite == "Non-Humanoid")
 				src.icon_state = "surgeon"
 			modtype = "Med"
+			nopush = 1
+			//feedback_inc("cyborg_medical",1)
 			channels = list("Medical" = 1)
 
 		if("Security")
 			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
+			updatename(mod)
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"
 			if (sprite == "Humanoid")
@@ -118,8 +131,10 @@
 				src.icon_state = "bloodhound"
 			modtype = "Sec"
 			channels = list("Security" = 1)
+			//feedback_inc("cyborg_security",1)
 
 		if("Engineering")
+			updatename(mod)
 			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			hands.icon_state = "engineer"
@@ -128,9 +143,11 @@
 			if (sprite == "Non-Humanoid")
 				src.icon_state = "landmate"
 			modtype = "Eng"
+			//feedback_inc("cyborg_engineering",1)
 			channels = list("Engineering" = 1)
 
 		if("Janitor")
+			updatename(mod)
 			var/sprite = input(src,"Chassis Style", "Chassis Style", "Cancel") in list("Humanoid","Non-Humanoid")
 			module = new /obj/item/weapon/robot_module/janitor(src)
 			hands.icon_state = "janitor"
@@ -139,11 +156,21 @@
 			if (sprite == "Non-Humanoid")
 				src.icon_state = "mopgearrex"
 			modtype = "Jan"
+			//feedback_inc("cyborg_janitor",1)
 			channels = list()
 
 	overlays -= "eyes" //Takes off the eyes that it started with
 	radio.config(channels)
 	updateicon()
+
+/mob/living/silicon/robot/proc/updatename(var/prefix as text)
+	if( length(real_name) < 7 || !prefix )	return
+	//not really necessary but just to avoid annoying people with
+	//unique names seeming as nobody could give me a straight answer as
+	//to whether to remove custom borg names completely.
+	if(copytext(real_name, 1, 7) == "Cyborg")
+		real_name = "[prefix] [real_name]"
+		name = real_name
 
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
 	set category = "Robot Commands"
@@ -213,7 +240,7 @@
 	flick("flash", flash)
 /*
 	if (stat == 2 && client)
-		gib(1)
+		gib()
 		return
 
 	else if (stat == 2 && !client)
@@ -225,7 +252,7 @@
 			if (stat != 2)
 				adjustBruteLoss(100)
 				adjustFireLoss(100)
-				gib(1)
+				gib()
 				return
 		if(2.0)
 			if (stat != 2)
@@ -262,16 +289,18 @@
 		if ((!( yes ) || now_pushing))
 			return
 		now_pushing = 1
-		/*if(ismob(AM))
+		if(ismob(AM))
 			var/mob/tmob = AM
+/*
 			if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
 				if(prob(20))
-					for(var/mob/M in viewers(src, null))
-						if(M.client)
-							M << M << "\red <B>[src] fails to push [tmob]'s fat ass out of the way.</B>"
+					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
-					//unlock_medal("That's No Moon, That's A Gourmand!", 1)
-					return*/
+					return
+*/
+			if(tmob.nopush)
+				now_pushing = 0
+				return
 		now_pushing = 0
 		..()
 		if (istype(AM, /obj/machinery/recharge_station))
@@ -349,6 +378,9 @@
 
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
+		return
+
 	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
 		if(getBruteLoss() == 0)
 			user << "There are no dents to fix here!"
@@ -488,6 +520,41 @@
 	else
 		spark_system.start()
 		return ..()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)
@@ -794,8 +861,8 @@
 			contents += O
 			if(istype(module_state_1,/obj/item/borg/sight))
 				sight_mode |= module_state_1:sight_mode
-			else if(istype(module_state_1,/obj/item/weapon/zippo))
-				var/obj/item/weapon/zippo/Z = module_state_1
+			else if(istype(module_state_1,/obj/item/weapon/lighter/zippo))
+				var/obj/item/weapon/lighter/zippo/Z = module_state_1
 				Z.lit = 1
 				Z.icon_state = "zippoon"
 				Z.item_state = "zippoon"
@@ -806,8 +873,8 @@
 			contents += O
 			if(istype(module_state_2,/obj/item/borg/sight))
 				sight_mode |= module_state_2:sight_mode
-			else if(istype(module_state_2,/obj/item/weapon/zippo))
-				var/obj/item/weapon/zippo/Z = module_state_2
+			else if(istype(module_state_2,/obj/item/weapon/lighter/zippo))
+				var/obj/item/weapon/lighter/zippo/Z = module_state_2
 				Z.lit = 1
 				Z.icon_state = "zippoon"
 				Z.item_state = "zippoon"
@@ -818,8 +885,8 @@
 			contents += O
 			if(istype(module_state_3,/obj/item/borg/sight))
 				sight_mode |= module_state_3:sight_mode
-			else if(istype(module_state_3,/obj/item/weapon/zippo))
-				var/obj/item/weapon/zippo/Z = module_state_3
+			else if(istype(module_state_3,/obj/item/weapon/lighter/zippo))
+				var/obj/item/weapon/lighter/zippo/Z = module_state_3
 				Z.lit = 1
 				Z.icon_state = "zippoon"
 				Z.item_state = "zippoon"
@@ -832,8 +899,8 @@
 		var/obj/item/O = locate(href_list["deact"])
 		if(activated(O))
 			if(module_state_1 == O)
-				if(istype(module_state_1, /obj/item/weapon/zippo))
-					var/obj/item/weapon/zippo/Z = module_state_1
+				if(istype(module_state_1, /obj/item/weapon/lighter/zippo))
+					var/obj/item/weapon/lighter/zippo/Z = module_state_1
 					Z.lit = 0
 					Z.icon_state = "zippo"
 					Z.item_state = "zippo"
@@ -841,8 +908,8 @@
 				module_state_1 = null
 				contents -= O
 			else if(module_state_2 == O)
-				if(istype(module_state_2, /obj/item/weapon/zippo))
-					var/obj/item/weapon/zippo/Z = module_state_2
+				if(istype(module_state_2, /obj/item/weapon/lighter/zippo))
+					var/obj/item/weapon/lighter/zippo/Z = module_state_2
 					Z.lit = 0
 					Z.icon_state = "zippo"
 					Z.item_state = "zippo"
@@ -850,8 +917,8 @@
 				module_state_2= null
 				contents -= O
 			else if(module_state_3 == O)
-				if(istype(module_state_3, /obj/item/weapon/zippo))
-					var/obj/item/weapon/zippo/Z = module_state_3
+				if(istype(module_state_3, /obj/item/weapon/lighter/zippo))
+					var/obj/item/weapon/lighter/zippo/Z = module_state_3
 					Z.lit = 0
 					Z.icon_state = "zippo"
 					Z.item_state = "zippo"
@@ -1041,5 +1108,6 @@ Frequency:
 	del(module)
 
 /mob/living/silicon/robot/proc/self_destruct()
-	gib(1)
+	gib()
+	return
 

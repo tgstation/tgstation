@@ -44,11 +44,13 @@
 	if(machine.ore_diamond)
 		dat += text("Diamond: [machine.ore_diamond] <A href='?src=\ref[src];release=diamond'>Release</A><br>")
 	if(machine.ore_clown)
-		dat += text("Bananium: [machine.ore_clown] <A href='?src=\ref[src];release=clown'>Release</A><br><br>")
+		dat += text("Bananium: [machine.ore_clown] <A href='?src=\ref[src];release=clown'>Release</A><br>")
 	if(machine.ore_adamantine)
-		dat += text ("Adamantine: [machine.ore_adamantine] <A href='?src=\ref[src];release=adamantine'>Release</A><br><br>")
+		dat += text ("Adamantine: [machine.ore_adamantine] <A href='?src=\ref[src];release=adamantine'>Release</A><br>")
+	if(machine.ore_mythril)
+		dat += text ("Mythril: [machine.ore_mythril] <A href='?src=\ref[src];release=adamantine'>Release</A><br>")
 
-	dat += text("Stacking: [machine.stack_amt]<br><br>")
+	dat += text("<br>Stacking: [machine.stack_amt]<br><br>")
 
 	user << browse("[dat]", "window=console_stacking_machine")
 
@@ -125,6 +127,12 @@
 					G.amount = machine.ore_adamantine
 					G.loc = machine.output.loc
 					machine.ore_adamantine = 0
+			if ("mythril")
+				if (machine.ore_mythril > 0)
+					var/obj/item/stack/sheet/mythril/G = new /obj/item/stack/sheet/mythril
+					G.amount = machine.ore_mythril
+					G.loc = machine.output.loc
+					machine.ore_mythril = 0
 	src.updateUsrDialog()
 	return
 
@@ -133,7 +141,7 @@
 
 
 /obj/machinery/mineral/stacking_machine
-	name = "Stacking machine"
+	name = "stacking machine"
 	icon = 'mining_machines.dmi'
 	icon_state = "stacker"
 	density = 1
@@ -155,6 +163,7 @@
 	var/ore_rglass = 0;
 	var/ore_plasteel = 0;
 	var/ore_adamantine = 0;
+	var/ore_mythril = 0;
 	var/stack_amt = 50; //ammount to stack before releassing
 
 /obj/machinery/mineral/stacking_machine/New()
@@ -217,6 +226,10 @@
 				continue
 			if (istype(O,/obj/item/stack/sheet/adamantine))
 				ore_adamantine+= O:amount
+				del(O)
+				continue
+			if (istype(O,/obj/item/stack/sheet/mythril))
+				ore_mythril+= O:amount
 				del(O)
 				continue
 			if (istype(O,/obj/item/weapon/ore/slag))
@@ -288,5 +301,11 @@
 		G.amount = stack_amt
 		G.loc = output.loc
 		ore_adamantine -= stack_amt
+		return
+	if (ore_mythril >= stack_amt)
+		var/obj/item/stack/sheet/mythril/G = new /obj/item/stack/sheet/mythril
+		G.amount = stack_amt
+		G.loc = output.loc
+		ore_mythril -= stack_amt
 		return
 	return

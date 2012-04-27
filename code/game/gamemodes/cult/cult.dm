@@ -9,10 +9,10 @@
 
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))	return 0
-	//This makes security unconvertable.  *comments out*
-/*	for(var/obj/item/weapon/implant/loyalty/L in mind.current)
+/*	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Captain", "Head of Security", "Security Officer", "Detective", "Chaplain", "Warden")))	return 0
+	for(var/obj/item/weapon/implant/loyalty/L in mind.current)
 		if(L && L.implanted)
-			return 0	*/
+			return 0*/
 	return 1
 
 
@@ -20,9 +20,13 @@
 	name = "cult"
 	config_tag = "cult"
 	restricted_jobs = list("AI", "Cyborg")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Captain", "Head of Security")
 	required_players = 3
 	required_enemies = 3
 	recommended_enemies = 4
+
+	uplink_welcome = "Nar-Sie Uplink Console:"
+	uplink_uses = 10
 
 	var/datum/mind/sacrifice_target = null
 	var/finished = 0
@@ -40,9 +44,6 @@
 	var/const/max_cultists_to_start = 4
 	var/acolytes_survived = 0
 
-	uplink_welcome = "Nar-Sie Uplink Console:"
-	uplink_uses = 10
-
 
 /datum/game_mode/cult/announce()
 	world << "<B>The current game mode is - Cult!</B>"
@@ -50,6 +51,15 @@
 
 
 /datum/game_mode/cult/pre_setup()
+	if(prob(50) || num_players() < 10) // don't give summon nar-sie if less than 10 people, it's literally impossible in that case!
+		objectives += "survive"
+		objectives += "sacrifice"
+	else
+		objectives += "eldergod"
+		objectives += "sacrifice"
+
+	if(config.protect_roles_from_antagonist)
+		restricted_jobs += protected_jobs
 
 	var/list/cultists_possible = get_players_for_role(BE_CULTIST)
 	for(var/datum/mind/player in cultists_possible)
@@ -64,26 +74,18 @@
 		cultists_possible -= cultist
 		cult += cultist
 
-	// don't give summon nar-sie if less than 10 people,
-	// it's literally impossible in that case!
-	if(prob(50) || num_players() < 10)
-		objectives += "survive"
-		objectives += "sacrifice"
-	else
-		objectives += "eldergod"
-		objectives += "sacrifice"
-
 	return (cult.len>0)
 
 
 /datum/game_mode/cult/post_setup()
 	modePlayer += cult
 	if("sacrifice" in objectives)
-		var/list/possible_targets = list()
+		var/list/possible_targets = get_unconvertables()
 
-		for(var/mob/living/carbon/human/player in world)
-			if(player.mind && !(player.mind in cult))
-				possible_targets += player.mind
+		if(!possible_targets.len)
+			for(var/mob/living/carbon/human/player in world)
+				if(player.mind && !(player.mind in cult))
+					possible_targets += player.mind
 
 		if(possible_targets.len > 0)
 			sacrifice_target = pick(possible_targets)
@@ -254,6 +256,14 @@
 						del(I)
 
 
+/datum/game_mode/cult/proc/get_unconvertables()
+	var/list/ucs = list()
+	for(var/mob/living/carbon/human/player in world)
+		if(!is_convertable_to_cult(player.mind))
+			ucs += player.mind
+	return ucs
+
+
 /datum/game_mode/cult/proc/check_cult_victory()
 	var/cult_fail = 0
 	if(objectives.Find("survive"))
@@ -301,23 +311,30 @@
 			if("survive")
 				if(!check_survive())
 					explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. \green <b>Success!</b>"
+					//feedback_add_details("cult_objective","cult_survive|SUCCESS|[acolytes_needed]")
 				else
 					explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. \red Failed."
+					//feedback_add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
 			if("sacrifice")
 				if(!sacrifice_target)
 					explanation = "Free objective"
 				else
 					if(sacrificed.Find(sacrifice_target))
 						explanation = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.role_alt_title ? sacrifice_target.role_alt_title : sacrifice_target.assigned_role]. \green <b>Success!</b>"
+						//feedback_add_details("cult_objective","cult_sacrifice|SUCCESS")
 					else if(sacrifice_target && sacrifice_target.current)
 						explanation = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.role_alt_title ? sacrifice_target.role_alt_title : sacrifice_target.assigned_role]. \red Failed."
+						//feedback_add_details("cult_objective","cult_sacrifice|FAIL")
 					else
 						explanation = "Sacrifice Unknown, the Unknown whos body was likely gibbed. \red Failed."
+						//feedback_add_details("cult_objective","cult_sacrifice|FAIL|GIBBED")
 			if("eldergod")
 				if(!eldergod)
 					explanation = "Summon Nar-Sie. \green <b>Success!</b>"
+					//feedback_add_details("cult_objective","cult_narsie|SUCCESS")
 				else
 					explanation = "Summon Nar-Sie. \red Failed."
+					//feedback_add_details("cult_objective","cult_narsie|FAIL")
 		world << "<B>Objective #[obj_count]</B>: [explanation]"
 
 	..()

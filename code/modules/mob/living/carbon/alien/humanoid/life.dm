@@ -565,15 +565,6 @@
 					D.cure()
 			return
 
-		check_if_buckled()
-			if (src.buckled)
-				src.lying = (istype(src.buckled, /obj/structure/stool/bed) ? 1 : 0)
-				if(src.lying)
-					src.drop_item()
-				src.density = 1
-			else
-				src.density = !src.lying
-
 		handle_stomach()
 			spawn(0)
 				for(var/mob/M in stomach_contents)

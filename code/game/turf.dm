@@ -80,7 +80,7 @@
 
 
 /turf/Entered(atom/movable/M as mob|obj)
-//	var/loopsanity = 100
+	var/loopsanity = 100
 	if(ismob(M))
 		if(!M:lastarea)
 			M:lastarea = get_area(M.loc)
@@ -97,12 +97,18 @@
 		else if(!istype(src, /turf/space))
 			M:inertia_dir = 0
 	..()
+	var/objects = 0
 	for(var/atom/A as mob|obj|turf|area in src)
+		if(objects > loopsanity)	break
+		objects++
 		spawn( 0 )
 			if ((A && M))
 				A.HasEntered(M, 1)
 			return
+	objects = 0
 	for(var/atom/A as mob|obj|turf|area in range(1))
+		if(objects > loopsanity)	break
+		objects++
 		spawn( 0 )
 			if ((A && M))
 				A.HasProximity(M, 1)
@@ -1241,6 +1247,9 @@ turf/simulated/floor/return_siding_icon_state()
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 
 	if (istype(C, /obj/item/stack/rods))
+		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
+		if(L)
+			return
 		var/obj/item/stack/rods/R = C
 		user << "\blue Constructing support lattice ..."
 		playsound(src.loc, 'Genhit.ogg', 50, 1)

@@ -59,6 +59,10 @@
 		line					 = 1
 		linepos 			 = 0 										 //column=codepos-linepos
 		n_scriptOptions/nS_Options/options
+
+		commenting = 0
+				// 1: single-line
+				// 2: multi-line
 		list
 /*
 	Variable: ignore
@@ -112,12 +116,16 @@
 	Scan() //Creates a list of tokens from source code
 		var/list/tokens=new
 		for(, src.codepos<=lentext(code), src.codepos++)
+
 			var/char=copytext(code, codepos, codepos+1)
 			if(char=="\n")
 				line++
 				linepos=codepos
+
 			if(ignore.Find(char))
 				continue
+			else if(char == "/")
+				ReadComment()
 			else if(end_stmt.Find(char))
 				tokens+=new /token/end(char, line, COL)
 			else if(string_delim.Find(char))
@@ -129,6 +137,8 @@
 				tokens+=ReadNumber()
 			else if(options.symbols.Find(char))
 				tokens+=ReadSymbol()
+
+
 		codepos=initial(codepos)
 		line=initial(line)
 		linepos=initial(linepos)
@@ -229,3 +239,49 @@
 				T.value=0
 			codepos-- //allow main Scan() proc to read the next character
 			return T
+
+/*
+	Proc: ReadComment
+	Reads a comment and outputs the type of comment
+*/
+
+		ReadComment()
+			var
+				char=copytext(code, codepos, codepos+1)
+				nextchar=copytext(code, codepos+1, codepos+2)
+				charstring = char+nextchar
+				comm = 1
+					// 1: single-line comment
+					// 2: multi-line comment
+				expectedend = 0
+
+			if(charstring == "//" || charstring == "/*")
+				if(charstring == "/*")
+					comm = 2 // starts a multi-line comment
+
+				while(comm)
+					if(++codepos>lentext(code)) break
+
+					if(expectedend) // ending statement expected...
+						char = copytext(code, codepos, codepos+1)
+						if(char == "/") // ending statement found - beak the comment
+							comm = 0
+							break
+
+					if(comm == 2)
+						// multi-line comments are broken by ending statements
+						char = copytext(code, codepos, codepos+1)
+						if(char == "*")
+							expectedend = 1
+							continue
+					else
+						char = copytext(code, codepos, codepos+1)
+						if(char == "\n")
+							comm = 0
+							break
+
+					if(expectedend) expectedend = 0
+
+				if(comm == 2)
+					errors+=new/scriptError/UnterminatedComment()
+

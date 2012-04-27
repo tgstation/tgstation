@@ -276,7 +276,13 @@
 			exp.func_name=curToken.value
 			NextToken() //skip function name
 			NextToken() //skip open parenthesis, already found
+			var/loops = 0
+
 			for()
+				loops++
+				if(loops>=1000)
+					CRASH("Something TERRIBLE has gone wrong in ParseFunctionExpression ;__;")
+
 				if(istype(curToken, /token/symbol) && curToken.value==")")
 					return exp
 				exp.parameters+=ParseParamExpression()

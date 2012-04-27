@@ -144,25 +144,26 @@ mob/living/carbon/proc/handle_hallucinations()
 				//Flashes of danger
 				//src << "Danger Flash"
 				if(!halbody)
-					var/possible_points = list()
+					var/list/possible_points = list()
 					for(var/turf/simulated/floor/F in view(src,world.view))
 						possible_points += F
-					var/turf/simulated/floor/target = pick(possible_points)
-					switch(rand(1,5))
-						if(1)
-							halbody = image('human.dmi',target,"husk_l",TURF_LAYER)
-						if(2,3)
-							halbody = image('human.dmi',target,"husk_s",TURF_LAYER)
-						if(4)
-							halbody = image('alien.dmi',target,"alienother",TURF_LAYER)
-						if(5)
-							halbody = image('xcomalien.dmi',target,"chryssalid",TURF_LAYER)
+					if(possible_points.len)
+						var/turf/simulated/floor/target = pick(possible_points)
+						switch(rand(1,4))
+							if(1)
+								halbody = image('human.dmi',target,"husk_l",TURF_LAYER)
+							if(2,3)
+								halbody = image('human.dmi',target,"husk_s",TURF_LAYER)
+							if(4)
+								halbody = image('alien.dmi',target,"alienother",TURF_LAYER)
+							if(5)
+								halbody = image('xcomalien.dmi',target,"chryssalid",TURF_LAYER)
 
-					if(client) client.images += halbody
-					spawn(rand(50,80)) //Only seen for a brief moment.
-						if(client) client.images -= halbody
-						halbody = null
-			if(71 to 75)
+						if(client) client.images += halbody
+						spawn(rand(50,80)) //Only seen for a brief moment.
+							if(client) client.images -= halbody
+							halbody = null
+			if(71 to 72)
 				//Fake death
 				src.sleeping_willingly = 1
 				src.sleeping = 1
@@ -212,9 +213,9 @@ proc/check_panel(mob/M)
 	if (istype(M, /mob/living/carbon/human) || istype(M, /mob/living/silicon/ai))
 		if(M.hallucination < 15)
 			return 1
-	return 0	*/
+	return 0*/
 
-/obj/effect/fake_attacker
+/obj/fake_attacker
 	icon = null
 	icon_state = null
 	name = ""
@@ -358,7 +359,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	if(!possible_clones.len) return
 	clone = pick(possible_clones)
 	//var/obj/fake_attacker/F = new/obj/fake_attacker(outside_range(target))
-	var/obj/effect/fake_attacker/F = new/obj/effect/fake_attacker(target.loc)
+	var/obj/fake_attacker/F = new/obj/fake_attacker(target.loc)
 	if(clone.l_hand)
 		if(!(locate(clone.l_hand) in non_fakeattack_weapons))
 			clone_weapon = clone.l_hand.name

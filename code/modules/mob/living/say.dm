@@ -32,8 +32,6 @@
 	if (!message)
 		return
 
-	log_say("[name]/[key] : [message]")
-
 	if (length(message) >= 1)
 		if (miming && copytext(message, 1, 2) != "*")
 			return
@@ -315,11 +313,13 @@
 		listening += src
 
 */
+/*  Handing this section over to get_mobs_in_view which was written with radiocode update
 	var/turf/T = get_turf(src)
 	listening = hearers(message_range, T)
+	for (var/O in listening)
+		world << O
 	var/list/V = view(message_range, T)
 	var/list/W = V
-
 	//find mobs in lockers, cryo, intellicards, brains, MMIs, and so on.
 	for (var/mob/M in world)
 		if (!M.client)
@@ -334,6 +334,21 @@
 		else
 			if (M.client && M.client.ghost_ears)
 				listening|=M
+
+*/
+
+	listening = get_mobs_in_view(message_range, src)
+	for(var/mob/M in world)
+		if (!M.client)
+			continue //skip monkeys and leavers
+		if (istype(M, /mob/new_player))
+			continue
+		if(M.stat == 2 && M.client.ghost_ears)
+			listening|=M
+
+	var/turf/T = get_turf(src)
+	var/list/V = view(message_range, T)
+	var/list/W = V
 
 	var/list/eavesdroppers = get_mobs_in_view(7, src)
 	for(var/mob/M in listening)
@@ -362,11 +377,20 @@
 			if(O && !istype(O.loc, /obj/item/weapon/storage))
 				O.hear_talk(src, message)
 
+
+/*			Commented out as replaced by code above from BS12
+	for (var/obj/O in ((V | contents)-used_radios)) //radio in pocket could work, radio in backpack wouldn't --rastaf0
+		spawn (0)
+			if (O)
+				O.hear_talk(src, message)
+*/
 	if(isbrain(src))//For brains to properly talk if they are in an MMI..or in a brain. Could be extended to other mobs I guess.
 		for(var/obj/O in loc)//Kinda ugly but whatever.
 			if(O)
 				spawn(0)
 					O.hear_talk(src, message)
+
+
 
 	var/list/heard_a = list() // understood us
 	var/list/heard_b = list() // didn't understand us
@@ -519,6 +543,8 @@
 			M << "\blue [src] speaks into their radio..."
 			M << speech_bubble
 		spawn(30) del(speech_bubble)
+
+	log_say("[name]/[key] : [message]")
 
 
 

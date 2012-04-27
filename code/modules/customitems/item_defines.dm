@@ -20,7 +20,7 @@
 
 /obj/item/fluff/sarah_calvera_1
 	name = "Old Photo"
-	desc = "Looks like it was made on a really old, cheap camera. Low quality. The camera shows a young hispanic looking girl with red hair wearing a white dress is standing in front of an old looking wall. On the back there is a note in black marker that reads \"Sara, Siempre pensé que eras tan linda con ese vestido. Tu hermano, Carlos.\""
+	desc = "Looks like it was made on a really old, cheap camera. Low quality. The camera shows a young hispanic looking girl with red hair wearing a white dress is standing in front of an old looking wall. On the back there is a note in black marker that reads \"Sara, Siempre pensÃ© que eras tan linda con ese vestido. Tu hermano, Carlos.\""
 	icon_state = "sarah_calvera_1"
 
 /obj/item/fluff/angelo_wilkerson_1
@@ -43,3 +43,20 @@
 	name = "Extranet HUD"
 	desc = "A heads-up display with limited connectivity to the NanoTrasen Extranet, capable of displaying information from official NanoTrasen records."
 	icon_state = "serithi_artalis_1"
+
+/obj/item/clothing/head/fluff/greg_anderson_1
+	name = "old hard hat"
+	desc = "An old dented hard hat with the nametag \"Anderson\".  It seems to be backwards."
+	icon_state = "hardhat0_red"
+	flags = FPRINT | TABLEPASS | SUITSPACE
+	item_state = "hardhat0_red"
+	color = "red"
+	armor = list(melee = 30, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
+	flags_inv = 0
+
+/obj/item/fluff/ethan_way_1
+	name = "Old ID"
+	desc = "A scratched and worn identification card; it appears too damaged to inferface with any technology. You can almost make out \"Tom Cabinet\" in the smeared ink."
+	icon = 'custom_items.dmi'
+	icon_state = "ethan_way_1"
+	flags = FPRINT | TABLEPASS

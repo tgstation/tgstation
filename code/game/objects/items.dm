@@ -253,11 +253,6 @@
 	del(src)
 	return
 
-/obj/screen/close/DblClick()
-	if (src.master)
-		src.master:close(usr)
-	return
-
 
 //What the fuck is this code  Looks to be the parrying code.  If you're grabbing someone, it might hit them instead... or something.--SkyMarshal
 /mob/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -473,7 +468,7 @@
 		istype(W, /obj/item/weapon/screwdriver)                   || \
 		istype(W, /obj/item/weapon/pen)                           || \
 		istype(W, /obj/item/weapon/weldingtool)      && W:welding || \
-		istype(W, /obj/item/weapon/zippo)            && W:lit     || \
+		istype(W, /obj/item/weapon/lighter/zippo)            && W:lit     || \
 		istype(W, /obj/item/weapon/match)            && W:lit     || \
 		istype(W, /obj/item/clothing/mask/cigarette) && W:lit     || \
 		istype(W, /obj/item/weapon/wirecutters)                   || \
@@ -509,7 +504,7 @@
 /proc/is_burn(obj/item/W as obj)
 	return ( \
 		istype(W, /obj/item/weapon/weldingtool)      && W:welding || \
-		istype(W, /obj/item/weapon/zippo)            && W:lit     || \
+		istype(W, /obj/item/weapon/lighter/zippo)    && W:lit     || \
 		istype(W, /obj/item/weapon/match)            && W:lit     || \
 		istype(W, /obj/item/clothing/mask/cigarette) && W:lit	|| \
 		istype(W,/obj/item/projectile/beam)\

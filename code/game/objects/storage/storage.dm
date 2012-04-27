@@ -244,9 +244,6 @@
 			O.emp_act(severity)
 	..()
 
-/obj/screen/storage/attackby(W, mob/user as mob)
-	src.master.attackby(W, user)
-	return
 // BubbleWrap - A box can be folded up to make card
 /obj/item/weapon/storage/attack_self(mob/user as mob)
 	if ( contents.len )
@@ -291,7 +288,7 @@
 	..()
 	contents = list()
 	sleep(1)
-	new /obj/item/clothing/mask/medical( src )
+	new /obj/item/clothing/mask/breath/medical( src )
 	new /obj/item/weapon/tank/emergency_oxygen/anesthetic( src )
 	new /obj/item/weapon/tank/emergency_oxygen/anesthetic( src )
 	new /obj/item/weapon/tank/emergency_oxygen/anesthetic( src )

@@ -6,6 +6,7 @@
 	total_positions = -1
 	spawn_positions = -1
 	supervisors = "absolutely everyone"
+	selection_color = "#dddddd"
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0

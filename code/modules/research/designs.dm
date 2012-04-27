@@ -525,6 +525,7 @@ datum
 			build_path = "/obj/item/weapon/aiModule/tyrant"
 
 
+
 ///////////////////////////////////
 /////Subspace Telecomms////////////
 ///////////////////////////////////
@@ -794,13 +795,13 @@ datum
 			req_tech = list("magnets" = 3, "programming" = 3, "engineering" = 3)
 			build_path = "/obj/item/mecha_parts/mecha_equipment/repair_droid"
 
-		mech_generator
+		mech_plasma_generator
 			name = "Exosuit Module Design (Plasma Converter Module)"
 			desc = "Exosuit-mounted plasma converter."
 			id = "mech_plasma_generator"
 			build_type = MECHFAB
 			req_tech = list("plasmatech" = 2, "powerstorage"= 2, "engineering" = 2)
-			build_path = "/obj/item/mecha_parts/mecha_equipment/generator"
+			build_path = "/obj/item/mecha_parts/mecha_equipment/plasma_generator"
 
 		mech_energy_relay
 			name = "Exosuit Module Design (Tesla Energy Relay)"
@@ -1332,8 +1333,8 @@ datum
 			req_tech = list("combat" = 3, "materials" = 3, "engineering" = 3, "biotech" = 2)
 			build_type = PROTOLATHE
 			materials = list("$metal" = 5000, "$glass" = 1000)
-			build_path = "/obj/item/weapon/gun/rapidsyringe"
-
+			build_path = "/obj/item/weapon/gun/syringe/rapidsyringe"
+/*
 		largecrossbow
 			name = "Energy Crossbow"
 			desc = "A weapon favoured by syndicate infiltration teams."
@@ -1342,7 +1343,7 @@ datum
 			build_type = PROTOLATHE
 			materials = list("$metal" = 5000, "$glass" = 1000, "$uranium" = 1000, "$silver" = 1000)
 			build_path = "/obj/item/weapon/gun/energy/crossbow/largecrossbow"
-
+*/
 		temp_gun
 			name = "Temperature Gun"
 			desc = "A gun that shoots temperature bullet energythings to change temperature."//Change it if you want

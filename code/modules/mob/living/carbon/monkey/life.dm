@@ -661,16 +661,6 @@
 			else
 				virus2.activate(src)
 
-
-		check_if_buckled()
-			if (src.buckled)
-				src.lying = istype(src.buckled, /obj/structure/stool/bed) || istype(src.buckled, /obj/machinery/conveyor)
-				if(src.lying)
-					src.drop_item()
-				src.density = 1
-			else
-				src.density = !src.lying
-
 		handle_changeling()
 			if (mind)
 				if (mind.special_role == "Changeling" && changeling)

@@ -43,7 +43,7 @@
 
 	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag)//TODO: go over this
 		if(!target || !user)	return
-		if(last_throw+4 > world.time)	return
+		if(last_throw+3 > world.time)	return
 		if(!host)
 			del(src)
 			return
@@ -51,19 +51,24 @@
 			del(src)
 			return
 		if(!focus)
-			focus_object(target)
+			focus_object(target, user)
 			return
+		var/focusturf = get_turf(focus)
+		if(get_dist(focusturf, target) <= 1 && !istype(target, /turf))
+			target.attackby(focus, user, user:get_organ_target())
 
-		if((get_dist(target, user) <= 16) && (get_dist(focus, user) <= 10))
+		else if(get_dist(focusturf, target) <= 16)
 			apply_focus_overlay()
 			focus.throw_at(target, 10, 1)
 			last_throw = world.time
 		return
 
 
-	proc/focus_object(var/obj/target)
+	proc/focus_object(var/obj/target, var/mob/living/user)
 		if(!istype(target,/obj))	return//Cant throw non objects atm might let it do mobs later
-		if(target.anchored)	return//No throwing anchored things
+		if(target.anchored)
+			target.attack_hand(user) // you can use shit now!
+			return//No throwing anchored things
 		focus = target
 		update_icon()
 		apply_focus_overlay()

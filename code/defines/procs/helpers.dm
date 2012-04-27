@@ -128,7 +128,7 @@
 	return t
 
 /proc/strip_html_simple(var/t,var/limit=MAX_MESSAGE_LEN)
-	var/list/strip_chars = list("<",">")
+	var/list/strip_chars = list("<",">","&","'")
 	t = copytext(t,1,limit)
 	for(var/char in strip_chars)
 		var/index = findtext(t, char)
@@ -910,11 +910,21 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if (!the_key)
 		text += "*no client*"
 	else
+		var/linked = 1
 		if (include_link && !isnull(the_mob))
 			if (istext(include_link))
-				text += "<a href=\"byond://?src=[include_link];priv_msg=\ref[the_mob]\">"
+				text += "<a href=\"byond://?src=[include_link];priv_msg=\ref[the_client]\">"
 			else
-				text += "<a href=\"byond://?src=\ref[include_link];priv_msg=\ref[the_mob]\">"
+				if(ismob(include_link))
+					var/mob/MM = include_link
+					if(MM.client)
+						text += "<a href=\"byond://?src=\ref[MM.client];priv_msg=\ref[the_client]\">"
+					else
+						linked = 0
+				else if (istype(include_link, /client))
+					text += "<a href=\"byond://?src=\ref[include_link];priv_msg=\ref[the_client]\">"
+				else
+					linked = 0
 
 		if (the_client && the_client.holder && the_client.stealth && !include_name)
 			text += "Administrator"
@@ -922,7 +932,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			text += "[the_key]"
 
 		if (!isnull(include_link) && !isnull(the_mob))
-			text += "</a>"
+			if(linked)
+				text += "</a>"
+			else
+				text += " (DC)"
 
 	if (include_name && !isnull(the_mob))
 		if (the_mob.real_name)

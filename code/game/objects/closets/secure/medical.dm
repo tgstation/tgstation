@@ -44,9 +44,9 @@
 		new /obj/item/weapon/tank/anesthetic(src)
 		new /obj/item/weapon/tank/anesthetic(src)
 		new /obj/item/weapon/tank/anesthetic(src)
-		new /obj/item/clothing/mask/medical(src)
-		new /obj/item/clothing/mask/medical(src)
-		new /obj/item/clothing/mask/medical(src)
+		new /obj/item/clothing/mask/breath/medical(src)
+		new /obj/item/clothing/mask/breath/medical(src)
+		new /obj/item/clothing/mask/breath/medical(src)
 		return
 
 
@@ -82,7 +82,9 @@
 		new /obj/item/device/pda/medical(src)
 		new /obj/item/weapon/storage/firstaid/regular(src)
 		new /obj/item/device/flashlight/pen(src)
+		new /obj/item/weapon/cartridge/medical(src)
 		new /obj/item/device/radio/headset/headset_med(src)
+		return
 
 /obj/structure/closet/secure_closet/genetics_personal
 	name = "Geneticist's Locker"
@@ -132,8 +134,11 @@
 		new /obj/item/device/pda/heads/cmo(src)
 		new /obj/item/weapon/storage/firstaid/regular(src)
 		new /obj/item/device/flashlight/pen(src)
+		new /obj/item/weapon/cartridge/cmo(src)
 		new /obj/item/device/radio/headset/heads/cmo(src)
 		return
+
+
 
 /obj/structure/closet/secure_closet/animal
 	name = "Animal Control"

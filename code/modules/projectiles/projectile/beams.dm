@@ -47,7 +47,7 @@
 		spawn(0)
 			del(src)
 
-/obj/item/projectile/beam/practice
+/obj/item/projectile/practice
 	name = "laser"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
@@ -72,6 +72,10 @@
 	name = "\improper Death Laser"
 	icon_state = "heavylaser"
 	damage = 60
+
+/obj/item/projectile/beam/emitter
+	name = "emitter beam"
+	icon_state = "emitter"
 
 
 

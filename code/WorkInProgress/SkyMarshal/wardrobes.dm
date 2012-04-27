@@ -172,7 +172,7 @@
 		new /obj/item/weapon/storage/toolbox/mechanical(src)
 		new /obj/item/clothing/suit/storage/labcoat(src)
 		new /obj/item/clothing/gloves/black(src)
-		new /obj/item/device/radio/headset/headset_eng(src)
+		new /obj/item/device/radio/headset/headset_rob(src)
 		new /obj/item/clothing/shoes/black(src)
 		new /obj/item/clothing/under/rank/roboticist(src)
 
@@ -420,7 +420,7 @@
 		new /obj/item/weapon/storage/box(BPK)
 		new /obj/item/weapon/fcardholder(src)
 		new /obj/item/weapon/clipboard(src)
-		new /obj/item/weapon/notebook(src)
+		new /obj/item/weapon/clipboard/notebook(src)
 		new /obj/item/device/detective_scanner(src)
 		new /obj/item/policetaperoll(src)
 		new /obj/item/weapon/storage/box/evidence(src)

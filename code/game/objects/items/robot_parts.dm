@@ -90,6 +90,7 @@
 	if(src.l_arm && src.r_arm)
 		if(src.l_leg && src.r_leg)
 			if(src.chest && src.head)
+				//feedback_inc("cyborg_frames_built",1)
 				return 1
 	return 0
 
@@ -105,31 +106,35 @@
 			user.put_in_inactive_hand(B)
 		del(src)
 	if(istype(W, /obj/item/robot_parts/l_leg))
+		if(src.l_leg)	return
 		user.drop_item()
 		W.loc = src
 		src.l_leg = W
 		src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/r_leg))
+		if(src.r_leg)	return
 		user.drop_item()
 		W.loc = src
 		src.r_leg = W
 		src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/l_arm))
+		if(src.l_arm)	return
 		user.drop_item()
 		W.loc = src
 		src.l_arm = W
 		src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/r_arm))
+		if(src.r_arm)	return
 		user.drop_item()
 		W.loc = src
 		src.r_arm = W
 		src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/chest))
-
+		if(src.chest)	return
 		if(W:wires && W:cell)
 			user.drop_item()
 			W.loc = src
@@ -141,6 +146,7 @@
 			user << "\blue You need to attach a cell to it first!"
 
 	if(istype(W, /obj/item/robot_parts/head))
+		if(src.head)	return
 		if(W:flash2 && W:flash1)
 			user.drop_item()
 			W.loc = src
@@ -163,7 +169,7 @@
 				return
 
 			if(M.brainmob.mind in ticker.mode.head_revolutionaries)
-				user << "\red The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'.  It refuses to accept the MMI."
+				user << "\red The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the MMI."
 				return
 
 			if(jobban_isbanned(M.brainmob, "Cyborg"))
@@ -196,8 +202,8 @@
 
 			O << "<B>You are playing a Robot. The Robot can interact with most electronic objects in its view point.</B>"
 			O << "<B>You must follow the laws that the AI has. You are the AI's assistant to the station basically.</B>"
-			O << "To use something, simply double-click it."
-			O << {"Use say ":s to speak to fellow cyborgs and the AI through binary."}
+			O << "To use something, simply click it."
+			O << {"Use say ":b to speak to fellow cyborgs and the AI through binary."}
 
 			O.job = "Cyborg"
 
@@ -205,6 +211,8 @@
 			O.cell.loc = O
 			W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 			O.mmi = W
+
+			//feedback_inc("cyborg_birth",1)
 
 			del(src)
 		else

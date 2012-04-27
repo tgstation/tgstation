@@ -623,11 +623,11 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			src.updateicon()
 
 		else
-			user << "\red The tray already has a seed in it!"
+			user << "\red The tray already has seeds in it!"
 
 	else if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		if(src.planted && src.myseed)
-			user << "*** <B>[src.myseed.name]</B> ***"
+			user << "*** <B>[src.myseed.plantname]</B> ***" //Carn: now reports the plants growing, not the seeds.
 			user << "-Plant Age: \blue [src.age]"
 			user << "-Plant Endurance: \blue [src.myseed.endurance]"
 			user << "-Plant Lifespan: \blue [src.myseed.lifespan]"

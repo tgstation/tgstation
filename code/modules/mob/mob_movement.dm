@@ -160,6 +160,7 @@
 		return
 
 	if(Process_Grab())	return
+	if(!mob.canmove)	return
 
 //Making mob movememnt changes instant.
 	if(mob.paralysis || mob.stunned || mob.resting || mob.weakened || mob.buckled || (mob.changeling && mob.changeling.changeling_fakedeath))
@@ -249,6 +250,7 @@
 			for(var/obj/effect/speech_bubble/S in range(1, mob))
 				if(S.parent == mob)
 					S.loc = mob.loc
+
 		moving = 0
 
 		return .
@@ -362,6 +364,8 @@
 		else
 			if((istype(turf,/turf/simulated/floor)) && (src.lastarea.has_gravity == 0)) // No one else gets a chance.
 				continue
+
+
 
 		/*
 		if(istype(turf,/turf/simulated/floor) && (src.flags & NOGRAV))

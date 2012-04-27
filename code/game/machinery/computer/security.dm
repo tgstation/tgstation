@@ -458,7 +458,7 @@ What a mess.*/
 							temp = "<h5>Rank:</h5>"
 							temp += "<ul>"
 							for(var/rank in get_all_jobs())
-								temp += "<li><a href='?src=\ref[src];choice=Change Rank;rank=[rank]'>[rank]</a></li>"
+								temp += "<li><a href='?src=\ref[src];choice=Change Rank;rank=[rank];real_rank=[rank]'>[rank]</a></li>"
 							temp += "</ul>"
 						else
 							alert(usr, "You do not have the required rank to do this!")

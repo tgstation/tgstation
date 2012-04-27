@@ -49,6 +49,7 @@
 		if(crit_fail)
 			user << "\red The Bluespace generator isn't working."
 			return
+			/* Remove these comments to re-enable BoH BoH Singuloths.-Hawk.
 		if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
 			user << "\red The Bluespace interfaces of the two devices catastrophically malfunction!"
 			del(W)
@@ -58,6 +59,7 @@
 			log_game("[key_name(user)] detonated a bag of holding")
 			del(src)
 			return
+			*/
 		..()
 
 	proc/failcheck(mob/user as mob)

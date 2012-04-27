@@ -143,9 +143,11 @@
 					new /obj/item/clothing/suit/syndicatefake(src.loc)
 					new /obj/item/clothing/head/syndicatefake(src.loc)
 				if(8)
-					new /obj/item/toy/crayonbox(src.loc)
+					new /obj/item/weapon/storage/crayonbox(src.loc)
 				if(9)
 					new /obj/item/toy/spinningtoy(src.loc)
+			//	if(10)									//Commented out on Urist-chan's orders~
+			//		new /obj/item/toy/balloon(src.loc)	//Until it gets a better sprite~
 		else
 			var/atom/movable/Prize = pick(contents)
 			Prize.loc = src.loc

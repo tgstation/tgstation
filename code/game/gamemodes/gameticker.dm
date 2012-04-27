@@ -177,14 +177,13 @@ var/datum/roundinfo/roundinfo = new()
 
 			spawn(50)
 				if (mode.station_was_nuked)
-					feedback_set_details("end_proper","nuke")
+					//feedback_set_details("end_proper","nuke")
 					world << "\blue <B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B>"
 				else
-					feedback_set_details("end_proper","proper completion")
+					//feedback_set_details("end_proper","proper completion")
 					world << "\blue <B>Restarting in [restart_timeout/10] seconds</B>"
-			//	send2irc(world.url,"Server Rebooting!")
 
-				feedback_set_details("round_end","[time2text(world.realtime)]")
+
 				if(blackbox)
 					blackbox.save_all_data_to_sql()
 
@@ -199,23 +198,23 @@ var/datum/roundinfo/roundinfo = new()
 
 	for (var/mob/living/silicon/ai/aiPlayer in world)
 		if (aiPlayer.stat != 2)
-			world << "<b>[aiPlayer.name]'s laws at the end of the game were:</b>"
+			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.key])'s laws at the end of the game were:</b>"
 		else
-			world << "<b>[aiPlayer.name]'s laws when it was deactivated were:</b>"
+			world << "<b>[aiPlayer.name] (Played by: [aiPlayer.key])'s laws when it was deactivated were:</b>"
 		aiPlayer.show_laws(1)
 
 		if (aiPlayer.connected_robots.len)
 			var/robolist = "<b>The AI's loyal minions were:</b> "
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
-				robolist += "[robo.name][robo.stat?" (Deactivated), ":", "]"
+				robolist += "[robo.name][robo.stat?" (Deactivated)  (Played by: [robo.key]), ":",  (Played by: [robo.key])"]"
 			world << "[robolist]"
 
 	for (var/mob/living/silicon/robot/robo in world)
 		if (!robo.connected_ai)
 			if (robo.stat != 2)
-				world << "<b>[robo.name] survived as an AI-less borg! Its laws were:</b>"
+				world << "<b>[robo.name] (Played by: [robo.key]) survived as an AI-less borg! Its laws were:</b>"
 			else
-				world << "<b>[robo.name] was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>"
+				world << "<b>[robo.name] (Played by: [robo.key]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</b>"
 			robo.laws.show_laws(world)
 
 	mode.declare_completion()//To declare normal completion.

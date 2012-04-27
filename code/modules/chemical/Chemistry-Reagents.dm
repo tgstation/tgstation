@@ -500,7 +500,7 @@ datum
 					holder.remove_reagent(src.id, 0.1)
 				return
 
-		silicate
+/*		silicate
 			name = "Silicate"
 			id = "silicate"
 			description = "A compound that can be used to reinforce glass."
@@ -534,7 +534,7 @@ datum
 							O.icon = I
 							O:silicateIcon = I
 
-				return
+				return*/
 
 		oxygen
 			name = "Oxygen"
@@ -768,10 +768,10 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:adjustToxLoss(0.2)
-				M.take_organ_damage(0, 1)
+				M:adjustToxLoss(1)
 				..()
 				return
+
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				if(!istype(M, /mob/living))
 					return //wooo more runtime fixin
@@ -782,17 +782,21 @@ datum
 							M << "\red Your mask melts away!"
 							return
 						if(M:head)
-							del (M:head)
-							M << "\red Your helmet melts into uselessness!"
+							if(prob(15))
+								del(M:head)
+								M << "\red Your helmet melts from the acid!"
+							else
+								M << "\red Your helmet protects you from the acid!"
 							return
 						var/datum/organ/external/head/affecting = M:get_organ("head")
-						affecting.disfigured = 1
-						affecting.take_damage(35, 0)
+						affecting.take_damage(15, 0)
 						M:UpdateDamageIcon()
 						M:emote("scream")
-						M << "\red Your face has become disfigured!"
-						M.real_name = "Unknown"
-						M.warn_flavor_changed()
+						if(prob(15))
+							M << "\red Your face has become disfigured!"
+							M.real_name = "Unknown"
+							M.warn_flavor_changed()
+							affecting.disfigured = 1
 					else
 						if(istype(M, /mob/living/carbon/monkey) && M:wear_mask)
 							del (M:wear_mask)
@@ -802,13 +806,14 @@ datum
 				else
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/head/affecting = M:get_organ("head")
-						affecting.disfigured = 1
-						affecting.take_damage(30, 0)
+						affecting.take_damage(15, 0)
 						M:UpdateDamageIcon()
 						M:emote("scream")
-						M << "\red Your face has become disfigured!"
-						M.real_name = "Unknown"
-						M.warn_flavor_changed()
+						if(prob(15))
+							M << "\red Your face has become disfigured!"
+							M.real_name = "Unknown"
+							M.warn_flavor_changed()
+							affecting.disfigured = 1
 					else
 						M.take_organ_damage(min(15, volume * 4))
 
@@ -856,11 +861,11 @@ datum
 				..()
 				return
 
-
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				if(!istype(T, /turf/space))
 					new /obj/effect/decal/cleanable/greenglow(T)
+					return
 
 
 		ryetalyn
@@ -1039,6 +1044,8 @@ datum
 			reagent_state = LIQUID
 			color = "#660000" // rgb: 102, 0, 0
 
+//Commenting this out as it's horribly broken. It's a neat effect though, so it might be worth making a new reagent (that is less common) with similar effects.	-Pete
+// Sort of fixed by creating plasma instead.
 			reaction_obj(var/obj/O, var/volume)
 				src = null
 				var/turf/the_turf = get_turf(O)
@@ -1060,6 +1067,7 @@ datum
 				M:adjustToxLoss(1)
 				..()
 				return
+
 
 		space_cleaner
 			name = "Space cleaner"
@@ -1701,6 +1709,7 @@ datum
 //					M:adjustToxLoss(0.1)
 				..()
 				return
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
