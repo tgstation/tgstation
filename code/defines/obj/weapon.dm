@@ -672,8 +672,12 @@
 	color = "green"
 	icon_state = "coil_green"
 
+/obj/item/weapon/cable_coil/pink
+	color = "pink"
+	icon_state = "coil_pink"
+
 /obj/item/weapon/cable_coil/random/New()
-	color = pick("red","yellow","green","blue")
+	color = pick("red","yellow","green","blue","pink")
 	icon_state = "coil_[color]"
 	..()
 
