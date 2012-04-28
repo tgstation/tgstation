@@ -339,6 +339,18 @@ obj/machinery/atmospherics/tvalve
 obj/machinery/atmospherics/tvalve/mirrored
 	icon_state = "tvalvem0"
 
+	New()
+		switch(dir)
+			if(NORTH)
+				initialize_directions = SOUTH|NORTH|WEST
+			if(SOUTH)
+				initialize_directions = NORTH|SOUTH|EAST
+			if(EAST)
+				initialize_directions = WEST|EAST|NORTH
+			if(WEST)
+				initialize_directions = EAST|WEST|SOUTH
+		..()
+
 	initialize()
 		var/node1_dir
 		var/node2_dir
