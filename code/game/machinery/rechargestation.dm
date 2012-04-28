@@ -89,6 +89,7 @@
 							if(istype(O,/obj/item/device/flash))
 								if(O:broken)
 									O:broken = 0
+									O:times_used = 0
 									O:icon_state = "flash"
 							if(istype(O,/obj/item/weapon/gun/energy/taser/cyborg))
 								if(O:power_supply.charge < O:power_supply.maxcharge)

@@ -4,14 +4,12 @@ atom/var/list/suit_fibers
 
 atom/proc/add_fibers(mob/living/carbon/human/M)
 	if(M.gloves)
-		if(M.gloves.transfer_blood)
-			if(add_blood(M.gloves.bloody_hands_mob))
+		if(M.gloves.transfer_blood) //bloodied gloves transfer blood to touched objects
+			if(add_blood(M.gloves.bloody_hands_mob)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
 				M.gloves.transfer_blood--
-				//world.log << "[M.gloves] added blood to [src] from [M.gloves.bloody_hands_mob]"
 	else if(M.bloody_hands)
 		if(add_blood(M.bloody_hands_mob))
 			M.bloody_hands--
-			//world.log << "[M] added blood to [src] from [M.bloody_hands_mob]"
 	if(!suit_fibers) suit_fibers = list()
 	var/fibertext
 	var/item_multiplier = istype(src,/obj/item)?1.2:1
@@ -190,6 +188,8 @@ obj/machinery/computer/forensic_scanning
 					I = card
 				if(I && istype(I,/obj/item/weapon/f_card))
 					card = I
+					if(!card.fingerprints)
+						card.fingerprints = list()
 					if(card.amount > 1 || !card.fingerprints.len)
 						usr << "\red ERROR: No prints/too many cards."
 						if(card.loc == src)
@@ -468,9 +468,10 @@ obj/machinery/computer/forensic_scanning
 
 
 	proc/add_data_scanner(var/obj/item/device/detective_scanner/W)
-		for(var/i = 1, i <= W.stored.len, i++)
-			var/list/data = W.stored[i]
-			add_data(data[1],1,data[2],data[3],data[4])
+		if(W.stored)
+			for(var/i = 1, i <= W.stored.len, i++)
+				var/list/data = W.stored[i]
+				add_data(data[1],1,data[2],data[3],data[4])
 		W.stored = list()
 		for(var/atom/A in W.contents)
 			del(A)

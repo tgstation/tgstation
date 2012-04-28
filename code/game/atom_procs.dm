@@ -337,7 +337,7 @@
 			else
 				T.icon = initial(icon)
 
-	if(blood_DNA && !blood_DNA.len)
+	if(blood_DNA && istype(blood_DNA, /list) && !blood_DNA.len)
 		del(blood_DNA)
 	if(src.fingerprints && src.fingerprints.len)
 		var/done = 0

@@ -101,13 +101,13 @@
 	for(var/obj/effect/landmark/start/sloc in world)
 		if (sloc.name != "AI")
 			continue
-		if (locate(/mob) in sloc.loc)
+		if (locate(/mob/living) in sloc.loc)
 			continue
 		loc_landmark = sloc
 	if (!loc_landmark)
 		for(var/obj/effect/landmark/tripai in world)
 			if (tripai.name == "tripai")
-				if(locate(/mob) in tripai.loc)
+				if(locate(/mob/living) in tripai.loc)
 					continue
 				loc_landmark = tripai
 	if (!loc_landmark)

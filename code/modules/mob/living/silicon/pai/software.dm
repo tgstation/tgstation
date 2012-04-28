@@ -170,8 +170,14 @@
 					if(isnull(P)||P.toff)
 						return
 
+					var/AnsweringMS = 0
 					for (var/obj/machinery/message_server/MS in world)
 						MS.send_pda_message("[P.owner]","[src]","[t]")
+						if(MS.active)
+							AnsweringMS++
+
+					if(!AnsweringMS)
+						return
 
 					tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
 					P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
@@ -195,12 +201,18 @@
 				else
 					var/mob/living/silicon/pai/P = target
 
-					tnote += "<i><b>&rarr; To [P]:</b></i><br>[t]<br>"
-					P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];soft=pdamessage;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
-
-
+					var/AnsweringMS = 0
 					for (var/obj/machinery/message_server/MS in world)
 						MS.send_pda_message("[P]","[src]","[t]")
+						if(MS.active)
+							AnsweringMS++
+
+					if(!AnsweringMS)
+						return
+
+
+					tnote += "<i><b>&rarr; To [P]:</b></i><br>[t]<br>"
+					P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];soft=pdamessage;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
 
 					if (prob(15)) //Give the AI a chance of intercepting the message
 						var/who = src

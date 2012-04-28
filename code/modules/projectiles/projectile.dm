@@ -27,7 +27,8 @@
 		yo = null
 		xo = null
 		current = null
-		turf/original = null
+		turf/original = null // the original turf clicked
+		turf/starting = null // the projectile's starting turf
 
 		p_x = 16
 		p_y = 16 // the pixel location of the tile that the player clicked. Default is the center

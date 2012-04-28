@@ -232,7 +232,7 @@ var/global/datum/controller/occupations/job_master
 			H.mind.assigned_role = rank
 			H.mind.role_alt_title = null
 
-		if(!joined_late && rank != "Tourist")
+		if(!joined_late)
 			var/obj/S = null
 			for(var/obj/effect/landmark/start/sloc in world)
 				if(sloc.name != rank)	continue
