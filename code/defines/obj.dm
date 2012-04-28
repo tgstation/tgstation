@@ -640,6 +640,10 @@
 	color="blue"
 	icon = 'power_cond_blue.dmi'
 
+/obj/structure/cable/pink
+	color="pink"
+	icon = 'power_cond_pink.dmi'
+
 /obj/effect/manifest
 	name = "manifest"
 	icon = 'screen1.dmi'

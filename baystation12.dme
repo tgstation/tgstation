@@ -1122,6 +1122,7 @@
 #include "code\WorkInProgress\Chinsky\ashtray.dm"
 #include "code\WorkInProgress\mapload\dmm_suite.dm"
 #include "code\WorkInProgress\mapload\reader.dm"
+#include "code\WorkInProgress\Mini\ATM.dm"
 #include "code\WorkInProgress\Mini\atmos_control.dm"
 #include "code\WorkInProgress\Mini\pipe_heater.dm"
 #include "code\WorkInProgress\Mloc\Shortcuts.dm"
