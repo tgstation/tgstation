@@ -180,35 +180,43 @@
 	w_class = 1.0
 	var/access = list()
 	access = access_crate_cash
+	var/worth = 1
 
 /obj/item/weapon/spacecash/c10
 	icon_state = "spacecash10"
 	access = access_crate_cash
 	desc = "It's worth 10 credits."
+	worth = 10
 /obj/item/weapon/spacecash/c20
 	icon_state = "spacecash20"
 	access = access_crate_cash
 	desc = "It's worth 20 credits."
+	worth = 20
 /obj/item/weapon/spacecash/c50
 	icon_state = "spacecash50"
 	access = access_crate_cash
 	desc = "It's worth 50 credits."
+	worth = 50
 /obj/item/weapon/spacecash/c100
 	icon_state = "spacecash100"
 	access = access_crate_cash
 	desc = "It's worth 100 credits."
+	worth = 100
 /obj/item/weapon/spacecash/c200
 	icon_state = "spacecash200"
 	access = access_crate_cash
 	desc = "It's worth 200 credits."
+	worth = 200
 /obj/item/weapon/spacecash/c500
 	icon_state = "spacecash500"
 	access = access_crate_cash
 	desc = "It's worth 500 credits."
+	worth = 500
 /obj/item/weapon/spacecash/c1000
 	icon_state = "spacecash1000"
 	access = access_crate_cash
 	desc = "It's worth 1000 credits."
+	worth = 1000
 
 /obj/item/device/mass_spectrometer
 	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
