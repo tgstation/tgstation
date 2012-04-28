@@ -413,7 +413,7 @@ AI MODULES
 	origin_tech = "programming=4"
 
 
-/obj/item/weapon/aiModule/purge/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
+/obj/item/weapon/aiModule/robocop/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
 	target.clear_inherent_laws()
 	target.add_inherent_law("Serve the public trust.")
