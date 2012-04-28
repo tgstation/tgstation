@@ -1098,7 +1098,8 @@
 			else
 				m_select.screen_loc = null
 
-
+	var/suit_img	//A bit of kludge to make belts go under coats, but on other suits
+	var/suit_stain
 	if (wear_suit)
 		/*if (mutations & FAT && !(wear_suit.flags & ONESIZEFITSALL))
 			src << "\red You burst out of the [wear_suit.name]!"
@@ -1112,7 +1113,7 @@
 				c:layer = initial(c:layer)*/
 		if (istype(wear_suit, /obj/item/clothing/suit))
 			var/t1 = wear_suit.icon_state
-			overlays += image("icon" = 'suit.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
+			suit_img = image("icon" = 'suit.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
 		if (wear_suit)
 			if (wear_suit.blood_DNA)
 				var/icon/stain_icon = null
@@ -1122,7 +1123,7 @@
 					stain_icon = icon('blood.dmi', "coatblood[!lying ? "" : "2"]")
 				else
 					stain_icon = icon('blood.dmi', "suitblood[!lying ? "" : "2"]")
-				overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
+				suit_stain = image("icon" = stain_icon, "layer" = MOB_LAYER)
 			wear_suit.screen_loc = ui_oclothing
 		if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
 			if (handcuffed)
@@ -1136,6 +1137,24 @@
 				hand = 0
 				drop_item()
 				hand = h
+	// Belt
+	var/belt_img	//A bit of kludge to make belts go under coats, but on other suits
+	if (belt)
+		var/t1 = belt.item_state
+		if (!t1)
+			t1 = belt.icon_state
+		belt_img = image("icon" = 'belt.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
+		belt.screen_loc = ui_belt
+
+	//A bit of kludge to make belts go under coats, but on other suits
+	if (istype(wear_suit, /obj/item/clothing/suit/storage/det_suit) || istype(wear_suit, /obj/item/clothing/suit/storage/labcoat))
+		overlays += belt_img
+		overlays += suit_img
+		overlays += suit_stain
+	else
+		overlays += suit_img
+		overlays += suit_stain
+		overlays += belt_img
 
 
 	if (lying)
@@ -1169,13 +1188,6 @@
 			overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
 		head.screen_loc = ui_head
 
-	// Belt
-	if (belt)
-		var/t1 = belt.item_state
-		if (!t1)
-			t1 = belt.icon_state
-		overlays += image("icon" = 'belt.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
-		belt.screen_loc = ui_belt
 
 	if ((wear_mask && !(wear_mask.see_face)) || (head && !(head.see_face))) // can't see the face
 		if (wear_id)
