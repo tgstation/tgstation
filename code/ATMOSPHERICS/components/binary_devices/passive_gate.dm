@@ -52,3 +52,11 @@ obj/machinery/atmospherics/binary/passive_gate
 
 			if(network2)
 				network2.update = 1
+
+	attack_ai(mob/user as mob)
+		return src.attack_hand(user)
+
+	attack_hand(mob/user as mob)
+		src.on = !src.on
+		src.update_icon()
+		return
