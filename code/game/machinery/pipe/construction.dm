@@ -19,6 +19,7 @@ Buildable meters
 #define PIPE_GAS_MIXER			14
 #define PIPE_MTVALVE			15
 #define PIPE_MANIFOLD4W			16
+#define PIPE_CAP				17
 
 /obj/item/pipe
 	name = "pipe"
@@ -72,6 +73,8 @@ Buildable meters
 			src.pipe_type = PIPE_MTVALVE
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold))
 			src.pipe_type = PIPE_MANIFOLD4W
+		else if(istype(make_from, /obj/machinery/atmospherics/pipe/cap))
+			src.pipe_type = PIPE_CAP
 	else
 		src.pipe_type = pipe_type
 		src.dir = dir
@@ -101,6 +104,7 @@ Buildable meters
 		"gas mixer", \
 		"t-valve", \
 		"4-way manifold", \
+		"pipe cap", \
 	)
 	name = nlist[pipe_type+1] + " fitting"
 	var/list/islist = list( \
@@ -121,6 +125,7 @@ Buildable meters
 		"mixer", \
 		"mtvalve", \
 		"manifold4w", \
+		"cap", \
 	)
 	icon_state = islist[pipe_type + 1]
 
@@ -187,6 +192,8 @@ Buildable meters
 			return flip|cw|acw
 		if(PIPE_GAS_FILTER, PIPE_GAS_MIXER,PIPE_MTVALVE)
 			return dir|flip|cw
+		if(PIPE_CAP)
+			return flip
 	return 0
 
 /obj/item/pipe/proc/get_pdir() //endpoints for regular pipes
@@ -509,6 +516,16 @@ Buildable meters
 			if (V.node3)
 				V.node3.initialize()
 				V.node3.build_network()
+
+		if(PIPE_CAP)
+			var/obj/machinery/atmospherics/pipe/cap/C = new(src.loc)
+			C.dir = dir
+			C.initialize_directions = pipe_dir
+			C.initialize()
+			C.build_network()
+			if(C.node)
+				C.node.initialize()
+				C.node.build_network()
 
 	playsound(src.loc, 'Ratchet.ogg', 50, 1)
 	user.visible_message( \
