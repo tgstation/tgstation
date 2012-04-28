@@ -275,6 +275,8 @@ var/datum/cameranet/cameranet = new()
 /mob/living/silicon/ai/New()
 	..()
 	eyeobj.ai = src
+	spawn(20)
+		freelook()
 
 /mob/living/silicon/ai/death(gibbed)
 	if(client && client.eye == eyeobj)
@@ -293,6 +295,7 @@ var/datum/cameranet/cameranet = new()
 		client.eye = src
 		for(var/datum/camerachunk/c in eyeobj.visibleCameraChunks)
 			c.remove(eyeobj)
+		freelook()
 	else
 		if(!eyeobj)	//if it got deleted somehow (like an admin trying to fix things <.<')
 			eyeobj = new()
@@ -300,6 +303,7 @@ var/datum/cameranet/cameranet = new()
 		eyeobj.loc = loc
 		cameranet.visibility(eyeobj)
 		cameraFollow = null
+
 /mob/aiEye/Move()
 	. = ..()
 	if(.)
@@ -361,3 +365,7 @@ var/datum/cameranet/cameranet = new()
 			continue
 		return 1
 	return 0
+
+/mob/living/silicon/ai/switchCamera(atom/A)
+	eyeobj.loc = A.loc
+	return
