@@ -154,6 +154,8 @@
 		if(W)
 			W.loc = src.loc
 
+	else if(istype(W, /obj/item/weapon/packageWrap))
+		return
 	else if(istype(W, /obj/item/weapon/weldingtool) && W:welding )
 		if(!W:remove_fuel(0,user))
 			user << "\blue You need more welding fuel to complete this task."
@@ -161,8 +163,6 @@
 		src.welded =! src.welded
 		for(var/mob/M in viewers(src))
 			M.show_message("\red [src] has been [welded?"welded shut":"unwelded"] by [user.name].", 3, "\red You hear welding.", 2)
-	else if(istype(W,/obj/item/weapon/packageWrap))
-		return
 	else
 		src.attack_hand(user)
 	return
