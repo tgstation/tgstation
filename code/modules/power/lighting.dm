@@ -44,7 +44,7 @@
 	brightness = 3
 	desc = "A small lighting fixture."
 	light_type = /obj/item/weapon/light/bulb
-	
+
 /obj/machinery/light/small/spot
 	brightness = 5
 
@@ -531,6 +531,10 @@
 		user << "You inject the solution into the [src]."
 
 		if(S.reagents.has_reagent("plasma", 5))
+
+			log_attack("<font color='red'>[user.name] ([user.ckey]) injected a light with plasma.</font>")
+			log_admin("ATTACK: [user] ([user.ckey]) injected a light with plasma.")
+			message_admins("ATTACK: [user] ([user.ckey]) injected a light with plasma.")
 
 			rigged = 1
 

@@ -109,6 +109,10 @@
 
 		if(S.reagents.has_reagent("plasma", 5))
 
+			log_attack("<font color='red'>[user.name] ([user.ckey]) injected a power cell with plasma.</font>")
+			log_admin("ATTACK: [user] ([user.ckey]) injected a power cell with plasma.")
+			message_admins("ATTACK: [user] ([user.ckey]) injected a power cell with plasma.")
+
 			rigged = 1
 
 		S.reagents.clear_reagents()
