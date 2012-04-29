@@ -192,7 +192,7 @@
 			<tr id='title_tr'>
 				<td align='center'>
 					<font size='5'><b>Player panel</b></font><br>
-					Hover over a line to see more information
+					Hover over a line to see more information - <a href='?src=\ref[src];secretsadmin=check_antagonist'>Check antagonists</a>
 					<p>
 				</td>
 			</tr>
