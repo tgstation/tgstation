@@ -169,6 +169,7 @@
 						editingcode = usr
 						winshow(editingcode, "Telecomms IDE", 1) // show the IDE
 						winset(editingcode, "tcscode", "is-disabled=false")
+						winset(editingcode, "tcscode", "text=\"\"")
 						var/showcode = dd_replacetext(storedcode, "\\\"", "\\\\\"")
 						showcode = dd_replacetext(storedcode, "\"", "\\\"")
 						winset(editingcode, "tcscode", "text=\"[showcode]\"")
