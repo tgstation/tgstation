@@ -180,14 +180,14 @@
 		distance = 1
 
 	if (src.stat == 1 || stat == 2)
-		msg += "<span class='warning'>[name] doesn't seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep.</span>\n"
+		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
 		if((!isbreathing || holdbreath) && distance <= 3)
-			msg += "<span class='warning'>[name] does not appear to be breathing.</span>\n"
+			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
 		if(istype(usr, /mob/living/carbon/human) && usr.stat == 0 && src.stat == 1 && distance <= 1)
 			for(var/mob/O in viewers(usr.loc, null))
 				O.show_message("[usr] checks [src]'s pulse.", 1)
 			spawn(15)
-				usr << "\blue [name] has a pulse!"
+				usr << "\blue [t_He] has a pulse!"
 
 	if (src.stat == 2 || (changeling && changeling.changeling_fakedeath == 1))
 		if(distance <= 1)
@@ -195,7 +195,7 @@
 				for(var/mob/O in viewers(usr.loc, null))
 					O.show_message("[usr] checks [src]'s pulse.", 1)
 			spawn(15)
-				usr << "\red [name] has no pulse!"
+				usr << "\red [t_He] has no pulse!"
 
 /*	if (src.getBruteLoss())
 		if (src.getBruteLoss() < 30)
