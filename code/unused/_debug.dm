@@ -615,3 +615,5 @@ Doing this because FindTurfs() isn't even used
 	playsound(pt.loc, 'explosionfar.ogg', 100, 1,10)
 	pt.gas.temperature = 500+T0C
 	pt.ignite()
+
+

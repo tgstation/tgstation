@@ -308,6 +308,7 @@
 	density = 1
 	anchored = 1.0
 	layer = 2.8
+//	throwpass = 1	//You can throw objects over this, despite it's density.
 
 
 /obj/structure/table/holotable/attack_paw(mob/user as mob)
