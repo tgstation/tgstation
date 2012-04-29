@@ -195,6 +195,7 @@
 			verbs += /client/proc/spawn_xeno
 			verbs += /client/proc/toggleprayers
 			verbs += /client/proc/deadmin_self
+			verbs += /client/proc/tension_report
 			verbs += /proc/possess
 			verbs += /proc/release
 			verbs += /client/proc/admin_deny_shuttle
@@ -229,7 +230,6 @@
 			//verbs += /proc/togglebuildmode 							--Merged with view variables
 			//verbs += /client/proc/cmd_modify_object_variables 		--Merged with view variables
 			verbs += /client/proc/togglebuildmodeself
-			verbs += /client/proc/tension_report
 			verbs += /client/proc/toggleadminhelpsound
 		else	return
 

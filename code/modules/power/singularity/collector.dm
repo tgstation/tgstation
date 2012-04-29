@@ -14,6 +14,7 @@
 		last_power = 0
 		active = 0
 		locked = 0
+		drainratio = 1
 
 	process()
 		if(P)
@@ -21,7 +22,7 @@
 				P.air_contents.toxins = 0
 				eject()
 			else
-				P.air_contents.toxins -= 0.001
+				P.air_contents.toxins -= 0.001*drainratio
 		return
 
 
