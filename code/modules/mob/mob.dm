@@ -1149,3 +1149,66 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/AdjustParalysis(amount)
 	paralysis = max(paralysis + amount,0)
 	return
+
+// ++++ROCKDTBEN++++ MOB PROCS -- Ask me before touching
+
+/mob/proc/getBruteLoss()
+	return bruteloss
+
+/mob/proc/adjustBruteLoss(var/amount)
+	bruteloss = max(bruteloss + amount, 0)
+
+/mob/proc/getOxyLoss()
+	return oxyloss
+
+/mob/proc/adjustOxyLoss(var/amount)
+	oxyloss = max(oxyloss + amount, 0)
+
+/mob/proc/setOxyLoss(var/amount)
+	oxyloss = amount
+
+/mob/proc/getToxLoss()
+	return toxloss
+
+/mob/proc/adjustToxLoss(var/amount)
+	toxloss = max(toxloss + amount, 0)
+
+/mob/proc/setToxLoss(var/amount)
+	toxloss = amount
+
+/mob/proc/getFireLoss()
+	return fireloss
+
+/mob/proc/adjustFireLoss(var/amount)
+	fireloss = max(fireloss + amount, 0)
+
+/mob/proc/getCloneLoss()
+	return cloneloss
+
+/mob/proc/adjustCloneLoss(var/amount)
+	cloneloss = max(cloneloss + amount, 0)
+
+/mob/proc/setCloneLoss(var/amount)
+	cloneloss = amount
+
+/mob/proc/getHalLoss()
+	return halloss
+
+/mob/proc/adjustHalLoss(var/amount)
+	halloss = max(halloss + amount, 0)
+
+/mob/proc/setHalLoss(var/amount)
+	halloss = amount
+
+
+
+/mob/proc/getBrainLoss()
+	return brainloss
+
+/mob/proc/adjustBrainLoss(var/amount)
+	brainloss = max(brainloss + amount, 0)
+
+/mob/proc/setBrainLoss(var/amount)
+	brainloss = amount
+
+// ++++ROCKDTBEN++++ MOB PROCS //END

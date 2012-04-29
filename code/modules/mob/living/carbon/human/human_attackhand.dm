@@ -32,6 +32,30 @@
 					visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
 				return
 
+		if(istype(M.gloves , /obj/item/clothing/gloves/boxing/hologlove))
+
+			var/damage = rand(0, 9)
+			if(!damage)
+				playsound(loc, 'punchmiss.ogg', 25, 1, -1)
+				visible_message("\red <B>[M] has attempted to punch [src]!</B>")
+				return 0
+			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
+			var/armor_block = run_armor_check(affecting, "melee")
+
+			if(M.mutations & HULK)	damage += 5
+			playsound(loc, "punch", 25, 1, -1)
+
+			visible_message("\red <B>[M] has punched [src]!</B>")
+
+			apply_damage(damage, HALLOSS, affecting, armor_block)
+			if(damage >= 9)
+				visible_message("\red <B>[M] has weakened [src]!</B>")
+				apply_effect(4, WEAKEN, armor_block)
+			UpdateDamageIcon()
+
+			return
+
+
 	switch(M.a_intent)
 		if("help")
 			if(health > 0)
