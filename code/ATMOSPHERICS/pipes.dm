@@ -1015,9 +1015,21 @@ obj/machinery/atmospherics/pipe
 		volume = 35
 
 		dir = SOUTH
-		initialize_directions = SOUTH
+		initialize_directions = NORTH
 
 		var/obj/machinery/atmospherics/node
+
+		New()
+			..()
+			switch(dir)
+				if(SOUTH)
+				 initialize_directions = NORTH
+				if(NORTH)
+				 initialize_directions = SOUTH
+				if(WEST)
+				 initialize_directions = EAST
+				if(EAST)
+				 initialize_directions = WEST
 
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
