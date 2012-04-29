@@ -19,3 +19,4 @@ lexusjjss: Lexus Langg: /obj/item/weapon/clipboard/fluff/smallnote
 lexusjjss: Zachary Tomlinson: /obj/item/weapon/clipboard/fluff/smallnote
 orangebottle: Lillian Levett: /obj/item/weapon/pen/fluff/fancypen
 orangebottle: Lilliana Reade: /obj/item/weapon/pen/fluff/fancypen
+deusdactyl: Roger Wiles: /obj/item/clothing/under/rank/virologist/fluff/cdc_jumpsuit, /obj/item/clothing/suit/storage/labcoat/fluff/cdc_labcoat
