@@ -1015,10 +1015,6 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	icon_state = "pen_red"
 	text_color = "#FF0000"
 
-/obj/item/weapon/pen/multi
-	desc = "It's a cool looking pen. Lots of colors!"
-	name = "multicolor pen"
-
 /obj/item/weapon/pen/feather
 	name = "feathery pen"
 	desc = "A gold pen disguised as a quill. How quaint."
