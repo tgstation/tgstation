@@ -107,6 +107,11 @@
 			update_icon()
 			return
 		else if(user.a_intent != "hurt" && load_into_chamber() && istype(in_chamber,/obj/item/projectile/energy/electrode)) //Point blank tasering.
+			if (M.canstun == 0 || M.canweaken == 0)
+				user.visible_message("\red <B>[M] has been stunned with the taser gun by [user] to no effect!</B>")
+				del(in_chamber)
+				update_icon()
+				return
 			if (prob(50))
 				if (M.paralysis < 60 && (!(M.mutations & 8)) )
 					M.paralysis = 60

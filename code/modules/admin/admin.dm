@@ -1091,6 +1091,21 @@ var/global/BSACooldown = 0
 			alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 			return
 
+	if (href_list["makeaisilent"])
+		if (src.level>=3)
+			var/mob/M = locate(href_list["makeaisilent"])
+			if(istype(M, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = M
+				message_admins("\red Admin [key_name_admin(usr)] AIized [key_name_admin(M)] silently!", 1)
+				log_admin("[key_name(usr)] AIized [key_name(M)] silently")
+				H.AIizeSilent()
+			else
+				alert("I cannot allow this.")
+				return
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+			return
+
 	if (href_list["makealien"])
 		if (src.level>=3)
 			var/mob/M = locate(href_list["makealien"])
@@ -2345,6 +2360,7 @@ var/global/BSACooldown = 0
 				foo += text("<B>Is an AI</B> | ")
 			else if(ishuman(M))
 				foo += text("<A HREF='?src=\ref[src];makeai=\ref[M]'>Make AI</A> | ")
+				foo += text("<A HREF='?src=\ref[src];makeaisilent=\ref[M]'>Make AI Silently</A> | ")
 				foo += text("<A HREF='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> | ")
 				foo += text("<A HREF='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> | ")
 				foo += text("<A HREF='?src=\ref[src];makemetroid=\ref[M]'>Make Metroid</A> | ")

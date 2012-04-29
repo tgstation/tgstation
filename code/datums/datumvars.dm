@@ -242,6 +242,7 @@ client
 			if(ishuman(D))
 				body += "<option value>---</option>"
 				body += "<option value='byond://?src=\ref[src];makeai=\ref[D]'>Make AI</option>"
+				body += "<option value='byond://?src=\ref[src];makeaisilent=\ref[D]'>Make AI (Silently)</option>"
 				body += "<option value='byond://?src=\ref[src];makerobot=\ref[D]'>Make cyborg</option>"
 				body += "<option value='byond://?src=\ref[src];makemonkey=\ref[D]'>Make monkey</option>"
 				body += "<option value='byond://?src=\ref[src];makealien=\ref[D]'>Make alien</option>"
@@ -670,6 +671,23 @@ client
 				usr << "Mob doesn't exist anymore"
 				return
 			holder.Topic(href, list("makeai"=href_list["makeai"]))
+		else if (href_list["makeaisilent"])
+			var/mob/M = locate(href_list["makeaisilent"])
+			if(!M)
+				return
+			if(!ishuman(M))
+				usr << "This can only be done to objects of type /mob/living/carbon/human"
+				return
+			if(!src.holder)
+				usr << "You are not an administrator."
+				return
+			var/action_type = alert("Confirm mob type change?",,"Transform","Cancel")
+			if(!action_type || action_type == "Cancel")
+				return
+			if(!M)
+				usr << "Mob doesn't exist anymore"
+				return
+			holder.Topic(href, list("makeaisilent"=href_list["makeaisilent"]))
 		else if (href_list["adjustDamage"] && href_list["mobToDamage"])
 			var/mob/M = locate(href_list["mobToDamage"])
 			var/Text = locate(href_list["adjustDamage"])
