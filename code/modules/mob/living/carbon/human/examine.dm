@@ -205,9 +205,9 @@
 
 	if (src.cloneloss)
 		if (src.cloneloss < 30)
-			msg += "<span class='warning'>[src.name] looks slightly... unfinished?</span>\n"
+			msg += "[t_He] looks slightly... unfinished?\n"
 		else
-			msg += "<span class='warning'>[src.name] looks very... unfinished?</B></span>\n"
+			msg += "<B>[t_He] looks very... unfinished?</B>\n"
 
 /*	if (src.getFireLoss())
 		if (src.getFireLoss() < 30)
@@ -230,7 +230,10 @@
 		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
 	if (!src.client && !admin_observing)
-		msg += "[t_He] [t_has] a vacant, braindead stare...\n"
+		msg += "[t_He] [t_has] a vacant stare...\n"
+
+	if (src.digitalcamo)
+		msg += "[t_He] [t_is] repulsively uncanny!\n"
 
 	var/list/wound_descriptions = list()
 	var/list/wound_flavor_text = list()

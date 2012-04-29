@@ -258,18 +258,18 @@ var/global/datum/controller/occupations/job_master
 
 			if(H.backbag == 2)
 				var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
-				new /obj/item/weapon/storage/box(BPK)
 				H.equip_if_possible(BPK, H.slot_back,1)
+				H.equip_if_possible(new /obj/item/weapon/storage/box(H.back), H.slot_in_backpack)
 
 			if(H.backbag == 3)
 				var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel(H)
-				new /obj/item/weapon/storage/box(BPK)
 				H.equip_if_possible(BPK, H.slot_back,1)
+				H.equip_if_possible(new /obj/item/weapon/storage/box(H.back), H.slot_in_backpack)
 
 			if(H.backbag == 4)
 				var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack/satchel_norm(H)
-				new /obj/item/weapon/storage/box(BPK)
 				H.equip_if_possible(BPK, H.slot_back,1)
+				H.equip_if_possible(new /obj/item/weapon/storage/box(H.back), H.slot_in_backpack)
 
 		//Give'em glasses if they are nearsighted
 		if(H.disabilities & 1)
