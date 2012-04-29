@@ -113,7 +113,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 	var/infectionchance = 10
 	var/speed = 1
 	var/spreadtype = "Blood" // Can also be "Airborne"
-	var/stage = 1
+	var/stage = 0
 	var/stageprob = 10
 	var/dead = 0
 	var/clicks = 0
@@ -225,7 +225,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 		if(mob.reagents.has_reagent("virusfood"))
 			mob.reagents.remove_reagent("virusfood",0.1)
 			clicks += 10
-		if(clicks > stage*100 && prob(10))
+		if(clicks > (stage+1)*100 && prob(10))
 			if(stage == 4)
 				var/datum/disease2/resistance/res = new /datum/disease2/resistance(src)
 				src.cure(mob)
@@ -246,13 +246,13 @@ proc/airborne_can_reach(turf/source, turf/target)
 		if(stage>1)
 			E = effects[1]
 			E.effect.deactivate(mob)
-		if(stage>2)
+		if(stage>=2)
 			E = effects[2]
 			E.effect.deactivate(mob)
-		if(stage>3)
+		if(stage>=3)
 			E = effects[3]
 			E.effect.deactivate(mob)
-		if(stage>4)
+		if(stage>=4)
 			E = effects[4]
 			E.effect.deactivate(mob)
 
@@ -272,6 +272,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 		disease.spreadtype = spreadtype
 		disease.stageprob = stageprob
 		disease.antigen   = antigen
+		disease.uniqueID  = uniqueID
 		for(var/datum/disease2/effectholder/holder in effects)
 	//		world << "adding effects"
 			var/datum/disease2/effectholder/newholder = new /datum/disease2/effectholder
