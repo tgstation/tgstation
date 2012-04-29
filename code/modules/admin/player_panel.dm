@@ -76,11 +76,12 @@
 
 					body += "<a href='?src=\ref[src];adminplayeropts="+ref+"'>PP</a> - "
 					body += "<a href='?src=\ref[src];adminplayervars="+ref+"'>VV</a> - "
+					body += "<a href='?src=\ref[src];traitor_panel_pp="+ref+"'>TP</a> - "
 					body += "<a href='?src=\ref[usr];priv_msg=\ref"+ref+"'>PM</a> - "
 					body += "<a href='?src=\ref[src];adminplayersubtlemessage="+ref+"'>SM</a> - "
 					body += "<a href='?src=\ref[src];adminplayerobservejump="+ref+"'>JMP</a><br>"
-					if(antagonist == 1)
-						body += "<font size='2'><a href='?src=\ref[src];secretsadmin=check_antagonist'>";
+					if(antagonist > 0)
+						body += "<font size='2'><a href='?src=\ref[src];secretsadmin=check_antagonist'><font color='red'><b>Antagonist</b></font></a></font>";
 
 					body += "</td></tr></table>";
 

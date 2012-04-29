@@ -140,7 +140,7 @@
 	name = "fake insulated gloves"
 	icon_state = "yellow"
 	item_state = "ygloves"
-	siemens_coefficient = null
+	siemens_coefficient = 1			//Set to a default of 1, gets overridden in New()
 	permeability_coefficient = 0.05
 	protective_temperature = 800
 	heat_transfer_coefficient = null

@@ -1128,9 +1128,15 @@ var/global/BSACooldown = 0
 					sleep(2)
 					cl.jumptomob(M)
 
-
-
-
+	if (href_list["traitor_panel_pp"])
+		var/mob/M = locate(href_list["traitor_panel_pp"])
+		if(isnull(M))
+			usr << "Mob doesn't seem to exist."
+			return
+		if(!ismob(M))
+			usr << "This doen't seem to be a mob."
+			return
+		show_traitor_panel(M)
 
 	if (href_list["BlueSpaceArtillery"])
 		var/mob/M = locate(href_list["BlueSpaceArtillery"])
