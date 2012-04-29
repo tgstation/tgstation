@@ -140,8 +140,12 @@ datum/shuttle_controller
 									AM.throw_at(E, 1, 1)
 									return
 								*/
+
 							if(istype(T, /turf/simulated))
 								del(T)
+
+						for(var/mob/living/carbon/bug in end_location) // If someone somehow is still in the shuttle's docking area...
+							bug.gib()
 
 						start_location.move_contents_to(end_location)
 						settimeleft(SHUTTLELEAVETIME)
@@ -151,6 +155,7 @@ datum/shuttle_controller
 						return 1
 
 				if(1)
+
 					if(timeleft>0)
 						return 0
 

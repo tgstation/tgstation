@@ -224,9 +224,11 @@
 		playsound(src.loc, 'Crowbar.ogg', 75, 1)
 		user << (state ? "You have pried the window into the frame." : "You have pried the window out of the frame.")
 	else
+
 		var/aforce = W.force
 		if(reinf) aforce /= 2.0
-		src.health = max(0, src.health - aforce)
+		if(W.damtype == BRUTE || W.damtype == BURN)
+			src.health = max(0, src.health - aforce)
 		playsound(src.loc, 'Glasshit.ogg', 75, 1)
 		if (src.health <= 7)
 			src.anchored = 0

@@ -92,9 +92,12 @@
 					dat += "<A href='?src=\ref[src];action=create;item=milk;cost=20'>10 milk</A> <FONT COLOR=blue>(20)</FONT><BR>"
 					dat += "<A href='?src=\ref[src];action=create;item=meat;cost=50'>Slab of meat</A> <FONT COLOR=blue>(50)</FONT><BR>"
 					dat += "Nutrient<BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=ez;cost=10'>E-Z-Nutrient</A> <FONT COLOR=blue>(10)</FONT><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=l4z;cost=20'>Left 4 Zed</A> <FONT COLOR=blue>(20)</FONT><BR>"
-					dat += "<A href='?src=\ref[src];action=create;item=rh;cost=25'>Robust Harvest</A> <FONT COLOR=blue>(25)</FONT><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=ez;cost=10'>E-Z-Nutrient</A> <FONT COLOR=blue>(10)</FONT> | <A href='?src=\ref[src];action=create;item=ez5;cost=50'>x5</A><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=l4z;cost=20'>Left 4 Zed</A> <FONT COLOR=blue>(20)</FONT> | <A href='?src=\ref[src];action=create;item=l4z5;cost=100'>x5</A><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=rh;cost=25'>Robust Harvest</A> <FONT COLOR=blue>(25)</FONT> | <A href='?src=\ref[src];action=create;item=rh5;cost=125'>x5</A><BR>"
+					dat += "Leather<BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=gloves;cost=350'>Botanical gloves</A> <FONT COLOR=blue>(350)</FONT><BR>"
+					dat += "<A href='?src=\ref[src];action=create;item=tbelt;cost=400'>Utility belt</A> <FONT COLOR=blue>(400)</FONT><BR>"
 					//dat += "Other<BR>"
 					//dat += "<A href='?src=\ref[src];action=create;item=monkey;cost=500'>Monkey</A> <FONT COLOR=blue>(500)</FONT><BR>"
 				else
@@ -163,6 +166,28 @@
 			new/obj/item/nutrient/l4z(src.loc)
 		if("rh")
 			new/obj/item/nutrient/rh(src.loc)
+		if("ez5") //It's not an elegant method, but it's safe and easy. -Cheridan
+			new/obj/item/nutrient/ez(src.loc)
+			new/obj/item/nutrient/ez(src.loc)
+			new/obj/item/nutrient/ez(src.loc)
+			new/obj/item/nutrient/ez(src.loc)
+			new/obj/item/nutrient/ez(src.loc)
+		if("l4z5")
+			new/obj/item/nutrient/l4z(src.loc)
+			new/obj/item/nutrient/l4z(src.loc)
+			new/obj/item/nutrient/l4z(src.loc)
+			new/obj/item/nutrient/l4z(src.loc)
+			new/obj/item/nutrient/l4z(src.loc)
+		if("rh5")
+			new/obj/item/nutrient/rh(src.loc)
+			new/obj/item/nutrient/rh(src.loc)
+			new/obj/item/nutrient/rh(src.loc)
+			new/obj/item/nutrient/rh(src.loc)
+			new/obj/item/nutrient/rh(src.loc)
+		if("gloves")
+			new/obj/item/clothing/gloves/botanic_leather(src.loc)
+		if("tbelt")
+			new/obj/item/weapon/storage/belt/utility(src.loc)
 		if("monkey")
 			new/mob/living/carbon/monkey(src.loc)
 	processing = 0
@@ -181,9 +206,10 @@
 		if("activate")
 			activate()
 		if("detach")
-			beaker.loc = src.loc
-			beaker = null
-			update_icon()
+			if(beaker)
+				beaker.loc = src.loc
+				beaker = null
+				update_icon()
 		if("create")
 			create_product(href_list["item"],text2num(href_list["cost"]))
 		if("menu")

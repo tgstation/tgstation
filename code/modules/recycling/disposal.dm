@@ -511,7 +511,7 @@
 						for (var/mob/V in viewers(usr))
 							V.show_message("[user] dunks [GM.name] into the toilet!", 3)
 						if(do_after(user, 30))
-							if(G.state>1&&!GM.internal)
+							if(G && G.state>1 && !GM.internal)
 								GM.oxyloss += 5
 
 			else if(I.w_class < 4)

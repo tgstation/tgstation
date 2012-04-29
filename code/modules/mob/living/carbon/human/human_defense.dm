@@ -143,7 +143,7 @@ emp_act
 	apply_damage(power, I.damtype, affecting, armor, is_cut(I), I.name)
 
 	var/bloody = 0
-	if((I.damtype == BRUTE) && prob(25 + is_sharp(I) * 50 + (I.force * 2)))
+	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + is_sharp(I) * 50 + (I.force * 2)))
 		I.add_blood(src)	//Make the weapon bloody, not the person.
 		bloody = 1
 		var/turf/location = loc

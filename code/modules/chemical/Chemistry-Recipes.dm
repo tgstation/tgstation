@@ -759,13 +759,14 @@ datum
 					if(M:eyecheck() <= 0)
 						flick("e_flash", M.flash)
 
-				for(var/i = 1, i <= created_volume, i++)
+				for(var/i = 1, i <= created_volume + rand(1,2), i++)
 					var/chosen = pick(borks)
 					var/obj/B = new chosen
-					B.loc = get_turf_loc(holder.my_atom)
-					if(prob(50))
-						for(var/j = 1, j <= rand(1, 3), j++)
-							step(B, pick(NORTH,SOUTH,EAST,WEST))
+					if(B)
+						B.loc = get_turf_loc(holder.my_atom)
+						if(prob(50))
+							for(var/j = 1, j <= rand(1, 3), j++)
+								step(B, pick(NORTH,SOUTH,EAST,WEST))
 
 
 
