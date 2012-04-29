@@ -108,7 +108,7 @@
 		if(href_list["network"])
 
 			var/newnet = input(usr, "Which network do you want to view?", "Comm Monitor", network) as null|text
-			if(newnet && usr in range(1, src))
+			if(newnet && ((usr in range(1, src) || issilicon(usr))))
 				if(length(newnet) > 15)
 					temp = "<font color = #D70B00>- FAILED: NETWORK TAG STRING TOO LENGHTLY -</font color>"
 

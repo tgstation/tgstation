@@ -35,7 +35,7 @@
 				winset(editingcode, "tcscode", "is-disabled=false")
 
 			// If the player's not manning the keyboard anymore, adjust everything
-			if(!(editingcode in range(1, src)) || editingcode.machine != src)
+			if( (!(editingcode in range(1, src)) && !issilicon(editingcode)) || (editingcode.machine != src && !issilicon(editingcode)))
 				if(editingcode)
 					winshow(editingcode, "Telecomms IDE", 0) // hide the window!
 				editingcode = null
@@ -189,7 +189,7 @@
 
 			var/newnet = input(usr, "Which network do you want to view?", "Comm Monitor", network) as null|text
 
-			if(newnet && usr in range(1, src))
+			if(newnet && ((usr in range(1, src) || issilicon(usr))))
 				if(length(newnet) > 15)
 					temp = "<font color = #D70B00>- FAILED: NETWORK TAG STRING TOO LENGHTLY -</font color>"
 
