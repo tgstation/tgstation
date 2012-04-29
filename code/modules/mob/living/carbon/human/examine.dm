@@ -205,9 +205,9 @@
 
 	if (src.cloneloss)
 		if (src.cloneloss < 30)
-			msg += "[t_He] [t_has] minor genetic deformities.\n"
+			msg += "[t_He] [t_has] looks slightly... unfinished?\n"
 		else
-			msg += "<B>[t_He] [t_has] severe genetic deformities.</B>\n"
+			msg += "<B>[t_He] [t_has] looks very... unfinished?</B>\n"
 
 /*	if (src.getFireLoss())
 		if (src.getFireLoss() < 30)
