@@ -349,6 +349,10 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 			if(71 to 100)
 				src.myseed = new /obj/item/seeds/killertomatoseed
 
+	else if ( istype(src.myseed, /obj/item/seeds/bluetomatoseed ))
+		del(src.myseed)
+		src.myseed = new /obj/item/seeds/bluespacetomatoseed
+
 	else if ( istype(src.myseed, /obj/item/seeds/grapeseed ))
 		del(src.myseed)
 		src.myseed = new /obj/item/seeds/greengrapeseed
