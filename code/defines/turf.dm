@@ -44,10 +44,41 @@
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
 
+	transit
+
+		var/pushdirection // push things that get caught in the transit tile this direction
+
+		north // moving to the north
+
+			pushdirection = SOUTH
+
+			one
+				icon_state = "1_south" // south because the space tile is scrolling south
+			two
+				icon_state = "2_south"
+			three
+				icon_state = "3_south"
+
+		east // moving to the east
+
+			pushdirection = WEST
+
+			one
+				icon_state = "1_west" // space tile is scrolling west
+			two
+				icon_state = "2_west"
+			three
+				icon_state = "3_west"
+
+
+
+
+
 /turf/space/New()
 //	icon = 'space.dmi'
-	..()
-	icon_state = "[rand(1,25)]"
+	if(!istype(src, /turf/space/transit))
+		..()
+		icon_state = "[rand(1,25)]"
 
 /turf/simulated
 	name = "station"
@@ -91,6 +122,7 @@
 	icon = 'shuttle.dmi'
 	thermal_conductivity = 0.05
 	heat_capacity = 0
+	layer = 2.1
 
 /turf/simulated/shuttle/wall
 	name = "wall"
@@ -136,13 +168,11 @@
 				if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
 					L.Add(t)
 		return L
-
 	Distance(turf/t)
 		if(get_dist(src,t) == 1)
 			var/cost = (src.x - t.x) * (src.x - t.x) + (src.y - t.y) * (src.y - t.y)
 			cost *= (pathweight+t.pathweight)/2
 			return cost
-
 		else
 			return get_dist(src,t)
 

@@ -186,7 +186,7 @@
 				//	a.hallucinate(src)
 				if(!handling_hal && hallucination > 20)
 					spawn handle_hallucinations() //The not boring kind!
- 				hallucination = max(hallucination - 2, 0)
+				hallucination = max(hallucination - 2, 0) // A more compact way of doing it. DMTG
 				//if(health < 0)
 				//	for(var/obj/a in hallucinations)
 				//		del a

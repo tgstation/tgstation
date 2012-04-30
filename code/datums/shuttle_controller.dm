@@ -5,14 +5,15 @@
 // and the time before it leaves again
 #define SHUTTLEARRIVETIME 600		// 10 minutes = 600 seconds
 #define SHUTTLELEAVETIME 180		// 3 minutes = 180 seconds
+#define SHUTTLETRANSITTIME 120		// 2 minutes = 120 seconds
 
 var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 
 datum/shuttle_controller
 	var
-		location = 0 //0 = somewhere far away, 1 = at SS13, 2 = returned from SS13
+		location = 0 //0 = somewhere far away (in spess), 1 = at SS13, 2 = returned from SS13
 		online = 0
-		direction = 1 //-1 = going back to central command, 1 = going back to SS13
+		direction = 1 //-1 = going back to central command, 1 = going to SS13, 2 = in transit to centcom (not recalled)
 
 		endtime			// timeofday that shuttle arrives
 		timelimit //important when the shuttle gets called for more than shuttlearrivetime
@@ -64,7 +65,7 @@ datum/shuttle_controller
 	proc/timeleft()
 		if(online)
 			var/timeleft = round((endtime - world.timeofday)/10 ,1)
-			if(direction == 1)
+			if(direction == 1 || direction == 2)
 				return timeleft
 			else
 				return SHUTTLEARRIVETIME-timeleft
@@ -102,6 +103,47 @@ datum/shuttle_controller
 		//			sound_siren = 1
 			switch(location)
 				if(0)
+
+					/* --- Shuttle is in transit to Central Command from SS13 --- */
+					if(direction == 2)
+						if(timeleft>0)
+							return 0
+
+						/* --- Shuttle has arrived at Centrcal Command --- */
+						else
+							// turn off the star spawners
+							/*
+							for(var/obj/effect/starspawner/S in world)
+								S.spawning = 0
+							*/
+
+							location = 2
+
+							//main shuttle
+							var/area/start_location = locate(/area/shuttle/escape/transit)
+							var/area/end_location = locate(/area/shuttle/escape/centcom)
+
+							start_location.move_contents_to(end_location, null, NORTH)
+
+							//pods
+							start_location = locate(/area/shuttle/escape_pod1/transit)
+							end_location = locate(/area/shuttle/escape_pod1/centcom)
+							start_location.move_contents_to(end_location, null, NORTH)
+							start_location = locate(/area/shuttle/escape_pod2/transit)
+							end_location = locate(/area/shuttle/escape_pod2/centcom)
+							start_location.move_contents_to(end_location, null, NORTH)
+							start_location = locate(/area/shuttle/escape_pod3/transit)
+							end_location = locate(/area/shuttle/escape_pod3/centcom)
+							start_location.move_contents_to(end_location, null, NORTH)
+							start_location = locate(/area/shuttle/escape_pod5/transit)
+							end_location = locate(/area/shuttle/escape_pod5/centcom)
+							start_location.move_contents_to(end_location, null, EAST)
+
+							online = 0
+
+							return 1
+
+					/* --- Shuttle has docked centcom after being recalled --- */
 					if(timeleft>timelimit)
 						online = 0
 						direction = 1
@@ -114,6 +156,7 @@ datum/shuttle_controller
 
 						return 0
 
+					/* --- Shuttle has docked with the station - begin countdown to transit --- */
 					else if(timeleft <= 0)
 						location = 1
 						var/area/start_location = locate(/area/shuttle/escape/centcom)
@@ -159,16 +202,133 @@ datum/shuttle_controller
 					if(timeleft>0)
 						return 0
 
+					/* --- Shuttle leaves the station, enters transit --- */
 					else
-						departed = 1
-						location = 2
-						var/area/start_location = locate(/area/shuttle/escape/station)
-						var/area/end_location = locate(/area/shuttle/escape/centcom)
 
-						start_location.move_contents_to(end_location)
-						online = 0
+						// Turn on the star effects
+
+						/* // kinda buggy atm, i'll fix this later
+						for(var/obj/effect/starspawner/S in world)
+							if(!S.spawning)
+								spawn() S.startspawn()
+						*/
+
+						departed = 1 // It's going!
+						location = 0 // in deep space
+						direction = 2 // heading to centcom
+
+						//main shuttle
+						var/area/start_location = locate(/area/shuttle/escape/station)
+						var/area/end_location = locate(/area/shuttle/escape/transit)
+
+						settimeleft(SHUTTLETRANSITTIME)
+						start_location.move_contents_to(end_location, null, NORTH)
+
+						for(var/obj/machinery/door/D in world)
+							if( get_area(D) == end_location )
+								spawn(0)
+									D.close()
+
+						//pods
+						start_location = locate(/area/shuttle/escape_pod1/station)
+						end_location = locate(/area/shuttle/escape_pod1/transit)
+						start_location.move_contents_to(end_location, null, NORTH)
+						for(var/obj/machinery/door/D in world)
+							if( get_area(D) == end_location )
+								spawn(0)
+									D.close()
+
+						start_location = locate(/area/shuttle/escape_pod2/station)
+						end_location = locate(/area/shuttle/escape_pod2/transit)
+						start_location.move_contents_to(end_location, null, NORTH)
+						for(var/obj/machinery/door/D in world)
+							if( get_area(D) == end_location )
+								spawn(0)
+									D.close()
+
+						start_location = locate(/area/shuttle/escape_pod3/station)
+						end_location = locate(/area/shuttle/escape_pod3/transit)
+						start_location.move_contents_to(end_location, null, NORTH)
+						for(var/obj/machinery/door/D in world)
+							if( get_area(D) == end_location )
+								spawn(0)
+									D.close()
+
+						start_location = locate(/area/shuttle/escape_pod5/station)
+						end_location = locate(/area/shuttle/escape_pod5/transit)
+						start_location.move_contents_to(end_location, null, EAST)
+						for(var/obj/machinery/door/D in world)
+							if( get_area(D) == end_location )
+								spawn(0)
+									D.close()
+
+
+						captain_announce("The Emergency Shuttle has left the station. Estimate [timeleft()/60] minutes until the shuttle docks at Central Command.")
+
+						// Some aesthetic turbulance shaking
+						for(var/mob/M in end_location)
+							if(M.client)
+								spawn()
+									if(M.buckled)
+										shake_camera(M, 4, 1) // buckled, not a lot of shaking
+									else
+										shake_camera(M, 10, 2) // unbuckled, HOLY SHIT SHAKE THE ROOM
 
 						return 1
 
 				else
 					return 1
+
+
+/*
+	Some slapped-together star effects for maximum spess immershuns. Basically consists of a
+	spawner, an ender, and bgstar. Spawners create bgstars, bgstars shoot off into a direction
+	until they reach a starender.
+*/
+
+/obj/effect/bgstar
+	name = "star"
+	var/speed = 10
+	var/direction = SOUTH
+	layer = 2 // TURF_LAYER
+
+	New()
+		..()
+		pixel_x += rand(-2,30)
+		pixel_y += rand(-2,30)
+		var/starnum = pick("1", "1", "1", "2", "3", "4")
+
+		icon_state = "star"+starnum
+
+		speed = rand(2, 5)
+
+	proc/startmove()
+
+		while(src)
+			sleep(speed)
+			step(src, direction)
+			for(var/obj/effect/starender/E in loc)
+				del(src)
+
+
+/obj/effect/starender
+	invisibility = 101
+
+/obj/effect/starspawner
+	invisibility = 101
+	var/spawndir = SOUTH
+	var/spawning = 0
+
+	West
+		spawndir = WEST
+
+	proc/startspawn()
+		spawning = 1
+		while(spawning)
+			sleep(rand(2, 30))
+			var/obj/effect/bgstar/S = new/obj/effect/bgstar(locate(x,y,z))
+			S.direction = spawndir
+			spawn()
+				S.startmove()
+
+
