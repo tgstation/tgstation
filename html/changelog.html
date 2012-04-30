@@ -1,13 +1,26 @@
 ﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <title>/tg/ Station 13 Changelog</title>
+  <title>Baystation 12 Changelog</title>
   <link rel="stylesheet" type="text/css" href="changelog.css">
-  <script type='text/javascript'></script>  
+  <script type='text/javascript'>
+  
+	function changeText(tagID, newText, linkTagID){
+		var tag = document.getElementById(tagID);
+		tag.innerHTML = newText;
+		var linkTag = document.getElementById(linkTagID);
+		linkTag.removeAttribute("href");
+		linkTag.removeAttribute("onclick");
+	}
+	
+  </script>  
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 
 <body>
+<!-- 
+Header Section 
+-->
 <table align='center' width='650'><tr><td>
 <table align='center' class="top">
 	<tr>
@@ -24,7 +37,31 @@
 	</tr>
 </table>
 
-<iframe width='100%' height='500px' src="http://baystation12.net/wiki/index.php?title=Changelog&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+<!-- 
+Changelog Section 
+-->
+
+<!-- NOTE TO UPDATERS!! Please only list things which are important to players. 
+Stuff which is in development and not yet visible to players or just code related 
+(ie. code improvements for expandability, etc.) should not be listed here. They 
+should be listed in the changelog upon commit though. Thanks. -->
+
+<!-- To take advantage of the pretty new format (well it was new when I wrote this anyway), open the "add-to-changelog.html" file in any browser and add the stuff and then generate the html code and paste it here -->
+<div class="commit sansserif">
+	<h2 class="date">30th April 2012</h2>
+	<h3 class="author">Erthilo updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Switched to /tg/'s changelog format! Previous updates can be found here: http://baystation12.net/wiki/index.php/Changelog</li>
+		<li class="rscadd">New green alt satchel for Botanists.</li>
+		<li class="rscadd">Cyborgs can now view crew manifest and also state laws.</li>
+		<li class="imageadd">New ATM sprites.</li>
+		<li class="tweak">Changes year to 2556 on medical/security records.</li>
+	</ul>
+</div>
+
+<!-- 
+Credits Section 
+-->
 
 <b>/tg/ station 13 Development Team</b>
 <table align='center' class="top">
