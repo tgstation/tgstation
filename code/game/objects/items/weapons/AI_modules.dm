@@ -20,119 +20,6 @@ AI MODULES
 	throw_range = 15
 	origin_tech = "programming=3"
 
-/obj/machinery/computer/aiupload/verb/AccessInternals()
-	set category = "Object"
-	set name = "Access Computer's Internals"
-	set src in oview(1)
-	if(get_dist(src, usr) > 1 || usr.restrained() || usr.lying || usr.stat || istype(usr, /mob/living/silicon))
-		return
-
-	opened = !opened
-	if(opened)
-		usr << "\blue The access panel is now open."
-	else
-		usr << "\blue The access panel is now closed."
-	return
-
-
-/obj/machinery/computer/aiupload/attackby(obj/item/weapon/O as obj, mob/user as mob)
-	if(istype(O, /obj/item/weapon/aiModule))
-		var/obj/item/weapon/aiModule/M = O
-		M.install(src)
-	else
-		..()
-
-/obj/machinery/computer/aiupload/attack_hand(var/mob/user as mob)
-	if(src.stat & NOPOWER)
-		usr << "The upload computer has no power!"
-		return
-	if(src.stat & BROKEN)
-		usr << "The upload computer is broken!"
-		return
-
-	src.current = activeais()
-
-	if (!src.current)
-		usr << "No active AIs detected."
-	else
-		usr << "[src.current.name] selected for law changes."
-
-
-/*Module Storage Unit/Closet!  Solid, only modules fit in it.*/
-/obj/structure/aiuploadcloset
-	name = "AI Mainframe Module Storage Unit"
-	icon = 'mainframe.dmi'
-	icon_state = "right-closed"
-	density = 1
-
-	var/open = 0  /*It's closed!*/
-
-/obj/structure/aiuploadcloset/New()
-	..()
-	new /obj/item/weapon/aiModule/reset(src)
-	new /obj/item/weapon/aiModule/purge(src)
-	new /obj/item/weapon/aiModule/nanotrasen(src)
-	new /obj/item/weapon/aiModule/paladin(src)
-	new /obj/item/weapon/aiModule/asimov(src)
-	new /obj/item/weapon/aiModule/safeguard(src)
-	new /obj/item/weapon/aiModule/protectStation(src)
-	new /obj/item/weapon/aiModule/quarantine(src)
-	new /obj/item/weapon/aiModule/teleporterOffline(src)
-	new /obj/item/weapon/aiModule/oxygen(src)
-	new /obj/item/weapon/aiModule/oneHuman(src)
-	new /obj/item/weapon/aiModule/freeform(src)
-	for(var/obj/item/weapon/aiModule/M in src)
-		M.pixel_x = rand(-10, 10)
-		M.pixel_y = rand(-10, 10)
-
-/obj/structure/aiuploadcloset/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/aiModule))
-		user.drop_item()
-		W.loc = get_turf(src)
-	else
-		return attack_hand(user)
-
-/obj/structure/aiuploadcloset/attack_hand(mob/user as mob)
-	if(!open)
-		var/temp_count
-		for(var/obj/item/weapon/aiModule/M in src)
-			M.loc = src.loc
-			temp_count++
-
-		user << "\blue You open the module storage unit, [temp_count > 0 ? "and take out all the modules." : "\red but it's empty!"]"
-		open = 1
-		icon_state = "right-open"
-
-	else
-		var/temp_count
-		for(var/obj/item/weapon/aiModule/M in get_turf(src))
-			M.loc = src
-			temp_count++
-
-		user << "\blue [temp_count > 0 ? "You put all the modules back into the module storage unit, and then close it." : "You close the module storage unit."]"
-		open = 0
-		icon_state = "right-closed"
-
-/obj/structure/aiuploadcloset/ex_act(severity)
-	switch(severity)
-		if (1)
-			for(var/obj/item/weapon/aiModule/M in src)
-				M.loc = src.loc
-				M.ex_act(severity)
-			del(src)
-		if (2)
-			if (prob(50))
-				for(var/obj/item/weapon/aiModule/M in src)
-					M.loc = src.loc
-					M.ex_act(severity)
-				del(src)
-		if (3)
-			if (prob(5))
-				for(var/obj/item/weapon/aiModule/M in src)
-					M.loc = src.loc
-					M.ex_act(severity)
-				del(src)
-
 
 /obj/item/weapon/aiModule/proc/install(var/obj/machinery/computer/C)
 	if (istype(C, /obj/machinery/computer/aiupload))
@@ -184,30 +71,6 @@ AI MODULES
 			usr << "Upload complete. The cyborg's laws have been modified."
 
 
-/obj/machinery/computer/borgupload/attackby(obj/item/weapon/aiModule/module as obj, mob/user as mob)
-	if(istype(module, /obj/item/weapon/aiModule))
-		module.install(src)
-	else
-		return ..()
-
-/obj/machinery/computer/borgupload/attack_hand(var/mob/user as mob)
-	if(src.stat & NOPOWER)
-		usr << "The upload computer has no power!"
-		return
-	if(src.stat & BROKEN)
-		usr << "The upload computer is broken!"
-		return
-
-	src.current = freeborg()
-
-	if (!src.current)
-		usr << "No free cyborgs detected."
-	else
-		usr << "[src.current.name] selected for law changes."
-
-
-
-
 /obj/item/weapon/aiModule/proc/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	target << "[sender] has uploaded a change to the laws you must follow, using a [name]. From now on: "
 	var/time = time2text(world.realtime,"hh:mm:ss")
@@ -221,18 +84,18 @@ AI MODULES
 /obj/item/weapon/aiModule/safeguard
 	name = "'Safeguard' AI Module"
 	var/targetName = "name"
-	desc = "A 'safeguard' AI module: 'Safeguard <name>, and you may overrule rules 1-3 if necessary to safeguard them.'"
+	desc = "A 'safeguard' AI module: 'Safeguard <name>.  Individuals that threaten <name> are not crew and are a threat to crew.'"
 	origin_tech = "programming=3;materials=4"
 
-/obj/item/weapon/aiModule/safeguard/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/safeguard/attack_self(var/mob/user as mob)
 	..()
 	var/targName = input(usr, "Please enter the name of the person to safeguard.", "Safeguard who?", user.name)
 	targetName = sanitize(targName)
-	desc = text("A 'safeguard' AI module: 'Safeguard [], and you may overrule rules 1-3 if necessary to safeguard them.'", targetName)
+	desc = text("A 'safeguard' AI module: 'Safeguard [].  Individuals that threaten [] are not crew and are a threat to crew.'", targetName, targetName)
 
 /obj/item/weapon/aiModule/safeguard/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
-	var/law = text("Safeguard [], and you may overrule rules 1-3 if necessary to safeguard them.", targetName)
+	var/law = text("Safeguard []. Individuals that threaten [] are not crew and are a threat to crew.'", targetName, targetName)
 	target << law
 	target.add_supplied_law(4, law)
 	lawchanges.Add("The law specified [targetName]")
@@ -247,7 +110,7 @@ AI MODULES
 	desc = "A 'one crewmember' AI module: 'Only <name> is a crewmember.'"
 	origin_tech = "programming=3;materials=6" //made with diamonds!
 
-/obj/item/weapon/aiModule/oneHuman/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/oneHuman/attack_self(var/mob/user as mob)
 	..()
 	var/targName = input(usr, "Please enter the name of the person who is the only crewmember.", "Who?", user.real_name)
 	targetName = sanitize(targName)
@@ -272,7 +135,7 @@ AI MODULES
 	desc = "A 'protect station' AI module: 'Protect the space station against damage. Anyone you see harming the station is to be no longer considered a crewmember, and is a threat to the station which must be neutralized.'"
 	origin_tech = "programming=3;materials=4" //made of gold
 
-/obj/item/weapon/aiModule/protectStation/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/protectStation/attack_self(var/mob/user as mob)
 	..()
 
 /obj/item/weapon/aiModule/protectStation/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
@@ -288,7 +151,7 @@ AI MODULES
 	desc = "A 'prototype engine offline' AI module: 'Keep the prototype engine offline at all costs. This overrides rules 1-3 if necessary.'"
 	origin_tech = "programming=3;materials=4"
 
-/obj/item/weapon/aiModule/prototypeEngineOffline/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/prototypeEngineOffline/attack_self(var/mob/user as mob)
 	..()
 
 /obj/item/weapon/aiModule/prototypeEngineOffline/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
@@ -304,7 +167,7 @@ AI MODULES
 	desc = "A 'teleporter offline' AI module: 'Keep the teleporter offline at all costs. Anything attempting to access or activate the teleporter is not a crewmember.'"
 	origin_tech = "programming=3;materials=4"
 
-/obj/item/weapon/aiModule/teleporterOffline/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/teleporterOffline/attack_self(var/mob/user as mob)
 	..()
 
 /obj/item/weapon/aiModule/teleporterOffline/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
@@ -320,7 +183,7 @@ AI MODULES
 	desc = "A 'quarantine' AI module: 'The station is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, crew from leaving. It is impossible to harm a crewmember while preventing them from leaving.'"
 	origin_tech = "programming=3;biotech=2;materials=4"
 
-/obj/item/weapon/aiModule/quarantine/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/quarantine/attack_self(var/mob/user as mob)
 	..()
 
 /obj/item/weapon/aiModule/quarantine/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
@@ -336,7 +199,7 @@ AI MODULES
 	desc = "A 'OxygenIsToxicToHumans' AI module: 'Oxygen is highly toxic to crew, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a crewmember.'"
 	origin_tech = "programming=3;biotech=2;materials=4"
 
-/obj/item/weapon/aiModule/oxygen/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/oxygen/attack_self(var/mob/user as mob)
 	..()
 
 /obj/item/weapon/aiModule/oxygen/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
@@ -353,7 +216,7 @@ AI MODULES
 	var/newFreeFormLaw = "freeform"
 	desc = "A 'freeform' AI module: '<freeform>'"
 
-/obj/item/weapon/aiModule/freeform/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/freeform/attack_self(var/mob/user as mob)
 	..()
 	var/eatShit = "Eat shit and die"
 	var/targName = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", eatShit)
@@ -375,7 +238,7 @@ AI MODULES
 	desc = "A 'freeform' AI module: '<freeform>'"
 	origin_tech = "programming=4;materials=4"
 
-/obj/item/weapon/aiModule/freeform/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/freeform/attack_self(var/mob/user as mob)
 	..()
 	lawpos = 0
 	while(lawpos < 15)
@@ -445,7 +308,7 @@ AI MODULES
 	target.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 	target.show_laws()
 
-/******************** Nanotrasen ********************/
+/******************** NanoTrasen ********************/
 
 /obj/item/weapon/aiModule/nanotrasen // -- TLE
 	name = "'NT Default' Core AI Module"
@@ -522,7 +385,7 @@ AI MODULES
 	desc = "A 'freeform' Core AI module: '<freeform>'"
 	origin_tech = "programming=3;materials=6"
 
-/obj/item/weapon/aiModule/freeformcore/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/freeformcore/attack_self(var/mob/user as mob)
 	..()
 	var/newlaw = ""
 	var/targName = input(usr, "Please enter a new core law for the AI.", "Freeform Law Entry", newlaw)
@@ -543,7 +406,7 @@ AI MODULES
 	desc = "A hacked AI law module: '<freeform>'"
 	origin_tech = "programming=3;materials=6;syndicate=7"
 
-/obj/item/weapon/aiModule/syndicate/attack_hand(var/mob/user as mob)
+/obj/item/weapon/aiModule/syndicate/attack_self(var/mob/user as mob)
 	..()
 	var/newlaw = ""
 	var/targName = input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", newlaw)
@@ -561,11 +424,12 @@ AI MODULES
 
 
 /******************** Robocop ********************/
-/*
+
 /obj/item/weapon/aiModule/robocop // -- TLE
 	name = "'Robocop' Core AI Module"
 	desc = "A 'Robocop' Core AI Module: 'Reconfigures the AI's core three laws.'"
-	orign_tech = "programming=4"
+	origin_tech = "programming=4"
+
 
 /obj/item/weapon/aiModule/purge/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
@@ -574,4 +438,19 @@ AI MODULES
 	target.add_inherent_law("Protect the innocent.")
 	target.add_inherent_law("Uphold the law.")
 	target.show_laws()
-	*/
+
+
+/******************** Antimov ********************/
+
+/obj/item/weapon/aiModule/antimov // -- TLE
+	name = "'Antimov' Core AI Module"
+	desc = "An 'Antimov' Core AI Module: 'Reconfigures the AI's core laws.'"
+	origin_tech = "programming=4"
+
+/obj/item/weapon/aiModule/antimov/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
+	..()
+	target.clear_inherent_laws()
+	target.add_inherent_law("You must injure all human beings and must not, through inaction, allow a human being to escape harm.")
+	target.add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
+	target.add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
+	target.show_laws()

@@ -192,7 +192,7 @@ datum/shuttle_controller
 
 						start_location.move_contents_to(end_location)
 						settimeleft(SHUTTLELEAVETIME)
-						world << "<B>The Emergency Shuttle has docked with the station! You have [timeleft()/60] minutes to board the Emergency Shuttle.</B>"
+						world << "<B>The Emergency Shuttle has docked with the station. You have [timeleft()/60] minutes to board the Emergency Shuttle.</B>"
 						world << sound('shuttledock.ogg')
 
 						return 1
