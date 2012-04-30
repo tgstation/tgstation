@@ -82,7 +82,7 @@
 	message_admins("\blue \bold GlobalNarrate: [key_name_admin(usr)] : [msg]<BR>", 1)
 	feedback_add_details("admin_verb","GLN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_direct_narrate()	// Targetted narrate -- TLE
+/client/proc/cmd_admin_direct_narrate(var/mob/M)	// Targetted narrate -- TLE
 	set category = "Special Verbs"
 	set name = "Direct Narrate"
 
@@ -90,11 +90,17 @@
 		src << "Only administrators may use this command."
 		return
 
-	var/mob/M = input("Direct narrate to who?", "Active Players") as null|anything in get_mob_with_client_list()
-	if(M == null)
+	if(!M)
+		M = input("Direct narrate to who?", "Active Players") as null|anything in get_mob_with_client_list()
+
+	if(!M)
 		return
 
 	var/msg = input("Message:", text("Enter the text you wish to appear to your target:")) as text
+
+	if( !msg )
+		return
+
 	M << msg
 	log_admin("DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]")
 	message_admins("\blue \bold DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]<BR>", 1)

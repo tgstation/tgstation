@@ -65,6 +65,75 @@ var/global/BSACooldown = 0
 			alert("You cannot perform this action. You must be of a higher administrative rank!")
 			return
 
+
+	if(href_list["simplemake"])
+
+		if(!href_list["mob"])
+			usr << "Invalid mob"
+			return
+
+		var/mob/M = locate(href_list["mob"])
+
+		if(!M || !ismob(M))
+			usr << "Cannot find mob"
+			return
+
+		var/delmob = 0
+		var/option = alert("Delete old mob?","Message","Yes","No","Cancel")
+		if(option == "Cancel")
+			return
+		if(option == "Yes")
+			delmob = 1
+
+		switch(href_list["simplemake"])
+			if("observer")
+				M.change_mob_type( /mob/dead/observer , null, null, delmob)
+			if("drone")
+				M.change_mob_type( /mob/living/carbon/alien/humanoid/drone , null, null, delmob)
+			if("hunter")
+				M.change_mob_type( /mob/living/carbon/alien/humanoid/hunter , null, null, delmob)
+			if("queen")
+				M.change_mob_type( /mob/living/carbon/alien/humanoid/queen , null, null, delmob)
+			if("sentinel")
+				M.change_mob_type( /mob/living/carbon/alien/humanoid/sentinel , null, null, delmob)
+			if("larva")
+				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob)
+			if("human")
+				M.change_mob_type( /mob/living/carbon/human , null, null, delmob)
+			if("metroid")
+				M.change_mob_type( /mob/living/carbon/metroid , null, null, delmob)
+			if("adultmetroid")
+				M.change_mob_type( /mob/living/carbon/metroid/adult , null, null, delmob)
+			if("monkey")
+				M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob)
+			if("robot")
+				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob)
+			if("cat")
+				M.change_mob_type( /mob/living/simple_animal/cat , null, null, delmob)
+			if("runtime")
+				M.change_mob_type( /mob/living/simple_animal/cat/Runtime , null, null, delmob)
+			if("corgi")
+				M.change_mob_type( /mob/living/simple_animal/corgi , null, null, delmob)
+			if("ian")
+				M.change_mob_type( /mob/living/simple_animal/corgi/Ian , null, null, delmob)
+			if("crab")
+				M.change_mob_type( /mob/living/simple_animal/crab , null, null, delmob)
+			if("coffee")
+				M.change_mob_type( /mob/living/simple_animal/crab/Coffee , null, null, delmob)
+			if("parrot")
+				M.change_mob_type( /mob/living/simple_animal/parrot , null, null, delmob)
+			if("drprofessor")
+				M.change_mob_type( /mob/living/simple_animal/parrot/DrProfessor , null, null, delmob)
+			if("constructarmoured")
+				M.change_mob_type( /mob/living/simple_animal/constructarmoured , null, null, delmob)
+			if("constructbuilder")
+				M.change_mob_type( /mob/living/simple_animal/constructbuilder , null, null, delmob)
+			if("constructwraith")
+				M.change_mob_type( /mob/living/simple_animal/constructwraith , null, null, delmob)
+			if("shade")
+				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob)
+
+
 	/////////////////////////////////////new ban stuff
 	if(href_list["unbanf"])
 		var/banfolder = href_list["unbanf"]
@@ -795,6 +864,11 @@ var/global/BSACooldown = 0
 
 	if (href_list["sendtoprison"])
 		if ((src.rank in list( "Moderator", "Admin Candidate", "Temporary Admin", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+
+			var/confirm = alert(usr, "Send to admin prison for the round?", "Message", "Yes", "No")
+			if(confirm != "Yes")
+				return
+
 			var/mob/M = locate(href_list["sendtoprison"])
 			if (ismob(M))
 				if(istype(M, /mob/living/silicon/ai))
@@ -864,6 +938,11 @@ var/global/BSACooldown = 0
 
 	if (href_list["tdome1"])
 		if ((src.rank in list( "Admin Candidate", "Temporary Admin", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+
+			var/confirm = alert(usr, "Confirm?", "Message", "Yes", "No")
+			if(confirm != "Yes")
+				return
+
 			var/mob/M = locate(href_list["tdome1"])
 			if (ismob(M))
 				if(istype(M, /mob/living/silicon/ai))
@@ -890,6 +969,11 @@ var/global/BSACooldown = 0
 
 	if (href_list["tdome2"])
 		if ((src.rank in list( "Admin Candidate", "Temporary Admin", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+
+			var/confirm = alert(usr, "Confirm?", "Message", "Yes", "No")
+			if(confirm != "Yes")
+				return
+
 			var/mob/M = locate(href_list["tdome2"])
 			if (ismob(M))
 				if(istype(M, /mob/living/silicon/ai))
@@ -916,6 +1000,11 @@ var/global/BSACooldown = 0
 
 	if (href_list["tdomeadmin"])
 		if ((src.rank in list( "Admin Candidate", "Temporary Admin", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+
+			var/confirm = alert(usr, "Confirm?", "Message", "Yes", "No")
+			if(confirm != "Yes")
+				return
+
 			var/mob/M = locate(href_list["tdomeadmin"])
 			if (ismob(M))
 				if(istype(M, /mob/living/silicon/ai))
@@ -931,6 +1020,11 @@ var/global/BSACooldown = 0
 
 	if (href_list["tdomeobserve"])
 		if ((src.rank in list( "Admin Candidate", "Temporary Admin", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+
+			var/confirm = alert(usr, "Confirm?", "Message", "Yes", "No")
+			if(confirm != "Yes")
+				return
+
 			var/mob/M = locate(href_list["tdomeobserve"])
 			if (ismob(M))
 				if(istype(M, /mob/living/silicon/ai))
@@ -1231,6 +1325,11 @@ var/global/BSACooldown = 0
 
 	if (href_list["getmob"])
 		if(rank in list( "Trial Admin", "Badmin", "Game Admin", "Game Master"))
+
+			var/confirm = alert(usr, "Confirm?", "Message", "Yes", "No")
+			if(confirm != "Yes")
+				return
+
 			var/mob/M = locate(href_list["getmob"])
 			usr.client.Getmob(M)
 		else
@@ -2143,7 +2242,7 @@ var/global/BSACooldown = 0
 	if (M.client)
 		if(!istype(M, /mob/new_player))
 			body += "<br><br>"
-			body += "<b>Transformations:</b>"
+			body += "<b>Transformation:</b>"
 			body += "<br>"
 
 			//Monkey
@@ -2167,6 +2266,33 @@ var/global/BSACooldown = 0
 				body += "<A href='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> | "
 				body += "<A href='?src=\ref[src];makemetroid=\ref[M]'>Make Metroid</A> "
 
+			body += "<br><br>"
+			body += "<b>Rudimentary transformation:</b><font size=2><br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>"
+			body += "<A href='?src=\ref[src];simplemake=observer;mob=\ref[M]'>Observer</A> | "
+			body += "\[ Alien: <A href='?src=\ref[src];simplemake=drone;mob=\ref[M]'>Drone</A>, "
+			body += "<A href='?src=\ref[src];simplemake=hunter;mob=\ref[M]'>Hunter</A>, "
+			body += "<A href='?src=\ref[src];simplemake=queen;mob=\ref[M]'>Queen</A>, "
+			body += "<A href='?src=\ref[src];simplemake=sentinel;mob=\ref[M]'>Sentinel</A>, "
+			body += "<A href='?src=\ref[src];simplemake=larva;mob=\ref[M]'>Larva</A> \] "
+			body += "<A href='?src=\ref[src];simplemake=human;mob=\ref[M]'>Human</A> "
+			body += "\[ Metroid: <A href='?src=\ref[src];simplemake=metroid;mob=\ref[M]'>Baby</A>, "
+			body += "<A href='?src=\ref[src];simplemake=adultmetroid;mob=\ref[M]'>Adult</A> \] "
+			body += "<A href='?src=\ref[src];simplemake=monkey;mob=\ref[M]'>Monkey</A> | "
+			body += "<A href='?src=\ref[src];simplemake=robot;mob=\ref[M]'>Cyborg</A> | "
+			body += "<A href='?src=\ref[src];simplemake=cat;mob=\ref[M]'>Cat</A> | "
+			body += "<A href='?src=\ref[src];simplemake=runtime;mob=\ref[M]'>Runtime</A> | "
+			body += "<A href='?src=\ref[src];simplemake=corgi;mob=\ref[M]'>Corgi</A> | "
+			body += "<A href='?src=\ref[src];simplemake=ian;mob=\ref[M]'>Ian</A> | "
+			body += "<A href='?src=\ref[src];simplemake=crab;mob=\ref[M]'>Crab</A> | "
+			body += "<A href='?src=\ref[src];simplemake=coffee;mob=\ref[M]'>Coffee</A> | "
+			//body += "<A href='?src=\ref[src];simplemake=parrot;mob=\ref[M]'>Parrot</A> | "
+			//body += "<A href='?src=\ref[src];simplemake=drprofessor;mob=\ref[M]'>DrProfessor</A> | "
+			body += "\[ Construct: <A href='?src=\ref[src];simplemake=constructarmoured;mob=\ref[M]'>Armoured</A> , "
+			body += "<A href='?src=\ref[src];simplemake=constructbuilder;mob=\ref[M]'>Builder</A> , "
+			body += "<A href='?src=\ref[src];simplemake=constructwraith;mob=\ref[M]'>Wraith</A> \] "
+			body += "<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>"
+			body += "<br>"
+
 	if (M.client)
 		body += "<br><br>"
 		body += "<b>Other actions:</b>"
@@ -2180,7 +2306,7 @@ var/global/BSACooldown = 0
 	body += "<br>"
 	body += "</body></html>"
 
-	usr << browse(body, "window=adminplayeropts;size=550x375")
+	usr << browse(body, "window=adminplayeropts;size=550x515")
 	feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

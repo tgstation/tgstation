@@ -142,12 +142,15 @@ proc/process_ghost_teleport_locs()
 	music = "music/escape.ogg"
 
 /area/shuttle/escape/station
+	name = "Emergency Shuttle Station"
 	icon_state = "shuttle2"
 
 /area/shuttle/escape/centcom
+	name = "Emergency Shuttle Centcom"
 	icon_state = "shuttle"
 
 /area/shuttle/escape/transit // the area to pass through for 3 minute transit
+	name = "Emergency Shuttle Transit"
 	icon_state = "shuttle"
 
 /area/shuttle/escape_pod1
