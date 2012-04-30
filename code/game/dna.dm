@@ -166,16 +166,17 @@
 /////////////////////////// DNA HELPER-PROCS
 /proc/getleftblocks(input,blocknumber,blocksize)
 	var/string
-	string = copytext(input,1,((blocksize*blocknumber)-(blocksize-1)))
+
 	if (blocknumber > 1)
+		string = copytext(input,1,((blocksize*blocknumber)-(blocksize-1)))
 		return string
 	else
 		return null
 
 /proc/getrightblocks(input,blocknumber,blocksize)
 	var/string
-	string = copytext(input,blocksize*blocknumber+1)
 	if (blocknumber < (length(input)/blocksize))
+		string = copytext(input,blocksize*blocknumber+1,length(input)+1)
 		return string
 	else
 		return null

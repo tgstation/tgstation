@@ -16,7 +16,6 @@
 		build_icon()
 
 	process()
-		..()
 		if(!(NOPOWER|BROKEN))
 			return
 
@@ -140,8 +139,9 @@
 				//Make sure they actually HAVE a cell, now that they can get in while powerless. --NEO
 				return
 			usr.pulling = null
-			usr.client.perspective = EYE_PERSPECTIVE
-			usr.client.eye = src
+			if(usr && usr.client)
+				usr.client.perspective = EYE_PERSPECTIVE
+				usr.client.eye = src
 			usr.loc = src
 			src.occupant = usr
 			/*for(var/obj/O in src)

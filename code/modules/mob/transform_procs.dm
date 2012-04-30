@@ -190,7 +190,8 @@
 	O.invisibility = 0
 	O.name = "Cyborg"
 	O.real_name = "Cyborg"
-	O.lastKnownIP = client.address ? client.address : null
+	if(client)
+		O.lastKnownIP = client.address ? client.address : null
 	if (mind)
 		mind.transfer_to(O)
 		if (mind.assigned_role == "Cyborg")

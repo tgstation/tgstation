@@ -30,15 +30,6 @@
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
 
 
-/obj/machinery/computer/atmos_alert
-	name = "Atmospheric Alert Computer"
-	desc = "Used to access the station's atmospheric sensors."
-	icon_state = "alert:0"
-	var/list/priority_alarms = list()
-	var/list/minor_alarms = list()
-	var/receive_frequency = 1437
-
-
 /obj/machinery/computer/atmosphere
 	name = "atmos"
 	desc = "A computer for Atmospherics."

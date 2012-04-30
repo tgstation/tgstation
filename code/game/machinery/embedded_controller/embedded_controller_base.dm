@@ -62,7 +62,6 @@ obj/machinery/embedded_controller
 
 		update_icon()
 		src.updateDialog()
-		..()
 
 	radio
 		var/frequency

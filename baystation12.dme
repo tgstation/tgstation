@@ -530,6 +530,7 @@
 #include "code\game\machinery\computer\aifixer.dm"
 #include "code\game\machinery\computer\arcade.dm"
 #include "code\game\machinery\computer\atmos.dm"
+#include "code\game\machinery\computer\atmos_alert.dm"
 #include "code\game\machinery\computer\buildandrepair.dm"
 #include "code\game\machinery\computer\camera_monitor.dm"
 #include "code\game\machinery\computer\cloning.dm"
