@@ -17,6 +17,8 @@
 		fuel_injectors["Two"] = new/list
 		fuel_injectors.Add("Three")
 		fuel_injectors["Three"] = new/list
+		fuel_injectors.Add("SCRAM")
+		fuel_injectors["SCRAM"] = new/list
 		spawn(0)
 			for(var/obj/machinery/rust/fuel_injector/Injector in range(50,src))
 				if(Injector.stage in fuel_injectors)
@@ -133,7 +135,7 @@
 					t += "<td>[Injector.rate/10] <a href='?src=\ref[Injector];cyclerate=1'>Modify</a></td>"
 					t += "<td>[Injector.fuel_usage*100]% <a href='?src=\ref[Injector];fuel_usage=1'>Modify</a></td>"
 					t += "<td>[Injector.owned_assembly_port ? "[Injector.owned_assembly_port.cur_assembly ? "<font color=green>Loaded</font>": "<font color=blue>Empty</font>"]" : "<font color=red>Disconnected</font>" ]</td>"
-					t += "<td>[Injector.owned_assembly_port && Injector.owned_assembly_port.cur_assembly ? "[Injector.owned_assembly_port.cur_assembly.amount_depleted*100]%" : ""]</td>"
+					t += "<td>[Injector.owned_assembly_port && Injector.owned_assembly_port.cur_assembly ? "[100 - Injector.owned_assembly_port.cur_assembly.amount_depleted*100]%" : ""]</td>"
 					t += "</tr>"
 			t += "</table>"
 			t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"

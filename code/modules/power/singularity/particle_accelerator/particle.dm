@@ -7,8 +7,9 @@
 	density = 1
 	var
 		movement_range = 10
-		energy = 10		//energy in eV?
+		energy = 10		//energy in eV
 		mega_energy = 0	//energy in MeV
+		frequency = 1
 		ionizing = 0
 		particle_type
 		additional_particles = 0
@@ -41,13 +42,15 @@
 				var/obj/machinery/rust/particle_catcher/collided_catcher = A
 				if(particle_type && particle_type != "neutron")
 					if(collided_catcher.AddParticles(particle_type, 1 + additional_particles))
-						collided_catcher.AddEnergy(energy,mega_energy)
+						collided_catcher.parent.AddEnergy(energy,mega_energy)
 						del (src)
 			if( istype(A,/obj/machinery/rust/core) )
 				var/obj/machinery/rust/core/collided_core = A
 				if(particle_type && particle_type != "neutron")
 					if(collided_core.AddParticles(particle_type, 1 + additional_particles))
-						collided_core.AddEnergy(energy,mega_energy)
+						var/energy_loss_ratio = abs(collided_core.owned_field.frequency - frequency) / 1e9
+						collided_core.owned_field.mega_energy += mega_energy - mega_energy * energy_loss_ratio
+						collided_core.owned_field.energy += energy - energy * energy_loss_ratio
 						del (src)
 		return
 
