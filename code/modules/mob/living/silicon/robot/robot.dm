@@ -137,6 +137,7 @@
 				src.icon_state = "bloodhound"
 			modtype = "Sec"
 			//speed = -1 Secborgs have nerfed tasers now, so the speed boost is not necessary
+			nopush = 1
 			channels = list("Security" = 1)
 			//feedback_inc("cyborg_security",1)
 

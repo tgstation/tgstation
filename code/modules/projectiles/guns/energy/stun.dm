@@ -1,6 +1,6 @@
 
 /obj/item/weapon/gun/energy/taser
-	name = "\improper Taser Gun"
+	name = "taser gun"
 	desc = "A small, low capacity gun used for non-lethal takedowns."
 	icon_state = "taser"
 	fire_sound = 'Taser.ogg'
@@ -18,24 +18,44 @@
 			M << "\red The gun refuses to fire!"
 		return 0*/// Can be used to restrict weapon use to implants. - Erthilo
 
-/obj/item/weapon/gun/energy/taser/cyborg/load_into_chamber()//TOOD: change this over to the slowly recharge other cell
-	if(in_chamber)
-		if(!istype(in_chamber, projectile_type))
-			del(in_chamber)
-			in_chamber = new projectile_type(src)
-		return 1
-	if(isrobot(src.loc))
-		var/mob/living/silicon/robot/R = src.loc
-		if(R && R.cell)
-			R.cell.use(charge_cost)
-			in_chamber = new /obj/item/projectile/energy/electrode(src)
-			return 1
-	return 0
+/obj/item/weapon/gun/energy/taser/cyborg
+	name = "taser gun"
+	desc = "A small, low capacity gun used for non-lethal takedowns."
+	icon_state = "taser"
+	fire_sound = 'Taser.ogg'
+	charge_cost = 100
+	projectile_type = "/obj/item/projectile/energy/electrode"
+	cell_type = "/obj/item/weapon/cell/secborg"
+	var/charge_tick = 0
+	var/recharge_time = 10 //Time it takes for shots to recharge (in seconds)
 
+	New()
+		..()
+		processing_objects.Add(src)
+
+
+	Del()
+		processing_objects.Remove(src)
+		..()
+
+	process() //Every [recharge_time] seconds, recharge a shot for the cyborg
+		charge_tick++
+		if(charge_tick < recharge_time) return 0
+		charge_tick = 0
+
+		if(!power_supply) return 0 //sanity
+		if(isrobot(src.loc))
+			var/mob/living/silicon/robot/R = src.loc
+			if(R && R.cell)
+				R.cell.use(charge_cost) 		//Take power from the borg...
+				power_supply.give(charge_cost)	//... to recharge the shot
+
+		update_icon()
+		return 1
 
 
 /obj/item/weapon/gun/energy/stunrevolver
-	name = "\improper Stun Revolver"
+	name = "stun revolver"
 	desc = "A high-tech revolver that fires stun cartridges. The stun cartridges can be recharged using a conventional energy weapon recharger."
 	icon_state = "stunrevolver"
 	fire_sound = 'Gunshot.ogg'
@@ -47,7 +67,7 @@
 
 
 /obj/item/weapon/gun/energy/crossbow
-	name = "\improper Mini Energy-Crossbow"
+	name = "mini energy-crossbow"
 	desc = "A weapon favored by many of the syndicates stealth specialists."
 	icon_state = "crossbow"
 	w_class = 2.0
