@@ -26,7 +26,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 	var/energy = 0
 	var/mega_energy = 0
 	var/radiation = 0
-	var/frequency = 0
+	var/frequency = 1
 	var/field_strength = 0.01						//in teslas, max is 50T
 
 	var/obj/machinery/rust/rad_source/radiator
@@ -138,8 +138,16 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 		//add plasma from the surrounding environment
 		var/datum/gas_mixture/environment = loc.return_air()
 
-		//we're going to hack in some stuff to remove plasma from the air because QUANTUM PHYSICS
+/*
+		if(air_contents.temperature > 0)
+			var/transfer_moles = (air_contents.return_pressure())*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
+			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
+
+			loc.assume_air(removed)
+*/
+
+		//we're going to hack in some stuff to remove plasma from the air because QUANTUM PHYSICS
 		//the amount of plasma pulled in each update is relative to the field strength, with 50T (max field strength) = 100% of area covered by the field
 		//at minimum strength, 0.25% of the field volume is pulled in per update (?)
 		//have a max of 1000 moles suspended
@@ -147,13 +155,13 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 			var/moles_covered = environment.return_pressure()*volume_covered/(environment.temperature * R_IDEAL_GAS_EQUATION)
 			//
 			var/datum/gas_mixture/gas_covered = environment.remove(moles_covered)
-			var/datum/gas_mixture/plasma_captured = new
+			var/datum/gas_mixture/plasma_captured = new /datum/gas_mixture()
 			//
-			plasma_captured.toxins = gas_covered.toxins * transfer_ratio
+			plasma_captured.toxins = round(gas_covered.toxins * transfer_ratio)
 			plasma_captured.temperature = gas_covered.temperature
+			gas_covered.toxins -= plasma_captured.toxins
 			held_plasma.merge(plasma_captured)
 			//
-			gas_covered.toxins -= gas_covered.toxins * transfer_ratio
 			environment.merge(gas_covered)
 
 		//let the particles inside the field react
@@ -168,10 +176,10 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 
 		//change held plasma temp according to energy levels
 		//SPECIFIC_HEAT_TOXIN
-		if(mega_energy > 0)
+		if(mega_energy > 0 && held_plasma.toxins)
 			var/heat_capacity = held_plasma.heat_capacity()//200 * number of plasma moles
 			if(heat_capacity > MINIMUM_HEAT_CAPACITY)
-				held_plasma.temperature = (heat_capacity + mega_energy * 10000)/heat_capacity
+				held_plasma.temperature = (heat_capacity + mega_energy * 35000)/heat_capacity
 
 		//if there is too much plasma in the field, lose some
 		/*if( held_plasma.toxins > (MOLES_CELLSTANDARD * 7) * (50 / field_strength) )
@@ -209,11 +217,15 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 		//
 		change_size(newsize)
 
+	proc/AddEnergy(var/a_energy, var/a_mega_energy, var/a_frequency)
+		var/energy_loss_ratio = abs(a_frequency - src.frequency) / 1e9
+		energy += a_energy - a_energy * a_frequency
+		mega_energy += a_mega_energy - a_mega_energy * energy_loss_ratio
+
 	proc/AddParticles(var/name, var/quantity = 1)
-		//world << "adding [quantity] [name]"
 		if(name in dormant_reactant_quantities)
 			dormant_reactant_quantities[name] += quantity
-		else if(name != "proton" && name != "electron")
+		else if(name != "proton" && name != "electron" && name != "neutron")
 			dormant_reactant_quantities.Add(name)
 			dormant_reactant_quantities[name] = quantity
 

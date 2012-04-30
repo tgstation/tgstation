@@ -6,12 +6,31 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
+
 /obj/item/clothing/suit/storage/wcoat
 	name = "waistcoat"
 	desc = "The height of class."
 	icon_state = "vest"
 	item_state = "wcoat"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
+
+
+
+/obj/item/clothing/suit/bluetag
+	name = "blue laser tag armour"
+	desc = "Blue Pride, Station Wide"
+	icon_state = "bluetag"
+	item_state = "bluetag"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
+/obj/item/clothing/suit/redtag
+	name = "red laser tag armour"
+	desc = "Pew pew pew"
+	icon_state = "redtag"
+	item_state = "redtag"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
 
 /obj/item/clothing/suit/storage/apron
 	name = "apron"
@@ -20,6 +39,7 @@
 	item_state = "apron"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	allowed = list (/obj/item/weapon/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/nutrient,/obj/item/weapon/minihoe)
+
 
 /obj/item/clothing/suit/storage/chef
 	name = "chef's apron"
@@ -33,6 +53,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	allowed = list (/obj/item/weapon/kitchenknife,/obj/item/weapon/butch)
 
+
 /obj/item/clothing/suit/storage/chef/classic
 	name = "classic chef's apron"
 	desc = "A basic, dull, white chef's apron."
@@ -40,17 +61,20 @@
 	item_state = "apronchef"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
+
 /obj/item/clothing/suit/hazardvest
 	name = "hazard vest"
 	desc = "A high-visibility vest used in work zones."
 	icon_state = "hazard"
 	item_state = "hazard"
 
+
 /obj/item/clothing/suit/suspenders
 	name = "suspenders"
 	desc = "They suspend the illusion of the mime's play."
 	icon = 'belts.dmi'
 	icon_state = "suspenders"
+
 
 /obj/item/clothing/suit/syndicatefake
 	name = "red space suit replica"
@@ -62,6 +86,7 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
+
 /obj/item/clothing/suit/storage/captunic
 	name = "captain's parade tunic"
 	desc = "Worn by a Captain to show their class."
@@ -69,6 +94,7 @@
 	item_state = "bio_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
+
 
 /obj/item/clothing/suit/nun
 	name = "nun robe"
@@ -92,13 +118,15 @@
 	item_state = "chaplain_hoodie"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
+
 /obj/item/clothing/suit/hastur
-	name = "Hastur's robes"
+	name = "\improper Hastur's robes"
 	desc = "Robes not meant to be worn by man"
 	icon_state = "hastur"
 	item_state = "hastur"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+
 
 /obj/item/clothing/suit/imperium_monk
 	name = "imperium monk robes"
@@ -108,6 +136,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
+
 /obj/item/clothing/suit/chickensuit
 	name = "chicken suit"
 	desc = "Bwak!"
@@ -115,6 +144,7 @@
 	item_state = "chickensuit"
 	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS|FEET|HEAD
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
+
 
 /obj/item/clothing/suit/monkeysuit
 	name = "monkey suit"
@@ -124,6 +154,7 @@
 	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS|FEET|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
+
 /obj/item/clothing/suit/holidaypriest
 	name = "holiday priest"
 	desc = "This is a nice holiday my son."
@@ -131,6 +162,8 @@
 	item_state = "holidaypriest"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+
+
 // BubbleWrap - Nothing to see here
 
 /obj/item/clothing/suit/cardborg

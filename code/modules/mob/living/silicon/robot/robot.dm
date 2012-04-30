@@ -207,6 +207,20 @@
 	viewalerts = 1
 	src << browse(dat, "window=robotalerts&can_close=0")
 
+/mob/living/silicon/robot/proc/ai_roster()
+	set category = "Robot Commands"
+	set name = "Show Crew Manifest"
+
+	var/dat = "<html><head><title>Crew Roster</title></head><body><b>Crew Roster:</b><br><br>"
+
+	for (var/datum/data/record/t in data_core.general)
+		dat += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+
+	dat += "</body></html>"
+
+	src << browse(dat, "window=airoster")
+	onclose(src, "airoster")
+
 /mob/living/silicon/robot/blob_act()
 	if (stat != 2)
 		adjustBruteLoss(60)
@@ -937,6 +951,26 @@
 		else
 			src << "Module isn't activated"
 		installed_modules()
+
+	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
+		var/L = text2num(href_list["lawc"])
+		switch(lawcheck[L+1])
+			if ("Yes") lawcheck[L+1] = "No"
+			if ("No") lawcheck[L+1] = "Yes"
+//		src << text ("Switching Law [L]'s report status to []", lawcheck[L+1])
+		checklaws()
+
+	if (href_list["lawi"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
+		var/L = text2num(href_list["lawi"])
+		switch(ioncheck[L])
+			if ("Yes") ioncheck[L] = "No"
+			if ("No") ioncheck[L] = "Yes"
+//		src << text ("Switching Law [L]'s report status to []", lawcheck[L+1])
+		checklaws()
+
+	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
+		statelaws()
+
 	return
 
 /mob/living/silicon/robot/proc/uneq_active()
@@ -1102,7 +1136,26 @@ Frequency:
 		. = ..()
 	if ((s_active && !( s_active in contents ) ))
 		s_active.close(src)
-	return
+
+	if(module)
+		if(module.type == /obj/item/weapon/robot_module/janitor)	//you'd think checking the module would work
+			var/turf/tile = get_turf(loc)
+
+			tile.clean_blood()
+			for(var/obj/effect/R in tile)
+				if(istype(R, /obj/effect/rune) || istype(R, /obj/effect/decal/cleanable) || istype(R, /obj/effect/overlay))
+					del(R)
+
+			for(var/obj/item/cleaned_item in tile)
+				cleaned_item.clean_blood()
+
+			for(var/mob/living/carbon/human/cleaned_human in tile)	//HUE HUE I CLEAN U
+				if(cleaned_human.lying)
+					cleaned_human.clean_blood()
+					cleaned_human << "\red [src] cleans your face!"
+					for(var/obj/item/carried_item in cleaned_human.contents)
+						carried_item.clean_blood()
+		return
 
 /mob/living/silicon/robot/proc/reset_module()
 	modtype = "robot"

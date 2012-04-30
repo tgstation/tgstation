@@ -76,7 +76,8 @@ field_generator power level display
 				power = field_generator_max_power
 				anchored = 1
 				warming_up = 3
-				turn_on()
+				start_fields()
+				update_icon()
 			Varedit_start = 0
 
 		if(src.active == 2)

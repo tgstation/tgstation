@@ -462,23 +462,23 @@
 		if (href_list["create_vaccine"])
 			if(!src.wait)
 				var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
-				var/vaccine_type = text2path(href_list["create_vaccine"])//the path is received as string - converting
-				var/datum/disease/D = new vaccine_type
-				var/name = input(usr,"Name:","Name the vaccine",D.name)
-				if(!name || name == " ") name = D.name
-				B.name = "[name] vaccine bottle"
-				B.reagents.add_reagent("vaccine",15,vaccine_type)
-				del(D)
-				wait = 1
-				var/datum/reagents/R = beaker.reagents
-				var/datum/reagent/blood/Blood = null
-				for(var/datum/reagent/blood/L in R.reagent_list)
-					if(L)
-						Blood = L
-						break
-				var/list/res = Blood.data["resistances"]
-				spawn(res.len*500)
-					src.wait = null
+				if(B)
+					var/vaccine_type = text2path(href_list["create_vaccine"])//the path is received as string - converting
+					var/datum/disease/D = new vaccine_type
+					if(D)
+						B.name = "[D.name] vaccine bottle"
+						B.reagents.add_reagent("vaccine",15,vaccine_type)
+						del(D)
+						wait = 1
+						var/datum/reagents/R = beaker.reagents
+						var/datum/reagent/blood/Blood = null
+						for(var/datum/reagent/blood/L in R.reagent_list)
+							if(L)
+								Blood = L
+								break
+						var/list/res = Blood.data["resistances"]
+						spawn(res.len*500)
+							src.wait = null
 			else
 				src.temphtml = "The replicator is not ready yet."
 			src.updateUsrDialog()

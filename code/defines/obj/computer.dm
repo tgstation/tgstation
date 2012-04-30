@@ -128,31 +128,6 @@
 	var/h_b = 245.0
 
 
-/obj/machinery/computer/med_data
-	name = "Medical Records"
-	desc = "This can be used to check medical records."
-	icon_state = "medcomp"
-	req_access = list(access_medical)
-	circuit = "/obj/item/weapon/circuitboard/med_data"
-	var/obj/item/weapon/card/id/scan = null
-	var/obj/item/weapon/disk/records/disk = null
-	var/authenticated = null
-	var/rank = null
-	var/screen = null
-	var/datum/data/record/active1 = null
-	var/datum/data/record/active2 = null
-	var/a_id = null
-	var/temp = null
-	var/printing = null
-	var/list/Perp
-	var/tempname = null
-
-
-/obj/machinery/computer/med_data/laptop
-	name = "Medical Laptop"
-	desc = "Cheap Nanotrasen Laptop."
-	icon_state = "medlaptop"
-
 
 /obj/machinery/computer/pod
 	name = "Pod Launch Control"

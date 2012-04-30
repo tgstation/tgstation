@@ -44,11 +44,18 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 	name = "Tokamak core"
 	desc = "Enormous solenoid for generating extremely high power electromagnetic fields"
 	icon = 'core.dmi'
-	icon_state = "off"
+	icon_state = "core0"
 	anchored = 1
 	var/on = 0
 	var/obj/machinery/rust/em_field/owned_field
 	var/field_strength = 0.01
+	//
+	req_access = list(access_engine)
+	//
+	use_power = 1
+	idle_power_usage = 10
+	active_power_usage = 300
+
 
 	Topic(href, href_list)
 		..()
@@ -76,11 +83,11 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 		owned_field = new(src.loc)
 		if(owned_field)
 			owned_field.ChangeFieldStrength(field_strength)
-			icon_state = "on"
+			icon_state = "core1"
 		return 1
 
 	proc/Shutdown()
-		icon_state = "off"
+		icon_state = "core0"
 		on = 0
 		del(owned_field)
 
@@ -90,15 +97,9 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 			return 1
 		return 0
 
-	proc/AddEnergy(var/energy, var/mega_energy)
-		if(owned_field)
-			owned_field.energy += energy
-			owned_field.mega_energy += mega_energy
-			return 1
-		return 0
-
 	process()
 		..()
+		use_power(100 * field_strength + 500)
 		if(on && !owned_field)
 			Shutdown()
 		return
@@ -108,5 +109,6 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 
 	bullet_act(var/obj/item/projectile/Proj)
 		if(Proj.flag != "bullet" && owned_field)
-			AddEnergy(0, Proj.damage / 600)
+			var/obj/item/projectile/beam/laserbeam = Proj
+			owned_field.AddEnergy(0, laserbeam.damage / 5000, laserbeam.frequency)
 		return 0

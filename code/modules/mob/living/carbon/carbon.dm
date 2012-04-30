@@ -193,11 +193,13 @@
 				var/status = ""
 				var/brutedamage = org.brute_dam
 				var/burndamage = org.burn_dam
+
 				if(halloss > 0)
 					if(prob(30))
 						brutedamage += halloss
 					if(prob(30))
 						burndamage += halloss
+
 				if(brutedamage > 0)
 					status = "bruised"
 				if(brutedamage > 20)
@@ -208,6 +210,7 @@
 					status += " and "
 				if(burndamage > 40)
 					status += "peeling away"
+
 				else if(burndamage > 10)
 					status += "blistered"
 				else if(burndamage > 0)

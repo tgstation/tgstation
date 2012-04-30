@@ -2000,6 +2000,8 @@
 		new /obj/item/weapon/reagent_containers/food/snacks/rawsticks(spawnloc)
 		user << "You cut the potato."
 		del(src)
+	else
+		..()
 
 /obj/item/weapon/reagent_containers/food/snacks/rawsticks
 	name = "raw potato sticks"

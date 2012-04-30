@@ -20,3 +20,5 @@ lexusjjss: Zachary Tomlinson: /obj/item/weapon/clipboard/fluff/smallnote
 orangebottle: Lillian Levett: /obj/item/weapon/pen/fluff/fancypen
 orangebottle: Lilliana Reade: /obj/item/weapon/pen/fluff/fancypen
 deusdactyl: Roger Wiles: /obj/item/clothing/under/rank/virologist/fluff/cdc_jumpsuit, /obj/item/clothing/suit/storage/labcoat/fluff/cdc_labcoat
+desiderium: Momiji Inubashiri: /obj/item/clothing/under/fluff/olddressuniform
+leonheart11:  Johann Erzatz: /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/johann_erzatz_1
