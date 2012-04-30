@@ -198,7 +198,7 @@
 				if(part)
 					parts[i] = part
 				//debug below
-				ASSERT(istype(parts[i],/obj/item))
+				if(!istype(parts[i],/obj/item)) return 0
 		return
 
 
