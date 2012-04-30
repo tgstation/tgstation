@@ -1,7 +1,6 @@
 
 //high frequency photon (laser beam)
 /obj/item/projectile/beam/ehf_beam
-	var/frequency = 5
 
 /obj/machinery/rust/gyrotron
 	icon = 'gyrotron.dmi'
@@ -10,12 +9,18 @@
 	anchored = 1
 	density = 0
 	layer = 4
-	var/frequency = 20
+	var/frequency = 1
 	var/emitting = 0
 	var/rate = 10
 	var/mega_energy = 0.001
 	var/on = 1
 	var/remoteenabled = 1
+	//
+	req_access = list(access_engine)
+	//
+	use_power = 1
+	idle_power_usage = 10
+	active_power_usage = 300
 
 	New()
 		..()
@@ -30,7 +35,7 @@
 			return
 		if( href_list["modifypower"] )
 			var/new_val = text2num(input("Enter new emission power level (0.001 - 0.01)", "Modifying power level (MeV)", mega_energy))
-			if(!new_val || new_val > 0.01 || new_val < 0.001)
+			if(!new_val)
 				usr << "\red That's not a valid number."
 				return
 			new_val = min(new_val,0.01)
@@ -41,7 +46,7 @@
 			return
 		if( href_list["modifyrate"] )
 			var/new_val = text2num(input("Enter new emission rate (1 - 10)", "Modifying emission rate (sec)", rate))
-			if(!new_val || new_val > 10 || new_val < 1)
+			if(!new_val)
 				usr << "\red That's not a valid number."
 				return
 			new_val = min(new_val,1)
@@ -51,12 +56,12 @@
 				comp.updateDialog()
 			return
 		if( href_list["modifyfreq"] )
-			var/new_val = text2num(input("Enter new emission frequency (1 - 500)", "Modifying emission frequency (GHz)", frequency))
-			if(!new_val || new_val > 500 || new_val < 1)
+			var/new_val = text2num(input("Enter new emission frequency (1 - 50000)", "Modifying emission frequency (GHz)", frequency))
+			if(!new_val)
 				usr << "\red That's not a valid number."
 				return
 			new_val = min(new_val,1)
-			new_val = max(new_val,500)
+			new_val = max(new_val,50000)
 			frequency = new_val
 			for(var/obj/machinery/computer/rust/gyrotron_controller/comp in range(25))
 				comp.updateDialog()
@@ -86,10 +91,12 @@
 
 	proc/Emit()
 		var/obj/item/projectile/beam/ehf_beam/A = new ( src.loc )
-		A.icon_state = "u_laser"
 		A.frequency = frequency
-		A.damage = mega_energy * 600
+		A.damage = mega_energy * 500
+		//
+		A.icon_state = "emitter"
 		playsound(src.loc, 'emitter.ogg', 25, 1)
+		use_power(100 * mega_energy + 500)
 		/*if(prob(35))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, src)
@@ -110,7 +117,8 @@
 		else // Any other
 			A.yo = -20
 			A.xo = 0
-		A.process()
+		A.fired()
+		//
 		flick("emitter-active",src)
 		if(emitting)
 			spawn(rate)

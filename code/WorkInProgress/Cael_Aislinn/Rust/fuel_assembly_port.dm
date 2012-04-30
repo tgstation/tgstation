@@ -2,9 +2,8 @@
 /obj/machinery/rust/fuel_assembly_port
 	name = "Fuel Assembly Port"
 	icon = 'fuel_assembly_port.dmi'
-	icon_state = "port"
+	icon_state = "port0"
 	density = 0
-	var/stage
 	var/obj/item/weapon/fuel_assembly/cur_assembly = null
 	layer = 4
 
@@ -15,6 +14,16 @@
 			cur_assembly = I
 			user.drop_item()
 			I.loc = src
+			icon_state = "port1"
+
+	attack_hand(mob/user)
+		add_fingerprint(user)
+		/*if(stat & (BROKEN|NOPOWER))
+			return*/
+		if(cur_assembly)
+			cur_assembly.loc = src.loc
+			cur_assembly = null
+			icon_state = "port0"
 
 	New()
 		//embed the fuel port into a wall
