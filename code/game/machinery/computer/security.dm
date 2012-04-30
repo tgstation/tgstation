@@ -328,7 +328,7 @@ What a mess.*/
 				var/counter = 1
 				while(active2.fields[text("com_[]", counter)])
 					counter++
-				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [], 2053<BR>[]", authenticated, rank, time2text(world.realtime, "DDD MMM DD hh:mm:ss"), t1)
+				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [], 2556<BR>[]", authenticated, rank, time2text(world.realtime, "DDD MMM DD hh:mm:ss"), t1)
 
 			if ("Delete Record (ALL)")
 				if (active1)

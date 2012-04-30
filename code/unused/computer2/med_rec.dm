@@ -409,7 +409,7 @@
 			var/counter = 1
 			while(src.active2.fields[text("com_[]", counter)])
 				counter++
-			src.active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [], 2053<BR>[]", src.authenticated, src.rank, time2text(world.realtime, "DDD MMM DD hh:mm:ss"), t1)
+			src.active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [], 2556<BR>[]", src.authenticated, src.rank, time2text(world.realtime, "DDD MMM DD hh:mm:ss"), t1)
 
 		if (href_list["del_c"])
 			if ((istype(src.active2, /datum/data/record) && src.active2.fields[text("com_[]", href_list["del_c"])]))

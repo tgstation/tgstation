@@ -657,3 +657,8 @@
 	name = "security satchel"
 	desc = "A robust satchel for security related needs."
 	icon_state = "satchel-sec"
+
+/obj/item/weapon/storage/backpack/satchel_hyd
+	name = "hydroponics satchel"
+	desc = "A green satchel for plant related work."
+	icon_state = "satchel_hyd"
