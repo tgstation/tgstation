@@ -170,7 +170,7 @@ client
 			body += "<a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=name'><b>[D]</b></a>"
 			if(A.dir)
 				body += "<br><font size='1'><a href='byond://?src=\ref[src];rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='byond://?src=\ref[src];rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
-			if(istype(A,/mob))
+			if(ismob(A))
 				var/mob/M = A
 				body += "<br><font size='1'><a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
 				body += {"
@@ -240,6 +240,7 @@ client
 			body += "<option value='byond://?src=\ref[src];godmode=\ref[D]'>Toggle Godmode</option>"
 			body += "<option value='byond://?src=\ref[src];build_mode=\ref[D]'>Toggle Build Mode</option>"
 			body += "<option value='byond://?src=\ref[src];direct_control=\ref[D]'>Assume Direct Control</option>"
+			body += "<option value='byond://?src=\ref[src];drop_everything=\ref[D]'>Drop Everything</option>"
 			if(ishuman(D))
 				body += "<option value>---</option>"
 				body += "<option value='byond://?src=\ref[src];makeai=\ref[D]'>Make AI</option>"
@@ -496,6 +497,20 @@ client
 				return
 			togglebuildmode(MOB)
 			href_list["datumrefresh"] = href_list["build_mode"]
+
+		else if (href_list["drop_everything"])
+			if(!href_list["drop_everything"])
+				return
+			var/mob/MOB = locate(href_list["drop_everything"])
+			if(!MOB)
+				return
+			if(!ismob(MOB))
+				return
+			if(!src.holder)
+				return
+
+			if(usr.client)
+				usr.client.cmd_admin_drop_everything(MOB)
 
 		else if (href_list["direct_control"])
 			if(!href_list["direct_control"])

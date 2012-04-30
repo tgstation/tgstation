@@ -2083,6 +2083,7 @@ var/global/BSACooldown = 0
 	set category = "Admin"
 	set name = "Show Player Panel"
 	set desc="Edit player (respawn, ban, heal, etc)"
+
 	if(!M)
 		usr << "You seem to be selecting a mob that doesn't exist anymore."
 		return
@@ -2091,59 +2092,95 @@ var/global/BSACooldown = 0
 	if (!istype(src,/obj/admins))
 		usr << "Error: you are not an admin!"
 		return
-	var/dat = "<html><head><title>Options for [M.key]</title></head>"
-	var/foo = "\[ "
-	if (ismob(M) && M.client)
-//		if(!M.client.authenticated && !M.client.authenticating)
-//			foo += text("<A HREF='?src=\ref[src];adminauth=\ref[M]'>Authorize</A> | ")
-//		else
-//			foo += text("<B>Authorized</B> | ")
-		foo += text("<A HREF='?src=\ref[src];prom_demot=\ref[M.client]'>Promote/Demote</A> | ")
+
+	var/body = "<html><head><title>Options for [M.key]</title></head>"
+	body += "<body>Options panel for <b>[M]</b>"
+	if(M.client)
+		body += " played by <b>[M.client]</b> "
+		if(M.client.holder)
+			body += "\[<A href='?src=\ref[src];prom_demot=\ref[M.client]'>[M.client.holder.rank]</A>\]"
+		else
+			body += "\[<A href='?src=\ref[src];prom_demot=\ref[M.client]'>Player</A>\]"
+
+	if(istype(M, /mob/new_player))
+		body += " <B>Hasn't Entered Game</B> "
+	else
+		body += " \[<A href='?src=\ref[src];revive=\ref[M]'>Heal</A>\] "
+
+	body += "<br><br>\[ "
+	body += "<a href='?src=\ref[src];adminplayervars=\ref[M]'>VV</a> - "
+	body += "<a href='?src=\ref[src];traitor_panel_pp=\ref[M]'>TP</a> - "
+	body += "<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a> - "
+	body += "<a href='?src=\ref[src];adminplayersubtlemessage=\ref[M]'>SM</a> - "
+	body += "<a href='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>"
+
+	body += "<b>Mob type</b> = [M.type]<br><br>"
+
+	body += "<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> | "
+	body += "<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> | "
+	body += "<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> "
+
+	if(M.client)
+		body += "| <A HREF='?src=\ref[src];sendtoprison=\ref[M]'>Prison</A> | "
+		body += "<b>Mute:</b> "
+		if(M.client.muted_complete)
+			body += "<b>Completely Muted:</b> (<A href='?src=\ref[src];mute_complete=\ref[M]'>Allow adminhelp</A>)"
+		else
+			if(M.client.muted)
+				body += "<b>Soft Mute:</b> (<A href='?src=\ref[src];mute2=\ref[M]'>Unmute</A>) (<A href='?src=\ref[src];mute_complete=\ref[M]'>Mute adminhelps</A>)"
+			else
+				body += "Voiced: (<A href='?src=\ref[src];mute2=\ref[M]'>Mute</A>)"
+
+	body += "<br><br>"
+	body += "<A href='?src=\ref[src];jumpto=\ref[M]'><b>Jump to</b></A> | "
+	body += "<A href='?src=\ref[src];getmob=\ref[M]'>Get</A>"
+
+	body += "<br><br>"
+	body += "<A href='?src=\ref[src];traitor=\ref[M]'>Traitor panel</A> | "
+	body += "<A href='?src=\ref[src];narrateto=\ref[M]'>Narrate to</A> | "
+	body += "<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A>"
+
+	if (M.client)
 		if(!istype(M, /mob/new_player))
-			if(!ismonkey(M))
-				foo += text("<A HREF='?src=\ref[src];monkeyone=\ref[M]'>Monkeyize</A> | ")
+			body += "<br><br>"
+			body += "<b>Transformations:</b>"
+			body += "<br>"
+
+			//Monkey
+			if(ismonkey(M))
+				body += "<B>Monkeyized</B> | "
 			else
-				foo += text("<B>Monkeyized</B> | ")
-			if(!iscorgi(M))
-				foo += text("<A HREF='?src=\ref[src];corgione=\ref[M]'>Corgize</A> | ")
+				body += "<A href='?src=\ref[src];monkeyone=\ref[M]'>Monkeyize</A> | "
+
+			//Corgi
+			if(iscorgi(M))
+				body += "<B>Corgized</B> | "
 			else
-				foo += text("<B>Corgized</B> | ")
+				body += "<A href='?src=\ref[src];corgione=\ref[M]'>Corgize</A> | "
+
+			//AI / Cyborg
 			if(isAI(M))
-				foo += text("<B>Is an AI</B> | ")
+				body += "<B>Is an AI</B> "
 			else if(ishuman(M))
-				foo += text("<A HREF='?src=\ref[src];makeai=\ref[M]'>Make AI</A> | ")
-				foo += text("<A HREF='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> | ")
-				foo += text("<A HREF='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> | ")
-				foo += text("<A HREF='?src=\ref[src];makemetroid=\ref[M]'>Make Metroid</A> | ")
-			foo += text("<A HREF='?src=\ref[src];tdome1=\ref[M]'>Thunderdome 1</A> | ")
-			foo += text("<A HREF='?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> | ")
-			foo += text("<A HREF='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> | ")
-			foo += text("<A HREF='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> | ")
-			foo += text("<A HREF='?src=\ref[src];sendtoprison=\ref[M]'>Prison</A> | ")
-		//	foo += text("<A HREF='?src=\ref[src];sendtomaze=\ref[M]'>Maze</A> | ")
-			foo += text("<A HREF='?src=\ref[src];revive=\ref[M]'>Heal/Revive</A> | ")
-		else
-			foo += text("<B>Hasn't Entered Game</B> | ")
-		foo += text("<A href='?src=\ref[src];forcespeech=\ref[M]'>Forcesay</A> | ")
-		if(M.client)
-			foo += text("<A href='?src=\ref[src];mute2=\ref[M]'>Mute: [(M.client.muted ? "Muted" : "Voiced")]</A> | ")
-			foo += text("<A href='?src=\ref[src];mute_complete=\ref[M]'>Complete mute: [(M.client.muted ? "Completely Muted" : "Voiced")]</A> | ")
-		else
-			foo += "Mute unavailable - no client"
-		foo += text("<A href='?src=\ref[src];boot2=\ref[M]'>Boot</A>")
-	foo += text("<br>")
-	foo += text("<A href='?src=\ref[src];jumpto=\ref[M]'>Jump to</A> | ")
-	foo += text("<A href='?src=\ref[src];getmob=\ref[M]'>Get</A> | ")
-	foo += text("<A href='?src=\ref[src];sendmob=\ref[M]'>Send</A>")
-	foo += text("<br>")
-	foo += text("<A href='?src=\ref[src];traitor=\ref[M]'>Edit mind</A> | ")
-	foo += text("<A href='?src=\ref[src];narrateto=\ref[M]'>Narrate to</A> | ")
-	foo += text("<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A>")
-	foo += text("<br>")
-	foo += text("<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> | ")
-	foo += text("<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A>")
-	dat += text("<body>[foo]</body></html>")
-	usr << browse(dat, "window=adminplayeropts;size=480x150")
+				body += "<A href='?src=\ref[src];makeai=\ref[M]'>Make AI</A> | "
+				body += "<A href='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> | "
+				body += "<A href='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> | "
+				body += "<A href='?src=\ref[src];makemetroid=\ref[M]'>Make Metroid</A> "
+
+	if (M.client)
+		body += "<br><br>"
+		body += "<b>Other actions:</b>"
+		body += "<br>"
+		body += "<A href='?src=\ref[src];forcespeech=\ref[M]'>Forcesay</A> | "
+		body += "<A href='?src=\ref[src];tdome1=\ref[M]'>Thunderdome 1</A> | "
+		body += "<A href='?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> | "
+		body += "<A href='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> | "
+		body += "<A href='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> | "
+
+	body += "<br>"
+	body += "</body></html>"
+
+	usr << browse(body, "window=adminplayeropts;size=550x375")
 	feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

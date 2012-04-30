@@ -1769,3 +1769,10 @@ proc/oview_or_orange(distance = world.view , center = usr , type)
 		if(a == character)
 			count++
 	return count
+
+proc/get_mob_with_client_list()
+	var/list/mobs = list()
+	for(var/mob/M in world)
+		if (M.client)
+			mobs += M
+	return mobs

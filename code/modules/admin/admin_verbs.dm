@@ -63,8 +63,8 @@
 				verbs += /client/proc/jumptocoord
 				verbs += /client/proc/cmd_admin_delete
 				verbs += /client/proc/cmd_admin_add_freeform_ai_law
-				verbs += /client/proc/cmd_admin_rejuvenate
-				verbs += /client/proc/cmd_admin_drop_everything
+				//verbs += /client/proc/cmd_admin_rejuvenate			--Merged with player panel
+				//verbs += /client/proc/cmd_admin_drop_everything		--Merged with view variables
 				//verbs += /client/proc/cmd_modify_object_variables 	--Merged with view variables
 
 		if ("Admin Candidate")
@@ -121,11 +121,11 @@
 			verbs += /obj/admins/proc/votekill
 			verbs += /obj/admins/proc/show_player_panel
 			verbs += /client/proc/deadchat								//toggles deadchat
-			verbs += /client/proc/cmd_admin_mute
+			//verbs += /client/proc/cmd_admin_mute	--was never used (according to stats trackind) - use show player panel --erro
 			verbs += /client/proc/cmd_admin_pm_context
 			verbs += /client/proc/cmd_admin_pm_panel
 			verbs += /client/proc/cmd_admin_subtle_message
-			verbs += /client/proc/warn
+			//verbs += /client/proc/warn	- was never used
 			verbs += /client/proc/dsay
 			verbs += /client/proc/admin_play
 			verbs += /client/proc/admin_observe
@@ -209,7 +209,7 @@
 			verbs += /client/proc/cmd_admin_delete
 			verbs += /client/proc/cmd_admin_add_freeform_ai_law
 			verbs += /client/proc/cmd_admin_add_random_ai_law
-			verbs += /client/proc/cmd_admin_rejuvenate
+			//verbs += /client/proc/cmd_admin_rejuvenate				--merged with player panel
 			verbs += /client/proc/hide_most_verbs
 			verbs += /client/proc/jumptocoord
 			verbs += /client/proc/deadmin_self
@@ -234,9 +234,8 @@
 			verbs += /client/proc/mapload
 			verbs += /client/proc/check_words
 			verbs += /client/proc/drop_bomb
-			verbs += /client/proc/cmd_admin_grantfullaccess
 			verbs += /client/proc/kill_airgroup
-			verbs += /client/proc/cmd_admin_drop_everything
+			//verbs += /client/proc/cmd_admin_drop_everything			--Merged with view variables
 			verbs += /client/proc/make_sound
 			verbs += /client/proc/play_local_sound
 			verbs += /client/proc/send_space_ninja
@@ -326,8 +325,7 @@
 	verbs -= /client/proc/mapload
 	verbs -= /client/proc/check_words
 	verbs -= /client/proc/drop_bomb
-	verbs -= /client/proc/cmd_admin_grantfullaccess
-	verbs -= /client/proc/cmd_admin_drop_everything
+	//verbs -= /client/proc/cmd_admin_drop_everything					--merged with view variables
 	verbs -= /client/proc/make_sound
 	verbs -= /client/proc/only_one
 	verbs -= /client/proc/send_space_ninja
@@ -344,7 +342,7 @@
 	verbs -= /client/proc/jumptoturf
 	verbs -= /client/proc/cmd_admin_add_freeform_ai_law
 	verbs -= /client/proc/cmd_admin_add_random_ai_law
-	verbs -= /client/proc/cmd_admin_rejuvenate
+	//verbs -= /client/proc/cmd_admin_rejuvenate						--merged with player panel
 	verbs -= /client/proc/cmd_admin_delete
 	verbs -= /client/proc/toggleadminhelpsound
 	verbs -= /client/proc/cmd_admin_remove_plasma
@@ -361,12 +359,12 @@
 	verbs -= /client/proc/cmd_admin_check_contents
 	verbs -= /client/proc/cmd_admin_create_centcom_report
 	verbs -= /client/proc/deadchat										//toggles deadchat
-	verbs -= /client/proc/cmd_admin_mute
+	//verbs -= /client/proc/cmd_admin_mute	--was never used (according to stats trackind) - use show player panel --erro
 	verbs -= /client/proc/cmd_admin_pm_context
 	verbs -= /client/proc/cmd_admin_pm_panel
 	verbs -= /client/proc/cmd_admin_say
 	verbs -= /client/proc/cmd_admin_subtle_message
-	verbs -= /client/proc/warn
+	//verbs -= /client/proc/warn
 	verbs -= /client/proc/dsay
 	verbs -= /client/proc/admin_play
 	verbs -= /client/proc/admin_observe
@@ -567,9 +565,9 @@
 
 #define AUTOBATIME 10
 /client/proc/warn(var/mob/M in world)
-	set category = "Special Verbs"
+	/*set category = "Special Verbs"
 	set name = "Warn"
-	set desc = "Warn a player"
+	set desc = "Warn a player"*/ //Based on the information I gathered via stat logging this verb was not used. Use the show player panel alternative. --erro
 	if(!holder)
 		src << "Only administrators may use this command."
 		return

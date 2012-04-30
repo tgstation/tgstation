@@ -4,6 +4,11 @@
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
+
+	var/confirm = alert(src, "Make [M] drop everything?", "Message", "Yes", "No")
+	if(confirm != "Yes")
+		return
+
 	for(var/obj/item/W in M)
 		M.drop_from_slot(W)
 
@@ -77,13 +82,18 @@
 	message_admins("\blue \bold GlobalNarrate: [key_name_admin(usr)] : [msg]<BR>", 1)
 	feedback_add_details("admin_verb","GLN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_direct_narrate(mob/M as mob in world)	// Targetted narrate -- TLE
+/client/proc/cmd_admin_direct_narrate()	// Targetted narrate -- TLE
 	set category = "Special Verbs"
 	set name = "Direct Narrate"
 
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
+
+	var/mob/M = input("Direct narrate to who?", "Active Players") as null|anything in get_mob_with_client_list()
+	if(M == null)
+		return
+
 	var/msg = input("Message:", text("Enter the text you wish to appear to your target:")) as text
 	M << msg
 	log_admin("DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]")
@@ -473,24 +483,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		alert("Cannot revive a ghost")
 		return
 	if(config.allow_admin_rev)
-		//M.fireloss = 0
-		M.setToxLoss(0)
-		//M.bruteloss = 0
-		M.setOxyLoss(0)
-		M.SetParalysis(0)
-		M.SetStunned(0)
-		M.SetWeakened(0)
-		M.radiation = 0
-		//M.health = 100
-		M.nutrition = 400
-		M.bodytemperature = 310
-		M.heal_overall_damage(1000, 1000)
-		//M.updatehealth()
-		M.buckled = initial(M.buckled)
-		M.handcuffed = initial(M.handcuffed)
-		if (M.stat > 1)
-			M.stat=0
-		..()
+		M.revive()
 
 		log_admin("[key_name(usr)] healed / revived [key_name(M)]")
 		message_admins("\red Admin [key_name_admin(usr)] healed / revived [key_name_admin(M)]!", 1)
