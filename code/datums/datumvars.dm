@@ -167,10 +167,10 @@ client
 
 		if(istype(D,/atom))
 			var/atom/A = D
-			body += "<a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=name'><b>[D]</b></a>"
-			if(A.dir)
-				body += "<br><font size='1'><a href='byond://?src=\ref[src];rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='byond://?src=\ref[src];rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
 			if(ismob(A))
+				body += "<a href='byond://?src=\ref[src];rename=\ref[D]'><b>[D]</b></a>"
+				if(A.dir)
+					body += "<br><font size='1'><a href='byond://?src=\ref[src];rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='byond://?src=\ref[src];rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
 				var/mob/M = A
 				body += "<br><font size='1'><a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>"
 				body += {"
@@ -185,6 +185,10 @@ client
 
 
 				"}
+			else
+				body += "<a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=name'><b>[D]</b></a>"
+				if(A.dir)
+					body += "<br><font size='1'><a href='byond://?src=\ref[src];rotatedatum=\ref[D];rotatedir=left'><<</a> <a href='byond://?src=\ref[src];datumedit=\ref[D];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='byond://?src=\ref[src];rotatedatum=\ref[D];rotatedir=right'>>></a></font>"
 		else
 			body += "<b>[D]</b>"
 
@@ -389,6 +393,30 @@ client
 
 		if (href_list["Vars"])
 			debug_variables(locate(href_list["Vars"]))
+
+		//~CARN: for renaming mobs (updates their real_name and their ID/PDA if applicable).
+		else if (href_list["rename"])
+			var/new_name = input(usr,"What would you like to name this mob?","Input a name") as text|null
+			if(!new_name)	return
+			var/mob/M = locate(href_list["rename"])
+			if(!istype(M))	return
+
+			message_admins("Admin [key_name_admin(usr)] renamed [key_name_admin(M)] to [new_name].", 1)
+			if(istype(M, /mob/living/carbon/human))
+				for(var/obj/item/weapon/card/id/ID in M.contents)
+					if(ID.registered == M.real_name)
+						ID.name = "[new_name]'s ID Card ([ID.assignment])"
+						ID.registered = new_name
+						break
+				for(var/obj/item/device/pda/PDA in M.contents)
+					if(PDA.owner == M.real_name)
+						PDA.name = "PDA-[new_name] ([PDA.ownjob])"
+						PDA.owner = new_name
+						break
+			M.real_name = new_name
+			M.name = new_name
+			href_list["datumrefresh"] = href_list["rename"]
+
 		else if (href_list["varnameedit"])
 			if(!href_list["datumedit"] || !href_list["varnameedit"])
 				usr << "Varedit error: Not all information has been sent Contact a coder."
