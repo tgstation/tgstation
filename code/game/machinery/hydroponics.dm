@@ -191,10 +191,10 @@ obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient,
 			src.myseed = new /obj/item/seeds/harebell
 		if(10 to 11)
 			src.myseed = new /obj/item/seeds/amanitamycelium
-		if(6 to 9)
+		if(8 to 9)
 			src.myseed = new /obj/item/seeds/chantermycelium
-		//if(6 to 7) implementation for tower caps still kinda missing
-		//	src.myseed = new /obj/item/seeds/towermycelium
+		if(6 to 7) // implementation for tower caps still kinda missing ~ Not Anymore! -Cheridan
+			src.myseed = new /obj/item/seeds/towermycelium
 		if(4 to 5)
 			src.myseed = new /obj/item/seeds/plumpmycelium
 		else
@@ -671,13 +671,8 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	else if (istype(O, /obj/item/weapon/minihoe))  // The minihoe
 		//var/deweeding
 		if(src.weedlevel > 0)
-			user.visible_message("\red [user] starts uprooting the weeds.", "\red You start removing some weeds from the tray.")
-			sleep(10)
-			if(src.weedlevel > 1)
-				src.weedlevel -= rand(1,2) // Kill kill kill
-			else
-				src.weedlevel = 0
-			user << "Success!"
+			user.visible_message("\red [user] starts uprooting the weeds.", "\red You remove the weeds from the tray.")
+			src.weedlevel = 0
 		else
 			user << "\red This plot is completely devoid of weeds. It doesn't need uprooting."
 
