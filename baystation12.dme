@@ -377,6 +377,7 @@
 #include "code\game\sound.dm"
 #include "code\game\specops_shuttle.dm"
 #include "code\game\status.dm"
+#include "code\game\step_triggers.dm"
 #include "code\game\supplyshuttle.dm"
 #include "code\game\syndicate_shuttle.dm"
 #include "code\game\syndicate_specops_shuttle.dm"
