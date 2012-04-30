@@ -12,9 +12,9 @@ var/global/BSACooldown = 0
 			else
 				M << rendered
 
+
 /obj/admins/Topic(href, href_list)
 	..()
-
 	if (usr.client != src.owner)
 		world << "\blue [usr.key] has attempted to override the admin panel!"
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
