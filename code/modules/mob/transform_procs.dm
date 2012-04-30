@@ -212,6 +212,8 @@
 	O << "To use something, simply click or double-click it."
 	O << {"Use say ":s to speak to fellow cyborgs and the AI through binary."}
 
+	O.verbs += /mob/living/silicon/robot/proc/ai_roster
+
 	O.job = "Cyborg"
 
 	O.mmi = new /obj/item/device/mmi(O)
