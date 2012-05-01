@@ -37,7 +37,6 @@ var/global/sent_strike_team = 0
 
 	if (emergency_shuttle.direction == 1 && emergency_shuttle.online == 1)
 		emergency_shuttle.recall()
-		world << "\blue <B>Alert: The shuttle is going back!</B>"
 
 	var/commando_number = commandos_possible //for selecting a leader
 	var/leader_selected = 0 //when the leader is chosen. The last person spawned.
@@ -184,6 +183,7 @@ var/global/sent_strike_team = 0
 	O.implant += L
 	L.imp_in = src
 	L.implanted = 1
+
 
 
 	var/obj/item/weapon/card/id/W = new(src)
