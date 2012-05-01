@@ -148,7 +148,7 @@
 			if(req in I.access) //has an access from the single access list
 				return 1
 	for(var/req in src.req_access)
-		if(!(req in I.access)) //doesn't have this access
+		if(!(req in I.access)) //doesn't have this access - Leave like this DMTG
 			return 0
 	return 1
 
@@ -164,7 +164,7 @@
 			if(req in L) //has an access from the single access list
 				return 1
 	for(var/req in src.req_access)
-		if(!(req in L)) //doesn't have this access
+		if(!(req in L)) //doesn't have this access - Leave like this DMTG
 			return 0
 	return 1
 

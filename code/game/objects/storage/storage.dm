@@ -390,6 +390,18 @@
 			return
 	return   ///////////////////////////////////////////////////////Alright, that should do it. *MARKER* for any possible runtimes
 
+
+/obj/item/weapon/storage/pill_bottle/verb/toggle_mode()
+	set name = "Switch Pill Bottle Method"
+	set category = "Object"
+
+	mode = !mode
+	switch (mode)
+		if(1)
+			usr << "The pill bottle now picks up all pills in a tile at once."
+		if(0)
+			usr << "The pill bottle now picks up one pill at a time."
+
 /obj/item/weapon/storage/pillbottlebox/New()
 	new /obj/item/weapon/storage/pill_bottle( src )
 	new /obj/item/weapon/storage/pill_bottle( src )
