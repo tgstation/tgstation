@@ -25,6 +25,8 @@
 	if(!loc)			// Fixing a null error that occurs when the mob isn't found in the world -- TLE
 		return
 
+	..()
+
 	//Being buckled to a chair or bed
 	check_if_buckled()
 
@@ -124,8 +126,6 @@
 		var/turf/currentTurf = loc
 		if(!currentTurf.sd_lumcount)
 			playsound_local(src,pick(scarySounds),50, 1, -1)
-
-	..() //for organs
 
 	src.moved_recently = max(0, moved_recently-1)
 
@@ -457,8 +457,10 @@
 			return null
 
 		update_canmove()
-			if(paralysis || resting || stunned || weakened || buckled || (changeling && changeling.changeling_fakedeath)) canmove = 0
-			else canmove = 1
+			if(paralysis || stunned || weakened || resting || buckled || (changeling && changeling.changeling_fakedeath))
+				canmove = 0
+			else
+				canmove = 1
 
 		handle_breath(datum/gas_mixture/breath)
 			if(nodamage || (mutations & mNobreath))

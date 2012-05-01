@@ -150,6 +150,8 @@ datum/preferences/proc/savefile_save(mob/user, slot)
 	F["skills"] << src.skills
 	F["skill_specialization"] << src.skill_specialization
 
+	F["OOC_Notes"] << src.metadata
+
 	return 1
 
 // loads the savefile corresponding to the mob's ckey
@@ -243,6 +245,11 @@ datum/preferences/proc/savefile_load(mob/user, slot)
 	F["job_alt_titles"] >> job_alt_titles
 	if(!job_alt_titles)
 		job_alt_titles = new()
+
+	F["OOC_Notes"] >> src.metadata
+
+	if(isnull(metadata))
+		metadata = ""
 
 	//NOTE: Conversion things go inside this if statement
 	//When updating the save file remember to add 1 to BOTH the savefile constants
