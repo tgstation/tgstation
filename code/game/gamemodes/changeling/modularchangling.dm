@@ -45,7 +45,7 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 /obj/effect/proc_holder/power/changeling_greater_form
 	name = "Greater Form"
 	desc = "We become the pinnicle of evolution.  We will show the humans what happens when they leave their isle of ignorance."
-	genomecost = 250
+	genomecost = 30
 
 	verbpath = /client/proc/changeling_greater_form
 
