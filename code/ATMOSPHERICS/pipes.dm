@@ -464,22 +464,6 @@ obj/machinery/atmospherics/pipe
 
 					..()
 
-			oxygen_agent_b
-				icon = 'red_orange_pipe_tank.dmi'
-				name = "High Capacity Pressure Tank (Oxygen + Plasma)"
-
-				New()
-					air_temporary = new
-					air_temporary.volume = volume
-					air_temporary.temperature = T0C
-
-					var/datum/gas/oxygen_agent_b/trace_gas = new
-					trace_gas.moles = (160*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-					air_temporary.trace_gases += trace_gas
-
-					..()
-
 			oxygen
 				icon = 'blue_pipe_tank.dmi'
 				name = "High Capacity Pressure Tank (Oxygen)"

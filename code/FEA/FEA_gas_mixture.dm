@@ -12,6 +12,7 @@ What are the archived variables for?
 
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define QUANTIZE(variable)		(round(variable,0.0001))
+#define TRANSFER_FRACTION 5 //What fraction (1/#) of the air difference to try and transfer
 
 datum
 	gas //These are used for the "Trace Gases" stuff, but is buggy.
@@ -57,6 +58,31 @@ datum
 
 				graphic_archived
 				fuel_burnt = 0
+
+//FOR THE LOVE OF GOD PLEASE USE THIS PROC
+//Call it with negative numbers to remove gases.
+
+		proc/adjustGases(o2 = 0, co2 = 0, n2 = 0, tx = 0, list/datum/gas/traces = list())
+			//Purpose: Adjusting the gases within a airmix
+			//Called by: Nothing, yet!
+			//Inputs: The values of the gases to adjust
+			//Outputs: null
+
+			oxygen = max(0, oxygen + o2)
+			carbon_dioxide = max(0, carbon_dioxide + co2)
+			nitrogen = max(0, nitrogen + n2)
+			toxins = max(0, toxins + tx)
+
+			//handle trace gasses
+			for(var/datum/gas/G in traces)
+				var/datum/gas/T = locate(G.type) in trace_gases
+				if(T)
+					T.moles = max(G.moles + T.moles, 0)
+				else if(G.moles > 0)
+					trace_gases |= G
+			update_values()
+			return
+
 ///////////////////////////////
 //PV=nRT - related procedures//
 ///////////////////////////////
@@ -441,10 +467,16 @@ datum
 			//   then -1 if sharer-check failed (sharing airgroup breaks?)
 			//   then 1 if both checks pass (share succesful?)
 
-			var/delta_oxygen = (oxygen_archived - sharer.oxygen_archived)/5
-			var/delta_carbon_dioxide = (carbon_dioxide_archived - sharer.carbon_dioxide_archived)/5
-			var/delta_nitrogen = (nitrogen_archived - sharer.nitrogen_archived)/5
-			var/delta_toxins = (toxins_archived - sharer.toxins_archived)/5
+			var/pressure = 1
+			if(!return_pressure() || !sharer.return_pressure())
+				pressure = 3
+			else if(pressure < 0)
+				pressure = (sharer.return_pressure() / return_pressure())
+			pressure = max(min(pressure,3),1) //Lets cap this.
+			var/delta_oxygen = max(QUANTIZE(oxygen_archived - sharer.oxygen_archived) * pressure/TRANSFER_FRACTION,oxygen)
+			var/delta_carbon_dioxide = max(QUANTIZE(carbon_dioxide_archived - sharer.carbon_dioxide_archived) * pressure/TRANSFER_FRACTION,carbon_dioxide)
+			var/delta_nitrogen = max(QUANTIZE(nitrogen_archived - sharer.nitrogen_archived) * pressure/TRANSFER_FRACTION,nitrogen)
+			var/delta_toxins = max(QUANTIZE(toxins_archived - sharer.toxins_archived) * pressure/TRANSFER_FRACTION,toxins)
 
 			var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 
@@ -497,10 +529,10 @@ datum
 			//Inputs: Unsimulated turf
 			//Outputs: 1 if safe to mimic, 0 if needs to break airgroup.
 
-			var/delta_oxygen = (oxygen_archived - model.oxygen)/5
-			var/delta_carbon_dioxide = (carbon_dioxide_archived - model.carbon_dioxide)/5
-			var/delta_nitrogen = (nitrogen_archived - model.nitrogen)/5
-			var/delta_toxins = (toxins_archived - model.toxins)/5
+			var/delta_oxygen = (oxygen_archived - model.oxygen)/TRANSFER_FRACTION
+			var/delta_carbon_dioxide = (carbon_dioxide_archived - model.carbon_dioxide)/TRANSFER_FRACTION
+			var/delta_nitrogen = (nitrogen_archived - model.nitrogen)/TRANSFER_FRACTION
+			var/delta_toxins = (toxins_archived - model.toxins)/TRANSFER_FRACTION
 
 			var/delta_temperature = (temperature_archived - model.temperature)
 
@@ -527,10 +559,16 @@ datum
 			//Outputs: Amount of gas exchanged (Negative if lost air, positive if gained.)
 
 			if(!sharer)	return 0
-			var/delta_oxygen = QUANTIZE(oxygen_archived - sharer.oxygen_archived)/5
-			var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - sharer.carbon_dioxide_archived)/5
-			var/delta_nitrogen = QUANTIZE(nitrogen_archived - sharer.nitrogen_archived)/5
-			var/delta_toxins = QUANTIZE(toxins_archived - sharer.toxins_archived)/5
+			var/pressure = 1
+			if(!return_pressure() || !sharer.return_pressure())
+				pressure = 3
+			else if(pressure < 0)
+				pressure = (sharer.return_pressure() / return_pressure())
+			pressure = max(min(pressure,3),1) //Lets cap this.
+			var/delta_oxygen = max(QUANTIZE(oxygen_archived - sharer.oxygen_archived) * pressure/TRANSFER_FRACTION,oxygen)
+			var/delta_carbon_dioxide = max(QUANTIZE(carbon_dioxide_archived - sharer.carbon_dioxide_archived) * pressure/TRANSFER_FRACTION,carbon_dioxide)
+			var/delta_nitrogen = max(QUANTIZE(nitrogen_archived - sharer.nitrogen_archived) * pressure/TRANSFER_FRACTION,nitrogen)
+			var/delta_toxins = max(QUANTIZE(toxins_archived - sharer.toxins_archived) * pressure/TRANSFER_FRACTION,toxins)
 
 			var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 
@@ -598,12 +636,12 @@ datum
 					var/delta = 0
 
 					if(corresponding)
-						delta = QUANTIZE(trace_gas.moles_archived - corresponding.moles_archived)/5
+						delta = max(QUANTIZE(trace_gas.moles_archived - corresponding.moles_archived)*pressure/TRANSFER_FRACTION,trace_gas.moles)
 					else
 						corresponding = new trace_gas.type()
 						sharer.trace_gases += corresponding
 
-						delta = trace_gas.moles_archived/5
+						delta = max(trace_gas.moles_archived*pressure/TRANSFER_FRACTION,trace_gas.moles)
 
 					trace_gas.moles -= delta/group_multiplier
 					corresponding.moles += delta/sharer.group_multiplier
@@ -632,7 +670,7 @@ datum
 						corresponding = new trace_gas.type()
 						trace_gases += corresponding
 
-						delta = trace_gas.moles_archived/5
+						delta = max(trace_gas.moles_archived*pressure/TRANSFER_FRACTION,trace_gas.moles)
 
 						trace_gas.moles -= delta/sharer.group_multiplier
 						corresponding.moles += delta/group_multiplier
@@ -673,10 +711,10 @@ datum
 			//Inputs: Unsimulated turf, Multiplier for gas transfer (optional)
 			//Outputs: Amount of gas exchanged
 
-			var/delta_oxygen = QUANTIZE(oxygen_archived - model.oxygen)/5
-			var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - model.carbon_dioxide)/5
-			var/delta_nitrogen = QUANTIZE(nitrogen_archived - model.nitrogen)/5
-			var/delta_toxins = QUANTIZE(toxins_archived - model.toxins)/5
+			var/delta_oxygen = QUANTIZE(oxygen_archived - model.oxygen)/TRANSFER_FRACTION
+			var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - model.carbon_dioxide)/TRANSFER_FRACTION
+			var/delta_nitrogen = QUANTIZE(nitrogen_archived - model.nitrogen)/TRANSFER_FRACTION
+			var/delta_toxins = QUANTIZE(toxins_archived - model.toxins)/TRANSFER_FRACTION
 
 			var/delta_temperature = (temperature_archived - model.temperature)
 
@@ -721,7 +759,7 @@ datum
 				for(var/datum/gas/trace_gas in trace_gases)
 					var/delta = 0
 
-					delta = trace_gas.moles_archived/5
+					delta = trace_gas.moles_archived/TRANSFER_FRACTION
 
 					if(border_multiplier)
 						trace_gas.moles -= delta*border_multiplier/group_multiplier

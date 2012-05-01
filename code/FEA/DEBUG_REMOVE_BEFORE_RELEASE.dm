@@ -116,7 +116,7 @@ obj/machinery/portable_atmospherics/canister
 
 		valve_open = 1
 		release_pressure = 1000
-
+/*
 obj/machinery/atmospherics
 	unary
 		heat_reservoir
@@ -352,6 +352,7 @@ obj/machinery/atmospherics
 					usr << "[x],[y] is in a pipeline with [parent.members.len] members ([parent.edges.len] edges)! Volume: [parent.air.volume]"
 					usr << "Pressure: [parent.air.return_pressure()], Temperature: [parent.air.temperature]"
 					usr << "[parent.air.oxygen], [parent.air.toxins], [parent.air.nitrogen], [parent.air.carbon_dioxide] .. [parent.alert_pressure]"
+*/
 mob
 	verb
 		flag_all_pipe_networks()
@@ -519,7 +520,7 @@ mob
 			for(var/obj/effect/hotspot/flame in world)
 				usr << "[flame.x],[flame.y]: [flame.temperature]K, [flame.volume] L - [flame.loc:air:temperature]"
 
-		process_cycle()
+/*		process_cycle()
 			set category = "Debug"
 			if(!master_controller)
 				usr << "Cannot find master_controller"
@@ -595,7 +596,7 @@ mob
 					if(S.processing)
 						S.icon_state = "individual_on"
 					else
-						S.icon_state = "individual_off"
+						S.icon_state = "individual_off"*/
 
 
 		mark_groups()

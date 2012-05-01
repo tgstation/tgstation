@@ -244,7 +244,6 @@
 	src.air_contents = new /datum/gas_mixture()
 	src.air_contents.volume = volume //liters
 	src.air_contents.temperature = T20C
-	air_contents.update_values()
 
 	processing_objects.Add(src)
 
