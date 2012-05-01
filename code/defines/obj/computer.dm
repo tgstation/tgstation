@@ -71,32 +71,6 @@
 	var/h_b = 245.0
 
 
-
-/obj/machinery/computer/pod
-	name = "Pod Launch Control"
-	desc = "A control for launching pods."
-	icon_state = "computer_generic"
-	var/id = 1.0
-	var/obj/machinery/mass_driver/connected = null
-	var/timing = 0.0
-	var/time = 30.0
-
-
-/obj/machinery/computer/pod/old
-	icon_state = "old"
-	name = "DoorMex Control Computer"
-
-
-/obj/machinery/computer/pod/old/syndicate
-	name = "ProComp Executive IIc"
-	desc = "The Syndicate operate on a tight budget. Operates external airlocks."
-
-
-/obj/machinery/computer/pod/old/swf
-	name = "Magix System IV"
-	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorceror's Edition"
-
-
 /obj/machinery/computer/secure_data
 	name = "Security Records"
 	desc = "Used to view and edit personnel's security records"

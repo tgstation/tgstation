@@ -264,7 +264,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		..()
 		if (src.closeOtherId != null)
 			spawn (5)
-				for (var/obj/machinery/door/airlock/A in machines)
+				for (var/obj/machinery/door/airlock/A in world)
 					if (A.closeOtherId == src.closeOtherId && A != src)
 						src.closeOther = A
 						break
