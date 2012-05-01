@@ -101,31 +101,51 @@
 		if("hurt")
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Punched [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
-
 			log_attack("<font color='red'>[M.name] ([M.ckey]) punched [src.name] ([src.ckey])</font>")
 
 
+			var/attack_verb
+			switch(M.mutantrace)
+				if("lizard")
+					attack_verb = "scratch"
+				if("plant")
+					attack_verb = "slash"
+				else
+					attack_verb = "punch"
 
+			if(istajaran(M))
+				attack_verb = "slash"
 
 			var/damage = rand(0, 9)
 			if(!damage)
-				playsound(loc, 'punchmiss.ogg', 25, 1, -1)
-				visible_message("\red <B>[M] has attempted to punch [src]!</B>")
+				switch(attack_verb)
+					if("slash")
+						playsound(loc, 'slashmiss.ogg', 25, 1, -1)
+					else
+						playsound(loc, 'punchmiss.ogg', 25, 1, -1)
+
+				visible_message("\red <B>[M] has attempted to [attack_verb] [src]!</B>")
 				return 0
+
+
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/armor_block = run_armor_check(affecting, "melee")
 
 			if(M.mutations & HULK)	damage += 5
-			playsound(loc, "punch", 25, 1, -1)
 
-			visible_message("\red <B>[M] has punched [src]!</B>")
+			switch(attack_verb)
+				if("slash")
+					playsound(loc, 'slice.ogg', 25, 1, -1)
+				else
+					playsound(loc, "punch", 25, 1, -1)
+
+			visible_message("\red <B>[M] has [attack_verb]ed [src]!</B>")
 
 			apply_damage(damage, BRUTE, affecting, armor_block)
 			if(damage >= 9)
 				visible_message("\red <B>[M] has weakened [src]!</B>")
 				apply_effect(4, WEAKEN, armor_block)
 			UpdateDamageIcon()
-
 
 		if("disarm")
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Disarmed [src.name] ([src.ckey])</font>")
@@ -180,4 +200,7 @@
 
 			playsound(loc, 'punchmiss.ogg', 25, 1, -1)
 			visible_message("\red <B>[M] attempted to disarm [src]!</B>")
+	return
+
+/mob/living/carbon/human/proc/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, inrange, params)
 	return

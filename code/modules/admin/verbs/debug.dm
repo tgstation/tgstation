@@ -359,9 +359,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/card/id/id = new/obj/item/weapon/card/id(M);
 			id.icon_state = "gold"
 			id:access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
-			id.registered = H.real_name
+			id.registered_name = H.real_name
 			id.assignment = "Captain"
-			id.name = "[id.registered]'s ID Card ([id.assignment])"
+			id.name = "[id.registered_name]'s ID Card ([id.assignment])"
 			H.equip_if_possible(id, H.slot_wear_id)
 			H.update_clothing()
 	else
@@ -557,7 +557,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.name = "[M.real_name]'s ID Card"
 			W.access = get_all_accesses()
 			W.assignment = "Tunnel Clown!"
-			W.registered = M.real_name
+			W.registered_name = M.real_name
 			M.equip_if_possible(W, M.slot_wear_id)
 
 			var/obj/item/weapon/twohanded/fireaxe/fire_axe = new(M)
@@ -614,7 +614,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.name = "[M.real_name]'s ID Card"
 			W.access = get_all_accesses()
 			W.assignment = "Reaper"
-			W.registered = M.real_name
+			W.registered_name = M.real_name
 			M.equip_if_possible(W, M.slot_wear_id)
 
 		if("death commando")//Was looking to add this for a while.
@@ -647,7 +647,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access = get_all_accesses()
 			W.access += list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer")
 			W.assignment = "CentCom Review Official"
-			W.registered = M.real_name
+			W.registered_name = M.real_name
 			M.equip_if_possible(W, M.slot_wear_id)
 
 		if("centcom commander")
@@ -669,7 +669,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
 			W.assignment = "CentCom Commanding Officer"
-			W.registered = M.real_name
+			W.registered_name = M.real_name
 			M.equip_if_possible(W, M.slot_wear_id)
 
 		if("special ops officer")
@@ -691,7 +691,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
 			W.assignment = "Special Operations Officer"
-			W.registered = M.real_name
+			W.registered_name = M.real_name
 			M.equip_if_possible(W, M.slot_wear_id)
 
 		if("blue wizard")
@@ -745,7 +745,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access = get_all_accesses()
 			W.access += get_all_centcom_access()
 			W.assignment = "Admiral"
-			W.registered = M.real_name
+			W.registered_name = M.real_name
 			M.equip_if_possible(W, M.slot_wear_id)
 
 	M.update_clothing()

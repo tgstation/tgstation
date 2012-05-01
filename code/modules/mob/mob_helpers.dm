@@ -60,6 +60,11 @@
 		return 1
 	return 0
 
+/proc/istajaran(A)
+	if(istype(A, /mob/living/carbon/human/tajaran))
+		return 1
+	return 0
+
 /*proc/ishivebot(A)
 	if(A && istype(A, /mob/living/silicon/hivebot))
 		return 1
@@ -105,12 +110,21 @@ proc/isorgan(A)
 		return 1
 	return 0
 
+proc/hasorgans(A)
+	if(ishuman(A) || ismonkey(A))
+		return 1
+	return 0
+
+
+
+
 /proc/hsl2rgb(h, s, l)
 	return
 
 
 /proc/check_zone(zone)
-	if(!zone)	return "chest"
+	if(!zone)
+		return "chest"
 	switch(zone)
 		if("eyes")
 			zone = "head"

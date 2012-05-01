@@ -482,8 +482,10 @@
 	icon_state = "id"
 	item_state = "card-id"
 	var/access = list()
-	var/registered = null
+	var/registered_name = null // The name registered_name on the card
+
 	var/assignment = null
+	var/over_jumpsuit = 1 // If set to 0, it won't display on top of the mob's jumpsuit
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
 /obj/item/weapon/card/id/silver
@@ -507,7 +509,7 @@
 /obj/item/weapon/card/id/syndicate_command
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
-	registered = "Syndicate"
+	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
 	access = list(access_syndicate)
 
@@ -516,7 +518,7 @@
 	desc = "The spare ID of the High Lord himself."
 	icon_state = "gold"
 	item_state = "gold_id"
-	registered = "Captain"
+	registered_name = "Captain"
 	assignment = "Captain"
 	New()
 		access = get_access("Captain")
@@ -526,7 +528,7 @@
 	name = "\improper CentCom. ID"
 	desc = "An ID straight from Cent. Com."
 	icon_state = "centcom"
-	registered = "Central Command"
+	registered_name = "Central Command"
 	assignment = "General"
 	New()
 		access = get_all_centcom_access()

@@ -189,6 +189,9 @@
 			verbs += /client/proc/toggleadminhelpsound
 			verbs += /proc/possess
 			verbs += /proc/release
+			verbs += /client/proc/make_tajaran
+
+
 		else	return
 
 		//Badmin
@@ -417,6 +420,7 @@
 	verbs -= /client/proc/togglebuildmodeself
 	verbs -= /client/proc/kill_airgroup
 	verbs -= /client/proc/debug_master_controller
+	verbs -= /client/proc/make_tajaran
 	return
 
 

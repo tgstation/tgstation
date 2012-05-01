@@ -404,9 +404,9 @@ client
 			message_admins("Admin [key_name_admin(usr)] renamed [key_name_admin(M)] to [new_name].", 1)
 			if(istype(M, /mob/living/carbon/human))
 				for(var/obj/item/weapon/card/id/ID in M.contents)
-					if(ID.registered == M.real_name)
+					if(ID.registered_name == M.real_name)
 						ID.name = "[new_name]'s ID Card ([ID.assignment])"
-						ID.registered = new_name
+						ID.registered_name = new_name
 						break
 				for(var/obj/item/device/pda/PDA in M.contents)
 					if(PDA.owner == M.real_name)

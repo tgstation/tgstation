@@ -162,6 +162,6 @@
 	W.name = "Fake Cyborg Card"
 	W.access = list(access_theatre)
 	W.assignment = "Kill all humans! Beep. Boop."
-	W.registered = name
+	W.registered_name = name
 	del(src)
 	*/

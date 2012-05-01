@@ -343,8 +343,8 @@ This method wont take into account storage items developed in the future and doe
 			reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
 
 			if (istype(usr:wear_id, /obj/item/weapon/card/id))
-				if(usr:wear_id.registered)
-					idname = usr:wear_id.registered
+				if(usr:wear_id.registered_name)
+					idname = usr:wear_id.registered_name
 				if(usr:wear_id.assignment)
 					idrank = usr:wear_id.assignment
 			if (istype(usr:wear_id, /obj/item/device/pda))

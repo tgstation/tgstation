@@ -158,7 +158,7 @@
 			id = pda.owner
 		else if(istype(src.wear_id, /obj/item/weapon/card/id)) //just in case something other than a PDA/ID card somehow gets in the ID slot :[
 			var/obj/item/weapon/card/id/idcard = src.wear_id
-			id = idcard.registered
+			id = idcard.registered_name
 		if (id && (id != src.real_name) && (get_dist(src, usr) <= 1) && prob(10))
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[src.wear_id] \a [src.wear_id] yet something doesn't seem right...</span>\n"
 		else
@@ -244,7 +244,7 @@
 
 			if(wear_id)
 				if(istype(wear_id,/obj/item/weapon/card/id))
-					perpname = wear_id:registered
+					perpname = wear_id:registered_name
 				else if(istype(wear_id,/obj/item/device/pda))
 					var/obj/item/device/pda/tempPda = wear_id
 					perpname = tempPda.owner

@@ -719,6 +719,52 @@
 
 		//	health = 100 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 
+			var/leg_tally = 2
+			for(var/datum/organ/external/E in organs)
+				E.process()
+				if(E.robot && prob(E.brute_dam + E.burn_dam))
+					if(E.name == "l_hand" || E.name == "l_arm")
+						if(hand && equipped())
+							drop_item()
+							emote("custom v drops what they were holding, their limb malfunctioning!")
+							var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+							spark_system.set_up(5, 0, src)
+							spark_system.attach(src)
+							spark_system.start()
+							spawn(10)
+								del(spark_system)
+					else if(E.name == "r_hand" || E.name == "r_arm")
+						if(!hand && equipped())
+							drop_item()
+							emote("custom v drops what they were holding, their limb malfunctioning!")
+							var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+							spark_system.set_up(5, 0, src)
+							spark_system.attach(src)
+							spark_system.start()
+							spawn(10)
+								del(spark_system)
+					else if(E.name == "l_leg" || E.name == "l_foot" \
+						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
+						leg_tally--									// let it fail even if just foot&leg
+				if(E.broken || E.destroyed)
+					if(E.name == "l_hand" || E.name == "l_arm")
+						if(hand && equipped())
+							drop_item()
+							emote("scream")
+					else if(E.name == "r_hand" || E.name == "r_arm")
+						if(!hand && equipped())
+							drop_item()
+							emote("scream")
+					else if(E.name == "l_leg" || E.name == "l_foot" \
+						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
+						leg_tally--									// let it fail even if just foot&leg
+
+			// can't stand
+			if(leg_tally == 0 && !paralysis && !(lying || resting))
+				emote("scream")
+				emote("collapse")
+				paralysis = 10
+
 			if(getOxyLoss() > 50) Paralyse(3)
 
 			if(health < config.health_threshold_dead || brain_op_stage == 4.0)
@@ -733,6 +779,38 @@
 				Paralyse(5)
 
 			if (stat != 2) //Alive.
+
+				var/blood_volume = round(vessel.get_reagent_amount("blood"))
+				if(bloodloss)
+					drip(bloodloss)
+				if(!blood_volume)
+					bloodloss = 0
+				else if(blood_volume > 448)
+					if(pale)
+						pale = 0
+						update_body()
+				else if(blood_volume <= 448 && blood_volume > 336)
+					adjustToxLoss(1)
+					if(!pale)
+						pale = 1
+						update_body()
+						var/word = pick("dizzy","woosey","faint")
+						src << "\red You feel [word]"
+					if(prob(1))
+						var/word = pick("dizzy","woosey","faint")
+						src << "\red You feel [word]"
+				else if(blood_volume <= 336 && blood_volume > 244)
+					adjustToxLoss(5)
+					if(!pale)
+						pale = 1
+						update_body()
+					eye_blurry += 6
+					if(prob(15))
+						paralysis += rand(1,3)
+				else if(blood_volume <= 244 && blood_volume > 122)
+					if(toxloss <= 101)
+						toxloss = 101
+
 				if (silent)
 					silent--
 
@@ -783,6 +861,32 @@
 				silent = 0
 
 			if (stuttering) stuttering--
+
+			var/datum/organ/external/head/head = get_organ("head")
+			if(head && !head.disfigured)
+				if(head.brute_dam >= 45 || head.burn_dam >= 45)
+					head.disfigured = 1
+					emote("scream")
+					real_name = "Unknown"
+					src << "\red Your face has become disfigured."
+//					face_op_stage = 0.0
+			var/blood_max = 0
+			for(var/datum/organ/external/temp in organs)
+				if(!temp.bleeding || temp.robot) //THAT WAS DUMB.
+					continue
+			//	else
+			//		if(prob(35))
+			//			bloodloss += rand(1,10)
+				if(temp.wounds)
+					for(var/datum/organ/wound/W in temp.wounds)
+						if(W.wound_size && W.bleeding)
+							blood_max += W.wound_size
+				if(temp.destroyed && !temp.gauzed)
+					blood_max += 50 //Yer missing a fucking limb.
+			bloodloss = min(bloodloss+1,(blood_max))
+
+
+
 
 			if (eye_blind)
 				eye_blind--
@@ -882,21 +986,40 @@
 				if (mutantrace == "lizard" || mutantrace == "metroid")
 					see_in_dark = 3
 					see_invisible = 1
+
+				else if (istajaran(src))
+					see_in_dark = 8
+
 				else if (druggy) // If drugged~
 					see_in_dark = 2
 					//see_invisible regulated by drugs themselves.
 				else
 					see_in_dark = 2
-					var/seer = 0
-					for(var/obj/effect/rune/R in world)
-						if(loc==R.loc && R.word1==wordsee && R.word2==wordhell && R.word3==wordjoin)
-							seer = 1
-					if(!seer)
-						see_invisible = 0
 
-			else if(istype(head, /obj/item/clothing/head/helmet/welding))
+				var/seer = 0
+				for(var/obj/effect/rune/R in world)
+					if(loc==R.loc && R.word1==wordsee && R.word2==wordhell && R.word3==wordjoin)
+						seer = 1
+				if(!seer)
+					see_invisible = 0
+
+
+
+
+
+
+
+			else if(istype(head, /obj/item/clothing/head/helmet/welding))		// wat.  This is never fucking called.
 				if(!head:up && tinted_weldhelh)
 					see_in_dark = 1
+
+
+
+
+
+
+
+
 
 		/* HUD shit goes here, as long as it doesn't modify src.sight flags */
 		// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl

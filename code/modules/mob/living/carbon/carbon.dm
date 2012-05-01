@@ -167,7 +167,6 @@
 				var/status = ""
 				var/brutedamage = org.brute_dam
 				var/burndamage = org.burn_dam
-
 				if(halloss > 0)
 					if(prob(30))
 						brutedamage += halloss
@@ -215,3 +214,4 @@
 
 /mob/living/carbon/proc/eyecheck()
 	return 0
+

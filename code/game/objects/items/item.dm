@@ -93,6 +93,18 @@
 
 /obj/item/attack_hand(mob/user as mob)
 	if (!user) return
+	if (user.hand)
+		if(ishuman(user))
+			var/datum/organ/external/temp = user:get_organ("l_hand")
+			if(temp.destroyed)
+				user << "\blue You look at your stump."
+				return
+	else
+		if(ishuman(user))
+			var/datum/organ/external/temp = user:get_organ("r_hand")
+			if(temp.destroyed)
+				user << "\blue You look at your stump."
+
 	if (istype(src.loc, /obj/item/weapon/storage))
 		for(var/mob/M in range(1, src.loc))
 			if (M.s_active == src.loc)

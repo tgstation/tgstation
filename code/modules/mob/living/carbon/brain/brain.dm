@@ -1,6 +1,6 @@
 /mob/living/carbon/brain
 	var
-		obj/item/device/mmi/container = null
+		obj/item/container = null
 		timeofhostdeath = 0
 
 	New()
@@ -30,3 +30,15 @@
 		if (istype(other, /mob/living/carbon/metroid))
 			return 1
 		return ..()
+
+
+/mob/living/carbon/brain/Login()
+	..()
+
+	if (!isturf(src.loc))
+		src.client.eye = src.loc
+		src.client.perspective = EYE_PERSPECTIVE
+	if (!container || !istype(container, /obj/item/device/mmi))
+		src.verbs += /mob/proc/ghost
+
+	return

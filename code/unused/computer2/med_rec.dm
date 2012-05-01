@@ -119,7 +119,7 @@
 			src.active1 = null
 			src.active2 = null
 			if (src.check_access(src.master.authid))
-				src.authenticated = src.master.authid.registered
+				src.authenticated = src.master.authid.registered_name
 				src.rank = src.master.authid.assignment
 				src.screen = 1
 	if (src.authenticated)

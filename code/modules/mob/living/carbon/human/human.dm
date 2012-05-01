@@ -54,6 +54,10 @@
 	var/mutantrace = null
 
 	var/list/organs = list()
+	var/bloodloss = 0
+	var/datum/reagents/vessel
+	var/pale = 0
+
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
@@ -62,30 +66,19 @@
 
 
 /mob/living/carbon/human/New()
+
+	..()
+
+
+
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
 
-	if(!dna)	dna = new /datum/dna(null)
+	if(!dna)
+		dna = new /datum/dna(null)
 
-	var/datum/organ/external/chest/chest = new /datum/organ/external/chest(src)
-	var/datum/organ/external/head/head = new /datum/organ/external/head(src)
-	var/datum/organ/external/l_arm/l_arm = new /datum/organ/external/l_arm(src)
-	var/datum/organ/external/r_arm/r_arm = new /datum/organ/external/r_arm(src)
-	var/datum/organ/external/r_leg/r_leg = new /datum/organ/external/r_leg(src)
-	var/datum/organ/external/l_leg/l_leg = new /datum/organ/external/l_leg(src)
-	chest.owner = src
-	head.owner = src
-	r_arm.owner = src
-	l_arm.owner = src
-	r_leg.owner = src
-	l_leg.owner = src
-	organs += chest
-	organs += head
-	organs += r_arm
-	organs += l_arm
-	organs += r_leg
-	organs += l_leg
+	make_human_organs()
 
 	var/g = "m"
 	if (gender == MALE)
@@ -96,16 +89,56 @@
 		gender = MALE
 		g = "m"
 
-	spawn (1)
-		if(!stand_icon)
-			stand_icon = new /icon('human.dmi', "body_[g]_s")
-		if(!lying_icon)
-			lying_icon = new /icon('human.dmi', "body_[g]_l")
+	spawn(1)
+		stand_icon = new /icon('human.dmi', "body_[g]_s")
+		lying_icon = new /icon('human.dmi', "body_[g]_l")
 		icon = stand_icon
 		update_clothing()
+
 		src << "\blue Your icons have been generated!"
 
-	..()
+	vessel = new/datum/reagents(600)
+	vessel.my_atom = src
+	vessel.add_reagent("blood",560)
+	spawn(1)
+		fixblood()
+
+
+/mob/living/carbon/human/proc/fixblood()
+	for(var/datum/reagent/blood/B in vessel.reagent_list)
+		if(B.id == "blood")
+			B.data = list("donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_type"=dna.b_type,"resistances"=null,"trace_chem"=null)
+
+/mob/living/carbon/human/proc/drip(var/amt as num)
+	if(!amt)
+		return
+
+	var/amm = 0.1 * amt
+	var/turf/T = get_turf(src)
+	var/list/obj/effect/decal/cleanable/blood/drip/nums = list()
+	var/list/iconL = list("1","2","3","4","5")
+
+	vessel.remove_reagent("blood",amm)
+
+	for(var/obj/effect/decal/cleanable/blood/drip/G in T)
+		nums += G
+		iconL.Remove(G.icon_state)
+		if(nums.len >= 3)
+			var/obj/effect/decal/cleanable/blood/drip/D = pick(nums)
+			D.blood_DNA.len++
+			D.blood_DNA[D.blood_DNA.len] = list(dna.unique_enzymes,dna.b_type)
+//			if(virus2)
+//				D.virus2 = virus2.getcopy()
+			return
+
+	var/obj/effect/decal/cleanable/blood/drip/this = new(T)
+	this.icon_state = pick(iconL)
+	this.blood_DNA = list(list(dna.unique_enzymes,dna.b_type))
+//	this.blood_owner = src
+
+//	if(virus2)
+//		this.virus2 = virus2.getcopy()
+
 
 //	organStructure = new /obj/effect/organstructure/human(src)
 
@@ -196,6 +229,14 @@
 
 	var/hungry = (500 - nutrition)/5 // So overeat would be 100 and default level would be 80
 	if (hungry >= 70) tally += hungry/50
+
+
+	for(var/organ in list("l_leg","l_foot","r_leg","r_foot"))
+		var/datum/organ/external/o = get_organ(organ)
+		if(o.broken)
+			tally += 6
+		if(o.destroyed)
+			tally += 12
 
 	if(wear_suit)
 		tally += wear_suit.slowdown
@@ -1019,8 +1060,8 @@
 		if (wear_id)
 			if (istype(wear_id, /obj/item/weapon/card/id))
 				var/obj/item/weapon/card/id/id = wear_id
-				if (id.registered)
-					name = id.registered
+				if (id.registered_name)
+					name = id.registered_name
 				else
 					name = "Unknown"
 			else if (istype(wear_id, /obj/item/device/pda))
@@ -1035,8 +1076,8 @@
 		if (wear_id)
 			if (istype(wear_id, /obj/item/weapon/card/id))
 				var/obj/item/weapon/card/id/id = wear_id
-				if (id.registered != real_name)
-					name = "[real_name] (as [id.registered])"
+				if (id.registered_name != real_name)
+					name = "[real_name] (as [id.registered_name])"
 
 
 			else if (istype(wear_id, /obj/item/device/pda))
@@ -1219,58 +1260,152 @@
 		return 1
 	return 0
 
+#define BS12TEST 1
 /mob/living/carbon/human/proc/update_body()
-	if(stand_icon)
-		del(stand_icon)
-	if(lying_icon)
-		del(lying_icon)
 
-	if (mutantrace)
-		return
+	if(!BS12TEST)
 
-	var/g = "m"
-	if (gender == MALE)
-		g = "m"
-	else if (gender == FEMALE)
-		g = "f"
+		if(stand_icon)
+			del(stand_icon)
+		if(lying_icon)
+			del(lying_icon)
 
-	stand_icon = new /icon('human.dmi', "blank")
-	lying_icon = new /icon('human.dmi', "blank")
+		if (mutantrace)
+			return
 
-	var/husk = (mutations & HUSK)
-	var/obese = (mutations & FAT)
+		var/g = "m"
+		if (gender == MALE)
+			g = "m"
+		else if (gender == FEMALE)
+			g = "f"
 
-	if (husk)
-		stand_icon.Blend(new /icon('human.dmi', "husk_s"), ICON_OVERLAY)
-		lying_icon.Blend(new /icon('human.dmi', "husk_l"), ICON_OVERLAY)
-	else if(obese)
-		stand_icon.Blend(new /icon('human.dmi', "fatbody_s"), ICON_OVERLAY)
-		lying_icon.Blend(new /icon('human.dmi', "fatbody_l"), ICON_OVERLAY)
+		stand_icon = new /icon('human.dmi', "blank")
+		lying_icon = new /icon('human.dmi', "blank")
+
+		var/husk = (mutations & HUSK)
+		var/obese = (mutations & FAT)
+
+		if (husk)
+			stand_icon.Blend(new /icon('human.dmi', "husk_s"), ICON_OVERLAY)
+			lying_icon.Blend(new /icon('human.dmi', "husk_l"), ICON_OVERLAY)
+		else if(obese)
+			stand_icon.Blend(new /icon('human.dmi', "fatbody_s"), ICON_OVERLAY)
+			lying_icon.Blend(new /icon('human.dmi', "fatbody_l"), ICON_OVERLAY)
+		else
+			stand_icon.Blend(new /icon('human.dmi', "chest_[g]_s"), ICON_OVERLAY)
+			lying_icon.Blend(new /icon('human.dmi', "chest_[g]_l"), ICON_OVERLAY)
+
+			for (var/part in list("head", "arm_left", "arm_right", "hand_left", "hand_right", "leg_left", "leg_right", "foot_left", "foot_right"))
+				stand_icon.Blend(new /icon('human.dmi', "[part]_s"), ICON_OVERLAY)
+				lying_icon.Blend(new /icon('human.dmi', "[part]_l"), ICON_OVERLAY)
+
+			stand_icon.Blend(new /icon('human.dmi', "groin_[g]_s"), ICON_OVERLAY)
+			lying_icon.Blend(new /icon('human.dmi', "groin_[g]_l"), ICON_OVERLAY)
+
+		// Skin tone
+		if (s_tone >= 0)
+			stand_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
+			lying_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
+		else
+			stand_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
+			lying_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
+
+		if (underwear < 6 && underwear > 0)
+			if(!obese)
+				stand_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
+				lying_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_l"), ICON_OVERLAY)
+
 	else
+		if(stand_icon)
+			del(stand_icon)
+		if(lying_icon)
+			del(lying_icon)
+
+		if (mutantrace)
+			return
+
+		var/g = "m"
+		if (gender == MALE)
+			g = "m"
+		else if (gender == FEMALE)
+			g = "f"
+
+		stand_icon = new /icon('human.dmi', "torso_[g]_s")
+		lying_icon = new /icon('human.dmi', "torso_[g]_l")
+
+		var/husk = (mutations & HUSK)
+		var/obese = (mutations & FAT)
+
 		stand_icon.Blend(new /icon('human.dmi', "chest_[g]_s"), ICON_OVERLAY)
 		lying_icon.Blend(new /icon('human.dmi', "chest_[g]_l"), ICON_OVERLAY)
 
-		for (var/part in list("head", "arm_left", "arm_right", "hand_left", "hand_right", "leg_left", "leg_right", "foot_left", "foot_right"))
-			stand_icon.Blend(new /icon('human.dmi', "[part]_s"), ICON_OVERLAY)
-			lying_icon.Blend(new /icon('human.dmi', "[part]_l"), ICON_OVERLAY)
+		var/datum/organ/external/head = get_organ("head")
+		if(!head.destroyed)
+			stand_icon.Blend(new /icon('human.dmi', "head_[g]_s"), ICON_OVERLAY)
+			lying_icon.Blend(new /icon('human.dmi', "head_[g]_l"), ICON_OVERLAY)
+
+		for(var/datum/organ/external/part in organs)
+			if(!istype(part, /datum/organ/external/groin) \
+				&& !istype(part, /datum/organ/external/chest) \
+				&& !istype(part, /datum/organ/external/head) \
+				&& !part.destroyed)
+				var/icon/temp = new /icon('human.dmi', "[part.icon_name]_s")
+				if(part.robot)
+					temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+				stand_icon.Blend(temp, ICON_OVERLAY)
+				temp = new /icon('human.dmi', "[part.icon_name]_l")
+				if(part.robot)
+					temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+				lying_icon.Blend(temp , ICON_OVERLAY)
 
 		stand_icon.Blend(new /icon('human.dmi', "groin_[g]_s"), ICON_OVERLAY)
 		lying_icon.Blend(new /icon('human.dmi', "groin_[g]_l"), ICON_OVERLAY)
 
-	// Skin tone
-	if (s_tone >= 0)
-		stand_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
-		lying_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
-	else
-		stand_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
-		lying_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
+		if (husk)
+			var/icon/husk_s = new /icon('human.dmi', "husk_s")
+			var/icon/husk_l = new /icon('human.dmi', "husk_l")
 
-	if (underwear < 6 && underwear > 0)
-		if(!obese)
-			stand_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
-			lying_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_l"), ICON_OVERLAY)
+			for(var/datum/organ/external/part in organs)
+				if(!istype(part, /datum/organ/external/groin) \
+					&& !istype(part, /datum/organ/external/chest) \
+					&& !istype(part, /datum/organ/external/head) \
+					&& part.destroyed)
+					husk_s.Blend(new /icon('dam_mask.dmi', "[part.icon_name]"), ICON_SUBTRACT)
+					husk_l.Blend(new /icon('dam_mask.dmi', "[part.icon_name]2"), ICON_SUBTRACT)
+
+			stand_icon.Blend(husk_s, ICON_OVERLAY)
+			lying_icon.Blend(husk_l, ICON_OVERLAY)
+		else if(obese)
+			stand_icon.Blend(new /icon('human.dmi', "fatbody_s"), ICON_OVERLAY)
+			lying_icon.Blend(new /icon('human.dmi', "fatbody_l"), ICON_OVERLAY)
+
+		// Skin tone
+		if (s_tone >= 0)
+			stand_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
+			lying_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
+		else
+			stand_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
+			lying_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
+//		if(pale)
+//			stand_icon.Blend(rgb(100,100,100))
+//			lying_icon.Blend(rgb(100,100,100))
+
+		if (underwear < 6 && underwear > 0)
+			if(!obese)
+				stand_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
+				lying_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_l"), ICON_OVERLAY)
+
+
+
 
 /mob/living/carbon/human/proc/update_face()
+	if(organs)
+		var/datum/organ/external/head = get_organ("head")
+		if(head)
+			if(head.destroyed)
+				del(face_standing)
+				del(face_lying)
+				return
 	if(!facial_hair_style || !hair_style)	return//Seems people like to lose their icons, this should stop the runtimes for now
 	del(face_standing)
 	del(face_lying)
@@ -2059,11 +2194,11 @@ It can still be worn/put on as normal.
 	var/obj/item/weapon/card/id/id = wear_id
 	if (istype(pda))
 		if (pda.id)
-			. = pda.id.registered
+			. = pda.id.registered_name
 		else
 			. = pda.owner
 	else if (istype(id))
-		. = id.registered
+		. = id.registered_name
 	else
 		return if_no_id
 	return
@@ -2076,7 +2211,7 @@ It can still be worn/put on as normal.
 	if (istype(pda))
 		. = pda.owner
 	else if (istype(id))
-		. = id.registered
+		. = id.registered_name
 	else
 		return if_no_id
 	return
@@ -2203,7 +2338,7 @@ It can still be worn/put on as normal.
 
 				if(wear_id)
 					if(istype(wear_id,/obj/item/weapon/card/id))
-						perpname = wear_id:registered
+						perpname = wear_id:registered_name
 					else if(istype(wear_id,/obj/item/device/pda))
 						var/obj/item/device/pda/tempPda = wear_id
 						perpname = tempPda.owner

@@ -58,7 +58,7 @@
 					W.access = get_all_accesses()
 					W.name = "[newname]'s ID card (Death Commando)"
 					W.assignment = "Death Commando"
-					W.registered = newname
+					W.registered_name = newname
 					M.equip_if_possible(W, M.slot_wear_id)
 		..()
 

@@ -729,9 +729,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			pda.name = "PDA-[newname] ([pda.ownjob])"
 			break
 	for(var/obj/item/weapon/card/id/id in M.contents)
-		if(id.registered == oldname)
-			id.registered = newname
-			id.name = "[id.registered]'s ID Card ([id.assignment])"
+		if(id.registered_name == oldname)
+			id.registered_name = newname
+			id.name = "[id.registered_name]'s ID Card ([id.assignment])"
 			break
 
 /proc/ionnum()

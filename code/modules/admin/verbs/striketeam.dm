@@ -135,7 +135,7 @@ var/global/sent_strike_team = 0
 	if(!(new_commando.mind in ticker.mode.traitors))//If they weren't already an extra traitor.
 		ticker.mode.traitors += new_commando.mind//Adds them to current traitor list. Which is really the extra antagonist list.
 	new_commando.equip_death_commando(leader_selected)
-	del(spawn_location)
+//	del(spawn_location)
 	return new_commando
 
 /mob/living/carbon/human/proc/equip_death_commando(leader_selected = 0)
@@ -190,7 +190,7 @@ var/global/sent_strike_team = 0
 	W.access = get_all_accesses()//They get full station access.
 	W.access += list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)//Let's add their alloted CentCom access.
 	W.assignment = "Death Commando"
-	W.registered = real_name
+	W.registered_name = real_name
 	equip_if_possible(W, slot_wear_id)
 
 	resistances += "alien_embryo"

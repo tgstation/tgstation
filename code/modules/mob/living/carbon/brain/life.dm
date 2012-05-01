@@ -40,6 +40,8 @@
 
 		clamp_values()
 
+
+
 	proc
 
 		clamp_values()
@@ -312,3 +314,4 @@
 				for(var/datum/disease/D in viruses)
 					D.cure()
 			return
+
