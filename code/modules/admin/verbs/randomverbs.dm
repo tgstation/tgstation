@@ -177,6 +177,8 @@
 
 	create_xeno()
 	feedback_add_details("admin_verb","X") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(usr)] spawned a xeno.")
+	message_admins("\blue [key_name_admin(usr)] spawned a xeno.", 1)
 	return
 
 //I use this proc for respawn character too. /N
@@ -614,9 +616,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	//Due to the delay here its easy for something to have happened to the mob
 	if(!M)	return
 
-	if(usr.key != M.key && M.client)
-		log_admin("[key_name(usr)] has gibbed [key_name(M)]")
-		message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(M)]", 1)
+	log_admin("[key_name(usr)] has gibbed [key_name(M)]")
+	message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(M)]", 1)
 
 	if(istype(M, /mob/dead/observer))
 		gibs(M.loc, M.viruses)
@@ -632,6 +633,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 	else
 		mob.gib()
+
+		log_admin("[key_name(usr)] used gibself.")
+		message_admins("\blue [key_name_admin(usr)] used gibself.", 1)
 		feedback_add_details("admin_verb","GIBS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /*
 /client/proc/cmd_manual_ban()
@@ -704,6 +708,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		usr << "[t]"
 	feedback_add_details("admin_verb","CC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/* This proc is DEFERRED. Does not do anything.
 /client/proc/cmd_admin_remove_plasma()
 	set category = "Debug"
 	set name = "Stabilize Atmos."
@@ -712,7 +717,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 	feedback_add_details("admin_verb","STATM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 // DEFERRED
-/*
 	spawn(0)
 		for(var/turf/T in view())
 			T.poison = 0
@@ -744,6 +748,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		view = input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128)
 	else
 		view = world.view
+
+	log_admin("[key_name(usr)] changed their view range to [view].")
+	message_admins("\blue [key_name_admin(usr)] changed their view range to [view].", 1)
+
 	feedback_add_details("admin_verb","CVRA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/admin_call_shuttle()
@@ -772,6 +780,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
 	world << sound('shuttlecalled.ogg')
 	feedback_add_details("admin_verb","CSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(usr)] admin-called the emergency shuttle.")
+	message_admins("\blue [key_name_admin(usr)] admin-called the emergency shuttle.", 1)
 	return
 
 /client/proc/admin_cancel_shuttle()
@@ -791,6 +801,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	emergency_shuttle.recall()
 	feedback_add_details("admin_verb","CCSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(usr)] admin-recalled the emergency shuttle.")
+	message_admins("\blue [key_name_admin(usr)] admin-recalled the emergency shuttle.", 1)
 
 	return
 

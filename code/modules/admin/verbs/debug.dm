@@ -194,6 +194,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		spawn(10)
 			M:Alienize()
 			feedback_add_details("admin_verb","MKAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		log_admin("[key_name(usr)] made [key_name(M)] into an alien.")
+		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into an alien.", 1)
 	else
 		alert("Invalid mob")
 
@@ -209,6 +211,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		spawn(10)
 			M:Metroidize()
 			feedback_add_details("admin_verb","MKMET") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		log_admin("[key_name(usr)] made [key_name(M)] into a metroid.")
+		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into a metroid.", 1)
 	else
 		alert("Invalid mob")
 
@@ -349,12 +353,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			if(istype(H.wear_id, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = H.wear_id
 				id = pda.id
-			log_admin("[key_name(src)] has granted [M.key] full access.")
 			id.icon_state = "gold"
 			id:access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
 		else
 			var/obj/item/weapon/card/id/id = new/obj/item/weapon/card/id(M);
-			log_admin("[key_name(src)] has granted [M.key] full access.")
 			id.icon_state = "gold"
 			id:access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
 			id.registered = H.real_name
@@ -365,6 +367,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	else
 		alert("Invalid mob")
 	feedback_add_details("admin_verb","GFA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(src)] has granted [M.key] full access.")
+	message_admins("\blue [key_name_admin(usr)] has granted [M.key] full access.", 1)
 
 /client/proc/cmd_assume_direct_control(var/mob/M in world)
 	set category = "Admin"
@@ -382,6 +386,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if( isobserver(adminmob) )
 		del(adminmob)
 	feedback_add_details("admin_verb","ADC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(usr)] assumed direct control of [M].")
+	message_admins("\blue [key_name_admin(usr)] assumed direct control of [M].", 1)
 
 
 
@@ -743,6 +749,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(W, M.slot_wear_id)
 
 	M.update_clothing()
+
+	log_admin("[key_name(usr)] changed the equipment of [key_name(M)] to [dresscode].")
+	message_admins("\blue [key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode]..", 1)
 	return
 
 /client/proc/startSinglo()

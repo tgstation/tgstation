@@ -177,7 +177,7 @@
 			verbs += /obj/admins/proc/toggleaban						//abandon mob
 			verbs += /obj/admins/proc/show_traitor_panel
 			verbs += /client/proc/getserverlog							//fetch an old serverlog to look at
-			verbs += /client/proc/cmd_admin_remove_plasma
+			//verbs += /client/proc/cmd_admin_remove_plasma 			--This proc is outdated, does not do anything
 			verbs += /client/proc/admin_call_shuttle
 			verbs += /client/proc/admin_cancel_shuttle
 			verbs += /client/proc/cmd_admin_dress
@@ -345,7 +345,7 @@
 	//verbs -= /client/proc/cmd_admin_rejuvenate						--merged with player panel
 	verbs -= /client/proc/cmd_admin_delete
 	verbs -= /client/proc/toggleadminhelpsound
-	verbs -= /client/proc/cmd_admin_remove_plasma
+	//verbs -= /client/proc/cmd_admin_remove_plasma						--This proc is outdated, does not do anything
 	verbs -= /client/proc/admin_call_shuttle
 	verbs -= /client/proc/admin_cancel_shuttle
 	verbs -= /client/proc/cmd_admin_dress
@@ -625,6 +625,8 @@
 	if(!S) return
 	T.spell_list += new S
 	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
+	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the spell [S].", 1)
 
 /client/proc/make_sound(var/obj/O in world) // -- TLE
 	set category = "Special Verbs"
@@ -636,7 +638,9 @@
 			return
 		for (var/mob/V in hearers(O))
 			V.show_message(message, 2)
-	feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
+		message_admins("\blue [key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound", 1)
+		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/togglebuildmodeself()
@@ -679,6 +683,8 @@
 		kill_air = 1
 		usr << "<b>Disabled air processing.</b>"
 	feedback_add_details("admin_verb","KA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(usr)] used 'kill air'.")
+	message_admins("\blue [key_name_admin(usr)] used 'kill air'.", 1)
 
 /client/proc/show_verbs()
 	set name = "Toggle admin verb visibility"
