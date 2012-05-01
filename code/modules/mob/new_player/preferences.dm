@@ -634,7 +634,7 @@ datum/preferences
 		if(link_tags["age"])
 			switch(link_tags["age"])
 				if("input")
-					var/new_age = input(user, "Please select type in age: 15-45", "Character Generation")  as num
+					var/new_age = input(user, "Please select type in age: 20-65", "Character Generation")  as num
 					if(new_age)
 						age = max(min(round(text2num(new_age)), 65), 20)
 				if("random")
