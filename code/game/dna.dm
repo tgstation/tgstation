@@ -361,28 +361,28 @@
 	if (!M) return
 	//mutations
 	/*
-	TK				=(1<<0)
-	COLD_RESISTANCE	=(1<<1)
-	XRAY			=(1<<2)
-	HULK			=(1<<3)
-	CLUMSY			=(1<<4)
-	//FAT				=(1<<5)
-	HUSK			=(1<<6)
-	LASER			=(1<<7)
-	HEAL			=(1<<8)
-	mNobreath		=(1<<9)
-	mRemote			=(1<<10)
-	mRegen			=(1<<11)
-	mRun			=(1<<12)
-	mRemotetalk		=(1<<13)
-	mMorph			=(1<<14)
-	mBlend			=(1<<15)
+	TK				=(1<<0)	1
+	COLD_RESISTANCE	=(1<<1)	2
+	XRAY			=(1<<2)	4
+	HULK			=(1<<3)	8
+	CLUMSY			=(1<<4)	16
+	//FAT				=(1<<5) 32
+	HUSK			=(1<<6)	64
+	LASER			=(1<<7)	128
+	HEAL			=(1<<8)	256
+	mNobreath		=(1<<9)	512
+	mRemote			=(1<<10)	1024
+	mRegen			=(1<<11)	2048
+	mRun			=(1<<12)	4096
+	mRemotetalk		=(1<<13)	8192
+	mMorph			=(1<<14)	16384
+	mBlend			=(1<<15)	32768
 
 	mutations2:
-	mHallucination	=(1<<0)
-	mFingerprints	=(1<<1)
-	mShock			=(1<<2)
-	mSmallsize		=(1<<3)
+	mHallucination	=(1<<0) 1
+	mFingerprints	=(1<<1) 2
+	mShock			=(1<<2) 4
+	mSmallsize		=(1<<3)	8
 	*/
 
 	//disabilities
