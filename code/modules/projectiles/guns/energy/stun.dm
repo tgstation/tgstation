@@ -3,6 +3,7 @@
 	name = "\improper Taser Gun"
 	desc = "A small, low capacity gun used for non-lethal takedowns."
 	icon_state = "taser"
+	item_state = "taser100"
 	fire_sound = 'Taser.ogg'
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/energy/electrode"
