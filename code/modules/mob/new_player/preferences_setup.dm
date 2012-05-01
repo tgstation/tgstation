@@ -15,7 +15,7 @@ datum/preferences
 		underwear = 1
 		backbag = 2
 		b_type = pick("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
-		age = rand(20,65)
+		age = rand(minimum_age, maximum_age)
 		copy_to(H,1)
 
 	proc/randomize_name()
