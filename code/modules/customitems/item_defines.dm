@@ -82,7 +82,7 @@
 	desc = "It's a cool looking pen. Lots of colors!"
 
 /obj/item/weapon/pen/fluff/fancypen
-	name = "multicolor pen"
+	name = "fancy pen"
 	desc = "A fancy metal pen. It uses blue ink. An inscription on one side reads,\"L.L. - L.R.\""
 	icon = 'custom_items.dmi'
 	icon_state = "fancypen"
