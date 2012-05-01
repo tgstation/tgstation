@@ -2840,6 +2840,9 @@ It can still be worn/put on as normal.
 	var/list/mob/creatures = list()
 
 	for(var/mob/living/carbon/h in world)
+		var/turf/temp_turf = get_turf(h)
+		if(temp_turf.z != 1 && temp_turf.z != 5) //Not on mining or the station.
+			continue
 		creatures += h
 
 	var/mob/target = input ("Who do you want to project your mind to ?") as mob in creatures
