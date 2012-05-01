@@ -467,16 +467,10 @@ datum
 			//   then -1 if sharer-check failed (sharing airgroup breaks?)
 			//   then 1 if both checks pass (share succesful?)
 
-			var/pressure = 1
-			if(!return_pressure() || !sharer.return_pressure())
-				pressure = 3
-			else if(pressure < 0)
-				pressure = (sharer.return_pressure() / return_pressure())
-			pressure = max(min(pressure,3),1) //Lets cap this.
-			var/delta_oxygen = max(QUANTIZE(oxygen_archived - sharer.oxygen_archived) * pressure/TRANSFER_FRACTION,oxygen)
-			var/delta_carbon_dioxide = max(QUANTIZE(carbon_dioxide_archived - sharer.carbon_dioxide_archived) * pressure/TRANSFER_FRACTION,carbon_dioxide)
-			var/delta_nitrogen = max(QUANTIZE(nitrogen_archived - sharer.nitrogen_archived) * pressure/TRANSFER_FRACTION,nitrogen)
-			var/delta_toxins = max(QUANTIZE(toxins_archived - sharer.toxins_archived) * pressure/TRANSFER_FRACTION,toxins)
+			var/delta_oxygen = QUANTIZE(oxygen_archived - sharer.oxygen_archived)/TRANSFER_FRACTION
+			var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - sharer.carbon_dioxide_archived)/TRANSFER_FRACTION
+			var/delta_nitrogen = QUANTIZE(nitrogen_archived - sharer.nitrogen_archived)/TRANSFER_FRACTION
+			var/delta_toxins = QUANTIZE(toxins_archived - sharer.toxins_archived)/TRANSFER_FRACTION
 
 			var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 
@@ -558,17 +552,10 @@ datum
 			//Inputs: Air datum to share with
 			//Outputs: Amount of gas exchanged (Negative if lost air, positive if gained.)
 
-			if(!sharer)	return 0
-			var/pressure = 1
-			if(!return_pressure() || !sharer.return_pressure())
-				pressure = 3
-			else if(pressure < 0)
-				pressure = (sharer.return_pressure() / return_pressure())
-			pressure = max(min(pressure,3),1) //Lets cap this.
-			var/delta_oxygen = max(QUANTIZE(oxygen_archived - sharer.oxygen_archived) * pressure/TRANSFER_FRACTION,oxygen)
-			var/delta_carbon_dioxide = max(QUANTIZE(carbon_dioxide_archived - sharer.carbon_dioxide_archived) * pressure/TRANSFER_FRACTION,carbon_dioxide)
-			var/delta_nitrogen = max(QUANTIZE(nitrogen_archived - sharer.nitrogen_archived) * pressure/TRANSFER_FRACTION,nitrogen)
-			var/delta_toxins = max(QUANTIZE(toxins_archived - sharer.toxins_archived) * pressure/TRANSFER_FRACTION,toxins)
+			var/delta_oxygen = QUANTIZE(oxygen_archived - sharer.oxygen_archived)/TRANSFER_FRACTION
+			var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - sharer.carbon_dioxide_archived)/TRANSFER_FRACTION
+			var/delta_nitrogen = QUANTIZE(nitrogen_archived - sharer.nitrogen_archived)/TRANSFER_FRACTION
+			var/delta_toxins = QUANTIZE(toxins_archived - sharer.toxins_archived)/TRANSFER_FRACTION
 
 			var/delta_temperature = (temperature_archived - sharer.temperature_archived)
 
@@ -636,12 +623,12 @@ datum
 					var/delta = 0
 
 					if(corresponding)
-						delta = max(QUANTIZE(trace_gas.moles_archived - corresponding.moles_archived)*pressure/TRANSFER_FRACTION,trace_gas.moles)
+						delta = QUANTIZE(trace_gas.moles_archived - corresponding.moles_archived)/TRANSFER_FRACTION
 					else
 						corresponding = new trace_gas.type()
 						sharer.trace_gases += corresponding
 
-						delta = max(trace_gas.moles_archived*pressure/TRANSFER_FRACTION,trace_gas.moles)
+						delta = trace_gas.moles_archived/TRANSFER_FRACTION
 
 					trace_gas.moles -= delta/group_multiplier
 					corresponding.moles += delta/sharer.group_multiplier
@@ -670,7 +657,7 @@ datum
 						corresponding = new trace_gas.type()
 						trace_gases += corresponding
 
-						delta = max(trace_gas.moles_archived*pressure/TRANSFER_FRACTION,trace_gas.moles)
+						delta = trace_gas.moles_archived/TRANSFER_FRACTION
 
 						trace_gas.moles -= delta/sharer.group_multiplier
 						corresponding.moles += delta/group_multiplier
