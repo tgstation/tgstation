@@ -50,12 +50,9 @@
 		if ("Trial Admin")
 			holder.level = 3
 			if(holder.state == 2) // if observing
-				// Debug
 				verbs += /client/proc/debug_variables
 				verbs += /client/proc/cmd_modify_ticker_variables
-				// Admin helpers
 				verbs += /client/proc/toggle_view_range
-				// Admin game intrusion
 				verbs += /client/proc/Getmob
 				verbs += /client/proc/Getkey
 				verbs += /client/proc/sendmob
@@ -74,12 +71,9 @@
 			holder.level = 2
 			if(holder.state == 2) // if observing
 				deadchat = 1
-				// Settings
 				verbs += /obj/admins/proc/toggleaban					//abandon mob
 				verbs += /client/proc/deadchat							//toggles deadchat
-				// Admin helpers
 				verbs += /client/proc/cmd_admin_check_contents
-				// Admin game intrusion
 				verbs += /client/proc/Jump
 				verbs += /client/proc/jumptokey
 				verbs += /client/proc/jumptomob
@@ -185,6 +179,8 @@
 			deadchat = 1
 			seeprayers = 1
 
+			verbs += /obj/admins/proc/view_txt_log
+			verbs += /obj/admins/proc/view_atk_log
 			verbs += /obj/admins/proc/toggleaban						//abandon mob
 			verbs += /obj/admins/proc/show_traitor_panel
 			verbs += /client/proc/cmd_admin_remove_plasma
@@ -231,14 +227,12 @@
 			//verbs += /proc/togglebuildmode 							--Merged with view variables
 			//verbs += /client/proc/cmd_modify_object_variables 		--Merged with view variables
 			verbs += /client/proc/togglebuildmodeself
-			verbs += /client/proc/toggleadminhelpsound
+
 		else	return
 
 		//Game Admin
 		if (holder.level >= 5)
 			verbs += /obj/admins/proc/spawn_atom
-			verbs += /obj/admins/proc/view_txt_log
-			verbs += /obj/admins/proc/view_atk_log
 			verbs += /client/proc/cmd_admin_list_open_jobs
 			verbs += /client/proc/cmd_admin_direct_narrate
 			verbs += /client/proc/colorooc
@@ -388,7 +382,8 @@
 	verbs -= /client/proc/cmd_admin_create_centcom_report
 	verbs -= /client/proc/deadchat										//toggles deadchat
 	verbs -= /client/proc/cmd_admin_mute
-	verbs -= /client/proc/cmd_admin_pm
+	verbs -= /client/proc/cmd_admin_pm_context
+	verbs -= /client/proc/cmd_admin_pm_panel
 	verbs -= /client/proc/cmd_admin_say
 	verbs -= /client/proc/cmd_admin_subtle_message
 	verbs -= /client/proc/warn
