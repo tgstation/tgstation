@@ -201,6 +201,7 @@
 	//clumsy = 16
 	//obese = 32
 	//husk = 64
+	var/tkdisable = 0//For remote viewing and stuff. Disables TK.
 
 	var/voice_name = "unidentifiable voice"
 	var/voice_message = null // When you are not understood by others (replaced with just screeches, hisses, chimpers etc.)

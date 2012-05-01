@@ -583,6 +583,10 @@
 	var/over_jumpsuit = 1 // If set to 0, it won't display on top of the mob's jumpsuit
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
+	var/blood_type = "\[UNSET\]"
+	var/dna_hash = "\[UNSET\]"
+	var/fingerprint_hash = "\[UNSET\]"
+
 /obj/item/weapon/card/id/silver
 	name = "identification card"
 	desc = "A silver card which shows honour and dedication."
