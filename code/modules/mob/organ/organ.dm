@@ -431,7 +431,7 @@
 			destspawn = 1
 			if(!robot)
 				owner.visible_message("\red [owner.name]'s [display_name] flies off in an arc.",\
-				"\red <b>Your [display_name] goes flying off!</b>",\
+				"<span class='moderate'><b>Your [display_name] goes flying off!</b></span>",\
 				"You hear a terrible sound of ripping tendons and flesh.")
 			else
 				owner.visible_message("\red [owner.name]'s [display_name] explodes violently!",\

@@ -935,13 +935,13 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				// ------- YOU DO NOT HAVE AN ITEM IN YOUR HAND -------
 				if (istype(usr, /mob/living/carbon/human))
 					// ------- YOU ARE HUMAN -------
-					if(usr.hand) // if he's using his right hand.
-						var/datum/organ/external/temp = usr:get_organ("r_hand")
+					if(usr.hand) // if he's using his left hand.
+						var/datum/organ/external/temp = usr:get_organ("l_hand")
 						if(temp.destroyed)
 							usr << "\blue You look at your stump."
 							return
 					else
-						var/datum/organ/external/temp = usr:get_organ("l_hand")
+						var/datum/organ/external/temp = usr:get_organ("r_hand")
 						if(temp.destroyed)
 							usr << "\blue You look at your stump."
 							return

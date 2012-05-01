@@ -122,6 +122,9 @@
 									for(var/datum/organ/wound/W in e.wounds)
 										del(W)
 								e.update_icon()
+
+							H.vessel.clear_reagents()
+							H.vessel.add_reagent("blood",560)
 							H.update_body()
 							H.update_face()
 							H.UpdateDamageIcon()
