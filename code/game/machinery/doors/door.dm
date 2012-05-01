@@ -128,7 +128,6 @@
 					E.uses--
 				else
 					return
-			src.operating = -1
 			if(istype(I, /obj/item/weapon/melee/energy/blade))
 				if(istype(src, /obj/machinery/door/airlock))
 					var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()

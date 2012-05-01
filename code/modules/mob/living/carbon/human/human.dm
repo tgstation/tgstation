@@ -2796,11 +2796,13 @@ It can still be worn/put on as normal.
 		reset_view(0)
 		remoteobserve = null
 		src.verbs -= /mob/living/carbon/human/proc/remoteobserve
+		src.tkdisable = 0
 		return
 
 	if(client.eye != client.mob)
 		reset_view(0)
 		remoteobserve = null
+		src.tkdisable = 0
 		return
 
 	var/list/mob/creatures = list()
@@ -2816,6 +2818,8 @@ It can still be worn/put on as normal.
 	if (target)
 		reset_view(target)
 		remoteobserve = target
+		src.tkdisable = 1
 	else
 		reset_view(0)
 		remoteobserve = null
+		src.tkdisable = 0
