@@ -254,4 +254,7 @@
 
 "}
 
-		usr << browse(output,"window=tensionreport")
+		for(var/game in tension_master.antagonistmodes)
+			output += "<font size = 2>Points required/Probability for [game]: [tension_master.antagonistmodes[game]]<br></font>"
+		usr << browse(output,"window=tensionreport;size=480x480")
+		feedback_add_details("admin_verb","STR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
