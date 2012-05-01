@@ -10,6 +10,7 @@
 		src.stand_icon = new /icon('alien.dmi', "alienh_s")
 		src.lying_icon = new /icon('alien.dmi', "alienh_l")
 		src.resting_icon = new /icon('alien.dmi', "alienh_sleep")
+		src.running_icon = new /icon('alien.dmi', "alienh_running")
 		src.icon = src.stand_icon
 		update_clothing()
 		src << "\blue Your icons have been generated!"

@@ -357,7 +357,11 @@ ZIPPO
 		src.update_icon()
 		return
 
-
+/obj/item/weapon/cigpacket/dromedaryco
+	name = "DromedaryCo packet"
+	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
+	icon_state = "Dpacket"
+	item_state = "Dpacket"
 
 /////////
 //ZIPPO//
