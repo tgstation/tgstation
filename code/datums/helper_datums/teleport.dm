@@ -111,12 +111,20 @@
 
 		playSpecials(curturf,effectin,soundin)
 
+		// Remove any luminosity etc.
+		var/prevlum = teleatom.luminosity
+		teleatom.luminosity = 0
+
 		if(force_teleport)
 			teleatom.forceMove(destturf)
 			playSpecials(destturf,effectout,soundout)
 		else
 			if(teleatom.Move(destturf))
 				playSpecials(destturf,effectout,soundout)
+
+		// Re-Apply lum
+		teleatom.sd_SetLuminosity(prevlum)
+
 
 		return 1
 
