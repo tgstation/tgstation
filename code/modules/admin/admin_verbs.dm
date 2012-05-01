@@ -265,6 +265,7 @@
 			//verbs += /client/proc/cmd_admin_emp						--Merged with view variables
 			//verbs += /client/proc/give_spell 							--Merged with view variables
 			//verbs += /client/proc/cmd_admin_ninjafy					--Merged with view variables
+			//verbs += /client/proc/cmd_switch_radio					--removed as tcommsat is staying
 			// Moved over from tg's Game Master:
 			verbs += /obj/admins/proc/toggle_aliens			//toggle aliens
 			verbs += /obj/admins/proc/toggle_space_ninja	//toggle ninjas
