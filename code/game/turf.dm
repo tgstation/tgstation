@@ -307,7 +307,6 @@
 		if(!devastated)
 			playsound(src.loc, 'Welder.ogg', 100, 1)
 			new /obj/effect/decal/cleanable/blood(src)
-			new /obj/structure/cultgirder(src)
 		else
 			new /obj/effect/decal/cleanable/blood(src)
 			new /obj/effect/decal/remains/human(src)
