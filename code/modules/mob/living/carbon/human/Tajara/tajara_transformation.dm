@@ -52,5 +52,9 @@
 		src << "Only administrators may use this command."
 		return
 
+	if(config.no_taj)
+		src << "Sorry, Tajarans are not allowed on this server." // For some reason allowing them is a big enough fucking issue that I have to add this flag
+		return
+
 	if(istype(H))
 		H:Tajaraize()

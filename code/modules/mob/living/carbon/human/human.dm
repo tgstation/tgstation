@@ -97,6 +97,11 @@
 
 		src << "\blue Your icons have been generated!"
 
+
+	spawn(10) // Failsafe for.. weirdness.
+		update_clothing()
+		update_body()
+
 	vessel = new/datum/reagents(600)
 	vessel.my_atom = src
 	vessel.add_reagent("blood",560)
