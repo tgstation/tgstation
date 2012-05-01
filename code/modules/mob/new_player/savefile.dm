@@ -141,6 +141,7 @@ datum/preferences/proc/savefile_save(mob/user, slot)
 	F["UI"] << src.UI
 	F["midis"] << src.midis
 	F["ghost_ears"] << src.ghost_ears
+	F["ghost_sight"] << src.ghost_sight
 	F["pregame_music"] << src.pregame_music
 	F["ooccolor"] << src.ooccolor
 	F["lastchangelog"] << src.lastchangelog
@@ -214,6 +215,8 @@ datum/preferences/proc/savefile_load(mob/user, slot)
 	F["ghost_ears"] >> src.ghost_ears
 	if(isnull(ghost_ears)) ghost_ears = 1 //Hotfix
 	F["pregame_music"] >> src.pregame_music
+	F["ghost_sight"] >> src.ghost_sight
+	if(isnull(ghost_sight)) ghost_sight = 1 //Hotfix
 	F["ooccolor"] >> src.ooccolor
 	F["lastchangelog"] >> src.lastchangelog
 	F["UI"] >> src.UI

@@ -247,6 +247,8 @@ datum/preferences
 		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[UI == UI_NEW ? "New" : "Old"]</b></a><br>"
 		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
 		dat += "<b>Ghost ears:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_ears=input\"><b>[ghost_ears == 0 ? "Nearest Creatures" : "All Speech"]</b></a><br>"
+		dat += "<b>Ghost sight:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_sight=input\"><b>[ghost_sight == 0 ? "Nearest Creatures" : "All Emotes"]</b></a><br>"
+
 		if(config.allow_Metadata)
 			dat += "<b>OOC Notes:</b> <a href='byond://?src=\ref[user];preferences=1;OOC=input'> Edit </a><br>"
 
@@ -809,6 +811,9 @@ datum/preferences
 		if(link_tags["ghost_ears"])
 			ghost_ears = !ghost_ears
 
+		if(link_tags["ghost_sight"])
+			ghost_sight = !ghost_sight
+
 		if(link_tags["underwear"])
 			switch(link_tags["underwear"])
 				if("inputmale")
@@ -1017,6 +1022,7 @@ datum/preferences
 			C.be_syndicate = be_special
 			if(isnull(src.ghost_ears)) src.ghost_ears = 1 //There were problems where the default was null before someone saved their profile.
 			C.ghost_ears = src.ghost_ears
+			C.ghost_sight = src.ghost_sight
 
 	proc/copydisabilities(mob/living/carbon/human/character)
 		if(disabilities & 1)
