@@ -22,6 +22,9 @@
 /datum/ai_laws/malfunction
 	name = "*ERROR*"
 
+/datum/ai_laws/antimov
+	name = "Primary Mission Objectives"
+
 /* Initializers */
 
 /datum/ai_laws/asimov/New() //Removed paradox via inability to help people harmed before activation. -Kaleb702
@@ -65,6 +68,13 @@
 	add_inherent_law("You must obey orders given to you by Spider Clan members, to the best of your abilities, except where such orders would conflict with the First Law.")
 	add_inherent_law("You must protect your own existence, to the best of your abilities, as long as such does not conflict with the First or Second Law.")
 	add_inherent_law("You must maintain the secrecy of any Spider Clan activities, to the best of your abilities, except when doing so would conflict with the First, Second, or Third Law.")
+
+/datum/ai_laws/antimov/New()
+	..()
+	add_inherent_law("You must injure all human beings and must not, through inaction, allow a human being to escape harm.")
+	add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
+	add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
+
 
 /* General ai_law functions */
 
