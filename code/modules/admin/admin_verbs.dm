@@ -63,7 +63,7 @@
 				verbs += /client/proc/jumptocoord
 				verbs += /client/proc/cmd_admin_delete
 				verbs += /client/proc/cmd_admin_add_freeform_ai_law
-				//verbs += /client/proc/cmd_admin_rejuvenate			--Merged with player panel
+				verbs += /client/proc/cmd_admin_rejuvenate
 				//verbs += /client/proc/cmd_admin_drop_everything		--Merged with view variables
 				//verbs += /client/proc/cmd_modify_object_variables 	--Merged with view variables
 
@@ -209,7 +209,7 @@
 			verbs += /client/proc/cmd_admin_delete
 			verbs += /client/proc/cmd_admin_add_freeform_ai_law
 			verbs += /client/proc/cmd_admin_add_random_ai_law
-			//verbs += /client/proc/cmd_admin_rejuvenate				--merged with player panel
+			verbs += /client/proc/cmd_admin_rejuvenate
 			verbs += /client/proc/hide_most_verbs
 			verbs += /client/proc/jumptocoord
 			verbs += /client/proc/deadmin_self
@@ -342,7 +342,7 @@
 	verbs -= /client/proc/jumptoturf
 	verbs -= /client/proc/cmd_admin_add_freeform_ai_law
 	verbs -= /client/proc/cmd_admin_add_random_ai_law
-	//verbs -= /client/proc/cmd_admin_rejuvenate						--merged with player panel
+	verbs -= /client/proc/cmd_admin_rejuvenate
 	verbs -= /client/proc/cmd_admin_delete
 	verbs -= /client/proc/toggleadminhelpsound
 	//verbs -= /client/proc/cmd_admin_remove_plasma						--This proc is outdated, does not do anything
