@@ -840,12 +840,13 @@
 		if(!reagents.total_volume)
 			var/mob/M = usr
 			var/obj/item/weapon/paper/paper = locate() in src
-			M.visible_message( \
-				"\blue [M] takes a piece of paper from the cookie!", \
-				"\blue You take a piece of paper from the cookie! Read it!" \
-			)
-			M.put_in_hand(paper)
-			paper.add_fingerprint(M)
+			if(paper)
+				M.visible_message( \
+					"\blue [M] takes a piece of paper from the cookie!", \
+					"\blue You take a piece of paper from the cookie! Read it!" \
+				)
+				M.put_in_hand(paper)
+				paper.add_fingerprint(M)
 
 /obj/item/weapon/reagent_containers/food/snacks/badrecipe
 	name = "Burned mess"

@@ -876,18 +876,19 @@
 			malfai.malfhack = src
 			malfai.malfhacking = 1
 			sleep(600)
-			if (!src.aidisabled)
-				malfai.malfhack = null
-				malfai.malfhacking = 0
-				if (ticker.mode.config_tag == "malfunction")
-					if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
-						ticker.mode:apcs++
-				if(usr:parent)
-					src.malfai = usr:parent
-				else
-					src.malfai = usr
-				malfai << "Hack complete. The APC is now under your exclusive control."
-				updateicon()
+			if(src)
+				if (!src.aidisabled)
+					malfai.malfhack = null
+					malfai.malfhacking = 0
+					if (ticker.mode.config_tag == "malfunction")
+						if (src.z == 1) //if (is_type_in_list(get_area(src), the_station_areas))
+							ticker.mode:apcs++
+					if(usr:parent)
+						src.malfai = usr:parent
+					else
+						src.malfai = usr
+					malfai << "Hack complete. The APC is now under your exclusive control."
+					updateicon()
 
 	else if (href_list["occupyapc"])
 		malfoccupy(usr)

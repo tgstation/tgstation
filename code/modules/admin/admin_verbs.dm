@@ -53,7 +53,6 @@
 				// Debug
 				verbs += /client/proc/debug_variables
 				verbs += /client/proc/cmd_modify_ticker_variables
-				verbs += /client/proc/toggleadminhelpsound
 				// Admin helpers
 				verbs += /client/proc/toggle_view_range
 				// Admin game intrusion
@@ -65,6 +64,7 @@
 				verbs += /client/proc/jumptomob
 				verbs += /client/proc/jumptoturf
 				verbs += /client/proc/jumptocoord
+				verbs += /client/proc/cmd_admin_delete
 				verbs += /client/proc/cmd_admin_add_freeform_ai_law
 				verbs += /client/proc/cmd_admin_rejuvenate
 				verbs += /client/proc/cmd_admin_drop_everything
@@ -121,6 +121,8 @@
 
 		//Moderator
 		if (holder.level >= 0)
+			verbs += /obj/admins/proc/announce
+			verbs += /obj/admins/proc/startnow
 			verbs += /obj/admins/proc/toggleAI							//Toggle the AI
 			verbs += /obj/admins/proc/toggleenter						//Toggle enterting
 //			verbs += /obj/admins/proc/toggleguests						//Toggle guests entering
@@ -136,8 +138,6 @@
 			verbs += /client/proc/cmd_admin_pm_panel
 			verbs += /client/proc/cmd_admin_subtle_message
 			verbs += /client/proc/warn
-			verbs += /obj/admins/proc/announce
-			verbs += /obj/admins/proc/startnow
 			verbs += /client/proc/dsay
 			verbs += /client/proc/admin_play
 			verbs += /client/proc/admin_observe
@@ -196,6 +196,7 @@
 			verbs += /client/proc/toggleprayers
 			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/tension_report
+			verbs += /client/proc/toggleadminhelpsound
 			verbs += /proc/possess
 			verbs += /proc/release
 			verbs += /client/proc/admin_deny_shuttle
