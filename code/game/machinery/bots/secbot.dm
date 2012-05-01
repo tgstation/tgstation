@@ -588,14 +588,24 @@ Auto Patrol: []"},
 	if(src.emagged) return 10 //Everyone is a criminal!
 
 	if(src.idcheck && !src.allowed(perp))
+
 		if(istype(perp.l_hand, /obj/item/weapon/gun) || istype(perp.l_hand, /obj/item/weapon/melee))
-			threatcount += 4
+			if(!istype(perp.l_hand, /obj/item/weapon/gun/energy/laser/bluetag) \
+			&& !istype(perp.l_hand, /obj/item/weapon/gun/energy/laser/redtag) \
+			&& !istype(perp.l_hand, /obj/item/weapon/gun/energy/laser/practice))
+				threatcount += 4
 
 		if(istype(perp.r_hand, /obj/item/weapon/gun) || istype(perp.r_hand, /obj/item/weapon/melee))
-			threatcount += 4
+			if(!istype(perp.r_hand, /obj/item/weapon/gun/energy/laser/bluetag) \
+			&& !istype(perp.r_hand, /obj/item/weapon/gun/energy/laser/redtag) \
+			&& !istype(perp.r_hand, /obj/item/weapon/gun/energy/laser/practice))
+				threatcount += 4
 
 		if(istype(perp:belt, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee))
-			threatcount += 2
+			if(!istype(perp:belt, /obj/item/weapon/gun/energy/laser/bluetag) \
+			&& !istype(perp:belt, /obj/item/weapon/gun/energy/laser/redtag) \
+			&& !istype(perp:belt, /obj/item/weapon/gun/energy/laser/practice))
+				threatcount += 2
 
 		if(istype(perp:wear_suit, /obj/item/clothing/suit/wizrobe))
 			threatcount += 2
