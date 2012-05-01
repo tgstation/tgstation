@@ -70,12 +70,18 @@
 			continue
 		if (istype(O, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = O
-			if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses))	continue
+			if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses))
+				continue
 			if (istype(H.head, /obj/item/clothing/head/helmet/welding))
-				if(!H.head:up)	continue
-			if (istype(H.wear_mask, /obj/item/clothing/mask/gas/voice))	continue
+				if(!H.head:up)
+					continue
+			if (istype(H.wear_mask, /obj/item/clothing/mask/gas/voice))
+				continue
 		if (istype(O, /mob/living/carbon/alien))//So aliens don't get flashed (they have no external eyes)/N
 			continue
+		if (istype(O, /mob/living/silicon/robot))
+			if(O:flashproof())
+				continue
 
 		O.Weaken(strength)
 		if ((O.eye_stat > 15 && prob(O.eye_stat + 50)))

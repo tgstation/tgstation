@@ -1421,7 +1421,7 @@ turf/simulated/floor/return_siding_icon_state()
 			spawn (0)
 				if ((A && A.loc))
 					A.loc.Entered(A)
-/*
+
 /turf/space/proc/Sandbox_Spacemove(atom/movable/A as mob|obj)
 	var/cur_x
 	var/cur_y
@@ -1530,7 +1530,7 @@ turf/simulated/floor/return_siding_icon_state()
 				if ((A && A.loc))
 					A.loc.Entered(A)
 	return
-*/
+
 /obj/effect/vaultspawner
 	var/maxX = 6
 	var/maxY = 6

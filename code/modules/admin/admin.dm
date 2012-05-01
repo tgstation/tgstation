@@ -1372,11 +1372,19 @@ var/global/BSACooldown = 0
 		else
 			alert("You are not a high enough administrator! Sorry!!!!")
 
+	if (href_list["quick_create_object"])
+		if (src.rank in list("Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"))
+			return quick_create_object(usr)
+		else
+			alert("You are not a high enough administrator! Sorry!!!!")
+
+
 	if (href_list["create_turf"])
 		if (src.rank in list("Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"))
 			return create_turf(usr)
 		else
 			alert("You are not a high enough administrator! Sorry!!!!")
+
 	if (href_list["create_mob"])
 		if (src.rank in list("Badmin", "Game Admin", "Game Master"))
 			return create_mob(usr)
@@ -2519,6 +2527,7 @@ var/global/BSACooldown = 0
 
 	if(lvl >= 3 )
 		dat += "<A href='?src=\ref[src];create_object=1'>Create Object</A><br>"
+		dat += "<A href='?src=\ref[src];quick_create_object=1'>Quick Create Object</A><br>"
 		dat += "<A href='?src=\ref[src];create_turf=1'>Create Turf</A><br>"
 	if(lvl >= 5)
 		dat += "<A href='?src=\ref[src];create_mob=1'>Create Mob</A><br>"

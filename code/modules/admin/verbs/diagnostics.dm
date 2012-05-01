@@ -202,6 +202,28 @@
 		//feedback_add_details("admin_verb","JDAG") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return
 
+	kill_airgroup()
+		set name = "Kill Local Airgroup"
+		set desc = "Use this to allow manual manupliation of atmospherics."
+		set category = "Debug"
+		if(!holder)
+			src << "Only administrators may use this command."
+			return
+
+		if(!air_master)
+			usr << "Cannot find air_system"
+			return
+
+		var/turf/T = get_turf(usr)
+		if(istype(T, /turf/simulated))
+			var/datum/air_group/AG = T:parent
+			AG.next_check = 30
+			AG.group_processing = 0
+		else
+			usr << "Local airgroup is unsimulated!"
+		//feedback_add_details("admin_verb","KLAG") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+
 	tension_report()
 		set category = "Debug"
 		set name = "Show Tension Report"
