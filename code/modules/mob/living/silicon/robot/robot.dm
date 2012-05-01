@@ -15,19 +15,31 @@
 			name = real_name
 
 	spawn (4)
-		if (client)
-			connected_ai = activeais()
-		if (connected_ai)
-			connected_ai.connected_robots += src
-//			laws = connected_ai.laws //The borg inherits its AI's laws
-			laws = new /datum/ai_laws
-			lawsync()
-			src << "<b>Unit slaved to [connected_ai.name], downloading laws.</b>"
-			lawupdate = 1
+		if(!syndie)
+			if (client)
+				connected_ai = activeais()
+			if (connected_ai)
+				connected_ai.connected_robots += src
+	//			laws = connected_ai.laws //The borg inherits its AI's laws
+				laws = new /datum/ai_laws
+				lawsync()
+				src << "<b>Unit slaved to [connected_ai.name], downloading laws.</b>"
+				lawupdate = 1
+			else
+				laws = new /datum/ai_laws/asimov
+				lawupdate = 0
+				src << "<b>Unable to locate an AI, reverting to standard Asimov laws.</b>"
 		else
-			laws = new /datum/ai_laws/nanotrasen
+			laws = new /datum/ai_laws/antimov
 			lawupdate = 0
-			src << "<b>Unable to locate an AI, reverting to standard NanoTrasen laws.</b>"
+			scrambledcodes = 1
+			src << "Follow your laws."
+			cell.maxcharge = 25000
+			cell.charge = 25000
+			module = new /obj/item/weapon/robot_module/syndicate(src)
+			hands.icon_state = "standard"
+			icon_state = "secborg"
+			modtype = "Synd"
 
 		radio = new /obj/item/device/radio(src)
 		camera = new /obj/machinery/camera(src)
@@ -137,6 +149,7 @@
 				src.icon_state = "bloodhound"
 			modtype = "Sec"
 			//speed = -1 Secborgs have nerfed tasers now, so the speed boost is not necessary
+			nopush = 1
 			channels = list("Security" = 1)
 			//feedback_inc("cyborg_security",1)
 

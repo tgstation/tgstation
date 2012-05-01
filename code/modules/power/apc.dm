@@ -904,21 +904,17 @@
 		return
 	if(src.z != 1)
 		return
-
 	src.occupant = new /mob/living/silicon/ai(src,malf.laws,null,1)
 	src.occupant.adjustOxyLoss(malf.getOxyLoss())
-	src.occupant.name = "[malf.name] APC Copy"
-
+	if(!findtext(src.occupant.name,"APC Copy"))
+		src.occupant.name = "[malf.name] APC Copy"
 	if(malf.parent)
 		src.occupant.parent = malf.parent
 	else
 		src.occupant.parent = malf
-
 	malf.mind.transfer_to(src.occupant)
-
 	if(malf.parent)
 		del(malf)
-
 	src.occupant.verbs += /mob/living/silicon/ai/proc/corereturn
 	src.occupant.cancel_camera()
 

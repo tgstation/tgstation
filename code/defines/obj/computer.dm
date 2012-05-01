@@ -22,69 +22,12 @@
 	var/blocked = 0 //Player cannot attack/heal while set
 
 
-/obj/machinery/computer/aistatus
-	name = "AI Status Panel"
-	desc = "This shows the status of the AI."
-	icon = 'mainframe.dmi'
-	icon_state = "left"
-//	brightnessred = 0
-//	brightnessgreen = 2
-//	brightnessblue = 0
-
-/obj/machinery/computer/aistatus/attack_hand(mob/user as mob)
-	if(stat & NOPOWER)
-		user << "\red The status panel has no power!"
-		return
-	if(stat & BROKEN)
-		user << "\red The status panel is broken!"
-		return
-	if(!issilicon(user))
-		user << "\red You don't understand any of this!"
-	else
-		user << "\blue You know all of this already, why are you messing with it?"
-	return
-
-/obj/machinery/computer/aiupload
-	name = "AI Upload"
-	desc = "Used to upload laws to the AI."
-	icon_state = "command"
-	circuit = "/obj/item/weapon/circuitboard/aiupload"
-	var/mob/living/silicon/ai/current = null
-	var/opened = 0
-
-/obj/machinery/computer/aiupload/mainframe
-	name = "AI Mainframe Upload"
-	icon = 'mainframe.dmi'
-	icon_state = "aimainframe"
-
-/obj/machinery/computer/borgupload
-	name = "Cyborg Upload"
-	desc = "Used to upload laws to Cyborgs."
-	icon_state = "command"
-	circuit = "/obj/item/weapon/circuitboard/borgupload"
-	var/mob/living/silicon/robot/current = null
-
-/obj/machinery/computer/borgupload/mainframe
-	name = "Borg Mainframe Upload"
-	icon = 'mainframe.dmi'
-	icon_state = "aimainframe"
-
-
 /obj/machinery/computer/station_alert
 	name = "Station Alert Computer"
 	desc = "Used to access the station's automated alert system."
 	icon_state = "alert:0"
 	circuit = "/obj/item/weapon/circuitboard/stationalert"
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
-
-
-/obj/machinery/computer/atmos_alert
-	name = "Atmospheric Alert Computer"
-	desc = "Used to access the station's atmospheric sensors."
-	icon_state = "alert:0"
-	var/list/priority_alarms = list()
-	var/list/minor_alarms = list()
-	var/receive_frequency = 1437
 
 
 /obj/machinery/computer/atmosphere

@@ -266,7 +266,12 @@
 	var/list/textList = new()
 	var/searchPosition = 1
 	var/findPosition = 1
+	var/loops = 0
 	while(1)
+		if(loops >= 1000)
+			break
+		loops++
+
 		findPosition = findtext(text, separator, searchPosition, 0)
 		var/buggyText = copytext(text, searchPosition, findPosition)
 		if(!withinList || (buggyText in withinList)) textList += "[buggyText]"
@@ -654,7 +659,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	total = rand(1, total)
 	for (item in L)
-		total -= L[item]
+		total -=L [item]
 		if (total <= 0)
 			return item
 
@@ -819,9 +824,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/creatures = list()
 	var/list/namecounts = list()
 	for(var/mob/M in mobs)
-		/*if((!M.name || !M.real_name) && !istype(M, /mob/new_player))
-			var/turf/T = get_turf(M)
-			message_admins("Alert!  The mob with the key [M.key ? M.key : "NO KEY"] at ([T.x], [T.y], [T.z]) has no name!")*/
 		var/name = M.name
 		if (name in names)
 			namecounts[name]++
@@ -1008,8 +1010,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		output += A
 	return output
 
-// Returns the turf a movable atom (obj or mob) is on
-/proc/get_turf_loc(var/atom/movable/M)
+/proc/get_turf_loc(var/atom/movable/M) //gets the location of the turf that the atom is on, or what the atom is in is on, etc
+	//in case they're in a closet or sleeper or something
 	var/atom/loc = M.loc
 	while(!istype(loc, /turf/))
 		loc = loc.loc
@@ -1020,6 +1022,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/get_edge_target_turf(var/atom/A, var/direction)
 
 	var/turf/target = locate(A.x, A.y, A.z)
+	if(!A || !target)
+		return 0
 		//since NORTHEAST == NORTH & EAST, etc, doing it this way allows for diagonal mass drivers in the future
 		//and isn't really any more complicated
 
@@ -1306,13 +1310,16 @@ proc/listclearnulls(list/list)
 	var/target_loc = target.loc
 	var/holding = user.equipped()
 	sleep(time)
+	if(!user || !target) return 0
 	if ( user.loc == user_loc && target.loc == target_loc && user.equipped() == holding && !( user.stat ) && ( !user.stunned && !user.weakened && !user.paralysis && !user.lying ) )
 		return 1
 	else
 		return 0
-
+/*
 /proc/do_after(mob/M as mob, time as num)
-	var/turf/T = get_turf(M)
+	if(!M)
+		return 0
+	var/turf/T = M.loc
 	var/holding = M.equipped()
 	for(var/i=0, i<time)
 		if(M)
@@ -1321,6 +1328,24 @@ proc/listclearnulls(list/list)
 				sleep(1)
 			else
 				return 0
+	return 1
+*/
+
+/proc/do_after(var/mob/user as mob, delay as num, var/numticks = 5) 		// Replacing the upper one with this one because Byond keeps feeling that the upper one is an infinate loop
+	if(!user || isnull(user))												// This one should have less temptation
+		return 0
+	if(numticks == 0)
+		return 0
+
+	var/delayfraction = round(delay/numticks)
+	var/turf/T = user.loc
+	var/holding = user.equipped()
+
+	for(var/i = 0, i<numticks, i++)
+		sleep(delayfraction)
+		if(!user || user.stat || user.weakened || user.stunned || !(user.loc == T) || !(user.equipped() == holding))
+			return 0
+
 	return 1
 
 /proc/hasvar(var/datum/A, var/varname)

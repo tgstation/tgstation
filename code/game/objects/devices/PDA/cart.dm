@@ -519,7 +519,7 @@ Code:
 							if (ml.z != cl.z)
 								continue
 
-						ldat += "Mop - <b>\[[ml.x],[ml.y]\]</b> - [M.reagents.total_volume ? "Wet" : "Dry"]<br>"
+							ldat += "Mop - <b>\[[ml.x],[ml.y]\]</b> - [M.reagents.total_volume ? "Wet" : "Dry"]<br>"
 
 					if (!ldat)
 						menu += "None"
@@ -532,10 +532,11 @@ Code:
 					for (var/obj/structure/mopbucket/B in world)
 						var/turf/bl = get_turf(B)
 
-						if (bl.z != cl.z)
-							continue
+						if(bl)
+							if (bl.z != cl.z)
+								continue
 
-						ldat += "Bucket - <b>\[[bl.x],[bl.y]\]</b> - Water level: [B.reagents.total_volume]/100<br>"
+							ldat += "Bucket - <b>\[[bl.x],[bl.y]\]</b> - Water level: [B.reagents.total_volume]/100<br>"
 
 					if (!ldat)
 						menu += "None"
@@ -548,10 +549,11 @@ Code:
 					for (var/obj/machinery/bot/cleanbot/B in world)
 						var/turf/bl = get_turf(B)
 
-						if (bl.z != cl.z)
-							continue
+						if(bl)
+							if (bl.z != cl.z)
+								continue
 
-						ldat += "Cleanbot - <b>\[[bl.x],[bl.y]\]</b> - [B.on ? "Online" : "Offline"]<br>"
+							ldat += "Cleanbot - <b>\[[bl.x],[bl.y]\]</b> - [B.on ? "Online" : "Offline"]<br>"
 
 					if (!ldat)
 						menu += "None"
