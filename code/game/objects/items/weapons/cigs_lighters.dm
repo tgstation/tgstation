@@ -310,12 +310,13 @@ ZIPPO
 		user << "\blue You refill the pipe with tobacco."
 		smoketime = maxsmoketime
 	return
-
+/*
 /obj/item/clothing/mask/pipe/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/match))
 		..()
 	else
 		user << "\red The [src] straight out REFUSES to be lit by such means."
+*/// Yeah no. DMTG
 
 
 /obj/item/clothing/mask/pipe/cobpipe

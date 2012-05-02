@@ -1070,7 +1070,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			src.Topic(nhref, params2list(nhref), src, 1)
 	return
 
-
+/*
 /atom/proc/get_global_map_pos()
 	if(!islist(global_map) || isemptylist(global_map)) return
 	var/cur_x = null
@@ -1086,7 +1086,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		return list("x"=cur_x,"y"=cur_y)
 	else
 		return 0
-
+*/ //Don't touch this either. DMTG
 /atom/proc/checkpass(passflag)
 	return pass_flags&passflag
 

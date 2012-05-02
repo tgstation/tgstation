@@ -626,10 +626,10 @@
 				if(H.mutations & FAT)		// is a human and fat?
 					has_fat_guy = 1			// set flag on holder
 			*/
-			if(istype(AM, /obj/structure/bigDelivery) && !hasmob)
+			if(istype(AM, /obj/structure/bigDelivery))// && !hasmob) Already have a check for this.
 				var/obj/structure/bigDelivery/T = AM
 				src.destinationTag = T.sortTag
-			if(istype(AM, /obj/item/smallDelivery) && !hasmob)
+			if(istype(AM, /obj/item/smallDelivery))// && !hasmob) And that. DMTG
 				var/obj/item/smallDelivery/T = AM
 				src.destinationTag = T.sortTag
 			else if (!src.destinationTag)

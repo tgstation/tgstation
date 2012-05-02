@@ -82,7 +82,7 @@ TRAITOR_SCALING
 #TENSIONER_ACTIVE
 
 ## If metadata is supported
-ALLOW_METADATA
+# ALLOW_METADATA
 
 ## allow players to initiate a restart vote
 ALLOW_VOTE_RESTART
