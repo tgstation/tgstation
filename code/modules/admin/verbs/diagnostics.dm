@@ -204,7 +204,7 @@
 
 	kill_airgroup()
 		set name = "Kill Local Airgroup"
-		set desc = "Use this to allow manual manupliation of atmospherics."
+		set desc = "Use this to allow manual manipulation of atmospherics."
 		set category = "Debug"
 		if(!holder)
 			src << "Only administrators may use this command."
