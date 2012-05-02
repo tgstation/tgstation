@@ -227,7 +227,7 @@
 
 
 	afterattack(atom/A, mob/user as mob)
-		if(istype(A,/area/shuttle))//||istype(A,/turf/space/transit))//No RCDs on the shuttles -Sieve
+		if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))//No RCDs on the shuttles -Sieve
 			disabled = 1
 		else
 			disabled = 0
