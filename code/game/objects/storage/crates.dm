@@ -38,6 +38,15 @@
 	icon_opened = "crateopen"
 	icon_closed = "crate"
 
+/obj/structure/closet/crate/contraband
+	name = "Contraband crate"
+	desc = "A random assortment of items manufactured by providers NOT listed under Nanotrasen's whitelist."
+	icon = 'storage.dmi'
+	icon_state = "crate"
+	density = 1
+	icon_opened = "crateopen"
+	icon_closed = "crate"
+
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."
 	name = "Medical crate"

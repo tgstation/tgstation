@@ -215,6 +215,7 @@
 						playsound(src, "clownstep", 50, 1) // this will get annoying very fast.
 				else
 					playsound(src, "clownstep", 20, 1)
+
 		switch (src.wet)
 			if(1)
 				if(istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
@@ -322,6 +323,12 @@
 			new /obj/item/stack/sheet/metal( src )
 			new /obj/item/stack/sheet/metal( src )
 
+	for(var/obj/O in src.contents) //Eject contents!
+		if(istype(O,/obj/effect/decal/poster))
+			var/obj/effect/decal/poster/P = O
+			P.roll_and_drop(src)
+		else
+			O.loc = src
 	ReplaceWithPlating(explode)
 
 /turf/simulated/wall/examine()
@@ -509,6 +516,12 @@
 		var/obj/item/apc_frame/AH = W
 		AH.try_build(src)
 		return
+
+	//Poster stuff
+	else if(istype(W,/obj/item/weapon/contraband/poster))
+		place_poster(W,user)
+		return
+
 	else
 		return attack_hand(user)
 	return
@@ -743,6 +756,11 @@
 	else if( istype(W,/obj/item/apc_frame) )
 		var/obj/item/apc_frame/AH = W
 		AH.try_build(src)
+
+	//Poster stuff
+	else if(istype(W,/obj/item/weapon/contraband/poster))
+		place_poster(W,user)
+		return
 
 	//Finally, CHECKING FOR FALSE WALLS if it isn't damaged
 	else if(!d_state)
