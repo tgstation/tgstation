@@ -436,7 +436,7 @@ datum
 					if(15 to 25)
 						M:drowsyness  = max(M:drowsyness, 20)
 					if(25 to INFINITY)
-						M.sleeping = 1
+						M.sleeping += 1
 						M.adjustOxyLoss(-M.getOxyLoss())
 						M.SetWeakened(0)
 						M.SetStunned(0)
@@ -2446,7 +2446,7 @@ datum
 				M:drowsyness = max(0,M:drowsyness-3)
 				M:slurring = max(0, M:slurring-3)
 				if(!M:sleeping_willingly)
-					M:sleeping = 0
+					M:sleeping = max(0,M.sleeping - 2)
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature+5)
 				M.make_jittery(1)
@@ -2488,7 +2488,7 @@ datum
 				M:drowsyness = max(0,M:drowsyness-3)
 				M:slurring = max(0, M:slurring-3)
 				if(!M:sleeping_willingly)
-					M:sleeping = 0
+					M:sleeping = max(0,M.sleeping-2)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature-5)
 				M.make_jittery(1)
@@ -2507,7 +2507,7 @@ datum
 				M.dizziness = max(0,M.dizziness-2)
 				M:drowsyness = max(0,M:drowsyness-1)
 				if(!M:sleeping_willingly)
-					M:sleeping = 0
+					M.sleeping = max(0,M.sleeping-2)
 				if(M:getToxLoss() && prob(20))
 					M:adjustToxLoss(-1)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
@@ -2542,7 +2542,7 @@ datum
 				M.dizziness +=5
 				M:drowsyness = 0
 				if(!M:sleeping_willingly)
-					M:sleeping = 0
+					M:sleeping = max(0,M.sleeping-2)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = max(310, M.bodytemperature-5)
 				M:nutrition += 1
@@ -2559,7 +2559,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				M:drowsyness = max(0,M:drowsyness-7)
 				if(!M:sleeping_willingly)
-					M:sleeping = 0
+					M:sleeping = max(0,M.sleeping-1)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-5)
 				M.make_jittery(1)
@@ -2779,7 +2779,7 @@ datum
 				on_mob_life(var/mob/living/M as mob)
 					M:drowsyness = max(0,M:drowsyness-7)
 					if(!M:sleeping_willingly)
-						M:sleeping = 0
+						M:sleeping = max(0,M.sleeping-2)
 					if (M.bodytemperature > 310)
 						M.bodytemperature = max(310, M.bodytemperature-5)
 					M.make_jittery(1)
@@ -3095,7 +3095,7 @@ datum
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
 				if(!M:sleeping_willingly)
-					M:sleeping = 0
+					M:sleeping = max(0,M.sleeping-2)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-5)
 				..()
@@ -3112,7 +3112,7 @@ datum
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
 				if(!M:sleeping_willingly)
-					M:sleeping = 0
+					M:sleeping = max(0,M.sleeping-2)
 				M.make_jittery(1)
 				..()
 				return
@@ -3128,7 +3128,7 @@ datum
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
 				if(!M:sleeping_willingly)
-					M:sleeping = 0
+					M:sleeping = max(0,M.sleeping - 2)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-5)
 				..()

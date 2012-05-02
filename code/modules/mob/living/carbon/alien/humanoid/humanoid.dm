@@ -741,7 +741,7 @@ In all, this is a lot like the monkey code. /N
 
 		if ("help")
 			if(!sleeping_willingly)
-				sleeping = 0
+				sleeping = max(0,sleeping-5)
 			resting = 0
 			AdjustParalysis(-3)
 			AdjustStunned(-3)

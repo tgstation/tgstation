@@ -380,7 +380,7 @@
 				src.drowsyness--
 				src.eye_blurry = max(2, src.eye_blurry)
 				if (prob(5))
-					src.sleeping = 1
+					src.sleeping += 1
 					src.Paralyse(5)
 
 			confused = max(0, confused - 1)

@@ -141,7 +141,7 @@
 				drowsyness--
 				eye_blurry = max(2, eye_blurry)
 				if (prob(5))
-					sleeping = 1
+					sleeping += 1
 					Paralyse(5)
 
 			confused = max(0, confused - 1)
