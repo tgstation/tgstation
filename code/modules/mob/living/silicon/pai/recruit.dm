@@ -193,13 +193,16 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 					if(c.key == O.key)
 						hasSubmitted = 1
 				if(!hasSubmitted && O.client.be_pai)
-					spawn question(O.client)
+					question(O.client)
 
 	proc/question(var/client/C)
-		asked.Add(C.key)
-		asked[C.key] = world.time
-		var/response = alert(C, "Someone is requesting a pAI personality. Would you like to play as a personal AI?", "pAI Request", "Yes", "No", "Never for this round")
-		if(response == "Yes")
-			recruitWindow(C.mob)
-		else if (response == "Never for this round")
-			C.be_pai = 0
+		spawn(0)
+			if(!C)	return
+			asked.Add(C.key)
+			asked[C.key] = world.time
+			var/response = alert(C, "Someone is requesting a pAI personality. Would you like to play as a personal AI?", "pAI Request", "Yes", "No", "Never for this round")
+			if(!C)	return		//handle logouts that happen whilst the alert is waiting for a response.
+			if(response == "Yes")
+				recruitWindow(C.mob)
+			else if (response == "Never for this round")
+				C.be_pai = 0

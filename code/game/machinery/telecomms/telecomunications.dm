@@ -103,11 +103,10 @@
 			if(machine.is_freq_listening(signal))
 				machine.traffic++
 
-			spawn()
-				if(copysig && copy)
-					machine.receive_information(copy, src)
-				else
-					machine.receive_information(signal, src)
+			if(copysig && copy)
+				machine.receive_information(copy, src)
+			else
+				machine.receive_information(signal, src)
 
 		if(send_count > 0 && is_freq_listening(signal))
 			traffic++

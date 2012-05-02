@@ -33,91 +33,108 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 /client/proc/callproc()
 	set category = "Debug"
 	set name = "Advanced ProcCall"
+
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
-	var/target = null
-	var/lst[] // List reference
-	lst = new/list() // Make the list
-	var/returnval = null
-	var/class = null
 
-	switch(alert("Proc owned by something?",,"Yes","No"))
-		if("Yes")
-			class = input("Proc owned by...","Owner") in list("Obj","Mob","Area or Turf","Client","CANCEL ABORT STOP")
+	spawn(0)
+		var/target = null
+		var/targetselected = 0
+		var/lst[] // List reference
+		lst = new/list() // Make the list
+		var/returnval = null
+		var/class = null
+
+		switch(alert("Proc owned by something?",,"Yes","No"))
+			if("Yes")
+				targetselected = 1
+				class = input("Proc owned by...","Owner",null) as null|anything in list("Obj","Mob","Area or Turf","Client")
+				switch(class)
+					if("Obj")
+						target = input("Enter target:","Target",usr) as obj in world
+					if("Mob")
+						target = input("Enter target:","Target",usr) as mob in world
+					if("Area or Turf")
+						target = input("Enter target:","Target",usr.loc) as area|turf in world
+					if("Client")
+						var/list/keys = list()
+						for(var/client/C)
+							keys += C
+						target = input("Please, select a player!", "Selection", null, null) as null|anything in keys
+					else
+						return
+			if("No")
+				target = null
+				targetselected = 0
+
+		var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
+		if(!procname)	return
+
+		var/argnum = input("Number of arguments","Number:",0) as num|null
+		if(!argnum && (argnum!=0))	return
+
+		lst.len = argnum // Expand to right length
+		//TODO: make a list to store whether each argument was initialised as null.
+		//Reason: So we can abort the proccall if say, one of our arguments was a mob which no longer exists
+		//this will protect us from a fair few errors ~Carn
+
+		var/i
+		for(i=1, i<argnum+1, i++) // Lists indexed from 1 forwards in byond
+
+			// Make a list with each index containing one variable, to be given to the proc
+			class = input("What kind of variable?","Variable Type") in list("text","num","type","reference","mob reference","icon","file","client","mob's area","CANCEL")
 			switch(class)
-				if("CANCEL ABORT STOP")
+				if("CANCEL")
 					return
-				if("Obj")
-					target = input("Enter target:","Target",usr) as obj in world
-				if("Mob")
-					target = input("Enter target:","Target",usr) as mob in world
-				if("Area or Turf")
-					target = input("Enter target:","Target",usr.loc) as area|turf in world
-				if("Client")
+
+				if("text")
+					lst[i] = input("Enter new text:","Text",null) as text
+
+				if("num")
+					lst[i] = input("Enter new number:","Num",0) as num
+
+				if("type")
+					lst[i] = input("Enter type:","Type") in typesof(/obj,/mob,/area,/turf)
+
+				if("reference")
+					lst[i] = input("Select reference:","Reference",src) as mob|obj|turf|area in world
+
+				if("mob reference")
+					lst[i] = input("Select reference:","Reference",usr) as mob in world
+
+				if("file")
+					lst[i] = input("Pick file:","File") as file
+
+				if("icon")
+					lst[i] = input("Pick icon:","Icon") as icon
+
+				if("client")
 					var/list/keys = list()
 					for(var/mob/M in world)
 						keys += M.client
-					target = input("Please, select a player!", "Selection", null, null) as null|anything in keys
-		if("No")
-			target = null
+					lst[i] = input("Please, select a player!", "Selection", null, null) as null|anything in keys
 
-	var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null)
+				if("mob's area")
+					var/mob/temp = input("Select mob", "Selection", usr) as mob in world
+					lst[i] = temp.loc
 
-	var/argnum = input("Number of arguments","Number:",0) as num
-
-	lst.len = argnum // Expand to right length
-
-	var/i
-	for(i=1, i<argnum+1, i++) // Lists indexed from 1 forwards in byond
-
-		// Make a list with each index containing one variable, to be given to the proc
-		class = input("What kind of variable?","Variable Type") in list("text","num","type","reference","mob reference","icon","file","client","mob's area","CANCEL")
-		switch(class)
-			if("CANCEL")
+		if(targetselected)
+			if(!target)
+				usr << "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>"
 				return
-
-			if("text")
-				lst[i] = input("Enter new text:","Text",null) as text
-
-			if("num")
-				lst[i] = input("Enter new number:","Num",0) as num
-
-			if("type")
-				lst[i] = input("Enter type:","Type") in typesof(/obj,/mob,/area,/turf)
-
-			if("reference")
-				lst[i] = input("Select reference:","Reference",src) as mob|obj|turf|area in world
-
-			if("mob reference")
-				lst[i] = input("Select reference:","Reference",usr) as mob in world
-
-			if("file")
-				lst[i] = input("Pick file:","File") as file
-
-			if("icon")
-				lst[i] = input("Pick icon:","Icon") as icon
-
-			if("client")
-				var/list/keys = list()
-				for(var/mob/M in world)
-					keys += M.client
-				lst[i] = input("Please, select a player!", "Selection", null, null) as null|anything in keys
-
-			if("mob's area")
-				var/mob/temp = input("Select mob", "Selection", usr) as mob in world
-				lst[i] = temp.loc
-
-
-	spawn(0)
-		if(target)
+			if(!hascall(target,procname))
+				usr << "<font color='red'>Error: callproc(): target has no such call [procname].</font>"
+				return
 			log_admin("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 			returnval = call(target,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
 		else
+			//this currently has no hascall protection. wasn't able to get it working.
 			log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 			returnval = call(procname)(arglist(lst)) // Pass the lst as an argument list to the proc
-	usr << "\blue Proc returned: [returnval ? returnval : "null"]"
-	feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+		usr << "<font color='blue'>[procname] returned: [returnval ? returnval : "null"]</font>"
+		feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/Cell()
 	set category = "Debug"
