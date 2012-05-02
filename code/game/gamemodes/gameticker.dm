@@ -117,9 +117,18 @@ var/datum/roundinfo/roundinfo = new()
 	spawn() supply_ticker() // Added to kick-off the supply shuttle regenerating points -- TLE
 
 	spawn(0)
-		while(1)
-			sleep(5000+rand(6000,10000))
-			SpawnEvent()
+		while (1)
+			var/potential_sleep_time = 10000 + rand(10000, 20000)
+			for (var/mob/living/M in world)
+				if(!M.client) continue
+				if(M.client.inactivity > 10 * 60 * 10) continue
+				if(M.stat == 2) continue
+
+				if (potential_sleep_time > 10000)
+					potential_sleep_time -= 600
+
+				sleep(potential_sleep_time)
+				SpawnEvent()
 
 	//Start master_controller.process()
 	spawn master_controller.process()

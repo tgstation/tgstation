@@ -486,6 +486,7 @@
 #include "code\game\machinery\dispenser.dm"
 #include "code\game\machinery\door_control.dm"
 #include "code\game\machinery\flasher.dm"
+#include "code\game\machinery\floodlight.dm"
 #include "code\game\machinery\Freezer.dm"
 #include "code\game\machinery\hologram.dm"
 #include "code\game\machinery\hydroponics.dm"
