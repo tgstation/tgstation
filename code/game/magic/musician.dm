@@ -1,21 +1,24 @@
 /datum/song
 	var
 		name = "Untitled"
-		lines[] = list()
+		list/lines = new()
+		tempo = 5
 
 /obj/structure/device/piano
-	name = "space piano"
+	name = "space minimoog"
 	icon = 'musician.dmi'
-	icon_state = "piano"
+	icon_state = "minimoog"
 	anchored = 1
 	density = 1
 	var
 		datum/song/song
 		playing = 0
-		tempo = 5
+		help = 0
+		edit = 1
 
 	proc
 		playnote(var/note as text)
+			//world << "Note: [note]"
 			var/soundfile
 			/*BYOND loads resource files at compile time if they are ''. This means you can't really manipulate them dynamically.
 			Tried doing it dynamically at first but its more trouble than its worth. Would have saved many lines tho.*/
@@ -361,90 +364,196 @@
 				else
 					return
 
-			for(var/mob/M in range(15, src))
+			for(var/mob/M in hearers(15, src))
 				M << sound(soundfile)
 
 		playsong()
+			var/cur_oct[7]
+			var/cur_acc[7]
+			for(var/i = 1 to 7)
+				cur_oct[i] = "3"
+				cur_acc[i] = "n"
+
 			for(var/line in song.lines)
-				for(var/i = 1, i <= length(line), i+=4)//i starts as 1, or beggining of list. Goes up by 4, skipping every fourth character.
-					if(!playing)//If the piano is playing and you don't want it playing, this will stop the proc.
-						return
-					var/currentnote = copytext(line, i, i+3)
-					playnote(currentnote)
-					sleep(tempo)
+				//world << line
+				for(var/beat in dd_text2list(lowertext(line), ","))
+					//world << "beat: [beat]"
+					var/list/notes = dd_text2list(beat, "/")
+					for(var/note in dd_text2list(notes[1], "-"))
+						//world << "note: [note]"
+						if(!playing || !anchored)//If the piano is playing, or is loose
+							playing = 0
+							return
+						if(lentext(note) == 0)
+							continue
+						//world << "Parse: [copytext(note,1,2)]"
+						var/cur_note = text2ascii(note) - 96
+						if(cur_note < 1 || cur_note > 7)
+							continue
+						for(var/i=2 to lentext(note))
+							var/ni = copytext(note,i,i+1)
+							if(!text2num(ni))
+								if(ni == "#" || ni == "b" || ni == "n")
+									cur_acc[cur_note] = ni
+								else if(ni == "s")
+									cur_acc[cur_note] = "#" // so shift is never required
+							else
+								cur_oct[cur_note] = ni
+						playnote(uppertext(copytext(note,1,2)) + cur_acc[cur_note] + cur_oct[cur_note])
+					if(notes.len >= 2 && text2num(notes[2]))
+						sleep(song.tempo / text2num(notes[2]))
+					else
+						sleep(song.tempo)
 			playing = 0
+			updateUsrDialog()
 
 	attack_hand(var/mob/user as mob)
+		if(!anchored)
+			return
+
 		usr.machine = src
-		var/dat = "<HEAD><TITLE>Piano</TITLE></HEAD><BODY>\n <META HTTP-EQUIV='Refresh' CONTENT='10'>"
-		var/calctempo = (10/tempo)*60
-		dat += "Tempo : [calctempo] BPM  (<A href='?src=\ref[src];choice=lowertempo'>-</A>/<A href='?src=\ref[src];choice=raisetempo'>+</A>)"
-		dat += "<A href='?src=\ref[src];choice=newsong'>(Start a New Song)</A><br>"
+		var/dat = "<HEAD><TITLE>Piano</TITLE></HEAD><BODY>"
+
 		if(song)
-			var/linecount = 0
-			for(var/line in song.lines)
-				linecount += 1
-				dat += "Bar [linecount]: [line]<br>"//<A href='?src=\ref[src];deletebar=[linecount]'>(Delete bar)</A><br>" // TODO: Replace delimeters with spaces, clean up display
-			dat += "<A href='?src=\ref[src];choice=newbar'>(Write a new bar)</A><br>"
 			if(song.lines.len > 0 && !(playing))
-				dat += "<A href='?src=\ref[src];choice=play'>(Play song)</A><br>"
+				dat += "<A href='?src=\ref[src];play=1'>Play Song</A><BR><BR>"
 			if(playing)
-				dat += "<A href='?src=\ref[src];choice=stop'>(Stop playing)</A><br>"
-		dat += {"
-				<br><br>
-				Bars are a series of notes separated by asterisks (*) or anything else you want to put there.<br>
-				Just know that every fourth character will act as a stop, delaying the next note by tempo.<br>
-				<br>
-				Notes are played by the names of the note, the accidental, then the octave number.<br>
-				Example: <i>An3*Bn3*Cn3*Dn3*En3*Fn3*Gn3</i> will play a scale.<br>
-				Chords can be played simply by listing more than one note before a pause: <i>AB*CD*EF*GA</i><br>
-				<br>
-				Bars may be up to 30 characters (including pauses).<br>
-				A song may only contain up to 10 bars.<br>
-				"}
-		user << browse(dat, "window=piano")
+				dat += "<A href='?src=\ref[src];stop=1'>Stop Playing</A><BR><BR>"
+
+		if(!edit)
+			dat += "<A href='?src=\ref[src];edit=2'>Show Editor</A><BR><BR>"
+		else
+			dat += "<A href='?src=\ref[src];edit=1'>Hide Editor</A><BR>"
+			dat += "<A href='?src=\ref[src];newsong=1'>Start a New Song</A><BR>"
+			dat += "<A href='?src=\ref[src];import=1'>Import a Song</A><BR><BR>"
+			if(song)
+				var/calctempo = (10/song.tempo)*60
+				dat += "Tempo : <A href='?src=\ref[src];tempo=10'>-</A><A href='?src=\ref[src];tempo=1'>-</A> [calctempo] BPM <A href='?src=\ref[src];tempo=-1'>+</A><A href='?src=\ref[src];tempo=-10'>+</A><BR><BR>"
+				var/linecount = 0
+				for(var/line in song.lines)
+					linecount += 1
+					dat += "Line [linecount]: [line] <A href='?src=\ref[src];deleteline=[linecount]'>Delete Line</A> <A href='?src=\ref[src];modifyline=[linecount]'>Modify Line</A><BR>"
+				dat += "<A href='?src=\ref[src];newline=1'>Add Line</A><BR><BR>"
+			if(help)
+				dat += "<A href='?src=\ref[src];help=1'>Hide Help</A><BR>"
+				dat += {"
+						Lines are a series of chords, separated by commas (,), each with notes seperated by hyphens (-).<br>
+						Every note in a chord will play together, with chord timed by the tempo.<br>
+						<br>
+						Notes are played by the names of the note, and optionally, the accidental, and/or the octave number.<br>
+						By default, every note is natural and in octave 3. Defining otherwise is remembered for each note.<br>
+						Example: <i>C,D,E,F,G,A,B</i> will play a C major scale.<br>
+						After a note has an accidental placed, it will be remembered: <i>C,C4,C,C3</i> is C3,C4,C4,C3</i><br>
+						Chords can be played simply by seperating each note with a hyphon: <i>A-C#,Cn-E,E-G#,Gn-B</i><br>
+						A pause may be denoted by an empty chord: <i>C,E,,C,G</i><br>
+						To make a chord be a different time, end it with /x, where the chord length will be length<br>
+							defined by tempo / x: <i>C,G/2,E/4</i><br>
+						Combined, an example is: <i>E-E4/4,/2,G#/8,B/8,E3-E4/4</i>
+						<br>
+						Lines may be up to 50 characters.<br>
+						A song may only contain up to 50 lines.<br>
+						"}
+			else
+				dat += "<A href='?src=\ref[src];help=2'>Show Help</A><BR>"
+		dat += "</BODY></HTML>"
+		user << browse(dat, "window=piano;size=700x300")
 		onclose(user, "piano")
 
 	Topic(href, href_list)
-		//You need some safety checks here. Where is the person located, etc.
-		switch(href_list["choice"])
-			if("lowertempo")
-				tempo += 1
-				if(tempo < 1)
-					tempo = 1
-			if("raisetempo")
-				tempo -= 1
-				if(tempo < 1)
-					tempo = 1
-			if("play")
+		if(in_range(src, usr) && !issilicon(usr) && anchored)
+			if(href_list["tempo"])
+				song.tempo += text2num(href_list["tempo"])
+				if(song.tempo < 1)
+					song.tempo = 1
+			if(href_list["play"])
 				if(song)
 					playing = 1
 					spawn() playsong()
-			if("newsong")
-				song = new /datum/song
-			if("newbar")
-				var/newbar = input("Enter your bar: ") as text|null
-				if(!newbar)
+			if(href_list["newsong"])
+				song = new()
+			if(href_list["newline"])
+				var/newline = input("Enter your line: ", "Piano") as text|null
+				if(!newline)
 					return
-				if(song.lines.len >= 10)
+				if(song.lines.len > 50)
 					return
-				if(lentext(newbar) > 30)
-					newbar = copytext(newbar, 1, 30)
-				song.lines.Add(newbar)
-			if("deletebar")
-				var/num = href_list["deletebar"]
-				num -= 1
-				var/line = song.lines[num]
-				usr << "Line found is [line]"
-				song.lines.Remove(line)
-			if("stop")
+				if(lentext(newline) > 50)
+					newline = copytext(newline, 1, 50)
+				song.lines.Add(newline)
+			if(href_list["deleteline"])
+				var/num = text2num(href_list["deleteline"])
+				song.lines.Cut(num, num+1)
+			if(href_list["modifyline"])
+				var/num = text2num(href_list["modifyline"])
+				var/content = input("Enter your line: ", "Piano", song.lines[num]) as text|null
+				if(!content)
+					return
+				if(lentext(content) > 50)
+					content = copytext(content, 1, 50)
+				song.lines[num] = content
+			if(href_list["stop"])
 				playing = 0
+			if(href_list["help"])
+				help = text2num(href_list["help"]) - 1
+			if(href_list["edit"])
+				edit = text2num(href_list["edit"]) - 1
+			if(href_list["import"])
+				var/t = ""
+				do
+					t = input(usr, "Please paste the entire song, formatted:", text("[]", src.name), t)  as message
+					if (!in_range(src, usr))
+						return
+
+					if(lentext(t) >= 3072)
+						var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
+						if(cont == "no")
+							break
+				while(lentext(t) > 3072)
+
+				//split into lines
+				spawn()
+					var/list/lines = dd_text2list(t, "\n")
+					var/tempo = 5
+					if(copytext(lines[1],1,6) == "BPM: ")
+						tempo = 600 / text2num(copytext(lines[1],6))
+						lines.Cut(1,2)
+					if(lines.len > 50)
+						usr << "Too many lines!"
+						lines.Cut(51)
+					var/linenum = 1
+					for(var/l in lines)
+						if(lentext(l) > 50)
+							usr << "Line [linenum] too long!"
+							lines.Remove(l)
+						else
+							linenum++
+					song = new()
+					song.lines = lines
+					song.tempo = tempo
+					updateUsrDialog()
 		add_fingerprint(usr)
 		updateUsrDialog()
 		return
 
-/*        playing = 1
-        var/datum/song/S = new /datum/song
-        S.lines.Add("A;B;C;D;E;F;G;A;A;B;B;A;G;A;F;F;A;*;*;*;*;B;C;C;F;G")
-        S.lines.Add("A;B;C;D;E;F;G;A;A;B;B;A;G;A;F;F;A;*;*;*;*;B;C;C;F;G")
-        song = S*/
+	attackby(obj/item/O as obj, mob/user as mob)
+		if (istype(O, /obj/item/weapon/wrench))
+			if (anchored)
+				playsound(src.loc, 'Ratchet.ogg', 50, 1)
+				user << "\blue You begin to loosen \the [src]'s casters..."
+				if (do_after(user, 40))
+					user.visible_message( \
+						"[user] loosens \the [src]'s casters.", \
+						"\blue You have loosened \the [src]. Now it can be pulled somewhere else.", \
+						"You hear ratchet.")
+					src.anchored = 0
+			else
+				playsound(src.loc, 'Ratchet.ogg', 50, 1)
+				user << "\blue You begin to tighten \the [src] to the floor..."
+				if (do_after(user, 20))
+					user.visible_message( \
+						"[user] tightens \the [src]'s casters.", \
+						"\blue You have tightened \the [src]'s casters. Now it can be played again.", \
+						"You hear ratchet.")
+					src.anchored = 1
+		else
+			..()
