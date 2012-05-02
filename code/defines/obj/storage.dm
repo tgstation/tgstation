@@ -601,7 +601,7 @@
 	/obj/item/stack/sheet/plasma,
 	/obj/item/stack/sheet/uranium,
 	/obj/item/stack/sheet/diamond,
-	/obj/item/stack/sheet/clown,
+//	/obj/item/stack/sheet/clown,
 	/obj/item/stack/sheet/plasteel,
 	/obj/item/stack/rods
 

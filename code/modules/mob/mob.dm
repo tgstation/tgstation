@@ -742,7 +742,7 @@
 	set category = "IC"
 	set src in oview(1)
 
-	if (!( usr ))
+	if ( !usr || usr==src || !istype(src.loc,/turf) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
 	if (!( anchored ))
 		usr.pulling = src
