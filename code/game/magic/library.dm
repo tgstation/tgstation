@@ -863,6 +863,16 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 						log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
 						alert("Upload Complete.")
 	if(href_list["targetid"])
+
+		if(!bibledelay)//Taken from the bible code part thing
+			bibledelay = 60
+			spawn(0)
+				while(bibledelay >= 1 && src)
+					sleep(10)
+					bibledelay -- // subtract one second to countdown
+
+				bibledelay = 0
+
 		if(BOOKS_USE_SQL && config.sql_enabled)
 			var/sqlid = href_list["targetid"]
 			var/DBConnection/dbcon = new()

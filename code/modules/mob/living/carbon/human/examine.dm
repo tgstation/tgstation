@@ -1,5 +1,5 @@
 /mob/living/carbon/human/examine()
-	set src in oview()
+	set src in view()
 
 	if(!usr || !src)	return
 	if(((usr.disabilities & 128) || usr.blinded || usr.stat) && !(istype(usr,/mob/dead/observer/)))
@@ -523,6 +523,31 @@
 //		if(w.bleeding)
 //			usr << "\red [src.name] is bleeding from a [sizetext] on [t_his] [temp.display_name]."
 //			continue
+
+	if(istype(usr, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = usr
+		if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+			var/perpname = "wot"
+			var/criminal = "None"
+
+			if(wear_id)
+				if(istype(wear_id,/obj/item/weapon/card/id))
+					perpname = wear_id:registered_name
+				else if(istype(wear_id,/obj/item/device/pda))
+					var/obj/item/device/pda/tempPda = wear_id
+					perpname = tempPda.owner
+			else
+				perpname = src.name
+
+			for (var/datum/data/record/E in data_core.general)
+				if (E.fields["name"] == perpname)
+					for (var/datum/data/record/R in data_core.security)
+						if (R.fields["id"] == E.fields["id"])
+							criminal = R.fields["criminal"]
+
+
+			msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
+			//msg += "\[Set Hostile Identification\]\n"
 
 	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
 

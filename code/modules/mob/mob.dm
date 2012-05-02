@@ -420,7 +420,7 @@
 	set src in usr
 	if(usr != src)
 		usr << "No."
-	var/msg = input(usr,"Set the flavor text in your 'examine' verb. Don't metagame!","Flavor Text",html_decode(flavor_text)) as message|null
+	var/msg = input(usr,"Set the flavor text in your 'examine' verb. Can also be used for OOC notes about your character.","Flavor Text",html_decode(flavor_text)) as message|null
 
 	if(msg != null)
 		msg = copytext(msg, 1, MAX_MESSAGE_LEN)
@@ -536,6 +536,19 @@
 		usr << "\blue Now you hear all speech in the world"
 	else
 		usr << "\blue Now you hear speech only from nearest creatures."
+
+/client/var/ghost_sight = 1
+/client/verb/toggle_ghost_sight()
+	set name = "Ghost sight"
+	set category = "OOC"
+	set desc = "Hear emotes from everywhere"
+	ghost_sight = !ghost_sight
+	if (ghost_sight)
+		usr << "\blue Now you hear all emotes in the world"
+	else
+		usr << "\blue Now you hear emotes only from nearest creatures."
+
+
 
 /mob/verb/observe()
 	set name = "Observe"

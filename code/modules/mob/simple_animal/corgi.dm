@@ -18,6 +18,7 @@
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
+	see_in_dark = 5
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	var/obj/item/inventory_mouth
@@ -393,7 +394,3 @@
 					sleep(1)
 	else
 		..()
-
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/meat/corgi
-	name = "Corgi meat"
-	desc = "Tastes like... well you know..."

@@ -29,3 +29,15 @@
 	icon_state = "hardhat0_dblue"
 	item_state = "hardhat0_dblue"
 	color = "dblue"
+
+/obj/item/clothing/head/helmet/hardhat/pumpkinhead
+	name = "carved pumpkin"
+	desc = "A jack o' lantern! Believed to ward off evil spirits."
+	icon_state = "hardhat0_pumpkin"
+	item_state = "hardhat0_pumpkin"
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
+	brightness_on = 3
+	see_face = 0.0
+	color = "pumpkin"
+	armor = list(melee = 5, bullet = 0, laser = 5,energy = 5, bomb = 5, bio = 0, rad = 0)
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES

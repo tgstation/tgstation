@@ -383,6 +383,24 @@ proc/process_ghost_teleport_locs()
 	icon_state = "cave"
 	requires_power = 0
 
+/area/asteroid/artifactroom
+	name = "Asteroid - Artifact"
+	icon_state = "cave"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /area/planet/clown
 	name = "Clown Planet"
 	icon_state = "honk"

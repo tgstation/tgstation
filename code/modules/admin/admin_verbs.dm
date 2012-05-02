@@ -50,13 +50,9 @@
 		if ("Trial Admin")
 			holder.level = 3
 			if(holder.state == 2) // if observing
-				// Debug
 				verbs += /client/proc/debug_variables
 				verbs += /client/proc/cmd_modify_ticker_variables
-				verbs += /client/proc/toggleadminhelpsound
-				// Admin helpers
 				verbs += /client/proc/toggle_view_range
-				// Admin game intrusion
 				verbs += /client/proc/Getmob
 				verbs += /client/proc/Getkey
 				verbs += /client/proc/sendmob
@@ -65,6 +61,7 @@
 				verbs += /client/proc/jumptomob
 				verbs += /client/proc/jumptoturf
 				verbs += /client/proc/jumptocoord
+				verbs += /client/proc/cmd_admin_delete
 				verbs += /client/proc/cmd_admin_add_freeform_ai_law
 				verbs += /client/proc/cmd_admin_rejuvenate
 				verbs += /client/proc/cmd_admin_drop_everything
@@ -74,12 +71,9 @@
 			holder.level = 2
 			if(holder.state == 2) // if observing
 				deadchat = 1
-				// Settings
 				verbs += /obj/admins/proc/toggleaban					//abandon mob
 				verbs += /client/proc/deadchat							//toggles deadchat
-				// Admin helpers
 				verbs += /client/proc/cmd_admin_check_contents
-				// Admin game intrusion
 				verbs += /client/proc/Jump
 				verbs += /client/proc/jumptokey
 				verbs += /client/proc/jumptomob
@@ -121,6 +115,8 @@
 
 		//Moderator
 		if (holder.level >= 0)
+			verbs += /obj/admins/proc/announce
+			verbs += /obj/admins/proc/startnow
 			verbs += /obj/admins/proc/toggleAI							//Toggle the AI
 			verbs += /obj/admins/proc/toggleenter						//Toggle enterting
 //			verbs += /obj/admins/proc/toggleguests						//Toggle guests entering
@@ -136,8 +132,6 @@
 			verbs += /client/proc/cmd_admin_pm_panel
 			verbs += /client/proc/cmd_admin_subtle_message
 			verbs += /client/proc/warn
-			verbs += /obj/admins/proc/announce
-			verbs += /obj/admins/proc/startnow
 			verbs += /client/proc/dsay
 			verbs += /client/proc/admin_play
 			verbs += /client/proc/admin_observe
@@ -185,6 +179,8 @@
 			deadchat = 1
 			seeprayers = 1
 
+			verbs += /obj/admins/proc/view_txt_log
+			verbs += /obj/admins/proc/view_atk_log
 			verbs += /obj/admins/proc/toggleaban						//abandon mob
 			verbs += /obj/admins/proc/show_traitor_panel
 			verbs += /client/proc/cmd_admin_remove_plasma
@@ -196,6 +192,7 @@
 			verbs += /client/proc/toggleprayers
 			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/tension_report
+			verbs += /client/proc/toggleadminhelpsound
 			verbs += /proc/possess
 			verbs += /proc/release
 			verbs += /client/proc/admin_deny_shuttle
@@ -230,14 +227,12 @@
 			//verbs += /proc/togglebuildmode 							--Merged with view variables
 			//verbs += /client/proc/cmd_modify_object_variables 		--Merged with view variables
 			verbs += /client/proc/togglebuildmodeself
-			verbs += /client/proc/toggleadminhelpsound
+
 		else	return
 
 		//Game Admin
 		if (holder.level >= 5)
 			verbs += /obj/admins/proc/spawn_atom
-			verbs += /obj/admins/proc/view_txt_log
-			verbs += /obj/admins/proc/view_atk_log
 			verbs += /client/proc/cmd_admin_list_open_jobs
 			verbs += /client/proc/cmd_admin_direct_narrate
 			verbs += /client/proc/colorooc
@@ -249,6 +244,7 @@
 			verbs += /client/proc/check_words
 			verbs += /client/proc/drop_bomb
 			verbs += /client/proc/cmd_admin_grantfullaccess
+			verbs += /client/proc/kill_airgroup
 			verbs += /client/proc/cmd_admin_drop_everything
 			verbs += /client/proc/make_sound
 			verbs += /client/proc/play_local_sound
@@ -265,6 +261,7 @@
 			//verbs += /client/proc/cmd_admin_emp						--Merged with view variables
 			//verbs += /client/proc/give_spell 							--Merged with view variables
 			//verbs += /client/proc/cmd_admin_ninjafy					--Merged with view variables
+			//verbs += /client/proc/cmd_switch_radio					--removed as tcommsat is staying
 			// Moved over from tg's Game Master:
 			verbs += /obj/admins/proc/toggle_aliens			//toggle aliens
 			verbs += /obj/admins/proc/toggle_space_ninja	//toggle ninjas
@@ -386,7 +383,8 @@
 	verbs -= /client/proc/cmd_admin_create_centcom_report
 	verbs -= /client/proc/deadchat										//toggles deadchat
 	verbs -= /client/proc/cmd_admin_mute
-	verbs -= /client/proc/cmd_admin_pm
+	verbs -= /client/proc/cmd_admin_pm_context
+	verbs -= /client/proc/cmd_admin_pm_panel
 	verbs -= /client/proc/cmd_admin_say
 	verbs -= /client/proc/cmd_admin_subtle_message
 	verbs -= /client/proc/warn
@@ -446,6 +444,7 @@
 	//verbs -= /obj/admins/proc/unprison 								--Merged with player panel
 	//verbs -= /client/proc/cmd_switch_radio							--removed because tcommsat is staying
 	verbs -= /client/proc/togglebuildmodeself
+	verbs -= /client/proc/kill_airgroup
 	verbs -= /client/proc/admin_deny_shuttle
 	verbs -= /client/proc/cmd_admin_christmas
 	verbs -= /client/proc/editappear

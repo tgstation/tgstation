@@ -1,3 +1,19 @@
+/mob/living/Life()
+
+	..()
+
+	// While I'm doing a terriblly lazy way of initalizing things, why don't I make it so people's preferences tag along with them.  This could be useful in fixing the fucking cloned-as-unknown thing, making me not have to dynamically load them during tensioner, and of course, storing metadata.
+
+	if(!src.storedpreferences)
+		src.storedpreferences = new
+		storedpreferences.savefile_load(src, 0)
+
+
+
+
+	return
+
+
 /mob/living/verb/succumb()
 	set hidden = 1
 	if ((src.health < 0 && src.health > -95.0))
@@ -226,6 +242,26 @@
 		density = 1
 	else
 		density = !lying
+
+
+/mob/living/proc/Examine_OOC()
+	set name = "Examine Meta-Info (OOC)"
+	set category = "OOC"
+	set src in view()
+
+	if(config.allow_Metadata)
+		usr << "[src]'s Metainfo:"
+
+		if(src.storedpreferences)
+			usr << "[src]'s OOC Notes:  [src.storedpreferences.metadata]"
+
+		else
+			usr << "[src] does not have any stored infomation!"
+
+	else
+		usr << "OOC Metadata is not supported by this server!"
+
+	return
 
 /mob/living/attack_animal(mob/M)
 	attack_paw(M)	// treat it like a normal non-human attack

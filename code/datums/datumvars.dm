@@ -239,6 +239,7 @@ client
 			body += "<option value='byond://?src=\ref[src];ninja=\ref[D]'>Make Space Ninja</option>"
 			body += "<option value='byond://?src=\ref[src];godmode=\ref[D]'>Toggle Godmode</option>"
 			body += "<option value='byond://?src=\ref[src];build_mode=\ref[D]'>Toggle Build Mode</option>"
+//			body += "<option value='byond://?src=\ref[src];direct_control=\ref[D]'>Assume Direct Control</option>"
 			if(ishuman(D))
 				body += "<option value>---</option>"
 				body += "<option value='byond://?src=\ref[src];makeai=\ref[D]'>Make AI</option>"
@@ -496,6 +497,20 @@ client
 				return
 			togglebuildmode(MOB)
 			href_list["datumrefresh"] = href_list["build_mode"]
+
+/*		else if (href_list["direct_control"])
+			if(!href_list["direct_control"])
+				return
+			var/mob/MOB = locate(href_list["direct_control"])
+			if(!MOB)
+				return
+			if(!ismob(MOB))
+				return
+			if(!src.holder)
+				return
+
+			if(usr.client)
+				usr.client.cmd_assume_direct_control(MOB)*/
 
 		else if (href_list["delall"])
 			if(!href_list["delall"])

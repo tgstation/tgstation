@@ -840,12 +840,13 @@
 		if(!reagents.total_volume)
 			var/mob/M = usr
 			var/obj/item/weapon/paper/paper = locate() in src
-			M.visible_message( \
-				"\blue [M] takes a piece of paper from the cookie!", \
-				"\blue You take a piece of paper from the cookie! Read it!" \
-			)
-			M.put_in_hand(paper)
-			paper.add_fingerprint(M)
+			if(paper)
+				M.visible_message( \
+					"\blue [M] takes a piece of paper from the cookie!", \
+					"\blue You take a piece of paper from the cookie! Read it!" \
+				)
+				M.put_in_hand(paper)
+				paper.add_fingerprint(M)
 
 /obj/item/weapon/reagent_containers/food/snacks/badrecipe
 	name = "Burned mess"
@@ -1719,6 +1720,21 @@
 	icon_state = "applecakeslice"
 	bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/pumpkinpie
+	name = "Pumpkin Pie"
+	desc = "A delicious treat for the autumn months."
+	icon_state = "pumpkinpie"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pumpkinpieslice
+	slices_num = 5
+	New()
+		..()
+		reagents.add_reagent("nutriment", 29)
+
+/obj/item/weapon/reagent_containers/food/snacks/pumpkinpieslice
+	name = "Pumpkin Pie slice"
+	desc = "A slice of pumpkin pie, with whipped cream on top. Perfection."
+	icon_state = "pumpkinpieslice"
+	bitesize = 2
 
 
 

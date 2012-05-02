@@ -551,6 +551,24 @@
 					if(prob(25))
 						src << "Hack attempt detected."
 			return
+
+	else if(istype(W, /obj/item/borg/upgrade/))
+		var/obj/item/borg/upgrade/U = W
+		if(!opened)
+			usr << "You must access the borgs internals!"
+		else if(!src.module && U.require_module)
+			usr << "The borg must choose a module before he can be upgraded!"
+		else if(U.locked)
+			usr << "The upgrade is locked and cannot be used yet!"
+		else
+			if(U.action(src))
+				usr << "You apply the upgrade to [src]!"
+				usr.drop_item()
+				U.loc = src
+			else
+				usr << "Upgrade error!"
+
+
 	else
 		spark_system.start()
 		return ..()
@@ -1207,9 +1225,9 @@ Frequency:
 		src.verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes
 
 
-/*/mob/living/silicon/robot/proc/flashproof()
+/mob/living/silicon/robot/proc/flashproof()
 	if(module)
 		for(var/obj/item/borg/upgrade/flashproof/F in module.modules)
 			return 1
 
-	return 0*/
+	return 0

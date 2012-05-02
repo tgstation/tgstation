@@ -129,6 +129,10 @@ datum/preferences
 		skill_specialization = null
 		list/skills = list() // skills can range from 0 to 3
 
+		// OOC Metadata:
+		metadata = ""
+
+
 	New()
 		hair_style = new/datum/sprite_accessory/hair/short
 		facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
@@ -243,6 +247,10 @@ datum/preferences
 		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[UI == UI_NEW ? "New" : "Old"]</b></a><br>"
 		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
 		dat += "<b>Ghost ears:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_ears=input\"><b>[ghost_ears == 0 ? "Nearest Creatures" : "All Speech"]</b></a><br>"
+		dat += "<b>Ghost sight:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_sight=input\"><b>[ghost_sight == 0 ? "Nearest Creatures" : "All Emotes"]</b></a><br>"
+
+		if(config.allow_Metadata)
+			dat += "<b>OOC Notes:</b> <a href='byond://?src=\ref[user];preferences=1;OOC=input'> Edit </a><br>"
 
 		if((user.client) && (user.client.holder) && (user.client.holder.rank) && (user.client.holder.rank == "Game Master"))
 			dat += "<hr><b>OOC</b><br>"
@@ -539,6 +547,8 @@ datum/preferences
 
 
 	proc/process_link(mob/user, list/link_tags)
+		if(!usr)
+			return
 		if(link_tags["occ"])
 			if(link_tags["cancel"])
 				user << browse(null, "window=\ref[user]occupation")
@@ -639,6 +649,24 @@ datum/preferences
 						age = max(min(round(text2num(new_age)), maximum_age), minimum_age)
 				if("random")
 					age = rand (minimum_age, maximum_age)
+
+		if(link_tags["OOC"])
+			var/tempnote = ""
+			tempnote = input(user, "Please enter your OOC Notes!:", "OOC notes" , metadata)  as text
+			var/list/bad_characters = list("_", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\","0","1","2","3","4","5","6","7","8","9")
+
+			for(var/c in bad_characters)
+				tempnote = dd_replacetext(tempnote, c, "")
+
+			if(length(tempnote) >= 255)
+				alert("That name is too long. (255 character max, please)")
+				return
+
+			metadata = tempnote
+			return
+
+
+
 
 		if(link_tags["b_type"])
 			switch(link_tags["b_type"])
@@ -782,6 +810,9 @@ datum/preferences
 
 		if(link_tags["ghost_ears"])
 			ghost_ears = !ghost_ears
+
+		if(link_tags["ghost_sight"])
+			ghost_sight = !ghost_sight
 
 		if(link_tags["underwear"])
 			switch(link_tags["underwear"])
@@ -991,6 +1022,7 @@ datum/preferences
 			C.be_syndicate = be_special
 			if(isnull(src.ghost_ears)) src.ghost_ears = 1 //There were problems where the default was null before someone saved their profile.
 			C.ghost_ears = src.ghost_ears
+			C.ghost_sight = src.ghost_sight
 
 	proc/copydisabilities(mob/living/carbon/human/character)
 		if(disabilities & 1)
