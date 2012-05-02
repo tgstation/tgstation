@@ -418,10 +418,6 @@
 	var/burning = null
 	var/hitsound = null
 	var/w_class = 3.0
-	var/wielded = 0 // 1 if item is two handed and grabbed with two hands
-	var/twohanded = 0 // Two handed and wielded off by default, nyoro~n -Agouri
-	var/force_unwielded = 0
-	var/force_wielded = 0
 	var/protective_temperature = 0 // Placing this here to avoid runtime errors, due to tiny items being allowed on ears and being queried for this variable
 	flags = FPRINT | TABLEPASS
 	pass_flags = PASSTABLE

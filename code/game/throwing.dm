@@ -33,19 +33,6 @@
 
 	if(!item) return
 
-	if(istype(item,/obj/item))
-		var/obj/item/IT = item
-		if(IT.twohanded)
-			if(IT.wielded)
-				if(hand)
-					var/obj/item/weapon/offhand/O = r_hand
-					del O
-				else
-					var/obj/item/weapon/offhand/O = l_hand
-					del O
-
-			IT.wielded = 0
-			IT.name = initial(IT.name)
 
 
 	u_equip(item)

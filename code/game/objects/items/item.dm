@@ -12,20 +12,6 @@
 	..()
 	user.update_clothing()
 
-	// So you can't drop the Offhand
-	if(istype(src, /obj/item/weapon/offhand))
-		user.drop_item(src)
-
-		var/obj/item/O_r = user.r_hand
-		var/obj/item/O_l = user.l_hand
-		if(O_r.twohanded)
-			if(O_r.wielded)
-				user.drop_item(O_r)
-		if(O_l.twohanded)
-			if(O_l.wielded)
-				user.drop_item(O_l)
-		del(src)
-
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
 	return
@@ -231,38 +217,6 @@
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
 
-/obj/item/attack_self(mob/user as mob)
-	..()
-	if(twohanded)
-		if(wielded) //Trying to unwield it
-			wielded = 0
-			force = force_unwielded
-			src.name = "[initial(name)] (Unwielded)"
-			src.update_icon() //If needed by the particular item
-			user << "\blue You are now carrying the [initial(name)] with one hand."
-
-			if(istype(user.get_inactive_hand(),/obj/item/weapon/offhand))
-				del user.get_inactive_hand()
-			return
-		else //Trying to wield it
-			if(user.get_inactive_hand())
-				user << "\red You need your other hand to be empty"
-				return
-			wielded = 1
-			force = force_wielded
-			src.name = "[initial(name)] (Wielded)"
-			src.update_icon() //If needed by the particular item
-			user << "\blue You grab the [initial(name)] with both hands."
-
-			var/obj/item/weapon/offhand/O = new /obj/item/weapon/offhand(user) ////Let's reserve his other hand~
-			O.name = text("[initial(src.name)] - Offhand")
-			O.desc = "Your second grip on the [initial(src.name)]"
-			if(user.hand)
-				user.r_hand = O          ///Place dat offhand in the opposite hand
-			else
-				user.l_hand = O
-			O.layer = 20
-			return
 
 mob/proc/flash_weak_pain()
 	flick("weak_pain",pain)

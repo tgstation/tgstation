@@ -783,7 +783,7 @@ In all, this is a lot like the monkey code. /N
 	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? text("[]", r_hand) : "Nothing")]</A>
 	<BR><B>Head:</B> <A href='?src=\ref[src];item=head'>[(head ? text("[]", head) : "Nothing")]</A>
 	<BR><B>(Exo)Suit:</B> <A href='?src=\ref[src];item=suit'>[(wear_suit ? text("[]", wear_suit) : "Nothing")]</A>
-	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
+	<BR><A href='?src=\ref[src];item=pockets'>Empty Pouches</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}
 	user << browse(dat, text("window=mob[name];size=340x480"))

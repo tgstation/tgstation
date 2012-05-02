@@ -203,17 +203,3 @@
 	for(var/mob/O in viewers(src, null))
 		O.show_message(text("\red <B>The mousetrap is triggered by [A].</B>"), 1)
 	src.triggered(null)
-
-/obj/item/weapon/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-	..()
-	if(A && wielded && (istype(A,/obj/structure/window) || istype(A,/obj/structure/grille))) //destroys windows and grilles in one hit
-		if(istype(A,/obj/structure/window)) //should just make a window.Break() proc but couldn't bother with it
-			var/obj/structure/window/W = A
-
-			new /obj/item/weapon/shard( W.loc )
-			if(W.reinf) new /obj/item/stack/rods( W.loc)
-
-			if (W.dir == SOUTHWEST)
-				new /obj/item/weapon/shard( W.loc )
-				if(W.reinf) new /obj/item/stack/rods( W.loc)
-		del(A)
