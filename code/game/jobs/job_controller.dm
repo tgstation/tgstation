@@ -288,7 +288,9 @@ var/global/datum/controller/occupations/job_master
 		switch(rank)
 			if("Cyborg")
 				return
-			if("Captain")
+			if(	"Head of Personnel" || "Head of Security" || "Chief Engineer" || "Research Director" || "Chief Medical Officer")
+				C = new /obj/item/weapon/card/id/silver(H)
+			else if("Captain")
 				C = new /obj/item/weapon/card/id/gold(H)
 			else
 				C = new /obj/item/weapon/card/id(H)
