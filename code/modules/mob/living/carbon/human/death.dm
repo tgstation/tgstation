@@ -99,8 +99,11 @@
 /mob/living/carbon/human/proc/ChangeToHusk()
 	if(mutations & HUSK)
 		return
+	var/datum/organ/external/head/head = get_organ("head")
+	if(head)
+		head.disfigured = 1
+	name = get_visible_name()
 	mutations |= HUSK
-	real_name = "Unknown"
 	update_body()
 	return
 

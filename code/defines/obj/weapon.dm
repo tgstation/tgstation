@@ -485,7 +485,6 @@
 	var/registered_name = null // The name registered_name on the card
 
 	var/assignment = null
-	var/over_jumpsuit = 1 // If set to 0, it won't display on top of the mob's jumpsuit
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
 /obj/item/weapon/card/id/silver

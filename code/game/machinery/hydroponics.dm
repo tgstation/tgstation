@@ -878,6 +878,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 		if (realName)
 			podman.real_name = realName
+			podman.original_name = realName	//don't want a random ghost name if we die again
 		else
 			podman.real_name = "pod person"  //No null names!!
 

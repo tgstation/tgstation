@@ -1061,37 +1061,8 @@
 		overlays += image("icon" = 'belt.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
 		belt.screen_loc = ui_belt
 
-	if ((wear_mask && !(wear_mask.see_face)) || (head && !(head.see_face))) // can't see the face
-		if (wear_id)
-			if (istype(wear_id, /obj/item/weapon/card/id))
-				var/obj/item/weapon/card/id/id = wear_id
-				if (id.registered_name)
-					name = id.registered_name
-				else
-					name = "Unknown"
-			else if (istype(wear_id, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = wear_id
-				if (pda.owner)
-					name = pda.owner
-				else
-					name = "Unknown"
-		else
-			name = "Unknown"
-	else
-		if (wear_id)
-			if (istype(wear_id, /obj/item/weapon/card/id))
-				var/obj/item/weapon/card/id/id = wear_id
-				if (id.registered_name != real_name)
-					name = "[real_name] (as [id.registered_name])"
 
-
-			else if (istype(wear_id, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = wear_id
-				if (pda.owner)
-					if (pda.owner != real_name)
-						name = "[real_name] (as [pda.owner])"
-		else
-			name = real_name
+	name = get_visible_name()
 
 	if (wear_id)
 		wear_id.screen_loc = ui_id
@@ -2208,18 +2179,33 @@ It can still be worn/put on as normal.
 		return if_no_id
 	return
 
+//repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a seperate proc as it'll be useful elsewhere
+/mob/living/carbon/human/proc/get_visible_name()
+	if ((wear_mask && !(wear_mask.see_face)) || (head && !(head.see_face))) // can't see their face
+		return get_id_name("Unknown")
+	else
+		var/face_name = get_face_name()
+		var/id_name = get_id_name("")
+		if(id_name && (id_name != face_name))
+			return "[face_name] as ([id_name])"
+		return face_name
+
+//Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
+/mob/living/carbon/human/proc/get_face_name()
+	var/datum/organ/external/head/head = get_organ("head")
+	if(!head || head.disfigured)	//no face!
+		return "Unknown"
+	else
+		return "[real_name]"
+
 //gets name from ID or PDA itself, ID inside PDA doesn't matter
 //Useful when player is being seen by other mobs
-/mob/living/carbon/human/proc/get_visible_name(var/if_no_id = "Unknown")
+/mob/living/carbon/human/proc/get_id_name(var/if_no_id = "Unknown")
 	var/obj/item/device/pda/pda = wear_id
 	var/obj/item/weapon/card/id/id = wear_id
-	if (istype(pda))
-		. = pda.owner
-	else if (istype(id))
-		. = id.registered_name
-	else
-		return if_no_id
-	return
+	if(istype(pda))		return pda.owner
+	if(istype(id))		return id.registered_name
+	return if_no_id
 
 //gets ID card object from special clothes slot or null.
 /mob/living/carbon/human/proc/get_idcard()

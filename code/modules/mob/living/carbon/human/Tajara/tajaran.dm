@@ -164,8 +164,7 @@
 				overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
 
 	if (wear_id)
-		if(wear_id.over_jumpsuit)
-			overlays += image("icon" = 'mob.dmi', "icon_state" = "id[!lying ? null : "2"]", "layer" = MOB_LAYER)
+		overlays += image("icon" = 'mob.dmi', "icon_state" = "id[!lying ? null : "2"]", "layer" = MOB_LAYER)
 
 	if (client)
 		client.screen -= hud_used.intents
@@ -354,37 +353,8 @@
 		overlays += image("icon" = 'belt.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
 		belt.screen_loc = ui_belt
 
-	if ((wear_mask && !(wear_mask.see_face)) || (head && !(head.see_face))) // can't see the face
-		if (wear_id)
-			if (istype(wear_id, /obj/item/weapon/card/id))
-				var/obj/item/weapon/card/id/id = wear_id
-				if (id.registered_name)
-					name = id.registered_name
-				else
-					name = "Unknown"
-			else if (istype(wear_id, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = wear_id
-				if (pda.owner)
-					name = pda.owner
-				else
-					name = "Unknown"
-		else
-			name = "Unknown"
-	else
-		if (wear_id)
-			if (istype(wear_id, /obj/item/weapon/card/id))
-				var/obj/item/weapon/card/id/id = wear_id
-				if (id.registered_name != real_name)
-					name = "[real_name] (as [id.registered_name])"
 
-
-			else if (istype(wear_id, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = wear_id
-				if (pda.owner)
-					if (pda.owner != real_name)
-						name = "[real_name] (as [pda.owner])"
-		else
-			name = real_name
+	name = get_visible_name()
 
 	if (wear_id)
 		wear_id.screen_loc = ui_id

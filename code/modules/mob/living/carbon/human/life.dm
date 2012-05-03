@@ -862,13 +862,13 @@
 
 			if (stuttering) stuttering--
 
+
+			//Carn: marker 4#
 			var/datum/organ/external/head/head = get_organ("head")
 			if(head && !head.disfigured)
 				if(head.brute_dam >= 45 || head.burn_dam >= 45)
-					head.disfigured = 1
 					emote("scream")
-					real_name = "Unknown"
-					src << "\red Your face has become disfigured."
+					disfigure_face()
 //					face_op_stage = 0.0
 			var/blood_max = 0
 			for(var/datum/organ/external/temp in organs)

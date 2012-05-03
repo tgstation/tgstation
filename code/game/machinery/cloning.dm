@@ -147,6 +147,7 @@
 
 	if(clonename)
 		src.occupant.real_name = clonename
+		src.occupant.original_name = clonename //we don't want random ghost names should we die again.
 	else
 		src.occupant.real_name = "clone"  //No null names!!
 

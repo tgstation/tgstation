@@ -20,7 +20,7 @@
 	var/alt_name = ""
 	if (istype(src, /mob/living/carbon/human) && src.name != src.real_name)
 		var/mob/living/carbon/human/H = src
-		alt_name = " (as [H.get_visible_name()])"
+		alt_name = " (as [H.get_id_name("Unknown")])"
 	// Mute disability
 	if (src.sdisabilities & 2)
 		return
