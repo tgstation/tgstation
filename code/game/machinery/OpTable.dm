@@ -12,13 +12,13 @@
 	var/strapped = 0.0
 
 	var/obj/machinery/computer/operating/computer = null
-	var/id = 0.0
 
 /obj/machinery/optable/New()
 	..()
-	for(var/obj/machinery/computer/operating/O in world)
-		if(src.id == O.id)
-			src.computer = O
+	for(dir in list(NORTH,EAST,SOUTH,WEST))
+		computer = locate(/obj/machinery/computer/operating, get_step(src, dir))
+		if (!isnull(computer))
+			break
 	spawn(100)
 		process()
 

@@ -7,15 +7,13 @@
 	var
 		mob/living/carbon/human/victim = null
 		obj/machinery/optable/table = null
-		id = 0.0
-
 
 /obj/machinery/computer/operating/New()
 	..()
-	for(var/obj/machinery/optable/O in world)
-		if(src.id == O.id)
-			src.table = O
-
+	for(dir in list(NORTH,EAST,SOUTH,WEST))
+		table = locate(/obj/machinery/optable, get_step(src, dir))
+		if (!isnull(table))
+			break
 
 /obj/machinery/computer/operating/attack_ai(mob/user)
 	add_fingerprint(user)
@@ -55,7 +53,7 @@
 <B>Toxins Damage:</B> [src.victim.getToxLoss()]<BR>
 <B>Fire Damage:</B> [src.victim.getFireLoss()]<BR>
 <B>Suffocation Damage:</B> [src.victim.getOxyLoss()]<BR>
-<B>Patient Status:</B> [src.victim.stat ? "Non-responsive" : "Stable"]<BR>
+<B>Patient Status:</B> [src.victim.stat ? "Non-Responsive" : "Stable"]<BR>
 "}
 	else
 		src.victim = null
