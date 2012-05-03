@@ -7,6 +7,7 @@
 		fire_alert = 0
 
 		temperature_alert = 0
+		organDelay = 0
 
 
 /mob/living/carbon/human/Life()
@@ -718,52 +719,58 @@
 		handle_regular_status_updates()
 
 		//	health = 100 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
+			if(!organDelay)
+				var/leg_tally = 2
+				for(var/datum/organ/external/E in organs)
 
-			var/leg_tally = 2
-			for(var/datum/organ/external/E in organs)
-				E.process()
-				if(E.robot && prob(E.brute_dam + E.burn_dam))
-					if(E.name == "l_hand" || E.name == "l_arm")
-						if(hand && equipped())
-							drop_item()
-							emote("custom v drops what they were holding, their limb malfunctioning!")
-							var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-							spark_system.set_up(5, 0, src)
-							spark_system.attach(src)
-							spark_system.start()
-							spawn(10)
-								del(spark_system)
-					else if(E.name == "r_hand" || E.name == "r_arm")
-						if(!hand && equipped())
-							drop_item()
-							emote("custom v drops what they were holding, their limb malfunctioning!")
-							var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-							spark_system.set_up(5, 0, src)
-							spark_system.attach(src)
-							spark_system.start()
-							spawn(10)
-								del(spark_system)
-					else if(E.name == "l_leg" || E.name == "l_foot" \
-						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
-						leg_tally--									// let it fail even if just foot&leg
-				if(E.broken || E.destroyed)
-					if(E.name == "l_hand" || E.name == "l_arm")
-						if(hand && equipped())
-							drop_item()
-							emote("scream")
-					else if(E.name == "r_hand" || E.name == "r_arm")
-						if(!hand && equipped())
-							drop_item()
-							emote("scream")
-					else if(E.name == "l_leg" || E.name == "l_foot" \
-						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
-						leg_tally--									// let it fail even if just foot&leg
+					E.process()
 
-			// can't stand
-			if(leg_tally == 0 && !paralysis && !(lying || resting))
-				emote("scream")
-				emote("collapse")
-				paralysis = 10
+					if(E.robot && prob(E.brute_dam + E.burn_dam))
+						if(E.name == "l_hand" || E.name == "l_arm")
+							if(hand && equipped())
+								drop_item()
+								emote("custom v drops what they were holding, their limb malfunctioning!")
+								var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+								spark_system.set_up(5, 0, src)
+								spark_system.attach(src)
+								spark_system.start()
+								spawn(10)
+									del(spark_system)
+						else if(E.name == "r_hand" || E.name == "r_arm")
+							if(!hand && equipped())
+								drop_item()
+								emote("custom v drops what they were holding, their limb malfunctioning!")
+								var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+								spark_system.set_up(5, 0, src)
+								spark_system.attach(src)
+								spark_system.start()
+								spawn(10)
+									del(spark_system)
+						else if(E.name == "l_leg" || E.name == "l_foot" \
+							|| E.name == "r_leg" || E.name == "r_foot" && !lying)
+							leg_tally--									// let it fail even if just foot&leg
+					if(E.broken || E.destroyed)
+						if(E.name == "l_hand" || E.name == "l_arm")
+							if(hand && equipped())
+								drop_item()
+								emote("scream")
+						else if(E.name == "r_hand" || E.name == "r_arm")
+							if(!hand && equipped())
+								drop_item()
+								emote("scream")
+						else if(E.name == "l_leg" || E.name == "l_foot" \
+							|| E.name == "r_leg" || E.name == "r_foot" && !lying)
+							leg_tally--									// let it fail even if just foot&leg
+
+				// can't stand
+				if(leg_tally == 0 && !weakened && !(lying || resting))
+					emote("scream")
+					emote("collapse")
+					weakened = 10
+
+				organDelay = 5
+			else
+				organDelay--
 
 			if(getOxyLoss() > 50) Paralyse(3)
 
@@ -779,7 +786,7 @@
 				Paralyse(5)
 
 			if (stat != 2) //Alive.
-
+				/*
 				var/blood_volume = round(vessel.get_reagent_amount("blood"))
 				if(bloodloss)
 					drip(bloodloss)
@@ -810,7 +817,7 @@
 				else if(blood_volume <= 244 && blood_volume > 122)
 					if(toxloss <= 101)
 						toxloss = 101
-
+				*/
 				if (silent)
 					silent--
 
@@ -870,6 +877,7 @@
 					emote("scream")
 					disfigure_face()
 //					face_op_stage = 0.0
+			/*
 			var/blood_max = 0
 			for(var/datum/organ/external/temp in organs)
 				if(!temp.bleeding || temp.robot) //THAT WAS DUMB.
@@ -884,7 +892,7 @@
 				if(temp.destroyed && !temp.gauzed)
 					blood_max += 50 //Yer missing a fucking limb.
 			bloodloss = min(bloodloss+1,(blood_max))
-
+			*/
 
 
 

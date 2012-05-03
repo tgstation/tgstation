@@ -221,7 +221,18 @@
 				msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"
 			else
 				msg += "[t_He] [t_is] quite chubby.\n"
+		/*
+		if(src.bloodloss)
+			msg += "[t_He] [t_is] bleeding profusely!"
 
+			for(var/datum/organ/external/organ in organs)
+				if(!temp.bleeding || temp.robot) //THAT WAS DUMB.
+					continue
+				if(temp.wounds)
+					for(var/datum/organ/wound/W in temp.wounds)
+						if(W.wound_size && W.bleeding)
+							blood_max += W.wound_size
+*/
 		msg += "</span>"
 
 		if (src.stat == UNCONSCIOUS)
