@@ -143,5 +143,8 @@ GUEST_JOBBAN 1
 ## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
 #POPUP_ADMIN_PM
 
+## Remove the # to allow special 'Easter-egg' events on special holidays such as seasonal holidays and stuff like 'Talk Like a Pirate Day' :3 YAARRR
+#ALLOW_HOLIDAYS
+
 ##What address should banned people appeal ther ban at?  Remember to escape the characters, if needed!
 # APPEAL_ADDRESS -->APPEAL ADDRESS HERE<--

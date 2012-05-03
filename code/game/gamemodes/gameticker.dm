@@ -113,6 +113,8 @@ var/datum/roundinfo/roundinfo = new()
 		spawn(-1)
 			world << "<FONT color='blue'><B>Enjoy the game!</B></FONT>"
 			world << sound('welcome.ogg') // Skie
+			//Holiday Round-start stuff	~Carn
+			Holiday_Game_Start()
 
 	spawn() supply_ticker() // Added to kick-off the supply shuttle regenerating points -- TLE
 
