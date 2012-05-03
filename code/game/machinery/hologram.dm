@@ -28,17 +28,20 @@ Possible to do for anyone motivated enough:
 /obj/machinery/hologram/holopad/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
 		return
-	/*There are pretty much only two ways to interact here.
+	/*There are pretty much only three ways to interact here.
 	I don't need to check for client since they're clicking on an object.
 	This may change in the future but for now will suffice.*/
-	if(!hologram)//If there is no hologram, possibly make one.
+	if(user.client.eye!=src)//Set client eye on the object if it's not already.
+		user.current = src
+		user.reset_view(src)
+	else if(!hologram)//If there is no hologram, possibly make one.
 		activate_holo(user)
 	else if(master==user)//If there is a hologram, remove it. But only if the user is the master. Otherwise do nothing.
 		clear_holo()
 	return
 
 /obj/machinery/hologram/holopad/proc/activate_holo(mob/living/silicon/ai/user)
-	if(!(stat & NOPOWER))//If the projector has power.
+	if(!(stat & NOPOWER)&&user.client.eye==src)//If the projector has power and client eye is on it.
 		if(!hologram)//If there is not already a hologram.
 			create_holo(user)//Create one.
 			for(var/mob/M in viewers())
