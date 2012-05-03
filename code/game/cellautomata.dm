@@ -88,7 +88,6 @@
 	if (config.usewhitelist)
 		load_whitelist()
 	LoadBansjob()
-	Get_Holiday()	//~Carn, needs to be here when the station is named so :P
 	src.update_status()
 
 	makepowernets()
