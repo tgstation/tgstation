@@ -14,6 +14,7 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 	var/revhref
 
 	proc/abort()
+		world.log << "Unable to get revision info."
 		spawn()
 			del src
 
@@ -58,6 +59,7 @@ var/global/datum/getrev/revdata = new("config/svndir.txt")
 				return abort()
 			revision = filelist[4]
 			commiter = filelist[12]
+			world.log << "Running TG Revision Number: [revision]."
 			diary << "Revision info loaded succesfully"
 			return
 		return abort()
