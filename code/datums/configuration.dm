@@ -2,9 +2,6 @@
 	var/server_name = null				// server name (for world name / status)
 	var/server_suffix = 0				// generate numeric suffix based on server port
 
-	var/medal_hub = null				// medal hub name
-	var/medal_password = null			// medal hub password
-
 	var/log_ooc = 0						// log OOC channek
 	var/log_access = 0					// log login/logout
 	var/log_say = 0						// log client say
@@ -211,12 +208,6 @@
 				if ("serversuffix")
 					config.server_suffix = 1
 
-				if ("medalhub")
-					config.medal_hub = value
-
-				if ("medalpass")
-					config.medal_password = value
-
 				if ("hostedby")
 					config.hostedby = value
 
@@ -381,8 +372,8 @@
 				sqllogging = 1
 			else
 				diary << "Unknown setting in configuration: '[name]'"
-
-/*/datum/configuration/proc/loadforumsql(filename)  // -- TLE
+/*
+/datum/configuration/proc/loadforumsql(filename)  // -- TLE
 	var/text = file2text(filename)
 
 	if (!text)
@@ -433,8 +424,8 @@
 			if ("authenticatedgroup")
 				forum_authenticated_group = value
 			else
-				diary << "Unknown setting in configuration: '[name]'"*/
-
+				diary << "Unknown setting in configuration: '[name]'"
+*/
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up
 	// their information, but it is the only way (at least that I know of).

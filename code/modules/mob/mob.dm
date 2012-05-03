@@ -840,9 +840,9 @@
 	for(var/mob/M in viewers())
 		M.see(message)
 
-//This is the proc for gibbing a mob. Cannot gib ghosts. Removed the medal reference,
+//This is the proc for gibbing a mob. Cannot gib ghosts.
 //added different sort of gibs and animations. N
-/mob/proc/gib(var/ex_act = 0)
+/mob/proc/gib()
 
 	if (istype(src, /mob/dead/observer))
 		gibs(loc, viruses)
@@ -901,10 +901,6 @@ Currently doesn't work, but should be useful later or at least as a template
 			else
 				gibs(loc, viruses, dna)
 		sleep(15)
-		for(var/obj/item/I in contents)
-			I.loc = get_turf(src)
-			if(ex_act)
-				I.ex_act(ex_act)
 		del(src)
 
 /*
