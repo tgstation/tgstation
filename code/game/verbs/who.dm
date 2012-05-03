@@ -33,4 +33,4 @@
 			if(usr.client.holder)
 				usr << "[M.key] is a [M.client.holder.rank][M.client.stealth ? " <i>(as [M.client.fakekey])</i>" : ""]"
 			else if(!M.client.stealth)
-				usr << "\t[M.client]"
+				usr << "\t[M.client]  is a [M.client.holder.rank]"
