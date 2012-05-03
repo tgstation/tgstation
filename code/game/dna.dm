@@ -221,9 +221,17 @@
 	if (!output) output = "5"
 	return output
 
-/proc/isblockon(hnumber, bnumber)
+/proc/isblockon(hnumber, bnumber , var/UI = 0)
+
 	var/temp2
 	temp2 = hex2num(hnumber)
+
+	if(UI)
+		if(temp2 >= 2050)
+			return 1
+		else
+			return 0
+
 	if (bnumber == HULKBLOCK || bnumber == TELEBLOCK)
 		if (temp2 >= 3500 + BLOCKADD)
 			return 1
@@ -313,7 +321,7 @@
 		H.g_eyes = hex2num(getblock(structure,9,3))
 		H.b_eyes = hex2num(getblock(structure,10,3))
 
-		if (isblockon(getblock(structure, 11,3),11))
+		if (isblockon(getblock(structure, 11,3),11 , 1))
 			H.gender = FEMALE
 		else
 			H.gender = MALE
