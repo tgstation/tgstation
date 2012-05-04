@@ -12,6 +12,10 @@
 		return 1
 	if (istype(other, /mob/living/silicon/decoy))
 		return 1
+	if (istype(other, /mob/living/carbon/brain))
+		return 1
+	if (istype(other, /mob/living/silicon/pai))
+		return 1
 	return ..()
 
 /mob/living/silicon/ai/say_quote(var/text)
