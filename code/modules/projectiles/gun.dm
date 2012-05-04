@@ -20,6 +20,7 @@
 		silenced = 0
 		recoil = 0
 		ejectshell = 1
+		determination = 0
 
 	proc
 		load_into_chamber()
@@ -93,14 +94,42 @@
 		in_chamber.firer = user
 		in_chamber.def_zone = user.zone_sel.selecting
 
-		if(targloc == curloc)
+		if(user == target) // What the FUCK was this code?  If shoot anything on the same tile, you're shooting yourself?  What?
+			if(!determination)
+				user << "Are you really sure you want to shoot yourself?  You put the gun against your head."
+				determination = 1
+				spawn(30)
+					if(determination == 2)
+						return
+					determination = 0
+					user << "You don't have the guts."
+				return
+
+			determination = 2
+
 			if(silenced)
 				playsound(user, fire_sound, 10, 1)
 			else
 				playsound(user, fire_sound, 50, 1)
-				user.visible_message("\red [user.name] fires the [src.name] at themselves!", "\red You fire the [src.name] at yourself!", "\blue You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
+				user.visible_message("\red [user.name] fires the [src.name] at their own head!", "\red You fire the [src.name] at yourself!", "\blue You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
+			in_chamber.def_zone = "head"
+			in_chamber.damage *= 5
+			user.bullet_act(in_chamber, in_chamber.def_zone)
+			del(in_chamber)
+			update_icon()
+			return
 
-			user.bullet_act(in_chamber)
+		if(inrange)
+			if(silenced)
+				playsound(user, fire_sound, 10, 1)
+			else
+				playsound(user, fire_sound, 50, 1)
+				if(ismob(target))
+					user.visible_message("\red [user.name] shoots [target] point-blank in the [in_chamber.def_zone] with the [src.name]!", "\red You fire the [src.name] point-blank at [target]'s [in_chamber.def_zone]!", "\blue You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
+				else
+					user.visible_message("\red [user.name] fires the [src.name] point-blank at [target]!", "\red You fire the [src.name] point-blank at [target]!", "\blue You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
+			in_chamber.damage *= 1.25
+			target.bullet_act(in_chamber, in_chamber.def_zone)
 			del(in_chamber)
 			update_icon()
 			return

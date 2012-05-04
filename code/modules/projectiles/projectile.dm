@@ -72,9 +72,9 @@
 				return // nope.avi
 
 			if(!silenced)
-				visible_message("\red [A.name] is hit by the [src.name]!")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+				visible_message("\red [A.name] is hit by the [src.name] in the [def_zone]!")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 			else
-				M << "\red You've been shot!"
+				M << "\red You've been shot in the [def_zone] by the [src.name]!"
 			if(istype(firer, /mob))
 				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 				firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"

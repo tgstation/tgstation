@@ -246,10 +246,13 @@ proc/isInSight(var/atom/A, var/atom/B)
 
 proc/doafterattack(obj/target , obj/source)
 
-	if (istype(target, /obj/item/weapon/storage/backpack ))
+	if (istype(target, /obj/item/weapon/storage/ ))
 		return 0
 
 	else if (locate (/obj/structure/table, source.loc))
+		return 0
+
+	else if (!istype(target.loc, /turf/))
 		return 0
 
 	else
