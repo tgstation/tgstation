@@ -1573,7 +1573,7 @@ About the new airlock wires panel:
 								src.removal_step = 1
 						return
 					else if (istype(C, /obj/item/weapon/wrench))
-						user << "You start to unfasten the armor from the circuits..."
+						user << "You start to unfasted the armor from the circuits..."
 						if(do_after(user,40))
 							user << "Circuits exposed."
 							src.removal_step = 3
