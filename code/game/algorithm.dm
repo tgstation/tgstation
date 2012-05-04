@@ -187,15 +187,18 @@ proc/countJob(rank)
 	return equipped
 
 /proc/AutoUpdateAI(obj/subject)
+/*
 	if (subject!=null)
 		for(var/mob/living/silicon/ai/M in world)
 			if ((M.client && M.machine == subject))
 				subject.attack_ai(M)
+*/
 
 /proc/AutoUpdateTK(obj/subject)
-	if (subject!=null)
+/*	if (subject!=null)
 		for(var/obj/item/tk_grab/T in world)
 			if (T.host)
 				var/mob/M = T.host
 				if(M.client && M.machine == subject)
 					subject.attack_hand(M)
+*/

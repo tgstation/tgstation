@@ -126,9 +126,12 @@
 	if(stage == 1 && cruiser_seconds() < 60 * 30)
 		announce_to_kill_crew()
 		stage = 2
-	else if(stage == 2 && cruiser_seconds() <= 0)
-		crew_lose()
+	else if(stage == 2 && cruiser_seconds() <= 60 * 5)
+		command_alert("Inbound cruiser detected on collision course. Scans indicate the ship to be armed and ready to fire. Estimated time of arrival: 5 minutes.", "[station_name()] Early Warning System")
 		stage = 3
+	else if(stage == 3 && cruiser_seconds() <= 0)
+		crew_lose()
+		stage = 4
 
 	checkwin_counter++
 	if(checkwin_counter >= 20)
