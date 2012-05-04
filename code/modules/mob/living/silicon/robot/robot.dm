@@ -26,9 +26,9 @@
 				src << "<b>Unit slaved to [connected_ai.name], downloading laws.</b>"
 				lawupdate = 1
 			else
-				laws = new /datum/ai_laws/asimov
+            laws = new /datum/ai_laws/nanotrasen/New
 				lawupdate = 0
-				src << "<b>Unable to locate an AI, reverting to standard Asimov laws.</b>"
+				src << "<b>Unable to locate an AI, reverting to standard NanoTrasen laws.</b>"
 		else
 			laws = new /datum/ai_laws/antimov
 			lawupdate = 0
