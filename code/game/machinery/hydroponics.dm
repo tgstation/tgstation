@@ -24,12 +24,11 @@
 		..()
 	bullet_act(var/obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 		if(istype(Proj ,/obj/item/projectile/energy/floramut))
-			src.mutmod = 2
+			if(src.planted)
+				src.mutate()
 		else if(istype(Proj ,/obj/item/projectile/energy/florayield))
-			src.yieldmod = 2
-			if(src.myseed.yield == 0)
+			if(src.planted && src.myseed.yield < 2)
 				src.myseed.yield += 1
-		return
 
 obj/machinery/hydroponics/process()
 
