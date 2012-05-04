@@ -1,13 +1,26 @@
 ﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <title>/tg/ Station 13 Changelog</title>
+  <title>Baystation 12 Changelog</title>
   <link rel="stylesheet" type="text/css" href="changelog.css">
-  <script type='text/javascript'></script>  
+  <script type='text/javascript'>
+  
+	function changeText(tagID, newText, linkTagID){
+		var tag = document.getElementById(tagID);
+		tag.innerHTML = newText;
+		var linkTag = document.getElementById(linkTagID);
+		linkTag.removeAttribute("href");
+		linkTag.removeAttribute("onclick");
+	}
+	
+  </script>  
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 
 <body>
+<!-- 
+Header Section 
+-->
 <table align='center' width='650'><tr><td>
 <table align='center' class="top">
 	<tr>
@@ -24,7 +37,118 @@
 	</tr>
 </table>
 
-<iframe width='100%' height='500px' src="http://baystation12.net/wiki/index.php?title=Changelog&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+<!-- 
+Changelog Section 
+-->
+
+<!-- NOTE TO UPDATERS!! Please only list things which are important to players. 
+Stuff which is in development and not yet visible to players or just code related 
+(ie. code improvements for expandability, etc.) should not be listed here. They 
+should be listed in the changelog upon commit though. Thanks. -->
+
+<!-- To take advantage of the pretty new format (well it was new when I wrote this anyway), open the "add-to-changelog.html" file in any browser and add the stuff and then generate the html code and paste it here -->
+<div class="commit sansserif">
+	<h2 class="date">2nd May 2012</h2>
+	<h3 class="author">TG updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Added carved pumpkins/jackolanterns. Carve them with any of the usual things you use to carve things. They work similarly to hardhats. </li>
+		<li class="rscadd">Added pumpkin pie and slices. Made with 5 milk, 5 sugar, 1 pumpkin, 1 flour, 1 egg. </li>
+		<li class="rscadd">Eating corn now makes corn cobs. Carve them with a saw, a knife, or a hatchet to make a corncob pipe. </li>
+		<li class="rscadd">Added the bit of transparency to biohelmets that they were always supposed to have. </li>
+		<li class="rscadd">Adds randomlly spawning rooms to the mining asteroid that contain various goodies.  </li>
+		<li class="rscadd">Adds a borg upgrade system. Can be used to reset modules or 'restart' dead cyborgs. </li>
+		<li class="rscadd">Officers can now use huds to modify humans' criminal statuses on the go. To do this, simply examine a human and at the end should be a clickable link to change the status. </li>
+		<li class="rscadd">Cell charger and Recharger are now wrenchable to make them moveable </li>
+		<li class="tweak">Cats and Dogs can see in the dark.  </li>
+		<li class="tweak">Changed around a few access levels; only jobs who need to do maintenance have access to maintenance tunnels. Also the heads and detective. </li>
+		<li class="tweak">Shuttle call/recall announcements are now more noticeable. </li>
+		<li class="tweak">Changes changling unstun time to 45 from 25 </li>
+		<li class="tweak">Can now repair the first stage of deconstruction of rwalls with metal rods. </li>
+		<li class="tweak">Library machine now has a delay when printing bibles to prevent spam. </li>
+		<li class="bugfix">Bugfix to the 'resist' button, unless I don't understand how it works.  I don't see how it could have ever worked before. </li>
+		<li class="bugfix">You can no longer toggle the welding helmet when stunned or restrained. </li>
+		<li class="bugfix">Fix for not being able to use pills as pill-satchels properly. </li>
+	</ul>
+	<h3 class="author">Erthilo updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="experiment">Increases time between random events happening in low population round to a maximum of double. Random events are more likely to happen up to a limit of around 30 active players. Events now fire at the same rate as previously with around 20~ active players. Please report unusually high or low amounts of events on the bug tracker!</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">1st May 2012</h2>
+	<h3 class="author">Mloc updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Added extra data to ID cards. Fingerprint, blood type, and DNA. Can all be changed in ID computer.</li>
+	</ul>
+	<h3 class="author">Erthilo updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">You can now respawn after 30 minutes in any mode where the win/loss condition is not all crew dead.</li>
+		<li class="imageadd">New in-hand sprites for energy and taser guns courtesy of Flashkirby99.</li>
+		<li class="bugfix">Fixes emagging doors.</li>
+		<li class="bugfix">NT has recently upgraded their anti-telepathy double glazing. As such, you can no longer remote view people on any level except the station or the mining asteroid!</li>
+		<li class="tweak">As a side effect of the above, remote viewing and telekinesis cannot be used at the same time.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">30th April 2012</h2>
+	<h3 class="author">Mloc updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Due to new NT hiring protocols, characters can now only be between the ages of 20-65 instead of 15-45.</li>
+	</ul>
+	<h3 class="author">Erthilo updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Switched to /tg/'s changelog format! Previous updates can be found here: http://baystation12.net/wiki/index.php/Changelog</li>
+		<li class="rscadd">New green alt satchel for Botanists.</li>
+		<li class="rscadd">Cyborgs can now view crew manifest and also state laws.</li>
+		<li class="imageadd">New ATM sprites.</li>
+		<li class="tweak">Changes year to 2556 on medical/security records.</li>
+	</ul>
+	<h3 class="author">TG updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">The escape shuttle will now spend two minutes travelling to CentCom, woo! Objectives are only complete when the shuttle reaches CentCom, and anyone leaving the shuttle during transit time will be lost in deep space! Also, anyone standing in the way of the shuttle when it arrives will be gibbed.</li>
+		<li class="rscadd">Added Antimov module. Very dangerous.</li>
+		<li class="rscadd">Pill bottles now work like ore satchels, click a tile full of pills to pick them all up.</li>
+		<li class="rscadd">Tower caps can now grow randomly as weeds</li>
+		<li class="tweak">Using a minihoe on a Hydroponics tray removes all the weeds in the tray at once. Using a bucket on a sink now fills it entirely with water, instead of 10 units at a time.</li>
+		<li class="tweak">You can no longer take photos of photos.</li>
+		<li class="tweak">Malf AI's hopping between APCs no longer become longer and longer.</li>
+		<li class="tweak">Secborgs now have modified tasers, it holds 6 shots and recharges one shot every 10 seconds automatically.</li>
+		<li class="tweak">Turning off PANIC SYPHON now sets scrubbers to scrubbing (default) instead of off. Vents will not appear in the list instead of a timeout message. They also have a link with sets them back to one atmosphere kPa.</li>
+		<li class="tweak">You now click on AI modules in-hand to set them, instead of just picking them up.</li>
+		<li class="bugfix">Fixes the way the safeguard module is written.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">TG</h2>
+	<h3 class="author">29th April 2012 updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="imageadd">Added new sprites for Killer Tomatoes.</li>
+		<li class="rscadd">Added lasertag vests, guns, projectiles. Sprites for the vests and guns from Muncher. Not actually mapped in. Lasertag guns are only usable if you're wearing the appropriate team vest. Lasertag projectiles will only stun people who are wearing vests belonging to the opposing team.</li>
+		<li class="rscadd">Adds Holodeck, also not mapped in.</li>
+		<li class="rscadd">Janitor borgs have been massively upgraded. They now clean as they move around.</li>
+		<li class="rscadd">Mining shuttle now shunts people where it wants to be. Shuttles now crush people if they fail to move out of where they want to be with the initial shunt. </li>
+		<li class="rscadd">Adds Halloss (Hallucination Damage) as a damage type weapons can do. Halloss can be healed by sleeping. </li>
+		<li class="tweak">Windows can only be damaged by weapons that do brute or burn. </li>
+		<li class="tweak">HUD damage indicator now updates with halloss. Inspecting yourself for organ damage now randomly shows damaged organs if you have halloss. </li>
+		<li class="tweak">Nuke disk now respawns in all rounds. </li>
+		<li class="rscadd">Pinpointers now show the remaining time until a nuke goes off if it's been armed when examined. </li>
+		<li class="tweak">Instead of z-level transition happening when you reach the edge of the map, it will now happen 7 tiles away from the edge. This means that you will no longer see the black edge, transition will likely happen without you even noticing. </li>
+		<li class="tweak">Slight changes to examine messages. You cannot examine when blind/unconscious. </li>
+		<li class="imageadd">More new locker sprites! </li>
+		<li class="bugfix">Fixes glass knock sound having a pop at the end of it. </li>
+		<li class="bugfix">Telecomm traffic control now has its own circuitboard and doesn't transform into a server when the monitor is disconnected/reconnected. </li>
+		<li class="bugfix">Using an igniter on a flamethrower that already has one attached no longer uses up the igniter. </li>
+		<li class="bugfix">NTSL bugfixes.</li>
+	</ul>
+</div>
+
+
+<!-- 
+Credits Section 
+-->
 
 <b>/tg/ station 13 Development Team</b>
 <table align='center' class="top">

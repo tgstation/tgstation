@@ -365,29 +365,17 @@
 	var/lastgenlev = -1
 
 /obj/machinery/power/monitor
-    name = "power monitoring computer"
-    desc = "It monitors power levels across the station, and can remotely toggle main breakers."
-    icon = 'computer.dmi'
-    icon_state = "power"
-    density = 1
-    anchored = 1
-    use_power = 2
-    idle_power_usage = 20
-    active_power_usage = 80
-    var/control = 0
-    req_access = list(access_engine_equip)
-
-/obj/machinery/cell_charger
-	name = "cell charger"
-	desc = "A charging unit for power cells."
-	icon = 'power.dmi'
-	icon_state = "ccharger0"
-	var/obj/item/weapon/cell/charging = null
-	var/chargelevel = -1
+	name = "power monitoring computer"
+	desc = "It monitors power levels across the station, and can remotely toggle main breakers."
+	icon = 'computer.dmi'
+	icon_state = "power"
+	density = 1
 	anchored = 1
-	use_power = 1
-	idle_power_usage = 5
-	active_power_usage = 60
+	use_power = 2
+	idle_power_usage = 20
+	active_power_usage = 80
+	var/control = 0
+	req_access = list(access_engine_equip)
 
 /obj/machinery/light_switch
 	name = "light switch"

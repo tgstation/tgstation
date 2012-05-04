@@ -23,6 +23,8 @@
 	if (src.monkeyizing)
 		return
 
+	..()
+
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
 	if(src.loc)
 		environment = loc.return_air()

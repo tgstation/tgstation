@@ -12,12 +12,15 @@
 	active_power_usage = 300
 
 	var
+		frequency = 1
 		active = 0
 		fire_delay = 100
 		last_shot = 0
 		shot_number = 0
 		state = 0
 		locked = 0
+		energy = 0
+		mega_energy = 0
 
 
 	verb/rotate()

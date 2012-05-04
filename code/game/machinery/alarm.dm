@@ -591,12 +591,12 @@ Temperature: <span class='dl[temperature_dangerlevel]'>[environment.temperature]
 			output += {"
 <a href='?src=\ref[src];screen=[AALARM_SCREEN_SCRUB]'>Scrubbers Control</a><br>
 <a href='?src=\ref[src];screen=[AALARM_SCREEN_VENT]'>Vents Control</a><br>
-<a href='?src=\ref[src];screen=[AALARM_SCREEN_MODE]'>Set envirenomentals mode</a><br>
-<a href='?src=\ref[src];screen=[AALARM_SCREEN_SENSORS]'>Sensor Control</a><br>
+<a href='?src=\ref[src];screen=[AALARM_SCREEN_MODE]'>Set environmentals mode</a><br>
+<a href='?src=\ref[src];screen=[AALARM_SCREEN_SENSORS]'>Sensor Settings</a><br>
 <HR>
 "}
 			if (mode==AALARM_MODE_PANIC)
-				output += "<font color='red'><B>PANIC SYPHON ACTIVE</B></font><br><A href='?src=\ref[src];mode=[AALARM_MODE_OFF]'>turn syphoning off</A>"
+				output += "<font color='red'><B>PANIC SYPHON ACTIVE</B></font><br><A href='?src=\ref[src];mode=[AALARM_MODE_SCRUBBING]'>Turn syphoning off</A>"
 			else
 				output += "<A href='?src=\ref[src];mode=[AALARM_MODE_PANIC]'><font color='red'><B>ACTIVATE PANIC SYPHON IN AREA</B></font></A>"
 		if (AALARM_SCREEN_VENT)
@@ -605,12 +605,10 @@ Temperature: <span class='dl[temperature_dangerlevel]'>[environment.temperature]
 				for(var/id_tag in alarm_area.air_vent_names)
 					var/long_name = alarm_area.air_vent_names[id_tag]
 					var/list/data = alarm_area.air_vent_info[id_tag]
-					var/state = ""
 					if(!data)
-						state = "<font color='red'> can not be found!</font>"
-						data = list("external" = 0) //for "0" instead of empty string
-					else if (data["timestamp"]+AALARM_REPORT_TIMEOUT < world.time)
-						state = "<font color='red'> not responding!</font>"
+						continue;
+					var/state = ""
+
 					sensor_data += {"
 <B>[long_name]</B>[state]<BR>
 <B>Operating:</B>
@@ -630,6 +628,7 @@ Temperature: <span class='dl[temperature_dangerlevel]'>[environment.temperature]
 <A href='?src=\ref[src];id_tag=[id_tag];command=adjust_external_pressure;val=+10'>+</A>
 <A href='?src=\ref[src];id_tag=[id_tag];command=adjust_external_pressure;val=+100'>+</A>
 <A href='?src=\ref[src];id_tag=[id_tag];command=adjust_external_pressure;val=+1000'>+</A>
+<A href='?src=\ref[src];id_tag=[id_tag];command=set_external_pressure;val=[ONE_ATMOSPHERE]'> (reset) </A>
 <BR>
 "}
 					if (data["direction"] == "siphon")
@@ -648,12 +647,9 @@ siphoning
 				for(var/id_tag in alarm_area.air_scrub_names)
 					var/long_name = alarm_area.air_scrub_names[id_tag]
 					var/list/data = alarm_area.air_scrub_info[id_tag]
-					var/state = ""
 					if(!data)
-						state = "<font color='red'> can not be found!</font>"
-						data = list("external" = 0) //for "0" instead of empty string
-					else if (data["timestamp"]+AALARM_REPORT_TIMEOUT < world.time)
-						state = "<font color='red'> not responding!</font>"
+						continue;
+					var/state = ""
 
 					sensor_data += {"
 <B>[long_name]</B>[state]<BR>
@@ -787,6 +783,7 @@ table tr:first-child th:first-child { border: none;}
 			if(
 				"power",
 				"adjust_external_pressure",
+				"set_external_pressure",
 				"checks",
 				"co2_scrub",
 				"tox_scrub",
@@ -797,6 +794,7 @@ table tr:first-child th:first-child { border: none;}
 				send_signal(device_id, list (href_list["command"] = text2num(href_list["val"])))
 				spawn(3)
 					src.updateUsrDialog()
+
 			//if("adjust_threshold") //was a good idea but required very wide window
 			if("set_threshold")
 				var/env = href_list["env"]
@@ -843,6 +841,7 @@ table tr:first-child th:first-child { border: none;}
 		apply_mode()
 		spawn(5)
 			src.updateUsrDialog()
+
 	return
 
 /obj/machinery/alarm/proc/apply_mode()
@@ -888,15 +887,15 @@ table tr:first-child th:first-child { border: none;}
 				send_signal(device_id, list(
 					"power"= 0
 				))
-		if(AALARM_MODE_OFF)
+		/*if(AALARM_MODE_OFF) Commented out cause the "turn off panic" uses scrubbing mode now instead.
 			for(var/device_id in alarm_area.air_scrub_names)
 				send_signal(device_id, list(
-					"power"= 0
+					"panic_siphon" = 0
 				))
 			for(var/device_id in alarm_area.air_vent_names)
 				send_signal(device_id, list(
-					"power"= 0
-				))
+					"power"= 1
+				))*/
 
 /obj/machinery/alarm/update_icon()
 	if(wiresexposed)

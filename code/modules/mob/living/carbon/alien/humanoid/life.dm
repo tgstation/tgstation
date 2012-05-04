@@ -14,7 +14,11 @@
 	if (src.monkeyizing)
 		return
 
+	..()
+
 	if (src.stat != 2) //still breathing
+
+
 
 		//First, resolve location and get a breath
 

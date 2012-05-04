@@ -82,6 +82,7 @@
 
 	var/itemnumber = 0
 	for(var/atom/A in the_turf)
+		if(istype(A, /obj/item/weapon/photo))	continue
 		if(A.invisibility) continue
 		if(ismob(A))
 			var/icon/X = build_composite_icon(A)

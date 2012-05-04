@@ -148,7 +148,7 @@
 			if(req in I.access) //has an access from the single access list
 				return 1
 	for(var/req in src.req_access)
-		if(!(req in I.access)) //doesn't have this access
+		if(!(req in I.access)) //doesn't have this access - Leave like this DMTG
 			return 0
 	return 1
 
@@ -164,7 +164,7 @@
 			if(req in L) //has an access from the single access list
 				return 1
 	for(var/req in src.req_access)
-		if(!(req in L)) //doesn't have this access
+		if(!(req in L)) //doesn't have this access - Leave like this DMTG
 			return 0
 	return 1
 
@@ -188,7 +188,7 @@
 		if("Librarian") // -- TLE
 			return list(access_library)
 		if("Lawyer") //Muskets 160910
-			return list(access_maint_tunnels, access_lawyer, access_court)
+			return list(access_lawyer, access_court)
 		if("Captain")
 			return get_all_accesses()
 		if("Security Officer")
@@ -219,9 +219,9 @@
 		if("Janitor")
 			return list(access_janitor, access_maint_tunnels)
 		if("Clown")
-			return list(access_maint_tunnels, access_clown, access_theatre)
+			return list(access_clown, access_theatre)
 		if("Mime")
-			return list(access_maint_tunnels, access_mime, access_theatre)
+			return list(access_mime, access_theatre)
 		if("Chef")
 			return list(access_kitchen)
 		if("Roboticist")
@@ -229,7 +229,7 @@
 		if("Cargo Technician")
 			return list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 		if("Shaft Miner")
-			return list(access_maint_tunnels, access_mining, access_mint, access_mining_station)
+			return list(access_mining, access_mint, access_mining_station)
 		if("Quartermaster")
 			return list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining)
 		if("Chief Engineer")
@@ -239,7 +239,7 @@
 			            access_mint, access_ce, access_RC_announce, access_keycard_auth, access_tcomsat)
 		if("Research Director")
 			return list(access_medlab, access_rd,
-			            access_maint_tunnels, access_heads, access_tox,
+			            access_heads, access_tox,
 			            access_tox_storage, access_chemistry, access_teleporter,
 			            access_research, access_robotics, access_xenobiology, access_RC_announce,
 			            access_keycard_auth, access_tcomsat)

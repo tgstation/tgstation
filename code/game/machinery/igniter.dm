@@ -89,7 +89,6 @@
 
 	flick("[base_state]-spark", src)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-
 	s.set_up(2, 1, src)
 	s.start()
 	src.last_spark = world.time
@@ -124,12 +123,12 @@
 	active = 1
 	icon_state = "launcheract"
 
-	for(var/obj/machinery/sparker/M in machines)
+	for(var/obj/machinery/sparker/M in world)
 		if (M.id == src.id)
 			spawn( 0 )
 				M.ignite()
 
-	for(var/obj/machinery/igniter/M in machines)
+	for(var/obj/machinery/igniter/M in world)
 		if(M.id == src.id)
 			use_power(50)
 			M.on = !( M.on )

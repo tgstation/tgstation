@@ -97,7 +97,10 @@
 			flashfail = 1
 
 	else if(issilicon(M))
-		M.Weaken(rand(5,10))
+		if(!M:flashproof())
+			M.Weaken(rand(5,10))
+		else
+			flashfail++
 
 	if(isrobot(user))
 		spawn(0)

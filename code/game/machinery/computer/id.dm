@@ -153,7 +153,14 @@
 						accesses += "<br>"
 					accesses += "</td>"
 				accesses += "</tr></table>"
-			body = "[carddesc]<br>[jobs]<br><br>[accesses]" //CHECK THIS
+
+			var/biometric = ""
+			biometric += 	"<b>Biometric Data</b>:<br />\
+							Blood type: <a href='?src=\ref[src];choice=bio_btype'>[modify.blood_type]</a><br />\
+							DNA hash: <a href='?src=\ref[src];choice=bio_dna'>[modify.dna_hash]</a><br />\
+							Fingerprint hash: <a href='?src=\ref[src];choice=bio_fprint'>[modify.fingerprint_hash]</a>"
+
+			body = "[carddesc]<br>[jobs]<br>[biometric]<br><br>[accesses]" //CHECK THIS
 		else
 			body = "<a href='?src=\ref[src];choice=auth'>{Log in}</a> <br><hr>"
 			body += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a>"
@@ -167,6 +174,17 @@
 		return
 	usr.machine = src
 	switch(href_list["choice"])
+		if("bio_btype")
+			var/new_b_type = input("Please input the blood type.", "Biometric Input")  as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
+			if(new_b_type)
+				modify.blood_type = new_b_type
+
+		if("bio_dna")
+			modify.dna_hash = input("Please input the DNA hash.", "Biometric Input", modify.dna_hash)
+
+		if("bio_fprint")
+			modify.fingerprint_hash = input("Please input the fingerprint hash.", "Biometric Input", modify.fingerprint_hash)
+
 		if ("modify")
 			if (modify)
 				data_core.manifest_modify(modify.registered_name, modify.assignment)

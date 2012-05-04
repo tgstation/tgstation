@@ -57,3 +57,6 @@
 	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
 	var/channels = list()
 	var/modlock = 0
+
+	var/lawcheck[1] //For stating laws!
+	var/ioncheck[1]

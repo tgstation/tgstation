@@ -191,12 +191,12 @@ var/global/datum/tension/tension_master
 													forcenexttick = 1
 												else
 													potentialgames.Remove(thegame)
-/*
+
 											if("POINTS_FOR_BORG_DEATHSQUAD")
 												if(!makeBorgDeathsquad())
 													forcenexttick = 1
 												else
-													potentialgames.Remove(thegame)*/
+													potentialgames.Remove(thegame)
 
 
 	proc/get_num_players()
@@ -268,8 +268,8 @@ var/global/datum/tension/tension_master
 		else if (href_list["makeDeathsquad"])
 			makeDeathsquad()
 
-/*		else if (href_list["makeBorgDeathsquad"])
-			makeBorgDeathsquad()*/
+		else if (href_list["makeBorgDeathsquad"])
+			makeBorgDeathsquad()
 
 		else if (href_list["Supress"])
 			supress = 1
@@ -728,7 +728,7 @@ var/global/datum/tension/tension_master
 		return 1 // Has to return one before it knows if there's a wizard to prevent the parent from automatically selecting another game mode.
 
 
-/*	proc/makeBorgDeathsquad()
+	proc/makeBorgDeathsquad()
 		var/list/mob/dead/observer/candidates = list()
 		var/mob/dead/observer/theghost = null
 		var/time_passed = world.time
@@ -795,7 +795,7 @@ var/global/datum/tension/tension_master
 
 
 		return 1 // Has to return one before it knows if there's a wizard to prevent the parent from automatically selecting another game mode.
-*/
+
 
 
 
@@ -972,7 +972,7 @@ var/global/datum/tension/tension_master
 		//del(spawn_location)  // Commenting this out for multiple commando teams.
 		return new_syndicate_commando
 
-/*	/proc/create_borg_death_commando(obj/spawn_location, name)
+	/proc/create_borg_death_commando(obj/spawn_location, name)
 
 		var/mob/living/silicon/robot/new_borg_deathsquad = new(spawn_location.loc, 1)
 
@@ -1035,4 +1035,4 @@ var/global/datum/tension/tension_master
 		for(var/obj/machinery/door/poddoor/P in end_location)
 			P.open()
 		jumpcomplete = 1
-		command_alert("DRADIS contact!  Set condition one throughout the station!")*/
+		command_alert("DRADIS contact!  Set condition one throughout the station!")

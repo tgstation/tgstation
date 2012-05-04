@@ -67,6 +67,14 @@
 	item_state = "jumpsuitdown"
 	color = "jumpsuitdown"
 
+/obj/item/clothing/under/fluff/olddressuniform
+	name = "retired dress uniform"
+	desc = "A retired Station Head of Staff uniform, phased out twenty years ago for the newer jumpsuit design, but still acceptable dress. Lovingly maintained."
+	icon = 'custom_items.dmi'
+	icon_state = "olddressuniform"
+	item_state = "olddressuniform"
+	color = "olddressuniform"
+
 //////////// Useable Items
 
 /obj/item/weapon/pen/fluff/multi
@@ -74,7 +82,7 @@
 	desc = "It's a cool looking pen. Lots of colors!"
 
 /obj/item/weapon/pen/fluff/fancypen
-	name = "multicolor pen"
+	name = "fancy pen"
 	desc = "A fancy metal pen. It uses blue ink. An inscription on one side reads,\"L.L. - L.R.\""
 	icon = 'custom_items.dmi'
 	icon_state = "fancypen"
@@ -100,6 +108,13 @@
 	desc = "A pristine stainless steel lunch box. The initials M.D. are engraved on the inside of the lid."
 	icon = 'custom_items.dmi'
 	icon_state = "maye_daye_1"
+
+/obj/item/weapon/reagent_containers/food/drinks/flask/fluff/johann_erzatz_1
+	name = "vintage thermos"
+	desc = "An older thermos with a faint shine."
+	icon = 'custom_items.dmi'
+	icon_state = "johann_erzatz_1"
+	volume = 50
 
 //////////// Misc Items
 

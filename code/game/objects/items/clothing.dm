@@ -254,21 +254,22 @@ THERMAL GLASSES
 /obj/item/clothing/head/helmet/welding/verb/toggle()
 	set category = "Object"
 	set name = "Adjust welding mask"
-	if(src.up)
-		src.up = !src.up
-		src.see_face = !src.see_face
-		src.flags |= HEADCOVERSEYES
-		flags_inv |= HIDEMASK|HIDEEARS|HIDEEYES
-		icon_state = "welding"
-		usr << "You flip the mask down to protect your eyes."
-	else
-		src.up = !src.up
-		src.see_face = !src.see_face
-		src.flags &= ~HEADCOVERSEYES
-		flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES)
-		icon_state = "weldingup"
-		usr << "You push the mask up out of your face."
-	usr.update_clothing()
+	if(usr.canmove && usr.stat != 2 && !usr.restrained())
+		if(src.up)
+			src.up = !src.up
+			src.see_face = !src.see_face
+			src.flags |= HEADCOVERSEYES
+			flags_inv |= HIDEMASK|HIDEEARS|HIDEEYES
+			icon_state = "welding"
+			usr << "You flip the mask down to protect your eyes."
+		else
+			src.up = !src.up
+			src.see_face = !src.see_face
+			src.flags &= ~HEADCOVERSEYES
+			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES)
+			icon_state = "weldingup"
+			usr << "You push the mask up out of your face."
+		usr.update_clothing()
 
 /obj/item/clothing/head/cargosoft/dropped()
 	src.icon_state = "cargosoft"

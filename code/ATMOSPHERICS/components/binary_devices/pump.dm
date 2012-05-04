@@ -21,10 +21,17 @@ obj/machinery/atmospherics/binary/pump
 
 	var/on = 0
 	var/target_pressure = ONE_ATMOSPHERE
+	var/max_pressure = 4500
 
 	var/frequency = 0
 	var/id = null
 	var/datum/radio_frequency/radio_connection
+
+	highcap
+		name = "High capacity gas pump"
+		desc = "A high capacity pump"
+
+		max_pressure = 15000000
 
 /*
 	attack_hand(mob/user)
@@ -160,8 +167,8 @@ obj/machinery/atmospherics/binary/pump
 		if(href_list["power"])
 			on = !on
 		if(href_list["set_press"])
-			var/new_pressure = input(usr,"Enter new output pressure (0-4500kPa)","Pressure control",src.target_pressure) as num
-			src.target_pressure = max(0, min(4500, new_pressure))
+			var/new_pressure = input(usr,"Enter new output pressure (0-[max_pressure]kPa)","Pressure control",src.target_pressure) as num
+			src.target_pressure = max(0, min(max_pressure, new_pressure))
 		usr.machine = src
 		src.update_icon()
 		src.updateUsrDialog()

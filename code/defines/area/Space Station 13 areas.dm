@@ -383,6 +383,24 @@ proc/process_ghost_teleport_locs()
 	icon_state = "cave"
 	requires_power = 0
 
+/area/asteroid/artifactroom
+	name = "Asteroid - Artifact"
+	icon_state = "cave"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /area/planet/clown
 	name = "Clown Planet"
 	icon_state = "honk"
@@ -440,6 +458,27 @@ proc/process_ghost_teleport_locs()
 	name = "Wizard's Den"
 	icon_state = "yellow"
 	requires_power = 0
+
+
+
+/area/borg_deathsquad
+	name = "Borg Deathsquad"
+	icon_state = "yellow"
+	requires_power = 0
+
+/area/borg_deathsquad/start
+	name = "Borg Deathsquad - Ready"
+
+
+/area/borg_deathsquad/station
+	name = "Borg Deathsquad - Arrived"
+
+
+
+
+
+
+
 
 //PRISON
 
@@ -1146,6 +1185,10 @@ proc/process_ghost_teleport_locs()
 /area/toxins/server
 	name = "Server Room"
 	icon_state = "server"
+
+/area/toxins/supermatter
+	name = "Supermatter Laboratory"
+	icon_state = "supermatter"
 
 //Storage
 

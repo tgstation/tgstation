@@ -420,7 +420,7 @@
 	set src in usr
 	if(usr != src)
 		usr << "No."
-	var/msg = input(usr,"Set the flavor text in your 'examine' verb. Don't metagame!","Flavor Text",html_decode(flavor_text)) as message|null
+	var/msg = input(usr,"Set the flavor text in your 'examine' verb. Can also be used for OOC notes about your character.","Flavor Text",html_decode(flavor_text)) as message|null
 
 	if(msg != null)
 		msg = copytext(msg, 1, MAX_MESSAGE_LEN)
@@ -454,14 +454,35 @@
 	set category = "OOC"
 
 	if (!( abandon_allowed ))
+		usr << "\blue Respawn is disabled."
 		return
 	if ((stat != 2 || !( ticker )))
 		usr << "\blue <B>You must be dead to use this!</B>"
 		return
+	if (ticker.mode.name == ("meteor" || "epidemic"))
+		usr << "\blue Respawn is disabled."
+		return
+	else
+		var/deathtime = world.time - src.timeofdeath
+		var/deathtimeminutes = round(deathtime / 600)
+		var/pluralcheck = "minute"
+		if(deathtimeminutes == 0)
+			pluralcheck = ""
+		else if(deathtimeminutes == 1)
+			pluralcheck = " [deathtimeminutes] minute and"
+		else if(deathtimeminutes > 1)
+			pluralcheck = " [deathtimeminutes] minutes and"
+		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10,1)
+		usr << "You have been dead for[pluralcheck] [deathtimeseconds] seconds."
+		if (deathtime < 18000)
+			usr << "You must wait 30 minutes to respawn!"
+			return
+		else
+			usr << "You can respawn now, enjoy your new life!"
 
 	log_game("[usr.name]/[usr.key] used abandon mob.")
 
-	usr << "\blue <B>Please roleplay correctly!</B>"
+	usr << "\blue <B>Make sure to play a different character, and please roleplay correctly!</B>"
 
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
@@ -515,6 +536,19 @@
 		usr << "\blue Now you hear all speech in the world"
 	else
 		usr << "\blue Now you hear speech only from nearest creatures."
+
+/client/var/ghost_sight = 1
+/client/verb/toggle_ghost_sight()
+	set name = "Ghost sight"
+	set category = "OOC"
+	set desc = "Hear emotes from everywhere"
+	ghost_sight = !ghost_sight
+	if (ghost_sight)
+		usr << "\blue Now you hear all emotes in the world"
+	else
+		usr << "\blue Now you hear emotes only from nearest creatures."
+
+
 
 /mob/verb/observe()
 	set name = "Observe"
@@ -1149,3 +1183,66 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/AdjustParalysis(amount)
 	paralysis = max(paralysis + amount,0)
 	return
+
+// ++++ROCKDTBEN++++ MOB PROCS -- Ask me before touching
+
+/mob/proc/getBruteLoss()
+	return bruteloss
+
+/mob/proc/adjustBruteLoss(var/amount)
+	bruteloss = max(bruteloss + amount, 0)
+
+/mob/proc/getOxyLoss()
+	return oxyloss
+
+/mob/proc/adjustOxyLoss(var/amount)
+	oxyloss = max(oxyloss + amount, 0)
+
+/mob/proc/setOxyLoss(var/amount)
+	oxyloss = amount
+
+/mob/proc/getToxLoss()
+	return toxloss
+
+/mob/proc/adjustToxLoss(var/amount)
+	toxloss = max(toxloss + amount, 0)
+
+/mob/proc/setToxLoss(var/amount)
+	toxloss = amount
+
+/mob/proc/getFireLoss()
+	return fireloss
+
+/mob/proc/adjustFireLoss(var/amount)
+	fireloss = max(fireloss + amount, 0)
+
+/mob/proc/getCloneLoss()
+	return cloneloss
+
+/mob/proc/adjustCloneLoss(var/amount)
+	cloneloss = max(cloneloss + amount, 0)
+
+/mob/proc/setCloneLoss(var/amount)
+	cloneloss = amount
+
+/mob/proc/getHalLoss()
+	return halloss
+
+/mob/proc/adjustHalLoss(var/amount)
+	halloss = max(halloss + amount, 0)
+
+/mob/proc/setHalLoss(var/amount)
+	halloss = amount
+
+
+
+/mob/proc/getBrainLoss()
+	return brainloss
+
+/mob/proc/adjustBrainLoss(var/amount)
+	brainloss = max(brainloss + amount, 0)
+
+/mob/proc/setBrainLoss(var/amount)
+	brainloss = amount
+
+// ++++ROCKDTBEN++++ MOB PROCS //END

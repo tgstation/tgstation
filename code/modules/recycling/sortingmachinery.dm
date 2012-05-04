@@ -2,7 +2,7 @@
 	desc = "A big wrapped package."
 	name = "large parcel"
 	icon = 'storage.dmi'
-	icon_state = "deliverycrate"
+	icon_state = "deliverycloset"
 	var/tmp/obj/wrapped = null
 	density = 1
 	var/sortTag = null
@@ -18,10 +18,10 @@
 		return unwrap()
 
 	proc/unwrap()
-		if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
-			src.wrapped.loc = (get_turf(src.loc))
-			if (istype(src.wrapped,/obj/structure/closet))
-				var/obj/structure/closet/O = src.wrapped
+		if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
+			wrapped.loc = (get_turf(src.loc))
+			if(istype(wrapped, /obj/structure/closet))
+				var/obj/structure/closet/O = wrapped
 				O.welded = waswelded
 		del(src)
 		return
@@ -172,9 +172,9 @@
 
 
 	afterattack(var/obj/target as obj, mob/user as mob)
-		if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) || istype(target,/obj/item/smallDelivery))
+		if(!(istype(target, /obj)))	//this really shouldn't be necessary (but it is).	-Pete
 			return
-		if(!istype(target,/obj))
+		if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) || istype(target,/obj/item/smallDelivery))
 			return
 		if(target.anchored)
 			return
@@ -197,10 +197,11 @@
 			var/obj/structure/closet/crate/O = target
 			if (src.amount > 3 && !O.opened)
 				var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
+				P.icon_state = "deliverycrate"
 				P.wrapped = O
 				O.loc = P
 				src.amount -= 3
-			else if(src.amount > 3)
+			else if(src.amount < 3)
 				user << "\blue You need more paper."
 		else if (istype (target, /obj/structure/closet))
 			var/obj/structure/closet/O = target
@@ -208,17 +209,15 @@
 				var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 				P.wrapped = O
 				P.waswelded = O.welded
-				O.opened = 0
 				O.welded = 1
 				O.loc = P
 				src.amount -= 3
-			else if(src.amount > 3)
+			else if(src.amount < 3)
 				user << "\blue You need more paper."
 		else
 			user << "\blue The object you are trying to wrap is unsuitable for the sorting machinery!"
 		if (src.amount <= 0)
 			new /obj/item/weapon/c_tube( src.loc )
-			//SN src = null
 			del(src)
 			return
 		return

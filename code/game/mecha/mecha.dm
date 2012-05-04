@@ -142,6 +142,20 @@
 		return 1
 	return 0
 
+/obj/mecha/proc/enter_after(delay as num, var/mob/user as mob, var/numticks = 5)
+	var/delayfraction = delay/numticks
+
+	var/turf/T = user.loc
+
+	for(var/i = 0, i<numticks, i++)
+		sleep(delayfraction)
+		if(!src || !user || !user.canmove || !(user.loc == T))
+			return 0
+
+	return 1
+
+
+
 /obj/mecha/proc/check_for_support()
 	if(locate(/obj/structure/grille, orange(1, src)) || locate(/obj/structure/lattice, orange(1, src)) || locate(/turf/simulated, orange(1, src)) || locate(/turf/unsimulated, orange(1, src)))
 		return 1
@@ -976,12 +990,19 @@
 		if(M.Victim == usr)
 			usr << "You're too busy getting your life sucked out of you."
 			return
-	usr << "You start climbing into [src.name]"
-	if(do_after(20))
+//	usr << "You start climbing into [src.name]"
+
+	for (var/mob/V in viewers(src))
+		if(V.client && !(V.blinded))
+			V.show_message("\blue [usr] starts to climb into [src.name]", 1)
+
+	if(enter_after(40,usr))
 		if(!src.occupant)
 			moved_inside(usr)
 		else if(src.occupant!=usr)
 			usr << "[src.occupant] was faster. Try better next time, loser."
+	else
+		usr << "You stop entering the exosuit."
 	return
 
 /obj/mecha/proc/moved_inside(var/mob/living/carbon/human/H as mob)
@@ -1020,12 +1041,19 @@
 		user << "Stop it!"
 		return 0
 	//Added a message here since people assume their first click failed or something./N
-	user << "Installing MMI, please stand by."
-	if(do_after(20))
+//	user << "Installing MMI, please stand by."
+
+	for (var/mob/V in viewers(src))
+		if(V.client && !(V.blinded))
+			V.show_message("\blue [usr] starts to insert an MMI into [src.name]", 1)
+
+	if(enter_after(40,user))
 		if(!occupant)
 			return mmi_moved_inside(mmi_as_oc,user)
 		else
 			user << "Occupant detected."
+	else
+		user << "You stop inserting the MMI."
 	return 0
 
 /obj/mecha/proc/mmi_moved_inside(var/obj/item/device/mmi/mmi_as_oc as obj,mob/user as mob)

@@ -264,7 +264,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		..()
 		if (src.closeOtherId != null)
 			spawn (5)
-				for (var/obj/machinery/door/airlock/A in machines)
+				for (var/obj/machinery/door/airlock/A in world)
 					if (A.closeOtherId == src.closeOtherId && A != src)
 						src.closeOther = A
 						break
@@ -1573,7 +1573,7 @@ About the new airlock wires panel:
 								src.removal_step = 1
 						return
 					else if (istype(C, /obj/item/weapon/wrench))
-						user << "You start to unfasted the armor from the circuits..."
+						user << "You start to unfasten the armor from the circuits..."
 						if(do_after(user,40))
 							user << "Circuits exposed."
 							src.removal_step = 3

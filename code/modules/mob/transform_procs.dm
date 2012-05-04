@@ -190,7 +190,8 @@
 	O.invisibility = 0
 	O.name = "Cyborg"
 	O.real_name = "Cyborg"
-	O.lastKnownIP = client.address ? client.address : null
+	if(client)
+		O.lastKnownIP = client.address ? client.address : null
 	if (mind)
 		mind.transfer_to(O)
 		if (mind.assigned_role == "Cyborg")
@@ -211,6 +212,8 @@
 	O << "<B>You must follow the laws that the AI has. You are basically the AI's extension into station.</B>"
 	O << "To use something, simply click or double-click it."
 	O << {"Use say ":s to speak to fellow cyborgs and the AI through binary."}
+
+	O.verbs += /mob/living/silicon/robot/proc/ai_roster
 
 	O.job = "Cyborg"
 

@@ -52,7 +52,7 @@
 			affected_mob.adjustToxLoss(10)
 			affected_mob.updatehealth()
 			if(prob(40)) //So everyone can feel like robot Seth Brundle
-				ASSERT(src.gibbed == 0)
+				if(src.gibbed != 0) return 0
 				var/turf/T = find_loc(affected_mob)
 				gibs(T)
 				src.cure(0)

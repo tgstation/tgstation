@@ -1,5 +1,5 @@
 /mob/living/carbon/human/examine()
-	set src in oview()
+	set src in view()
 
 	if(!usr || !src)	return
 	if(((usr.disabilities & 128) || usr.blinded || usr.stat) && !(istype(usr,/mob/dead/observer/)))
@@ -180,14 +180,14 @@
 		distance = 1
 
 	if (src.stat == 1 || stat == 2)
-		msg += "<span class='warning'>[name] doesn't seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep.</span>\n"
+		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
 		if((!isbreathing || holdbreath) && distance <= 3)
-			msg += "<span class='warning'>[name] does not appear to be breathing.</span>\n"
+			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
 		if(istype(usr, /mob/living/carbon/human) && usr.stat == 0 && src.stat == 1 && distance <= 1)
 			for(var/mob/O in viewers(usr.loc, null))
 				O.show_message("[usr] checks [src]'s pulse.", 1)
 			spawn(15)
-				usr << "\blue [name] has a pulse!"
+				usr << "\blue [t_He] has a pulse!"
 
 	if (src.stat == 2 || (changeling && changeling.changeling_fakedeath == 1))
 		if(distance <= 1)
@@ -195,7 +195,19 @@
 				for(var/mob/O in viewers(usr.loc, null))
 					O.show_message("[usr] checks [src]'s pulse.", 1)
 			spawn(15)
-				usr << "\red [name] has no pulse!"
+				if(!src.client)
+					var/foundghost = 0
+					for(var/mob/dead/observer/G in world)
+						if(G.client)
+							if(G.corpse == src)
+								foundghost++
+								break
+					if(!foundghost)
+						usr << "<span class='deadsay'>[t_He] has no pulse and [t_his] soul has departed...</span>"
+					else
+						usr << "<span class='deadsay'>[t_He] has no pulse...</span>"
+
+	msg += "<span class='warning'>"
 
 /*	if (src.getBruteLoss())
 		if (src.getBruteLoss() < 30)
@@ -205,9 +217,9 @@
 
 	if (src.cloneloss)
 		if (src.cloneloss < 30)
-			msg += "<span class='warning'>[src.name] looks slightly... unfinished?</span>\n"
+			msg += "[t_He] looks slightly... unfinished?\n"
 		else
-			msg += "<span class='warning'>[src.name] looks very... unfinished?</B></span>\n"
+			msg += "<B>[t_He] looks very... unfinished?</B>\n"
 
 /*	if (src.getFireLoss())
 		if (src.getFireLoss() < 30)
@@ -230,7 +242,10 @@
 		msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 
 	if (!src.client && !admin_observing)
-		msg += "[t_He] [t_has] a vacant, braindead stare...\n"
+		msg += "[t_He] [t_has] a vacant stare...\n"
+
+	if (src.digitalcamo)
+		msg += "[t_He] [t_is] repulsively uncanny!\n"
 
 	var/list/wound_descriptions = list()
 	var/list/wound_flavor_text = list()
@@ -508,6 +523,31 @@
 //		if(w.bleeding)
 //			usr << "\red [src.name] is bleeding from a [sizetext] on [t_his] [temp.display_name]."
 //			continue
+
+	if(istype(usr, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = usr
+		if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+			var/perpname = "wot"
+			var/criminal = "None"
+
+			if(wear_id)
+				if(istype(wear_id,/obj/item/weapon/card/id))
+					perpname = wear_id:registered_name
+				else if(istype(wear_id,/obj/item/device/pda))
+					var/obj/item/device/pda/tempPda = wear_id
+					perpname = tempPda.owner
+			else
+				perpname = src.name
+
+			for (var/datum/data/record/E in data_core.general)
+				if (E.fields["name"] == perpname)
+					for (var/datum/data/record/R in data_core.security)
+						if (R.fields["id"] == E.fields["id"])
+							criminal = R.fields["criminal"]
+
+
+			msg += "<span class = 'deptradio'>Criminal status:</span> <a href='?src=\ref[src];criminal=1'>\[[criminal]\]</a>\n"
+			//msg += "\[Set Hostile Identification\]\n"
 
 	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
 

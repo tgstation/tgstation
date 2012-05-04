@@ -48,6 +48,9 @@
 		return 1
 	else
 		if (istype(user, /mob/living/carbon))
+			if (usr.tkdisable != 0) //Remote Viewing + TK = oh god wat
+				user << "\red Your mind is too strained right now!"
+				return 0
 			if (user:mutations & TK)
 				var/X = source:x
 				var/Y = source:y

@@ -1,5 +1,6 @@
 /obj/item/weapon/gun/energy/gun
 	icon_state = "energystun100"
+	item_state = "energystun100"
 	name = "energy gun"
 	desc = "A basic energy-based gun with two settings: Stun and kill."
 	fire_sound = 'Taser.ogg'

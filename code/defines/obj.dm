@@ -1481,6 +1481,7 @@
 	var/list/list3 = list()
 	var/list/list4 = list()
 	var/list/list5 = list()
+	var/list/list6 = list()
 
 	var/var1 = null
 	var/var2 = null

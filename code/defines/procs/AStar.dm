@@ -57,12 +57,12 @@ PriorityQueue
 				j >>= 1
 
 		Dequeue()
-			ASSERT(L.len)
+			if(!L.len) return 0
 			. = L[1]
 			Remove(1)
 
 		Remove(i)
-			ASSERT(i <= L.len)
+			if(i > L.len) return 0
 			L.Swap(i,L.len)
 			L.Cut(L.len)
 			if(i < L.len)

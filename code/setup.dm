@@ -1,3 +1,5 @@
+#define PI 3.1415
+
 #define R_IDEAL_GAS_EQUATION	8.31 //kPa*L/(K*mol)
 #define ONE_ATMOSPHERE		101.325	//kPa
 
@@ -281,3 +283,9 @@ var/static/list/scarySounds = list('thudswoosh.ogg','Taser.ogg','armbomb.ogg','h
 #define SEC_LEVEL_BLUE 1
 #define SEC_LEVEL_RED 2
 #define SEC_LEVEL_DELTA 3
+
+#define TRANSITIONEDGE 7 //Distance from edge to move to another z-level
+
+// Maximum and minimum character ages.
+var/const/minimum_age = 20
+var/const/maximum_age = 65

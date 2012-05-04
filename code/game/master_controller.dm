@@ -34,6 +34,9 @@ datum/controller/game_controller
 
 		setupgenetics()
 
+		for(var/i = 0, i < max_secret_rooms, i++)
+			make_mining_asteroid_secret()
+
 		syndicate_code_phrase = generate_code_phrase()//Sets up code phrase for traitors, for the round.
 		syndicate_code_response = generate_code_phrase()
 
@@ -125,7 +128,7 @@ datum/controller/game_controller
 
 		ticker.process()
 
-		sleep(world.timeofday+10-start_time)
+		sleep(world.timeofday+10-start_time) // This is fine for our tick lag. DMTG
 
 		spawn process()
 

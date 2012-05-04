@@ -1768,7 +1768,23 @@
 			icon_state = "pill[rand(1,20)]"
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-
+		if (istype(W, /obj/item/weapon/storage/pill_bottle))
+			var/obj/item/weapon/storage/pill_bottle/P = W
+			if (P.mode == 1)
+				for (var/obj/item/weapon/reagent_containers/pill/O in locate(src.x,src.y,src.z))
+					if(P.contents.len < P.storage_slots)
+						O.loc = P
+						P.orient2hud(user)
+					else
+						user << "\blue The pill bottle is full."
+						return
+				user << "\blue You pick up all the pills."
+			else
+				if (P.contents.len < P.storage_slots)
+					loc = P
+					P.orient2hud(user)
+				else
+					user << "\blue The pill bottle is full."
 		return
 	attack_self(mob/user as mob)
 		return
@@ -2067,7 +2083,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
-	volume = 30
+	volume = 50
 
 	New()
 		..()
