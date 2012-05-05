@@ -285,11 +285,12 @@
 			verbs += /client/proc/get_admin_state
 			verbs += /client/proc/reload_admins
 			verbs += /client/proc/cmd_debug_make_powernets
+			verbs += /client/proc/enable_debug_verbs
 			verbs += /client/proc/everyone_random
 			verbs += /client/proc/only_one
 			verbs += /client/proc/deadmin_self
 			verbs += /client/proc/getruntimelog							//used by coders to retrieve runtime logs
-			verbs += /client/proc/enable_mapping_debug
+			verbs += /client/proc/enable_debug_verbs
 			verbs += /client/proc/kill_air
 			verbs += /client/proc/callprocgen
 			verbs += /client/proc/callprocobj
@@ -403,6 +404,7 @@
 	verbs -= /client/proc/cmd_admin_gib_self
 	verbs -= /client/proc/restartcontroller
 	verbs -= /client/proc/play_local_sound
+	verbs -= /client/proc/enable_debug_verbs
 	verbs -= /client/proc/toggleprayers
 	verbs -= /client/proc/Blobize
 	verbs -= /client/proc/toggle_clickproc 								//TODO ERRORAGE (Temporary proc while the enw clickproc is being tested)
@@ -452,7 +454,7 @@
 	verbs -= /client/proc/jump_to_dead_group
 	verbs -= /client/proc/playernotes
 	verbs -= /obj/admins/proc/show_skills
-	verbs -= /client/proc/enable_mapping_debug
+	verbs -= /client/proc/enable_debug_verbs
 	return
 
 

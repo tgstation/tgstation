@@ -498,7 +498,7 @@ client
 			togglebuildmode(MOB)
 			href_list["datumrefresh"] = href_list["build_mode"]
 
-/*		else if (href_list["direct_control"])
+		else if (href_list["direct_control"])
 			if(!href_list["direct_control"])
 				return
 			var/mob/MOB = locate(href_list["direct_control"])
@@ -510,7 +510,7 @@ client
 				return
 
 			if(usr.client)
-				usr.client.cmd_assume_direct_control(MOB)*/
+				usr.client.cmd_assume_direct_control(MOB)
 
 		else if (href_list["delall"])
 			if(!href_list["delall"])
