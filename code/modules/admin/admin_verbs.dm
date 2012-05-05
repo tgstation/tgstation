@@ -625,7 +625,7 @@
 		log_admin("[ckey] warned [M.ckey], resulting in a [AUTOBANTIME] minute autoban.")
 		ban_unban_log_save("[ckey] warned [M.ckey], resulting in a [AUTOBANTIME] minute autoban.")
 		message_admins("\blue [ckey] warned [M.ckey], resulting in a [AUTOBANTIME] minute autoban.")
-		feedback_inc("ban_warn",1)
+		//feedback_inc("ban_warn",1)
 
 		del(M.client)
 //	feedback_add_details("admin_verb","WARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
