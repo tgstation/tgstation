@@ -61,12 +61,6 @@
 //a lot of these variables are pretty hacked, so dont rely on the comments
 /obj/machinery/power/supermatter/process()
 
-	var/datum/gas_mixture/env = loc.return_air()
-
-	//Remove gas from surrounding area
-	var/transfer_moles = gasefficency * env.total_moles()
-	var/datum/gas_mixture/removed = env.remove(transfer_moles)
-
 	//core can no longer spontaneously explode
 /*
 	previousdet = det
@@ -111,15 +105,24 @@
 #define REACTION_POWER_MODIFIER 0.5	//Higher == more overall power
 */
 
-	//100% oxygen atmosphere = 100% plasma production
-	//100% nitrogen atmosphere = 0% plasma production
-	//anything else is halfway in between; an atmosphere with no nitrogen or oxygen will still be at 50% (but steadily rise as more oxygen is made)
-	var/total_moles = removed.total_moles()
+	var/datum/gas_mixture/env = loc.return_air()
+
+	//nothing can happen in a vacuum
+	var/datum/gas_mixture/removed = env
 	var/retardation_factor = 0.5
-	if(total_moles)
-		retardation_factor += removed.oxygen / (total_moles * 2) - removed.nitrogen / (total_moles * 2)
-	else
-		retardation_factor -= 0.25
+	if(env.total_moles())
+		//Remove gas from surrounding area
+		var/transfer_moles = gasefficency * env.total_moles()
+		removed = env.remove(transfer_moles)
+
+		//100% oxygen atmosphere = 100% plasma production
+		//100% nitrogen atmosphere = 0% plasma production
+		//anything else is halfway in between; an atmosphere with no nitrogen or oxygen will still be at 50% (but steadily rise as more oxygen is made)
+		var/total_moles = removed.total_moles()
+		if(total_moles)
+			retardation_factor += removed.oxygen / (total_moles * 2) - removed.nitrogen / (total_moles * 2)
+		else
+			retardation_factor -= 0.25
 
 	var/device_energy = mega_energy * REACTION_POWER_MODIFIER			//device energy is provided by the zero point lasers
 	device_energy *= removed.temperature / T0C							//environmental heat directly affects device energy

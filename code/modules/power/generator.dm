@@ -1,4 +1,7 @@
-// dummy generator object for testing
+// thermo electric generator powered by twinned gas turbines
+// more realistic than type 2, and also cooler
+#define ENERGY_TRANSFER_FACTOR 10
+#define POWER_PRODUCTION_FACTOR 1.25
 
 /*/obj/machinery/power/generator/verb/set_amount(var/g as num)
 	set src in view(1)
@@ -35,12 +38,19 @@
 	if(!circ1 || !circ2)
 		return
 
-	var/datum/gas_mixture/hot_air = circ1.return_transfer_air()
-	var/datum/gas_mixture/cold_air = circ2.return_transfer_air()
+	var/datum/gas_mixture/air1 = circ1.return_transfer_air()
+	var/datum/gas_mixture/air2 = circ2.return_transfer_air()
+	//
+	var/datum/gas_mixture/hot_air = air1
+	var/datum/gas_mixture/cold_air = air2
 
 	lastgen = 0
 
-	if(cold_air && hot_air)
+	if(hot_air && cold_air)
+		if(hot_air.temperature < cold_air.temperature)
+			hot_air = air2
+			cold_air = air1
+
 		var/cold_air_heat_capacity = cold_air.heat_capacity()
 		var/hot_air_heat_capacity = hot_air.heat_capacity()
 
@@ -52,24 +62,25 @@
 			var/energy_transfer = delta_temperature*hot_air_heat_capacity*cold_air_heat_capacity/(hot_air_heat_capacity+cold_air_heat_capacity)
 
 			var/heat = energy_transfer*(1-efficiency)
-			lastgen = energy_transfer*efficiency
+			lastgen = POWER_PRODUCTION_FACTOR * energy_transfer*efficiency
 
-			hot_air.temperature = hot_air.temperature - energy_transfer/hot_air_heat_capacity
-			cold_air.temperature = cold_air.temperature + heat/cold_air_heat_capacity
+			//ENERGY_TRANSFER_FACTOR to beef up the amount of heat passed over
+			hot_air.temperature -= energy_transfer/hot_air_heat_capacity
+			cold_air.temperature += heat/cold_air_heat_capacity
 
 
-			world << "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]"
+			//world << "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]"
 
 			add_avail(lastgen)
 	// update icon overlays only if displayed level has changed
 
-	if(hot_air)
-		circ1.air2.merge(hot_air)
+	if(air1)
+		circ1.air2.merge(air1)
 
-	if(cold_air)
-		circ2.air2.merge(cold_air)
+	if(air2)
+		circ2.air2.merge(air2)
 
-	var/genlev = max(0, min( round(11*lastgen / 100000), 11))
+	var/genlev = max(0, min( round(11*lastgen / 250000), 11))
 	if(genlev != lastgenlev)
 		lastgenlev = genlev
 		updateicon()
@@ -97,17 +108,27 @@
 
 	user.machine = src
 
+	var/obj/machinery/atmospherics/binary/circulator/hot_circ = circ1
+	var/obj/machinery/atmospherics/binary/circulator/cold_circ = circ2
+	if(hot_circ.air1.temperature < cold_circ.air1.temperature)
+		hot_circ = circ2
+		cold_circ = circ1
+
 	var/t = "<PRE><B>Thermo-Electric Generator</B><HR>"
 
 	t += "Output : [round(lastgen)] W<BR><BR>"
 
 	t += "<B>Cold loop</B><BR>"
-	t += "Temperature Inlet: [round(circ1.air1.temperature, 0.1)] K  Outlet: [round(circ1.air2.temperature, 0.1)] K<BR>"
-	t += "Pressure Inlet: [round(circ1.air1.return_pressure(), 0.1)] kPa  Outlet: [round(circ1.air2.return_pressure(), 0.1)] kPa<BR>"
+	t += "Temperature Inlet: [round(cold_circ.air1.temperature, 0.1)] K<BR>"
+	t += "Temperature Outlet: [round(cold_circ.air2.temperature, 0.1)] K<BR>"
+	t += "Pressure Inlet: [round(cold_circ.air1.return_pressure(), 0.1)] kPa<BR>"
+	t += "Pressure Outlet: [round(cold_circ.air2.return_pressure(), 0.1)] kPa<BR>"
 
 	t += "<B>Hot loop</B><BR>"
-	t += "Temperature Inlet: [round(circ2.air1.temperature, 0.1)] K  Outlet: [round(circ2.air2.temperature, 0.1)] K<BR>"
-	t += "Pressure Inlet: [round(circ2.air1.return_pressure(), 0.1)] kPa  Outlet: [round(circ2.air2.return_pressure(), 0.1)] kPa<BR>"
+	t += "Temperature Inlet: [round(hot_circ.air1.temperature, 0.1)] K<BR>"
+	t += "Temperature Outlet: [round(hot_circ.air2.temperature, 0.1)] K<BR>"
+	t += "Pressure Inlet: [round(hot_circ.air1.return_pressure(), 0.1)] kPa<BR>"
+	t += "Pressure Outlet: [round(hot_circ.air2.return_pressure(), 0.1)] kPa<BR>"
 
 	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
