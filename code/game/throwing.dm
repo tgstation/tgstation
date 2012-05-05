@@ -128,7 +128,7 @@
 	..()
 
 /atom/movable/proc/throw_at(atom/target, range, speed)
-	if(!target)	return 0
+	if(!target || !src)	return 0
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 	src.throwing = 1
 
@@ -181,7 +181,6 @@
 				if(dist_since_sleep >= speed)
 					dist_since_sleep = 0
 					sleep(1)
-
 			a = get_area(src.loc)
 	else
 		var/error = dist_y/2 - dist_x
