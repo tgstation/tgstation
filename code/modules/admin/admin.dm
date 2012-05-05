@@ -1049,6 +1049,16 @@ var/global/BSACooldown = 0
 				log_admin("[key_name(usr)] has sent [key_name(M)] to the thunderdome. (Observer.)")
 				message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Observer.)", 1)
 
+//	if (href_list["adminauth"])
+//		if ((src.rank in list( "Admin Candidate", "Temporary Admin", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+//			var/mob/M = locate(href_list["adminauth"])
+//			if (ismob(M) && !M.client.authenticated && !M.client.authenticating)
+//				M.client.verbs -= /client/proc/authorize
+//				M.client.authenticated = text("admin/[]", usr.client.authenticated)
+//				log_admin("[key_name(usr)] authorized [key_name(M)]")
+//				message_admins("\blue [key_name_admin(usr)] authorized [key_name_admin(M)]", 1)
+//				M.client << text("You have been authorized by []", usr.key)
+
 	if (href_list["revive"])
 		if ((src.rank in list( "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
 			var/mob/living/M = locate(href_list["revive"])
@@ -1904,30 +1914,16 @@ var/global/BSACooldown = 0
 					world << sound('granomalies.ogg')
 					var/turf/T = pick(blobstart)
 					var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
-					spawn(rand(50, 300))
+					spawn(rand(100, 600))
 						del(bh)
-				if("timeanomalies")
-					command_alert("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert")
-					world << sound('spanomalies.ogg')
-					var/list/turfs = list(	)
-					var/turf/picked
-					for(var/turf/T in world)
-						if(T.z == 1 && istype(T,/turf/simulated/floor) && !istype(T,/turf/space))
-							turfs += T
-					for(var/turf/T in world)
-						set background = 1
-						if(prob(20) && T.z == 1 && istype(T,/turf/simulated/floor))
-							spawn(50+rand(0,3000))
-								picked = pick(turfs)
-								var/obj/effect/portal/P = new /obj/effect/portal( T )
-								P.target = picked
-								P.creator = null
-								P.icon = 'objects.dmi'
-								P.failchance = 0
-								P.icon_state = "anom"
-								P.name = "wormhole"
-								spawn(rand(300,600))
-									del(P)
+
+				if("timeanomalies")	//dear god this code was awful :P Still needs further optimisation
+					feedback_inc("admin_secrets_fun_used",1)
+					feedback_add_details("admin_secrets_fun_used","STA")
+					//moved to its own dm so I could split it up and prevent the spawns copying variables over and over
+					//can be found in code\game\game_modes\events\wormholes.dm
+					wormhole_event()
+
 				if("goblob")
 					//feedback_inc("admin_secrets_fun_used",1)
 					//feedback_add_details("admin_secrets_fun_used","BL")
@@ -2354,6 +2350,10 @@ var/global/BSACooldown = 0
 	var/dat = "<html><head><title>Options for [M.key]</title></head>"
 	var/foo = " "
 	if (ismob(M) && M.client)
+//		if(!M.client.authenticated && !M.client.authenticating)
+//			foo += text("<A HREF='?src=\ref[src];adminauth=\ref[M]'>Authorize</A> | ")
+//		else
+//			foo += text("<B>Authorized</B> | ")
 		foo += text("<A HREF='?src=\ref[src];prom_demot=\ref[M.client]'>Promote/Demote</A> | ")
 		if(!istype(M, /mob/new_player))
 			if(!ismonkey(M))

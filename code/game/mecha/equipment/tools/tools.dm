@@ -200,6 +200,10 @@
 	var/disabled = 0 //malf
 
 	action(atom/target)
+		if(istype(target,/area/shuttle)||istype(target, /turf/space/transit))//>implying these are ever made -Sieve
+			disabled = 1
+		else
+			disabled = 0
 		if(!istype(target, /turf) && !istype(target, /obj/machinery/door/airlock))
 			target = get_turf(target)
 		if(!action_checks(target) || disabled || get_dist(chassis, target)>3) return

@@ -75,7 +75,7 @@
 /obj/item/weapon/fuel/proc/injest(mob/M as mob)
 	switch(content)
 		if("Anti-Hydrogen")
-			M.gib(1)
+			M.gib()
 		if("Hydrogen")
 			M << "\blue You feel very light, as if you might just float away..."
 	del(src)

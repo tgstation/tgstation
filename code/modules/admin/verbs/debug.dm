@@ -505,6 +505,24 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			H.update_clothing()
 	else
 		alert("Invalid mob")
+	//feedback_add_details("admin_verb","GFA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/cmd_assume_direct_control(var/mob/M in world)
+	set category = "Admin"
+	set name = "Assume direct control"
+	set desc = "Direct intervention"
+
+	if(M.ckey)
+		if(alert("This mob is being controlled by [M.ckey]. Are you sure you wish to assume control of it? [M.ckey] will be made a ghost.",,"Yes","No") != "Yes")
+			return
+		else
+			var/mob/dead/observer/ghost = new/mob/dead/observer()
+			ghost.ckey = M.ckey;
+	var/mob/adminmob = src.mob
+	M.ckey = src.ckey;
+	if( isobserver(adminmob) )
+		del(adminmob)
+	//feedback_add_details("admin_verb","ADC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/cmd_admin_dress(var/mob/living/carbon/human/M in world)
@@ -663,8 +681,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.registered_name = M.real_name
 			M.equip_if_possible(W, M.slot_wear_id)
 
-			var/obj/item/weapon/fireaxe/fire_axe = new(M)
-			fire_axe.name = "Fire Axe (Unwielded)"
+			var/obj/item/weapon/twohanded/fireaxe/fire_axe = new(M)
 			M.equip_if_possible(fire_axe, M.slot_r_hand)
 
 		if("masked killer")
@@ -679,8 +696,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_if_possible(new /obj/item/weapon/kitchenknife(M), M.slot_l_store)
 			M.equip_if_possible(new /obj/item/weapon/scalpel(M), M.slot_r_store)
 
-			var/obj/item/weapon/fireaxe/fire_axe = new(M)
-			fire_axe.name = "Fire Axe (Unwielded)"
+			var/obj/item/weapon/twohanded/fireaxe/fire_axe = new(M)
 			M.equip_if_possible(fire_axe, M.slot_r_hand)
 
 			for(var/obj/item/carried_item in M.contents)

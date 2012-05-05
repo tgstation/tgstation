@@ -1005,6 +1005,19 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pumpkinpie
 
+/datum/recipe/plumphelmetbiscuit
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit
+
+/datum/recipe/mushroomsoup
+	reagents = list("water" = 5, "milk" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/mushroomsoup
 
 //////////////////////////////////////////
 // bs12 food port stuff

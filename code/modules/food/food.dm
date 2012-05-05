@@ -1417,6 +1417,30 @@
 		reagents.add_reagent("nutriment", 28)
 		bitesize = 3
 
+/obj/item/weapon/reagent_containers/food/snacks/mushroomsoup
+	name = "chantrelle soup"
+	desc = "A delicious and hearty mushroom soup."
+	icon_state = "mushroomsoup"
+	trash = "snack_bowl"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit
+	name = "plump helmet biscuit"
+	desc = "This is a finely-prepared plump helmet biscuit. The ingredients are exceptionally minced plump helmet, and well-minced dwarven wheat flour."
+	icon_state = "phelmbiscuit"
+	New()
+		..()
+		if(prob(10))
+			name = "exceptional plump helmet biscuit"
+			desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump helmet biscuit!"
+			reagents.add_reagent("nutriment", 15)
+			bitesize = 2
+		else
+			reagents.add_reagent("nutriment", 5)
+			bitesize = 2
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
 

@@ -262,19 +262,17 @@ var/global/list/autolathe_recipes_hidden = list( \
 				restart:
 				if(outputAmount > 0)
 					if(src.m_amount >= template.m_amt*multiplier && src.g_amount >= template.g_amt*multiplier)
-						busy = 1
+
 						use_power(power)
 						icon_state = "autolathe"
 						flick("autolathe_n",src)
 						spawn(16)
-
 							if(!busy)
 								busy = 1
 								use_power(power)
 								spawn(16)
 									use_power(power)
 									spawn(16)
-										flick("autolathe_n",src)
 										src.m_amount -= template.m_amt*multiplier
 										src.g_amount -= template.g_amt*multiplier
 										if(src.m_amount < 0)

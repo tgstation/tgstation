@@ -52,6 +52,8 @@
 	return 0
 
 /mob/proc/say_quote(var/text)
+	if(!text)
+		return "says, \"...\"";	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
 	var/ending = copytext(text, length(text))
 	if (src.disease_symptoms & DISEASE_HOARSE)
 		return "rasps, \"[text]\"";
@@ -63,7 +65,7 @@
 		return "gibbers, \"[text]\"";
 	if (ending == "?")
 		return "asks, \"[text]\"";
-	else if (ending == "!")
+	if (ending == "!")
 		return "exclaims, \"[text]\"";
 
 	return "says, \"[text]\"";

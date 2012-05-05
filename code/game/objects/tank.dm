@@ -33,9 +33,9 @@
 	examine()
 		set src in usr
 		..()
-		if(air_contents.oxygen < 1)
+		if(air_contents.oxygen < 1 && loc==usr)
 			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-			playsound(usr, 'alert.ogg', 50, 1)
+			usr << sound('alert.ogg')
 
 
 /obj/item/weapon/tank/plasma

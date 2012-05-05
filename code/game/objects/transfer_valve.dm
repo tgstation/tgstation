@@ -1,6 +1,6 @@
 /obj/item/device/transfer_valve
 	icon = 'assemblies.dmi'
-	name = "Tank transfer valve" // because that's what it is exadv1 and don't you dare change it
+	name = "tank transfer valve"
 	icon_state = "valve_1"
 	desc = "Regulates the transfer of air between two tanks"
 	var/obj/item/weapon/tank/tank_one
@@ -19,34 +19,34 @@
 	attackby(obj/item/item, mob/user)
 		if(istype(item, /obj/item/weapon/tank))
 			if(tank_one && tank_two)
-				user << "\red There are already two tanks attached, remove one first!"
+				user << "<span class='warning'>There are already two tanks attached, remove one first.</span>"
 				return
 
 			if(!tank_one)
 				tank_one = item
 				user.drop_item()
 				item.loc = src
-				user << "\blue You attach the tank to the transfer valve"
+				user << "<span class='notice'>You attach the tank to the transfer valve.</span>"
 			else if(!tank_two)
 				tank_two = item
 				user.drop_item()
 				item.loc = src
-				user << "\blue You attach the tank to the transfer valve!"
+				user << "<span class='notice'>You attach the tank to the transfer valve.</span>"
 
 			update_icon()
 //TODO: Have this take an assemblyholder
 		else if(isassembly(item))
 			var/obj/item/device/assembly/A = item
 			if(A.secured)
-				user << "\red The device is secured!"
+				user << "<span class='notice'>The device is secured.</span>"
 				return
 			if(attached_device)
-				user << "\red There is already an device attached to the valve, remove it first!"
+				user << "<span class='warning'>There is already an device attached to the valve, remove it first.</span>"
 				return
 			user.remove_from_mob(item)
 			attached_device = A
 			A.loc = src
-			user << "\blue You attach the [item] to the valve controls and secure it!"
+			user << "<span class='notice'>You attach the [item] to the valve controls and secure it.</span>"
 			A.holder = src
 			A.toggle_secure()
 
@@ -75,39 +75,39 @@
 		onclose(user, "trans_valve")
 		return
 
-
+	//CARN: MARKER
 	Topic(href, href_list)
 		..()
-		if (usr.stat|| usr.restrained())
+		if ( usr.stat || usr.restrained() )
 			return
 		if (src.loc == usr)
-			if(href_list["tankone"])
+			if(tank_one && href_list["tankone"])
 				split_gases()
 				valve_open = 0
 				tank_one.loc = get_turf(src)
 				tank_one = null
 				update_icon()
-			if(href_list["tanktwo"])
+			else if(tank_two && href_list["tanktwo"])
 				split_gases()
 				valve_open = 0
 				tank_two.loc = get_turf(src)
 				tank_two = null
 				update_icon()
-			if(href_list["open"])
+			else if(href_list["open"])
 				toggle_valve()
-			if(href_list["rem_device"])
-				if(attached_device)
+			else if(attached_device)
+				if(href_list["rem_device"])
 					attached_device.loc = get_turf(src)
 					attached_device:holder = null
 					attached_device = null
-				update_icon()
-			if(href_list["device"])
-				attached_device.attack_self(usr)
+					update_icon()
+				if(href_list["device"])
+					attached_device.attack_self(usr)
 
 			src.attack_self(usr)
-
 			src.add_fingerprint(usr)
 			return
+		return
 
 	process_activation(var/obj/item/device/D)
 		if(toggle)

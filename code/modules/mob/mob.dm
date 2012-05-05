@@ -191,28 +191,16 @@
 	var/obj/item/W = equipped()
 
 	if (W)
-		if(W.twohanded)
-			if(W.wielded)
-				if(hand)
-					var/obj/item/weapon/offhand/O = r_hand
-					del O
-				else
-					var/obj/item/weapon/offhand/O = l_hand
-					del O
-			W.wielded = 0          //Kinda crude, but gets the job done with minimal pain -Agouri
-			W.name = "[initial(W.name)]" //name reset so people don't see world fireaxes with (unwielded) or (wielded) tags
-			W.update_icon()
 		u_equip(W)
 		if (client)
 			client.screen -= W
 		if (W)
+			W.layer = initial(W.layer)
 			if(target)
 				W.loc = target.loc
 			else
 				W.loc = loc
 			W.dropped(src)
-			if (W)
-				W.layer = initial(W.layer)
 		var/turf/T = get_turf(loc)
 		if (istype(T))
 			T.Entered(W)
@@ -235,7 +223,7 @@
 		return r_hand
 
 /mob/proc/get_inactive_hand()
-	if ( ! hand)
+	if (!hand)
 		return l_hand
 	else
 		return r_hand
@@ -754,7 +742,7 @@
 	set category = "IC"
 	set src in oview(1)
 
-	if (!( usr ))
+	if ( !usr || usr==src || !istype(src.loc,/turf) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
 	if (!( anchored ))
 		usr.pulling = src
@@ -852,9 +840,9 @@
 	for(var/mob/M in viewers())
 		M.see(message)
 
-//This is the proc for gibbing a mob. Cannot gib ghosts. Removed the medal reference,
+//This is the proc for gibbing a mob. Cannot gib ghosts.
 //added different sort of gibs and animations. N
-/mob/proc/gib(var/ex_act = 0)
+/mob/proc/gib()
 
 	if (istype(src, /mob/dead/observer))
 		gibs(loc, viruses)
@@ -913,10 +901,6 @@ Currently doesn't work, but should be useful later or at least as a template
 			else
 				gibs(loc, viruses, dna)
 		sleep(15)
-		for(var/obj/item/I in contents)
-			I.loc = get_turf(src)
-			if(ex_act)
-				I.ex_act(ex_act)
 		del(src)
 
 /*
@@ -1038,8 +1022,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 		stat(null, "([x], [y], [z])")
 		stat(null, "CPU: [world.cpu]")
 		stat(null, "Controller: [controllernum]")
-		//if (master_controller)
-		//	stat(null, "Loop: [master_controller.loop_freq]")
+		if (master_controller)
+			stat(null, "Current Iteration: [controller_iteration]")
 
 	if (spell_list.len)
 

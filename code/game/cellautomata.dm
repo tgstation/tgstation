@@ -19,8 +19,6 @@
 
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
-	auth_motd = file2text("config/motd-auth.txt")
-	no_auth_motd = file2text("config/motd-noauth.txt")
 
 /world/proc/load_rules()
 	rules = file2text("config/rules.html")
@@ -125,7 +123,8 @@
 	src.update_status()
 
 	master_controller = new /datum/controller/game_controller()
-	spawn(-1) master_controller.setup()
+	spawn(-1)
+		master_controller.setup()
 	return
 
 //Crispy fullban

@@ -285,13 +285,20 @@ var/global/datum/controller/occupations/job_master
 		if(!H)	return 0
 		if(!title) title = rank
 		var/obj/item/weapon/card/id/C = null
-		switch(rank)
-			if("Cyborg")
+
+		var/datum/job/job = null
+		for(var/datum/job/J in occupations)
+			if(J.title == rank)
+				job = J
+				break
+
+		if(job)
+			if(job.title == "Cyborg")
 				return
-			if("Captain")
-				C = new /obj/item/weapon/card/id/gold(H)
 			else
-				C = new /obj/item/weapon/card/id(H)
+				C = new job.idtype(H)
+		else
+			C = new /obj/item/weapon/card/id(H)
 		if(C)
 			C.registered_name = H.real_name
 			C.assignment = title

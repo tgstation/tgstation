@@ -40,30 +40,3 @@
 					if ( istype(A2) && A2.master && A2.master == A )
 						SCRUBBER.on = scrubber_state
 						SCRUBBER.update_icon()
-
-
-
-
-/obj/machinery/computer/mining_shuttle/attack_hand(user as mob)
-	src.add_fingerprint(usr)
-	var/dat
-	dat = text("<center>Mining shuttle:<br> <b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>")
-	user << browse("[dat]", "window=miningshuttle;size=200x100")
-
-/obj/machinery/computer/mining_shuttle/Topic(href, href_list)
-	if(..())
-		return
-	usr.machine = src
-	src.add_fingerprint(usr)
-	if(href_list["move"])
-		if(ticker.mode.name == "blob")
-			if(ticker.mode:declared)
-				usr << "Under directive 7-10, [station_name()] is quarantined until further notice."
-				return
-
-		if (!mining_shuttle_moving)
-			usr << "\blue Shuttle recieved message and will be sent shortly."
-			move_mining_shuttle()
-		else
-			usr << "\blue Shuttle is already moving."
-

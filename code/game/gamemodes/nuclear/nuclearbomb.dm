@@ -151,7 +151,6 @@
 /obj/machinery/nuclearbomb/ex_act(severity)
 	return
 
-
 /obj/machinery/nuclearbomb/blob_act()
 	if (src.timing == -1.0)
 		return
@@ -174,14 +173,7 @@
 		ticker.mode.explosion_in_progress = 1
 	sleep(100)
 
-/*
-	var/turf/ground_zero = get_turf(loc)
-	explosion(ground_zero, 50, 250, 500, 750)
-
-*/
 	enter_allowed = 0
-
-
 
 	var/off_station = 0
 	var/area/A = get_area(src.loc)
