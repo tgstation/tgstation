@@ -383,7 +383,6 @@
 	opacity = 0
 	density = 0
 
-
 /obj/hud
 	name = "hud"
 	unacidable = 1
@@ -400,9 +399,8 @@
 	var/obj/screen/g_dither = null
 	var/obj/screen/blurry = null
 	var/list/darkMask = null
-	var/obj/screen/station_explosion = null
 
-	var/h_type = /obj/screen
+	var/h_type = /obj/screen		//this is like...the most pointless thing ever. Use a god damn define!
 
 /obj/item
 	name = "item"
