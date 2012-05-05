@@ -307,7 +307,7 @@
 	product_hidden = "/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola"
 //	product_hideamt = "20"
 	hidden_prices = "1"
-	product_ads = "What the fuck is this shit?;Why would you buy this;holy shit help;i'm stuck;in;a;universe;factory;AAAAAARGH!;HEIL... Stalin?;CAPITALIST PIGS;FUCK THE WEST"
+	product_ads = "For Tsar and Country.;Have you fulfilled your nutrition quota today?;Very nice!;We are simple people, for this is all we eat.;If there is a person, there is a problem. If there is no person, then there is no problem."
 	charge_type = "soda"
 
 /obj/machinery/vending/tool

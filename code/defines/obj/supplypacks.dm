@@ -390,7 +390,8 @@
 					"/obj/item/seeds/carrotseed",
 					"/obj/item/seeds/sunflowerseed",
 					"/obj/item/seeds/chantermycelium",
-					"/obj/item/seeds/potatoseed")
+					"/obj/item/seeds/potatoseed",
+					"/obj/item/seeds/sugarcaneseed")
 	cost = 10
 	containertype = /obj/structure/closet/crate/hydroponics
 	containername = "Seeds crate"

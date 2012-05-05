@@ -1393,6 +1393,7 @@
 	name = "Metroid Sandwich"
 	desc = "A sandwich is green stuff."
 	icon_state = "metroidsandwich"
+	trash = "plate"
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
@@ -1441,6 +1442,40 @@
 		else
 			reagents.add_reagent("nutriment", 5)
 			bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/chawanmushi
+	name = "chawanmushi"
+	desc = "A legendary egg custard that makes friends out of enemies. Probably too hot for a cat to eat."
+	icon_state = "chawanmushi"
+	trash = "snack_bowl"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+		bitesize = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/beetsoup
+	name = "beet soup"
+	desc = "Wait, how do you spell it, again..?"
+	icon_state = "beetsoup"
+	trash = "snack_bowl"
+	New()
+		..()
+		switch(rand(1,6))
+			if(1)
+				name = "borsch"
+			if(2)
+				name = "bortsch"
+			if(3)
+				name = "borstch"
+			if(4)
+				name = "borsh"
+			if(5)
+				name = "borshch"
+			if(6)
+				name = "borscht"
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 2
+
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
 
