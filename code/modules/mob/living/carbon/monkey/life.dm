@@ -591,26 +591,26 @@
 			//NOTE: the alerts dont reset when youre out of danger. dont blame me,
 			//blame the person who coded them. Temporary fix added.
 
-			switch(src.bodytemperature) //310.055 optimal body temp
-
-				if(345 to INFINITY)
-					src.bodytemp.icon_state = "temp4"
-				if(335 to 345)
-					src.bodytemp.icon_state = "temp3"
-				if(327 to 335)
-					src.bodytemp.icon_state = "temp2"
-				if(316 to 327)
-					src.bodytemp.icon_state = "temp1"
-				if(300 to 316)
-					src.bodytemp.icon_state = "temp0"
-				if(295 to 300)
-					src.bodytemp.icon_state = "temp-1"
-				if(280 to 295)
-					src.bodytemp.icon_state = "temp-2"
-				if(260 to 280)
-					src.bodytemp.icon_state = "temp-3"
-				else
-					src.bodytemp.icon_state = "temp-4"
+			if(bodytemp)
+				switch(src.bodytemperature) //310.055 optimal body temp
+					if(345 to INFINITY)
+						src.bodytemp.icon_state = "temp4"
+					if(335 to 345)
+						src.bodytemp.icon_state = "temp3"
+					if(327 to 335)
+						src.bodytemp.icon_state = "temp2"
+					if(316 to 327)
+						src.bodytemp.icon_state = "temp1"
+					if(300 to 316)
+						src.bodytemp.icon_state = "temp0"
+					if(295 to 300)
+						src.bodytemp.icon_state = "temp-1"
+					if(280 to 295)
+						src.bodytemp.icon_state = "temp-2"
+					if(260 to 280)
+						src.bodytemp.icon_state = "temp-3"
+					else
+						src.bodytemp.icon_state = "temp-4"
 
 			src.client.screen -= src.hud_used.blurry
 			src.client.screen -= src.hud_used.druggy
