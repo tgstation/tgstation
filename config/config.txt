@@ -145,3 +145,5 @@ GUEST_JOBBAN 1
 
 ##What address should banned people appeal ther ban at?  Remember to escape the characters, if needed!
 # APPEAL_ADDRESS -->APPEAL ADDRESS HERE<--
+##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
+TICKLAG 0.9
