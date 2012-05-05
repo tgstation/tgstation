@@ -297,39 +297,46 @@ mob/proc/flash_weak_pain()
 									Metroid.SStun = 0
 
 						spawn(0)
-							Metroid.canmove = 0
-							step_away(Metroid, user)
-							if(prob(25 + power*2))
-								sleep(2)
+							if(Metroid)
+								Metroid.canmove = 0
 								step_away(Metroid, user)
-							Metroid.canmove = 1
+								if(prob(25 + power))
+									sleep(2)
+									if(Metroid && user)
+										step_away(Metroid, user)
+								Metroid.canmove = 1
 
 				else
 					if(prob(10 + power*2))
+						if(Metroid)
+							if(Metroid.Victim)
+								if(prob(80) && !Metroid.client)
+									Metroid.Discipline++
 
-						if(Metroid.Victim)
-							if(prob(80) && !Metroid.client)
-								Metroid.Discipline++
+									if(Metroid.Discipline == 1)
+										Metroid.attacked = 0
 
-								if(Metroid.Discipline == 1)
-									Metroid.attacked = 0
+								spawn()
+									if(Metroid)
+										Metroid.SStun = 1
+										sleep(rand(5,20))
+										if(Metroid)
+											Metroid.SStun = 0
 
-							spawn()
-								Metroid.SStun = 1
-								sleep(rand(5,20))
-								Metroid.SStun = 0
-
-						Metroid.Victim = null
-						Metroid.anchored = 0
+							Metroid.Victim = null
+							Metroid.anchored = 0
 
 
 						spawn(0)
-							step_away(Metroid, user)
-							Metroid.canmove = 0
-							if(prob(25 + power*4))
-								sleep(2)
+							if(Metroid && user)
 								step_away(Metroid, user)
-							Metroid.canmove = 1
+								Metroid.canmove = 0
+								if(prob(25 + power*4))
+									sleep(2)
+									if(Metroid && user)
+										step_away(Metroid, user)
+								Metroid.canmove = 1
+
 
 		var/showname = "."
 		if(user)
