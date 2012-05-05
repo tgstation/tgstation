@@ -352,3 +352,18 @@
 	stat = DEAD
 	density = 0
 	return
+
+/mob/living/simple_animal/ex_act(severity)
+	flick("flash", flash)
+	switch (severity)
+		if (1.0)
+			health -= 500
+			gib()
+			return
+
+		if (2.0)
+			health -= 60
+
+
+		if(3.0)
+			health -= 30
