@@ -881,6 +881,7 @@ datum
 				data++
 				M.mutations = 0
 				M.disabilities = 0
+				M.jitteriness = 0
 				if(volume > REAGENTS_OVERDOSE)
 					M:adjustToxLoss(1)
 //				switch(data)
