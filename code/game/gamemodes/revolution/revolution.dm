@@ -75,7 +75,7 @@
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		for(var/datum/mind/head_mind in heads)
-			var/datum/objective/assassinate/rev_obj = new
+			var/datum/objective/mutiny/rev_obj = new
 			rev_obj.owner = rev_mind
 			rev_obj.target = head_mind
 			rev_obj.explanation_text = "Assassinate [head_mind.current.real_name], the [head_mind.role_alt_title ? head_mind.role_alt_title : head_mind.assigned_role]."
@@ -95,7 +95,7 @@
 
 /datum/game_mode/revolution/process()
 	checkwin_counter++
-	if(checkwin_counter >= 20)
+	if(checkwin_counter >= 5)
 		if(!finished)
 			ticker.mode.check_win()
 		checkwin_counter = 0
@@ -370,7 +370,7 @@
 	var/list/heads = get_all_heads()
 	var/list/targets = new
 	for (var/datum/mind/i in head_revolutionaries)
-		for (var/datum/objective/assassinate/o in i.objectives)
+		for (var/datum/objective/mutiny/o in i.objectives)
 			targets |= o.target
 	if (head_revolutionaries.len!=0                      || \
 		revolutionaries.len!=0                           || \
