@@ -1,10 +1,10 @@
-//THIS IS OBVIOUSLY WIP, SORRY	-PETE
 /obj/item/weapon/folder
 	name = "folder"
 	desc = "A folder."
 	icon = 'bureaucracy.dmi'
 	icon_state = "folder"
 	w_class = 2
+	pressure_resistance = 2
 
 /obj/item/weapon/folder/blue
 	desc = "A blue folder."
