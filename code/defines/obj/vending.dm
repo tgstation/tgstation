@@ -92,6 +92,7 @@
 	hidden_prices = "2;5"
 	points = 15
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
+	charge_type = "engineering"
 
 /obj/machinery/vending/coffee
 	name = "Hot Drinks machine"
@@ -308,6 +309,23 @@
 	hidden_prices = "1"
 	product_ads = "What the fuck is this shit?;Why would you buy this;holy shit help;i'm stuck;in;a;universe;factory;AAAAAARGH!;HEIL... Stalin?;CAPITALIST PIGS;FUCK THE WEST"
 	charge_type = "soda"
+
+/obj/machinery/vending/tool
+	name = "YouTool"
+	desc = "Tools for tools."
+	icon_state = "tool"
+	icon_deny = "tool-deny"
+	req_access_txt = "12" //Maintenance access
+	product_paths = "/obj/item/weapon/cable_coil/random;/obj/item/weapon/crowbar;/obj/item/weapon/weldingtool;/obj/item/weapon/wirecutters;/obj/item/weapon/wrench;/obj/item/device/analyzer;/obj/item/device/t_scanner"
+//	product_amounts = "10;5;3;5;5;5;5"
+	product_prices = "1;2;3;2;2;2;2"
+	product_prices = "1"
+	product_hidden = "/obj/item/weapon/weldingtool/largetank;/obj/item/device/multitool"
+//	product_hideamt = "2;2"
+	hidden_prices = "4;4"
+	product_coin = "/obj/item/clothing/gloves/yellow"
+	product_coin_amt = "1"
+	charge_type = "engineering"
 
 /obj/machinery/vending/genetics
 	name = "Genetics Dispenser"
