@@ -187,8 +187,6 @@
 		..()
 		new /obj/item/weapon/plantbgone(src)
 		new /obj/item/weapon/plantbgone(src)
-		new /obj/item/weapon/plantbgone(src)
-		new /obj/item/weapon/hatchet(src)
 		new /obj/item/weapon/minihoe(src)
 //		new /obj/item/weapon/weedspray(src)
 //		new /obj/item/weapon/weedspray(src)

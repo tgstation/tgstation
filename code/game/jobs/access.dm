@@ -301,17 +301,17 @@
 		if(1) //security
 			return list(access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos)
 		if(2) //medbay
-			return list(access_medical, access_medlab, access_morgue, access_chemistry, access_virology, access_cmo, access_surgery)
+			return list(access_medical, access_medlab, access_morgue, access_chemistry, access_virology, access_surgery, access_cmo)
 		if(3) //research
-			return list(access_tox, access_tox_storage, access_rd, access_hydroponics, access_research, access_xenobiology)
+			return list(access_research, access_tox, access_tox_storage, access_xenobiology, access_rd)
 		if(4) //engineering and maintenance
-			return list(access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks, access_emergency_storage, access_tech_storage, access_atmospherics, access_construction, access_robotics, access_ce)
+			return list(access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks, access_tech_storage, access_atmospherics, access_construction, access_robotics, access_ce)
 		if(5) //command
-			return list(access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_mint_vault, access_heads_vault, access_hop, access_RC_announce, access_keycard_auth, access_tcomsat)
+			return list(access_heads, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_all_personal_lockers, access_heads_vault, access_RC_announce, access_keycard_auth, access_tcomsat, access_hop, access_captain)
 		if(6) //station general
-			return list(access_chapel_office, access_kitchen,access_bar, access_janitor, access_crematorium, access_library, access_theatre, access_lawyer, access_clown, access_mime)
+			return list(access_kitchen,access_bar, access_hydroponics, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_lawyer, access_clown, access_mime)
 		if(7) //supply
-			return list(access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mailsorting, access_mint)
+			return list(access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_mining, access_mining_station)
 
 /proc/get_region_accesses_name(var/code)
 	switch(code)
@@ -342,29 +342,29 @@
 		if(access_security)
 			return "Security"
 		if(access_brig)
-			return "Brig"
+			return "Brig Cells"
 		if(access_court)
 			return "Courtroom"
 		if(access_forensics_lockers)
-			return "Forensics"
+			return "Detective's Office"
 		if(access_medical)
 			return "Medical"
 		if(access_medlab)
-			return "Med-Sci"
+			return "Genetics Lab"
 		if(access_morgue)
 			return "Morgue"
 		if(access_tox)
-			return "Toxins Research"
+			return "Research Lab"
 		if(access_tox_storage)
 			return "Toxins Storage"
 		if(access_chemistry)
-			return "Toxins Chemical Lab"
+			return "Chemistry Lab"
 		if(access_rd)
 			return "RD Private"
 		if(access_bar)
 			return "Bar"
 		if(access_janitor)
-			return "Janitorial Equipment"
+			return "Custodial Closet"
 		if(access_engine)
 			return "Engineering"
 		if(access_engine_equip)
@@ -372,7 +372,7 @@
 		if(access_maint_tunnels)
 			return "Maintenance"
 		if(access_external_airlocks)
-			return "External Airlock"
+			return "External Airlocks"
 		if(access_emergency_storage)
 			return "Emergency Storage"
 		if(access_change_ids)
@@ -384,11 +384,11 @@
 		if(access_eva)
 			return "EVA"
 		if(access_heads)
-			return "Head's Quarters/Bridge"
+			return "Bridge"
 		if(access_captain)
-			return "Captain's Quarters"
+			return "Captain Private"
 		if(access_all_personal_lockers)
-			return "Personal Locker"
+			return "Personal Lockers"
 		if(access_chapel_office)
 			return "Chapel Office"
 		if(access_tech_storage)
@@ -400,7 +400,7 @@
 		if(access_armory)
 			return "Armory"
 		if(access_construction)
-			return "Construction Site"
+			return "Construction Areas"
 		if(access_kitchen)
 			return "Kitchen"
 		if(access_hydroponics)
@@ -428,7 +428,7 @@
 		if(access_manufacturing)
 			return "Manufacturing"
 		if(access_research)
-			return "Research"
+			return "Science"
 		if(access_mining)
 			return "Mining"
 		if(access_mining_office)
@@ -442,9 +442,9 @@
 		if(access_heads_vault)
 			return "Main Vault"
 		if(access_mining_station)
-			return "Mining Station"
+			return "Mining Station EVA"
 		if(access_xenobiology)
-			return "Xenobiology"
+			return "Xenobiology Lab"
 		if(access_hop)
 			return "HoP Private"
 		if(access_hos)
@@ -452,11 +452,11 @@
 		if(access_ce)
 			return "CE Private"
 		if(access_RC_announce)
-			return "RC announcements"
+			return "RC Announcements"
 		if(access_keycard_auth)
-			return "Keycode auth. device"
+			return "Keycode Auth. Device"
 		if(access_tcomsat)
-			return "Telecommunications Satellite"
+			return "Telecoms Satellite"
 
 /proc/get_centcom_access_desc(A)
 	switch(A)
@@ -480,10 +480,10 @@
 			return "Code Gold"
 
 /proc/get_all_jobs()
-	return list("Assistant", "Station Engineer", "Shaft Miner", "Detective", "Medical Doctor", "Captain", "Security Officer", "Warden",
-				"Geneticist", "Scientist", "Head of Security", "Head of Personnel", "Atmospheric Technician",
-				"Chaplain", "Bartender", "Chemist", "Janitor", "Clown", "Mime", "Chef", "Roboticist", "Quartermaster",
-				"Chief Engineer", "Research Director", "Botanist", "Librarian", "Lawyer", "Virologist", "Cargo Technician", "Chief Medical Officer")
+	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Chef", "Botanist", "Quartermaster", "Cargo Technician",
+				"Shaft Miner", "Clown", "Mime", "Janitor", "Librarian", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
+				"Atmospheric Technician", "Roboticist", "Chief Medical Officer", "Medical Doctor", "Geneticist", "Virologist",
+				"Research Director", "Scientist", "Chemist", "Head of Security", "Warden", "Detective", "Security Officer")
 
 /proc/get_all_centcom_jobs()
 	return list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer","BlackOps Commander","Supreme Commander")
