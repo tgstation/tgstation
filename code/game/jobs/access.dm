@@ -240,11 +240,10 @@
 			            access_heads, access_ai_upload, access_construction, access_robotics,
 			            access_mint, access_ce, access_RC_announce, access_keycard_auth, access_tcomsat)
 		if("Research Director")
-			return list(access_medlab, access_rd,
-			            access_heads, access_tox,
+			return list(access_rd, access_heads, access_tox,
 			            access_tox_storage, access_chemistry, access_teleporter,
-			            access_research, access_robotics, access_xenobiology, access_RC_announce,
-			            access_keycard_auth, access_tcomsat)
+			            access_research, access_robotics, access_xenobiology,
+			            access_RC_announce, access_keycard_auth, access_tcomsat)
 		if("Virologist")
 			return list(access_medical, access_morgue, access_virology)
 		if("Chief Medical Officer")
