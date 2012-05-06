@@ -100,7 +100,16 @@ Class Procs:
 	..()
 
 /obj/machinery/process()//If you dont use process or power why are you here
-//	machines.Remove(src)Not going to do this till I test it a bit more
+
+	/*
+	Big note: if do not call ..() in any machinery subtype process() call or it will
+	be removed from the list of machines to iterate. It is, however, okay to call ..()
+	if the machine has a parent process() call. For instance, machinery/atmosphereics has a
+	root process() call, so things like cryocells can call ..() and not worry about
+	it getting removed from machines.
+	*/
+
+	machines.Remove(src) // uncommented by Doohl
 	return
 
 /obj/machinery/emp_act(severity)

@@ -35,7 +35,7 @@
 				winset(editingcode, "tcscode", "is-disabled=false")
 
 			// If the player's not manning the keyboard anymore, adjust everything
-			if(!(editingcode in range(1, src)) || editingcode.machine != src)
+			if( (!(editingcode in range(1, src)) && !issilicon(editingcode)) || (editingcode.machine != src && !issilicon(editingcode)))
 				if(editingcode)
 					winshow(editingcode, "Telecomms IDE", 0) // hide the window!
 				editingcode = null
@@ -169,6 +169,7 @@
 						editingcode = usr
 						winshow(editingcode, "Telecomms IDE", 1) // show the IDE
 						winset(editingcode, "tcscode", "is-disabled=false")
+						winset(editingcode, "tcscode", "text=\"\"")
 						var/showcode = dd_replacetext(storedcode, "\\\"", "\\\\\"")
 						showcode = dd_replacetext(storedcode, "\"", "\\\"")
 						winset(editingcode, "tcscode", "text=\"[showcode]\"")
@@ -189,7 +190,7 @@
 
 			var/newnet = input(usr, "Which network do you want to view?", "Comm Monitor", network) as null|text
 
-			if(newnet && usr in range(1, src))
+			if(newnet && ((usr in range(1, src) || issilicon(usr))))
 				if(length(newnet) > 15)
 					temp = "<font color = #D70B00>- FAILED: NETWORK TAG STRING TOO LENGHTLY -</font color>"
 
@@ -211,7 +212,7 @@
 					user << "\blue The broken glass falls out."
 					var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 					new /obj/item/weapon/shard( src.loc )
-					var/obj/item/weapon/circuitboard/comm_server/M = new /obj/item/weapon/circuitboard/comm_server( A )
+					var/obj/item/weapon/circuitboard/comm_traffic/M = new /obj/item/weapon/circuitboard/comm_traffic( A )
 					for (var/obj/C in src)
 						C.loc = src.loc
 					A.circuit = M
@@ -222,7 +223,7 @@
 				else
 					user << "\blue You disconnect the monitor."
 					var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-					var/obj/item/weapon/circuitboard/comm_server/M = new /obj/item/weapon/circuitboard/comm_server( A )
+					var/obj/item/weapon/circuitboard/comm_traffic/M = new /obj/item/weapon/circuitboard/comm_traffic( A )
 					for (var/obj/C in src)
 						C.loc = src.loc
 					A.circuit = M

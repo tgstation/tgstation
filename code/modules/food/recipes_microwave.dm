@@ -996,6 +996,16 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/mysterysoup
 
+/datum/recipe/pumpkinpie
+	reagents = list("milk" = 5, "sugar" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin,
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pumpkinpie
+
+
 //////////////////////////////////////////
 // bs12 food port stuff
 //////////////////////////////////////////

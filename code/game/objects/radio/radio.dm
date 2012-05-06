@@ -129,11 +129,12 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		if(!src.loc)
 			on = 0
-		var/area/A = get_area(src)
-		if(!A || !isarea(A) || !A.master)
-			on = 0
 		else
-			on = A.master.powered(EQUIP) // set "on" to the power status
+			var/area/A = src.loc.loc
+			if(!A || !isarea(A) || !A.master)
+				on = 0
+			else
+				on = A.master.powered(EQUIP) // set "on" to the power status
 
 		if(!on)
 			icon_state = "intercom-p"
@@ -255,6 +256,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/talk_into(mob/M as mob, message, channel)
 
 	if(!on) return // the device has to be on
+/*  Fix for permacell radios, but kinda eh about actually fixing them.
+	if(!(src.wires & WIRE_TRANSMIT)) // The device has to have all its wires and shit intact
+		return
+*/
 
 	if(GLOBAL_RADIO_TYPE == 1) // NEW RADIO SYSTEMS: By Doohl
 

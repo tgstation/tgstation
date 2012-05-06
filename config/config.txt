@@ -78,6 +78,12 @@ TRAITOR_SCALING
 ## If security is prohibited from being most antagonists
 #PROTECT_ROLES_FROM_ANTAGONIST
 
+## If the auto-tensioner is active by default.  It creates more tratiors/other antagonists if it consideers the round slowing down.
+#TENSIONER_ACTIVE
+
+## If metadata is supported
+# ALLOW_METADATA
+
 ## allow players to initiate a restart vote
 ALLOW_VOTE_RESTART
 
@@ -101,7 +107,7 @@ ALLOW_AI
 
 
 ## disable abandon mob
-NORESPAWN
+# NORESPAWN
 
 ## disables calling del(src) on newmobs if they logout before spawnin in
 # DONT_DEL_NEWMOB

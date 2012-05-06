@@ -22,69 +22,12 @@
 	var/blocked = 0 //Player cannot attack/heal while set
 
 
-/obj/machinery/computer/aistatus
-	name = "AI Status Panel"
-	desc = "This shows the status of the AI."
-	icon = 'mainframe.dmi'
-	icon_state = "left"
-//	brightnessred = 0
-//	brightnessgreen = 2
-//	brightnessblue = 0
-
-/obj/machinery/computer/aistatus/attack_hand(mob/user as mob)
-	if(stat & NOPOWER)
-		user << "\red The status panel has no power!"
-		return
-	if(stat & BROKEN)
-		user << "\red The status panel is broken!"
-		return
-	if(!issilicon(user))
-		user << "\red You don't understand any of this!"
-	else
-		user << "\blue You know all of this already, why are you messing with it?"
-	return
-
-/obj/machinery/computer/aiupload
-	name = "AI Upload"
-	desc = "Used to upload laws to the AI."
-	icon_state = "command"
-	circuit = "/obj/item/weapon/circuitboard/aiupload"
-	var/mob/living/silicon/ai/current = null
-	var/opened = 0
-
-/obj/machinery/computer/aiupload/mainframe
-	name = "AI Mainframe Upload"
-	icon = 'mainframe.dmi'
-	icon_state = "aimainframe"
-
-/obj/machinery/computer/borgupload
-	name = "Cyborg Upload"
-	desc = "Used to upload laws to Cyborgs."
-	icon_state = "command"
-	circuit = "/obj/item/weapon/circuitboard/borgupload"
-	var/mob/living/silicon/robot/current = null
-
-/obj/machinery/computer/borgupload/mainframe
-	name = "Borg Mainframe Upload"
-	icon = 'mainframe.dmi'
-	icon_state = "aimainframe"
-
-
 /obj/machinery/computer/station_alert
 	name = "Station Alert Computer"
 	desc = "Used to access the station's automated alert system."
 	icon_state = "alert:0"
 	circuit = "/obj/item/weapon/circuitboard/stationalert"
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
-
-
-/obj/machinery/computer/atmos_alert
-	name = "Atmospheric Alert Computer"
-	desc = "Used to access the station's atmospheric sensors."
-	icon_state = "alert:0"
-	var/list/priority_alarms = list()
-	var/list/minor_alarms = list()
-	var/receive_frequency = 1437
 
 
 /obj/machinery/computer/atmosphere
@@ -126,57 +69,6 @@
 	var/h_r = 245.0
 	var/h_g = 245.0
 	var/h_b = 245.0
-
-
-/obj/machinery/computer/med_data
-	name = "Medical Records"
-	desc = "This can be used to check medical records."
-	icon_state = "medcomp"
-	req_access = list(access_medical)
-	circuit = "/obj/item/weapon/circuitboard/med_data"
-	var/obj/item/weapon/card/id/scan = null
-	var/obj/item/weapon/disk/records/disk = null
-	var/authenticated = null
-	var/rank = null
-	var/screen = null
-	var/datum/data/record/active1 = null
-	var/datum/data/record/active2 = null
-	var/a_id = null
-	var/temp = null
-	var/printing = null
-	var/list/Perp
-	var/tempname = null
-
-
-/obj/machinery/computer/med_data/laptop
-	name = "Medical Laptop"
-	desc = "Cheap Nanotrasen Laptop."
-	icon_state = "medlaptop"
-
-
-/obj/machinery/computer/pod
-	name = "Pod Launch Control"
-	desc = "A control for launching pods."
-	icon_state = "computer_generic"
-	var/id = 1.0
-	var/obj/machinery/mass_driver/connected = null
-	var/timing = 0.0
-	var/time = 30.0
-
-
-/obj/machinery/computer/pod/old
-	icon_state = "old"
-	name = "DoorMex Control Computer"
-
-
-/obj/machinery/computer/pod/old/syndicate
-	name = "ProComp Executive IIc"
-	desc = "The Syndicate operate on a tight budget. Operates external airlocks."
-
-
-/obj/machinery/computer/pod/old/swf
-	name = "Magix System IV"
-	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorceror's Edition"
 
 
 /obj/machinery/computer/secure_data
@@ -289,23 +181,6 @@
 	active_power_usage = 500
 	circuit = "/obj/item/weapon/circuitboard/crew"
 	var/list/tracked =	list(  )
-
-
-/obj/machinery/computer/robotics
-	name = "Robotics Control"
-	desc = "Used to remotely lockdown or detonate linked Cyborgs."
-	icon = 'computer.dmi'
-	icon_state = "robot"
-	req_access = list(access_robotics)
-	circuit = "/obj/item/weapon/circuitboard/robotics"
-
-	var/id = 0.0
-	var/temp = null
-	var/status = 0
-	var/timeleft = 60
-	var/stop = 0.0
-	var/screen = 0 // 0 - Main Menu, 1 - Cyborg Status, 2 - Kill 'em All! -- In text
-
 
 /*/obj/machinery/computer/scan_consolenew    //Coming Soon, I highly doubt this but Ill leave it here anyways
 	name = "DNA Modifier Access Console"

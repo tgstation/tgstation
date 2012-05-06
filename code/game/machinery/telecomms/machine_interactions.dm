@@ -90,19 +90,25 @@
 						del(src)
 
 
+	attack_ai(var/mob/user as mob)
+		attack_hand(user)
+
 	attack_hand(var/mob/user as mob)
 
-		// You need a multitool to use this.
-		if(user.equipped())
-			if(!istype(user.equipped(), /obj/item/device/multitool))
+		// You need a multitool to use this, or be silicon
+		if(!issilicon(user))
+			if(user.equipped())
+				if(!istype(user.equipped(), /obj/item/device/multitool))
+					return
+			else
 				return
-		else
-			return
 
 		if(stat & (BROKEN|NOPOWER) || !on)
 			return
 
-		var/obj/item/device/multitool/P = user.equipped()
+		var/obj/item/device/multitool/P = null
+		if(!issilicon(user))
+			P = user.equipped()
 
 		user.machine = src
 		var/dat
@@ -138,10 +144,12 @@
 
 		dat += "<br>  <a href='?src=\ref[src];input=freq'>\[Add Filter\]</a>"
 		dat += "<hr>"
-		if(P.buffer)
-			dat += "<br><br>MULTITOOL BUFFER: [P.buffer] ([P.buffer.id]) <a href='?src=\ref[src];link=1'>\[Link\]</a> <a href='?src=\ref[src];flush=1'>\[Flush\]"
-		else
-			dat += "<br><br>MULTITOOL BUFFER: <a href='?src=\ref[src];buffer=1'>\[Add Machine\]</a>"
+
+		if(P)
+			if(P.buffer)
+				dat += "<br><br>MULTITOOL BUFFER: [P.buffer] ([P.buffer.id]) <a href='?src=\ref[src];link=1'>\[Link\]</a> <a href='?src=\ref[src];flush=1'>\[Flush\]"
+			else
+				dat += "<br><br>MULTITOOL BUFFER: <a href='?src=\ref[src];buffer=1'>\[Add Machine\]</a>"
 
 		dat += "</font>"
 		temp = ""
@@ -150,16 +158,19 @@
 
 	Topic(href, href_list)
 
-		if(usr.equipped())
-			if(!istype(usr.equipped(), /obj/item/device/multitool))
+		if(!issilicon(usr))
+			if(usr.equipped())
+				if(!istype(usr.equipped(), /obj/item/device/multitool))
+					return
+			else
 				return
-		else
-			return
 
 		if(stat & (BROKEN|NOPOWER) || !on)
 			return
 
-		var/obj/item/device/multitool/P = usr.equipped()
+		var/obj/item/device/multitool/P = null
+		if(!issilicon(usr))
+			P = usr.equipped()
 
 		if(href_list["input"])
 			switch(href_list["input"])
@@ -205,27 +216,30 @@
 
 		if(href_list["unlink"])
 
-			var/obj/machinery/telecomms/T = links[text2num(href_list["unlink"])]
-			temp = "<font color = #666633>-% Removed \ref[T] [T.name] from linked entities. %-</font color>"
+			if(text2num(href_list["unlink"]) <= length(links))
+				var/obj/machinery/telecomms/T = links[text2num(href_list["unlink"])]
+				temp = "<font color = #666633>-% Removed \ref[T] [T.name] from linked entities. %-</font color>"
 
-			// Remove link entries from both T and src.
-			if(src in T.links)
-				T.links.Remove(src)
-			links.Remove(T)
+				// Remove link entries from both T and src.
+				if(src in T.links)
+					T.links.Remove(src)
+				links.Remove(T)
 
 		if(href_list["link"])
 
-			if(P.buffer)
-				if(!(src in P.buffer.links))
-					P.buffer.links.Add(src)
+			if(P)
 
-				if(!(P.buffer in src.links))
-					src.links.Add(P.buffer)
+				if(P.buffer)
+					if(!(src in P.buffer.links))
+						P.buffer.links.Add(src)
 
-				temp = "<font color = #666633>-% Successfully linked with \ref[P.buffer] [P.buffer.name] %-</font color>"
+					if(!(P.buffer in src.links))
+						src.links.Add(P.buffer)
 
-			else
-				temp = "<font color = #666633>-% Unable to acquire buffer %-</font color>"
+					temp = "<font color = #666633>-% Successfully linked with \ref[P.buffer] [P.buffer.name] %-</font color>"
+
+				else
+					temp = "<font color = #666633>-% Unable to acquire buffer %-</font color>"
 
 		if(href_list["buffer"])
 
@@ -243,4 +257,5 @@
 		src.add_fingerprint(usr)
 
 		updateUsrDialog()
+
 

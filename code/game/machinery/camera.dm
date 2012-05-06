@@ -66,6 +66,8 @@
 			continue
 		else if (M == usr)
 			continue
+		if(M.digitalcamo)
+			continue
 		var/turf/temp_turf = get_turf(M)
 		if(temp_turf.z != 1 && temp_turf.z != 5) //Not on mining or the station.
 			continue
@@ -118,6 +120,11 @@
 		 			usr << "Follow camera mode terminated."
 					usr:cameraFollow = null
 					return
+				if(target.digitalcamo)
+					usr << "Follow camera mode terminated."
+					usr:cameraFollow = null
+					return
+
 			else if(istype(target.loc,/obj/effect/dummy))
 				usr << "Follow camera mode ended."
 				usr:cameraFollow = null

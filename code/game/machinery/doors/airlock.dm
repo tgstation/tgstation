@@ -264,14 +264,14 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		..()
 		if (src.closeOtherId != null)
 			spawn (5)
-				for (var/obj/machinery/door/airlock/A in machines)
+				for (var/obj/machinery/door/airlock/A in world)
 					if (A.closeOtherId == src.closeOtherId && A != src)
 						src.closeOther = A
 						break
 
 
 	open()
-		if (src.welded || src.locked || (!src.arePowerSystemsOn()) || (stat & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+		if(src.welded || src.locked || (!src.arePowerSystemsOn()) || (stat & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR) || src.operating)
 			return 0
 		use_power(50)
 		if(istype(src, /obj/machinery/door/airlock/glass))
@@ -284,7 +284,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 
 	close()
-		if (src.welded || src.locked || (!src.arePowerSystemsOn()) || (stat & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+		if(src.welded || src.locked || (!src.arePowerSystemsOn()) || (stat & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR) || src.operating)
 			return
 		..()
 		use_power(50)

@@ -201,6 +201,7 @@
 	//clumsy = 16
 	//obese = 32
 	//husk = 64
+	var/tkdisable = 0//For remote viewing and stuff. Disables TK.
 
 	var/voice_name = "unidentifiable voice"
 	var/voice_message = null // When you are not understood by others (replaced with just screeches, hisses, chimpers etc.)
@@ -282,64 +283,10 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
 
-
 	var/list/organs = list(  )	//List of organs.
 	var/list/organs2 = list()
 //Singularity wants you!
 	var/grav_delay = 0
 	var/being_strangled = 0
 
-
-
-// ++++ROCKDTBEN++++ MOB PROCS
-
-/mob/proc/getBruteLoss()
-	return bruteloss
-
-/mob/proc/adjustBruteLoss(var/amount)
-	bruteloss = max(bruteloss + amount, 0)
-
-/mob/proc/getOxyLoss()
-	return oxyloss
-
-/mob/proc/adjustOxyLoss(var/amount)
-	oxyloss = max(oxyloss + amount, 0)
-
-/mob/proc/setOxyLoss(var/amount)
-	oxyloss = amount
-
-/mob/proc/getToxLoss()
-	return toxloss
-
-/mob/proc/adjustToxLoss(var/amount)
-	toxloss = max(toxloss + amount, 0)
-
-/mob/proc/setToxLoss(var/amount)
-	toxloss = amount
-
-/mob/proc/getFireLoss()
-	return fireloss
-
-/mob/proc/adjustFireLoss(var/amount)
-	fireloss = max(fireloss + amount, 0)
-
-/mob/proc/getCloneLoss()
-	return cloneloss
-
-/mob/proc/adjustCloneLoss(var/amount)
-	cloneloss = max(cloneloss + amount, 0)
-
-/mob/proc/setCloneLoss(var/amount)
-	cloneloss = amount
-
-/mob/proc/getBrainLoss()
-	return brainloss
-
-/mob/proc/adjustBrainLoss(var/amount)
-	brainloss = max(brainloss + amount, 0)
-
-/mob/proc/setBrainLoss(var/amount)
-	brainloss = amount
-
-// ++++ROCKDTBEN++++ MOB PROCS //END
-
+	var/datum/preferences/storedpreferences = null

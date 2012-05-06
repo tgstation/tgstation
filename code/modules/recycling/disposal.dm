@@ -511,7 +511,7 @@
 						for (var/mob/V in viewers(usr))
 							V.show_message("[user] dunks [GM.name] into the toilet!", 3)
 						if(do_after(user, 30))
-							if(G.state>1&&!GM.internal)
+							if(G && G.state>1 && !GM.internal)
 								GM.oxyloss += 5
 
 			else if(I.w_class < 4)
@@ -595,12 +595,27 @@
 	var/count = 1000	//*** can travel 1000 steps before going to the mail room (in case of loops)
 	var/destinationTag = null // changes if contains a delivery container
 	var/tomail = 0 //changes if contains wrapped package
+	var/hasmob = 0 //If it contains a mob
 
 
 	// initialize a holder from the contents of a disposal unit
 	proc/init(var/obj/machinery/disposal/D)
 		if(!istype(D, /obj/machinery/disposal/toilet))//So it does not drain gas from a toilet which does not function on it.
 			gas = D.air_contents// transfer gas resv. into holder object
+
+		//Check for any living mobs trigger hasmob.
+		//hasmob effects whether the package goes to cargo or its tagged destination.
+		for(var/mob/living/M in D)
+			if(M && M.stat != 2)
+				hasmob = 1
+
+		//Checks 1 contents level deep. This means that players can be sent through disposals...
+		//...but it should require a second person to open the package. (i.e. person inside a wrapped locker)
+		for(var/obj/O in D)
+			if(O.contents)
+				for(var/mob/living/M in O.contents)
+					if(M && M.stat != 2)
+						hasmob = 1
 
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs
@@ -611,10 +626,10 @@
 				if(H.mutations & FAT)		// is a human and fat?
 					has_fat_guy = 1			// set flag on holder
 			*/
-			if(istype(AM, /obj/structure/bigDelivery))
+			if(istype(AM, /obj/structure/bigDelivery))// && !hasmob) Already have a check for this.
 				var/obj/structure/bigDelivery/T = AM
 				src.destinationTag = T.sortTag
-			else if(istype(AM, /obj/item/smallDelivery))
+			if(istype(AM, /obj/item/smallDelivery))// && !hasmob) And that. DMTG
 				var/obj/item/smallDelivery/T = AM
 				src.destinationTag = T.sortTag
 			else if (!src.destinationTag)

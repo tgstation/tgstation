@@ -448,7 +448,7 @@ proc
 
 				currentLayer = current:layer
 				if(currentLayer<0) // Special case for FLY_LAYER
-					ASSERT(currentLayer > -1000)
+					if(currentLayer <= -1000) return 0
 					if(pSet == 0) // Underlay
 						currentLayer = A.layer+currentLayer/1000
 					else // Overlay

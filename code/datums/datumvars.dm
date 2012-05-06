@@ -239,9 +239,11 @@ client
 			body += "<option value='byond://?src=\ref[src];ninja=\ref[D]'>Make Space Ninja</option>"
 			body += "<option value='byond://?src=\ref[src];godmode=\ref[D]'>Toggle Godmode</option>"
 			body += "<option value='byond://?src=\ref[src];build_mode=\ref[D]'>Toggle Build Mode</option>"
+//			body += "<option value='byond://?src=\ref[src];direct_control=\ref[D]'>Assume Direct Control</option>"
 			if(ishuman(D))
 				body += "<option value>---</option>"
 				body += "<option value='byond://?src=\ref[src];makeai=\ref[D]'>Make AI</option>"
+				body += "<option value='byond://?src=\ref[src];makeaisilent=\ref[D]'>Make AI (Silently)</option>"
 				body += "<option value='byond://?src=\ref[src];makerobot=\ref[D]'>Make cyborg</option>"
 				body += "<option value='byond://?src=\ref[src];makemonkey=\ref[D]'>Make monkey</option>"
 				body += "<option value='byond://?src=\ref[src];makealien=\ref[D]'>Make alien</option>"
@@ -496,6 +498,20 @@ client
 			togglebuildmode(MOB)
 			href_list["datumrefresh"] = href_list["build_mode"]
 
+/*		else if (href_list["direct_control"])
+			if(!href_list["direct_control"])
+				return
+			var/mob/MOB = locate(href_list["direct_control"])
+			if(!MOB)
+				return
+			if(!ismob(MOB))
+				return
+			if(!src.holder)
+				return
+
+			if(usr.client)
+				usr.client.cmd_assume_direct_control(MOB)*/
+
 		else if (href_list["delall"])
 			if(!href_list["delall"])
 				return
@@ -670,6 +686,23 @@ client
 				usr << "Mob doesn't exist anymore"
 				return
 			holder.Topic(href, list("makeai"=href_list["makeai"]))
+		else if (href_list["makeaisilent"])
+			var/mob/M = locate(href_list["makeaisilent"])
+			if(!M)
+				return
+			if(!ishuman(M))
+				usr << "This can only be done to objects of type /mob/living/carbon/human"
+				return
+			if(!src.holder)
+				usr << "You are not an administrator."
+				return
+			var/action_type = alert("Confirm mob type change?",,"Transform","Cancel")
+			if(!action_type || action_type == "Cancel")
+				return
+			if(!M)
+				usr << "Mob doesn't exist anymore"
+				return
+			holder.Topic(href, list("makeaisilent"=href_list["makeaisilent"]))
 		else if (href_list["adjustDamage"] && href_list["mobToDamage"])
 			var/mob/M = locate(href_list["mobToDamage"])
 			var/Text = locate(href_list["adjustDamage"])

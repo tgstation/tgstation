@@ -366,6 +366,7 @@
 					"/obj/item/weapon/plantbgone",
 					"/obj/item/weapon/plantbgone",
 					"/obj/item/weapon/plantbgone",
+					"/obj/item/weapon/hatchet",
 					"/obj/item/weapon/minihoe",
 					"/obj/item/device/analyzer/plant_analyzer",
 					"/obj/item/clothing/gloves/botanic_leather",

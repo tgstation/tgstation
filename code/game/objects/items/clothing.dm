@@ -254,21 +254,22 @@ THERMAL GLASSES
 /obj/item/clothing/head/helmet/welding/verb/toggle()
 	set category = "Object"
 	set name = "Adjust welding mask"
-	if(src.up)
-		src.up = !src.up
-		src.see_face = !src.see_face
-		src.flags |= HEADCOVERSEYES
-		flags_inv |= HIDEMASK|HIDEEARS|HIDEEYES
-		icon_state = "welding"
-		usr << "You flip the mask down to protect your eyes."
-	else
-		src.up = !src.up
-		src.see_face = !src.see_face
-		src.flags &= ~HEADCOVERSEYES
-		flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES)
-		icon_state = "weldingup"
-		usr << "You push the mask up out of your face."
-	usr.update_clothing()
+	if(usr.canmove && usr.stat != 2 && !usr.restrained())
+		if(src.up)
+			src.up = !src.up
+			src.see_face = !src.see_face
+			src.flags |= HEADCOVERSEYES
+			flags_inv |= HIDEMASK|HIDEEARS|HIDEEYES
+			icon_state = "welding"
+			usr << "You flip the mask down to protect your eyes."
+		else
+			src.up = !src.up
+			src.see_face = !src.see_face
+			src.flags &= ~HEADCOVERSEYES
+			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES)
+			icon_state = "weldingup"
+			usr << "You push the mask up out of your face."
+		usr.update_clothing()
 
 /obj/item/clothing/head/cargosoft/dropped()
 	src.icon_state = "cargosoft"
@@ -383,13 +384,18 @@ THERMAL GLASSES
 	else if(src.icon_state == "labcoat_pink")
 		src.icon_state = "labcoat_pink_open"
 		usr << "You unbutton the labcoat."
-	else if(src.icon_state == "labcoat_sleeve_open")
-		src.icon_state = "labcoat_sleeve"
+	else if(src.icon_state == "labcoat_red_open")
+		src.icon_state = "labcoat_red"
 		usr << "You button up the labcoat."
-	else if(src.icon_state == "labcoat_sleeve")
-		src.icon_state = "labcoat_sleeve_open"
+	else if(src.icon_state == "labcoat_red")
+		src.icon_state = "labcoat_red_open"
 		usr << "You unbutton the labcoat."
-
+	else if(src.icon_state == "labcoat_cdc_open")
+		src.icon_state = "labcoat_cdc"
+		usr << "You button up the labcoat."
+	else if(src.icon_state == "labcoat_cdc")
+		src.icon_state = "labcoat_cdc_open"
+		usr << "You unbutton the labcoat."
 	else
 		usr << "Sorry! The suit you're wearing doesn't have buttons!"
 	usr.update_clothing()

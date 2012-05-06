@@ -1,7 +1,7 @@
 //copy pastad freezer
 //remove this shit when someonething better is done
 /obj/machinery/atmospherics/unary/heat_reservoir/heater
-	name = "Heat Regulatorer"
+	name = "Heat Regulator"
 	icon = 'Cryogenic2.dmi'
 	icon_state = "freezer_0"
 	density = 1

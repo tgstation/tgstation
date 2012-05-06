@@ -16,7 +16,6 @@
 		build_icon()
 
 	process()
-		..()
 		if(!(NOPOWER|BROKEN))
 			return
 
@@ -89,10 +88,14 @@
 							if(istype(O,/obj/item/device/flash))
 								if(O:broken)
 									O:broken = 0
+									O:times_used = 0
 									O:icon_state = "flash"
 							if(istype(O,/obj/item/weapon/gun/energy/taser/cyborg))
 								if(O:power_supply.charge < O:power_supply.maxcharge)
-									O:power_supply.give(100)
+									O:power_supply.give(O:charge_cost)
+									O:update_icon()
+								else
+									O:charge_tick = 0
 							if(istype(O,/obj/item/weapon/melee/baton))
 								if(O:charges < 10)
 									O:charges += 1
@@ -136,8 +139,9 @@
 				//Make sure they actually HAVE a cell, now that they can get in while powerless. --NEO
 				return
 			usr.pulling = null
-			usr.client.perspective = EYE_PERSPECTIVE
-			usr.client.eye = src
+			if(usr && usr.client)
+				usr.client.perspective = EYE_PERSPECTIVE
+				usr.client.eye = src
 			usr.loc = src
 			src.occupant = usr
 			/*for(var/obj/O in src)

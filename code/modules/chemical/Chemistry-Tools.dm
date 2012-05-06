@@ -1768,7 +1768,23 @@
 			icon_state = "pill[rand(1,20)]"
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-
+		if (istype(W, /obj/item/weapon/storage/pill_bottle))
+			var/obj/item/weapon/storage/pill_bottle/P = W
+			if (P.mode == 1)
+				for (var/obj/item/weapon/reagent_containers/pill/O in locate(src.x,src.y,src.z))
+					if(P.contents.len < P.storage_slots)
+						O.loc = P
+						P.orient2hud(user)
+					else
+						user << "\blue The pill bottle is full."
+						return
+				user << "\blue You pick up all the pills."
+			else
+				if (P.contents.len < P.storage_slots)
+					loc = P
+					P.orient2hud(user)
+				else
+					user << "\blue The pill bottle is full."
 		return
 	attack_self(mob/user as mob)
 		return
@@ -1870,6 +1886,20 @@
 			user << "You add the sensor to the bucket"
 			del(D)
 			del(src)
+
+/obj/item/weapon/reagent_containers/glass/watercan
+	name = "watering can"
+	desc = "A watering can, for all your watering needs."
+	icon = 'hydroponics.dmi'
+	icon_state = "watercan"
+	item_state = "bucket"
+	m_amt = 200
+	g_amt = 0
+	w_class = 3.0
+	amount_per_transfer_from_this = 20
+	possible_transfer_amounts = list(10,20,30,50,70)
+	volume = 70
+	flags = FPRINT | OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/cantister
 	desc = "It's a canister. Mainly used for transporting fuel."
@@ -2053,7 +2083,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
-	volume = 30
+	volume = 50
 
 	New()
 		..()

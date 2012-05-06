@@ -1,3 +1,24 @@
+/obj/machinery/computer/med_data//TODO:SANITY
+	name = "Medical Records"
+	desc = "This can be used to check medical records."
+	icon_state = "medcomp"
+	req_access = list(access_medical)
+	circuit = "/obj/item/weapon/circuitboard/med_data"
+	var
+		obj/item/weapon/card/id/scan = null
+		obj/item/weapon/disk/records/disk = null
+		authenticated = null
+		rank = null
+		screen = null
+		datum/data/record/active1 = null
+		datum/data/record/active2 = null
+		a_id = null
+		temp = null
+		printing = null
+		list/Perp
+		tempname = null
+
+
 /obj/machinery/computer/med_data/attackby(obj/item/O as obj, user as mob)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
 		usr.drop_item()
@@ -21,7 +42,6 @@
 	if(..())
 		return
 	var/dat
-
 	if (src.temp)
 		dat = text("<TT>[src.temp]</TT><BR><BR><A href='?src=\ref[src];temp=1'>Clear Screen</A>")
 	else
@@ -461,7 +481,7 @@
 				var/counter = 1
 				while(src.active2.fields[text("com_[]", counter)])
 					counter++
-				src.active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [], 2053<BR>[]", src.authenticated, src.rank, time2text(world.realtime, "DDD MMM DD hh:mm:ss"), t1)
+				src.active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [], 2556<BR>[]", src.authenticated, src.rank, time2text(world.realtime, "DDD MMM DD hh:mm:ss"), t1)
 
 			if (href_list["del_c"])
 				if ((istype(src.active2, /datum/data/record) && src.active2.fields[text("com_[]", href_list["del_c"])]))
@@ -540,3 +560,8 @@
 	src.updateUsrDialog()
 	return
 
+
+/obj/machinery/computer/med_data/laptop
+	name = "Medical Laptop"
+	desc = "Cheap Nanotrasen Laptop."
+	icon_state = "medlaptop"

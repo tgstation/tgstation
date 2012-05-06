@@ -1098,8 +1098,7 @@
 			else
 				m_select.screen_loc = null
 
-	var/suit_img	//A bit of kludge to make belts go under coats, but on other suits
-	var/suit_stain
+
 	if (wear_suit)
 		/*if (mutations & FAT && !(wear_suit.flags & ONESIZEFITSALL))
 			src << "\red You burst out of the [wear_suit.name]!"
@@ -1113,7 +1112,7 @@
 				c:layer = initial(c:layer)*/
 		if (istype(wear_suit, /obj/item/clothing/suit))
 			var/t1 = wear_suit.icon_state
-			suit_img = image("icon" = 'suit.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
+			overlays += image("icon" = 'suit.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
 		if (wear_suit)
 			if (wear_suit.blood_DNA)
 				var/icon/stain_icon = null
@@ -1123,7 +1122,7 @@
 					stain_icon = icon('blood.dmi', "coatblood[!lying ? "" : "2"]")
 				else
 					stain_icon = icon('blood.dmi', "suitblood[!lying ? "" : "2"]")
-				suit_stain = image("icon" = stain_icon, "layer" = MOB_LAYER)
+				overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
 			wear_suit.screen_loc = ui_oclothing
 		if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
 			if (handcuffed)
@@ -1137,24 +1136,6 @@
 				hand = 0
 				drop_item()
 				hand = h
-	// Belt
-	var/belt_img	//A bit of kludge to make belts go under coats, but on other suits
-	if (belt)
-		var/t1 = belt.item_state
-		if (!t1)
-			t1 = belt.icon_state
-		belt_img = image("icon" = 'belt.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
-		belt.screen_loc = ui_belt
-
-	//A bit of kludge to make belts go under coats, but on other suits
-	if (istype(wear_suit, /obj/item/clothing/suit/storage/det_suit) || istype(wear_suit, /obj/item/clothing/suit/storage/labcoat))
-		overlays += belt_img
-		overlays += suit_img
-		overlays += suit_stain
-	else
-		overlays += suit_img
-		overlays += suit_stain
-		overlays += belt_img
 
 
 	if (lying)
@@ -1188,6 +1169,13 @@
 			overlays += image("icon" = stain_icon, "layer" = MOB_LAYER)
 		head.screen_loc = ui_head
 
+	// Belt
+	if (belt)
+		var/t1 = belt.item_state
+		if (!t1)
+			t1 = belt.icon_state
+		overlays += image("icon" = 'belt.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
+		belt.screen_loc = ui_belt
 
 	if ((wear_mask && !(wear_mask.see_face)) || (head && !(head.see_face))) // can't see the face
 		if (wear_id)
@@ -2437,7 +2425,7 @@ It can still be worn/put on as normal.
 	var/obj/item/device/pda/pda = wear_id
 	var/obj/item/weapon/card/id/id = wear_id
 	if (istype(pda))
-		if (pda.id)
+		if (pda.id && istype(pda.id, /obj/item/weapon/card/id))
 			. = pda.id.assignment
 		else
 			. = pda.ownjob
@@ -2594,6 +2582,40 @@ It can still be worn/put on as normal.
 		spawn( 0 )
 			O.process()
 			return
+
+	if (href_list["criminal"])
+		if(istype(usr, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = usr
+			if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+				var/perpname = "wot"
+				var/modified = 0
+
+				if(wear_id)
+					if(istype(wear_id,/obj/item/weapon/card/id))
+						perpname = wear_id:registered_name
+					else if(istype(wear_id,/obj/item/device/pda))
+						var/obj/item/device/pda/tempPda = wear_id
+						perpname = tempPda.owner
+				else
+					perpname = src.name
+
+				for (var/datum/data/record/E in data_core.general)
+					if (E.fields["name"] == perpname)
+						for (var/datum/data/record/R in data_core.security)
+							if (R.fields["id"] == E.fields["id"])
+
+								var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Released", "Cancel")
+
+								if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+									if(setcriminal != "Cancel")
+										R.fields["criminal"] = setcriminal
+										modified = 1
+
+										spawn()
+											H.handle_regular_hud_updates()
+
+				if(!modified)
+					usr << "\red Unable to locate a data core entry for this person."
 	..()
 	return
 
@@ -2808,16 +2830,21 @@ It can still be worn/put on as normal.
 		reset_view(0)
 		remoteobserve = null
 		src.verbs -= /mob/living/carbon/human/proc/remoteobserve
+		src.tkdisable = 0
 		return
 
 	if(client.eye != client.mob)
 		reset_view(0)
 		remoteobserve = null
+		src.tkdisable = 0
 		return
 
 	var/list/mob/creatures = list()
 
 	for(var/mob/living/carbon/h in world)
+		var/turf/temp_turf = get_turf(h)
+		if(temp_turf.z != 1 && temp_turf.z != 5) //Not on mining or the station.
+			continue
 		creatures += h
 
 	var/mob/target = input ("Who do you want to project your mind to ?") as mob in creatures
@@ -2825,6 +2852,8 @@ It can still be worn/put on as normal.
 	if (target)
 		reset_view(target)
 		remoteobserve = target
+		src.tkdisable = 1
 	else
 		reset_view(0)
 		remoteobserve = null
+		src.tkdisable = 0

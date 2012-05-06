@@ -111,6 +111,21 @@
 						/obj/item/mecha_parts/mecha_equipment/weapon/honker
 						),
 
+	"Cyborg Upgrade Modules" = list(
+						/obj/item/borg/upgrade/reset,
+						/obj/item/borg/upgrade/restart,
+						/obj/item/borg/upgrade/vtec
+						///obj/item/borg/upgrade/tasercooler
+						///obj/item/borg/upgrade/flashproof
+
+
+						),
+
+
+
+
+
+
 	"Misc"=list(/obj/item/mecha_parts/mecha_tracking)
 	)
 
@@ -127,6 +142,8 @@
 		component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
 		component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
 		RefreshParts()
+
+	//	part_sets["Cyborg Upgrade Modules"] = typesof(/obj/item/borg/upgrade/) - /obj/item/borg/upgrade/  // Eh.  This does it dymaically, but to support having the items referenced otherwhere in the code but not being constructable, going to do it manaully.
 
 		for(var/part_set in part_sets)
 			convert_part_set(part_set)
@@ -198,7 +215,7 @@
 				if(part)
 					parts[i] = part
 				//debug below
-				ASSERT(istype(parts[i],/obj/item))
+				if(!istype(parts[i],/obj/item)) return 0
 		return
 
 
@@ -299,7 +316,7 @@
 		return
 
 	proc/check_resources(var/obj/item/mecha_parts/part)
-		if(istype(part, /obj/item/robot_parts) || istype(part, /obj/item/mecha_parts))
+		if(istype(part, /obj/item/robot_parts) || istype(part, /obj/item/mecha_parts) || istype(part,/obj/item/borg/upgrade))
 			for(var/resource in part.construction_cost)
 				if(resource in src.resources)
 					if(src.resources[resource] < get_resource_cost_w_coeff(part,resource))
@@ -455,7 +472,7 @@
 		if(!operation_allowed(user))
 			return
 		user.machine = src
-		var/turf/exit = get_step(src,EAST)
+		var/turf/exit = get_step(src,SOUTH)
 		if(exit.density)
 			src.visible_message("\icon[src] <b>[src]</b> beeps, \"Error! Part outlet is obstructed\".")
 			return

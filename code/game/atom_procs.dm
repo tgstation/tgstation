@@ -76,12 +76,13 @@
 	if (istype(W, /obj/item/device/detective_scanner))
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O << text("\red [src] has been scanned by [user] with the [W]")
+				O << "\red [src] has been scanned by [user] with the [W]"
 	else
 		if (!( istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) &&!(istype(W, /obj/item/weapon/cleaner)) &&!(istype(W, /obj/item/weapon/chemsprayer)) &&!(istype(W, /obj/item/weapon/pepperspray)) && !(istype(W, /obj/item/weapon/plantbgone)) )
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
-					O << text("\red <B>[] has been hit by [] with []</B>", src, user, W)
+					O << "\red <B>[src] has been hit by [user] with [W]</B>"
+
 	return
 
 /atom/proc/add_hiddenprint(mob/living/M as mob)
@@ -337,7 +338,7 @@
 			else
 				T.icon = initial(icon)
 
-	if(blood_DNA && !blood_DNA.len)
+	if(blood_DNA && istype(blood_DNA, /list) && !blood_DNA.len)
 		del(blood_DNA)
 	if(src.fingerprints && src.fingerprints.len)
 		var/done = 0
@@ -1069,8 +1070,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			src.Topic(nhref, params2list(nhref), src, 1)
 	return
 
-
-/*/atom/proc/get_global_map_pos()
+/*
+/atom/proc/get_global_map_pos()
 	if(!islist(global_map) || isemptylist(global_map)) return
 	var/cur_x = null
 	var/cur_y = null
@@ -1084,8 +1085,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 	if(cur_x && cur_y)
 		return list("x"=cur_x,"y"=cur_y)
 	else
-		return 0	*/
-
+		return 0
+*/ //Don't touch this either. DMTG
 /atom/proc/checkpass(passflag)
 	return pass_flags&passflag
 

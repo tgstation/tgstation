@@ -1,9 +1,9 @@
-spaceman96: Trenna Seber: /obj/item/weapon/pen/multi, /obj/item/clothing/suit/storage/labcoat/pink
+spaceman96: Trenna Seber: /obj/item/weapon/pen/fluff/multi, /obj/item/clothing/suit/storage/labcoat/fluff/pink
 asanadas: Book Berner: /obj/item/clothing/under/chameleon/psyche, /obj/item/clothing/glasses/meson/fluff/book_berner_1
 tastyfish: Cindy Robertson: /obj/item/weapon/wrapping_paper
 eternal248: Maximilian Haynes: /obj/item/weapon/paper/certificate
-searif: Yuki Matsuda: /obj/item/weapon/paper/certificate, /obj/item/clothing/under/jumpsuitdown
-erthilo: Farah Lants: /obj/item/clothing/under/rank/medical_sleeve, /obj/item/clothing/suit/storage/labcoat/red, /obj/item/weapon/storage/backpack/medicalsatchel
+searif: Yuki Matsuda: /obj/item/weapon/paper/certificate, /obj/item/clothing/under/fluff/jumpsuitdown
+erthilo: Farah Lants: /obj/item/clothing/under/rank/medical/fluff/short, /obj/item/clothing/suit/storage/labcoat/fluff/red
 compactninja: Ysyr Rylias: /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 tzefa: Wes Solari: /obj/item/fluff/wes_solari_1
 misterfox: Rashid Siraj: /obj/item/weapon/storage/bible/tajaran
@@ -12,5 +12,13 @@ fniff: Sarah Calvera: /obj/item/fluff/sarah_calvera_1
 fniff: Angleo Wilkerson: /obj/item/fluff/angelo_wilkerson_1
 gvazdas: Sarah Carbrokes: /obj/item/fluff/sarah_carbrokes_1
 serithi: Serithi Artalis: /obj/item/clothing/glasses/fluff/serithi_artalis_1
-deusdactyl: Greg Anderson: /obj/item/clothing/head/fluff/greg_anderson_1
+deusdactyl: Greg Anderson: /obj/item/clothing/head/helmet/hardhat/fluff/greg_anderson_1
 whitellama: Ethan Way: /obj/item/fluff/ethan_way_1
+morrinn: Maye Day: /obj/item/weapon/storage/fluff/maye_daye_1
+lexusjjss: Lexus Langg: /obj/item/weapon/clipboard/fluff/smallnote
+lexusjjss: Zachary Tomlinson: /obj/item/weapon/clipboard/fluff/smallnote
+orangebottle: Lillian Levett: /obj/item/weapon/pen/fluff/fancypen
+orangebottle: Lilliana Reade: /obj/item/weapon/pen/fluff/fancypen
+deusdactyl: Roger Wiles: /obj/item/clothing/under/rank/virologist/fluff/cdc_jumpsuit, /obj/item/clothing/suit/storage/labcoat/fluff/cdc_labcoat
+desiderium: Momiji Inubashiri: /obj/item/clothing/under/fluff/olddressuniform
+leonheart11:  Johann Erzatz: /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/johann_erzatz_1

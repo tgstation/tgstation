@@ -583,6 +583,10 @@
 	var/over_jumpsuit = 1 // If set to 0, it won't display on top of the mob's jumpsuit
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
+	var/blood_type = "\[UNSET\]"
+	var/dna_hash = "\[UNSET\]"
+	var/fingerprint_hash = "\[UNSET\]"
+
 /obj/item/weapon/card/id/silver
 	name = "identification card"
 	desc = "A silver card which shows honour and dedication."
@@ -1014,10 +1018,6 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	desc = "It's a normal red ink pen."
 	icon_state = "pen_red"
 	text_color = "#FF0000"
-
-/obj/item/weapon/pen/multi
-	desc = "It's a cool looking pen. Lots of colors!"
-	name = "multicolor pen"
 
 /obj/item/weapon/pen/feather
 	name = "feathery pen"

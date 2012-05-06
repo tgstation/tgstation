@@ -19,6 +19,8 @@ var/const
 
 	var/strength = 5
 
+	var/attached = 0
+
 	attack_paw(user as mob) //can be picked up by aliens
 		if(isalien(user))
 			attack_hand(user)
@@ -86,6 +88,13 @@ var/const
 	proc/Attach(M as mob)
 		if(!isliving(M) || isalien(M))
 			return
+
+		if(attached)
+			return
+		else
+			attached++
+			spawn(MAX_IMPREGNATION_TIME)
+			attached = 0
 
 		var/mob/living/L = M //just so I don't need to use :
 
@@ -180,7 +189,8 @@ var/const
 		for(var/mob/living/carbon/alien/alien in world)
 			var/image/activeIndicator = image('alien.dmi', loc = src, icon_state = "facehugger_active")
 			activeIndicator.override = 1
-			alien.client.images += activeIndicator
+			if(alien && alien.client)
+				alien.client.images += activeIndicator
 
 		spawn(rand(MIN_ACTIVE_TIME,MAX_ACTIVE_TIME))
 			GoIdle()
@@ -220,3 +230,41 @@ var/const
 
 		return
 
+/obj/item/clothing/mask/facehugger/angry
+	stat = CONSCIOUS
+
+/obj/item/clothing/mask/facehugger/angry/HasProximity(atom/movable/AM as mob|obj)
+	if(istype(AM , /mob/living/))
+		Attach(AM)
+
+
+/*
+/obj/item/clothing/mask/facehugger/angry/New()
+	processing_objects.Add(src)
+
+/obj/item/clothing/mask/facehugger/angry/process()
+	if(!src || src.stat == (DEAD))
+		return
+
+	for(var/mob/living/carbon/C in range(1,src))
+		Attach(C)
+		return
+
+	for(var/mob/living/carbon/C in range(5,src))
+		if(isInSight(C,src))
+			step_to(src,C,0)
+			spawn(5)
+				if(C in range(1,src))
+					Attach(C)
+			return
+
+	step_rand(src)
+
+	return
+
+/obj/item/clothing/mask/facehugger/angry/Attach(var/mob/M as mob)
+
+	..(M)
+	processing_objects.Remove(src)
+
+*/

@@ -510,14 +510,14 @@
 						last_text = world.time
 
 
-//						var/AnsweringMS = 0
+						var/AnsweringMS = 0
 						for (var/obj/machinery/message_server/MS in world)
 							MS.send_pda_message("[P.owner]","[owner]","[t]")
-//							if(MS.active)
-//								AnsweringMS++
+							if(MS.active)
+								AnsweringMS++
 
-//						if(!AnsweringMS)
-//							return
+						if(!AnsweringMS)
+							return
 
 						tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
 						P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a>:</b></i><br>[t]<br>"
@@ -544,7 +544,7 @@
 					// pAI Message
 					else
 
-/*						var/AnsweringMS = 0
+						var/AnsweringMS = 0
 						for (var/obj/machinery/message_server/MS in world)
 							MS.send_pda_message("[P]","[src]","[t]")
 							if(MS.active)
@@ -552,7 +552,7 @@
 
 						if(!AnsweringMS)
 							return
-*/
+
 
 						tnote += "<i><b>&rarr; To [P]:</b></i><br>[t]<br>"
 						P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];soft=pdamessage;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
