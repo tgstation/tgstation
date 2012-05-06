@@ -670,6 +670,7 @@
 #include "code\game\objects\closets\secure\cargo.dm"
 #include "code\game\objects\closets\secure\civilian.dm"
 #include "code\game\objects\closets\secure\engineering.dm"
+#include "code\game\objects\closets\secure\hydroponics.dm"
 #include "code\game\objects\closets\secure\medical.dm"
 #include "code\game\objects\closets\secure\personal.dm"
 #include "code\game\objects\closets\secure\research.dm"
