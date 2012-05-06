@@ -75,6 +75,14 @@
 	item_state = "olddressuniform"
 	color = "olddressuniform"
 
+/obj/item/clothing/suit/storage/det_suit/fluff/graycoat
+	name = "gray coat"
+	desc = "Old, worn out coat. It's seen better days."
+	icon = 'custom_items.dmi'
+	icon_state = "graycoat"
+	item_state = "graycoat"
+	color = "graycoat"
+
 //////////// Useable Items
 
 /obj/item/weapon/pen/fluff/multi
@@ -116,6 +124,28 @@
 	icon_state = "johann_erzatz_1"
 	volume = 50
 
+/obj/item/weapon/lighter/zippo/fluff/li_tsun_1
+	name = "blue zippo lighter"
+	desc = "A zippo lighter made of some blue metal."
+	icon = 'custom_items.dmi'
+	icon_state = "bluezippo"
+	icon_on = "bluezippoon"
+	icon_off = "bluezippo"
+
+/obj/item/weapon/fluff/cado_keppel_1
+	name = "purple comb"
+	desc = "A pristine purple comb made from flexible plastic. It has a small K etched into its side."
+	w_class = 1.0
+	icon = 'custom_items.dmi'
+	icon_state = "purplecomb"
+	item_state = "purplecomb"
+
+	attack_self(mob/user)
+		if(user.r_hand == src || user.l_hand == src)
+			for(var/mob/O in viewers(user, null))
+				O.show_message(text("\red [] uses their [] to comb their hair with incredible style and sophistication. What a guy.", user, src), 1)
+		return
+
 //////////// Misc Items
 
 /obj/item/fluff/wes_solari_1
@@ -142,3 +172,8 @@
 	name = "old ID"
 	desc = "A scratched and worn identification card; it appears too damaged to inferface with any technology. You can almost make out \"Tom Cabinet\" in the smeared ink."
 	icon_state = "ethan_way_1"
+
+/obj/item/fluff/val_mcneil_1
+	name = "rosary pendant"
+	desc = "A cross on a ring of beads, has McNeil etched onto the back."
+	icon_state = "val_mcneil_1"
