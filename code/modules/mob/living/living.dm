@@ -157,6 +157,9 @@
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
+	src.radiation = 0
+	src.nutrition = 400
+	src.bodytemperature = 310
 	//src.health = 100
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src

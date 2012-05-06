@@ -11,6 +11,8 @@
 
 
 //TODO: make teleporting to places trigger Entered() ~Carn
+// Done.
+
 /area/turret_protected/Entered(O)
 	..()
 	if( master && master != src )
@@ -83,6 +85,7 @@
 	anchored = 1
 	layer = 3.5
 	density = 0
+	var/obj/machinery/turret/host = null
 
 /obj/machinery/turret/proc/isPopping()
 	return (popping!=0)
@@ -156,6 +159,7 @@
 		return
 	if(src.cover==null)
 		src.cover = new /obj/machinery/turretcover(src.loc)
+		src.cover.host = src
 	protected_area = get_protected_area()
 	if(!enabled || !protected_area || protected_area.turretTargets.len<=0)
 		if(!isDown() && !isPopping())

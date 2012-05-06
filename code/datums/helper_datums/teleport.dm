@@ -96,6 +96,7 @@
 
 		var/turf/destturf
 		var/turf/curturf = get_turf(teleatom)
+		var/area/destarea = get_area(destination)
 		if(precision)
 			var/list/posturfs = circlerangeturfs(destination,precision)
 			destturf = safepick(posturfs)
@@ -121,6 +122,7 @@
 		// Re-Apply lum
 		teleatom.sd_SetLuminosity(prevlum)
 
+		destarea.Entered(teleatom)
 
 		return 1
 

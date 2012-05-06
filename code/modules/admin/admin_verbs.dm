@@ -234,7 +234,7 @@
 			verbs += /client/proc/cmd_admin_world_narrate
 			verbs += /client/proc/cmd_debug_del_all
 			verbs += /client/proc/cmd_debug_tog_aliens
-			verbs += /client/proc/mapload
+//			verbs += /client/proc/mapload
 			verbs += /client/proc/check_words
 			verbs += /client/proc/drop_bomb
 			verbs += /client/proc/kill_airgroup
@@ -325,7 +325,7 @@
 	verbs -= /client/proc/Cell
 	verbs -= /client/proc/cmd_debug_del_all
 	verbs -= /client/proc/cmd_debug_tog_aliens
-	verbs -= /client/proc/mapload
+//	verbs -= /client/proc/mapload
 	verbs -= /client/proc/check_words
 	verbs -= /client/proc/drop_bomb
 	//verbs -= /client/proc/cmd_admin_drop_everything					--merged with view variables

@@ -47,6 +47,8 @@ datum/controller/game_controller
 
 		world.tick_lag = config.Ticklag
 
+		createRandomZlevel()
+
 		setup_objects()
 
 		setupgenetics()
