@@ -330,6 +330,30 @@
 	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
 		statelaws()
 
+	if (href_list["track"])
+		var/mob/target = locate(href_list["track"])
+		var/mob/living/silicon/ai/A = locate(href_list["track2"])
+		if(A && target)
+			A.ai_actual_track(target)
+		return
+
+	else if (href_list["faketrack"])
+		var/mob/target = locate(href_list["track"])
+		var/mob/living/silicon/ai/A = locate(href_list["track2"])
+		if(A && target)
+
+			A:cameraFollow = target
+			A << text("Now tracking [] on camera.", target.name)
+			if (usr.machine == null)
+				usr.machine = usr
+
+			while (usr:cameraFollow == target)
+				usr << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
+				sleep(40)
+				continue
+
+		return
+
 	return
 
 /mob/living/silicon/ai/meteorhit(obj/O as obj)
