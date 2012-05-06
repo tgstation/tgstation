@@ -65,6 +65,76 @@ var/global/BSACooldown = 0
 			alert("You cannot perform this action. You must be of a higher administrative rank!")
 			return
 
+	if(href_list["simplemake"])
+
+		if(!href_list["mob"])
+			usr << "Invalid mob"
+			return
+
+		var/mob/M = locate(href_list["mob"])
+
+		if(!M || !ismob(M))
+			usr << "Cannot find mob"
+			return
+
+		var/delmob = 0
+		var/option = alert("Delete old mob?","Message","Yes","No","Cancel")
+		if(option == "Cancel")
+			return
+		if(option == "Yes")
+			delmob = 1
+
+		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]]; deletemob=[delmob]")
+		message_admins("\blue [key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]]; deletemob=[delmob]", 1)
+
+		switch(href_list["simplemake"])
+			if("observer")
+				M.change_mob_type( /mob/dead/observer , null, null, delmob)
+			if("drone")
+				M.change_mob_type( /mob/living/carbon/alien/humanoid/drone , null, null, delmob)
+			if("hunter")
+				M.change_mob_type( /mob/living/carbon/alien/humanoid/hunter , null, null, delmob)
+			if("queen")
+				M.change_mob_type( /mob/living/carbon/alien/humanoid/queen , null, null, delmob)
+			if("sentinel")
+				M.change_mob_type( /mob/living/carbon/alien/humanoid/sentinel , null, null, delmob)
+			if("larva")
+				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob)
+			if("human")
+				M.change_mob_type( /mob/living/carbon/human , null, null, delmob)
+			if("metroid")
+				M.change_mob_type( /mob/living/carbon/metroid , null, null, delmob)
+			if("adultmetroid")
+				M.change_mob_type( /mob/living/carbon/metroid/adult , null, null, delmob)
+			if("monkey")
+				M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob)
+			if("robot")
+				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob)
+			if("cat")
+				M.change_mob_type( /mob/living/simple_animal/cat , null, null, delmob)
+			if("runtime")
+				M.change_mob_type( /mob/living/simple_animal/cat/Runtime , null, null, delmob)
+			if("corgi")
+				M.change_mob_type( /mob/living/simple_animal/corgi , null, null, delmob)
+			if("ian")
+				M.change_mob_type( /mob/living/simple_animal/corgi/Ian , null, null, delmob)
+			if("crab")
+				M.change_mob_type( /mob/living/simple_animal/crab , null, null, delmob)
+			if("coffee")
+				M.change_mob_type( /mob/living/simple_animal/crab/Coffee , null, null, delmob)
+			if("parrot")
+				M.change_mob_type( /mob/living/simple_animal/parrot , null, null, delmob)
+			if("drprofessor")
+				M.change_mob_type( /mob/living/simple_animal/parrot/DrProfessor , null, null, delmob)
+			if("constructarmoured")
+				M.change_mob_type( /mob/living/simple_animal/constructarmoured , null, null, delmob)
+			if("constructbuilder")
+				M.change_mob_type( /mob/living/simple_animal/constructbuilder , null, null, delmob)
+			if("constructwraith")
+				M.change_mob_type( /mob/living/simple_animal/constructwraith , null, null, delmob)
+			if("shade")
+				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob)
+
 	if(href_list["view_player_info"])
 		show_player_info(href_list["view_player_info"])
 
@@ -885,6 +955,11 @@ var/global/BSACooldown = 0
 
 	if (href_list["sendtoprison"])
 		if ((src.rank in list( "Moderator", "Admin Candidate", "Temporary Admin", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+
+			var/confirm = alert(usr, "Send to admin prison for the round?", "Message", "Yes", "No")
+			if(confirm != "Yes")
+				return
+
 			var/mob/M = locate(href_list["sendtoprison"])
 			if (ismob(M))
 				if(istype(M, /mob/living/silicon/ai))
@@ -954,6 +1029,11 @@ var/global/BSACooldown = 0
 
 	if (href_list["tdome1"])
 		if ((src.rank in list( "Admin Candidate", "Temporary Admin", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+
+			var/confirm = alert(usr, "Confirm?", "Message", "Yes", "No")
+			if(confirm != "Yes")
+				return
+
 			var/mob/M = locate(href_list["tdome1"])
 			if (ismob(M))
 				if(istype(M, /mob/living/silicon/ai))
@@ -980,6 +1060,11 @@ var/global/BSACooldown = 0
 
 	if (href_list["tdome2"])
 		if ((src.rank in list( "Admin Candidate", "Temporary Admin", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+
+			var/confirm = alert(usr, "Confirm?", "Message", "Yes", "No")
+			if(confirm != "Yes")
+				return
+
 			var/mob/M = locate(href_list["tdome2"])
 			if (ismob(M))
 				if(istype(M, /mob/living/silicon/ai))
@@ -1006,6 +1091,11 @@ var/global/BSACooldown = 0
 
 	if (href_list["tdomeadmin"])
 		if ((src.rank in list( "Admin Candidate", "Temporary Admin", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+
+			var/confirm = alert(usr, "Confirm?", "Message", "Yes", "No")
+			if(confirm != "Yes")
+				return
+
 			var/mob/M = locate(href_list["tdomeadmin"])
 			if (ismob(M))
 				if(istype(M, /mob/living/silicon/ai))
@@ -1340,6 +1430,11 @@ var/global/BSACooldown = 0
 
 	if (href_list["getmob"])
 		if(rank in list( "Trial Admin", "Badmin", "Game Admin", "Game Master"))
+
+			var/confirm = alert(usr, "Confirm?", "Message", "Yes", "No")
+			if(confirm != "Yes")
+				return
+
 			var/mob/M = locate(href_list["getmob"])
 			usr.client.Getmob(M)
 		else
