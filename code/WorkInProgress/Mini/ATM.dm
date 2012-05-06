@@ -14,6 +14,7 @@ log transactions
 	desc = "For all your monetary needs!"
 	icon = 'terminals.dmi'
 	icon_state = "atm"
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 10
 
