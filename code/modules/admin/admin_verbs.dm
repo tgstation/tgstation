@@ -183,7 +183,8 @@
 			verbs += /obj/admins/proc/view_atk_log
 			verbs += /obj/admins/proc/toggleaban						//abandon mob
 			verbs += /obj/admins/proc/show_traitor_panel
-			verbs += /client/proc/cmd_admin_remove_plasma
+			verbs += /client/proc/getserverlog							//fetch an old serverlog to look at
+			//verbs += /client/proc/cmd_admin_remove_plasma 			--This proc is outdated, does not do anything
 			verbs += /client/proc/admin_call_shuttle
 			verbs += /client/proc/admin_cancel_shuttle
 			verbs += /client/proc/cmd_admin_dress
@@ -289,7 +290,7 @@
 			verbs += /client/proc/everyone_random
 			verbs += /client/proc/only_one
 			verbs += /client/proc/deadmin_self
-//			verbs += /client/proc/giveruntimelog							//used by coders to retrieve runtime logs
+			verbs += /client/proc/giveruntimelog							//used by coders to retrieve runtime logs
 			verbs += /client/proc/cinematic							//used by coders to retrieve runtime logs
 			verbs += /client/proc/enable_debug_verbs
 			verbs += /client/proc/kill_air
@@ -419,9 +420,9 @@
 	verbs -= /client/proc/deadmin_self
 	verbs -= /client/proc/jumptocoord
 	verbs -= /client/proc/everyone_random
-//	verbs -= /client/proc/giveruntimelog									//used by coders to retrieve runtime logs
-//	verbs -= /client/proc/getserverlog
-	verbs -= /client/proc/cinematic
+	verbs -= /client/proc/giveruntimelog									//used by coders to retrieve runtime logs
+	verbs -= /client/proc/getserverlog
+	verbs -= /client/proc/cinematic										//show a cinematic sequence
 	verbs -= /client/proc/cmd_admin_change_custom_event
 	verbs -= /client/proc/admin_invis
 	verbs -= /client/proc/callprocgen
@@ -433,7 +434,6 @@
 	verbs -= /client/proc/rnd_check_designs
 	verbs -= /client/proc/make_tajaran
 	verbs -= /client/proc/CarbonCopy
-	verbs -= /client/proc/getruntimelog									//used by coders to retrieve runtime logs
 	verbs -= /proc/possess
 	verbs -= /proc/release
 	//verbs -= /client/proc/give_spell 									--Merged with view variables
