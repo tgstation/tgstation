@@ -25,12 +25,16 @@
 
 
 	load_into_chamber()
-		if(in_chamber) return 1
-		if(!loaded.len)	return 0
+		if(in_chamber)
+			return 1
+
+		if(!loaded.len)
+			return 0
 
 		var/obj/item/ammo_casing/AC = loaded[1] //load next casing.
 		loaded -= AC //Remove casing from loaded list.
 		AC.loc = get_turf(src) //Eject casing onto ground.
+		AC.desc += " This one is spent."	//descriptions are magic
 
 		if(AC.BB)
 			in_chamber = AC.BB //Load projectile into chamber.
@@ -40,6 +44,7 @@
 
 
 	attackby(var/obj/item/A as obj, mob/user as mob)
+
 		var/num_loaded = 0
 		if(istype(A, /obj/item/ammo_magazine))
 			if((load_method == 2) && loaded.len)	return
@@ -64,13 +69,18 @@
 				loaded += AC
 				num_loaded++
 		if(num_loaded)
-			user << text("\blue You load [] shell\s into the gun!", num_loaded)
+			user << "\blue You load [num_loaded] shell\s into the gun!"
 		A.update_icon()
 		update_icon()
 		return
 
 
-	update_icon()
-		desc = initial(desc) + text(" Has [] rounds remaining.", loaded.len)
+	examine()
+		..()
+		usr << "Has [loaded.len] round\s remaining."
+		if(in_chamber && !loaded.len)
+			usr << "However, it has a chambered round."
+		if(in_chamber && loaded.len)
+			usr << "It also has a chambered round."
 		return
 

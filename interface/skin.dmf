@@ -1340,10 +1340,66 @@ window "rpane"
 		splitter = 50
 		show-splitter = true
 		lock = none
+	elem "forumb"
+		type = BUTTON
+		pos = 260,0
+		size = 60x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Forum"
+		image = ""
+		command = "forum"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbutton
+	elem "wikib"
+		type = BUTTON
+		pos = 195,0
+		size = 60x16
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Wiki"
+		image = ""
+		command = "wiki"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = "rpanemode"
+		button-type = pushbutton
 	elem "textb"
 		type = BUTTON
 		pos = 0,0
-		size = 60x20
+		size = 60x16
 		anchor1 = none
 		anchor2 = none
 		font-family = ""
@@ -1371,7 +1427,7 @@ window "rpane"
 	elem "browseb"
 		type = BUTTON
 		pos = 65,0
-		size = 60x20
+		size = 60x16
 		anchor1 = none
 		anchor2 = none
 		font-family = ""
@@ -1379,7 +1435,7 @@ window "rpane"
 		font-style = ""
 		text-color = #000000
 		background-color = none
-		is-visible = false
+		is-visible = true
 		is-disabled = false
 		is-transparent = false
 		is-default = false
@@ -1399,7 +1455,7 @@ window "rpane"
 	elem "infob"
 		type = BUTTON
 		pos = 130,0
-		size = 60x20
+		size = 60x16
 		anchor1 = none
 		anchor2 = none
 		font-family = ""

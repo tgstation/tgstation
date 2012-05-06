@@ -2,7 +2,7 @@
 	var/server_name = null				// server name (for world name / status)
 	var/server_suffix = 0				// generate numeric suffix based on server port
 
-	var/log_ooc = 0						// log OOC channek
+	var/log_ooc = 0						// log OOC channel
 	var/log_access = 0					// log login/logout
 	var/log_say = 0						// log client say
 	var/log_admin = 0					// log admin actions
@@ -32,6 +32,7 @@
 	var/Tensioner_Active = 0			// If the tensioner is running.
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
+	var/Ticklag = 0.9
 
 	var/list/mode_names = list()
 	var/list/modes = list()				// allowed modes
@@ -48,6 +49,8 @@
 
 	var/server
 	var/banappeals
+	var/wikiurl
+	var/forumurl
 
 	//Alert level description
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
@@ -217,6 +220,12 @@
 				if ("banappeals")
 					config.banappeals = value
 
+				if ("wikiurl")
+					config.wikiurl = value
+
+				if ("forumurl")
+					config.forumurl = value
+
 				if ("guest_jobban")
 					config.guest_jobban = 1
 
@@ -287,6 +296,9 @@
 					config.popup_admin_pm = 1
 				if("useircbot")
 					useircbot = 1
+
+				if("ticklag")
+					Ticklag = text2num(value)
 
 				if("require_heads_alive")
 					config.require_heads_alive = value

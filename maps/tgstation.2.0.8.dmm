@@ -17,7 +17,7 @@
 "aaq" = (/obj/structure/rack,/obj/item/clothing/suit/armor/riot,/obj/item/weapon/melee/baton,/obj/item/weapon/shield/riot,/obj/item/clothing/head/helmet/riot,/obj/machinery/light{dir = 1},/obj/structure/window/basic,/turf/simulated/floor{icon_state = "bot"; dir = 1},/area/security/warden{name = "Armory"})
 "aar" = (/obj/structure/rack,/obj/item/clothing/suit/armor/riot,/obj/item/weapon/melee/baton,/obj/item/weapon/shield/riot,/obj/item/clothing/head/helmet/riot,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/basic,/turf/simulated/floor{icon_state = "bot"; dir = 1},/area/security/warden{name = "Armory"})
 "aas" = (/turf/simulated/floor,/area/security/warden{name = "Armory"})
-"aat" = (/obj/structure/rack,/obj/item/weapon/gun/projectile/shotgun/combat2,/obj/item/weapon/gun/projectile/shotgun/combat2,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/basic,/turf/simulated/floor{icon_state = "bot"; dir = 1},/area/security/warden{name = "Armory"})
+"aat" = (/obj/structure/rack,/obj/item/ammo_casing/shotgun,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/basic,/obj/item/weapon/gun/projectile/shotgun/pump/combat,/obj/item/weapon/gun/projectile/shotgun/pump/combat,/turf/simulated/floor{icon_state = "bot"; dir = 1},/area/security/warden{name = "Armory"})
 "aau" = (/obj/machinery/light{dir = 1},/turf/simulated/floor,/area/security/warden{name = "Armory"})
 "aav" = (/obj/structure/rack,/obj/item/weapon/gun/energy/laser,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/basic,/turf/simulated/floor{icon_state = "bot"; dir = 1},/area/security/warden{name = "Armory"})
 "aaw" = (/turf/simulated/floor/plating/airless,/area)

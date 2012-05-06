@@ -639,7 +639,7 @@
 	w_class = 2.0
 	throw_speed = 3
 	throw_range = 10
-	flags = ONBELT
+	flags = FPRINT | TABLEPASS | ONBELT
 
 /obj/item/weapon/clipboard/notebook
 	name = "notebook"

@@ -638,10 +638,11 @@
 						for (var/mob/living/silicon/decoy/D in world)
 							if (eye)
 								eye = D
-		if (eye)
-			client.eye = eye
-		else
-			client.eye = client.mob
+		if (client)
+			if (eye)
+				client.eye = eye
+			else
+				client.eye = client.mob
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -1036,42 +1037,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 				if("holdervar")
 					statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
 
-
-/client/proc/station_explosion_cinematic(var/station_missed)
-	if(!mob || !ticker)	return
-	if(!mob.client || !mob.hud_used || !ticker.mode)	return
-//	M.loc = null this might make it act weird but fuck putting them in nullspace, it causes issues.
-	var/obj/screen/boom = mob.hud_used.station_explosion
-	if(!istype(boom))	return
-
-	mob.client.screen += boom
-
-	switch(ticker.mode.name)
-		if("nuclear emergency")
-			flick("start_nuke", boom)
-		if("AI malfunction")
-			flick("start_malf", boom)
-		else
-			boom.icon_state = "start"
-
-	sleep(40)
-	mob << sound('explosionfar.ogg')
-	boom.icon_state = "end"
-	if(!station_missed) flick("explode", boom)
-	else flick("explode2", boom)
-	sleep(40)
-
-	switch(ticker.mode.name)
-		if("nuclear emergency")
-			if(!station_missed) boom.icon_state = "loss_nuke"
-			else boom.icon_state = "loss_nuke2"
-		if("malfunction")
-			boom.icon_state = "loss_malf"
-		if("blob")
-			return//Nothin here yet and the general one does not fit.
-		else
-			boom.icon_state = "loss_general"
-	return
 
 
 // facing verbs

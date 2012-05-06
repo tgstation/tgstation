@@ -1019,6 +1019,23 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/mushroomsoup
 
+/datum/recipe/chawanmushi
+	reagents = list("water" = 5, "soysauce" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/chawanmushi
+
+/datum/recipe/beetsoup
+	reagents = list("water" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/beetsoup
+
 //////////////////////////////////////////
 // bs12 food port stuff
 //////////////////////////////////////////

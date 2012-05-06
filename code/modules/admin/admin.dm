@@ -522,8 +522,8 @@ var/global/BSACooldown = 0
 					for(var/job in notbannedlist)
 						ban_unban_log_save("[key_name(usr)] jobbanned [key_name(M)] from [job]. reason: [reason]")
 						log_admin("[key_name(usr)] banned [key_name(M)] from [job]")
-						feedback_inc("ban_job",1)
-						feedback_add_details("ban_job","- [job]")
+						//feedback_inc("ban_job",1)
+						//feedback_add_details("ban_job","- [job]")
 						jobban_fullban(M, job, "[reason]; By [usr.ckey] on [time2text(world.realtime)]")
 						if(!msg)	msg = job
 						else		msg += ", [job]"
@@ -547,8 +547,8 @@ var/global/BSACooldown = 0
 						if("Yes")
 							ban_unban_log_save("[key_name(usr)] unjobbanned [key_name(M)] from [job]")
 							log_admin("[key_name(usr)] unbanned [key_name(M)] from [job]")
-							feedback_inc("ban_job_unban",1)
-							feedback_add_details("ban_job_unban","- [job]")
+							//feedback_inc("ban_job_unban",1)
+							//feedback_add_details("ban_job_unban","- [job]")
 							jobban_unban(M, job)
 							if(!msg)	msg = job
 							else		msg += ", [job]"
@@ -1615,8 +1615,8 @@ var/global/BSACooldown = 0
 					ok = 1*/
 				if("toxic")
 				/*
-					feedback_inc("admin_secrets_fun_used",1)
-					feedback_add_details("admin_secrets_fun_used","T")
+					//feedback_inc("admin_secrets_fun_used",1)
+					//feedback_add_details("admin_secrets_fun_used","T")
 					for(var/obj/machinery/atmoalter/siphs/fullairsiphon/O in world)
 						O.t_status = 3
 					for(var/obj/machinery/atmoalter/siphs/scrubbers/O in world)
