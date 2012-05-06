@@ -1829,6 +1829,13 @@ proc/get_opposite(var/checkdir)
 			count++
 	return count
 
+proc/get_mob_with_client_list()
+	var/list/mobs = list()
+	for(var/mob/M in world)
+		if (M.client)
+			mobs += M
+	return mobs
+
 /proc/reverse_direction(var/dir)
 	switch(dir)
 		if(NORTH)

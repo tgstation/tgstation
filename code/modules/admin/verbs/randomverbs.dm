@@ -4,6 +4,11 @@
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
+
+	var/confirm = alert(src, "Make [M] drop everything?", "Message", "Yes", "No")
+	if(confirm != "Yes")
+		return
+
 	for(var/obj/item/W in M)
 		M.drop_from_slot(W)
 
@@ -77,14 +82,25 @@
 	message_admins("\blue \bold GlobalNarrate: [key_name_admin(usr)] : [msg]<BR>", 1)
 	//feedback_add_details("admin_verb","GLN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_direct_narrate(mob/M as mob in world)	// Targetted narrate -- TLE
+/client/proc/cmd_admin_direct_narrate(var/mob/M)	// Targetted narrate -- TLE
 	set category = "Special Verbs"
 	set name = "Direct Narrate"
 
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
+
+	if(!M)
+		M = input("Direct narrate to who?", "Active Players") as null|anything in get_mob_with_client_list()
+
+	if(!M)
+		return
+
 	var/msg = input("Message:", text("Enter the text you wish to appear to your target:")) as text
+
+	if( !msg )
+		return
+
 	M << msg
 	log_admin("DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]")
 	message_admins("\blue \bold DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]<BR>", 1)
@@ -457,51 +473,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		alert("Cannot revive a ghost")
 		return
 	if(config.allow_admin_rev)
-		//M.fireloss = 0
-		M.setToxLoss(0)
-		//M.bruteloss = 0
-		M.setOxyLoss(0)
-		M.SetParalysis(0)
-		M.SetStunned(0)
-		M.SetWeakened(0)
-		M.radiation = 0
-		//M.health = 100
-		M.nutrition = 400
-		M.bodytemperature = initial(M.bodytemperature)
-		M.heal_overall_damage(1000, 1000)
-		//M.updatehealth()
-		M.buckled = initial(M.buckled)
-		M.handcuffed = initial(M.handcuffed)
-		if(istype(M,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			for(var/name in H.organs)
-				var/datum/organ/external/e = H.organs[name]
-				e.brute_dam = 0.0
-				e.burn_dam = 0.0
-				e.bandaged = 0.0
-				e.max_damage = initial(e.max_damage)
-				e.bleeding = 0
-				e.open = 0
-				e.broken = 0
-				e.destroyed = 0
-				e.perma_injury = 0
-				e.update_icon()
-				for(var/datum/organ/wound/W in e.wounds)
-					if(W.bleeding || !W.is_healing)
-						W.stopbleeding()
-			del(H.vessel)
-			H.vessel = new/datum/reagents(560)
-			H.vessel.my_atom = H
-			H.vessel.add_reagent("blood",560)
-			spawn(1)
-				H.fixblood()
-			H.pale = 0
-			H.update_body()
-			H.update_face()
-			H.UpdateDamageIcon()
-		if (M.stat > 1)
-			M.stat=0
-		..()
+		M.revive()
 
 		log_admin("[key_name(usr)] healed / revived [key_name(M)]")
 		message_admins("\red Admin [key_name_admin(usr)] healed / revived [key_name_admin(M)]!", 1)

@@ -64,7 +64,7 @@
 				verbs += /client/proc/cmd_admin_delete
 				verbs += /client/proc/cmd_admin_add_freeform_ai_law
 				verbs += /client/proc/cmd_admin_rejuvenate
-				verbs += /client/proc/cmd_admin_drop_everything
+				//verbs += /client/proc/cmd_admin_drop_everything		--Merged with view variables
 				//verbs += /client/proc/cmd_modify_object_variables 	--Merged with view variables
 
 		if ("Admin Candidate")
@@ -127,11 +127,11 @@
 			verbs += /obj/admins/proc/votekill
 			verbs += /obj/admins/proc/show_player_panel
 			verbs += /client/proc/deadchat								//toggles deadchat
-			verbs += /client/proc/cmd_admin_mute
+			//verbs += /client/proc/cmd_admin_mute	--was never used (according to stats trackind) - use show player panel --erro
 			verbs += /client/proc/cmd_admin_pm_context
 			verbs += /client/proc/cmd_admin_pm_panel
 			verbs += /client/proc/cmd_admin_subtle_message
-			verbs += /client/proc/warn
+			//verbs += /client/proc/warn	- was never used
 			verbs += /client/proc/dsay
 			verbs += /client/proc/admin_play
 			verbs += /client/proc/admin_observe
@@ -140,7 +140,7 @@
 			verbs += /client/proc/player_panel_new
 			verbs += /client/proc/unban_panel
 			verbs += /client/proc/jobbans
-			verbs += /client/proc/playernotes
+
 			verbs += /client/proc/voting
 			verbs += /client/proc/hide_verbs
 			verbs += /client/proc/general_report
@@ -148,6 +148,7 @@
 			verbs += /client/proc/deadmin_self
 			//verbs += /client/proc/cmd_admin_prison 					--Merged with player panel
 			//verbs += /obj/admins/proc/unprison  						--Merged with player panel
+			verbs += /client/proc/playernotes
 			verbs += /obj/admins/proc/show_skills
 		else	return
 
@@ -244,9 +245,8 @@
 			verbs += /client/proc/mapload
 			verbs += /client/proc/check_words
 			verbs += /client/proc/drop_bomb
-			verbs += /client/proc/cmd_admin_grantfullaccess
 			verbs += /client/proc/kill_airgroup
-			verbs += /client/proc/cmd_admin_drop_everything
+			//verbs += /client/proc/cmd_admin_drop_everything			--Merged with view variables
 			verbs += /client/proc/make_sound
 			verbs += /client/proc/play_local_sound
 			verbs += /client/proc/send_space_ninja
@@ -350,8 +350,7 @@
 	verbs -= /client/proc/mapload
 	verbs -= /client/proc/check_words
 	verbs -= /client/proc/drop_bomb
-	verbs -= /client/proc/cmd_admin_grantfullaccess
-	verbs -= /client/proc/cmd_admin_drop_everything
+	//verbs -= /client/proc/cmd_admin_drop_everything					--merged with view variables
 	verbs -= /client/proc/make_sound
 	verbs -= /client/proc/only_one
 	verbs -= /client/proc/send_space_ninja
@@ -379,17 +378,18 @@
 	verbs -= /client/proc/spawn_xeno
 	verbs -= /client/proc/cmd_admin_add_random_ai_law
 	verbs -= /client/proc/secrets
+	verbs -= /client/proc/check_antagonists
 	verbs -= /client/proc/play_sound
 	verbs -= /client/proc/stealth
 	verbs -= /client/proc/cmd_admin_check_contents
 	verbs -= /client/proc/cmd_admin_create_centcom_report
 	verbs -= /client/proc/deadchat										//toggles deadchat
-	verbs -= /client/proc/cmd_admin_mute
+	//verbs -= /client/proc/cmd_admin_mute	--was never used (according to stats trackind) - use show player panel --erro
 	verbs -= /client/proc/cmd_admin_pm_context
 	verbs -= /client/proc/cmd_admin_pm_panel
 	verbs -= /client/proc/cmd_admin_say
 	verbs -= /client/proc/cmd_admin_subtle_message
-	verbs -= /client/proc/warn
+	//verbs -= /client/proc/warn
 	verbs -= /client/proc/dsay
 	verbs -= /client/proc/admin_play
 	verbs -= /client/proc/admin_observe
