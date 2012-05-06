@@ -87,8 +87,6 @@
 #define FILE_DIR "code/js"
 #define FILE_DIR "code/modules"
 #define FILE_DIR "code/modules/admin"
-#define FILE_DIR "code/modules/admin/new"
-#define FILE_DIR "code/modules/admin/new/verbs"
 #define FILE_DIR "code/modules/admin/verbs"
 #define FILE_DIR "code/modules/assembly"
 #define FILE_DIR "code/modules/chemical"

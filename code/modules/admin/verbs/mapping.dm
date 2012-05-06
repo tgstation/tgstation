@@ -139,6 +139,7 @@ var/intercom_range_display_status = 0
 		src.verbs += /client/proc/cmd_assume_direct_control	//-errorage
 		src.verbs += /client/proc/jump_to_dead_group
 		src.verbs += /client/proc/startSinglo
+		src.verbs += /client/proc/ticklag	//allows you to set the ticklag.
 		//feedback_add_details("admin_verb","mDV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	count_objects_on_z_level()

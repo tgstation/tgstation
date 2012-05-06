@@ -169,6 +169,7 @@
 		if (holder.level >= 2)
 			verbs += /client/proc/cmd_admin_add_random_ai_law
 			verbs += /client/proc/secrets
+			verbs += /client/proc/check_antagonists
 			verbs += /client/proc/play_sound
 			verbs += /client/proc/stealth
 			verbs += /client/proc/deadmin_self
@@ -240,7 +241,6 @@
 			verbs += /client/proc/cmd_admin_world_narrate
 			verbs += /client/proc/cmd_debug_del_all
 			verbs += /client/proc/cmd_debug_tog_aliens
-			verbs += /client/proc/ticklag
 			verbs += /client/proc/mapload
 			verbs += /client/proc/check_words
 			verbs += /client/proc/drop_bomb
@@ -347,7 +347,6 @@
 	verbs -= /client/proc/Cell
 	verbs -= /client/proc/cmd_debug_del_all
 	verbs -= /client/proc/cmd_debug_tog_aliens
-	verbs -= /client/proc/ticklag
 	verbs -= /client/proc/mapload
 	verbs -= /client/proc/check_words
 	verbs -= /client/proc/drop_bomb
@@ -529,6 +528,14 @@
 	if(holder)
 		holder.player_panel_new()
 //	feedback_add_details("admin_verb","PPN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	return
+
+/client/proc/check_antagonists()
+	set name = "Check Antagonists"
+	set category = "Admin"
+	if(holder)
+		holder.check_antagonists()
+	//feedback_add_details("admin_verb","CHA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/jobbans()
