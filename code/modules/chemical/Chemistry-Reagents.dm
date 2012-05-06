@@ -1873,6 +1873,23 @@ datum
 				..()
 				return
 
+		lipozine
+			name = "Lipozine" // The anti-nutriment.
+			id = "lipozine"
+			description = "A chemical compound that causes a powerful fat-burning reaction."
+			reagent_state = LIQUID
+			nutriment_factor = 10 * REAGENTS_METABOLISM
+			color = "#BBEDA4" // rgb: 187, 237, 164
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M:nutrition -= nutriment_factor
+				M:overeatduration = 0
+				if(M:nutrition < 0)//Prevent from going into negatives.
+					M:nutrition = 0
+				..()
+				return
+
 		soysauce
 			name = "Soysauce"
 			id = "soysauce"
