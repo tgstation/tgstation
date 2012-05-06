@@ -202,6 +202,12 @@
 			if(isInSight(source,C))
 				hear += C
 
+	// Parasites(e.g. Meme)
+	for(var/mob/living/carbon/C in V)
+		for(var/mob/M in C.parasites)
+			hear += M
+			world << "[M] added to hearers"
+
 /*   -- Handled above.  WHY IS THIS HERE?  WHYYYYYYY
 	// Personal AIs
 	for(var/obj/item/device/paicard/C in V)
