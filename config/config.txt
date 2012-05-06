@@ -126,6 +126,12 @@ GUEST_JOBBAN 1
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
 # SERVER ss13.example.com:2506
 
+## forum address
+# FORUMURL http://baystation12.net/forums/
+
+## Wiki address
+# WIKIURL http://baystation12.net/wiki/index.php
+
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://justanotherday.example.com
 

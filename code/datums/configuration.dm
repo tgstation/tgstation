@@ -2,7 +2,7 @@
 	var/server_name = null				// server name (for world name / status)
 	var/server_suffix = 0				// generate numeric suffix based on server port
 
-	var/log_ooc = 0						// log OOC channek
+	var/log_ooc = 0						// log OOC channel
 	var/log_access = 0					// log login/logout
 	var/log_say = 0						// log client say
 	var/log_admin = 0					// log admin actions
@@ -49,6 +49,8 @@
 
 	var/server
 	var/banappeals
+	var/wikiurl
+	var/forumurl
 
 	//Alert level description
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
@@ -217,6 +219,12 @@
 
 				if ("banappeals")
 					config.banappeals = value
+
+				if ("wikiurl")
+					config.wikiurl = value
+
+				if ("forumurl")
+					config.forumurl = value
 
 				if ("guest_jobban")
 					config.guest_jobban = 1
