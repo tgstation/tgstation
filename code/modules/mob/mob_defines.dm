@@ -113,6 +113,7 @@
 	var/canmove = 1.0
 	var/eye_stat = null//Living, potentially Carbon
 	var/lastpuke = 0
+	var/unacidable = 0
 
 	var/name_archive //For admin things like possession
 

@@ -1148,21 +1148,40 @@
 				if (mutantrace == "lizard" || mutantrace == "metroid")
 					see_in_dark = 3
 					see_invisible = 1
+
+				else if (istajaran(src))
+					see_in_dark = 8
+
 				else if (druggy) // If drugged~
 					see_in_dark = 2
 					//see_invisible regulated by drugs themselves.
 				else
 					see_in_dark = 2
-					var/seer = 0
-					for(var/obj/effect/rune/R in world)
-						if(loc==R.loc && R.word1==wordsee && R.word2==wordhell && R.word3==wordjoin)
-							seer = 1
-					if(!seer)
-						see_invisible = 0
 
-			else if(istype(head, /obj/item/clothing/head/helmet/welding))
+				var/seer = 0
+				for(var/obj/effect/rune/R in world)
+					if(loc==R.loc && R.word1==wordsee && R.word2==wordhell && R.word3==wordjoin)
+						seer = 1
+				if(!seer)
+					see_invisible = 0
+
+
+
+
+
+
+
+			else if(istype(head, /obj/item/clothing/head/helmet/welding))		// wat.  This is never fucking called.
 				if(!head:up && tinted_weldhelh)
 					see_in_dark = 1
+
+
+
+
+
+
+
+
 
 		/* HUD shit goes here, as long as it doesn't modify src.sight flags */
 		// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl

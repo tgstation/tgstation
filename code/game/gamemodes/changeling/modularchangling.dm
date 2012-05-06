@@ -47,7 +47,7 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 	desc = "We become the pinnicle of evolution.  We will show the humans what happens when they leave their isle of ignorance."
 	genomecost = 250
 
-	// doesn't happen lol.  Yet!
+//	verbpath = /client/proc/changeling_greater_form
 
 /obj/effect/proc_holder/power/fakedeath
 	name = "Fake Death"

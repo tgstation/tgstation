@@ -77,6 +77,7 @@
 			if(B != src)
 				del(B)
 
+
 /obj/effect/decal/cleanable/blood/drip
 	name = "drips of blood"
 	desc = "It's red."

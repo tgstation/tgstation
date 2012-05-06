@@ -84,6 +84,8 @@
 	min_broken_damage = 15
 	body_part = HAND_LEFT
 
+
+
 obj/item/weapon/organ
 	icon = 'human.dmi'
 
@@ -112,6 +114,12 @@ obj/item/weapon/organ/head
 	var/mob/living/carbon/brain/brainmob
 	var/brain_op_stage = 0
 
+obj/item/weapon/organ/head/New()
+	..()
+	spawn(5)
+	if(brainmob && brainmob.client)
+		brainmob.client.screen.len = null //clear the hud
+
 obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
 	brainmob = new(src)
 	brainmob.name = H.real_name
@@ -119,6 +127,11 @@ obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)
 	brainmob.dna = H.dna
 	if(H.mind)
 		H.mind.transfer_to(brainmob)
+	brainmob.container = src
+	if (brainmob.client)
+		spawn(10)
+			if(brainmob.client)
+				verbs += /mob/proc/ghost
 
 obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/scalpel))

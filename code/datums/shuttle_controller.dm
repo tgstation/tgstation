@@ -91,7 +91,8 @@ datum/shuttle_controller
 
 	emergency_shuttle
 		process()
-			if(!online) return
+			if(!online)
+				return
 			var/timeleft = timeleft()
 			if(timeleft > 1e5)		// midnight rollover protection
 				timeleft = 0

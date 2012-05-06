@@ -198,6 +198,7 @@
 			verbs += /client/proc/toggleadminhelpsound
 			verbs += /proc/possess
 			verbs += /proc/release
+			verbs += /client/proc/make_tajaran
 			verbs += /client/proc/admin_deny_shuttle
 			verbs += /client/proc/cmd_admin_christmas
 			verbs += /client/proc/editappear
@@ -274,7 +275,6 @@
 			verbs += /client/proc/delbook
 			verbs += /client/proc/Force_Event_admin
 			verbs += /client/proc/radioalert
-			verbs += /client/proc/make_tajaran
 			verbs += /client/proc/CarbonCopy
 			verbs += /client/proc/jump_to_dead_group
 		else	return
@@ -431,7 +431,6 @@
 	verbs -= /client/proc/Force_Event_admin
 	verbs -= /client/proc/radioalert
 	verbs -= /client/proc/rnd_check_designs
-	verbs -= /client/proc/make_tajaran
 	verbs -= /client/proc/CarbonCopy
 	verbs -= /proc/possess
 	verbs -= /proc/release
@@ -451,6 +450,7 @@
 	verbs -= /client/proc/togglebuildmodeself
 	verbs -= /client/proc/kill_airgroup
 	verbs -= /client/proc/debug_master_controller
+	verbs -= /client/proc/make_tajaran
 	verbs -= /client/proc/admin_deny_shuttle
 	verbs -= /client/proc/cmd_admin_christmas
 	verbs -= /client/proc/editappear
