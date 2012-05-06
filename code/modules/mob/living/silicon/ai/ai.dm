@@ -31,6 +31,7 @@
 
 	real_name = pickedName
 	name = real_name
+	original_name = real_name
 	anchored = 1
 	canmove = 0
 	loc = loc
