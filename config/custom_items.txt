@@ -22,3 +22,7 @@ orangebottle: Lilliana Reade: /obj/item/weapon/pen/fluff/fancypen
 deusdactyl: Roger Wiles: /obj/item/clothing/under/rank/virologist/fluff/cdc_jumpsuit, /obj/item/clothing/suit/storage/labcoat/fluff/cdc_labcoat
 desiderium: Momiji Inubashiri: /obj/item/clothing/under/fluff/olddressuniform
 leonheart11:  Johann Erzatz: /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/johann_erzatz_1
+mangled: Li Tsun: /obj/item/weapon/lighter/zippo/fluff/li_tsun_1
+vinceluk: Seth Sealis: /obj/item/clothing/suit/storage/det_suit/fluff/graycoat
+sparklysheep: Cado Keppel: /obj/item/weapon/fluff/cado_keppel_1
+silentthunder: Val McNeil: /obj/item/fluff/val_mcneil_1
