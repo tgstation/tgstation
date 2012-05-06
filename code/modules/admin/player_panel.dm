@@ -94,6 +94,7 @@
 			<td><A href='?src=\ref[usr];priv_msg=\ref[M]'><b>PM</b></A> |
 			<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A> |
 			<A HREF='?src=\ref[src];adminplayervars=\ref[M]'>VV</A> |
+			<A HREF='?src=\ref[src];traitor_panel_pp=\ref[M]'>TP</A> |
 			<A HREF='?src=\ref[src];adminplayersubtlemessage=\ref[M]'>SM</A> |
 			<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A></font>
 			<br><font size="2">[muting]</font><br>
