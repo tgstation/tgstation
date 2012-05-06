@@ -1205,6 +1205,8 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	g_amt = 50
 	var/rigged = 0		// true if rigged to explode
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
+	var/construction_cost = list("metal"=750,"glass"=75)
+	var/construction_time=100
 
 /obj/item/weapon/cell/crap
 	name = "\improper NanoTrasen Brand Rechargable AA Battery"
@@ -1222,23 +1224,29 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 /obj/item/weapon/cell/high
 	name = "high-capacity power cell"
 	origin_tech = "powerstorage=2"
+	icon_state = "hcell"
 	maxcharge = 10000
 	g_amt = 60
 
 /obj/item/weapon/cell/super
 	name = "super-capacity power cell"
 	origin_tech = "powerstorage=5"
+	icon_state = "scell"
 	maxcharge = 20000
 	g_amt = 70
+	construction_cost = list("metal"=750,"glass"=100)
 
 /obj/item/weapon/cell/hyper
 	name = "hyper-capacity power cell"
 	origin_tech = "powerstorage=6"
+	icon_state = "hpcell"
 	maxcharge = 30000
 	g_amt = 80
+	construction_cost = list("metal"=500,"glass"=150,"gold"=200,"silver"=200)
 
 /obj/item/weapon/cell/infinite
 	name = "infinite-capacity power cell!"
+	icon_state = "icell"
 	origin_tech =  null
 	maxcharge = 30000
 	g_amt = 80
@@ -1890,6 +1898,13 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	gender = PLURAL
 	icon = 'wizard.dmi'
 	icon_state = "ectoplasm"
+
+/obj/item/weapon/research//Makes testing much less of a pain -Sieve
+	name = "research"
+	icon = 'stock_parts.dmi'
+	icon_state = "capacitor"
+	desc = "A debug item for research."
+	origin_tech = "materials=8;programming=8;magnets=8;powerstorage=8;bluespace=8;combat=8;biotech=8;syndicate=8"
 
 /obj/item/weapon/appendix
 	name = "appendix"

@@ -113,3 +113,36 @@
 		else if (src.anchored)
 			user.show_message(text("\red [src] is now secured."))
 			src.overlays += "[base_state]-s"
+
+/obj/machinery/flasher_button/attack_ai(mob/user as mob)
+	return src.attack_hand(user)
+
+/obj/machinery/flasher_button/attack_paw(mob/user as mob)
+	return src.attack_hand(user)
+
+/obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user as mob)
+	return src.attack_hand(user)
+
+/obj/machinery/flasher_button/attack_hand(mob/user as mob)
+
+	if(stat & (NOPOWER|BROKEN))
+		return
+	if(active)
+		return
+
+	use_power(5)
+
+	active = 1
+	icon_state = "launcheract"
+
+	for(var/obj/machinery/flasher/M in world)
+		if(M.id == src.id)
+			spawn()
+				M.flash()
+
+	sleep(50)
+
+	icon_state = "launcherbtt"
+	active = 0
+
+	return

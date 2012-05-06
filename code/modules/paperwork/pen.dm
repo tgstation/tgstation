@@ -10,6 +10,7 @@
 	throw_range = 15
 	m_amt = 10
 	var/colour = "black"	//what colour the ink is!
+	pressure_resistance = 5
 
 /obj/item/weapon/pen/blue
 	desc = "It's a normal blue ink pen."
