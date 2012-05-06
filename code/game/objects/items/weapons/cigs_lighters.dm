@@ -405,16 +405,16 @@ ZIPPO
 				src.item_state = icon_on
 				if( istype(src,/obj/item/weapon/lighter/zippo) )
 					for(var/mob/O in viewers(user, null))
-						O.show_message(text("\red Without even breaking stride, [] flips open and lights the [] in one smooth movement.", user, src), 1)
+						O.show_message(text("\red Without even breaking stride, [] flips open and lights [] in one smooth movement.", user, src), 1)
 				else
 					if(prob(75))
 						for(var/mob/O in viewers(user, null))
-							O.show_message("\red After a few attempts, [user] manages to light the [src].", 1)
+							O.show_message("\red After a few attempts, [user] manages to light [src].", 1)
 					else
 						user << "\red <b>You burn yourself while lighting the lighter.</b>"
 						user.adjustFireLoss(5)
 						for(var/mob/O in viewers(user, null))
-							O.show_message("\red After a few attempts, [user] manages to light the [src], they however burn their finger in the process.", 1)
+							O.show_message("\red After a few attempts, [user] manages to light [src], they however burn their finger in the process.", 1)
 
 				user.total_luminosity += 2
 				processing_objects.Add(src)
