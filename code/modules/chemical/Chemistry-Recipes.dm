@@ -1247,7 +1247,7 @@ datum
 
 ////DRINKS THAT REQUIRE IMPROVED SPRITES BELOW:: -Agouri/////
 
-/*		sbiten
+		sbiten
 			name = "Sbiten"
 			id = "sbiten"
 			result = "sbiten"
@@ -1401,7 +1401,7 @@ datum
 			id = "silencer"
 			result = "silencer"
 			required_reagents = list("nothing" = 1, "cream" = 1, "sugar" = 1)
-			result_amount = 3*/
+			result_amount = 3
 
 
 

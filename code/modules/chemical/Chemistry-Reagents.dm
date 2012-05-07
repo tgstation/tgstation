@@ -3061,9 +3061,9 @@ datum
 				return
 
 		tequilla_sunrise
-			name = "Tequilla Sunrise"
+			name = "Tequila Sunrise"
 			id = "tequillasunrise"
-			description = "Tequilla and orange juice. Much like a Screwdriver, only Mexican~"
+			description = "Tequila and orange juice. Much like a Screwdriver, only Mexican~"
 			reagent_state = LIQUID
 			color = "#664300" // rgb: 102, 67, 0
 
@@ -3312,7 +3312,7 @@ datum
 		manhattan_proj
 			name = "Manhattan Project"
 			id = "manhattan_proj"
-			description = "A scienitst drink of choice, for thinking how to blow up the station."
+			description = "A scientist's drink of choice, for pondering ways to blow up the station."
 			reagent_state = LIQUID
 			color = "#664300" // rgb: 102, 67, 0
 
@@ -3356,14 +3356,16 @@ datum
 			color = "#664300" // rgb: 102, 67, 0
 
 			on_mob_life(var/mob/living/M as mob)
+				if (M.bodytemperature < 330)
+					M.bodytemperature = min(330, M.bodytemperature+20) //310 is the normal bodytemp. 310.055
 				if(!data) data = 1
 				data++
-				M.dizziness +=5
-				if(data >= 55 && data <115)
+				M.dizziness +=3
+				if(data >= 55 && data <165)
 					if (!M.stuttering) M.stuttering = 1
-					M.stuttering += 5
-				else if(data >= 115 && prob(33))
-					M.confused = max(M:confused+5,0)
+					M.stuttering += 3
+				else if(data >= 165 && prob(33))
+					M.confused = max(M:confused+2,0)
 				..()
 				return
 
@@ -3504,7 +3506,7 @@ datum
 
 ////////////////////////// REMOVED COCKTAIL REAGENTS BELOW:: RE-ENABLE THEM IF THEY EVER GET SPRITES THAT DON'T LOOK FUCKING STUPID --Agouri ///////////////////////////
 
-/*		sbiten
+		sbiten
 			name = "Sbiten"
 			id = "sbiten"
 			description = "A spicy Vodka! Might be a little hot for the little guys!"
@@ -3749,7 +3751,7 @@ datum
 		amasec
 			name = "Amasec"
 			id = "amasec"
-			description = "Always before COMBAT!!!"
+			description = "Official drink of the Imperium."
 			reagent_state = LIQUID
 			color = "#664300" // rgb: 102, 67, 0
 
@@ -3795,7 +3797,7 @@ datum
 
 
 		hippies_delight
-			name = "Hippies Delight"
+			name = "Hippie's Delight"
 			id = "hippiesdelight"
 			description = "A drink enjoyed by people during the 1960's."
 			reagent_state = LIQUID
@@ -3828,7 +3830,7 @@ datum
 				return
 
 		bananahonk
-			name = "Banana Honk"
+			name = "Banana Mama"
 			id = "bananahonk"
 			description = "A drink from Clown Heaven."
 			nutriment_factor = 1 * REAGENTS_METABOLISM
@@ -3885,7 +3887,6 @@ datum
 					return
 
 
-
 		changelingsting
 			name = "Changeling Sting"
 			id = "changelingsting"
@@ -3908,7 +3909,7 @@ datum
 		irishcarbomb
 			name = "Irish Car Bomb"
 			id = "irishcarbomb"
-			description = "An irish car bomb"
+			description = "Mmm, tastes like chocolate cake..."
 			reagent_state = LIQUID
 			color = "#2E6671" // rgb: 46, 102, 113
 
@@ -3946,7 +3947,7 @@ datum
 		erikasurprise
 			name = "Erika Surprise"
 			id = "erikasurprise"
-			description = "A surprise of Erika"
+			description = "The surprise is, it's green!"
 			reagent_state = LIQUID
 			color = "#2E6671" // rgb: 46, 102, 113
 
@@ -3960,6 +3961,4 @@ datum
 				else if(data >= 115 && prob(60))
 					M.confused = max(M:confused+15,15)
 				..()
-				return*/
-
-
+				return
