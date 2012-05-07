@@ -638,6 +638,17 @@
 	item_state = "fire_extinguisher"
 	m_amt = 90
 
+/obj/item/weapon/extinguisher/mini
+	name = "fire extinguisher"
+	desc = "A light and compact fibreglass-framed model fire extinguisher."
+	icon_state = "miniFE0"
+	flags = FPRINT | USEDELAY | TABLEPASS
+	throwforce = 2
+	w_class = 2.0
+	force = 3.0
+	item_state = "miniFE"
+	m_amt = 0
+
 /obj/item/weapon/f_card
 	name = "finger print card"
 	desc = "Used to take fingerprints."
