@@ -65,6 +65,12 @@ var/global/BSACooldown = 0
 			alert("You cannot perform this action. You must be of a higher administrative rank!")
 			return
 
+	if(href_list["delay_round_end"])
+		if (src.rank in list("Badmin", "Game Admin", "Game Master"))
+			ticker.delay_end = !ticker.delay_end
+			log_admin("[key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
+			message_admins("\blue [key_name(usr)] [ticker.delay_end ? "delayed the round end" : "has made the round end normally"].", 1)
+			href_list["secretsadmin"] = "check_antagonist"
 
 	if(href_list["simplemake"])
 

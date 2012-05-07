@@ -29,6 +29,7 @@ var/global/datum/controller/gameticker/ticker
 
 	var/pregame_timeleft = 0
 
+	var/delay_end = 0	//if set to nonzero, the round will not restart on it's own
 
 /datum/controller/gameticker/proc/pregame()
 	login_music = pick('title2.ogg') // choose title music!
@@ -277,17 +278,22 @@ var/global/datum/controller/gameticker/ticker
 			spawn(50)
 				if (mode.station_was_nuked)
 					feedback_set_details("end_proper","nuke")
-					world << "\blue <B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B>"
+					if(!delay_end)
+						world << "\blue <B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B>"
 				else
 					feedback_set_details("end_proper","proper completion")
-					world << "\blue <B>Restarting in [restart_timeout/10] seconds</B>"
+					if(!delay_end)
+						world << "\blue <B>Restarting in [restart_timeout/10] seconds</B>"
 
 
 				if(blackbox)
 					blackbox.save_all_data_to_sql()
 
-				sleep(restart_timeout)
-				world.Reboot()
+				if(!delay_end)
+					sleep(restart_timeout)
+					world.Reboot()
+				else
+					world << "\blue <B>An admin has delayed the round end</B>"
 
 		return 1
 
@@ -304,7 +310,7 @@ var/global/datum/controller/gameticker/ticker
 		if (aiPlayer.connected_robots.len)
 			var/robolist = "<b>The AI's loyal minions were:</b> "
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
-				robolist += "[robo.name][robo.stat?" (Deactivated)  (Played by: [robo.key]), ":",  (Played by: [robo.key])"]"
+				robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.key]), ":" (Played by: [robo.key]), "]"
 			world << "[robolist]"
 
 	for (var/mob/living/silicon/robot/robo in world)
