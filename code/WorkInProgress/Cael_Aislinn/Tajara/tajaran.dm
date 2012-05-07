@@ -624,8 +624,8 @@
 /mob/living/carbon/human/tajaran/co2overloadtime = null
 /mob/living/carbon/human/tajaran/temperature_resistance = T0C+70
 
-//I just need this for some vars, please don't hurt me. -- Erthilo
 
+/* //This is silly. -- Erthilo
 /mob/living/carbon/human/tajaran/Emissary/
 	unacidable = 1
 	var/aegis = 1
@@ -713,3 +713,4 @@
 		src.heal_overall_damage(9001,9001)
 		src.stat = 0
 		aegis = 0
+*/
