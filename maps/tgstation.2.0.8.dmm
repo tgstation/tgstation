@@ -3441,7 +3441,7 @@
 "boi" = (/obj/structure/kitchenspike,/obj/machinery/light/small{dir = 8},/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/kitchen)
 "boj" = (/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/kitchen)
 "bok" = (/obj/structure/closet/wardrobe/chef_white,/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/kitchen)
-"bol" = (/obj/item/device/radio/intercom{dir = 8; name = "Station Intercom (General)"; pixel_x = -28},/obj/structure/table/reinforced,/obj/item/weapon/gun/projectile/shotgun,/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/cafeteria)
+"bol" = (/obj/item/device/radio/intercom{dir = 8; name = "Station Intercom (General)"; pixel_x = -28},/obj/structure/table/reinforced,/obj/item/weapon/gun/projectile/shotgun/doublebarrel,/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/cafeteria)
 "bom" = (/obj/structure/disposalpipe/trunk{dir = 4},/obj/machinery/disposal,/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/cafeteria)
 "bon" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/wall,/area/crew_quarters/cafeteria)
 "boo" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/obj/structure/disposalpipe/sortjunction{sortType = list("Diner")},/turf/simulated/wall,/area/maintenance/maintcentral)
