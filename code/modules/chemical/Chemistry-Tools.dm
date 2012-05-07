@@ -3251,8 +3251,7 @@
 					icon_state = "booger"
 					name = "Booger"
 					desc = "Ewww..."
-
-				/*if("snowwhite")  /// Dumbly-sprited drinks below. If your drink is on the list, shame on you --Agouri
+				if("snowwhite")
 					icon_state = "snowwhite"
 					name = "Snow White"
 					desc = "A cold refreshment."
@@ -3339,7 +3338,7 @@
 				if("erikasurprise")
 					icon_state = "erikasurprise"
 					name = "Erika Surprise"
-					desc = "A surprise of Erika"*/
+					desc = "The surprise is, it's green!"
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"
