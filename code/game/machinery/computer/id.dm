@@ -188,7 +188,10 @@
 		if ("modify")
 			if (modify)
 				data_core.manifest_modify(modify.registered_name, modify.assignment)
-				modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
+				if(istype(modify,/obj/item/weapon/card/id/fluff/lifetime))
+					modify.name = text("[modify.registered_name]'s Lifetime ID Card ([modify.assignment])")
+				else
+					modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
 				if(ishuman(usr))
 					modify.loc = usr.loc
 					if(!usr.get_active_hand())
