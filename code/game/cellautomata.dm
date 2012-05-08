@@ -106,8 +106,6 @@
 
 	..()
 
-	sleep(50)
-
 	plmaster = new /obj/effect/overlay(  )
 	plmaster.icon = 'tile_effects.dmi'
 	plmaster.icon_state = "plasma"
