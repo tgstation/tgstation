@@ -571,17 +571,13 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 						B.name = ticker.Bible_name
 						B.deity_name = ticker.Bible_deity_name
 
-					bibledelay = 60
-					spawn(0)
-						while(bibledelay >= 1 && src)
-							sleep(10)
-							bibledelay -- // subtract one second to countdown
-
+					bibledelay = 1
+					spawn(60)
 						bibledelay = 0
 
 				else
 					for (var/mob/V in hearers(src))
-						V.show_message("<b>[src]</b>'s monitor flashes, \"[bibledelay] seconds remaining until the bible printer is ready for use.\"")
+						V.show_message("<b>[src]</b>'s monitor flashes, \"Bible printer currently unavailable, please wait a moment.\"")
 
 			if("7")
 				screenstate = 7
@@ -649,18 +645,6 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 						dbcon.Disconnect()
 	if(href_list["targetid"])
 
-		if(!bibledelay)//Taken from the bible code part thing
-			bibledelay = 60
-			spawn(0)
-				while(bibledelay >= 1 && src)
-					sleep(10)
-					bibledelay -- // subtract one second to countdown
-
-				bibledelay = 0
-
-		else
-			for (var/mob/V in hearers(src))
-				V.show_message("<b>[src]</b>'s monitor flashes, \"[bibledelay] seconds remaining until the printer is ready for use.\"")
 
 
 
@@ -669,7 +653,13 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
 		if(!dbcon.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
+		if(bibledelay)
+			for (var/mob/V in hearers(src))
+				V.show_message("<b>[src]</b>'s monitor flashes, \"Printer unavailable. Please allow a short time before attempting to print.\"")
 		else
+			bibledelay = 1
+			spawn(60)
+				bibledelay = 0
 			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM library WHERE id=\"[sqlid]\"")
 			query.Execute()
 
