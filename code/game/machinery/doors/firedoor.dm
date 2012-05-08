@@ -11,7 +11,7 @@
 	opacity = 0
 	density = 0
 	var/nextstate = null
-
+	var/net_id
 
 	Bumped(atom/AM)
 		if(p_open || operating)	return
