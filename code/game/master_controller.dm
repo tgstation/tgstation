@@ -47,6 +47,12 @@ datum/controller/game_controller
 
 		world.tick_lag = config.Ticklag
 
+		//	Sleep for about 5 seconds to allow background initialization procs to finish
+		sleep(50)
+
+		//	Now that the game is world is fully initialized, pause server until a user connects.
+		world.sleep_offline = 1
+
 		setup_objects()
 
 		setupgenetics()
