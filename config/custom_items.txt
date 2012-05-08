@@ -30,13 +30,4 @@ tastyfish: Cindy Robertson: /obj/item/weapon/wrapping_paper
 tzefa: Wes Solari: /obj/item/fluff/wes_solari_1
 vinceluk: Seth Sealis: /obj/item/clothing/suit/storage/det_suit/fluff/graycoat
 whitellama: Ethan Way: /obj/item/fluff/ethan_way_1
-
-
-
-
-
-
-
-
-
-
+fastler: Fastler Greay: /obj/item/weapon/card/id/fluff/lifetimeid

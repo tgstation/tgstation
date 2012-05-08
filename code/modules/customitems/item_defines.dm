@@ -112,6 +112,13 @@
 	icon_state = "orangecamera"
 	pictures_left = 30
 
+
+/obj/item/weapon/card/id/fluff/lifetime		//fastler: Fastler Greay; it seemed like something multiple people would have
+	name = "Lifetime ID Card"
+	desc = "A modified ID card given only to those people who have devoted their lives to the better interests of NanoTrasen. It sparkles blue."
+	icon = 'custom_items.dmi'
+	icon_state = "lifetimeid"
+
 //////////////////////////////////
 //////////// Clothing ////////////
 //////////////////////////////////
