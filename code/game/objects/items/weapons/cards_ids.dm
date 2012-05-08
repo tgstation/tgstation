@@ -207,13 +207,10 @@ FINGERPRINT CARD
 
 /obj/item/weapon/f_card/proc/display()
 	if(!fingerprints)	return
-	if (!istype(src.fingerprints, /list))
-		src.fingerprints = params2list(src.fingerprints)
-	if (length(src.fingerprints))
+	if (length(fingerprints))
 		var/dat = "<B>Fingerprints on Card</B><HR>"
-		for(var/i = 1, i < (src.fingerprints.len + 1), i++)
-			var/list/L = params2list(src.fingerprints[i])
-			dat += text("[]<BR>", L["1"])
+		for(var/name in fingerprints)
+			dat += "[name]<BR>"
 			//Foreach goto(41)
 		return dat
 	else
@@ -273,7 +270,7 @@ FINGERPRINT CARD
 			else
 				src.name = "Finger Print Card"
 			W.add_fingerprint(user)
-			src.add_fingerprint(user)
+			add_fingerprint(user)
 	return
 
 /obj/item/weapon/f_card/add_fingerprint()
