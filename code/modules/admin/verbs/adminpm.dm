@@ -47,7 +47,7 @@
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
-		msg = input(src,"Message:", "Private message") as text|null // This is to stop identification of stealthmins for now -- Erthilo
+		msg = input(src,"Message:", "Private message to [C.key]") as text|null
 		if(!msg)	return
 		if(!C)
 			if(holder)	src << "<font color='red'>Error: Admin-PM: Client not found.</font>"

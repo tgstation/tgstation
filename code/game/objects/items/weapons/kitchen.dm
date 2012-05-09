@@ -88,7 +88,7 @@ KNIFE
 
 
 // ROLLING PIN
-/* //Honestly this doesn't even work and is very silly. -- Erthilo
+
 /obj/item/weapon/kitchen/rollingpin/attack(mob/M as mob, mob/living/user as mob)
 	if ((user.mutations & CLUMSY) && prob(50))
 		user << "\red The [src] slips out of your hand and hits your head."
@@ -121,7 +121,6 @@ KNIFE
 		M.eye_blurry += 3
 
 	return
-*/
 
 
 

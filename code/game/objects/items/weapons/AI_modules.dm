@@ -75,8 +75,6 @@ AI MODULES
 	target << "[sender] has uploaded a change to the laws you must follow, using a [name]. From now on: "
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
-	message_admins("[sender.name]([sender.key]) uploaded a new AI/Cyborg law.")
-	log_game("[sender.name]([sender.key]) uploaded a new AI/Cyborg law.")
 
 
 /******************** Modules ********************/

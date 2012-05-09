@@ -54,12 +54,12 @@
 					src.cell.use(1)
 				else
 					if(src.module_state_1)
-						src.cell.use(5)
+						src.cell.use(5.5)
 					if(src.module_state_2)
-						src.cell.use(5)
+						src.cell.use(5.5)
 					if(src.module_state_3)
-						src.cell.use(5)
-					src.cell.use(1)
+						src.cell.use(5.5)
+					src.cell.use(0.1)
 					src.blinded = 0
 					src.stat = 0
 			else

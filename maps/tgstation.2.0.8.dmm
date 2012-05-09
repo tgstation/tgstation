@@ -3609,7 +3609,7 @@
 "bru" = (/obj/structure/kitchenspike,/obj/machinery/light/small{dir = 8},/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/kitchen)
 "brv" = (/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/kitchen)
 "brw" = (/obj/structure/closet/wardrobe/chef_white,/turf/simulated/floor{icon_state = "freezerfloor"},/area/crew_quarters/kitchen)
-"brx" = (/obj/item/device/radio/intercom{dir = 8; name = "Station Intercom (General)"; pixel_x = -28},/obj/structure/table/reinforced,/obj/item/weapon/gun/projectile/shotgun/doublebarrel,/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/cafeteria)
+"brx" = (/obj/item/device/radio/intercom{dir = 8; name = "Station Intercom (General)"; pixel_x = -28},/obj/structure/table/reinforced,/obj/item/weapon/gun/projectile/shotgun/doublebarrel,/obj/item/weapon/paper{info = "Remeber, due to NanoTrasen firearm regulations, illegal modifications of, or possession of, the shotgun outside the bar area is considered a Contraband offence. <br><br>--CentCom Regulatory Body"; name = "Firearm Regulations"},/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/cafeteria)
 "bry" = (/obj/structure/disposalpipe/trunk{dir = 4},/obj/machinery/disposal,/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/simulated/floor{icon_state = "bar"},/area/crew_quarters/cafeteria)
 "brz" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/wall,/area/crew_quarters/cafeteria)
 "brA" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/obj/structure/disposalpipe/sortjunction{sortType = list("Diner")},/turf/simulated/wall,/area/maintenance/maintcentral)
