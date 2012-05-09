@@ -700,6 +700,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		newname = dd_replacetext(newname, ">", "'")
 		M.real_name = newname
 		M.name = newname
+		M.original_name = newname
 
 /*/proc/clname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea
 	var/randomname = pick(clown_names)
@@ -731,6 +732,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		newname = dd_replacetext(newname, ">", "'")
 		M.real_name = newname
 		M.name = newname
+		M.original_name = newname
 
 	for (var/obj/item/device/pda/pda in M.contents)
 		if (pda.owner == oldname)
@@ -738,9 +740,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			pda.name = "PDA-[newname] ([pda.ownjob])"
 			break
 	for(var/obj/item/weapon/card/id/id in M.contents)
-		if(id.registered == oldname)
-			id.registered = newname
-			id.name = "[id.registered]'s ID Card ([id.assignment])"
+		if(id.registered_name == oldname)
+			id.registered_name = newname
+			id.name = "[id.registered_name]'s ID Card ([id.assignment])"
 			break*/
 
 /proc/ionnum()
@@ -1826,6 +1828,13 @@ proc/get_opposite(var/checkdir)
 		if(a == character)
 			count++
 	return count
+
+proc/get_mob_with_client_list()
+	var/list/mobs = list()
+	for(var/mob/M in world)
+		if (M.client)
+			mobs += M
+	return mobs
 
 /proc/reverse_direction(var/dir)
 	switch(dir)

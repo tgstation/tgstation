@@ -137,33 +137,38 @@
 			var/obj/machinery/camera/C = usr:current
 			if ((C && istype(C, /obj/machinery/camera)) || C==null)
 
-				var/closestDist = -1
-				if (C!=null)
-					if (C.status)
-						closestDist = get_dist(C, target)
-				//usr << text("Dist = [] for camera []", closestDist, C.name)
-				var/zmatched = 0
-				if (closestDist > 7 || closestDist == -1)
-					//check other cameras
-					var/obj/machinery/camera/closest = C
-					for(var/obj/machinery/camera/C2 in world)
-						if (C2.network in src.networks)
-							if (C2.z == target.z)
-								zmatched = 1
-								if (C2.status)
-									var/dist = get_dist(C2, target)
-									if ((dist < closestDist) || (closestDist == -1))
-										closestDist = dist
-										closest = C2
-					//usr << text("Closest camera dist = [], for camera []", closestDist, closest.area.name)
+				if(isrobot(target))
+					C = target:camera
+					usr:current = C
+					usr.reset_view(C)
+				else
+					var/closestDist = -1
+					if (C!=null)
+						if (C.status)
+							closestDist = get_dist(C, target)
+					//usr << text("Dist = [] for camera []", closestDist, C.name)
+					var/zmatched = 0
+					if (closestDist > 7 || closestDist == -1)
+						//check other cameras
+						var/obj/machinery/camera/closest = C
+						for(var/obj/machinery/camera/C2 in world)
+							if (C2.network == src.networks)
+								if (C2.z == target.z)
+									zmatched = 1
+									if (C2.status)
+										var/dist = get_dist(C2, target)
+										if ((dist < closestDist) || (closestDist == -1))
+											closestDist = dist
+											closest = C2
+						//usr << text("Closest camera dist = [], for camera []", closestDist, closest.area.name)
 
-					if (closest != C)
-						usr:current = closest
-						usr.reset_view(closest)
-						//use_power(50)
-					if (zmatched == 0)
-						usr << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
-						sleep(40) //because we're sleeping another second after this (a few lines down)
+						if (closest != C)
+							usr:current = closest
+							usr.reset_view(closest)
+							//use_power(50)
+						if (zmatched == 0)
+							usr << "Target is not on or near any active cameras on the station. We'll check again in 5 seconds (unless you use the cancel-camera verb)."
+							sleep(40) //because we're sleeping another second after this (a few lines down)
 			else
 				usr << "Follow camera mode ended."
 				usr:cameraFollow = null

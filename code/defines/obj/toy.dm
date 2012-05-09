@@ -67,8 +67,8 @@
 
 
 /obj/item/toy/syndicateballoon
-	name = "syndicate balloon"
-	desc = "There is a tag on the back that reads \"FUK NT!11!\"."
+	name = "red balloon"
+	desc = "Looks like a red balloon with a large \"S\" on it."
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20

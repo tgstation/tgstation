@@ -11,11 +11,14 @@
 		updateicon()
 
 /obj/item/weapon/cell/proc/updateicon()
-
-	if(maxcharge <= 2500)
+	/*if(maxcharge < 10000)
 		icon_state = "cell"
+	if(maxcharge >= 10000 && maxcharge < 20000)
+		icon_state = "hcell"
+	if(maxcharge >= 20000 && maxcharge < 30000)
+		icon_state = "scell"
 	else
-		icon_state = "hpcell"
+		icon_state = "hpcell"*/
 
 	overlays = null
 
@@ -63,9 +66,9 @@
 		if(maxcharge <= 2500)
 			usr << "[desc]\nThe manufacturer's label states this cell has a power rating of [maxcharge], and that you should not swallow it.\nThe charge meter reads [round(src.percent() )]%."
 		else
-			usr << "This power cell has an exciting chrome finish, as it is an uber-capacity cell type! It has a power rating of [maxcharge]!!!\nThe charge meter reads [round(src.percent() )]%."
+			usr << "This power cell has an exciting chrome finish, as it is an uber-capacity cell type! It has a power rating of [maxcharge]!\nThe charge meter reads [round(src.percent() )]%."
 	if(crit_fail)
-		usr << "\red This power cell seems to be faulty"
+		usr << "\red This power cell seems to be faulty."
 
 /obj/item/weapon/cell/attack_self(mob/user as mob)
 	src.add_fingerprint(user)

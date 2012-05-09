@@ -1,4 +1,4 @@
-/obj/structure/closet/secure_closet/personal/var/registered = null
+/obj/structure/closet/secure_closet/personal/var/registered_name = null
 /obj/structure/closet/secure_closet/personal/req_access = list(access_all_personal_lockers)
 
 /obj/structure/closet/secure_closet/personal/New()
@@ -42,14 +42,14 @@
 			return
 		var/obj/item/weapon/card/id/I = W
 		if(!I || !I.registered_name)	return
-		if(src.allowed(user) || !src.registered || (istype(I) && (src.registered == I.registered_name)))
+		if(src.allowed(user) || !src.registered_name || (istype(I) && (src.registered_name == I.registered_name)))
 			//they can open all lockers, or nobody owns this, or they own this locker
 			src.locked = !( src.locked )
 			if(src.locked)	src.icon_state = src.icon_locked
 			else	src.icon_state = src.icon_closed
 
-			if(!src.registered)
-				src.registered = I.registered_name
+			if(!src.registered_name)
+				src.registered_name = I.registered_name
 				src.desc = "Owned by [I.registered_name]."
 				src.name = "Personal Closet - [I.registered_name]"
 		else

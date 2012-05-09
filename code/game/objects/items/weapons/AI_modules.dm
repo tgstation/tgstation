@@ -75,6 +75,8 @@ AI MODULES
 	target << "[sender] has uploaded a change to the laws you must follow, using a [name]. From now on: "
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [sender.name]([sender.key]) used [src.name] on [target.name]([target.key])")
+	message_admins("[sender.name]([sender.key]) uploaded a new AI/Cyborg law.")
+	log_game("[sender.name]([sender.key]) uploaded a new AI/Cyborg law.")
 
 
 /******************** Modules ********************/
@@ -431,7 +433,7 @@ AI MODULES
 	origin_tech = "programming=4"
 
 
-/obj/item/weapon/aiModule/purge/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
+/obj/item/weapon/aiModule/robocop/transmitInstructions(var/mob/living/silicon/ai/target, var/mob/sender)
 	..()
 	target.clear_inherent_laws()
 	target.add_inherent_law("Serve the public trust.")

@@ -70,11 +70,17 @@
 
 
 /mob/living/carbon/human/New()
+
+	..()
+
+
+
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
 
-	if(!dna)	dna = new /datum/dna(null)
+	if(!dna)
+		dna = new /datum/dna(null)
 
 	new /datum/organ/external/chest(src)
 	new /datum/organ/external/groin(src)
@@ -123,19 +129,24 @@
 		gender = MALE
 		g = "m"
 
-	spawn (1)
-		if(!stand_icon)
-			stand_icon = new /icon('human.dmi', "body_[g]_s")
-		if(!lying_icon)
-			lying_icon = new /icon('human.dmi', "body_[g]_l")
+	spawn(1)
+		stand_icon = new /icon('human.dmi', "body_[g]_s")
+		lying_icon = new /icon('human.dmi', "body_[g]_l")
 		icon = stand_icon
 		update_clothing()
+
 		src << "\blue Your icons have been generated!"
+
+
+	spawn(10) // Failsafe for.. weirdness.
+		update_clothing()
+		update_body()
 
 	vessel = new/datum/reagents(600)
 	vessel.my_atom = src
 	vessel.add_reagent("blood",560)
-	spawn(1) fixblood()
+	spawn(1)
+		fixblood()
 
 	..()
 	/*var/known_languages = list()
@@ -266,6 +277,7 @@
 
 	var/hungry = (500 - nutrition)/5 // So overeat would be 100 and default level would be 80
 	if (hungry >= 70) tally += hungry/50
+
 
 	for(var/organ in list("l_leg","l_foot","r_leg","r_foot"))
 		var/datum/organ/external/o = organs["[organ]"]
@@ -1484,7 +1496,6 @@
 				del(face_standing)
 				del(face_lying)
 				return
-
 	if(!facial_hair_style || !hair_style)	return//Seems people like to lose their icons, this should stop the runtimes for now
 	del(face_standing)
 	del(face_lying)

@@ -735,29 +735,32 @@ datum
 							del (M:wear_mask)
 							M << "\red Your mask melts away but protects you from the acid!"
 							return
+					if(!M.unacidable)
+						if(prob(15) && istype(M, /mob/living/carbon/human) && volume >= 30)
 
-					if(prob(15) && istype(M, /mob/living/carbon/human) && volume >= 30)
-						var/datum/organ/external/head/affecting = M:get_organ("head")
-						if(affecting)
-							affecting.disfigured = 1
-							affecting.take_damage(25, 0)
-							M:UpdateDamageIcon()
-							M:emote("scream")
-							M << "\red Your face has become disfigured!"
-							M.real_name = "Unknown"
-							M.warn_flavor_changed()
-					else
-						M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
+							var/datum/organ/external/head/affecting = M:get_organ("head")
+							if(affecting)
+								affecting.disfigured = 1
+								affecting.take_damage(25, 0)
+								M:UpdateDamageIcon()
+								M:emote("scream")
+								M << "\red Your face has become disfigured!"
+								M.real_name = "Unknown"
+								M.warn_flavor_changed()
+						else
+							M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
 				else
-					M.take_organ_damage(min(15, volume * 2))
+					if(!M.unacidable)
+						M.take_organ_damage(min(15, volume * 2))
 
 			reaction_obj(var/obj/O, var/volume)
 				if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(10))
-					var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
-					I.desc = "Looks like this was \an [O] some time ago."
-					for(var/mob/M in viewers(5, O))
-						M << "\red \the [O] melts."
-					del(O)
+					if(!O.unacidable)
+						var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
+						I.desc = "Looks like this was \an [O] some time ago."
+						for(var/mob/M in viewers(5, O))
+							M << "\red \the [O] melts."
+						del(O)
 
 		pacid
 			name = "Polytrinic acid"
@@ -788,42 +791,49 @@ datum
 							else
 								M << "\red Your helmet protects you from the acid!"
 							return
-						var/datum/organ/external/head/affecting = M:get_organ("head")
-						affecting.take_damage(15, 0)
-						M:UpdateDamageIcon()
-						M:emote("scream")
-						if(prob(15))
-							M << "\red Your face has become disfigured!"
-							M.real_name = "Unknown"
-							M.warn_flavor_changed()
-							affecting.disfigured = 1
+
+						if(!M.unacidable)
+							var/datum/organ/external/head/affecting = M:get_organ("head")
+							affecting.take_damage(15, 0)
+							M:UpdateDamageIcon()
+							M:emote("scream")
+							if(prob(15))
+								M << "\red Your face has become disfigured!"
+								M.real_name = "Unknown"
+								M.warn_flavor_changed()
+								affecting.disfigured = 1
 					else
 						if(istype(M, /mob/living/carbon/monkey) && M:wear_mask)
 							del (M:wear_mask)
 							M << "\red Your mask melts away but protects you from the acid!"
 							return
-						M.take_organ_damage(min(15, volume * 4)) // same deal as sulphuric acid
+
+
+						if(!M.unacidable)
+							M.take_organ_damage(min(15, volume * 4)) // same deal as sulphuric acid
 				else
-					if(istype(M, /mob/living/carbon/human))
-						var/datum/organ/external/head/affecting = M:get_organ("head")
-						affecting.take_damage(15, 0)
-						M:UpdateDamageIcon()
-						M:emote("scream")
-						if(prob(15))
-							M << "\red Your face has become disfigured!"
-							M.real_name = "Unknown"
-							M.warn_flavor_changed()
-							affecting.disfigured = 1
-					else
-						M.take_organ_damage(min(15, volume * 4))
+					if(!M.unacidable)
+						if(istype(M, /mob/living/carbon/human))
+							var/datum/organ/external/head/affecting = M:get_organ("head")
+							affecting.take_damage(15, 0)
+							M:UpdateDamageIcon()
+							M:emote("scream")
+							if(prob(15))
+								M << "\red Your face has become disfigured!"
+								M.real_name = "Unknown"
+								M.warn_flavor_changed()
+								affecting.disfigured = 1
+						else
+							M.take_organ_damage(min(15, volume * 4))
 
 			reaction_obj(var/obj/O, var/volume)
 				if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)))
-					var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
-					I.desc = "Looks like this was \an [O] some time ago."
-					for(var/mob/M in viewers(5, O))
-						M << "\red \the [O] melts."
-					del(O)
+					if(!O.unacidable)
+						var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
+						I.desc = "Looks like this was \an [O] some time ago."
+						for(var/mob/M in viewers(5, O))
+							M << "\red \the [O] melts."
+						del(O)
 
 		glycerol
 			name = "Glycerol"
@@ -1870,6 +1880,23 @@ datum
 					M.adjustToxLoss(rand(-15, -5)))
 					M.updatehealth()
 */
+				..()
+				return
+
+		lipozine
+			name = "Lipozine" // The anti-nutriment.
+			id = "lipozine"
+			description = "A chemical compound that causes a powerful fat-burning reaction."
+			reagent_state = LIQUID
+			nutriment_factor = 10 * REAGENTS_METABOLISM
+			color = "#BBEDA4" // rgb: 187, 237, 164
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M:nutrition -= nutriment_factor
+				M:overeatduration = 0
+				if(M:nutrition < 0)//Prevent from going into negatives.
+					M:nutrition = 0
 				..()
 				return
 

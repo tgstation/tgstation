@@ -64,7 +64,7 @@
 				verbs += /client/proc/cmd_admin_delete
 				verbs += /client/proc/cmd_admin_add_freeform_ai_law
 				verbs += /client/proc/cmd_admin_rejuvenate
-				verbs += /client/proc/cmd_admin_drop_everything
+				//verbs += /client/proc/cmd_admin_drop_everything		--Merged with view variables
 				//verbs += /client/proc/cmd_modify_object_variables 	--Merged with view variables
 
 		if ("Admin Candidate")
@@ -127,11 +127,11 @@
 			verbs += /obj/admins/proc/votekill
 			verbs += /obj/admins/proc/show_player_panel
 			verbs += /client/proc/deadchat								//toggles deadchat
-			verbs += /client/proc/cmd_admin_mute
+			//verbs += /client/proc/cmd_admin_mute	--was never used (according to stats trackind) - use show player panel --erro
 			verbs += /client/proc/cmd_admin_pm_context
 			verbs += /client/proc/cmd_admin_pm_panel
 			verbs += /client/proc/cmd_admin_subtle_message
-			verbs += /client/proc/warn
+			//verbs += /client/proc/warn	- was never used
 			verbs += /client/proc/dsay
 			verbs += /client/proc/admin_play
 			verbs += /client/proc/admin_observe
@@ -140,7 +140,7 @@
 			verbs += /client/proc/player_panel_new
 			verbs += /client/proc/unban_panel
 			verbs += /client/proc/jobbans
-			verbs += /client/proc/playernotes
+
 			verbs += /client/proc/voting
 			verbs += /client/proc/hide_verbs
 			verbs += /client/proc/general_report
@@ -148,6 +148,7 @@
 			verbs += /client/proc/deadmin_self
 			//verbs += /client/proc/cmd_admin_prison 					--Merged with player panel
 			//verbs += /obj/admins/proc/unprison  						--Merged with player panel
+			verbs += /client/proc/playernotes
 			verbs += /obj/admins/proc/show_skills
 		else	return
 
@@ -169,6 +170,7 @@
 		if (holder.level >= 2)
 			verbs += /client/proc/cmd_admin_add_random_ai_law
 			verbs += /client/proc/secrets
+			verbs += /client/proc/check_antagonists
 			verbs += /client/proc/play_sound
 			verbs += /client/proc/stealth
 			verbs += /client/proc/deadmin_self
@@ -183,7 +185,8 @@
 			verbs += /obj/admins/proc/view_atk_log
 			verbs += /obj/admins/proc/toggleaban						//abandon mob
 			verbs += /obj/admins/proc/show_traitor_panel
-			verbs += /client/proc/cmd_admin_remove_plasma
+			verbs += /client/proc/getserverlog							//fetch an old serverlog to look at
+			//verbs += /client/proc/cmd_admin_remove_plasma 			--This proc is outdated, does not do anything
 			verbs += /client/proc/admin_call_shuttle
 			verbs += /client/proc/admin_cancel_shuttle
 			verbs += /client/proc/cmd_admin_dress
@@ -195,6 +198,7 @@
 			verbs += /client/proc/toggleadminhelpsound
 			verbs += /proc/possess
 			verbs += /proc/release
+			verbs += /client/proc/make_tajaran
 			verbs += /client/proc/admin_deny_shuttle
 			verbs += /client/proc/cmd_admin_christmas
 			verbs += /client/proc/editappear
@@ -239,13 +243,11 @@
 			verbs += /client/proc/cmd_admin_world_narrate
 			verbs += /client/proc/cmd_debug_del_all
 			verbs += /client/proc/cmd_debug_tog_aliens
-			verbs += /client/proc/ticklag
 			verbs += /client/proc/mapload
 			verbs += /client/proc/check_words
 			verbs += /client/proc/drop_bomb
-			verbs += /client/proc/cmd_admin_grantfullaccess
 			verbs += /client/proc/kill_airgroup
-			verbs += /client/proc/cmd_admin_drop_everything
+			//verbs += /client/proc/cmd_admin_drop_everything			--Merged with view variables
 			verbs += /client/proc/make_sound
 			verbs += /client/proc/play_local_sound
 			verbs += /client/proc/send_space_ninja
@@ -273,7 +275,6 @@
 			verbs += /client/proc/delbook
 			verbs += /client/proc/Force_Event_admin
 			verbs += /client/proc/radioalert
-			verbs += /client/proc/make_tajaran
 			verbs += /client/proc/CarbonCopy
 			verbs += /client/proc/jump_to_dead_group
 		else	return
@@ -289,7 +290,7 @@
 			verbs += /client/proc/everyone_random
 			verbs += /client/proc/only_one
 			verbs += /client/proc/deadmin_self
-//			verbs += /client/proc/giveruntimelog							//used by coders to retrieve runtime logs
+			verbs += /client/proc/giveruntimelog							//used by coders to retrieve runtime logs
 			verbs += /client/proc/cinematic							//used by coders to retrieve runtime logs
 			verbs += /client/proc/enable_debug_verbs
 			verbs += /client/proc/kill_air
@@ -346,12 +347,10 @@
 	verbs -= /client/proc/Cell
 	verbs -= /client/proc/cmd_debug_del_all
 	verbs -= /client/proc/cmd_debug_tog_aliens
-	verbs -= /client/proc/ticklag
 	verbs -= /client/proc/mapload
 	verbs -= /client/proc/check_words
 	verbs -= /client/proc/drop_bomb
-	verbs -= /client/proc/cmd_admin_grantfullaccess
-	verbs -= /client/proc/cmd_admin_drop_everything
+	//verbs -= /client/proc/cmd_admin_drop_everything					--merged with view variables
 	verbs -= /client/proc/make_sound
 	verbs -= /client/proc/only_one
 	verbs -= /client/proc/send_space_ninja
@@ -371,7 +370,7 @@
 	verbs -= /client/proc/cmd_admin_rejuvenate
 	verbs -= /client/proc/cmd_admin_delete
 	verbs -= /client/proc/toggleadminhelpsound
-	verbs -= /client/proc/cmd_admin_remove_plasma
+	//verbs -= /client/proc/cmd_admin_remove_plasma						--This proc is outdated, does not do anything
 	verbs -= /client/proc/admin_call_shuttle
 	verbs -= /client/proc/admin_cancel_shuttle
 	verbs -= /client/proc/cmd_admin_dress
@@ -379,17 +378,18 @@
 	verbs -= /client/proc/spawn_xeno
 	verbs -= /client/proc/cmd_admin_add_random_ai_law
 	verbs -= /client/proc/secrets
+	verbs -= /client/proc/check_antagonists
 	verbs -= /client/proc/play_sound
 	verbs -= /client/proc/stealth
 	verbs -= /client/proc/cmd_admin_check_contents
 	verbs -= /client/proc/cmd_admin_create_centcom_report
 	verbs -= /client/proc/deadchat										//toggles deadchat
-	verbs -= /client/proc/cmd_admin_mute
+	//verbs -= /client/proc/cmd_admin_mute	--was never used (according to stats trackind) - use show player panel --erro
 	verbs -= /client/proc/cmd_admin_pm_context
 	verbs -= /client/proc/cmd_admin_pm_panel
 	verbs -= /client/proc/cmd_admin_say
 	verbs -= /client/proc/cmd_admin_subtle_message
-	verbs -= /client/proc/warn
+	//verbs -= /client/proc/warn
 	verbs -= /client/proc/dsay
 	verbs -= /client/proc/admin_play
 	verbs -= /client/proc/admin_observe
@@ -419,9 +419,9 @@
 	verbs -= /client/proc/deadmin_self
 	verbs -= /client/proc/jumptocoord
 	verbs -= /client/proc/everyone_random
-//	verbs -= /client/proc/giveruntimelog									//used by coders to retrieve runtime logs
-//	verbs -= /client/proc/getserverlog
-	verbs -= /client/proc/cinematic
+	verbs -= /client/proc/giveruntimelog									//used by coders to retrieve runtime logs
+	verbs -= /client/proc/getserverlog
+	verbs -= /client/proc/cinematic										//show a cinematic sequence
 	verbs -= /client/proc/cmd_admin_change_custom_event
 	verbs -= /client/proc/admin_invis
 	verbs -= /client/proc/callprocgen
@@ -431,9 +431,7 @@
 	verbs -= /client/proc/Force_Event_admin
 	verbs -= /client/proc/radioalert
 	verbs -= /client/proc/rnd_check_designs
-	verbs -= /client/proc/make_tajaran
 	verbs -= /client/proc/CarbonCopy
-	verbs -= /client/proc/getruntimelog									//used by coders to retrieve runtime logs
 	verbs -= /proc/possess
 	verbs -= /proc/release
 	//verbs -= /client/proc/give_spell 									--Merged with view variables
@@ -452,6 +450,7 @@
 	verbs -= /client/proc/togglebuildmodeself
 	verbs -= /client/proc/kill_airgroup
 	verbs -= /client/proc/debug_master_controller
+	verbs -= /client/proc/make_tajaran
 	verbs -= /client/proc/admin_deny_shuttle
 	verbs -= /client/proc/cmd_admin_christmas
 	verbs -= /client/proc/editappear
@@ -529,6 +528,14 @@
 	if(holder)
 		holder.player_panel_new()
 //	feedback_add_details("admin_verb","PPN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	return
+
+/client/proc/check_antagonists()
+	set name = "Check Antagonists"
+	set category = "Admin"
+	if(holder)
+		holder.check_antagonists()
+	//feedback_add_details("admin_verb","CHA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/jobbans()
@@ -669,6 +676,8 @@
 	if(!S) return
 	T.spell_list += new S
 //	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
+	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] the spell [S].", 1)
 
 /client/proc/make_sound(var/obj/O in world) // -- TLE
 	set category = "Special Verbs"
@@ -680,7 +689,9 @@
 			return
 		for (var/mob/V in hearers(O))
 			V.show_message(message, 2)
-//	feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
+		message_admins("\blue [key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound", 1)
+//		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/togglebuildmodeself()
@@ -723,6 +734,8 @@
 		kill_air = 1
 		usr << "<b>Disabled air processing.</b>"
 //	feedback_add_details("admin_verb","KA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(usr)] used 'kill air'.")
+	message_admins("\blue [key_name_admin(usr)] used 'kill air'.", 1)
 
 /client/proc/show_verbs()
 	set name = "Toggle admin verb visibility"

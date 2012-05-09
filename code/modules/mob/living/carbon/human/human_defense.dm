@@ -119,9 +119,8 @@ emp_act
 	if(!I || !user)	return 0
 
 	var/datum/organ/external/affecting = get_organ(ran_zone(user.zone_sel.selecting))
+
 	var/hit_area = affecting.display_name
-
-
 
 	if((user != src) && check_shields(I.force, "the [I.name]"))
 		return 0

@@ -67,7 +67,7 @@
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
 	..()
-
+/* //This breaks a few blood related things, thankfully we don't get too many decals -- Erthilo
 /obj/effect/decal/cleanable/blood/New()
 	..()
 	if(istype(src, /obj/effect/decal/cleanable/blood/gibs))
@@ -76,6 +76,7 @@
 		for(var/obj/effect/decal/cleanable/blood/B in src.loc)
 			if(B != src)
 				del(B)
+*/
 
 /obj/effect/decal/cleanable/blood/drip
 	name = "drips of blood"

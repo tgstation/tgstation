@@ -65,6 +65,76 @@ var/global/BSACooldown = 0
 			alert("You cannot perform this action. You must be of a higher administrative rank!")
 			return
 
+	if(href_list["simplemake"])
+
+		if(!href_list["mob"])
+			usr << "Invalid mob"
+			return
+
+		var/mob/M = locate(href_list["mob"])
+
+		if(!M || !ismob(M))
+			usr << "Cannot find mob"
+			return
+
+		var/delmob = 0
+		var/option = alert("Delete old mob?","Message","Yes","No","Cancel")
+		if(option == "Cancel")
+			return
+		if(option == "Yes")
+			delmob = 1
+
+		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]]; deletemob=[delmob]")
+		message_admins("\blue [key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]]; deletemob=[delmob]", 1)
+
+		switch(href_list["simplemake"])
+			if("observer")
+				M.change_mob_type( /mob/dead/observer , null, null, delmob)
+			if("drone")
+				M.change_mob_type( /mob/living/carbon/alien/humanoid/drone , null, null, delmob)
+			if("hunter")
+				M.change_mob_type( /mob/living/carbon/alien/humanoid/hunter , null, null, delmob)
+			if("queen")
+				M.change_mob_type( /mob/living/carbon/alien/humanoid/queen , null, null, delmob)
+			if("sentinel")
+				M.change_mob_type( /mob/living/carbon/alien/humanoid/sentinel , null, null, delmob)
+			if("larva")
+				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob)
+			if("human")
+				M.change_mob_type( /mob/living/carbon/human , null, null, delmob)
+			if("metroid")
+				M.change_mob_type( /mob/living/carbon/metroid , null, null, delmob)
+			if("adultmetroid")
+				M.change_mob_type( /mob/living/carbon/metroid/adult , null, null, delmob)
+			if("monkey")
+				M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob)
+			if("robot")
+				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob)
+			if("cat")
+				M.change_mob_type( /mob/living/simple_animal/cat , null, null, delmob)
+			if("runtime")
+				M.change_mob_type( /mob/living/simple_animal/cat/Runtime , null, null, delmob)
+			if("corgi")
+				M.change_mob_type( /mob/living/simple_animal/corgi , null, null, delmob)
+			if("ian")
+				M.change_mob_type( /mob/living/simple_animal/corgi/Ian , null, null, delmob)
+			if("crab")
+				M.change_mob_type( /mob/living/simple_animal/crab , null, null, delmob)
+			if("coffee")
+				M.change_mob_type( /mob/living/simple_animal/crab/Coffee , null, null, delmob)
+			if("parrot")
+				M.change_mob_type( /mob/living/simple_animal/parrot , null, null, delmob)
+			if("drprofessor")
+				M.change_mob_type( /mob/living/simple_animal/parrot/DrProfessor , null, null, delmob)
+			if("constructarmoured")
+				M.change_mob_type( /mob/living/simple_animal/constructarmoured , null, null, delmob)
+			if("constructbuilder")
+				M.change_mob_type( /mob/living/simple_animal/constructbuilder , null, null, delmob)
+			if("constructwraith")
+				M.change_mob_type( /mob/living/simple_animal/constructwraith , null, null, delmob)
+			if("shade")
+				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob)
+
 	if(href_list["view_player_info"])
 		show_player_info(href_list["view_player_info"])
 
@@ -885,6 +955,11 @@ var/global/BSACooldown = 0
 
 	if (href_list["sendtoprison"])
 		if ((src.rank in list( "Moderator", "Admin Candidate", "Temporary Admin", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+
+			var/confirm = alert(usr, "Send to admin prison for the round?", "Message", "Yes", "No")
+			if(confirm != "Yes")
+				return
+
 			var/mob/M = locate(href_list["sendtoprison"])
 			if (ismob(M))
 				if(istype(M, /mob/living/silicon/ai))
@@ -954,6 +1029,11 @@ var/global/BSACooldown = 0
 
 	if (href_list["tdome1"])
 		if ((src.rank in list( "Admin Candidate", "Temporary Admin", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+
+			var/confirm = alert(usr, "Confirm?", "Message", "Yes", "No")
+			if(confirm != "Yes")
+				return
+
 			var/mob/M = locate(href_list["tdome1"])
 			if (ismob(M))
 				if(istype(M, /mob/living/silicon/ai))
@@ -980,6 +1060,11 @@ var/global/BSACooldown = 0
 
 	if (href_list["tdome2"])
 		if ((src.rank in list( "Admin Candidate", "Temporary Admin", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+
+			var/confirm = alert(usr, "Confirm?", "Message", "Yes", "No")
+			if(confirm != "Yes")
+				return
+
 			var/mob/M = locate(href_list["tdome2"])
 			if (ismob(M))
 				if(istype(M, /mob/living/silicon/ai))
@@ -1006,6 +1091,11 @@ var/global/BSACooldown = 0
 
 	if (href_list["tdomeadmin"])
 		if ((src.rank in list( "Admin Candidate", "Temporary Admin", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+
+			var/confirm = alert(usr, "Confirm?", "Message", "Yes", "No")
+			if(confirm != "Yes")
+				return
+
 			var/mob/M = locate(href_list["tdomeadmin"])
 			if (ismob(M))
 				if(istype(M, /mob/living/silicon/ai))
@@ -1237,9 +1327,15 @@ var/global/BSACooldown = 0
 					sleep(2)
 					cl.jumptomob(M)
 
-
-
-
+	if (href_list["traitor_panel_pp"])
+		var/mob/M = locate(href_list["traitor_panel_pp"])
+		if(isnull(M))
+			usr << "Mob doesn't seem to exist."
+			return
+		if(!ismob(M))
+			usr << "This doen't seem to be a mob."
+			return
+		show_traitor_panel(M)
 
 	if (href_list["BlueSpaceArtillery"])
 		var/mob/M = locate(href_list["BlueSpaceArtillery"])
@@ -1334,6 +1430,11 @@ var/global/BSACooldown = 0
 
 	if (href_list["getmob"])
 		if(rank in list( "Trial Admin", "Badmin", "Game Admin", "Game Master"))
+
+			var/confirm = alert(usr, "Confirm?", "Message", "Yes", "No")
+			if(confirm != "Yes")
+				return
+
 			var/mob/M = locate(href_list["getmob"])
 			usr.client.Getmob(M)
 		else
@@ -2099,121 +2200,7 @@ var/global/BSACooldown = 0
 							dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
 						usr << browse(dat, "window=jobdebug;size=600x500")
 				if("check_antagonist")
-					if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
-						var/dat = "<html><head><title>Round Status</title></head><body><h1><B>Round Status</B></h1>"
-						dat += "Current Game Mode: <B>[ticker.mode.name]</B><BR>"
-						dat += "Round Duration: <B>[round(world.time / 36000)]:[(((world.time / 600 % 60)/10) > 1 ? world.time / 600 % 60 : add_zero(world.time / 600 % 60, 2))]:[world.time / 100 % 6][world.time / 100 % 10]</B><BR>"
-						dat += "<B>Emergency shuttle</B><BR>"
-						if (!emergency_shuttle.online)
-							dat += "<a href='?src=\ref[src];call_shuttle=1'>Call Shuttle</a><br>"
-						else
-							var/timeleft = emergency_shuttle.timeleft()
-							switch(emergency_shuttle.location)
-								if(0)
-									dat += "ETA: <a href='?src=\ref[src];edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</a><BR>"
-									dat += "<a href='?src=\ref[src];call_shuttle=2'>Send Back</a><br>"
-								if(1)
-									dat += "ETA: <a href='?src=\ref[src];edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</a><BR>"
-
-						if(ticker.mode.syndicates.len)
-							dat += "<br><table cellspacing=5><tr><td><B>Syndicates</B></td><td></td></tr>"
-							for(var/datum/mind/N in ticker.mode.syndicates)
-								var/mob/M = N.current
-								if(M)
-									dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-									dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td></tr>"
-								else
-									dat += "<tr><td><i>Nuclear Operative not found!</i></td></tr>"
-							dat += "</table><br><table><tr><td><B>Nuclear Disk(s)</B></td></tr>"
-							for(var/obj/item/weapon/disk/nuclear/N in world)
-								dat += "<tr><td>[N.name], "
-								var/atom/disk_loc = N.loc
-								while(!istype(disk_loc, /turf))
-									if(istype(disk_loc, /mob))
-										var/mob/M = disk_loc
-										dat += "carried by <a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a> "
-									if(istype(disk_loc, /obj))
-										var/obj/O = disk_loc
-										dat += "in \a [O.name] "
-									disk_loc = disk_loc.loc
-								dat += "in [disk_loc.loc] at ([disk_loc.x], [disk_loc.y], [disk_loc.z])</td></tr>"
-							dat += "</table>"
-
-						if(ticker.mode.head_revolutionaries.len || ticker.mode.revolutionaries.len)
-							dat += "<br><table cellspacing=5><tr><td><B>Revolutionaries</B></td><td></td></tr>"
-							for(var/datum/mind/N in ticker.mode.head_revolutionaries)
-								var/mob/M = N.current
-								if(!M)
-									dat += "<tr><td><i>Head Revolutionary not found!</i></td></tr>"
-								else
-									dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a> <b>(Leader)</b>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-									dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td></tr>"
-							for(var/datum/mind/N in ticker.mode.revolutionaries)
-								var/mob/M = N.current
-								if(M)
-									dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-									dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td></tr>"
-							dat += "</table><table cellspacing=5><tr><td><B>Target(s)</B></td><td></td><td><B>Location</B></td></tr>"
-							for(var/datum/mind/N in ticker.mode.get_living_heads())
-								var/mob/M = N.current
-								if(M)
-									dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-									dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>"
-									var/turf/mob_loc = get_turf_loc(M)
-									dat += "<td>[mob_loc.loc]</td></tr>"
-								else
-									dat += "<tr><td><i>Head not found!</i></td></tr>"
-							dat += "</table>"
-
-						if(ticker.mode.changelings.len > 0)
-							dat += "<br><table cellspacing=5><tr><td><B>Changelings</B></td><td></td><td></td></tr>"
-							for(var/datum/mind/changeling in ticker.mode.changelings)
-								var/mob/M = changeling.current
-								if(M)
-									dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-									dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>"
-									dat += "<td><A HREF='?src=\ref[src];traitor=\ref[M]'>Show Objective</A></td></tr>"
-								else
-									dat += "<tr><td><i>Changeling not found!</i></td></tr>"
-							dat += "</table>"
-
-						if(ticker.mode.wizards.len > 0)
-							dat += "<br><table cellspacing=5><tr><td><B>Wizards</B></td><td></td><td></td></tr>"
-							for(var/datum/mind/wizard in ticker.mode.wizards)
-								var/mob/M = wizard.current
-								if(M)
-									dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-									dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>"
-									dat += "<td><A HREF='?src=\ref[src];traitor=\ref[M]'>Show Objective</A></td></tr>"
-								else
-									dat += "<tr><td><i>Wizard not found!</i></td></tr>"
-							dat += "</table>"
-
-						if(ticker.mode.cult.len)
-							dat += "<br><table cellspacing=5><tr><td><B>Cultists</B></td><td></td></tr>"
-							for(var/datum/mind/N in ticker.mode.cult)
-								var/mob/M = N.current
-								if(M)
-									dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-									dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td></tr>"
-							dat += "</table>"
-
-						if(ticker.mode.traitors.len > 0)
-							dat += "<br><table cellspacing=5><tr><td><B>Traitors</B></td><td></td><td></td></tr>"
-							for(var/datum/mind/traitor in ticker.mode.traitors)
-								var/mob/M = traitor.current
-								if(M)
-									dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-									dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>"
-									dat += "<td><A HREF='?src=\ref[src];traitor=\ref[M]'>Show Objective</A></td></tr>"
-								else
-									dat += "<tr><td><i>Traitor not found!</i></td></tr>"
-							dat += "</table>"
-
-						dat += "</body></html>"
-						usr << browse(dat, "window=roundstatus;size=400x500")
-					else
-						alert("The game hasn't started yet!")
+					check_antagonists()
 				if("showailaws")
 					for(var/mob/living/silicon/ai/ai in world)
 						usr << "[key_name(ai, usr)]'s Laws:"
@@ -2339,6 +2326,7 @@ var/global/BSACooldown = 0
 	set category = "Admin"
 	set name = "Show Player Panel"
 	set desc="Edit player (respawn, ban, heal, etc)"
+
 	if(!M)
 		usr << "You seem to be selecting a mob that doesn't exist anymore."
 		return
@@ -2347,60 +2335,123 @@ var/global/BSACooldown = 0
 	if (!istype(src,/obj/admins))
 		usr << "Error: you are not an admin!"
 		return
-	var/dat = "<html><head><title>Options for [M.key]</title></head>"
-	var/foo = " "
-	if (ismob(M) && M.client)
-//		if(!M.client.authenticated && !M.client.authenticating)
-//			foo += text("<A HREF='?src=\ref[src];adminauth=\ref[M]'>Authorize</A> | ")
-//		else
-//			foo += text("<B>Authorized</B> | ")
-		foo += text("<A HREF='?src=\ref[src];prom_demot=\ref[M.client]'>Promote/Demote</A> | ")
+
+	var/body = "<html><head><title>Options for [M.key]</title></head>"
+	body += "<body>Options panel for <b>[M]</b>"
+	if(M.client)
+		body += " played by <b>[M.client]</b> "
+		if(M.client.holder)
+			body += "\[<A href='?src=\ref[src];prom_demot=\ref[M.client]'>[M.client.holder.rank]</A>\]"
+		else
+			body += "\[<A href='?src=\ref[src];prom_demot=\ref[M.client]'>Player</A>\]"
+
+	if(istype(M, /mob/new_player))
+		body += " <B>Hasn't Entered Game</B> "
+	else
+		body += " \[<A href='?src=\ref[src];revive=\ref[M]'>Heal</A>\] "
+
+	body += "<br><br>\[ "
+	body += "<a href='?src=\ref[src];adminplayervars=\ref[M]'>VV</a> - "
+	body += "<a href='?src=\ref[src];traitor_panel_pp=\ref[M]'>TP</a> - "
+	body += "<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a> - "
+	body += "<a href='?src=\ref[src];adminplayersubtlemessage=\ref[M]'>SM</a> - "
+	body += "<a href='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>"
+
+	body += "<b>Mob type</b> = [M.type]<br><br>"
+
+	body += "<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> | "
+	body += "<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> | "
+	body += "<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> "
+
+	if(M.client)
+		body += "| <A HREF='?src=\ref[src];sendtoprison=\ref[M]'>Prison</A> | "
+		body += "<b>Mute:</b> "
+		if(M.client.muted_complete)
+			body += "<b>Completely Muted:</b> (<A href='?src=\ref[src];mute_complete=\ref[M]'>Allow adminhelp</A>)"
+		else
+			if(M.client.muted)
+				body += "<b>Soft Mute:</b> (<A href='?src=\ref[src];mute2=\ref[M]'>Unmute</A>) (<A href='?src=\ref[src];mute_complete=\ref[M]'>Mute adminhelps</A>)"
+			else
+				body += "Voiced: (<A href='?src=\ref[src];mute2=\ref[M]'>Mute</A>)"
+
+	body += "<br><br>"
+	body += "<A href='?src=\ref[src];jumpto=\ref[M]'><b>Jump to</b></A> | "
+	body += "<A href='?src=\ref[src];getmob=\ref[M]'>Get</A>"
+
+	body += "<br><br>"
+	body += "<A href='?src=\ref[src];traitor=\ref[M]'>Traitor panel</A> | "
+	body += "<A href='?src=\ref[src];narrateto=\ref[M]'>Narrate to</A> | "
+	body += "<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A>"
+
+	if (M.client)
 		if(!istype(M, /mob/new_player))
-			if(!ismonkey(M))
-				foo += text("<A HREF='?src=\ref[src];monkeyone=\ref[M]'>Monkeyize</A> | ")
+			body += "<br><br>"
+			body += "<b>Transformation:</b>"
+			body += "<br>"
+
+			//Monkey
+			if(ismonkey(M))
+				body += "<B>Monkeyized</B> | "
 			else
-				foo += text("<B>Monkeyized</B> | ")
-			if(!iscorgi(M))
-				foo += text("<A HREF='?src=\ref[src];corgione=\ref[M]'>Corgize</A> | ")
+				body += "<A href='?src=\ref[src];monkeyone=\ref[M]'>Monkeyize</A> | "
+
+			//Corgi
+			if(iscorgi(M))
+				body += "<B>Corgized</B> | "
 			else
-				foo += text("<B>Corgized</B> | ")
+				body += "<A href='?src=\ref[src];corgione=\ref[M]'>Corgize</A> | "
+
+			//AI / Cyborg
 			if(isAI(M))
-				foo += text("<B>Is an AI</B> | ")
+				body += "<B>Is an AI</B> "
 			else if(ishuman(M))
-				foo += text("<A HREF='?src=\ref[src];makeai=\ref[M]'>Make AI</A> | ")
-				foo += text("<A HREF='?src=\ref[src];makeaisilent=\ref[M]'>Make AI Silently</A> | ")
-				foo += text("<A HREF='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> | ")
-				foo += text("<A HREF='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> | ")
-				foo += text("<A HREF='?src=\ref[src];makemetroid=\ref[M]'>Make Metroid</A> | ")
-			foo += text("<A HREF='?src=\ref[src];tdome1=\ref[M]'>Thunderdome 1</A> | ")
-			foo += text("<A HREF='?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> | ")
-			foo += text("<A HREF='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> | ")
-			foo += text("<A HREF='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> | ")
-			foo += text("<A HREF='?src=\ref[src];sendtoprison=\ref[M]'>Prison</A> | ")
-		//	foo += text("<A HREF='?src=\ref[src];sendtomaze=\ref[M]'>Maze</A> | ")
-			foo += text("<A HREF='?src=\ref[src];revive=\ref[M]'>Heal/Revive</A> | ")
-		else
-			foo += text("<B>Hasn't Entered Game</B> | ")
-		foo += text("<A href='?src=\ref[src];forcespeech=\ref[M]'>Forcesay</A> | ")
-		if(M.client)
-			foo += text("<A href='?src=\ref[src];mute2=\ref[M]'>Mute: [(M.client.muted ? "Muted" : "Voiced")]</A> | ")
-			foo += text("<A href='?src=\ref[src];mute_complete=\ref[M]'>Complete mute: [(M.client.muted ? "Completely Muted" : "Voiced")]</A> | ")
-		else
-			foo += "Mute unavailable - no client"
-		foo += text("<A href='?src=\ref[src];boot2=\ref[M]'>Boot</A>")
-	foo += text("<br>")
-	foo += text("<A href='?src=\ref[src];jumpto=\ref[M]'>Jump to</A> | ")
-	foo += text("<A href='?src=\ref[src];getmob=\ref[M]'>Get</A> | ")
-	foo += text("<A href='?src=\ref[src];sendmob=\ref[M]'>Send</A>")
-	foo += text("<br>")
-	foo += text("<A href='?src=\ref[src];traitor=\ref[M]'>Edit mind</A> | ")
-	foo += text("<A href='?src=\ref[src];narrateto=\ref[M]'>Narrate to</A> | ")
-	foo += text("<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A>")
-	foo += text("<br>")
-	foo += text("<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> | ")
-	foo += text("<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A>")
-	dat += text("<body>[foo]</body></html>")
-	usr << browse(dat, "window=adminplayeropts;size=480x150")
+				body += "<A href='?src=\ref[src];makeai=\ref[M]'>Make AI</A> | "
+				body += "<A href='?src=\ref[src];makeaisilent=\ref[M]'>Make AI Silently</A> | "
+				body += "<A href='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> | "
+				body += "<A href='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> | "
+				body += "<A href='?src=\ref[src];makemetroid=\ref[M]'>Make Metroid</A> "
+
+			body += "<br><br>"
+			body += "<b>Rudimentary transformation:</b><font size=2><br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>"
+			body += "<A href='?src=\ref[src];simplemake=observer;mob=\ref[M]'>Observer</A> | "
+			body += "\[ Alien: <A href='?src=\ref[src];simplemake=drone;mob=\ref[M]'>Drone</A>, "
+			body += "<A href='?src=\ref[src];simplemake=hunter;mob=\ref[M]'>Hunter</A>, "
+			body += "<A href='?src=\ref[src];simplemake=queen;mob=\ref[M]'>Queen</A>, "
+			body += "<A href='?src=\ref[src];simplemake=sentinel;mob=\ref[M]'>Sentinel</A>, "
+			body += "<A href='?src=\ref[src];simplemake=larva;mob=\ref[M]'>Larva</A> \] "
+			body += "<A href='?src=\ref[src];simplemake=human;mob=\ref[M]'>Human</A> "
+			body += "\[ Metroid: <A href='?src=\ref[src];simplemake=metroid;mob=\ref[M]'>Baby</A>, "
+			body += "<A href='?src=\ref[src];simplemake=adultmetroid;mob=\ref[M]'>Adult</A> \] "
+			body += "<A href='?src=\ref[src];simplemake=monkey;mob=\ref[M]'>Monkey</A> | "
+			body += "<A href='?src=\ref[src];simplemake=robot;mob=\ref[M]'>Cyborg</A> | "
+			body += "<A href='?src=\ref[src];simplemake=cat;mob=\ref[M]'>Cat</A> | "
+			body += "<A href='?src=\ref[src];simplemake=runtime;mob=\ref[M]'>Runtime</A> | "
+			body += "<A href='?src=\ref[src];simplemake=corgi;mob=\ref[M]'>Corgi</A> | "
+			body += "<A href='?src=\ref[src];simplemake=ian;mob=\ref[M]'>Ian</A> | "
+			body += "<A href='?src=\ref[src];simplemake=crab;mob=\ref[M]'>Crab</A> | "
+			body += "<A href='?src=\ref[src];simplemake=coffee;mob=\ref[M]'>Coffee</A> | "
+			//body += "<A href='?src=\ref[src];simplemake=parrot;mob=\ref[M]'>Parrot</A> | "
+			//body += "<A href='?src=\ref[src];simplemake=drprofessor;mob=\ref[M]'>DrProfessor</A> | "
+			body += "\[ Construct: <A href='?src=\ref[src];simplemake=constructarmoured;mob=\ref[M]'>Armoured</A> , "
+			body += "<A href='?src=\ref[src];simplemake=constructbuilder;mob=\ref[M]'>Builder</A> , "
+			body += "<A href='?src=\ref[src];simplemake=constructwraith;mob=\ref[M]'>Wraith</A> \] "
+			body += "<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>"
+			body += "<br>"
+
+	if (M.client)
+		body += "<br><br>"
+		body += "<b>Other actions:</b>"
+		body += "<br>"
+		body += "<A href='?src=\ref[src];forcespeech=\ref[M]'>Forcesay</A> | "
+		body += "<A href='?src=\ref[src];tdome1=\ref[M]'>Thunderdome 1</A> | "
+		body += "<A href='?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> | "
+		body += "<A href='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> | "
+		body += "<A href='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> | "
+
+	body += "<br>"
+	body += "</body></html>"
+
+	usr << browse(body, "window=adminplayeropts;size=550x515")
 	//feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -3194,47 +3245,6 @@ var/global/BSACooldown = 0
 	//feedback_add_details("admin_verb","TGU") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 */
 
-
-
-/obj/admins/proc/view_txt_log()
-	set category = "Admin"
-	set desc="Shows todays server log in new window"
-	set name="Show Server Log"
-	var/path = "data/logs/[time2text(world.realtime,"YYYY")]/[time2text(world.realtime,"MM")]-[time2text(world.realtime,"Month")]/[time2text(world.realtime,"DD")]-[time2text(world.realtime,"Day")].log"
-	var/output = {"<html>
-						<head>
-						<title>[time2text(world.realtime,"Day, MMM DD, YYYY")] - Log</title>
-						</head>
-						<body>
-						<pre>
-						[file2text(path)]
-						</pre>
-						</body>
-						</html>"}
-	usr << browse(output,"window=server_logfile")
-	onclose(usr,"server_logfile")
-	//feedback_add_details("admin_verb","VTL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
-
-/obj/admins/proc/view_atk_log()
-	set category = "Admin"
-	set desc="Shows todays server attack log in new window"
-	set name="Show Server Attack Log"
-	var/path = "data/logs/[time2text(world.realtime,"YYYY")]/[time2text(world.realtime,"MM")]-[time2text(world.realtime,"Month")]/[time2text(world.realtime,"DD")]-[time2text(world.realtime,"Day")] Attack.log"
-	var/output = {"<html>
-						<head>
-						<title>[time2text(world.realtime,"Day, MMM DD, YYYY")] - Attack Log</title>
-						</head>
-						<body>
-						<pre>
-						[file2text(path)]
-						</pre>
-						</body>
-						</html>"}
-	usr << browse(output,"window=server_logfile")
-	onclose(usr,"server_logfile")
-//	feedback_add_details("admin_verb","SSAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
 
 /*/client/proc/unjobban_panel()
 	set name = "Unjobban Panel"

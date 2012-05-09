@@ -463,7 +463,7 @@
 	if (is_sharp(W))
 		burst()
 
-/proc/is_sharp(obj/item/W as obj)
+/proc/is_sharp(obj/item/W as obj)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
 	return ( \
 		istype(W, /obj/item/weapon/screwdriver)                   || \
 		istype(W, /obj/item/weapon/pen)                           || \
@@ -483,6 +483,7 @@
 		istype(W, /obj/item/weapon/shard)                         || \
 		istype(W, /obj/item/weapon/reagent_containers/syringe)    || \
 		istype(W, /obj/item/weapon/kitchen/utensil/fork) && W.icon_state != "forkloaded" || \
+		istype(W, /obj/item/weapon/twohanded/fireaxe)			  || \
 		istype(W,/obj/item/projectile)\
 	)
 

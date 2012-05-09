@@ -133,11 +133,16 @@ var/intercom_range_display_status = 0
 		src.verbs += /client/proc/air_status //Air things
 		src.verbs += /client/proc/Cell //More air things
 		src.verbs += /client/proc/atmosscan //check plumbing
+		src.verbs += /client/proc/powerdebug //check power
 		src.verbs += /client/proc/count_objects_on_z_level
 		src.verbs += /client/proc/count_objects_all
 		src.verbs += /client/proc/cmd_assume_direct_control	//-errorage
 		src.verbs += /client/proc/jump_to_dead_group
 		src.verbs += /client/proc/startSinglo
+		src.verbs += /client/proc/ticklag	//allows you to set the ticklag.
+		src.verbs += /client/proc/cmd_admin_grantfullaccess
+		//src.verbs += /client/proc/cmd_admin_rejuvenate
+
 		//feedback_add_details("admin_verb","mDV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	count_objects_on_z_level()

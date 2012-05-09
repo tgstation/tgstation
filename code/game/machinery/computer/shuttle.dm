@@ -39,6 +39,7 @@
 						message_admins("[key_name_admin(user)] has launched the shuttle")
 						log_game("[user.ckey] has launched the shuttle early")
 						world << "\blue <B>Alert: Shuttle launch time shortened to 10 seconds!</B>"
+						emergency_shuttle.online = 1
 						emergency_shuttle.settimeleft(10)
 						//src.authorized = null
 						del(src.authorized)

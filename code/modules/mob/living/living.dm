@@ -218,10 +218,50 @@
 	SetStunned(0)
 	SetWeakened(0)
 	//src.health = 100
+	if(ishuman(src))
+		src.radiation = 0
+		//M.health = 100
+		src.nutrition = 400
+		src.bodytemperature = initial(src.bodytemperature)
+		src.heal_overall_damage(1000, 1000)
+		//M.updatehealth()
+		src.buckled = initial(src.buckled)
+		src.handcuffed = initial(src.handcuffed)
+		if(istype(src,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = src
+			for(var/name in H.organs)
+				var/datum/organ/external/e = H.organs[name]
+				e.brute_dam = 0.0
+				e.burn_dam = 0.0
+				e.bandaged = 0.0
+				e.max_damage = initial(e.max_damage)
+				e.bleeding = 0
+				e.open = 0
+				e.broken = 0
+				e.destroyed = 0
+				e.perma_injury = 0
+				e.update_icon()
+				for(var/datum/organ/wound/W in e.wounds)
+					if(W.bleeding || !W.is_healing)
+						W.stopbleeding()
+			del(H.vessel)
+			H.vessel = new/datum/reagents(560)
+			H.vessel.my_atom = H
+			H.vessel.add_reagent("blood",560)
+			spawn(1)
+				H.fixblood()
+			H.pale = 0
+			H.update_body()
+			H.update_face()
+			H.UpdateDamageIcon()
+		if (src.stat > 1)
+			src.stat=0
+		..()
 	src.heal_overall_damage(1000, 1000)
 	src.buckled = initial(src.buckled)
 	src.handcuffed = initial(src.handcuffed)
-	if(src.stat > 1) src.stat = CONSCIOUS
+	if(src.stat > 1)
+		src.stat = CONSCIOUS
 	..()
 	return
 

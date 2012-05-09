@@ -339,6 +339,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin("[key_name(src)] has alienized [M.key].")
 		spawn(10)
 			M:Alienize()
+			//feedback_add_details("admin_verb","MKAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		log_admin("[key_name(usr)] made [key_name(M)] into an alien.")
+		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into an alien.", 1)
 	else
 		alert("Invalid mob")
 
@@ -353,6 +356,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin("[key_name(src)] has metroidized [M.key].")
 		spawn(10)
 			M:Metroidize()
+			//feedback_add_details("admin_verb","MKMET") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		log_admin("[key_name(usr)] made [key_name(M)] into a metroid.")
+		message_admins("\blue [key_name_admin(usr)] made [key_name(M)] into a metroid.", 1)
 	else
 		alert("Invalid mob")
 
@@ -490,12 +496,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			if(istype(H.wear_id, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = H.wear_id
 				id = pda.id
-			log_admin("[key_name(src)] has granted [M.key] full access.")
 			id.icon_state = "gold"
 			id:access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
 		else
 			var/obj/item/weapon/card/id/id = new/obj/item/weapon/card/id(M);
-			log_admin("[key_name(src)] has granted [M.key] full access.")
 			id.icon_state = "gold"
 			id:access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
 			id.registered_name = H.real_name

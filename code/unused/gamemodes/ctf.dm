@@ -58,7 +58,7 @@
 					W.name = "[M.real_name]'s ID card (Red Team)"
 					W.access = access_red
 					W.assignment = "Red Team"
-					W.registered = M.real_name
+					W.registered_name = M.real_name
 					M.wear_id = W
 					M.wear_id.layer = 20
 					if(R)
@@ -98,7 +98,7 @@
 					W.name = "[M.real_name]'s ID card (Green Team)"
 					W.access = access_green
 					W.assignment = "Green Team"
-					W.registered = M.real_name
+					W.registered_name = M.real_name
 					M.wear_id = W
 					M.wear_id.layer = 20
 					if(G)

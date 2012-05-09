@@ -1,3 +1,25 @@
+/obj/machinery/computer/secure_data
+	name = "Security Records"
+	desc = "Used to view and edit personnel's security records"
+	icon_state = "security"
+	req_access = list(access_security)
+	circuit = "/obj/item/weapon/circuitboard/secure_data"
+	var
+		obj/item/weapon/card/id/scan = null
+		obj/item/weapon/disk/records/disk = null
+		authenticated = null
+		rank = null
+		screen = null
+		datum/data/record/active1 = null
+		datum/data/record/active2 = null
+		a_id = null
+		temp = null
+		printing = null
+		can_change_id = 0
+		list/Perp
+		tempname = null
+
+
 /obj/machinery/computer/secure_data/attackby(obj/item/O as obj, user as mob)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
 		usr.drop_item()
@@ -522,6 +544,10 @@ What a mess.*/
 	add_fingerprint(usr)
 	updateUsrDialog()
 	return
+
+/obj/machinery/computer/secure_data/detective_computer
+	icon = 'computer.dmi'
+	icon_state = "messyfiles"
 
 /obj/item/weapon/disk/records
 	name = "Crew Records Disk"

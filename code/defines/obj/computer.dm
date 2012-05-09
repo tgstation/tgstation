@@ -71,32 +71,6 @@
 	var/h_b = 245.0
 
 
-/obj/machinery/computer/secure_data
-	name = "Security Records"
-	desc = "Used to view and edit personnel's security records"
-	icon_state = "security"
-	req_access = list(access_security)
-	circuit = "/obj/item/weapon/circuitboard/secure_data"
-	var/obj/item/weapon/card/id/scan = null
-	var/obj/item/weapon/disk/records/disk = null
-	var/authenticated = null
-	var/rank = null
-	var/screen = null
-	var/datum/data/record/active1 = null
-	var/datum/data/record/active2 = null
-	var/a_id = null
-	var/temp = null
-	var/printing = null
-	var/can_change_id = 0
-	var/list/Perp
-	var/tempname = null
-
-
-/obj/machinery/computer/secure_data/detective_computer
-	icon = 'computer.dmi'
-	icon_state = "messyfiles"
-
-
 /obj/machinery/computer/security
 	name = "Security Cameras"
 	desc = "Used to access the various cameras on the station."

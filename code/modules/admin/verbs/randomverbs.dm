@@ -4,6 +4,11 @@
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
+
+	var/confirm = alert(src, "Make [M] drop everything?", "Message", "Yes", "No")
+	if(confirm != "Yes")
+		return
+
 	for(var/obj/item/W in M)
 		M.drop_from_slot(W)
 
@@ -77,14 +82,25 @@
 	message_admins("\blue \bold GlobalNarrate: [key_name_admin(usr)] : [msg]<BR>", 1)
 	//feedback_add_details("admin_verb","GLN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_direct_narrate(mob/M as mob in world)	// Targetted narrate -- TLE
+/client/proc/cmd_admin_direct_narrate(var/mob/M)	// Targetted narrate -- TLE
 	set category = "Special Verbs"
 	set name = "Direct Narrate"
 
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
+
+	if(!M)
+		M = input("Direct narrate to who?", "Active Players") as null|anything in get_mob_with_client_list()
+
+	if(!M)
+		return
+
 	var/msg = input("Message:", text("Enter the text you wish to appear to your target:")) as text
+
+	if( !msg )
+		return
+
 	M << msg
 	log_admin("DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]")
 	message_admins("\blue \bold DirectNarrate: [key_name(usr)] to ([M.name]/[M.key]): [msg]<BR>", 1)
@@ -144,6 +160,8 @@
 
 	create_xeno()
 	//feedback_add_details("admin_verb","X") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(usr)] spawned a xeno.")
+	message_admins("\blue [key_name_admin(usr)] spawned a xeno.", 1)
 	return
 
 //I use this proc for respawn character too. /N
@@ -457,51 +475,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		alert("Cannot revive a ghost")
 		return
 	if(config.allow_admin_rev)
-		//M.fireloss = 0
-		M.setToxLoss(0)
-		//M.bruteloss = 0
-		M.setOxyLoss(0)
-		M.SetParalysis(0)
-		M.SetStunned(0)
-		M.SetWeakened(0)
-		M.radiation = 0
-		//M.health = 100
-		M.nutrition = 400
-		M.bodytemperature = initial(M.bodytemperature)
-		M.heal_overall_damage(1000, 1000)
-		//M.updatehealth()
-		M.buckled = initial(M.buckled)
-		M.handcuffed = initial(M.handcuffed)
-		if(istype(M,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			for(var/name in H.organs)
-				var/datum/organ/external/e = H.organs[name]
-				e.brute_dam = 0.0
-				e.burn_dam = 0.0
-				e.bandaged = 0.0
-				e.max_damage = initial(e.max_damage)
-				e.bleeding = 0
-				e.open = 0
-				e.broken = 0
-				e.destroyed = 0
-				e.perma_injury = 0
-				e.update_icon()
-				for(var/datum/organ/wound/W in e.wounds)
-					if(W.bleeding || !W.is_healing)
-						W.stopbleeding()
-			del(H.vessel)
-			H.vessel = new/datum/reagents(560)
-			H.vessel.my_atom = H
-			H.vessel.add_reagent("blood",560)
-			spawn(1)
-				H.fixblood()
-			H.pale = 0
-			H.update_body()
-			H.update_face()
-			H.UpdateDamageIcon()
-		if (M.stat > 1)
-			M.stat=0
-		..()
+		M.revive()
 
 		log_admin("[key_name(usr)] healed / revived [key_name(M)]")
 		message_admins("\red Admin [key_name_admin(usr)] healed / revived [key_name_admin(M)]!", 1)
@@ -634,9 +608,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	//Due to the delay here its easy for something to have happened to the mob
 	if(!M)	return
 
-	if(usr.key != M.key && M.client)
-		log_admin("[key_name(usr)] has gibbed [key_name(M)]")
-		message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(M)]", 1)
+	log_admin("[key_name(usr)] has gibbed [key_name(M)]")
+	message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(M)]", 1)
 
 	if(istype(M, /mob/dead/observer))
 		gibs(M.loc, M.viruses)
@@ -652,6 +625,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 	else
 		mob.gib()
+
+		log_admin("[key_name(usr)] used gibself.")
+		message_admins("\blue [key_name_admin(usr)] used gibself.", 1)
 		//feedback_add_details("admin_verb","GIBS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /*
 /client/proc/cmd_manual_ban()
@@ -726,6 +702,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		usr << "[t]"
 	//feedback_add_details("admin_verb","CC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/* This proc is DEFERRED. Does not do anything.
 /client/proc/cmd_admin_remove_plasma(area/A as area)
 	set category = "Debug"
 	set name = "Stabilize Atmos."
@@ -745,6 +722,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 				// make things update properly
 				T.assume_air(new /datum/gas_mixture())
+*/
 
 /client/proc/toggle_view_range()
 	set category = "Special Verbs"
@@ -755,6 +733,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		view = input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128)
 	else
 		view = world.view
+
+	log_admin("[key_name(usr)] changed their view range to [view].")
+	//message_admins("\blue [key_name_admin(usr)] changed their view range to [view].", 1)	//why? removed by order of XSI
+
 	//feedback_add_details("admin_verb","CVRA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/admin_call_shuttle()
@@ -783,6 +765,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
 	world << sound('shuttlecalled.ogg')
 	//feedback_add_details("admin_verb","CSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(usr)] admin-called the emergency shuttle.")
+	message_admins("\blue [key_name_admin(usr)] admin-called the emergency shuttle.", 1)
 	return
 
 /client/proc/admin_cancel_shuttle()
@@ -802,6 +786,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	emergency_shuttle.recall()
 	//feedback_add_details("admin_verb","CCSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(usr)] admin-recalled the emergency shuttle.")
+	message_admins("\blue [key_name_admin(usr)] admin-recalled the emergency shuttle.", 1)
 
 	return
 

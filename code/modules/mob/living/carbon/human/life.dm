@@ -457,10 +457,17 @@
 			return null
 
 		update_canmove()
-			if(paralysis || stunned || weakened || resting || buckled || (changeling && changeling.changeling_fakedeath))
+			if(sleeping || paralysis || stunned || weakened || resting || buckled || (changeling && changeling.changeling_fakedeath))
 				canmove = 0
+
 			else
+				lying = 0
 				canmove = 1
+	/*			for(var/obj/effect/stop/S in geaslist)
+					if(S.victim == src)
+						geaslist -= S
+						del(S)
+*/
 
 		handle_breath(datum/gas_mixture/breath)
 			if(nodamage || (mutations & mNobreath))
@@ -964,7 +971,7 @@
 				if (silent)
 					silent--
 
-				if (paralysis || stunned || weakened || (changeling && changeling.changeling_fakedeath)) //Stunned etc.
+				if (resting || sleeping || paralysis || stunned || weakened || (changeling && changeling.changeling_fakedeath)) //Stunned etc.
 					if (stunned > 0)
 						AdjustStunned(-1)
 						stat = 0
@@ -978,6 +985,22 @@
 						blinded = 1
 						lying = 1
 						stat = 1
+
+					if (sleeping > 0)
+						handle_dreams()
+						adjustHalLoss(-5)
+						blinded = 1
+						lying = 1
+						stat = 1
+						if (prob(10) && health && !hal_crit)
+							spawn(0)
+								emote("snore")
+						sleeping--
+
+					if(resting)
+						lying = 1
+						stat = 0
+
 					var/h = hand
 					hand = 0
 					drop_item()
@@ -1125,21 +1148,40 @@
 				if (mutantrace == "lizard" || mutantrace == "metroid")
 					see_in_dark = 3
 					see_invisible = 1
+
+				else if (istajaran(src))
+					see_in_dark = 8
+
 				else if (druggy) // If drugged~
 					see_in_dark = 2
 					//see_invisible regulated by drugs themselves.
 				else
 					see_in_dark = 2
-					var/seer = 0
-					for(var/obj/effect/rune/R in world)
-						if(loc==R.loc && R.word1==wordsee && R.word2==wordhell && R.word3==wordjoin)
-							seer = 1
-					if(!seer)
-						see_invisible = 0
 
-			else if(istype(head, /obj/item/clothing/head/helmet/welding))
+				var/seer = 0
+				for(var/obj/effect/rune/R in world)
+					if(loc==R.loc && R.word1==wordsee && R.word2==wordhell && R.word3==wordjoin)
+						seer = 1
+				if(!seer)
+					see_invisible = 0
+
+
+
+
+
+
+
+			else if(istype(head, /obj/item/clothing/head/helmet/welding))		// wat.  This is never fucking called.
 				if(!head:up && tinted_weldhelh)
 					see_in_dark = 1
+
+
+
+
+
+
+
+
 
 		/* HUD shit goes here, as long as it doesn't modify src.sight flags */
 		// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
@@ -1388,7 +1430,17 @@
 							if(!M.nodamage)
 								M.adjustBruteLoss(5)
 							nutrition += 10
-
+/*  One day.
+			if(nutrition <= 100)
+				if (prob (1))
+					src << "\red Your stomach rumbles."
+				if(nutrition <= 50)
+					if (prob (25))
+						bruteloss++
+					if (prob (5))
+						src << "You feel very weak."
+						weakened += rand(2, 3)
+*/
 		handle_changeling()
 			if (mind)
 				if (mind.special_role == "Changeling" && changeling)
@@ -1436,14 +1488,7 @@
 /*
 			// Commented out so hunger system won't be such shock
 			// Damage and effect from not eating
-			if(nutrition <= 50)
-				if (prob (0.1))
-					src << "\red Your stomach rumbles."
-				if (prob (10))
-					bruteloss++
-				if (prob (5))
-					src << "You feel very weak."
-					weakened += rand(2, 3)
+
 */
 /*
 snippets
