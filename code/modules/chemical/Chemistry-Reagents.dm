@@ -744,9 +744,7 @@ datum
 								affecting.take_damage(25, 0)
 								M:UpdateDamageIcon()
 								M:emote("scream")
-								M << "\red Your face has become disfigured!"
-								M.real_name = "Unknown"
-								M.warn_flavor_changed()
+								M:disfigure_face()
 						else
 							M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
 				else
@@ -798,10 +796,7 @@ datum
 							M:UpdateDamageIcon()
 							M:emote("scream")
 							if(prob(15))
-								M << "\red Your face has become disfigured!"
-								M.real_name = "Unknown"
-								M.warn_flavor_changed()
-								affecting.disfigured = 1
+								M:disfigure_face()
 					else
 						if(istype(M, /mob/living/carbon/monkey) && M:wear_mask)
 							del (M:wear_mask)
@@ -819,10 +814,7 @@ datum
 							M:UpdateDamageIcon()
 							M:emote("scream")
 							if(prob(15))
-								M << "\red Your face has become disfigured!"
-								M.real_name = "Unknown"
-								M.warn_flavor_changed()
-								affecting.disfigured = 1
+								M:disfigure_face()
 						else
 							M.take_organ_damage(min(15, volume * 4))
 
