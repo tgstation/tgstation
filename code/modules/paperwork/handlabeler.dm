@@ -40,7 +40,7 @@
 	if(mode)
 		usr << "\blue You turn on the hand labeler."
 		//Now let them chose the text.
-		var/str = input(usr,"Label text?","Set label","")
+		var/str = reject_bad_text(input(usr,"Label text?","Set label",""))	//sanitize stuff! GOD DAMN THIS IS A SECURITY HOLE
 		if(!str || !length(str))
 			usr << "\red Invalid text."
 			return

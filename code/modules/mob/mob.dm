@@ -582,27 +582,12 @@
 		if(src:cameraFollow)
 			src:cameraFollow = null
 
-
-/client/Topic(href, href_list)
-	if(href_list["priv_msg"])
-		var/client/C = locate(href_list["priv_msg"])
-		if(ismob(C)) //Old stuff can pass in mobs instead of clients
-			var/mob/M = C
-			C = M.client
-		cmd_admin_pm(C,null)
-	else
-		..()
-
 /mob/Topic(href, href_list)
-	if(href_list["priv_msg"])	//for priv_msg references that have yet to be updated to target clients. Forwards it to client/Topic()
-		if(client)
-			client.Topic(href, href_list)
-
 	if(href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
 		machine = null
 		src << browse(null, t1)
-	..()
+//	..()
 	return
 
 /mob/proc/get_damage()
