@@ -292,6 +292,6 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 
 	var/datum/preferences/storedpreferences = null
 
-	var/geaslist = list()
+//	var/geaslist = list()
 
 
