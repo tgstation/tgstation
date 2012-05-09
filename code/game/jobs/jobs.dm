@@ -75,14 +75,16 @@ var/list/medical_positions = list(
 	"Chief Medical Officer",
 	"Medical Doctor",
 	"Geneticist",
-	"Virologist"
+	"Virologist",
+	"Chemist"
 )
 
 
 var/list/science_positions = list(
 	"Research Director",
 	"Scientist",
-	"Chemist"
+	"Geneticist",	//Part of both medical and science
+	"Roboticist"	//Part of both engineering and science
 )
 
 
