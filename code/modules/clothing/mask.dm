@@ -39,6 +39,14 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 
+/obj/item/clothing/mask/balaclava
+	name = "balaclava"
+	desc = "LOADSAMONEY"
+	icon_state = "balaclava"
+	item_state = "balaclava"
+	flags = FPRINT|TABLEPASS|SUITSPACE|HEADSPACE|MASKCOVERSMOUTH|BLOCKHAIR
+	w_class = 2
+
 /obj/item/clothing/mask/muzzle
 	name = "muzzle"
 	desc = "To stop that awful noise."
