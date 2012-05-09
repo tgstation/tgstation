@@ -603,20 +603,6 @@
 		if(!istype(D, /obj/machinery/disposal/toilet))//So it does not drain gas from a toilet which does not function on it.
 			gas = D.air_contents// transfer gas resv. into holder object
 
-		//Check for any living mobs trigger hasmob.
-		//hasmob effects whether the package goes to cargo or its tagged destination.
-		for(var/mob/living/M in D)
-			if(M && M.stat != 2)
-				hasmob = 1
-
-		//Checks 1 contents level deep. This means that players can be sent through disposals...
-		//...but it should require a second person to open the package. (i.e. person inside a wrapped locker)
-		for(var/obj/O in D)
-			if(O.contents)
-				for(var/mob/living/M in O.contents)
-					if(M && M.stat != 2)
-						hasmob = 1
-
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs
 		for(var/atom/movable/AM in D)
@@ -664,7 +650,7 @@
 			//
 			if(!(count--))
 				tomail = 1 //So loops end up in the mail room.
-				destinationTag = "Mail Office"
+				destinationTag = null
 		return
 
 
@@ -1102,6 +1088,31 @@
 		screen = 0
 		icon_state_old = null
 
+	nonsorting
+		NE
+			dir = 1
+			icon_state = "pipe-j1s"
+		NW
+			dir = 1
+			icon_state = "pipe-j2s"
+		ES
+			dir = 4
+			icon_state = "pipe-j1s"
+		EN
+			dir = 4
+			icon_state = "pipe-j2s"
+		SW
+			dir = 2
+			icon_state = "pipe-j1s"
+		SE
+			dir = 2
+			icon_state = "pipe-j2s"
+		WN
+			dir = 8
+			icon_state = "pipe-j1s"
+		WS
+			dir = 81
+			icon_state = "pipe-j2s"
 
 	New()
 		..()
@@ -1129,22 +1140,15 @@
 		if(service)
 			return posdir //If it's being worked on, it isn't sorting.
 		if(sortTag)
-			for(var/i, i <= backType.len, i++)
-				if(sortTag == src.backType[i])
-					return negdir
+			if(sortTag in backType)
+				return negdir
 		else if (!sortTag && mailsort)
 			return sortdir
 		else if (!sortTag && !mailsort)
 			return posdir
 
 		if(fromdir != sortdir)	// probably came from the negdir
-
-			var/issort = 0
-			for(var/i, i <= sortType.len, i++)
-				if(sortTag == src.sortType[i])
-					issort = 1
-
-			if(issort) //if destination matches filtered type...
+			if(sortTag in sortType)
 				return sortdir		// exit through sortdirection
 			else
 				return posdir
@@ -1239,6 +1243,68 @@
 				else
 					sortType -= variable
 		updateUsrDialog()
+
+//a three-way junction that sorts objects
+/obj/structure/disposalpipe/mailjunction
+	name = "\improper Package Discrimination Unit"
+	desc = "An underfloor disposal pipe that is racist against packages."
+	icon_state = "pipe-j1s"
+	var
+		posdir = 0
+		negdir = 0
+		sortdir = 0
+		screen = 0
+
+
+	New()
+		..()
+		posdir = dir
+		if(icon_state == "pipe-j1s")
+			sortdir = turn(posdir, -90)
+			negdir = turn(posdir, 180)
+		else
+			icon_state = "pipe-j2s"
+			sortdir = turn(posdir, 90)
+			negdir = turn(posdir, 180)
+		dpdir = sortdir | posdir | negdir
+
+		update()
+		return
+
+
+	// next direction to move
+	// if coming in from negdir, then next is primary dir or sortdir
+	// if coming in from posdir, then flip around and go back to posdir
+	// if coming in from sortdir, go to posdir
+
+	nextdir(var/package)
+		//var/flipdir = turn(fromdir, 180)
+		if(package)
+			return sortdir
+		else
+			return posdir	// so go with the flow to positive direction
+
+	transfer(var/obj/structure/disposalholder/H)
+		var/package = locate(/obj/structure/bigDelivery) in H
+		if(!package)
+			package = locate(/obj/item/smallDelivery) in H
+		var/nextdir = nextdir(package)
+		H.dir = nextdir
+		var/turf/T = H.nextloc()
+		var/obj/structure/disposalpipe/P = H.findpipe(T)
+
+		if(P)
+			// find other holder in next loc, if inactive merge it with current
+			var/obj/structure/disposalholder/H2 = locate() in P
+			if(H2 && !H2.active)
+				H.merge(H2)
+
+			H.loc = P
+		else			// if wasn't a pipe, then set loc to turf
+			H.loc = T
+			return null
+
+		return P
 
 //a trunk joining to a disposal bin or outlet on the same turf
 /obj/structure/disposalpipe/trunk
