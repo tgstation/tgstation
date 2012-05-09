@@ -713,6 +713,19 @@
 
 	if ( !usr || usr==src || !istype(src.loc,/turf) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
+
+	if(ishuman(usr))
+		if(usr.hand) // if he's using his left hand.
+			var/datum/organ/external/temp = usr:get_organ("l_hand")
+			if(temp.destroyed)
+				usr << "\blue You look at your stump."
+				return
+		else
+			var/datum/organ/external/temp = usr:get_organ("r_hand")
+			if(temp.destroyed)
+				usr << "\blue You look at your stump."
+				return
+
 	if (!( anchored ))
 		usr.pulling = src
 		if(ismob(src))
