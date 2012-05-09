@@ -95,6 +95,7 @@ var/list/supply_groups = new()
 	circuit = "/obj/item/weapon/circuitboard/supplycomp"
 	var/temp = null
 	var/hacked = 0
+	var/can_order_contraband = 0
 
 /obj/machinery/computer/supplycomp/New()
 	// add the supply pack groups, if they haven't already been added
@@ -141,6 +142,7 @@ var/list/supply_groups = new()
 	var/containername = null
 	var/access = null
 	var/hidden = 0
+	var/contraband = 0
 	var/group = "Miscellaneous"
 
 /proc/supply_ticker()
@@ -348,7 +350,7 @@ This method wont take into account storage items developed in the future and doe
 		src.temp = "Supply points: [supply_shuttle_points]<BR><HR><BR>Request what?<BR><BR>"
 		for(var/S in (typesof(/datum/supply_packs) - /datum/supply_packs - /datum/supply_packs/charge) )
 			var/datum/supply_packs/N = new S()
-			if(N.hidden) continue																	//Have to send the type instead of a reference to
+			if(N.hidden || N.contraband) continue																	//Have to send the type instead of a reference to
 			if(N.group != G) continue																//correct group?
 			src.temp += "<A href='?src=\ref[src];doorder=[N.type]'>[N.name]</A> Cost: [N.cost] "    //the obj because it would get caught by the garbage
 			src.temp += "<A href='?src=\ref[src];printform=[N.type]'>Print Requisition</A><br>"     //collector. oh well.
@@ -490,6 +492,8 @@ This method wont take into account storage items developed in the future and doe
 				user << "\blue You disconnect the monitor."
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 				var/obj/item/weapon/circuitboard/supplycomp/M = new /obj/item/weapon/circuitboard/supplycomp( A )
+				if(src.can_order_contraband)
+					M.contraband_enabled = 1
 				for (var/obj/C in src)
 					C.loc = src.loc
 				A.circuit = M
@@ -567,6 +571,7 @@ This method wont take into account storage items developed in the future and doe
 		for(var/S in (typesof(/datum/supply_packs) - /datum/supply_packs - /datum/supply_packs/charge) )
 			var/datum/supply_packs/N = new S()
 			if(N.hidden && !src.hacked) continue													//Have to send the type instead of a reference to
+			if(N.contraband && !src.can_order_contraband){continue;} //Agouri -Kavalamarker
 			if(N.group != G) continue																//correct group?
 			src.temp += "<A href='?src=\ref[src];doorder=[N.type]'>[N.name]</A> Cost: [N.cost]<BR>" //the obj because it would get caught by the garbage
 		src.temp += "<BR><A href='?src=\ref[src];order=1'>Back</A>"								//collector. oh well.

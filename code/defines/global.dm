@@ -151,9 +151,7 @@ var
 	shuttlecoming = 0
 
 	join_motd = null
-	auth_motd = null
 	rules = null
-	no_auth_motd = null
 	forceblob = 0
 
 	custom_event_msg = null

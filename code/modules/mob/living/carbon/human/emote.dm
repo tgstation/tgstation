@@ -164,7 +164,9 @@
 
 		if ("faint")
 			message = "<B>[src]</B> faints."
-			src.sleeping = 1
+			if(src.sleeping)
+				return //Can't faint while asleep
+			src.sleeping += 10 //Short-short nap
 			m_type = 1
 
 		if ("cough")
@@ -523,6 +525,8 @@
 			if (!M.client)
 				continue //skip monkeys and leavers
 			if (istype(M, /mob/new_player))
+				continue
+			if(findtext(message," snores.")) //Because we have so many sleeping people.
 				continue
 			if(M.stat == 2 && M.client.ghost_sight && !(M in viewers(src,null)))
 				M.show_message(message)

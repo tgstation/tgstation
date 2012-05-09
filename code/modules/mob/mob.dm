@@ -191,28 +191,16 @@
 	var/obj/item/W = equipped()
 
 	if (W)
-		if(W.twohanded)
-			if(W.wielded)
-				if(hand)
-					var/obj/item/weapon/offhand/O = r_hand
-					del O
-				else
-					var/obj/item/weapon/offhand/O = l_hand
-					del O
-			W.wielded = 0          //Kinda crude, but gets the job done with minimal pain -Agouri
-			W.name = "[initial(W.name)]" //name reset so people don't see world fireaxes with (unwielded) or (wielded) tags
-			W.update_icon()
 		u_equip(W)
 		if (client)
 			client.screen -= W
 		if (W)
+			W.layer = initial(W.layer)
 			if(target)
 				W.loc = target.loc
 			else
 				W.loc = loc
 			W.dropped(src)
-			if (W)
-				W.layer = initial(W.layer)
 		var/turf/T = get_turf(loc)
 		if (istype(T))
 			T.Entered(W)
@@ -235,7 +223,7 @@
 		return r_hand
 
 /mob/proc/get_inactive_hand()
-	if ( ! hand)
+	if (!hand)
 		return l_hand
 	else
 		return r_hand
@@ -650,10 +638,11 @@
 						for (var/mob/living/silicon/decoy/D in world)
 							if (eye)
 								eye = D
-		if (eye)
-			client.eye = eye
-		else
-			client.eye = client.mob
+		if (client)
+			if (eye)
+				client.eye = eye
+			else
+				client.eye = client.mob
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -754,7 +743,7 @@
 	set category = "IC"
 	set src in oview(1)
 
-	if (!( usr ))
+	if ( !usr || usr==src || !istype(src.loc,/turf) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
 	if (!( anchored ))
 		usr.pulling = src
@@ -852,9 +841,9 @@
 	for(var/mob/M in viewers())
 		M.see(message)
 
-//This is the proc for gibbing a mob. Cannot gib ghosts. Removed the medal reference,
+//This is the proc for gibbing a mob. Cannot gib ghosts.
 //added different sort of gibs and animations. N
-/mob/proc/gib(var/ex_act = 0)
+/mob/proc/gib()
 
 	if (istype(src, /mob/dead/observer))
 		gibs(loc, viruses)
@@ -913,10 +902,6 @@ Currently doesn't work, but should be useful later or at least as a template
 			else
 				gibs(loc, viruses, dna)
 		sleep(15)
-		for(var/obj/item/I in contents)
-			I.loc = get_turf(src)
-			if(ex_act)
-				I.ex_act(ex_act)
 		del(src)
 
 /*
@@ -1038,8 +1023,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 		stat(null, "([x], [y], [z])")
 		stat(null, "CPU: [world.cpu]")
 		stat(null, "Controller: [controllernum]")
-		//if (master_controller)
-		//	stat(null, "Loop: [master_controller.loop_freq]")
+		if (master_controller)
+			stat(null, "Current Iteration: [controller_iteration]")
 
 	if (spell_list.len)
 
@@ -1052,42 +1037,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 				if("holdervar")
 					statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
 
-
-/client/proc/station_explosion_cinematic(var/station_missed)
-	if(!mob || !ticker)	return
-	if(!mob.client || !mob.hud_used || !ticker.mode)	return
-//	M.loc = null this might make it act weird but fuck putting them in nullspace, it causes issues.
-	var/obj/screen/boom = mob.hud_used.station_explosion
-	if(!istype(boom))	return
-
-	mob.client.screen += boom
-
-	switch(ticker.mode.name)
-		if("nuclear emergency")
-			flick("start_nuke", boom)
-		if("AI malfunction")
-			flick("start_malf", boom)
-		else
-			boom.icon_state = "start"
-
-	sleep(40)
-	mob << sound('explosionfar.ogg')
-	boom.icon_state = "end"
-	if(!station_missed) flick("explode", boom)
-	else flick("explode2", boom)
-	sleep(40)
-
-	switch(ticker.mode.name)
-		if("nuclear emergency")
-			if(!station_missed) boom.icon_state = "loss_nuke"
-			else boom.icon_state = "loss_nuke2"
-		if("malfunction")
-			boom.icon_state = "loss_malf"
-		if("blob")
-			return//Nothin here yet and the general one does not fit.
-		else
-			boom.icon_state = "loss_general"
-	return
 
 
 // facing verbs

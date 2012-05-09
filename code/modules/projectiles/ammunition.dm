@@ -50,5 +50,5 @@
 
 	update_icon()
 		if(multiple_sprites)
-			icon_state = text("[initial(icon_state)]-[]", stored_ammo.len)
-		desc = text("There are [] shell\s left!", stored_ammo.len)
+			icon_state = "[initial(icon_state)]-[stored_ammo.len]"
+		desc = "There are [stored_ammo.len] shell\s left!"

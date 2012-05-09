@@ -16,7 +16,7 @@
 
 		//only load blast doors for map-defined departments for the moment
 		switch(department)
-			if("Engineering")
+			if("SinguloEngineering-Antiqua")
 				connectedDoorIds.Add("Engineering Primary Access")
 				connectedDoorIds.Add("Engineering Secondary Access")
 				connectedDoorIds.Add("Fore Maintenance Access")
@@ -28,7 +28,13 @@
 				connectedDoorIds.Add("Atmospheric Storage Rad Shielding")
 				connectedDoorIds.Add("Construction Storage Rad Shielding")
 				connectedDoorIds.Add("Engineering Secure Storage")
-			if("Medbay")
+			if("RustEngineering-Antiqua")
+				connectedDoorIds.Add("Port vessel entry")
+				connectedDoorIds.Add("Starboard vessel entry")
+				connectedDoorIds.Add("Central aft shell access")
+				connectedDoorIds.Add("Port aft shell access")
+				connectedDoorIds.Add("Starboard aft shell access")
+			if("Medbay-Exodus")
 				connectedDoorIds.Add("Genetics Outer Shutters")
 				connectedDoorIds.Add("Genetics Inner Shutters")
 				connectedDoorIds.Add("Chemistry Outer Shutters")

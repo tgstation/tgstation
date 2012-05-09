@@ -90,7 +90,7 @@
 	flick("flash", flash)
 
 //	if (stat == 2 && client)
-//		gib(1)
+//		gib()
 //		return
 
 //	else if (stat == 2 && !client)
@@ -105,7 +105,7 @@
 	switch (severity)
 		if (1.0)
 			b_loss += 500
-			gib(1)
+			gib()
 			return
 
 		if (2.0)
@@ -741,7 +741,7 @@ In all, this is a lot like the monkey code. /N
 
 		if ("help")
 			if(!sleeping_willingly)
-				sleeping = 0
+				sleeping = max(0,sleeping-5)
 			resting = 0
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
@@ -783,7 +783,7 @@ In all, this is a lot like the monkey code. /N
 	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? text("[]", r_hand) : "Nothing")]</A>
 	<BR><B>Head:</B> <A href='?src=\ref[src];item=head'>[(head ? text("[]", head) : "Nothing")]</A>
 	<BR><B>(Exo)Suit:</B> <A href='?src=\ref[src];item=suit'>[(wear_suit ? text("[]", wear_suit) : "Nothing")]</A>
-	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
+	<BR><A href='?src=\ref[src];item=pockets'>Empty Pouches</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}
 	user << browse(dat, text("window=mob[name];size=340x480"))

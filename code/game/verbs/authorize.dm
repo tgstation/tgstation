@@ -1,7 +1,4 @@
 /*
-
-The old goon auth/beta code is here:
-
 /client/proc/authorize()
 	set name = "Authorize"
 
@@ -45,8 +42,9 @@ The old goon auth/beta code is here:
 			src << "Try again using the <b>Authorize</b> command, sometimes the server will hiccup and not correctly authorize."
 			src << "\blue[no_auth_motd]"
 		src.authenticating = 0
+*/
 
-
+/* The old goon auth/beta code is here
 /client/proc/beta_tester_auth()
 	set name = "Tester?"
 	/*if(istester(src))

@@ -2,12 +2,6 @@
 	name = "weapon"
 	icon = 'weapons.dmi'
 
-/obj/item/weapon/offhand
-	name = "offhand"
-	var/linked_weapon_name = ""
-	w_class = 5.0
-	icon_state = "offhand"
-
 /obj/item/weapon/shield
 	name = "shield"
 
@@ -645,7 +639,7 @@
 	w_class = 2.0
 	throw_speed = 3
 	throw_range = 10
-	flags = ONBELT
+	flags = FPRINT | TABLEPASS | ONBELT
 
 /obj/item/weapon/clipboard/notebook
 	name = "notebook"
@@ -710,17 +704,6 @@
 /obj/item/weapon/crowbar/red
 	icon = 'items.dmi'
 	icon_state = "red_crowbar"
-
-/obj/item/weapon/fireaxe  // DEM AXES MAN, marker -Agouri
-	icon_state = "fireaxe0"
-	name = "fire axe"
-	desc = "A tool for breaking down those obstructions that stop you from fighting that fire."  //Less ROBUST. --SkyMarshal
-	force = 5
-	w_class = 4.0
-	flags = ONBACK
-	twohanded = 1
-	force_unwielded = 5
-	force_wielded = 18
 
 /obj/item/weapon/cane
 	name = "cane"

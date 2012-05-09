@@ -11,7 +11,7 @@
 	opacity = 0
 	density = 0
 	var/nextstate = null
-
+	var/net_id
 
 	Bumped(atom/AM)
 		if(p_open || operating)	return
@@ -38,7 +38,7 @@
 				update_icon()
 				return
 
-		if (istype(C, /obj/item/weapon/crowbar) || (istype(C,/obj/item/weapon/fireaxe) && C.wielded == 1))
+		if (istype(C, /obj/item/weapon/crowbar) || (istype(C,/obj/item/weapon/twohanded/fireaxe) && C:wielded == 1))
 			if(blocked || operating)	return
 			if(src.density)
 				spawn(0)
@@ -52,7 +52,8 @@
 
 
 	process()
-		if(operating || stat & NOPOWER || !nextstate)	return
+		if(operating || stat & NOPOWER || !nextstate)
+			return
 		switch(nextstate)
 			if(OPEN)
 				spawn()

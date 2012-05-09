@@ -1887,19 +1887,16 @@
 			del(D)
 			del(src)
 
-/obj/item/weapon/reagent_containers/glass/watercan
+/obj/item/weapon/reagent_containers/glass/bucket/wateringcan
 	name = "watering can"
 	desc = "A watering can, for all your watering needs."
 	icon = 'hydroponics.dmi'
 	icon_state = "watercan"
 	item_state = "bucket"
-	m_amt = 200
-	g_amt = 0
-	w_class = 3.0
-	amount_per_transfer_from_this = 20
-	possible_transfer_amounts = list(10,20,30,50,70)
-	volume = 70
-	flags = FPRINT | OPENCONTAINER
+
+	attackby(var/obj/D, mob/user as mob)
+		if(isprox(D))
+			return
 
 /obj/item/weapon/reagent_containers/glass/cantister
 	desc = "It's a canister. Mainly used for transporting fuel."
@@ -2290,6 +2287,25 @@
 		var/datum/disease/F = new /datum/disease/wizarditis(0)
 		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent("blood", 20, data)
+
+/obj/item/weapon/reagent_containers/glass/bottle/pacid
+	name = "Polytrinic Acid Bottle"
+	desc = "A small bottle. Contains a small amount of Polytronic Acid"
+	icon = 'chemical.dmi'
+	icon_state = "bottle17"
+	New()
+		..()
+		reagents.add_reagent("pacid", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/adminordrazine
+	name = "Adminordrazine Bottle"
+	desc = "A small bottle. Contains the liquid essence of the gods."
+	icon = 'drinks.dmi'
+	icon_state = "holyflask"
+	New()
+		..()
+		reagents.add_reagent("adminordrazine", 30)
+
 
 /obj/item/weapon/reagent_containers/glass/bottle/ert
 	name = "emergency medicine bottle"
@@ -3342,14 +3358,6 @@
 					icon_state = "manlydorfglass"
 					name = "The Manly Dorf"
 					desc = "A manly concotion made from Ale and Beer. Intended for true men only."
-				if("irishcream")
-					icon_state = "irishcreamglass"
-					name = "Irish Cream"
-					desc = "It's cream, mixed with whiskey. What else would you expect from the Irish?"
-				if("cubalibre")
-					icon_state = "cubalibreglass"
-					name = "Cuba Libre"
-					desc = "A classic mix of rum and cola."
 				if("irishcream")
 					icon_state = "irishcreamglass"
 					name = "Irish Cream"

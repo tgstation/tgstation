@@ -79,6 +79,7 @@
 		H.equip_if_possible(new /obj/item/clothing/gloves/botanic_leather(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/clothing/suit/storage/apron(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/device/analyzer/plant_analyzer(H), H.slot_s_store)
+		H.equip_if_possible(new /obj/item/device/pda/botanist(H), H.slot_belt)
 		return 1
 
 
@@ -266,6 +267,7 @@
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/clothing/under/suit_jacket/red(H), H.slot_w_uniform)
+		H.equip_if_possible(new /obj/item/device/pda/librarian(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/weapon/barcodescanner(H), H.slot_l_store)
 		return 1

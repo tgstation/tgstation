@@ -6,6 +6,7 @@
 	icon = 'effects.dmi'
 	icon_state = "energynet"
 	density = 0
+	anchored = 1
 	var/obj/machinery/rust/em_field/parent
 	var/mysize = 0
 

@@ -1191,8 +1191,17 @@ table tr:first-child th:first-child { border: none;}
 	A = A.loc
 	if (!( istype(A, /area) ))
 		return
-	for(var/area/RA in A.related)
-		RA.firereset()
+	if(network)
+		for(var/obj/machinery/door/firedoor/D in world)
+			if(!D.blocked && D.net_id == src.network)
+				if(D.operating)
+					D.nextstate = CLOSED
+				else if(!D.density)
+					spawn(0)
+						D.close()
+	else
+		for(var/area/RA in A.related)
+			RA.firereset()
 	return
 
 /obj/machinery/firealarm/proc/alarm()
@@ -1202,8 +1211,17 @@ table tr:first-child th:first-child { border: none;}
 	A = A.loc
 	if (!( istype(A, /area) ))
 		return
-	for(var/area/RA in A.related)
-		RA.firealert()
+	if(network)
+		for(var/obj/machinery/door/firedoor/D in world)
+			if(!D.blocked && D.net_id == src.network)
+				if(D.operating)
+					D.nextstate = OPEN
+				else if(!D.density)
+					spawn(0)
+						D.open()
+	else
+		for(var/area/RA in A.related)
+			RA.firealert()
 	//playsound(src.loc, 'signal.ogg', 75, 0)
 	return
 

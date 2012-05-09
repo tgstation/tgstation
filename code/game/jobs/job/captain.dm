@@ -7,6 +7,7 @@
 	spawn_positions = 1
 	supervisors = "Nanotrasen officials and Space law"
 	selection_color = "#ccccff"
+	idtype = /obj/item/weapon/card/id/gold
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -43,6 +44,7 @@
 	spawn_positions = 1
 	supervisors = "the captain"
 	selection_color = "#ddddff"
+	idtype = /obj/item/weapon/card/id/silver
 
 
 	equip(var/mob/living/carbon/human/H)

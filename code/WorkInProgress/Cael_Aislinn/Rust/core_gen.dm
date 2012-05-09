@@ -84,12 +84,14 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 		if(owned_field)
 			owned_field.ChangeFieldStrength(field_strength)
 			icon_state = "core1"
+		luminosity = 1
 		return 1
 
 	proc/Shutdown()
 		icon_state = "core0"
 		on = 0
 		del(owned_field)
+		luminosity = 0
 
 	proc/AddParticles(var/name, var/quantity = 1)
 		if(owned_field)
@@ -103,6 +105,9 @@ max volume of plasma storeable by the field = the total volume of a number of ti
 		if(on && !owned_field)
 			Shutdown()
 		return
+		//
+		luminosity = round(owned_field.field_strength/10)
+		luminosity = max(luminosity,1)
 		//
 		if(stat & (NOPOWER|BROKEN))
 			Shutdown()

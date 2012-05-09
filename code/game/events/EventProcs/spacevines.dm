@@ -25,7 +25,7 @@
 			if(/obj/item/weapon/circular_saw) del src
 			if(/obj/item/weapon/kitchen/utensil/knife) del src
 			if(/obj/item/weapon/scalpel) del src
-			if(/obj/item/weapon/fireaxe) del src
+			if(/obj/item/weapon/twohanded/fireaxe) del src
 			if(/obj/item/weapon/hatchet) del src
 			if(/obj/item/weapon/melee/energy) del src
 

@@ -125,6 +125,16 @@
 	icon_state = "pda-lawyer"
 	ttone = "objection"
 
+/obj/item/device/pda/botanist
+	//default_cartridge = /obj/item/weapon/cartridge/botanist
+	icon_state = "pda-hydro"
+
+/obj/item/device/pda/librarian
+	icon_state = "pda-libb"
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a WGW-11 series e-reader."
+	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
+	silent = 1 //Quiet in the library!
+
 /*
  *	The Actual PDA
  */
