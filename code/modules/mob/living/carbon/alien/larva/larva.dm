@@ -80,7 +80,7 @@
 	flick("flash", flash)
 /*
 	if (stat == 2 && client)
-		gib(1)
+		gib()
 		return
 
 	else if (stat == 2 && !client)
@@ -93,7 +93,7 @@
 	switch (severity)
 		if (1.0)
 			b_loss += 500
-			gib(1)
+			gib()
 			return
 
 		if (2.0)
@@ -490,7 +490,7 @@
 
 		if ("help")
 			if(!sleeping_willingly)
-				sleeping = 0
+				sleeping = max(0,sleeping-5)
 			resting = 0
 			AdjustParalysis(-3)
 			AdjustStunned(-3)

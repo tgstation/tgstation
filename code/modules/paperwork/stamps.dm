@@ -11,6 +11,7 @@
 	throw_range = 15
 	m_amt = 60
 	var/color = "cargo"
+	pressure_resistance = 5
 
 /obj/item/weapon/stamp/captain
 	name = "captain's rubber stamp"

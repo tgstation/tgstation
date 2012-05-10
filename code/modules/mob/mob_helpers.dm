@@ -56,7 +56,7 @@
 	return 0
 
 /proc/iscat(A)
-	if(istype(A, /mob/living/simple_animal/cat))
+	if(istype(A, /mob/living/simple_animal/cat/))
 		return 1
 	return 0
 
@@ -115,12 +115,16 @@ proc/hasorgans(A)
 		return 1
 	return 0
 
+
+
+
 /proc/hsl2rgb(h, s, l)
 	return
 
 
 /proc/check_zone(zone)
-	if(!zone)	return "chest"
+	if(!zone)
+		return "chest"
 	switch(zone)
 		if("eyes")
 			zone = "head"

@@ -615,11 +615,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 			if( istype(I, /obj/item/device/pda) )
 				var/obj/item/device/pda/P = I
 				if(P.id)
-					src.scanned_user = "[P.id.registered] ([P.id.assignment])"
+					src.scanned_user = "[P.id.registered_name] ([P.id.assignment])"
 					src.screen=2
 			else
 				var/obj/item/weapon/card/id/T = I
-				src.scanned_user = text("[T.registered] ([T.assignment])")
+				src.scanned_user = text("[T.registered_name] ([T.assignment])")
 				src.screen=2*/  //Obsolete after autorecognition
 
 	if (src.isbroken)

@@ -71,6 +71,10 @@ RCD
 
 
 	afterattack(atom/A, mob/user as mob)
+		if(istype(A,/area/shuttle)||istype(A,/turf/space/transit))//Nanotrasen Matter Jammer TM -Sieve
+			disabled = 1
+		else
+			disabled = 0
 		if(!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock)))
 			return
 

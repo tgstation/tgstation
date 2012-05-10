@@ -92,6 +92,12 @@
 	R.my_atom = src
 	R.add_reagent("water", 50)
 
+/obj/item/weapon/extinguisher/mini/New()
+	var/datum/reagents/R = new/datum/reagents(30)
+	reagents = R
+	R.my_atom = src
+	R.add_reagent("water", 30)
+
 /obj/item/weapon/extinguisher/examine()
 	set src in usr
 
@@ -169,6 +175,19 @@
 		safety = 0
 	else
 		src.icon_state = "fire_extinguisher0"
+		src.desc = "The safety is on."
+		user << "The safety is on."
+		safety = 1
+	return
+
+/obj/item/weapon/extinguisher/mini/attack_self(mob/user as mob)
+	if (safety)
+		src.icon_state = "miniFE1"
+		src.desc = "The safety is off."
+		user << "The safety is off."
+		safety = 0
+	else
+		src.icon_state = "miniFE0"
 		src.desc = "The safety is on."
 		user << "The safety is on."
 		safety = 1
@@ -463,7 +482,7 @@
 	if (is_sharp(W))
 		burst()
 
-/proc/is_sharp(obj/item/W as obj)
+/proc/is_sharp(obj/item/W as obj)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
 	return ( \
 		istype(W, /obj/item/weapon/screwdriver)                   || \
 		istype(W, /obj/item/weapon/pen)                           || \
@@ -483,6 +502,7 @@
 		istype(W, /obj/item/weapon/shard)                         || \
 		istype(W, /obj/item/weapon/reagent_containers/syringe)    || \
 		istype(W, /obj/item/weapon/kitchen/utensil/fork) && W.icon_state != "forkloaded" || \
+		istype(W, /obj/item/weapon/twohanded/fireaxe)			  || \
 		istype(W,/obj/item/projectile)\
 	)
 

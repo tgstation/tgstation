@@ -1,3 +1,44 @@
+/mob/living/carbon/human/gib()
+	death(1)
+	var/atom/movable/overlay/animation = null
+	monkeyizing = 1
+	canmove = 0
+	icon = null
+	invisibility = 101
+
+	animation = new(loc)
+	animation.icon_state = "blank"
+	animation.icon = 'mob.dmi'
+	animation.master = src
+
+	flick("gibbed-h", animation)
+	hgibs(loc, viruses, dna)
+
+	spawn(15)
+		if(animation)	del(animation)
+		if(src)			del(src)
+
+/mob/living/carbon/human/dust()
+	death(1)
+	var/atom/movable/overlay/animation = null
+	monkeyizing = 1
+	canmove = 0
+	icon = null
+	invisibility = 101
+
+	animation = new(loc)
+	animation.icon_state = "blank"
+	animation.icon = 'mob.dmi'
+	animation.master = src
+
+	flick("dust-h", animation)
+	new /obj/effect/decal/remains/human(loc)
+
+	spawn(15)
+		if(animation)	del(animation)
+		if(src)			del(src)
+
+
 /mob/living/carbon/human/death(gibbed)
 	if(halloss > 0 && (!gibbed))
 		//hallucination = 0
@@ -61,8 +102,11 @@
 /mob/living/carbon/human/proc/ChangeToHusk()
 	if(mutations & HUSK)
 		return
+	var/datum/organ/external/head/head = get_organ("head")
+	if(head)
+		head.disfigured = 1
+	name = get_visible_name()
 	mutations |= HUSK
-	real_name = "Unknown"
 	update_body()
 	return
 

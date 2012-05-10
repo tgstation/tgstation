@@ -51,3 +51,9 @@
 					if ((M.client && !( M.blinded )))
 						M.show_message("\red [user] gently taps [src] with the [O]. ")
 		return
+
+/mob/living/simple_animal/shade/proc/mind_initialize(mob/G)
+	mind = new
+	mind.current = src
+	mind.assigned_role = "Shade"
+	mind.key = G.key

@@ -13,9 +13,10 @@
 		src.real_name += " "
 		src.real_name += "-[ident]"
 		src.name = src.real_name
-	if(!src.connected_ai)
+	/*if(!src.connected_ai)
 		for(var/mob/living/silicon/ai/A in world)
 			src.connected_ai = A
 			A.connected_robots += src
 			break
+	*/
 	return

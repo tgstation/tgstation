@@ -6,7 +6,6 @@
 
 Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 ---------------------
-
 "}
 
 	diaryofmeanpeople = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")] Attack.log")
@@ -15,19 +14,13 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 
 Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 ---------------------
-Dear Diary....
-Today, these people were mean:
-
 "}
-
-
 
 	jobban_loadbanfile()
 	jobban_updatelegacybans()
 	LoadBans()
 	process_teleport_locs() //Sets up the wizard teleport locations
 	process_ghost_teleport_locs() //Sets up ghost teleport locations.
-	sleep_offline = 1
 
 	if (config.kick_inactive)
 		spawn(30)
@@ -187,15 +180,18 @@ proc/countJob(rank)
 	return equipped
 
 /proc/AutoUpdateAI(obj/subject)
+/*
 	if (subject!=null)
 		for(var/mob/living/silicon/ai/M in world)
 			if ((M.client && M.machine == subject))
 				subject.attack_ai(M)
+*/
 
 /proc/AutoUpdateTK(obj/subject)
-	if (subject!=null)
+/*	if (subject!=null)
 		for(var/obj/item/tk_grab/T in world)
 			if (T.host)
 				var/mob/M = T.host
 				if(M.client && M.machine == subject)
 					subject.attack_hand(M)
+*/

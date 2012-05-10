@@ -10,6 +10,8 @@
 	range = -1
 	include_user = 1
 
+
+	var phaseshift = 0
 	var/jaunt_duration = 50 //in deciseconds
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
@@ -25,26 +27,45 @@
 			animation.icon_state = "liquify"
 			animation.layer = 5
 			animation.master = holder
-			flick("liquify",animation)
-			target.loc = holder
-			target.client.eye = holder
-			var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
-			steam.set_up(10, 0, mobloc)
-			steam.start()
-			sleep(jaunt_duration)
-			mobloc = get_turf(target.loc)
-			animation.loc = mobloc
-			steam.location = mobloc
-			steam.start()
-			target.canmove = 0
-			sleep(20)
-			flick("reappear",animation)
-			sleep(5)
-			target.loc = mobloc
-			target.canmove = 1
-			target.client.eye = target
-			del(animation)
-			del(holder)
+			if(phaseshift == 1)
+				animation.dir = target.dir
+				flick("phase_shift",animation)
+				target.loc = holder
+				target.client.eye = holder
+				sleep(jaunt_duration)
+				mobloc = get_turf(target.loc)
+				animation.loc = mobloc
+				target.canmove = 0
+				sleep(20)
+				animation.dir = target.dir
+				flick("phase_shift2",animation)
+				sleep(5)
+				target.loc = mobloc
+				target.canmove = 1
+				target.client.eye = target
+				del(animation)
+				del(holder)
+			else
+				flick("liquify",animation)
+				target.loc = holder
+				target.client.eye = holder
+				var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
+				steam.set_up(10, 0, mobloc)
+				steam.start()
+				sleep(jaunt_duration)
+				mobloc = get_turf(target.loc)
+				animation.loc = mobloc
+				steam.location = mobloc
+				steam.start()
+				target.canmove = 0
+				sleep(20)
+				flick("reappear",animation)
+				sleep(5)
+				target.loc = mobloc
+				target.canmove = 1
+				target.client.eye = target
+				del(animation)
+				del(holder)
 
 /obj/effect/dummy/spell_jaunt
 	name = "water"

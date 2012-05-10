@@ -202,32 +202,69 @@ NOTEBOOK
 			user << "\blue You stamp the paper with your rubber stamp."
 
 		if(istype(P, /obj/item/weapon/stamperaser))
-			if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/weapon/clipboard) ) && src.loc.loc != user && user.equipped() != P))
-				return
-			src.info = src.infoold
-			src.infoold = null
-			for(var/i, i <= stamped.len, i++)
-				switch(stamped[i])
-					if(/obj/item/weapon/stamp/captain)
-						src.overlays -= "paper_stamped_cap"
-					if(/obj/item/weapon/stamp/hop)
-						src.overlays -= "paper_stamped_hop"
-					if(/obj/item/weapon/stamp/hos)
-						src.overlays -= "paper_stamped_hos"
-					if(/obj/item/weapon/stamp/ce)
-						src.overlays -= "paper_stamped_ce"
-					if(/obj/item/weapon/stamp/rd)
-						src.overlays -= "paper_stamped_rd"
-					if(/obj/item/weapon/stamp/cmo)
-						src.overlays -= "paper_stamped_cmo"
-					if(/obj/item/weapon/stamp/denied)
-						src.overlays -= "paper_stamped_denied"
-					if(/obj/item/weapon/stamp/clown)
-						src.overlays -= "paper_stamped_clown"
-					else
-						src.overlays -= "paper_stamped"
-			stamped = list()
-			user << "\blue You sucessfully remove those pesky stamps."
+			switch(alert("Would you like to erase all stamps, or forge one?","Choose.","Erase","Forge"))
+				if("Erase")
+					if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/weapon/clipboard) ) && src.loc.loc != user && user.equipped() != P))
+						return
+					src.info = src.infoold
+					src.infoold = null
+					src.overlays -= "paper_stamped_cap"
+					src.overlays -= "paper_stamped_hop"
+					src.overlays -= "paper_stamped_hos"
+					src.overlays -= "paper_stamped_ce"
+					src.overlays -= "paper_stamped_rd"
+					src.overlays -= "paper_stamped_cmo"
+					src.overlays -= "paper_stamped_denied"
+					src.overlays -= "paper_stamped_clown"
+					src.overlays -= "paper_stamped"
+					stamped = list()
+					user << "\blue You sucessfully remove those pesky stamps."
+					return
+				if("Forge")
+					if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/weapon/clipboard) ) && src.loc.loc != user && user.equipped() != P))
+						return
+					if(!src.infoold)
+						src.infoold = src.info
+					var/forgename = ""
+					var/stamptype = ""
+					var/pathtype = ""
+					var/list/stamps = list("Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "DENIED")
+					stamptype = input("Select a stamp type.", null) in stamps
+					if(stamptype == "Captain")
+						src.overlays += "paper_stamped_cap"
+						forgename = "captain's rubber stamp"
+						pathtype = "/obj/item/weapon/stamp/captain"
+					else if(stamptype == "Head of Personnel")
+						src.overlays += "paper_stamped_hop"
+						forgename = "head of personnel's rubber stamp"
+						pathtype = "/obj/item/weapon/stamp/hop"
+					else if(stamptype == "Head of Security")
+						src.overlays += "paper_stamped_hos"
+						forgename = "head of security's rubber stamp"
+						pathtype = "/obj/item/weapon/stamp/hos"
+					else if(stamptype == "Chief Engineer")
+						src.overlays += "paper_stamped_ce"
+						forgename = "chief engineers's rubber stamp"
+						pathtype = "/obj/item/weapon/stamp/ce"
+					else if(stamptype == "Research Director")
+						src.overlays += "paper_stamped_rd"
+						forgename = "research director's rubber stamp"
+						pathtype = "/obj/item/weapon/stamp/rd"
+					else if(stamptype == "Chief Medical Officer")
+						src.overlays += "paper_stamped_cmo"
+						forgename = "chief medical officer's rubber stamp"
+						pathtype = "/obj/item/weapon/stamp/cmo"
+					else if(stamptype == "DENIED")
+						src.overlays += "paper_stamped_denied"
+						forgename = "\improper DENIED rubber stamp"
+						pathtype = "/obj/item/weapon/stamp/denied"
+					src.info += text("<BR><i>This paper has been stamped with the [].</i><BR>", forgename)
+					if(!stamped)
+						stamped = new
+					stamped += pathtype
+
+					user << "\blue You forge a stamp on the paper."
+					return
 
 	/*
 	else

@@ -126,6 +126,12 @@ GUEST_JOBBAN 1
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
 # SERVER ss13.example.com:2506
 
+## forum address
+# FORUMURL http://baystation12.net/forums/
+
+## Wiki address
+# WIKIURL http://baystation12.net/wiki/index.php
+
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://justanotherday.example.com
 
@@ -145,3 +151,10 @@ GUEST_JOBBAN 1
 
 ##What address should banned people appeal ther ban at?  Remember to escape the characters, if needed!
 # APPEAL_ADDRESS -->APPEAL ADDRESS HERE<--
+##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
+TICKLAG 0.9
+
+## Defines if Tick Compensation is used.  It results in a minor slowdown of movement of all mobs, but attempts to result in a level movement speed across all ticks.  Recommended if tickrate is lowered.
+TICKCOMP 0
+
+

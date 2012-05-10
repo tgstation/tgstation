@@ -4,6 +4,7 @@ MATCHES
 MATCHBOXES
 CIGARETTES
 CIGARS
+SMOKING PIPES
 CIG PACKET
 ZIPPO
 */
@@ -329,7 +330,7 @@ ZIPPO
 //CIG PACK//
 ////////////
 /obj/item/weapon/cigpacket
-	name = "Cigarette packet"
+	name = "cigarette packet"
 	desc = "The most popular brand of Space Cigarettes, sponsors of the Space Olympics."
 	icon = 'cigarettes.dmi'
 	icon_state = "cigpacket"
@@ -342,26 +343,30 @@ ZIPPO
 
 
 	update_icon()
-		src.icon_state = text("cigpacket[]", src.cigcount)
-		src.desc = text("There are [] cigs\s left!", src.cigcount)
+		icon_state = "[initial(icon_state)][cigcount]"
+		desc = "There's [cigcount] cig\s left!"
 		return
 
 
 	attack_hand(mob/user as mob)
 		if(user.r_hand == src || user.l_hand == src)
-			if(src.cigcount == 0)
+			if(cigcount == 0)
 				user << "\red You're out of cigs, shit! How you gonna get through the rest of the day..."
 				return
 			else
-				src.cigcount--
+				cigcount--
 				var/obj/item/clothing/mask/cigarette/W = new /obj/item/clothing/mask/cigarette(user)
 				user.put_in_hand(W)
 		else
 			return ..()
-		src.update_icon()
+		update_icon()
 		return
 
-
+/obj/item/weapon/cigpacket/dromedaryco
+	name = "DromedaryCo packet"
+	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
+	icon_state = "Dpacket"
+	item_state = "Dpacket"
 
 /////////
 //ZIPPO//
@@ -405,16 +410,16 @@ ZIPPO
 				src.item_state = icon_on
 				if( istype(src,/obj/item/weapon/lighter/zippo) )
 					for(var/mob/O in viewers(user, null))
-						O.show_message(text("\red Without even breaking stride, [] flips open and lights the [] in one smooth movement.", user, src), 1)
+						O.show_message(text("\red Without even breaking stride, [] flips open and lights [] in one smooth movement.", user, src), 1)
 				else
 					if(prob(75))
 						for(var/mob/O in viewers(user, null))
-							O.show_message("\red After a few attempts, [user] manages to light the [src].", 1)
+							O.show_message("\red After a few attempts, [user] manages to light [src].", 1)
 					else
 						user << "\red <b>You burn yourself while lighting the lighter.</b>"
 						user.adjustFireLoss(5)
 						for(var/mob/O in viewers(user, null))
-							O.show_message("\red After a few attempts, [user] manages to light the [src], they however burn their finger in the process.", 1)
+							O.show_message("\red After a few attempts, [user] manages to light [src], they however burn their finger in the process.", 1)
 
 				user.total_luminosity += 2
 				processing_objects.Add(src)

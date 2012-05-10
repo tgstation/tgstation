@@ -25,6 +25,9 @@
 	//Sellection screen color
 	var/selection_color = "#ffffff"
 
+	//the type of the ID the player will have
+	var/idtype = /obj/item/weapon/card/id
+
 	//List of alternate titles, if any
 	var/list/alt_titles
 

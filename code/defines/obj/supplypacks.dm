@@ -1,6 +1,7 @@
 //SUPPLY PACKS
 //NOTE: only secure crate types use the access var (and are lockable)
 //NOTE: hidden packs only show up when the computer has been hacked.
+//ANOTER NOTE: Contraband is obtainable through modified supplycomp circuitboards.
 //BIG NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
 /datum/supply_packs/specialops
 	name = "Special Ops supplies"
@@ -389,7 +390,8 @@
 					"/obj/item/seeds/carrotseed",
 					"/obj/item/seeds/sunflowerseed",
 					"/obj/item/seeds/chantermycelium",
-					"/obj/item/seeds/potatoseed")
+					"/obj/item/seeds/potatoseed",
+					"/obj/item/seeds/sugarcaneseed")
 	cost = 10
 	containertype = /obj/structure/closet/crate/hydroponics
 	containername = "Seeds crate"
@@ -711,8 +713,8 @@
 	name = "Ballistic gear crate"
 	contains = list("/obj/item/clothing/suit/armor/bulletproof",
 					"/obj/item/clothing/suit/armor/bulletproof",
-					"/obj/item/weapon/gun/projectile/shotgun/combat2",
-					"/obj/item/weapon/gun/projectile/shotgun/combat2")
+					"/obj/item/weapon/gun/projectile/shotgun/pump/combat",
+					"/obj/item/weapon/gun/projectile/shotgun/pump/combat")
 	cost = 50
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Ballistic gear crate"
@@ -779,10 +781,10 @@
 					"/obj/item/clothing/head/collectable/xenom",
 					"/obj/item/clothing/head/collectable/xenom",
 					"/obj/item/clothing/head/collectable/petehat")
-	name = "Collectable Hat Crate!"
+	name = "Collectable hat crate!"
 	cost = 200
 	containertype = "/obj/structure/closet/crate/hat"
-	containername = "Collectable Hats Crate! Brought to you by Bass.inc!"
+	containername = "Collectable hats crate! Brought to you by Bass.inc!"
 	group = "Clothing"
 
 /datum/supply_packs/hats/New()
@@ -793,5 +795,34 @@
 	..()
 
 
+/datum/supply_packs/poster
+	contains = list("/obj/item/weapon/contraband/poster",) //We randomly pick 5 items from this list through the constructor, look below
+	name = "Poster crate"
+	cost = 30
+	containertype = "/obj/structure/closet/crate/poster"
+	containername = "Poster crate"
+	contraband = 1
+	group = "Secure Storage"
+
+/datum/supply_packs/poster/New()
+	var/list/tempContains = list()
+	for(var/i = 0,i<5,i++)
+		tempContains += pick(contains)
+	src.contains = tempContains
+	..()
+
+/datum/supply_packs/cigarettes
+	contains = list("/obj/item/weapon/cigpacket/dromedaryco",
+					"/obj/item/weapon/cigpacket/dromedaryco",
+					"/obj/item/weapon/cigpacket/dromedaryco",
+					"/obj/item/weapon/cigpacket/dromedaryco",
+					"/obj/item/weapon/cigpacket/dromedaryco",
+					"/obj/item/weapon/cigpacket/dromedaryco",)
+	name = "DromedaryCo cigarettes crate"
+	cost = 15
+	containertype = "/obj/structure/closet/crate/cigarettes"
+	containername = "DromedaryCo cigarettes crate"
+	contraband = 1
+	group = "Secure Storage"
 
 //SUPPLY PACKS

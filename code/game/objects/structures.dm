@@ -160,6 +160,58 @@ obj/structure
 /obj/structure/girder/reinforced
 	icon_state = "reinforced"
 	state = 2
+
+/obj/structure/cultgirder
+	icon= 'cult.dmi'
+	icon_state= "cultgirder"
+	anchored = 1
+	density = 1
+	layer = 2
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(istype(W, /obj/item/weapon/wrench))
+			playsound(src.loc, 'Ratchet.ogg', 100, 1)
+			user << "\blue Now disassembling the girder"
+			if(do_after(user,40))
+				user << "\blue You dissasembled the girder!"
+				new /obj/effect/decal/remains/human(get_turf(src))
+				del(src)
+
+		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+			user << "\blue Now slicing apart the girder"
+			if(do_after(user,30))
+				user << "\blue You slice apart the girder!"
+			new /obj/effect/decal/remains/human(get_turf(src))
+			del(src)
+
+		else if(istype(W, /obj/item/weapon/pickaxe/diamonddrill))
+			user << "\blue You drill through the girder!"
+			new /obj/effect/decal/remains/human(get_turf(src))
+			del(src)
+
+	blob_act()
+		if(prob(40))
+			del(src)
+
+
+	ex_act(severity)
+		switch(severity)
+			if(1.0)
+				del(src)
+				return
+			if(2.0)
+				if (prob(30))
+					new /obj/effect/decal/remains/human(loc)
+					del(src)
+				return
+			if(3.0)
+				if (prob(5))
+					new /obj/effect/decal/remains/human(loc)
+					del(src)
+				return
+			else
+		return
+
 // LATTICE
 
 

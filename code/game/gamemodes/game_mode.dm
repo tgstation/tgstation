@@ -47,7 +47,7 @@ Stealth and Camouflage Items;
 /obj/item/clothing/mask/gas/voice:4:Voice Changer;
 /obj/item/clothing/glasses/thermal:4:Thermal Imaging Glasses;
 /obj/item/device/chameleon:4:Chameleon-Projector;
-/obj/item/weapon/stamperaser:1:Stamp Remover;
+/obj/item/weapon/stamperaser:1:Stamp Remover and Forger;
 Whitespace:Seperator;
 Devices and Tools;
 /obj/item/weapon/card/emag:4:Cryptographic Sequencer (Limited uses, almost full access);

@@ -9,7 +9,7 @@
 
 	New()
 		spawn(0)
-			core_generator = locate() in range(15,src)
+			core_generator = locate() in world
 
 	attack_ai(mob/user)
 		attack_hand(user)

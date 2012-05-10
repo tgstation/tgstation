@@ -678,6 +678,25 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			if ( !animal.restrained() )
 				attack_animal(animal)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /atom/DblClick(location, control, params) //TODO: DEFERRED: REWRITE
 //	world << "checking if this shit gets called at all"
 
@@ -908,7 +927,18 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				// ------- YOU DO NOT HAVE AN ITEM IN YOUR HAND -------
 				if (istype(usr, /mob/living/carbon/human))
 					// ------- YOU ARE HUMAN -------
+/*					if(usr.hand) // if he's using his left hand.
+						var/datum/organ/external/temp = usr:get_organ("l_hand")
+						if(temp.destroyed)
+							usr << "\blue You look at your stump."
+							return
+					else
+						var/datum/organ/external/temp = usr:get_organ("r_hand")
+						if(temp.destroyed)
+							usr << "\blue You look at your stump."
+							return*/
 					src.attack_hand(usr, usr.hand)
+//					usr:afterattack(src, usr, (t5 ? 1 : 0), params)
 				else
 					// ------- YOU ARE NOT HUMAN. WHAT ARE YOU - DETERMINED HERE AND PROPER ATTACK_MOBTYPE CALLED -------
 					if (istype(usr, /mob/living/carbon/monkey))
@@ -1058,9 +1088,11 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		else
 			var/nhref = "src=\ref[src];aiDisable=5"
 			src.Topic(nhref, params2list(nhref), src, 1)
+
+
 	return
 
-/atom/proc/AICtrlClick() // Bolts doors.
+/atom/proc/AICtrlClick() // Bolts doors, turns off APCs.
 	if(istype(src , /obj/machinery/door/airlock))
 		if(src:locked)
 			var/nhref = "src=\ref[src];aiEnable=4"
@@ -1068,6 +1100,13 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		else
 			var/nhref = "src=\ref[src];aiDisable=4"
 			src.Topic(nhref, params2list(nhref), src, 1)
+
+	else if (istype(src , /obj/machinery/power/apc/))
+		var/nhref = "src=\ref[src];breaker=1"
+		src.Topic(nhref, params2list(nhref), 0)
+
+
+
 	return
 
 /*

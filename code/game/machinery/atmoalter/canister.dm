@@ -171,6 +171,20 @@
 		src.health -= W.force
 		src.add_fingerprint(user)
 		healthcheck()
+
+	if(istype(user, /mob/living/silicon/robot) && istype(W, /obj/item/weapon/tank/jetpack))
+		var/datum/gas_mixture/thejetpack = W:air_contents
+		var/env_pressure = thejetpack.return_pressure()
+		var/pressure_delta = min(10*ONE_ATMOSPHERE - env_pressure, (air_contents.return_pressure() - env_pressure)/2)
+		//Can not have a pressure delta that would cause environment pressure > tank pressure
+		var/transfer_moles = 0
+		if((air_contents.temperature > 0) && (pressure_delta > 0))
+			transfer_moles = pressure_delta*thejetpack.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)//Actually transfer the gas
+			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
+			thejetpack.merge(removed)
+			user << "You pulse-pressurize your jetpack from the tank."
+		return
+
 	..()
 
 /obj/machinery/portable_atmospherics/canister/attack_ai(var/mob/user as mob)

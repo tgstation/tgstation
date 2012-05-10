@@ -34,6 +34,12 @@
 		if(0)
 			usr << "The satchel now picks up one ore at a time."
 
+/obj/item/weapon/satchel/borg
+	icon = 'mining.dmi'
+	icon_state = "satchel"
+	name = "Cyborg Mining Satchel"
+	mode = 1;  //0 = pick one at a time, 1 = pick all on tile
+	capacity = 200; //the number of ore pieces it can carry.
 
 /**********************Ore box**************************/
 

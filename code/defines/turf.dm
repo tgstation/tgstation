@@ -117,6 +117,15 @@
 
 	var/walltype = "wall"
 
+/turf/simulated/wall/heatshield
+	thermal_conductivity = 0
+	opacity = 0
+	name = "Heat Shielding"
+	icon = 'thermal.dmi'
+	icon_state = "thermal"
+	heat_capacity = 625000 //twice the cap of a normal wall
+	walltype = "heatshield"
+
 /turf/simulated/wall/cult
 	name = "wall"
 	desc = "The patterns engraved on the wall seem to shift as you try to focus on them. You feel sick"
@@ -128,7 +137,7 @@
 	icon = 'shuttle.dmi'
 	thermal_conductivity = 0.05
 	heat_capacity = 0
-	layer = 2.1
+	layer = 2
 
 /turf/simulated/shuttle/wall
 	name = "wall"

@@ -281,6 +281,9 @@ var
 	var/list/heard_garbled	= list() // garbled message (ie "f*c* **u, **i*er!")
 	var/list/heard_gibberish= list() // completely screwed over message (ie "F%! (O*# *#!<>&**%!")
 
+	// Make sure everyone only hears the message once
+	var/list/already_heard  = list()
+
 	for (var/mob/R in receive)
 
 	  /* --- Loop through the receivers and categorize them --- */
@@ -290,6 +293,12 @@ var
 
 		if(istype(M, /mob/new_player)) // we don't want new players to hear messages. rare but generates runtimes.
 			continue
+
+		// We'll skip those guys who have already heard the message
+		if (R in already_heard)
+			continue
+
+		already_heard += R
 
 
 		// --- Check for compression ---

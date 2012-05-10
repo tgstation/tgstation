@@ -451,7 +451,7 @@ It is caused by the unexpected circumstances after awakening in cryo (if cloned 
 				</ul>
 
 				<h3>Security Cyborg</h3>
-				The Security Cyborg module is equipped with effective secuity measures used to apprehend and arrest criminals without harming them a bit.<br>A Security Cyborg comes with:
+				The Security Cyborg module is equipped with effective security measures used to apprehend and arrest criminals without harming them a bit.<br>A Security Cyborg comes with:
 				<ul>
 				  <li>Stun Baton</li>
 				  <li>Handcuffs</li>

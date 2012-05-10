@@ -15,6 +15,8 @@
 	attack(mob/living/carbon/human/M as mob, mob/user as mob)
 		if(!istype(M, /mob/living/carbon/human))//If target is not a human.
 			return ..()
+		if(istype(M, /mob/living/carbon/human/dummy))
+			return..()
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their soul captured with [src.name] by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to capture the soul of [M.name] ([M.ckey])</font>")
 
@@ -161,12 +163,21 @@
 			var/mob/living/simple_animal/shade/A = locate() in C
 			if(A)
 				var/construct_class = alert(U, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
-				var/mob/living/simple_animal/Z
 				switch(construct_class)
 					if("Juggernaut")
-						Z = new /mob/living/simple_animal/constructarmoured (get_turf(T.loc))
+						var/mob/living/simple_animal/constructarmoured/Z = new /mob/living/simple_animal/constructarmoured (get_turf(T.loc))
 						if (A.client)
 							A.client.mob = Z
+							Z.mind_initialize(Z)
+							if(iscultist(U))
+								if (ticker.mode.name == "cult")
+									ticker.mode:add_cultist(Z.mind)
+									Z.mind.special_role = "Cultist"
+									ticker.mode.update_cult_icons_added(Z.mind)
+								else
+									ticker.mode.cult+=Z.mind
+									Z.mind.special_role = "Cultist"
+									ticker.mode.update_cult_icons_added(Z.mind)
 						del(T)
 						Z << "<B>You are playing a Juggernaut. Though slow, you can withstand extreme punishment, and rip apart enemies and walls alike.</B>"
 						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
@@ -175,9 +186,19 @@
 						del(C)
 
 					if("Wraith")
-						Z = new /mob/living/simple_animal/constructwraith (get_turf(T.loc))
+						var/mob/living/simple_animal/constructwraith/Z = new /mob/living/simple_animal/constructwraith (get_turf(T.loc))
 						if (A.client)
 							A.client.mob = Z
+							Z.mind_initialize(Z)
+							if(iscultist(U))
+								if (ticker.mode.name == "cult")
+									ticker.mode:add_cultist(Z.mind)
+									Z.mind.special_role = "Cultist"
+									ticker.mode.update_cult_icons_added(Z.mind)
+								else
+									ticker.mode.cult+=Z.mind
+									Z.mind.special_role = "Cultist"
+									ticker.mode.update_cult_icons_added(Z.mind)
 						del(T)
 						Z << "<B>You are playing a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</B>"
 						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"
@@ -186,9 +207,19 @@
 						del(C)
 
 					if("Artificer")
-						Z = new /mob/living/simple_animal/constructbuilder (get_turf(T.loc))
+						var/mob/living/simple_animal/constructbuilder/Z = new /mob/living/simple_animal/constructbuilder (get_turf(T.loc))
 						if (A.client)
 							A.client.mob = Z
+							Z.mind_initialize(Z)
+							if(iscultist(U))
+								if (ticker.mode.name == "cult")
+									ticker.mode:add_cultist(Z.mind)
+									Z.mind.special_role = "Cultist"
+									ticker.mode.update_cult_icons_added(Z.mind)
+								else
+									ticker.mode.cult+=Z.mind
+									Z.mind.special_role = "Cultist"
+									ticker.mode.update_cult_icons_added(Z.mind)
 						del(T)
 						Z << "<B>You are playing an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, repair allied constructs (by clicking on them), and even create new constructs</B>"
 						Z << "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>"

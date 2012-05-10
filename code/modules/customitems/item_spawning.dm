@@ -29,6 +29,22 @@
 				if(istype(M.back,/obj/item/weapon/storage) && M.back:contents.len < M.back:storage_slots) // Try to place it in something on the mob's back first
 					Item.loc = M.back
 					ok = 1
+				else if(istype(Item,/obj/item/weapon/card/id)) //player wants a custom ID card - only lifetime cards for now
+					var/obj/item/weapon/card/id/I = Item
+					for(var/obj/item/weapon/card/id/C in M)
+						I.registered_name = M.real_name
+						I.name = "[M.real_name]'s Lifetime ID Card ([M.mind.role_alt_title ? M.mind.role_alt_title : M.mind.assigned_role])"
+						I.access = C.access
+						I.assignment = C.assignment
+						I.over_jumpsuit = C.over_jumpsuit
+						I.blood_type = C.blood_type
+						I.dna_hash = C.dna_hash
+						I.fingerprint_hash = C.fingerprint_hash
+						//
+						I.loc = C.loc
+						ok = 1
+						del(C)
+						break
 				else
 					for(var/obj/item/weapon/storage/S in M.contents) // Try to place it in any item that can store stuff, on the mob.
 						if (S:len < S:storage_slots)

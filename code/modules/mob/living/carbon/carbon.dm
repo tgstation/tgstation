@@ -35,7 +35,7 @@
 				if(prob(src.getBruteLoss() - 50))
 					src.gib()
 
-/mob/living/carbon/gib(give_medal,ex_act)
+/mob/living/carbon/gib()
 	for(var/mob/M in src)
 		if(M in src.stomach_contents)
 			src.stomach_contents.Remove(M)
@@ -43,7 +43,7 @@
 		for(var/mob/N in viewers(src, null))
 			if(N.client)
 				N.show_message(text("\red <B>[M] bursts out of [src]!</B>"), 2)
-	. = ..(ex_act)
+	. = ..()
 
 /mob/living/carbon/attack_hand(mob/M as mob)
 	if (M.hand)
@@ -168,9 +168,9 @@
 /mob/living/carbon/proc/swap_hand()
 	var/obj/item/item_in_hand = src.get_active_hand()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
-		if(item_in_hand.twohanded == 1)
-			if(item_in_hand.wielded == 1)
-				usr << text("Your other hand is too busy holding the []",item_in_hand.name)
+		if(istype(item_in_hand,/obj/item/weapon/twohanded))
+			if(item_in_hand:wielded == 1)
+				usr << "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>"
 				return
 	src.hand = !( src.hand )
 	if (!( src.hand ))
@@ -193,7 +193,6 @@
 				var/status = ""
 				var/brutedamage = org.brute_dam
 				var/burndamage = org.burn_dam
-
 				if(halloss > 0)
 					if(prob(30))
 						brutedamage += halloss
@@ -215,6 +214,9 @@
 					status += "blistered"
 				else if(burndamage > 0)
 					status += "numb"
+				if(org.destroyed)
+					status = "MISSING!"
+
 				if(status == "")
 					status = "OK"
 				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.getDisplayName(),status),1)
@@ -228,10 +230,10 @@
 			if (istype(src,/mob/living/carbon/human) && src:w_uniform)
 				var/mob/living/carbon/human/H = src
 				H.w_uniform.add_fingerprint(M)
-			src.sleeping = max(0,src.sleeping-5)
 			if(!src.sleeping_willingly)
-				src.sleeping = 0
-			src.resting = 0
+				src.sleeping = max(0,src.sleeping-5)
+			if(src.sleeping == 0)
+				src.resting = 0
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
 			AdjustWeakened(-3)

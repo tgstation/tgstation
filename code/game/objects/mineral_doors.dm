@@ -244,3 +244,64 @@
 /obj/structure/mineral_door/transparent/diamond
 	mineralType = "diamond"
 	hardness = 10
+
+/obj/structure/mineral_door/wood
+	mineralType = "wood"
+	hardness = 1
+
+	Open()
+		isSwitchingStates = 1
+		playsound(loc, 'doorcreaky.ogg', 100, 1)
+		flick("[mineralType]opening",src)
+		sleep(10)
+		density = 0
+		opacity = 0
+		state = 1
+		update_icon()
+		isSwitchingStates = 0
+
+	Close()
+		isSwitchingStates = 1
+		playsound(loc, 'doorcreaky.ogg', 100, 1)
+		flick("[mineralType]closing",src)
+		sleep(10)
+		density = 1
+		opacity = 1
+		state = 0
+		update_icon()
+		isSwitchingStates = 0
+
+	Dismantle(devastated = 0)
+		if(!devastated)
+			for(var/i = 1, i <= oreAmount, i++)
+				new/obj/item/stack/sheet/wood(get_turf(src))
+		del(src)
+
+/obj/structure/mineral_door/resin
+	mineralType = "resin"
+	hardness = 5
+
+	Open()
+		isSwitchingStates = 1
+		playsound(loc, 'attackblob.ogg', 100, 1)
+		flick("[mineralType]opening",src)
+		sleep(10)
+		density = 0
+		opacity = 0
+		state = 1
+		update_icon()
+		isSwitchingStates = 0
+
+	Close()
+		isSwitchingStates = 1
+		playsound(loc, 'attackblob.ogg', 100, 1)
+		flick("[mineralType]closing",src)
+		sleep(10)
+		density = 1
+		opacity = 1
+		state = 0
+		update_icon()
+		isSwitchingStates = 0
+
+	Dismantle(devastated = 0)
+		del(src)

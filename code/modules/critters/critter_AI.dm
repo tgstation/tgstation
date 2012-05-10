@@ -8,81 +8,83 @@
 	process()
 		set background = 1
 		if (!src.alive)	return
-		switch(task)
-			if("thinking")
-				src.attack = 0
-				src.target = null
-				sleep(thinkspeed)
-				walk_to(src,0)
-				if (src.aggressive) seek_target()
-				if (src.wanderer && !src.target) src.task = "wandering"
-			if("chasing")
-				if (src.frustration >= max_frustration)
+
+		// use a loop to avoid weird benchmarking phenomenons caused by
+		// recursion
+		while(1)
+			switch(task)
+				if("thinking")
+					src.attack = 0
 					src.target = null
-					src.last_found = world.time
-					src.frustration = 0
-					src.task = "thinking"
+					sleep(thinkspeed)
 					walk_to(src,0)
-				if (target)
-					if (get_dist(src, src.target) <= 1)
-						var/mob/living/carbon/M = src.target
-						ChaseAttack()
-						src.task = "attacking"
-						if(chasestate)
-							icon_state = chasestate
-						src.anchored = 1
-						src.target_lastloc = M.loc
-					else
-						var/turf/olddist = get_dist(src, src.target)
-						walk_to(src, src.target,1,chasespeed)
-						if ((get_dist(src, src.target)) >= (olddist))
-							src.frustration++
+					if (src.aggressive) seek_target()
+					if (src.wanderer && !src.target) src.task = "wandering"
+				if("chasing")
+					if (src.frustration >= max_frustration)
+						src.target = null
+						src.last_found = world.time
+						src.frustration = 0
+						src.task = "thinking"
+						walk_to(src,0)
+					if (target)
+						if (get_dist(src, src.target) <= 1)
+							var/mob/living/carbon/M = src.target
+							ChaseAttack()
+							src.task = "attacking"
+							if(chasestate)
+								icon_state = chasestate
+							src.anchored = 1
+							src.target_lastloc = M.loc
 						else
-							src.frustration = 0
-						sleep(5)
-				else src.task = "thinking"
-			if("attacking")
-				// see if he got away
-				if ((get_dist(src, src.target) > 1) || ((src.target:loc != src.target_lastloc)))
-					src.anchored = 0
-					src.task = "chasing"
-					if(chasestate)
-						icon_state = chasestate
-				else
-					if (get_dist(src, src.target) <= 1)
-						var/mob/living/carbon/M = src.target
-						if(!src.attacking)	RunAttack()
-						if(!src.aggressive)
-							src.task = "thinking"
-							src.target = null
-							src.anchored = 0
-							src.last_found = world.time
-							src.frustration = 0
-							src.attacking = 0
-						else
-							if(M!=null)
-								if(ismob(src.target))
-									if(M.health < config.health_threshold_crit)
-										src.task = "thinking"
-										src.target = null
-										src.anchored = 0
-										src.last_found = world.time
-										src.frustration = 0
-										src.attacking = 0
-					else
+							var/turf/olddist = get_dist(src, src.target)
+							walk_to(src, src.target,1,chasespeed)
+							if ((get_dist(src, src.target)) >= (olddist))
+								src.frustration++
+							else
+								src.frustration = 0
+							sleep(5)
+					else src.task = "thinking"
+				if("attacking")
+					// see if he got away
+					if ((get_dist(src, src.target) > 1) || ((src.target:loc != src.target_lastloc)))
 						src.anchored = 0
-						src.attacking = 0
 						src.task = "chasing"
 						if(chasestate)
 							icon_state = chasestate
-			if("wandering")
-				if(chasestate)
-					icon_state = initial(icon_state)
-				patrol_step()
-				sleep(wanderspeed)
-		spawn(8)
-			process()
-		return
+					else
+						if (get_dist(src, src.target) <= 1)
+							var/mob/living/carbon/M = src.target
+							if(!src.attacking)	RunAttack()
+							if(!src.aggressive)
+								src.task = "thinking"
+								src.target = null
+								src.anchored = 0
+								src.last_found = world.time
+								src.frustration = 0
+								src.attacking = 0
+							else
+								if(M!=null)
+									if(ismob(src.target))
+										if(M.health < config.health_threshold_crit)
+											src.task = "thinking"
+											src.target = null
+											src.anchored = 0
+											src.last_found = world.time
+											src.frustration = 0
+											src.attacking = 0
+						else
+							src.anchored = 0
+							src.attacking = 0
+							src.task = "chasing"
+							if(chasestate)
+								icon_state = chasestate
+				if("wandering")
+					if(chasestate)
+						icon_state = initial(icon_state)
+					patrol_step()
+					sleep(wanderspeed)
+			sleep(8)
 
 
 	patrol_step()
@@ -115,7 +117,7 @@
 
 	seek_target()
 		if(!prob(aggression)) return // make them attack depending on aggression levels
-	
+
 		src.anchored = 0
 		var/T = null
 		for(var/mob/living/C in view(src.seekrange,src))//TODO: mess with this
