@@ -410,7 +410,6 @@ THERMAL GLASSES
 		src.item_state = "ushankadown"
 		user << "You lower the ear flaps on the ushanka."
 
-
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	if(istype(src.loc, /mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src.loc
@@ -429,18 +428,19 @@ THERMAL GLASSES
 /obj/item/clothing/head/helmet/space/rig/engspace_helmet/verb/toggle()
 	set category = "Object"
 	set name = "Toggle Helmet Visor"
-	if(src.up)
-		src.up = !src.up
-		src.see_face = !src.see_face
-		src.flags |= HEADCOVERSEYES
-		icon_state = "engspace_helmet"
-		usr << "You toggle the reflective tint on."
-	else
-		src.up = !src.up
-		src.see_face = !src.see_face
-		src.flags &= ~HEADCOVERSEYES
-		icon_state = "engspace_helmet_clear"
-		usr << "You toggle the reflective tint off."
+	if(usr.canmove && usr.stat != 2 && !usr.restrained())
+		if(src.up)
+			src.up = !src.up
+			src.see_face = !src.see_face
+			src.flags |= HEADCOVERSEYES
+			icon_state = "engspace_helmet"
+			usr << "You toggle the reflective tint on."
+		else
+			src.up = !src.up
+			src.see_face = !src.see_face
+			src.flags &= ~HEADCOVERSEYES
+			icon_state = "engspace_helmet_clear"
+			usr << "You toggle the reflective tint off."
 	usr.update_clothing()
 
 /obj/item/clothing/head/helmet/space/rig/cespace_helmet/attack_self()
@@ -449,17 +449,38 @@ THERMAL GLASSES
 /obj/item/clothing/head/helmet/space/rig/cespace_helmet/verb/toggle()
 	set category = "Object"
 	set name = "Toggle Helmet Visor"
-	if(src.up)
-		src.up = !src.up
-		src.see_face = !src.see_face
-		src.flags |= HEADCOVERSEYES
-		icon_state = "cespace_helmet"
-		usr << "You toggle the reflective tint on."
-	else
-		src.up = !src.up
-		src.see_face = !src.see_face
-		src.flags &= ~HEADCOVERSEYES
-		icon_state = "cespace_helmet_clear"
-		usr << "You toggle the reflective tint off."
+	if(usr.canmove && usr.stat != 2 && !usr.restrained())
+		if(src.up)
+			src.up = !src.up
+			src.see_face = !src.see_face
+			src.flags |= HEADCOVERSEYES
+			icon_state = "cespace_helmet"
+			usr << "You toggle the reflective tint on."
+		else
+			src.up = !src.up
+			src.see_face = !src.see_face
+			src.flags &= ~HEADCOVERSEYES
+			icon_state = "cespace_helmet_clear"
+			usr << "You toggle the reflective tint off."
 	usr.update_clothing()
 
+/obj/item/clothing/mask/breath/verb/toggle()
+	set name = "Adjust Mask"
+	set category = "Object"
+	if(usr.canmove && usr.stat != 2 && !usr.restrained())
+		if(src.icon_state == "medical")
+			usr << "You can't seem to adjust this mask."
+			return
+		if(src.icon_state == "breath_low")
+			src.icon_state = "breath"
+			src.item_state = "breath"
+			src.flags |= SUITSPACE|HEADSPACE|MASKCOVERSMOUTH
+			protective_temperature = 420
+			usr << "You are now breathing through your mask."
+		else if(src.icon_state == "breath")
+			src.icon_state = "breath_low"
+			src.item_state = "breath_low"
+			src.flags &= ~(SUITSPACE|HEADSPACE|MASKCOVERSMOUTH)
+			protective_temperature = 270
+			usr << "Your mask is now hanging on your neck."
+	usr.update_clothing()

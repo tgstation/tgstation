@@ -192,6 +192,14 @@
 	item_state = "graycoat"
 	color = "graycoat"
 
+/obj/item/clothing/suit/storage/det_suit/fluff/leatherjack //atomicdog92: Seth Sealis
+	name = "leather jacket"
+	desc = "A black leather coat, popular amongst punks, greasers, and other galactic scum."
+	icon = 'custom_items.dmi'
+	icon_state = "leatherjack"
+	item_state = "leatherjack"
+	color = "leatherjack"
+
 //////////// Uniforms ////////////
 
 /obj/item/clothing/under/fluff/jumpsuitdown //searif: Yuki Matsuda
@@ -221,15 +229,15 @@
 	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
 	w_class = 2
 	gas_transfer_coefficient = 0.90
-/*
-/obj/item/clothing/mask/mara_kilpatrick_1
+
+/obj/item/clothing/mask/mara_kilpatrick_1 //staghorn: Mara Kilpatrick
 	name = "shamrock pendant"
 	desc = "A silver and emerald shamrock pendant. It has the initials \"M.K.\" engraved on the back."
 	icon = 'custom_items.dmi'
 	icon_state = "mara_kilpatrick_1"
 	flags = FPRINT|TABLEPASS
 	w_class = 1
-*/
+
 //////////// Shoes ////////////
 
 /obj/item/clothing/shoes/fluff/leatherboots //serithi: Serithi Artalis
