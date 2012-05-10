@@ -52,13 +52,13 @@
 								viruus.holder = gib
 								viruus.spread_type = CONTACT_FEET
 					if(MobDNA)
-						gib.blood_DNA = list(list(MobDNA.unique_enzymes, MobDNA.b_type))
+						gib.blood_DNA[MobDNA.unique_enzymes] = MobDNA.b_type
 						if(MobDNA.original_name != "Unknown")
 							gib.OriginalMob = MobDNA.original_name
 					else if(istype(src, /obj/effect/gibspawner/xeno))
-						gib.blood_DNA = list(list("UNKNOWN DNA", "X*"))
+						gib.blood_DNA["UNKNOWN DNA"] = "X*"
 					else if(istype(src, /obj/effect/gibspawner/human)) // Probably a monkey
-						gib.blood_DNA = list(list("Non-human DNA", "A+"))
+						gib.blood_DNA["Non-human DNA"] = "A+"
 					var/list/directions = gibdirections[i]
 					if(directions.len)
 						gib.streak(directions)

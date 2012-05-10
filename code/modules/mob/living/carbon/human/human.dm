@@ -175,15 +175,15 @@
 		iconL.Remove(G.icon_state)
 		if(nums.len >= 3)
 			var/obj/effect/decal/cleanable/blood/drip/D = pick(nums)
-			D.blood_DNA.len++
-			D.blood_DNA[D.blood_DNA.len] = list(dna.unique_enzymes,dna.b_type)
+			D.blood_DNA[dna.unique_enzymes] = dna.b_type
 			if(virus2)
 				D.virus2 = virus2.getcopy()
 			return
 
 	var/obj/effect/decal/cleanable/blood/drip/this = new(T)
 	this.icon_state = pick(iconL)
-	this.blood_DNA = list(list(dna.unique_enzymes,dna.b_type))
+	this.blood_DNA = list()
+	this.blood_DNA[dna.unique_enzymes] = dna.b_type
 	this.blood_owner = src
 
 	if(virus2)

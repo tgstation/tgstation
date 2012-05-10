@@ -248,10 +248,9 @@
 	desc = "Used to set the destination of properly wrapped packages."
 	icon_state = "forensic0"
 	var/currTag = null
-	var/list/spaceList = list(0,1,0,0,1,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0) // Breaks up departments with whitespace.
+	var/list/spaceList = list(0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0) // Breaks up departments with whitespace.
 	var/list/locationList = list("Disposals",
-	"Mail Office", "Cargo Bay", "QM Office",
-	"Mining Base", "Mining West", "Mining North",
+	"Mail Office", "Cargo Bay", "QM Office","Mining Bay",
 	"Locker Room", "Tool Storage", "Laundry Room", "Toilets",
 	"Security", "Courtroom", "Detective's Office", "Law Office",
 	"Research Division", "Research Director", "Genetics",
