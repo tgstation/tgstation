@@ -86,7 +86,7 @@
 
 		if (href_list["style"])
 			style_name = input("Select the door's paint scheme.", "Door Style", style_name) in \
-				list("General", "Command", "Security", "Engineering", "Medical", "Maintenance", "Airlock", "Freezer")
+				list("General", "Command", "Security", "Engineering", "Medical", "Maintenance", "Airlock", "Freezer", "Research")
 
 			switch(style_name)
 				if("General")
@@ -105,6 +105,8 @@
 					style = /obj/structure/door_assembly/door_assembly_ext
 				if("Freezer")
 					style = /obj/structure/door_assembly/door_assembly_fre
+				if("Research")
+					style = /obj/structure/door_assembly/door_assembly_research
 
 		attack_self(usr)
 

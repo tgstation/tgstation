@@ -1,4 +1,5 @@
 asanadas: Book Berner: /obj/item/clothing/under/chameleon/psyche, /obj/item/clothing/glasses/meson/fluff/book_berner_1
+atomicdog92: Seth Sealis: /obj/item/clothing/suit/storage/det_suit/fluff/leatherjack
 chinsky: Victor Kaminski: /obj/item/fluff/victor_kaminsky_1
 chinsky: Summer Springfield: /obj/item/weapon/camera_test/fluff/orange
 compactninja: Ysyr Rylias: /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
@@ -27,6 +28,7 @@ serithi: Serithi Artalis: /obj/item/clothing/glasses/fluff/serithi_artalis_1, /o
 silentthunder: Val McNeil: /obj/item/fluff/val_mcneil_1
 spaceman96: Trenna Seber: /obj/item/weapon/pen/fluff/multi, /obj/item/clothing/suit/storage/labcoat/fluff/pink
 sparklysheep: Cado Keppel: /obj/item/weapon/fluff/cado_keppel_1
+staghorn: Mara Kilpatrick: /obj/item/clothing/mask/mara_kilpatrick_1
 tastyfish: Cindy Robertson: /obj/item/weapon/wrapping_paper
 thebreadbocks: Steve Johnson: /obj/item/fluff/steve_johnson_1
 themij: Taryn Kifer: /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1

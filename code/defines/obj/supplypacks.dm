@@ -795,14 +795,14 @@
 	..()
 
 
-/datum/supply_packs/poster
-	contains = list("/obj/item/weapon/contraband/poster",) //We randomly pick 5 items from this list through the constructor, look below
-	name = "Poster crate"
+/datum/supply_packs/contraband
+	contains = list("/obj/item/weapon/contraband/poster","/obj/item/weapon/cigpacket/dromedaryco") //We randomly pick 5 items from this list through the constructor, look below
+	name = "Contraband crate"
 	cost = 30
-	containertype = "/obj/structure/closet/crate/poster"
-	containername = "Poster crate"
+	containertype = "/obj/structure/closet/crate/contraband"
+	containername = "Contraband crate"
 	contraband = 1
-	group = "Secure Storage"
+	group = "NanoTrasen Contraband Storage"
 
 /datum/supply_packs/poster/New()
 	var/list/tempContains = list()
@@ -810,19 +810,3 @@
 		tempContains += pick(contains)
 	src.contains = tempContains
 	..()
-
-/datum/supply_packs/cigarettes
-	contains = list("/obj/item/weapon/cigpacket/dromedaryco",
-					"/obj/item/weapon/cigpacket/dromedaryco",
-					"/obj/item/weapon/cigpacket/dromedaryco",
-					"/obj/item/weapon/cigpacket/dromedaryco",
-					"/obj/item/weapon/cigpacket/dromedaryco",
-					"/obj/item/weapon/cigpacket/dromedaryco",)
-	name = "DromedaryCo cigarettes crate"
-	cost = 15
-	containertype = "/obj/structure/closet/crate/cigarettes"
-	containername = "DromedaryCo cigarettes crate"
-	contraband = 1
-	group = "Secure Storage"
-
-//SUPPLY PACKS
