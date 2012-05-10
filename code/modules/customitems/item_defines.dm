@@ -10,35 +10,41 @@
 ////////// Fluff Items ///////////
 //////////////////////////////////
 
-/obj/item/fluff/wes_solari_1
+/obj/item/fluff/wes_solari_1 //tzefa: Wes Solari
 	name = "family photograph"
 	desc = "A family photograph of a couple and a young child, Written on the back it says \"See you soon Dad -Roy\"."
 	icon_state = "wes_solari_1"
 
-/obj/item/fluff/sarah_calvera_1
+/obj/item/fluff/sarah_calvera_1 //fniff: Sarah Calvera
 	name = "old photo"
 	desc = "Looks like it was made on a really old, cheap camera. Low quality. The camera shows a young hispanic looking girl with red hair wearing a white dress is standing in front of an old looking wall. On the back there is a note in black marker that reads \"Sara, Siempre pensé que eras tan linda con ese vestido. Tu hermano, Carlos.\""
 	icon_state = "sarah_calvera_1"
 
-/obj/item/fluff/angelo_wilkerson_1
+/obj/item/fluff/angelo_wilkerson_1 //fniff: Angleo Wilkerson
 	name = "fancy watch"
 	desc = "An old and expensive pocket watch. Engraved on the bottom is \"Odium est Source De Dolor\". On the back, there is an engraving that does not match the bottom and looks more recent. \"Angelo, If you find this, you shall never see me again. Please, for your sake, go anywhere and do anything but stay. I'm proud of you and I will always love you. Your father, Jacob Wilkerson.\" Jacob Wilkerson... Wasn't he that serial killer?"
 	icon_state = "angelo_wilkerson_1"
 
-/obj/item/fluff/sarah_carbrokes_1
+/obj/item/fluff/sarah_carbrokes_1 //gvazdas: Sarah Carbrokes
 	name = "locket"
 	desc = "A grey locket with a picture of a black haired man in it. The text above it reads: \"Edwin Carbrokes\"."
 	icon_state = "sarah_carbrokes_1"
 
-/obj/item/fluff/ethan_way_1
+/obj/item/fluff/ethan_way_1 //whitellama: Ethan Way
 	name = "old ID"
 	desc = "A scratched and worn identification card; it appears too damaged to inferface with any technology. You can almost make out \"Tom Cabinet\" in the smeared ink."
 	icon_state = "ethan_way_1"
 
-/obj/item/fluff/val_mcneil_1
+/obj/item/fluff/val_mcneil_1 //silentthunder: Val McNeil
 	name = "rosary pendant"
 	desc = "A cross on a ring of beads, has McNeil etched onto the back."
 	icon_state = "val_mcneil_1"
+
+/obj/item/fluff/steve_johnson_1 //thebreadbocks: Steve Johnson
+	name = "bottle of hair dye"
+	desc = "A bottle of pink hair dye. So that's how he gets his beard so pink..."
+	icon_state = "steve_johnson_1"
+	item_state = "steve_johnson_1"
 
 //////////////////////////////////
 ////////// Usable Items //////////
@@ -105,7 +111,7 @@
 				O.show_message(text("\red [] uses their [] to comb their hair with incredible style and sophistication. What a guy.", user, src), 1)
 		return
 
-/obj/item/weapon/camera_test/fluff/orange
+/obj/item/weapon/camera_test/fluff/orange //chinsky: Summer Springfield
 	name = "orange camera"
 	icon = 'custom_items.dmi'
 	desc = "A modified detective's camera, painted in bright orange. On the back you see \"Have fun\" written in small accurate letters with something black."
@@ -113,7 +119,7 @@
 	pictures_left = 30
 
 
-/obj/item/weapon/card/id/fluff/lifetime		//fastler: Fastler Greay; it seemed like something multiple people would have
+/obj/item/weapon/card/id/fluff/lifetime	//fastler: Fastler Greay; it seemed like something multiple people would have
 	name = "Lifetime ID Card"
 	desc = "A modified ID card given only to those people who have devoted their lives to the better interests of NanoTrasen. It sparkles blue."
 	icon = 'custom_items.dmi'
@@ -152,15 +158,33 @@
 	icon = 'custom_items.dmi'
 	icon_state = "swatcap"
 
+/obj/item/clothing/head/helmet/welding/fluff/alice_mccrea_1 //madmalicemccrea: Alice McCrea
+	name = "flame decal welding helmet"
+	desc = "A welding helmet adorned with flame decals, and several cryptic slogans of varying degrees of legibility. \"Fly the Friendly Skies\" is clearly visible, written above the visor, for some reason."
+	icon = 'custom_items.dmi'
+	icon_state = "alice_mccrea_1"
+
+/obj/item/clothing/head/helmet/welding/fluff/yuki_matsuda_1 //searif: Yuki Matsuda
+	name = "white decal welding helmet"
+	desc = "A white welding helmet with a character written across it."
+	icon = 'custom_items.dmi'
+	icon_state = "yuki_matsuda_1"
+
+/obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1 //themij: Taryn Kifer
+	name = "orange bandana"
+	desc = "Hey, I think we're missing a hazard vest..."
+	icon = 'custom_items.dmi'
+	icon_state = "taryn_kifer_1"
+
 //////////// Suits ////////////
 
-/obj/item/clothing/suit/storage/labcoat/fluff/pink
+/obj/item/clothing/suit/storage/labcoat/fluff/pink //spaceman96: Trenna Seber
 	name = "pink labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a pink stripe down from the shoulders."
 	icon = 'custom_items.dmi'
 	icon_state = "labcoat_pink_open"
 
-/obj/item/clothing/suit/storage/det_suit/fluff/graycoat
+/obj/item/clothing/suit/storage/det_suit/fluff/graycoat //vinceluk: Seth Sealis
 	name = "gray coat"
 	desc = "Old, worn out coat. It's seen better days."
 	icon = 'custom_items.dmi'
@@ -170,7 +194,7 @@
 
 //////////// Uniforms ////////////
 
-/obj/item/clothing/under/fluff/jumpsuitdown
+/obj/item/clothing/under/fluff/jumpsuitdown //searif: Yuki Matsuda
 	name = "rolled down jumpsuit"
 	desc = "A rolled down jumpsuit. Great for mechanics."
 	icon = 'custom_items.dmi'
@@ -178,7 +202,7 @@
 	item_state = "jumpsuitdown"
 	color = "jumpsuitdown"
 
-/obj/item/clothing/under/fluff/olddressuniform
+/obj/item/clothing/under/fluff/olddressuniform //desiderium: Momiji Inubashiri
 	name = "retired dress uniform"
 	desc = "A retired Station Head of Staff uniform, phased out twenty years ago for the newer jumpsuit design, but still acceptable dress. Lovingly maintained."
 	icon = 'custom_items.dmi'
@@ -197,10 +221,27 @@
 	flags = FPRINT|TABLEPASS|MASKCOVERSMOUTH
 	w_class = 2
 	gas_transfer_coefficient = 0.90
+/*
+/obj/item/clothing/mask/mara_kilpatrick_1
+	name = "shamrock pendant"
+	desc = "A silver and emerald shamrock pendant. It has the initials \"M.K.\" engraved on the back."
+	icon = 'custom_items.dmi'
+	icon_state = "mara_kilpatrick_1"
+	flags = FPRINT|TABLEPASS
+	w_class = 1
+*/
+//////////// Shoes ////////////
+
+/obj/item/clothing/shoes/fluff/leatherboots //serithi: Serithi Artalis
+	name = "leather boots"
+	desc = "A pair of leather boots. Well-worn, but still kept in good condition. There is a small \"S\" scratched into the back of each boot."
+	icon = 'custom_items.dmi'
+	icon_state = "leatherboots"
+	item_state = "jackboots"
 
 //////////// Sets ////////////
 
-////// CDC
+////// CDC //deusdactyl: Roger Wiles
 
 /obj/item/clothing/under/rank/virologist/fluff/cdc_jumpsuit
 	name = "\improper CDC jumpsuit"
@@ -215,7 +256,7 @@
 	icon = 'custom_items.dmi'
 	icon_state = "labcoat_cdc_open"
 
-////// Short Sleeve Medical Outfit
+////// Short Sleeve Medical Outfit //erthilo: Farah Lants
 
 /obj/item/clothing/under/rank/medical/fluff/short
 	name = "short sleeve medical jumpsuit"
@@ -230,7 +271,7 @@
 	icon = 'custom_items.dmi'
 	icon_state = "labcoat_red_open"
 
-////// Retired Patrol Outfit
+////// Retired Patrol Outfit //desiderium: Rook Maudlin
 
 /obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat
 	name = "retired colony patrolman's coat"

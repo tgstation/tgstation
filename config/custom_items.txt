@@ -11,6 +11,7 @@ gvazdas: Sarah Carbrokes: /obj/item/fluff/sarah_carbrokes_1
 leonheart11:  Johann Erzatz: /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/johann_erzatz_1
 lexusjjss: Lexus Langg: /obj/item/weapon/clipboard/fluff/smallnote
 lexusjjss: Zachary Tomlinson: /obj/item/weapon/clipboard/fluff/smallnote
+madmalicemccrea: Alice McCrea: /obj/item/clothing/head/helmet/welding/fluff/alice_mccrea_1
 mangled: Li Tsun: /obj/item/weapon/lighter/zippo/fluff/li_tsun_1
 misterfox: Rashid Siraj: /obj/item/weapon/storage/bible/tajaran
 morrinn: Maye Day: /obj/item/weapon/storage/fluff/maye_daye_1
@@ -20,13 +21,15 @@ fniff: Sarah Calvera: /obj/item/fluff/sarah_calvera_1
 fniff: Angleo Wilkerson: /obj/item/fluff/angelo_wilkerson_1
 desiderium: Momiji Inubashiri: /obj/item/clothing/under/fluff/olddressuniform
 desiderium: Rook Maudlin: /obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat, /obj/item/clothing/head/det_hat/fluff/retpolcap, /obj/item/clothing/under/det/fluff/retpoluniform
-searif: Yuki Matsuda: /obj/item/clothing/under/fluff/jumpsuitdown
+searif: Yuki Matsuda: /obj/item/clothing/under/fluff/jumpsuitdown, /obj/item/clothing/head/helmet/welding/fluff/yuki_matsuda_1
 searif: Tsiokeriio Tarbell: /obj/item/clothing/mask/fluff/flagmask
-serithi: Serithi Artalis: /obj/item/clothing/glasses/fluff/serithi_artalis_1
+serithi: Serithi Artalis: /obj/item/clothing/glasses/fluff/serithi_artalis_1, /obj/item/clothing/shoes/fluff/leatherboots
 silentthunder: Val McNeil: /obj/item/fluff/val_mcneil_1
 spaceman96: Trenna Seber: /obj/item/weapon/pen/fluff/multi, /obj/item/clothing/suit/storage/labcoat/fluff/pink
 sparklysheep: Cado Keppel: /obj/item/weapon/fluff/cado_keppel_1
 tastyfish: Cindy Robertson: /obj/item/weapon/wrapping_paper
+thebreadbocks: Steve Johnson: /obj/item/fluff/steve_johnson_1
+themij: Taryn Kifer: /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1
 tzefa: Wes Solari: /obj/item/fluff/wes_solari_1
 vinceluk: Seth Sealis: /obj/item/clothing/suit/storage/det_suit/fluff/graycoat
 whitellama: Ethan Way: /obj/item/fluff/ethan_way_1
