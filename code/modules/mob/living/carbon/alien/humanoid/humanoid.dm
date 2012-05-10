@@ -11,6 +11,7 @@
 			stand_icon = new /icon('alien.dmi', "alien_s")
 			lying_icon = new /icon('alien.dmi', "alien_l")
 			resting_icon = new /icon('alien.dmi', "alienh_sleep")
+			running_icon = new /icon('alien.dmi', "alienh_running")
 		icon = stand_icon
 		update_clothing()
 		src << "\blue Your icons have been generated!"
@@ -335,6 +336,13 @@
 				icon = lying_icon
 			else
 				icon = resting_icon
+
+	else if(!lying)
+		if(update_icon)
+			if(m_intent == "run")
+				icon = running_icon
+			else
+				icon = stand_icon
 
 		overlays += body_lying
 

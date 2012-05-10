@@ -179,10 +179,7 @@
 	name = "botanist's leather gloves"
 	icon_state = "leather"
 	item_state = "ggloves"
-	siemens_coefficient = 0.50
 	permeability_coefficient = 0.9
-	protective_temperature = 400
-	heat_transfer_coefficient = 0.70
 
 /obj/item/clothing/gloves/orange
 	name = "orange gloves"

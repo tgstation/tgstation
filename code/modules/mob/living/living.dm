@@ -217,12 +217,11 @@
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
+	src.radiation = 0
+	src.nutrition = 400
+	src.bodytemperature = initial(src.bodytemperature)
 	//src.health = 100
 	if(ishuman(src))
-		src.radiation = 0
-		//M.health = 100
-		src.nutrition = 400
-		src.bodytemperature = initial(src.bodytemperature)
 		src.heal_overall_damage(1000, 1000)
 		//M.updatehealth()
 		src.buckled = initial(src.buckled)

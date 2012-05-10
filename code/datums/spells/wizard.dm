@@ -317,5 +317,5 @@
 	invocation_type = "none"
 	range = -1
 	include_user = 1
-
+	phaseshift = 1
 	jaunt_duration = 50 //in deciseconds

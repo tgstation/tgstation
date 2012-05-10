@@ -37,7 +37,7 @@ emp_act
 	if(check_shields(P.damage, "the [P.name]"))
 		P.on_hit(src, 2)
 		return 2
-	return (..())
+	return (..(P , def_zone))
 
 
 /mob/living/carbon/human/getarmor(var/def_zone, var/type)

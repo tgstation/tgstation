@@ -1,3 +1,17 @@
+/obj/machinery/computer/hologram_comp
+	name = "Hologram Computer"
+	desc = "Rumoured to control holograms."
+	icon = 'stationobjs.dmi'
+	icon_state = "holo_console0"
+	var
+		obj/machinery/hologram/projector/projector = null
+		temp = null
+		lumens = 0.0
+		h_r = 245.0
+		h_g = 245.0
+		h_b = 245.0
+
+
 /obj/machinery/computer/hologram_comp/New()
 	..()
 	spawn( 10 )
