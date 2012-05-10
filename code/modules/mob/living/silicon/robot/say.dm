@@ -5,6 +5,10 @@
 		return 1
 	if (istype(other, /mob/living/carbon/human))
 		return 1
+	if (istype(other, /mob/living/carbon/brain))
+		return 1
+	if (istype(other, /mob/living/silicon/pai))
+		return 1
 //	if (istype(other, /mob/living/silicon/hivebot))
 //		return 1
 	return ..()
