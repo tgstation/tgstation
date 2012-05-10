@@ -260,14 +260,14 @@ THERMAL GLASSES
 			src.see_face = !src.see_face
 			src.flags |= HEADCOVERSEYES
 			flags_inv |= HIDEMASK|HIDEEARS|HIDEEYES
-			icon_state = "welding"
+			icon_state = "[initial(icon_state)]"
 			usr << "You flip the mask down to protect your eyes."
 		else
 			src.up = !src.up
 			src.see_face = !src.see_face
 			src.flags &= ~HEADCOVERSEYES
 			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES)
-			icon_state = "weldingup"
+			icon_state = "[initial(icon_state)]up"
 			usr << "You push the mask up out of your face."
 		usr.update_clothing()
 
