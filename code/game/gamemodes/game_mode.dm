@@ -22,7 +22,7 @@
 		list/datum/mind/modePlayer = new
 		list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 		list/protected_jobs = list()	// Jobs that can't be tratiors because
-		required_players = 0
+		required_players = 1
 		required_enemies = 0
 		recommended_enemies = 0
 		uplink_welcome
