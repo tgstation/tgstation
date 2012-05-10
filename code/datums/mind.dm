@@ -46,6 +46,10 @@ datum/mind
 		recipient << browse(output,"window=memory")
 
 	proc/edit_memory()
+		if(!ticker || !ticker.mode)
+			alert("Not before round-start!", "Alert")
+			return
+
 		var/out = "<B>[current.real_name]</B><br>"
 		out += "Assigned role: [assigned_role]. <a href='?src=\ref[src];role_edit=1'>Edit</a><br>"
 		out += "Factions and special roles:<br>"
