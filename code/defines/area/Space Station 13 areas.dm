@@ -1504,6 +1504,21 @@ proc/process_ghost_teleport_locs()
 	icon_state = "tcomsatlounge"
 
 
+
+
+
+
+
+
+
+
+
+
+/area/turret_protected/AssistantRoom
+	name = "Assistant Room"
+	icon_state = "storage"
+	sd_lighting = 0
+
 /////////////////////////////////////////////////////////////////////
 /*
  Lists of areas to be used with is_type_in_list.

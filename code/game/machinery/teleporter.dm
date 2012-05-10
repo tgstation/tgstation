@@ -56,8 +56,10 @@
 
 	for(var/obj/item/device/radio/beacon/R in world)
 		var/turf/T = get_turf(R)
-		if (!T)	continue
-		if(T.z == 2)	continue
+		if (!T)
+			continue
+		if(T.z == 2)
+			continue
 		var/tmpname = T.loc.name
 		if(areaindex[tmpname])
 			tmpname = "[tmpname] ([++areaindex[tmpname]])"
