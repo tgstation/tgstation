@@ -57,44 +57,67 @@
 	icon_state = "photo"
 	item_state = "clipboard"
 	w_class = 1.0
-	var/icon/img
+	var/icon/img	//Big photo image
+	var/scribble	//Scribble on the back.
 
 
 /obj/item/weapon/photo/attack_self(var/mob/user as mob)
 		..()
 		examine()
 
+/obj/item/weapon/photo/attackby(obj/item/weapon/P as obj, mob/user as mob)
+	if (istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
+		var/txt = scrub_input(usr, "What would you like to write on the back?", "Photo Writing", null)  as text
+		txt = copytext(txt, 1, 128)
+		if ((loc == usr && usr.stat == 0))
+			scribble = txt
+
+	..()
 
 /obj/item/weapon/photo/examine()
-		set src in oview(2)
-		..()	//We don't want them to see the dumb "this is a paper" thing every time.
+	set src in oview(2)
+	..()
+	if (scribble)
+		usr << "\blue you see something written on photo's back. "
+	usr << browse_rsc(src.img, "tmp_photo.png")
+	usr << browse("<html><head><title>Photo</title></head>" \
+		+ "<body style='overflow:hidden'>" \
+		+ "<div> <img src='tmp_photo.png' width = '180'" \
+		+ "[scribble ? "<div> Writings on the back:<br><i>[scribble]</i>" : ]"\
+		+ "</body></html>", "window=book;size=200x[scribble ? 400 : 200]")
+	onclose(usr, "[name]")
 
-		usr << browse_rsc(src.img, "tmp_photo.png")
-		usr << browse("<html><head><title>Photo</title></head>" \
-			+ "<body style='overflow:hidden'>" \
-			+ "<div> <img src='tmp_photo.png' width = '180'" \
-			+ "</body></html>", "window=book;size=200x200")
-		onclose(usr, "[name]")
+	return
+/obj/item/weapon/photo/verb/rename()
+	set name = "Rename photo"
+	set category = "Object"
+	set src in usr
 
-		return
+	var/n_name = input(usr, "What would you like to label the photo?", "Photo Labelling", src.name)  as text
+	n_name = copytext(n_name, 1, 32)
+	if ((loc == usr && usr.stat == 0))
+		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
+	add_fingerprint(usr)
+	return
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /obj/item/weapon/camera_test/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
 
 /obj/item/weapon/camera_test/proc/get_icon(turf/the_turf as turf)
-	var/icon/res = icon('items.dmi',"photo")
+	//Bigger icon base to capture those icons that were shifted to the next tile
+	//i.e. pretty much all wall-mounted machinery
+	var/icon/res = icon('96x96.dmi',"")
+
 	var/icon/turficon = build_composite_icon(the_turf)
-	res.Blend(turficon,ICON_OVERLAY,0,0)
-	var/icons[] 	= list()		//For all atoms on this turf getting their icons
-	var/layers[] 	= list()		//and levels
+	res.Blend(turficon,ICON_OVERLAY,32,32)
+
+	var/atoms[] 	= list()
 	for(var/atom/A in the_turf)
-		//if(istype(A, /obj/item/weapon/photo))	continue
 		if(A.invisibility) continue
-		icons.Add(build_composite_icon(A))
-		layers.Add(A.layer)
+		atoms.Add(A)
 
 	//Sorting icons based on levels
-	var/gap = layers.len
+	var/gap = atoms.len
 	var/swapped = 1
 	while (gap > 1 || swapped)
 		swapped = 0
@@ -102,15 +125,19 @@
 			gap = round(gap / 1.247330950103979)
 		if (gap < 1)
 			gap = 1
-		for (var/i = 1; gap + i <= layers.len; i++)
-			if (layers[i] > layers[gap+i])
-				layers.Swap(i, gap + i)
-				icons.Swap(i, gap + i)
+		for (var/i = 1; gap + i <= atoms.len; i++)
+			var/atom/l = atoms[i]		//Fucking hate
+			var/atom/r = atoms[gap+i]	//how lists work here
+			if (l.layer > r.layer)		//no "atoms[i].layer" for me
+				atoms.Swap(i, gap + i)
 				swapped = 1
 
-	for (var/i; i <= icons.len; i++)
-		if(istype(icons[i], /icon))
-			res.Blend(icons[i],ICON_OVERLAY,0,0)
+	for (var/i; i <= atoms.len; i++)
+		var/atom/A = atoms[i]
+		if (A)
+			var/icon/img = build_composite_icon(A)
+			if(istype(img, /icon))
+				res.Blend(img,ICON_OVERLAY,32+A.pixel_x,32+A.pixel_y)
 	return res
 
 /obj/item/weapon/camera_test/attack_self(var/mob/user as mob)
@@ -131,14 +158,14 @@
 			if(A.l_hand) holding = "They are holding \a [A.l_hand]"
 			if(A.r_hand)
 				if(holding)
-					holding += " and \a [A.r_hand]."
+					holding += " and \a [A.r_hand]"
 				else
-					holding = "They are holding \a [A.r_hand]."
+					holding = "They are holding \a [A.r_hand]"
 
 		if(!mob_detail)
 			mob_detail = "You can see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]. "
 		else
-			mob_detail += "You can also see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]"
+			mob_detail += "You can also see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]."
 	return mob_detail
 
 /obj/item/weapon/camera_test/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
@@ -149,12 +176,19 @@
 	var/z_c	= target.z
 
 	var/icon/temp = icon('96x96.dmi',"")
+	var/icon/black = icon('space.dmi', "black")
 	var/mobs = ""
 	for (var/i = 1; i <= 3; i++)
 		for (var/j = 1; j <= 3; j++)
 			var/turf/T = locate(x_c,y_c,z_c)
-			temp.Blend(get_icon(T),ICON_OVERLAY,31*(j-1),62 - 31*(i-1))
+
+			var/mob/dummy = new(T)	//Go go visibility check dummy
+			if(dummy in viewers(world.view, user))
+				temp.Blend(get_icon(T),ICON_OVERLAY,31*(j-1-1),31 - 31*(i-1))
+			else
+				temp.Blend(black,ICON_OVERLAY,31*(j-1),62 - 31*(i-1))
 			mobs += get_mobs(T)
+			del dummy	//Alas, nameless creature
 			x_c++
 		y_c--
 		x_c = x_c - 3
