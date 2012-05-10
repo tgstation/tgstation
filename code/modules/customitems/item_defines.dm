@@ -173,6 +173,7 @@
 /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1 //themij: Taryn Kifer
 	name = "orange bandana"
 	desc = "Hey, I think we're missing a hazard vest..."
+	icon = 'custom_items.dmi'
 	icon_state = "taryn_kifer_1"
 
 //////////// Suits ////////////
@@ -182,14 +183,6 @@
 	desc = "A suit that protects against minor chemical spills. Has a pink stripe down from the shoulders."
 	icon = 'custom_items.dmi'
 	icon_state = "labcoat_pink_open"
-
-/obj/item/clothing/suit/storage/det_suit/fluff/graycoat //vinceluk: Seth Sealis
-	name = "gray coat"
-	desc = "Old, worn out coat. It's seen better days."
-	icon = 'custom_items.dmi'
-	icon_state = "graycoat"
-	item_state = "graycoat"
-	color = "graycoat"
 
 /obj/item/clothing/suit/storage/det_suit/fluff/graycoat //vinceluk: Seth Sealis
 	name = "gray coat"
