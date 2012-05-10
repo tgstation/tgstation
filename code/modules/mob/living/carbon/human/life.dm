@@ -1086,11 +1086,6 @@
 				if(!druggy)
 					see_invisible = 2
 
-			else if (type == /mob/living/carbon/human/tajaran)
-//				sight |= SEE_MOBS
-//				sight |= SEE_OBJS
-				see_in_dark = 8
-
 			else if (seer)
 				var/obj/effect/rune/R = locate() in loc
 				if (istype(R) && R.word1 == wordsee && R.word2 == wordhell && R.word3 == wordjoin)
