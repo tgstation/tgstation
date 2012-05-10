@@ -128,8 +128,8 @@ var/datum/roundinfo/roundinfo = new()
 				if (potential_sleep_time > 10000)
 					potential_sleep_time -= 600
 
-				sleep(potential_sleep_time)
-				SpawnEvent()
+			sleep(potential_sleep_time)
+			SpawnEvent()
 
 	//Start master_controller.process()
 	spawn master_controller.process()
