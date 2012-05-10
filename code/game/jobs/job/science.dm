@@ -47,28 +47,3 @@
 		H.equip_if_possible(new /obj/item/clothing/mask/gas(H), H.slot_wear_mask)
 		H.equip_if_possible(new /obj/item/weapon/tank/oxygen(H), H.slot_l_hand)
 		return 1
-
-
-//Chemist is a medical job damnit
-/datum/job/chemist
-	title = "Chemist"
-	flag = CHEMIST
-	department_flag = MEDSCI
-	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
-	supervisors = "the chief medical officer and the research director"
-	selection_color = "#ffeeff"
-
-
-	equip(var/mob/living/carbon/human/H)
-		if(!H)	return 0
-		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
-		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
-		if(H.backbag == 4) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_chem(H), H.slot_back)
-		H.equip_if_possible(new /obj/item/device/radio/headset/headset_medsci(H), H.slot_ears)
-		H.equip_if_possible(new /obj/item/clothing/under/rank/chemist(H), H.slot_w_uniform)
-		H.equip_if_possible(new /obj/item/clothing/shoes/white(H), H.slot_shoes)
-		H.equip_if_possible(new /obj/item/device/pda/toxins(H), H.slot_belt)
-		H.equip_if_possible(new /obj/item/clothing/suit/storage/labcoat/chemist(H), H.slot_wear_suit)
-		return 1
