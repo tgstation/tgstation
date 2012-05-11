@@ -1226,6 +1226,16 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/pacman/mrs"
 
+		industrial
+			name = "Industrial PACMAN-type Generator Board"
+			desc = "The circuit board that for a Industrial PACMAN-type portable generator."
+			id = "industrial"
+			req_tech = list("programming" = 3, "powerstorage" = 4, "engineering" = 4)
+			build_type = IMPRINTER
+			reliability_base = 70
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/pacman/industrial"
+
 
 /////////////////////////////////////////
 ////////////Medical Tools////////////////
