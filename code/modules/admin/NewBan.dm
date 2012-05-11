@@ -36,10 +36,16 @@ var/savefile/Banlist
 				ClearTempbans()
 				return 0
 			else
-				return "[Banlist["reason"]]\n(This ban will be automatically removed in [GetBanExp(Banlist["minutes"])].)"
+				log_access("Failed Login: [clientvar] - Banned")
+				message_admins("\blue Failed Login: [clientvar] - Banned")
+				alert(clientvar,"You have been banned.\nReason : [Banlist["reason"]]\n(This ban will be automatically removed in [GetBanExp(Banlist["minutes"])].)[config.appeal_address ? "\nYou may try to appeal this at [config.appeal_address]" : ""]","Ban","Ok")
+				return 1
 		else
 			Banlist.cd = "/base/[key][id]"
-			return "[Banlist["reason"]]\n(This is a permanent ban)"
+			log_access("Failed Login: [clientvar] - Banned")
+			message_admins("\blue Failed Login: [clientvar] - Banned")
+			alert(clientvar,"You have been banned.\nReason : [Banlist["reason"]]\n(This is a permanent ban.)[config.appeal_address ? "\nYou may try to appeal this at [config.appeal_address]" : ""]","Ban","Ok")
+			return 1
 
 	Banlist.cd = "/base"
 	for (var/A in Banlist.dir)
@@ -50,9 +56,23 @@ var/savefile/Banlist
 					ClearTempbans()
 					return 0
 				else
-					return "[Banlist["reason"]]\n(This ban will be automatically removed in [GetBanExp(Banlist["minutes"])].)"
+					if(key != Banlist["key"])
+						log_access("Failed Login: [clientvar] - Banned as [Banlist["key"]]")
+						message_admins("\blue Failed Login: [clientvar] - Banned as [Banlist["key"]]")
+					else
+						log_access("Failed Login: [clientvar] - Banned")
+						message_admins("\blue Failed Login: [clientvar] - Banned")
+					alert(clientvar,"You have been banned.\nReason : [Banlist["reason"]]\n(This ban will be automatically removed in [GetBanExp(Banlist["minutes"])].)[config.appeal_address ? "\nYou may try to appeal this at [config.appeal_address]" : ""]","Ban","Ok")
+					return 1
 			else
-				return "[Banlist["reason"]]\n(This is a permanent ban)"
+				if(key != Banlist["key"])
+					log_access("Failed Login: [clientvar] - Banned as [Banlist["key"]]")
+					message_admins("\blue Failed Login: [clientvar] - Banned as [Banlist["key"]]")
+				else
+					log_access("Failed Login: [clientvar] - Banned")
+					message_admins("\blue Failed Login: [clientvar] - Banned")
+				alert(clientvar,"You have been banned.\nReason : [Banlist["reason"]]\n(This is a permanent ban.)[config.appeal_address ? "\nYou may try to appeal this at [config.appeal_address]" : ""]","Ban","Ok")
+				return 1
 
 	return 0
 

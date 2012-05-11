@@ -144,4 +144,4 @@ GUEST_JOBBAN 1
 #POPUP_ADMIN_PM
 
 ##What address should banned people appeal ther ban at?  Remember to escape the characters, if needed!
-# APPEAL_ADDRESS -->APPEAL ADDRESS HERE<--
+APPEAL_ADDRESS http://baystation12.net/forums/index.php/board,2.0.html
