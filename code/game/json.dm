@@ -88,8 +88,9 @@ obj/mapinfo
 	var/decks = 4
 proc/GetMapInfo()
 	var/obj/mapinfo/M = locate()
-	world << M.name
-	world << M.mapname
+//	Just removing these to try and fix the occasional JSON -> WORLD issue.
+//	world << M.name
+//	world << M.mapname
 client/proc/ChangeMap(var/X as text)
 	set name = "Change Map"
 	set category  = "Admin"
