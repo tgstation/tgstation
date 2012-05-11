@@ -87,7 +87,7 @@ obj/mapinfo
 	var/mapname = "thismap"
 	var/decks = 4
 proc/GetMapInfo()
-	var/obj/mapinfo/M = locate()
+//	var/obj/mapinfo/M = locate()
 //	Just removing these to try and fix the occasional JSON -> WORLD issue.
 //	world << M.name
 //	world << M.mapname

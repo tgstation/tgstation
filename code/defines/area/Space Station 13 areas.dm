@@ -859,6 +859,10 @@ proc/process_ghost_teleport_locs()
 		name = "Chief Engineers office"
 		icon_state = "engine_ce"
 
+	engineering_break_room
+		name = "Engineering Breakroom"
+		icon_state = "engine_br"
+
 //new engine areas
 	control
 		name = "Engineering Control"
