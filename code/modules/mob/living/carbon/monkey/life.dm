@@ -333,7 +333,7 @@
 					if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 						Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 						if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
-							src.sleeping = max(src.sleeping, 2)
+							src.sleeping = max(src.sleeping+2, 10)
 					else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 						if(prob(20))
 							spawn(0) emote(pick("giggle", "laugh"))
@@ -591,26 +591,26 @@
 			//NOTE: the alerts dont reset when youre out of danger. dont blame me,
 			//blame the person who coded them. Temporary fix added.
 
-			switch(src.bodytemperature) //310.055 optimal body temp
-
-				if(345 to INFINITY)
-					src.bodytemp.icon_state = "temp4"
-				if(335 to 345)
-					src.bodytemp.icon_state = "temp3"
-				if(327 to 335)
-					src.bodytemp.icon_state = "temp2"
-				if(316 to 327)
-					src.bodytemp.icon_state = "temp1"
-				if(300 to 316)
-					src.bodytemp.icon_state = "temp0"
-				if(295 to 300)
-					src.bodytemp.icon_state = "temp-1"
-				if(280 to 295)
-					src.bodytemp.icon_state = "temp-2"
-				if(260 to 280)
-					src.bodytemp.icon_state = "temp-3"
-				else
-					src.bodytemp.icon_state = "temp-4"
+			if(bodytemp)
+				switch(src.bodytemperature) //310.055 optimal body temp
+					if(345 to INFINITY)
+						src.bodytemp.icon_state = "temp4"
+					if(335 to 345)
+						src.bodytemp.icon_state = "temp3"
+					if(327 to 335)
+						src.bodytemp.icon_state = "temp2"
+					if(316 to 327)
+						src.bodytemp.icon_state = "temp1"
+					if(300 to 316)
+						src.bodytemp.icon_state = "temp0"
+					if(295 to 300)
+						src.bodytemp.icon_state = "temp-1"
+					if(280 to 295)
+						src.bodytemp.icon_state = "temp-2"
+					if(260 to 280)
+						src.bodytemp.icon_state = "temp-3"
+					else
+						src.bodytemp.icon_state = "temp-4"
 
 			src.client.screen -= src.hud_used.blurry
 			src.client.screen -= src.hud_used.druggy

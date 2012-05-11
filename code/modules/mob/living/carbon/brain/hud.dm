@@ -1,10 +1,4 @@
 /obj/hud/proc/brain_hud(var/ui_style='screen1_old.dmi')
-	station_explosion = new h_type( src )
-	station_explosion.icon = 'station_explosion.dmi'
-	station_explosion.icon_state = "start"
-	station_explosion.layer = 20
-	station_explosion.mouse_opacity = 0
-	station_explosion.screen_loc = "1,3"
 
 	blurry = new h_type( src )
 	blurry.screen_loc = "WEST,SOUTH to EAST,NORTH"

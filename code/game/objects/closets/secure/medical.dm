@@ -1,12 +1,12 @@
 /obj/structure/closet/secure_closet/medicine
 	name = "Medicine Closet"
 	desc = "Filled with medical junk."
-	icon_state = "securemed1"
-	icon_closed = "securemed"
-	icon_locked = "securemed1"
-	icon_opened = "securemedopen"
-	icon_broken = "securemedbroken"
-	icon_off = "securemed1"
+	icon_state = "medical1"
+	icon_closed = "medical"
+	icon_locked = "medical1"
+	icon_opened = "medicalopen"
+	icon_broken = "medicalbroken"
+	icon_off = "medicaloff"
 	req_access = list(access_medical)
 
 
@@ -29,12 +29,12 @@
 /obj/structure/closet/secure_closet/anaesthetic
 	name = "Anesthetic"
 	desc = "Used to knock people out."
-	icon_state = "securemed1"
-	icon_closed = "securemed"
-	icon_locked = "securemed1"
-	icon_opened = "securemedopen"
-	icon_broken = "securemedbroken"
-	icon_off = "securemed1"
+	icon_state = "medical1"
+	icon_closed = "medical"
+	icon_locked = "medical1"
+	icon_opened = "medicalopen"
+	icon_broken = "medicalbroken"
+	icon_off = "medicaloff"
 	req_access = list(access_medical)
 
 
@@ -59,7 +59,7 @@
 	icon_locked = "securemed1"
 	icon_opened = "securemedopen"
 	icon_broken = "securemedbroken"
-	icon_off = "securemed1"
+	icon_off = "securemedoff"
 
 	New()
 		..()
@@ -133,7 +133,7 @@
 	icon_locked = "cmosecure1"
 	icon_opened = "cmosecureopen"
 	icon_broken = "cmosecurebroken"
-	icon_off = "cmosecure1"
+	icon_off = "cmosecureoff"
 
 	New()
 		..()
@@ -176,7 +176,7 @@
 	icon_locked = "securemed1"
 	icon_opened = "securemedopen"
 	icon_broken = "securemedbroken"
-	icon_off = "securemed1"
+	icon_off = "securemedoff"
 	req_access = list(access_medical)
 
 

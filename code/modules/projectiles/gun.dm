@@ -1,5 +1,5 @@
 /obj/item/weapon/gun
-	name = "\improper Gun"
+	name = "gun"
 	desc = "Its a gun. It's pretty terrible, though."
 	icon = 'gun.dmi'
 	icon_state = "detective"
@@ -19,6 +19,7 @@
 		caliber = ""
 		silenced = 0
 		recoil = 0
+		ejectshell = 1
 		tmp/list/mob/living/target //List of who yer targeting.
 		tmp/lock_time = -100
 		tmp/mouthshoot = 0 ///To stop people from suiciding twice... >.>

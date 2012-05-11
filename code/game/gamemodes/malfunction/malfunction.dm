@@ -4,7 +4,6 @@
 /datum/game_mode/malfunction
 	name = "AI malfunction"
 	config_tag = "malfunction"
-	required_players = 1
 	required_enemies = 1
 	recommended_enemies = 1
 
@@ -188,14 +187,11 @@
 		world << i
 	sleep(10)
 	enter_allowed = 0
-	for(var/mob/M in world)
-		if(M.client)
-			spawn(0)
-				M.client.station_explosion_cinematic()
-	sleep(110)
-	ticker.mode:station_was_nuked = 1
-	ticker.mode:explosion_in_progress = 0
-	//world << "<B>Everyone was killed by the self-destruct!"
+	if(ticker)
+		ticker.station_explosion_cinematic(0,null)
+		if(ticker.mode)
+			ticker.mode:station_was_nuked = 1
+			ticker.mode:explosion_in_progress = 0
 	return
 
 

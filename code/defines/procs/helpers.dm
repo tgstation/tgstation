@@ -127,6 +127,19 @@
 			index = findtext(t, char)
 	return t
 
+//For sanitizing user inputs
+/proc/reject_bad_text(var/text)
+	if(length(text) > 512)	return			//message too long
+	var/non_whitespace = 0
+	for(var/i=1, i<=length(text), i++)
+		switch(text2ascii(text,i))
+			if(62,60,92,47)	return			//rejects the text if it contains these bad characters: <, >, \ or /
+			if(127 to 255)	return			//rejects weird letters like ÿ
+			if(0 to 31)		return			//more weird stuff
+			if(32)							//whitespace
+			else			non_whitespace = 1
+	if(non_whitespace)		return text		//only accepts the text if it has some non-spaces
+
 /proc/strip_html_simple(var/t,var/limit=MAX_MESSAGE_LEN)
 	var/list/strip_chars = list("<",">","&","'")
 	t = copytext(t,1,limit)
@@ -700,6 +713,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		newname = dd_replacetext(newname, ">", "'")
 		M.real_name = newname
 		M.name = newname
+		M.original_name = newname
 
 /*/proc/clname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea
 	var/randomname = pick(clown_names)
@@ -731,6 +745,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		newname = dd_replacetext(newname, ">", "'")
 		M.real_name = newname
 		M.name = newname
+		M.original_name = newname
 
 	for (var/obj/item/device/pda/pda in M.contents)
 		if (pda.owner == oldname)
@@ -738,9 +753,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			pda.name = "PDA-[newname] ([pda.ownjob])"
 			break
 	for(var/obj/item/weapon/card/id/id in M.contents)
-		if(id.registered == oldname)
-			id.registered = newname
-			id.name = "[id.registered]'s ID Card ([id.assignment])"
+		if(id.registered_name == oldname)
+			id.registered_name = newname
+			id.name = "[id.registered_name]'s ID Card ([id.assignment])"
 			break*/
 
 /proc/ionnum()
@@ -1826,6 +1841,13 @@ proc/get_opposite(var/checkdir)
 		if(a == character)
 			count++
 	return count
+
+proc/get_mob_with_client_list()
+	var/list/mobs = list()
+	for(var/mob/M in world)
+		if (M.client)
+			mobs += M
+	return mobs
 
 /proc/reverse_direction(var/dir)
 	switch(dir)

@@ -2,10 +2,7 @@
 	var/server_name = null				// server name (for world name / status)
 	var/server_suffix = 0				// generate numeric suffix based on server port
 
-	var/medal_hub = null				// medal hub name
-	var/medal_password = null			// medal hub password
-
-	var/log_ooc = 0						// log OOC channek
+	var/log_ooc = 0						// log OOC channel
 	var/log_access = 0					// log login/logout
 	var/log_say = 0						// log client say
 	var/log_admin = 0					// log admin actions
@@ -35,6 +32,8 @@
 	var/Tensioner_Active = 0			// If the tensioner is running.
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
+	var/Ticklag = 0.9
+	var/Tickcomp = 0
 
 	var/list/mode_names = list()
 	var/list/modes = list()				// allowed modes
@@ -51,6 +50,8 @@
 
 	var/server
 	var/banappeals
+	var/wikiurl
+	var/forumurl
 
 	//Alert level description
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
@@ -211,12 +212,6 @@
 				if ("serversuffix")
 					config.server_suffix = 1
 
-				if ("medalhub")
-					config.medal_hub = value
-
-				if ("medalpass")
-					config.medal_password = value
-
 				if ("hostedby")
 					config.hostedby = value
 
@@ -225,6 +220,12 @@
 
 				if ("banappeals")
 					config.banappeals = value
+
+				if ("wikiurl")
+					config.wikiurl = value
+
+				if ("forumurl")
+					config.forumurl = value
 
 				if ("guest_jobban")
 					config.guest_jobban = 1
@@ -296,6 +297,12 @@
 					config.popup_admin_pm = 1
 				if("useircbot")
 					useircbot = 1
+
+				if("ticklag")
+					Ticklag = text2num(value)
+
+				if("tickcomp")
+					Tickcomp = 1
 
 				if("require_heads_alive")
 					config.require_heads_alive = value
@@ -381,8 +388,8 @@
 				sqllogging = 1
 			else
 				diary << "Unknown setting in configuration: '[name]'"
-
-/*/datum/configuration/proc/loadforumsql(filename)  // -- TLE
+/* //Don't touch this, we don't use it. DMTG
+/datum/configuration/proc/loadforumsql(filename)  // -- TLE
 	var/text = file2text(filename)
 
 	if (!text)
@@ -433,8 +440,8 @@
 			if ("authenticatedgroup")
 				forum_authenticated_group = value
 			else
-				diary << "Unknown setting in configuration: '[name]'"*/
-
+				diary << "Unknown setting in configuration: '[name]'"
+*/
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up
 	// their information, but it is the only way (at least that I know of).

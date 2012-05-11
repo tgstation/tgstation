@@ -1,4 +1,7 @@
 /mob/living/carbon/human/say(var/message)
+/*	if(src.mutantrace == "lizard")
+		if(copytext(message, 1, 2) != "*")
+			message = dd_replaceText(message, "s", stutter("ss"))*///Just here for reference. -- Erthilo
 	if(src.mutantrace == "metroid" && prob(5))
 		if(copytext(message, 1, 2) != "*")
 			if(copytext(message, 1, 2) == ";")

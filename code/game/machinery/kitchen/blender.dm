@@ -65,9 +65,20 @@ the blender or the processor: Processor items are solid objects and Blender resu
 		if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))	//Will only blend food items. Add others in this else clause.
 			user.drop_item()
 			O.loc = src
+			user << "You drop the [O] into the blender."
+		else if (istype(O, /obj/item/weapon/plantbag)) //Allows plant bags to empty into the blender.
+			for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
+				O.contents -= G
+				G.loc = src
+				if(src.contents.len >= 10 || src.reagents.total_volume >= 80) //Sanity checking so the blender doesn't overfill
+					user << "You fill the blender to the brim."
+					break
+			if(src.contents.len < 10 && src.reagents.total_volume < 80)
+				user << "You empty the plant bag into the blender."
 		else
 			user << "That probably won't blend."
 	return 0
+
 
 /obj/machinery/blender/verb/blend()		//Blend shit. Note: In the actual blending loop, make sure it can't include the jug.
 	set category = "Object"

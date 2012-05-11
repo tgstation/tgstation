@@ -54,7 +54,7 @@
 				t_his = "her"
 				t_him = "her"
 
-	msg += "<EM>\a [src], one of the cat-like Tajarans.</EM>!\n"
+	msg += "<EM>\a [src], one of the cat-like Tajarans</EM>!\n"
 
 	//uniform
 	if (src.w_uniform && !skipjumpsuit)

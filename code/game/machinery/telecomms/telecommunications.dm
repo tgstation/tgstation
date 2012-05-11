@@ -103,11 +103,10 @@
 			if(machine.is_freq_listening(signal))
 				machine.traffic++
 
-			spawn()
-				if(copysig && copy)
-					machine.receive_information(copy, src)
-				else
-					machine.receive_information(signal, src)
+			if(copysig && copy)
+				machine.receive_information(copy, src)
+			else
+				machine.receive_information(signal, src)
 
 		if(send_count > 0 && is_freq_listening(signal))
 			traffic++
@@ -487,7 +486,17 @@
 	autolinkers = list("bus3", "bus4") // Bus units 3 and 4
 	freq_listening = list(1459, 1353, 1357, 1359) // common, command, engineering, security
 
+/obj/machinery/telecomms/receiver/antiqua_left
+	id = "Receiver A"
+	network = "tcommsat"
+	autolinkers = list("bus1") // link to bus units 1 and 2
+	freq_listening = list(1351, 1355, 1347, 1349) // science, medical, cargo, mining
 
+/obj/machinery/telecomms/receiver/antiqua_right
+	id = "Receiver B"
+	network = "tcommsat"
+	autolinkers = list("bus2") // Bus units 3 and 4
+	freq_listening = list(1459, 1353, 1357, 1359) // common, command, engineering, security
 
 /obj/machinery/telecomms/bus/preset_one
 	id = "Bus 1"
@@ -509,6 +518,15 @@
 	network = "tcommsat"
 	autolinkers = list("bus4", "processor4", "engineering", "common")
 
+/obj/machinery/telecomms/bus/antiqua_one
+	id = "Bus 1"
+	network = "tcommsat"
+	autolinkers = list("bus1", "processor1", "science", "medical", "cargo", "mining")
+
+/obj/machinery/telecomms/bus/antiqua_two
+	id = "Bus 2"
+	network = "tcommsat"
+	autolinkers = list("bus2", "processor2", "cargo", "mining", "engineering", "common")
 
 
 /obj/machinery/telecomms/processor/preset_one

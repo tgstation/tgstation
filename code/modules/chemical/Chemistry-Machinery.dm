@@ -226,6 +226,7 @@
 		if(usr.stat || usr.restrained()) return
 		if(!in_range(src, usr)) return
 
+		src.add_fingerprint(usr)
 		usr.machine = src
 		if(!beaker) return
 		var/datum/reagents/R = beaker:reagents
@@ -290,9 +291,9 @@
 			reagents.clear_reagents()
 			icon_state = "mixer0"
 		else if (href_list["createpill"])
-			var/name = input(usr,"Name:","Name your pill!",reagents.get_master_reagent_name())
+			var/name = reject_bad_text(input(usr,"Name:","Name your pill!",reagents.get_master_reagent_name()))
 			var/obj/item/weapon/reagent_containers/pill/P = new/obj/item/weapon/reagent_containers/pill(src.loc)
-			if(!name || name == " ") name = reagents.get_master_reagent_name()
+			if(!name) name = reagents.get_master_reagent_name()
 			P.name = "[name] pill"
 			P.pixel_x = rand(-7, 7) //random position
 			P.pixel_y = rand(-7, 7)
@@ -300,9 +301,9 @@
 			reagents.trans_to(P,50)
 		else if (href_list["createbottle"])
 			if(!condi)
-				var/name = input(usr,"Name:","Name your bottle!",reagents.get_master_reagent_name())
+				var/name = reject_bad_text(input(usr,"Name:","Name your bottle!",reagents.get_master_reagent_name()))
 				var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
-				if(!name || name == " ") name = reagents.get_master_reagent_name()
+				if(!name) name = reagents.get_master_reagent_name()
 				P.name = "[name] bottle"
 				P.pixel_x = rand(-7, 7) //random position
 				P.pixel_y = rand(-7, 7)
@@ -334,7 +335,6 @@
 		else
 			usr << browse(null, "window=chem_master")
 		src.updateUsrDialog()
-		src.add_fingerprint(usr)
 		return
 
 	attack_ai(mob/user as mob)

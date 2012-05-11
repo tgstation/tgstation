@@ -125,6 +125,16 @@
 	icon_state = "pda-lawyer"
 	ttone = "objection"
 
+/obj/item/device/pda/botanist
+	//default_cartridge = /obj/item/weapon/cartridge/botanist
+	icon_state = "pda-hydro"
+
+/obj/item/device/pda/librarian
+	icon_state = "pda-libb"
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a WGW-11 series e-reader."
+	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
+	silent = 1 //Quiet in the library!
+
 /*
  *	The Actual PDA
  */
@@ -188,8 +198,8 @@
 			if (0)
 				dat += "<h2>PERSONAL DATA ASSISTANT v.1.2</h2>"
 				dat += "Owner: [owner], [ownjob]<br>"
-				dat += text("ID: <A href='?src=\ref[];choice=Authenticate'>[]</A><br>", src, (id ? "[id.registered_name], [id.assignment]" : "----------"))
-				dat += text("<A href='?src=\ref[];choice=UpdateInfo'>[]</A><br>", src, (id ? "Update PDA Info" : ""))
+				dat += text("ID: <A href='?src=\ref[src];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")
+				dat += text("<br><A href='?src=\ref[src];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br>")
 
 				dat += "Station Time: [round(world.time / 36000)+12]:[(world.time / 600 % 60) < 10 ? add_zero(world.time / 600 % 60, 1) : world.time / 600 % 60]"//:[world.time / 100 % 6][world.time / 100 % 10]"
 
@@ -694,19 +704,36 @@
 		U << browse(null, "window=pda")
 	return
 
+/obj/item/device/pda/proc/remove_id()
+	if (id)
+		if (istype(loc, /mob))
+			var/mob/M = loc
+			if(M.equipped() == null)
+				M.put_in_hand(id)
+				id = null
+				usr << "\blue You remove the ID from the [name]."
+				return
+		id.loc = get_turf(src)
+		id = null
+
+/obj/item/device/pda/verb/verb_remove_id()
+	set category = "Object"
+	set name = "Remove id"
+	set src in usr
+
+	if ( !(usr.stat || usr.restrained()) )
+		if(id)
+			remove_id()
+		else
+			usr << "\blue This PDA does not have an ID in it."
+	else
+		usr << "\blue You cannot do this while restrained."
+
+
 /obj/item/device/pda/proc/id_check(mob/user as mob, choice as num)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
 	if(choice == 1)
 		if (id)
-			if (istype(loc, /mob))
-				var/obj/item/W = loc:equipped()
-				var/emptyHand = (W == null)
-				if(emptyHand)
-					id.DblClick()
-					if(!istype(id.loc, /obj/item/device/pda))
-						id = null
-			else
-				id.loc = loc
-				id = null
+			remove_id()
 		else
 			var/obj/item/I = user.equipped()
 			if (istype(I, /obj/item/weapon/card/id))
@@ -804,9 +831,8 @@
 				else
 					user << "\blue Blood found on [C]. Analysing..."
 					spawn(15)
-						for(var/i = 1, i < C:blood_DNA.len, i++)
-							var/list/templist = C:blood_DNA[i]
-							user << "\blue Blood type: [templist[2]]\nDNA: [templist[1]]"
+						for(var/blood in C:blood_DNA)
+							user << "\blue Blood type: [C:blood_DNA[blood]]\nDNA: [blood]"
 
 			if(4)
 				for (var/mob/O in viewers(C, null))
@@ -828,16 +854,15 @@
 				var/list/prints = A:fingerprints
 				var/list/complete_prints = list()
 				for(var/i in prints)
-					var/list/templist = params2list(i)
-					var/temp = stringpercent(templist["2"])
-					if(temp <= 6)
-						complete_prints += templist["2"]
+					var/print = prints[i]
+					if(stringpercent(print) <= FINGERPRINT_COMPLETE)
+						complete_prints += print
 				if(complete_prints.len < 1)
 					user << "\blue No intact prints found"
 				else
 					user << "\blue Found [complete_prints.len] intact prints"
 					for(var/i in complete_prints)
-						user << "\blue " + i
+						user << "\blue [i]"
 
 		if(3)
 			if(!isnull(A.reagents))

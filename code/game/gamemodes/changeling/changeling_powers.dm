@@ -403,6 +403,117 @@
 	del(usr)
 	return
 
+/*
+/client/proc/changeling_greater_form() // Oh shit, it's on now.
+
+	set category = "Changeling"
+	set name = "Greater Form"
+	set desc = "Become onto the Goddess"
+
+	if (usr.monkeyizing)
+		return
+	for(var/obj/item/W in src)
+		usr.drop_from_slot(W)
+	usr.update_clothing()
+	usr.monkeyizing = 1
+	usr.canmove = 0
+	usr.icon = null
+	usr.invisibility = 101
+	for(var/datum/organ/external/organ in usr:organs)
+		del(organ)
+
+	var/atom/movable/overlay/animation = new /atom/movable/overlay( usr.loc )
+	animation.icon_state = "blank"
+	animation.icon = 'mob.dmi'
+	animation.master = src
+	flick("h2monkey", animation)
+	sleep(48)
+	//animation = null
+	var/mob/living/carbon/human/tajaran/Emissary/O = new /mob/living/carbon/human/tajaran/Emissary( src )
+	del(animation)
+
+	O.real_name = usr.real_name
+	O.name = usr.name
+	O.dna = usr.dna
+	usr.dna = null
+	O.changeling = usr.changeling
+	updateappearance(O,O.dna.uni_identity)
+	O.loc = usr.loc
+	O.viruses = usr.viruses
+	usr.viruses = list()
+	for(var/datum/disease/D in O.viruses)
+		D.affected_mob = O
+	O.universal_speak = 1 //hacky fix until someone can figure out how to make them only understand humans
+
+	if (usr.client)
+		usr.client.mob = O
+	if(usr.mind)
+		usr.mind.transfer_to(O)
+
+	spawn(300)
+		command_alert("Extreme danger.  A level four biological entity has been detected on board the station.  Emergancy evacuation procedures have begun.  Civilian staff, do NOT engage the creature if spotted.  Renforcements are on route.")
+		emergency_shuttle.online = 1
+		emergency_shuttle.settimeleft(10)
+		spawn(10)
+			var/list/candidates = list()
+
+			for(var/mob/dead/observer/G in world)
+				candidates += G
+
+			for(var/mob/dead/observer/G in candidates)
+				if(!G.client || !G.key)
+					candidates.Remove(G)
+
+			for(var/obj/structure/stool/bed/chair/C in locate(/area/shuttle/escape/transit))
+
+				var/mob/living/carbon/human/new_commando = create_death_commando(C, 0)
+
+				if(candidates.len)
+					var/mob/dead/observer/G = pick(candidates)
+					new_commando.mind.key = G.key//For mind stuff.
+					new_commando.key = G.key
+					new_commando.internal = new_commando.s_store
+					new_commando.internals.icon_state = "internal1"
+					candidates -= G
+					del(G)
+				else
+					break
+
+				//So they don't forget their code or mission.
+				new_commando.mind.store_memory("<B>Mission:</B> \red Assist in mobilizing station crew against the hostile entity.  Do not allow the hostile entity to escape.  Do not leave or permit anyone to leave until the entity is contained.")
+
+				new_commando << "\blue You are a Special Ops Commando in the service of Central Command. \nYour current mission is: \red<B>Assist in mobilizing station crew against the hostile entity.  Do not allow the hostile entity to escape.  Do not leave or permit anyone to leave until the entity is contained.</B>"
+		spawn(100)
+			emergency_shuttle.online = 0
+			command_alert("The emergancy shuttle will hold until the hostile entity has been terminated.  During evacuation, do NOT use escape pods.  To avoid the chance of a hostile entity escaping, the Thunderchild will be firing on and destorying any escape pods leaving the station")
+			O << "Your way out has arrived.  Obtain the ID of three heads to override the holding protocol and escape.  Let none stand in your way, for you are a perfect creature."
+			for(var/datum/objective/objective in O.mind.objectives)
+				O.mind.objectives.Remove(objective)
+				del(objective)
+			var/datum/objective/new_objective = null
+			new_objective = new /datum/objective/escape
+			new_objective.owner = O.mind
+			O.mind.objectives += new_objective
+
+			spawn(0)
+				while(emergency_shuttle.online == 0)
+					sleep(10)
+				command_alert("Authorization codes recieved, confirming hostile entity terminated.  The emergancy shuttle is now departing.")
+				spawn(900)
+					for(var/mob/M in locate(/area/shuttle/escape_pod1/transit))
+						M.gib()
+					for(var/mob/M in locate(/area/shuttle/escape_pod2/transit))
+						M.gib()
+					for(var/mob/M in locate(/area/shuttle/escape_pod3/transit))
+						M.gib()
+					for(var/mob/M in locate(/area/shuttle/escape_pod5/transit))
+						M.gib()
+				while(emergency_shuttle.online == 1)
+					sleep(10)
+					if((locate(/mob/living/carbon/human/tajaran/Emissary) in locate(/area/shuttle/escape/centcom))   ||  (locate(/mob/living/carbon/human/tajaran/Emissary) in locate(/area/centcom/evac)) || (locate(/mob/living/carbon/human/tajaran/Emissary) in locate(/area/centcom/control)  )     )
+						command_alert("What the fu- Shoot it!  SHOOT IT!  CENTRAL COMMAND TRANSMITTING DIST- *static*  Nevermind previous transmission, Nanotrasen.  We're all good here.  Subject contained. Standing down alert status.")
+
+*/
 /client/proc/changeling_fakedeath()
 	set category = "Changeling"
 	set name = "Regenerative Stasis (20)"

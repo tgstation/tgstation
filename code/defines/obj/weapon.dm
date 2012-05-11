@@ -2,12 +2,6 @@
 	name = "weapon"
 	icon = 'weapons.dmi'
 
-/obj/item/weapon/offhand
-	name = "offhand"
-	var/linked_weapon_name = ""
-	w_class = 5.0
-	icon_state = "offhand"
-
 /obj/item/weapon/shield
 	name = "shield"
 
@@ -578,7 +572,8 @@
 	icon_state = "id"
 	item_state = "card-id"
 	var/access = list()
-	var/registered_name = null
+	var/registered_name = null // The name registered_name on the card
+
 	var/assignment = null
 	var/over_jumpsuit = 1 // If set to 0, it won't display on top of the mob's jumpsuit
 	var/dorm = 0		// determines if this ID has claimed a dorm already
@@ -645,7 +640,7 @@
 	w_class = 2.0
 	throw_speed = 3
 	throw_range = 10
-	flags = ONBELT
+	flags = FPRINT | TABLEPASS | ONBELT
 
 /obj/item/weapon/clipboard/notebook
 	name = "notebook"
@@ -711,17 +706,6 @@
 	icon = 'items.dmi'
 	icon_state = "red_crowbar"
 
-/obj/item/weapon/fireaxe  // DEM AXES MAN, marker -Agouri
-	icon_state = "fireaxe0"
-	name = "fire axe"
-	desc = "A tool for breaking down those obstructions that stop you from fighting that fire."  //Less ROBUST. --SkyMarshal
-	force = 5
-	w_class = 4.0
-	flags = ONBACK
-	twohanded = 1
-	force_unwielded = 5
-	force_wielded = 18
-
 /obj/item/weapon/cane
 	name = "cane"
 	desc = "A cane used by a true gentlemen."
@@ -771,6 +755,17 @@
 	force = 15.0
 	item_state = "fire_extinguisher"
 	m_amt = 90
+
+/obj/item/weapon/extinguisher/mini
+	name = "fire extinguisher"
+	desc = "A light and compact fibreglass-framed model fire extinguisher."
+	icon_state = "miniFE0"
+	flags = FPRINT | USEDELAY | TABLEPASS
+	throwforce = 5
+	w_class = 2.0
+	force = 6.0
+	item_state = "miniFE"
+	m_amt = 0
 
 /obj/item/weapon/f_card
 	name = "finger print card"
@@ -978,6 +973,10 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 /obj/item/weapon/paper/sop
 	name = "paper - 'Standard Operating Procedure'"
 	info = "Alert Levels:<BR>\nBlue- Emergency<BR>\n\t1. Caused by fire<BR>\n\t2. Caused by manual interaction<BR>\n\tAction:<BR>\n\t\tClose all fire doors. These can only be opened by reseting the alarm<BR>\nRed- Ejection/Self Destruct<BR>\n\t1. Caused by module operating computer.<BR>\n\tAction:<BR>\n\t\tAfter the specified time the module will eject completely.<BR>\n<BR>\nEngine Maintenance Instructions:<BR>\n\tShut off ignition systems:<BR>\n\tActivate internal power<BR>\n\tActivate orbital balance matrix<BR>\n\tRemove volatile liquids from area<BR>\n\tWear a fire suit<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nToxin Laboratory Procedure:<BR>\n\tWear a gas mask regardless<BR>\n\tGet an oxygen tank.<BR>\n\tActivate internal atmosphere<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nDisaster Procedure:<BR>\n\tFire:<BR>\n\t\tActivate sector fire alarm.<BR>\n\t\tMove to a safe area.<BR>\n\t\tGet a fire suit<BR>\n\t\tAfter:<BR>\n\t\t\tAssess Damage<BR>\n\t\t\tRepair damages<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tMeteor Shower:<BR>\n\t\tActivate fire alarm<BR>\n\t\tMove to the back of ship<BR>\n\t\tAfter<BR>\n\t\t\tRepair damage<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tAccidental Reentry:<BR>\n\t\tActivate fire alrms in front of ship.<BR>\n\t\tMove volatile matter to a fire proof area!<BR>\n\t\tGet a fire suit.<BR>\n\t\tStay secure until an emergency ship arrives.<BR>\n<BR>\n\t\tIf ship does not arrive-<BR>\n\t\t\tEvacuate to a nearby safe area!"
+
+/obj/item/weapon/paper/armoury
+	name = "paper - 'Armoury Inventory'"
+	info = "<div align='center'><img src='http://i265.photobucket.com/albums/ii207/Mr_Bombastic_Bucket/WikiLogo.png'><br><b><h1>Armoury Inventory</h1></b></div><hr><br><div align='center'><table border='3'><tr><td>Item</td><td>Stock</td><td>In Use</td><td>Notes</td></tr><tr><td>Ablative Armour Vest</td><td>1</td><td>0</td><td>-</td></tr><tr><td>Beanbag Shells</td><td>12</td><td>0</td><td>-</td></tr><tr><td>Body Bags</td><td>1</td><td>0</td><td>-</td></tr><tr><td>Bulletproof Vest</td><td>1</td><td>0</td><td>-</td></tr><tr><td>Chemical Implant Kit</td><td>1</td><td>0</td><td>-</td></tr><tr><td>Combat Shotguns</td><td>2</td><td>0</td><td>-</td></tr><tr><td>Deployable Barrier</td><td>9</td><td>0</td><td>-</td></tr><tr><td>Deployable Flashers</td><td>4</td><td>0</td><td>-</td></tr><tr><td>Energy Gun</td><td>6</td><td>0</td><td>-</td></tr><tr><td>Flashbangs</td><td>7</td><td>0</td><td>-</td></tr><tr><td>Gas Mask</td><td>3</td><td>0</td><td>-</td></tr><tr><td>Handcuffs</td><td>7</td><td>0</td><td>-</td></tr><tr><td>Ion Rifle</td><td>1</td><td>0</td><td>-</td></tr><tr><td>L3 Biohazard Suit</td><td>1</td><td>0</td><td>-</td></tr><tr><td>L4 EOD Suit</td><td>1</td><td>0</td><td>-</td></tr><tr><td>Laser Gun</td><td>1</td><td>0</td><td>-</td></tr><tr><td>Lockbox</td><td>1</td><td>0</td><td>-</td></tr><tr><td>Loyalty Implants Lockbox</td><td>1</td><td>0</td><td>-</td></tr><tr><td>Pepper Sprayers</td><td>2</td><td>0</td><td>-</td></tr><tr><td>RIG Helmet</td><td>1</td><td>0</td><td>-</td></tr><tr><td>RIG Suit</td><td>1</td><td>0</td><td>-</td></tr><tr><td>Riot Helmet</td><td>3</td><td>0</td><td>-</td></tr><tr><td>Riot Shield</td><td>3</td><td>0</td><td>-</td></tr><tr><td>Riot Suit</td><td>3</td><td>0</td><td>-</td></tr><tr><td>Stun Baton</td><td>5</td><td>0</td><td>-</td></tr><tr><td>Taser</td><td>3</td><td>0</td><td>-</td></tr><tr><td>Tracking Implant Kit</td><td>1</td><td>0</td><td>-</td></tr></table></div><br/><hr/><br/><div align='center'><table border='3'><tr><td>Officer Name</td><td>Items Withdrawn</td><td>Notes</td></tr><tr><td><INSERT OFFICER NAME HERE></td><td><INSERT ITEMS WITHDRAWN HERE></td><td>-</td></tr><tr><td><INSERT OFFICER NAME HERE></td><td><INSERT ITEMS WITHDRAWN HERE></td><td>-</td></tr><tr><td><INSERT OFFICER NAME HERE></td><td><INSERT ITEMS WITHDRAWN HERE></td><td>-</td></tr></table><br/><hr/><br/><p><i>List maintained by NSS Exodus, Warden, <INSERT WARDEN NAME HERE></i></p></div>"
 
 /obj/item/weapon/paper_bin
 	name = "Paper Bin"
@@ -1222,6 +1221,8 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	g_amt = 50
 	var/rigged = 0		// true if rigged to explode
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
+	var/construction_cost = list("metal"=750,"glass"=75)
+	var/construction_time=100
 
 /obj/item/weapon/cell/crap
 	name = "\improper NanoTrasen Brand Rechargable AA Battery"
@@ -1239,23 +1240,29 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 /obj/item/weapon/cell/high
 	name = "high-capacity power cell"
 	origin_tech = "powerstorage=2"
+	icon_state = "hcell"
 	maxcharge = 10000
 	g_amt = 60
 
 /obj/item/weapon/cell/super
 	name = "super-capacity power cell"
 	origin_tech = "powerstorage=5"
+	icon_state = "scell"
 	maxcharge = 20000
 	g_amt = 70
+	construction_cost = list("metal"=750,"glass"=100)
 
 /obj/item/weapon/cell/hyper
 	name = "hyper-capacity power cell"
 	origin_tech = "powerstorage=6"
+	icon_state = "hpcell"
 	maxcharge = 30000
 	g_amt = 80
+	construction_cost = list("metal"=500,"glass"=150,"gold"=200,"silver"=200)
 
 /obj/item/weapon/cell/infinite
 	name = "infinite-capacity power cell!"
+	icon_state = "icell"
 	origin_tech =  null
 	maxcharge = 30000
 	g_amt = 80
@@ -1907,6 +1914,13 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	gender = PLURAL
 	icon = 'wizard.dmi'
 	icon_state = "ectoplasm"
+
+/obj/item/weapon/research//Makes testing much less of a pain -Sieve
+	name = "research"
+	icon = 'stock_parts.dmi'
+	icon_state = "capacitor"
+	desc = "A debug item for research."
+	origin_tech = "materials=8;programming=8;magnets=8;powerstorage=8;bluespace=8;combat=8;biotech=8;syndicate=8"
 
 /obj/item/weapon/appendix
 	name = "appendix"

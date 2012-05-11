@@ -195,15 +195,15 @@
 		..()
 */
 
-						var/obj/effect/decal/cleanable/blood/B = new(src.loc)
-						var/list/blood_DNA_temp[1]
-						blood_DNA_temp[1] = list(H.dna.unique_enzymes, H.dna.b_type)
-						B.blood_DNA =  blood_DNA_temp
-						B.virus2 = H.virus2
-						for(var/datum/disease/D in H.viruses)
-							var/datum/disease/newDisease = new D.type
-							B.viruses += newDisease
-							newDisease.holder = B
+	//					var/obj/effect/decal/cleanable/blood/B = new(src.loc)
+	//					var/list/blood_DNA_temp[1]
+	//					blood_DNA_temp[1] = list(H.dna.unique_enzymes, H.dna.b_type)
+	//					B.blood_DNA =  blood_DNA_temp
+	//					B.virus2 = H.virus2
+	//					for(var/datum/disease/D in H.viruses)
+	//						var/datum/disease/newDisease = new D.type
+	//						B.viruses += newDisease
+	//						newDisease.holder = B
 
 						H:weakened = max(H:weakened,2)
 						H:updatehealth()

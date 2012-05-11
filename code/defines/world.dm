@@ -6,12 +6,12 @@ world
 
 
 	Topic(href, href_list[])
-		world << "Received a Topic() call!"
-		world << "[href]"
-		for(var/a in href_list)
-			world << "[a]"
-		if(href_list["hello"])
-			world << "Hello world!"
-			return "Hello world!"
-		world << "End of Topic() call."
-		..()
+//		world << "Received a Topic() call!"
+//		world << "[href]"
+//		for(var/a in href_list)
+//			world << "[a]"
+//		if(href_list["hello"])
+//			world << "Hello world!"
+//			return "Hello world!"
+//		world << "End of Topic() call."
+//		..()

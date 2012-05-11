@@ -33,9 +33,9 @@
 	examine()
 		set src in usr
 		..()
-		if(air_contents.oxygen < 1)
+		if(air_contents.oxygen < 1 && loc==usr)
 			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
-			playsound(usr, 'alert.ogg', 50, 1)
+			usr << sound('alert.ogg')
 
 
 /obj/item/weapon/tank/plasma
@@ -159,8 +159,8 @@
 		var/pressure = air_contents.return_pressure()
 		if(pressure > TANK_FRAGMENT_PRESSURE)
 			if(!istype(src.loc,/obj/item/device/transfer_valve))
-				message_admins("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
-				log_game("Explosive tank rupture! last key to touch the tank was [src.fingerprintslast].")
+				message_admins("Explosive tank rupture! last key to touch the tank was [fingerprintslast].")
+				log_game("Explosive tank rupture! last key to touch the tank was [fingerprintslast].")
 			//world << "\blue[x],[y] tank is exploding: [pressure] kPa"
 			//Give the gas a chance to build up more pressure through reacting
 			air_contents.react()

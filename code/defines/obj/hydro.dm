@@ -278,6 +278,23 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/bluespacetomatoseed
+	name = "pack of blue-space tomato seeds"
+	desc = "These seeds grow into blue-space tomato plants."
+	icon_state = "seed-bluespacetomato"
+	mypath = "/obj/item/seeds/bluespacetomatoseed"
+	species = "bluespacetomato"
+	plantname = "Blue-Space Tomato Plants"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato"
+	lifespan = 25
+	endurance = 15
+	maturation = 8
+	production = 6
+	yield = 2
+	potency = 10
+	plant_type = 0
+	growthstages = 6
+
 /obj/item/seeds/cornseed
 	name = "pack of corn seeds"
 	desc = "I don't mean to sound corny..."
@@ -400,7 +417,7 @@
 	potency = 10
 	oneharvest = 1
 	plant_type = 0
-	growthstages = 5
+	growthstages = 3
 
 /obj/item/seeds/amanitamycelium
 	name = "pack of fly amanita mycelium"
@@ -1143,46 +1160,6 @@
 		reagents.add_reagent("coco", 4+round((potency / 5), 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
-//This object is just a transition object. All it does is make a grass tile and delete itself.
-/obj/item/weapon/reagent_containers/food/snacks/grown/grass
-	seed = "/obj/item/seeds/grassseed"
-	name = "grass"
-	desc = "Green and lush."
-	icon_state = "spawner"
-	potency = 20
-	New()
-		new/obj/item/stack/tile/grass(src.loc)
-		spawn(5) //Workaround to keep harvesting from working weirdly.
-			del(src)
-
-//This object is just a transition object. All it does is make dosh and delete itself. -Cheridan
-/obj/item/weapon/reagent_containers/food/snacks/grown/money
-	seed = "/obj/item/seeds/cashseed"
-	name = "dosh"
-	desc = "Green and lush."
-	icon_state = "spawner"
-	potency = 10
-	New()
-		switch(rand(1,100))//(potency) //It wants to use the default potency instead of the new, so it was always 10. Will try to come back to this later - Cheridan
-			if(0 to 10)
-				new/obj/item/weapon/spacecash/(src.loc)
-			if(11 to 20)
-				new/obj/item/weapon/spacecash/c10(src.loc)
-			if(21 to 30)
-				new/obj/item/weapon/spacecash/c20(src.loc)
-			if(31 to 40)
-				new/obj/item/weapon/spacecash/c50(src.loc)
-			if(41 to 50)
-				new/obj/item/weapon/spacecash/c100(src.loc)
-			if(51 to 60)
-				new/obj/item/weapon/spacecash/c200(src.loc)
-			if(61 to 80)
-				new/obj/item/weapon/spacecash/c500(src.loc)
-			else
-				new/obj/item/weapon/spacecash/c1000(src.loc)
-		spawn(5) //Workaround to keep harvesting from working weirdly.
-			del(src)
-
 /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
 	seed = "/obj/item/seeds/sugarcaneseed"
 	name = "sugarcane"
@@ -1707,7 +1684,7 @@
 	seed = "/obj/item/seeds/towermycelium"
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
+		if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
 			user.show_message("<span class='notice'>You make planks out of the [src]!</span>", 1)
 			for(var/i=0,i<2,i++)
 				new /obj/item/stack/sheet/wood (src.loc)
@@ -1985,3 +1962,99 @@
 	New()
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
+
+
+// *************************************
+// Complex Grown Object Defines -
+// Putting these at the bottom so they don't clutter the list up. -Cheridan
+// *************************************
+
+//This object is just a transition object. All it does is make a grass tile and delete itself.
+/obj/item/weapon/reagent_containers/food/snacks/grown/grass
+	seed = "/obj/item/seeds/grassseed"
+	name = "grass"
+	desc = "Green and lush."
+	icon_state = "spawner"
+	potency = 20
+	New()
+		new/obj/item/stack/tile/grass(src.loc)
+		spawn(5) //Workaround to keep harvesting from working weirdly.
+			del(src)
+
+//This object is just a transition object. All it does is make dosh and delete itself. -Cheridan
+/obj/item/weapon/reagent_containers/food/snacks/grown/money
+	seed = "/obj/item/seeds/cashseed"
+	name = "dosh"
+	desc = "Green and lush."
+	icon_state = "spawner"
+	potency = 10
+	New()
+		switch(rand(1,100))//(potency) //It wants to use the default potency instead of the new, so it was always 10. Will try to come back to this later - Cheridan
+			if(0 to 10)
+				new/obj/item/weapon/spacecash/(src.loc)
+			if(11 to 20)
+				new/obj/item/weapon/spacecash/c10(src.loc)
+			if(21 to 30)
+				new/obj/item/weapon/spacecash/c20(src.loc)
+			if(31 to 40)
+				new/obj/item/weapon/spacecash/c50(src.loc)
+			if(41 to 50)
+				new/obj/item/weapon/spacecash/c100(src.loc)
+			if(51 to 60)
+				new/obj/item/weapon/spacecash/c200(src.loc)
+			if(61 to 80)
+				new/obj/item/weapon/spacecash/c500(src.loc)
+			else
+				new/obj/item/weapon/spacecash/c1000(src.loc)
+		spawn(5) //Workaround to keep harvesting from working weirdly.
+			del(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
+	seed = "/obj/item/seeds/bluespacetomatoseed"
+	name = "blue-space tomato"
+	desc = "So lubricated, you might slip through space-time."
+	icon_state = "bluespacetomato"
+	potency = 10
+	origin_tech = "bluespace=3"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
+		reagents.add_reagent("singulo", 1+round((potency / 5), 1))
+		bitesize = 1+round(reagents.total_volume / 2, 1)
+
+	throw_impact(atom/hit_atom)
+		..()
+		var/mob/M = usr
+		var/outer_teleport_radius = potency/10 //Plant potency determines radius of teleport.
+		var/inner_teleport_radius = potency/15
+		var/list/turfs = new/list()
+		for(var/turf/T in orange(M,outer_teleport_radius))
+			if(T in orange(M,inner_teleport_radius)) continue
+			if(istype(T,/turf/space)) continue
+			if(T.density) continue
+			if(T.x>world.maxx-outer_teleport_radius || T.x<outer_teleport_radius)	continue
+			if(T.y>world.maxy-outer_teleport_radius || T.y<outer_teleport_radius)	continue
+			turfs += T
+		if(!turfs.len)
+			var/list/turfs_to_pick_from = list()
+			for(var/turf/T in orange(M,outer_teleport_radius))
+				if(!(T in orange(M,inner_teleport_radius)))
+					turfs_to_pick_from += T
+			turfs += pick(/turf in turfs_to_pick_from)
+		var/turf/picked = pick(turfs)
+		if(!isturf(picked)) return
+		switch(rand(1,2))//Allows for easy addition of more bluespace weirdness.
+			if(1) // Teleports the person who threw the tomato.
+				new/obj/effect/effect/sparks(M.loc)
+				new/obj/effect/decal/ash(M.loc) //Leaves a pile of ash behind for dramatic effect.
+				M.loc = picked
+				new/obj/effect/effect/sparks(M.loc) //Two set of sparks, one before the teleport and one after.
+			if(2) //Teleports mob the tomato hit instead.
+				for(var/mob/A in get_turf(hit_atom))
+					new/obj/effect/effect/sparks(A.loc)
+					new/obj/effect/decal/ash(A.loc)
+					A.loc = picked
+					new/obj/effect/effect/sparks(A.loc)
+		src.visible_message("<span class='notice'>The [src.name] has been squashed, causing a distortion in space-time.</span>","<span class='moderate'>You hear a smack.</span>")
+		del(src)
+		return

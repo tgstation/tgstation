@@ -22,6 +22,7 @@ var/datum/roundinfo/roundinfo = new()
 	var/Bible_icon_state	// icon_state the chaplain has chosen for his bible
 	var/Bible_item_state	// item_state the chaplain has chosen for his bible
 	var/Bible_name			// name of the bible
+	var/Bible_deity_name
 
 	var/random_players = 0 	// if set to nonzero, ALL players who latejoin or declare-ready join will have random appearances/genders
 
@@ -54,7 +55,7 @@ var/datum/roundinfo/roundinfo = new()
 		runnable_modes = config.get_runnable_modes()
 		if (runnable_modes.len==0)
 			current_state = GAME_STATE_PREGAME
-			world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
+			world << "<B>Unable to choose playable game mode. Not enough players?</B> Reverting to pre-game lobby."
 			return 0
 		if(secret_force_mode != "secret")
 			var/datum/game_mode/M = config.pick_mode(secret_force_mode)
@@ -127,8 +128,8 @@ var/datum/roundinfo/roundinfo = new()
 				if (potential_sleep_time > 10000)
 					potential_sleep_time -= 600
 
-				sleep(potential_sleep_time)
-				SpawnEvent()
+			sleep(potential_sleep_time)
+			SpawnEvent()
 
 	//Start master_controller.process()
 	spawn master_controller.process()
@@ -138,6 +139,107 @@ var/datum/roundinfo/roundinfo = new()
 	return 1
 
 /datum/controller/gameticker
+	//station_explosion used to be a variable for every mob's hud. Which was a waste!
+	//Now we have a general cinematic centrally held within the gameticker....far more efficient!
+	var/obj/screen/cinematic = null
+
+	//Plus it provides an easy way to make cinematics for other events. Just use this as a template :)
+	proc/station_explosion_cinematic(var/station_missed=0, var/override = null)
+		if( cinematic )	return	//already a cinematic in progress!
+
+		//initialise our cinematic screen object
+		cinematic = new(src)
+		cinematic.icon = 'station_explosion.dmi'
+		cinematic.icon_state = "start"
+		cinematic.layer = 20
+		cinematic.mouse_opacity = 0
+		cinematic.screen_loc = "1,3"	//TODO resize them
+
+		var/obj/structure/stool/bed/temp_buckle = new(src)
+		//Incredibly hackish. It creates a bed within the gameticker (lol) to stop mobs running around
+		if(station_missed)
+			for(var/mob/M in world)
+				M.buckled = temp_buckle				//buckles the mob so it can't do anything
+				if(M.client)
+					M.client.screen += cinematic	//show every client the cinematic
+		else	//nuke kills everyone on z-level 1 to prevent "hurr-durr I survived"
+			for(var/mob/M in world)
+				M.buckled = temp_buckle
+				if(M.client)
+					M.client.screen += cinematic
+				switch(M.z)
+					if(0)	//inside a crate or something
+						var/turf/T = get_turf(M)
+						if(T && T.z==1)				//we don't use M.death(0) because it calls a for(/mob) loop and
+							M.health = 0
+							M.stat = DEAD
+					if(1)	//on a z-level 1 turf.
+						M.health = 0
+						M.stat = DEAD
+
+		//Now animate the cinematic
+		switch(station_missed)
+			if(2)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
+				sleep(50)
+				world << sound('explosionfar.ogg')
+
+			if(1)	//nuke was nearby but (mostly) missed
+				if( mode && !override )
+					override = mode.name
+				switch( override )
+					if("nuclear emergency")
+						flick("start_nuke",cinematic)
+						sleep(50)
+						world << sound('explosionfar.ogg')
+						flick("explode2",cinematic)
+						cinematic.icon_state = "loss_nuke2"
+					else
+						sleep(50)
+						world << sound('explosionfar.ogg')
+						flick("explode2",cinematic)
+
+			else	//station was destroyed
+				if( mode && !override )
+					override = mode.name
+				switch( override )
+					if("nuclear emergency")
+						flick("start_nuke",cinematic)
+						sleep(50)
+						world << sound('explosionfar.ogg')
+						cinematic.icon_state = "end"
+						flick("explode",cinematic)
+						cinematic.icon_state = "loss_nuke"
+
+					if("AI malfunction")
+						flick("start_malf",cinematic)
+						sleep(50)
+						world << sound('explosionfar.ogg')
+						cinematic.icon_state = "end"
+						flick("explode",cinematic)
+						cinematic.icon_state = "loss_malf"
+
+					if("blob")
+						flick("start_blob",cinematic)			//TODO: make a blob one
+						sleep(50)
+						world << sound('explosionfar.ogg')
+						cinematic.icon_state = "end"
+						flick("explode",cinematic)
+						cinematic.icon_state = "loss_blob"		//TODO: make a blob one
+
+					else
+						//default station-destroyed ending
+						sleep(50)
+						world << sound('explosionfar.ogg')
+						cinematic.icon_state = "end"
+						flick("explode",cinematic)
+						cinematic.icon_state = "loss_general"
+		sleep(100)
+
+		//Tidy-up time!
+		if(cinematic)	del(cinematic)		//end the cinematic
+		if(temp_buckle)	del(temp_buckle)	//release everybody
+		return
+
 
 	proc/create_characters()
 		for(var/mob/new_player/player in world)
@@ -215,7 +317,7 @@ var/datum/roundinfo/roundinfo = new()
 		if (aiPlayer.connected_robots.len)
 			var/robolist = "<b>The AI's loyal minions were:</b> "
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
-				robolist += "[robo.name][robo.stat?" (Deactivated)  (Played by: [robo.key]), ":",  (Played by: [robo.key])"]"
+				robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.key]), ":" (Played by: [robo.key]), "]"
 			world << "[robolist]"
 
 	for (var/mob/living/silicon/robot/robo in world)

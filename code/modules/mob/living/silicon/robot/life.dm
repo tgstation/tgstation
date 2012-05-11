@@ -54,12 +54,12 @@
 					src.cell.use(1)
 				else
 					if(src.module_state_1)
-						src.cell.use(5)
+						src.cell.use(5.5)
 					if(src.module_state_2)
-						src.cell.use(5)
+						src.cell.use(5.5)
 					if(src.module_state_3)
-						src.cell.use(5)
-					src.cell.use(1)
+						src.cell.use(5.5)
+					src.cell.use(0.1)
 					src.blinded = 0
 					src.stat = 0
 			else
@@ -242,18 +242,18 @@
 				else
 					src.cells.icon_state = "charge-empty"
 
-			switch(src.bodytemperature) //310.055 optimal body temp
-
-				if(335 to INFINITY)
-					src.bodytemp.icon_state = "temp2"
-				if(320 to 335)
-					src.bodytemp.icon_state = "temp1"
-				if(300 to 320)
-					src.bodytemp.icon_state = "temp0"
-				if(260 to 300)
-					src.bodytemp.icon_state = "temp-1"
-				else
-					src.bodytemp.icon_state = "temp-2"
+			if(bodytemp)
+				switch(src.bodytemperature) //310.055 optimal body temp
+					if(335 to INFINITY)
+						src.bodytemp.icon_state = "temp2"
+					if(320 to 335)
+						src.bodytemp.icon_state = "temp1"
+					if(300 to 320)
+						src.bodytemp.icon_state = "temp0"
+					if(260 to 300)
+						src.bodytemp.icon_state = "temp-1"
+					else
+						src.bodytemp.icon_state = "temp-2"
 
 
 			if(src.pullin)	src.pullin.icon_state = "pull[src.pulling ? 1 : 0]"

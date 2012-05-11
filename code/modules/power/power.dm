@@ -31,7 +31,7 @@
 	if(!A || !isarea(A) || !A.master)
 		return 0					// if not, then not powered
 
-	return A.master.powered(chan)	// return power status of the area
+	return A.master.powered(power_channel)	// return power status of the area
 
 // increment the power usage stats for an area
 

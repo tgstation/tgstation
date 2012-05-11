@@ -33,7 +33,7 @@
 			if(usr.client.holder)
 				usr << "[M.key] is a [M.client.holder.rank][M.client.stealth ? " <i>(as [M.client.fakekey])</i>" : ""]"
 			else if(!M.client.stealth && (M.client.holder.level != -3))
-				usr << "\t[pick(nobles)] [M.client]"
+				usr << "\t[pick(nobles)] [M.client] is a [M.client.holder.rank]"
 
 var/list/nobles = list("Baron","Bookkeeper","Captain of the Guard","Chief Medical Dwarf","Count","Dungeon Master","Duke","General","Mayor","Outpost Liaison","Sheriff","Champion")
 

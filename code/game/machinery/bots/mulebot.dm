@@ -792,15 +792,6 @@
 	src.visible_message("\red [src] drives over [H]!")
 	playsound(src.loc, 'splat.ogg', 50, 1)
 
-	/*
-	if(ismob(load))
-		var/mob/M = load
-		if(M.reagents.has_reagent("beer"))
-			M.unlock_medal("DUI", 1)
-		if(M.reagents.has_reagent("space_drugs") && istype(H) && H.wear_id.assignment == "Security Officer")
-			M.unlock_medel("Ridin' Dirty",1)
-	*/
-
 	var/damage = rand(5,15)
 	H.apply_damage(2*damage, BRUTE, "head")
 	H.apply_damage(2*damage, BRUTE, "chest")
@@ -810,7 +801,7 @@
 	H.apply_damage(0.5*damage, BRUTE, "r_arm")
 
 	var/obj/effect/decal/cleanable/blood/B = new(src.loc)
-	B.blood_DNA = list(list(H.dna.unique_enzymes, H.dna.b_type))
+	B.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
 
 	bloodiness += 4
 
@@ -933,7 +924,7 @@
 	var/list/kv = list(
 		"type" = "mulebot",
 		"name" = suffix,
-		"loca" = loc.loc,	// area
+		"loca" = (loc ? loc.loc : "Unknown"),	// somehow loc can be null and cause a runtime - Quarxink
 		"mode" = mode,
 		"powr" = (cell ? cell.percent() : 0),
 		"dest" = destination,

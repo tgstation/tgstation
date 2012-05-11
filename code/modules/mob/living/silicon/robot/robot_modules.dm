@@ -8,6 +8,7 @@
 	var
 		list/modules = list()
 		obj/item/emag = null
+		obj/item/borg/upgrade/jetpack = null
 
 
 	emp_act(severity)
@@ -24,6 +25,8 @@
 		src.modules += new /obj/item/device/flash(src)
 		src.emag = new /obj/item/toy/sword(src)
 		src.emag.name = "Placeholder Emag Item"
+//		src.jetpack = new /obj/item/toy/sword(src)
+//		src.jetpack.name = "Placeholder Upgrade Item"
 		return
 
 
@@ -152,7 +155,7 @@
 		src.modules += new /obj/item/weapon/handcuffs/cyborg(src)
 		src.modules += new /obj/item/weapon/melee/baton(src)
 		src.modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
-//		src.emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
+		src.emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 		return
 
 
@@ -217,9 +220,10 @@
 		..()
 		src.modules += new /obj/item/borg/sight/meson(src)
 		src.emag = new /obj/item/borg/stun(src)
-		src.modules += new /obj/item/weapon/satchel(src)
-		src.modules += new /obj/item/weapon/pickaxe/jackhammer(src)
-		src.modules += new /obj/item/weapon/shovel(src)
+		src.modules += new /obj/item/weapon/satchel/borg(src)
+		src.modules += new /obj/item/weapon/pickaxe/borgdrill(src)
+//		src.modules += new /obj/item/weapon/shovel(src) Uneeded due to buffed drill
+//		src.jetpack += new/obj/item/weapon/tank/jetpack/carbondioxide(src)
 		return
 
 
@@ -231,5 +235,4 @@
 		src.modules += new /obj/item/weapon/melee/energy/sword(src)
 		src.modules += new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(src)
 		src.modules += new /obj/item/weapon/card/emag(src)
-		src.modules += new /obj/item/weapon/tank/jetpack/oxygen(src)
 		return

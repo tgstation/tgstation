@@ -20,7 +20,7 @@
 		fuel_injectors.Add("SCRAM")
 		fuel_injectors["SCRAM"] = new/list
 		spawn(0)
-			for(var/obj/machinery/rust/fuel_injector/Injector in range(50,src))
+			for(var/obj/machinery/rust/fuel_injector/Injector in world)
 				if(Injector.stage in fuel_injectors)
 					var/list/targetlist = fuel_injectors[Injector.stage]
 					targetlist.Add(Injector)

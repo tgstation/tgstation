@@ -383,7 +383,6 @@
 	opacity = 0
 	density = 0
 
-
 /obj/hud
 	name = "hud"
 	unacidable = 1
@@ -400,9 +399,8 @@
 	var/obj/screen/g_dither = null
 	var/obj/screen/blurry = null
 	var/list/darkMask = null
-	var/obj/screen/station_explosion = null
 
-	var/h_type = /obj/screen
+	var/h_type = /obj/screen		//this is like...the most pointless thing ever. Use a god damn define!
 
 /obj/item
 	name = "item"
@@ -418,10 +416,6 @@
 	var/burning = null
 	var/hitsound = null
 	var/w_class = 3.0
-	var/wielded = 0 // 1 if item is two handed and grabbed with two hands
-	var/twohanded = 0 // Two handed and wielded off by default, nyoro~n -Agouri
-	var/force_unwielded = 0
-	var/force_wielded = 0
 	var/protective_temperature = 0 // Placing this here to avoid runtime errors, due to tiny items being allowed on ears and being queried for this variable
 	flags = FPRINT | TABLEPASS
 	pass_flags = PASSTABLE

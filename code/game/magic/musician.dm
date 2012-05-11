@@ -5,9 +5,9 @@
 		tempo = 5
 
 /obj/structure/device/piano
-	name = "space piano"
+	name = "space minimoog"
 	icon = 'musician.dmi'
-	icon_state = "piano"
+	icon_state = "minimoog"
 	anchored = 1
 	density = 1
 	var
@@ -500,7 +500,7 @@
 			if(href_list["import"])
 				var/t = ""
 				do
-					t = input(usr, "Please paste the entire song, formated:", text("[]", src.name), t)  as message
+					t = input(usr, "Please paste the entire song, formatted:", text("[]", src.name), t)  as message
 					if (!in_range(src, usr))
 						return
 

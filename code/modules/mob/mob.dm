@@ -103,38 +103,6 @@
 /mob/proc/update_clothing()
 	return
 
-/mob/proc/death(gibbed)
-	timeofdeath = world.time
-
-	var/cancel = 0
-	for(var/mob/M in world)
-		if(M.client && (M.stat != DEAD))
-			cancel = 1
-			break
-	if(!cancel)
-		world << "<B>Everyone is dead! Resetting in 30 seconds!</B>"
-
-
-
-		spawn(300)
-			for(var/mob/M in world)
-				if(M.client && (M.stat != DEAD))
-					world << "Aborting world restart!"
-					return
-
-			//feedback_set_details("end_error","no live players")
-
-			if(blackbox)
-				blackbox.save_all_data_to_sql()
-
-			sleep(50)
-
-			log_game("Rebooting because of no live players")
-			world.Reboot()
-			return
-
-	return ..(gibbed)
-
 /mob/proc/restrained()
 	if (handcuffed)
 		return 1
@@ -191,28 +159,16 @@
 	var/obj/item/W = equipped()
 
 	if (W)
-		if(W.twohanded)
-			if(W.wielded)
-				if(hand)
-					var/obj/item/weapon/offhand/O = r_hand
-					del O
-				else
-					var/obj/item/weapon/offhand/O = l_hand
-					del O
-			W.wielded = 0          //Kinda crude, but gets the job done with minimal pain -Agouri
-			W.name = "[initial(W.name)]" //name reset so people don't see world fireaxes with (unwielded) or (wielded) tags
-			W.update_icon()
 		u_equip(W)
 		if (client)
 			client.screen -= W
 		if (W)
+			W.layer = initial(W.layer)
 			if(target)
 				W.loc = target.loc
 			else
 				W.loc = loc
 			W.dropped(src)
-			if (W)
-				W.layer = initial(W.layer)
 		var/turf/T = get_turf(loc)
 		if (istype(T))
 			T.Entered(W)
@@ -235,7 +191,7 @@
 		return r_hand
 
 /mob/proc/get_inactive_hand()
-	if ( ! hand)
+	if (!hand)
 		return l_hand
 	else
 		return r_hand
@@ -650,10 +606,11 @@
 						for (var/mob/living/silicon/decoy/D in world)
 							if (eye)
 								eye = D
-		if (eye)
-			client.eye = eye
-		else
-			client.eye = client.mob
+		if (client)
+			if (eye)
+				client.eye = eye
+			else
+				client.eye = client.mob
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -664,22 +621,7 @@
 		if(src:cameraFollow)
 			src:cameraFollow = null
 
-
-/client/Topic(href, href_list)
-	if(href_list["priv_msg"])
-		var/client/C = locate(href_list["priv_msg"])
-		if(ismob(C)) //Old stuff can pass in mobs instead of clients
-			var/mob/M = C
-			C = M.client
-		cmd_admin_pm(C,null)
-	else
-		..()
-
 /mob/Topic(href, href_list)
-	if(href_list["priv_msg"])	//for priv_msg references that have yet to be updated to target clients. Forwards it to client/Topic()
-		if(client)
-			client.Topic(href, href_list)
-
 	if(href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
 		machine = null
@@ -728,7 +670,7 @@
 		onclose(usr, "[name]")
 	if(href_list["flavor_change"])
 		update_flavor_text()
-	..()
+//	..()
 	return
 
 /mob/proc/get_damage()
@@ -754,8 +696,21 @@
 	set category = "IC"
 	set src in oview(1)
 
-	if (!( usr ))
+	if ( !usr || usr==src || !istype(src.loc,/turf) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
+
+	if(ishuman(usr))
+		if(usr.hand) // if he's using his left hand.
+			var/datum/organ/external/temp = usr:get_organ("l_hand")
+			if(temp.destroyed)
+				usr << "\blue You look at your stump."
+				return
+		else
+			var/datum/organ/external/temp = usr:get_organ("r_hand")
+			if(temp.destroyed)
+				usr << "\blue You look at your stump."
+				return
+
 	if (!( anchored ))
 		usr.pulling = src
 		if(ismob(src))
@@ -848,110 +803,6 @@
 	for(var/mob/M in viewers())
 		M.see(message)
 
-//This is the proc for gibbing a mob. Cannot gib ghosts. Removed the medal reference,
-//added different sort of gibs and animations. N
-/mob/proc/gib(var/ex_act = 0)
-
-	if (istype(src, /mob/dead/observer))
-		gibs(loc, viruses)
-		return
-	if(!isrobot(src))//Cyborgs no-longer "die" when gibbed.
-		death(1)
-	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
-	canmove = 0
-	icon = null
-	invisibility = 101
-
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'mob.dmi'
-	animation.master = src
-	if(ishuman(src))
-		flick("gibbed-h", animation)
-	else if(ismonkey(src))
-		flick("gibbed-m", animation)
-	else if(ismetroid(src))
-		flick("gibbed-m", animation)
-	else if(iscrab(src))
-		flick("gibbed-m", animation)
-	else if(iscorgi(src))
-		flick("gibbed-m", animation)
-	else if(iscat(src))
-		flick("gibbed-m", animation)   //New-has monkey gib effect versus robogib
-	else if(isalien(src))
-		flick("gibbed-a", animation)
-	else
-		flick("gibbed-r", animation)
-
-	spawn()
-		if(key)
-			if(istype(src, /mob/living/silicon))
-				robogibs(loc, viruses)
-			else if (istype(src, /mob/living/carbon/alien))
-				xgibs(loc, viruses)
-			else
-				gibs(loc, viruses, dna)
-
-/*		else if(key)
-			if(istype(src, /mob/living/simple_animals))     //Should gib all simple_animals like a monkey
-				gibs(loc, viruses)
-			else if (istype(src, /mob/living/simple_animals))
-				gibs(loc, viruses)
-Currently doesn't work, but should be useful later or at least as a template
-*/
-
-		else
-			if(istype(src, /mob/living/silicon))
-				robogibs(loc, viruses)
-			else if(istype(src, /mob/living/carbon/alien))
-				xgibs(loc, viruses)
-			else
-				gibs(loc, viruses, dna)
-		sleep(15)
-		for(var/obj/item/I in contents)
-			I.loc = get_turf(src)
-			if(ex_act)
-				I.ex_act(ex_act)
-		del(src)
-
-/*
-This is the proc for turning a mob into ash. Mostly a copy of gib code (above).
-Originally created for wizard disintegrate. I've removed the virus code since it's irrelevant here.
-Dusting robots does not eject the MMI, so it's a bit more powerful than gib() /N
-*/
-/mob/proc/dust()
-	death(1)
-	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
-	canmove = 0
-	icon = null
-	invisibility = 101
-
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'mob.dmi'
-	animation.master = src
-	if(ishuman(src))
-		flick("dust-h", animation)
-		new /obj/effect/decal/remains/human(loc)
-	else if(ismonkey(src))
-		flick("dust-m", animation)
-		new /obj/effect/decal/remains/human(loc)
-	else if(isalien(src))
-		flick("dust-a", animation)
-		new /obj/effect/decal/remains/xeno(loc)
-	else
-		flick("dust-r", animation)
-		new /obj/effect/decal/remains/robot(loc)
-
-	sleep(15)
-	if(isrobot(src)&&src:mmi)//Is a robot and it has an mmi.
-		del(src:mmi)//Delete the MMI first so that it won't go popping out.
-	for(var/obj/item/I in contents)
-		I.loc = get_turf(src)
-	del(src)
-
 /*
 adds a dizziness amount to a mob
 use this rather than directly changing var/dizziness
@@ -1034,8 +885,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 		stat(null, "([x], [y], [z])")
 		stat(null, "CPU: [world.cpu]")
 		stat(null, "Controller: [controllernum]")
-		//if (master_controller)
-		//	stat(null, "Loop: [master_controller.loop_freq]")
+		if (master_controller)
+			stat(null, "Current Iteration: [controller_iteration]")
 
 	if (spell_list.len)
 
@@ -1048,42 +899,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 				if("holdervar")
 					statpanel("Spells","[S.holder_var_type] [S.holder_var_amount]",S)
 
-
-/client/proc/station_explosion_cinematic(var/station_missed)
-	if(!mob || !ticker)	return
-	if(!mob.client || !mob.hud_used || !ticker.mode)	return
-//	M.loc = null this might make it act weird but fuck putting them in nullspace, it causes issues.
-	var/obj/screen/boom = mob.hud_used.station_explosion
-	if(!istype(boom))	return
-
-	mob.client.screen += boom
-
-	switch(ticker.mode.name)
-		if("nuclear emergency")
-			flick("start_nuke", boom)
-		if("AI malfunction")
-			flick("start_malf", boom)
-		else
-			boom.icon_state = "start"
-
-	sleep(40)
-	mob << sound('explosionfar.ogg')
-	boom.icon_state = "end"
-	if(!station_missed) flick("explode", boom)
-	else flick("explode2", boom)
-	sleep(40)
-
-	switch(ticker.mode.name)
-		if("nuclear emergency")
-			if(!station_missed) boom.icon_state = "loss_nuke"
-			else boom.icon_state = "loss_nuke2"
-		if("malfunction")
-			boom.icon_state = "loss_malf"
-		if("blob")
-			return//Nothin here yet and the general one does not fit.
-		else
-			boom.icon_state = "loss_general"
-	return
 
 
 // facing verbs
@@ -1132,53 +947,124 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
+/*
+/mob/proc/createGeas()
 
+	var/obj/effect/stop/S
+	for(var/obj/effect/stop/temp in loc)
+		if(temp.victim == src)
+			S = temp
+
+	if(!S)
+		S = new /obj/effect/stop
+		S.victim = src
+		S.loc = src.loc
+		geaslist += S
+
+	return
+*/
 
 /mob/proc/Stun(amount)
 	if(canstun)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
+//		if(stunned)
+//			createGeas()
 	else
 		if(istype(src, /mob/living/carbon/alien))	// add some movement delay
 			var/mob/living/carbon/alien/Alien = src
-			Alien.move_delay_add = min(Alien.move_delay_add + round(amount / 5), 10) // a maximum delay of 10
+			Alien.move_delay_add = min(Alien.move_delay_add + round(amount / 2), 10) // a maximum delay of 10
 	return
 
 /mob/proc/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
 	if(canstun)
 		stunned = max(amount,0)
+//		if(stunned)
+//			createGeas()
 	return
 
 /mob/proc/AdjustStunned(amount)
 	if(canstun)
 		stunned = max(stunned + amount,0)
+//		if(stunned)
+//			createGeas()
 	return
 
 /mob/proc/Weaken(amount)
 	if(canweaken)
 		weakened = max(max(weakened,amount),0)
+//		if(weakened)
+//			createGeas()
 	return
 
 /mob/proc/SetWeakened(amount)
 	if(canweaken)
 		weakened = max(amount,0)
+//		if(weakened)
+//			createGeas()
 	return
 
 /mob/proc/AdjustWeakened(amount)
 	if(canweaken)
 		weakened = max(weakened + amount,0)
+//		if(weakened)
+//			createGeas()
 	return
 
 /mob/proc/Paralyse(amount)
 	paralysis = max(max(paralysis,amount),0)
+//	if(paralysis)
+//		createGeas()
 	return
 
 /mob/proc/SetParalysis(amount)
 	paralysis = max(amount,0)
 	return
+//	if(paralysis)
+//		createGeas()
 
 /mob/proc/AdjustParalysis(amount)
 	paralysis = max(paralysis + amount,0)
+//	if(paralysis)
+//		createGeas()
 	return
+
+/mob/proc/Sleeping(amount)
+	sleeping = max(max(sleeping,amount),0)
+//	if(sleeping)
+//		createGeas()
+	return
+
+/mob/proc/SetSleeping(amount)
+	sleeping = max(amount,0)
+	return
+//	if(sleeping)
+//		createGeas()
+
+
+/mob/proc/AdjustSleeping(amount)
+	sleeping = max(sleeping + amount,0)
+//	if(sleeping)
+//		createGeas()
+	return
+
+/mob/proc/Resting(amount)
+	resting = max(max(resting,amount),0)
+//	if(resting)
+//		createGeas()
+	return
+
+/mob/proc/SetResting(amount)
+	resting = max(amount,0)
+	return
+//	if(resting)
+//		createGeas()
+
+/mob/proc/AdjustResting(amount)
+	resting = max(resting + amount,0)
+//	if(resting)
+//		createGeas()
+	return
+
 
 // ++++ROCKDTBEN++++ MOB PROCS -- Ask me before touching
 
