@@ -244,7 +244,7 @@ proc/isInSight(var/atom/A, var/atom/B)
 		return 0
 
 
-proc/doafterattack(obj/target , obj/source)
+/*proc/doafterattack(obj/target , obj/source)
 
 	if (istype(target, /obj/item/weapon/storage/ ))
 		return 0
@@ -257,3 +257,4 @@ proc/doafterattack(obj/target , obj/source)
 
 	else
 		return 1
+{R}*/

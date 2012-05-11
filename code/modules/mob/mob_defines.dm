@@ -243,7 +243,6 @@
 
 	var/robot_talk_understand = 0
 	var/alien_talk_understand = 0
-	var/taj_talk_understand = 0
 
 	//You can guess what these are for.  --SkyMarshal
 	var/list/atom/hallucinations = list()

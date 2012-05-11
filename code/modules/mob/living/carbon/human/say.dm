@@ -88,6 +88,4 @@
 		return 1
 	if (istype(other, /mob/living/carbon/metroid))
 		return 1
-	if (istype(other, /mob/living/carbon/human/tajaran))
-		return 1
 	return ..()

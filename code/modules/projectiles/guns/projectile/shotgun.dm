@@ -70,8 +70,8 @@
 	ammo_type = "/obj/item/ammo_casing/shotgun/beanbag"
 
 	load_into_chamber()
-		if(in_chamber)
-			return 1
+//		if(in_chamber)
+//			return 1 {R}
 		if(!loaded.len)
 			return 0
 

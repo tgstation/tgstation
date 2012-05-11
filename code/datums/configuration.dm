@@ -34,7 +34,6 @@
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/Ticklag = 0.9
 	var/Tickcomp = 0
-	var/no_taj = 0
 
 	var/list/mode_names = list()
 	var/list/modes = list()				// allowed modes
@@ -305,9 +304,6 @@
 
 				if("tickcomp")
 					Tickcomp = 1
-
-				if("no_taj")
-					no_taj = 1
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"

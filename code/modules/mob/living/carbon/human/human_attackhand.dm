@@ -101,6 +101,7 @@
 		if("hurt")
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>Punched [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
+
 			log_attack("<font color='red'>[M.name] ([M.ckey]) punched [src.name] ([src.ckey])</font>")
 
 
@@ -113,8 +114,6 @@
 				else
 					attack_verb = "punch"
 
-			if(istajaran(M))
-				attack_verb = "slash"
 
 			var/damage = rand(0, 9)
 			if(!damage)

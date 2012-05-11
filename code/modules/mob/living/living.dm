@@ -161,37 +161,10 @@
 	src.nutrition = 400
 	src.bodytemperature = 310
 	//src.health = 100
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		for(var/datum/organ/external/e in src:organs)
-			if(e.destroyed)
-				e.destroyed = 0
-			e.brute_dam = 0.0
-			e.burn_dam = 0.0
-			e.bandaged = 0.0
-			e.max_damage = initial(e.max_damage)
-			e.bleeding = 0
-			e.open = 0
-			e.broken = 0
-			e.destroyed = 0
-			e.perma_injury = 0
-
-			if(e.wounds)
-				for(var/datum/organ/wound/W in e.wounds)
-					del(W)
-			e.update_icon()
-		src:update_body()
-		src:update_face()
-		src:UpdateDamageIcon()
-
-		H.vessel:clear_reagents()
-		H.vessel:add_reagent("blood",560)
-
 	src.heal_overall_damage(1000, 1000)
 	src.buckled = initial(src.buckled)
 	src.handcuffed = initial(src.handcuffed)
-	if(src.stat > 1)
-		src.stat = CONSCIOUS
+	if(src.stat > 1) src.stat = CONSCIOUS
 	..()
 	return
 

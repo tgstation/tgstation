@@ -24,8 +24,8 @@
 
 
 	load_into_chamber()
-		if(in_chamber)
-			return 1
+//		if(in_chamber)
+//			return 1 {R}
 
 		if(!loaded.len)
 			return 0
@@ -77,9 +77,9 @@
 	examine()
 		..()
 		usr << "Has [loaded.len] round\s remaining."
-		if(in_chamber && !loaded.len)
-			usr << "However, it has a chambered round."
-		if(in_chamber && loaded.len)
-			usr << "It also has a chambered round."
+//		if(in_chamber && !loaded.len)
+//			usr << "However, it has a chambered round."
+//		if(in_chamber && loaded.len)
+//			usr << "It also has a chambered round." {R}
 		return
 

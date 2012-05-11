@@ -1,12 +1,3 @@
-//Instead of setting real_name = "Unknown", use this when necessary.
-//It will prevent the cloned-as-unknown bug and various other derpy things.
-/mob/living/carbon/human/proc/disfigure_face()
-	var/datum/organ/external/head/head = get_organ("head")
-	if(head && !head.disfigured)
-		head.disfigured = 1
-		name = get_visible_name()
-		src << "\red Your face has become disfigured."
-
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
 	var/datum/organ/external/E = get_organ(zone)
 	if(istype(E, /datum/organ/external))
@@ -36,37 +27,33 @@
 
 
 /mob/living/carbon/human/proc/get_organ(var/zone)
-	if(!zone)
-		zone = "chest"
+	if(!zone)	zone = "chest"
 	for(var/datum/organ/external/O in organs)
 		if(O.name == zone)
 			return O
 	return null
 
 
-/mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0 , var/weapon = null)
+/mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0)
 	if((damagetype != BRUTE) && (damagetype != BURN))
 		..(damage, damagetype, def_zone, blocked)
 		return 1
 
-	if(blocked >= 2)
-		return 0
+	if(blocked >= 2)	return 0
 
 	var/datum/organ/external/organ = null
 	if(isorgan(def_zone))
 		organ = def_zone
 	else
-		if(!def_zone)
-			def_zone = ran_zone(def_zone)
+		if(!def_zone)	def_zone = ran_zone(def_zone)
 		organ = get_organ(check_zone(def_zone))
-	if(!organ)
-		return 0
+	if(!organ)	return 0
 	if(blocked)
 		damage = (damage/(blocked+1))
 
 	switch(damagetype)
 		if(BRUTE)
-			organ.take_damage(damage, 0, is_sharp(weapon), weapon)
+			organ.take_damage(damage, 0)
 		if(BURN)
 			organ.take_damage(0, damage)
 	UpdateDamageIcon()

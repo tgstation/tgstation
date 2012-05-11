@@ -72,7 +72,7 @@
 				dat += text("Dermaline: [] units<BR>", occupant.reagents.get_reagent_amount("dermaline"))
 				dat += text("Bicaridine: [] units<BR>", occupant.reagents.get_reagent_amount("bicaridine"))
 				dat += text("Dexalin: [] units<BR>", occupant.reagents.get_reagent_amount("dexalin"))
-			dat += text("<HR><A href='?src=\ref[];refresh=1'>Refresh meter readings each second</A><BR><A href='?src=\ref[];inap=1'>Inject Inaprovaline</A><BR><A href='?src=\ref[];stox=1'>Inject Soporific</A><BR><A href='?src=\ref[];derm=1'>Inject Dermaline</A><BR><A href='?src=\ref[];bic=1'>Inject Bicaridine</A><BR><A href='?src=\ref[];dex=1'>Inject Dexalin</A><BR><A href='?src=\ref[];organ=1'>Regenerate Organs</A>", src, src, src, src, src, src,src)
+			dat += text("<HR><A href='?src=\ref[];refresh=1'>Refresh meter readings each second</A><BR><A href='?src=\ref[];inap=1'>Inject Inaprovaline</A><BR><A href='?src=\ref[];stox=1'>Inject Soporific</A><BR><A href='?src=\ref[];derm=1'>Inject Dermaline</A><BR><A href='?src=\ref[];bic=1'>Inject Bicaridine</A><BR><A href='?src=\ref[];dex=1'>Inject Dexalin</A>", src, src, src, src, src, src)
 		else
 			dat += "The sleeper is empty."
 		dat += text("<BR><BR><A href='?src=\ref[];mach_close=sleeper'>Close</A>", user)
@@ -98,43 +98,11 @@
 						src.connected.inject_bicaridine(usr)
 					if (href_list["dex"])
 						src.connected.inject_dexalin(usr)
-					if (href_list["organ"])
-						if(istype(src.connected.occupant,/mob/living/carbon/human))
-							var/mob/living/carbon/human/H = src.connected.occupant
-							for(var/datum/organ/external/e in H.organs)
-								if(e.destroyed)
-									usr << "Please wait, regenerating limb.  Administring nanite-bath.  Do not eject occupant until told to."
-									sleep(100)
-									if(!src.connected.occupant)
-										return
-									e.destroyed = 0
-							//	e.brute_dam = 0.0
-							//	e.burn_dam = 0.0
-								e.bandaged = 0.0
-								e.max_damage = initial(e.max_damage)
-								e.bleeding = 0
-								e.open = 0
-								e.broken = 0
-								e.destroyed = 0
-								e.perma_injury = 0
-
-								if(e.wounds)
-									for(var/datum/organ/wound/W in e.wounds)
-										del(W)
-								e.update_icon()
-
-							H.vessel.clear_reagents()
-							H.vessel.add_reagent("blood",560)
-							H.update_body()
-							H.update_face()
-							H.UpdateDamageIcon()
-						usr << "Run complete.  Limbs regenerated.  Additional healing may be required."
 				else
 					if(src.connected.occupant.health > -100)
 						if (href_list["inap"])
 							src.connected.inject_inap(usr)
-						else
-						//if (href_list["stox"] || href_list["derm"] || href_list["bic"] || href_list["dex"])
+						if (href_list["stox"] || href_list["derm"] || href_list["bic"] || href_list["dex"])
 							usr << "\red \b this person is not in good enough condition for sleepers to be effective! Use another means of treatment, such as cryogenics!"
 					else
 						usr << "\red \b This person has no life for to preserve anymore. Take them to a department capable of reanimating them."

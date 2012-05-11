@@ -20,7 +20,6 @@
 		silenced = 0
 		recoil = 0
 		ejectshell = 1
-		determination = 0
 
 	proc
 		load_into_chamber()
@@ -39,8 +38,33 @@
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 
+/*
+		New()
+		spawn(15)				// Hack, but I need to wait for sub-calls to load the gun before loading the chamber.  1.5 seconds should be fine.
+			load_into_chamber()
 
+	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, inrange, params)//TODO: go over this
+		if(inrange)
+			if(!doafterattack(target , src))
+				return //we're placing gun on a table or in backpack.  What the fuck was the previous check?
+		if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))
+			return//Shouldnt flag take care of this?
+{R} */
 
+	afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, params)//TODO: go over this
+		if(flag)	return //we're placing gun on a table or in backpack
+		if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
+
+		if(istype(user, /mob/living))
+			var/mob/living/M = user
+			if ((M.mutations & CLUMSY) && prob(50))
+				M << "\red The [src.name] blows up in your face."
+				M.take_organ_damage(0,20)
+				M.drop_item()
+				del(src)
+				return
+
+/*
 	attack(mob/M as mob, mob/user as mob)
 		if(!in_chamber)
 			if(!load_into_chamber())
@@ -60,15 +84,7 @@
 				return //we're placing gun on a table or in backpack.  What the fuck was the previous check?
 		if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))
 			return//Shouldnt flag take care of this?
-
-		if(istype(user, /mob/living))
-			var/mob/living/M = user
-			if ((M.mutations & CLUMSY) && prob(50))
-				M << "\red The [src.name] blows up in your face."
-				M.take_organ_damage(0,20)
-				M.drop_item()
-				del(src)
-				return
+{R} */
 
 		if (!user.IsAdvancedToolUser())
 			user << "\red You don't have the dexterity to do this!"
@@ -84,8 +100,7 @@
 		if(!special_check(user))
 			return
 		if(!load_into_chamber())
-			if(!inrange)	// If we're in range, we're just going to hit them instead of pulling the trigger.
-				user << "\red *click*";
+			user << "\red *click*";
 			return
 
 		if(!in_chamber)
@@ -94,6 +109,7 @@
 		in_chamber.firer = user
 		in_chamber.def_zone = user.zone_sel.selecting
 
+/*
 		if(user == target) // What the FUCK was this code?  If shoot anything on the same tile, you're shooting yourself?  What?
 			if(!determination)
 				user << "Are you really sure you want to shoot yourself?  You put the gun against your head."
@@ -130,6 +146,21 @@
 					user.visible_message("\red [user.name] fires the [src.name] point-blank at [target]!", "\red You fire the [src.name] point-blank at [target]!", "\blue You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 			in_chamber.damage *= 1.25
 			target.bullet_act(in_chamber, in_chamber.def_zone)
+			del(in_chamber)
+			update_icon()
+			return
+{R}*/
+
+		if(targloc == curloc)
+/*
+			if(silenced)
+				playsound(user, fire_sound, 10, 1)
+			else
+				playsound(user, fire_sound, 50, 1)
+				user.visible_message("\red [user.name] fires the [src.name] at themselves!", "\red You fire the [src.name] at yourself!", "\blue You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
+{R}*/
+
+			user.bullet_act(in_chamber)
 			del(in_chamber)
 			update_icon()
 			return

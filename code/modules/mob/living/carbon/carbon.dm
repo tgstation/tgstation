@@ -188,9 +188,6 @@
 					status += "blistered"
 				else if(burndamage > 0)
 					status += "numb"
-				if(org.destroyed)
-					status = "MISSING!"
-
 				if(status == "")
 					status = "OK"
 				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.getDisplayName(),status),1)

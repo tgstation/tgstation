@@ -644,25 +644,6 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			if ( !animal.restrained() )
 				attack_animal(animal)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /atom/DblClick(location, control, params) //TODO: DEFERRED: REWRITE
 //	world << "checking if this shit gets called at all"
 
@@ -935,18 +916,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				// ------- YOU DO NOT HAVE AN ITEM IN YOUR HAND -------
 				if (istype(usr, /mob/living/carbon/human))
 					// ------- YOU ARE HUMAN -------
-					if(usr.hand) // if he's using his left hand.
-						var/datum/organ/external/temp = usr:get_organ("l_hand")
-						if(temp.destroyed)
-							usr << "\blue You look at your stump."
-							return
-					else
-						var/datum/organ/external/temp = usr:get_organ("r_hand")
-						if(temp.destroyed)
-							usr << "\blue You look at your stump."
-							return
 					src.attack_hand(usr, usr.hand)
-					usr:afterattack(src, usr, (t5 ? 1 : 0), params)
 				else
 					// ------- YOU ARE NOT HUMAN. WHAT ARE YOU - DETERMINED HERE AND PROPER ATTACK_MOBTYPE CALLED -------
 					if (istype(usr, /mob/living/carbon/monkey))
