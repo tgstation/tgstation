@@ -18,7 +18,7 @@
 	var/locked = 1
 //var/emagged = 0
 	var/obj/machinery/camera/cam = null
-	var/list/botcard_access = list(access_medical, access_morgue, access_medlab, access_robotics)
+	var/list/botcard_access = list(access_medical, access_morgue, access_genetics, access_robotics)
 	var/obj/item/weapon/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
 	var/skin = null //Set to "tox", "ointment" or "o2" for the other two firstaid kits.
 	var/frustration = 0
