@@ -153,7 +153,7 @@
 		"/obj/item/weapon/zippo",
 		"/obj/item/device/taperecorder",
 		"/obj/item/weapon/evidencebag",
-		"/obj/item/policetaperoll"
+		"/obj/item/taperoll/police"
 		)
 
 /obj/item/weapon/storage/belt/soulstone
