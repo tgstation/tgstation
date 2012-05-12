@@ -32,8 +32,6 @@
 	item_state = "thunderdome"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 
-
-
 /obj/item/clothing/head/helmet/welding
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
