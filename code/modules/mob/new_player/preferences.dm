@@ -138,6 +138,19 @@ datum/preferences
 		facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
 		randomize_name()
 		..()
+//proc for making sentences Do This As An Example. For names.
+	proc/simple_titlecase(string)
+		string = uppertext(copytext(string,1,2)) + copytext(string, 2)
+		var/space_pos = findtext(string, " ")
+		var/strlen = length(string)
+		while(space_pos)
+			string = copytext(string,1,space_pos+1) + \
+				uppertext(copytext(string, space_pos+1, space_pos+2)) + \
+				((space_pos+2 <= strlen) ? copytext(string, space_pos+2) : "")
+			space_pos = findtext(string, " ", space_pos+1)
+			//In case of a trailing space
+			if(space_pos >= strlen) return string
+		return string
 
 	proc/ZeroSkills(var/forced = 0)
 		for(var/V in SKILLS) for(var/datum/skill/S in SKILLS[V])
@@ -624,7 +637,9 @@ datum/preferences
 					if(length(new_name) >= 26)
 						alert("That name is too long.")
 						return
-
+					//Make it so number one. (means you can have names like McMillian). Credit to: Jtgibson
+					new_name = simple_titlecase(new_name)
+/*
 					//Carn: To fix BYOND text-parsing errors caused by people using dumb capitalisation in their names.
 					var/tempname
 					for(var/N in dd_text2list(new_name, " "))
@@ -632,6 +647,8 @@ datum/preferences
 							tempname += " "
 						tempname += capitalize(lowertext(N))
 					new_name = tempname
+*/
+
 
 				if("random")
 					randomize_name()
