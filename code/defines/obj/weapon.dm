@@ -623,7 +623,7 @@
 
 /obj/item/weapon/extinguisher
 	name = "fire extinguisher"
-	desc = "Contains water....dangit..."
+	desc = "A traditional red fire extinguisher."
 	icon = 'items.dmi'
 	icon_state = "fire_extinguisher0"
 	var/last_use = 1.0
@@ -642,6 +642,7 @@
 	name = "fire extinguisher"
 	desc = "A light and compact fibreglass-framed model fire extinguisher."
 	icon_state = "miniFE0"
+	hitsound = null	//it is much lighter, after all.
 	flags = FPRINT | USEDELAY | TABLEPASS
 	throwforce = 2
 	w_class = 2.0
