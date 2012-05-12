@@ -76,6 +76,39 @@
 	icon_state = "beret"
 	flags = FPRINT | TABLEPASS
 
+/obj/item/clothing/head/chaplain_hood
+	name = "chaplain's hood"
+	desc = "It's hood that covers the head. It keeps you warm during the space winters."
+	icon_state = "chaplain_hood"
+	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|BLOCKHAIR
+
+/obj/item/clothing/head/hasturhood
+	name = "hastur's hood"
+	desc = "It's unspeakably stylish"
+	icon_state = "hasturhood"
+	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|BLOCKHAIR
+
+/obj/item/clothing/head/nursehat
+	name = "nurse's hat"
+	desc = "It allows quick identification of trained medical personnel."
+	icon_state = "nursehat"
+	flags = FPRINT|TABLEPASS
+
+/obj/item/clothing/head/secsoft
+	name = "soft cap"
+	desc = "It's baseball hat in tasteful red colour."
+	icon_state = "secsoft"
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
+	item_state = "helmet"
+
+/obj/item/clothing/head/cargosoft
+	name = "cargo cap"
+	desc = "It's a baseball hat in a tasteless yellow colour."
+	icon_state = "cargosoft"
+	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
+	item_state = "helmet"
+	var/flipped = 0
+
 
 // CHUMP HELMETS: COOKING THEM DESTROYS THE CHUMP HELMET SPAWN.
 
@@ -103,21 +136,7 @@
 	flags = FPRINT|TABLEPASS|SUITSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	item_state="cueball"
 	flags_inv = 0
-
-/obj/item/clothing/head/secsoft
-	name = "soft cap"
-	desc = "It's baseball hat in tasteful red colour."
-	icon_state = "secsoft"
-	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
-	item_state = "helmet"
-
-/obj/item/clothing/head/cargosoft
-	name = "cargo cap"
-	desc = "It's a baseball hat in a tasteless yellow colour."
-	icon_state = "cargosoft"
-	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
-	item_state = "helmet"
-	var/flipped = 0
+	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/head/syndicatefake
 	name = "red space-helmet replica"
@@ -145,8 +164,6 @@
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | HEADCOVERSEYES | BLOCKHAIR
 	item_state = "thunderdome"
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
-
-
 
 /obj/item/clothing/head/helmet/welding
 	name = "welding helmet"
@@ -197,24 +214,6 @@
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 0, rad = 0)
 	flags_inv = 0
 
-/obj/item/clothing/head/chaplain_hood
-	name = "chaplain's hood"
-	desc = "It's hood that covers the head. It keeps you warm during the space winters."
-	icon_state = "chaplain_hood"
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|BLOCKHAIR
-
-/obj/item/clothing/head/hasturhood
-	name = "hastur's hood"
-	desc = "It's unspeakably stylish"
-	icon_state = "hasturhood"
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|BLOCKHAIR
-
-/obj/item/clothing/head/nursehat
-	name = "nurse's hat"
-	desc = "It allows quick identification of trained medical personnel."
-	icon_state = "nursehat"
-	flags = FPRINT|TABLEPASS
-
 /obj/item/clothing/head/helmet/cardborg
 	name = "cardborg helmet"
 	desc = "A helmet made out of a box."
@@ -222,4 +221,5 @@
 	item_state = "cardborg_h"
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH
 	see_face = 0.0
+	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES

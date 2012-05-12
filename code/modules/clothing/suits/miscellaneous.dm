@@ -15,14 +15,14 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 
-
-
 /obj/item/clothing/suit/bluetag
 	name = "blue laser tag armour"
 	desc = "Blue Pride, Station Wide"
 	icon_state = "bluetag"
 	item_state = "bluetag"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	allowed = list (/obj/item/weapon/gun/energy/laser/bluetag)
+
 
 /obj/item/clothing/suit/redtag
 	name = "red laser tag armour"
@@ -30,6 +30,7 @@
 	icon_state = "redtag"
 	item_state = "redtag"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	allowed = list (/obj/item/weapon/gun/energy/laser/redtag)
 
 
 /obj/item/clothing/suit/apron
