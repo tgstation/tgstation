@@ -54,8 +54,14 @@ Important Procedures
 */
 
 var/kill_air = 0
+var/tick_multiplier = 2
 
 atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	//Purpose: Determines if the object (or airflow) can pass this atom.
+	//Called by: Movement, airflow.
+	//Inputs: The moving atom (optional), target turf, "height" and air group
+	//Outputs: Boolean if can pass.
+
 	return (!density || !height || air_group)
 
 turf
@@ -97,40 +103,11 @@ datum
 			var/list/turf/simulated/groups_to_rebuild = list()
 
 			var/current_cycle = 0
+			var/update_delay = 5 //How long between check should it try to process atmos again.
 
-			proc
-				setup()
-					//Call this at the start to setup air groups geometry
-					//Warning: Very processor intensive but only must be done once per round
 
-				assemble_group_turf(turf/simulated/base)
-					//Call this to try to construct a group starting from base and merging with neighboring unparented tiles
-					//Expands the group until all valid borders explored
-
-//				assemble_group_object(obj/movable/floor/base)
-
-				process()
+/*				process()
 					//Call this to process air movements for a cycle
-
-				process_groups()
-					//Used by process()
-					//Warning: Do not call this
-
-				process_singletons()
-					//Used by process()
-					//Warning: Do not call this
-
-				process_high_pressure_delta()
-					//Used by process()
-					//Warning: Do not call this
-
-				process_super_conductivity()
-					//Used by process()
-					//Warning: Do not call this
-
-				process_update_tiles()
-					//Used by process()
-					//Warning: Do not call this
 
 				process_rebuild_select_groups()
 					//Used by process()
@@ -139,15 +116,19 @@ datum
 				rebuild_group(datum/air_group)
 					//Used by process_rebuild_select_groups()
 					//Warning: Do not call this, add the group to air_master.groups_to_rebuild instead
+					*/
 
-				add_singleton(turf/simulated/T)
-					if(!active_singletons.Find(T))
-						active_singletons += T
 
-			setup()
+			proc/setup()
+				//Purpose: Call this at the start to setup air groups geometry
+				//    (Warning: Very processor intensive but only must be done once per round)
+				//Called by: Gameticker/Master controller
+				//Inputs: None.
+				//Outputs: None.
+
 				set background = 1
 				world << "\red \b Processing Geometry..."
-				sleep(1)
+				sleep(-1)
 
 				var/start_time = world.timeofday
 
@@ -158,16 +139,16 @@ datum
 					if(S.z > 4) // Skipping asteroids -- TLE
 						continue
 					S.update_air_properties()
-/*
-				for(var/obj/movable/floor/S in world)
-					if(!S.parent)
-						assemble_group_object(S)
-				for(var/obj/movable/floor/S in world) //Update all pathing and border information as well
-					S.update_air_properties()
-*/
-				world << "\red \b Geometry processed in [(world.timeofday-start_time)/10] seconds!"
 
-			assemble_group_turf(turf/simulated/base)
+				world << "\red \b Geometry processed in [time2text(world.timeofday-start_time, "mm:ss")] minutes!"
+				spawn start()
+
+			proc/assemble_group_turf(turf/simulated/base)
+				//Purpose: Call this to try to construct a group starting from base and merging with neighboring unparented tiles
+				//    (Expands the group until all valid borders explored)
+				//Called by: setup()
+				//Inputs: turf to flood fill from.
+				//Outputs: resulting group, or null if no group is formed.
 
 				var/list/turf/simulated/members = list(base) //Confirmed group members
 				var/list/turf/simulated/possible_members = list(base) //Possible places for group expansion
@@ -196,7 +177,7 @@ datum
 						possible_members -= test
 
 				if(members.len > 1)
-					var/datum/air_group/turf/group = new
+					var/datum/air_group/group = new
 					if(possible_borders.len>0)
 						group.borders = possible_borders
 					if(possible_space_borders.len>0)
@@ -221,85 +202,56 @@ datum
 						base.update_visuals(base.air)
 
 				return null
-/*
-			assemble_group_object(obj/movable/floor/base)
 
-				var/list/obj/movable/floor/members = list(base) //Confirmed group members
-				var/list/obj/movable/floor/possible_members = list(base) //Possible places for group expansion
-				var/list/obj/movable/floor/possible_borders = list()
+			proc/start()
+				//Purpose: This is kicked off by the master controller, and controls the processing of all atmosphere.
+				//Called by: Master controller
+				//Inputs: None.
+				//Outputs: None.
 
-				while(possible_members.len>0) //Keep expanding, looking for new members
-					for(var/obj/movable/floor/test in possible_members)
-						for(var/direction in list(NORTH, SOUTH, EAST, WEST))
-							var/turf/T = get_step(test.loc,direction)
-							if(T && test.loc.CanPass(null, T, null, 1))
-								var/obj/movable/floor/O = locate(/obj/movable/floor) in T
-								if(istype(O) && !O.parent)
-									if(!members.Find(O))
-										possible_members += O
-										members += O
-								else
-									possible_borders -= test
-									possible_borders += test
-						possible_members -= test
+				set background = 1
+				while(1)
+					if(kill_air)
+						return 1
+					current_cycle++
+					if(groups_to_rebuild.len > 0) //If there are groups to rebuild, do so.
+						spawn process_rebuild_select_groups()
 
-				if(members.len > 1)
-					var/datum/air_group/object/group = new
-					if(possible_borders.len>0)
-						group.borders = possible_borders
+					if(tiles_to_update.len > 0) //If there are tiles to update, do so.
+						for(var/turf/simulated/T in tiles_to_update)
+							spawn T.update_air_properties()
+						tiles_to_update = list()
 
-					for(var/obj/movable/floor/test in members)
-						test.parent = group
-						test.processing = 0
-						active_singletons -= test
+					for(var/datum/air_group/AG in air_groups) //Processing groups
+						spawn AG.process_group()
+					for(var/turf/simulated/T in active_singletons) //Processing Singletons
+						spawn T.process_cell()
 
-					group.members = members
-					air_groups += group
+					for(var/turf/simulated/hot_potato in active_super_conductivity) //Process superconduction
+						spawn hot_potato.super_conduct()
 
-					group.update_group_from_tiles() //Initialize air group variables
-					return group
-				else
-					base.processing = 0 //singletons at startup are technically unconnected anyway
-					base.parent = null
+					if(high_pressure_delta.len)	//Process high pressure delta (airflow)
+						for(var/turf/pressurized in high_pressure_delta)
+							spawn pressurized.high_pressure_movements()
+						high_pressure_delta = list()
 
-				return null
-*/
-			process()
-				if(kill_air)
-					return 1
-				current_cycle++
-				if(groups_to_rebuild.len > 0) process_rebuild_select_groups()
-				if(tiles_to_update.len > 0) process_update_tiles()
+					if(current_cycle%10==5) //Check for groups of tiles to resume group processing every 10 cycles
+						for(var/datum/air_group/AG in air_groups)
+							spawn AG.check_regroup()
+					sleep(max(5,update_delay*tick_multiplier))
 
-				process_groups()
-				process_singletons()
-
-				process_super_conductivity()
-				process_high_pressure_delta()
-
-				if(current_cycle%10==5) //Check for groups of tiles to resume group processing every 10 cycles
-					for(var/datum/air_group/AG in air_groups)
-						AG.check_regroup()
-
-				return 1
-
-			process_update_tiles()
-				for(var/turf/simulated/T in tiles_to_update)
-					T.update_air_properties()
-/*
-				for(var/obj/movable/floor/O in tiles_to_update)
-					O.update_air_properties()
-*/
-				tiles_to_update.len = 0
-
-			process_rebuild_select_groups()
+			proc/process_rebuild_select_groups()
+				//Purpose: This gets called to recalculate and rebuild group geometry
+				//Called by: process()
+				//Inputs: None.
+				//Outputs: None.
 				var/turf/list/turfs = list()
 
-				for(var/datum/air_group/turf/turf_AG in groups_to_rebuild) //Deconstruct groups, gathering their old members
-					for(var/turf/simulated/T in turf_AG.members)
+				for(var/datum/air_group/AG in groups_to_rebuild) //Deconstruct groups, gathering their old members
+					for(var/turf/simulated/T in AG.members)
 						T.parent = null
 						turfs += T
-					del(turf_AG)
+					del(AG)
 
 				for(var/turf/simulated/S in turfs) //Have old members try to form new groups
 					if(!S.parent)
@@ -307,37 +259,4 @@ datum
 				for(var/turf/simulated/S in turfs)
 					S.update_air_properties()
 
-//				var/obj/movable/list/movable_objects = list()
-
-				for(var/datum/air_group/object/object_AG in groups_to_rebuild) //Deconstruct groups, gathering their old members
-/*
-					for(var/obj/movable/floor/OM in object_AG.members)
-						OM.parent = null
-						movable_objects += OM
-					del(object_AG)
-
-				for(var/obj/movable/floor/OM in movable_objects) //Have old members try to form new groups
-					if(!OM.parent)
-						assemble_group_object(OM)
-				for(var/obj/movable/floor/OM in movable_objects)
-					OM.update_air_properties()
-*/
-				groups_to_rebuild.len = 0
-
-			process_groups()
-				for(var/datum/air_group/AG in air_groups)
-					AG.process_group()
-
-			process_singletons()
-				for(var/turf/simulated/T in active_singletons)
-					T.process_cell()
-
-			process_super_conductivity()
-				for(var/turf/simulated/hot_potato in active_super_conductivity)
-					hot_potato.super_conduct()
-
-			process_high_pressure_delta()
-				for(var/turf/pressurized in high_pressure_delta)
-					pressurized.high_pressure_movements()
-
-				high_pressure_delta.len = 0
+				groups_to_rebuild = list()

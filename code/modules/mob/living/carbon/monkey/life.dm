@@ -206,7 +206,7 @@
 						var/obj/location_as_object = loc
 						breath = location_as_object.handle_internal_lifeform(src, BREATH_VOLUME)
 					else if(istype(loc, /turf/))
-						var/breath_moles = environment.total_moles()*BREATH_PERCENTAGE
+						var/breath_moles = environment.total_moles*BREATH_PERCENTAGE
 						breath = loc.remove_air(breath_moles)
 
 						// Handle chem smoke effect  -- Doohl
@@ -260,7 +260,7 @@
 			if(src.nodamage)
 				return
 
-			if(!breath || (breath.total_moles() == 0))
+			if(!breath || (breath.total_moles == 0))
 				adjustOxyLoss(7)
 
 				oxygen_alert = max(oxygen_alert, 1)
@@ -274,14 +274,14 @@
 			var/SA_para_min = 0.5
 			var/SA_sleep_min = 5
 			var/oxygen_used = 0
-			var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+			var/breath_pressure = (breath.total_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 			//Partial pressure of the O2 in our breath
-			var/O2_pp = (breath.oxygen/breath.total_moles())*breath_pressure
+			var/O2_pp = (breath.oxygen/breath.total_moles)*breath_pressure
 			// Same, but for the toxins
-			var/Toxins_pp = (breath.toxins/breath.total_moles())*breath_pressure
+			var/Toxins_pp = (breath.toxins/breath.total_moles)*breath_pressure
 			// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
-			var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*breath_pressure
+			var/CO2_pp = (breath.carbon_dioxide/breath.total_moles)*breath_pressure
 
 			if(O2_pp < safe_oxygen_min) 			// Too little oxygen
 				if(prob(20))
@@ -329,7 +329,7 @@
 
 			if(breath.trace_gases.len)	// If there's some other shit in the air lets deal with it here.
 				for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
-					var/SA_pp = (SA.moles/breath.total_moles())*breath_pressure
+					var/SA_pp = (SA.moles/breath.total_moles)*breath_pressure
 					if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 						Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 						if(SA_pp > SA_sleep_min) // Enough to make us sleep as well

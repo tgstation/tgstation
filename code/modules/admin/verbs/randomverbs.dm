@@ -719,6 +719,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				T.air.nitrogen = T.nitrogen
 				T.air.toxins = T.toxins
 				T.air.temperature = T.temperature
+				T.air.update_values()
 
 				// make things update properly
 				T.assume_air(new /datum/gas_mixture())

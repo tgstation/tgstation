@@ -65,7 +65,7 @@ obj/machinery/atmospherics/binary/pump
 			return 1
 
 		//Calculate necessary moles to transfer using PV=nRT
-		if((air1.total_moles() > 0) && (air1.temperature>0))
+		if((air1.total_moles > 0) && (air1.temperature>0))
 			var/pressure_delta = target_pressure - output_starting_pressure
 			var/transfer_moles = pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
 
