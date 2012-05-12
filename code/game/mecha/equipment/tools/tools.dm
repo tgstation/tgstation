@@ -853,8 +853,9 @@
 			destroy()
 		else
 			GM.toxins += 5
-			GM.temperature = istype(T) ? T.air.return_temperature() : T20C
+			GM.temperature = istype(T) ? T.air.temperature : T20C
 			T.visible_message("The [src] suddenly disgorges a cloud of plasma.")
+		GM.update_values()
 		T.assume_air(GM)
 		return
 

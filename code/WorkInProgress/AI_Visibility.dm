@@ -1,5 +1,13 @@
 //All credit for this goes to Uristqwerty.
 
+//And some to me! -Mini
+
+
+
+//This file is partly designed around being able to uninclude it to go back to the old ai viewing system completely.
+//(And therefore also be portable to another similar codebase simply by transferring the file and including it after the other AI code files.)
+//There are probably a few parts that don't do that at the moment, but I'll fix them at some point.
+
 /turf
 	var/image/obscured
 	var/image/dim
@@ -290,19 +298,13 @@ var/datum/cameranet/cameranet = new()
 	set name = "freelook"
 	current = null	//cancel camera view first, it causes problems
 	cameraFollow = null
-	machine = null
-	if(client.eye == eyeobj)
-		client.eye = src
-		for(var/datum/camerachunk/c in eyeobj.visibleCameraChunks)
-			c.remove(eyeobj)
-		freelook()
-	else
-		if(!eyeobj)	//if it got deleted somehow (like an admin trying to fix things <.<')
-			eyeobj = new()
-		client.eye = eyeobj
-		eyeobj.loc = loc
-		cameranet.visibility(eyeobj)
-		cameraFollow = null
+//	machine = null
+	if(!eyeobj)	//if it got deleted somehow (like an admin trying to fix things <.<')
+		eyeobj = new()
+	client.eye = eyeobj
+	eyeobj.loc = loc
+	cameranet.visibility(eyeobj)
+	cameraFollow = null
 
 /mob/aiEye/Move()
 	. = ..()
@@ -366,6 +368,47 @@ var/datum/cameranet/cameranet = new()
 		return 1
 	return 0
 
-/mob/living/silicon/ai/switchCamera(atom/A)
-	eyeobj.loc = A.loc
+/mob/living/silicon/ai/switchCamera(var/obj/machinery/camera/C)
+	eyeobj.loc = C.loc
+	cameranet.visibility(eyeobj)
 	return
+
+/mob/living/silicon/ai/attack_ai(var/mob/user as mob)
+	if (user != src)
+		return
+
+	if (stat == 2)
+		return
+
+	var/list/L = list()
+	for (var/obj/machinery/camera/C in world)
+		L.Add(C)
+
+	camera_sort(L)
+	L = camera_network_sort(L)
+
+	var/list/D = list()
+	for (var/obj/machinery/camera/C in L)
+		if ( C.network in src.networks )
+			D[text("[]: [][]", C.network, C.c_tag, (C.status ? null : " (Deactivated)"))] = C
+	D["Cancel"] = "Cancel"
+
+	var/t = input(user, "Which camera should you change to?") as null|anything in D
+
+	if (!t || t == "Cancel")
+		return 0
+
+	var/obj/machinery/camera/C = D[t]
+
+	eyeobj.loc = C.loc
+	cameranet.visibility(eyeobj)
+
+	return
+
+/mob/living/silicon/ai/cancel_camera()
+	set name = "Cancel Camera View"
+	set category = "OOC"
+	reset_view(null)
+	machine = null
+	del eyeobj
+	src.freelook()

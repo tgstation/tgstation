@@ -92,8 +92,9 @@ datum/pipe_network
 
 		for(var/datum/gas_mixture/gas in gases)
 			air_transient.volume += gas.volume
-			total_thermal_energy += gas.thermal_energy()
-			total_heat_capacity += gas.heat_capacity()
+			var/temp_heatcap = gas.heat_capacity()
+			total_thermal_energy += gas.temperature*temp_heatcap
+			total_heat_capacity += temp_heatcap
 
 			air_transient.oxygen += gas.oxygen
 			air_transient.nitrogen += gas.nitrogen
@@ -157,8 +158,9 @@ proc/equalize_gases(datum/gas_mixture/list/gases)
 
 	for(var/datum/gas_mixture/gas in gases)
 		total_volume += gas.volume
-		total_thermal_energy += gas.thermal_energy()
-		total_heat_capacity += gas.heat_capacity()
+		var/temp_heatcap = gas.heat_capacity()
+		total_thermal_energy += gas.temperature*temp_heatcap
+		total_heat_capacity += temp_heatcap
 
 		total_oxygen += gas.oxygen
 		total_nitrogen += gas.nitrogen

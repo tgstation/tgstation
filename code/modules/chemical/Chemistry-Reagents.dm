@@ -282,7 +282,7 @@ datum
 
 				var/hotspot = (locate(/obj/effect/hotspot) in T)
 				if(hotspot && !istype(T, /turf/space))
-					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
+					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
@@ -293,7 +293,7 @@ datum
 				var/turf/T = get_turf(O)
 				var/hotspot = (locate(/obj/effect/hotspot) in T)
 				if(hotspot && !istype(T, /turf/space))
-					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
+					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
@@ -543,12 +543,14 @@ datum
 				var/datum/gas_mixture/napalm = new
 				napalm.oxygen = volume*10
 				napalm.temperature = T0C
+				napalm.update_values()
 				the_turf.assume_air(napalm)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				var/datum/gas_mixture/napalm = new
 				napalm.oxygen = volume*10
 				napalm.temperature = T0C
+				napalm.update_values()
 				T.assume_air(napalm)
 				return
 
@@ -571,12 +573,14 @@ datum
 				var/datum/gas_mixture/napalm = new
 				napalm.nitrogen = volume*10
 				napalm.temperature = T0C
+				napalm.update_values()
 				the_turf.assume_air(napalm)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				var/datum/gas_mixture/napalm = new
 				napalm.nitrogen = volume*10
 				napalm.temperature = T0C
+				napalm.update_values()
 				T.assume_air(napalm)
 				return
 
@@ -1051,12 +1055,14 @@ datum
 				var/datum/gas_mixture/napalm = new
 				napalm.toxins = volume*10
 				napalm.temperature = T0C
+				napalm.update_values()
 				the_turf.assume_air(napalm)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				var/datum/gas_mixture/napalm = new
 				napalm.toxins = volume*10
 				napalm.temperature = T0C
+				napalm.update_values()
 				T.assume_air(napalm)
 				return
 			on_mob_life(var/mob/living/M as mob)
@@ -1168,6 +1174,7 @@ datum
 				var/datum/gas/volatile_fuel/fuel = new
 				fuel.moles = 5
 				napalm.trace_gases += fuel
+				napalm.update_values()
 				the_turf.assume_air(napalm)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
@@ -1175,6 +1182,7 @@ datum
 				var/datum/gas/volatile_fuel/fuel = new
 				fuel.moles = 5
 				napalm.trace_gases += fuel
+				napalm.update_values()
 				T.assume_air(napalm)
 				return
 
@@ -2154,7 +2162,7 @@ datum
 							T.wet_overlay = null
 				var/hotspot = (locate(/obj/effect/hotspot) in T)
 				if(hotspot)
-					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
+					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)

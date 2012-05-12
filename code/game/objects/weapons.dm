@@ -38,6 +38,7 @@
 
 			trace_gas.moles = 30
 			payload += trace_gas
+			payload.update_values()
 
 			target.air.merge(payload)
 
@@ -53,6 +54,7 @@
 			var/datum/gas_mixture/payload = new
 
 			payload.toxins = 30
+			payload.update_values()
 
 			target.air.merge(payload)
 

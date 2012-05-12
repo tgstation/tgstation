@@ -301,6 +301,7 @@
 
 			napalm.toxins = toxinsToDeduce
 			napalm.temperature = 400+T0C
+			napalm.update_values()
 
 			target_tile.assume_air(napalm)
 			spawn (0) target_tile.hotspot_expose(temperature, 400)

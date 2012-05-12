@@ -126,6 +126,12 @@ GUEST_JOBBAN 1
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
 # SERVER ss13.example.com:2506
 
+
+
+
+
+
+
 ## forum address
 # FORUMURL http://baystation12.net/forums/
 
@@ -150,7 +156,8 @@ GUEST_JOBBAN 1
 #POPUP_ADMIN_PM
 
 ##What address should banned people appeal ther ban at?  Remember to escape the characters, if needed!
-# APPEAL_ADDRESS -->APPEAL ADDRESS HERE<--
+APPEAL_ADDRESS http://baystation12.net/forums/index.php/board,2.0.html
+
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
 TICKLAG 0.9
 
