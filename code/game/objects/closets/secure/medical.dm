@@ -94,7 +94,7 @@
 
 /obj/structure/closet/secure_closet/genetics_personal
 	name = "Geneticist's Locker"
-	req_access = list(access_medlab)
+	req_access = list(access_genetics)
 
 	New()
 		..()
