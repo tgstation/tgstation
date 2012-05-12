@@ -206,7 +206,6 @@
 	for(var/mob/living/carbon/C in V)
 		for(var/mob/M in C.parasites)
 			hear += M
-			world << "[M] added to hearers"
 
 /*   -- Handled above.  WHY IS THIS HERE?  WHYYYYYYY
 	// Personal AIs

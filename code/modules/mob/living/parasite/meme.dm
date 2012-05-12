@@ -31,6 +31,7 @@ mob/living/parasite/proc/enter_host(mob/living/carbon/host)
 		return 0
 
 	src.host = host
+	host.parasites.Add(src)
 
 	if(client) client.eye = host
 
@@ -48,6 +49,9 @@ mob/living/parasite/proc/exit_host()
 
 // Memes use points for many actions
 mob/living/parasite/meme/var/meme_points = 100
+
+// Memes have a list of indoctrinated hosts
+mob/living/parasite/meme/var/list/indoctrinated = list()
 
 mob/living/parasite/meme/Life()
 	..()
@@ -88,6 +92,8 @@ mob/living/parasite/meme/say_understands(mob/other)
 	if(!host) return 0
 
 	return host.say_understands(other)
+
+// A meme can make people hear things with the thought ability
 
 
 // TEST CODE
