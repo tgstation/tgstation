@@ -1332,6 +1332,7 @@
 	desc = "You can drill using this item. You dig?"
 	icon = 'surgery.dmi'
 	icon_state = "drill"
+	hitsound = 'circsawhit.ogg'
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 15.0
 	w_class = 1.0
@@ -1342,6 +1343,7 @@
 	desc = "For heavy duty cutting."
 	icon = 'surgery.dmi'
 	icon_state = "saw3"
+	hitsound = 'circsawhit.ogg'
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 15.0
 	w_class = 1.0
