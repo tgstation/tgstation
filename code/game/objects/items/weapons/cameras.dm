@@ -193,7 +193,10 @@
 		y_c--
 		x_c = x_c - 3
 
-	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo( get_turf(src) )
+	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
+	P.loc = usr.loc
+	if(!user.get_inactive_hand())
+		usr.put_in_inactive_hand(P)
 	var/icon/small_img = icon(temp)
 	var/icon/ic = icon('items.dmi',"photo")
 	small_img.Scale(8,8)
