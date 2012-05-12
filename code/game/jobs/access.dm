@@ -7,7 +7,7 @@
 	access_morgue = 6
 	access_tox = 7
 	access_tox_storage = 8
-	access_medlab = 9
+	access_genetics = 9
 	access_engine = 10
 	access_engine_equip= 11
 	access_maint_tunnels = 12
@@ -172,7 +172,7 @@
 /proc/get_access(job)
 	switch(job)
 		if("Geneticist")
-			return list(access_medical, access_morgue, access_medlab)
+			return list(access_medical, access_morgue, access_genetics)
 		if("Station Engineer")
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction)
 		if("Assistant")
@@ -198,13 +198,13 @@
 		if("Scientist")
 			return list(access_tox, access_tox_storage, access_research, access_xenobiology)
 		if("Head of Security")
-			return list(access_medical, access_morgue, access_tox, access_tox_storage, access_chemistry, access_medlab, access_court,
+			return list(access_medical, access_morgue, access_tox, access_tox_storage, access_chemistry, access_genetics, access_court,
 			            access_teleporter, access_heads, access_tech_storage, access_security, access_brig, access_atmospherics,
 			            access_maint_tunnels, access_bar, access_janitor, access_kitchen, access_robotics, access_armory, access_hydroponics,
 			            access_theatre, access_research, access_hos, access_RC_announce, access_forensics_lockers, access_keycard_auth)
 		if("Head of Personnel")
 			return list(access_security, access_brig, access_court, access_forensics_lockers,
-			            access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab, access_engine,
+			            access_tox, access_tox_storage, access_chemistry, access_medical, access_genetics, access_engine,
 			            access_emergency_storage, access_change_ids, access_ai_upload, access_eva, access_heads,
 			            access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 			            access_crematorium, access_kitchen, access_robotics, access_cargo, access_cargo_bot, access_hydroponics, access_lawyer,
@@ -238,14 +238,14 @@
 			            access_heads, access_ai_upload, access_construction, access_robotics,
 			            access_mint, access_ce, access_RC_announce, access_keycard_auth, access_tcomsat)
 		if("Research Director")
-			return list(access_rd, access_heads, access_tox,
-			            access_tox_storage, access_teleporter, access_medlab,
+			return list(access_rd, access_heads, access_tox, access_genetics,
+			            access_tox_storage, access_teleporter,
 			            access_research, access_robotics, access_xenobiology,
 			            access_RC_announce, access_keycard_auth, access_tcomsat)
 //		if("Virologist")
 //			return list(access_medical, access_morgue, access_virology)
 		if("Chief Medical Officer")
-			return list(access_medical, access_morgue, access_medlab, access_heads,
+			return list(access_medical, access_morgue, access_genetics, access_heads,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
 			access_keycard_auth)
 		else
@@ -274,7 +274,7 @@
 
 /proc/get_all_accesses()
 	return list(access_security, access_brig, access_armory, access_forensics_lockers, access_court,
-	            access_medical, access_medlab, access_morgue, access_rd,
+	            access_medical, access_genetics, access_morgue, access_rd,
 	            access_tox, access_tox_storage, access_chemistry, access_engine, access_engine_equip, access_maint_tunnels,
 	            access_external_airlocks, access_emergency_storage, access_change_ids, access_ai_upload,
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
@@ -298,7 +298,7 @@
 		if(1) //security
 			return list(access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos)
 		if(2) //medbay
-			return list(access_medical, access_medlab, access_morgue, access_chemistry, access_virology, access_surgery, access_cmo)
+			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_virology, access_surgery, access_cmo)
 		if(3) //research
 			return list(access_research, access_tox, access_tox_storage, access_xenobiology, access_rd)
 		if(4) //engineering and maintenance
@@ -346,7 +346,7 @@
 			return "Detective's Office"
 		if(access_medical)
 			return "Medical"
-		if(access_medlab)
+		if(access_genetics)
 			return "Genetics Lab"
 		if(access_morgue)
 			return "Morgue"
