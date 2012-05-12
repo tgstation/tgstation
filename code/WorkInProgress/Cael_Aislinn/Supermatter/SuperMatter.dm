@@ -60,12 +60,6 @@
 
 //a lot of these variables are pretty hacked, so dont rely on the comments
 /obj/machinery/power/supermatter/process()
-	var/datum/gas_mixture/env = loc.return_air()
-
-	//Remove gas from surrounding area
-	var/transfer_moles = gasefficency * env.total_moles
-	var/datum/gas_mixture/removed = env.remove(transfer_moles)
-
 	//core can no longer spontaneously explode
 /*
 	previousdet = det

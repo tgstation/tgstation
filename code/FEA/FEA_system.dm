@@ -54,6 +54,7 @@ Important Procedures
 */
 
 var/kill_air = 0
+var/tick_multiplier = 2
 
 atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	//Purpose: Determines if the object (or airflow) can pass this atom.
