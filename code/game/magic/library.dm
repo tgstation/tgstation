@@ -84,7 +84,7 @@
 				// if 3 or less books, fill shelf with that
 				for(var/datum/archived_book/AB in catbooks)
 					var/obj/item/weapon/book/B = new(src)
-					B.name = "Book: [AB.title]"
+					B.name = "[AB.title]"
 					B.title = AB.title
 					B.author = AB.author
 					B.dat = AB.dat
@@ -103,7 +103,7 @@
 				for(var/i = 1 to 3)
 					var/datum/archived_book/AB = pick(catbooks)
 					var/obj/item/weapon/book/B = new(src)
-					B.name = "Book: [AB.title]"
+					B.name = "[AB.title]"
 					B.title = AB.title
 					B.author = AB.author
 					B.dat = AB.dat
@@ -127,7 +127,7 @@
 			if(!newname)
 				return
 			else
-				src.setname(sanitize(newname))
+				setname(sanitize(newname))
 		else
 			..()
 	attack_hand(var/mob/user as mob)

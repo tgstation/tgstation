@@ -369,7 +369,7 @@ MASS SPECTROMETER
 	var/datum/gas_mixture/environment = location.return_air()
 
 	var/pressure = environment.return_pressure()
-	var/total_moles = environment.total_moles()
+	var/total_moles = environment.total_moles
 
 	user.show_message("\blue <B>Results:</B>", 1)
 	if(abs(pressure - ONE_ATMOSPHERE) < 10)

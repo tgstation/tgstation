@@ -137,7 +137,7 @@ datum/controller/game_controller
 
 
 		spawn(0)
-			air_master.process()
+//			air_master.process()
 			air_master_ready = 1
 		spawn(0)
 			tension_master.process()

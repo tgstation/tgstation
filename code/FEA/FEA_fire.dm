@@ -1,10 +1,18 @@
 atom
-	proc
-		temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-			return null
+	proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		//Purpose: Managing temperature exposure.
+		//Called by: Atmos
+		//Inputs: Airmix, temperature, volume.
+		//Outputs: None.
+
+		return null
 
 turf
 	proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
+		//Purpose: Making the equivilent of a spark.
+		//Called by: Atmos.  Anything that might light a fire.
+		//Inputs: Temperature, Volume, ?
+		//Outputs: If it is igniting or not.
 
 	simulated
 		hotspot_expose(exposed_temperature, exposed_volume, soh)
@@ -40,7 +48,7 @@ turf
 					//remove just_spawned protection if no longer processing this cell
 
 				//start processing quickly if we aren't already
-				reset_delay()
+//				reset_delay()
 
 			return igniting
 
