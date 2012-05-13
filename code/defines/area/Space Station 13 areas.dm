@@ -485,8 +485,8 @@ proc/process_ghost_teleport_locs()
 
 //PRISON
 /area/prison
-	name = "Brig Prison Wing"
-	icon_state = "brig"
+	name = "Prison Wing"
+	icon_state = "security"
 
 /area/prison/arrival_airlock
 	name = "Prison Station Airlock"
@@ -980,6 +980,11 @@ proc/process_ghost_teleport_locs()
 
 /area/teleporter
 	name = "Teleporter"
+	icon_state = "teleporter"
+	music = "signal"
+
+/area/teleporter/gateway
+	name = "Secure Construction Area"
 	icon_state = "teleporter"
 	music = "signal"
 
