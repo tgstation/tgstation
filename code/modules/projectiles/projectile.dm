@@ -173,6 +173,8 @@
 	fired()
 		var/turf/curloc = get_turf(src)
 		var/turf/targloc = get_turf(target)
+		if(!curloc || !targloc)
+			return 0
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
 		target = targloc

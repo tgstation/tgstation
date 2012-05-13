@@ -50,6 +50,7 @@ datum/pipeline
 					member.air_temporary.trace_gases += corresponding
 
 					corresponding.moles = trace_gas.moles*member.volume/air.volume
+			member.air_temporary.update_values()
 
 	proc/build_pipeline(obj/machinery/atmospherics/pipe/base)
 		air = new

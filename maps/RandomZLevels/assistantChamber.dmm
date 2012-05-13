@@ -22,15 +22,14 @@
 "v" = (/obj/item/brain,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
 "w" = (/obj/item/weapon/gun/energy/laser/captain,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
 "x" = (/obj/item/weapon/gun/projectile/deagle/gold,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"y" = (/obj/item/weapon/sord,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"z" = (/obj/item/weapon/gun/energy/lasercannon,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"A" = (/obj/item/weapon/gun/energy/crossbow/largecrossbow,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"B" = (/obj/item/weapon/gun/energy/pulse_rifle/destroyer,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"C" = (/obj/item/toy/spinningtoy,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"D" = (/obj/item/weapon/card/id/centcom,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"E" = (/obj/item/weapon/gun/grenadelauncher,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"F" = (/obj/item/weapon/chemsprayer,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
-"G" = (/obj/machinery/turret{dir = 8; lasers = 1; name = "Angry Turret"},/obj/machinery/light,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
+"y" = (/obj/item/weapon/gun/energy/lasercannon,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
+"z" = (/obj/item/weapon/gun/energy/crossbow/largecrossbow,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
+"A" = (/obj/item/weapon/gun/energy/pulse_rifle/destroyer,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
+"B" = (/obj/item/toy/spinningtoy,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
+"C" = (/obj/item/weapon/card/id/centcom,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
+"D" = (/obj/item/weapon/gun/grenadelauncher,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
+"E" = (/obj/item/weapon/chemsprayer,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
+"F" = (/obj/machinery/turret{dir = 8; lasers = 1; name = "Angry Turret"},/obj/machinery/light,/turf/simulated/floor{icon_state = "whiteshiny"},/area/turret_protected/AssistantRoom)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -48,10 +47,10 @@ aaaaaaaaabccddddddccbaaaaaaaaa
 aaaaaaaaabcefghijklcbaaaaaaaaa
 aaaaaaaaabcemnopqrlcbaaaaaaaaa
 aaaaaaaaabcestquvqlcbaaaaaaaaa
-aaaaaaaaabcewqqxqylcbaaaaaaaaa
-aaaaaaaaabceqzAqBqlcbaaaaaaaaa
-aaaaaaaaabceCqDqEFlcbaaaaaaaaa
-aaaaaaaaabccGGGGGGccbaaaaaaaaa
+aaaaaaaaabcewqqxqqlcbaaaaaaaaa
+aaaaaaaaabceqyzqAqlcbaaaaaaaaa
+aaaaaaaaabceBqCqDElcbaaaaaaaaa
+aaaaaaaaabccFFFFFFccbaaaaaaaaa
 aaaaaaaaabccccccccccbaaaaaaaaa
 aaaaaaaaabbbbbbbbbbbbaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
