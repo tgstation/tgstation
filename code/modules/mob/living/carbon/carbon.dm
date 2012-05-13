@@ -252,7 +252,7 @@
 
 	if(!src.sleeping && !src.admin_observing) // would be exploited by stoxin'd people otherwise ;)
 					   // (also make admins set-observing not sleep)
-		src.sleeping = 1
+		src.sleeping += 1
 		src.sleeping_willingly = 1
 
 /mob/living/carbon/Login()
