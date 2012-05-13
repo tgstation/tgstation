@@ -89,13 +89,13 @@
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the chief medical officer"
+	supervisors = "the chief medical officer and research director"
 	selection_color = "#ffeef0"
 
 
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
-		H.equip_if_possible(new /obj/item/device/radio/headset/headset_med(H), H.slot_ears)
+		H.equip_if_possible(new /obj/item/device/radio/headset/headset_medsci(H), H.slot_ears)
 		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack/medic (H), H.slot_back)
 		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/geneticist(H), H.slot_w_uniform)
