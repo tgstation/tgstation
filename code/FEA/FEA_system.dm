@@ -223,8 +223,10 @@ datum
 						tiles_to_update = list()
 
 					for(var/datum/air_group/AG in air_groups) //Processing groups
-						if(AG) // Because of runtime errors on syphoning.
-							spawn AG.process_group()
+						spawn
+							if(AG) // Because of runtime errors on syphoning.
+								AG.process_group()
+
 					for(var/turf/simulated/T in active_singletons) //Processing Singletons
 						spawn T.process_cell()
 
@@ -238,8 +240,9 @@ datum
 
 					if(current_cycle%10==5) //Check for groups of tiles to resume group processing every 10 cycles
 						for(var/datum/air_group/AG in air_groups)
-							if(AG) // Because of runtime errors on syphoning.
-								spawn AG.check_regroup()
+							spawn
+								if(AG) // Because of runtime errors on syphoning.
+									AG.check_regroup()
 					sleep(max(5,update_delay*tick_multiplier))
 
 			proc/process_rebuild_select_groups()
