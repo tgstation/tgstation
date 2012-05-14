@@ -29,6 +29,7 @@
 	icon_opened = "trashcartopen"
 	icon_closed = "trashcart"
 
+/*these aren't needed anymore
 /obj/structure/closet/crate/hat
 	desc = "A crate filled with Valuable Collector's Hats!."
 	name = "Hat Crate"
@@ -38,7 +39,7 @@
 	icon_opened = "crateopen"
 	icon_closed = "crate"
 
-/obj/structure/closet/crate/poster
+/obj/structure/closet/crate/contraband
 	name = "Poster crate"
 	desc = "A random assortment of posters manufactured by providers NOT listed under Nanotrasen's whitelist."
 	icon = 'storage.dmi'
@@ -46,15 +47,7 @@
 	density = 1
 	icon_opened = "crateopen"
 	icon_closed = "crate"
-
-/obj/structure/closet/crate/cigarettes
-	name = "DromedaryCo cigarettes crate"
-	desc = "A crate of cigarettes manufactured by the notorious DromedaryCo company."
-	icon = 'storage.dmi'
-	icon_state = "crate"
-	density = 1
-	icon_opened = "crateopen"
-	icon_closed = "crate"
+*/
 
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."

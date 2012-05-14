@@ -542,7 +542,8 @@
 	containertype = "/obj/structure/closet/crate/secure/gear"
 	containername = "Secruity Barriers crate"
 
-/datum/supply_packs/hats/
+/datum/supply_packs/randomised
+	var/num_contained = 3 //number of items picked to be contained in a randomised crate
 	contains = list("/obj/item/clothing/head/collectable/chef",
 					"/obj/item/clothing/head/collectable/paper",
 					"/obj/item/clothing/head/collectable/tophat",
@@ -569,28 +570,22 @@
 					"/obj/item/clothing/head/collectable/petehat")
 	name = "Collectable hat crate!"
 	cost = 200
-	containertype = "/obj/structure/closet/crate/hat"
+	containertype = "/obj/structure/closet/crate"
 	containername = "Collectable hats crate! Brought to you by Bass.inc!"
 
-/datum/supply_packs/hats/New()
+/datum/supply_packs/randomised/New()
 	var/list/tempContains = list()
-	for(var/i = 0,i<min(3,contains.len),i++)
+	for(var/i = 0,i<num_contained,i++)
 		tempContains += pick(contains)
 	contains = tempContains
 	..()
 
 
-/datum/supply_packs/contraband
+/datum/supply_packs/randomised/contraband
+	num_contained = 5
 	contains = list("/obj/item/weapon/contraband/poster","/obj/item/weapon/cigpacket/dromedaryco") //We randomly pick 5 items from this list through the constructor, look below
 	name = "Contraband crate"
 	cost = 30
-	containertype = "/obj/structure/closet/crate/contraband"
+	containertype = "/obj/structure/closet/crate"
 	containername = "Contraband crate"
 	contraband = 1
-
-/datum/supply_packs/poster/New()
-	var/list/tempContains = list()
-	for(var/i = 0,i<5,i++)
-		tempContains += pick(contains)
-	src.contains = tempContains
-	..()
