@@ -263,6 +263,9 @@ WELDINGTOOOL
 	attack(mob/M as mob, mob/user as mob)
 		if(hasorgans(M))
 			var/datum/organ/external/S = M:organs[user.zone_sel.selecting]
+			if(S)
+				message_admins("It appears [M] has \"null\" where there should be a [user.zone_sel.selecting].  Check into this, and tell SkyMarshal: \"[M.type]\"")
+				return ..()
 			if(!S.robot || user.a_intent != "help")
 				return ..()
 			if(S.brute_dam)
