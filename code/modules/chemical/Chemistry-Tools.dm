@@ -1936,6 +1936,8 @@
 	icon = 'chemical.dmi'
 	icon_state = "beaker0"
 	item_state = "beaker"
+	m_amt = 0
+	g_amt = 500
 
 	pickup(mob/user)
 		on_reagent_change(user)
@@ -2015,6 +2017,8 @@
 	icon = 'chemical.dmi'
 	icon_state = "beakerlarge"
 	item_state = "beaker"
+	m_amt = 0
+	g_amt = 15000
 	volume = 100
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,50,100)
