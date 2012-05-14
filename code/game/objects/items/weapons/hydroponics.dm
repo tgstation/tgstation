@@ -97,6 +97,10 @@ Craftables (Cob pipes, potato batteries, pumpkinheads)
 		usr << "All the leaves have fallen off the nettle from violent whacking."
 		del(src)
 
+/obj/item/weapon/grown/nettle/changePotency(newValue) //-QualityVan
+	potency = newValue
+	force = round((5+potency/5), 1)
+
 
 // Deathnettle
 
@@ -136,6 +140,10 @@ Craftables (Cob pipes, potato batteries, pumpkinheads)
 	else
 		usr << "All the leaves have fallen off the deathnettle from violent whacking."
 		del(src)
+
+/obj/item/weapon/grown/deathnettle/changePotency(newValue) //-QualityVan
+	potency = newValue
+	force = round((5+potency/2.5), 1)
 
 //Crafting
 
