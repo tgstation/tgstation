@@ -820,7 +820,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	var/t_amount = 0
 
 	while ( t_amount < (yield * parent.yieldmod ))
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new produce(user.loc, potency) // User gets a consumable
+		var/obj/item/weapon/grown/t_prod = new produce(user.loc, potency) // User gets a consumable -QualityVan
 		t_prod.seed = mypath
 		t_prod.species = species
 		t_prod.lifespan = lifespan
@@ -828,7 +828,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		t_prod.maturation = maturation
 		t_prod.production = production
 		t_prod.yield = yield
-		t_prod.potency = potency
+		t_prod.changePotency(potency) // -QualityVan
 		t_prod.plant_type = plant_type
 		t_amount++
 
@@ -840,7 +840,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	var/t_amount = 0
 
 	while ( t_amount < (yield * parent.yieldmod ))
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new produce(user.loc, potency) // User gets a consumable
+		var/obj/item/weapon/grown/t_prod = new produce(user.loc, potency) // User gets a consumable -QualityVan
 		t_prod.seed = mypath
 		t_prod.species = species
 		t_prod.lifespan = lifespan
@@ -848,7 +848,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		t_prod.maturation = maturation
 		t_prod.production = production
 		t_prod.yield = yield
-		t_prod.potency = potency
+		t_prod.changePotency(potency) // -QualityVan
 		t_prod.plant_type = plant_type
 		t_amount++
 

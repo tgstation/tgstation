@@ -404,7 +404,7 @@
 
 			if(src.sleeping)
 				Paralyse(3)
-				if (prob(10) && health) spawn(0) emote("snore")
+				//if (prob(10) && health) emote("snore") //Invalid emote for aliens, but it might be worth making sleep noticeable somehow -Yvarov
 				src.sleeping--
 
 			if(src.resting)

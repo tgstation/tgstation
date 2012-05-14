@@ -29,21 +29,7 @@
 
 	handle_regular_hud_updates()
 
-		if (src.stat == 2 || src.mutations & XRAY)
-			src.sight |= SEE_TURFS
-			src.sight |= SEE_MOBS
-			src.sight |= SEE_OBJS
-			src.see_in_dark = 8
-			src.see_invisible = 2
-		else if (src.stat != 2)
-			src.sight |= SEE_MOBS
-			src.sight |= SEE_TURFS
-			src.sight &= ~SEE_OBJS
-			src.see_in_dark = 5
-			src.see_invisible = 2
-
-		if (src.sleep) src.sleep.icon_state = text("sleep[]", src.sleeping)
-		if (src.rest) src.rest.icon_state = text("rest[]", src.resting)
+		..() //-Yvarov
 
 		if (src.healths)
 			if (src.stat != 2)
@@ -82,7 +68,7 @@
 
 		if(src.sleeping)
 			Paralyse(3)
-			if (prob(10) && health) spawn(0) emote("snore")
+			//if (prob(10) && health) spawn(0) emote("snore") Invalid Emote
 			src.sleeping--
 
 		if(src.resting)

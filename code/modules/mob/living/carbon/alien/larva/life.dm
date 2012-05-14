@@ -327,7 +327,7 @@
 
 			if(sleeping)
 				Paralyse(3)
-				if (prob(10) && health) spawn(0) emote("snore")
+				//if (prob(10) && health) spawn(0) emote("snore") Invalid Emote
 				sleeping--
 
 			if(resting)

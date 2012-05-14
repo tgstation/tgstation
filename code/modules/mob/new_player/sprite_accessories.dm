@@ -157,7 +157,7 @@
 
 	hogan
 		name = "Hulk Hogan Mustache"
-		icon_state = "facial_chaplin"
+		icon_state = "facial_hogan" //-Neek
 
 	vandyke
 		name = "Van Dyke Mustache"

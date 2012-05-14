@@ -230,11 +230,8 @@
 	src.closer.icon_state = "x"
 	src.closer.layer = 20
 	spawn( 5 )
-		var/col_num = 0
 		var/row_count = min(7,storage_slots) -1
-		if (contents.len > 7)
-			if(contents.len % 7)
-				col_num = round(contents.len / 7) // 7 is the maximum allowed column height for r_hand, l_hand and back storage items.
+		var/col_num = round((storage_slots - 1) / 7) // 7 is the maximum allowed column height for r_hand, l_hand and back storage items. -Yvarov
 		src.orient_objs(5, 10+col_num, 5 + row_count, 10)
 		return
 	return
