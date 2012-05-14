@@ -342,13 +342,13 @@ obj/machinery/atmospherics/tvalve/mirrored
 	New()
 		switch(dir)
 			if(NORTH)
-				initialize_directions = SOUTH|NORTH|WEST
+				initialize_directions = SOUTH|NORTH|EAST
 			if(SOUTH)
-				initialize_directions = NORTH|SOUTH|EAST
+				initialize_directions = NORTH|SOUTH|WEST
 			if(EAST)
-				initialize_directions = WEST|EAST|NORTH
+				initialize_directions = WEST|EAST|SOUTH
 			if(WEST)
-				initialize_directions = EAST|WEST|SOUTH
+				initialize_directions = EAST|WEST|NORTH
 		..()
 
 	initialize()
