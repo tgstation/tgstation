@@ -891,6 +891,9 @@ datum
 			if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 				var/self_heat_capacity = heat_capacity_archived()
 				var/sharer_heat_capacity = sharer.heat_capacity_archived()
+				if(!group_multiplier)
+					message_admins("Error!  The gas mixture (ref \ref[src]) has no group multiplier!")
+					return
 
 				if((sharer_heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
 					var/heat = conduction_coefficient*delta_temperature* \
@@ -903,13 +906,14 @@ datum
 			var/delta_temperature = (temperature - model.temperature)
 			if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 				var/self_heat_capacity = heat_capacity()//_archived()
+				if(!group_multiplier)
+					message_admins("Error!  The gas mixture (ref \ref[src]) has no group multiplier!")
+					return
 
 				if((model.heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
 					var/heat = conduction_coefficient*delta_temperature* \
 						(self_heat_capacity*model.heat_capacity/(self_heat_capacity+model.heat_capacity))
 
-					ASSERT(self_heat_capacity != 0) // Trying to solve a runtime error - Abi79
-					ASSERT(group_multiplier != 0)
 					if(border_multiplier)
 						temperature -= heat*border_multiplier/(self_heat_capacity*group_multiplier)
 					else

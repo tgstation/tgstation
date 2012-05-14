@@ -477,28 +477,21 @@
 	proc/start_close()
 		if(parent.robot)
 			return
-		sleep(rand(1800,3000)) //3-5 minutes
-		if(prob(50) && wound_size == 1)
-			parent.wounds.Remove(src)
-			update_health(1)
-			del(src)
-		else if(prob(33) && wound_size < 3)
-			stopbleeding()
-			return
-		sleep(rand(1800,3000))
-		if(wound_size == 1) //Small cuts heal in 6-10 minutes.
-			parent.wounds.Remove(src)
-			update_health(1)
-			del(src)
-		else if(prob(50) && wound_size < 5 && bleeding)
-			stopbleeding()
-			return
-		if(wound_size < 5 && bleeding) //Give it a chance to stop bleeding on it's own.
-			spawn while(1)
-				sleep(1200)
-				if(prob(50))
-					stopbleeding()
-					return
+		spawn(rand(1800,3000)) //3-5 minutes
+			if(prob(50) && wound_size == 1)
+				parent.wounds.Remove(src)
+				update_health(1)
+				del(src)
+			else if(prob(33) && wound_size < 3)
+				stopbleeding()
+			else
+				spawn(rand(1800,3000))
+					if(wound_size == 1) //Small cuts heal in 6-10 minutes.
+						parent.wounds.Remove(src)
+						update_health(1)
+						del(src)
+					else if(prob(50) && wound_size < 3 && bleeding)
+						stopbleeding()
 		return
 
 	proc/stopbleeding(var/bleed = 0)
@@ -518,60 +511,60 @@
 		return 1
 
 	proc/become_scar()
-		if(parent.robot)
+		if(parent.robot || healing_state)
 			return
 		healing_state = 1 //Patched
 		spawn(200*slowheal) //~20-60 seconds
 			update_health(5) //Heals some.
 
-		sleep(rand(1800,3000)*slowheal) //3-5 minutes
-
-		if(!parent || !parent.owner || parent.owner.stat == 2)
-			if(!parent || !parent.owner)
-				del(parent)
+		spawn(rand(180,300)*slowheal) //18-30 second
+			if(!parent || !parent.owner || parent.owner.stat == 2)
+				if(!parent || !parent.owner)
+					del(parent)
+					del(src)
+				return
+			if(prob(80) && wound_size < 2) //Small cuts heal.
+				update_health(1)
+				parent.wounds.Remove(src)
 				del(src)
-			return
-		if(prob(80) && wound_size < 2) //Small cuts heal.
-			update_health(1)
-			parent.wounds.Remove(src)
-			del(src)
 
-		healing_state = 2 //Noticibly healing.
-		update_health(2) //Heals more.
+			healing_state = 2 //Noticibly healing.
+			update_health(2) //Heals more.
 
-		sleep(rand(1800,3000)*slowheal) //3-5 minutes
-		if(!parent || !parent.owner || parent.owner.stat == 2)
-			if(!parent || !parent.owner)
-				del(parent)
-				del(src)
-			return
-		if(prob(60) && wound_size < 3) //Cuts heal up
-			parent.wounds.Remove(src)
-			del(src)
-		healing_state = 3 //Angry red scar
-		update_health(1) //Heals the rest of the way.
+			spawn(rand(1200,1800)*slowheal) //2-3 minutes
+				if(!parent || !parent.owner || parent.owner.stat == 2)
+					if(!parent || !parent.owner)
+						del(parent)
+						del(src)
+					return
+				if(prob(60) && wound_size < 3) //Cuts heal up
+					parent.wounds.Remove(src)
+					del(src)
+				healing_state = 3 //Angry red scar
+				update_health(1) //Heals the rest of the way.
 
 
-		sleep(rand(6000,9000)*slowheal) //10-15 minutes
-		if(!parent || !parent.owner || parent.owner.stat == 2)
-			if(!parent || !parent.owner)
-				del(parent)
-				del(src)
-			return
-		if(prob(80) && wound_size < 4) //Minor wounds heal up fully.
-			parent.wounds.Remove(src)
-			del(src)
-		healing_state = 4 //Scar
-		sleep(rand(6000,9000)*slowheal) //10-15 minutes
-		if(!parent || !parent.owner || parent.owner.stat == 2)
-			if(!parent || !parent.owner)
-				del(parent)
-				del(src)
-			return
-		if(prob(30) || wound_size < 4 || wound_type == 1) //Small chance for the scar to disappear, any small remaining wounds deleted.
-			parent.wounds.Remove(src)
-			del(src)
-		healing_state = 5 //Faded scar
+				spawn(rand(6000,9000)*slowheal) //10-15 minutes
+					if(!parent || !parent.owner || parent.owner.stat == 2)
+						if(!parent || !parent.owner)
+							del(parent)
+							del(src)
+						return
+					if(prob(80) && wound_size < 4) //Minor wounds heal up fully.
+						parent.wounds.Remove(src)
+						del(src)
+					healing_state = 4 //Scar.
+
+					spawn(rand(6000,9000)*slowheal) //10-15 minutes
+						if(!parent || !parent.owner || parent.owner.stat == 2)
+							if(!parent || !parent.owner)
+								del(parent)
+								del(src)
+							return
+						if(prob(30) || wound_size < 4 || wound_type == 1) //Small chance for the scar to disappear, any small remaining wounds deleted.
+							parent.wounds.Remove(src)
+							del(src)
+						healing_state = 5 //Faded scar
 		return
 
 	proc/update_health(var/percent = 1)
@@ -584,6 +577,9 @@
 			parent.brute_dam = max(parent.brute_dam - (initial_dmg - damage),0)
 		initial_dmg = damage //reset it for further updates.
 		parent.owner.updatehealth()
+		if(percent == 1 && wound_type == 1)
+			parent.wounds.Remove(src)
+			del(src)
 
 
 
