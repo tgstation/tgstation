@@ -141,6 +141,7 @@ mob/living/parasite/meme/verb/Thought()
 	// Use the points at the end rather than the beginning, because the user might cancel
 	if(!use_points(150)) return
 
+	message = say_quote(message)
 	var/rendered = "<span class='game say'><span class='name'>[speaker]</span> <span class='message'>[message]</span></span>"
 	target.show_message(rendered)
 
@@ -168,7 +169,7 @@ mob/living/parasite/meme/verb/Agony()
 		host.emote("scream")
 
 		for(var/i=0, i<10, i++)
-			sleep(20)
+			sleep(50)
 			if(prob(50)) host.flash_pain()
 			if(prob(10)) host.paralysis = max(host.paralysis, 2)
 			if(prob(15)) host.emote("twitch")
@@ -189,7 +190,7 @@ mob/living/parasite/meme/verb/Joy()
 
 	spawn
 		var/mob/host = src.host
-		host.druggy = max(host.druggy, 5)
+		host.druggy = max(host.druggy, 50)
 		host.slurring = max(host.slurring, 10)
 
 		usr << "<b>You stimulate [host.name]'s brain, injecting waves of endorphines and dopamine into the tissue. They should now forget all their worries, particularly relating to you, for around a minute."
@@ -220,7 +221,7 @@ mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob i
 	if(!istype(target, /mob/living/carbon/human))
 		src << "<b>You can't jump to this creature..</b>"
 		return
-	if(!(target in view(1, host)))
+	if(!(target in view(1, host)+src))
 		src << "<b>The target is not close enough.</b>"
 		return
 
@@ -261,7 +262,7 @@ mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob 
 
 	if(!use_points(500)) return
 
-	for(var/mob/M in view(host))
+	for(var/mob/M in view(host)+src)
 		M.show_message("<B>[host]</B> screams something incoherent!",2) // 2 stands for hearable message
 
 	// Find out whether the target can hear
