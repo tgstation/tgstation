@@ -500,11 +500,15 @@
 						U << browse(null, "window=pda")
 						return
 				if("Message")
-					var/t = input(U, "Please enter message", name, null) as text
-					t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+					var/t
+					if(!href_list["pAI_mess"])
+						t = input(U, "Please enter message", name, null) as text
+						t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+					else
+						t = href_list["pAI_mess"]
 					if (!t)
 						return
-					if (!in_range(src, U) && loc != U)
+					if (!in_range(src, U) && loc != U && !href_list["pAI_mess"])
 						return
 
 					var/obj/item/device/pda/P = locate(href_list["target"])
@@ -697,7 +701,7 @@
 		honkamt--
 		playsound(loc, 'bikehorn.ogg', 30, 1)
 
-	if(U.machine == src)//Final safety.
+	if(U.machine == src && !href_list["pAI_mess"])//Final safety.
 		attack_self(U)//It auto-closes the menu prior if the user is not in range and so on.
 	else
 		U.machine = null

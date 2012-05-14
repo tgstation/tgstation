@@ -257,7 +257,7 @@
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "computer")
-					if(B.build_path != "")
+					if(B.build_path != "" && !isnull(B.build_path))
 						playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 						user << "\blue You place the circuit board inside the frame."
 						src.icon_state = "1"
@@ -324,13 +324,14 @@
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
 				user << "\blue You connect the monitor."
-				var/B = new src.circuit.build_path ( src.loc )
-				if(circuit.powernet) B:powernet = circuit.powernet
-				if(circuit.id) B:id = circuit.id
-				if(circuit.records) B:records = circuit.records
-				if(circuit.frequency) B:frequency = circuit.frequency
-				if(istype(circuit,/obj/item/weapon/circuitboard/supplycomp))
-					var/obj/machinery/computer/supplycomp/SC = B
-					var/obj/item/weapon/circuitboard/supplycomp/C = circuit
-					SC.can_order_contraband = C.contraband_enabled
-				del(src)
+				if(circuit && circuit.build_path)
+					var/B = new circuit.build_path (loc)
+					if(circuit.powernet) B:powernet = circuit.powernet
+					if(circuit.id) B:id = circuit.id
+					if(circuit.records) B:records = circuit.records
+					if(circuit.frequency) B:frequency = circuit.frequency
+					if(istype(circuit,/obj/item/weapon/circuitboard/supplycomp))
+						var/obj/machinery/computer/supplycomp/SC = B
+						var/obj/item/weapon/circuitboard/supplycomp/C = circuit
+						SC.can_order_contraband = C.contraband_enabled
+					del(src)
