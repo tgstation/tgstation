@@ -26,7 +26,7 @@
 				src << "<b>Unit slaved to [connected_ai.name], downloading laws.</b>"
 				lawupdate = 1
 			else
-				laws = new /datum/ai_laws/nanotrasen/New
+				laws = new /datum/ai_laws/nanotrasen
 				lawupdate = 0
 				src << "<b>Unable to locate an AI, reverting to standard NanoTrasen laws.</b>"
 		else
@@ -265,6 +265,11 @@
 		else
 			stat(null, text("No Cell Inserted!"))
 
+		if(module)
+			internal = locate(/obj/item/weapon/tank/jetpack) in module.modules
+			if(internal)
+				stat("Internal Atmosphere Info", internal.name)
+				stat("Tank Pressure", internal.air_contents.return_pressure())
 
 /mob/living/silicon/robot/restrained()
 	return 0

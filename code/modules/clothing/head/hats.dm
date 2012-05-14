@@ -116,6 +116,7 @@
 	item_state = "syndicate"
 	see_face = 0.0
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/chaplain_hood
 	name = "chaplain's hood"
@@ -142,4 +143,5 @@
 	item_state = "cardborg_h"
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH
 	see_face = 0.0
+	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES

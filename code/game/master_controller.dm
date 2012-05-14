@@ -47,6 +47,8 @@ datum/controller/game_controller
 
 		world.tick_lag = config.Ticklag
 
+		createRandomZlevel()
+
 		//	Sleep for about 5 seconds to allow background initialization procs to finish
 		sleep(50)
 
@@ -135,7 +137,7 @@ datum/controller/game_controller
 
 
 		spawn(0)
-			air_master.process()
+//			air_master.process()
 			air_master_ready = 1
 		spawn(0)
 			tension_master.process()

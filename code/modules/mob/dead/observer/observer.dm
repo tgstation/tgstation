@@ -71,6 +71,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(key)
 		var/mob/dead/observer/ghost = new(src)
 		ghost.key = key
+		if(timeofdeath)
+			ghost.timeofdeath = timeofdeath
 		verbs -= /mob/proc/ghost
 		if (ghost.client)
 			ghost.client.eye = ghost

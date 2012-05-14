@@ -9,7 +9,7 @@
 		datum/effect/effect/system/ion_trail_follow/ion_trail
 		on = 0.0
 		stabilization_on = 0
-
+		volume_rate = 500              //Needed for borg jetpack transfer
 
 	New()
 		..()
@@ -53,7 +53,7 @@
 	proc/allow_thrust(num, mob/living/user as mob)
 		if(!(src.on))
 			return 0
-		if((num < 0.005 || src.air_contents.total_moles() < num))
+		if((num < 0.005 || src.air_contents.total_moles < num))
 			src.ion_trail.stop()
 			return 0
 
@@ -75,7 +75,7 @@
 
 	New()
 		..()
-		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+		air_contents.adjustGases((6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 		return
 
 /obj/item/weapon/tank/jetpack/oxygen
@@ -86,7 +86,7 @@
 
 	New()
 		..()
-		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+		air_contents.adjustGases((6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 		return
 
 /obj/item/weapon/tank/jetpack/carbondioxide
@@ -99,5 +99,13 @@
 		..()
 		src.ion_trail = new /datum/effect/effect/system/ion_trail_follow()
 		src.ion_trail.set_up(src)
-		src.air_contents.carbon_dioxide = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+		air_contents.adjustGases(0,(6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
+		return
+
+	examine()
+		set src in usr
+		..()
+		if(air_contents.carbon_dioxide < 10)
+			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
+			playsound(usr, 'alert.ogg', 50, 1)
 		return

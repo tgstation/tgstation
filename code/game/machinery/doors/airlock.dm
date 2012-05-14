@@ -362,7 +362,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		//world << text("airlock attackby src [] obj [] mob []", src, C, user)
 		if(istype(C, /obj/item/device/detective_scanner))
 			return
-		if(istype(C, /obj/item/policetaperoll))
+		if(istype(C, /obj/item/taperoll/police))
 			return
 		if (!istype(usr, /mob/living/silicon))
 			if (src.isElectrified())
@@ -419,6 +419,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 						if(15) new/obj/structure/door_assembly/door_assembly_eng/glass( src.loc )	//issue 301 -mysthic
 						if(16) new/obj/structure/door_assembly/door_assembly_sec/glass( src.loc )
 						if(17) new/obj/structure/door_assembly/door_assembly_med/glass( src.loc )
+						if(21) new/obj/structure/door_assembly/door_assembly_research( src.loc )
 					var/obj/item/weapon/airlock_electronics/ae
 					if (!electronics)
 						ae = new/obj/item/weapon/airlock_electronics( src.loc )

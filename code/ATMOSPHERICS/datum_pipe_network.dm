@@ -44,11 +44,9 @@ datum/pipe_network
 	proc/merge(datum/pipe_network/giver)
 		if(giver==src) return 0
 
-		normal_members -= giver.normal_members
-		normal_members += giver.normal_members
+		normal_members |= giver.normal_members
 
-		line_members -= giver.line_members
-		line_members += giver.line_members
+		line_members |= giver.line_members
 
 		for(var/obj/machinery/atmospherics/normal_member in giver.normal_members)
 			normal_member.reassign_network(giver, src)
@@ -92,8 +90,9 @@ datum/pipe_network
 
 		for(var/datum/gas_mixture/gas in gases)
 			air_transient.volume += gas.volume
-			total_thermal_energy += gas.thermal_energy()
-			total_heat_capacity += gas.heat_capacity()
+			var/temp_heatcap = gas.heat_capacity()
+			total_thermal_energy += gas.temperature*temp_heatcap
+			total_heat_capacity += temp_heatcap
 
 			air_transient.oxygen += gas.oxygen
 			air_transient.nitrogen += gas.nitrogen
@@ -138,6 +137,8 @@ datum/pipe_network
 							gas.trace_gases += corresponding
 
 						corresponding.moles = trace_gas.moles*gas.volume/air_transient.volume
+				gas.update_values()
+		air_transient.update_values()
 		return 1
 
 proc/equalize_gases(datum/gas_mixture/list/gases)
@@ -157,8 +158,9 @@ proc/equalize_gases(datum/gas_mixture/list/gases)
 
 	for(var/datum/gas_mixture/gas in gases)
 		total_volume += gas.volume
-		total_thermal_energy += gas.thermal_energy()
-		total_heat_capacity += gas.heat_capacity()
+		var/temp_heatcap = gas.heat_capacity()
+		total_thermal_energy += gas.temperature*temp_heatcap
+		total_heat_capacity += temp_heatcap
 
 		total_oxygen += gas.oxygen
 		total_nitrogen += gas.nitrogen
@@ -199,5 +201,6 @@ proc/equalize_gases(datum/gas_mixture/list/gases)
 						gas.trace_gases += corresponding
 
 					corresponding.moles = trace_gas.moles*gas.volume/total_volume
+			gas.update_values()
 
 	return 1

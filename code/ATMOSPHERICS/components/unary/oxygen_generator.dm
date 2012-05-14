@@ -33,7 +33,7 @@ obj/machinery/atmospherics/unary/oxygen_generator
 		if(!on)
 			return 0
 
-		var/total_moles = air_contents.total_moles()
+		var/total_moles = air_contents.total_moles
 
 		if(total_moles < oxygen_content)
 			var/current_heat_capacity = air_contents.heat_capacity()
@@ -42,6 +42,7 @@ obj/machinery/atmospherics/unary/oxygen_generator
 
 			air_contents.temperature = (current_heat_capacity*air_contents.temperature + 20*added_oxygen*T0C)/(current_heat_capacity+20*added_oxygen)
 			air_contents.oxygen += added_oxygen
+			air_contents.update_values()
 
 			if(network)
 				network.update = 1

@@ -7,6 +7,7 @@
 	var/active = 0
 	var/list/holographic_items = list()
 	var/damaged = 0
+	var/last_change = 0
 
 
 	attack_ai(var/mob/user as mob)
@@ -34,9 +35,6 @@
 
 		dat += "Please ensure that only holographic weapons are used in the holodeck if a combat simulation has been loaded.<BR>"
 
-		if(issilicon(user) && !emagged)
-			dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=red>Override Safety Protocols?</font>)</A><BR>"
-
 		if(emagged)
 			dat += "<A href='?src=\ref[src];burntest=1'>(<font color=red>Begin Atmospheric Burn Simulation</font>)</A><BR>"
 			dat += "Ensure the holodeck is empty before testing.<BR>"
@@ -46,6 +44,8 @@
 			dat += "<BR>"
 			dat += "Safety Protocols are <font color=red> DISABLED </font><BR>"
 		else
+			if(issilicon(user))
+				dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=red>Override Safety Protocols?</font>)</A><BR>"
 			dat += "<BR>"
 			dat += "Safety Protocols are <font color=green> ENABLED </font><BR>"
 
@@ -88,16 +88,19 @@
 					loadProgram(target)
 
 			else if(href_list["burntest"])
+				if(!emagged)	return
 				target = locate(/area/holodeck/source_burntest)
 				if(target)
 					loadProgram(target)
 
 			else if(href_list["wildlifecarp"])
+				if(!emagged)	return
 				target = locate(/area/holodeck/source_wildlife)
 				if(target)
 					loadProgram(target)
 
 			else if(href_list["AIoverride"])
+				if(!issilicon(usr))	return
 				emagged = 1
 
 			src.add_fingerprint(usr)
@@ -231,6 +234,15 @@
 
 /obj/machinery/computer/HolodeckControl/proc/loadProgram(var/area/A)
 
+	if(world.time < (last_change + 25))
+		if(world.time < (last_change + 15))//To prevent super-spam clicking, reduced process size and annoyance -Sieve
+			return
+		for(var/mob/M in range(3,src))
+			M.show_message("\b ERROR. Recalibrating projetion apparatus.")
+			last_change = world.time
+			return
+
+	last_change = world.time
 	active = 1
 
 	for(var/item in holographic_items)

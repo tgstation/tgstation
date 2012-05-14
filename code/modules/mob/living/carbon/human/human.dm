@@ -70,11 +70,17 @@
 
 
 /mob/living/carbon/human/New()
+
+	..()
+
+
+
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
 
-	if(!dna)	dna = new /datum/dna(null)
+	if(!dna)
+		dna = new /datum/dna(null)
 
 	new /datum/organ/external/chest(src)
 	new /datum/organ/external/groin(src)
@@ -123,19 +129,24 @@
 		gender = MALE
 		g = "m"
 
-	spawn (1)
-		if(!stand_icon)
-			stand_icon = new /icon('human.dmi', "body_[g]_s")
-		if(!lying_icon)
-			lying_icon = new /icon('human.dmi', "body_[g]_l")
+	spawn(1)
+		stand_icon = new /icon('human.dmi', "body_[g]_s")
+		lying_icon = new /icon('human.dmi', "body_[g]_l")
 		icon = stand_icon
 		update_clothing()
+
 		src << "\blue Your icons have been generated!"
+
+
+	spawn(10) // Failsafe for.. weirdness.
+		update_clothing()
+		update_body()
 
 	vessel = new/datum/reagents(600)
 	vessel.my_atom = src
 	vessel.add_reagent("blood",560)
-	spawn(1) fixblood()
+	spawn(1)
+		fixblood()
 
 	..()
 	/*var/known_languages = list()
@@ -164,15 +175,15 @@
 		iconL.Remove(G.icon_state)
 		if(nums.len >= 3)
 			var/obj/effect/decal/cleanable/blood/drip/D = pick(nums)
-			D.blood_DNA.len++
-			D.blood_DNA[D.blood_DNA.len] = list(dna.unique_enzymes,dna.b_type)
+			D.blood_DNA[dna.unique_enzymes] = dna.b_type
 			if(virus2)
 				D.virus2 = virus2.getcopy()
 			return
 
 	var/obj/effect/decal/cleanable/blood/drip/this = new(T)
 	this.icon_state = pick(iconL)
-	this.blood_DNA = list(list(dna.unique_enzymes,dna.b_type))
+	this.blood_DNA = list()
+	this.blood_DNA[dna.unique_enzymes] = dna.b_type
 	this.blood_owner = src
 
 	if(virus2)
@@ -266,6 +277,7 @@
 
 	var/hungry = (500 - nutrition)/5 // So overeat would be 100 and default level would be 80
 	if (hungry >= 70) tally += hungry/50
+
 
 	for(var/organ in list("l_leg","l_foot","r_leg","r_foot"))
 		var/datum/organ/external/o = organs["[organ]"]
@@ -1177,37 +1189,8 @@
 		overlays += image("icon" = 'belt.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
 		belt.screen_loc = ui_belt
 
-	if ((wear_mask && !(wear_mask.see_face)) || (head && !(head.see_face))) // can't see the face
-		if (wear_id)
-			if (istype(wear_id, /obj/item/weapon/card/id))
-				var/obj/item/weapon/card/id/id = wear_id
-				if (id.registered_name)
-					name = id.registered_name
-				else
-					name = "Unknown"
-			else if (istype(wear_id, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = wear_id
-				if (pda.owner)
-					name = pda.owner
-				else
-					name = "Unknown"
-		else
-			name = "Unknown"
-	else
-		if (wear_id)
-			if (istype(wear_id, /obj/item/weapon/card/id))
-				var/obj/item/weapon/card/id/id = wear_id
-				if (id.registered_name != real_name)
-					name = "[real_name] (as [id.registered_name])"
 
-
-			else if (istype(wear_id, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = wear_id
-				if (pda.owner)
-					if (pda.owner != real_name)
-						name = "[real_name] (as [pda.owner])"
-		else
-			name = real_name
+	name = get_visible_name()
 
 	if (wear_id)
 		wear_id.screen_loc = ui_id
@@ -1484,7 +1467,6 @@
 				del(face_standing)
 				del(face_lying)
 				return
-
 	if(!facial_hair_style || !hair_style)	return//Seems people like to lose their icons, this should stop the runtimes for now
 	del(face_standing)
 	del(face_lying)
@@ -2353,18 +2335,33 @@ It can still be worn/put on as normal.
 		return if_no_id
 	return
 
+//repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a seperate proc as it'll be useful elsewhere
+/mob/living/carbon/human/proc/get_visible_name()
+	if ((wear_mask && !(wear_mask.see_face)) || (head && !(head.see_face))) // can't see their face
+		return get_id_name("Unknown")
+	else
+		var/face_name = get_face_name()
+		var/id_name = get_id_name("")
+		if(id_name && (id_name != face_name))
+			return "[face_name] as ([id_name])"
+		return face_name
+
+//Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
+/mob/living/carbon/human/proc/get_face_name()
+	var/datum/organ/external/head/head = get_organ("head")
+	if(!head || head.disfigured)	//no face!
+		return "Unknown"
+	else
+		return "[real_name]"
+
 //gets name from ID or PDA itself, ID inside PDA doesn't matter
 //Useful when player is being seen by other mobs
-/mob/living/carbon/human/proc/get_visible_name(var/if_no_id = "Unknown")
+/mob/living/carbon/human/proc/get_id_name(var/if_no_id = "Unknown")
 	var/obj/item/device/pda/pda = wear_id
 	var/obj/item/weapon/card/id/id = wear_id
-	if (istype(pda))
-		. = pda.owner
-	else if (istype(id))
-		. = id.registered_name
-	else
-		return if_no_id
-	return
+	if(istype(pda))		return pda.owner
+	if(istype(id))		return id.registered_name
+	return if_no_id
 
 //gets ID card object from special clothes slot or null.
 /mob/living/carbon/human/proc/get_idcard()

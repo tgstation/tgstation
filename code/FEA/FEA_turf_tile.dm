@@ -25,6 +25,7 @@ turf
 		GM.toxins = toxins
 
 		GM.temperature = temperature
+		GM.update_values()
 
 		return GM
 
@@ -39,6 +40,7 @@ turf
 			GM.toxins = (toxins/sum)*amount
 
 		GM.temperature = temperature
+		GM.update_values()
 
 		return GM
 
@@ -47,8 +49,8 @@ turf
 	var/pressure_direction = 0
 
 	//optimization vars
-	var/next_check = 0  //number of ticks before this tile updates
-	var/check_delay = 0  //number of ticks between updates
+//	var/next_check = 0  //number of ticks before this tile updates
+//	var/check_delay = 0  //number of ticks between updates
 
 	proc
 		high_pressure_movements()
@@ -93,7 +95,7 @@ turf
 			datum/gas_mixture/air
 
 			processing = 1
-			datum/air_group/turf/parent
+			datum/air_group/parent
 			group_border = 0
 			length_space_border = 0
 
@@ -149,6 +151,7 @@ turf
 				air.toxins = toxins
 
 				air.temperature = temperature
+				air.update_values()
 
 				if(air_master)
 					air_master.tiles_to_update.Add(src)
@@ -189,8 +192,8 @@ turf
 						parent.suspend_group_processing()
 						air.merge(giver)
 				else
-					if (giver.total_moles() > MINIMUM_AIR_TO_SUSPEND)
-						reset_delay()
+//					if (giver.total_moles > MINIMUM_AIR_TO_SUSPEND)
+//						reset_delay()
 
 					air.merge(giver)
 
@@ -239,7 +242,6 @@ turf
 					if(!processing)
 						if(air.check_tile_graphic())
 							update_visuals(air)
-
 				return removed
 
 			else
@@ -290,7 +292,7 @@ turf
 			if(air_check_directions)
 				processing = 1
 				if(!parent)
-					air_master.add_singleton(src)
+					air_master.active_singletons |= src
 			else
 				processing = 0
 
@@ -300,11 +302,11 @@ turf
 			//and doesn't afraid of anything
 
 			//check if we're skipping this tick
-			if (next_check > 0)
-				next_check--
-				return 1
-			next_check += check_delay + rand(0,check_delay/2)
-			check_delay++
+//			if (next_check > 0)
+//				next_check--
+//				return 1
+//			next_check += check_delay + rand(0,check_delay/2)
+//			check_delay++
 
 			var/turf/simulated/list/possible_fire_spreads = list()
 			if(processing)
@@ -321,11 +323,11 @@ turf
 							if(enemy_tile.archived_cycle < archived_cycle) //archive bordering tile information if not already done
 								enemy_tile.archive()
 
-							if (air && enemy_tile.air)
-								var/delay_trigger = air.compare(enemy_tile.air)
-								if (!delay_trigger) //if compare() didn't return 1, air is different enough to trigger processing
-									reset_delay()
-									enemy_tile.reset_delay()
+//							if (air && enemy_tile.air)
+//								var/delay_trigger = air.compare(enemy_tile.air)
+//								if (!delay_trigger) //if compare() didn't return 1, air is different enough to trigger processing
+//									reset_delay()
+//									enemy_tile.reset_delay()
 
 							if(enemy_tile.parent && enemy_tile.parent.group_processing) //apply tile to group sharing
 								if(enemy_tile.parent.current_cycle < current_cycle) //if the group hasn't been archived, it could just be out of date
@@ -390,7 +392,7 @@ turf
 				update_visuals(air)
 
 			if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-				reset_delay() //hotspots always process quickly
+//				reset_delay() //hotspots always process quickly
 				hotspot_expose(air.temperature, CELL_VOLUME)
 				for(var/atom/movable/item in src)
 					item.temperature_expose(air, air.temperature, CELL_VOLUME)
@@ -562,11 +564,11 @@ turf
 
 			air_master.active_super_conductivity += src
 
-		proc/reset_delay()
+//		proc/reset_delay()
 			//sets this turf to process quickly again
-			next_check=0
-			check_delay= -5 //negative numbers mean a mandatory quick-update period
+//			next_check=0
+//			check_delay= -5 //negative numbers mean a mandatory quick-update period
 
 			//if this turf has a parent air group, suspend its processing
-			if (parent && parent.group_processing)
-				parent.suspend_group_processing()
+//			if (parent && parent.group_processing)
+//				parent.suspend_group_processing()

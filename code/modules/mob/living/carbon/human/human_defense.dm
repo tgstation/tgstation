@@ -37,7 +37,7 @@ emp_act
 	if(check_shields(P.damage, "the [P.name]"))
 		P.on_hit(src, 2)
 		return 2
-	return (..())
+	return (..(P , def_zone))
 
 
 /mob/living/carbon/human/getarmor(var/def_zone, var/type)
@@ -119,9 +119,8 @@ emp_act
 	if(!I || !user)	return 0
 
 	var/datum/organ/external/affecting = get_organ(ran_zone(user.zone_sel.selecting))
+
 	var/hit_area = affecting.display_name
-
-
 
 	if((user != src) && check_shields(I.force, "the [I.name]"))
 		return 0

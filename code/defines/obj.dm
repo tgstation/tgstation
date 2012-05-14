@@ -23,28 +23,28 @@
 
 	proc/initialize()
 
-/obj/item/policetaperoll
-	name = "police tape roll"
-	desc = "A roll of police tape used to block off crime scenes from the public."
+//Define all tape types in policetape.dm
+/obj/item/taperoll
+	name = "tape roll"
 	icon = 'policetape.dmi'
 	icon_state = "rollstart"
 	flags = FPRINT
 	w_class = 1.0
-	var/tapestartx = 0
-	var/tapestarty = 0
-	var/tapestartz = 0
-	var/tapeendx = 0
-	var/tapeendy = 0
-	var/tapeendz = 0
+	var
+		turf/start
+		turf/end
+		tape_type = /obj/item/tape
+		icon_base
 
-/obj/item/policetape
-	name = "police tape"
-	desc = "A length of police tape.  Do not cross."
+/obj/item/tape
+	name = "tape"
 	icon = 'policetape.dmi'
 	anchored = 1
 	density = 1
-	req_access = list(access_security)
+	var/icon_base
+/*
 
+*/
 /obj/structure/signpost
 	icon = 'stationobjs.dmi'
 	icon_state = "signpost"

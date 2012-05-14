@@ -51,8 +51,8 @@ obj/machinery/atmospherics/trinary/mixer
 		if(air2.temperature > 0)
 			transfer_moles2 = (node2_concentration*pressure_delta)*air3.volume/(air2.temperature * R_IDEAL_GAS_EQUATION)
 
-		var/air1_moles = air1.total_moles()
-		var/air2_moles = air2.total_moles()
+		var/air1_moles = air1.total_moles
+		var/air2_moles = air2.total_moles
 
 		if((air1_moles < transfer_moles1) || (air2_moles < transfer_moles2))
 			if(!transfer_moles1 || !transfer_moles2) return

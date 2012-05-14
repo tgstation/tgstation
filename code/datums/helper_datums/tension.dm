@@ -972,6 +972,10 @@ var/global/datum/tension/tension_master
 		//del(spawn_location)  // Commenting this out for multiple commando teams.
 		return new_syndicate_commando
 
+
+
+
+
 	/proc/create_borg_death_commando(obj/spawn_location, name)
 
 		var/mob/living/silicon/robot/new_borg_deathsquad = new(spawn_location.loc, 1)

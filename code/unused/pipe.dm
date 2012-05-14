@@ -59,17 +59,17 @@ var/linenums = 0
 
 /*
 /obj/machinery/pipeline/get_gas_moles(from)
-	return gas.total_moles()/capmult
+	return gas.total_moles/capmult
 */
 /obj/machinery/pipeline/get_gas(from)
 	return gas
 
 /obj/machinery/pipeline/gas_flow()
-	//if(suffix == "d" && Debug) world.log << "PLF1  [gas.total_moles()] ~ [ngas.total_moles()]"
+	//if(suffix == "d" && Debug) world.log << "PLF1  [gas.total_moles] ~ [ngas.total_moles]"
 
 	gas.copy_from(ngas)
 
-	//if(suffix == "d" && Debug) world.log << "PLF2  [gas.total_moles()] ~ [ngas.total_moles()]"
+	//if(suffix == "d" && Debug) world.log << "PLF2  [gas.total_moles] ~ [ngas.total_moles]"
 
 /obj/machinery/pipeline/process()
 	/*
@@ -81,7 +81,7 @@ var/linenums = 0
 
 //	var/dbg = (suffix == "d") && Debug
 
-	//if(dbg) world.log << "PLP1 [gas.total_moles()] ~ [ngas.total_moles()]"
+	//if(dbg) world.log << "PLP1 [gas.total_moles] ~ [ngas.total_moles()]"
 
 	if(!numnodes)
 		return		//dividing by zero is bad okay?

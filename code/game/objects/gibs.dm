@@ -1,6 +1,7 @@
-//HUMANS
+/proc/gibs(atom/location, var/list/viruses, var/datum/dna/MobDNA)		//CARN MARKER
+	new /obj/effect/gibspawner/generic(get_turf(location),viruses,MobDNA)
 
-/proc/gibs(atom/location, var/list/viruses, var/datum/dna/MobDNA)
+/proc/hgibs(atom/location, var/list/viruses, var/datum/dna/MobDNA)
 	new /obj/effect/gibspawner/human(get_turf(location),viruses,MobDNA)
 
 /proc/xgibs(atom/location, var/list/viruses)
@@ -51,13 +52,13 @@
 								viruus.holder = gib
 								viruus.spread_type = CONTACT_FEET
 					if(MobDNA)
-						gib.blood_DNA = list(list(MobDNA.unique_enzymes, MobDNA.b_type))
+						gib.blood_DNA[MobDNA.unique_enzymes] = MobDNA.b_type
 						if(MobDNA.original_name != "Unknown")
 							gib.OriginalMob = MobDNA.original_name
 					else if(istype(src, /obj/effect/gibspawner/xeno))
-						gib.blood_DNA = list(list("UNKNOWN DNA", "X*"))
+						gib.blood_DNA["UNKNOWN DNA"] = "X*"
 					else if(istype(src, /obj/effect/gibspawner/human)) // Probably a monkey
-						gib.blood_DNA = list(list("Non-human DNA", "A+"))
+						gib.blood_DNA["Non-human DNA"] = "A+"
 					var/list/directions = gibdirections[i]
 					if(directions.len)
 						gib.streak(directions)
@@ -65,6 +66,14 @@
 		del(src)
 
 /obj/effect/gibspawner
+	generic
+		gibtypes = list(/obj/effect/decal/cleanable/blood/gibs,/obj/effect/decal/cleanable/blood/gibs,/obj/effect/decal/cleanable/blood/gibs/core)
+		gibamounts = list(2,2,1)
+
+		New()
+			gibdirections = list(list(WEST, NORTHWEST, SOUTHWEST, NORTH),list(EAST, NORTHEAST, SOUTHEAST, SOUTH), list())
+			..()
+
 	human
 		gibtypes = list(/obj/effect/decal/cleanable/blood/gibs/up,/obj/effect/decal/cleanable/blood/gibs/down,/obj/effect/decal/cleanable/blood/gibs,/obj/effect/decal/cleanable/blood/gibs,/obj/effect/decal/cleanable/blood/gibs/body,/obj/effect/decal/cleanable/blood/gibs/limb,/obj/effect/decal/cleanable/blood/gibs/core)
 		gibamounts = list(1,1,1,1,1,1,1)

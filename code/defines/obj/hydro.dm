@@ -620,16 +620,16 @@
 /obj/item/seeds/harebell
 	name = "pack of harebell seeds"
 	desc = "These seeds grow into pretty little flowers."
-	icon_state = "seed"
+	icon_state = "seed-harebell"
 	mypath = "/obj/item/seeds/harebell"
 	species = "harebell"
 	plantname = "Harebells"
-	productname = ""
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/harebell"
 	lifespan = 100
 	endurance = 20
 	maturation = 7
 	production = 1
-	yield = -1
+	yield = 2
 	potency = 1
 	oneharvest = 1
 	growthstages = 4
@@ -1058,6 +1058,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy
 	seed = "/obj/item/seeds/poppyseed"
 	name = "poppy"
+	desc = "Long-used as a symbol of rest, peace, and death."
 	icon_state = "poppy"
 	potency = 30
 	New()
@@ -1066,6 +1067,16 @@
 		reagents.add_reagent("bicaridine", 1+round((potency / 10), 1))
 		bitesize = 1+round(reagents.total_volume / 3, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/harebell
+	seed = "obj/item/seeds/harebellseed"
+	name = "harebell"
+	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten’d not thy breath.\""
+	icon_state = "harebell"
+	potency = 1
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
+		bitesize = 1+round(reagents.total_volume / 3, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato
 	seed = "/obj/item/seeds/potatoseed"

@@ -6,7 +6,7 @@
 	icon_locked = "secureres1"
 	icon_opened = "secureresopen"
 	icon_broken = "secureresbroken"
-	icon_off = "secureres1"
+	icon_off = "secureresoff"
 
 	New()
 		..()
@@ -31,7 +31,7 @@
 	icon_locked = "rdsecure1"
 	icon_opened = "rdsecureopen"
 	icon_broken = "rdsecurebroken"
-	icon_off = "rdsecure1"
+	icon_off = "rdsecureoff"
 
 	New()
 		..()

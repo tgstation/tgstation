@@ -2,22 +2,17 @@
 	name = "Identification Computer"
 	desc = "A computer used to modify ID cards."
 	icon_state = "id"
-	circuit = "/obj/item/weapon/circuitboard/card"
-	var/obj/item/weapon/card/id/scan = null
-	var/obj/item/weapon/card/id/modify = null
-	var/authenticated = 0.0
-	var/mode = 0.0
-	var/printing = null
 	req_access = list(access_change_ids)
+	circuit = "/obj/item/weapon/circuitboard/card"
+	var
+		obj/item/weapon/card/id/scan = null
+		obj/item/weapon/card/id/modify = null
+		authenticated = 0.0
+		mode = 0.0
+		printing = null
 
 
-/obj/machinery/computer/card/centcom
-	name = "CentCom Identification Computer"
-	circuit = "/obj/item/weapon/circuitboard/card/centcom"
-	req_access = list(access_cent_captain)
-
-
-/obj/machinery/computer/card/attackby(O as obj, user as mob)
+/obj/machinery/computer/card/attackby(O as obj, user as mob)//TODO:SANITY
 	if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = O
 		if(access_change_ids in idcard.access)
@@ -37,11 +32,14 @@
 	else
 		..()
 
+
 /obj/machinery/computer/card/attack_ai(var/mob/user as mob)
 	return attack_hand(user)
 
+
 /obj/machinery/computer/card/attack_paw(var/mob/user as mob)
 	return attack_hand(user)
+
 
 /obj/machinery/computer/card/attack_hand(var/mob/user as mob)
 	if(..())
@@ -169,6 +167,7 @@
 	onclose(user, "id_com")
 	return
 
+
 /obj/machinery/computer/card/Topic(href, href_list)
 	if(..())
 		return
@@ -246,7 +245,9 @@
 			if (authenticated)
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
-					t1 = input("Enter a custom job assignment.","Assignment")
+					var/temp_t = copytext(sanitize(input("Enter a custom job assignment.","Assignment")),1,MAX_MESSAGE_LEN)
+					if(temp_t)
+						t1 = temp_t
 				else
 					modify.access = ( istype(src,/obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : get_access(t1) )
 				if (modify)
@@ -271,3 +272,11 @@
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
 	updateUsrDialog()
 	return
+
+
+
+/obj/machinery/computer/card/centcom
+	name = "CentCom Identification Computer"
+	circuit = "/obj/item/weapon/circuitboard/card/centcom"
+	req_access = list(access_cent_captain)
+

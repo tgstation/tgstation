@@ -67,18 +67,39 @@ FINGERPRINT CARD
 	return
 /obj/item/weapon/card/id/syndicate/var/mob/registered_user = null
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user as mob)
-	if(!registered_user)
-		registered_name = input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)
-		assignment = input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")
-		name = "[src.registered_name]'s ID Card ([src.assignment])"
+	if(!src.registered_name)
+		//Stop giving the players unsanitized unputs! You are giving ways for players to intentionally crash clients! -Nodrak
+		var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)),1,26)
+		if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/new_player/prefrences.dm
+			alert("Invalid name.")
+			return
+		src.registered_name = t
+
+		var u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")),1,MAX_MESSAGE_LEN)
+		if(!u)
+			alert("Invalid assignment.")
+			src.registered_name = ""
+			return
+		src.assignment = u
+		src.name = "[src.registered_name]'s ID Card ([src.assignment])"
 		user << "\blue You successfully forge the ID card."
 		registered_user = user
 	else if(registered_user == user)
 		switch(alert("Would you like to display the ID, or retitle it?","Choose.","Rename","Show"))
 			if("Rename")
-				registered_name = input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)
-				assignment = input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")
-				name = "[src.registered_name]'s ID Card ([src.assignment])"
+				var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)),1,26)
+				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/new_player/prefrences.dm
+					alert("Invalid name.")
+					return
+				src.registered_name = t
+		
+				var u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")),1,MAX_MESSAGE_LEN)
+				if(!u)
+					alert("Invalid assignment.")
+					src.registered_name = ""
+					return
+				src.assignment = u
+				src.name = "[src.registered_name]'s ID Card ([src.assignment])"
 				user << "\blue You successfully forge the ID card."
 				return
 			if("Show")
@@ -207,13 +228,10 @@ FINGERPRINT CARD
 
 /obj/item/weapon/f_card/proc/display()
 	if(!fingerprints)	return
-	if (!istype(src.fingerprints, /list))
-		src.fingerprints = params2list(src.fingerprints)
-	if (length(src.fingerprints))
+	if (length(fingerprints))
 		var/dat = "<B>Fingerprints on Card</B><HR>"
-		for(var/i = 1, i < (src.fingerprints.len + 1), i++)
-			var/list/L = params2list(src.fingerprints[i])
-			dat += text("[]<BR>", L["1"])
+		for(var/name in fingerprints)
+			dat += "[name]<BR>"
 			//Foreach goto(41)
 		return dat
 	else
@@ -273,7 +291,7 @@ FINGERPRINT CARD
 			else
 				src.name = "Finger Print Card"
 			W.add_fingerprint(user)
-			src.add_fingerprint(user)
+			add_fingerprint(user)
 	return
 
 /obj/item/weapon/f_card/add_fingerprint()

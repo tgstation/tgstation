@@ -171,6 +171,20 @@
 		src.health -= W.force
 		src.add_fingerprint(user)
 		healthcheck()
+
+	if(istype(user, /mob/living/silicon/robot) && istype(W, /obj/item/weapon/tank/jetpack))
+		var/datum/gas_mixture/thejetpack = W:air_contents
+		var/env_pressure = thejetpack.return_pressure()
+		var/pressure_delta = min(10*ONE_ATMOSPHERE - env_pressure, (air_contents.return_pressure() - env_pressure)/2)
+		//Can not have a pressure delta that would cause environment pressure > tank pressure
+		var/transfer_moles = 0
+		if((air_contents.temperature > 0) && (pressure_delta > 0))
+			transfer_moles = pressure_delta*thejetpack.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)//Actually transfer the gas
+			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
+			thejetpack.merge(removed)
+			user << "You pulse-pressurize your jetpack from the tank."
+		return
+
 	..()
 
 /obj/machinery/portable_atmospherics/canister/attack_ai(var/mob/user as mob)
@@ -275,6 +289,7 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 	..()
 
 	src.air_contents.toxins = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	air_contents.update_values()
 
 	src.update_icon()
 	return 1
@@ -284,7 +299,7 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 	..()
 
 	src.air_contents.oxygen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
+	air_contents.update_values()
 	src.update_icon()
 	return 1
 
@@ -295,6 +310,7 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 	var/datum/gas/sleeping_agent/trace_gas = new
 	air_contents.trace_gases += trace_gas
 	trace_gas.moles = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	air_contents.update_values()
 
 	src.update_icon()
 	return 1
@@ -318,6 +334,7 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 	..()
 
 	src.air_contents.nitrogen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	air_contents.update_values()
 
 	src.update_icon()
 	return 1
@@ -326,6 +343,7 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 
 	..()
 	src.air_contents.carbon_dioxide = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	air_contents.update_values()
 
 	src.update_icon()
 	return 1
@@ -336,6 +354,7 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 	..()
 	src.air_contents.oxygen = (O2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 	src.air_contents.nitrogen = (N2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	air_contents.update_values()
 
 	src.update_icon()
 	return 1

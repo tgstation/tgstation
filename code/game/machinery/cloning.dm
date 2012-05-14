@@ -11,7 +11,7 @@
 	density = 1
 	icon = 'cloning.dmi'
 	icon_state = "pod_0"
-	req_access = list(access_medlab) //For premature unlocking.
+	req_access = list(access_genetics) //For premature unlocking.
 	var/mob/living/occupant
 	var/heal_level = 10 //The clone is released once its health reaches this level.
 	var/locked = 0
@@ -149,9 +149,9 @@
 
 	if(clonename)
 		src.occupant.real_name = clonename
+		src.occupant.original_name = clonename //we don't want random ghost names should we die again.
 	else
 		src.occupant.real_name = "clone"  //No null names!!
-	src.occupant.original_name = original_name
 
 
 	var/datum/mind/clonemind = (locate(mindref) in ticker.minds)

@@ -1,6 +1,6 @@
 /mob/living/carbon/brain
 	var
-		obj/item/device/mmi/container = null
+		obj/item/container = null
 		timeofhostdeath = 0
 
 	New()
@@ -31,9 +31,14 @@
 			return 1
 		return ..()
 
-	Login()
-		if(!container)
-			verbs += /mob/proc/ghost
 
-	Logout()
-		verbs -= /mob/proc/ghost
+/mob/living/carbon/brain/Login()
+	..()
+
+	if (!isturf(src.loc))
+		src.client.eye = src.loc
+		src.client.perspective = EYE_PERSPECTIVE
+	if (!container || !istype(container, /obj/item/device/mmi))
+		src.verbs += /mob/proc/ghost
+
+	return

@@ -1,7 +1,10 @@
 /mob/living/proc/binarycheck()
-	if (istype(src, /mob/living/silicon/pai)) return
-	if (issilicon(src)) return 1
-	if (!ishuman(src)) return
+	if (istype(src, /mob/living/silicon/pai))
+		return
+	if (issilicon(src))
+		return 1
+	if (!ishuman(src))
+		return
 	var/mob/living/carbon/human/H = src
 	if (H.l_ear || H.r_ear)
 		var/obj/item/device/radio/headset/dongle
@@ -64,7 +67,7 @@
 	var/alt_name = ""
 	if (istype(src, /mob/living/carbon/human) && name != real_name)
 		var/mob/living/carbon/human/H = src
-		alt_name = " (as [H.get_visible_name()])"
+		alt_name = " (as [H.get_id_name("Unknown")])"
 	var/italics = 0
 	var/message_range = null
 	var/message_mode = null

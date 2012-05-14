@@ -135,7 +135,7 @@ var/global/sent_strike_team = 0
 	if(!(new_commando.mind in ticker.mode.traitors))//If they weren't already an extra traitor.
 		ticker.mode.traitors += new_commando.mind//Adds them to current traitor list. Which is really the extra antagonist list.
 	new_commando.equip_death_commando(leader_selected)
-	del(spawn_location)
+//	del(spawn_location)
 	return new_commando
 
 /mob/living/carbon/human/proc/equip_death_commando(leader_selected = 0)

@@ -56,8 +56,10 @@
 
 	for(var/obj/item/device/radio/beacon/R in world)
 		var/turf/T = get_turf(R)
-		if (!T)	continue
-		if(T.z == 2)	continue
+		if (!T)
+			continue
+		if(T.z == 2)
+			continue
 		var/tmpname = T.loc.name
 		if(areaindex[tmpname])
 			tmpname = "[tmpname] ([++areaindex[tmpname]])"
@@ -128,6 +130,10 @@
 			O.show_message("\red Failure: Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.")
 		return
 	if (istype(M, /atom/movable))
+		if (istype(M, /obj/effect/dummy/chameleon))
+			for(var/mob/C in M)
+				C << "\red The projection field prevents you from entering!"
+			return
 		if(prob(5) && !accurate) //oh dear a problem, put em in deep space
 			do_teleport(M, locate(rand(5, world.maxx - 5), rand(5, world.maxy - 5), 3), 2)
 		else

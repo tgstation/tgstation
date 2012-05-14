@@ -86,6 +86,8 @@ obj/item/weapon/gun/energy/laser/retro
 	icon_state = "bluetag"
 	desc = "Standard issue weapon of the Imperial Guard"
 	projectile_type = "/obj/item/projectile/bluetag"
+	origin_tech = "combat=1;magnets=2"
+	var/charge_tick = 0
 
 	special_check(var/mob/living/carbon/human/M)
 		if(ishuman(M))
@@ -93,8 +95,6 @@ obj/item/weapon/gun/energy/laser/retro
 				return 1
 			M << "\red You need to be wearing your laser tag vest!"
 		return 0
-	var/charge_tick = 0
-
 
 	New()
 		..()
@@ -122,6 +122,7 @@ obj/item/weapon/gun/energy/laser/retro
 	icon_state = "redtag"
 	desc = "Standard issue weapon of the Imperial Guard"
 	projectile_type = "/obj/item/projectile/redtag"
+	origin_tech = "combat=1;magnets=2"
 	var/charge_tick = 0
 
 	special_check(var/mob/living/carbon/human/M)

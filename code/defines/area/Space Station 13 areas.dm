@@ -144,12 +144,15 @@ proc/process_ghost_teleport_locs()
 	music = "music/escape.ogg"
 
 /area/shuttle/escape/station
+	name = "Emergency Shuttle Station"
 	icon_state = "shuttle2"
 
 /area/shuttle/escape/centcom
+	name = "Emergency Shuttle Centcom"
 	icon_state = "shuttle"
 
 /area/shuttle/escape/transit // the area to pass through for 3 minute transit
+	name = "Emergency Shuttle Transit"
 	icon_state = "shuttle"
 
 /area/shuttle/escape_pod1
@@ -481,6 +484,9 @@ proc/process_ghost_teleport_locs()
 
 
 //PRISON
+/area/prison
+	name = "Prison Wing"
+	icon_state = "security"
 
 /area/prison/arrival_airlock
 	name = "Prison Station Airlock"
@@ -853,6 +859,10 @@ proc/process_ghost_teleport_locs()
 		name = "Chief Engineers office"
 		icon_state = "engine_ce"
 
+	engineering_break_room
+		name = "Engineering Breakroom"
+		icon_state = "engine_br"
+
 //new engine areas
 	control
 		name = "Engineering Control"
@@ -973,6 +983,11 @@ proc/process_ghost_teleport_locs()
 	icon_state = "teleporter"
 	music = "signal"
 
+/area/teleporter/gateway
+	name = "Secure Construction Area"
+	icon_state = "teleporter"
+	music = "signal"
+
 /area/AIsattele
 	name = "AI Satellite Teleporter Room"
 	icon_state = "teleporter"
@@ -1032,7 +1047,7 @@ proc/process_ghost_teleport_locs()
 //Security
 
 /area/security/main
-	name = "Security"
+	name = "Security Office"
 	icon_state = "security"
 
 /area/security/lobby
@@ -1497,6 +1512,21 @@ proc/process_ghost_teleport_locs()
 	name = "Telecommunications Satellite Lounge"
 	icon_state = "tcomsatlounge"
 
+
+
+
+
+
+
+
+
+
+
+
+/area/turret_protected/AssistantRoom
+	name = "Assistant Room"
+	icon_state = "storage"
+	sd_lighting = 0
 
 /////////////////////////////////////////////////////////////////////
 /*

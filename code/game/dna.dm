@@ -758,7 +758,7 @@
 //		if (!M.client)
 //			for(var/mob/dead/observer/ghost in world)
 //				if(ghost.corpse == M && ghost.client)
-//					ghost << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be ressurected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
+//					ghost << "<b><font color = #330033><font size = 3>Your corpse has been placed into a cloning scanner. Return to your body if you want to be resurrected/cloned!</b> (Verbs -> Ghost -> Re-enter corpse)</font color>"
 //					break
 	del(G)
 	return
@@ -853,7 +853,10 @@
 /obj/machinery/computer/scan_consolenew/New()
 	..()
 	spawn(5)
-		src.connected = locate(/obj/machinery/dna_scannernew, get_step(src, WEST))
+		for(dir in list(NORTH,EAST,SOUTH,WEST))
+			connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
+			if(!isnull(connected))
+				break
 		spawn(250)
 			src.injectorready = 1
 		return

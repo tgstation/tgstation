@@ -22,6 +22,7 @@ var/datum/roundinfo/roundinfo = new()
 	var/Bible_icon_state	// icon_state the chaplain has chosen for his bible
 	var/Bible_item_state	// item_state the chaplain has chosen for his bible
 	var/Bible_name			// name of the bible
+	var/Bible_deity_name
 
 	var/random_players = 0 	// if set to nonzero, ALL players who latejoin or declare-ready join will have random appearances/genders
 
@@ -54,7 +55,7 @@ var/datum/roundinfo/roundinfo = new()
 		runnable_modes = config.get_runnable_modes()
 		if (runnable_modes.len==0)
 			current_state = GAME_STATE_PREGAME
-			world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
+			world << "<B>Unable to choose playable game mode. Not enough players?</B> Reverting to pre-game lobby."
 			return 0
 		if(secret_force_mode != "secret")
 			var/datum/game_mode/M = config.pick_mode(secret_force_mode)
@@ -127,8 +128,8 @@ var/datum/roundinfo/roundinfo = new()
 				if (potential_sleep_time > 10000)
 					potential_sleep_time -= 600
 
-				sleep(potential_sleep_time)
-				SpawnEvent()
+			sleep(potential_sleep_time)
+			SpawnEvent()
 
 	//Start master_controller.process()
 	spawn master_controller.process()
@@ -316,7 +317,7 @@ var/datum/roundinfo/roundinfo = new()
 		if (aiPlayer.connected_robots.len)
 			var/robolist = "<b>The AI's loyal minions were:</b> "
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
-				robolist += "[robo.name][robo.stat?" (Deactivated)  (Played by: [robo.key]), ":",  (Played by: [robo.key])"]"
+				robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.key]), ":" (Played by: [robo.key]), "]"
 			world << "[robolist]"
 
 	for (var/mob/living/silicon/robot/robo in world)

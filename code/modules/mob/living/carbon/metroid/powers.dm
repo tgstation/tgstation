@@ -110,7 +110,7 @@
 					src << "\red <i>[pick("This subject is incompatable", \
 					"This subject does not have a life energy", "This subject is empty", \
 					"I am not satisified", "I can not feed from this subject", \
-					"I do not feel nurished", "This subject is not food")]...</i>"
+					"I do not feel nourished", "This subject is not food")]...</i>"
 
 			sleep(rand(15,45))
 
@@ -136,13 +136,7 @@
 			if(Victim && !rabid && !attacked)
 				if(Victim.LAssailant && Victim.LAssailant != Victim)
 					if(prob(50))
-						var/Found = 0
-						for(var/mob/F in Friends)
-							if(F == Victim.LAssailant)
-								Found = 1
-
-						if(!Found)
-							Friends += Victim.LAssailant
+						Friends |= Victim.LAssailant
 
 		if(M.client && istype(src, /mob/living/carbon/human))
 			if(prob(85))

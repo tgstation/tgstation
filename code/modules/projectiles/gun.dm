@@ -1,5 +1,5 @@
 /obj/item/weapon/gun
-	name = "\improper Gun"
+	name = "gun"
 	desc = "Its a gun. It's pretty terrible, though."
 	icon = 'gun.dmi'
 	icon_state = "detective"

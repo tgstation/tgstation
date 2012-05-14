@@ -51,6 +51,13 @@
 		item.layer = initial(item.layer)
 		src.visible_message("\red [src] has thrown [item].")
 
+		if(istype(item,/mob/living))
+			var/mob/living/M = item
+			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been thrown by [src.name] ([src.ckey])</font>")
+			src.attack_log += text("\[[time_stamp()]\] <font color='red'>Threw [M.name] ([M.ckey])</font>")
+			log_attack("<font color='red'>[src.name] ([src.ckey]) threw [M.name] ([M.ckey])</font>")
+			log_admin("ATTACK: [src.name] ([src.ckey]) threw [M.name] ([M.ckey])")
+
 		if(!src.lastarea)
 			src.lastarea = get_area(src.loc)
 		if((istype(src.loc, /turf/space)) || (src.lastarea.has_gravity == 0))
@@ -105,6 +112,10 @@
 		M.visible_message("\red [hit_atom] has been hit by [src].")
 		if(src.vars.Find("throwforce"))
 			M.take_organ_damage(src:throwforce)
+
+			log_attack("<font color='red'>[hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])</font>")
+			log_admin("ATTACK: [hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])")
+			message_admins("ATTACK: [hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])")
 
 	else if(isobj(hit_atom))
 		var/obj/O = hit_atom

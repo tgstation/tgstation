@@ -155,13 +155,11 @@ datum
 					var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T //find some blood here
 					if(!blood_prop) //first blood!
 						blood_prop = new(T)
-						blood_prop.blood_DNA = list(list(self.data["blood_DNA"], self.data["blood_type"]))
+						blood_prop.blood_DNA[self.data["blood_DNA"]] = self.data["blood_type"]
 					else
 						if(!blood_prop.blood_DNA)
-							blood_prop.blood_DNA = list(list(self.data["blood_DNA"], self.data["blood_type"]))
-						else
-							blood_prop.blood_DNA.len++
-							blood_prop.blood_DNA[blood_prop.blood_DNA.len] = list(self.data["blood_DNA"], self.data["blood_type"])
+							blood_prop.blood_DNA = list()
+						blood_prop.blood_DNA[self.data["blood_DNA"]] = self.data["blood_type"]
 
 					for(var/datum/disease/D in self.data["viruses"])
 						var/datum/disease/newVirus = new D.type
@@ -185,13 +183,11 @@ datum
 					var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T
 					if(!blood_prop)
 						blood_prop = new(T)
-						blood_prop.blood_DNA = list(list(self.data["blood_DNA"],"A+"))
+						blood_prop.blood_DNA[self.data["blood_DNA"]] = "A+"
 					else
 						if(!blood_prop.blood_DNA)
-							blood_prop.blood_DNA = list(list(self.data["blood_DNA"],"A+"))
-						else
-							blood_prop.blood_DNA.len++
-							blood_prop.blood_DNA[blood_prop.blood_DNA.len] = list(self.data["blood_DNA"], "A+")
+							blood_prop.blood_DNA = list()
+						blood_prop.blood_DNA[self.data["blood_DNA"]] = "A+"
 
 					for(var/datum/disease/D in self.data["viruses"])
 						var/datum/disease/newVirus = new D.type
@@ -209,13 +205,11 @@ datum
 					var/obj/effect/decal/cleanable/xenoblood/blood_prop = locate() in T
 					if(!blood_prop)
 						blood_prop = new(T)
-						blood_prop.blood_DNA = list(list("UNKNOWN DNA","X*"))
+						blood_prop.blood_DNA["UNKNOWN DNA"] = "X*"
 					else
 						if(!blood_prop.blood_DNA)
-							blood_prop.blood_DNA = list(list("UNKNOWN DNA","X*"))
-						else
-							blood_prop.blood_DNA.len++
-							blood_prop.blood_DNA[blood_prop.blood_DNA.len] = list("UNKNOWN DNA","X*")
+							blood_prop.blood_DNA = list()
+						blood_prop.blood_DNA["UNKNOWN DNA"] = "X*"
 
 					for(var/datum/disease/D in self.data["viruses"])
 						var/datum/disease/newVirus = new D.type
@@ -288,7 +282,7 @@ datum
 
 				var/hotspot = (locate(/obj/effect/hotspot) in T)
 				if(hotspot && !istype(T, /turf/space))
-					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
+					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
@@ -299,7 +293,7 @@ datum
 				var/turf/T = get_turf(O)
 				var/hotspot = (locate(/obj/effect/hotspot) in T)
 				if(hotspot && !istype(T, /turf/space))
-					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
+					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
@@ -549,12 +543,14 @@ datum
 				var/datum/gas_mixture/napalm = new
 				napalm.oxygen = volume*10
 				napalm.temperature = T0C
+				napalm.update_values()
 				the_turf.assume_air(napalm)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				var/datum/gas_mixture/napalm = new
 				napalm.oxygen = volume*10
 				napalm.temperature = T0C
+				napalm.update_values()
 				T.assume_air(napalm)
 				return
 
@@ -577,12 +573,14 @@ datum
 				var/datum/gas_mixture/napalm = new
 				napalm.nitrogen = volume*10
 				napalm.temperature = T0C
+				napalm.update_values()
 				the_turf.assume_air(napalm)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				var/datum/gas_mixture/napalm = new
 				napalm.nitrogen = volume*10
 				napalm.temperature = T0C
+				napalm.update_values()
 				T.assume_air(napalm)
 				return
 
@@ -735,29 +733,30 @@ datum
 							del (M:wear_mask)
 							M << "\red Your mask melts away but protects you from the acid!"
 							return
+					if(!M.unacidable)
+						if(prob(15) && istype(M, /mob/living/carbon/human) && volume >= 30)
 
-					if(prob(15) && istype(M, /mob/living/carbon/human) && volume >= 30)
-						var/datum/organ/external/head/affecting = M:get_organ("head")
-						if(affecting)
-							affecting.disfigured = 1
-							affecting.take_damage(25, 0)
-							M:UpdateDamageIcon()
-							M:emote("scream")
-							M << "\red Your face has become disfigured!"
-							M.real_name = "Unknown"
-							M.warn_flavor_changed()
-					else
-						M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
+							var/datum/organ/external/head/affecting = M:get_organ("head")
+							if(affecting)
+								affecting.disfigured = 1
+								affecting.take_damage(25, 0)
+								M:UpdateDamageIcon()
+								M:emote("scream")
+								M:disfigure_face()
+						else
+							M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
 				else
-					M.take_organ_damage(min(15, volume * 2))
+					if(!M.unacidable)
+						M.take_organ_damage(min(15, volume * 2))
 
 			reaction_obj(var/obj/O, var/volume)
 				if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(10))
-					var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
-					I.desc = "Looks like this was \an [O] some time ago."
-					for(var/mob/M in viewers(5, O))
-						M << "\red \the [O] melts."
-					del(O)
+					if(!O.unacidable)
+						var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
+						I.desc = "Looks like this was \an [O] some time ago."
+						for(var/mob/M in viewers(5, O))
+							M << "\red \the [O] melts."
+						del(O)
 
 		pacid
 			name = "Polytrinic acid"
@@ -788,42 +787,43 @@ datum
 							else
 								M << "\red Your helmet protects you from the acid!"
 							return
-						var/datum/organ/external/head/affecting = M:get_organ("head")
-						affecting.take_damage(15, 0)
-						M:UpdateDamageIcon()
-						M:emote("scream")
-						if(prob(15))
-							M << "\red Your face has become disfigured!"
-							M.real_name = "Unknown"
-							M.warn_flavor_changed()
-							affecting.disfigured = 1
+
+						if(!M.unacidable)
+							var/datum/organ/external/head/affecting = M:get_organ("head")
+							affecting.take_damage(15, 0)
+							M:UpdateDamageIcon()
+							M:emote("scream")
+							if(prob(15))
+								M:disfigure_face()
 					else
 						if(istype(M, /mob/living/carbon/monkey) && M:wear_mask)
 							del (M:wear_mask)
 							M << "\red Your mask melts away but protects you from the acid!"
 							return
-						M.take_organ_damage(min(15, volume * 4)) // same deal as sulphuric acid
+
+
+						if(!M.unacidable)
+							M.take_organ_damage(min(15, volume * 4)) // same deal as sulphuric acid
 				else
-					if(istype(M, /mob/living/carbon/human))
-						var/datum/organ/external/head/affecting = M:get_organ("head")
-						affecting.take_damage(15, 0)
-						M:UpdateDamageIcon()
-						M:emote("scream")
-						if(prob(15))
-							M << "\red Your face has become disfigured!"
-							M.real_name = "Unknown"
-							M.warn_flavor_changed()
-							affecting.disfigured = 1
-					else
-						M.take_organ_damage(min(15, volume * 4))
+					if(!M.unacidable)
+						if(istype(M, /mob/living/carbon/human))
+							var/datum/organ/external/head/affecting = M:get_organ("head")
+							affecting.take_damage(15, 0)
+							M:UpdateDamageIcon()
+							M:emote("scream")
+							if(prob(15))
+								M:disfigure_face()
+						else
+							M.take_organ_damage(min(15, volume * 4))
 
 			reaction_obj(var/obj/O, var/volume)
 				if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)))
-					var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
-					I.desc = "Looks like this was \an [O] some time ago."
-					for(var/mob/M in viewers(5, O))
-						M << "\red \the [O] melts."
-					del(O)
+					if(!O.unacidable)
+						var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
+						I.desc = "Looks like this was \an [O] some time ago."
+						for(var/mob/M in viewers(5, O))
+							M << "\red \the [O] melts."
+						del(O)
 
 		glycerol
 			name = "Glycerol"
@@ -1055,12 +1055,14 @@ datum
 				var/datum/gas_mixture/napalm = new
 				napalm.toxins = volume*10
 				napalm.temperature = T0C
+				napalm.update_values()
 				the_turf.assume_air(napalm)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				var/datum/gas_mixture/napalm = new
 				napalm.toxins = volume*10
 				napalm.temperature = T0C
+				napalm.update_values()
 				T.assume_air(napalm)
 				return
 			on_mob_life(var/mob/living/M as mob)
@@ -1172,6 +1174,7 @@ datum
 				var/datum/gas/volatile_fuel/fuel = new
 				fuel.moles = 5
 				napalm.trace_gases += fuel
+				napalm.update_values()
 				the_turf.assume_air(napalm)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
@@ -1179,6 +1182,7 @@ datum
 				var/datum/gas/volatile_fuel/fuel = new
 				fuel.moles = 5
 				napalm.trace_gases += fuel
+				napalm.update_values()
 				T.assume_air(napalm)
 				return
 
@@ -1873,6 +1877,23 @@ datum
 				..()
 				return
 
+		lipozine
+			name = "Lipozine" // The anti-nutriment.
+			id = "lipozine"
+			description = "A chemical compound that causes a powerful fat-burning reaction."
+			reagent_state = LIQUID
+			nutriment_factor = 10 * REAGENTS_METABOLISM
+			color = "#BBEDA4" // rgb: 187, 237, 164
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!M) M = holder.my_atom
+				M:nutrition -= nutriment_factor
+				M:overeatduration = 0
+				if(M:nutrition < 0)//Prevent from going into negatives.
+					M:nutrition = 0
+				..()
+				return
+
 		soysauce
 			name = "Soysauce"
 			id = "soysauce"
@@ -2141,7 +2162,7 @@ datum
 							T.wet_overlay = null
 				var/hotspot = (locate(/obj/effect/hotspot) in T)
 				if(hotspot)
-					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )
+					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
@@ -2903,9 +2924,9 @@ datum
 				color = "#664300" // rgb: 102, 67, 0
 
 			tequilla_sunrise
-				name = "Tequilla Sunrise"
+				name = "Tequila Sunrise"
 				id = "tequillasunrise"
-				description = "Tequilla and orange juice. Much like a Screwdriver, only Mexican~"
+				description = "Tequila and orange juice. Much like a Screwdriver, only Mexican~"
 				reagent_state = LIQUID
 				color = "#664300" // rgb: 102, 67, 0
 
@@ -3007,7 +3028,7 @@ datum
 			manhattan_proj
 				name = "Manhattan Project"
 				id = "manhattan_proj"
-				description = "A scienitst drink of choice, for thinking how to blow up the station."
+				description = "A scienitst's drink of choice, for pondering ways to blow up the station."
 				reagent_state = LIQUID
 				color = "#664300" // rgb: 102, 67, 0
 
@@ -3083,6 +3104,180 @@ datum
 				dizzy_adj = 15
 				slurr_adj = 15
 
+
+			sbiten
+				name = "Sbiten"
+				id = "sbiten"
+				description = "A spicy Vodka! Might be a little hot for the little guys!"
+				reagent_state = LIQUID
+				color = "#664300" // rgb: 102, 67, 0
+	
+				on_mob_life(var/mob/living/M as mob)
+					if (M.bodytemperature < 360)
+						M.bodytemperature = min(360, M.bodytemperature+50) //310 is the normal bodytemp. 310.055
+					return
+	
+			devilskiss
+				name = "Devils Kiss"
+				id = "devilskiss"
+				description = "Creepy time!"
+				reagent_state = LIQUID
+				color = "#A68310" // rgb: 166, 131, 16
+	
+			red_mead
+				name = "Red Mead"
+				id = "red_mead"
+				description = "The true Viking drink! Even though it has a strange red color."
+				reagent_state = LIQUID
+				color = "#664300" // rgb: 102, 67, 0
+	
+			mead
+				name = "Mead"
+				id = "mead"
+				description = "A Vikings drink, though a cheap one."
+				reagent_state = LIQUID
+				color = "#664300" // rgb: 102, 67, 0
+	
+			iced_beer
+				name = "Iced Beer"
+				id = "iced_beer"
+				description = "A beer which is so cold the air around it freezes."
+				reagent_state = LIQUID
+				color = "#664300" // rgb: 102, 67, 0
+	
+				on_mob_life(var/mob/living/M as mob)
+					if (M.bodytemperature < 270)
+						M.bodytemperature = min(270, M.bodytemperature-40) //310 is the normal bodytemp. 310.055
+					return
+	
+			grog
+				name = "Grog"
+				id = "grog"
+				description = "Watered down rum, NanoTrasen approves!"
+				reagent_state = LIQUID
+				color = "#664300" // rgb: 102, 67, 0
+	
+			aloe
+				name = "Aloe"
+				id = "aloe"
+				description = "So very, very, very good."
+				reagent_state = LIQUID
+				color = "#664300" // rgb: 102, 67, 0
+	
+			andalusia
+				name = "Andalusia"
+				id = "andalusia"
+				description = "A nice, strange named drink."
+				reagent_state = LIQUID
+				color = "#664300" // rgb: 102, 67, 0
+	
+			alliescocktail
+				name = "Allies Cocktail"
+				id = "alliescocktail"
+				description = "A drink made from your allies."
+				reagent_state = LIQUID
+				color = "#664300" // rgb: 102, 67, 0
+	
+			acid_spit
+				name = "Acid Spit"
+				id = "acidspit"
+				description = "A drink by Nanotrasen. Made from live aliens."
+				reagent_state = LIQUID
+				color = "#365000" // rgb: 54, 80, 0
+	
+			amasec
+				name = "Amasec"
+				id = "amasec"
+				description = "Official drink of the Imperium."
+				reagent_state = LIQUID
+				color = "#664300" // rgb: 102, 67, 0
+	
+				on_mob_life(var/mob/living/M as mob)
+					M.stunned = 4
+					return
+	
+			neurotoxin
+				name = "Neurotoxin"
+				id = "neurotoxin"
+				description = "A strong neurotoxin that puts the subject into a death-like state."
+				reagent_state = LIQUID
+				color = "#2E2E61" // rgb: 46, 46, 97
+	
+				on_mob_life(var/mob/living/M as mob)
+					if(!M) M = holder.my_atom
+					M:adjustOxyLoss(0.5)
+					M:adjustOxyLoss(0.5)
+					M:weakened = max(M:weakened, 15)
+					M:silent = max(M:silent, 15)
+					return
+
+			bananahonk
+				name = "Banana Mama"
+				id = "bananahonk"
+				description = "A drink from Clown Heaven."
+				nutriment_factor = 1 * REAGENTS_METABOLISM
+				color = "#664300" // rgb: 102, 67, 0
+
+			silencer
+				name = "Silencer"
+				id = "silencer"
+				description = "A drink from Mime Heaven."
+				nutriment_factor = 1 * REAGENTS_METABOLISM
+				color = "#664300" // rgb: 102, 67, 0
+	
+			changelingsting
+				name = "Changeling Sting"
+				id = "changelingsting"
+				description = "A stingy drink."
+				reagent_state = LIQUID
+				color = "#2E6671" // rgb: 46, 102, 113
+	
+				on_mob_life(var/mob/living/M as mob)
+					if(!data) data = 1
+					data++
+					M.dizziness +=5
+					if(data >= 55 && data <115)
+						if (!M.slurring) M.slurring = 1
+						M.slurring += 5
+					else if(data >= 115 && prob(33))
+						M.confused = max(M:confused+15,15)
+					..()
+					return
+	
+			irishcarbomb
+				name = "Irish Car Bomb"
+				id = "irishcarbomb"
+				description = "Mmm, tastes like chocolate cake..."
+				reagent_state = LIQUID
+				color = "#2E6671" // rgb: 46, 102, 113
+	
+				on_mob_life(var/mob/living/M as mob)
+					if(!data) data = 1
+					data++
+					M.dizziness +=5
+					if(data >= 55 && data <115)
+						if (!M.slurring) M.slurring = 1
+						M.slurring += 5
+					else if(data >= 115 && prob(33))
+						M.confused = max(M:confused+15,15)
+					..()
+					return
+	
+			syndicatebomb
+				name = "Syndicate Bomb"
+				id = "syndicatebomb"
+				description = "A Syndicate bomb"
+				reagent_state = LIQUID
+				color = "#2E6671" // rgb: 46, 102, 113
+	
+			erikasurprise
+				name = "Erika Surprise"
+				id = "erikasurprise"
+				description = "The surprise is, it's green!"
+				reagent_state = LIQUID
+				color = "#2E6671" // rgb: 46, 102, 113
+
+
 //ALCHOHOL end
 
 		tonic
@@ -3148,191 +3343,7 @@ datum
 				..()
 				return
 
-
 ////////////////////////// REMOVED COCKTAIL REAGENTS BELOW:: RE-ENABLE THEM IF THEY EVER GET SPRITES THAT DON'T LOOK FUCKING STUPID --Agouri ///////////////////////////
-
-/*		sbiten
-			name = "Sbiten"
-			id = "sbiten"
-			description = "A spicy Vodka! Might be a little hot for the little guys!"
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if (M.bodytemperature < 360)
-					M.bodytemperature = min(360, M.bodytemperature+50) //310 is the normal bodytemp. 310.055
-				if(!data) data = 1
-				data++
-				M.dizziness +=6
-				if(data >= 45 && data <125)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 6
-				else if(data >= 125 && prob(33))
-					M.confused = max(M:confused+5,5)
-				..()
-				return
-
-		devilskiss
-			name = "Devils Kiss"
-			id = "devilskiss"
-			description = "Creepy time!"
-			reagent_state = LIQUID
-			color = "#A68310" // rgb: 166, 131, 16
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				if(data >= 55 && data <165)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 4
-				else if(data >= 165 && prob(33))
-					M.confused = max(M:confused+4,0)
-				..()
-				return
-
-		red_mead
-			name = "Red Mead"
-			id = "red_mead"
-			description = "The true Viking drink! Even though it has a strange red color."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=5
-				if(data >= 55 && data <115)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 4
-				else if(data >= 115 && prob(33))
-					M.confused = max(M:confused+4,4)
-				..()
-				return
-
-		mead
-			name = "Mead"
-			id = "mead"
-			description = "A Vikings drink, though a cheap one."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.make_dizzy(3)
-				M:jitteriness = max(M:jitteriness-3,0)
-				M:nutrition += 2
-				if(data >= 25)
-					if (!M:slurring) M:slurring = 1
-					M:slurring += 3
-				if(data >= 40 && prob(33))
-					if (!M:confused) M:confused = 1
-					M:confused += 2
-
-				..()
-				return
-
-		iced_beer
-			name = "Iced Beer"
-			id = "iced_beer"
-			description = "A beer which is so cold the air around it freezes."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if (M.bodytemperature < 270)
-					M.bodytemperature = min(270, M.bodytemperature-40) //310 is the normal bodytemp. 310.055
-				if(!data) data = 1
-				data++
-				M.make_dizzy(3)
-				M:jitteriness = max(M:jitteriness-3,0)
-				M:nutrition += 2
-				if(data >= 25)
-					if (!M:slurring) M:slurring = 1
-					M:slurring += 3
-				if(data >= 40 && prob(33))
-					if (!M:confused) M:confused = 1
-					M:confused += 2
-
-				..()
-				return
-
-		grog
-			name = "Grog"
-			id = "grog"
-			description = "Watered down rum, Nanotrasen approves!"
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=2
-				if(data >= 90 && data <250)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 2
-				else if(data >= 250 && prob(33))
-					M.confused = max(M:confused+2,0)
-				..()
-				return
-
-		aloe
-			name = "Aloe"
-			id = "aloe"
-			description = "So very, very, very good."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=2
-				if(data >= 90 && data <250)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 2
-				else if(data >= 250 && prob(33))
-					M.confused = max(M:confused+2,0)
-				..()
-				return
-
-		andalusia
-			name = "Andalusia"
-			id = "andalusia"
-			description = "A nice, strange named drink."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=8
-				if(data >= 90 && data <250)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 1
-				else if(data >= 250 && prob(33))
-					M.confused = max(M:confused+2,0)
-				..()
-				return
-
-		alliescocktail
-			name = "Allies Cocktail"
-			id = "alliescocktail"
-			description = "A drink made from your allies."
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				if(data >= 90 && data <250)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 7
-				else if(data >= 250 && prob(60))
-					M.confused = max(M:confused+8,0)
-				..()
-				return
 
 		soy_latte
 			name = "Soy Latte"
@@ -3374,75 +3385,8 @@ datum
 				..()
 				return
 
-		acid_spit
-			name = "Acid Spit"
-			id = "acidspit"
-			description = "A drink by Nanotrasen. Made from live aliens."
-			reagent_state = LIQUID
-			color = "#365000" // rgb: 54, 80, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=10
-				if(data >= 55 && data <115)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 10
-				else if(data >= 115 && prob(33))
-					M.confused = max(M:confused+10,0)
-				..()
-				return
-
-		amasec
-			name = "Amasec"
-			id = "amasec"
-			description = "Always before COMBAT!!!"
-			reagent_state = LIQUID
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				M.stunned = 4
-				if(!data) data = 1
-				data++
-				M.dizziness +=4
-				if(data >= 55 && data <165)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 4
-				else if(data >= 165 && prob(33))
-					M.confused = max(M:confused+5,0)
-				..()
-				return
-
-		neurotoxin
-			name = "Neurotoxin"
-			id = "neurotoxin"
-			description = "A strong neurotoxin that puts the subject into a death-like state."
-			reagent_state = LIQUID
-			color = "#2E2E61" // rgb: 46, 46, 97
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!M) M = holder.my_atom
-				M:adjustOxyLoss(0.5)
-				M:adjustOxyLoss(0.5)
-				M:weakened = max(M:weakened, 15)
-				M:silent = max(M:silent, 15)
-				if(!data) data = 1
-				data++
-				M.dizziness +=6
-				if(data >= 15 && data <45)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 3
-				else if(data >= 45 && prob(50) && data <55)
-					M.confused = max(M:confused+3,0)
-				else if(data >=55)
-					M.druggy = max(M.druggy, 55)
-				..()
-
-				return
-
-
 		hippies_delight
-			name = "Hippies Delight"
+			name = "Hippie's Delight"
 			id = "hippiesdelight"
 			description = "A drink enjoyed by people during the 1960's."
 			reagent_state = LIQUID
@@ -3473,138 +3417,3 @@ datum
 				data++
 				..()
 				return
-
-		bananahonk
-			name = "Banana Honk"
-			id = "bananahonk"
-			description = "A drink from Clown Heaven."
-			nutriment_factor = 1 * REAGENTS_METABOLISM
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				M:nutrition += nutriment_factor
-				if(!data) data = 1
-				data++
-				if(istype(M, /mob/living/carbon/human) && M.job in list("Clown"))
-					if(!M) M = holder.my_atom
-					M:heal_organ_damage(1,1)
-					M.dizziness +=5
-					if(data >= 55 && data <165)
-						if (!M.slurring) M.slurring = 1
-						M.slurring += 5
-					else if(data >= 165 && prob(33))
-						M.confused = max(M:confused+5,0)
-					..()
-					return
-				if(istype(M, /mob/living/carbon/monkey))
-					if(!M) M = holder.my_atom
-					M:heal_organ_damage(1,1)
-					M.dizziness +=5
-					if(data >= 55 && data <165)
-						if (!M.slurring) M.slurring = 1
-						M.slurring += 5
-					else if(data >= 165 && prob(33))
-						M.confused = max(M:confused+5,0)
-					..()
-					return
-
-		silencer
-			name = "Silencer"
-			id = "silencer"
-			description = "A drink from Mime Heaven."
-			nutriment_factor = 1 * REAGENTS_METABOLISM
-			color = "#664300" // rgb: 102, 67, 0
-
-			on_mob_life(var/mob/living/M as mob)
-				M:nutrition += nutriment_factor
-				if(!data) data = 1
-				data++
-				if(istype(M, /mob/living/carbon/human) && M.job in list("Mime"))
-					if(!M) M = holder.my_atom
-					M:heal_organ_damage(1,1)
-					M.dizziness +=5
-					if(data >= 55 && data <165)
-						if (!M.slurring) M.slurring = 1
-						M.slurring += 5
-					else if(data >= 165 && prob(33))
-						M.confused = max(M:confused+5,0)
-					..()
-					return
-
-
-
-		changelingsting
-			name = "Changeling Sting"
-			id = "changelingsting"
-			description = "A stingy drink."
-			reagent_state = LIQUID
-			color = "#2E6671" // rgb: 46, 102, 113
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=5
-				if(data >= 55 && data <115)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 5
-				else if(data >= 115 && prob(33))
-					M.confused = max(M:confused+15,15)
-				..()
-				return
-
-		irishcarbomb
-			name = "Irish Car Bomb"
-			id = "irishcarbomb"
-			description = "An irish car bomb"
-			reagent_state = LIQUID
-			color = "#2E6671" // rgb: 46, 102, 113
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=5
-				if(data >= 55 && data <115)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 5
-				else if(data >= 115 && prob(33))
-					M.confused = max(M:confused+15,15)
-				..()
-				return
-
-		syndicatebomb
-			name = "Syndicate Bomb"
-			id = "syndicatebomb"
-			description = "A Syndicate bomb"
-			reagent_state = LIQUID
-			color = "#2E6671" // rgb: 46, 102, 113
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=10
-				if(data >= 55 && data <115)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 10
-				else if(data >= 115 && prob(33))
-					M.confused = max(M:confused+15,15)
-				..()
-				return
-
-		erikasurprise
-			name = "Erika Surprise"
-			id = "erikasurprise"
-			description = "A surprise of Erika"
-			reagent_state = LIQUID
-			color = "#2E6671" // rgb: 46, 102, 113
-
-			on_mob_life(var/mob/living/M as mob)
-				if(!data) data = 1
-				data++
-				M.dizziness +=30
-				if(data >= 55 && data <115)
-					if (!M.slurring) M.slurring = 1
-					M.slurring += 30
-				else if(data >= 115 && prob(60))
-					M.confused = max(M:confused+15,15)
-				..()
-				return*/

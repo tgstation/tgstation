@@ -103,38 +103,6 @@
 /mob/proc/update_clothing()
 	return
 
-/mob/proc/death(gibbed)
-	timeofdeath = world.time
-
-	var/cancel = 0
-	for(var/mob/M in world)
-		if(M.client && (M.stat != DEAD))
-			cancel = 1
-			break
-	if(!cancel)
-		world << "<B>Everyone is dead! Resetting in 30 seconds!</B>"
-
-
-
-		spawn(300)
-			for(var/mob/M in world)
-				if(M.client && (M.stat != DEAD))
-					world << "Aborting world restart!"
-					return
-
-			//feedback_set_details("end_error","no live players")
-
-			if(blackbox)
-				blackbox.save_all_data_to_sql()
-
-			sleep(50)
-
-			log_game("Rebooting because of no live players")
-			world.Reboot()
-			return
-
-	return ..(gibbed)
-
 /mob/proc/restrained()
 	if (handcuffed)
 		return 1
@@ -653,22 +621,7 @@
 		if(src:cameraFollow)
 			src:cameraFollow = null
 
-
-/client/Topic(href, href_list)
-	if(href_list["priv_msg"])
-		var/client/C = locate(href_list["priv_msg"])
-		if(ismob(C)) //Old stuff can pass in mobs instead of clients
-			var/mob/M = C
-			C = M.client
-		cmd_admin_pm(C,null)
-	else
-		..()
-
 /mob/Topic(href, href_list)
-	if(href_list["priv_msg"])	//for priv_msg references that have yet to be updated to target clients. Forwards it to client/Topic()
-		if(client)
-			client.Topic(href, href_list)
-
 	if(href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
 		machine = null
@@ -717,7 +670,7 @@
 		onclose(usr, "[name]")
 	if(href_list["flavor_change"])
 		update_flavor_text()
-	..()
+//	..()
 	return
 
 /mob/proc/get_damage()
@@ -745,6 +698,19 @@
 
 	if ( !usr || usr==src || !istype(src.loc,/turf) )	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
+
+	if(ishuman(usr))
+		if(usr.hand) // if he's using his left hand.
+			var/datum/organ/external/temp = usr:get_organ("l_hand")
+			if(temp.destroyed)
+				usr << "\blue You look at your stump."
+				return
+		else
+			var/datum/organ/external/temp = usr:get_organ("r_hand")
+			if(temp.destroyed)
+				usr << "\blue You look at your stump."
+				return
+
 	if (!( anchored ))
 		usr.pulling = src
 		if(ismob(src))
@@ -772,11 +738,7 @@
 	if(findtextEx(key, "Telnet @"))
 		src << "Sorry, this game does not support Telnet."
 		del(src)
-	var/isbanned = CheckBan(src)
-	if (isbanned)
-		log_access("Failed Login: [src] - Banned")
-		message_admins("\blue Failed Login: [src] - Banned")
-		alert(src,"You have been banned.\nReason : [isbanned][config.appeal_address ? "\nYou may try to appeal this at [config.appeal_address]" : ""]","Ban","Ok")
+	if (CheckBan(src))
 		del(src)
 
 /*
@@ -840,106 +802,6 @@
 /mob/proc/show_viewers(message)
 	for(var/mob/M in viewers())
 		M.see(message)
-
-//This is the proc for gibbing a mob. Cannot gib ghosts.
-//added different sort of gibs and animations. N
-/mob/proc/gib()
-
-	if (istype(src, /mob/dead/observer))
-		gibs(loc, viruses)
-		return
-	if(!isrobot(src))//Cyborgs no-longer "die" when gibbed.
-		death(1)
-	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
-	canmove = 0
-	icon = null
-	invisibility = 101
-
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'mob.dmi'
-	animation.master = src
-	if(ishuman(src))
-		flick("gibbed-h", animation)
-	else if(ismonkey(src))
-		flick("gibbed-m", animation)
-	else if(ismetroid(src))
-		flick("gibbed-m", animation)
-	else if(iscrab(src))
-		flick("gibbed-m", animation)
-	else if(iscorgi(src))
-		flick("gibbed-m", animation)
-	else if(iscat(src))
-		flick("gibbed-m", animation)   //New-has monkey gib effect versus robogib
-	else if(isalien(src))
-		flick("gibbed-a", animation)
-	else
-		flick("gibbed-r", animation)
-
-	spawn()
-		if(key)
-			if(istype(src, /mob/living/silicon))
-				robogibs(loc, viruses)
-			else if (istype(src, /mob/living/carbon/alien))
-				xgibs(loc, viruses)
-			else
-				gibs(loc, viruses, dna)
-
-/*		else if(key)
-			if(istype(src, /mob/living/simple_animals))     //Should gib all simple_animals like a monkey
-				gibs(loc, viruses)
-			else if (istype(src, /mob/living/simple_animals))
-				gibs(loc, viruses)
-Currently doesn't work, but should be useful later or at least as a template
-*/
-
-		else
-			if(istype(src, /mob/living/silicon))
-				robogibs(loc, viruses)
-			else if(istype(src, /mob/living/carbon/alien))
-				xgibs(loc, viruses)
-			else
-				gibs(loc, viruses, dna)
-		sleep(15)
-		del(src)
-
-/*
-This is the proc for turning a mob into ash. Mostly a copy of gib code (above).
-Originally created for wizard disintegrate. I've removed the virus code since it's irrelevant here.
-Dusting robots does not eject the MMI, so it's a bit more powerful than gib() /N
-*/
-/mob/proc/dust()
-	death(1)
-	var/atom/movable/overlay/animation = null
-	monkeyizing = 1
-	canmove = 0
-	icon = null
-	invisibility = 101
-
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'mob.dmi'
-	animation.master = src
-	if(ishuman(src))
-		flick("dust-h", animation)
-		new /obj/effect/decal/remains/human(loc)
-	else if(ismonkey(src))
-		flick("dust-m", animation)
-		new /obj/effect/decal/remains/human(loc)
-	else if(isalien(src))
-		flick("dust-a", animation)
-		new /obj/effect/decal/remains/xeno(loc)
-	else
-		flick("dust-r", animation)
-		new /obj/effect/decal/remains/robot(loc)
-
-	sleep(15)
-	if(isrobot(src)&&src:mmi)//Is a robot and it has an mmi.
-		del(src:mmi)//Delete the MMI first so that it won't go popping out.
-	for(var/obj/item/I in contents)
-		I.loc = get_turf(src)
-	del(src)
 
 /*
 adds a dizziness amount to a mob
@@ -1085,53 +947,124 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
+/*
+/mob/proc/createGeas()
 
+	var/obj/effect/stop/S
+	for(var/obj/effect/stop/temp in loc)
+		if(temp.victim == src)
+			S = temp
+
+	if(!S)
+		S = new /obj/effect/stop
+		S.victim = src
+		S.loc = src.loc
+		geaslist += S
+
+	return
+*/
 
 /mob/proc/Stun(amount)
 	if(canstun)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
+//		if(stunned)
+//			createGeas()
 	else
 		if(istype(src, /mob/living/carbon/alien))	// add some movement delay
 			var/mob/living/carbon/alien/Alien = src
-			Alien.move_delay_add = min(Alien.move_delay_add + round(amount / 5), 10) // a maximum delay of 10
+			Alien.move_delay_add = min(Alien.move_delay_add + round(amount / 2), 10) // a maximum delay of 10
 	return
 
 /mob/proc/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
 	if(canstun)
 		stunned = max(amount,0)
+//		if(stunned)
+//			createGeas()
 	return
 
 /mob/proc/AdjustStunned(amount)
 	if(canstun)
 		stunned = max(stunned + amount,0)
+//		if(stunned)
+//			createGeas()
 	return
 
 /mob/proc/Weaken(amount)
 	if(canweaken)
 		weakened = max(max(weakened,amount),0)
+//		if(weakened)
+//			createGeas()
 	return
 
 /mob/proc/SetWeakened(amount)
 	if(canweaken)
 		weakened = max(amount,0)
+//		if(weakened)
+//			createGeas()
 	return
 
 /mob/proc/AdjustWeakened(amount)
 	if(canweaken)
 		weakened = max(weakened + amount,0)
+//		if(weakened)
+//			createGeas()
 	return
 
 /mob/proc/Paralyse(amount)
 	paralysis = max(max(paralysis,amount),0)
+//	if(paralysis)
+//		createGeas()
 	return
 
 /mob/proc/SetParalysis(amount)
 	paralysis = max(amount,0)
 	return
+//	if(paralysis)
+//		createGeas()
 
 /mob/proc/AdjustParalysis(amount)
 	paralysis = max(paralysis + amount,0)
+//	if(paralysis)
+//		createGeas()
 	return
+
+/mob/proc/Sleeping(amount)
+	sleeping = max(max(sleeping,amount),0)
+//	if(sleeping)
+//		createGeas()
+	return
+
+/mob/proc/SetSleeping(amount)
+	sleeping = max(amount,0)
+	return
+//	if(sleeping)
+//		createGeas()
+
+
+/mob/proc/AdjustSleeping(amount)
+	sleeping = max(sleeping + amount,0)
+//	if(sleeping)
+//		createGeas()
+	return
+
+/mob/proc/Resting(amount)
+	resting = max(max(resting,amount),0)
+//	if(resting)
+//		createGeas()
+	return
+
+/mob/proc/SetResting(amount)
+	resting = max(amount,0)
+	return
+//	if(resting)
+//		createGeas()
+
+/mob/proc/AdjustResting(amount)
+	resting = max(resting + amount,0)
+//	if(resting)
+//		createGeas()
+	return
+
 
 // ++++ROCKDTBEN++++ MOB PROCS -- Ask me before touching
 

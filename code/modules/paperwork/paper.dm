@@ -8,6 +8,7 @@
 	throw_speed = 3
 	throw_range = 15
 	layer = 4
+	pressure_resistance = 1
 
 	var
 		info	//What's actually written on the paper.

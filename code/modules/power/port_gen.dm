@@ -313,3 +313,13 @@ display round(lastgen) and plasmatank amount
 	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"
 	overheat()
 		explosion(src.loc, 4, 4, 4, -1)
+
+/obj/machinery/power/port_gen/pacman/industrial
+	name = "Industrial P.A.C.M.A.N.-type Portable Generator"
+	icon_state = "plasmagen"
+	sheet_path = /obj/item/stack/sheet/plasma
+	power_gen = 25000
+	time_per_sheet = 30
+	board_path = "/obj/item/weapon/circuitboard/pacman/industrial"
+	overheat()
+		explosion(src.loc, 4, 4, 4, -1)

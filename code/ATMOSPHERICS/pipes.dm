@@ -341,6 +341,7 @@ obj/machinery/atmospherics/pipe
 
 		New()
 			initialize_directions = dir
+			air_temporary.update_values()
 			..()
 
 		process()
@@ -378,22 +379,6 @@ obj/machinery/atmospherics/pipe
 				air_temporary.temperature = T20C
 
 				air_temporary.toxins = (25*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-				..()
-
-		oxygen_agent_b
-			icon = 'red_orange_pipe_tank.dmi'
-			name = "Pressure Tank (Oxygen + Plasma)"
-
-			New()
-				air_temporary = new
-				air_temporary.volume = volume
-				air_temporary.temperature = T0C
-
-				var/datum/gas/oxygen_agent_b/trace_gas = new
-				trace_gas.moles = (25*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-				air_temporary.trace_gases += trace_gas
 
 				..()
 
@@ -477,22 +462,6 @@ obj/machinery/atmospherics/pipe
 					air_temporary.temperature = T20C
 
 					air_temporary.toxins = (160*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-					..()
-
-			oxygen_agent_b
-				icon = 'red_orange_pipe_tank.dmi'
-				name = "High Capacity Pressure Tank (Oxygen + Plasma)"
-
-				New()
-					air_temporary = new
-					air_temporary.volume = volume
-					air_temporary.temperature = T0C
-
-					var/datum/gas/oxygen_agent_b/trace_gas = new
-					trace_gas.moles = (160*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-					air_temporary.trace_gases += trace_gas
 
 					..()
 
@@ -599,7 +568,7 @@ obj/machinery/atmospherics/pipe
 					O << "\red [user] has used the analyzer on \icon[icon]"
 
 				var/pressure = parent.air.return_pressure()
-				var/total_moles = parent.air.total_moles()
+				var/total_moles = parent.air.total_moles
 
 				user << "\blue Results of analysis of \icon[icon]"
 				if (total_moles>0)

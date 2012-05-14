@@ -159,8 +159,8 @@
 		src.cartridge = C
 		src.updateSelfDialog()
 
-	else if (istype(C, /obj/item/weapon/card/id) && !src.owner && C:registered)
-		src.owner = C:registered
+	else if (istype(C, /obj/item/weapon/card/id) && !src.owner && C:registered_name)
+		src.owner = C:registered_name
 		src.name = "PDA-[src.owner]"
 		user << "\blue Card scanned."
 		src.updateSelfDialog()

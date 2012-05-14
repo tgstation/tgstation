@@ -84,7 +84,7 @@
 				// if 3 or less books, fill shelf with that
 				for(var/datum/archived_book/AB in catbooks)
 					var/obj/item/weapon/book/B = new(src)
-					B.name = "Book: [AB.title]"
+					B.name = "[AB.title]"
 					B.title = AB.title
 					B.author = AB.author
 					B.dat = AB.dat
@@ -103,7 +103,7 @@
 				for(var/i = 1 to 3)
 					var/datum/archived_book/AB = pick(catbooks)
 					var/obj/item/weapon/book/B = new(src)
-					B.name = "Book: [AB.title]"
+					B.name = "[AB.title]"
 					B.title = AB.title
 					B.author = AB.author
 					B.dat = AB.dat
@@ -127,7 +127,7 @@
 			if(!newname)
 				return
 			else
-				src.setname(sanitize(newname))
+				setname(sanitize(newname))
 		else
 			..()
 	attack_hand(var/mob/user as mob)
@@ -757,23 +757,21 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 						B.icon_state = ticker.Bible_icon_state
 						B.item_state = ticker.Bible_item_state
 						B.name = ticker.Bible_name
+						B.deity_name = ticker.Bible_deity_name
 
-					bibledelay = 60
-					spawn(0)
-						while(bibledelay >= 1 && src)
-							sleep(10)
-							bibledelay -- // subtract one second to countdown
-
+					bibledelay = 1
+					spawn(60)
 						bibledelay = 0
 
 				else
 					for (var/mob/V in hearers(src))
-						V.show_message("<b>[src]</b>'s monitor flashes, \"[bibledelay] seconds remaining until the bible printer is ready for use.\"")
+						V.show_message("<b>[src]</b>'s monitor flashes, \"Bible printer currently unavailable, please wait a moment.\"")
 
 			if("7")
 				screenstate = 7
 	if(href_list["arccheckout"])
-		src.arcanecheckout = 1
+		if(src.emagged)
+			src.arcanecheckout = 1
 		src.screenstate = 0
 	if(href_list["increasetime"])
 		checkoutperiod += 1
@@ -864,22 +862,19 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 						alert("Upload Complete.")
 	if(href_list["targetid"])
 
-		if(!bibledelay)//Taken from the bible code part thing
-			bibledelay = 60
-			spawn(0)
-				while(bibledelay >= 1 && src)
-					sleep(10)
-					bibledelay -- // subtract one second to countdown
-
-				bibledelay = 0
-
 		if(BOOKS_USE_SQL && config.sql_enabled)
 			var/sqlid = href_list["targetid"]
 			var/DBConnection/dbcon = new()
 			dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
 			if(!dbcon.IsConnected())
 				alert("Connection to Archive has been severed. Aborting.")
+			if(bibledelay)
+				for (var/mob/V in hearers(src))
+					V.show_message("<b>[src]</b>'s monitor flashes, \"Printer unavailable. Please allow a short time before attempting to print.\"")
 			else
+				bibledelay = 1
+				spawn(60)
+					bibledelay = 0
 				var/DBQuery/query = dbcon.NewQuery("SELECT * FROM library WHERE id=[sqlid]")
 				query.Execute()
 

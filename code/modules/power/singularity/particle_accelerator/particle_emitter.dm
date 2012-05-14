@@ -1,6 +1,6 @@
 /obj/structure/particle_accelerator/particle_emitter
-	name = "Particle Accelerator Emitter"
-	desc = "Part of a Particle Accelerator, might not want to stand near this end."
+	name = "EM Containment Grid"
+	desc_holder = "This launchs the Alpha particles, might not want to stand near this end."
 	icon = 'particle_accelerator.dmi'
 	icon_state = "none"
 	var
@@ -9,17 +9,19 @@
 
 	center
 		icon_state = "emitter_center"
+		reference = "emitter_center"
 
 	left
 		icon_state = "emitter_left"
+		reference = "emitter_left"
 
 	right
 		icon_state = "emitter_right"
-
+		reference = "emitter_right"
 
 	update_icon()
-		return//Add overlays here
-
+		..()
+		return
 
 	proc
 		set_delay(var/delay)

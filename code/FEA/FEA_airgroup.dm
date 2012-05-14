@@ -10,29 +10,8 @@ datum
 			//	to be rolled into the updating step
 
 		//optimization vars
-		var/tmp/next_check = 0  //number of ticks before this group updates
-		var/tmp/check_delay = 10  //number of ticks between updates, starts fairly high to get boring groups out of the way
-
-		proc
-			archive()
-
-			members()
-			//Returns the members of the group
-
-			check_regroup()
-			//If individually processing tiles, checks all member tiles to see if they are close enough
-			//	that the group may resume group processing
-			//Warning: Do not call, called by air_master.process()
-
-			process_group()
-			suspend_group_processing()
-			update_group_from_tiles()
-				//Copy group air information to individual tile air
-				//Used right before turning on group processing
-
-			update_tiles_from_group()
-				//Copy group air information to individual tile air
-				//Used right before turning off group processing
+//		var/tmp/next_check = 0  //number of ticks before this group updates
+//		var/tmp/check_delay = 10  //number of ticks between updates, starts fairly high to get boring groups out of the way
 
 		var/list/borders //Tiles that connect this group to other groups/individual tiles
 		var/list/members //All tiles in this group
@@ -40,13 +19,27 @@ datum
 		var/list/space_borders
 		var/length_space_border = 0
 
-		suspend_group_processing()
+		Del()
+			spawn(5)
+				message_admins("WARNING!  Airgroup deleted!  Stacktrace is in a runtime, give it to Sky.")
+				CRASH("Fuck. Something deleted an airgroup.  Here's your stack trace.")
+			..()
+
+		proc/suspend_group_processing()
+			//Purpose: Suspends processing of the group, breaks it into individual tiles.
+			//Called by: Any check where the airgroup is determined to break.
+			//Inputs: None.
+			//Outputs: None.
+
 			group_processing = 0
 			update_tiles_from_group()
-			check_delay=0
-			next_check=0
 
-		update_group_from_tiles()
+		proc/update_group_from_tiles()
+			//Purpose: Regathers the tiles of the group into the airgroup, reverses update_tiles_from_group()
+			//Called by: Any check where the airgroup is determined to reconnect.
+			//Inputs: None.
+			//Outputs: None.
+
 			var/sample_member = pick(members)
 			var/datum/gas_mixture/sample_air = sample_member:air
 
@@ -55,20 +48,30 @@ datum
 
 			return 1
 
-		update_tiles_from_group()
+		proc/update_tiles_from_group()
+			//Purpose: Breaks the group into individual tiles.
+			//Called by: Any check where the airgroup is determined to break.
+			//Inputs: None.
+			//Outputs: None.
+
 			for(var/member in members)
 				member:air.copy_from(air)
-				if (istype(member,/turf/simulated))
-					var/turf/simulated/turfmem=member
-					turfmem.reset_delay()
 
-		archive()
+		proc/archive()
+			//Purpose: Archives the air for optimization.
+			//Called by: ?
+			//Inputs: None.
+			//Outputs: None.
+
 			air.archive()
 			archived_cycle = air_master.current_cycle
 
-		check_regroup()
+		proc/check_regroup()
 			//Purpose: Checks to see if group processing should be turned back on
-			//Returns: group_processing
+			//Called by: Any time an airgroup is checked to reform
+			//Inputs: None.
+			//Outputs: if the group is processing or not, boolean
+
 			if(group_processing) return 1
 
 
@@ -85,15 +88,14 @@ datum
 
 			return 1
 
-		turf/process_group()
+		proc/process_group()
+			//Purpose: Processes group atmos
+			//Called by: Atmos Ticker.
+			//Inputs: None.
+			//Outputs: None.
+
 			current_cycle = air_master.current_cycle
 			if(group_processing) //See if processing this group as a group
-				//check if we're skipping this tick
-				if (next_check > 0)
-					next_check--
-					return 1
-				next_check += check_delay + rand(0,check_delay/2)
-				check_delay++
 
 				var/turf/simulated/list/border_individual = list()
 				var/datum/air_group/list/border_group = list()
@@ -108,22 +110,9 @@ datum
 						//But only if another group didn't store it for us
 
 				for(var/turf/simulated/border_tile in src.borders)
-					//var/obj/movable/floor/movable_on_me = locate(/obj/movable/floor) in border_tile
 					for(var/direction in cardinal) //Go through all border tiles and get bordering groups and individuals
 						if(border_tile.group_border&direction)
-							var/turf/simulated/enemy_tile = get_step(border_tile, direction) //Add found tile to appropriate category
-							//var/obj/movable/floor/movable_on_enemy
-							//if(!movable_on_me)
-							//	movable_on_enemy = locate(/obj/movable/floor) in enemy_tile
-							/*if(movable_on_enemy) //guaranteed !movable_on_me if this is set
-								if(movable_on_enemy.parent && movable_on_enemy.parent.group_processing)
-									border_group += movable_on_enemy.parent
-									enemies += movable_on_enemy
-									self_group_borders += border_tile
-								else
-									border_individual += movable_on_enemy
-									self_tile_borders += border_tile
-							else*/
+							var/turf/simulated/enemy_tile = get_step(border_tile, direction)
 							if(istype(enemy_tile) && enemy_tile.parent && enemy_tile.parent.group_processing)
 								border_group += enemy_tile.parent
 								enemies += enemy_tile
@@ -234,82 +223,3 @@ datum
 						member.consider_superconductivity(starting=1)
 
 				air.react()
-
-		object/process_group()
-			current_cycle = air_master.current_cycle
-
-			if(group_processing) //See if processing this group as a group
-
-				var/turf/simulated/list/border_individual = list()
-				var/datum/air_group/list/border_group = list()
-
-				var/turf/simulated/list/enemies = list() //used to send the appropriate border tile of a group to the group proc
-				var/enemy_index = 1
-
-				if(archived_cycle < air_master.current_cycle)
-					archive()
-						//Archive air data for use in calculations
-						//But only if another group didn't store it for us
-/*
-				for(var/obj/movable/floor/border_tile in src.borders)
-					for(var/direction in list(NORTH,SOUTH,EAST,WEST)) //Go through all border tiles and get bordering groups and individuals
-						if(border_tile.group_border&direction)
-							var/turf/simulated/enemy_tile = get_step(border_tile, direction) //Add found tile to appropriate category
-							var/obj/movable/floor/movable_on_enemy = locate(/obj/movable/floor) in enemy_tile
-							if(movable_on_enemy)
-								if(movable_on_enemy.parent && movable_on_enemy.parent.group_processing)
-									border_group += movable_on_enemy.parent
-									enemies += movable_on_enemy
-									enemy_index++
-								else
-									border_individual += movable_on_enemy
-
-							else
-								if(istype(enemy_tile) && enemy_tile.parent && enemy_tile.parent.group_processing)
-									border_group += enemy_tile.parent
-									enemies += enemy_tile
-									enemy_index++
-								else
-									border_individual += enemy_tile
-*/
-				enemy_index = 1
-				var/abort_group = 0
-				for(var/datum/air_group/AG in border_group)
-					if(AG.archived_cycle < archived_cycle) //archive other groups information if it has not been archived yet this cycle
-						AG.archive()
-					if(AG.current_cycle < current_cycle)
-						//This if statement makes sure two groups only process their individual connections once!
-						//Without it, each connection would be processed a second time as the second group is evaluated
-
-						var/result = air.check_gas_mixture(AG.air)
-						if(result == 1)
-							air.share(AG.air)
-						else if(result == -1)
-							AG.suspend_group_processing()
-							var/turf/simulated/floor/enemy_border = enemies[enemy_index]
-							air.share(enemy_border.air)
-						else
-							abort_group = 0
-							break
-						enemy_index++
-
-				if(!abort_group)
-					for(var/enemy_tile in border_individual)
-						if(istype(enemy_tile, /turf/simulated))
-							if(enemy_tile:archived_cycle < archived_cycle) //archive tile information if not already done
-								enemy_tile:archive()
-							if(enemy_tile:current_cycle < current_cycle)
-								if(air.check_gas_mixture(enemy_tile:air))
-									air.share(enemy_tile:air)
-								else
-									abort_group = 1
-									break
-						else
-							if(air.check_turf(enemy_tile))
-								air.mimic(enemy_tile)
-							else
-								abort_group = 1
-								break
-
-				if(abort_group)
-					suspend_group_processing()

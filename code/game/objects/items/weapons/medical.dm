@@ -27,18 +27,17 @@ MEDICAL
 		return 1
 
 	var/stoppedblood = 0
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/datum/organ/external/affecting = H.get_organ("chest")
+	if(hasorgans(M))
+		var/datum/organ/external/affecting = M:get_organ("chest")
 
 		if(istype(user, /mob/living/carbon/human))
 			var/mob/living/carbon/human/user2 = user
-			affecting = H.get_organ(check_zone(user2.zone_sel.selecting))
+			affecting = M:get_organ(check_zone(user2.zone_sel.selecting))
 		else
 			if(!istype(affecting, /datum/organ/external) || affecting:burn_dam <= 0)
-				affecting = H.get_organ("head")
+				affecting = M:get_organ("head")
 		if(affecting.destroyed && !affecting.gauzed)
-			user.visible_message("\red You do your best to stop the bleeding from [H]'s stump.", "\red [user] does [user.gender == MALE? "his" : "her"] best to stem [H]'s bleeding from [H.gender == MALE? "his" : "her"] stump.", "\red You hear something like gauze being ripped.")
+			user.visible_message("\red You do your best to stop the bleeding from [M]'s stump.", "\red [user] does [user.gender == MALE? "his" : "her"] best to stem [M]'s bleeding from [M.gender == MALE? "his" : "her"] stump.", "\red You hear something like gauze being ripped.")
 			affecting.gauzed = 1
 			use(1)
 			return
@@ -69,7 +68,7 @@ MEDICAL
 
 		if (user && stoppedblood)
 			if (M != user)
-				user.visible_message("\red [user] [heal_burn? "salves" : "bandages"] [stoppedblood - 1 ? "some of" : "the last of"] [H]'s cuts with [src].", "\red You [heal_burn? "salve" : "bandage up"] [stoppedblood - 1 ? "some of" : "the last of"] [H]'s [heal_burn? "burns" : "wounds"].", "\red You hear something like gauze being ripped.")
+				user.visible_message("\red [user] [heal_burn? "salves" : "bandages"] [stoppedblood - 1 ? "some of" : "the last of"] [M]'s cuts with [src].", "\red You [heal_burn? "salve" : "bandage up"] [stoppedblood - 1 ? "some of" : "the last of"] [M]'s [heal_burn? "burns" : "wounds"].", "\red You hear something like gauze being ripped.")
 			else
 				user.visible_message("\red [user] [heal_burn? "salves" : "bandages"] [stoppedblood - 1 ? "some of" : "the last of"] [user.gender == MALE? "his" : "her"] own cuts with [src].", "\red You [heal_burn? "salve" : "bandage up"] [stoppedblood - 1 ? "some of" : "the last of"] your [heal_burn? "burns" : "wounds"].", "\red You hear something like gauze being ripped.")
 		else if(user)
@@ -146,18 +145,17 @@ MEDICAL
 		return 1
 
 	var/stoppedblood = 0
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/datum/organ/external/affecting = H.get_organ("chest")
+	if(hasorgans(M))
+		var/datum/organ/external/affecting = M:get_organ("chest")
 
 		if(istype(user, /mob/living/carbon/human))
 			var/mob/living/carbon/human/user2 = user
-			affecting = H.get_organ(check_zone(user2.zone_sel.selecting))
+			affecting = M:get_organ(check_zone(user2.zone_sel.selecting))
 		else
 			if(!istype(affecting, /datum/organ/external) || affecting:burn_dam <= 0)
-				affecting = H.get_organ("head")
+				affecting = M:get_organ("head")
 		if(affecting.destroyed && !affecting.gauzed)
-			H.visible_message("\red You do your best to stop the bleeding from [H]'s stump.", "\red [user] does their best to stem [H]'s bleeding from [H.gender == MALE? "his" : "her"] stump.", "\red You hear something like gauze being ripped.")
+			M.visible_message("\red You do your best to stop the bleeding from [M]'s stump.", "\red [user] does their best to stem [M]'s bleeding from [M.gender == MALE? "his" : "her"] stump.", "\red You hear something like gauze being ripped.")
 			affecting.gauzed = 1
 			use(1)
 			return
@@ -179,7 +177,7 @@ MEDICAL
 
 		if (user && stoppedblood)
 			if (M != user)
-				user.visible_message("\red [user] [heal_burn? "salves" : "bandages"] [stoppedblood - 1 ? "some of" : "the last of"] [H]'s cuts with [src].", "\red You [heal_burn? "salve" : "bandage up"] [stoppedblood - 1 ? "some of" : "the last of"] [H]'s [heal_burn? "burns" : "wounds"].", "\red You hear something like gauze being ripped.")
+				user.visible_message("\red [user] [heal_burn? "salves" : "bandages"] [stoppedblood - 1 ? "some of" : "the last of"] [M]'s cuts with [src].", "\red You [heal_burn? "salve" : "bandage up"] [stoppedblood - 1 ? "some of" : "the last of"] [M]'s [heal_burn? "burns" : "wounds"].", "\red You hear something like gauze being ripped.")
 			else
 				user.visible_message("\red [user] [heal_burn? "salves" : "bandages"] [stoppedblood - 1 ? "some of" : "the last of"] [user.gender == MALE? "his" : "her"] own cuts with [src].", "\red You [heal_burn? "salve" : "bandage up"] [stoppedblood - 1 ? "some of" : "the last of"] your [heal_burn? "burns" : "wounds"].", "\red You hear something like gauze being ripped.")
 		else if(user)

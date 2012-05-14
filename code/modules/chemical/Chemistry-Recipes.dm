@@ -357,6 +357,7 @@ datum
 
 					napalm.toxins = created_volume*10
 					napalm.temperature = 400+T0C
+					napalm.update_values()
 
 					target_tile.assume_air(napalm)
 					spawn (0) target_tile.hotspot_expose(700, 400)
@@ -430,6 +431,13 @@ datum
 			result = "LSD"
 			required_reagents = list("silicon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
 			result_amount = 5
+
+		lipozine
+			name = "Lipozine"
+			id = "Lipozine"
+			result = "lipozine"
+			required_reagents = list("sodiumchloride" = 1, "ethanol" = 1, "radium" = 1)
+			result_amount = 3
 
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -1254,7 +1262,7 @@ datum
 
 ////DRINKS THAT REQUIRE IMPROVED SPRITES BELOW:: -Agouri/////
 
-/*		sbiten
+		sbiten
 			name = "Sbiten"
 			id = "sbiten"
 			result = "sbiten"
@@ -1408,7 +1416,7 @@ datum
 			id = "silencer"
 			result = "silencer"
 			required_reagents = list("nothing" = 1, "cream" = 1, "sugar" = 1)
-			result_amount = 3*/
+			result_amount = 3
 
 
 

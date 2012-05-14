@@ -409,7 +409,7 @@
 							breath_moles = (ONE_ATMOSPHERE*BREATH_VOLUME/R_IDEAL_GAS_EQUATION*environment.temperature)
 						else*/
 							// Not enough air around, take a percentage of what's there to model this properly
-						breath_moles = environment.total_moles()*BREATH_PERCENTAGE
+						breath_moles = environment.total_moles*BREATH_PERCENTAGE
 
 						breath = loc.remove_air(breath_moles)
 
@@ -457,16 +457,23 @@
 			return null
 
 		update_canmove()
-			if(paralysis || stunned || weakened || resting || buckled || (changeling && changeling.changeling_fakedeath))
+			if(sleeping || paralysis || stunned || weakened || resting || buckled || (changeling && changeling.changeling_fakedeath))
 				canmove = 0
+
 			else
+				lying = 0
 				canmove = 1
+	/*			for(var/obj/effect/stop/S in geaslist)
+					if(S.victim == src)
+						geaslist -= S
+						del(S)
+*/
 
 		handle_breath(datum/gas_mixture/breath)
 			if(nodamage || (mutations & mNobreath))
 				return
 
-			if(!breath || (breath.total_moles() == 0))
+			if(!breath || (breath.total_moles == 0))
 				if(reagents.has_reagent("inaprovaline"))
 					return
 				adjustOxyLoss(HUMAN_MAX_OXYLOSS)
@@ -484,15 +491,15 @@
 			var/SA_para_min = 1
 			var/SA_sleep_min = 5
 			var/oxygen_used = 0
-			var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+			var/breath_pressure = (breath.total_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 			//Partial pressure of the O2 in our breath
-			var/O2_pp = (breath.oxygen/breath.total_moles())*breath_pressure
+			var/O2_pp = (breath.oxygen/breath.total_moles)*breath_pressure
 			// Same, but for the toxins
-			var/Toxins_pp = (breath.toxins/breath.total_moles())*breath_pressure
+			var/Toxins_pp = (breath.toxins/breath.total_moles)*breath_pressure
 			// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
-			var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*breath_pressure // Tweaking to fit the hacky bullshit I've done with atmo -- TLE
-			//var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*0.5 // The default pressure value
+			var/CO2_pp = (breath.carbon_dioxide/breath.total_moles)*breath_pressure // Tweaking to fit the hacky bullshit I've done with atmo -- TLE
+			//var/CO2_pp = (breath.carbon_dioxide/breath.total_moles)*0.5 // The default pressure value
 
 			if(O2_pp < safe_oxygen_min) 			// Too little oxygen
 				if(prob(20) && isbreathing)
@@ -541,7 +548,7 @@
 
 			if(breath.trace_gases.len)	// If there's some other shit in the air lets deal with it here.
 				for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
-					var/SA_pp = (SA.moles/breath.total_moles())*breath_pressure
+					var/SA_pp = (SA.moles/breath.total_moles)*breath_pressure
 					if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 						Paralyse(3) // 3 gives them one second to wake up and run away a bit!
 						if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
@@ -964,7 +971,7 @@
 				if (silent)
 					silent--
 
-				if (paralysis || stunned || weakened || (changeling && changeling.changeling_fakedeath)) //Stunned etc.
+				if (resting || sleeping || paralysis || stunned || weakened || (changeling && changeling.changeling_fakedeath)) //Stunned etc.
 					if (stunned > 0)
 						AdjustStunned(-1)
 						stat = 0
@@ -978,6 +985,23 @@
 						blinded = 1
 						lying = 1
 						stat = 1
+
+					if (sleeping > 0)
+						handle_dreams()
+						adjustHalLoss(-5)
+						blinded = 1
+						lying = 1
+						stat = 1
+						if (prob(10) && health && !hal_crit)
+							spawn(0)
+								emote("snore")
+						if(!sleeping_willingly)
+							sleeping--
+
+					if(resting)
+						lying = 1
+						stat = 0
+
 					var/h = hand
 					hand = 0
 					drop_item()
@@ -998,15 +1022,14 @@
 			if (stuttering) stuttering--
 			if (slurring) slurring--
 
+			//Carn: marker 4#
 			var/datum/organ/external/head/head = organs["head"]
 			if(head && !head.disfigured)
 				if(head.brute_dam >= 45 || head.burn_dam >= 45)
-					head.disfigured = 1
 					emote("scream")
-					real_name = "Unknown"
-					src << "\red Your face has become disfigured."
+					disfigure_face()
 					face_op_stage = 0.0
-					warn_flavor_changed()
+
 			var/blood_max = 0
 			for(var/name in organs)
 				var/datum/organ/external/temp = organs[name]
@@ -1064,11 +1087,6 @@
 				if(!druggy)
 					see_invisible = 2
 
-			else if (type == /mob/living/carbon/human/tajaran)
-//				sight |= SEE_MOBS
-//				sight |= SEE_OBJS
-				see_in_dark = 8
-
 			else if (seer)
 				var/obj/effect/rune/R = locate() in loc
 				if (istype(R) && R.word1 == wordsee && R.word2 == wordhell && R.word3 == wordjoin)
@@ -1125,21 +1143,40 @@
 				if (mutantrace == "lizard" || mutantrace == "metroid")
 					see_in_dark = 3
 					see_invisible = 1
+
+				else if (istajaran(src))
+					see_in_dark = 8
+
 				else if (druggy) // If drugged~
 					see_in_dark = 2
 					//see_invisible regulated by drugs themselves.
 				else
 					see_in_dark = 2
-					var/seer = 0
-					for(var/obj/effect/rune/R in world)
-						if(loc==R.loc && R.word1==wordsee && R.word2==wordhell && R.word3==wordjoin)
-							seer = 1
-					if(!seer)
-						see_invisible = 0
 
-			else if(istype(head, /obj/item/clothing/head/helmet/welding))
+				var/seer = 0
+				for(var/obj/effect/rune/R in world)
+					if(loc==R.loc && R.word1==wordsee && R.word2==wordhell && R.word3==wordjoin)
+						seer = 1
+				if(!seer)
+					see_invisible = 0
+
+
+
+
+
+
+
+			else if(istype(head, /obj/item/clothing/head/helmet/welding))		// wat.  This is never fucking called.
 				if(!head:up && tinted_weldhelh)
 					see_in_dark = 1
+
+
+
+
+
+
+
+
 
 		/* HUD shit goes here, as long as it doesn't modify src.sight flags */
 		// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
@@ -1388,7 +1425,17 @@
 							if(!M.nodamage)
 								M.adjustBruteLoss(5)
 							nutrition += 10
-
+/*  One day.
+			if(nutrition <= 100)
+				if (prob (1))
+					src << "\red Your stomach rumbles."
+				if(nutrition <= 50)
+					if (prob (25))
+						bruteloss++
+					if (prob (5))
+						src << "You feel very weak."
+						weakened += rand(2, 3)
+*/
 		handle_changeling()
 			if (mind)
 				if (mind.special_role == "Changeling" && changeling)
@@ -1436,14 +1483,7 @@
 /*
 			// Commented out so hunger system won't be such shock
 			// Damage and effect from not eating
-			if(nutrition <= 50)
-				if (prob (0.1))
-					src << "\red Your stomach rumbles."
-				if (prob (10))
-					bruteloss++
-				if (prob (5))
-					src << "You feel very weak."
-					weakened += rand(2, 3)
+
 */
 /*
 snippets
@@ -1493,5 +1533,5 @@ snippets
 						src << "\red You collapse from heat exaustion!"
 				plcheck = t_plasma
 				oxcheck = t_oxygen
-				G.turf_add(T, G.total_moles())
+				G.turf_add(T, G.total_moles)
 */

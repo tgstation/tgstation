@@ -152,6 +152,21 @@
 	heat_transfer_coefficient = 0.01
 	color="yellow"
 
+/obj/item/clothing/gloves/fyellow                             //Cheap Chinese Crap
+	desc = "These gloves are cheap copies of the coveted gloves, no way this can end badly."
+	name = "fake insulated gloves"
+	icon_state = "yellow"
+	item_state = "ygloves"
+	siemens_coefficient = 1			//Set to a default of 1, gets overridden in New()
+	permeability_coefficient = 0.05
+	protective_temperature = 800
+	heat_transfer_coefficient = null
+	color="yellow"
+
+	New()
+		siemens_coefficient = pick(0,0,0.25,0.25,0.5,0.5,1)
+		heat_transfer_coefficient = pick(0.01,0.1,0.25,0.25,0.5)
+
 /obj/item/clothing/gloves/captain
 	desc = "Regal blue gloves, with a nice gold trim. Swanky."
 	name = "captain's gloves"
@@ -164,10 +179,7 @@
 	name = "botanist's leather gloves"
 	icon_state = "leather"
 	item_state = "ggloves"
-	siemens_coefficient = 0.50
 	permeability_coefficient = 0.9
-	protective_temperature = 400
-	heat_transfer_coefficient = 0.70
 
 /obj/item/clothing/gloves/orange
 	name = "orange gloves"
