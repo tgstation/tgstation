@@ -11,6 +11,17 @@ var/list/forbidden_varedit_object_types = list(
 	src.modify_variables(O)
 	//feedback_add_details("admin_verb","EDITV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_modify_ref_variables(var/target as text)
+	set category = "Debug"
+	set name = "Edit Variables (Reference)"
+	set desc="(target) Edit a target item's variables"
+	var/obj/I = locate(target)
+	if(!I)
+		usr << "ERROR: Object could not be located!"
+		return
+	src.modify_variables(I)
+	//feedback_add_details("admin_verb","EDITV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/cmd_modify_ticker_variables()
 	set category = "Debug"
 	set name = "Edit Ticker Variables"

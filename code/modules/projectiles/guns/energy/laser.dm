@@ -1,8 +1,8 @@
 /obj/item/weapon/gun/energy/laser
 	name = "laser gun"
-	desc = "a basic weapon designed kill with concentrated energy bolts"
+	desc = "A basic weapon designed kill with concentrated energy bolts."
 	icon_state = "laser"
-	item_state = "laser"
+	item_state = "laser100"
 	fire_sound = 'Laser.ogg'
 	w_class = 3.0
 	m_amt = 2000
@@ -23,8 +23,9 @@ obj/item/weapon/gun/energy/laser/retro
 
 
 /obj/item/weapon/gun/energy/laser/captain
-	icon_state = "caplaser"
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
+	icon_state = "caplaser"
+	item_state = "laser"
 	force = 10
 	origin_tech = null
 	var/charge_tick = 0
@@ -71,6 +72,7 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "laser cannon"
 	desc = "With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!"
 	icon_state = "lasercannon"
+	item_state = "laser100"
 	fire_sound = 'lasercannonfire.ogg'
 	origin_tech = "combat=4;materials=3;powerstorage=3"
 	projectile_type = "/obj/item/projectile/beam/heavylaser"
@@ -86,6 +88,8 @@ obj/item/weapon/gun/energy/laser/retro
 	icon_state = "bluetag"
 	desc = "Standard issue weapon of the Imperial Guard"
 	projectile_type = "/obj/item/projectile/bluetag"
+	origin_tech = "combat=1;magnets=2"
+	var/charge_tick = 0
 
 	special_check(var/mob/living/carbon/human/M)
 		if(ishuman(M))
@@ -93,8 +97,6 @@ obj/item/weapon/gun/energy/laser/retro
 				return 1
 			M << "\red You need to be wearing your laser tag vest!"
 		return 0
-	var/charge_tick = 0
-
 
 	New()
 		..()
@@ -122,6 +124,7 @@ obj/item/weapon/gun/energy/laser/retro
 	icon_state = "redtag"
 	desc = "Standard issue weapon of the Imperial Guard"
 	projectile_type = "/obj/item/projectile/redtag"
+	origin_tech = "combat=1;magnets=2"
 	var/charge_tick = 0
 
 	special_check(var/mob/living/carbon/human/M)

@@ -46,6 +46,12 @@
 	icon_state = "steve_johnson_1"
 	item_state = "steve_johnson_1"
 
+/obj/item/fluff/david_fanning_1 //sicktrigger: David Fanning
+	name = "golden scalpel"
+	desc = "A fine surgical cutting tool covered in thin gold leaf. Does not seem able to cut anything."
+	icon_state = "david_fanning_1"
+	item_state = "david_fanning_1"
+
 //////////////////////////////////
 ////////// Usable Items //////////
 //////////////////////////////////
@@ -118,12 +124,18 @@
 	icon_state = "orangecamera"
 	pictures_left = 30
 
-
 /obj/item/weapon/card/id/fluff/lifetime	//fastler: Fastler Greay; it seemed like something multiple people would have
 	name = "Lifetime ID Card"
 	desc = "A modified ID card given only to those people who have devoted their lives to the better interests of NanoTrasen. It sparkles blue."
 	icon = 'custom_items.dmi'
 	icon_state = "lifetimeid"
+
+/obj/item/weapon/reagent_containers/food/drinks/flask/fluff/shinyflask //lexusjjss: Lexus Langg & Zachary Tomlinson
+	name = "shiny flask"
+	desc = "A shiny metal flask. It appears to have a Greek symbol inscribed on it."
+	icon = 'custom_items.dmi'
+	icon_state = "shinyflask"
+	volume = 50
 
 //////////////////////////////////
 //////////// Clothing ////////////
@@ -175,6 +187,13 @@
 	desc = "Hey, I think we're missing a hazard vest..."
 	icon = 'custom_items.dmi'
 	icon_state = "taryn_kifer_1"
+
+/obj/item/clothing/head/fluff/enos_adlai_1 //roaper: Enos Adlai
+	name = "comfy cap"
+	desc = "Because when you're the toughest Mother Hubbard on the station, nobody's criticizing your fashion sense."
+	icon = 'custom_items.dmi'
+	icon_state = "enos_adlai_1"
+	flags = FPRINT|TABLEPASS
 
 //////////// Suits ////////////
 

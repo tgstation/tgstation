@@ -9,7 +9,7 @@
 				src.attack_ai(usr)
 
 	// check for TK users
-	AutoUpdateTK(src)
+	//AutoUpdateTK(src)
 	if (istype(usr, /mob/living/carbon/human))
 		if(istype(usr.l_hand, /obj/item/tk_grab) || istype(usr.r_hand, /obj/item/tk_grab/))
 			if(!(usr in nearby))

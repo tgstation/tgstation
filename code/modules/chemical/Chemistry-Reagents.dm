@@ -102,7 +102,9 @@ datum
 			reagent_state = LIQUID
 			color = "#C80000" // rgb: 200, 0, 0
 			on_mob_life(var/mob/living/M)
-				if(istype(M, /mob/living/carbon/human) && blood_incompatible(data["blood_type"],M.dna.b_type))
+				if(!data || !data["blood_type"])
+					..()
+				else if(istype(M, /mob/living/carbon/human) && blood_incompatible(data["blood_type"],M.dna.b_type))
 					M.adjustToxLoss(rand(0.5,1.5))
 					M.adjustOxyLoss(rand(1,1.5))
 					..()
@@ -3111,98 +3113,98 @@ datum
 				description = "A spicy Vodka! Might be a little hot for the little guys!"
 				reagent_state = LIQUID
 				color = "#664300" // rgb: 102, 67, 0
-	
+
 				on_mob_life(var/mob/living/M as mob)
 					if (M.bodytemperature < 360)
 						M.bodytemperature = min(360, M.bodytemperature+50) //310 is the normal bodytemp. 310.055
 					return
-	
+
 			devilskiss
 				name = "Devils Kiss"
 				id = "devilskiss"
 				description = "Creepy time!"
 				reagent_state = LIQUID
 				color = "#A68310" // rgb: 166, 131, 16
-	
+
 			red_mead
 				name = "Red Mead"
 				id = "red_mead"
 				description = "The true Viking drink! Even though it has a strange red color."
 				reagent_state = LIQUID
 				color = "#664300" // rgb: 102, 67, 0
-	
+
 			mead
 				name = "Mead"
 				id = "mead"
 				description = "A Vikings drink, though a cheap one."
 				reagent_state = LIQUID
 				color = "#664300" // rgb: 102, 67, 0
-	
+
 			iced_beer
 				name = "Iced Beer"
 				id = "iced_beer"
 				description = "A beer which is so cold the air around it freezes."
 				reagent_state = LIQUID
 				color = "#664300" // rgb: 102, 67, 0
-	
+
 				on_mob_life(var/mob/living/M as mob)
 					if (M.bodytemperature < 270)
 						M.bodytemperature = min(270, M.bodytemperature-40) //310 is the normal bodytemp. 310.055
 					return
-	
+
 			grog
 				name = "Grog"
 				id = "grog"
 				description = "Watered down rum, NanoTrasen approves!"
 				reagent_state = LIQUID
 				color = "#664300" // rgb: 102, 67, 0
-	
+
 			aloe
 				name = "Aloe"
 				id = "aloe"
 				description = "So very, very, very good."
 				reagent_state = LIQUID
 				color = "#664300" // rgb: 102, 67, 0
-	
+
 			andalusia
 				name = "Andalusia"
 				id = "andalusia"
 				description = "A nice, strange named drink."
 				reagent_state = LIQUID
 				color = "#664300" // rgb: 102, 67, 0
-	
+
 			alliescocktail
 				name = "Allies Cocktail"
 				id = "alliescocktail"
 				description = "A drink made from your allies."
 				reagent_state = LIQUID
 				color = "#664300" // rgb: 102, 67, 0
-	
+
 			acid_spit
 				name = "Acid Spit"
 				id = "acidspit"
 				description = "A drink by Nanotrasen. Made from live aliens."
 				reagent_state = LIQUID
 				color = "#365000" // rgb: 54, 80, 0
-	
+
 			amasec
 				name = "Amasec"
 				id = "amasec"
 				description = "Official drink of the Imperium."
 				reagent_state = LIQUID
 				color = "#664300" // rgb: 102, 67, 0
-	
+
 				on_mob_life(var/mob/living/M as mob)
 					M.stunned = 4
 					return
-	
+
 			neurotoxin
 				name = "Neurotoxin"
 				id = "neurotoxin"
 				description = "A strong neurotoxin that puts the subject into a death-like state."
 				reagent_state = LIQUID
 				color = "#2E2E61" // rgb: 46, 46, 97
-	
+
 				on_mob_life(var/mob/living/M as mob)
 					if(!M) M = holder.my_atom
 					M:adjustOxyLoss(0.5)
@@ -3224,14 +3226,14 @@ datum
 				description = "A drink from Mime Heaven."
 				nutriment_factor = 1 * REAGENTS_METABOLISM
 				color = "#664300" // rgb: 102, 67, 0
-	
+
 			changelingsting
 				name = "Changeling Sting"
 				id = "changelingsting"
 				description = "A stingy drink."
 				reagent_state = LIQUID
 				color = "#2E6671" // rgb: 46, 102, 113
-	
+
 				on_mob_life(var/mob/living/M as mob)
 					if(!data) data = 1
 					data++
@@ -3243,14 +3245,14 @@ datum
 						M.confused = max(M:confused+15,15)
 					..()
 					return
-	
+
 			irishcarbomb
 				name = "Irish Car Bomb"
 				id = "irishcarbomb"
 				description = "Mmm, tastes like chocolate cake..."
 				reagent_state = LIQUID
 				color = "#2E6671" // rgb: 46, 102, 113
-	
+
 				on_mob_life(var/mob/living/M as mob)
 					if(!data) data = 1
 					data++
@@ -3262,14 +3264,14 @@ datum
 						M.confused = max(M:confused+15,15)
 					..()
 					return
-	
+
 			syndicatebomb
 				name = "Syndicate Bomb"
 				id = "syndicatebomb"
 				description = "A Syndicate bomb"
 				reagent_state = LIQUID
 				color = "#2E6671" // rgb: 46, 102, 113
-	
+
 			erikasurprise
 				name = "Erika Surprise"
 				id = "erikasurprise"

@@ -124,6 +124,7 @@
 
 				//Remix the resulting gases
 				filtered_out.update_values()
+				removed.update_values()
 				air_contents.merge(filtered_out)
 
 				loc.assume_air(removed)
