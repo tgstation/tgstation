@@ -42,6 +42,7 @@
 	origin_tech = "combat=3;materials=5;powerstorage=3"
 	var/lightfail = 0
 	icon_state = "nucgun"
+	item_state = "nucgun100"
 	var/charge_tick = 0
 
 	New()
