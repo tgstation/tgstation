@@ -995,7 +995,8 @@
 						if (prob(10) && health && !hal_crit)
 							spawn(0)
 								emote("snore")
-						sleeping--
+						if(!sleeping_willingly)
+							sleeping--
 
 					if(resting)
 						lying = 1

@@ -897,7 +897,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	M.update_clothing()
 
 	log_admin("[key_name(usr)] changed the equipment of [key_name(M)] to [dresscode].")
-	message_admins("\blue [key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode]..", 1)
+	message_admins("\blue [key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode].", 1)
 	return
 
 /client/proc/startSinglo()
