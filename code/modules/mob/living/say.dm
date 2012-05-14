@@ -337,10 +337,7 @@
 				listening|=M
 
 */
-
-	world << "getting listeners"
 	listening = get_mobs_in_view(message_range, src)
-	world << "done getting listeners"
 	for(var/mob/M in world)
 		if (!M.client)
 			continue //skip monkeys and leavers
@@ -517,7 +514,6 @@
 		for (var/mob/M in heard_b)
 			M.show_message(rendered, 2)
 			M << speech_bubble
-			world << "[M] heard"
 		spawn(30) del(speech_bubble)
 
 			/*
