@@ -119,6 +119,7 @@
 #define FILE_DIR "code/modules/mob/living/carbon/human"
 #define FILE_DIR "code/modules/mob/living/carbon/metroid"
 #define FILE_DIR "code/modules/mob/living/carbon/monkey"
+#define FILE_DIR "code/modules/mob/living/parasite"
 #define FILE_DIR "code/modules/mob/living/silicon"
 #define FILE_DIR "code/modules/mob/living/silicon/ai"
 #define FILE_DIR "code/modules/mob/living/silicon/decoy"

@@ -188,7 +188,7 @@ mob/living/parasite/meme/verb/Joy()
 	if(!use_points(200)) return
 
 	spawn
-		var/mob/host = target
+		var/mob/host = src.host
 		host.druggy = max(host.druggy, 5)
 		host.slurring = max(host.slurring, 10)
 
