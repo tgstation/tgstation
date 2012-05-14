@@ -18,7 +18,7 @@
 				temp_airlock.prison_open()
 			if(istype(get_area(temp_airlock), /area/security/brig))
 				temp_airlock.prison_open()
-		for (var/obj/machinery/door/airlock/glass_security/temp_glassairlock in world)
+		for (var/obj/machinery/door/airlock/glass/glass_security/temp_glassairlock in world)
 			if(istype(get_area(temp_glassairlock), /area/security/prison))
 				temp_glassairlock.prison_open()
 			if(istype(get_area(temp_glassairlock), /area/security/brig))
@@ -27,4 +27,4 @@
 			if(istype(get_area(temp_timer), /area/security/brig))
 				temp_timer.releasetime = 1
 		sleep(150)
-		command_alert("Gr3y.T1d3 virus detected in [station_name()] imprisonment subroutines. Recommend station AI involvement.", "Security Alert")
+		command_alert("Glitch in imprisonment subroutines detected on [station_name()]. Recommend station AI involvement.", "Security Alert")
