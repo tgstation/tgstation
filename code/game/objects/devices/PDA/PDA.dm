@@ -110,6 +110,9 @@
 	default_cartridge = /obj/item/weapon/cartridge/quartermaster
 	icon_state = "pda-q"
 
+/obj/item/device/pda/shaftminer
+	icon_state = "pda-miner"
+
 /obj/item/device/pda/syndicate
 	default_cartridge = /obj/item/weapon/cartridge/syndicate
 	icon_state = "pda-syn"
@@ -128,6 +131,11 @@
 /obj/item/device/pda/botanist
 	//default_cartridge = /obj/item/weapon/cartridge/botanist
 	icon_state = "pda-hydro"
+
+/obj/item/device/pda/roboticist
+	icon_state = "pda-robot"
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a special edition with a transparent case."
+	note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Turbo Edition!"
 
 /obj/item/device/pda/librarian
 	icon_state = "pda-libb"
