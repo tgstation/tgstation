@@ -411,15 +411,16 @@ steam.start() -- spawns the effect
 	var/obj/R = new /obj()
 	R.reagents = new/datum/reagents(500)
 	R.reagents.my_atom = R
-	reagents.trans_to(R, reagents.total_volume/divisor)
-	for(var/atom/A in view(1, src))
-		if(reagents.has_reagent("radium")||reagents.has_reagent("uranium")||reagents.has_reagent("carbon")||reagents.has_reagent("thermite"))//Prevents unholy radium spam by reducing the number of 'greenglows' down to something reasonable -Sieve
-			if(prob(5))
+	if(reagents)
+		reagents.trans_to(R, reagents.total_volume/divisor)
+		for(var/atom/A in view(1, src))
+			if(reagents.has_reagent("radium")||reagents.has_reagent("uranium")||reagents.has_reagent("carbon")||reagents.has_reagent("thermite"))//Prevents unholy radium spam by reducing the number of 'greenglows' down to something reasonable -Sieve
+				if(prob(5))
+					R.reagents.reaction(A)
+				del(R)
+			else if(R && R.reagents)
 				R.reagents.reaction(A)
 			del(R)
-		else
-			R.reagents.reaction(A)
-		del(R)
 	return
 
 /obj/effect/effect/chem_smoke/HasEntered(mob/living/carbon/M as mob )

@@ -94,7 +94,7 @@
 			traitor.objectives += block_objective
 
 	else
-		for(var/datum/objective/o in SelectObjectives((traitor.current:wear_id ? traitor.current:wear_id:assignment : traitor.assigned_role), traitor))
+		for(var/datum/objective/o in SelectObjectives((istype(traitor.current:wear_id, /obj/item/weapon/card/id) ? traitor.current:wear_id:assignment : traitor.assigned_role), traitor))
 			o.owner = traitor
 			traitor.objectives += o
 	return
@@ -238,7 +238,7 @@
 	if (!R && traitor_mob.w_uniform && istype(traitor_mob.belt, /obj/item/device/radio))
 		R = traitor_mob.belt
 		loc = "on your belt"
-	if (!R && istype(traitor_mob.l_ear, /obj/item/device/radio) || prob(10))
+	if (!R && istype(traitor_mob.l_ear, /obj/item/device/radio))
 		R = traitor_mob.l_ear
 		loc = "on your head"
 	if (!R && istype(traitor_mob.r_ear, /obj/item/device/radio))

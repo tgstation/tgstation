@@ -380,23 +380,31 @@
 			return "I couldn't find [name]'s PDA."
 
 		// send message
-		pda.tnote += "<i><b>&larr; From [eliza.callsign]:</b></i><br>[object]<br>"
+		if(!istype(eliza.speaker.loc.loc, /obj/item/device/pda))//Looking if we are in a PDA
+			pda.tnote += "<i><b>&larr; From [eliza.callsign]:</b></i><br>[object]<br>"
 
-		if(prob(15) && eliza.speaker) //Give the AI a chance of intercepting the message
-			var/who = eliza.speaker
-			if(prob(50))
-				who = "[eliza.speaker:master] via [eliza.speaker]"
-			for(var/mob/living/silicon/ai/ai in world)
-				ai.show_message("<i>Intercepted message from <b>[who]</b>: [object]</i>")
+			if(prob(15) && eliza.speaker) //Give the AI a chance of intercepting the message
+				var/who = eliza.speaker
+				if(prob(50))
+					who = "[eliza.speaker:master] via [eliza.speaker]"
+				for(var/mob/living/silicon/ai/ai in world)
+					ai.show_message("<i>Intercepted message from <b>[who]</b>: [object]</i>")
 
-		if (!pda.silent)
-			playsound(pda.loc, 'twobeep.ogg', 50, 1)
-			for (var/mob/O in hearers(3, pda.loc))
-				O.show_message(text("\icon[pda] *[pda.ttone]*"))
+			if (!pda.silent)
+				playsound(pda.loc, 'twobeep.ogg', 50, 1)
+				for (var/mob/O in hearers(3, pda.loc))
+					O.show_message(text("\icon[pda] *[pda.ttone]*"))
 
-		pda.overlays = null
-		pda.overlays += image('pda.dmi', "pda-r")
-
+			pda.overlays = null
+			pda.overlays += image('pda.dmi', "pda-r")
+		else
+			var/list/href_list = list()
+			href_list["src"] = "\ref[eliza.speaker.loc.loc]"
+			href_list["choice"] = "Message"
+			href_list["target"] = "\ref[pda]"
+			href_list["pAI_mess"] = "\"[object]\" \[Via pAI Unit\]"
+			var/obj/item/device/pda/pda_im_in = eliza.speaker.loc.loc
+			pda_im_in.Topic("src=\ref[eliza.speaker.loc.loc];choice=Message;target=\ref[pda];pAI_mess=\"[object] \[Via pAI Unit\]",href_list)
 		return "Told [name], [object]."
 
 /datum/text_parser/keyword/yes

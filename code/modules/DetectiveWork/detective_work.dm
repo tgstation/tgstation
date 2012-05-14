@@ -353,51 +353,52 @@ obj/machinery/computer/forensic_scanning
 						scan_data = null
 						updateDialog()
 						return
-					scan_process = 0
-					scan_name = scanning.name
-					scan_data = "<u>[scanning]</u><br><br>"
-					if (scanning.blood_DNA)
-						scan_data += "Blood Found:<br>"
-						for(var/blood in scanning.blood_DNA)
-							scan_data += "Blood type: [scanning.blood_DNA[blood]]\nDNA: [blood]<br><br>"
-					else
-						scan_data += "No Blood Found<br><br>"
-					if(!scanning.fingerprints)
-						scan_data += "No Fingerprints Found<br><br>"
-					else
-						var/list/L = scanning.fingerprints
-						scan_data += "Isolated [L.len] Fingerprints.  Loaded into database.<br>"
-						add_data(scanning)
+					if(scanning)
+						scan_process = 0
+						scan_name = scanning.name
+						scan_data = "<u>[scanning]</u><br><br>"
+						if (scanning.blood_DNA)
+							scan_data += "Blood Found:<br>"
+							for(var/blood in scanning.blood_DNA)
+								scan_data += "Blood type: [scanning.blood_DNA[blood]]\nDNA: [blood]<br><br>"
+						else
+							scan_data += "No Blood Found<br><br>"
+						if(!scanning.fingerprints)
+							scan_data += "No Fingerprints Found<br><br>"
+						else
+							var/list/L = scanning.fingerprints
+							scan_data += "Isolated [L.len] Fingerprints.  Loaded into database.<br>"
+							add_data(scanning)
 
-					if(!scanning.suit_fibers)
-						/*if(istype(scanning,/obj/item/device/detective_scanner))
-							var/obj/item/device/detective_scanner/scanner = scanning
-							if(scanner.stored_name)
-								scan_data += "Fibers/Materials Data - [scanner.stored_name]:<br>"
-								for(var/data in scanner.stored_fibers)
-									scan_data += "- [data]<br>"
-							else
-								scan_data += "No Fibers/Materials Data<br>"
-						else*/
-						scan_data += "No Fibers/Materials Located<br>"
-					else
-						/*if(istype(scanning,/obj/item/device/detective_scanner))
-							var/obj/item/device/detective_scanner/scanner = scanning
-							if(scanner.stored_name)
-								scan_data += "Fibers/Materials Data - [scanner.stored_name]:<br>"
-								for(var/data in scanner.stored_fibers)
-									scan_data += "- [data]<br>"
-							else
-								scan_data += "No Fibers/Materials Data<br>"*/
+						if(!scanning.suit_fibers)
+							/*if(istype(scanning,/obj/item/device/detective_scanner))
+								var/obj/item/device/detective_scanner/scanner = scanning
+								if(scanner.stored_name)
+									scan_data += "Fibers/Materials Data - [scanner.stored_name]:<br>"
+									for(var/data in scanner.stored_fibers)
+										scan_data += "- [data]<br>"
+								else
+									scan_data += "No Fibers/Materials Data<br>"
+							else*/
+							scan_data += "No Fibers/Materials Located<br>"
+						else
+							/*if(istype(scanning,/obj/item/device/detective_scanner))
+								var/obj/item/device/detective_scanner/scanner = scanning
+								if(scanner.stored_name)
+									scan_data += "Fibers/Materials Data - [scanner.stored_name]:<br>"
+									for(var/data in scanner.stored_fibers)
+										scan_data += "- [data]<br>"
+								else
+									scan_data += "No Fibers/Materials Data<br>"*/
 
-						scan_data += "Fibers/Materials Found:<br>"
-						for(var/data in scanning.suit_fibers)
-							scan_data += "- [data]<br>"
-					if(istype(scanning,/obj/item/device/detective_scanner))
-						scan_data += "<br><b>Data transfered from Scanner to Database.</b><br>"
-						add_data_scanner(scanning)
-					else if(!scanning.fingerprints)
-						scan_data += "<br><b><a href='?src=\ref[src];operation=add'>Add to Database?</a></b><br>"
+							scan_data += "Fibers/Materials Found:<br>"
+							for(var/data in scanning.suit_fibers)
+								scan_data += "- [data]<br>"
+						if(istype(scanning,/obj/item/device/detective_scanner))
+							scan_data += "<br><b>Data transfered from Scanner to Database.</b><br>"
+							add_data_scanner(scanning)
+						else if(!scanning.fingerprints)
+							scan_data += "<br><b><a href='?src=\ref[src];operation=add'>Add to Database?</a></b><br>"
 				else
 					temp = "Scan Failed: No Object"
 
@@ -467,7 +468,7 @@ obj/machinery/computer/forensic_scanning
 						if(!blood[main_blood])
 							blood[main_blood] = atom_blood_DNA[blood]
 				return 1
-			var/list/templist[2]
+			var/list/templist[3]
 			templist[1] = atom_suit_fibers
 			templist[2] = atom_blood_DNA
 			templist[3] = atom_name
