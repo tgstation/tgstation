@@ -2,6 +2,7 @@
 	name = "\improper Pulse Rifle"
 	desc = "A heavy-duty, pulse-based energy weapon, preferred by front-line combat personnel."
 	icon_state = "pulse"
+	item_state = "pulse100"
 	force = 10
 	fire_sound = 'pulse.ogg'
 	charge_cost = 200
@@ -50,6 +51,7 @@
 	name = "\improper M1911-P"
 	desc = "It's not the size of the gun, it's the size of the hole it puts through people."
 	icon_state = "m1911-p"
+	item_state = "gun"
 	cell_type = "/obj/item/weapon/cell/infinite"
 
 
