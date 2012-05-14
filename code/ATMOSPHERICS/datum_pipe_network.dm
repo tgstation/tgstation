@@ -44,11 +44,9 @@ datum/pipe_network
 	proc/merge(datum/pipe_network/giver)
 		if(giver==src) return 0
 
-		normal_members -= giver.normal_members
-		normal_members += giver.normal_members
+		normal_members |= giver.normal_members
 
-		line_members -= giver.line_members
-		line_members += giver.line_members
+		line_members |= giver.line_members
 
 		for(var/obj/machinery/atmospherics/normal_member in giver.normal_members)
 			normal_member.reassign_network(giver, src)
@@ -139,6 +137,7 @@ datum/pipe_network
 							gas.trace_gases += corresponding
 
 						corresponding.moles = trace_gas.moles*gas.volume/air_transient.volume
+				gas.update_values()
 		air_transient.update_values()
 		return 1
 

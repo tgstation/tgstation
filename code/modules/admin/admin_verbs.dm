@@ -210,6 +210,7 @@
 			verbs += /obj/admins/proc/adspawn							//toggle admin item spawning
 			verbs += /client/proc/debug_variables
 			verbs += /client/proc/cmd_modify_ticker_variables
+			verbs += /client/proc/cmd_modify_ref_variables
 			verbs += /client/proc/Debug2								//debug toggle switch
 			verbs += /client/proc/toggle_view_range
 			verbs += /client/proc/Getmob
@@ -432,6 +433,7 @@
 	verbs -= /client/proc/radioalert
 	verbs -= /client/proc/rnd_check_designs
 	verbs -= /client/proc/CarbonCopy
+	verbs -= /client/proc/cmd_modify_ref_variables
 	verbs -= /proc/possess
 	verbs -= /proc/release
 	//verbs -= /client/proc/give_spell 									--Merged with view variables

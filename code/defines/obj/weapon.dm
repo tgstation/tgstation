@@ -741,7 +741,7 @@
 
 /obj/item/weapon/extinguisher
 	name = "fire extinguisher"
-	desc = "Contains water for fighting fires."
+	desc = "A traditional red fire extinguisher."
 	icon = 'items.dmi'
 	icon_state = "fire_extinguisher0"
 	var/last_use = 1.0
@@ -760,6 +760,7 @@
 	name = "fire extinguisher"
 	desc = "A light and compact fibreglass-framed model fire extinguisher."
 	icon_state = "miniFE0"
+	hitsound = null	//it is much lighter, after all.
 	flags = FPRINT | USEDELAY | TABLEPASS
 	throwforce = 5
 	w_class = 2.0
@@ -1511,6 +1512,7 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	desc = "You can drill using this item. You dig?"
 	icon = 'surgery.dmi'
 	icon_state = "drill"
+	hitsound = 'circsawhit.ogg'
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 15.0
 	w_class = 1.0
@@ -1521,6 +1523,7 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	desc = "For heavy duty cutting."
 	icon = 'surgery.dmi'
 	icon_state = "saw3"
+	hitsound = 'circsawhit.ogg'
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 15.0
 	w_class = 1.0

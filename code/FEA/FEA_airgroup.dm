@@ -19,6 +19,12 @@ datum
 		var/list/space_borders
 		var/length_space_border = 0
 
+		Del()
+			spawn(5)
+				message_admins("WARNING!  Airgroup deleted!  Stacktrace is in a runtime, give it to Sky.")
+				CRASH("Fuck. Something deleted an airgroup.  Here's your stack trace.")
+			..()
+
 		proc/suspend_group_processing()
 			//Purpose: Suspends processing of the group, breaks it into individual tiles.
 			//Called by: Any check where the airgroup is determined to break.

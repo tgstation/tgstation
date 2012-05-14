@@ -104,6 +104,7 @@ datum
 
 			var/current_cycle = 0
 			var/update_delay = 5 //How long between check should it try to process atmos again.
+			var/failed_ticks = 0 //How many ticks have runtimed?
 
 
 /*				process()
@@ -211,36 +212,52 @@ datum
 
 				set background = 1
 				while(1)
-					if(kill_air)
-						return 1
-					current_cycle++
-					if(groups_to_rebuild.len > 0) //If there are groups to rebuild, do so.
-						spawn process_rebuild_select_groups()
-
-					if(tiles_to_update.len > 0) //If there are tiles to update, do so.
-						for(var/turf/simulated/T in tiles_to_update)
-							spawn T.update_air_properties()
-						tiles_to_update = list()
-
-					for(var/datum/air_group/AG in air_groups) //Processing groups
-						if(AG) // Because of runtime errors on syphoning.
-							spawn AG.process_group()
-					for(var/turf/simulated/T in active_singletons) //Processing Singletons
-						spawn T.process_cell()
-
-					for(var/turf/simulated/hot_potato in active_super_conductivity) //Process superconduction
-						spawn hot_potato.super_conduct()
-
-					if(high_pressure_delta.len)	//Process high pressure delta (airflow)
-						for(var/turf/pressurized in high_pressure_delta)
-							spawn pressurized.high_pressure_movements()
-						high_pressure_delta = list()
-
-					if(current_cycle%10==5) //Check for groups of tiles to resume group processing every 10 cycles
-						for(var/datum/air_group/AG in air_groups)
-							if(AG) // Because of runtime errors on syphoning.
-								spawn AG.check_regroup()
+					if(!kill_air)
+						current_cycle++
+						var/success = tick() //Changed so that a runtime does not crash the ticker.
+						if(!success) //Runtimed.
+							failed_ticks++
+							if(failed_ticks > 20)
+								world << "<font size='4' color='red'>ERROR IN ATMOS TICKER.  Killing air simulation!</font>"
+								kill_air = 1
 					sleep(max(5,update_delay*tick_multiplier))
+
+			proc/tick()
+				if(groups_to_rebuild.len > 0) //If there are groups to rebuild, do so.
+					spawn process_rebuild_select_groups()
+
+				if(tiles_to_update.len > 0) //If there are tiles to update, do so.
+					for(var/turf/simulated/T in tiles_to_update)
+						spawn T.update_air_properties()
+					tiles_to_update = list()
+
+				for(var/datum/air_group/AG in air_groups) //Processing groups
+					spawn
+						if(AG) // Because of runtime errors on syphoning.
+							AG.process_group()
+
+				for(var/turf/simulated/T in active_singletons) //Processing Singletons
+					spawn
+						if(istype(T))
+							T.process_cell()
+						else
+							active_singletons.Remove(T)
+
+				for(var/turf/simulated/hot_potato in active_super_conductivity) //Process superconduction
+					spawn hot_potato.super_conduct()
+
+				if(high_pressure_delta.len)	//Process high pressure delta (airflow)
+					for(var/turf/pressurized in high_pressure_delta)
+						spawn pressurized.high_pressure_movements()
+					high_pressure_delta = list()
+
+				if(current_cycle%10==5) //Check for groups of tiles to resume group processing every 10 cycles
+					for(var/datum/air_group/AG in air_groups)
+						spawn
+							if(AG) // Because of runtime errors on syphoning.
+								AG.check_regroup()
+				return 1
+
 
 			proc/process_rebuild_select_groups()
 				//Purpose: This gets called to recalculate and rebuild group geometry

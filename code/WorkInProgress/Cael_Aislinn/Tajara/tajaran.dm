@@ -4,7 +4,7 @@
 	voice_name = "tajaran"
 	icon = 'tajaran.dmi'
 	icon_state = "m-none"
-	var/list/tajspeak_letters
+	var/list/tajspeak_letters = list("~","*","-")
 	//
 	universal_speak = 1 //hacky fix until someone can figure out how to make them only understand humans
 	taj_talk_understand = 1
@@ -12,8 +12,6 @@
 	examine_text = "one of the cat-like Tajarans."
 
 /mob/living/carbon/human/tajaran/New()
-	tajspeak_letters = new/list("~","*","-")
-
 	var/g = "m"
 	if (gender == FEMALE)
 		g = "f"

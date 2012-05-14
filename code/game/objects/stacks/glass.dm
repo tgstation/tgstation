@@ -83,6 +83,9 @@ SHARDS
 		if("full (2 sheets)")
 			if(!src)	return 1
 			if(src.loc != user)	return 1
+			if(src.amount < 2)
+				user << "\red You need more glass to do that."
+				return 1
 			if(locate(/obj/structure/window) in user.loc)
 				user << "\red There is a window in the way."
 				return 1
@@ -142,6 +145,9 @@ SHARDS
 		if("full (2 sheets)")
 			if(!src)	return 1
 			if(src.loc != user)	return 1
+			if(src.amount < 2)
+				user << "\red You need more glass to do that."
+				return 1
 			if(locate(/obj/structure/window) in user.loc)
 				user << "\red There is a window in the way."
 				return 1

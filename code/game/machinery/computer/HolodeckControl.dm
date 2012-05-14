@@ -7,6 +7,7 @@
 	var/active = 0
 	var/list/holographic_items = list()
 	var/damaged = 0
+	var/last_change = 0
 
 
 	attack_ai(var/mob/user as mob)
@@ -233,6 +234,15 @@
 
 /obj/machinery/computer/HolodeckControl/proc/loadProgram(var/area/A)
 
+	if(world.time < (last_change + 25))
+		if(world.time < (last_change + 15))//To prevent super-spam clicking, reduced process size and annoyance -Sieve
+			return
+		for(var/mob/M in range(3,src))
+			M.show_message("\b ERROR. Recalibrating projetion apparatus.")
+			last_change = world.time
+			return
+
+	last_change = world.time
 	active = 1
 
 	for(var/item in holographic_items)

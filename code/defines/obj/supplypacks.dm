@@ -806,7 +806,9 @@
 
 /datum/supply_packs/contraband/New()
 	var/list/tempContains = list()
-	for(var/i = 0,i<5,i++)
+	for(1 to 5)
+		if(!contains || !contains.len)
+			break //Sanity checking.
 		tempContains += pick(contains)
-	src.contains = tempContains
+	contains = tempContains
 	..()
