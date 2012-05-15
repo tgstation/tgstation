@@ -242,6 +242,25 @@
 	else
 		usr << "A coil of power cable. There are [amount] lengths of cable in the coil."
 
+/obj/item/weapon/cable_coil/verb/make_restraint()
+	set name = "Make Cable Restraints"
+	set category = "Object"
+	var/mob/M = usr
+	if (istype(M, /mob/dead/)) return
+	if (usr.stat) return
+	if(!istype(usr.loc,/turf)) return
+	if(src.amount <= 14)
+		usr << "\red You need at least 15 lengths to make restraints!"
+		return
+	if(src.amount == 15)
+		del(src)
+	else
+		src.amount -= 15
+	var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
+	B.layer = 20
+	usr << "\blue You wind some cable together to make some restraints."
+	..()
+
 /obj/item/weapon/cable_coil/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if( istype(W, /obj/item/weapon/wirecutters) && src.amount > 1)
