@@ -813,6 +813,7 @@
 	density = 1
 	anchored = 1.0
 	layer = 2.8
+	var/dented = 0
 
 	New()
 		..()
