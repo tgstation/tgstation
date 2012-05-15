@@ -88,7 +88,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 				if(uses > 9)
 					randomItems.Add("/obj/item/toy/syndicateballoon")//Syndicate Balloon
 					randomItems.Add("/obj/item/weapon/storage/syndie_kit/imp_uplink") //Uplink Implanter
-					randomItems.add("/obj/item/weapon/storage/box/syndicate") //Syndicate bundle
+					randomItems.Add("/obj/item/weapon/storage/box/syndicate") //Syndicate bundle
 
 				//if(uses > 8)	//Nothing... yet.
 				//if(uses > 7)	//Nothing... yet.
