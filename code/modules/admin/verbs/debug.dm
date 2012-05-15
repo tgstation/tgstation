@@ -461,7 +461,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Del-All"
 
 	// to prevent REALLY stupid deletions
-	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human)
+	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human, /mob/dead, /mob/dead/observer, /mob/living/silicon, /mob/living/silicon/robot, /mob/living/silicon/ai)
 	var/hsbitem = input(usr, "Choose an object to delete.", "Delete:") as null|anything in typesof(/obj) + typesof(/mob) - blocked
 	if(hsbitem)
 		for(var/atom/O in world)
@@ -901,6 +901,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	return
 
 /client/proc/startSinglo()
+
+	set category = "Debug"
+	set name = "Start Singularity"
+	set desc = "Sets up the singularity and all machines to get power flowing through the station"
 
 	if(alert("Are you sure? This will start up the engine. Should only be used during debug!",,"Yes","No") != "Yes")
 		return

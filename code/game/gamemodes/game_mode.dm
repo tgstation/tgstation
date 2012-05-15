@@ -70,8 +70,7 @@ Implants;
 /obj/item/weapon/storage/syndie_kit/imp_uplink:10:Uplink Implant (Contains 5 Telecrystals);
 Whitespace:Seperator;
 Badassery;
-/obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);
-Whitespace:Seperator;"}
+/obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);"}
 
 // Items removed from above:
 /*

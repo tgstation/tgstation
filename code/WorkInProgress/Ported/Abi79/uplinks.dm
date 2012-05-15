@@ -71,11 +71,104 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			src.menu_message += "<A href='byond://?src=\ref[src];buy_item=[path_text];cost=[cost]'>[name]</A> ([cost])<BR>"
 			category_items++
 
+//		src.menu_message += "<A href='byond://?src=\ref[src];buy_item=random'>Random Item (??)</A><br>"
 		src.menu_message += "<HR>"
 		return
 
 	Topic(href, href_list)
 		if (href_list["buy_item"])
+/*			if(href_list["buy_item"] == "random")
+				var/list/randomItems = list()
+
+				//Sorry for all the ifs, but it makes it 1000 times easier for other people/servers to add or remove items from this list
+				//Add only items the player can afford:
+				if(uses > 19)
+					randomItems.Add("/obj/item/weapon/circuitboard/teleporter") //Teleporter Circuit Board (costs 20, for nuke ops)
+
+				if(uses > 9)
+					randomItems.Add("/obj/item/toy/syndicateballoon")//Syndicate Balloon
+					randomItems.Add("/obj/item/weapon/storage/syndie_kit/imp_uplink") //Uplink Implanter
+					randomItems.Add("/obj/item/weapon/storage/box/syndicate") //Syndicate bundle
+
+				//if(uses > 8)	//Nothing... yet.
+				//if(uses > 7)	//Nothing... yet.
+
+				if(uses > 6)
+					randomItems.Add("/obj/item/weapon/aiModule/syndicate") //Hacked AI Upload Module
+					randomItems.Add("/obj/machinery/singularity_beacon/syndicate") //Singularity Beacon
+
+				if(uses > 5)
+					randomItems.Add("/obj/item/weapon/gun/projectile") //Revolver
+
+				if(uses > 4)
+					randomItems.Add("/obj/item/weapon/gun/energy/crossbow") //Energy Crossbow
+					randomItems.Add("/obj/item/device/powersink") //Powersink
+
+				if(uses > 3)
+					randomItems.Add("/obj/item/weapon/melee/energy/sword") //Energy Sword
+					randomItems.Add("/obj/item/clothing/mask/gas/voice") //Voice Changer
+					randomItems.Add("/obj/item/device/chameleon") //Chameleon Projector
+					randomItems.Add("/obj/item/clothing/glasses/thermal") //Syndicate Space Suit
+
+				if(uses > 2)
+					randomItems.Add("/obj/item/weapon/storage/emp_kit") //EMP Grenades
+					randomItems.Add("/obj/item/weapon/pen/paralysis") //Paralysis Pen
+					randomItems.Add("/obj/item/weapon/cartridge/syndicate") //Detomatix Cartridge
+					randomItems.Add("/obj/item/clothing/under/chameleon") //Chameleon Jumpsuit
+					randomItems.Add("/obj/item/weapon/card/id/syndicate") //Agent ID Card
+					randomItems.Add("/obj/item/weapon/card/emag") //Cryptographic Sequencer
+					randomItems.Add("/obj/item/weapon/storage/syndie_kit/space") //Syndicate Space Suit
+					randomItems.Add("/obj/item/device/encryptionkey/binary") //Binary Translator Key
+					randomItems.Add("/obj/item/weapon/storage/syndie_kit/imp_freedom") //Freedom Implant
+
+				if(uses > 1)
+					var/list/usrItems = usr.get_contents()
+					var/hasRevolver = 0
+					for(var/obj/I in usrItems) //Only add revolver ammo if the user has a gun that can shoot it
+						if(istype(I,/obj/item/weapon/gun/projectile))
+							hasRevolver = 1
+
+					if(hasRevolver) randomItems.Add("/obj/item/ammo_magazine/a357") //Revolver ammo
+					randomItems.Add("/obj/item/clothing/shoes/syndigaloshes") //No-Slip Syndicate Shoes
+					randomItems.Add("/obj/item/weapon/plastique") //C4
+
+				if(uses > 0)
+					randomItems.Add("/obj/item/weapon/soap/syndie") //Syndicate Soap
+					randomItems.Add("/obj/item/weapon/storage/toolbox/syndicate") //Syndicate Toolbox
+
+				if(!randomItems)
+					del(randomItems)
+					return 0
+				else
+					href_list["buy_item"] = pick(randomItems)
+
+					switch(href_list["buy_item"]) //Ok, this gets a little messy, sorry.
+						if("/obj/item/weapon/circuitboard/teleporter")
+							uses -= 20
+						if("/obj/item/toy/syndicateballoon" , "/obj/item/weapon/storage/syndie_kit/imp_uplink")
+							uses -= 10
+						if("/obj/item/weapon/aiModule/syndicate" , "/obj/machinery/singularity_beacon/syndicate" , "/obj/item/weapon/storage/box/syndicate")
+							uses -= 7
+						if("/obj/item/weapon/gun/projectile")
+							uses -= 6
+						if("/obj/item/weapon/gun/energy/crossbow" , "/obj/item/device/powersink")
+							uses -= 5
+						if("/obj/item/weapon/melee/energy/sword" , "/obj/item/clothing/mask/gas/voice" , "/obj/item/device/chameleon" , "/obj/item/clothing/glasses/thermal")
+							uses -= 4
+						if("/obj/item/weapon/storage/emp_kit" , "/obj/item/weapon/pen/paralysis" , "/obj/item/weapon/cartridge/syndicate" , "/obj/item/clothing/under/chameleon" , \
+						"/obj/item/weapon/card/id/syndicate" , "/obj/item/weapon/card/emag" , "/obj/item/weapon/storage/syndie_kit/space" , "/obj/item/device/encryptionkey/binary" , \
+						"/obj/item/weapon/storage/syndie_kit/imp_freedom")
+							uses -= 3
+						if("/obj/item/ammo_magazine/a357" , "/obj/item/clothing/shoes/syndigaloshes" , "/obj/item/weapon/plastique")
+							uses -= 2
+						if("/obj/item/weapon/soap/syndie" , "/obj/item/weapon/storage/toolbox/syndicate")
+							uses -= 1
+
+					del(randomItems)
+					return 1
+*/
+
+
 			if(text2num(href_list["cost"]) > uses) // Not enough crystals for the item
 				return 0
 
