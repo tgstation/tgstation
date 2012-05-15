@@ -862,6 +862,9 @@
 /obj/item/weapon/handcuffs/cyborg
 	dispenser = 1
 
+/obj/item/weapon/handcuffs/cable
+	name = "cable restraints"
+	desc = "Looks like some cables tied together. Could be used to tie something up."
 
 /obj/item/weapon/locator
 	name = "locator"
