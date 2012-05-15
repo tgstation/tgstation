@@ -493,25 +493,25 @@
 				usr.next_move = world.time + 100
 				usr.last_special = world.time + 100
 				if(isalienadult(usr) || usr.mutations & HULK)//Don't want to do a lot of logic gating here.
-					usr << "\green You attempt to break [usr:handcuffed]. (This will take around 5 seconds and you need to stand still)"
+					usr << "\green You attempt to break \the [usr:handcuffed]. (This will take around 5 seconds and you need to stand still)"
 					for(var/mob/O in viewers(usr))
-						O.show_message(text("\red <B>[] is trying to break [usr:handcuffed]!</B>", usr), 1)
+						O.show_message(text("\red <B>[] is trying to break \the [usr:handcuffed]!</B>", usr), 1)
 					spawn(0)
 						if(do_after(usr, 50))
 							if(!usr:handcuffed || usr:buckled)
 								return
 							for(var/mob/O in viewers(usr))
-								O.show_message(text("\red <B>[] manages to break [usr:handcuffed]!</B>", usr), 1)
-							usr << "\green You successfully break [usr:handcuffed]."
+								O.show_message(text("\red <B>[] manages to break \the [usr:handcuffed]!</B>", usr), 1)
+							usr << "\green You successfully break \the [usr:handcuffed]."
 							del(usr:handcuffed)
 							usr:handcuffed = null
 				else
 					if(istype(usr:handcuffed, /obj/item/weapon/handcuffs/cable))
 						breakouttime = 300
 						displaytime = 0.5
-					usr << "\red You attempt to remove [usr:handcuffed]. (This will take around [displaytime] minutes and you need to stand still)"
+					usr << "\red You attempt to remove \the [usr:handcuffed]. (This will take around [displaytime] minutes and you need to stand still)"
 					for(var/mob/O in viewers(usr))
-						O.show_message(text("\red <B>[] attempts to remove [usr:handcuffed]!</B>", usr), 1)
+						O.show_message(text("\red <B>[] attempts to remove \the [usr:handcuffed]!</B>", usr), 1)
 					spawn(0)
 						var/increment = 150
 						for(var/i = 0, i < breakouttime, i += increment)
@@ -530,11 +530,11 @@
 											"This is exhausting!")									// - SkyMarshal
 								for(var/mob/O in viewers(usr))
 									if(prob(50)) //Reduces spam slightly
-										O.show_message(text("\red [] continues to struggle in [usr:handcuffed]!", usr), 1)
+										O.show_message(text("\red [] continues to struggle in \the [usr:handcuffed]!", usr), 1)
 						if(!usr:handcuffed) return
 						for(var/mob/O in viewers(usr))
-							O.show_message(text("\red <B>[] manages to remove [usr:handcuffed]!</B>", usr), 1)
-						usr << "\blue You successfully remove [usr:handcuffed]."
+							O.show_message(text("\red <B>[] manages to remove \the [usr:handcuffed]!</B>", usr), 1)
+						usr << "\blue You successfully remove \the [usr:handcuffed]."
 						usr:handcuffed:loc = usr:loc
 						usr:handcuffed = null
 						usr.update_clothing()
