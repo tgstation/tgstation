@@ -108,15 +108,15 @@
 /obj/item/clothing/suit/storage/proc/orient_objs(tx, ty, mx, my)
 	var/cx = tx
 	var/cy = ty
-	src.boxes.screen_loc = text("[tx],[ty] to [mx],[my]")
+	src.boxes.screen_loc = "[tx],[ty] to [mx],[my]"
 	for(var/obj/O in src.contents)
-		O.screen_loc = text("[cx],[cy]")
+		O.screen_loc = "[cx],[cy]"
 		O.layer = 20
 		cx++
 		if (cx > mx)
 			cx = tx
 			cy--
-	src.closer.screen_loc = text("[mx+1],[my]")
+	src.closer.screen_loc = "[mx+1],[my]"
 	return
 
 /obj/item/clothing/suit/storage/proc/show_to(mob/user as mob)
