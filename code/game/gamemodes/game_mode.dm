@@ -64,13 +64,11 @@ Implants;
 /obj/item/weapon/storage/syndie_kit/imp_uplink:10:Uplink Implant (Contains 5 Telecrystals);
 Whitespace:Seperator;
 (Pointless) Badassery;
-/obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);
-Whitespace:Seperator;"}
+/obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);"}
 
 // Items removed from above:
 /*
 /obj/item/weapon/cloaking_device:4:Cloaking Device;	//Replacing cloakers with thermals.	-Pete
-/obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);	//That fucking balloon	-Pete
 */
 
 /datum/game_mode/proc/announce() //to be calles when round starts

@@ -273,8 +273,9 @@
 			verbs += /client/proc/everyone_random
 			verbs += /client/proc/only_one
 			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/giveruntimelog							//used by coders to retrieve runtime logs
+			verbs += /client/proc/giveruntimelog						//used by coders to retrieve runtime logs
 			verbs += /client/proc/cinematic								//show a cinematic sequence
+			verbs += /client/proc/startSinglo							//Used to prevent the station from losing power while testing stuff out.
 		else	return
 	return
 
