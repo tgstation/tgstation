@@ -8,7 +8,7 @@
 	var/list/holographic_items = list()
 	var/damaged = 0
 	var/last_change = 0
-
+	var/safety = 1
 
 	attack_ai(var/mob/user as mob)
 		return src.attack_hand(user)
@@ -35,7 +35,11 @@
 
 		dat += "Please ensure that only holographic weapons are used in the holodeck if a combat simulation has been loaded.<BR>"
 
-		if(emagged)
+		if(!safety)
+			if(issilicon(user) && (emagged))
+				dat += "<font color=red>ERROR: SAFETY PROTOCOLS UNRESPONSIVE</font><BR>"
+			else if(issilicon(user) && (!emagged))
+				dat += "<A href='?src=\ref[src];AIrelock=1'>(<font color=red>Enable Safety Protocols?</font>)</A><BR>"
 			dat += "<A href='?src=\ref[src];burntest=1'>(<font color=red>Begin Atmospheric Burn Simulation</font>)</A><BR>"
 			dat += "Ensure the holodeck is empty before testing.<BR>"
 			dat += "<BR>"
@@ -43,12 +47,11 @@
 			dat += "Ensure the holodeck is empty before testing.<BR>"
 			dat += "<BR>"
 			dat += "Safety Protocols are <font color=red> DISABLED </font><BR>"
-		else
+		else if(safety)
 			if(issilicon(user))
-				dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=red>Override Safety Protocols?</font>)</A><BR>"
+				dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=red>Disable Safety Protocols?</font>)</A><BR>"
 			dat += "<BR>"
 			dat += "Safety Protocols are <font color=green> ENABLED </font><BR>"
-
 		user << browse(dat, "window=computer;size=400x500")
 		onclose(user, "computer")
 
@@ -101,7 +104,13 @@
 
 			else if(href_list["AIoverride"])
 				if(!issilicon(usr))	return
-				emagged = 1
+				safety = 0
+				log_admin("[usr] ([usr.ckey]) disabled Holodeck Safeties.")
+				message_admins("[usr] ([usr.ckey]) disabled Holodeck Safeties.")
+
+			else if(href_list["AIrelock"])
+				if(!issilicon(usr))	return
+				safety = 1
 
 			src.add_fingerprint(usr)
 		src.updateUsrDialog()
@@ -141,8 +150,11 @@
 	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 		playsound(src.loc, 'sparks4.ogg', 75, 1)
 		emagged = 1
+		safety = 0
 		user << "\blue You vastly increase projector power and override the safety and security protocols."
 		user << "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintence and do not use the simulator."
+		log_admin("[user] ([user.ckey]) emagged Holodeck Safeties.")
+		message_admins("[user] ([user.ckey]) emagged Holodeck Safeties.")
 	src.updateUsrDialog()
 	return
 
@@ -340,7 +352,17 @@
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state<2)
-			user << "\red You need a better grip to do that!"
+			if(ishuman(G.affecting))
+				var/mob/living/carbon/human/H = G.affecting
+				var/datum/organ/external/affecting = H.get_organ("head")
+				affecting.take_damage(4, 0)
+				H.UpdateDamageIcon()
+				H.updatehealth()
+				playsound(src.loc, 'punch1.ogg', 50, 1, -3)
+				src.add_blood(G.affecting)
+				for(var/mob/O in viewers(world.view, src))
+					if (O.client)
+						O << text("\red [] smashes []'s head on the table!", G.assailant, G.affecting)
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
