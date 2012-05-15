@@ -252,13 +252,13 @@
 	if(src.amount <= 14)
 		usr << "\red You need at least 15 lengths to make restraints!"
 		return
+	var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
+	usr << "\blue You wind some cable together to make some restraints."
 	if(src.amount == 15)
 		del(src)
 	else
 		src.amount -= 15
-	var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
 	B.layer = 20
-	usr << "\blue You wind some cable together to make some restraints."
 	..()
 
 /obj/item/weapon/cable_coil/attackby(obj/item/weapon/W, mob/user)
