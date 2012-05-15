@@ -93,7 +93,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the chief medical officer"
+	supervisors = "the chief medical officer and research director"
 	selection_color = "#ffeef0"
 
 

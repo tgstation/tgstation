@@ -146,6 +146,7 @@
 		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack/industrial (H), H.slot_back)
 		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
 		if(H.backbag == 4) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_eng(H), H.slot_back)
+		H.equip_if_possible(new /obj/item/device/pda/shaftminer(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/miner(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		if(H.backbag == 1)

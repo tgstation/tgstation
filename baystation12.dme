@@ -643,6 +643,7 @@
 #include "code\game\objects\toys.dm"
 #include "code\game\objects\transfer_valve.dm"
 #include "code\game\objects\washing_machine.dm"
+#include "code\game\objects\watercloset.dm"
 #include "code\game\objects\weapons.dm"
 #include "code\game\objects\window.dm"
 #include "code\game\objects\alien\acid.dm"

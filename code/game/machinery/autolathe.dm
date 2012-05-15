@@ -23,6 +23,8 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/kitchenknife(), \
 		new /obj/item/weapon/scalpel(), \
 		new /obj/item/weapon/circular_saw(), \
+		new /obj/item/weapon/reagent_containers/glass/beaker(), \
+		new /obj/item/weapon/reagent_containers/glass/large(), \
 		new /obj/item/ammo_casing/shotgun/blank(), \
 		new /obj/item/ammo_casing/shotgun/beanbag(), \
 		new /obj/item/ammo_magazine/c38(), \
