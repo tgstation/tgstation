@@ -63,7 +63,7 @@
 	if(istype(W,/obj/item/weapon/evidencebag) && src.loc != user)
 		return
 	if(src.contents.len >= 2)
-		user << "You have nowhere to place that"
+		user << "\red There's nowhere to place that!"
 		return
 	user.u_equip(W)
 	W.loc = src
@@ -84,42 +84,62 @@
 	if (src.loc == user)
 		if (user.s_active)
 			user.s_active.close(user)
-		view_inv(user)
-		orient2hud(user)
+		src.show_to(user)
 	else
 		..()
 		for(var/mob/M in range(1))
 			if (M.s_active == src)
 				src.close(M)
+	src.orient2hud(user)
 	src.add_fingerprint(user)
 	return
 
 /obj/item/clothing/suit/storage/proc/orient2hud(mob/user as mob)
 	if (src == user.l_hand)
-		src.orient_objs(3, 5, 3, 3)
+		src.orient_objs(3, 4, 3, 3)
 	else if (src == user.r_hand)
-		src.orient_objs(1, 5, 1, 3)
+		src.orient_objs(1, 4, 1, 3)
 	else if (istype(user,/mob/living/carbon/human) && src == user:wear_suit)
-		src.orient_objs(1, 3, 3, 3)
+		src.orient_objs(1, 3, 2, 3)
 	else
-		src.orient_objs(4, 4, 4, 2)
+		src.orient_objs(4, 3, 4, 2)
 	return
 
 /obj/item/clothing/suit/storage/proc/orient_objs(tx, ty, mx, my)
-
 	var/cx = tx
 	var/cy = ty
-	src.boxes.screen_loc = text("[],[] to [],[]", tx, ty, mx, my)
+	src.boxes.screen_loc = text("[tx],[ty] to [mx],[my]")
 	for(var/obj/O in src.contents)
-		O.screen_loc = text("[],[]", cx, cy)
+		O.screen_loc = text("[cx],[cy]")
 		O.layer = 20
 		cx++
 		if (cx > mx)
 			cx = tx
 			cy--
-		//Foreach goto(56)
-	src.closer.screen_loc = text("[],[]", mx+1, my)
+	src.closer.screen_loc = text("[mx+1],[my]")
 	return
+
+/obj/item/clothing/suit/storage/proc/show_to(mob/user as mob)
+	for(var/obj/item/weapon/mousetrap/MT in src)
+		if(MT.armed)
+			for(var/mob/O in viewers(user, null))
+				if(O == user)
+					user.show_message(text("\red <B>You reach into the [src.name], but there was a live mousetrap in there!</B>"), 1)
+				else
+					user.show_message(text("\red <B>[user] reaches into the [src.name] and sets off a hidden mousetrap!</B>"), 1)
+			MT.loc = user.loc
+			MT.triggered(user, user.hand ? "l_hand" : "r_hand")
+			MT.layer = OBJ_LAYER
+			return
+	user.client.screen -= src.boxes
+	user.client.screen -= src.closer
+	user.client.screen -= src.contents
+	user.client.screen += src.boxes
+	user.client.screen += src.closer
+	user.client.screen += src.contents
+	user.s_active = src
+	return
+
 /*/obj/item/clothing/suit/storage/New()
 
 	src.boxes = new /obj/screen/storage(  )
