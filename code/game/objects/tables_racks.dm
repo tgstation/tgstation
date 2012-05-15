@@ -149,7 +149,24 @@ TABLE AND RACK OBJECT INTERATIONS
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state<2)
-			user << "\red You need a better grip to do that!"
+			if(ishuman(G.affecting))
+				G.affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed on a table by [G.assailant.name] ([G.assailant.ckey])</font>")
+				G.assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Smashed [G.affecting.name] ([G.affecting.ckey]) on a table.</font>")
+
+				log_admin("ATTACK: [G.assailant] ([G.assailant.ckey]) smashed [G.affecting] ([G.affecting.ckey]) on a table.")
+				message_admins("ATTACK: [G.assailant] ([G.assailant.ckey]) smashed [G.affecting] ([G.affecting.ckey]) on a table.")
+				log_attack("<font color='red'>[G.assailant] ([G.assailant.ckey]) smashed [G.affecting] ([G.affecting.ckey]) on a table.</font>")
+
+				var/mob/living/carbon/human/H = G.affecting
+				var/datum/organ/external/affecting = H.get_organ("head")
+				affecting.take_damage(4, 0)
+				H.UpdateDamageIcon()
+				H.updatehealth()
+				playsound(src.loc, 'punch1.ogg', 50, 1, -3)
+				src.add_blood(G.affecting)
+				for(var/mob/O in viewers(world.view, src))
+					if (O.client)
+						O << text("\red [] smashes []'s head on the table!", G.assailant, G.affecting)
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)

@@ -439,7 +439,8 @@
 			usr.pulling = null
 		if("sleep")
 			if(usr.sleeping && usr.sleeping_willingly)
-				return
+				usr.sleeping = 0
+				usr.sleeping_willingly = 0
 			else if(!usr.sleeping)
 				usr.sleeping = 20 //Short nap
 				usr.sleeping_willingly = 1
