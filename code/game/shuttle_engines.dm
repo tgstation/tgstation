@@ -1,8 +1,6 @@
-
 /obj/structure/shuttle
 	name = "shuttle"
 	icon = 'shuttle.dmi'
-	pressure_resistance = 4*ONE_ATMOSPHERE
 
 /obj/structure/shuttle/window
 	name = "shuttle window"
@@ -12,6 +10,12 @@
 	opacity = 0
 	anchored = 1
 
+/obj/structure/shuttle/window/New()
+	var/temploc = src.loc
+	for(var/turf/simulated/W in range(temploc,0))
+		W.blocks_air = 1
+		W.density = 1
+	..()
 
 /obj/structure/shuttle/engine
 	name = "engine"
