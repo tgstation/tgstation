@@ -696,10 +696,11 @@ datum
 			id = "sugar"
 			description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
 			reagent_state = SOLID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#808080" // rgb: 128, 128, 128
 
 			on_mob_life(var/mob/living/M as mob)
-				M:nutrition += 1
+				M:nutrition += nutriment_factor
 				..()
 				return
 
@@ -2236,7 +2237,6 @@ datum
 				M:nutrition += nutriment_factor
 				if(!M) M = holder.my_atom
 				if(M:getOxyLoss() && prob(30)) M:adjustOxyLoss(-1)
-				M:nutrition++
 				..()
 				return
 
@@ -2252,7 +2252,6 @@ datum
 				M:nutrition += nutriment_factor
 				if(!M) M = holder.my_atom
 				if(M:getFireLoss() && prob(20)) M:heal_organ_damage(0,1)
-				M:nutrition++
 				..()
 				return
 
@@ -2268,7 +2267,6 @@ datum
 				M:nutrition += nutriment_factor
 				if(!M) M = holder.my_atom
 				if(M:getToxLoss() && prob(20)) M:adjustToxLoss(-1)
-				M:nutrition++
 				..()
 				return
 
@@ -2420,12 +2418,13 @@ datum
 			id = "milk"
 			description = "An opaque white liquid produced by the mammary glands of mammals."
 			reagent_state = LIQUID
+			nutriment_factor = 1.5 * REAGENTS_METABOLISM
 			color = "#DFDFDF" // rgb: 223, 223, 223
 
 			on_mob_life(var/mob/living/M as mob)
+				M:nutrition += nutriment_factor
 				if(!M) M = holder.my_atom
 				if(M:getBruteLoss() && prob(20)) M:heal_organ_damage(1,0)
-				M:nutrition++
 				..()
 				return
 
@@ -2434,12 +2433,13 @@ datum
 			id = "soymilk"
 			description = "An opaque white liquid made from soybeans."
 			reagent_state = LIQUID
+			nutriment_factor = 1.2 * REAGENTS_METABOLISM
 			color = "#DFDFC7" // rgb: 223, 223, 199
 
 			on_mob_life(var/mob/living/M as mob)
+				M:nutrition += nutriment_factor
 				if(!M) M = holder.my_atom
 				if(M:getBruteLoss() && prob(20)) M:heal_organ_damage(1,0)
-				M:nutrition++
 				..()
 				return
 
@@ -2543,13 +2543,14 @@ datum
 			id = "cola"
 			description = "A refreshing beverage."
 			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#100800" // rgb: 16, 8, 0
 
 			on_mob_life(var/mob/living/M as mob)
 				M:drowsyness = max(0,M:drowsyness-5)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = max(310, M.bodytemperature-5)
-				M:nutrition += 1
+				M:nutrition += nutriment_factor
 				..()
 				return
 
@@ -2558,6 +2559,7 @@ datum
 			id = "nuka_cola"
 			description = "Cola, cola never changes."
 			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#100800" // rgb: 16, 8, 0
 
 			on_mob_life(var/mob/living/M as mob)
@@ -2569,7 +2571,7 @@ datum
 					M:sleeping = max(0,M.sleeping-2)
 				if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = max(310, M.bodytemperature-5)
-				M:nutrition += 1
+				M:nutrition += nutriment_factor
 				..()
 				return
 
@@ -2578,6 +2580,7 @@ datum
 			id = "spacemountainwind"
 			description = "Blows right through you like a space wind."
 			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#102000" // rgb: 16, 32, 0
 
 			on_mob_life(var/mob/living/M as mob)
@@ -2587,7 +2590,7 @@ datum
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-5)
 				M.make_jittery(1)
-				M:nutrition += 1
+				M:nutrition += nutriment_factor
 				..()
 				return
 
@@ -2596,13 +2599,14 @@ datum
 			id = "dr_gibb"
 			description = "A delicious blend of 42 different flavours"
 			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#102000" // rgb: 16, 32, 0
 
 			on_mob_life(var/mob/living/M as mob)
 				M:drowsyness = max(0,M:drowsyness-6)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-5) //310 is the normal bodytemp. 310.055
-				M:nutrition += 1
+				M:nutrition += nutriment_factor
 				..()
 				return
 
@@ -2611,12 +2615,13 @@ datum
 			id = "space_up"
 			description = "Tastes like a hull breach in your mouth."
 			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#202800" // rgb: 32, 40, 0
 
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-8) //310 is the normal bodytemp. 310.055
-				M:nutrition += 1
+				M:nutrition += nutriment_factor
 				..()
 				return
 
@@ -2625,12 +2630,13 @@ datum
 			description = "A tangy substance made of 0.5% natural citrus!"
 			id = "lemon_lime"
 			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#878F00" // rgb: 135, 40, 0
 
 			on_mob_life(var/mob/living/M as mob)
 				if (M.bodytemperature > 310)
 					M.bodytemperature = max(310, M.bodytemperature-8) //310 is the normal bodytemp. 310.055
-				M:nutrition += 1
+				M:nutrition += nutriment_factor
 				..()
 				return
 
@@ -2664,6 +2670,7 @@ datum
 			id = "ethanol"
 			description = "A well-known alcohol with a variety of applications."
 			reagent_state = LIQUID
+			nutriment_factor = 0 //So alcohol can fill you up! If they want to.
 			color = "#404030" // rgb: 64, 64, 48
 			var
 				dizzy_adj = 3
@@ -2675,6 +2682,7 @@ datum
 				pass_out = 325	//amount absorbed after which mob starts passing out
 
 			on_mob_life(var/mob/living/M as mob)
+				M:nutrition += nutriment_factor
 				if(!src.data) data = 1
 				src.data++
 
@@ -2706,13 +2714,13 @@ datum
 				name = "Beer"
 				id = "beer"
 				description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
+				nutriment_factor = 2 * REAGENTS_METABOLISM
 				color = "#664300" // rgb: 102, 67, 0
 //				slur_start = 25			//amount absorbed after which mob starts slurring
 //				confused_start = 40		//amount absorbed after which mob starts confusing directions //This is quite silly - Erthilo
 				on_mob_life(var/mob/living/M as mob)
 					..()
 					M:jitteriness = max(M:jitteriness-3,0)
-					M:nutrition += 2
 					return
 
 			whiskey
@@ -2801,13 +2809,13 @@ datum
 				color = "#102000" // rgb: 16, 32, 0
 
 				on_mob_life(var/mob/living/M as mob)
+					M:nutrition += nutriment_factor
 					M:drowsyness = max(0,M:drowsyness-7)
 					if(!M:sleeping_willingly)
 						M:sleeping = max(0,M.sleeping-2)
 					if (M.bodytemperature > 310)
 						M.bodytemperature = max(310, M.bodytemperature-5)
 					M.make_jittery(1)
-					M:nutrition += 1
 					return
 
 
@@ -2951,9 +2959,11 @@ datum
 				id = "doctorsdelight"
 				description = "A gulp a day keeps the MediBot away. That's probably for the best."
 				reagent_state = LIQUID
+				nutriment_factor = 1 * REAGENTS_METABOLISM
 				color = "#664300" // rgb: 102, 67, 0
 
 				on_mob_life(var/mob/living/M as mob)
+					M:nutrition += nutriment_factor
 					if(!M) M = holder.my_atom
 					if(M:getOxyLoss() && prob(50)) M:adjustOxyLoss(-2)
 					if(M:getBruteLoss() && prob(60)) M:heal_organ_damage(2,0)
@@ -3115,6 +3125,7 @@ datum
 				color = "#664300" // rgb: 102, 67, 0
 
 				on_mob_life(var/mob/living/M as mob)
+					..()
 					if (M.bodytemperature < 360)
 						M.bodytemperature = min(360, M.bodytemperature+50) //310 is the normal bodytemp. 310.055
 					return
@@ -3148,6 +3159,7 @@ datum
 				color = "#664300" // rgb: 102, 67, 0
 
 				on_mob_life(var/mob/living/M as mob)
+					..()
 					if (M.bodytemperature < 270)
 						M.bodytemperature = min(270, M.bodytemperature-40) //310 is the normal bodytemp. 310.055
 					return
@@ -3195,6 +3207,7 @@ datum
 				color = "#664300" // rgb: 102, 67, 0
 
 				on_mob_life(var/mob/living/M as mob)
+					..()
 					M.stunned = 4
 					return
 
@@ -3206,6 +3219,7 @@ datum
 				color = "#2E2E61" // rgb: 46, 46, 97
 
 				on_mob_life(var/mob/living/M as mob)
+					..()
 					if(!M) M = holder.my_atom
 					M:adjustOxyLoss(0.5)
 					M:adjustOxyLoss(0.5)
@@ -3235,15 +3249,8 @@ datum
 				color = "#2E6671" // rgb: 46, 102, 113
 
 				on_mob_life(var/mob/living/M as mob)
-					if(!data) data = 1
-					data++
-					M.dizziness +=5
-					if(data >= 55 && data <115)
-						if (!M.slurring) M.slurring = 1
-						M.slurring += 5
-					else if(data >= 115 && prob(33))
-						M.confused = max(M:confused+15,15)
 					..()
+					M.dizziness +=5
 					return
 
 			irishcarbomb
@@ -3254,15 +3261,8 @@ datum
 				color = "#2E6671" // rgb: 46, 102, 113
 
 				on_mob_life(var/mob/living/M as mob)
-					if(!data) data = 1
-					data++
-					M.dizziness +=5
-					if(data >= 55 && data <115)
-						if (!M.slurring) M.slurring = 1
-						M.slurring += 5
-					else if(data >= 115 && prob(33))
-						M.confused = max(M:confused+15,15)
 					..()
+					M.dizziness +=5
 					return
 
 			syndicatebomb
@@ -3352,10 +3352,12 @@ datum
 			id = "soy_latte"
 			description = "A nice and tasty beverage while you are reading your hippie books."
 			reagent_state = LIQUID
+
 			color = "#664300" // rgb: 102, 67, 0
 
 			on_mob_life(var/mob/living/M as mob)
 				..()
+				M:nutrition += nutriment_factor
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
 				M:sleeping = 0
@@ -3363,7 +3365,6 @@ datum
 					M.bodytemperature = min(310, M.bodytemperature+5)
 				M.make_jittery(5)
 				if(M:getBruteLoss() && prob(20)) M:heal_organ_damage(1,0)
-				M:nutrition++
 				..()
 				return
 
@@ -3372,10 +3373,10 @@ datum
 			id = "cafe_latte"
 			description = "A nice, strong and tasty beverage while you are reading."
 			reagent_state = LIQUID
+			nutriment_factor = 1 * REAGENTS_METABOLISM
 			color = "#664300" // rgb: 102, 67, 0
 
 			on_mob_life(var/mob/living/M as mob)
-				..()
 				M.dizziness = max(0,M.dizziness-5)
 				M:drowsyness = max(0,M:drowsyness-3)
 				M:sleeping = 0
@@ -3383,8 +3384,6 @@ datum
 					M.bodytemperature = min(310, M.bodytemperature+5)
 				M.make_jittery(5)
 				if(M:getBruteLoss() && prob(20)) M:heal_organ_damage(1,0)
-				M:nutrition++
-				..()
 				return
 
 		hippies_delight
