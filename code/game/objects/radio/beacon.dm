@@ -6,7 +6,6 @@
 	var/code = "electronic"
 	origin_tech = "bluespace=1"
 
-
 /obj/item/device/radio/beacon/hear_talk()
 	return
 
@@ -32,3 +31,19 @@
 	proc/digest_delay()
 		spawn(600)
 			del(src)
+
+
+// SINGULO BEACON SPAWNER
+
+/obj/item/device/radio/beacon/syndicate
+	name = "suspicious beacon"
+	desc = "A label on it reads:'Activate to have a singularity beacon teleported to your location'."
+	origin_tech = "bluespace=1;syndicate=7"
+
+/obj/item/device/radio/beacon/syndicate/attack_self(mob/user as mob)
+	if(user)
+		user << "\blue Locked In"
+		new /obj/machinery/singularity_beacon/syndicate( user.loc )
+		playsound(src, 'pop.ogg', 100, 1, 1)
+		del(src)
+	return

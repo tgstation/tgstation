@@ -62,6 +62,9 @@
 /obj/item/clothing/suit/bio_suit/cmo
 	icon_state = "bio_cmo"
 
+/obj/item/clothing/head/bio_hood/cmo
+	icon_state = "bio_cmo"
+
 
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit
 	name = "Plague doctor suit"
