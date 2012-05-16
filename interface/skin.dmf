@@ -327,6 +327,53 @@ menu "menu"
 		is-disabled = false
 		saved-params = "is-checked"
 
+menu "minimap_menu"
+	elem 
+		name = "Size"
+		command = ""
+		category = ""
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "50%"
+		command = ".winset \"minimap.icon-size=16\""
+		category = "Size"
+		is-checked = false
+		can-check = true
+		group = "minimap_size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "100%"
+		command = ".winset \"minimap.icon-size=32\""
+		category = "Size"
+		is-checked = true
+		can-check = true
+		group = "minimap_size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "200%"
+		command = ".winset \"minimap.icon-size=64\""
+		category = "Size"
+		is-checked = false
+		can-check = true
+		group = "minimap_size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "stretch"
+		command = ".winset \"minimap.icon-size=0\""
+		category = "Size"
+		is-checked = false
+		can-check = true
+		group = "minimap_size"
+		is-disabled = false
+		saved-params = "is-checked"
+
 
 window "Telecomms IDE"
 	elem "Telecomms IDE"
@@ -1245,7 +1292,7 @@ window "minimapwindow"
 		transparent-color = none
 		alpha = 255
 		macro = ""
-		menu = ""
+		menu = "minimap_menu"
 		on-close = ""
 	elem "minimap"
 		type = MAP

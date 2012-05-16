@@ -43,7 +43,27 @@
 	var/minimap_updating = 0
 
 	var/icon/minimap_icon = new('minimap.dmi', "chunk_base")
-	var/obj/minimap_obj = new()
+	var/obj/minimap_obj/minimap_obj = new()
+
+/obj/minimap_obj/Click(location, control, params)
+	var/list/par = params2list(params)
+	var/screen_loc = par["screen-loc"]
+
+	if(findtext(screen_loc, "minimap:") != 1)
+		return
+
+	screen_loc = copytext(screen_loc, length("minimap:") + 1)
+
+	var/x_text = copytext(screen_loc, 1, findtext(screen_loc, ","))
+	var/y_text = copytext(screen_loc, findtext(screen_loc, ",") + 1)
+
+	var/x = (text2num(copytext(x_text, 1, findtext(x_text, ":"))) - 1) * 16
+	x += round((text2num(copytext(x_text, findtext(x_text, ":") + 1)) + 1) / 2)
+
+	var/y = (text2num(copytext(y_text, 1, findtext(y_text, ":"))) - 1) * 16
+	y += round((text2num(copytext(y_text, findtext(y_text, ":") + 1)) + 1) / 2)
+
+	usr.loc = locate(max(1, x - 1), max(1, y - 1), usr.z)
 
 /mob/verb/minimap_test()
 	winshow(src, "minimapwindow", 1)
