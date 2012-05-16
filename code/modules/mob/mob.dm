@@ -415,7 +415,7 @@
 	if ((stat != 2 || !( ticker )))
 		usr << "\blue <B>You must be dead to use this!</B>"
 		return
-	if (ticker.mode.name == ("meteor" || "epidemic"))
+	if (ticker.mode.name == "meteor" || ticker.mode.name == "epidemic")
 		usr << "\blue Respawn is disabled."
 		return
 	else
