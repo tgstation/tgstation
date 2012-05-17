@@ -25,6 +25,7 @@ obj/machinery/atmospherics
 
 	process()
 		build_network()
+		..()
 
 	proc
 		network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)

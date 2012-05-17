@@ -199,6 +199,7 @@
 			verbs += /proc/possess
 			verbs += /proc/release
 			verbs += /client/proc/make_tajaran
+			verbs += /client/proc/make_birdman
 			verbs += /client/proc/admin_deny_shuttle
 			verbs += /client/proc/cmd_admin_christmas
 			verbs += /client/proc/editappear
@@ -454,6 +455,7 @@
 	verbs -= /client/proc/kill_airgroup
 	verbs -= /client/proc/debug_master_controller
 	verbs -= /client/proc/make_tajaran
+	verbs -= /client/proc/make_birdman
 	verbs -= /client/proc/admin_deny_shuttle
 	verbs -= /client/proc/cmd_admin_christmas
 	verbs -= /client/proc/editappear
@@ -891,8 +893,8 @@
 	switch(alert("You sure you wish to edit this mob's appearance?",,"Yes","No"))
 		if("No")
 			return
-	if(istype(M,/mob/living/carbon/human/tajaran))
-		usr << "\red Tajarans do not have an editable appearance... yet!"
+	if(istype(M,/mob/living/carbon/human/tajaran) || istype(M,/mob/living/carbon/human/birdman))
+		usr << "\red Humanoid aliens do not have an editable appearance... yet!"
 	else
 		var/new_facial = input("Please select facial hair color.", "Character Generation") as color
 		if(new_facial)

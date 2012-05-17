@@ -123,15 +123,12 @@
 	icon_state = "security_det"
 
 /obj/machinery/computer/lockdown
-	/*
 	name = "Lockdown Control"
 	desc = "Used to control blast doors."
 	icon_state = "lockdown"
 	circuit = "/obj/item/weapon/circuitboard/lockdown"
-	var/connectedDoorIds[0]
-	var/department = ""
 	var/connected_doors[0][0]
-	*/
+	var/department
 
 /obj/machinery/computer/crew
 	name = "Crew monitoring computer"
