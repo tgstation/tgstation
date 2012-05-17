@@ -912,6 +912,7 @@
 /obj/item/weapon/handcuffs/cable
 	name = "cable restraints"
 	desc = "Looks like some cables tied together. Could be used to tie something up."
+	icon_state = "cuff_red"
 
 /obj/item/weapon/locator
 	name = "locator"
