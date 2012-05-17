@@ -179,19 +179,16 @@ proc/countJob(rank)
 			del(W)
 	return equipped
 
-/proc/AutoUpdateAI(obj/subject)
-/*
+/proc/AutoUpdateAI(obj/subject) // Needed for AI's to not have to click on every computer after every change.
 	if (subject!=null)
 		for(var/mob/living/silicon/ai/M in world)
 			if ((M.client && M.machine == subject))
 				subject.attack_ai(M)
-*/
 
-/proc/AutoUpdateTK(obj/subject)
-/*	if (subject!=null)
+/proc/AutoUpdateTK(obj/subject) // Commented where used due to lag.
+	if (subject!=null)
 		for(var/obj/item/tk_grab/T in world)
 			if (T.host)
 				var/mob/M = T.host
 				if(M.client && M.machine == subject)
 					subject.attack_hand(M)
-*/

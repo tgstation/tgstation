@@ -372,7 +372,7 @@
 
 	if(M:brain_op_stage == 4.0)
 		for(var/mob/O in viewers(M, null))
-			if(O == (user || M))
+			if(O == user || O == M)
 				continue
 			if(M == user)
 				O.show_message(text("\red [user] inserts [src] into his head!"), 1)
