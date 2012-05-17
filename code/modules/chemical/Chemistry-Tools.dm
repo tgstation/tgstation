@@ -2034,7 +2034,7 @@
 	icon_state = "beakerlarge"
 	item_state = "beaker"
 	m_amt = 0
-	g_amt = 15000
+	g_amt = 5000
 	volume = 100
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,50,100)

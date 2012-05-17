@@ -249,7 +249,7 @@
 		new /obj/item/device/flashlight/pen(src)
 		new /obj/item/clothing/gloves/latex(src)
 		new /obj/item/clothing/suit/bio_suit/cmo(src)
-		new /obj/item/clothing/head/bio_hood/general(src)
+		new /obj/item/clothing/head/bio_hood/cmo(src)
 		new /obj/item/clothing/suit/storage/labcoat/cmo(src)
 		new /obj/item/clothing/suit/storage/labcoat/cmoalt(src)
 		new /obj/item/clothing/shoes/brown(src)
@@ -539,7 +539,7 @@
 		new /obj/item/device/pda/quartermaster(src)
 		new /obj/item/device/radio/headset/headset_cargo(src)
 		new /obj/item/clothing/shoes/black(src)
-		new /obj/item/clothing/under/rank/cargo(src)
+		new /obj/item/clothing/under/rank/cargotech(src)
 
 /obj/item/wardrobe/mining
 	name = "\improper Shaft Miner Wardrobe"
