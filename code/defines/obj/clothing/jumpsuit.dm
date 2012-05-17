@@ -265,7 +265,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0)
 
 /obj/item/clothing/under/rank/medical
-	desc = "It's made of a special fiber that provides minor protection against biohazards. it has a cross on the chest denoting that the wearer is trained medical personnel."
+	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel."
 	name = "medical doctor's jumpsuit"
 	icon_state = "medical"
 	item_state = "w_suit"
@@ -313,14 +313,14 @@
 
 /obj/item/clothing/under/rank/cargo
 	name = "quartermaster's jumpsuit"
-	desc = "It's a jumpsuit worn by the quartermaster. It's specially designed to prevent back injuries caused by heavy lifting."
+	desc = "It's a jumpsuit worn by the quartermaster. It's specially designed to prevent back injuries caused by pushing paper."
 	icon_state = "qm"
 	item_state = "lb_suit"
 	color = "qm"
 
 /obj/item/clothing/under/rank/cargotech
 	name = "cargo technician's jumpsuit"
-	desc = "You can always count on brown"
+	desc = "It's specially designed to prevent back injuries caused by heavy lifting."
 	icon_state = "cargotech"
 	item_state = "lb_suit"
 	color = "cargo"
