@@ -175,7 +175,10 @@ obj/machinery/access_button
 			icon_state = "access_button_off"
 
 	attack_hand(mob/user)
-		if(radio_connection)
+		if(!allowed(user))
+			user << "\red Access Denied"
+
+		else if(radio_connection)
 			var/datum/signal/signal = new
 			signal.transmission_method = 1 //radio signal
 			signal.data["tag"] = master_tag

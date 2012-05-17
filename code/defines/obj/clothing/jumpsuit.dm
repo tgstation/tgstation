@@ -320,7 +320,7 @@
 
 /obj/item/clothing/under/rank/cargotech
 	name = "cargo technician's jumpsuit"
-	desc = "It's specially designed to prevent back injuries caused by heavy lifting."
+	desc = "Shooooorts! They're comfy and easy to wear!"
 	icon_state = "cargotech"
 	item_state = "lb_suit"
 	color = "cargo"
