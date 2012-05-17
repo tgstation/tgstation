@@ -223,7 +223,7 @@
 		var/a = 1
 		a = input(usr,"How much you want take?") as num
 		if((a > src.amount) || (a < 0))
-			usr << "\red You don't have that many credits"
+			usr << "\red You don't have that many credits."
 			return
 		src.amount -= a
 		var/obj/item/weapon/spacecash/S
@@ -254,7 +254,7 @@
 		return
 	if(istype(I,src))
 		src.amount += I:amount
-		user << "You add [I:amount] credits to stack"
+		user << "You add [I:amount] credits to stack."
 		del(I)
 
 

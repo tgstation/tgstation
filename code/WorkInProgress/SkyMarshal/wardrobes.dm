@@ -432,6 +432,7 @@
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/clothing/shoes/brown(src)
 		new /obj/item/clothing/under/det(src)
+		new /obj/item/weapon/camera_film(src)
 
 /obj/item/wardrobe/officer
 	name = "\improper Security Officer Wardrobe"
