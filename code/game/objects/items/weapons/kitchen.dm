@@ -167,7 +167,7 @@ KNIFE
 	var/mob/living/carbon/human/H = M      // Let's have this ready for later.
 
 
-	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != user.zone_sel.selecting != "head") //hitting anything else other than the eyes
+	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head") //hitting anything else other than the eyes
 		if(prob(33))
 			src.add_blood(H)
 			var/turf/location = H.loc
