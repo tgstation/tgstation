@@ -1034,7 +1034,8 @@ steam.start() -- spawns the effect
 			user << "\blue You hit the metal foam to no effect."
 
 	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
-		if(air_group) return 0
+		if(!istype(mover))
+			return 0
 		return !density
 
 
