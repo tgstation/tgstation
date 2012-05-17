@@ -285,7 +285,7 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 	var/digitalcamo = 0 // Can they be tracked by the AI?
 
 	var/list/organs = list(  )	//List of organs.
-	var/list/organs2 = list()
+//	var/list/organs2 = list()
 //Singularity wants you!
 	var/grav_delay = 0
 	var/being_strangled = 0
