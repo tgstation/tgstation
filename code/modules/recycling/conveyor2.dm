@@ -1,5 +1,6 @@
 //conveyor2 is pretty much like the original, except it supports corners, but not diverters.
 //note that corner pieces transfer stuff clockwise when running forward, and anti-clockwise backwards.
+//cael - added fix for diverters, not sure if tg has them
 
 /obj/machinery/conveyor
 	icon = 'recycling.dmi'
@@ -115,14 +116,16 @@
 
 	affecting = loc.contents - src		// moved items will be all in loc
 	spawn(1)	// slight delay to prevent infinite propagation due to map order
-		var/items_moved = 0
 		for(var/atom/movable/A in affecting)
 			if(!A.anchored)
 				if(isturf(A.loc)) // this is to prevent an ugly bug that forces a player to drop what they're holding if they recently pick it up from the conveyer belt
-					step(A,movedir)
-					items_moved++
-			if(items_moved >= 10)
-				break
+					if(!step(A,movedir))
+						//if it's a crate, move the item into the crate
+						var/turf/T = get_step(A,movedir)
+						for(var/obj/structure/closet/crate/C in T)
+							if(C && C.opened)
+								A.loc = C.loc
+								break
 
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(var/obj/item/I, mob/user)
