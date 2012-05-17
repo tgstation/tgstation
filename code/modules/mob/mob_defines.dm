@@ -290,8 +290,4 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 	var/grav_delay = 0
 	var/being_strangled = 0
 
-	var/datum/preferences/storedpreferences = null
-
-//	var/geaslist = list()
-
 
