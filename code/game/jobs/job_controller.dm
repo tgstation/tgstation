@@ -304,6 +304,11 @@ var/global/datum/controller/occupations/job_master
 			C.assignment = title
 			C.name = "[C.registered_name]'s ID Card ([C.assignment])"
 			C.access = get_access(rank)
+			C.pin = rand(1000,9999)
+			C.money = 10 * rand(50,200)
+			H << "\bold \red Your station account has [C.money] credits. The pin-code is [C.pin]."
+			if(H.mind)
+				H.mind.memory += "Your pin-code is - [C.pin]<br>"
 			H.equip_if_possible(C, H.slot_wear_id)
 		if(!H.equip_if_possible(new /obj/item/weapon/pen(H), H.slot_r_store))
 			H.equip_if_possible(new /obj/item/weapon/pen(H), H.slot_ears)
