@@ -429,16 +429,16 @@ mob/living/parasite/meme/verb/Possession()
 
 	spawn
 		var/mob/dummy = new
-		var/client/host_client = host.client
-		var/client/meme_client = src.client
+		var/client/host_key = host.key
+		var/client/meme_key = src.key
 
-		if(host_client) host_client.mob = dummy
-		meme_client.mob = host
+		if(host_client) dummy.key = host_key
+		host.key = meme_key
 
 		sleep(600)
 
-		if(host_client) host_client.mob = host
-		if(meme_client) meme_client.mob = src
+		host.key = host_key
+		src.key = meme_key
 		src << "\red You lose control.."
 
 		del dummy
