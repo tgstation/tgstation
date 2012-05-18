@@ -997,7 +997,6 @@ datum
 			required_reagents = list("gin" = 2, "tonic" = 1)
 			result_amount = 3
 
-
 		cuba_libre
 			name = "Cuba Libre"
 			id = "cubalibre"
@@ -1019,12 +1018,11 @@ datum
 			required_reagents = list("vodka" = 2, "vermouth" = 1)
 			result_amount = 3
 
-
 		white_russian
 			name = "White Russian"
 			id = "whiterussian"
 			result = "whiterussian"
-			required_reagents = list("vodka" = 3, "cream" = 1, "kahlua" = 1)
+			required_reagents = list("blackrussian" = 3, "cream" = 2)
 			result_amount = 5
 
 		whiskey_cola
@@ -1206,15 +1204,15 @@ datum
 			name = "Singulo"
 			id = "singulo"
 			result = "singulo"
-			required_reagents = list("vodka" = 5, "radium" = 1, "acid" = 1, "wine" = 5)
+			required_reagents = list("vodka" = 5, "radium" = 1, "wine" = 5)
 			result_amount = 10
 
-/*		alliescocktail
+		alliescocktail
 			name = "Allies Cocktail"
 			id = "alliescocktail"
 			result = "alliescocktail"
-			required_reagents = list("gin" = 1, "vermouth" = 1)
-			result_amount = 2*/
+			required_reagents = list("martini" = 1, "vodka" = 1)
+			result_amount = 2
 
 		demonsblood
 			name = "Demons Blood"
@@ -1241,11 +1239,11 @@ datum
 			name = "Barefoot"
 			id = "barefoot"
 			result = "barefoot"
-			required_reagents = list("vodka" = 1, "cream" = 1, "vermouth" = 1, "whiskey" = 1)
-			result_amount = 4
+			required_reagents = list("berryjuice" = 1, "cream" = 1, "vermouth" = 1)
+			result_amount = 3
 
 
-////DRINKS THAT REQUIRE IMPROVED SPRITES BELOW:: -Agouri/////
+////DRINKS THAT REQUIRED IMPROVED SPRITES BELOW:: -Agouri/////
 
 		sbiten
 			name = "Sbiten"
@@ -1329,7 +1327,7 @@ datum
 			name = "Aloe"
 			id = "aloe"
 			result = "aloe"
-			required_reagents = list("cream" = 1, "whiskey" = 1)
+			required_reagents = list("cream" = 1, "whiskey" = 1, "watermelonjuice" = 1)
 			result_amount = 2
 
 		andalusia
@@ -1357,15 +1355,15 @@ datum
 			name = "Irish Car Bomb"
 			id = "irishcarbomb"
 			result = "irishcarbomb"
-			required_reagents = list("ale" = 1, "cream" = 1, "whiskey" = 1)
-			result_amount = 3
+			required_reagents = list("ale" = 1, "irishcream" = 1)
+			result_amount = 2
 
 		syndicatebomb
 			name = "Syndicate Bomb"
 			id = "syndicatebomb"
 			result = "syndicatebomb"
-			required_reagents = list("beer" = 1, "cola" = 1, "whiskey" = 1)
-			result_amount = 3
+			required_reagents = list("beer" = 1, "whiskeycola" = 1)
+			result_amount = 2
 
 		erikasurprise
 			name = "Erika Surprise"
@@ -1373,7 +1371,6 @@ datum
 			result = "erikasurprise"
 			required_reagents = list("ale" = 1, "limejuice" = 1, "whiskey" = 1, "banana" = 1, "ice" = 1)
 			result_amount = 5
-
 
 		devilskiss
 			name = "Devils Kiss"
@@ -1403,6 +1400,10 @@ datum
 			required_reagents = list("nothing" = 1, "cream" = 1, "sugar" = 1)
 			result_amount = 3
 
-
-
+		driestmartini
+			name = "Driest Martini"
+			id = "driestmartini"
+			result = "driestmartini"
+			required_reagents = list("nothing" = 1, "gin" = 1)
+			result_amount = 2
 

@@ -2146,7 +2146,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/pacid
 	name = "Polytrinic Acid Bottle"
-	desc = "A small bottle. Contains a small amount of Polytronic Acid"
+	desc = "A small bottle. Contains a small amount of Polytrinic Acid"
 	icon = 'chemical.dmi'
 	icon_state = "bottle17"
 	New()
@@ -3340,7 +3340,7 @@
 					desc = "Creepy time!"
 				if("changelingsting")
 					icon_state = "changelingsting"
-					name = "Changeling sting"
+					name = "Changeling Sting"
 					desc = "A stingy drink."
 				if("irishcarbomb")
 					icon_state = "irishcarbomb"
@@ -3354,6 +3354,10 @@
 					icon_state = "erikasurprise"
 					name = "Erika Surprise"
 					desc = "The surprise is, it's green!"
+				if("driestmartini")
+					icon_state = "driestmartini"
+					name = "Driest Martini"
+					desc = "Only for the experienced. You think you see sand floating in the glass."
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"

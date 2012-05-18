@@ -3957,3 +3957,22 @@ datum
 					M.confused = max(M:confused+15,15)
 				..()
 				return
+
+		driestmartini
+			name = "Driest Martini"
+			id = "driestmartini"
+			description = "Only for the experienced. You think you see sand floating in the glass."
+			nutriment_factor = 1 * REAGENTS_METABOLISM
+			color = "#2E6671" // rgb: 46, 102, 113
+
+			on_mob_life(var/mob/living/M as mob)
+				if(!data) data = 1
+				data++
+				M.dizziness +=10
+				if(data >= 55 && data <115)
+					if (!M.stuttering) M.stuttering = 1
+					M.stuttering += 10
+				else if(data >= 115 && prob(33))
+					M.confused = max(M:confused+15,15)
+				..()
+				return
