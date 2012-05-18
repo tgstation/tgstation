@@ -432,7 +432,7 @@ mob/living/parasite/meme/verb/Possession()
 		var/client/host_key = host.key
 		var/client/meme_key = src.key
 
-		if(host_client) dummy.key = host_key
+		dummy.key = host_key
 		host.key = meme_key
 
 		sleep(600)

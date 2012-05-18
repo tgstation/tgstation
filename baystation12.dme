@@ -987,6 +987,7 @@
 #include "code\modules\mob\living\carbon\monkey\npc.dm"
 #include "code\modules\mob\living\carbon\monkey\powers.dm"
 #include "code\modules\mob\living\carbon\monkey\say.dm"
+#include "code\modules\mob\living\parasite\meme.dm"
 #include "code\modules\mob\living\silicon\death.dm"
 #include "code\modules\mob\living\silicon\say.dm"
 #include "code\modules\mob\living\silicon\silicon.dm"
