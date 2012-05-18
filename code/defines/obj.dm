@@ -619,6 +619,32 @@
 	desc = "You sit in this. Either by will or force."
 	icon_state = "chair"
 
+/obj/structure/stool/bed/chair/comfy
+	name = "comfy chair"
+	desc = "It looks comfy."
+
+/obj/structure/stool/bed/chair/comfy/brown
+	icon_state = "comfychair_brown"
+
+/obj/structure/stool/bed/chair/comfy/beige
+	icon_state = "comfychair_beige"
+
+/obj/structure/stool/bed/chair/comfy/teal
+	icon_state = "comfychair_teal"
+
+/obj/structure/stool/bed/chair/comfy/black
+	icon_state = "comfychair_black"
+
+/obj/structure/stool/bed/chair/comfy/lime
+	icon_state = "comfychair_lime"
+
+
+/obj/structure/stool/bed/chair/office/light
+	icon_state = "officechair_white"
+
+/obj/structure/stool/bed/chair/office/dark
+	icon_state = "officechair_dark"
+
 /obj/structure/table
 	name = "table"
 	desc = "A square piece of metal standing on four metal legs. It can not move."
