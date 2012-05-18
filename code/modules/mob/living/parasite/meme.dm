@@ -215,6 +215,7 @@ mob/living/parasite/meme/verb/Hallucinate()
 
 	usr << "<b>You make [target] hallucinate.</b>"
 
+// Jump to a closeby target through a whisper
 mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob in world)
 	set category = "Meme"
 
@@ -245,6 +246,7 @@ mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob i
 
 	usr << "<b>You successfully jumped to [target]."
 
+// Jump to a distant target through a shout
 mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob in world)
 	set category = "Meme"
 
@@ -274,6 +276,59 @@ mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob 
 	src.enter_host(target)
 
 	usr << "<b>You successfully jumped to [target]."
+
+// ATTUNE a mob, adding it to the indoctrinated list
+mob/living/parasite/meme/verb/Attune()
+	set category = "Meme"
+
+	if(host in src.indoctrinated)
+		usr << "<b>You have already attuned this host.</b>"
+		return
+
+	if(!host) return
+	if(!use_points(400)) return
+
+	src.indoctrinated.Add(host)
+
+	usr << "<b>You successfully indoctrinated [host]."
+
+// Enables the mob to take a lot more damage
+mob/living/parasite/meme/verb/Analgesic()
+	set category = "Meme"
+
+	if(!host) return
+	if(!use_points(500)) return
+
+	usr << "<b>You inject drugs into [host]."
+	host << "\red You feel your body strengthen and your pain subside.."
+	host.analgesic = 60
+	while(host.analgesic > 0)
+		sleep(10)
+	host << "\red The dizziness wears off, and you can feel pain again.."
+
+
+// Take control of the mob
+mob/living/parasite/meme/verb/Possession()
+	set category = "Meme"
+
+	if(!host) return
+	if(!use_points(500)) return
+
+	usr << "<b>You take control of [host]!</b>"
+	host << "\red Everything goes black.."
+
+	spawn
+		var/client/host_client = host.client
+		var/client/meme_client = src.client
+
+		if(host_client) host_client.mob = null
+		meme_client.mob = host
+
+		sleep(300)
+
+		if(host_client) host_client.mob = host
+		if(meme_client) meme_client.mob = src
+		src << "\red You lose control.."
 
 
 

@@ -133,6 +133,9 @@
 	proc
 
 		handle_health_updates()
+			// the analgesic effect wears off slowly
+			analgesic = max(0, analgesic - 1)
+
 			// if the mob has enough health, she should slowly heal
 			if(stat == 1)
 				if(health >= 0)
@@ -150,6 +153,8 @@
 				if(!lying)
 					lying = 1 //Seriously, stay down :x
 					update_clothing()
+
+
 
 		clamp_values()
 
@@ -1445,6 +1450,8 @@
 
 	handle_shock()
 		..()
+
+		if(analgesic) return // analgesic avoids all traumatic shock temporarily
 
 		if(health < 0)
 			// health 0 makes you immediately collapse
