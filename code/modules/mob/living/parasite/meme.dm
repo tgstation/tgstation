@@ -61,27 +61,28 @@ mob/living/parasite/meme/var/list/indoctrinated = list()
 mob/living/parasite/meme/Life()
 	..()
 
+	if(!host) return
+
 	// recover meme points slowly
 	var/gain = 1
 	if(dormant) gain = 3 // dormant recovers points faster
 
 	meme_points = min(meme_points + gain, MAXIMUM_MEME_POINTS)
 
-	if(host)
-		// if there are sleep toxins in the host's body, that's bad
-		if(host.reagents.has_reagent("stoxin"))
-			src << "\red <b>Something in your host's blood makes you lose consciousness.. you fade away..</b>"
-			src.death()
-			return
-		// a host without brain is no good
-		if(!host.mind)
-			src << "\red <b>Your host has no mind.. you fade away..</b>"
-			src.death()
-			return
-		if(host.stat == 2)
-			src << "\red <b>Your host has died.. you fade away..</b>"
-			src.death()
-			return
+	// if there are sleep toxins in the host's body, that's bad
+	if(host.reagents.has_reagent("stoxin"))
+		src << "\red <b>Something in your host's blood makes you lose consciousness.. you fade away..</b>"
+		src.death()
+		return
+	// a host without brain is no good
+	if(!host.mind)
+		src << "\red <b>Your host has no mind.. you fade away..</b>"
+		src.death()
+		return
+	if(host.stat == 2)
+		src << "\red <b>Your host has died.. you fade away..</b>"
+		src.death()
+		return
 
 	if(host.blinded) src.blinded = 1
 	else 			 src.blinded = 0
