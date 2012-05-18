@@ -101,7 +101,6 @@
 		H.equip_if_possible(new /obj/item/clothing/gloves/black(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/clothing/suit/det_suit(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/weapon/lighter/zippo(H), H.slot_l_store)
-		H.equip_if_possible(new /obj/item/weapon/reagent_containers/food/snacks/candy_corn(H), H.slot_h_store)
 
 		if(H.backbag == 1)//Why cant some of these things spawn in his office?
 			var/obj/item/weapon/storage/box/survival/Evipack = new /obj/item/weapon/storage/box/survival(H)

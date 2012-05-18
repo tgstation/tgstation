@@ -68,7 +68,6 @@ proc/countJob(rank)
 	slot_r_store = 16
 	slot_s_store = 17
 	slot_in_backpack = 18
-	slot_h_store = 19
 
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, del_on_fail = 1)
 	for (var/slot in slots)
@@ -85,9 +84,6 @@ proc/countJob(rank)
 		del(W)
 		return
 	if(slot == s_store && !src.wear_suit)
-		del(W)
-		return
-	if(slot == h_store && !src.head)
 		del(W)
 		return
 	switch(slot)
@@ -165,10 +161,6 @@ proc/countJob(rank)
 				if(B.contents.len < B.storage_slots && W.w_class <= B.max_w_class)
 					W.loc = B
 					equipped = 1
-		if(slot_h_store)
-			if(!src.h_store)
-				src.h_store = W
-				equipped = 1
 
 	if(equipped)
 		W.layer = 20
