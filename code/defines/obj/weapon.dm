@@ -159,7 +159,7 @@
 	ammo = 30
 
 /obj/item/weapon/spacecash
-	name = "space cash"
+	name = "stack of credits"
 	desc = "It's worth 1 credit."
 	gender = PLURAL
 	icon = 'items.dmi'
@@ -175,6 +175,7 @@
 	var/access = list()
 	access = access_crate_cash
 	var/worth = 1
+	var/amount = 1
 
 /obj/item/weapon/spacecash/c10
 	icon_state = "spacecash10"
@@ -211,6 +212,51 @@
 	access = access_crate_cash
 	desc = "It's worth 1000 credits."
 	worth = 1000
+/obj/item/weapon/spacecash/attack_self(var/mob/user)
+	var/dat = "<HEAD><TITLE>Space cash stack</TITLE></HEAD>"
+	dat += "Credit amount - [worth * amount]<br>"
+	dat += "<a href='?src=\ref[src];takemoney=1'>Take amount</a><br>"
+	user << browse(dat,"window=money")
+
+/obj/item/weapon/spacecash/Topic(href, href_list)
+	if(href_list["takemoney"])
+		var/a = 1
+		a = input(usr,"How much you want take?") as num
+		if((a > src.amount) || (a < 0))
+			usr << "\red You don't have that many credits."
+			return
+		src.amount -= a
+		var/obj/item/weapon/spacecash/S
+		if(a <= 0)
+			return
+		switch(src.worth)
+			if(1)
+				S = new /obj/item/weapon/spacecash(get_turf(src))
+			if(10)
+				S = new /obj/item/weapon/spacecash/c10(get_turf(src))
+			if(20)
+				S = new /obj/item/weapon/spacecash/c20(get_turf(src))
+			if(50)
+				S = new /obj/item/weapon/spacecash/c50(get_turf(src))
+			if(100)
+				S = new /obj/item/weapon/spacecash/c100(get_turf(src))
+			if(200)
+				S = new /obj/item/weapon/spacecash/c200(get_turf(src))
+			if(500)
+				S = new /obj/item/weapon/spacecash/c500(get_turf(src))
+			if(1000)
+				S = new /obj/item/weapon/spacecash/c1000(get_turf(src))
+		S.amount = a
+		if(src.amount == 0)
+			del(src)
+/obj/item/weapon/spacecash/attackby(var/obj/I, var/mob/user)
+	if(!I)
+		return
+	if(istype(I,src))
+		src.amount += I:amount
+		user << "You add [I:amount] credits to stack."
+		del(I)
+
 
 /obj/item/device/mass_spectrometer
 	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
@@ -573,11 +619,12 @@
 	item_state = "card-id"
 	var/access = list()
 	var/registered_name = null // The name registered_name on the card
-
+	var/pin = 0
+	var/money = 0
 	var/assignment = null
 	var/over_jumpsuit = 1 // If set to 0, it won't display on top of the mob's jumpsuit
 	var/dorm = 0		// determines if this ID has claimed a dorm already
-
+	var/obj/item/weapon/credit_card/card
 	var/blood_type = "\[UNSET\]"
 	var/dna_hash = "\[UNSET\]"
 	var/fingerprint_hash = "\[UNSET\]"
@@ -865,6 +912,7 @@
 /obj/item/weapon/handcuffs/cable
 	name = "cable restraints"
 	desc = "Looks like some cables tied together. Could be used to tie something up."
+	icon_state = "cuff_red"
 
 /obj/item/weapon/locator
 	name = "locator"

@@ -107,6 +107,12 @@ FINGERPRINT CARD
 	else
 		..()
 
+/obj/item/weapon/card/id/proc/checkaccess(p,var/mob/user)
+	if(p == pin)
+		user << "\green Access granted"
+		return 1
+	user << "\red Access denied"
+	return 0
 
 // FINGERPRINT HOLDER
 

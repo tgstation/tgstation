@@ -151,6 +151,18 @@
 	icon_state = "down"
 	anchored = 0
 
+/obj/item/roller
+	name = "roller bed"
+	desc = "A collapsed roller bed that can be carried around."
+	icon = 'rollerbed.dmi'
+	icon_state = "folded"
+	w_class = 4.0 // Can't be put in backpacks. Oh well.
+
+	attack_self(mob/user)
+		var/obj/structure/stool/bed/roller/R = new /obj/structure/stool/bed/roller(user.loc)
+		R.add_fingerprint(user)
+		del(src)
+
 //obj/structure/stool/bed/roller/Move()
 /obj/structure/stool/bed/Move()
 	..()
@@ -181,7 +193,20 @@
 		buckled_mob.pixel_y = 0
 		buckled_mob.anchored = 0
 		buckled_mob.buckled = null
+		buckled_mob = null
 	density = 0
 	icon_state = "down"
 	..()
 	return
+
+/obj/structure/stool/bed/roller/MouseDrop(over_object, src_location, over_location)
+	..()
+	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
+		if(!ishuman(usr))	return
+		if(buckled_mob)	return 0
+		visible_message("[usr] collapses \the [src.name]")
+		new/obj/item/roller(get_turf(src))
+		spawn(0)
+			del(src)
+		return
+
