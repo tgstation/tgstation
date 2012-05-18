@@ -1728,7 +1728,7 @@
 					//SN src = null
 					del(src)
 					return
-				message = text("\red <B>[] is trying perform CPR on []!</B>", source, target)
+				message = text("\red <B>[] is trying to perform CPR on []!</B>", source, target)
 			if("id")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their ID removed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) ID</font>")
