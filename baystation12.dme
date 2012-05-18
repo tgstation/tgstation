@@ -1143,12 +1143,9 @@
 #include "code\WorkInProgress\AI_Visibility.dm"
 #include "code\WorkInProgress\buildmode.dm"
 #include "code\WorkInProgress\explosion_particles.dm"
-<<<<<<< HEAD
+#include "code\WorkInProgress\animusstation\atm.dm"
 #include "code\WorkInProgress\Cael_Aislinn\BirdMan\bird_transformation.dm"
 #include "code\WorkInProgress\Cael_Aislinn\BirdMan\birdman.dm"
-=======
-#include "code\WorkInProgress\animusstation\atm.dm"
->>>>>>> fca7924e47da378a3223559e6833dc831d35e8bc
 #include "code\WorkInProgress\Cael_Aislinn\Rust\core_field.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Rust\core_gen.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Rust\core_monitor.dm"
