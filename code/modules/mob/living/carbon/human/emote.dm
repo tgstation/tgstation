@@ -537,8 +537,14 @@
 
 
 		if (m_type & 1)
-			for (var/mob/O in world) if(O.client && (O.client.eye in viewers(src.loc)))
+			for (var/mob/O in viewers(src, null))
+				if(istype(O,/mob/living/carbon/human))
+					for(var/mob/living/parasite/P in O:parasites)
+						P.show_message(message, m_type)
 				O.show_message(message, m_type)
 		else if (m_type & 2)
-			for (var/mob/O in world) if(O.client && (O.client.eye in hearers(src.loc)))
+			for (var/mob/O in hearers(src.loc, null))
+				if(istype(O,/mob/living/carbon/human))
+					for(var/mob/living/parasite/P in O:parasites)
+						P.show_message(message, m_type)
 				O.show_message(message, m_type)
