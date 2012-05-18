@@ -61,6 +61,10 @@ mob/living/parasite/meme/var/list/indoctrinated = list()
 mob/living/parasite/meme/Life()
 	..()
 
+	if(client)
+		if(blinded) client.eye = null
+		else		client.eye = mob
+
 	if(!host) return
 
 	// recover meme points slowly
