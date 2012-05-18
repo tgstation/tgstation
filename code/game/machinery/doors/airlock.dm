@@ -1027,6 +1027,11 @@ About the new airlock wires panel:
 					if(15) new/obj/structure/door_assembly/door_assembly_eng/glass( src.loc )	//issue 301 -mysthic
 					if(16) new/obj/structure/door_assembly/door_assembly_sec/glass( src.loc )
 					if(17) new/obj/structure/door_assembly/door_assembly_med/glass( src.loc )
+					if(18) new/obj/structure/door_assembly/door_assembly_min( src.loc )
+					if(19) new/obj/structure/door_assembly/door_assembly_atmo( src.loc )
+					if(20) new/obj/structure/door_assembly/door_assembly_research( src.loc )
+					if(21) new/obj/structure/door_assembly/door_assembly_research/glass( src.loc )
+					if(22) new/obj/structure/door_assembly/door_assembly_min/glass( src.loc )
 				var/obj/item/weapon/airlock_electronics/ae
 				if(!electronics)
 					ae = new/obj/item/weapon/airlock_electronics( src.loc )

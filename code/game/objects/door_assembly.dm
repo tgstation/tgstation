@@ -72,11 +72,17 @@ obj/structure/door_assembly
 	door_assembly_min
 		name = "Mining Airlock Assembly"
 		icon_state = "door_as_min1"
+		glass_base_icon_state = "door_as_gmin"
+		glass_type = /obj/machinery/door/airlock/glass_mining
 		airlock_type = /obj/machinery/door/airlock/mining
 		anchored = 1
 		density = 1
 		state = 1
 		glass = 0
+
+		glass
+			glass = 1
+			icon_state = "door_as_gmin1"
 
 	door_assembly_atmo
 		name = "Atmospherics Airlock Assembly"
@@ -90,11 +96,17 @@ obj/structure/door_assembly
 	door_assembly_research
 		name = "Research Airlock Assembly"
 		icon_state = "door_as_res1"
+		glass_base_icon_state = "door_as_gres"
+		glass_type = /obj/machinery/door/airlock/glass_research
 		airlock_type = /obj/machinery/door/airlock/research
 		anchored = 1
 		density = 1
 		state = 1
 		glass = 0
+
+		glass
+			glass = 1
+			icon_state = "door_as_gres1"
 
 	door_assembly_med
 		name = "Medical Airlock Assembly"
