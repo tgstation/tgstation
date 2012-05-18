@@ -199,7 +199,6 @@
 			verbs += /proc/possess
 			verbs += /proc/release
 			verbs += /client/proc/make_tajaran
-			verbs += /client/proc/make_birdman
 			verbs += /client/proc/admin_deny_shuttle
 			verbs += /client/proc/cmd_admin_christmas
 			verbs += /client/proc/editappear
@@ -455,7 +454,6 @@
 	verbs -= /client/proc/kill_airgroup
 	verbs -= /client/proc/debug_master_controller
 	verbs -= /client/proc/make_tajaran
-	verbs -= /client/proc/make_birdman
 	verbs -= /client/proc/admin_deny_shuttle
 	verbs -= /client/proc/cmd_admin_christmas
 	verbs -= /client/proc/editappear

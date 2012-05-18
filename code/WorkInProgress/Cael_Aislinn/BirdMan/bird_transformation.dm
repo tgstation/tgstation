@@ -1,3 +1,4 @@
+//don't use this
 /mob/living/carbon/human/proc/Birdize()
 	if (monkeyizing)
 		return

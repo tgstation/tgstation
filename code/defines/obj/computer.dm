@@ -128,7 +128,7 @@
 	icon_state = "lockdown"
 	circuit = "/obj/item/weapon/circuitboard/lockdown"
 	var/connected_doors[0][0]
-	var/department
+	var/department	//each department has a hardcoded list of possible door networks
 
 /obj/machinery/computer/crew
 	name = "Crew monitoring computer"

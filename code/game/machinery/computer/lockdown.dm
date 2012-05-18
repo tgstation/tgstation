@@ -15,8 +15,8 @@
 
 	New()
 		..()
-
 		//only load blast doors for map-defined departments for the moment
+		//door networks are hardcoded here.
 		switch(department)
 			if("Engineering")
 				//Antiqua SinguloEngineering

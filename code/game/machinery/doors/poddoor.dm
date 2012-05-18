@@ -30,7 +30,7 @@
 			return
 	return
 
-/obj/machinery/door/poddoor/open()
+/obj/machinery/door/poddoor/open(var/closeafterdelay = 0)
 	if (src.operating == 1) //doors can still open when emag-disabled
 		return
 	if (!ticker)
@@ -46,7 +46,7 @@
 
 	if(operating == 1) //emag again
 		src.operating = 0
-	if(autoclose)
+	if(closeafterdelay)
 		spawn(50)
 			autoclose()
 	return 1

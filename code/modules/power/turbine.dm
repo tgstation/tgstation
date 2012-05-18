@@ -1,3 +1,4 @@
+//cleaned up the file. might have to tone it down a bit in testing, but we'll see what happens
 
 // the inlet stage of the gas turbine electricity generator
 /obj/machinery/compressor

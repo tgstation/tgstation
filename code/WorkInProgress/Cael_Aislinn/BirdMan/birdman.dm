@@ -1,4 +1,5 @@
 //these are bugged as fuck. dont use them if you like runtimes.
+//was testing some icon overlays. might actually fix them up one day
 
 /mob/living/carbon/human/birdman
 	name = "birdman"
