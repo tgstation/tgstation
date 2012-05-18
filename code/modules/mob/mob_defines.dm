@@ -70,6 +70,7 @@
 	var/obj/screen/zone_sel/zone_sel = null
 
 	var/emote_allowed = 1
+	var/speech_allowed = 1
 	var/computer_id = null
 	var/lastattacker = null
 	var/lastattacked = null

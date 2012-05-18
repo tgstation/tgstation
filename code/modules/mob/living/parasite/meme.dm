@@ -53,17 +53,50 @@ mob/living/parasite/proc/exit_host()
 
 // Memes use points for many actions
 mob/living/parasite/meme/var/meme_points = 100
+mob/living/parasite/meme/var/dormant = 0
 
 // Memes have a list of indoctrinated hosts
 mob/living/parasite/meme/var/list/indoctrinated = list()
 
 mob/living/parasite/meme/Life()
 	..()
+
 	// recover meme points slowly
-	meme_points = min(meme_points + 1, MAXIMUM_MEME_POINTS)
+	var/gain = 1
+	if(dormant) gain = 3 // dormant recovers points faster
+
+	meme_points = min(meme_points + gain, MAXIMUM_MEME_POINTS)
+
+	if(host)
+		// if there are sleep toxins in the host's body, that's bad
+		if(host.reagents.has_reagent("stoxin"))
+			src << "\red <b>Something in your host's blood makes you lose consciousness.. you fade away..</b>"
+			src.death()
+			return
+		// a host without brain is no good
+		if(!host.mind)
+			src << "\red <b>Your host has no mind.. you fade away..</b>"
+			src.death()
+			return
+		if(host.stat == 2)
+			src << "\red <b>Your host has died.. you fade away..</b>"
+			src.death()
+			return
+
+	if(host.blinded) src.blinded = 1
+	else 			 src.blinded = 0
+
+
+mob/living/parasite/meme/death()
+	// make sure the mob is on the actual map before gibbing
+	if(host) src.loc = host.loc
+	return ..(1)
 
 // When a meme speaks, it speaks through its host
 mob/living/parasite/meme/say(message as text)
+	if(dormant)
+		usr << "\red You're dormant!"
+		return
 	if(!host)
 		usr << "\red You can't speak without host!"
 		return
@@ -72,6 +105,9 @@ mob/living/parasite/meme/say(message as text)
 
 // Same as speak, just with whisper
 mob/living/parasite/meme/whisper(message as text)
+	if(dormant)
+		usr << "\red You're dormant!"
+		return
 	if(!host)
 		usr << "\red You can't speak without host!"
 		return
@@ -81,6 +117,12 @@ mob/living/parasite/meme/whisper(message as text)
 // Make the host do things
 mob/living/parasite/meme/me_verb(message as text)
 	set name = "Me"
+
+
+	if(dormant)
+		usr << "\red You're dormant!"
+		return
+
 	if(!host)
 		usr << "\red You can't emote without host!"
 		return
@@ -95,6 +137,9 @@ mob/living/parasite/meme/say_understands(mob/other)
 
 // Try to use amount points, return 1 if successful
 mob/living/parasite/meme/proc/use_points(amount)
+	if(dormant)
+		usr << "\red You're dormant!"
+		return
 	if(src.meme_points < amount)
 		src << "<b>* You don't have enough meme points(need [amount]).</b>"
 		return 0
@@ -104,7 +149,15 @@ mob/living/parasite/meme/proc/use_points(amount)
 
 // Let the meme choose one of his indoctrinated mobs as target
 mob/living/parasite/meme/proc/select_indoctrinated(var/title, var/message)
-	var/list/candidates = indoctrinated.Copy()
+	var/list/candidates
+
+	// Can only affect other mobs thant he host if not blinded
+	if(blinded)
+		candidates = list()
+		src << "\red You are blinded, so you can not affect mobs other than your host."
+	else
+		candidates = indoctrinated.Copy()
+
 	candidates.Add(src.host)
 
 	var/mob/target = null
@@ -146,6 +199,57 @@ mob/living/parasite/meme/verb/Thought()
 	target.show_message(rendered)
 
 	usr << "<i>You make [target] hear:</i> [rendered]"
+
+// Mutes the host
+mob/living/parasite/meme/verb/Mute()
+	set category = "Meme"
+
+	if(!src.host) return
+	if(!host.speech_allowed)
+		usr << "\red Your host already can't speak.."
+		return
+	if(!use_points(250)) return
+
+	spawn
+		// backup the host incase we switch hosts after using the verb
+		var/mob/host = src.host
+
+		host << "\red Your tongue feels numb.. You lose your ability to speak."
+		usr << "\red Your host can't speak anymore."
+
+		host.speech_allowed = 0
+
+		sleep(1200)
+
+		host.speech_allowed = 1
+		host << "\red Your tongue has feeling again.."
+		usr << "\red [host] can speak again."
+
+// Makes the host unable to emote
+mob/living/parasite/meme/verb/Paralyze()
+	set category = "Meme"
+
+	if(!src.host) return
+	if(!host.emote_allowed)
+		usr << "\red Your host already can't use body language.."
+		return
+	if(!use_points(250)) return
+
+	spawn
+		// backup the host incase we switch hosts after using the verb
+		var/mob/host = src.host
+
+		host << "\red Your body feels numb.. You lose your ability to use body language."
+		usr << "\red Your host can't use body language anymore."
+
+		host.emote_allowed = 0
+
+		sleep(1200)
+
+		host.emote_allowed = 1
+		host << "\red Your body has feeling again.."
+		usr << "\red [host] can use body language again."
+
 
 
 // Cause great agony with the host, used for conditioning the host
@@ -219,7 +323,7 @@ mob/living/parasite/meme/verb/Hallucinate()
 mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob in world)
 	set category = "Meme"
 
-	if(!istype(target, /mob/living/carbon/human))
+	if(!istype(target, /mob/living/carbon/human) || !target.mind)
 		src << "<b>You can't jump to this creature..</b>"
 		return
 	if(!(target in view(1, host)+src))
@@ -227,7 +331,7 @@ mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob i
 		return
 
 	// Find out whether we can speak
-	if (host.silent || host.stat || (host.disabilities & 64))
+	if (host.silent || (host.disabilities & 64))
 		src << "<b>Your host can't speak..</b>"
 		return
 
@@ -250,7 +354,7 @@ mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob i
 mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob in world)
 	set category = "Meme"
 
-	if(!istype(target, /mob/living/carbon/human))
+	if(!istype(target, /mob/living/carbon/human) || !target.mind)
 		src << "<b>You can't jump to this creature..</b>"
 		return
 	if(!(target in view(host)))
@@ -258,7 +362,7 @@ mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob 
 		return
 
 	// Find out whether we can speak
-	if (host.silent || host.stat || (host.disabilities & 64))
+	if (host.silent || (host.disabilities & 64))
 		src << "<b>Your host can't speak..</b>"
 		return
 
@@ -297,6 +401,9 @@ mob/living/parasite/meme/verb/Analgesic()
 	set category = "Meme"
 
 	if(!host) return
+	if(!(host in indoctrinated))
+		usr << "\red You need to attune the host first."
+		return
 	if(!use_points(500)) return
 
 	usr << "<b>You inject drugs into [host]."
@@ -312,25 +419,47 @@ mob/living/parasite/meme/verb/Possession()
 	set category = "Meme"
 
 	if(!host) return
+	if(!(host in indoctrinated))
+		usr << "\red You need to attune the host first."
+		return
 	if(!use_points(500)) return
 
 	usr << "<b>You take control of [host]!</b>"
 	host << "\red Everything goes black.."
 
 	spawn
+		var/mob/dummy = new
 		var/client/host_client = host.client
 		var/client/meme_client = src.client
 
-		if(host_client) host_client.mob = null
+		if(host_client) host_client.mob = dummy
 		meme_client.mob = host
 
-		sleep(300)
+		sleep(600)
 
 		if(host_client) host_client.mob = host
 		if(meme_client) meme_client.mob = src
 		src << "\red You lose control.."
 
+		del dummy
 
+// Enter dormant mode, increases meme point gain
+mob/living/parasite/meme/verb/Dormant()
+	set category = "Meme"
+
+	if(!host) return
+	if(!use_points(100)) return
+
+	usr << "<b>You enter dormant mode.. You won't be able to take action until all your points have recharged.</b>"
+
+	dormant = 1
+
+	while(meme_points < 500)
+		sleep(10)
+
+	dormant = 0
+
+	usr << "\red You have regained all points and exited dormant mode!"
 
 
 // TEST CODE

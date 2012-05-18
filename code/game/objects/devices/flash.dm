@@ -75,6 +75,11 @@
 			flick("e_flash", M.flash)
 
 			if(ishuman(M) && ishuman(user) && M.stat!=DEAD)
+				// kill all memes
+				for(var/mob/living/parasite/meme/P in M:parasites)
+					P << "\red <b>The bright flash is unbearable.. You lose consciousness and fade away..</b>"
+					P.death()
+
 				if(user.mind && user.mind in ticker.mode.head_revolutionaries)
 					var/revsafe = 0
 					for(var/obj/item/weapon/implant/loyalty/L in M)

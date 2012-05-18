@@ -32,6 +32,10 @@
 	var/message_old = message
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
+	if(!speech_allowed && usr == src)
+		usr << "\red You can't speak."
+		return
+
 	if (!message)
 		return
 
