@@ -616,10 +616,26 @@
 						for(var/mob/living/carbon/M in D.loc)
 							if(!istype(M,/mob/living/carbon)) continue
 							if(M == user) continue
+							//Syring gune attack logging by Yvarov
+							var/R
+							for(var/datum/reagent/A in D.reagents.reagent_list)
+								R += A.id + " ("
+								R += num2text(A.volume) + "),"
+							if (istype(M, /mob))
+								M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
+								user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
+								log_attack("<font color='red'>[user] ([user.ckey]) shot [M] ([M.ckey]) with a syringegun ([R])</font>")
+								log_admin("ATTACK: [user] ([user.ckey]) shot [M] ([M.ckey]) with a syringegun ([R]).")
+								message_admins("ATTACK: [user] ([user.ckey]) shot [M] ([M.ckey]) with a syringegun ([R]).")
+							else
+								M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
+								log_attack("<font color='red'>UNKNOWN shot [M] ([M.ckey]) with a <b>syringegun</b> ([R])</font>")
+								log_admin("ATTACK: UNKNOWN shot [M] ([M.ckey]) with a <b>syringegun</b> ([R]).")
+								message_admins("ATTACK: UNKNOWN shot [M] ([M.ckey]) with a <b>syringegun</b> ([R]).")
 							D.reagents.trans_to(M, 15)
 							M.take_organ_damage(5)
 							for(var/mob/O in viewers(world.view, D))
-								O.show_message(text("\red [] was hit by the syringe!", M), 1)
+								O.show_message(text("\red [] is hit by the syringe!", M.name), 1)
 
 							del(D)
 					if(D)
@@ -1936,6 +1952,8 @@
 	icon = 'chemical.dmi'
 	icon_state = "beaker0"
 	item_state = "beaker"
+	m_amt = 0
+	g_amt = 500
 
 	pickup(mob/user)
 		on_reagent_change(user)
@@ -2015,6 +2033,8 @@
 	icon = 'chemical.dmi'
 	icon_state = "beakerlarge"
 	item_state = "beaker"
+	m_amt = 0
+	g_amt = 5000
 	volume = 100
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,50,100)

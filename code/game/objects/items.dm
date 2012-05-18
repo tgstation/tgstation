@@ -63,7 +63,10 @@
 				O.place = "handcuff"
 				M.requests += O
 				spawn( 0 )
-					playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
+					if(istype(src, /obj/item/weapon/handcuffs/cable))
+						playsound(src.loc, 'cablecuff.ogg', 30, 1, -2)
+					else
+						playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
 					O.process()
 			return
 		else
@@ -77,7 +80,10 @@
 				O.place = "handcuff"
 				M.requests += O
 				spawn( 0 )
-					playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
+					if(istype(src, /obj/item/weapon/handcuffs/cable))
+						playsound(src.loc, 'cablecuff.ogg', 30, 1, -2)
+					else
+						playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
 					O.process()
 			return
 	return
@@ -372,7 +378,7 @@
 
 	if(M:brain_op_stage == 4.0)
 		for(var/mob/O in viewers(M, null))
-			if(O == (user || M))
+			if(O == user || O == M)
 				continue
 			if(M == user)
 				O.show_message(text("\red [user] inserts [src] into his head!"), 1)

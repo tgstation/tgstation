@@ -26,6 +26,10 @@ obj/machinery/atmospherics/tvalve
 			icon_state = "tvalve[state]"
 
 	New()
+		initialize_directions()
+		..()
+
+	proc/initialize_directions()
 		switch(dir)
 			if(NORTH)
 				initialize_directions = SOUTH|NORTH|EAST
@@ -35,7 +39,6 @@ obj/machinery/atmospherics/tvalve
 				initialize_directions = WEST|EAST|SOUTH
 			if(WEST)
 				initialize_directions = EAST|WEST|NORTH
-		..()
 
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 		if(reference == node1)
@@ -339,7 +342,7 @@ obj/machinery/atmospherics/tvalve
 obj/machinery/atmospherics/tvalve/mirrored
 	icon_state = "tvalvem0"
 
-	New()
+	initialize_directions()
 		switch(dir)
 			if(NORTH)
 				initialize_directions = SOUTH|NORTH|WEST
@@ -349,7 +352,6 @@ obj/machinery/atmospherics/tvalve/mirrored
 				initialize_directions = WEST|EAST|NORTH
 			if(WEST)
 				initialize_directions = EAST|WEST|SOUTH
-		..()
 
 	initialize()
 		var/node1_dir

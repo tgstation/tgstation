@@ -1,4 +1,3 @@
-
 /obj/structure/shuttle
 	name = "shuttle"
 	icon = 'shuttle.dmi'
@@ -11,6 +10,9 @@
 	opacity = 0
 	anchored = 1
 
+	CanPass(atom/movable/mover, turf/target, height, air_group)
+		if(!height || air_group) return 0
+		else return ..()
 
 /obj/structure/shuttle/engine
 	name = "engine"

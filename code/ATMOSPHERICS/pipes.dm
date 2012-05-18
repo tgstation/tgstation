@@ -341,6 +341,8 @@ obj/machinery/atmospherics/pipe
 
 		New()
 			initialize_directions = dir
+			if(air_temporary)
+				air_temporary.update_values()
 			..()
 
 		process()

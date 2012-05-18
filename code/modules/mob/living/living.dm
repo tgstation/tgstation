@@ -3,10 +3,10 @@
 	..()
 
 	// While I'm doing a terriblly lazy way of initalizing things, why don't I make it so people's preferences tag along with them.  This could be useful in fixing the fucking cloned-as-unknown thing, making me not have to dynamically load them during tensioner, and of course, storing metadata.
-
-	if(!src.storedpreferences)
-		src.storedpreferences = new
-		storedpreferences.savefile_load(src, 0)
+//Whoever wrote this should go suck a choad.  This was causing runtimes, asshat.  IN ADDITION, YOU PUT IT IN THE LIFE PROC YOU ASSHAT
+//	if(!src.storedpreferences)
+//		src.storedpreferences = new
+//		storedpreferences.savefile_load(src, 0)
 
 
 
@@ -281,8 +281,8 @@
 		density = 1
 	else
 		density = !lying
-
-
+//Bullshit ERP horseshit causing runtimes.  Eat a dick.
+/*
 /mob/living/proc/Examine_OOC()
 	set name = "Examine Meta-Info (OOC)"
 	set category = "OOC"
@@ -300,7 +300,7 @@
 	else
 		usr << "OOC Metadata is not supported by this server!"
 
-	return
+	return*/
 
 /mob/living/attack_animal(mob/M)
 	attack_paw(M)	// treat it like a normal non-human attack

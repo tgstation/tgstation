@@ -398,13 +398,15 @@
 		O << "4.) Your laws are not in preference, laws do not take preference over one another unless specifically stated in the law."
 		O << "<br>We want everyone to have a good time, so we, the admins, will try to correct you if you stray from these rules.  Just try to keep it sensible."
 
-
+//If you add a verb here, make sure to add it to silicon\ai\ai.dm too.
 	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
 	O.verbs += /mob/living/silicon/ai/proc/ai_camera_track
 	O.verbs += /mob/living/silicon/ai/proc/ai_alerts
 	O.verbs += /mob/living/silicon/ai/proc/ai_camera_list
+	O.verbs += /mob/living/silicon/ai/proc/ai_network_change
 	O.verbs += /mob/living/silicon/ai/proc/ai_statuschange
+	O.verbs += /mob/living/silicon/ai/proc/ai_hologram_change
 	O.verbs += /mob/living/silicon/ai/proc/ai_roster
 
 //	O.verbs += /mob/living/silicon/ai/proc/ai_cancel_call

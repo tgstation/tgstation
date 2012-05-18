@@ -263,6 +263,9 @@ WELDINGTOOOL
 	attack(mob/M as mob, mob/user as mob)
 		if(hasorgans(M))
 			var/datum/organ/external/S = M:organs[user.zone_sel.selecting]
+			if(S)
+				message_admins("It appears [M] has \"null\" where there should be a [user.zone_sel.selecting].  Check into this, and tell SkyMarshal: \"[M.type]\"")
+				return ..()
 			if(!S.robot || user.a_intent != "help")
 				return ..()
 			if(S.brute_dam)
@@ -321,3 +324,14 @@ WELDINGTOOOL
 	New()
 		if(prob(50))
 			icon_state = "cutters-y"
+
+/obj/item/weapon/wirecutters/attack(mob/M as mob, mob/user as mob)
+	if((M.handcuffed) && (istype(M:handcuffed, /obj/item/weapon/handcuffs/cable)))
+		M.visible_message("You cut \the [M]'s restraints with \the [src]!",\
+		"\The [usr] cuts \the [M]'s restraints with \the [src]!",\
+		"You hear cable being cut.")
+		M.handcuffed = null
+		M.update_clothing()
+		return
+	else
+		..()

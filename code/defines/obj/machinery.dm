@@ -225,38 +225,6 @@
 	idle_power_usage = 10
 	active_power_usage = 400
 
-/obj/machinery/door_control
-	name = "remote door-control"
-	desc = "It controls doors, remotely."
-	icon = 'stationobjs.dmi'
-	icon_state = "doorctrl0"
-	desc = "A remote control-switch for a door."
-	var/id = null
-	var/range = 10
-	var/normaldoorcontrol = 0
-	var/desiredstate = 0 // Zero is closed, 1 is open.
-	var/specialfunctions = 1
-	/*
-	Bitflag, 	1= open
-				2= idscan,
-				4= bolts
-				8= shock
-				16= door safties
-
-	*/
-
-	var/exposedwires = 0
-	var/wires = 3
-	/*
-	Bitflag,	1=checkID
-				2=Network Access
-	*/
-
-	anchored = 1.0
-	use_power = 1
-	idle_power_usage = 2
-	active_power_usage = 4
-
 /obj/machinery/driver_button
 	name = "mass driver button"
 	icon = 'objects.dmi'

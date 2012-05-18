@@ -88,7 +88,7 @@
 
 /obj/structure/bedsheetbin
 	name = "linen bin"
-	desc = "A bin for containing bedsheets. It looks rather cosy."
+	desc = "A small wire mesh bin full of extra bedsheets and cleaning supplies for the beds.  Smells of lilacs and has a faint undertone of disinfectant."
 	icon = 'items.dmi'
 	icon_state = "bedbin"
 	var/amount = 23.0
@@ -232,7 +232,7 @@
 	var/mob/living/carbon/monkey/target = null
 
 /obj/effect/sign/securearea
-	desc = "A warning sign which reads 'SECURE AREA'"
+	desc = "A large yellow warning sign which reads 'SECURE AREA', it appears to have been painted onto the wall like that."
 	name = "SECURE AREA"
 	icon = 'decals.dmi'
 	icon_state = "securearea"
@@ -250,7 +250,7 @@
 	density = 0
 
 /obj/effect/sign/biohazard
-	desc = "A warning sign which reads 'BIOHAZARD'"
+	desc = "A warning sign which reads 'BIOHAZARD', you think it'd be a good idea to ensure you have a properly sealed hazardsuit on."
 	name = "BIOHAZARD"
 	icon = 'decals.dmi'
 	icon_state = "bio"
@@ -259,7 +259,7 @@
 	density = 0
 
 /obj/effect/sign/electricshock
-	desc = "A warning sign which reads 'HIGH VOLTAGE'"
+	desc = "A warning sign which reads 'HIGH VOLTAGE', it looks like it'd be a wise decision to stay away from here."
 	name = "HIGH VOLTAGE"
 	icon = 'decals.dmi'
 	icon_state = "shock"
@@ -813,6 +813,7 @@
 	density = 1
 	anchored = 1.0
 	layer = 2.8
+	var/dented = 0
 
 	New()
 		..()

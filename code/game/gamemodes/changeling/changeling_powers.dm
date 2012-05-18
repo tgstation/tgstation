@@ -403,7 +403,7 @@
 	del(usr)
 	return
 
-/*
+
 /client/proc/changeling_greater_form() // Oh shit, it's on now.
 
 	set category = "Changeling"
@@ -429,7 +429,7 @@
 	flick("h2monkey", animation)
 	sleep(48)
 	//animation = null
-	var/mob/living/carbon/human/tajaran/Emissary/O = new /mob/living/carbon/human/tajaran/Emissary( src )
+	var/mob/living/carbon/human/O = new /mob/living/carbon/human( src )//Removed Emissary shit -Sieve{R}
 	del(animation)
 
 	O.real_name = usr.real_name
@@ -495,7 +495,7 @@
 			new_objective.owner = O.mind
 			O.mind.objectives += new_objective
 
-			spawn(0)
+/*			spawn(0)
 				while(emergency_shuttle.online == 0)
 					sleep(10)
 				command_alert("Authorization codes recieved, confirming hostile entity terminated.  The emergancy shuttle is now departing.")
@@ -512,8 +512,8 @@
 					sleep(10)
 					if((locate(/mob/living/carbon/human/tajaran/Emissary) in locate(/area/shuttle/escape/centcom))   ||  (locate(/mob/living/carbon/human/tajaran/Emissary) in locate(/area/centcom/evac)) || (locate(/mob/living/carbon/human/tajaran/Emissary) in locate(/area/centcom/control)  )     )
 						command_alert("What the fu- Shoot it!  SHOOT IT!  CENTRAL COMMAND TRANSMITTING DIST- *static*  Nevermind previous transmission, Nanotrasen.  We're all good here.  Subject contained. Standing down alert status.")
+Tarjan shit, not recoding this -Sieve{R}*/
 
-*/
 /client/proc/changeling_fakedeath()
 	set category = "Changeling"
 	set name = "Regenerative Stasis (20)"

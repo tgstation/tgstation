@@ -210,6 +210,7 @@
 			verbs += /obj/admins/proc/adspawn							//toggle admin item spawning
 			verbs += /client/proc/debug_variables
 			verbs += /client/proc/cmd_modify_ticker_variables
+			verbs += /client/proc/cmd_modify_ref_variables
 			verbs += /client/proc/Debug2								//debug toggle switch
 			verbs += /client/proc/toggle_view_range
 			verbs += /client/proc/Getmob
@@ -290,8 +291,9 @@
 			verbs += /client/proc/everyone_random
 			verbs += /client/proc/only_one
 			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/giveruntimelog							//used by coders to retrieve runtime logs
-			verbs += /client/proc/cinematic							//used by coders to retrieve runtime logs
+			verbs += /client/proc/giveruntimelog						//used by coders to retrieve runtime logs
+			verbs += /client/proc/cinematic								//show a cinematic sequence
+			verbs += /client/proc/startSinglo							//Used to prevent the station from losing power while testing stuff out.
 			verbs += /client/proc/enable_debug_verbs
 			verbs += /client/proc/kill_air
 			verbs += /client/proc/callprocgen
@@ -432,6 +434,7 @@
 	verbs -= /client/proc/radioalert
 	verbs -= /client/proc/rnd_check_designs
 	verbs -= /client/proc/CarbonCopy
+	verbs -= /client/proc/cmd_modify_ref_variables
 	verbs -= /proc/possess
 	verbs -= /proc/release
 	//verbs -= /client/proc/give_spell 									--Merged with view variables

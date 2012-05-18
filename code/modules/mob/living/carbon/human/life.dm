@@ -975,10 +975,16 @@
 					if (stunned > 0)
 						AdjustStunned(-1)
 						stat = 0
+
 					if (weakened > 0)
 						AdjustWeakened(-1)
 						lying = 1
 						stat = 0
+
+					if(resting)
+						lying = 1
+						stat = 0
+
 					if (paralysis > 0)
 						handle_dreams()
 						AdjustParalysis(-1)
@@ -995,11 +1001,8 @@
 						if (prob(10) && health && !hal_crit)
 							spawn(0)
 								emote("snore")
-						sleeping--
-
-					if(resting)
-						lying = 1
-						stat = 0
+						if(!sleeping_willingly)
+							sleeping--
 
 					var/h = hand
 					hand = 0
