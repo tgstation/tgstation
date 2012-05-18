@@ -63,7 +63,7 @@ mob/living/parasite/meme/Life()
 
 	if(client)
 		if(blinded) client.eye = null
-		else		client.eye = mob
+		else		client.eye = host
 
 	if(!host) return
 
@@ -442,8 +442,8 @@ mob/living/parasite/meme/verb/Possession()
 
 		sleep(600)
 
-		host.key = host_key
 		src.key = meme_key
+		host.key = host_key
 		src << "\red You lose control.."
 
 		del dummy
