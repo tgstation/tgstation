@@ -21,7 +21,7 @@
 	..()
 	spawn(4)
 		contents = list()
-		new /obj/item/weapon/storage/backpack/satchel( src )
+		new /obj/item/weapon/storage/backpack/satchel/withwallet( src )
 		new /obj/item/device/radio/headset( src )
 	return
 

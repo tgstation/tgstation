@@ -108,8 +108,10 @@
 	desc = "It's a very robust satchel to wear on your back."
 	icon_state = "satchel"
 
+/obj/item/weapon/storage/backpack/satchel/withwallet
 	New()
 		..()
+		new /obj/item/weapon/storage/wallet/random( src )
 
 /obj/item/weapon/storage/backpack/bandolier
 	name = "bandolier"
@@ -138,6 +140,7 @@
 	desc = "It can hold a few small and personal things."
 	storage_slots = 4
 	icon_state = "wallet"
+	w_class = 2
 	can_hold = list(
 		"/obj/item/weapon/spacecash",
 		"/obj/item/weapon/card",

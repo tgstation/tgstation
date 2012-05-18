@@ -204,6 +204,19 @@
 
 /obj/item/weapon/storage/attack_hand(mob/user as mob)
 	playsound(src.loc, "rustle", 50, 1, -5)
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.l_store == src && !H.get_active_hand())
+			H.put_in_hand(src)
+			H.l_store = null
+			return
+		if(H.r_store == src && !H.get_active_hand())
+			H.put_in_hand(src)
+			H.r_store = null
+			return
+
+	src.orient2hud(user)
 	if (src.loc == user)
 		if (user.s_active)
 			user.s_active.close(user)
@@ -213,7 +226,6 @@
 		for(var/mob/M in range(1))
 			if (M.s_active == src)
 				src.close(M)
-	src.orient2hud(user)
 	src.add_fingerprint(user)
 	return
 
