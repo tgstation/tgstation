@@ -201,6 +201,20 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon = 'Doorresearch.dmi'
 	doortype = 20
 
+/obj/machinery/door/airlock/glass_research
+	name = "Maintenance Hatch"
+	icon = 'doorresearchglass.dmi'
+	opacity = 0
+	doortype = 21
+	glass = 1
+
+/obj/machinery/door/airlock/glass_mining
+	name = "Maintenance Hatch"
+	icon = 'doorminingglass.dmi'
+	opacity = 0
+	doortype = 22
+	glass = 1
+
 /*
 About the new airlock wires panel:
 *	An airlock wire dialog can be accessed by the normal way or by using wirecutters or a multitool on the door while the wire-panel is open. This would show the following wires, which you can either wirecut/mend or send a multitool pulse through. There are 9 wires.
