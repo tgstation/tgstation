@@ -76,6 +76,8 @@
 	name = "Arts and Crafts supplies"
 	contains = list("/obj/item/weapon/storage/crayonbox",
 	"/obj/item/weapon/camera_test",
+	"/obj/item/weapon/camera_film",
+	"/obj/item/weapon/camera_film",
 	"/obj/item/weapon/storage/photo_album",
 	"/obj/item/weapon/packageWrap",
 	"/obj/item/weapon/reagent_containers/glass/paint/red",

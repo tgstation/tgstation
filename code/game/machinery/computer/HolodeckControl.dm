@@ -371,7 +371,7 @@
 						"\red You hear a whine as \the [src]'s is hit by something dense.")
 					H.UpdateDamageIcon()
 					H.updatehealth()
-					playsound(src.loc, 'punch1.ogg', 50, 1, -3)
+					playsound(src.loc, 'tablehit1.ogg', 50, 1, -3)
 				else //Lets do REAL DAMAGE, YEAH!
 					G.affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed on a table by [G.assailant.name] ([G.assailant.ckey])</font>")
 					G.assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Smashed [G.affecting.name] ([G.affecting.ckey]) on a table.</font>")
@@ -409,7 +409,7 @@
 						"\red You hear the nauseating crunch of bone and gristle on solid metal.")
 					H.UpdateDamageIcon()
 					H.updatehealth()
-					playsound(src.loc, 'punch1.ogg', 50, 1, -3)
+					playsound(src.loc, 'tablehit1.ogg', 50, 1, -3)
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)

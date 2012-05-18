@@ -122,7 +122,7 @@
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_cargo(H), H.slot_ears)
-		H.equip_if_possible(new /obj/item/clothing/under/rank/cargo(H), H.slot_w_uniform)
+		H.equip_if_possible(new /obj/item/clothing/under/rank/cargotech(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/quartermaster(H), H.slot_belt)
 		return 1

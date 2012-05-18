@@ -159,6 +159,7 @@
 #define FILE_DIR "code/unused/powerarmor"
 #define FILE_DIR "code/unused/spacecraft"
 #define FILE_DIR "code/WorkInProgress"
+#define FILE_DIR "code/WorkInProgress/animusstation"
 #define FILE_DIR "code/WorkInProgress/Apples"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn/BirdMan"
@@ -1142,8 +1143,12 @@
 #include "code\WorkInProgress\AI_Visibility.dm"
 #include "code\WorkInProgress\buildmode.dm"
 #include "code\WorkInProgress\explosion_particles.dm"
+<<<<<<< HEAD
 #include "code\WorkInProgress\Cael_Aislinn\BirdMan\bird_transformation.dm"
 #include "code\WorkInProgress\Cael_Aislinn\BirdMan\birdman.dm"
+=======
+#include "code\WorkInProgress\animusstation\atm.dm"
+>>>>>>> fca7924e47da378a3223559e6833dc831d35e8bc
 #include "code\WorkInProgress\Cael_Aislinn\Rust\core_field.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Rust\core_gen.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Rust\core_monitor.dm"
@@ -1164,7 +1169,6 @@
 #include "code\WorkInProgress\Cael_Aislinn\Tajara\tajaran.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Tajara\whisper.dm"
 #include "code\WorkInProgress\Chinsky\ashtray.dm"
-#include "code\WorkInProgress\Mini\ATM.dm"
 #include "code\WorkInProgress\Mini\atmos_control.dm"
 #include "code\WorkInProgress\Mini\pipe_heater.dm"
 #include "code\WorkInProgress\Mloc\Shortcuts.dm"

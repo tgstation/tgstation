@@ -1208,10 +1208,11 @@
 
 	if (handcuffed)
 		pulling = null
+		var/h1 = handcuffed.icon_state
 		if (!lying)
-			overlays += image("icon" = 'mob.dmi', "icon_state" = "handcuff1", "layer" = MOB_LAYER)
+			overlays += image("icon" = 'mob.dmi', "icon_state" = "[h1]1", "layer" = MOB_LAYER)
 		else
-			overlays += image("icon" = 'mob.dmi', "icon_state" = "handcuff2", "layer" = MOB_LAYER)
+			overlays += image("icon" = 'mob.dmi', "icon_state" = "[h1]2", "layer" = MOB_LAYER)
 
 	if (client)
 		client.screen -= contents

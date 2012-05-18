@@ -38,7 +38,7 @@
 /obj/item/weapon/camera_test
 	name = "camera"
 	icon = 'items.dmi'
-	desc = "A one use - polaroid camera. 10 photos left."
+	desc = "A polaroid camera. It has 30 photos left."
 	icon_state = "camera"
 	item_state = "electropack"
 	w_class = 2.0
@@ -47,6 +47,7 @@
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 10
+	var/pictures_max = 30
 	var/pictures_left = 30
 	var/can_use = 1
 
@@ -60,6 +61,13 @@
 	var/icon/img	//Big photo image
 	var/scribble	//Scribble on the back.
 
+/obj/item/weapon/camera_film
+	name = "film cartridge"
+	icon = 'items.dmi'
+	desc = "A camera film cartridge. Insert it into a camera to reload it."
+	icon_state = "film"
+	item_state = "electropack"
+	w_class = 1.0
 
 /obj/item/weapon/photo/attack_self(var/mob/user as mob)
 		..()
@@ -145,9 +153,11 @@
 	if (can_use)
 		can_use = 0
 		icon_state = "camera_off"
+		usr << "\red You turn the camera off."
 	else
 		can_use = 1
 		icon_state = "camera"
+		usr << "\blue You turn the camera on."
 
 /obj/item/weapon/camera_test/proc/get_mobs(turf/the_turf as turf)
 	var/mob_detail
@@ -206,7 +216,7 @@
 	playsound(src.loc, pick('polaroid1.ogg','polaroid2.ogg'), 75, 1, -3)
 
 	pictures_left--
-	src.desc = "A one use - polaroid camera. [pictures_left] photos left."
+	src.desc = "A polaroid camera. It has [pictures_left] photos left."
 	user << "\blue [pictures_left] photos left."
 	can_use = 0
 	icon_state = "camera_off"
@@ -214,4 +224,16 @@
 		can_use = 1
 		icon_state = "camera"
 
-
+/obj/item/weapon/camera_test/attackby(A as obj, mob/user as mob)
+	if (istype(A, /obj/item/weapon/camera_film))
+		if (src.pictures_left >= pictures_max)
+			user << "\blue It's already full!"
+			return 1
+		else
+			del(A)
+			src.pictures_left = src.pictures_max
+			src.desc = "A polaroid camera. It has [pictures_left] photos left."
+			user << text("\blue You reload the camera film!",)
+			user.update_clothing()
+		return 1
+	return

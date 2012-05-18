@@ -149,6 +149,7 @@
 		"/obj/item/weapon/melee/baton",
 		"/obj/item/weapon/melee/classic_baton",
 		"/obj/item/weapon/camera_test",
+		"/obj/item/weapon/camera_film",
 		"/obj/item/weapon/cigpacket",
 		"/obj/item/weapon/zippo",
 		"/obj/item/device/taperecorder",

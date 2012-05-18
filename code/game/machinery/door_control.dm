@@ -63,6 +63,7 @@
 		return
 
 	if(!allowed(user) && (wires & 1))
+		user << "\red Access Denied"
 		flick("doorctrl-denied",src)
 		return
 
@@ -81,8 +82,8 @@
 					if(specialfunctions & IDSCAN)
 						D.aiDisabledIdScanner = 1
 					if(specialfunctions & BOLTS)
-						spawn(5)
-							D.locked = 1
+						D.locked = 1
+						D.update_icon()
 					if(specialfunctions & SHOCK)
 						D.secondsElectrified = -1
 
@@ -95,8 +96,8 @@
 					if(specialfunctions & IDSCAN)
 						D.aiDisabledIdScanner = 0
 					if(specialfunctions & BOLTS)
-						spawn(5)
-							D.locked = 0
+						D.locked = 0
+						D.update_icon()
 					if(specialfunctions & SHOCK)
 						D.secondsElectrified = 0
 

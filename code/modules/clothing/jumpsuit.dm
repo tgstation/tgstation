@@ -273,7 +273,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0)
 
 /obj/item/clothing/under/rank/medical
-	desc = "It's made of a special fiber that provides minor protection against biohazards. it has a cross on the chest denoting that the wearer is trained medical personnel."
+	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel."
 	name = "medical doctor's jumpsuit"
 	icon_state = "medical"
 	item_state = "w_suit"
@@ -281,12 +281,32 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 
+//SKRUBS
+
+/obj/item/clothing/under/rank/medical/blue
+	name = "medical scrubs"
+	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in baby blue."
+	icon_state = "scrubsblue"
+	color = "scrubsblue"
+
+/obj/item/clothing/under/rank/medical/green
+	name = "medical scrubs"
+	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in dark green."
+	icon_state = "scrubsgreen"
+	color = "scrubsgreen"
+
+/obj/item/clothing/under/rank/medical/purple
+	name = "medical scrubs"
+	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in deep purple."
+	icon_state = "scrubspurple"
+	color = "scrubspurple"
+
 /obj/item/clothing/under/rank/chief_medical_officer
 	desc = "It's a jumpsuit worn by those with the experience to be \"Chief Medical Officer\". It provides minor biological protection."
 	name = "chief medical officer's jumpsuit"
-	icon_state = "medical"
+	icon_state = "cmo"
 	item_state = "w_suit"
-	color = "medical"
+	color = "cmo"
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 10, rad = 0)
 
@@ -301,17 +321,17 @@
 
 /obj/item/clothing/under/rank/cargo
 	name = "quartermaster's jumpsuit"
-	desc = "It's a jumpsuit worn by the quartermaster. It's specially designed to prevent back injuries caused by heavy lifting."
-	icon_state = "lightbrown"
+	desc = "It's a jumpsuit worn by the quartermaster. It's specially designed to prevent back injuries caused by pushing paper."
+	icon_state = "qm"
 	item_state = "lb_suit"
-	color = "cargo"
+	color = "qm"
 
 /obj/item/clothing/under/rank/cargotech
-	name = "cargotech's jumpsuit"
-	desc = "<i>'Shooooorts! They're comfy and easy to wear!'</i>"
+	name = "cargo technician's jumpsuit"
+	desc = "Shooooorts! They're comfy and easy to wear!"
 	icon_state = "cargotech"
-	item_state = "cargotech"
-	color = "cargotech"
+	item_state = "lb_suit"
+	color = "cargo"
 
 /obj/item/clothing/under/rank/mailman
 	name = "mailman's jumpsuit"
@@ -532,6 +552,7 @@
 	armor = list(melee = 100, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100)
 
 // Cheerleader outfits or something
+
 /obj/item/clothing/under/cheerleader
 	name = "cheerleader uniform"
 	desc = "Looks breezy."
@@ -552,6 +573,7 @@
 /obj/item/clothing/under/cheerleader/white
 	icon_state = "white_cheer"
 	color = "white_cheer"
+
 //End of cheerleaders
 
 /obj/item/clothing/under/captainmal

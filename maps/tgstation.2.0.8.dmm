@@ -3513,7 +3513,7 @@
 "bpC" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/machinery/camera{c_tag = "Division Centre"; dir = 1; network = "Research"; pixel_x = 22},/turf/simulated/floor{icon_state = "white"},/area/medical/research{name = "Research Division"})
 "bpD" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/medical/research{name = "Research Division"})
 "bpE" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 9},/obj/structure/closet/wardrobe/toxins_white,/turf/simulated/floor{icon_state = "white"},/area/medical/research{name = "Research Division"})
-"bpF" = (/obj/structure/noticeboard{pixel_y = -27},/turf/simulated/floor{icon_state = "white"},/area/medical/research{name = "Research Division"})
+"bpF" = (/obj/structure/noticeboard{pixel_y = -27},/obj/machinery/light,/turf/simulated/floor{icon_state = "white"},/area/medical/research{name = "Research Division"})
 "bpG" = (/obj/structure/table,/turf/simulated/floor{icon_state = "white"},/area/medical/research{name = "Research Division"})
 "bpH" = (/obj/item/weapon/paper_bin{pixel_x = 1; pixel_y = 9},/obj/structure/table,/obj/item/weapon/pen,/turf/simulated/floor{icon_state = "white"},/area/medical/research{name = "Research Division"})
 "bpI" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/turf/simulated/floor/plating,/area/maintenance/asmaint2)
