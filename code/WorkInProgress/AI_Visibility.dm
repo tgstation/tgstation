@@ -301,6 +301,7 @@ var/datum/cameranet/cameranet = new()
 //	machine = null
 	if(!eyeobj)	//if it got deleted somehow (like an admin trying to fix things <.<')
 		eyeobj = new()
+		eyeobj.ai = src
 	client.eye = eyeobj
 	eyeobj.loc = loc
 	cameranet.visibility(eyeobj)
@@ -405,5 +406,20 @@ var/datum/cameranet/cameranet = new()
 	set category = "OOC"
 	reset_view(null)
 	machine = null
-	del eyeobj
-	src.freelook()
+
+/mob/living/silicon/ai/reset_view(atom/A)
+	if (client)
+		if(!eyeobj)
+			eyeobj = new()
+			eyeobj.ai = src
+
+		client.eye = eyeobj
+		client.perspective = EYE_PERSPECTIVE
+
+		if (istype(A, /atom/movable))
+			eyeobj.loc = locate(A.x, A.y, A.z)
+
+		else
+			eyeobj.loc = locate(src.x, src.y, src.z)
+
+		cameranet.visibility(eyeobj)
