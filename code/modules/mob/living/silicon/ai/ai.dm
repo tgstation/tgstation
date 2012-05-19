@@ -441,6 +441,7 @@
 
 	if(client.eye == eyeobj)
 		eyeobj.loc = C.loc
+		cameranet.visibility(eyeobj)
 	else
 		machine = src
 		src:current = C

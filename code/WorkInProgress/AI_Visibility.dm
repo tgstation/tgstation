@@ -368,12 +368,6 @@ var/datum/cameranet/cameranet = new()
 		return 1
 	return 0
 
-/mob/living/silicon/ai/switchCamera(var/obj/machinery/camera/C)
-	if(C && isturf(C.loc))
-		eyeobj.loc = C.loc
-		cameranet.visibility(eyeobj)
-		return
-
 /mob/living/silicon/ai/attack_ai(var/mob/user as mob)
 	if (user != src)
 		return
