@@ -220,6 +220,7 @@
 			verbs += /client/proc/jumptokey
 			verbs += /client/proc/jumptomob
 			verbs += /client/proc/jumptoturf
+			verbs += /client/proc/Open_Minimap
 			verbs += /client/proc/cmd_admin_delete
 			verbs += /client/proc/cmd_admin_add_freeform_ai_law
 			verbs += /client/proc/cmd_admin_add_random_ai_law

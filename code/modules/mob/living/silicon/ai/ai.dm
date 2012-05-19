@@ -441,6 +441,7 @@
 
 	if(client.eye == eyeobj)
 		eyeobj.loc = C.loc
+		cameranet.visibility(eyeobj)
 	else
 		machine = src
 		src:current = C
@@ -578,7 +579,9 @@
 		if(C.network == newnet)
 			cameralist.Add(C)
 
-	switchCamera( pick(cameralist) )
+	if(length(cameralist))
+		switchCamera( pick(cameralist) )
+
 	src << "\blue Jumped to [newnet] camera network."
 //End of code by Mord_Sith
 //cael - with the multiple onstation networks all linked together, changing networks is legacy functionality
