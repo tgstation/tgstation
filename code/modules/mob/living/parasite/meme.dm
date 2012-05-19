@@ -466,13 +466,7 @@ mob/living/parasite/meme/verb/Analgesic()
 
 mob/proc/clearHUD()
 	update_clothing()
-	if(!hud_used) return
-	if(client)
-		client.screen -= hud_used.contents
-		client.screen -= hud_used.adding
-		client.screen -= hud_used.mon_blo
-		client.screen -= list( oxygen, throw_icon, i_select, m_select, toxin, internals, fire, hands, healths, pullin, blind, flash, rest, sleep, mach )
-		client.screen -= list( zone_sel, oxygen, throw_icon, i_select, m_select, toxin, internals, fire, hands, healths, pullin, blind, flash, rest, sleep, mach )
+	if(client) client.screen.Cut()
 
 // Take control of the mob
 mob/living/parasite/meme/verb/Possession()
@@ -525,7 +519,7 @@ mob/living/parasite/meme/verb/Dormant()
 
 	dormant = 1
 
-	while(meme_points < 500)
+	while(meme_points < MAXIMUM_MEME_POINTS)
 		sleep(10)
 
 	dormant = 0
