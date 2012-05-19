@@ -1,7 +1,5 @@
 
 
-#define MINIMAP_UPDATE_DELAY 1200
-
 /turf
 	var/image/obscured
 	var/image/dim

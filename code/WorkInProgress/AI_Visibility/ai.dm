@@ -25,14 +25,12 @@
 	set name = "freelook"
 	current = null	//cancel camera view first, it causes problems
 	cameraFollow = null
-//	machine = null
 	if(!eyeobj)	//if it got deleted somehow (like an admin trying to fix things <.<')
 		eyeobj = new()
 		eyeobj.ai = src
 	client.eye = eyeobj
 	eyeobj.loc = loc
 	cameranet.visibility(eyeobj)
-	cameraFollow = null
 
 /mob/aiEye/Move()
 	. = ..()
