@@ -253,6 +253,7 @@ Whitespace:Seperator;"}
 		if(BE_WIZARD)		roletext="wizard"
 		if(BE_REV)			roletext="revolutionary"
 		if(BE_CULTIST)		roletext="cultist"
+		if(BE_MEME)			roletext="meme"
 
 
 	for(var/mob/new_player/player in world)

@@ -39,6 +39,7 @@ var/const
 	BE_CULTIST   =(1<<7)
 	BE_MONKEY    =(1<<8)
 	BE_PAI       =(1<<9)
+	BE_MEME		 =(1<<10)
 
 
 

@@ -468,10 +468,14 @@ mob/living/parasite/meme/verb/Dormant()
 
 	usr << "\red You have regained all points and exited dormant mode!"
 
+// Game mode helpers, used for theft objectives
+// --------------------------------------------
+mob/living/parasite/check_contents_for(t)
+	if(!host) return 0
 
-// TEST CODE
-client/verb/become_meme(target as mob in world)
-	var/mob/living/parasite/meme/M = new
-	M.enter_host(target)
-	src.mob = M
-// END TEST CODE
+	return host.check_contents_for(t)
+
+mob/living/parasite/check_contents_for_reagent(t)
+	if(!host) return 0
+
+	return host.check_contents_for_reagent(t)
