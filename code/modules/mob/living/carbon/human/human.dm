@@ -2125,17 +2125,6 @@ It can still be worn/put on as normal.
 					item.layer = 20
 					target.back = item
 					item.loc = target
-		if("h_store")
-			if (target.h_store)
-				var/obj/item/W = target.h_store
-				target.u_equip(W)
-				if (target.client)
-					target.client.screen -= W
-				if (W)
-					W.loc = target.loc
-					W.dropped(target)
-					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
 		if("handcuff")
 			if (target.handcuffed)
 				var/obj/item/W = target.handcuffed

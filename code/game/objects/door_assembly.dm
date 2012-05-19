@@ -97,7 +97,7 @@ obj/structure/door_assembly
 		name = "Research Airlock Assembly"
 		icon_state = "door_as_res1"
 		glass_base_icon_state = "door_as_gres"
-		glass_type = /obj/machinery/door/airlock/glass_research
+		glass_type = /obj/machinery/door/airlock/glass/glass_research
 		airlock_type = /obj/machinery/door/airlock/research
 		anchored = 1
 		density = 1
