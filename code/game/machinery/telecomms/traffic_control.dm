@@ -180,6 +180,7 @@
 						viewingcode.Add(usr)
 						winshow(usr, "Telecomms IDE", 1) // show the IDE
 						winset(usr, "tcscode", "is-disabled=true")
+						winset(editingcode, "tcscode", "text=\"\"")
 						var/showcode = dd_replacetext(storedcode, "\"", "\\\"")
 						winset(usr, "tcscode", "text=\"[showcode]\"")
 

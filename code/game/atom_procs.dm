@@ -341,6 +341,7 @@
 	..()
 	return
 
+
 /atom/Click(location,control,params)
 	//world << "atom.Click() on [src] by [usr] : src.type is [src.type]"
 
@@ -733,6 +734,14 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		return
 	}
 
+	// ------- MIDDLE-CLICK -------
+
+	if(parameters["middle"]){
+		if(!isAI(usr))
+			MiddleClick(usr)
+			return
+	}
+
 	// ------- THROW -------
 	if(usr.in_throw_mode)
 		return usr:throw_item(src)
@@ -1060,6 +1069,11 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 
 	return
+
+/atom/proc/MiddleClick(var/mob/M as mob) // switch hands
+	if(istype(M, /mob/living/carbon))
+		var/mob/living/carbon/U = M
+		U.swap_hand()
 
 
 /atom/proc/get_global_map_pos()

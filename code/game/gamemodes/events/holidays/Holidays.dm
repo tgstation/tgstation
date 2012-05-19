@@ -36,6 +36,7 @@ var/global/Holiday = null
 
 		if(3)	//Mar
 			switch(DD)
+				if(14)							Holiday = "Pi Day"
 				if(17)							Holiday = "St. Patrick's Day"
 				if(27)
 					if(YY == 16)
@@ -51,7 +52,6 @@ var/global/Holiday = null
 					if(YY == 18 && prob(50)) 	Holiday = "Easter"
 				if(5)
 					if(YY == 15)				Holiday = "Easter"
-				if(14)							Holiday = "Pi Day"
 				if(16)
 					if(YY == 17)				Holiday = "Easter"
 				if(20)

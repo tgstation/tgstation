@@ -21,9 +21,9 @@
 
 	..()
 
-	var/datum/gas_mixture/environment = loc.return_air()
-
 	if (stat != 2) //still breathing
+
+		var/datum/gas_mixture/environment = loc.return_air()
 
 		//First, resolve location and get a breath
 
