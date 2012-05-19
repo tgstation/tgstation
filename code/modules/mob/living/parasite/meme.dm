@@ -95,7 +95,9 @@ mob/living/parasite/meme/Life()
 mob/living/parasite/meme/death()
 	// make sure the mob is on the actual map before gibbing
 	if(host) src.loc = host.loc
-	return ..(1)
+	src.stat = 2
+	..()
+	del src
 
 // When a meme speaks, it speaks through its host
 mob/living/parasite/meme/say(message as text)
