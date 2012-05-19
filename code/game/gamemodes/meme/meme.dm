@@ -3,8 +3,7 @@
 /datum/game_mode/meme
 	name = "Memetic Anomaly"
 	config_tag = "meme"
-	//required_players = 6
-	required_players = 2 // for testing
+	required_players = 6
 	restricted_jobs = list("AI", "Cyborg")
 	recommended_enemies = 2 // need at least a meme and a host
 
