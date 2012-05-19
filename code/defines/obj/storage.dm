@@ -134,6 +134,55 @@
 		..()
 		new /obj/item/weapon/storage/wallet/random( src )
 
+// Belt Bags/Satchels
+
+/obj/item/weapon/storage/backpack/satchel_norm
+	name = "satchel"
+	desc = "A trendy looking satchel."
+	icon_state = "satchel-norm"
+
+/obj/item/weapon/storage/backpack/satchel_eng
+	name = "industrial satchel"
+	desc = "A tough satchel with extra pockets."
+	icon_state = "satchel-eng"
+
+/obj/item/weapon/storage/backpack/satchel_med
+	name = "medical satchel"
+	desc = "A sterile satchel used in medical departments."
+	icon_state = "satchel-med"
+
+/obj/item/weapon/storage/backpack/satchel_vir
+	name = "virologist satchel"
+	desc = "A sterile satchel with virologist colours."
+	icon_state = "satchel-vir"
+
+/obj/item/weapon/storage/backpack/satchel_chem
+	name = "chemist satchel"
+	desc = "A sterile satchel with chemist colours."
+	icon_state = "satchel-chem"
+
+/obj/item/weapon/storage/backpack/satchel_gen
+	name = "geneticist satchel"
+	desc = "A sterile satchel with geneticist colours."
+	icon_state = "satchel-gen"
+
+/obj/item/weapon/storage/backpack/satchel_tox
+	name = "scientist satchel"
+	desc = "Useful for holding research materials."
+	icon_state = "satchel-tox"
+
+/obj/item/weapon/storage/backpack/satchel_sec
+	name = "security satchel"
+	desc = "A robust satchel for security related needs."
+	icon_state = "satchel-sec"
+
+/obj/item/weapon/storage/backpack/satchel_hyd
+	name = "hydroponics satchel"
+	desc = "A green satchel for plant related work."
+	icon_state = "satchel_hyd"
+
+
+
 /obj/item/weapon/storage/backpack/bandolier
 	name = "bandolier"
 	desc = "It's a very old bandolier to wear on your back."
@@ -618,50 +667,3 @@
 			R.amount = R.max_amount
 
 	return
-
-// Belt Bags/Satchels
-
-/obj/item/weapon/storage/backpack/satchel_norm
-	name = "satchel"
-	desc = "A trendy looking satchel."
-	icon_state = "satchel-norm"
-
-/obj/item/weapon/storage/backpack/satchel_eng
-	name = "industrial satchel"
-	desc = "A tough satchel with extra pockets."
-	icon_state = "satchel-eng"
-
-/obj/item/weapon/storage/backpack/satchel_med
-	name = "medical satchel"
-	desc = "A sterile satchel used in medical departments."
-	icon_state = "satchel-med"
-
-/obj/item/weapon/storage/backpack/satchel_vir
-	name = "virologist satchel"
-	desc = "A sterile satchel with virologist colours."
-	icon_state = "satchel-vir"
-
-/obj/item/weapon/storage/backpack/satchel_chem
-	name = "chemist satchel"
-	desc = "A sterile satchel with chemist colours."
-	icon_state = "satchel-chem"
-
-/obj/item/weapon/storage/backpack/satchel_gen
-	name = "geneticist satchel"
-	desc = "A sterile satchel with geneticist colours."
-	icon_state = "satchel-gen"
-
-/obj/item/weapon/storage/backpack/satchel_tox
-	name = "scientist satchel"
-	desc = "Useful for holding research materials."
-	icon_state = "satchel-tox"
-
-/obj/item/weapon/storage/backpack/satchel_sec
-	name = "security satchel"
-	desc = "A robust satchel for security related needs."
-	icon_state = "satchel-sec"
-
-/obj/item/weapon/storage/backpack/satchel_hyd
-	name = "hydroponics satchel"
-	desc = "A green satchel for plant related work."
-	icon_state = "satchel_hyd"
