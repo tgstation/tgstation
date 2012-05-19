@@ -8,7 +8,7 @@ be able to influence the host through various commands.
 **/
 
 // The maximum amount of points a meme can gather.
-var/global/const/MAXIMUM_MEME_POINTS = 500
+var/global/const/MAXIMUM_MEME_POINTS = 750
 
 
 // === PARASITE ===
@@ -70,8 +70,8 @@ mob/living/parasite/meme/Life()
 	if(!host) return
 
 	// recover meme points slowly
-	var/gain = 2
-	if(dormant) gain = 6 // dormant recovers points faster
+	var/gain = 4
+	if(dormant) gain = 12 // dormant recovers points faster
 
 	meme_points = min(meme_points + gain, MAXIMUM_MEME_POINTS)
 
@@ -376,7 +376,7 @@ mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob i
 // Jump to a distant target through a shout
 mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob in world)
 	set category = "Meme"
-	set name	 = "Obvious Jump(500)"
+	set name	 = "Obvious Jump(750)"
 	set desc     = "Move to any mob in view through a shout."
 
 	if(!istype(target, /mob/living/carbon/human) || !target.mind)
@@ -391,7 +391,7 @@ mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob 
 		src << "<b>Your host can't speak..</b>"
 		return
 
-	if(!use_points(500)) return
+	if(!use_points(750)) return
 
 	for(var/mob/M in view(host)+src)
 		M.show_message("<B>[host]</B> screams something incoherent!",2) // 2 stands for hearable message
@@ -465,6 +465,7 @@ mob/living/parasite/meme/verb/Analgesic()
 
 
 mob/proc/clearHUD()
+	update_clothing()
 	if(!hud_used) return
 	if(client)
 		client.screen -= hud_used.contents
@@ -473,11 +474,10 @@ mob/proc/clearHUD()
 		client.screen -= list( oxygen, throw_icon, i_select, m_select, toxin, internals, fire, hands, healths, pullin, blind, flash, rest, sleep, mach )
 		client.screen -= list( zone_sel, oxygen, throw_icon, i_select, m_select, toxin, internals, fire, hands, healths, pullin, blind, flash, rest, sleep, mach )
 
-
 // Take control of the mob
 mob/living/parasite/meme/verb/Possession()
 	set category = "Meme"
-	set name	 = "Thought(500)"
+	set name	 = "Possession(500)"
 	set desc     = "Take direct control of the host for a while."
 
 	if(!host) return
@@ -490,7 +490,10 @@ mob/living/parasite/meme/verb/Possession()
 	host << "\red Everything goes black.."
 
 	spawn
-		var/mob/living/dummy = new(null)
+		var/mob/dummy = new()
+		dummy.loc = 0
+		dummy.sight = BLIND
+
 		var/datum/mind/host_mind = host.mind
 		var/datum/mind/meme_mind = src.mind
 
@@ -512,6 +515,8 @@ mob/living/parasite/meme/verb/Possession()
 // Enter dormant mode, increases meme point gain
 mob/living/parasite/meme/verb/Dormant()
 	set category = "Meme"
+	set name	 = "Dormant(100)"
+	set desc     = "Speed up point recharging, will force you to cease all actions until all points are recharged."
 
 	if(!host) return
 	if(!use_points(100)) return

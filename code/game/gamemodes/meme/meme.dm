@@ -71,6 +71,7 @@
 		var/mob/living/parasite/meme/M = new
 		var/mob/original = meme.current
 		meme.transfer_to(M)
+		M.clearHUD()
 		M.enter_host(first_host.current)
 		forge_meme_objectives(meme, first_host)
 
