@@ -892,8 +892,8 @@
 	switch(alert("You sure you wish to edit this mob's appearance?",,"Yes","No"))
 		if("No")
 			return
-	if(istype(M,/mob/living/carbon/human/tajaran))
-		usr << "\red Tajarans do not have an editable appearance... yet!"
+	if(istype(M,/mob/living/carbon/human/tajaran) || istype(M,/mob/living/carbon/human/birdman))
+		usr << "\red Humanoid aliens do not have an editable appearance... yet!"
 	else
 		var/new_facial = input("Please select facial hair color.", "Character Generation") as color
 		if(new_facial)

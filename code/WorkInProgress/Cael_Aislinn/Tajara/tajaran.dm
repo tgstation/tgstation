@@ -3,7 +3,7 @@
 	real_name = "tajaran"
 	voice_name = "tajaran"
 	icon = 'tajaran.dmi'
-	icon_state = "m-none"
+	icon_state = "m_none"
 	var/list/tajspeak_letters = list("~","*","-")
 	//
 	universal_speak = 1 //hacky fix until someone can figure out how to make them only understand humans
