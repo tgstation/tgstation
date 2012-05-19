@@ -99,7 +99,7 @@ datum/preferences
 		b_eyes = 0
 
 		//UI style
-		UI = UI_OLD
+		UI = UI_NEW
 
 		//Mob preview
 		icon/preview_icon = null

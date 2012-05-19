@@ -677,10 +677,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 	var/scribble=""
 	var/scribble_page = null
 
-/*obj/item/weapon/newspaper/attack_hand(mob/user as mob)
-	..()
-	world << "derp"*/
-
 obj/item/weapon/newspaper/attack_self(mob/user as mob)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user

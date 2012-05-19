@@ -8,7 +8,7 @@
 	var/list/holographic_items = list()
 	var/damaged = 0
 	var/last_change = 0
-
+	var/safety = 1
 
 	attack_ai(var/mob/user as mob)
 		return src.attack_hand(user)
@@ -35,7 +35,11 @@
 
 		dat += "Please ensure that only holographic weapons are used in the holodeck if a combat simulation has been loaded.<BR>"
 
-		if(emagged)
+		if(!safety)
+			if(issilicon(user) && (emagged))
+				dat += "<font color=red>ERROR: SAFETY PROTOCOLS UNRESPONSIVE</font><BR>"
+			else if(issilicon(user) && (!emagged))
+				dat += "<A href='?src=\ref[src];AIrelock=1'>(<font color=red>Enable Safety Protocols?</font>)</A><BR>"
 			dat += "<A href='?src=\ref[src];burntest=1'>(<font color=red>Begin Atmospheric Burn Simulation</font>)</A><BR>"
 			dat += "Ensure the holodeck is empty before testing.<BR>"
 			dat += "<BR>"
@@ -43,12 +47,11 @@
 			dat += "Ensure the holodeck is empty before testing.<BR>"
 			dat += "<BR>"
 			dat += "Safety Protocols are <font color=red> DISABLED </font><BR>"
-		else
+		else if(safety)
 			if(issilicon(user))
-				dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=red>Override Safety Protocols?</font>)</A><BR>"
+				dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=red>Disable Safety Protocols?</font>)</A><BR>"
 			dat += "<BR>"
 			dat += "Safety Protocols are <font color=green> ENABLED </font><BR>"
-
 		user << browse(dat, "window=computer;size=400x500")
 		onclose(user, "computer")
 
@@ -101,7 +104,13 @@
 
 			else if(href_list["AIoverride"])
 				if(!issilicon(usr))	return
-				emagged = 1
+				safety = 0
+				log_admin("[usr] ([usr.ckey]) disabled Holodeck Safeties.")
+				message_admins("[usr] ([usr.ckey]) disabled Holodeck Safeties.")
+
+			else if(href_list["AIrelock"])
+				if(!issilicon(usr))	return
+				safety = 1
 
 			src.add_fingerprint(usr)
 		src.updateUsrDialog()
@@ -141,8 +150,11 @@
 	if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 		playsound(src.loc, 'sparks4.ogg', 75, 1)
 		emagged = 1
+		safety = 0
 		user << "\blue You vastly increase projector power and override the safety and security protocols."
 		user << "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintence and do not use the simulator."
+		log_admin("[user] ([user.ckey]) emagged Holodeck Safeties.")
+		message_admins("[user] ([user.ckey]) emagged Holodeck Safeties.")
 	src.updateUsrDialog()
 	return
 
@@ -340,7 +352,64 @@
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(G.state<2)
-			user << "\red You need a better grip to do that!"
+			if(ishuman(G.affecting))
+				var/mob/living/carbon/human/H = G.affecting
+				var/datum/organ/external/affecting = H.get_organ("head")
+				//Fucking hacky, but whatever.
+				var/obj/machinery/computer/HolodeckControl/HC = locate() in world
+				if(istype(HC) && HC.safety) //If the computer exists, and the safety is active...
+					if(prob(25))
+						add_blood(G.affecting)
+						H.halloss += rand(10, 15)
+						G.assailant.visible_message("\red \The [G.assailant] smashes \the [H]'s head on \the [src] with enough force to engage \the [src]'s safeties!",\
+						"\red You smash \the [H]'s head on \the [src] with enough force to engage \the [src]'s safeties!",\
+						"\red You hear a whine as \the [src]'s engage.")
+					else
+						H.halloss += rand(5, 10)
+						G.assailant.visible_message("\red \The [G.assailant] smashes \the [H]'s head on \the [src]!",\
+						"\red You smash \the [H]'s head on \the [src]!",\
+						"\red You hear a whine as \the [src]'s is hit by something dense.")
+					H.UpdateDamageIcon()
+					H.updatehealth()
+					playsound(src.loc, 'tablehit1.ogg', 50, 1, -3)
+				else //Lets do REAL DAMAGE, YEAH!
+					G.affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed on a table by [G.assailant.name] ([G.assailant.ckey])</font>")
+					G.assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>Smashed [G.affecting.name] ([G.affecting.ckey]) on a table.</font>")
+
+					log_admin("ATTACK: [G.assailant] ([G.assailant.ckey]) smashed [G.affecting] ([G.affecting.ckey]) on a table.")
+					message_admins("ATTACK: [G.assailant] ([G.assailant.ckey]) smashed [G.affecting] ([G.affecting.ckey]) on a table.")
+					log_attack("<font color='red'>[G.assailant] ([G.assailant.ckey]) smashed [G.affecting] ([G.affecting.ckey]) on a table.</font>")
+					if(prob(25))
+						add_blood(G.affecting)
+						affecting.take_damage(rand(10,15), 0)
+						H.Weaken(2)
+						if(prob(20)) // One chance in 20 to DENT THE TABLE
+							affecting.take_damage(rand(0,5), 0) //Extra damage
+							if(dented)
+								G.assailant.visible_message("\red \The [G.assailant] smashes \the [H]'s head on \the [src] with enough force to further deform \the [src]!\nYou wish you could unhear that sound.",\
+								"\red You smash \the [H]'s head on \the [src] with enough force to leave another dent!\n[prob(50)?"That was a satisfying noise." : "That sound will haunt your nightmares"]",\
+								"\red You hear the nauseating crunch of bone and gristle on solid metal and the squeal of said metal deforming.")
+							else
+								dented = 1
+								G.assailant.visible_message("\red \The [G.assailant] smashes \the [H]'s head on \the [src] so hard it left a dent!\nYou wish you could unhear that sound.",\
+								"\red You smash \the [H]'s head on \the [src] with enough force to leave a dent!\n[prob(5)?"That was a satisfying noise." : "That sound will haunt your nightmares"]",\
+								"\red You hear the nauseating crunch of bone and gristle on solid metal and the squeal of said metal deforming.")
+						else if(prob(50))
+							G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src], [H.gender == MALE? "his" : "her"] bone and cartilage making a loud crunch!",\
+							"\red You smash \the [H]'s head on \the [src], [H.gender == MALE? "his" : "her"] bone and cartilage making a loud crunch!",\
+							"\red You hear the nauseating crunch of bone and gristle on solid metal, the noise echoing through the room.")
+						else
+							G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src], [H.gender == MALE? "his" : "her"] nose smashed and face bloodied!",\
+							"\red You smash \the [H]'s head on \the [src], [H.gender == MALE? "his" : "her"] nose smashed and face bloodied!",\
+							"\red You hear the nauseating crunch of bone and gristle on solid metal and the gurgling gasp of someone who is trying to breathe through their own blood.")
+					else
+						affecting.take_damage(rand(5,10), 0)
+						G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src]!",\
+						"\red You smash \the [H]'s head on \the [src]!",\
+						"\red You hear the nauseating crunch of bone and gristle on solid metal.")
+					H.UpdateDamageIcon()
+					H.updatehealth()
+					playsound(src.loc, 'tablehit1.ogg', 50, 1, -3)
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)

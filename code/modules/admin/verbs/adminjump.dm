@@ -95,20 +95,24 @@
 	else
 		alert("Admin jumping disabled")
 
-/client/proc/Getmob(var/mob/M)
+/client/proc/Getmob(var/mob/M in world)
 	set category = "Admin"
 	set name = "Get Mob"
 	set desc = "Mob to teleport"
+
 	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
+
 	if(config.allow_admin_jump)
 		if(!M || !istype(M))
 			var/mobs = getmobs()
 			var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in mobs
-			M = mobs[selection]
-			if(!istype(M))
+			if(!selection)
 				return
+
+			M = mobs[selection]
+
 		var/mob/A = src.mob
 		var/turf/T = get_turf(A)
 		if(T && isturf(T))

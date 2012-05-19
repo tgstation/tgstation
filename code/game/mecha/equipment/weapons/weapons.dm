@@ -32,7 +32,7 @@
 		A.yo = targloc.y - curloc.y
 		A.xo = targloc.x - curloc.x
 		chassis.use_power(energy_drain)
-		A.process()
+		A.fired()
 		chassis.log_message("Fired from [src.name], targeting [target].")
 		do_after_cooldown()
 		return
@@ -215,7 +215,7 @@
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
 			set_ready_state(0)
-			A.process()
+			A.fired()
 		log_message("Fired from [src.name], targeting [target].")
 		do_after_cooldown()
 		return
@@ -256,7 +256,7 @@
 			A.current = curloc
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
-			A.process()
+			A.fired()
 			sleep(2)
 		set_ready_state(0)
 		log_message("Fired from [src.name], targeting [target].")

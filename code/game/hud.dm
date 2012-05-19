@@ -11,10 +11,10 @@
 #define ui_storage1 "SOUTH-1,4"
 #define ui_storage2 "SOUTH-1,5"
 #define ui_sstore1 "SOUTH+1,4"
-#define ui_hstore1 "SOUTH+1,5"
+#define ui_hstore1 "SOUTH+1,6"
 #define ui_resist "EAST+1,SOUTH-1"
 #define ui_gloves "SOUTH,5"
-#define ui_glasses "SOUTH+1,6"
+#define ui_glasses "SOUTH+1,5"
 #define ui_lear "SOUTH,7"
 #define ui_rear "SOUTH,6"
 #define ui_head "SOUTH+1,2"
@@ -68,7 +68,6 @@ obj/hud/New(var/type = 0)
 		if(mymob:r_ear) mymob:r_ear:screen_loc = ui_rear
 		if(mymob:s_store) mymob:s_store:screen_loc = ui_sstore1
 		if(mymob:glasses) mymob:glasses:screen_loc = ui_glasses
-		if(mymob:h_store) mymob:h_store:screen_loc = ui_hstore1
 	else
 		if(istype(mymob, /mob/living/carbon/human))
 			if(mymob:shoes) mymob:shoes:screen_loc = null
@@ -77,7 +76,6 @@ obj/hud/New(var/type = 0)
 			if(mymob:r_ear) mymob:r_ear:screen_loc = null
 			if(mymob:s_store) mymob:s_store:screen_loc = null
 			if(mymob:glasses) mymob:glasses:screen_loc = null
-			if(mymob:h_store) mymob:h_store:screen_loc = null
 
 
 /obj/hud/var/show_otherinventory = 1

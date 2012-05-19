@@ -22,7 +22,7 @@
 /obj/item/tape/engineering
 	name = "engineering tape"
 	desc = "A length of engineering tape. Better not cross it."
-	req_one_access = list(access_engine,access_atmospherics)
+	req_access = list(access_engine,access_atmospherics)
 	icon_base = "engineering"
 
 /obj/item/taperoll/attack_self(mob/user as mob)
@@ -73,7 +73,7 @@
 		var/turf/T = get_turf(A)
 		var/obj/item/tape/P = new tape_type(T.x,T.y,T.z)
 		P.loc = locate(T.x,T.y,T.z)
-		P.icon_state = "door"
+		P.icon_state = "[src.icon_base]_door"
 		P.layer = 3.2
 		user << "\blue You finish placing the [src]."
 

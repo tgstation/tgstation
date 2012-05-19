@@ -47,15 +47,16 @@
 
 	verbs += /mob/living/silicon/ai/proc/show_laws_verb
 
-	if (istype(loc, /turf))
+	if (istype(loc, /turf)) //If you add a verb here, make sure to add it to transform_procs.dm too.
 		verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
+		verbs += /mob/living/silicon/ai/proc/show_laws_verb
 		verbs += /mob/living/silicon/ai/proc/ai_camera_track
+		verbs += /mob/living/silicon/ai/proc/ai_alerts
 		verbs += /mob/living/silicon/ai/proc/ai_camera_list
-		//Added ai_network_change by Mord_Sith
 		verbs += /mob/living/silicon/ai/proc/ai_network_change
 		verbs += /mob/living/silicon/ai/proc/ai_statuschange
-		//Hologram verb./N
 		verbs += /mob/living/silicon/ai/proc/ai_hologram_change
+		verbs += /mob/living/silicon/ai/proc/ai_roster
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
@@ -440,6 +441,7 @@
 
 	if(client.eye == eyeobj)
 		eyeobj.loc = C.loc
+		cameranet.visibility(eyeobj)
 	else
 		machine = src
 		src:current = C
@@ -577,7 +579,9 @@
 		if(C.network == newnet)
 			cameralist.Add(C)
 
-	switchCamera( pick(cameralist) )
+	if(length(cameralist))
+		switchCamera( pick(cameralist) )
+
 	src << "\blue Jumped to [newnet] camera network."
 //End of code by Mord_Sith
 //cael - with the multiple onstation networks all linked together, changing networks is legacy functionality

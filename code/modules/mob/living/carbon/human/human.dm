@@ -39,7 +39,6 @@
 	var/obj/item/weapon/r_store = null
 	var/obj/item/weapon/l_store = null
 	var/obj/item/weapon/s_store = null
-	var/obj/item/weapon/h_store = null
 
 	var/icon/stand_icon = null
 	var/icon/lying_icon = null
@@ -481,15 +480,6 @@
 		glasses = null
 	else if (W == head)
 		var/obj/item/prev_head = W
-		W = h_store
-		if (W)
-			u_equip(W)
-			if (client)
-				client.screen -= W
-			if (W)
-				W.loc = loc
-				W.dropped(src)
-				W.layer = initial(W.layer)
 		head = null
 		if(prev_head && (prev_head.flags & BLOCKHAIR))
 			// rebuild face
@@ -524,8 +514,6 @@
 		l_store = null
 	else if (W == s_store)
 		s_store = null
-	else if (W == h_store)
-		h_store = null
 	else if (W == back)
 		back = null
 	else if (W == handcuffed)
@@ -755,22 +743,6 @@
 			else
 				u_equip(W)
 				s_store = W
-
-		if("hat storage")
-			if (h_store)
-				if (emptyHand)
-					h_store.DblClick()
-				return
-			var/confirm
-			if (head)
-				if (istype(W, /obj/item/weapon/pen))
-					confirm = 1
-				if (istype(head) && is_type_in_list(W, head.allowed)) // NOTE: head is /obj/item/clothing/head/ and parer hat is not /obj/item/clothing/ and does not have "allowed" --rastaf0
-					confirm = 1
-			if (!confirm) return
-			else
-				u_equip(W)
-				h_store = W
 
 	update_clothing()
 
@@ -1087,9 +1059,6 @@
 			overlays += image("icon" = 'belt_mirror.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
 		s_store.screen_loc = ui_sstore1
 
-	if (h_store)
-		h_store.screen_loc = ui_hstore1
-
 	if(client) hud_used.other_update() //Update the screenloc of the items on the 'other' inventory bar
 											   //to hide / show them.
 	if (client)
@@ -1210,10 +1179,11 @@
 
 	if (handcuffed)
 		pulling = null
+		var/h1 = handcuffed.icon_state
 		if (!lying)
-			overlays += image("icon" = 'mob.dmi', "icon_state" = "handcuff1", "layer" = MOB_LAYER)
+			overlays += image("icon" = 'mob.dmi', "icon_state" = "[h1]1", "layer" = MOB_LAYER)
 		else
-			overlays += image("icon" = 'mob.dmi', "icon_state" = "handcuff2", "layer" = MOB_LAYER)
+			overlays += image("icon" = 'mob.dmi', "icon_state" = "[h1]2", "layer" = MOB_LAYER)
 
 	if (client)
 		client.screen -= contents
@@ -1620,6 +1590,8 @@
 			if("dnainjector")
 				message = text("\red <B>[] is trying to inject [] with the []!</B>", source, target, item)
 			if("mask")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their mask removed by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) mask</font>")
 				if(istype(target.wear_mask, /obj/item/clothing)&&!target.wear_mask:canremove)
 					message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.wear_mask, target)
 				else
@@ -1627,60 +1599,84 @@
 /*			if("headset")
 				message = text("\red <B>[] is trying to take off \a [] from []'s face!</B>", source, target.w_radio, target) */
 			if("l_hand")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their left hand item removed by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) left hand item</font>")
 				message = text("\red <B>[] is trying to take off \a [] from []'s left hand!</B>", source, target.l_hand, target)
 			if("r_hand")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their right hand item removed by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) right hand item</font>")
 				message = text("\red <B>[] is trying to take off \a [] from []'s right hand!</B>", source, target.r_hand, target)
 			if("gloves")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their gloves removed by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) gloves</font>")
 				if(istype(target.gloves, /obj/item/clothing)&&!target.gloves:canremove)
 					message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.gloves, target)
 				else
 					message = text("\red <B>[] is trying to take off the [] from []'s hands!</B>", source, target.gloves, target)
 			if("eyes")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their eyewear removed by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) eyewear</font>")
 				if(istype(target.glasses, /obj/item/clothing)&&!target.glasses:canremove)
 					message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.glasses, target)
 				else
 					message = text("\red <B>[] is trying to take off the [] from []'s eyes!</B>", source, target.glasses, target)
 			if("l_ear")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their left ear item removed by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) left ear item</font>")
 				if(istype(target.l_ear, /obj/item/clothing)&&!target.l_ear:canremove)
 					message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.l_ear, target)
 				else
 					message = text("\red <B>[] is trying to take off the [] from []'s left ear!</B>", source, target.l_ear, target)
 			if("r_ear")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their right ear item removed by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) right ear item</font>")
 				if(istype(target.r_ear, /obj/item/clothing)&&!target.r_ear:canremove)
 					message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.r_ear, target)
 				else
 					message = text("\red <B>[] is trying to take off the [] from []'s right ear!</B>", source, target.r_ear, target)
 			if("head")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their hat removed by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) hat</font>")
 				if(istype(target.head, /obj/item/clothing)&&!target.head:canremove)
 					message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.head, target)
 				else
 					message = text("\red <B>[] is trying to take off the [] from []'s head!</B>", source, target.head, target)
 			if("shoes")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their shoes removed by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) shoes</font>")
 				if(istype(target.shoes, /obj/item/clothing)&&!target.shoes:canremove)
 					message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.shoes, target)
 				else
 					message = text("\red <B>[] is trying to take off the [] from []'s feet!</B>", source, target.shoes, target)
 			if("belt")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their belt item removed by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) belt item</font>")
 				message = text("\red <B>[] is trying to take off the [] from []'s belt!</B>", source, target.belt, target)
 			if("suit")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their suit removed by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) suit</font>")
 				if(istype(target.wear_suit, /obj/item/clothing)&&!target.wear_suit:canremove)
 					message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.wear_suit, target)
 				else
 					message = text("\red <B>[] is trying to take off \a [] from []'s body!</B>", source, target.wear_suit, target)
 			if("back")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their back item removed by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) back item</font>")
 				message = text("\red <B>[] is trying to take off \a [] from []'s back!</B>", source, target.back, target)
 			if("handcuff")
 				message = text("\red <B>[] is trying to unhandcuff []!</B>", source, target)
 			if("uniform")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their uniform removed by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) uniform</font>")
 				if(istype(target.w_uniform, /obj/item/clothing)&&!target.w_uniform:canremove)
 					message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.w_uniform, target)
 				else
 					message = text("\red <B>[] is trying to take off \a [] from []'s body!</B>", source, target.w_uniform, target)
 			if("s_store")
 				message = text("\red <B>[] is trying to take off \a [] from []'s suit!</B>", source, target.s_store, target)
-			if("h_store")
-				message = text("\red <B>[] is trying to empty []'s hat!</B>", source, target)
 			if("pockets")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their pockets emptied by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to empty [target.name]'s ([target.ckey]) pockets</font>")
 				for(var/obj/item/weapon/mousetrap/MT in  list(target.l_store, target.r_store))
 					if(MT.armed)
 						for(var/mob/O in viewers(target, null))
@@ -1701,10 +1697,14 @@
 					//SN src = null
 					del(src)
 					return
-				message = text("\red <B>[] is trying perform CPR on []!</B>", source, target)
+				message = text("\red <B>[] is trying to perform CPR on []!</B>", source, target)
 			if("id")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their ID removed by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) ID</font>")
 				message = text("\red <B>[] is trying to take off [] from []'s uniform!</B>", source, target.wear_id, target)
 			if("internal")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their internals toggled by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to toggle [target.name]'s ([target.ckey]) internals</font>")
 				if (target.internal)
 					message = text("\red <B>[] is trying to remove []'s internals</B>", source, target)
 				else
@@ -2127,17 +2127,6 @@ It can still be worn/put on as normal.
 					item.layer = 20
 					target.back = item
 					item.loc = target
-		if("h_store")
-			if (target.h_store)
-				var/obj/item/W = target.h_store
-				target.u_equip(W)
-				if (target.client)
-					target.client.screen -= W
-				if (W)
-					W.loc = target.loc
-					W.dropped(target)
-					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
 		if("handcuff")
 			if (target.handcuffed)
 				var/obj/item/W = target.handcuffed
@@ -2288,7 +2277,6 @@ It can still be worn/put on as normal.
 	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
-	<BR><A href='?src=\ref[src];item=h_store'>Empty Hat</A>
 	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}

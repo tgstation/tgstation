@@ -26,6 +26,10 @@ log transactions
 			del I
 
 /obj/machinery/atm/attack_hand(mob/user as mob)
+	if(istype(user, /mob/living/silicon))
+		user << "\red Artificial unit recognized. Artificial units do not currently receive monetary compensation, as per NanoTrasen regulation #1005."
+		return
+		
 	var/obj/item/weapon/card/id/user_id = src.scan_user(user)
 	if(..())
 		return

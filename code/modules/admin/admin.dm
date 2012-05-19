@@ -2267,8 +2267,7 @@ var/global/BSACooldown = 0
 				if("maint_access_engiebrig")
 					for(var/obj/machinery/door/airlock/maintenance/M in world)
 						if (access_maint_tunnels in M.req_access)
-							M.req_access = list()
-							M.req_one_access = list(access_brig,access_engine)
+							M.req_access = list(access_brig,access_engine)
 					message_admins("[key_name_admin(usr)] made all maint doors engineering and brig access-only.")
 				if("infinite_sec")
 					var/datum/job/J = job_master.GetJob("Security Officer")
@@ -2729,16 +2728,11 @@ var/global/BSACooldown = 0
 	dat += "<center><B>Voting</B></center><hr>\n"
 
 	if(lvl > 0)
-//			if(lvl >= 2 )
 		dat += {"
 <A href='?src=\ref[src];votekill=1'>Abort Vote</A><br>
 <A href='?src=\ref[src];vmode=1'>Start Vote</A><br>
 <A href='?src=\ref[src];voteres=1'>Toggle Voting</A><br>
 "}
-
-//			if(lvl >= 3 )
-//			if(lvl >= 5)
-//			if(lvl == 6 )
 
 	usr << browse(dat, "window=admin2;size=210x160")
 	return
@@ -2751,11 +2745,11 @@ var/global/BSACooldown = 0
 
 /obj/admins/proc/vmode()
 	set category = "Server"
-	set name = "Start Vote"
-	set desc="Starts vote"
+	set hidden = 1 // It doesn't have a cancel button, so it shouldn't be autocompleted. Should be started via Voting() instead
 	if (!usr.client.holder)
 		return
-	var/confirm = alert("What vote would you like to start?", "Vote", "Restart", "Custom Vote", "Change Game Mode", "Cancel")
+
+	var/confirm = alert("What vote would you like to start?", "Vote", "Restart", "Custom Vote", "Change Game Mode")
 	switch(confirm)
 		if("Cancel")
 			return

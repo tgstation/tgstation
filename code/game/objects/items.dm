@@ -63,7 +63,10 @@
 				O.place = "handcuff"
 				M.requests += O
 				spawn( 0 )
-					playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
+					if(istype(src, /obj/item/weapon/handcuffs/cable))
+						playsound(src.loc, 'cablecuff.ogg', 30, 1, -2)
+					else
+						playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
 					O.process()
 			return
 		else
@@ -77,7 +80,10 @@
 				O.place = "handcuff"
 				M.requests += O
 				spawn( 0 )
-					playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
+					if(istype(src, /obj/item/weapon/handcuffs/cable))
+						playsound(src.loc, 'cablecuff.ogg', 30, 1, -2)
+					else
+						playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
 					O.process()
 			return
 	return
@@ -117,6 +123,7 @@
 
 	if (!safety)
 		if (src.reagents.total_volume < 1)
+			usr << "\red the [src] is empty."
 			return
 
 		if (world.time < src.last_use + 20)
@@ -127,6 +134,28 @@
 		playsound(src.loc, 'extinguish.ogg', 75, 1, -3)
 
 		var/direction = get_dir(src,target)
+
+		if(usr.buckled && isobj(usr.buckled) && !usr.buckled.anchored )
+			spawn(0)
+				var/obj/B = usr.buckled
+				var/movementdirection = turn(direction,180)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(1)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(1)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(1)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(2)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(2)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(3)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(3)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(3)
+				B.Move(get_step(usr,movementdirection), movementdirection)
 
 		var/turf/T = get_turf(target)
 		var/turf/T1 = get_step(T,turn(direction, 90))
@@ -372,7 +401,7 @@
 
 	if(M:brain_op_stage == 4.0)
 		for(var/mob/O in viewers(M, null))
-			if(O == (user || M))
+			if(O == user || O == M)
 				continue
 			if(M == user)
 				O.show_message(text("\red [user] inserts [src] into his head!"), 1)

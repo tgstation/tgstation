@@ -82,28 +82,29 @@
 
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
-/obj/var/list/req_one_access = null
-/obj/var/req_one_access_txt = "0"
+
+/obj/var/list/req_combined_access = null
+/obj/var/req_combined_access_txt = "0"
 
 /obj/New()
 	//NOTE: If a room requires more than one access (IE: Morgue + medbay) set the req_acesss_txt to "5;6" if it requires 5 and 6
-	if(src.req_access_txt)
+	if(req_access_txt)
 		var/list/req_access_str = dd_text2list(req_access_txt,";")
 		if(!req_access)
 			req_access = list()
 		for(var/x in req_access_str)
 			var/n = text2num(x)
 			if(n)
-				req_access += n
+				req_access |= n
 
-	if(src.req_one_access_txt)
-		var/list/req_one_access_str = dd_text2list(req_one_access_txt,";")
-		if(!req_one_access)
-			req_one_access = list()
-		for(var/x in req_one_access_str)
+	if(req_combined_access_txt)
+		var/list/req_access_str = dd_text2list(req_combined_access_txt,";")
+		if(!req_combined_access)
+			req_combined_access = list()
+		for(var/x in req_access_str)
 			var/n = text2num(x)
 			if(n)
-				req_one_access += n
+				req_combined_access |= n
 
 	..()
 
@@ -133,40 +134,47 @@
 		var/obj/item/device/pda/pda = I
 		I = pda.id
 
-	if(!src.req_access && !src.req_one_access) //no requirements
+	if(!req_access) //no requirements
 		return 1
-	if(!istype(src.req_access, /list)) //something's very wrong
+	if(!istype(req_access, /list)) //something's very wrong
 		return 1
-
-	var/list/L = src.req_access
-	if(!L.len && (!src.req_one_access || !src.req_one_access.len)) //no requirements
-		return 1
+	if(!req_access.len) //no requirements
+		if(!req_combined_access || !islist(req_combined_access) || !req_combined_access.len)
+			return 1
 	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
 		return 0
-	if(src.req_one_access && src.req_one_access.len)
-		for(var/req in src.req_one_access)
-			if(req in I.access) //has an access from the single access list
-				return 1
-	for(var/req in src.req_access)
-		if(!(req in I.access)) //doesn't have this access - Leave like this DMTG
-			return 0
-	return 1
+	for(var/req in req_access)
+		if(req in I.access) //has an access from the single access list
+			return 1
+	if(req_combined_access && req_combined_access.len)
+		for(var/req in req_combined_access)
+			if(!req in I.access)
+				return 0
+		return 1
+	return 0
 
 
 /obj/proc/check_access_list(var/list/L)
-	if(!src.req_access  && !src.req_one_access)	return 1
-	if(!istype(src.req_access, /list))	return 1
-	if(!src.req_access.len && (!src.req_one_access || !src.req_one_access.len))	return 1
-	if(!L)	return 0
-	if(!istype(L, /list))	return 0
-	if(src.req_one_access && src.req_one_access.len)
-		for(var/req in src.req_one_access)
-			if(req in L) //has an access from the single access list
-				return 1
-	for(var/req in src.req_access)
-		if(!(req in L)) //doesn't have this access - Leave like this DMTG
-			return 0
-	return 1
+	if(!req_access)
+		return 1
+	if(!istype(req_access, /list))
+		return 1
+	if(!req_access.len)
+		if(!req_combined_access || !islist(req_combined_access) || !req_combined_access.len)
+			return 1
+	if(!L)
+		return 0
+	if(!istype(L, /list))
+		return 0
+	for(var/req in req_access)
+		if(req in L) //has an access from the single access list
+			return 1
+	if(req_combined_access && req_combined_access.len)
+		for(var/req in req_combined_access)
+			if(!req in L)
+				return 0
+		return 1
+	return 0
 
 
 /proc/get_access(job)
@@ -207,9 +215,9 @@
 			            access_tox, access_tox_storage, access_chemistry, access_medical, access_genetics, access_engine,
 			            access_emergency_storage, access_change_ids, access_ai_upload, access_eva, access_heads,
 			            access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
-			            access_crematorium, access_kitchen, access_robotics, access_cargo, access_cargo_bot, access_hydroponics, access_lawyer,
-			            access_theatre, access_research, access_mining, access_heads_vault, access_mining_station,
-			            access_hop, access_RC_announce, access_keycard_auth)
+			            access_crematorium, access_kitchen, access_robotics, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
+			            access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
+			            access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth)
 		if("Atmospheric Technician")
 			return list(access_atmospherics, access_maint_tunnels, access_emergency_storage)
 		if("Bartender")
@@ -231,7 +239,7 @@
 		if("Shaft Miner")
 			return list(access_mining, access_mint, access_mining_station)
 		if("Quartermaster")
-			return list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining)
+			return list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station)
 		if("Chief Engineer")
 			return list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,

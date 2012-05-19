@@ -3,7 +3,7 @@
 	real_name = "tajaran"
 	voice_name = "tajaran"
 	icon = 'tajaran.dmi'
-	icon_state = "m-none"
+	icon_state = "m_none"
 	var/list/tajspeak_letters = list("~","*","-")
 	//
 	universal_speak = 1 //hacky fix until someone can figure out how to make them only understand humans
@@ -238,9 +238,6 @@
 		if(!istype(wear_suit, /obj/item/clothing/suit/storage/armoredundersuit))
 			overlays += image("icon" = 'belt_mirror.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
 		s_store.screen_loc = ui_sstore1
-
-	if (h_store)
-		h_store.screen_loc = ui_hstore1
 
 	if(client) hud_used.other_update() //Update the screenloc of the items on the 'other' inventory bar
 											   //to hide / show them.

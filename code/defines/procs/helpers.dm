@@ -838,6 +838,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/names = list()
 	var/list/creatures = list()
 	var/list/namecounts = list()
+
 	for(var/mob/M in mobs)
 		var/name = M.name
 		if (name in names)
@@ -846,13 +847,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		else
 			names.Add(name)
 			namecounts[name] = 1
+
 		if (M.real_name && M.real_name != M.name)
 			name += " \[[M.original_name? M.original_name : M.real_name]\]"
+
 		if (M.stat == 2)
 			if(istype(M, /mob/dead/observer/))
 				name += " \[ghost\]"
 			else
 				name += " \[dead\]"
+
 		creatures[name] = M
 
 	return creatures

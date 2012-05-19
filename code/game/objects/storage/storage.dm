@@ -207,6 +207,19 @@
 
 /obj/item/weapon/storage/attack_hand(mob/user as mob)
 	playsound(src.loc, "rustle", 50, 1, -5)
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.l_store == src && !H.get_active_hand())
+			H.put_in_hand(src)
+			H.l_store = null
+			return
+		if(H.r_store == src && !H.get_active_hand())
+			H.put_in_hand(src)
+			H.r_store = null
+			return
+
+	src.orient2hud(user)
 	if (src.loc == user)
 		if (user.s_active)
 			user.s_active.close(user)
@@ -216,7 +229,6 @@
 		for(var/mob/M in range(1))
 			if (M.s_active == src)
 				src.close(M)
-	src.orient2hud(user)
 	src.add_fingerprint(user)
 	return
 
@@ -316,7 +328,7 @@
 
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
-	switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "freedom" = 1)))
+	switch (pickweight(list("bloodyspai" = 1, "stealth" = 1, "screwed" = 1, "guns" = 1, "freedom" = 1, "hacker" = 1, "lordsingulo" = 1)))
 		if ("bloodyspai")
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/clothing/mask/gas/voice(src)
@@ -350,6 +362,19 @@
 			O.imp = new /obj/item/weapon/implant/freedom(O)
 			var/obj/item/weapon/implanter/U = new /obj/item/weapon/implanter(src)
 			U.imp = new /obj/item/weapon/implant/uplink(U)
+			return
+
+		if ("hacker")
+			new /obj/item/weapon/aiModule/syndicate(src)
+			new /obj/item/weapon/card/emag(src)
+			new /obj/item/device/encryptionkey/binary(src)
+			return
+
+		if ("lordsingulo")
+			new /obj/item/device/radio/beacon/syndicate(src)
+			new /obj/item/clothing/suit/space/syndicate(src)
+			new /obj/item/clothing/head/helmet/space/syndicate(src)
+			new /obj/item/weapon/card/emag(src)
 			return
 
 /obj/item/weapon/storage/dice/New()

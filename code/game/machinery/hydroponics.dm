@@ -1,5 +1,5 @@
 /obj/machinery/hydroponics
-	name = "Hydroponics Tray"
+	name = "hydroponics tray"
 	icon = 'hydroponics.dmi'
 	icon_state = "hydrotray3"
 	density = 1
@@ -404,7 +404,7 @@ obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent in
 		src.updateicon()
 		src.visible_message("\red The mutated weeds in [src] spawned a \blue [src.myseed.plantname]!")
 	else
-		usr << "The few weeds in the tray seem to react, but only for a moment..."
+		usr << "The few weeds in the [src] seem to react, but only for a moment..."
 	return
 
 
@@ -441,7 +441,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			O.reagents.remove_reagent("water", b_amount)
 			src.waterlevel += b_amount
 			playsound(src.loc, 'slosh.ogg', 25, 1)
-			user << "You fill the tray with [b_amount] units of water."
+			user << "You fill the [src] with [b_amount] units of water."
 
 	//		Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
 			src.toxic -= round(b_amount/4)
@@ -449,7 +449,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				src.toxic = 0
 
 		else if(src.waterlevel >= 100)
-			user << "\red The hydroponics tray is already full."
+			user << "\red The [src] is already full."
 		else
 			user << "\red The bucket is not filled with water."
 		src.updateicon()
@@ -460,7 +460,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		src.nutrilevel = 10
 		src.yieldmod = myNut.yieldmod
 		src.mutmod = myNut.mutmod
-		user << "You replace the nutrient solution in the tray"
+		user << "You replace the nutrient solution in the [src]."
 		del(O)
 		src.updateicon()
 
@@ -661,7 +661,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			src.updateicon()
 
 		else
-			user << "\red The tray already has seeds in it!"
+			user << "\red The [src] already has seeds in it!"
 
 	else if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		if(src.planted && src.myseed)
@@ -709,7 +709,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	else if (istype(O, /obj/item/weapon/minihoe))  // The minihoe
 		//var/deweeding
 		if(src.weedlevel > 0)
-			user.visible_message("\red [user] starts uprooting the weeds.", "\red You remove the weeds from the tray.")
+			user.visible_message("\red [user] starts uprooting the weeds.", "\red You remove the weeds from the [src].")
 			src.weedlevel = 0
 		else
 			user << "\red This plot is completely devoid of weeds. It doesn't need uprooting."
@@ -723,7 +723,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			src.weedlevel = 0
 		if (src.toxic > 100 ) // Make sure it won't go overoboard
 			src.toxic = 100
-		user << "You apply the weedkiller solution into the tray"
+		user << "You apply the weedkiller solution into the [src]."
 		playsound(src.loc, 'spray3.ogg', 50, 1, -6)
 		del(O)
 		src.updateicon()
@@ -737,7 +737,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			src.pestlevel = 0
 		if (src.toxic > 100 ) // Make sure it won't go overoboard
 			src.toxic = 100
-		user << "You apply the pestkiller solution into the tray"
+		user << "You apply the pestkiller solution into the [src]."
 		playsound(src.loc, 'spray3.ogg', 50, 1, -6)
 		del(O)
 		src.updateicon()
@@ -754,22 +754,22 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	else if(src.dead)
 		src.planted = 0
 		src.dead = 0
-		usr << text("You remove the dead plant from the tray")
+		usr << text("You remove the dead plant from the [src].")
 		del(src.myseed)
 		src.updateicon()
 	else
 		if(src.planted && !src.dead)
-			usr << text("The hydroponics tray has \blue [src.myseed.plantname] \black planted")
+			usr << text("The [src] has \blue [src.myseed.plantname] \black planted.")
 			if(src.health <= (src.myseed.endurance / 2))
 				usr << text("The plant looks unhealthy")
 		else
-			usr << text("The hydroponics tray is empty")
+			usr << text("The [src] is empty.")
 		usr << text("Water: [src.waterlevel]/100")
 		usr << text("Nutrient: [src.nutrilevel]/10")
 		if(src.weedlevel >= 5) // Visual aid for those blind
-			usr << text("The tray is filled with weeds!")
+			usr << text("The [src] is filled with weeds!")
 		if(src.pestlevel >= 5) // Visual aid for those blind
-			usr << text("The tray is filled with tiny worms!")
+			usr << text("The [src] is filled with tiny worms!")
 		usr << text ("") // Empty line for readability.
 
 /obj/item/seeds/proc/harvest(mob/user = usr)
@@ -820,7 +820,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	var/t_amount = 0
 
 	while ( t_amount < (yield * parent.yieldmod ))
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new produce(user.loc, potency) // User gets a consumable
+		var/obj/item/weapon/grown/t_prod = new produce(user.loc, potency) // User gets a consumable -QualityVan
 		t_prod.seed = mypath
 		t_prod.species = species
 		t_prod.lifespan = lifespan
@@ -828,7 +828,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		t_prod.maturation = maturation
 		t_prod.production = production
 		t_prod.yield = yield
-		t_prod.potency = potency
+		t_prod.changePotency(potency) // -QualityVan
 		t_prod.plant_type = plant_type
 		t_amount++
 
@@ -840,7 +840,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	var/t_amount = 0
 
 	while ( t_amount < (yield * parent.yieldmod ))
-		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new produce(user.loc, potency) // User gets a consumable
+		var/obj/item/weapon/grown/t_prod = new produce(user.loc, potency) // User gets a consumable -QualityVan
 		t_prod.seed = mypath
 		t_prod.species = species
 		t_prod.lifespan = lifespan
@@ -848,7 +848,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 		t_prod.maturation = maturation
 		t_prod.production = production
 		t_prod.yield = yield
-		t_prod.potency = potency
+		t_prod.changePotency(potency) // -QualityVan
 		t_prod.plant_type = plant_type
 		t_amount++
 
@@ -977,7 +977,7 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	harvest = 0
 	lastproduce = src.age
 	if((yieldmod * myseed.yield) <= 0)
-		user << text("\red You fail to harvest anything useful")
+		user << text("\red You fail to harvest anything useful.")
 	else
 		user << text("You harvest from the [src.myseed.plantname]")
 	if(myseed.oneharvest)

@@ -31,12 +31,12 @@
 /obj/structure/closet/secure_closet/hop
 	name = "Head of Personnel"
 	req_access = list(access_hop)
-	icon_state = "capsecure1"
-	icon_closed = "capsecure"
-	icon_locked = "capsecure1"
-	icon_opened = "capsecureopen"
-	icon_broken = "capsecurebroken"
-	icon_off = "capsecureoff"
+	icon_state = "hopsecure1"
+	icon_closed = "hopsecure"
+	icon_locked = "hopsecure1"
+	icon_opened = "hopsecureopen"
+	icon_broken = "hopsecurebroken"
+	icon_off = "hopsecureoff"
 
 	New()
 		..()
@@ -144,9 +144,9 @@
 		new /obj/item/device/pda/security(src)
 		new /obj/item/device/radio/headset/headset_sec(src)
 		new /obj/item/weapon/storage/belt/security(src)
-		new /obj/item/weapon/flashbang(src)
-		new /obj/item/weapon/pepperspray(src)
 		new /obj/item/device/flash(src)
+		new /obj/item/weapon/pepperspray(src)
+		new /obj/item/weapon/flashbang(src)
 		new /obj/item/weapon/melee/baton(src)
 		new /obj/item/clothing/glasses/sunglasses/sechud(src)
 		return

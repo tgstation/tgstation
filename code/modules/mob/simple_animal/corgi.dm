@@ -171,7 +171,8 @@
 						/obj/item/clothing/head/helmet/hardhat/white,
 						/obj/item/weapon/bedsheet,
 						/obj/item/clothing/head/helmet/space/santahat,
-						/obj/item/clothing/head/collectable/paper
+						/obj/item/clothing/head/collectable/paper,
+						/obj/item/clothing/head/cargosoft
 					)
 
 					if( ! ( item_to_add.type in allowed_types ) )
@@ -183,7 +184,7 @@
 					src.inventory_head = item_to_add
 					update_clothing()
 
-					//Various hats and items (worn on his head) change Ian's behaviour. His attributesare reset when a HAT is removed.
+					//Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a HAT is removed.
 
 
 					switch(inventory_head && inventory_head.type)
@@ -240,6 +241,10 @@
 							emote_hear = list("barks christmas songs", "yaps")
 							desc = "He has a very shiny nose."
 							src.sd_SetLuminosity(6)
+						if(/obj/item/clothing/head/cargosoft)
+							name = "Corgi Tech [real_name]"
+							speak = list("Needs a stamp!", "Request DENIED!", "Fill these out in triplicate!")
+							desc = "The reason your yellow gloves have chew-marks."
 
 			if("back")
 				if(inventory_back)

@@ -11,6 +11,7 @@
 		s["ai"] = config.allow_ai
 		s["host"] = host ? host : null
 		s["players"] = list()
+		s["admins"] = 0
 		var/n = 0
 
 		for(var/client/C)

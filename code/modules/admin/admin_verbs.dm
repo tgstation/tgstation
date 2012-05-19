@@ -220,6 +220,7 @@
 			verbs += /client/proc/jumptokey
 			verbs += /client/proc/jumptomob
 			verbs += /client/proc/jumptoturf
+			verbs += /client/proc/Open_Minimap
 			verbs += /client/proc/cmd_admin_delete
 			verbs += /client/proc/cmd_admin_add_freeform_ai_law
 			verbs += /client/proc/cmd_admin_add_random_ai_law
@@ -291,8 +292,9 @@
 			verbs += /client/proc/everyone_random
 			verbs += /client/proc/only_one
 			verbs += /client/proc/deadmin_self
-			verbs += /client/proc/giveruntimelog							//used by coders to retrieve runtime logs
-			verbs += /client/proc/cinematic							//used by coders to retrieve runtime logs
+			verbs += /client/proc/giveruntimelog						//used by coders to retrieve runtime logs
+			verbs += /client/proc/cinematic								//show a cinematic sequence
+			verbs += /client/proc/startSinglo							//Used to prevent the station from losing power while testing stuff out.
 			verbs += /client/proc/enable_debug_verbs
 			verbs += /client/proc/kill_air
 			verbs += /client/proc/callprocgen
@@ -890,8 +892,8 @@
 	switch(alert("You sure you wish to edit this mob's appearance?",,"Yes","No"))
 		if("No")
 			return
-	if(istype(M,/mob/living/carbon/human/tajaran))
-		usr << "\red Tajarans do not have an editable appearance... yet!"
+	if(istype(M,/mob/living/carbon/human/tajaran) || istype(M,/mob/living/carbon/human/birdman))
+		usr << "\red Humanoid aliens do not have an editable appearance... yet!"
 	else
 		var/new_facial = input("Please select facial hair color.", "Character Generation") as color
 		if(new_facial)
