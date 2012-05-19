@@ -62,11 +62,11 @@
 			if (O)
 				O.hear_talk(src, message)
 
-	var/list/listening = hearers(message_range, src)
+	var/list/listening = get_mobs_in_view(message_range, src)
 //	listening -= src
 //	listening += src
 // WAT.
-	var/list/eavesdropping = hearers(2, src)
+	var/list/eavesdropping = get_mobs_in_view(message_range, src)
 	eavesdropping -= src
 	eavesdropping -= listening
 	var/list/watching  = hearers(5, src)

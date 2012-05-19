@@ -35,6 +35,7 @@ mob/living/parasite/proc/enter_host(mob/living/carbon/host)
 		return 0
 
 	src.host = host
+	src.loc = host
 	host.parasites.Add(src)
 
 	if(client) client.eye = host
@@ -44,6 +45,7 @@ mob/living/parasite/proc/enter_host(mob/living/carbon/host)
 mob/living/parasite/proc/exit_host()
 	src.host.parasites.Remove(src)
 	src.host = null
+	src.loc = null
 
 	return 1
 
@@ -68,8 +70,8 @@ mob/living/parasite/meme/Life()
 	if(!host) return
 
 	// recover meme points slowly
-	var/gain = 1
-	if(dormant) gain = 3 // dormant recovers points faster
+	var/gain = 2
+	if(dormant) gain = 6 // dormant recovers points faster
 
 	meme_points = min(meme_points + gain, MAXIMUM_MEME_POINTS)
 
@@ -435,17 +437,17 @@ mob/living/parasite/meme/verb/Possession()
 	host << "\red Everything goes black.."
 
 	spawn
-		var/mob/dummy = new
-		var/client/host_key = host.key
-		var/client/meme_key = src.key
+		var/mob/living/dummy = new
+		var/datum/mind/host_mind = host.mind
+		var/datum/mind/meme_mind = src.mind
 
-		dummy.key = host_key
-		host.key = meme_key
+		host_mind.transfer_to(dummy)
+		meme_mind.transfer_to(host)
 
 		sleep(600)
 
-		src.key = meme_key
-		host.key = host_key
+		meme_mind.transfer_to(src)
+		host_mind.transfer_to(host)
 		src << "\red You lose control.."
 
 		del dummy
@@ -467,6 +469,11 @@ mob/living/parasite/meme/verb/Dormant()
 	dormant = 0
 
 	usr << "\red You have regained all points and exited dormant mode!"
+
+mob/living/parasite/meme/verb/Show_Points()
+	set category = "Meme"
+
+	usr << "<b>Meme Points: [src.meme_points]/[MAXIMUM_MEME_POINTS]</b>"
 
 // Game mode helpers, used for theft objectives
 // --------------------------------------------
