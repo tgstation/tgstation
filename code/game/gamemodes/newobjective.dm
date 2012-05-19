@@ -1226,6 +1226,20 @@ datum
 				else
 					return 0
 
+		meme_attune
+			var/target_amount
+			proc/gen_amount_goal(var/lowbound = 4, var/highbound = 6)
+				target_amount = rand (lowbound,highbound)
+
+				explanation_text = "Attune [target_amount] humanoid brains."
+				return target_amount
+
+			check_completion()
+				if(owner && owner.current && istype(owner.current,/mob/living/parasite/meme) && (owner.current:indoctrinated.len >= target_amount))
+					return 1
+				else
+					return 0
+
 		download
 			var/target_amount
 			proc/gen_amount_goal()
