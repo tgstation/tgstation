@@ -52,6 +52,7 @@
 
 	if (stat != 2) //still breathing
 
+
 		//First, resolve location and get a breath
 
 		if(air_master.current_cycle%4==2)

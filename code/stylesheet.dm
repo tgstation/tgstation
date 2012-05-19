@@ -34,6 +34,7 @@ em						{font-style: normal;	font-weight: bold;}
 h1.alert, h2.alert		{color: #000000;}
 
 .emote					{					font-style: italic;}
+.selecteddna			{color: #FFFFFF; 	background-color: #001B1B}
 
 .attack					{color: #ff0000;}
 .moderate				{color: #CC0000;}

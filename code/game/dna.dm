@@ -181,6 +181,30 @@
 	else
 		return null
 
+/proc/getblockstring(input,block,subblock,blocksize)
+	var/string
+	var/subpos = 1 // keeps track of the current sub block
+	var/blockpos = 1 // keeps track of the current block
+
+	for(var/i = 1, i <= length(input), i++) // loop through each letter
+
+		var/pushstring = copytext(input, i, i+1)
+
+		if(subpos == subblock && blockpos == block) // if the current block/subblock is selected, mark it
+			pushstring = "</font color><b>[copytext(input, i, i+1)]</b><font color='blue'>"
+
+		string += pushstring // push the string to the return string
+
+		if(subpos >= blocksize) // add a line break for every block
+			string += " </font color><font color='#285B5B'>|</font color><font color='blue'> "
+			subpos = 0
+			blockpos++
+
+		subpos++
+
+	return string
+
+
 /proc/getblock(input,blocknumber,blocksize)
 	var/result
 	result = copytext(input ,(blocksize*blocknumber)-(blocksize-1),(blocksize*blocknumber)+1)
@@ -1009,13 +1033,17 @@
 		////////////////////////////////////////////////////////
 		if (href_list["unimenu"])
 			//src.temphtml = text("Unique Identifier: <font color='blue'>[]</FONT><BR><BR>", src.connected.occupant.dna.uni_identity)
-			src.temphtml = text("Unique Identifier: <font color='blue'>[getleftblocks(src.connected.occupant.dna.uni_identity,uniblock,3)][src.subblock == 1 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1)][src.subblock == 2 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1)][src.subblock == 3 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)][getrightblocks(src.connected.occupant.dna.uni_identity,uniblock,3)]</FONT><BR><BR>")
+			//src.temphtml = text("Unique Identifier: <font color='blue'>[getleftblocks(src.connected.occupant.dna.uni_identity,uniblock,3)][src.subblock == 1 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1)][src.subblock == 2 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1)][src.subblock == 3 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)][getrightblocks(src.connected.occupant.dna.uni_identity,uniblock,3)]</FONT><BR><BR>")
+
+			// New way of displaying DNA blocks
+			src.temphtml = text("Unique Identifier: <font color='blue'>[getblockstring(src.connected.occupant.dna.uni_identity,uniblock,subblock,3)]</FONT><br><br>")
+
 			src.temphtml += text("Selected Block: <font color='blue'><B>[]</B></FONT><BR>", src.uniblock)
 			src.temphtml += text("<A href='?src=\ref[];unimenuminus=1'><-</A> Block <A href='?src=\ref[];unimenuplus=1'>-></A><BR><BR>", src, src)
 			src.temphtml += text("Selected Sub-Block: <font color='blue'><B>[]</B></FONT><BR>", src.subblock)
 			src.temphtml += text("<A href='?src=\ref[];unimenusubminus=1'><-</A> Sub-Block <A href='?src=\ref[];unimenusubplus=1'>-></A><BR><BR>", src, src)
 			src.temphtml += "<B>Modify Block:</B><BR>"
-			src.temphtml += text("<A href='?src=\ref[];unipulse=1'>Radiation</A><BR>", src)
+			src.temphtml += text("<A href='?src=\ref[];unipulse=1'>Irradiate</A><BR>", src)
 			src.delete = 0
 		if (href_list["unimenuplus"])
 			if (src.uniblock < 13)
@@ -1091,14 +1119,19 @@
 				var/temp2 = ""
 				for(var/i = 3, i <= length(temp_string2), i += 3)
 					temp2 += copytext(temp_string2, i-2, i+1) + " "
-				src.temphtml = text("Structural Enzymes: <font color='blue'>[temp1] [src.subblock == 1 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1)][src.subblock == 2 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1)+"</U></B>":getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1)][src.subblock == 3 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)+"</U></B>":getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)] [temp2]</FONT><BR><BR>")
+				//src.temphtml = text("Structural Enzymes: <font color='blue'>[temp1] [src.subblock == 1 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),1,1)][src.subblock == 2 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1)+"</U></B>":getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),2,1)][src.subblock == 3 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)+"</U></B>":getblock(getblock(src.connected.occupant.dna.struc_enzymes,src.strucblock,3),3,1)] [temp2]</FONT><BR><BR>")
 				//src.temphtml = text("Structural Enzymes: <font color='blue'>[]</FONT><BR><BR>", src.connected.occupant.dna.struc_enzymes)
+
+				// New shit, it doesn't suck (as much)
+				src.temphtml = text("Structural Enzymes: <font color='blue'>[getblockstring(src.connected.occupant.dna.struc_enzymes,strucblock,subblock,3)]</FONT><br><br>")
+																							// SE of occupant,	selected block,	selected subblock,	block size (3 subblocks)
+
 				src.temphtml += text("Selected Block: <font color='blue'><B>[]</B></FONT><BR>", src.strucblock)
 				src.temphtml += text("<A href='?src=\ref[];strucmenuminus=1'><-</A> <A href='?src=\ref[];strucmenuchoose=1'>Block</A> <A href='?src=\ref[];strucmenuplus=1'>-></A><BR><BR>", src, src, src)
 				src.temphtml += text("Selected Sub-Block: <font color='blue'><B>[]</B></FONT><BR>", src.subblock)
 				src.temphtml += text("<A href='?src=\ref[];strucmenusubminus=1'><-</A> Sub-Block <A href='?src=\ref[];strucmenusubplus=1'>-></A><BR><BR>", src, src)
 				src.temphtml += "<B>Modify Block:</B><BR>"
-				src.temphtml += text("<A href='?src=\ref[];strucpulse=1'>Radiation</A><BR>", src)
+				src.temphtml += text("<A href='?src=\ref[];strucpulse=1'>Irradiate</A><BR>", src)
 				src.delete = 0
 		if (href_list["strucmenuplus"])
 			if (src.strucblock < 27)

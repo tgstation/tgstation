@@ -150,10 +150,10 @@ var/datum/roundinfo/roundinfo = new()
 		//initialise our cinematic screen object
 		cinematic = new(src)
 		cinematic.icon = 'station_explosion.dmi'
-		cinematic.icon_state = "start"
+		cinematic.icon_state = "station_intact"
 		cinematic.layer = 20
 		cinematic.mouse_opacity = 0
-		cinematic.screen_loc = "1,3"	//TODO resize them
+		cinematic.screen_loc = "1,0"
 
 		var/obj/structure/stool/bed/temp_buckle = new(src)
 		//Incredibly hackish. It creates a bed within the gameticker (lol) to stop mobs running around
@@ -179,63 +179,61 @@ var/datum/roundinfo/roundinfo = new()
 
 		//Now animate the cinematic
 		switch(station_missed)
-			if(2)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
-				sleep(50)
-				world << sound('explosionfar.ogg')
-
 			if(1)	//nuke was nearby but (mostly) missed
 				if( mode && !override )
 					override = mode.name
 				switch( override )
-					if("nuclear emergency")
-						flick("start_nuke",cinematic)
-						sleep(50)
+					if("nuclear emergency") //Nuke wasn't on station when it blew up
+						flick("intro_nuke",cinematic)
+						sleep(35)
 						world << sound('explosionfar.ogg')
-						flick("explode2",cinematic)
-						cinematic.icon_state = "loss_nuke2"
+						flick("station_intact_fade_red",cinematic)
+						cinematic.icon_state = "summary_nukefail"
 					else
-						sleep(50)
+						flick("intro_nuke",cinematic)
+						sleep(35)
 						world << sound('explosionfar.ogg')
-						flick("explode2",cinematic)
+						//flick("end",cinematic)
+
+
+			if(2)	//nuke was nowhere nearby	//TODO: a really distant explosion animation
+				sleep(50)
+				world << sound('explosionfar.ogg')
+
 
 			else	//station was destroyed
 				if( mode && !override )
 					override = mode.name
 				switch( override )
-					if("nuclear emergency")
-						flick("start_nuke",cinematic)
-						sleep(50)
+					if("nuclear emergency") //Nuke Ops successfully bombed the station
+						flick("intro_nuke",cinematic)
+						sleep(35)
+						flick("station_explode_fade_red",cinematic)
 						world << sound('explosionfar.ogg')
-						cinematic.icon_state = "end"
-						flick("explode",cinematic)
-						cinematic.icon_state = "loss_nuke"
-
-					if("AI malfunction")
-						flick("start_malf",cinematic)
-						sleep(50)
+						cinematic.icon_state = "summary_nukewin"
+					if("AI malfunction") //Malf (screen,explosion,summary)
+						flick("intro_malf",cinematic)
+						sleep(76)
+						flick("station_explode_fade_red",cinematic)
 						world << sound('explosionfar.ogg')
-						cinematic.icon_state = "end"
-						flick("explode",cinematic)
-						cinematic.icon_state = "loss_malf"
-
-					if("blob")
-						flick("start_blob",cinematic)			//TODO: make a blob one
-						sleep(50)
+						cinematic.icon_state = "summary_malf"
+					if("blob") //Station nuked (nuke,explosion,summary)
+						flick("intro_nuke",cinematic)
+						sleep(35)
+						flick("station_explode_fade_red",cinematic)
 						world << sound('explosionfar.ogg')
-						cinematic.icon_state = "end"
-						flick("explode",cinematic)
-						cinematic.icon_state = "loss_blob"		//TODO: make a blob one
-
-					else
-						//default station-destroyed ending
-						sleep(50)
+						cinematic.icon_state = "summary_selfdes"
+					else //Station nuked (nuke,explosion,summary)
+						flick("intro_nuke",cinematic)
+						sleep(35)
+						flick("station_explode_fade_red", cinematic)
 						world << sound('explosionfar.ogg')
-						cinematic.icon_state = "end"
-						flick("explode",cinematic)
-						cinematic.icon_state = "loss_general"
-		sleep(100)
+						cinematic.icon_state = "summary_selfdes"
 
-		//Tidy-up time!
+		//If its actually the end of the round, wait for it to end.
+		//Otherwise if its a verb it will continue on afterwards.
+		sleep(300)
+
 		if(cinematic)	del(cinematic)		//end the cinematic
 		if(temp_buckle)	del(temp_buckle)	//release everybody
 		return
