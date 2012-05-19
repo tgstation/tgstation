@@ -1,5 +1,7 @@
+/datum/game_mode/var/list/memes = list()
+
 /datum/game_mode/meme
-	name = "meme"
+	name = "Memetic Anomaly"
 	config_tag = "meme"
 	//required_players = 6
 	required_players = 2 // for testing
@@ -8,7 +10,6 @@
 
 
 	var
-		list/memes = list()
 
 		var/datum/mind/first_host = null
 		const
@@ -53,6 +54,7 @@
 
 	modePlayer += meme
 	modePlayer += first_host
+	memes += meme
 
 	meme.assigned_role = "MODE" //So they aren't chosen for other jobs.
 	meme.special_role = "Meme"
@@ -68,7 +70,8 @@
 	for(var/datum/mind/meme in memes)
 		var/mob/living/parasite/meme/M = new
 		meme.transfer_to(M)
-		M.enter_host(first_host)
+		M.enter_host(first_host.current)
+		forge_meme_objectives(meme, first_host)
 		break
 
 		// TODO: make it possible to have multiple memes with multiple hosts
@@ -79,7 +82,7 @@
 	return
 
 
-/datum/game_mode/proc/forge_meme_objectives(var/datum/mind/meme)
+/datum/game_mode/proc/forge_meme_objectives(var/datum/mind/meme, var/datum/mind/first_host)
 	// meme always needs to attune X hosts
 	var/datum/objective/meme_attune/attune_objective = new
 	attune_objective.owner = meme
@@ -122,12 +125,10 @@
 /datum/game_mode/proc/auto_declare_completion_meme()
 	for(var/datum/mind/meme in memes)
 		var/memewin = 1
-		var/meme_name
 		var/attuned = 0
 		if((meme.current) && istype(meme.current,/mob/living/parasite/meme))
-			meme_name = "[meme.key] (The Meme)"
 			world << "<B>The meme was [meme.current.key].</B>"
-			world << "<B>The first host was [first_host.key].</B>"
+			world << "<B>The first host was [src:first_host.current.key].</B>"
 			world << "<B>The last host was [meme.current:host.key].</B>"
 			world << "<B>Hosts attuned: [attuned]</B>"
 
@@ -143,7 +144,6 @@
 				count++
 
 		else
-			meme_name = "[meme.key] (character destroyed)"
 			memewin = 0
 
 		if(memewin)
