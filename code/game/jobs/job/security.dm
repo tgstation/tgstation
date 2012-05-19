@@ -104,8 +104,6 @@
 		H.equip_if_possible(new /obj/item/device/detective_scanner(H), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/weapon/reagent_containers/food/drinks/dflask(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/weapon/lighter/zippo(H), H.slot_l_store)
-//		H.equip_if_possible(new /obj/item/weapon/reagent_containers/food/snacks/candy_corn(H), H.slot_h_store)
-//		No... just no. --SkyMarshal
 		var/datum/organ/external/O = H.organs[pick(H.organs)]
 		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(O)
 		O.implant += L
