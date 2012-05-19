@@ -69,9 +69,13 @@
 	// create a meme and enter it
 	for(var/datum/mind/meme in memes)
 		var/mob/living/parasite/meme/M = new
+		var/mob/original = meme.current
 		meme.transfer_to(M)
 		M.enter_host(first_host.current)
 		forge_meme_objectives(meme, first_host)
+
+		del original
+
 		break
 
 		// TODO: make it possible to have multiple memes with multiple hosts
@@ -96,7 +100,7 @@
 		o.owner = meme
 		meme.objectives += o
 
-	greet_meme()
+	greet_meme(meme)
 
 	return
 
@@ -113,7 +117,7 @@
 /datum/game_mode/meme/check_finished()
 	var/memes_alive = 0
 	for(var/datum/mind/meme in memes)
-		if(!istype(meme.current,/mob/living/parasite/meme))
+		if(!istype(meme.current,/mob/living))
 			continue
 		if(meme.current.stat==2)
 			continue

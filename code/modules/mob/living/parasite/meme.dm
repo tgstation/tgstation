@@ -181,6 +181,8 @@ mob/living/parasite/meme/proc/select_indoctrinated(var/title, var/message)
 // A meme can make people hear things with the thought ability
 mob/living/parasite/meme/verb/Thought()
 	set category = "Meme"
+	set name	 = "Thought(150)"
+	set desc     = "Implants a thought into the target, making them think they heard someone talk."
 
 	if(meme_points < 150)
 		// just call use_points() to give the standard failure message
@@ -212,6 +214,8 @@ mob/living/parasite/meme/verb/Thought()
 // Mutes the host
 mob/living/parasite/meme/verb/Mute()
 	set category = "Meme"
+	set name	 = "Mute(250)"
+	set desc     = "Prevents your host from talking for a while."
 
 	if(!src.host) return
 	if(!host.speech_allowed)
@@ -237,6 +241,8 @@ mob/living/parasite/meme/verb/Mute()
 // Makes the host unable to emote
 mob/living/parasite/meme/verb/Paralyze()
 	set category = "Meme"
+	set name	 = "Paralyze(250)"
+	set desc     = "Prevents your host from using emote for a while."
 
 	if(!src.host) return
 	if(!host.emote_allowed)
@@ -264,6 +270,8 @@ mob/living/parasite/meme/verb/Paralyze()
 // Cause great agony with the host, used for conditioning the host
 mob/living/parasite/meme/verb/Agony()
 	set category = "Meme"
+	set name	 = "Agony(200)"
+	set desc     = "Causes significant pain in your host."
 
 	if(!src.host) return
 	if(!use_points(200)) return
@@ -283,7 +291,7 @@ mob/living/parasite/meme/verb/Agony()
 
 		for(var/i=0, i<10, i++)
 			sleep(50)
-			if(prob(50)) host.flash_pain()
+			if(prob(50)) host.flash_weak_pain()
 			if(prob(10)) host.paralysis = max(host.paralysis, 2)
 			if(prob(15)) host.emote("twitch")
 			else if(prob(15)) host.emote("scream")
@@ -297,6 +305,8 @@ mob/living/parasite/meme/verb/Agony()
 // Cause great joy with the host, used for conditioning the host
 mob/living/parasite/meme/verb/Joy()
 	set category = "Meme"
+	set name	 = "Joy(200)"
+	set desc     = "Causes significant joy in your host."
 
 	if(!src.host) return
 	if(!use_points(200)) return
@@ -318,6 +328,8 @@ mob/living/parasite/meme/verb/Joy()
 // Cause the target to hallucinate.
 mob/living/parasite/meme/verb/Hallucinate()
 	set category = "Meme"
+	set name	 = "Hallucinate(300)"
+	set desc     = "Makes your host hallucinate, has a short delay."
 
 	if(!src.host) return
 	if(!use_points(300)) return
@@ -331,6 +343,8 @@ mob/living/parasite/meme/verb/Hallucinate()
 // Jump to a closeby target through a whisper
 mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob in world)
 	set category = "Meme"
+	set name	 = "Subtle Jump(350)"
+	set desc     = "Move to a closeby human through a whisper."
 
 	if(!istype(target, /mob/living/carbon/human) || !target.mind)
 		src << "<b>You can't jump to this creature..</b>"
@@ -362,6 +376,8 @@ mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob i
 // Jump to a distant target through a shout
 mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob in world)
 	set category = "Meme"
+	set name	 = "Obvious Jump(500)"
+	set desc     = "Move to any mob in view through a shout."
 
 	if(!istype(target, /mob/living/carbon/human) || !target.mind)
 		src << "<b>You can't jump to this creature..</b>"
@@ -390,9 +406,32 @@ mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob 
 
 	usr << "<b>You successfully jumped to [target]."
 
+// Jump to an attuned mob for free
+mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob in world)
+	set category = "Meme"
+	set name	 = "Attuned Jump(0)"
+	set desc     = "Move to a mob in sight that you have already attuned."
+
+	if(!istype(target, /mob/living/carbon/human) || !target.mind)
+		src << "<b>You can't jump to this creature..</b>"
+		return
+	if(!(target in view(host)))
+		src << "<b>You need to make eye-contact with the target.</b>"
+		return
+	if(!(target in indoctrinated))
+		src << "<b>You need to attune the target first.</b>"
+		return
+
+	src.exit_host()
+	src.enter_host(target)
+
+	usr << "<b>You successfully jumped to [target]."
+
 // ATTUNE a mob, adding it to the indoctrinated list
 mob/living/parasite/meme/verb/Attune()
 	set category = "Meme"
+	set name	 = "Attune(400)"
+	set desc     = "Change the host's brain structure, making it easier for you to manipulate him."
 
 	if(host in src.indoctrinated)
 		usr << "<b>You have already attuned this host.</b>"
@@ -408,6 +447,8 @@ mob/living/parasite/meme/verb/Attune()
 // Enables the mob to take a lot more damage
 mob/living/parasite/meme/verb/Analgesic()
 	set category = "Meme"
+	set name	 = "Analgesic(500)"
+	set desc     = "Combat drug that the host to move normally, even under life-threatening pain."
 
 	if(!host) return
 	if(!(host in indoctrinated))
@@ -423,9 +464,21 @@ mob/living/parasite/meme/verb/Analgesic()
 	host << "\red The dizziness wears off, and you can feel pain again.."
 
 
+mob/proc/clearHUD()
+	if(!hud_used) return
+	if(client)
+		client.screen -= hud_used.contents
+		client.screen -= hud_used.adding
+		client.screen -= hud_used.mon_blo
+		client.screen -= list( oxygen, throw_icon, i_select, m_select, toxin, internals, fire, hands, healths, pullin, blind, flash, rest, sleep, mach )
+		client.screen -= list( zone_sel, oxygen, throw_icon, i_select, m_select, toxin, internals, fire, hands, healths, pullin, blind, flash, rest, sleep, mach )
+
+
 // Take control of the mob
 mob/living/parasite/meme/verb/Possession()
 	set category = "Meme"
+	set name	 = "Thought(500)"
+	set desc     = "Take direct control of the host for a while."
 
 	if(!host) return
 	if(!(host in indoctrinated))
@@ -437,17 +490,21 @@ mob/living/parasite/meme/verb/Possession()
 	host << "\red Everything goes black.."
 
 	spawn
-		var/mob/living/dummy = new
+		var/mob/living/dummy = new(null)
 		var/datum/mind/host_mind = host.mind
 		var/datum/mind/meme_mind = src.mind
 
 		host_mind.transfer_to(dummy)
 		meme_mind.transfer_to(host)
+		host_mind.current.clearHUD()
+		host.update_clothing()
 
 		sleep(600)
 
 		meme_mind.transfer_to(src)
 		host_mind.transfer_to(host)
+		meme_mind.current.clearHUD()
+		host.update_clothing()
 		src << "\red You lose control.."
 
 		del dummy
