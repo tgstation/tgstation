@@ -3279,6 +3279,12 @@ datum
 				reagent_state = LIQUID
 				color = "#2E6671" // rgb: 46, 102, 113
 
+			driestmartini
+				name = "Driest Martini"
+				id = "driestmartini"
+				description = "Only for the experienced. You think you see sand floating in the glass."
+				nutriment_factor = 1 * REAGENTS_METABOLISM
+				color = "#2E6671" // rgb: 46, 102, 113
 
 //ALCHOHOL end
 
