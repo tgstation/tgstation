@@ -195,10 +195,21 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			doortype = 17
 			glass = 1
 
+
 		glass_research
 			name = "Research Airlock"
 			icon = 'doorsciglass.dmi'
+			opacity = 0
 			doortype = 20
+			glass = 1
+
+
+		glass_mining
+			name = "Maintenance Hatch"
+			icon = 'doorminingglass.dmi'
+			opacity = 0
+			doortype = 22
+			glass = 1
 
 	centcom
 		name = "Airlock"
@@ -419,7 +430,11 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 						if(15) new/obj/structure/door_assembly/door_assembly_eng/glass( src.loc )	//issue 301 -mysthic
 						if(16) new/obj/structure/door_assembly/door_assembly_sec/glass( src.loc )
 						if(17) new/obj/structure/door_assembly/door_assembly_med/glass( src.loc )
+						if(18) new/obj/structure/door_assembly/door_assembly_min( src.loc )
+						if(19) new/obj/structure/door_assembly/door_assembly_atmo( src.loc )
+						if(20) new/obj/structure/door_assembly/door_assembly_research( src.loc )
 						if(21) new/obj/structure/door_assembly/door_assembly_research( src.loc )
+						if(22) new/obj/structure/door_assembly/door_assembly_min/glass( src.loc )
 					var/obj/item/weapon/airlock_electronics/ae
 					if (!electronics)
 						ae = new/obj/item/weapon/airlock_electronics( src.loc )

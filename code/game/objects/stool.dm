@@ -118,6 +118,8 @@
 	return
 
 /obj/structure/stool/bed/chair/New()
+	if(anchored)
+		src.verbs -= /atom/movable/verb/pull
 	if(src.dir == NORTH)
 		src.layer = FLY_LAYER
 	..()
