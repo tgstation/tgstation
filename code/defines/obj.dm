@@ -632,12 +632,21 @@
 /obj/structure/stool/bed/chair/comfy/teal
 	icon_state = "comfychair_teal"
 
+/obj/structure/stool/bed/chair/office
+	anchored = 0
+
 /obj/structure/stool/bed/chair/comfy/black
 	icon_state = "comfychair_black"
 
 /obj/structure/stool/bed/chair/comfy/lime
 	icon_state = "comfychair_lime"
 
+/obj/structure/stool/bed/chair/office/Move()
+	..()
+	if(buckled_mob)
+		if(buckled_mob.buckled == src)
+			buckled_mob.loc = src.loc
+			buckled_mob.dir = src.dir
 
 /obj/structure/stool/bed/chair/office/light
 	icon_state = "officechair_white"

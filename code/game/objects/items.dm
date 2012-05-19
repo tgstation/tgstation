@@ -116,6 +116,7 @@
 
 	if (!safety)
 		if (src.reagents.total_volume < 1)
+			usr << "\red the [src] is empty."
 			return
 
 		if (world.time < src.last_use + 20)
@@ -126,6 +127,28 @@
 		playsound(src.loc, 'extinguish.ogg', 75, 1, -3)
 
 		var/direction = get_dir(src,target)
+
+		if(usr.buckled && isobj(usr.buckled) && !usr.buckled.anchored )
+			spawn(0)
+				var/obj/B = usr.buckled
+				var/movementdirection = turn(direction,180)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(1)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(1)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(1)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(2)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(2)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(3)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(3)
+				B.Move(get_step(usr,movementdirection), movementdirection)
+				sleep(3)
+				B.Move(get_step(usr,movementdirection), movementdirection)
 
 		var/turf/T = get_turf(target)
 		var/turf/T1 = get_step(T,turn(direction, 90))
