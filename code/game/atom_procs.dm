@@ -348,6 +348,7 @@
 	..()
 	return
 
+
 /atom/Click(location,control,params)
 	//world << "atom.Click() on [src] by [usr] : src.type is [src.type]"
 	if(!istype(src,/obj/item/weapon/gun))
@@ -652,25 +653,6 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			if ( !animal.restrained() )
 				attack_animal(animal)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /atom/DblClick(location, control, params) //TODO: DEFERRED: REWRITE
 //	world << "checking if this shit gets called at all"
 
@@ -758,6 +740,14 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		else
 			AICtrlClick(usr)
 		return
+	}
+
+	// ------- MIDDLE-CLICK -------
+
+	if(parameters["middle"]){
+		if(!isAI(usr))
+			MiddleClick(usr)
+			return
 	}
 
 	// ------- THROW -------
@@ -1082,6 +1072,11 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 
 	return
+
+/atom/proc/MiddleClick(var/mob/M as mob) // switch hands
+	if(istype(M, /mob/living/carbon))
+		var/mob/living/carbon/U = M
+		U.swap_hand()
 
 /*
 /atom/proc/get_global_map_pos()
