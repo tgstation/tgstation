@@ -11,6 +11,10 @@
 		src << "You are muted."
 		return
 
+	if(!speech_allowed && usr == src)
+		usr << "\red You can't speak."
+		return
+
 	if (src.stat == 2)
 		return src.say_dead(message)
 

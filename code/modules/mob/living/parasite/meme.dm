@@ -173,7 +173,19 @@ mob/living/parasite/meme/proc/select_indoctrinated(var/title, var/message)
 	if(candidates.len == 1)
 		target = candidates[1]
 	else
-		target = input(message,title) as null|mob in candidates
+		var/selected
+
+		var/list/text_candidates = list()
+		var/list/map_text_to_mob = list()
+
+		for(var/mob/living/carbon/human/M in candidates)
+			text_candidates += M.real_name
+			map_text_to_mob[M.real_name] = M
+
+		selected = input(message,title) as null|mob in text_candidates
+		if(!selected) return null
+
+		target = map_text_to_mob[selected]
 
 	return target
 
@@ -282,7 +294,7 @@ mob/living/parasite/meme/verb/Agony()
 
 		host.paralysis = max(host.paralysis, 2)
 
-		host.flash_pain()
+		host.flash_weak_pain()
 		host << "\red <font size=5>You feel excrutiating pain all over your body! It is so bad you can't think or articulate yourself properly..</font>"
 
 		usr << "<b>You send a jolt of agonizing pain through [host], they should be unable to concentrate on anything else for half a minute.</b>"
@@ -290,8 +302,9 @@ mob/living/parasite/meme/verb/Agony()
 		host.emote("scream")
 
 		for(var/i=0, i<10, i++)
+			host.stuttering = 2
 			sleep(50)
-			if(prob(50)) host.flash_weak_pain()
+			if(prob(80)) host.flash_weak_pain()
 			if(prob(10)) host.paralysis = max(host.paralysis, 2)
 			if(prob(15)) host.emote("twitch")
 			else if(prob(15)) host.emote("scream")
