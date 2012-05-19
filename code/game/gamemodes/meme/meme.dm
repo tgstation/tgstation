@@ -34,7 +34,7 @@
 
 /datum/game_mode/meme/announce()
 	world << "<B>The current game mode is - Meme!</B>"
-	world << "<B>An unknown creature has infested the mind of a crew member. Find and destroy it by what means necessary.</B>"
+	world << "<B>An unknown creature has infested the mind of a crew member. Find and destroy it by any means necessary.</B>"
 
 /datum/game_mode/meme/can_start()
 	if(!..())
