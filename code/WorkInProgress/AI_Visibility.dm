@@ -8,6 +8,9 @@
 //(And therefore also be portable to another similar codebase simply by transferring the file and including it after the other AI code files.)
 //There are probably a few parts that don't do that at the moment, but I'll fix them at some point.
 
+
+#define MINIMAP_UPDATE_DELAY 1200
+
 /turf
 	var/image/obscured
 	var/image/dim
@@ -46,6 +49,9 @@
 	var/obj/minimap_obj/minimap_obj = new()
 
 /obj/minimap_obj/Click(location, control, params)
+	if(!istype(usr, /mob/dead) && !istype(usr, /mob/living/silicon/ai) && !(usr.client && usr.client.holder && usr.client.holder.level >= 4))
+		return
+
 	var/list/par = params2list(params)
 	var/screen_loc = par["screen-loc"]
 
@@ -63,12 +69,38 @@
 	var/y = (text2num(copytext(y_text, 1, findtext(y_text, ":"))) - 1) * 16
 	y += round((text2num(copytext(y_text, findtext(y_text, ":") + 1)) + 1) / 2)
 
-	usr.loc = locate(max(1, x - 1), max(1, y - 1), usr.z)
+	if(istype(usr, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/ai = usr
+		ai.freelook()
+		ai.eyeobj.loc = locate(max(1, x - 1), max(1, y - 1), ai.eyeobj.z)
+		cameranet.visibility(ai.eyeobj)
 
-/mob/verb/minimap_test()
+	else
+		usr.loc = locate(max(1, x - 1), max(1, y - 1), usr.z)
+
+/mob/dead/verb/Open_Minimap()
+	set category = "Ghost"
 	winshow(src, "minimapwindow", 1)
 	client.screen |= cameranet.minimap
 
+	if(cameranet.generating_minimap)
+		cameranet.minimap_viewers += src
+
+/mob/living/silicon/ai/verb/Open_Minimap()
+	set category = "AI Commands"
+	winshow(src, "minimapwindow", 1)
+	client.screen |= cameranet.minimap
+
+	if(cameranet.generating_minimap)
+		cameranet.minimap_viewers += src
+
+/client/proc/Open_Minimap()
+	set category = "Admin"
+	winshow(src, "minimapwindow", 1)
+	screen |= cameranet.minimap
+
+	if(cameranet.generating_minimap)
+		cameranet.minimap_viewers += src.mob
 
 /datum/camerachunk/proc/update_minimap()
 	if(changed && !updating)
@@ -170,7 +202,7 @@
 	if(!minimap_updating)
 		minimap_updating = 1
 
-		spawn(1200)
+		spawn(MINIMAP_UPDATE_DELAY)
 			if(changed && !updating)
 				update()
 				changed = 0
@@ -305,6 +337,9 @@ var/datum/cameranet/cameranet = new()
 
 	var/list/minimap = list()
 
+	var/generating_minimap = TRUE
+	var/list/minimap_viewers = list()
+
 /datum/cameranet/New()
 	..()
 
@@ -314,6 +349,12 @@ var/datum/cameranet/cameranet = new()
 				sleep(1)
 				var/datum/camerachunk/c = getCameraChunk(x, y, 1)
 				c.update_minimap()
+
+				for(var/mob/m in minimap_viewers)
+					m.client.screen |= c.minimap_obj
+
+		generating_minimap = FALSE
+		minimap_viewers = list()
 
 /datum/cameranet/proc/chunkGenerated(x, y, z)
 	var/key = "[x],[y],[z]"
