@@ -13,6 +13,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"pAI candidate" = 1, // -- TLE
 	"cultist" = IS_MODE_COMPILED("cult"),
 	"infested monkey" = IS_MODE_COMPILED("monkey"),
+	"meme" = IS_MODE_COMPILED("meme"),
 )
 /*
 var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm --rastaf
@@ -39,6 +40,7 @@ var/const
 	BE_CULTIST   =(1<<7)
 	BE_MONKEY    =(1<<8)
 	BE_PAI       =(1<<9)
+	BE_MEME		 =(1<<10)
 
 
 

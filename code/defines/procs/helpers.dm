@@ -872,6 +872,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		temp_list.Add(M)
 	for(var/mob/living/carbon/human/M in world)
 		temp_list.Add(M)
+		for(var/mob/living/parasite/P in M.parasites)
+			temp_list.Add(P)
 	for(var/mob/living/carbon/brain/M in world)
 		temp_list.Add(M)
 	for(var/mob/living/carbon/alien/M in world)

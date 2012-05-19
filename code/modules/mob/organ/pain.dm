@@ -38,6 +38,8 @@ mob/living/carbon/human/proc/handle_pain()
 		return
 	if(reagents.has_reagent("oxycodone"))
 		return
+	if(analgesic)
+		return
 	var/maxdam = 0
 	var/datum/organ/external/damaged_organ = null
 	for(var/name in organs)

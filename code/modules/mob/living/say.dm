@@ -32,6 +32,10 @@
 	var/message_old = message
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
+	if(!speech_allowed && usr == src)
+		usr << "\red You can't speak."
+		return
+
 	if (!message)
 		return
 
@@ -340,7 +344,6 @@
 				listening|=M
 
 */
-
 	listening = get_mobs_in_view(message_range, src)
 	for(var/mob/M in world)
 		if (!M.client)
