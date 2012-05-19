@@ -70,8 +70,8 @@ mob/living/parasite/meme/Life()
 	if(!host) return
 
 	// recover meme points slowly
-	var/gain = 4
-	if(dormant) gain = 12 // dormant recovers points faster
+	var/gain = 3
+	if(dormant) gain = 9 // dormant recovers points faster
 
 	meme_points = min(meme_points + gain, MAXIMUM_MEME_POINTS)
 
@@ -182,7 +182,7 @@ mob/living/parasite/meme/proc/select_indoctrinated(var/title, var/message)
 			text_candidates += M.real_name
 			map_text_to_mob[M.real_name] = M
 
-		selected = input(message,title) as null|mob in text_candidates
+		selected = input(message,title) as null|anything in text_candidates
 		if(!selected) return null
 
 		target = map_text_to_mob[selected]
@@ -202,7 +202,8 @@ mob/living/parasite/meme/verb/Thought()
 		return
 
 	var/list/candidates = indoctrinated.Copy()
-	candidates.Add(src.host)
+	if(!(src.host in candidates))
+		candidates.Add(src.host)
 
 	var/mob/target = select_indoctrinated("Thought", "Select a target which will hear your thought.")
 
@@ -211,7 +212,7 @@ mob/living/parasite/meme/verb/Thought()
 	var/speaker = input("Select the voice in which you would like to make yourself heard.", "Voice") as null|text
 	if(!speaker) return
 
-	var/message = input("What would you like to say?", "Message") as null|text
+	var/message = input("What would you like to say?", "Message") as null
 	if(!message) return
 
 	// Use the points at the end rather than the beginning, because the user might cancel
@@ -344,10 +345,10 @@ mob/living/parasite/meme/verb/Hallucinate()
 	set name	 = "Hallucinate(300)"
 	set desc     = "Makes your host hallucinate, has a short delay."
 
-	if(!src.host) return
-	if(!use_points(300)) return
-
 	var/mob/target = select_indoctrinated("Hallucination", "Who should hallucinate?")
+
+	if(!target) return
+	if(!use_points(300)) return
 
 	target.hallucination += 100
 
@@ -456,6 +457,7 @@ mob/living/parasite/meme/verb/Attune()
 	src.indoctrinated.Add(host)
 
 	usr << "<b>You successfully indoctrinated [host]."
+	host << "\red Your head feels a bit roomier.."
 
 // Enables the mob to take a lot more damage
 mob/living/parasite/meme/verb/Analgesic()
