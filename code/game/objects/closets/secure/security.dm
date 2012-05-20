@@ -1,5 +1,5 @@
 /obj/structure/closet/secure_closet/captains
-	name = "Captain's Closet"
+	name = "Captain's Locker"
 	req_access = list(access_captain)
 	icon_state = "capsecure1"
 	icon_closed = "capsecure"
@@ -27,7 +27,7 @@
 
 
 /obj/structure/closet/secure_closet/hop
-	name = "Head of Personnel"
+	name = "Head of Personnel's Locker"
 	req_access = list(access_hop)
 	icon_state = "hopsecure1"
 	icon_closed = "hopsecure"
@@ -55,7 +55,7 @@
 
 
 /obj/structure/closet/secure_closet/hos
-	name = "Head Of Security"
+	name = "Head of Security's Locker"
 	req_access = list(access_hos)
 	icon_state = "hossecure1"
 	icon_closed = "hossecure"
@@ -118,7 +118,7 @@
 
 
 /obj/structure/closet/secure_closet/security
-	name = "Security Locker"
+	name = "Security Officer's Locker"
 	req_access = list(access_security)
 	icon_state = "sec1"
 	icon_closed = "sec"
@@ -147,7 +147,7 @@
 
 
 /obj/structure/closet/secure_closet/detective
-	name = "Detective"
+	name = "Detective's Cabinet"
 	req_access = list(access_forensics_lockers)
 	icon_state = "cabinetdetective_locked"
 	icon_closed = "cabinetdetective"

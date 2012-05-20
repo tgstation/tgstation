@@ -92,7 +92,7 @@
 
 
 /obj/structure/closet/secure_closet/CMO
-	name = "Chief Medical Officer"
+	name = "Chief Medical Officer's Locker"
 	req_access = list(access_cmo)
 	icon_state = "cmosecure1"
 	icon_closed = "cmosecure"

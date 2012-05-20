@@ -417,7 +417,11 @@
 	if(usr.stat == 2)
 		usr << "You can't call the shuttle because you are dead!"
 		return
-	call_shuttle_proc(src)
+
+	var/confirm = alert("Are you sure you want to call the shuttle?", "Confirm Shuttle Call", "Yes", "No")
+
+	if(confirm == "Yes")
+		call_shuttle_proc(src)
 
 	// hack to display shuttle timer
 	if(emergency_shuttle.online)

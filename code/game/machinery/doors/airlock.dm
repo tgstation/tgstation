@@ -158,7 +158,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	opacity = 1
 	doortype = 13
 
-/obj/machinery/door/airlock/glass/glass_command
+/obj/machinery/door/airlock/glass_command
 	name = "Maintenance Hatch"
 	icon = 'Doorcomglass.dmi'
 	opacity = 0
@@ -1126,7 +1126,7 @@ About the new airlock wires panel:
 		return 0
 	use_power(50)
 	if(istype(src, /obj/machinery/door/airlock/glass))
-		playsound(src.loc, 'windowdoor.ogg', 30, 1)
+		playsound(src.loc, 'windowdoor.ogg', 100, 1)
 	else
 		playsound(src.loc, 'airlock.ogg', 30, 1)
 	if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
