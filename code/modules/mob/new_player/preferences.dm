@@ -90,6 +90,9 @@ datum/preferences
 		g_facial = 0
 		b_facial = 0
 
+		//Species
+		species = "Human"
+
 		//Skin color
 		s_tone = 0
 
@@ -281,6 +284,7 @@ datum/preferences
 		dat += "<hr><table><tr><td><b>Body</b> "
 		dat += "(<a href=\"byond://?src=\ref[user];preferences=1;s_tone=random;underwear=random;backbag_type=random;age=random;b_type=random;hair=random;h_style=random;facial=random;f_style=random;eyes=random\">&reg;</A>)" // Random look
 		dat += "<br>"
+		dat += "Species: <a href='byond://?src=\ref[user];preferences=1;species=input'>[species]</a><br>"
 		dat += "Blood Type: <a href='byond://?src=\ref[user];preferences=1;b_type=input'>[b_type]</a><br>"
 		dat += "Skin Tone: <a href='byond://?src=\ref[user];preferences=1;s_tone=input'>[-s_tone + 35]/220<br></a>"
 
@@ -696,6 +700,23 @@ datum/preferences
 				if("random")
 					b_type = pickweight ( list ("A+" = 31, "A-" = 7, "B+" = 8, "B-" = 2, "AB+" = 2, "AB-" = 1, "O+" = 40, "O-" = 9))
 
+		if(link_tags["species"])
+			switch(link_tags["species"])
+				if("input")
+					var/list/new_species = list("Human")
+					if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
+						if((is_alien_whitelisted(user, "Soghun")) || ((user.client) && (user.client.holder) && (user.client.holder.level) && (user.client.holder.level >= 5))) //Check for Soghun and admins
+							new_species += "Soghun"
+						if((is_alien_whitelisted(user, "Tajaran")) || ((user.client) && (user.client.holder) && (user.client.holder.level) && (user.client.holder.level >= 5))) //Check for Tajaran
+							new_species += "Tajaran"
+					else //Not using the whitelist? Aliens for everyone!
+						new_species += "Tajaran"
+						new_species += "Soghun"
+					species = input("Please select a species", "Character Generation", null) in new_species
+					h_style = "Bald" //Try not to carry face/head hair over.
+					hair_style = "Bald"
+					f_style = "Shaved"
+					facial_hair_style = "Shaved"
 
 		if(link_tags["hair"])
 			switch(link_tags["hair"])
@@ -735,14 +756,18 @@ datum/preferences
 				if("random")
 					randomize_skin_tone()
 				if("input")
-					var/new_tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
+					var/new_tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black) or 20-70 for Tajarans", "Character Generation")  as text
 					if(new_tone)
-						s_tone = max(min(round(text2num(new_tone)), 220), 1)
+						if(species == "Tajaran")
+							s_tone = max(min(round(text2num(new_tone)), 70), 20)
+						else
+							s_tone = max(min(round(text2num(new_tone)), 220), 1)
 						s_tone = -s_tone + 35
 
 		if(link_tags["h_style"])
+			if(species != "Human")
+				return
 			switch(link_tags["h_style"])
-
 				// New and improved hair selection code, by Doohl
 				if("random") // random hair selection
 
@@ -785,6 +810,8 @@ datum/preferences
 				src.ooccolor = ooccolor
 
 		if(link_tags["f_style"])
+			if(species != "Human") //Tajarans and Soghuns don't have hair stuff yet.
+				return
 			switch(link_tags["f_style"])
 
 				// see above for commentation. This is just a slight modification of the hair code for facial hairs

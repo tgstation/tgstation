@@ -94,6 +94,7 @@ var
 	list/lastsignalers = list(	)	//keeps last 100 signals here in format: "[src] used \ref[src] @ location [src.loc]: [freq]/[code]"
 	list/lawchanges = list(  ) //Stores who uploaded laws to which silicon-based lifeform, and what the law was
 	list/admins = list(  )
+	list/alien_whitelist = list(  )
 	list/shuttles = list(  )
 	list/reg_dna = list(  )
 //	list/traitobj = list(  )
