@@ -842,14 +842,12 @@ proc/process_ghost_teleport_locs()
 //Engineering
 
 /area/engine
+	engineering
+
 	engine_smes
 		name = "Engineering SMES"
 		icon_state = "engine_smes"
 		requires_power = 0//This area only covers the batteries and they deal with their own power
-
-	engineering
-		name = "Engineering"
-		icon_state = "engine"
 
 	particle_accelerator
 		name = "Particle Accelerator"
@@ -861,9 +859,8 @@ proc/process_ghost_teleport_locs()
 
 	engineering_break_room
 		name = "Engineering Breakroom"
-		icon_state = "engine_br"
+		icon_state = "engine_breakroom"
 
-//new engine areas
 	control
 		name = "Engineering Control"
 		icon_state = "engine_control"
@@ -908,13 +905,51 @@ proc/process_ghost_teleport_locs()
 		name = "Engineering Foyer"
 		icon_state = "engine_foyer"
 
-	breakroom
-		name = "Engineering Break Room"
-		icon_state = "engine_breakroom"
-
 	core
 		name = "Engineering Core"
 		icon_state = "engine_core"
+
+//reactor areas
+
+	reactor_core
+		name = "Reactor Core"
+		icon_state = "engine_core"
+
+	reactor_gas
+		name = "Reactor Gas Storage"
+		icon_state = "engine_atmos"
+
+	aux_control
+		name = "Reactor Auxiliary Control"
+		icon_state = "engine_aux"
+
+	turbine_control
+		name = "Turbine Control"
+		icon_state = "engine_turbine"
+
+	reactor_airlock
+		name = "Reactor Primary Entrance"
+		icon_state = "engine_airlock"
+
+	reactor_fuel_storage
+		name = "Reactor Fuel Storage"
+		icon_state = "engine_fuel"
+
+	reactor_fuel_ports
+		name = "Reactor Fuel Ports"
+		icon_state = "engine_port"
+
+	generators
+		name = "Generator Room"
+		icon_state = "engine_generators"
+
+	port_gyro_bay
+		name = "Port Gyrotron Bay"
+		icon_state = "engine_starboardgyro"
+
+	starboard_gyro_bay
+		name = "Starboard Gyrotron Bay"
+		icon_state = "engine_portgyro"
 
 //Solars
 
