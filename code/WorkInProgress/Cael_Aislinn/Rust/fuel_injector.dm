@@ -104,11 +104,11 @@
 					user.machine = null
 					user << browse(null, "window=fuel_injector")
 					return
-			var/t = "<B>Reactor Core Fuel Injector</B><BR>"
+			var/t = "<B>Reactor Core Fuel Injector</B><hr>"
 			t += "<b>Stage:</b> <font color=blue>[stage]</font><br>"
 			t += "<b>Status:</b> [injecting ? "<font color=green>Active</font> <a href='?src=\ref[src];end_injecting=1'>\[Disable\]</a>" : "<font color=blue>Standby</font> <a href='?src=\ref[src];begin_injecting=1'>\[Enable\]</a>"]<br>"
-			t += "<b>Interval (sec):</b> <font color=blue>[rate/10]</font> <a href='?src=\ref[src];cyclerate=1'>\[Modify\]</a>"
-			t += "<b>Fuel usage:</b> [fuel_usage*100]% <a href='?src=\ref[src];fuel_usage=1'>\[Modify\]</a>"
+			t += "<b>Interval (sec):</b> <font color=blue>[rate/10]</font> <a href='?src=\ref[src];cyclerate=1'>\[Modify\]</a><br>"
+			t += "<b>Fuel usage:</b> [fuel_usage*100]% <a href='?src=\ref[src];fuel_usage=1'>\[Modify\]</a><br>"
 			/*
 			var/t = "<B>Reactor Core Fuel Control</B><BR>"
 			t += "Current fuel injection stage: [active_stage]<br>"
@@ -146,6 +146,7 @@
 					t += "</tr>"
 			t += "</table>"
 			*/
+			t += "<hr>"
 			t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 			user << browse(t, "window=fuel_injector;size=500x800")
 			user.machine = src
@@ -178,26 +179,21 @@
 			for(var/reagent in owned_assembly_port.cur_assembly.rod_quantities)
 				//world << "checking [reagent]"
 				if(owned_assembly_port.cur_assembly.rod_quantities[reagent] > 0)
-					//world << "	rods left: [owned_assembly_port.cur_assembly.rod_quantities[reagent]]]
+					//world << "	rods left: [owned_assembly_port.cur_assembly.rod_quantities[reagent]]"
 					var/amount = owned_assembly_port.cur_assembly.rod_quantities[reagent] * fuel_usage
 					var/numparticles = round(amount * 1000)
 					if(numparticles < 1)
 						numparticles = 1
 					//world << "	amount: [amount]"
 					//world << "	numparticles: [numparticles]"
-					for(var/i=0, i<numparticles, i++)
-						var/obj/effect/accelerated_particle/particle = new(src.loc, src.dir)
-						particle.particle_type = reagent
-						particle.energy = 0
-						particle.icon_state = "particle_single"
-						particle.pixel_x = rand(-10,10)
-						particle.pixel_y = rand(-10,10)
-						var/extra_particles = round(rand(0, numparticles - i - 1))
-						//world << "[extra_particles + 1] [reagent] particles"
-						particle.additional_particles = extra_particles
-						particle.target = target_field
-						i += extra_particles
-						//world << "[reagent] particle injected"
+					//
+					var/obj/effect/accelerated_particle/particle = new/obj/effect/accelerated_particle(src.loc, src.dir)
+					particle.particle_type = reagent
+					particle.energy = 0
+					particle.icon_state = "particle"
+					particle.additional_particles = numparticles - 1
+					particle.target = target_field
+					//
 					owned_assembly_port.cur_assembly.rod_quantities[reagent] -= amount
 					amount_left += owned_assembly_port.cur_assembly.rod_quantities[reagent]
 			owned_assembly_port.cur_assembly.amount_depleted = amount_left / 300

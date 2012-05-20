@@ -132,6 +132,7 @@ var/const/RADIO_AIRLOCK = "6"
 var/const/RADIO_SECBOT = "7"
 var/const/RADIO_MULEBOT = "8"
 var/const/RADIO_MAGNETS = "9"
+var/const/RADIO_POWER = "10"
 
 var/global/datum/controller/radio/radio_controller
 
