@@ -18,7 +18,6 @@
 	var/list/minimap = list()
 
 	var/generating_minimap = TRUE
-	var/list/minimap_viewers = list()
 
 var/datum/cameranet/cameranet = new()
 
@@ -35,14 +34,10 @@ var/datum/cameranet/cameranet = new()
 	for(var/x = 0, x <= world.maxx, x += 16)
 		for(var/y = 0, y <= world.maxy, y += 16)
 			sleep(1)
-			var/datum/camerachunk/c = getCameraChunk(x, y, 1)
-			c.update_minimap()
-
-			for(var/mob/m in minimap_viewers)
-				m.client.screen |= c.minimap_obj
+			getCameraChunk(x, y, 5)
+			getCameraChunk(x, y, 1)
 
 	generating_minimap = FALSE
-	minimap_viewers = list()
 
 
 /datum/cameranet/proc/chunkGenerated(x, y, z)
