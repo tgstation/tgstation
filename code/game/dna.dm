@@ -801,6 +801,7 @@
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
 	src.occupant.loc = src.loc
+	src.occupant.update_clothing()
 	src.occupant = null
 	src.icon_state = "scanner_0"
 	return

@@ -70,6 +70,38 @@
 
 	src.loc = T
 
+
+obj/item/verb/pick_up()
+	set name = "Pick Up"
+	set category = "Object"
+	set src in view(1)
+
+	if(!(usr))
+		return
+	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))
+		usr << "\red You can't pick things up!"
+		return
+	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() )
+		usr << "\red You can't pick things up!"
+		return
+	if(src.anchored)
+		usr << "\red You can't pick that up!"
+		return
+	if(!usr.hand && usr.r_hand)
+		usr << "\red Your right hand is full."
+		return
+	if(usr.hand && usr.l_hand)
+		usr << "\red Your left hand is full."
+		return
+	//All checks are done, time to pick it up!
+	if(istype(usr, /mob/living/carbon/human))
+		src.attack_hand(usr)
+	if(istype(usr, /mob/living/carbon/alien))
+		src.attack_alien(usr)
+	if(istype(usr, /mob/living/carbon/monkey))
+		src.attack_paw(usr)
+	return
+
 /obj/item/examine()
 	set src in view()
 

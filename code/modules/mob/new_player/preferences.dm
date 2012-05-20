@@ -866,7 +866,7 @@ datum/preferences
 			be_random_name = !be_random_name
 
 		if(link_tags["flavor_text"])
-			var/msg = input(usr,"Set the flavor text in your 'examine' verb. Don't metagame!","Flavor Text",html_decode(flavor_text)) as message
+			var/msg = input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(flavor_text)) as message
 
 			if(msg != null)
 				msg = copytext(msg, 1, MAX_MESSAGE_LEN)
@@ -893,6 +893,8 @@ datum/preferences
 					slotname = savefile_getslots(user)[curslot]
 					loadsave(user)
 		if(link_tags["removeslot"])
+			if(alert("Are you sure you wish to delete this slot?",,"Yes","No")=="No")
+				return
 			var/slot = text2num(link_tags["removeslot"])
 			if(!slot)
 				return
