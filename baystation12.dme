@@ -166,7 +166,6 @@
 #define FILE_DIR "code/WorkInProgress/Apples"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn/BirdMan"
-#define FILE_DIR "code/WorkInProgress/Cael_Aislinn/Jumper"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn/Rust"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn/Supermatter"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn/Tajara"
@@ -205,7 +204,6 @@
 #define FILE_DIR "icons/vending_icons"
 #define FILE_DIR "interface"
 #define FILE_DIR "maps"
-#define FILE_DIR "maps/backup"
 #define FILE_DIR "maps/RandomZLevels"
 #define FILE_DIR "sound"
 #define FILE_DIR "sound/AI"
@@ -1212,5 +1210,5 @@
 #include "code\WorkInProgress\Wrongnumber\weldbackpack.dm"
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
-#include "maps\Antiqua.dmm"
+#include "maps\tgstation.2.0.8.dmm"
 // END_INCLUDE

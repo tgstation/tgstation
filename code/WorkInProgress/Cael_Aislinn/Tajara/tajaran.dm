@@ -28,7 +28,7 @@
 	..()
 
 /mob/living/carbon/human/tajaran/update_clothing()
-	..()
+//	..()
 
 	if (monkeyizing)
 		return

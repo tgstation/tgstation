@@ -146,7 +146,7 @@
 			t += "<table border=1>"
 			for(var/curNetId in connected_doors)
 				var/list/L = connected_doors[curNetId]
-				if(L.len == 0)
+				if(!L || L.len == 0)
 					continue
 				t += "<tr>"
 				t += "<td><b>" + curNetId + "<b></td>"
