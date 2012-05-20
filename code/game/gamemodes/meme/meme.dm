@@ -6,6 +6,7 @@
 	required_players = 6
 	restricted_jobs = list("AI", "Cyborg")
 	recommended_enemies = 2 // need at least a meme and a host
+	votable = 0 // temporarily disable this mode for voting
 
 
 	var
