@@ -373,6 +373,24 @@ menu "minimap_menu"
 		group = "minimap_size"
 		is-disabled = false
 		saved-params = "is-checked"
+	elem 
+		name = "View"
+		command = ""
+		category = ""
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "Change Z level"
+		command = "Open-Minimap-Z"
+		category = "View"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
 
 
 window "Telecomms IDE"
