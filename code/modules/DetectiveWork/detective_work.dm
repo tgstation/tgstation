@@ -238,9 +238,8 @@ obj/machinery/computer/forensic_scanning
 						var/list/blood = outputs[3]
 						if(blood && blood.len)
 							temp += "&nbsp<b>Blood:</b><br>"
-							for(var/j = 1, j <= blood.len, j++)
-								var/list/templist2 = blood[j]
-								temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [templist2[2]], DNA: [templist2[1]]<br>"
+							for(var/named in blood)
+								temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [blood[named]], DNA: [named]<br>"
 					temp += "<br><a href='?src=\ref[src];operation=database;delete_record=[href_list["identifier"]]'>{Delete this Dossier}</a>"
 					temp += "<br><a href='?src=\ref[src];operation=databaseprint;identifier=[href_list["identifier"]]'>{Print}</a>"
 				else

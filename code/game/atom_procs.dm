@@ -213,7 +213,8 @@
 		for(var/obj/effect/decal/cleanable/blood/B in T.contents)
 			if(!B.blood_DNA[M.dna.unique_enzymes])
 				B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-			B.virus2 += M.virus2
+			if(!B.virus2)
+				B.virus2 = M.virus2
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
 				B.viruses += newDisease
