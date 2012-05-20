@@ -20,7 +20,7 @@
 		return//Whatever the case, return since you can't move anyway.
 
 	if(user.client)//To make AI holograms work. They will relay directions as long as they are centered on the object.
-		var/obj/machinery/hologram/holopad/T = user.client.eye//Client eye centers on an object.
+		var/obj/machinery/hologram/holopad/T = user.current//Client eye centers on an object.
 		if(istype(T)&&T.hologram&&T.master==user)//If there is a hologram and its master is the user.
 			T.hologram.loc = get_step(T.hologram, direct)
 			T.hologram.dir = direct

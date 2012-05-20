@@ -159,7 +159,7 @@
 						//check other cameras
 						var/obj/machinery/camera/closest = C
 						for(var/obj/machinery/camera/C2 in world)
-							if (C2.network == src.networks)
+							if (C2.network in src.networks)
 								if (C2.z == target.z)
 									zmatched = 1
 									if (C2.status)
