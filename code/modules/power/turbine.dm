@@ -209,7 +209,7 @@
 				if(src.vent_network == C.comp_id)
 					compressors.Add(C)
 			for(var/obj/machinery/door/poddoor/D in world)
-				if(src.vent_network == D.networkTag)
+				if(src.vent_network == D.id)
 					doors.Add(D)
 
 	process()
