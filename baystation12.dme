@@ -616,7 +616,6 @@
 #include "code\game\mecha\working\firefighter.dm"
 #include "code\game\mecha\working\ripley.dm"
 #include "code\game\mecha\working\working.dm"
-#include "code\game\objects\biomass.dm"
 #include "code\game\objects\blood.dm"
 #include "code\game\objects\bodybag.dm"
 #include "code\game\objects\bombspawner.dm"

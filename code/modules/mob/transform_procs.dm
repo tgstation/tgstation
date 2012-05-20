@@ -23,7 +23,7 @@
 	del(O.organs)
 	O.organs = organs
 	for(var/name in O.organs)
-		var/datum/organ/external/organ = O[name]
+		var/datum/organ/external/organ = O.organs[name]
 		organ.owner = O
 		for(var/obj/item/weapon/implant/implant in organ.implant)
 			implant.imp_in = O

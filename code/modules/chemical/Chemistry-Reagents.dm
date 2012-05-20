@@ -104,7 +104,7 @@ datum
 			on_mob_life(var/mob/living/M)
 				if(!data || !data["blood_type"])
 					..()
-				else if(istype(M, /mob/living/carbon/human) && blood_incompatible(data["blood_type"],M.dna.b_type))
+				else if(istype(M, /mob/living/carbon/human) && blood_incompatible(data["blood_type"],M.dna.b_type) && !M.changeling)
 					M.adjustToxLoss(rand(0.5,1.5))
 					M.adjustOxyLoss(rand(1,1.5))
 					..()

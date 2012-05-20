@@ -378,25 +378,24 @@ turf
 								enemy_tile.consider_pressure_difference(connection_difference, direction)
 			else
 				air_master.active_singletons -= src //not active if not processing!
+			if(air)
+				air.react()
 
-			air.react()
+				if(active_hotspot)
+					if (!active_hotspot.process(possible_fire_spreads))
+						return 0
 
-			if(active_hotspot)
-				if (!active_hotspot.process(possible_fire_spreads))
-					return 0
+				if(air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
+					consider_superconductivity(starting = 1)
 
-			if(air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
-				consider_superconductivity(starting = 1)
+				if(air.check_tile_graphic())
+					update_visuals(air)
 
-			if(air.check_tile_graphic())
-				update_visuals(air)
-
-			if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-//				reset_delay() //hotspots always process quickly
-				hotspot_expose(air.temperature, CELL_VOLUME)
-				for(var/atom/movable/item in src)
-					item.temperature_expose(air, air.temperature, CELL_VOLUME)
-				temperature_expose(air, air.temperature, CELL_VOLUME)
+				if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+					hotspot_expose(air.temperature, CELL_VOLUME)
+					for(var/atom/movable/item in src)
+						item.temperature_expose(air, air.temperature, CELL_VOLUME)
+					temperature_expose(air, air.temperature, CELL_VOLUME)
 
 			return 1
 

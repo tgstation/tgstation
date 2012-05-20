@@ -108,8 +108,8 @@ Filter types:
 				else
 					filtered_out = null
 
-
-			filtered_out.update_values()
+			if(filtered_out)
+				filtered_out.update_values()
 			air2.merge(filtered_out)
 			air3.merge(removed)
 

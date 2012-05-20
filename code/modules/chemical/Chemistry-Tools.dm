@@ -185,9 +185,10 @@
 							if(W:amount >= 1)
 								playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 								if(do_after(user, 20))
-									W:use(1)
-									user << "\blue You put in the glass lens."
-									src.state = 5
+									if(W)
+										W:use(1)
+										user << "\blue You put in the glass lens."
+										src.state = 5
 					if(5)
 						if(istype(W, /obj/item/weapon/crowbar))
 							playsound(src.loc, 'Crowbar.ogg', 50, 1)
