@@ -78,20 +78,23 @@ obj/item/verb/pick_up()
 
 	if(!(usr))
 		return
-	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))
+	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))//Is humanoid, and is not a brain
 		usr << "\red You can't pick things up!"
 		return
-	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() )
+	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
 		usr << "\red You can't pick things up!"
 		return
-	if(src.anchored)
+	if(src.anchored) //Object isn't anchored
 		usr << "\red You can't pick that up!"
 		return
-	if(!usr.hand && usr.r_hand)
+	if(!usr.hand && usr.r_hand) //Right hand is not full
 		usr << "\red Your right hand is full."
 		return
-	if(usr.hand && usr.l_hand)
+	if(usr.hand && usr.l_hand) //Left hand is not full
 		usr << "\red Your left hand is full."
+		return
+	if(!istype(src.loc, /turf)) //Object is on a turf
+		usr << "\red You can't pick that up!"
 		return
 	//All checks are done, time to pick it up!
 	if(istype(usr, /mob/living/carbon/human))

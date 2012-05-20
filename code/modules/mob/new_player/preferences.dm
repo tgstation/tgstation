@@ -714,9 +714,9 @@ datum/preferences
 						new_species += "Soghun"
 					species = input("Please select a species", "Character Generation", null) in new_species
 					h_style = "Bald" //Try not to carry face/head hair over.
-					hair_style = "Bald"
 					f_style = "Shaved"
-					facial_hair_style = "Shaved"
+					hair_style = new/datum/sprite_accessory/hair/bald
+					facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
 
 		if(link_tags["hair"])
 			switch(link_tags["hair"])
