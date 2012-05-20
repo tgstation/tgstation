@@ -37,6 +37,7 @@
 	updateappearance(O,O.dna.uni_identity)
 	O.loc = loc
 	O.viruses = viruses
+	O.s_tone = s_tone
 	viruses = list()
 	for(var/datum/disease/D in O.viruses)
 		D.affected_mob = O
@@ -47,6 +48,10 @@
 		client.mob = O
 	if(mind)
 		mind.transfer_to(O)
+
+	del(O.stand_icon)  //Force it to update.
+	del(O.lying_icon)
+
 	O.update_body()
 	O.update_face()
 	spawn(1)
