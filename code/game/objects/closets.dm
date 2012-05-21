@@ -165,6 +165,10 @@
 	return
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	if(istype(O, /obj/screen) || istype(O, /obj/hud))	//fix for HUD elements making their way into the world	-Pete
+		return
+	if(O.loc == user)
+		return
 	if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis)
 		return
 	if((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)))
@@ -179,7 +183,7 @@
 		return
 	step_towards(O, src.loc)
 	if(user != O)
-		user.show_viewers(text("\red [] stuffs [] into []!", user, O, src))
+		user.show_viewers("\red [user] stuffs [O] into [src]!")
 	src.add_fingerprint(user)
 	return
 
