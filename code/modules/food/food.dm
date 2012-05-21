@@ -629,6 +629,7 @@
 			name = "exceptional plump pie"
 			desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump pie!"
 			reagents.add_reagent("nutriment", 15)
+			reagents.add_reagent("tricordrazine", 5)
 			bitesize = 2
 		else
 			reagents.add_reagent("nutriment", 10)
@@ -855,7 +856,7 @@
 	New()
 		..()
 		reagents.add_reagent("toxin", 1)
-		reagents.add_reagent("carbon", 1)
+		reagents.add_reagent("carbon", 3)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/meatsteak
@@ -906,17 +907,17 @@
 		reagents.add_reagent("amatoxin", 6)
 		reagents.add_reagent("psilocybin", 3)
 		bitesize = 3
-/*
+
 /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
 	name = "Poppy pretzel"
-	desc = "" //TODO
+	desc = "It's all twisted up!"
 	icon_state = "poppypretzel"
 	bitesize = 2
 	New()
 		..()
 		reagents.add_reagent("nutriment", 5)
 		bitesize = 2
-*/
+
 
 /obj/item/weapon/reagent_containers/food/snacks/meatballsoup
 	name = "Meatball soup"
@@ -947,7 +948,7 @@
 		..()
 		reagents.add_reagent("nutriment", 2)
 		reagents.add_reagent("blood", 15)
-		reagents.add_reagent("water", 10)
+		reagents.add_reagent("water", 5)
 		bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/clownstears
@@ -956,7 +957,7 @@
 	icon_state = "clownstears"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("nutriment", 4)
 		reagents.add_reagent("banana", 5)
 		reagents.add_reagent("water", 10)
 		bitesize = 5
@@ -969,7 +970,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 10)
-		reagents.add_reagent("water", 10)
+		reagents.add_reagent("water", 5)
 		bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/nettlesoup
@@ -980,8 +981,8 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 10)
-		reagents.add_reagent("water", 7)
-		reagents.add_reagent("tricordrazine", 3)
+		reagents.add_reagent("water", 5)
+		reagents.add_reagent("tricordrazine", 5)
 		bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/mysterysoup
@@ -1038,7 +1039,7 @@
 		..()
 		reagents.add_reagent("water", 10)
 		bitesize = 5
-		if(prob(5))
+		if(prob(25))
 			src.desc = "A wish come true!"
 			reagents.add_reagent("nutriment", 10)
 
@@ -1205,6 +1206,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 12)
+		reagents.add_reagent("carbon", 2)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/grilledcheese
@@ -1248,7 +1250,7 @@
 		reagents.add_reagent("nutriment", 20)
 		reagents.add_reagent("tomatojuice", 5)
 		reagents.add_reagent("imidazoline", 5)
-		reagents.add_reagent("water", 10)
+		reagents.add_reagent("water", 5)
 		bitesize = 10
 
 /obj/item/weapon/reagent_containers/food/snacks/metroidtoast
@@ -1280,7 +1282,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 12)
-		reagents.add_reagent("water", 20)
+		reagents.add_reagent("water", 5)
 		bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat
@@ -1438,6 +1440,7 @@
 			name = "exceptional plump helmet biscuit"
 			desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump helmet biscuit!"
 			reagents.add_reagent("nutriment", 15)
+			reagents.add_reagent("tricordrazine", 5)
 			bitesize = 2
 		else
 			reagents.add_reagent("nutriment", 5)
