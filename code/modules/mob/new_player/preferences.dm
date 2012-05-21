@@ -705,9 +705,9 @@ datum/preferences
 				if("input")
 					var/list/new_species = list("Human")
 					if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
-						if((is_alien_whitelisted(user, "Soghun")) || ((user.client) && (user.client.holder) && (user.client.holder.level) && (user.client.holder.level >= 5))) //Check for Soghun and admins
+						if(is_alien_whitelisted(user, "Soghun")) //Check for Soghun and admins
 							new_species += "Soghun"
-						if((is_alien_whitelisted(user, "Tajaran")) || ((user.client) && (user.client.holder) && (user.client.holder.level) && (user.client.holder.level >= 5))) //Check for Tajaran
+						if(is_alien_whitelisted(user, "Tajaran")) //Check for Tajaran
 							new_species += "Tajaran"
 					else //Not using the whitelist? Aliens for everyone!
 						new_species += "Tajaran"
@@ -715,6 +715,7 @@ datum/preferences
 					species = input("Please select a species", "Character Generation", null) in new_species
 					h_style = "Bald" //Try not to carry face/head hair over.
 					f_style = "Shaved"
+					s_tone = 0 //Don't carry over skintone either.
 					hair_style = new/datum/sprite_accessory/hair/bald
 					facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
 
