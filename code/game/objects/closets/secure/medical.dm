@@ -52,7 +52,7 @@
 
 
 /obj/structure/closet/secure_closet/doctor_personal
-	name = "Doctor's Locker"
+	name = "Medical Doctor's Locker"
 	req_access = list(access_medical)
 	icon_state = "securemed1"
 	icon_closed = "securemed"
