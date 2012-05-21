@@ -50,4 +50,4 @@
 
 
 	// comment out the line below when debugging locally to enable the options & messages menu
-	//control_freak = 1
+	control_freak = 1
