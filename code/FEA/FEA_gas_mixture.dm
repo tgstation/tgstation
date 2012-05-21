@@ -466,6 +466,8 @@ datum
 			//Outputs: 0 if the self-check failed (local airgroup breaks?)
 			//   then -1 if sharer-check failed (sharing airgroup breaks?)
 			//   then 1 if both checks pass (share succesful?)
+			if(!istype(sharer))
+				return
 
 			var/delta_oxygen = QUANTIZE(oxygen_archived - sharer.oxygen_archived)/TRANSFER_FRACTION
 			var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - sharer.carbon_dioxide_archived)/TRANSFER_FRACTION
@@ -551,6 +553,10 @@ datum
 			//Called by: Sharing air with adjacent simulated turfs
 			//Inputs: Air datum to share with
 			//Outputs: Amount of gas exchanged (Negative if lost air, positive if gained.)
+
+
+			if(!istype(sharer))
+				return
 
 			var/delta_oxygen = QUANTIZE(oxygen_archived - sharer.oxygen_archived)/TRANSFER_FRACTION
 			var/delta_carbon_dioxide = QUANTIZE(carbon_dioxide_archived - sharer.carbon_dioxide_archived)/TRANSFER_FRACTION

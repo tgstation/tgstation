@@ -729,10 +729,12 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	..()
 
 /obj/item/device/radio/proc/config(op)
-	for (var/ch_name in channels)
-		radio_controller.remove_object(src, radiochannels[ch_name])
+	if(radio_controller)
+		for (var/ch_name in channels)
+			radio_controller.remove_object(src, radiochannels[ch_name])
 	secure_radio_connections = new
 	channels = op
-	for (var/ch_name in op)
-		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
+	if(radio_controller)
+		for (var/ch_name in op)
+			secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
 	return

@@ -1612,7 +1612,7 @@ About the new airlock wires panel:
 		name = "CentCom Secure Airlock"
 		desc = "I hope you have insulated gloves...."
 		icon = 'Doorhatchele.dmi'
-		var/list/mob/morons
+		var/list/mob/morons = list()
 
 		pulse(var/wireColor)
 			if(prob(25))

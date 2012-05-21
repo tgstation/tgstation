@@ -131,6 +131,7 @@ datum/preferences/proc/savefile_save(mob/user, slot)
 	F["eyes_green"] << src.g_eyes
 	F["eyes_blue"] << src.b_eyes
 	F["blood_type"] << src.b_type
+	F["species"] << src.species
 	F["underwear"] << src.underwear
 	F["backbag"] << src.backbag
 	F["backbag"] << src.backbag
@@ -206,6 +207,8 @@ datum/preferences/proc/savefile_load(mob/user, slot)
 	F["eyes_green"] >> src.g_eyes
 	F["eyes_blue"] >> src.b_eyes
 	F["blood_type"] >> src.b_type
+	F["species"] >> src.species
+	if(isnull(species)) species = "Human"
 	F["underwear"] >> src.underwear
 	if(underwear == 0) underwear = 6 //For old players who have 0 in their savefile
 	F["backbag"] >> src.backbag

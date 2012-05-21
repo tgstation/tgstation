@@ -104,7 +104,7 @@ datum
 			on_mob_life(var/mob/living/M)
 				if(!data || !data["blood_type"])
 					..()
-				else if(istype(M, /mob/living/carbon/human) && blood_incompatible(data["blood_type"],M.dna.b_type))
+				else if(istype(M, /mob/living/carbon/human) && blood_incompatible(data["blood_type"],M.dna.b_type) && !M.changeling)
 					M.adjustToxLoss(rand(0.5,1.5))
 					M.adjustOxyLoss(rand(1,1.5))
 					..()
@@ -1862,7 +1862,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				if(prob(50)) M:heal_organ_damage(1,0)
+				if(prob(1)) M:heal_organ_damage(0.5,0) //This should stop being able to heal out of crit from eating a donut
 				M:nutrition += nutriment_factor	// For hunger and fatness
 /*
 				// If overeaten - vomit and fall down

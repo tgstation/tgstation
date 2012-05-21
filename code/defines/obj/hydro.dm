@@ -1044,11 +1044,12 @@
 	potency = 40
 	On_Consume()
 		if(!reagents.total_volume)
-			var/mob/M = usr
-			var/obj/item/weapon/corncob/W = new /obj/item/weapon/corncob( M )
-			M << "<span class='notice'>You chew on the corn, leaving nothing behind but a cob.</span>"
-			M.put_in_hand(W)
-			W.add_fingerprint(M)
+			var/mob/living/M = usr
+			if(M)
+				var/obj/item/weapon/corncob/W = new /obj/item/weapon/corncob( M )
+				M << "<span class='notice'>You chew on the corn, leaving nothing behind but a cob.</span>"
+				M.put_in_hand(W)
+				W.add_fingerprint(M)
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1+round((potency / 10), 1))

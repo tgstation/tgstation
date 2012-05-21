@@ -166,7 +166,6 @@
 #define FILE_DIR "code/WorkInProgress/Apples"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn/BirdMan"
-#define FILE_DIR "code/WorkInProgress/Cael_Aislinn/Jumper"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn/Rust"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn/Supermatter"
 #define FILE_DIR "code/WorkInProgress/Cael_Aislinn/Tajara"
@@ -617,7 +616,6 @@
 #include "code\game\mecha\working\firefighter.dm"
 #include "code\game\mecha\working\ripley.dm"
 #include "code\game\mecha\working\working.dm"
-#include "code\game\objects\biomass.dm"
 #include "code\game\objects\blood.dm"
 #include "code\game\objects\bodybag.dm"
 #include "code\game\objects\bombspawner.dm"
@@ -1211,5 +1209,5 @@
 #include "code\WorkInProgress\Wrongnumber\weldbackpack.dm"
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
-#include "maps\Antiqua.dmm"
+#include "maps\tgstation.2.0.8.dmm"
 // END_INCLUDE
