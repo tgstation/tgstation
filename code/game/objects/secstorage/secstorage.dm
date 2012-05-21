@@ -169,6 +169,7 @@
 	if (src.locked == 1)
 		return
 
+	orient2hud(usr)
 	if ((over_object == usr && ((get_dist(src, usr) <= 1 ||src.locked == 0) || usr.contents.Find(src))))  //|| usr.telekinesis == 1
 		if (usr.s_active)
 			usr.s_active.close(usr)

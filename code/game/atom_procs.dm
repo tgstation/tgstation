@@ -733,15 +733,15 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			else
 				AICtrlClick(usr)
 			return
+			}
+
+		// ------- MIDDLE-CLICK -------
+
+		if(parameters["middle"]){
+			if(!isAI(usr))
+				MiddleClick(usr)
+				return
 		}
-
-	// ------- MIDDLE-CLICK -------
-
-	if(parameters["middle"]){
-		if(!isAI(usr))
-			MiddleClick(usr)
-			return
-	}
 
 	// ------- THROW -------
 	if(usr.in_throw_mode)
