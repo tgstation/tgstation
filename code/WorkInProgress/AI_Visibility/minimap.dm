@@ -1,4 +1,3 @@
-
 /client/var/minimap_view_z = 1
 
 /obj/minimap_obj

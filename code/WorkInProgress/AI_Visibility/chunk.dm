@@ -1,4 +1,3 @@
-
 #define MINIMAP_UPDATE_DELAY 1200
 
 /datum/camerachunk

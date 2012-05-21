@@ -1,5 +1,4 @@
 
-
 /mob/aiEye
 	var/list/visibleCameraChunks = list()
 	var/mob/ai = null
