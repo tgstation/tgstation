@@ -303,12 +303,7 @@
 		if ( istype(wear_suit, /obj/item/clothing/suit/bio_suit) || istype(wear_suit, /obj/item/clothing/suit/bomb_suit) || istype(wear_suit, /obj/item/clothing/suit/space) )
 			tail_shown = 0
 	if(tail_shown)
-		var/icon/tail_icon = image("icon" = icon('tajaran.dmi', "tail_[gender==FEMALE ? "f" : "m"]_[lying ? "l" : "s"]"), "layer" = MOB_LAYER)
-		if (s_tone >= 0)
-			tail_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
-		else
-			tail_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
-		overlays += tail_icon
+		overlays += image("icon" = icon('tajaran.dmi', "tail_[gender==FEMALE ? "f" : "m"]_[lying ? "l" : "s"]"), "layer" = MOB_LAYER)
 
 	if (lying)
 		if (face_lying)
@@ -344,12 +339,7 @@
 		var/datum/organ/external/head = organs["head"]
 		if(!head.destroyed)
 		//if not wearing anything on the head, show the ears
-			var/icon/ears_icon = image("icon" = icon('tajaran.dmi', "ears_[gender==FEMALE ? "f" : "m"]_[lying ? "l" : "s"]"), "layer" = MOB_LAYER)
-			if (s_tone >= 0)
-				ears_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
-			else
-				ears_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
-			overlays += ears_icon
+			overlays += image("icon" = icon('tajaran.dmi', "ears_[gender==FEMALE ? "f" : "m"]_[lying ? "l" : "s"]"), "layer" = MOB_LAYER)
 
 	// Belt
 	if (belt)

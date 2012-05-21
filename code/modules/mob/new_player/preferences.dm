@@ -715,6 +715,7 @@ datum/preferences
 					species = input("Please select a species", "Character Generation", null) in new_species
 					h_style = "Bald" //Try not to carry face/head hair over.
 					f_style = "Shaved"
+					s_tone = 0 //Don't carry over skintone either.
 					hair_style = new/datum/sprite_accessory/hair/bald
 					facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
 
