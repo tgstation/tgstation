@@ -742,11 +742,30 @@ proc/blood_incompatible(donor,receiver)
 	return 0
 
 /obj/item/weapon/rag
+	New() // So I don't have to grab maplock
+		spawn(1)
+			new/obj/item/weapon/reagent_containers/glass/rag(loc)
+			del src
+
+/obj/item/weapon/reagent_containers/glass/rag
 	name = "damp rag"
-	desc = "For cleaning up messes, I suppose."
+	desc = "For cleaning up messes, you suppose."
 	w_class = 1
 	icon = 'toy.dmi'
 	icon_state = "rag"
+	amount_per_transfer_from_this = 5
+	possible_transfer_amounts = list(5)
+	volume = 5
+	can_be_placed_into = null
+
+	attack(atom/target as obj|turf|area, mob/user as mob , flag)
+		if(ismob(target) && target.reagents && reagents.total_volume)
+			user.visible_message("\red \The [target] has been smothered with \the [src] by \the [user]!", "\red You smother \the [target] with \the [src]!", "You hear some struggling and muffled cries of surprise")
+			src.reagents.reaction(target, TOUCH)
+			spawn(5) src.reagents.clear_reagents()
+			return
+		else
+			..()
 
 	afterattack(atom/A as obj|turf|area, mob/user as mob)
 		if(istype(A))
@@ -754,4 +773,11 @@ proc/blood_incompatible(donor,receiver)
 			if(do_after(user,30))
 				user.visible_message("[user] finishes wiping off the [A]!")
 				A.clean_blood()
+		return
+
+	examine()
+		if (!( usr ))
+			return
+		usr << "That's \a [src]."
+		usr << desc
 		return
