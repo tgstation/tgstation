@@ -514,7 +514,7 @@ client/verb
 				usr.gun_move_icon.name = "Disallow Walking"
 		else
 //			winset(usr,"default.target_can_move","is-flat=false;border=none")
-			usr << "Target may no longegr move."
+			usr << "Target may no longer move."
 			target_can_run = 0
 			del(usr.gun_run_icon)
 			if(usr.gun_move_icon)

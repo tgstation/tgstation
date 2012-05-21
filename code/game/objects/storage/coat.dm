@@ -131,7 +131,7 @@
 			return
 
 	if (W.w_class > max_w_class)
-		user << "\red This [W] is too big for this [src]"
+		user << "\red This [W] is too big for \the [src]"
 		return
 
 	var/sum_w_class = W.w_class
