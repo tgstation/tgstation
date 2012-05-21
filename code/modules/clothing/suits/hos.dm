@@ -23,7 +23,7 @@
 
 
 /obj/item/clothing/suit/armor/hos/jensen
-	name = "armored trenchoat"
+	name = "armored trenchcoat"
 	desc = "A trenchoat augmented with a special alloy for some protection and style"
 	icon_state = "jensencoat"
 	item_state = "jensencoat"
