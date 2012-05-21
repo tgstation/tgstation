@@ -124,18 +124,42 @@
 	new /obj/item/clothing/shoes/white(src)
 	return
 
+/obj/structure/closet/wardrobe/robotics_black/New()
+	new /obj/item/clothing/under/rank/roboticist(src)
+	new /obj/item/clothing/under/rank/roboticist(src)
+	new /obj/item/clothing/suit/labcoat(src)
+	new /obj/item/clothing/suit/labcoat(src)
+	new /obj/item/clothing/shoes/black(src)
+	new /obj/item/clothing/shoes/black(src)
+	return
+
+/obj/structure/closet/wardrobe/chemistry_white/New()
+	new /obj/item/clothing/under/rank/chemist(src)
+	new /obj/item/clothing/under/rank/chemist(src)
+	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/clothing/suit/labcoat/chemist(src)
+	new /obj/item/clothing/suit/labcoat/chemist(src)
+	return
+
 /obj/structure/closet/wardrobe/genetics_white/New()
 	new /obj/item/clothing/under/rank/geneticist(src)
 	new /obj/item/clothing/under/rank/geneticist(src)
-	new /obj/item/clothing/under/rank/geneticist(src)
-	new /obj/item/clothing/under/rank/geneticist(src)
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/clothing/suit/labcoat/genetics(src)
+	new /obj/item/clothing/suit/labcoat/genetics(src)
+	return
+
+/obj/structure/closet/wardrobe/virology_white/New()
+	new /obj/item/clothing/under/rank/virologist(src)
+	new /obj/item/clothing/under/rank/virologist(src)
 	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/weapon/storage/stma_kit(src)
-	new /obj/item/clothing/suit/labcoat(src)
-	new /obj/item/clothing/suit/labcoat(src)
-	new /obj/item/clothing/suit/labcoat(src)
+	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/clothing/suit/labcoat/virologist(src)
+	new /obj/item/clothing/suit/labcoat/virologist(src)
+	new /obj/item/clothing/mask/surgical(src)
+	new /obj/item/clothing/mask/surgical(src)
 	return
 
 /obj/structure/closet/wardrobe/grey/New()

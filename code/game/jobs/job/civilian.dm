@@ -96,7 +96,7 @@
 		if(!H)	return 0
 		H.equip_if_possible(new /obj/item/device/radio/headset/heads/qm(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/cargo(H), H.slot_w_uniform)
-		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
+		H.equip_if_possible(new /obj/item/clothing/shoes/brown(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/quartermaster(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/gloves/black(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(H), H.slot_glasses)

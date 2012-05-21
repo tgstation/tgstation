@@ -14,6 +14,7 @@
 	icon_state = "miningsec1"
 	icon_closed = "miningsec"
 	icon_locked = "miningsec1"
+	icon_opened = "miningsecopen"
 	icon_broken = "miningsecbroken"
 	icon_off = "miningsecoff"
 	req_access = list(access_mining)
@@ -21,11 +22,12 @@
 /obj/structure/closet/secure_closet/miner/New()
 	..()
 	sleep(2)
-	new /obj/item/device/analyzer(src)
+	new /obj/item/weapon/storage/backpack/industrial(src)
 	new /obj/item/device/radio/headset/headset_mine(src)
 	new /obj/item/clothing/under/rank/miner(src)
 	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/shoes/black(src)
+	new /obj/item/device/analyzer(src)
 	new /obj/item/weapon/satchel(src)
 	new /obj/item/device/flashlight/lantern(src)
 	new /obj/item/weapon/shovel(src)

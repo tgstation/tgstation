@@ -1,12 +1,12 @@
 /obj/structure/closet/secure_closet/engineering_chief
 	name = "Chief Engineer's Locker"
 	req_access = list(access_ce)
-	icon_state = "secureeng1"
-	icon_closed = "secureeng"
-	icon_locked = "secureeng1"
-	icon_opened = "toolclosetopen"
-	icon_broken = "secureengbroken"
-	icon_off = "secureengoff"
+	icon_state = "securece1"
+	icon_closed = "securece"
+	icon_locked = "securece1"
+	icon_opened = "secureceopen"
+	icon_broken = "securecebroken"
+	icon_off = "secureceoff"
 
 
 	New()
@@ -89,7 +89,7 @@
 	icon_state = "secureeng1"
 	icon_closed = "secureeng"
 	icon_locked = "secureeng1"
-	icon_opened = "toolclosetopen"
+	icon_opened = "secureengopen"
 	icon_broken = "secureengbroken"
 	icon_off = "secureengoff"
 

@@ -38,6 +38,8 @@
 /obj/structure/closet/gmcloset
 	name = "formal closet"
 	desc = "It's a storage unit for formal clothing."
+	icon_state = "black"
+	icon_closed = "black"
 
 /obj/structure/closet/emcloset
 	name = "emergency closet"
@@ -92,10 +94,14 @@
 /obj/structure/closet/jcloset
 	name = "custodial closet"
 	desc = "It's a storage unit for janitorial clothes and gear."
+	icon_state = "mixed"
+	icon_closed = "mixed"
 
 /obj/structure/closet/lawcloset
 	name = "legal closet"
 	desc = "It's a storage unit for courtroom apparel and items."
+	icon_state = "blue"
+	icon_closed = "blue"
 
 /obj/structure/closet/coffin
 	name = "coffin"
@@ -265,8 +271,23 @@
 	icon_state = "white"
 	icon_closed = "white"
 
+/obj/structure/closet/wardrobe/robotics_black
+	name = "robotics wardrobe"
+	icon_state = "black"
+	icon_closed = "black"
+
+/obj/structure/closet/wardrobe/chemistry_white
+	name = "chemistry wardrobe"
+	icon_state = "white"
+	icon_closed = "white"
+
 /obj/structure/closet/wardrobe/genetics_white
 	name = "genetics wardrobe"
+	icon_state = "white"
+	icon_closed = "white"
+
+/obj/structure/closet/wardrobe/virology_white
+	name = "virology wardrobe"
 	icon_state = "white"
 	icon_closed = "white"
 
