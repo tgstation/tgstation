@@ -12,7 +12,7 @@
 		..()
 		sleep(2)
 		new /obj/item/clothing/under/rank/cargotech(src)
-		new /obj/item/clothing/shoes/brown(src)
+		new /obj/item/clothing/shoes/black(src)
 		new /obj/item/device/radio/headset/headset_cargo(src)
 		new /obj/item/clothing/gloves/black(src)
 		new /obj/item/weapon/cartridge/quartermaster(src)
@@ -21,6 +21,12 @@
 /obj/structure/closet/secure_closet/qm_personal
 	name = "Quartermaster's Locker"
 	req_access = list(access_qm)
+	icon_state = "secureqm1"
+	icon_closed = "secureqm"
+	icon_locked = "secureqm1"
+	icon_opened = "secureqmopen"
+	icon_broken = "secureqmbroken"
+	icon_off = "secureqmoff"
 
 	New()
 		..()
