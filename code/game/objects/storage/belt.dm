@@ -36,17 +36,6 @@
 			return
 
 
-	attack_hand(mob/user as mob)
-		src.add_fingerprint(user)
-		if(src.loc == user)
-			playsound(src.loc, "rustle", 50, 1, -5)
-			if (user.s_active)
-				user.s_active.close(user)
-			src.show_to(user)
-		else
-			return ..()
-
-
 
 /obj/item/weapon/storage/belt/utility
 	name = "tool-belt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
