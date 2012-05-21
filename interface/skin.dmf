@@ -4,19 +4,19 @@ macro "macro"
 		command = ".center"
 		is-disabled = false
 	elem 
-		name = "NORTHEAST+REP"
+		name = "NORTHEAST"
 		command = ".northeast"
 		is-disabled = false
 	elem 
-		name = "SOUTHEAST+REP"
+		name = "SOUTHEAST"
 		command = ".southeast"
 		is-disabled = false
 	elem 
-		name = "SOUTHWEST+REP"
+		name = "SOUTHWEST"
 		command = ".southwest"
 		is-disabled = false
 	elem 
-		name = "NORTHWEST+REP"
+		name = "NORTHWEST"
 		command = ".northwest"
 		is-disabled = false
 	elem 
@@ -50,6 +50,14 @@ macro "macro"
 	elem 
 		name = "SOUTH+REP"
 		command = ".south"
+		is-disabled = false
+	elem 
+		name = "INSERT"
+		command = "insert-key-pressed"
+		is-disabled = false
+	elem 
+		name = "DELETE"
+		command = "delete-key-pressed"
 		is-disabled = false
 	elem 
 		name = "CTRL+A"
