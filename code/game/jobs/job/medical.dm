@@ -80,7 +80,7 @@
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_medsci(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/chemist(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/white(H), H.slot_shoes)
-		H.equip_if_possible(new /obj/item/device/pda/toxins(H), H.slot_belt)
+		H.equip_if_possible(new /obj/item/device/pda/medical(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/suit/storage/labcoat/chemist(H), H.slot_wear_suit)
 		return 1
 

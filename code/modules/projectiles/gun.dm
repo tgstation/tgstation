@@ -529,7 +529,8 @@ client/verb
 						if(!target_can_run)
 							M << "\red Your move intent is now set to walk, as your targeter permits it."
 							M.m_intent = "walk"
-							M.hud_used.move_intent.icon_state = "walking"
+							if(M.hud_used.move_intent)
+								M.hud_used.move_intent.icon_state = "walking"
 					else
 						M << "\red <b>Your character will now be shot if they move.</b>"
 	AllowTargetRun()

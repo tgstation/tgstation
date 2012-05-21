@@ -713,43 +713,44 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 	// ------- SHIFT-CLICK -------
 
-	var/parameters = params2list(params)
+	if(params)
+		var/parameters = params2list(params)
 
-	if(parameters["shift"]){
-		if(!isAI(usr))
-			ShiftClick(usr)
-		else
-			AIShiftClick(usr)
-		return
-	}
-
-	// ------- ALT-CLICK -------
-
-	if(parameters["alt"]){
-		if(!isAI(usr))
-			AltClick(usr)
-		else
-			AIAltClick(usr)
-		return
-	}
-
-	// ------- CTRL-CLICK -------
-
-	if(parameters["ctrl"]){
-		if(!isAI(usr))
-			CtrlClick(usr)
-		else
-			AICtrlClick(usr)
-		return
-	}
-
-	// ------- MIDDLE-CLICK -------
-
-	if(parameters["middle"]){
-		if(!isAI(usr))
-			MiddleClick(usr)
+		if(parameters["shift"]){
+			if(!isAI(usr))
+				ShiftClick(usr)
+			else
+				AIShiftClick(usr)
 			return
-	}
+		}
+
+		// ------- ALT-CLICK -------
+
+		if(parameters["alt"]){
+			if(!isAI(usr))
+				AltClick(usr)
+			else
+				AIAltClick(usr)
+			return
+		}
+
+		// ------- CTRL-CLICK -------
+
+		if(parameters["ctrl"]){
+			if(!isAI(usr))
+				CtrlClick(usr)
+			else
+				AICtrlClick(usr)
+			return
+			}
+
+		// ------- MIDDLE-CLICK -------
+
+		if(parameters["middle"]){
+			if(!isAI(usr))
+				MiddleClick(usr)
+				return
+		}
 
 	// ------- THROW -------
 	if(usr.in_throw_mode)
