@@ -32,7 +32,7 @@
 	icon = 'zone_sel.dmi'
 	icon_state = "blank"
 	var/selecting = "chest"
-	screen_loc = "EAST+1,NORTH"
+	screen_loc = ui_zonesel
 
 
 /obj/screen/zone_sel/MouseDown(location, control,params)
@@ -199,21 +199,71 @@
 /obj/screen/grab/attackby()
 	return
 
+/obj/screen/MouseEntered(object,location,control,params)
+	if(!ishuman(usr) && !istype(usr,/mob/living/carbon/alien/humanoid) && !islarva(usr) && !ismonkey(usr))
+		return
+	switch(name)
+		/*
+		if("other")
+			if (usr.hud_used.show_otherinventory)
+				usr.hud_used.show_otherinventory = 0
+				usr.client.screen -= usr.hud_used.other
+			else
+				usr.hud_used.show_otherinventory = 1
+				usr.client.screen += usr.hud_used.other
+
+			usr.hud_used.other_update()*/
+		if("act_intent")
+			if(!usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 1
+				usr.client.screen += usr.hud_used.intent_small_hud_objects
+		if("harm")
+			if(!usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 1
+				usr.client.screen += usr.hud_used.intent_small_hud_objects
+		if("help")
+			if(!usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 1
+				usr.client.screen += usr.hud_used.intent_small_hud_objects
+		if("disarm")
+			if(!usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 1
+				usr.client.screen += usr.hud_used.intent_small_hud_objects
+		if("grab")
+			if(!usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 1
+				usr.client.screen += usr.hud_used.intent_small_hud_objects
+
+
+/obj/screen/MouseExited(object,location,control,params)
+	if(!ishuman(usr) && !istype(usr,/mob/living/carbon/alien/humanoid) && !islarva(usr) && !ismonkey(usr))
+		return
+	switch(name)
+		if("act_intent")
+			if (usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 0
+				usr.client.screen -= usr.hud_used.intent_small_hud_objects
+		if("harm")
+			if (usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 0
+				usr.client.screen -= usr.hud_used.intent_small_hud_objects
+		if("help")
+			if (usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 0
+				usr.client.screen -= usr.hud_used.intent_small_hud_objects
+		if("disarm")
+			if (usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 0
+				usr.client.screen -= usr.hud_used.intent_small_hud_objects
+		if("grab")
+			if (usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 0
+				usr.client.screen -= usr.hud_used.intent_small_hud_objects
+
 /obj/screen/Click(location, control, params)
-
-	var/list/pa = params2list(params)
-
 	switch(name)
 		if("map")
-
 			usr.clearmap()
-		if("maprefresh")
-			var/obj/machinery/computer/security/seccomp = usr.machine
-
-			if(seccomp!=null)
-				seccomp.drawmap(usr)
-			else
-				usr.clearmap()
 
 		if("other")
 			if (usr.hud_used.show_otherinventory)
@@ -225,36 +275,13 @@
 
 			usr.hud_used.other_update()
 
+		if("maprefresh")
+			var/obj/machinery/computer/security/seccomp = usr.machine
 
-		if("act_intent")
-			if(pa.Find("left"))
-				switch(usr.a_intent)
-					if("help")
-						usr.a_intent = "disarm"
-						usr.hud_used.action_intent.icon_state = "disarm"
-					if("disarm")
-						usr.a_intent = "hurt"
-						usr.hud_used.action_intent.icon_state = "harm"
-					if("hurt")
-						usr.a_intent = "grab"
-						usr.hud_used.action_intent.icon_state = "grab"
-					if("grab")
-						usr.a_intent = "help"
-						usr.hud_used.action_intent.icon_state = "help"
+			if(seccomp!=null)
+				seccomp.drawmap(usr)
 			else
-				switch(usr.a_intent)
-					if("help")
-						usr.a_intent = "grab"
-						usr.hud_used.action_intent.icon_state = "grab"
-					if("disarm")
-						usr.a_intent = "help"
-						usr.hud_used.action_intent.icon_state = "help"
-					if("hurt")
-						usr.a_intent = "disarm"
-						usr.hud_used.action_intent.icon_state = "disarm"
-					if("grab")
-						usr.a_intent = "hurt"
-						usr.hud_used.action_intent.icon_state = "harm"
+				usr.clearmap()
 
 		if("arrowleft")
 			switch(usr.a_intent)
@@ -316,20 +343,6 @@
 				if("walk")
 					usr.m_intent = "run"
 					usr.hud_used.move_intent.icon_state = "running"
-
-		if("intent")
-			if (!( usr.intent ))
-				switch(usr.a_intent)
-					if("help")
-						usr.intent = "13,15"
-					if("disarm")
-						usr.intent = "14,15"
-					if("hurt")
-						usr.intent = "15,15"
-					if("grab")
-						usr.intent = "12,15"
-			else
-				usr.intent = null
 		if("m_intent")
 			if (!( usr.m_int ))
 				switch(usr.m_intent)
@@ -350,20 +363,6 @@
 		if("run")
 			usr.m_intent = "run"
 			usr.m_int = "13,14"
-		if("hurt")
-			usr.a_intent = "hurt"
-			usr.intent = "15,15"
-		if("grab")
-			usr.a_intent = "grab"
-			usr.intent = "12,15"
-		if("disarm")
-			if (istype(usr, /mob/living/carbon/human))
-				var/mob/M = usr
-				M.a_intent = "disarm"
-				M.intent = "14,15"
-		if("help")
-			usr.a_intent = "help"
-			usr.intent = "13,15"
 		if("Reset Machine")
 			usr.machine = null
 		if("internal")
@@ -407,16 +406,43 @@
 									usr.internals.icon_state = "internal1"
 							else
 								usr << "\blue You don't have an oxygen tank."
+		if("act_intent")
+			if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
+				if (usr.hud_used.show_intent_icons)
+					usr.hud_used.show_intent_icons = 0
+					usr.client.screen -= usr.hud_used.intent_small_hud_objects
+				else
+					usr.hud_used.show_intent_icons = 1
+					usr.client.screen += usr.hud_used.intent_small_hud_objects
+			if(issilicon(usr))
+				if(usr.a_intent == "help")
+					usr.a_intent = "hurt"
+					usr.hud_used.action_intent.icon_state = "harm"
+				else
+					usr.a_intent = "help"
+					usr.hud_used.action_intent.icon_state = "help"
+		if("help")
+			usr.a_intent = "help"
+			usr.hud_used.action_intent.icon_state = "help"
+			usr.hud_used.show_intent_icons = 0
+			usr.client.screen -= usr.hud_used.intent_small_hud_objects
+		if("harm")
+			usr.a_intent = "hurt"
+			usr.hud_used.action_intent.icon_state = "harm"
+			usr.hud_used.show_intent_icons = 0
+			usr.client.screen -= usr.hud_used.intent_small_hud_objects
+		if("grab")
+			usr.a_intent = "grab"
+			usr.hud_used.action_intent.icon_state = "grab"
+			usr.hud_used.show_intent_icons = 0
+			usr.client.screen -= usr.hud_used.intent_small_hud_objects
+		if("disarm")
+			usr.a_intent = "disarm"
+			usr.hud_used.action_intent.icon_state = "disarm"
+			usr.hud_used.show_intent_icons = 0
+			usr.client.screen -= usr.hud_used.intent_small_hud_objects
 		if("pull")
 			usr.pulling = null
-		if("sleep")
-			if(usr.sleeping)
-				return
-			else
-				usr.sleeping = 20 //Short nap
-		if("rest")
-			usr.resting = !( usr.resting )
-			//kavala2
 		if("throw")
 			if (!usr.stat && isturf(usr.loc) && !usr.restrained())
 				usr:toggle_throw_mode()
@@ -426,79 +452,14 @@
 			usr:swap_hand()
 		if("hand")
 			usr:swap_hand()
-		if("resist")
-			if(usr.next_move > world.time)
-				return
-			usr.next_move = world.time + 20
-			if ((!( usr.stat ) && usr.canmove && !( usr.restrained() )))
-				var/resisting = 0
-				for(var/obj/O in usr.requests)
-					del(O)
-					resisting++
-				for(var/obj/item/weapon/grab/G in usr.grabbed_by)
-					resisting++
-					if (G.state == 1)
-						del(G)
-					else
-						if (G.state == 2)
-							if (prob(25))
-								for(var/mob/O in viewers(usr, null))
-									O.show_message(text("\red [] has broken free of []'s grip!", usr, G.assailant), 1)
-								del(G)
-						else
-							if (G.state == 3)
-								if (prob(5))
-									for(var/mob/O in viewers(usr, null))
-										O.show_message(text("\red [] has broken free of []'s headlock!", usr, G.assailant), 1)
-									del(G)
-				if(resisting)
-					for(var/mob/O in viewers(usr, null))
-						O.show_message(text("\red <B>[] resists!</B>", usr), 1)
-			if(usr:handcuffed && usr:canmove && (usr.last_special <= world.time))
-				usr.next_move = world.time + 100
-				usr.last_special = world.time + 100
-				if(isalienadult(usr) || usr.mutations & HULK)//Don't want to do a lot of logic gating here.
-					usr << "\green You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)"
-					for(var/mob/O in viewers(usr))
-						O.show_message(text("\red <B>[] is trying to break the handcuffs!</B>", usr), 1)
-					spawn(0)
-						if(do_after(usr, 50))
-							if(!usr:handcuffed || usr:buckled)
-								return
-							for(var/mob/O in viewers(usr))
-								O.show_message(text("\red <B>[] manages to break the handcuffs!</B>", usr), 1)
-							usr << "\green You successfully break your handcuffs."
-							del(usr:handcuffed)
-							usr:handcuffed = null
-				else
-					usr << "\red You attempt to remove your handcuffs. (This will take around 2 minutes and you need to stand still)"
-					for(var/mob/O in viewers(usr))
-						O.show_message(text("\red <B>[] attempts to remove the handcuffs!</B>", usr), 1)
-					spawn(0)
-						if(do_after(usr, 1200))
-							if(!usr:handcuffed || usr:buckled)
-								return // time leniency for lag which also might make this whole thing pointless but the server
-							for(var/mob/O in viewers(usr))//                                         lags so hard that 40s isn't lenient enough - Quarxink
-								O.show_message(text("\red <B>[] manages to remove the handcuffs!</B>", usr), 1)
-							usr << "\blue You successfully remove your handcuffs."
-							usr:handcuffed:loc = usr:loc
-							usr:handcuffed = null
-			if(usr:handcuffed && (usr.last_special <= world.time) && usr:buckled)
-				usr.next_move = world.time + 100
-				usr.last_special = world.time + 100
-				usr << "\red You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)"
-				for(var/mob/O in viewers(usr))
-					O.show_message(text("\red <B>[] attempts to unbuckle themself!</B>", usr), 1)
-				spawn(0)
-					if(do_after(usr, 1200))
-						if(!usr:buckled)
-							return
-						for(var/mob/O in viewers(usr))
-							O.show_message(text("\red <B>[] manages to unbuckle themself!</B>", usr), 1)
-						usr << "\blue You successfully unbuckle yourself."
-						usr:buckled.manual_unbuckle(usr)
-
-
+		if("r_hand")
+			if(iscarbon(usr))
+				var/mob/living/carbon/C = usr
+				C.activate_hand("r")
+		if("l_hand")
+			if(iscarbon(usr))
+				var/mob/living/carbon/C = usr
+				C.activate_hand("l")
 		if("module")
 			if(issilicon(usr))
 				if(usr:module)
@@ -560,3 +521,96 @@
 /obj/screen/attack_paw(mob/user as mob, using)
 	user.db_click(name, using)
 	return
+
+
+/mob/living/verb/mob_sleep()
+	set name = "Sleep"
+	set category = "IC"
+
+	if(usr.sleeping)
+		usr << "\red You are already sleeping"
+		return
+	else
+		usr.sleeping = 20 //Short nap
+
+/mob/living/verb/lay_down()
+	set name = "Lay down / Get up"
+	set category = "IC"
+
+	usr.resting = !( usr.resting )
+	usr << "\blue You are now [(usr.resting) ? "resting" : "getting up"]"
+
+/mob/living/verb/resist()
+	set name = "Resist"
+	set category = "IC"
+
+	if(usr.next_move > world.time)
+		return
+	usr.next_move = world.time + 20
+	if ((!( usr.stat ) && usr.canmove && !( usr.restrained() )))
+		var/resisting = 0
+		for(var/obj/O in usr.requests)
+			del(O)
+			resisting++
+		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
+			resisting++
+			if (G.state == 1)
+				del(G)
+			else
+				if (G.state == 2)
+					if (prob(25))
+						for(var/mob/O in viewers(usr, null))
+							O.show_message(text("\red [] has broken free of []'s grip!", usr, G.assailant), 1)
+						del(G)
+				else
+					if (G.state == 3)
+						if (prob(5))
+							for(var/mob/O in viewers(usr, null))
+								O.show_message(text("\red [] has broken free of []'s headlock!", usr, G.assailant), 1)
+							del(G)
+		if(resisting)
+			for(var/mob/O in viewers(usr, null))
+				O.show_message(text("\red <B>[] resists!</B>", usr), 1)
+	if(usr:handcuffed && usr:canmove && (usr.last_special <= world.time))
+		usr.next_move = world.time + 100
+		usr.last_special = world.time + 100
+		if(isalienadult(usr) || usr.mutations & HULK)//Don't want to do a lot of logic gating here.
+			usr << "\green You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)"
+			for(var/mob/O in viewers(usr))
+				O.show_message(text("\red <B>[] is trying to break the handcuffs!</B>", usr), 1)
+			spawn(0)
+				if(do_after(usr, 50))
+					if(!usr:handcuffed || usr:buckled)
+						return
+					for(var/mob/O in viewers(usr))
+						O.show_message(text("\red <B>[] manages to break the handcuffs!</B>", usr), 1)
+					usr << "\green You successfully break your handcuffs."
+					del(usr:handcuffed)
+					usr:handcuffed = null
+		else
+			usr << "\red You attempt to remove your handcuffs. (This will take around 2 minutes and you need to stand still)"
+			for(var/mob/O in viewers(usr))
+				O.show_message(text("\red <B>[] attempts to remove the handcuffs!</B>", usr), 1)
+			spawn(0)
+				if(do_after(usr, 1200))
+					if(!usr:handcuffed || usr:buckled)
+						return // time leniency for lag which also might make this whole thing pointless but the server
+					for(var/mob/O in viewers(usr))//                                         lags so hard that 40s isn't lenient enough - Quarxink
+						O.show_message(text("\red <B>[] manages to remove the handcuffs!</B>", usr), 1)
+					usr << "\blue You successfully remove your handcuffs."
+					usr:handcuffed:loc = usr:loc
+					usr:handcuffed = null
+	if(usr:handcuffed && (usr.last_special <= world.time) && usr:buckled)
+		usr.next_move = world.time + 100
+		usr.last_special = world.time + 100
+		usr << "\red You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)"
+		for(var/mob/O in viewers(usr))
+			O.show_message(text("\red <B>[] attempts to unbuckle themself!</B>", usr), 1)
+		spawn(0)
+			if(do_after(usr, 1200))
+				if(!usr:buckled)
+					return
+				for(var/mob/O in viewers(usr))
+					O.show_message(text("\red <B>[] manages to unbuckle themself!</B>", usr), 1)
+				usr << "\blue You successfully unbuckle yourself."
+				usr:buckled.manual_unbuckle(usr)

@@ -1,5 +1,7 @@
 /obj/hud/proc/human_hud(var/ui_style='screen1_old.dmi')
 
+	ui_style='screen1_old.dmi' //Overriding the parameter. Only this UI style is acceptable with the 'sleek' layout.
+
 	src.adding = list(  )
 	src.other = list(  )
 	src.intents = list(  )
@@ -8,6 +10,7 @@
 	src.mov_int = list(  )
 	src.vimpaired = list(  )
 	src.darkMask = list(  )
+	src.intent_small_hud_objects = list(  )
 
 	src.g_dither = new src.h_type( src )
 	src.g_dither.screen_loc = "WEST,SOUTH to EAST,NORTH"
@@ -53,6 +56,41 @@
 	src.adding += using
 	action_intent = using
 
+//intent small hud objects
+	using = new src.h_type( src )
+	using.name = "help"
+	using.icon = ui_style
+	using.icon_state = "help_small"
+	using.screen_loc = ui_help_small
+	using.layer = 21
+	src.intent_small_hud_objects += using
+
+	using = new src.h_type( src )
+	using.name = "disarm"
+	using.icon = ui_style
+	using.icon_state = "disarm_small"
+	using.screen_loc = ui_disarm_small
+	using.layer = 21
+	src.intent_small_hud_objects += using
+
+	using = new src.h_type( src )
+	using.name = "grab"
+	using.icon = ui_style
+	using.icon_state = "grab_small"
+	using.screen_loc = ui_grab_small
+	using.layer = 21
+	src.intent_small_hud_objects += using
+
+	using = new src.h_type( src )
+	using.name = "harm"
+	using.icon = ui_style
+	using.icon_state = "harm_small"
+	using.screen_loc = ui_harm_small
+	using.layer = 21
+	src.intent_small_hud_objects += using
+
+//end intent small hud objects
+
 	using = new src.h_type( src )
 	using.name = "mov_intent"
 	using.dir = SOUTHWEST
@@ -63,6 +101,7 @@
 	src.adding += using
 	move_intent = using
 
+/*
 	using = new src.h_type(src) //Right hud bar
 	using.dir = SOUTH
 	using.icon = ui_style
@@ -101,6 +140,7 @@
 	using.screen_loc = ui_iarrowright
 	using.layer = 19
 	src.adding += using
+*/
 
 	using = new src.h_type( src )
 	using.name = "drop"
@@ -117,7 +157,7 @@
 	using.icon_state = "center"
 	using.screen_loc = ui_iclothing
 	using.layer = 19
-	src.adding += using
+	src.other += using
 
 	using = new src.h_type( src )
 	using.name = "o_clothing"
@@ -126,7 +166,7 @@
 	using.icon_state = "equip"
 	using.screen_loc = ui_oclothing
 	using.layer = 19
-	src.adding += using
+	src.other += using
 
 /*	using = new src.h_type( src )
 	using.name = "headset"
@@ -141,25 +181,49 @@
 	using.name = "r_hand"
 	using.dir = WEST
 	using.icon = ui_style
-	using.icon_state = "equip"
+	using.icon_state = "hand_inactive"
+	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
+		using.icon_state = "hand_active"
 	using.screen_loc = ui_rhand
 	using.layer = 19
+	src.r_hand_hud_object = using
 	src.adding += using
 
 	using = new src.h_type( src )
 	using.name = "l_hand"
 	using.dir = EAST
 	using.icon = ui_style
-	using.icon_state = "equip"
+	using.icon_state = "hand_inactive"
+	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
+		using.icon_state = "hand_active"
 	using.screen_loc = ui_lhand
+	using.layer = 19
+	src.l_hand_hud_object = using
+	src.adding += using
+
+	using = new src.h_type( src )
+	using.name = "hand"
+	using.dir = SOUTH
+	using.icon = ui_style
+	using.icon_state = "hand1"
+	using.screen_loc = ui_swaphand1
+	using.layer = 19
+	src.adding += using
+
+	using = new src.h_type( src )
+	using.name = "hand"
+	using.dir = SOUTH
+	using.icon = ui_style
+	using.icon_state = "hand2"
+	using.screen_loc = ui_swaphand2
 	using.layer = 19
 	src.adding += using
 
 	using = new src.h_type( src )
 	using.name = "id"
-	using.dir = SOUTHWEST
+	using.dir = NORTH
 	using.icon = ui_style
-	using.icon_state = "equip"
+	using.icon_state = "id"
 	using.screen_loc = ui_id
 	using.layer = 19
 	src.adding += using
@@ -171,13 +235,13 @@
 	using.icon_state = "equip"
 	using.screen_loc = ui_mask
 	using.layer = 19
-	src.adding += using
+	src.other += using
 
 	using = new src.h_type( src )
 	using.name = "back"
-	using.dir = NORTHEAST
+	using.dir = NORTH
 	using.icon = ui_style
-	using.icon_state = "equip"
+	using.icon_state = "back"
 	using.screen_loc = ui_back
 	using.layer = 19
 	src.adding += using
@@ -201,11 +265,13 @@
 	using = new src.h_type( src )
 	using.name = "suit storage"
 	using.icon = ui_style
+	using.dir = 8 //The sprite at dir=8 has the background whereas the others don't.
 	using.icon_state = "belt"
 	using.screen_loc = ui_sstore1
 	using.layer = 19
 	src.other += using
 
+/*
 	using = new src.h_type( src )
 	using.name = "resist"
 	using.icon = ui_style
@@ -213,12 +279,13 @@
 	using.screen_loc = ui_resist
 	using.layer = 19
 	src.adding += using
+*/
 
 	using = new src.h_type( src )
 	using.name = "other"
 	using.icon = ui_style
 	using.icon_state = "other"
-	using.screen_loc = ui_shoes
+	using.screen_loc = ui_inventory
 	using.layer = 20
 	src.adding += using
 
@@ -268,7 +335,7 @@
 	using.icon_state = "hair"
 	using.screen_loc = ui_head
 	using.layer = 19
-	src.adding += using
+	src.other += using
 
 	using = new src.h_type( src )
 	using.name = "shoes"
@@ -527,6 +594,7 @@
 	mymob.flash.screen_loc = "1,1 to 15,15"
 	mymob.flash.layer = 17
 
+/*
 	mymob.hands = new /obj/screen( null )
 	mymob.hands.icon = ui_style
 	mymob.hands.icon_state = "hand"
@@ -545,6 +613,7 @@
 	mymob.rest.icon_state = "rest0"
 	mymob.rest.name = "rest"
 	mymob.rest.screen_loc = ui_rest
+*/
 
 	/*/Monkey blockers
 
@@ -641,7 +710,7 @@
 	mymob.client.screen = null
 
 	//, mymob.i_select, mymob.m_select
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.hands, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 
 	//if(istype(mymob,/mob/living/carbon/monkey)) mymob.client.screen += src.mon_blo
