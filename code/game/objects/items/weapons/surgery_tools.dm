@@ -593,6 +593,7 @@ CIRCULAR SAW
 						implant.loc = (get_turf(H))
 						implant.implanted = 0
 						S.implant = null
+						playsound(user, 'squelch1.ogg', 50, 1)
 						if(istype(implant, /obj/item/weapon/implant/explosive) || istype(implant, /obj/item/weapon/implant/uplink) || istype(implant, /obj/item/weapon/implant/dexplosive) || istype(implant, /obj/item/weapon/implant/explosive) || istype(implant, /obj/item/weapon/implant/compressed))
 							usr << "The implant disintegrates into nothing..."
 							del(implant)
