@@ -514,7 +514,7 @@ client/verb
 				usr.gun_move_icon.name = "Disallow Walking"
 		else
 //			winset(usr,"default.target_can_move","is-flat=false;border=none")
-			usr << "Target may no longer move."
+			usr << "Target may no longegr move."
 			target_can_run = 0
 			del(usr.gun_run_icon)
 			if(usr.gun_move_icon)
@@ -529,7 +529,8 @@ client/verb
 						if(!target_can_run)
 							M << "\red Your move intent is now set to walk, as your targeter permits it."
 							M.m_intent = "walk"
-							M.hud_used.move_intent.icon_state = "walking"
+							if(M.hud_used.move_intent)
+								M.hud_used.move_intent.icon_state = "walking"
 					else
 						M << "\red <b>Your character will now be shot if they move.</b>"
 	AllowTargetRun()

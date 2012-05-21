@@ -8,6 +8,7 @@
 	src.mov_int = list(  )
 	src.vimpaired = list(  )
 	src.darkMask = list(  )
+	src.intent_small_hud_objects = list(  )
 
 	src.g_dither = new src.h_type( src )
 	src.g_dither.screen_loc = "WEST,SOUTH to EAST,NORTH"
@@ -49,6 +50,41 @@
 	src.adding += using
 	action_intent = using
 
+//intent small hud objects
+	using = new src.h_type( src )
+	using.name = "help"
+	using.icon = 'screen1_alien.dmi'
+	using.icon_state = "help_small"
+	using.screen_loc = ui_help_small
+	using.layer = 21
+	src.intent_small_hud_objects += using
+
+	using = new src.h_type( src )
+	using.name = "disarm"
+	using.icon = 'screen1_alien.dmi'
+	using.icon_state = "disarm_small"
+	using.screen_loc = ui_disarm_small
+	using.layer = 21
+	src.intent_small_hud_objects += using
+
+	using = new src.h_type( src )
+	using.name = "grab"
+	using.icon = 'screen1_alien.dmi'
+	using.icon_state = "grab_small"
+	using.screen_loc = ui_grab_small
+	using.layer = 21
+	src.intent_small_hud_objects += using
+
+	using = new src.h_type( src )
+	using.name = "harm"
+	using.icon = 'screen1_alien.dmi'
+	using.icon_state = "harm_small"
+	using.screen_loc = ui_harm_small
+	using.layer = 21
+	src.intent_small_hud_objects += using
+
+//end intent small hud objects
+
 	using = new src.h_type( src )
 	using.name = "mov_intent"
 	using.dir = SOUTHWEST
@@ -59,6 +95,7 @@
 	src.adding += using
 	move_intent = using
 
+/*
 	using = new src.h_type(src) //Right hud bar
 	using.dir = SOUTH
 	using.icon = 'screen1_alien.dmi'
@@ -79,7 +116,9 @@
 	using.screen_loc = "EAST+1,SOUTH-1"
 	using.layer = 19
 	src.adding += using
+*/
 
+	/*
 	using = new src.h_type( src )
 	using.name = "arrowleft"
 	using.icon = 'screen1_alien.dmi'
@@ -97,6 +136,7 @@
 	using.screen_loc = ui_iarrowright
 	using.layer = 19
 	src.adding += using
+	*/
 
 	using = new src.h_type( src )
 	using.name = "drop"
@@ -115,7 +155,7 @@
 	using.dir = SOUTH
 	using.icon = 'screen1_alien.dmi'
 	using.icon_state = "equip"
-	using.screen_loc = ui_iclothing
+	using.screen_loc = ui_alien_oclothing
 	using.layer = 19
 	src.adding += using
 
@@ -125,7 +165,7 @@
 	using.dir = WEST
 	using.icon = 'screen1_alien.dmi'
 	using.icon_state = "equip"
-	using.screen_loc = ui_id
+	using.screen_loc = ui_rhand
 	using.layer = 19
 	src.adding += using
 
@@ -135,7 +175,7 @@
 	using.dir = EAST
 	using.icon = 'screen1_alien.dmi'
 	using.icon_state = "equip"
-	using.screen_loc = ui_belt
+	using.screen_loc = ui_lhand
 	using.layer = 19
 	src.adding += using
 
@@ -162,11 +202,12 @@
 	using.name = "head"
 	using.icon = 'screen1_alien.dmi'
 	using.icon_state = "hair"
-	using.screen_loc = ui_oclothing
+	using.screen_loc = ui_alien_head
 	using.layer = 19
 	src.adding += using
 //end of equippable shit
 
+/*
 	using = new src.h_type( src )
 	using.name = "resist"
 	using.icon = 'screen1_alien.dmi'
@@ -174,8 +215,7 @@
 	using.screen_loc = ui_resist
 	using.layer = 19
 	src.adding += using
-
-
+*/
 
 	using = new src.h_type( src )
 	using.name = null
@@ -241,7 +281,7 @@
 	mymob.healths.icon = 'screen1_alien.dmi'
 	mymob.healths.icon_state = "health0"
 	mymob.healths.name = "health"
-	mymob.healths.screen_loc = ui_health
+	mymob.healths.screen_loc = ui_alien_health
 
 	mymob.pullin = new /obj/screen( null )
 	mymob.pullin.icon = 'screen1_alien.dmi'
@@ -265,6 +305,7 @@
 	mymob.flash.screen_loc = "1,1 to 15,15"
 	mymob.flash.layer = 17
 
+	/*
 	mymob.hands = new /obj/screen( null )
 	mymob.hands.icon = 'screen1_alien.dmi'
 	mymob.hands.icon_state = "hand"
@@ -285,6 +326,7 @@
 	mymob.rest.screen_loc = ui_rest
 
 	mymob.gun_setting_icon = new /obj/screen/gun/mode(null)
+	*/
 
 
 	mymob.zone_sel = new /obj/screen/zone_sel( null )
@@ -293,6 +335,6 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.toxin, mymob.fire, mymob.hands, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, mymob.rest, mymob.sleep, mymob.gun_setting_icon) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.toxin, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 
