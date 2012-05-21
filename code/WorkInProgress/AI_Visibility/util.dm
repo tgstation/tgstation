@@ -1,5 +1,4 @@
 
-
 /turf
 	var/image/obscured
 	var/image/dim
