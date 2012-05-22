@@ -1,6 +1,6 @@
 <h1>Welcome to Baystation 12!</h1>
 
-<i>This server is running Baystation 12's modification of the /tg/station13 <b>Space Station 13</b> code.</i>
+-<i>This server is running <a href="http://baystation12.net/">Baystation 12's</a> modification of the <a href="http://nanotrasen.com/">/tg/station13</a> SS13 code.</i>
 <br><br>
 <strong>Bugtracker:</strong> <a href="https://github.com/Baystation12/Baystation12/issues">https://github.com/Baystation12/Baystation12/issues</a>
 <br>
