@@ -134,6 +134,26 @@ var/global/BSACooldown = 0
 				M.change_mob_type( /mob/living/simple_animal/constructwraith , null, null, delmob)
 			if("shade")
 				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob)
+			if("meme")
+				var/mob/living/parasite/meme/newmeme = new
+				M.mind.transfer_to(newmeme)
+				newmeme.clearHUD()
+
+				var/found = 0
+				for(var/mob/living/carbon/human/H in world) if(H.client && !H.parasites.len)
+					found = 1
+					newmeme.enter_host(H)
+
+					log_admin("[H] has become [newmeme.key]'s host")
+
+					break
+
+				// if there was no host, abort
+				if(!found)
+					newmeme.mind.transfer_to(M)
+					log_admin("Failed to find host for meme [M.key]. Aborting.")
+
+
 
 	if(href_list["view_player_info"])
 		show_player_info(href_list["view_player_info"])
@@ -2435,6 +2455,7 @@ var/global/BSACooldown = 0
 			body += "<A href='?src=\ref[src];simplemake=constructbuilder;mob=\ref[M]'>Builder</A> , "
 			body += "<A href='?src=\ref[src];simplemake=constructwraith;mob=\ref[M]'>Wraith</A> \] "
 			body += "<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>"
+			body += "<A href='?src=\ref[src];simplemake=meme;mob=\ref[M]'>Meme</A>"
 			body += "<br>"
 
 	if (M.client)

@@ -90,8 +90,8 @@ mob/living/parasite/meme/Life()
 		src.death()
 		return
 
-	if(host.blinded) src.blinded = 1
-	else 			 src.blinded = 0
+	if(host.blinded && host.stat != 1) src.blinded = 1
+	else 			 				   src.blinded = 0
 
 
 mob/living/parasite/meme/death()
@@ -382,10 +382,15 @@ mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob i
 		src << "<b>Your target doesn't seem to hear you..</b>"
 		return
 
+	if(target.parasites.len > 0)
+		src << "<b>Your target already is possessed by something..</b>"
+		return
+
 	src.exit_host()
 	src.enter_host(target)
 
 	usr << "<b>You successfully jumped to [target]."
+	log_admin("[src.key] has jumped to [target]")
 
 // Jump to a distant target through a shout
 mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob in world)
@@ -415,10 +420,15 @@ mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob 
 		src << "<b>Your target doesn't seem to hear you..</b>"
 		return
 
+	if(target.parasites.len > 0)
+		src << "<b>Your target already is possessed by something..</b>"
+		return
+
 	src.exit_host()
 	src.enter_host(target)
 
 	usr << "<b>You successfully jumped to [target]."
+	log_admin("[src.key] has jumped to [target]")
 
 // Jump to an attuned mob for free
 mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob in world)
@@ -441,6 +451,8 @@ mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob 
 
 	usr << "<b>You successfully jumped to [target]."
 
+	log_admin("[src.key] has jumped to [target]")
+
 // ATTUNE a mob, adding it to the indoctrinated list
 mob/living/parasite/meme/verb/Attune()
 	set category = "Meme"
@@ -458,6 +470,8 @@ mob/living/parasite/meme/verb/Attune()
 
 	usr << "<b>You successfully indoctrinated [host]."
 	host << "\red Your head feels a bit roomier.."
+
+	log_admin("[src.key] has attuned [host]")
 
 // Enables the mob to take a lot more damage
 mob/living/parasite/meme/verb/Analgesic()
@@ -511,7 +525,11 @@ mob/living/parasite/meme/verb/Possession()
 		host_mind.current.clearHUD()
 		host.update_clothing()
 
+		log_admin("[meme_mind.key] has taken possession of [host]([host_mind.key])")
+
 		sleep(600)
+
+		log_admin("[meme_mind.key] has lost possession of [host]([host_mind.key])")
 
 		meme_mind.transfer_to(src)
 		host_mind.transfer_to(host)
