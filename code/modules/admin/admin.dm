@@ -144,14 +144,19 @@ var/global/BSACooldown = 0
 					found = 1
 					newmeme.enter_host(H)
 
-					log_admin("[H] has become [newmeme.key]'s host")
+					message_admins("[H] has become [newmeme.key]'s host")
 
 					break
 
 				// if there was no host, abort
 				if(!found)
 					newmeme.mind.transfer_to(M)
-					log_admin("Failed to find host for meme [M.key]. Aborting.")
+					message_admins("Failed to find host for meme [M.key]. Aborting.")
+
+
+				if(delmob)
+					del(M)
+
 
 
 
@@ -2454,7 +2459,7 @@ var/global/BSACooldown = 0
 			body += "\[ Construct: <A href='?src=\ref[src];simplemake=constructarmoured;mob=\ref[M]'>Armoured</A> , "
 			body += "<A href='?src=\ref[src];simplemake=constructbuilder;mob=\ref[M]'>Builder</A> , "
 			body += "<A href='?src=\ref[src];simplemake=constructwraith;mob=\ref[M]'>Wraith</A> \] "
-			body += "<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>"
+			body += "<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A> "
 			body += "<A href='?src=\ref[src];simplemake=meme;mob=\ref[M]'>Meme</A>"
 			body += "<br>"
 

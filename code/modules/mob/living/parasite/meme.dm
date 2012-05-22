@@ -391,6 +391,7 @@ mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob i
 
 	usr << "<b>You successfully jumped to [target]."
 	log_admin("[src.key] has jumped to [target]")
+	message_admins("[src.key] has jumped to [target]")
 
 // Jump to a distant target through a shout
 mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob in world)
@@ -429,6 +430,7 @@ mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob 
 
 	usr << "<b>You successfully jumped to [target]."
 	log_admin("[src.key] has jumped to [target]")
+	message_admins("[src.key] has jumped to [target]")
 
 // Jump to an attuned mob for free
 mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob in world)
@@ -452,6 +454,7 @@ mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob 
 	usr << "<b>You successfully jumped to [target]."
 
 	log_admin("[src.key] has jumped to [target]")
+	message_admins("[src.key] has jumped to [target]")
 
 // ATTUNE a mob, adding it to the indoctrinated list
 mob/living/parasite/meme/verb/Attune()
@@ -472,6 +475,7 @@ mob/living/parasite/meme/verb/Attune()
 	host << "\red Your head feels a bit roomier.."
 
 	log_admin("[src.key] has attuned [host]")
+	message_admins("[src.key] has attuned [host]")
 
 // Enables the mob to take a lot more damage
 mob/living/parasite/meme/verb/Analgesic()
@@ -526,10 +530,12 @@ mob/living/parasite/meme/verb/Possession()
 		host.update_clothing()
 
 		log_admin("[meme_mind.key] has taken possession of [host]([host_mind.key])")
+		message_admins("[meme_mind.key] has taken possession of [host]([host_mind.key])")
 
 		sleep(600)
 
 		log_admin("[meme_mind.key] has lost possession of [host]([host_mind.key])")
+		message_admins("[meme_mind.key] has lost possession of [host]([host_mind.key])")
 
 		meme_mind.transfer_to(src)
 		host_mind.transfer_to(host)
