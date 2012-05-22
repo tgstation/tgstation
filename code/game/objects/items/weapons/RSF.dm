@@ -56,7 +56,7 @@ RSF
 		if (istype(A, /obj/structure/table) && matter >= 1)
 			user << "Dispensing Dosh..."
 			playsound(src.loc, 'click.ogg', 10, 1)
-			new /obj/item/weapon/spacecash/c10( A.loc )
+			new /obj/item/weapon/money/c10( A.loc )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
 				engy.cell.charge -= 200 //once money becomes useful, I guess changing this to a high ammount, like 500 units a kick, till then, enjoy dosh!
@@ -70,7 +70,7 @@ RSF
 		if (istype(A, /turf/simulated/floor) && matter >= 1)
 			user << "Dispensing Dosh..."
 			playsound(src.loc, 'click.ogg', 10, 1)
-			new /obj/item/weapon/spacecash/c10( A )
+			new /obj/item/weapon/money/c10( A )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
 				engy.cell.charge -= 200 //once money becomes useful, I guess changing this to a high ammount, like 500 units a kick, till then, enjoy dosh!

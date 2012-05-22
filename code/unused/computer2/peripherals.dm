@@ -154,7 +154,7 @@
 
 		switch(prizeselect)
 			if(1)
-				prize = new /obj/item/weapon/spacecash( prize_location )
+				prize = new /obj/item/weapon/money( prize_location )
 				prize.name = "space ticket"
 				prize.desc = "It's almost like actual currency!"
 			if(2)

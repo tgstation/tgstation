@@ -87,17 +87,19 @@
 		return 0
 
 	attack_self(mob/living/user as mob)
-		if(!(locate(/obj/item/ammo_casing/shotgun) in src) && !loaded.len)
-			user << "<span class='notice'>\The [src] is empty.</span>"
-			return
+		if(..())
+			if(!(locate(/obj/item/ammo_casing/shotgun) in src) && !loaded.len)
+				user << "<span class='notice'>\The [src] is empty.</span>"
+				return
 
-		for(var/obj/item/ammo_casing/shotgun/shell in src)	//This feels like a hack.	//don't code at 3:30am kids!!
-			if(shell in loaded)
-				loaded -= shell
-			shell.loc = get_turf(src.loc)
+			for(var/obj/item/ammo_casing/shotgun/shell in src)	//This feels like a hack.	//don't code at 3:30am kids!!
+				if(shell in loaded)
+					loaded -= shell
+				shell.loc = get_turf(src.loc)
 
-		user << "<span class='notice'>You break \the [src].</span>"
-		update_icon()
+			user << "<span class='notice'>You break \the [src].</span>"
+			update_icon()
+		return
 
 	attackby(var/obj/item/A as obj, mob/user as mob)
 		if(istype(A, /obj/item/ammo_casing) && !load_method)

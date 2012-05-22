@@ -985,6 +985,12 @@
 				occupant_message("<font color=\"red\"><B>The sleeper is already occupied!</B></font>")
 				return
 			target.forceMove(src)
+			if(target.buckled)
+				var/obj/structure/stool/bed/S = target.buckled
+				target.buckled = null
+				target.anchored = 0
+				target.lying = 0
+				S.buckled_mob = null
 			occupant = target
 			target.reset_view(src)
 			/*
