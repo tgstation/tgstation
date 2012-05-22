@@ -153,7 +153,7 @@ var/global/BSACooldown = 0
 					newmeme.mind.transfer_to(M)
 					message_admins("Failed to find host for meme [M.key]. Aborting.")
 
-				memes += newmeme
+				ticker.mode.memes += newmeme
 
 				if(delmob)
 					del(M)
