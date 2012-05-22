@@ -209,7 +209,15 @@ datum/preferences
 		else if (gender == FEMALE)
 			g = "f"
 
-		preview_icon = new /icon('human.dmi', "body_[g]_s", "dir" = preview_dir)
+		if(species == "Tajaran")
+			preview_icon = new /icon('tajaran.dmi', "body_[g]_s", "dir" = preview_dir)
+		else if(species == "Soghun")
+			if(g == "m")
+				preview_icon = new /icon('genetics.dmi', "lizard_male_s", "dir" = preview_dir)
+			else if(g == "f")
+				preview_icon = new /icon('genetics.dmi', "lizard_female_s", "dir" = preview_dir)
+		else
+			preview_icon = new /icon('human.dmi', "body_[g]_s", "dir" = preview_dir)
 
 		// Skin tone
 		if (s_tone >= 0)

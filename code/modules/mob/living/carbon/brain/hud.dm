@@ -1,5 +1,7 @@
 /obj/hud/proc/brain_hud(var/ui_style='screen1_old.dmi')
 
+	ui_style='screen1_old.dmi' //Overriding the parameter. Only this UI style is acceptable with the 'sleek' layout.
+
 	blurry = new h_type( src )
 	blurry.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	blurry.name = "Blurry"

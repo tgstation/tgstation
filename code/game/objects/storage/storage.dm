@@ -62,11 +62,11 @@
 	return
 
 //This proc draws out the inventory and places the items on it. tx and ty are the upper left tile and mx, my are the bottm right.
-//The numbers are calculated from the bottom-left (Right hand slot on the map) being 1,1.
+//The numbers are calculated from the bottom-left The bottom-left slot being 1,1.
 /obj/item/weapon/storage/proc/orient_objs(tx, ty, mx, my)
 	var/cx = tx
 	var/cy = ty
-	src.boxes.screen_loc = text("[tx],[ty] to [mx],[my]")
+	src.boxes.screen_loc = text("[tx]:,[ty] to [mx],[my]")
 	for(var/obj/O in src.contents)
 		O.screen_loc = text("[cx],[cy]")
 		O.layer = 20
@@ -77,23 +77,29 @@
 	src.closer.screen_loc = text("[mx+1],[my]")
 	return
 
+//This proc draws out the inventory and places the items on it. It uses the standard position.
+/obj/item/weapon/storage/proc/standard_orient_objs(var/rows,var/cols)
+	var/cx = 4
+	var/cy = 2+rows
+	src.boxes.screen_loc = text("4:16,2:16 to [4+cols]:16,[2+rows]:16")
+	for(var/obj/O in src.contents)
+		O.screen_loc = text("[cx]:16,[cy]:16")
+		O.layer = 20
+		cx++
+		if (cx > (4+cols))
+			cx = 4
+			cy--
+	src.closer.screen_loc = text("[4+cols+1]:16,2:16")
+	return
+
 //This proc determins the size of the inventory to be displayed. Please touch it only if you know what you're doing.
 /obj/item/weapon/storage/proc/orient2hud(mob/user as mob)
-	var/mob/living/carbon/human/H = user
-	var/col_num = 0
-	var/row_count = min(7,storage_slots) -1 //For belts, the meanings of the two variables are inverted, so we don't have to declare new ones
+	//var/mob/living/carbon/human/H = user
+	var/row_num = 0
+	var/col_count = min(7,storage_slots) -1
 	if (contents.len > 7)
-		col_num = round((contents.len-1) / 7) // 7 is the maximum allowed column height for r_hand, l_hand and back storage items.
-	if (src == user.l_hand)
-		src.orient_objs(3-col_num, 3+row_count, 3, 3)
-	else if(src == user.r_hand)
-		src.orient_objs(1, 3+row_count, 1+col_num, 3)
-	else if(src == user.back)
-		src.orient_objs(4-col_num, 3+row_count, 4, 3)
-	else if(istype(user, /mob/living/carbon/human) && src == H.belt)//only humans have belts
-		src.orient_objs(1, 3+col_num, 1+row_count, 3)
-	else
-		src.orient_objs(5, 10+col_num, 5 + row_count, 10)
+		row_num = round((contents.len-1) / 7) // 7 is the maximum allowed width.
+	src.standard_orient_objs(row_num,col_count)
 	return
 
 //This proc is called when you want to place an item into the storage item.
@@ -129,7 +135,7 @@
 			return
 
 	if (W.w_class > max_w_class)
-		user << "\red This [W] is too big for this [src]"
+		user << "\red This [W] is too big for \the [src]"
 		return
 
 	if(istype(W, /obj/item/weapon/tray))
@@ -186,15 +192,11 @@
 	return
 
 /obj/item/weapon/storage/dropped(mob/user as mob)
-	var/col_num = 0
-	var/row_count = min(7,storage_slots) -1
-	if (contents.len > 7)
-		col_num = round((contents.len-1) / 7) // 7 is the maximum allowed column height for r_hand, l_hand and back storage items.
-	src.orient_objs(5, 10+col_num, 5 + row_count, 10)
 	return
 
 /obj/item/weapon/storage/MouseDrop(over_object, src_location, over_location)
 	..()
+	orient2hud(usr)
 	if ((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
 		if (usr.s_active)
 			usr.s_active.close(usr)
@@ -244,14 +246,7 @@
 	src.closer.master = src
 	src.closer.icon_state = "x"
 	src.closer.layer = 20
-	spawn( 5 )
-		var/col_num = 0
-		var/row_count = min(7,storage_slots) -1
-		if (contents.len > 7)
-			if(contents.len % 7)
-				col_num = round(contents.len / 7) // 7 is the maximum allowed column height for r_hand, l_hand and back storage items.
-		src.orient_objs(5, 10+col_num, 5 + row_count, 10)
-		return
+	orient2hud()
 	return
 
 /obj/item/weapon/storage/emp_act(severity)

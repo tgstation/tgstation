@@ -217,8 +217,9 @@
 		if(2)
 			dat += "<h4>Current records</h4>"
 			dat += "<a href='byond://?src=\ref[src];menu=1'>Back</a><br><br>"
-			for(var/datum/data/record/R in geneticsrecords)
-				dat += "<a href='byond://?src=\ref[src];view_rec=\ref[R]'>[R.fields["id"]]-[R.fields["name"]]</a><br>"
+			for(var/id in geneticsrecords)
+				var/datum/data/record/R = geneticsrecords[id]
+				dat += "<a href='byond://?src=\ref[src];view_rec=[id]'>[R.fields["id"]]-[R.fields["name"]]</a><br>"
 
 		if(3)
 			dat += "<h4>Selected Record</h4>"
@@ -250,7 +251,7 @@
 				dat += {"<b>UI:</b> [src.active_record.fields["UI"]]<br>
 				<b>SE:</b> [src.active_record.fields["SE"]]<br><br>"}
 				if(wantspod)
-					dat += "<a href='byond://?src=\ref[src];clone=\ref[src.active_record]'>Clone</a><br>"
+					dat += "<a href='byond://?src=\ref[src];clone=[src.active_record.fields["id"]]'>Clone</a><br>"
 
 		if(4)
 			if (!src.active_record)
@@ -281,7 +282,7 @@
 			src.scanner.locked = 0
 
 	else if (href_list["view_rec"])
-		src.active_record = locate(href_list["view_rec"])
+		src.active_record = geneticsrecords[href_list["view_rec"]]
 		if ((isnull(src.active_record.fields["ckey"])) || (src.active_record.fields["ckey"] == ""))
 			del(src.active_record)
 			src.temp = "ERROR: Record Corrupt"
@@ -299,7 +300,7 @@
 			var/obj/item/weapon/card/id/C = usr.equipped()
 			if (istype(C)||istype(C, /obj/item/device/pda))
 				if(src.check_access(C))
-					geneticsrecords.Remove(src.active_record)
+					geneticsrecords.Remove(active_record["id"])
 					del(src.active_record)
 					src.temp = "Record deleted."
 					src.menu = 2
@@ -359,10 +360,11 @@
 		src.updateUsrDialog()
 
 	else if (href_list["clone"])
-		var/datum/data/record/C = locate(href_list["clone"])
+		var/datum/data/record/C = geneticsrecords[href_list["clone"]]
 		//Look for that player! They better be dead!
 		if(C)
 			var/mob/selected = find_dead_player("[C.fields["ckey"]]")
+			selected << 'chime.ogg'	//probably not the best sound but I think it's reasonable
 			var/answer = alert(selected,"Do you want to return to life?","Cloning","Yes","No")
 			if(answer == "No")
 				selected = null
@@ -371,7 +373,7 @@
 				src.temp = "Unable to initiate cloning cycle." // most helpful error message in THE HISTORY OF THE WORLD
 			else if (src.pod1.growclone(selected, C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["interface"],C.fields["changeling"],C.fields["original"]))
 				src.temp = "Cloning cycle activated."
-				geneticsrecords.Remove(C)
+				geneticsrecords.Remove(C.fields["id"])
 				del(C)
 				src.menu = 1
 
@@ -438,7 +440,7 @@
 	if (!isnull(subject.mind)) //Save that mind so traitors can continue traitoring after cloning.
 		R.fields["mind"] = "\ref[subject.mind]"
 
-	geneticsrecords += R //Save it to the global scan list.
+	geneticsrecords["[copytext(md5(subject.real_name), 2, 6)]"] = R //Save it to the global scan list.
 	src.temp = "Subject successfully scanned."
 
 //Find a specific record by key.

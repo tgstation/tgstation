@@ -193,17 +193,19 @@
 		del(ghost) //Don't leave ghosts everywhere!!
 
 	if(!src.occupant.dna)
-		src.occupant.dna = new /datum/dna(  )
+		src.occupant.dna = new /datum/dna()
 	if(ui)
 		src.occupant.dna.uni_identity = ui
 		updateappearance(src.occupant, ui)
 	if(se)
 		src.occupant.dna.struc_enzymes = se
-		randmutb(src.occupant) //Sometimes the clones come out wrong.
+		for(var/i = 0 to 5)
+			randmutb(src.occupant) //Sometimes the clones come out wrong.
 	src.occupant:update_face()
 	src.occupant:update_body()
 	src.occupant:mutantrace = mrace
 	src.occupant:suiciding = 0
+	occupant.brainloss = 100
 	src.attempting = 0
 	return 1
 

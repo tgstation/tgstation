@@ -89,11 +89,11 @@
 				part.update_icon()
 			if(src.strength > 2)
 				src.strength = 2
-				message_admins("[usr] increased particle accelerator power to [strength].")
-				log_admin("[usr] increased particle accelerator power to [strength].")
 				for(var/obj/structure/particle_accelerator/part in connected_parts)
 					part.strength = 2
 					part.update_icon()
+			message_admins("[usr] increased particle accelerator power to [strength].")
+			log_admin("[usr] increased particle accelerator power to [strength].")
 		if(href_list["strengthdown"])
 			src.strength--
 			for(var/obj/structure/particle_accelerator/part in connected_parts)
@@ -101,11 +101,11 @@
 				part.update_icon()
 			if(src.strength < 0)
 				src.strength = 0
-				message_admins("[usr] decreased particle accelerator power to [strength].")
-				log_admin("[usr] decreased particle accelerator power to [strength].")
 				for(var/obj/structure/particle_accelerator/part in connected_parts)
 					part.strength = 0
 					part.update_icon()
+			message_admins("[usr] decreased particle accelerator power to [strength].")
+			log_admin("[usr] decreased particle accelerator power to [strength].")
 		src.updateDialog()
 		src.update_icon()
 		return

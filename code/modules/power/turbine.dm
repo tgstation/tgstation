@@ -30,11 +30,15 @@
 		if(..())
 			return
 
-		if( href_list["view"] )
-			usr.client.eye = src
+		if( href_list["close"] )
+			usr << browse(null, "window=turbinegen")
+			usr.machine = null
 
-		src.add_fingerprint(usr)
-		src.updateUsrDialog()
+		else if( href_list["str"] )
+			starter = !starter
+			src.updateDialog()
+
+		src.updateDialog()
 
 #define COMPFRICTION 5e5
 #define COMPSTARTERLOAD 2800
@@ -72,6 +76,31 @@
 			overlays += image('pipes.dmi', "comp-o1", FLY_LAYER)
 		 //TODO: DEFERRED
 
+	attack_ai(var/mob/user as mob)
+		return src.attack_hand(user)
+
+	attack_paw(var/mob/user as mob)
+		return src.attack_hand(user)
+
+	attack_hand(var/mob/user as mob)
+		if(..())
+			return
+		user.machine = src
+
+		var/dat = "<TT><B>Gas turbine generator</B><HR>"
+		if(turbine)
+			dat += "Turbine status: [starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]<BR>"
+			dat += "Turbine speed: [rpm]rpm<BR>"
+			dat += "Power currently being generated: [turbine.lastgen]W<BR>"
+			dat += "Internal gas temperature: [gas_contained.temperature]K<BR>"
+		else
+			dat += "\red No turbine found.<br>"
+		dat += "<HR>"
+		dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A> <A href='?src=\ref[src];close=1'>Close</A><BR>"
+
+		user << browse(dat, "window=turbinegen;size=400x500")
+		onclose(user, "turbinegen")
+
 /obj/machinery/power/turbine
 	name = "gas turbine generator"
 	desc = "A gas turbine used for backup power generation."
@@ -91,7 +120,6 @@
 			compressor = locate() in get_step(src, get_dir(outturf, src))
 			if(!compressor)
 				stat |= BROKEN
-
 
 #define TURBPRES 9000000
 #define TURBGENQ 20000
@@ -123,65 +151,40 @@
 		if(lastgen > 100)
 			overlays += image('pipes.dmi', "turb-o", FLY_LAYER)
 
-		for(var/mob/M in viewers(1, src))
-			if ((M.client && M.machine == src))
-				src.interact(M)
-		AutoUpdateAI(src)
+	attack_ai(var/mob/user as mob)
+		return src.attack_hand(user)
 
-	attack_ai(mob/user)
-		if(stat & (BROKEN|NOPOWER))
-			return
-		interact(user)
+	attack_paw(var/mob/user as mob)
+		return src.attack_hand(user)
 
-	attack_hand(mob/user)
-		add_fingerprint(user)
-		if(stat & (BROKEN|NOPOWER))
-			return
-		interact(user)
-
-	proc/interact(mob/user)
-		if ( (get_dist(src, user) > 1 ) || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon/ai)) )
-			user.machine = null
-			user << browse(null, "window=turbine")
+	attack_hand(var/mob/user as mob)
+		if(..())
 			return
 		user.machine = src
 
-		var/t = "<TT><B>Gas Turbine Generator</B><HR>"
-		t += "Generated power : [round(lastgen)] W<BR>"
-		t += "Turbine: [round(compressor.rpm)] RPM<BR>"
-		t += "Starter: [ compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]"
-		t += "<HR>"
-		t += "<A href='?src=\ref[src];refresh=1'>Refresh</A> <A href='?src=\ref[src];close=1'>Close</A>"
+		var/dat = "<TT><B>Gas turbine generator</B><HR>"
+		if(compressor)
+			dat += "Turbine status: [compressor.starter ? "<A href='?src=\ref[compressor];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[compressor];str=1'>On</A>"]<BR>"
+			dat += "Turbine speed: [compressor.rpm]rpm<BR>"
+			dat += "Power currently being generated: [lastgen]W<BR>"
+			dat += "Internal gas temperature: [compressor.gas_contained.temperature]K<BR>"
+		else
+			dat += "\red No compressor found.<br>"
+		dat += "<HR>"
+		dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A> <A href='?src=\ref[src];close=1'>Close</A><BR>"
 
-		user << browse(t, "window=turbine")
-		onclose(user, "turbine")
-		return
+		user << browse(dat, "window=turbinegen;size=400x500")
+		onclose(user, "turbinegen")
 
 	Topic(href, href_list)
-		..()
-		if(stat & BROKEN)
+		if(..())
 			return
-		if (usr.stat || usr.restrained() )
-			return
-		if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-			if(!istype(usr, /mob/living/silicon/ai))
-				usr << "\red You don't have the dexterity to do this!"
-				return
-		if (( usr.machine==src && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
-			if( href_list["close"] )
-				usr << browse(null, "window=turbine")
-				usr.machine = null
-				return
-			else if( href_list["str"] )
-				compressor.starter = !compressor.starter
-			spawn(0)
-				for(var/mob/M in viewers(1, src))
-					if ((M.client && M.machine == src))
-						src.interact(M)
-		else
-			usr << browse(null, "window=turbine")
+
+		if( href_list["close"] )
+			usr << browse(null, "window=turbinegen")
 			usr.machine = null
-		return
+
+		src.updateDialog()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -200,13 +203,30 @@
 	New()
 		..()
 		compressors = new/list()
+		doors = new/list()
 		spawn(5)
 			for(var/obj/machinery/compressor/C in world)
 				if(src.vent_network == C.comp_id)
 					compressors.Add(C)
 			for(var/obj/machinery/door/poddoor/D in world)
-				if(src.vent_network == D.networkTag)
+				if(src.vent_network == D.id)
 					doors.Add(D)
+
+	process()
+		..()
+		src.updateDialog()
+
+	power_change()
+		if(stat & BROKEN)
+			icon_state = "broken"
+		else
+			if( powered() )
+				icon_state = initial(icon_state)
+				stat &= ~NOPOWER
+			else
+				spawn(rand(0, 15))
+					src.icon_state = "c_unpowered"
+					stat |= NOPOWER
 
 /*
 /obj/machinery/computer/turbine_computer/attackby(I as obj, user as mob)
@@ -243,42 +263,48 @@
 	return
 */
 
+	attack_ai(var/mob/user as mob)
+		return src.attack_hand(user)
+
+	attack_paw(var/mob/user as mob)
+		return src.attack_hand(user)
+
 	attack_hand(var/mob/user as mob)
-		interact()
-		return
-
-	proc/interact()
-		if ( (get_dist(src, usr) > 1 ) || (stat & (NOPOWER|BROKEN)) && (!istype(usr, /mob/living/silicon/ai)) )
-			usr.machine = null
-			usr << browse(null, "window=turbinecomp")
+		if(..())
 			return
-		usr.machine = src
+		user.machine = src
 
-		var/dat = "<TT><B>Gas turbine remote control system</B><HR>"
+		var/dat = "<TT><B>Gas turbine remote control system</B>"
+		dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A> <A href='?src=\ref[src];close=1'>Close</A><BR>"
+		dat += "<HR>"
 
 		if(src.doors.len)
 			var/closed = 0
 			for(var/obj/machinery/door/poddoor/D in src.doors)
 				if(D.density)
 					closed = 1
-			dat += "Connected vent status: <font color=blue>[closed ? "<b>Closed</b> <a href='?src=\ref[src];opendoors=1'>\[Open\]</a>" : "<b>Open</b> <a href='?src=\ref[src];closedoors=1'>\[Close\]</a>"]</font>"
+			dat += "Connected vent door status: <font color=blue>[closed ? "<b>Closed</b> <a href='?src=\ref[src];opendoors=1'>\[Open\]</a>" : "<a href='?src=\ref[src];closedoors=1'>\[Close\]</a> <b>Open</b>"]</font>"
 		else
 			dat += "<font color=red><b>No vents connected.</b></font>"
+		dat += "<hr>"
 
 		if(src.compressors.len)
 			for(var/obj/machinery/compressor/C in compressors)
-				dat += "Turbine status: [C.starter ? "<A href='?src=\ref[C];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[C];str=1'>On</A>"]<BR>"
-				dat += "Turbine speed: [C.rpm]rpm<BR>"
-				dat += "Power currently being generated: [C.turbine.lastgen]W<BR>"
-				dat += "Internal gas temperature: [C.gas_contained.temperature]K<BR>"
-				dat += "<A href='?src=\ref[src];view=1'>View</A><BR>"
+				if(C.turbine)
+					dat += "Turbine status: [C.starter ? "<A href='?src=\ref[src];str=1;comp=\ref[C]'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1;comp=\ref[C]'>On</A>"]<BR>"
+					dat += "Turbine speed: [C.rpm]rpm<BR>"
+					dat += "Power currently being generated: [C.turbine.lastgen]W<BR>"
+					dat += "Internal gas temperature: [C.gas_contained.temperature]K<BR>"
+					dat += "<A href='?src=\ref[src];view=1;comp=\ref[C]'>View</A><BR>"
+				else
+					dat += "\red Invalid turbine/compressor configuration.<br>"
 				dat += "<HR>"
 		else
 			dat += "\red<B>No compatible attached compressors found."
 		dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A> <A href='?src=\ref[src];close=1'>Close</A><BR>"
 
-		usr << browse(dat, "window=turbinecomp;size=400x500")
-		onclose(usr, "turbinecomp")
+		user << browse(dat, "window=turbinecomp;size=400x500")
+		onclose(user, "turbinecomp")
 
 	Topic(href, href_list)
 		if(..())
@@ -288,19 +314,24 @@
 			for(var/obj/machinery/door/poddoor/D in src.doors)
 				spawn(0)
 					D.open()
-		if (href_list["closedoors"])
+					src.updateDialog()
+		else if (href_list["closedoors"])
 			for(var/obj/machinery/door/poddoor/D in src.doors)
 				spawn(0)
 					D.close()
+					src.updateDialog()
+
+		else if( href_list["view"] )
+			var/obj/machinery/compressor/C = locate(href_list["comp"])
+			if(C)
+				usr.client.eye = C
+		else if( href_list["str"] )
+			var/obj/machinery/compressor/C = locate(href_list["comp"])
+			if(C)
+				C.starter = !C.starter
+
 		else if( href_list["close"] )
 			usr << browse(null, "window=turbinecomp")
 			usr.machine = null
-			return
 
-		src.add_fingerprint(usr)
-		src.updateUsrDialog()
-		return
-
-	process()
 		src.updateDialog()
-		return

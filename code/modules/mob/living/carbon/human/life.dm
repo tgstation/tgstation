@@ -52,6 +52,7 @@
 
 	if (stat != 2) //still breathing
 
+
 		//First, resolve location and get a breath
 
 		if(air_master.current_cycle%4==2)
@@ -871,7 +872,7 @@
 					if(E.name == "l_hand" || E.name == "l_arm")
 						if(hand && equipped())
 							drop_item()
-							emote("custom v drops what they were holding, their limb malfunctioning!")
+							emote("custom v drops what they were holding, their [E] malfunctioning!")
 							var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 							spark_system.set_up(5, 0, src)
 							spark_system.attach(src)
@@ -881,7 +882,7 @@
 					else if(E.name == "r_hand" || E.name == "r_arm")
 						if(!hand && equipped())
 							drop_item()
-							emote("custom v drops what they were holding, their limb malfunctioning!")
+							emote("custom v drops what they were holding, their [E] malfunctioning!")
 							var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 							spark_system.set_up(5, 0, src)
 							spark_system.attach(src)
@@ -914,6 +915,15 @@
 				var/blood_volume = round(vessel.get_reagent_amount("blood"))
 				if(bloodloss)
 					drip(bloodloss)
+				else if(blood_volume < 560 && blood_volume)
+					var/datum/reagent/blood/B = locate() in vessel //Grab some blood
+					if(!B.data["donor"] == src) //If it's not theirs, then we look for theirs
+						for(var/datum/reagent/blood/D in vessel)
+							if(D.data["donor"] == src)
+								B = D
+								break
+					//At this point, we dun care which blood we are adding to, as long as they get more blood.
+					B.volume = max(min(B.volume + 560/blood_volume,560), 0) //Less blood = More blood generated per tick
 				if(!blood_volume)
 					bloodloss = 0
 				else if(blood_volume > 448)

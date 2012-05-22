@@ -418,10 +418,10 @@
 		usr << "You can't call the shuttle because you are dead!"
 		return
 
-	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
-	if(confirm != "Yes") return
+	var/confirm = alert("Are you sure you want to call the shuttle?", "Confirm Shuttle Call", "Yes", "No")
 
-	call_shuttle_proc(src)
+	if(confirm == "Yes")
+		call_shuttle_proc(src)
 
 	// hack to display shuttle timer
 	if(emergency_shuttle.online)

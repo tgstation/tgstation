@@ -131,7 +131,7 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 		radiation = 0
 
 		//update values
-		var/transfer_ratio = 50 / field_strength
+		var/transfer_ratio = field_strength / 50
 		major_radius = field_strength * 0.21875// max = 8.75
 		minor_radius = field_strength * 0.2125// max = 8.625
 		volume_covered = PI * major_radius * minor_radius * 2.5 * 2.5 * 2.5 * 7 * 7 * transfer_ratio
@@ -159,10 +159,12 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 			var/datum/gas_mixture/plasma_captured = new /datum/gas_mixture()
 			//
 			plasma_captured.toxins = round(gas_covered.toxins * transfer_ratio)
+			//world << "\blue[plasma_captured.toxins] moles of plasma captured"
 			plasma_captured.temperature = gas_covered.temperature
+			//plasma_captured.update_values()
 			gas_covered.toxins -= plasma_captured.toxins
-			plasma_captured.update_values()
-			gas_covered.update_values()
+			//gas_covered.update_values()
+			//
 			held_plasma.merge(plasma_captured)
 			//
 			environment.merge(gas_covered)
@@ -187,7 +189,25 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 		//if there is too much plasma in the field, lose some
 		/*if( held_plasma.toxins > (MOLES_CELLSTANDARD * 7) * (50 / field_strength) )
 			LosePlasma()*/
-		LosePlasma()
+		if(held_plasma.toxins > 1)
+			//lose a random amount of plasma back into the air, increased by the field strength (want to switch this over to frequency eventually)
+			var/loss_ratio = rand() * (0.05 + (0.05 * 50 / field_strength))
+			//world << "lost [loss_ratio*100]% of held plasma"
+			//
+			var/datum/gas_mixture/plasma_lost = new
+			plasma_lost.temperature = held_plasma.temperature
+			//
+			plasma_lost.toxins = held_plasma.toxins * loss_ratio
+			//plasma_lost.update_values()
+			held_plasma.toxins -= held_plasma.toxins * loss_ratio
+			//held_plasma.update_values()
+			//
+			environment.merge(plasma_lost)
+			radiation += loss_ratio * mega_energy * 0.1
+			mega_energy -= loss_ratio * mega_energy * 0.1
+		else
+			held_plasma.toxins = 0
+			//held_plasma.update_values()
 
 		//handle some reactants formatting
 		//helium-4 has no use at the moment, but a buttload of it is produced
@@ -292,30 +312,6 @@ Deuterium-tritium fusion: 4.5 x 10^7 K
 		for(var/obj/machinery/rust/particle_catcher/catcher in particle_catchers)
 			catcher.UpdateSize()
 		return changed
-
-	proc/LosePlasma()
-		if(held_plasma.toxins > 1)
-			//lose a random amount of plasma back into the air, increased by the field strength (want to switch this over to frequency eventually)
-			var/datum/gas_mixture/environment = loc.return_air()
-			var/loss_ratio = rand() * (0.05 + (0.05 * 50 / field_strength))
-			//world << "lost [loss_ratio*100]% of held plasma"
-			//
-			var/datum/gas_mixture/plasma_lost = new
-			plasma_lost.temperature = held_plasma.temperature
-			//
-			plasma_lost.toxins = held_plasma.toxins * loss_ratio
-			plasma_lost.update_values()
-			held_plasma.toxins -= held_plasma.toxins * loss_ratio
-			held_plasma.update_values()
-			//
-			environment.merge(plasma_lost)
-			radiation += loss_ratio * mega_energy * 0.1
-			mega_energy -= loss_ratio * mega_energy * 0.1
-			return 1
-		else
-			held_plasma.toxins = 0
-			held_plasma.update_values()
-			return 0
 
 	//the !!fun!! part
 	//reactions have to be individually hardcoded, see AttemptReaction() below this

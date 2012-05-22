@@ -1,5 +1,5 @@
 /mob/verb/listen_ooc()
-	set name = "Un/Mute OOC"
+	set name = "Hear/Stop Hearing OOC"
 	set category = "OOC"
 
 	if (src.client)

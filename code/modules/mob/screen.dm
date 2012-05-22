@@ -33,7 +33,7 @@
 	icon = 'zone_sel.dmi'
 	icon_state = "blank"
 	var/selecting = "chest"
-	screen_loc = "EAST+1,NORTH"
+	screen_loc = ui_zonesel
 
 /obj/screen/gun
 	name = "gun"
@@ -227,21 +227,71 @@
 /obj/screen/grab/attackby()
 	return
 
+/obj/screen/MouseEntered(object,location,control,params)
+	if(!ishuman(usr) && !istype(usr,/mob/living/carbon/alien/humanoid) && !islarva(usr) && !ismonkey(usr))
+		return
+	switch(name)
+		/*
+		if("other")
+			if (usr.hud_used.show_otherinventory)
+				usr.hud_used.show_otherinventory = 0
+				usr.client.screen -= usr.hud_used.other
+			else
+				usr.hud_used.show_otherinventory = 1
+				usr.client.screen += usr.hud_used.other
+
+			usr.hud_used.other_update()*/
+		if("act_intent")
+			if(!usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 1
+				usr.client.screen += usr.hud_used.intent_small_hud_objects
+		if("harm")
+			if(!usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 1
+				usr.client.screen += usr.hud_used.intent_small_hud_objects
+		if("help")
+			if(!usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 1
+				usr.client.screen += usr.hud_used.intent_small_hud_objects
+		if("disarm")
+			if(!usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 1
+				usr.client.screen += usr.hud_used.intent_small_hud_objects
+		if("grab")
+			if(!usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 1
+				usr.client.screen += usr.hud_used.intent_small_hud_objects
+
+
+/obj/screen/MouseExited(object,location,control,params)
+	if(!ishuman(usr) && !istype(usr,/mob/living/carbon/alien/humanoid) && !islarva(usr) && !ismonkey(usr))
+		return
+	switch(name)
+		if("act_intent")
+			if (usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 0
+				usr.client.screen -= usr.hud_used.intent_small_hud_objects
+		if("harm")
+			if (usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 0
+				usr.client.screen -= usr.hud_used.intent_small_hud_objects
+		if("help")
+			if (usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 0
+				usr.client.screen -= usr.hud_used.intent_small_hud_objects
+		if("disarm")
+			if (usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 0
+				usr.client.screen -= usr.hud_used.intent_small_hud_objects
+		if("grab")
+			if (usr.hud_used.show_intent_icons)
+				usr.hud_used.show_intent_icons = 0
+				usr.client.screen -= usr.hud_used.intent_small_hud_objects
+
 /obj/screen/Click(location, control, params)
-
-	var/list/pa = params2list(params)
-
 	switch(name)
 		if("map")
-
 			usr.clearmap()
-		if("maprefresh")
-			var/obj/machinery/computer/security/seccomp = usr.machine
-
-			if(seccomp!=null)
-				seccomp.drawmap(usr)
-			else
-				usr.clearmap()
 
 		if("other")
 			if (usr.hud_used.show_otherinventory)
@@ -253,36 +303,13 @@
 
 			usr.hud_used.other_update()
 
+		if("maprefresh")
+			var/obj/machinery/computer/security/seccomp = usr.machine
 
-		if("act_intent")
-			if(pa.Find("left"))
-				switch(usr.a_intent)
-					if("help")
-						usr.a_intent = "disarm"
-						usr.hud_used.action_intent.icon_state = "disarm"
-					if("disarm")
-						usr.a_intent = "hurt"
-						usr.hud_used.action_intent.icon_state = "harm"
-					if("hurt")
-						usr.a_intent = "grab"
-						usr.hud_used.action_intent.icon_state = "grab"
-					if("grab")
-						usr.a_intent = "help"
-						usr.hud_used.action_intent.icon_state = "help"
+			if(seccomp!=null)
+				seccomp.drawmap(usr)
 			else
-				switch(usr.a_intent)
-					if("help")
-						usr.a_intent = "grab"
-						usr.hud_used.action_intent.icon_state = "grab"
-					if("disarm")
-						usr.a_intent = "help"
-						usr.hud_used.action_intent.icon_state = "help"
-					if("hurt")
-						usr.a_intent = "disarm"
-						usr.hud_used.action_intent.icon_state = "disarm"
-					if("grab")
-						usr.a_intent = "hurt"
-						usr.hud_used.action_intent.icon_state = "harm"
+				usr.clearmap()
 
 		if("arrowleft")
 			switch(usr.a_intent)
@@ -344,20 +371,6 @@
 				if("walk")
 					usr.m_intent = "run"
 					usr.hud_used.move_intent.icon_state = "running"
-
-		if("intent")
-			if (!( usr.intent ))
-				switch(usr.a_intent)
-					if("help")
-						usr.intent = "13,15"
-					if("disarm")
-						usr.intent = "14,15"
-					if("hurt")
-						usr.intent = "15,15"
-					if("grab")
-						usr.intent = "12,15"
-			else
-				usr.intent = null
 		if("m_intent")
 			if (!( usr.m_int ))
 				switch(usr.m_intent)
@@ -378,20 +391,6 @@
 		if("run")
 			usr.m_intent = "run"
 			usr.m_int = "13,14"
-		if("hurt")
-			usr.a_intent = "hurt"
-			usr.intent = "15,15"
-		if("grab")
-			usr.a_intent = "grab"
-			usr.intent = "12,15"
-		if("disarm")
-			if (istype(usr, /mob/living/carbon/human))
-				var/mob/M = usr
-				M.a_intent = "disarm"
-				M.intent = "14,15"
-		if("help")
-			usr.a_intent = "help"
-			usr.intent = "13,15"
 		if("Reset Machine")
 			usr.machine = null
 		if("internal")
@@ -435,18 +434,43 @@
 									usr.internals.icon_state = "internal1"
 							else
 								usr << "\blue You don't have an oxygen tank."
+		if("act_intent")
+			if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
+				if (usr.hud_used.show_intent_icons)
+					usr.hud_used.show_intent_icons = 0
+					usr.client.screen -= usr.hud_used.intent_small_hud_objects
+				else
+					usr.hud_used.show_intent_icons = 1
+					usr.client.screen += usr.hud_used.intent_small_hud_objects
+			if(issilicon(usr))
+				if(usr.a_intent == "help")
+					usr.a_intent = "hurt"
+					usr.hud_used.action_intent.icon_state = "harm"
+				else
+					usr.a_intent = "help"
+					usr.hud_used.action_intent.icon_state = "help"
+		if("help")
+			usr.a_intent = "help"
+			usr.hud_used.action_intent.icon_state = "help"
+			usr.hud_used.show_intent_icons = 0
+			usr.client.screen -= usr.hud_used.intent_small_hud_objects
+		if("harm")
+			usr.a_intent = "hurt"
+			usr.hud_used.action_intent.icon_state = "harm"
+			usr.hud_used.show_intent_icons = 0
+			usr.client.screen -= usr.hud_used.intent_small_hud_objects
+		if("grab")
+			usr.a_intent = "grab"
+			usr.hud_used.action_intent.icon_state = "grab"
+			usr.hud_used.show_intent_icons = 0
+			usr.client.screen -= usr.hud_used.intent_small_hud_objects
+		if("disarm")
+			usr.a_intent = "disarm"
+			usr.hud_used.action_intent.icon_state = "disarm"
+			usr.hud_used.show_intent_icons = 0
+			usr.client.screen -= usr.hud_used.intent_small_hud_objects
 		if("pull")
 			usr.pulling = null
-		if("sleep")
-			if(usr.sleeping && usr.sleeping_willingly)
-				usr.sleeping = 0
-				usr.sleeping_willingly = 0
-			else if(!usr.sleeping)
-				usr.sleeping = 20 //Short nap
-				usr.sleeping_willingly = 1
-		if("rest")
-			usr.resting = !( usr.resting )
-			//kavala2
 		if("throw")
 			if (!usr.stat && isturf(usr.loc) && !usr.restrained())
 				usr:toggle_throw_mode()
@@ -456,135 +480,14 @@
 			usr:swap_hand()
 		if("hand")
 			usr:swap_hand()
-		if("resist")
-			if(usr.next_move > world.time)
-				return
-			usr.next_move = world.time + 20
-			if ((!( usr.stat ) && usr.canmove && !( usr.restrained() )))
-				var/resisting = 0
-				for(var/obj/O in usr.requests)
-					del(O)
-					resisting++
-				for(var/obj/item/weapon/grab/G in usr.grabbed_by)
-					resisting++
-					if (G.state == 1)
-						del(G)
-					else
-						if (G.state == 2)
-							if (prob(25))
-								for(var/mob/O in viewers(usr, null))
-									O.show_message(text("\red [] has broken free of []'s grip!", usr, G.assailant), 1)
-								del(G)
-						else
-							if (G.state == 3)
-								if (prob(5))
-									for(var/mob/O in viewers(usr, null))
-										O.show_message(text("\red [] has broken free of []'s headlock!", usr, G.assailant), 1)
-									del(G)
-				if(resisting)
-					for(var/mob/O in viewers(usr, null))
-						O.show_message(text("\red <B>[] resists!</B>", usr), 1)
-			if(usr:handcuffed && usr:canmove && (usr.last_special <= world.time))
-				var/breakouttime = 1200
-				var/displaytime = 2
-				if(!usr:canmove)
-					breakouttime = 2400
-					displaytime = 4
-				usr.next_move = world.time + 100
-				usr.last_special = world.time + 100
-				if(isalienadult(usr) || usr.mutations & HULK)//Don't want to do a lot of logic gating here.
-					usr << "\green You attempt to break \the [usr:handcuffed]. (This will take around 5 seconds and you need to stand still)"
-					for(var/mob/O in viewers(usr))
-						O.show_message(text("\red <B>[] is trying to break \the [usr:handcuffed]!</B>", usr), 1)
-					spawn(0)
-						if(do_after(usr, 50))
-							if(!usr:handcuffed || usr:buckled)
-								return
-							for(var/mob/O in viewers(usr))
-								O.show_message(text("\red <B>[] manages to break \the [usr:handcuffed]!</B>", usr), 1)
-							usr << "\green You successfully break \the [usr:handcuffed]."
-							del(usr:handcuffed)
-							usr:handcuffed = null
-				else
-					if(istype(usr:handcuffed, /obj/item/weapon/handcuffs/cable))
-						breakouttime = 300
-						displaytime = 0.5
-					usr << "\red You attempt to remove \the [usr:handcuffed]. (This will take around [displaytime] minutes and you need to stand still)"
-					for(var/mob/O in viewers(usr))
-						O.show_message(text("\red <B>[] attempts to remove \the [usr:handcuffed]!</B>", usr), 1)
-					spawn(0)
-						var/increment = 150
-						for(var/i = 0, i < breakouttime, i += increment)
-							if(!do_after(usr, increment))
-								return
-
-							else
-								usr << pick("You hear something click, but it doesn't open yet.",	// - Uristqwerty
-											"The latch resists!",									// - IRC: BowlSoldier
-											"The chain is starting to give!",						// - IRC: BowlSoldier
-											"The chain bends a little.",							// - IRC: STALKER
-											"Your wrist hurts.",									// - IRC: STALKER
-											"Unnng",												// - IRC: Doug_H_Nuts
-											"The chain jangles a bit.",								// - SkyMarshal
-											"\red Hurry up, dammit!",								// - SkyMarshal
-											"This is exhausting!")									// - SkyMarshal
-								for(var/mob/O in viewers(usr))
-									if(prob(50)) //Reduces spam slightly
-										O.show_message(text("\red [] continues to struggle in \the [usr:handcuffed]!", usr), 1)
-						if(!usr:handcuffed) return
-						for(var/mob/O in viewers(usr))
-							O.show_message(text("\red <B>[] manages to remove \the [usr:handcuffed]!</B>", usr), 1)
-						usr << "\blue You successfully remove \the [usr:handcuffed]."
-						usr:handcuffed:loc = usr:loc
-						usr:handcuffed = null
-						usr.update_clothing()
-
-			if(istype(usr, /mob/living/carbon/human) && istype(usr:wear_suit, /obj/item/clothing/suit/straight_jacket) && usr:canmove && (usr.last_special <= world.time))
-				usr.next_move = world.time + 200
-				usr.last_special = world.time + 200
-				if(isalienadult(usr) || usr.mutations & HULK)//Don't want to do a lot of logic gating here.
-					usr << "\green You attempt to break out of your straight jacket. (This will take around 5 seconds and you need to stand still)"
-					for(var/mob/O in viewers(usr))
-						O.show_message(text("\red <B>[] is trying to break out of \his straight jacket!</B>", usr), 1)
-					spawn(0)
-						if(do_after(usr, 50))
-							if(!istype(usr:wear_suit, /obj/item/clothing/suit/straight_jacket)) return
-							for(var/mob/O in viewers(usr))
-								O.show_message(text("\red <B>[] manages to break out of the straight jacket!</B>", usr), 1)
-							usr << "\green You successfully break out of your straight jacket."
-							var/obj/sj = usr:wear_suit
-							usr.remove_from_mob(sj)
-							sj.loc = usr.loc
-				else
-					usr << "\red You attempt to get out of your straight jacket. (This will take around 4 minutes and you need to stand still)"
-					for(var/mob/O in viewers(usr))
-						O.show_message(text("\red <B>[] attempts to get out \his straight jacket!</B>", usr), 1)
-					spawn(0)
-						if(do_after(usr, 1200))
-							if(!istype(usr:wear_suit, /obj/item/clothing/suit/straight_jacket)) return
-							for(var/mob/O in viewers(usr))
-								O.show_message(text("\red <B>[] manages to wriggle out of the straight jacket!</B>", usr), 1)
-							usr << "\blue You successfully get out of your straight jacket."
-							var/obj/sj = usr:wear_suit
-							usr.remove_from_mob(sj)
-							sj.loc = usr.loc
-
-			if(usr:handcuffed && (usr.last_special <= world.time) && usr:buckled)
-				usr.next_move = world.time + 100
-				usr.last_special = world.time + 100
-				usr << "\red You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)"
-				for(var/mob/O in viewers(usr))
-					O.show_message(text("\red <B>[] attempts to unbuckle themself!</B>", usr), 1)
-				spawn(0)
-					if(do_after(usr, 1200))
-						if(!usr:buckled)
-							return
-						for(var/mob/O in viewers(usr))
-							O.show_message(text("\red <B>[] manages to unbuckle themself!</B>", usr), 1)
-						usr << "\blue You successfully unbuckle yourself."
-						usr:buckled.manual_unbuckle(usr)
-
-
+		if("r_hand")
+			if(iscarbon(usr))
+				var/mob/living/carbon/C = usr
+				C.activate_hand("r")
+		if("l_hand")
+			if(iscarbon(usr))
+				var/mob/living/carbon/C = usr
+				C.activate_hand("l")
 		if("module")
 			if(issilicon(usr))
 				if(usr:module)
@@ -704,3 +607,152 @@
 /obj/screen/attack_paw(mob/user as mob, using)
 	user.db_click(name, using)
 	return
+
+
+/mob/living/verb/mob_sleep()
+	set name = "Sleep"
+	set category = "IC"
+
+	if(usr.sleeping && usr.sleeping_willingly)
+		usr.sleeping = 0
+		usr.sleeping_willingly = 0
+	else if(!usr.sleeping)
+		usr.sleeping = 20 //Short nap
+		usr.sleeping_willingly = 1
+
+/mob/living/verb/lay_down()
+	set name = "Lay down / Get up"
+	set category = "IC"
+
+	usr.resting = !( usr.resting )
+	usr << "\blue You are now [(usr.resting) ? "resting" : "getting up"]"
+
+/mob/living/verb/resist()
+	set name = "Resist"
+	set category = "IC"
+
+	if(usr.next_move > world.time)
+		return
+	usr.next_move = world.time + 20
+	if ((!( usr.stat ) && usr.canmove && !( usr.restrained() )))
+		var/resisting = 0
+		for(var/obj/O in usr.requests)
+			del(O)
+			resisting++
+		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
+			resisting++
+			if (G.state == 1)
+				del(G)
+			else
+				if (G.state == 2)
+					if (prob(25))
+						for(var/mob/O in viewers(usr, null))
+							O.show_message(text("\red [] has broken free of []'s grip!", usr, G.assailant), 1)
+						del(G)
+				else
+					if (G.state == 3)
+						if (prob(5))
+							for(var/mob/O in viewers(usr, null))
+								O.show_message(text("\red [] has broken free of []'s headlock!", usr, G.assailant), 1)
+							del(G)
+		if(resisting)
+			for(var/mob/O in viewers(usr, null))
+				O.show_message(text("\red <B>[] resists!</B>", usr), 1)
+	if(usr:handcuffed && usr:canmove && (usr.last_special <= world.time))
+		var/breakouttime = 1200
+		var/displaytime = 2
+		if(!usr:canmove)
+			breakouttime = 2400
+			displaytime = 4
+		usr.next_move = world.time + 100
+		usr.last_special = world.time + 100
+		if(isalienadult(usr) || usr.mutations & HULK)//Don't want to do a lot of logic gating here.
+			usr << "\green You attempt to break \the [usr:handcuffed]. (This will take around 5 seconds and you need to stand still)"
+			for(var/mob/O in viewers(usr))
+				O.show_message(text("\red <B>[] is trying to break \the [usr:handcuffed]!</B>", usr), 1)
+			spawn(0)
+				if(do_after(usr, 50))
+					if(!usr:handcuffed || usr:buckled)
+						return
+					for(var/mob/O in viewers(usr))
+						O.show_message(text("\red <B>[] manages to break \the [usr:handcuffed]!</B>", usr), 1)
+					usr << "\green You successfully break \the [usr:handcuffed]."
+					del(usr:handcuffed)
+					usr:handcuffed = null
+		else
+			if(istype(usr:handcuffed, /obj/item/weapon/handcuffs/cable))
+				breakouttime = 300
+				displaytime = 0.5
+			usr << "\red You attempt to remove \the [usr:handcuffed]. (This will take around [displaytime] minutes and you need to stand still)"
+			for(var/mob/O in viewers(usr))
+				O.show_message(text("\red <B>[] attempts to remove \the [usr:handcuffed]!</B>", usr), 1)
+			spawn(0)
+				var/increment = 150
+				for(var/i = 0, i < breakouttime, i += increment)
+					if(!do_after(usr, increment))
+						return
+
+					else
+						usr << pick("You hear something click, but it doesn't open yet.",	// - Uristqwerty
+									"The latch resists!",									// - IRC: BowlSoldier
+									"The chain is starting to give!",						// - IRC: BowlSoldier
+									"The chain bends a little.",							// - IRC: STALKER
+									"Your wrist hurts.",									// - IRC: STALKER
+									"Unnng",												// - IRC: Doug_H_Nuts
+									"The chain jangles a bit.",								// - SkyMarshal
+									"\red Hurry up, dammit!",								// - SkyMarshal
+									"This is exhausting!")									// - SkyMarshal
+						for(var/mob/O in viewers(usr))
+							if(prob(50)) //Reduces spam slightly
+								O.show_message(text("\red [] continues to struggle in \the [usr:handcuffed]!", usr), 1)
+				if(!usr:handcuffed) return
+				for(var/mob/O in viewers(usr))
+					O.show_message(text("\red <B>[] manages to remove \the [usr:handcuffed]!</B>", usr), 1)
+				usr << "\blue You successfully remove \the [usr:handcuffed]."
+				usr:handcuffed:loc = usr:loc
+				usr:handcuffed = null
+				usr.update_clothing()
+
+	if(istype(usr, /mob/living/carbon/human) && istype(usr:wear_suit, /obj/item/clothing/suit/straight_jacket) && usr:canmove && (usr.last_special <= world.time))
+		usr.next_move = world.time + 200
+		usr.last_special = world.time + 200
+		if(isalienadult(usr) || usr.mutations & HULK)//Don't want to do a lot of logic gating here.
+			usr << "\green You attempt to break out of your straight jacket. (This will take around 5 seconds and you need to stand still)"
+			for(var/mob/O in viewers(usr))
+				O.show_message(text("\red <B>[] is trying to break out of \his straight jacket!</B>", usr), 1)
+			spawn(0)
+				if(do_after(usr, 50))
+					if(!istype(usr:wear_suit, /obj/item/clothing/suit/straight_jacket)) return
+					for(var/mob/O in viewers(usr))
+						O.show_message(text("\red <B>[] manages to break out of the straight jacket!</B>", usr), 1)
+					usr << "\green You successfully break out of your straight jacket."
+					var/obj/sj = usr:wear_suit
+					usr.remove_from_mob(sj)
+					sj.loc = usr.loc
+		else
+			usr << "\red You attempt to get out of your straight jacket. (This will take around 4 minutes and you need to stand still)"
+			for(var/mob/O in viewers(usr))
+				O.show_message(text("\red <B>[] attempts to get out \his straight jacket!</B>", usr), 1)
+			spawn(0)
+				if(do_after(usr, 1200))
+					if(!istype(usr:wear_suit, /obj/item/clothing/suit/straight_jacket)) return
+					for(var/mob/O in viewers(usr))
+						O.show_message(text("\red <B>[] manages to wriggle out of the straight jacket!</B>", usr), 1)
+					usr << "\blue You successfully get out of your straight jacket."
+					var/obj/sj = usr:wear_suit
+					usr.remove_from_mob(sj)
+					sj.loc = usr.loc
+	if(usr:handcuffed && (usr.last_special <= world.time) && usr:buckled)
+		usr.next_move = world.time + 100
+		usr.last_special = world.time + 100
+		usr << "\red You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)"
+		for(var/mob/O in viewers(usr))
+			O.show_message(text("\red <B>[] attempts to unbuckle themself!</B>", usr), 1)
+		spawn(0)
+			if(do_after(usr, 1200))
+				if(!usr:buckled)
+					return
+				for(var/mob/O in viewers(usr))
+					O.show_message(text("\red <B>[] manages to unbuckle themself!</B>", usr), 1)
+				usr << "\blue You successfully unbuckle yourself."
+				usr:buckled.manual_unbuckle(usr)

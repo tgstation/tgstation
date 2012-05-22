@@ -542,7 +542,7 @@
 							return
 
 						tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
-						P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a>:</b></i><br>[t]<br>"
+						P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a> ([ownjob]):</b></i><br>[t]<br>"
 
 						// Give every ghost the ability to see all messages
 						for (var/mob/dead/observer/G in world)
@@ -559,6 +559,9 @@
 							playsound(P.loc, 'twobeep.ogg', 50, 1)
 							for (var/mob/O in hearers(3, P.loc))
 								O.show_message(text("\icon[P] *[P.ttone]*"))
+							if( P.loc && ishuman(P.loc) )
+								var/mob/living/carbon/human/H = P.loc
+								H << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
 
 						P.overlays = null
 						P.overlays += image('pda.dmi', "pda-r")
@@ -709,7 +712,7 @@
 		honkamt--
 		playsound(loc, 'bikehorn.ogg', 30, 1)
 
-	if(U.machine == src && !href_list["pAI_mess"])//Final safety.
+	if(U.machine == src && href_list["skiprefresh"]!="1")//Final safety.
 		attack_self(U)//It auto-closes the menu prior if the user is not in range and so on.
 	else
 		U.machine = null

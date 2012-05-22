@@ -90,6 +90,9 @@ datum/preferences
 		g_facial = 0
 		b_facial = 0
 
+		//Species
+		species = "Human"
+
 		//Skin color
 		s_tone = 0
 
@@ -99,7 +102,7 @@ datum/preferences
 		b_eyes = 0
 
 		//UI style
-		UI = UI_NEW
+		UI = UI_OLD
 
 		//Mob preview
 		icon/preview_icon = null
@@ -259,7 +262,7 @@ datum/preferences
 		dat += "<b>Age:</b> <a href='byond://?src=\ref[user];preferences=1;age=input'>[age]</a>"
 
 		dat += "<br>"
-		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[UI == UI_NEW ? "New" : "Old"]</b></a><br>"
+		//dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[UI == UI_NEW ? "New" : "Old"]</b></a><br>" -- UI Style no longer a thing
 		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
 		dat += "<b>Ghost ears:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_ears=input\"><b>[ghost_ears == 0 ? "Nearest Creatures" : "All Speech"]</b></a><br>"
 		dat += "<b>Ghost sight:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_sight=input\"><b>[ghost_sight == 0 ? "Nearest Creatures" : "All Emotes"]</b></a><br>"
@@ -281,6 +284,7 @@ datum/preferences
 		dat += "<hr><table><tr><td><b>Body</b> "
 		dat += "(<a href=\"byond://?src=\ref[user];preferences=1;s_tone=random;underwear=random;backbag_type=random;age=random;b_type=random;hair=random;h_style=random;facial=random;f_style=random;eyes=random\">&reg;</A>)" // Random look
 		dat += "<br>"
+		dat += "Species: <a href='byond://?src=\ref[user];preferences=1;species=input'>[species]</a><br>"
 		dat += "Blood Type: <a href='byond://?src=\ref[user];preferences=1;b_type=input'>[b_type]</a><br>"
 		dat += "Skin Tone: <a href='byond://?src=\ref[user];preferences=1;s_tone=input'>[-s_tone + 35]/220<br></a>"
 
@@ -696,6 +700,24 @@ datum/preferences
 				if("random")
 					b_type = pickweight ( list ("A+" = 31, "A-" = 7, "B+" = 8, "B-" = 2, "AB+" = 2, "AB-" = 1, "O+" = 40, "O-" = 9))
 
+		if(link_tags["species"])
+			switch(link_tags["species"])
+				if("input")
+					var/list/new_species = list("Human")
+					if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
+						if(is_alien_whitelisted(user, "Soghun")) //Check for Soghun and admins
+							new_species += "Soghun"
+						if(is_alien_whitelisted(user, "Tajaran")) //Check for Tajaran
+							new_species += "Tajaran"
+					else //Not using the whitelist? Aliens for everyone!
+						new_species += "Tajaran"
+						new_species += "Soghun"
+					species = input("Please select a species", "Character Generation", null) in new_species
+					h_style = "Bald" //Try not to carry face/head hair over.
+					f_style = "Shaved"
+					s_tone = 0 //Don't carry over skintone either.
+					hair_style = new/datum/sprite_accessory/hair/bald
+					facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
 
 		if(link_tags["hair"])
 			switch(link_tags["hair"])
@@ -735,14 +757,18 @@ datum/preferences
 				if("random")
 					randomize_skin_tone()
 				if("input")
-					var/new_tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
+					var/new_tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black) or 20-70 for Tajarans", "Character Generation")  as text
 					if(new_tone)
-						s_tone = max(min(round(text2num(new_tone)), 220), 1)
+						if(species == "Tajaran")
+							s_tone = max(min(round(text2num(new_tone)), 70), 20)
+						else
+							s_tone = max(min(round(text2num(new_tone)), 220), 1)
 						s_tone = -s_tone + 35
 
 		if(link_tags["h_style"])
+			if(species != "Human")
+				return
 			switch(link_tags["h_style"])
-
 				// New and improved hair selection code, by Doohl
 				if("random") // random hair selection
 
@@ -785,6 +811,8 @@ datum/preferences
 				src.ooccolor = ooccolor
 
 		if(link_tags["f_style"])
+			if(species != "Human") //Tajarans and Soghuns don't have hair stuff yet.
+				return
 			switch(link_tags["f_style"])
 
 				// see above for commentation. This is just a slight modification of the hair code for facial hairs
@@ -866,7 +894,7 @@ datum/preferences
 			be_random_name = !be_random_name
 
 		if(link_tags["flavor_text"])
-			var/msg = input(usr,"Set the flavor text in your 'examine' verb. Don't metagame!","Flavor Text",html_decode(flavor_text)) as message
+			var/msg = input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(flavor_text)) as message
 
 			if(msg != null)
 				msg = copytext(msg, 1, MAX_MESSAGE_LEN)
@@ -893,6 +921,8 @@ datum/preferences
 					slotname = savefile_getslots(user)[curslot]
 					loadsave(user)
 		if(link_tags["removeslot"])
+			if(alert("Are you sure you wish to delete this slot?",,"Yes","No")=="No")
+				return
 			var/slot = text2num(link_tags["removeslot"])
 			if(!slot)
 				return

@@ -189,6 +189,7 @@ TABLE AND RACK OBJECT INTERATIONS
 					"\red You hear the nauseating crunch of bone and gristle on solid metal.")
 				H.UpdateDamageIcon()
 				H.updatehealth()
+				H.update_clothing()
 				playsound(src.loc, 'tablehit1.ogg', 50, 1, -3)
 			return
 		G.affecting.loc = src.loc

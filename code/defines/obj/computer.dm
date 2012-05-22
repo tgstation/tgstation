@@ -127,8 +127,8 @@
 	desc = "Used to control blast doors."
 	icon_state = "lockdown"
 	circuit = "/obj/item/weapon/circuitboard/lockdown"
-	var/connected_doors[0][0]
-	var/department	//each department has a hardcoded list of possible door networks
+	var/list/connected_doors
+	var/department		//each department has a hardcoded list of possible door networks
 
 /obj/machinery/computer/crew
 	name = "Crew monitoring computer"

@@ -46,6 +46,12 @@
 	item_state = "glasses"
 	prescription = 1
 
+/obj/item/clothing/glasses/regular/hipster
+	name = "Prescription Glasses"
+	desc = "Made by Uncool. Co."
+	icon_state = "hipster_glasses"
+	item_state = "hipster_glasses"
+
 /obj/item/clothing/glasses/gglasses
 	name = "Green Glasses"
 	desc = "Forest green glasses, like the kind you'd wear when hatching a nasty scheme."
@@ -68,16 +74,6 @@
 	icon_state = "bigsunglasses"
 	item_state = "bigsunglasses"
 	protective_temperature = 1400
-
-//ultimate glasses
-/obj/item/clothing/glasses/hud/security/jensenshades
-	name = "Augmented shades"
-	desc = "Polarized bioneural eyewear, designed to augment your vision."
-	icon_state = "jensenshades"
-	item_state = "jensenshades"
-	protective_temperature = 1500
-	vision_flags = SEE_MOBS
-	invisa_view = 2
 
 /obj/item/clothing/glasses/sunglasses/sechud
 	name = "HUDSunglasses"

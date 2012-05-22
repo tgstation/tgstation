@@ -1,7 +1,7 @@
 abi79 - Game Master
 arcalane - Game Admin
 bobbehluvspropane - Game Admin
-cacophony - Game Admin
+cacophony - Retired Admin
 cajoes - Game Admin
 cib - Game Master
 compactninja - Game Master
@@ -15,6 +15,7 @@ iaryni - Game Master
 masterofapples - Game Admin
 megacaesar - Game Admin
 miniature - Game Master
+misterbook - Game Admin
 misterfox - Game Admin
 mloc - Game Master
 ridley4 - Game Admin

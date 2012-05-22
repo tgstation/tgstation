@@ -150,23 +150,23 @@
 	if(usr /*&& !usr.stat*/)
 		usr << "A control terminal for the area electrical systems."
 		if(stat & BROKEN)
-			usr << "Looks broken."
+			usr << "It looks broken."
 			return
 		if(opened)
 			if(has_electronics && terminal)
 				usr << "The cover is [opened==2?"removed":"open"] and the power cell is [ cell ? "installed" : "missing"]."
 			else if (!has_electronics && terminal)
-				usr << "There are some wires but no any electronics."
+				usr << "There are some wires but no electronics."
 			else if (has_electronics && !terminal)
-				usr << "Electronics installed but not wired."
+				usr << "There are electronics installed but they're not wired."
 			else /* if (!has_electronics && !terminal) */
-				usr << "There is no electronics nor connected wires."
+				usr << "There are no electronics or any connected wires."
 
 		else
 			if (stat & MAINT)
-				usr << "The cover is closed. Something is wrong with it, it doesn't work."
+				usr << "The cover is closed. It looks like it 's not working."
 			else if (malfhack)
-				usr << "The cover is broken. It may be hard to force it open."
+				usr << "The cover is broken. It looks like it'll be hard to force open."
 			else
 				usr << "The cover is closed."
 
@@ -213,7 +213,7 @@
 	if (istype(W, /obj/item/weapon/crowbar) && opened)
 		if (has_electronics==1)
 			if (terminal)
-				user << "\red Disconnect wires first."
+				user << "\red You need to cut the wires first."
 				return
 			playsound(src.loc, 'Crowbar.ogg', 50, 1)
 			user << "You try to remove the power control board..."
@@ -222,7 +222,7 @@
 				if ((stat & BROKEN) || malfhack)
 					user.visible_message(\
 						"\red [user.name] has broken the power control board inside [src.name]!",\
-						"You broke the charred power control board and remove the remains.",
+						"You break the charred power control board and remove the remains.",
 						"You hear a crack!")
 					//ticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
 				else
@@ -238,7 +238,7 @@
 			user.visible_message("\red [user] starts removing the broken APC cover with \the [W]!", \
 				"\red You start removing the broken APC cover!")
 			if(do_after(user, 50))
-				user.visible_message("\red The broken APC cover was removed with \the [W] by [user.name]!", \
+				user.visible_message("\red [user.name] removes the broken APC cover with \the [W]!", \
 					"\red You remove the broken APC cover with your [W.name]!")
 				opened = 2
 				cover_unscrewed = 0
@@ -254,24 +254,24 @@
 			updateicon()
 	else if	(istype(W, /obj/item/weapon/cell) && opened)	// trying to put a cell inside
 		if(cell)
-			user << "There is a power cell already installed."
+			user << "There's a power cell installed already."
 			return
 		else
 			if (stat & MAINT)
-				user << "\red There is no any connector for your power cell."
+				user << "\red There aren't any connectors for the power cell."
 				return
 			user.drop_item()
 			W.loc = src
 			cell = W
 			user.visible_message(\
-				"\red [user.name] has inserted the power cell to [src.name]!",\
+				"\red [user.name] has inserted the power cell into [src.name]!",\
 				"You insert the power cell.")
 			chargecount = 0
 			updateicon()
 	else if	(istype(W, /obj/item/weapon/screwdriver))	// haxing
 		if(opened)
 			if (cell)
-				user << "\red Remove the power cell first." //FUCK YOU, USEFUL MESSAGES ARE GOOD
+				user << "\red You need to remove the power cell first." //FUCK YOU, USEFUL MESSAGES ARE GOOD
 				return
 			else
 				if (has_electronics==1 && terminal)
@@ -285,7 +285,7 @@
 					playsound(src.loc, 'Screwdriver.ogg', 50, 1)
 					user << "You unfasten the electronics."
 				else /* has_electronics==0 */
-					user << "\red There is nothing to secure."
+					user << "\red There's nothing to secure here."
 					return
 				updateicon()
 		else if((stat & BROKEN) || malfhack)
@@ -293,12 +293,12 @@
 			user.visible_message("\red [user] starts unscrewing the broken APC cover with \the [W]!", \
 				"\red You start unscrewing the broken APC cover!")
 			if(do_after(user, 50))
-				user.visible_message("\red The broken APC cover was unscrewed with \the [W] by [user.name]!", \
+				user.visible_message("\red [user.name] unscrews the broken APC cover with \the [W]!", \
 					"\red You unscrew the broken APC cover with your [W.name]!")
 				cover_unscrewed = 1
 				updateicon()
 		else if(emagged)
-			user << "The interface is broken."
+			user << "The interface seems broken."
 		else
 			wiresexposed = !wiresexposed
 			user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
@@ -306,11 +306,11 @@
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
 		if(emagged)
-			user << "The interface is broken."
+			user << "The interface seems broken."
 		else if(opened)
-			user << "You must close the cover to swipe an ID card."
+			user << "You have to close the cover to swipe an ID card."
 		else if(wiresexposed)
-			user << "You must close the panel"
+			user << "You have to close the panel."
 		else if(stat & (BROKEN|MAINT))
 			user << "Nothing happens."
 		else
@@ -328,9 +328,9 @@
 			else
 				return
 		if(opened)
-			user << "You must close the cover to swipe an ID card."
+			user << "You have to close the cover to swipe an ID card."
 		else if(wiresexposed)
-			user << "You must close the panel first"
+			user << "You have to close the panel first"
 		else if(stat & (BROKEN|MAINT))
 			user << "Nothing happens."
 		else
@@ -345,7 +345,7 @@
 					user << "You fail to [ locked ? "unlock" : "lock"] the APC interface."
 	else if (istype(W, /obj/item/weapon/cable_coil) && !terminal && opened && has_electronics!=2)
 		if (src.loc:intact)
-			user << "\red There is no floor with the plating revealed in front of the APC."
+			user << "\red You have to remove the floor plating in front of the APC first."
 			return
 		var/obj/item/weapon/cable_coil/C = W
 		if(C.amount < 10)
@@ -369,7 +369,7 @@
 			terminal.connect_to_network()
 	else if (istype(W, /obj/item/weapon/wirecutters) && terminal && opened && has_electronics!=2)
 		if (src.loc:intact)
-			user << "\red You must remove the floor plating in front of the APC first."
+			user << "\red You have to remove the floor plating in front of the APC first."
 			return
 		user << "You begin to cut cables..."
 		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
@@ -381,11 +381,11 @@
 				return
 			new /obj/item/weapon/cable_coil(loc,10)
 			user.visible_message(\
-				"\red [user.name] cut cables and dismantled the power terminal.",\
-				"You cut cables and dismantle the power terminal.")
+				"\red [user.name] cuts the cables and dismantles the power terminal.",\
+				"You cut the cable and dismantle the power terminal.")
 			del(terminal)
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
-		user << "You try to insert the power control board into the frame..."
+		user << "You start to insert the power control board into the frame..."
 		playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 		if(do_after(user, 10))
 			has_electronics = 1
@@ -396,7 +396,7 @@
 		return
 	else if (istype(W, /obj/item/weapon/weldingtool) && W:welding && opened && has_electronics==0 && !terminal)
 		if (W:get_fuel() < 3)
-			user << "\blue You need more welding fuel to complete this task."
+			user << "\blue You need more welding fuel to do this."
 			return
 		user << "You start welding APC frame..."
 		if(W:remove_fuel(0,user))
@@ -407,13 +407,13 @@
 				if (emagged || malfhack || (stat & BROKEN) || opened==2)
 					new /obj/item/stack/sheet/metal(loc)
 					user.visible_message(\
-						"\red [src] has been cut apart by [user.name] with the weldingtool.",\
-						"You disassembled the broken APC frame.",\
+						"\red \The [src] has been cut apart by [user.name] with the welding tool.",\
+						"You disassemble the broken APC frame.",\
 						"\red You hear welding.")
 				else
 					new /obj/item/apc_frame(loc)
 					user.visible_message(\
-						"\red [src] has been cut from the wall by [user.name] with the weldingtool.",\
+						"\red \The [src] has been cut from the wall by [user.name] with the welding tool.",\
 						"You cut APC frame from the wall.",\
 						"\red You hear welding.")
 			W:welding = 1
@@ -424,19 +424,19 @@
 		if (opened==2)
 			opened = 1
 		user.visible_message(\
-			"\red [user.name] has replaced the damaged APC frontal panel with a new one.",\
-			"You replace the damaged APC frontal panel with a new one.")
+			"\red [user.name] replaces the damaged APC panel with a new one.",\
+			"You replace the damaged APC panel with a new one.")
 		del(W)
 		updateicon()
 	else if (istype(W, /obj/item/apc_frame) && opened && ((stat & BROKEN) || malfhack))
 		if (has_electronics)
-			user << "You cannot repair this APC until you remove the electronics still inside."
+			user << "You cannot repair this APC until you remove the electronics inside."
 			return
 		user << "You begin to replace the damaged APC frame..."
 		if(do_after(user, 50))
 			user.visible_message(\
-				"\red [user.name] has replaced the damaged APC frame with new one.",\
-				"You replace the damaged APC frame with new one.")
+				"\red [user.name] has replaced the damaged APC frame with a new one.",\
+				"You replace the damaged APC frame with a new one.")
 			del(W)
 			stat &= ~BROKEN
 			malfai = null
@@ -452,8 +452,8 @@
 				&& W.w_class >= 3.0 \
 				&& prob(20) )
 			opened = 2
-			user.visible_message("\red The APC cover was knocked down with the [W.name] by [user.name]!", \
-				"\red You knock down the APC cover with your [W.name]!", \
+			user.visible_message("\red The APC cover has been knocked down with \the [W.name] by [user.name]!", \
+				"\red You knock down the APC cover with \the [W.name]!", \
 				"You hear a loud bang!")
 			updateicon()
 		else
@@ -463,9 +463,9 @@
 				(istype(W, /obj/item/device/multitool) || \
 				istype(W, /obj/item/weapon/wirecutters)))
 				return src.attack_hand(user)
-			user.visible_message("\red The [src.name] has been hit with the [W.name] by [user.name]!", \
-				"\red You hit the [src.name] with your [W.name]!", \
-				"You hear bang")
+			user.visible_message("\red The [src.name] has been hit with \the [W.name] by [user.name]!", \
+				"\red You hit the [src.name] with \the [W.name]!", \
+				"You hear a banging sound.")
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
@@ -769,7 +769,7 @@
 				(istype(robot) && (robot in malfai.connected_robots))    \
 			)                                                            \
 		)
-			user << "\red \The [src] have AI control disabled!"
+			user << "\red \The [src] has it's AI control disabled!"
 			user << browse(null, "window=apc")
 			user.machine = null
 			return 0
@@ -782,10 +782,10 @@
 	if (istype(H))
 		if(H.getBrainLoss() >= 60)
 			for(var/mob/M in viewers(src, null))
-				M << "\red [H] stares cluelessly at [src] and drools."
+				M << "\red [H] stares cluelessly at \the [src] and drools."
 			return 0
 		else if(prob(H.getBrainLoss()))
-			user << "\red You momentarily forget how to use [src]."
+			user << "\red You momentarily forget how to use \the [src]."
 			return 0
 	return 1
 
@@ -873,7 +873,7 @@
 			if (malfai.malfhacking)
 				malfai << "You are already hacking an APC."
 				return
-			malfai << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
+			malfai << "Beginning override of APC systems. This will take some time, and you cannot perform other actions during the process."
 			malfai.malfhack = src
 			malfai.malfhacking = 1
 			sleep(600)
@@ -932,7 +932,7 @@
 		del(src.occupant)
 
 	else
-		src.occupant << "\red Primary core damaged, unable to return core processes."
+		src.occupant << "\red Primary core damaged, unable to return to core processes."
 		if(forced)
 			src.occupant.loc = src.loc
 			src.occupant.death()
@@ -958,7 +958,7 @@
 				s.set_up(3, 1, src)
 				s.start()
 				for(var/mob/M in viewers(src))
-					M.show_message("\red The [src.name] suddenly lets out a blast of smoke and some sparks!", 3, "\red You hear sizzling electronics.", 2)
+					M.show_message("\red The [src.name] suddenly lets out a blast of smoke and sparks!", 3, "\red You hear sizzling electronics.", 2)
 
 
 /obj/machinery/power/apc/surplus()

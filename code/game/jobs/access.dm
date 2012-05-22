@@ -487,8 +487,8 @@
 /proc/get_all_jobs()
 	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Chef", "Botanist", "Quartermaster", "Cargo Technician",
 				"Shaft Miner", "Janitor", "Librarian", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
-				"Atmospheric Technician", "Roboticist", "Chief Medical Officer", "Medical Doctor", "Geneticist",
-				"Research Director", "Scientist", "Chemist", "Head of Security", "Warden", "Detective", "Security Officer")
+				"Atmospheric Technician", "Roboticist", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist",
+				"Research Director", "Scientist", "Head of Security", "Warden", "Detective", "Security Officer")
 
 /proc/get_all_centcom_jobs()
 	return list("VIP Guest","Custodian","Thunderdome Overseer","Intel Officer","Medical Officer","Death Commando","Research Officer","BlackOps Commander","Supreme Commander")

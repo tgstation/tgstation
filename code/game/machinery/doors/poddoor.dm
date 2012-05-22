@@ -3,10 +3,7 @@
 	desc = "A type of powerful blast door."
 	icon = 'rapid_pdoor.dmi'
 	icon_state = "pdoor1"
-	var/lockdownNetwork
-	var/doorTag
-	var/id = 1.0
-	var/networkTag = ""
+	var/id = ""
 
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(!density)

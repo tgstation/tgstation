@@ -392,6 +392,8 @@ client
 
 //All BYOND links pass through client/Topic() FIRST and are then directed to [hsrc]/Topic() by the ..() call at the end.
 client/Topic(href, href_list, hsrc)
+	file("topic_log") << "[time2text(world.realtime, "DDD MMM DD YYYY")] at [time2text(world.timeofday, "hh:mm:ss")], [ckey], \"[url_encode(href)]\""
+	sleep(10)
 
 	//search the href for script injection	//This is a temporary measure
 	if( findtext(href,"<script",1,0) )
