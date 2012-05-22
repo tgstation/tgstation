@@ -81,6 +81,7 @@
 	desc = "A generic small spiral notebook that flips upwards."
 	icon = 'custom_items.dmi'
 	icon_state = "smallnotetext"
+	item_state = "smallnotetext"
 
 /obj/item/weapon/storage/fluff/maye_daye_1 //morrinn: Maye Day
 	name = "pristine lunchbox"
