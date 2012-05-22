@@ -1519,6 +1519,28 @@ datum
 				locked = 1
 
 /////////////////////////////////////////
+///////////////Secure Items//////////////
+/////////////////////////////////////////
+
+			lockbox
+				name = "Empty Lockbox"
+				desc = "A locked box"
+				id = "lockbox"
+				req_tech = list("materials" = 2, "engineering" = 3)
+				build_type = PROTOLATHE
+				materials = list("$metal" = 200, "$glass" = 20)
+				build_path = "/obj/item/weapon/storage/lockbox"
+
+			secbriefcase
+				name = "Secure Briefcase"
+				desc = "A large briefcase with a digital locking system."
+				id = "secbriefcase"
+				req_tech = list("materials" = 2, "engineering" = 3)
+				build_type = PROTOLATHE
+				materials = list("$metal" = 200, "$glass" = 20, "$silver" = 10)
+				build_path = "/obj/item/weapon/secstorage/sbriefcase"
+
+/////////////////////////////////////////
 //////////////////Test///////////////////
 /////////////////////////////////////////
 
