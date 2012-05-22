@@ -1276,6 +1276,7 @@ var/global/BSACooldown = 0
 					alert("This key is already on the whitelist!", null, null, null, null, null)
 					return
 			alien_whitelist += "[M.ckey] - Tajaran"
+			usr << "[M.ckey] added to Tajaran whitelist."
 		else
 			alert("You cannot perform this action. You must be of a higher administrative rank!")
 			return
@@ -1288,6 +1289,7 @@ var/global/BSACooldown = 0
 					alert("This key is already on the whitelist!", null, null, null, null, null)
 					return
 			alien_whitelist += "[M.ckey] - Soghun"
+			usr << "[M.ckey] added to Soghun whitelist."
 		else
 			alert("You cannot perform this action. You must be of a higher administrative rank!")
 			return
