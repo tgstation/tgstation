@@ -917,13 +917,14 @@
 					drip(bloodloss)
 				else if(blood_volume < 560 && blood_volume)
 					var/datum/reagent/blood/B = locate() in vessel //Grab some blood
-					if(!B.data["donor"] == src) //If it's not theirs, then we look for theirs
-						for(var/datum/reagent/blood/D in vessel)
-							if(D.data["donor"] == src)
-								B = D
-								break
-					//At this point, we dun care which blood we are adding to, as long as they get more blood.
-					B.volume = max(min(B.volume + 560/blood_volume,560), 0) //Less blood = More blood generated per tick
+					if(B.data)
+						if(!B.data["donor"] == src) //If it's not theirs, then we look for theirs
+							for(var/datum/reagent/blood/D in vessel)
+								if(D.data["donor"] == src)
+									B = D
+									break
+						//At this point, we dun care which blood we are adding to, as long as they get more blood.
+						B.volume = max(min(B.volume + 560/blood_volume,560), 0) //Less blood = More blood generated per tick
 				if(!blood_volume)
 					bloodloss = 0
 				else if(blood_volume > 448)
