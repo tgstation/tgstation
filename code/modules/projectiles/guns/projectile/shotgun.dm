@@ -52,6 +52,7 @@
 /obj/item/weapon/gun/projectile/shotgun/pump/combat
 	name = "combat shotgun"
 	icon_state = "cshotgun"
+	item_state = "cshotgun"
 	max_shells = 8
 	origin_tech = "combat=5;materials=2"
 	ammo_type = "/obj/item/ammo_casing/shotgun"
@@ -120,6 +121,7 @@
 				return
 			if(do_after(user, 30))	//SHIT IS STEALTHY EYYYYY
 				icon_state = "sawnshotgun"
+				item_state = "sawnshotgun"
 				w_class = 3.0
 				item_state = "gun"
 				flags &= ~ONBACK	//you can't sling it on your back
