@@ -11,7 +11,9 @@
 
 	var
 
-		var/datum/mind/first_host = null
+		var/list/datum/mind/first_hosts = list()
+		var/list/assigned_hosts = list()
+
 		const
 			prob_int_murder_target = 50 // intercept names the assassination target half the time
 			prob_right_murder_target_l = 25 // lower bound on probability of naming right assassination target
@@ -41,23 +43,34 @@
 	if(!..())
 		return 0
 
+	// for every 10 players, get 1 meme, and for each meme, get a host
+	// also make sure that there's at least one meme and one host
+	recommended_enemies = max(src.num_players() / 10 * 2, 2)
+
 	var/list/datum/mind/possible_memes = get_players_for_role(BE_MEME)
 
 	if(possible_memes.len < 2)
 		log_admin("MODE FAILURE: MEME. NOT ENOUGH MEME CANDIDATES.")
 		return 0 // not enough candidates for meme
 
-	var/datum/mind/meme = pick(possible_memes)
-	possible_memes.Remove(meme)
+	// for each 2 possible memes, add one meme and one host
+	while(possible_memes.len >= 2)
+		var/datum/mind/meme = pick(possible_memes)
+		possible_memes.Remove(meme)
 
-	first_host = pick(possible_memes)
+		var/datum/mind/first_host = pick(possible_memes)
+		possible_memes.Remove(first_host)
 
-	modePlayer += meme
-	modePlayer += first_host
-	memes += meme
+		modePlayer += meme
+		modePlayer += first_host
+		memes += meme
+		first_hosts += first_host
 
-	meme.assigned_role = "MODE" //So they aren't chosen for other jobs.
-	meme.special_role = "Meme"
+		// so that we can later know which host belongs to which meme
+		assigned_hosts[meme.key] = first_host
+
+		meme.assigned_role = "MODE" //So they aren't chosen for other jobs.
+		meme.special_role = "Meme"
 
 	return 1
 
@@ -72,6 +85,9 @@
 		var/mob/original = meme.current
 		meme.transfer_to(M)
 		M.clearHUD()
+
+		// get the host for this meme
+		var/datum/mind/first_host = assigned_hosts[meme.key]
 		M.enter_host(first_host.current)
 		forge_meme_objectives(meme, first_host)
 
@@ -79,7 +95,7 @@
 
 		break
 
-		// TODO: make it possible to have multiple memes with multiple hosts
+	log_admin("Created [memes.len] memes.")
 
 	spawn (rand(waittime_l, waittime_h))
 		send_intercept()
@@ -135,7 +151,6 @@
 		var/attuned = 0
 		if((meme.current) && istype(meme.current,/mob/living/parasite/meme))
 			world << "<B>The meme was [meme.current.key].</B>"
-			world << "<B>The first host was [src:first_host.current.key].</B>"
 			world << "<B>The last host was [meme.current:host.key].</B>"
 			world << "<B>Hosts attuned: [attuned]</B>"
 
