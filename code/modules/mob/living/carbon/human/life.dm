@@ -998,6 +998,10 @@
 						stat = 1
 
 					if (sleeping > 0)
+						if(stat == 0)
+							// show them a message so they know what's going on
+							src << "\blue You feel very drowsy.. Your eyelids become heavy..."
+
 						handle_dreams()
 						adjustHalLoss(-5)
 						blinded = 1

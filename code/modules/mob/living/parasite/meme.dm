@@ -529,6 +529,8 @@ mob/living/parasite/meme/verb/Possession()
 		host_mind.current.clearHUD()
 		host.update_clothing()
 
+		dummy << "\blue You feel very drowsy.. Your eyelids become heavy..."
+
 		log_admin("[meme_mind.key] has taken possession of [host]([host_mind.key])")
 		message_admins("[meme_mind.key] has taken possession of [host]([host_mind.key])")
 
@@ -569,6 +571,17 @@ mob/living/parasite/meme/verb/Show_Points()
 	set category = "Meme"
 
 	usr << "<b>Meme Points: [src.meme_points]/[MAXIMUM_MEME_POINTS]</b>"
+
+// Stat panel to show meme points, copypasted from alien
+/mob/living/parasite/meme/Stat()
+	..()
+
+	statpanel("Status")
+	if (client && client.holder)
+		stat(null, "([x], [y], [z])")
+
+	if (client && client.statpanel == "Status")
+		stat(null, "Meme Points: [src.meme_points]")
 
 // Game mode helpers, used for theft objectives
 // --------------------------------------------
