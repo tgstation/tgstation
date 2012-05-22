@@ -495,6 +495,7 @@
 	set category = "Admin"
 	if(holder)
 		holder.check_antagonists()
+		log_admin("[key_name(usr)] checked antagonists.")	//for tsar~
 	feedback_add_details("admin_verb","CHA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
