@@ -45,77 +45,77 @@ var/const
 
 
 datum/preferences
-	var
-		real_name
-		be_random_name = 0
-		gender = MALE
-		age = 30.0
-		b_type = "A+"
+	var/real_name
+	var/be_random_name = 0
+	var/gender = MALE
+	var/age = 30.0
+	var/b_type = "A+"
 
 		//Special role selection
-		be_special = 0
+	var/be_special = 0
 		//Play admin midis
-		midis = 1
+	var/midis = 1
 		//Toggle ghost ears
-		ghost_ears = 1
-		ghost_sight = 1
+	var/ghost_ears = 1
+	var/ghost_sight = 1
 		//Saved changlog filesize to detect if there was a change
-		lastchangelog = 0
+	var/lastchangelog = 0
 
 		//Just like it sounds
-		ooccolor = "#b82e00"
-		underwear = 1
-		list/underwear_m = list("White", "Grey", "Green", "Blue", "Black", "None") //Curse whoever made male/female underwear diffrent colours
-		list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "None")
-		backbag = 2
-		list/backbaglist = list("Nothing", "Backpack", "Satchel")
+	var/ooccolor = "#b82e00"
+	var/underwear = 1
+	var/list/underwear_m = list("White", "Grey", "Green", "Blue", "Black", "None") //Curse whoever made male/female underwear diffrent colours
+	var/list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "None")
+	var/backbag = 2
+	var/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 
 		//Hair type
-		h_style = "Short Hair"
-		datum/sprite_accessory/hair/hair_style
+	var/h_style = "Short Hair"
+	var/datum/sprite_accessory/hair/hair_style
 		//Hair color
-		r_hair = 0
-		g_hair = 0
-		b_hair = 0
+	var/r_hair = 0
+	var/g_hair = 0
+	var/b_hair = 0
 
 		//Face hair type
-		f_style = "Shaved"
-		datum/sprite_accessory/facial_hair/facial_hair_style
+	var/f_style = "Shaved"
+	var/datum/sprite_accessory/facial_hair/facial_hair_style
 		//Face hair color
-		r_facial = 0
-		g_facial = 0
-		b_facial = 0
+	var/r_facial = 0
+	var/g_facial = 0
+	var/b_facial = 0
 
 		//Skin color
-		s_tone = 0
+	var/s_tone = 0
 
 		//Eye color
-		r_eyes = 0
-		g_eyes = 0
-		b_eyes = 0
+	var/r_eyes = 0
+	var/g_eyes = 0
+	var/b_eyes = 0
 
 		//UI style
-		UI = UI_OLD
+		//UI = UI_OLD
+	var/UI_style = "Midnight"
 
 		//Mob preview
-		icon/preview_icon_front = null
-		icon/preview_icon_side = null
+	var/icon/preview_icon_front = null
+	var/icon/preview_icon_side = null
 
 		//Jobs, uses bitflags
-		job_civilian_high = 0
-		job_civilian_med = 0
-		job_civilian_low = 0
+	var/job_civilian_high = 0
+	var/job_civilian_med = 0
+	var/job_civilian_low = 0
 
-		job_medsci_high = 0
-		job_medsci_med = 0
-		job_medsci_low = 0
+	var/job_medsci_high = 0
+	var/job_medsci_med = 0
+	var/job_medsci_low = 0
 
-		job_engsec_high = 0
-		job_engsec_med = 0
-		job_engsec_low = 0
+	var/job_engsec_high = 0
+	var/job_engsec_med = 0
+	var/job_engsec_low = 0
 
 		// OOC Metadata:
-		metadata = ""
+	var/metadata = ""
 
 
 	New()
@@ -140,7 +140,7 @@ datum/preferences
 		dat += "<b>Age:</b> <a href='byond://?src=\ref[user];preferences=1;age=input'>[age]</a>"
 
 		dat += "<br>"
-		//dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[UI == UI_NEW ? "New" : "Old"]</b></a><br>" -- UI Style no longer a thing
+		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[UI_style]</b></a><br>"
 		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
 		dat += "<b>Ghost ears:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_ears=input\"><b>[ghost_ears == 0 ? "Nearest Creatures" : "All Speech"]</b></a><br>"
 		dat += "<b>Ghost sight:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_sight=input\"><b>[ghost_sight == 0 ? "Nearest Creatures" : "All Emotes"]</b></a><br>"
@@ -577,10 +577,15 @@ datum/preferences
 				gender = MALE
 
 		if(link_tags["UI"])
-			if(UI == UI_OLD)
-				UI = UI_NEW
-			else
-				UI = UI_OLD
+			switch(UI_style)
+				if("Midnight")
+					UI_style = "Orange"
+				if("Orange")
+					UI_style = "old"
+				if("old")
+					UI_style = "Midnight"
+				else
+					UI_style = "Midnight"
 
 		if(link_tags["midis"])
 			midis = !midis
@@ -662,7 +667,8 @@ datum/preferences
 			b_eyes = 0.0
 			s_tone = 0.0
 			b_type = "A+"
-			UI = UI_OLD
+			//UI = UI_OLD
+			UI_style = "Midnight"
 			midis = 1
 			ghost_ears = 1
 
@@ -695,11 +701,15 @@ datum/preferences
 		character.h_style = h_style
 		character.f_style = f_style
 
-		switch (UI)
-			if(UI_OLD)
+		switch(UI_style)
+			if("Midnight")
+				character.UI = 'screen1_Midnight.dmi'
+			if("Orange")
+				character.UI = 'screen1_Orange.dmi'
+			if("old")
 				character.UI = 'screen1_old.dmi'
-			if(UI_NEW)
-				character.UI = 'screen1.dmi'
+			else
+				character.UI = 'screen1_Midnight.dmi'
 
 		character.hair_style = hair_style
 		character.facial_hair_style = facial_hair_style

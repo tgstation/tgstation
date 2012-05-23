@@ -259,7 +259,7 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 	var/update_icon = 1 // Set to 0 if you want that the mob's icon doesn't update when it moves -- Skie
 						// This can be used if you want to change the icon on the fly and want it to stay
 
-	var/UI = 'screen1_old.dmi' // For changing the UI from preferences
+	var/UI = 'screen1_Midnight.dmi' // For changing the UI from preferences
 
 //	var/obj/effect/organstructure/organStructure = null //for dem organs
 

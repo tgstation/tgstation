@@ -1,6 +1,6 @@
 /obj/hud/proc/human_hud(var/ui_style='screen1_old.dmi')
 
-	ui_style='screen1_old.dmi' //Overriding the parameter. Only this UI style is acceptable with the 'sleek' layout.
+	//ui_style='screen1_old.dmi' //Overriding the parameter. Only this UI style is acceptable with the 'sleek' layout.
 
 	src.adding = list(  )
 	src.other = list(  )
@@ -522,7 +522,7 @@
 	mymob.oxygen.screen_loc = ui_oxygen
 
 	mymob.pressure = new /obj/screen( null )
-	mymob.pressure.icon = 'screen1_old.dmi'
+	mymob.pressure.icon = ui_style
 	mymob.pressure.icon_state = "pressure0"
 	mymob.pressure.name = "pressure"
 	mymob.pressure.screen_loc = ui_pressure
