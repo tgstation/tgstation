@@ -92,7 +92,7 @@
 		// if picking hosts works with this method, remove the method above
 		if(!first_host)
 			first_host = pick(first_hosts)
-			first_hosts.remove(first_host)
+			first_hosts.Remove(first_host)
 		M.enter_host(first_host.current)
 		forge_meme_objectives(meme, first_host)
 
