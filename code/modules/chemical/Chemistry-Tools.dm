@@ -3608,7 +3608,7 @@
 					name = "Erika Surprise"
 					desc = "The surprise is, it's green!"
 				if("driestmartini")
-					icon_state = "driestmartini"
+					icon_state = "driestmartiniglass"
 					name = "Driest Martini"
 					desc = "Only for the experienced. You think you see sand floating in the glass."
 				else
