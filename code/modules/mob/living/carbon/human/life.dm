@@ -1183,8 +1183,8 @@
 					see_in_dark = 2
 
 				var/seer = 0
-				for(var/obj/effect/rune/R in world)
-					if(loc==R.loc && R.word1==wordsee && R.word2==wordhell && R.word3==wordjoin)
+				for(var/obj/effect/rune/R in loc)
+					if(R.word1==wordsee && R.word2==wordhell && R.word3==wordjoin)
 						seer = 1
 				if(!seer)
 					see_invisible = 0
