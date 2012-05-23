@@ -149,6 +149,11 @@
 		fixblood()
 
 	..()
+
+	spawn(5) // Failsafe for.. weirdness.
+		update_clothing()
+		update_body()
+
 	/*var/known_languages = list()
 	known_languages.Add("english")*/
 
