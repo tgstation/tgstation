@@ -1047,7 +1047,7 @@
 			var/blood_max = 0
 			for(var/name in organs)
 				var/datum/organ/external/temp = organs[name]
-				if(!temp.bleeding || temp.robot) //THAT WAS DUMB.
+				if(!temp.bleeding || temp.robot)
 					continue
 				var/lose_blood = temp.total_wound_bleeding()
 				if(lose_blood)
