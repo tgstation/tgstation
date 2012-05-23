@@ -8,3 +8,5 @@ searif - Soghun
 searif - Tajaran
 galenus - Soghun
 botanistpower - Tajaran
+nevis - Tajaran
+sniperyeti - Tajaran
