@@ -37,7 +37,7 @@ MEDICAL
 			if(!istype(affecting, /datum/organ/external) || affecting:burn_dam <= 0)
 				affecting = M:get_organ("head")
 		if(affecting.destroyed && !affecting.gauzed)
-			user.visible_message("\red You do your best to stop the bleeding from [M]'s stump.", "\red [user] does [user.gender == MALE? "his" : "her"] best to stem [M]'s bleeding from [M.gender == MALE? "his" : "her"] stump.", "\red You hear something like gauze being ripped.")
+			user.visible_message("\red [user] does [user.gender == MALE? "his" : "her"] best to stem [M]'s bleeding from [M.gender == MALE? "his" : "her"] stump.", "\red You do your best to stop the bleeding from [M]'s stump.", "\red You hear something like gauze being ripped.")
 			affecting.gauzed = 1
 			use(1)
 			return

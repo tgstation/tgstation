@@ -12,6 +12,9 @@ obj/machinery/recharger
 		obj/item/weapon/melee/baton/charging2 = null
 
 	attackby(obj/item/weapon/G as obj, mob/user as mob)
+		if(issilicon(user))
+			return
+
 		if (istype(G, /obj/item/weapon/gun/energy))
 			if (src.charging || src.charging2)
 				return
