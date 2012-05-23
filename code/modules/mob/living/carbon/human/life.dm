@@ -915,6 +915,7 @@
 				var/blood_volume = round(vessel.get_reagent_amount("blood"))
 				if(bloodloss)
 					drip(bloodloss)
+/*   //Causing too many runtimes, sorry Sky.
 				else if(blood_volume < 560 && blood_volume)
 					var/datum/reagent/blood/B = locate() in vessel //Grab some blood
 					if(!B.data["donor"] == src) //If it's not theirs, then we look for theirs
@@ -924,6 +925,7 @@
 								break
 					//At this point, we dun care which blood we are adding to, as long as they get more blood.
 					B.volume = max(min(B.volume + 560/blood_volume,560), 0) //Less blood = More blood generated per tick
+*/
 				if(!blood_volume)
 					bloodloss = 0
 				else if(blood_volume > 448)
@@ -959,18 +961,6 @@
 
 			if(getOxyLoss() > 50) Paralyse(3)
 
-			if(sleeping)
-				adjustHalLoss(-5)
-				if(paralysis <= 0)
-					Paralyse(2)
-				if (prob(10) && health && !hal_crit) spawn(0) emote("snore")
-				if(!src.sleeping_willingly)
-					src.sleeping--
-
-			if(resting)
-				if(weakened <= 0)
-					Weaken(2)
-
 			if(health < config.health_threshold_dead || brain_op_stage == 4.0)
 				death()
 			else if(health < config.health_threshold_crit)
@@ -990,7 +980,6 @@
 					if (stunned > 0)
 						AdjustStunned(-1)
 						stat = 0
-
 					if (weakened > 0)
 						AdjustWeakened(-1)
 						lying = 1
@@ -1282,7 +1271,9 @@
 						nutrition_icon.icon_state = "nutrition3"
 					else
 						nutrition_icon.icon_state = "nutrition4"
+
 			if (pressure)
+
 				if(istype(wear_suit, /obj/item/clothing/suit/space)||istype(wear_suit, /obj/item/clothing/suit/armor/captain))
 					pressure.icon_state = "pressure0"
 

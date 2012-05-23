@@ -614,9 +614,14 @@
 	set category = "IC"
 
 	if(usr.sleeping && usr.sleeping_willingly)
+		usr << "\blue You start to wake up..."
 		usr.sleeping = 0
 		usr.sleeping_willingly = 0
+	else if(usr.sleeping)
+		usr << "\red You feel unable to wake up..."
+		return
 	else if(!usr.sleeping)
+		usr << "\blue You start to fall asleep..."
 		usr.sleeping = 20 //Short nap
 		usr.sleeping_willingly = 1
 
