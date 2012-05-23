@@ -88,12 +88,15 @@
 
 		// get the host for this meme
 		var/datum/mind/first_host = assigned_hosts[meme.key]
+		// this is a redundant check, but I don't think the above works..
+		// if picking hosts works with this method, remove the method above
+		if(!first_host)
+			first_host = pick(first_hosts)
+			first_hosts.Remove(first_host)
 		M.enter_host(first_host.current)
 		forge_meme_objectives(meme, first_host)
 
 		del original
-
-		break
 
 	log_admin("Created [memes.len] memes.")
 
