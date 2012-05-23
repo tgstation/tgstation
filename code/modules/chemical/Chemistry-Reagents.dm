@@ -1818,9 +1818,9 @@ datum
 						M:confused += 2
 						M:drowsyness += 2
 					if(2 to 50)
-						M:sleeping += 1
+						M:sleeping += 5
 					if(51 to INFINITY)
-						M:sleeping += 1
+						M:sleeping += 5
 						M:adjustToxLoss(2)
 				..()
 				return
