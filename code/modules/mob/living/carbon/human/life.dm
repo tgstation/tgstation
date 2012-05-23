@@ -468,8 +468,6 @@
 				if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
 					internal = null
 				if(internal)
-					//if (internals) //should be unnecessary, uncomment if it isn't. -raftaf0
-					//	internals.icon_state = "internal1"
 					return internal.remove_air_volume(volume_needed)
 				else if(internals)
 					internals.icon_state = "internal0"
@@ -482,11 +480,6 @@
 			else
 				lying = 0
 				canmove = 1
-	/*			for(var/obj/effect/stop/S in geaslist)
-					if(S.victim == src)
-						geaslist -= S
-						del(S)
-*/
 
 		handle_breath(datum/gas_mixture/breath)
 			if(nodamage || (mutations & mNobreath))
@@ -966,11 +959,8 @@
 						toxloss = 100
 				else if(blood_volume <= 122)
 					death()
-					//src.unlock_medal("We're all sold out on blood", 0, "You bled to death..", "easy")
 
 			updatehealth()
-
-		//	health = 100 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 
 			if(getOxyLoss() > 50) Paralyse(3)
 
@@ -1454,17 +1444,27 @@
 							if(!M.nodamage)
 								M.adjustBruteLoss(5)
 							nutrition += 10
-/*  One day.
 			if(nutrition <= 100)
-				if (prob (1))
-					src << "\red Your stomach rumbles."
-				if(nutrition <= 50)
-					if (prob (25))
-						bruteloss++
-					if (prob (5))
-						src << "You feel very weak."
-						weakened += rand(2, 3)
-*/
+				if (prob(1))
+					var/list/funny_comments = list(
+						"You feel hungry..",
+						"You feel thirsty..",
+						"Perhaps you should grab a bite to eat..",
+						"Your stomach rumbles..",
+						"Perhaps you should have a drink...",
+						"You feel empty inside..",
+						"You feel a bit peckish..",
+						"Whatever you last ate didn't do much to fill you up...",
+						"Hmm, some pizza would be nice..",
+						"You feel the darkness consuming you from within. You think you should find some food to soothe the devil inside you.",
+						"Are you on hunger strike or something?",
+						"You feel a void forming in yourself..",
+						"Your stomach files a complaint with your brain!",
+						"You feel a nagging sense of emptiness.."
+					)
+
+					src << "\blue [pick(funny_comments)]"
+
 		handle_changeling()
 			if (mind)
 				if (mind.special_role == "Changeling" && changeling)
@@ -1510,59 +1510,3 @@
 			src << "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")
 		else if(shock_stage == 80)
 			src << "<font color='red'><b>"+pick("You see a light at the end of the tunnel!", "You feel like you could die any moment now.", "You're about to lose consciousness.")
-
-/*
-			// Commented out so hunger system won't be such shock
-			// Damage and effect from not eating
-
-*/
-/*
-snippets
-
-	if (mach)
-		if (machine)
-			mach.icon_state = "mach1"
-		else
-			mach.icon_state = null
-
-	if (!m_flag)
-		moved_recently = 0
-	m_flag = null
-
-
-
-		if ((istype(loc, /turf/space) && !( locate(/obj/movable, loc) )))
-			var/layers = 20
-			// ******* Check
-			if (((istype(head, /obj/item/clothing/head) && head.flags & 4) || (istype(wear_mask, /obj/item/clothing/mask) && (!( wear_mask.flags & 4 ) && wear_mask.flags & 8))))
-				layers -= 5
-			if (istype(w_uniform, /obj/item/clothing/under))
-				layers -= 5
-			if ((istype(wear_suit, /obj/item/clothing/suit) && wear_suit.flags & 8))
-				layers -= 10
-			if (layers > oxcheck)
-				oxcheck = layers
-
-
-				if(bodytemperature < 282.591 && (!firemut))
-					if(bodytemperature < 250)
-						adjustFireLoss(4)
-						updatehealth()
-						if(paralysis <= 2)	paralysis += 2
-					else if(prob(1) && !paralysis)
-						if(paralysis <= 5)	paralysis += 5
-						emote("collapse")
-						src << "\red You collapse from the cold!"
-				if(bodytemperature > 327.444  && (!firemut))
-					if(bodytemperature > 345.444)
-						if(!eye_blurry)	src << "\red The heat blurs your vision!"
-						eye_blurry = max(4, eye_blurry)
-						if(prob(3))	adjustFireLoss(rand(1,2))
-					else if(prob(3) && !paralysis)
-						paralysis += 2
-						emote("collapse")
-						src << "\red You collapse from heat exaustion!"
-				plcheck = t_plasma
-				oxcheck = t_oxygen
-				G.turf_add(T, G.total_moles)
-*/
