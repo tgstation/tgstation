@@ -12,6 +12,7 @@
 
 
 //Lower center, persistant menu
+#define ui_sstore1 "3:10,1:5"
 #define ui_id "4:12,1:5"
 #define ui_belt "5:14,1:5"
 #define ui_back "6:14,1:5"
@@ -42,35 +43,37 @@
 #define ui_zonesel "14:28,1:5"
 
 
-//Middle right (damage indicators)
-#define ui_pressure "14:28,6:13"
-#define ui_oxygen "14:28,7:15"
-#define ui_fire "14:28,8:17"
-#define ui_toxin "14:28,9:19"
+//Upper-middle right (damage indicators)
+#define ui_toxin "14:28,13:27"
+#define ui_fire "14:28,12:25"
+#define ui_oxygen "14:28,11:23"
+#define ui_pressure "14:28,10:21"
 
+//Middle right (status indicators)
+#define ui_nutrition "14:28,5:11"
+#define ui_temp "14:28,6:13"
+#define ui_health "14:28,7:15"
+#define ui_internal "14:28,8:17"
+
+									//borgs
 #define ui_borg_health "14:28,6:13" //borgs have the health display where humans have the pressure damage indicator.
 #define ui_alien_health "14:28,6:13" //aliens have the health display where humans have the pressure damage indicator.
 
 
-//Upper right (status indicators)
-#define ui_nutrition "11:22,15:-5"
-#define ui_internal "12:24,15:-5"
-#define ui_health "13:26,15:-5"
-#define ui_temp "14:28,15:-5"
-
-
 //Pop-up inventory
-#define ui_shoes "1:6,2:7"
-#define ui_iclothing "2:8,2:7"
+#define ui_shoes "2:8,1:5"
+
+#define ui_iclothing "1:6,2:7"
+#define ui_oclothing "2:8,2:7"
 #define ui_gloves "3:10,2:7"
 
-#define ui_sstore1 "1:6,3:9"
-#define ui_oclothing "2:8,3:9"
-#define ui_glasses "3:10,3:9"
+#define ui_glasses "1:6,3:9"
+#define ui_mask "2:8,3:9"
+#define ui_ears "3:10,3:9"
 
-#define ui_mask "1:6,4:11"
 #define ui_head "2:8,4:11"
-#define ui_ears "3:10,4:11"
+
+
 
 
 //Intent small buttons
@@ -111,7 +114,7 @@ obj/hud/New(var/type = 0)
 		if(mymob:shoes) mymob:shoes:screen_loc = ui_shoes
 		if(mymob:gloves) mymob:gloves:screen_loc = ui_gloves
 		if(mymob:ears) mymob:ears:screen_loc = ui_ears
-		if(mymob:s_store) mymob:s_store:screen_loc = ui_sstore1
+		//if(mymob:s_store) mymob:s_store:screen_loc = ui_sstore1
 		if(mymob:glasses) mymob:glasses:screen_loc = ui_glasses
 		if(mymob:w_uniform) mymob:w_uniform:screen_loc = ui_iclothing
 		if(mymob:wear_suit) mymob:wear_suit:screen_loc = ui_oclothing
@@ -122,7 +125,7 @@ obj/hud/New(var/type = 0)
 			if(mymob:shoes) mymob:shoes:screen_loc = null
 			if(mymob:gloves) mymob:gloves:screen_loc = null
 			if(mymob:ears) mymob:ears:screen_loc = null
-			if(mymob:s_store) mymob:s_store:screen_loc = null
+			//if(mymob:s_store) mymob:s_store:screen_loc = null
 			if(mymob:glasses) mymob:glasses:screen_loc = null
 			if(mymob:w_uniform) mymob:w_uniform:screen_loc = null
 			if(mymob:wear_suit) mymob:wear_suit:screen_loc = null

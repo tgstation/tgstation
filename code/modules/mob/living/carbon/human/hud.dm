@@ -11,6 +11,7 @@
 	src.vimpaired = list(  )
 	src.darkMask = list(  )
 	src.intent_small_hud_objects = list(  )
+	src.hotkeybuttons = list(  ) //These can be disabled for hotkey usersx
 
 	src.g_dither = new src.h_type( src )
 	src.g_dither.screen_loc = "WEST,SOUTH to EAST,NORTH"
@@ -148,7 +149,7 @@
 	using.icon_state = "act_drop"
 	using.screen_loc = ui_dropbutton
 	using.layer = 19
-	src.adding += using
+	src.hotkeybuttons += using
 
 	using = new src.h_type( src )
 	using.name = "i_clothing"
@@ -269,7 +270,7 @@
 	using.icon_state = "belt"
 	using.screen_loc = ui_sstore1
 	using.layer = 19
-	src.other += using
+	src.adding += using
 
 /*
 	using = new src.h_type( src )
@@ -512,6 +513,7 @@
 	mymob.throw_icon.icon_state = "act_throw_off"
 	mymob.throw_icon.name = "throw"
 	mymob.throw_icon.screen_loc = ui_throw
+	src.hotkeybuttons += mymob.throw_icon
 
 	mymob.oxygen = new /obj/screen( null )
 	mymob.oxygen.icon = ui_style
@@ -579,6 +581,7 @@
 	mymob.pullin.icon_state = "pull0"
 	mymob.pullin.name = "pull"
 	mymob.pullin.screen_loc = ui_pull
+	src.hotkeybuttons += mymob.pullin
 
 	mymob.blind = new /obj/screen( null )
 	mymob.blind.icon = ui_style
@@ -711,7 +714,7 @@
 
 	//, mymob.i_select, mymob.m_select
 	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
-	mymob.client.screen += src.adding + src.other
+	mymob.client.screen += src.adding + src.other + src.hotkeybuttons
 
 	//if(istype(mymob,/mob/living/carbon/monkey)) mymob.client.screen += src.mon_blo
 
@@ -748,3 +751,17 @@
 	using.layer = 19
 	src.adding += using
 	*/
+
+/mob/living/carbon/human/verb/toggle_hotkey_verbs()
+	set category = "OOC"
+	set name = "Toggle hotkey buttons"
+	set desc = "This disables or enables the user interface buttons which can be used with hotkeys."
+
+	if(hud_used.hotkey_ui_hidden)
+		client.screen += src.hud_used.hotkeybuttons
+		src.hud_used.hotkey_ui_hidden = 0
+	else
+		client.screen -= src.hud_used.hotkeybuttons
+		src.hud_used.hotkey_ui_hidden = 1
+
+

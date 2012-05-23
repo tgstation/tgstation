@@ -266,6 +266,8 @@
 	var/obj/screen/l_hand_hud_object = null
 	var/list/obj/screen/intent_small_hud_objects = null
 	var/show_intent_icons = 0
+	var/list/obj/screen/hotkeybuttons = null
+	var/hotkey_ui_hidden = 0 //This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
 	var/h_type = /obj/screen		//this is like...the most pointless thing ever. Use a god damn define!
 
