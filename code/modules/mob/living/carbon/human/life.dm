@@ -1214,18 +1214,6 @@
 				if (!druggy)
 					see_invisible = 0
 
-/*
-			if (istype(glasses, /obj/item/clothing/glasses))
-				sight = glasses.vision_flags
-				see_in_dark = 2 + glasses.darkness_view
-				see_invisible = invisa_view
-
-					if(istype(glasses, /obj/item/clothing/glasses/hud))
-						if(client)
-							glasses:process_hud(src)
-*/
-//Should finish this up later
-
 
 
 			if (src.sleep && !hal_crit)
@@ -1237,23 +1225,29 @@
 
 			if (healths)
 				if (stat != 2)
-					switch(health - halloss)
-						if(100 to INFINITY)
-							healths.icon_state = "health0"
-						if(80 to 100)
-							healths.icon_state = "health1"
-						if(60 to 80)
-							healths.icon_state = "health2"
-						if(40 to 60)
-							healths.icon_state = "health3"
-						if(20 to 40)
-							healths.icon_state = "health4"
-						if(0 to 20)
-							healths.icon_state = "health5"
-						else
-							healths.icon_state = "health6"
+					// if the mob is not in crit, do a switch
+					if(health - halloss >= config.health_threshold_crit)
+						switch(health - halloss)
+							if(100 to INFINITY)
+								healths.icon_state = "health0"
+							if(80 to 100)
+								healths.icon_state = "health1"
+							if(60 to 80)
+								healths.icon_state = "health2"
+							if(40 to 60)
+								healths.icon_state = "health3"
+							if(20 to 40)
+								healths.icon_state = "health4"
+							else
+								healths.icon_state = "health5"
+					// if he's in crit, display crit icon
+					else
+						healths.icon_state = "health6"
+
+				// if he's dead, display death icon
 				else
 					healths.icon_state = "health7"
+
 				if(hal_screwyhud == 1)
 					healths.icon_state = "health6"
 				if(hal_screwyhud == 2)
