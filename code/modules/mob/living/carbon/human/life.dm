@@ -447,6 +447,19 @@
 			if(breath)
 				loc.assume_air(breath)
 
+		vomit()
+			// Make the human vomit on the floor
+			for(var/mob/O in viewers(world.view, src))
+				O.show_message(text("<b>\red [] throws up!</b>", src), 1)
+			playsound(src.loc, 'splat.ogg', 50, 1)
+
+			var/turf/location = loc
+			if (istype(location, /turf/simulated))
+				location.add_vomit_floor(src, 1)
+
+			nutrition -= 20
+			adjustToxLoss(-3)
+
 
 		get_breath_from_internal(volume_needed)
 			if(internal)
@@ -1088,10 +1101,13 @@
 
 			if(!client)	return 0
 
+			// Apparently deletes all the hud_ icons
 			for(var/image/hud in client.images)
 				if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
 					del(hud)
 
+			// Handle special vision stuff, such as thermals or ghost vision
+			// -------------------------------------------------------------
 			if (stat == 2 || mutations & XRAY)
 				sight |= SEE_TURFS
 				sight |= SEE_MOBS
@@ -1131,11 +1147,11 @@
 						sight |= SEE_TURFS
 						if(!druggy)
 							see_invisible = 0
-
 			else if(istype(glasses, /obj/item/clothing/glasses/meson))
 				sight |= SEE_TURFS
 				if(!druggy)
 					see_invisible = 0
+
 			else if(istype(glasses, /obj/item/clothing/glasses/night))
 				see_in_dark = 5
 				if(!druggy)
@@ -1185,14 +1201,12 @@
 
 
 
-
-
-
-
-
-
 		/* HUD shit goes here, as long as it doesn't modify src.sight flags */
 		// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
+
+
+			// Special on-map HUDs like the medical HUD
+			// ----------------------------------------
 			if(istype(glasses, /obj/item/clothing/glasses/hud/health))
 				if(client)
 					glasses:process_hud(src)
@@ -1214,15 +1228,20 @@
 				if (!druggy)
 					see_invisible = 0
 
+			// ======================================================
+			// HUD icon updates(sleep, rest, health, nutrition, etc.)
+			// ======================================================
 
-
+			// Update the sleep icon
+			// -----------------------
 			if (src.sleep && !hal_crit)
 				src.sleep.icon_state = text("sleep[]", src.sleeping > 0 ? 1 : 0)
 				src.sleep.overlays = null
 				if(src.sleeping_willingly)
 					src.sleep.overlays += icon(src.sleep.icon, "sleep_willing")
-			if (rest) rest.icon_state = text("rest[]", resting)
 
+			// Update the health display
+			// -------------------------
 			if (healths)
 				if (stat != 2)
 					// if the mob is not in crit, do a switch
@@ -1253,6 +1272,8 @@
 				if(hal_screwyhud == 2)
 					healths.icon_state = "health7"
 
+			// Update the nutrition icon
+			// -------------------------
 			if (nutrition_icon)
 				switch(nutrition)
 					if(450 to INFINITY)
@@ -1266,6 +1287,8 @@
 					else
 						nutrition_icon.icon_state = "nutrition4"
 
+			// Update the icon displaying whether we're on internals
+			// -----------------------------------------------------
 			if (pressure)
 
 				if(istype(wear_suit, /obj/item/clothing/suit/space)||istype(wear_suit, /obj/item/clothing/suit/armor/captain))
@@ -1286,17 +1309,25 @@
 							else
 								pressure.icon_state = "pressure-2"
 
+			// Update the icon which displays whether we're pulling something
+			// --------------------------------------------------------------
 			if(pullin)	pullin.icon_state = "pull[pulling ? 1 : 0]"
 
+			// Update the rest icon
+			// --------------------
 			if(rest)	rest.icon_state = "rest[(resting || lying || sleeping) ? 1 : 0]"
 
-
+			// Update the air alarms
+			// ---------------------
 			if (toxin || hal_screwyhud == 4)	toxin.icon_state = "tox[toxins_alert ? 1 : 0]"
 			if (oxygen || hal_screwyhud == 3)	oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
-			if (fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"													//NOTE: INVESTIGATE NUKE BURNINGS
+			if (fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"
+			//NOTE: INVESTIGATE NUKE BURNINGS
 			//NOTE: the alerts dont reset when youre out of danger. dont blame me,
 			//blame the person who coded them. Temporary fix added.
 
+			// Update body temperature display
+			// -------------------------------
 			if(bodytemp)
 				switch(bodytemperature) //310.055 optimal body temp
 					if(370 to INFINITY)
@@ -1318,6 +1349,9 @@
 					else
 						bodytemp.icon_state = "temp-4"
 
+			// ====================================================
+			// Update complete screen overlays, like blurred vision
+			// ====================================================
 			if(!client)	return 0 //Wish we did not need these
 			client.screen -= hud_used.blurry
 			client.screen -= hud_used.druggy
@@ -1350,7 +1384,9 @@
 							client.screen += hud_used.vimpaired
 
 
-
+			// =============================================
+			// If we're a machine, check if we can still see
+			// =============================================
 			if (stat != 2)
 				if (machine)
 					if (!( machine.check_eye(src) ))
@@ -1363,13 +1399,6 @@
 			return 1
 
 		handle_random_events()
-			/* // probably stupid -- Doohl
-			if (prob(1) && prob(2))
-				spawn(0)
-					emote("sneeze")
-					return
-			*/
-
 			// Puke if toxloss is too high
 			if(!stat)
 				if (getToxLoss() >= 45 && nutrition > 20)
@@ -1377,16 +1406,7 @@
 					if(lastpuke >= 25) // about 25 second delay I guess
 						Stun(5)
 
-						for(var/mob/O in viewers(world.view, src))
-							O.show_message(text("<b>\red [] throws up!</b>", src), 1)
-						playsound(src.loc, 'splat.ogg', 50, 1)
-
-						var/turf/location = loc
-						if (istype(location, /turf/simulated))
-							location.add_vomit_floor(src, 1)
-
-						nutrition -= 20
-						adjustToxLoss(-3)
+						src.vomit()
 
 						// make it so you can only puke so fast
 						lastpuke = 0
