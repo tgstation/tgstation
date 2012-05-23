@@ -87,11 +87,17 @@ obj/structure/door_assembly
 	door_assembly_atmo
 		name = "Atmospherics Airlock Assembly"
 		icon_state = "door_as_atmo1"
+		glass_base_icon_state = "door_as_gatmo"
+		glass_type = /obj/machinery/door/airlock/glass_atmos
 		airlock_type = /obj/machinery/door/airlock/atmos
 		anchored = 1
 		density = 1
 		state = 1
 		glass = 0
+
+		glass
+			glass = 1
+			icon_state = "door_as_gatmo1"
 
 	door_assembly_research
 		name = "Research Airlock Assembly"
