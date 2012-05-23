@@ -204,6 +204,7 @@
 		if(ticker.mode)
 			ticker.mode:station_was_nuked = 1
 			ticker.mode:explosion_in_progress = 0
+	finished = 2
 	return
 
 
