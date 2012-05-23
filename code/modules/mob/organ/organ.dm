@@ -82,6 +82,18 @@
 			del(W)
 		..()
 
+	proc/total_wound_bleeding()
+		// Get the total amount and size of bleeding wounds
+		var/rval = 0
+
+		for(var/datum/organ/wound/W in wounds) if(W.bleeding)
+			rval += W.wound_size
+
+		// bandages reduce bleeding
+		if(bandaged) return rval / 8
+
+		return rval
+
 	proc/take_damage(brute, burn, sharp, used_weapon = null, spread=0)
 		if((brute <= 0) && (burn <= 0))
 			return 0
@@ -411,9 +423,8 @@
 		if(hasorgans(owner))
 			if(!possible_wounds.len || prob(20))
 				var/datum/organ/wound/W = new(src)
-				bleeding = max(!type,bleeding) //Sharp objects cause bleeding.
-				W.bleeding = !type
-	//			owner:bloodloss += 10 * size
+				W.bleeding = !type || (size > 2) // large wounds always cause bleeding
+
 				W.damage = damage
 				W.initial_dmg = damage
 				W.wound_type = type
@@ -429,7 +440,7 @@
 				var/datum/organ/wound/W = pick(possible_wounds)
 				bleeding = max(!type,bleeding) //Sharp objects cause bleeding.
 				W.bleeding = max(!type,W.bleeding)
-	//			owner:bloodloss += 10 * size
+
 				W.damage += damage
 				W.initial_dmg += damage
 				W.wound_size = max(1,min(6,round(W.damage/10) + rand(0,1)))
