@@ -1411,14 +1411,6 @@
 		reagents.add_reagent("metroid", 5)
 		bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/braincake
-	name = "Brain Cake"
-	desc = "A squishy cake-thing."
-	icon_state = "braincake"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 28)
-		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/mushroomsoup
 	name = "chantrelle soup"
@@ -1573,6 +1565,23 @@
 	desc = "Carrotty slice of Carrot Cake, carrots are good for your eyes! Also not a lie."
 	icon_state = "carrotcake_slice"
 	trash = "plate"
+	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/braincake
+	name = "Brain Cake"
+	desc = "A squishy cake-thing."
+	icon_state = "braincake"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/braincakeslice
+	slices_num = 5
+	New()
+		..()
+		reagents.add_reagent("nutriment", 28)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/braincakeslice
+	name = "Brain Cake slice"
+	desc = "Lemme tell you something about prions. THEY'RE DELICIOUS."
+	icon_state = "braincakeslice"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesecake
