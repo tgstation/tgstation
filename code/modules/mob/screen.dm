@@ -452,21 +452,37 @@
 		if("help")
 			usr.a_intent = "help"
 			usr.hud_used.action_intent.icon_state = "help"
+			usr.hud_used.hurt_intent.icon_state = "harm_small"
+			usr.hud_used.help_intent.icon_state = "help_small_active"
+			usr.hud_used.grab_intent.icon_state = "grab_small"
+			usr.hud_used.disarm_intent.icon_state = "disarm_small"
 			usr.hud_used.show_intent_icons = 0
 			usr.client.screen -= usr.hud_used.intent_small_hud_objects
 		if("harm")
 			usr.a_intent = "hurt"
 			usr.hud_used.action_intent.icon_state = "harm"
+			usr.hud_used.hurt_intent.icon_state = "harm_small_active"
+			usr.hud_used.help_intent.icon_state = "help_small"
+			usr.hud_used.grab_intent.icon_state = "grab_small"
+			usr.hud_used.disarm_intent.icon_state = "disarm_small"
 			usr.hud_used.show_intent_icons = 0
 			usr.client.screen -= usr.hud_used.intent_small_hud_objects
 		if("grab")
 			usr.a_intent = "grab"
 			usr.hud_used.action_intent.icon_state = "grab"
+			usr.hud_used.hurt_intent.icon_state = "harm_small"
+			usr.hud_used.help_intent.icon_state = "help_small"
+			usr.hud_used.grab_intent.icon_state = "grab_small_active"
+			usr.hud_used.disarm_intent.icon_state = "disarm_small"
 			usr.hud_used.show_intent_icons = 0
 			usr.client.screen -= usr.hud_used.intent_small_hud_objects
 		if("disarm")
 			usr.a_intent = "disarm"
 			usr.hud_used.action_intent.icon_state = "disarm"
+			usr.hud_used.hurt_intent.icon_state = "harm_small"
+			usr.hud_used.help_intent.icon_state = "help_small"
+			usr.hud_used.grab_intent.icon_state = "grab_small"
+			usr.hud_used.disarm_intent.icon_state = "disarm_small_active"
 			usr.hud_used.show_intent_icons = 0
 			usr.client.screen -= usr.hud_used.intent_small_hud_objects
 		if("pull")
