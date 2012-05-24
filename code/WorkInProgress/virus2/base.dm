@@ -371,7 +371,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 		var/name = pick(mob.organs)
 		var/datum/organ/external/organ = mob.organs[name]
 
-		if(!organ.broken)
+		if(!organ.broken && !organ.robot)
 			mob.adjustBruteLoss(10)
 			mob.visible_message("\red You hear a loud cracking sound coming from [mob.name].","\red <b>Something feels like it shattered in your [organ.display_name]!</b>","You hear a sickening crack.")
 			mob.emote("scream")
