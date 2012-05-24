@@ -805,7 +805,11 @@
 
 			// nutrition decrease
 			if (nutrition > 0 && stat != 2)
-				nutrition = max (0, nutrition - HUNGER_FACTOR)
+				// sleeping slows the metabolism, hunger increases more slowly
+				if(stat == 1)
+					nutrition = max (0, nutrition - HUNGER_FACTOR)
+				else
+					nutrition = max (0, nutrition - HUNGER_FACTOR / 4)
 
 			if (nutrition > 450)
 				if(overeatduration < 600) //capped so people don't take forever to unfat
@@ -1439,7 +1443,7 @@
 							if(!M.nodamage)
 								M.adjustBruteLoss(5)
 							nutrition += 10
-			if(nutrition <= 100)
+			if(nutrition <= 150)
 				if (prob(1))
 					var/list/funny_comments = list(
 						"You feel hungry..",
