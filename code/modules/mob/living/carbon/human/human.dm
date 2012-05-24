@@ -283,7 +283,7 @@
 	if(health_deficiency >= 40) tally += (health_deficiency / 25)
 
 	var/hungry = (500 - nutrition)/5 // So overeat would be 100 and default level would be 80
-	if (hungry >= 70) tally += hungry/50
+	if (hungry >= 70) tally += hungry/300
 
 
 	for(var/organ in list("l_leg","l_foot","r_leg","r_foot"))
