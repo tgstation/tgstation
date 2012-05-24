@@ -1,0 +1,74 @@
+Involved datums
+===============
+
+/datum/gas_mixture
+    code/FEA/FEA_gas_mixture.dm
+
+    This is the backbone of the entire FEA system. It's the conceptual representation of both,
+    "air" and "volume", and literally anything that can store air, including gas tanks you put
+    on your back use this datum.
+
+    Provides a lot of functionality, including such silly things like the equal gas equation,
+    or thermal conductivity, but also useful stuff like gas equalization with other mixtures,
+    or combustion(the stuff that makes air hot and causes fire).
+
+/datum/air_group
+    code/FEA/FEA_air_group.dm
+    Responsible for unifying groups of tiles into one and treating them as one large tile.
+
+/datum/controller/air_system
+    code/FEA/FEA_system.dm
+    Responsible for initializing air groups and performing the simulation calls.
+
+/turf, /turf/simulated 
+    code/FEA/FEA_tile.dm
+    Offers a high-level interface for exchanging air. Provides individual per-tile basis
+    simulation. Stores information about air pressure and direction.
+
+/obj/effect/hotspot
+    code/FEA/FEA_fire.dm
+    In nearly all cases, this is an effect object which represent fire. This object is responsible
+    for the fire effects itself(but doesn't generate temperature, this is done by a separate mechanism
+    in gas_mixture).
+
+
+Atmos simulation workflow
+=========================
+
+Initialization
+--------------
+
+- master controller creates air_system
+- air_system tries to combine all tiles on the map into air_groups
+  and stores the groups in a list. groups are built only from turfs
+  that are directly connected to eachother, and not separated by doors,
+  walls, windows, or other objects that block air.
+
+
+Simulation Step
+---------------
+- master controller calls air_system.process
+- air_system calls process_group() on the individual air_groups
+- air_group checks if it's in group processing mode
+- Case 1: Group processing
+    - air_group gathers the tiles bordering itself
+        - If the tile is itself in a group, do air_group <=> air_group exchange
+        - If the tile is a turf, do air_group <=> turf exchange
+        - If the tile is a space connection, invoke special code
+    - Before doing the air exchange, air_group checks how much gas would be exchanged.
+      If the amount exceeds a treshold, air_group suspends group processing.
+- Case 2: No Group Processing
+    - air_group calls process_cell on all turfs in the group
+- Every N ticks, the air system checks all air_groups for whether they have stabilized
+  enough to be combined into a group again.
+
+
+Group processing
+----------------
+
+As can be seen above, group processing means that all the tiles in a group are treated as one uniform mass.
+This way, all calculations involving the group are only done once per entity bordering it, which cuts down
+on processing power quite neatly.
+
+However, group processing is suspended when too much air is inserted into a tile at once. This means that
+*whenever* anything large happens, the group is split up, and tiles are processed individually.
