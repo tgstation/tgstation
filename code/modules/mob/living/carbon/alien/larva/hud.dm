@@ -56,7 +56,7 @@
 	using.dir = SOUTHWEST
 	using.icon = 'screen1_alien.dmi'
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
-	using.screen_loc = ui_movi
+	using.screen_loc = ui_movi_old
 	using.layer = 20
 	src.adding += using
 	move_intent = using
@@ -179,7 +179,7 @@
 	mymob.pullin.icon = 'screen1_alien.dmi'
 	mymob.pullin.icon_state = "pull0"
 	mymob.pullin.name = "pull"
-	mymob.pullin.screen_loc = ui_pull
+	mymob.pullin.screen_loc = ui_pull_old
 
 	mymob.blind = new /obj/screen( null )
 	mymob.blind.icon = 'screen1_alien.dmi'

@@ -54,34 +54,38 @@
 	using = new src.h_type( src )
 	using.name = "help"
 	using.icon = 'screen1_alien.dmi'
-	using.icon_state = "help_small"
+	using.icon_state = (mymob.a_intent == "help" ? "help_small_active" : "help_small")
 	using.screen_loc = ui_help_small
 	using.layer = 21
-	src.intent_small_hud_objects += using
+	src.adding += using
+	help_intent = using
 
 	using = new src.h_type( src )
 	using.name = "disarm"
 	using.icon = 'screen1_alien.dmi'
-	using.icon_state = "disarm_small"
+	using.icon_state = (mymob.a_intent == "disarm" ? "disarm_small_active" : "disarm_small")
 	using.screen_loc = ui_disarm_small
 	using.layer = 21
-	src.intent_small_hud_objects += using
+	src.adding += using
+	disarm_intent = using
 
 	using = new src.h_type( src )
 	using.name = "grab"
 	using.icon = 'screen1_alien.dmi'
-	using.icon_state = "grab_small"
+	using.icon_state = (mymob.a_intent == "grab" ? "grab_small_active" : "grab_small")
 	using.screen_loc = ui_grab_small
 	using.layer = 21
-	src.intent_small_hud_objects += using
+	src.adding += using
+	grab_intent = using
 
 	using = new src.h_type( src )
 	using.name = "harm"
 	using.icon = 'screen1_alien.dmi'
-	using.icon_state = "harm_small"
+	using.icon_state = (mymob.a_intent == "hurt" ? "harm_small_active" : "harm_small")
 	using.screen_loc = ui_harm_small
 	using.layer = 21
-	src.intent_small_hud_objects += using
+	src.adding += using
+	hurt_intent = using
 
 //end intent small hud objects
 
@@ -90,7 +94,7 @@
 	using.dir = SOUTHWEST
 	using.icon = 'screen1_alien.dmi'
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
-	using.screen_loc = ui_movi
+	using.screen_loc = ui_movi_old
 	using.layer = 20
 	src.adding += using
 	move_intent = using
@@ -257,7 +261,7 @@
 	mymob.throw_icon.icon = 'screen1_alien.dmi'
 	mymob.throw_icon.icon_state = "act_throw_off"
 	mymob.throw_icon.name = "throw"
-	mymob.throw_icon.screen_loc = ui_throw
+	mymob.throw_icon.screen_loc = ui_throw_old
 
 	mymob.oxygen = new /obj/screen( null )
 	mymob.oxygen.icon = 'screen1_alien.dmi'
@@ -287,7 +291,7 @@
 	mymob.pullin.icon = 'screen1_alien.dmi'
 	mymob.pullin.icon_state = "pull0"
 	mymob.pullin.name = "pull"
-	mymob.pullin.screen_loc = ui_pull
+	mymob.pullin.screen_loc = ui_pull_old
 
 	mymob.blind = new /obj/screen( null )
 	mymob.blind.icon = 'screen1_alien.dmi'

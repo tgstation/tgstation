@@ -11,6 +11,8 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 
 datum/shuttle_controller
 	var
+		alert = 0 //0 = emergency, 1 = crew cycle
+
 		location = 0 //0 = somewhere far away (in spess), 1 = at SS13, 2 = returned from SS13
 		online = 0
 		direction = 1 //-1 = going back to central command, 1 = going to SS13, 2 = in transit to centcom (not recalled)
@@ -36,28 +38,35 @@ datum/shuttle_controller
 			settimeleft(SHUTTLEARRIVETIME*coeff)
 			online = 1
 		//turning on the red lights in hallways and siren
-		for(var/area/A in world)
-			if(istype(A, /area/hallway))
-				A.readyalert()
-		//sound_siren = 1
+		if(coeff == 1)
+			for(var/area/A in world)
+				if(istype(A, /area/hallway))
+					A.readyalert()
+			//sound_siren = 1
 
+	proc/shuttlealert(var/X)
+		alert = X
 
 
 	proc/recall()
 		if(direction == 1)
 			var/timeleft = timeleft()
-			if(timeleft >= 600)
+			if(alert == 0)
+				if(timeleft >= 600)
+					return
+				captain_announce("The emergency shuttle has been recalled.")
+				world << sound('shuttlerecalled.ogg')
+				setdirection(-1)
+				online = 1
+				for(var/area/A in world)
+					if(istype(A, /area/hallway))
+						A.readyreset()
 				return
-			captain_announce("The emergency shuttle has been recalled.")
-			world << sound('shuttlerecalled.ogg')
-			setdirection(-1)
-			online = 1
-			//turning off the red lights in hallways and siren
-			for(var/area/A in world)
-				if(istype(A, /area/hallway))
-					A.readyreset()
-		//	sound_siren = 0
-
+			else //makes it possible to send shuttle back.
+				captain_announce("The shuttle has been recalled.")
+				setdirection(-1)
+				online = 1
+				return
 
 	// returns the time (in seconds) before shuttle arrival
 	// note if direction = -1, gives a count-up to SHUTTLEARRIVETIME
@@ -192,9 +201,11 @@ datum/shuttle_controller
 
 						start_location.move_contents_to(end_location)
 						settimeleft(SHUTTLELEAVETIME)
-						captain_announce("The Emergency Shuttle has docked with the station. You have [timeleft()/60] minutes to board the Emergency Shuttle.")
-						world << sound('shuttledock.ogg')
-
+						if(alert == 0)
+							captain_announce("The Emergency Shuttle has docked with the station. You have [timeleft()/60] minutes to board the Emergency Shuttle.")
+							world << sound('shuttledock.ogg')
+						else
+							captain_announce("The shuttle has docked with the station. You have [timeleft()/60] minutes to board the shuttle.")
 						return 1
 
 				if(1)
@@ -262,8 +273,10 @@ datum/shuttle_controller
 								spawn(0)
 									D.close()
 
-
-						captain_announce("The Emergency Shuttle has left the station. Estimate [timeleft()/60] minutes until the shuttle docks at Central Command.")
+						if(alert == 0)
+							captain_announce("The Emergency Shuttle has left the station. Estimate [timeleft()/60] minutes until the shuttle docks at Central Command.")
+						else
+							captain_announce("The shuttle has left the station. Estimate [timeleft()/60] minutes until the shuttle docks at Central Command.")
 
 						// Some aesthetic turbulance shaking
 						for(var/mob/M in end_location)

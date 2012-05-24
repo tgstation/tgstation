@@ -1,6 +1,6 @@
 /obj/hud/proc/human_hud(var/ui_style='screen1_old.dmi')
 
-	ui_style='screen1_old.dmi' //Overriding the parameter. Only this UI style is acceptable with the 'sleek' layout.
+	//ui_style='screen1_old.dmi' //Overriding the parameter. Only this UI style is acceptable with the 'sleek' layout.
 
 	src.adding = list(  )
 	src.other = list(  )
@@ -11,6 +11,7 @@
 	src.vimpaired = list(  )
 	src.darkMask = list(  )
 	src.intent_small_hud_objects = list(  )
+	src.hotkeybuttons = list(  ) //These can be disabled for hotkey usersx
 
 	src.g_dither = new src.h_type( src )
 	src.g_dither.screen_loc = "WEST,SOUTH to EAST,NORTH"
@@ -60,34 +61,38 @@
 	using = new src.h_type( src )
 	using.name = "help"
 	using.icon = ui_style
-	using.icon_state = "help_small"
+	using.icon_state = (mymob.a_intent == "help" ? "help_small_active" : "help_small")
 	using.screen_loc = ui_help_small
 	using.layer = 21
-	src.intent_small_hud_objects += using
+	src.adding += using
+	help_intent = using
 
 	using = new src.h_type( src )
 	using.name = "disarm"
 	using.icon = ui_style
-	using.icon_state = "disarm_small"
+	using.icon_state = (mymob.a_intent == "disarm" ? "disarm_small_active" : "disarm_small")
 	using.screen_loc = ui_disarm_small
 	using.layer = 21
-	src.intent_small_hud_objects += using
+	src.adding += using
+	disarm_intent = using
 
 	using = new src.h_type( src )
 	using.name = "grab"
 	using.icon = ui_style
-	using.icon_state = "grab_small"
+	using.icon_state = (mymob.a_intent == "grab" ? "grab_small_active" : "grab_small")
 	using.screen_loc = ui_grab_small
 	using.layer = 21
-	src.intent_small_hud_objects += using
+	src.adding += using
+	grab_intent = using
 
 	using = new src.h_type( src )
 	using.name = "harm"
 	using.icon = ui_style
-	using.icon_state = "harm_small"
+	using.icon_state = (mymob.a_intent == "hurt" ? "harm_small_active" : "harm_small")
 	using.screen_loc = ui_harm_small
 	using.layer = 21
-	src.intent_small_hud_objects += using
+	src.adding += using
+	hurt_intent = using
 
 //end intent small hud objects
 
@@ -148,7 +153,7 @@
 	using.icon_state = "act_drop"
 	using.screen_loc = ui_dropbutton
 	using.layer = 19
-	src.adding += using
+	src.hotkeybuttons += using
 
 	using = new src.h_type( src )
 	using.name = "i_clothing"
@@ -269,7 +274,7 @@
 	using.icon_state = "belt"
 	using.screen_loc = ui_sstore1
 	using.layer = 19
-	src.other += using
+	src.adding += using
 
 /*
 	using = new src.h_type( src )
@@ -520,6 +525,7 @@
 	mymob.throw_icon.icon_state = "act_throw_off"
 	mymob.throw_icon.name = "throw"
 	mymob.throw_icon.screen_loc = ui_throw
+	src.hotkeybuttons += mymob.throw_icon
 
 	mymob.oxygen = new /obj/screen( null )
 	mymob.oxygen.icon = ui_style
@@ -528,7 +534,7 @@
 	mymob.oxygen.screen_loc = ui_oxygen
 
 	mymob.pressure = new /obj/screen( null )
-	mymob.pressure.icon = 'screen1_old.dmi'
+	mymob.pressure.icon = ui_style
 	mymob.pressure.icon_state = "pressure0"
 	mymob.pressure.name = "pressure"
 	mymob.pressure.screen_loc = ui_pressure
@@ -587,6 +593,7 @@
 	mymob.pullin.icon_state = "pull0"
 	mymob.pullin.name = "pull"
 	mymob.pullin.screen_loc = ui_pull
+	src.hotkeybuttons += mymob.pullin
 
 	mymob.blind = new /obj/screen( null )
 	mymob.blind.icon = ui_style
@@ -728,7 +735,7 @@
 
 	//, mymob.i_select, mymob.m_select
 	mymob.client.screen += list( mymob.pain, mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash, mymob.gun_setting_icon) //, mymob.hands, mymob.rest, mymob.sleep, mymob.gun_setting_icon) //, mymob.mach )
-	mymob.client.screen += src.adding + src.other
+	mymob.client.screen += src.adding + src.other + src.hotkeybuttons
 
 	//if(istype(mymob,/mob/living/carbon/monkey)) mymob.client.screen += src.mon_blo
 
@@ -765,3 +772,17 @@
 	using.layer = 19
 	src.adding += using
 	*/
+
+/mob/living/carbon/human/verb/toggle_hotkey_verbs()
+	set category = "OOC"
+	set name = "Toggle hotkey buttons"
+	set desc = "This disables or enables the user interface buttons which can be used with hotkeys."
+
+	if(hud_used.hotkey_ui_hidden)
+		client.screen += src.hud_used.hotkeybuttons
+		src.hud_used.hotkey_ui_hidden = 0
+	else
+		client.screen -= src.hud_used.hotkeybuttons
+		src.hud_used.hotkey_ui_hidden = 1
+
+

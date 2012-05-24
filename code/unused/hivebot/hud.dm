@@ -55,7 +55,7 @@
 	using.dir = SOUTHWEST
 	using.icon = 'screen1_robot.dmi'
 	using.icon_state = "radio"
-	using.screen_loc = ui_movi
+	using.screen_loc = ui_movi_old
 	using.layer = 20
 	src.adding += using
 
