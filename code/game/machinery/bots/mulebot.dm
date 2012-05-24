@@ -372,7 +372,7 @@
 
 			if("setid")
 				refresh=0
-				var/new_id = input("Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", suffix) as text|null
+				var/new_id = copytext(sanitize(input("Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", suffix) as text|null),1,MAX_NAME_LEN)
 				refresh=1
 				if(new_id)
 					suffix = new_id

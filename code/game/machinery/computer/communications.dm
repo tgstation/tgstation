@@ -97,7 +97,7 @@
 		if("announce")
 			if(src.authenticated==2)
 				if(message_cooldown)	return
-				var/input = input(usr, "Please choose a message to announce to the station crew.", "What?", "")
+				var/input = copytext(sanitize(input(usr, "Please choose a message to announce to the station crew.", "What?", "")),1,MAX_MESSAGE_LEN)
 				if(!input || !(usr in view(1,src)))
 					return
 				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
@@ -176,7 +176,7 @@
 				if(centcomm_message_cooldown)
 					usr << "Arrays recycling.  Please stand by."
 					return
-				var/input = input(usr, "Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "To abort, send an empty message.", "")
+				var/input = copytext(sanitize(input(usr, "Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "To abort, send an empty message.", "")),1,MAX_MESSAGE_LEN)
 				if(!input || !(usr in view(1,src)))
 					return
 				Centcomm_announce(input, usr)
@@ -193,7 +193,7 @@
 				if(centcomm_message_cooldown)
 					usr << "Arrays recycling.  Please stand by."
 					return
-				var/input = input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "To abort, send an empty message.", "")
+				var/input = copytext(sanitize(input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "To abort, send an empty message.", "")),1,MAX_MESSAGE_LEN)
 				if(!input || !(usr in view(1,src)))
 					return
 				Syndicate_announce(input, usr)

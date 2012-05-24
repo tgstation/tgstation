@@ -338,7 +338,7 @@ datum/objective/steal
 			var/tmp_obj = new custom_target
 			var/custom_name = tmp_obj:name
 			del(tmp_obj)
-			custom_name = input("Enter target name:", "Objective target", custom_name) as text|null
+			custom_name = copytext(sanitize(input("Enter target name:", "Objective target", custom_name) as text|null),1,MAX_MESSAGE_LEN)
 			if (!custom_name) return
 			target_name = custom_name
 			steal_target = custom_target

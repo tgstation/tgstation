@@ -391,15 +391,13 @@ datum/preferences
 
 			switch(link_tags["real_name"])
 				if("input")
-					new_name = input(user, "Please select a name:", "Character Generation")  as text
+					new_name = copytext( (input(user, "Please select a name:", "Character Generation")  as text) ,1,MAX_NAME_LEN)
 					var/list/bad_characters = list("_", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\","0","1","2","3","4","5","6","7","8","9")
 					for(var/c in bad_characters)
 						new_name = dd_replacetext(new_name, c, "")
+
 					if(!new_name || (new_name == "Unknown") || (new_name == "floor") || (new_name == "wall") || (new_name == "r-wall"))
 						alert("Invalid name. Don't do that!")
-						return
-					if(length(new_name) >= 26)
-						alert("That name is too long.")
 						return
 
 					//Carn: To fix BYOND text-parsing errors caused by people using dumb capitalisation in their names.
@@ -414,8 +412,6 @@ datum/preferences
 					randomize_name()
 
 			if(new_name)
-				if(length(new_name) >= 26)
-					new_name = copytext(new_name, 1, 26)
 				real_name = new_name
 
 		if(link_tags["age"])
@@ -429,17 +425,9 @@ datum/preferences
 
 		if(link_tags["OOC"])
 			var/tempnote = ""
-			tempnote = input(user, "Please enter your OOC/ERP Notes!:", "OOC notes" , metadata)  as text
-			var/list/bad_characters = list("_", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\","0","1","2","3","4","5","6","7","8","9")
-
-			for(var/c in bad_characters)
-				tempnote = dd_replacetext(tempnote, c, "")
-
-			if(length(tempnote) >= 255)
-				alert("That name is too long. (255 character max, please)")
-				return
-
-			metadata = tempnote
+			tempnote = copytext(sanitize(input(user, "Please enter your OOC Notes!:", "OOC notes" , metadata)  as text),1,MAX_MESSAGE_LEN)
+			if(tempnote)
+				metadata = tempnote
 			return
 
 
@@ -493,9 +481,9 @@ datum/preferences
 				if("random")
 					randomize_skin_tone()
 				if("input")
-					var/new_tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
+					var/new_tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as num
 					if(new_tone)
-						s_tone = max(min(round(text2num(new_tone)), 220), 1)
+						s_tone = max(min(round(new_tone), 220), 1)
 						s_tone = -s_tone + 35
 
 		if(link_tags["h_style"])

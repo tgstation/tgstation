@@ -26,8 +26,7 @@
 			M << "\red You don't feel cool enough to name this gun, chump."
 			return 0
 
-		var/input = input("What do you want to name the gun?",,"")
-		input = sanitize(input)
+		var/input = copytext(sanitize(input("What do you want to name the gun?",,"")),1,MAX_NAME_LEN)
 
 		if(src && input && !M.stat && in_range(M,src))
 			name = input

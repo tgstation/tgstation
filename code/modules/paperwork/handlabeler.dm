@@ -40,12 +40,9 @@
 	if(mode)
 		usr << "\blue You turn on the hand labeler."
 		//Now let them chose the text.
-		var/str = reject_bad_text(input(usr,"Label text?","Set label",""))	//sanitize stuff! GOD DAMN THIS IS A SECURITY HOLE
+		var/str = copytext(reject_bad_text(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
 		if(!str || !length(str))
 			usr << "\red Invalid text."
-			return
-		if(length(str) > 64)
-			usr << "\red Text too long."
 			return
 		label = str
 		usr << "\blue You set the text to '[str]'."

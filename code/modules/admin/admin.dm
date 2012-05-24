@@ -860,11 +860,10 @@ var/global/BSACooldown = 0
 		if ((src.rank in list( "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
 			var/mob/M = locate(href_list["forcespeech"])
 			if (ismob(M))
-				var/speech = input("What will [key_name(M)] say?.", "Force speech", "")
+				var/speech = copytext(sanitize(input("What will [key_name(M)] say?.", "Force speech", "")),1,MAX_MESSAGE_LEN)
 				if(!speech)
 					return
 				M.say(speech)
-				speech = copytext(sanitize(speech), 1, MAX_MESSAGE_LEN)
 				log_admin("[key_name(usr)] forced [key_name(M)] to say: [speech]")
 				message_admins("\blue [key_name_admin(usr)] forced [key_name_admin(M)] to say: [speech]")
 		else
@@ -1732,7 +1731,7 @@ var/global/BSACooldown = 0
 						if(!ticker)
 							alert("The game hasn't started yet!")
 							return
-						var/objective = input("Enter an objective")
+						var/objective = copytext(sanitize(input("Enter an objective")),1,MAX_MESSAGE_LEN)
 						if(!objective)
 							return
 						feedback_inc("admin_secrets_fun_used",1)
