@@ -103,7 +103,7 @@ datum
 			color = "#C80000" // rgb: 200, 0, 0
 			on_mob_life(var/mob/living/M)
 				if(!data || !data["blood_type"])
-					..()
+					return
 				else if(istype(M, /mob/living/carbon/human) && blood_incompatible(data["blood_type"],M.dna.b_type) && !M.changeling)
 					M.adjustToxLoss(rand(0.5,1.5))
 					M.adjustOxyLoss(rand(1,1.5))
@@ -136,18 +136,6 @@ datum
 						M:virus2.dead = 1
 
 
-				/*
-				if(self.data["virus"])
-					var/datum/disease/V = self.data["virus"]
-					if(M.resistances.Find(V.type)) return
-					if(method == TOUCH)//respect all protective clothing...
-						M.contract_disease(V)
-					else //injected
-						M.contract_disease(V, 1, 0)
-				return
-				*/
-
-
 			reaction_turf(var/turf/simulated/T, var/volume)//splash the blood all over the place
 				if(!istype(T)) return
 				var/datum/reagent/blood/self = src
@@ -171,15 +159,6 @@ datum
 					var/datum/disease2/disease/v = self.data["virus2"]
 					if(v)
 						blood_prop.virus2 = v.getcopy()
-
-						// this makes it almost impossible for airborne diseases to spread
-						// THIS SHIT HAS TO GO, SORRY!
-						/*
-						if(T.density==0)
-							newVirus.spread_type = CONTACT_FEET
-						else
-							newVirus.spread_type = CONTACT_HANDS
-						*/
 
 				else if(istype(self.data["donor"], /mob/living/carbon/monkey))
 					var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T
