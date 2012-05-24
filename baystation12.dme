@@ -592,6 +592,7 @@
 #include "code\game\magic\archived_book.dm"
 #include "code\game\magic\library.dm"
 #include "code\game\magic\musician.dm"
+#include "code\game\magic\Uristrunes.dm"
 #include "code\game\magic\cultist\ritual.dm"
 #include "code\game\magic\cultist\runes.dm"
 #include "code\game\magic\cultist\talisman.dm"
