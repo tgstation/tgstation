@@ -215,6 +215,7 @@
 				observer.name = preferences.real_name
 				observer.real_name = observer.name
 				observer.original_name = observer.name //Original name is only used in ghost chat! It is not to be edited by anything!
+				observer.timeofdeath = world.time //So you can't just observe than respawn
 
 				preferences.copy_to_observer(observer)
 
