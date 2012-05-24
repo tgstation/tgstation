@@ -69,7 +69,7 @@ var/list/uristrune_cache = list()
 
 	for(var/i = 0, i < 10, i++)
 		if(symbol_bits & (1 << i))
-			I.Blend(icon('icons/effects/uristrunes.dmi', "rune-[i]"), ICON_OVERLAY)
+			I.Blend(icon('icons/effects/uristrunes.dmi', "rune-[1 << i]"), ICON_OVERLAY)
 
 
 	I.SwapColor(rgb(0, 0, 0, 100), rgb(100, 0, 0, 200))
