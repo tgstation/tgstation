@@ -89,7 +89,7 @@
 								t += "<td>[H.stat > 1 ? "<font color=red>Deceased</font>" : "Living"], [dam2] - [dam2] - [dam3] - [dam4]</td><td>[get_area(H)] ([H.x], [H.y])</td></tr>"
 			t += "</table>"
 			t += "</FONT></PRE></TT>"
-			user << browse(t, "window=crewcomp;size=500x800")
+			user << browse(t, "window=crewcomp;size=900x600")
 			onclose(user, "crewcomp")
 
 
