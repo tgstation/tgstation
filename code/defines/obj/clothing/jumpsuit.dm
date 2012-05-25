@@ -8,6 +8,7 @@
 	heat_transfer_coefficient = 0.30
 	permeability_coefficient = 0.90
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	slot_flags = SLOT_ICLOTHING
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/sensor_mode = 0
 		/*

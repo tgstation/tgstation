@@ -4,6 +4,7 @@
 	icon = 'hats.dmi'
 	body_parts_covered = HEAD
 	var/list/allowed = list()
+	slot_flags = SLOT_HEAD
 
 /obj/item/clothing/head/cakehat
 	name = "cake-hat"

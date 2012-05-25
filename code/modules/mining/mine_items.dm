@@ -157,7 +157,8 @@ proc/move_mining_shuttle()
 	name = "Miner's pickaxe"
 	icon = 'items.dmi'
 	icon_state = "pickaxe"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
 	force = 15.0
 	throwforce = 4.0
 	item_state = "pickaxe"
@@ -241,7 +242,8 @@ proc/move_mining_shuttle()
 	name = "Shovel"
 	icon = 'items.dmi'
 	icon_state = "shovel"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
 	force = 8.0
 	throwforce = 4.0
 	item_state = "shovel"

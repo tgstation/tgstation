@@ -10,7 +10,8 @@
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
 	icon = 'weapons.dmi'
 	icon_state = "riot"
-	flags = FPRINT | TABLEPASS| CONDUCT| ONBACK
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BACK
 	force = 5.0
 	throwforce = 5.0
 	throw_speed = 1
@@ -29,7 +30,8 @@
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	force = 15
 	throw_speed = 1
 	throw_range = 4
@@ -41,7 +43,8 @@
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
 	icon_state = "sord"
 	item_state = "sord"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	force = 2
 	throwforce = 1
 	w_class = 3
@@ -51,7 +54,8 @@
 	desc = "What are you standing around staring at this for? Get to killing!"
 	icon_state = "claymore"
 	item_state = "claymore"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	force = 40
 	throwforce = 10
 	w_class = 3
@@ -165,7 +169,8 @@
 	icon_state = "spectrometer"
 	item_state = "analyzer"
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT | OPENCONTAINER
+	flags = FPRINT | TABLEPASS| CONDUCT | OPENCONTAINER
+	slot_flags = SLOT_BELT
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 20
@@ -187,7 +192,8 @@
 	desc = "A stun baton for hitting people with."
 	icon_state = "stunbaton"
 	item_state = "baton"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	force = 10
 	throwforce = 7
 	w_class = 3
@@ -201,7 +207,8 @@
 	desc = "The Captain is first and all other heads are last."
 	icon_state = "chainofcommand"
 	item_state = "chainofcommand"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	force = 10
 	throwforce = 7
 	w_class = 3
@@ -483,6 +490,7 @@
 	item_state = "card-id"
 	var/access = list()
 	var/registered_name = null // The name registered_name on the card
+	slot_flags = SLOT_ID
 
 	var/assignment = null
 	var/dorm = 0		// determines if this ID has claimed a dorm already
@@ -547,7 +555,8 @@
 	throw_range = 5
 	m_amt = 50
 	g_amt = 20
-	flags = TABLEPASS|USEDELAY|FPRINT|CONDUCT | ONBELT
+	flags = TABLEPASS | USEDELAY | FPRINT | CONDUCT
+	slot_flags = SLOT_BELT
 	item_state = "coil_red"
 
 /obj/item/weapon/cable_coil/cut
@@ -576,7 +585,8 @@
 	desc = "Used to hit floors"
 	icon = 'items.dmi'
 	icon_state = "crowbar"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
 	force = 5.0
 	throwforce = 7.0
 	item_state = "wrench"
@@ -734,7 +744,8 @@
 	gender = PLURAL
 	icon = 'items.dmi'
 	icon_state = "handcuff"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
 	throwforce = 5
 	w_class = 2.0
 	throw_speed = 2
@@ -833,7 +844,8 @@
 	name = "banhammer"
 	icon = 'items.dmi'
 	icon_state = "toyhammer"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	throwforce = 0
 	w_class = 1.0
 	throw_speed = 7
@@ -841,12 +853,14 @@
 
 /obj/item/weapon/pen/sleepypen
 	desc = "It's a normal black ink pen with a sharp point and a carefully engraved \"Waffle Co.\""
-	flags = FPRINT | ONBELT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	slot_flags = SLOT_BELT
 	origin_tech = "materials=2;biotech=1;syndicate=7"
 
 /obj/item/weapon/pen/paralysis
 	desc = "It's a normal black ink pen with a sharp point."
-	flags = FPRINT | ONBELT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	slot_flags = SLOT_BELT
 	origin_tech = "materials=2;biotech=1;syndicate=5"
 
 /obj/item/weapon/rack_parts
@@ -870,7 +884,8 @@
 	desc = "You can be totally screwwy with this."
 	icon = 'items.dmi'
 	icon_state = "screwdriver"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
 	force = 5.0
 	w_class = 1.0
 	throwforce = 5.0
@@ -919,7 +934,8 @@
 	var/selfdestruct = 0.0
 	var/traitor_frequency = 0.0
 	var/obj/item/device/radio/origradio = null
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
 	item_state = "radio"
 	throwforce = 5
 	w_class = 2.0

@@ -3,10 +3,10 @@
 	icon = 'glasses.dmi'
 	w_class = 2.0
 	flags = GLASSESCOVERSEYES
-	var
-		vision_flags = 0
-		darkness_view = 0//Base human is 2
-		invisa_view = 0
+	slot_flags = SLOT_EYES
+	var/vision_flags = 0
+	var/darkness_view = 0//Base human is 2
+	var/invisa_view = 0
 
 /*
 SEE_SELF  // can see self, no matter what

@@ -98,8 +98,23 @@ var/MAX_EXPLOSION_RANGE = 14
 #define SHOES_SLOWDOWN -1.0			// How much shoes slow you down by default. Negative values speed you up
 
 
+//ITEM INVENTORY SLOT BITMASKS: (HUMANS ONLY!)
+#define SLOT_OCLOTHING 1
+#define SLOT_ICLOTHING 2
+#define SLOT_GLOVES 4
+#define SLOT_EYES 8
+#define SLOT_EARS 16
+#define SLOT_MASK 32
+#define SLOT_HEAD 64
+#define SLOT_FEET 128
+#define SLOT_ID 256
+#define SLOT_BELT 512
+#define SLOT_BACK 1024
+#define SLOT_POCKET 2048		//this is to allow items with a w_class of 3 or 4 to fit in pockets.
+#define SLOT_DENYPOCKET 4096	//this is to deny items with a w_class of 2 or 1 to fit in pockets.
+
+
 //FLAGS BITMASK
-#define ONBACK 1			// can be put in back slot
 #define TABLEPASS 2			// can pass by a table or rack
 
 /********************************************************************************
@@ -117,7 +132,6 @@ var/MAX_EXPLOSION_RANGE = 14
 #define NODELAY 32768		// 1 second attackby delay skipped (Can be used once every 0.2s). Most objects have a 1s attackby delay, which doesn't require a flag.
 #define NOSHIELD 32			// weapon not affected by shield
 #define CONDUCT 64			// conducts electricity (metal etc.)
-#define ONBELT 128			// can be put in belt slot
 #define FPRINT 256			// takes a fingerprint
 #define ON_BORDER 512		// item has priority to check when entering or leaving
 

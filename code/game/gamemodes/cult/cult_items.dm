@@ -3,7 +3,8 @@
 	desc = "An arcane weapon wielded by the followers of Nar-Sie"
 	icon_state = "cultblade"
 	item_state = "cultblade"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	force = 40
 	throwforce = 10
 

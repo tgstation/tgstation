@@ -1844,7 +1844,8 @@
 	name = "bottle of Plant-B-Gone"
 	icon_state = "plantbgone"
 	item_state = "plantbgone"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	flags = TABLEPASS | OPENCONTAINER | FPRINT | USEDELAY
+	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 2.0
 	throw_speed = 2
@@ -1858,7 +1859,8 @@
 	name = "weed-spray"
 	icon_state = "weedspray"
 	item_state = "spray"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	flags = TABLEPASS | OPENCONTAINER | FPRINT | USEDELAY
+	slot_flags = SLOT_BELT
 	throwforce = 4
 	w_class = 2.0
 	throw_speed = 2
@@ -1872,7 +1874,8 @@
 	name = "pest-spray"
 	icon_state = "pestspray"
 	item_state = "spray"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	flags = TABLEPASS | OPENCONTAINER | FPRINT | USEDELAY
+	slot_flags = SLOT_BELT
 	throwforce = 4
 	w_class = 2.0
 	throw_speed = 2

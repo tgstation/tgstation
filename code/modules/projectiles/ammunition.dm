@@ -3,13 +3,13 @@
 	desc = "A bullet casing."
 	icon = 'ammo.dmi'
 	icon_state = "s-casing"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
 	throwforce = 1
 	w_class = 1.0
-	var
-		caliber = ""							//Which kind of guns it can be loaded into
-		projectile_type = ""//The bullet type to create when New() is called
-		obj/item/projectile/BB = null 			//The loaded bullet
+	var/caliber = ""							//Which kind of guns it can be loaded into
+	var/projectile_type = ""//The bullet type to create when New() is called
+	var/obj/item/projectile/BB = null 			//The loaded bullet
 
 
 	New()
@@ -28,18 +28,18 @@
 	desc = "A box of ammo"
 	icon_state = "357"
 	icon = 'ammo.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
 	item_state = "syringe_kit"
 	m_amt = 50000
 	throwforce = 2
 	w_class = 1.0
 	throw_speed = 4
 	throw_range = 10
-	var
-		list/stored_ammo = list()
-		ammo_type = "/obj/item/ammo_casing"
-		max_ammo = 7
-		multiple_sprites = 0
+	var/list/stored_ammo = list()
+	var/ammo_type = "/obj/item/ammo_casing"
+	var/max_ammo = 7
+	var/multiple_sprites = 0
 
 
 	New()

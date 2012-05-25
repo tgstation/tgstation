@@ -4,7 +4,8 @@
 	icon = 'belts.dmi'
 	icon_state = "utilitybelt"
 	item_state = "utility"
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 
 
 	proc/can_use()

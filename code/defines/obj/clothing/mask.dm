@@ -7,7 +7,7 @@
 	icon = 'masks.dmi'
 	body_parts_covered = HEAD
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 0, rad = 0)
-
+	slot_flags = SLOT_MASK
 
 /obj/item/clothing/mask/breath
 	desc = "A close-fitting mask that can be connected to an air supply."

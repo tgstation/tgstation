@@ -5,7 +5,8 @@
 
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BACK
 
 	pressure_resistance = ONE_ATMOSPHERE*5
 

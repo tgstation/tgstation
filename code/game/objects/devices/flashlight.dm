@@ -4,14 +4,14 @@
 	icon_state = "flight0"
 	w_class = 2
 	item_state = "flight"
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
 	m_amt = 50
 	g_amt = 20
-	var
-		on = 0
-		brightness_on = 4 //luminosity when on
-		icon_on = "flight1"
-		icon_off = "flight0"
+	var/on = 0
+	var/brightness_on = 4 //luminosity when on
+	var/icon_on = "flight1"
+	var/icon_off = "flight0"
 
 /obj/item/device/flashlight/initialize()
 	..()

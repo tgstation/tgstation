@@ -2,7 +2,8 @@
 	name = "pinpointer"
 	icon = 'device.dmi'
 	icon_state = "pinoff"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
 	w_class = 2.0
 	item_state = "electronic"
 	throw_speed = 4

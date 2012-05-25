@@ -55,7 +55,8 @@
 	item_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
 
 /obj/item/weapon/firbang/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 	if (user.equipped() == src)

@@ -94,7 +94,8 @@
 	w_class = 1
 	throwforce = 2
 	var/candlecount = 5
-	flags = ONBELT | TABLEPASS
+	flags = TABLEPASS
+	slot_flags = SLOT_BELT
 
 
 /obj/item/weapon/candlepack/update_icon()

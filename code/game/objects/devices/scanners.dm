@@ -14,7 +14,8 @@ MASS SPECTROMETER
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
 	var/on = 0
-	flags = FPRINT|ONBELT|TABLEPASS
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	w_class = 2
 	item_state = "electronic"
 	m_amt = 150
@@ -64,7 +65,8 @@ MASS SPECTROMETER
 	icon_state = "health"
 	item_state = "analyzer"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 1.0
 	throw_speed = 5
@@ -146,7 +148,8 @@ MASS SPECTROMETER
 	icon_state = "atmos"
 	item_state = "analyzer"
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 20

@@ -58,7 +58,8 @@
 	desc = "A heavy-duty, no fun allowed trash bag."
 	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
 	var/capacity = 25; //the number of trash it can carry.
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	w_class = 2.0
 
 /obj/item/weapon/trashbag/update_icon()

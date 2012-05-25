@@ -4,7 +4,8 @@
 	icon = 'gun.dmi'
 	icon_state = "detective"
 	item_state = "gun"
-	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT | USEDELAY
+	flags =  FPRINT | TABLEPASS | CONDUCT |  USEDELAY
+	slot_flags = SLOT_BELT
 	m_amt = 2000
 	w_class = 3.0
 	throwforce = 5
@@ -13,17 +14,19 @@
 	force = 5.0
 	origin_tech = "combat=1"
 
-	var
-		fire_sound = 'Gunshot.ogg'
-		obj/item/projectile/in_chamber = null
-		caliber = ""
-		silenced = 0
-		recoil = 0
-		ejectshell = 1
+	var/fire_sound = 'Gunshot.ogg'
+	var/obj/item/projectile/in_chamber = null
+	var/caliber = ""
+	var/silenced = 0
+	var/recoil = 0
+	var/ejectshell = 1
 
-	proc
-		load_into_chamber()
-		special_check(var/mob/M)
+
+	proc/load_into_chamber()
+		return
+
+	proc/special_check(var/mob/M)
+		return
 
 
 	load_into_chamber()

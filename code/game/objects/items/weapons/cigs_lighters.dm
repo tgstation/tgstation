@@ -56,7 +56,8 @@ ZIPPO
 	icon_state = "matchbox"
 	item_state = "zippo"
 	w_class = 1
-	flags = ONBELT | TABLEPASS
+	flags = TABLEPASS
+	slot_flags = SLOT_BELT
 	var/matchcount = 10
 	w_class = 1.0
 
@@ -328,9 +329,9 @@ ZIPPO
 	item_state = "cigpacket"
 	w_class = 1
 	throwforce = 2
-	flags = ONBELT | TABLEPASS
-	var
-		cigcount = 6
+	flags = TABLEPASS
+	slot_flags = SLOT_BELT
+	var/cigcount = 6
 
 
 	update_icon()
@@ -377,7 +378,8 @@ ZIPPO
 	var/icon_off = "lighter-g"
 	w_class = 1
 	throwforce = 4
-	flags = ONBELT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
 	var/lit = 0
 
 /obj/item/weapon/lighter/zippo

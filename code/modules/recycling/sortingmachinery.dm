@@ -154,7 +154,8 @@
 
 	w_class = 1
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
 
 	attack_self(mob/user as mob)
 		var/dat = "<TT><B>TagMaster 2.2</B><BR><BR>"
