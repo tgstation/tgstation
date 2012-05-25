@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/projectile/detective
 	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-Special rounds."
-	name = "\improper Revolver"
+	name = "revolver"
 	icon_state = "detective"
 	caliber = "357"
 	origin_tech = "combat=2;materials=2"
@@ -18,7 +18,8 @@
 
 	verb/rename_gun()
 		set name = "Name Gun"
-		set desc = "Click to rename your gun."
+		set category = "Object"
+		set desc = "Click to rename your gun. If you're the detective."
 
 		var/mob/M = usr
 		if(!M.mind)	return 0
@@ -38,7 +39,7 @@
 
 
 /obj/item/weapon/gun/projectile/mateba
-	name = "\improper Mateba"
+	name = "mateba"
 	desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."
 	icon_state = "mateba"
 	origin_tech = "combat=2;materials=2"
