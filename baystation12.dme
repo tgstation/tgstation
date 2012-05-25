@@ -789,6 +789,7 @@
 #include "code\js\byjax.dm"
 #include "code\js\menus.dm"
 #include "code\modules\admin\admin.dm"
+#include "code\modules\admin\admin_memo.dm"
 #include "code\modules\admin\admin_verbs.dm"
 #include "code\modules\admin\banjob.dm"
 #include "code\modules\admin\create_mob.dm"

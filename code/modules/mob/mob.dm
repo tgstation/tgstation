@@ -747,8 +747,8 @@
 	return
 
 /client/New()
-	if(findtextEx(key, "Telnet @"))
-		src << "Sorry, this game does not support Telnet."
+	if( connection != "seeker" )
+		src << "Sorry, this game does not support [connection] connections."	//doesn't work
 		del(src)
 	if (CheckBan(src))
 		del(src)
@@ -771,8 +771,6 @@
 
 	..()
 	makejson()
-	if (join_motd)
-		src << "<div class=\"motd\">[join_motd]</div>"
 
 	if(custom_event_msg && custom_event_msg != "")
 		src << "<h1 class='alert'>Custom Event</h1>"
@@ -780,10 +778,11 @@
 		src << "<span class='alert'>[html_encode(custom_event_msg)]</span>"
 		src << "<br>"
 
-	if(admins.Find(ckey))
+	if( ckey in admins )
 		holder = new /obj/admins(src)
 		holder.rank = admins[ckey]
 		update_admins(admins[ckey])
+		admin_memo_show()
 
 	if(ticker && ticker.mode && ticker.mode.name =="sandbox")
 		mob.CanBuild()

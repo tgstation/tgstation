@@ -15,6 +15,9 @@
 	anchored = 1	//  don't get pushed around
 
 	Login()
+		if (join_motd)
+			src << "<div class=\"motd\">[join_motd]</div>"
+
 		if(!preferences)
 			preferences = new
 
