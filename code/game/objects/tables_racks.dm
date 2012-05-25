@@ -39,10 +39,10 @@ TABLE AND RACK OBJECT INTERATIONS
 
 /obj/structure/table/attack_paw(mob/user as mob)
 	if ((usr.mutations & HULK))
-		usr << text("\blue You destroy the table.")
+		usr << "\blue You destroy the table."
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] smashes the table apart!", usr)
+				O << "\red [user] smashes the table apart!"
 		if(istype(src, /obj/structure/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced( src.loc )
 		else if(istype(src, /obj/structure/table/woodentable))
@@ -57,16 +57,16 @@ TABLE AND RACK OBJECT INTERATIONS
 			user.layer = TURF_LAYER
 			for(var/mob/O in oviewers())
 				if ((O.client && !( O.blinded )))
-					O << text("[] hides under the table!", user)
+					O << "[user] hides under the table!"
 				//Foreach goto(69)
 	return
 
 
 /obj/structure/table/attack_alien(mob/user as mob) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
-	usr << text("\green You destroy the table.")
+	usr << "\green You destroy the table."
 	for(var/mob/O in oviewers())
 		if ((O.client && !( O.blinded )))
-			O << text("\red [] slices the table apart!", user)
+			O << "\red [user] slices the table apart!"
 	if(istype(src, /obj/structure/table/reinforced))
 		new /obj/item/weapon/table_parts/reinforced( src.loc )
 	else if(istype(src, /obj/structure/table/woodentable))
@@ -80,10 +80,10 @@ TABLE AND RACK OBJECT INTERATIONS
 
 /obj/structure/table/attack_animal(mob/living/simple_animal/user as mob) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
 	if(user.wall_smash)
-		usr << text("\red You destroy the table.")
+		usr << "\red You destroy the table."
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] smashes the table apart!", user)
+				O << "\red [user] smashes the table apart!"
 		if(istype(src, /obj/structure/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced( src.loc )
 		else if(istype(src, /obj/structure/table/woodentable))
@@ -99,10 +99,10 @@ TABLE AND RACK OBJECT INTERATIONS
 
 /obj/structure/table/attack_hand(mob/user as mob)
 	if ((usr.mutations & HULK))
-		usr << text("\blue You destroy the table.")
+		usr << "\blue You destroy the table."
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] smashes the table apart!", usr)
+				O << "\red [user] smashes the table apart!"
 		if(istype(src, /obj/structure/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced( src.loc )
 		else if(istype(src, /obj/structure/table/woodentable))
@@ -145,7 +145,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		G.affecting.Weaken(5)
 		for(var/mob/O in viewers(world.view, src))
 			if (O.client)
-				O << text("\red [] puts [] on the table.", G.assailant, G.affecting)
+				O << "\red [G.assailant] puts [G.affecting] on the table."
 		del(W)
 		return
 
@@ -169,7 +169,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		playsound(src.loc, 'blade1.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
 		for(var/mob/O in viewers(user, 4))
-			O.show_message(text("\blue The table was sliced apart by []!", user), 1, text("\red You hear metal coming apart."), 2)
+			O.show_message("\blue The table was sliced apart by [user]!", 1, "\red You hear metal coming apart.", 2)
 		new /obj/item/weapon/table_parts( src.loc )
 		del(src)
 		return
@@ -191,7 +191,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		G.affecting.Weaken(5)
 		for(var/mob/O in viewers(world.view, src))
 			if (O.client)
-				O << text("\red [] puts [] on the wooden table.", G.assailant, G.affecting)
+				O << "\red [G.assailant] puts [G.affecting] on the wooden table."
 		del(W)
 		return
 	if (istype(W, /obj/item/weapon/wrench))
@@ -211,7 +211,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		playsound(src.loc, 'blade1.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
 		for(var/mob/O in viewers(user, 4))
-			O.show_message(text("\blue The wooden table was sliced apart by []!", user), 1, text("\red You hear wood coming apart."), 2)
+			O.show_message("\blue The wooden table was sliced apart by [user]!", 1, "\red You hear wood coming apart.", 2)
 		new /obj/item/weapon/table_parts/wood( src.loc )
 		del(src)
 		return
@@ -233,7 +233,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		G.affecting.Weaken(5)
 		for(var/mob/O in viewers(world.view, src))
 			if (O.client)
-				O << text("\red [] puts [] on the reinforced table.", G.assailant, G.affecting)
+				O << "\red [G.assailant] puts [G.affecting] on the reinforced table."
 		del(W)
 		return
 
@@ -241,6 +241,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		if(W:welding == 1)
 			if(src.status == 2)
 				W:welding = 2
+				W:eyecheck(user)
 				user << "\blue Now weakening the reinforced table"
 				playsound(src.loc, 'Welder.ogg', 50, 1)
 				if (do_after(user, 50))
@@ -281,7 +282,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		playsound(src.loc, 'blade1.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
 		for(var/mob/O in viewers(user, 4))
-			O.show_message(text("\blue The reinforced table was sliced apart by []!", user), 1, text("\red You hear metal coming apart."), 2)
+			O.show_message("\blue The reinforced table was sliced apart by [user]!", 1, "\red You hear metal coming apart.", 2)
 		new /obj/item/weapon/table_parts/reinforced( src.loc )
 		del(src)
 		return

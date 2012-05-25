@@ -177,7 +177,7 @@
 		else
 			C.clean_blood()						//other things that can't wear gloves should just wash the mob.
 	for(var/mob/V in viewers(src, null))
-		V.show_message(text("\blue [M] washes their hands using \the [src]."))
+		V.show_message("\blue [M] washes their hands using \the [src].")
 
 /obj/structure/sink/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(busy)

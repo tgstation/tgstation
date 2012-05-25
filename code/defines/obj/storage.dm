@@ -3,7 +3,8 @@
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
 	w_class = 4.0
-	flags = 259.0
+	flags = FPRINT|TABLEPASS
+	slot_flags = SLOT_BACK	//ERROOOOO
 	max_w_class = 3
 	max_combined_w_class = 21
 

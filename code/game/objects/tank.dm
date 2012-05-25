@@ -35,7 +35,7 @@
 		set src in usr
 		..()
 		if(air_contents.oxygen < 1 && loc==usr)
-			usr << text("\red <B>The meter on the [src.name] indicates you are almost out of air!</B>")
+			usr << "\red <B>The meter on the [src.name] indicates you are almost out of air!</B>"
 			usr << sound('alert.ogg')
 
 
@@ -44,6 +44,7 @@
 	desc = "Contains dangerous plasma. Do not inhale."
 	icon_state = "plasma"
 	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = null	//they have no straps!
 
 /obj/item/weapon/tank/blob_act()
 	if(prob(50))
@@ -282,7 +283,7 @@
 	else
 		descriptive = "furiously hot"
 
-	usr << text("\blue \The \icon[][src] feels []", icon, descriptive)
+	usr << "\blue \The \icon[icon][src] feels [descriptive]"
 
 	return
 

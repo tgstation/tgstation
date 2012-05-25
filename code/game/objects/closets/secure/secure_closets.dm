@@ -50,15 +50,15 @@
 			playsound(src.loc, 'blade1.ogg', 50, 1)
 			playsound(src.loc, "sparks", 50, 1)
 			for(var/mob/O in viewers(user, 3))
-				O.show_message(text("\blue The locker has been sliced open by [] with an energy blade!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
+				O.show_message("\blue The locker has been sliced open by [user] with an energy blade!", 1, "\red You hear metal being sliced and sparks flying.", 2)
 		else
 			for(var/mob/O in viewers(user, 3))
-				O.show_message(text("\blue The locker has been broken by [] with an electromagnetic card!", user), 1, text("You hear a faint electrical spark."), 2)
+				O.show_message("\blue The locker has been broken by [user] with an electromagnetic card!", 1, "You hear a faint electrical spark.", 2)
 	else if(src.allowed(user))
 		src.locked = !src.locked
 		for(var/mob/O in viewers(user, 3))
 			if((O.client && !( O.blinded )))
-				O << text("\blue The locker has been []locked by [].", (src.locked ? null : "un"), user)
+				O << "\blue The locker has been [src.locked ? null : "un"]locked by [user]."
 		if(src.locked)
 			src.icon_state = src.icon_locked
 		else
