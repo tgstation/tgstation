@@ -4027,7 +4027,7 @@
 "bzw" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/medical/medbay)
 "bzx" = (/obj/machinery/sleeper,/turf/simulated/floor,/area/medical/sleeper)
 "bzy" = (/obj/machinery/sleep_console,/obj/machinery/light{dir = 1},/turf/simulated/floor{icon_state = "whitehall"; dir = 4},/area/medical/sleeper)
-"bzz" = (/obj/machinery/power/apc{dir = 1; name = "Surgery APC"; pixel_x = 0; pixel_y = 24},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/machinery/light_switch{pixel_x = 27},/turf/simulated/floor{icon_state = "white"},/area/medical/sleeper)
+"bzz" = (/obj/machinery/power/apc{dir = 1; name = "Sleeper Room APC"; pixel_x = 0; pixel_y = 24},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/machinery/light_switch{pixel_x = 27},/turf/simulated/floor{icon_state = "white"},/area/medical/sleeper)
 "bzA" = (/obj/machinery/camera{c_tag = "Genetics Cloning"; dir = 4; network = "SS13"},/obj/structure/table,/obj/item/weapon/book/manual/medical_cloning{pixel_y = 6},/obj/item/weapon/pen,/turf/simulated/floor{icon_state = "white"},/area/medical/genetics)
 "bzB" = (/obj/effect/landmark/start{name = "Geneticist"},/obj/structure/stool/bed/chair{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/medical/genetics)
 "bzC" = (/obj/machinery/computer/cloning,/turf/simulated/floor,/area/medical/genetics)
