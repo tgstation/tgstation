@@ -534,7 +534,7 @@ var/list/sacrificed = list()
 /////////////////////////////////////////FOURTEETH RUNE
 
 		communicate()
-			var/input = input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "") as text|null
+			var/input = copytext(sanitize(input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "") as text|null),1,MAX_MESSAGE_LEN)
 			if(!input)
 				if (istype(src))
 					return fizzle()

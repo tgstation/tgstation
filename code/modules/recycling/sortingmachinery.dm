@@ -52,25 +52,18 @@
 		else if(istype(W, /obj/item/weapon/pen))
 			switch(alert("What would you like to alter?",,"Title","Description", "Cancel"))
 				if("Title")
-					var/str = input(usr,"Label text?","Set label","")
+					var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
 					if(!str || !length(str))
 						usr << "\red Invalid text."
 						return
-					if(length(str) > 64)
-						usr << "\red Text too long."
-						return
-					var/label = str
 					for(var/mob/M in viewers())
-						M << "\blue [user] labels [src] as [label]."
-					src.name = "[src.name] ([label])"
+						M << "\blue [user] labels [src] as [str]."
+					src.name = "[src.name] ([str])"
 					update_icon()
 				if("Description")
-					var/str = input(usr,"Label text?","Set label","")
+					var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
 					if(!str || !length(str))
 						usr << "\red Invalid text."
-						return
-					if(length(str) > 64)
-						usr << "\red Text too long."
 						return
 					examtext = str
 					for(var/mob/M in viewers())
@@ -128,25 +121,18 @@
 		else if(istype(W, /obj/item/weapon/pen))
 			switch(alert("What would you like to alter?",,"Title","Description", "Cancel"))
 				if("Title")
-					var/str = input(usr,"Label text?","Set label","")
+					var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
 					if(!str || !length(str))
 						usr << "\red Invalid text."
 						return
-					if(length(str) > 64)
-						usr << "\red Text too long."
-						return
-					var/label = str
 					for(var/mob/M in viewers())
-						M << "\blue [user] labels [src] as [label]."
-					src.name = "[src.name] ([label])"
+						M << "\blue [user] labels [src] as [str]."
+					src.name = "[src.name] ([str])"
 					update_icon()
 				if("Description")
-					var/str = input(usr,"Label text?","Set label","")
+					var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
 					if(!str || !length(str))
 						usr << "\red Invalid text."
-						return
-					if(length(str) > 64)
-						usr << "\red Text too long."
 						return
 					examtext = str
 					for(var/mob/M in viewers())

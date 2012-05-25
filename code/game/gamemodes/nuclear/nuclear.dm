@@ -339,18 +339,15 @@
 
 /proc/nukelastname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
 	var/randomname = pick(last_names)
-	var/newname = input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)
+	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
 
-	if (length(newname) == 0)
+	if (!newname)
 		newname = randomname
 
-	if (newname)
-		if (newname == "Unknown")
+	else
+		if (newname == "Unknown" || newname == "floor" || newname == "wall" || newname == "rwall" || newname == "_")
 			M << "That name is reserved."
 			return nukelastname(M)
-		if (length(newname) >= 26)
-			newname = copytext(newname, 1, 26)
-		newname = dd_replacetext(newname, ">", "'")
 
 	return newname
 

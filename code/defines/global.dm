@@ -190,6 +190,8 @@ var
 	const/MAX_PAPER_MESSAGE_LEN = 3072
 	const/MAX_BOOK_MESSAGE_LEN = 9216
 
+	const/MAX_NAME_LEN = 26
+
 	list/paper_blacklist = list("script","frame","iframe","input","button","a","embed","object")
 
 	const/shuttle_time_in_station = 1800 // 3 minutes in the station

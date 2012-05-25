@@ -418,7 +418,7 @@ client/Topic(href, href_list, hsrc)
 
 			//~CARN: for renaming mobs (updates their real_name and their ID/PDA if applicable).
 			else if (href_list["rename"])
-				var/new_name = input(usr,"What would you like to name this mob?","Input a name") as text|null
+				var/new_name = copytext(sanitize(input(usr,"What would you like to name this mob?","Input a name") as text|null),1,MAX_NAME_LEN)
 				if(!new_name)	return
 				var/mob/M = locate(href_list["rename"])
 				if(!istype(M))	return
