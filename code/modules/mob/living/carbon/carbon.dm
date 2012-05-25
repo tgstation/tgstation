@@ -322,3 +322,23 @@
 		if(O.name == zone)
 			return O
 	return null
+
+/mob/living/carbon/human/drip()
+
+/mob/living/carbon/proc/vomit()
+	// only humanoids and monkeys can vomit
+	if(!istype(src,/mob/living/carbon/human) && !istype(src,/mob/living/carbon/monkey))
+		return
+
+	// Make the human vomit on the floor
+	for(var/mob/O in viewers(world.view, src))
+		O.show_message(text("<b>\red [] throws up!</b>", src), 1)
+	playsound(src.loc, 'splat.ogg', 50, 1)
+
+	var/turf/location = loc
+	if (istype(location, /turf/simulated))
+		location.add_vomit_floor(src, 1)
+
+	nutrition -= 20
+	adjustToxLoss(-3)
+
