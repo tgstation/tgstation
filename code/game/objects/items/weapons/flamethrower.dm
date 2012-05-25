@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 /obj/item/weapon/flamethrower/full/New(var/loc)
 	..()
 	weldtool = new/obj/item/weapon/weldingtool(src)
@@ -24,15 +26,14 @@
 	w_class = 3.0
 	m_amt = 500
 	origin_tech = "combat=1;plasmatech=1"
-	var
-		status = 0
-		throw_amount = 100
-		lit = 0	//on or off
-		operating = 0//cooldown
-		turf/previousturf = null
-		obj/item/weapon/weldingtool/weldtool = null
-		obj/item/device/assembly/igniter/igniter = null
-		obj/item/weapon/tank/plasma/ptank = null
+	var/status = 0
+	var/throw_amount = 100
+	var/lit = 0	//on or off
+	var/operating = 0//cooldown
+	var/turf/previousturf = null
+	var/obj/item/weapon/weldingtool/weldtool = null
+	var/obj/item/device/assembly/igniter/igniter = null
+	var/obj/item/weapon/tank/plasma/ptank = null
 
 
 	Del()

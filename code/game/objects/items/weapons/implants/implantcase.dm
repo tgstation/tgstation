@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 /obj/item/weapon/implantcase
 	name = "Glass Case"
 	desc = "A case containing an implant."
@@ -6,8 +8,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 1.0
-	var
-		obj/item/weapon/implant/imp = null
+	var/obj/item/weapon/implant/imp = null
 	proc
 		update()
 

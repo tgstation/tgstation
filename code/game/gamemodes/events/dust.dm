@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /*
 Space dust
 Commonish random event that causes small clumps of "space dust" to hit the station at high speeds.
@@ -34,9 +36,8 @@ The "dust" will damage the hull of the station causin minor hull breaches.
 	icon_state = "space_dust"
 	density = 1
 	anchored = 1
-	var
-		strength = 2 //ex_act severity number
-		life = 2 //how many things we hit before del(src)
+	var/strength = 2 //ex_act severity number
+	var/life = 2 //how many things we hit before del(src)
 
 	weak
 		strength = 3

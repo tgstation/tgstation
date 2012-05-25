@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 /obj/structure/closet/crate
 	desc = "A crate."
 	name = "Crate"
@@ -75,9 +77,8 @@
 	density = 1
 	icon_opened = "freezeropen"
 	icon_closed = "freezer"
-	var
-		target_temp = T0C - 40
-		cooling_power = 40
+	var/target_temp = T0C - 40
+	var/cooling_power = 40
 
 	return_air()
 		var/datum/gas_mixture/gas = (..())

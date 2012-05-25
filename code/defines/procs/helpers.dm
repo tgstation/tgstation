@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /proc/hex2num(hex)
 
 	if (!( istext(hex) ))
@@ -117,7 +119,7 @@
 			K += item
 	return K
 
-/proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#","ÿ"="ß"))
+/proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#","ï¿½"="ï¿½"))
 	for(var/char in repl_chars)
 		var/index = findtext(t, char)
 		while(index)
@@ -132,7 +134,7 @@
 	for(var/i=1, i<=length(text), i++)
 		switch(text2ascii(text,i))
 			if(62,60,92,47)	return			//rejects the text if it contains these bad characters: <, >, \ or /
-			if(127 to 255)	return			//rejects weird letters like ÿ
+			if(127 to 255)	return			//rejects weird letters like ï¿½
 			if(0 to 31)		return			//more weird stuff
 			if(32)							//whitespace
 			else			non_whitespace = 1
@@ -1725,19 +1727,17 @@ proc/oview_or_orange(distance = world.view , center = usr , type)
 	return
 
 /proc/stringsplit(txt, character)
-	var
-		cur_text = txt
-		last_found = 1
-		found_char = findtext(cur_text,character)
-		list/list = list()
+	var/cur_text = txt
+	var/last_found = 1
+	var/found_char = findtext(cur_text,character)
+	var/list/list = list()
 	if(found_char)
 		var/fs = copytext(cur_text,last_found,found_char)
 		list += fs
 		last_found = found_char+length(character)
 		found_char = findtext(cur_text,character,last_found)
 	while(found_char)
-		var
-			found_string = copytext(cur_text,last_found,found_char)
+		var/found_string = copytext(cur_text,last_found,found_char)
 		last_found = found_char+length(character)
 		list += found_string
 		found_char = findtext(cur_text,character,last_found)

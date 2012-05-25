@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 var/global/list/autolathe_recipes = list( \
 		/* screwdriver removed*/ \
 		new /obj/item/weapon/reagent_containers/glass/bucket(), \
@@ -51,10 +53,9 @@ var/global/list/autolathe_recipes_hidden = list( \
 	)
 
 /obj/machinery/autolathe
-	var
-		busy = 0
-		max_m_amount = 150000.0
-		max_g_amount = 75000.0
+	var/busy = 0
+	var/max_m_amount = 150000.0
+	var/max_g_amount = 75000.0
 
 	proc
 		wires_win(mob/user as mob)

@@ -1,10 +1,11 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 /obj/item/weapon/implant/freedom
 	name = "freedom"
 	desc = "Use this to escape from those evil Red Shirts."
 	color = "r"
-	var
-		activation_emote = "chuckle"
-		uses = 1.0
+	var/activation_emote = "chuckle"
+	var/uses = 1.0
 
 
 	New()

@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 #define SOLARGENRATE 1500
 /obj/machinery/power/solar
 	name = "solar panel"
@@ -10,15 +12,14 @@
 	use_power = 0
 	idle_power_usage = 0
 	active_power_usage = 0
-	var
-		health = 10
-		id = 1
-		obscured = 0
-		sunfrac = 0
-		adir = SOUTH
-		ndir = SOUTH
-		turn_angle = 0
-		obj/machinery/power/solar_control/control = null
+	var/health = 10
+	var/id = 1
+	var/obscured = 0
+	var/sunfrac = 0
+	var/adir = SOUTH
+	var/ndir = SOUTH
+	var/turn_angle = 0
+	var/obj/machinery/power/solar_control/control = null
 	proc
 		healthcheck()
 		updateicon()
@@ -162,15 +163,14 @@
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 20
-	var
-		id = 1
-		cdir = 0
-		gen = 0
-		lastgen = 0
-		track = 2			// 0= off  1=timed  2=auto (tracker)
-		trackrate = 600		// 300-900 seconds
-		trackdir = 1		// 0 =CCW, 1=CW
-		nexttime = 0
+	var/id = 1
+	var/cdir = 0
+	var/gen = 0
+	var/lastgen = 0
+	var/track = 2			// 0= off  1=timed  2=auto (tracker)
+	var/trackrate = 600		// 300-900 seconds
+	var/trackdir = 1		// 0 =CCW, 1=CW
+	var/nexttime = 0
 	proc
 		updateicon()
 		tracker_update(var/angle)

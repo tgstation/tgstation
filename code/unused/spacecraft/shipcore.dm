@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 /obj/machinery/shipcore
 	icon = 'craft.dmi'
 	icon_state = "core"
@@ -193,10 +195,9 @@ obj/machinery/shipcore/Topic(href, href_list)
 obj/machinery/ship_component
 	name = "ship component"
 	icon = 'craft.dmi'
-	var
-		obj/machinery/shipcore/core
-		required_draw = 0
-		active = 1
+	var/obj/machinery/shipcore/core
+	var/required_draw = 0
+	var/active = 1
 
 	proc
 		draw_power(var/n as num)
@@ -213,10 +214,9 @@ obj/machinery/ship_component/thruster
 	density = 1
 	opacity = 1
 
-	var
-		cooldown = 600 // In 1/10th seconds
-		lastused
-		ready = 0
+	var/cooldown = 600 // In 1/10th seconds
+	var/lastused
+	var/ready = 0
 	required_draw = 100
 
 	proc
@@ -249,9 +249,8 @@ obj/machinery/ship_component/engine
 	density = 1
 	opacity = 1
 
-	var
-		charge = 1000
-		capacity = 1000
+	var/charge = 1000
+	var/capacity = 1000
 
 	draw_power(var/n as num)
 		if(charge >= n)

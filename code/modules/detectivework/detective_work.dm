@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 //gloves w_uniform wear_suit shoes
 
 atom/var/list/suit_fibers
@@ -68,11 +70,10 @@ atom/proc/get_duplicate(var/atom/location)
 obj/machinery/computer/forensic_scanning
 	name = "High-Res Forensic Scanning Computer"
 	icon_state = "forensic"
-	var
-		obj/item/scanning
-		temp = ""
-		canclear = 1
-		authenticated = 0
+	var/obj/item/scanning
+	var/temp = ""
+	var/canclear = 1
+	var/authenticated = 0
 
 //Here's the structure for files: each entry is a list, and entry one in that list is the string of their
 //full and scrambled fingerprint.  This acts as the method to arrange evidence.  Each subsequent entry is list
@@ -82,14 +83,14 @@ obj/machinery/computer/forensic_scanning
 //	3: All fibers on the object
 //	4: All blood on the object
 //This is then used to show what objects were used to "find" the full print, as well as the fibers on it.
-		list/files
+	var/list/files
 //This holds objects (1) without prints, and their fibers(2) and blood(3).
-		list/misc
-		obj/item/weapon/f_card/card
+	var/list/misc
+	var/obj/item/weapon/f_card/card
 
-		scan_data = ""
-		scan_name = ""
-		scan_process = 0
+	var/scan_data = ""
+	var/scan_name = ""
+	var/scan_process = 0
 
 	req_access = list(access_forensics_lockers)
 
@@ -481,10 +482,9 @@ obj/machinery/computer/forensic_scanning
 	proc/add_data(var/atom/A, var/override = 0, var/tempfingerprints, var/tempsuit_fibers,var/tempblood_DNA)
 //What follows is massive.  It cross references all stored data in the scanner with the other stored data,
 //and what is already in the computer.  Not sure how bad the lag may/may not be.
-		var
-			backup_prints
-			backup_fibers
-			backup_DNA
+		var/backup_prints
+		var/backup_fibers
+		var/backup_DNA
 		if(override)
 			backup_prints = A.fingerprints
 			A.fingerprints = tempfingerprints
@@ -843,11 +843,10 @@ proc/get_tracks(mob/M)
 */
 
 proc/blood_incompatible(donor,receiver)
-	var
-		donor_antigen = copytext(donor,1,lentext(donor))
-		receiver_antigen = copytext(receiver,1,lentext(receiver))
-		donor_rh = findtext("+",donor)
-		receiver_rh = findtext("+",receiver)
+	var/donor_antigen = copytext(donor,1,lentext(donor))
+	var/receiver_antigen = copytext(receiver,1,lentext(receiver))
+	var/donor_rh = findtext("+",donor)
+	var/receiver_rh = findtext("+",receiver)
 	if(donor_rh && !receiver_rh) return 1
 	switch(receiver_antigen)
 		if("A")

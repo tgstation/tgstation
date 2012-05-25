@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 // Controls the emergency shuttle
 
 
@@ -10,15 +12,14 @@
 var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 
 datum/shuttle_controller
-	var
-		location = 0 //0 = somewhere far away (in spess), 1 = at SS13, 2 = returned from SS13
-		online = 0
-		direction = 1 //-1 = going back to central command, 1 = going to SS13, 2 = in transit to centcom (not recalled)
+	var/location = 0 //0 = somewhere far away (in spess), 1 = at SS13, 2 = returned from SS13
+	var/online = 0
+	var/direction = 1 //-1 = going back to central command, 1 = going to SS13, 2 = in transit to centcom (not recalled)
 
-		endtime			// timeofday that shuttle arrives
-		timelimit //important when the shuttle gets called for more than shuttlearrivetime
+	var/endtime			// timeofday that shuttle arrives
+	var/timelimit //important when the shuttle gets called for more than shuttlearrivetime
 		//timeleft = 360 //600
-		fake_recall = 0 //Used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
+	var/fake_recall = 0 //Used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
 
 
 	// call the shuttle

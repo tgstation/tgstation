@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 /obj/item/tk_grab
 	name = "Telekinetic Grab"
 	desc = "Magic"
@@ -8,10 +10,9 @@
 	w_class = 10.0
 	layer = 20
 
-	var
-		last_throw = 0
-		obj/focus = null
-		mob/living/host = null
+	var/last_throw = 0
+	var/obj/focus = null
+	var/mob/living/host = null
 
 
 	dropped(mob/user as mob)

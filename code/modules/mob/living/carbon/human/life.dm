@@ -1,12 +1,13 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 #define HUMAN_MAX_OXYLOSS 12 //Defines how much oxyloss humans can get per tick. No air applies this value.
 
 /mob/living/carbon/human
-	var
-		oxygen_alert = 0
-		toxins_alert = 0
-		fire_alert = 0
+	var/oxygen_alert = 0
+	var/toxins_alert = 0
+	var/fire_alert = 0
 
-		temperature_alert = 0
+	var/temperature_alert = 0
 
 
 /mob/living/carbon/human/Life()

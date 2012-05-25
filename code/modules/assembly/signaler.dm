@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 /obj/item/device/assembly/signaler
 	name = "Remote Signaling Device"
 	desc = "Used to remotely activate devices."
@@ -13,12 +15,11 @@
 	small_icon_state_left = "signaller_left"
 	small_icon_state_right = "signaller_right"
 
-	var
-		code = 30
-		frequency = 1457
-		delay = 0
-		airlock_wire = null
-		datum/radio_frequency/radio_connection
+	var/code = 30
+	var/frequency = 1457
+	var/delay = 0
+	var/airlock_wire = null
+	var/datum/radio_frequency/radio_connection
 
 	proc
 		signal()

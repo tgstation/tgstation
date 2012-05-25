@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 //cursors
 #define Default_Cursor 0
 #define Client_Cursor 1
@@ -37,9 +39,8 @@
 
 // Deprecated! See global.dm for new configuration vars
 /*
-var
-	DB_SERVER = "" // This is the location of your MySQL server (localhost is USUALLY fine)
-	DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is the default)
+var/DB_SERVER = "" // This is the location of your MySQL server (localhost is USUALLY fine)
+var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is the default)
 */
 
 DBConnection
@@ -69,15 +70,14 @@ DBConnection
 			return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[sqladdress]:[sqlport]"]",user,password)
 		NewQuery(sql_query,cursor_handler=src.default_cursor) return new/DBQuery(sql_query,src,cursor_handler)
 
-	var
-		_db_con // This variable contains a reference to the actual database connection.
-		dbi // This variable is a string containing the DBI MySQL requires.
-		user // This variable contains the username data.
-		password // This variable contains the password data.
-		default_cursor // This contains the default database cursor data.
+	var/_db_con // This variable contains a reference to the actual database connection.
+	var/dbi // This variable is a string containing the DBI MySQL requires.
+	var/user // This variable contains the username data.
+	var/password // This variable contains the password data.
+	var/default_cursor // This contains the default database cursor data.
 		//
-		server = ""
-		port = 3306
+	var/server = ""
+	var/port = 3306
 
 DBQuery
 	New(sql_query,DBConnection/connection_handler,cursor_handler)
@@ -134,25 +134,23 @@ DBQuery
 			else if(conversions.len < column) conversions.len = column
 			conversions[column] = conversion
 
-	var
-		sql // The sql query being executed.
-		default_cursor
-		list/columns //list of DB Columns populated by Columns()
-		list/conversions
-		list/item[0]  //list of data values populated by NextRow()
+	var/sql // The sql query being executed.
+	var/default_cursor
+	var/list/columns //list of DB Columns populated by Columns()
+	var/list/conversions
+	var/list/item[0]  //list of data values populated by NextRow()
 
-		DBConnection/db_connection
-		_db_query
+	var/DBConnection/db_connection
+	var/_db_query
 
 DBColumn
-	var
-		name
-		table
-		position //1-based index into item data
-		sql_type
-		flags
-		length
-		max_length
+	var/name
+	var/table
+	var/position //1-based index into item data
+	var/sql_type
+	var/flags
+	var/length
+	var/max_length
 
 	New(name_handler,table_handler,position_handler,type_handler,flag_handler,length_handler,max_length_handler)
 		src.name = name_handler

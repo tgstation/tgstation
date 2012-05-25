@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 /obj/effect/accelerated_particle
 	name = "Accelerated Particles"
 	desc = "Small things moving very fast."
@@ -5,9 +7,8 @@
 	icon_state = "particle"//Need a new icon for this
 	anchored = 1
 	density = 1
-	var
-		movement_range = 10
-		energy = 10
+	var/movement_range = 10
+	var/energy = 10
 
 	weak
 		movement_range = 8

@@ -1,7 +1,8 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /datum/game_mode
-	var
-		list/datum/mind/cult = list()
-		list/allwords = list("travel","self","see","hell","blood","join","tech","destroy", "other", "hide")
+	var/list/datum/mind/cult = list()
+	var/list/allwords = list("travel","self","see","hell","blood","join","tech","destroy", "other", "hide")
 
 
 /proc/iscultist(mob/living/M as mob)

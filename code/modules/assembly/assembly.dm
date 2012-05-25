@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 
 /proc/isassembly(O)
 	if(istype(O, /obj/item/device/assembly))
@@ -196,11 +198,10 @@ Desc:	If true is an object that can be attached to an assembly holder but is a s
 /obj/proc/IsSpecialAssembly()
 	return 0
 /*
-	var
-		small_icon_state = null//If this obj will go inside the assembly use this for icons
-		list/small_icon_state_overlays = null//Same here
-		obj/holder = null
-		cooldown = 0//To prevent spam
+	var/small_icon_state = null//If this obj will go inside the assembly use this for icons
+	var/list/small_icon_state_overlays = null//Same here
+	var/obj/holder = null
+	var/cooldown = 0//To prevent spam
 
 	proc
 		Activate()//Called when this assembly is pulsed by another one

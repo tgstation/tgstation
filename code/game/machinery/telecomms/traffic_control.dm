@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 
 
 
@@ -6,18 +8,17 @@
 	name = "Telecommunications Traffic Control"
 	icon_state = "computer_generic"
 
-	var
-		screen = 0				// the screen number:
-		list/servers = list()	// the servers located by the computer
-		mob/editingcode
-		mob/lasteditor
-		list/viewingcode = list()
-		obj/machinery/telecomms/server/SelectedServer
+	var/screen = 0				// the screen number:
+	var/list/servers = list()	// the servers located by the computer
+	var/mob/editingcode
+	var/mob/lasteditor
+	var/list/viewingcode = list()
+	var/obj/machinery/telecomms/server/SelectedServer
 
-		network = "NULL"		// the network to probe
-		temp = ""				// temporary feedback messages
+	var/network = "NULL"		// the network to probe
+	var/temp = ""				// temporary feedback messages
 
-		storedcode = ""			// code stored
+	var/storedcode = ""			// code stored
 
 
 	proc/update_ide()

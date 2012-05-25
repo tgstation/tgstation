@@ -1,22 +1,22 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 //UltraLight system, by Sukasa
 
-var
-	const
-		UL_LUMINOSITY = 0
-		UL_SQUARELIGHT = 0
+	const/ar/UL_LUMINOSITY = 0
+	const/ar/UL_SQUARELIGHT = 0
 
-		UL_RGB = 1
-		UL_ROUNDLIGHT = 2
+	const/ar/UL_RGB = 1
+	const/ar/UL_ROUNDLIGHT = 2
 
-		UL_I_FALLOFF_SQUARE = 0
-		UL_I_FALLOFF_ROUND = 1
+	const/ar/UL_I_FALLOFF_SQUARE = 0
+	const/ar/UL_I_FALLOFF_ROUND = 1
 
-		UL_I_LUMINOSITY = 0
-		UL_I_RGB = 1
+	const/ar/UL_I_LUMINOSITY = 0
+	const/ar/UL_I_RGB = 1
 
-		UL_I_LIT = 0
-		UL_I_EXTINGUISHED = 1
-		UL_I_ONZERO = 2
+	const/ar/UL_I_LIT = 0
+	const/ar/UL_I_EXTINGUISHED = 1
+	const/ar/UL_I_ONZERO = 2
 
 	ul_LightingEnabled = 1
 	ul_LightingResolution = 1
@@ -37,12 +37,11 @@ proc
 		return min(max(Value, 0), ul_Steps)
 
 atom
-	var
-		LuminosityRed = 0
-		LuminosityGreen = 0
-		LuminosityBlue = 0
+	var/LuminosityRed = 0
+	var/LuminosityGreen = 0
+	var/LuminosityBlue = 0
 
-		ul_Extinguished = UL_I_ONZERO
+	var/ul_Extinguished = UL_I_ONZERO
 
 	proc
 		ul_SetLuminosity(var/Red, var/Green = Red, var/Blue = Red)
@@ -240,14 +239,13 @@ atom
 			return
 
 turf
-	var
-		LightLevelRed = 0
-		LightLevelGreen = 0
-		LightLevelBlue = 0
+	var/LightLevelRed = 0
+	var/LightLevelGreen = 0
+	var/LightLevelBlue = 0
 
-		list/MaxRed = list( )
-		list/MaxGreen = list( )
-		list/MaxBlue = list( )
+	var/list/MaxRed = list( )
+	var/list/MaxGreen = list( )
+	var/list/MaxBlue = list( )
 
 	proc
 
@@ -304,13 +302,12 @@ turf
 			return
 
 area
-	var
-		ul_Overlay = null
-		ul_Lighting = 1
+	var/ul_Overlay = null
+	var/ul_Lighting = 1
 
-		LightLevelRed = 0
-		LightLevelGreen = 0
-		LightLevelBlue = 0
+	var/LightLevelRed = 0
+	var/LightLevelGreen = 0
+	var/LightLevelBlue = 0
 
 	proc
 		ul_Light(var/Red = LightLevelRed, var/Green = LightLevelGreen, var/Blue = LightLevelBlue)

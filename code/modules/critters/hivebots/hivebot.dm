@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 /obj/item/projectile/hivebotbullet
 	damage = 5
 	damage_type = BRUTE
@@ -25,9 +27,8 @@
 	melee_damage_upper = 3
 	angertext = "leaps at"
 	attacktext = "claws"
-	var
-		ranged = 0
-		rapid = 0
+	var/ranged = 0
+	var/rapid = 0
 	proc
 		Shoot(var/target, var/start, var/user, var/bullet = 0)
 		OpenFire(var/thing)//bluh ill rename this later or somethin
@@ -186,12 +187,11 @@
 	seekrange = 2
 	armor = 10
 
-	var
-		bot_type = "norm"
-		bot_amt = 10
-		spawn_delay = 600
-		turn_on = 0
-		auto_spawn = 1
+	var/bot_type = "norm"
+	var/bot_amt = 10
+	var/spawn_delay = 600
+	var/turn_on = 0
+	var/auto_spawn = 1
 	proc
 		warpbots()
 

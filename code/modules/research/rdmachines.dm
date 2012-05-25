@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 //All devices that link into the R&D console fall into thise type for easy identification and some shared procs.
 
 
@@ -6,17 +8,16 @@
 	density = 1
 	anchored = 1
 	use_power = 1
-	var
-		busy = 0
-		hacked = 0
-		disabled = 0
-		shocked = 0
-		list/wires = list()
-		hack_wire
-		disable_wire
-		shock_wire
-		opened = 0
-		obj/machinery/computer/rdconsole/linked_console
+	var/busy = 0
+	var/hacked = 0
+	var/disabled = 0
+	var/shocked = 0
+	var/list/wires = list()
+	var/hack_wire
+	var/disable_wire
+	var/shock_wire
+	var/opened = 0
+	var/obj/machinery/computer/rdconsole/linked_console
 
 	New()
 		..()

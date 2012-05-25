@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /obj/machinery/constructable_frame //Made into a seperate type to make future revisions easier.
 	name = "machine frame"
 	icon = 'stock_parts.dmi'
@@ -5,11 +7,10 @@
 	density = 1
 	anchored = 1
 	use_power = 0
-	var
-		obj/item/weapon/circuitboard/circuit = null
-		list/components = null
-		list/req_components = null
-		state = 1
+	var/obj/item/weapon/circuitboard/circuit = null
+	var/list/components = null
+	var/list/req_components = null
+	var/state = 1
 
 /obj/machinery/constructable_frame/machine_frame
 	attackby(obj/item/P as obj, mob/user as mob)

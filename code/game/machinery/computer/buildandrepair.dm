@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /obj/structure/computerframe
 	density = 1
 	anchored = 0
@@ -17,15 +19,14 @@
 	icon_state = "id_mod"
 	item_state = "electronic"
 	origin_tech = "programming=2"
-	var
-		id = null
-		frequency = null
-		build_path = null
-		board_type = "computer"
-		list/req_components = null
-		powernet = null
-		list/records = null
-		frame_desc = null
+	var/id = null
+	var/frequency = null
+	var/build_path = null
+	var/board_type = "computer"
+	var/list/req_components = null
+	var/powernet = null
+	var/list/records = null
+	var/frame_desc = null
 
 /obj/item/weapon/circuitboard/security
 	name = "Circuit board (Security)"

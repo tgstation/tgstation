@@ -1,15 +1,16 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 // Recruiting observers to play as pAIs
 
 var/datum/paiController/paiController			// Global handler for pAI candidates
 
 /datum/paiCandidate
-	var
-		name
-		key
-		description
-		role
-		comments
-		ready = 0
+	var/name
+	var/key
+	var/description
+	var/role
+	var/comments
+	var/ready = 0
 
 
 

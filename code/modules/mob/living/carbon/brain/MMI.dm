@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 /obj/item/device/mmi
 	name = "Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
@@ -14,11 +16,10 @@
 
 	//Revised. Brainmob is now contained directly within object of transfer. MMI in this case.
 
-	var
-		locked = 0
-		mob/living/carbon/brain/brainmob = null//The current occupant.
-		mob/living/silicon/robot = null//Appears unused.
-		obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
+	var/locked = 0
+	var/mob/living/carbon/brain/brainmob = null//The current occupant.
+	var/mob/living/silicon/robot = null//Appears unused.
+	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if(istype(O,/obj/item/brain) && !brainmob) //Time to stick a brain in it --NEO

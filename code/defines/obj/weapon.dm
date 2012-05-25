@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /obj/item/weapon
 	name = "weapon"
 	icon = 'weapons.dmi'
@@ -177,9 +179,8 @@
 	m_amt = 30
 	g_amt = 20
 	origin_tech = "magnets=2;biotech=2"
-	var
-		details = 0
-		recent_fail = 0
+	var/details = 0
+	var/recent_fail = 0
 
 /obj/item/device/mass_spectrometer/adv
 	name = "advanced mass-spectrometer"

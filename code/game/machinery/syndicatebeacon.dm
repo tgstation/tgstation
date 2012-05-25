@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 //  Beacon randomly spawns in space
 //	When a non-traitor (no special role in /mind) uses it, he is given the choice to become a traitor
 //	If he accepts there is a random chance he will be accepted, rejected, or rejected and killed
@@ -13,10 +15,9 @@
 	anchored = 1
 	density = 1
 
-	var
-		temptext = ""
-		selfdestructing = 0
-		charges = 1
+	var/temptext = ""
+	var/selfdestructing = 0
+	var/charges = 1
 
 	attack_hand(var/mob/user as mob)
 		usr.machine = src
@@ -113,10 +114,9 @@
 	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
 	stat = 0
 
-	var
-		active = 0 //It doesn't use up power, so use_power wouldn't really suit it
-		icontype = "beacon"
-		obj/structure/cable/attached = null
+	var/active = 0 //It doesn't use up power, so use_power wouldn't really suit it
+	var/icontype = "beacon"
+	var/obj/structure/cable/attached = null
 
 
 	proc/Activate(mob/user = null)

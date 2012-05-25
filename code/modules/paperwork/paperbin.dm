@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 /obj/item/weapon/paper_bin
 	name = "paper bin"
 	icon = 'bureaucracy.dmi'
@@ -8,10 +10,9 @@
 	throw_speed = 3
 	throw_range = 7
 	pressure_resistance = 10
-	var
-		amount = 30	//How much paper is in the bin.
-		list/papers = new/list() //List of papers put in the bin for reference.
-		sealed = 1  //If it's brandnew and unopened, it's sealed.
+	var/amount = 30	//How much paper is in the bin.
+	var/list/papers = new/list() //List of papers put in the bin for reference.
+	var/sealed = 1  //If it's brandnew and unopened, it's sealed.
 
 	MouseDrop(mob/user as mob)
 		if ((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))

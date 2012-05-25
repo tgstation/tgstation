@@ -1,12 +1,13 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /obj/machinery/computer/operating
 	name = "Operating Computer"
 	density = 1
 	anchored = 1.0
 	icon_state = "operating"
 	circuit = "/obj/item/weapon/circuitboard/operating"
-	var
-		mob/living/carbon/human/victim = null
-		obj/machinery/optable/table = null
+	var/mob/living/carbon/human/victim = null
+	var/obj/machinery/optable/table = null
 
 /obj/machinery/computer/operating/New()
 	..()

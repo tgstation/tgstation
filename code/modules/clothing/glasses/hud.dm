@@ -1,10 +1,11 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 /obj/item/clothing/glasses/hud
 	name = "HUD"
 	desc = "A heads-up display that provides important info in (almost) real time."
 	flags = null //doesn't protect eyes because it's a monocle, duh
 	origin_tech = "magnets=3;biotech=2"
-	var
-		list/icon/current = list() //the current hud icons
+	var/list/icon/current = list() //the current hud icons
 
 	proc
 		process_hud(var/mob/M)	return

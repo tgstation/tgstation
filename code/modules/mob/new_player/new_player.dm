@@ -1,10 +1,11 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 /mob/new_player
-	var
-		datum/preferences/preferences = null
-		ready = 0
-		spawning = 0//Referenced when you want to delete the new_player later on in the code.
-		totalPlayers = 0		 //Player counts for the Lobby tab
-		totalPlayersReady = 0
+	var/datum/preferences/preferences = null
+	var/ready = 0
+	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
+	var/totalPlayers = 0		 //Player counts for the Lobby tab
+	var/totalPlayersReady = 0
 
 	invisibility = 101
 

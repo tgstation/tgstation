@@ -1,14 +1,15 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /obj/machinery/computer/security
 	name = "Security Cameras"
 	desc = "Used to access the various cameras on the station."
 	icon_state = "cameras"
 	circuit = "/obj/item/weapon/circuitboard/security"
-	var
-		obj/machinery/camera/current = null
-		last_pic = 1.0
-		network = "SS13"
-		mapping = 0//For the overview file, interesting bit of code.
+	var/obj/machinery/camera/current = null
+	var/last_pic = 1.0
+	var/network = "SS13"
+	var/mapping = 0//For the overview file, interesting bit of code.
 
 
 	attack_ai(var/mob/user as mob)

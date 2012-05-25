@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 /obj/item/weapon/storage/lockbox
 	name = "lockbox"
 	desc = "A locked box."
@@ -8,12 +10,11 @@
 	max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	storage_slots = 4
 	req_access = list(access_armory)
-	var
-		locked = 1
-		broken = 0
-		icon_locked = "lockbox+l"
-		icon_closed = "lockbox"
-		icon_broken = "lockbox+b"
+	var/locked = 1
+	var/broken = 0
+	var/icon_locked = "lockbox+l"
+	var/icon_closed = "lockbox"
+	var/icon_broken = "lockbox+b"
 
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)

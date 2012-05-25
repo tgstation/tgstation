@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /obj
 	//var/datum/module/mod		//not used
 	var/m_amt = 0	// metal
@@ -941,8 +943,7 @@
 	throw_range = 5
 	origin_tech = "biotech=3"
 
-	var
-		mob/living/carbon/brain/brainmob = null
+	var/mob/living/carbon/brain/brainmob = null
 
 	New()
 		..()

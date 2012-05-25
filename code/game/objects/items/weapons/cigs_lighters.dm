@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 /*
 CONTAINS:
 MATCHES
@@ -111,13 +113,12 @@ ZIPPO
 	item_state = "cigoff"
 	w_class = 1
 	body_parts_covered = null
-	var
-		lit = 0
-		icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
-		icon_off = "cigoff"
-		type_butt = /obj/item/weapon/cigbutt
-		lastHolder = null
-		smoketime = 300
+	var/lit = 0
+	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
+	var/icon_off = "cigoff"
+	var/type_butt = /obj/item/weapon/cigbutt
+	var/lastHolder = null
+	var/smoketime = 300
 	proc
 		light(var/flavor_text = "[usr] lights the [name].")
 
@@ -237,13 +238,12 @@ ZIPPO
 	item_state = "cobpipeoff"
 	w_class = 1
 	body_parts_covered = null
-	var
-		lit = 0
-		icon_on = "cobpipeon"  //Note - these are in masks.dmi
-		icon_off = "cobpipeoff"
-		lastHolder = null
-		smoketime = 100
-		maxsmoketime = 100 //make sure this is equal to your smoketime
+	var/lit = 0
+	var/icon_on = "cobpipeon"  //Note - these are in masks.dmi
+	var/icon_off = "cobpipeoff"
+	var/lastHolder = null
+	var/smoketime = 100
+	var/maxsmoketime = 100 //make sure this is equal to your smoketime
 	proc
 		light(var/flavor_text = "[usr] lights the [name].")
 

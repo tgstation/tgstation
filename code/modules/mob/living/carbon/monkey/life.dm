@@ -1,10 +1,11 @@
-/mob/living/carbon/monkey
-	var
-		oxygen_alert = 0
-		toxins_alert = 0
-		fire_alert = 0
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
-		temperature_alert = 0
+/mob/living/carbon/monkey
+	var/oxygen_alert = 0
+	var/toxins_alert = 0
+	var/fire_alert = 0
+
+	var/temperature_alert = 0
 
 
 /mob/living/carbon/monkey/Life()

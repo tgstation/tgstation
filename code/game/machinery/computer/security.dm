@@ -1,22 +1,23 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /obj/machinery/computer/secure_data//TODO:SANITY
 	name = "Security Records"
 	desc = "Used to view and edit personnel's security records"
 	icon_state = "security"
 	req_access = list(access_security)
 	circuit = "/obj/item/weapon/circuitboard/secure_data"
-	var
-		obj/item/weapon/card/id/scan = null
-		authenticated = null
-		rank = null
-		screen = null
-		datum/data/record/active1 = null
-		datum/data/record/active2 = null
-		a_id = null
-		temp = null
-		printing = null
-		can_change_id = 0
-		list/Perp
-		tempname = null
+	var/obj/item/weapon/card/id/scan = null
+	var/authenticated = null
+	var/rank = null
+	var/screen = null
+	var/datum/data/record/active1 = null
+	var/datum/data/record/active2 = null
+	var/a_id = null
+	var/temp = null
+	var/printing = null
+	var/can_change_id = 0
+	var/list/Perp
+	var/tempname = null
 
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O as obj, user as mob)

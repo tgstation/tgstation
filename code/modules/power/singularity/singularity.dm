@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 var/global/list/uneatable = list(
 	/turf/space,
 	/obj/effect/overlay
@@ -13,23 +15,22 @@ var/global/list/uneatable = list(
 	layer = 6
 	unacidable = 1 //Don't comment this out.
 	use_power = 0
-	var
-		current_size = 1
-		allowed_size = 1
-		contained = 1 //Are we going to move around?
-		energy = 100 //How strong are we?
-		dissipate = 1 //Do we lose energy over time?
-		dissipate_delay = 10
-		dissipate_track = 0
-		dissipate_strength = 1 //How much energy do we lose?
-		move_self = 1 //Do we move on our own?
-		grav_pull = 4 //How many tiles out do we pull?
-		consume_range = 0 //How many tiles out do we eat
-		event_chance = 15 //Prob for event each tick
-		target = null //its target. moves towards the target if it has one
-		last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
-		teleport_del = 0
-		last_warning
+	var/current_size = 1
+	var/allowed_size = 1
+	var/contained = 1 //Are we going to move around?
+	var/energy = 100 //How strong are we?
+	var/dissipate = 1 //Do we lose energy over time?
+	var/dissipate_delay = 10
+	var/dissipate_track = 0
+	var/dissipate_strength = 1 //How much energy do we lose?
+	var/move_self = 1 //Do we move on our own?
+	var/grav_pull = 4 //How many tiles out do we pull?
+	var/consume_range = 0 //How many tiles out do we eat
+	var/event_chance = 15 //Prob for event each tick
+	var/target = null //its target. moves towards the target if it has one
+	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
+	var/teleport_del = 0
+	var/last_warning
 
 	New(loc, var/starting_energy = 50, var/temp = 0)
 		//CARN: admin-alert for chuckle-fuckery.

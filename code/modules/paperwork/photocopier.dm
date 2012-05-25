@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 /obj/machinery/photocopier
 	name = "Photocopier"
 	icon = 'library.dmi'
@@ -8,11 +10,10 @@
 	idle_power_usage = 30
 	active_power_usage = 200
 	power_channel = EQUIP
-	var
-		obj/item/weapon/paper/copy = null	//what's in the copier!
-		copies = 1	//how many copies to print!
-		toner = 30 //how much toner is left! woooooo~
-		maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
+	var/obj/item/weapon/paper/copy = null	//what's in the copier!
+	var/copies = 1	//how many copies to print!
+	var/toner = 30 //how much toner is left! woooooo~
+	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 
 	attack_ai(mob/user as mob)
 		return src.attack_hand(user)

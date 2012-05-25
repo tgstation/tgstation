@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 +++++++++++++++++++++++++++++++++//                    //++++++++++++++++++++++++++++++++++
@@ -163,7 +165,7 @@ ________________________________________________________________________________
 					U << "\blue Extending neural-net interface...\nNow monitoring brain wave pattern..."
 				if(3)
 					if(U.stat==2||U.health<=0)
-						U << "\red <B>FÄ†AL ÈRrÖR</B>: 344--93#†&&21 BRÄÌN |/|/aVÈ PATT$RN <B>RED</B>\nA-A-aBÖrTÌNG..."
+						U << "\red <B>FÄ†AL ï¿½Rrï¿½R</B>: 344--93#ï¿½&&21 BRï¿½ï¿½N |/|/aVï¿½ PATT$RN <B>RED</B>\nA-A-aBï¿½rTï¿½NG..."
 						unlock_suit()
 						break
 					lock_suit(U,1)//Check for icons.
@@ -659,24 +661,24 @@ ________________________________________________________________________________
 							switch(i)
 								if(0)
 									A << "\red <b>WARNING</b>: \black purge procedure detected. \nNow hacking host..."
-									U << "\red <b>WARNING</b>: HACKING AT††TEMP† IN PR0GRESs!"
+									U << "\red <b>WARNING</b>: HACKING ATï¿½ï¿½TEMPï¿½ IN PR0GRESs!"
 									spideros = 0
 									k_unlock = 0
 									U << browse(null, "window=spideros")
 								if(1)
 									A << "Disconnecting neural interface..."
-									U << "\red <b>WAR†NING</b>: þR†O0†GrÈ--S 2&3%"
+									U << "\red <b>WARï¿½NING</b>: ï¿½Rï¿½O0ï¿½Grï¿½--S 2&3%"
 								if(2)
 									A << "Shutting down external protocol..."
-									U << "\red <b>WARNING</b>: PþþþþRÖ†GrÈ5S 677^%"
+									U << "\red <b>WARNING</b>: Pï¿½ï¿½ï¿½ï¿½RÖ†Grï¿½5S 677^%"
 									cancel_stealth()
 								if(3)
 									A << "Connecting to kernel..."
-									U << "\red <b>WARNING</b>: ÈR†rÖR_404"
+									U << "\red <b>WARNING</b>: ï¿½Rï¿½rï¿½R_404"
 									A.control_disabled = 0
 								if(4)
 									A << "Connection established and secured. Menu updated."
-									U << "\red <b>WÄr#nING</b>: #%@!!WÈ†|_4þ54@ \nUnÄB88l3 TÖ LÖ-†o-LÖCaT2 ##$!ÈRNÈ0..%.."
+									U << "\red <b>Wï¿½r#nING</b>: #%@!!WÈ†|_4ï¿½54@ \nUnï¿½B88l3 Tï¿½ Lï¿½-ï¿½o-Lï¿½CaT2 ##$!ï¿½RNï¿½0..%.."
 									grant_AI_verbs()
 									return
 							sleep(s_delay)
@@ -918,7 +920,7 @@ ________________________________________________________________________________
 			U << "There are <B>[s_bombs]</B> smoke bombs remaining."
 			U << "There are <B>[a_boost]</B> adrenaline boosters remaining."
 		else
-			U <<  "ÈrrÖR Ða†Ða†Ä No-†-† fÖÚNÐ 3RRÖr"
+			U <<  "ï¿½rrï¿½R ï¿½aï¿½ï¿½aï¿½ï¿½ No-ï¿½-ï¿½ fï¿½ï¿½Nï¿½ 3RRï¿½r"
 
 /*
 ===================================================================================
@@ -1307,10 +1309,9 @@ It is possible to destroy the net by the occupant or someone else.
 	mouse_opacity = 1//So you can hit it with stuff.
 	anchored = 1//Can't drag/grab the trapped mob.
 
-	var
-		health = 25//How much health it has.
-		mob/living/affecting = null//Who it is currently affecting, if anyone.
-		mob/living/master = null//Who shot web. Will let this person know if the net was successful or failed.
+	var/health = 25//How much health it has.
+	var/mob/living/affecting = null//Who it is currently affecting, if anyone.
+	var/mob/living/master = null//Who shot web. Will let this person know if the net was successful or failed.
 
 	proc
 		healthcheck()

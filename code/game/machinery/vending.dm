@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /*
 Important notice: I changed "vendingwindow" to "vendingwindow_n" (n for new) because
 I extended the window's height a small amount and, for some reason, BYOND saves the
@@ -10,11 +12,10 @@ To combat this, I changed the window name. -- Doohl
 #define PRODUCTS_PER_PAGE		15 // # of products per page
 
 /obj/machinery/vending
-	var/const
-		WIRE_EXTEND = 1
-		WIRE_SCANID = 2
-		WIRE_SHOCK = 3
-		WIRE_SHOOTINV = 4
+	var/const/WIRE_EXTEND = 1
+	var/const/WIRE_SCANID = 2
+	var/const/WIRE_SHOCK = 3
+	var/const/WIRE_SHOOTINV = 4
 	var/page
 	var/builtpaths = 0
 	var/lastpaths

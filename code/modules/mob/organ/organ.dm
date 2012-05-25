@@ -1,7 +1,8 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 /datum/organ
-	var
-		name = "organ"
-		owner = null
+	var/name = "organ"
+	var/owner = null
 
 
 	proc/process()
@@ -18,17 +19,16 @@
 ****************************************************/
 /datum/organ/external
 	name = "external"
-	var
-		icon_name = null
-		body_part = null
+	var/icon_name = null
+	var/body_part = null
 
-		damage_state = "00"
-		brute_dam = 0
-		burn_dam = 0
-		bandaged = 0
-		max_damage = 0
-		wound_size = 0
-		max_size = 0
+	var/damage_state = "00"
+	var/brute_dam = 0
+	var/burn_dam = 0
+	var/bandaged = 0
+	var/max_damage = 0
+	var/wound_size = 0
+	var/max_size = 0
 
 
 	proc/take_damage(brute, burn)

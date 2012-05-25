@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 /obj/item/device/assembly/prox_sensor
 	name = "proximity sensor"
 	desc = "Used for scanning and alerting when someone enters a certain proximity."
@@ -11,10 +13,9 @@
 	small_icon_state_left = "prox_left"
 	small_icon_state_right = "prox_right"
 
-	var
-		scanning = 0
-		timing = 0
-		time = 10
+	var/scanning = 0
+	var/timing = 0
+	var/time = 10
 
 	proc
 		toggle_scan()

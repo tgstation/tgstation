@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /*
  * GAMEMODES (by Rastaf0)
  *
@@ -11,23 +13,22 @@
 
 
 /datum/game_mode
-	var
-		name = "invalid"
-		config_tag = null
-		intercept_hacked = 0
-		votable = 1
-		probability = 1
-		station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
-		explosion_in_progress = 0 //sit back and relax
-		list/datum/mind/modePlayer = new
-		list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
-		list/protected_jobs = list()	// Jobs that can't be tratiors because
-		required_players = 0
-		required_enemies = 0
-		recommended_enemies = 0
-		uplink_welcome
-		uplink_uses
-		uplink_items = {"Highly Visible and Dangerous Weapons;
+	var/name = "invalid"
+	var/config_tag = null
+	var/intercept_hacked = 0
+	var/votable = 1
+	var/probability = 1
+	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
+	var/explosion_in_progress = 0 //sit back and relax
+	var/list/datum/mind/modePlayer = new
+	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
+	var/list/protected_jobs = list()	// Jobs that can't be tratiors because
+	var/required_players = 0
+	var/required_enemies = 0
+	var/recommended_enemies = 0
+	var/uplink_welcome
+	var/uplink_uses
+	var/uplink_items = {"Highly Visible and Dangerous Weapons;
 /obj/item/weapon/gun/projectile:6:Revolver;
 /obj/item/ammo_magazine/a357:2:Ammo-357;
 /obj/item/weapon/gun/energy/crossbow:5:Energy Crossbow;

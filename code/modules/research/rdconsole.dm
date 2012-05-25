@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 /*
 Research and Development (R&D) Console
 
@@ -32,18 +34,17 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole
 	name = "R&D Console"
 	icon_state = "rdcomp"
-	var
-		datum/research/files							//Stores all the collected research data.
-		obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
-		obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
+	var/datum/research/files							//Stores all the collected research data.
+	var/obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
+	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
 
-		obj/machinery/r_n_d/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
-		obj/machinery/r_n_d/protolathe/linked_lathe = null				//Linked Protolathe
-		obj/machinery/r_n_d/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
+	var/obj/machinery/r_n_d/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
+	var/obj/machinery/r_n_d/protolathe/linked_lathe = null				//Linked Protolathe
+	var/obj/machinery/r_n_d/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
 
-		screen = 1.0	//Which screen is currently showing.
-		id = 0			//ID of the computer (for server restrictions).
-		sync = 1		//If sync = 0, it doesn't show up on Server Control Console
+	var/screen = 1.0	//Which screen is currently showing.
+	var/id = 0			//ID of the computer (for server restrictions).
+	var/sync = 1		//If sync = 0, it doesn't show up on Server Control Console
 
 	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 

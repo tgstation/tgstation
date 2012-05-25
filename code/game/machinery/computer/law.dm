@@ -1,11 +1,12 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /obj/machinery/computer/aiupload
 	name = "AI Upload"
 	desc = "Used to upload laws to the AI."
 	icon_state = "command"
 	circuit = "/obj/item/weapon/circuitboard/aiupload"
-	var
-		mob/living/silicon/ai/current = null
-		opened = 0
+	var/mob/living/silicon/ai/current = null
+	var/opened = 0
 
 
 	verb/AccessInternals()

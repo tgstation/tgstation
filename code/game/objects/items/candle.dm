@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 #define CANDLE_LUM 3
 
 /obj/item/candle
@@ -7,9 +9,8 @@
 	icon_state = "candle1"
 	item_state = "candle1"
 
-	var
-		wax = 200
-		lit = 0
+	var/wax = 200
+	var/lit = 0
 	proc
 		light(var/flavor_text = "\red [usr] lights the [name].")
 

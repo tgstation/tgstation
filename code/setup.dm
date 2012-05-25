@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 #define PI 3.1415
 
 #define R_IDEAL_GAS_EQUATION	8.31 //kPa*L/(K*mol)
@@ -193,24 +195,22 @@ var/MAX_EXPLOSION_RANGE = 14
 #define FULL_BODY		2047
 
 //bitflags for mutations
-var/const
-	TK				=(1<<0)
-	COLD_RESISTANCE	=(1<<1)
-	XRAY			=(1<<2)
-	HULK			=(1<<3)
-	CLUMSY			=(1<<4)
-	FAT				=(1<<5)
-	HUSK			=(1<<6)
-	LASER			=(1<<7)
-	HEAL			=(1<<8)
-	NOCLONE			=(1<<9)
+var/const/TK				=(1<<0)
+var/const/COLD_RESISTANCE	=(1<<1)
+var/const/XRAY			=(1<<2)
+var/const/HULK			=(1<<3)
+var/const/CLUMSY			=(1<<4)
+var/const/FAT				=(1<<5)
+var/const/HUSK			=(1<<6)
+var/const/LASER			=(1<<7)
+var/const/HEAL			=(1<<8)
+var/const/NOCLONE			=(1<<9)
 
 
 //mob/var/stat things
-var/const
-	CONSCIOUS = 0
-	UNCONSCIOUS = 1
-	DEAD = 2
+var/const/CONSCIOUS = 0
+var/const/UNCONSCIOUS = 1
+var/const/DEAD = 2
 
 // channel numbers for power
 #define EQUIP 1
@@ -239,12 +239,11 @@ var/const
 #define MAX_STACK_AMOUNT_GLASS 50
 #define MAX_STACK_AMOUNT_RODS 60
 
-var/const
-	GAS_O2 = 1 << 0
-	GAS_N2 = 1 << 1
-	GAS_PL = 1 << 2
-	GAS_CO2 = 1 << 3
-	GAS_N2O = 1 << 4
+var/const/GAS_O2 = 1 << 0
+var/const/GAS_N2 = 1 << 1
+var/const/GAS_PL = 1 << 2
+var/const/GAS_CO2 = 1 << 3
+var/const/GAS_N2O = 1 << 4
 
 
 var/list/accessable_z_levels = list("3" = 30, "4" = 70)

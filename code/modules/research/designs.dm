@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 /***************************************************************
 **						Design Datums						  **
 **	All the data for building stuff and tracking reliability. **
@@ -39,18 +41,17 @@ other types of metals and chemistry for reagents).
 
 datum
 	design						//Datum for object designs, used in construction
-		var
-			name = "Name"					//Name of the created object.
-			desc = "Desc"					//Description of the created object.
-			id = "id"						//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols
-			list/req_tech = list()			//IDs of that techs the object originated from and the minimum level requirements.
-			reliability_mod = 0				//Reliability modifier of the device at it's starting point.
-			reliability_base = 100			//Base reliability of a device before modifiers.
-			reliability = 100				//Reliability of the device.
-			build_type = null				//Flag as to what kind machine the design is built in. See defines.
-			list/materials = list()			//List of materials. Format: "id" = amount.
-			build_path = ""					//The file path of the object that gets created
-			locked = 0						//If true it will spawn inside a lockbox with currently sec access
+		var/name = "Name"					//Name of the created object.
+		var/desc = "Desc"					//Description of the created object.
+		var/id = "id"						//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols
+		var/list/req_tech = list()			//IDs of that techs the object originated from and the minimum level requirements.
+		var/reliability_mod = 0				//Reliability modifier of the device at it's starting point.
+		var/reliability_base = 100			//Base reliability of a device before modifiers.
+		var/reliability = 100				//Reliability of the device.
+		var/build_type = null				//Flag as to what kind machine the design is built in. See defines.
+		var/list/materials = list()			//List of materials. Format: "id" = amount.
+		var/build_path = ""					//The file path of the object that gets created
+		var/locked = 0						//If true it will spawn inside a lockbox with currently sec access
 
 		proc
 			//A proc to calculate the reliability of a design based on tech levels and innate modifiers.

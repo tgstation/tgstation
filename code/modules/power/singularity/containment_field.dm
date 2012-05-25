@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 /obj/machinery/containment_field
 	name = "Containment Field"
 	desc = "An energy field."
@@ -7,9 +9,8 @@
 	density = 0
 	unacidable = 1
 	use_power = 0
-	var
-		obj/machinery/field_generator/FG1 = null
-		obj/machinery/field_generator/FG2 = null
+	var/obj/machinery/field_generator/FG1 = null
+	var/obj/machinery/field_generator/FG2 = null
 
 	New()
 		spawn(1)

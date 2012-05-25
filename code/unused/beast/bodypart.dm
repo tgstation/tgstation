@@ -1,7 +1,8 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 datum/bodypart
-	var
-		name = "unidentified bodypart"
-		health = 50
+	var/name = "unidentified bodypart"
+	var/health = 50
 
 datum/bodypart/body
 	health = 100
