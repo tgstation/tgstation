@@ -45,3 +45,8 @@
 	name = "Scientist Labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a purple stripe on the shoulder."
 	icon_state = "labcoat_tox_open"
+
+/obj/item/clothing/suit/storage/labcoat/fr_jacket
+	name = "first responder jacket"
+	desc = "\"The first moments are the most crucial.\""
+	icon_state = "fr_jacket_open"
