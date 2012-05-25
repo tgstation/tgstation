@@ -127,16 +127,11 @@
 	icon_state = "valve"
 
 	if(tank_one)
-		var/icon/I = new(src.icon, icon_state = "[tank_one.icon_state]")
-		src.underlays += I
+		src.underlays += "[tank_one.icon_state]"
 	if(tank_two)
-		var/icon/J = new(src.icon, icon_state = "[tank_two.icon_state]")
+		var/icon/J = new(icon, icon_state = "[tank_two.icon_state]")
 		J.Shift(WEST, 13)
 		src.underlays += J
-
-	if(attached_device)
-		var/icon/K = new(src.icon, icon_state = "device")
-		src.overlays += K
 
 /obj/item/device/transfer_valve/proc/merge_gases()
 	tank_two.air_contents.volume += tank_one.air_contents.volume
