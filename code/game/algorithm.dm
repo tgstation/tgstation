@@ -77,6 +77,130 @@ proc/countJob(rank)
 		del(W)
 	return null
 
+/mob/living/carbon/human/proc/equip_to_appropriate_slot(obj/item/W)
+	if(!W)
+		return
+	if(!ishuman(src))
+		return
+
+	if(W.slot_flags & SLOT_BACK)
+		if(!src.back)
+			if( src.get_active_hand() == W )
+				src.u_equip(W)
+			src.back = W
+			update_clothing()
+			return
+
+	if(W.slot_flags & SLOT_ID)
+		if(!src.wear_id)
+			if( src.get_active_hand() == W )
+				src.u_equip(W)
+			src.wear_id = W
+			update_clothing()
+			return
+
+	if(W.slot_flags & SLOT_ICLOTHING)
+		if(!src.w_uniform)
+			if( src.get_active_hand() == W )
+				src.u_equip(W)
+			src.w_uniform = W
+			update_clothing()
+			return
+
+	if(W.slot_flags & SLOT_OCLOTHING)
+		if(!src.wear_suit)
+			if( src.get_active_hand() == W )
+				src.u_equip(W)
+			src.wear_suit = W
+			update_clothing()
+			return
+
+	if(W.slot_flags & SLOT_MASK)
+		if(!src.wear_mask)
+			if( src.get_active_hand() == W )
+				src.u_equip(W)
+			src.wear_mask = W
+			update_clothing()
+			return
+
+	if(W.slot_flags & SLOT_HEAD)
+		if(!src.head)
+			if( src.get_active_hand() == W )
+				src.u_equip(W)
+			src.head = W
+			update_clothing()
+			return
+
+	if(W.slot_flags & SLOT_FEET)
+		if(!src.shoes)
+			if( src.get_active_hand() == W )
+				src.u_equip(W)
+			src.shoes = W
+			update_clothing()
+			return
+
+	if(W.slot_flags & SLOT_GLOVES)
+		if(!src.gloves)
+			if( src.get_active_hand() == W )
+				src.u_equip(W)
+			src.gloves = W
+			update_clothing()
+			return
+
+	if(W.slot_flags & SLOT_EARS)
+		if(!src.ears)
+			if( src.get_active_hand() == W )
+				src.u_equip(W)
+			src.ears = W
+			update_clothing()
+			return
+
+	if(W.slot_flags & SLOT_EYES)
+		if(!src.glasses)
+			if( src.get_active_hand() == W )
+				src.u_equip(W)
+			src.glasses = W
+			update_clothing()
+			return
+
+	if(W.slot_flags & SLOT_BELT)
+		if(!src.belt)
+			if( src.get_active_hand() == W )
+				src.u_equip(W)
+			src.belt = W
+			update_clothing()
+			return
+
+	//Suit storage
+	var/confirm
+	if (wear_suit)
+		if(wear_suit.allowed)
+			if (istype(W, /obj/item/device/pda) || istype(W, /obj/item/weapon/pen))
+				confirm = 1
+			if (is_type_in_list(W, wear_suit.allowed))
+				confirm = 1
+		if(confirm)
+			src.u_equip(W)
+			src.s_store = W
+			update_clothing()
+			return
+
+	//Pockets
+	if ( !( W.slot_flags & SLOT_DENYPOCKET ) )
+		if(!src.l_store)
+			if ( W.w_class <= 2 || ( W.slot_flags & SLOT_POCKET ) )
+				u_equip(W)
+				l_store = W
+				update_clothing()
+				return
+		if(!src.r_store)
+			if ( W.w_class <= 2 || ( W.slot_flags & SLOT_POCKET ) )
+				u_equip(W)
+				r_store = W
+				update_clothing()
+				return
+
+
 /mob/living/carbon/human/proc/equip_if_possible(obj/item/W, slot, del_on_fail = 1) // since byond doesn't seem to have pointers, this seems like the best way to do this :/
 	//warning: icky code
 	var/equipped = 0
