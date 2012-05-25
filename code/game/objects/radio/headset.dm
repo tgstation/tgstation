@@ -9,7 +9,7 @@
 	canhear_range = 1 // can't hear headsets from very far away
 
 	slot_flags = SLOT_EARS
-	var/protective_temperature = 0
+	protective_temperature = 0
 	var/translate_binary = 0
 	var/translate_hive = 0
 	var/obj/item/device/encryptionkey/keyslot1 = null

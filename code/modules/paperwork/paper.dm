@@ -10,15 +10,15 @@
 	layer = 4
 	pressure_resistance = 1
 	slot_flags = SLOT_HEAD
+	see_face = 1
+	body_parts_covered = HEAD
+	protective_temperature = 0
 
 	var/info	//What's actually written on the paper.
 	var/info_links //A different version of the paper which includes html links at fields and EOF
 	var/stamps	//The (text for the) stamps on the paper.
 	var/fields  //Amount of user created fields
 	var/list/stamped
-	var/see_face = 1
-	var/body_parts_covered = HEAD
-	var/protective_temperature = 0
 	var/rigged = 0
 	var/spam_flag = 0
 

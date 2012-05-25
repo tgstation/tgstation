@@ -233,7 +233,7 @@
 	origin_tech = "combat=3"
 
 /obj/item/weapon/melee/energy/sword
-	var/color
+	color
 	name = "energy sword"
 	desc = "May the force be within you."
 	icon_state = "sword0"
@@ -323,7 +323,7 @@
 	w_class = 1.0
 	throw_speed = 2
 	throw_range = 10
-	var/color = "white"
+	color = "white"
 
 /obj/item/weapon/bedsheet/blue
 	icon_state = "sheetblue"
@@ -547,7 +547,7 @@
 	icon = 'power.dmi'
 	icon_state = "coil_red"
 	var/amount = MAXCOIL
-	var/color = "red"
+	color = "red"
 	desc = "A coil of power cable."
 	throwforce = 10
 	w_class = 2.0

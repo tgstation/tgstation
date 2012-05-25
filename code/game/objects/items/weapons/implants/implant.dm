@@ -1,15 +1,22 @@
 /obj/item/weapon/implant
 	name = "implant"
-	var
-		implanted = null
-		mob/imp_in = null
-		color = "b"
-		allow_reagents = 0
-	proc
-		trigger(emote, source as mob)
-		activate()
-		implanted(source as mob)
-		get_data()
+	var/implanted = null
+	var/mob/imp_in = null
+	color = "b"
+	var/allow_reagents = 0
+
+	proc/trigger(emote, source as mob)
+		return
+
+	proc/activate()
+		return
+
+	proc/implanted(source as mob)
+		return
+
+	proc/get_data()
+		return
+
 
 
 	trigger(emote, source as mob)
@@ -32,9 +39,8 @@
 /obj/item/weapon/implant/uplink
 	name = "uplink"
 	desc = "Summon things."
-	var
-		activation_emote = "chuckle"
-		obj/item/device/uplink/radio/uplink = null
+	var/activation_emote = "chuckle"
+	var/obj/item/device/uplink/radio/uplink = null
 
 
 	New()
@@ -61,8 +67,7 @@
 /obj/item/weapon/implant/tracking
 	name = "tracking"
 	desc = "Track with this."
-	var
-		id = 1.0
+	var/id = 1.0
 
 
 	get_data()

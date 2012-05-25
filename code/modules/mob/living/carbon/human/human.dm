@@ -23,18 +23,18 @@
 	var/age = 30.0
 	var/b_type = "A+"
 
-	var/obj/item/clothing/suit/wear_suit = null
-	var/obj/item/clothing/under/w_uniform = null
-	var/obj/item/clothing/shoes/shoes = null
-	var/obj/item/weapon/belt = null
-	var/obj/item/clothing/gloves/gloves = null
-	var/obj/item/clothing/glasses/glasses = null
-	var/obj/item/clothing/head/head = null
-	var/obj/item/clothing/ears/ears = null
+	var/obj/item/wear_suit = null
+	var/obj/item/w_uniform = null
+	var/obj/item/shoes = null
+	var/obj/item/belt = null
+	var/obj/item/gloves = null
+	var/obj/item/glasses = null
+	var/obj/item/head = null
+	var/obj/item/ears = null
 	var/obj/item/weapon/card/id/wear_id = null
-	var/obj/item/weapon/r_store = null
-	var/obj/item/weapon/l_store = null
-	var/obj/item/weapon/s_store = null
+	var/obj/item/r_store = null
+	var/obj/item/l_store = null
+	var/obj/item/s_store = null
 
 	var/icon/stand_icon = null
 	var/icon/lying_icon = null

@@ -157,11 +157,13 @@
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return
-	if(M.gloves)
-		if(M.gloves.cell)
-			if(M.a_intent == "hurt")
-				if(M.gloves.cell.charge >= 2500)
-					M.gloves.cell.charge -= 2500
+
+	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
+		var/obj/item/clothing/gloves/G = M.gloves
+		if(G.cell)
+			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+				if(G.cell.charge >= 2500)
+					G.cell.charge -= 2500
 					Weaken(5)
 					if (stuttering < 5)
 						stuttering = 5

@@ -292,6 +292,20 @@
 //	causeerrorheresoifixthis
 	var/obj/item/master = null
 
+	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
+	var/see_face = 1.0
+	var/color = null
+	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
+	var/protective_temperature = 0
+	var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
+	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
+	var/permeability_coefficient = 1 // for chemicals/diseases
+	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
+	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
+	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
+	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	var/list/allowed = null //suit storage stuff.
+
 /obj/item/device
 	icon = 'device.dmi'
 
