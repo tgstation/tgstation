@@ -1939,10 +1939,6 @@
 
 		return 0
 
-	attackby(obj/item/I as obj, mob/user as mob)
-
-		return
-
 	afterattack(obj/target, mob/user , flag)
 
 		if(target.is_open_container() == 1 && target.reagents)
