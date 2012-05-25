@@ -85,9 +85,12 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if(!on)
 		return
 
-	var/dat = {"
-				<html><head><title>[src]</title></head><body><TT>
-				Microphone: [broadcasting ? "<A href='byond://?src=\ref[src];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];talk=1'>Disengaged</A>"]<BR>
+	var/dat = "<html><head><title>[src]</title></head><body><TT>"
+
+	if(!istype(src, /obj/item/device/radio/headset)) //Headsets dont get a mic button
+		dat += "Microphone: [broadcasting ? "<A href='byond://?src=\ref[src];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];talk=1'>Disengaged</A>"]<BR>"
+
+	dat += {"
 				Speaker: [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
 				Frequency:
 				<A href='byond://?src=\ref[src];freq=-10'>-</A>
