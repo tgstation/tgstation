@@ -323,7 +323,7 @@
 			return O
 	return null
 
-/mob/living/carbon/human/drip()
+/mob/living/carbon/proc/drip()
 
 /mob/living/carbon/proc/vomit()
 	// only humanoids and monkeys can vomit
