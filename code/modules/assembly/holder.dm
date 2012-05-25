@@ -12,9 +12,9 @@
 	throw_range = 10
 
 	var/secured = 0
-	varobj/item/device/assembly/a_left = null
-	varobj/item/device/assembly/a_right = null
-	varobj/special_assembly = null
+	var/obj/item/device/assembly/a_left = null
+	var/obj/item/device/assembly/a_right = null
+	var/obj/special_assembly = null
 
 	proc/attach(var/obj/item/device/D, var/obj/item/device/D2, var/mob/user)
 		return
