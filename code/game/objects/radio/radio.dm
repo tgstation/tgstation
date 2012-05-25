@@ -9,46 +9,44 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	suffix = "\[3\]"
 	icon_state = "walkietalkie"
 	item_state = "walkietalkie"
-	var
-		on = 1 // 0 for off
-		last_transmission
-		frequency = 1459 //common chat
-		traitor_frequency = 0 //tune to frequency to unlock traitor supplies
-		canhear_range = 3 // the range which mobs can hear this radio from
-		obj/item/device/radio/patch_link = null
-		obj/item/device/uplink/traitorradio = null
-		wires = WIRE_SIGNAL | WIRE_RECEIVE | WIRE_TRANSMIT
-		b_stat = 0
-		broadcasting = 0
-		listening = 1
-		freerange = 0 // 0 - Sanitize frequencies, 1 - Full range
-		list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
-		subspace_transmission = 0
+	var/on = 1 // 0 for off
+	var/last_transmission
+	var/frequency = 1459 //common chat
+	var/traitor_frequency = 0 //tune to frequency to unlock traitor supplies
+	var/canhear_range = 3 // the range which mobs can hear this radio from
+	var/obj/item/device/radio/patch_link = null
+	var/obj/item/device/uplink/traitorradio = null
+	var/wires = WIRE_SIGNAL | WIRE_RECEIVE | WIRE_TRANSMIT
+	var/b_stat = 0
+	var/broadcasting = 0
+	var/listening = 1
+	var/freerange = 0 // 0 - Sanitize frequencies, 1 - Full range
+	var/list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
+	var/subspace_transmission = 0
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
-	flags = 450		// hello i'm a fucking idiot why is this 450?? CODE GODS PLEASE EXPLAIN~
+	flags = FPRINT | CONDUCT | TABLEPASS
+	slot_flags = SLOT_BELT
 	throw_speed = 2
 	throw_range = 9
 	w_class = 2
 	g_amt = 25
 	m_amt = 75
-	var/const
-		WIRE_SIGNAL = 1 //sends a signal, like to set off a bomb or electrocute someone
-		WIRE_RECEIVE = 2
-		WIRE_TRANSMIT = 4
-		TRANSMISSION_DELAY = 5 // only 2/second/radio
-		FREQ_LISTENING = 1
+	var/const/WIRE_SIGNAL = 1 //sends a signal, like to set off a bomb or electrocute someone
+	var/const/WIRE_RECEIVE = 2
+	var/const/WIRE_TRANSMIT = 4
+	var/const/TRANSMISSION_DELAY = 5 // only 2/second/radio
+	var/const/FREQ_LISTENING = 1
 		//FREQ_BROADCASTING = 2
 
 
 /obj/item/device/radio
-	var
-		datum/radio_frequency/radio_connection
-		list/datum/radio_frequency/secure_radio_connections = new
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, frequency)
-			frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
+	var/datum/radio_frequency/radio_connection
+	var/list/datum/radio_frequency/secure_radio_connections = new
+
+	proc/set_frequency(new_frequency)
+		radio_controller.remove_object(src, frequency)
+		frequency = new_frequency
+		radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
 
 
 

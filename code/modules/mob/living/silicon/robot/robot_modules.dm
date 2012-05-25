@@ -5,10 +5,10 @@
 	w_class = 100.0
 	item_state = "electronic"
 	flags = FPRINT|TABLEPASS | CONDUCT
-	var
-		list/modules = list()
-		obj/item/emag = null
-		obj/item/borg/upgrade/jetpack = null
+
+	var/list/modules = list()
+	var/obj/item/emag = null
+	var/obj/item/borg/upgrade/jetpack = null
 
 
 	emp_act(severity)

@@ -8,7 +8,8 @@
 	m_amt = 10000
 	frequency = 1449
 	w_class = 5.0
-	flags = 323
+	flags = FPRINT | CONDUCT | TABLEPASS
+	slot_flags = SLOT_BACK
 	item_state = "electropack"
 
 /obj/item/device/radio/electropack/examine()

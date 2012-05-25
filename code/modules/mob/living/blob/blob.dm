@@ -6,9 +6,8 @@
 	pass_flags = PASSBLOB
 	see_in_dark = 8
 	see_invisible = 2
-	var
-		ghost_name = "Unknown"
-		creating_blob = 0
+	var/ghost_name = "Unknown"
+	var/creating_blob = 0
 
 
 	New()

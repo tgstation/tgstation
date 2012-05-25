@@ -629,7 +629,7 @@
 	name = "dummy"
 	invisibility = 101.0
 	anchored = 1.0
-	flags = 2.0
+	flags = TABLEPASS
 
 /obj/item/weapon/extinguisher
 	name = "fire extinguisher"
@@ -734,7 +734,7 @@
 	throwforce = 5
 	w_class = 2.0
 	throw_speed = 3
-	throw_range = 5
+	throw_range = 5W
 	m_amt = 10000
 	origin_tech = "magnets=1;bluespace=3"
 
