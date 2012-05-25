@@ -723,7 +723,7 @@ proc/process_ghost_teleport_locs()
 //Crew
 
 /area/crew_quarters
-	name = "Dormitory"
+	name = "Dormitories"
 	icon_state = "Sleep"
 
 /area/crew_quarters/toilet
@@ -842,24 +842,24 @@ proc/process_ghost_teleport_locs()
 //Engineering
 
 /area/engine
-	engineering
-
 	engine_smes
 		name = "Engineering SMES"
 		icon_state = "engine_smes"
 		requires_power = 0//This area only covers the batteries and they deal with their own power
 
+	engineering
+
+	engineering_break_room
+		name = "Engineering Break Room"
+		icon_state = "engine_breakroom"
+
+	chiefs_office
+		name = "Chief Engineer's office"
+		icon_state = "engine_ce"
+
 	particle_accelerator
 		name = "Particle Accelerator"
 		icon_state = "engine_pa"
-
-	chiefs_office
-		name = "Chief Engineers office"
-		icon_state = "engine_ce"
-
-	engineering_break_room
-		name = "Engineering Breakroom"
-		icon_state = "engine_breakroom"
 
 	control
 		name = "Engineering Control"
@@ -1008,7 +1008,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "showroom"
 
 /area/assembly/assembly_line
-	name = "Assembly Line"
+	name = "Robotics Assembly Line"
 	icon_state = "ass_line"
 
 //Teleporter
@@ -1079,6 +1079,10 @@ proc/process_ghost_teleport_locs()
 	name = "Genetics"
 	icon_state = "genetics"
 
+/area/medical/sleeper
+	name = "Medical Sleepers Room"
+	icon_state = "medbay"
+
 //Security
 
 /area/security/main
@@ -1106,7 +1110,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "security"
 
 /area/security/hos
-	name = "Head of Security"
+	name = "Head of Security's Office"
 	icon_state = "security"
 
 /area/security/detectives_office
@@ -1187,7 +1191,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "yellow"
 
 /area/janitor/
-	name = "Janitors Closet"
+	name = "Custodial Closet"
 	icon_state = "janitor"
 
 /area/hydroponics
@@ -1221,15 +1225,15 @@ proc/process_ghost_teleport_locs()
 	icon_state = "toxlab"
 
 /area/toxins/storage
-	name = "Toxin Storage"
+	name = "Toxins Storage"
 	icon_state = "toxstorage"
 
 /area/toxins/test_area
-	name = "Toxins Lab Test Area"
+	name = "Toxins Test Area"
 	icon_state = "toxtest"
 
 /area/toxins/mixing
-	name = "Toxins Lab Mixing Room"
+	name = "Toxins Mixing Room"
 	icon_state = "toxmix"
 
 /area/toxins/observatory
@@ -1247,7 +1251,7 @@ proc/process_ghost_teleport_locs()
 //Storage
 
 /area/storage/tools
-	name = "Tool Storage"
+	name = "Auxiliary Tool Storage"
 	icon_state = "storage"
 
 /area/storage/primary
@@ -1275,11 +1279,11 @@ proc/process_ghost_teleport_locs()
 	icon_state = "storage"
 
 /area/storage/emergency
-	name = "Emergency Storage A"
+	name = "Starboard Emergency Storage"
 	icon_state = "emergencystorage"
 
 /area/storage/emergency2
-	name = "Emergency Storage B"
+	name = "Port Emergency Storage"
 	icon_state = "emergencystorage"
 
 /area/storage/tech
@@ -1316,7 +1320,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "hallS"
 
 /area/derelict/arrival
-	name = "Arrival Centre"
+	name = "Derelict Arrival Centre"
 	icon_state = "yellow"
 
 /area/derelict/storage/equipment
@@ -1330,23 +1334,23 @@ proc/process_ghost_teleport_locs()
 	icon_state = "green"
 
 /area/derelict/bridge
-	name = "Control Room"
+	name = "Derelict Control Room"
 	icon_state = "bridge"
 
 /area/derelict/secret
-	name = "Secret Room"
+	name = "Derelict Secret Room"
 	icon_state = "library"
 
 /area/derelict/bridge/access
-	name = "Control Room Access"
+	name = "Derelict Control Room Access"
 	icon_state = "auxstorage"
 
 /area/derelict/bridge/ai_upload
-	name = "Ruined Computer Core"
+	name = "Derelict Computer Core"
 	icon_state = "ai"
 
 /area/derelict/solar_control
-	name = "Solar Control"
+	name = "Derelict Solar Control"
 	icon_state = "engine"
 
 /area/derelict/crew_quarters
@@ -1374,7 +1378,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "eva"
 
 /area/derelict/ship
-	name = "Abandoned ship"
+	name = "Abandoned Ship"
 	icon_state = "yellow"
 
 /area/solar/derelict_starboard
