@@ -1144,3 +1144,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 	brainloss = amount
 
 // ++++ROCKDTBEN++++ MOB PROCS //END
+
+/*
+ * Sends resource files to client cache
+ */
+/mob/proc/getFiles()
+	if(!isemptylist(args))
+		for(var/file in args)
+			src << browse_rsc(file)
+		return 1
+	return 0
