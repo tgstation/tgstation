@@ -21,7 +21,6 @@
 	var/access_status_display = 0
 	var/access_quartermaster = 0
 	var/access_hydroponics = 0
-	var/access_chemistry = 0
 	var/mode = null
 	var/menu
 	var/datum/data/record/active1 = null //General
