@@ -1153,8 +1153,6 @@
 #include "code\WorkInProgress\AI_Visibility\util.dm"
 #include "code\WorkInProgress\animusstation\atm.dm"
 #include "code\WorkInProgress\Cael_Aislinn\power_monitor.dm"
-#include "code\WorkInProgress\Cael_Aislinn\BirdMan\bird_transformation.dm"
-#include "code\WorkInProgress\Cael_Aislinn\BirdMan\birdman.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Rust\core_field.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Rust\core_gen.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Rust\core_monitor.dm"
