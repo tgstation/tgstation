@@ -89,6 +89,7 @@
 				if(contents.len < capacity)	//slightly redundant, but it makes it prettier in the chatbox. -Pete
 					user << "\blue You pick up all the trash."
 					for(var/obj/item/O in get_turf(W))
+						if(istype(O, /obj/item/weapon/disk/nuclear)) continue //No nuke disks - Nodrak
 						if(contents.len < capacity)
 							if(O.w_class <= 2)
 								contents += O;
@@ -98,6 +99,7 @@
 				else
 					user << "\blue The bag is full!"
 			else
+				if(istype(W, /obj/item/weapon/disk/nuclear)) return //No nuke disks - Nodrak
 				if(contents.len < capacity)
 					contents += W;
 				else

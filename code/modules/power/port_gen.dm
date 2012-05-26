@@ -292,7 +292,7 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/pacman/super
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type Portable Generator"
 	icon_state = "portgen1"
-	sheet_path = "/obj/item/stack/sheet/uranium"
+	sheet_path = /obj/item/stack/sheet/uranium
 	power_gen = 15000
 	time_per_sheet = 25
 	board_path = "/obj/item/weapon/circuitboard/pacman/super"
@@ -302,7 +302,7 @@ display round(lastgen) and plasmatank amount
 /obj/machinery/power/port_gen/pacman/mrs
 	name = "M.R.S.P.A.C.M.A.N.-type Portable Generator"
 	icon_state = "portgen2"
-	sheet_path = "/obj/item/stack/sheet/diamond"
+	sheet_path = /obj/item/stack/sheet/diamond
 	power_gen = 40000
 	time_per_sheet = 30
 	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"
