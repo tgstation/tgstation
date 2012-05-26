@@ -64,14 +64,13 @@ atom/movable/RepelAirflowDest(n)
 
 */
 
-var/tick_multiplier = 2
 vs_control/var
 
 	zone_update_delay = 10
 	zone_update_delay_NAME = "Zone Update Delay"
 	zone_update_delay_DESC = "The delay in ticks between updates of zones. Increase if lag is bad seemingly because of air."
 
-	zone_share_percent = 2
+	zone_share_percent = 5
 	zone_share_percent_NAME = "Zone Connection Transfer %"
 	zone_share_percent_DESC = "Percent of gas per connected tile that is shared between zones."
 

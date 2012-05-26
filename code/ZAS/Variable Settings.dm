@@ -133,6 +133,8 @@ vs_control
 
 				plc.EYE_BURNS = 0 //Plasma burns the eyes of anyone not wearing eye protection.
 
+				plc.PLASMA_HALLUCINATION = 0
+
 				//plc.N2O_REACTION = 0 //Plasma can react with N2O, making sparks and starting a fire if levels are high.
 
 				//plc.PLASMA_COLOR = "onturf" //Plasma can change colors yaaaay!
@@ -141,8 +143,8 @@ vs_control
 				//plc.PLASMA_DMG_QUOTIENT = 10
 
 				plc.CONTAMINATION_LOSS = 0
-			if("Hazard-Low")
-				plc.CLOTH_CONTAMINATION = 1 //If this is on, plasma does damage by getting into cloth.
+			if("Hazard - Low")
+				plc.CLOTH_CONTAMINATION = 0 //If this is on, plasma does damage by getting into cloth.
 
 				plc.ALL_ITEM_CONTAMINATION = 0 //If this is on, any item can be contaminated, so suits and tools must be discarded or
 
@@ -152,7 +154,7 @@ vs_control
 
 				plc.GENETIC_CORRUPTION = 0 //Chance of genetic corruption as well as toxic damage, X in 1000.
 
-				plc.SKIN_BURNS = 0       //Plasma has an effect similar to mustard gas on the un-suited.
+				plc.SKIN_BURNS = 1       //Plasma has an effect similar to mustard gas on the un-suited.
 
 			//	plc.PLASMA_INJECTS_TOXINS = 0         //Plasma damage injects the toxins chemical to do damage over time.
 
@@ -168,12 +170,9 @@ vs_control
 				//plc.PLASMA_DMG_OFFSET = 1.5
 				//plc.PLASMA_DMG_QUOTIENT = 8
 
-				plc.CONTAMINATION_LOSS = 0.01
+				plc.CONTAMINATION_LOSS = 0
 
-				var/s = pick(plc.settings)
-				plc.Randomize(s)
-
-			if("Hazard-High")
+			if("Hazard - High")
 				plc.CLOTH_CONTAMINATION = 1 //If this is on, plasma does damage by getting into cloth.
 
 				plc.ALL_ITEM_CONTAMINATION = 0 //If this is on, any item can be contaminated, so suits and tools must be discarded or
@@ -184,11 +183,11 @@ vs_control
 
 				plc.GENETIC_CORRUPTION = 0 //Chance of genetic corruption as well as toxic damage, X in 1000.
 
-				plc.SKIN_BURNS = 0       //Plasma has an effect similar to mustard gas on the un-suited.
+				plc.SKIN_BURNS = 1       //Plasma has an effect similar to mustard gas on the un-suited.
 
 			//	plc.PLASMA_INJECTS_TOXINS = 0         //Plasma damage injects the toxins chemical to do damage over time.
 
-				plc.EYE_BURNS = 0 //Plasma burns the eyes of anyone not wearing eye protection.
+				plc.EYE_BURNS = 1 //Plasma burns the eyes of anyone not wearing eye protection.
 
 			//	plc.N2O_REACTION = 0 //Plasma can react with N2O, making sparks and starting a fire if levels are high.
 
@@ -197,16 +196,10 @@ vs_control
 				//plc.PLASMA_DMG_OFFSET = 3
 				//plc.PLASMA_DMG_QUOTIENT = 5
 
-				plc.CONTAMINATION_LOSS = 0.05
-
-				for(var/i = rand(3,5),i>0,i--)
-					var/s = pick(plc.settings)
-					plc.Randomize(s)
-
-			if("Everything")
+			if("Oh Shit!")
 				plc.CLOTH_CONTAMINATION = 1 //If this is on, plasma does damage by getting into cloth.
 
-				plc.ALL_ITEM_CONTAMINATION = 1 //If this is on, any item can be contaminated, so suits and tools must be discarded or ELSE
+				plc.ALL_ITEM_CONTAMINATION = 0 //If this is on, any item can be contaminated, so suits and tools must be discarded or ELSE
 
 				plc.PLASMAGUARD_ONLY = 1
 
@@ -227,7 +220,6 @@ vs_control
 				//plc.PLASMA_DMG_OFFSET = 3
 				//plc.PLASMA_DMG_QUOTIENT = 5
 
-				plc.CONTAMINATION_LOSS = 0.02
 		/////world << "Plasma color updated."
 
 pl_control

@@ -17,7 +17,7 @@
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
 	///Chemistry.
 
-	proc/assume_air(datum/air_group/giver)
+	proc/assume_air(datum/gas_mixture/giver)
 		del(giver)
 		return null
 
@@ -48,7 +48,7 @@
 */
 
 obj
-	assume_air(datum/air_group/giver)
+	assume_air(datum/gas_mixture/giver)
 		if(loc)
 			return loc.assume_air(giver)
 		else

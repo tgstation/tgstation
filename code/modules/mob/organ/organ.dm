@@ -104,7 +104,7 @@
 			burn *= 0.66 //~2/3 damage for ROBOLIMBS
 
 		if(owner && !robot)
-			owner.pain(display_name, (brute+burn)*3, 1)
+			owner.pain(display_name, (brute+burn)*3, 1, burn > brute)
 		if(sharp)
 			var/nux = brute * rand(10,15)
 			if(brute_dam >= max_damage)

@@ -48,14 +48,28 @@ turf/proc/HasDoor(turf/O)
 			return 1
 
 turf/proc/find_zone()
+	if(world.time < 10) return
 	for(var/d in cardinal)
 		var/turf/T = get_step(src,d)
-		if(!T || !T.zone) continue
+		if(!T || !T.zone || !T.ZCanPass(src)) continue
 		if(!zone)
 			zone = T.zone
 			zone.AddTurf(src)
 		else if(T.zone != zone)
 			ZConnect(src,T)
+
+turf/proc/check_connections()
+	for(var/d in cardinal)
+		var/turf/T = get_step(src,d)
+		if(!T || !T.zone || !T.CanPass(0,src,0,0)) continue
+		if(T.zone != zone)
+			ZConnect(src,T)
+
+turf/proc/check_for_space()
+	for(var/d in cardinal)
+		var/turf/T = get_step(src,d)
+		if(istype(T,/turf/space) && T.CanPass(0,src,0,0))
+			zone.AddSpace(T)
 
 proc
 	ZMerge(zone/A,zone/B)
@@ -78,6 +92,7 @@ proc
 			if((C.A in new_contents) && (C.B in new_contents))
 				del C
 				continue
+			if(!A.connections) A.connections = list()
 			A.connections += C
 		A.space_tiles += B.space_tiles
 		A.contents = new_contents
@@ -93,7 +108,7 @@ proc
 			return
 		if(istype(A,/turf/space))
 			if(B.zone)
-				B.zone.AddSpace(B)
+				B.zone.AddSpace(A)
 				//world << "Space added."
 			return
 		if(!A.zone || !B.zone) return
@@ -124,7 +139,7 @@ proc
 							A.overlays -= 'zone_connection_A.dmi'
 							B.overlays -= 'zone_connection_B.dmi'*/
 						del C
-			/*else
+			else
 				if(A == B) return
 				if(A.CanPass(0,B,0,0)) return
 				if(A.HasDoor(B) || B.HasDoor(A)) return
@@ -137,6 +152,8 @@ proc
 						if((A in Z.contents) || (B in Z.contents))
 							if(!Z.connections) Z.connections = list()
 							Z.connections += C
+					for(var/turf/T in test)
+						T.check_for_space()
 					var/datum/gas_mixture/Y_Air = new
 					Y_Air.copy_from(oldzone.air)
 					var/zone/Y = new(B,Y_Air)
@@ -144,14 +161,11 @@ proc
 						if((A in Y.contents) || (B in Y.contents))
 							if(!Y.connections) Y.connections = list()
 							Y.connections += C
+					for(var/turf/space/T in oldzone.space_tiles)
+						if(!(T in Z.space_tiles))
+							Y.AddSpace(T)
 					oldzone.air = null
 					del oldzone
-					world << "Zone Split: [A] / [B]"
-					A.overlays += 'zone_connection_A.dmi'
-					B.overlays += 'zone_connection_B.dmi'
-					spawn(10)
-						A.overlays -= 'zone_connection_A.dmi'
-						B.overlays -= 'zone_connection_B.dmi'*/
 		else
 			if(istype(A,/turf/space) && B.zone)
 				B.zone.RemoveSpace(A)

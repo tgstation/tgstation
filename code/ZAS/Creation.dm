@@ -17,6 +17,7 @@ zone
 			air.toxins += T.toxins / members
 			air.temperature += T.temperature / members
 		air.group_multiplier = contents.len
+		air.update_values()
 		zones += src
 	Del()
 		zones -= src

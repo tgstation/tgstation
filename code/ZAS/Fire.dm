@@ -7,7 +7,7 @@ atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed
 turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 
 turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
-	if(fire_protection) return
+	if(fire_protection > world.time-300) return
 	var/datum/gas_mixture/air_contents = return_air(1)
 	if(!air_contents)
 		return 0
@@ -25,18 +25,10 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 		return 1
 	var/datum/gas/volatile_fuel/fuel = locate() in air_contents.trace_gases
 	var/obj/liquid_fuel/liquid = locate() in src
-	var/fuel_level = 0
-	var/liquid_level = 0
-	if(fuel) fuel_level = fuel.moles
-	if(liquid) liquid_level = liquid.amount
-	var/total_fuel = air_contents.toxins + fuel_level + liquid_level
-	if((air_contents.oxygen + air_contents.toxins + fuel_level*1.5 + liquid_level*1.5) - (air_contents.carbon_dioxide*0.25) > vsc.IgnitionLevel && total_fuel > 0.5)
+	if(air_contents.calculate_firelevel(liquid) > vsc.IgnitionLevel && (fuel || liquid || air_contents.toxins > 0.5))
 		igniting = 1
 		if(air_contents.oxygen < 0.5)
 			return 0
-
-		if(parent&&parent.group_processing)
-			parent.suspend_group_processing()
 
 		if(! (locate(/obj/fire) in src))
 			var/obj/fire/F = new(src,1000)
@@ -180,31 +172,20 @@ obj
 					var
 						datum/gas_mixture/air_contents = S.return_air()
 						datum/gas/volatile_fuel/fuel = locate(/datum/gas/volatile_fuel/) in air_contents.trace_gases
-						fuel_level = 0
 						obj/liquid_fuel/liquid = locate() in S
-						liquid_level = 0
 
-					if(fuel) fuel_level = fuel.moles
-					if(liquid)
-						liquid_level = liquid.amount
-						if(liquid.amount <= 0)
-							del liquid
-							liquid_level = 0
+					firelevel = air_contents.calculate_firelevel(liquid)
 
-					firelevel = (air_contents.oxygen + air_contents.toxins + fuel_level*1.5 + liquid_level*1.5) - (air_contents.carbon_dioxide*0.25)
-
-					firelevel = min(firelevel,vsc.IgnitionLevel*5)
-
-					if(firelevel > vsc.IgnitionLevel * 1.5 && (air_contents.toxins || fuel_level || liquid_level))
+					if(firelevel > 25 && (air_contents.toxins || fuel || liquid))
 						for(var/direction in cardinal)
 							if(S.air_check_directions&direction) //Grab all valid bordering tiles
 								var/turf/simulated/enemy_tile = get_step(S, direction)
 								if(istype(enemy_tile))
-									if(enemy_tile.fire_protection)
-										firelevel -= vsc.IgnitionLevel
+									if(enemy_tile.fire_protection > world.time-30)
+										firelevel -= 150
 										continue
 									if(!(locate(/obj/fire) in enemy_tile))
-										if( prob( firelevel/(vsc.IgnitionLevel*0.1) ) )
+										if( prob( firelevel/2.5 ) )
 											new/obj/fire(enemy_tile,firelevel)
 					//					else
 					//						world << "Spread Probability: [firelevel/(vsc.IgnitionLevel*0.1)]%."
@@ -220,12 +201,12 @@ obj
 
 					if(flow)
 
-						if(flow.oxygen > 0.3 && (flow.toxins || fuel_level || liquid))
+						if(flow.oxygen > 0.3 && (flow.toxins || fuel || liquid))
 
 							icon_state = "1"
-							if(firelevel > vsc.IgnitionLevel * 2)
+							if(firelevel > 25)
 								icon_state = "2"
-							if(firelevel > vsc.IgnitionLevel * 3.5)
+							if(firelevel > 100)
 								icon_state = "3"
 							flow.temperature = max(PLASMA_MINIMUM_BURN_TEMPERATURE+0.1,flow.temperature)
 							flow.zburn(liquid)
@@ -245,7 +226,7 @@ obj
 				del src
 
 			for(var/mob/living/carbon/human/M in loc)
-				M.FireBurn(firelevel/(vsc.IgnitionLevel*10))
+				M.FireBurn(min(max(0.1,firelevel / 20),10))
 
 
 		New(newLoc,fl)
@@ -254,7 +235,7 @@ obj
 			sd_SetLuminosity(3)
 			firelevel = fl
 			for(var/mob/living/carbon/human/M in loc)
-				M.FireBurn(firelevel/(vsc.IgnitionLevel*10))
+				M.FireBurn(min(max(0.1,firelevel / 20),10))
 
 		Del()
 			if (istype(loc, /turf/simulated))
@@ -265,74 +246,135 @@ obj
 			..()
 
 obj/liquid_fuel
-	icon = 'effects.dmi'
-	icon_state = "slube"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "fuel"
 	layer = TURF_LAYER+0.2
 	anchored = 1
 	var/amount = 1
 
-	New(newLoc)
+	New(newLoc,amt=1)
+		src.amount = amt
 		for(var/obj/liquid_fuel/other in newLoc)
 			if(other != src)
 				other.amount += src.amount
+				spawn other.Spread()
 				del src
+				return
+		Spread()
 		. = ..()
+	proc/Spread()
+		if(amount < 0.5) return
+		var/turf/simulated/S = loc
+		if(!istype(S)) return
+		for(var/d in cardinal)
+			if(S.air_check_directions & d)
+				if(rand(25))
+					var/turf/simulated/O = get_step(src,d)
+					new/obj/liquid_fuel(O,amount*0.25)
+					amount *= 0.75
+
+	flamethrower_fuel
+		icon_state = "mustard"
+		anchored = 0
+		New(newLoc, amt = 1, d = 0)
+			dir = d
+			. = ..()
+		Spread()
+			if(amount < 0.1) return
+			var/turf/simulated/S = loc
+			if(!istype(S)) return
+			for(var/d in list(turn(dir,90),turn(dir,-90)))
+				if(S.air_check_directions & d)
+					var/turf/simulated/O = get_step(S,d)
+					new/obj/liquid_fuel/flamethrower_fuel(O,amount*0.25,d)
+					O.hotspot_expose((T20C*2) + 380,500)
+			amount *= 0.5
 
 vs_control/var/switch_fire = 1
 
 turf/simulated/var/fire_protection = 0
 
-datum/gas_mixture/proc/zburn(obj/liquid_fuel/liquid)
-	if(vsc.switch_fire)
-		. = fire()
-		if(liquid && liquid.amount > 0)
-			oxygen -= fire_ratio_1
-			liquid.amount = max(liquid.amount-fire_ratio_1,0)
-			carbon_dioxide += fire_ratio_1
-			if(liquid.amount <= 0)
-				del liquid
-		return
-	if(temperature > PLASMA_MINIMUM_BURN_TEMPERATURE)
+turf/proc/apply_fire_protection()
+turf/simulated/apply_fire_protection()
+	fire_protection = world.time
+
+datum/gas_mixture/proc
+	zburn(obj/liquid_fuel/liquid)
+		if(temperature > PLASMA_MINIMUM_BURN_TEMPERATURE)
+			var
+				total_fuel = toxins
+				fuel_sources = 0
+				datum/gas/volatile_fuel/fuel = locate() in trace_gases
+			if(fuel)
+				total_fuel += fuel.moles
+				fuel_sources++
+			if(liquid)
+				if(liquid.amount <= 0)
+					del liquid
+				else
+					total_fuel += liquid.amount
+					fuel_sources++
+			if(toxins > 0.3) fuel_sources++
+
+			if(!fuel_sources) return 0
+			if(oxygen > 0.3 && total_fuel)
+				var/firelevel = calculate_firelevel(liquid)
+				//f(x) = 1000ln(0.01x + 1.45)
+				temperature = 1000*log(0.016*firelevel + 1.45)
+				var/consumed_gas = min(oxygen,0.002*firelevel,total_fuel) / fuel_sources
+				oxygen -= consumed_gas
+				toxins = max(0,toxins-consumed_gas)
+				if(fuel)
+					fuel.moles -= consumed_gas
+					if(fuel.moles <= 0) del fuel
+				if(liquid)
+					liquid.amount -= consumed_gas
+					if(liquid.amount <= 0) del liquid
+				update_values()
+				return consumed_gas*fuel_sources
+		return 0
+	calculate_firelevel(obj/liquid_fuel/liquid)
 		var
-			fuel_level = 0
 			datum/gas/volatile_fuel/fuel = locate() in trace_gases
+			fuel_level = 0
 			liquid_level = 0
 		if(fuel) fuel_level = fuel.moles
 		if(liquid) liquid_level = liquid.amount
-		if(liquid && liquid_level <= 0)
-			del liquid
-			liquid_level = 0
-		if(oxygen > 0.3 && (toxins || fuel_level || liquid_level))
-			if(toxins && temperature < PLASMA_UPPER_TEMPERATURE)
-				temperature += (FIRE_PLASMA_ENERGY_RELEASED*fire_ratio_1) / heat_capacity()
+		return oxygen + toxins + liquid_level*15 + fuel_level*5
 
-			if((fuel_level || liquid_level) && temperature < PLASMA_UPPER_TEMPERATURE)
-				temperature += (FIRE_CARBON_ENERGY_RELEASED*fire_ratio_1) / heat_capacity()
+/mob/living/carbon/human/proc/FireBurn(mx as num)
+	//NO! NOT INTO THE PIT! IT BURRRRRNS!
 
-			if(toxins > fire_ratio_1)
-				oxygen -= vsc.plc.OXY_TO_PLASMA*fire_ratio_1
-				toxins -= fire_ratio_1
-				carbon_dioxide += fire_ratio_1
-			else if(toxins)
-				oxygen -= toxins * vsc.plc.OXY_TO_PLASMA
-				carbon_dioxide += toxins
-				toxins = 0
+	var
+		head_exposure = 1
+		chest_exposure = 1
+		groin_exposure = 1
+		legs_exposure = 1
+		arms_exposure = 1
 
-			if(fuel_level > fire_ratio_1/1.5)
-				oxygen -= vsc.plc.OXY_TO_PLASMA*fire_ratio_1
-				fuel.moles -= fire_ratio_1
-				carbon_dioxide += fire_ratio_1
+	for(var/obj/item/clothing/C in src)
+		if(l_hand == C || r_hand == C) continue
+		if(C.body_parts_covered & HEAD)
+			head_exposure *= C.heat_transfer_coefficient
+		if(C.body_parts_covered & UPPER_TORSO)
+			chest_exposure *= C.heat_transfer_coefficient
+		if(C.body_parts_covered & LOWER_TORSO)
+			groin_exposure *= C.heat_transfer_coefficient
+		if(C.body_parts_covered & LEGS)
+			legs_exposure *= C.heat_transfer_coefficient
+		if(C.body_parts_covered & ARMS)
+			arms_exposure *= C.heat_transfer_coefficient
 
-			else if(fuel_level)
-				oxygen -= fuel.moles * vsc.plc.OXY_TO_PLASMA
-				carbon_dioxide += fuel.moles
-				fuel.moles = 0
+	mx *= 1
 
-			if(liquid_level > 0)
-				oxygen -= fire_ratio_1
-				liquid.amount = max(liquid.amount-fire_ratio_1,0)
-				carbon_dioxide += fire_ratio_1
-				if(liquid.amount <= 0)
-					del liquid
-			return 1
-	return 0
+	//Always check these damage procs first if fire damage isn't working. They're probably what's wrong.
+
+	apply_damage(2.5*mx*head_exposure, BURN, "head", 0, 0, "Fire")
+	apply_damage(2.5*mx*chest_exposure, BURN, "chest", 0, 0, "Fire")
+	apply_damage(2.0*mx*groin_exposure, BURN, "groin", 0, 0, "Fire")
+	apply_damage(0.6*mx*legs_exposure, BURN, "l_leg", 0, 0, "Fire")
+	apply_damage(0.6*mx*legs_exposure, BURN, "r_leg", 0, 0, "Fire")
+	apply_damage(0.4*mx*arms_exposure, BURN, "l_arm", 0, 0, "Fire")
+	apply_damage(0.4*mx*arms_exposure, BURN, "r_arm", 0, 0, "Fire")
+
+	flash_pain()

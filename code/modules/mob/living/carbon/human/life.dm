@@ -359,7 +359,7 @@
 			if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 
 			var/datum/gas_mixture/environment = loc.return_air()
-			var/datum/air_group/breath
+			var/datum/gas_mixture/breath
 
 			// HACK NEED CHANGING LATER
 			if(isbreathing && health < config.health_threshold_crit)
@@ -420,6 +420,14 @@
 											smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
 									break // If they breathe in the nasty stuff once, no need to continue checking
 
+					if(istype(wear_mask, /obj/item/clothing/mask/gas))
+						var/datum/gas_mixture/filtered = new()
+						filtered.toxins = breath.toxins
+						filtered.trace_gases = breath.trace_gases.Copy()
+						breath.toxins = 0
+						breath.trace_gases = list()
+						loc.assume_air(filtered)
+
 				else //Still give containing object the chance to interact
 					if(istype(loc, /obj/))
 						var/obj/location_as_object = loc
@@ -469,7 +477,7 @@
 			var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 			//var/safe_oxygen_max = 140 // Maximum safe partial pressure of O2, in kPa (Not used for now)
 			var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
-			var/safe_toxins_max = 0.005
+			var/safe_toxins_max = 0.0025
 			var/SA_para_min = 1
 			var/SA_sleep_min = 5
 			var/oxygen_used = 0
@@ -649,7 +657,7 @@
 
 			//Account for massive pressure differences.  Done by Polymorph
 			var/pressure = environment.return_pressure()
-			if(!istype(wear_suit, /obj/item/clothing/suit/space))
+			if(!istype(wear_suit, /obj/item/clothing/suit/space) && !istype(wear_suit, /obj/item/clothing/suit/fire))
 					/*if(pressure < 20)
 						if(prob(25))
 							src << "You feel the splittle on your lips and the fluid on your eyes boiling away, the capillteries in your skin breaking."
@@ -657,6 +665,9 @@
 					*/
 				if(pressure > HAZARD_HIGH_PRESSURE)
 					adjustBruteLoss(min((10+(round(pressure/(HIGH_STEP_PRESSURE)-2)*5)),MAX_PRESSURE_DAMAGE))
+
+			if(environment.toxins > MOLES_PLASMA_VISIBLE)
+				pl_effects()
 
 			return //TODO: DEFERRED
 
