@@ -959,7 +959,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "surgery"
 
 /area/medical/cryo
-	name = "Cryo"
+	name = "Cryogenics"
 	icon_state = "cryo"
 
 /area/medical/exam_room
@@ -989,7 +989,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "security"
 
 /area/security/warden
-	name = "Warden"
+	name = "Armory"
 	icon_state = "Warden"
 
 /area/security/hos
@@ -997,7 +997,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "security"
 
 /area/security/detectives_office
-	name = "Detectives Office"
+	name = "Detective's Office"
 	icon_state = "detective"
 
 /area/security/range

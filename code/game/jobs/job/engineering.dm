@@ -77,7 +77,7 @@
 		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/atmospheric_technician(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
-		H.equip_if_possible(new /obj/item/device/pda/engineering(H), H.slot_l_store)
+		H.equip_if_possible(new /obj/item/device/pda/atmos(H), H.slot_l_store)
 		H.equip_if_possible(new /obj/item/weapon/storage/belt/utility/atmostech/(H), H.slot_belt)
 		if(H.backbag == 1)
 			H.equip_if_possible(new /obj/item/weapon/storage/box/engineer(H), H.slot_r_hand)
