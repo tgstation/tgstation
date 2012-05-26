@@ -101,10 +101,6 @@
 		H.equip_if_possible(new /obj/item/device/pda/geneticist(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/suit/labcoat/genetics(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/device/flashlight/pen(H), H.slot_s_store)
-		if(H.backbag == 1)
-			H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H), H.slot_r_hand)
-		else
-			H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H.back), H.slot_in_backpack)
 		return 1
 
 

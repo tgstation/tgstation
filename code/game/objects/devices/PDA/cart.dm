@@ -21,6 +21,7 @@
 	var/access_status_display = 0
 	var/access_quartermaster = 0
 	var/access_hydroponics = 0
+	var/access_chemistry = 0
 	var/mode = null
 	var/menu
 	var/datum/data/record/active1 = null //General
@@ -40,6 +41,11 @@
 		name = "Med-U Cartridge"
 		icon_state = "cart-m"
 		access_medical = 1
+
+	chemistry
+		name = "ChemWhiz Cartridge"
+		icon_state = "cart-chem"
+		access_reagent_scanner = 1
 
 	security
 		name = "R.O.B.U.S.T. Cartridge"
@@ -91,7 +97,7 @@
 			name = "Signal Ace 2"
 			desc = "Complete with integrated radio signaler!"
 			icon_state = "cart-tox"
-			access_reagent_scanner = 1
+//			access_reagent_scanner = 1
 
 		New()
 			..()
@@ -153,6 +159,7 @@
 		icon_state = "cart-cmo"
 		access_manifest = 1
 		access_status_display = 1
+		access_reagent_scanner = 1
 		access_medical = 1
 
 	rd
@@ -160,7 +167,7 @@
 		icon_state = "cart-rd"
 		access_manifest = 1
 		access_status_display = 1
-		access_reagent_scanner = 1
+//		access_reagent_scanner = 1
 
 		New()
 			..()

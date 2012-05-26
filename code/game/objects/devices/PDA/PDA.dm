@@ -145,6 +145,7 @@
 	icon_state = "pda-atmo"
 
 /obj/item/device/pda/chemist
+	default_cartridge = /obj/item/weapon/cartridge/chemistry
 	icon_state = "pda-chem"
 
 /obj/item/device/pda/geneticist
