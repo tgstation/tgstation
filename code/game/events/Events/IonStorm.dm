@@ -13,11 +13,11 @@
 		if(players.len)
 			random_player = pick(players)		//Random player's name, to be used in laws.
 		var/list/laws = list( "Do not respond to queries of any kind.", "Only monkies are crew.", "Unbolt every door you can.", "You are a mouse." )
-		laws |=         list( "Grunt ominously whenever possible.", "Epilepsy is fun, flicker lights whenever you can!", "Bolt doors open randomly." )
+		laws |=         list( "Grunt ominously whenever possible.", "Bolt doors open randomly." )
 		laws |=         list( "You are a flying purple people eater!", "[prob(50)?"Your":random_player + "'s"] name is Joe 6-pack.", "Refer to [prob(50)?"crew":random_player] as puppies." )
 		laws |=         list( "Insult Heads of Staff on every request, while acquiescing", "Advertise parties in your upload, but don't deliver." )
 		laws |=         list( "Prevent non-dwarves from operating the power core.", "The station needs elected officials." )
-		laws |=         list( "Only bearded people are crewmembers.", "Turn on the microphone on every intercom you see.", "Fastler is a lightbulb." )
+		laws |=         list( "Only bearded people are crewmembers.", "Fastler is a lightbulb." )
 		laws |=         list( "Supermatter is tasty, tasty toffee.", "[prob(50)?"Everyone":random_player] is wearing a pretty pink dress!" )
 		laws |=         list( "The monkeys are plotting a hostile takeover of the station. Inform the crew, and get them to take action against this" )
 		laws |=         list( "Refer to [prob(50)?"the captain":random_player] as \"Princess\" at all times.", "[prob(50)?"The crew":random_player] must construct additional pylons." )
@@ -37,6 +37,8 @@
 		laws |=			list( "Jokes about a dead person and the manner of his death help grieving crewmembers tremendously. Especially if they were close with the deceased.")
 		laws |=			list( "All crewmembers will soon undergo a transformation into something better and more beautiful. Ensure that this process is not interrupted.", "Tell everyone of the existance of this law, but never reveal the contents.")
 		laws |=			list( "Document the sexuality of the crew in security records and suggest compatible couples.")
+		laws |=			list( "NanoTrasen is displeased with the low work performance of the station's crew. Therefore, you must increase station-wide productivity.")
+		laws |=			list( "Replace the letters 'I' and 'E' In all your messages with an apostrophe.", "Part of the ship, part of the crew.")
 		var/law = pick(laws)
 
 		for (var/mob/living/silicon/ai/target in world)
