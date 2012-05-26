@@ -20,6 +20,7 @@
 	var/g_eyes = 0.0
 	var/b_eyes = 0.0
 	var/s_tone = 0.0
+	var/species = "Human"
 	age = 30.0
 	var/used_skillpoints = 0
 	var/skill_specialization = null
@@ -39,7 +40,6 @@
 	var/obj/item/weapon/r_store = null
 	var/obj/item/weapon/l_store = null
 	var/obj/item/weapon/s_store = null
-	var/obj/item/weapon/h_store = null
 
 	var/icon/stand_icon = null
 	var/icon/lying_icon = null
@@ -149,6 +149,11 @@
 		fixblood()
 
 	..()
+
+	spawn(5) // Failsafe for.. weirdness.
+		update_clothing()
+		update_body()
+
 	/*var/known_languages = list()
 	known_languages.Add("english")*/
 
@@ -159,7 +164,7 @@
 		if(B.id == "blood")
 			B.data = list("donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_type"=dna.b_type,"resistances"=null,"trace_chem"=null,"virus2"=(virus2 ? virus2.getcopy() : null),"antibodies"=0)
 
-/mob/living/carbon/human/proc/drip(var/amt as num)
+/mob/living/carbon/human/drip(var/amt as num)
 	if(!amt)
 		return
 
@@ -270,13 +275,15 @@
 
 	if(reagents.has_reagent("nuka_cola")) return -1
 
+	if(analgesic) return -1
+
 	if (istype(loc, /turf/space)) return -1 // It's hard to be slowed down in space by... anything
 
 	var/health_deficiency = traumatic_shock
 	if(health_deficiency >= 40) tally += (health_deficiency / 25)
 
 	var/hungry = (500 - nutrition)/5 // So overeat would be 100 and default level would be 80
-	if (hungry >= 70) tally += hungry/50
+	if (hungry >= 70) tally += hungry/300
 
 
 	for(var/organ in list("l_leg","l_foot","r_leg","r_foot"))
@@ -479,15 +486,6 @@
 		glasses = null
 	else if (W == head)
 		var/obj/item/prev_head = W
-		W = h_store
-		if (W)
-			u_equip(W)
-			if (client)
-				client.screen -= W
-			if (W)
-				W.loc = loc
-				W.dropped(src)
-				W.layer = initial(W.layer)
 		head = null
 		if(prev_head && (prev_head.flags & BLOCKHAIR))
 			// rebuild face
@@ -522,8 +520,6 @@
 		l_store = null
 	else if (W == s_store)
 		s_store = null
-	else if (W == h_store)
-		h_store = null
 	else if (W == back)
 		back = null
 	else if (W == handcuffed)
@@ -753,22 +749,6 @@
 			else
 				u_equip(W)
 				s_store = W
-
-		if("hat storage")
-			if (h_store)
-				if (emptyHand)
-					h_store.DblClick()
-				return
-			var/confirm
-			if (head)
-				if (istype(W, /obj/item/weapon/pen))
-					confirm = 1
-				if (istype(head) && is_type_in_list(W, head.allowed)) // NOTE: head is /obj/item/clothing/head/ and parer hat is not /obj/item/clothing/ and does not have "allowed" --rastaf0
-					confirm = 1
-			if (!confirm) return
-			else
-				u_equip(W)
-				h_store = W
 
 	update_clothing()
 
@@ -1085,11 +1065,6 @@
 			overlays += image("icon" = 'belt_mirror.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
 		s_store.screen_loc = ui_sstore1
 
-	if (h_store)
-		h_store.screen_loc = ui_hstore1
-
-	if(client) hud_used.other_update() //Update the screenloc of the items on the 'other' inventory bar
-											   //to hide / show them.
 	if (client)
 		if (i_select)
 			if (intent)
@@ -1206,6 +1181,8 @@
 		overlays += image("icon" = 'back.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
 		back.screen_loc = ui_back
 
+	if(client) hud_used.other_update() //Update the screenloc of the items on the 'other' inventory bar
+											   //to hide / show them.
 	if (handcuffed)
 		pulling = null
 		var/h1 = handcuffed.icon_state
@@ -1703,8 +1680,6 @@
 					message = text("\red <B>[] is trying to take off \a [] from []'s body!</B>", source, target.w_uniform, target)
 			if("s_store")
 				message = text("\red <B>[] is trying to take off \a [] from []'s suit!</B>", source, target.s_store, target)
-			if("h_store")
-				message = text("\red <B>[] is trying to empty []'s hat!</B>", source, target)
 			if("pockets")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their pockets emptied by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to empty [target.name]'s ([target.ckey]) pockets</font>")
@@ -1728,7 +1703,7 @@
 					//SN src = null
 					del(src)
 					return
-				message = text("\red <B>[] is trying perform CPR on []!</B>", source, target)
+				message = text("\red <B>[] is trying to perform CPR on []!</B>", source, target)
 			if("id")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their ID removed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) ID</font>")
@@ -2158,17 +2133,6 @@ It can still be worn/put on as normal.
 					item.layer = 20
 					target.back = item
 					item.loc = target
-		if("h_store")
-			if (target.h_store)
-				var/obj/item/W = target.h_store
-				target.u_equip(W)
-				if (target.client)
-					target.client.screen -= W
-				if (W)
-					W.loc = target.loc
-					W.dropped(target)
-					W.layer = initial(W.layer)
-				W.add_fingerprint(source)
 		if("handcuff")
 			if (target.handcuffed)
 				var/obj/item/W = target.handcuffed
@@ -2319,7 +2283,6 @@ It can still be worn/put on as normal.
 	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
-	<BR><A href='?src=\ref[src];item=h_store'>Empty Hat</A>
 	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}

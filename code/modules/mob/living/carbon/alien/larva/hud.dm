@@ -56,11 +56,12 @@
 	using.dir = SOUTHWEST
 	using.icon = 'screen1_alien.dmi'
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
-	using.screen_loc = ui_movi
+	using.screen_loc = ui_movi_old
 	using.layer = 20
 	src.adding += using
 	move_intent = using
 
+/*
 	using = new src.h_type(src) //Right hud bar
 	using.dir = SOUTH
 	using.icon = 'screen1_alien.dmi'
@@ -81,7 +82,9 @@
 	using.screen_loc = "EAST+1,SOUTH-1"
 	using.layer = 19
 	src.adding += using
+*/
 
+/*
 	using = new src.h_type( src )
 	using.name = "arrowleft"
 	using.icon = 'screen1_alien.dmi'
@@ -100,7 +103,6 @@
 	using.layer = 19
 	src.adding += using
 
-
 	using = new src.h_type( src )
 	using.name = "resist"
 	using.icon = 'screen1_alien.dmi'
@@ -108,7 +110,7 @@
 	using.screen_loc = ui_resist
 	using.layer = 19
 	src.adding += using
-
+*/
 
 
 	using = new src.h_type( src )
@@ -171,13 +173,13 @@
 	mymob.healths.icon = 'screen1_alien.dmi'
 	mymob.healths.icon_state = "health0"
 	mymob.healths.name = "health"
-	mymob.healths.screen_loc = ui_health
+	mymob.healths.screen_loc = ui_alien_health
 
 	mymob.pullin = new /obj/screen( null )
 	mymob.pullin.icon = 'screen1_alien.dmi'
 	mymob.pullin.icon_state = "pull0"
 	mymob.pullin.name = "pull"
-	mymob.pullin.screen_loc = ui_pull
+	mymob.pullin.screen_loc = ui_pull_old
 
 	mymob.blind = new /obj/screen( null )
 	mymob.blind.icon = 'screen1_alien.dmi'
@@ -194,7 +196,7 @@
 	mymob.flash.screen_loc = "1,1 to 15,15"
 	mymob.flash.layer = 17
 
-
+/*
 	mymob.sleep = new /obj/screen( null )
 	mymob.sleep.icon = 'screen1_alien.dmi'
 	mymob.sleep.icon_state = "sleep0"
@@ -206,7 +208,7 @@
 	mymob.rest.icon_state = "rest0"
 	mymob.rest.name = "rest"
 	mymob.rest.screen_loc = ui_rest
-
+*/
 
 	mymob.zone_sel = new /obj/screen/zone_sel( null )
 	mymob.zone_sel.overlays = null
@@ -214,7 +216,7 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.zone_sel, mymob.oxygen, mymob.toxin, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.zone_sel, mymob.oxygen, mymob.toxin, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 
 

@@ -334,8 +334,22 @@
 	if(stat & BROKEN) return
 	if (istype(user, /mob/living/silicon))
 		return src.attack_hand(user)
+
+	if (istype(W, /obj/item/weapon/card/emag) && !emagged)
+		user << "\red You short out the turret controls' access analysis module."
+		emagged = 1
+		locked = 0
+		if(user.machine==src)
+			src.attack_hand(user)
+
+		return
+
 	else if( get_dist(src, user) == 0 )		// trying to unlock the interface
 		if (src.allowed(usr))
+			if(emagged)
+				user << "<span class='notice'>The turret control is unresponsive.</span>"
+				return
+
 			locked = !locked
 			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the panel.</span>"
 			if (locked)
@@ -344,7 +358,7 @@
 					user << browse(null, "window=turretid")
 			else
 				if (user.machine==src)
-					src.attack_hand(usr)
+					src.attack_hand(user)
 		else
 			user << "<span class='warning'>Access denied.</span>"
 

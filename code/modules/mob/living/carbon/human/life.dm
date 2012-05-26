@@ -52,6 +52,7 @@
 
 	if (stat != 2) //still breathing
 
+
 		//First, resolve location and get a breath
 
 		if(air_master.current_cycle%4==2)
@@ -133,23 +134,12 @@
 	proc
 
 		handle_health_updates()
-			// if the mob has enough health, she should slowly heal
-			if(stat == 1)
-				if(health >= 0)
-					var/pr = 5
-					if(stat == 1) // sleeping means faster healing
-						pr += 5
-					if(prob(pr))
-						heal_organ_damage(1,1)
-						adjustToxLoss(-1)
-				else if(health < 0)
-					var/pr = 15
-					if(prob(pr))
-						take_overall_damage(1, 0, used_weapon = "Bloodloss")
-			else if (stat != 0)
+			if (stat != 0)
 				if(!lying)
 					lying = 1 //Seriously, stay down :x
 					update_clothing()
+
+
 
 		clamp_values()
 
@@ -441,7 +431,6 @@
 			if(breath)
 				loc.assume_air(breath)
 
-
 		get_breath_from_internal(volume_needed)
 			if(internal)
 				if (!contents.Find(internal))
@@ -449,8 +438,6 @@
 				if (!wear_mask || !(wear_mask.flags & MASKINTERNALS) )
 					internal = null
 				if(internal)
-					//if (internals) //should be unnecessary, uncomment if it isn't. -raftaf0
-					//	internals.icon_state = "internal1"
 					return internal.remove_air_volume(volume_needed)
 				else if(internals)
 					internals.icon_state = "internal0"
@@ -463,11 +450,6 @@
 			else
 				lying = 0
 				canmove = 1
-	/*			for(var/obj/effect/stop/S in geaslist)
-					if(S.victim == src)
-						geaslist -= S
-						del(S)
-*/
 
 		handle_breath(datum/gas_mixture/breath)
 			if(nodamage || (mutations & mNobreath))
@@ -809,7 +791,11 @@
 
 			// nutrition decrease
 			if (nutrition > 0 && stat != 2)
-				nutrition = max (0, nutrition - HUNGER_FACTOR)
+				// sleeping slows the metabolism, hunger increases more slowly
+				if(stat == 1)
+					nutrition = max (0, nutrition - HUNGER_FACTOR)
+				else
+					nutrition = max (0, nutrition - HUNGER_FACTOR / 4)
 
 			if (nutrition > 450)
 				if(overeatduration < 600) //capped so people don't take forever to unfat
@@ -857,7 +843,9 @@
 
 			return //TODO: DEFERRED
 
-		handle_regular_status_updates()
+		handle_organs()
+			// take care of organ related updates, such as broken and missing limbs
+
 			var/leg_tally = 2
 			for(var/name in organs)
 				var/datum/organ/external/E = organs[name]
@@ -866,7 +854,7 @@
 					if(E.name == "l_hand" || E.name == "l_arm")
 						if(hand && equipped())
 							drop_item()
-							emote("custom v drops what they were holding, their limb malfunctioning!")
+							emote("custom v drops what they were holding, their [E] malfunctioning!")
 							var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 							spark_system.set_up(5, 0, src)
 							spark_system.attach(src)
@@ -876,7 +864,7 @@
 					else if(E.name == "r_hand" || E.name == "r_arm")
 						if(!hand && equipped())
 							drop_item()
-							emote("custom v drops what they were holding, their limb malfunctioning!")
+							emote("custom v drops what they were holding, their [E] malfunctioning!")
 							var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 							spark_system.set_up(5, 0, src)
 							spark_system.attach(src)
@@ -905,11 +893,25 @@
 				emote("collapse")
 				paralysis = 10
 
+
+		handle_blood()
+			// take care of blood and blood loss
+
 			if(stat < 2)
 				var/blood_volume = round(vessel.get_reagent_amount("blood"))
-				if(bloodloss)
-					drip(bloodloss)
-				if(!blood_volume)
+				if(blood_volume < 560 && blood_volume)
+					var/datum/reagent/blood/B = locate() in vessel //Grab some blood
+					if(B) // Make sure there's some blood at all
+						if(!B.data["donor"] == src) //If it's not theirs, then we look for theirs
+							for(var/datum/reagent/blood/D in vessel)
+								if(D.data["donor"] == src)
+									B = D
+									break
+
+						//At this point, we dun care which blood we are adding to, as long as they get more blood.
+						B.volume = max(min(B.volume + 560/blood_volume,560), 0) //Less blood = More blood generated per tick
+
+				if(!blood_volume) // what is this for? if their blood_volume is 0, they'll die anyway
 					bloodloss = 0
 				else if(blood_volume > 448)
 					if(pale)
@@ -930,38 +932,32 @@
 						update_body()
 					eye_blurry += 6
 					if(prob(15))
-						paralysis += rand(1,3)
+						Paralyse(rand(1,3))
 				else if(blood_volume <= 244 && blood_volume > 122)
 					if(toxloss <= 100)
 						toxloss = 100
 				else if(blood_volume <= 122)
 					death()
-					//src.unlock_medal("We're all sold out on blood", 0, "You bled to death..", "easy")
+
+
+		handle_regular_status_updates()
+			// take care of misc. things related to health
+
+			// the analgesic effect wears off slowly
+			analgesic = max(0, analgesic - 1)
+
+			handle_organs()
+			handle_blood()
 
 			updatehealth()
 
-		//	health = 100 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
-
 			if(getOxyLoss() > 50) Paralyse(3)
-
-			if(sleeping)
-				adjustHalLoss(-5)
-				if(paralysis <= 0)
-					Paralyse(2)
-				if (prob(10) && health && !hal_crit) spawn(0) emote("snore")
-				if(!src.sleeping_willingly)
-					src.sleeping--
-
-			if(resting)
-				if(weakened <= 0)
-					Weaken(2)
 
 			if(health < config.health_threshold_dead || brain_op_stage == 4.0)
 				death()
 			else if(health < config.health_threshold_crit)
 				if(health <= 20 && prob(1)) spawn(0) emote("gasp")
 
-				//if(!rejuv) oxyloss++
 				if(!reagents.has_reagent("inaprovaline")) adjustOxyLoss(1)
 
 				if(stat != 2)	stat = 1
@@ -975,7 +971,6 @@
 					if (stunned > 0)
 						AdjustStunned(-1)
 						stat = 0
-
 					if (weakened > 0)
 						AdjustWeakened(-1)
 						lying = 1
@@ -993,6 +988,13 @@
 						stat = 1
 
 					if (sleeping > 0)
+						if(stat == 0)
+							// BUG: this doesn't seem to happen ever.. probably when you hit sleep willingly,
+							// it automatically adjusts your stat without calling this proc
+
+							// show them a message so they know what's going on
+							src << "\blue You feel very drowsy.. Your eyelids become heavy..."
+
 						handle_dreams()
 						adjustHalLoss(-5)
 						blinded = 1
@@ -1035,15 +1037,12 @@
 			var/blood_max = 0
 			for(var/name in organs)
 				var/datum/organ/external/temp = organs[name]
-				if(!temp.bleeding || temp.robot) //THAT WAS DUMB.
+				if(!temp.bleeding || temp.robot)
 					continue
-			//	else
-			//		if(prob(35))
-			//			bloodloss += rand(1,10)
-				if(temp.wounds)
-					for(var/datum/organ/wound/W in temp.wounds)
-						if(W.wound_size && W.bleeding)
-							blood_max += W.wound_size
+				var/lose_blood = temp.total_wound_bleeding()
+				if(lose_blood)
+					drip(lose_blood)
+					blood_max += lose_blood
 				if(temp.destroyed && !temp.gauzed)
 					blood_max += 10 //Yer missing a fucking limb.
 			bloodloss = min(bloodloss+1,sqrt(blood_max))
@@ -1077,10 +1076,13 @@
 
 			if(!client)	return 0
 
+			// Apparently deletes all the hud_ icons
 			for(var/image/hud in client.images)
 				if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
 					del(hud)
 
+			// Handle special vision stuff, such as thermals or ghost vision
+			// -------------------------------------------------------------
 			if (stat == 2 || mutations & XRAY)
 				sight |= SEE_TURFS
 				sight |= SEE_MOBS
@@ -1120,11 +1122,11 @@
 						sight |= SEE_TURFS
 						if(!druggy)
 							see_invisible = 0
-
 			else if(istype(glasses, /obj/item/clothing/glasses/meson))
 				sight |= SEE_TURFS
 				if(!druggy)
 					see_invisible = 0
+
 			else if(istype(glasses, /obj/item/clothing/glasses/night))
 				see_in_dark = 5
 				if(!druggy)
@@ -1156,8 +1158,8 @@
 					see_in_dark = 2
 
 				var/seer = 0
-				for(var/obj/effect/rune/R in world)
-					if(loc==R.loc && R.word1==wordsee && R.word2==wordhell && R.word3==wordjoin)
+				for(var/obj/effect/rune/R in loc)
+					if(R.word1==wordsee && R.word2==wordhell && R.word3==wordjoin)
 						seer = 1
 				if(!seer)
 					see_invisible = 0
@@ -1174,14 +1176,12 @@
 
 
 
-
-
-
-
-
-
 		/* HUD shit goes here, as long as it doesn't modify src.sight flags */
 		// The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
+
+
+			// Special on-map HUDs like the medical HUD
+			// ----------------------------------------
 			if(istype(glasses, /obj/item/clothing/glasses/hud/health))
 				if(client)
 					glasses:process_hud(src)
@@ -1203,51 +1203,52 @@
 				if (!druggy)
 					see_invisible = 0
 
-/*
-			if (istype(glasses, /obj/item/clothing/glasses))
-				sight = glasses.vision_flags
-				see_in_dark = 2 + glasses.darkness_view
-				see_invisible = invisa_view
+			// ======================================================
+			// HUD icon updates(sleep, rest, health, nutrition, etc.)
+			// ======================================================
 
-					if(istype(glasses, /obj/item/clothing/glasses/hud))
-						if(client)
-							glasses:process_hud(src)
-*/
-//Should finish this up later
-
-
-
+			// Update the sleep icon
+			// -----------------------
 			if (src.sleep && !hal_crit)
 				src.sleep.icon_state = text("sleep[]", src.sleeping > 0 ? 1 : 0)
 				src.sleep.overlays = null
 				if(src.sleeping_willingly)
 					src.sleep.overlays += icon(src.sleep.icon, "sleep_willing")
-			if (rest) rest.icon_state = text("rest[]", resting)
 
+			// Update the health display
+			// -------------------------
 			if (healths)
 				if (stat != 2)
-					switch(health - halloss)
-						if(100 to INFINITY)
-							healths.icon_state = "health0"
-						if(80 to 100)
-							healths.icon_state = "health1"
-						if(60 to 80)
-							healths.icon_state = "health2"
-						if(40 to 60)
-							healths.icon_state = "health3"
-						if(20 to 40)
-							healths.icon_state = "health4"
-						if(0 to 20)
-							healths.icon_state = "health5"
-						else
-							healths.icon_state = "health6"
+					// if the mob is not in crit, do a switch
+					if(health - halloss >= config.health_threshold_crit)
+						switch(health - halloss)
+							if(100 to INFINITY)
+								healths.icon_state = "health0"
+							if(80 to 100)
+								healths.icon_state = "health1"
+							if(60 to 80)
+								healths.icon_state = "health2"
+							if(40 to 60)
+								healths.icon_state = "health3"
+							if(20 to 40)
+								healths.icon_state = "health4"
+							else
+								healths.icon_state = "health5"
+					// if he's in crit, display crit icon
+					else
+						healths.icon_state = "health6"
+
+				// if he's dead, display death icon
 				else
 					healths.icon_state = "health7"
+
 				if(hal_screwyhud == 1)
 					healths.icon_state = "health6"
 				if(hal_screwyhud == 2)
 					healths.icon_state = "health7"
 
+			// Update the nutrition icon
+			// -------------------------
 			if (nutrition_icon)
 				switch(nutrition)
 					if(450 to INFINITY)
@@ -1260,7 +1261,11 @@
 						nutrition_icon.icon_state = "nutrition3"
 					else
 						nutrition_icon.icon_state = "nutrition4"
+
+			// Update the icon displaying whether we're on internals
+			// -----------------------------------------------------
 			if (pressure)
+
 				if(istype(wear_suit, /obj/item/clothing/suit/space)||istype(wear_suit, /obj/item/clothing/suit/armor/captain))
 					pressure.icon_state = "pressure0"
 
@@ -1279,17 +1284,25 @@
 							else
 								pressure.icon_state = "pressure-2"
 
+			// Update the icon which displays whether we're pulling something
+			// --------------------------------------------------------------
 			if(pullin)	pullin.icon_state = "pull[pulling ? 1 : 0]"
 
+			// Update the rest icon
+			// --------------------
 			if(rest)	rest.icon_state = "rest[(resting || lying || sleeping) ? 1 : 0]"
 
-
+			// Update the air alarms
+			// ---------------------
 			if (toxin || hal_screwyhud == 4)	toxin.icon_state = "tox[toxins_alert ? 1 : 0]"
 			if (oxygen || hal_screwyhud == 3)	oxygen.icon_state = "oxy[oxygen_alert ? 1 : 0]"
-			if (fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"													//NOTE: INVESTIGATE NUKE BURNINGS
+			if (fire) fire.icon_state = "fire[fire_alert ? 1 : 0]"
+			//NOTE: INVESTIGATE NUKE BURNINGS
 			//NOTE: the alerts dont reset when youre out of danger. dont blame me,
 			//blame the person who coded them. Temporary fix added.
 
+			// Update body temperature display
+			// -------------------------------
 			if(bodytemp)
 				switch(bodytemperature) //310.055 optimal body temp
 					if(370 to INFINITY)
@@ -1311,6 +1324,9 @@
 					else
 						bodytemp.icon_state = "temp-4"
 
+			// ====================================================
+			// Update complete screen overlays, like blurred vision
+			// ====================================================
 			if(!client)	return 0 //Wish we did not need these
 			client.screen -= hud_used.blurry
 			client.screen -= hud_used.druggy
@@ -1343,7 +1359,9 @@
 							client.screen += hud_used.vimpaired
 
 
-
+			// =============================================
+			// If we're a machine, check if we can still see
+			// =============================================
 			if (stat != 2)
 				if (machine)
 					if (!( machine.check_eye(src) ))
@@ -1356,13 +1374,6 @@
 			return 1
 
 		handle_random_events()
-			/* // probably stupid -- Doohl
-			if (prob(1) && prob(2))
-				spawn(0)
-					emote("sneeze")
-					return
-			*/
-
 			// Puke if toxloss is too high
 			if(!stat)
 				if (getToxLoss() >= 45 && nutrition > 20)
@@ -1370,16 +1381,7 @@
 					if(lastpuke >= 25) // about 25 second delay I guess
 						Stun(5)
 
-						for(var/mob/O in viewers(world.view, src))
-							O.show_message(text("<b>\red [] throws up!</b>", src), 1)
-						playsound(src.loc, 'splat.ogg', 50, 1)
-
-						var/turf/location = loc
-						if (istype(location, /turf/simulated))
-							location.add_vomit_floor(src, 1)
-
-						nutrition -= 20
-						adjustToxLoss(-3)
+						src.vomit()
 
 						// make it so you can only puke so fast
 						lastpuke = 0
@@ -1427,17 +1429,27 @@
 							if(!M.nodamage)
 								M.adjustBruteLoss(5)
 							nutrition += 10
-/*  One day.
-			if(nutrition <= 100)
-				if (prob (1))
-					src << "\red Your stomach rumbles."
-				if(nutrition <= 50)
-					if (prob (25))
-						bruteloss++
-					if (prob (5))
-						src << "You feel very weak."
-						weakened += rand(2, 3)
-*/
+			if(nutrition <= 150)
+				if (prob(1))
+					var/list/funny_comments = list(
+						"You feel hungry..",
+						"You feel thirsty..",
+						"Perhaps you should grab a bite to eat..",
+						"Your stomach rumbles..",
+						"Perhaps you should have a drink...",
+						"You feel empty inside..",
+						"You feel a bit peckish..",
+						"Whatever you last ate didn't do much to fill you up...",
+						"Hmm, some pizza would be nice..",
+						"You feel the darkness consuming you from within. You think you should find some food to soothe the devil inside you.",
+						"Are you on hunger strike or something?",
+						"You feel a void forming in yourself..",
+						"Your stomach files a complaint with your brain!",
+						"You feel a nagging sense of emptiness.."
+					)
+
+					src << "\blue [pick(funny_comments)]"
+
 		handle_changeling()
 			if (mind)
 				if (mind.special_role == "Changeling" && changeling)
@@ -1447,6 +1459,8 @@
 
 	handle_shock()
 		..()
+
+		if(analgesic) return // analgesic avoids all traumatic shock temporarily
 
 		if(health < 0)
 			// health 0 makes you immediately collapse
@@ -1481,59 +1495,3 @@
 			src << "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")
 		else if(shock_stage == 80)
 			src << "<font color='red'><b>"+pick("You see a light at the end of the tunnel!", "You feel like you could die any moment now.", "You're about to lose consciousness.")
-
-/*
-			// Commented out so hunger system won't be such shock
-			// Damage and effect from not eating
-
-*/
-/*
-snippets
-
-	if (mach)
-		if (machine)
-			mach.icon_state = "mach1"
-		else
-			mach.icon_state = null
-
-	if (!m_flag)
-		moved_recently = 0
-	m_flag = null
-
-
-
-		if ((istype(loc, /turf/space) && !( locate(/obj/movable, loc) )))
-			var/layers = 20
-			// ******* Check
-			if (((istype(head, /obj/item/clothing/head) && head.flags & 4) || (istype(wear_mask, /obj/item/clothing/mask) && (!( wear_mask.flags & 4 ) && wear_mask.flags & 8))))
-				layers -= 5
-			if (istype(w_uniform, /obj/item/clothing/under))
-				layers -= 5
-			if ((istype(wear_suit, /obj/item/clothing/suit) && wear_suit.flags & 8))
-				layers -= 10
-			if (layers > oxcheck)
-				oxcheck = layers
-
-
-				if(bodytemperature < 282.591 && (!firemut))
-					if(bodytemperature < 250)
-						adjustFireLoss(4)
-						updatehealth()
-						if(paralysis <= 2)	paralysis += 2
-					else if(prob(1) && !paralysis)
-						if(paralysis <= 5)	paralysis += 5
-						emote("collapse")
-						src << "\red You collapse from the cold!"
-				if(bodytemperature > 327.444  && (!firemut))
-					if(bodytemperature > 345.444)
-						if(!eye_blurry)	src << "\red The heat blurs your vision!"
-						eye_blurry = max(4, eye_blurry)
-						if(prob(3))	adjustFireLoss(rand(1,2))
-					else if(prob(3) && !paralysis)
-						paralysis += 2
-						emote("collapse")
-						src << "\red You collapse from heat exaustion!"
-				plcheck = t_plasma
-				oxcheck = t_oxygen
-				G.turf_add(T, G.total_moles)
-*/

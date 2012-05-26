@@ -14,6 +14,8 @@
 		src.traumatic_shock -= 200 // make synaptizine function as good painkiller
 	if(src.slurring)
 		src.traumatic_shock -= 20
+	if(src.analgesic)
+		src.traumatic_shock = 0
 
 	// broken or ripped off organs will add quite a bit of pain
 	if(istype(src,/mob/living/carbon/human))

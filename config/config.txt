@@ -164,4 +164,5 @@ TICKLAG 0.9
 ## Defines if Tick Compensation is used.  It results in a minor slowdown of movement of all mobs, but attempts to result in a level movement speed across all ticks.  Recommended if tickrate is lowered.
 TICKCOMP 0
 
-
+## Uncomment to restrict non-admins using humanoid alien races
+USEALIENWHITELIST

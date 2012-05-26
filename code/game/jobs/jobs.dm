@@ -122,7 +122,7 @@ var/list/nonhuman_positions = list(
 	switch(job)
 		if("Bartender","Chef","Lawyer","Librarian","Janitor","Assistant","Unassigned")
 			return 0
-		if("Chaplain","Botanist","Hydroponicist","Medical Doctor","Atmospheric Technician","Geneticist", "Virologist", "Surgeon", "Emergency Medical Technician", "Counselor")
+		if("Chaplain","Botanist","Hydroponicist","Medical Doctor","Atmospheric Technician","Geneticist", "Virologist", "Surgeon", "Emergency Physician", "Counselor")
 			return 1
 		if("Quartermaster","Cargo Technician","Chemist", "Station Engineer","Roboticist", "Security Officer", "Forensic Technician","Detective", "Scientist","Shaft Miner", "Xenobiologist", "Plasma Researcher","Chief Medical Officer")
 			return 2

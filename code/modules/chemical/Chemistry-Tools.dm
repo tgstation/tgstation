@@ -185,9 +185,10 @@
 							if(W:amount >= 1)
 								playsound(src.loc, 'Deconstruct.ogg', 50, 1)
 								if(do_after(user, 20))
-									W:use(1)
-									user << "\blue You put in the glass lens."
-									src.state = 5
+									if(W)
+										W:use(1)
+										user << "\blue You put in the glass lens."
+										src.state = 5
 					if(5)
 						if(istype(W, /obj/item/weapon/crowbar))
 							playsound(src.loc, 'Crowbar.ogg', 50, 1)
@@ -1337,6 +1338,97 @@
 			user << "\blue [trans] units injected.  [reagents.total_volume] units remaining in the hypospray."
 	return
 
+/obj/item/weapon/reagent_containers/borghypo
+	name = "Cyborg Hypospray"
+	desc = "An advanced chemical synthesizer and injection system, designed for heavy-duty medical equipment."
+	icon = 'syringe.dmi'
+	item_state = "hypo"
+	icon_state = "borghypo"
+	amount_per_transfer_from_this = 5
+	volume = 30
+	possible_transfer_amounts = null
+	flags = FPRINT
+	var/mode = 1
+	var/charge_cost = 100
+	var/charge_tick = 0
+	var/recharge_time = 10 //Time it takes for shots to recharge (in seconds)
+
+	New()
+		..()
+		processing_objects.Add(src)
+
+
+	Del()
+		processing_objects.Remove(src)
+		..()
+
+	process() //Every [recharge_time] seconds, recharge some reagents for the cyborg
+		charge_tick++
+		if(charge_tick < recharge_time) return 0
+		charge_tick = 0
+
+		if(isrobot(src.loc))
+			var/mob/living/silicon/robot/R = src.loc
+			if(R && R.cell)
+				if(mode == 1 && reagents.total_volume < 30) 	//Don't recharge reagents and drain power if the storage is full.
+					R.cell.use(charge_cost) 					//Take power from borg...
+					reagents.add_reagent("tricordrazine",10)	//And fill hypo with reagent.
+				if(mode == 2 && reagents.total_volume < 30)
+					R.cell.use(charge_cost)
+					reagents.add_reagent("inaprovaline", 10)
+				if(mode == 3 && reagents.total_volume < 30)
+					R.cell.use(charge_cost)
+					reagents.add_reagent("spaceacillin", 10)
+		//update_icon()
+		return 1
+
+/obj/item/weapon/reagent_containers/borghypo/attack(mob/M as mob, mob/user as mob)
+	if(!reagents.total_volume)
+		user << "\red The injector is empty."
+		return
+	if (!( istype(M, /mob) ))
+		return
+	if (reagents.total_volume)
+		user << "\blue You inject [M] with the injector."
+		M << "\red You feel a tiny prick!"
+
+		src.reagents.reaction(M, INGEST)
+		if(M.reagents)
+			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
+			user << "\blue [trans] units injected.  [reagents.total_volume] units remaining."
+	return
+
+/obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user as mob)
+	playsound(src.loc, 'pop.ogg', 50, 0)		//Change the mode
+	if(mode == 1)
+		mode = 2
+		reagents.clear_reagents() //Flushes whatever was in the storage previously, so you don't get chems all mixed up.
+		user << "\blue Synthesizer is now producing 'Inaprovaline'."
+		return
+	if(mode == 2)
+		mode = 3
+		reagents.clear_reagents()
+		user << "\blue Synthesizer is now producing 'Spaceacillin'."
+		return
+	if(mode == 3)
+		mode = 1
+		reagents.clear_reagents()
+		user << "\blue Synthesizer is now producing 'Tricordrazine'."
+		return
+
+/obj/item/weapon/reagent_containers/borghypo/examine()
+	set src in view()
+	..()
+	if (!(usr in view(2)) && usr!=src.loc) return
+
+	if(reagents && reagents.reagent_list.len)
+		for(var/datum/reagent/R in reagents.reagent_list)
+			usr << "\blue It currently has [R.volume] units of [R.name] stored."
+	else
+		usr << "\blue It is currently empty. Allow some time for the internal syntheszier to produce more."
+
+
+
 /obj/item/weapon/reagent_containers/hypospray/ert
 	name = "emergency hypospray"
 	desc = "The DeForest Medical Corporation hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients."
@@ -1591,7 +1683,8 @@
 				istype(W, /obj/item/weapon/circular_saw) || \
 				istype(W, /obj/item/weapon/melee/energy/sword) && W:active || \
 				istype(W, /obj/item/weapon/melee/energy/blade) || \
-				istype(W, /obj/item/weapon/shovel) \
+				istype(W, /obj/item/weapon/shovel) || \
+				istype(W, /obj/item/weapon/hatchet) \
 			)
 			inaccurate = 1
 		/*else if(W.w_class <= 2 && istype(src,/obj/item/weapon/reagent_containers/food/snacks/sliceable))
@@ -1845,10 +1938,6 @@
 			return 1
 
 		return 0
-
-	attackby(obj/item/I as obj, mob/user as mob)
-
-		return
 
 	afterattack(obj/target, mob/user , flag)
 
@@ -2310,7 +2399,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/pacid
 	name = "Polytrinic Acid Bottle"
-	desc = "A small bottle. Contains a small amount of Polytronic Acid"
+	desc = "A small bottle. Contains a small amount of Polytrinic Acid"
 	icon = 'chemical.dmi'
 	icon_state = "bottle17"
 	New()
@@ -3592,7 +3681,7 @@
 					desc = "Creepy time!"
 				if("changelingsting")
 					icon_state = "changelingsting"
-					name = "Changeling sting"
+					name = "Changeling Sting"
 					desc = "A stingy drink."
 				if("irishcarbomb")
 					icon_state = "irishcarbomb"
@@ -3606,6 +3695,10 @@
 					icon_state = "erikasurprise"
 					name = "Erika Surprise"
 					desc = "The surprise is, it's green!"
+				if("driestmartini")
+					icon_state = "driestmartiniglass"
+					name = "Driest Martini"
+					desc = "Only for the experienced. You think you see sand floating in the glass."
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"

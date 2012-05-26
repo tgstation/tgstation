@@ -71,7 +71,7 @@
 					"You hear metal clanking")
 			else
 				buckled_mob.visible_message(\
-					"\blue [buckled_mob.name] unbuckled himself!",\
+					"\blue [buckled_mob.name] unbuckles!",\
 					"You unbuckle yourself from [src].",\
 					"You hear metal clanking")
 			unbuckle()
@@ -118,6 +118,8 @@
 	return
 
 /obj/structure/stool/bed/chair/New()
+	if(anchored)
+		src.verbs -= /atom/movable/verb/pull
 	if(src.dir == NORTH)
 		src.layer = FLY_LAYER
 	..()

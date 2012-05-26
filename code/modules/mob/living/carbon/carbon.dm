@@ -173,11 +173,31 @@
 				usr << "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>"
 				return
 	src.hand = !( src.hand )
-	if (!( src.hand ))
+	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
+		if(hand)	//This being 1 means the left hand is in use
+			hud_used.l_hand_hud_object.icon_state = "hand_active"
+			hud_used.r_hand_hud_object.icon_state = "hand_inactive"
+		else
+			hud_used.l_hand_hud_object.icon_state = "hand_inactive"
+			hud_used.r_hand_hud_object.icon_state = "hand_active"
+	/*if (!( src.hand ))
 		src.hands.dir = NORTH
 	else
-		src.hands.dir = SOUTH
+		src.hands.dir = SOUTH*/
 	return
+
+/mob/living/carbon/proc/activate_hand(var/selhand) //0 or "r" or "right" for right hand; 1 or "l" or "left" for left hand.
+
+	if(istext(selhand))
+		selhand = lowertext(selhand)
+
+	if(selhand == "right" || selhand == "r")
+		selhand = 0
+	if(selhand == "left" || selhand == "l")
+		selhand = 1
+
+	if(selhand != src.hand)
+		swap_hand()
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if (src.health > 0)
@@ -262,11 +282,12 @@
 	if(src.sleeping_willingly)
 		src.sleeping = 0
 		src.sleeping_willingly = 0
-	// Update the hands-indicator on re-join.
+/*	// Update the hands-indicator on re-join.
 	if (!( src.hand ))
 		src.hands.dir = NORTH
 	else
 		src.hands.dir = SOUTH
+*/
 
 /mob/living/carbon/human/proc/GetOrgans()
 	var/list/L = list(  )
@@ -301,3 +322,23 @@
 		if(O.name == zone)
 			return O
 	return null
+
+/mob/living/carbon/proc/drip()
+
+/mob/living/carbon/proc/vomit()
+	// only humanoids and monkeys can vomit
+	if(!istype(src,/mob/living/carbon/human) && !istype(src,/mob/living/carbon/monkey))
+		return
+
+	// Make the human vomit on the floor
+	for(var/mob/O in viewers(world.view, src))
+		O.show_message(text("<b>\red [] throws up!</b>", src), 1)
+	playsound(src.loc, 'splat.ogg', 50, 1)
+
+	var/turf/location = loc
+	if (istype(location, /turf/simulated))
+		location.add_vomit_floor(src, 1)
+
+	nutrition -= 20
+	adjustToxLoss(-3)
+

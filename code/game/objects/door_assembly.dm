@@ -72,29 +72,47 @@ obj/structure/door_assembly
 	door_assembly_min
 		name = "Mining Airlock Assembly"
 		icon_state = "door_as_min1"
+		glass_base_icon_state = "door_as_gmin"
+		glass_type = /obj/machinery/door/airlock/glass/glass_mining
 		airlock_type = /obj/machinery/door/airlock/mining
 		anchored = 1
 		density = 1
 		state = 1
 		glass = 0
 
+		glass
+			glass = 1
+			icon_state = "door_as_gmin1"
+
 	door_assembly_atmo
 		name = "Atmospherics Airlock Assembly"
 		icon_state = "door_as_atmo1"
+		glass_base_icon_state = "door_as_gatmo"
+		glass_type = /obj/machinery/door/airlock/glass/glass_atmos
 		airlock_type = /obj/machinery/door/airlock/atmos
 		anchored = 1
 		density = 1
 		state = 1
 		glass = 0
 
+		glass
+			glass = 1
+			icon_state = "door_as_gatmo1"
+
 	door_assembly_research
 		name = "Research Airlock Assembly"
 		icon_state = "door_as_res1"
+		glass_base_icon_state = "door_as_gres"
+		glass_type = /obj/machinery/door/airlock/glass/glass_research
 		airlock_type = /obj/machinery/door/airlock/research
 		anchored = 1
 		density = 1
 		state = 1
 		glass = 0
+
+		glass
+			glass = 1
+			icon_state = "door_as_gres1"
 
 	door_assembly_med
 		name = "Medical Airlock Assembly"
@@ -243,6 +261,8 @@ obj/structure/door_assembly
 			del(src)
 		else
 			W.loc = src.loc
+
+			//del(W)
 	else if(istype(W, /obj/item/weapon/crowbar) && state == 2 )
 		playsound(src.loc, 'Crowbar.ogg', 100, 1)
 		var/turf/T = get_turf(user)
@@ -266,7 +286,7 @@ obj/structure/door_assembly
 		if(do_after(user, 40))
 			if(G)
 				if(G.amount>=1)
-					user << "\blue You installed glass windows into the airlock assembly!"
+					user << "\blue You installed glass windows the airlock assembly!"
 					G.use(1)
 					src.glass = 1
 					src.name = "Near finished Window Airlock Assembly"

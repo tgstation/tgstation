@@ -38,14 +38,85 @@
 
 
 /client/Southwest()
-	toggle_throw_mode()
+	if(iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		if(!C.get_active_hand())
+			usr << "\red You have nothing in your hand to throw."
+			return
+		toggle_throw_mode()
+	else
+		usr << "\red This mob type cannot throw items."
 	return
 
 
 /client/Northwest()
-	drop_item()
+	if(iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		if(!C.get_active_hand())
+			usr << "\red You have nothing to drop in your hand."
+			return
+		drop_item()
+	else
+		usr << "\red This mob type cannot drop items."
 	return
 
+//This gets called when you press the insert button.
+/client/verb/insert_key_pressed()
+	set hidden = 1
+
+	if(!src.mob)
+		return
+	var/mob/M = src.mob
+	if(ishuman(M) || isrobot(usr) || ismonkey(M) || istype(M,/mob/living/carbon/alien/humanoid) || islarva(M))
+		switch(M.a_intent)
+			if("help")
+				if(issilicon(usr))
+					usr.a_intent = "hurt"
+					usr.hud_used.action_intent.icon_state = "harm"
+				else
+					usr.a_intent = "disarm"
+					usr.hud_used.action_intent.icon_state = "disarm"
+					usr.hud_used.hurt_intent.icon_state = "harm_small"
+					usr.hud_used.help_intent.icon_state = "help_small"
+					usr.hud_used.grab_intent.icon_state = "grab_small"
+					usr.hud_used.disarm_intent.icon_state = "disarm_small_active"
+			if("disarm")
+				usr.a_intent = "hurt"
+				usr.hud_used.action_intent.icon_state = "harm"
+				usr.hud_used.hurt_intent.icon_state = "harm_small_active"
+				usr.hud_used.help_intent.icon_state = "help_small"
+				usr.hud_used.grab_intent.icon_state = "grab_small"
+				usr.hud_used.disarm_intent.icon_state = "disarm_small"
+			if("hurt")
+				if(issilicon(usr))
+					usr.a_intent = "help"
+					usr.hud_used.action_intent.icon_state = "help"
+				else
+					usr.a_intent = "grab"
+					usr.hud_used.action_intent.icon_state = "grab"
+					usr.hud_used.hurt_intent.icon_state = "harm_small"
+					usr.hud_used.help_intent.icon_state = "help_small"
+					usr.hud_used.grab_intent.icon_state = "grab_small_active"
+					usr.hud_used.disarm_intent.icon_state = "disarm_small"
+			if("grab")
+				usr.a_intent = "help"
+				usr.hud_used.action_intent.icon_state = "help"
+				usr.hud_used.hurt_intent.icon_state = "harm_small"
+				usr.hud_used.help_intent.icon_state = "help_small_active"
+				usr.hud_used.grab_intent.icon_state = "grab_small"
+				usr.hud_used.disarm_intent.icon_state = "disarm_small"
+		usr << "\blue Your intent is now \"[usr.a_intent]\"."
+	else
+		usr << "\red This mob type does not use intents."
+
+//This gets called when you press the delete button.
+/client/verb/delete_key_pressed()
+	set hidden = 1
+
+	if(!usr.pulling)
+		usr << "\blue You are not pulling anything."
+		return
+	usr.pulling = null
 
 /client/verb/swap_hand()
 	set hidden = 1

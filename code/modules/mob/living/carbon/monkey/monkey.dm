@@ -511,7 +511,7 @@
 		if (istype(wear_mask, /obj/item/clothing/mask))
 			var/t1 = wear_mask.icon_state
 			overlays += image("icon" = 'monkey.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = layer)
-			wear_mask.screen_loc = ui_mask
+			wear_mask.screen_loc = ui_monkey_mask
 
 	if (r_hand)
 		if(update_icon)
@@ -526,7 +526,7 @@
 	if (back)
 		var/t1 = back.icon_state //apparently tables make me upset and cause my dreams to shatter
 		overlays += image("icon" = 'back.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = layer)
-		back.screen_loc = ui_back
+		back.screen_loc = ui_monkey_back
 
 	if (handcuffed && update_icon)
 		pulling = null

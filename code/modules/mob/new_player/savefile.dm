@@ -131,6 +131,7 @@ datum/preferences/proc/savefile_save(mob/user, slot)
 	F["eyes_green"] << src.g_eyes
 	F["eyes_blue"] << src.b_eyes
 	F["blood_type"] << src.b_type
+	F["species"] << src.species
 	F["underwear"] << src.underwear
 	F["backbag"] << src.backbag
 	F["backbag"] << src.backbag
@@ -138,7 +139,10 @@ datum/preferences/proc/savefile_save(mob/user, slot)
 
 
 	F["be_special"] << src.be_special
-	F["UI"] << src.UI
+	//F["UI"] << src.UI
+	if(isnull(UI_style))
+		UI_style = "Midnight"
+	F["UI_style"] << UI_style
 	F["midis"] << src.midis
 	F["ghost_ears"] << src.ghost_ears
 	F["ghost_sight"] << src.ghost_sight
@@ -206,6 +210,8 @@ datum/preferences/proc/savefile_load(mob/user, slot)
 	F["eyes_green"] >> src.g_eyes
 	F["eyes_blue"] >> src.b_eyes
 	F["blood_type"] >> src.b_type
+	F["species"] >> src.species
+	if(isnull(species)) species = "Human"
 	F["underwear"] >> src.underwear
 	if(underwear == 0) underwear = 6 //For old players who have 0 in their savefile
 	F["backbag"] >> src.backbag
@@ -219,7 +225,10 @@ datum/preferences/proc/savefile_load(mob/user, slot)
 	if(isnull(ghost_sight)) ghost_sight = 1 //Hotfix
 	F["ooccolor"] >> src.ooccolor
 	F["lastchangelog"] >> src.lastchangelog
-	F["UI"] >> src.UI
+	//F["UI"] >> src.UI
+	F["UI_style"] >> src.UI_style
+	if(isnull(UI_style))
+		UI_style = "Midnight"
 	F["be_special"] >> src.be_special
 
 	F["job_civilian_high"] >> src.job_civilian_high

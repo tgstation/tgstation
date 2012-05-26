@@ -13,6 +13,7 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"pAI candidate" = 1, // -- TLE
 	"cultist" = IS_MODE_COMPILED("cult"),
 	"infested monkey" = IS_MODE_COMPILED("monkey"),
+	"meme" = IS_MODE_COMPILED("meme"),
 )
 /*
 var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm --rastaf
@@ -39,98 +40,102 @@ var/const
 	BE_CULTIST   =(1<<7)
 	BE_MONKEY    =(1<<8)
 	BE_PAI       =(1<<9)
+	BE_MEME		 =(1<<10)
 
 
 
 
 
 datum/preferences
-	var
-		real_name
-		be_random_name = 0
-		gender = MALE
-		age = 30.0
-		b_type = "A+"
+	var/real_name
+	var/be_random_name = 0
+	var/gender = MALE
+	var/age = 30.0
+	var/b_type = "A+"
 
 		//Special role selection
-		be_special = 0
+	var/be_special = 0
 		//Play admin midis
-		midis = 1
+	var/midis = 1
 		//Toggle ghost ears
-		ghost_ears = 1
-		ghost_sight = 1
+	var/ghost_ears = 1
+	var/ghost_sight = 1
 		//Play pregame music
-		pregame_music = 1
+	var/pregame_music = 1
 		//Saved changlog filesize to detect if there was a change
-		lastchangelog = 0
+	var/lastchangelog = 0
 
 		//Just like it sounds
-		ooccolor = "#b82e00"
-		underwear = 1
-		list/underwear_m = list("White", "Grey", "Green", "Blue", "Black", "None") //Curse whoever made male/female underwear diffrent colours
-		list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "None")
-		backbag = 2
-		list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Alt")
+	var/ooccolor = "#b82e00"
+	var/underwear = 1
+	var/list/underwear_m = list("White", "Grey", "Green", "Blue", "Black", "None") //Curse whoever made male/female underwear diffrent colours
+	var/list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "None")
+	var/backbag = 2
+	var/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Alt")
 
 		//Hair type
-		h_style = "Short Hair"
-		datum/sprite_accessory/hair/hair_style
+	var/h_style = "Short Hair"
+	var/datum/sprite_accessory/hair/hair_style
 		//Hair color
-		r_hair = 0
-		g_hair = 0
-		b_hair = 0
+	var/r_hair = 0
+	var/g_hair = 0
+	var/b_hair = 0
 
 		//Face hair type
-		f_style = "Shaved"
-		datum/sprite_accessory/facial_hair/facial_hair_style
+	var/f_style = "Shaved"
+	var/datum/sprite_accessory/facial_hair/facial_hair_style
 		//Face hair color
-		r_facial = 0
-		g_facial = 0
-		b_facial = 0
+	var/r_facial = 0
+	var/g_facial = 0
+	var/b_facial = 0
+
+		//Species
+	var/species = "Human"
 
 		//Skin color
-		s_tone = 0
+	var/s_tone = 0
 
 		//Eye color
-		r_eyes = 0
-		g_eyes = 0
-		b_eyes = 0
+	var/r_eyes = 0
+	var/g_eyes = 0
+	var/b_eyes = 0
 
 		//UI style
-		UI = UI_NEW
+		//UI = UI_OLD
+	var/UI_style = "Midnight"
 
 		//Mob preview
-		icon/preview_icon = null
-		preview_dir = SOUTH
+	var/icon/preview_icon = null
+	var/preview_dir = SOUTH
 
 		//Jobs, uses bitflags
-		job_civilian_high = 0
-		job_civilian_med = 0
-		job_civilian_low = 0
+	var/job_civilian_high = 0
+	var/job_civilian_med = 0
+	var/job_civilian_low = 0
 
-		job_medsci_high = 0
-		job_medsci_med = 0
-		job_medsci_low = 0
+	var/job_medsci_high = 0
+	var/job_medsci_med = 0
+	var/job_medsci_low = 0
 
-		job_engsec_high = 0
-		job_engsec_med = 0
-		job_engsec_low = 0
+	var/job_engsec_high = 0
+	var/job_engsec_med = 0
+	var/job_engsec_low = 0
 
-		list/job_alt_titles = new()		// the default name of a job like "Medical Doctor"
+	var/list/job_alt_titles = new()		// the default name of a job like "Medical Doctor"
 
-		flavor_text = ""
+	var/flavor_text = ""
 
 		// slot stuff (Why were they var/var?  --SkyMarshal)
-		slotname
-		curslot = 0
-		disabilities = 0
+	var/slotname
+	var/curslot = 0
+	var/disabilities = 0
 
-		used_skillpoints = 0
-		skill_specialization = null
-		list/skills = list() // skills can range from 0 to 3
+	var/used_skillpoints = 0
+	var/skill_specialization = null
+	var/list/skills = list() // skills can range from 0 to 3
 
 		// OOC Metadata:
-		metadata = ""
+	var/metadata = ""
 
 
 	New()
@@ -257,7 +262,7 @@ datum/preferences
 		dat += "<b>Age:</b> <a href='byond://?src=\ref[user];preferences=1;age=input'>[age]</a>"
 
 		dat += "<br>"
-		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[UI == UI_NEW ? "New" : "Old"]</b></a><br>"
+		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[UI_style]</b></a><br>"
 		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
 		dat += "<b>Ghost ears:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_ears=input\"><b>[ghost_ears == 0 ? "Nearest Creatures" : "All Speech"]</b></a><br>"
 		dat += "<b>Ghost sight:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_sight=input\"><b>[ghost_sight == 0 ? "Nearest Creatures" : "All Emotes"]</b></a><br>"
@@ -265,7 +270,7 @@ datum/preferences
 		if(config.allow_Metadata)
 			dat += "<b>OOC Notes:</b> <a href='byond://?src=\ref[user];preferences=1;OOC=input'> Edit </a><br>"
 
-		if((user.client) && (user.client.holder) && (user.client.holder.rank) && (user.client.holder.rank == "Game Master"))
+		if((user.client) && (user.client.holder) && (user.client.holder.rank) && (user.client.holder.level >= 5))
 			dat += "<hr><b>OOC</b><br>"
 			dat += "<a href='byond://?src=\ref[user];preferences=1;ooccolor=input'>Change colour</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table style='display:inline;'  bgcolor=\"[ooccolor]\"><tr><td>__</td></tr></table></font>"
 
@@ -279,6 +284,7 @@ datum/preferences
 		dat += "<hr><table><tr><td><b>Body</b> "
 		dat += "(<a href=\"byond://?src=\ref[user];preferences=1;s_tone=random;underwear=random;backbag_type=random;age=random;b_type=random;hair=random;h_style=random;facial=random;f_style=random;eyes=random\">&reg;</A>)" // Random look
 		dat += "<br>"
+		dat += "Species: <a href='byond://?src=\ref[user];preferences=1;species=input'>[species]</a><br>"
 		dat += "Blood Type: <a href='byond://?src=\ref[user];preferences=1;b_type=input'>[b_type]</a><br>"
 		dat += "Skin Tone: <a href='byond://?src=\ref[user];preferences=1;s_tone=input'>[-s_tone + 35]/220<br></a>"
 
@@ -694,6 +700,24 @@ datum/preferences
 				if("random")
 					b_type = pickweight ( list ("A+" = 31, "A-" = 7, "B+" = 8, "B-" = 2, "AB+" = 2, "AB-" = 1, "O+" = 40, "O-" = 9))
 
+		if(link_tags["species"])
+			switch(link_tags["species"])
+				if("input")
+					var/list/new_species = list("Human")
+					if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
+						if(is_alien_whitelisted(user, "Soghun")) //Check for Soghun and admins
+							new_species += "Soghun"
+						if(is_alien_whitelisted(user, "Tajaran")) //Check for Tajaran
+							new_species += "Tajaran"
+					else //Not using the whitelist? Aliens for everyone!
+						new_species += "Tajaran"
+						new_species += "Soghun"
+					species = input("Please select a species", "Character Generation", null) in new_species
+					h_style = "Bald" //Try not to carry face/head hair over.
+					f_style = "Shaved"
+					s_tone = 0 //Don't carry over skintone either.
+					hair_style = new/datum/sprite_accessory/hair/bald
+					facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
 
 		if(link_tags["hair"])
 			switch(link_tags["hair"])
@@ -733,14 +757,18 @@ datum/preferences
 				if("random")
 					randomize_skin_tone()
 				if("input")
-					var/new_tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
+					var/new_tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black) or 20-70 for Tajarans", "Character Generation")  as text
 					if(new_tone)
-						s_tone = max(min(round(text2num(new_tone)), 220), 1)
+						if(species == "Tajaran")
+							s_tone = max(min(round(text2num(new_tone)), 70), 20)
+						else
+							s_tone = max(min(round(text2num(new_tone)), 220), 1)
 						s_tone = -s_tone + 35
 
 		if(link_tags["h_style"])
+			if(species != "Human")
+				return
 			switch(link_tags["h_style"])
-
 				// New and improved hair selection code, by Doohl
 				if("random") // random hair selection
 
@@ -783,6 +811,8 @@ datum/preferences
 				src.ooccolor = ooccolor
 
 		if(link_tags["f_style"])
+			if(species != "Human") //Tajarans and Soghuns don't have hair stuff yet.
+				return
 			switch(link_tags["f_style"])
 
 				// see above for commentation. This is just a slight modification of the hair code for facial hairs
@@ -817,10 +847,15 @@ datum/preferences
 				gender = MALE
 
 		if(link_tags["UI"])
-			if(UI == UI_OLD)
-				UI = UI_NEW
-			else
-				UI = UI_OLD
+			switch(UI_style)
+				if("Midnight")
+					UI_style = "Orange"
+				if("Orange")
+					UI_style = "old"
+				if("old")
+					UI_style = "Midnight"
+				else
+					UI_style = "Midnight"
 
 		if(link_tags["midis"])
 			midis = !midis
@@ -864,7 +899,7 @@ datum/preferences
 			be_random_name = !be_random_name
 
 		if(link_tags["flavor_text"])
-			var/msg = input(usr,"Set the flavor text in your 'examine' verb. Don't metagame!","Flavor Text",html_decode(flavor_text)) as message
+			var/msg = input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(flavor_text)) as message
 
 			if(msg != null)
 				msg = copytext(msg, 1, MAX_MESSAGE_LEN)
@@ -891,6 +926,8 @@ datum/preferences
 					slotname = savefile_getslots(user)[curslot]
 					loadsave(user)
 		if(link_tags["removeslot"])
+			if(alert("Are you sure you wish to delete this slot?",,"Yes","No")=="No")
+				return
 			var/slot = text2num(link_tags["removeslot"])
 			if(!slot)
 				return
@@ -951,7 +988,8 @@ datum/preferences
 			b_eyes = 0.0
 			s_tone = 0.0
 			b_type = "A+"
-			UI = UI_OLD
+			//UI = UI_OLD
+			UI_style = "Midnight"
 			midis = 1
 			ghost_ears = 1
 			disabilities = 0
@@ -996,11 +1034,15 @@ datum/preferences
 		character.h_style = h_style
 		character.f_style = f_style
 
-		switch (UI)
-			if(UI_OLD)
+		switch(UI_style)
+			if("Midnight")
+				character.UI = 'screen1_Midnight.dmi'
+			if("Orange")
+				character.UI = 'screen1_Orange.dmi'
+			if("old")
 				character.UI = 'screen1_old.dmi'
-			if(UI_NEW)
-				character.UI = 'screen1.dmi'
+			else
+				character.UI = 'screen1_Midnight.dmi'
 
 		character.hair_style = hair_style
 		character.facial_hair_style = facial_hair_style

@@ -1,6 +1,10 @@
 /mob/living/carbon/human/emote(var/act,var/m_type=1,var/message = null)
 	var/param = null
 
+	if(!emote_allowed && usr == src)
+		usr << "You are unable to emote."
+		return
+
 	if (findtext(act, " ", 1, null))
 		var/t1 = findtext(act, " ", 1, null)
 		param = copytext(act, t1 + 1, length(act) + 1)
@@ -534,7 +538,13 @@
 
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
+				if(istype(O,/mob/living/carbon/human))
+					for(var/mob/living/parasite/P in O:parasites)
+						P.show_message(message, m_type)
 				O.show_message(message, m_type)
 		else if (m_type & 2)
 			for (var/mob/O in hearers(src.loc, null))
+				if(istype(O,/mob/living/carbon/human))
+					for(var/mob/living/parasite/P in O:parasites)
+						P.show_message(message, m_type)
 				O.show_message(message, m_type)

@@ -1,3 +1,5 @@
+//UNTICKED DUE TO BUGGY SHIT
+
 /obj/effect/biomass
 	icon = 'biomass.dmi'
 	icon_state = "stage1"

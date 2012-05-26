@@ -1,4 +1,8 @@
 
+
+var/use_uristrunes = 1
+
+
 var/wordtravel = null
 var/wordself = null
 var/wordsee = null
@@ -207,6 +211,10 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			return
 
 		check_icon()
+			if(use_uristrunes)
+				icon = get_uristrune_cult(word1, word2, word3)
+				return
+
 			if(word1 == wordtravel && word2 == wordself)
 				icon_state = "2"
 				src.icon += rgb(0, 0 , 255)
@@ -562,6 +570,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				R.word2 = w2
 				R.word3 = w3
 				R.check_icon()
+				if(!R.blood_DNA)
+					R.blood_DNA = list()
 				R.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
 			return
 		else

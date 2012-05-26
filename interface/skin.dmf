@@ -4,19 +4,19 @@ macro "macro"
 		command = ".center"
 		is-disabled = false
 	elem 
-		name = "NORTHEAST+REP"
+		name = "NORTHEAST"
 		command = ".northeast"
 		is-disabled = false
 	elem 
-		name = "SOUTHEAST+REP"
+		name = "SOUTHEAST"
 		command = ".southeast"
 		is-disabled = false
 	elem 
-		name = "SOUTHWEST+REP"
+		name = "SOUTHWEST"
 		command = ".southwest"
 		is-disabled = false
 	elem 
-		name = "NORTHWEST+REP"
+		name = "NORTHWEST"
 		command = ".northwest"
 		is-disabled = false
 	elem 
@@ -50,6 +50,14 @@ macro "macro"
 	elem 
 		name = "SOUTH+REP"
 		command = ".south"
+		is-disabled = false
+	elem 
+		name = "INSERT"
+		command = "insert-key-pressed"
+		is-disabled = false
+	elem 
+		name = "DELETE"
+		command = "delete-key-pressed"
 		is-disabled = false
 	elem 
 		name = "CTRL+A"
@@ -321,6 +329,71 @@ menu "menu"
 		name = "&News"
 		command = "Read-News"
 		category = "&Help"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+
+menu "minimap_menu"
+	elem 
+		name = "Size"
+		command = ""
+		category = ""
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "50%"
+		command = ".winset \"minimap.icon-size=16\""
+		category = "Size"
+		is-checked = false
+		can-check = true
+		group = "minimap_size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "100%"
+		command = ".winset \"minimap.icon-size=32\""
+		category = "Size"
+		is-checked = true
+		can-check = true
+		group = "minimap_size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "200%"
+		command = ".winset \"minimap.icon-size=64\""
+		category = "Size"
+		is-checked = false
+		can-check = true
+		group = "minimap_size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "stretch"
+		command = ".winset \"minimap.icon-size=0\""
+		category = "Size"
+		is-checked = false
+		can-check = true
+		group = "minimap_size"
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "View"
+		command = ""
+		category = ""
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+	elem 
+		name = "Change Z level"
+		command = "Open-Minimap-Z"
+		category = "View"
 		is-checked = false
 		can-check = false
 		group = ""
@@ -1206,6 +1279,71 @@ window "mapwindow"
 		text-mode = false
 		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
 		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
+
+window "minimapwindow"
+	elem "minimapwindow"
+		type = MAIN
+		pos = 281,0
+		size = 640x480
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = false
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		on-size = ""
+		title = ""
+		titlebar = true
+		statusbar = true
+		can-close = true
+		can-minimize = true
+		can-resize = true
+		is-pane = false
+		is-minimized = false
+		is-maximized = false
+		can-scroll = none
+		icon = ""
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = ""
+		menu = "minimap_menu"
+		on-close = ""
+	elem "minimap"
+		type = MAP
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = true
+		right-click = false
+		saved-params = "icon-size"
+		on-size = ""
+		icon-size = 32
+		text-mode = false
+		on-show = ""
+		on-hide = ""
 
 window "outputwindow"
 	elem "outputwindow"

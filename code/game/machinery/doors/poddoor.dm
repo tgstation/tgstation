@@ -3,8 +3,7 @@
 	desc = "A type of powerful blast door."
 	icon = 'rapid_pdoor.dmi'
 	icon_state = "pdoor1"
-	var/id = 1.0
-	var/networkTag = ""
+	var/id = ""
 
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(!density)
@@ -28,7 +27,7 @@
 			return
 	return
 
-/obj/machinery/door/poddoor/open()
+/obj/machinery/door/poddoor/open(var/closeafterdelay = 0)
 	if (src.operating == 1) //doors can still open when emag-disabled
 		return
 	if (!ticker)
@@ -44,8 +43,8 @@
 
 	if(operating == 1) //emag again
 		src.operating = 0
-	if(autoclose)
-		spawn(150)
+	if(closeafterdelay)
+		spawn(50)
 			autoclose()
 	return 1
 
@@ -63,7 +62,6 @@
 	sleep(10)
 	src.operating = 0
 	return
-
 
 /obj/machinery/door/poddoor/two_tile_hor/open()
 	if (src.operating == 1) //doors can still open when emag-disabled

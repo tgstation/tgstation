@@ -67,7 +67,7 @@
 			if ((O.client && !( O.blinded )))
 				O << "\red [src] has been scanned by [user] with the [W]"
 	else
-		if (!( istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) &&!(istype(W, /obj/item/weapon/cleaner)) &&!(istype(W, /obj/item/weapon/chemsprayer)) &&!(istype(W, /obj/item/weapon/pepperspray)) && !(istype(W, /obj/item/weapon/plantbgone)) )
+		if (!( istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) &&!(istype(W, /obj/item/weapon/cleaner)) &&!(istype(W, /obj/item/weapon/chemsprayer)) &&!(istype(W, /obj/item/weapon/pepperspray)) && !(istype(W, /obj/item/weapon/plantbgone)) && !(istype(W, /obj/item/weapon/reagent_containers/glass/rag)) )
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O << "\red <B>[src] has been hit by [user] with [W]</B>"
@@ -213,7 +213,8 @@
 		for(var/obj/effect/decal/cleanable/blood/B in T.contents)
 			if(!B.blood_DNA[M.dna.unique_enzymes])
 				B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-			B.virus2 += M.virus2
+			if(!B.virus2)
+				B.virus2 = M.virus2
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
 				B.viruses += newDisease
@@ -347,6 +348,7 @@
 		return
 	..()
 	return
+
 
 /atom/Click(location,control,params)
 	//world << "atom.Click() on [src] by [usr] : src.type is [src.type]"
@@ -652,25 +654,6 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 			if ( !animal.restrained() )
 				attack_animal(animal)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /atom/DblClick(location, control, params) //TODO: DEFERRED: REWRITE
 //	world << "checking if this shit gets called at all"
 
@@ -730,35 +713,44 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 	// ------- SHIFT-CLICK -------
 
-	var/parameters = params2list(params)
+	if(params)
+		var/parameters = params2list(params)
 
-	if(parameters["shift"]){
-		if(!isAI(usr))
-			ShiftClick(usr)
-		else
-			AIShiftClick(usr)
-		return
-	}
+		if(parameters["shift"]){
+			if(!isAI(usr))
+				ShiftClick(usr)
+			else
+				AIShiftClick(usr)
+			return
+		}
 
-	// ------- ALT-CLICK -------
+		// ------- ALT-CLICK -------
 
-	if(parameters["alt"]){
-		if(!isAI(usr))
-			AltClick(usr)
-		else
-			AIAltClick(usr)
-		return
-	}
+		if(parameters["alt"]){
+			if(!isAI(usr))
+				AltClick(usr)
+			else
+				AIAltClick(usr)
+			return
+		}
 
-	// ------- CTRL-CLICK -------
+		// ------- CTRL-CLICK -------
 
-	if(parameters["ctrl"]){
-		if(!isAI(usr))
-			CtrlClick(usr)
-		else
-			AICtrlClick(usr)
-		return
-	}
+		if(parameters["ctrl"]){
+			if(!isAI(usr))
+				CtrlClick(usr)
+			else
+				AICtrlClick(usr)
+			return
+			}
+
+		// ------- MIDDLE-CLICK -------
+
+		if(parameters["middle"]){
+			if(!isAI(usr))
+				MiddleClick(usr)
+				return
+		}
 
 	// ------- THROW -------
 	if(usr.in_throw_mode)
@@ -1082,6 +1074,11 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 
 	return
+
+/atom/proc/MiddleClick(var/mob/M as mob) // switch hands
+	if(istype(M, /mob/living/carbon))
+		var/mob/living/carbon/U = M
+		U.swap_hand()
 
 /*
 /atom/proc/get_global_map_pos()

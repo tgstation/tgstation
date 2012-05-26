@@ -158,9 +158,9 @@
 	name = "super compressed matter cartridge"
 	ammo = 30
 
-/obj/item/weapon/spacecash
+/obj/item/weapon/money
 	name = "stack of credits"
-	desc = "It's worth 1 credit."
+	desc = "A pile of 1 credit."
 	gender = PLURAL
 	icon = 'items.dmi'
 	icon_state = "spacecash"
@@ -172,90 +172,143 @@
 	throw_speed = 1
 	throw_range = 2
 	w_class = 1.0
+	var/currency
+	var/worth
+	var/split = 5
+	var/round = 0.01
 	var/access = list()
 	access = access_crate_cash
-	var/worth = 1
-	var/amount = 1
 
-/obj/item/weapon/spacecash/c10
+/obj/item/weapon/spacecash
+	New() // Just in case
+		spawn(1)
+			new/obj/item/weapon/money(loc)
+			del src
+
+/obj/item/weapon/money/proc/updatedesc()
+	name = "stack of [currency]"
+	desc = "A pile of [worth] [currency]"
+
+/obj/item/weapon/money/New(var/nloc, var/nworth=1,var/ncurrency  = "credits")
+	if(!worth)
+		worth = nworth
+	if(!currency)
+		currency = ncurrency
+	split = round(worth/2,round)
+	updatedesc()
+	return ..(nloc)
+
+/obj/item/weapon/money/c10
 	icon_state = "spacecash10"
 	access = access_crate_cash
-	desc = "It's worth 10 credits."
+	desc = "A pile of 10 credits."
 	worth = 10
-/obj/item/weapon/spacecash/c20
+
+/obj/item/weapon/money/c20
 	icon_state = "spacecash20"
 	access = access_crate_cash
-	desc = "It's worth 20 credits."
-	worth = 20
-/obj/item/weapon/spacecash/c50
+	desc = "A pile of 20 credits."
+
+/obj/item/weapon/money/c50
 	icon_state = "spacecash50"
 	access = access_crate_cash
-	desc = "It's worth 50 credits."
-	worth = 50
-/obj/item/weapon/spacecash/c100
+	desc = "A pile of 50 credits."
+
+/obj/item/weapon/money/c100
 	icon_state = "spacecash100"
 	access = access_crate_cash
-	desc = "It's worth 100 credits."
+	desc = "A pile of 100 credits."
 	worth = 100
-/obj/item/weapon/spacecash/c200
+
+/obj/item/weapon/money/c200
 	icon_state = "spacecash200"
 	access = access_crate_cash
-	desc = "It's worth 200 credits."
+	desc = "A pile of 200 credits."
 	worth = 200
-/obj/item/weapon/spacecash/c500
+
+/obj/item/weapon/money/c500
 	icon_state = "spacecash500"
 	access = access_crate_cash
-	desc = "It's worth 500 credits."
+	desc = "A pile of 500 credits."
 	worth = 500
-/obj/item/weapon/spacecash/c1000
+
+/obj/item/weapon/money/c1000
 	icon_state = "spacecash1000"
 	access = access_crate_cash
-	desc = "It's worth 1000 credits."
+	desc = "A pile of 1000 credits."
 	worth = 1000
-/obj/item/weapon/spacecash/attack_self(var/mob/user)
-	var/dat = "<HEAD><TITLE>Space cash stack</TITLE></HEAD>"
-	dat += "Credit amount - [worth * amount]<br>"
-	dat += "<a href='?src=\ref[src];takemoney=1'>Take amount</a><br>"
-	user << browse(dat,"window=money")
 
-/obj/item/weapon/spacecash/Topic(href, href_list)
-	if(href_list["takemoney"])
-		var/a = 1
-		a = input(usr,"How much you want take?") as num
-		if((a > src.amount) || (a < 0))
-			usr << "\red You don't have that many credits."
-			return
-		src.amount -= a
-		var/obj/item/weapon/spacecash/S
-		if(a <= 0)
-			return
-		switch(src.worth)
-			if(1)
-				S = new /obj/item/weapon/spacecash(get_turf(src))
-			if(10)
-				S = new /obj/item/weapon/spacecash/c10(get_turf(src))
-			if(20)
-				S = new /obj/item/weapon/spacecash/c20(get_turf(src))
-			if(50)
-				S = new /obj/item/weapon/spacecash/c50(get_turf(src))
-			if(100)
-				S = new /obj/item/weapon/spacecash/c100(get_turf(src))
-			if(200)
-				S = new /obj/item/weapon/spacecash/c200(get_turf(src))
-			if(500)
-				S = new /obj/item/weapon/spacecash/c500(get_turf(src))
-			if(1000)
-				S = new /obj/item/weapon/spacecash/c1000(get_turf(src))
-		S.amount = a
-		if(src.amount == 0)
-			del(src)
-/obj/item/weapon/spacecash/attackby(var/obj/I, var/mob/user)
-	if(!I)
-		return
-	if(istype(I,src))
-		src.amount += I:amount
-		user << "You add [I:amount] credits to stack."
-		del(I)
+/obj/item/weapon/money/attack_self(var/mob/user)
+	interact(user)
+
+/obj/item/weapon/money/proc/interact(var/mob/user)
+
+	user.machine = src
+
+	var/dat
+
+	dat += "<BR>[worth] [currency]"
+	dat += "<BR>New pile:"
+
+	dat += "<A href='?src=\ref[src];sd=5'>-</a>"
+	dat += "<A href='?src=\ref[src];sd=1'>-</a>"
+	if(round<=0.1)
+		dat += "<A href='?src=\ref[src];sd=0.1'>-</a>"
+		if(round<=0.01)
+			dat += "<A href='?src=\ref[src];sd=0.01'>-</a>"
+	dat += "[split]"
+	if(round<=0.01)
+		dat += "<A href='?src=\ref[src];su=0.01'>+</a>"
+	if(round<=0.1)
+		dat += "<A href='?src=\ref[src];su=0.1'>+</a>"
+	dat += "<A href='?src=\ref[src];su=1'>+</a>"
+	dat += "<A href='?src=\ref[src];su=5'>+</a>"
+	dat += "<BR><A href='?src=\ref[src];split=1'>split</a>"
+
+
+	user << browse(dat, "window=computer;size=400x500")
+
+	onclose(user, "computer")
+	return
+
+/obj/item/weapon/money/Topic(href, href_list)
+	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+		usr.machine = src
+
+		if (href_list["su"])
+			var/samt = text2num(href_list["su"])
+			if(split+samt<worth)
+				split+=samt
+		if (href_list["sd"])
+			var/samt = text2num(href_list["sd"])
+			if(split-samt>0)
+				split-=samt
+		if(href_list["split"])
+			new /obj/item/weapon/money(get_turf(src),split,currency)
+			worth-=split
+			split = round(worth/2,round)
+			updatedesc()
+
+
+		src.add_fingerprint(usr)
+	src.updateUsrDialog()
+	for (var/mob/M in viewers(1, src.loc))
+		if (M.client && M.machine == src)
+			src.attack_self(M)
+	return
+
+/obj/item/weapon/money/attackby(var/obj/I as obj, var/mob/user as mob)
+	if(istype(I,/obj/item/weapon/money))
+		var/mob/living/carbon/c = user
+		if(!uppertext(I:currency)==uppertext(currency))
+			c<<"You can't mix currencies!"
+			return ..()
+		else
+			worth+=I:worth
+			c<<"You combine the piles."
+			updatedesc()
+			del I
+	return ..()
 
 
 /obj/item/device/mass_spectrometer

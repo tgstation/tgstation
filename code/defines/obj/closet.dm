@@ -15,6 +15,33 @@
 	var/lasttry = 0
 	layer = 2.98
 
+/obj/structure/closet/verb/open_close()
+	set name = "Open/Close"
+	set category = "Object"
+	set src in view(1)
+
+	if(!(usr))
+		return
+	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() )
+		usr << "\red You can't interact with this!"
+		return
+	if(src.anchored)
+		usr << "\red You can't interact with this!"
+		return
+	if(istype(usr, /mob/living/silicon/robot))
+		src.attack_hand(usr)
+		return
+	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))
+		usr << "\red You can't interact with this!"
+		return
+	if(istype(usr, /mob/living/carbon/human))
+		src.attack_hand(usr)
+	if(istype(usr, /mob/living/carbon/alien))
+		src.attack_alien(usr)
+	if(istype(usr, /mob/living/carbon/monkey))
+		src.attack_paw(usr)
+	return
+
 /obj/structure/closet/detective
 	name = "detective's closet"
 	desc = "Holds the detective's clothes while his coat rack is being repaired."
@@ -44,6 +71,8 @@
 /obj/structure/closet/gmcloset
 	name = "formal closet"
 	desc = "It's a storage unit for formal clothing."
+	icon_state = "black"
+	icon_closed = "black"
 
 /obj/structure/closet/emcloset
 	name = "emergency closet"
@@ -98,14 +127,20 @@
 /obj/structure/closet/jcloset
 	name = "custodial closet"
 	desc = "It's a storage unit for janitorial clothes and gear."
+	icon_state = "mixed"
+	icon_closed = "mixed"
 
 /obj/structure/closet/jcloset2
 	name = "cleaner's closet"
 	desc = "It's a storage unit for various cleaning items."
+	icon_state = "mixed"
+	icon_closed = "mixed"
 
 /obj/structure/closet/lawcloset
 	name = "legal closet"
 	desc = "It's a storage unit for courtroom apparel and items."
+	icon_state = "blue"
+	icon_closed = "blue"
 
 /obj/structure/closet/coffin
 	name = "coffin"
@@ -290,10 +325,10 @@
 	icon_state = "white"
 	icon_closed = "white"
 
-/obj/structure/closet/wardrobe/genetics_white
-	name = "genetics wardrobe"
-	icon_state = "white"
-	icon_closed = "white"
+/obj/structure/closet/wardrobe/robotics_black
+	name = "robotics wardrobe"
+	icon_state = "black"
+	icon_closed = "black"
 
 /obj/structure/closet/wardrobe/medic_white
 	name = "doctor's wardrobe"
@@ -302,6 +337,11 @@
 
 /obj/structure/closet/wardrobe/chemistry_white
 	name = "chemistry wardrobe"
+	icon_state = "white"
+	icon_closed = "white"
+
+/obj/structure/closet/wardrobe/genetics_white
+	name = "genetics wardrobe"
 	icon_state = "white"
 	icon_closed = "white"
 

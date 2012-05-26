@@ -98,19 +98,15 @@
 
 	usr:cameraFollow = target
 	usr << "Now tracking target on camera." //Unidentifieds are no longer screamed at you.
-	if (usr.machine == null)
+
+	if (usr.machine == null && client.eye != eyeobj)
 		usr.machine = usr
 
 	spawn (0)
-		if(client.eye == eyeobj)
-			if(checkcameravis(target))
-				eyeobj.loc = target.loc
-			else
-				usr << "Target is not on or near any active cameras on the station."
-			return
 		while (usr:cameraFollow == target)
 			if (usr:cameraFollow == null)
 				return
+
 			else if (istype(target, /mob/living/carbon/human))
 				if(istype(target:wear_id, /obj/item/weapon/card/id/syndicate))
 					usr << "Follow camera mode terminated."
@@ -134,6 +130,17 @@
 				sleep(40) //because we're sleeping another second after this (a few lines down)
 				continue
 
+			if(client.eye == eyeobj)
+				if(checkcameravis(target))
+					eyeobj.loc = target.loc
+					sleep(50)
+					continue
+
+				else
+					usr << "Target is not on or near any active cameras on the station."
+					usr:cameraFollow = null
+					return
+
 			var/obj/machinery/camera/C = usr:current
 			if ((C && istype(C, /obj/machinery/camera)) || C==null)
 
@@ -152,7 +159,7 @@
 						//check other cameras
 						var/obj/machinery/camera/closest = C
 						for(var/obj/machinery/camera/C2 in world)
-							if (C2.network == src.networks)
+							if (C2.network in src.networks)
 								if (C2.z == target.z)
 									zmatched = 1
 									if (C2.status)

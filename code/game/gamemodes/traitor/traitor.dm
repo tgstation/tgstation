@@ -78,6 +78,10 @@
 
 
 /datum/game_mode/proc/forge_traitor_objectives(var/datum/mind/traitor)
+	var/datum/traitorinfo/info = new
+	info.ckey = traitor.key
+	info.starting_player_count = num_players()
+	info.starting_name = traitor.current.name
 	if(istype(traitor.current, /mob/living/silicon))
 		var/datum/objective/assassinate/kill_objective = new
 		kill_objective.owner = traitor
@@ -92,11 +96,16 @@
 			var/datum/objective/block/block_objective = new
 			block_objective.owner = traitor
 			traitor.objectives += block_objective
+		info.starting_occupation = "AI"
 
 	else
+		info.starting_occupation = (traitor.current:wear_id && traitor.current:wear_id:assignment ? traitor.current:wear_id:assignment : traitor.assigned_role)
 		for(var/datum/objective/o in SelectObjectives((istype(traitor.current:wear_id, /obj/item/weapon/card/id) ? traitor.current:wear_id:assignment : traitor.assigned_role), traitor))
 			o.owner = traitor
 			traitor.objectives += o
+	for(var/datum/objective/objective in traitor.objectives)
+		info.starting_objective += "[objective.explanation_text]            "
+	logtraitors[traitor] = info
 	return
 
 
@@ -184,6 +193,15 @@
 			else
 				world << "<B>The [special_role_text] has failed!<B>"
 				//feedback_add_details("traitor_success","FAIL")
+
+			var/datum/traitorinfo/info = logtraitors[traitor]
+			if (info)
+				var/DBConnection/dbcon = new()
+				dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
+				if(dbcon.IsConnected())
+					var/DBQuery/query = dbcon.NewQuery("INSERT INTO `bay12`.`traitorlogs` (`CKey`, `Objective`, `Succeeded`, `Spawned`, `Occupation`, `PlayerCount`) VALUES ('[info.ckey]', [dbcon.Quote(info.starting_objective)], '[traitorwin]', '[dd_list2text(info.spawnlist, ";")]', '[info.starting_occupation]', '[info.starting_player_count]')")
+					query.Execute()
+
 	return 1
 
 

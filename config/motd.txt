@@ -1,9 +1,11 @@
 <h1>Welcome to Baystation 12!</h1>
 
-<i>This server is running <a href="http://baystation12.net/">Baystation 12's</a> modification of the <a href="http://nanotrasen.com/">/tg/station13</a> code.</i>
+-<i>This server is running <a href="http://baystation12.net/">Baystation 12's</a> modification of the <a href="http://nanotrasen.com/">/tg/station13</a> SS13 code.</i>
 <br><br>
 <strong>Bugtracker:</strong> <a href="https://github.com/Baystation12/Baystation12/issues">https://github.com/Baystation12/Baystation12/issues</a>
 <br>
-<strong>Rules and Roleplaying Tips:</strong> <a href="http://baystation12.net/wiki/index.php/Rules">http://baystation12.net/wiki/index.php/Rules</a> or the Rules command.
+<strong>Changelog:</strong> <a href="http://baystation12.net/wiki/index.php/Changelog">http://baystation12.net/wiki/index.php/Changelog</a> or the Changelog command.
+<br>
+<strong>Rules and roleplaying tips:</strong> <a href="http://baystation12.net/wiki/index.php/Rules">http://baystation12.net/wiki/index.php/Rules</a> or the Rules command.
 <br><br>
-This is a roleplaying server, so don't forget to remain in character when not in OOC. By playing you agree to have read and abide by the rules!
+This is a roleplaying server, so don't forget to remain in character while playing. Make sure to read and abide by the rules and if you have any questions, feel free to adminhelp! Remember that even when there are no admins on, adminhelps are being sent to IRC and it is possible for an administrator to see it and respond.

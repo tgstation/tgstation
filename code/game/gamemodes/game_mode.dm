@@ -22,6 +22,7 @@
 		list/datum/mind/modePlayer = new
 		list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 		list/protected_jobs = list()	// Jobs that can't be tratiors because
+		list/logtraitors = list()
 		required_players = 1
 		required_enemies = 0
 		recommended_enemies = 0
@@ -252,6 +253,7 @@ Badassery;
 		if(BE_WIZARD)		roletext="wizard"
 		if(BE_REV)			roletext="revolutionary"
 		if(BE_CULTIST)		roletext="cultist"
+		if(BE_MEME)			roletext="meme"
 
 
 	for(var/mob/new_player/player in world)

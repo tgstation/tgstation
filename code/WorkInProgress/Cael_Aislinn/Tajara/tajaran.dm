@@ -3,13 +3,13 @@
 	real_name = "tajaran"
 	voice_name = "tajaran"
 	icon = 'tajaran.dmi'
-	icon_state = "m-none"
+	icon_state = "m_none"
 	var/list/tajspeak_letters = list("~","*","-")
 	//
 	universal_speak = 1 //hacky fix until someone can figure out how to make them only understand humans
 	taj_talk_understand = 1
 	voice_message = "mrowls"
-	examine_text = "one of the cat-like Tajarans."
+	examine_text = "one of the cat-like Tajarans"
 
 /mob/living/carbon/human/tajaran/New()
 	var/g = "m"
@@ -28,7 +28,7 @@
 	..()
 
 /mob/living/carbon/human/tajaran/update_clothing()
-	..()
+//	..()
 
 	if (monkeyizing)
 		return
@@ -238,9 +238,6 @@
 		if(!istype(wear_suit, /obj/item/clothing/suit/storage/armoredundersuit))
 			overlays += image("icon" = 'belt_mirror.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
 		s_store.screen_loc = ui_sstore1
-
-	if (h_store)
-		h_store.screen_loc = ui_hstore1
 
 	if(client) hud_used.other_update() //Update the screenloc of the items on the 'other' inventory bar
 											   //to hide / show them.
@@ -592,94 +589,3 @@
 
 /mob/living/carbon/human/tajaran/co2overloadtime = null
 /mob/living/carbon/human/tajaran/temperature_resistance = T0C+70
-
-
-/* //This is silly. -- Erthilo
-/mob/living/carbon/human/tajaran/Emissary/
-	unacidable = 1
-	var/aegis = 1
-
-/mob/living/carbon/human/tajaran/Emissary/New()
-
-	..()
-
-	reagents.add_reagent("hyperzine", 5000)		//From the dark, to the light, it's a supersonic flight!
-													// Gotta keep it going!
-	if (!(mutations & HULK))
-		mutations |= HULK
-
-	if (!(mutations & LASER))
-		mutations |= LASER
-
-	if (!(mutations & XRAY))
-		mutations |= XRAY
-		sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
-		see_in_dark = 8
-		see_invisible = 2
-
-	if (!(mutations & COLD_RESISTANCE))
-		mutations |= COLD_RESISTANCE
-
-	if (!(mutations & TK))
-		mutations |= TK
-
-	if(!(mutations & HEAL))
-		mutations |= HEAL
-
-	spawn(0)
-		while(src)
-			adjustBruteLoss(-10)
-			adjustToxLoss(-10)
-			adjustOxyLoss(-10)
-			adjustFireLoss(-10)
-			sleep(10)
-
-
-/mob/living/carbon/human/tajaran/Emissary/ex_act()
-	return
-
-/mob/living/carbon/human/tajaran/Emissary/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, inrange, params)
-	if(istype(target , /obj/machinery/door/airlock))
-		if(target:locked)
-			target:locked = 0
-		if(!target:density)
-			return 1
-		if(target:operating > 0)
-			return
-		if(!ticker)
-			return 0
-		if(!target:operating)
-			target:operating = 1
-
-		target:animate("opening")
-		target:sd_SetOpacity(0)
-		sleep(10)
-		target:layer = 2.7
-		target:density = 0
-		target:update_icon()
-		target:sd_SetOpacity(0)
-		target:update_nearby_tiles()
-
-		target:operating = -1
-
-		user << "You force the door open, shearing the bolts and burning out the motor."
-
-		if(target:operating)
-			target:operating = -1
-	else if(istype(target , /obj/machinery/door/firedoor))
-		target:open()
-
-/mob/living/carbon/human/tajaran/Emissary/Life()
-
-	..()
-
-	if (!(mutations & HULK))
-		mutations |= HULK
-
-
-	if((stat == 2) && aegis)
-		src.show_message("\red [src]'s eyes open suddenlly.", 3, "\red \"I gave a solemn vow to never die for long.\"", 2)
-		src.heal_overall_damage(9001,9001)
-		src.stat = 0
-		aegis = 0
-*/

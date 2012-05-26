@@ -81,6 +81,7 @@
 	desc = "A generic small spiral notebook that flips upwards."
 	icon = 'custom_items.dmi'
 	icon_state = "smallnotetext"
+	item_state = "smallnotetext"
 
 /obj/item/weapon/storage/fluff/maye_daye_1 //morrinn: Maye Day
 	name = "pristine lunchbox"
@@ -236,6 +237,13 @@
 	icon_state = "olddressuniform"
 	item_state = "olddressuniform"
 	color = "olddressuniform"
+
+/obj/item/clothing/under/rank/security/fluff/jeremy_wolf_1 //whitewolf41: Jeremy Wolf
+	name = "worn officer's uniform"
+	desc = "An old red security jumpsuit. Seems to have some slight modifications."
+	icon = 'custom_items.dmi'
+	icon_state = "jeremy_wolf_1"
+	color = "jeremy_wolf_1"
 
 //////////// Masks ////////////
 

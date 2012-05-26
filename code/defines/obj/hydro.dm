@@ -1044,11 +1044,12 @@
 	potency = 40
 	On_Consume()
 		if(!reagents.total_volume)
-			var/mob/M = usr
-			var/obj/item/weapon/corncob/W = new /obj/item/weapon/corncob( M )
-			M << "<span class='notice'>You chew on the corn, leaving nothing behind but a cob.</span>"
-			M.put_in_hand(W)
-			W.add_fingerprint(M)
+			var/mob/living/M = usr
+			if(M)
+				var/obj/item/weapon/corncob/W = new /obj/item/weapon/corncob( M )
+				M << "<span class='notice'>You chew on the corn, leaving nothing behind but a cob.</span>"
+				M.put_in_hand(W)
+				W.add_fingerprint(M)
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
@@ -2005,21 +2006,21 @@
 	New()
 		switch(rand(1,100))//(potency) //It wants to use the default potency instead of the new, so it was always 10. Will try to come back to this later - Cheridan
 			if(0 to 10)
-				new/obj/item/weapon/spacecash/(src.loc)
+				new/obj/item/weapon/money/(src.loc)
 			if(11 to 20)
-				new/obj/item/weapon/spacecash/c10(src.loc)
+				new/obj/item/weapon/money/c10(src.loc)
 			if(21 to 30)
-				new/obj/item/weapon/spacecash/c20(src.loc)
+				new/obj/item/weapon/money/c20(src.loc)
 			if(31 to 40)
-				new/obj/item/weapon/spacecash/c50(src.loc)
+				new/obj/item/weapon/money/c50(src.loc)
 			if(41 to 50)
-				new/obj/item/weapon/spacecash/c100(src.loc)
+				new/obj/item/weapon/money/c100(src.loc)
 			if(51 to 60)
-				new/obj/item/weapon/spacecash/c200(src.loc)
+				new/obj/item/weapon/money/c200(src.loc)
 			if(61 to 80)
-				new/obj/item/weapon/spacecash/c500(src.loc)
+				new/obj/item/weapon/money/c500(src.loc)
 			else
-				new/obj/item/weapon/spacecash/c1000(src.loc)
+				new/obj/item/weapon/money/c1000(src.loc)
 		spawn(5) //Workaround to keep harvesting from working weirdly.
 			del(src)
 

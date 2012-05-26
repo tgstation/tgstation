@@ -215,6 +215,7 @@
 				observer.name = preferences.real_name
 				observer.real_name = observer.name
 				observer.original_name = observer.name //Original name is only used in ghost chat! It is not to be edited by anything!
+				observer.timeofdeath = world.time //So you can't just observe than respawn
 
 				preferences.copy_to_observer(observer)
 
@@ -392,7 +393,11 @@
 
 	proc/create_character()
 		spawning = 1
-		var/mob/living/carbon/human/new_character = new(loc)
+		var/mob/living/carbon/human/new_character //	var/path/to/object/varname
+		if((preferences.species == "Tajaran") && (is_alien_whitelisted(src, "Tajaran")))
+			new_character = new /mob/living/carbon/human/tajaran(loc)	//	varname = new /path/to/object(location_to_spawn_at)
+		else
+			new_character = new /mob/living/carbon/human(loc)
 		new_character.lastarea = get_area(loc)
 
 		close_spawn_windows()
@@ -403,8 +408,9 @@
 			preferences.randomize_appearance_for(new_character)
 		else
 			preferences.copy_to(new_character)
-
-		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
+			if((preferences.species == "Soghun") && (is_alien_whitelisted(src, "Soghun"))) //This probably shouldn't be here, but I can't think of any other way
+				new_character.mutantrace = "lizard"
+		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
 
 		new_character.dna.ready_dna(new_character)
 		preferences.copydisabilities(new_character)

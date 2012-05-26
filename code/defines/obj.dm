@@ -399,6 +399,12 @@
 	var/obj/screen/g_dither = null
 	var/obj/screen/blurry = null
 	var/list/darkMask = null
+	var/obj/screen/r_hand_hud_object = null
+	var/obj/screen/l_hand_hud_object = null
+	var/list/obj/screen/intent_small_hud_objects = null
+	var/show_intent_icons = 1
+	var/list/obj/screen/hotkeybuttons = null
+	var/hotkey_ui_hidden = 0 //This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
 	var/h_type = /obj/screen		//this is like...the most pointless thing ever. Use a god damn define!
 
@@ -792,12 +798,21 @@
 /obj/structure/stool/bed/chair/comfy/teal
 	icon_state = "comfychair_teal"
 
+/obj/structure/stool/bed/chair/office
+	anchored = 0
+
 /obj/structure/stool/bed/chair/comfy/black
 	icon_state = "comfychair_black"
 
 /obj/structure/stool/bed/chair/comfy/lime
 	icon_state = "comfychair_lime"
 
+/obj/structure/stool/bed/chair/office/Move()
+	..()
+	if(buckled_mob)
+		if(buckled_mob.buckled == src)
+			buckled_mob.loc = src.loc
+			buckled_mob.dir = src.dir
 
 /obj/structure/stool/bed/chair/office/light
 	icon_state = "officechair_white"

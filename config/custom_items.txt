@@ -38,3 +38,4 @@ themij: Taryn Kifer: /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kif
 tzefa: Wes Solari: /obj/item/fluff/wes_solari_1
 vinceluk: Seth Sealis: /obj/item/clothing/suit/storage/det_suit/fluff/graycoat
 whitellama: Ethan Way: /obj/item/fluff/ethan_way_1
+whitewolf41: Jeremy Wolf: /obj/item/clothing/under/rank/security/fluff/jeremy_wolf_1

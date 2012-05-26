@@ -134,6 +134,32 @@ var/global/BSACooldown = 0
 				M.change_mob_type( /mob/living/simple_animal/constructwraith , null, null, delmob)
 			if("shade")
 				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob)
+			if("meme")
+				var/mob/living/parasite/meme/newmeme = new
+				M.mind.transfer_to(newmeme)
+				newmeme.clearHUD()
+
+				var/found = 0
+				for(var/mob/living/carbon/human/H in world) if(H.client && !H.parasites.len)
+					found = 1
+					newmeme.enter_host(H)
+
+					message_admins("[H] has become [newmeme.key]'s host")
+
+					break
+
+				// if there was no host, abort
+				if(!found)
+					newmeme.mind.transfer_to(M)
+					message_admins("Failed to find host for meme [M.key]. Aborting.")
+
+				ticker.mode.memes += newmeme
+
+				if(delmob)
+					del(M)
+
+
+
 
 	if(href_list["view_player_info"])
 		show_player_info(href_list["view_player_info"])
@@ -1241,6 +1267,33 @@ var/global/BSACooldown = 0
 		else
 			alert("You cannot perform this action. You must be of a higher administrative rank!")
 			return
+
+	if (href_list["granttaj"])
+		if (src.level>=5)
+			var/mob/M = locate(href_list["granttaj"])
+			for (var/s in alien_whitelist)
+				if(findtext(s,"[M.ckey] - Tajaran"))
+					alert("This key is already on the whitelist!", null, null, null, null, null)
+					return
+			alien_whitelist += "[M.ckey] - Tajaran"
+			usr << "[M.ckey] added to Tajaran whitelist."
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
+			return
+
+	if (href_list["grantsog"])
+		if (src.level>=5)
+			var/mob/M = locate(href_list["grantsog"])
+			for (var/s in alien_whitelist)
+				if(findtext(s,"[M.ckey] - Soghun"))
+					alert("This key is already on the whitelist!", null, null, null, null, null)
+					return
+			alien_whitelist += "[M.ckey] - Soghun"
+			usr << "[M.ckey] added to Soghun whitelist."
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
+			return
+
 /***************** BEFORE**************
 
 	if (href_list["l_players"])
@@ -2434,7 +2487,8 @@ var/global/BSACooldown = 0
 			body += "\[ Construct: <A href='?src=\ref[src];simplemake=constructarmoured;mob=\ref[M]'>Armoured</A> , "
 			body += "<A href='?src=\ref[src];simplemake=constructbuilder;mob=\ref[M]'>Builder</A> , "
 			body += "<A href='?src=\ref[src];simplemake=constructwraith;mob=\ref[M]'>Wraith</A> \] "
-			body += "<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>"
+			body += "<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A> "
+			body += "<A href='?src=\ref[src];simplemake=meme;mob=\ref[M]'>Meme</A>"
 			body += "<br>"
 
 	if (M.client)
@@ -2446,6 +2500,8 @@ var/global/BSACooldown = 0
 		body += "<A href='?src=\ref[src];tdome2=\ref[M]'>Thunderdome 2</A> | "
 		body += "<A href='?src=\ref[src];tdomeadmin=\ref[M]'>Thunderdome Admin</A> | "
 		body += "<A href='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> | "
+		body += "<A href='?src=\ref[src];granttaj=\ref[M]'>Grant Tajaran (Temp)</A> | "
+		body += "<A href='?src=\ref[src];grantsog=\ref[M]'>Grant Soghun (Temp)</A> | "
 
 	body += "<br>"
 	body += "</body></html>"

@@ -71,7 +71,7 @@
 			sleep(10 * 60 * 20) // 30 minutes
 			command_alert("Diagnosis suite failure detected. Running backup diagnosis tool.", "Anomaly Alert")
 			sleep(100)
-		command_alert("AI unit diagnosis failed. Unable to detect morality cores. Disabling of unit recommended.", "Anomaly Alert")
+		command_alert("Nanotrasen has received reports that some AI cores may have been tampered with.  You are advised to monitor your assigned AI for any abberant bahavior, and are authorized to take corrective action, should it be necessary.", "Security Alert")
 
 	..()
 

@@ -195,10 +195,28 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			doortype = 17
 			glass = 1
 
+
 		glass_research
 			name = "Research Airlock"
 			icon = 'doorsciglass.dmi'
+			opacity = 0
 			doortype = 20
+			glass = 1
+
+
+		glass_mining
+			name = "Maintenance Hatch"
+			icon = 'doorminingglass.dmi'
+			opacity = 0
+			doortype = 22
+			glass = 1
+
+		glass_atmos
+			name = "Maintenance Hatch"
+			icon = 'dooratmoglass.dmi'
+			opacity = 0
+			doortype = 23
+			glass = 1
 
 	centcom
 		name = "Airlock"
@@ -275,7 +293,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			return 0
 		use_power(50)
 		if(istype(src, /obj/machinery/door/airlock/glass))
-			playsound(src.loc, 'windowdoor.ogg', 30, 1)
+			playsound(src.loc, 'windowdoor.ogg', 100, 1)
 		else
 			playsound(src.loc, 'airlock.ogg', 30, 1)
 		if (src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
@@ -289,7 +307,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		..()
 		use_power(50)
 		if(istype(src, /obj/machinery/door/airlock/glass))
-			playsound(src.loc, 'windowdoor.ogg', 30, 1)
+			playsound(src.loc, 'windowdoor.ogg', 100, 1)
 		else
 			playsound(src.loc, 'airlock.ogg', 30, 1)
 		var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
@@ -419,7 +437,12 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 						if(15) new/obj/structure/door_assembly/door_assembly_eng/glass( src.loc )	//issue 301 -mysthic
 						if(16) new/obj/structure/door_assembly/door_assembly_sec/glass( src.loc )
 						if(17) new/obj/structure/door_assembly/door_assembly_med/glass( src.loc )
+						if(18) new/obj/structure/door_assembly/door_assembly_min( src.loc )
+						if(19) new/obj/structure/door_assembly/door_assembly_atmo( src.loc )
+						if(20) new/obj/structure/door_assembly/door_assembly_research( src.loc )
 						if(21) new/obj/structure/door_assembly/door_assembly_research( src.loc )
+						if(22) new/obj/structure/door_assembly/door_assembly_min/glass( src.loc )
+						if(23) new/obj/structure/door_assembly/door_assembly_atmo/glass( src.loc )
 					var/obj/item/weapon/airlock_electronics/ae
 					if (!electronics)
 						ae = new/obj/item/weapon/airlock_electronics( src.loc )
@@ -1597,7 +1620,7 @@ About the new airlock wires panel:
 		name = "CentCom Secure Airlock"
 		desc = "I hope you have insulated gloves...."
 		icon = 'Doorhatchele.dmi'
-		var/list/mob/morons
+		var/list/mob/morons = list()
 
 		pulse(var/wireColor)
 			if(prob(25))

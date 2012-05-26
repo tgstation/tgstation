@@ -70,10 +70,11 @@
 	var/obj/screen/zone_sel/zone_sel = null
 
 	var/emote_allowed = 1
+	var/speech_allowed = 1
 	var/computer_id = null
 	var/lastattacker = null
 	var/lastattacked = null
-	var/attack_log = list( )
+	var/list/attack_log = list( )
 	var/already_placed = 0.0
 	var/obj/machinery/machine = null
 	var/other_mobs = null

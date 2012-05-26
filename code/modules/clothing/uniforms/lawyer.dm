@@ -62,4 +62,4 @@
 	item_state = "judge"
 	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	allowed = list(/obj/item/weapon/cigpacket,/obj/item/weapon/spacecash)
+	allowed = list(/obj/item/weapon/cigpacket,/obj/item/weapon/money)
