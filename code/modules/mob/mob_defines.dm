@@ -74,7 +74,7 @@
 	var/computer_id = null
 	var/lastattacker = null
 	var/lastattacked = null
-	var/attack_log = list( )
+	var/list/attack_log = list( )
 	var/already_placed = 0.0
 	var/obj/machinery/machine = null
 	var/other_mobs = null

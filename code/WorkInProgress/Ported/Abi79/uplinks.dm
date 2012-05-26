@@ -175,9 +175,9 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			if(text2num(href_list["cost"]) > uses) // Not enough crystals for the item
 				return 0
 
-			//if(usr:mind && ticker.mode.traitors[usr:mind])
-				//var/datum/traitorinfo/info = ticker.mode.traitors[usr:mind]
-				//info.spawnlist += href_list["buy_item"]
+			if(usr:mind && ticker.mode.traitors[usr:mind])
+				var/datum/traitorinfo/info = ticker.mode.traitors[usr:mind]
+				info.spawnlist += href_list["buy_item"]
 
 			uses -= text2num(href_list["cost"])
 
@@ -268,7 +268,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			else
 				item:loc = get_turf(A)
 			usr.update_clothing()
-	//		usr.client.onBought("[item:name]")	When we have the stats again, uncomment.
+			usr.client.onBought("[item:name]")
 	/*		if(istype(item, /obj/spawner)) // Spawners need to have del called on them to avoid leaving a marker behind
 				del item*/
 	//HEADFINDBACK
@@ -371,7 +371,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 						item:loc = get_turf(A)
 	/*				if(istype(item, /obj/spawner)) // Spawners need to have del called on them to avoid leaving a marker behind
 						del item*/
-	//				usr.client.onBought("[item:name]")	When we have the stats again, uncomment.
+					usr.client.onBought("[item:name]")
 				src.attack_self(usr)
 				return
 
