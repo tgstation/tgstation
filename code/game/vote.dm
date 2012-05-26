@@ -106,16 +106,20 @@
 
 		world << "Result is \red Restart round."
 
-		world <<"\red <B>World will reboot in 5 seconds</B>"
+		if(vote.instant_restart)
+			world <<"\red <B>World will reboot in 5 seconds</B>"
 
-		//feedback_set_details("end_error","restart vote")
+			//feedback_set_details("end_error","restart vote")
 
-		if(blackbox)
-			blackbox.save_all_data_to_sql()
+			if(blackbox)
+				blackbox.save_all_data_to_sql()
 
-		sleep(50)
-		log_game("Rebooting due to restart vote")
-		world.Reboot()
+			sleep(50)
+			log_game("Rebooting due to restart vote")
+			world.Reboot()
+		else
+			// Call the shift change shuttle instead
+			init_shift_change()
 	return
 
 
@@ -256,10 +260,13 @@
 			usr << browse(text, "window=vote")
 
 		else	// voting to restart
-			text += "Vote to restart round in progress.<BR>"
+			text += "Vote to call crew transfer shuttle round in progress.<BR>"
 			text += "[vote.endwait()] until voting is closed.<BR>"
 
-			text += "Restart the world?<BR><UL>"
+			if(vote.instant_restart)
+				text += "Restart the world? <B><font color='red'>ONLY PRESS THIS IF THERE'S A ROUND-BREAKING GLITCH.</font></B><BR><UL>"
+			else
+				text += "Call the Crew Transfer Shuttle?<BR><UL>"
 
 			var/list/VL = list("default","restart")
 
@@ -391,12 +398,23 @@
 			if(M) M.vote()
 			return
 
+		if(vote.mode == 0)
+			var/answer = alert(M,"Do you want to force an immediate restart? Only do this when there are round-breaking glitches, or risk being banned.","Immediate Reboot?","Yes","No")
+
+			if(answer == "Yes")
+				vote.instant_restart = 1
+				log_admin("[M.key] has initiated an instant reboot vote! This may be banworthy!")
+				message_admins("[M.key] has initiated an instant reboot vote! This may be banworthy!")
+			else
+				vote.instant_restart = 0
+
 		if(!ticker && vote.mode == 1)
 			if(going)
 				world << "<B>The game start has been delayed.</B>"
 				going = 0
 		vote.voting = 1						// now voting
 		vote.votetime = world.timeofday + config.vote_period*10	// when the vote will end
+
 
 		spawn(config.vote_period*10)
 			vote.endvote()

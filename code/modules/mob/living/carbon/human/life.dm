@@ -431,20 +431,6 @@
 			if(breath)
 				loc.assume_air(breath)
 
-		vomit()
-			// Make the human vomit on the floor
-			for(var/mob/O in viewers(world.view, src))
-				O.show_message(text("<b>\red [] throws up!</b>", src), 1)
-			playsound(src.loc, 'splat.ogg', 50, 1)
-
-			var/turf/location = loc
-			if (istype(location, /turf/simulated))
-				location.add_vomit_floor(src, 1)
-
-			nutrition -= 20
-			adjustToxLoss(-3)
-
-
 		get_breath_from_internal(volume_needed)
 			if(internal)
 				if (!contents.Find(internal))
