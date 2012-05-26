@@ -9,3 +9,5 @@
 	var/customname
 	var/choices = list()
 	var/enteringchoices = 0
+
+	var/instant_restart = 0

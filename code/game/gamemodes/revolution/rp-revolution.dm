@@ -25,15 +25,13 @@
 
 /datum/game_mode/rp_revolution/announce()
 	world << "<B>The current game mode is - Revolution RP!</B>"
-//	world << "<B>Some crewmembers are attempting to start a revolution!<BR>\nRevolutionaries - Kill the Captain, HoP, and HoS. Convert other crewmembers (excluding the Captain, HoP, HoS, and security officers) to your cause. Protect your leaders.<BR>\nPersonnel - Protect the Captain, HoP, and HoR. Kill the leaders of the revolution, and brainwash the other revolutionaries (by beating them in the head).</B>"
 
 /datum/game_mode/rp_revolution/send_intercept()
 	var/intercepttext = "<FONT size = 3><B>Cent. Com. Update</B> Requested staus information:</FONT><HR>"
 	intercepttext += "<B> Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:</B>"
 
 	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "malf")
-	possible_modes -= "nuke"
+	possible_modes.Add("revolution", "wizard", "traitor", "malf")
 	var/number = pick(2, 3)
 	var/i = 0
 	for(i = 0, i < number, i++)
