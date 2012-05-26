@@ -1580,9 +1580,9 @@
 						if(!reagents.total_volume)
 							if(M == user) user << "\red You finish eating [src]."
 							else user << "\red [M] finishes eating [src]."
+							del(src)
 							spawn(5)
 								user.update_clothing()
-							del(src)
 				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
 				return 1
 		else if(istype(M, /mob/living/simple_animal/livestock))
@@ -1979,14 +1979,7 @@
 
 	attackby(var/obj/D, mob/user as mob)
 		if(isprox(D))
-			var/obj/item/weapon/bucket_sensor/B = new /obj/item/weapon/bucket_sensor
-			B.loc = user
-			if (user.r_hand == D)
-				user.u_equip(D)
-				user.r_hand = B
-			else
-				user.u_equip(D)
-				user.l_hand = B
+			var/obj/item/weapon/bucket_sensor/B = new /obj/item/weapon/bucket_sensor(user.loc)
 			B.layer = 20
 			user << "You add the sensor to the bucket"
 			del(D)
