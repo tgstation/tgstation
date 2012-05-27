@@ -1,3 +1,8 @@
+/*
+This object is contained within zone/var/connections. It's generated whenever two turfs from different zones are linked.
+Indirect connections will not merge the two zones after they reach equilibrium.
+*/
+
 connection
 	var
 		turf //The turfs involved in the connection.

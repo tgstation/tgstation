@@ -2,19 +2,26 @@
 var/explosion_halt = 0
 zone
 	proc/process()
+		//Does rebuilding stuff. Not sure if used.
 		if(rebuild)
+			//Deletes zone if empty.
 			if(!contents.len)
 				del src
 				return 0
+
+			//Choose a random turf and regenerate the zone from it.
 			var
 				turf/sample = pick(contents)
 				list/new_contents = FloodFill(sample)
 				problem = 0
+
+			//If something isn't carried over, there was a complication.
 			for(var/turf/T in contents)
 				if(!(T in new_contents))
 					problem = 1
 
 			if(problem)
+				//Build some new zones for stuff that wasn't included.
 				var/list/rebuild_turfs = list()
 				for(var/turf/T in contents - new_contents)
 					contents -= T
@@ -26,11 +33,13 @@ zone
 						Z.air.copy_from(air)
 			rebuild = 0
 
+		//Sometimes explosions will cause the air to be deleted for some reason.
 		if(!air)
 			air = new()
 			air.adjustGases(MOLES_O2STANDARD, 0, MOLES_N2STANDARD, 0, list())
 			world.log << "Air object lost in zone. Regenerating."
 
+		//Counting up space.
 		var/total_space = 0
 
 		if(space_tiles)
@@ -38,44 +47,60 @@ zone
 				if(!istype(T,/turf/space)) space_tiles -= T
 			total_space = length(space_tiles)
 
-		if(total_space) // SPAAAAAAAAAACE
-			//var/old_pressure = air.pressure
+		//Add checks to ensure that we're not sucking air out of an empty room.
+		if(total_space && air.total_moles > 0.1 && air.temperature > TCMB+0.5)
+			//If there is space, air should flow out of the zone.
 			ShareSpace(air,total_space*(vsc.zone_share_percent/100))
-			//var/p_diff = old_pressure - air.pressure
-			//if(p_diff > vsc.AF_TINY_MOVEMENT_THRESHOLD) AirflowSpace(src,p_diff)
 
+		//React the air here.
 		air.react(null,0)
+
+		//Check the graphic.
 		var/check = air.check_tile_graphic()
 
+		//Only run through the individual turfs if there's reason to.
 		if(check || air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+
 			for(var/turf/simulated/S in contents)
+				//Update overlays.
 				if(check)
 					if(S.HasDoor(1))
 						S.update_visuals()
 					else
 						S.update_visuals(air)
 
+				//Expose stuff to extreme heat.
 				if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 					for(var/atom/movable/item in S)
 						item.temperature_expose(air, air.temperature, CELL_VOLUME)
 					S.temperature_expose(air, air.temperature, CELL_VOLUME)
 
+		//Archive graphic so we can know if it's different.
 		air.graphic_archived = air.graphic
 
+		//Ensure temperature does not reach absolute zero.
 		air.temperature = max(TCMB,air.temperature)
 
+		//Handle connections to other zones.
 		if(length(connections))
 			for(var/connection/C in connections)
+				//Check if the connection is valid first.
 				C.Cleanup()
+				//Do merging if conditions are met. Specifically, if there's a non-door connection
+				//to somewhere with space, the zones are merged regardless of equilibrium, to speed
+				//up spacing in areas with double-plated windows.
 				if(C && !C.indirect && C.A.zone && C.B.zone)
 					if(C.A.zone.air.compare(C.B.zone.air) || total_space)
 						ZMerge(C.A.zone,C.B.zone)
+
+			//Share some
 			for(var/zone/Z in connected_zones)
-				//var/p_diff = (air.return_pressure()-Z.air.return_pressure())*connected_zones[Z]*(vsc.zone_share_percent/100)
-				//if(p_diff > vsc.AF_TINY_MOVEMENT_THRESHOLD) Airflow(src,Z,p_diff)
-				ShareRatio(air,Z.air,connected_zones[Z]*(vsc.zone_share_percent/100))
+				//Ensure we're not doing pointless calculations on equilibrium zones.
+				if(abs(air.total_moles - Z.air.total_moles) > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
+					ShareRatio(air,Z.air,connected_zones[Z]*(vsc.zone_share_percent/100))
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, ratio)
+	//Shares a specific ratio of gas between mixtures using simple weighted averages.
 	var
 		size = max(1,A.group_multiplier)
 		share_size = max(1,B.group_multiplier)
@@ -138,9 +163,8 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, ratio)
 	if(A.compare(B)) return 1
 	else return 0
 
-	/* See? Now that's how it's done. */
-
 proc/ShareSpace(datum/gas_mixture/A, ratio)
+	//A modified version of ShareRatio for spacing gas at the same rate as if it were going into a huge airless room.
 	var
 		size = max(1,A.group_multiplier)
 		share_size = 2000 //A huge value because space is huge.
@@ -179,6 +203,7 @@ proc/ShareSpace(datum/gas_mixture/A, ratio)
 
 zone/proc
 	connected_zones()
+		//A legacy proc for getting connected zones.
 		. = list()
 		for(var/connection/C in connections)
 			var/zone/Z

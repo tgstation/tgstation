@@ -5,7 +5,7 @@ var/list/zones = list()
 zone
 	var
 		dbg_output = 0 //Enables debug output.
-		rebuild = 0 //If 1, zone will be rebuilt on next process.
+		rebuild = 0 //If 1, zone will be rebuilt on next process. Not sure if used.
 		datum/gas_mixture/air //The air contents of the zone.
 		list/contents //All the tiles that are contained in this zone.
 		list/connections // /connection objects which refer to connections with other zones, e.g. through a door.
