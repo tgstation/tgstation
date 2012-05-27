@@ -78,7 +78,8 @@
 			return
 		if(href_list["togglep"])
 			src.toggle_power()
-			investigate_log("turned [active?"<font color='red'>ON</font>":"<font color='green'>OFF</font>"] by [usr.key]","singulo")		else if(href_list["scan"])
+			investigate_log("turned [active?"<font color='red'>ON</font>":"<font color='green'>OFF</font>"] by [usr.key]","singulo")
+		else if(href_list["scan"])
 			src.part_scan()
 		else if(href_list["strengthup"])
 			strength++
