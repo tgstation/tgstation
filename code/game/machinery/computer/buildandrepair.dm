@@ -167,7 +167,6 @@
 	name = "Circuit board (Telecommunications Server Monitor)"
 	build_path = "/obj/machinery/computer/telecomms/server"
 	origin_tech = "programming=3"
-
 /obj/item/weapon/circuitboard/comm_traffic
 	name = "Circuitboard (Telecommunications Traffic Control)"
 	build_path = "/obj/machinery/computer/telecomms/traffic"
@@ -176,11 +175,30 @@
 /obj/item/weapon/circuitboard/curefab
 	name = "Circuit board (Cure fab)"
 	build_path = "/obj/machinery/computer/curer"
-
 /obj/item/weapon/circuitboard/splicer
 	name = "Circuit board (Disease Splicer)"
 	build_path = "/obj/machinery/computer/diseasesplicer"
 
+/obj/item/weapon/circuitboard/mining_shuttle
+	name = "Circuit board (Mining Shuttle)"
+	build_path = "/obj/machinery/computer/mining_shuttle"
+	origin_tech = "programming=2"
+/obj/item/weapon/circuitboard/HolodeckControl // Not going to let people get this, but it's just here for future
+	name = "Circuit board (Holodeck Control)"
+	build_path = "/obj/machinery/computer/HolodeckControl"
+	origin_tech = "programming=4"
+/obj/item/weapon/circuitboard/aifixer
+	name = "Circuit board (AI Integrity Fixer)"
+	build_path = "/obj/machinery/computer/aifixer"
+	origin_tech = "programming=3;biotech=2"
+/obj/item/weapon/circuitboard/area_atmos
+	name = "Circuit board (Area Air Control)"
+	build_path = "/obj/machinery/computer/area_atmos"
+	origin_tech = "programming=2"
+/obj/item/weapon/circuitboard/prison_shuttle
+	name = "Circuit board (Prison Shuttle)"
+	build_path = "/obj/machinery/computer/prison_shuttle"
+	origin_tech = "programming=2"
 
 
 /obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob)
