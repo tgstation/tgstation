@@ -1,4 +1,4 @@
-//todo: flushing, flushing heads, showers actually cleaning people
+//todo: toothbrushes, and some sort of "toilet-filthinator" for the hos
 
 /obj/structure/toilet
 	name = "toilet"
@@ -8,17 +8,42 @@
 	density = 0
 	anchored = 1
 	var/open = 0
+	var/mob/swirlie = null
 
 /obj/structure/toilet/New()
 	open = round(rand(0, 1))
 	update_icon()
 
 /obj/structure/toilet/attack_hand()
-	open = !open
-	update_icon()
+	if(!swirlie)
+		open = !open
+		update_icon()
+	else
+		usr.visible_message("<span class='danger'>[usr] slams the toilet seat onto [swirlie.name]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie.name]'s head!</span>", "You hear reverberating porcelain.")
+		swirlie.adjustBruteLoss(8)
 
 /obj/structure/toilet/update_icon()
 	icon_state = "toilet[open]"
+
+/obj/structure/toilet/attackby(var/obj/item/I, var/mob/user)
+	if(istype(I, /obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = I
+		var/mob/GM = G.affecting
+		if(ismob(G.affecting))
+			if(G.state>1 && GM.loc == get_turf(src))
+				if(open && !swirlie)
+					user.visible_message("<span class='danger'>[user] starts to give [GM.name] a swirlie!</span>", "<span class='notice'>You start to give [GM.name] a swirlie!</span>")
+					swirlie = GM
+					if(do_after(user, 30, 5, 0))
+						user.visible_message("<span class='danger'>[user] gives [GM.name] a swirlie!</span>", "<span class='notice'>You give [GM.name] a swirlie!</span>", "You hear a toilet flushing.")
+						if(!GM.internal)
+							GM.adjustOxyLoss(5)
+					swirlie = null
+				else
+					user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM.name] into the [src]!</span>")
+					GM.adjustBruteLoss(8)
+			else
+				user << "<span class='notice'>You need a tighter grip.</span>"
 
 
 
@@ -30,9 +55,20 @@
 	density = 0
 	anchored = 1
 
+/obj/structure/urinal/attackby(var/obj/item/I, var/mob/user)
+	if(istype(I, /obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = I
+		var/mob/GM = G.affecting
+		if(ismob(G.affecting))
+			if(G.state>1 && GM.loc == get_turf(src))
+				user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM.name] into the [src]!</span>")
+				GM.adjustBruteLoss(8)
+			else
+				user << "<span class='notice'>You need a tighter grip.</span>"
 
 
-/obj/structure/shower
+
+/obj/machinery/shower
 	name = "shower"
 	desc = "The HS-451. Installed in the 2550s by the Nanotrasen Hygiene Division."
 	icon = 'watercloset.dmi'
@@ -41,7 +77,9 @@
 	anchored = 1
 	var/on = 0
 	var/obj/effect/mist/mymist = null
-	var/ismist = 0	//needs a var so we can make it linger~
+	var/ismist = 0				//needs a var so we can make it linger~
+	var/watertemp = "normal"	//freezing, normal, or boiling
+	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
 
 //add heat controls? when emagged, you can freeze to death in it?
 
@@ -52,22 +90,37 @@
 	layer = MOB_LAYER + 1
 	mouse_opacity = 0
 
-/obj/structure/shower/attack_hand(mob/M as mob)
+/obj/machinery/shower/attack_hand(mob/M as mob)
 	on = !on
 	update_icon()
 	if(on && M.loc == loc)
 		wash(M)
+		check_heat(M)
 
-/obj/structure/shower/attackby(mob/M as mob)
-	attack_hand(M)
+/obj/machinery/shower/attackby(var/obj/item/I, var/mob/user)
+	if(I.type == /obj/item/device/analyzer)
+		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
+	if(istype(I, /obj/item/weapon/wrench))
+		user << "<span class='notice'>You begin to adjust the temperature valve with the [I].</span>"
+		if(do_after(user, 50))
+			switch(watertemp)
+				if("normal")
+					watertemp = "freezing"
+				if("freezing")
+					watertemp = "boiling"
+				if("boiling")
+					watertemp = "normal"
+			user.visible_message("<span class='notice'>[user] adjusts the shower with the [I].</span>", "<span class='notice'>You adjust the shower with the [I].</span>")
 
-/obj/structure/shower/update_icon()
-	overlays = null
+/obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
+	overlays = null					//once it's been on for a while, in addition to handling the water overlay.
 	if(mymist)
 		del(mymist)
 
 	if(on)
 		overlays += image('watercloset.dmi', src, "water", MOB_LAYER + 1, dir)
+		if(watertemp == "freezing")
+			return
 		if(!ismist)
 			spawn(50)
 				if(src && on)
@@ -84,13 +137,20 @@
 				del(mymist)
 				ismist = 0
 
-/obj/structure/shower/HasEntered(atom/movable/O as obj|mob)
+/obj/machinery/shower/HasEntered(atom/movable/O)
 	..()
 	wash(O)
+	if(ismob(O))
+		mobpresent += 1
+		check_heat(O)
+
+/obj/machinery/shower/Uncrossed(atom/movable/O)
+	if(ismob(O))
+		mobpresent -= 1
+	..()
 
 //Yes, showers are super powerful as far as washing goes.
-/obj/structure/shower/proc/wash(atom/movable/O as obj|mob)
-	..()
+/obj/machinery/shower/proc/wash(atom/movable/O as obj|mob)
 	if(!on) return
 
 	O.clean_blood()
@@ -108,10 +168,10 @@
 			var/mob/living/carbon/human/washer = O
 			if(washer.head)
 				washer.head.clean_blood()
-			if(washer.w_uniform)
-				washer.w_uniform.clean_blood()
 			if(washer.wear_suit)
 				washer.wear_suit.clean_blood()
+			else if(washer.w_uniform)
+				washer.w_uniform.clean_blood()
 			if(washer.shoes)
 				washer.shoes.clean_blood()
 			if(washer.gloves)
@@ -128,6 +188,26 @@
 			del(R)
 		for(var/obj/effect/overlay/R in tile)
 			del(R)
+
+/obj/machinery/shower/process()
+	if(!on || !mobpresent) return
+	for(var/mob/living/carbon/C in loc)
+		check_heat(C)
+
+/obj/machinery/shower/proc/check_heat(mob/M as mob)
+	if(!on || watertemp == "normal") return
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+
+		if(watertemp == "freezing")
+			C.bodytemperature = min(100, C.bodytemperature - 80)
+			C << "<span class='warning'>The water is freezing!</span>"
+			return
+		if(watertemp == "boiling")
+			C.bodytemperature = max(500, C.bodytemperature + 35)
+			C.adjustFireLoss(10)
+			C << "<span class='danger'>The water is searing!</span>"
+			return
 
 
 

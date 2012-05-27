@@ -1301,8 +1301,8 @@ proc/listclearnulls(list/list)
 	return 1
 */
 
-/proc/do_after(var/mob/user as mob, delay as num, var/numticks = 5) 		// Replacing the upper one with this one because Byond keeps feeling that the upper one is an infinate loop
-	if(!user || isnull(user))												// This one should have less temptation
+/proc/do_after(var/mob/user as mob, delay as num, var/numticks = 5, var/needhand = 1) 		// Replacing the upper one with this one because Byond keeps feeling that the upper one is an infinate loop
+	if(!user || isnull(user))																// This one should have less temptation
 		return 0
 	if(numticks == 0)
 		return 0
@@ -1313,7 +1313,10 @@ proc/listclearnulls(list/list)
 
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
-		if(!user || user.stat || user.weakened || user.stunned || !(user.loc == T) || !(user.equipped() == holding))
+
+		if(needhand && !(user.equipped() == holding))	//Sometimes you don't want the user to have to keep their active hand
+			return 0
+		if(!user || user.stat || user.weakened || user.stunned || !(user.loc == T))
 			return 0
 
 	return 1
