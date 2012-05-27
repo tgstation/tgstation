@@ -905,7 +905,10 @@
 	if (ismob(loc))
 		var/mob/M = loc
 		M.show_message("\red Your [src] explodes!", 1)
-
+		if (src in M.contents)
+			if(fon)
+				fon = 0
+				M.total_luminosity -= f_lum
 	if(T)
 		T.hotspot_expose(700,125)
 

@@ -1,8 +1,9 @@
 //May expand later, but right now it just repairs lights.
 /obj/item/device/portalathe
-	name = "\improper Portable Autolathe"
-	desc = "It blinks and has an antenna on it.  It must be advanced."
-	icon_state = "t-ray0"
+	name = "portable autolathe"
+	desc = "A device which can repair broken lights instantly. Must be advanced."
+	icon = 'janitor.dmi'
+	icon_state = "portalathe"
 
 	afterattack(var/atom/target, mob/user as mob)
 		if(!target || !user)

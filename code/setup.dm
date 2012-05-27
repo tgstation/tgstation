@@ -142,7 +142,7 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define OPENCONTAINER	4096	// is an open container for chemistry purposes
 
-#define ONESIZEFITSALL	8192	// can be worn by fatties (or children? ugh)
+// #define ONESIZEFITSALL	8192	// can be worn by fatties (or children? ugh)
 
 #define	NOREACT	16384 //Reagents dont' react inside this container.
 

@@ -1086,6 +1086,7 @@ datum
 
 
 			reagent
+				weight = 20
 				var/target_name
 				New(var/text,var/joba)
 					..()
