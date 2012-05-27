@@ -93,7 +93,7 @@
 				part.update_icon()
 
 		else if(href_list["strengthdown"])
-			strength++
+			strength--
 			if(strength < 0)
 				strength = 0
 			else

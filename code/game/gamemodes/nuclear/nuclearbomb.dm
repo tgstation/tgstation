@@ -74,7 +74,7 @@
 
 /obj/machinery/nuclearbomb/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained())
+	if (!usr.canmove || usr.stat || usr.restrained())
 		return
 	if (!ishuman(usr))
 		usr << "\red You don't have the dexterity to do this!"

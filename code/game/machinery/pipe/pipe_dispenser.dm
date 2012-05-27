@@ -44,7 +44,7 @@
 /obj/machinery/pipedispenser/Topic(href, href_list)
 	if(..())
 		return
-	if(unwrenched)
+	if(unwrenched || !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 		usr << browse(null, "window=pipedispenser")
 		return
 	usr.machine = src
@@ -133,6 +133,9 @@
 	usr.machine = src
 	src.add_fingerprint(usr)
 	if(href_list["dmake"])
+		if(unwrenched || !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+			usr << browse(null, "window=pipedispenser")
+			return
 		if(!wait)
 			var/p_type = text2num(href_list["dmake"])
 			var/obj/structure/disposalconstruct/C = new (src.loc)
