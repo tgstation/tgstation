@@ -385,7 +385,7 @@ mob/proc
 				spawn(0) //Make it show the 2 states properly
 					if(target_locked)
 						target_locked.icon_state = "locking"
-					update_clothing()
+					update_clothing() // update_clothing clears overlays, so this might break stuff
 					sleep(20)
 					if(target_locked)
 						target_locked.icon_state = "locked"

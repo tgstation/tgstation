@@ -105,7 +105,7 @@
 				icon_state = "table2-active"
 			return 1
 	if(victim)
-		victim.update_clothing()
+		victim.update_lying()
 	victim = null
 	if(updatesicon)
 		icon_state = "table2-idle"
@@ -134,7 +134,7 @@
 			if(updatesicon)
 				icon_state = "table2-active"
 			src.victim = M
-			M.update_clothing()
+			M.update_lying()
 			processing_objects.Add(src)
 			del(W)
 			return

@@ -29,23 +29,22 @@
 			if("monkey")
 				if (M.monkeyizing)
 					return
-				if(istype(M,/mob/carbon/living/human))
+				if(istype(M,/mob/living/carbon/human))
 					M:monkeyize()
 			if("robot")
 				if (M.monkeyizing)
 					return
-				if(istype(M,/mob/carbon/living/human))
+				if(istype(M,/mob/living/carbon/human))
 					M:Robotize()
 			if("metroid")
 				if (M.monkeyizing)
 					return
-				if(istype(M,/mob/carbon/living/human))
+				if(istype(M,/mob/living/carbon/human))
 					M:Metroidize()
 			if("alien")
 				if (M.monkeyizing)
 					return
-					Alienize
-				if(istype(M,/mob/carbon/living/human))
+				if(istype(M,/mob/living/carbon/human))
 					M:Alienize()
 			if("human")
 				if (M.monkeyizing)

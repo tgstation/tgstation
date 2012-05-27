@@ -13,7 +13,7 @@
 			resting_icon = new /icon('alien.dmi', "alienh_sleep")
 			running_icon = new /icon('alien.dmi', "alienh_running")
 		icon = stand_icon
-		update_clothing()
+		rebuild_appearance()
 		src << "\blue Your icons have been generated!"
 	..()
 

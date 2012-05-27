@@ -235,7 +235,8 @@
 				var/datum/autopsy_data/W = autopsy_data[V]
 				del W
 			autopsy_data = list()
-		return update_icon()
+		var/result = update_icon()
+		return result
 
 	proc/add_wound(var/used_weapon, var/damage)
 		var/datum/autopsy_data/W = autopsy_data[used_weapon]
@@ -248,6 +249,7 @@
 		W.damage += damage
 		W.time_inflicted = world.time
 
+		owner.update_body_appearance()
 
 
 	proc/get_damage()	//returns total damage
@@ -314,6 +316,7 @@
 		var/n_is = damage_state_text()
 		if (n_is != damage_state)
 			damage_state = n_is
+			owner.update_body_appearance() // I'm not sure about this, Sky probably knows better where to put it
 			return 1
 		return 0
 
@@ -412,7 +415,7 @@
 			for(var/datum/organ/wound/W in wounds)
 				W.update_health()
 				del(W)
-			owner.update_body()
+			owner.update_body_appearance()
 			owner.update_clothing()
 
 	proc/createwound(var/size = 1, var/type = 0, var/damage)

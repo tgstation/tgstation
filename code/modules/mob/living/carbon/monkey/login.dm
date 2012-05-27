@@ -1,7 +1,7 @@
 /mob/living/carbon/monkey/Login()
 	..()
 
-	update_clothing()
+	rebuild_appearance()
 	/*
 	if (!( src.primary ))
 		var/t1 = rand(1000, 1500)

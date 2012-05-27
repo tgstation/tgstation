@@ -25,7 +25,7 @@
 
 			remove_special_verbs()
 
-			update_clothing()
+			rebuild_appearance()
 
 	death(gibbed)
 		..()

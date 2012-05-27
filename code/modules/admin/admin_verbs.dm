@@ -863,8 +863,7 @@
 		return
 	src.admin_invis =! src.admin_invis
 	if(src.mob)
-		var/mob/m = src.mob//probably don't need this cast, but I'm too lazy to check if /client.mob is of type /mob or not
-		m.update_clothing()
+		mob.rebuild_appearance()
 	log_admin("[key_name(usr)] has turned their invisibility [src.admin_invis ? "ON" : "OFF"]")
 	message_admins("[key_name_admin(usr)] has turned their invisibility [src.admin_invis ? "ON" : "OFF"]", 1)
 
@@ -971,9 +970,7 @@
 			M.gender = MALE
 		else
 			M.gender = FEMALE
-	M.update_body()
-	M.update_face()
-	M.update_clothing()
+	M.rebuild_appearance()
 	M.check_dna(M)
 
 

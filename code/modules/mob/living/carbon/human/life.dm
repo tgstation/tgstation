@@ -29,18 +29,18 @@
 
 	//Being buckled to a chair or bed
 	check_if_buckled()
+	handle_clothing()
 
-	// Update clothing
-//	update_clothing()
+	// TODO: this check and the lyingcheck variable should probably be removed in favor of the visual_lying check
 	if((lyingcheck != lying) || (buckle_check != (buckled ? 1 : 0)))		//This is a fix for falling down / standing up not updating icons.  Instead of going through and changing every
 		spawn(5)
-			update_clothing()		//instance in the code where lying is modified, I've just added a new variable "lyingcheck" which will be compared
+			update_lying()		//instance in the code where lying is modified, I've just added a new variable "lyingcheck" which will be compared
 		lyingcheck = lying		//to lying, so if lying ever changes, update_clothing() will run like normal.
 
 	if(stat == 2)
-		if((!lying || !lyingcheck) && !buckled)
+		if(!lying && !buckled)
 			lying = 1
-			update_clothing()
+			update_lying()
 		return
 
 	life_tick++
@@ -137,7 +137,7 @@
 			if (stat != 0)
 				if(!lying)
 					lying = 1 //Seriously, stay down :x
-					update_clothing()
+					update_lying()
 
 
 
@@ -1490,3 +1490,53 @@
 			src << "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")
 		else if(shock_stage == 80)
 			src << "<font color='red'><b>"+pick("You see a light at the end of the tunnel!", "You feel like you could die any moment now.", "You're about to lose consciousness.")
+
+
+/mob/living/carbon/human/proc/handle_clothing()
+	// Non-visual stuff that was in update_clothing()
+
+	if(buckled)
+		if(istype(buckled, /obj/structure/stool/bed/chair))
+			lying = 0
+		else
+			lying = 1
+
+	if(!w_uniform)
+		// Automatically drop anything in store / id / belt if you're not wearing a uniform.
+		for (var/obj/item/thing in list(r_store, l_store, wear_id, belt))
+			if (thing)
+				u_equip(thing)
+				if (client)
+					client.screen -= thing
+				if (thing)
+					thing.loc = loc
+					thing.dropped(src)
+					thing.layer = initial(thing.layer)
+
+	// Why this stuff was in handle_clothing() is beyond me
+	var/shielded = 0
+	for (var/obj/item/weapon/cloaking_device/S in src)
+		if (S.active)
+			shielded = 2
+			break
+
+	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_active)
+		shielded = 3
+	switch(shielded)
+		if(1)
+		if(2)
+			invisibility = 2
+			//New stealth. Hopefully doesn't lag too much. /N
+			if(istype(loc, /turf))//If they are standing on a turf.
+				AddCamoOverlay(loc)//Overlay camo.
+		if(3)
+			if(istype(loc, /turf))
+			//Ninjas may flick into view once in a while if they are stealthed.
+				if(prob(90))
+					NinjaStealthActive(loc)
+				else
+					NinjaStealthMalf()
+		else
+			invisibility = 0
+
+	name = get_visible_name()

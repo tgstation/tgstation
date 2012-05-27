@@ -133,14 +133,13 @@
 		stand_icon = new /icon('human.dmi', "body_[g]_s")
 		lying_icon = new /icon('human.dmi', "body_[g]_l")
 		icon = stand_icon
-		update_clothing()
+		rebuild_appearance()
 
 		src << "\blue Your icons have been generated!"
 
 
 	spawn(10) // Failsafe for.. weirdness.
-		update_clothing()
-		update_body()
+		rebuild_appearance()
 
 	vessel = new/datum/reagents(600)
 	vessel.my_atom = src
@@ -151,8 +150,7 @@
 	..()
 
 	spawn(5) // Failsafe for.. weirdness.
-		update_clothing()
-		update_body()
+		rebuild_appearance()
 
 	/*var/known_languages = list()
 	known_languages.Add("english")*/
@@ -918,6 +916,10 @@
 	body_overlays_lying += body_lying
 	body_overlays_standing += body_standing
 
+	// face_lying and face_standing are the face icons, not a flag
+	body_overlays_lying += face_standing // yes, the vars are named wrong, I didn't do it -- CIB
+	body_overlays_standing += face_lying
+
 
 
 /mob/living/carbon/human/proc/rebuild_clothing_overlays()
@@ -1158,58 +1160,6 @@
 
 	last_b_state = stat
 
-
-/mob/living/carbon/human/proc/handle_clothing()
-	// Non-visual stuff that was in update_clothing()
-
-	if(buckled)
-		if(istype(buckled, /obj/structure/stool/bed/chair))
-			lying = 0
-		else
-			lying = 1
-
-	if(!w_uniform)
-		// Automatically drop anything in store / id / belt if you're not wearing a uniform.
-		for (var/obj/item/thing in list(r_store, l_store, wear_id, belt))
-			if (thing)
-				u_equip(thing)
-				if (client)
-					client.screen -= thing
-				if (thing)
-					thing.loc = loc
-					thing.dropped(src)
-					thing.layer = initial(thing.layer)
-
-	// Why this stuff was in handle_clothing() is beyond me
-	var/shielded = 0
-	for (var/obj/item/weapon/cloaking_device/S in src)
-		if (S.active)
-			shielded = 2
-			break
-
-	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_active)
-		shielded = 3
-	switch(shielded)
-		if(1)
-		if(2)
-			invisibility = 2
-			//New stealth. Hopefully doesn't lag too much. /N
-			if(istype(loc, /turf))//If they are standing on a turf.
-				AddCamoOverlay(loc)//Overlay camo.
-		if(3)
-			if(istype(loc, /turf))
-			//Ninjas may flick into view once in a while if they are stealthed.
-				if(prob(90))
-					NinjaStealthActive(loc)
-				else
-					NinjaStealthMalf()
-		else
-			invisibility = 0
-
-	// WHY IS THIS IN UPDATE_CLOTHING?!?!
-	name = get_visible_name()
-
-
 /mob/living/carbon/human/proc/misc_clothing_updates()
 	// Temporary proc to shove stuff in that was put into update_clothing()
 	// for questionable reasons
@@ -1268,19 +1218,10 @@
 		icon = lying_icon
 		overlays += body_overlays_standing
 
-		// What is this for?
-		if (face_lying)
-			overlays += face_lying
-
-
 	if(!lying)
 		icon = stand_icon
 
 		overlays += body_overlays_lying
-
-		// What is this for?
-		if (face_standing)
-			overlays += face_standing
 
 
 	overlays += clothing_overlays
@@ -2739,9 +2680,7 @@ It can still be worn/put on as normal.
 			gender = MALE
 		else
 			gender = FEMALE
-	update_body()
-	update_face()
-	update_clothing()
+	rebuild_appearance()
 	check_dna()
 
 	for(var/mob/M in view())
