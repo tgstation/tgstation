@@ -1098,16 +1098,16 @@
 				else
 					seer = 0
 					see_invisible = 0
+
 			else if (istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
 				switch(wear_mask:mode)
 					if(0)
-						if(client)
-							var/target_list[] = list()
-							for(var/mob/living/target in oview(src))
-								if( target.mind&&(target.mind.special_role||issilicon(target)) )//They need to have a mind.
-									target_list += target
-							if(target_list.len)//Everything else is handled by the ninja mask proc.
-								wear_mask:assess_targets(target_list, src)
+						var/target_list[] = list()
+						for(var/mob/living/target in oview(src))
+							if( target.mind&&(target.mind.special_role||issilicon(target)) )//They need to have a mind.
+								target_list += target
+						if(target_list.len)//Everything else is handled by the ninja mask proc.
+							wear_mask:assess_targets(target_list, src)
 						if (!druggy)
 							see_invisible = 0
 					if(1)
@@ -1122,6 +1122,7 @@
 						sight |= SEE_TURFS
 						if(!druggy)
 							see_invisible = 0
+
 			else if(istype(glasses, /obj/item/clothing/glasses/meson))
 				sight |= SEE_TURFS
 				if(!druggy)
@@ -1131,10 +1132,12 @@
 				see_in_dark = 5
 				if(!druggy)
 					see_invisible = 0
+
 			else if(istype(glasses, /obj/item/clothing/glasses/thermal))
 				sight |= SEE_MOBS
 				if(!druggy)
 					see_invisible = 2
+
 			else if(istype(glasses, /obj/item/clothing/glasses/material))
 				sight |= SEE_OBJS
 				if (!druggy)
@@ -1165,11 +1168,6 @@
 					see_invisible = 0
 
 
-
-
-
-
-
 			else if(istype(head, /obj/item/clothing/head/helmet/welding))		// wat.  This is never fucking called.
 				if(!head:up && tinted_weldhelh)
 					see_in_dark = 1
@@ -1183,23 +1181,20 @@
 			// Special on-map HUDs like the medical HUD
 			// ----------------------------------------
 			if(istype(glasses, /obj/item/clothing/glasses/hud/health))
-				if(client)
-					glasses:process_hud(src)
+				glasses:process_hud(src)
 				if (!druggy)
 					see_invisible = 0
 
-			if(istype(glasses, /obj/item/clothing/glasses/hud/security))
-				if(client)
-					glasses:process_hud(src)
+			else if(istype(glasses, /obj/item/clothing/glasses/hud/security))
+				glasses:process_hud(src)
 				if (!druggy)
 					see_invisible = 0
 
-			if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
+			else if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
 				see_in_dark = 1
 				if(istype(glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-					if(client)
-						if(glasses:hud)
-							glasses:hud:process_hud(src)
+					if(glasses:hud)
+						glasses:hud:process_hud(src)
 				if (!druggy)
 					see_invisible = 0
 
