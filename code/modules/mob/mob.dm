@@ -96,8 +96,6 @@
 	return 0
 
 /mob/proc/Life()
-//	if(organStructure)
-//		organStructure.ProcessOrgans()
 	return
 
 /mob/proc/update_clothing()
@@ -172,7 +170,7 @@
 		var/turf/T = get_turf(loc)
 		if (istype(T))
 			T.Entered(W)
-	update_clothing()
+		update_clothing()
 	return
 
 /mob/proc/before_take_item(var/obj/item/item)
