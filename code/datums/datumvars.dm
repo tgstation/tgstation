@@ -389,8 +389,16 @@ client
 
 		return html
 
+#define TOPIC_SPAM_DELAY 5		//5 tick delay is a little under half a second
 //All BYOND links pass through client/Topic() FIRST and are then directed to [hsrc]/Topic() by the ..() call at the end.
 client/Topic(href, href_list, hsrc)
+
+	if(next_allowed_topic_time > world.time)
+		//we have previously sent a Topic() call withing the last [TOPIC_SPAM_DELAY] ticks.
+		//drop the Topic call to preventc crashing/lagging the server via link-spamming
+//		src << "\red Error: SPAM"
+		return
+	next_allowed_topic_time = world.time + TOPIC_SPAM_DELAY
 
 	//search the href for script injection	//This is a temporary measure
 	if( findtext(href,"<script",1,0) )
