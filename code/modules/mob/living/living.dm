@@ -29,6 +29,22 @@
 		src.health = 100
 		src.stat = 0
 
+/mob/living/proc/rebuild_appearance()
+	// Rebuild the entire mob appearance completely, this should ONLY be called in rare cases,
+	// e.g. when the mob spawns.
+
+/mob/living/proc/update_body_appearance()
+	// Call this proc whenever something about the appearance of the body itself changes.
+	// For example, this must be called when you add a wound to a mob.
+
+/mob/living/proc/update_lying()
+	// Call this whenever the lying status of a mob changes.
+
+/mob/living/update_clothing()
+	// Call this proc whenever something about the clothing of a mob changes. Normally, you
+	// don't need to call this by hand, as the equip procs will do it for you.
+	..()
+
 
 //sort of a legacy burn method for /electrocute, /shock, and the e_chair
 /mob/living/proc/burn_skin(burn_amount, used_weapon = null)
