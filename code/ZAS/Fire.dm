@@ -45,7 +45,7 @@ turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh)
 
 obj
 	fire
-		//Icon for fire on turfs, also helps for nurturing small fires until they are full tile
+		//Icon for fire on turfs.
 
 		anchored = 1
 		mouse_opacity = 0

@@ -119,8 +119,6 @@ vs_control
 			if("Original")
 				plc.CLOTH_CONTAMINATION = 0 //If this is on, plasma does damage by getting into cloth.
 
-				plc.ALL_ITEM_CONTAMINATION = 0 //If this is on, any item can be contaminated, so suits and tools must be discarded or
-
 				plc.PLASMAGUARD_ONLY = 0
 
 				//plc.CANISTER_CORROSION = 0         //If this is on, plasma must be stored in orange tanks and canisters,
@@ -145,8 +143,6 @@ vs_control
 				plc.CONTAMINATION_LOSS = 0
 			if("Hazard - Low")
 				plc.CLOTH_CONTAMINATION = 0 //If this is on, plasma does damage by getting into cloth.
-
-				plc.ALL_ITEM_CONTAMINATION = 0 //If this is on, any item can be contaminated, so suits and tools must be discarded or
 
 				plc.PLASMAGUARD_ONLY = 0
 
@@ -175,8 +171,6 @@ vs_control
 			if("Hazard - High")
 				plc.CLOTH_CONTAMINATION = 1 //If this is on, plasma does damage by getting into cloth.
 
-				plc.ALL_ITEM_CONTAMINATION = 0 //If this is on, any item can be contaminated, so suits and tools must be discarded or
-
 				plc.PLASMAGUARD_ONLY = 0
 
 			//	plc.CANISTER_CORROSION = 1         //If this is on, plasma must be stored in orange tanks and canisters,
@@ -198,8 +192,6 @@ vs_control
 
 			if("Oh Shit!")
 				plc.CLOTH_CONTAMINATION = 1 //If this is on, plasma does damage by getting into cloth.
-
-				plc.ALL_ITEM_CONTAMINATION = 0 //If this is on, any item can be contaminated, so suits and tools must be discarded or ELSE
 
 				plc.PLASMAGUARD_ONLY = 1
 

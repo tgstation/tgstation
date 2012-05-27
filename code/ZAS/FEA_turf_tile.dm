@@ -51,7 +51,7 @@ turf
 			archived_cycle = 0
 			current_cycle = 0
 
-			obj/effect/hotspot/active_hotspot
+			obj/fire/active_hotspot
 
 			temperature_archived //USED ONLY FOR SOLIDS
 			being_superconductive = 0
