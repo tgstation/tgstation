@@ -208,11 +208,13 @@
 	icon_state = "spacecash20"
 	access = access_crate_cash
 	desc = "A pile of 20 credits."
+	worth = 20
 
 /obj/item/weapon/money/c50
 	icon_state = "spacecash50"
 	access = access_crate_cash
 	desc = "A pile of 50 credits."
+	worth = 50
 
 /obj/item/weapon/money/c100
 	icon_state = "spacecash100"
