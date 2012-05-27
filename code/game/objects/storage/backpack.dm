@@ -46,6 +46,7 @@
 			user << "\red The Bluespace generator isn't working."
 			return
 		if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
+			investigate_log("has become a singularity. Caused by [user.key]","singulo")
 			user << "\red The Bluespace interfaces of the two devices catastrophically malfunction!"
 			del(W)
 			var/obj/machinery/singularity/singulo = new /obj/machinery/singularity (get_turf(src))

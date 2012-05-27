@@ -33,6 +33,7 @@
 				toggle_power()
 				user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
 				"You turn the [src.name] [active? "on":"off"].")
+				investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"It contains [P]":"It is empty"].","singulo")
 				return
 			else
 				user << "\red The controls are locked!"
@@ -135,7 +136,6 @@
 			if(active)
 				icon_state = "ca_on"
 				flick("ca_active", src)
-
 			else
 				icon_state = "ca"
 				flick("ca_deactive", src)

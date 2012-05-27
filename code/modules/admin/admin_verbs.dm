@@ -102,6 +102,7 @@
 
 		//Admin Observer
 		if (holder.level >= -1)
+			verbs += /client/proc/investigate_show
 			verbs += /client/proc/cmd_admin_say
 			verbs += /client/proc/cmd_admin_gib_self
 			verbs += /client/proc/deadmin_self
@@ -400,10 +401,11 @@
 	verbs -= /client/proc/jumptocoord
 	verbs -= /client/proc/everyone_random
 	verbs -= /client/proc/Set_Holiday
-	verbs -= /client/proc/giveruntimelog									//used by coders to retrieve runtime logs
+	verbs -= /client/proc/giveruntimelog								//used by coders to retrieve runtime logs
 	verbs -= /client/proc/getserverlog
 	verbs -= /client/proc/cinematic										//show a cinematic sequence
 	verbs -= /client/proc/admin_memo
+	verbs -= /client/proc/investigate_show								//investigate in-game mishaps using various logs.
 	verbs -= /proc/possess
 	verbs -= /proc/release
 	//verbs -= /client/proc/give_spell 									--Merged with view variables

@@ -79,12 +79,12 @@
 	src.load_motd()
 	src.load_rules()
 	src.load_admins()
+	investigate_reset()
 	if (config.usewhitelist)
 		load_whitelist()
 	LoadBansjob()
 	Get_Holiday()	//~Carn, needs to be here when the station is named so :P
 	src.update_status()
-
 	makepowernets()
 
 	sun = new /datum/sun()

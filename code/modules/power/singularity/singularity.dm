@@ -40,6 +40,7 @@ var/global/list/uneatable = list(
 			count = 1
 			break
 		if(!count)	message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
+		investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]","singulo")
 
 		src.energy = starting_energy
 		if(temp)
