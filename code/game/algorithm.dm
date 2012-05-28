@@ -146,12 +146,17 @@ proc/countJob(rank)
 			return
 
 	if(W.slot_flags & SLOT_EARS)
-		if(!src.ears)
+		if(!src.l_ear)
 			if( src.get_active_hand() == W )
 				src.u_equip(W)
-			src.ears = W
+			src.l_ear = W
 			update_clothing()
-			return
+		else if(!src.r_ear)
+			if( src.get_active_hand() == W )
+				src.u_equip(W)
+			src.r_ear = W
+			update_clothing()
+		return
 
 	if(W.slot_flags & SLOT_EYES)
 		if(!src.glasses)
