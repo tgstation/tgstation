@@ -182,6 +182,7 @@ var/global/list/uneatable = list(
 					consume_range = 4
 					dissipate = 0 //It cant go smaller due to e loss
 			if(current_size == allowed_size)
+				investigate_log("<font color='red'>grew to size [current_size]</font>","singulo")
 				return 1
 			else if(current_size < (--temp_allowed_size))
 				expand(temp_allowed_size)

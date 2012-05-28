@@ -25,7 +25,7 @@
 	if(!message)	return
 	var/F = investigate_subject2file(subject)
 	if(!F)	return
-	F << "[src] \ref[src] ([x],[y],[z]) [message]<br>"
+	F << "<small>[time2text(world.timeofday,"hh:mm")] \ref[src] ([x],[y],[z])</small> || [src] [message]<br>"
 
 
 
@@ -38,6 +38,6 @@
 	if(!F)
 		src << "<font color='red'>Error: admin_investigate: [INVESTIGATE_DIR][subject] is an invalid path or cannot be accessed.</font>"
 		return
-	src << browse(F,"window=investigate;title='investigate [subject]'")
+	src << browse(F,"window=investigate;size=800x300")
 
 

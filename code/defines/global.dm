@@ -133,7 +133,6 @@ var/wavesecret = 0
 var/shuttlecoming = 0
 
 var/join_motd = null
-var/rules = null
 var/forceblob = 0
 
 	//airlockWireColorToIndex takes a number representing the wire color, e.g. the orange wire is always 1, the dark red wire is always 2, etc. It returns the index for whatever that wire does.

@@ -87,7 +87,6 @@
 				strength = 2
 			else
 				investigate_log("increased to <font color='red'>[strength]</font> by [usr.key]","singulo")
-			strength = min(2,strength+1)
 			for(var/obj/structure/particle_accelerator/part in connected_parts)
 				part.strength = strength
 				part.update_icon()
