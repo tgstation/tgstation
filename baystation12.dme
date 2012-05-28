@@ -855,6 +855,7 @@
 #include "code\modules\clothing\head\hats.dm"
 #include "code\modules\clothing\head\helmets.dm"
 #include "code\modules\clothing\spacesuits\captain.dm"
+#include "code\modules\clothing\spacesuits\engineer.dm"
 #include "code\modules\clothing\spacesuits\miscellaneous.dm"
 #include "code\modules\clothing\spacesuits\ninja.dm"
 #include "code\modules\clothing\spacesuits\rig.dm"

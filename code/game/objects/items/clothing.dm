@@ -428,10 +428,10 @@ THERMAL GLASSES
 				M.disabilities &= ~1
 	..()
 
-/obj/item/clothing/head/helmet/space/rig/engspace_helmet/attack_self()
+/obj/item/clothing/head/helmet/space/engineer/attack_self()
 	toggle()
 
-/obj/item/clothing/head/helmet/space/rig/engspace_helmet/verb/toggle()
+/obj/item/clothing/head/helmet/space/engineer/verb/toggle()
 	set category = "Object"
 	set name = "Toggle Helmet Visor"
 	if(usr.canmove && usr.stat != 2 && !usr.restrained())
@@ -439,34 +439,13 @@ THERMAL GLASSES
 			src.up = !src.up
 			src.see_face = !src.see_face
 			src.flags |= HEADCOVERSEYES
-			icon_state = "engspace_helmet"
+			icon_state = "[initial(icon_state)]"
 			usr << "You toggle the reflective tint on."
 		else
 			src.up = !src.up
 			src.see_face = !src.see_face
 			src.flags &= ~HEADCOVERSEYES
-			icon_state = "engspace_helmet_clear"
-			usr << "You toggle the reflective tint off."
-	usr.update_clothing()
-
-/obj/item/clothing/head/helmet/space/rig/cespace_helmet/attack_self()
-	toggle()
-
-/obj/item/clothing/head/helmet/space/rig/cespace_helmet/verb/toggle()
-	set category = "Object"
-	set name = "Toggle Helmet Visor"
-	if(usr.canmove && usr.stat != 2 && !usr.restrained())
-		if(src.up)
-			src.up = !src.up
-			src.see_face = !src.see_face
-			src.flags |= HEADCOVERSEYES
-			icon_state = "cespace_helmet"
-			usr << "You toggle the reflective tint on."
-		else
-			src.up = !src.up
-			src.see_face = !src.see_face
-			src.flags &= ~HEADCOVERSEYES
-			icon_state = "cespace_helmet_clear"
+			icon_state = "[initial(icon_state)]_clear"
 			usr << "You toggle the reflective tint off."
 	usr.update_clothing()
 
