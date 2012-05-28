@@ -50,6 +50,8 @@ zone
 		//Add checks to ensure that we're not sucking air out of an empty room.
 		if(total_space && air.total_moles > 0.1 && air.temperature > TCMB+0.5)
 			//If there is space, air should flow out of the zone.
+			//if(abs(air.pressure) > vsc.airflow_lightest_pressure)
+			//	AirflowSpace(src)
 			ShareSpace(air,total_space*(vsc.zone_share_percent/100))
 
 		//React the air here.
@@ -97,6 +99,8 @@ zone
 			for(var/zone/Z in connected_zones)
 				//Ensure we're not doing pointless calculations on equilibrium zones.
 				if(abs(air.total_moles - Z.air.total_moles) > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
+					//if(abs(Z.air.pressure - air.pressure) > vsc.airflow_lightest_pressure)
+					//	Airflow(src,Z)
 					ShareRatio(air,Z.air,connected_zones[Z]*(vsc.zone_share_percent/100))
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, ratio)
