@@ -63,7 +63,8 @@ ZIPPO
 	icon_state = "matchbox"
 	item_state = "zippo"
 	w_class = 1
-	flags = ONBELT | TABLEPASS
+	flags = TABLEPASS
+	slot_flags = SLOT_BELT
 	var/matchcount = 10
 	w_class = 1.0
 
@@ -113,14 +114,14 @@ ZIPPO
 	item_state = "cigoff"
 	w_class = 1
 	body_parts_covered = null
-	var
-		lit = 0
-		icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
-		icon_off = "cigoff"
-		icon_butt = "cigbutt"
-		lastHolder = null
-		smoketime = 300
-		butt_count = 5  //count of butt sprite variations
+	var/lit = 0
+	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
+	var/icon_off = "cigoff"
+	var/icon_butt = "cigbutt"
+	var/lastHolder = null
+	var/smoketime = 300
+	var/butt_count = 5  //count of butt sprite variations
+
 	proc
 		light(var/flavor_text = "[usr] lights the [name].")
 
@@ -159,7 +160,6 @@ ZIPPO
 			for(var/mob/O in viewers(usr, null))
 				O.show_message(flavor_text, 1)
 			processing_objects.Add(src)
-
 
 
 	process()
@@ -244,13 +244,13 @@ ZIPPO
 	item_state = "cobpipeoff"
 	w_class = 1
 	body_parts_covered = null
-	var
-		lit = 0
-		icon_on = "cobpipeon"  //Note - these are in masks.dmi
-		icon_off = "cobpipeoff"
-		lastHolder = null
-		smoketime = 100
-		maxsmoketime = 100 //make sure this is equal to your smoketime
+	var/lit = 0
+	var/icon_on = "cobpipeon"  //Note - these are in masks.dmi
+	var/icon_off = "cobpipeoff"
+	var/lastHolder = null
+	var/smoketime = 100
+	var/maxsmoketime = 100 //make sure this is equal to your smoketime
+
 	proc
 		light(var/flavor_text = "[usr] lights the [name].")
 
@@ -337,9 +337,9 @@ ZIPPO
 	item_state = "cigpacket"
 	w_class = 1
 	throwforce = 2
-	flags = ONBELT | TABLEPASS
-	var
-		cigcount = 6
+	flags = TABLEPASS
+	slot_flags = SLOT_BELT
+	var/cigcount = 6
 
 
 	update_icon()
@@ -382,7 +382,8 @@ ZIPPO
 	var/icon_off = "lighter-g"
 	w_class = 1
 	throwforce = 4
-	flags = ONBELT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
 	var/lit = 0
 
 /obj/item/weapon/lighter/zippo
@@ -410,16 +411,16 @@ ZIPPO
 				src.item_state = icon_on
 				if( istype(src,/obj/item/weapon/lighter/zippo) )
 					for(var/mob/O in viewers(user, null))
-						O.show_message(text("\red Without even breaking stride, [] flips open and lights [] in one smooth movement.", user, src), 1)
+						O.show_message(text("\red Without even breaking stride, \the [] flips open and lights \the [] in one smooth movement.", user, src), 1)
 				else
 					if(prob(75))
 						for(var/mob/O in viewers(user, null))
-							O.show_message("\red After a few attempts, [user] manages to light [src].", 1)
+							O.show_message("\red After a few attempts, \the [user] manages to light \the [src].", 1)
 					else
 						user << "\red <b>You burn yourself while lighting the lighter.</b>"
 						user.adjustFireLoss(5)
 						for(var/mob/O in viewers(user, null))
-							O.show_message("\red After a few attempts, [user] manages to light [src], they however burn their finger in the process.", 1)
+							O.show_message("\red After a few attempts, \the [user] manages to light \the [src], they however burn themself in the process.", 1)
 
 				user.total_luminosity += 2
 				processing_objects.Add(src)

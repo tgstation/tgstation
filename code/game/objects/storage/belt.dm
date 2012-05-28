@@ -4,7 +4,8 @@
 	icon = 'belts.dmi'
 	icon_state = "utilitybelt"
 	item_state = "utility"
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	max_w_class = 3
 	max_combined_w_class = 21
 

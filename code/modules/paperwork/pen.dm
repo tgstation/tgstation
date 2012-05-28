@@ -3,7 +3,8 @@
 	name = "pen"
 	icon = 'bureaucracy.dmi'
 	icon_state = "pen"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT | SLOT_EARS
 	throwforce = 0
 	w_class = 1.0
 	throw_speed = 7

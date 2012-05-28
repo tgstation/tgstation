@@ -11,9 +11,6 @@
 	item_state = "flashbang"
 	w_class = 2.0
 	force = 2.0
-	throw_speed = 4
-	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT | USEDELAY
 	var/obj/item/weapon/reagent_containers/glass/beaker_one
 	var/obj/item/weapon/reagent_containers/glass/beaker_two
 	var/obj/item/device/assembly/attached_device
@@ -27,6 +24,10 @@
 	var/list/allowed_containers = list("/obj/item/weapon/reagent_containers/glass/beaker", "/obj/item/weapon/reagent_containers/glass/dispenser", "/obj/item/weapon/reagent_containers/glass/bottle")
 	var/affected_area = 3
 	var/mob/attacher = "Unknown"
+	throw_speed = 4
+	throw_range = 20
+	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	slot_flags = SLOT_BELT
 
 	attackby(var/obj/item/weapon/W, var/mob/user)
 		if(path || !active)
@@ -784,7 +785,7 @@
 		/obj/structure/table,
 		/obj/structure/closet/secure_closet,
 		/obj/structure/closet,
-		/obj/machinery/sink,
+		/obj/structure/sink,
 		/obj/item/weapon/storage,
 		/obj/machinery/atmospherics/unary/cryo_cell,
 		/obj/item/weapon/chem_grenade,
@@ -1304,7 +1305,8 @@
 	amount_per_transfer_from_this = 5
 	volume = 30
 	possible_transfer_amounts = null
-	flags = FPRINT | ONBELT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	slot_flags = SLOT_BELT
 
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user as mob)
 	return src.attack_hand(user)

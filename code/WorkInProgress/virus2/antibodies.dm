@@ -43,8 +43,8 @@ var/global/list/ANTIGENS = list("[ANTIGEN_A]" = "A", "[ANTIGEN_B]" = "B", "[ANTI
 	icon_state = "health"
 	w_class = 2.0
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | USEDELAY
-
+	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	slot_flags = SLOT_BELT
 
 /obj/item/device/antibody_scanner/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	if(! istype(M, /mob/living/carbon) || !M:antibodies)

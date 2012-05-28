@@ -5,7 +5,8 @@
 	fire_sound = 'Laser.ogg'
 	origin_tech = "combat=2;magnets=4"
 	w_class = 4.0
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	slot_flags = SLOT_BACK
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/ion"
 
@@ -27,7 +28,8 @@ obj/item/weapon/gun/energy/staff
 	icon_state = "staffofchange"
 	item_state = "staffofchange"
 	fire_sound = 'emitter.ogg'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	slot_flags = SLOT_BACK
 	w_class = 4.0
 	charge_cost = 200
 	projectile_type = "/obj/item/projectile/change"

@@ -1,4 +1,4 @@
-/obj/structure/closet/extinguisher
+/obj/structure/extinguisher_cabinet
 	name = "extinguisher cabinet"
 	desc = "A small wall mounted cabinet designed to hold a fire extinguisher."
 	icon = 'closet.dmi'
@@ -6,10 +6,11 @@
 	anchored = 1
 	density = 0
 	var/obj/item/weapon/extinguisher/has_extinguisher = new/obj/item/weapon/extinguisher
+	var/opened = 0
 
 
 
-/obj/structure/closet/extinguisher/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/structure/extinguisher_cabinet/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (isrobot(usr))
 		return
 	if (istype(O, /obj/item/weapon/extinguisher))
@@ -26,7 +27,7 @@
 
 
 
-/obj/structure/closet/extinguisher/attack_hand(mob/user as mob)
+/obj/structure/extinguisher_cabinet/attack_hand(mob/user as mob)
 	if(has_extinguisher)
 		user.put_in_hand(has_extinguisher)
 		has_extinguisher = null
@@ -38,13 +39,13 @@
 
 
 
-/obj/structure/closet/extinguisher/attack_paw(mob/user as mob)
+/obj/structure/extinguisher_cabinet/attack_paw(mob/user as mob)
 	attack_hand(user)
 	return
 
 
 
-/obj/structure/closet/extinguisher/update_icon()
+/obj/structure/extinguisher_cabinet/update_icon()
 	if(!opened)
 		icon_state = "extinguisher_closed"
 		return

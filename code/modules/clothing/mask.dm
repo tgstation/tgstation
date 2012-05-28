@@ -73,6 +73,7 @@
 	desc = "A face-covering mask that can be connected to an air supply."
 	icon_state = "gas_alt"
 	flags = FPRINT|TABLEPASS|SUITSPACE|MASKCOVERSMOUTH|MASKCOVERSEYES
+	flags_inv = HIDEEARS|HIDEEYES
 	w_class = 3.0
 	see_face = 0.0
 	item_state = "gas_alt"

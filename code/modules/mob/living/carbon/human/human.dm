@@ -554,7 +554,7 @@
 				return
 			if (!istype(W, /obj/item))
 				return
-			if (!( W.flags & ONBACK ))
+			if (!( W.slot_flags & SLOT_BACK ))
 				return
 			if(istype(W,/obj/item/weapon/twohanded) && W:wielded)
 				usr << "<span class='warning'>Unwield the [initial(W.name)] first!</span>"
@@ -578,7 +578,10 @@
 				if (emptyHand)
 					wear_suit.DblClick()
 				return
-			if (!( istype(W, /obj/item/clothing/suit) ))
+			if (!istype(W, /obj/item))
+				return
+			if (!( W.slot_flags & SLOT_OCLOTHING ))
+				return
 				return
 			u_equip(W)
 			wear_suit = W
@@ -588,7 +591,9 @@
 				if (emptyHand)
 					gloves.DblClick()
 				return
-			if (!( istype(W, /obj/item/clothing/gloves) ))
+			if (!istype(W, /obj/item))
+				return
+			if (!( W.slot_flags & SLOT_GLOVES ))
 				return
 			u_equip(W)
 			gloves = W
@@ -598,7 +603,9 @@
 				if (emptyHand)
 					shoes.DblClick()
 				return
-			if (!( istype(W, /obj/item/clothing/shoes) ))
+			if (!istype(W, /obj/item))
+				return
+			if (!( W.slot_flags & SLOT_FEET ))
 				return
 			u_equip(W)
 			shoes = W
@@ -608,7 +615,9 @@
 				if (emptyHand)
 					belt.DblClick()
 				return
-			if (!W || !W.flags || !( W.flags & ONBELT ))
+			if (!istype(W, /obj/item))
+				return
+			if (!( W.slot_flags & SLOT_BELT ))
 				return
 			u_equip(W)
 			belt = W
@@ -618,7 +627,9 @@
 				if (emptyHand)
 					glasses.DblClick()
 				return
-			if (!( istype(W, /obj/item/clothing/glasses) ))
+			if (!istype(W, /obj/item))
+				return
+			if (!( W.slot_flags & SLOT_EYES ))
 				return
 			u_equip(W)
 			glasses = W
@@ -628,10 +639,9 @@
 				if (emptyHand)
 					head.DblClick()
 				return
-			if (( istype(W, /obj/item/weapon/paper) ))
-				u_equip(W)
-				head = W
-			else if (!( istype(W, /obj/item/clothing/head) ))
+			if (!istype(W, /obj/item))
+				return
+			if (!( W.slot_flags & SLOT_HEAD ))
 				return
 			u_equip(W)
 			head = W
@@ -683,7 +693,10 @@
 				if (emptyHand)
 					w_uniform.DblClick()
 				return
-			if (!( istype(W, /obj/item/clothing/under) ))
+			if (!istype(W, /obj/item))
+				return
+			if (!( W.slot_flags & SLOT_ICLOTHING ))
+				return
 				return
 			u_equip(W)
 			w_uniform = W
@@ -695,7 +708,9 @@
 				return
 			if (!w_uniform)
 				return
-			if (!istype(W, /obj/item/weapon/card/id) && !istype(W, /obj/item/device/pda) )
+			if (!istype(W, /obj/item))
+				return
+			if (!( W.slot_flags & SLOT_ID ))
 				return
 			u_equip(W)
 			wear_id = W
@@ -705,19 +720,25 @@
 				if (emptyHand)
 					l_store.DblClick()
 				return
-			if ((!( istype(W, /obj/item) ) || W.w_class > 2 || !( w_uniform )))
+			if (!istype(W, /obj/item))
 				return
-			u_equip(W)
-			l_store = W
+			if ( ( W.slot_flags & SLOT_DENYPOCKET ) )
+				return
+			if ( W.w_class <= 2 || ( W.slot_flags & SLOT_POCKET ) )
+				u_equip(W)
+				l_store = W
 		if("storage2")
 			if (r_store)
 				if (emptyHand)
 					r_store.DblClick()
 				return
-			if ((!( istype(W, /obj/item) ) || W.w_class > 2 || !( w_uniform )))
+			if (!istype(W, /obj/item))
 				return
-			u_equip(W)
-			r_store = W
+			if ( ( W.slot_flags & SLOT_DENYPOCKET ) )
+				return
+			if ( W.w_class <= 2 || ( W.slot_flags & SLOT_POCKET ) )
+				u_equip(W)
+				r_store = W
 		if("suit storage")
 			if (s_store)
 				if (emptyHand)

@@ -8,12 +8,11 @@
 	m_amt = 1000
 	force = 10 //Pistol whipp'n good.  (It was frigging SIXTY on pre-goon code)
 
-	var
-		ammo_type = "/obj/item/ammo_casing/a357"
-		list/loaded = list()
-		max_shells = 7
-		load_method = 0 //0 = Single shells or quick loader, 1 = box, 2 = magazine
-		obj/item/ammo_magazine/empty_mag = null
+	var/ammo_type = "/obj/item/ammo_casing/a357"
+	var/list/loaded = list()
+	var/max_shells = 7
+	var/load_method = 0 //0 = Single shells or quick loader, 1 = box, 2 = magazine
+	var/obj/item/ammo_magazine/empty_mag = null
 
 
 	New()

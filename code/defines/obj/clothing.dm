@@ -28,6 +28,7 @@
 /obj/item/clothing/belt
 	name = "belt"
 
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 */
 

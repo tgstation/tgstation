@@ -424,6 +424,7 @@
 	var/w_class = 3.0
 	var/protective_temperature = 0 // Placing this here to avoid runtime errors, due to tiny items being allowed on ears and being queried for this variable
 	flags = FPRINT | TABLEPASS
+	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 50
 //	causeerrorheresoifixthis
