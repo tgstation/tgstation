@@ -11,16 +11,20 @@
 	throw_speed = 3
 	throw_range = 10
 
-	var
-		secured = 0
-		obj/item/device/assembly/a_left = null
-		obj/item/device/assembly/a_right = null
-		obj/special_assembly = null
+	var/secured = 0
+	var/obj/item/device/assembly/a_left = null
+	var/obj/item/device/assembly/a_right = null
+	var/obj/special_assembly = null
 
-	proc
-		attach(var/obj/item/device/D, var/obj/item/device/D2, var/mob/user)
-		attach_special(var/obj/O, var/mob/user)
-		process_activation(var/obj/item/device/D)
+	proc/attach(var/obj/item/device/D, var/obj/item/device/D2, var/mob/user)
+		return
+
+	proc/attach_special(var/obj/O, var/mob/user)
+		return
+
+	proc/process_activation(var/obj/item/device/D)
+		return
+
 
 
 	IsAssemblyHolder()

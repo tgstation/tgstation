@@ -42,7 +42,8 @@
 	icon_state = "camera"
 	item_state = "electropack"
 	w_class = 2.0
-	flags = 466.0
+	flags = FPRINT | CONDUCT | USEDELAY | TABLEPASS
+	slot_flags = SLOT_BELT
 	m_amt = 2000
 	throwforce = 5
 	throw_speed = 4
@@ -50,7 +51,6 @@
 	var/pictures_max = 30
 	var/pictures_left = 30
 	var/can_use = 1
-
 
 /obj/item/weapon/photo
 	name = "photo"

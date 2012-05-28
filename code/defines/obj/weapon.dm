@@ -849,7 +849,7 @@
 	name = "dummy"
 	invisibility = 101.0
 	anchored = 1.0
-	flags = 2.0
+	flags = TABLEPASS
 
 /obj/item/weapon/extinguisher
 	name = "fire extinguisher"

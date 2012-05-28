@@ -5,10 +5,10 @@
 	w_class = 100.0
 	item_state = "electronic"
 	flags = FPRINT|TABLEPASS | CONDUCT
-	var
-		list/modules = list()
-		obj/item/emag = null
-		obj/item/borg/upgrade/jetpack = null
+
+	var/list/modules = list()
+	var/obj/item/emag = null
+	var/obj/item/borg/upgrade/jetpack = null
 
 
 	emp_act(severity)
@@ -59,12 +59,12 @@
 		..()
 		src.modules += new /obj/item/borg/sight/hud/med(src)
 		src.modules += new /obj/item/device/healthanalyzer(src)
-		src.modules += new /obj/item/weapon/reagent_containers/borghypo
+		src.modules += new /obj/item/weapon/reagent_containers/borghypo(src)
 		src.modules += new /obj/item/weapon/reagent_containers/glass/large(src)
 		src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
-		src.modules += new /obj/item/weapon/reagent_containers/syringe
-		src.modules += new /obj/item/weapon/extinguisher/mini
-		src.emag = new /obj/item/weapon/circular_saw
+		src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
+		src.modules += new /obj/item/weapon/extinguisher/mini(src)
+		src.emag = new /obj/item/weapon/circular_saw(src)
 		return
 
 
@@ -142,8 +142,8 @@
 	New()
 		..()
 		src.modules += new /obj/item/weapon/soap/nanotrasen(src)
-		src.modules += new /obj/item/weapon/trashbag
-		src.modules += new/obj/item/weapon/mop
+		src.modules += new /obj/item/weapon/trashbag(src)
+		src.modules += new/obj/item/weapon/mop(src)
 		src.emag = new /obj/item/weapon/cleaner(src)
 
 		var/datum/reagents/R = new/datum/reagents(1000)

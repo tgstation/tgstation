@@ -11,17 +11,17 @@ Note: Must be placed west/left of and R&D console to function.
 	name = "Protolathe"
 	icon_state = "protolathe"
 	flags = OPENCONTAINER
-	var
-		max_material_storage = 100000 //All this could probably be done better with a list but meh.
-		m_amount = 0.0
-		g_amount = 0.0
-		gold_amount = 0.0
-		silver_amount = 0.0
-		plasma_amount = 0.0
-		uranium_amount = 0.0
-		diamond_amount = 0.0
-		clown_amount = 0.0
-		adamantine_amount = 0.0
+
+	var/max_material_storage = 100000 //All this could probably be done better with a list but meh.
+	var/m_amount = 0.0
+	var/g_amount = 0.0
+	var/gold_amount = 0.0
+	var/silver_amount = 0.0
+	var/plasma_amount = 0.0
+	var/uranium_amount = 0.0
+	var/diamond_amount = 0.0
+	var/clown_amount = 0.0
+	var/adamantine_amount = 0.0
 
 
 	New()

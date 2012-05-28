@@ -46,31 +46,43 @@
 	throw_range = 10
 	origin_tech = "magnets=1"
 
-	var
-		secured = 1
-		small_icon_state_left = null
-		small_icon_state_right = null
-		list/small_icon_state_overlays = null
-		obj/item/device/assembly_holder/holder = null
-		cooldown = 0//To prevent spam
-		wires = WIRE_RECEIVE | WIRE_PULSE
+	var/secured = 1
+	var/small_icon_state_left = null
+	var/small_icon_state_right = null
+	var/list/small_icon_state_overlays = null
+	var/obj/item/device/assembly_holder/holder = null
+	var/cooldown = 0//To prevent spam
+	var/wires = WIRE_RECEIVE | WIRE_PULSE
 
-	var/const
-		WIRE_RECEIVE = 1			//Allows Pulsed(0) to call Activate()
-		WIRE_PULSE = 2				//Allows Pulse(0) to act on the holder
-		WIRE_PULSE_SPECIAL = 4		//Allows Pulse(0) to act on the holders special assembly
-		WIRE_RADIO_RECEIVE = 8		//Allows Pulsed(1) to call Activate()
-		WIRE_RADIO_PULSE = 16		//Allows Pulse(1) to send a radio message
+	var/const/WIRE_RECEIVE = 1			//Allows Pulsed(0) to call Activate()
+	var/const/WIRE_PULSE = 2				//Allows Pulse(0) to act on the holder
+	var/const/WIRE_PULSE_SPECIAL = 4		//Allows Pulse(0) to act on the holders special assembly
+	var/const/WIRE_RADIO_RECEIVE = 8		//Allows Pulsed(1) to call Activate()
+	var/const/WIRE_RADIO_PULSE = 16		//Allows Pulse(1) to send a radio message
 
-	proc
-		activate()									//What the device does when turned on
-		pulsed(var/radio = 0)						//Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
-		pulse(var/radio = 0)						//Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
-		toggle_secure()								//Code that has to happen when the assembly is un\secured goes here
-		attach_assembly(var/obj/A, var/mob/user)	//Called when an assembly is attacked by another
-		process_cooldown()							//Called via spawn(10) to have it count down the cooldown var
-		holder_movement()							//Called when the holder is moved
-		interact(mob/user as mob)					//Called when attack_self is called
+	proc/activate()									//What the device does when turned on
+		return
+
+	proc/pulsed(var/radio = 0)						//Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
+		return
+
+	proc/pulse(var/radio = 0)						//Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
+		return
+
+	proc/toggle_secure()								//Code that has to happen when the assembly is un\secured goes here
+		return
+
+	proc/attach_assembly(var/obj/A, var/mob/user)	//Called when an assembly is attacked by another
+		return
+
+	proc/process_cooldown()							//Called via spawn(10) to have it count down the cooldown var
+		return
+
+	proc/holder_movement()							//Called when the holder is moved
+		return
+
+	proc/interact(mob/user as mob)					//Called when attack_self is called
+		return
 
 
 	process_cooldown()
@@ -186,11 +198,10 @@ Desc:	If true is an object that can be attached to an assembly holder but is a s
 /obj/proc/IsSpecialAssembly()
 	return 0
 /*
-	var
-		small_icon_state = null//If this obj will go inside the assembly use this for icons
-		list/small_icon_state_overlays = null//Same here
-		obj/holder = null
-		cooldown = 0//To prevent spam
+	var/small_icon_state = null//If this obj will go inside the assembly use this for icons
+	var/list/small_icon_state_overlays = null//Same here
+	var/obj/holder = null
+	var/cooldown = 0//To prevent spam
 
 	proc
 		Activate()//Called when this assembly is pulsed by another one

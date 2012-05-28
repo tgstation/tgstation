@@ -515,7 +515,7 @@
 	density = 0
 	anchored = 1.0
 	layer = 2.3 //under pipes
-	//	flags = 64.0
+	//	flags = CONDUCT
 
 /obj/structure/lattice/New()
 	..()
