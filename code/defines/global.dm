@@ -190,7 +190,7 @@ var
 	const/MAX_PAPER_MESSAGE_LEN = 3072
 	const/MAX_BOOK_MESSAGE_LEN = 9216
 
-	const/MAX_NAME_LEN = 26
+	const/MAX_NAME_LEN = 40
 
 	list/paper_blacklist = list("script","frame","iframe","input","button","a","embed","object")
 
