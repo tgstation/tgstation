@@ -1,5 +1,5 @@
 /obj/item/clothing/head/helmet/space/rig
-	name = "engineer RIG helmet"
+	name = "engineer hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
 	icon_state = "rig0-engineering"
 	item_state = "rig0_engineering"
@@ -10,20 +10,20 @@
 	color = "engineering" //Determines used sprites: rig[on]-[color] and rig[on]-[color]2 (lying down sprite)
 
 /obj/item/clothing/head/helmet/space/rig/mining
-	name = "mining RIG helmet"
+	name = "mining hardsuit helmet"
 	icon_state = "rig0-mining"
 	item_state = "rig0-mining"
 	color = "mining"
 
 
 /obj/item/clothing/head/helmet/space/rig/elite
-	name = "advanced RIG helmet"
+	name = "advanced hardsuit helmet"
 	icon_state = "rig0-white"
 	item_state = "rig0-white"
 	color = "white"
 
 /obj/item/clothing/suit/space/rig
-	name = "engineer RIG suit"
+	name = "engineer hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
 	icon_state = "rig-engineering"
 	item_state = "rig_suit"
@@ -34,9 +34,9 @@
 
 /obj/item/clothing/suit/space/rig/mining
 	icon_state = "rig-mining"
-	name = "mining RIG suit"
+	name = "mining hardsuit"
 
 /obj/item/clothing/suit/space/rig/elite
 	icon_state = "rig-white"
-	name = "advanced RIG suit"
+	name = "advanced hardsuit"
 	protective_temperature = 10000
