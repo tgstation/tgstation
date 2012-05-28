@@ -424,8 +424,10 @@
 						var/datum/gas_mixture/filtered = new()
 						filtered.toxins = breath.toxins
 						filtered.trace_gases = breath.trace_gases.Copy()
+						filtered.update_values()
 						breath.toxins = 0
 						breath.trace_gases = list()
+						breath.update_values()
 						loc.assume_air(filtered)
 
 				else //Still give containing object the chance to interact

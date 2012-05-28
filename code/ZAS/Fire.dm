@@ -208,10 +208,9 @@ obj/liquid_fuel
 
 			amount *= 0.5
 
-turf/simulated/var/fire_protection = 0 //Protects newly extinguished tiles from being overrun again.
 
-turf/proc/apply_fire_protection()
-turf/simulated/apply_fire_protection()
+turf/simulated/var/fire_protection = 0 //Protects newly extinguished tiles from being overrun again.
+turf/simulated/proc/apply_fire_protection()
 	fire_protection = world.time
 
 datum/gas_mixture/proc
