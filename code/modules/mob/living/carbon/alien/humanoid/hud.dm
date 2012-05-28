@@ -146,7 +146,7 @@
 	using.name = "drop"
 	using.icon = 'screen1_alien.dmi'
 	using.icon_state = "act_drop"
-	using.screen_loc = ui_dropbutton
+	using.screen_loc = ui_dropbutton_old
 	using.layer = 19
 	src.adding += using
 

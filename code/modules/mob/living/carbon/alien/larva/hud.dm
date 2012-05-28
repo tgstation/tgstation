@@ -56,7 +56,7 @@
 	using.dir = SOUTHWEST
 	using.icon = 'screen1_alien.dmi'
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
-	using.screen_loc = ui_movi_old
+	using.screen_loc = ui_acti
 	using.layer = 20
 	src.adding += using
 	move_intent = using
