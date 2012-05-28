@@ -3,10 +3,11 @@
 atom/var/list/suit_fibers
 
 atom/proc/add_fibers(mob/living/carbon/human/M)
-	if(M.gloves)
-		if(M.gloves.transfer_blood) //bloodied gloves transfer blood to touched objects
-			if(add_blood(M.gloves.bloody_hands_mob)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
-				M.gloves.transfer_blood--
+	if(M.gloves && istype(M.gloves,/obj/item/clothing/))
+		var/obj/item/clothing/gloves/G = M.gloves
+		if(G.transfer_blood) //bloodied gloves transfer blood to touched objects
+			if(add_blood(G.bloody_hands_mob)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
+				G.transfer_blood--
 	else if(M.bloody_hands)
 		if(add_blood(M.bloody_hands_mob))
 			M.bloody_hands--
@@ -613,10 +614,11 @@ turf/Exited(mob/living/carbon/human/M)
 						M.track_blood--
 						src.add_bloody_footprints(M.track_blood_mob,1,M.dir,get_tracks(M),M.track_blood_type)
 					else if(istype(M,/mob/living/carbon/human))
-						if(M.shoes)
-							if(M.shoes.track_blood > 0)
-								M.shoes.track_blood--
-								src.add_bloody_footprints(M.shoes.track_blood_mob,1,M.dir,M.shoes.name,M.shoes.track_blood_type) // And bloody tracks end here
+						if(M.shoes && istype(M.shoes,/obj/item/clothing/shoes))
+							var/obj/item/clothing/shoes/S = M.shoes
+							if(S.track_blood > 0)
+								S.track_blood--
+								src.add_bloody_footprints(S.track_blood_mob,1,M.dir,S.name,S.track_blood_type) // And bloody tracks end here
 		. = ..()
 turf/Entered(mob/living/carbon/human/M)
 	if(istype(M,/mob/living) && !istype(M,/mob/living/carbon/metroid))
@@ -631,10 +633,11 @@ turf/Entered(mob/living/carbon/human/M)
 				M.track_blood--
 				src.add_bloody_footprints(M.track_blood_mob,0,M.dir,get_tracks(M),M.track_blood_type)
 			else if(istype(M,/mob/living/carbon/human))
-				if(M.shoes && !istype(src,/turf/space))
-					if(M.shoes.track_blood > 0)
-						M.shoes.track_blood--
-						src.add_bloody_footprints(M.shoes.track_blood_mob,0,M.dir,M.shoes.name,M.shoes.track_blood_type)
+				if(M.shoes && istype(M.shoes,/obj/item/clothing/shoes) && !istype(src,/turf/space))
+					var/obj/item/clothing/shoes/S = M.shoes
+					if(S.track_blood > 0)
+						S.track_blood--
+						src.add_bloody_footprints(S.track_blood_mob,0,M.dir,S.name,S.track_blood_type)
 
 
 			for(var/obj/effect/decal/cleanable/B in src)
@@ -649,11 +652,12 @@ turf/Entered(mob/living/carbon/human/M)
 							track_type = "oil"
 
 						if(istype(M,/mob/living/carbon/human))
-							if(M.shoes)
-								M.shoes.add_blood(B.blood_owner)
-								M.shoes.track_blood_mob = B.blood_owner
-								M.shoes.track_blood = max(M.shoes.track_blood,8)
-								M.shoes.track_blood_type = track_type
+							if(M.shoes && istype(M.shoes,/obj/item/clothing/shoes))
+								var/obj/item/clothing/shoes/S = M.shoes
+								S.add_blood(B.blood_owner)
+								S.track_blood_mob = B.blood_owner
+								S.track_blood = max(S.track_blood,8)
+								S.track_blood_type = track_type
 						else
 							M.add_blood(B.blood_owner)
 							M.track_blood_mob = B.blood_owner

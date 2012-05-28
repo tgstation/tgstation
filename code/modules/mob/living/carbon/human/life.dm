@@ -1334,8 +1334,20 @@
 				else
 					blind.layer = 0
 
-					if ((disabilities & 1 && ((glasses && !glasses.prescription) || !glasses)) || (glasses && glasses.prescription && !(disabilities & 1)))
-						client.screen += hud_used.vimpaired
+					if(disabilities & 1)
+						if(!glasses)
+							client.screen += hud_used.vimpaired
+						else if (glasses && istype(glasses,/obj/item/clothing/glasses))
+							var/obj/item/clothing/glasses/G = glasses
+							if(!G.prescription)
+								client.screen += hud_used.vimpaired
+						else
+							client.screen += hud_used.vimpaired
+					else
+						if(glasses && istype(glasses,/obj/item/clothing/glasses))
+							var/obj/item/clothing/glasses/G = glasses
+							if(G.prescription)
+								client.screen += hud_used.vimpaired
 
 					if (eye_blurry)
 						client.screen += hud_used.blurry

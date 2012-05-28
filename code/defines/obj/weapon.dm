@@ -386,7 +386,7 @@
 	origin_tech = "combat=3"
 
 /obj/item/weapon/melee/energy/sword
-	var/color
+	color
 	name = "energy sword"
 	desc = "It cuts AND cooks at the same time!"
 	icon_state = "sword0"
@@ -476,7 +476,7 @@
 	w_class = 1.0
 	throw_speed = 2
 	throw_range = 10
-	var/color = "white"
+	color = "white"
 
 /obj/item/weapon/bedsheet/blue
 	icon_state = "sheetblue"
@@ -763,7 +763,7 @@
 	icon = 'power.dmi'
 	icon_state = "coil_red"
 	var/amount = MAXCOIL
-	var/color = "red"
+	color = "red"
 	desc = "A coil of power cable."
 	throwforce = 10
 	w_class = 2.0
@@ -1026,12 +1026,12 @@
 	throw_range = 15
 	layer = 4
 	var/list/stamped
-	var/see_face = 1
-	var/body_parts_covered = HEAD
-	var/heat_transfer_coefficient = 0.99
-	var/gas_transfer_coefficient = 1
-	var/permeability_coefficient = 0.99
-	var/siemens_coefficient = 0.80
+	see_face = 1
+	body_parts_covered = HEAD
+	heat_transfer_coefficient = 0.99
+	gas_transfer_coefficient = 1
+	permeability_coefficient = 0.99
+	siemens_coefficient = 0.80
 	var/iteration
 
 /obj/item/weapon/directions
@@ -1701,7 +1701,7 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60
-	var/color = "cargo"
+	color = "cargo"
 
 /obj/item/weapon/stamp/captain
 	name = "captain's rubber stamp"
