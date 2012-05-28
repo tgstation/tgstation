@@ -46,6 +46,37 @@
 
 		if(isrobot(user) && !istype(I, /obj/item/weapon/trashbag))
 			return
+		if(mode<=0) // It's off
+			if(istype(I, /obj/item/weapon/screwdriver))
+				if(mode==0) // It's off but still not unscrewed
+					mode=-1 // Set it to doubleoff l0l
+					playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+					user << "You remove the screws around the power connection."
+					return
+				else if(mode==-1)
+					mode=0
+					playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+					user << "You attach the screws around the power connection."
+					return
+			else if(istype(I,/obj/item/weapon/weldingtool) && mode==-1)
+				var/obj/item/weapon/weldingtool/W = I
+				if(W.remove_fuel(0,user))
+					playsound(src.loc, 'Welder2.ogg', 100, 1)
+					user << "You start slicing the floorweld off the disposal unit."
+					W:welding = 2
+					if(do_after(user,20))
+						user << "You sliced the floorweld off the disposal unit."
+						var/obj/structure/disposalconstruct/C = new (src.loc)
+						C.ptype = 6 // 6 = disposal unit
+						C.anchored = 1
+						C.density = 1
+						C.update()
+						del(src)
+					W:welding = 1
+					return
+				else
+					user << "You need more welding fuel to complete this task."
+					return
 
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
 			user << "You can't place that item inside the disposal unit."
@@ -167,6 +198,11 @@
 		if(user && user.loc == src)
 			usr << "\red You cannot reach the controls from inside."
 			return
+		/*
+		if(mode==-1)
+			usr << "\red The disposal units power is disabled."
+			return
+		*/
 		interact(user, 0)
 
 	// user interaction
@@ -187,7 +223,7 @@
 
 			dat += "<BR><HR><A href='?src=\ref[src];eject=1'>Eject contents</A><HR>"
 
-		if(mode == 0)
+		if(mode <= 0)
 			dat += "Pump: <B>Off</B> <A href='?src=\ref[src];pump=1'>On</A><BR>"
 		else if(mode == 1)
 			dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (pressurizing)<BR>"
@@ -208,6 +244,10 @@
 	Topic(href, href_list)
 		if(usr.loc == src)
 			usr << "\red You cannot reach the controls from inside."
+			return
+
+		if(mode==-1 && !href_list["eject"]) // only allow ejecting if mode is -1
+			usr << "\red The disposal units power is disabled."
 			return
 		..()
 		src.add_fingerprint(usr)
@@ -264,7 +304,7 @@
 			overlays += image('disposal.dmi', "dispover-handle")
 
 		// only handle is shown if no power
-		if(stat & NOPOWER)
+		if(stat & NOPOWER || mode == -1)
 			return
 
 		// 	check for items in disposal - occupied light
@@ -281,6 +321,9 @@
 	// charge the gas reservoir and perform flush if ready
 	process()
 		if(stat & BROKEN)			// nothing can happen if broken
+			return
+
+		if(!air_contents) // Potentially causes a runtime otherwise (if this is really shitty, blame pete //Donkie)
 			return
 
 		flush_count++
@@ -803,6 +846,8 @@
 				C.ptype = 5
 
 		C.dir = dir
+		C.density = 0
+		C.anchored = 1
 		C.update()
 
 		del(src)
@@ -1030,6 +1075,37 @@
 		update()
 		return
 
+	// Override attackby so we disallow trunkremoval when somethings ontop
+	attackby(var/obj/item/I, var/mob/user)
+
+		if(linked != null)
+			return
+
+		var/turf/T = src.loc
+		if(T.intact)
+			return		// prevent interaction with T-scanner revealed pipes
+
+		if(istype(I, /obj/item/weapon/weldingtool))
+			var/obj/item/weapon/weldingtool/W = I
+
+			if(W.welding)
+				if(W.remove_fuel(0,user))
+					W:welding = 2
+					playsound(src.loc, 'Welder2.ogg', 100, 1)
+					// check if anything changed over 2 seconds
+					var/turf/uloc = user.loc
+					var/atom/wloc = W.loc
+					user << "Slicing the disposal pipe."
+					sleep(30)
+					if(user.loc == uloc && wloc == W.loc)
+						welded()
+					else
+						user << "You must stay still while welding the pipe."
+					W:welding = 1
+				else
+					user << "You need more welding fuel to cut the pipe."
+					return
+
 	// would transfer to next pipe segment, but we are in a trunk
 	// if not entering from disposal bin,
 	// transfer to linked object (outlet or bin)
@@ -1091,6 +1167,7 @@
 	anchored = 1
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
+	var/mode = 0
 
 	New()
 		..()
@@ -1111,13 +1188,47 @@
 			for(var/atom/movable/AM in H)
 				AM.loc = src.loc
 				AM.pipe_eject(dir)
-				spawn(1)
+				spawn(5)
 					AM.throw_at(target, 3, 1)
 			H.vent_gas(src.loc)
 			del(H)
 
 		return
 
+	attackby(var/obj/item/I, var/mob/user)
+		if(!I || !user)
+			return
+
+		if(istype(I, /obj/item/weapon/screwdriver))
+			if(mode==0)
+				mode=1
+				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+				user << "You remove the screws around the power connection."
+				return
+			else if(mode==1)
+				mode=0
+				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+				user << "You attach the screws around the power connection."
+				return
+		else if(istype(I,/obj/item/weapon/weldingtool) && mode==1)
+			var/obj/item/weapon/weldingtool/W = I
+			if(W.remove_fuel(0,user))
+				playsound(src.loc, 'Welder2.ogg', 100, 1)
+				user << "You start slicing the floorweld off the disposal outlet."
+				W:welding = 2
+				if(do_after(user,20))
+					user << "You sliced the floorweld off the disposal outlet."
+					var/obj/structure/disposalconstruct/C = new (src.loc)
+					C.ptype = 7 // 7 =  outlet
+					C.update()
+					C.anchored = 1
+					C.density = 1
+					del(src)
+				W:welding = 1
+				return
+			else
+				user << "You need more welding fuel to complete this task."
+				return
 
 
 
