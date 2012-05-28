@@ -208,77 +208,75 @@ obj/liquid_fuel
 
 			amount *= 0.5
 
-turf/simulated/var/fire_protection = 0 //Protects newly extinguished tiles from being overrun again.
 
-turf/proc/apply_fire_protection()
-turf/simulated/apply_fire_protection()
+turf/simulated/var/fire_protection = 0 //Protects newly extinguished tiles from being overrun again.
+turf/simulated/proc/apply_fire_protection()
 	fire_protection = world.time
 
-datum/gas_mixture/proc
-	zburn(obj/liquid_fuel/liquid)
-		//This proc is similar to fire(), but uses a simple logarithm to calculate temp, and is thus more stable with ZAS.
-		if(temperature > PLASMA_MINIMUM_BURN_TEMPERATURE)
-			var
-				total_fuel = toxins
-				fuel_sources = 0 //We'll divide by this later so that fuel is consumed evenly.
-				datum/gas/volatile_fuel/fuel = locate() in trace_gases
+datum/gas_mixture/proc/zburn(obj/liquid_fuel/liquid)
+	//This proc is similar to fire(), but uses a simple logarithm to calculate temp, and is thus more stable with ZAS.
+	if(temperature > PLASMA_MINIMUM_BURN_TEMPERATURE)
+		var
+			total_fuel = toxins
+			fuel_sources = 0 //We'll divide by this later so that fuel is consumed evenly.
+			datum/gas/volatile_fuel/fuel = locate() in trace_gases
 
-			if(fuel)
-			//Volatile Fuel
-				total_fuel += fuel.moles
+		if(fuel)
+		//Volatile Fuel
+			total_fuel += fuel.moles
+			fuel_sources++
+
+		if(liquid)
+		//Liquid Fuel
+			if(liquid.amount <= 0)
+				del liquid
+			else
+				total_fuel += liquid.amount
 				fuel_sources++
 
-			if(liquid)
-			//Liquid Fuel
-				if(liquid.amount <= 0)
-					del liquid
-				else
-					total_fuel += liquid.amount
-					fuel_sources++
-
 			//Toxins
-			if(toxins > 0.3) fuel_sources++
+		if(toxins > 0.3) fuel_sources++
 
-			if(!fuel_sources) return 0 //If there's no fuel, there's no burn. Can't divide by zero anyway.
+		if(!fuel_sources) return 0 //If there's no fuel, there's no burn. Can't divide by zero anyway.
 
-			if(oxygen > 0.3)
+		if(oxygen > 0.3)
 
 				//Calculate the firelevel.
-				var/firelevel = calculate_firelevel(liquid)
+			var/firelevel = calculate_firelevel(liquid)
 
 				//Reaches a maximum practical temperature of around 2750.
 
-				temperature = 1000*log(0.016*firelevel + 1.45)
+			temperature = 1000*log(0.016*firelevel + 1.45)
 
-				//Consume some gas.
-				var/consumed_gas = min(oxygen,0.002*firelevel,total_fuel) / fuel_sources
+			//Consume some gas.
+			var/consumed_gas = min(oxygen,0.002*firelevel,total_fuel) / fuel_sources
 
-				oxygen -= consumed_gas
+			oxygen -= consumed_gas
 
-				toxins = max(0,toxins-consumed_gas)
+			toxins = max(0,toxins-consumed_gas)
 
-				if(fuel)
-					fuel.moles -= consumed_gas
-					if(fuel.moles <= 0) del fuel
+			if(fuel)
+				fuel.moles -= consumed_gas
+				if(fuel.moles <= 0) del fuel
 
-				if(liquid)
-					liquid.amount -= consumed_gas
-					if(liquid.amount <= 0) del liquid
+			if(liquid)
+				liquid.amount -= consumed_gas
+				if(liquid.amount <= 0) del liquid
 
-				update_values()
-				return consumed_gas*fuel_sources
-		return 0
+			update_values()
+			return consumed_gas*fuel_sources
+	return 0
 
-	calculate_firelevel(obj/liquid_fuel/liquid)
+datum/gas_mixture/proc/calculate_firelevel(obj/liquid_fuel/liquid)
 		//Calculates the firelevel based on one equation instead of having to do this multiple times in different areas.
-		var
-			datum/gas/volatile_fuel/fuel = locate() in trace_gases
-			fuel_level = 0
-			liquid_level = 0
+	var
+		datum/gas/volatile_fuel/fuel = locate() in trace_gases
+		fuel_level = 0
+		liquid_level = 0
 
-		if(fuel) fuel_level = fuel.moles
-		if(liquid) liquid_level = liquid.amount
-		return oxygen + toxins + liquid_level*15 + fuel_level*5
+	if(fuel) fuel_level = fuel.moles
+	if(liquid) liquid_level = liquid.amount
+	return oxygen + toxins + liquid_level*15 + fuel_level*5
 
 /mob/living/carbon/human/proc/FireBurn(mx as num)
 	//Burns mobs due to fire. Respects heat transfer coefficients on various body parts.
