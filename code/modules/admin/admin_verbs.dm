@@ -260,6 +260,7 @@
 			verbs += /client/proc/toggle_gravity_off
 			verbs += /client/proc/toggle_random_events
 			verbs += /client/proc/deadmin_self
+			if(ENABLE_MEMOS)	verbs += /client/proc/admin_memo
 			//verbs += /client/proc/cmd_mass_modify_object_variables 	--Merged with view variables
 			//verbs += /client/proc/cmd_admin_explosion					--Merged with view variables
 			//verbs += /client/proc/cmd_admin_emp						--Merged with view variables
@@ -425,6 +426,7 @@
 	verbs -= /client/proc/giveruntimelog									//used by coders to retrieve runtime logs
 	verbs -= /client/proc/getserverlog
 	verbs -= /client/proc/cinematic										//show a cinematic sequence
+	verbs -= /client/proc/admin_memo
 	verbs -= /client/proc/cmd_admin_change_custom_event
 	verbs -= /client/proc/admin_invis
 	verbs -= /client/proc/callprocgen

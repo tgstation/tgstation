@@ -76,7 +76,7 @@
 				param = trim(param)
 			var/input
 			if(!param)
-				input = input("Choose an emote to display.") as text|null
+				input = copytext(sanitize(input("Choose an emote to display.") as text|null),1,MAX_MESSAGE_LEN)
 			else
 				input = param
 			if(input)
