@@ -77,7 +77,7 @@
 /atom/proc/add_hiddenprint(mob/living/M as mob)
 	if(isnull(M)) return
 	if(isnull(M.key)) return
-	if (!( src.flags ) & 256)
+	if (!( src.flags ) & FPRINT)
 		return
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -102,7 +102,7 @@
 /atom/proc/add_fingerprint(mob/living/M as mob)
 	if(isnull(M)) return
 	if(isnull(M.key)) return
-	if (!( flags ) & 256)
+	if (!( src.flags ) & FPRINT)
 		return
 	//Smudge up dem prints some
 	for(var/P in fingerprints)
@@ -175,7 +175,7 @@
 	if (!istype(M.dna, /datum/dna))
 		M.dna = new /datum/dna(null)
 	M.check_dna()
-	if (!( src.flags ) & 256)
+	if (!( src.flags ) & FPRINT)
 		return 0
 	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
@@ -291,7 +291,7 @@
 
 /atom/proc/clean_blood()
 
-	if (!flags & 256)
+	if (!( src.flags ) & FPRINT)
 		return
 	if (blood_DNA )
 
