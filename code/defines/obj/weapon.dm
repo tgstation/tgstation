@@ -56,7 +56,7 @@
 	desc = "What are you standing around staring at this for? Get to killing!"
 	icon_state = "claymore"
 	item_state = "claymore"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 	force = 40
 	throwforce = 10
@@ -70,7 +70,6 @@
 	desc = "Bag mixed with a bit of body."
 	icon = 'closet.dmi'
 	icon_state = "bodybag"
-	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 5.0
 	throwforce = 5.0
 	throw_speed = 1
@@ -208,7 +207,7 @@
 	desc = "The Captain is first and all other heads are last."
 	icon_state = "chainofcommand"
 	item_state = "chainofcommand"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 	force = 10
 	throwforce = 7

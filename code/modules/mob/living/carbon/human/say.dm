@@ -26,6 +26,28 @@
 				pick_list -= H
 			message = dd_list2text(temp_message, " ")
 
+	if(istype(src.wear_mask, /obj/item/clothing/mask/luchador))
+		if(copytext(message, 1, 2) != "*")
+			message = dd_replacetext(message, "captain", "CAPITÁN")
+			message = dd_replacetext(message, "station", "ESTACIÓN")
+			message = dd_replacetext(message, "sir", "SEÑOR")
+			message = dd_replacetext(message, "the ", "el ")
+			message = dd_replacetext(message, "my ", "mi ")
+			message = dd_replacetext(message, "is ", "es ")
+			message = dd_replacetext(message, "it's", "es")
+			message = dd_replacetext(message, "friend", "amigo")
+			message = dd_replacetext(message, "buddy", "amigo")
+			message = dd_replacetext(message, "hello", "hola")
+			message = dd_replacetext(message, " hot", " caliente")
+			message = dd_replacetext(message, " very ", " muy ")
+			message = dd_replacetext(message, "sword", "espada")
+			message = dd_replacetext(message, "library", "biblioteca")
+			message = dd_replacetext(message, "traitor", "traidor")
+			message = dd_replacetext(message, "wizard", "mago")
+			message = uppertext(message) //Things end up looking better this way (no mixed cases), and it fits the macho wrestler image.
+			if(prob(25))
+				message += " OLE!"
+
 	//Ninja mask obscures text and voice if set to do so.
 	//Would make it more global but it's sort of ninja specific.
 	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja)&&src.wear_mask:voice=="Unknown")
