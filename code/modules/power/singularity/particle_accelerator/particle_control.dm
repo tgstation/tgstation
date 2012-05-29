@@ -11,10 +11,9 @@
 	active_power_usage = 10000
 	construction_state = 0
 	active = 0
-	var
-		list/obj/structure/particle_accelerator/connected_parts
-		assembled = 0
-		parts = null
+	var/list/obj/structure/particle_accelerator/connected_parts
+	var/assembled = 0
+	var/parts = null
 
 
 	New()
@@ -48,7 +47,6 @@
 			if(use_power)
 				icon_state = "[reference]p"
 			else
-				icon_state = "[reference]c"
 				switch(construction_state)
 					if(0)
 						icon_state = "[reference]"
@@ -56,7 +54,7 @@
 						icon_state = "[reference]"
 					if(2)
 						icon_state = "[reference]w"
-					if(3)
+					else
 						icon_state = "[reference]c"
 		return
 
@@ -78,34 +76,34 @@
 			return
 		if(href_list["togglep"])
 			src.toggle_power()
+			investigate_log("turned [active?"<font color='red'>ON</font>":"<font color='green'>OFF</font>"] by [usr.key]","singulo")
 			message_admins("[usr] toggled particle accelerator power to [active ? "on" : "off"].")
 			log_admin("[usr] toggled particle accelerator power to [active ? "on" : "off"].")
-		if(href_list["scan"])
+		else if(href_list["scan"])
 			src.part_scan()
-		if(href_list["strengthup"])
-			src.strength++
+		else if(href_list["strengthup"])
+			strength++
+			if(strength > 2)
+				strength = 2
+			else
+				investigate_log("increased to <font color='red'>[strength]</font> by [usr.key]","singulo")
+				message_admins("[usr] increased particle accelerator power to [strength].")
+				log_admin("[usr] increased particle accelerator power to [strength].")
 			for(var/obj/structure/particle_accelerator/part in connected_parts)
-				part.strength++
+				part.strength = strength
 				part.update_icon()
-			if(src.strength > 2)
-				src.strength = 2
-				for(var/obj/structure/particle_accelerator/part in connected_parts)
-					part.strength = 2
-					part.update_icon()
-			message_admins("[usr] increased particle accelerator power to [strength].")
-			log_admin("[usr] increased particle accelerator power to [strength].")
-		if(href_list["strengthdown"])
-			src.strength--
+
+		else if(href_list["strengthdown"])
+			strength--
+			if(strength < 0)
+				strength = 0
+			else
+				message_admins("[usr] decreased particle accelerator power to [strength].")
+				log_admin("[usr] decreased particle accelerator power to [strength].")
+				investigate_log("decreased to <font color='green'>[strength]</font> by [usr.key]","singulo")
 			for(var/obj/structure/particle_accelerator/part in connected_parts)
-				part.strength--
+				part.strength = strength
 				part.update_icon()
-			if(src.strength < 0)
-				src.strength = 0
-				for(var/obj/structure/particle_accelerator/part in connected_parts)
-					part.strength = 0
-					part.update_icon()
-			message_admins("[usr] decreased particle accelerator power to [strength].")
-			log_admin("[usr] decreased particle accelerator power to [strength].")
 		src.updateDialog()
 		src.update_icon()
 		return
@@ -123,14 +121,15 @@
 
 	process()
 		if(src.active)
+			//a part is missing!
+			if( length(connected_parts) < 6 )
+				investigate_log("lost a connected part; It <font color='red'>powered down</font>.","singulo")
+				src.toggle_power()
+				return
+			//emit some particles
 			for(var/obj/structure/particle_accelerator/particle_emitter/PE in connected_parts)
 				if(PE)
 					PE.emit_particle(src.strength)
-//			for(var/obj/structure/particle_accelerator/fuel_chamber/PF in connected_parts)
-//				PF.doshit()
-//			for(var/obj/structure/particle_accelerator/power_box/PB in connected_parts)
-//				PB.doshit()
-			//finish up putting the fuel run and power use things in here
 		return
 
 

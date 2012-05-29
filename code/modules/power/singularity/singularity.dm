@@ -15,23 +15,22 @@ var/global/list/uneatable = list(
 	layer = 6
 	unacidable = 1 //Don't comment this out.
 	use_power = 0
-	var
-		current_size = 1
-		allowed_size = 1
-		contained = 1 //Are we going to move around?
-		energy = 100 //How strong are we?
-		dissipate = 1 //Do we lose energy over time?
-		dissipate_delay = 10
-		dissipate_track = 0
-		dissipate_strength = 1 //How much energy do we lose?
-		move_self = 1 //Do we move on our own?
-		grav_pull = 4 //How many tiles out do we pull?
-		consume_range = 0 //How many tiles out do we eat
-		event_chance = 15 //Prob for event each tick
-		target = null //its target. moves towards the target if it has one
-		last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
-		teleport_del = 0
-		last_warning
+	var/current_size = 1
+	var/allowed_size = 1
+	var/contained = 1 //Are we going to move around?
+	var/energy = 100 //How strong are we?
+	var/dissipate = 1 //Do we lose energy over time?
+	var/dissipate_delay = 10
+	var/dissipate_track = 0
+	var/dissipate_strength = 1 //How much energy do we lose?
+	var/move_self = 1 //Do we move on our own?
+	var/grav_pull = 4 //How many tiles out do we pull?
+	var/consume_range = 0 //How many tiles out do we eat
+	var/event_chance = 15 //Prob for event each tick
+	var/target = null //its target. moves towards the target if it has one
+	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
+	var/teleport_del = 0
+	var/last_warning
 
 	New(loc, var/starting_energy = 50, var/temp = 0)
 		//CARN: admin-alert for chuckle-fuckery.
@@ -41,6 +40,7 @@ var/global/list/uneatable = list(
 			count = 1
 			break
 		if(!count)	message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
+		investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]","singulo")
 
 		src.energy = starting_energy
 		if(temp)
@@ -93,17 +93,16 @@ var/global/list/uneatable = list(
 
 
 	process()
-		spawn(0)
-			eat()
-			dissipate()
-			check_energy()
-			if(current_size >= 3)
-				move()
-				if(current_size <= 7)
-					pulse()
-					if(current_size >= 5)
-						if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
-							event()
+		eat()
+		dissipate()
+		check_energy()
+		if(current_size >= 3)
+			move()
+			if(current_size <= 7)
+				pulse()
+				if(current_size >= 5)
+					if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
+						event()
 		return
 
 
@@ -183,6 +182,7 @@ var/global/list/uneatable = list(
 					consume_range = 4
 					dissipate = 0 //It cant go smaller due to e loss
 			if(current_size == allowed_size)
+				investigate_log("<font color='red'>grew to size [current_size]</font>","singulo")
 				return 1
 			else if(current_size < (--temp_allowed_size))
 				expand(temp_allowed_size)

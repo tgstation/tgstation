@@ -32,18 +32,17 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole
 	name = "R&D Console"
 	icon_state = "rdcomp"
-	var
-		datum/research/files							//Stores all the collected research data.
-		obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
-		obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
+	var/datum/research/files							//Stores all the collected research data.
+	var/obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
+	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
 
-		obj/machinery/r_n_d/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
-		obj/machinery/r_n_d/protolathe/linked_lathe = null				//Linked Protolathe
-		obj/machinery/r_n_d/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
+	var/obj/machinery/r_n_d/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
+	var/obj/machinery/r_n_d/protolathe/linked_lathe = null				//Linked Protolathe
+	var/obj/machinery/r_n_d/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
 
-		screen = 1.0	//Which screen is currently showing.
-		id = 0			//ID of the computer (for server restrictions).
-		sync = 1		//If sync = 0, it doesn't show up on Server Control Console
+	var/screen = 1.0	//Which screen is currently showing.
+	var/id = 0			//ID of the computer (for server restrictions).
+	var/sync = 1		//If sync = 0, it doesn't show up on Server Control Console
 
 	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 
@@ -351,6 +350,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				screen = 0.3
 				linked_lathe.busy = 1
 				flick("protolathe_n",linked_lathe)
+				var/key = usr.key	//so we don't lose the info during the spawn delay
 				spawn(16)
 					use_power(power)
 					spawn(16)
@@ -379,6 +379,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 						if(being_built.build_path)
 							var/obj/new_item = new being_built.build_path(src)
+							if( new_item.type == /obj/item/weapon/storage/backpack/holding )
+								new_item.investigate_log("built by [key]","singulo")
 							new_item.reliability = being_built.reliability
 							if(linked_lathe.hacked) being_built.reliability = max((reliability / 2), 0)
 							if(being_built.locked)

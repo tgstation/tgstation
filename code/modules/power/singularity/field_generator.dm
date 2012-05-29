@@ -20,17 +20,16 @@ field_generator power level display
 	anchored = 0
 	density = 1
 	use_power = 0
-	var
-		const/num_power_levels = 6	// Total number of power level icon has
-		Varedit_start = 0
-		Varpower = 0
-		active = 0
-		power = 20  // Current amount of power
-		state = 0
-		warming_up = 0
-		list/obj/machinery/containment_field/fields
-		list/obj/machinery/field_generator/connected_gens
-		clean_up = 0
+	var/const/num_power_levels = 6	// Total number of power level icon has
+	var/Varedit_start = 0
+	var/Varpower = 0
+	var/active = 0
+	var/power = 20  // Current amount of power
+	var/state = 0
+	var/warming_up = 0
+	var/list/obj/machinery/containment_field/fields
+	var/list/obj/machinery/field_generator/connected_gens
+	var/clean_up = 0
 
 
 	update_icon()
@@ -87,6 +86,8 @@ field_generator power level display
 						"You turn on the [src.name].", \
 						"You hear heavy droning")
 					turn_on()
+					investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
+
 					src.add_fingerprint(user)
 		else
 			user << "The [src] needs to be firmly secured to the floor first."
@@ -214,6 +215,7 @@ field_generator power level display
 				for(var/mob/M in viewers(src))
 					M.show_message("\red The [src.name] shuts down!")
 				turn_off()
+				investigate_log("ran out of power and <font color='red'>deactivated</font>","singulo")
 				src.power = 0
 				return 0
 
