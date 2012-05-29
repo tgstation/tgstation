@@ -22,7 +22,7 @@
 		usr << browse(output,"window=generalreport")
 		//feedback_add_details("admin_verb","SGR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-	air_report()
+/*	air_report()
 		set category = "Debug"
 		set name = "Show Air Report"
 
@@ -83,7 +83,7 @@
 		for(var/datum/gas/trace_gas in GM.trace_gases)
 			usr << "[trace_gas.type]: [trace_gas.moles]"
 		//feedback_add_details("admin_verb","DAST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
+*/
 	fix_next_move()
 		set category = "Debug"
 		set name = "Unfreeze Everyone"
@@ -183,7 +183,7 @@
 		//feedback_add_details("admin_verb","RLDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-	jump_to_dead_group()
+	/*jump_to_dead_group()
 		set name = "Jump to dead group"
 		set category = "Debug"
 		if(!holder)
@@ -221,7 +221,7 @@
 		else
 			usr << "Local airgroup is unsimulated!"
 		//feedback_add_details("admin_verb","KLAG") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
+*/
 
 	tension_report()
 		set category = "Debug"

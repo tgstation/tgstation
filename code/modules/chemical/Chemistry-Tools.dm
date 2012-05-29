@@ -2912,6 +2912,15 @@
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
 
+/obj/item/weapon/reagent_containers/food/drinks/waterbottle
+	name = "water bottle"
+	desc = "Straight from the ice lakes of Mars!"
+	icon_state = "waterbottle"
+	New()
+		..()
+		reagents.add_reagent("water", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/sillycup
 	name = "Paper Cup"

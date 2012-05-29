@@ -27,7 +27,7 @@ client/verb/JoinResponseTeam()
 			new_commando.mind.key = usr.key
 			new_commando.key = usr.key
 
-			new_commando << "\blue You are [!leader_selected?"a member":"the <B>LEADER</B>"] of an armed response team in CentComm's service. Something went down on [station_name()] and they're now on code red. Go in there and fix the problem."
+			new_commando << "\blue You are [!leader_selected?"a member":"the <B>LEADER</B>"] of an Emergency Response Team under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem."
 			new_commando << "<b>You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready."
 			del(L)
 
@@ -81,7 +81,7 @@ proc/trigger_armed_response_team(var/force = 0)
 	if(!nuke)
 		nuke = locate() in world
 	var/obj/item/weapon/paper/P = new
-	P.info = "Your orders, Commander, are to use all necessary tools given to return the station to a survivable condition. <br> To this end, you have been provided with the best tools we can give in the three areas of Medical Engineering and Security. The nuclear authorization code is: <b>[ nuke ? nuke.r_code : "AHH, THE NUKE IS GONE!"]</b>. Be warned, if you detonate this without good reason, we will hold you to account for damages. Memorise this code, and then burn this message."
+	P.info = "Your orders, Commander, are to use all means necessary to return the station to a survivable condition.<br>To this end, you have been provided with the best tools we can give in the three areas of Medicine, Engineering, and Security. The nuclear authorization code is: <b>[ nuke ? nuke.r_code : "AHH, THE NUKE IS GONE!"]</b>. Be warned, if you detonate this without good reason, we will hold you to account for damages. Memorise this code, and then burn this message."
 	P.name = "Emergency Nuclear Code, and ERT Orders"
 	for (var/obj/effect/landmark/A in world)
 		if (A.name == "nukecode")

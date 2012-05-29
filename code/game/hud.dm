@@ -35,19 +35,19 @@
 #define ui_monkey_back "6:14,1:5"	//monkey
 
 //Lower right, persistant menu
-#define ui_dropbutton "13:26,1:5"
-#define ui_throw "13:26,1:5"
-#define ui_pull "13:26,2:7"
-#define ui_acti "12:24,1:5"
+#define ui_dropbutton "11:22,1:5"
+#define ui_throw "11:22,1:5"
+#define ui_pull "12:24,1:5"
+#define ui_movi "12:24,1:5"
 
-#define ui_movi "13:26,2:7"
+#define ui_acti "13:26,1:5"
 #define ui_zonesel "14:28,1:5"
 
 //Gun buttons
-#define ui_gun1 "11:22,2:7"
-#define ui_gun2 "10:20,2:7"
-#define ui_gun3 "9:18,2:7"
-#define ui_gun_select "11:22,1:5"
+#define ui_gun1 "13:26,2:5"
+#define ui_gun2 "12:24,2:5"
+#define ui_gun3 "11:22,2:5"
+#define ui_gun_select "14:28,2:5"
 
 //Middle right (damage indicators)
 #define ui_pressure "14:28,6:13"
@@ -67,12 +67,15 @@
 #define ui_health "14:28,7:15"
 #define ui_internal "14:28,8:17"
 
+//For non-human compatibility
 									//borgs
 #define ui_borg_health "14:28,6:13" //borgs have the health display where humans have the pressure damage indicator.
 #define ui_alien_health "14:28,6:13" //aliens have the health display where humans have the pressure damage indicator.
 #define ui_throw_old "13:26,2:7"
 #define ui_movi_old "12:24,2:7"
 #define ui_pull_old "14:28,2:7"
+#define ui_dropbutton_old "12:24,1:5"
+#define ui_pull_borg "12:24,1:5"
 
 //Pop-up inventory
 #define ui_shoes "2:8,1:5"
@@ -92,10 +95,10 @@
 
 
 //Intent small buttons
-#define ui_help_small "12:16,1:-3"
-#define ui_disarm_small "12:16,1:12"
-#define ui_grab_small "12:32,1:12"
-#define ui_harm_small "12:32,1:-3"
+#define ui_help_small "13:18,1:-3"
+#define ui_disarm_small "13:18,1:12"
+#define ui_grab_small "13:34,1:12"
+#define ui_harm_small "13:34,1:-3"
 
 
 

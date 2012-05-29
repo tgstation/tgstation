@@ -238,7 +238,19 @@
 
 /mob/proc/show_inv(mob/user as mob)
 	user.machine = src
-	var/dat = text("<TT>\n<B><FONT size=3>[]</FONT></B><BR>\n\t<B>Head(Mask):</B> <A href='?src=\ref[];item=mask'>[]</A><BR>\n\t<B>Left Hand:</B> <A href='?src=\ref[];item=l_hand'>[]</A><BR>\n\t<B>Right Hand:</B> <A href='?src=\ref[];item=r_hand'>[]</A><BR>\n\t<B>Back:</B> <A href='?src=\ref[];item=back'>[]</A><BR>\n\t[]<BR>\n\t[]<BR>\n\t[]<BR>\n\t<A href='?src=\ref[];item=pockets'>Empty Pockets</A><BR>\n<A href='?src=\ref[];mach_close=mob[]'>Close</A><BR>\n</TT>", name, src, (wear_mask ? text("[]", wear_mask) : "Nothing"), src, (l_hand ? text("[]", l_hand) : "Nothing"), src, (r_hand ? text("[]", r_hand) : "Nothing"), src, (back ? text("[]", back) : "Nothing"), ((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : ""), (internal ? text("<A href='?src=\ref[];item=internal'>Remove Internal</A>", src) : ""), (handcuffed ? text("<A href='?src=\ref[];item=handcuff'>Handcuffed</A>", src) : text("<A href='?src=\ref[];item=handcuff'>Not Handcuffed</A>", src)), src, user, name)
+	var/dat = {"
+	<B><HR><FONT size=3>[name]</FONT></B>
+	<BR><HR>
+	<BR><B>Head(Mask):</B> <A href='?src=\ref[src];item=mask'>[(wear_mask ? wear_mask : "Nothing")]</A>
+	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[(l_hand ? l_hand  : "Nothing")]</A>
+	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? r_hand : "Nothing")]</A>
+	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
+	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
+	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
+	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
+	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
+	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
+	<BR>"}
 	user << browse(dat, text("window=mob[];size=325x500", name))
 	onclose(user, "mob[name]")
 	return
@@ -746,8 +758,8 @@
 	return
 
 /client/New()
-	if(findtextEx(key, "Telnet @"))
-		src << "Sorry, this game does not support Telnet."
+	if( connection != "seeker" )
+		src << "Sorry, this game does not support [connection] connections."	//doesn't work
 		del(src)
 	if (CheckBan(src))
 		del(src)
@@ -770,8 +782,6 @@
 
 	..()
 	makejson()
-	if (join_motd)
-		src << "<div class=\"motd\">[join_motd]</div>"
 
 	if(custom_event_msg && custom_event_msg != "")
 		src << "<h1 class='alert'>Custom Event</h1>"
@@ -779,10 +789,11 @@
 		src << "<span class='alert'>[html_encode(custom_event_msg)]</span>"
 		src << "<br>"
 
-	if(admins.Find(ckey))
+	if( ckey in admins )
 		holder = new /obj/admins(src)
 		holder.rank = admins[ckey]
 		update_admins(admins[ckey])
+		admin_memo_show()
 
 	if(ticker && ticker.mode && ticker.mode.name =="sandbox")
 		mob.CanBuild()

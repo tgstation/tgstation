@@ -267,12 +267,12 @@
 		if (src.operating)
 			return
 		src.operating = 1
-	
+
 		var/X = src:x
 		var/Y = src:y
 		var/Z = src:z
 		var/held = 1
-	
+
 		if(src.holdopen && !forcecrush)
 			while(held == 1 && holdopen && !forcecrush) //If it is no longer hold open, it should close.
 				sleep(held? 10:40)
@@ -288,25 +288,25 @@
 		spawn(4)
 			if(!istype(src, /obj/machinery/door/window))
 				for(var/mob/living/L in src.loc) // Crush mobs and move them out of the way
-	
+
 					if(src.forcecrush) // Save an AI, crush a limb
 						var/limbname = pick("l_arm", "r_arm", "l_hand","r_hand", "l_foot", "r_foot")
 						var/limbdisplay
-	
+
 						for(var/organ in L:organs)
 							var/datum/organ/external/temp = L:organs["[organ]"]
 							if (istype(temp, /datum/organ/external) && temp.name == limbname)
 								limbdisplay = temp.display_name // Take the name for down below
 								temp.take_damage(rand(50,80), 0) //OH GOD IT HURTS
 								break
-	
+
 						L << "\red The airlock crushes your [limbdisplay]!"
 						for(var/mob/O in viewers(L, null))
 							if(O == L)
 								continue
 							O.show_message("\red The airlock crushes [L.name]'s [limbdisplay]!", 1)
 						sleep(rand(2,8))
-	
+
 					L << "\red The airlock forces you out of the way!" //Lucky you
 					for(var/mob/O in viewers(L, null))
 						O.show_message("\red The airlock pushes [L.name] out of the way!", 1)
@@ -314,7 +314,7 @@
 					var/turf/T = get_random_turf(L, lst)
 					if(T)
 						L.loc = T
-	
+
 				if(!src.forcecrush)
 					for(var/obj/item/I in src.loc) // Move items out of the way
 						if(!I.anchored)
@@ -322,10 +322,10 @@
 							var/turf/T = get_random_turf(I, lst)
 							if(T)
 								I.loc = T
-	
+
 		sleep(6)
 		update_icon()
-	
+
 		if(src.visible && (!src.glass))
 			src.sd_SetOpacity(1)
 		if(operating == 1)
@@ -343,38 +343,11 @@
 		var/turf/simulated/east = get_step(source,EAST)
 		var/turf/simulated/west = get_step(source,WEST)
 
-		if(need_rebuild)
-			if(istype(source)) //Rebuild/update nearby group geometry
-				if(source.parent)
-					air_master.groups_to_rebuild += source.parent
-				else
-					air_master.tiles_to_update += source
-			if(istype(north))
-				if(north.parent)
-					air_master.groups_to_rebuild += north.parent
-				else
-					air_master.tiles_to_update += north
-			if(istype(south))
-				if(south.parent)
-					air_master.groups_to_rebuild += south.parent
-				else
-					air_master.tiles_to_update += south
-			if(istype(east))
-				if(east.parent)
-					air_master.groups_to_rebuild += east.parent
-				else
-					air_master.tiles_to_update += east
-			if(istype(west))
-				if(west.parent)
-					air_master.groups_to_rebuild += west.parent
-				else
-					air_master.tiles_to_update += west
-		else
-			if(istype(source)) air_master.tiles_to_update += source
-			if(istype(north)) air_master.tiles_to_update += north
-			if(istype(south)) air_master.tiles_to_update += south
-			if(istype(east)) air_master.tiles_to_update += east
-			if(istype(west)) air_master.tiles_to_update += west
+		if(istype(source)) air_master.tiles_to_update += source
+		if(istype(north)) air_master.tiles_to_update += north
+		if(istype(south)) air_master.tiles_to_update += south
+		if(istype(east)) air_master.tiles_to_update += east
+		if(istype(west)) air_master.tiles_to_update += west
 		return 1
 
 

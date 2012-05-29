@@ -187,7 +187,7 @@
 			if(!loc) return //probably ought to make a proper fix for this, but :effort: --NeoFite
 
 			var/datum/gas_mixture/environment = loc.return_air()
-			var/datum/air_group/breath
+			var/datum/gas_mixture/breath
 
 			if(losebreath>0) //Suffocating so do not take a breath
 				src.losebreath--
