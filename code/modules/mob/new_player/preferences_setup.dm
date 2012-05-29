@@ -206,10 +206,7 @@ datum/preferences
 		var/icon/preview_icon = null
 
 		var/g = "m"
-		if (gender == MALE)
-			g = "m"
-		else if (gender == FEMALE)
-			g = "f"
+		if (gender == FEMALE)	g = "f"
 
 		preview_icon = new /icon('human.dmi', "body_[g]_s")
 

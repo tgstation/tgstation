@@ -1187,93 +1187,50 @@
 	return 0
 
 /mob/living/carbon/human/proc/update_body()
-	if(stand_icon)
-		del(stand_icon)
-	if(lying_icon)
-		del(lying_icon)
-
-	if (mutantrace)
-		return
+	if(stand_icon)	del(stand_icon)
+	if(lying_icon)	del(lying_icon)
+	if(mutantrace)	return
 
 	var/g = "m"
-	if (gender == MALE)
-		g = "m"
-	else if (gender == FEMALE)
-		g = "f"
-
-	stand_icon = new /icon('human.dmi', "blank")
-	lying_icon = new /icon('human.dmi', "blank")
-
+	if(gender == FEMALE)	g = "f"
 	var/husk = (HUSK in src.mutations)
 	var/obese = (FAT in src.mutations)
 
-	if (husk)
-		stand_icon.Blend(new /icon('human.dmi', "husk_s"), ICON_OVERLAY)
-		lying_icon.Blend(new /icon('human.dmi', "husk_l"), ICON_OVERLAY)
-
+	//Base mob icon
+	if(husk)
+		stand_icon = new /icon('human.dmi', "husk_s")
+		lying_icon = new /icon('human.dmi', "husk_l")
 	else if(obese)
-		stand_icon.Blend(new /icon('human.dmi', "fatbody_s"), ICON_OVERLAY)
-		lying_icon.Blend(new /icon('human.dmi', "fatbody_l"), ICON_OVERLAY)
-/*
+		stand_icon = new /icon('human.dmi', "fatbody_s")
+		lying_icon = new /icon('human.dmi', "fatbody_l")
 	else
-		stand_icon.Blend(new /icon('human.dmi', "chest_[g]_s"), ICON_OVERLAY)
-		lying_icon.Blend(new /icon('human.dmi', "chest_[g]_l"), ICON_OVERLAY)
+		stand_icon = new /icon('human.dmi', "body_[g]_s")
+		lying_icon = new /icon('human.dmi', "body_[g]_l")
 
-		stand_icon.Blend(new /icon('human.dmi', "groin_[g]_s"), ICON_OVERLAY)
-		lying_icon.Blend(new /icon('human.dmi', "groin_[g]_l"), ICON_OVERLAY)
-
-		if (husk)
-			var/icon/husk_s = new /icon('human.dmi', "husk_s")
-			var/icon/husk_l = new /icon('human.dmi', "husk_l")
-
-			stand_icon.Blend(husk_s, ICON_OVERLAY)
-			lying_icon.Blend(husk_l, ICON_OVERLAY)
-		else if(obese)
-			stand_icon.Blend(new /icon('human.dmi', "fatbody_s"), ICON_OVERLAY)
-			lying_icon.Blend(new /icon('human.dmi', "fatbody_l"), ICON_OVERLAY)
-{R}*/
-	else
-		stand_icon.Blend(new /icon('human.dmi', "chest_[g]_s"), ICON_OVERLAY)
-		lying_icon.Blend(new /icon('human.dmi', "chest_[g]_l"), ICON_OVERLAY)
-
-		for (var/part in list("arm_left", "arm_right", "hand_left", "hand_right", "leg_left", "leg_right", "foot_left", "foot_right"))
-			stand_icon.Blend(new /icon('human.dmi', "[part]_s"), ICON_OVERLAY)
-			lying_icon.Blend(new /icon('human.dmi', "[part]_l"), ICON_OVERLAY)
-
-		for(var/part in list("head","groin"))
-			stand_icon.Blend(new /icon('human.dmi', "[part]_[g]_s"), ICON_OVERLAY)
-			lying_icon.Blend(new /icon('human.dmi', "[part]_[g]_l"), ICON_OVERLAY)
-
-	// Skin tone
-	if (s_tone >= 0)
+	//Skin tone
+	if(s_tone >= 0)
 		stand_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
 		lying_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
 	else
 		stand_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 		lying_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
 
-		if (underwear < 6 && underwear > 0)
-			if(!obese)
-				stand_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
-				lying_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_l"), ICON_OVERLAY)
-
+	//Underwear
+	if(underwear < 6 && underwear > 0)
+		if(!obese)
+			stand_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
+			lying_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_l"), ICON_OVERLAY)
 
 
 
 /mob/living/carbon/human/proc/update_face()
-
 	if(!facial_hair_style || !hair_style)	return//Seems people like to lose their icons, this should stop the runtimes for now
-	del(face_standing)
-	del(face_lying)
-
-	if (mutantrace)
-		return
+	if(face_standing)	del(face_standing)
+	if(face_lying)		del(face_lying)
+	if(mutantrace)		return
 
 	var/g = "m"
-	if (gender == MALE)
-		g = "m"
-	else if (gender == FEMALE)
-		g = "f"
+	if (gender == FEMALE)	g = "f"
 
 	var/icon/eyes_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "eyes_s")
 	var/icon/eyes_l = new/icon("icon" = 'human_face.dmi', "icon_state" = "eyes_l")
@@ -1310,9 +1267,7 @@
 	face_standing = new /image()
 	face_lying = new /image()
 	face_standing.icon = eyes_s
-	face_standing.layer = MOB_LAYER
 	face_lying.icon = eyes_l
-	face_lying.layer = MOB_LAYER
 
 	del(mouth_l)
 	del(mouth_s)
