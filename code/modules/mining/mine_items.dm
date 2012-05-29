@@ -192,6 +192,7 @@ proc/move_mining_shuttle()
 
 	hammer
 		name = "Mining Sledge Hammer"
+		//icon_state = "sledgehammer" Waiting on sprite
 		desc = "A mining hammer made of reinforced metal. You feel like smashing your boss in the face with this."
 
 	silver

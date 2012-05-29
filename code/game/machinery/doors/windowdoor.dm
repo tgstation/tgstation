@@ -4,6 +4,7 @@
 	icon = 'windoor.dmi'
 	icon_state = "left"
 	var/base_state = "left"
+	var/health = 200.0 //If you change this, consiter changing ../door/window/brigdoor/ health at the bottom of this .dm file
 	visible = 0.0
 	flags = ON_BORDER
 	opacity = 0
@@ -124,13 +125,49 @@
 	src.operating = 0
 	return 1
 
-/obj/machinery/door/window/attackby(obj/item/I as obj, mob/user as mob)
+//When an object is thrown at the window
+/obj/machinery/door/window/hitby(AM as mob|obj)
+
+	..()
+	for(var/mob/O in viewers(src, null))
+		O.show_message("\red <B>The glass door was hit by [AM].</B>", 1)
+	var/tforce = 0
+	if(ismob(AM))
+		tforce = 40
+	else
+		tforce = AM:throwforce
+	playsound(src.loc, 'Glasshit.ogg', 100, 1)
+	src.health = max(0, src.health - tforce)
+	if (src.health <= 0)
+		new /obj/item/weapon/shard(src.loc)
+		var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
+		CC.amount = 2
+		src.density = 0
+		del(src)
+		return
+	//..() //Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
+	return
+
+
+/obj/machinery/door/window/attack_ai(mob/user as mob)
+	return src.attack_hand(user)
+
+
+/obj/machinery/door/window/attack_paw(mob/user as mob)
+	return src.attack_hand(user)
+
+
+/obj/machinery/door/window/attack_hand(mob/user as mob)
+	return src.attackby(user, user)
+
+
+/obj/machinery/door/window/attackby(obj/item/weapon/I as obj, mob/user as mob)
+
+	//If it's in the process of opening/closing, ignore the click
 	if (src.operating)
 		return
-	src.add_fingerprint(user)
-	if (!src.requiresID())
-		//don't care who they are or what they have, act as if they're NOTHING
-		user = null
+
+	//Emags and ninja swords? You may pass.
 	if (src.density && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
 		src.operating = -1
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
@@ -145,13 +182,36 @@
 		sleep(6)
 		open()
 		return 1
+
+	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
+	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
+		var/aforce = I.force
+		if(I.damtype == BRUTE || I.damtype == BURN)
+			src.health = max(0, src.health - aforce)
+		playsound(src.loc, 'Glasshit.ogg', 75, 1)
+		if (src.health <= 0)
+			new /obj/item/weapon/shard(src.loc)
+			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
+			CC.amount = 2
+			src.density = 0
+			del(src)
+		return
+
+
+	src.add_fingerprint(user)
+	if (!src.requiresID())
+		//don't care who they are or what they have, act as if they're NOTHING
+		user = null
+
 	if (src.allowed(user))
 		if (src.density)
 			open()
 		else
 			close()
+
 	else if (src.density)
 		flick(text("[]deny", src.base_state), src)
+
 	return
 
 
@@ -163,6 +223,7 @@
 	base_state = "leftsecure"
 	req_access = list(access_security)
 	var/id = null
+	health = 500.0 //Stronger doors for prison (regular window door health is 200)
 
 
 /obj/machinery/door/window/northleft
@@ -196,7 +257,6 @@
 	dir = SOUTH
 	icon_state = "right"
 	base_state = "right"
-
 
 /obj/machinery/door/window/brigdoor/northleft
 	dir = NORTH
