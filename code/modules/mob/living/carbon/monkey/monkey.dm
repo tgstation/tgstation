@@ -69,7 +69,7 @@
 		if(!lying_icon)
 			lying_icon = new /icon('monkey.dmi', "monkey0")
 		icon = stand_icon
-		update_clothing()
+		rebuild_appearance()
 		src << "\blue Your icons have been generated!"
 
 	..()
@@ -928,7 +928,6 @@
 
 	UpdateDamageIcon()
 	updatehealth()
-	update_clothing()
 	return 1
 
 /*/mob/living/carbon/monkey/UpdateDamageIcon()

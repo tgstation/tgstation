@@ -150,7 +150,7 @@ var/const
 		layer = 20
 		target.wear_mask = src
 
-		target.update_clothing()
+		target.rebuild_appearance()
 
 		GoIdle() //so it doesn't jump the people that tear it off
 
