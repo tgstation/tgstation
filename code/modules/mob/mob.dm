@@ -645,46 +645,6 @@
 	//usr << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
 	return
 
-/client/New()
-	if( connection != "seeker" )
-		src << "Sorry, this game does not support [connection] connections."	//doesn't work
-		del(src)
-	var/isbanned = CheckBan(src)
-	if (isbanned)
-		log_access("Failed Login: [src] - Banned")
-		message_admins("\blue Failed Login: [src] - Banned")
-		alert(src,"You have been banned.\nReason : [isbanned]","Ban","Ok")		//doesn't work
-		del(src)
-
-	if (!guests_allowed && IsGuestKey(key))
-		log_access("Failed Login: [src] - Guests not allowed")
-		message_admins("\blue Failed Login: [src] - Guests not allowed")
-		alert(src,"You cannot play here.\nReason : Guests not allowed","Guests not allowed","Ok")	//doesn't work
-		del(src)
-
-	if (((world.address == address || !(address)) && !(host)))
-		host = key
-		world.update_status()
-
-	..()
-
-//	authorize()				//old gooncode
-
-	if( ckey in admins )
-		holder = new /obj/admins(src)
-		holder.rank = admins[ckey]
-		update_admins(admins[ckey])
-		admin_memo_show()
-
-	if(ticker && ticker.mode && ticker.mode.name =="sandbox")
-		mob.CanBuild()
-
-/client/Del()
-	spawn(0)
-		if(holder)
-			del(holder)
-	return ..()
-
 /mob/proc/can_use_hands()
 	if(handcuffed)
 		return 0

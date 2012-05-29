@@ -2,44 +2,57 @@ var/CMinutes = null
 var/savefile/Banlist
 
 
-/proc/CheckBan(var/client/clientvar)
-
-	var/id = clientvar.computer_id
-	var/key = clientvar.ckey
-
+/proc/CheckBan(var/ckey, var/id, var/address)
 	if(!Banlist)		// if Banlist cannot be located for some reason
 		LoadBans()		// try to load the bans
 		if(!Banlist)	// uh oh, can't find bans!
 			return 0	// ABORT ABORT ABORT
 
+	. = list()
+	var/appeal
+	if(config && config.banappeals)
+		appeal = "\nFor more information on your ban, or to appeal, head to <a href='[config.banappeals]'>[config.banappeals]</a>"
 	Banlist.cd = "/base"
-	if (Banlist.dir.Find("[key][id]"))
-		Banlist.cd = "[key][id]"
+	if( "[ckey][id]" in Banlist.dir )
+		Banlist.cd = "[ckey][id]"
 		if (Banlist["temp"])
 			if (!GetExp(Banlist["minutes"]))
 				ClearTempbans()
 				return 0
 			else
-				return "[Banlist["reason"]]\n(This ban will be automatically removed in [GetExp(Banlist["minutes"])].)"
+				.["desc"] = "\nReason: [Banlist["reason"]]\nExpires: [GetExp(Banlist["minutes"])]\nBy: [Banlist["bannedby"]][appeal]"
 		else
-			Banlist.cd = "/base/[key][id]"
-			return "[Banlist["reason"]]\n(This is a permanent ban)"
+			Banlist.cd	= "/base/[ckey][id]"
+			.["desc"]	= "\nReason: [Banlist["reason"]]\nExpires: <B>PERMENANT</B>\nBy: [Banlist["bannedby"]][appeal]"
+		.["reason"]	= "ckey/id"
+		return .
+	else
+		for (var/A in Banlist.dir)
+			Banlist.cd = "/base/[A]"
+			var/matches
+			if( ckey == Banlist["key"] )
+				matches += "ckey"
+			if( id == Banlist["id"] )
+				if(matches)
+					matches += "/"
+				matches += "id"
+//			if( address == Banlist["ip"] )
+//				if(matches)
+//					matches += "/"
+//				matches += "ip"
 
-	Banlist.cd = "/base"
-	for (var/A in Banlist.dir)
-		Banlist.cd = "/base/[A]"
-		if (id == Banlist["id"] || key == Banlist["key"])
-			if(Banlist["temp"])
-				if (!GetExp(Banlist["minutes"]))
-					ClearTempbans()
-					return 0
+			if(matches)
+				if(Banlist["temp"])
+					if (!GetExp(Banlist["minutes"]))
+						ClearTempbans()
+						return 0
+					else
+						.["desc"] = "\nReason: [Banlist["reason"]]\nExpires: [GetExp(Banlist["minutes"])]\nBy: [Banlist["bannedby"]][appeal]"
 				else
-					return "[Banlist["reason"]]\n(This ban will be automatically removed in [GetExp(Banlist["minutes"])].)"
-			else
-				return "[Banlist["reason"]]\n(This is a permanent ban)"
-
+					.["desc"] = "\nReason: [Banlist["reason"]]\nExpires: <B>PERMENANT</B>\nBy: [Banlist["bannedby"]][appeal]"
+				.["reason"] = matches
+				return .
 	return 0
-
 
 /proc/UpdateTime() //No idea why i made this a proc.
 	CMinutes = (world.realtime / 10) / 60

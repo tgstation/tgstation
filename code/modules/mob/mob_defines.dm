@@ -169,7 +169,6 @@
 	var/job = null//Living
 
 	var/nodamage = 0
-	var/logged_in = 0
 
 	var/underwear = 1//Human
 	var/backbag = 2//Human

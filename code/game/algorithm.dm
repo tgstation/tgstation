@@ -29,15 +29,14 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 		spawn(30)
 			KickInactiveClients()
 
-
+#define INACTIVITY_KICK	6000	//10 minutes in ticks (approx.)
 /world/proc/KickInactiveClients()
 	for(var/client/C)
-		if(!C.holder && ((C.inactivity/10)/60) >= 10)
+		if( !C.holder && (C.inactivity >= INACTIVITY_KICK) )
 			if(C.mob)
 				if(!istype(C.mob, /mob/dead/))
 					log_access("AFK: [key_name(C)]")
 					C << "\red You have been inactive for more than 10 minutes and have been disconnected."
-					C.mob.logged_in = 0
 			del(C)
 	spawn(3000) KickInactiveClients()//more or less five minutes
 

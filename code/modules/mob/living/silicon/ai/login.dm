@@ -1,4 +1,8 @@
 /mob/living/silicon/ai/Login()
+	for(var/obj/effect/rune/rune in world)
+		var/image/blood = image('blood.dmi', loc = rune, icon_state = "floor[rand(1,7)]")
+		blood.override = 1
+		client.images += blood
 	..()
 	update_clothing()
 	for(var/S in src.client.screen)
