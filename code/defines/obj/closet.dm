@@ -109,7 +109,7 @@
 
 /obj/structure/closet/masks
 	name = "mask closet"
-	desc = "IT'S A STORAGE UNIT FOR FIGHTER MASKS OLE!."
+	desc = "IT'S A STORAGE UNIT FOR FIGHTER MASKS OLE!"
 
 /obj/structure/closet/lasertag/red
 	name = "red laser tag equipment"
