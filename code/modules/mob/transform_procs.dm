@@ -5,7 +5,7 @@
 		if (W==w_uniform) // will be teared
 			continue
 		drop_from_slot(W)
-	update_clothing()
+	rebuild_appearance()
 	monkeyizing = 1
 	canmove = 0
 	stunned = 1
@@ -69,7 +69,7 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_slot(W)
-	update_clothing()
+	rebuild_appearance()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
@@ -156,7 +156,7 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_slot(W)
-	update_clothing()
+	rebuild_appearance()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
@@ -222,7 +222,7 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_slot(W)
-	update_clothing()
+	rebuild_appearance()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
@@ -262,7 +262,7 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_slot(W)
-	update_clothing()
+	rebuild_appearance()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
@@ -313,7 +313,7 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_slot(W)
-	update_clothing()
+	rebuild_appearance()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
@@ -347,7 +347,7 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_slot(W)
-	update_clothing()
+	rebuild_appearance()
 	monkeyizing = 1
 	canmove = 0
 	icon = null

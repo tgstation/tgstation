@@ -52,6 +52,7 @@
 				dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=red>Disable Safety Protocols?</font>)</A><BR>"
 			dat += "<BR>"
 			dat += "Safety Protocols are <font color=green> ENABLED </font><BR>"
+
 		user << browse(dat, "window=computer;size=400x500")
 		onclose(user, "computer")
 
@@ -119,6 +120,8 @@
 
 
 /obj/machinery/computer/HolodeckControl/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
+//Warning, uncommenting this can have concequences. For example, deconstructing the computer may cause holographic eswords to never derez
+
 /*		if(istype(D, /obj/item/weapon/screwdriver))
 			playsound(src.loc, 'Screwdriver.ogg', 50, 1)
 			if(do_after(user, 20))
@@ -165,6 +168,30 @@
 	//	target = locate(/area/holodeck/source_emptycourt)
 	//	if(target)
 	//		loadProgram(target)
+
+//This could all be done better, but it works for now.
+/obj/machinery/computer/HolodeckControl/Del()
+	emergencyShutdown()
+	..()
+
+/obj/machinery/computer/HolodeckControl/meteorhit(var/obj/O as obj)
+	emergencyShutdown()
+	..()
+
+
+/obj/machinery/computer/HolodeckControl/emp_act(severity)
+	emergencyShutdown()
+	..()
+
+
+/obj/machinery/computer/HolodeckControl/ex_act(severity)
+	emergencyShutdown()
+	..()
+
+
+/obj/machinery/computer/HolodeckControl/blob_act()
+	emergencyShutdown()
+	..()
 
 
 /obj/machinery/computer/HolodeckControl/process()
@@ -282,7 +309,18 @@
 						T.hotspot_expose(50000,50000,1)
 
 
+/obj/machinery/computer/HolodeckControl/proc/emergencyShutdown()
+	//Get rid of any items
+	for(var/item in holographic_items)
+		derez(item)
+	//Turn it back to the regular non-holographic room
+	target = locate(/area/holodeck/source_plating)
+	if(target)
+		loadProgram(target)
 
+	var/area/targetsource = locate(/area/holodeck/source_plating)
+	targetsource.copy_contents_to(linkedholodeck , 1)
+	active = 0
 
 
 
@@ -371,7 +409,6 @@
 						"\red You hear a whine as \the [src]'s is hit by something dense.")
 					H.UpdateDamageIcon()
 					H.updatehealth()
-					H.update_clothing()
 					playsound(src.loc, 'tablehit1.ogg', 50, 1, -3)
 				else //Lets do REAL DAMAGE, YEAH!
 					G.affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed on a table by [G.assailant.name] ([G.assailant.ckey])</font>")
@@ -410,7 +447,6 @@
 						"\red You hear the nauseating crunch of bone and gristle on solid metal.")
 					H.UpdateDamageIcon()
 					H.updatehealth()
-					H.update_clothing()
 					playsound(src.loc, 'tablehit1.ogg', 50, 1, -3)
 			return
 		G.affecting.loc = src.loc

@@ -547,7 +547,7 @@
 				if (W==H.w_uniform) // will be teared
 					continue
 				H.drop_from_slot(W)
-			M.update_clothing()
+			M.rebuild_appearance()
 			M.monkeyizing = 1
 			M.canmove = 0
 			M.icon = null
@@ -604,7 +604,7 @@
 		O.a_intent = "hurt"
 		O.flavor_text = M.flavor_text
 		O.warn_flavor_changed()
-		O.update_clothing()
+		O.rebuild_appearance()
 		del(M)
 		return
 
@@ -615,7 +615,7 @@
 		if(!connected)
 			for(var/obj/item/W in (Mo.contents))
 				Mo.drop_from_slot(W)
-			M.update_clothing()
+			M.rebuild_appearance()
 			M.monkeyizing = 1
 			M.canmove = 0
 			M.icon = null
@@ -681,12 +681,12 @@
 		O.stat = M.stat
 		O.flavor_text = M.flavor_text
 		O.warn_flavor_changed()
-		O.update_clothing()
+		O.rebuild_appearance()
 		del(M)
 		return
 //////////////////////////////////////////////////////////// Monkey Block
 	if (M)
-		M.update_clothing()
+		M.rebuild_appearance()
 	return null
 /////////////////////////// DNA MISC-PROCS
 
@@ -790,13 +790,7 @@
 /obj/machinery/dna_scannernew/proc/go_out()
 	if ((!( src.occupant ) || src.locked))
 		return
-/*
-//	it's like this was -just- here to break constructed dna scanners -Pete
-//	if that's not the case, slap my shit and uncomment this.
-//	for(var/obj/O in src)
-//		O.loc = src.loc
-*/
-		//Foreach goto(30)
+
 	if (src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE

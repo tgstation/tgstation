@@ -260,7 +260,7 @@
 		if (istype(W, /obj/item/weapon/implant))
 			implants += W
 
-	usr.update_clothing()
+	usr.rebuild_appearance()
 	usr.monkeyizing = 1
 	usr.canmove = 0
 	usr.icon = null
@@ -346,7 +346,7 @@
 	for (var/obj/item/weapon/implant/I in usr) //Still preserving implants
 		implants += I
 
-	usr.update_clothing()
+	usr.rebuild_appearance()
 	usr.monkeyizing = 1
 	usr.canmove = 0
 	usr.icon = null
@@ -414,7 +414,7 @@
 		return
 	for(var/obj/item/W in src)
 		usr.drop_from_slot(W)
-	usr.update_clothing()
+	usr.rebuild_appearance()
 	usr.monkeyizing = 1
 	usr.canmove = 0
 	usr.icon = null

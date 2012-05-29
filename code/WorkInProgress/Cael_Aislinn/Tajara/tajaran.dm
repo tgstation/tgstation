@@ -22,7 +22,7 @@
 		if(!lying_icon)
 			lying_icon = new /icon('tajaran.dmi', "body_[g]_l")
 		icon = stand_icon
-		update_clothing()
+		rebuild_appearance()
 		src << "\blue Your icons have been generated!"
 
 	..()

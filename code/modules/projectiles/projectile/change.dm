@@ -166,10 +166,10 @@
 				var/last = pick(last_names)
 				O.name = "[first] [last]"
 				O.real_name = "[first] [last]"
-				var/race = pick("golem","metroid","plant","normal")
+				var/race = pick("lizard","golem","metroid","plant","normal")
 				switch(race)
-//					if("lizard")
-//						O.mutantrace = "lizard"
+					if("lizard")
+						O.mutantrace = "lizard"
 					if("golem")
 						O.mutantrace = "golem"
 					if("metroid")

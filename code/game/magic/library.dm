@@ -123,7 +123,7 @@
 			user.drop_item()
 			O.loc = src
 		else if(istype(O, /obj/item/weapon/pen))
-			var/newname = input("What would you like to title this bookshelf?") as text|null
+			var/newname = copytext(sanitize(input("What would you like to title this bookshelf?") as text|null),1,MAX_MESSAGE_LEN)
 			if(!newname)
 				return
 			else
@@ -306,12 +306,9 @@
 			var/choice = input("What would you like to change?") in list("Title", "Contents", "Author", "Cancel")
 			switch(choice)
 				if("Title")
-					var/ntitle = input("Write a new title:") as text|null
+					var/ntitle = copytext(sanitize(input("Write a new title:") as text|null),1,MAX_MESSAGE_LEN)
 					if(!ntitle)
 						return
-					else
-						title = sanitize(ntitle)
-						name = "Book: [title]"
 				if("Contents")
 					var/t = "[src.dat]"
 					do
@@ -337,7 +334,7 @@
 					src.dat = t
 					gen_pages()
 				if("Author")
-					var/nauthor = input("Write the author's name:") as text|null
+					var/nauthor = copytext(sanitize(input("Write the author's name:") as text|null),1,MAX_NAME_LEN)
 					if(!nauthor)
 						return
 					else
@@ -780,9 +777,9 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		if(checkoutperiod < 1)
 			checkoutperiod = 1
 	if(href_list["editbook"])
-		buffer_book = input("Enter the book's title:") as text|null
+		buffer_book = copytext(sanitize(input("Enter the book's title:") as text|null),1,MAX_MESSAGE_LEN)
 	if(href_list["editmob"])
-		buffer_mob = input("Enter the recipient's name:") as text|null
+		buffer_mob = copytext(sanitize(input("Enter the recipient's name:") as text|null),1,MAX_NAME_LEN)
 	if(href_list["checkout"])
 		var/datum/borrowbook/b = new /datum/borrowbook
 		b.bookname = sanitize(buffer_book)
@@ -802,9 +799,9 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			scanner.cache.title = sanitize(newtitle)
 			scanner.cache.name = "Book: [scanner.cache.title]"
 	if(href_list["setauthor"])
-		var/newauthor = input("Enter the author's name: ", "Book Upload", scanner.cache.author) as text|null
+		var/newauthor = copytext(sanitize(input("Enter the author's name: ", "Book Upload", scanner.cache.author) as text|null),1,MAX_MESSAGE_LEN)
 		if(newauthor)
-			scanner.cache.author = sanitize(newauthor)
+			scanner.cache.author = newauthor
 	if(href_list["setcategory"])
 		var/newcategory = input("Choose a category: ") in list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
 		if(newcategory)

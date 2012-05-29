@@ -692,15 +692,15 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/ainame(var/mob/M as mob)
 	var/randomname = M.name
 	var/time_passed = world.time//Pretty basic but it'll do. It's still possible to bypass this by return ainame().
-	var/newname = input(M,"You are the AI. Would you like to change your name to something else?", "Name change",randomname)
+	var/newname = copytext(sanitize(input(M,"You are the AI. Would you like to change your name to something else?", "Name change",randomname)),1,MAX_NAME_LEN)
 	if((world.time-time_passed)>200)//If more than 20 game seconds passed.
 		M << "You took too long to decide. Default name selected."
 		return
 
-	if (length(newname) == 0)
+	if (!newname)
 		newname = randomname
 
-	if (newname)
+	else
 		if (newname == "Inactive AI")//Keeping this here to prevent dumb.
 			M << "That name is reserved."
 			return ainame(M)
@@ -708,22 +708,19 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if (A.real_name == newname&&newname!=randomname)
 				M << "There's already an AI with that name."
 				return ainame(M)
-		if (length(newname) >= 26)
-			newname = copytext(newname, 1, 26)
-		newname = dd_replacetext(newname, ">", "'")
 		M.real_name = newname
 		M.name = newname
 		M.original_name = newname
 
 /*/proc/clname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea
 	var/randomname = pick(clown_names)
-	var/newname = input(M,"You are the clown. Would you like to change your name to something else?", "Name change",randomname)
+	var/newname = copytext(sanitize(input(M,"You are the clown. Would you like to change your name to something else?", "Name change",randomname)),1,MAX_NAME_LEN)
 	var/oldname = M.real_name
 
-	if (length(newname) == 0)
+	if (!newname)
 		newname = randomname
 
-	if (newname)
+	else
 		var/badname = 0
 		switch(newname)
 			if("Unknown")	badname = 1
@@ -740,9 +737,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(A.real_name == newname)
 				M << "That name is reserved."
 				return clname(M)
-		if(length(newname) >= 26)
-			newname = copytext(newname, 1, 26)
-		newname = dd_replacetext(newname, ">", "'")
 		M.real_name = newname
 		M.name = newname
 		M.original_name = newname
@@ -1561,19 +1555,13 @@ proc/listclearnulls(list/list)
 		for(var/turf/simulated/T1 in toupdate)
 			for(var/obj/machinery/door/D2 in T1)
 				doors += D2
-			if(T1.parent)
-				air_master.groups_to_rebuild += T1.parent
-			else
-				air_master.tiles_to_update += T1
+			air_master.tiles_to_update += T1
 
 	if(fromupdate.len)
 		for(var/turf/simulated/T2 in fromupdate)
 			for(var/obj/machinery/door/D2 in T2)
 				doors += D2
-			if(T2.parent)
-				air_master.groups_to_rebuild += T2.parent
-			else
-				air_master.tiles_to_update += T2
+			air_master.tiles_to_update += T2
 
 	for(var/obj/O in doors)
 		O:update_nearby_tiles(1)
@@ -1728,10 +1716,7 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 		for(var/turf/simulated/T1 in toupdate)
 			for(var/obj/machinery/door/D2 in T1)
 				doors += D2
-			if(T1.parent)
-				air_master.groups_to_rebuild += T1.parent
-			else
-				air_master.tiles_to_update += T1
+			air_master.tiles_to_update += T1
 
 	for(var/obj/O in doors)
 		O:update_nearby_tiles(1)

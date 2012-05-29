@@ -24,7 +24,7 @@ var/global/sent_strike_team = 0
 
 	var/input = null
 	while(!input)
-		input = input(src, "Please specify which mission the death commando squad shall undertake.", "Specify Mission", "") as text|null
+		input = copytext(sanitize(input(src, "Please specify which mission the death commando squad shall undertake.", "Specify Mission", "")),1,MAX_MESSAGE_LEN)
 		if(!input)
 			if(alert("Error, no mission set. Do you want to exit the setup process?",,"Yes","No")=="Yes")
 				return

@@ -1583,6 +1583,7 @@
 							del(src)
 							spawn(5)
 								user.update_clothing()
+
 				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
 				return 1
 		else if(istype(M, /mob/living/simple_animal/livestock))
