@@ -622,6 +622,7 @@
 #include "code\game\objects\closets\extinguisher.dm"
 #include "code\game\objects\closets\fireaxe.dm"
 #include "code\game\objects\closets\firecloset.dm"
+#include "code\game\objects\closets\fitnesscloset.dm"
 #include "code\game\objects\closets\gimmick.dm"
 #include "code\game\objects\closets\gmcloset.dm"
 #include "code\game\objects\closets\janitor.dm"

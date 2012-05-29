@@ -455,6 +455,14 @@ proc/process_ghost_teleport_locs()
 	name = "Syndicate Station Location 4"
 	icon_state = "green"
 
+/area/syndicate_station/five
+	name = "Syndicate Station Location 5"
+	icon_state = "green"
+
+/area/syndicate_station/six
+	name = "Syndicate Station Location 6"
+	icon_state = "green"
+
 /area/wizard_station
 	name = "Wizard's Den"
 	icon_state = "yellow"

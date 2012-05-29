@@ -26,7 +26,7 @@ var/bomb_set = 1
 	var/syndicate_break = 0
 
 /proc/syndicate_begin()
-	switch(rand(1,4))
+	switch(rand(1,6))
 		if(1)
 			syndicate_loc = locate(/area/syndicate_station/one)
 		if(2)
@@ -35,6 +35,10 @@ var/bomb_set = 1
 			syndicate_loc = locate(/area/syndicate_station/three)
 		if(4)
 			syndicate_loc = locate(/area/syndicate_station/four)
+		if(5)
+			syndicate_loc = locate(/area/syndicate_station/five)
+		if(6)
+			syndicate_loc = locate(/area/syndicate_station/six)
 
 /proc/syndicate_process()
 	while(syndicate_station_time - world.timeofday > 0)
