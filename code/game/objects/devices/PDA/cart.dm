@@ -40,6 +40,11 @@
 		icon_state = "cart-m"
 		access_medical = 1
 
+	chemistry
+		name = "ChemWhiz Cartridge"
+		icon_state = "cart-chem"
+		access_reagent_scanner = 1
+
 	security
 		name = "R.O.B.U.S.T. Cartridge"
 		icon_state = "cart-s"
@@ -89,7 +94,7 @@
 			name = "Signal Ace 2"
 			desc = "Complete with integrated radio signaler!"
 			icon_state = "cart-tox"
-			access_reagent_scanner = 1
+//			access_reagent_scanner = 1
 
 		New()
 			..()
@@ -152,7 +157,7 @@
 		name = "Signal Ace DELUXE"
 		icon_state = "cart-rd"
 		access_status_display = 1
-		access_reagent_scanner = 1
+//		access_reagent_scanner = 1
 
 		New()
 			..()

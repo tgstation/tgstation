@@ -81,7 +81,7 @@
 		if(H.backbag == 2) H.equip_if_possible(new /obj/item/weapon/storage/backpack(H), H.slot_back)
 		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
 		if(H.backbag == 4) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel_chem(H), H.slot_back)
-		H.equip_if_possible(new /obj/item/device/radio/headset/headset_medsci(H), H.slot_ears)
+		H.equip_if_possible(new /obj/item/device/radio/headset/headset_med(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/chemist(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/white(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/chemist(H), H.slot_belt)

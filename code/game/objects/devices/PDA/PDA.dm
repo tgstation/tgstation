@@ -135,8 +135,6 @@
 
 /obj/item/device/pda/roboticist
 	icon_state = "pda-robot"
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a special edition with a transparent case."
-	note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Turbo Edition!"
 
 /obj/item/device/pda/librarian
 	icon_state = "pda-libb"

@@ -86,7 +86,7 @@
 				new /obj/item/clothing/under/rank/medical/green(src)
 			if ("purple")
 				new /obj/item/clothing/under/rank/medical/purple(src)
-		new /obj/item/weapon/cartridge/medical(src)
+//		new /obj/item/weapon/cartridge/medical(src)
 		new /obj/item/device/radio/headset/headset_med(src)
 		return
 
