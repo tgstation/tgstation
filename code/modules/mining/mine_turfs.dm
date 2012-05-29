@@ -316,6 +316,8 @@
 			icon_plating = "asteroid_dug"
 			icon_state = "asteroid_dug"
 			return
+		else
+			return
 	else
 		..(W,user)
 	if ((istype(W,/obj/item/weapon/pickaxe/drill)))
@@ -337,6 +339,9 @@
 			dug = 1
 			icon_plating = "asteroid_dug"
 			icon_state = "asteroid_dug"
+			return
+		else
+			return
 	else
 		..(W,user)
 
@@ -359,6 +364,9 @@
 			dug = 1
 			icon_plating = "asteroid_dug"
 			icon_state = "asteroid_dug"
+			return
+		else
+			return
 	else
 		..(W,user)
 
