@@ -144,6 +144,16 @@
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
 	silent = 1 //Quiet in the library!
 
+/obj/item/device/pda/atmos
+	icon_state = "pda-atmo"
+
+/obj/item/device/pda/chemist
+	default_cartridge = /obj/item/weapon/cartridge/chemistry
+	icon_state = "pda-chem"
+
+/obj/item/device/pda/geneticist
+	icon_state = "pda-gene"
+
 /*
  *	The Actual PDA
  */
