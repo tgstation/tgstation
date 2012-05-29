@@ -26,6 +26,9 @@ var/global/datum/controller/gameticker/ticker
 
 	var/random_players = 0 	// if set to nonzero, ALL players who latejoin or declare-ready join will have random appearances/genders
 
+	var/list/syndicate_coalition = list() // list of traitor-compatible factions
+	var/list/factions = list()			  // list of all factions
+	var/list/availablefactions = list()	  // list of factions with openings
 
 	var/pregame_timeleft = 0
 
@@ -294,6 +297,11 @@ var/global/datum/controller/gameticker/ticker
 					world << "\blue <B>An admin has delayed the round end</B>"
 
 		return 1
+
+	proc/getfactionbyname(var/name)
+		for(var/datum/faction/F in factions)
+			if(F.name == name)
+				return F
 
 
 /datum/controller/gameticker/proc/declare_completion()

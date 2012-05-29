@@ -93,7 +93,7 @@
 //These all need to be rewritten to use visiblemessage()
 
 /obj/structure/window/attack_hand()
-	if ((usr.mutations & HULK))
+	if ((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
 		usr << "\blue You smash through the window."
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
@@ -106,7 +106,7 @@
 	return
 
 /obj/structure/window/attack_paw()
-	if ((usr.mutations & HULK))
+	if ((HULK in usr.mutations))
 		usr << "\blue You smash through the window."
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))

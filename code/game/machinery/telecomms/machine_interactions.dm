@@ -211,9 +211,15 @@
 
 		if(href_list["delete"])
 
-			var/x = freq_listening[text2num(href_list["delete"])]
-			temp = "<font color = #666633>-% Removed frequency filter [x] %-</font color>"
-			freq_listening.Remove(x)
+			// changed the layout about to workaround a pesky runtime -- Doohl
+
+			var/freq_remove = text2num(href_list["delete"])
+			for(var/x in freq_listening)
+				if(x == freq_remove)
+
+					temp = "<font color = #666633>-% Removed frequency filter [x] %-</font color>"
+					freq_listening.Remove(x)
+					break
 
 		if(href_list["unlink"])
 

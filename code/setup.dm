@@ -194,17 +194,79 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define FULL_BODY		2047
 
+/*
 //bitflags for mutations
-var/const/TK				=(1<<0)
-var/const/COLD_RESISTANCE	=(1<<1)
-var/const/XRAY			=(1<<2)
-var/const/HULK			=(1<<3)
-var/const/CLUMSY			=(1<<4)
-var/const/FAT				=(1<<5)
-var/const/HUSK			=(1<<6)
-var/const/LASER			=(1<<7)
-var/const/HEAL			=(1<<8)
-var/const/NOCLONE			=(1<<9)
+var/const
+	// Extra powers:
+	SHADOW			=(1<<10)	// shadow teleportation (create in/out portals anywhere) (25%)
+	SCREAM			=(1<<11)	// supersonic screaming (25%)
+	EXPLOSIVE		=(1<<12)	// exploding on-demand (15%)
+	REGENERATION	=(1<<13)	// superhuman regeneration (30%)
+	REPROCESSOR		=(1<<14)	// eat anything (50%)
+	SHAPESHIFTING	=(1<<15)	// take on the appearance of anything (40%)
+	PHASING			=(1<<16)	// ability to phase through walls (40%)
+	SHIELD			=(1<<17)	// shielding from all projectile attacks (30%)
+	SHOCKWAVE		=(1<<18)	// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
+	ELECTRICITY		=(1<<19)	// ability to shoot electric attacks (15%)
+
+
+	// Nanoaugmentations:
+	SUPRSTR			=(1<<20)	// super strength
+	RADAR			=(1<<21)	// on-screen mob radar
+	ELECTRICHANDS	=(1<<22)	// electric hands
+	ESWORDSYNTH		=(1<<23)	// esword synthesizer
+	REBREATHER		=(1<<24)	// removes the need to breathe
+	DERMALARMOR		=(1<<25)	// 35% damage decrease
+	REFLEXES		=(1<<26)	// dodge 50% of projectiles, dodge 25% of melee attacks
+	NANOREGEN		=(1<<27)	// regenerative nanobots, -3 all damage types per second
+*/
+
+// String identifiers for associative list lookup
+
+var/const
+
+// mob/var/list/mutations
+
+	// Generic mutations:
+	TK				=1
+	COLD_RESISTANCE	=2
+	XRAY			=3
+	HULK			=4
+	CLUMSY			=5
+	FAT				=6
+	HUSK			=7
+	NOCLONE			=8
+
+
+	// Extra powers:
+	LASER			=9			// harm intent - click anywhere to shoot lasers from eyes
+	HEAL			=10			// healing people with hands
+	SHADOW			=11			// shadow teleportation (create in/out portals anywhere) (25%)
+	SCREAM			=12			// supersonic screaming (25%)
+	EXPLOSIVE		=13			// exploding on-demand (15%)
+	REGENERATION	=14			// superhuman regeneration (30%)
+	REPROCESSOR		=15			// eat anything (50%)
+	SHAPESHIFTING	=16			// take on the appearance of anything (40%)
+	PHASING			=17			// ability to phase through walls (40%)
+	SHIELD			=18			// shielding from all projectile attacks (30%)
+	SHOCKWAVE		=19			// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
+	ELECTRICITY		=20			// ability to shoot electric attacks (15%)
+
+
+// mob/var/list/augmentations
+
+	// Nanoaugmentations:
+	SUPRSTR			=21			// super strength (hulk powers)
+	RADAR			=22			// on-screen mob radar
+	ELECTRICHANDS	=23			// electric hands
+	ESWORDSYNTH		=24			// esword synthesizer
+	REBREATHER		=25			// removes the need to breathe
+	DERMALARMOR		=26			// 35% damage decrease
+	REFLEXES		=27			// dodge 50% of projectiles
+	NANOREGEN		=28			// regenerative nanobots, -3 all damage types per second
+
+
+
 
 
 //mob/var/stat things
@@ -285,3 +347,25 @@ var/static/list/scarySounds = list('thudswoosh.ogg','Taser.ogg','armbomb.ogg','h
 #define SEC_LEVEL_DELTA 3
 
 #define TRANSITIONEDGE 7 //Distance from edge to move to another z-level
+
+var/list/liftable_structures = list(\
+
+	/obj/machinery/autolathe, \
+	/obj/machinery/constructable_frame, \
+	/obj/machinery/hydroponics, \
+	/obj/machinery/computer, \
+	/obj/machinery/optable, \
+	/obj/machinery/dispenser, \
+	/obj/machinery/gibber, \
+	/obj/machinery/microwave, \
+	/obj/machinery/vending, \
+	/obj/machinery/seed_extractor, \
+	/obj/machinery/space_heater, \
+	/obj/machinery/recharge_station, \
+	/obj/machinery/flasher, \
+	/obj/structure/stool, \
+	/obj/structure/closet, \
+	/obj/machinery/photocopier, \
+	/obj/structure/filingcabinet, \
+	/obj/structure/reagent_dispensers, \
+	/obj/machinery/portable_atmospherics/canister)

@@ -68,7 +68,7 @@ FLASHBANG
 
 
 	clown_check(var/mob/living/user)
-		if((user.mutations & CLUMSY) && prob(50))
+		if((CLUMSY in user.mutations) && prob(50))
 			user << "\red Huh? How does this thing work?!"
 			src.active = 1
 			src.icon_state = "empar"
@@ -170,7 +170,7 @@ FLASHBANG
 			if(ishuman(M))
 				if(istype(M:ears, /obj/item/clothing/ears/earmuffs))
 					ear_safety += 2
-				if(M.mutations & HULK)
+				if(HULK in M.mutations)
 					ear_safety += 1
 				if(istype(M:head, /obj/item/clothing/head/helmet))
 					ear_safety += 1
@@ -269,7 +269,7 @@ FLASHBANG
 
 
 	clown_check(var/mob/living/user)
-		if ((user.mutations & CLUMSY) && prob(50))
+		if ((CLUMSY in user.mutations) && prob(50))
 			user << "\red Huh? How does this thing work?!"
 			src.active = 1
 			src.icon_state = "flashbang1"

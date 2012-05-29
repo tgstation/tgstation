@@ -27,7 +27,7 @@
 					M.handcuffed = new /obj/item/weapon/handcuffs(M)
 
 	else
-		if ((usr.mutations & CLUMSY) && prob(50))
+		if ((CLUMSY in usr.mutations) && prob(50))
 			usr << "\red Uh ... how do those things work?!"
 			if (istype(M, /mob/living/carbon/human))
 				if(!M.handcuffed)

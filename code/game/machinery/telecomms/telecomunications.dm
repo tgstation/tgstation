@@ -167,18 +167,6 @@
 
 		if(traffic > 0)
 			traffic -= netspeed
-		/* Machine checks */
-		if(on)
-			if(machinetype == 2) // bus mainframes
-				switch(traffic)
-					if(-100 to 49)
-						icon_state = initial(icon_state)
-					if(50 to 200)
-						icon_state = "bus2"
-					else
-						icon_state = "bus3"
-
-		// Check heat and generate some
 
 	proc/checkheat()
 		// Checks heat from the environment and applies any integrity damage
@@ -270,7 +258,7 @@
 /obj/machinery/telecomms/bus
 	name = "Bus Mainframe"
 	icon = 'stationobjs.dmi'
-	icon_state = "bus1"
+	icon_state = "bus"
 	desc = "A mighty piece of hardware used to send massive amounts of data quickly."
 	density = 1
 	anchored = 1

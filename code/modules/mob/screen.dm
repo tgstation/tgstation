@@ -510,6 +510,12 @@
 					usr:inv3.icon_state = "inv3"
 					usr:module_active = null
 
+		if("radar")
+			usr:close_radar()
+
+		if("radar closed")
+			usr:start_radar()
+
 		else
 			DblClick()
 	return
@@ -574,7 +580,7 @@
 	if(usr:handcuffed && usr:canmove && (usr.last_special <= world.time))
 		usr.next_move = world.time + 100
 		usr.last_special = world.time + 100
-		if(isalienadult(usr) || usr.mutations & HULK)//Don't want to do a lot of logic gating here.
+		if(isalienadult(usr) || (HULK in usr.mutations) || (SUPRSTR in usr.augmentations))//Don't want to do a lot of logic gating here.
 			usr << "\green You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)"
 			for(var/mob/O in viewers(usr))
 				O.show_message(text("\red <B>[] is trying to break the handcuffs!</B>", usr), 1)

@@ -48,7 +48,7 @@
 		if(!host)
 			del(src)
 			return
-		if(!host.mutations & TK)
+		if(!(TK in host.mutations))
 			del(src)
 			return
 		if(!focus)

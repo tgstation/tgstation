@@ -259,7 +259,7 @@
 		else
 			prot = 1
 
-		if(prot > 0 || (user.mutations & COLD_RESISTANCE))
+		if(prot > 0 || (COLD_RESISTANCE in user.mutations))
 			user << "You remove the light [fitting]"
 		else
 			user << "You try to remove the light [fitting], but you burn your hand on it!"

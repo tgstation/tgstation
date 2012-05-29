@@ -60,7 +60,7 @@
 
 /obj/item/weapon/firbang/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 	if (user.equipped() == src)
-		if ((user.mutations & CLUMSY) && prob(50))
+		if ((CLUMSY in usr.mutations) && prob(50))
 			user << "\red Huh? How does this thing work?!"
 			src.state = 1
 			src.icon_state = "flashbang1"
@@ -108,7 +108,7 @@
 
 /obj/item/weapon/firbang/attack_self(mob/user as mob)
 	if (!src.state)
-		if (user.mutations & CLUMSY)
+		if (CLUMSY in user.mutations)
 			user << "\red Huh? How does this thing work?!"
 			spawn( 5 )
 				prime()

@@ -4,6 +4,7 @@
 	icon_state = "grabbed"
 	var/obj/screen/grab/hud1 = null
 	var/mob/affecting = null
+	var/atom/movable/structure = null // if the grab is not grabbing a mob
 	var/mob/assailant = null
 	var/state = 1.0
 	var/killing = 0.0
@@ -21,32 +22,52 @@
 		spawn(0)
 			del(src)
 		return grabee
+
+	else if(structure)
+		var/grabee = structure
+		spawn(0)
+			del(src)
+		return grabee
+
 	return null
 
 
 /obj/item/weapon/grab/proc/synch()
-	if(affecting.anchored)//This will prevent from grabbing people that are anchored.
-		del(src)
-	if (assailant.r_hand == src)
-		hud1.screen_loc = ui_rhand
-	else
-		hud1.screen_loc = ui_lhand
+	if(affecting)
+		if(affecting.anchored)//This will prevent from grabbing people that are anchored.
+			del(src)
+		if (assailant.r_hand == src)
+			hud1.screen_loc = ui_rhand
+		else
+			hud1.screen_loc = ui_lhand
 	return
 
 
 /obj/item/weapon/grab/process()
-	if(!assailant || !affecting)
+	if(!assailant || (!affecting && !structure))
 		del(src)
 		return
-	if ((!( isturf(assailant.loc) ) || (!( isturf(affecting.loc) ) || (assailant.loc != affecting.loc && get_dist(assailant, affecting) > 1))))
-		//SN src = null
-		del(src)
-		return
+
+	if(affecting && !structure)
+		if ((!( isturf(assailant.loc) ) || (!( isturf(affecting.loc) ) || (assailant.loc != affecting.loc && get_dist(assailant, affecting) > 1))))
+			//SN src = null
+			del(src)
+			return
+	else if(!affecting && structure)
+		if (!isturf(structure.loc) || !isturf(structure.loc) || (assailant.loc != structure.loc && get_dist(assailant, structure) > 1))
+			del(src)
+			return
+
 	if (assailant.client)
 		assailant.client.screen -= hud1
 		assailant.client.screen += hud1
-	if (assailant.pulling == affecting)
+	if (assailant.pulling == affecting || assailant.pulling == structure)
 		assailant.pulling = null
+
+	if (structure)
+		structure.loc = assailant.loc
+		structure.layer = assailant.layer + 1
+
 	if (state <= 2)
 		allow_upgrade = 1
 		if ((assailant.l_hand && assailant.l_hand != src && istype(assailant.l_hand, /obj/item/weapon/grab)))
@@ -111,6 +132,9 @@
 /obj/item/weapon/grab/proc/s_dbclick(obj/screen/S as obj)
 	//if ((assailant.next_move > world.time && !( last_suffocate < world.time + 2 )))
 	//	return
+
+	if (!affecting)
+		return
 	if ((!( assailant.canmove ) || assailant.lying))
 		del(src)
 		return
@@ -133,7 +157,7 @@
 				if (state < 3)
 					if(istype(affecting, /mob/living/carbon/human))
 						var/mob/living/carbon/human/H = affecting
-						if(H.mutations & FAT)
+						if(FAT in H.mutations)
 							assailant << "\blue You can't strangle [affecting] through all that fat!"
 							return
 
@@ -197,6 +221,7 @@
 
 
 /obj/item/weapon/grab/attack(mob/M as mob, mob/user as mob)
+	if(!affecting) return
 	if (M == affecting)
 		if (state < 3)
 			s_dbclick(hud1)
@@ -204,7 +229,7 @@
 			s_click(hud1)
 		return
 	if(M == assailant && state >= 2)
-		if( ( ishuman(user) && (user.mutations & FAT) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
+		if( ( ishuman(user) && (FAT in user.mutations) && ismonkey(affecting) ) || ( isalien(user) && iscarbon(affecting) ) )
 			var/mob/living/carbon/attacker = user
 			for(var/mob/N in viewers(user, null))
 				if(N.client)

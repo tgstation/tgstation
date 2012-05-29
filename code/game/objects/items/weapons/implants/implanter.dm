@@ -35,13 +35,13 @@
 				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] ([src.imp.name]) to implant [M.name] ([M.ckey])</font>")
 				log_attack("<font color='red'>[user.name] ([user.ckey]) implanted [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
+				user.show_message("\red You implanted the implant into [M].")
 				src.imp.loc = M
 				src.imp.imp_in = M
 				src.imp.implanted = 1
 				src.imp.implanted(M)
 				src.imp = null
-				user.show_message("\red You implanted the implant into [M].")
-				src.icon_state = "implanter0"
+				update()
 	return
 
 

@@ -151,7 +151,7 @@
 
 		handle_regular_hud_updates()
 
-			if (src.stat == 2 || src.mutations & XRAY || src.sight_mode & BORGXRAY)
+			if (src.stat == 2 || XRAY in mutations || src.sight_mode & BORGXRAY)
 				src.sight |= SEE_TURFS
 				src.sight |= SEE_MOBS
 				src.sight |= SEE_OBJS

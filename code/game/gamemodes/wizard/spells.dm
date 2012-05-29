@@ -489,13 +489,13 @@
 	usr.spellvoice()
 
 	usr << text("\blue You feel strong! You feel pressure building behind your eyes!")
-	if (!(usr.mutations & HULK))
-		usr.mutations |= HULK
-	if (!(usr.mutations & LASER))
-		usr.mutations |= LASER
+	if (!(HULK in usr.mutations))
+		usr.mutations.Add(HULK)
+	if (!(LASER in usr.mutations))
+		usr.mutations.Add(LASER)
 	spawn (300)
-		if (usr.mutations & LASER) usr.mutations &= ~LASER
-		if (usr.mutations & HULK) usr.mutations &= ~HULK
+		if (LASER in usr.mutations) usr.mutations.Remove(LASER)
+		if (HULK in usr.mutations)  usr.mutations.Remove(HULK)
 	return
 
 //BODY SWAP /N

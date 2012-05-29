@@ -28,7 +28,7 @@
 		now_pushing = 1
 		if(ismob(AM))
 			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
+			if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
 				if(prob(70))
 					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
@@ -430,7 +430,7 @@
 		else
 			var/damage = rand(1, 9)
 			if (prob(90))
-				if (M.mutations & HULK)
+				if ((HULK in M.mutations) || (SUPRSTR in M.augmentations))
 					damage += 5
 					spawn(0)
 						Paralyse(1)

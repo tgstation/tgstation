@@ -47,7 +47,7 @@
 		now_pushing = 1
 		if(ismob(AM))
 			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
+			if(istype(tmob, /mob/living/carbon/human) && (HULK in tmob.mutations))
 				if(prob(70))
 					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
@@ -115,7 +115,7 @@
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
 			var/damage = rand(1, 5)
-			if (mutations & HULK) damage += 10
+			if (HULK in mutations) damage += 10
 			adjustBruteLoss(damage)
 			updatehealth()
 

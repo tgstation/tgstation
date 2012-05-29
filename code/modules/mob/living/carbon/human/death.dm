@@ -97,14 +97,14 @@
 	return ..(gibbed)
 
 /mob/living/carbon/human/proc/ChangeToHusk()
-	if(mutations & HUSK)
+	if(HUSK in src.mutations)
 		return
-	mutations |= HUSK
+	mutations.Add(HUSK)
 	real_name = "Unknown"
 	update_body()
 	return
 
 /mob/living/carbon/human/proc/Drain()
 	ChangeToHusk()
-	mutations |= NOCLONE
+	mutations.Add(NOCLONE)
 	return

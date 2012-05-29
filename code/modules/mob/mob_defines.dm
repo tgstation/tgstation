@@ -183,14 +183,11 @@
 	var/datum/dna/dna = null//Carbon
 	var/radiation = 0.0//Carbon
 
-	var/mutations = 0//Carbon
-	//telekinesis = 1
-	//firemut = 2
-	//xray = 4
-	//hulk = 8
-	//clumsy = 16
-	//obese = 32
-	//husk = 64
+	var/list/mutations = list() //Carbon -- Doohl
+	//see: setup.dm for list of mutations
+
+	var/list/augmentations = list() //Carbon -- Doohl
+	//see: setup.dm for list of augmentations
 
 	var/voice_name = "unidentifiable voice"
 	var/voice_message = null // When you are not understood by others (replaced with just screeches, hisses, chimpers etc.)
@@ -275,4 +272,6 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 
 	var/geaslist = list()
 
+	var/list/radar_blips = list() // list of screen objects, radar blips
+	var/radar_open = 0 	// nonzero is radar is open
 

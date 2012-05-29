@@ -23,7 +23,7 @@
 /obj/item/weapon/dnainjector/proc/inject(mob/M as mob)
 	M.radiation += rand(20,50)
 
-	if (!(M.mutations & NOCLONE)) // prevents drained people from having their DNA changed
+	if (!(NOCLONE in M.mutations)) // prevents drained people from having their DNA changed
 		if (dnatype == "ui")
 			if (!block) //isolated block?
 				if (ue) //unique enzymes? yes

@@ -64,26 +64,26 @@ var/global/list/spawned_surprises = list()
 		charges--
 		insisting = 0
 
-		if (!(user.mutations & HULK))
-			user.mutations |= HULK
+		if (!(HULK in user.mutations))
+			user.mutations.Add(HULK)
 
-		if (!(user.mutations & LASER))
-			user.mutations |= LASER
+		if (!(LASER in user.mutations))
+			user.mutations.Add(LASER)
 
-		if (!(user.mutations & XRAY))
-			user.mutations |= XRAY
+		if (!(XRAY in user.mutations))
+			user.mutations.Add(XRAY)
 			user.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 			user.see_in_dark = 8
 			user.see_invisible = 2
 
-		if (!(user.mutations & COLD_RESISTANCE))
-			user.mutations |= COLD_RESISTANCE
+		if (!(COLD_RESISTANCE in user.mutations))
+			user.mutations.Add(COLD_RESISTANCE)
 
-		if (!(user.mutations & TK))
-			user.mutations |= TK
+		if (!(TK in user.mutations))
+			user.mutations.Add(TK)
 
-		if(!(user.mutations & HEAL))
-			user.mutations |= HEAL
+		if(!(HEAL in user.mutations))
+			user.mutations.Add(HEAL)
 
 		ticker.mode.traitors += user.mind
 		user.mind.special_role = "Avatar of the Wish Granter"

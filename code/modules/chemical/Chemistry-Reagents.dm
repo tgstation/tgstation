@@ -347,7 +347,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				if (M.mutations & FAT)
+				if (FAT in M.mutations)
 					M.gib()
 				..()
 				return
@@ -782,7 +782,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.mutations = 0
+				M.mutations = list()
 				M.disabilities = 0
 				M.sdisabilities = 0
 				..()
@@ -1565,6 +1565,12 @@ datum
 			description = "A caustic substance commonly used in fertilizer or household cleaners."
 			reagent_state = GAS
 			color = "#404030" // rgb: 64, 64, 48
+
+		ultraglue
+			name = "Ulta Glue"
+			id = "glue"
+			description = "An extremely powerful bonding agent."
+			color = "#FFFFCC" // rgb: 255, 255, 204
 
 		diethylamine
 			name = "Diethylamine"

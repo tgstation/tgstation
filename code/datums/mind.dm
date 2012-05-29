@@ -16,6 +16,8 @@ datum/mind
 
 	var/has_been_rev = 0//Tracks if this mind has been a rev or not
 
+	var/datum/faction/faction // associated faction
+
 	proc/transfer_to(mob/new_character)
 		if(current)
 			current.mind = null

@@ -256,7 +256,7 @@ CIRCULAR SAW
 
 	//if(M.mutations & HUSK)	return ..()
 
-	if((user.mutations & CLUMSY) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		M = user
 		return eyestab(M,user)
 
@@ -453,7 +453,7 @@ CIRCULAR SAW
 	if(!istype(M))
 		return ..()
 
-	if((user.mutations & CLUMSY) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		M = user
 		return eyestab(M,user)
 

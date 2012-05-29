@@ -58,10 +58,11 @@
 	set category = "Object"
 	set src in usr
 
-	if ((usr.mutations & CLUMSY) && prob(50))
+	if ((CLUMSY in usr.mutations) && prob(50))
 		usr << "\red You cut yourself on the paper."
 		return
-	var/n_name = copytext(sanitize(input(usr, "What would you like to label the paper?", "Paper Labelling", null)  as text),1,MAX_NAME_LEN)
+	var/n_name = input(usr, "What would you like to label the paper?", "Paper Labelling", null)  as text
+	n_name = copytext(n_name, 1, 32)
 	if ((loc == usr && usr.stat == 0))
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)

@@ -65,6 +65,7 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
+		select_traitor_faction(traitor)
 		forge_traitor_objectives(traitor)
 		spawn(rand(10,100))
 			finalize_traitor(traitor)
@@ -74,6 +75,44 @@
 		send_intercept()
 	..()
 	return 1
+
+
+/datum/game_mode/proc/assign_to_faction(var/datum/mind/traitor, var/datum/faction/faction, var/forceentry)
+	if(traitor && faction && faction in ticker.availablefactions)
+		if((length(faction.members) >= faction.max_op) && !forceentry)
+			return 0
+		traitor.faction = faction
+		faction.members.Add(traitor)
+		if(length(faction.members) >= faction.max_op)
+			ticker.availablefactions.Remove(faction)
+		return 1
+
+/datum/game_mode/proc/pick_syndicate_faction()
+	var/list/availablesyndicatefactions = list()
+	for(var/datum/faction/F in ticker.availablefactions)
+		if(F in ticker.syndicate_coalition)
+			availablesyndicatefactions.Add(F)
+
+	return pick(availablesyndicatefactions)
+
+
+/datum/game_mode/proc/select_traitor_faction(var/datum/mind/traitor)
+	if(istype(traitor.current, /mob/living/silicon))
+		if(prob(99))
+			var/datum/faction/faction = ticker.getfactionbyname("SELF")
+			assign_to_faction(traitor, faction, 1)
+		else
+			var/datum/faction/faction = ticker.getfactionbyname("Cybersun Industries")
+			assign_to_faction(traitor, faction, 1)
+
+	else
+		for(var/i = 1, i <= ticker.availablefactions.len, i++)
+			var/datum/faction/faction = pick_syndicate_faction()
+
+			if(!assign_to_faction(traitor, faction))
+				continue
+			else
+				break
 
 
 /datum/game_mode/proc/forge_traitor_objectives(var/datum/mind/traitor)
@@ -120,11 +159,39 @@
 
 
 /datum/game_mode/proc/greet_traitor(var/datum/mind/traitor)
-	traitor.current << "<B><font size=3 color=red>You are the traitor.</font></B>"
+
+	/*
+	traitor.current << "<B><font size=3 color=red>You are a traitor.</font></B>"
 	var/obj_count = 1
 	for(var/datum/objective/objective in traitor.objectives)
 		traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
+	*/
+
+	var/objectivetxt = ""
+	var/obj_count = 1
+	for(var/datum/objective/objective in traitor.objectives)
+		objectivetxt += "<B>Objective #[obj_count]</B>: [objective.explanation_text]<br>"
+		obj_count++
+
+	var/datum/faction/syndicate/syndifaction = traitor.faction
+
+	var/dat = {"
+
+	<b><font size=3 color=red><center>You are a traitor!</center></font></b><br><br>
+
+	<font color='#8C0000'>You have been hired by an associate of the Syndicate Coalition. The Syndicate Coalition is a group of several companies, organizations, and terrorist groups that share the common interest of foiling Nanotrasen in every way possible. You now work for <b>[syndifaction]</b>, a key member of the coalition.. It is highly recommended you take some time to read familiarize yourself with your faction:</font><br><br>
+
+	[syndifaction.desc]<br><br>
+
+	You have been assigned to complete the following objectives before the end of your shift:<br>
+	[objectivetxt]<br>
+
+	[syndifaction.name] would finally like to add: <i>\"[syndifaction.operative_notes]\"</i>
+	"}
+
+	traitor.current << browse("<HEAD><TITLE>You are a traitor!</TITLE></HEAD>[dat]", "window=traitorgreet;size=700x500")
+
 	return
 
 
@@ -207,10 +274,11 @@
 	if (traitor_mob.mind)
 		if (traitor_mob.mind.assigned_role == "Clown")
 			traitor_mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
-			traitor_mob.mutations &= ~CLUMSY
+			traitor_mob.mutations.Remove(CLUMSY)
 
 	// find a radio! toolbox(es), backpack, belt, headset
 	var/loc = ""
+	var/datum/faction/syndicate/faction = traitor_mob.mind.faction
 	var/obj/item/device/R = null //Hide the uplink in a PDA if available, otherwise radio
 	if (!R && istype(traitor_mob.belt, /obj/item/device/pda))
 		R = traitor_mob.belt
@@ -276,30 +344,79 @@
 			T.name = R.name
 			T.icon_state = R.icon_state
 			T.origradio = R
-			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features."
+
+			T.item_data = faction.uplink_contents
+			if(!T.item_data)
+				T.item_data = uplink_items
+			T.welcome = "[faction.name] Uplink Console"
+			if(!T.welcome)
+				T.welcome = uplink_welcome
+
+			traitor_mob << "The [faction.name] have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features."
 			traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
 		else if (istype(R, /obj/item/device/pda))
 			// generate a passcode if the uplink is hidden in a PDA
-			var/pda_pass = "[rand(100,999)] [pick("Alpha","Bravo","Delta","Omega")]"
+			var/pda_pass = "[rand(100,999)] [pick("Alpha","Bravo","Delta","Omega","Charlie","Zeta","Oscar","Papa","Echo","Foxtrot","Tango","Raptor","Sierra","India","Xray","Zulu","Yankee","Rosebud","Greenwich","Atlanta","Roger","Mayday","Toady","Relic")]"
+
+			if(prob(15))
+				var/extrastuff = ""
+				for(var/i = 1, i <= rand(1,4), i++)
+					extrastuff += pick("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","1","2","3","4","5","6","7","8","9","0","-","/","+","_","@")
+
+				if(prob(50))
+					pda_pass = "[pda_pass]-[extrastuff]"
+				else
+					pda_pass = "[extrastuff]-[pda_pass]"
 
 			var/obj/item/device/uplink/pda/T = new /obj/item/device/uplink/pda(R)
 			R:uplink = T
 			T.lock_code = pda_pass
 			T.hostpda = R
-			traitor_mob << "The Syndicate have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features."
+
+			T.item_data = faction.uplink_contents
+			if(!T.item_data)
+				T.item_data = uplink_items
+			T.welcome = "[faction.name] Uplink Console"
+			if(!T.welcome)
+				T.welcome = uplink_welcome
+
+			traitor_mob << "[faction.name] have cunningly disguised a Syndicate Uplink as your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features."
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
 	//Begin code phrase.
 	if(!safety)//If they are not a rev. Can be added on to.
-		traitor_mob << "The Syndicate provided you with the following information on how to identify other agents:"
-		if(prob(80))
-			traitor_mob << "\red Code Phrase: \black [syndicate_code_phrase]"
-			traitor_mob.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
-		else
-			traitor_mob << "Unfortunetly, the Syndicate did not provide you with a code phrase."
-		if(prob(80))
-			traitor_mob << "\red Code Response: \black [syndicate_code_response]"
-			traitor_mob.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
-		else
-			traitor_mob << "Unfortunately, the Syndicate did not provide you with a code response."
-		traitor_mob << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
+
+		if(faction.friendly_identification == 0)
+			traitor_mob << "[faction.name] have not provided you with identification codes or the identity of other agents. You are completely anonymous."
+
+		else if(faction.friendly_identification == 1)
+
+			traitor_mob << "[faction.name] provided you with the following information on how to identify other agents:"
+			if(prob(80))
+				traitor_mob << "\red Code Phrase: \black [syndicate_code_phrase]"
+				traitor_mob.mind.store_memory("<b>Code Phrase</b>: [syndicate_code_phrase]")
+			else
+				traitor_mob << "Unfortunetly, [faction.name] did not provide you with a code phrase."
+			if(prob(80))
+				traitor_mob << "\red Code Response: \black [syndicate_code_response]"
+				traitor_mob.mind.store_memory("<b>Code Response</b>: [syndicate_code_response]")
+			else
+				traitor_mob << "Unfortunately, [faction.name] did not provide you with a code response."
+			traitor_mob << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
+
+		else if(faction.friendly_identification == 2)
+			var/list/allies = list()
+			for(var/datum/faction/syndicate/F in faction.alliances)
+				for(var/datum/mind/M in F.members)
+					allies.Add(M)
+
+			if(length(allies + faction.members) > 1)
+				traitor_mob << "[faction.name] have provided you with precise identities of allied Syndicate operatives."
+				for(var/datum/mind/M in allies + faction.members)
+					if(M != traitor_mob.mind)
+						traitor_mob << "\red Confirmed Syndicate ally: \black [M.current] - [M.assigned_job.title]"
+						traitor_mob.mind.store_memory("<b>Confirmed Syndicate ally</b>: [M.current] - [M.assigned_job.title] ([M.faction.name])")
+
+			else
+				traitor_mob << "[faction.name] have informed you that you are their only operative on the station."
+
 	//End code phrase.

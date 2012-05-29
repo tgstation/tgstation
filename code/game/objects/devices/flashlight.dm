@@ -49,7 +49,7 @@
 /obj/item/device/flashlight/attack(mob/M as mob, mob/user as mob)
 	src.add_fingerprint(user)
 	if(src.on && user.zone_sel.selecting == "eyes")
-		if ((user.mutations & CLUMSY || user.getBrainLoss() >= 60) && prob(50))//too dumb to use flashlight properly
+		if (((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))//too dumb to use flashlight properly
 			return ..()//just hit them in the head
 
 		if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")//don't have dexterity
@@ -69,7 +69,7 @@
 			if(M.stat > 1 || M.sdisabilities & 1)//mob is dead or fully blind
 				if(M!=user)
 					user.show_message(text("\red [] pupils does not react to the light!", M),1)
-			else if(M.mutations & XRAY)//mob has X-RAY vision
+			else if(XRAY in M.mutations)//mob has X-RAY vision
 				if(M!=user)
 					user.show_message(text("\red [] pupils give an eerie glow!", M),1)
 			else //nothing wrong

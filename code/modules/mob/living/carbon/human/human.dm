@@ -147,8 +147,8 @@
 					Metroid.UpdateFeed()
 			return
 
-		if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
-			if(prob(40) && !(mutations & FAT))
+		if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
+			if(prob(40) && !(FAT in src.mutations))
 				src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 				now_pushing = 0
 				return
@@ -207,7 +207,7 @@
 	if(shoes)
 		tally += shoes.slowdown
 
-	if(mutations & FAT)
+	if(FAT in src.mutations)
 		tally += 1.5
 	if (bodytemperature < 283.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
@@ -480,9 +480,10 @@
 				return
 			if (!istype(W, /obj/item))
 				return
+
 			if (!( W.slot_flags & SLOT_OCLOTHING ))
 				return
-			if (mutations & FAT && !(W.flags & ONESIZEFITSALL))
+			if ((FAT in src.mutations) && !(W.flags & ONESIZEFITSALL))
 				src << "\red You're too fat to wear the [W.name]!"
 				return
 			u_equip(W)
@@ -575,7 +576,7 @@
 				return
 			if (!( W.slot_flags & SLOT_ICLOTHING ))
 				return
-			if (mutations & FAT && !(W.flags & ONESIZEFITSALL))
+			if ((FAT in src.mutations) && !(W.flags & ONESIZEFITSALL))
 				src << "\red You're too fat to wear the [W.name]!"
 				return
 			u_equip(W)
@@ -751,19 +752,19 @@
 
 	// lol
 	var/fat = ""
-	if (mutations & FAT)
+	if (FAT in mutations)
 		fat = "fat"
 
-	if (mutations & HULK)
+	if (HULK in mutations)
 		overlays += image("icon" = 'genetics.dmi', "icon_state" = "hulk[fat][!lying ? "_s" : "_l"]")
 
-	if (mutations & COLD_RESISTANCE)
+	if (COLD_RESISTANCE in mutations)
 		overlays += image("icon" = 'genetics.dmi', "icon_state" = "fire[fat][!lying ? "_s" : "_l"]")
 
-	if (mutations & TK)
+	if (TK in mutations)
 		overlays += image("icon" = 'genetics.dmi', "icon_state" = "telekinesishead[fat][!lying ? "_s" : "_l"]")
 
-	if (mutations & LASER)
+	if (LASER in mutations)
 		overlays += image("icon" = 'genetics.dmi', "icon_state" = "lasereyes[!lying ? "_s" : "_l"]")
 
 	if (mutantrace)
@@ -839,7 +840,7 @@
 
 	// Uniform
 	if(w_uniform)
-		if (mutations & FAT && !(w_uniform.flags & ONESIZEFITSALL))
+		if ((FAT in src.mutations) && !(w_uniform.flags & ONESIZEFITSALL))
 			src << "\red You burst out of the [w_uniform.name]!"
 			var/obj/item/clothing/c = w_uniform
 			u_equip(c)
@@ -855,7 +856,7 @@
 			var/t1 = w_uniform.color
 			if (!t1)
 				t1 = icon_state
-			if (mutations & FAT)
+			if (FAT in src.mutations)
 				overlays += image("icon" = 'uniform_fat.dmi', "icon_state" = "[t1][!lying ? "_s" : "_l"]", "layer" = MOB_LAYER)
 			else
 				overlays += image("icon" = 'uniform.dmi', "icon_state" = text("[][]",t1, (!(lying) ? "_s" : "_l")), "layer" = MOB_LAYER)
@@ -933,7 +934,7 @@
 
 
 	if (wear_suit)
-		if (mutations & FAT && !(wear_suit.flags & ONESIZEFITSALL))
+		if ((FAT in src.mutations) && !(wear_suit.flags & ONESIZEFITSALL))
 			src << "\red You burst out of the [wear_suit.name]!"
 			var/obj/item/clothing/c = wear_suit
 			u_equip(c)
@@ -1203,8 +1204,8 @@
 	stand_icon = new /icon('human.dmi', "blank")
 	lying_icon = new /icon('human.dmi', "blank")
 
-	var/husk = (mutations & HUSK)
-	var/obese = (mutations & FAT)
+	var/husk = (HUSK in src.mutations)
+	var/obese = (FAT in src.mutations)
 
 	if (husk)
 		stand_icon.Blend(new /icon('human.dmi', "husk_s"), ICON_OVERLAY)
@@ -2287,17 +2288,17 @@ It can still be worn/put on as normal.
 		heal_overall_damage(0, -amount)
 
 /mob/living/carbon/human/Stun(amount)
-	if(mutations & HULK)
+	if(HULK in mutations)
 		return
 	..()
 
 /mob/living/carbon/human/Weaken(amount)
-	if(mutations & HULK)
+	if(HULK in mutations)
 		return
 	..()
 
 /mob/living/carbon/human/Paralyse(amount)
-	if(mutations & HULK)
+	if(HULK in mutations)
 		return
 	..()
 
