@@ -199,4 +199,3 @@ emp_act
 				if(src.w_uniform)	src.w_uniform.add_blood(src)
 
 	UpdateDamageIcon()
-	update_clothing()

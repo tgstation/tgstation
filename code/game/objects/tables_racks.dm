@@ -111,16 +111,6 @@ TABLE AND RACK OBJECT INTERATIONS
 			new /obj/item/weapon/table_parts( src.loc )
 		src.density = 0
 		del(src)
-/*	if (user.mutations2 & mSmallsize)
-		step(user, get_dir(user, src))
-		if (user.loc == src.loc)
-			user.layer = TURF_LAYER
-			user.update_clothing()
-			for(var/mob/M in viewers(user, null))
-				M.show_message("[user] hides under the table!", 1)
-				//Foreach goto(69)
-				*/
-//Googol never tested this shit.
 	return
 
 
@@ -189,7 +179,6 @@ TABLE AND RACK OBJECT INTERATIONS
 					"\red You hear the nauseating crunch of bone and gristle on solid metal.")
 				H.UpdateDamageIcon()
 				H.updatehealth()
-				H.update_clothing()
 				playsound(src.loc, 'tablehit1.ogg', 50, 1, -3)
 			return
 		G.affecting.loc = src.loc

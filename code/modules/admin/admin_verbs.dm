@@ -145,7 +145,7 @@
 			verbs += /client/proc/voting
 			verbs += /client/proc/hide_verbs
 			verbs += /client/proc/general_report
-			verbs += /client/proc/air_report
+			//verbs += /client/proc/air_report
 			verbs += /client/proc/deadmin_self
 			//verbs += /client/proc/cmd_admin_prison 					--Merged with player panel
 			//verbs += /obj/admins/proc/unprison  						--Merged with player panel
@@ -249,7 +249,7 @@
 //			verbs += /client/proc/mapload
 			verbs += /client/proc/check_words
 			verbs += /client/proc/drop_bomb
-			verbs += /client/proc/kill_airgroup
+			//verbs += /client/proc/kill_airgroup
 			//verbs += /client/proc/cmd_admin_drop_everything			--Merged with view variables
 			verbs += /client/proc/make_sound
 			verbs += /client/proc/play_local_sound
@@ -280,7 +280,7 @@
 			verbs += /client/proc/Force_Event_admin
 			verbs += /client/proc/radioalert
 			verbs += /client/proc/CarbonCopy
-			verbs += /client/proc/jump_to_dead_group
+			//verbs += /client/proc/jump_to_dead_group
 		else	return
 
 		//Game Master
@@ -405,7 +405,7 @@
 	verbs -= /client/proc/voting
 	verbs -= /client/proc/hide_verbs
 	verbs -= /client/proc/general_report
-	verbs -= /client/proc/air_report
+	//verbs -= /client/proc/air_report
 	verbs -= /client/proc/cmd_admin_say
 	verbs -= /client/proc/cmd_admin_gib_self
 	verbs -= /client/proc/restartcontroller
@@ -456,13 +456,13 @@
 	//verbs -= /obj/admins/proc/unprison 								--Merged with player panel
 	//verbs -= /client/proc/cmd_switch_radio							--removed because tcommsat is staying
 	verbs -= /client/proc/togglebuildmodeself
-	verbs -= /client/proc/kill_airgroup
+	//verbs -= /client/proc/kill_airgroup
 	verbs -= /client/proc/debug_master_controller
 	verbs -= /client/proc/make_tajaran
 	verbs -= /client/proc/admin_deny_shuttle
 	verbs -= /client/proc/cmd_admin_christmas
 	verbs -= /client/proc/editappear
-	verbs -= /client/proc/jump_to_dead_group
+	//verbs -= /client/proc/jump_to_dead_group
 	verbs -= /client/proc/playernotes
 	verbs -= /obj/admins/proc/show_skills
 	verbs -= /client/proc/enable_debug_verbs
@@ -867,8 +867,7 @@
 		return
 	src.admin_invis =! src.admin_invis
 	if(src.mob)
-		var/mob/m = src.mob//probably don't need this cast, but I'm too lazy to check if /client.mob is of type /mob or not
-		m.update_clothing()
+		mob.rebuild_appearance()
 	log_admin("[key_name(usr)] has turned their invisibility [src.admin_invis ? "ON" : "OFF"]")
 	message_admins("[key_name_admin(usr)] has turned their invisibility [src.admin_invis ? "ON" : "OFF"]", 1)
 
@@ -975,9 +974,7 @@
 			M.gender = MALE
 		else
 			M.gender = FEMALE
-	M.update_body()
-	M.update_face()
-	M.update_clothing()
+	M.rebuild_appearance()
 	M.check_dna(M)
 
 

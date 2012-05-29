@@ -338,7 +338,7 @@
 		del(fingerprints)
 	if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src
-		M.update_clothing()
+		M.rebuild_appearance() // both clothes and hands need to be cleaned, so just rebuild all
 	return
 
 /atom/MouseDrop(atom/over_object as mob|obj|turf|area)

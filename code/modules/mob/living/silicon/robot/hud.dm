@@ -202,7 +202,7 @@
 	mymob.pullin.icon = 'screen1_robot.dmi'
 	mymob.pullin.icon_state = "pull0"
 	mymob.pullin.name = "pull"
-	mymob.pullin.screen_loc = ui_pull_old
+	mymob.pullin.screen_loc = ui_pull_borg
 
 	mymob.blind = new /obj/screen( null )
 	mymob.blind.icon = 'screen1_robot.dmi'

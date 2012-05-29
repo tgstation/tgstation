@@ -498,7 +498,6 @@ mob/living/parasite/meme/verb/Analgesic()
 
 
 mob/proc/clearHUD()
-	update_clothing()
 	if(client) client.screen.Cut()
 
 // Take control of the mob

@@ -341,8 +341,6 @@
 
 	proc/TemperatureAct(temperature)
 		for(var/turf/simulated/floor/target_tile in range(2,loc))
-			if(target_tile.parent && target_tile.parent.group_processing)
-				target_tile.parent.suspend_group_processing()
 
 			var/datum/gas_mixture/napalm = new
 

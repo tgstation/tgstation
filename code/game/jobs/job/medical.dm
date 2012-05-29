@@ -52,6 +52,12 @@
 		if(H.mind.role_alt_title && H.mind.role_alt_title == "Virologist")
 			H.equip_if_possible(new /obj/item/clothing/under/rank/virologist(H), H.slot_w_uniform)
 			H.equip_if_possible(new /obj/item/clothing/suit/storage/labcoat/virologist(H), H.slot_wear_suit)
+		else if(H.mind.role_alt_title && H.mind.role_alt_title == "Emergency Physician")
+			H.equip_if_possible(new /obj/item/clothing/under/rank/medical(H), H.slot_w_uniform)
+			H.equip_if_possible(new /obj/item/clothing/suit/storage/labcoat/fr_jacket(H), H.slot_wear_suit)
+		else if(H.mind.role_alt_title && H.mind.role_alt_title == "Surgeon")
+			H.equip_if_possible(new /obj/item/clothing/under/rank/medical/blue(H), H.slot_w_uniform)
+			H.equip_if_possible(new /obj/item/clothing/suit/storage/labcoat(H), H.slot_wear_suit)
 		else
 			H.equip_if_possible(new /obj/item/clothing/under/rank/medical(H), H.slot_w_uniform)
 			H.equip_if_possible(new /obj/item/clothing/suit/storage/labcoat(H), H.slot_wear_suit)

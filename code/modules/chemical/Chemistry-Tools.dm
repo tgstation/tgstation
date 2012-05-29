@@ -1588,6 +1588,7 @@
 							del(src)
 							spawn(5)
 								user.update_clothing()
+
 				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
 				return 1
 		else if(istype(M, /mob/living/simple_animal/livestock))
@@ -2916,6 +2917,15 @@
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
 
+/obj/item/weapon/reagent_containers/food/drinks/waterbottle
+	name = "water bottle"
+	desc = "Straight from the ice lakes of Mars!"
+	icon_state = "waterbottle"
+	New()
+		..()
+		reagents.add_reagent("water", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/sillycup
 	name = "Paper Cup"

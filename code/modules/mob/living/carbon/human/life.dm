@@ -29,18 +29,18 @@
 
 	//Being buckled to a chair or bed
 	check_if_buckled()
+	handle_clothing()
 
-	// Update clothing
-//	update_clothing()
+	// TODO: this check and the lyingcheck variable should probably be removed in favor of the visual_lying check
 	if((lyingcheck != lying) || (buckle_check != (buckled ? 1 : 0)))		//This is a fix for falling down / standing up not updating icons.  Instead of going through and changing every
 		spawn(5)
-			update_clothing()		//instance in the code where lying is modified, I've just added a new variable "lyingcheck" which will be compared
+			update_lying()		//instance in the code where lying is modified, I've just added a new variable "lyingcheck" which will be compared
 		lyingcheck = lying		//to lying, so if lying ever changes, update_clothing() will run like normal.
 
 	if(stat == 2)
-		if((!lying || !lyingcheck) && !buckled)
+		if(!lying && !buckled)
 			lying = 1
-			update_clothing()
+			update_lying()
 		return
 
 	life_tick++
@@ -137,7 +137,7 @@
 			if (stat != 0)
 				if(!lying)
 					lying = 1 //Seriously, stay down :x
-					update_clothing()
+					update_lying()
 
 
 
@@ -359,7 +359,7 @@
 			if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 
 			var/datum/gas_mixture/environment = loc.return_air()
-			var/datum/air_group/breath
+			var/datum/gas_mixture/breath
 
 			// HACK NEED CHANGING LATER
 			if(isbreathing && health < config.health_threshold_crit)
@@ -420,6 +420,16 @@
 											smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
 									break // If they breathe in the nasty stuff once, no need to continue checking
 
+					if(istype(wear_mask, /obj/item/clothing/mask/gas))
+						var/datum/gas_mixture/filtered = new()
+						filtered.toxins = breath.toxins
+						filtered.trace_gases = breath.trace_gases.Copy()
+						filtered.update_values()
+						breath.toxins = 0
+						breath.trace_gases = list()
+						breath.update_values()
+						loc.assume_air(filtered)
+
 				else //Still give containing object the chance to interact
 					if(istype(loc, /obj/))
 						var/obj/location_as_object = loc
@@ -469,7 +479,7 @@
 			var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 			//var/safe_oxygen_max = 140 // Maximum safe partial pressure of O2, in kPa (Not used for now)
 			var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
-			var/safe_toxins_max = 0.005
+			var/safe_toxins_max = 0.0025
 			var/SA_para_min = 1
 			var/SA_sleep_min = 5
 			var/oxygen_used = 0
@@ -649,7 +659,7 @@
 
 			//Account for massive pressure differences.  Done by Polymorph
 			var/pressure = environment.return_pressure()
-			if(!istype(wear_suit, /obj/item/clothing/suit/space))
+			if(!istype(wear_suit, /obj/item/clothing/suit/space) && !istype(wear_suit, /obj/item/clothing/suit/fire))
 					/*if(pressure < 20)
 						if(prob(25))
 							src << "You feel the splittle on your lips and the fluid on your eyes boiling away, the capillteries in your skin breaking."
@@ -657,6 +667,9 @@
 					*/
 				if(pressure > HAZARD_HIGH_PRESSURE)
 					adjustBruteLoss(min((10+(round(pressure/(HIGH_STEP_PRESSURE)-2)*5)),MAX_PRESSURE_DAMAGE))
+
+			if(environment.toxins > MOLES_PLASMA_VISIBLE)
+				pl_effects()
 
 			return //TODO: DEFERRED
 
@@ -1502,3 +1515,53 @@
 			src << "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")
 		else if(shock_stage == 80)
 			src << "<font color='red'><b>"+pick("You see a light at the end of the tunnel!", "You feel like you could die any moment now.", "You're about to lose consciousness.")
+
+
+/mob/living/carbon/human/proc/handle_clothing()
+	// Non-visual stuff that was in update_clothing()
+
+	if(buckled)
+		if(istype(buckled, /obj/structure/stool/bed/chair))
+			lying = 0
+		else
+			lying = 1
+
+	if(!w_uniform)
+		// Automatically drop anything in store / id / belt if you're not wearing a uniform.
+		for (var/obj/item/thing in list(r_store, l_store, wear_id, belt))
+			if (thing)
+				u_equip(thing)
+				if (client)
+					client.screen -= thing
+				if (thing)
+					thing.loc = loc
+					thing.dropped(src)
+					thing.layer = initial(thing.layer)
+
+	// Why this stuff was in handle_clothing() is beyond me
+	var/shielded = 0
+	for (var/obj/item/weapon/cloaking_device/S in src)
+		if (S.active)
+			shielded = 2
+			break
+
+	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_active)
+		shielded = 3
+	switch(shielded)
+		if(1)
+		if(2)
+			invisibility = 2
+			//New stealth. Hopefully doesn't lag too much. /N
+			if(istype(loc, /turf))//If they are standing on a turf.
+				AddCamoOverlay(loc)//Overlay camo.
+		if(3)
+			if(istype(loc, /turf))
+			//Ninjas may flick into view once in a while if they are stealthed.
+				if(prob(90))
+					NinjaStealthActive(loc)
+				else
+					NinjaStealthMalf()
+		else
+			invisibility = 0
+
+	name = get_visible_name()

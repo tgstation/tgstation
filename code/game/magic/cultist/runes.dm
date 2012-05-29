@@ -795,7 +795,7 @@ var/list/sacrificed = list()
 					return fizzle()
 				cultist.loc = src.loc
 				cultist.lying = 1
-				cultist.update_clothing()
+				cultist.update_lying()
 				for(var/mob/living/carbon/human/C in orange(1,src))
 					if(iscultist(C))
 						C.say("N'ath reth sh'yro eth d'rekkathnor!")

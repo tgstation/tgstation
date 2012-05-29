@@ -55,7 +55,7 @@
 	O.update_body()
 	O.update_face()
 	spawn(1)
-		O.update_clothing()
+		O.rebuild_appearance()
 	O << "<B>You are now a Tajara.</B>"
 	spawn(0)//To prevent the proc from returning null.
 		del(src)

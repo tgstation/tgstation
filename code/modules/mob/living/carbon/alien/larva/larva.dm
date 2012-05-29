@@ -7,7 +7,7 @@
 		name = text("alien larva ([rand(1, 1000)])")
 	real_name = name
 	spawn (1)
-		update_clothing()
+		rebuild_appearance()
 		src << "\blue Your icons have been generated!"
 //	spawn(1200) grow()  Grow after 120 seconds -- TLE Commented out because life.dm has better version -- Urist
 	..()

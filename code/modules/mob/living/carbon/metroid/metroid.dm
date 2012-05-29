@@ -9,7 +9,7 @@
 
 	real_name = name
 	spawn (1)
-		update_clothing()
+		rebuild_appearance()
 		src << "\blue Your icons have been generated!"
 	..()
 

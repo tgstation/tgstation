@@ -1,6 +1,6 @@
 /mob/living/silicon/ai/Login()
 	..()
-	update_clothing()
+	rebuild_appearance()
 	for(var/S in src.client.screen)
 		del(S)
 	src.flash = new /obj/screen( null )

@@ -177,9 +177,6 @@
 	item.loc = null
 	item.layer = initial(item.layer)
 	u_equip(item)
-	//if (client)
-	//	client.screen -= item
-	//update_clothing()
 	return
 
 /mob/proc/get_active_hand()
@@ -1163,3 +1160,25 @@ note dizziness decrements automatically in the mob's Life() proc.
 			src << browse_rsc(file)
 		return 1
 	return 0
+
+
+/** The stuff below here really should be in /mob/living, but due to tons of procs that should only
+	take /mob/living only taking /mob(or, indeed, some silly procs relying on usr.. yes, *procs*, not verbs..),
+	I'm putting this stuff into /mob for now
+**/
+/mob/proc/rebuild_appearance()
+	// Rebuild the entire mob appearance completely, this should ONLY be called in rare cases,
+	// e.g. when the mob spawns.
+	return update_clothing() // most mobs still implement update_clothing() by simply rebuilding the entire appearance
+
+/mob/proc/update_body_appearance()
+	// Call this proc whenever something about the appearance of the body itself changes.
+	// For example, this must be called when you add a wound to a mob.
+
+/mob/proc/update_lying()
+	// Call this whenever the lying status of a mob changes.
+
+/mob/update_clothing()
+	// Call this proc whenever something about the clothing of a mob changes. Normally, you
+	// don't need to call this by hand, as the equip procs will do it for you.
+	..()

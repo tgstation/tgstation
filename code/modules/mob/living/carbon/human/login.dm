@@ -1,7 +1,7 @@
 /mob/living/carbon/human/Login()
 	..()
 
-	update_clothing()
+	rebuild_appearance()
 
 	if (!isturf(src.loc))
 		src.client.eye = src.loc
