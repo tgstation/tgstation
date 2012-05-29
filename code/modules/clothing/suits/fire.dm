@@ -28,6 +28,18 @@
 	protective_temperature = 10000
 	slowdown = 1.5
 
+/obj/item/clothing/head/helmet/space/fire_helmet
+	name = "Fire Helmet"
+	desc = "A helmet designed to protect against fires in sealed areas, which often create extreme pressures."
+	flags = FPRINT | TABLEPASS | HEADSPACE | HEADCOVERSEYES | BLOCKHAIR
+	see_face = 0.0
+	permeability_coefficient = 0.01
+	heat_transfer_coefficient = 0.01
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	icon_state = "hazmat_firered"
+	item_state = "hazhat_firered"
+
 
 
 /obj/item/clothing/head/radiation
