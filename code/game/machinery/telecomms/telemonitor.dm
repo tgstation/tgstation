@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 
 /*
 	Telecomms monitor tracks the overall trafficing of a telecommunications network
@@ -9,14 +11,13 @@
 	name = "Telecommunications Monitor"
 	icon_state = "comm_monitor"
 
-	var
-		screen = 0				// the screen number:
-		list/machines = list()	// the machines located by the computer
-		var/obj/machinery/telecomms/SelectedMachine
+	var/screen = 0				// the screen number:
+	var/list/machines = list()	// the machines located by the computer
+	var/var/obj/machinery/telecomms/SelectedMachine
 
-		network = "NULL"		// the network to probe
+	var/network = "NULL"		// the network to probe
 
-		temp = ""				// temporary feedback messages
+	var/temp = ""				// temporary feedback messages
 
 	attack_hand(mob/user as mob)
 		if(stat & (BROKEN|NOPOWER))

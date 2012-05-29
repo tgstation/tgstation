@@ -1,18 +1,18 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:06
+
 /obj/machinery/r_n_d/server
 	name = "R&D Server"
 	icon_state = "server"
-	var
-		datum/research/files
-		health = 100
-		list
-			id_with_upload = list()		//List of R&D consoles with upload to server access.
-			id_with_download = list()	//List of R&D consoles with download from server access.
-		id_with_upload_string = ""		//String versions for easy editing in map editor.
-		id_with_download_string = ""
-		server_id = 0
-		heat_gen = 100
-		heating_power = 40000
-		delay = 10
+	var/datum/research/files
+	var/health = 100
+	var/list/id_with_upload = list()		//List of R&D consoles with upload to server access.
+	var/list/id_with_download = list()	//List of R&D consoles with download from server access.
+	var/id_with_upload_string = ""		//String versions for easy editing in map editor.
+	var/id_with_download_string = ""
+	var/server_id = 0
+	var/heat_gen = 100
+	var/heating_power = 40000
+	var/delay = 10
 	req_access = list(access_rd) //Only the R&D can change server settings.
 
 	New()
@@ -159,13 +159,11 @@
 /obj/machinery/computer/rdservercontrol
 	name = "R&D Server Controller"
 	icon_state = "rdcomp"
-	var
-		screen = 0
-		obj/machinery/r_n_d/server/temp_server
-		list
-			servers = list()
-			consoles = list()
-		badmin = 0
+	var/screen = 0
+	var/obj/machinery/r_n_d/server/temp_server
+	var/list/servers = list()
+	var/list/consoles = list()
+	var/badmin = 0
 
 	Topic(href, href_list)
 		if(..())

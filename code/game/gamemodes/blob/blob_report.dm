@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /datum/game_mode/blob/send_intercept(var/report = 1)
 	var/intercepttext = ""
 	var/interceptname = "Error"
@@ -43,14 +45,13 @@
 
 
 /datum/station_state
-	var
-		floor = 0
-		wall = 0
-		r_wall = 0
-		window = 0
-		door = 0
-		grille = 0
-		mach = 0
+	var/floor = 0
+	var/wall = 0
+	var/r_wall = 0
+	var/window = 0
+	var/door = 0
+	var/grille = 0
+	var/mach = 0
 
 
 	proc/count()

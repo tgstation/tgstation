@@ -1,8 +1,9 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /datum/song
-	var
-		name = "Untitled"
-		list/lines = new()
-		tempo = 5
+	var/name = "Untitled"
+	var/list/lines = new()
+	var/tempo = 5
 
 /obj/structure/device/piano
 	name = "space minimoog"
@@ -10,11 +11,10 @@
 	icon_state = "minimoog"
 	anchored = 1
 	density = 1
-	var
-		datum/song/song
-		playing = 0
-		help = 0
-		edit = 1
+	var/datum/song/song
+	var/playing = 0
+	var/help = 0
+	var/edit = 1
 
 	proc
 		playnote(var/note as text)

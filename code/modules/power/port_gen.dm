@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /* new portable generator - work in progress
 
 /obj/machinery/power/port_gen
@@ -49,12 +51,11 @@ display round(lastgen) and plasmatank amount
 	directwired = 1
 	use_power = 0
 
-	var
-		active = 0
-		power_gen = 5000
-		open = 0
-		recent_fault = 0
-		power_output = 1
+	var/active = 0
+	var/power_gen = 5000
+	var/open = 0
+	var/recent_fault = 0
+	var/power_output = 1
 
 	proc
 		HasFuel() //Placeholder for fuel check.
@@ -98,14 +99,13 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/pacman
 	name = "P.A.C.M.A.N.-type Portable Generator"
-	var
-		sheets = 0
-		max_sheets = 100
-		sheet_path = /obj/item/stack/sheet/plasma
-		board_path = "/obj/item/weapon/circuitboard/pacman"
-		sheet_left = 0 // How much is left of the sheet
-		time_per_sheet = 10
-		heat = 0
+	var/sheets = 0
+	var/max_sheets = 100
+	var/sheet_path = /obj/item/stack/sheet/plasma
+	var/board_path = "/obj/item/weapon/circuitboard/pacman"
+	var/sheet_left = 0 // How much is left of the sheet
+	var/time_per_sheet = 10
+	var/heat = 0
 
 	New()
 		..()

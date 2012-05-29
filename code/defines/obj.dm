@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /obj
 	//var/datum/module/mod		//not used
 	var/m_amt = 0	// metal
@@ -30,11 +32,10 @@
 	icon_state = "rollstart"
 	flags = FPRINT
 	w_class = 1.0
-	var
-		turf/start
-		turf/end
-		tape_type = /obj/item/tape
-		icon_base
+	var/turf/start
+	var/turf/end
+	var/tape_type = /obj/item/tape
+	var/icon_base
 
 /obj/item/tape
 	name = "tape"
@@ -1100,8 +1101,7 @@
 	throw_range = 5
 	origin_tech = "biotech=3"
 
-	var
-		mob/living/carbon/brain/brainmob = null
+	var/mob/living/carbon/brain/brainmob = null
 
 	New()
 		..()

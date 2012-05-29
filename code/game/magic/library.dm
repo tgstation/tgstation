@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 //*******************************
 //
 //	Library SQL Configuration
@@ -211,20 +213,19 @@
 	throw_range = 5
 	w_class = 1.0
 	flags = FPRINT | TABLEPASS
-	var
-		dat			 // Actual page content
-		due_date = 0 // Game time in 1/10th seconds
-		author		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
-		unique = 0   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
-		title		 // The real name of the book.
+	var/dat			 // Actual page content
+	var/due_date = 0 // Game time in 1/10th seconds
+	var/author		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	var/unique = 0   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
+	var/title		 // The real name of the book.
 
-		author_real	 // author's real_name
-		author_key	 // author's byond key
-		ssbn		 // the ssbn, if a downloaded book
+	var/author_real	 // author's real_name
+	var/author_key	 // author's byond key
+	var/ssbn		 // the ssbn, if a downloaded book
 
-		list/pages = new()	 // individual pages as a list of text
-		cur_page = 1 // current page being read
-		list/icon/photos	 // in-game photos used
+	var/list/pages = new()	 // individual pages as a list of text
+	var/cur_page = 1 // current page being read
+	var/list/icon/photos	 // in-game photos used
 
 	proc/navbar()
 		return "<div style='color:#666;font-style:italic;padding-top:1em;height:7.5%'>" \
@@ -414,10 +415,9 @@
 	throw_range = 5
 	w_class = 1.0
 	flags = FPRINT | TABLEPASS
-	var
-		obj/machinery/librarycomp/computer // Associated computer - Modes 1 to 3 use this
-		obj/item/weapon/book/book	 //  Currently scanned book
-		mode = 0 					// 0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
+	var/obj/machinery/librarycomp/computer // Associated computer - Modes 1 to 3 use this
+	var/obj/item/weapon/book/book	 //  Currently scanned book
+	var/mode = 0 					// 0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
 
 	attack_self(mob/user as mob)
 		mode += 1
@@ -453,11 +453,10 @@
 
 
 datum/borrowbook // Datum used to keep track of who has borrowed what when and for how long.
-	var
-		bookname
-		mobname
-		getdate
-		duedate
+	var/bookname
+	var/mobname
+	var/getdate
+	var/duedate
 
 
 
@@ -472,12 +471,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	icon_state = "computer"
 	anchored = 1
 	density = 1
-	var
-		screenstate = 0
-		title
-		category = "Any"
-		author
-		SQLquery
+	var/screenstate = 0
+	var/title
+	var/category = "Any"
+	var/author
+	var/SQLquery
 
 
 /obj/machinery/librarypubliccomp/attack_hand(var/mob/user as mob)
@@ -580,18 +578,17 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	icon_state = "computer"
 	anchored = 1
 	density = 1
-	var
-		arcanecheckout = 0
-		screenstate = 0 // 0 - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book
-		buffer_book
-		buffer_mob
-		upload_category = "Fiction"
-		list/checkouts = list()
-		list/inventory = list()
-		checkoutperiod = 5 // In minutes
-		obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
+	var/arcanecheckout = 0
+	var/screenstate = 0 // 0 - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book
+	var/buffer_book
+	var/buffer_mob
+	var/upload_category = "Fiction"
+	var/list/checkouts = list()
+	var/list/inventory = list()
+	var/checkoutperiod = 5 // In minutes
+	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 
-		bibledelay = 0 // LOL NO SPAM (1 minute delay) -- Doohl
+	var/bibledelay = 0 // LOL NO SPAM (1 minute delay) -- Doohl
 
 /obj/machinery/librarycomp/attack_hand(var/mob/user as mob)
 	usr.machine = src
@@ -936,8 +933,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	icon_state = "bigscanner"
 	anchored = 1
 	density = 1
-	var
-		obj/item/weapon/book/cache		// Last scanned book
+	var/obj/item/weapon/book/cache		// Last scanned book
 
 
 

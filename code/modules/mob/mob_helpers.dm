@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 
 // fun if you want to typecast humans/monkeys/etc without writing long path-filled lines.
 /proc/ishuman(A)
@@ -212,10 +214,10 @@ proc/hasorgans(A)
 
 proc/slur(phrase)
 	phrase = html_decode(phrase)
-	var
-		leng=lentext(phrase)
-		counter=lentext(phrase)
-		newphrase="";newletter=""
+	var/leng=lentext(phrase)
+	var/counter=lentext(phrase)
+	var/newphrase=""
+	var/newletter=""
 	while(counter>=1)
 		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
 		if(rand(1,3)==3)

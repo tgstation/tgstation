@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /*
 #define BRUTE "brute"
 #define BURN "burn"
@@ -19,33 +21,32 @@
 	flags = FPRINT | TABLEPASS
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
-	var
-		bumped = 0		//Prevents it from hitting more than one guy at once
-		def_zone = ""	//Aiming at
-		mob/firer = null//Who shot it
-		silenced = 0	//Attack message
-		yo = null
-		xo = null
-		current = null
-		turf/original = null // the original turf clicked
-		turf/starting = null // the projectile's starting turf
+	var/bumped = 0		//Prevents it from hitting more than one guy at once
+	var/def_zone = ""	//Aiming at
+	var/mob/firer = null//Who shot it
+	var/silenced = 0	//Attack message
+	var/yo = null
+	var/xo = null
+	var/current = null
+	var/turf/original = null // the original turf clicked
+	var/turf/starting = null // the projectile's starting turf
 
-		p_x = 16
-		p_y = 16 // the pixel location of the tile that the player clicked. Default is the center
+	var/p_x = 16
+	var/p_y = 16 // the pixel location of the tile that the player clicked. Default is the center
 
-		damage = 10
-		damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
-		nodamage = 0 //Determines if the projectile will skip any damage inflictions
-		flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
-		projectile_type = "/obj/item/projectile"
+	var/damage = 10
+	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
+	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
+	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
+	var/projectile_type = "/obj/item/projectile"
 		//Effects
-		stun = 0
-		weaken = 0
-		paralyze = 0
-		irradiate = 0
-		stutter = 0
-		eyeblur = 0
-		drowsy = 0
+	var/stun = 0
+	var/weaken = 0
+	var/paralyze = 0
+	var/irradiate = 0
+	var/stutter = 0
+	var/eyeblur = 0
+	var/drowsy = 0
 
 
 	proc/on_hit(var/atom/target, var/blocked = 0)
@@ -154,9 +155,8 @@
 	invisibility = 101 //Nope!  Can't see me!
 	yo = null
 	xo = null
-	var
-		target = null
-		result = 0 //To pass the message back to the gun.
+	var/target = null
+	var/result = 0 //To pass the message back to the gun.
 
 	Bump(atom/A as mob|obj|turf|area)
 		if(A == firer)

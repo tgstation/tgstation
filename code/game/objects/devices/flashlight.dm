@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/item/device/flashlight
 	name = "flashlight"
 	desc = "A hand-held emergency light."
@@ -7,11 +9,10 @@
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	m_amt = 50
 	g_amt = 20
-	var
-		on = 0
-		brightness_on = 4 //luminosity when on
-		icon_on = "flight1"
-		icon_off = "flight0"
+	var/on = 0
+	var/brightness_on = 4 //luminosity when on
+	var/icon_on = "flight1"
+	var/icon_off = "flight0"
 
 /obj/item/device/flashlight/initialize()
 	..()

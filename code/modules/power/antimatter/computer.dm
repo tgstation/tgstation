@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/machinery/computer/am_engine
 	name = "Antimatter Engine Console"
 	icon = 'stationobjs.dmi'
@@ -8,10 +10,9 @@
 	var/obj/machinery/power/am_engine/engine/connected_E = null
 	var/obj/machinery/power/am_engine/injector/connected_I = null
 	var/state = STATE_DEFAULT
-	var/const
-		STATE_DEFAULT = 1
-		STATE_INJECTOR = 2
-		STATE_ENGINE = 3
+	var/const/STATE_DEFAULT = 1
+	var/const/STATE_INJECTOR = 2
+	var/const/STATE_ENGINE = 3
 
 /obj/machinery/computer/am_engine/New()
 	..()

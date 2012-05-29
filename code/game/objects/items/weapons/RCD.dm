@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /*
 CONTAINS:
 RCD
@@ -18,13 +20,12 @@ RCD
 	w_class = 3.0
 	m_amt = 50000
 	origin_tech = "engineering=4;materials=2"
-	var
-		datum/effect/effect/system/spark_spread/spark_system
-		matter = 0
-		working = 0
-		mode = 1
-		disabled = 0
-		max_matter = 30
+	var/datum/effect/effect/system/spark_spread/spark_system
+	var/matter = 0
+	var/working = 0
+	var/mode = 1
+	var/disabled = 0
+	var/max_matter = 30
 
 
 	New()

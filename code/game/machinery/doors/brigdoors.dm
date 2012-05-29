@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Brig Door control displays.
 //  Description: This is a controls the timer for the brig doors, displays the timer on itself and
@@ -14,12 +16,11 @@
 	req_access = list(access_brig)
 	anchored = 1.0    		// can't pick it up
 	density = 0       		// can walk through it.
-	var
-		id = null     		// id of door it controls.
-		releasetime = 0		// when world.time reaches it - release the prisoneer
-		timing = 1    		// boolean, true/1 timer is on, false/0 means it's not timing
-		picture_state		// icon_state of alert picture, if not displaying text/numbers
-		list/obj/machinery/targets = list()
+	var/id = null     		// id of door it controls.
+	var/releasetime = 0		// when world.time reaches it - release the prisoneer
+	var/timing = 1    		// boolean, true/1 timer is on, false/0 means it's not timing
+	var/picture_state		// icon_state of alert picture, if not displaying text/numbers
+	var/list/obj/machinery/targets = list()
 
 
 	New()
