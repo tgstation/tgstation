@@ -1400,14 +1400,9 @@ turf/simulated/floor/return_siding_icon_state()
 	if(ticker && ticker.mode)
 
 		// Okay, so let's make it so that people can travel z levels but not nuke disks!
-		// if(ticker.mode.name == "nuclear emergency")	return
 		if (src.x <= TRANSITIONEDGE || A.x >= (world.maxx - TRANSITIONEDGE - 1) || src.y <= TRANSITIONEDGE || A.y >= (world.maxy - TRANSITIONEDGE - 1))
-			if(istype(A, /obj/effect/meteor)||istype(A, /obj/effect/space_dust))
-				del(A)
-				return
-
-			if(istype(A, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks travel Z levels  ... And moving this shit down here so it only fires when they're actually trying to change z-level.
-				del(A) //The disk's Del() proc ensures a new one is created
+			if(istype(A, /obj))
+				del(A) // The nuke disk's del() will spawn a new disk
 				return
 
 			if(!isemptylist(A.search_contents_for(/obj/item/weapon/disk/nuclear)))
@@ -1417,10 +1412,7 @@ turf/simulated/floor/return_siding_icon_state()
 						MM << "\red Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is."
 				return
 
-			var/move_to_z_str = pickweight(accessable_z_levels)
-
-			var/move_to_z = text2num(move_to_z_str)
-
+			var/move_to_z = text2num(pickweight(accessable_z_levels))
 			if(!move_to_z)
 				return
 
