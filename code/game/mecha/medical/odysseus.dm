@@ -78,7 +78,6 @@
 		if(!M || M.stat || !(M in view(M)))	return
 		if(!M.client)	return
 		var/client/C = M.client
-		var/icon/tempHud = 'hud.dmi'
 		for(var/mob/living/carbon/human/patient in view(M.loc))
 			if(M.see_invisible < patient.invisibility)
 				continue
@@ -88,12 +87,14 @@
 					foundVirus++
 			//if(patient.virus2)
 			//	foundVirus++
-			C.images += image(tempHud,patient,"hud[RoundHealth(patient.health)]")
+			patient.health_img.icon_state = "hud[RoundHealth(patient.health)]"
+			C.images += patient.health_img
 			if(patient.stat == 2)
-				C.images += image(tempHud,patient,"huddead")
+				patient.med_img.icon_state = "huddead"
 			else if(patient.alien_egg_flag)
-				C.images += image(tempHud,patient,"hudxeno")
+				patient.med_img.icon_state = "hudxeno"
 			else if(foundVirus)
-				C.images += image(tempHud,patient,"hudill")
+				patient.med_img.icon_state = "hudill"
 			else
-				C.images += image(tempHud,patient,"hudhealthy")
+				patient.med_img.icon_state = "hudhealthy"
+			C.images += patient.med_img

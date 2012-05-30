@@ -961,6 +961,7 @@
 #include "code\modules\mob\living\carbon\human\emote.dm"
 #include "code\modules\mob\living\carbon\human\examine.dm"
 #include "code\modules\mob\living\carbon\human\hud.dm"
+#include "code\modules\mob\living\carbon\human\hud_overlays.dm"
 #include "code\modules\mob\living\carbon\human\human.dm"
 #include "code\modules\mob\living\carbon\human\human_attackalien.dm"
 #include "code\modules\mob\living\carbon\human\human_attackhand.dm"
