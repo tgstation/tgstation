@@ -165,7 +165,7 @@
 	containername = "Snack charge crate"
 
 /datum/supply_packs/charge/liquidfood
-	name = "LiquidFood Charge"
+	name = "\"LiquidFood\" Charge"
 	contains = list("/obj/item/weapon/vending_charge/liquid")
 	containername = "LiquidFood charge crate"
 

@@ -397,7 +397,7 @@
 	product_paths = "/obj/item/weapon/reagent_containers/food/snacks/liquidfood;/obj/item/weapon/flavor/red;/obj/item/weapon/flavor/blue"
 //	product_amounts = "6;6;6;6;6;6;6"
 	product_prices = "1;1;1"
-	product_slogans = "Enjoy your NanoTrasen LiquidFood Ration! Now with a choice of TWO delicious flavors!"
+	product_slogans = "Enjoy your NanoTrasen \"LiquidFood\" Ration! Now with a choice of TWO delicious flavors!"
 	product_hidden = ""
 //	product_hideamt = "10"
 	hidden_prices = ""
