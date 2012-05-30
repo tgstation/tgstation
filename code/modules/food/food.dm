@@ -2043,7 +2043,7 @@
 			user << "You cannot add flavoring to an already flavored ration, however bland it may be."
 			return
 
-		user.visible_message("\The [user] adds [prob(30) ? "some of" : ""] \a [W] to \a [src], mixing it into [W.decriptor] gruel.",\
+		user.visible_message("\The [user] adds [prob(30) ? "some of" : ""] \a [W] to \a [src], mixing it into [W.descriptor] gruel.",\
 		"You add \the [W] into your bland [src].  As you mix it into a grotesquely [W.color] paste, you reflect that this was not a wise decision.",\
 		"You hear a small tinfoil package being ripped open, then the sound of a thick paste being mixed.")
 		name = "[W.color] \"LiquidFood\" ration"
