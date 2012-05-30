@@ -17,5 +17,5 @@
 			L.status = 0
 			L.on = 1
 			L.update()
-			user.visible_message("[user] repairs \the [target] on the spot with their [src]!","You repair the lightbulb!")
+			user.visible_message("[user] repairs \the [target] on the spot with their [src]!","You repair the lightbulb!","You hear a soft whiiir-pop noise over the sound of flexing glass, followed by the soft hum of an activated [target].")
 		return
