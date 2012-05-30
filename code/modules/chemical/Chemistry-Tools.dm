@@ -3708,7 +3708,7 @@
 					desc = "You can't really tell what this is."
 		else
 			icon_state = "glass_empty"
-			name = "Drinking glass"
+			name = "drinking glass"
 			desc = "Your standard drinking glass"
 			return
 
