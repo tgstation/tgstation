@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 // === MEMETIC ANOMALY ===
 // =======================
 
@@ -18,8 +20,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 mob/living/carbon/var/list/parasites = list()
 
 mob/living/parasite
-	var
-		mob/living/carbon/host // the host that this parasite occupies
+	var/mob/living/carbon/host // the host that this parasite occupies
 
 	Login()
 		..()

@@ -1,22 +1,22 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /obj/machinery
 	name = "machinery"
 	icon = 'stationobjs.dmi'
-	var
-		stat = 0
-		emagged = 0
-		use_power = 0
+	var/stat = 0
+	var/emagged = 0
+	var/use_power = 0
 		//0 = dont run the auto
 		//1 = run auto, use idle
 		//2 = run auto, use active
-		idle_power_usage = 0
-		active_power_usage = 0
-		power_channel = EQUIP
+	var/idle_power_usage = 0
+	var/active_power_usage = 0
+	var/power_channel = EQUIP
 		//EQUIP,ENVIRON or LIGHT
-		list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
-		uid
-		manual = 0
-		global
-			gl_uid = 1
+	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
+	var/uid
+	var/manual = 0
+	var/global/gl_uid = 1
 
 /obj/machinery/autolathe
 	name = "\improper Autolathe"
@@ -384,16 +384,14 @@
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
-	var
-		obj/effect/overlay/hologram//The projection itself. If there is one, the instrument is on, off otherwise.
+	var/obj/effect/overlay/hologram//The projection itself. If there is one, the instrument is on, off otherwise.
 
 /obj/machinery/hologram/holopad
 	name = "\improper AI holopad"
 	desc = "It's a floor-mounted device for projecting holographic images. It is activated remotely."
 	icon_state = "holopad0"
-	var
-		mob/living/silicon/ai/master//Which AI, if any, is controlling the object? Only one AI may control a hologram at any time.
-		last_request = 0 //to prevent request spam. ~Carn
+	var/mob/living/silicon/ai/master//Which AI, if any, is controlling the object? Only one AI may control a hologram at any time.
+	var/last_request = 0 //to prevent request spam. ~Carn
 
 /obj/machinery/hologram/projector
 	name = "hologram projector"
@@ -406,12 +404,11 @@
 	desc = "It's used by the AI for fooling around."
 	icon = 'stationobjs.dmi'
 	icon_state = "hologram0"
-	var
-		temp = null
-		lumens = 0.0
-		h_r = 245.0
-		h_g = 245.0
-		h_b = 245.0
+	var/temp = null
+	var/lumens = 0.0
+	var/h_r = 245.0
+	var/h_g = 245.0
+	var/h_b = 245.0
 
 /obj/machinery/coatrack
 	name = "coat rack"

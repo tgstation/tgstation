@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 // The communications computer
 /obj/machinery/computer/communications
 	name = "Communications Console"
@@ -16,17 +18,16 @@
 	var/message_cooldown = 0
 	var/centcomm_message_cooldown = 0
 	var/tmp_alertlevel = 0
-	var/const
-		STATE_DEFAULT = 1
-		STATE_CALLSHUTTLE = 2
-		STATE_CANCELSHUTTLE = 3
-		STATE_MESSAGELIST = 4
-		STATE_VIEWMESSAGE = 5
-		STATE_DELMESSAGE = 6
-		STATE_STATUSDISPLAY = 7
-		STATE_ALERT_LEVEL = 8
-		STATE_CONFIRM_LEVEL = 9
-		STATE_CREWTRANSFER = 10
+	var/const/STATE_DEFAULT = 1
+	var/const/STATE_CALLSHUTTLE = 2
+	var/const/STATE_CANCELSHUTTLE = 3
+	var/const/STATE_MESSAGELIST = 4
+	var/const/STATE_VIEWMESSAGE = 5
+	var/const/STATE_DELMESSAGE = 6
+	var/const/STATE_STATUSDISPLAY = 7
+	var/const/STATE_ALERT_LEVEL = 8
+	var/const/STATE_CONFIRM_LEVEL = 9
+	var/const/STATE_CREWTRANSFER = 10
 
 	var/status_display_freq = "1435"
 	var/stat_msg1

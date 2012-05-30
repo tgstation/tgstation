@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /*
 	IconProcs
 	by Lummox JR
@@ -434,14 +436,13 @@ proc
 		if(!dir) dir = A.dir
 
 		// Loop through the underlays, then overlays, sorting them into the layers list
-		var
-			list/process = A.underlays // Current list being processed
-			pSet=0 // Which list is being processed: 0 = underlays, 1 = overlays
-			curIndex=1 // index of 'current' in list being processed
-			current // Current overlay being sorted
-			currentLayer // Calculated layer that overlay appears on (special case for FLOAT_LAYER)
-			compare // The overlay 'add' is being compared against
-			cmpIndex // The index in the layers list of 'compare'
+		var/list/process = A.underlays // Current list being processed
+		var/pSet=0 // Which list is being processed: 0 = underlays, 1 = overlays
+		var/curIndex=1 // index of 'current' in list being processed
+		var/current // Current overlay being sorted
+		var/currentLayer // Calculated layer that overlay appears on (special case for FLOAT_LAYER)
+		var/compare // The overlay 'add' is being compared against
+		var/cmpIndex // The index in the layers list of 'compare'
 		while(TRUE)
 			if(curIndex<=process.len)
 				current = process[curIndex]
@@ -487,15 +488,20 @@ proc
 						// Icon already exists, just return that one
 						return _flatIcons[h]
 
-		var
 			// We start with a blank canvas, otherwise some icon procs crash silently
-			icon/flat = icon('effects.dmi', "icon_state"="nothing") // Final flattened icon
-			icon/add // Icon of overlay being added
+		var/icon/flat = icon('effects.dmi', "icon_state"="nothing") // Final flattened icon
+		var/icon/add // Icon of overlay being added
 
 			// Current dimensions of flattened icon
-			flatX1=1;flatX2=flat.Width();flatY1=1;flatY2=flat.Height()
+		var/flatX1=1
+		var/flatX2=flat.Width()
+		var/flatY1=1
+		var/flatY2=flat.Height()
 			// Dimensions of overlay being added
-			addX1;addX2;addY1;addY2
+		var/addX1
+		var/addX2
+		var/addY1
+		var/addY2
 
 		for(var/I in layers)
 

@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /*
 CONTAINS:
 
@@ -53,10 +55,9 @@ WELDINGTOOOL
 	m_amt = 70
 	g_amt = 30
 	origin_tech = "engineering=1"
-	var
-		welding = 0
-		status = 1
-		max_fuel = 20
+	var/welding = 0
+	var/status = 1
+	var/max_fuel = 20
 	proc
 		get_fuel()
 		remove_fuel(var/amount = 1, var/mob/M = null)

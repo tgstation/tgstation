@@ -1,8 +1,9 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 //Few global vars to track the blob
-var
-	list/blobs = list()
-	list/blob_cores = list()
-	list/blob_nodes = list()
+var/list/blobs = list()
+var/list/blob_cores = list()
+var/list/blob_nodes = list()
 
 
 /datum/game_mode/blob
@@ -16,19 +17,18 @@ var
 	var/const/waittime_l = 1800 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 3600 //upper bound on time before intercept arrives (in tenths of seconds)
 
-	var
-		declared = 0
-		stage = 0
+	var/declared = 0
+	var/stage = 0
 
-		cores_to_spawn = 1
-		players_per_core = 16
+	var/cores_to_spawn = 1
+	var/players_per_core = 16
 
 		//Controls expansion via game controller
-		autoexpand = 0
-		expanding = 0
+	var/autoexpand = 0
+	var/expanding = 0
 
-		blobnukecount = 500
-		blobwincount = 700
+	var/blobnukecount = 500
+	var/blobwincount = 700
 
 
 	announce()

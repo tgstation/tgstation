@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /*
 CONTAINS:
 MATCHES
@@ -113,14 +115,13 @@ ZIPPO
 	item_state = "cigoff"
 	w_class = 1
 	body_parts_covered = null
-	var
-		lit = 0
-		icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
-		icon_off = "cigoff"
-		icon_butt = "cigbutt"
-		lastHolder = null
-		smoketime = 300
-		butt_count = 5  //count of butt sprite variations
+	var/lit = 0
+	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
+	var/icon_off = "cigoff"
+	var/icon_butt = "cigbutt"
+	var/lastHolder = null
+	var/smoketime = 300
+	var/butt_count = 5  //count of butt sprite variations
 	proc
 		light(var/flavor_text = "[usr] lights the [name].")
 
@@ -244,13 +245,12 @@ ZIPPO
 	item_state = "cobpipeoff"
 	w_class = 1
 	body_parts_covered = null
-	var
-		lit = 0
-		icon_on = "cobpipeon"  //Note - these are in masks.dmi
-		icon_off = "cobpipeoff"
-		lastHolder = null
-		smoketime = 100
-		maxsmoketime = 100 //make sure this is equal to your smoketime
+	var/lit = 0
+	var/icon_on = "cobpipeon"  //Note - these are in masks.dmi
+	var/icon_off = "cobpipeoff"
+	var/lastHolder = null
+	var/smoketime = 100
+	var/maxsmoketime = 100 //make sure this is equal to your smoketime
 	proc
 		light(var/flavor_text = "[usr] lights the [name].")
 
@@ -338,8 +338,7 @@ ZIPPO
 	w_class = 1
 	throwforce = 2
 	flags = ONBELT | TABLEPASS
-	var
-		cigcount = 6
+	var/cigcount = 6
 
 
 	update_icon()

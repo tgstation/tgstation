@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 obj/machinery/recharger
 	anchored = 1
 	icon = 'stationobjs.dmi'
@@ -7,9 +9,8 @@ obj/machinery/recharger
 	idle_power_usage = 4
 	active_power_usage = 250
 
-	var
-		obj/item/weapon/gun/energy/charging = null
-		obj/item/weapon/melee/baton/charging2 = null
+	var/obj/item/weapon/gun/energy/charging = null
+	var/obj/item/weapon/melee/baton/charging2 = null
 
 	attackby(obj/item/weapon/G as obj, mob/user as mob)
 		if(issilicon(user))

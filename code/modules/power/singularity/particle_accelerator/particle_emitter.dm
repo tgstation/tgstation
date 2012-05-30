@@ -1,11 +1,12 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/structure/particle_accelerator/particle_emitter
 	name = "EM Containment Grid"
 	desc_holder = "This launchs the Alpha particles, might not want to stand near this end."
 	icon = 'particle_accelerator.dmi'
 	icon_state = "none"
-	var
-		fire_delay = 50
-		last_shot = 0
+	var/fire_delay = 50
+	var/last_shot = 0
 
 	center
 		icon_state = "emitter_center"

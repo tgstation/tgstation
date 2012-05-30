@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /* base 64 procs
 	These procs convert plain text to a hexidecimal string to 64 encoded text and vice versa.
 
@@ -33,12 +35,11 @@ proc
 			pad_code = the character or ASCII code used to pad the base64 text.
 					DEFAULT: 67 (= sign)
 			RETURNS: the hexidecimal text */
-		var
-			pos = 1
-			offset = 2
-			current = 0
-			padding = 0
-			hextext = ""
+		var/pos = 1
+		var/offset = 2
+		var/current = 0
+		var/padding = 0
+		var/hextext = ""
 		if(istext(pad_code)) pad_code = text2ascii(pad_code)
 		while(pos <= length(encode64))
 			var/val = text2ascii(encode64, pos++)
@@ -80,15 +81,14 @@ proc
 			pad_char = the character or ASCII code used to pad the base64 text.
 					DEFAULT: "=" (ASCII 67)
 			RETURNS: the base 64 encoded text */
-		var
-			key64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-			encode64 = ""
-			pos = 1
-			offset = 2
-			current = 0
-			len = length(hextext)
-			end = len
-			padding = end%6
+		var/key64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+		var/encode64 = ""
+		var/pos = 1
+		var/offset = 2
+		var/current = 0
+		var/len = length(hextext)
+		var/end = len
+		var/padding = end%6
 		if(padding)
 			padding = 6 - padding
 			end += padding

@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 var/containment_fail_announced = 0
 
 /*
@@ -20,17 +22,16 @@ field_generator power level display
 	anchored = 0
 	density = 1
 	use_power = 0
-	var
-		const/num_power_levels = 6	// Total number of power level icon has
-		Varedit_start = 0
-		Varpower = 0
-		active = 0
-		power = 20  // Current amount of power
-		state = 0
-		warming_up = 0
-		list/obj/machinery/containment_field/fields
-		list/obj/machinery/field_generator/connected_gens
-		clean_up = 0
+	var/const/num_power_levels = 6	// Total number of power level icon has
+	var/Varedit_start = 0
+	var/Varpower = 0
+	var/active = 0
+	var/power = 20  // Current amount of power
+	var/state = 0
+	var/warming_up = 0
+	var/list/obj/machinery/containment_field/fields
+	var/list/obj/machinery/field_generator/connected_gens
+	var/clean_up = 0
 
 
 	update_icon()

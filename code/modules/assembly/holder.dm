@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/item/device/assembly_holder
 	name = "Assembly"
 	desc = "Holds various devices"//Fix this by adding dynamic desc
@@ -11,11 +13,10 @@
 	throw_speed = 3
 	throw_range = 10
 
-	var
-		secured = 0
-		obj/item/device/assembly/a_left = null
-		obj/item/device/assembly/a_right = null
-		obj/special_assembly = null
+	var/secured = 0
+	var/obj/item/device/assembly/a_left = null
+	var/obj/item/device/assembly/a_right = null
+	var/obj/special_assembly = null
 
 	proc
 		attach(var/obj/item/device/D, var/obj/item/device/D2, var/mob/user)

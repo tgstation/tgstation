@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:06
+
 /*
 
 TODO:
@@ -15,12 +17,11 @@ log transactions
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 10
-	var
-		obj/item/weapon/card/id/card
-		obj/item/weapon/money/cashes = list()
-		inserted = 0
-		accepted = 0
-		pincode = 0
+	var/obj/item/weapon/card/id/card
+	var/obj/item/weapon/money/cashes = list()
+	var/inserted = 0
+	var/accepted = 0
+	var/pincode = 0
 
 	attackby(var/obj/A, var/mob/user)
 		if(istype(A,/obj/item/weapon/money))

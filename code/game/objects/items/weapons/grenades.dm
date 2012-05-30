@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /*
 CONTAINS:
 EMP GRENADE
@@ -16,9 +18,8 @@ FLASHBANG
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	origin_tech = "materials=2;magnets=3"
-	var
-		active = 0
-		det_time = 50
+	var/active = 0
+	var/det_time = 50
 	proc
 		prime()
 		clown_check(var/mob/living/user)
@@ -90,10 +91,9 @@ FLASHBANG
 	throw_range = 20
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	origin_tech = "materials=2;combat=1"
-	var
-		active = 0
-		det_time = 30
-		banglet = 0
+	var/active = 0
+	var/det_time = 30
+	var/banglet = 0
 	proc
 		bang(var/turf/T , var/mob/living/carbon/M)
 		prime()

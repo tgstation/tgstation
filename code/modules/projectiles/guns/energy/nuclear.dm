@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/item/weapon/gun/energy/gun
 	icon_state = "energystun100"
 	item_state = "energystun100"
@@ -10,8 +12,7 @@
 	origin_tech = "combat=3;magnets=2"
 	modifystate = "energystun"
 
-	var
-		mode = 0 //0 = stun, 1 = kill
+	var/mode = 0 //0 = stun, 1 = kill
 
 
 	attack_self(mob/living/user as mob)

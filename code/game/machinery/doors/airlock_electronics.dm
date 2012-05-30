@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /obj/item/weapon/airlock_electronics
 	name = "Airlock Electronics"
 	icon = 'door_assembly.dmi'
@@ -8,12 +10,11 @@
 
 	req_access = list(access_engine)
 
-	var
-		list/conf_access = null
-		last_configurator = null
-		locked = 1
-		style_name = "General"
-		style = /obj/structure/door_assembly/door_assembly_0
+	var/list/conf_access = null
+	var/last_configurator = null
+	var/locked = 1
+	var/style_name = "General"
+	var/style = /obj/structure/door_assembly/door_assembly_0
 
 	attack_self(mob/user as mob)
 		if (!ishuman(user))
