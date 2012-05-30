@@ -482,9 +482,11 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		M << "\red You feel searing heat inside!"
 
 
-
 	attack_self(mob/living/user as mob)
 		usr = user
+		if(!usr.canmove || usr.stat || usr.restrained())
+			return
+
 		if(!wordtravel)
 			runerandom()
 		if(iscultist(user))
@@ -494,6 +496,10 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			if (!istype(user.loc,/turf))
 				user << "\red You do not have enough space to write a proper rune."
 				return
+
+
+
+
 			if (C>=26+runedec+ticker.mode.cult.len) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
 				switch(alert("The cloth of reality can't take that much of a strain. By creating another rune, you risk locally tearing reality apart, which would prove fatal to you. Do you still wish to scribe the rune?",,"Yes","No"))
 					if("Yes")
@@ -509,9 +515,13 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					if("Cancel")
 						return
 					if("Read it")
+						if(usr.equipped() != src)
+							return
 						user << browse("[tomedat]", "window=Arcane Tome")
 						return
 					if("Notes")
+						if(usr.equipped() != src)
+							return
 						notedat = {"
 					<br><b>Word translation notes</b> <br>
 					[words[1]] is <a href='byond://?src=\ref[src];number=1;action=change'>[words[words[1]]]</A> <A href='byond://?src=\ref[src];number=1;action=clear'>Clear</A><BR>
@@ -528,6 +538,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 //						call(/obj/item/weapon/tome/proc/edit_notes)()
 						user << browse("[notedat]", "window=notes")
 						return
+			if(usr.equipped() != src)
+				return
+
 			var/w1
 			var/w2
 			var/w3
@@ -549,11 +562,17 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				for (var/w in words)
 					if (words[w] == w3)
 						w3 = w
+
+			if(usr.equipped() != src)
+				return
+
 			for (var/mob/V in viewers(src))
 				V.show_message("\red [user] slices open a finger and begins to chant and paint symbols on the floor.", 3, "\red You hear chanting.", 2)
 			user << "\red You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world."
 			user.take_overall_damage(1)
 			if(do_after(user, 50))
+				if(usr.equipped() != src)
+					return
 				var/mob/living/carbon/human/H = user
 				var/obj/effect/rune/R = new /obj/effect/rune(user.loc)
 				user << "\red You finish drawing the arcane markings of the Geometer."
