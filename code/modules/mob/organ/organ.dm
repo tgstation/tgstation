@@ -64,9 +64,9 @@
 	var/list/datum/organ/external/children
 	var/damage_msg = "\red You feel a intense pain"
 
-	var/var/open = 0
-	var/var/stage = 0
-	var/var/wound = 0
+	var/open = 0
+	var/stage = 0
+	var/wound = 0
 
 	New(mob/living/carbon/H)
 		..(H)

@@ -1202,6 +1202,7 @@
 #include "code\WorkInProgress\virus2\monkeydispensor.dm"
 #include "code\WorkInProgress\virus2\Prob.dm"
 #include "code\WorkInProgress\Wrongnumber\weldbackpack.dm"
+#include "code\ZAS\Airflow.dm"
 #include "code\ZAS\Connection.dm"
 #include "code\ZAS\Creation.dm"
 #include "code\ZAS\Definition.dm"
