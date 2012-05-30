@@ -1472,7 +1472,7 @@
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/liquidfood
-	name = "LiquidFood ration"
+	name = "\improper \"LiquidFood\" ration"
 	icon_state = "liquidfood"
 	desc = "A bland, tasteless pulp of what you need to survive. Packaged in a airtight bag, which you can drink through a straw. Strangely crunchy."
 	trash = "liquidfood"
@@ -1483,19 +1483,6 @@
 		reagents.add_reagent("water", 5)
 		reagents.add_reagent("tricordrazine", 2)
 		bitesize = 6
-
-/obj/item/weapon/reagent_containers/food/snacks/liquidfood/red
-	name = "flavored LiquidFood ration"
-	icon_state = "liquidfood-red"
-	desc = "A flavored pulp of nutritional essentials. It has a faint sour apple taste, but still is hard to stomach. Strangely crunchy."
-	flavored = 1
-
-
-/obj/item/weapon/reagent_containers/food/snacks/liquidfood/blue
-	name = "flavored LiquidFood ration"
-	icon_state = "liquidfood-blue"
-	desc = "A flavored pulp of nutritional essentials. It has a faint bitter berry taste, but still is hard to stomach. Strangely crunchy."
-	flavored = 1
 
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
@@ -2049,27 +2036,25 @@
 		..()
 
 // Liquidfood + Flavoring = Flavored Liquidfood! :P
-/obj/item/weapon/reagent_containers/food/snacks/liquidfood/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/item/weapon/reagent_containers/food/snacks/liquidfood/attackby(obj/item/weapon/flavor/W as obj, mob/user as mob)
 	// Check if already flavored
-	if (istype(W,/obj/item/weapon/flavor) && src.flavored)
-		user << "You cannot add flavoring to an already flavored ration."
+	if(istype(W))
+		if (flavored)
+			user << "You cannot add flavoring to an already flavored ration, however bland it may be."
+			return
+
+		user.visible_message("\The [user] adds [prob(30) ? "some of" : ""] \a [W] to \a [src], mixing it into [W.decriptor] gruel.",\
+		"You add \the [W] into your bland [src].  As you mix it into a grotesquely [W.color] paste, you reflect that this was not a wise decision.",\
+		"You hear a small tinfoil package being ripped open, then the sound of a thick paste being mixed.")
+		name = "[W.color] \"LiquidFood\" ration"
+		icon_state = "liquidfood-[W.color]"
+		desc = "A flavored pulp of nutritional essentials. [W.newDesc]"
+		flavored = 1
+
+		del(W)
 		return
 
-	// Red flavoring
-	else if(istype(W,/obj/item/weapon/flavor/red))
-		var/turf/spawnloc = foodloc(user, src)
-		new /obj/item/weapon/reagent_containers/food/snacks/liquidfood/red(spawnloc)
-		user << "You add the flavoring."
-		del(W)
-		del(src)
-
-	// Blue flavoring
-	else if(istype(W,/obj/item/weapon/flavor/blue))
-		var/turf/spawnloc = foodloc(user, src)
-		new /obj/item/weapon/reagent_containers/food/snacks/liquidfood/blue(spawnloc)
-		user << "You add the flavoring."
-		del(W)
-		del(src)
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/taco
 	name = "taco"
