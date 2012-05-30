@@ -216,14 +216,15 @@
 				if(cultist.current.client)
 					for(var/image/I in cultist.current.client.images)
 						if(I.icon_state == "cult")
-							del(I)
+							cultist.current.client.images -= I
 
 		for(var/datum/mind/cultist in cult)
 			if(cultist.current)
 				if(cultist.current.client)
 					for(var/datum/mind/cultist_1 in cult)
 						if(cultist_1.current)
-							var/I = image('mob.dmi', loc = cultist_1.current, icon_state = "cult")
+							var/image/I = cultist.current.antag_img
+							I.icon_state = "cult"
 							cultist.current.client.images += I
 
 
@@ -232,12 +233,14 @@
 		for(var/datum/mind/cultist in cult)
 			if(cultist.current)
 				if(cultist.current.client)
-					var/I = image('mob.dmi', loc = cult_mind.current, icon_state = "cult")
+					var/image/I = cult_mind.current.antag_img
+					I.icon_state = "cult"
 					cultist.current.client.images += I
 			if(cult_mind.current)
 				if(cult_mind.current.client)
-					var/image/J = image('mob.dmi', loc = cultist.current, icon_state = "cult")
-					cult_mind.current.client.images += J
+					var/image/I = cultist.current.antag_img
+					I.icon_state = "cult"
+					cult_mind.current.client.images += I
 
 
 /datum/game_mode/proc/update_cult_icons_removed(datum/mind/cult_mind)
@@ -247,13 +250,13 @@
 				if(cultist.current.client)
 					for(var/image/I in cultist.current.client.images)
 						if(I.icon_state == "cult" && I.loc == cult_mind.current)
-							del(I)
+							cultist.current.client.images -= I
 
 		if(cult_mind.current)
 			if(cult_mind.current.client)
 				for(var/image/I in cult_mind.current.client.images)
 					if(I.icon_state == "cult")
-						del(I)
+						cult_mind.current.client.images -= I
 
 
 /datum/game_mode/cult/proc/get_unconvertables()

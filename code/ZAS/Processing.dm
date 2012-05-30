@@ -1,5 +1,6 @@
 #define QUANTIZE(variable)		(round(variable,0.0001))
 var/explosion_halt = 0
+var/zone_share_percent = 8
 zone
 	proc/process()
 		//Does rebuilding stuff. Not sure if used.
@@ -52,20 +53,29 @@ zone
 			//If there is space, air should flow out of the zone.
 			//if(abs(air.pressure) > vsc.airflow_lightest_pressure)
 			//	AirflowSpace(src)
-			ShareSpace(air,total_space*(vsc.zone_share_percent/100))
+			ShareSpace(air,total_space*(zone_share_percent/100))
 
 		//React the air here.
-		air.react(null,0)
+		//air.react(null,0)
 
 		//Check the graphic.
-		var/check = air.check_tile_graphic()
+
+		air.graphic = 0
+		if(air.toxins > MOLES_PLASMA_VISIBLE)
+			air.graphic = 1
+		else if(length(air.trace_gases))
+			var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in air.trace_gases
+			if(sleeping_agent && (sleeping_agent.moles > 1))
+				air.graphic = 2
+			else
+				air.graphic = 0
 
 		//Only run through the individual turfs if there's reason to.
-		if(check || air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		if(air.graphic != air.graphic_archived || air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 
 			for(var/turf/simulated/S in contents)
 				//Update overlays.
-				if(check)
+				if(air.graphic != air.graphic_archived)
 					if(S.HasDoor(1))
 						S.update_visuals()
 					else
@@ -101,7 +111,7 @@ zone
 				if(abs(air.total_moles - Z.air.total_moles) > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
 					//if(abs(Z.air.pressure - air.pressure) > vsc.airflow_lightest_pressure)
 					//	Airflow(src,Z)
-					ShareRatio(air,Z.air,connected_zones[Z]*(vsc.zone_share_percent/100))
+					ShareRatio(air,Z.air,connected_zones[Z]*(zone_share_percent/100))
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, ratio)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.

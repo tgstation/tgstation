@@ -1092,7 +1092,7 @@
 			// Apparently deletes all the hud_ icons
 			for(var/image/hud in client.images)
 				if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
-					del(hud)
+					client.images -= hud//del(hud)
 
 			// Handle special vision stuff, such as thermals or ghost vision
 			// -------------------------------------------------------------

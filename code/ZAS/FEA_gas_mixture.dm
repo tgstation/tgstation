@@ -47,7 +47,7 @@ datum
 
 				temperature_archived
 
-				graphic_archived
+				graphic_archived = 0
 				fuel_burnt = 0
 
 //FOR THE LOVE OF GOD PLEASE USE THIS PROC
@@ -167,15 +167,15 @@ datum
 			//Inputs: None
 			//Outputs: 1 if graphic changed, 0 if unchanged
 
-			graphic = null
+			graphic = 0
 			if(toxins > MOLES_PLASMA_VISIBLE)
-				graphic = "plasma"
+				graphic = 1
 			else if(length(trace_gases))
 				var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in trace_gases
 				if(sleeping_agent && (sleeping_agent.moles > 1))
-					graphic = "sleeping_agent"
+					graphic = 2
 				else
-					graphic = null
+					graphic = 0
 
 			return graphic != graphic_archived
 
@@ -188,7 +188,7 @@ datum
 			var/reacting = 0 //set to 1 if a notable reaction occured (used by pipe_network)
 
 			if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-				if(fire() > 0)
+				if(zburn(null) > 0)
 					reacting = 1
 
 			return reacting
