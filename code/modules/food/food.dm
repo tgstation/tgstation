@@ -1471,6 +1471,32 @@
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/liquidfood
+	name = "LiquidFood ration"
+	icon_state = "liquidfood"
+	desc = "A bland, tasteless pulp of what you need to survive. Packaged in a airtight bag, which you can drink through a straw. Strangely crunchy."
+	trash = "liquidfood"
+	var/flavored = 0
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+		reagents.add_reagent("water", 5)
+		reagents.add_reagent("tricordrazine", 2)
+		bitesize = 6
+
+/obj/item/weapon/reagent_containers/food/snacks/liquidfood/red
+	name = "flavored LiquidFood ration"
+	icon_state = "liquidfood-red"
+	desc = "A flavored pulp of nutritional essentials. It has a faint sour apple taste, but still is hard to stomach. Strangely crunchy."
+	flavored = 1
+
+
+/obj/item/weapon/reagent_containers/food/snacks/liquidfood/blue
+	name = "flavored LiquidFood ration"
+	icon_state = "liquidfood-blue"
+	desc = "A flavored pulp of nutritional essentials. It has a faint bitter berry taste, but still is hard to stomach. Strangely crunchy."
+	flavored = 1
+
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
 
@@ -2021,6 +2047,29 @@
 		return
 	else
 		..()
+
+// Liquidfood + Flavoring = Flavored Liquidfood! :P
+/obj/item/weapon/reagent_containers/food/snacks/liquidfood/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	// Check if already flavored
+	if (istype(W,/obj/item/weapon/flavor) && src.flavored)
+		user << "You cannot add flavoring to an already flavored ration."
+		return
+
+	// Red flavoring
+	else if(istype(W,/obj/item/weapon/flavor/red))
+		var/turf/spawnloc = foodloc(user, src)
+		new /obj/item/weapon/reagent_containers/food/snacks/liquidfood/red(spawnloc)
+		user << "You add the flavoring."
+		del(W)
+		del(src)
+
+	// Blue flavoring
+	else if(istype(W,/obj/item/weapon/flavor/blue))
+		var/turf/spawnloc = foodloc(user, src)
+		new /obj/item/weapon/reagent_containers/food/snacks/liquidfood/blue(spawnloc)
+		user << "You add the flavoring."
+		del(W)
+		del(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/taco
 	name = "taco"

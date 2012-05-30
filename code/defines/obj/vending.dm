@@ -390,6 +390,20 @@
 	hidden_prices = ""
 	charge_type = "robotics"
 
+/obj/machinery/vending/liquid
+	name = "LiquidRation Dispenser"
+	desc = "All the food you'll ever need to survive!"
+	icon_state = "liquidfood"
+	product_paths = "/obj/item/weapon/reagent_containers/food/snacks/liquidfood;/obj/item/weapon/flavor/red;/obj/item/weapon/flavor/blue"
+//	product_amounts = "6;6;6;6;6;6;6"
+	product_prices = "1;1;1"
+	product_slogans = "Enjoy your NanoTrasen LiquidFood Ration! Now with a choice of TWO delicious flavors!"
+	product_hidden = ""
+//	product_hideamt = "10"
+	hidden_prices = ""
+	product_ads = "Think of it as free survival!;It's even healthy!;Take a quick break, enjoy your ration!"
+	charge_type = "liquid"
+
 /obj/item/weapon/vending_charge
 	name = "Vending Charge"
 	var/charge_type = "generic"
@@ -478,3 +492,8 @@
 	name = "Toxins Lab Charge"
 	charge_type = "toxinslab"
 	icon_state = "toxinslab-charge"*/
+
+/obj/item/weapon/vending_charge/liquid
+	name = "LiquidRation Charge"
+	charge_type = "liquid"
+	icon_state = "liquidfood-charge"
