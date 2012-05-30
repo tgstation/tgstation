@@ -2041,3 +2041,20 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	name = "inflamed appendix"
 	desc = "An appendix which appears to be inflamed."
 	icon_state = "appendixinflamed"
+
+/obj/item/weapon/flavor
+	name = "flavoring"
+	desc = "A sachet of flavoring, designed to be used with LiquidFood rations."
+	icon = 'food_ingredients.dmi'
+
+/obj/item/weapon/flavor/red
+	name = "cherry flavoring"
+	desc = "A sachet of cherry flavoring, designed to be used with LiquidFood rations."
+	icon = 'food_ingredients.dmi'
+	icon_state = "flavor-red"
+
+/obj/item/weapon/flavor/blue
+	name = "berry flavoring"
+	desc = "A sachet of berry flavoring, designed to be used with LiquidFood rations."
+	icon = 'food_ingredients.dmi'
+	icon_state = "flavor-blue"

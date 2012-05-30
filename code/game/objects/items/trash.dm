@@ -46,6 +46,9 @@
 		name = "candle"
 		icon = 'candle.dmi'
 		icon_state = "candle4"
+	liquidfood
+		name = "LiquidFood ration"
+		icon_state = "liquidfood"
 
 /obj/item/trash/attack(mob/M as mob, mob/living/user as mob)
 	return
