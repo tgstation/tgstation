@@ -27,6 +27,12 @@
 
 	..()
 
+/mob/living/carbon/human/tajaran/rebuild_appearance()
+	update_clothing()
+
+/mob/living/carbon/human/tajaran/update_body_appearance()
+	update_clothing()
+
 /mob/living/carbon/human/tajaran/update_clothing()
 //	..()
 
