@@ -125,6 +125,7 @@
 	ttone = "holy"
 
 /obj/item/device/pda/lawyer
+	default_cartridge = /obj/item/weapon/cartridge/lawyer
 	icon_state = "pda-lawyer"
 	ttone = "objection"
 
@@ -1006,15 +1007,15 @@
 	var/newcart = pick(1,2,3,4)
 	switch(newcart)
 		if(1)
-			new /obj/item/weapon/cartridge/janitor(src)
+			new /obj/item/weapon/cartridge/engineering(src)
 		if(2)
 			new /obj/item/weapon/cartridge/security(src)
 		if(3)
 			new /obj/item/weapon/cartridge/medical(src)
 		if(4)
-			new /obj/item/weapon/cartridge/head(src)
+			new /obj/item/weapon/cartridge/signal/toxins(src)
 
-	new /obj/item/weapon/cartridge/signal/toxins(src)
+	new /obj/item/weapon/cartridge/head(src)
 
 
 // Pass along the pulse to atoms in contents, largely added so pAIs are vulnerable to EMP

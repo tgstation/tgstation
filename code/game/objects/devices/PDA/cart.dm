@@ -70,6 +70,11 @@
 		icon_state = "cart-j"
 		access_janitor = 1
 
+	lawyer
+		name = "P.R.O.V.E. Cartridge"
+		icon_state = "cart-s"
+		access_security = 1
+
 	clown
 		name = "Honkworks 5.0"
 		icon_state = "cart-clown"
