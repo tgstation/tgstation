@@ -144,7 +144,7 @@
 			verbs += /client/proc/voting
 			verbs += /client/proc/hide_verbs
 			verbs += /client/proc/general_report
-			verbs += /client/proc/air_report
+			//verbs += /client/proc/air_report
 			verbs += /client/proc/deadmin_self
 			//verbs += /client/proc/cmd_admin_prison 					--Merged with player panel
 			//verbs += /obj/admins/proc/unprison  						--Merged with player panel
@@ -248,7 +248,7 @@
 //			verbs += /client/proc/mapload
 			verbs += /client/proc/check_words
 			verbs += /client/proc/drop_bomb
-			verbs += /client/proc/kill_airgroup
+			//verbs += /client/proc/kill_airgroup
 			//verbs += /client/proc/cmd_admin_drop_everything			--Merged with view variables
 			verbs += /client/proc/make_sound
 			verbs += /client/proc/play_local_sound
@@ -260,6 +260,7 @@
 			verbs += /client/proc/toggle_gravity_off
 			verbs += /client/proc/toggle_random_events
 			verbs += /client/proc/deadmin_self
+			if(ENABLE_MEMOS)	verbs += /client/proc/admin_memo
 			//verbs += /client/proc/cmd_mass_modify_object_variables 	--Merged with view variables
 			//verbs += /client/proc/cmd_admin_explosion					--Merged with view variables
 			//verbs += /client/proc/cmd_admin_emp						--Merged with view variables
@@ -278,7 +279,7 @@
 			verbs += /client/proc/Force_Event_admin
 			verbs += /client/proc/radioalert
 			verbs += /client/proc/CarbonCopy
-			verbs += /client/proc/jump_to_dead_group
+			//verbs += /client/proc/jump_to_dead_group
 		else	return
 
 		//Game Master
@@ -403,7 +404,7 @@
 	verbs -= /client/proc/voting
 	verbs -= /client/proc/hide_verbs
 	verbs -= /client/proc/general_report
-	verbs -= /client/proc/air_report
+	//verbs -= /client/proc/air_report
 	verbs -= /client/proc/cmd_admin_say
 	verbs -= /client/proc/cmd_admin_gib_self
 	verbs -= /client/proc/restartcontroller
@@ -425,6 +426,7 @@
 	verbs -= /client/proc/giveruntimelog									//used by coders to retrieve runtime logs
 	verbs -= /client/proc/getserverlog
 	verbs -= /client/proc/cinematic										//show a cinematic sequence
+	verbs -= /client/proc/admin_memo
 	verbs -= /client/proc/cmd_admin_change_custom_event
 	verbs -= /client/proc/admin_invis
 	verbs -= /client/proc/callprocgen
@@ -452,13 +454,13 @@
 	//verbs -= /obj/admins/proc/unprison 								--Merged with player panel
 	//verbs -= /client/proc/cmd_switch_radio							--removed because tcommsat is staying
 	verbs -= /client/proc/togglebuildmodeself
-	verbs -= /client/proc/kill_airgroup
+	//verbs -= /client/proc/kill_airgroup
 	verbs -= /client/proc/debug_master_controller
 	verbs -= /client/proc/make_tajaran
 	verbs -= /client/proc/admin_deny_shuttle
 	verbs -= /client/proc/cmd_admin_christmas
 	verbs -= /client/proc/editappear
-	verbs -= /client/proc/jump_to_dead_group
+	//verbs -= /client/proc/jump_to_dead_group
 	verbs -= /client/proc/playernotes
 	verbs -= /obj/admins/proc/show_skills
 	verbs -= /client/proc/enable_debug_verbs
@@ -539,6 +541,7 @@
 	set category = "Admin"
 	if(holder)
 		holder.check_antagonists()
+		log_admin("[key_name(usr)] checked antagonists.")	//for tsar~
 	//feedback_add_details("admin_verb","CHA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -862,8 +865,7 @@
 		return
 	src.admin_invis =! src.admin_invis
 	if(src.mob)
-		var/mob/m = src.mob//probably don't need this cast, but I'm too lazy to check if /client.mob is of type /mob or not
-		m.update_clothing()
+		mob.rebuild_appearance()
 	log_admin("[key_name(usr)] has turned their invisibility [src.admin_invis ? "ON" : "OFF"]")
 	message_admins("[key_name_admin(usr)] has turned their invisibility [src.admin_invis ? "ON" : "OFF"]", 1)
 
@@ -892,7 +894,7 @@
 	switch(alert("You sure you wish to edit this mob's appearance?",,"Yes","No"))
 		if("No")
 			return
-	if(istype(M,/mob/living/carbon/human/tajaran) || istype(M,/mob/living/carbon/human/birdman))
+	if(istype(M,/mob/living/carbon/human/tajaran))
 		usr << "\red Humanoid aliens do not have an editable appearance... yet!"
 	else
 		var/new_facial = input("Please select facial hair color.", "Character Generation") as color
@@ -970,9 +972,7 @@
 			M.gender = MALE
 		else
 			M.gender = FEMALE
-	M.update_body()
-	M.update_face()
-	M.update_clothing()
+	M.rebuild_appearance()
 	M.check_dna(M)
 
 

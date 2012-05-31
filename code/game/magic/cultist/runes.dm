@@ -534,7 +534,7 @@ var/list/sacrificed = list()
 /////////////////////////////////////////FOURTEETH RUNE
 
 		communicate()
-			var/input = input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "") as text|null
+			var/input = copytext(sanitize(input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "") as text|null),1,MAX_MESSAGE_LEN)
 			if(!input)
 				if (istype(src))
 					return fizzle()
@@ -795,7 +795,7 @@ var/list/sacrificed = list()
 					return fizzle()
 				cultist.loc = src.loc
 				cultist.lying = 1
-				cultist.update_clothing()
+				cultist.update_lying()
 				for(var/mob/living/carbon/human/C in orange(1,src))
 					if(iscultist(C))
 						C.say("N'ath reth sh'yro eth d'rekkathnor!")

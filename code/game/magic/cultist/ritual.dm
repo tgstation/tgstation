@@ -1,3 +1,9 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
+
+
+var/use_uristrunes = 1
+
 
 var/wordtravel = null
 var/wordself = null
@@ -60,10 +66,9 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	layer = TURF_LAYER
 
 
-	var
-		word1
-		word2
-		word3
+	var/word1
+	var/word2
+	var/word3
 // Places these combos are mentioned: this file - twice in the rune code, once in imbued tome, once in tome's HTML runes.dm - in the imbue rune code. If you change a combination - dont forget to change it everywhere.
 
 // travel self [word] - Teleport to random [rune with word destination matching]
@@ -207,6 +212,10 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			return
 
 		check_icon()
+			if(use_uristrunes)
+				icon = get_uristrune_cult(word1, word2, word3)
+				return
+
 			if(word1 == wordtravel && word2 == wordself)
 				icon_state = "2"
 				src.icon += rgb(0, 0 , 255)
@@ -773,8 +782,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	w_class = 1.0
 	flags = FPRINT | TABLEPASS
 
-	var
-		data
+	var/data
 
 	attack_self(mob/user as mob)
 		view_scrap(user)

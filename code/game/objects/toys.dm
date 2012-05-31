@@ -140,7 +140,7 @@ CRAYONS
 				user << "You start drawing a rune on the [target.name]."
 		if(instant || do_after(user, 50))
 			if(user.equipped() == src)
-				new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
+				new /obj/effect/decal/cleanable/crayon(user.client,target,colour,shadeColour,drawtype)
 				user << "You finish drawing."
 				if(uses)
 					uses--
@@ -175,6 +175,7 @@ CRAYONS
 	icon = 'rune.dmi'
 	layer = 2.1
 	anchored = 1
+	var/client/who_drew_this
 
 
 	examine()
@@ -183,9 +184,10 @@ CRAYONS
 		return
 
 
-	New(location,main = "#FFFFFF",shade = "#000000",var/type = "rune")
+	New(who,location,main = "#FFFFFF",shade = "#000000",var/type = "rune")
 		..()
 		loc = location
+		who_drew_this = who
 
 		name = type
 		desc = "A [type] drawn in crayon."

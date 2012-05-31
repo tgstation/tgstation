@@ -1,3 +1,8 @@
+/*
+This object is contained within zone/var/connections. It's generated whenever two turfs from different zones are linked.
+Indirect connections will not merge the two zones after they reach equilibrium.
+*/
+
 connection
 	var
 		turf //The turfs involved in the connection.
@@ -5,6 +10,7 @@ connection
 			B
 		indirect = 0 //If the connection is purely indirect, the zones should not join.
 		last_updated //The tick at which this was last updated.
+		no_zone_count = 0
 	New(turf/T,turf/O)
 		A = T
 		B = O
@@ -31,6 +37,8 @@ connection
 				B.zone.connected_zones[A.zone] = 1
 			else
 				B.zone.connected_zones[A.zone]++
+		else
+			world.log << "Attempted to create connection object for non-zone tiles: [T] -> [O]"
 	Del()
 		if(A.zone && A.zone.connections)
 			A.zone.connections -= src
@@ -57,5 +65,14 @@ connection
 		. = ..()
 
 	proc/Cleanup()
-		if(A.zone == B.zone) del src
-		if(!A.zone || !B.zone) del src
+		if(!A || !B)
+			//world.log << "Connection removed: [A] or [B] missing entirely."
+			del src
+		if(A.zone == B.zone)
+			//world.log << "Connection removed: Zones now merged."
+			del src
+		if(!A.zone || !B.zone)
+			no_zone_count++
+		if(no_zone_count >= 5)
+			//world.log << "Connection removed: [A] or [B] missing a zone."
+			del src

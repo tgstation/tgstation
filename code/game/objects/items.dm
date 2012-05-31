@@ -8,7 +8,6 @@
 /obj/item/weapon/bedsheet/attack_self(mob/user as mob)
 	user.drop_item()
 	src.layer = 5
-	user.update_clothing()
 	add_fingerprint(user)
 	return
 

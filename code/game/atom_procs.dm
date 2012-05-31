@@ -67,7 +67,7 @@
 			if ((O.client && !( O.blinded )))
 				O << "\red [src] has been scanned by [user] with the [W]"
 	else
-		if (!( istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) &&!(istype(W, /obj/item/weapon/cleaner)) &&!(istype(W, /obj/item/weapon/chemsprayer)) &&!(istype(W, /obj/item/weapon/pepperspray)) && !(istype(W, /obj/item/weapon/plantbgone)) )
+		if (!( istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) &&!(istype(W, /obj/item/weapon/cleaner)) &&!(istype(W, /obj/item/weapon/chemsprayer)) &&!(istype(W, /obj/item/weapon/pepperspray)) && !(istype(W, /obj/item/weapon/plantbgone)) && !(istype(W, /obj/item/weapon/reagent_containers/glass/rag)) )
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.blinded )))
 					O << "\red <B>[src] has been hit by [user] with [W]</B>"
@@ -338,7 +338,7 @@
 		del(fingerprints)
 	if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src
-		M.update_clothing()
+		M.rebuild_appearance() // both clothes and hands need to be cleaned, so just rebuild all
 	return
 
 /atom/MouseDrop(atom/over_object as mob|obj|turf|area)
@@ -713,43 +713,44 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 	// ------- SHIFT-CLICK -------
 
-	var/parameters = params2list(params)
+	if(params)
+		var/parameters = params2list(params)
 
-	if(parameters["shift"]){
-		if(!isAI(usr))
-			ShiftClick(usr)
-		else
-			AIShiftClick(usr)
-		return
-	}
-
-	// ------- ALT-CLICK -------
-
-	if(parameters["alt"]){
-		if(!isAI(usr))
-			AltClick(usr)
-		else
-			AIAltClick(usr)
-		return
-	}
-
-	// ------- CTRL-CLICK -------
-
-	if(parameters["ctrl"]){
-		if(!isAI(usr))
-			CtrlClick(usr)
-		else
-			AICtrlClick(usr)
-		return
-	}
-
-	// ------- MIDDLE-CLICK -------
-
-	if(parameters["middle"]){
-		if(!isAI(usr))
-			MiddleClick(usr)
+		if(parameters["shift"]){
+			if(!isAI(usr))
+				ShiftClick(usr)
+			else
+				AIShiftClick(usr)
 			return
-	}
+		}
+
+		// ------- ALT-CLICK -------
+
+		if(parameters["alt"]){
+			if(!isAI(usr))
+				AltClick(usr)
+			else
+				AIAltClick(usr)
+			return
+		}
+
+		// ------- CTRL-CLICK -------
+
+		if(parameters["ctrl"]){
+			if(!isAI(usr))
+				CtrlClick(usr)
+			else
+				AICtrlClick(usr)
+			return
+			}
+
+		// ------- MIDDLE-CLICK -------
+
+		if(parameters["middle"]){
+			if(!isAI(usr))
+				MiddleClick(usr)
+				return
+		}
 
 	// ------- THROW -------
 	if(usr.in_throw_mode)

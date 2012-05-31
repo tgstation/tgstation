@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /obj
 	//var/datum/module/mod		//not used
 	var/m_amt = 0	// metal
@@ -30,11 +32,10 @@
 	icon_state = "rollstart"
 	flags = FPRINT
 	w_class = 1.0
-	var
-		turf/start
-		turf/end
-		tape_type = /obj/item/tape
-		icon_base
+	var/turf/start
+	var/turf/end
+	var/tape_type = /obj/item/tape
+	var/icon_base
 
 /obj/item/tape
 	name = "tape"
@@ -399,6 +400,12 @@
 	var/obj/screen/g_dither = null
 	var/obj/screen/blurry = null
 	var/list/darkMask = null
+	var/obj/screen/r_hand_hud_object = null
+	var/obj/screen/l_hand_hud_object = null
+	var/list/obj/screen/intent_small_hud_objects = null
+	var/show_intent_icons = 1
+	var/list/obj/screen/hotkeybuttons = null
+	var/hotkey_ui_hidden = 0 //This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
 	var/h_type = /obj/screen		//this is like...the most pointless thing ever. Use a god damn define!
 
@@ -1094,8 +1101,7 @@
 	throw_range = 5
 	origin_tech = "biotech=3"
 
-	var
-		mob/living/carbon/brain/brainmob = null
+	var/mob/living/carbon/brain/brainmob = null
 
 	New()
 		..()

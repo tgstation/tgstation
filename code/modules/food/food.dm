@@ -629,6 +629,7 @@
 			name = "exceptional plump pie"
 			desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump pie!"
 			reagents.add_reagent("nutriment", 15)
+			reagents.add_reagent("tricordrazine", 5)
 			bitesize = 2
 		else
 			reagents.add_reagent("nutriment", 10)
@@ -855,7 +856,7 @@
 	New()
 		..()
 		reagents.add_reagent("toxin", 1)
-		reagents.add_reagent("carbon", 1)
+		reagents.add_reagent("carbon", 3)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/meatsteak
@@ -906,17 +907,17 @@
 		reagents.add_reagent("amatoxin", 6)
 		reagents.add_reagent("psilocybin", 3)
 		bitesize = 3
-/*
+
 /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
 	name = "Poppy pretzel"
-	desc = "" //TODO
+	desc = "It's all twisted up!"
 	icon_state = "poppypretzel"
 	bitesize = 2
 	New()
 		..()
 		reagents.add_reagent("nutriment", 5)
 		bitesize = 2
-*/
+
 
 /obj/item/weapon/reagent_containers/food/snacks/meatballsoup
 	name = "Meatball soup"
@@ -947,7 +948,7 @@
 		..()
 		reagents.add_reagent("nutriment", 2)
 		reagents.add_reagent("blood", 15)
-		reagents.add_reagent("water", 10)
+		reagents.add_reagent("water", 5)
 		bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/clownstears
@@ -956,7 +957,7 @@
 	icon_state = "clownstears"
 	New()
 		..()
-		reagents.add_reagent("nutriment", 1)
+		reagents.add_reagent("nutriment", 4)
 		reagents.add_reagent("banana", 5)
 		reagents.add_reagent("water", 10)
 		bitesize = 5
@@ -969,7 +970,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 10)
-		reagents.add_reagent("water", 10)
+		reagents.add_reagent("water", 5)
 		bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/nettlesoup
@@ -980,8 +981,8 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 10)
-		reagents.add_reagent("water", 7)
-		reagents.add_reagent("tricordrazine", 3)
+		reagents.add_reagent("water", 5)
+		reagents.add_reagent("tricordrazine", 5)
 		bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/mysterysoup
@@ -1038,7 +1039,7 @@
 		..()
 		reagents.add_reagent("water", 10)
 		bitesize = 5
-		if(prob(5))
+		if(prob(25))
 			src.desc = "A wish come true!"
 			reagents.add_reagent("nutriment", 10)
 
@@ -1205,6 +1206,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 12)
+		reagents.add_reagent("carbon", 2)
 		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/grilledcheese
@@ -1248,7 +1250,7 @@
 		reagents.add_reagent("nutriment", 20)
 		reagents.add_reagent("tomatojuice", 5)
 		reagents.add_reagent("imidazoline", 5)
-		reagents.add_reagent("water", 10)
+		reagents.add_reagent("water", 5)
 		bitesize = 10
 
 /obj/item/weapon/reagent_containers/food/snacks/metroidtoast
@@ -1280,7 +1282,7 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 12)
-		reagents.add_reagent("water", 20)
+		reagents.add_reagent("water", 5)
 		bitesize = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat
@@ -1409,14 +1411,6 @@
 		reagents.add_reagent("metroid", 5)
 		bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/braincake
-	name = "Brain Cake"
-	desc = "A squishy cake-thing."
-	icon_state = "braincake"
-	New()
-		..()
-		reagents.add_reagent("nutriment", 28)
-		bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/mushroomsoup
 	name = "chantrelle soup"
@@ -1438,6 +1432,7 @@
 			name = "exceptional plump helmet biscuit"
 			desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump helmet biscuit!"
 			reagents.add_reagent("nutriment", 15)
+			reagents.add_reagent("tricordrazine", 5)
 			bitesize = 2
 		else
 			reagents.add_reagent("nutriment", 5)
@@ -1475,6 +1470,19 @@
 				name = "borscht"
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/liquidfood
+	name = "\improper \"LiquidFood\" ration"
+	icon_state = "liquidfood"
+	desc = "A bland, tasteless pulp of what you need to survive. Packaged in a airtight bag, which you can drink through a straw. Strangely crunchy."
+	trash = "liquidfood"
+	var/flavored = 0
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+		reagents.add_reagent("water", 5)
+		reagents.add_reagent("tricordrazine", 2)
+		bitesize = 6
 
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
@@ -1570,6 +1578,23 @@
 	desc = "Carrotty slice of Carrot Cake, carrots are good for your eyes! Also not a lie."
 	icon_state = "carrotcake_slice"
 	trash = "plate"
+	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/braincake
+	name = "Brain Cake"
+	desc = "A squishy cake-thing."
+	icon_state = "braincake"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/braincakeslice
+	slices_num = 5
+	New()
+		..()
+		reagents.add_reagent("nutriment", 28)
+		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/braincakeslice
+	name = "Brain Cake slice"
+	desc = "Lemme tell you something about prions. THEY'RE DELICIOUS."
+	icon_state = "braincakeslice"
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesecake
@@ -2009,6 +2034,27 @@
 		return
 	else
 		..()
+
+// Liquidfood + Flavoring = Flavored Liquidfood! :P
+/obj/item/weapon/reagent_containers/food/snacks/liquidfood/attackby(obj/item/weapon/flavor/W as obj, mob/user as mob)
+	// Check if already flavored
+	if(istype(W))
+		if (flavored)
+			user << "You cannot add flavoring to an already flavored ration, however bland it may be."
+			return
+
+		user.visible_message("\The [user] adds [prob(30) ? "some of" : ""] \a [W] to \a [src], mixing it into [W.descriptor] gruel.",\
+		"You add \the [W] into your bland [src].  As you mix it into a grotesquely [W.color] paste, you reflect that this was not a wise decision.",\
+		"You hear a small tinfoil package being ripped open, then the sound of a thick paste being mixed.")
+		name = "[W.color] \"LiquidFood\" ration"
+		icon_state = "liquidfood-[W.color]"
+		desc = "A flavored pulp of nutritional essentials. [W.newDesc]"
+		flavored = 1
+
+		del(W)
+		return
+
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/taco
 	name = "taco"

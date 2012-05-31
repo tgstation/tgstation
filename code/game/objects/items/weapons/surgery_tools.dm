@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /*
 CONTAINS:
 RETRACTOR
@@ -569,8 +571,48 @@ CIRCULAR SAW
 		return 0
 
 	if(!S.bleeding)
-		user << "\red [H] is not bleeding in \his [S.display_name]!"
-		return 0
+		if(S.implant)
+			if(H != user)
+				H.visible_message( \
+					"\red [user] is attempting to remove the implant in [H]'s [S.display_name] with \the [src].", \
+					"\red [user] attempts to remove the implant in your [S.display_name] with \the [src]!")
+			else
+				H.visible_message( \
+					"\red [user] attempts to remove the implant in \his [S.display_name] with \the [src]!", \
+					"\red You attempt to remove the implant in your [S.display_name] with \the [src]!")
+
+			if(do_mob(user, H, 50))
+				if(prob(50))
+					if(H != user)
+						H.visible_message( \
+							"\red [user] successfully removes the implant in [H]'s [S.display_name] with \the [src]!", \
+							"\red [user] successfully removes the implant in your [S.display_name] with \the [src]!")
+					else
+						H.visible_message( \
+							"\red [user] successfully removes the implant in \his [S.display_name] with \the [src]!", \
+							"\red You successfully remove the implant in your [S.display_name] with \the [src]!")
+					for(var/obj/item/weapon/implant/implant in S.implant)
+						implant.loc = (get_turf(H))
+						implant.implanted = 0
+						S.implant = null
+						playsound(user, 'squelch1.ogg', 50, 1)
+						if(istype(implant, /obj/item/weapon/implant/explosive) || istype(implant, /obj/item/weapon/implant/uplink) || istype(implant, /obj/item/weapon/implant/dexplosive) || istype(implant, /obj/item/weapon/implant/explosive) || istype(implant, /obj/item/weapon/implant/compressed))
+							usr << "The implant disintegrates into nothing..."
+							del(implant)
+				else
+					if(H != user)
+						H.visible_message( \
+							"\red [user] fails to removes the implant!", \
+							"\red [user] fails to removes the implant!")
+					else
+						H.visible_message( \
+							"\red [user] fails to removes the implant!", \
+							"\red You fail to removes the implant!")
+
+			return 1
+		else
+			user << "\red [H] is not bleeding in \his [S.display_name]!"
+			return 0
 
 	if(H != user)
 		H.visible_message( \
@@ -611,11 +653,10 @@ CIRCULAR SAW
 /obj/item/weapon/autopsy_scanner/var/timeofdeath = null
 
 /datum/autopsy_data_data
-	var
-		weapon = null // this is the DEFINITE weapon type that was used
-		list/organs_scanned = list() // this maps a number of scanned organs to
+	var/weapon = null // this is the DEFINITE weapon type that was used
+	var/list/organs_scanned = list() // this maps a number of scanned organs to
 		                             // the wounds to those organs with this data's weapon type
-		organ_names = ""
+	var/organ_names = ""
 
 /obj/item/weapon/autopsy_scanner/proc/add_data(var/datum/organ/external/O)
 	if(!O.autopsy_data.len && !O.trace_chemicals.len) return

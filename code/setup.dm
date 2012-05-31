@@ -14,6 +14,16 @@
 
 #define MOLES_PLASMA_VISIBLE	0.5 //Moles in a standard cell after which plasma is visible
 
+#define SPECIFIC_HEAT_TOXIN		200
+#define SPECIFIC_HEAT_AIR		20
+#define SPECIFIC_HEAT_CDO		30
+#define HEAT_CAPACITY_CALCULATION(oxygen,carbon_dioxide,nitrogen,toxins) \
+	(carbon_dioxide*SPECIFIC_HEAT_CDO + (oxygen+nitrogen)*SPECIFIC_HEAT_AIR + toxins*SPECIFIC_HEAT_TOXIN)
+
+#define MINIMUM_HEAT_CAPACITY	0.0003
+#define QUANTIZE(variable)		(round(variable,0.0001))
+#define TRANSFER_FRACTION 5 //What fraction (1/#) of the air difference to try and transfer
+
 #define BREATH_VOLUME 0.5	//liters in a normal breath
 #define BREATH_PERCENTAGE BREATH_VOLUME/CELL_VOLUME
 	//Amount of air to take a from a tile
@@ -32,7 +42,7 @@
 #define DOOR_CRUSH_DAMAGE 10
 
 // Factor of how fast mob nutrition decreases
-#define	HUNGER_FACTOR 0.05
+#define	HUNGER_FACTOR 0.1
 #define	REAGENTS_METABOLISM 0.05
 #define REAGENTS_OVERDOSE 30
 
@@ -132,7 +142,7 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define OPENCONTAINER	4096	// is an open container for chemistry purposes
 
-#define ONESIZEFITSALL	8192	// can be worn by fatties (or children? ugh)
+// #define ONESIZEFITSALL	8192	// can be worn by fatties (or children? ugh)
 
 #define	NOREACT	16384 //Reagents dont' react inside this container.
 

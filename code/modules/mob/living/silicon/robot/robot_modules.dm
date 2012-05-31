@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/item/weapon/robot_module
 	name = "robot module"
 	icon = 'module.dmi'
@@ -5,10 +7,9 @@
 	w_class = 100.0
 	item_state = "electronic"
 	flags = FPRINT|TABLEPASS | CONDUCT
-	var
-		list/modules = list()
-		obj/item/emag = null
-		obj/item/borg/upgrade/jetpack = null
+	var/list/modules = list()
+	var/obj/item/emag = null
+	var/obj/item/borg/upgrade/jetpack = null
 
 
 	emp_act(severity)
@@ -59,37 +60,12 @@
 		..()
 		src.modules += new /obj/item/borg/sight/hud/med(src)
 		src.modules += new /obj/item/device/healthanalyzer(src)
-		src.modules += new /obj/item/weapon/reagent_containers/syringe/robot/antitoxin(src)
-		src.modules += new /obj/item/weapon/reagent_containers/syringe/robot/inaprovaline(src)
-		src.modules += new /obj/item/weapon/reagent_containers/syringe/robot/mixed(src)
-		src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
-		src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
-		src.modules += new /obj/item/weapon/reagent_containers/glass/bottle/robot/inaprovaline(src)
-		src.modules += new /obj/item/weapon/reagent_containers/glass/bottle/robot/antitoxin(src)
-		src.modules += new /obj/item/weapon/reagent_containers/glass/beaker(src)
+		src.modules += new /obj/item/weapon/reagent_containers/borghypo
+		src.modules += new /obj/item/weapon/reagent_containers/glass/large(src)
 		src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
-		src.emag = new /obj/item/weapon/reagent_containers/pill/cyanide(src)
-		src.modules += new /obj/item/weapon/reagent_containers/pill/dexalin(src)
-		src.modules += new /obj/item/weapon/reagent_containers/pill/antitox(src)
-		src.modules += new /obj/item/weapon/reagent_containers/pill/kelotane(src)
-		src.modules += new /obj/item/weapon/reagent_containers/pill/bicaridine(src)
-		return
-
-
-	respawn_consumable(var/mob/living/silicon/robot/R)
-		var/list/what = list (
-			/obj/item/weapon/reagent_containers/pill/dexalin,
-			/obj/item/weapon/reagent_containers/pill/antitox,
-			/obj/item/weapon/reagent_containers/pill/kelotane,
-			/obj/item/weapon/reagent_containers/pill/bicaridine
-		)
-		for (var/T in what)
-			if (!(locate(T) in src.modules))
-				src.modules -= null
-				var/O = new T(src)
-				src.modules += O
-		if (R.emagged && !src.emag) //thanks to cyborg-900 for uncovering this
-			src.emag = new /obj/item/weapon/reagent_containers/pill/cyanide(src)
+		src.modules += new /obj/item/weapon/reagent_containers/syringe
+		src.modules += new /obj/item/weapon/extinguisher/mini
+		src.emag = new /obj/item/weapon/circular_saw
 		return
 
 
@@ -167,7 +143,8 @@
 	New()
 		..()
 		src.modules += new /obj/item/weapon/soap/nanotrasen(src)
-		src.modules += new /obj/item/weapon/trashbag(src)
+		src.modules += new /obj/item/weapon/trashbag
+		src.modules += new/obj/item/weapon/mop
 		src.emag = new /obj/item/weapon/cleaner(src)
 
 		var/datum/reagents/R = new/datum/reagents(1000)

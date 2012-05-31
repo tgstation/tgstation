@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 atom/movable/var/pressure_resistance = 20
 atom/movable/var/last_forced_movement = 0
 
@@ -91,23 +93,22 @@ turf
 
 		var/current_graphic = null
 
-		var/tmp
-			datum/gas_mixture/air
+		var/tmp/datum/gas_mixture/air
 
-			processing = 1
-			datum/air_group/parent
-			group_border = 0
-			length_space_border = 0
+		var/tmp/processing = 1
+		var/tmp/datum/air_group/parent
+		var/tmp/group_border = 0
+		var/tmp/length_space_border = 0
 
-			air_check_directions = 0 //Do not modify this, just add turf to air_master.tiles_to_update
+		var/tmp/air_check_directions = 0 //Do not modify this, just add turf to air_master.tiles_to_update
 
-			archived_cycle = 0
-			current_cycle = 0
+		var/tmp/archived_cycle = 0
+		var/tmp/current_cycle = 0
 
-			obj/effect/hotspot/active_hotspot
+		var/tmp/obj/effect/hotspot/active_hotspot
 
-			temperature_archived //USED ONLY FOR SOLIDS
-			being_superconductive = 0
+		var/tmp/temperature_archived //USED ONLY FOR SOLIDS
+		var/tmp/being_superconductive = 0
 
 
 		proc
@@ -132,9 +133,9 @@ turf
 					overlays += image('floors.dmi',siding_icon_state)
 
 				switch(model.graphic)
-					if("plasma")
+					if(1)
 						overlays.Add(plmaster)
-					if("sleeping_agent")
+					if(2)
 						overlays.Add(slmaster)
 
 

@@ -45,3 +45,14 @@
 	name = "Scientist Labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a purple stripe on the shoulder."
 	icon_state = "labcoat_tox_open"
+
+/obj/item/clothing/suit/storage/labcoat/fr_jacket
+	name = "first responder jacket"
+	desc = "A high-visibility jacket worn by medical first responders."
+	icon_state = "fr_jacket_open"
+	item_state = "fr_jacket"
+
+/obj/item/clothing/suit/storage/labcoat/fr_jacket/sleeve
+	name = "first responder jacket"
+	desc = "A high-visibility jacket worn by medical first responders. Has rolled up sleeves."
+	icon_state = "fr_sleeve_open"

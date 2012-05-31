@@ -130,15 +130,6 @@
 	var/list/connected_doors
 	var/department		//each department has a hardcoded list of possible door networks
 
-/obj/machinery/computer/crew
-	name = "Crew monitoring computer"
-	desc = "Used to monitor active health sensors built into most of the crew's uniforms."
-	icon_state = "crew"
-	use_power = 1
-	idle_power_usage = 250
-	active_power_usage = 500
-	circuit = "/obj/item/weapon/circuitboard/crew"
-	var/list/tracked =	list(  )
 
 /*/obj/machinery/computer/scan_consolenew    //Coming Soon, I highly doubt this but Ill leave it here anyways
 	name = "DNA Modifier Access Console"

@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 
 /*
 
@@ -6,9 +8,8 @@
 */
 
 /obj/machinery/telecomms
-	var
-		temp = "" // output message
-		construct_op = 0
+	var/temp = "" // output message
+	var/construct_op = 0
 
 
 
@@ -176,7 +177,7 @@
 			switch(href_list["input"])
 
 				if("id")
-					var/newid = input(usr, "Specify the new ID for this machine", src, id) as null|text
+					var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID for this machine", src, id) as null|text),1,MAX_MESSAGE_LEN)
 					if(newid && usr in range(1, src))
 						id = newid
 						temp = "<font color = #666633>-% New ID assigned: \"[id]\" %-</font color>"

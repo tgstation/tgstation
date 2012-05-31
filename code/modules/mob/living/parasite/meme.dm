@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 // === MEMETIC ANOMALY ===
 // =======================
 
@@ -18,8 +20,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 mob/living/carbon/var/list/parasites = list()
 
 mob/living/parasite
-	var
-		mob/living/carbon/host // the host that this parasite occupies
+	var/mob/living/carbon/host // the host that this parasite occupies
 
 	Login()
 		..()
@@ -90,8 +91,8 @@ mob/living/parasite/meme/Life()
 		src.death()
 		return
 
-	if(host.blinded) src.blinded = 1
-	else 			 src.blinded = 0
+	if(host.blinded && host.stat != 1) src.blinded = 1
+	else 			 				   src.blinded = 0
 
 
 mob/living/parasite/meme/death()
@@ -382,10 +383,16 @@ mob/living/parasite/meme/verb/SubtleJump(mob/living/carbon/human/target as mob i
 		src << "<b>Your target doesn't seem to hear you..</b>"
 		return
 
+	if(target.parasites.len > 0)
+		src << "<b>Your target already is possessed by something..</b>"
+		return
+
 	src.exit_host()
 	src.enter_host(target)
 
 	usr << "<b>You successfully jumped to [target]."
+	log_admin("[src.key] has jumped to [target]")
+	message_admins("[src.key] has jumped to [target]")
 
 // Jump to a distant target through a shout
 mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob in world)
@@ -415,10 +422,16 @@ mob/living/parasite/meme/verb/ObviousJump(mob/living/carbon/human/target as mob 
 		src << "<b>Your target doesn't seem to hear you..</b>"
 		return
 
+	if(target.parasites.len > 0)
+		src << "<b>Your target already is possessed by something..</b>"
+		return
+
 	src.exit_host()
 	src.enter_host(target)
 
 	usr << "<b>You successfully jumped to [target]."
+	log_admin("[src.key] has jumped to [target]")
+	message_admins("[src.key] has jumped to [target]")
 
 // Jump to an attuned mob for free
 mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob in world)
@@ -441,6 +454,9 @@ mob/living/parasite/meme/verb/AttunedJump(mob/living/carbon/human/target as mob 
 
 	usr << "<b>You successfully jumped to [target]."
 
+	log_admin("[src.key] has jumped to [target]")
+	message_admins("[src.key] has jumped to [target]")
+
 // ATTUNE a mob, adding it to the indoctrinated list
 mob/living/parasite/meme/verb/Attune()
 	set category = "Meme"
@@ -458,6 +474,9 @@ mob/living/parasite/meme/verb/Attune()
 
 	usr << "<b>You successfully indoctrinated [host]."
 	host << "\red Your head feels a bit roomier.."
+
+	log_admin("[src.key] has attuned [host]")
+	message_admins("[src.key] has attuned [host]")
 
 // Enables the mob to take a lot more damage
 mob/living/parasite/meme/verb/Analgesic()
@@ -480,7 +499,6 @@ mob/living/parasite/meme/verb/Analgesic()
 
 
 mob/proc/clearHUD()
-	update_clothing()
 	if(client) client.screen.Cut()
 
 // Take control of the mob
@@ -511,7 +529,15 @@ mob/living/parasite/meme/verb/Possession()
 		host_mind.current.clearHUD()
 		host.update_clothing()
 
+		dummy << "\blue You feel very drowsy.. Your eyelids become heavy..."
+
+		log_admin("[meme_mind.key] has taken possession of [host]([host_mind.key])")
+		message_admins("[meme_mind.key] has taken possession of [host]([host_mind.key])")
+
 		sleep(600)
+
+		log_admin("[meme_mind.key] has lost possession of [host]([host_mind.key])")
+		message_admins("[meme_mind.key] has lost possession of [host]([host_mind.key])")
 
 		meme_mind.transfer_to(src)
 		host_mind.transfer_to(host)
@@ -545,6 +571,17 @@ mob/living/parasite/meme/verb/Show_Points()
 	set category = "Meme"
 
 	usr << "<b>Meme Points: [src.meme_points]/[MAXIMUM_MEME_POINTS]</b>"
+
+// Stat panel to show meme points, copypasted from alien
+/mob/living/parasite/meme/Stat()
+	..()
+
+	statpanel("Status")
+	if (client && client.holder)
+		stat(null, "([x], [y], [z])")
+
+	if (client && client.statpanel == "Status")
+		stat(null, "Meme Points: [src.meme_points]")
 
 // Game mode helpers, used for theft objectives
 // --------------------------------------------

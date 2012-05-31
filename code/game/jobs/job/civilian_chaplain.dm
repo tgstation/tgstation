@@ -21,15 +21,11 @@
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		spawn(0)
 			var/religion_name = "Christianity"
-			var/new_religion = input(H, "You are the Chaplain / Counselor. For game mechanics purposes, you need to choose a religion either way. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name)
+			var/new_religion = copytext(sanitize(input(H, "You are the Chaplain / Counselor. For game mechanics purposes, you need to choose a religion either way. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name)),1,MAX_NAME_LEN)
 
 			if ((length(new_religion) == 0) || (new_religion == "Christianity"))
 				new_religion = religion_name
 
-			if (new_religion)
-				if (length(new_religion) >= 26)
-					new_religion = copytext(new_religion, 1, 26)
-				new_religion = dd_replacetext(new_religion, ">", "'")
 				switch(lowertext(new_religion))
 					if("christianity")
 						B.name = pick("The Holy Bible","The Dead Sea Scrolls")
@@ -53,15 +49,10 @@
 
 		spawn(1)
 			var/deity_name = "Space Jesus"
-			var/new_deity = input(H, "Would you like to change your deity? Default is Space Jesus.", "Name change", deity_name)
+			var/new_deity = copytext(sanitize(input(H, "Would you like to change your deity? Default is Space Jesus.", "Name change", deity_name)),1,MAX_NAME_LEN)
 
 			if ((length(new_deity) == 0) || (new_deity == "Space Jesus") )
 				new_deity = deity_name
-
-			if(new_deity)
-				if (length(new_deity) >= 26)
-					new_deity = copytext(new_deity, 1, 26)
-					new_deity = dd_replacetext(new_deity, ">", "'")
 			B.deity_name = new_deity
 
 			var/accepted = 0

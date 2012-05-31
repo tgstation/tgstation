@@ -49,11 +49,19 @@
 			end = get_turf(locate(end.x+d,end.y,end.z))
 			dir = "h"
 
-		while (cur!=end)
+		var/can_place = 1
+		while (cur!=end && can_place)
 			if(cur.density == 1)
-				usr << "\blue You can't run [src] through a wall!"
-				return
+				can_place = 0
+			else
+				for(var/obj/O in cur)
+					if(O.density)
+						can_place = 0
+						break
 			cur = get_step_towards(cur,end)
+		if (!can_place)
+			usr << "\blue You can't run \the [src] through that!"
+			return
 
 		cur = start
 		var/tapetest = 0

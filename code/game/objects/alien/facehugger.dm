@@ -1,9 +1,10 @@
-var/const
-	MIN_IMPREGNATION_TIME = 100 //time it takes to impregnate someone
-	MAX_IMPREGNATION_TIME = 150
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
 
-	MIN_ACTIVE_TIME = 300 //time between being dropped and going idle
-	MAX_ACTIVE_TIME = 600
+var/const/MIN_IMPREGNATION_TIME = 100 //time it takes to impregnate someone
+var/const/MAX_IMPREGNATION_TIME = 150
+
+var/const/MIN_ACTIVE_TIME = 300 //time between being dropped and going idle
+var/const/MAX_ACTIVE_TIME = 600
 
 /obj/item/clothing/mask/facehugger
 	name = "alien"
@@ -150,7 +151,7 @@ var/const
 		layer = 20
 		target.wear_mask = src
 
-		target.update_clothing()
+		target.rebuild_appearance()
 
 		GoIdle() //so it doesn't jump the people that tear it off
 

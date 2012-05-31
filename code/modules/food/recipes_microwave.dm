@@ -959,9 +959,9 @@
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
 		/obj/item/weapon/reagent_containers/food/snacks/egg,
-		/mob/living/carbon/brain,
+		/obj/item/brain
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/braincake
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/braincake
 
 /datum/recipe/chocolateegg
 	items = list(

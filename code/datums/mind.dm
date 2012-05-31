@@ -20,6 +20,12 @@ datum/mind
 	var/rev_cooldown = 0
 
 	proc/transfer_to(mob/new_character)
+		// multikey information is stored in the mob, not the mind, so
+		// we need to clean this stuff up to avoid multikey alerts
+		current.lastKnownIP = null
+		current.computer_id = null
+
+
 		if(current)
 			current.mind = null
 
@@ -27,6 +33,9 @@ datum/mind
 		current = new_character
 
 		new_character.key = key
+
+		// mob/Login() will handle setting the new mob's lastKnownIP and
+		// computer_id for us
 
 	proc/store_memory(new_text)
 		memory += "[new_text]<BR>"
@@ -296,7 +305,7 @@ datum/mind
 			role_alt_title = null
 
 		else if (href_list["memory_edit"])
-			var/new_memo = input("Write new memory", "Memory", memory) as null|message
+			var/new_memo = copytext(sanitize(input("Write new memory", "Memory", memory) as null|message),1,MAX_MESSAGE_LEN)
 			if (isnull(new_memo)) return
 			memory = new_memo
 
@@ -399,7 +408,7 @@ datum/mind
 					new_objective:target_amount = target_number
 
 				if ("custom")
-					var/expl = input("Custom objective:", "Objective", objective ? objective.explanation_text : "") as text|null
+					var/expl = copytext(sanitize(input("Custom objective:", "Objective", objective ? objective.explanation_text : "") as text|null),1,MAX_MESSAGE_LEN)
 					if (!expl) return
 					new_objective = new /datum/objective
 					new_objective.owner = src

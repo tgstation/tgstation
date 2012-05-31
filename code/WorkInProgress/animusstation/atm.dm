@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:06
+
 /*
 
 TODO:
@@ -15,15 +17,14 @@ log transactions
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 10
-	var
-		obj/item/weapon/card/id/card
-		obj/item/weapon/spacecash/cashes = list()
-		inserted = 0
-		accepted = 0
-		pincode = 0
+	var/obj/item/weapon/card/id/card
+	var/obj/item/weapon/money/cashes = list()
+	var/inserted = 0
+	var/accepted = 0
+	var/pincode = 0
 
 	attackby(var/obj/A, var/mob/user)
-		if(istype(A,/obj/item/weapon/spacecash))
+		if(istype(A,/obj/item/weapon/money))
 			cashes += A
 			user.drop_item()
 			A.loc = src
@@ -100,21 +101,21 @@ log transactions
 					card.money -= amount
 					switch(amount)
 						if(1)
-							new /obj/item/weapon/spacecash(loc)
+							new /obj/item/weapon/money(loc)
 						if(10)
-							new /obj/item/weapon/spacecash/c10(loc)
+							new /obj/item/weapon/money/c10(loc)
 						if(20)
-							new /obj/item/weapon/spacecash/c20(loc)
+							new /obj/item/weapon/money/c20(loc)
 						if(50)
-							new /obj/item/weapon/spacecash/c50(loc)
+							new /obj/item/weapon/money/c50(loc)
 						if(100)
-							new /obj/item/weapon/spacecash/c100(loc)
+							new /obj/item/weapon/money/c100(loc)
 						if(200)
-							new /obj/item/weapon/spacecash/c200(loc)
+							new /obj/item/weapon/money/c200(loc)
 						if(500)
-							new /obj/item/weapon/spacecash/c500(loc)
+							new /obj/item/weapon/money/c500(loc)
 						if(1000)
-							new /obj/item/weapon/spacecash/c1000(loc)
+							new /obj/item/weapon/money/c1000(loc)
 				else
 					user << "\red Error: Insufficient funds."
 					return
@@ -143,7 +144,7 @@ log transactions
 		if (usr.machine==src && get_dist(src, usr) <= 1 || istype(usr, /mob/living/silicon/ai))
 			if(href_list["eca"])
 				if(accepted)
-					for(var/obj/item/weapon/spacecash/M in cashes)
+					for(var/obj/item/weapon/money/M in cashes)
 						M.loc = loc
 					inserted = 0
 					if(!cashes)
@@ -154,6 +155,8 @@ log transactions
 				if(accepted)
 					card.money += inserted
 					inserted = 0
+					if(cashes)
+						cashes = null
 			if(href_list["lock"])
 				card = null
 				accepted = 0

@@ -1,10 +1,11 @@
-/mob/living/carbon/alien/humanoid
-	var
-		oxygen_alert = 0
-		toxins_alert = 0
-		fire_alert = 0
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
 
-		temperature_alert = 0
+/mob/living/carbon/alien/humanoid
+	var/oxygen_alert = 0
+	var/toxins_alert = 0
+	var/fire_alert = 0
+
+	var/temperature_alert = 0
 
 
 /mob/living/carbon/alien/humanoid/Life()
@@ -183,7 +184,7 @@
 			if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 
 			var/datum/gas_mixture/environment = loc.return_air()
-			var/datum/air_group/breath
+			var/datum/gas_mixture/breath
 			// HACK NEED CHANGING LATER
 			if(src.health < 0)
 				src.losebreath++

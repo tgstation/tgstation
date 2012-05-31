@@ -211,6 +211,13 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			doortype = 22
 			glass = 1
 
+		glass_atmos
+			name = "Maintenance Hatch"
+			icon = 'dooratmoglass.dmi'
+			opacity = 0
+			doortype = 23
+			glass = 1
+
 	centcom
 		name = "Airlock"
 		icon = 'Doorele.dmi'
@@ -286,7 +293,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			return 0
 		use_power(50)
 		if(istype(src, /obj/machinery/door/airlock/glass))
-			playsound(src.loc, 'windowdoor.ogg', 30, 1)
+			playsound(src.loc, 'windowdoor.ogg', 100, 1)
 		else
 			playsound(src.loc, 'airlock.ogg', 30, 1)
 		if (src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
@@ -300,7 +307,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		..()
 		use_power(50)
 		if(istype(src, /obj/machinery/door/airlock/glass))
-			playsound(src.loc, 'windowdoor.ogg', 30, 1)
+			playsound(src.loc, 'windowdoor.ogg', 100, 1)
 		else
 			playsound(src.loc, 'airlock.ogg', 30, 1)
 		var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
@@ -435,6 +442,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 						if(20) new/obj/structure/door_assembly/door_assembly_research( src.loc )
 						if(21) new/obj/structure/door_assembly/door_assembly_research( src.loc )
 						if(22) new/obj/structure/door_assembly/door_assembly_min/glass( src.loc )
+						if(23) new/obj/structure/door_assembly/door_assembly_atmo/glass( src.loc )
 					var/obj/item/weapon/airlock_electronics/ae
 					if (!electronics)
 						ae = new/obj/item/weapon/airlock_electronics( src.loc )

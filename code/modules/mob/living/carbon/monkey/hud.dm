@@ -1,5 +1,7 @@
 /obj/hud/proc/monkey_hud(var/ui_style='screen1_old.dmi')
 
+	//ui_style='screen1_old.dmi' //Overriding the parameter. Only this UI style is acceptable with the 'sleek' layout.
+
 	src.adding = list(  )
 	src.other = list(  )
 	src.intents = list(  )
@@ -8,8 +10,9 @@
 	src.mov_int = list(  )
 	src.vimpaired = list(  )
 	src.darkMask = list(  )
+	src.intent_small_hud_objects = list(  )
 
-	var/icon/blocked = icon(ui_style,"blocked")
+	//var/icon/blocked = icon(ui_style,"blocked")
 
 	src.g_dither = new src.h_type( src )
 	src.g_dither.screen_loc = "WEST,SOUTH to EAST,NORTH"
@@ -55,6 +58,45 @@
 	src.adding += using
 	action_intent = using
 
+//intent small hud objects
+	using = new src.h_type( src )
+	using.name = "help"
+	using.icon = ui_style
+	using.icon_state = (mymob.a_intent == "help" ? "help_small_active" : "help_small")
+	using.screen_loc = ui_help_small
+	using.layer = 21
+	src.adding += using
+	help_intent = using
+
+	using = new src.h_type( src )
+	using.name = "disarm"
+	using.icon = ui_style
+	using.icon_state = (mymob.a_intent == "disarm" ? "disarm_small_active" : "disarm_small")
+	using.screen_loc = ui_disarm_small
+	using.layer = 21
+	src.adding += using
+	disarm_intent = using
+
+	using = new src.h_type( src )
+	using.name = "grab"
+	using.icon = ui_style
+	using.icon_state = (mymob.a_intent == "grab" ? "grab_small_active" : "grab_small")
+	using.screen_loc = ui_grab_small
+	using.layer = 21
+	src.adding += using
+	grab_intent = using
+
+	using = new src.h_type( src )
+	using.name = "harm"
+	using.icon = ui_style
+	using.icon_state = (mymob.a_intent == "hurt" ? "harm_small_active" : "harm_small")
+	using.screen_loc = ui_harm_small
+	using.layer = 21
+	src.adding += using
+	hurt_intent = using
+
+//end intent small hud objects
+
 	using = new src.h_type( src )
 	using.name = "mov_intent"
 	using.dir = SOUTHWEST
@@ -65,6 +107,7 @@
 	src.adding += using
 	move_intent = using
 
+/*
 	using = new src.h_type(src) //Right hud bar
 	using.dir = SOUTH
 	using.icon = ui_style
@@ -102,7 +145,7 @@
 	using.dir = EAST
 	using.screen_loc = ui_iarrowright
 	using.layer = 19
-	src.adding += using
+	src.adding += using*/
 
 	using = new src.h_type( src )
 	using.name = "drop"
@@ -111,7 +154,7 @@
 	using.screen_loc = ui_dropbutton
 	using.layer = 19
 	src.adding += using
-
+/*
 	using = new src.h_type( src )
 	using.name = "i_clothing"
 	using.dir = SOUTH
@@ -131,7 +174,7 @@
 	using.layer = 19
 	using.overlays += blocked
 	src.adding += using
-
+*/
 /*	using = new src.h_type( src )
 	using.name = "headset"
 	using.dir = SOUTHEAST
@@ -145,20 +188,44 @@
 	using.name = "r_hand"
 	using.dir = WEST
 	using.icon = ui_style
-	using.icon_state = "equip"
+	using.icon_state = "hand_inactive"
+	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
+		using.icon_state = "hand_active"
 	using.screen_loc = ui_rhand
 	using.layer = 19
+	src.r_hand_hud_object = using
 	src.adding += using
 
 	using = new src.h_type( src )
 	using.name = "l_hand"
 	using.dir = EAST
 	using.icon = ui_style
-	using.icon_state = "equip"
+	using.icon_state = "hand_inactive"
+	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
+		using.icon_state = "hand_active"
 	using.screen_loc = ui_lhand
+	using.layer = 19
+	src.l_hand_hud_object = using
+	src.adding += using
+
+	using = new src.h_type( src )
+	using.name = "hand"
+	using.dir = SOUTH
+	using.icon = ui_style
+	using.icon_state = "hand1"
+	using.screen_loc = ui_swaphand1
 	using.layer = 19
 	src.adding += using
 
+	using = new src.h_type( src )
+	using.name = "hand"
+	using.dir = SOUTH
+	using.icon = ui_style
+	using.icon_state = "hand2"
+	using.screen_loc = ui_swaphand2
+	using.layer = 19
+	src.adding += using
+/*
 	using = new src.h_type( src )
 	using.name = "id"
 	using.dir = SOUTHWEST
@@ -168,13 +235,14 @@
 	using.layer = 19
 	using.overlays += blocked
 	src.adding += using
+*/
 
 	using = new src.h_type( src )
 	using.name = "mask"
 	using.dir = NORTH
 	using.icon = ui_style
 	using.icon_state = "equip"
-	using.screen_loc = ui_mask
+	using.screen_loc = ui_monkey_mask
 	using.layer = 19
 	src.adding += using
 
@@ -186,7 +254,7 @@
 	using.screen_loc = ui_back
 	using.layer = 19
 	src.adding += using
-
+/*
 	using = new src.h_type( src )
 	using.name = "storage1"
 	using.icon = ui_style
@@ -204,7 +272,6 @@
 	using.layer = 19
 	using.overlays += blocked
 	src.adding += using
-
 	using = new src.h_type( src )
 	using.name = "resist"
 	using.icon = ui_style
@@ -283,6 +350,7 @@
 	using.layer = 19
 	using.overlays += blocked
 	src.adding += using
+*/
 
 /*
 	using = new src.h_type( src )
@@ -383,7 +451,7 @@
 	mymob.oxygen.screen_loc = ui_oxygen
 
 	mymob.pressure = new /obj/screen( null )
-	mymob.pressure.icon = 'screen1_old.dmi'
+	mymob.pressure.icon = ui_style
 	mymob.pressure.icon_state = "pressure0"
 	mymob.pressure.name = "pressure"
 	mymob.pressure.screen_loc = ui_pressure
@@ -399,6 +467,7 @@
 	mymob.m_select.name = "moving"
 	mymob.m_select.screen_loc = "16:-11,14"
 */
+
 	mymob.toxin = new /obj/screen( null )
 	mymob.toxin.icon = ui_style
 	mymob.toxin.icon_state = "tox0"
@@ -450,6 +519,7 @@
 	mymob.flash.screen_loc = "1,1 to 15,15"
 	mymob.flash.layer = 17
 
+/*
 	mymob.hands = new /obj/screen( null )
 	mymob.hands.icon = ui_style
 	mymob.hands.icon_state = "hand"
@@ -467,7 +537,7 @@
 	mymob.rest.icon = ui_style
 	mymob.rest.icon_state = "rest0"
 	mymob.rest.name = "rest"
-	mymob.rest.screen_loc = ui_rest
+	mymob.rest.screen_loc = ui_rest*/
 
 	/*/Monkey blockers
 
@@ -566,7 +636,7 @@
 	mymob.client.screen = null
 
 	//, mymob.i_select, mymob.m_select
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.hands, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, mymob.rest, mymob.sleep, mymob.pressure, mymob.gun_setting_icon) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.pullin, mymob.blind, mymob.flash, mymob.gun_setting_icon) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach, mymob.hands, )
 	mymob.client.screen += src.adding + src.other
 
 	//if(istype(mymob,/mob/living/carbon/monkey)) mymob.client.screen += src.mon_blo

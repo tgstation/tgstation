@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/item/weapon/gun/projectile/shotgun/pump
 	name = "shotgun"
 	desc = "Useful for sweeping alleys."
@@ -10,10 +12,9 @@
 	caliber = "shotgun"
 	origin_tech = "combat=4;materials=2"
 	ammo_type = "/obj/item/ammo_casing/shotgun/beanbag"
-	var
-		recentpump = 0 // to prevent spammage
-		pumped = 0
-		obj/item/ammo_casing/current_shell = null
+	var/recentpump = 0 // to prevent spammage
+	var/pumped = 0
+	var/obj/item/ammo_casing/current_shell = null
 
 
 	load_into_chamber()
@@ -52,6 +53,7 @@
 /obj/item/weapon/gun/projectile/shotgun/pump/combat
 	name = "combat shotgun"
 	icon_state = "cshotgun"
+	item_state = "cshotgun"
 	max_shells = 8
 	origin_tech = "combat=5;materials=2"
 	ammo_type = "/obj/item/ammo_casing/shotgun"
@@ -87,17 +89,19 @@
 		return 0
 
 	attack_self(mob/living/user as mob)
-		if(!(locate(/obj/item/ammo_casing/shotgun) in src) && !loaded.len)
-			user << "<span class='notice'>\The [src] is empty.</span>"
-			return
+		if(..())
+			if(!(locate(/obj/item/ammo_casing/shotgun) in src) && !loaded.len)
+				user << "<span class='notice'>\The [src] is empty.</span>"
+				return
 
-		for(var/obj/item/ammo_casing/shotgun/shell in src)	//This feels like a hack.	//don't code at 3:30am kids!!
-			if(shell in loaded)
-				loaded -= shell
-			shell.loc = get_turf(src.loc)
+			for(var/obj/item/ammo_casing/shotgun/shell in src)	//This feels like a hack.	//don't code at 3:30am kids!!
+				if(shell in loaded)
+					loaded -= shell
+				shell.loc = get_turf(src.loc)
 
-		user << "<span class='notice'>You break \the [src].</span>"
-		update_icon()
+			user << "<span class='notice'>You break \the [src].</span>"
+			update_icon()
+		return
 
 	attackby(var/obj/item/A as obj, mob/user as mob)
 		if(istype(A, /obj/item/ammo_casing) && !load_method)
@@ -118,6 +122,7 @@
 				return
 			if(do_after(user, 30))	//SHIT IS STEALTHY EYYYYY
 				icon_state = "sawnshotgun"
+				item_state = "sawnshotgun"
 				w_class = 3.0
 				item_state = "gun"
 				flags &= ~ONBACK	//you can't sling it on your back

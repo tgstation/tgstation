@@ -79,18 +79,25 @@
 	src.closer.screen_loc = text("[],[]", mx, my)
 	return
 
-/obj/item/weapon/secstorage/proc/orient2hud(mob/user as mob)
+//This proc draws out the inventory and places the items on it. It uses the standard position.
+/obj/item/weapon/secstorage/proc/standard_orient_objs()
+	var/rows = 0
+	var/cols = 6
+	var/cx = 4
+	var/cy = 2+rows
+	src.boxes.screen_loc = text("4:16,2:16 to [4+cols]:16,[2+rows]:16")
+	for(var/obj/O in src.contents)
+		O.screen_loc = text("[cx]:16,[cy]:16")
+		O.layer = 20
+		cx++
+		if (cx > (4+cols))
+			cx = 4
+			cy--
+	src.closer.screen_loc = text("11:16,2:16")
+	return
 
-	if (src == user.l_hand)
-		src.orient_objs(3, 11, 3, 4)
-	else
-		if (src == user.r_hand)
-			src.orient_objs(1, 11, 1, 4)
-		else
-			if (src == user.back)
-				src.orient_objs(4, 10, 4, 3)
-			else
-				src.orient_objs(7, 8, 10, 7)
+/obj/item/weapon/secstorage/proc/orient2hud(mob/user as mob)
+	standard_orient_objs()
 	return
 
 /obj/item/weapon/secstorage/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -160,7 +167,7 @@
 
 /obj/item/weapon/secstorage/dropped(mob/user as mob)
 
-	src.orient_objs(7, 8, 10, 7)
+	standard_orient_objs()
 	return
 
 /obj/item/weapon/secstorage/MouseDrop(over_object, src_location, over_location)
@@ -168,6 +175,7 @@
 	if (src.locked == 1)
 		return
 
+	orient2hud(usr)
 	if ((over_object == usr && ((get_dist(src, usr) <= 1 ||src.locked == 0) || usr.contents.Find(src))))  //|| usr.telekinesis == 1
 		if (usr.s_active)
 			usr.s_active.close(usr)
@@ -258,6 +266,6 @@
 	src.closer.icon_state = "x"
 	src.closer.layer = 20
 	spawn( 5 )
-		src.orient_objs(7, 8, 10, 7)
+		standard_orient_objs()
 		return
  	return

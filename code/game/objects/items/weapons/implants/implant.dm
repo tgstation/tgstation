@@ -1,10 +1,14 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/item/weapon/implant
 	name = "implant"
-	var
-		implanted = null
-		mob/imp_in = null
-		color = "b"
-		allow_reagents = 0
+	desc = "An implant. Not usually seen outside a body."
+	icon = 'items.dmi'
+	icon_state = "implant"
+	var/implanted = null
+	var/mob/imp_in = null
+	var/color = "b"
+	var/allow_reagents = 0
 	proc
 		trigger(emote, source as mob)
 		activate()
@@ -16,14 +20,23 @@
 	trigger(emote, source as mob)
 		return
 
-
 	activate()
 		return
 
+	attackby(obj/item/weapon/I as obj, mob/user as mob)
+		..()
+		if (istype(I, /obj/item/weapon/implanter))
+			if (I:imp)
+				return
+			else
+				src.loc = I
+				I:imp = src
+//				del(src)
+			I:update()
+		return
 
 	implanted(source as mob)
 		return
-
 
 	get_data()
 		return "No information available"
@@ -34,11 +47,10 @@
 
 
 /obj/item/weapon/implant/uplink
-	name = "uplink"
-	desc = "Summon things."
-	var
-		activation_emote = "chuckle"
-		obj/item/device/uplink/radio/uplink = null
+	name = "uplink implant"
+	desc = "A micro-telecrystal implant which allows for instant transportation of equipment."
+	var/activation_emote = "chuckle"
+	var/obj/item/device/uplink/radio/uplink = null
 
 
 	New()
@@ -63,10 +75,9 @@
 
 
 /obj/item/weapon/implant/tracking
-	name = "tracking"
-	desc = "Track with this."
-	var
-		id = 1.0
+	name = "tracking implant"
+	desc = "An implant which relays information to the appropriate tracking computer."
+	var/id = 1.0
 
 
 	get_data()
@@ -89,8 +100,8 @@ Implant Specifics:<BR>"}
 
 //Nuke Agent Explosive
 /obj/item/weapon/implant/dexplosive
-	name = "explosive"
-	desc = "And boom goes the weasel."
+	name = "explosive implant"
+	desc = "A military grade micro bio-explosive. Highly dangerous."
 	var/activation_emote = "deathgasp"
 	var/coded = 0
 
@@ -140,8 +151,8 @@ Implant Specifics:<BR>"}
 
 
 /obj/item/weapon/implant/chem
-	name = "chem"
-	desc = "Injects things."
+	name = "chemical implant"
+	desc = "A micro-injector that can be triggered remotely."
 	allow_reagents = 1
 
 	get_data()
@@ -190,8 +201,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 
 /obj/item/weapon/implant/loyalty
-	name = "loyalty"
-	desc = "Makes you loyal or such."
+	name = "loyalty implant"
+	desc = "An implant which contains a small pod of nanobots which manipulate host mental functions to induce loyalty."
 
 	get_data()
 		var/dat = {"
@@ -220,8 +231,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 //BS12 Explosive
 /obj/item/weapon/implant/explosive
-	name = "explosive"
-	desc = "And boom goes the weasel."
+	name = "explosive implant"
+	desc = "A military grade micro bio-explosive. Highly dangerous."
 	var/phrase = "supercalifragilisticexpialidocious"
 
 
@@ -263,8 +274,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		usr << "The implanted explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate."
 
 /obj/item/weapon/implant/death_alarm
-	name = "death alarm"
-	desc = "Danger Will Robinson!"
+	name = "death alarm implant"
+	desc = "An alarm which monitors host vital signs and transmits a radio message upon death."
 	var/mobname = "Will Robinson"
 
 	get_data()
@@ -302,7 +313,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 /obj/item/weapon/implant/compressed
 	name = "compressed matter implant"
-	desc = "*fwooomp*"
+	desc = "Based on compressed matter technology, can store a single item."
 	var/activation_emote = "sigh"
 	var/obj/item/scanned = null
 

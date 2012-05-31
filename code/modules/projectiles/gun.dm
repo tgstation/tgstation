@@ -385,7 +385,7 @@ mob/proc
 				spawn(0) //Make it show the 2 states properly
 					if(target_locked)
 						target_locked.icon_state = "locking"
-					update_clothing()
+					update_clothing() // update_clothing clears overlays, so this might break stuff
 					sleep(20)
 					if(target_locked)
 						target_locked.icon_state = "locked"
@@ -529,7 +529,8 @@ client/verb
 						if(!target_can_run)
 							M << "\red Your move intent is now set to walk, as your targeter permits it."
 							M.m_intent = "walk"
-							M.hud_used.move_intent.icon_state = "walking"
+							if(M.hud_used.move_intent)
+								M.hud_used.move_intent.icon_state = "walking"
 					else
 						M << "\red <b>Your character will now be shot if they move.</b>"
 	AllowTargetRun()

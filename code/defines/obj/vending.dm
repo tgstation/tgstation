@@ -113,7 +113,7 @@
 	desc = "A snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars"
 	icon_state = "snack"
 	product_paths = "/obj/item/weapon/reagent_containers/food/snacks/candy;/obj/item/weapon/reagent_containers/food/drinks/dry_ramen;/obj/item/weapon/reagent_containers/food/snacks/chips;/obj/item/weapon/reagent_containers/food/snacks/sosjerky;/obj/item/weapon/reagent_containers/food/snacks/no_raisin;/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie;/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers"
-//	product_amounts = "10;10;10;10;10;10;10"
+//	product_amounts = "6;6;6;6;6;6;6"
 	product_prices = "1;1;1;1;1;1;1"
 	product_slogans = "Try our new nougat bar!;Twice the calories for half the price!"
 	product_hidden = "/obj/item/weapon/reagent_containers/food/snacks/syndicake"
@@ -126,9 +126,9 @@
 	name = "Robust Softdrinks"
 	desc = "A softdrink vendor provided by Robust Industries, LLC."
 	icon_state = "Cola_Machine"
-	product_paths = "/obj/item/weapon/reagent_containers/food/drinks/cola;/obj/item/weapon/reagent_containers/food/drinks/space_mountain_wind;/obj/item/weapon/reagent_containers/food/drinks/dr_gibb;/obj/item/weapon/reagent_containers/food/drinks/starkist;/obj/item/weapon/reagent_containers/food/drinks/space_up"
-	product_amounts = "10;10;10;10;10"
-	product_prices = "1;1;1;1;1"
+	product_paths = "/obj/item/weapon/reagent_containers/food/drinks/cola;/obj/item/weapon/reagent_containers/food/drinks/space_mountain_wind;/obj/item/weapon/reagent_containers/food/drinks/dr_gibb;/obj/item/weapon/reagent_containers/food/drinks/starkist;/obj/item/weapon/reagent_containers/food/drinks/space_up;/obj/item/weapon/reagent_containers/food/drinks/waterbottle"
+//	product_amounts = "10;10;10;10;10"
+	product_prices = "1;1;1;1;1;1"
 	product_slogans = "Robust Softdrinks: More robust then a toolbox to the head!"
 	product_hidden = "/obj/item/weapon/reagent_containers/food/drinks/thirteenloko"
 	product_hideamt = "5"
@@ -173,9 +173,9 @@
 	icon_state = "med"
 	icon_deny = "med-deny"
 	req_access_txt = "5"
-	product_paths = "/obj/item/clothing/under/rank/medical;/obj/item/clothing/under/rank/chemist;/obj/item/clothing/suit/storage/labcoat;/obj/item/clothing/shoes/white;/obj/item/device/healthanalyzer;/obj/item/weapon/reagent_containers/glass/bottle/antitoxin;/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline;/obj/item/weapon/reagent_containers/glass/bottle/stoxin;/obj/item/weapon/reagent_containers/glass/bottle/toxin;/obj/item/weapon/reagent_containers/syringe/antiviral;/obj/item/weapon/reagent_containers/syringe;/obj/item/device/healthanalyzer;/obj/item/weapon/reagent_containers/glass/beaker;/obj/item/weapon/reagent_containers/dropper"
+	product_paths = "/obj/item/clothing/under/rank/medical;/obj/item/clothing/under/rank/chemist;/obj/item/clothing/suit/storage/labcoat;/obj/item/clothing/shoes/white;/obj/item/weapon/reagent_containers/glass/bottle/antitoxin;/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline;/obj/item/weapon/reagent_containers/glass/bottle/stoxin;/obj/item/weapon/reagent_containers/glass/bottle/toxin;/obj/item/weapon/reagent_containers/syringe/antiviral;/obj/item/weapon/reagent_containers/syringe;/obj/item/device/healthanalyzer;/obj/item/weapon/reagent_containers/glass/beaker;/obj/item/weapon/reagent_containers/dropper"
 //	product_amounts = "4;4;4;4;4;12;5;4;2"
-	product_prices = "1;1;1;1;2;2;2;2;2;2;1;2;2;5"
+	product_prices = "1;1;1;1;2;2;2;2;2;1;2;2;5"
 	product_hidden = "/obj/item/weapon/reagent_containers/pill/tox;/obj/item/weapon/reagent_containers/pill/stox;/obj/item/weapon/reagent_containers/pill/antitox"
 //	product_hideamt = "3;4;6"
 	hidden_prices = "3;3;2"
@@ -390,6 +390,20 @@
 	hidden_prices = ""
 	charge_type = "robotics"
 
+/obj/machinery/vending/liquid
+	name = "LiquidRation Dispenser"
+	desc = "All the food you'll ever need to survive!"
+	icon_state = "liquidfood"
+	product_paths = "/obj/item/weapon/reagent_containers/food/snacks/liquidfood;/obj/item/weapon/flavor/red;/obj/item/weapon/flavor/blue"
+//	product_amounts = "6;6;6;6;6;6;6"
+	product_prices = "1;1;1"
+	product_slogans = "Enjoy your NanoTrasen \"LiquidFood\" Ration! Now with a choice of TWO delicious flavors!"
+	product_hidden = ""
+//	product_hideamt = "10"
+	hidden_prices = ""
+	product_ads = "Think of it as free survival!;It's even healthy!;Take a quick break, enjoy your ration!"
+	charge_type = "liquid"
+
 /obj/item/weapon/vending_charge
 	name = "Vending Charge"
 	var/charge_type = "generic"
@@ -478,3 +492,8 @@
 	name = "Toxins Lab Charge"
 	charge_type = "toxinslab"
 	icon_state = "toxinslab-charge"*/
+
+/obj/item/weapon/vending_charge/liquid
+	name = "LiquidRation Charge"
+	charge_type = "liquid"
+	icon_state = "liquidfood-charge"

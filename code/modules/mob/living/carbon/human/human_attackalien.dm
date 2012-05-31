@@ -70,5 +70,4 @@
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
 							O.show_message(text("\red <B>[] has tried to disarm []!</B>", M, src), 1)
-	update_clothing()
 	return

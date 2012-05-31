@@ -1,16 +1,17 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /obj/machinery/computer/prisoner
 	name = "Prisoner Management"
 	icon = 'computer.dmi'
 	icon_state = "explosive"
 	req_access = list(access_armory)
 	circuit = "/obj/item/weapon/circuitboard/prisoner"
-	var
-		id = 0.0
-		temp = null
-		status = 0
-		timeleft = 60
-		stop = 0.0
-		screen = 0 // 0 - No Access Denied, 1 - Access allowed
+	var/id = 0.0
+	var/temp = null
+	var/status = 0
+	var/timeleft = 60
+	var/stop = 0.0
+	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
 
 
 	attack_ai(var/mob/user as mob)
@@ -94,7 +95,8 @@
 					usr << "Unauthorized Access."
 
 			else if(href_list["warn"])
-				var/warning = input(usr,"Message:","Enter your message here!","")
+				var/warning = copytext(sanitize(input(usr,"Message:","Enter your message here!","")),1,MAX_MESSAGE_LEN)
+				if(!warning) return
 				var/obj/item/weapon/implant/I = locate(href_list["warn"])
 				if((I)&&(I.imp_in))
 					var/mob/living/carbon/R = I.imp_in

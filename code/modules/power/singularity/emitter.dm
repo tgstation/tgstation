@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/machinery/emitter
 	name = "Emitter"
 	desc = "A heavy duty industrial laser"
@@ -11,16 +13,15 @@
 	idle_power_usage = 10
 	active_power_usage = 300
 
-	var
-		frequency = 1
-		active = 0
-		fire_delay = 100
-		last_shot = 0
-		shot_number = 0
-		state = 0
-		locked = 0
-		energy = 0
-		mega_energy = 0
+	var/frequency = 1
+	var/active = 0
+	var/fire_delay = 100
+	var/last_shot = 0
+	var/shot_number = 0
+	var/state = 0
+	var/locked = 0
+	var/energy = 0
+	var/mega_energy = 0
 
 
 	verb/rotate()

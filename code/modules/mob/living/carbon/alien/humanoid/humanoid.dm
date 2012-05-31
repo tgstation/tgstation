@@ -13,7 +13,7 @@
 			resting_icon = new /icon('alien.dmi', "alienh_sleep")
 			running_icon = new /icon('alien.dmi', "alienh_running")
 		icon = stand_icon
-		update_clothing()
+		rebuild_appearance()
 		src << "\blue Your icons have been generated!"
 	..()
 
@@ -398,7 +398,7 @@
 				overlays += image("icon" = 'blood.dmi', "icon_state" = "armorblood[!lying ? "" : "2"]", "layer" = MOB_LAYER)
 			else
 				overlays += image("icon" = 'blood.dmi', "icon_state" = "suitblood[!lying ? "" : "2"]", "layer" = MOB_LAYER)
-		wear_suit.screen_loc = ui_iclothing
+		wear_suit.screen_loc = ui_alien_oclothing
 		if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
 			if (handcuffed)
 				handcuffed.loc = loc
@@ -420,7 +420,7 @@
 		overlays += image("icon" = 'mob.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = MOB_LAYER)
 		if (head.blood_DNA)
 			overlays += image("icon" = 'blood.dmi', "icon_state" = "helmetblood[!lying ? "" : "2"]", "layer" = MOB_LAYER)
-		head.screen_loc = ui_oclothing
+		head.screen_loc = ui_alien_head
 
 	if (l_store)
 		l_store.screen_loc = ui_storage1
@@ -435,12 +435,12 @@
 	if (r_hand)
 		overlays += image("icon" = 'items_righthand.dmi', "icon_state" = r_hand.item_state ? r_hand.item_state : r_hand.icon_state, "layer" = MOB_LAYER+1)
 
-		r_hand.screen_loc = ui_id
+		r_hand.screen_loc = ui_rhand
 
 	if (l_hand)
 		overlays += image("icon" = 'items_lefthand.dmi', "icon_state" = l_hand.item_state ? l_hand.item_state : l_hand.icon_state, "layer" = MOB_LAYER+1)
 
-		l_hand.screen_loc = ui_belt
+		l_hand.screen_loc = ui_lhand
 
 
 

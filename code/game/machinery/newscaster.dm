@@ -444,9 +444,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 						FC.messages += newMsg                      // To avoid further confusion, this one for adds the message to all existing newscasters' channel_list's channels.
 						break                                      // Another for to go through newscasters is not needed. Due to the nature of submit_new_CHANNEL, every reference
 				src.screen=4                                       // to a channel in ANY newscaster is the same. Editing one will edit them all.
-
-			for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
-				NEWSCASTER.newsAlert(src.channel_name)
+				for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
+					NEWSCASTER.newsAlert(src.channel_name)
 
 			src.updateUsrDialog()
 

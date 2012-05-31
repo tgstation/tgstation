@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/machinery/particle_accelerator/control_box
 	name = "Particle Accelerator Control Computer"
 	desc = "This controls the density of the particles."
@@ -11,10 +13,9 @@
 	active_power_usage = 10000
 	construction_state = 0
 	active = 0
-	var
-		list/obj/structure/particle_accelerator/connected_parts
-		assembled = 0
-		parts = null
+	var/list/obj/structure/particle_accelerator/connected_parts
+	var/assembled = 0
+	var/parts = null
 
 
 	New()
@@ -89,11 +90,11 @@
 				part.update_icon()
 			if(src.strength > 2)
 				src.strength = 2
-				message_admins("[usr] increased particle accelerator power to [strength].")
-				log_admin("[usr] increased particle accelerator power to [strength].")
 				for(var/obj/structure/particle_accelerator/part in connected_parts)
 					part.strength = 2
 					part.update_icon()
+			message_admins("[usr] increased particle accelerator power to [strength].")
+			log_admin("[usr] increased particle accelerator power to [strength].")
 		if(href_list["strengthdown"])
 			src.strength--
 			for(var/obj/structure/particle_accelerator/part in connected_parts)
@@ -101,11 +102,11 @@
 				part.update_icon()
 			if(src.strength < 0)
 				src.strength = 0
-				message_admins("[usr] decreased particle accelerator power to [strength].")
-				log_admin("[usr] decreased particle accelerator power to [strength].")
 				for(var/obj/structure/particle_accelerator/part in connected_parts)
 					part.strength = 0
 					part.update_icon()
+			message_admins("[usr] decreased particle accelerator power to [strength].")
+			log_admin("[usr] decreased particle accelerator power to [strength].")
 		src.updateDialog()
 		src.update_icon()
 		return

@@ -1,8 +1,9 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /datum/event/viralinfection
-	var
-		virus_type
-		virus
-		virus2 = 0
+	var/virus_type
+	var/virus
+	var/virus2 = 0
 
 	Announce()
 		if(!virus)

@@ -60,6 +60,6 @@
 	desc = "This robe commands authority."
 	icon_state = "judge"
 	item_state = "judge"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	allowed = list(/obj/item/weapon/cigpacket,/obj/item/weapon/spacecash)
+	allowed = list(/obj/item/weapon/cigpacket,/obj/item/weapon/money)

@@ -55,14 +55,15 @@
 			S.attachable = 0
 			S.destroyed = 0
 			S.robot = 1
-			var/datum/organ/external/T = H.organs[limbloc]
+			var/datum/organ/external/T = H.organs["[limbloc]"]
 			T.attachable = 0
 			T.destroyed = 0
 			T.broken = 0
 			T.robot = 1
-			del(src)
 			M.update_body()
 			M.updatehealth()
 			M.UpdateDamageIcon()
+			del(src)
 
-		return 1
+			return 1
+		return 0

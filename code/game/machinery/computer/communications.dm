@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 // The communications computer
 /obj/machinery/computer/communications
 	name = "Communications Console"
@@ -16,16 +18,16 @@
 	var/message_cooldown = 0
 	var/centcomm_message_cooldown = 0
 	var/tmp_alertlevel = 0
-	var/const
-		STATE_DEFAULT = 1
-		STATE_CALLSHUTTLE = 2
-		STATE_CANCELSHUTTLE = 3
-		STATE_MESSAGELIST = 4
-		STATE_VIEWMESSAGE = 5
-		STATE_DELMESSAGE = 6
-		STATE_STATUSDISPLAY = 7
-		STATE_ALERT_LEVEL = 8
-		STATE_CONFIRM_LEVEL = 9
+	var/const/STATE_DEFAULT = 1
+	var/const/STATE_CALLSHUTTLE = 2
+	var/const/STATE_CANCELSHUTTLE = 3
+	var/const/STATE_MESSAGELIST = 4
+	var/const/STATE_VIEWMESSAGE = 5
+	var/const/STATE_DELMESSAGE = 6
+	var/const/STATE_STATUSDISPLAY = 7
+	var/const/STATE_ALERT_LEVEL = 8
+	var/const/STATE_CONFIRM_LEVEL = 9
+	var/const/STATE_CREWTRANSFER = 10
 
 	var/status_display_freq = "1435"
 	var/stat_msg1
@@ -97,7 +99,7 @@
 		if("announce")
 			if(src.authenticated==2)
 				if(message_cooldown)	return
-				var/input = input(usr, "Please choose a message to announce to the station crew.", "What?", "")
+				var/input = copytext(sanitize(input(usr, "Please choose a message to announce to the station crew.", "What?", "")),1,MAX_MESSAGE_LEN)
 				if(!input || !(usr in view(1,src)))
 					return
 				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
@@ -114,6 +116,16 @@
 		if("callshuttle2")
 			if(src.authenticated)
 				call_shuttle_proc(usr)
+				if(emergency_shuttle.online)
+					post_status("shuttle")
+			src.state = STATE_DEFAULT
+		if("crewtransfer")
+			src.state= STATE_DEFAULT
+			if(src.authenticated)
+				src.state = STATE_CREWTRANSFER
+		if("crewtransfer2")
+			if(src.authenticated)
+				init_shift_change(usr) //key difference here
 				if(emergency_shuttle.online)
 					post_status("shuttle")
 			src.state = STATE_DEFAULT
@@ -176,7 +188,7 @@
 				if(centcomm_message_cooldown)
 					usr << "Arrays recycling.  Please stand by."
 					return
-				var/input = input(usr, "Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "To abort, send an empty message.", "")
+				var/input = copytext(sanitize(input(usr, "Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "To abort, send an empty message.", "")),1,MAX_MESSAGE_LEN)
 				if(!input || !(usr in view(1,src)))
 					return
 				Centcomm_announce(input, usr)
@@ -193,7 +205,7 @@
 				if(centcomm_message_cooldown)
 					usr << "Arrays recycling.  Please stand by."
 					return
-				var/input = input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "To abort, send an empty message.", "")
+				var/input = copytext(sanitize(input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "To abort, send an empty message.", "")),1,MAX_MESSAGE_LEN)
 				if(!input || !(usr in view(1,src)))
 					return
 				Syndicate_announce(input, usr)
@@ -306,6 +318,7 @@
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=cancelshuttle'>Cancel Shuttle Call</A> \]"
 					else
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=callshuttle'>Call Emergency Shuttle</A> \]"
+						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=crewtransfer'>Initiate Crew Transfer</A> \]"
 
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=status'>Set Status Display</A> \]"
 			else
@@ -313,6 +326,8 @@
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=messagelist'>Message List</A> \]"
 		if(STATE_CALLSHUTTLE)
 			dat += "Are you sure you want to call the shuttle? \[ <A HREF='?src=\ref[src];operation=callshuttle2'>OK</A> | <A HREF='?src=\ref[src];operation=main'>Cancel</A> \]"
+		if(STATE_CREWTRANSFER) // this is the shiftchage screen.
+			dat += "Are you sure you want to initiate a crew transfer? This will call the shuttle. \[ <a HREF='?src=\ref[src];operation=crewtransfer2'>OK</a> | <A HREF='?src=\ref[src];operation=main'>Cancel</A> \]"
 		if(STATE_CANCELSHUTTLE)
 			dat += "Are you sure you want to cancel the shuttle? \[ <A HREF='?src=\ref[src];operation=cancelshuttle2'>OK</A> | <A HREF='?src=\ref[src];operation=main'>Cancel</A> \]"
 		if(STATE_MESSAGELIST)
@@ -418,10 +433,10 @@
 		usr << "You can't call the shuttle because you are dead!"
 		return
 
-	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
-	if(confirm != "Yes") return
+	var/confirm = alert("Are you sure you want to call the shuttle?", "Confirm Shuttle Call", "Yes", "No")
 
-	call_shuttle_proc(src)
+	if(confirm == "Yes")
+		call_shuttle_proc(src)
 
 	// hack to display shuttle timer
 	if(emergency_shuttle.online)
@@ -468,10 +483,51 @@
 		return
 
 	emergency_shuttle.incall()
+	emergency_shuttle.shuttlealert(1)
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
 	captain_announce("The emergency shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
 	world << sound('shuttlecalled.ogg')
+
+	return
+
+/proc/init_shift_change(var/mob/user)
+	if ((!( ticker ) || emergency_shuttle.location))
+		return
+
+	if(emergency_shuttle.deny_shuttle)
+		user << "Centcom does not currently have a shuttle available in your sector. Please try again later."
+		return
+
+	if(sent_strike_team == 1)
+		user << "Centcom will not allow the shuttle to be called. Consider all contracts terminated."
+		return
+
+	if(world.time < 54000) // 30 minute grace period to let the game get going
+		user << "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again."//may need to change "/600"
+		return
+
+	if(emergency_shuttle.direction == -1)
+		user << "The shuttle may not be called while returning to CentCom."
+		return
+
+	if(emergency_shuttle.online)
+		user << "The shuttle is already on its way."
+		return
+
+	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "sandbox")
+		//New version pretends to call the shuttle but cause the shuttle to return after a random duration.
+		emergency_shuttle.fake_recall = rand(300,500)
+
+	if(ticker.mode.name == "blob" || ticker.mode.name == "epidemic")
+		user << "Under directive 7-10, [station_name()] is quarantined until further notice."
+		return
+
+	emergency_shuttle.incall()
+	emergency_shuttle.shuttlealert(1)
+	log_game("[key_name(user)] has called the shuttle.")
+	message_admins("[key_name_admin(user)] has called the shuttle.", 1)
+	captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")
 
 	return
 

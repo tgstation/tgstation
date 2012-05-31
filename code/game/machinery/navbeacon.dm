@@ -193,7 +193,7 @@ Transponder Codes:<UL>"}
 					updateDialog()
 
 				else if(href_list["locedit"])
-					var/newloc = input("Enter New Location", "Navigation Beacon", location) as text|null
+					var/newloc = copytext(sanitize(input("Enter New Location", "Navigation Beacon", location) as text|null),1,MAX_MESSAGE_LEN)
 					if(newloc)
 						location = newloc
 						updateDialog()

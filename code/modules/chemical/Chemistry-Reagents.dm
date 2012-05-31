@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 #define SOLID 1
 #define LIQUID 2
 #define GAS 3
@@ -103,7 +105,7 @@ datum
 			color = "#C80000" // rgb: 200, 0, 0
 			on_mob_life(var/mob/living/M)
 				if(!data || !data["blood_type"])
-					..()
+					return
 				else if(istype(M, /mob/living/carbon/human) && blood_incompatible(data["blood_type"],M.dna.b_type) && !M.changeling)
 					M.adjustToxLoss(rand(0.5,1.5))
 					M.adjustOxyLoss(rand(1,1.5))
@@ -136,18 +138,6 @@ datum
 						M:virus2.dead = 1
 
 
-				/*
-				if(self.data["virus"])
-					var/datum/disease/V = self.data["virus"]
-					if(M.resistances.Find(V.type)) return
-					if(method == TOUCH)//respect all protective clothing...
-						M.contract_disease(V)
-					else //injected
-						M.contract_disease(V, 1, 0)
-				return
-				*/
-
-
 			reaction_turf(var/turf/simulated/T, var/volume)//splash the blood all over the place
 				if(!istype(T)) return
 				var/datum/reagent/blood/self = src
@@ -171,15 +161,6 @@ datum
 					var/datum/disease2/disease/v = self.data["virus2"]
 					if(v)
 						blood_prop.virus2 = v.getcopy()
-
-						// this makes it almost impossible for airborne diseases to spread
-						// THIS SHIT HAS TO GO, SORRY!
-						/*
-						if(T.density==0)
-							newVirus.spread_type = CONTACT_FEET
-						else
-							newVirus.spread_type = CONTACT_HANDS
-						*/
 
 				else if(istype(self.data["donor"], /mob/living/carbon/monkey))
 					var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T
@@ -282,23 +263,25 @@ datum
 				for(var/mob/living/carbon/metroid/M in T)
 					M.adjustToxLoss(rand(15,20))
 
-				var/hotspot = (locate(/obj/effect/hotspot) in T)
+				var/hotspot = (locate(/obj/fire) in T)
 				if(hotspot && !istype(T, /turf/space))
 					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
+					T.apply_fire_protection()
 					del(hotspot)
 				return
 			reaction_obj(var/obj/O, var/volume)
 				src = null
 				var/turf/T = get_turf(O)
-				var/hotspot = (locate(/obj/effect/hotspot) in T)
+				var/hotspot = (locate(/obj/fire) in T)
 				if(hotspot && !istype(T, /turf/space))
 					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
+					//T.apply_fire_protection()
 					del(hotspot)
 				if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 					var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
@@ -1818,9 +1801,9 @@ datum
 						M:confused += 2
 						M:drowsyness += 2
 					if(2 to 50)
-						M:sleeping += 1
+						M:sleeping += 5
 					if(51 to INFINITY)
-						M:sleeping += 1
+						M:sleeping += 5
 						M:adjustToxLoss(2)
 				..()
 				return
@@ -2163,12 +2146,13 @@ datum
 						if(T.wet_overlay)
 							T.overlays -= T.wet_overlay
 							T.wet_overlay = null
-				var/hotspot = (locate(/obj/effect/hotspot) in T)
+				var/hotspot = (locate(/obj/fire) in T)
 				if(hotspot)
 					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
+					T.apply_fire_protection()
 					del(hotspot)
 
 		enzyme
@@ -2672,14 +2656,13 @@ datum
 			reagent_state = LIQUID
 			nutriment_factor = 0 //So alcohol can fill you up! If they want to.
 			color = "#404030" // rgb: 64, 64, 48
-			var
-				dizzy_adj = 3
-				slurr_adj = 3
-				confused_adj = 2
-				slur_start = 65			//amount absorbed after which mob starts slurring
-				confused_start = 130	//amount absorbed after which mob starts confusing directions
-				blur_start = 260	//amount absorbed after which mob starts getting blurred vision
-				pass_out = 325	//amount absorbed after which mob starts passing out
+			var/dizzy_adj = 3
+			var/slurr_adj = 3
+			var/confused_adj = 2
+			var/slur_start = 65			//amount absorbed after which mob starts slurring
+			var/confused_start = 130	//amount absorbed after which mob starts confusing directions
+			var/blur_start = 260	//amount absorbed after which mob starts getting blurred vision
+			var/pass_out = 325	//amount absorbed after which mob starts passing out
 
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor

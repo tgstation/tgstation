@@ -96,8 +96,6 @@
 	return 0
 
 /mob/proc/Life()
-//	if(organStructure)
-//		organStructure.ProcessOrgans()
 	return
 
 /mob/proc/update_clothing()
@@ -172,16 +170,13 @@
 		var/turf/T = get_turf(loc)
 		if (istype(T))
 			T.Entered(W)
-	update_clothing()
+		update_clothing()
 	return
 
 /mob/proc/before_take_item(var/obj/item/item)
 	item.loc = null
 	item.layer = initial(item.layer)
 	u_equip(item)
-	//if (client)
-	//	client.screen -= item
-	//update_clothing()
 	return
 
 /mob/proc/get_active_hand()
@@ -243,7 +238,19 @@
 
 /mob/proc/show_inv(mob/user as mob)
 	user.machine = src
-	var/dat = text("<TT>\n<B><FONT size=3>[]</FONT></B><BR>\n\t<B>Head(Mask):</B> <A href='?src=\ref[];item=mask'>[]</A><BR>\n\t<B>Left Hand:</B> <A href='?src=\ref[];item=l_hand'>[]</A><BR>\n\t<B>Right Hand:</B> <A href='?src=\ref[];item=r_hand'>[]</A><BR>\n\t<B>Back:</B> <A href='?src=\ref[];item=back'>[]</A><BR>\n\t[]<BR>\n\t[]<BR>\n\t[]<BR>\n\t<A href='?src=\ref[];item=pockets'>Empty Pockets</A><BR>\n<A href='?src=\ref[];mach_close=mob[]'>Close</A><BR>\n</TT>", name, src, (wear_mask ? text("[]", wear_mask) : "Nothing"), src, (l_hand ? text("[]", l_hand) : "Nothing"), src, (r_hand ? text("[]", r_hand) : "Nothing"), src, (back ? text("[]", back) : "Nothing"), ((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : ""), (internal ? text("<A href='?src=\ref[];item=internal'>Remove Internal</A>", src) : ""), (handcuffed ? text("<A href='?src=\ref[];item=handcuff'>Handcuffed</A>", src) : text("<A href='?src=\ref[];item=handcuff'>Not Handcuffed</A>", src)), src, user, name)
+	var/dat = {"
+	<B><HR><FONT size=3>[name]</FONT></B>
+	<BR><HR>
+	<BR><B>Head(Mask):</B> <A href='?src=\ref[src];item=mask'>[(wear_mask ? wear_mask : "Nothing")]</A>
+	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[(l_hand ? l_hand  : "Nothing")]</A>
+	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? r_hand : "Nothing")]</A>
+	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
+	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
+	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
+	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
+	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
+	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
+	<BR>"}
 	user << browse(dat, text("window=mob[];size=325x500", name))
 	onclose(user, "mob[name]")
 	return
@@ -476,9 +483,25 @@
 	set name = "Changelog"
 	set category = "OOC"
 	if (client)
-		src << browse_rsc('postcardsmall.jpg')
-		src << browse_rsc('somerights20.png')
-		src << browse_rsc('88x31.png')
+		src.getFiles('postcardsmall.jpg',
+							 'somerights20.png',
+							 '88x31.png',
+							 'bug-minus.png',
+							 'cross-circle.png',
+							 'hard-hat-exclamation.png',
+							 'image-minus.png',
+							 'image-plus.png',
+							 'music-minus.png',
+							 'music-plus.png',
+							 'tick-circle.png',
+							 'wrench-screwdriver.png',
+							 'spell-check.png',
+							 'burn-exclamation.png',
+							 'chevron.png',
+							 'chevron-expand.png',
+							 'changelog.css',
+							 'changelog.js'
+							 )
 		src << browse('changelog.html', "window=changes;size=675x650")
 		client.changes = 1
 
@@ -735,8 +758,8 @@
 	return
 
 /client/New()
-	if(findtextEx(key, "Telnet @"))
-		src << "Sorry, this game does not support Telnet."
+	if( connection != "seeker" )
+		src << "Sorry, this game does not support [connection] connections."	//doesn't work
 		del(src)
 	if (CheckBan(src))
 		del(src)
@@ -759,8 +782,6 @@
 
 	..()
 	makejson()
-	if (join_motd)
-		src << "<div class=\"motd\">[join_motd]</div>"
 
 	if(custom_event_msg && custom_event_msg != "")
 		src << "<h1 class='alert'>Custom Event</h1>"
@@ -768,10 +789,11 @@
 		src << "<span class='alert'>[html_encode(custom_event_msg)]</span>"
 		src << "<br>"
 
-	if(admins.Find(ckey))
+	if( ckey in admins )
 		holder = new /obj/admins(src)
 		holder.rank = admins[ckey]
 		update_admins(admins[ckey])
+		admin_memo_show()
 
 	if(ticker && ticker.mode && ticker.mode.name =="sandbox")
 		mob.CanBuild()
@@ -1128,3 +1150,35 @@ note dizziness decrements automatically in the mob's Life() proc.
 	brainloss = amount
 
 // ++++ROCKDTBEN++++ MOB PROCS //END
+
+/*
+ * Sends resource files to client cache
+ */
+/mob/proc/getFiles()
+	if(!isemptylist(args))
+		for(var/file in args)
+			src << browse_rsc(file)
+		return 1
+	return 0
+
+
+/** The stuff below here really should be in /mob/living, but due to tons of procs that should only
+	take /mob/living only taking /mob(or, indeed, some silly procs relying on usr.. yes, *procs*, not verbs..),
+	I'm putting this stuff into /mob for now
+**/
+/mob/proc/rebuild_appearance()
+	// Rebuild the entire mob appearance completely, this should ONLY be called in rare cases,
+	// e.g. when the mob spawns.
+	return update_clothing() // most mobs still implement update_clothing() by simply rebuilding the entire appearance
+
+/mob/proc/update_body_appearance()
+	// Call this proc whenever something about the appearance of the body itself changes.
+	// For example, this must be called when you add a wound to a mob.
+
+/mob/proc/update_lying()
+	// Call this whenever the lying status of a mob changes.
+
+/mob/update_clothing()
+	// Call this proc whenever something about the clothing of a mob changes. Normally, you
+	// don't need to call this by hand, as the equip procs will do it for you.
+	..()

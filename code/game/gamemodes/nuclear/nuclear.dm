@@ -75,21 +75,23 @@
 				if(synd_mind.current.client)
 					for(var/image/I in synd_mind.current.client.images)
 						if(I.icon_state == "synd")
-							del(I)
+							synd_mind.current.client.images -= I
 
 		for(var/datum/mind/synd_mind in syndicates)
 			if(synd_mind.current)
 				if(synd_mind.current.client)
 					for(var/datum/mind/synd_mind_1 in syndicates)
 						if(synd_mind_1.current)
-							var/I = image('mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
+							var/image/I = synd_mind_1.current.antag_img
+							I.icon_state = "synd"
 							synd_mind.current.client.images += I
 
 /datum/game_mode/proc/update_synd_icons_added(datum/mind/synd_mind)
 	spawn(0)
 		if(synd_mind.current)
 			if(synd_mind.current.client)
-				var/I = image('mob.dmi', loc = synd_mind.current, icon_state = "synd")
+				var/image/I = synd_mind.current.antag_img
+				I.icon_state = "synd"
 				synd_mind.current.client.images += I
 
 /datum/game_mode/proc/update_synd_icons_removed(datum/mind/synd_mind)
@@ -99,13 +101,13 @@
 				if(synd.current.client)
 					for(var/image/I in synd.current.client.images)
 						if(I.icon_state == "synd" && I.loc == synd_mind.current)
-							del(I)
+							synd.current.client.images -= I
 
 		if(synd_mind.current)
 			if(synd_mind.current.client)
 				for(var/image/I in synd_mind.current.client.images)
 					if(I.icon_state == "synd")
-						del(I)
+						synd_mind.current.client.images -= I
 
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -339,18 +341,15 @@
 
 /proc/nukelastname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
 	var/randomname = pick(last_names)
-	var/newname = input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)
+	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
 
-	if (length(newname) == 0)
+	if (!newname)
 		newname = randomname
 
-	if (newname)
-		if (newname == "Unknown")
+	else
+		if (newname == "Unknown" || newname == "floor" || newname == "wall" || newname == "rwall" || newname == "_")
 			M << "That name is reserved."
 			return nukelastname(M)
-		if (length(newname) >= 26)
-			newname = copytext(newname, 1, 26)
-		newname = dd_replacetext(newname, ">", "'")
 
 	return newname
 

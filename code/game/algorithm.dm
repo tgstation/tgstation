@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /world/New()
 	..()
 
@@ -48,25 +50,24 @@ proc/countJob(rank)
 			jobCount++
 	return jobCount
 
-/mob/living/carbon/human/var/const
-	slot_back = 1
-	slot_wear_mask = 2
-	slot_handcuffed = 3
-	slot_l_hand = 4
-	slot_r_hand = 5
-	slot_belt = 6
-	slot_wear_id = 7
-	slot_ears = 8
-	slot_glasses = 9
-	slot_gloves = 10
-	slot_head = 11
-	slot_shoes = 12
-	slot_wear_suit = 13
-	slot_w_uniform = 14
-	slot_l_store = 15
-	slot_r_store = 16
-	slot_s_store = 17
-	slot_in_backpack = 18
+/mob/living/carbon/human/var/const/slot_back = 1
+/mob/living/carbon/human/var/const/slot_wear_mask = 2
+/mob/living/carbon/human/var/const/slot_handcuffed = 3
+/mob/living/carbon/human/var/const/slot_l_hand = 4
+/mob/living/carbon/human/var/const/slot_r_hand = 5
+/mob/living/carbon/human/var/const/slot_belt = 6
+/mob/living/carbon/human/var/const/slot_wear_id = 7
+/mob/living/carbon/human/var/const/slot_ears = 8
+/mob/living/carbon/human/var/const/slot_glasses = 9
+/mob/living/carbon/human/var/const/slot_gloves = 10
+/mob/living/carbon/human/var/const/slot_head = 11
+/mob/living/carbon/human/var/const/slot_shoes = 12
+/mob/living/carbon/human/var/const/slot_wear_suit = 13
+/mob/living/carbon/human/var/const/slot_w_uniform = 14
+/mob/living/carbon/human/var/const/slot_l_store = 15
+/mob/living/carbon/human/var/const/slot_r_store = 16
+/mob/living/carbon/human/var/const/slot_s_store = 17
+/mob/living/carbon/human/var/const/slot_in_backpack = 18
 
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, del_on_fail = 1)
 	for (var/slot in slots)

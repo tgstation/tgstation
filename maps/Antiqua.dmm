@@ -4893,7 +4893,7 @@
 "bQe" = (/obj/structure/grille,/obj/machinery/door/firedoor/border_only{dir = 1},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area)
 "bQf" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/mousetraps,/turf/unsimulated/floor{icon_state = "whiteshiny"},/area)
 "bQg" = (/obj/effect/decal/cleanable/dirt,/turf/unsimulated/floor{icon_state = "whiteshiny"},/area)
-"bQh" = (/obj/structure/closet,/obj/item/weapon/spacecash/c10,/obj/item/weapon/spacecash/c10,/obj/item/weapon/spacecash/c20,/obj/item/weapon/spacecash/c100,/obj/item/weapon/storage/wallet,/turf/unsimulated/floor{icon_state = "whiteshiny"},/area)
+"bQh" = (/obj/structure/closet,/obj/item/weapon/storage/wallet,/turf/unsimulated/floor{icon_state = "whiteshiny"},/area)
 "bQi" = (/obj/structure/closet,/obj/item/weapon/stock_parts/capacitor,/obj/item/weapon/stock_parts/capacitor/adv,/obj/item/weapon/stock_parts/console_screen,/obj/item/weapon/aiModule/reset,/turf/unsimulated/floor{icon_state = "whiteshiny"},/area)
 "bQj" = (/obj/structure/closet/crate,/obj/item/weapon/shovel,/obj/item/weapon/soap/nanotrasen,/obj/item/toy/gun,/obj/item/toy/ammo/gun,/turf/unsimulated/floor{icon_state = "whiteshiny"},/area)
 "bQk" = (/obj/structure/lattice,/turf/unsimulated/floor,/area)

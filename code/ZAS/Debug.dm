@@ -1,5 +1,5 @@
 
-client/proc/Zone_Info(turf/T as null|turf)
+client/verb/Zone_Info(turf/T as null|turf)
 	set category = "Debug"
 	if(T)
 		if(T.zone)
@@ -28,9 +28,11 @@ zone/proc
 			M << "Plasma: [air.toxins]"
 			M << "Carbon Dioxide: [air.carbon_dioxide]"
 			M << "Temperature: [air.temperature]"
-			M << "Heat Energy: [air.thermal_energy()]"
+			M << "Heat Energy: [air.temperature * air.heat_capacity()]"
 			M << "Pressure: [air.return_pressure()]"
 			M << ""
+			M << "Space Tiles: [length(space_tiles)]"
+			M << "Movable Objects: [length(movable_objects)]"
 			M << "<u>Connections: [length(connections)]</u>"
 
 			for(var/connection/C in connections)
@@ -40,6 +42,9 @@ zone/proc
 				spawn(50)
 					C.A.overlays -= 'debug_connect.dmi'
 					C.B.overlays -= 'debug_connect.dmi'
+			for(var/C in connections)
+				if(!istype(C,/connection))
+					M << "[C] (Not Connection!)"
 
 		else
 			dbg_output = 0
