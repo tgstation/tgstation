@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /* HSL procs
 	These procs convert between RGB (red, green, blu) and HSL (hue, saturation, light)
 		color spaces. The algorithms used for these procs were found at
@@ -80,20 +82,18 @@ proc
 		sat /= scale
 		lgh /= scale
 
-		var
-			red
-			grn
-			blu
+		var/red
+		var/grn
+		var/blu
 
 		if(!sat)	// greyscale
 			red = lgh
 			grn = lgh
 			blu = lgh
 		else
-			var
-				temp1
-				temp2
-				temp3
+			var/temp1
+			var/temp2
+			var/temp3
 			if(lgh < 0.5) temp2 = lgh * (1 + sat)
 			else temp2 = lgh + sat - lgh * sat
 			temp1 = 2 * lgh - temp2
@@ -160,12 +160,11 @@ proc
 		red /= 255
 		grn /= 255
 		blu /= 255
-		var
-			lo = min(red, grn, blu)
-			hi = max(red, grn, blu)
-			hue = 0
-			sat = 0
-			lgh = (lo + hi)/2
+		var/lo = min(red, grn, blu)
+		var/hi = max(red, grn, blu)
+		var/hue = 0
+		var/sat = 0
+		var/lgh = (lo + hi)/2
 
 		if(lo != hi)	// if equal, hue and sat may both stay 0
 			if(lgh < 0.5) sat = (hi - lo) / (hi + lo)

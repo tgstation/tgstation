@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
 
@@ -223,8 +225,7 @@
 	if(mob.stat==2)	return
 
 	if(isAI(mob))	return AIMove(n,direct,mob)
-
-	if(mob.monkeyizing)	return//This is sota the goto stop mobs from moving var
+	if(mob.monkeyizing)  return //This is sota the goto stop mobs from moving var
 
 	if(mob.incorporeal_move)//Move though walls
 		Process_Incorpmove(direct)

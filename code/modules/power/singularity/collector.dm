@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 
 /obj/machinery/power/rad_collector
 	name = "Radiation Collector Array"
@@ -9,12 +11,11 @@
 	directwired = 1
 	req_access = list(access_engine)
 //	use_power = 0
-	var
-		obj/item/weapon/tank/plasma/P = null
-		last_power = 0
-		active = 0
-		locked = 0
-		drainratio = 1
+	var/obj/item/weapon/tank/plasma/P = null
+	var/last_power = 0
+	var/active = 0
+	var/locked = 0
+	var/drainratio = 1
 
 	process()
 		if(P)

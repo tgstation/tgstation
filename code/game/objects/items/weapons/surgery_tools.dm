@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /*
 CONTAINS:
 RETRACTOR
@@ -651,11 +653,10 @@ CIRCULAR SAW
 /obj/item/weapon/autopsy_scanner/var/timeofdeath = null
 
 /datum/autopsy_data_data
-	var
-		weapon = null // this is the DEFINITE weapon type that was used
-		list/organs_scanned = list() // this maps a number of scanned organs to
+	var/weapon = null // this is the DEFINITE weapon type that was used
+	var/list/organs_scanned = list() // this maps a number of scanned organs to
 		                             // the wounds to those organs with this data's weapon type
-		organ_names = ""
+	var/organ_names = ""
 
 /obj/item/weapon/autopsy_scanner/proc/add_data(var/datum/organ/external/O)
 	if(!O.autopsy_data.len && !O.trace_chemicals.len) return

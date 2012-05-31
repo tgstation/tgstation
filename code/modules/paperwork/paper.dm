@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/item/weapon/paper
 	name = "paper"
 	gender = PLURAL
@@ -10,22 +12,20 @@
 	layer = 4
 	pressure_resistance = 1
 
-	var
-		info	//What's actually written on the paper.
-		info_links //A different version of the paper which includes html links at fields and EOF
-		stamps	//The (text for the) stamps on the paper.
-		fields  //Amount of user created fields
-		list/stamped
-		see_face = 1
-		body_parts_covered = HEAD
-		protective_temperature = 0
-		rigged = 0
-		spam_flag = 0
+	var/info	//What's actually written on the paper.
+	var/info_links //A different version of the paper which includes html links at fields and EOF
+	var/stamps	//The (text for the) stamps on the paper.
+	var/fields  //Amount of user created fields
+	var/list/stamped
+	var/see_face = 1
+	var/body_parts_covered = HEAD
+	var/protective_temperature = 0
+	var/rigged = 0
+	var/spam_flag = 0
 
-		const
-			deffont = "Verdana"
-			signfont = "Times New Roman"
-			crayonfont = "Comic Sans MS"
+		const/ar/deffont = "Verdana"
+		const/ar/signfont = "Times New Roman"
+		const/ar/crayonfont = "Comic Sans MS"
 
 	New()
 		..()

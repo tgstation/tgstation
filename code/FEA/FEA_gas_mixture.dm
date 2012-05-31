@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /*
 What are the archived variables for?
 	Calculations are done using the archived variables with the results merged into the regular variables.
@@ -22,11 +24,10 @@ datum
 		volatile_fuel
 			specific_heat = 30
 
-		var
-			moles = 0
-			specific_heat = 0
+		var/moles = 0
+		var/specific_heat = 0
 
-			moles_archived = 0
+		var/moles_archived = 0
 
 	gas_mixture
 		var	//Holds the "moles" of each of the four gases.

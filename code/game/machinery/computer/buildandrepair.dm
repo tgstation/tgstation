@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /obj/structure/computerframe
 	density = 1
 	anchored = 0
@@ -17,16 +19,15 @@
 	icon_state = "id_mod"
 	item_state = "electronic"
 	origin_tech = "programming=2"
-	var
-		id = null
-		frequency = null
-		build_path = null
-		board_type = "computer"
-		list/req_components = null
-		powernet = null
-		list/records = null
-		frame_desc = null
-		contain_parts = 1
+	var/id = null
+	var/frequency = null
+	var/build_path = null
+	var/board_type = "computer"
+	var/list/req_components = null
+	var/powernet = null
+	var/list/records = null
+	var/frame_desc = null
+	var/contain_parts = 1
 
 /obj/item/weapon/circuitboard/aicore
 	name = "Circuit board (AI core)"

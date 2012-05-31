@@ -1471,6 +1471,19 @@
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/liquidfood
+	name = "\improper \"LiquidFood\" ration"
+	icon_state = "liquidfood"
+	desc = "A bland, tasteless pulp of what you need to survive. Packaged in a airtight bag, which you can drink through a straw. Strangely crunchy."
+	trash = "liquidfood"
+	var/flavored = 0
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+		reagents.add_reagent("water", 5)
+		reagents.add_reagent("tricordrazine", 2)
+		bitesize = 6
+
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
 
@@ -2021,6 +2034,27 @@
 		return
 	else
 		..()
+
+// Liquidfood + Flavoring = Flavored Liquidfood! :P
+/obj/item/weapon/reagent_containers/food/snacks/liquidfood/attackby(obj/item/weapon/flavor/W as obj, mob/user as mob)
+	// Check if already flavored
+	if(istype(W))
+		if (flavored)
+			user << "You cannot add flavoring to an already flavored ration, however bland it may be."
+			return
+
+		user.visible_message("\The [user] adds [prob(30) ? "some of" : ""] \a [W] to \a [src], mixing it into [W.descriptor] gruel.",\
+		"You add \the [W] into your bland [src].  As you mix it into a grotesquely [W.color] paste, you reflect that this was not a wise decision.",\
+		"You hear a small tinfoil package being ripped open, then the sound of a thick paste being mixed.")
+		name = "[W.color] \"LiquidFood\" ration"
+		icon_state = "liquidfood-[W.color]"
+		desc = "A flavored pulp of nutritional essentials. [W.newDesc]"
+		flavored = 1
+
+		del(W)
+		return
+
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/taco
 	name = "taco"

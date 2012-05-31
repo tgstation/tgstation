@@ -1,14 +1,15 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 
 //Baseline portable generator. Has all the default handling. Not intended to be used on it's own (since it generates unlimited power).
 /obj/machinery/power/port_gen/pacman2
 	name = "Pacman II"
 	desc = "P.A.C.M.A.N. type II portable generator. Uses liquid plasma as a fuel source."
 	power_gen = 4500
-	var
-		obj/item/weapon/tank/plasma/P = null
-		board_path = "/obj/item/weapon/circuitboard/pacman2"
-		emagged = 0
-		heat = 0
+	var/obj/item/weapon/tank/plasma/P = null
+	var/board_path = "/obj/item/weapon/circuitboard/pacman2"
+	var/emagged = 0
+	var/heat = 0
 /*
 	process()
 		if(P)

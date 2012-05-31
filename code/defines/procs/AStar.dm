@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /*
 A Star pathfinding algorithm
 Returns a list of tiles forming a path from A to B, taking dense objects as well as walls, and the orientation of
@@ -36,9 +38,8 @@ length to avoid portals or something i guess?? Not that they're counted right no
 
 
 PriorityQueue
-	var
-		L[]
-		cmp
+	var/L[]
+	var/cmp
 	New(compare)
 		L = new()
 		cmp = compare
@@ -92,13 +93,12 @@ PriorityQueue
 			if(ind)
 				Remove(ind)
 PathNode
-	var
-		datum/source
-		PathNode/prevNode
-		f
-		g
-		h
-		nt		// Nodes traversed
+	var/datum/source
+	var/PathNode/prevNode
+	var/f
+	var/g
+	var/h
+	var/nt		// Nodes traversed
 	New(s,p,pg,ph,pnt)
 		source = s
 		prevNode = p
@@ -109,8 +109,7 @@ PathNode
 		nt = pnt
 
 datum
-	var
-		bestF
+	var/bestF
 proc
 	PathWeightCompare(PathNode/a, PathNode/b)
 		return a.f - b.f

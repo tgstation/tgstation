@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 var/global/list/space_surprises = list(				/obj/item/clothing/mask/facehugger/angry			=4,
 												//	/obj/effect/critter/spesscarp						=2,
 													/obj/effect/critter/spesscarp/elite					=2,
@@ -34,9 +36,8 @@ var/global/list/spawned_surprises = list()
 	anchored = 1
 	density = 1
 
-	var
-		charges = 1
-		insisting = 0
+	var/charges = 1
+	var/insisting = 0
 
 /obj/machinery/wish_granter/attack_hand(var/mob/user as mob)
 	usr.machine = src
