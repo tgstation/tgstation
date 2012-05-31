@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 // Disposal bin
 // Holds items for disposal into pipe system
 // Draws air from turf, gradually charges internal reservoir
@@ -1076,17 +1078,16 @@
 
 	desc = "An underfloor disposal pipe with a package sorting mechanism."
 	icon_state = "pipe-j1s"
-	var
-		list/sortType = list()
-		list/backType = list()
-		backsort = 0 //For sending disposal packets to upstream destinations.
-		mailsort = 0
-		posdir = 0
-		negdir = 0
-		sortdir = 0
-		service = 0
-		screen = 0
-		icon_state_old = null
+	var/list/sortType = list()
+	var/list/backType = list()
+	var/backsort = 0 //For sending disposal packets to upstream destinations.
+	var/mailsort = 0
+	var/posdir = 0
+	var/negdir = 0
+	var/sortdir = 0
+	var/service = 0
+	var/screen = 0
+	var/icon_state_old = null
 
 	nonsorting
 		NE
@@ -1249,11 +1250,10 @@
 	name = "\improper Package Discrimination Unit"
 	desc = "An underfloor disposal pipe that is racist against packages."
 	icon_state = "pipe-j1s"
-	var
-		posdir = 0
-		negdir = 0
-		sortdir = 0
-		screen = 0
+	var/posdir = 0
+	var/negdir = 0
+	var/sortdir = 0
+	var/screen = 0
 
 
 	New()

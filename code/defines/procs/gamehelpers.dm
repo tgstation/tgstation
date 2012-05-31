@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /proc/dopage(src,target)
 	var/href_list
 	var/href
@@ -261,11 +263,10 @@ proc
 						return 0
 					Y1+=s
 		else
-			var
-				m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
-				b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
-				signX = SIGN(X2-X1)
-				signY = SIGN(Y2-Y1)
+			var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
+			var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
+			var/signX = SIGN(X2-X1)
+			var/signY = SIGN(Y2-Y1)
 			if(X1<X2)
 				b+=m
 			while(X1!=X2 || Y1!=Y2)

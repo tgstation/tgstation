@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:06
+
 /obj/item/wardrobe
 	name = "\improper Wardrobe"
 	desc = "A standard-issue bag for clothing and equipment. Usually comes sealed, stocked with everything you need for a particular job."
@@ -6,9 +8,8 @@
 	item_state = "wardrobe"
 	w_class = 4
 	layer = 2.99
-	var
-		descriptor = "various clothing"
-		seal_torn = 0
+	var/descriptor = "various clothing"
+	var/seal_torn = 0
 
 	attack_self(mob/user)
 		if(!contents.len)

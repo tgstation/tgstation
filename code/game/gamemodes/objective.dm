@@ -1,9 +1,10 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 datum/objective
-	var
-		datum/mind/owner = null			//Who owns the objective.
-		explanation_text = "Nothing"	//What that person is supposed to do.
-		datum/mind/target = null		//If they are focused on a particular person.
-		target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
+	var/datum/mind/owner = null			//Who owns the objective.
+	var/explanation_text = "Nothing"	//What that person is supposed to do.
+	var/datum/mind/target = null		//If they are focused on a particular person.
+	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
 
 	New(var/text)
 		if(text)

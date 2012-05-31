@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:06
+
 /*
 Destructive Analyzer
 
@@ -8,9 +10,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 /obj/machinery/r_n_d/destructive_analyzer
 	name = "Destructive Analyzer"
 	icon_state = "d_analyzer"
-	var
-		obj/item/weapon/loaded_item = null
-		decon_mod = 1
+	var/obj/item/weapon/loaded_item = null
+	var/decon_mod = 1
 
 	New()
 		..()

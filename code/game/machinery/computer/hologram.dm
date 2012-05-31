@@ -1,15 +1,16 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /obj/machinery/computer/hologram_comp
 	name = "Hologram Computer"
 	desc = "Rumoured to control holograms."
 	icon = 'stationobjs.dmi'
 	icon_state = "holo_console0"
-	var
-		obj/machinery/hologram/projector/projector = null
-		temp = null
-		lumens = 0.0
-		h_r = 245.0
-		h_g = 245.0
-		h_b = 245.0
+	var/obj/machinery/hologram/projector/projector = null
+	var/temp = null
+	var/lumens = 0.0
+	var/h_r = 245.0
+	var/h_g = 245.0
+	var/h_b = 245.0
 
 
 /obj/machinery/computer/hologram_comp/New()

@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/item/weapon/gun/projectile/shotgun/pump
 	name = "shotgun"
 	desc = "Useful for sweeping alleys."
@@ -10,10 +12,9 @@
 	caliber = "shotgun"
 	origin_tech = "combat=4;materials=2"
 	ammo_type = "/obj/item/ammo_casing/shotgun/beanbag"
-	var
-		recentpump = 0 // to prevent spammage
-		pumped = 0
-		obj/item/ammo_casing/current_shell = null
+	var/recentpump = 0 // to prevent spammage
+	var/pumped = 0
+	var/obj/item/ammo_casing/current_shell = null
 
 
 	load_into_chamber()

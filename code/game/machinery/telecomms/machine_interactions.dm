@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 
 /*
 
@@ -6,9 +8,8 @@
 */
 
 /obj/machinery/telecomms
-	var
-		temp = "" // output message
-		construct_op = 0
+	var/temp = "" // output message
+	var/construct_op = 0
 
 
 

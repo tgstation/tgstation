@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 
 /proc/RandomAAlarmWires()
 	//to make this not randomize the wires, just set index to 1 and increment it in the flag for loop (after doing everything else).
@@ -24,11 +26,10 @@
 // A datum for dealing with threshold limit values
 // used in /obj/machinery/alarm
 /datum/tlv
-	var
-		min2
-		min1
-		max1
-		max2
+	var/min2
+	var/min1
+	var/max1
+	var/max2
 	New(_min2 as num, _min1 as num, _max1 as num, _max2 as num)
 		min2 = _min2
 		min1 = _min1

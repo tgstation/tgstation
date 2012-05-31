@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/item/weapon/robot_module
 	name = "robot module"
 	icon = 'module.dmi'
@@ -5,10 +7,9 @@
 	w_class = 100.0
 	item_state = "electronic"
 	flags = FPRINT|TABLEPASS | CONDUCT
-	var
-		list/modules = list()
-		obj/item/emag = null
-		obj/item/borg/upgrade/jetpack = null
+	var/list/modules = list()
+	var/obj/item/emag = null
+	var/obj/item/borg/upgrade/jetpack = null
 
 
 	emp_act(severity)

@@ -1,26 +1,27 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /turf
 	icon = 'floors.dmi'
 	var/intact = 1 //for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 
 	level = 1.0
 
-	var
 		//Properties for open tiles (/floor)
-		oxygen = 0
-		carbon_dioxide = 0
-		nitrogen = 0
-		toxins = 0
+	var/oxygen = 0
+	var/carbon_dioxide = 0
+	var/nitrogen = 0
+	var/toxins = 0
 
 		//Properties for airtight tiles (/wall)
-		thermal_conductivity = 0.05
-		heat_capacity = 1
+	var/thermal_conductivity = 0.05
+	var/heat_capacity = 1
 
 		//Properties for both
-		temperature = T20C
+	var/temperature = T20C
 
-		blocks_air = 0
-		icon_old = null
-		pathweight = 1
+	var/blocks_air = 0
+	var/icon_old = null
+	var/pathweight = 1
 
 	proc/is_plating()
 		return 0

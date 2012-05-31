@@ -1,14 +1,15 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 var/global/datum/controller/occupations/job_master
 
 /datum/controller/occupations
-	var
 		//List of all jobs
-		list/occupations = list()
-		list/occupations2 = list() // Prevents problems with latejoiners.
+	var/list/occupations = list()
+	var/list/occupations2 = list() // Prevents problems with latejoiners.
 		//Players who need jobs
-		list/unassigned = list()
+	var/list/unassigned = list()
 		//Debug info
-		list/job_debug = list()
+	var/list/job_debug = list()
 
 
 	New()

@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/item/weapon/implanter
 	name = "implanter"
 	icon = 'items.dmi'
@@ -6,8 +8,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
-	var
-		obj/item/weapon/implant/imp = null
+	var/obj/item/weapon/implant/imp = null
 	proc
 		update()
 

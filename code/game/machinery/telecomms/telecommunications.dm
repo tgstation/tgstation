@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /*
 	Hello, friends, this is Doohl from sexylands. You may be wondering what this
 	monstrous code file is. Sit down, boys and girls, while I tell you the tale.
@@ -12,24 +14,23 @@
 */
 
 /obj/machinery/telecomms
-	var
-		list/links = list() // list of machines this machine is linked to
-		traffic = 0 // value increases as traffic increases
-		netspeed = 5 // how much traffic to lose per tick (50 gigabytes/second * netspeed)
-		list/autolinkers = list() // list of text/number values to link with
-		id = "NULL" // identification string
-		network = "NULL" // the network of the machinery
+	var/list/links = list() // list of machines this machine is linked to
+	var/traffic = 0 // value increases as traffic increases
+	var/netspeed = 5 // how much traffic to lose per tick (50 gigabytes/second * netspeed)
+	var/list/autolinkers = list() // list of text/number values to link with
+	var/id = "NULL" // identification string
+	var/network = "NULL" // the network of the machinery
 
-		list/freq_listening = list() // list of frequencies to tune into: if none, will listen to all
+	var/list/freq_listening = list() // list of frequencies to tune into: if none, will listen to all
 
-		machinetype = 0 // just a hacky way of preventing alike machines from pairing
-		on = 1
-		integrity = 100 // basically HP, loses integrity by heat
-		heatgen = 20 // how much heat to transfer to the environment
-		delay = 10 // how many process() ticks to delay per heat
-		heating_power = 40000
+	var/machinetype = 0 // just a hacky way of preventing alike machines from pairing
+	var/on = 1
+	var/integrity = 100 // basically HP, loses integrity by heat
+	var/heatgen = 20 // how much heat to transfer to the environment
+	var/delay = 10 // how many process() ticks to delay per heat
+	var/heating_power = 40000
 
-		circuitboard = null // string pointing to a circuitboard type
+	var/circuitboard = null // string pointing to a circuitboard type
 
 
 
@@ -360,22 +361,21 @@
 	machinetype = 4
 	heatgen = 50
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/server"
-	var
-		list/log_entries = list()
-		list/stored_names = list()
-		list/TrafficActions = list()
-		logs = 0 // number of logs
-		totaltraffic = 0 // gigabytes (if > 1024, divide by 1024 -> terrabytes)
+	var/list/log_entries = list()
+	var/list/stored_names = list()
+	var/list/TrafficActions = list()
+	var/logs = 0 // number of logs
+	var/totaltraffic = 0 // gigabytes (if > 1024, divide by 1024 -> terrabytes)
 
-		list/memory = list()	// stored memory
-		rawcode = ""	// the code to compile (raw text)
-		datum/TCS_Compiler/Compiler	// the compiler that compiles and runs the code
-		autoruncode = 0		// 1 if the code is set to run every time a signal is picked up
+	var/list/memory = list()	// stored memory
+	var/rawcode = ""	// the code to compile (raw text)
+	var/datum/TCS_Compiler/Compiler	// the compiler that compiles and runs the code
+	var/autoruncode = 0		// 1 if the code is set to run every time a signal is picked up
 
-		encryption = "null" // encryption key: ie "password"
-		salt = "null"		// encryption salt: ie "123comsat"
+	var/encryption = "null" // encryption key: ie "password"
+	var/salt = "null"		// encryption salt: ie "123comsat"
 							// would add up to md5("password123comsat")
-		language = "human"
+	var/language = "human"
 
 	receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 

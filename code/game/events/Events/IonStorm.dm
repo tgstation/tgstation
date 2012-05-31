@@ -1,7 +1,8 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /datum/event/ionstorm
-	var
-		botEmagChance = 0.5
-		list/players = list()
+	var/botEmagChance = 0.5
+	var/list/players = list()
 
 	Announce()
 		Lifetime = rand(15, 20)

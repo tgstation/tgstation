@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/machinery/implantchair
 	name = "Loyalty Implanter"
 	desc = "Used to implant occupants with loyalty implants."
@@ -7,16 +9,15 @@
 	opacity = 0
 	anchored = 1
 
-	var
-		ready = 1
-		malfunction = 0
-		list/obj/item/weapon/implant/loyalty/implant_list = list()
-		max_implants = 5
-		injection_cooldown = 600
-		replenish_cooldown = 6000
-		replenishing = 0
-		mob/living/carbon/occupant = null
-		injecting = 0
+	var/ready = 1
+	var/malfunction = 0
+	var/list/obj/item/weapon/implant/loyalty/implant_list = list()
+	var/max_implants = 5
+	var/injection_cooldown = 600
+	var/replenish_cooldown = 6000
+	var/replenishing = 0
+	var/mob/living/carbon/occupant = null
+	var/injecting = 0
 
 	proc
 		go_out()

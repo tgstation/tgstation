@@ -1,22 +1,23 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /obj/machinery/computer/med_data//TODO:SANITY
 	name = "Medical Records"
 	desc = "This can be used to check medical records."
 	icon_state = "medcomp"
 	req_access = list(access_medical)
 	circuit = "/obj/item/weapon/circuitboard/med_data"
-	var
-		obj/item/weapon/card/id/scan = null
-		obj/item/weapon/disk/records/disk = null
-		authenticated = null
-		rank = null
-		screen = null
-		datum/data/record/active1 = null
-		datum/data/record/active2 = null
-		a_id = null
-		temp = null
-		printing = null
-		list/Perp
-		tempname = null
+	var/obj/item/weapon/card/id/scan = null
+	var/obj/item/weapon/disk/records/disk = null
+	var/authenticated = null
+	var/rank = null
+	var/screen = null
+	var/datum/data/record/active1 = null
+	var/datum/data/record/active2 = null
+	var/a_id = null
+	var/temp = null
+	var/printing = null
+	var/list/Perp
+	var/tempname = null
 
 
 /obj/machinery/computer/med_data/attackby(obj/item/O as obj, user as mob)

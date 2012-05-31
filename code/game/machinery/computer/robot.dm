@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 
 /obj/machinery/computer/robotics
 	name = "Robotics Control"
@@ -7,13 +9,12 @@
 	req_access = list(access_robotics)
 	circuit = "/obj/item/weapon/circuitboard/robotics"
 
-	var
-		id = 0.0
-		temp = null
-		status = 0
-		timeleft = 60
-		stop = 0.0
-		screen = 0 // 0 - Main Menu, 1 - Cyborg Status, 2 - Kill 'em All! -- In text
+	var/id = 0.0
+	var/temp = null
+	var/status = 0
+	var/timeleft = 60
+	var/stop = 0.0
+	var/screen = 0 // 0 - Main Menu, 1 - Cyborg Status, 2 - Kill 'em All! -- In text
 
 
 /obj/machinery/computer/robotics/attack_ai(var/mob/user as mob)

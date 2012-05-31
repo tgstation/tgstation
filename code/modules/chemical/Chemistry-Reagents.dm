@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 #define SOLID 1
 #define LIQUID 2
 #define GAS 3
@@ -279,7 +281,7 @@ datum
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
-					T.apply_fire_protection()
+					//T.apply_fire_protection()
 					del(hotspot)
 				if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 					var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
@@ -2654,14 +2656,13 @@ datum
 			reagent_state = LIQUID
 			nutriment_factor = 0 //So alcohol can fill you up! If they want to.
 			color = "#404030" // rgb: 64, 64, 48
-			var
-				dizzy_adj = 3
-				slurr_adj = 3
-				confused_adj = 2
-				slur_start = 65			//amount absorbed after which mob starts slurring
-				confused_start = 130	//amount absorbed after which mob starts confusing directions
-				blur_start = 260	//amount absorbed after which mob starts getting blurred vision
-				pass_out = 325	//amount absorbed after which mob starts passing out
+			var/dizzy_adj = 3
+			var/slurr_adj = 3
+			var/confused_adj = 2
+			var/slur_start = 65			//amount absorbed after which mob starts slurring
+			var/confused_start = 130	//amount absorbed after which mob starts confusing directions
+			var/blur_start = 260	//amount absorbed after which mob starts getting blurred vision
+			var/pass_out = 325	//amount absorbed after which mob starts passing out
 
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor

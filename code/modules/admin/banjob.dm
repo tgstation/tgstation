@@ -1,6 +1,7 @@
-var
-	jobban_runonce			// Updates legacy bans with new info
-	jobban_keylist[0]		//to store the keys & ranks
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
+var/jobban_runonce			// Updates legacy bans with new info
+var/jobban_keylist[0]		//to store the keys & ranks
 
 /proc/jobban_fullban(mob/M, rank, reason)
 	if (!M || !M.key) return

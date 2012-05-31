@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/machinery/particle_accelerator/control_box
 	name = "Particle Accelerator Control Computer"
 	desc = "This controls the density of the particles."
@@ -11,10 +13,9 @@
 	active_power_usage = 10000
 	construction_state = 0
 	active = 0
-	var
-		list/obj/structure/particle_accelerator/connected_parts
-		assembled = 0
-		parts = null
+	var/list/obj/structure/particle_accelerator/connected_parts
+	var/assembled = 0
+	var/parts = null
 
 
 	New()
