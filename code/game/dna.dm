@@ -1220,7 +1220,7 @@
 				src.temphtml += text("Data: <font color='blue'>[]</FONT><BR>", src.buffer1)
 				src.temphtml += text("By: <font color='blue'>[]</FONT><BR>", src.buffer1owner)
 				src.temphtml += text("Label: <font color='blue'>[]</FONT><BR>", src.buffer1label)
-			if (src.connected.occupant && !(src.connected.occupant.mutations & HUSK)) src.temphtml += text("Save : <A href='?src=\ref[];b1addui=1'>UI</A> - <A href='?src=\ref[];b1adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b1addse=1'>SE</A><BR>", src, src, src)
+			if (src.connected.occupant && !(src.connected.occupant.mutations & NOCLONE)) src.temphtml += text("Save : <A href='?src=\ref[];b1addui=1'>UI</A> - <A href='?src=\ref[];b1adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b1addse=1'>SE</A><BR>", src, src, src)
 			if (src.buffer1) src.temphtml += text("Transfer to: <A href='?src=\ref[];b1transfer=1'>Occupant</A> - <A href='?src=\ref[];b1injector=1'>Injector</A><BR>", src, src)
 			//if (src.buffer1) src.temphtml += text("<A href='?src=\ref[];b1iso=1'>Isolate Block</A><BR>", src)
 			if (src.buffer1) src.temphtml += "Disk: <A href='?src=\ref[src];save_disk=1'>Save To</a> | <A href='?src=\ref[src];load_disk=1'>Load From</a><br>"
