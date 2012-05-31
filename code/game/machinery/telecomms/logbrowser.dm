@@ -6,7 +6,7 @@
 
 	var/screen = 0				// the screen number:
 	var/list/servers = list()	// the servers located by the computer
-	var/var/obj/machinery/telecomms/server/SelectedServer
+	var/obj/machinery/telecomms/server/SelectedServer
 
 	var/network = "NULL"		// the network to probe
 	var/temp = ""				// temporary feedback messages

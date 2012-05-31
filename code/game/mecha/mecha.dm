@@ -1581,7 +1581,7 @@
 /*
 
 	if (href_list["ai_take_control"])
-		var/var/mob/living/silicon/ai/AI = locate(href_list["ai_take_control"])
+		var/mob/living/silicon/ai/AI = locate(href_list["ai_take_control"])
 		var/duration = text2num(href_list["duration"])
 		var/mob/living/silicon/ai/O = new /mob/living/silicon/ai(src)
 		var/cur_occupant = src.occupant

@@ -13,7 +13,7 @@
 
 	var/screen = 0				// the screen number:
 	var/list/machines = list()	// the machines located by the computer
-	var/var/obj/machinery/telecomms/SelectedMachine
+	var/obj/machinery/telecomms/SelectedMachine
 
 	var/network = "NULL"		// the network to probe
 
