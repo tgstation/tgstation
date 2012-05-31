@@ -1,6 +1,6 @@
 #define QUANTIZE(variable)		(round(variable,0.0001))
 var/explosion_halt = 0
-var/zone_share_percent = 8
+var/zone_share_percent = 1 // The amount shared between zones/space at each tick.
 zone
 	proc/process()
 		//Does rebuilding stuff. Not sure if used.
