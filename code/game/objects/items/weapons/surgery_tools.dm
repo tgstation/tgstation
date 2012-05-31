@@ -346,7 +346,7 @@ CIRCULAR SAW
 					if(M != user)
 						for(var/mob/O in (viewers(M) - user - M))
 							O.show_message("\red [user] is beginning to clamp bleeders in [M]'s cut open torso with [src].", 1)
-						M << "\red [user] begins to torso bleeders in your chest with [src]!"
+						M << "\red [user] begins to clamp bleeders in your chest with [src]!"
 						user << "\red You clamp bleeders in [M]'s torso with [src]!"
 						M:embryo_op_stage = 2.0
 						return
@@ -503,12 +503,12 @@ CIRCULAR SAW
 				if(3.0)
 					if(M != user)
 						M.visible_message( \
-							"\red [user] is beginning to reshape [M]'s vocal chords and face with [src].", \
+							"\red [user] is beginning to reshape [M]'s vocal cords and face with [src].", \
 							"\red [user] begins to reshape your vocal chords and face [src]!")
 					else
 						M.visible_message( \
-							"\red [user] begins to reshape their vocal chords and face and face with [src]!", \
-							"\red You begin to reshape your vocal chords and face with [src]!")
+							"\red [user] begins to reshape their vocal cords and face and face with [src]!", \
+							"\red You begin to reshape your vocal cords and face with [src]!")
 
 					if(do_mob(user, M, 120))
 						if(M != user)
@@ -523,12 +523,12 @@ CIRCULAR SAW
 					if(do_mob(user, M, 120))
 						if(M != user)
 							M.visible_message( \
-								"\red [user] reshapes [M]'s vocal chords and face with [src]!", \
-								"\red [user] reshapes your vocal chords and face with [src]!")
+								"\red [user] reshapes [M]'s vocal cords and face with [src]!", \
+								"\red [user] reshapes your vocal cords and face with [src]!")
 						else
 							M.visible_message( \
-								"\red [user] reshapes their vocal chords and face with [src]!", \
-								"\red You reshape your vocal chords and face with [src]!")
+								"\red [user] reshapes their vocal cords and face with [src]!", \
+								"\red You reshape your vocal cords and face with [src]!")
 
 						if(M == user && prob(25))
 							user << "\red You mess up!"
@@ -563,7 +563,7 @@ CIRCULAR SAW
 		return ..()
 
 	if(S.robot)
-		user << "Medical equipment for a robot arm?  How would that do any good..."
+		user << "Medical equipment for a robot arm?  How would that do any good?"
 		return
 
 	if(!S.open)
@@ -814,7 +814,7 @@ CIRCULAR SAW
 		usr << "<b>You have to cut the limb open first!</b>"
 		return
 	if(S.robot)
-		user << "Medical equipment for a robot arm?  How would that do any good..."
+		user << "Medical equipment for a robot arm?  How would that do any good?"
 		return
 	for(var/mob/O in viewers(M))
 		O.show_message("\red [user.name] scans the wounds on [M.name]'s [S.display_name] with \the [src.name]", 1)
