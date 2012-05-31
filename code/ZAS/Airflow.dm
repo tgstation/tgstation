@@ -50,13 +50,11 @@ atom/movable/RepelAirflowDest(n)
 
 vs_control/var
 
-	zone_share_percent = 5
-
-	airflow_lightest_pressure = 35
-	airflow_light_pressure = 50
-	airflow_medium_pressure = 80
-	airflow_heavy_pressure = 100
-	airflow_heaviest_pressure = 150
+	airflow_lightest_pressure = 15
+	airflow_light_pressure = 30
+	airflow_medium_pressure = 45
+	airflow_heavy_pressure = 60
+	airflow_heaviest_pressure = 100
 
 	airflow_damage = 0.3
 	airflow_stun = 0.15
@@ -145,7 +143,7 @@ proc/Airflow(zone/A,zone/B)
 
 				M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
 
-				spawn M.GotoAirflowDest(abs(n)/20)
+				spawn M.GotoAirflowDest(abs(n)/5)
 
 	//Do it again for the stuff in the other zone, making it fly away.
 	for(var/atom/movable/M in otherpplz)
@@ -168,7 +166,7 @@ proc/Airflow(zone/A,zone/B)
 
 				M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
 
-				spawn M.RepelAirflowDest(abs(n)/20)
+				spawn M.RepelAirflowDest(abs(n)/5)
 
 proc/AirflowSpace(zone/A)
 
@@ -216,7 +214,7 @@ atom/movable
 		if(airflow_speed < 0) return
 		if(last_airflow > world.time - 150) return
 		if(airflow_speed)
-			airflow_speed = n
+			airflow_speed = n/max(get_dist(src,airflow_dest),1)
 			return
 		last_airflow = world.time
 		if(airflow_dest == loc)
@@ -265,7 +263,7 @@ atom/movable
 		if(airflow_speed < 0) return
 		if(last_airflow > world.time - 150) return
 		if(airflow_speed)
-			airflow_speed = n
+			airflow_speed = n/max(get_dist(src,airflow_dest),1)
 			return
 		last_airflow = world.time
 		if(airflow_dest == loc)
