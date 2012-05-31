@@ -840,22 +840,23 @@ ________________________________________________________________________________
 					U << "\red Procedure interrupted. Protocol terminated."
 			return
 		else if(istype(I, /obj/item/weapon/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
-			if(I:stored)//If it has something on it.
+			var/obj/item/weapon/disk/tech_disk/T = I
+			if(T.stored)//If it has something on it.
 				U << "Research information detected, processing..."
 				if(do_after(U,s_delay))
 					for(var/datum/tech/current_data in stored_research)
-						if(current_data.id==I:stored.id)
-							if(current_data.level<I:stored.level)
-								current_data.level=I:stored.level
+						if(current_data.id==T.stored.id)
+							if(current_data.level<T.stored.level)
+								current_data.level=T.stored.level
 							break
-					I:stored = null
+					T.stored = null
 					U << "\blue Data analyzed and updated. Disk erased."
 				else
 					U << "\red <b>ERROR</b>: \black Procedure interrupted. Process terminated."
 			else
-				I.loc = src
-				t_disk = I
-				U << "\blue You slot \the [I] into \the [src]."
+				T.loc = src
+				t_disk = T
+				U << "\blue You slot \the [T] into \the [src]."
 			return
 	..()
 

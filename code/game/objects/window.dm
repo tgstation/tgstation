@@ -34,7 +34,7 @@
 	del(src)
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && mover.pass_flags & PASSGLASS)
 		return 1
 	if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST)
 		return 0 //full tile window, you can't move into it!
@@ -44,7 +44,7 @@
 		return 1
 
 /obj/structure/window/CheckExit(atom/movable/O as mob|obj, target as turf)
-	if(istype(O) && O.checkpass(PASSGLASS))
+	if(istype(O) && O.pass_flags & PASSGLASS)
 		return 1
 	if (get_dir(O.loc, target) == dir)
 		return 0

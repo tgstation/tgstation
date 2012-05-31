@@ -392,7 +392,7 @@ obj/machinery/computer/forensic_scanning
 							scan_data += "Fibers/Materials Found:<br>"
 							for(var/data in scanning.suit_fibers)
 								scan_data += "- [data]<br>"
-						if(istype(scanning,/obj/item/device/detective_scanner))
+						if(istype(scanning,/obj/item/device/detective_scanner) || (istype(scanning, /obj/item/device/pda) && scanning:cartridge && scanning:cartridge.access_security))
 							scan_data += "<br><b>Data transfered from Scanner to Database.</b><br>"
 							add_data_scanner(scanning)
 						else if(!scanning.fingerprints)
@@ -425,12 +425,19 @@ obj/machinery/computer/forensic_scanning
 		return
 
 
-	proc/add_data_scanner(var/obj/item/device/detective_scanner/W)
-		if(W.stored)
-			for(var/atom in W.stored)
-				var/list/data = W.stored[atom]
-				add_data_master(atom,data[1],data[2],data[3],data[4])
-		W.stored = list()
+	proc/add_data_scanner(var/obj/item/device/W)
+		if(istype(W, /obj/item/device/detective_scanner))
+			if(W:stored)
+				for(var/atom in W:stored)
+					var/list/data = W:stored[atom]
+					add_data_master(atom,data[1],data[2],data[3],data[4])
+			W:stored = list()
+		else if(istype(W, /obj/item/device/pda) && W:cartridge && W:cartridge.access_security)
+			if(W:cartridge.stored)
+				for(var/atom in W:cartridge.stored)
+					var/list/data = W:cartridge.stored[atom]
+					add_data_master(atom,data[1],data[2],data[3],data[4])
+			W:cartridge.stored = list()
 		return
 
 	proc/add_data(var/atom/scanned_atom)
@@ -446,89 +453,88 @@ obj/machinery/computer/forensic_scanning
 //What follows is massive.  It cross references all stored data in the scanner with the other stored data,
 //and what is already in the computer.  Not sure how bad the lag may/may not be.
 
-		if(!atom_fingerprints)	//No prints
-			if(!misc)
-				misc = list()
-			var/list/data_entry = misc[atom_reference]
-			if(data_entry)
-				var/list/fibers = data_entry[1]
-				if(!fibers)
-					fibers = list()
-				if(atom_suit_fibers)
-					for(var/j = 1, j <= atom_suit_fibers.len, j++)	//Fibers~~~
-						if(!fibers.Find(atom_suit_fibers[j]))	//It isn't!  Add!
-							fibers += atom_suit_fibers[j]
-				var/list/blood = data_entry[2]
-				if(!blood)
-					blood = list()
-				if(atom_blood_DNA)
-					for(var/main_blood in atom_blood_DNA)
-						if(!blood[main_blood])
-							blood[main_blood] = atom_blood_DNA[blood]
-				return 1
+		if(!misc)
+			misc = list()
+		var/list/data_entry = misc[atom_reference]
+		if(data_entry)
+			var/list/fibers = data_entry[1]
+			if(!fibers)
+				fibers = list()
+			if(atom_suit_fibers)
+				for(var/j = 1, j <= atom_suit_fibers.len, j++)	//Fibers~~~
+					if(!fibers.Find(atom_suit_fibers[j]))	//It isn't!  Add!
+						fibers += atom_suit_fibers[j]
+			var/list/blood = data_entry[2]
+			if(!blood)
+				blood = list()
+			if(atom_blood_DNA)
+				for(var/main_blood in atom_blood_DNA)
+					if(!blood[main_blood])
+						blood[main_blood] = atom_blood_DNA[blood]
+		else
 			var/list/templist[3]
 			templist[1] = atom_suit_fibers
 			templist[2] = atom_blood_DNA
 			templist[3] = atom_name
 			misc[atom_reference] = templist	//Store it!
-			return 0
 		//Has prints.
-		if(!files)
-			files = list()
-		for(var/main_print in atom_fingerprints)
-			var/list/data_entry = files[main_print]
-			if(data_entry)//The print is already in here!
-				var/list/internal_atom = data_entry[atom_reference] //Lets see if we can find the current object
-				if(internal_atom)
-					//We must be on a roll!  Just update what needs to be updated.
-					var/list/internal_prints = internal_atom[1]
-					for(var/print in atom_fingerprints) //Sorry for the double loop! D:
-						var/associated_print = internal_prints[print]
-						var/reference_print = atom_fingerprints[print]
-						if(associated_print && associated_print != reference_print) //It does not match
-							internal_prints[print] = stringmerge(associated_print, reference_print)
-						else if(!associated_print)
-							internal_prints[print] = reference_print
-						//If the main print was updated, lets update the master as well.
-						if(print == main_print && (!associated_print || (associated_print && associated_print != reference_print)))
-							update_fingerprints(main_print, internal_prints[print])
-					//Fibers.
-					var/list/fibers = internal_atom[2]
-					if(!fibers)
-						fibers = list()
-					if(atom_suit_fibers)
-						for(var/j = 1, j < atom_suit_fibers.len, j++)	//Fibers~~~
-							if(!fibers.Find(atom_suit_fibers[j]))	//It isn't!  Add!
-								fibers += atom_suit_fibers[j]
-					//Blood.
-					var/list/blood = internal_atom[3]
-					if(!blood)
-						blood = list()
-					if(atom_blood_DNA)
-						for(var/main_blood in atom_blood_DNA)
-							if(!blood[main_blood])
-								blood[main_blood] = atom_blood_DNA[blood]
+		if(atom_fingerprints)
+			if(!files)
+				files = list()
+			for(var/main_print in atom_fingerprints)
+				data_entry = files[main_print]
+				if(data_entry)//The print is already in here!
+					var/list/internal_atom = data_entry[atom_reference] //Lets see if we can find the current object
+					if(internal_atom)
+						//We must be on a roll!  Just update what needs to be updated.
+						var/list/internal_prints = internal_atom[1]
+						for(var/print in atom_fingerprints) //Sorry for the double loop! D:
+							var/associated_print = internal_prints[print]
+							var/reference_print = atom_fingerprints[print]
+							if(associated_print && associated_print != reference_print) //It does not match
+								internal_prints[print] = stringmerge(associated_print, reference_print)
+							else if(!associated_print)
+								internal_prints[print] = reference_print
+							//If the main print was updated, lets update the master as well.
+							if(print == main_print && (!associated_print || (associated_print && associated_print != reference_print)))
+								update_fingerprints(main_print, internal_prints[print])
+						//Fibers.
+						var/list/fibers = internal_atom[2]
+						if(!fibers)
+							fibers = list()
+						if(atom_suit_fibers)
+							for(var/j = 1, j < atom_suit_fibers.len, j++)	//Fibers~~~
+								if(!fibers.Find(atom_suit_fibers[j]))	//It isn't!  Add!
+									fibers += atom_suit_fibers[j]
+						//Blood.
+						var/list/blood = internal_atom[3]
+						if(!blood)
+							blood = list()
+						if(atom_blood_DNA)
+							for(var/main_blood in atom_blood_DNA)
+								if(!blood[main_blood])
+									blood[main_blood] = atom_blood_DNA[blood]
 
+						continue
+					//It's not in there!  We gotta add it.
+					update_fingerprints(main_print, atom_fingerprints[main_print])
+					var/list/data_point[4]
+					data_point[1] = atom_fingerprints
+					data_point[2] = atom_suit_fibers
+					data_point[3] = atom_blood_DNA
+					data_point[4] = atom_name
+					data_entry[atom_reference] = data_point
 					continue
-				//It's not in there!  We gotta add it.
-				update_fingerprints(main_print, atom_fingerprints[main_print])
+				//No print at all!  New data entry, go!
 				var/list/data_point[4]
 				data_point[1] = atom_fingerprints
 				data_point[2] = atom_suit_fibers
 				data_point[3] = atom_blood_DNA
 				data_point[4] = atom_name
-				data_entry[atom_reference] = data_point
-				continue
-			//No print at all!  New data entry, go!
-			var/list/data_point[4]
-			data_point[1] = atom_fingerprints
-			data_point[2] = atom_suit_fibers
-			data_point[3] = atom_blood_DNA
-			data_point[4] = atom_name
-			var/list/new_file[1]
-			new_file[1] = atom_fingerprints[main_print]
-			new_file[atom_reference] = data_point
-			files[main_print] = new_file
+				var/list/new_file[1]
+				new_file[1] = atom_fingerprints[main_print]
+				new_file[atom_reference] = data_point
+				files[main_print] = new_file
 		return 1
 /********************************
 ***END DO NOT DIRECTLY CALL ME***
