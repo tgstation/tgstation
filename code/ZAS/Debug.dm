@@ -32,6 +32,7 @@ zone/proc
 			M << "Pressure: [air.return_pressure()]"
 			M << ""
 			M << "Space Tiles: [length(space_tiles)]"
+			M << "Movable Objects: [length(movable_objects)]"
 			M << "<u>Connections: [length(connections)]</u>"
 
 			for(var/connection/C in connections)

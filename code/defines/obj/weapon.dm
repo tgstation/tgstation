@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /obj/item/weapon
 	name = "weapon"
 	icon = 'weapons.dmi'
@@ -2058,3 +2060,27 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	name = "inflamed appendix"
 	desc = "An appendix which appears to be inflamed."
 	icon_state = "appendixinflamed"
+
+/obj/item/weapon/flavor
+	name = "bland flavoring packet"
+	desc = "A sachet of flavoring, designed to be used with \"LiquidFood\" rations.  The flavor is indeterminable."
+	icon = 'food_ingredients.dmi'
+	var/descriptor = "disturbingly beige" //Description shown to onlookers.
+	var/color = "beige" //Color the icon should take on when this is applied.  Also shown when it is mixed in.
+	var/newDesc = "It posesses a strange and unidentifiable taste.  You try not to think to hard about it." //What gets pegged onto the description.
+
+/obj/item/weapon/flavor/red
+	name = "cherry flavoring packet"
+	desc = "A sachet of cherry flavoring, designed to be used with \"LiquidFood\" rations."
+	icon_state = "flavor-red"
+	descriptor = "garrishly red"
+	color = "red"
+	newDesc = "It has a faintly cherry taste, but still is hard to stomach. Reminds you of cough syrup."
+
+/obj/item/weapon/flavor/blue
+	name = "berry flavoring packet"
+	desc = "A sachet of berry flavoring, designed to be used with \"LiquidFood\" rations."
+	icon_state = "flavor-blue"
+	descriptor = "molted blue"
+	color = "blue"
+	newDesc = "It has a faint bitter berry taste, but still is hard to stomach. Strangely crunchy."

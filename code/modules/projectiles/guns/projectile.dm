@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/item/weapon/gun/projectile
 	desc = "A classic revolver. Uses 357 ammo"
 	name = "revolver"

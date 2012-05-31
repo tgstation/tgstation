@@ -1,7 +1,8 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /mob/living/carbon/brain
-	var
-		obj/item/container = null
-		timeofhostdeath = 0
+	var/obj/item/container = null
+	var/timeofhostdeath = 0
 
 	New()
 		var/datum/reagents/R = new/datum/reagents(1000)

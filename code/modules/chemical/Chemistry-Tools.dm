@@ -1513,6 +1513,9 @@
 				if ("tray")
 					var/obj/item/trash/tray/T = new /obj/item/trash/tray/( M )
 					M.put_in_hand(T)
+				if ("liquidfood")
+					var/obj/item/trash/liquidfood/T = new /obj/item/trash/liquidfood/( M )
+					M.put_in_hand(T)
 		return
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -3713,7 +3716,7 @@
 					desc = "You can't really tell what this is."
 		else
 			icon_state = "glass_empty"
-			name = "Drinking glass"
+			name = "drinking glass"
 			desc = "Your standard drinking glass"
 			return
 

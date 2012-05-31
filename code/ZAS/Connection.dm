@@ -66,13 +66,13 @@ connection
 
 	proc/Cleanup()
 		if(!A || !B)
-			world.log << "Connection removed: [A] or [B] missing entirely."
+			//world.log << "Connection removed: [A] or [B] missing entirely."
 			del src
 		if(A.zone == B.zone)
-			world.log << "Connection removed: Zones now merged."
+			//world.log << "Connection removed: Zones now merged."
 			del src
 		if(!A.zone || !B.zone)
 			no_zone_count++
 		if(no_zone_count >= 5)
-			world.log << "Connection removed: [A] or [B] missing a zone."
+			//world.log << "Connection removed: [A] or [B] missing a zone."
 			del src

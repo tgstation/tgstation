@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/item/device/assembly/infra
 	name = "Infrared Beam"
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
@@ -11,10 +13,9 @@
 	small_icon_state_left = "infrared_left"
 	small_icon_state_right = "infrared_right"
 
-	var
-		scanning = 0
-		visible = 0
-		obj/effect/beam/i_beam/first = null
+	var/scanning = 0
+	var/visible = 0
+	var/obj/effect/beam/i_beam/first = null
 
 	proc
 		trigger_beam()

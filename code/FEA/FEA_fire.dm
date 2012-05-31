@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 atom
 	proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 		//Purpose: Managing temperature exposure.
@@ -67,13 +69,12 @@ obj
 
 		layer = TURF_LAYER
 
-		var
-			volume = 125
-			temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
+		var/volume = 125
+		var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 
-			just_spawned = 1
+		var/just_spawned = 1
 
-			bypassing = 0
+		var/bypassing = 0
 
 		proc/perform_exposure()
 			var/turf/simulated/floor/location = loc

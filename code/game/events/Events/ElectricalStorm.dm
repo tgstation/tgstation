@@ -1,9 +1,10 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /datum/event/electricalstorm
-	var
-		list/obj/machinery/light/Lights = list( )
-		list/obj/machinery/light/APCs = list( )
-		list/obj/machinery/light/Doors = list( )
-		list/obj/machinery/light/Comms = list( )
+	var/list/obj/machinery/light/Lights = list( )
+	var/list/obj/machinery/light/APCs = list( )
+	var/list/obj/machinery/light/Doors = list( )
+	var/list/obj/machinery/light/Comms = list( )
 
 	Announce()
 //		command_alert("The station is flying through an electrical storm.  Radio communications may be disrupted", "Anomaly Alert")

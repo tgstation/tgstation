@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /*///////////////Circuit Imprinter (By Darem)////////////////////////
 	Used to print new circuit boards (for computers and similar systems) and AI modules. Each circuit board pattern are stored in
 a /datum/desgin on the linked R&D console. You can then print them out in a fasion similar to a regular lathe. However, instead of

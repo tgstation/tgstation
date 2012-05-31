@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/machinery/emitter
 	name = "Emitter"
 	desc = "A heavy duty industrial laser"

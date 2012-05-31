@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /obj/machinery/door
 	name = "Door"
 	desc = "It opens and closes."
@@ -8,15 +10,14 @@
 	density = 1
 	layer = 2.7
 
-	var
-		secondsElectrified = 0
-		visible = 1
-		p_open = 0
-		operating = 0
-		autoclose = 0
-		glass = 0
-		forcecrush = 0
-		holdopen = 0
+	var/secondsElectrified = 0
+	var/visible = 1
+	var/p_open = 0
+	var/operating = 0
+	var/autoclose = 0
+	var/glass = 0
+	var/forcecrush = 0
+	var/holdopen = 0
 
 	proc/bumpopen(mob/user as mob)
 	proc/update_nearby_tiles(need_rebuild)

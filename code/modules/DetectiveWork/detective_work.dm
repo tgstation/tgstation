@@ -167,7 +167,7 @@ obj/machinery/computer/forensic_scanning
 						I.loc = src
 				else
 					usr << "Invalid Object Rejected."
-			if("card")
+			if("card")  //Processing a fingerprint card.
 				var/mob/M = usr
 				var/obj/item/I = M.equipped()
 				if(!(I && istype(I,/obj/item/weapon/f_card)))
@@ -187,7 +187,7 @@ obj/machinery/computer/forensic_scanning
 					process_card()
 				else
 					usr << "\red Invalid Object Rejected."
-			if("database")
+			if("database") //Viewing all records in each database
 				canclear = 1
 				if(href_list["delete_record"])
 					delete_dossier(href_list["delete_record"])
@@ -212,7 +212,7 @@ obj/machinery/computer/forensic_scanning
 						for(var/atom in misc)
 							var/list/data_entry = misc[atom]
 							temp += "<a href='?src=\ref[src];operation=auxiliary;identifier=[atom]'>{[data_entry[3]]}</a><br>"
-			if("record")
+			if("record") //Viewing a record from the "files" database.
 				canclear = 0
 				if(files)
 					temp = "<b>Criminal Evidence Database</b><br><br>"
@@ -246,7 +246,7 @@ obj/machinery/computer/forensic_scanning
 				else
 					temp = "ERROR.  Database not found!<br>"
 				temp += "<br><a href='?src=\ref[src];operation=database'>{Return}</a>"
-			if("databaseprint")
+			if("databaseprint") //Printing from the "files" database.
 				if(files)
 					var/obj/item/weapon/paper/P = new(loc)
 					P.name = "Database File (Dossier [files.Find(href_list["identifier"])])"
@@ -275,12 +275,11 @@ obj/machinery/computer/forensic_scanning
 						var/list/blood = outputs[3]
 						if(blood && blood.len)
 							P.info += "&nbsp<b>Blood:</b><br>"
-							for(var/j = 1, j <= blood.len, j++)
-								var/list/templist2 = blood[j]
-								P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [templist2[2]], DNA: [templist2[1]]<br>"
+							for(var/named in blood)
+								P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [blood[named]], DNA: [named]<br>"
 				else
 					usr << "ERROR.  Database not found!<br>"
-			if("auxiliary")
+			if("auxiliary") //Viewing a record from the "misc" database.
 				canclear = 0
 				if(misc)
 					temp = "<b>Auxiliary Evidence Database</b><br><br>"
@@ -302,7 +301,7 @@ obj/machinery/computer/forensic_scanning
 				else
 					temp = "ERROR.  Database not found!<br>"
 				temp += "<br><a href='?src=\ref[src];operation=database'>{Return}</a>"
-			if("auxiliaryprint")
+			if("auxiliaryprint") //Printing from the "misc" database.
 				if(misc)
 					var/obj/item/weapon/paper/P = new(loc)
 					var/list/outputs = misc[href_list["identifier"]]
@@ -403,7 +402,7 @@ obj/machinery/computer/forensic_scanning
 					temp = "Scan Failed: No Object"
 
 
-			if("print")
+			if("print") //Printing scan data
 				if(scan_data)
 					temp = "Scan Data Printed."
 					var/obj/item/weapon/paper/P = new(loc)
@@ -416,7 +415,7 @@ obj/machinery/computer/forensic_scanning
 				scan_data = ""
 			if("cancel")
 				scan_process = 0
-			if("add")
+			if("add") //Adding an object (Manually) to the database.
 				if(scanning)
 					add_data(scanning)
 				else
@@ -541,7 +540,7 @@ obj/machinery/computer/forensic_scanning
 		if(master)
 			master[1] = stringmerge(master[1],new_print)
 		else
-			CRASH("Fucking hell.  Something went wrong, and it tried to update a null print or something.  Tell SkyMarshal")
+			CRASH("Fucking hell.  Something went wrong, and it tried to update a null print or something.  Tell SkyMarshal (and give him this call stack)")
 		return
 
 	proc/process_card()	//Same as above, but for fingerprint cards
@@ -772,7 +771,7 @@ proc/blood_incompatible(donor,receiver)
 			..()
 
 	afterattack(atom/A as obj|turf|area, mob/user as mob)
-		if(istype(A))
+		if(istype(A) && src in user)
 			user.visible_message("[user] starts to wipe down [A] with [src]!")
 			if(do_after(user,30))
 				user.visible_message("[user] finishes wiping off the [A]!")
@@ -780,7 +779,7 @@ proc/blood_incompatible(donor,receiver)
 		return
 
 	examine()
-		if (!( usr ))
+		if (!usr)
 			return
 		usr << "That's \a [src]."
 		usr << desc

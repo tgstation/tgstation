@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/machinery/particle_accelerator/control_box
 	name = "Particle Accelerator Control Computer"
 	desc = "This controls the density of the particles."

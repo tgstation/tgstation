@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 
 /proc/isassembly(O)
 	if(istype(O, /obj/item/device/assembly))
@@ -89,7 +91,7 @@
 		cooldown--
 		if(cooldown <= 0)	return 0
 		spawn(10)
-			process_cooldown()
+		process_cooldown()
 		return 1
 
 
@@ -101,7 +103,7 @@
 		return 1
 
 
-	pulse(var/radio = 0)
+	proc/pulse(var/radio = 0)
 		if(holder && (wires & WIRE_PULSE))
 			holder.process_activation(src, 1, 0)
 		if(holder && (wires & WIRE_PULSE_SPECIAL))
@@ -205,7 +207,6 @@ Desc:	If true is an object that can be attached to an assembly holder but is a s
 
 	proc
 		Activate()//Called when this assembly is pulsed by another one
-		Process_cooldown()//Call this via spawn(10) to have it count down the cooldown var
 		Attach_Holder(var/obj/H, var/mob/user)//Called when an assembly holder attempts to attach, sets src's loc in here
 
 

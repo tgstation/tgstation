@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /* new portable generator - work in progress
 
 /obj/machinery/power/port_gen

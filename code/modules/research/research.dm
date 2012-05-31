@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:06
+
 /*
 General Explination:
 The research datum is the "folder" where all the research information is stored in a R&D console. It's also a holder for all the
@@ -45,12 +47,11 @@ research holder datum.
 ***************************************************************/
 
 /datum/research								//Holder for all the existing, archived, and known tech. Individual to console.
-	var
-		list								//Datum/tech go here.
-			possible_tech = list()			//List of all tech in the game that players have access to (barring special events).
-			known_tech = list()				//List of locally known tech.
-			possible_designs = list()		//List of all designs (at base reliability).
-			known_designs = list()			//List of available designs (at base reliability).
+	//Datum/tech go here.
+	var/list/possible_tech = list()			//List of all tech in the game that players have access to (barring special events).
+	var/list/known_tech = list()				//List of locally known tech.
+	var/list/possible_designs = list()		//List of all designs (at base reliability).
+	var/list/known_designs = list()			//List of available designs (at base reliability).
 
 	New()		//Insert techs into possible_tech here. Known_tech automatically updated.
 		for(var/T in typesof(/datum/tech) - /datum/tech)
@@ -170,12 +171,11 @@ research holder datum.
 
 datum
 	tech		//Datum of individual technologies.
-		var
-			name = "name"					//Name of the technology.
-			desc = "description"			//General description of what it does and what it makes.
-			id = "id"						//An easily referenced ID. Must be alphanumeric, lower-case, and no symbols.
-			level = 1						//A simple number scale of the research level. Level 0 = Secret tech.
-			list/req_tech = list()			//List of ids associated values of techs required to research this tech. "id" = #
+		var/name = "name"					//Name of the technology.
+		var/desc = "description"			//General description of what it does and what it makes.
+		var/id = "id"						//An easily referenced ID. Must be alphanumeric, lower-case, and no symbols.
+		var/level = 1						//A simple number scale of the research level. Level 0 = Secret tech.
+		var/list/req_tech = list()			//List of ids associated values of techs required to research this tech. "id" = #
 
 
 //Trunk Technologies (don't require any other techs and you start knowning them).

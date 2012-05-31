@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/item/device/assembly/timer
 	name = "timer"
 	desc = "Used to time things. Works well with contraptions which has to count down. Tick tock."
@@ -11,9 +13,8 @@
 	small_icon_state_left = "timer_left"
 	small_icon_state_right = "timer_right"
 
-	var
-		timing = 0
-		time = 10
+	var/timing = 0
+	var/time = 10
 
 	proc
 		timer_end()

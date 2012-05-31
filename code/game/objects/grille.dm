@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/structure/grille
 	desc = "A piece of metal with evenly spaced gridlike holes in it. Blocks large object but lets small items, gas, or energy beams through. Strangely enough these grilles also lets meteors pass through them, whether they be small or huge station breaking death stones."
 	name = "grille"
@@ -8,9 +10,8 @@
 	flags = FPRINT | CONDUCT
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = 2.9
-	var
-		health = 10
-		destroyed = 0
+	var/health = 10
+	var/destroyed = 0
 	proc
 		healthcheck()
 		shock(mob/user, prb)

@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	// 0 = old radios
 	// 1 = new radios (subspace technology)

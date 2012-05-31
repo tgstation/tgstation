@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 
 /////SINGULARITY SPAWNER
 /obj/machinery/the_singularitygen/
@@ -8,8 +10,7 @@
 	anchored = 0
 	density = 1
 	use_power = 0
-	var
-		energy = 0
+	var/energy = 0
 
 //////////////////////Singularity gen START
 

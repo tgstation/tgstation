@@ -1,19 +1,20 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 #define HUMAN_MAX_OXYLOSS 3 //Defines how much oxyloss humans can get per tick. No air applies this value.
 
 /mob/living/carbon/human
-	var
-		oxygen_alert = 0
-		toxins_alert = 0
-		fire_alert = 0
+	var/oxygen_alert = 0
+	var/toxins_alert = 0
+	var/fire_alert = 0
 
-		temperature_alert = 0
+	var/temperature_alert = 0
 
 		// used to do some stuff only on every X life tick
-		life_tick = 0
-		isbreathing = 1
-		holdbreath = 0
-		lyingcheck = 0
-		buckle_check = 0
+	var/life_tick = 0
+	var/isbreathing = 1
+	var/holdbreath = 0
+	var/lyingcheck = 0
+	var/buckle_check = 0
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
@@ -1092,7 +1093,7 @@
 			// Apparently deletes all the hud_ icons
 			for(var/image/hud in client.images)
 				if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
-					del(hud)
+					client.images -= hud//del(hud)
 
 			// Handle special vision stuff, such as thermals or ghost vision
 			// -------------------------------------------------------------

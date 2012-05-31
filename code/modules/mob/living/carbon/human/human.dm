@@ -1237,12 +1237,12 @@
 
 	if(lying)
 		icon = lying_icon
-		overlays += body_overlays_standing
+		overlays += body_overlays_lying
 
 	if(!lying)
 		icon = stand_icon
+		overlays += body_overlays_standing
 
-		overlays += body_overlays_lying
 
 
 	overlays += clothing_overlays

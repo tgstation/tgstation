@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 #define UI_OLD 0
 #define UI_NEW 1
 
@@ -29,18 +31,17 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"infested monkey" = ispath(text2path("/datum/game_mode/monkey")),
 )
 */
-var/const
-	BE_TRAITOR   =(1<<0)
-	BE_OPERATIVE =(1<<1)
-	BE_CHANGELING=(1<<2)
-	BE_WIZARD    =(1<<3)
-	BE_MALF      =(1<<4)
-	BE_REV       =(1<<5)
-	BE_ALIEN     =(1<<6)
-	BE_CULTIST   =(1<<7)
-	BE_MONKEY    =(1<<8)
-	BE_PAI       =(1<<9)
-	BE_MEME		 =(1<<10)
+var/const/BE_TRAITOR   =(1<<0)
+var/const/BE_OPERATIVE =(1<<1)
+var/const/BE_CHANGELING=(1<<2)
+var/const/BE_WIZARD    =(1<<3)
+var/const/BE_MALF      =(1<<4)
+var/const/BE_REV       =(1<<5)
+var/const/BE_ALIEN     =(1<<6)
+var/const/BE_CULTIST   =(1<<7)
+var/const/BE_MONKEY    =(1<<8)
+var/const/BE_PAI       =(1<<9)
+var/const/BE_MEME		 =(1<<10)
 
 
 

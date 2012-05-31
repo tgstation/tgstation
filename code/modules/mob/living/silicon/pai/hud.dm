@@ -2,16 +2,16 @@
 	if(client)
 		for(var/image/hud in client.images)
 			if(copytext(hud.icon_state,1,4) == "hud")
-				del(hud)
+				client.images -= hud
 
 /mob/living/silicon/pai/proc/securityHUD()
 	if(client)
-		var/icon/tempHud = 'hud.dmi'
 		var/turf/T = get_turf_or_move(src.loc)
 		for(var/mob/living/carbon/human/perp in view(T))
 			if(perp.wear_id)
-				client.images += image(tempHud,perp,"hud[ckey(perp:wear_id:GetJobName())]")
-				var/perpname = "wot"
+				perp.sec_img.icon_state = "hud[ckey(perp:wear_id:GetJobName())]"
+				client.images += perp.sec_img
+				var/perpname = "wot no name?"
 				if(istype(perp.wear_id,/obj/item/weapon/card/id))
 					perpname = perp.wear_id:registered_name
 				else if(istype(perp.wear_id,/obj/item/device/pda))
@@ -21,17 +21,19 @@
 					if (E.fields["name"] == perpname)
 						for (var/datum/data/record/R in data_core.security)
 							if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
-								client.images += image(tempHud,perp,"hudwanted")
+								perp.sec2_img.icon_state = "hudwanted"
+								client.images += perp.sec2_img
 								break
 							else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Incarcerated"))
-								client.images += image(tempHud,perp,"hudprisoner")
+								perp.sec2_img.icon_state = "hudprisoner"
+								client.images += perp.sec2_img
 								break
 			else
-				client.images += image(tempHud,perp,"hudunknown")
+				perp.sec_img.icon_state = "hudunknown"
+				client.images += perp.sec_img
 
 /mob/living/silicon/pai/proc/medicalHUD()
 	if(client)
-		var/icon/tempHud = 'hud.dmi'
 		var/turf/T = get_turf_or_move(src.loc)
 		for(var/mob/living/carbon/human/patient in view(T))
 
@@ -40,15 +42,17 @@
 				if(!D.hidden[SCANNER])
 					foundVirus = 1
 
-			client.images += image(tempHud,patient,"hud[RoundHealth(patient.health)]")
+			patient.health_img.icon_state = "hud[RoundHealth(patient.health)]"
+			client.images += patient.health_img
 			if(patient.stat == 2)
-				client.images += image(tempHud,patient,"huddead")
+				patient.med_img.icon_state = "huddead"
 			else if(patient.alien_egg_flag)
-				client.images += image(tempHud,patient,"hudxeno")
+				patient.med_img.icon_state = "hudxeno"
 			else if(foundVirus)
-				client.images += image(tempHud,patient,"hudill")
+				patient.med_img.icon_state = "hudill"
 			else
-				client.images += image(tempHud,patient,"hudhealthy")
+				patient.med_img.icon_state = "hudhealthy"
+			client.images += patient.med_img
 
 /mob/living/silicon/pai/proc/RoundHealth(health)
 	switch(health)

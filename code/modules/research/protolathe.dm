@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:06
+
 /*
 Protolathe
 
@@ -11,7 +13,6 @@ Note: Must be placed west/left of and R&D console to function.
 	name = "Protolathe"
 	icon_state = "protolathe"
 	flags = OPENCONTAINER
-
 	var/max_material_storage = 100000 //All this could probably be done better with a list but meh.
 	var/m_amount = 0.0
 	var/g_amount = 0.0

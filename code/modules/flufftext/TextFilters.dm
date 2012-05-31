@@ -1,9 +1,11 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 proc/Intoxicated(phrase)
 	phrase = html_decode(phrase)
-	var
-		leng=lentext(phrase)
-		counter=lentext(phrase)
-		newphrase="";newletter=""
+	var/leng=lentext(phrase)
+	var/counter=lentext(phrase)
+	var/newphrase=""
+	var/newletter=""
 	while(counter>=1)
 		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
 		if(rand(1,3)==3)
