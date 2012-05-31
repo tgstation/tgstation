@@ -173,6 +173,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define HIDEEYES	4	//APPLIES ONLY TO HELMETS!!
 
 //clothing-overlay layers. They are floats so they always appear above the Mob
+#define DAMAGE_LAYER		-23
 #define UNIFORM_LAYER		-22
 #define B_UNIFORM_LAYER		-21
 #define SHOES_LAYER			-20

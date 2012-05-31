@@ -47,8 +47,8 @@
 	var/hair_icon_state = "hair_a"
 	var/face_icon_state = "bald"
 
-	var/list/body_standing = list()
-	var/list/body_lying = list()
+	var/image/damageicon_standing
+	var/image/damageicon_lying
 
 	var/mutantrace = null
 
@@ -820,14 +820,14 @@
 	if (lying)
 		icon = lying_icon
 
-		overlays += body_lying
+		overlays += damageicon_lying
 
 		if (face_lying)
 			overlays += face_lying
 	else
 		icon = stand_icon
 
-		overlays += body_standing
+		overlays += damageicon_standing
 
 		if (face_standing)
 			overlays += face_standing
