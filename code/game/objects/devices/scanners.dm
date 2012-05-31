@@ -64,7 +64,6 @@ MASS SPECTROMETER
 	desc = "Used to scan objects for DNA and fingerprints."
 	icon_state = "forensic1"
 	var/amount = 20.0
-//	var/printing = 0.0
 	var/list/stored = list()
 	w_class = 3.0
 	item_state = "electronic"
@@ -89,16 +88,6 @@ MASS SPECTROMETER
 			if (W)
 				W.add_fingerprint(user)
 		return
-
-//	attack_self(mob/user as mob)
-//		src.printing = !( src.printing )
-//		if(src.printing)
-//			user << "\blue Printing turned on"
-//		else
-//			user << "\blue Printing turned off"
-//		src.icon_state = text("forensic[]", src.printing)
-//		add_fingerprint(user)
-//		return
 
 	attack(mob/living/carbon/human/M as mob, mob/user as mob)
 		if (!ishuman(M))
@@ -132,17 +121,16 @@ MASS SPECTROMETER
 		return
 
 	afterattack(atom/A as obj|turf|area, mob/user as mob)
-		if(!(locate(A) in oview(1,user)))
+		if(!in_range(A,user))
 			return
-		if(src.loc != user)
+		if(loc != user)
 			return
 		if(istype(A,/obj/machinery/computer/forensic_scanning)) //breaks shit.
 			return
 		if(istype(A,/obj/item/weapon/f_card))
-			user << "Haha, nice try.  Cheater.  (It would break stuff anyways.)"
+			user << "The scanner displays on the screen: \"ERROR 43: Object on Excluded Object List.\""
 			return
-		if(!A.fingerprints)
-			A.fingerprints = list()
+
 		add_fingerprint(user)
 
 		//Special case for blood splaters.
@@ -151,50 +139,46 @@ MASS SPECTROMETER
 				for(var/blood in A.blood_DNA)
 					user << "\blue Blood type: [A.blood_DNA[blood]]\nDNA: [blood]"
 			return
-		var/duplicate = 0
+
 		//General
 		if ((!A.fingerprints || !A.fingerprints.len) && !A.suit_fibers && !A.blood_DNA)
-			user << "\blue Unable to locate any fingerprints, materials, fibers, or blood on [A]!"
+			user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "his": "her"] humming[prob(70) ? " gently." : "."]" ,\
+			"\blue Unable to locate any fingerprints, materials, fibers, or blood on [A]!",\
+			"You hear a faint hum of electrical equipment.")
 			return 0
 
-		//BLOOD
-		else if (A.blood_DNA)
-			user << "\blue Blood found on [A]. Analysing..."
-			sleep(15)
-			if(!duplicate)
-				duplicate = 1
-				var/i = add_data(A)
-				if(i)
-					user << "\blue Blood already in memory."
-			for(var/blood in A.blood_DNA)
-				user << "\blue Blood type: [A.blood_DNA[blood]]\nDNA: [blood]"
-		else
-			user << "\blue No Blood Located"
+		if(add_data(A))
+			user << "\blue Object already in internal memory. Consolidating data..."
+			return
+
 
 		//PRINTS
 		if(!A.fingerprints || !A.fingerprints.len)
-			user << "\blue No Fingerprints Located."
 			if(A.fingerprints)
 				del(A.fingerprints)
 		else
-			user << text("\blue Isolated [A.fingerprints.len] fingerprints: Data Stored: Scan with Hi-Res Forensic Scanner to retrieve.")
-			if(!duplicate)
-				duplicate = 1
-				var/i = add_data(A)
-				if(i)
-					user << "\blue Fingerprints already in memory."
+			user << "\blue Isolated [A.fingerprints.len] fingerprints: Data Stored: Scan with Hi-Res Forensic Scanner to retrieve."
 
 		//FIBERS
-		if(!A.suit_fibers)
-			user << "\blue No Fibers/Materials Located."
-		else
+		if(A.suit_fibers)
 			user << "\blue Fibers/Materials Data Stored: Scan with Hi-Res Forensic Scanner to retrieve."
 
-			if(!duplicate)
-				duplicate = 1
-				var/i = add_data(A)
-				if(i)
-					user << "\blue Fibers/Materials already in memory."
+		//Blood
+		if (A.blood_DNA)
+			user << "\blue Blood found on [A]. Analysing..."
+			spawn(15)
+				for(var/blood in A.blood_DNA)
+					user << "Blood type: \red [A.blood_DNA[blood]] \t \black DNA: \red [blood]"
+		if(prob(5))
+			user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "his": "her"] humming[prob(70) ? " gently." : "."]" ,\
+			"You finish scanning \the [A].",\
+			"You hear a faint hum of electrical equipment.")
+			return 0
+		else
+			user.visible_message("\The [user] scans \the [A] with \a [src], the air around [user.gender == MALE ? "his": "her"] humming[prob(70) ? " gently." : "."]\n[user.gender == MALE ? "He": "She"] seems to perk up slightly at the readout." ,\
+			"The results of the scan pique your interest.",\
+			"You hear a faint hum of electrical equipment, and someone making a thoughtful noise.")
+			return 0
 		return
 
 	proc/add_data(atom/A as mob|obj|turf|area)

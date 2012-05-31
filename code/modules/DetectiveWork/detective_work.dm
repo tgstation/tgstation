@@ -392,7 +392,7 @@ obj/machinery/computer/forensic_scanning
 							scan_data += "Fibers/Materials Found:<br>"
 							for(var/data in scanning.suit_fibers)
 								scan_data += "- [data]<br>"
-						if(istype(scanning,/obj/item/device/detective_scanner))
+						if(istype(scanning,/obj/item/device/detective_scanner) || (istype(scanning, /obj/item/device/pda) && scanning:cartridge && scanning:cartridge.access_security))
 							scan_data += "<br><b>Data transfered from Scanner to Database.</b><br>"
 							add_data_scanner(scanning)
 						else if(!scanning.fingerprints)
@@ -425,12 +425,19 @@ obj/machinery/computer/forensic_scanning
 		return
 
 
-	proc/add_data_scanner(var/obj/item/device/detective_scanner/W)
-		if(W.stored)
-			for(var/atom in W.stored)
-				var/list/data = W.stored[atom]
-				add_data_master(atom,data[1],data[2],data[3],data[4])
-		W.stored = list()
+	proc/add_data_scanner(var/obj/item/device/W)
+		if(istype(W, /obj/item/device/detective_scanner))
+			if(W:stored)
+				for(var/atom in W:stored)
+					var/list/data = W:stored[atom]
+					add_data_master(atom,data[1],data[2],data[3],data[4])
+			W:stored = list()
+		else if(istype(W, /obj/item/device/pda) && W:cartridge && W:cartridge.access_security)
+			if(W:cartridge.stored)
+				for(var/atom in W:cartridge.stored)
+					var/list/data = W:cartridge.stored[atom]
+					add_data_master(atom,data[1],data[2],data[3],data[4])
+			W:cartridge.stored = list()
 		return
 
 	proc/add_data(var/atom/scanned_atom)
@@ -475,7 +482,7 @@ obj/machinery/computer/forensic_scanning
 			if(!files)
 				files = list()
 			for(var/main_print in atom_fingerprints)
-				var/list/data_entry = files[main_print]
+				data_entry = files[main_print]
 				if(data_entry)//The print is already in here!
 					var/list/internal_atom = data_entry[atom_reference] //Lets see if we can find the current object
 					if(internal_atom)

@@ -860,6 +860,8 @@
 					user.show_message("\blue No radiation detected.")
 
 /obj/item/device/pda/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
+	if(!in_range(A, user))
+		return
 	switch(scanmode)
 		if(2)
 			if (!A.fingerprints)
@@ -878,6 +880,9 @@
 					user << "\blue Found [complete_prints.len] intact prints"
 					for(var/i in complete_prints)
 						user << "\blue [i]"
+			if(cartridge && cartridge.access_security)
+				cartridge.add_data(A)
+				user << "Data added to internal storage.  Scan with a High-Resolution Scanner to retreive."
 
 		if(3)
 			if(!isnull(A.reagents))
