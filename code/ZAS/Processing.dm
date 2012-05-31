@@ -1,6 +1,6 @@
 #define QUANTIZE(variable)		(round(variable,0.0001))
 var/explosion_halt = 0
-var/zone_share_percent = 8
+var/zone_share_percent = 1
 zone
 	proc/process()
 		//Does rebuilding stuff. Not sure if used.
@@ -46,13 +46,13 @@ zone
 		if(space_tiles)
 			for(var/T in space_tiles)
 				if(!istype(T,/turf/space)) space_tiles -= T
-			total_space = length(space_tiles)
+				total_space++
 
 		//Add checks to ensure that we're not sucking air out of an empty room.
 		if(total_space && air.total_moles > 0.1 && air.temperature > TCMB+0.5)
 			//If there is space, air should flow out of the zone.
-			//if(abs(air.pressure) > vsc.airflow_lightest_pressure)
-			//	AirflowSpace(src)
+			if(abs(air.pressure) > vsc.airflow_lightest_pressure)
+				AirflowSpace(src)
 			ShareSpace(air,total_space*(zone_share_percent/100))
 
 		//React the air here.
@@ -63,7 +63,7 @@ zone
 		air.graphic = 0
 		if(air.toxins > MOLES_PLASMA_VISIBLE)
 			air.graphic = 1
-		else if(length(air.trace_gases))
+		else if(air.trace_gases.len)
 			var/datum/gas/sleeping_agent = locate(/datum/gas/sleeping_agent) in air.trace_gases
 			if(sleeping_agent && (sleeping_agent.moles > 1))
 				air.graphic = 2
@@ -109,8 +109,8 @@ zone
 			for(var/zone/Z in connected_zones)
 				//Ensure we're not doing pointless calculations on equilibrium zones.
 				if(abs(air.total_moles - Z.air.total_moles) > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
-					//if(abs(Z.air.pressure - air.pressure) > vsc.airflow_lightest_pressure)
-					//	Airflow(src,Z)
+					if(abs(Z.air.pressure - air.pressure) > vsc.airflow_lightest_pressure)
+						Airflow(src,Z)
 					ShareRatio(air,Z.air,connected_zones[Z]*(zone_share_percent/100))
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, ratio)
@@ -124,39 +124,35 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, ratio)
 		full_co2 = A.carbon_dioxide * size
 		full_plasma = A.toxins * size
 
-		full_thermal = A.temperature * A.heat_capacity() * size
+		full_heat_capacity = A.heat_capacity() * size
 
 		s_full_oxy = B.oxygen * share_size
 		s_full_nitro = B.nitrogen * share_size
 		s_full_co2 = B.carbon_dioxide * share_size
 		s_full_plasma = B.toxins * share_size
 
-		s_full_thermal = B.temperature * B.heat_capacity() * share_size
+		s_full_heat_capacity = B.heat_capacity() * share_size
 
 		oxy_avg = (full_oxy + s_full_oxy) / (size + share_size)
 		nit_avg = (full_nitro + s_full_nitro) / (size + share_size)
 		co2_avg = (full_co2 + s_full_co2) / (size + share_size)
 		plasma_avg = (full_plasma + s_full_plasma) / (size + share_size)
 
-		thermal_avg = (full_thermal + s_full_thermal) / (size+share_size)
+		temp_avg = (A.temperature * full_heat_capacity + B.temperature * s_full_heat_capacity) / (full_heat_capacity + s_full_heat_capacity)
 
 	A.oxygen = (A.oxygen - oxy_avg) * (1-ratio) + oxy_avg
 	A.nitrogen = (A.nitrogen - nit_avg) * (1-ratio) + nit_avg
 	A.carbon_dioxide = (A.carbon_dioxide - co2_avg) * (1-ratio) + co2_avg
 	A.toxins = (A.toxins - plasma_avg) * (1-ratio) + plasma_avg
 
+	A.temperature = (A.temperature - temp_avg) * (1-ratio) + temp_avg
+
 	B.oxygen = (B.oxygen - oxy_avg) * (1-ratio) + oxy_avg
 	B.nitrogen = (B.nitrogen - nit_avg) * (1-ratio) + nit_avg
 	B.carbon_dioxide = (B.carbon_dioxide - co2_avg) * (1-ratio) + co2_avg
 	B.toxins = (B.toxins - plasma_avg) * (1-ratio) + plasma_avg
 
-	var
-		thermal = (full_thermal/size - thermal_avg) * (1-ratio) + thermal_avg
-		sharer_thermal = (s_full_thermal/share_size - thermal_avg) * (1-ratio) + thermal_avg
-
-	A.temperature = thermal / (A.heat_capacity() == 0 ? MINIMUM_HEAT_CAPACITY : A.heat_capacity())
-
-	B.temperature = sharer_thermal / (B.heat_capacity() == 0 ? MINIMUM_HEAT_CAPACITY : B.heat_capacity())
+	B.temperature = (B.temperature - temp_avg) * (1-ratio) + temp_avg
 
 	for(var/datum/gas/G in A.trace_gases)
 		var/datum/gas/H = locate(G.type) in B.trace_gases
@@ -178,33 +174,37 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, ratio)
 	else return 0
 
 proc/ShareSpace(datum/gas_mixture/A, ratio)
-	//A modified version of ShareRatio for spacing gas at the same rate as if it were going into a huge airless room.
+	//A modified version of ShareRatio for spacing gas at the same rate as if it were going into a large airless room.
 	var
 		size = max(1,A.group_multiplier)
-		share_size = 2000 //A huge value because space is huge.
+		share_size = max(1,A.group_multiplier)
 
 		full_oxy = A.oxygen * size
 		full_nitro = A.nitrogen * size
 		full_co2 = A.carbon_dioxide * size
 		full_plasma = A.toxins * size
 
-		full_thermal = A.temperature * A.heat_capacity() * size
+		full_heat_capacity = A.heat_capacity() * size
 
-		oxy_avg = (full_oxy + 0) / (size + share_size)
-		nit_avg = (full_nitro + 0.2) / (size + share_size)
-		co2_avg = (full_co2 + 0) / (size + share_size)
-		plasma_avg = (full_plasma + 0) / (size + share_size)
+		space_heat_capacity = MINIMUM_HEAT_CAPACITY * share_size
 
-		thermal_avg = (full_thermal + MINIMUM_HEAT_CAPACITY) / (size+share_size)
+		oxy_avg = (full_oxy) / (size + share_size)
+		nit_avg = (full_nitro) / (size + share_size)
+		co2_avg = (full_co2) / (size + share_size)
+		plasma_avg = (full_plasma) / (size + share_size)
+
+		temp_avg = (A.temperature * full_heat_capacity + TCMB * space_heat_capacity) / (full_heat_capacity + space_heat_capacity)
 
 	A.oxygen = (A.oxygen - oxy_avg) * (1-ratio) + oxy_avg
 	A.nitrogen = (A.nitrogen - nit_avg) * (1-ratio) + nit_avg
 	A.carbon_dioxide = (A.carbon_dioxide - co2_avg) * (1-ratio) + co2_avg
 	A.toxins = (A.toxins - plasma_avg) * (1-ratio) + plasma_avg
 
-	var/thermal = (full_thermal/size - thermal_avg) * (1-ratio) + thermal_avg
+	A.temperature = (A.temperature - temp_avg) * (1-ratio) + temp_avg
 
-	A.temperature = thermal / (A.heat_capacity() == 0 ? MINIMUM_HEAT_CAPACITY : A.heat_capacity())
+	//833 * 0.9 + 833 =
+	//(5000/3) = 1666
+	//(5000/6) = 833
 
 	for(var/datum/gas/G in A.trace_gases)
 		var/G_avg = (G.moles*size + 0) / (size+share_size)
