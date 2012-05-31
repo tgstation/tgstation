@@ -184,7 +184,7 @@
 	if ((!( istype(M, /mob) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat || M.buckled || istype(usr, /mob/living/silicon/pai)))
 		return
 	M.pixel_y = 6
-	M.update_lying()
+	M.update_clothing()
 	density = 1
 	icon_state = "up"
 	..()

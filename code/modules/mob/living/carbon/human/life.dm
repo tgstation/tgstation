@@ -35,13 +35,13 @@
 	// TODO: this check and the lyingcheck variable should probably be removed in favor of the visual_lying check
 	if((lyingcheck != lying) || (buckle_check != (buckled ? 1 : 0)))		//This is a fix for falling down / standing up not updating icons.  Instead of going through and changing every
 		spawn(5)
-			update_lying()		//instance in the code where lying is modified, I've just added a new variable "lyingcheck" which will be compared
+			update_clothing()		//instance in the code where lying is modified, I've just added a new variable "lyingcheck" which will be compared
 		lyingcheck = lying		//to lying, so if lying ever changes, update_clothing() will run like normal.
 
 	if(stat == 2)
 		if(!lying && !buckled)
 			lying = 1
-			update_lying()
+			update_clothing()
 		return
 
 	life_tick++
@@ -138,7 +138,7 @@
 			if (stat != 0)
 				if(!lying)
 					lying = 1 //Seriously, stay down :x
-					update_lying()
+					update_clothing()
 
 
 
