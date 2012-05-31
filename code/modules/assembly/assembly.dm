@@ -103,7 +103,7 @@
 		return 1
 
 
-	proc/pulse(var/radio = 0)
+	pulse(var/radio = 0)
 		if(holder && (wires & WIRE_PULSE))
 			holder.process_activation(src, 1, 0)
 		if(holder && (wires & WIRE_PULSE_SPECIAL))

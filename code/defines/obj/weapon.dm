@@ -2066,7 +2066,7 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	desc = "A sachet of flavoring, designed to be used with \"LiquidFood\" rations.  The flavor is indeterminable."
 	icon = 'food_ingredients.dmi'
 	var/descriptor = "disturbingly beige" //Description shown to onlookers.
-	var/color = "beige" //Color the icon should take on when this is applied.  Also shown when it is mixed in.
+	color = "beige" //Color the icon should take on when this is applied.  Also shown when it is mixed in.
 	var/newDesc = "It posesses a strange and unidentifiable taste.  You try not to think to hard about it." //What gets pegged onto the description.
 
 /obj/item/weapon/flavor/red
