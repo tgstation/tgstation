@@ -33,7 +33,7 @@
 		M.client.mob = new/mob/living/carbon/alien/humanoid/special/snakeman(new/obj/effect/snake_egg(src.loc))
 		visible_message("[src] injects [M] with an egg.")
 		visible_message("The egg absorbs [M]")
-		M.mutations |= HUSK
+		M.mutations |= NOCLONE
 		M.update_body()
 		M.death()
 	else
