@@ -1045,7 +1045,6 @@ window "mapwindow"
 		text-mode = false
 		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
 		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
-		style = ""
 
 window "outputwindow"
 	elem "outputwindow"
@@ -1188,9 +1187,9 @@ window "rpane"
 		anchor2 = none
 		font-family = ""
 		font-size = 0
-		font-style = "bold"
-		text-color = #ffffff
-		background-color = #8080ff
+		font-style = ""
+		text-color = #000000
+		background-color = none
 		is-visible = true
 		is-disabled = false
 		is-transparent = false
