@@ -917,8 +917,8 @@
 	body_overlays_standing += body_standing
 
 	// face_lying and face_standing are the face icons, not a flag
-	body_overlays_lying += face_standing // yes, the vars are named wrong, I didn't do it -- CIB
-	body_overlays_standing += face_lying
+	body_overlays_lying += face_lying
+	body_overlays_standing += face_standing
 
 
 
