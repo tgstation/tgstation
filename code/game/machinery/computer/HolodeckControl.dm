@@ -417,8 +417,7 @@
 					log_admin("ATTACK: [G.assailant] ([G.assailant.ckey]) smashed [G.affecting] ([G.affecting.ckey]) on a table.")
 					message_admins("ATTACK: [G.assailant] ([G.assailant.ckey]) smashed [G.affecting] ([G.affecting.ckey]) on a table.")
 					log_attack("<font color='red'>[G.assailant] ([G.assailant.ckey]) smashed [G.affecting] ([G.affecting.ckey]) on a table.</font>")
-					var/list/proper_forms = H.get_visible_gender()
-					var/t_his = proper_forms["its"]
+
 					if(prob(25))
 						add_blood(G.affecting)
 						affecting.take_damage(rand(10,15), 0)
@@ -435,12 +434,12 @@
 								"\red You hear the nauseating crunch of bone and gristle on solid metal and the squeal of said metal deforming.")
 							dented++
 						else if(prob(50))
-							G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src], [t_his] bone and cartilage making a loud crunch!",\
-							"\red You smash \the [H]'s head on \the [src], [t_his] bone and cartilage making a loud crunch!",\
+							G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src], [H.get_gender_form("its")] bone and cartilage making a loud crunch!",\
+							"\red You smash \the [H]'s head on \the [src], [H.get_gender_form("its")] bone and cartilage making a loud crunch!",\
 							"\red You hear the nauseating crunch of bone and gristle on solid metal, the noise echoing through the room.")
 						else
-							G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src], [t_his] nose smashed and face bloodied!",\
-							"\red You smash \the [H]'s head on \the [src], [t_his] nose smashed and face bloodied!",\
+							G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src], [H.get_gender_form("its")] nose smashed and face bloodied!",\
+							"\red You smash \the [H]'s head on \the [src], [H.get_gender_form("its")] nose smashed and face bloodied!",\
 							"\red You hear the nauseating crunch of bone and gristle on solid metal and the gurgling gasp of someone who is trying to breathe through their own blood.")
 					else
 						affecting.take_damage(rand(5,10), 0)
