@@ -116,7 +116,6 @@ obj/structure/windoor_assembly/Del()
 					var/obj/item/weapon/cable_coil/CC = W
 					CC.use(1)
 					user << "\blue You wire the windoor!"
-					src.density = 1
 					src.state = "02"
 					if(src.secure)
 						src.name = "Secure Wired Windoor Assembly"
@@ -138,7 +137,6 @@ obj/structure/windoor_assembly/Del()
 					user << "\blue You cut the windoor wires.!"
 					new/obj/item/weapon/cable_coil(get_turf(user), 1)
 					src.state = "01"
-					src.density = 0
 					if(src.secure)
 						src.name = "Secure Wired Windoor Assembly"
 					else
@@ -161,9 +159,20 @@ obj/structure/windoor_assembly/Del()
 
 					if(!src) return
 
+					density = 1 //Shouldn't matter but just incase
 					user << "\blue You finish the windoor!"
 
 					if(secure)
+						var/obj/machinery/door/window/brigdoor/windoor = new /obj/machinery/door/window/brigdoor(src.loc)
+						if(src.facing == "l")
+							windoor.icon_state = "leftsecure"
+							windoor.base_state = "leftsecure"
+						else
+							windoor.icon_state = "rightsecure"
+							windoor.base_state = "rightsecure"
+						windoor.dir = src.dir
+						windoor.req_access = src.conf_access
+					else
 						var/obj/machinery/door/window/windoor = new /obj/machinery/door/window(src.loc)
 						if(src.facing == "l")
 							windoor.icon_state = "left"
@@ -174,16 +183,6 @@ obj/structure/windoor_assembly/Del()
 						windoor.dir = src.dir
 						windoor.req_access = src.conf_access
 
-					else
-						var/obj/machinery/door/window/brigdoor/windoor = new /obj/machinery/door/window/brigdoor(src.loc)
-						if(src.facing == "l")
-							windoor.icon_state = "leftsecure"
-							windoor.base_state = "leftsecure"
-						else
-							windoor.icon_state = "rightsecure"
-							windoor.base_state = "rightsecure"
-						windoor.dir = src.dir
-						windoor.req_access = src.conf_access
 
 					del(src)
 
