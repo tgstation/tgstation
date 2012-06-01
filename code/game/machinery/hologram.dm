@@ -44,6 +44,7 @@ Possible to do for anyone motivated enough:
 	if(!(stat & NOPOWER)&&user.eyeobj.loc==src.loc)//If the projector has power and client eye is on it.
 		if(!hologram)//If there is not already a hologram.
 			create_holo(user)//Create one.
+			user.current = src
 			for(var/mob/M in viewers())
 				M.show_message("A holographic image of [user] flicks to life right before your eyes!",1)
 		else

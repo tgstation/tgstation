@@ -117,7 +117,7 @@
 		for(var/i = 1, i <=2, i++)
 			new /obj/item/weapon/storage/box/ert(src)
 		new /obj/item/weapon/storage/box/medic(src)
-		new /obj/item/weapon/storage/belt/medical(src)
+		new /obj/item/device/healthanalyzer(src)
 		return
 
 /obj/item/weapon/storage/backpack/security
