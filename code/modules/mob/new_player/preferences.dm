@@ -126,6 +126,9 @@ datum/preferences
 
 	var/flavor_text = ""
 
+	var/med_record = ""
+	var/sec_record = ""
+
 		// slot stuff (Why were they var/var?  --SkyMarshal)
 	var/slotname
 	var/curslot = 0
@@ -320,6 +323,10 @@ datum/preferences
 
 		dat += "<hr><b><a href=\"byond://?src=\ref[user];preferences=1;disabilities=-1\">Disabilities</a></b><br>"
 
+		if(jobban_isbanned(user, "Records"))
+			dat += "<hr><b>You are banned from using character records.</b><br>"
+		else
+			dat += "<hr><b><a href=\"byond://?src=\ref[user];preferences=1;records=1\">Character Records</a></b><br>"
 		dat += "<hr><b>Flavor Text</b><br>"
 		dat += "<a href='byond://?src=\ref[user];preferences=1;flavor_text=1'>Change</a><br>"
 		if(lentext(flavor_text) <= 40)
@@ -390,6 +397,33 @@ datum/preferences
 
 		user << browse(null, "window=preferences")
 		user << browse(HTML, "window=disabil;size=350x300")
+		return
+
+	proc/SetRecords(mob/user)
+		var/HTML = "<body>"
+		HTML += "<tt><center>"
+		HTML += "<b>Set Character Records</b><br>"
+
+		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;med_record=1\">Medical Records</a><br>"
+
+		if(lentext(med_record) <= 40)
+			HTML += "<br>[med_record]<br>"
+		else
+			HTML += "<br>[copytext(med_record, 1, 37)]...<br>"
+
+		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;sec_record=1\">Security Records</a><br>"
+
+		if(lentext(sec_record) <= 40)
+			HTML += "<br>[sec_record]<br>"
+		else
+			HTML += "<br>[copytext(sec_record, 1, 37)]...<br>"
+
+		HTML += "<br>"
+		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;records=-1\">\[Done\]</a>"
+		HTML += "</center></tt>"
+
+		user << browse(null, "window=preferences")
+		user << browse(HTML, "window=records;size=350x300")
 		return
 
 	proc/GetAltTitle(datum/job/job)
@@ -890,10 +924,9 @@ datum/preferences
 			be_random_name = !be_random_name
 
 		if(link_tags["flavor_text"])
-			var/msg = input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(flavor_text)) as message
+			var/msg = copytext(sanitize(input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(flavor_text)) as message),1,MAX_NAME_LEN)
 
 			if(msg != null)
-				msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 				msg = html_encode(msg)
 
 				flavor_text = msg
@@ -984,6 +1017,7 @@ datum/preferences
 			midis = 1
 			ghost_ears = 1
 			disabilities = 0
+
 		if(link_tags["disabilities"])
 			if(text2num(link_tags["disabilities"]) >= -1)
 				if(text2num(link_tags["disabilities"]) >= 0)
@@ -992,6 +1026,39 @@ datum/preferences
 				return
 			else
 				user << browse(null, "window=disabil")
+
+		if(link_tags["records"])
+			if(text2num(link_tags["records"]) >= 1)
+				SetRecords(user)
+				return
+			else
+				user << browse(null, "window=records")
+
+		if(link_tags["med_record"])
+			var/medmsg = copytext(sanitize(input(usr,"Set your medical notes here.","Medical Records",html_decode(med_record)) as message),1,MAX_NAME_LEN)
+
+			if(medmsg != null)
+				medmsg = html_encode(medmsg)
+
+				med_record = medmsg
+				SetRecords(user)
+
+		if(link_tags["sec_record"])
+			var/secmsg = copytext(sanitize(input(usr,"Set your security notes here.","Security Records",html_decode(sec_record)) as message),1,MAX_NAME_LEN)
+
+			if(secmsg != null)
+				secmsg = html_encode(secmsg)
+
+				sec_record = secmsg
+				SetRecords(user)
+
+		if(link_tags["flavor_text"])
+			var/msg = copytext(sanitize(input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(flavor_text)) as message),1,MAX_NAME_LEN)
+
+			if(msg != null)
+				msg = html_encode(msg)
+
+				flavor_text = msg
 
 		ShowChoices(user)
 
@@ -1002,6 +1069,8 @@ datum/preferences
 		character.original_name = real_name //Original name is only used in ghost chat! It is not to be edited by anything!
 
 		character.flavor_text = flavor_text
+		character.med_record = med_record
+		character.sec_record = sec_record
 
 		character.gender = gender
 

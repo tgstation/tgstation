@@ -98,6 +98,8 @@
 	var/real_name = null
 	var/original_name = null //Original name is only used in ghost chat! It is not to be edited by anything!
 	var/flavor_text = ""
+	var/med_record = ""
+	var/sec_record = ""
 	var/blinded = null
 	var/bhunger = 0//Carbon
 	var/ajourn = 0

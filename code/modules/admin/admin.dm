@@ -515,6 +515,17 @@ var/global/BSACooldown = 0
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Emergency Response Team;jobban4=\ref[M]'>[dd_replacetext("Emergency Response Team", " ", "&nbsp")]</a></td>"
 
+	//Misc (Grey)
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='B5B5B5'><th colspan='10'>Misc Positions</th></tr><tr align='center'>"
+
+		//Records
+		if(jobban_isbanned(M, "Records"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Records;jobban4=\ref[M]'><font color=red>[dd_replacetext("Records", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Records;jobban4=\ref[M]'>[dd_replacetext("Records", " ", "&nbsp")]</a></td>"
+
+
 
 /*		//Malfunctioning AI	//Removed Malf-bans because they're a pain to impliment
 		if(jobban_isbanned(M, "malf AI") || isbanned_dept)
@@ -595,6 +606,13 @@ var/global/BSACooldown = 0
 						if(!temp) continue
 						joblist += temp.title
 				if("nonhumandept")
+					joblist += "pAI"
+					for(var/jobPos in nonhuman_positions)
+						if(!jobPos)	continue
+						var/datum/job/temp = job_master.GetJob(jobPos)
+						if(!temp) continue
+						joblist += temp.title
+				if("miscdept")
 					joblist += "pAI"
 					for(var/jobPos in nonhuman_positions)
 						if(!jobPos)	continue
