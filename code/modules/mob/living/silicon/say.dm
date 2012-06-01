@@ -48,14 +48,18 @@
 	if (!message)
 		return
 
-	var/obj/machinery/hologram/holopad/T = client.eye//Client eye centers on an object.
-	if(istype(T)&&T.hologram&&T.master==src)//If there is a hologram and its master is the user.
+	if(!isAI(src))
+		return
+
+	var/mob/living/silicon/ai/A = src
+	var/obj/machinery/hologram/holopad/T = A.current//Client eye centers on an object.
+	if(istype(T) && T.hologram && T.master==src)
 		var/message_a = say_quote(message)
 
 		//Human-like, sorta, heard by those who understand humans.
 		var/rendered_a = "<span class='game say'><span class='name'>[name]</span> <span class='message'>[message_a]</span></span>"
 
-		//Speach distorted, heard by those who do not understand AIs.
+		//Speech distorted, heard by those who do not understand AIs.
 		message = stars(message)
 		var/message_b = say_quote(message)
 		var/rendered_b = "<span class='game say'><span class='name'>[voice_name]</span> <span class='message'>[message_b]</span></span>"
