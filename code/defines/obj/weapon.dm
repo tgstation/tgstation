@@ -2061,6 +2061,13 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	desc = "An appendix which appears to be inflamed."
 	icon_state = "appendixinflamed"
 
+/obj/item/weapon/megaphone
+	name = "megaphone"
+	desc = "A device used to project your voice. Loudly."
+	icon = 'items.dmi'
+	icon_state = "megaphone"
+	var/cooldown = 0
+
 /obj/item/weapon/flavor
 	name = "bland flavoring packet"
 	desc = "A sachet of flavoring, designed to be used with \"LiquidFood\" rations.  The flavor is indeterminable."

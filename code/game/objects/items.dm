@@ -564,3 +564,20 @@
 		for(var/mob/M in viewers(5, src))
 			M << "\red \the [src] burns up."
 		del(src)
+
+/obj/item/weapon/megaphone/attack_self(mob/user as mob)
+	if(!ishuman(user))
+		usr << "\red You don't know how to use this!"
+		return
+	if(cooldown)
+		usr << "\red \The [src] needs to recharge!"
+		return
+	var/message = copytext(sanitize(input(user, "Shout a message?", "Megaphone", null)  as text),1,MAX_MESSAGE_LEN)
+	if(message && !cooldown)
+		if ((src.loc == user && usr.stat == 0))
+			for(var/mob/O in (viewers(user)))
+				O.show_message("<B>[user]</B> broadcasts, <FONT size=3>\"[message]\"</FONT>",2) // 2 stands for hearable message
+			cooldown = 1
+			spawn(100)
+				cooldown = 0
+			return
