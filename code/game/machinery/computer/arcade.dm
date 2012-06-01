@@ -1,4 +1,19 @@
 /obj/machinery/computer/arcade
+	name = "arcade machine"
+	desc = "Does not support Pinball."
+	icon = 'computer.dmi'
+	icon_state = "arcade"
+	circuit = "/obj/item/weapon/circuitboard/arcade"
+	var/enemy_name = "Space Villian"
+	var/temp = "Winners Don't Use Spacedrugs" //Temporary message, for attack messages, etc
+	var/player_hp = 30 //Player health/attack points
+	var/player_mp = 10
+	var/enemy_hp = 45 //Enemy health/attack points
+	var/enemy_mp = 20
+	var/gameover = 0
+	var/blocked = 0 //Player cannot attack/heal while set
+
+/obj/machinery/computer/arcade
 	var/turtle = 0
 
 /obj/machinery/computer/arcade/New()
@@ -224,3 +239,24 @@
 
 
 		src.updateUsrDialog()
+	else if(istype(I, /obj/item/weapon/screwdriver))
+		playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+		if(do_after(user, 20))
+			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
+			var/obj/item/weapon/circuitboard/arcade/M = new /obj/item/weapon/circuitboard/arcade( A )
+			for (var/obj/C in src)
+				C.loc = src.loc
+			A.circuit = M
+			A.anchored = 1
+
+			if (src.stat & BROKEN)
+				user << "\blue The broken glass falls out."
+				new /obj/item/weapon/shard( src.loc )
+				A.state = 3
+				A.icon_state = "3"
+			else
+				user << "\blue You disconnect the monitor."
+				A.state = 4
+				A.icon_state = "4"
+
+			del(src)
