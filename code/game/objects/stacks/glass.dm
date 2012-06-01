@@ -169,9 +169,11 @@ SHARDS
 
 			if(isturf(user.loc) && locate(/obj/structure/windoor_assembly/, user.loc))
 				user << "\red There is already a windoor assembly in that location."
+				return 1
 
 			if(isturf(user.loc) && locate(/obj/machinery/door/window/, user.loc))
 				user << "\red There is already a windoor in that location."
+				return 1
 
 			if(src.amount < 5)
 				user << "\red You need more glass to do that."

@@ -8,6 +8,7 @@
 	visible = 0.0
 	flags = ON_BORDER
 	opacity = 0
+	var/obj/item/weapon/airlock_electronics/electronics = null
 
 
 /obj/machinery/door/window/update_nearby_tiles(need_rebuild)
@@ -194,6 +195,8 @@
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			src.health = max(0, src.health - aforce)
 		playsound(src.loc, 'Glasshit.ogg', 75, 1)
+		for(var/mob/O in viewers(src, null))
+			O.show_message("\red <B>[src] was hit by [I].</B>", 1)
 		if (src.health <= 0)
 			new /obj/item/weapon/shard(src.loc)
 			var/obj/item/weapon/cable_coil/CC = new /obj/item/weapon/cable_coil(src.loc)
