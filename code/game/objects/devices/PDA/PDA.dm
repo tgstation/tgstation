@@ -873,25 +873,26 @@
 		return
 	switch(scanmode)
 		if(2)
-			if (!A.fingerprints)
-				user << "\blue Unable to locate any fingerprints on [A]!"
-			else
-				user << "\blue Isolated [A:fingerprints.len] fingerprints."
-				var/list/prints = A:fingerprints
-				var/list/complete_prints = list()
-				for(var/i in prints)
-					var/print = prints[i]
-					if(stringpercent(print) <= FINGERPRINT_COMPLETE)
-						complete_prints += print
-				if(complete_prints.len < 1)
-					user << "\blue No intact prints found"
+			if(!istype(A, /obj/item/weapon/f_card))
+				if (!A.fingerprints)
+					user << "\blue Unable to locate any fingerprints on [A]!"
 				else
-					user << "\blue Found [complete_prints.len] intact prints"
-					for(var/i in complete_prints)
-						user << "\blue [i]"
-			if(cartridge && cartridge.access_security)
-				cartridge.add_data(A)
-				user << "Data added to internal storage.  Scan with a High-Resolution Scanner to retreive."
+					user << "\blue Isolated [A:fingerprints.len] fingerprints."
+					var/list/prints = A:fingerprints
+					var/list/complete_prints = list()
+					for(var/i in prints)
+						var/print = prints[i]
+						if(stringpercent(print) <= FINGERPRINT_COMPLETE)
+							complete_prints += print
+					if(complete_prints.len < 1)
+						user << "\blue No intact prints found"
+					else
+						user << "\blue Found [complete_prints.len] intact prints"
+						for(var/i in complete_prints)
+							user << "\blue [i]"
+				if(cartridge && cartridge.access_security)
+					cartridge.add_data(A)
+					user << "Data added to internal storage.  Scan with a High-Resolution Scanner to retreive."
 
 		if(3)
 			if(!isnull(A.reagents))
