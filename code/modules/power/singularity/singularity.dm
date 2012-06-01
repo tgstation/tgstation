@@ -95,16 +95,17 @@ var/global/list/uneatable = list(
 
 
 	process()
-		eat()
-		dissipate()
-		check_energy()
-		if(current_size >= 3)
-			move()
-			if(current_size <= 7)
-				pulse()
-				if(current_size >= 5)
-					if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
-						event()
+		spawn(0)
+			eat()
+			dissipate()
+			check_energy()
+			if(current_size >= 3)
+				move()
+				if(current_size <= 7)
+					pulse()
+					if(current_size >= 5)
+						if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
+							event()
 		return
 
 
