@@ -62,7 +62,7 @@
 	return
 
 /atom/proc/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (!(istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) && !(istype(W, /obj/item/weapon/cleaner)) && !(istype(W, /obj/item/weapon/chemsprayer)) && !(istype(W, /obj/item/weapon/pepperspray)) && !(istype(W, /obj/item/weapon/plantbgone)) && !(istype(W, /obj/item/weapon/packageWrap)))
+	if (!(istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) && !(istype(W, /obj/item/weapon/cleaner)) && !(istype(W, /obj/item/weapon/chemsprayer)) && !(istype(W, /obj/item/weapon/pepperspray)) && !(istype(W, /obj/item/weapon/plantbgone)) && !(istype(W, /obj/item/weapon/packageWrap)) && !istype(W, /obj/item/device/detective_scanner))
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
 				O << "\red <B>[src] has been hit by [user] with [W]</B>"
@@ -98,64 +98,62 @@
 	if(isnull(M.key)) return
 	if (!( src.flags ) & FPRINT)
 		return
+	//Smudge up dem prints some
+	for(var/P in fingerprints)
+		var/test_print = stars(fingerprints[P], rand(85,95))
+		if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
+			fingerprints.Remove(P)
+		else
+			fingerprints[P] = test_print
 	if (ishuman(M))
+		//Add the list if it does not exist.
 		if(!fingerprintshidden)
 			fingerprintshidden = list()
+		//Fibers~
+		add_fibers(M)
+		//Now, lets get to the dirty work.
+		//First, make sure their DNA makes sense.
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 32))
 			if(!istype(H.dna, /datum/dna))
 				H.dna = new /datum/dna(null)
 		H.check_dna()
+		//Now, deal with gloves.
 		if (H.gloves && H.gloves != src)
-			if(src.fingerprintslast != H.key)
-				src.fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
-				src.fingerprintslast = H.key
+			if(fingerprintslast != H.key)
+				fingerprintshidden += text("(Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
+				fingerprintslast = H.key
 			H.gloves.add_fingerprint(M)
+		//Deal with gloves the pass finger/palm prints.
 		if(H.gloves != src)
 			if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
 				return 0
 			else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
 				return 0
-		if(src.fingerprintslast != H.key)
-			src.fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
-			src.fingerprintslast = H.key
+		//More adminstuffz
+		if(fingerprintslast != H.key)
+			fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
+			fingerprintslast = H.key
+		//Make the list if it does not exist.
 		if(!fingerprints)
 			fingerprints = list()
-		var/new_prints = 0
-		var/prints
-		for(var/i = 1, i <= src.fingerprints.len, i++)
-			var/list/L = params2list(src.fingerprints[i])
-			if(L[num2text(1)] == md5(H.dna.uni_identity))
-				new_prints = i
-				prints = L[num2text(2)]
-				break
-			else
-				var/test_print = stars(L[num2text(2)], rand(80,90))
-				if(stringpercent(test_print) == 32)
-					if(src.fingerprints.len == 1)
-						src.fingerprints = list()
-					else
-						for(var/j = (i + 1), j < (src.fingerprints.len), j++)
-							src.fingerprints[j-1] = src.fingerprints[j]
-						src.fingerprints.len--
-				else
-					src.fingerprints[i] = "1=[L[num2text(1)]]&2=[test_print]"
-		if(new_prints)
-			src.fingerprints[new_prints] = text("1=[]&2=[]", md5(H.dna.uni_identity), stringmerge(prints,stars(md5(H.dna.uni_identity), (H.gloves ? rand(10,20) : rand(25,40)))))
-		else if(new_prints == 0)
-			if(!src.fingerprints)
-				src.fingerprints = list(text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40))))
-			else
-				src.fingerprints += text("1=[]&2=[]", md5(H.dna.uni_identity), stars(md5(H.dna.uni_identity), H.gloves ? rand(10,20) : rand(25,40)))
-		for(var/i = 1, i <= src.fingerprints.len, i++)
-			if(length(src.fingerprints[i]) != 69)
-				src.fingerprints.Remove(src.fingerprints[i])
-		if(fingerprints && !fingerprints.len)	del(fingerprints)
+		//Hash this shit.
+		var/full_print = md5(H.dna.uni_identity)
+		var/print = fingerprints[full_print] //Find if the print is already there.
+		//It is not!  We need to add it!
+		if(!print)
+			fingerprints[full_print] = stars(full_print, H.gloves ? rand(10,20) : rand(25,40))
+		//It's there, lets merge this shit!
+		else
+			fingerprints[full_print] = stringmerge(print, stars(full_print, (H.gloves ? rand(10,20) : rand(25,40))))
 		return 1
 	else
-		if(src.fingerprintslast != M.key)
-			src.fingerprintshidden += text("Real name: [], Key: []",M.real_name, M.key)
-			src.fingerprintslast = M.key
+		if(fingerprintslast != M.key)
+			fingerprintshidden += text("Real name: [], Key: []",M.real_name, M.key)
+			fingerprintslast = M.key
+	//Cleaning up shit.
+	if(fingerprints && !fingerprints.len)
+		del(fingerprints)
 	return
 
 //returns 1 if made bloody, returns 0 otherwise
@@ -190,11 +188,10 @@
 			O.overlays += O.blood_overlay
 
 		//if this blood isn't already in the list, add it
-		for(var/i = 1, i <= O.blood_DNA.len, i++)
-			if((O.blood_DNA[i][1] == M.dna.unique_enzymes) && (O.blood_DNA[i][2] == M.dna.b_type))
-				return 0 //already bloodied with this blood. Cannot add more.
-		O.blood_DNA.len++
-		O.blood_DNA[O.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
+
+		if(blood_DNA[M.dna.unique_enzymes])
+			return 0 //already bloodied with this blood. Cannot add more.
+		blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 		return 1 //we applied blood to the item
 
 	//adding blood to turfs
@@ -203,8 +200,8 @@
 
 		//get one blood decal and infect it with virus from M.viruses
 		for(var/obj/effect/decal/cleanable/blood/B in T.contents)
-			B.blood_DNA.len++
-			B.blood_DNA[B.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
+			if(!B.blood_DNA[M.dna.unique_enzymes])
+				B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
 				B.viruses += newDisease
@@ -213,7 +210,7 @@
 
 		//if there isn't a blood decal already, make one.
 		var/obj/effect/decal/cleanable/blood/newblood = new /obj/effect/decal/cleanable/blood(T)
-		newblood.blood_DNA =  list(list(M.dna.unique_enzymes, M.dna.b_type))
+		newblood.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 		for(var/datum/disease/D in M.viruses)
 			var/datum/disease/newDisease = new D.type
 			newblood.viruses += newDisease
@@ -224,11 +221,9 @@
 	else if (istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
 		//if this blood isn't already in the list, add it
-		for(var/i = 1, i <= H.blood_DNA.len, i++)
-			if((H.blood_DNA[i][1] == M.dna.unique_enzymes) && (H.blood_DNA[i][2] == M.dna.b_type))
-				return 0 //already bloodied with this blood. Cannot add more.
-		H.blood_DNA.len++
-		H.blood_DNA[H.blood_DNA.len] = list(M.dna.unique_enzymes,M.dna.b_type)
+		if(blood_DNA[H.dna.unique_enzymes])
+			return 0 //already bloodied with this blood. Cannot add more.
+		blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
 		return 1 //we applied blood to the item
 	return
 
@@ -251,7 +246,7 @@
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source1 = src
 			var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(source1)
-			this.blood_DNA = list(list(M.dna.unique_enzymes,M.dna.b_type))
+			this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
 				this.viruses += newDisease
@@ -261,6 +256,7 @@
 		if( istype(src, /turf/simulated) )
 			var/turf/simulated/source2 = src
 			var/obj/effect/decal/cleanable/xenoblood/this = new /obj/effect/decal/cleanable/xenoblood(source2)
+			this.blood_DNA["UNKNOWN BLOOD"] = "X*"
 			for(var/datum/disease/D in M.viruses)
 				var/datum/disease/newDisease = new D.type
 				this.viruses += newDisease
@@ -281,12 +277,15 @@
 
 	if (!( src.flags ) & FPRINT)
 		return
-	if ( src.blood_DNA )
+	if (blood_DNA)
 
 		//Cleaning blood off of mobs
 		if (istype (src, /mob/living/carbon))
 			var/mob/living/carbon/M = src
 			del(M.blood_DNA)
+			if(ishuman(src))
+				var/mob/living/carbon/human/H = src
+				H.bloody_hands = 0
 
 		//Cleaning blood off of items
 		else if (istype (src, /obj/item))
@@ -294,6 +293,10 @@
 			del(O.blood_DNA)
 			if(O.blood_overlay)
 				O.overlays.Remove(O.blood_overlay)
+
+			if(istype(src, /obj/item/clothing/gloves))
+				var/obj/item/clothing/gloves/G = src
+				G.transfer_blood = 0
 
 		//Cleaning blood off of turfs
 		else if (istype(src, /turf/simulated))
@@ -307,25 +310,14 @@
 
 	if(blood_DNA && istype(blood_DNA, /list) && !blood_DNA.len)
 		del(blood_DNA)
-	if(src.fingerprints && src.fingerprints.len)
-		var/done = 0
-		while(!done)
-			done = 1
-			for(var/i = 1, i < (src.fingerprints.len + 1), i++)
-				var/list/prints = params2list(src.fingerprints[i])
-				var/test_print = prints["2"]
-				var/new_print = stars(test_print, rand(1,20))
-				if(stringpercent(new_print) == 32)
-					if(src.fingerprints.len == 1)
-						src.fingerprints = list()
-					else
-						for(var/j = (i + 1), j < (src.fingerprints.len), j++)
-							src.fingerprints[j-1] = src.fingerprints[j]
-						src.fingerprints.len--
-						done = 0
-					break
-				else
-					src.fingerprints[i] = "1=" + prints["1"] + "&2=" + new_print
+	if(fingerprints && fingerprints.len)
+		//Smudge up dem prints some
+		for(var/P in fingerprints)
+			var/test_print = stars(fingerprints[P], rand(10,20))
+			if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
+				fingerprints.Remove(P)
+			else
+				fingerprints[P] = test_print
 	if(fingerprints && !fingerprints.len)
 		del(fingerprints)
 	if(istype(src, /mob/living/carbon/human))

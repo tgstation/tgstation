@@ -135,7 +135,7 @@ datum
 					var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T //find some blood here
 					if(!blood_prop) //first blood!
 						blood_prop = new(T)
-						blood_prop.blood_DNA = list(list(self.data["blood_DNA"],self.data["blood_type"]))
+						blood_prop.blood_DNA[self.data["blood_DNA"]] = self.data["blood_type"]
 
 					for(var/datum/disease/D in self.data["viruses"])
 						var/datum/disease/newVirus = new D.type
@@ -147,7 +147,7 @@ datum
 					var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T
 					if(!blood_prop)
 						blood_prop = new(T)
-						blood_prop.blood_DNA = list(list("Non-Human DNA","A+"))
+						blood_prop.blood_DNA["Non-Human DNA"] = "A+"
 					for(var/datum/disease/D in self.data["viruses"])
 						var/datum/disease/newVirus = new D.type
 						blood_prop.viruses += newVirus
@@ -164,7 +164,7 @@ datum
 					var/obj/effect/decal/cleanable/xenoblood/blood_prop = locate() in T
 					if(!blood_prop)
 						blood_prop = new(T)
-						blood_prop.blood_DNA = list(list("UNKNOWN DNA STRUCTURE","X*"))
+						blood_prop.blood_DNA["UNKNOWN DNA STRUCTURE"] = "X*"
 					for(var/datum/disease/D in self.data["viruses"])
 						var/datum/disease/newVirus = new D.type
 						blood_prop.viruses += newVirus

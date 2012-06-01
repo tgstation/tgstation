@@ -192,18 +192,13 @@ FINGERPRINT CARD
 	return
 
 /obj/item/weapon/f_card/proc/display()
-	if(!fingerprints)	return
-	if (!istype(src.fingerprints, /list))
-		src.fingerprints = params2list(src.fingerprints)
-	if (length(src.fingerprints))
-		var/dat = "<B>Fingerprints on Card</B><HR>"
-		for(var/i = 1, i < (src.fingerprints.len + 1), i++)
-			var/list/L = params2list(src.fingerprints[i])
-			dat += text("[]<BR>", L["1"])
-			//Foreach goto(41)
-		return dat
-	else
+	if(!fingerprints || !fingerprints.len)
 		return "<B>There are no fingerprints on this card.</B>"
+	else
+		var/dat = "<B>Fingerprints on Card</B><HR>"
+		for(var/name in fingerprints)
+			dat += "[name]<BR>"
+		return dat
 	return
 
 /*
