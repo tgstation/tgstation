@@ -11,7 +11,8 @@
 	item_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | ONBELT | USEDELAY
+	flags = FPRINT | TABLEPASS | USEDELAY
+	slot_flags = SLOT_BELT
 	var/datum/effect/effect/system/bad_smoke_spread/smoke
 
 /obj/item/weapon/mustardbomb
@@ -25,7 +26,8 @@
 	item_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20
-	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags =  FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
 	var/datum/effect/effect/system/mustard_gas_spread/mustard_gas
 
 /obj/item/weapon/smokebomb/New()

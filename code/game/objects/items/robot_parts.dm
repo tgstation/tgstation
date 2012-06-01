@@ -3,7 +3,8 @@
 	icon = 'robot_parts.dmi'
 	item_state = "buildpipe"
 	icon_state = "blank"
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
 	var/construction_time = 100
 	var/list/construction_cost = list("metal"=20000,"glass"=5000)
 

@@ -8,7 +8,8 @@
 	icon_state = "pda"
 	item_state = "electronic"
 	w_class = 1.0
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_ID | SLOT_BELT
 
 	//Main variables
 	var/owner = null
@@ -134,14 +135,22 @@
 
 /obj/item/device/pda/roboticist
 	icon_state = "pda-robot"
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a special edition with a transparent case."
-	note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Turbo Edition!"
 
 /obj/item/device/pda/librarian
 	icon_state = "pda-libb"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
 	silent = 1 //Quiet in the library!
+
+/obj/item/device/pda/atmos
+	icon_state = "pda-atmo"
+
+/obj/item/device/pda/chemist
+	default_cartridge = /obj/item/weapon/cartridge/chemistry
+	icon_state = "pda-chem"
+
+/obj/item/device/pda/geneticist
+	icon_state = "pda-gene"
 
 /*
  *	The Actual PDA

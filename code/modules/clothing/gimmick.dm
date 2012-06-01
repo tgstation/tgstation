@@ -296,7 +296,8 @@
 	icon = 'weapons.dmi'
 	icon_state = "baton"
 	item_state = "classic_baton"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	force = 10
 
 /obj/item/clothing/under/pirate

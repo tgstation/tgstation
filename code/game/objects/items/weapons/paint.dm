@@ -63,14 +63,13 @@ var/global/list/cached_icons = list()
 
 	remover
 		paint_type = "remover"
-
 /*
 /obj/item/weapon/paint
 	name = "Paint Can"
 	desc = "Used to recolor floors and walls. Can not be removed by the janitor."
 	icon = 'items.dmi'
 	icon_state = "paint_neutral"
-	var/color = "FFFFFF"
+	color = "FFFFFF"
 	item_state = "paintcan"
 	w_class = 3.0
 

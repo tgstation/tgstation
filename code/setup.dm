@@ -109,8 +109,23 @@ var/MAX_EXPLOSION_RANGE = 14
 #define SHOES_SLOWDOWN -1.0			// How much shoes slow you down by default. Negative values speed you up
 
 
+//ITEM INVENTORY SLOT BITMASKS: (HUMANS ONLY!)
+#define SLOT_OCLOTHING 1
+#define SLOT_ICLOTHING 2
+#define SLOT_GLOVES 4
+#define SLOT_EYES 8
+#define SLOT_EARS 16
+#define SLOT_MASK 32
+#define SLOT_HEAD 64
+#define SLOT_FEET 128
+#define SLOT_ID 256
+#define SLOT_BELT 512
+#define SLOT_BACK 1024
+#define SLOT_POCKET 2048		//this is to allow items with a w_class of 3 or 4 to fit in pockets.
+#define SLOT_DENYPOCKET 4096	//this is to deny items with a w_class of 2 or 1 to fit in pockets.
+
+
 //FLAGS BITMASK
-#define ONBACK 1			// can be put in back slot
 #define TABLEPASS 2			// can pass by a table or rack
 
 /********************************************************************************
@@ -128,7 +143,6 @@ var/MAX_EXPLOSION_RANGE = 14
 #define NODELAY 32768		// 1 second attackby delay skipped (Can be used once every 0.2s). Most objects have a 1s attackby delay, which doesn't require a flag.
 #define NOSHIELD 32			// weapon not affected by shield
 #define CONDUCT 64			// conducts electricity (metal etc.)
-#define ONBELT 128			// can be put in belt slot
 #define FPRINT 256			// takes a fingerprint
 #define ON_BORDER 512		// item has priority to check when entering or leaving
 
@@ -192,35 +206,33 @@ var/MAX_EXPLOSION_RANGE = 14
 #define FULL_BODY		2047
 
 //bitflags for mutations
-var/const
-	TK				=(1<<0)
-	COLD_RESISTANCE	=(1<<1)
-	XRAY			=(1<<2)
-	HULK			=(1<<3)
-	CLUMSY			=(1<<4)
-	FAT				=(1<<5)
-	HUSK			=(1<<6)
-	LASER			=(1<<7)
-	HEAL			=(1<<8)
-	mNobreath		=(1<<9)
-	mRemote			=(1<<10)
-	mRegen			=(1<<11)
-	mRun			=(1<<12)
-	mRemotetalk		=(1<<13)
-	mMorph			=(1<<14)
-	mBlend			=(1<<15)
+var/const/TK				=(1<<0)
+var/const/COLD_RESISTANCE	=(1<<1)
+var/const/XRAY			=(1<<2)
+var/const/HULK			=(1<<3)
+var/const/CLUMSY			=(1<<4)
+var/const/FAT				=(1<<5)
+var/const/HUSK			=(1<<6)
+var/const/LASER			=(1<<7)
+var/const/HEAL			=(1<<8)
+var/const/mNobreath		=(1<<9)
+var/const/mRemote			=(1<<10)
+var/const/mRegen			=(1<<11)
+var/const/mRun			=(1<<12)
+var/const/mRemotetalk		=(1<<13)
+var/const/mMorph			=(1<<14)
+var/const/mBlend			=(1<<15)
 //the "&" operator cannot go higher than (2^16)-1
-	mHallucination	=(1<<0)
-	mFingerprints	=(1<<1)
-	mShock			=(1<<2)
-	mSmallsize		=(1<<3)
-	NOCLONE			=(1<<4)
+var/const/mHallucination	=(1<<0)
+var/const/mFingerprints	=(1<<1)
+var/const/mShock			=(1<<2)
+var/const/mSmallsize		=(1<<3)
+var/const/NOCLONE			=(1<<4)
 
 //mob/var/stat things
-var/const
-	CONSCIOUS = 0
-	UNCONSCIOUS = 1
-	DEAD = 2
+var/const/CONSCIOUS = 0
+var/const/UNCONSCIOUS = 1
+var/const/DEAD = 2
 
 // channel numbers for power
 #define EQUIP 1
@@ -249,12 +261,11 @@ var/const
 #define MAX_STACK_AMOUNT_GLASS 50
 #define MAX_STACK_AMOUNT_RODS 60
 
-var/const
-	GAS_O2 = 1 << 0
-	GAS_N2 = 1 << 1
-	GAS_PL = 1 << 2
-	GAS_CO2 = 1 << 3
-	GAS_N2O = 1 << 4
+var/const/GAS_O2 = 1 << 0
+var/const/GAS_N2 = 1 << 1
+var/const/GAS_PL = 1 << 2
+var/const/GAS_CO2 = 1 << 3
+var/const/GAS_N2O = 1 << 4
 
 
 var/list/accessable_z_levels = list("3" = 15, "4" = 35, "6" = 50)

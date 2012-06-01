@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
-
 /obj/item/device/assembly_holder
 	name = "Assembly"
 	desc = "Holds various devices"//Fix this by adding dynamic desc
@@ -18,10 +16,15 @@
 	var/obj/item/device/assembly/a_right = null
 	var/obj/special_assembly = null
 
-	proc
-		attach(var/obj/item/device/D, var/obj/item/device/D2, var/mob/user)
-		attach_special(var/obj/O, var/mob/user)
-		process_activation(var/obj/item/device/D)
+	proc/attach(var/obj/item/device/D, var/obj/item/device/D2, var/mob/user)
+		return
+
+	proc/attach_special(var/obj/O, var/mob/user)
+		return
+
+	proc/process_activation(var/obj/item/device/D)
+		return
+
 
 
 	IsAssemblyHolder()

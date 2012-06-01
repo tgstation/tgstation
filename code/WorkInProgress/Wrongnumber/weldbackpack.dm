@@ -1,7 +1,7 @@
 /obj/item/weapon/weldpack
 	name = "Welding kit"
 	desc = "A heavy-duty, portable welding fluid carrier."
-	flags = ONBACK
+	slot_flags = SLOT_BACK
 	icon = 'storage.dmi'
 	icon_state = "welderpack"
 	w_class = 4.0

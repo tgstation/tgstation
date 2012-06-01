@@ -88,6 +88,8 @@ field_generator power level display
 						"You turn on the [src.name].", \
 						"You hear heavy droning")
 					turn_on()
+					investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
+
 					src.add_fingerprint(user)
 		else
 			user << "The [src] needs to be firmly secured to the floor first."
@@ -215,6 +217,7 @@ field_generator power level display
 				for(var/mob/M in viewers(src))
 					M.show_message("\red The [src.name] shuts down!")
 				turn_off()
+				investigate_log("ran out of power and <font color='red'>deactivated</font>","singulo")
 				src.power = 0
 				return 0
 

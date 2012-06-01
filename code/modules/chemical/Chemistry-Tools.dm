@@ -11,9 +11,6 @@
 	item_state = "flashbang"
 	w_class = 2.0
 	force = 2.0
-	throw_speed = 4
-	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT | USEDELAY
 	var/obj/item/weapon/reagent_containers/glass/beaker_one
 	var/obj/item/weapon/reagent_containers/glass/beaker_two
 	var/obj/item/device/assembly/attached_device
@@ -27,6 +24,10 @@
 	var/list/allowed_containers = list("/obj/item/weapon/reagent_containers/glass/beaker", "/obj/item/weapon/reagent_containers/glass/dispenser", "/obj/item/weapon/reagent_containers/glass/bottle")
 	var/affected_area = 3
 	var/mob/attacher = "Unknown"
+	throw_speed = 4
+	throw_range = 20
+	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	slot_flags = SLOT_BELT
 
 	attackby(var/obj/item/weapon/W, var/mob/user)
 		if(path || !active)
@@ -784,7 +785,7 @@
 		/obj/structure/table,
 		/obj/structure/closet/secure_closet,
 		/obj/structure/closet,
-		/obj/machinery/sink,
+		/obj/structure/sink,
 		/obj/item/weapon/storage,
 		/obj/machinery/atmospherics/unary/cryo_cell,
 		/obj/item/weapon/chem_grenade,
@@ -1304,7 +1305,8 @@
 	amount_per_transfer_from_this = 5
 	volume = 30
 	possible_transfer_amounts = null
-	flags = FPRINT | ONBELT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	slot_flags = SLOT_BELT
 
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
@@ -1349,9 +1351,9 @@
 	possible_transfer_amounts = null
 	flags = FPRINT
 	var/mode = 1
-	var/charge_cost = 100
+	var/charge_cost = 50
 	var/charge_tick = 0
-	var/recharge_time = 10 //Time it takes for shots to recharge (in seconds)
+	var/recharge_time = 5 //Time it takes for shots to recharge (in seconds)
 
 	New()
 		..()
@@ -1372,13 +1374,13 @@
 			if(R && R.cell)
 				if(mode == 1 && reagents.total_volume < 30) 	//Don't recharge reagents and drain power if the storage is full.
 					R.cell.use(charge_cost) 					//Take power from borg...
-					reagents.add_reagent("tricordrazine",10)	//And fill hypo with reagent.
+					reagents.add_reagent("tricordrazine",5)		//And fill hypo with reagent.
 				if(mode == 2 && reagents.total_volume < 30)
 					R.cell.use(charge_cost)
-					reagents.add_reagent("inaprovaline", 10)
+					reagents.add_reagent("inaprovaline", 5)
 				if(mode == 3 && reagents.total_volume < 30)
 					R.cell.use(charge_cost)
-					reagents.add_reagent("spaceacillin", 10)
+					reagents.add_reagent("spaceacillin", 5)
 		//update_icon()
 		return 1
 
@@ -1402,16 +1404,19 @@
 	playsound(src.loc, 'pop.ogg', 50, 0)		//Change the mode
 	if(mode == 1)
 		mode = 2
+		charge_tick = 0 //Prevents wasted chems/cell charge if you're cycling through modes.
 		reagents.clear_reagents() //Flushes whatever was in the storage previously, so you don't get chems all mixed up.
 		user << "\blue Synthesizer is now producing 'Inaprovaline'."
 		return
 	if(mode == 2)
 		mode = 3
+		charge_tick = 0
 		reagents.clear_reagents()
 		user << "\blue Synthesizer is now producing 'Spaceacillin'."
 		return
 	if(mode == 3)
 		mode = 1
+		charge_tick = 0
 		reagents.clear_reagents()
 		user << "\blue Synthesizer is now producing 'Tricordrazine'."
 		return

@@ -85,13 +85,13 @@
 	src.load_motd()
 	src.load_rules()
 	src.load_admins()
+	investigate_reset()
 	if (config.usealienwhitelist)
 		load_alienwhitelist()
 	if (config.usewhitelist)
 		load_whitelist()
 	LoadBansjob()
 	src.update_status()
-
 	makepowernets()
 
 	sun = new /datum/sun()

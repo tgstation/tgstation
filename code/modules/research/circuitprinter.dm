@@ -10,6 +10,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	name = "Circuit Imprinter"
 	icon_state = "circuit_imprinter"
 	flags = OPENCONTAINER
+
 	var/g_amount = 0
 	var/gold_amount = 0
 	var/diamond_amount = 0

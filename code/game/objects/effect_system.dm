@@ -18,7 +18,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	icon = 'effects.dmi'
 	icon_state = "extinguish"
 	var/life = 15.0
-	flags = 2.0
+	flags = TABLEPASS
 	mouse_opacity = 0
 
 /obj/effect/effect/smoke

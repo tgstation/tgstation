@@ -40,6 +40,9 @@
 		..()
 		return
 
+	Del()
+		investigate_log("<font color='red'>deleted</font> at ([x],[y],[z])","singulo")
+		..()
 
 	update_icon()
 		if (active && !(stat & (NOPOWER|BROKEN)))
@@ -56,12 +59,14 @@
 					src.active = 0
 					user << "You turn off the [src]."
 					src.use_power = 1
+					investigate_log("turned <font color='red'>off</font> by [user.key]","singulo")
 				else
 					src.active = 1
 					user << "You turn on the [src]."
 					src.shot_number = 0
 					src.fire_delay = 100
 					src.use_power = 2
+					investigate_log("turned <font color='green'>on</font> by [user.key]","singulo")
 				update_icon()
 			else
 				user << "\red The controls are locked!"

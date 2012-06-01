@@ -129,7 +129,8 @@
 	icon = 'gun.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
-	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT | USEDELAY
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	slot_flags = SLOT_BELT
 	w_class = 3.0
 	g_amt = 10
 	m_amt = 10

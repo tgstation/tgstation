@@ -7,18 +7,28 @@
 	icon_state = "implant"
 	var/implanted = null
 	var/mob/imp_in = null
-	var/color = "b"
+	color = "b"
 	var/allow_reagents = 0
-	proc
-		trigger(emote, source as mob)
-		activate()
-		implanted(source as mob)
-		get_data()
-		hear(message, source as mob)
+
+	proc/trigger(emote, source as mob)
+		return
+
+	proc/activate()
+		return
+
+	proc/implanted(source as mob)
+		return
+
+	proc/get_data()
+		return
+
+	proc/hear(message, source as mob)
+		return
 
 
 	trigger(emote, source as mob)
 		return
+
 
 	activate()
 		return
@@ -37,6 +47,7 @@
 
 	implanted(source as mob)
 		return
+
 
 	get_data()
 		return "No information available"

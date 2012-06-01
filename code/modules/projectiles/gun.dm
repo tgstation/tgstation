@@ -4,7 +4,8 @@
 	icon = 'gun.dmi'
 	icon_state = "detective"
 	item_state = "gun"
-	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT | USEDELAY
+	flags =  FPRINT | TABLEPASS | CONDUCT |  USEDELAY
+	slot_flags = SLOT_BELT
 	m_amt = 2000
 	w_class = 3.0
 	throwforce = 5
@@ -13,19 +14,18 @@
 	force = 5.0
 	origin_tech = "combat=1"
 
-	var
-		fire_sound = 'Gunshot.ogg'
-		tmp/obj/item/projectile/in_chamber = null
-		caliber = ""
-		silenced = 0
-		recoil = 0
-		ejectshell = 1
-		tmp/list/mob/living/target //List of who yer targeting.
-		tmp/lock_time = -100
-		tmp/mouthshoot = 0 ///To stop people from suiciding twice... >.>
-		automatic = 0 //Used to determine if you can target multiple people.
-		tmp/mob/living/last_moved_mob //Used to fire faster at more than one person.
-		tmp/told_cant_shoot = 0 //So that it doesn't spam them with the fact they cannot hit them.
+	var/fire_sound = 'Gunshot.ogg'
+	var/tmp/obj/item/projectile/in_chamber = null
+	var/caliber = ""
+	var/silenced = 0
+	var/recoil = 0
+	var/ejectshell = 1
+	var/tmp/list/mob/living/target //List of who yer targeting.
+	var/tmp/lock_time = -100
+	var/tmp/mouthshoot = 0 ///To stop people from suiciding twice... >.>
+	var/automatic = 0 //Used to determine if you can target multiple people.
+	var/tmp/mob/living/last_moved_mob //Used to fire faster at more than one person.
+	var/tmp/told_cant_shoot = 0 //So that it doesn't spam them with the fact they cannot hit them.
 
 	proc/load_into_chamber()
 		return 0
@@ -165,14 +165,16 @@
 		if (!istype(targloc) || !istype(curloc))
 			return
 
-		if(!special_check(user))	return
+		if(!special_check(user))
+			return
 		if(!load_into_chamber())
 			user.visible_message("*click click*", "\red <b>*click*</b>")
 			for(var/mob/K in viewers(usr))
 				K << 'empty.ogg'
 			return
 
-		if(!in_chamber)	return
+		if(!in_chamber)
+			return
 
 		in_chamber.firer = user
 		in_chamber.def_zone = user.zone_sel.selecting
@@ -191,7 +193,7 @@
 			playsound(user, fire_sound, 10, 1)
 		else
 			playsound(user, fire_sound, 50, 1)
-			user.visible_message("\red [user] fires the [src]!", "\red You fire the [src]!", "\blue You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
+			user.visible_message("\red [user] fires \the [src]!", "\red You fire \the [src]!", "\blue You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 
 		in_chamber.original = targloc
 		in_chamber.loc = get_turf(user)
@@ -210,7 +212,8 @@
 				in_chamber.p_y = text2num(mouse_control["icon-y"])
 
 		spawn()
-			if(in_chamber)	in_chamber.fired()
+			if(in_chamber)
+				in_chamber.fired()
 		sleep(1)
 		in_chamber = null
 

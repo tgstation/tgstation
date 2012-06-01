@@ -103,8 +103,6 @@ proc/process_ghost_teleport_locs()
 /*-----------------------------------------------------------------------------*/
 
 /area/engine/
-	name = "Engineering"
-	icon_state = "engine"
 
 /area/turret_protected/
 
@@ -848,6 +846,8 @@ proc/process_ghost_teleport_locs()
 		requires_power = 0//This area only covers the batteries and they deal with their own power
 
 	engineering
+		name = "Engineering"
+		icon_state = "engine"
 
 	engineering_break_room
 		name = "Engineering Break Room"
@@ -1068,7 +1068,7 @@ proc/process_ghost_teleport_locs()
 	icon_state = "surgery"
 
 /area/medical/cryo
-	name = "Cryo"
+	name = "Cryogenics"
 	icon_state = "cryo"
 
 /area/medical/exam_room
@@ -1107,14 +1107,14 @@ proc/process_ghost_teleport_locs()
 
 /area/security/armoury
 	name = "Armoury"
-	icon_state = "security"
+	icon_state = "Warden"
 
 /area/security/hos
 	name = "Head of Security's Office"
 	icon_state = "security"
 
 /area/security/detectives_office
-	name = "Detectives Office"
+	name = "Detective's Office"
 	icon_state = "detective"
 
 /area/security/range
