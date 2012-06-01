@@ -63,7 +63,7 @@
 /obj/structure/bookcase
 	name = "bookcase"
 	icon = 'library.dmi'
-	icon_state = "bookcase"
+	icon_state = "book-0"
 	anchored = 1
 	density = 1
 	opacity = 1
@@ -120,57 +120,58 @@
 					if(comp)
 						comp.inventory += B
 
-	attackby(obj/O as obj, mob/user as mob)
-		if(istype(O, /obj/item/weapon/book))
-			user.drop_item()
-			O.loc = src
-		else if(istype(O, /obj/item/weapon/pen))
-			var/newname = copytext(sanitize(input("What would you like to title this bookshelf?") as text|null),1,MAX_MESSAGE_LEN)
-			if(!newname)
-				return
-			else
-				setname(sanitize(newname))
+/obj/structure/bookcase/attackby(obj/O as obj, mob/user as mob)
+	if(istype(O, /obj/item/weapon/book))
+		user.drop_item()
+		O.loc = src
+		update_icon()
+	else if(istype(O, /obj/item/weapon/pen))
+		var/newname = copytext(sanitize(input("What would you like to title this bookshelf?") as text|null),1,MAX_MESSAGE_LEN)
+		if(!newname)
+			return
 		else
-			..()
-	attack_hand(var/mob/user as mob)
-		var/list/books = list()
-		for(var/obj/item/weapon/book/b in src.contents)
-			books.Add(b)
-		if(books.len)
-			var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") as null|anything in books
-			if(choice)
-				choice.loc = src.loc
+			name = ("bookcase ([sanitize(newname)])")
+	else
+		..()
+
+/obj/structure/bookcase/attack_hand(var/mob/user as mob)
+	if(contents.len)
+		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in contents as obj|null
+		if(choice)
+			if(ishuman(user))
+				if(!user.get_active_hand())
+					user.put_in_hand(choice)
 			else
-				return
+				choice.loc = get_turf(src)
+			update_icon()
+
+/obj/structure/bookcase/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			for(var/obj/item/weapon/book/b in contents)
+				del(b)
+			del(src)
+			return
+		if(2.0)
+			for(var/obj/item/weapon/book/b in contents)
+				if (prob(50)) b.loc = (get_turf(src))
+				else del(b)
+			del(src)
+			return
+		if(3.0)
+			if (prob(50))
+				for(var/obj/item/weapon/book/b in contents)
+					b.loc = (get_turf(src))
+				del(src)
+			return
 		else
-			user << "None of these books pique your interest in the slightest."
+	return
 
-	proc
-		setname(var/t as text)
-			if(t)
-				src.name = "bookcase ([t])"
-
-	ex_act(severity)
-		switch(severity)
-			if(1.0)
-				for(var/obj/item/weapon/book/b in src.contents)
-					del(b)
-				del(src)
-				return
-			if(2.0)
-				for(var/obj/item/weapon/book/b in src.contents)
-					if (prob(50)) b.loc = (get_turf(src))
-					else del(b)
-				del(src)
-				return
-			if(3.0)
-				if (prob(50))
-					for(var/obj/item/weapon/book/b in src.contents)
-						b.loc = (get_turf(src))
-					del(src)
-				return
-			else
-		return
+/obj/structure/bookcase/update_icon()
+	if(contents.len < 5)
+		icon_state = "book-[contents.len]"
+	else
+		icon_state = "book-5"
 
 
 /obj/structure/bookcase/manuals/medical
@@ -179,6 +180,7 @@
 	New()
 		..()
 		new /obj/item/weapon/book/manual/medical_cloning(src)
+		update_icon()
 
 
 /obj/structure/bookcase/manuals/engineering
@@ -192,6 +194,7 @@
 		new /obj/item/weapon/book/manual/engineering_guide(src)
 		new /obj/item/weapon/book/manual/engineering_singularity_safety(src)
 		new /obj/item/weapon/book/manual/robotics_cyborgs(src)
+		update_icon()
 
 /obj/structure/bookcase/manuals/research_and_development
 	name = "R&D Manuals bookcase"
@@ -199,6 +202,7 @@
 	New()
 		..()
 		new /obj/item/weapon/book/manual/research_and_development(src)
+		update_icon()
 
 
 
@@ -606,9 +610,8 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 				dat += "<A href='?src=\ref[src];switchscreen=7'>7. Access the Forbidden Lore Vault</A><BR>"
 			if(src.arcanecheckout)
 				new /obj/item/weapon/tome(src.loc)
-				user << "<font color=red>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a dusty old tome sitting on the desk. You don't really remember printing it.</font>"
-				for (var/mob/V in hearers(src))
-					V.show_message("[usr] stares at the blank screen for a few moments, his expression frozen in fear. When he finally awakens from it, he looks a lot older.", 2)
+				user << "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a dusty old tome sitting on the desk. You don't really remember printing it.</span>"
+				user.visible_message("[user] stares at the blank screen for a few moments, his expression frozen in fear. When he finally awakens from it, he looks a lot older.", 2)
 				src.arcanecheckout = 0
 		if(1)
 			// Inventory

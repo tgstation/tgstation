@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /proc/hex2num(hex)
 
 	if (!( istext(hex) ))
@@ -832,7 +834,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/names = list()
 	var/list/creatures = list()
 	var/list/namecounts = list()
-
 	for(var/mob/M in mobs)
 		var/name = M.name
 		if (name in names)
@@ -841,7 +842,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		else
 			names.Add(name)
 			namecounts[name] = 1
-
 		if (M.real_name && M.real_name != M.name)
 			name += " \[[M.original_name? M.original_name : M.real_name]\]"
 
@@ -850,7 +850,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				name += " \[ghost\]"
 			else
 				name += " \[dead\]"
-
 		creatures[name] = M
 
 	return creatures
@@ -1346,8 +1345,8 @@ proc/listclearnulls(list/list)
 	return 1
 */
 
-/proc/do_after(var/mob/user as mob, delay as num, var/numticks = 5) 		// Replacing the upper one with this one because Byond keeps feeling that the upper one is an infinate loop
-	if(!user || isnull(user))												// This one should have less temptation
+/proc/do_after(var/mob/user as mob, delay as num, var/numticks = 5, var/needhand = 1) 		// Replacing the upper one with this one because Byond keeps feeling that the upper one is an infinate loop
+	if(!user || isnull(user))																// This one should have less temptation
 		return 0
 	if(numticks == 0)
 		return 0
@@ -1358,7 +1357,10 @@ proc/listclearnulls(list/list)
 
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
-		if(!user || user.stat || user.weakened || user.stunned || !(user.loc == T) || !(user.equipped() == holding))
+
+		if(needhand && !(user.equipped() == holding))	//Sometimes you don't want the user to have to keep their active hand
+			return 0
+		if(!user || user.stat || user.weakened || user.stunned || !(user.loc == T))
 			return 0
 
 	return 1
@@ -1781,19 +1783,17 @@ proc/get_opposite(var/checkdir)
 			return NORTHEAST
 
 /proc/stringsplit(txt, character)
-	var
-		cur_text = txt
-		last_found = 1
-		found_char = findtext(cur_text,character)
-		list/list = list()
+	var/cur_text = txt
+	var/last_found = 1
+	var/found_char = findtext(cur_text,character)
+	var/list/list = list()
 	if(found_char)
 		var/fs = copytext(cur_text,last_found,found_char)
 		list += fs
 		last_found = found_char+length(character)
 		found_char = findtext(cur_text,character,last_found)
 	while(found_char)
-		var
-			found_string = copytext(cur_text,last_found,found_char)
+		var/found_string = copytext(cur_text,last_found,found_char)
 		last_found = found_char+length(character)
 		list += found_string
 		found_char = findtext(cur_text,character,last_found)
