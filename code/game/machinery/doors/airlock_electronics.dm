@@ -54,13 +54,10 @@
 
 	Topic(href, href_list)
 		..()
-		if (usr.stat || usr.restrained())
+		if (usr.stat || usr.restrained() || !ishuman(usr))
 			return
 		if (href_list["close"])
 			usr << browse(null, "window=airlock")
-			return
-
-		if (!ishuman(usr))
 			return
 
 		if (href_list["login"])

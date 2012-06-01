@@ -41,6 +41,11 @@
 		src.base_state = src.icon_state
 	return
 
+/obj/machinery/door/window/Del()
+	density = 0
+	playsound(src, "shatter", 70, 1)
+	..()
+
 /obj/machinery/door/window/Bumped(atom/movable/AM as mob|obj)
 	if (!( ismob(AM) ))
 		var/obj/machinery/bot/bot = AM
