@@ -301,7 +301,7 @@
 
 
 	proc/ManifestLateSpawn(var/mob/living/carbon/human/H, icon/H_icon) // Attempted fix to add late joiners to various databases -- TLE
-		// This is basically ripped wholesale from the normal code for adding people to the databases during a fresh round
+		// This is basically ripped wholesale from the normal code for adding people to the databases during a fresh round //Erth Mark
 		if (!isnull(H.mind) && (H.mind.assigned_role != "MODE"))
 			var/datum/data/record/G = new()
 			var/datum/data/record/M = new()
@@ -310,10 +310,11 @@
 			var/obj/item/weapon/card/id/C = H.wear_id
 			if (C)
 				G.fields["rank"] = C.assignment
+
 				G.fields["real_rank"] = H.mind.assigned_role
 			else
 				if(H.mind && H.mind.assigned_role)
-					G.fields["rank"] = H.mind.assigned_role
+					G.fields["rank"] = H.mind.role_alt_title ? H.mind.role_alt_title : H.mind.assigned_role
 					G.fields["real_rank"] = H.mind.assigned_role
 				else
 					G.fields["rank"] = "Unassigned"
@@ -334,21 +335,58 @@
 			G.fields["m_stat"] = "Stable"
 			M.fields["b_type"] = text("[]", H.dna.b_type)
 			M.fields["b_dna"] = H.dna.unique_enzymes
-			M.fields["mi_dis"] = "None"
-			M.fields["mi_dis_d"] = "No minor disabilities have been declared."
-			M.fields["ma_dis"] = "None"
-			M.fields["ma_dis_d"] = "No major disabilities have been diagnosed."
+
+			var/minor_dis = null
+			if(H.disabilities)
+				if(H.disabilities & 1)
+					minor_dis += "Myopia, "
+				if(H.disabilities & 4)
+					minor_dis += "Persistant Cough, "
+				if(H.disabilities & 16)
+					minor_dis += "Stuttering, "
+			if(minor_dis)
+				M.fields["mi_dis"] = minor_dis
+			else
+				M.fields["mi_dis"] = "None"
+
+			M.fields["mi_dis_d"] = "No additional minor disability notes."
+
+			var/major_dis = null
+			if(H.disabilities)
+				if(H.disabilities & 2)
+					major_dis += "Epilepsy, "
+				if(H.disabilities & 8)
+					major_dis += "Tourette's Syndrome, "
+				if(H.disabilities & 32)
+					major_dis += "Deafness, "
+			if(major_dis)
+				M.fields["ma_dis"] = major_dis
+			else
+				M.fields["ma_dis"] = "None"
+
+			M.fields["ma_dis_d"] = "No additional major disability notes."
 			M.fields["alg"] = "None"
-			M.fields["alg_d"] = "No allergies have been detected in this patient."
+			M.fields["alg_d"] = "No additional allergy notes."
 			M.fields["cdi"] = "None"
-			M.fields["cdi_d"] = "No diseases have been diagnosed at the moment."
-			M.fields["notes"] = "No notes."
+			M.fields["cdi_d"] = "No additional disease notes."
+
+			if(H.med_record && !jobban_isbanned(H, "Records"))
+				M.fields["notes"] = H.med_record
+			else
+				M.fields["notes"] = "No notes found."
+
 			S.fields["criminal"] = "None"
 			S.fields["mi_crim"] = "None"
 			S.fields["mi_crim_d"] = "No minor crime convictions."
 			S.fields["ma_crim"] = "None"
 			S.fields["ma_crim_d"] = "No major crime convictions."
-			S.fields["notes"] = "No notes."
+
+			if(H.sec_record && !jobban_isbanned(H, "Records"))
+				S.fields["notes"] = H.sec_record
+			else
+				S.fields["notes"] = "No notes."
+
+
 
 			//Begin locked reporting
 			L.fields["name"] = H.real_name
