@@ -859,7 +859,7 @@ proc/process_ghost_teleport_locs()
 
 	engineering_break_room
 		name = "\improper Engineering Break Room"
-		icon_state = "engine"
+		icon_state = "engine_breakroom"
 
 	chiefs_office
 		name = "\improper Chief Engineer's office"
@@ -1214,7 +1214,7 @@ proc/process_ghost_teleport_locs()
 
 /area/toxins/lab
 	name = "\improper Research Lab"
-	icon_state = "toxlab"
+	icon_state = "researchlab"
 
 /area/toxins/rdoffice
 	name = "\improper Research Director's Office"
