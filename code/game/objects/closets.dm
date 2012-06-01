@@ -216,3 +216,13 @@
 
 	if(!src.toggle())
 		usr << "\blue It won't budge!"
+
+/obj/structure/closet/verb/verb_toggleopen()
+	set src in oview(1)
+	set category = "Object"
+	set name = "Toggle Open"
+
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return
+
+	src.attack_hand(usr)

@@ -308,6 +308,16 @@
 	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/allowed = null //suit storage stuff.
 
+/obj/item/verb/verb_pickup()
+	set src in oview(1)
+	set category = "Object"
+	set name = "Pickup"
+
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return
+
+	src.attack_hand(usr)
+
 /obj/item/device
 	icon = 'device.dmi'
 
