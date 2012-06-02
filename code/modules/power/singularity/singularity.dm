@@ -95,7 +95,7 @@ var/global/list/uneatable = list(
 
 
 	process()
-		spawn(0)
+		spawn(0) //Keep this in - Erthilo
 			eat()
 			dissipate()
 			check_energy()
