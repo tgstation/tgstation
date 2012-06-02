@@ -1,19 +1,3 @@
-/mob/living/Life()
-
-	..()
-
-	// While I'm doing a terriblly lazy way of initalizing things, why don't I make it so people's preferences tag along with them.  This could be useful in fixing the fucking cloned-as-unknown thing, making me not have to dynamically load them during tensioner, and of course, storing metadata.
-//Whoever wrote this should go suck a choad.  This was causing runtimes, asshat.  IN ADDITION, YOU PUT IT IN THE LIFE PROC YOU ASSHAT
-//	if(!src.storedpreferences)
-//		src.storedpreferences = new
-//		storedpreferences.savefile_load(src, 0)
-
-
-
-
-	return
-
-
 /mob/living/verb/succumb()
 	set hidden = 1
 	if ((src.health < 0 && src.health > -95.0))

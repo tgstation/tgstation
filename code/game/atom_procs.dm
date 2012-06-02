@@ -77,7 +77,7 @@
 /atom/proc/add_hiddenprint(mob/living/M as mob)
 	if(isnull(M)) return
 	if(isnull(M.key)) return
-	if (!( src.flags ) & 256)
+	if (!( src.flags ) & FPRINT)
 		return
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -102,7 +102,7 @@
 /atom/proc/add_fingerprint(mob/living/M as mob)
 	if(isnull(M)) return
 	if(isnull(M.key)) return
-	if (!( flags ) & 256)
+	if (!( src.flags ) & FPRINT)
 		return
 	//Smudge up dem prints some
 	for(var/P in fingerprints)
@@ -175,7 +175,7 @@
 	if (!istype(M.dna, /datum/dna))
 		M.dna = new /datum/dna(null)
 	M.check_dna()
-	if (!( src.flags ) & 256)
+	if (!( src.flags ) & FPRINT)
 		return 0
 	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
@@ -291,7 +291,7 @@
 
 /atom/proc/clean_blood()
 
-	if (!flags & 256)
+	if (!( src.flags ) & FPRINT)
 		return
 	if (blood_DNA )
 
@@ -1080,95 +1080,32 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		var/mob/living/carbon/U = M
 		U.swap_hand()
 
-/*
-/atom/proc/get_global_map_pos()
-	if(!islist(global_map) || isemptylist(global_map)) return
-	var/cur_x = null
-	var/cur_y = null
-	var/list/y_arr = null
-	for(cur_x=1,cur_x<=global_map.len,cur_x++)
-		y_arr = global_map[cur_x]
-		cur_y = y_arr.Find(src.z)
-		if(cur_y)
-			break
-//	world << "X = [cur_x]; Y = [cur_y]"
-	if(cur_x && cur_y)
-		return list("x"=cur_x,"y"=cur_y)
-	else
-		return 0
-*/ //Don't touch this either. DMTG
-/atom/proc/checkpass(passflag)
-	return pass_flags&passflag
-
-
 //Could not find object proc defines and this could almost be an atom level one.
 
 /obj/proc/process()
 	processing_objects.Remove(src)
 	return 0
 
+// Show a message to all mobs in sight of this one
+// This would be for visible actions by the src mob
+// message is the message output to anyone who can see e.g. "[src] does something!"
+// self_message (optional) is what the src mob sees  e.g. "You do something!"
+// blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
-/*Really why was this in the click proc of all the places you could put it
-					if (usr:a_intent == "help")
-						// ------- YOU HAVE THE HELP INTENT SELECTED -------
-						if(istype(src, /mob/living/carbon))
-							// ------- YOUR TARGET IS LIVING CARBON CREATURE (NOT AI OR CYBORG OR SIMPLE ANIMAL) -------
-							var/mob/living/carbon/C = src
-							if(usr:mutations & HEAL)
-								// ------- YOU ARE HUMAN, WITH THE HELP INTENT TARGETING A HUMAN AND HAVE THE 'HEAT' GENETIC MUTATION -------
+/mob/visible_message(var/message, var/self_message, var/blind_message)
+	for(var/mob/M in viewers(src))
+		var/msg = message
+		if(self_message && M==src)
+			msg = self_message
+		M.show_message( msg, 1, blind_message, 2)
 
-								if(C.stat != 2)
-									// ------- THE PERSON YOU'RE TOUCHING IS NOT DEAD -------
-
-									var/t_him = "it"
-									if (src.gender == MALE)
-										t_him = "his"
-									else if (src.gender == FEMALE)
-										t_him = "her"
-									var/u_him = "it"
-									if (usr.gender == MALE)
-										t_him = "him"
-									else if (usr.gender == FEMALE)
-										t_him = "her"
-
-									if(src != usr)
-										usr.visible_message( \
-										"\blue <i>[usr] places [u_him] palms on [src], healing [t_him]!</i>", \
-										"\blue You place your palms on [src] and heal [t_him].", \
-										)
-									else
-										usr.visible_message( \
-										"\blue <i>[usr] places [u_him] palms on [u_him]self and heals.</i>", \
-										"\blue You place your palms on yourself and heal.", \
-										)
-
-									C.adjustOxyLoss(-25)
-									C.adjustToxLoss(-25)
-
-									if(istype(C, /mob/living/carbon/human))
-										// ------- YOUR TARGET IS HUMAN -------
-										var/mob/living/carbon/human/H = C
-										var/datum/organ/external/affecting = H.get_organ(check_zone(usr:zone_sel:selecting))
-										if(affecting && affecting.heal_damage(25, 25))
-											H.UpdateDamageIcon()
-									else
-										C.heal_organ_damage(25, 25)
-									C.adjustCloneLoss(-25)
-									C.stunned = max(0, C.stunned-5)
-									C.paralysis = max(0, C.paralysis-5)
-									C.stuttering = max(0, C.stuttering-5)
-									C.drowsyness = max(0, C.drowsyness-5)
-									C.weakened = max(0, C.weakened-5)
-									usr:nutrition -= rand(1,10)
-									usr.next_move = world.time + 6
-								else
-									// ------- PERSON YOU'RE TOUCHING IS ALREADY DEAD -------
-									usr << "\red [src] is dead and can't be healed."
-								return
-
-					// ------- IF YOU DON'T HAVE THE SILLY ABILITY ABOVE OR FAIL ON ANY OTHER CHECK, THEN YOU'RE CLICKING ON SOMETHING WITH AN EMPTY HAND. ATTACK_HAND IT IS THEN -------
-*/
-
+// Show a message to all mobs in sight of this atom
+// Use for objects performing visible actions
+// message is output to anyone who can see, e.g. "The [src] does something!"
+// blind_message (optional) is what blind people will hear e.g. "You hear something!"
+/atom/proc/visible_message(var/message, var/blind_message)
+	for(var/mob/M in viewers(src))
+		M.show_message( message, 1, blind_message, 2)
 
 
 

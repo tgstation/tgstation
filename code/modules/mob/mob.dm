@@ -64,28 +64,6 @@
 		src << msg
 	return
 
-// Show a message to all mobs in sight of this one
-// This would be for visible actions by the src mob
-// message is the message output to anyone who can see e.g. "[src] does something!"
-// self_message (optional) is what the src mob sees  e.g. "You do something!"
-// blind_message (optional) is what blind people will hear e.g. "You hear something!"
-
-/mob/visible_message(var/message, var/self_message, var/blind_message)
-	for(var/mob/M in viewers(src))
-		var/msg = message
-		if(self_message && M==src)
-			msg = self_message
-		M.show_message( msg, 1, blind_message, 2)
-
-// Show a message to all mobs in sight of this atom
-// Use for objects performing visible actions
-// message is output to anyone who can see, e.g. "The [src] does something!"
-// blind_message (optional) is what blind people will hear e.g. "You hear something!"
-/atom/proc/visible_message(var/message, var/blind_message)
-	for(var/mob/M in viewers(src))
-		M.show_message( message, 1, blind_message, 2)
-
-
 /mob/proc/findname(msg)
 	for(var/mob/M in world)
 		if (M.real_name == text("[]", msg))
@@ -1182,3 +1160,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 	// Call this proc whenever something about the clothing of a mob changes. Normally, you
 	// don't need to call this by hand, as the equip procs will do it for you.
 	..()
+
+/mob/proc/get_visible_gender()
+	//Returns the proper words to use based on the mob's visible gender.  Used in text creation.
+	return list("It" = "It", "its" = "its", "it" = "it", "has" = "has", "is" = "is", "itself" = "itself")
+
+/mob/proc/get_gender_form(var/form)
+	if(!istext(form))
+		return
+	var/list/proper_forms = get_visible_gender()
+	return proper_forms[form]

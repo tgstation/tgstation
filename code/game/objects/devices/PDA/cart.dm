@@ -29,6 +29,7 @@
 	var/list/powermonitors = list()
 	var/message1	// used for status_displays
 	var/message2
+	var/list/stored = list()
 
 	engineering
 		name = "Power-ON Cartridge"
@@ -40,6 +41,11 @@
 		icon_state = "cart-m"
 		access_medical = 1
 
+	chemistry
+		name = "ChemWhiz Cartridge"
+		icon_state = "cart-chem"
+		access_reagent_scanner = 1
+
 	security
 		name = "R.O.B.U.S.T. Cartridge"
 		icon_state = "cart-s"
@@ -49,6 +55,7 @@
 			..()
 			spawn(5)
 				radio = new /obj/item/radio/integrated/beepsky(src)
+
 
 	detective
 		name = "D.E.T.E.C.T. Cartridge"
@@ -89,7 +96,7 @@
 			name = "Signal Ace 2"
 			desc = "Complete with integrated radio signaler!"
 			icon_state = "cart-tox"
-			access_reagent_scanner = 1
+//			access_reagent_scanner = 1
 
 		New()
 			..()
@@ -152,7 +159,7 @@
 		name = "Signal Ace DELUXE"
 		icon_state = "cart-rd"
 		access_status_display = 1
-		access_reagent_scanner = 1
+//		access_reagent_scanner = 1
 
 		New()
 			..()
@@ -569,6 +576,43 @@ Code:
 
 				else
 					menu += "ERROR: Unable to determine current location."
+
+	proc/add_data(atom/A as mob|obj|turf|area)
+		//I love hashtables.
+		var/list/data_entry = stored["\ref [A]"]
+		if(islist(data_entry)) //Yay, it was already stored!
+			//Merge the fingerprints.
+			var/list/data_prints = data_entry[1]
+			for(var/print in A.fingerprints)
+				var/merged_print = data_prints[print]
+				if(!merged_print)
+					data_prints[print] = A.fingerprints[print]
+				else
+					data_prints[print] = stringmerge(data_prints[print],A.fingerprints[print])
+
+			//Now the fibers
+			var/list/fibers = data_entry[2]
+			if(!fibers)
+				fibers = list()
+			if(A.suit_fibers && A.suit_fibers.len)
+				for(var/j = 1, j <= A.suit_fibers.len, j++)	//Fibers~~~
+					if(!fibers.Find(A.suit_fibers[j]))	//It isn't!  Add!
+						fibers += A.suit_fibers[j]
+			var/list/blood = data_entry[3]
+			if(!blood)
+				blood = list()
+			if(A.blood_DNA && A.blood_DNA.len)
+				for(var/main_blood in A.blood_DNA)
+					if(!blood[main_blood])
+						blood[main_blood] = A.blood_DNA[blood]
+			return 1
+		var/list/sum_list[4]	//Pack it back up!
+		sum_list[1] = A.fingerprints
+		sum_list[2] = A.suit_fibers
+		sum_list[3] = A.blood_DNA
+		sum_list[4] = "\The [A] in \the [get_area(A)]"
+		stored["\ref [A]"] = sum_list
+		return 0
 
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()

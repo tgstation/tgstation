@@ -82,7 +82,7 @@
 
 	if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))
 		for(var/mob/O in viewers(world.view, src.loc))
-			O << text("<font color='red'>[M] triggered the \icon[] [src]</font>", src)
+			O << "<font color='red'>[M] triggered the \icon[src] [src]</font>"
 		triggered = 1
 		call(src,triggerproc)(M)
 
@@ -162,7 +162,7 @@
 			for(var/mob/O in viewers(user, null))
 				if(O == user)
 					continue
-				O.show_message(text("\red <B>[user] accidentally sets off the mousetrap, breaking their fingers.</B>"), 1)
+				O.show_message("\red <B>[user] accidentally sets off the mousetrap, breaking their fingers.</B>", 1)
 			return
 		user << "\blue You disarm the mousetrap."
 	armed = !armed
@@ -179,7 +179,7 @@
 			for(var/mob/O in viewers(user, null))
 				if(O == user)
 					continue
-				O.show_message(text("\red <B>[user] accidentally sets off the mousetrap, breaking their fingers.</B>"), 1)
+				O.show_message("\red <B>[user] accidentally sets off the mousetrap, breaking their fingers.</B>", 1)
 			return
 	..()
 
@@ -192,12 +192,12 @@
 			for(var/mob/O in viewers(H, null))
 				if(O == H)
 					continue
-				O.show_message(text("\red <B>[H] accidentally steps on the mousetrap.</B>"), 1)
+				O.show_message("\red <B>[H] accidentally steps on the mousetrap.</B>", 1)
 	..()
 
 /obj/item/weapon/mousetrap/hitby(A as mob|obj)
 	if(!armed)
 		return ..()
 	for(var/mob/O in viewers(src, null))
-		O.show_message(text("\red <B>The mousetrap is triggered by [A].</B>"), 1)
+		O.show_message("\red <B>The mousetrap is triggered by [A].</B>", 1)
 	src.triggered(null)

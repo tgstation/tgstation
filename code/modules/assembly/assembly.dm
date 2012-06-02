@@ -62,17 +62,32 @@
 	var/const/WIRE_RADIO_RECEIVE = 8		//Allows Pulsed(1) to call Activate()
 	var/const/WIRE_RADIO_PULSE = 16		//Allows Pulse(1) to send a radio message
 
-
 	proc/activate()									//What the device does when turned on
+		return
+
 	proc/pulsed(var/radio = 0)						//Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
-	pulse(var/radio = 0)						//Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
+		return
+
+	proc/pulse(var/radio = 0)						//Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
+		return
+
 	proc/toggle_secure()								//Code that has to happen when the assembly is un\secured goes here
+		return
+
 	proc/attach_assembly(var/obj/A, var/mob/user)	//Called when an assembly is attacked by another
+		return
+
+	proc/process_cooldown()							//Called via spawn(10) to have it count down the cooldown var
+		return
+
 	proc/holder_movement()							//Called when the holder is moved
+		return
+
 	proc/interact(mob/user as mob)					//Called when attack_self is called
+		return
 
 
-	proc/process_cooldown()
+	process_cooldown()
 		cooldown--
 		if(cooldown <= 0)	return 0
 		spawn(10)
@@ -88,7 +103,7 @@
 		return 1
 
 
-	proc/pulse(var/radio = 0)
+	pulse(var/radio = 0)
 		if(holder && (wires & WIRE_PULSE))
 			holder.process_activation(src, 1, 0)
 		if(holder && (wires & WIRE_PULSE_SPECIAL))

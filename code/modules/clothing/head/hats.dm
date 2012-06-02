@@ -3,7 +3,7 @@
 	name = "head"
 	icon = 'hats.dmi'
 	body_parts_covered = HEAD
-	var/list/allowed = list()
+	slot_flags = SLOT_HEAD
 
 /obj/item/clothing/head/cakehat
 	name = "cake-hat"
@@ -83,8 +83,24 @@
 	icon_state = "beret"
 	flags = FPRINT | TABLEPASS
 
+/obj/item/clothing/head/chaplain_hood
+	name = "chaplain's hood"
+	desc = "It's hood that covers the head. It keeps you warm during the space winters."
+	icon_state = "chaplain_hood"
+	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|BLOCKHAIR
 
-// CHUMP HELMETS: COOKING THEM DESTROYS THE CHUMP HELMET SPAWN.
+/obj/item/clothing/head/hasturhood
+	name = "hastur's hood"
+	desc = "It's unspeakably stylish"
+	icon_state = "hasturhood"
+	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|BLOCKHAIR
+
+/obj/item/clothing/head/nursehat
+	name = "nurse's hat"
+	desc = "It allows quick identification of trained medical personnel."
+	icon_state = "nursehat"
+	flags = FPRINT|TABLEPASS
+
 
 /obj/item/clothing/head/helmet/cueball
 	name = "cueball helmet"
@@ -109,6 +125,8 @@
 	item_state = "helmet"
 	var/flipped = 0
 
+
+// CHUMP HELMETS: COOKING THEM DESTROYS THE CHUMP HELMET SPAWN.
 /obj/item/clothing/head/syndicatefake
 	name = "red space-helmet replica"
 	desc = "A plastic replica of a red space space helmet. This is a toy, it is not made for use in space!"
@@ -117,24 +135,6 @@
 	see_face = 0.0
 	flags = FPRINT | TABLEPASS | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
-
-/obj/item/clothing/head/chaplain_hood
-	name = "chaplain's hood"
-	desc = "It's hood that covers the head. It keeps you warm during the space winters."
-	icon_state = "chaplain_hood"
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|BLOCKHAIR
-
-/obj/item/clothing/head/hasturhood
-	name = "hastur's hood"
-	desc = "It's unspeakably stylish"
-	icon_state = "hasturhood"
-	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|BLOCKHAIR
-
-/obj/item/clothing/head/nursehat
-	name = "nurse's hat"
-	desc = "It allows quick identification of trained medical personnel."
-	icon_state = "nursehat"
-	flags = FPRINT|TABLEPASS
 
 /obj/item/clothing/head/helmet/cardborg
 	name = "cardborg helmet"

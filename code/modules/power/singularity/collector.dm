@@ -20,6 +20,7 @@
 	process()
 		if(P)
 			if(P.air_contents.toxins <= 0)
+				investigate_log("<font color='red'>out of fuel</font>.","singulo")
 				P.air_contents.toxins = 0
 				eject()
 			else
@@ -33,6 +34,7 @@
 				toggle_power()
 				user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
 				"You turn the [src.name] [active? "on":"off"].")
+				investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.toxins/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
 				return
 			else
 				user << "\red The controls are locked!"
@@ -97,48 +99,47 @@
 		return ..()
 
 
-	proc
-		eject()
-			var/obj/item/weapon/tank/plasma/Z = src.P
-			if (!Z)
-				return
-			Z.loc = get_turf(src)
-			Z.layer = initial(Z.layer)
-			src.P = null
-			if(active)
-				toggle_power()
-			else
-				updateicon()
-
-		receive_pulse(var/pulse_strength)
-			if(P && active)
-				var/power_produced = 0
-				power_produced = P.air_contents.toxins*pulse_strength*20
-				add_avail(power_produced)
-				last_power = power_produced
-				return
+	proc/eject()
+		locked = 0
+		var/obj/item/weapon/tank/plasma/Z = src.P
+		if (!Z)
 			return
-
-
-		updateicon()
-			overlays = null
-			if(P)
-				overlays += image('singularity.dmi', "ptank")
-			if(stat & (NOPOWER|BROKEN))
-				return
-			if(active)
-				overlays += image('singularity.dmi', "on")
-
-
-		toggle_power()
-			active = !active
-			if(active)
-				icon_state = "ca_on"
-				flick("ca_active", src)
-
-			else
-				icon_state = "ca"
-				flick("ca_deactive", src)
+		Z.loc = get_turf(src)
+		Z.layer = initial(Z.layer)
+		src.P = null
+		if(active)
+			toggle_power()
+		else
 			updateicon()
+
+	proc/receive_pulse(var/pulse_strength)
+		if(P && active)
+			var/power_produced = 0
+			power_produced = P.air_contents.toxins*pulse_strength*20
+			add_avail(power_produced)
+			last_power = power_produced
 			return
+		return
+
+
+	proc/updateicon()
+		overlays = null
+		if(P)
+			overlays += image('singularity.dmi', "ptank")
+		if(stat & (NOPOWER|BROKEN))
+			return
+		if(active)
+			overlays += image('singularity.dmi', "on")
+
+
+	proc/toggle_power()
+		active = !active
+		if(active)
+			icon_state = "ca_on"
+			flick("ca_active", src)
+		else
+			icon_state = "ca"
+			flick("ca_deactive", src)
+		updateicon()
+		return
 

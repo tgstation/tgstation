@@ -50,7 +50,7 @@
 /obj/effect/alien/resin/hitby(AM as mob|obj)
 	..()
 	for(var/mob/O in viewers(src, null))
-		O.show_message(text("\red <B>[src] was hit by [AM].</B>"), 1)
+		O.show_message("\red <B>[src] was hit by [AM].</B>", 1)
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 10
@@ -64,9 +64,9 @@
 
 /obj/effect/alien/resin/attack_hand()
 	if ((usr.mutations & HULK))
-		usr << text("\blue You easily destroy the [name].")
+		usr << "\blue You easily destroy the [name]."
 		for(var/mob/O in oviewers(src))
-			O.show_message(text("\red [] destroys the [name]!", usr), 1)
+			O.show_message("\red [usr] destroys the [name]!", 1)
 		health = 0
 	healthcheck()
 	return
@@ -77,15 +77,15 @@
 /obj/effect/alien/resin/attack_alien()
 	if (islarva(usr))//Safety check for larva. /N
 		return
-	usr << text("\green You claw at the [name].")
+	usr << "\green You claw at the [name]."
 	for(var/mob/O in oviewers(src))
-		O.show_message(text("\red [] claws at the resin!", usr), 1)
+		O.show_message("\red [usr] claws at the resin!", 1)
 	playsound(loc, 'attackblob.ogg', 100, 1)
 	health -= rand(10, 20)
 	if(health <= 0)
-		usr << text("\green You slice the [name] to pieces.")
+		usr << "\green You slice the [name] to pieces."
 		for(var/mob/O in oviewers(src))
-			O.show_message(text("\red [] slices the [name] apart!", usr), 1)
+			O.show_message("\red [usr] slices the [name] apart!", 1)
 	healthcheck()
 	return
 
@@ -161,6 +161,6 @@
 
 /obj/effect/alien/resin/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group) return 0
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && mover.pass_flags & PASSGLASS)
 		return !opacity
 	return !density

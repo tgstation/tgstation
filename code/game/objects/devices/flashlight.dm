@@ -6,7 +6,8 @@
 	icon_state = "flight0"
 	w_class = 2
 	item_state = "flight"
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
 	m_amt = 50
 	g_amt = 20
 	var/on = 0

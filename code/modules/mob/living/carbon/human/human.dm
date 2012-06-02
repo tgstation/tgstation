@@ -27,19 +27,19 @@
 	var/list/skills = null
 //	var/b_type
 
-	var/obj/item/clothing/suit/wear_suit = null
-	var/obj/item/clothing/under/w_uniform = null
-	var/obj/item/clothing/shoes/shoes = null
-	var/obj/item/weapon/belt = null
-	var/obj/item/clothing/gloves/gloves = null
-	var/obj/item/clothing/glasses/glasses = null
-	var/obj/item/clothing/head/head = null
-	var/obj/item/clothing/ears/l_ear = null
-	var/obj/item/clothing/ears/r_ear = null
+	var/obj/item/wear_suit = null
+	var/obj/item/w_uniform = null
+	var/obj/item/shoes = null
+	var/obj/item/belt = null
+	var/obj/item/gloves = null
+	var/obj/item/glasses = null
+	var/obj/item/head = null
+	var/obj/item/l_ear = null
+	var/obj/item/r_ear = null
 	var/obj/item/weapon/card/id/wear_id = null
-	var/obj/item/weapon/r_store = null
-	var/obj/item/weapon/l_store = null
-	var/obj/item/weapon/s_store = null
+	var/obj/item/r_store = null
+	var/obj/item/l_store = null
+	var/obj/item/s_store = null
 
 	var/icon/stand_icon = null
 	var/icon/lying_icon = null
@@ -150,7 +150,8 @@
 	..()
 
 	spawn(5) // Failsafe for.. weirdness.
-		rebuild_appearance()
+		update_clothing()
+		update_body()
 
 	/*var/known_languages = list()
 	known_languages.Add("english")*/
@@ -552,7 +553,7 @@
 				return
 			if (!istype(W, /obj/item))
 				return
-			if (!( W.flags & ONBACK ))
+			if (!( W.slot_flags & SLOT_BACK ))
 				return
 			if(istype(W,/obj/item/weapon/twohanded) && W:wielded)
 				usr << "<span class='warning'>Unwield the [initial(W.name)] first!</span>"
@@ -576,7 +577,10 @@
 				if (emptyHand)
 					wear_suit.DblClick()
 				return
-			if (!( istype(W, /obj/item/clothing/suit) ))
+			if (!istype(W, /obj/item))
+				return
+			if (!( W.slot_flags & SLOT_OCLOTHING ))
+				return
 				return
 			u_equip(W)
 			wear_suit = W
@@ -586,7 +590,9 @@
 				if (emptyHand)
 					gloves.DblClick()
 				return
-			if (!( istype(W, /obj/item/clothing/gloves) ))
+			if (!istype(W, /obj/item))
+				return
+			if (!( W.slot_flags & SLOT_GLOVES ))
 				return
 			u_equip(W)
 			gloves = W
@@ -596,7 +602,9 @@
 				if (emptyHand)
 					shoes.DblClick()
 				return
-			if (!( istype(W, /obj/item/clothing/shoes) ))
+			if (!istype(W, /obj/item))
+				return
+			if (!( W.slot_flags & SLOT_FEET ))
 				return
 			u_equip(W)
 			shoes = W
@@ -606,7 +614,9 @@
 				if (emptyHand)
 					belt.DblClick()
 				return
-			if (!W || !W.flags || !( W.flags & ONBELT ))
+			if (!istype(W, /obj/item))
+				return
+			if (!( W.slot_flags & SLOT_BELT ))
 				return
 			u_equip(W)
 			belt = W
@@ -616,7 +626,9 @@
 				if (emptyHand)
 					glasses.DblClick()
 				return
-			if (!( istype(W, /obj/item/clothing/glasses) ))
+			if (!istype(W, /obj/item))
+				return
+			if (!( W.slot_flags & SLOT_EYES ))
 				return
 			u_equip(W)
 			glasses = W
@@ -626,10 +638,9 @@
 				if (emptyHand)
 					head.DblClick()
 				return
-			if (( istype(W, /obj/item/weapon/paper) ))
-				u_equip(W)
-				head = W
-			else if (!( istype(W, /obj/item/clothing/head) ))
+			if (!istype(W, /obj/item))
+				return
+			if (!( W.slot_flags & SLOT_HEAD ))
 				return
 			u_equip(W)
 			head = W
@@ -681,7 +692,10 @@
 				if (emptyHand)
 					w_uniform.DblClick()
 				return
-			if (!( istype(W, /obj/item/clothing/under) ))
+			if (!istype(W, /obj/item))
+				return
+			if (!( W.slot_flags & SLOT_ICLOTHING ))
+				return
 				return
 			u_equip(W)
 			w_uniform = W
@@ -693,7 +707,9 @@
 				return
 			if (!w_uniform)
 				return
-			if (!istype(W, /obj/item/weapon/card/id) && !istype(W, /obj/item/device/pda) )
+			if (!istype(W, /obj/item))
+				return
+			if (!( W.slot_flags & SLOT_ID ))
 				return
 			u_equip(W)
 			wear_id = W
@@ -703,19 +719,25 @@
 				if (emptyHand)
 					l_store.DblClick()
 				return
-			if ((!( istype(W, /obj/item) ) || W.w_class > 2 || !( w_uniform )))
+			if (!istype(W, /obj/item))
 				return
-			u_equip(W)
-			l_store = W
+			if ( ( W.slot_flags & SLOT_DENYPOCKET ) )
+				return
+			if ( W.w_class <= 2 || ( W.slot_flags & SLOT_POCKET ) )
+				u_equip(W)
+				l_store = W
 		if("storage2")
 			if (r_store)
 				if (emptyHand)
 					r_store.DblClick()
 				return
-			if ((!( istype(W, /obj/item) ) || W.w_class > 2 || !( w_uniform )))
+			if (!istype(W, /obj/item))
 				return
-			u_equip(W)
-			r_store = W
+			if ( ( W.slot_flags & SLOT_DENYPOCKET ) )
+				return
+			if ( W.w_class <= 2 || ( W.slot_flags & SLOT_POCKET ) )
+				u_equip(W)
+				r_store = W
 		if("suit storage")
 			if (s_store)
 				if (emptyHand)
@@ -917,8 +939,8 @@
 	body_overlays_standing += body_standing
 
 	// face_lying and face_standing are the face icons, not a flag
-	body_overlays_lying += face_standing // yes, the vars are named wrong, I didn't do it -- CIB
-	body_overlays_standing += face_lying
+	body_overlays_lying += face_lying
+	body_overlays_standing += face_standing
 
 
 
@@ -1216,12 +1238,12 @@
 
 	if(lying)
 		icon = lying_icon
-		overlays += body_overlays_standing
+		overlays += body_overlays_lying
 
 	if(!lying)
 		icon = stand_icon
+		overlays += body_overlays_standing
 
-		overlays += body_overlays_lying
 
 
 	overlays += clothing_overlays
@@ -2743,3 +2765,14 @@ It can still be worn/put on as normal.
 		reset_view(0)
 		remoteobserve = null
 		src.tkdisable = 0
+
+/mob/living/carbon/human/get_visible_gender()
+	var/skip_gender = (wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT && ((head && head.flags_inv & HIDEMASK) || wear_mask))
+
+	if( !skip_gender ) //big suits/masks make it hard to tell their gender
+		switch(gender)
+			if(MALE)
+				return list("It" = "He", "its" = "his", "it" = "he", "has" = "has", "is" = "is", "itself" = "himself")
+			if(FEMALE)
+				return list("It" = "She", "its" = "her", "it" = "she", "has" = "has", "is" = "is", "itself" = "herself")
+	return list("It" = "They", "its" = "their", "it" = "them", "has" = "have", "is" = "are", "itself" = "themselves")

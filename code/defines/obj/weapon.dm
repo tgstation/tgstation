@@ -12,7 +12,8 @@
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
 	icon = 'weapons.dmi'
 	icon_state = "riot"
-	flags = FPRINT | TABLEPASS| CONDUCT| ONBACK
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BACK
 	force = 5.0
 	throwforce = 5.0
 	throw_speed = 1
@@ -31,7 +32,8 @@
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	force = 10
 	throw_speed = 1
 	throw_range = 4
@@ -83,7 +85,8 @@
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
 	icon_state = "sord"
 	item_state = "sord"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	force = 2
 	throwforce = 1
 	w_class = 3*/
@@ -93,7 +96,8 @@
 	desc = "BLOOD FOR THE BLOOD GOD."	//SKULLS FOR THE SKULL THRONE. --SkyMarshal
 	icon_state = "claymore"
 	item_state = "claymore"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	force = 40
 	throwforce = 10
 	w_class = 3
@@ -321,7 +325,8 @@
 	icon_state = "spectrometer"
 	item_state = "analyzer"
 	w_class = 2.0
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT | OPENCONTAINER
+	flags = FPRINT | TABLEPASS| CONDUCT | OPENCONTAINER
+	slot_flags = SLOT_BELT
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 20
@@ -342,7 +347,8 @@
 	desc = "The police baton of the future."
 	icon_state = "stunbaton"
 	item_state = "baton"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	force = 15
 	throwforce = 7
 	w_class = 3
@@ -356,7 +362,8 @@
 	desc = "The Captain is first and all other heads are last."
 	icon_state = "chainofcommand"
 	item_state = "chainofcommand"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	force = 10
 	throwforce = 7
 	w_class = 3
@@ -381,7 +388,7 @@
 	origin_tech = "combat=3"
 
 /obj/item/weapon/melee/energy/sword
-	var/color
+	color
 	name = "energy sword"
 	desc = "It cuts AND cooks at the same time!"
 	icon_state = "sword0"
@@ -471,7 +478,7 @@
 	w_class = 1.0
 	throw_speed = 2
 	throw_range = 10
-	var/color = "white"
+	color = "white"
 
 /obj/item/weapon/bedsheet/blue
 	icon_state = "sheetblue"
@@ -675,6 +682,7 @@
 	item_state = "card-id"
 	var/access = list()
 	var/registered_name = null // The name registered_name on the card
+	slot_flags = SLOT_ID
 	var/pin = 0
 	var/money = 0
 	var/assignment = null
@@ -743,7 +751,8 @@
 	w_class = 2.0
 	throw_speed = 3
 	throw_range = 10
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 
 /obj/item/weapon/clipboard/notebook
 	name = "notebook"
@@ -756,7 +765,7 @@
 	icon = 'power.dmi'
 	icon_state = "coil_red"
 	var/amount = MAXCOIL
-	var/color = "red"
+	color = "red"
 	desc = "A coil of power cable."
 	throwforce = 10
 	w_class = 2.0
@@ -764,7 +773,8 @@
 	throw_range = 5
 	m_amt = 50
 	g_amt = 20
-	flags = TABLEPASS|USEDELAY|FPRINT|CONDUCT | ONBELT
+	flags = TABLEPASS | USEDELAY | FPRINT | CONDUCT
+	slot_flags = SLOT_BELT
 	item_state = "coil_red"
 
 /obj/item/weapon/cable_coil/cut
@@ -797,7 +807,8 @@
 	desc = "Used to remove floor tiles."
 	icon = 'items.dmi'
 	icon_state = "crowbar"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
 	force = 5.0
 	throwforce = 7.0
 	item_state = "wrench"
@@ -840,7 +851,7 @@
 	name = "dummy"
 	invisibility = 101.0
 	anchored = 1.0
-	flags = 2.0
+	flags = TABLEPASS
 
 /obj/item/weapon/extinguisher
 	name = "fire extinguisher"
@@ -953,7 +964,8 @@
 	gender = PLURAL
 	icon = 'items.dmi'
 	icon_state = "handcuff"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
 	throwforce = 5
 	w_class = 2.0
 	throw_speed = 2
@@ -1016,12 +1028,12 @@
 	throw_range = 15
 	layer = 4
 	var/list/stamped
-	var/see_face = 1
-	var/body_parts_covered = HEAD
-	var/heat_transfer_coefficient = 0.99
-	var/gas_transfer_coefficient = 1
-	var/permeability_coefficient = 0.99
-	var/siemens_coefficient = 0.80
+	see_face = 1
+	body_parts_covered = HEAD
+	heat_transfer_coefficient = 0.99
+	gas_transfer_coefficient = 1
+	permeability_coefficient = 0.99
+	siemens_coefficient = 0.80
 	var/iteration
 
 /obj/item/weapon/directions
@@ -1103,7 +1115,8 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	name = "pen"
 	icon = 'paper.dmi'
 	icon_state = "pen"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	throwforce = 0
 	w_class = 1.0
 	throw_speed = 7
@@ -1136,7 +1149,8 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	name = "banhammer"
 	icon = 'items.dmi'
 	icon_state = "toyhammer"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	throwforce = 0
 	w_class = 1.0
 	throw_speed = 7
@@ -1144,12 +1158,14 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 
 /obj/item/weapon/pen/sleepypen
 	desc = "It's a normal black ink pen with a sharp point."
-	flags = FPRINT | ONBELT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	slot_flags = SLOT_BELT
 	origin_tech = "materials=2;biotech=1;syndicate=7"
 
 /obj/item/weapon/pen/paralysis
 	desc = "It's a normal black ink pen with a sharp point."
-	flags = FPRINT | ONBELT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	slot_flags = SLOT_BELT
 	origin_tech = "materials=2;biotech=1;syndicate=5"
 
 /obj/item/weapon/rack_parts
@@ -1173,7 +1189,8 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	desc = "Used for screwing."
 	icon = 'items.dmi'
 	icon_state = "screwdriver"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
 	force = 5.0
 	w_class = 1.0
 	throwforce = 5.0
@@ -1203,7 +1220,8 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	var/selfdestruct = 0.0
 	var/traitor_frequency = 0.0
 	var/obj/item/device/radio/origradio = null
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
 	item_state = "radio"
 	throwforce = 5
 	w_class = 2.0
@@ -1685,7 +1703,7 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60
-	var/color = "cargo"
+	color = "cargo"
 
 /obj/item/weapon/stamp/captain
 	name = "captain's rubber stamp"
@@ -1742,7 +1760,8 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	w_class = 1
 	throwforce = 2
 	var/cigarcount = 6
-	flags = ONBELT | TABLEPASS */
+	flags = TABLEPASS
+	slot_flags = SLOT_BELT*/
 
 
 /obj/item/weapon/mousetrap
@@ -2042,12 +2061,19 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	desc = "An appendix which appears to be inflamed."
 	icon_state = "appendixinflamed"
 
+/obj/item/weapon/megaphone
+	name = "megaphone"
+	desc = "A device used to project your voice. Loudly."
+	icon = 'items.dmi'
+	icon_state = "megaphone"
+	var/cooldown = 0
+
 /obj/item/weapon/flavor
 	name = "bland flavoring packet"
 	desc = "A sachet of flavoring, designed to be used with \"LiquidFood\" rations.  The flavor is indeterminable."
 	icon = 'food_ingredients.dmi'
 	var/descriptor = "disturbingly beige" //Description shown to onlookers.
-	var/color = "beige" //Color the icon should take on when this is applied.  Also shown when it is mixed in.
+	color = "beige" //Color the icon should take on when this is applied.  Also shown when it is mixed in.
 	var/newDesc = "It posesses a strange and unidentifiable taste.  You try not to think to hard about it." //What gets pegged onto the description.
 
 /obj/item/weapon/flavor/red

@@ -494,96 +494,6 @@
 		else
 			return ..()
 
-//The toilet does not need to pressurized but can only handle small items.
-//You can also choke people by dunking them into the toilet.
-/obj/machinery/disposal/toilet
-	name = "toilet"
-	desc = "A torque rotation-based, waste disposal unit for small matter."
-	icon_state = "toilet"
-	density = 0//So you can stand on it.
-	mode = 2
-
-	attackby(var/obj/item/I, var/mob/user)
-		if( !(stat & BROKEN) )
-			if(istype(I, /obj/item/weapon/grab))
-				var/obj/item/weapon/grab/G = I
-				if(istype(G)) // handle grabbed mob
-					if(ismob(G.affecting))
-						var/mob/GM = G.affecting
-						for (var/mob/V in viewers(usr))
-							V.show_message("[user] dunks [GM.name] into the toilet!", 3)
-						if(do_after(user, 30))
-							if(G && G.state>1 && !GM.internal)
-								GM.oxyloss += 5
-
-			else if(I.w_class < 4)
-				user.drop_item()
-				I.loc = src
-				user << "You place \the [I] into the [src]."
-				for(var/mob/M in viewers(src))
-					if(M == user)
-						continue
-					M.show_message("[user.name] places \the [I] into the [src].", 3)
-			else
-				user << "\red That item cannot be placed into the toilet."
-		return
-
-	MouseDrop_T(mob/target, mob/user)
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai))
-			return//Damn that list is long
-
-		for (var/mob/V in viewers(usr))
-			if(target == user && !user.stat)
-				V.show_message("[user] sits on the toilet.", 3)
-			if(target != user && !user.restrained())
-				V.show_message("[user] places [target.name] on the toilet.", 3)
-		target.loc = loc
-		return
-
-	interact(mob/user)
-		if(isAI(user) || isrobot(user))
-			return
-
-		add_fingerprint(user)
-		for (var/mob/V in viewers(user))
-			V.show_message("[user] eagerly drinks the toilet water!", 3)//Yum yum yum
-		return
-
-	update()
-		overlays = null
-		if( !(stat & BROKEN) )
-			if(flush)
-				overlays += image('disposal.dmi',"toilet-handle",,dir)
-			if( !(stat & NOPOWER) )
-				overlays += image('disposal.dmi',"toilet-ready",,dir)
-		else
-			icon_state = "toilet-broken"
-			mode = 0
-			flush = 0
-		return
-
-	process()
-		if( !((stat & BROKEN)||(stat & NOPOWER)) )// nothing can happen if broken or not powered.
-			updateDialog()
-			if(!flush&&contents.len)
-				flush++
-				flush()
-			use_power(100)// base power usage
-			update()
-		return
-
-	flush()
-		flick("toilet-flush", src)
-		var/obj/structure/disposalholder/H = new()
-		H.init(src)
-		sleep(10)
-		playsound(src, 'disposalflush.ogg', 50, 0, 0)
-		sleep(30) // To prevent spam.
-		H.start(src)
-		flush--
-		update()
-		return
-
 // virtual disposal object
 // travels through pipes in lieu of actual items
 // contents will be items flushed by the disposal
@@ -602,8 +512,8 @@
 
 	// initialize a holder from the contents of a disposal unit
 	proc/init(var/obj/machinery/disposal/D)
-		if(!istype(D, /obj/machinery/disposal/toilet))//So it does not drain gas from a toilet which does not function on it.
-			gas = D.air_contents// transfer gas resv. into holder object
+		gas = D.air_contents// transfer gas resv. into holder object
+
 
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs

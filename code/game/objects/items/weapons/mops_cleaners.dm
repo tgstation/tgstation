@@ -6,7 +6,8 @@
 	name = "space cleaner"
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	flags = TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 2.0
 	throw_speed = 2
@@ -117,7 +118,8 @@
 	name = "chem sprayer"
 	icon_state = "chemsprayer"
 	item_state = "chemsprayer"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	flags = TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 3.0
 	throw_speed = 2
@@ -212,7 +214,6 @@
 	return
 
 
-	return
 
 //Pepper spray, set up to make the 2 different types
 /obj/item/weapon/pepperspray //This is riot control
@@ -221,7 +222,8 @@
 	name = "pepperspray"
 	icon_state = "pepperspray"
 	item_state = "pepperspray"
-	flags = ONBELT|TABLEPASS|FPRINT|USEDELAY
+	flags = TABLEPASS | FPRINT | USEDELAY
+	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 2.0
 	throw_speed = 2
@@ -236,7 +238,8 @@
 	name = "mace"
 	icon_state = "pepperspray"
 	item_state = "pepperspray"
-	flags = ONBELT|TABLEPASS|FPRINT|USEDELAY
+	flags = TABLEPASS | FPRINT | USEDELAY
+	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 1.0
 	throw_speed = 2

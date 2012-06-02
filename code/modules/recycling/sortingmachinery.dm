@@ -19,7 +19,7 @@
 
 	proc/unwrap()
 		if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
-			wrapped.loc = (get_turf(src.loc))
+			wrapped.loc = (get_turf(loc))
 			if(istype(wrapped, /obj/structure/closet))
 				var/obj/structure/closet/O = wrapped
 				O.welded = waswelded
@@ -47,7 +47,7 @@
 		if(istype(W, /obj/item/device/destTagger))
 			var/obj/item/device/destTagger/O = W
 			user << "\blue *TAGGED*"
-			src.sortTag = O.currTag
+			sortTag = O.currTag
 			update_icon()
 		else if(istype(W, /obj/item/weapon/pen))
 			switch(alert("What would you like to alter?",,"Title","Description", "Cancel"))
@@ -56,9 +56,10 @@
 					if(!str || !length(str))
 						usr << "\red Invalid text."
 						return
-					for(var/mob/M in viewers())
-						M << "\blue [user] labels [src] as [str]."
-					src.name = "[src.name] ([str])"
+					user.visible_message("\The [user] titles \the [src] with \a [W], marking down: \"[examtext]\"",\
+					"\blue You title \the [src]: \"[examtext]\"",\
+					"You hear someone scribbling a note.")
+					name = "[name] ([str])"
 					update_icon()
 				if("Description")
 					var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
@@ -66,8 +67,9 @@
 						usr << "\red Invalid text."
 						return
 					examtext = str
-					for(var/mob/M in viewers())
-						M << "\blue [user] labels [src] with the note: [examtext]."
+					user.visible_message("\The [user] labels \the [src] with \a [W], scribbling down: \"[examtext]\"",\
+					"\blue You label \the [src]: \"[examtext]\"",\
+					"You hear someone scribbling a note.")
 					update_icon()
 		return
 
@@ -87,11 +89,29 @@
 			F.opened = 0
 			break
 
+	ex_act(severity)
+		switch(severity)
+			if(1.0)
+				del(src)
+			if(2.0)
+				if(prob(10))
+					del(src)
+				else
+					wrapped.loc = get_turf(src)
+					wrapped:welded = waswelded
+					del(src)
+				return
+			if(3.0)
+				wrapped.loc = get_turf(src)
+				wrapped:welded = waswelded
+				del(src)
+				return
+
 /obj/item/smallDelivery
 	desc = "A small wrapped package."
 	name = "small parcel"
 	icon = 'storage.dmi'
-	icon_state = "deliverycrateSmall"
+	icon_state = "deliverycrateSmall1"
 	var/tmp/obj/item/wrapped = null
 	var/sortTag = null
 	flags = FPRINT
@@ -99,9 +119,8 @@
 
 
 	attack_self(mob/user)
-		if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
-			src.wrapped.loc = (get_turf(src.loc))
-
+		if (wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
+			wrapped.loc = (get_turf(loc))
 		del(src)
 		return
 
@@ -116,7 +135,7 @@
 		if(istype(W, /obj/item/device/destTagger))
 			var/obj/item/device/destTagger/O = W
 			user << "\blue *TAGGED*"
-			src.sortTag = O.currTag
+			sortTag = O.currTag
 			update_icon()
 		else if(istype(W, /obj/item/weapon/pen))
 			switch(alert("What would you like to alter?",,"Title","Description", "Cancel"))
@@ -125,9 +144,10 @@
 					if(!str || !length(str))
 						usr << "\red Invalid text."
 						return
-					for(var/mob/M in viewers())
-						M << "\blue [user] labels [src] as [str]."
-					src.name = "[src.name] ([str])"
+					user.visible_message("\The [user] titles \the [src] with \a [W], marking down: \"[examtext]\"",\
+					"\blue You title \the [src]: \"[examtext]\"",\
+					"You hear someone scribbling a note.")
+					name = "[name] ([str])"
 					update_icon()
 				if("Description")
 					var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
@@ -135,8 +155,9 @@
 						usr << "\red Invalid text."
 						return
 					examtext = str
-					for(var/mob/M in viewers())
-						M << "\blue [user] labels [src] with the note: [examtext]."
+					user.visible_message("\The [user] labels \the [src] with \a [W], scribbling down: \"[examtext]\"",\
+					"\blue You label \the [src]: \"[examtext]\"",\
+					"You hear someone scribbling a note.")
 					update_icon()
 		return
 
@@ -149,6 +170,22 @@
 		..()
 		return
 
+	ex_act(severity)
+		switch(severity)
+			if(1.0)
+				del(src)
+			if(2.0)
+				if(prob(40))
+					del(src)
+				else
+					wrapped.loc = get_turf(src)
+					del(src)
+				return
+			if(3.0)
+				wrapped.loc = get_turf(src)
+				del(src)
+				return
+
 /obj/item/weapon/packageWrap
 	name = "package wrapper"
 	icon = 'items.dmi'
@@ -158,6 +195,8 @@
 
 
 	afterattack(var/obj/target as obj, mob/user as mob)
+		if(!in_range(target,user))
+			return
 		if(!(istype(target, /obj)))	//this really shouldn't be necessary (but it is).	-Pete
 			return
 		if(istype(target, /obj/structure/table) || istype(target, /obj/structure/rack) || istype(target,/obj/item/smallDelivery))
@@ -167,43 +206,54 @@
 		if(target in user)
 			return
 
-		user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[target]</font>")
+		user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used \a [src] on \ref[target]</font>")
 
 		if (istype(target, /obj/item))
 			var/obj/item/O = target
-			if (src.amount > 1)
+			if (amount > 1)
 				var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(O.loc))	//Aaannd wrap it up!
 				if(!istype(O.loc, /turf))
 					if(user.client)
 						user.client.screen -= O
 				P.wrapped = O
 				O.loc = P
-				src.amount -= 1
+				amount -= 1
+				P.w_class = O.w_class
+				P.icon_state = "deliverycrateSmall[P.w_class]"
+				user.visible_message("\The [user] wraps \a [target] with \a [src], producing \a [P].",\
+				"\blue You wrap \the [target], leaving [amount] units of paper on your [src].",\
+				"You hear someone taping paper around a small object.")
 		else if (istype(target, /obj/structure/closet/crate))
 			var/obj/structure/closet/crate/O = target
-			if (src.amount > 3 && !O.opened)
+			if (amount > 3 && !O.opened)
 				var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 				P.icon_state = "deliverycrate"
 				P.wrapped = O
 				O.loc = P
-				src.amount -= 3
-			else if(src.amount < 3)
+				amount -= 3
+				user.visible_message("\The [user] wraps \a [target] with \a [src], producing \a [P].",\
+				"\blue You wrap \the [target], leaving [amount] units of paper on your [src].",\
+				"You hear someone pondering a problem, using a tape measure, and taping paper around a large object.")
+			else if(amount < 3)
 				user << "\blue You need more paper."
 		else if (istype (target, /obj/structure/closet))
 			var/obj/structure/closet/O = target
-			if (src.amount > 3 && !O.opened)
+			if (amount > 3 && !O.opened)
 				var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 				P.wrapped = O
 				P.waswelded = O.welded
 				O.welded = 1
 				O.loc = P
-				src.amount -= 3
-			else if(src.amount < 3)
+				amount -= 3
+				user.visible_message("\The [user] wraps \a [target] with \a [src], producing \a [P].",\
+				"\blue You wrap \the [target], leaving [amount] units of paper on your [src].",\
+				"You hear someone pondering a problem, using a tape measure, and taping paper around a large object.")
+			else if(amount < 3)
 				user << "\blue You need more paper."
 		else
 			user << "\blue The object you are trying to wrap is unsuitable for the sorting machinery!"
-		if (src.amount <= 0)
-			new /obj/item/weapon/c_tube( src.loc )
+		if (amount <= 0)
+			new /obj/item/weapon/c_tube( loc )
 			del(src)
 			return
 		return
@@ -252,7 +302,8 @@
 
 	w_class = 1
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
 
 	attack_self(mob/user as mob)
 		interact(user)
@@ -275,15 +326,15 @@
 
 	Topic(href, href_list)
 		usr.machine = src
-		src.add_fingerprint(usr)
+		add_fingerprint(usr)
 		if(href_list["nextTag"])
 			var/n = text2num(href_list["nextTag"])
 			if(n > locationList.len)
 				var/t1 = input("Which tag?","Tag") as null|text
 				if(t1)
-					src.currTag = t1
+					currTag = t1
 			else
-				src.currTag = locationList[n]
+				currTag = locationList[n]
 		if(istype(loc,/mob))
 			interact(loc)
 		else
@@ -291,18 +342,15 @@
 			return
 
 	attack(target as obj, mob/user as mob)
-		if (istype(target, /obj/structure/bigDelivery))
-			user << "\blue *TAGGED*"
-			var/obj/structure/bigDelivery/O = target
-			O.sortTag = src.currTag
-			O.update_icon()
-		else if (istype(target, /obj/item/smallDelivery))
-			user << "\blue *TAGGED*"
-			var/obj/item/smallDelivery/O = target
-			O.sortTag = src.currTag
-			O.update_icon()
+		if (istype(target, /obj/structure/bigDelivery) || istype(target, /obj/item/smallDelivery))
+			user.visible_message("\The [user] tags \a [target] with \a [src].", "\blue *TAGGED*",\
+			"You hear a short electronic click-shunk, like something being printed on a surface.")
+			target:sortTag = currTag
+			target:update_icon()
 		else
-			user << "\blue You can only tag properly wrapped delivery packages!"
+			user.visible_message("\The [user] tries to tag \a [target], but their [src] refuses to work on anything but packages.",\
+			"\blue Your [src] flashes: \"You can only tag properly wrapped delivery packages!\"",\
+			"You hear a short click then a sad synthesized noise.")
 		return
 
 /obj/machinery/disposal/deliveryChute
@@ -311,6 +359,7 @@
 	density = 0
 	icon_state = "intake"
 	var/currentlyFlushing = 0
+	var/defaultDestination = "Disposals"
 
 	interact()
 		return
@@ -322,7 +371,7 @@
 		else if (istype(AM, /mob))
 			var/mob/M = AM
 			M.loc = src
-		src.flush()
+		flush()
 
 	flush()
 		flushing = 1
@@ -333,13 +382,13 @@
 		for(var/obj/structure/bigDelivery/O in src)
 			deliveryCheck = 1
 			if(!O.sortTag)
-				O.sortTag = "Disposals"
+				O.sortTag = defaultDestination
 		for(var/obj/item/smallDelivery/O in src)
 			deliveryCheck = 1
 			if (!O.sortTag)
-				O.sortTag = "Disposals"
+				O.sortTag = defaultDestination
 		if(deliveryCheck == 0)
-			H.destinationTag = "Disposals"
+			H.destinationTag = defaultDestination
 
 
 		H.init(src)	// copy the contents of disposer to holder
@@ -366,11 +415,11 @@
 		return
 
 	CanPass(atom/A, turf/T)
-		if(istype(A, /mob/living)) // You Shall Not Pass!
+		if(istype(A, /mob/living)) // You Shall Get Sucked In And Killed!
 			var/mob/living/M = A
 			HasEntered(M)
 			return 0
-		if(istype(A, /obj)) // You Shall Not Pass!
+		if(istype(A, /obj)) // You Shall Get Mailed!
 			var/obj/M = A
 			HasEntered(M)
 			return 1

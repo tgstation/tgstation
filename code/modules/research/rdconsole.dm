@@ -352,6 +352,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				screen = 0.3
 				linked_lathe.busy = 1
 				flick("protolathe_n",linked_lathe)
+				var/key = usr.key	//so we don't lose the info during the spawn delay
 				spawn(16)
 					use_power(power)
 					spawn(16)
@@ -380,6 +381,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 						if(being_built.build_path)
 							var/obj/new_item = new being_built.build_path(src)
+							if( new_item.type == /obj/item/weapon/storage/backpack/holding )
+								new_item.investigate_log("built by [key]","singulo")
 							new_item.reliability = being_built.reliability
 							if(linked_lathe.hacked) being_built.reliability = max((reliability / 2), 0)
 							if(being_built.locked)

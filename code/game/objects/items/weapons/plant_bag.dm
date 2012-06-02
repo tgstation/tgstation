@@ -7,7 +7,8 @@
 	name = "Plant Bag"
 	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
 	var/capacity = 50; //the number of plant pieces it can carry.
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	w_class = 1
 
 /obj/item/weapon/plantbag/attack_self(mob/user as mob)

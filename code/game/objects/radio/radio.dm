@@ -26,7 +26,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
 	var/subspace_transmission = 0
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
-	flags = 450		// hello i'm a fucking idiot why is this 450?? CODE GODS PLEASE EXPLAIN~
+	flags = FPRINT | CONDUCT | TABLEPASS
+	slot_flags = SLOT_BELT
 	throw_speed = 2
 	throw_range = 9
 	w_class = 2
@@ -43,11 +44,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio
 	var/datum/radio_frequency/radio_connection
 	var/list/datum/radio_frequency/secure_radio_connections = new
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, frequency)
-			frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
+
+	proc/set_frequency(new_frequency)
+		radio_controller.remove_object(src, frequency)
+		frequency = new_frequency
+		radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
 
 
 
