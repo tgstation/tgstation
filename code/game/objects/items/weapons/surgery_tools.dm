@@ -1082,9 +1082,9 @@ CIRCULAR SAW
 	if(!istype(M))
 		return ..()
 
-	//if(M.mutations & HUSK)	return ..()
+	//if(NOCLONE in M.mutations)	return ..()
 
-	if((user.mutations & CLUMSY) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		M = user
 		return eyestab(M,user)
 
@@ -1488,12 +1488,11 @@ CIRCULAR SAW
 ////////////////
 //CIRCULAR SAW//
 ////////////////
-
 /obj/item/weapon/circular_saw/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return ..()
 
-	if((user.mutations & CLUMSY) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		M = user
 		return eyestab(M,user)
 
@@ -1673,7 +1672,7 @@ CIRCULAR SAW
 /obj/item/weapon/surgical_tool/attack(mob/living/carbon/human/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M, /mob))
 		return
-	if((usr.mutations & 16) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		M << "\red You stab yourself in the eye."
 		M.disabilities |= 128
 		M.weakened += 4

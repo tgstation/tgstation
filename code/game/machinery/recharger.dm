@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 obj/machinery/recharger
 	anchored = 1
@@ -29,7 +29,7 @@ obj/machinery/recharger
 			if(!isarea(a))
 				return
 			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				user << "\red The recharger rejects the weapon!"
+				user << "\red The [name] blinks red as you try to insert the item!"
 				return
 			user.drop_item()
 			G.loc = src

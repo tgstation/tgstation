@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/item/weapon
 	name = "weapon"
@@ -25,6 +25,20 @@
 
 	IsShield()
 		return 1
+
+/obj/item/weapon/shield/energy
+	name = "energy combat shield"
+	desc = "A shield capable of stopping most projectile and melee attacks. It can be retracted, expanded, and stored anywhere."
+	icon = 'weapons.dmi'
+	icon_state = "eshield0" // eshield1 for expanded
+	flags = FPRINT | TABLEPASS| CONDUCT
+	force = 3.0
+	throwforce = 5.0
+	throw_speed = 1
+	throw_range = 4
+	w_class = 1
+	origin_tech = "materials=4;magnets=3;syndicate=4"
+	var/active = 0
 
 
 /obj/item/weapon/nullrod
@@ -96,7 +110,7 @@
 	desc = "BLOOD FOR THE BLOOD GOD."	//SKULLS FOR THE SKULL THRONE. --SkyMarshal
 	icon_state = "claymore"
 	item_state = "claymore"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 	force = 40
 	throwforce = 10
@@ -110,7 +124,6 @@
 	desc = "A bag used to deal with a corpse."
 	icon = 'closet.dmi'
 	icon_state = "bodybag"
-	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 5.0
 	throwforce = 5.0
 	throw_speed = 1
@@ -362,7 +375,7 @@
 	desc = "The Captain is first and all other heads are last."
 	icon_state = "chainofcommand"
 	item_state = "chainofcommand"
-	flags = FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS | CONDUCT
 	slot_flags = SLOT_BELT
 	force = 10
 	throwforce = 7

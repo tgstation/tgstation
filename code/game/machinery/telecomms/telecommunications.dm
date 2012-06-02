@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /*
 	Hello, friends, this is Doohl from sexylands. You may be wondering what this
@@ -167,18 +167,6 @@
 
 		if(traffic > 0)
 			traffic -= netspeed
-		/* Machine checks */
-		if(on)
-			if(machinetype == 2) // bus mainframes
-				switch(traffic)
-					if(-100 to 49)
-						icon_state = initial(icon_state)
-					if(50 to 200)
-						icon_state = "bus2"
-					else
-						icon_state = "bus3"
-
-		// Check heat and generate some
 
 	proc/checkheat()
 		// Checks heat from the environment and applies any integrity damage
@@ -270,7 +258,7 @@
 /obj/machinery/telecomms/bus
 	name = "Bus Mainframe"
 	icon = 'stationobjs.dmi'
-	icon_state = "bus1"
+	icon_state = "bus"
 	desc = "A mighty piece of hardware used to send massive amounts of data quickly."
 	density = 1
 	anchored = 1
@@ -498,6 +486,8 @@
 	autolinkers = list("bus2") // Bus units 3 and 4
 	freq_listening = list(1459, 1353, 1357, 1359) // common, command, engineering, security
 
+
+
 /obj/machinery/telecomms/bus/preset_one
 	id = "Bus 1"
 	network = "tcommsat"
@@ -607,6 +597,7 @@
 	id = "Broadcaster B"
 	network = "tcommsat"
 	autolinkers = list("broadcasterB")
+
 
 
 

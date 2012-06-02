@@ -88,6 +88,7 @@ proc/move_mining_shuttle()
 	icon = 'computer.dmi'
 	icon_state = "shuttle"
 	req_access = list(access_mining)
+	circuit = "/obj/item/weapon/circuitboard/mining_shuttle"
 	var/hacked = 0
 	var/location = 0 //0 = station, 1 = mining base
 
@@ -125,6 +126,28 @@ proc/move_mining_shuttle()
 		src.req_access = list()
 		hacked = 1
 		usr << "You fried the consoles ID checking system. It's now available to everyone!"
+
+	else if(istype(W, /obj/item/weapon/screwdriver))
+		playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+		if(do_after(user, 20))
+			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
+			var/obj/item/weapon/circuitboard/mining_shuttle/M = new /obj/item/weapon/circuitboard/mining_shuttle( A )
+			for (var/obj/C in src)
+				C.loc = src.loc
+			A.circuit = M
+			A.anchored = 1
+
+			if (src.stat & BROKEN)
+				user << "\blue The broken glass falls out."
+				new /obj/item/weapon/shard( src.loc )
+				A.state = 3
+				A.icon_state = "3"
+			else
+				user << "\blue You disconnect the monitor."
+				A.state = 4
+				A.icon_state = "4"
+
+			del(src)
 
 /******************************Lantern*******************************/
 
@@ -166,6 +189,7 @@ proc/move_mining_shuttle()
 
 	hammer
 		name = "Mining Sledge Hammer"
+		//icon_state = "sledgehammer" Waiting on sprite
 		desc = "A mining hammer made of reinforced metal. You feel like smashing your boss in the face with this."
 
 	silver

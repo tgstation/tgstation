@@ -1,3 +1,5 @@
+//This could either be split into the proper DM files or placed somewhere else all together, but it'll do for now -Nodrak
+
 /*
 
 SYNDICATE UPLINKS
@@ -19,14 +21,19 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	var/welcome 					// Welcoming menu message
 	var/menu_message = "" 			// The actual menu text
 	var/items						// List of items
+	var/item_data					// raw item text
 	var/list/ItemList				// Parsed list of items
 	var/uses 						// Numbers of crystals
+	var/uplink_data					// designated uplink items
 	// List of items not to shove in their hands.
 	var/list/NotInHand = list(/obj/machinery/singularity_beacon/syndicate)
 
 	New()
 		welcome = ticker.mode.uplink_welcome
-		items = dd_replacetext(ticker.mode.uplink_items, "\n", "")	// Getting the text string of items
+		if(!item_data)
+			items = dd_replacetext(ticker.mode.uplink_items, "\n", "")	// Getting the text string of items
+		else
+			items = dd_replacetext(item_data)
 		ItemList = dd_text2list(src.items, ";")	// Parsing the items text string
 		uses = ticker.mode.uplink_uses
 

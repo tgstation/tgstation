@@ -679,7 +679,7 @@
 				attack_verb = "slash"
 
 			if (prob(90))
-				if (M.mutations & HULK)//HULK SMASH
+				if ((HULK in M.mutations) || (SUPRSTR in M.augmentations))//HULK SMASH
 					damage += 14
 					spawn(0)
 						Paralyse(5)

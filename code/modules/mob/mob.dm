@@ -452,11 +452,6 @@
 	M.Login()
 	return
 
-/mob/verb/cmd_rules()
-	set name = "Rules"
-	set category = "OOC"
-	src << browse(rules, "window=rules;size=480x320")
-
 /mob/verb/changes()
 	set name = "Changelog"
 	set category = "OOC"

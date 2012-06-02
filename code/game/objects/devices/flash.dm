@@ -15,7 +15,7 @@
 	var/last_used = 0 //last world.time it was used.
 
 /obj/item/device/flash/proc/clown_check(var/mob/user)
-	if(user && (user.mutations & CLUMSY) && prob(50))
+	if(user && (CLUMSY in user.mutations) && prob(50))
 		user << "\red The Flash slips out of your hand."
 		user.drop_item()
 		return 0

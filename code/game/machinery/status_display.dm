@@ -118,10 +118,10 @@
 			var/disp1
 			var/disp2
 			if(supply_shuttle_moving)
-				disp1 = get_supply_shuttle_timer()
+				disp1 = "SPPLY"
+				disp2 = get_supply_shuttle_timer()
 				if(lentext(disp1) > 5)
 					disp1 = "**~**"
-				disp2 = null
 
 			else
 				if(supply_shuttle_at_station)

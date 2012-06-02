@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/structure/grille
 	desc = "A piece of metal with evenly spaced gridlike holes in it. Blocks large object but lets small items, gas, or energy beams through. Strangely enough these grilles also lets meteors pass through them, whether they be small or huge station breaking death stones."
@@ -49,7 +49,7 @@
 		user.visible_message("[user.name] kicks the [src.name].", \
 							"You kick the [src.name].", \
 							"You hear a noise")
-		if((usr.mutations & HULK))
+		if((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
 			src.health -= 5
 		else if(!shock(user, 70))
 			src.health -= 3

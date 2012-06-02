@@ -152,7 +152,6 @@ var/wavesecret = 0
 var/shuttlecoming = 0
 
 var/join_motd = null
-var/rules = null
 var/forceblob = 0
 
 var/custom_event_msg = null

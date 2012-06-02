@@ -100,7 +100,7 @@
 		usr << "\red This creature is not compatible with our biology."
 		return
 
-	if (M.mutations2 & NOCLONE)
+	if (NOCLONE in M.mutations)
 		usr << "\red This creature's DNA is ruined beyond useability!"
 		return
 
@@ -797,7 +797,7 @@ Tarjan shit, not recoding this -Sieve{R}*/
 			usr << "\red We don't have enough stored chemicals to do that!"
 			return
 
-		if(T.stat != 2 || (T.mutations & HUSK) || (!ishuman(T) && !ismonkey(T)))
+		if(T.stat != 2 || (HUSK in T.mutations) || (!ishuman(T) && !ismonkey(T)))
 			usr << "\red We can't transform that target!"
 			return
 

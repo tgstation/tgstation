@@ -397,7 +397,7 @@
 //	if ((!subject.ckey) || (!subject.client))
 //		src.temp = "Error: Mental interface failure."
 //		return
-	if (subject.mutations & NOCLONE)
+	if (NOCLONE in subject.mutations)
 		src.temp = "Error: Mental interface failure."
 		return
 	if (!isnull(find_record(subject.ckey)))

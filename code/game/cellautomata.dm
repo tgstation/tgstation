@@ -20,10 +20,6 @@
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
 
-/world/proc/load_rules()
-	rules = file2text("config/rules.html")
-	if (!rules)
-		rules = "<html><head><title>Rules</title><body>There are no rules! Go nuts!</body></html>"
 
 /world/proc/load_admins()
 	var/text = file2text("config/admins.txt")
@@ -83,7 +79,6 @@
 
 	src.load_mode()
 	src.load_motd()
-	src.load_rules()
 	src.load_admins()
 	investigate_reset()
 	if (config.usealienwhitelist)

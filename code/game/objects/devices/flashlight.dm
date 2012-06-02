@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
-
 /obj/item/device/flashlight
 	name = "flashlight"
 	desc = "A hand-held emergency light."
@@ -51,7 +49,7 @@
 /obj/item/device/flashlight/attack(mob/M as mob, mob/user as mob)
 	src.add_fingerprint(user)
 	if(src.on && user.zone_sel.selecting == "eyes")
-		if ((user.mutations & CLUMSY || user.getBrainLoss() >= 60) && prob(50))//too dumb to use flashlight properly
+		if (((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))//too dumb to use flashlight properly
 			return ..()//just hit them in the head
 
 		if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")//don't have dexterity
@@ -71,7 +69,7 @@
 			if(M.stat > 1 || M.disabilities & 128)//mob is dead or fully blind
 				if(M!=user)
 					user.show_message(text("\red [] pupils does not react to the light!", M),1)
-			else if(M.mutations & XRAY)//mob has X-RAY vision
+			else if(XRAY in M.mutations)//mob has X-RAY vision
 				if(M!=user)
 					user.show_message(text("\red [] pupils give an eerie glow!", M),1)
 			else //nothing wrong
@@ -191,6 +189,28 @@
 		user.total_luminosity -= brightness_on
 		user.UpdateLuminosity()
 		src.sd_SetLuminosity(brightness_on)
+
+// the desk lamps are a bit special
+/obj/item/device/flashlight/lamp
+	name = "desk lamp"
+	desc = "A desk lamp"
+	icon = 'lighting.dmi'
+	icon_state = "lamp0"
+	brightness_on = 5
+	icon_on = "lamp1"
+	icon_off = "lamp0"
+	w_class = 4
+	flags = FPRINT | TABLEPASS | CONDUCT
+	m_amt = 0
+	g_amt = 0
+	on = 1
+
+// green-shaded desk lamp
+/obj/item/device/flashlight/lamp/green
+	icon_state = "green0"
+	icon_on = "green1"
+	icon_off = "green0"
+	desc = "A green-shaded desk lamp"
 
 /obj/item/device/flashlight/lamp/verb/toggle_light()
 	set name = "Toggle light"
