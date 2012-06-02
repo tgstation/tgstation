@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
-
 // Disposal bin
 // Holds items for disposal into pipe system
 // Draws air from turf, gradually charges internal reservoir
@@ -49,6 +47,37 @@
 
 		if(isrobot(user) && !istype(I, /obj/item/weapon/trashbag))
 			return
+		if(mode<=0) // It's off
+			if(istype(I, /obj/item/weapon/screwdriver))
+				if(mode==0) // It's off but still not unscrewed
+					mode=-1 // Set it to doubleoff l0l
+					playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+					user << "You remove the screws around the power connection."
+					return
+				else if(mode==-1)
+					mode=0
+					playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+					user << "You attach the screws around the power connection."
+					return
+			else if(istype(I,/obj/item/weapon/weldingtool) && mode==-1)
+				var/obj/item/weapon/weldingtool/W = I
+				if(W.remove_fuel(0,user))
+					playsound(src.loc, 'Welder2.ogg', 100, 1)
+					user << "You start slicing the floorweld off the disposal unit."
+					W:welding = 2
+					if(do_after(user,20))
+						user << "You sliced the floorweld off the disposal unit."
+						var/obj/structure/disposalconstruct/C = new (src.loc)
+						C.ptype = 6 // 6 = disposal unit
+						C.anchored = 1
+						C.density = 1
+						C.update()
+						del(src)
+					W:welding = 1
+					return
+				else
+					user << "You need more welding fuel to complete this task."
+					return
 
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
 			user << "You can't place that item inside the disposal unit."
@@ -72,26 +101,6 @@
 			update()
 			return
 
-		if(istype(I, /obj/item/weapon/weldingtool) && I:welding)
-			var/obj/item/weapon/weldingtool/W = I
-			playsound(src.loc, 'Welder.ogg', 100, 1)
-			var/turf/T = get_turf(user)
-			user.visible_message("[user] welds apart the disposal.", "You start to weld apart the disposal.")
-			sleep(40)
-			if(get_turf(user) == T && W.remove_fuel(2,user))
-				var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(loc)
-				M.state = 2
-				M.icon_state = "box_1"
-				for(var/obj/O in component_parts)
-					if(O.reliability != 100 && crit_fail)
-						O.crit_fail = 1
-					O.loc = src.loc
-				// the stuff still in the disposal
-				for(var/obj/O in src)
-					O.loc = src.loc
-				del(src)
-			return
-
 		var/obj/item/weapon/grab/G = I
 		if(istype(G))	// handle grabbed mob
 			if(ismob(G.affecting))
@@ -104,13 +113,11 @@
 						GM.client.eye = src
 					GM.loc = src
 					for (var/mob/C in viewers(src))
-
-						log_attack("<font color='red'>[usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.</font>")
-						log_admin("ATTACK: [usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.")
-		//				message_admins("ATTACK: [usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.")
-
 						C.show_message("\red [GM.name] has been placed in the [src] by [user].", 3)
 					del(G)
+					log_attack("<font color='red'>[usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.</font>")
+					log_admin("ATTACK: [usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.")
+					message_admins("ATTACK: [usr] ([usr.ckey]) placed [GM] ([GM.ckey]) in a disposals unit.")
 		else
 			if(!I || isnull(I))
 				//CRASH("disposal/attackby() was called, but I was nulled before calling user.drop_item()")
@@ -258,6 +265,11 @@
 		if(user && user.loc == src)
 			usr << "\red You cannot reach the controls from inside."
 			return
+		/*
+		if(mode==-1)
+			usr << "\red The disposal units power is disabled."
+			return
+		*/
 		interact(user, 0)
 
 	// user interaction
@@ -278,7 +290,7 @@
 
 			dat += "<BR><HR><A href='?src=\ref[src];eject=1'>Eject contents</A><HR>"
 
-		if(mode == 0)
+		if(mode <= 0)
 			dat += "Pump: <B>Off</B> <A href='?src=\ref[src];pump=1'>On</A><BR>"
 		else if(mode == 1)
 			dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (pressurizing)<BR>"
@@ -299,6 +311,10 @@
 	Topic(href, href_list)
 		if(usr.loc == src)
 			usr << "\red You cannot reach the controls from inside."
+			return
+
+		if(mode==-1 && !href_list["eject"]) // only allow ejecting if mode is -1
+			usr << "\red The disposal units power is disabled."
 			return
 		..()
 		src.add_fingerprint(usr)
@@ -356,7 +372,7 @@
 			overlays += image('disposal.dmi', "dispover-handle")
 
 		// only handle is shown if no power
-		if(stat & NOPOWER)
+		if(stat & NOPOWER || mode == -1)
 			return
 
 		// 	check for items in disposal - occupied light
@@ -374,6 +390,10 @@
 	process()
 		if(stat & BROKEN)			// nothing can happen if broken
 			return
+
+		if(!air_contents) // Potentially causes a runtime otherwise (if this is really shitty, blame pete //Donkie)
+			return
+
 
 		if(length(src.contents) > 0)
 			if(timeleft == 0)
@@ -913,6 +933,8 @@
 				C.ptype = 5
 
 		C.dir = dir
+		C.density = 0
+		C.anchored = 1
 		C.update()
 
 		del(src)
@@ -1245,6 +1267,37 @@
 		update()
 		return
 
+	// Override attackby so we disallow trunkremoval when somethings ontop
+	attackby(var/obj/item/I, var/mob/user)
+
+		if(linked != null)
+			return
+
+		var/turf/T = src.loc
+		if(T.intact)
+			return		// prevent interaction with T-scanner revealed pipes
+
+		if(istype(I, /obj/item/weapon/weldingtool))
+			var/obj/item/weapon/weldingtool/W = I
+
+			if(W.welding)
+				if(W.remove_fuel(0,user))
+					W:welding = 2
+					playsound(src.loc, 'Welder2.ogg', 100, 1)
+					// check if anything changed over 2 seconds
+					var/turf/uloc = user.loc
+					var/atom/wloc = W.loc
+					user << "Slicing the disposal pipe."
+					sleep(30)
+					if(user.loc == uloc && wloc == W.loc)
+						welded()
+					else
+						user << "You must stay still while welding the pipe."
+					W:welding = 1
+				else
+					user << "You need more welding fuel to cut the pipe."
+					return
+
 	// would transfer to next pipe segment, but we are in a trunk
 	// if not entering from disposal bin,
 	// transfer to linked object (outlet or bin)
@@ -1306,6 +1359,7 @@
 	anchored = 1
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
+	var/mode = 0
 	var/playing_sound = 0
 	var/playing_buzzer = 0
 
@@ -1338,13 +1392,47 @@
 			for(var/atom/movable/AM in H)
 				AM.loc = src.loc
 				AM.pipe_eject(dir)
-				spawn(1)
+				spawn(5)
 					AM.throw_at(target, 3, 1)
 			H.vent_gas(src.loc)
 			del(H)
 
 		return
 
+	attackby(var/obj/item/I, var/mob/user)
+		if(!I || !user)
+			return
+
+		if(istype(I, /obj/item/weapon/screwdriver))
+			if(mode==0)
+				mode=1
+				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+				user << "You remove the screws around the power connection."
+				return
+			else if(mode==1)
+				mode=0
+				playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+				user << "You attach the screws around the power connection."
+				return
+		else if(istype(I,/obj/item/weapon/weldingtool) && mode==1)
+			var/obj/item/weapon/weldingtool/W = I
+			if(W.remove_fuel(0,user))
+				playsound(src.loc, 'Welder2.ogg', 100, 1)
+				user << "You start slicing the floorweld off the disposal outlet."
+				W:welding = 2
+				if(do_after(user,20))
+					user << "You sliced the floorweld off the disposal outlet."
+					var/obj/structure/disposalconstruct/C = new (src.loc)
+					C.ptype = 7 // 7 =  outlet
+					C.update()
+					C.anchored = 1
+					C.density = 1
+					del(src)
+				W:welding = 1
+				return
+			else
+				user << "You need more welding fuel to complete this task."
+				return
 
 
 
