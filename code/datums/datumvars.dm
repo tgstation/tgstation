@@ -757,16 +757,14 @@ client
 				message_admins("\blue [key_name(usr)] dealt [amount] amount of [Text] damage to [M] ", 1)
 				href_list["datumrefresh"] = href_list["mobToDamage"]
 		else
-			return 0
-
+			. = 0
 		if (href_list["datumrefresh"])
-			if(!href_list["datumrefresh"])
-				return
 			var/datum/DAT = locate(href_list["datumrefresh"])
 			if(!DAT)
 				return
 			if(!istype(DAT,/datum))
 				return
 			src.debug_variables(DAT)
+			. = 1
 		return
 
