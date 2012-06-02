@@ -153,7 +153,7 @@
 		user << "\blue You arm the mousetrap."
 	else
 		icon_state = "mousetrap"
-		if((user.getBrainLoss() >= 60 || user.mutations & CLUMSY) && prob(50))
+		if(( (user.getBrainLoss() >= 60 || (CLUMSY in user.mutations)) && prob(50)))
 			var/which_hand = "l_hand"
 			if(!user.hand)
 				which_hand = "r_hand"
@@ -170,7 +170,7 @@
 
 /obj/item/weapon/mousetrap/attack_hand(mob/user as mob)
 	if(armed)
-		if((user.getBrainLoss() >= 60 || user.mutations & CLUMSY) && prob(50))
+		if(( (user.getBrainLoss() >= 60 || CLUMSY in user.mutations)) && prob(50))
 			var/which_hand = "l_hand"
 			if(!user.hand)
 				which_hand = "r_hand"

@@ -19,11 +19,14 @@ datum/mind
 	var/has_been_rev = 0//Tracks if this mind has been a rev or not
 	var/rev_cooldown = 0
 
+	var/datum/faction/faction // associated faction
+
 	proc/transfer_to(mob/new_character)
 		// multikey information is stored in the mob, not the mind, so
 		// we need to clean this stuff up to avoid multikey alerts
 		current.lastKnownIP = null
 		current.computer_id = null
+
 
 
 		if(current)

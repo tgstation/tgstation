@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 +++++++++++++++++++++++++++++++++//                    //++++++++++++++++++++++++++++++++++
@@ -1308,10 +1310,9 @@ It is possible to destroy the net by the occupant or someone else.
 	mouse_opacity = 1//So you can hit it with stuff.
 	anchored = 1//Can't drag/grab the trapped mob.
 
-	var
-		health = 25//How much health it has.
-		mob/living/affecting = null//Who it is currently affecting, if anyone.
-		mob/living/master = null//Who shot web. Will let this person know if the net was successful or failed.
+	var/health = 25//How much health it has.
+	var/mob/living/affecting = null//Who it is currently affecting, if anyone.
+	var/mob/living/master = null//Who shot web. Will let this person know if the net was successful or failed.
 
 	proc
 		healthcheck()
@@ -1423,7 +1424,7 @@ It is possible to destroy the net by the occupant or someone else.
 		return
 
 	attack_hand()
-		if ((usr.mutations & HULK))
+		if ((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
 			usr << text("\blue You easily destroy the energy net.")
 			for(var/mob/O in oviewers(src))
 				O.show_message(text("\red [] rips the energy net apart!", usr), 1)

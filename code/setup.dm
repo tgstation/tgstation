@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 #define PI 3.1415
 
 #define R_IDEAL_GAS_EQUATION	8.31 //kPa*L/(K*mol)
@@ -136,52 +138,52 @@ var/MAX_EXPLOSION_RANGE = 14
 
 #define HEADSPACE 4			// head wear protects against space
 
-#define MASKINTERNALS 8		// mask allows internals
-#define SUITSPACE 8			// suit protects against space
+#define MASKINTERNALS	8	// mask allows internals
+#define SUITSPACE		8	// suit protects against space
 
-#define USEDELAY 16			// 1 second extra delay on use (Can be used once every 2s)
-#define NODELAY 32768		// 1 second attackby delay skipped (Can be used once every 0.2s). Most objects have a 1s attackby delay, which doesn't require a flag.
-#define NOSHIELD 32			// weapon not affected by shield
-#define CONDUCT 64			// conducts electricity (metal etc.)
-#define FPRINT 256			// takes a fingerprint
-#define ON_BORDER 512		// item has priority to check when entering or leaving
+#define USEDELAY 	16		// 1 second extra delay on use (Can be used once every 2s)
+#define NODELAY 	32768	// 1 second attackby delay skipped (Can be used once every 0.2s). Most objects have a 1s attackby delay, which doesn't require a flag.
+#define NOSHIELD	32		// weapon not affected by shield
+#define CONDUCT		64		// conducts electricity (metal etc.)
+#define FPRINT		256		// takes a fingerprint
+#define ON_BORDER	512		// item has priority to check when entering or leaving
 
-#define GLASSESCOVERSEYES 1024
-#define MASKCOVERSEYES 1024		// get rid of some of the other retardation in these flags
-#define HEADCOVERSEYES 1024		// feel free to realloc these numbers for other purposes
-#define MASKCOVERSMOUTH 2048		// on other items, these are just for mask/head
-#define HEADCOVERSMOUTH 2048
+#define GLASSESCOVERSEYES	1024
+#define MASKCOVERSEYES		1024		// get rid of some of the other retardation in these flags
+#define HEADCOVERSEYES		1024		// feel free to realloc these numbers for other purposes
+#define MASKCOVERSMOUTH		2048		// on other items, these are just for mask/head
+#define HEADCOVERSMOUTH		2048
 
-#define NOSLIP 1024 //prevents from slipping on wet floors, in space etc
+#define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc
 
 #define OPENCONTAINER	4096	// is an open container for chemistry purposes
 
 // #define ONESIZEFITSALL	8192	// can be worn by fatties (or children? ugh)
 
-#define	NOREACT	16384 //Reagents dont' react inside this container.
+#define	NOREACT		16384 		//Reagents dont' react inside this container.
 
-#define BLOCKHAIR 32768			// temporarily removes the user's hair icon
+#define BLOCKHAIR	32768		// temporarily removes the user's hair icon
 
 #define PLASMAGUARD 65536		//Does not get contaminated by plasma.
 
 //flags for pass_flags
-#define PASSTABLE 1
-#define PASSGLASS 2
-#define PASSGRILLE 4
-#define PASSBLOB 8
+#define PASSTABLE	1
+#define PASSGLASS	2
+#define PASSGRILLE	4
+#define PASSBLOB	8
 
 //turf-only flags
-#define NOJAUNT 1
+#define NOJAUNT		1
 
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
-#define HIDEGLOVES 1		//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDESUITSTORAGE 2	//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDEJUMPSUIT 4		//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDESHOES 8			//APPLIES ONLY TO THE EXTERIOR SUIT!!
-#define HIDEMASK 1			//APPLIES ONLY TO HELMETS!!
-#define HIDEEARS 2			//APPLIES ONLY TO HELMETS!!
-#define HIDEEYES 4			//APPLIES ONLY TO HELMETS!!
+#define HIDEGLOVES		1	//APPLIES ONLY TO THE EXTERIOR SUIT!!
+#define HIDESUITSTORAGE	2	//APPLIES ONLY TO THE EXTERIOR SUIT!!
+#define HIDEJUMPSUIT	4	//APPLIES ONLY TO THE EXTERIOR SUIT!!
+#define HIDESHOES		8	//APPLIES ONLY TO THE EXTERIOR SUIT!!
+#define HIDEMASK	1	//APPLIES ONLY TO HELMETS!!
+#define HIDEEARS	2	//APPLIES ONLY TO HELMETS!!
+#define HIDEEYES	4	//APPLIES ONLY TO HELMETS!!
 
 
 //Cant seem to find a mob bitflags area other than the powers one
@@ -202,32 +204,88 @@ var/MAX_EXPLOSION_RANGE = 14
 #define HAND_LEFT		512
 #define HAND_RIGHT		1024
 #define HANDS			1536
-
 #define FULL_BODY		2047
 
+/*
 //bitflags for mutations
-var/const/TK				=(1<<0)
-var/const/COLD_RESISTANCE	=(1<<1)
-var/const/XRAY			=(1<<2)
-var/const/HULK			=(1<<3)
-var/const/CLUMSY			=(1<<4)
-var/const/FAT				=(1<<5)
-var/const/HUSK			=(1<<6)
-var/const/LASER			=(1<<7)
-var/const/HEAL			=(1<<8)
-var/const/mNobreath		=(1<<9)
-var/const/mRemote			=(1<<10)
-var/const/mRegen			=(1<<11)
-var/const/mRun			=(1<<12)
-var/const/mRemotetalk		=(1<<13)
-var/const/mMorph			=(1<<14)
-var/const/mBlend			=(1<<15)
-//the "&" operator cannot go higher than (2^16)-1
-var/const/mHallucination	=(1<<0)
-var/const/mFingerprints	=(1<<1)
-var/const/mShock			=(1<<2)
-var/const/mSmallsize		=(1<<3)
-var/const/NOCLONE			=(1<<4)
+	// Extra powers:
+#define SHADOW			(1<<10)	// shadow teleportation (create in/out portals anywhere) (25%)
+#define SCREAM			(1<<11)	// supersonic screaming (25%)
+#define EXPLOSIVE		(1<<12)	// exploding on-demand (15%)
+#define REGENERATION	(1<<13)	// superhuman regeneration (30%)
+#define REPROCESSOR		(1<<14)	// eat anything (50%)
+#define SHAPESHIFTING	(1<<15)	// take on the appearance of anything (40%)
+#define PHASING			(1<<16)	// ability to phase through walls (40%)
+#define SHIELD			(1<<17)	// shielding from all projectile attacks (30%)
+#define SHOCKWAVE		(1<<18)	// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
+#define ELECTRICITY		(1<<19)	// ability to shoot electric attacks (15%)
+
+
+	// Nanoaugmentations:
+#define SUPRSTR			(1<<20)	// super strength
+#define RADAR			(1<<21)	// on-screen mob radar
+#define ELECTRICHANDS	(1<<22)	// electric hands
+#define ESWORDSYNTH		(1<<23)	// esword synthesizer
+#define REBREATHER		(1<<24)	// removes the need to breathe
+#define DERMALARMOR		(1<<25)	// 35% damage decrease
+#define REFLEXES		(1<<26)	// dodge 50% of projectiles, dodge 25% of melee attacks
+#define NANOREGEN		(1<<27)	// regenerative nanobots, -3 all damage types per second
+*/
+
+// String identifiers for associative list lookup
+
+// mob/var/list/mutations
+
+	// Generic mutations:
+#define	TK				1
+#define COLD_RESISTANCE	2
+#define XRAY			3
+#define HULK			4
+#define CLUMSY			5
+#define FAT				6
+#define HUSK			7
+#define NOCLONE			8
+
+
+	// Extra powers:
+#define LASER			9 	// harm intent - click anywhere to shoot lasers from eyes
+#define HEAL			10 	// healing people with hands
+#define SHADOW			11 	// shadow teleportation (create in/out portals anywhere) (25%)
+#define SCREAM			12 	// supersonic screaming (25%)
+#define EXPLOSIVE		13 	// exploding on-demand (15%)
+#define REGENERATION	14 	// superhuman regeneration (30%)
+#define REPROCESSOR		15 	// eat anything (50%)
+#define SHAPESHIFTING	16 	// take on the appearance of anything (40%)
+#define PHASING			17 	// ability to phase through walls (40%)
+#define SHIELD			18 	// shielding from all projectile attacks (30%)
+#define SHOCKWAVE		19 	// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
+#define ELECTRICITY		20 	// ability to shoot electric attacks (15%)
+
+
+// mob/var/list/augmentations
+
+	// Nanoaugmentations:
+#define SUPRSTR			21 	// super strength (hulk powers)
+#define RADAR			22 	// on-screen mob radar
+#define ELECTRICHANDS	23 	// electric hands
+#define ESWORDSYNTH		24 	// esword synthesizer
+#define REBREATHER		25 	// removes the need to breathe
+#define DERMALARMOR		26 	// 35% damage decrease
+#define REFLEXES		27 	// dodge 50% of projectiles
+#define NANOREGEN		28 	// regenerative nanobots, -3 all damage types per second
+
+	// Other Mutations:
+#define mNobreath		100 	// no need to breathe
+#define mRemote			101 	// remote viewing
+#define mRegen			102 	// health regen
+#define mRun			103 	// no slowdown
+#define mRemotetalk		104 	// remote talking
+#define mMorph			105 	// changing appearance
+#define mBlend			106 	// nothing (seriously nothing)
+#define mHallucination	107 	// hallucinations
+#define mFingerprints	108 	// no fingerprints
+#define mShock			109 	// insulated hands
+#define mSmallsize		110 	// table climbing
 
 //mob/var/stat things
 var/const/CONSCIOUS = 0
@@ -235,31 +293,31 @@ var/const/UNCONSCIOUS = 1
 var/const/DEAD = 2
 
 // channel numbers for power
-#define EQUIP 1
-#define LIGHT 2
-#define ENVIRON 3
-#define TOTAL 4	//for total power used only
+#define EQUIP	1
+#define LIGHT	2
+#define ENVIRON	3
+#define TOTAL	4	//for total power used only
 
 // bitflags for machine stat variable
-#define BROKEN 1
-#define NOPOWER 2
-#define POWEROFF 4		// tbd
-#define MAINT 8			// under maintaince
-#define EMPED 16		// temporary broken by EMP pulse
+#define BROKEN		1
+#define NOPOWER		2
+#define POWEROFF	4		// tbd
+#define MAINT		8			// under maintaince
+#define EMPED		16		// temporary broken by EMP pulse
 
 //bitflags for door switches.
-#define OPEN 1
-#define IDSCAN 2
-#define BOLTS 4
-#define SHOCK 8
-#define SAFE 16
+#define OPEN	1
+#define IDSCAN	2
+#define BOLTS	4
+#define SHOCK	8
+#define SAFE	16
 
-#define ENGINE_EJECT_Z 3
+#define ENGINE_EJECT_Z	3
 
 //metal, glass, rod stacks
-#define MAX_STACK_AMOUNT_METAL 50
-#define MAX_STACK_AMOUNT_GLASS 50
-#define MAX_STACK_AMOUNT_RODS 60
+#define MAX_STACK_AMOUNT_METAL	50
+#define MAX_STACK_AMOUNT_GLASS	50
+#define MAX_STACK_AMOUNT_RODS	60
 
 var/const/GAS_O2 = 1 << 0
 var/const/GAS_N2 = 1 << 1
@@ -283,32 +341,54 @@ var/list/global_mutations = list() // list of hidden mutation things
 
 
 //Damage things
-#define BRUTE "brute"
-#define BURN "fire"
-#define TOX "tox"
-#define OXY "oxy"
-#define CLONE "clone"
-#define HALLOSS "halloss"
+#define BRUTE		"brute"
+#define BURN		"fire"
+#define TOX			"tox"
+#define OXY			"oxy"
+#define CLONE		"clone"
+#define HALLOSS		"halloss"
 
-#define STUN "stun"
-#define WEAKEN "weaken"
-#define PARALYZE "paralize"
-#define IRRADIATE "irradiate"
-#define STUTTER "stutter"
-#define SLUR "slur"
-#define EYE_BLUR "eye_blur"
-#define DROWSY "drowsy"
+#define STUN		"stun"
+#define WEAKEN		"weaken"
+#define PARALYZE	"paralize"
+#define IRRADIATE	"irradiate"
+#define STUTTER		"stutter"
+#define SLUR 		"slur"
+#define EYE_BLUR	"eye_blur"
+#define DROWSY		"drowsy"
 
 var/static/list/scarySounds = list('thudswoosh.ogg','Taser.ogg','armbomb.ogg','hiss1.ogg','hiss2.ogg','hiss3.ogg','hiss4.ogg','hiss5.ogg','hiss6.ogg','Glassbr1.ogg','Glassbr2.ogg','Glassbr3.ogg','Welder.ogg','Welder2.ogg','airlock.ogg','clownstep1.ogg','clownstep2.ogg')
 
 //Security levels
-#define SEC_LEVEL_GREEN 0
-#define SEC_LEVEL_BLUE 1
-#define SEC_LEVEL_RED 2
-#define SEC_LEVEL_DELTA 3
+#define SEC_LEVEL_GREEN	0
+#define SEC_LEVEL_BLUE	1
+#define SEC_LEVEL_RED	2
+#define SEC_LEVEL_DELTA	3
 
-#define TRANSITIONEDGE 7 //Distance from edge to move to another z-level
+#define TRANSITIONEDGE	7 //Distance from edge to move to another z-level
 
 // Maximum and minimum character ages.
 var/const/minimum_age = 20
 var/const/maximum_age = 65
+
+var/list/liftable_structures = list(\
+
+	/obj/machinery/autolathe, \
+	/obj/machinery/constructable_frame, \
+	/obj/machinery/hydroponics, \
+	/obj/machinery/computer, \
+	/obj/machinery/optable, \
+	/obj/machinery/dispenser, \
+	/obj/machinery/gibber, \
+	/obj/machinery/microwave, \
+	/obj/machinery/vending, \
+	/obj/machinery/seed_extractor, \
+	/obj/machinery/space_heater, \
+	/obj/machinery/recharge_station, \
+	/obj/machinery/flasher, \
+	/obj/structure/stool, \
+	/obj/structure/closet, \
+/*	/obj/machinery/photocopier, \*/
+	/obj/structure/filingcabinet, \
+	/obj/structure/reagent_dispensers, \
+	/obj/machinery/portable_atmospherics/canister)

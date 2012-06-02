@@ -100,17 +100,17 @@
 	return ..(gibbed)
 
 /mob/living/carbon/human/proc/ChangeToHusk()
-	if(mutations & HUSK)
+	if(HUSK in src.mutations)
 		return
 	var/datum/organ/external/head/head = get_organ("head")
 	if(head)
 		head.disfigured = 1
 	name = get_visible_name()
-	mutations |= HUSK
+	mutations.Add(HUSK)
 	update_body()
 	return
 
 /mob/living/carbon/human/proc/Drain()
 	ChangeToHusk()
-	mutations2 |= NOCLONE
+	mutations.Add(NOCLONE)
 	return

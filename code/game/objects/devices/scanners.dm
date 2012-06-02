@@ -60,6 +60,7 @@ MASS SPECTROMETER
 				if(M)
 					M.invisibility = 2
 
+
 /obj/item/device/detective_scanner
 	name = "Scanner"
 	desc = "Used to scan objects for DNA and fingerprints."
@@ -296,7 +297,7 @@ MASS SPECTROMETER
 	return
 
 /obj/item/device/healthanalyzer/attack(mob/M as mob, mob/user as mob)
-	if ((user.mutations & CLUMSY || user.getBrainLoss() >= 60) && prob(50))
+	if (( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 		user << text("\red You try to analyze the floor's vitals!")
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red [user] has analyzed the floor's vitals!"), 1)

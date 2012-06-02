@@ -63,7 +63,7 @@
 	return
 
 /obj/effect/alien/resin/attack_hand()
-	if ((usr.mutations & HULK))
+	if ((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
 		usr << "\blue You easily destroy the [name]."
 		for(var/mob/O in oviewers(src))
 			O.show_message("\red [usr] destroys the [name]!", 1)
@@ -131,7 +131,7 @@
 		contents.Add(affecting)
 
 		while(!isnull(M)&&!isnull(src))//While M and wall exist
-			if(prob(90)&& M.mutations & HULK)//If they're the Hulk, they're getting out.
+			if(prob(90)&& HULK in M.mutations)//If they're the Hulk, they're getting out.
 				M << "You smash your way to freedom!"
 				break
 			if(prob(30))//Let's people know that someone is trapped in the resin wall.

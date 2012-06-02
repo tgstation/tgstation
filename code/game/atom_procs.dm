@@ -118,7 +118,7 @@
 		//Fibers~
 		add_fibers(M)
 		//He has no prints!
-		if (M.mutations2 & mFingerprints)
+		if (mFingerprints in M.mutations)
 			if(fingerprintslast != M.key)
 				fingerprintshidden += "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]"
 				fingerprintslast = M.key
@@ -343,6 +343,7 @@
 
 /atom/MouseDrop(atom/over_object as mob|obj|turf|area)
 	spawn( 0 )
+
 		if (istype(over_object, /atom))
 			over_object.MouseDrop_T(src, usr)
 		return
@@ -967,7 +968,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 					src.hand_al(usr, usr.hand)
 		else
 			// ------- YOU ARE CLICKING ON AN OBJECT THAT'S INACCESSIBLE TO YOU AND IS NOT YOUR HUD -------
-			if(usr:mutations & LASER && usr:a_intent == "hurt" && world.time >= usr.next_move)
+			if((LASER in usr:mutations) && usr:a_intent == "hurt" && world.time >= usr.next_move)
 				// ------- YOU HAVE THE LASER MUTATION, YOUR INTENT SET TO HURT AND IT'S BEEN MORE THAN A DECISECOND SINCE YOU LAS TATTACKED -------
 				var/turf/oloc
 				var/turf/T = get_turf(usr)
@@ -997,7 +998,6 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				usr.next_move = world.time + 6
 	return
 
-
 /proc/CanReachThrough(turf/srcturf, turf/targetturf, atom/target)
 	var/obj/item/weapon/dummy/D = new /obj/item/weapon/dummy( srcturf )
 
@@ -1026,8 +1026,38 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 	return
 
 /atom/proc/AltClick()
-	if(hascall(src,"pull"))
-		src:pull()
+
+	/* // NOT UNTIL I FIGURE OUT A GOOD WAY TO DO THIS SHIT
+	if((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
+		if(!istype(src, /obj/item) && !istype(src, /mob) && !istype(src, /turf))
+			if(!usr.equipped())
+
+				var/liftable = 0
+				for(var/x in liftable_structures)
+					if(findtext("[src.type]", "[x]"))
+						liftable = 1
+						break
+
+				if(liftable)
+
+					add_fingerprint(usr)
+					var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(usr)
+					G.assailant = usr
+					if (usr.hand)
+						usr.l_hand = G
+					else
+						usr.r_hand = G
+					G.layer = 20
+					G.structure = src
+					G.synch()
+
+					visible_message("\red [usr] has picked up [src]!")
+
+					return
+				else
+					usr << "\red You can't pick this up!"
+	*/
+
 	return
 
 /atom/proc/ShiftClick()

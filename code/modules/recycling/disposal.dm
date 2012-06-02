@@ -541,7 +541,7 @@
 			AM.loc = src
 			/*if(istype(AM, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = AM
-				if(H.mutations & FAT)		// is a human and fat?
+				if(FAT in H.mutations)		// is a human and fat?
 					has_fat_guy = 1			// set flag on holder
 			*/
 			if(istype(AM, /obj/structure/bigDelivery))// && !hasmob) Already have a check for this.

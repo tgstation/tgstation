@@ -11,7 +11,7 @@
 /obj/item/weapon/storage/briefcase/attack(mob/M as mob, mob/living/user as mob)
 	//..()
 
-	if ((user.mutations & CLUMSY) && prob(50))
+	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red The [src] slips out of your hand and hits your head."
 		user.take_organ_damage(10)
 		user.Paralyse(2)

@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /mob/living/carbon/alien/humanoid
 	var/oxygen_alert = 0
@@ -127,15 +127,15 @@
 		handle_mutations_and_radiation()
 
 			if(src.getFireLoss())
-				if(src.mutations & COLD_RESISTANCE || prob(50))
+				if((COLD_RESISTANCE in src.mutations) || prob(50))
 					switch(src.getFireLoss())
 						if(1 to 50)
 							src.adjustFireLoss(-1)
 						if(51 to 100)
 							src.adjustFireLoss(-5)
 
-			if (src.mutations & HULK && src.health <= 25)
-				src.mutations &= ~HULK
+			if ((HULK in src.mutations) && src.health <= 25)
+				src.mutations.Remove(HULK)
 				src << "\red You suddenly feel very weak."
 				Weaken(3)
 				emote("collapse")
@@ -284,7 +284,7 @@
 			breath.toxins -= toxins_used
 			breath.oxygen += toxins_used
 
-			if(breath.temperature > (T0C+66) && !(src.mutations & COLD_RESISTANCE)) // Hot air hurts :(
+			if(breath.temperature > (T0C+66) && !(COLD_RESISTANCE in src.mutations)) // Hot air hurts :(
 				if(prob(20))
 					src << "\red You feel a searing heat in your lungs!"
 				fire_alert = max(fire_alert, 1)
@@ -340,7 +340,7 @@
 				thermal_protection += 0.2
 			if(wear_suit && (wear_suit.flags & SUITSPACE))
 				thermal_protection += 3
-			if(src.mutations & COLD_RESISTANCE)
+			if(COLD_RESISTANCE in src.mutations)
 				thermal_protection += 5
 
 			return thermal_protection
@@ -364,16 +364,17 @@
 
 			if(reagents) reagents.metabolize(src)
 
-			/*if(src.nutrition > 500 && !(src.mutations & FAT))
+/*			if(src.nutrition > 500 && !(FAT in src.mutations))
 				if(prob(5 + round((src.nutrition - 200) / 2)))
 					src << "\red You suddenly feel blubbery!"
-					src.mutations |= FAT
-					update_body()
-			if (src.nutrition < 100 && src.mutations & FAT)
+					src.mutations.Add(FAT)
+//					update_body()
+			if (src.nutrition < 100 && (FAT in src.mutations))
 				if(prob(round((50 - src.nutrition) / 100)))
 					src << "\blue You feel fit again!"
-					src.mutations &= ~FAT
-					update_body()*/
+					src.mutations.Remove(FAT)
+//					update_body()
+*/
 			if (src.nutrition > 0)
 				src.nutrition -= HUNGER_FACTOR
 
@@ -488,7 +489,7 @@
 
 		handle_regular_hud_updates()
 
-			if (src.stat == 2 || src.mutations & XRAY)
+			if (src.stat == 2 || (XRAY in src.mutations))
 				src.sight |= SEE_TURFS
 				src.sight |= SEE_MOBS
 				src.sight |= SEE_OBJS

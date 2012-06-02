@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
-
 #define SOLID 1
 #define LIQUID 2
 #define GAS 3
@@ -865,7 +863,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
 				data++
-				M.mutations = 0
+				M.mutations = list()
 				M.disabilities = 0
 				M.jitteriness = 0
 				if(volume > REAGENTS_OVERDOSE)
@@ -1760,6 +1758,12 @@ datum
 			description = "A caustic substance commonly used in fertilizer or household cleaners."
 			reagent_state = GAS
 			color = "#404030" // rgb: 64, 64, 48
+
+		ultraglue
+			name = "Ulta Glue"
+			id = "glue"
+			description = "An extremely powerful bonding agent."
+			color = "#FFFFCC" // rgb: 255, 255, 204
 
 		diethylamine
 			name = "Diethylamine"

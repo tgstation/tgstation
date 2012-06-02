@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 #define HUMAN_MAX_OXYLOSS 3 //Defines how much oxyloss humans can get per tick. No air applies this value.
 
@@ -165,7 +165,7 @@
 
 
 		handle_disabilities()
-			if(mutations2 & mHallucination)
+			if(mHallucination in mutations)
 				hallucination = 100
 				halloss = 0
 
@@ -195,7 +195,7 @@
 					Paralyse(15)
 					setHalLoss(99)
 
-			if(mutations2 & mSmallsize)
+			if(mSmallsize in mutations)
 				if(!(pass_flags & PASSTABLE))
 					pass_flags |= PASSTABLE
 			else
@@ -204,7 +204,7 @@
 
 
 
-			if (mutations & mRegen)
+			if (mRegen in mutations)
 				adjustBruteLoss(-2)
 				adjustToxLoss(-2)
 				adjustOxyLoss(-2)
@@ -217,24 +217,24 @@
 				updatehealth()
 
 			if(!(/mob/living/carbon/human/proc/morph in src.verbs))
-				if(mutations & mMorph)
+				if(mMorph in mutations)
 					src.verbs += /mob/living/carbon/human/proc/morph
 			else
-				if(!(mutations & mMorph))
+				if(!(mMorph in mutations))
 					src.verbs -= /mob/living/carbon/human/proc/morph
 
 			if(!(/mob/living/carbon/human/proc/remoteobserve in src.verbs))
-				if(mutations & mRemote)
+				if(mRemote in mutations)
 					src.verbs += /mob/living/carbon/human/proc/remoteobserve
 			else
-				if(!(mutations & mRemote))
+				if(!(mRemote in mutations))
 					src.verbs -= /mob/living/carbon/human/proc/remoteobserve
 
 			if(!(/mob/living/carbon/human/proc/remotesay in src.verbs))
-				if(mutations & mRemotetalk)
+				if(mRemotetalk in mutations)
 					src.verbs += /mob/living/carbon/human/proc/remotesay
 			else
-				if(!(mutations & mRemotetalk))
+				if(!(mRemotetalk in mutations))
 					src.verbs -= /mob/living/carbon/human/proc/remotesay
 
 
@@ -285,11 +285,37 @@
 
 		handle_mutations_and_radiation()
 			if(getFireLoss())
-				if(mutations & COLD_RESISTANCE || (prob(1) && prob(75)))
+				if((COLD_RESISTANCE in mutations) || (prob(1) && prob(75)))
 					heal_organ_damage(0,1)
 
-			if (mutations & HULK && health <= 25)
-				mutations &= ~HULK
+			// Make nanoregen heal youu, -3 all damage types
+			if(NANOREGEN in augmentations)
+				var/healed = 0
+				if(getToxLoss())
+					adjustToxLoss(-3)
+					healed = 1
+				if(getOxyLoss())
+					adjustOxyLoss(-3)
+					healed = 1
+				if(getCloneLoss())
+					adjustCloneLoss(-3)
+					healed = 1
+				if(getBruteLoss())
+					heal_organ_damage(3,0)
+					healed = 1
+				if(getFireLoss())
+					heal_organ_damage(0,3)
+					healed = 1
+				if(halloss > 0)
+					halloss -= 3
+					if(halloss < 0) halloss = 0
+					healed = 1
+				if(healed)
+					if(prob(5))
+						src << "\blue You feel your wounds mending..."
+
+			if ((HULK in mutations) && health <= 25)
+				mutations.Remove(HULK)
 				src << "\red You suddenly feel very weak."
 				Weaken(3)
 				emote("collapse")
@@ -463,7 +489,7 @@
 				canmove = 1
 
 		handle_breath(datum/gas_mixture/breath)
-			if(nodamage || (mutations & mNobreath))
+			if(nodamage || REBREATHER in augmentations || (mNobreath in mutations))
 				return
 
 			if(!breath || (breath.total_moles == 0))
@@ -552,7 +578,7 @@
 					SA.moles = 0 //Hack to stop the damned surgeon from giggling.
 
 
-			if(breath.temperature > (T0C+66) && !(mutations & COLD_RESISTANCE)) // Hot air hurts :(
+			if(breath.temperature > (T0C+66) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
 				if(prob(20))
 					src << "\red You feel a searing heat in your lungs!"
 				fire_alert = max(fire_alert, 1)
@@ -659,6 +685,8 @@
 			*/
 
 			//Account for massive pressure differences.  Done by Polymorph
+
+
 			var/pressure = environment.return_pressure()
 			if(!istype(wear_suit, /obj/item/clothing/suit/space) && !istype(wear_suit, /obj/item/clothing/suit/fire))
 					/*if(pressure < 20)
@@ -714,7 +742,7 @@
 				thermal_protection += 3
 			if(head && (head.flags & HEADSPACE))
 				thermal_protection += 1
-			if(mutations & COLD_RESISTANCE)
+			if(COLD_RESISTANCE in mutations)
 				thermal_protection += 5
 
 			return thermal_protection
@@ -794,15 +822,15 @@
 					adjustToxLoss(-1)
 					adjustOxyLoss(-1)
 
-			/*if(overeatduration > 500 && !(mutations & FAT))
+/*			if(overeatduration > 500 && !(FAT in mutations))
 				src << "\red You suddenly feel blubbery!"
-				mutations |= FAT
+				mutations.Add(FAT)
 				update_body()
-			if (overeatduration < 100 && mutations & FAT)
+			if ((overeatduration < 100 && (FAT in mutations)))
 				src << "\blue You feel fit again!"
-				mutations &= ~FAT
-				update_body()*/
-
+				mutations.Remove(FAT)
+				update_body()
+*/
 			// nutrition decrease
 			if (nutrition > 0 && stat != 2)
 				// sleeping slows the metabolism, hunger increases more slowly
@@ -1097,7 +1125,7 @@
 
 			// Handle special vision stuff, such as thermals or ghost vision
 			// -------------------------------------------------------------
-			if (stat == 2 || mutations & XRAY)
+			if (stat == 2 || (XRAY in mutations))
 				sight |= SEE_TURFS
 				sight |= SEE_MOBS
 				sight |= SEE_OBJS
@@ -1387,7 +1415,7 @@
 				if (machine)
 					if (!( machine.check_eye(src) ))
 						reset_view(null)
-				else if(!(mutations & mRemote) && !client.adminobs)
+				else if(!(mRemote in mutations) && !client.adminobs)
 					reset_view(null)
 					if(remoteobserve)
 						remoteobserve = null

@@ -44,7 +44,9 @@
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/armor_block = run_armor_check(affecting, "melee")
 
-			if(M.mutations & HULK)	damage += 5
+			if(HULK in M.mutations)			damage += 5
+			if(SUPRSTR in M.augmentations)	damage += 5
+
 			playsound(loc, "punch", 25, 1, -1)
 
 			visible_message("\red <B>[M] has punched [src]!</B>")
@@ -103,6 +105,28 @@
 			return 1
 
 		if("hurt")
+
+			if(ELECTRICHANDS in M.augmentations)
+				var/gendertxt = "their"
+				if(M.gender == "male")
+					gendertxt = "his"
+				if(M.gender == "female")
+					gendertxt = "her"
+
+				visible_message("\red <B>[M] has shocked [src] with [gendertxt] bare hands!</B>")
+				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Used Electric Hands nanoaug power on [src.name] ([src.ckey])</font>")
+				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been shocked by [M.name] with the Electric Hands nanoaug ([M.ckey])</font>")
+
+				log_admin("ATTACK: [M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name] ([src.ckey]), shocking them .")
+				message_admins("ATTACK: [M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name] ([src.ckey]), shocking them .")
+				log_attack("<font color='red'>[M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name] ([src.ckey]), shocking them </font>")
+
+
+				var/armorblock = run_armor_check(M.zone_sel.selecting, "energy")
+				apply_effects(5,5,0,0,5,0,0,armorblock)
+
+				return
+
 			if(M.type != /mob/living/carbon/human/tajaran)
 				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Punched [src.name] ([src.ckey])</font>")
 				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
@@ -143,7 +167,8 @@
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/armor_block = run_armor_check(affecting, "melee")
 
-			if(M.mutations & HULK)	damage += 5
+			if(HULK in M.mutations)			damage += 5
+			if(SUPRSTR in M.augmentations) 	damage += 5
 
 			switch(attack_verb)
 				if(("slash") || ("scratch"))

@@ -51,7 +51,7 @@
 	return
 
 /obj/machinery/optable/attack_paw(mob/user as mob)
-	if ((usr.mutations & HULK))
+	if ((HULK in usr.mutations))
 		usr << text("\blue You destroy the operating table.")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
@@ -68,7 +68,7 @@
 	return
 
 /obj/machinery/optable/attack_hand(mob/user as mob)
-	if ((usr.mutations & HULK))
+	if ((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
 		usr << text("\blue You destroy the table.")
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))

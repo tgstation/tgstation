@@ -70,6 +70,8 @@ datum/controller/game_controller
 		if(!ticker)
 			ticker = new /datum/controller/gameticker()
 
+		setupfactions()
+
 		spawn
 			ticker.pregame()
 

@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/item/tk_grab
 	name = "Telekinetic Grab"
@@ -48,7 +48,7 @@
 		if(!host)
 			del(src)
 			return
-		if(!host.mutations & TK)
+		if(!(TK in host.mutations))
 			del(src)
 			return
 		if(!focus)

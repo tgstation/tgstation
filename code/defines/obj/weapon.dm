@@ -26,6 +26,20 @@
 	IsShield()
 		return 1
 
+/obj/item/weapon/shield/energy
+	name = "energy combat shield"
+	desc = "A shield capable of stopping most projectile and melee attacks. It can be retracted, expanded, and stored anywhere."
+	icon = 'weapons.dmi'
+	icon_state = "eshield0" // eshield1 for expanded
+	flags = FPRINT | TABLEPASS| CONDUCT
+	force = 3.0
+	throwforce = 5.0
+	throw_speed = 1
+	throw_range = 4
+	w_class = 1
+	origin_tech = "materials=4;magnets=3;syndicate=4"
+	var/active = 0
+
 
 /obj/item/weapon/nullrod
 	name = "null rod"

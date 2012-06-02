@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /*
 CONTAINS:
@@ -36,7 +36,7 @@ WELDINGTOOOL
 	if(!istype(M))	return ..()
 	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
 		return ..()
-	if((user.mutations & CLUMSY) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		M = user
 	return eyestab(M,user)
 

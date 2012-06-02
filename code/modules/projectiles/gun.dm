@@ -114,12 +114,12 @@
 				update_icon()
 				return
 			if (prob(50))
-				if (M.paralysis < 60 && (!(M.mutations & 8)) )
+				if (M.paralysis < 60 && (!(HULK in M.mutations)) )
 					M.paralysis = 60
 			else
-				if (M.weakened < 60 && (!(M.mutations & 8)) )
+				if (M.weakened < 60 && (!(HULK in M.mutations)) )
 					M.weakened = 60
-			if (M.stuttering < 60 && (!(M.mutations & 8)) )
+			if (M.stuttering < 60 && (!(HULK in M.mutations)) )
 				M.stuttering = 60
 			if(silenced)
 				playsound(user, fire_sound, 10, 1)
@@ -147,7 +147,7 @@
 	proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params)//TODO: go over this
 		if(istype(user, /mob/living))
 			var/mob/living/M = user
-			if ((M.mutations & CLUMSY) && prob(50)) ///Who ever came up with this...
+			if ((CLUMSY in M.mutations) && prob(50)) ///Who ever came up with this...
 				M << "\red \the [src] blows up in your face."
 				M.take_organ_damage(0,20)
 				M.drop_item()

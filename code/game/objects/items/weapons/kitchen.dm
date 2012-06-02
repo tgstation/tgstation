@@ -35,7 +35,7 @@ KNIFE
 				del(bite)
 				src.icon_state = "fork"
 		else if(user.zone_sel.selecting == "eyes")
-			if((user.mutations & CLUMSY) && prob(50))
+			if((CLUMSY in user.mutations) && prob(50))
 				M = user
 			return eyestab(M, user)
 		else
@@ -90,7 +90,7 @@ KNIFE
 // ROLLING PIN
 /* //Honestly this doesn't even work and is very silly. -- Erthilo
 /obj/item/weapon/kitchen/rollingpin/attack(mob/M as mob, mob/living/user as mob)
-	if ((user.mutations & CLUMSY) && prob(50))
+	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red The [src] slips out of your hand and hits your head."
 		user.take_organ_damage(10)
 		user.Paralyse(2)
@@ -130,7 +130,7 @@ KNIFE
 // KNIFE
 
 /obj/item/weapon/kitchen/utensil/knife/attack(target as mob, mob/living/user as mob)
-	if ((user.mutations & CLUMSY) && prob(50))
+	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red You accidentally cut yourself with the [src]."
 		user.take_organ_damage(20)
 		return
@@ -153,7 +153,7 @@ KNIFE
 						sleep(rand(2,4))
 
 
-	if((user.mutations & CLUMSY) && prob(50))              //What if he's a clown?
+	if((CLUMSY in user.mutations) && prob(50))              //What if he's a clown?
 		M << "\red You accidentally slam yourself with the [src]!"
 		M.Weaken(1)
 		user.take_organ_damage(2)

@@ -301,11 +301,11 @@
 	if(tally < 0)
 		tally = 0
 
-	if(mutations & mRun)
-		tally = 0
-
 	if(istype(M) && M.lying) //Pulling lying down people is slower
 		tally += 3
+
+	if(mRun in mutations)
+		tally = 0
 
 	return tally
 
@@ -871,19 +871,19 @@
 	body_overlays_standing.Cut()
 	body_overlays_lying.Cut()
 
-	if (mutations & HULK)
+	if (HULK in mutations)
 		body_overlays_standing += image("icon" = 'genetics.dmi', "icon_state" = "hulk_[gender]_s")
 		body_overlays_lying    += image("icon" = 'genetics.dmi', "icon_state" = "hulk_[gender]_l")
 
-	if (mutations & COLD_RESISTANCE)
+	if (COLD_RESISTANCE in mutations)
 		body_overlays_standing += image("icon" = 'genetics.dmi', "icon_state" = "fire_s")
 		body_overlays_lying    += image("icon" = 'genetics.dmi', "icon_state" = "fire_l")
 
-	if (mutations & TK)
+	if (TK in mutations)
 		body_overlays_standing += image("icon" = 'genetics.dmi', "icon_state" = "telekinesishead_s")
 		body_overlays_lying	   += image("icon" = 'genetics.dmi', "icon_state" = "telekinesishead_l")
 
-	if (mutations & LASER)
+	if (LASER in mutations)
 		body_overlays_standing += image("icon" = 'genetics.dmi', "icon_state" = "lasereyes_s")
 		body_overlays_lying	   += image("icon" = 'genetics.dmi', "icon_state" = "lasereyes_l")
 
@@ -1396,7 +1396,7 @@
 	stand_icon = new /icon('human.dmi', "torso_[g]_s")
 	lying_icon = new /icon('human.dmi', "torso_[g]_l")
 
-	var/husk = (mutations & HUSK)
+	var/husk = (HUSK in mutations)
 
 	stand_icon.Blend(new /icon('human.dmi', "chest_[g]_s"), ICON_OVERLAY)
 	lying_icon.Blend(new /icon('human.dmi', "chest_[g]_l"), ICON_OVERLAY)
@@ -2605,24 +2605,24 @@ It can still be worn/put on as normal.
 		heal_overall_damage(0, -amount)
 
 /mob/living/carbon/human/Stun(amount)
-	if(mutations & HULK)
+	if(HULK in mutations)
 		return
 	..()
 
 /mob/living/carbon/human/Weaken(amount)
-	if(mutations & HULK)
+	if(HULK in mutations)
 		return
 	..()
 
 /mob/living/carbon/human/Paralyse(amount)
-	if(mutations & HULK)
+	if(HULK in mutations)
 		return
 	..()
 
 /mob/living/carbon/human/proc/morph()
 	set name = "Morph"
 	set category = "Superpower"
-	if(!(src.mutations & mMorph))
+	if(!(mMorph in mutations))
 		src.verbs -= /mob/living/carbon/human/proc/morph
 		return
 
@@ -2711,7 +2711,7 @@ It can still be worn/put on as normal.
 /mob/living/carbon/human/proc/remotesay()
 	set name = "Project mind"
 	set category = "Superpower"
-	if(!(src.mutations & mRemotetalk))
+	if(!(mRemotetalk in src.mutations))
 		src.verbs -= /mob/living/carbon/human/proc/remotesay
 		return
 	var/list/creatures = list()
@@ -2720,7 +2720,7 @@ It can still be worn/put on as normal.
 	var/mob/target = input ("Who do you want to project your mind to ?") as mob in creatures
 
 	var/say = input ("What do you wish to say")
-	if(target.mutations & mRemotetalk)
+	if(mRemotetalk in target.mutations)
 		target.show_message("\blue You hear [src.real_name]'s voice: [say]")
 	else
 		target.show_message("\blue You hear a voice that seems to echo around the room: [say]")
@@ -2734,7 +2734,7 @@ It can still be worn/put on as normal.
 	set name = "Remote View"
 	set category = "Superpower"
 
-	if(!(src.mutations & mRemote))
+	if(!(mRemote in src.mutations))
 		reset_view(0)
 		remoteobserve = null
 		src.verbs -= /mob/living/carbon/human/proc/remoteobserve

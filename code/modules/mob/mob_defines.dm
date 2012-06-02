@@ -196,15 +196,12 @@
 	var/datum/dna/dna = null//Carbon
 	var/radiation = 0.0//Carbon
 
-	var/mutations = 0//Carbon
-	var/mutations2 = 0//Carbon
-	//telekinesis = 1
-	//firemut = 2
-	//xray = 4
-	//hulk = 8
-	//clumsy = 16
-	//obese = 32
-	//husk = 64
+	var/list/mutations = list() //Carbon -- Doohl
+	//see: setup.dm for list of mutations
+
+	var/list/augmentations = list() //Carbon -- Doohl
+	//see: setup.dm for list of augmentations
+
 	var/tkdisable = 0//For remote viewing and stuff. Disables TK.
 
 	var/voice_name = "unidentifiable voice"
@@ -293,4 +290,6 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 	var/grav_delay = 0
 	var/being_strangled = 0
 
+	var/list/radar_blips = list() // list of screen objects, radar blips
+	var/radar_open = 0 	// nonzero is radar is open
 

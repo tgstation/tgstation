@@ -1,6 +1,6 @@
 /mob/living/carbon/proc/toggle_throw_mode()
 	if(!equipped())//Not holding anything
-		if(mutations & TK)
+		if(TK in mutations)
 			if (hand)
 				l_hand = new/obj/item/tk_grab(src)
 				l_hand:host = src
@@ -99,7 +99,8 @@
 			if(istype(A,/mob/living))
 				if(A:lying) continue
 				src.throw_impact(A)
-				src.throwing = 0
+				if(src.throwing == 1)
+					src.throwing = 0
 			if(isobj(A))
 				if(A.density && !A.CanPass(src,target))	// **TODO: Better behaviour for windows
 												// which are dense, but shouldn't always stop movement
@@ -110,7 +111,22 @@
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
 		M.visible_message("\red [hit_atom] has been hit by [src].")
-		if(src.vars.Find("throwforce"))
+
+		if(!istype(src, /obj/item)) // this is a big item that's being thrown at them~
+
+			if(istype(M, /mob/living/carbon/human))
+				var/armor_block = M:run_armor_check("chest", "melee")
+				M:apply_damage(rand(20,45), BRUTE, "chest", armor_block)
+
+				visible_message("\red <B>[M] has been knocked down by the force of [src]!</B>")
+				M:apply_effect(rand(4,12), WEAKEN, armor_block)
+
+				M:UpdateDamageIcon()
+			else
+				M.take_organ_damage(rand(20,45))
+
+
+		else if(src.vars.Find("throwforce"))
 			M.take_organ_damage(src:throwforce)
 
 			log_attack("<font color='red'>[hit_atom] ([M.ckey]) was hit by [src] thrown by ([src.fingerprintslast])</font>")
@@ -141,7 +157,12 @@
 /atom/movable/proc/throw_at(atom/target, range, speed)
 	if(!target || !src)	return 0
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
+
 	src.throwing = 1
+
+	if(usr)
+		if((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
+			src.throwing = 2 // really strong throw!
 
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)

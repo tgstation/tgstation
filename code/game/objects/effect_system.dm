@@ -1000,7 +1000,7 @@ steam.start() -- spawns the effect
 		return
 
 	attack_hand(var/mob/user)
-		if (user.mutations & HULK || (prob(75 - metal*25)))
+		if ((HULK in user.mutations) || (prob(75 - metal*25)) || (SUPRSTR in user.augmentations))
 			user << "\blue You smash through the metal foam wall."
 			for(var/mob/O in oviewers(user))
 				if ((O.client && !( O.blinded )))

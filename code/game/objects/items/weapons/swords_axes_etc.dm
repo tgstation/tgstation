@@ -4,6 +4,7 @@ SWORD
 BLADE
 AXE
 STUN BATON
+ENERGY SHIELD (where else should i even put this)
 */
 
 
@@ -22,7 +23,7 @@ STUN BATON
 	color = pick("red","blue","green","purple")
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user as mob)
-	if ((user.mutations & CLUMSY) && prob(50))
+	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red You accidentally cut yourself with [src]."
 		user.take_organ_damage(5,5)
 	active = !active
@@ -104,7 +105,7 @@ STUN BATON
 
 /obj/item/weapon/melee/baton/attack_self(mob/user as mob)
 	src.status = !( src.status )
-	if ((usr.mutations & CLUMSY) && prob(50))
+	if ((CLUMSY in user.mutations) && prob(50))
 		usr << "\red You grab the stunbaton on the wrong side."
 		usr.Paralyse(60)
 		return
@@ -120,7 +121,7 @@ STUN BATON
 	return
 
 /obj/item/weapon/melee/baton/attack(mob/M as mob, mob/user as mob)
-	if ((usr.mutations & CLUMSY) && prob(50))
+	if ((CLUMSY in usr.mutations) && prob(50))
 		usr << "\red You grab the stunbaton on the wrong side."
 		usr.Weaken(30)
 		return
@@ -165,7 +166,7 @@ STUN BATON
 				R.cell.charge -= 20
 			else
 				charges--
-			if (M.stuttering < 1 && (!(M.mutations & HULK) && M.canstun)  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+			if (M.stuttering < 1 && (!(HULK in M.mutations) && M.canstun)  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 				M.stuttering = 1
 			M.Stun(1)
 			M.Weaken(1)
@@ -176,7 +177,7 @@ STUN BATON
 				R.cell.charge -= 20
 			else
 				charges--
-			if (M.stuttering < 10 && (!(M.mutations & HULK) && M.canstun)  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+			if (M.stuttering < 10 && (!(HULK in M.mutations) && M.canstun)  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 				M.stuttering = 10
 			M.Stun(10)
 			M.Weaken(10)
@@ -193,7 +194,7 @@ STUN BATON
 			charges -= 5
 
 /obj/item/weapon/melee/classic_baton/attack(mob/M as mob, mob/living/user as mob)
-	if ((user.mutations & CLUMSY) && prob(50))
+	if ((CLUMSY in user.mutations) && prob(50))
 		user << "\red You club yourself over the head."
 		user.Weaken(3 * force)
 		if(ishuman(user))
@@ -215,7 +216,7 @@ STUN BATON
 	if (user.a_intent == "hurt")
 		if(!..()) return
 		playsound(src.loc, "swing_hit", 50, 1, -1)
-		if (M.stuttering < 8 && (!(M.mutations & HULK))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+		if (M.stuttering < 8 && (!(HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 			M.stuttering = 8
 		M.Stun(8)
 		M.Weaken(8)
@@ -227,3 +228,29 @@ STUN BATON
 		M.Weaken(5)
 		for(var/mob/O in viewers(M))
 			if (O.client)	O.show_message("\red <B>[M] has been stunned with the police baton by [user]!</B>", 1, "\red You hear someone fall", 2)
+
+/obj/item/weapon/shield/energy/IsShield()
+	if(active)
+		return 1
+	else
+		return 0
+
+/obj/item/weapon/shield/energy/attack_self(mob/living/user as mob)
+	if ((CLUMSY in user.mutations) && prob(50))
+		user << "\red You beat yourself in the head with [src]."
+		user.take_organ_damage(5)
+	active = !active
+	if (active)
+		force = 10
+		icon_state = "eshield[active]"
+		w_class = 4
+		playsound(user, 'saberon.ogg', 50, 1)
+		user << "\blue [src] is now active."
+	else
+		force = 3
+		icon_state = "eshield[active]"
+		w_class = 1
+		playsound(user, 'saberoff.ogg', 50, 1)
+		user << "\blue [src] can now be concealed."
+	add_fingerprint(user)
+	return

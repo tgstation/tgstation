@@ -121,7 +121,7 @@ obj/item/verb/pick_up()
 		if(5.0)
 			t = "huge"
 		else
-	if ((usr.mutations & CLUMSY) && prob(50)) t = "funny-looking"
+	if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
 	usr << text("This is a []\icon[][]. It is a [] item.", !src.blood_DNA ? "" : "bloody ",src, src.name, t)
 	if(src.desc)
 		usr << src.desc
@@ -302,6 +302,9 @@ mob/proc/flash_weak_pain()
 	//	M.lastattacker = null
 	/////////////////////////
 
+	if((HULK in user.mutations) || (SUPRSTR in user.augmentations))
+		power *= 2
+
 	if(!istype(M, /mob/living/carbon/human))
 		if(istype(M, /mob/living/carbon/metroid))
 			var/mob/living/carbon/metroid/Metroid = M
@@ -410,7 +413,7 @@ mob/proc/flash_weak_pain()
 						if (istype(location, /turf/simulated))
 							location.add_blood_floor(M)
 			if("fire")
-				if (!(M.mutations & COLD_RESISTANCE))
+				if (!(COLD_RESISTANCE in M.mutations))
 					M.take_organ_damage(0, power)
 					M << "Aargh it burns!"
 		M.updatehealth()
@@ -454,7 +457,7 @@ mob/proc/flash_weak_pain()
 	log_attack("<font color='red'> [user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
 	src.add_fingerprint(user)
-	//if((user.mutations & CLUMSY) && prob(50))
+	//if((CLUMSY in user.mutations) && prob(50))
 	//	M = user
 		/*
 		M << "\red You stab yourself in the eye."

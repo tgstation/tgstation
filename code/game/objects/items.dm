@@ -27,7 +27,7 @@
 					M.handcuffed = new /obj/item/weapon/handcuffs(M)
 
 	else
-		if ((usr.mutations & CLUMSY) && prob(50))
+		if ((CLUMSY in usr.mutations) && prob(50))
 			usr << "\red Uh ... how do those things work?!"
 			if (istype(M, /mob/living/carbon/human))
 				if(!M.handcuffed)
@@ -117,13 +117,13 @@
 	if( istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
 		var/obj/o = target
 		o.reagents.trans_to(src, 50)
-		user << "\blue Extinguisher refilled"
+		user << "\blue \The [src] is now refilled"
 		playsound(src.loc, 'refill.ogg', 50, 1, -6)
 		return
 
 	if (!safety)
 		if (src.reagents.total_volume < 1)
-			usr << "\red the [src] is empty."
+			usr << "\red \The [src] is empty."
 			return
 
 		if (world.time < src.last_use + 20)
