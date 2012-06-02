@@ -825,6 +825,8 @@
 #include "code\modules\critters\hivebots\hivebot.dm"
 #include "code\modules\detectivework\detective_work.dm"
 #include "code\modules\detectivework\evidence.dm"
+#include "code\modules\detectivework\footprints_and_rag.dm"
+#include "code\modules\detectivework\scanner.dm"
 #include "code\modules\flufftext\Dreaming.dm"
 #include "code\modules\flufftext\Hallucination.dm"
 #include "code\modules\flufftext\TextFilters.dm"

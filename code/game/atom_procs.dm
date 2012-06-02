@@ -98,13 +98,6 @@
 	if(isnull(M.key)) return
 	if (!( src.flags ) & FPRINT)
 		return
-	//Smudge up dem prints some
-	for(var/P in fingerprints)
-		var/test_print = stars(fingerprints[P], rand(85,95))
-		if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
-			fingerprints.Remove(P)
-		else
-			fingerprints[P] = test_print
 	if (ishuman(M))
 		//Add the list if it does not exist.
 		if(!fingerprintshidden)
@@ -139,6 +132,15 @@
 			fingerprints = list()
 		//Hash this shit.
 		var/full_print = md5(H.dna.uni_identity)
+		//Smudge up dem prints some
+		for(var/P in fingerprints)
+			if(P == full_print)
+				continue
+			var/test_print = stars(fingerprints[P], rand(85,95))
+			if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
+				fingerprints.Remove(P)
+			else
+				fingerprints[P] = test_print
 		var/print = fingerprints[full_print] //Find if the print is already there.
 		//It is not!  We need to add it!
 		if(!print)
@@ -148,6 +150,13 @@
 			fingerprints[full_print] = stringmerge(print, stars(full_print, (H.gloves ? rand(10,20) : rand(25,40))))
 		return 1
 	else
+		//Smudge up dem prints some
+		for(var/P in fingerprints)
+			var/test_print = stars(fingerprints[P], rand(85,95))
+			if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
+				fingerprints.Remove(P)
+			else
+				fingerprints[P] = test_print
 		if(fingerprintslast != M.key)
 			fingerprintshidden += text("Real name: [], Key: []",M.real_name, M.key)
 			fingerprintslast = M.key
