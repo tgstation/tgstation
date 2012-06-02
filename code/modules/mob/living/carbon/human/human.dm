@@ -863,10 +863,6 @@
 		client.screen -= hud_used.intents
 		client.screen -= hud_used.mov_int
 
-
-	//Screenlocs for these slots are handled by the huds other_update()
-	//because theyre located on the 'other' inventory bar.
-
 	// Gloves
 	if (gloves)
 		var/t1 = gloves.item_state
@@ -977,7 +973,6 @@
 		back.screen_loc = ui_back
 
 	if(client)
-		hud_used.other_update() //Update the screenloc of the items on the 'other' inventory bar
 		client.screen -= contents
 		client.screen += contents
 											   //to hide / show them.
@@ -1042,6 +1037,11 @@
 					stain_icon = icon('blood.dmi', "suitblood[!lying ? "" : "2"]")
 				overlays += image("icon" = stain_icon, "layer" = B_SUIT_LAYER)
 			wear_suit.screen_loc = ui_oclothing
+
+	//Update_other() MUST be called after all the storage slots get updated. This is because all the storage slots assign their
+	//respective items a screen_loc, which other_update() will then override if needed.
+	if(client)
+		hud_used.other_update() //Update the screenloc of the items on the 'other' inventory bar
 
 	switch(shielded)
 		if(1)

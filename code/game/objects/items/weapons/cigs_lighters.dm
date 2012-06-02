@@ -119,61 +119,62 @@ ZIPPO
 	var/type_butt = /obj/item/weapon/cigbutt
 	var/lastHolder = null
 	var/smoketime = 300
-	proc
-		light(var/flavor_text = "[usr] lights the [name].")
 
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		..()
-		if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
-			light("\red [user] casually lights the [name] with [W], what a badass.")
+/obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+	if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
+		light("\red [user] casually lights the [name] with [W], what a badass.")
 
-		else if(istype(W, /obj/item/weapon/lighter/zippo) && (W:lit > 0))
-			light("\red With a single flick of their wrist, [user] smoothly lights their [name] with their [W]. Damn they're cool.")
+	else if(istype(W, /obj/item/weapon/lighter/zippo) && (W:lit > 0))
+		light("\red With a single flick of their wrist, [user] smoothly lights their [name] with their [W]. Damn they're cool.")
 
-		else if(istype(W, /obj/item/weapon/lighter) && (W:lit > 0))
-			light("\red After some fiddling, [user] manages to light their [name] with [W].")
+	else if(istype(W, /obj/item/weapon/lighter) && (W:lit > 0))
+		light("\red After some fiddling, [user] manages to light their [name] with [W].")
 
-		else if(istype(W, /obj/item/weapon/match) && (W:lit > 0))
-			light("\red [user] lights their [name] with their [W].")
+	else if(istype(W, /obj/item/weapon/melee/energy/sword) && (W:active))
+		light("\red [user] swings their [W], barely missing their nose. They light their [name] in the process.")
+
+	else if(istype(W, /obj/item/weapon/match) && (W:lit > 0))
+		light("\red [user] lights their [name] with their [W].")
+	return
+
+
+/obj/item/clothing/mask/cigarette/proc/light(var/flavor_text = "[usr] lights the [name].")
+	if(!src.lit)
+		src.lit = 1
+		src.damtype = "fire"
+		src.icon_state = icon_on
+		src.item_state = icon_on
+		for(var/mob/O in viewers(usr, null))
+			O.show_message(flavor_text, 1)
+		processing_objects.Add(src)
+
+
+/obj/item/clothing/mask/cigarette/process()
+	var/turf/location = get_turf(src)
+	src.smoketime--
+	if(src.smoketime < 1)
+		new type_butt(location)
+		if(ismob(src.loc))
+			var/mob/living/M = src.loc
+			M << "\red Your [src.name] goes out."
+		processing_objects.Remove(src)
+		del(src)
 		return
+	if(location)
+		location.hotspot_expose(700, 5)
+	return
 
 
-	light(var/flavor_text = "[usr] lights the [name].")
-		if(!src.lit)
-			src.lit = 1
-			src.damtype = "fire"
-			src.icon_state = icon_on
-			src.item_state = icon_on
-			for(var/mob/O in viewers(usr, null))
-				O.show_message(flavor_text, 1)
-			processing_objects.Add(src)
-
-
-	process()
-		var/turf/location = get_turf(src)
-		src.smoketime--
-		if(src.smoketime < 1)
-			new type_butt(location)
-			if(ismob(src.loc))
-				var/mob/living/M = src.loc
-				M << "\red Your [src.name] goes out."
+/obj/item/clothing/mask/cigarette/dropped(mob/user as mob)
+	if(src.lit == 1)
+		for(var/mob/O in viewers(user, null))
+			O.show_message(text("\red [] calmly drops and treads on the lit [], putting it out instantly.", user,src.name), 1)
+			new type_butt(loc)
 			processing_objects.Remove(src)
 			del(src)
-			return
-		if(location)
-			location.hotspot_expose(700, 5)
-		return
-
-
-	dropped(mob/user as mob)
-		if(src.lit == 1)
-			for(var/mob/O in viewers(user, null))
-				O.show_message(text("\red [] calmly drops and treads on the lit [], putting it out instantly.", user,src.name), 1)
-				new type_butt(loc)
-				processing_objects.Remove(src)
-				del(src)
-		return ..()
+	return ..()
 
 
 
