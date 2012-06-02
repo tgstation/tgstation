@@ -104,13 +104,6 @@
 	if(isnull(M.key)) return
 	if (!( src.flags ) & FPRINT)
 		return
-	//Smudge up dem prints some
-	for(var/P in fingerprints)
-		var/test_print = stars(fingerprints[P], rand(85,95))
-		if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
-			fingerprints.Remove(P)
-		else
-			fingerprints[P] = test_print
 	if (ishuman(M))
 		//Add the list if it does not exist.
 		if(!fingerprintshidden)
@@ -142,6 +135,15 @@
 				return 0
 			else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex) && !istype(H.gloves, /obj/item/clothing/gloves/fingerless))
 				return 0
+		//Smudge up dem prints some
+		for(var/P in fingerprints)
+			if(P == md5(H.dna.uni_identity))
+				continue
+			var/test_print = stars(fingerprints[P], rand(85,95))
+			if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
+				fingerprints.Remove(P)
+			else
+				fingerprints[P] = test_print
 		//More adminstuffz
 		if(fingerprintslast != H.key)
 			fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
@@ -160,6 +162,13 @@
 			fingerprints[full_print] = stringmerge(print, stars(full_print, (H.gloves ? rand(10,20) : rand(25,40))))
 		return 1
 	else
+		//Smudge up dem prints some
+		for(var/P in fingerprints)
+			var/test_print = stars(fingerprints[P], rand(85,95))
+			if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
+				fingerprints.Remove(P)
+			else
+				fingerprints[P] = test_print
 		if(fingerprintslast != M.key)
 			fingerprintshidden += text("Real name: [], Key: []",M.real_name, M.key)
 			fingerprintslast = M.key

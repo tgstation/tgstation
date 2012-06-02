@@ -4,3 +4,5 @@ searif - Tajaran
 galenus - Soghun
 botanistpower - Tajaran
 fenrisian - Tajaran
+forsamori - Tajaran
+forsamori - Soghun

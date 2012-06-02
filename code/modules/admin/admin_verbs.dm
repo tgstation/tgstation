@@ -107,51 +107,31 @@
 		if (holder.level >= -1)
 			verbs += /client/proc/investigate_show
 			verbs += /client/proc/cmd_admin_say
+			verbs += /client/proc/cmd_mod_say
 			verbs += /client/proc/cmd_admin_gib_self
 			verbs += /client/proc/deadmin_self
 		else if (holder.level == -3) // Retired Admin
 			verbs += /client/proc/cmd_admin_say
+			verbs += /client/proc/cmd_mod_say
 			return
 		else	return
 
 		//Moderator
 		if (holder.level >= 0)
-			verbs += /obj/admins/proc/announce
-			verbs += /obj/admins/proc/startnow
-			verbs += /obj/admins/proc/toggleAI							//Toggle the AI
-			verbs += /obj/admins/proc/toggleenter						//Toggle enterting
-//			verbs += /obj/admins/proc/toggleguests						//Toggle guests entering
-			verbs += /obj/admins/proc/toggleooc							//toggle ooc
-			verbs += /obj/admins/proc/toggleoocdead						//toggle ooc for dead/unc
-			verbs += /obj/admins/proc/voteres 							//toggle votes
-			verbs += /obj/admins/proc/vmode
-			verbs += /obj/admins/proc/votekill
-			verbs += /obj/admins/proc/show_player_panel
-			verbs += /client/proc/deadchat								//toggles deadchat
-			//verbs += /client/proc/cmd_admin_mute	--was never used (according to stats trackind) - use show player panel --erro
 			verbs += /client/proc/cmd_admin_pm_context
 			verbs += /client/proc/cmd_admin_pm_panel
-			verbs += /client/proc/cmd_admin_subtle_message
-			//verbs += /client/proc/warn	- was never used
-			verbs += /client/proc/dsay
 			verbs += /client/proc/admin_play
 			verbs += /client/proc/admin_observe
-			verbs += /client/proc/game_panel
-//			verbs += /client/proc/player_panel
-			verbs += /client/proc/player_panel_new
-			verbs += /client/proc/unban_panel
-			verbs += /client/proc/jobbans
-
-			verbs += /client/proc/voting
 			verbs += /client/proc/hide_verbs
-			verbs += /client/proc/general_report
-			//verbs += /client/proc/air_report
 			verbs += /client/proc/deadmin_self
-			//verbs += /client/proc/cmd_admin_prison 					--Merged with player panel
-			//verbs += /obj/admins/proc/unprison  						--Merged with player panel
-			verbs += /client/proc/playernotes
 			verbs += /obj/admins/proc/show_skills
 		else	return
+
+		if(holder.level == 0) //Moderators don't get asay, only msay
+			verbs -= /client/proc/cmd_admin_say
+			verbs -= /client/proc/investigate_show
+			verbs -= /client/proc/cmd_admin_gib_self
+			verbs += /client/proc/mod_panel
 
 		//Temporary Admin
 		if (holder.level >= 1)
@@ -165,6 +145,35 @@
 			verbs += /client/proc/deadmin_self
 			//verbs += /client/proc/cmd_admin_attack_log				--Merged with view variables
 			verbs += /client/proc/cmd_admin_change_custom_event
+			//
+			//MOVED FROM MODERATOR
+			//
+			verbs += /client/proc/cmd_admin_subtle_message
+			verbs += /obj/admins/proc/announce
+			verbs += /obj/admins/proc/startnow
+			verbs += /obj/admins/proc/toggleAI							//Toggle the AI
+			verbs += /obj/admins/proc/toggleenter						//Toggle enterting
+//			verbs += /obj/admins/proc/toggleguests						//Toggle guests entering
+			verbs += /obj/admins/proc/toggleooc							//toggle ooc
+			verbs += /obj/admins/proc/toggleoocdead						//toggle ooc for dead/unc
+			verbs += /obj/admins/proc/voteres 							//toggle votes
+			verbs += /obj/admins/proc/vmode
+			verbs += /obj/admins/proc/votekill
+			verbs += /client/proc/deadchat								//toggles deadchat
+			//verbs += /client/proc/cmd_admin_mute	--was never used (according to stats trackind) - use show player panel --erro
+			verbs += /client/proc/dsay
+			verbs += /client/proc/game_panel
+			verbs += /obj/admins/proc/show_player_panel
+//			verbs += /client/proc/player_panel
+			verbs += /client/proc/player_panel_new
+			verbs += /client/proc/unban_panel
+			verbs += /client/proc/jobbans
+			verbs += /client/proc/voting
+			verbs += /client/proc/general_report
+			//verbs += /client/proc/air_report
+			//verbs += /client/proc/cmd_admin_prison 					--Merged with player panel
+			//verbs += /obj/admins/proc/unprison  						--Merged with player panel
+			verbs += /client/proc/playernotes
 		else	return
 
 		//Admin Candidate
@@ -393,8 +402,8 @@
 	verbs -= /client/proc/cmd_admin_pm_context
 	verbs -= /client/proc/cmd_admin_pm_panel
 	verbs -= /client/proc/cmd_admin_say
+	verbs -= /client/proc/cmd_mod_say
 	verbs -= /client/proc/cmd_admin_subtle_message
-	//verbs -= /client/proc/warn
 	verbs -= /client/proc/dsay
 	verbs -= /client/proc/admin_play
 	verbs -= /client/proc/admin_observe
@@ -418,6 +427,7 @@
 	verbs -= /client/proc/toggle_hear_radio
 	verbs -= /client/proc/tension_report
 	verbs -= /client/proc/player_panel_new
+	verbs -= /client/proc/mod_panel
 	verbs -= /client/proc/toggle_gravity_on
 	verbs -= /client/proc/toggle_gravity_off
 	verbs -= /client/proc/toggle_random_events
@@ -428,7 +438,7 @@
 	verbs -= /client/proc/getserverlog
 	verbs -= /client/proc/cinematic										//show a cinematic sequence
 	verbs -= /client/proc/admin_memo
-	verbs -= /client/proc/investigate_show	
+	verbs -= /client/proc/investigate_show
 	verbs -= /client/proc/cmd_admin_change_custom_event
 	verbs -= /client/proc/admin_invis
 	verbs -= /client/proc/callprocgen
@@ -536,6 +546,14 @@
 	if(holder)
 		holder.player_panel_new()
 //	feedback_add_details("admin_verb","PPN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	return
+
+/client/proc/mod_panel()
+	set name = "Moderator Panel"
+	set category = "Admin"
+	if(holder)
+		holder.mod_panel()
+//	feedback_add_details("admin_verb","MP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/check_antagonists()
@@ -836,6 +854,7 @@
 	verbs += /client/proc/deadchat					//toggles deadchat
 	verbs += /obj/admins/proc/toggleooc				//toggle ooc
 	verbs += /client/proc/cmd_admin_say//asay
+	verbs += /client/proc/cmd_mod_say
 	verbs += /client/proc/toggleadminhelpsound
 //	feedback_add_details("admin_verb","HMV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
@@ -856,6 +875,7 @@
 	verbs += /client/proc/deadchat					//toggles deadchat
 	verbs += /obj/admins/proc/toggleooc				//toggle ooc
 	verbs += /client/proc/cmd_admin_say//asay
+	verbs += /client/proc/cmd_mod_say//asay
 //	feedback_add_details("admin_verb","TAVVH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
