@@ -1035,6 +1035,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 	return
 
 /atom/proc/AltClick()
+	if(hascall(src,"pull"))
+		src:pull()
 
 	/* // NOT UNTIL I FIGURE OUT A GOOD WAY TO DO THIS SHIT
 	if((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
