@@ -21,7 +21,7 @@
 		H.equip_if_possible(new /obj/item/clothing/suit/armor/hos(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/clothing/gloves/black(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/clothing/head/helmet/HoS(H), H.slot_head)
-		H.equip_if_possible(new /obj/item/clothing/mask/gas(H), H.slot_wear_mask)
+//		H.equip_if_possible(new /obj/item/clothing/mask/gas(H), H.slot_wear_mask) //Grab one from the armory you donk
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses/sechud(H), H.slot_glasses)
 		H.equip_if_possible(new /obj/item/weapon/gun/energy/gun(H), H.slot_s_store)
 		if(H.backbag == 1)
@@ -60,7 +60,7 @@
 		H.equip_if_possible(new /obj/item/clothing/head/helmet/warden(H), H.slot_head)
 		H.equip_if_possible(new /obj/item/clothing/gloves/black(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses/sechud(H), H.slot_glasses)
-		H.equip_if_possible(new /obj/item/clothing/mask/gas(H), H.slot_wear_mask)
+//		H.equip_if_possible(new /obj/item/clothing/mask/gas(H), H.slot_wear_mask) //Grab one from the armory you donk
 		H.equip_if_possible(new /obj/item/device/flash(H), H.slot_l_store)
 		if(H.backbag == 1)
 			H.equip_if_possible(new /obj/item/weapon/storage/box/survival(H), H.slot_r_hand)
