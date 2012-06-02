@@ -360,9 +360,11 @@
 							src.active2.fields["cdi_d"] = t1
 					if("notes")
 						if (istype(src.active2, /datum/data/record))
-							var/t1 = copytext(sanitize(input("Please summarize notes:", "Med. records", src.active2.fields["notes"], null)  as message),1,MAX_MESSAGE_LEN)
+							var/t1 = input("Please summarize notes:", "Med. records", src.active2.fields["notes"], null)  as message
 							if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
 								return
+							t1 = copytext(t1, 1, MAX_PAPER_MESSAGE_LEN)
+							t1 = html_encode(t1)
 							src.active2.fields["notes"] = t1
 					if("p_stat")
 						if (istype(src.active1, /datum/data/record))
