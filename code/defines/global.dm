@@ -189,7 +189,7 @@ var/const/MAX_MESSAGE_LEN = 1024
 var/const/MAX_PAPER_MESSAGE_LEN = 3072
 var/const/MAX_BOOK_MESSAGE_LEN = 9216
 
-var/const/MAX_NAME_LEN = 40
+var/const/MAX_NAME_LEN = 32
 
 var/list/paper_blacklist = list("script","frame","iframe","input","button","a","embed","object")
 

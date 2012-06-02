@@ -707,7 +707,7 @@ datum/preferences
 
 		if(link_tags["OOC"])
 			var/tempnote = ""
-			tempnote = copytext(sanitize(input(user, "Please enter your OOC Notes!:", "OOC notes" , metadata)  as text),1,1000)
+			tempnote = copytext(sanitize(input(user, "Please enter your OOC Notes!:", "OOC notes" , metadata)  as text),1,MAX_MESSAGE_LEN)
 			if(tempnote)
 				metadata = tempnote
 			return
@@ -924,9 +924,10 @@ datum/preferences
 			be_random_name = !be_random_name
 
 		if(link_tags["flavor_text"])
-			var/msg = copytext(sanitize(input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(flavor_text)) as message),1,1000)
+			var/msg = input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(flavor_text)) as message
 
 			if(msg != null)
+				msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 				msg = html_encode(msg)
 
 				flavor_text = msg
@@ -1035,18 +1036,20 @@ datum/preferences
 				user << browse(null, "window=records")
 
 		if(link_tags["med_record"])
-			var/medmsg = copytext(sanitize(input(usr,"Set your medical notes here.","Medical Records",html_decode(med_record)) as message),1,2000)
+			var/medmsg = input(usr,"Set your medical notes here.","Medical Records",html_decode(med_record)) as message
 
 			if(medmsg != null)
+				medmsg = copytext(medmsg, 1, MAX_PAPER_MESSAGE_LEN)
 				medmsg = html_encode(medmsg)
 
 				med_record = medmsg
 				SetRecords(user)
 
 		if(link_tags["sec_record"])
-			var/secmsg = copytext(sanitize(input(usr,"Set your security notes here.","Security Records",html_decode(sec_record)) as message),1,2000)
+			var/secmsg = input(usr,"Set your security notes here.","Security Records",html_decode(sec_record)) as message
 
 			if(secmsg != null)
+				secmsg = copytext(secmsg, 1, MAX_PAPER_MESSAGE_LEN)
 				secmsg = html_encode(secmsg)
 
 				sec_record = secmsg

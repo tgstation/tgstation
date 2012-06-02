@@ -464,9 +464,11 @@ What a mess.*/
 							active2.fields["ma_crim_d"] = t1
 					if("notes")
 						if (istype(active2, /datum/data/record))
-							var/t1 = copytext(sanitize(input("Please summarize notes:", "Secure. records", active2.fields["notes"], null)  as message),1,MAX_MESSAGE_LEN)
+							var/t1 = input("Please summarize notes:", "Secure. records", active2.fields["notes"], null)  as message
 							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
 								return
+							t1 = copytext(t1, 1, MAX_PAPER_MESSAGE_LEN)
+							t1 = html_encode(t1)
 							active2.fields["notes"] = t1
 					if("criminal")
 						if (istype(active2, /datum/data/record))
