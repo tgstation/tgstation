@@ -7,7 +7,7 @@
 	icon = 'masks.dmi'
 	body_parts_covered = HEAD
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 0, rad = 0)
-
+	slot_flags = SLOT_MASK
 
 /obj/item/clothing/mask/breath
 	desc = "A close-fitting mask that can be connected to an air supply."
@@ -44,8 +44,30 @@
 	desc = "LOADSAMONEY"
 	icon_state = "balaclava"
 	item_state = "balaclava"
-	flags = FPRINT|TABLEPASS|SUITSPACE|HEADSPACE|MASKCOVERSMOUTH|BLOCKHAIR
+	see_face = 0.0
+	flags = FPRINT|TABLEPASS|HEADSPACE|BLOCKHAIR
 	w_class = 2
+
+/obj/item/clothing/mask/luchador
+	name = "Luchador Mask"
+	desc = "Worn by robust fighters, flying high to defeat their foes!"
+	icon_state = "luchag"
+	item_state = "luchag"
+	flags = FPRINT|TABLEPASS|HEADSPACE|BLOCKHAIR
+	see_face = 0.0
+	w_class = 2
+
+/obj/item/clothing/mask/luchador/tecnicos
+	name = "Tecnicos Mask"
+	desc = "Worn by robust fighters who uphold justice and fight honorably."
+	icon_state = "luchador"
+	item_state = "luchador"
+
+/obj/item/clothing/mask/luchador/rudos
+	name = "Rudos Mask"
+	desc = "Worn by robust fighters who are willing to do anything to win."
+	icon_state = "luchar"
+	item_state = "luchar"
 
 /obj/item/clothing/mask/muzzle
 	name = "muzzle"
@@ -66,6 +88,13 @@
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.05
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 75, rad = 0)
+
+/obj/item/clothing/mask/fakemoustache
+	name = "fake moustache"
+	desc = "Warning: moustache is fake."
+	icon_state = "fake-moustache"
+	flags = FPRINT|TABLEPASS
+	see_face = 0.0 //Well, it's a disguise, of course.
 
 //This now uses the alt sprites, like the emergency gasmask.	-Pete
 /obj/item/clothing/mask/gas
@@ -149,9 +178,3 @@
 	desc = "A traditional female mime's mask."
 	icon_state = "sexymime"
 	item_state = "sexymime"
-
-//WHY IS THIS A GASMASK
-/obj/item/clothing/mask/gas/fakemoustache
-	name = "fake moustache"
-	desc = "Warning: moustache is fake."
-	icon_state = "fake-moustache"

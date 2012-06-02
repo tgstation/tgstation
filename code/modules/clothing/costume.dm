@@ -70,7 +70,7 @@
 	new /obj/item/clothing/shoes/black(src.loc)
 	new /obj/item/weapon/cane(src.loc)
 	new /obj/item/clothing/under/sl_suit(src.loc)
-	new /obj/item/clothing/mask/gas/fakemoustache(src.loc)
+	new /obj/item/clothing/mask/fakemoustache(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/plaguedoctor/New()
