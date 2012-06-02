@@ -134,10 +134,8 @@ obj/machinery/computer/forensic_scanning
 					authenticated = 1
 					updateDialog()
 					return
-				var/obj/item/weapon/card/id/I = M.equipped()
-				if (I && istype(I))
-					if(src.check_access(I))
-						authenticated = 1
+				if (allowed(M))
+					authenticated = 1
 						//usr << "\green Access Granted"
 				//if(!authenticated)
 					//usr << "\red Access Denied"
