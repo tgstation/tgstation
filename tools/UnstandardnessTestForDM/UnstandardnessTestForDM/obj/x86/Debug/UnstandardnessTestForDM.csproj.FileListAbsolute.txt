@@ -1,0 +1,9 @@
+c:\users\baloh\documents\visual studio 2010\Projects\UnstandardnessTestForDM\UnstandardnessTestForDM\bin\Debug\UnstandardnessTestForDM.exe
+c:\users\baloh\documents\visual studio 2010\Projects\UnstandardnessTestForDM\UnstandardnessTestForDM\bin\Debug\UnstandardnessTestForDM.pdb
+c:\users\baloh\documents\visual studio 2010\Projects\UnstandardnessTestForDM\UnstandardnessTestForDM\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\users\baloh\documents\visual studio 2010\Projects\UnstandardnessTestForDM\UnstandardnessTestForDM\obj\x86\Debug\UnstandardnessTestForDM.Form1.resources
+c:\users\baloh\documents\visual studio 2010\Projects\UnstandardnessTestForDM\UnstandardnessTestForDM\obj\x86\Debug\UnstandardnessTestForDM.Properties.Resources.resources
+c:\users\baloh\documents\visual studio 2010\Projects\UnstandardnessTestForDM\UnstandardnessTestForDM\obj\x86\Debug\GenerateResource.read.1.tlog
+c:\users\baloh\documents\visual studio 2010\Projects\UnstandardnessTestForDM\UnstandardnessTestForDM\obj\x86\Debug\GenerateResource.write.1.tlog
+c:\users\baloh\documents\visual studio 2010\Projects\UnstandardnessTestForDM\UnstandardnessTestForDM\obj\x86\Debug\UnstandardnessTestForDM.exe
+c:\users\baloh\documents\visual studio 2010\Projects\UnstandardnessTestForDM\UnstandardnessTestForDM\obj\x86\Debug\UnstandardnessTestForDM.pdb
