@@ -29,7 +29,7 @@ obj/machinery/recharger
 			if(!isarea(a))
 				return
 			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				user << "\red The [name] blinks red as you try to insert the item!"
+				user << "\red \The [src] blinks red as you try to insert the item!"
 				return
 			user.drop_item()
 			G.loc = src
