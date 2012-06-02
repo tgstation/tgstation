@@ -114,7 +114,7 @@
 	usr << browse(dat, "window=players;size=905x600")
 
 
-/obj/admins/proc/mod_panel()//For moderators!
+/obj/admins/proc/mod_panel()//The new one
 	if (!usr.client.holder)
 		return
 	var/dat = "<html><head><title>Player Menu</title></head>"
@@ -205,7 +205,7 @@
 			"}
 
 			dat += {"<td><A HREF='?src=\ref[src];player_info=[M.ckey]'>[player_has_info(M.ckey) ? "Info" : "N/A"] </A></td>
-			<td><A href='?src=\ref[usr];priv_msg=\ref[M]'><b>PM</b></A>
+			<td><A href='?src=\ref[usr];priv_msg=\ref[M]'><b>PM</b></A></td>
 			"}
 
 /*			switch(is_special_character(M))

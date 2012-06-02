@@ -37,7 +37,7 @@
 	log_ooc("[src.name]/[src.key] : [msg]")
 
 	for (var/client/C)
-		if (src.client.holder && (!src.client.stealth || C.holder))
+		if (src.client.holder && (!src.client.stealth || ( C.holder && C.holder.level != 0)))
 			if (src.client.holder.rank == "Admin Observer")
 				C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 			else if (src.client.holder.rank == "Retired Admin")

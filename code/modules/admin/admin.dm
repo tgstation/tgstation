@@ -1376,16 +1376,19 @@ var/global/BSACooldown = 0
 			alert("You cannot perform this action. You must be of a higher administrative rank!")
 
 	if (href_list["adminplayersubtlemessage"])
-		var/mob/M = locate(href_list["adminplayersubtlemessage"])
-		if(src && src.owner)
-			if(istype(src.owner,/client))
-				var/client/cl = src.owner
-				cl.cmd_admin_subtle_message(M)
-			else if(ismob(src.owner))
-				var/mob/MO = src.owner
-				if(MO.client)
-					var/client/cl = MO.client
+		if(rank in list("Admin Observer", "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"))
+			var/mob/M = locate(href_list["adminplayersubtlemessage"])
+			if(src && src.owner)
+				if(istype(src.owner,/client))
+					var/client/cl = src.owner
 					cl.cmd_admin_subtle_message(M)
+				else if(ismob(src.owner))
+					var/mob/MO = src.owner
+					if(MO.client)
+						var/client/cl = MO.client
+						cl.cmd_admin_subtle_message(M)
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
 
 	if (href_list["adminplayerobservejump"])
 		if(rank in list("Admin Observer", "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"))
