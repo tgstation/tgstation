@@ -1,6 +1,6 @@
 //Blocks an attempt to connect before even creating our client datum thing.
 world/IsBanned(key,address,computer_id)
-    if(ckey(key) in admins)
+	if(ckey(key) in admins)
 		return ..()
 
 	//Guest Checking
