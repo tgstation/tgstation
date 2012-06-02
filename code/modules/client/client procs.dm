@@ -1,7 +1,7 @@
 	////////////
 	//SECURITY//
 	////////////
-#define TOPIC_SPAM_DELAY	5		//5 tick delay is a little under half a second
+#define TOPIC_SPAM_DELAY	7		//7 tick delay is about half a second
 #define UPLOAD_LIMIT		1048576	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
 	/*
 	When somebody clicks a link in game, this Topic is called first.
@@ -16,6 +16,7 @@
 		- If so, does it have checks to see if the person who called it (usr.client) is an admin?
 		- Are the processes being called by Topic() particularly laggy?
 		- If so, is there any protection against somebody spam-clicking a link?
+	If you have any  questions about this stuff feel free to ask. ~Carn
 	*/
 /client/Topic(href, href_list, hsrc)
 	//Reduces spamming of links by dropping calls that happen during the delay period
@@ -39,6 +40,10 @@
 			C = M.client
 		cmd_admin_pm(C,null)
 		return
+
+	//Logs all hrefs
+	if(config && config.log_hrefs && href_logfile)
+		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [href]<br>"
 
 	if(view_var_Topic(href,href_list,hsrc))	//Until viewvars can be rewritten as datum/admins/Topic()
 		return

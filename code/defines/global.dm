@@ -48,6 +48,7 @@ var/blobevent = 0
 
 var/diary = null
 var/diaryofmeanpeople = null
+var/href_logfile = null
 var/station_name = null
 var/game_version = "/tg/ Station 13"
 
@@ -62,7 +63,7 @@ var/aliens_allowed = 1
 var/ooc_allowed = 1
 var/dooc_allowed = 1
 var/traitor_scaling = 1
-var/goonsay_allowed = 0
+//var/goonsay_allowed = 0
 var/dna_ident = 1
 var/abandon_allowed = 1
 var/enter_allowed = 1

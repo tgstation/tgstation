@@ -11,12 +11,13 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 "}
 
 	diaryofmeanpeople = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")] Attack.log")
-
 	diaryofmeanpeople << {"
 
 Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 ---------------------
 "}
+
+	href_logfile = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")] hrefs.html")
 
 	jobban_loadbanfile()
 	jobban_updatelegacybans()

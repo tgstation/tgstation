@@ -278,6 +278,7 @@
 			verbs += /client/proc/giveruntimelog						//used by coders to retrieve runtime logs
 			verbs += /client/proc/cinematic								//show a cinematic sequence
 			verbs += /client/proc/startSinglo							//Used to prevent the station from losing power while testing stuff out.
+			verbs += /client/proc/toggle_log_hrefs
 		else	return
 	return
 
@@ -406,6 +407,7 @@
 	verbs -= /client/proc/cinematic										//show a cinematic sequence
 	verbs -= /client/proc/admin_memo
 	verbs -= /client/proc/investigate_show								//investigate in-game mishaps using various logs.
+	verbs -= /client/proc/toggle_log_hrefs
 	verbs -= /proc/possess
 	verbs -= /proc/release
 	//verbs -= /client/proc/give_spell 									--Merged with view variables
@@ -805,3 +807,15 @@
 	verbs += /client/proc/cmd_admin_say//asay
 	feedback_add_details("admin_verb","TAVVH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
+
+/client/proc/toggle_log_hrefs()
+	set name = "Toggle href logging"
+	set category = "Server"
+	if(!holder)	return
+	if(config)
+		if(config.log_hrefs)
+			config.log_hrefs = 0
+			src << "<b>Stopped logging hrefs</b>"
+		else
+			config.log_hrefs = 1
+			src << "<b>Started logging hrefs</b>"
