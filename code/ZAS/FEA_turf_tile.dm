@@ -33,7 +33,6 @@ turf
 
 		return GM
 
-
 turf
 	simulated
 
@@ -79,9 +78,9 @@ turf
 					overlays += image('floors.dmi',siding_icon_state)
 				var/datum/gas_mixture/model = return_air()
 				switch(model.graphic)
-					if("plasma")
-						overlays.Add(plmaster)
-					if("sleeping_agent")
+					if(1)
+						overlays.Add(plmaster) //TODO: Make invisible plasma an option
+					if(2)
 						overlays.Add(slmaster)
 
 
