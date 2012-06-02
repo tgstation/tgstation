@@ -181,7 +181,7 @@
 			allmeat += newmeat
 
 	for (var/mob/M in world)
-		if (M.client && M.client.holder && (M.client.holder.level != -3))
+		if (M.client && M.client.holder && (M.client.holder.level != -3) && (M.client.holder.level != 0))
 			M << "\red [user.name]/[user.ckey] has gibbed [src.occupant.name]/[src.occupant.ckey]"
 	src.occupant.death(1)
 	src.occupant.ghostize()

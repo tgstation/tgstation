@@ -301,7 +301,7 @@
 
 
 	proc/ManifestLateSpawn(var/mob/living/carbon/human/H, icon/H_icon) // Attempted fix to add late joiners to various databases -- TLE
-		// This is basically ripped wholesale from the normal code for adding people to the databases during a fresh round //Erth Mark
+		// This is basically ripped wholesale from the normal code for adding people to the databases during a fresh round
 		if (!isnull(H.mind) && (H.mind.assigned_role != "MODE"))
 			var/datum/data/record/G = new()
 			var/datum/data/record/M = new()
