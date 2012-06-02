@@ -134,10 +134,8 @@ obj/machinery/computer/forensic_scanning
 					authenticated = 1
 					updateDialog()
 					return
-				var/obj/item/weapon/card/id/I = M.equipped()
-				if (I && istype(I))
-					if(src.check_access(I))
-						authenticated = 1
+				if (allowed(M))
+					authenticated = 1
 						//usr << "\green Access Granted"
 				//if(!authenticated)
 					//usr << "\red Access Denied"
@@ -289,13 +287,12 @@ obj/machinery/computer/forensic_scanning
 					if(fibers && fibers.len)
 						temp += "&nbsp<b>Fibers:</b><br>"
 						for(var/j = 1, j <= fibers.len, j++)
-							temp += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]"
+							temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]<br>"
 					var/list/blood = outputs[2]
 					if(blood && blood.len)
 						temp += "&nbsp<b>Blood:</b><br>"
-						for(var/j = 1, j <= blood.len, j++)
-							var/list/templist2 = blood[j]
-							temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [templist2[2]], DNA: [templist2[1]]<br>"
+						for(var/named in blood)
+							temp += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [blood[named]], DNA: [named]<br>"
 					temp += "<br><a href='?src=\ref[src];operation=database;delete_aux=[href_list["identifier"]]'>{Delete This Record}</a>"
 					temp += "<br><a href='?src=\ref[src];operation=auxiliaryprint;identifier=[href_list["identifier"]]'>{Print}</a>"
 				else
@@ -313,13 +310,12 @@ obj/machinery/computer/forensic_scanning
 					if(fibers && fibers.len)
 						P.info += "&nbsp<b>Fibers:</b><br>"
 						for(var/j = 1, j <= fibers.len, j++)
-							P.info += "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]"
+							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[fibers[j]]<br>"
 					var/list/blood = outputs[2]
 					if(blood && blood.len)
 						P.info += "&nbsp<b>Blood:</b><br>"
-						for(var/j = 1, j <= blood.len, j++)
-							var/list/templist2 = blood[j]
-							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [templist2[2]], DNA: [templist2[1]]<br>"
+						for(var/named in blood)
+							P.info += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type: [blood[named]], DNA: [named]<br>"
 				else
 					usr << "ERROR.  Database not found!<br>"
 			if("scan")

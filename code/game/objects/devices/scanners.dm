@@ -216,7 +216,7 @@ MASS SPECTROMETER
 		sum_list[1] = A.fingerprints
 		sum_list[2] = A.suit_fibers
 		sum_list[3] = A.blood_DNA
-		sum_list[4] = "\The [A] in [get_area(A)]"
+		sum_list[4] = "\The [A] in \the [get_area(A)]"
 		stored["\ref [A]"] = sum_list
 		return 0
 
