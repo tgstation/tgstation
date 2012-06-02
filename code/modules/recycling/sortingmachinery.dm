@@ -62,7 +62,7 @@
 					name = "[name] ([str])"
 					update_icon()
 				if("Description")
-					var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
+					var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_MESSAGE_LEN)
 					if(!str || !length(str))
 						usr << "\red Invalid text."
 						return
@@ -150,7 +150,7 @@
 					name = "[name] ([str])"
 					update_icon()
 				if("Description")
-					var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_NAME_LEN)
+					var/str = copytext(sanitize(input(usr,"Label text?","Set label","")),1,MAX_MESSAGE_LEN)
 					if(!str || !length(str))
 						usr << "\red Invalid text."
 						return

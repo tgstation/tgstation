@@ -246,7 +246,7 @@
 			if (authenticated)
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
-					var/temp_t = copytext(sanitize(input("Enter a custom job assignment.","Assignment")),1,MAX_MESSAGE_LEN)
+					var/temp_t = copytext(sanitize(input("Enter a custom job assignment.","Assignment")),1,MAX_NAME_LEN)
 					if(temp_t)
 						t1 = temp_t
 				else

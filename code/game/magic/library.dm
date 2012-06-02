@@ -126,7 +126,7 @@
 		O.loc = src
 		update_icon()
 	else if(istype(O, /obj/item/weapon/pen))
-		var/newname = copytext(sanitize(input("What would you like to title this bookshelf?") as text|null),1,MAX_MESSAGE_LEN)
+		var/newname = copytext(sanitize(input("What would you like to title this bookshelf?") as text|null),1,MAX_NAME_LEN)
 		if(!newname)
 			return
 		else
