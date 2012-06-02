@@ -1,6 +1,5 @@
-//CONTAINS:
-//Evidence bags and stuff
-///////////
+//CONTAINS: Evidence bags
+
 /obj/item/weapon/evidencebag
 	name = "evidence bag"
 	desc = "An empty evidence bag."

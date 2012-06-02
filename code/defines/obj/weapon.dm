@@ -1017,7 +1017,7 @@
 	icon_state = "cone"
 
 /obj/item/weapon/paper
-	name = "Paper"
+	name = "\improper Paper"
 	icon = 'paper.dmi'
 	icon_state = "paper"
 	var/info = null

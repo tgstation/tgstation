@@ -879,6 +879,8 @@
 #include "code\modules\customitems\item_spawning.dm"
 #include "code\modules\DetectiveWork\detective_work.dm"
 #include "code\modules\DetectiveWork\evidence.dm"
+#include "code\modules\DetectiveWork\footprints_and_rag.dm"
+#include "code\modules\DetectiveWork\scanner.dm"
 #include "code\modules\flufftext\Dreaming.dm"
 #include "code\modules\flufftext\Hallucination.dm"
 #include "code\modules\flufftext\TextFilters.dm"
