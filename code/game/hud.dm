@@ -35,13 +35,15 @@
 #define ui_monkey_back "6:14,1:5"	//monkey
 
 //Lower right, persistant menu
-#define ui_dropbutton "12:24,2:7"
-#define ui_throw "13:26,2:7"
-#define ui_pull "14:28,2:7"
+#define ui_drop_throw "14:28,2:7"
+#define ui_pull_resist "13:26,2:7"
 #define ui_acti "12:24,1:5"
 #define ui_movi "13:26,1:5"
 #define ui_zonesel "14:28,1:5"
 
+#define ui_borg_pull "12:24,2:7"
+#define ui_borg_module "13:26,2:7"
+#define ui_borg_panel "14:28,2:7"
 
 //Upper-middle right (damage indicators)
 #define ui_toxin "14:28,13:27"
@@ -90,7 +92,7 @@
 //#define ui_headset "SOUTH,8"
 #define ui_hand "6:14,1:5"
 #define ui_hstore1 "5,5"
-#define ui_resist "EAST+1,SOUTH-1"
+//#define ui_resist "EAST+1,SOUTH-1"
 #define ui_sleep "EAST+1, NORTH-13"
 #define ui_rest "EAST+1, NORTH-14"
 

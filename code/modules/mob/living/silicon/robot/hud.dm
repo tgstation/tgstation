@@ -159,14 +159,14 @@
 	mymob.hands.icon = 'screen1_robot.dmi'
 	mymob.hands.icon_state = "nomod"
 	mymob.hands.name = "module"
-	mymob.hands.screen_loc = ui_dropbutton
+	mymob.hands.screen_loc = ui_borg_module
 
 //Module Panel
 	using = new src.h_type( src )
 	using.name = "panel"
 	using.icon = 'screen1_robot.dmi'
 	using.icon_state = "panel"
-	using.screen_loc = ui_throw
+	using.screen_loc = ui_borg_panel
 	using.layer = 19
 	src.adding += using
 
@@ -202,7 +202,7 @@
 	mymob.pullin.icon = 'screen1_robot.dmi'
 	mymob.pullin.icon_state = "pull0"
 	mymob.pullin.name = "pull"
-	mymob.pullin.screen_loc = ui_pull
+	mymob.pullin.screen_loc = ui_borg_pull
 
 	mymob.blind = new /obj/screen( null )
 	mymob.blind.icon = 'screen1_robot.dmi'

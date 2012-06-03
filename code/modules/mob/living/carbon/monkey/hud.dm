@@ -147,7 +147,7 @@
 	using.name = "drop"
 	using.icon = ui_style
 	using.icon_state = "act_drop"
-	using.screen_loc = ui_dropbutton
+	using.screen_loc = ui_drop_throw
 	using.layer = 19
 	src.adding += using
 /*
@@ -429,7 +429,7 @@
 	mymob.throw_icon.icon = ui_style
 	mymob.throw_icon.icon_state = "act_throw_off"
 	mymob.throw_icon.name = "throw"
-	mymob.throw_icon.screen_loc = ui_throw
+	mymob.throw_icon.screen_loc = ui_drop_throw
 
 	mymob.oxygen = new /obj/screen( null )
 	mymob.oxygen.icon = ui_style
@@ -489,7 +489,7 @@
 	mymob.pullin.icon = ui_style
 	mymob.pullin.icon_state = "pull0"
 	mymob.pullin.name = "pull"
-	mymob.pullin.screen_loc = ui_pull
+	mymob.pullin.screen_loc = ui_pull_resist
 
 	mymob.blind = new /obj/screen( null )
 	mymob.blind.icon = ui_style

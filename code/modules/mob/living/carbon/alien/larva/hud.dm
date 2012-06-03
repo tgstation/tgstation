@@ -10,6 +10,7 @@
 	src.mov_int = list(  )
 	src.vimpaired = list(  )
 	src.darkMask = list(  )
+	src.intent_small_hud_objects = list(  )
 
 	src.g_dither = new src.h_type( src )
 	src.g_dither.screen_loc = "WEST,SOUTH to EAST,NORTH"
@@ -50,6 +51,41 @@
 	using.layer = 20
 	src.adding += using
 	action_intent = using
+
+//intent small hud objects
+	using = new src.h_type( src )
+	using.name = "help"
+	using.icon = 'screen1_alien.dmi'
+	using.icon_state = "help_small"
+	using.screen_loc = ui_help_small
+	using.layer = 21
+	src.intent_small_hud_objects += using
+
+	using = new src.h_type( src )
+	using.name = "disarm"
+	using.icon = 'screen1_alien.dmi'
+	using.icon_state = "disarm_small"
+	using.screen_loc = ui_disarm_small
+	using.layer = 21
+	src.intent_small_hud_objects += using
+
+	using = new src.h_type( src )
+	using.name = "grab"
+	using.icon = 'screen1_alien.dmi'
+	using.icon_state = "grab_small"
+	using.screen_loc = ui_grab_small
+	using.layer = 21
+	src.intent_small_hud_objects += using
+
+	using = new src.h_type( src )
+	using.name = "harm"
+	using.icon = 'screen1_alien.dmi'
+	using.icon_state = "harm_small"
+	using.screen_loc = ui_harm_small
+	using.layer = 21
+	src.intent_small_hud_objects += using
+
+//end intent small hud objects
 
 	using = new src.h_type( src )
 	using.name = "mov_intent"
@@ -179,7 +215,7 @@
 	mymob.pullin.icon = 'screen1_alien.dmi'
 	mymob.pullin.icon_state = "pull0"
 	mymob.pullin.name = "pull"
-	mymob.pullin.screen_loc = ui_pull
+	mymob.pullin.screen_loc = ui_pull_resist
 
 	mymob.blind = new /obj/screen( null )
 	mymob.blind.icon = 'screen1_alien.dmi'

@@ -147,7 +147,7 @@
 	using.name = "drop"
 	using.icon = ui_style
 	using.icon_state = "act_drop"
-	using.screen_loc = ui_dropbutton
+	using.screen_loc = ui_drop_throw
 	using.layer = 19
 	src.hotkeybuttons += using
 
@@ -272,15 +272,13 @@
 	using.layer = 19
 	src.adding += using
 
-/*
 	using = new src.h_type( src )
 	using.name = "resist"
 	using.icon = ui_style
 	using.icon_state = "act_resist"
-	using.screen_loc = ui_resist
+	using.screen_loc = ui_pull_resist
 	using.layer = 19
-	src.adding += using
-*/
+	src.hotkeybuttons += using
 
 	using = new src.h_type( src )
 	using.name = "other"
@@ -512,7 +510,7 @@
 	mymob.throw_icon.icon = ui_style
 	mymob.throw_icon.icon_state = "act_throw_off"
 	mymob.throw_icon.name = "throw"
-	mymob.throw_icon.screen_loc = ui_throw
+	mymob.throw_icon.screen_loc = ui_drop_throw
 	src.hotkeybuttons += mymob.throw_icon
 
 	mymob.oxygen = new /obj/screen( null )
@@ -580,7 +578,7 @@
 	mymob.pullin.icon = ui_style
 	mymob.pullin.icon_state = "pull0"
 	mymob.pullin.name = "pull"
-	mymob.pullin.screen_loc = ui_pull
+	mymob.pullin.screen_loc = ui_pull_resist
 	src.hotkeybuttons += mymob.pullin
 
 	mymob.blind = new /obj/screen( null )

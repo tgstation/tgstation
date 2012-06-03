@@ -66,30 +66,30 @@
 /obj/item/weapon/storage/proc/orient_objs(tx, ty, mx, my)
 	var/cx = tx
 	var/cy = ty
-	src.boxes.screen_loc = text("[tx]:,[ty] to [mx],[my]")
+	src.boxes.screen_loc = "[tx]:,[ty] to [mx],[my]"
 	for(var/obj/O in src.contents)
-		O.screen_loc = text("[cx],[cy]")
+		O.screen_loc = "[cx],[cy]"
 		O.layer = 20
 		cx++
 		if (cx > mx)
 			cx = tx
 			cy--
-	src.closer.screen_loc = text("[mx+1],[my]")
+	src.closer.screen_loc = "[mx+1],[my]"
 	return
 
 //This proc draws out the inventory and places the items on it. It uses the standard position.
 /obj/item/weapon/storage/proc/standard_orient_objs(var/rows,var/cols)
 	var/cx = 4
 	var/cy = 2+rows
-	src.boxes.screen_loc = text("4:16,2:16 to [4+cols]:16,[2+rows]:16")
+	src.boxes.screen_loc = "4:16,2:16 to [4+cols]:16,[2+rows]:16"
 	for(var/obj/O in src.contents)
-		O.screen_loc = text("[cx]:16,[cy]:16")
+		O.screen_loc = "[cx]:16,[cy]:16"
 		O.layer = 20
 		cx++
 		if (cx > (4+cols))
 			cx = 4
 			cy--
-	src.closer.screen_loc = text("[4+cols+1]:16,2:16")
+	src.closer.screen_loc = "[4+cols+1]:16,2:16"
 	return
 
 //This proc determins the size of the inventory to be displayed. Please touch it only if you know what you're doing.
