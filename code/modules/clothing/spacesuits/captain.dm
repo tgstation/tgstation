@@ -3,7 +3,7 @@
 	icon_state = "capspace"
 	item_state = "capspacehelmet"
 	desc = "A special helmet for the most fashionable of military figureheads."
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES
+	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | BLOCKHAIR
 	see_face = 0.0
 	permeability_coefficient = 0.01
 	armor = list(melee = 65, bullet = 50, laser = 50,energy = 25, bomb = 50, bio = 100, rad = 50)
