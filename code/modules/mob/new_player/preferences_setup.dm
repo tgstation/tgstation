@@ -204,10 +204,7 @@ datum/preferences
 		del(preview_icon)
 
 		var/g = "m"
-		if (gender == MALE)
-			g = "m"
-		else if (gender == FEMALE)
-			g = "f"
+		if (gender == FEMALE)	g = "f"
 
 		if(species == "Tajaran")
 			preview_icon = new /icon('tajaran.dmi', "body_[g]_s", "dir" = preview_dir)

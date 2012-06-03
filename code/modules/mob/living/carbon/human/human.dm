@@ -1379,24 +1379,18 @@
 	return 0
 
 /mob/living/carbon/human/proc/update_body()
-	if(stand_icon)
-		del(stand_icon)
-	if(lying_icon)
-		del(lying_icon)
-
-	if (mutantrace)
-		return
+	if(stand_icon)	del(stand_icon)
+	if(lying_icon)	del(lying_icon)
+	if(mutantrace)	return
 
 	var/g = "m"
-	if (gender == MALE)
-		g = "m"
-	else if (gender == FEMALE)
-		g = "f"
+	if(gender == FEMALE)	g = "f"
+	var/husk = (HUSK in src.mutations)
+//	var/obese = (FAT in src.mutations)
 
+	//Base mob icon
 	stand_icon = new /icon('human.dmi', "torso_[g]_s")
 	lying_icon = new /icon('human.dmi', "torso_[g]_l")
-
-	var/husk = (HUSK in mutations)
 
 	stand_icon.Blend(new /icon('human.dmi', "chest_[g]_s"), ICON_OVERLAY)
 	lying_icon.Blend(new /icon('human.dmi', "chest_[g]_l"), ICON_OVERLAY)
@@ -1438,8 +1432,8 @@
 		stand_icon.Blend(husk_s, ICON_OVERLAY)
 		lying_icon.Blend(husk_l, ICON_OVERLAY)
 
-	// Skin tone
-	if (s_tone >= 0)
+	//Skin tone
+	if(s_tone >= 0)
 		stand_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
 		lying_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
 	else
@@ -1449,10 +1443,13 @@
 		stand_icon.Blend(rgb(100,100,100))
 		lying_icon.Blend(rgb(100,100,100))
 
-	if (underwear < 6 && underwear > 0)
+	//Underwear
+	if(underwear < 6 && underwear > 0)
 //		if(!obese)
 		stand_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
 		lying_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_l"), ICON_OVERLAY)
+
+
 
 /mob/living/carbon/human/proc/update_face()
 	if(organs)
@@ -1463,17 +1460,12 @@
 				del(face_lying)
 				return
 	if(!facial_hair_style || !hair_style)	return//Seems people like to lose their icons, this should stop the runtimes for now
-	del(face_standing)
-	del(face_lying)
-
-	if (mutantrace)
-		return
+	if(face_standing)	del(face_standing)
+	if(face_lying)		del(face_lying)
+	if(mutantrace)		return
 
 	var/g = "m"
-	if (gender == MALE)
-		g = "m"
-	else if (gender == FEMALE)
-		g = "f"
+	if (gender == FEMALE)	g = "f"
 
 	var/icon/eyes_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "eyes_s")
 	var/icon/eyes_l = new/icon("icon" = 'human_face.dmi', "icon_state" = "eyes_l")
@@ -1510,9 +1502,9 @@
 	face_standing = new /image()
 	face_lying = new /image()
 	face_standing.icon = eyes_s
-	face_standing.layer = MOB_LAYER
+	face_standing.layer = FACE_LAYER
 	face_lying.icon = eyes_l
-	face_lying.layer = MOB_LAYER
+	face_lying.layer = FACE_LAYER
 
 	del(mouth_l)
 	del(mouth_s)

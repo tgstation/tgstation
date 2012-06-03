@@ -1,8 +1,11 @@
 /client/proc/restartcontroller()
 	set category = "Debug"
 	set name = "Restart Master Controller"
+	if(!holder)	return
 	switch(alert("Are you sure?  If the control is still running it will now be running twice.",,"Yes","No"))
 		if("Yes")
+			src = null
+			usr = null	//weird things were happening after restarting MC.
 			spawn(0)
 				master_controller.process()
 		if("No")
