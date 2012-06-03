@@ -325,51 +325,57 @@ THERMAL GLASSES
 /obj/item/clothing/suit/labcoat/verb/toggle()
 	set name = "Toggle Labcoat Buttons"
 	set category = "Object"
-	if(src.icon_state == "labcoat_open")
-		src.icon_state = "labcoat"
-		usr << "You button up the labcoat."
-	else if(src.icon_state == "labcoat")
-		src.icon_state = "labcoat_open"
-		usr << "You unbutton the labcoat."
-	else if(src.icon_state == "labcoat_cmo_open")
-		src.icon_state = "labcoat_cmo"
-		usr << "You button up the labcoat."
-	else if(src.icon_state == "labcoat_cmo")
-		src.icon_state = "labcoat_cmo_open"
-		usr << "You unbutton the labcoat."
-	else if(src.icon_state == "labcoat_gen_open")
-		src.icon_state = "labcoat_gen"
-		usr << "You button up the labcoat."
-	else if(src.icon_state == "labcoat_gen")
-		src.icon_state = "labcoat_gen_open"
-		usr << "You unbutton the labcoat."
-	else if(src.icon_state == "labcoat_chem_open")
-		src.icon_state = "labcoat_chem"
-		usr << "You button up the labcoat."
-	else if(src.icon_state == "labcoat_chem")
-		src.icon_state = "labcoat_chem_open"
-		usr << "You unbutton the labcoat."
-	else if(src.icon_state == "labcoat_vir_open")
-		src.icon_state = "labcoat_vir"
-		usr << "You button up the labcoat."
-	else if(src.icon_state == "labcoat_vir")
-		src.icon_state = "labcoat_vir_open"
-		usr << "You unbutton the labcoat."
-	else if(src.icon_state == "labcoat_tox_open")
-		src.icon_state = "labcoat_tox"
-		usr << "You button up the labcoat."
-	else if(src.icon_state == "labcoat_tox")
-		src.icon_state = "labcoat_tox_open"
-		usr << "You unbutton the labcoat."
-	else if(src.icon_state == "labgreen_open")
-		src.icon_state = "labgreen"
-		usr << "You button up the labcoat."
-	else if(src.icon_state == "labgreen")
-		src.icon_state = "labgreen_open"
-		usr << "You unbutton the labcoat."
+
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return 0
 
 	else
-		usr << "Sorry! The suit you're wearing doesn't have buttons!"
+
+		if(src.icon_state == "labcoat_open")
+			src.icon_state = "labcoat"
+			usr << "You button up the labcoat."
+		else if(src.icon_state == "labcoat")
+			src.icon_state = "labcoat_open"
+			usr << "You unbutton the labcoat."
+		else if(src.icon_state == "labcoat_cmo_open")
+			src.icon_state = "labcoat_cmo"
+			usr << "You button up the labcoat."
+		else if(src.icon_state == "labcoat_cmo")
+			src.icon_state = "labcoat_cmo_open"
+			usr << "You unbutton the labcoat."
+		else if(src.icon_state == "labcoat_gen_open")
+			src.icon_state = "labcoat_gen"
+			usr << "You button up the labcoat."
+		else if(src.icon_state == "labcoat_gen")
+			src.icon_state = "labcoat_gen_open"
+			usr << "You unbutton the labcoat."
+		else if(src.icon_state == "labcoat_chem_open")
+			src.icon_state = "labcoat_chem"
+			usr << "You button up the labcoat."
+		else if(src.icon_state == "labcoat_chem")
+			src.icon_state = "labcoat_chem_open"
+			usr << "You unbutton the labcoat."
+		else if(src.icon_state == "labcoat_vir_open")
+			src.icon_state = "labcoat_vir"
+			usr << "You button up the labcoat."
+		else if(src.icon_state == "labcoat_vir")
+			src.icon_state = "labcoat_vir_open"
+			usr << "You unbutton the labcoat."
+		else if(src.icon_state == "labcoat_tox_open")
+			src.icon_state = "labcoat_tox"
+			usr << "You button up the labcoat."
+		else if(src.icon_state == "labcoat_tox")
+			src.icon_state = "labcoat_tox_open"
+			usr << "You unbutton the labcoat."
+		else if(src.icon_state == "labgreen_open")
+			src.icon_state = "labgreen"
+			usr << "You button up the labcoat."
+		else if(src.icon_state == "labgreen")
+			src.icon_state = "labgreen_open"
+			usr << "You unbutton the labcoat."
+
+		else
+			usr << "Sorry! The suit you're wearing doesn't have buttons!"
 
 /obj/item/clothing/head/ushanka/attack_self(mob/user as mob)
 	if(src.icon_state == "ushankadown")
