@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj
 	//var/datum/module/mod		//not used
@@ -443,6 +443,40 @@
 	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
 	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/allowed = null //suit storage stuff.
+
+/obj/item/verb/verb_pickup()
+	set src in view(1)
+	set category = "Object"
+	set name = "Pickup"
+
+	if(!(usr))
+		return
+	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))//Is humanoid, and is not a brain
+		usr << "\red You can't pick things up!"
+		return
+	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
+		usr << "\red You can't pick things up!"
+		return
+	if(src.anchored) //Object isn't anchored
+		usr << "\red You can't pick that up!"
+		return
+	if(!usr.hand && usr.r_hand) //Right hand is not full
+		usr << "\red Your right hand is full."
+		return
+	if(usr.hand && usr.l_hand) //Left hand is not full
+		usr << "\red Your left hand is full."
+		return
+	if(!istype(src.loc, /turf)) //Object is on a turf
+		usr << "\red You can't pick that up!"
+		return
+	//All checks are done, time to pick it up!
+	if(istype(usr, /mob/living/carbon/human))
+		src.attack_hand(usr)
+	if(istype(usr, /mob/living/carbon/alien))
+		src.attack_alien(usr)
+	if(istype(usr, /mob/living/carbon/monkey))
+		src.attack_paw(usr)
+	return
 
 /obj/item/device
 	icon = 'device.dmi'

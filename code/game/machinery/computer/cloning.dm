@@ -84,11 +84,13 @@
 	req_access = list(access_heads) //Only used for record deletion right now.
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
 	var/obj/machinery/clonepod/pod1 = null //Linked cloning pod.
-	var/temp = "Initializing System..."
+	var/temp = ""
+	var/scantemp = "Scanner unoccupied"
 	var/menu = 1 //Which menu screen to display
 	var/list/records = list()
 	var/datum/data/record/active_record = null
 	var/obj/item/weapon/disk/data/diskette = null //Mostly so the geneticist can steal everything.
+	var/loading = 0 // Nice loading text
 	var/wantsscan = 1
 	var/wantspod = 1
 	var/list/message = list()
@@ -97,64 +99,45 @@
 	..()
 	spawn(5)
 		updatemodules()
-		/*src.scanner = locate(/obj/machinery/dna_scannernew, get_step(src, scandir))
-		src.pod1 = locate(/obj/machinery/clonepod, get_step(src, poddir))
-
-		src.temp = ""
-		if (isnull(src.scanner) && wantsscan)
-			src.temp += " <font color=red>SCNR-ERROR</font>"
-		if (isnull(src.pod1) && wantspod)
-			src.temp += " <font color=red>POD1-ERROR</font>"
-		else if (wantspod)
-			src.pod1.connected = src
-
-		if (src.temp == "")
-			src.temp = "System ready."*/
 		return
 	return
 
 /obj/machinery/computer/cloning/proc/updatemodules()
-	//world << "UPDATING MODULES"
-	src.scanner = findscanner()//locate(/obj/machinery/dna_scannernew, get_step(src, WEST))
-	src.pod1 = findcloner()//locate(/obj/machinery/clonepod, get_step(src, EAST))
-	//world << "SEARCHING FOR MACHEIN"
-	//src.temp = ""
-	//if (isnull(src.scanner))
-	//	src.temp += " <font color=red>SCNR-ERROR</font>"
-	if (!isnull(src.pod1)  && !wantspod)
-		src.pod1.connected = src
-	//	src.temp += " <font color=red>POD1-ERROR</font>"
-	//else
+	src.scanner = findscanner()
+	src.pod1 = findcloner()
 
-	//if (src.temp == "")
-	//	src.temp = "System ready."
+	if (!isnull(src.pod1) && !wantspod)
+		src.pod1.connected = src // Some variable the pod needs
 
 /obj/machinery/computer/cloning/proc/findscanner()
-	//..()
-	//world << "SEARCHING FOR SCANNER"
 	var/obj/machinery/dna_scannernew/scannerf = null
+
+	// Loop through every direction
 	for(dir in list(1,2,4,8,5,6,9,10))
-		//world << "SEARCHING IN [dir]"
+		// Try to find a scanner in that direction
 		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
+		// If found, then we break, and return the scanner
 		if (!isnull(scannerf))
-			//world << "FOUND"
 			break
 	if(isnull(scannerf) && wantsscan)
 		src.temp += " <font color=red>SCNR-ERROR</font>"
+
+	// If no scanner was found, it will return null
 	return scannerf
 
 /obj/machinery/computer/cloning/proc/findcloner()
-	//..()
-	//world << "SEARCHING FOR POD"
 	var/obj/machinery/clonepod/podf = null
+
 	for(dir in list(1,2,4,8,5,6,9,10))
-		//world << "SEARCHING IN [dir]"
+
 		podf = locate(/obj/machinery/clonepod, get_step(src, dir))
+
 		if (!isnull(podf))
-			//world << "FOUND"
 			break
+
 	if(isnull(podf) && wantspod)
 		src.temp += " <font color=red>POD1-ERROR</font>"
+
 	return podf
 
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
@@ -195,23 +178,44 @@
 
 	switch(src.menu)
 		if(1)
+			// Modules
+			dat += "<h4>Modules</h4>"
+			//dat += "<a href='byond://?src=\ref[src];relmodules=1'>Reload Modules</a>"
+			if (isnull(src.scanner))
+				dat += " <font color=red>Scanner-ERROR</font><br>"
+			else
+				dat += " <font color=green>Scanner-Found!</font><br>"
+			if (isnull(src.pod1))
+				dat += " <font color=red>Pod-ERROR</font><br>"
+			else
+				dat += " <font color=green>Pod-Found!</font><br>"
+
+			// Scanner
 			if(wantsscan)
 				dat += "<h4>Scanner Functions</h4>"
-
+	
+				if(loading)
+					dat += "<b>Scanning...</b><br>"
+				else
+					dat += "<b>[scantemp]</b><br>"
+	
 				if (isnull(src.scanner))
-					dat += "No scanner connected!"
+					dat += "No scanner connected!<br>"
 				else
 					if (src.scanner.occupant)
-						dat += "<a href='byond://?src=\ref[src];scan=1'>Scan - [src.scanner.occupant]</a>"
+						if(scantemp == "Scanner unoccupied") scantemp = "" // Stupid check to remove the text
+	
+						dat += "<a href='byond://?src=\ref[src];scan=1'>Scan - [src.scanner.occupant]</a><br>"
 					else
-						dat += "Scanner unoccupied"
-
-					dat += "<br>Lock status: <a href='byond://?src=\ref[src];lock=1'>[src.scanner.locked ? "Locked" : "Unlocked"]</a>"
-
-			dat += "<h4>Database Functions</h4>"
-			dat += "<a href='byond://?src=\ref[src];menu=2'>View Records</a><br>"
-			if (src.diskette)
-				dat += "<a href='byond://?src=\ref[src];disk=eject'>Eject Disk</a>"
+						scantemp = "Scanner unoccupied"
+	
+					dat += "Lock status: <a href='byond://?src=\ref[src];lock=1'>[src.scanner.locked ? "Locked" : "Unlocked"]</a><br>"
+	
+				// Database
+				dat += "<h4>Database Functions</h4>"
+				dat += "<a href='byond://?src=\ref[src];menu=2'>View Records</a><br>"
+				if (src.diskette)
+					dat += "<a href='byond://?src=\ref[src];disk=eject'>Eject Disk</a>"
 
 
 		if(2)
@@ -271,8 +275,21 @@
 	if(..())
 		return
 
+	if(loading)
+		return
+
 	if ((href_list["scan"]) && (!isnull(src.scanner)))
-		src.scan_mob(src.scanner.occupant)
+		scantemp = ""
+
+		loading = 1
+		src.updateUsrDialog()
+
+		spawn(20)
+			src.scan_mob(src.scanner.occupant)
+
+			loading = 0
+			src.updateUsrDialog()
+
 
 		//No locking an open scanner.
 	else if ((href_list["lock"]) && (!isnull(src.scanner)))
@@ -386,22 +403,22 @@
 
 /obj/machinery/computer/cloning/proc/scan_mob(mob/living/carbon/human/subject as mob)
 	if ((isnull(subject)) || (!(ishuman(subject))) || (!subject.dna))
-		src.temp = "Error: Unable to locate valid genetic data."
+		scantemp = "Error: Unable to locate valid genetic data."
 		return
 	if (subject.brain_op_stage == 4.0)
-		src.temp = "Error: No signs of intelligence detected."
+		scantemp = "Error: No signs of intelligence detected."
 		return
 //	if (subject.suiciding == 1)
-//		src.temp = "Error: Subject's brain is not responding to scanning stimuli."
+//		scantemp = "Error: Subject's brain is not responding to scanning stimuli."
 //		return
 //	if ((!subject.ckey) || (!subject.client))
-//		src.temp = "Error: Mental interface failure."
+//		scantemp = "Error: Mental interface failure."
 //		return
 	if (NOCLONE in subject.mutations)
-		src.temp = "Error: Mental interface failure."
+		scantemp = "Error: Mental interface failure."
 		return
 	if (!isnull(find_record(subject.ckey)))
-		src.temp = "Subject already in database."
+		scantemp = "Subject already in database."
 		return
 
 	subject.dna.check_integrity()
@@ -441,7 +458,7 @@
 		R.fields["mind"] = "\ref[subject.mind]"
 
 	geneticsrecords["[copytext(md5(subject.real_name), 2, 6)]"] = R //Save it to the global scan list.
-	src.temp = "Subject successfully scanned."
+	scantemp = "Subject successfully scanned."
 
 //Find a specific record by key.
 /obj/machinery/computer/cloning/proc/find_record(var/find_key)

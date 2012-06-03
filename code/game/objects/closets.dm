@@ -232,3 +232,30 @@
 
 	if(!src.toggle())
 		usr << "\blue It won't budge!"
+
+/obj/structure/closet/verb/verb_toggleopen()
+	set src in view(1)
+	set category = "Object"
+	set name = "Toggle Open"
+
+	if(!(usr))
+		return
+	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() )
+		usr << "\red You can't interact with this!"
+		return
+	if(src.anchored)
+		usr << "\red You can't interact with this!"
+		return
+	if(istype(usr, /mob/living/silicon/robot))
+		src.attack_hand(usr)
+		return
+	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))
+		usr << "\red You can't interact with this!"
+		return
+	if(istype(usr, /mob/living/carbon/human))
+		src.attack_hand(usr)
+	if(istype(usr, /mob/living/carbon/alien))
+		src.attack_alien(usr)
+	if(istype(usr, /mob/living/carbon/monkey))
+		src.attack_paw(usr)
+	return
