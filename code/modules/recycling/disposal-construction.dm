@@ -81,8 +81,11 @@
 
 		if(usr.stat)
 			return
+
 		if(anchored)
 			usr << "You must unfasten the pipe before rotating it."
+			return
+
 		dir = turn(dir, -90)
 		update()
 
@@ -94,6 +97,7 @@
 
 		if(anchored)
 			usr << "You must unfasten the pipe before flipping it."
+			return
 
 		dir = turn(dir, 180)
 		if(ptype == 2)
@@ -186,41 +190,45 @@
 			update()
 
 		else if(istype(I, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/W = I
-			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'Welder2.ogg', 100, 1)
-				user << "Welding the [nicetype] in place."
-				W:welding = 2
-				if(do_after(user, 20))
-					user << "The [nicetype] has been welded in place!"
-					update() // TODO: Make this neat
-					if(ispipe) // Pipe
+			if(anchored)
+				var/obj/item/weapon/weldingtool/W = I
+				if(W.remove_fuel(0,user))
+					playsound(src.loc, 'Welder2.ogg', 100, 1)
+					user << "Welding the [nicetype] in place."
+					W:welding = 2
+					if(do_after(user, 20))
+						user << "The [nicetype] has been welded in place!"
+						update() // TODO: Make this neat
+						if(ispipe) // Pipe
 
-						var/pipetype = dpipetype()
-						var/obj/structure/disposalpipe/P = new pipetype(src.loc)
-						P.base_icon_state = base_state
-						P.dir = dir
-						P.dpdir = dpdir
-						P.updateicon()
+							var/pipetype = dpipetype()
+							var/obj/structure/disposalpipe/P = new pipetype(src.loc)
+							P.base_icon_state = base_state
+							P.dir = dir
+							P.dpdir = dpdir
+							P.updateicon()
 
-					else if(ptype==6) // Disposal bin
-						var/obj/machinery/disposal/P = new /obj/machinery/disposal(src.loc)
-						P.mode = 0 // start with pump off
+						else if(ptype==6) // Disposal bin
+							var/obj/machinery/disposal/P = new /obj/machinery/disposal(src.loc)
+							P.mode = 0 // start with pump off
 
-					else if(ptype==7) // Disposal outlet
+						else if(ptype==7) // Disposal outlet
 
-						var/obj/structure/disposaloutlet/P = new /obj/structure/disposaloutlet(src.loc)
-						P.dir = dir
-						Trunk.linked = P
+							var/obj/structure/disposaloutlet/P = new /obj/structure/disposaloutlet(src.loc)
+							P.dir = dir
+							Trunk.linked = P
 
-					else if(ptype==8) // Disposal outlet
+						else if(ptype==8) // Disposal outlet
 
-						var/obj/machinery/disposal/deliveryChute/P = new /obj/machinery/disposal/deliveryChute(src.loc)
-						P.dir = dir
+							var/obj/machinery/disposal/deliveryChute/P = new /obj/machinery/disposal/deliveryChute(src.loc)
+							P.dir = dir
 
-					del(src)
+						del(src)
+						return
+					W:welding = 1
+				else
+					user << "You need more welding fuel to complete this task."
 					return
-				W:welding = 1
 			else
-				user << "You need more welding fuel to complete this task."
+				user << "You need to attach it to the plating first!"
 				return
