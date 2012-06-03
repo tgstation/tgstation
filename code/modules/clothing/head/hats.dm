@@ -89,6 +89,12 @@
 	icon_state = "chaplain_hood"
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|BLOCKHAIR
 
+/obj/item/clothing/head/nun_hood
+	name = "nun hood"
+	desc = "Maximum piety in this star system."
+	icon_state = "nun_hood"
+	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|BLOCKHAIR
+
 /obj/item/clothing/head/hasturhood
 	name = "hastur's hood"
 	desc = "It's unspeakably stylish"
