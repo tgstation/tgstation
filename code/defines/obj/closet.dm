@@ -142,6 +142,32 @@
 	icon_state = "blue"
 	icon_closed = "blue"
 
+/obj/structure/closet/boxinggloves
+	name = "boxing gloves"
+	desc = "It's a storage unit for gloves for use in the boxing ring."
+
+/obj/structure/closet/masks
+	name = "mask closet"
+	desc = "IT'S A STORAGE UNIT FOR FIGHTER MASKS OLE!"
+
+/obj/structure/closet/lasertag/red
+	name = "red laser tag equipment"
+	desc = "It's a storage unit for laser tag equipment."
+	icon_state = "red"
+	icon_closed = "red"
+
+/obj/structure/closet/lasertag/blue
+	name = "blue laser tag equipment"
+	desc = "It's a storage unit for laser tag equipment."
+	icon_state = "blue"
+	icon_closed = "blue"
+
+/obj/structure/closet/athletic_mixed
+	name = "athletic wardrobe"
+	desc = "It's a storage unit for athletic wear."
+	icon_state = "mixed"
+	icon_closed = "mixed"
+
 /obj/structure/closet/coffin
 	name = "coffin"
 	desc = "It's a burial receptacle for the dearly departed."
