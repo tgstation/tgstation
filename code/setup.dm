@@ -185,6 +185,33 @@ var/MAX_EXPLOSION_RANGE = 14
 #define HIDEEARS	2	//APPLIES ONLY TO HELMETS!!
 #define HIDEEYES	4	//APPLIES ONLY TO HELMETS!!
 
+//clothing-overlay layers. They are floats so they always appear above the Mob
+#define DAMAGE_LAYER		-23
+#define UNIFORM_LAYER		-22
+#define B_UNIFORM_LAYER		-21
+#define SHOES_LAYER			-20
+#define B_SHOES_LAYER		-19
+#define ID_LAYER			-18
+#define GLOVES_LAYER		-17
+#define B_GLOVES_LAYER		-16
+#define EARS_LAYER			-15
+#define SUIT_LAYER			-14
+#define B_SUIT_LAYER		-13
+#define FACE_LAYER			-12
+#define GLASSES_LAYER		-11
+#define FACEMASK_LAYER		-10
+#define B_FACEMASK_LAYER	-9
+#define HEAD_LAYER			-8
+#define B_HEAD_LAYER		-7
+#define SUIT_STORE_LAYER	-6
+#define BELT_LAYER			-5
+#define BACK_LAYER			-4
+#define CUFFED_LAYER		-3
+#define SHIELD_LAYER		-2
+#define INHANDS_LAYER		-1
+
+
+
 
 //Cant seem to find a mob bitflags area other than the powers one
 
@@ -288,9 +315,9 @@ var/MAX_EXPLOSION_RANGE = 14
 #define mSmallsize		110 	// table climbing
 
 //mob/var/stat things
-var/const/CONSCIOUS = 0
-var/const/UNCONSCIOUS = 1
-var/const/DEAD = 2
+#define CONSCIOUS	0
+#define UNCONSCIOUS	1
+#define DEAD		2
 
 // channel numbers for power
 #define EQUIP	1
@@ -319,11 +346,11 @@ var/const/DEAD = 2
 #define MAX_STACK_AMOUNT_GLASS	50
 #define MAX_STACK_AMOUNT_RODS	60
 
-var/const/GAS_O2 = 1 << 0
-var/const/GAS_N2 = 1 << 1
-var/const/GAS_PL = 1 << 2
-var/const/GAS_CO2 = 1 << 3
-var/const/GAS_N2O = 1 << 4
+#define GAS_O2 	(1 << 0)
+#define GAS_N2	(1 << 1)
+#define GAS_PL	(1 << 2)
+#define GAS_CO2	(1 << 3)
+#define GAS_N2O	(1 << 4)
 
 
 var/list/accessable_z_levels = list("3" = 15, "4" = 35, "6" = 50)
