@@ -78,7 +78,7 @@ obj/structure/closet/wardrobe/hop/New()
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/suit/nun(src)
 	new /obj/item/clothing/head/nun_hood(src)
-	new /obj/item/clothing/suit/chaplain_hoodie(src)
+	new /obj/item/clothing/suit/storage/chaplain_hoodie(src)
 	new /obj/item/clothing/head/chaplain_hood(src)
 	new /obj/item/clothing/suit/holidaypriest(src)
 	//new /obj/item/clothing/suit/hastur (src) //No. -- Urist
