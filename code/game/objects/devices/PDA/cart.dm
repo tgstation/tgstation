@@ -56,7 +56,6 @@
 			spawn(5)
 				radio = new /obj/item/radio/integrated/beepsky(src)
 
-
 	detective
 		name = "D.E.T.E.C.T. Cartridge"
 		icon_state = "cart-s"
@@ -69,6 +68,11 @@
 		desc = "The ultimate in clean-room design."
 		icon_state = "cart-j"
 		access_janitor = 1
+
+	lawyer
+		name = "P.R.O.V.E. Cartridge"
+		icon_state = "cart-s"
+		access_security = 1
 
 	clown
 		name = "Honkworks 5.0"
@@ -153,6 +157,7 @@
 		name = "Med-U DELUXE"
 		icon_state = "cart-cmo"
 		access_status_display = 1
+		access_reagent_scanner = 1
 		access_medical = 1
 
 	rd
