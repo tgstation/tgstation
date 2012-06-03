@@ -17,8 +17,8 @@
 	var/image/face_standing = null
 	var/image/face_lying = null
 
-	var/list/body_standing = list(  )
-	var/list/body_lying = list(  )
+	var/image/damageicon_standing = null
+	var/image/damageicon_lying = null
 
 /mob/living/carbon/alien/humanoid/hunter
 	name = "alien hunter"

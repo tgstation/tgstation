@@ -327,7 +327,7 @@
 	// Automatically drop anything in store / id / belt if you're not wearing a uniform.
 	if (zone_sel)
 		zone_sel.overlays = null
-		zone_sel.overlays += body_standing
+		zone_sel.overlays += damageicon_standing
 		zone_sel.overlays += image("icon" = 'zone_sel.dmi', "icon_state" = text("[]", zone_sel.selecting))
 
 	if (lying)
@@ -344,7 +344,7 @@
 			else
 				icon = stand_icon
 
-		overlays += body_lying
+		overlays += damageicon_lying
 
 		if (face_lying)
 			overlays += face_lying
@@ -352,7 +352,7 @@
 		if(update_icon)
 			icon = stand_icon
 
-		overlays += body_standing
+		overlays += damageicon_standing
 
 		if (face_standing)
 			overlays += face_standing

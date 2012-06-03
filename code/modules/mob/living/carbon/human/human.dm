@@ -52,8 +52,8 @@
 	var/hair_icon_state = "hair_a"
 	var/face_icon_state = "bald"
 
-	var/list/body_standing = list()
-	var/list/body_lying = list()
+	var/image/damageicon_standing
+	var/image/damageicon_lying
 
 	var/mutantrace = null
 
@@ -936,8 +936,8 @@
 
 	// Other procs(probably update_face() and update_body() ) also rebuild their own
 	// kinds of overlay lists. Think about merging those procs into this proc.
-	body_overlays_lying += body_lying
-	body_overlays_standing += body_standing
+	body_overlays_lying += damageicon_lying
+	body_overlays_standing += damageicon_standing
 
 	// face_lying and face_standing are the face icons, not a flag
 	body_overlays_lying += face_lying
@@ -1866,7 +1866,7 @@ It can still be worn/put on as normal.
 					W.add_fingerprint(source)
 			else
 				if(!item) return
-				if ((istype(item, /obj) && item.flags & 128 && target.w_uniform))
+				if ((istype(item, /obj) && (item.slot_flags & SLOT_BELT) && target.w_uniform))
 					source.drop_item()
 					loc = target
 					item.layer = 20
@@ -2160,7 +2160,7 @@ It can still be worn/put on as normal.
 					W.add_fingerprint(source)
 			else
 				if(!item) return
-				if ((istype(item, /obj/item) && item.flags & 1))
+				if ((istype(item, /obj/item) && (item.slot_flags & SLOT_BACK)))
 					source.drop_item()
 					loc = target
 					item.layer = 20
