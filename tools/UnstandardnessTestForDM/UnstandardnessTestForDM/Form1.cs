@@ -93,17 +93,70 @@ namespace UnstandardnessTestForDM
         public int totalreferences = 0;
         public int errordefines = 0;
 
+        public List<String> filenames;
+
         public DMSource()
         {
             defines = new List<Define>();
+            filenames = new List<String>();
         }
 
         public void find_all_defines()
         {
-            DirSearch(".", FLAG_DEFINE);
+            find_all_files();
+            foreach(String filename in filenames){
+                searchFileForDefines(filename);
+            }
+            
         }
 
+        public void find_all_files()
+        {
+            filenames = new List<String>();
+            String dmefilename = "";
 
+            foreach (string f in Directory.GetFiles("."))
+            {
+                if (f.ToLower().EndsWith(".dme"))
+                {
+                    dmefilename = f;
+                    break;
+                }
+            }
+
+            if (dmefilename.Equals(""))
+            {
+                MessageBox.Show("dme file not found");
+                return;
+            }
+
+            using (var reader = File.OpenText(dmefilename))
+            {
+                    String s;
+                    while (true)
+                    {
+                        s = reader.ReadLine();
+
+                        if (!(s is String))
+                            break;
+
+                        if (s.StartsWith("#include"))
+                        {
+                            int start = s.IndexOf("\"")+1;
+                            s = s.Substring(start, s.Length - 11);
+
+                            if (s.EndsWith(".dm"))
+                            {
+                                filenames.Add(s);
+                            }
+                        }
+
+                        s = s.Trim(' ');
+                        if (s == "") { continue; }
+                    }
+                reader.Close();
+            }
+        }
 
         
         public void DirSearch(string sDir, int flag)
@@ -127,7 +180,12 @@ namespace UnstandardnessTestForDM
             }
             catch (System.Exception excpt)
             {
+                Console.WriteLine("ERROR IN DIRSEARCH");
                 Console.WriteLine(excpt.Message);
+                Console.WriteLine(excpt.Data);
+                Console.WriteLine(excpt.ToString());
+                Console.WriteLine(excpt.StackTrace);
+                Console.WriteLine("END OF ERROR IN DIRSEARCH");
             }
         }
 
@@ -137,6 +195,8 @@ namespace UnstandardnessTestForDM
             filessearched++;
             FileInfo f = new FileInfo(fileName);
             List<String> lines = new List<String>();
+            List<String> lines_without_comments = new List<String>();
+
             mainform.label5.Text = "Files searched: " + filessearched + "; Defines found: " + defines.Count() + "; References found: " + totalreferences + "; Errorous defines: " + errordefines;
             mainform.label5.Refresh();
 
@@ -155,13 +215,25 @@ namespace UnstandardnessTestForDM
                     }
                 }
                 catch { }
+                reader.Close();
             }
+
+            mainform.listBox1.Items.Add("ATTEMPTING: " + fileName);
+            lines_without_comments = remove_comments(lines);
+
+            /*TextWriter tw = new StreamWriter(fileName);
+            foreach (String s in lines_without_comments)
+            {
+                tw.WriteLine(s);
+            }
+            tw.Close();
+            mainform.listBox1.Items.Add("REWRITE: "+fileName);*/
 
             try
             {
-                for (int i = 0; i < lines.Count; i++)
+                for (int i = 0; i < lines_without_comments.Count; i++)
                 {
-                    String line = lines[i];
+                    String line = lines_without_comments[i];
 
                     if (!(line is string))
                         continue;
@@ -228,6 +300,156 @@ namespace UnstandardnessTestForDM
                 MessageBox.Show("Exception: " + e.Message + " | " + e.ToString());
             }
         }
+
+        bool iscomment = false;
+        int ismultilinecomment = 0;
+        bool isstring = false;
+        bool ismultilinestring = false;
+        int escapesequence = 0;
+        int stringvar = 0;
+
+        public List<String> remove_comments(List<String> lines)
+        {
+            List<String> r = new List<String>();
+
+            iscomment = false;
+            ismultilinecomment = 0;
+            isstring = false;
+            ismultilinestring = false;
+
+            bool skiponechar = false; //Used so the / in */ doesn't get written;
+
+            for (int i = 0; i < lines.Count(); i++)
+            {
+
+                String line = lines[i];
+
+                if (!(line is String))
+                    continue;
+
+                iscomment = false;
+                isstring = false;
+                char ca = ' ';
+                escapesequence = 0;
+
+                String newline = "";
+
+                int k = line.Length;
+
+                for (int j = 0; j < k; j++)
+                {
+
+                    char c = line.ToCharArray()[j];
+
+                    if (escapesequence == 0)
+                        if (normalstatus())
+                        {
+                            if (ca == '/' && c == '/')
+                            {
+                                c = ' ';
+                                iscomment = true;
+
+                                newline = newline.Remove(newline.Length - 1);
+                                k = line.Length;
+                            }
+                            if (ca == '/' && c == '*')
+                            {
+                                c = ' ';
+                                ismultilinecomment = 1;
+                                newline = newline.Remove(newline.Length - 1);
+                                k = line.Length;
+                            }
+                            if (c == '"')
+                            {
+                                isstring = true;
+                            }
+                            if (ca == '{' && c == '"')
+                            {
+                                ismultilinestring = true;
+                            }
+                        }
+                        else if (isstring)
+                        {
+
+                            if (c == '\\')
+                            {
+                                escapesequence = 2;
+                            }
+                            else if (stringvar > 0)
+                            {
+                                if (c == ']')
+                                {
+                                    stringvar--;
+                                }
+                                else if (c == '[')
+                                {
+                                    stringvar++;
+                                }
+                            }
+                            else if (c == '"')
+                            {
+                                isstring = false;
+                            }
+                            else if (c == '[')
+                            {
+                                stringvar++;
+                            }
+                        }
+                        else if (ismultilinestring)
+                        {
+                            if (ca == '"' && c == '}')
+                            {
+                                ismultilinestring = false;
+                            }
+                        }
+                        else if (ismultilinecomment > 0)
+                        {
+                            if (ca == '/' && c == '*')
+                            {
+                                c = ' ';    //These things are here to prevent /*/ from bieng interpreted as the start and end of a comment.
+                                skiponechar = true;
+                                ismultilinecomment++;
+                            }
+                            if (ca == '*' && c == '/')
+                            {
+                                c = ' ';    //These things are here to prevent /*/ from bieng interpreted as the start and end of a comment.
+                                skiponechar = true;
+                                ismultilinecomment--;
+                            }
+                        }
+
+                        if (!iscomment && (ismultilinecomment==0) && !skiponechar)
+                        {
+                            newline += c;
+                        }
+
+                        if (skiponechar)
+                        {
+                            skiponechar = false;
+                        }
+                        if (escapesequence > 0)
+                        {
+                            escapesequence--;
+                        }
+                        else
+                        {
+                            ca = c;
+                        }
+                }
+
+                r.Add(newline.TrimEnd());
+
+            }
+        
+            return r;
+        }
+
+        private bool normalstatus()
+        {
+            return !isstring && !ismultilinestring && (ismultilinecomment==0) && !iscomment && (escapesequence == 0);
+        }
+
+
     }
 
     public class Define

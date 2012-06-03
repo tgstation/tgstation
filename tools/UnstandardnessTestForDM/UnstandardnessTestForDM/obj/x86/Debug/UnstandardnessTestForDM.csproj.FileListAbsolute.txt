@@ -7,3 +7,12 @@ c:\users\baloh\documents\visual studio 2010\Projects\UnstandardnessTestForDM\Uns
 c:\users\baloh\documents\visual studio 2010\Projects\UnstandardnessTestForDM\UnstandardnessTestForDM\obj\x86\Debug\GenerateResource.write.1.tlog
 c:\users\baloh\documents\visual studio 2010\Projects\UnstandardnessTestForDM\UnstandardnessTestForDM\obj\x86\Debug\UnstandardnessTestForDM.exe
 c:\users\baloh\documents\visual studio 2010\Projects\UnstandardnessTestForDM\UnstandardnessTestForDM\obj\x86\Debug\UnstandardnessTestForDM.pdb
+C:\Users\Baloh\Desktop\tgs13\tools\UnstandardnessTestForDM\UnstandardnessTestForDM\bin\Debug\UnstandardnessTestForDM.exe
+C:\Users\Baloh\Desktop\tgs13\tools\UnstandardnessTestForDM\UnstandardnessTestForDM\bin\Debug\UnstandardnessTestForDM.pdb
+C:\Users\Baloh\Desktop\tgs13\tools\UnstandardnessTestForDM\UnstandardnessTestForDM\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Baloh\Desktop\tgs13\tools\UnstandardnessTestForDM\UnstandardnessTestForDM\obj\x86\Debug\UnstandardnessTestForDM.Form1.resources
+C:\Users\Baloh\Desktop\tgs13\tools\UnstandardnessTestForDM\UnstandardnessTestForDM\obj\x86\Debug\UnstandardnessTestForDM.Properties.Resources.resources
+C:\Users\Baloh\Desktop\tgs13\tools\UnstandardnessTestForDM\UnstandardnessTestForDM\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Baloh\Desktop\tgs13\tools\UnstandardnessTestForDM\UnstandardnessTestForDM\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Baloh\Desktop\tgs13\tools\UnstandardnessTestForDM\UnstandardnessTestForDM\obj\x86\Debug\UnstandardnessTestForDM.exe
+C:\Users\Baloh\Desktop\tgs13\tools\UnstandardnessTestForDM\UnstandardnessTestForDM\obj\x86\Debug\UnstandardnessTestForDM.pdb
