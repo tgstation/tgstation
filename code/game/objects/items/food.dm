@@ -82,7 +82,7 @@ MONKEY CUBE BOX
 					usr.put_in_hand(D)
 					usr << "You take a donut out of the box."
 			else
-				D.loc = get_turf_loc(src)
+				D.loc = get_turf(src)
 				usr << "You take a donut out of the box."
 
 	src.update()

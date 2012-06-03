@@ -149,7 +149,7 @@ I kind of like the right click only--the window version can get a little confusi
 
 					vents.Add(temp_vent)
 
-					var/atom/a = get_turf_loc(temp_vent)
+					var/atom/a = get_turf(temp_vent)
 					ventAreas.Add(a.loc)
 
 
