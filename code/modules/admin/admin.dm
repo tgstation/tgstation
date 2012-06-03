@@ -282,10 +282,10 @@ var/global/BSACooldown = 0
 				if(!reason)
 					return
 
-		log_admin("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [GetExp(mins + CMinutes)]")
+		log_admin("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [GetBanExp(mins + CMinutes)]")
 
-		ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [GetExp(mins + CMinutes)]")
-		message_admins("\blue [key_name_admin(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [GetExp(mins + CMinutes)]", 1)
+		ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [GetBanExp(mins + CMinutes)]")
+		message_admins("\blue [key_name_admin(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [GetBanExp(mins + CMinutes)]", 1)
 		Banlist.cd = "/base/[banfolder]"
 		Banlist["reason"] << reason
 		Banlist["temp"] << temp
