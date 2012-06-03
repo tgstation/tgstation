@@ -33,7 +33,8 @@
 	var/showvote		= null
 	var/STFU_ghosts				//80+ people rounds are fun to admin when text flies faster than airport security
 	var/STFU_radio				//80+ people rounds are fun to admin when text flies faster than airport security
-	var/be_syndicate = 0 		//Moving this into client vars, since I was silly when I made it.
+	var/be_syndicate	= 0 	//Moving this into client vars, since I was silly when I made it.
+	var/bubbles			= 1		//Check if bubbles should be displayed for someone
 
 		///////////////
 		//SOUND STUFF//
