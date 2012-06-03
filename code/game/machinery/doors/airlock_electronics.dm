@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/item/weapon/airlock_electronics
 	name = "Airlock Electronics"
@@ -58,13 +58,10 @@
 
 	Topic(href, href_list)
 		..()
-		if (usr.stat || usr.restrained())
+		if (usr.stat || usr.restrained() || !ishuman(usr))
 			return
 		if (href_list["close"])
 			usr << browse(null, "window=airlock")
-			return
-
-		if (!ishuman(usr))
 			return
 
 		if (href_list["login"])
