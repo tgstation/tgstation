@@ -65,6 +65,7 @@ var/blobevent = 0
 
 var/diary = null
 var/diaryofmeanpeople = null
+var/href_logfile = null
 var/station_name = null
 var/game_version = "Baystation 12"
 
@@ -83,7 +84,7 @@ var/goonsay_allowed = 0
 var/dna_ident = 1
 var/abandon_allowed = 1
 var/enter_allowed = 1
-//	guests_allowed = 1
+var/guests_allowed = 0
 var/shuttle_frozen = 0
 var/shuttle_left = 0
 var/tinted_weldhelh = 1

@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /world/New()
 	..()
@@ -11,7 +11,6 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 "}
 
 	diaryofmeanpeople = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")] Attack.log")
-
 	diaryofmeanpeople << {"
 
 Starting up. [time2text(world.timeofday, "hh:mm.ss")]
@@ -28,15 +27,14 @@ Starting up. [time2text(world.timeofday, "hh:mm.ss")]
 		spawn(30)
 			KickInactiveClients()
 
-
+#define INACTIVITY_KICK	6000	//10 minutes in ticks (approx.)
 /world/proc/KickInactiveClients()
 	for(var/client/C)
-		if(!C.holder && ((C.inactivity/10)/60) >= 10)
+		if( !C.holder && (C.inactivity >= INACTIVITY_KICK) )
 			if(C.mob)
 				if(!istype(C.mob, /mob/dead/))
 					log_access("AFK: [key_name(C)]")
 					C << "\red You have been inactive for more than 10 minutes and have been disconnected."
-					C.mob.logged_in = 0
 			del(C)
 	spawn(3000) KickInactiveClients()//more or less five minutes
 
