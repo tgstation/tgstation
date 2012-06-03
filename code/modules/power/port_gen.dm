@@ -57,15 +57,14 @@ display round(lastgen) and plasmatank amount
 	var/recent_fault = 0
 	var/power_output = 1
 
-	proc
-		HasFuel() //Placeholder for fuel check.
-			return 1
+	proc/HasFuel() //Placeholder for fuel check.
+		return 1
 
-		UseFuel() //Placeholder for fuel use.
-			return
+	proc/UseFuel() //Placeholder for fuel use.
+		return
 
-		handleInactive()
-			return
+	proc/handleInactive()
+		return
 
 	process()
 		if(active && HasFuel() && !crit_fail && anchored)
