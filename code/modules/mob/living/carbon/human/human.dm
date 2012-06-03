@@ -1502,9 +1502,9 @@
 	face_standing = new /image()
 	face_lying = new /image()
 	face_standing.icon = eyes_s
-	face_standing.layer = FACE_LAYER
+	face_standing.layer = MOB_LAYER
 	face_lying.icon = eyes_l
-	face_lying.layer = FACE_LAYER
+	face_lying.layer = MOB_LAYER
 
 	del(mouth_l)
 	del(mouth_s)
