@@ -1,10 +1,10 @@
 //Blocks an attempt to connect before even creating our client datum thing.
 world/IsBanned(key,address,computer_id)
-	if(ckey(key) in admins)
-		return ..()
+//	if(ckey(key) in admins)
+//		return ..()
 
 	//Guest Checking
-	if( !guests_allowed && IsGuestKey(key) )
+	if(IsGuestKey(key))
 		log_access("Failed Login: [key] - Guests not allowed")
 		message_admins("\blue Failed Login: [key] - Guests not allowed")
 		return list("reason"="guest", "desc"="\nReason: Guests not allowed.brb")

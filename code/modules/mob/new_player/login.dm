@@ -11,8 +11,6 @@
 		mind.key = key
 		mind.current = src
 
-	spawn() Playmusic() // git some tunes up in heeyaa~
-
 	var/starting_loc = pick(newplayer_start)
 	if(!starting_loc)	starting_loc = locate(1,1,1)
 	loc = starting_loc
@@ -28,7 +26,7 @@
 	if(watch_locations.len>0)
 		loc = pick(watch_locations)
 
-	if(!preferences.savefile_load(src, 0))
+	if(!preferences.savefile_load(src, 1))
 		preferences.ShowChoices(src)
 		if(!client.changes)
 			changes()
@@ -37,11 +35,16 @@
 		if(!client.changes && preferences.lastchangelog!=lastchangelog)
 			changes()
 			preferences.lastchangelog = lastchangelog
-			preferences.savefile_save(src)
+			preferences.savefile_save(src, 1)
 
-	spawn(10)
-		if(client)
-			new_player_panel()
+	if(preferences.pregame_music)
+		spawn() Playmusic() // git some tunes up in heeyaa~
+
+	if(client.has_news())
+		src << "<b><font color=blue>There are some unread <a href='?src=\ref[news_topic_handler];client=\ref[client];action=show_news'>news</a> for you! Please make sure to read all news, as they may contain important updates about roleplay rules or canon.</font></b>"
+
+	new_player_panel()
+
 	//PDA Resource Initialisation =======================================================>
 	/*
 	Quick note: local dream daemon instances don't seem to cache images right. Might be

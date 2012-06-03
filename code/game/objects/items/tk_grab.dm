@@ -114,7 +114,7 @@
 //equip_if_possible(obj/item/W, slot, del_on_fail = 1)
 /*
 		if(istype(user, /mob/living/carbon))
-			if(user:mutations & TK && get_dist(source, user) <= 7)
+			if((TK in user:mutations) && get_dist(source, user) <= 7)
 				if(user:equipped())	return 0
 				var/X = source:x
 				var/Y = source:y

@@ -2,9 +2,7 @@ var/CMinutes = null
 var/savefile/Banlist
 
 
-
 /proc/CheckBan(var/ckey, var/id, var/address)
-
 	if(!Banlist)		// if Banlist cannot be located for some reason
 		LoadBans()		// try to load the bans
 		if(!Banlist)	// uh oh, can't find bans!
@@ -18,11 +16,11 @@ var/savefile/Banlist
 	if( "[ckey][id]" in Banlist.dir )
 		Banlist.cd = "[ckey][id]"
 		if (Banlist["temp"])
-			if (!GetBanExp(Banlist["minutes"]))
+			if (!GetExp(Banlist["minutes"]))
 				ClearTempbans()
 				return 0
 			else
-				.["desc"] = "\nReason: [Banlist["reason"]]\nExpires: [GetBanExp(Banlist["minutes"])]\nBy: [Banlist["bannedby"]][appeal]"
+				.["desc"] = "\nReason: [Banlist["reason"]]\nExpires: [GetExp(Banlist["minutes"])]\nBy: [Banlist["bannedby"]][appeal]"
 		else
 			Banlist.cd	= "/base/[ckey][id]"
 			.["desc"]	= "\nReason: [Banlist["reason"]]\nExpires: <B>PERMENANT</B>\nBy: [Banlist["bannedby"]][appeal]"
@@ -34,7 +32,7 @@ var/savefile/Banlist
 			var/matches
 			if( ckey == Banlist["key"] )
 				matches += "ckey"
-			if( id == Banlist["id"] && Banlist["skipIdCheck"] == 0)
+			if( id == Banlist["id"] )
 				if(matches)
 					matches += "/"
 				matches += "id"
@@ -45,11 +43,11 @@ var/savefile/Banlist
 
 			if(matches)
 				if(Banlist["temp"])
-					if (!GetBanExp(Banlist["minutes"]))
+					if (!GetExp(Banlist["minutes"]))
 						ClearTempbans()
 						return 0
 					else
-						.["desc"] = "\nReason: [Banlist["reason"]]\nExpires: [GetBanExp(Banlist["minutes"])]\nBy: [Banlist["bannedby"]][appeal]"
+						.["desc"] = "\nReason: [Banlist["reason"]]\nExpires: [GetExp(Banlist["minutes"])]\nBy: [Banlist["bannedby"]][appeal]"
 				else
 					.["desc"] = "\nReason: [Banlist["reason"]]\nExpires: <B>PERMENANT</B>\nBy: [Banlist["bannedby"]][appeal]"
 				.["reason"] = matches
@@ -63,16 +61,15 @@ var/savefile/Banlist
 /proc/LoadBans()
 
 	Banlist = new("data/banlist.bdb")
-	log_admin("Loading Banlist")
+	log_admin("Loading banlist.")
 
 	if (!length(Banlist.dir)) log_admin("Banlist is empty.")
 
 	if (!Banlist.dir.Find("base"))
 		log_admin("Banlist missing base dir.")
 		Banlist.dir.Add("base")
-		Banlist.cd = "/base"
-	else if (Banlist.dir.Find("base"))
-		Banlist.cd = "/base"
+
+	Banlist.cd = "/base"
 
 	ClearTempbans()
 	return 1
@@ -112,7 +109,6 @@ var/savefile/Banlist
 		Banlist.cd = "/base/[ckey][computerid]"
 		Banlist["key"] << ckey
 		Banlist["id"] << computerid
-		Banlist["skipIdCheck"] << 0
 		Banlist["reason"] << reason
 		Banlist["bannedby"] << bannedby
 		Banlist["temp"] << temp
@@ -149,7 +145,7 @@ var/savefile/Banlist
 
 	return 1
 
-/proc/GetBanExp(minutes as num)
+/proc/GetExp(minutes as num)
 	UpdateTime()
 	var/exp = minutes - CMinutes
 	if (exp <= 0)
@@ -172,7 +168,7 @@ var/savefile/Banlist
 	for (var/A in Banlist.dir)
 		count++
 		Banlist.cd = "/base/[A]"
-		dat += text("<tr><td><A href='?src=\ref[src];unban_del=[Banlist["key"]][Banlist["id"]]'>(U)</A><A href='?src=\ref[src];unban_edit=[Banlist["key"]][Banlist["id"]]'>(E)</A><A href='?src=\ref[src];unban_cid=[Banlist["key"]][Banlist["id"]]'>(K)</A> Key: <B>[Banlist["key"]]</B></td><td> ([Banlist["temp"] ? "[GetBanExp(Banlist["minutes"]) ? GetBanExp(Banlist["minutes"]) : "Removal pending" ]" : "Permaban"])</td><td>(By: [Banlist["bannedby"]])</td><td>(Reason: [Banlist["reason"]])</td></tr>")
+		dat += text("<tr><td><A href='?src=\ref[src];unban_del=[Banlist["key"]][Banlist["id"]]'>(U)</A><A href='?src=\ref[src];unban_edit=[Banlist["key"]][Banlist["id"]]'>(E)</A><A href='?src=\ref[src];unban_cid=[Banlist["key"]][Banlist["id"]]'>(K)</A> Key: <B>[Banlist["key"]]</B></td><td> ([Banlist["temp"] ? "[GetExp(Banlist["minutes"]) ? GetExp(Banlist["minutes"]) : "Removal pending" ]" : "Permaban"])</td><td>(By: [Banlist["bannedby"]])</td><td>(Reason: [Banlist["reason"]])</td></tr>")
 
 	dat += "</table>"
 	dat = "<HR><B>Bans:</B> <FONT COLOR=blue>(U) = Unban , (E) = Edit Ban , (K) = Remove Computer ID</FONT> - <FONT COLOR=green>([count] Bans)</FONT><HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >[dat]"
