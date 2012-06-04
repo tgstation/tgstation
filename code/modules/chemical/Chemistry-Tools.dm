@@ -3221,19 +3221,19 @@
 
 	bullet_act(var/obj/item/projectile/Proj)
 		if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-			explosion(src.loc,-1,0,2)
+			explosion(get_turf(src),-1,0,2)
 			if(src)
 				del(src)
 
 
 
 	blob_act()
-		explosion(src.loc,0,1,5,7,10)
+		explosion(get_turf(src),0,1,5,7,10)
 		if(src)
 			del(src)
 
 	ex_act()
-		explosion(src.loc,-1,0,2)
+		explosion(get_turf(src),-1,0,2)
 		if(src)
 			del(src)
 
@@ -3274,7 +3274,7 @@
 		reagents.add_reagent("beer",1000)
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act()
-	explosion(src.loc,0,3,5,7,10)
+	explosion(get_turf(src),0,3,5,7,10)
 	del(src)
 
 

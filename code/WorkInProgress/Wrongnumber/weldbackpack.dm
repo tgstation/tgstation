@@ -20,7 +20,7 @@
 			message_admins("[key_name_admin(user)] triggered a fueltank explosion.")
 			log_game("[key_name(user)] triggered a fueltank explosion.")
 			user << "\red That was stupid of you."
-			explosion(src.loc,-1,0,2)
+			explosion(get_turf(src),-1,0,2)
 			if(src)
 				del(src)
 			return

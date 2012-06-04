@@ -258,7 +258,7 @@ var/global/list/uneatable = list(
 
 				if (istype(A,/obj/item/weapon/storage/backpack/holding))
 					var/dist = max((current_size - 2),1)
-					explosion(src.loc,(dist),(dist*2),(dist*4))
+					explosion(get_turf(src),(dist),(dist*2),(dist*4))
 					return
 
 				if(istype(A, /obj/machinery/singularity))//Welp now you did it
@@ -266,7 +266,7 @@ var/global/list/uneatable = list(
 					src.energy += (S.energy/2)//Absorb most of it
 					del(S)
 					var/dist = max((current_size - 2),1)
-					explosion(src.loc,(dist),(dist*2),(dist*4))
+					explosion(get_turf(src),(dist),(dist*2),(dist*4))
 					return//Quits here, the obj should be gone, hell we might be
 
 				if((teleport_del) && (!istype(A, /obj/machinery)))//Going to see if it does not lag less to tele items over to Z 2

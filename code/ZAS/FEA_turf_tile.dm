@@ -178,17 +178,18 @@ turf
 
 			if(zone)
 				for(var/direction in cardinal)
-					if(air_check_directions&direction)
-
-						var/turf/simulated/T = get_step(src,direction)
-						if(T)
-							ZConnect(src,T)
-					else
-						var/turf/simulated/T = get_step(src,direction)
-						if(T)
-							ZDisconnect(src,T)
+					var/turf/simulated/T = get_step(src,direction)
+					if(istype(T))
+						if(CanPass(null, src, 1.5, 0))
+							if(CanPass(null, src, 0, 0))
+								ZConnect(src,T)
+							else
+								ZDisconnect(src,T)
+						else
+							zone.rebuild = 1
+							if(T.zone)
+								T.zone.rebuild = 1
 			else
-
 				for(var/direction in cardinal)
 					if(air_check_directions&direction)
 						var/turf/simulated/T = get_step(src,direction)

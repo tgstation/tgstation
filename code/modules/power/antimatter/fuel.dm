@@ -46,7 +46,7 @@
 	var/strength = convert2energy(mass)
 
 	if (strength < 773.0)
-		var/turf/T = get_turf(src.loc)
+		var/turf/T = get_turf(src)
 
 		if (strength > (450+T0C))
 			explosion(T, 0, 1, 2, 4)
