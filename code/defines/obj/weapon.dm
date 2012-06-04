@@ -2068,11 +2068,13 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 /obj/item/weapon/appendix
 	name = "appendix"
 	desc = "An appendix which looks perfectly healthy."
+	icon = 'food.dmi'
 	icon_state = "appendix"
 
 /obj/item/weapon/appendixinflamed
 	name = "inflamed appendix"
 	desc = "An appendix which appears to be inflamed."
+	icon = 'food.dmi'
 	icon_state = "appendixinflamed"
 
 /obj/item/weapon/megaphone
