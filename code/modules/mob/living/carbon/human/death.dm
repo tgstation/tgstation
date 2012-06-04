@@ -65,7 +65,7 @@
 		//For ninjas exploding when they die./N
 		if (istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_initialized)
 			src << browse(null, "window=spideros")//Just in case.
-			var/location = loc
+			var/turf/location = get_turf(src)
 			explosion(location, 1, 2, 3, 4)
 
 		canmove = 0

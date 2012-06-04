@@ -12,7 +12,7 @@
 
 	New()
 		..()
-		air_contents.adjustGases((3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
+		air_contents.adjust((3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 		return
 
 
@@ -44,5 +44,5 @@
 		..()
 		var/datum/gas/sleeping_agent/trace_gas = new()
 		trace_gas.moles = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
-		air_contents.adjustGases((3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD, traces = list(trace_gas))
+		air_contents.adjust((3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD, traces = list(trace_gas))
 		return

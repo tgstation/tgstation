@@ -183,7 +183,7 @@ display round(lastgen) and plasmatank amount
 
 	proc
 		overheat()
-			explosion(src.loc, 2, 5, 2, -1)
+			explosion(get_turf(src), 2, 5, 2, -1)
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if(istype(O, sheet_path))
@@ -302,7 +302,7 @@ display round(lastgen) and plasmatank amount
 	time_per_sheet = 25
 	board_path = "/obj/item/weapon/circuitboard/pacman/super"
 	overheat()
-		explosion(src.loc, 3, 3, 3, -1)
+		explosion(get_turf(src), 3, 3, 3, -1)
 
 /obj/machinery/power/port_gen/pacman/mrs
 	name = "M.R.S.P.A.C.M.A.N.-type Portable Generator"
@@ -312,7 +312,7 @@ display round(lastgen) and plasmatank amount
 	time_per_sheet = 30
 	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"
 	overheat()
-		explosion(src.loc, 4, 4, 4, -1)
+		explosion(get_turf(src), 4, 4, 4, -1)
 
 /obj/machinery/power/port_gen/pacman/industrial
 	name = "Industrial P.A.C.M.A.N.-type Portable Generator"
@@ -322,4 +322,4 @@ display round(lastgen) and plasmatank amount
 	time_per_sheet = 30
 	board_path = "/obj/item/weapon/circuitboard/pacman/industrial"
 	overheat()
-		explosion(src.loc, 4, 4, 4, -1)
+		explosion(get_turf(src), 4, 4, 4, -1)

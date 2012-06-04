@@ -53,7 +53,7 @@ datum
 //FOR THE LOVE OF GOD PLEASE USE THIS PROC
 //Call it with negative numbers to remove gases.
 
-		proc/adjustGases(o2 = 0, co2 = 0, n2 = 0, tx = 0, list/datum/gas/traces = list())
+		proc/adjust(o2 = 0, co2 = 0, n2 = 0, tx = 0, list/datum/gas/traces = list())
 			//Purpose: Adjusting the gases within a airmix
 			//Called by: Nothing, yet!
 			//Inputs: The values of the gases to adjust
