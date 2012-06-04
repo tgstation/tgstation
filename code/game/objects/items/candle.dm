@@ -27,14 +27,22 @@
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		..()
-		if(istype(W, /obj/item/weapon/weldingtool)  && W:welding)
-			light("\red [user] casually lights the [name] with [W], what a badass.")
-		else if(istype(W, /obj/item/weapon/lighter) && W:lit)
-			light()
-		else if(istype(W, /obj/item/weapon/match) && W:lit)
-			light()
-		else if(istype(W, /obj/item/candle) && W:lit)
-			light()
+		if(istype(W, /obj/item/weapon/weldingtool))
+			var/obj/item/weapon/weldingtool/WT = W
+			if(WT.isOn()) //Badasses dont get blinded by lighting their candle with a welding tool
+				light("\red [user] casually lights the [name] with [W], what a badass.")
+		else if(istype(W, /obj/item/weapon/lighter))
+			var/obj/item/weapon/lighter/L = W
+			if(L.lit)
+				light()
+		else if(istype(W, /obj/item/weapon/match))
+			var/obj/item/weapon/match/M = W
+			if(M.lit)
+				light()
+		else if(istype(W, /obj/item/candle))
+			var/obj/item/candle/C = W
+			if(C.lit)
+				light()
 
 
 	light(var/flavor_text = "\red [usr] lights the [name].")

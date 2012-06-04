@@ -215,7 +215,8 @@
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/weapon/weldingtool))
-			if(W:welding)
+			var/obj/item/weapon/weldingtool/WT = W
+			if(WT.remove_fuel(0, user))
 				TemperatureAct(100)
 		..()
 

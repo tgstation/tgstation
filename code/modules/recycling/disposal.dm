@@ -67,8 +67,9 @@
 				if(W.remove_fuel(0,user))
 					playsound(src.loc, 'Welder2.ogg', 100, 1)
 					user << "You start slicing the floorweld off the disposal unit."
-					W:welding = 2
+
 					if(do_after(user,20))
+						if(!src || !W.isOn()) return
 						user << "You sliced the floorweld off the disposal unit."
 						var/obj/structure/disposalconstruct/C = new (src.loc)
 						C.ptype = 6 // 6 = disposal unit
@@ -76,7 +77,6 @@
 						C.density = 1
 						C.update()
 						del(src)
-					W:welding = 1
 					return
 				else
 					user << "You need more welding fuel to complete this task."
@@ -813,23 +813,21 @@
 		if(istype(I, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/W = I
 
-			if(W.welding)
-				if(W.remove_fuel(0,user))
-					W:welding = 2
-					playsound(src.loc, 'Welder2.ogg', 100, 1)
-					// check if anything changed over 2 seconds
-					var/turf/uloc = user.loc
-					var/atom/wloc = W.loc
-					user << "Slicing the disposal pipe."
-					sleep(30)
-					if(user.loc == uloc && wloc == W.loc)
-						welded()
-					else
-						user << "You must stay still while welding the pipe."
-					W:welding = 1
+			if(W.remove_fuel(0,user))
+				playsound(src.loc, 'Welder2.ogg', 100, 1)
+				// check if anything changed over 2 seconds
+				var/turf/uloc = user.loc
+				var/atom/wloc = W.loc
+				user << "Slicing the disposal pipe."
+				sleep(30)
+				if(!W.isOn()) return
+				if(user.loc == uloc && wloc == W.loc)
+					welded()
 				else
-					user << "You need more welding fuel to cut the pipe."
-					return
+					user << "You must stay still while welding the pipe."
+			else
+				user << "You need more welding fuel to cut the pipe."
+				return
 
 	// called when pipe is cut with welder
 	proc/welded()
@@ -1109,23 +1107,21 @@
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 
-		if(W.welding)
-			if(W.remove_fuel(0,user))
-				W:welding = 2
-				playsound(src.loc, 'Welder2.ogg', 100, 1)
-				// check if anything changed over 2 seconds
-				var/turf/uloc = user.loc
-				var/atom/wloc = W.loc
-				user << "Slicing the disposal pipe."
-				sleep(30)
-				if(user.loc == uloc && wloc == W.loc)
-					welded()
-				else
-					user << "You must stay still while welding the pipe."
-				W:welding = 1
+		if(W.remove_fuel(0,user))
+			playsound(src.loc, 'Welder2.ogg', 100, 1)
+			// check if anything changed over 2 seconds
+			var/turf/uloc = user.loc
+			var/atom/wloc = W.loc
+			user << "Slicing the disposal pipe."
+			sleep(30)
+			if(!W.isOn()) return
+			if(user.loc == uloc && wloc == W.loc)
+				welded()
 			else
-				user << "You need more welding fuel to cut the pipe."
-				return
+				user << "You must stay still while welding the pipe."
+		else
+			user << "You need more welding fuel to cut the pipe."
+			return
 
 	// would transfer to next pipe segment, but we are in a trunk
 	// if not entering from disposal bin,
@@ -1241,8 +1237,8 @@
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'Welder2.ogg', 100, 1)
 				user << "You start slicing the floorweld off the disposal outlet."
-				W:welding = 2
 				if(do_after(user,20))
+					if(!src || !W.isOn()) return
 					user << "You sliced the floorweld off the disposal outlet."
 					var/obj/structure/disposalconstruct/C = new (src.loc)
 					C.ptype = 7 // 7 =  outlet
@@ -1250,7 +1246,6 @@
 					C.anchored = 1
 					C.density = 1
 					del(src)
-				W:welding = 1
 				return
 			else
 				user << "You need more welding fuel to complete this task."

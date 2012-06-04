@@ -369,8 +369,9 @@
 	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
-	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
-		if (W:remove_fuel(0))
+	if (istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+		if (WT.remove_fuel(0))
 			adjustBruteLoss(-30)
 			updatehealth()
 			add_fingerprint(user)

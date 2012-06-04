@@ -31,11 +31,12 @@
 
 
 /obj/effect/decal/mecha_wreckage/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
+	if(istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
 		if(salvage_num <= 0)
 			user << "You don't see anything that can be cut with [W]."
 			return
-		if (!isemptylist(welder_salvage) && W:remove_fuel(0,user))
+		if (!isemptylist(welder_salvage) && WT.remove_fuel(0,user))
 			var/type = prob(70)?pick(welder_salvage):null
 			if(type)
 				var/N = new type(get_turf(user))

@@ -12,11 +12,14 @@ FLOOR TILES
 
 /obj/item/stack/rods/attackby(obj/item/W as obj, mob/user as mob)
 	..()
-	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
+	if (istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+
 		if(amount < 2)
 			user << "\red You need at least two rods to do this."
 			return
-		if(W:remove_fuel(0,user))
+
+		if(WT.remove_fuel(0,user))
 			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
 			new_item.add_to_stacks(usr)
 			for (var/mob/M in viewers(src))

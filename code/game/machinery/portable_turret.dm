@@ -639,13 +639,19 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 				return
 
 			else if(istype(W, /obj/item/weapon/weldingtool))
-				if (W:remove_fuel(5,user)) // uses up 5 fuel.
-					playsound(src.loc, pick('Welder.ogg', 'Welder2.ogg'), 50, 1)
-					if(do_after(user, 20))
-						build_step = 1
-						user << "You remove the turret's interior metal armor."
-						new /obj/item/stack/sheet/metal( loc, 2)
-						return
+				var/obj/item/weapon/weldingtool/WT = W
+				if(!WT.isOn()) return
+				if (WT.get_fuel() < 5) // uses up 5 fuel.
+					user << "\red You need more fuel to complete this task."
+					return
+
+				playsound(src.loc, pick('Welder.ogg', 'Welder2.ogg'), 50, 1)
+				if(do_after(user, 20))
+					if(!src || !WT.remove_fuel(5, user)) return
+					build_step = 1
+					user << "You remove the turret's interior metal armor."
+					new /obj/item/stack/sheet/metal( loc, 2)
+					return
 
 
 		if(3)
@@ -701,22 +707,27 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 
 		if(7)
 			if(istype(W, /obj/item/weapon/weldingtool))
-				if (W:remove_fuel(5,user))
-					playsound(src.loc, pick('Welder.ogg', 'Welder2.ogg'), 50, 1)
-					if(do_after(user, 30))
-						build_step = 8
-						user << "\blue You weld the turret's armor down."
+				var/obj/item/weapon/weldingtool/WT = W
+				if(!WT.isOn()) return
+				if (WT.get_fuel() < 5)
+					user << "\red You need more fuel to complete this task."
 
-						// The final step: create a full turret
-						var/obj/machinery/porta_turret/Turret = new/obj/machinery/porta_turret(locate(x,y,z))
-						Turret.name = finish_name
-						Turret.installation = src.installation
-						Turret.gun_charge = src.gun_charge
+				playsound(src.loc, pick('Welder.ogg', 'Welder2.ogg'), 50, 1)
+				if(do_after(user, 30))
+					if(!src || !WT.remove_fuel(5, user)) return
+					build_step = 8
+					user << "\blue You weld the turret's armor down."
 
-						Turret.cover=new/obj/machinery/porta_turret_cover(src.loc)
-						Turret.cover.Parent_Turret=Turret
-						Turret.cover.name = finish_name
-						del(src)
+					// The final step: create a full turret
+					var/obj/machinery/porta_turret/Turret = new/obj/machinery/porta_turret(locate(x,y,z))
+					Turret.name = finish_name
+					Turret.installation = src.installation
+					Turret.gun_charge = src.gun_charge
+
+					Turret.cover=new/obj/machinery/porta_turret_cover(src.loc)
+					Turret.cover.Parent_Turret=Turret
+					Turret.cover.name = finish_name
+					del(src)
 
 			else if(istype(W, /obj/item/weapon/crowbar))
 				playsound(src.loc, 'Crowbar.ogg', 75, 1)

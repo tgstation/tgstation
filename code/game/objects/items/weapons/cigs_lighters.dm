@@ -123,20 +123,30 @@ ZIPPO
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
-		light("\red [user] casually lights the [name] with [W], what a badass.")
+	if(istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(WT.isOn())//Badasses dont get blinded while lighting their cig with a welding tool
+			light("\red [user] casually lights the [name] with [W], what a badass.")
 
-	else if(istype(W, /obj/item/weapon/lighter/zippo) && (W:lit > 0))
-		light("\red With a single flick of their wrist, [user] smoothly lights their [name] with their [W]. Damn they're cool.")
+	else if(istype(W, /obj/item/weapon/lighter/zippo))
+		var/obj/item/weapon/lighter/zippo/Z = W
+		if(Z.lit > 0)
+			light("\red With a single flick of their wrist, [user] smoothly lights their [name] with their [W]. Damn they're cool.")
 
-	else if(istype(W, /obj/item/weapon/lighter) && (W:lit > 0))
-		light("\red After some fiddling, [user] manages to light their [name] with [W].")
+	else if(istype(W, /obj/item/weapon/lighter))
+		var/obj/item/weapon/lighter/L = W
+		if(L.lit > 0)
+			light("\red After some fiddling, [user] manages to light their [name] with [W].")
 
-	else if(istype(W, /obj/item/weapon/melee/energy/sword) && (W:active))
-		light("\red [user] swings their [W], barely missing their nose. They light their [name] in the process.")
+	else if(istype(W, /obj/item/weapon/melee/energy/sword))
+		var/obj/item/weapon/melee/energy/sword/S = W
+		if(S.active)
+			light("\red [user] swings their [W], barely missing their nose. They light their [name] in the process.")
 
-	else if(istype(W, /obj/item/weapon/match) && (W:lit > 0))
-		light("\red [user] lights their [name] with their [W].")
+	else if(istype(W, /obj/item/weapon/match))
+		var/obj/item/weapon/match/M = W
+		if(M.lit > 0)
+			light("\red [user] lights their [name] with their [W].")
 	return
 
 
@@ -250,18 +260,25 @@ ZIPPO
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		..()
-		if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
-			light("\red [user] casually lights the [name] with [W], what a badass.")
+		if(istype(W, /obj/item/weapon/weldingtool))
+			var/obj/item/weapon/weldingtool/WT = W
+			if(WT.isOn())
+				light("\red [user] casually lights the [name] with [W], what a badass.")
 
-		else if(istype(W, /obj/item/weapon/lighter/zippo) && (W:lit > 0))
-			light("\red With a single flick of their wrist, [user] smoothly lights their [name] with their [W]. Damn they're cool.")
+		else if(istype(W, /obj/item/weapon/lighter/zippo))
+			var/obj/item/weapon/lighter/zippo/Z = W
+			if(Z.lit > 0)
+				light("\red With a single flick of their wrist, [user] smoothly lights their [name] with their [W]. Damn they're cool.")
 
-		else if(istype(W, /obj/item/weapon/lighter) && (W:lit > 0))
-			light("\red After some fiddling, [user] manages to light their [name] with [W].")
+		else if(istype(W, /obj/item/weapon/lighter))
+			var/obj/item/weapon/lighter/L = W
+			if(L.lit > 0)
+				light("\red After some fiddling, [user] manages to light their [name] with [W].")
 
-		else if(istype(W, /obj/item/weapon/match) && (W:lit > 0))
-			light("\red [user] lights \his [name] with \his [W].")
-		return
+		else if(istype(W, /obj/item/weapon/match))
+			var/obj/item/weapon/match/M = W
+			if(M.lit > 0)
+				light("\red [user] lights their [name] with their [W].")
 
 	light(var/flavor_text = "[usr] lights the [name].")
 		if(!src.lit)

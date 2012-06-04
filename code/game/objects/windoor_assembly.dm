@@ -58,22 +58,22 @@ obj/structure/windoor_assembly/Del()
 
 
 /obj/structure/windoor_assembly/attackby(obj/item/W as obj, mob/user as mob)
+	//I really should have spread this out across more states but thin little windoors are hard to sprite.
 	switch(state)
 		if("01")
-			if(istype(W, /obj/item/weapon/weldingtool) && W:welding && !anchored )
-				if (W:remove_fuel(0,user))
-					W:welding = 2
+			if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
+				var/obj/item/weapon/weldingtool/WT = W
+				if (WT.remove_fuel(0,user))
 					user.visible_message("[user] dissassembles the windoor assembly.", "You start to dissassemble the windoor assembly.")
 					playsound(src.loc, 'Welder2.ogg', 50, 1)
 
 					if(do_after(user, 40))
-						if(!src) return
+						if(!src || !WT.isOn()) return
 						user << "\blue You dissasembled the windoor assembly!"
 						new /obj/item/stack/sheet/rglass(get_turf(src), 5)
 						if(secure)
 							new /obj/item/stack/rods(get_turf(src), 4)
 						del(src)
-					W:welding = 1
 				else
 					user << "\blue You need more welding fuel to dissassemble the windoor assembly."
 					return
