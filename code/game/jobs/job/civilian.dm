@@ -17,6 +17,7 @@
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/clothing/suit/armor/vest(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/bartender(H), H.slot_w_uniform)
+		H.equip_if_possible(new /obj/item/device/pda/bar(H), H.slot_belt)
 
 		if(H.backbag == 1)
 			var/obj/item/weapon/storage/box/survival/Barpack = new /obj/item/weapon/storage/box/survival(H)
@@ -53,6 +54,7 @@
 		H.equip_if_possible(new /obj/item/clothing/suit/chef(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/clothing/head/chefhat(H), H.slot_head)
+		H.equip_if_possible(new /obj/item/device/pda/chef(H), H.slot_belt)
 		return 1
 
 
@@ -121,7 +123,7 @@
 		H.equip_if_possible(new /obj/item/device/radio/headset/headset_cargo(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/cargotech(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/black(H), H.slot_shoes)
-		H.equip_if_possible(new /obj/item/device/pda/quartermaster(H), H.slot_belt)
+		H.equip_if_possible(new /obj/item/device/pda/cargo(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/gloves/black(H), H.slot_gloves)
 		return 1
 

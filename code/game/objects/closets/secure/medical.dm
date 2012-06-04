@@ -67,14 +67,14 @@
 		new /obj/item/weapon/storage/backpack/medic(src)
 		new /obj/item/clothing/under/rank/nursesuit (src)
 		new /obj/item/clothing/head/nursehat (src)
-		switch(pick(list("blue", "green", "purple")))
+		switch(pick("blue", "green", "purple"))
 			if ("blue")
 				new /obj/item/clothing/under/rank/medical/blue(src)
 			if ("green")
 				new /obj/item/clothing/under/rank/medical/green(src)
 			if ("purple")
 				new /obj/item/clothing/under/rank/medical/purple(src)
-		switch(pick(list("blue", "green", "purple")))
+		switch(pick("blue", "green", "purple"))
 			if ("blue")
 				new /obj/item/clothing/under/rank/medical/blue(src)
 			if ("green")
@@ -112,6 +112,8 @@
 		new /obj/item/clothing/gloves/latex(src)
 		new /obj/item/clothing/shoes/brown	(src)
 		new /obj/item/device/radio/headset/heads/cmo(src)
+		new /obj/item/weapon/storage/belt/medical(src)
+		new /obj/item/device/flash(src)
 		return
 
 

@@ -55,7 +55,7 @@
 		if(H.backbag == 3) H.equip_if_possible(new /obj/item/weapon/storage/backpack/satchel(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/under/rank/warden(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/clothing/shoes/jackboots(H), H.slot_shoes)
-		H.equip_if_possible(new /obj/item/device/pda/security(H), H.slot_belt)
+		H.equip_if_possible(new /obj/item/device/pda/warden(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/suit/armor/vest/warden(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/clothing/head/helmet/warden(H), H.slot_head)
 		H.equip_if_possible(new /obj/item/clothing/gloves/black(H), H.slot_gloves)

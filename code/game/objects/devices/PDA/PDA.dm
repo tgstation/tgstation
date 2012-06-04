@@ -53,7 +53,11 @@
 
 /obj/item/device/pda/detective
 	default_cartridge = /obj/item/weapon/cartridge/detective
-	icon_state = "pda-s"
+	icon_state = "pda-det"
+
+/obj/item/device/pda/warden
+	default_cartridge = /obj/item/weapon/cartridge/security
+	icon_state = "pda-warden"
 
 /obj/item/device/pda/janitor
 	default_cartridge = /obj/item/weapon/cartridge/janitor
@@ -106,6 +110,10 @@
 	icon_state = "pda-c"
 	toff = 1
 
+/obj/item/device/pda/cargo
+	default_cartridge = /obj/item/weapon/cartridge/quartermaster
+	icon_state = "pda-cargo"
+
 /obj/item/device/pda/quartermaster
 	default_cartridge = /obj/item/weapon/cartridge/quartermaster
 	icon_state = "pda-q"
@@ -141,6 +149,13 @@
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
 	silent = 1 //Quiet in the library!
+
+
+/obj/item/device/pda/chef
+	icon_state = "pda-chef"
+
+/obj/item/device/pda/bar
+	icon_state = "pda-bar"
 
 /obj/item/device/pda/atmos
 	icon_state = "pda-atmo"
