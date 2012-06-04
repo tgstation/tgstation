@@ -1466,6 +1466,7 @@
 	icon_state = null
 	var/bitesize = 1
 	var/bitecount = 0
+	var/eatsound = 'eatfood.ogg'
 	var/trash = null
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
@@ -1592,7 +1593,7 @@
 							spawn(5)
 								user.update_clothing()
 
-				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
+				playsound(M.loc, eatsound, rand(10,50), 1)
 				return 1
 		else if(istype(M, /mob/living/simple_animal/livestock))
 			if(M == user)								//If you're eating it yourself.
