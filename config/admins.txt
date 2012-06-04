@@ -5,7 +5,6 @@ cacophony - Retired Admin
 cajoes - Game Admin
 cib - Game Master
 compactninja - Game Master
-desiderium - Game Admin
 dysthymia - Retired Admin
 doughnuts - Game Admin
 erthilo - Game Admin
