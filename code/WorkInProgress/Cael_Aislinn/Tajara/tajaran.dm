@@ -127,14 +127,14 @@
 	if (lying)
 		icon = lying_icon
 
-		overlays += body_lying
+		overlays += damageicon_lying
 
 		if (face_lying)
 			overlays += face_lying
 	else
 		icon = stand_icon
 
-		overlays += body_standing
+		overlays += damageicon_standing
 
 		if (face_standing)
 			overlays += face_standing

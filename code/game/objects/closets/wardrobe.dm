@@ -74,12 +74,15 @@ obj/structure/closet/wardrobe/hop/New()
 
 /obj/structure/closet/wardrobe/chaplain_black/New()
 	//new /obj/item/clothing/suit/imperium_monk(src) //No. -- Urist
+	new /obj/item/clothing/under/rank/chaplain(src)
+	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/suit/nun(src)
+	new /obj/item/clothing/head/nun_hood(src)
 	new /obj/item/clothing/suit/storage/chaplain_hoodie(src)
 	new /obj/item/clothing/head/chaplain_hood(src)
 	new /obj/item/clothing/suit/holidaypriest(src)
-	new /obj/item/clothing/suit/hastur (src)
-	new /obj/item/clothing/head/hasturhood (src)
+	//new /obj/item/clothing/suit/hastur (src) //No. -- Urist
+	//new /obj/item/clothing/head/hasturhood (src) //No. -- Urist
 	return
 
 /obj/structure/closet/wardrobe/green/New()

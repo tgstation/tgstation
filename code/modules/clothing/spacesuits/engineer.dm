@@ -1,7 +1,7 @@
 /obj/item/clothing/head/helmet/space/engineer
 	name = "environment suit helmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding and a visor that can be toggled on and off."
-	flags = FPRINT | TABLEPASS | HEADSPACE | HEADCOVERSEYES
+	flags = FPRINT | TABLEPASS | HEADSPACE | HEADCOVERSEYES | BLOCKHAIR
 	see_face = 0.0
 	flags_inv = HIDEEARS
 	icon_state = "engspace_helmet"

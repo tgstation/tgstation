@@ -87,7 +87,7 @@
 		src.density = 0
 		del(src)
 		return
-	..()
+	//..() //Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
 	return
 
 //These all need to be rewritten to use visiblemessage()

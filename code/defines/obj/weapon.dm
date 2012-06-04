@@ -824,7 +824,7 @@
 	slot_flags = SLOT_BELT
 	force = 5.0
 	throwforce = 7.0
-	item_state = "wrench"
+	item_state = "crowbar"
 	w_class = 2.0
 	m_amt = 50
 	origin_tech = "engineering=1"
@@ -832,6 +832,7 @@
 /obj/item/weapon/crowbar/red
 	icon = 'items.dmi'
 	icon_state = "red_crowbar"
+	item_state = "crowbar_red"
 
 /obj/item/weapon/cane
 	name = "cane"
@@ -2067,11 +2068,13 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 /obj/item/weapon/appendix
 	name = "appendix"
 	desc = "An appendix which looks perfectly healthy."
+	icon = 'food.dmi'
 	icon_state = "appendix"
 
 /obj/item/weapon/appendixinflamed
 	name = "inflamed appendix"
 	desc = "An appendix which appears to be inflamed."
+	icon = 'food.dmi'
 	icon_state = "appendixinflamed"
 
 /obj/item/weapon/megaphone

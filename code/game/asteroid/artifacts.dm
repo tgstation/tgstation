@@ -12,7 +12,7 @@ var/global/list/space_surprises = list(		/obj/item/clothing/mask/facehugger/angr
 											/obj/item/weapon/pickaxe/plasmacutter			=2,
 											/obj/structure/closet/syndicate/resources		=2,
 											/obj/item/weapon/melee/energy/sword/pirate		=1,
-											//  /obj/mecha/working/ripley/mining				=1
+											/obj/mecha/working/ripley/mining				=1
 
 											//	/obj/creature									=0,
 											//	/obj/item/weapon/rcd							=0,

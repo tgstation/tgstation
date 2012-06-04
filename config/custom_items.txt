@@ -9,7 +9,6 @@ deusdactyl: Greg Anderson: /obj/item/clothing/head/helmet/hardhat/fluff/greg_and
 deusdactyl: Roger Wiles: /obj/item/clothing/under/rank/virologist/fluff/cdc_jumpsuit, /obj/item/clothing/suit/storage/labcoat/fluff/cdc_labcoat
 deusdactyl: James Girard: /obj/item/clothing/head/secsoft/fluff/swatcap
 eternal248: Maximilian Haynes: /obj/item/weapon/paper/certificate
-erthilo: Farah Lants: /obj/item/clothing/under/rank/medical/fluff/short, /obj/item/clothing/suit/storage/labcoat/fluff/red
 fastler: Fastler Greay: /obj/item/weapon/card/id/fluff/lifetime
 fniff: Sarah Calvera: /obj/item/fluff/sarah_calvera_1
 fniff: Angleo Wilkerson: /obj/item/fluff/angelo_wilkerson_1

@@ -27,7 +27,29 @@ WELDINGTOOOL
 
 // SCREWDRIVER
 /obj/item/weapon/screwdriver/New()
-	icon_state = pick("screwdriver","screwdriver2","screwdriver3","screwdriver4","screwdriver5","screwdriver6","screwdriver7")
+	switch(pick("red","blue","purple","brown","green","cyan","yellow"))
+		if ("red")
+			icon_state = "screwdriver2"
+			item_state = "screwdriver"
+		if ("blue")
+			icon_state = "screwdriver"
+			item_state = "screwdriver_blue"
+		if ("purple")
+			icon_state = "screwdriver3"
+			item_state = "screwdriver_purple"
+		if ("brown")
+			icon_state = "screwdriver4"
+			item_state = "screwdriver_brown"
+		if ("green")
+			icon_state = "screwdriver5"
+			item_state = "screwdriver_green"
+		if ("cyan")
+			icon_state = "screwdriver6"
+			item_state = "screwdriver_cyan"
+		if ("yellow")
+			icon_state = "screwdriver7"
+			item_state = "screwdriver_yellow"
+
 	if (prob(75))
 		src.pixel_y = rand(0, 16)
 	return
@@ -327,6 +349,7 @@ WELDINGTOOOL
 	New()
 		if(prob(50))
 			icon_state = "cutters-y"
+			item_state = "cutters_yellow"
 
 /obj/item/weapon/wirecutters/attack(mob/M as mob, mob/user as mob)
 	if((M.handcuffed) && (istype(M:handcuffed, /obj/item/weapon/handcuffs/cable)))

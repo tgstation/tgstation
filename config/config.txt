@@ -82,7 +82,8 @@ TRAITOR_SCALING
 ## If security is prohibited from being most antagonists
 #PROTECT_ROLES_FROM_ANTAGONIST
 
-## If the auto-tensioner is active by default.  It creates more tratiors/other antagonists if it consideers the round slowing down.
+## If the TG auto-tensioner is active by default.  It creates more traitors/other antagonists if it consideers the round slowing down.
+## On BS12 we use Traitor-among-us. 
 #TENSIONER_ACTIVE
 
 ## If metadata is supported
@@ -131,13 +132,13 @@ GUEST_JOBBAN 1
 # SERVER ss13.example.com:2506
 
 ## forum address
-# FORUMURL http://baystation12.net/forums/
+# FORUMURL http://example.com
 
 ## Wiki address
-# WIKIURL http://baystation12.net/wiki/index.php
+# WIKIURL http://example.com
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
-# BANAPPEALS http://justanotherday.example.com
+# BANAPPEALS http://example.com
 
 ## In-game features
 ## spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
@@ -154,7 +155,7 @@ GUEST_JOBBAN 1
 #POPUP_ADMIN_PM
 
 ##What address should banned people appeal ther ban at?  Remember to escape the characters, if needed!
-# APPEAL_ADDRESS http://baystation12.net/forums/viewforum.php?f=2
+# APPEAL_ADDRESS http://example.com
 
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
 TICKLAG 0.9
