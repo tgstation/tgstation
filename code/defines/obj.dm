@@ -311,12 +311,18 @@
 /obj/item/verb/verb_pickup()
 	set src in oview(1)
 	set category = "Object"
-	set name = "Pickup"
+	set name = "Pick up"
 
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
 
-	src.attack_hand(usr)
+	if(ishuman(usr))
+		if(usr.get_active_hand() == null)
+			src.attack_hand(usr)
+		else
+			usr << "\red You already have something in your hand."
+	else
+		usr << "\red This mob type can't use this verb."
 
 /obj/item/device
 	icon = 'device.dmi'
