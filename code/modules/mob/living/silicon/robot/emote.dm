@@ -1,11 +1,9 @@
-/mob/living/silicon/robot/emote(var/act)
+/mob/living/silicon/robot/emote(var/act,var/m_type=1,var/message = null)
 	var/param = null
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
-	var/m_type = 1
-	var/message
 
 	switch(act)
 		if ("salute")
@@ -68,6 +66,19 @@
 				alert("Unable to use this emote, must be either hearable or visible.")
 				return
 			message = "<B>[src]</B> [input]"
+
+		if ("me")
+			if(silent)
+				return
+			if (src.client && (client.muted || client.muted_complete))
+				src << "You are muted."
+				return
+			if (stat)
+				return
+			if(!(message))
+				return
+			else
+				message = "<B>[src]</B> [message]"
 
 		if ("twitch")
 			message = "<B>[src]</B> twitches violently."
