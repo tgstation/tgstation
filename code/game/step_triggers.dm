@@ -1,15 +1,15 @@
 /* Simple object type, calls a proc when "stepped" on by something */
 
-/obj/step_trigger
+/obj/effect/step_trigger
 	var/affect_ghosts = 0
 	var/stopper = 1 // stops throwers
 	invisibility = 101 // nope cant see this shit
 	anchored = 1
 
-/obj/step_trigger/proc/Trigger(var/atom/movable/A)
+/obj/effect/step_trigger/proc/Trigger(var/atom/movable/A)
 	return 0
 
-/obj/step_trigger/HasEntered(H as mob|obj)
+/obj/effect/step_trigger/HasEntered(H as mob|obj)
 	..()
 	if(!H)
 		return
@@ -21,7 +21,7 @@
 
 /* Tosses things in a certain direction */
 
-/obj/step_trigger/thrower
+/obj/effect/step_trigger/thrower
 	var/direction = SOUTH // the direction of throw
 	var/tiles = 3	// if 0: forever until atom hits a stopper
 	var/immobilize = 1 // if nonzero: prevents mobs from moving while they're being flung
@@ -33,7 +33,7 @@
 	Trigger(var/atom/movable/A)
 		var/curtiles = 0
 		var/stopthrow = 0
-		for(var/obj/step_trigger/thrower/T in orange(2, src))
+		for(var/obj/effect/step_trigger/thrower/T in orange(2, src))
 			if(A in T.affecting)
 				return
 
@@ -56,11 +56,11 @@
 
 			// Calculate if we should stop the process
 			if(!nostop)
-				for(var/obj/step_trigger/T in get_step(A, direction))
+				for(var/obj/effect/step_trigger/T in get_step(A, direction))
 					if(T.stopper && T != src)
 						stopthrow = 1
 			else
-				for(var/obj/step_trigger/teleporter/T in get_step(A, direction))
+				for(var/obj/effect/step_trigger/teleporter/T in get_step(A, direction))
 					if(T.stopper)
 						stopthrow = 1
 
@@ -81,11 +81,11 @@
 
 /* Stops things thrown by a thrower, doesn't do anything */
 
-/obj/step_trigger/stopper
+/obj/effect/step_trigger/stopper
 
 /* Instant teleporter */
 
-/obj/step_trigger/teleporter
+/obj/effect/step_trigger/teleporter
 	var/teleport_x = 0	// teleportation coordinates (if one is null, then no teleport!)
 	var/teleport_y = 0
 	var/teleport_z = 0
@@ -99,7 +99,7 @@
 
 /* Random teleporter, teleports atoms to locations ranging from teleport_x - teleport_x_offset, etc */
 
-/obj/step_trigger/teleporter/random
+/obj/effect/step_trigger/teleporter/random
 	var/teleport_x_offset = 0
 	var/teleport_y_offset = 0
 	var/teleport_z_offset = 0

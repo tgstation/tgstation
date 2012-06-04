@@ -1,5 +1,5 @@
 
-/obj/datacore/proc/manifest(var/nosleep = 0)
+/obj/effect/datacore/proc/manifest(var/nosleep = 0)
 	spawn()
 		if(!nosleep)
 			sleep(40)
@@ -68,7 +68,7 @@
 				locked += L
 		return
 
-/obj/datacore/proc/manifest_modify(var/name, var/assignment)
+/obj/effect/datacore/proc/manifest_modify(var/name, var/assignment)
 	var/datum/data/record/foundrecord
 
 	for(var/datum/data/record/t in data_core.general)
@@ -80,7 +80,7 @@
 		foundrecord.fields["rank"] = assignment
 
 
-/obj/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
+/obj/effect/datacore/proc/manifest_inject(var/mob/living/carbon/human/H)
 	if (!isnull(H.mind) && (H.mind.assigned_role != "MODE"))
 		var/datum/data/record/G = new()
 		var/datum/data/record/M = new()

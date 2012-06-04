@@ -215,7 +215,7 @@ proc/check_panel(mob/M)
 			return 1
 	return 0*/
 
-/obj/fake_attacker
+/obj/effect/fake_attacker
 	icon = null
 	icon_state = null
 	name = ""
@@ -357,8 +357,8 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 
 	if(!possible_clones.len) return
 	clone = pick(possible_clones)
-	//var/obj/fake_attacker/F = new/obj/fake_attacker(outside_range(target))
-	var/obj/fake_attacker/F = new/obj/fake_attacker(target.loc)
+	//var/obj/effect/fake_attacker/F = new/obj/effect/fake_attacker(outside_range(target))
+	var/obj/effect/fake_attacker/F = new/obj/effect/fake_attacker(target.loc)
 	if(clone.l_hand)
 		if(!(locate(clone.l_hand) in non_fakeattack_weapons))
 			clone_weapon = clone.l_hand.name

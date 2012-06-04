@@ -11,7 +11,7 @@
 	//MOB overhaul
 
 	//Not in use yet
-	var/obj/organstructure/organStructure = null
+	var/obj/effect/organstructure/organStructure = null
 
 	//Vars that have been relocated to organStructure
 	//Vars that have been relocated to organStructure ++END

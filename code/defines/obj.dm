@@ -81,7 +81,7 @@
 	anchored = 1.0
 	unacidable = 1
 
-/obj/datacore
+/obj/effect/datacore
 	name = "datacore"
 	var/medical[] = list()
 	var/general[] = list()
@@ -1329,24 +1329,3 @@
 	name = "Geas"
 	desc = "You can't resist."
 	// name = ""
-
-
-
-/obj/debug/debugger
-	name =	"Quantum Debugger"
-	desc =  "A quantum debugger used by Centcomm Reality Engineers to help monitor transiant variables."
-	icon = 'stationobjs.dmi'
-	icon_state = "blackbox"
-
-	var/list/list1 = list()
-	var/list/list2 = list()
-	var/list/list3 = list()
-	var/list/list4 = list()
-	var/list/list5 = list()
-	var/list/list6 = list()
-
-	var/var1 = null
-	var/var2 = null
-	var/var3 = null
-	var/var4 = null
-	var/var5 = null
