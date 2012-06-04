@@ -108,6 +108,8 @@
 	if(!usr.canmove || usr.stat || usr.restrained()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
 		return
 
-	if(!opened) // If we let him lock it while it's open, it will close without the items inside going with it
-		togglelock(usr)
-
+	if (ishuman(usr))
+		if (!opened)
+			togglelock(usr)
+	else
+		usr << "\red This mob type can't use this verb."

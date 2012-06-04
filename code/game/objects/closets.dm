@@ -227,4 +227,7 @@
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
 
-	src.attack_hand(usr)
+	if(ishuman(usr))
+		src.attack_hand(usr)
+	else
+		usr << "\red This mob type can't use this verb."
