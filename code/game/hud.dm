@@ -18,6 +18,7 @@
 #define ui_back "6:14,1:5"
 #define ui_rhand "7:16,1:5"
 #define ui_lhand "8:16,1:5"
+#define ui_equip "7:16,2:5"
 #define ui_swaphand1 "7:16,2:5"
 #define ui_swaphand2 "8:16,2:5"
 #define ui_storage1 "9:18,1:5"
@@ -37,8 +38,8 @@
 //Lower right, persistant menu
 #define ui_drop_throw "14:28,2:7"
 #define ui_pull_resist "13:26,2:7"
-#define ui_acti "12:24,1:5"
-#define ui_movi "13:26,1:5"
+#define ui_acti "13:26,1:5"
+#define ui_movi "12:24,1:5"
 #define ui_zonesel "14:28,1:5"
 
 #define ui_borg_pull "12:24,2:7"

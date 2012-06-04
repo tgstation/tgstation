@@ -288,6 +288,14 @@
 	using.layer = 20
 	src.adding += using
 
+	using = new src.h_type( src )
+	using.name = "equip"
+	using.icon = ui_style
+	using.icon_state = "act_equip"
+	using.screen_loc = ui_equip
+	using.layer = 20
+	src.adding += using
+
 /*
 	using = new src.h_type( src )
 	using.name = "intent"
@@ -712,7 +720,8 @@
 
 	//, mymob.i_select, mymob.m_select
 	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
-	mymob.client.screen += src.adding + src.other + src.hotkeybuttons
+	mymob.client.screen += src.adding + src.hotkeybuttons
+	show_otherinventory = 0;
 
 	//if(istype(mymob,/mob/living/carbon/monkey)) mymob.client.screen += src.mon_blo
 

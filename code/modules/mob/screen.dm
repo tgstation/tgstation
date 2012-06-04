@@ -214,51 +214,19 @@
 
 			usr.hud_used.other_update()*/
 		if("act_intent")
-			if(!usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 1
-				usr.client.screen += usr.hud_used.intent_small_hud_objects
-		if("harm")
-			if(!usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 1
-				usr.client.screen += usr.hud_used.intent_small_hud_objects
-		if("help")
-			if(!usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 1
-				usr.client.screen += usr.hud_used.intent_small_hud_objects
-		if("disarm")
-			if(!usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 1
-				usr.client.screen += usr.hud_used.intent_small_hud_objects
-		if("grab")
-			if(!usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 1
-				usr.client.screen += usr.hud_used.intent_small_hud_objects
-
+			if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
+				usr.hud_used.action_intent.icon_state = "intent_[usr.a_intent]"
 
 /obj/screen/MouseExited(object,location,control,params)
 	if(!ishuman(usr) && !istype(usr,/mob/living/carbon/alien/humanoid) && !islarva(usr) && !ismonkey(usr))
 		return
 	switch(name)
 		if("act_intent")
-			if (usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 0
-				usr.client.screen -= usr.hud_used.intent_small_hud_objects
-		if("harm")
-			if (usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 0
-				usr.client.screen -= usr.hud_used.intent_small_hud_objects
-		if("help")
-			if (usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 0
-				usr.client.screen -= usr.hud_used.intent_small_hud_objects
-		if("disarm")
-			if (usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 0
-				usr.client.screen -= usr.hud_used.intent_small_hud_objects
-		if("grab")
-			if (usr.hud_used.show_intent_icons)
-				usr.hud_used.show_intent_icons = 0
-				usr.client.screen -= usr.hud_used.intent_small_hud_objects
+			if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
+				var/intent = usr.a_intent
+				if(intent == "hurt")
+					intent = "harm"	//hurt and harm have different sprite names for some reason.
+				usr.hud_used.action_intent.icon_state = "[intent]"
 
 /obj/screen/Click(location, control, params)
 	switch(name)
@@ -274,6 +242,15 @@
 				usr.client.screen += usr.hud_used.other
 
 			usr.hud_used.other_update()
+
+		if("equip")
+			var/obj/item/I = usr.get_active_hand()
+			if(!I)
+				usr << "\blue You are not holding anything to equip."
+				return
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				H.equip_to_appropriate_slot(I)
 
 		if("maprefresh")
 			var/obj/machinery/computer/security/seccomp = usr.machine
@@ -408,12 +385,25 @@
 								usr << "\blue You don't have an oxygen tank."
 		if("act_intent")
 			if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
-				if (usr.hud_used.show_intent_icons)
+				switch(usr.a_intent)
+					if("help")
+						usr.a_intent = "disarm"
+						usr.hud_used.action_intent.icon_state = "intent_disarm"
+					if("disarm")
+						usr.a_intent = "grab"
+						usr.hud_used.action_intent.icon_state = "intent_grab"
+					if("grab")
+						usr.a_intent = "hurt"
+						usr.hud_used.action_intent.icon_state = "intent_hurt"
+					if("hurt")
+						usr.a_intent = "help"
+						usr.hud_used.action_intent.icon_state = "intent_help"
+				/*if (usr.hud_used.show_intent_icons)
 					usr.hud_used.show_intent_icons = 0
 					usr.client.screen -= usr.hud_used.intent_small_hud_objects
 				else
 					usr.hud_used.show_intent_icons = 1
-					usr.client.screen += usr.hud_used.intent_small_hud_objects
+					usr.client.screen += usr.hud_used.intent_small_hud_objects*/ //Small intent icons
 			if(issilicon(usr))
 				if(usr.a_intent == "help")
 					usr.a_intent = "hurt"
