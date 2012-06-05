@@ -68,7 +68,7 @@ obj/structure/windoor_assembly/Del()
 					playsound(src.loc, 'Welder2.ogg', 50, 1)
 
 					if(do_after(user, 40))
-						if(!src || !WT.isOn()) return
+						if(!src) return
 						user << "\blue You dissasembled the windoor assembly!"
 						new /obj/item/stack/sheet/rglass(get_turf(src), 5)
 						if(secure)
