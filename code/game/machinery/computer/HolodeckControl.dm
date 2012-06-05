@@ -92,13 +92,13 @@
 					loadProgram(target)
 
 			else if(href_list["burntest"])
-				if(!emagged)	return
+				if(safety)	return
 				target = locate(/area/holodeck/source_burntest)
 				if(target)
 					loadProgram(target)
 
 			else if(href_list["wildlifecarp"])
-				if(!emagged)	return
+				if(safety)	return
 				target = locate(/area/holodeck/source_wildlife)
 				if(target)
 					loadProgram(target)
