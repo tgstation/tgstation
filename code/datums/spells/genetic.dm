@@ -20,10 +20,11 @@
 	for(var/mob/target in targets)
 		for(var/x in mutations)
 			target.mutations.Add(x)
+		var/old_disabilities = target.disabilities
 		target.disabilities |= disabilities
 		spawn(duration)
 			for(var/x in mutations)
 				target.mutations.Remove(x)
-			target.disabilities &= ~disabilities
+			target.disabilities = old_disabilities
 
 	return
