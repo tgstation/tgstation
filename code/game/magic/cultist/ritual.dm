@@ -590,8 +590,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 				R.word2 = w2
 				R.word3 = w3
 				R.check_icon()
-				if(!R.blood_DNA)
-					R.blood_DNA = list()
+				R.blood_DNA = list()
 				R.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
 			return
 		else
@@ -637,6 +636,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			var/obj/effect/rune/R = new /obj/effect/rune
 			if(istype(user, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = user
+				R.blood_DNA = list()
 				R.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
 			switch(r)
 				if("teleport")

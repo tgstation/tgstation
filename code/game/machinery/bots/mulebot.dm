@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 // Mulebot - carries crates around for Quartermaster
 // Navigates via floor navbeacons
@@ -802,6 +802,7 @@
 	H.apply_damage(0.5*damage, BRUTE, "r_arm")
 
 	var/obj/effect/decal/cleanable/blood/B = new(src.loc)
+	B.blood_DNA = list()
 	B.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
 
 	bloodiness += 4

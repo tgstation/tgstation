@@ -62,16 +62,10 @@
 	return
 
 /atom/proc/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/device/detective_scanner))
+	if (!(istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) && !(istype(W, /obj/item/weapon/cleaner)) && !(istype(W, /obj/item/weapon/chemsprayer)) && !(istype(W, /obj/item/weapon/pepperspray)) && !(istype(W, /obj/item/weapon/plantbgone)) && !istype(W, /obj/item/device/detective_scanner) && !(istype(W, /obj/item/weapon/reagent_containers/glass/rag)) )
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O << "\red [src] has been scanned by [user] with the [W]"
-	else
-		if (!( istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) &&!(istype(W, /obj/item/weapon/cleaner)) &&!(istype(W, /obj/item/weapon/chemsprayer)) &&!(istype(W, /obj/item/weapon/pepperspray)) && !(istype(W, /obj/item/weapon/plantbgone)) && !(istype(W, /obj/item/weapon/reagent_containers/glass/rag)) )
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O << "\red <B>[src] has been hit by [user] with [W]</B>"
-
+				O << "\red <B>[src] has been hit by [user] with [W]</B>"
 	return
 
 /atom/proc/add_hiddenprint(mob/living/M as mob)
@@ -135,15 +129,6 @@
 				return 0
 			else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex) && !istype(H.gloves, /obj/item/clothing/gloves/fingerless))
 				return 0
-		//Smudge up dem prints some
-		for(var/P in fingerprints)
-			if(P == md5(H.dna.uni_identity))
-				continue
-			var/test_print = stars(fingerprints[P], rand(85,95))
-			if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
-				fingerprints.Remove(P)
-			else
-				fingerprints[P] = test_print
 		//More adminstuffz
 		if(fingerprintslast != H.key)
 			fingerprintshidden += text("Real name: [], Key: []",H.real_name, H.key)
@@ -153,6 +138,15 @@
 			fingerprints = list()
 		//Hash this shit.
 		var/full_print = md5(H.dna.uni_identity)
+		//Smudge up dem prints some
+		for(var/P in fingerprints)
+			if(P == full_print)
+				continue
+			var/test_print = stars(fingerprints[P], rand(85,95))
+			if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
+				fingerprints.Remove(P)
+			else
+				fingerprints[P] = test_print
 		var/print = fingerprints[full_print] //Find if the print is already there.
 		//It is not!  We need to add it!
 		if(!print)
@@ -209,6 +203,7 @@
 			O.overlays += O.blood_overlay
 
 		//if this blood isn't already in the list, add it
+
 		if(blood_DNA[M.dna.unique_enzymes])
 			return 0 //already bloodied with this blood. Cannot add more.
 		blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
@@ -302,7 +297,7 @@
 
 	if (!( src.flags ) & FPRINT)
 		return
-	if (blood_DNA )
+	if (blood_DNA)
 
 		//Cleaning blood off of mobs
 		if (istype (src, /mob/living/carbon))
@@ -914,7 +909,6 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 							usr << "\blue You look at your stump."
 							return*/
 					src.attack_hand(usr, usr.hand)
-//					usr:afterattack(src, usr, (t5 ? 1 : 0), params)
 				else
 					// ------- YOU ARE NOT HUMAN. WHAT ARE YOU - DETERMINED HERE AND PROPER ATTACK_MOBTYPE CALLED -------
 					if (istype(usr, /mob/living/carbon/monkey))

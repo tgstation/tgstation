@@ -233,15 +233,13 @@ FINGERPRINT CARD
 	return
 
 /obj/item/weapon/f_card/proc/display()
-	if(!fingerprints)	return
-	if (length(fingerprints))
+	if(!fingerprints || !fingerprints.len)
+		return "<B>There are no fingerprints on this card.</B>"
+	else
 		var/dat = "<B>Fingerprints on Card</B><HR>"
 		for(var/name in fingerprints)
 			dat += "[name]<BR>"
-			//Foreach goto(41)
 		return dat
-	else
-		return "<B>There are no fingerprints on this card.</B>"
 	return
 
 /*
@@ -297,7 +295,7 @@ FINGERPRINT CARD
 			else
 				src.name = "Finger Print Card"
 			W.add_fingerprint(user)
-			add_fingerprint(user)
+			src.add_fingerprint(user)
 	return
 
 /obj/item/weapon/f_card/add_fingerprint()
