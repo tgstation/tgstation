@@ -51,7 +51,7 @@ connection
 				del A.zone.connections
 		if(B.zone && B.zone.connections)
 			B.zone.connections.Remove(src)
-			if(!A.zone.connections.len)
+			if(!B.zone.connections.len)
 				del B.zone.connections
 		if(zone_A && zone_A.connections)
 			zone_A.connections.Remove(src)
