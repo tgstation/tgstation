@@ -252,6 +252,11 @@
 				var/mob/living/carbon/human/H = usr
 				H.equip_to_appropriate_slot(I)
 
+		if("resist")
+			if(isliving(usr))
+				var/mob/living/L = usr
+				L.resist()
+
 		if("maprefresh")
 			var/obj/machinery/computer/security/seccomp = usr.machine
 
