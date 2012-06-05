@@ -201,7 +201,7 @@ client/proc/remove_news(ID as num)
 		display_all_news_list()
 
 client/proc/edit_news(ID as num)
-	if(!src.holder)
+	if(!src.holder || src.holder.level <= 0)
 		src << "<b>You tried to modify the news, but you're not an admin!"
 		return
 
