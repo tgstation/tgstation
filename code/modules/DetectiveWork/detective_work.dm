@@ -466,11 +466,11 @@ obj/machinery/computer/forensic_scanning
 					add_data_master(atom,data[1],data[2],data[3],data[4])
 			W:stored = list()
 		else if(istype(W, /obj/item/device/pda) && W:cartridge && W:cartridge.access_security)
-			if(W:cartridge.stored)
-				for(var/atom in W:cartridge.stored)
-					var/list/data = W:cartridge.stored[atom]
+			if(W:cartridge.stored_data)
+				for(var/atom in W:cartridge.stored_data)
+					var/list/data = W:cartridge.stored_data[atom]
 					add_data_master(atom,data[1],data[2],data[3],data[4])
-			W:cartridge.stored = list()
+			W:cartridge.stored_data = list()
 		return
 
 	proc/add_data(var/atom/scanned_atom)

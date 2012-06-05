@@ -8,6 +8,7 @@
 	visible = 0.0
 	flags = ON_BORDER
 	opacity = 0
+	var/obj/item/weapon/airlock_electronics/electronics = null
 
 
 /obj/machinery/door/window/update_nearby_tiles(need_rebuild)

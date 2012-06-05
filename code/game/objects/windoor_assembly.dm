@@ -19,7 +19,7 @@ obj/structure/windoor_assembly
 	dir = NORTH
 
 	var/ini_dir
-	var/list/conf_access = null //configuring access, step 6
+	var/obj/item/weapon/airlock_electronics/electronics = null
 
 	//Vars to help with the icon's name
 	var/facing = "l"	//Does the windoor open to the left or right?
@@ -58,8 +58,26 @@ obj/structure/windoor_assembly/Del()
 
 
 /obj/structure/windoor_assembly/attackby(obj/item/W as obj, mob/user as mob)
+	//I really should have spread this out across more states but thin little windoors are hard to sprite.
 	switch(state)
 		if("01")
+			if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
+				var/obj/item/weapon/weldingtool/WT = W
+				if (WT.remove_fuel(0,user))
+					user.visible_message("[user] dissassembles the windoor assembly.", "You start to dissassemble the windoor assembly.")
+					playsound(src.loc, 'Welder2.ogg', 50, 1)
+
+					if(do_after(user, 40))
+						if(!src) return
+						user << "\blue You dissasembled the windoor assembly!"
+						new /obj/item/stack/sheet/rglass(get_turf(src), 5)
+						if(secure)
+							new /obj/item/stack/rods(get_turf(src), 4)
+						del(src)
+				else
+					user << "\blue You need more welding fuel to dissassemble the windoor assembly."
+					return
+
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
 			if(istype(W, /obj/item/weapon/wrench) && !anchored)
 				playsound(src.loc, 'Ratchet.ogg', 100, 1)
@@ -142,15 +160,42 @@ obj/structure/windoor_assembly/Del()
 					else
 						src.name = "Wired Windoor Assembly"
 
-			//Screwdrivering the wires in place (setting door access). Step 6 in progress.
+			//Adding airlock electronics for access. Step 6 complete.
+			else if(istype(W, /obj/item/weapon/airlock_electronics))
+				playsound(src.loc, 'Screwdriver.ogg', 100, 1)
+				user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
+
+				if(do_after(user, 40))
+					if(!src) return
+
+					user.drop_item()
+					W.loc = src
+					user << "\blue You've installed the airlock electronics!"
+					src.name = "Near finished Windoor Assembly"
+					src.electronics = W
+				else
+					W.loc = src.loc
+
+			//Screwdriver to remove airlock electronics. Step 6 undone.
 			else if(istype(W, /obj/item/weapon/screwdriver))
 				playsound(src.loc, 'Screwdriver.ogg', 100, 1)
-				user.visible_message("[user] adjusts the access wires of the windoor assembly.", "You start to adjust the access wires of the windoor assembly.")
-				configure_access()
+				user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to install electronics into the airlock assembly.")
+
+				if(do_after(user, 40))
+					if(!src) return
+					user << "\blue You've removed the airlock electronics!"
+					src.name = "Wired Windoor Assembly"
+					var/obj/item/weapon/airlock_electronics/ae
+					if (!electronics)
+						ae = new/obj/item/weapon/airlock_electronics( src.loc )
+					else
+						ae = electronics
+						electronics = null
+						ae.loc = src.loc
 
 
 			//Crowbar to complete the assembly, Step 7 complete.
-			if(istype(W, /obj/item/weapon/crowbar))
+			else if(istype(W, /obj/item/weapon/crowbar))
 				usr << browse(null, "window=windoor_access")
 				playsound(src.loc, 'Crowbar.ogg', 100, 1)
 				user.visible_message("[user] pries the windoor into the frame.", "You start prying the windoor into the frame.")
@@ -171,8 +216,11 @@ obj/structure/windoor_assembly/Del()
 							windoor.icon_state = "rightsecureopen"
 							windoor.base_state = "rightsecure"
 						windoor.dir = src.dir
-						windoor.req_access = src.conf_access
+						windoor.density = 0
 
+						windoor.req_access = src.electronics.conf_access
+						windoor.electronics = src.electronics
+						src.electronics.loc = windoor
 					else
 						var/obj/machinery/door/window/windoor = new /obj/machinery/door/window(src.loc)
 						if(src.facing == "l")
@@ -182,7 +230,12 @@ obj/structure/windoor_assembly/Del()
 							windoor.icon_state = "rightopen"
 							windoor.base_state = "right"
 						windoor.dir = src.dir
-						windoor.req_access = src.conf_access
+						windoor.density = 0
+
+						windoor.req_access = src.electronics.conf_access
+						windoor.electronics = src.electronics
+						src.electronics.loc = windoor
+
 
 					del(src)
 
@@ -192,61 +245,6 @@ obj/structure/windoor_assembly/Del()
 
 	//Update to reflect changes(if applicable)
 	update_icon()
-
-//Adjust the access of the door and pass it to Topic
-/obj/structure/windoor_assembly/proc/configure_access()
-	if(!src || !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
-		return
-
-	var/t1 = "<B>Access control</B><br>\n"
-
-	if(!conf_access)
-		t1 += "<font color=red>All</font><br>"
-	else
-		t1 += "<a href='?src=\ref[src];access=all'>All</a><br>"
-
-	t1 += "<br>"
-
-	var/list/accesses = get_all_accesses()
-	for (var/acc in accesses)
-		var/aname = get_access_desc(acc)
-
-		if (!conf_access || !conf_access.len || !(acc in conf_access))
-			t1 += "<a href='?src=\ref[src];access=[acc]'>[aname]</a><br>"
-		else
-			t1 += "<a style='color: red' href='?src=\ref[src];access=[acc]'>[aname]</a><br>"
-
-	t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
-
-	usr << browse(t1, "window=windoor_access")
-
-
-//Finalize door accesses. Step 6 complete.
-/obj/structure/windoor_assembly/Topic(href, href_list)
-	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr) || href_list["close"])
-		usr << browse(null, "window=windoor_access")
-		return
-
-	if(href_list["access"])
-		var/acc = href_list["access"]
-
-		if (acc == "all")
-			conf_access = null
-		else
-			var/req = text2num(acc)
-
-			if(conf_access == null)
-				conf_access = list()
-
-			if(!(req in conf_access))
-				conf_access += req
-			else
-				conf_access -= req
-				if (!conf_access.len)
-					conf_access = null
-
-		//Refresh the window.
-		configure_access()
 
 
 //Rotates the windoor assembly clockwise
@@ -267,6 +265,7 @@ obj/structure/windoor_assembly/Del()
 		update_nearby_tiles(need_rebuild=1)
 
 	src.ini_dir = src.dir
+	update_icon()
 	return
 
 //Flips the windoor assembly, determines whather the door opens to the left or the right
@@ -282,7 +281,7 @@ obj/structure/windoor_assembly/Del()
 		src.facing = "l"
 		usr << "The windoor will now slide to the left."
 
-
+	update_icon()
 	return
 
 /obj/structure/windoor_assembly/proc/update_nearby_tiles(need_rebuild)

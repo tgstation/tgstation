@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
-
 
 // fun if you want to typecast humans/monkeys/etc without writing long path-filled lines.
 /proc/ishuman(A)
@@ -345,7 +343,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	return 0
 
-/mob/proc/put_in_hands(var/obj/item/I)
+/mob/proc/put_in_hands(var/obj/item/I) //A suprisingly useful proc.  Allows a simple way to place an object in a mob's hands, or, if they are full, on the ground below them.
 	if(!r_hand)
 		I.loc = src
 		r_hand = I

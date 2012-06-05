@@ -29,7 +29,7 @@
 	var/list/powermonitors = list()
 	var/message1	// used for status_displays
 	var/message2
-	var/list/stored = list()
+	var/list/stored_data = list()
 
 	engineering
 		name = "Power-ON Cartridge"
@@ -584,7 +584,7 @@ Code:
 
 	proc/add_data(atom/A as mob|obj|turf|area)
 		//I love hashtables.
-		var/list/data_entry = stored["\ref [A]"]
+		var/list/data_entry = stored_data["\ref [A]"]
 		if(islist(data_entry)) //Yay, it was already stored!
 			//Merge the fingerprints.
 			var/list/data_prints = data_entry[1]
@@ -616,7 +616,7 @@ Code:
 		sum_list[2] = A.suit_fibers
 		sum_list[3] = A.blood_DNA
 		sum_list[4] = "\The [A] in \the [get_area(A)]"
-		stored["\ref [A]"] = sum_list
+		stored_data["\ref [A]"] = sum_list
 		return 0
 
 /obj/item/weapon/cartridge/Topic(href, href_list)

@@ -3673,7 +3673,7 @@
 					desc = "A drink that is guaranteed to knock you silly."
 				if("hippiesdelight")
 					icon_state = "hippiesdelightglass"
-					name = "Hippiesdelight"
+					name = "Hippie's Delight"
 					desc = "A drink enjoyed by people during the 1960's."
 				if("bananahonk")
 					icon_state = "bananahonkglass"
@@ -3711,6 +3711,22 @@
 					icon_state = "driestmartiniglass"
 					name = "Driest Martini"
 					desc = "Only for the experienced. You think you see sand floating in the glass."
+				if("ice")
+					icon_state = "iceglass"
+					name = "Glass of ice"
+					desc = "Generally, you're supposed to put something else in there too..."
+				if("icecoffee")
+					icon_state = "icedcoffeeglass"
+					name = "Iced Coffee"
+					desc = "A drink to perk you up and refresh you!"
+				if("coffee")
+					icon_state = "glass_brown"
+					name = "Glass of coffee"
+					desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
+				if("bilk")
+					icon_state = "glass_brown"
+					name = "Glass of bilk"
+					desc = "A brew of milk and beer. For those alcoholics who fear osteoporosis."
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"
