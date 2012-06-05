@@ -83,7 +83,7 @@
 
 			for(var/obj/machinery/power/apc/A in L)
 
-				t += copytext(add_tspace(A.area.name, 30), 1, 30)
+				t += copytext(add_tspace("\The [A.area]", 30), 1, 30)
 				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"]<BR>"
 
 		t += "</FONT></PRE></TT>"
