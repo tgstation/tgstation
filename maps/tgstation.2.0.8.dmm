@@ -152,7 +152,7 @@
 "acV" = (/obj/effect/sign/securearea,/turf/simulated/wall/r_wall,/area/security/hos)
 "acW" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/wall/r_wall,/area/security/hos)
 "acX" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/turf/simulated/floor/plating,/area/security/hos)
-"acY" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{req_access_txt = 1},/obj/machinery/door/airlock/glass/glass_security{name = "Security"; req_access_txt = "1"},/turf/simulated/floor,/area/security/hos)
+"acY" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{req_access_txt = 1},/obj/machinery/door/airlock/glass/glass_security{name = "Head of Security's Office"; req_access_txt = "58"},/turf/simulated/floor,/area/security/hos)
 "acZ" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/cable{icon_state = "0-2"; pixel_y = 1; d2 = 2},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/plating,/area/security/hos)
 "ada" = (/obj/structure/disposalpipe/segment{dir = 1},/turf/simulated/wall/r_wall,/area/security/hos)
 "adb" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/grille,/turf/simulated/floor/plating,/area/security/main)
