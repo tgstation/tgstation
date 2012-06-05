@@ -873,6 +873,7 @@ ________________________________________________________________________________
 		U << "\blue You are now invisible to normal detection."
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] vanishes into thin air!",1)
+	U.update_clothing()
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/cancel_stealth()
@@ -884,6 +885,7 @@ ________________________________________________________________________________
 		U << "\blue You are now visible."
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] appears from thin air!",1)
+		U.update_clothing()
 		return 1
 	return 0
 

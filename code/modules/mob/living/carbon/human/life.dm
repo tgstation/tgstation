@@ -1567,30 +1567,5 @@
 					thing.dropped(src)
 					thing.layer = initial(thing.layer)
 
-	// Why this stuff was in handle_clothing() is beyond me
-	var/shielded = 0
-	for (var/obj/item/weapon/cloaking_device/S in src)
-		if (S.active)
-			shielded = 2
-			break
-
-	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_active)
-		shielded = 3
-	switch(shielded)
-		if(1)
-		if(2)
-			invisibility = 2
-			//New stealth. Hopefully doesn't lag too much. /N
-			if(istype(loc, /turf))//If they are standing on a turf.
-				AddCamoOverlay(loc)//Overlay camo.
-		if(3)
-			if(istype(loc, /turf))
-			//Ninjas may flick into view once in a while if they are stealthed.
-				if(prob(90))
-					NinjaStealthActive(loc)
-				else
-					NinjaStealthMalf()
-		else
-			invisibility = 0
 
 	name = get_visible_name()

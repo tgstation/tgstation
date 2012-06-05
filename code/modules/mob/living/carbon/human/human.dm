@@ -1132,20 +1132,6 @@
 			break
 
 
-	if(client && client.admin_invis)
-		invisibility = 100
-	else if (shielded == 2)
-		invisibility = 2
-	else
-		invisibility = 0
-		if(targeted_by && target_locked)
-			clothing_overlays += target_locked
-		else if(targeted_by)
-			target_locked = new /obj/effect/target_locked(src)
-			clothing_overlays += target_locked
-		else if(!targeted_by && target_locked)
-			del(target_locked)
-
 	if (wear_suit)
 
 
@@ -1197,6 +1183,21 @@
 					NinjaStealthMalf()
 		else
 			invisibility = 0
+
+	if(client && client.admin_invis)
+		invisibility = 100
+	else if (shielded == 2)
+		invisibility = 2
+	else
+//		invisibility = 0 //This should hopefully be taken care of by the above
+		if(targeted_by && target_locked)
+			clothing_overlays += target_locked
+		else if(targeted_by)
+			target_locked = new /obj/effect/target_locked(src)
+			clothing_overlays += target_locked
+		else if(!targeted_by && target_locked)
+			del(target_locked)
+
 /*
 	for (var/mob/M in viewers(1, src))//For the love of god DO NOT REFRESH EVERY SECOND - Mport
 		if ((M.client && M.machine == src))
