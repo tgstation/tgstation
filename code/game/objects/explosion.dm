@@ -44,39 +44,40 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			hTurfs = range(epicenter,heavy_impact_range) - dTurfs
 			lTurfs = range(epicenter,light_impact_range) - dTurfs - hTurfs
 
-		spawn() //Lets pop these into different threads.
-			for(var/turf/T in dTurfs) //Loop through the turfs in devestation range.
-				spawn() //Try to pop each turf into it's own thread, speed things along.
-					if(T) //Sanity checking.
-						//Now, the actual explosion stuff happens.
-						if(prob(5))
-							T.ex_act(2)
-						else
-							T.ex_act(1)
-						for(var/atom/object in T.contents)
-							spawn()
-								if(object)
-									object.ex_act(1)
-		spawn()
-			for(var/turf/T in hTurfs)
-				spawn()
-					if(T)
-						if(prob(15) && devastation_range > 2 && heavy_impact_range > 2)
-							secondaryexplosion(T, 1)
-						else
-							T.ex_act(2)
-						for(var/atom/object in T.contents)
+
+		for(var/turf/T in dTurfs) //Loop through the turfs in devestation range.
+			spawn() //Try to pop each turf into it's own thread, speed things along.
+				if(T) //Sanity checking.
+					//Now, the actual explosion stuff happens.
+					if(prob(5))
+						T.ex_act(2)
+					else
+						T.ex_act(1)
+					for(var/atom/object in T.contents)
+						spawn()
+							if(object)
+								object.ex_act(1)
+
+		for(var/turf/T in hTurfs)
+			spawn()
+				if(T)
+					if(prob(15) && devastation_range > 2 && heavy_impact_range > 2)
+						secondaryexplosion(T, 1)
+					else
+						T.ex_act(2)
+					for(var/atom/object in T.contents)
+						spawn()
 							if(object)
 								object.ex_act(2)
-		spawn()
-			for(var/turf/T in lTurfs)
-				spawn()
-					if(T)
-						T.ex_act(3)
-						for(var/atom/object in T.contents)
-							spawn()
-								if(object)
-									object.ex_act(3)
+
+		for(var/turf/T in lTurfs)
+			spawn()
+				if(T)
+					T.ex_act(3)
+					for(var/atom/object in T.contents)
+						spawn()
+							if(object)
+								object.ex_act(3)
 
 		spawn()
 			for(var/mob/living/carbon/mob in fTurfs)
