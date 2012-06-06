@@ -109,6 +109,7 @@
 			verbs += /client/proc/cmd_admin_say
 			verbs += /client/proc/cmd_mod_say
 			verbs += /client/proc/cmd_admin_gib_self
+			verbs += /client/proc/update_mob_sprite
 			verbs += /client/proc/deadmin_self
 		else if (holder.level == -3) // Retired Admin
 			verbs += /client/proc/cmd_admin_say
@@ -417,6 +418,7 @@
 	//verbs -= /client/proc/air_report
 	verbs -= /client/proc/cmd_admin_say
 	verbs -= /client/proc/cmd_admin_gib_self
+	verbs -= /client/proc/update_mob_sprite
 	verbs -= /client/proc/restartcontroller
 	verbs -= /client/proc/play_local_sound
 	verbs -= /client/proc/enable_debug_verbs

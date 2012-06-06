@@ -80,6 +80,18 @@
 					del(stand_icon)
 				if(lying_icon)
 					del(lying_icon)
+			if("skrell")
+				body_overlays_standing += image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace]_[gender]_s")
+				body_overlays_lying	   += image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace]_[gender]_l")
+// This needs to be matched up with humans, but I'm too lazy right now
+//				if(face_standing)
+//					del(face_standing)
+//				if(face_lying)
+//					del(face_lying)
+				if(stand_icon)
+					del(stand_icon)
+				if(lying_icon)
+					del(lying_icon)
 			if("plant")
 				if(stat != 2) //if not dead, that is
 					overlays += image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace][fat]_[gender][!lying ? "_s" : "_l"]")
