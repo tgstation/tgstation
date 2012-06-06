@@ -9,13 +9,7 @@
 
 //SYSTEM
 /proc/investigate_subject2file(var/subject)
-	switch(subject)
-		if("singulo")
-			return file("[INVESTIGATE_DIR]singulo.html")
-		if("silicon")
-			return file("[INVESTIGATE_DIR]silicon.html")
-		else
-			return
+	return file("[INVESTIGATE_DIR][subject].html")
 
 /proc/investigate_reset()
 	if(fdel(INVESTIGATE_DIR))	return 1
@@ -27,17 +21,26 @@
 	if(!F)	return
 	F << "<small>[time2text(world.timeofday,"hh:mm")] \ref[src] ([x],[y],[z])</small> || [src] [message]<br>"
 
-
-
 //ADMINVERBS
-/client/proc/investigate_show( subject in list("singulo","silicon") )
+/client/proc/investigate_show( subject in list("hrefs","singulo") )
 	set name = "Investigate"
 	set category = "Admin"
 	if(!holder)	return
-	var/F = investigate_subject2file(subject)
-	if(!F)
-		src << "<font color='red'>Error: admin_investigate: [INVESTIGATE_DIR][subject] is an invalid path or cannot be accessed.</font>"
-		return
-	src << browse(F,"window=investigate;size=800x300")
+	switch(subject)
+		if("singulo")			//general one-round-only stuff
+			var/F = investigate_subject2file(subject)
+			if(!F)
+				src << "<font color='red'>Error: admin_investigate: [INVESTIGATE_DIR][subject] is an invalid path or cannot be accessed.</font>"
+				return
+			src << browse(F,"window=investigate[subject];size=800x300")
 
-
+		if("hrefs")				//persistant logs and stuff
+			if(config && config.log_hrefs)
+				if(href_logfile)
+					src << browse(href_logfile,"window=investigate[subject];size=800x300")
+				else
+					src << "<font color='red'>Error: admin_investigate: No href logfile found.</font>"
+					return
+			else
+				src << "<font color='red'>Error: admin_investigate: Href Logging is not on.</font>"
+				return
