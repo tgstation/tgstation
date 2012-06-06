@@ -731,17 +731,25 @@ datum/preferences
 					if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
 						if(is_alien_whitelisted(user, "Soghun")) //Check for Soghun and admins
 							new_species += "Soghun"
-						if(is_alien_whitelisted(user, "Tajaran")) //Check for Tajaran
+						if(is_alien_whitelisted(user, "Tajaran")) //Check for Tajaran and admins
 							new_species += "Tajaran"
+						if(is_alien_whitelisted(user, "Skrell")) //Check for Skrell and admins
+							new_species += "Skrell"
 					else //Not using the whitelist? Aliens for everyone!
 						new_species += "Tajaran"
 						new_species += "Soghun"
+						new_species += "Skrell"
 					species = input("Please select a species", "Character Generation", null) in new_species
 					h_style = "Bald" //Try not to carry face/head hair over.
 					f_style = "Shaved"
 					s_tone = 0 //Don't carry over skintone either.
 					hair_style = new/datum/sprite_accessory/hair/bald
 					facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
+					if(species == "Skrell")
+						if(gender == FEMALE)
+							hair_style = new/datum/sprite_accessory/hair/alien/skrell/female/tentacle
+						else
+							hair_style = new/datum/sprite_accessory/hair/alien/skrell/male/tentacle
 
 		if(link_tags["hair"])
 			switch(link_tags["hair"])
@@ -781,16 +789,16 @@ datum/preferences
 				if("random")
 					randomize_skin_tone()
 				if("input")
-					var/new_tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black) or 20-70 for Tajarans", "Character Generation")  as num
+					var/new_tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black) or 20-70 for other species.", "Character Generation")  as num
 					if(new_tone)
-						if(species == "Tajaran")
+						if(species != "Human")
 							s_tone = max(min(round(text2num(new_tone)), 70), 20)
 						else
 							s_tone = max(min(round(text2num(new_tone)), 220), 1)
 						s_tone = -s_tone + 35
 
 		if(link_tags["h_style"])
-			if(species != "Human")
+			if(species == "Tajaran" || species == "Soghun")
 				return
 			switch(link_tags["h_style"])
 
@@ -803,7 +811,13 @@ datum/preferences
 				if("input") // input hair selection
 
 					// Generate list of hairs via typesof()
-					var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
+					var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair - typesof(/datum/sprite_accessory/hair/alien)
+
+					if(species == "Skrell")
+						if(gender == FEMALE)
+							all_hairs = typesof(/datum/sprite_accessory/hair/alien/skrell/female) - /datum/sprite_accessory/hair/alien/skrell/female
+						else
+							all_hairs = typesof(/datum/sprite_accessory/hair/alien/skrell/male) - /datum/sprite_accessory/hair/alien/skrell/male
 
 					// List of hair names
 					var/list/hairs = list()
@@ -836,7 +850,7 @@ datum/preferences
 				src.ooccolor = ooccolor
 
 		if(link_tags["f_style"])
-			if(species != "Human") //Tajarans and Soghuns don't have hair stuff yet.
+			if(species != "Human") //Non-humans don't have hair stuff yet.
 				return
 			switch(link_tags["f_style"])
 
@@ -868,8 +882,12 @@ datum/preferences
 		if(link_tags["gender"])
 			if(gender == MALE)
 				gender = FEMALE
+				if(species == "Skrell")
+					hair_style = new/datum/sprite_accessory/hair/alien/skrell/female/tentacle
 			else
 				gender = MALE
+				if(species == "Skrell")
+					hair_style = new/datum/sprite_accessory/hair/alien/skrell/male/tentacle
 
 		if(link_tags["UI"])
 			switch(UI_style)
@@ -1062,6 +1080,8 @@ datum/preferences
 			randomize_name()
 		character.real_name = real_name
 		character.original_name = real_name //Original name is only used in ghost chat! It is not to be edited by anything!
+
+		character.species = species
 
 		character.flavor_text = flavor_text
 		character.med_record = med_record

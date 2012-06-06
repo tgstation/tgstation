@@ -154,11 +154,10 @@
 
 			var/damage = rand(0, 5)
 			if(!damage)
-				switch(attack_verb)
-					if(("slash") || ("scratch"))
-						playsound(loc, 'slashmiss.ogg', 25, 1, -1)
-					else
-						playsound(loc, 'punchmiss.ogg', 25, 1, -1)
+				if(attack_verb == "scratch" || attack_verb == "slash")
+					playsound(loc, 'slashmiss.ogg', 25, 1, -1)
+				else
+					playsound(loc, 'punchmiss.ogg', 25, 1, -1)
 
 				visible_message("\red <B>[M] has attempted to [attack_verb] [src]!</B>")
 				return 0
@@ -169,13 +168,11 @@
 
 			if(HULK in M.mutations)			damage += 5
 			if(SUPRSTR in M.augmentations) 	damage += 5
-
-			switch(attack_verb)
-				if(("slash") || ("scratch"))
-					damage += 10
-					playsound(loc, 'slice.ogg', 25, 1, -1)
-				else
-					playsound(loc, "punch", 25, 1, -1)
+			if(attack_verb == "scratch" || attack_verb == "slash")
+				damage += 7
+				playsound(loc, 'slice.ogg', 25, 1, -1)
+			else
+				playsound(loc, "punch", 25, 1, -1)
 
 			visible_message("\red <B>[M] has [attack_verb]ed [src]!</B>")
 

@@ -204,7 +204,7 @@
 		if(src == M && istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			var/list/damaged = H.get_damaged_organs(1,1)
-			visible_message("\blue [src] examines [get_gender_form("itsself")].", \
+			visible_message("\blue [src] examines [get_gender_form("itself")].", \
 				"\blue You check yourself for injuries.", \
 				"You hear a rustle, as someone checks about their person.")
 
@@ -255,9 +255,9 @@
 			AdjustWeakened(-3)
 			playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
 			M.visible_message( \
-				"\blue \The [M] shakes \the [src] trying to wake [get_gender_form("it")] up!", \
-				"\blue You shake \the [src] trying to wake [get_gender_form("it")] up!", \
-				"You hear someone get shaken.")
+				"\blue \The [M] shakes \the [src] trying to wake them up!", \
+				"\blue You shake \the [src] trying to wake them up!", \
+				"You hear someone get shaken.") //Using it or its here have he or his, which made no sense, so sticking with gender neutral for now
 
 /mob/living/carbon/proc/eyecheck()
 	return 0

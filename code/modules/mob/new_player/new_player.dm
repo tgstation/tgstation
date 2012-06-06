@@ -358,6 +358,12 @@
 			preferences.copy_to(new_character)
 			if((preferences.species == "Soghun") && (is_alien_whitelisted(src, "Soghun"))) //This probably shouldn't be here, but I can't think of any other way
 				new_character.mutantrace = "lizard"
+				new_character.soghun_talk_understand = 1
+				new_character.voice_name = "Soghun"
+			if((preferences.species == "Skrell") && (is_alien_whitelisted(src, "Skrell")))
+				new_character.mutantrace = "skrell"
+				new_character.skrell_talk_understand = 1
+				new_character.voice_name = "Skrell"
 		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
 
 		new_character.dna.ready_dna(new_character)

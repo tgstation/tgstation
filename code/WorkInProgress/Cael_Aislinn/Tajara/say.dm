@@ -184,7 +184,7 @@
 	var/is_speaking_taj = 0
 	if(copytext(message, 1, 3) == ":j" || copytext(message, 1, 3) == ":J")
 		message = copytext(message, 3)
-		if(taj_talk_understand)
+		if(taj_talk_understand || universal_speak)
 			is_speaking_taj = 1
 
 	if( !message_mode && (disease_symptoms & DISEASE_WHISPER))
@@ -403,7 +403,7 @@
 
 	for (var/mob/M in listening)
 		//if speaking in tajaran, only let other tajs understand
-		if ( M.say_understands(src) && (M.taj_talk_understand || !is_speaking_taj)  )
+		if ( M.say_understands(src) && (M.taj_talk_understand || !is_speaking_taj || M.universal_speak)  )
 			heard_a += M
 		else
 			heard_b += M
