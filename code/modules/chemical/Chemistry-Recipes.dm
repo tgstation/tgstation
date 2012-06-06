@@ -885,7 +885,7 @@ datum
 			name = "Soy Sauce"
 			id = "soysauce"
 			result = "soysauce"
-			required_reagents = list("soymilk" = 4, "acid" = 1)
+			required_reagents = list("soymilk" = 4, "water" = 1) //Was sulphuric acid, probably should change it
 			result_amount = 5
 
 		cheesewheel
