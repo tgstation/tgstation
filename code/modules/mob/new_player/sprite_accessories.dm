@@ -153,6 +153,22 @@
 	spikey
 		name = "Spikey"
 		icon_state = "hair_spikey"
+//////
+//Begin Alien Hairstyle
+//////
+	alien
+//Skrell
+		skrell
+
+			male
+				tentacle
+					name = "Skrell Male Tentacles"
+					icon_state = "skrell_hair_m"
+
+			female
+				tentacle
+					name = "Skrell Female Tentacles"
+					icon_state = "skrell_hair_f"
 
 /*
 ///////////////////////////////////

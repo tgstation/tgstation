@@ -1311,6 +1311,19 @@ var/global/BSACooldown = 0
 			alert("You cannot perform this action. You must be of a higher administrative rank!")
 			return
 
+	if (href_list["grantskrell"])
+		if (src.level>=5)
+			var/mob/M = locate(href_list["grantskrell"])
+			for (var/s in alien_whitelist)
+				if(findtext(s,"[M.ckey] - Skrell"))
+					alert("This key is already on the whitelist!", null, null, null, null, null)
+					return
+			alien_whitelist += "[M.ckey] - Skrell"
+			usr << "[M.ckey] added to Skrell whitelist."
+		else
+			alert("You cannot perform this action. You must be of a higher administrative rank!")
+			return
+
 /***************** BEFORE**************
 
 	if (href_list["l_players"])
@@ -2537,6 +2550,7 @@ var/global/BSACooldown = 0
 		body += "<A href='?src=\ref[src];tdomeobserve=\ref[M]'>Thunderdome Observer</A> | "
 		body += "<A href='?src=\ref[src];granttaj=\ref[M]'>Grant Tajaran (Temp)</A> | "
 		body += "<A href='?src=\ref[src];grantsog=\ref[M]'>Grant Soghun (Temp)</A> | "
+		body += "<A href='?src=\ref[src];grantskrell=\ref[M]'>Grant Skrell (Temp)</A> | "
 
 	body += "<br>"
 	body += "</body></html>"
@@ -2610,6 +2624,20 @@ var/global/BSACooldown = 0
 	show_skill_window(usr, M)
 
 	return
+
+/client/proc/update_mob_sprite(mob/living/carbon/human/H as mob)
+	set category = "Admin"
+	set name = "Update Mob Sprite"
+	set desc = "Should fix any mob sprite update errors."
+
+	if (!holder)
+		src << "Only administrators may use this command."
+		return
+
+	if(istype(H))
+		H.update_body()
+		H.update_clothing()
+		H.update_face()
 
 /obj/admins/proc/Jobbans()
 

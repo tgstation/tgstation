@@ -888,51 +888,6 @@
 		body_overlays_standing += image("icon" = 'genetics.dmi', "icon_state" = "lasereyes_s")
 		body_overlays_lying	   += image("icon" = 'genetics.dmi', "icon_state" = "lasereyes_l")
 
-	if (mutantrace)
-		switch(mutantrace)
-			if("golem","metroid")
-				body_overlays_standing += image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace]_s")
-				body_overlays_lying    += image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace]_l")
-				if(face_standing)
-					del(face_standing)
-				if(face_lying)
-					del(face_lying)
-				if(stand_icon)
-					del(stand_icon)
-				if(lying_icon)
-					del(lying_icon)
-			if("lizard")
-				body_overlays_standing += image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace]_[gender]_s")
-				body_overlays_lying	   += image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace]_[gender]_l")
-				if(face_standing)
-					del(face_standing)
-				if(face_lying)
-					del(face_lying)
-				if(stand_icon)
-					del(stand_icon)
-				if(lying_icon)
-					del(lying_icon)
-			if("plant")
-				if(stat != 2) //if not dead, that is
-					body_overlays_standing += image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace]_[gender]_s")
-					body_overlays_lying    += image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace]_[gender]_l")
-				else
-					// not sure why this doesn't need separate lying/standing states
-					body_overlays_lying += image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace]_d")
-				if(face_standing)
-					del(face_standing)
-				if(face_lying)
-					del(face_lying)
-				if(stand_icon)
-					del(stand_icon)
-				if(lying_icon)
-					del(lying_icon)
-	else
-		// TODO: rewrite update_face() and update_body() if necessary
-		if(!face_standing || !face_lying)
-			update_face()
-		if(!stand_icon || !lying_icon)
-			update_body()
 
 	// Other procs(probably update_face() and update_body() ) also rebuild their own
 	// kinds of overlay lists. Think about merging those procs into this proc.
@@ -1406,7 +1361,7 @@
 /mob/living/carbon/human/proc/update_body()
 	if(stand_icon)	del(stand_icon)
 	if(lying_icon)	del(lying_icon)
-	if(mutantrace)	return
+//	if(mutantrace)	return
 
 	var/g = "m"
 	if(gender == FEMALE)	g = "f"
@@ -1440,6 +1395,31 @@
 
 	stand_icon.Blend(new /icon('human.dmi', "groin_[g]_s"), ICON_OVERLAY)
 	lying_icon.Blend(new /icon('human.dmi', "groin_[g]_l"), ICON_OVERLAY)
+
+	if (mutantrace)
+		switch(mutantrace)
+			if("golem","metroid")
+				stand_icon.Blend(new /icon('genetics.dmi', "icon_state" = "[mutantrace]_s"), ICON_OVERLAY)
+				lying_icon.Blend(new /icon('genetics.dmi', "icon_state" = "[mutantrace]_l"), ICON_OVERLAY)
+			if("lizard")
+				stand_icon.Blend(new /icon('genetics.dmi', "icon_state" = "[mutantrace]_[gender]_s"), ICON_OVERLAY)
+				lying_icon.Blend(new /icon('genetics.dmi', "icon_state" = "[mutantrace]_[gender]_l"), ICON_OVERLAY)
+			if("skrell")
+				stand_icon.Blend(new /icon('genetics.dmi', "icon_state" = "[mutantrace]_[gender]_s"), ICON_OVERLAY)
+				lying_icon.Blend(new /icon('genetics.dmi', "icon_state" = "[mutantrace]_[gender]_l"), ICON_OVERLAY)
+			if("plant")
+				if(stat != 2) //if not dead, that is
+					stand_icon.Blend(new /icon('genetics.dmi', "icon_state" = "[mutantrace]_[gender]_s"), ICON_OVERLAY)
+					lying_icon.Blend(new /icon('genetics.dmi', "icon_state" = "[mutantrace]_[gender]_l"), ICON_OVERLAY)
+				else
+					// not sure why this doesn't need separate lying/standing states
+					lying_icon.Blend(new /icon('genetics.dmi', "icon_state" = "[mutantrace]_d"), ICON_OVERLAY)
+	else
+		// TODO: rewrite update_face() and update_body() if necessary
+		if(!face_standing || !face_lying)
+			update_face()
+		if(!stand_icon || !lying_icon)
+			update_body()
 
 	if (husk)
 		var/icon/husk_s = new /icon('human.dmi', "husk_s")
@@ -1487,15 +1467,16 @@
 	if(!facial_hair_style || !hair_style)	return//Seems people like to lose their icons, this should stop the runtimes for now
 	if(face_standing)	del(face_standing)
 	if(face_lying)		del(face_lying)
-	if(mutantrace)		return
+//	if(mutantrace)		return
 
 	var/g = "m"
 	if (gender == FEMALE)	g = "f"
 
 	var/icon/eyes_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "eyes_s")
 	var/icon/eyes_l = new/icon("icon" = 'human_face.dmi', "icon_state" = "eyes_l")
-	eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
-	eyes_l.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
+	if(species != "Skrell")
+		eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
+		eyes_l.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
 
 	var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
 	var/icon/hair_l = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_l")
@@ -1515,8 +1496,9 @@
 		eyes_s.Blend(hair_s, ICON_OVERLAY)
 		eyes_l.Blend(hair_l, ICON_OVERLAY)
 
-	eyes_s.Blend(mouth_s, ICON_OVERLAY)
-	eyes_l.Blend(mouth_l, ICON_OVERLAY)
+	if(species == "Human")
+		eyes_s.Blend(mouth_s, ICON_OVERLAY)
+		eyes_l.Blend(mouth_l, ICON_OVERLAY)
 
 	// if BLOCKHAIR, do not apply facial hair
 	if((!(head && (head.flags & BLOCKHAIR))) && !(wear_mask && (wear_mask.flags & BLOCKHAIR)))

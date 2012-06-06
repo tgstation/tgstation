@@ -35,7 +35,7 @@
 	var/is_speaking_taj = 0
 	if(copytext(message, 1, 4) == ":j ")
 		message = copytext(message, 4)
-		if(taj_talk_understand)
+		if(taj_talk_understand || universal_speak)
 			is_speaking_taj = 1
 
 	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja)&&src.wear_mask:voice=="Unknown")
@@ -84,7 +84,7 @@
 	var/list/heard_b = list() // didn't understand us
 
 	for (var/mob/M in listening)
-		if ( M.say_understands(src) && (M.taj_talk_understand || !is_speaking_taj)  )
+		if ( M.say_understands(src) && (M.taj_talk_understand || !is_speaking_taj || M.universal_speak)  )
 			heard_a += M
 		else
 			heard_b += M

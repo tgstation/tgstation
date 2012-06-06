@@ -69,9 +69,10 @@
 		return emote(copytext(message, 2))
 
 	var/alt_name = ""
-	if (istype(src, /mob/living/carbon/human) && name != real_name)
+	if (istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
-		alt_name = " (as [H.get_id_name("Unknown")])"
+		if(H.get_face_name() != real_name)
+			alt_name = " (as [H.get_id_name("Unknown")])"
 	var/italics = 0
 	var/message_range = null
 	var/message_mode = null
@@ -155,6 +156,21 @@
 
 	if (!message)
 		return
+
+	//work out if we're speaking skrell or not
+	var/is_speaking_skrell = 0
+
+	if(copytext(message, 1, 3) == ":k" || copytext(message, 1, 3) == ":K")
+		message = copytext(message, 3)
+		if(skrell_talk_understand || universal_speak)
+			is_speaking_skrell = 1
+
+	//work out if we're speaking soghun or not
+	var/is_speaking_soghun = 0
+	if(copytext(message, 1, 3) == ":o" || copytext(message, 1, 3) == ":O")
+		message = copytext(message, 3)
+		if(soghun_talk_understand || universal_speak)
+			is_speaking_soghun = 1
 
 	if( !message_mode && (disease_symptoms & DISEASE_WHISPER))
 		message_mode = "whisper"
@@ -403,7 +419,12 @@
 	var/list/heard_b = list() // didn't understand us
 
 	for (var/mob/M in listening)
-		if (M.say_understands(src))
+		//if speaking in skrell, only let other skrell understand
+		if (M.say_understands(src) && !is_speaking_skrell && !is_speaking_soghun) //This could probably be merged into say_understands(), but I'm too lazy
+			heard_a += M
+		else if(is_speaking_skrell && (M.skrell_talk_understand || M.universal_speak))
+			heard_a += M
+		else if(is_speaking_soghun && (M.soghun_talk_understand || M.universal_speak))
 			heard_a += M
 		else
 			heard_b += M
@@ -413,18 +434,20 @@
 
 	var/rendered = null
 	if (length(heard_a))
-		var/message_a = say_quote(message)
+		var/message_a = say_quote(message,is_speaking_soghun,is_speaking_skrell)
 		if (italics)
 			message_a = "<i>[message_a]</i>"
 		if (!istype(src, /mob/living/carbon/human))
 			rendered = "<span class='game say'><span class='name'>[name]</span> <span class='message'>[message_a]</span></span>"
 		else if(istype(wear_mask, /obj/item/clothing/mask/gas/voice))
+			var/mob/living/carbon/human/H = src
 			if(wear_mask:vchange)
 				rendered = "<span class='game say'><span class='name'>[wear_mask:voice]</span> <span class='message'>[message_a]</span></span>"
 			else
-				rendered = "<span class='game say'><span class='name'>[name]</span> <span class='message'>[message_a]</span></span>"
+				rendered = "<span class='game say'><span class='name'>[H.get_visible_name()]</span> <span class='message'>[message_a]</span></span>"
 		else
-			rendered = "<span class='game say'><span class='name'>[real_name]</span>[alt_name] <span class='message'>[message_a]</span></span>"
+			var/mob/living/carbon/human/H = src
+			rendered = "<span class='game say'><span class='name'>[H.get_face_name()]</span>[alt_name] <span class='message'>[message_a]</span></span>"
 
 /*
 		// Create speech bubble
@@ -491,7 +514,7 @@
 			message_b = voice_message
 		else
 			message_b = stars(message)
-			message_b = say_quote(message_b)
+			message_b = say_quote(message_b,is_speaking_soghun,is_speaking_skrell)
 
 		if (italics)
 			message_b = "<i>[message_b]</i>"
