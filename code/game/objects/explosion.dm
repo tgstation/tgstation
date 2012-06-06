@@ -39,10 +39,10 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			hTurfs = circlerange(epicenter,heavy_impact_range) - dTurfs
 			lTurfs = circlerange(epicenter,light_impact_range) - dTurfs - hTurfs
 		else
-			fTurfs = circlerange(epicenter,max(devastation_range, heavy_impact_range, light_impact_range, flash_range))
-			dTurfs = circlerange(epicenter,devastation_range)
-			hTurfs = circlerange(epicenter,heavy_impact_range) - dTurfs
-			lTurfs = circlerange(epicenter,light_impact_range) - dTurfs - hTurfs
+			fTurfs = range(epicenter,max(devastation_range, heavy_impact_range, light_impact_range, flash_range))
+			dTurfs = range(epicenter,devastation_range)
+			hTurfs = range(epicenter,heavy_impact_range) - dTurfs
+			lTurfs = range(epicenter,light_impact_range) - dTurfs - hTurfs
 
 		spawn() //Lets pop these into different threads.
 			for(var/turf/T in dTurfs) //Loop through the turfs in devestation range.
