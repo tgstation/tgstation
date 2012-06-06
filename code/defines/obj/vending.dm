@@ -262,8 +262,8 @@
 	icon_state = "engivend"
 	icon_deny = "engivend-deny"
 	req_access_txt = "10" //Engineering access
-	product_paths = "/obj/item/weapon/cable_coil/random;/obj/item/weapon/crowbar;/obj/item/weapon/weldingtool/largetank;/obj/item/weapon/wirecutters;/obj/item/weapon/wrench;/obj/item/device/t_scanner;/obj/item/device/multitool;/obj/item/weapon/airlock_electronics;/obj/item/weapon/module/power_control"
-	product_amounts = "10;5;3;5;5;5;3;5;5"
+	product_paths = "/obj/item/weapon/cable_coil/random;/obj/item/weapon/crowbar;/obj/item/weapon/weldingtool;/obj/item/weapon/wirecutters;/obj/item/weapon/wrench;/obj/item/device/t_scanner;/obj/item/device/multitool;/obj/item/weapon/airlock_electronics;/obj/item/weapon/module/power_control"
+	product_amounts = "5;5;3;5;5;5;2;3;3"
 	product_hidden = "/obj/item/weapon/weldingtool/hugetank;/obj/item/clothing/gloves/fyellow"
 	product_hideamt = "2;2"
 	product_coin = "/obj/item/weapon/storage/belt/utility"
