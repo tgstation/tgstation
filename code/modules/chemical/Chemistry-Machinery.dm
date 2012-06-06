@@ -8,6 +8,8 @@
 	anchored = 1
 	icon = 'chemical.dmi'
 	icon_state = "dispenser"
+	use_power = 1
+	idle_power_usage = 40
 	var/energy = 25
 	var/max_energy = 75
 	var/amount = 30
@@ -23,6 +25,13 @@
 				energy += addenergy
 				use_power(2000) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
 			spawn(200) recharge()
+
+	power_change()
+		if(powered())
+			stat &= ~NOPOWER
+		else
+			spawn(rand(0, 15))
+				stat |= NOPOWER
 
 	New()
 		recharge()
@@ -75,7 +84,7 @@
 		winset(user, "chemdispenser_reagents", "size=340x[8 + 40 * i]")
 
 	SkinCmd(mob/user as mob, var/data as text)
-		if(stat & BROKEN) return
+		if(stat & (BROKEN|NOPOWER)) return
 		if(usr.stat || usr.restrained()) return
 		if(!in_range(src, usr)) return
 
@@ -159,6 +168,8 @@
 	anchored = 1
 	icon = 'chemical.dmi'
 	icon_state = "mixer0"
+	use_power = 1
+	idle_power_usage = 20
 	var/beaker = null
 	var/mode = 0
 	var/condi = 0
@@ -186,6 +197,13 @@
 		del(src)
 		return
 
+	power_change()
+		if(powered())
+			stat &= ~NOPOWER
+		else
+			spawn(rand(0, 15))
+				stat |= NOPOWER
+
 	attackby(var/obj/item/weapon/reagent_containers/glass/B as obj, var/mob/user as mob)
 		if(!istype(B, /obj/item/weapon/reagent_containers/glass))
 			return
@@ -202,7 +220,7 @@
 		icon_state = "mixer1"
 
 	Topic(href, href_list)
-		if(stat & BROKEN) return
+		if(stat & (BROKEN|NOPOWER)) return
 		if(usr.stat || usr.restrained()) return
 		if(!in_range(src, usr)) return
 
@@ -352,6 +370,8 @@
 	anchored = 1
 	icon = 'chemical.dmi'
 	icon_state = "mixer0"
+	use_power = 1
+	idle_power_usage = 20
 	var/temphtml = ""
 	var/wait = null
 	var/obj/item/weapon/reagent_containers/glass/beaker = null

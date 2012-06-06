@@ -401,13 +401,15 @@ var/global/list/uneatable = list(
 		toxmob()
 			var/toxrange = 10
 			var/toxdamage = 4
-			var/radiation = 5
+			var/radiation = 15
+			var/radiationmin = 3
 			if (src.energy>200)
 				toxdamage = round(((src.energy-150)/50)*4,1)
 				radiation = round(((src.energy-150)/50)*5,1)
+				radiationmin = round((radiation/5),1)//
 			for(var/mob/living/M in view(toxrange, src.loc))
 				if(istype(M,/mob/living/))
-					M.apply_effect(rand(radiation), IRRADIATE)
+					M.apply_effect(rand(radiationmin,radiation), IRRADIATE)
 					toxdamage = (toxdamage - (toxdamage*M.getarmor(null, "rad")))
 					M.apply_effect(toxdamage, TOX)
 			return

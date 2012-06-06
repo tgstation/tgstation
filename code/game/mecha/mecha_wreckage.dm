@@ -95,6 +95,9 @@
 				parts -= part
 		return
 
+/obj/effect/decal/mecha_wreckage/gygax/dark
+	name = "Dark Gygax wreckage"
+	icon_state = "darkgygax-broken"
 
 /obj/effect/decal/mecha_wreckage/marauder
 	name = "Marauder wreckage"

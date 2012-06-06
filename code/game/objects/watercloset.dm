@@ -4,7 +4,7 @@
 	name = "toilet"
 	desc = "The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean."
 	icon = 'watercloset.dmi'
-	icon_state = "toilet0"
+	icon_state = "toilet00"
 	density = 0
 	anchored = 1
 	var/open = 0			//if the lid is up

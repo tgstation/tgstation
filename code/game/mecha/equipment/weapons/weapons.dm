@@ -324,6 +324,9 @@
 		do_after_cooldown()
 		return
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang//Because I am a heartless bastard -Sieve
+	name = "SOP-6 Grenade Launcher"
+	projectile = /obj/item/weapon/flashbang/clusterbang
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar
 	name = "Banana Mortar"

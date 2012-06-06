@@ -21,6 +21,7 @@
 	var/flushing = 0	// true if flushing in progress
 	var/flush_every_ticks = 30 //Every 30 ticks it will look whether it is ready to flush
 	var/flush_count = 0 //this var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
+	var/last_sound = 0
 
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
@@ -394,7 +395,9 @@
 		air_contents = new()		// new empty gas resv.
 
 		sleep(10)
-		playsound(src, 'disposalflush.ogg', 50, 0, 0)
+		if(last_sound < world.time + 1)
+			playsound(src, 'disposalflush.ogg', 50, 0, 0)
+			last_sound = world.time
 		sleep(5) // wait for animation to finish
 
 

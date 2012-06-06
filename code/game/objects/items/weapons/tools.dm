@@ -340,13 +340,21 @@ WELDINGTOOOL
 
 /obj/item/weapon/weldingtool/experimental
 	name = "Experimental Welding Tool"
-	max_fuel = 80
+	max_fuel = 40
 	w_class = 3.0
 	m_amt = 70
 	g_amt = 120
+	origin_tech = "engineering=4;plasma=3"
+	icon_state = "ewelder"
+	var/last_gen = 0
 
 
 
+/obj/item/weapon/weldingtool/experimental/proc/fuel_gen()//Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
+	var/gen_amount = ((world.time-last_gen)/25)
+	reagents += (gen_amount)
+	if(reagents > max_fuel)
+		reagents = max_fuel
 /obj/item/weapon/wirecutters
 	name = "wirecutters"
 	desc = "This cuts wires."

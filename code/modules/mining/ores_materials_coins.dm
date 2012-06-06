@@ -220,7 +220,7 @@
 	pixel_y = rand(0,4)-4
 
 /obj/item/stack/sheet/uranium
-	name = "Uranium block"
+	name = "uranium"
 	icon_state = "sheet-uranium"
 	force = 5.0
 	throwforce = 5
@@ -231,7 +231,7 @@
 	perunit = 2000
 
 /obj/item/stack/sheet/enruranium
-	name = "Enriched Uranium block"
+	name = "enriched uranium"
 	icon_state = "sheet-enruranium"
 	force = 5.0
 	throwforce = 5

@@ -222,6 +222,94 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	doortype = 23
 	glass = 1
 
+/obj/machinery/door/airlock/gold
+	name = "Gold Airlock"
+	icon = 'Doorgold.dmi'
+	var/mineral = "gold"
+	doortype = 24
+
+/obj/machinery/door/airlock/silver
+	name = "Silver Airlock"
+	icon = 'Doorsilver.dmi'
+	var/mineral = "silver"
+	doortype = 25
+
+/obj/machinery/door/airlock/diamond
+	name = "Diamond Airlock"
+	icon = 'Doordiamond.dmi'
+	var/mineral = "diamond"
+	doortype = 26
+
+/obj/machinery/door/airlock/uranium
+	name = "Uranium Airlock"
+	desc = "And they said I was crazy."
+	icon = 'Dooruranium.dmi'
+	var/mineral = "uranium"
+	doortype = 27
+	var/last_event = 0
+
+/obj/machinery/door/airlock/uranium/process()
+	if(world.time > last_event+20)
+		if(prob(50))
+			radiate()
+		last_event = world.time
+	..()
+
+/obj/machinery/door/airlock/uranium/proc/radiate()
+	for(var/mob/living/L in range (3,src))
+		L.apply_effect(15,IRRADIATE,0)
+	return
+
+/obj/machinery/door/airlock/plasma
+	name = "Plasma Airlock"
+	desc = "No way this can end badly."
+	icon = 'Doorplasma.dmi'
+	var/mineral = "plasma"
+	doortype = 28
+
+/obj/machinery/door/airlock/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(exposed_temperature > 300)
+		PlasmaBurn(exposed_temperature)
+
+/obj/machinery/door/airlock/plasma/proc/ignite(exposed_temperature)
+	if(exposed_temperature > 300)
+		PlasmaBurn(exposed_temperature)
+
+/obj/machinery/door/airlock/plasma/proc/PlasmaBurn(temperature)
+	for(var/turf/simulated/floor/target_tile in range(2,loc))
+		if(target_tile.parent && target_tile.parent.group_processing)
+			target_tile.parent.suspend_group_processing()
+		var/datum/gas_mixture/napalm = new
+		var/toxinsToDeduce = 35
+		napalm.toxins = toxinsToDeduce
+		napalm.temperature = 400+T0C
+		target_tile.assume_air(napalm)
+		spawn (0) target_tile.hotspot_expose(temperature, 400)
+		new/obj/structure/door_assembly/door_assembly_0( src.loc )
+	for(var/obj/structure/falsewall/plasma/F in range(3,src))//Hackish as fuck, but until temperature_expose works, there is nothing I can do -Sieve
+		var/turf/T = get_turf(F)
+		T.ReplaceWithMineralWall("plasma")
+		del (F)
+	for(var/turf/simulated/wall/mineral/W in range(3,src))
+		if(mineral == "plasma")
+			W.ignite((temperature/4))//Added so that you can't set off a massive chain reaction with a small flame
+	for(var/obj/machinery/door/airlock/plasma/D in range(3,src))
+		D.ignite(temperature/4)
+	del (src)
+
+/obj/machinery/door/airlock/clown
+	name = "Bananium Airlock"
+	desc = "Honkhonkhonk"
+	icon = 'Doorbananium.dmi'
+	var/mineral = "clown"
+	doortype = 29
+
+/obj/machinery/door/airlock/sandstone
+	name = "Sandstone Airlock"
+	icon = 'Doorsand.dmi'
+	var/mineral = "sandstone"
+	doortype = 30
+
 /*
 About the new airlock wires panel:
 *	An airlock wire dialog can be accessed by the normal way or by using wirecutters or a multitool on the door while the wire-panel is open. This would show the following wires, which you can either wirecut/mend or send a multitool pulse through. There are 9 wires.
@@ -1031,9 +1119,9 @@ About the new airlock wires panel:
 					if(4) new/obj/structure/door_assembly/door_assembly_med( src.loc )
 					if(5) new/obj/structure/door_assembly/door_assembly_mai( src.loc )
 					if(6) new/obj/structure/door_assembly/door_assembly_ext( src.loc )
-					if(7) new/obj/structure/door_assembly/door_assembly_g( src.loc )
+					if(7) new/obj/structure/door_assembly/door_assembly_glass( src.loc )
 					if(14) new/obj/structure/door_assembly/door_assembly_com/glass( src.loc )
-					if(15) new/obj/structure/door_assembly/door_assembly_eng/glass( src.loc )	//issue 301 -mysthic
+					if(15) new/obj/structure/door_assembly/door_assembly_eng/glass( src.loc )
 					if(16) new/obj/structure/door_assembly/door_assembly_sec/glass( src.loc )
 					if(17) new/obj/structure/door_assembly/door_assembly_med/glass( src.loc )
 					if(18) new/obj/structure/door_assembly/door_assembly_min( src.loc )
@@ -1042,6 +1130,14 @@ About the new airlock wires panel:
 					if(21) new/obj/structure/door_assembly/door_assembly_research/glass( src.loc )
 					if(22) new/obj/structure/door_assembly/door_assembly_min/glass( src.loc )
 					if(23) new/obj/structure/door_assembly/door_assembly_atmo/glass( src.loc )
+					if(24) new/obj/structure/door_assembly/door_assembly_gold( src.loc )
+					if(25) new/obj/structure/door_assembly/door_assembly_silver( src.loc )
+					if(26) new/obj/structure/door_assembly/door_assembly_diamond( src.loc )
+					if(27) new/obj/structure/door_assembly/door_assembly_uranium( src.loc )
+					if(28) new/obj/structure/door_assembly/door_assembly_plasma( src.loc )
+					if(29) new/obj/structure/door_assembly/door_assembly_clown( src.loc )
+					if(30) new/obj/structure/door_assembly/door_assembly_sandstone( src.loc )
+
 				var/obj/item/weapon/airlock_electronics/ae
 				if(!electronics)
 					ae = new/obj/item/weapon/airlock_electronics( src.loc )
@@ -1131,12 +1227,19 @@ About the new airlock wires panel:
 		..()
 	return
 
+/obj/machinery/door/airlock/plasma/attackby(C as obj, mob/user as mob)
+	if(C)
+		ignite(is_hot(C))
+	..()
+
 /obj/machinery/door/airlock/open()
 	if(src.welded || src.locked || (!src.arePowerSystemsOn()) || (stat & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR) || src.operating)
 		return 0
 	use_power(50)
 	if(istype(src, /obj/machinery/door/airlock/glass))
 		playsound(src.loc, 'windowdoor.ogg', 100, 1)
+	if(istype(src, /obj/machinery/door/airlock/clown))
+		playsound(src.loc, 'bikehorn.ogg', 30, 1)
 	else
 		playsound(src.loc, 'airlock.ogg', 30, 1)
 	if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
@@ -1174,6 +1277,8 @@ About the new airlock wires panel:
 	use_power(50)
 	if(istype(src, /obj/machinery/door/airlock/glass))
 		playsound(src.loc, 'windowdoor.ogg', 30, 1)
+	if(istype(src, /obj/machinery/door/airlock/clown))
+		playsound(src.loc, 'bikehorn.ogg', 30, 1)
 	else
 		playsound(src.loc, 'airlock.ogg', 30, 1)
 	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))

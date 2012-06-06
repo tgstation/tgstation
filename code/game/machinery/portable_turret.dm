@@ -23,6 +23,7 @@
 	req_access = list(access_security)
 	power_channel = EQUIP	// drains power from the EQUIPMENT channel
 
+	var/lasercolor = ""
 	var/raised = 0			// if the turret cover is "open" and the turret is raised
 	var/raising= 0			// if the turret is currently opening or closing its cover
 	var/health = 80			// the turret's health
@@ -30,6 +31,11 @@
 
 	var/installation		// the type of weapon installed
 	var/gun_charge = 0		// the charge of the gun inserted
+	var/projectile = null	//holder for bullettype
+	var/reqpower = 0 //holder for power needed
+	var/sound = null//So the taser can have sound
+	var/iconholder = null//holder for the icon_state
+	var/egun = null//holder to handle certain guns switching bullettypes
 
 	var/obj/machinery/porta_turret_cover/cover = null	// the cover that is covering this turret
 	var/last_fired = 0		// 1: if the turret is cooling down from a shot, 0: turret is ready to fire
@@ -46,11 +52,13 @@
 
 	//var/emagged = 0			// 1: emagged, 0: not emagged
 	var/on = 1				// determines if the turret is on
+	var/disabled = 0
 
 	var/datum/effect/effect/system/spark_spread/spark_system // the spark system, used for generating... sparks?
 
 	New()
 		..()
+		icon_state = "[lasercolor]grey_target_prism"
 		// Sets up a spark system
 		spark_system = new /datum/effect/effect/system/spark_spread
 		spark_system.set_up(5, 0, src)
@@ -131,22 +139,22 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 		icon_state = "turretCover"
 		return
 	if(stat & BROKEN)
-		icon_state = "destroyed_target_prism"
+		icon_state = "[lasercolor]destroyed_target_prism"
 	else
 		if( powered() )
 			if (on)
 				if (installation == /obj/item/weapon/gun/energy/laser || installation == /obj/item/weapon/gun/energy/pulse_rifle)
 					// laser guns and pulse rifles have an orange icon
-					icon_state = "orange_target_prism"
+					icon_state = "[lasercolor]orange_target_prism"
 				else
 					// anything else has a blue icon
-					icon_state = "target_prism"
+					icon_state = "[lasercolor]target_prism"
 			else
-				icon_state = "grey_target_prism"
+				icon_state = "[lasercolor]grey_target_prism"
 			stat &= ~NOPOWER
 		else
 			spawn(rand(0, 15))
-				src.icon_state = "grey_target_prism"
+				src.icon_state = "[lasercolor]grey_target_prism"
 				stat |= NOPOWER
 
 
@@ -165,6 +173,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 					var/obj/item/weapon/gun/energy/Gun = new installation(src.loc)
 					Gun.power_supply.charge=gun_charge
 					Gun.update_icon()
+					lasercolor = null
 				if(prob(50)) new /obj/item/stack/sheet/metal( loc, rand(1,4))
 				if(prob(50)) new /obj/item/device/assembly/prox_sensor(locate(x,y,z))
 			else
@@ -192,7 +201,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 		if(!anchored)
 			anchored = 1
 			invisibility = 2
-			icon_state = "grey_target_prism"
+			icon_state = "[lasercolor]grey_target_prism"
 			user << "You secure the exterior bolts on the turret."
 			cover=new/obj/machinery/porta_turret_cover(src.loc) // create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
 			cover.Parent_Turret = src // make the cover's parent src
@@ -239,6 +248,16 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 	if(prob(45) && Proj.damage > 0) src.spark_system.start()
 	if (src.health <= 0)
 		src.die() // the death process :(
+	if((src.lasercolor == "b") && (src.disabled == 0))
+		if(istype(Proj, /obj/item/projectile/redtag))
+			src.disabled = 1
+			sleep(100)
+			src.disabled = 0
+	if((src.lasercolor == "r") && (src.disabled == 0))
+		if(istype(Proj, /obj/item/projectile/bluetag))
+			src.disabled = 1
+			sleep(100)
+			src.disabled = 0
 	return
 
 /obj/machinery/porta_turret/emp_act(severity)
@@ -322,7 +341,11 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 
 				if(!istype(C, /mob/living/silicon) && ai) // If it's set to attack all nonsilicons, target them!
 					if(C.lying)
-						secondarytargets += C
+						if(lasercolor)
+							continue
+						else
+							secondarytargets += C
+							continue
 					else
 						targets += C
 						continue
@@ -396,7 +419,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 		cover.icon_state="turretCover"
 		raised=0
 		invisibility=2
-		icon_state="grey_target_prism"
+		icon_state="[lasercolor]grey_target_prism"
 
 
 /obj/machinery/porta_turret/proc/assess_perp(mob/living/carbon/human/perp as mob)
@@ -412,7 +435,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 	if(auth_weapons) // check for weapon authorization
 		if((isnull(perp:wear_id)) || (istype(perp:wear_id, /obj/item/weapon/card/id/syndicate)))
 
-			if(src.allowed(perp)) // if the perp has security access, return 0
+			if((src.allowed(perp)) && (!lasercolor)) // if the perp has security access, return 0
 				return 0
 
 			if((istype(perp.l_hand, /obj/item/weapon/gun) && !istype(perp.l_hand, /obj/item/weapon/gun/projectile/shotgun)) || istype(perp.l_hand, /obj/item/weapon/melee/baton))
@@ -423,6 +446,22 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 
 			if(istype(perp:belt, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee/baton))
 				threatcount += 2
+
+	if(src.lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
+		if(istype(perp.wear_suit, /obj/item/clothing/suit/redtag))
+			threatcount += 4
+		if((istype(perp:r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(perp:l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
+			threatcount += 4
+		if(istype(perp:belt, /obj/item/weapon/gun/energy/laser/redtag))
+			threatcount += 2
+
+	if(src.lasercolor == "r")
+		if(istype(perp.wear_suit, /obj/item/clothing/suit/bluetag))
+			threatcount += 4
+		if((istype(perp:r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(perp:l_hand,/obj/item/weapon/gun/energy/laser/bluetag)))
+			threatcount += 4
+		if(istype(perp:belt, /obj/item/weapon/gun/energy/laser/bluetag))
+			threatcount += 2
 
 	if (src.check_records) // if the turret can check the records, check if they are set to *Arrest* on records
 		for (var/datum/data/record/E in data_core.general)
@@ -451,6 +490,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 
 
 /obj/machinery/porta_turret/proc/shootAt(var/atom/movable/target) // shoots at a target
+
 	if(!emagged) // if it hasn't been emagged, it has to obey a cooldown rate
 		if(last_fired || !raised) return // prevents rapid-fire shooting, unless it's been emagged
 		last_fired = 1
@@ -470,98 +510,107 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 	// any emagged turrets will shoot extremely fast! This not only is deadly, but drains a lot power!
 
 
-	var/obj/item/projectile/A
-	if(!installation) // if for some reason the turret has no gun (ie, admin spawned) it resorts to basic taser shots
-		A = new /obj/item/projectile/energy/electrode( loc )
-		if(!emagged) use_power(200)
-		else use_power(400)
-		playsound(src.loc, 'Taser.ogg', 75, 1)
-		icon_state = "target_prism"
+	if(!projectile)
+		lasercolor = ""
+		req_access = list(access_security)
+		if(!installation)// if for some reason the turret has no gun (ie, admin spawned) it resorts to basic taser shots
+			projectile = /obj/item/projectile/energy/electrode
+			reqpower = 200
+			sound = 1
+			iconholder = 1
+		else
+			var/obj/item/weapon/gun/energy/E=new installation
+					// All energy-based weapons are applicable
+			if(istype(E, /obj/item/weapon/gun/energy/laser/bluetag))
+				projectile = /obj/item/projectile/bluetag
+				iconholder = null
+				reqpower = 100
+				lasercolor = "b"
+				req_access = list(access_maint_tunnels,access_clown,access_mime)
+
+			else if(istype(E, /obj/item/weapon/gun/energy/laser/redtag))
+				projectile = /obj/item/projectile/redtag
+				iconholder = null
+				reqpower = 100
+				lasercolor = "r"
+				req_access = list(access_maint_tunnels,access_clown,access_mime)
+
+			else if(istype(E, /obj/item/weapon/gun/energy/pulse_rifle))
+				projectile = /obj/item/projectile/beam/pulse
+				iconholder = null
+				reqpower = 700
+
+			else if(istype(E, /obj/item/weapon/gun/energy/staff))
+				projectile = /obj/item/projectile/change
+				iconholder = 1
+				reqpower = 700
+
+			else if(istype(E, /obj/item/weapon/gun/energy/ionrifle))
+				projectile = /obj/item/projectile/ion
+				iconholder = 1
+				reqpower = 700
+
+			else if(istype(E, /obj/item/weapon/gun/energy/taser) || istype(E, /obj/item/weapon/gun/energy/stunrevolver))
+				projectile = /obj/item/projectile/energy/electrode
+				iconholder = 1
+				reqpower = 200
+
+			else if(istype(E, /obj/item/weapon/gun/energy/lasercannon))
+				projectile = /obj/item/projectile/beam/heavylaser
+				iconholder = null
+				reqpower = 600
+
+			else if(istype(E, /obj/item/weapon/gun/energy/decloner))
+				projectile = /obj/item/projectile/energy/declone
+				iconholder = null
+				reqpower = 600
+
+			else if(istype(E, /obj/item/weapon/gun/energy/crossbow/largecrossbow))
+				projectile = /obj/item/projectile/energy/bolt/large
+				iconholder = null
+				reqpower = 125
+
+			else if(istype(E, /obj/item/weapon/gun/energy/crossbow))
+				projectile = /obj/item/projectile/energy/bolt
+				iconholder = null
+				reqpower = 50
+
+			else if(istype(E, /obj/item/weapon/gun/energy/laser))
+				projectile = /obj/item/projectile/beam
+				iconholder = null
+				reqpower = 500
+
+			else // Energy gun shots
+				projectile = /obj/item/projectile/energy/electrode// if it hasn't been emagged, it uses normal taser shots
+				iconholder = 1
+				egun = 1
+				reqpower = 200
+
+	var/obj/item/projectile/A = projectile
+	var/obj/item/weapon/gun/energy/E=new installation
+	if(iconholder)
+		icon_state = "[lasercolor]target_prism"
 	else
+		icon_state = "[lasercolor]orange_target_prism"
+	if(sound)
+		playsound(src.loc, 'Taser.ogg', 75, 1)
+	A = new projectile( loc )
+	A.original = target.loc
+	if(!emagged)
+		use_power(reqpower)
+	else
+		use_power((reqpower*2))
+		if(egun)// if it has been emagged, use laser shots
+			projectile = /obj/item/projectile/beam
+			iconholder = null
+			reqpower = 500
+
 		// Shooting Code:
-		var/obj/item/weapon/gun/energy/E=new installation
 
 		if(!E.silenced)
 			playsound(src.loc, E.fire_sound, 75, 1)
 		else
 			playsound(src.loc, E.fire_sound, 10, 1)
-
-		// All energy-based weapons are applicable
-		if(istype(E, /obj/item/weapon/gun/energy/laser))
-			A = new /obj/item/projectile/beam( loc )
-			A.original = target.loc
-			icon_state = "orange_target_prism"
-			if(!emagged) use_power(500)
-			else use_power(1000)
-
-		else if(istype(E, /obj/item/weapon/gun/energy/pulse_rifle))
-			A = new /obj/item/projectile/beam/pulse( loc )
-			A.original = target.loc
-			icon_state = "orange_target_prism"
-			if(!emagged) use_power(700)
-			else use_power(1400)
-
-		else if(istype(E, /obj/item/weapon/gun/energy/staff))
-			A = new /obj/item/projectile/change( loc )
-			A.original = target.loc
-			icon_state = "target_prism"
-			if(!emagged) use_power(700)
-			else use_power(1400)
-
-		else if(istype(E, /obj/item/weapon/gun/energy/ionrifle))
-			A = new /obj/item/projectile/ion( loc )
-			A.original = target.loc
-			icon_state = "target_prism"
-			if(!emagged) use_power(700)
-			else use_power(1400)
-
-
-		else if(istype(E, /obj/item/weapon/gun/energy/taser) || istype(E, /obj/item/weapon/gun/energy/stunrevolver))
-			A = new /obj/item/projectile/energy/electrode( loc )
-			icon_state = "target_prism"
-			if(!emagged) use_power(200)
-			else use_power(400)
-
-		else if(istype(E, /obj/item/weapon/gun/energy/lasercannon))
-			A = new /obj/item/projectile/beam/heavylaser( loc )
-			A.original = target.loc
-			icon_state = "orange_target_prism"
-			if(!emagged) use_power(600)
-			else use_power(1200)
-
-		else if(istype(E, /obj/item/weapon/gun/energy/decloner))
-			A = new /obj/item/projectile/energy/declone( loc )
-			A.original = target.loc
-			icon_state = "orange_target_prism"
-			if(!emagged) use_power(600)
-			else use_power(1200)
-
-		else if(istype(E, /obj/item/weapon/gun/energy/crossbow))
-			A = new /obj/item/projectile/energy/bolt( loc )
-			A.original = target.loc
-			icon_state = "orange_target_prism"
-			if(!emagged) use_power(50)
-			else use_power(100)
-
-		else if(istype(E, /obj/item/weapon/gun/energy/crossbow/largecrossbow))
-			A = new /obj/item/projectile/energy/bolt/large( loc )
-			A.original = target.loc
-			icon_state = "orange_target_prism"
-			if(!emagged) use_power(125)
-			else use_power(250)
-
-		else // Energy gun shots
-
-			if(!emagged) // if it hasn't been emagged, it uses normal taser shots
-				A = new /obj/item/projectile/energy/electrode( loc )
-				icon_state = "target_prism"
-				use_power(200)
-
-			else // if it has been emagged, use laser shots
-				A = new /obj/item/projectile/beam( loc )
-				A.original = target.loc
-				icon_state = "orange_target_prism"
-				use_power(1000)
 
 		del(E)
 	A.current = T

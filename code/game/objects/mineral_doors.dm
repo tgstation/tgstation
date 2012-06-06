@@ -8,9 +8,9 @@
 	opacity = 1
 
 	icon = 'mineral_doors.dmi'
-	icon_state = "iron"
+	icon_state = "metal"
 
-	var/mineralType = "iron"
+	var/mineralType = "metal"
 	var/state = 0 //closed, 1 == open
 	var/isSwitchingStates = 0
 	var/hardness = 1
@@ -116,8 +116,12 @@
 
 	proc/Dismantle(devastated = 0)
 		if(!devastated)
-			var/ore = text2path("/obj/item/weapon/ore/[mineralType]")
+			var/ore = text2path("/obj/item/stack/sheet/[mineralType]")
 			for(var/i = 1, i <= oreAmount, i++)
+				new ore(get_turf(src))
+		else
+			var/ore = text2path("/obj/item/stack/sheet/[mineralType]")
+			for(var/i = 3, i <= oreAmount, i++)
 				new ore(get_turf(src))
 		del(src)
 
@@ -181,7 +185,7 @@
 		return 1
 
 /obj/structure/mineral_door/iron
-	mineralType = "iron"
+	mineralType = "metal"
 	hardness = 3
 
 /obj/structure/mineral_door/silver
@@ -234,7 +238,7 @@
 			var/toxinsToDeduce = temperature/10
 
 			napalm.toxins = toxinsToDeduce
-			napalm.temperature = 400+T0C
+			napalm.temperature = 200+T0C
 
 			target_tile.assume_air(napalm)
 			spawn (0) target_tile.hotspot_expose(temperature, 400)

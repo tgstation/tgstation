@@ -276,18 +276,19 @@
 	command_alert("High levels of radiation detected near the station. Please report to the Med-bay if you feel strange.", "Anomaly Alert")
 	world << sound('radiation.ogg')
 	for(var/mob/living/carbon/human/H in world)
-		H.radiation += rand(5,25)
-		if (prob(5))
-			H.radiation += rand(30,50)
-		if (prob(25))
-			if (prob(75))
-				randmutb(H)
-				domutcheck(H,null,1)
-			else
-				randmutg(H)
-				domutcheck(H,null,1)
+		if(istype(H,/mob/living/carbon/human))
+			H.apply_effect((rand(15,75)),IRRADIATE,0)
+			if (prob(5))
+				H.apply_effect((rand(90,150)),IRRADIATE,0)
+			if (prob(25))
+				if (prob(75))
+					randmutb(H)
+					domutcheck(H,null,1)
+				else
+					randmutg(H)
+					domutcheck(H,null,1)
 	for(var/mob/living/carbon/monkey/M in world)
-		M.radiation += rand(5,25)
+		M.apply_effect((rand(15,75)),IRRADIATE,0)
 
 //Changing this to affect the main station. Blame Urist. --Pete
 /proc/prison_break() // -- Callagan

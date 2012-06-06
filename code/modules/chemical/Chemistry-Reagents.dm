@@ -762,7 +762,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.radiation += 3
+				M.apply_effect(10,IRRADIATE,0)
 				..()
 				return
 
@@ -828,7 +828,7 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(isrobot(M) || isAI(M)) return // Mutagen doesn't do anything to robutts!
 				if(!M) M = holder.my_atom
-				M.radiation += 3
+				M.apply_effect(10,IRRADIATE,0)
 				..()
 				return
 
@@ -911,7 +911,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.radiation += 1
+				M.apply_effect(3,IRRADIATE,0)
 				..()
 				return
 

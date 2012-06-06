@@ -1,3 +1,5 @@
+/mob/living/silicon/robot
+	var/started = null//A fix to ensure people don't try to bypass law assignment. Initial assignment sets it to one but it check on login whether they have been initiated -Sieve
 
 /mob/living/silicon/robot/New(loc,var/syndie = 0)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -51,6 +53,7 @@
 		cell = C
 	if(src.mind)
 		ticker.mode.remove_revolutionary(src.mind)
+	started = 1
 	..()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
@@ -487,6 +490,9 @@
 					sleep(20)
 					src << "\red ERRORERRORERROR"
 					src << "\red \b ALERT: [user.real_name] is your new master. Obey your new laws and his commands."
+					if(istype(src.module, /obj/item/weapon/robot_module/miner))
+						src.module.modules -= /obj/item/weapon/pickaxe/borgdrill
+						src.module.modules += /obj/item/weapon/pickaxe/diamonddrill//Buff when emagged, break down walls, kill men, whatever -Sieve
 					updateicon()
 				else
 					user << "You fail to [ locked ? "unlock" : "lock"] [src]'s interface."

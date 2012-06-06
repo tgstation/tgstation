@@ -202,6 +202,7 @@
 		if(!operating)	operating = 1
 
 		animate("opening")
+		icon_state = "door0"
 		src.sd_SetOpacity(0)
 		sleep(10)
 		src.layer = 2.7
