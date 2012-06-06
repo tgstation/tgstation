@@ -201,21 +201,6 @@
 	details = 1
 	origin_tech = "magnets=4;biotech=2"
 
-/obj/item/weapon/melee/baton
-	name = "stun baton"
-	desc = "A stun baton for hitting people with."
-	icon_state = "stunbaton"
-	item_state = "baton"
-	flags = FPRINT | TABLEPASS
-	slot_flags = SLOT_BELT
-	force = 10
-	throwforce = 7
-	w_class = 3
-	var/charges = 10.0
-	var/maximum_charges = 10.0
-	var/status = 0
-	origin_tech = "combat=2"
-
 /obj/item/weapon/melee/chainofcommand
 	name = "chain of command"
 	desc = "The Captain is first and all other heads are last."

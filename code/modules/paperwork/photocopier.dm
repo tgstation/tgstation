@@ -102,6 +102,10 @@
 				updateUsrDialog()
 			else
 				user << "This cartridge is not yet ready for replacement! Use up the rest of the toner."
+		else if(istype(O, /obj/item/weapon/wrench))
+			playsound(loc, 'Ratchet.ogg', 50, 1)
+			anchored = !anchored
+			user << "You [anchored ? "wrench" : "unwrench"] \the [src]."
 		return
 
 	ex_act(severity)

@@ -70,6 +70,13 @@
 	origin_tech = "combat=3;materials=1"
 	ammo_type = "/obj/item/ammo_casing/shotgun/beanbag"
 
+	New()
+		for(var/i = 1, i <= max_shells, i++)
+			loaded += new ammo_type(src)
+
+		update_icon()
+		return
+
 	load_into_chamber()
 //		if(in_chamber)
 //			return 1 {R}
@@ -113,6 +120,7 @@
 			user << "<span class='notice'>You begin to shorten the barrel of \the [src].</span>"
 			if(loaded.len)
 				afterattack(user, user)	//will this work?
+				afterattack(user, user)	//it will. we call it twice, for twice the FUN
 				playsound(user, fire_sound, 50, 1)
 				user.visible_message("<span class='danger'>The shotgun goes off!</span>", "<span class='danger'>The shotgun goes off in your face!</span>")
 				return
@@ -121,7 +129,7 @@
 				w_class = 3.0
 				item_state = "gun"
 				slot_flags &= ~SLOT_BACK	//you can't sling it on your back
-				slot_flags |= SLOT_BELT	//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
+				slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 				name = "sawn-off shotgun"
 				desc = "Omar's coming!"
 				user << "<span class='warning'>You shorten the barrel of \the [src]!</span>"
