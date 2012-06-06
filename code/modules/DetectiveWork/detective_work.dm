@@ -259,10 +259,10 @@ obj/machinery/computer/forensic_scanning
 			if("databaseprint") //Printing from the "files" database.
 				if(files)
 					var/obj/item/weapon/paper/P = new(loc)
-					P.name = "\improper Database File (Dossier [files.Find(href_list["identifier"])])"
+					var/list/dossier = files[href_list["identifier"]]
+					P.name = "\improper Database File ([dossier[2]])"
 					P.overlays += "paper_words"
 					P.info = "<b>Criminal Evidence Database</b><br><br>"
-					var/list/dossier = files[href_list["identifier"]]
 					P.info += "Consolidated data points: [dossier[2]]<br>"
 					var/print_string = "Fingerprints: Print not complete!<br>"
 					if(stringpercent(dossier[1]) <= FINGERPRINT_COMPLETE)
