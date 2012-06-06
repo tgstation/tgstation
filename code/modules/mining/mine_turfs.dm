@@ -339,7 +339,7 @@
 	else
 		..(W,user)
 
-	if ((istype(W,/obj/item/weapon/pickaxe/diamonddrill)))
+	if ((istype(W,/obj/item/weapon/pickaxe/diamonddrill)) || (istype(W,/obj/item/weapon/pickaxe/borgdrill)))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
 			return

@@ -76,9 +76,9 @@
 	Topic(href, href_list)
 		..()
 
-		if(get_dist(src, usr) > 1)
-			usr << browse(null, "window=signal")
-			onclose(usr, "signal")
+		if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+			usr << browse(null, "window=radio")
+			onclose(usr, "radio")
 			return
 
 		if (href_list["freq"])
