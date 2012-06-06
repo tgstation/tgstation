@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 #define UI_OLD 0
 #define UI_NEW 1
@@ -439,14 +439,48 @@ datum/preferences
 		if(job.title != new_title)
 			job_alt_titles[job.title] = new_title
 
-	proc/SetChoices(mob/user, changedjob)
+	proc/SetChoices(mob/user, limit = 17, list/splitJobs, width = 550, height = 500)
+		 //limit 	 - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
+		 //splitJobs - Allows you split the table by job. You can make different tables for each department by including their heads. Defaults to CE to make it look nice.
+		 //width	 - Screen' width. Defaults to 550 to make it look nice.
+		 //height 	 - Screen's height. Defaults to 500 to make it look nice.
+
+		 // Modify this if you added more jobs and it looks like a mess. Add the jobs in the splitJobs that you want to trigger and intitate a new table.
+
+		if(splitJobs == null)
+			if (ticker.current_state >= GAME_STATE_PLAYING
+)
+				splitJobs = list()
+			else
+				splitJobs = list("Chief Engineer")
+
+
 		var/HTML = "<body>"
 		HTML += "<tt><center>"
-		HTML += "<b>Choose occupation chances</b><br>Unavailable occupations are in red.<br>"
-		HTML += "<table width='100%' cellpadding='1' cellspacing='0' align='center'>"
+		HTML += "<b>Choose occupation chances</b><br>Unavailable occupations are in red.<br><br>"
+		HTML += "<a align='center' href=\"byond://?src=\ref[user];preferences=1;occ=0;job=cancel\">\[Done\]</a><br><br>" // Easier to press up here.
+		HTML += "<table width='100%' cellpadding='1' cellspacing='0'><tr><td width='20%'>" // Table within a table for alignment, also allows you to easily add more colomns.
+		HTML += "<table width='100%' cellpadding='1' cellspacing='0'>"
+		var/index = -1
+
+		//The job before the current job. I only use this to get the previous jobs color when I'm filling in blank rows.
+		var/datum/job/lastJob
+
 		for(var/datum/job/job in job_master.occupations)
+
+			index += 1
+			if((index >= limit) || (job.title in splitJobs))
+				if((index < limit) && (lastJob != null))
+					//If the cells were broken up by a job in the splitJob list then it will fill in the rest of the cells with
+					//the last job's selection color. Creating a rather nice effect.
+					for(var/i = 0, i < (limit - index), i += 1)
+						HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'><a>&nbsp</a></td><td><a>&nbsp</a></td></tr>"
+				HTML += "</table></td><td width='20%'><table width='100%' cellpadding='1' cellspacing='0'>"
+				index = 0
+
 			HTML += "<tr bgcolor='[job.selection_color]'><td width='60%' align='right'>"
 			var/rank = job.title
+			lastJob = job
 			if(jobban_isbanned(user, rank))
 				HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[BANNED]</b></font></td></tr>"
 				continue
@@ -483,12 +517,10 @@ datum/preferences
 			else
 				HTML += "</a></td></tr>"
 
-		HTML += "</table><br>"
-		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;occ=0;job=cancel\">\[Done\]</a>"
 		HTML += "</center></tt>"
 
 		user << browse(null, "window=preferences")
-		user << browse(HTML, "window=mob_occupation;size=320x600")
+		user << browse(HTML, "window=mob_occupation;size=[width]x[height]")
 		return
 
 
