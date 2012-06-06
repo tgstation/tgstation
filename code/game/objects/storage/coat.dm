@@ -112,7 +112,7 @@
 		return //Means the item is already in the storage item
 
 	if(contents.len >= storage_slots)
-		user << "\red The [src] is full, make some space."
+		user << "\red \The [src] is full, make some space."
 		return //Storage item is full
 
 	if(can_hold.len)
@@ -122,16 +122,16 @@
 				ok = 1
 				break
 		if(!ok)
-			user << "\red This [src] cannot hold [W]."
+			user << "\red \The [src] cannot hold \the [W]."
 			return
 
 	for(var/A in cant_hold) //Check for specific items which this container can't hold.
 		if(istype(W, text2path(A) ))
-			user << "\red This [src] cannot hold [W]."
+			user << "\red \The [src] cannot hold \the [W]."
 			return
 
 	if (W.w_class > max_w_class)
-		user << "\red This [W] is too big for \the [src]"
+		user << "\red \The [W] is too big for \the [src]"
 		return
 
 	var/sum_w_class = W.w_class
@@ -139,12 +139,12 @@
 		sum_w_class += I.w_class //Adds up the combined w_classes which will be in the storage item if the item is added to it.
 
 	if(sum_w_class > max_combined_w_class)
-		user << "\red The [src] is full, make some space."
+		user << "\red \The [src] is full, make some space."
 		return
 
 	if(W.w_class >= src.w_class && (istype(W, /obj/item/weapon/storage)))
 		if(!istype(src, /obj/item/weapon/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
-			user << "\red The [src] cannot hold [W] as it's a storage item of the same size."
+			user << "\red \The [src] cannot hold \the [W] as it's a storage item of the same size."
 			return //To prevent the stacking of the same sized items.
 
 	user.u_equip(W)
