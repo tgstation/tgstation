@@ -28,24 +28,24 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			E.set_up(epicenter)
 			E.start()
 
-		var/list/exTurfs = list()
+		var/list/dTurfs = list()
+		var/list/hTurfs = list()
+		var/list/lTurfs = list()
+		var/list/fTurfs = list()
 
 		if(roundExplosions)
-			for(var/turf/T in circlerange(epicenter,light_impact_range))
-				exTurfs += T
+			fTurfs = circlerange(epicenter,max(devastation_range, heavy_impact_range, light_impact_range, flash_range))
+			dTurfs = circlerange(epicenter,devastation_range)
+			hTurfs = circlerange(epicenter,heavy_impact_range) - dTurfs
+			lTurfs = circlerange(epicenter,light_impact_range) - dTurfs - hTurfs
 		else
-			for(var/turf/T in range(light_impact_range, epicenter))
-				exTurfs += T
+			fTurfs = circlerange(epicenter,max(devastation_range, heavy_impact_range, light_impact_range, flash_range))
+			dTurfs = circlerange(epicenter,devastation_range)
+			hTurfs = circlerange(epicenter,heavy_impact_range) - dTurfs
+			lTurfs = circlerange(epicenter,light_impact_range) - dTurfs - hTurfs
 
-		for(var/turf/T in exTurfs)
-			var/distance = 0
-			if(roundExplosions)
-				distance = get_dist_euclidian(epicenter, T)
-			else
-				distance = get_dist(epicenter, T)
-			if(distance < 0)
-				distance = 0
-			if(distance < devastation_range)
+		spawn()
+			for(var/turf/T in dTurfs)
 				for(var/atom/object in T.contents)
 					spawn()
 						if(object)
@@ -56,14 +56,8 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 				else
 					if(T)
 						T.ex_act(1)
-			else if(distance < heavy_impact_range)
-				for(var/atom/object in T.contents)
-					spawn()
-						if(object)
-							object.ex_act(2)
-				if(T)
-					T.ex_act(2)
-			else if (distance == heavy_impact_range)
+		spawn()
+			for(var/turf/T in hTurfs)
 				for(var/atom/object in T.contents)
 					if(object)
 						object.ex_act(2)
@@ -72,14 +66,16 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 				else
 					if(T)
 						T.ex_act(2)
-			else if(distance <= light_impact_range)
+		spawn()
+			for(var/turf/T in lTurfs)
 				for(var/atom/object in T.contents)
 					spawn()
 						if(object)
 							object.ex_act(3)
 				if(T)
 					T.ex_act(3)
-			for(var/mob/living/carbon/mob in T)
+		spawn()
+			for(var/mob/living/carbon/mob in fTurfs)
 				flick("flash", mob:flash)
 
 		sleep(-1)
