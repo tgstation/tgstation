@@ -293,6 +293,11 @@
 
 	if (bodytemperature < 283.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
+		if(mutantrace == "lizard") //Soghun are more affected by the cold
+			tally += 1
+		if(istajaran()) //But Tajarans are slightly resistant
+			if(tally != 0)
+				tally -= tally*0.1
 		if (stuttering < 10)
 			stuttering = 10
 

@@ -1,8 +1,10 @@
-forsamori - Tajaran
-searif - Soghun
-searif - Tajaran
-galenus - Soghun
 botanistpower - Tajaran
 fenrisian - Tajaran
 forsamori - Tajaran
 forsamori - Soghun
+galenus - Soghun
+searif - Soghun
+searif - Tajaran
+searif - Skrell
+
+
