@@ -12,8 +12,14 @@ zone/proc/process()
 		//Choose a random turf and regenerate the zone from it.
 		var
 			turf/sample = pick(contents)
-			list/new_contents = FloodFill(sample)
+			list/new_contents
 			problem = 0
+
+		contents.Remove(null) //I can't believe this is needed.
+		do
+			sample = pick(contents)  //Nor this.
+		while(!istype(sample))
+		new_contents = FloodFill(sample)
 
 		//If something isn't carried over, there was a complication.
 		for(var/turf/T in contents)
@@ -27,15 +33,10 @@ zone/proc/process()
 				contents -= T
 				rebuild_turfs += T
 				T.zone = null
-			var/zone/Z
 			for(var/turf/T in rebuild_turfs)
 				if(!T.zone)
-					var/list/flood_fill = FloodFill(T)
-					Z = new /zone()
+					var/zone/Z = new /zone(T)
 					Z.air.copy_from(air)
-					for(var/turf/NT in flood_fill)
-						Z.AddTurf(NT)
-
 		rebuild = 0
 
 	//Sometimes explosions will cause the air to be deleted for some reason.

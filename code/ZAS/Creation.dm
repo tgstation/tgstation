@@ -34,6 +34,8 @@ zone
 		. = ..()
 
 proc/FloodFill(turf/start)
+	if(!istype(start))
+		return list()
 	var
 		list
 			open = list(start)
