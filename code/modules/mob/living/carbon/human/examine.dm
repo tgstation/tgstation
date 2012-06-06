@@ -34,6 +34,11 @@
 	var/t_has = proper_forms["has"]
 	var/t_is = proper_forms["is"]
 
+	if(mutantrace == "lizard")
+		examine_text = "one of those lizard-like Soghuns"
+	if(mutantrace == "skrell")
+		examine_text = "one of those gelatinous Skrells"
+
 	var/msg = "<span class='info'>*---------*\nThis is "
 	if(icon)
 		msg += "\icon[icon] " //fucking BYOND: this should stop dreamseeker crashing if we -somehow- examine somebody before their icon is generated
