@@ -1251,7 +1251,7 @@
 	// Should be called only when something about the clothing itself changed
 	// which is not handled by the equip code.
 	rebuild_appearance()
-
+	update_face() //Fixes hair not coming back after using a BLOCKHAIR mask/helmet
 	return
 
 	// TODO: once I have replaced the udpate_clothing() calls with update_lying() or
