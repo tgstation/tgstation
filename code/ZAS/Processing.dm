@@ -1,6 +1,6 @@
 #define QUANTIZE(variable)		(round(variable,0.0001))
 var/explosion_halt = 0
-var/zone_share_percent = 4
+var/zone_share_percent = 3.5
 zone/proc/process()
 	//Does rebuilding stuff. Not sure if used.
 	if(rebuild)
@@ -27,10 +27,14 @@ zone/proc/process()
 				contents -= T
 				rebuild_turfs += T
 				T.zone = null
+			var/zone/Z
 			for(var/turf/T in rebuild_turfs)
 				if(!T.zone)
-					var/zone/Z = new/zone(T)
+					var/list/flood_fill = FloodFill(T)
+					Z = new /zone(T)
 					Z.air.copy_from(air)
+					for(var/turf/NT in flood_fill)
+						Z.AddTurf(NT)
 
 		rebuild = 0
 
