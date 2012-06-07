@@ -97,7 +97,7 @@
 
 	radio_controller = new /datum/controller/radio()
 	//main_hud1 = new /obj/hud()
-	data_core = new /obj/datacore()
+	data_core = new /obj/effect/datacore()
 
 	paiController = new /datum/paiController()
 

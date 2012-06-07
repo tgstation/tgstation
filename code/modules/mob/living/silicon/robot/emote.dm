@@ -67,6 +67,25 @@
 				return
 			message = "<B>[src]</B> [input]"
 
+		if ("me")
+			if(silent)
+				return
+			if (src.client && (client.muted || client.muted_complete))
+				src << "You are muted."
+				return
+			if (stat)
+				return
+			if(!(message))
+				return
+			else
+				if(cmptext(copytext(message, 1, 3), "v "))
+					message = "<B>[src]</B> [copytext(message, 3)]"
+					m_type = 1
+				else if(cmptext(copytext(message, 1, 3), "h "))
+					message = "<B>[src]</B> [copytext(message, 3)]"
+					m_type = 2
+				else
+					message = "<B>[src]</B> [message]"
 		if ("twitch")
 			message = "<B>[src]</B> twitches violently."
 			m_type = 1
@@ -189,25 +208,7 @@
 			playsound(src.loc, 'biamthelaw.ogg', 50, 0)
 			m_type = 2
 
-		if ("me")
-			if(silent)
-				return
-			if (src.client && (client.muted || client.muted_complete))
-				src << "You are muted."
-				return
-			if (stat)
-				return
-			if(!(message))
-				return
-			else
-				if(cmptext(copytext(message, 1, 3), "v "))
-					message = "<B>[src]</B> [copytext(message, 3)]"
-					m_type = 1
-				else if(cmptext(copytext(message, 1, 3), "h "))
-					message = "<B>[src]</B> [copytext(message, 3)]"
-					m_type = 2
-				else
-					message = "<B>[src]</B> [message]"
+
 
 		if("help")
 			src << "beep-(none)/mob, ping-(none)/mob, buzz-(none)/mob, look-(none)/mob, stare-(none)/mob, glare-(none)/mob, twitch, twitch_s, law"
