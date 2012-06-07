@@ -66,7 +66,7 @@
 
 
 /obj/item/weapon/implanter/explosive
-	name = "implanter-explosive"
+	name = "implanter (E)"
 
 /obj/item/weapon/implanter/explosive/New()
 	imp = new /obj/item/weapon/implant/explosive( src )
@@ -75,7 +75,7 @@
 	return
 
 /obj/item/weapon/implanter/compressed
-	name = "implanter-compressed"
+	name = "implanter (C)"
 	icon_state = "cimplanter0"
 
 /obj/item/weapon/implanter/compressed/New()

@@ -529,8 +529,8 @@
 	item_state = "syringe_kit"
 
 /obj/item/weapon/storage/toolbox/syndicate
-	name = "suspicious looking toolbox"
-	desc = "You have no idea what this is."
+	name = "red and black toolbox"
+	desc = "An oddly coloured toolbox."
 	icon_state = "syndicate"
 	item_state = "toolbox_syndi"
 	origin_tech = "combat=1;syndicate=1"

@@ -145,7 +145,7 @@ Devices and Tools;
 /obj/item/clothing/glasses/thermal:3:Thermal Imaging Glasses;
 /obj/item/device/encryptionkey/binary:3:Binary Translator Key;
 /obj/item/weapon/aiModule/syndicate:7:Hacked AI Upload Module;
-/obj/item/weapon/plastique:2:C-4 (Destroys walls);
+/obj/item/weapon/plastique:2:C-4 (Destroys walls, not people);
 /obj/item/device/powersink:5:Powersink (DANGER!);
 /obj/item/device/radio/beacon/syndicate:7:Singularity Beacon (DANGER!);
 /obj/item/weapon/circuitboard/teleporter:20:Teleporter Circuit Board;

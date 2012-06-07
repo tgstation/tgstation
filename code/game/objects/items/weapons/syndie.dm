@@ -9,8 +9,8 @@
 /obj/item/weapon/syndie/c4explosive
 	icon_state = "c-4small_0"
 	item_state = "c-4small"
-	name = "mysterious package"
-	desc = "A mysterious package."
+	name = "normal-sized package"
+	desc = "A small wrapped package."
 	w_class = 3
 
 	var/power = 1  /*Size of the explosion.*/
@@ -27,9 +27,9 @@
 	var/K = rand(1,2000)
 	K = md5(num2text(K)+name)
 	K = copytext(K,1,7)
-	src.desc += "\n You see [K] engraved on \the [src]"
+	src.desc += "\n You see [K] engraved on \the [src]."
 	var/obj/item/weapon/syndie/c4detonator/detonator = new(src.loc)
-	detonator.desc += "\n You see [K] engraved on \the [src]"
+	detonator.desc += "\n You see [K] engraved on the lighter."
 	detonator.bomb = src
 
 /obj/item/weapon/syndie/c4explosive/proc/detonate()
@@ -53,8 +53,8 @@
 /obj/item/weapon/syndie/c4detonator
 	icon_state = "c-4detonator_0"
 	item_state = "c-4detonator"
-	name = "lighter"  /*Sneaky, thanks Dreyfus.*/
-	desc = "A disposable lighter, it's quite heavy."
+	name = "\improper Zippo lighter"  /*Sneaky, thanks Dreyfus.*/
+	desc = "The zippo."
 	w_class = 1
 
 	var/obj/item/weapon/syndie/c4explosive/bomb
