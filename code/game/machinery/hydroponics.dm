@@ -449,9 +449,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				src.toxic = 0
 
 		else if(src.waterlevel >= 100)
-			user << "\red The [src] is already full."
+			user << "\red \The [src] is already full."
 		else
-			user << "\red The bucket is not filled with water."
+			user << "\red \The [src] is not filled with water."
 		src.updateicon()
 
 	else if ( istype(O, /obj/item/nutrient) )
