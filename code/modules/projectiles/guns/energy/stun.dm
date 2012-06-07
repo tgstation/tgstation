@@ -69,7 +69,7 @@
 
 /obj/item/weapon/gun/energy/crossbow
 	name = "mini energy-crossbow"
-	desc = "A weapon favored by many of the syndicates stealth specialists."
+	desc = "A crossbow that doesn't seem to have space for bolts."
 	icon_state = "crossbow"
 	w_class = 2.0
 	item_state = "crossbow"

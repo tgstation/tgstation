@@ -507,7 +507,7 @@
 	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage
 
 /obj/item/device/hacktool
-	name = "hacktool"
+	name = "modifed door debugger"
 	icon_state = "hacktool"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	var/in_use = 0
