@@ -102,8 +102,7 @@
 				if(src.throwing == 1)
 					src.throwing = 0
 			if(isobj(A))
-				if(A.density && !A.CanPass(src,target))	// **TODO: Better behaviour for windows
-												// which are dense, but shouldn't always stop movement
+				if(A.density && !A.CanPass(src,target))
 					src.throw_impact(A)
 					src.throwing = 0
 
@@ -152,6 +151,7 @@
 	if(src.throwing)
 		src.throw_impact(O)
 		src.throwing = 0
+		airflow_speed = 0
 	..()
 
 /atom/movable/proc/throw_at(atom/target, range, speed)

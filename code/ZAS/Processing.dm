@@ -15,11 +15,19 @@ zone/proc/process()
 			list/new_contents
 			problem = 0
 
+		if(space_tiles)
+			del(space_tiles)
+
 		contents.Remove(null) //I can't believe this is needed.
 		do
 			sample = pick(contents)  //Nor this.
 		while(!istype(sample))
 		new_contents = FloodFill(sample)
+
+		for(var/turf/space/S in new_contents)
+			if(!space_tiles)
+				space_tiles = list()
+			space_tiles |= S
 
 		//If something isn't carried over, there was a complication.
 		for(var/turf/T in contents)
@@ -37,6 +45,10 @@ zone/proc/process()
 				if(!T.zone)
 					var/zone/Z = new /zone(T)
 					Z.air.copy_from(air)
+				if(istype(T,/turf/space))
+					if(!T.zone.space_tiles)
+						T.zone.space_tiles = list()
+					T.zone.space_tiles |= T
 		rebuild = 0
 
 	//Sometimes explosions will cause the air to be deleted for some reason.
@@ -54,12 +66,14 @@ zone/proc/process()
 				space_tiles -= T
 				continue
 			total_space++
+		if(space_tiles && !space_tiles.len)
+			del space_tiles
 
 	//Add checks to ensure that we're not sucking air out of an empty room.
 	if(total_space && air.total_moles > 0.1 && air.temperature > TCMB+0.5)
 		//If there is space, air should flow out of the zone.
-		//if(abs(air.pressure) > vsc.airflow_lightest_pressure)
-		//	AirflowSpace(src)
+		if(abs(air.return_pressure()) > vsc.airflow_lightest_pressure)
+			AirflowSpace(src)
 		ShareSpace(air,total_space*(zone_share_percent/100))
 
 	//React the air here.
@@ -115,8 +129,8 @@ zone/proc/process()
 		for(var/zone/Z in connected_zones)
 			//Ensure we're not doing pointless calculations on equilibrium zones.
 			if(abs(air.total_moles - Z.air.total_moles) > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
-				//if(abs(Z.air.pressure - air.pressure) > vsc.airflow_lightest_pressure)
-				//	Airflow(src,Z)
+				if(abs(Z.air.return_pressure() - air.return_pressure()) > vsc.airflow_lightest_pressure)
+					Airflow(src,Z)
 				ShareRatio(air,Z.air,connected_zones[Z]*(zone_share_percent/100))
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, ratio)

@@ -25,7 +25,6 @@ datum
 			nitrogen = 0
 			toxins = 0
 			total_moles = 0 //Updated when a reaction occurs.
-			pressure = 0
 
 			volume = CELL_VOLUME
 
@@ -150,10 +149,6 @@ datum
 				for(var/datum/gas/trace_gas in trace_gases)
 					total_moles += trace_gas.moles
 
-			if(volume)
-				pressure = total_moles*R_IDEAL_GAS_EQUATION*temperature/volume
-			else
-				pressure = 0
 			return
 
 ////////////////////////////////////////////

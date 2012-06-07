@@ -30,6 +30,8 @@ zone
 
 	Del()
 		//Ensuring the zone list doesn't get clogged with null values.
+		for(var/connection/C in connections)
+			del(C)
 		zones -= src
 		. = ..()
 
