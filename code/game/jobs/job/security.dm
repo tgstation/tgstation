@@ -20,8 +20,7 @@
 		H.equip_if_possible(new /obj/item/clothing/suit/storage/armourrigvest(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/clothing/shoes/jackboots(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/heads/hos(H), H.slot_belt)
-//		H.equip_if_possible(new /obj/item/clothing/suit/armor/hos(H), H.slot_wear_suit)
-//We're Bay12, not Goon.  We don't need armor 24/7
+//		H.equip_if_possible(new /obj/item/clothing/suit/armor/hos(H), H.slot_wear_suit) //We're Bay12, not Goon.  We don't need armor 24/7
 		H.equip_if_possible(new /obj/item/clothing/gloves/hos(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/clothing/head/helmet/HoS(H), H.slot_head)
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses/sechud(H), H.slot_glasses)
@@ -97,7 +96,6 @@
 /*		var/obj/item/clothing/mask/cigarette/CIG = new /obj/item/clothing/mask/cigarette(H)
 		CIG.light("")
 		H.equip_if_possible(CIG, H.slot_wear_mask)	*/
-		//Fuck that thing.  --SkyMarshal
 		H.equip_if_possible(new /obj/item/clothing/gloves/detective(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/weapon/storage/box/evidence(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/weapon/fcardholder(H), H.slot_in_backpack)
