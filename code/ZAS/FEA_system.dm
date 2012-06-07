@@ -78,9 +78,10 @@ turf
 			for(var/obj/obstacle in src)
 				if(!obstacle.CanPass(mover, target, height, air_group))
 					return 0
-			for(var/obj/obstacle in target)
-				if(!obstacle.CanPass(mover, src, height, air_group))
-					return 0
+			if(target != src)
+				for(var/obj/obstacle in target)
+					if(!obstacle.CanPass(mover, src, height, air_group))
+						return 0
 
 			return 1
 
@@ -91,15 +92,16 @@ datum
 	controller
 		air_system
 			//Geoemetry lists
-			var/list/turf/simulated/active_singletons = list()
+//			var/list/turf/simulated/active_singletons = list()
 
 			//Special functions lists
-			var/list/turf/simulated/active_super_conductivity = list()
-			var/list/turf/simulated/high_pressure_delta = list()
+//			var/list/turf/simulated/active_super_conductivity = list()
+//			var/list/turf/simulated/high_pressure_delta = list()
 
 			//Geometry updates lists
 			var/list/turf/simulated/tiles_to_update = list()
-			var/list/turf/simulated/groups_to_rebuild = list()
+			var/list/turf/simulated/tiles_with_connections = list()
+//			var/list/turf/simulated/groups_to_rebuild = list()
 
 			var/current_cycle = 0
 			var/update_delay = 5 //How long between check should it try to process atmos again.
@@ -164,7 +166,9 @@ datum
 
 				if(tiles_to_update.len > 0) //If there are tiles to update, do so.
 					for(var/turf/simulated/T in tiles_to_update)
-						spawn T.update_air_properties()
+						spawn
+							if(istype(T))
+								T.update_air_properties()
 					tiles_to_update = list()
 
 				for(var/zone/Z in zones)

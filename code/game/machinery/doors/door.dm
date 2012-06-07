@@ -344,11 +344,11 @@
 		var/turf/simulated/east = get_step(source,EAST)
 		var/turf/simulated/west = get_step(source,WEST)
 
-		if(istype(source)) air_master.tiles_to_update += source
-		if(istype(north)) air_master.tiles_to_update += north
-		if(istype(south)) air_master.tiles_to_update += south
-		if(istype(east)) air_master.tiles_to_update += east
-		if(istype(west)) air_master.tiles_to_update += west
+		if(istype(source)) air_master.tiles_to_update |= source
+		if(istype(north)) air_master.tiles_to_update |= north
+		if(istype(south)) air_master.tiles_to_update |= south
+		if(istype(east)) air_master.tiles_to_update |= east
+		if(istype(west)) air_master.tiles_to_update |= west
 		return 1
 
 

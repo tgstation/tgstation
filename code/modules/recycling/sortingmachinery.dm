@@ -111,7 +111,7 @@
 	desc = "A small wrapped package."
 	name = "small parcel"
 	icon = 'storage.dmi'
-	icon_state = "deliverycrateSmall1"
+	icon_state = "deliverycrate1"
 	var/tmp/obj/item/wrapped = null
 	var/sortTag = null
 	flags = FPRINT
@@ -219,7 +219,20 @@
 				O.loc = P
 				amount -= 1
 				P.w_class = O.w_class
-				P.icon_state = "deliverycrateSmall[P.w_class]"
+				P.icon_state = "deliverycrate[P.w_class]"
+				var/t
+				switch(P.w_class)
+					if(1.0)
+						t = "tiny"
+					if(2.0)
+						t = "small"
+					if(3.0)
+						t = "normal-sized"
+					if(4.0)
+						t = "bulky"
+					if(5.0)
+						t = "huge"
+				P.name = "[t] package"
 				user.visible_message("\The [user] wraps \a [target] with \a [src], producing \a [P].",\
 				"\blue You wrap \the [target], leaving [amount] units of paper on your [src].",\
 				"You hear someone taping paper around a small object.")

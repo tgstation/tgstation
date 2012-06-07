@@ -39,27 +39,6 @@
 		else
 			return 1
 
-/turf/proc/find_zone()
-	//Allows newly generated turfs to join up with a nearby zone.
-	if(world.time < 10) return
-	if(density)
-		for(var/d in cardinal)
-			var/turf/T = get_step(src,d)
-			if(!T || !T.zone || !T.ZCanPass(src))
-				continue
-			T.zone.rebuild = 1
-
-	else
-		for(var/d in cardinal)
-			var/turf/T = get_step(src,d)
-			if(!T || !T.zone || !T.ZCanPass(src))
-				continue
-			if(!zone)
-				zone = T.zone
-				zone.AddTurf(src)
-			else if(T.zone != zone)
-				ZConnect(src,T)
-
 /turf/proc/check_connections()
 	//Checks for new connections that can be made.
 	for(var/d in cardinal)
@@ -144,6 +123,7 @@ proc/ZConnect(turf/A,turf/B)
 	//Ensure zones separated by doors do not merge.
 	if(A.HasDoor(B) || B.HasDoor(A)) C.indirect = 1
 
+/*
 proc/ZDisconnect(turf/A,turf/B)
 	//Removes a zone connection. Can split zones in the case of a permanent barrier.
 
@@ -154,6 +134,8 @@ proc/ZDisconnect(turf/A,turf/B)
 			for(var/connection/C in A.zone.connections)
 				if((C.A == A && C.B == B) || (C.A == B && C.B == A))
 					del C
+				if(C)
+					C.Cleanup()
 		//If they're the same, split the zone at this line.
 		else
 			//Preliminary checks to prevent stupidity.
@@ -171,9 +153,10 @@ proc/ZDisconnect(turf/A,turf/B)
 
 				//Add connections from the old zone.
 				for(var/connection/C in oldzone.connections)
-					if((A in Z.contents) || (B in Z.contents))
+					if((C.A in Z.contents) || (C.B in Z.contents))
 						if(!Z.connections) Z.connections = list()
 						Z.connections += C
+						C.Cleanup()
 
 				//Check for space.
 				for(var/turf/T in test)
@@ -187,9 +170,10 @@ proc/ZDisconnect(turf/A,turf/B)
 
 				//Add relevant connections from old zone.
 				for(var/connection/C in oldzone.connections)
-					if((A in Y.contents) || (B in Y.contents))
+					if((C.A in Y.contents) || (C.B in Y.contents))
 						if(!Y.connections) Y.connections = list()
 						Y.connections += C
+						C.Cleanup()
 
 				//Add the remaining space tiles to this zone.
 				for(var/turf/space/T in oldzone.space_tiles)
@@ -199,7 +183,21 @@ proc/ZDisconnect(turf/A,turf/B)
 				oldzone.air = null
 				del oldzone
 	else
-		if(istype(A,/turf/space) && B.zone)
-			B.zone.RemoveSpace(A)
-		else if(istype(B,/turf/space) && A.zone)
-			A.zone.RemoveSpace(B)
+		if(B.zone)
+			if(istype(A,/turf/space))
+				B.zone.RemoveSpace(A)
+			else
+				for(var/connection/C in B.zone.connections)
+					if((C.A == A && C.B == B) || (C.A == B && C.B == A))
+						del C
+					if(C)
+						C.Cleanup()
+		if(A.zone)
+			if(istype(B,/turf/space))
+				A.zone.RemoveSpace(B)
+			else
+				for(var/connection/C in A.zone.connections)
+					if((C.A == A && C.B == B) || (C.A == B && C.B == A))
+						del C
+					if(C)
+						C.Cleanup()*/

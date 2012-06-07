@@ -1164,11 +1164,6 @@ proc/isemptylist(list/list)
 		return 1
 	return 0
 
-proc/clearlist(list/list)
-	if(istype(list))
-		list.len = 0
-	return
-
 proc/listclearnulls(list/list)
 	if(istype(list))
 		while(null in list)
@@ -1763,24 +1758,6 @@ proc/oview_or_orange(distance = world.view , center = usr , type)
 		if("range")
 			. = orange(distance,center)
 	return
-proc/get_opposite(var/checkdir)
-	switch(checkdir)
-		if(NORTH)
-			return SOUTH
-		if(SOUTH)
-			return NORTH
-		if(EAST)
-			return WEST
-		if(WEST)
-			return EAST
-		if(NORTHEAST)
-			return SOUTHWEST
-		if(NORTHWEST)
-			return SOUTHEAST
-		if(SOUTHEAST)
-			return NORTHWEST
-		if(SOUTHWEST)
-			return NORTHEAST
 
 /proc/stringsplit(txt, character)
 	var/cur_text = txt
