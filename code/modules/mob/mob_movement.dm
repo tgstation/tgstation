@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
-
 /mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
 
@@ -107,9 +105,6 @@
 				usr.hud_used.help_intent.icon_state = "help_small_active"
 				usr.hud_used.grab_intent.icon_state = "grab_small"
 				usr.hud_used.disarm_intent.icon_state = "disarm_small"
-		usr << "\blue Your intent is now \"[usr.a_intent]\"."
-	else
-		usr << "\red This mob type does not use intents."
 
 //This gets called when you press the delete button.
 /client/verb/delete_key_pressed()
