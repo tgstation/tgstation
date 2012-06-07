@@ -165,7 +165,17 @@
 		W.sd_SetOpacity(0)
 		//This is probably gonna make lighting go a bit wonky in bombed areas, but sd_SetOpacity was the primary reason bombs have been so laggy. --NEO
 	W.levelupdate()
-	air_master.tiles_to_update += W
+	air_master.tiles_to_update |= W
+
+	var/turf/simulated/north = get_step(W,NORTH)
+	var/turf/simulated/south = get_step(W,SOUTH)
+	var/turf/simulated/east = get_step(W,EAST)
+	var/turf/simulated/west = get_step(W,WEST)
+
+	if(istype(north)) air_master.tiles_to_update |= north
+	if(istype(south)) air_master.tiles_to_update |= south
+	if(istype(east)) air_master.tiles_to_update |= east
+	if(istype(west)) air_master.tiles_to_update |= west
 	return W
 
 /turf/proc/ReplaceWithPlating()
@@ -183,7 +193,17 @@
 	W.opacity = 1
 	W.sd_SetOpacity(0)
 	W.levelupdate()
-	air_master.tiles_to_update += W
+	air_master.tiles_to_update |= W
+
+	var/turf/simulated/north = get_step(W,NORTH)
+	var/turf/simulated/south = get_step(W,SOUTH)
+	var/turf/simulated/east = get_step(W,EAST)
+	var/turf/simulated/west = get_step(W,WEST)
+
+	if(istype(north)) air_master.tiles_to_update |= north
+	if(istype(south)) air_master.tiles_to_update |= south
+	if(istype(east)) air_master.tiles_to_update |= east
+	if(istype(west)) air_master.tiles_to_update |= west
 	return W
 
 /turf/proc/ReplaceWithEngineFloor()
@@ -196,7 +216,17 @@
 	E.dir = old_dir
 	E.icon_state = "engine"
 	E.levelupdate()
-	air_master.tiles_to_update += E
+	air_master.tiles_to_update |= E
+
+	var/turf/simulated/north = get_step(E,NORTH)
+	var/turf/simulated/south = get_step(E,SOUTH)
+	var/turf/simulated/east = get_step(E,EAST)
+	var/turf/simulated/west = get_step(E,WEST)
+
+	if(istype(north)) air_master.tiles_to_update |= north
+	if(istype(south)) air_master.tiles_to_update |= south
+	if(istype(east)) air_master.tiles_to_update |= east
+	if(istype(west)) air_master.tiles_to_update |= west
 	return E
 
 /turf/simulated/Entered(atom/A, atom/OL)
@@ -259,7 +289,17 @@
 	var/old_dir = dir
 	var/turf/space/S = new /turf/space( locate(src.x, src.y, src.z) )
 	S.dir = old_dir
-	air_master.tiles_to_update += S
+	air_master.tiles_to_update |= S
+
+	var/turf/simulated/north = get_step(S,NORTH)
+	var/turf/simulated/south = get_step(S,SOUTH)
+	var/turf/simulated/east = get_step(S,EAST)
+	var/turf/simulated/west = get_step(S,WEST)
+
+	if(istype(north)) air_master.tiles_to_update |= north
+	if(istype(south)) air_master.tiles_to_update |= south
+	if(istype(east)) air_master.tiles_to_update |= east
+	if(istype(west)) air_master.tiles_to_update |= west
 	return S
 
 /turf/proc/ReplaceWithLattice()
@@ -267,7 +307,17 @@
 	var/turf/space/S = new /turf/space( locate(src.x, src.y, src.z) )
 	S.dir = old_dir
 	new /obj/structure/lattice( locate(src.x, src.y, src.z) )
-	air_master.tiles_to_update += S
+	air_master.tiles_to_update |= S
+
+	var/turf/simulated/north = get_step(S,NORTH)
+	var/turf/simulated/south = get_step(S,SOUTH)
+	var/turf/simulated/east = get_step(S,EAST)
+	var/turf/simulated/west = get_step(S,WEST)
+
+	if(istype(north)) air_master.tiles_to_update |= north
+	if(istype(south)) air_master.tiles_to_update |= south
+	if(istype(east)) air_master.tiles_to_update |= east
+	if(istype(west)) air_master.tiles_to_update |= west
 	return S
 
 /turf/proc/ReplaceWithWall()
@@ -277,7 +327,17 @@
 	S.opacity = 0
 	S.sd_NewOpacity(1)
 	levelupdate()
-	air_master.tiles_to_update += S
+	air_master.tiles_to_update |= S
+
+	var/turf/simulated/north = get_step(S,NORTH)
+	var/turf/simulated/south = get_step(S,SOUTH)
+	var/turf/simulated/east = get_step(S,EAST)
+	var/turf/simulated/west = get_step(S,WEST)
+
+	if(istype(north)) air_master.tiles_to_update |= north
+	if(istype(south)) air_master.tiles_to_update |= south
+	if(istype(east)) air_master.tiles_to_update |= east
+	if(istype(west)) air_master.tiles_to_update |= west
 	return S
 
 /turf/proc/ReplaceWithRWall()
@@ -287,7 +347,17 @@
 	S.opacity = 0
 	S.sd_NewOpacity(1)
 	levelupdate()
-	air_master.tiles_to_update += S
+	air_master.tiles_to_update |= S
+
+	var/turf/simulated/north = get_step(S,NORTH)
+	var/turf/simulated/south = get_step(S,SOUTH)
+	var/turf/simulated/east = get_step(S,EAST)
+	var/turf/simulated/west = get_step(S,WEST)
+
+	if(istype(north)) air_master.tiles_to_update |= north
+	if(istype(south)) air_master.tiles_to_update |= south
+	if(istype(east)) air_master.tiles_to_update |= east
+	if(istype(west)) air_master.tiles_to_update |= west
 	return S
 
 //turf/simulated/wall/New()

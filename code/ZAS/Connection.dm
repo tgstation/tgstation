@@ -17,15 +17,32 @@ connection
 	New(turf/T,turf/O)
 		A = T
 		B = O
-		if(A.zone)
-			if(!A.zone.connections) A.zone.connections = new()
+		if(A.zone && B.zone)
+			if(!A.zone.connections) A.zone.connections = list()
 			A.zone.connections += src
 			zone_A = A.zone
-		if(B.zone)
-			if(!B.zone.connections) B.zone.connections = new()
+
+			if(!B.zone.connections) B.zone.connections = list()
 			B.zone.connections += src
 			zone_B = B.zone
-		if(A.zone && B.zone)
+
+			if(!air_master.tiles_with_connections)
+				air_master.tiles_with_connections = list()
+
+			if(air_master.tiles_with_connections[A])
+				var/list/A_connections = air_master.tiles_with_connections[A]
+				A_connections |= src
+			else
+				var/list/A_connections = list(src)
+				air_master.tiles_with_connections[A] = A_connections
+
+			if(air_master.tiles_with_connections[B])
+				var/list/B_connections = air_master.tiles_with_connections[B]
+				B_connections |= src
+			else
+				var/list/B_connections = list(src)
+				air_master.tiles_with_connections[B] = B_connections
+
 			if(!A.zone.connected_zones)
 				A.zone.connected_zones = list()
 			if(!B.zone.connected_zones)
@@ -44,26 +61,43 @@ connection
 				B.zone.connected_zones[A.zone]++
 		else
 			world.log << "Attempted to create connection object for non-zone tiles: [T] -> [O]"
+			del(src)
 	Del()
-		if(A.zone && A.zone.connections)
-			A.zone.connections.Remove(src)
-			if(!A.zone.connections.len)
-				del A.zone.connections
-		if(B.zone && B.zone.connections)
-			B.zone.connections.Remove(src)
-			if(!B.zone.connections.len)
-				del B.zone.connections
-		if(zone_A && zone_A.connections)
-			zone_A.connections.Remove(src)
-			if(!zone_A.connections.len)
-				del zone_A.connections
-		if(zone_B && zone_B.connections)
-			zone_B.connections.Remove(src)
-			if(!zone_B.connections.len)
-				del zone_B.connections
+		if(A)
+			if(A.zone && A.zone.connections)
+				A.zone.connections.Remove(src)
+				if(!A.zone.connections.len)
+					del A.zone.connections
+			if(A in air_master.tiles_with_connections)
+				var/list/A_connections = air_master.tiles_with_connections[A]
+				A_connections -= src
+				if(A_connections && !A_connections.len)
+					del A_connections
+					air_master.tiles_with_connections.Remove(A)
+		if(B)
+			if(B.zone && B.zone.connections)
+				B.zone.connections.Remove(src)
+				if(!B.zone.connections.len)
+					del B.zone.connections
+			if(B in air_master.tiles_with_connections)
+				var/list/B_connections = air_master.tiles_with_connections[B]
+				B_connections -= src
+				if(B_connections && !B_connections.len)
+					del B_connections
+					air_master.tiles_with_connections.Remove(B)
+		if(zone_A)
+			if(zone_A && zone_A.connections)
+				zone_A.connections.Remove(src)
+				if(!zone_A.connections.len)
+					del zone_A.connections
+		if(zone_B)
+			if(zone_B && zone_B.connections)
+				zone_B.connections.Remove(src)
+				if(!zone_B.connections.len)
+					del zone_B.connections
 
-		if(A.zone)
-			if(B.zone)
+		if(A && A.zone)
+			if(B && B.zone)
 				if(B.zone in A.zone.connected_zones)
 					if(A.zone.connected_zones[B.zone] > 1)
 						A.zone.connected_zones[B.zone]--
@@ -71,7 +105,7 @@ connection
 						A.zone.connected_zones -= B.zone
 				if(A.zone.connected_zones && !A.zone.connected_zones.len)
 					A.zone.connected_zones = null
-			if( zone_B && (!B.zone && zone_B != B.zone) )
+			if( zone_B && (!B.zone || zone_B != B.zone) )
 				if(zone_B in A.zone.connected_zones)
 					if(A.zone.connected_zones[zone_B] > 1)
 						A.zone.connected_zones[zone_B]--
@@ -80,7 +114,7 @@ connection
 				if(A.zone.connected_zones && !A.zone.connected_zones.len)
 					A.zone.connected_zones = null
 		if(zone_A && (!A.zone || zone_A != A.zone))
-			if(B.zone)
+			if(B && B.zone)
 				if(B.zone in zone_A.connected_zones)
 					if(zone_A.connected_zones[B.zone] > 1)
 						zone_A.connected_zones[B.zone]--
@@ -88,7 +122,7 @@ connection
 						zone_A.connected_zones -= B.zone
 				if(zone_A.connected_zones && !zone_A.connected_zones.len)
 					zone_A.connected_zones = null
-			if( zone_B && (!B.zone && zone_B != B.zone) )
+			if( zone_B && (!B.zone || zone_B != B.zone) )
 				if(zone_B in zone_A.connected_zones)
 					if(zone_A.connected_zones[zone_B] > 1)
 						zone_A.connected_zones[zone_B]--
@@ -96,8 +130,8 @@ connection
 						zone_A.connected_zones -= zone_B
 				if(zone_A.connected_zones && !zone_A.connected_zones.len)
 					zone_A.connected_zones = null
-		if(B.zone)
-			if(A.zone)
+		if(B && B.zone)
+			if(A && A.zone)
 				if(A.zone in B.zone.connected_zones)
 					if(B.zone.connected_zones[A.zone] > 1)
 						B.zone.connected_zones[A.zone]--
@@ -105,7 +139,7 @@ connection
 						B.zone.connected_zones -= A.zone
 				if(B.zone.connected_zones && !B.zone.connected_zones.len)
 					B.zone.connected_zones = null
-			if( zone_A && (!A.zone && zone_A != A.zone) )
+			if( zone_A && (!A.zone || zone_A != A.zone) )
 				if(zone_A in B.zone.connected_zones)
 					if(B.zone.connected_zones[zone_A] > 1)
 						B.zone.connected_zones[zone_A]--
@@ -114,7 +148,7 @@ connection
 				if(B.zone.connected_zones && !B.zone.connected_zones.len)
 					B.zone.connected_zones = null
 		if(zone_B && (!B.zone || zone_B != B.zone))
-			if(A.zone)
+			if(A && A.zone)
 				if(A.zone in zone_B.connected_zones)
 					if(zone_B.connected_zones[A.zone] > 1)
 						zone_B.connected_zones[A.zone]--
@@ -122,7 +156,7 @@ connection
 						zone_B.connected_zones -= A.zone
 				if(zone_B.connected_zones && !zone_B.connected_zones.len)
 					zone_B.connected_zones = null
-			if( zone_A && (!A.zone && zone_A != A.zone) )
+			if( zone_A && (!A.zone || zone_A != A.zone) )
 				if(zone_A in zone_B.connected_zones)
 					if(zone_B.connected_zones[zone_A] > 1)
 						zone_B.connected_zones[zone_A]--

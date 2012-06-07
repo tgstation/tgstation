@@ -712,11 +712,17 @@
 				increments = difference/10
 			var/change = increments*boost	// Get the amount to change by (x per increment)
 			var/temp_change
-			if(current < loc_temp)
-				temperature = min(loc_temp, temperature+change)
-			else if(current > loc_temp)
-				temperature = max(loc_temp, temperature-change)
-			temp_change = (temperature - current)
+			if(current < loc_temp) //If your body temp is less than loc, then try to heat up
+				if(istajaran(src)) //If Tajaran, you heat up faster
+					change = change*4
+				temperature = min(loc_temp, temperature+change) //Pick the minimum of these two
+			else if(current > loc_temp) //If your body temp is more than loc, then try to cool down
+				if(istajaran(src)) //If Tajaran, you cool down slower
+					change = change*0.5
+				if(mutantrace == "lizard") //If Soghun, you cool down faster
+					change = change*3
+				temperature = max(loc_temp, temperature-change) //Pick the max of these two
+			temp_change = (temperature - current) //Work out the actual change of temp
 			return temp_change
 
 		get_thermal_protection()
@@ -835,7 +841,12 @@
 			if (nutrition > 0 && stat != 2)
 				// sleeping slows the metabolism, hunger increases more slowly
 				if(stat == 1)
-					nutrition = max (0, nutrition - HUNGER_FACTOR)
+					if(istajaran(src)) //Tajarans get hungry slightly faster
+						nutrition = max (0, nutrition - HUNGER_FACTOR*1.25)
+					if(mutantrace == "lizard") //Soghuns get hungry much slower
+						nutrition = max (0, nutrition - HUNGER_FACTOR*0.5)
+					else
+						nutrition = max (0, nutrition - HUNGER_FACTOR)
 				else
 					nutrition = max (0, nutrition - HUNGER_FACTOR / 4)
 

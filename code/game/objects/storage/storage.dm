@@ -126,23 +126,23 @@
 				ok = 1
 				break
 		if(!ok)
-			user << "\red This [src] cannot hold [W]."
+			user << "\red \The [src] cannot hold \the [W]."
 			return
 
 	for(var/A in cant_hold) //Check for specific items which this container can't hold.
 		if(istype(W, text2path(A) ))
-			user << "\red This [src] cannot hold [W]."
+			user << "\red \The [src] cannot hold \the [W]."
 			return
 
 	if (W.w_class > max_w_class)
-		user << "\red This [W] is too big for \the [src]"
+		user << "\red \The [W] is too big for \the [src]"
 		return
 
 	if(istype(W, /obj/item/weapon/tray))
 		var/obj/item/weapon/tray/T = W
 		if(T.calc_carry() > 0)
 			if(prob(85))
-				user << "\red The tray won't fit in [src]."
+				user << "\red The tray won't fit in \the [src]."
 				return
 			else
 
@@ -157,12 +157,12 @@
 		sum_w_class += I.w_class //Adds up the combined w_classes which will be in the storage item if the item is added to it.
 
 	if(sum_w_class > max_combined_w_class)
-		user << "\red The [src] is full, make some space."
+		user << "\red \The [src] is full, make some space."
 		return
 
 	if(W.w_class >= src.w_class && (istype(W, /obj/item/weapon/storage)))
 		if(!istype(src, /obj/item/weapon/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
-			user << "\red The [src] cannot hold [W] as it's a storage item of the same size."
+			user << "\red \The [src] cannot hold \the [W] as it's a storage item of the same size."
 			return //To prevent the stacking of the same sized items.
 
 	user.u_equip(W)
@@ -184,11 +184,11 @@
 	if (istype(W, /obj/item/weapon/gun/energy/crossbow)) return //STEALTHY
 	for(var/mob/M in viewers(user, null))
 		if (M == user)
-			user << "\blue You put the [W] into [src]."
+			user << "\blue You put the \the [W] into \the [src]."
 		else if (M in range(1)) //If someone is standing close enough, they can tell what it is...
-			M.show_message(text("\blue [user] puts [W] into [src]."))
+			M.show_message(text("\blue \The [user] puts \the [W] into \the [src]."))
 		else if (W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
-			M.show_message(text("\blue [user] puts [W] into [src]."))
+			M.show_message(text("\blue \The [user] puts \the [W] into \the [src]."))
 	return
 
 /obj/item/weapon/storage/dropped(mob/user as mob)
@@ -271,7 +271,7 @@
 	if ( !found )	// User is too far away
 		return
 	// Now make the cardboard
-	user << "\blue You fold [src] flat."
+	user << "\blue You fold \the [src] flat."
 	new src.foldable(get_turf(src))
 	del(src)
 //BubbleWrap END

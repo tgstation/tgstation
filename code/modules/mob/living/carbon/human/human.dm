@@ -293,6 +293,11 @@
 
 	if (bodytemperature < 283.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
+		if(mutantrace == "lizard") //Soghun are more affected by the cold
+			tally += 1
+		if(istajaran()) //But Tajarans are slightly resistant
+			if(tally != 0)
+				tally -= tally*0.1
 		if (stuttering < 10)
 			stuttering = 10
 
@@ -1250,7 +1255,7 @@
 	// Should be called only when something about the clothing itself changed
 	// which is not handled by the equip code.
 	rebuild_appearance()
-
+	update_face() //Fixes hair not coming back after using a BLOCKHAIR mask/helmet
 	return
 
 	// TODO: once I have replaced the udpate_clothing() calls with update_lying() or
