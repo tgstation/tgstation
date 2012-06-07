@@ -486,8 +486,9 @@
 		head = null
 		if(prev_head && (prev_head.flags & BLOCKHAIR))
 			// rebuild face
-			del(face_standing)
-			del(face_lying)
+//			del(face_standing)
+//			del(face_lying)
+			update_face()
 
 	else if (W == l_ear)
 		l_ear = null
@@ -506,8 +507,9 @@
 		wear_mask = null
 		if(prev_mask && (prev_mask.flags & BLOCKHAIR))
 			// rebuild face
-			del(face_standing)
-			del(face_lying)
+//			del(face_standing)
+//			del(face_lying)
+			update_face()
 
 	else if (W == wear_id)
 		wear_id = null
@@ -1251,7 +1253,6 @@
 	// Should be called only when something about the clothing itself changed
 	// which is not handled by the equip code.
 	rebuild_appearance()
-	update_face() //Fixes hair not coming back after using a BLOCKHAIR mask/helmet
 	return
 
 	// TODO: once I have replaced the udpate_clothing() calls with update_lying() or
@@ -1766,6 +1767,8 @@ It can still be worn/put on as normal.
 					return
 				var/obj/item/clothing/W = target.wear_mask
 				target.u_equip(W)
+				if (W.flags & BLOCKHAIR)
+					target.update_face()
 				if (target.client)
 					target.client.screen -= W
 				if (W)
@@ -1895,6 +1898,8 @@ It can still be worn/put on as normal.
 				target.u_equip(W)
 				if (target.client)
 					target.client.screen -= W
+				if (W.flags & BLOCKHAIR)
+					target.update_face()
 				if (W)
 					W.loc = target.loc
 					W.dropped(target)
