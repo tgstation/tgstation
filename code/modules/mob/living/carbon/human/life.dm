@@ -481,7 +481,7 @@
 			return null
 
 		update_canmove()
-			if(sleeping || paralysis || stunned || weakened || resting || buckled || (changeling && changeling.changeling_fakedeath))
+			if(stat || sleeping || paralysis || stunned || weakened || resting || buckled || (changeling && changeling.changeling_fakedeath))
 				canmove = 0
 
 			else

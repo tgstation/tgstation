@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /obj/machinery/emitter
 	name = "Emitter"
@@ -149,7 +149,8 @@
 					user << "\red The [src.name] needs to be unwelded from the floor."
 			return
 
-		if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
+		if(istype(W, /obj/item/weapon/weldingtool))
+			var/obj/item/weapon/weldingtool/WT = W
 			if(active)
 				user << "Turn off the [src] first."
 				return
@@ -157,29 +158,27 @@
 				if(0)
 					user << "\red The [src.name] needs to be wrenched to the floor."
 				if(1)
-					if (W:remove_fuel(0,user))
-						W:welding = 2
+					if (WT.remove_fuel(0,user))
 						playsound(src.loc, 'Welder2.ogg', 50, 1)
 						user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 							"You start to weld the [src] to the floor.", \
 							"You hear welding")
 						if (do_after(user,20))
+							if(!src || !WT.isOn()) return
 							state = 2
 							user << "You weld the [src] to the floor."
-						W:welding = 1
 					else
 						user << "\red You need more welding fuel to complete this task."
 				if(2)
-					if (W:remove_fuel(0,user))
-						W:welding = 2
+					if (WT.remove_fuel(0,user))
 						playsound(src.loc, 'Welder2.ogg', 50, 1)
 						user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 							"You start to cut the [src] free from the floor.", \
 							"You hear welding")
 						if (do_after(user,20))
+							if(!src || !WT.isOn()) return
 							state = 1
 							user << "You cut the [src] free from the floor."
-						W:welding = 1
 					else
 						user << "\red You need more welding fuel to complete this task."
 			return

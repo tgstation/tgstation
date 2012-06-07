@@ -203,8 +203,8 @@
 				if(W.remove_fuel(0,user))
 					playsound(src.loc, 'Welder2.ogg', 100, 1)
 					user << "Welding the [nicetype] in place."
-					W:welding = 2
 					if(do_after(user, 20))
+						if(!src || !W.isOn()) return
 						user << "The [nicetype] has been welded in place!"
 						update() // TODO: Make this neat
 						if(ispipe) // Pipe
@@ -233,7 +233,6 @@
 
 						del(src)
 						return
-					W:welding = 1
 				else
 					user << "You need more welding fuel to complete this task."
 					return

@@ -252,11 +252,12 @@
 		return
 
 	attackby(obj/item/W, mob/user)
-		if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
-			if (W:remove_fuel(0,user))
-				W:welding = 2
+		if(istype(W, /obj/item/weapon/weldingtool))
+			var/obj/item/weapon/weldingtool/WT = W
+			if (WT.remove_fuel(0,user))
 				user << "\blue Now welding the vent."
 				if(do_after(user, 20))
+					if(!src || !WT.isOn()) return
 					playsound(src.loc, 'Welder2.ogg', 50, 1)
 					if(!welded)
 						user.visible_message("[user] welds the vent shut.", "You weld the vent shut.", "You hear welding.")
@@ -266,7 +267,8 @@
 						user.visible_message("[user] unwelds the vent.", "You unweld the vent.", "You hear welding.")
 						welded = 0
 						update_icon()
-				W:welding = 1
+				else
+					user << "\blue The welding tool needs to be on to start this task."
 			else
 				user << "\blue You need more welding fuel to complete this task."
 				return 1
