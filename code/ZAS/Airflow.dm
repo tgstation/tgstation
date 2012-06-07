@@ -59,13 +59,17 @@ vs_control/var
 	airflow_damage = 0.3
 	airflow_stun = 0.15
 	airflow_speed_decay = 1
-	airflow_delay = 25 //Time in deciseconds before they can be moved by airflow again.
+	airflow_delay = 35 //Time in deciseconds before they can be moved by airflow again.
 	airflow_mob_slowdown = 3 //Time in tenths of a second to add as a delay to each movement by a mob.\
 	Only active if they are fighting the pull of the airflow.
+	airflow_stun_cooldown = 10 //How long, in tenths of a second, to wait before stunning them again.
 
+mob/var/last_airflow_stun = 0
 mob/proc/airflow_stun()
+	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)	return 0
 	if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
 	weakened = max(weakened,5)
+	last_airflow_stun = world.time
 
 mob/living/silicon/airflow_stun()
 	return
@@ -74,6 +78,7 @@ mob/living/carbon/metroid/airflow_stun()
 	return
 
 mob/living/carbon/human/airflow_stun()
+	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)	return 0
 	if(buckled) return 0
 	if(wear_suit)
 		if(wear_suit.flags & SUITSPACE) return 0
@@ -81,6 +86,7 @@ mob/living/carbon/human/airflow_stun()
 		if(shoes.flags & NOSLIP) return 0
 	if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
 	weakened = max(weakened,rand(1,2))
+	last_airflow_stun = world.time
 
 atom/movable/proc/check_airflow_movable(n)
 

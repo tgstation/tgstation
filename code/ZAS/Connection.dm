@@ -105,7 +105,7 @@ connection
 						A.zone.connected_zones -= B.zone
 				if(A.zone.connected_zones && !A.zone.connected_zones.len)
 					A.zone.connected_zones = null
-			if( zone_B && (!B.zone && zone_B != B.zone) )
+			if( zone_B && (!B.zone || zone_B != B.zone) )
 				if(zone_B in A.zone.connected_zones)
 					if(A.zone.connected_zones[zone_B] > 1)
 						A.zone.connected_zones[zone_B]--
@@ -122,7 +122,7 @@ connection
 						zone_A.connected_zones -= B.zone
 				if(zone_A.connected_zones && !zone_A.connected_zones.len)
 					zone_A.connected_zones = null
-			if( zone_B && (!B.zone && zone_B != B.zone) )
+			if( zone_B && (!B.zone || zone_B != B.zone) )
 				if(zone_B in zone_A.connected_zones)
 					if(zone_A.connected_zones[zone_B] > 1)
 						zone_A.connected_zones[zone_B]--
@@ -139,7 +139,7 @@ connection
 						B.zone.connected_zones -= A.zone
 				if(B.zone.connected_zones && !B.zone.connected_zones.len)
 					B.zone.connected_zones = null
-			if( zone_A && (!A.zone && zone_A != A.zone) )
+			if( zone_A && (!A.zone || zone_A != A.zone) )
 				if(zone_A in B.zone.connected_zones)
 					if(B.zone.connected_zones[zone_A] > 1)
 						B.zone.connected_zones[zone_A]--
@@ -156,7 +156,7 @@ connection
 						zone_B.connected_zones -= A.zone
 				if(zone_B.connected_zones && !zone_B.connected_zones.len)
 					zone_B.connected_zones = null
-			if( zone_A && (!A.zone && zone_A != A.zone) )
+			if( zone_A && (!A.zone || zone_A != A.zone) )
 				if(zone_A in zone_B.connected_zones)
 					if(zone_B.connected_zones[zone_A] > 1)
 						zone_B.connected_zones[zone_A]--

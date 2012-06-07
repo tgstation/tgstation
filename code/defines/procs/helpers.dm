@@ -1552,13 +1552,13 @@ proc/listclearnulls(list/list)
 		for(var/turf/simulated/T1 in toupdate)
 			for(var/obj/machinery/door/D2 in T1)
 				doors += D2
-			air_master.tiles_to_update += T1
+			air_master.tiles_to_update |= T1
 
 	if(fromupdate.len)
 		for(var/turf/simulated/T2 in fromupdate)
 			for(var/obj/machinery/door/D2 in T2)
 				doors += D2
-			air_master.tiles_to_update += T2
+			air_master.tiles_to_update |= T2
 
 	for(var/obj/O in doors)
 		O:update_nearby_tiles(1)
