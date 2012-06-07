@@ -268,6 +268,116 @@ datum/gas_mixture/proc/zburn(obj/liquid_fuel/liquid)
 			return consumed_gas*fuel_sources
 	return 0
 
+/*
+OLD FIRE:
+fire()
+				var/energy_released = 0
+				var/old_heat_capacity = heat_capacity()
+
+				var/datum/gas/volatile_fuel/fuel_store = locate(/datum/gas/volatile_fuel/) in trace_gases
+				if(fuel_store) //General volatile gas burn
+					var/burned_fuel = 0
+
+					if(oxygen < fuel_store.moles)
+						burned_fuel = oxygen
+						fuel_store.moles -= burned_fuel
+						oxygen = 0
+					else
+						burned_fuel = fuel_store.moles
+						oxygen -= fuel_store.moles
+						del(fuel_store)
+
+					energy_released += vsc.FIRE_CARBON_ENERGY_RELEASED * burned_fuel
+					carbon_dioxide += burned_fuel
+					fuel_burnt += burned_fuel
+
+				//Handle plasma burning
+				if(toxins > MINIMUM_HEAT_CAPACITY)
+					var/plasma_burn_rate = 0
+					var/oxygen_burn_rate = 0
+					//more plasma released at higher temperatures
+					var/temperature_scale
+					if(temperature < PLASMA_UPPER_TEMPERATURE)
+						temperature_scale = 1
+					else
+						temperature_scale = (temperature-PLASMA_MINIMUM_BURN_TEMPERATURE)/(PLASMA_UPPER_TEMPERATURE-PLASMA_MINIMUM_BURN_TEMPERATURE)
+					if(temperature_scale > 0)
+						oxygen_burn_rate = 1.4 - temperature_scale
+						if(oxygen > toxins*PLASMA_OXYGEN_FULLBURN)
+							plasma_burn_rate = (toxins*temperature_scale)/4
+						else
+							plasma_burn_rate = (temperature_scale*(oxygen/PLASMA_OXYGEN_FULLBURN))/4
+						if(plasma_burn_rate > MINIMUM_HEAT_CAPACITY)
+							toxins -= plasma_burn_rate
+							oxygen -= plasma_burn_rate*oxygen_burn_rate
+							carbon_dioxide += plasma_burn_rate
+
+							energy_released += vsc.FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
+
+							fuel_burnt += (plasma_burn_rate)*(1+oxygen_burn_rate)
+
+				if(energy_released > 0)
+					var/new_heat_capacity = heat_capacity()
+					if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+						temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
+
+				return fuel_burnt
+ OLD ZBURN:
+datum/gas_mixture/proc/zburn(obj/liquid_fuel/liquid)
+	if(vsc.switch_fire)
+		. = fire()
+		if(liquid && liquid.amount > 0)
+			oxygen -= fire_ratio_1
+			liquid.amount = max(liquid.amount-fire_ratio_1,0)
+			carbon_dioxide += fire_ratio_1
+			if(liquid.amount <= 0)
+				del liquid
+		return
+	if(temperature > PLASMA_MINIMUM_BURN_TEMPERATURE)
+		var
+			fuel_level = 0
+			datum/gas/volatile_fuel/fuel = locate() in trace_gases
+			liquid_level = 0
+		if(fuel) fuel_level = fuel.moles
+		if(liquid) liquid_level = liquid.amount
+		if(liquid.amount <= 0)
+			del liquid
+			liquid_level = 0
+		if(oxygen > 0.3 && (toxins || fuel_level || liquid_level))
+			if(toxins && temperature < PLASMA_UPPER_TEMPERATURE)
+				temperature += (vsc.FIRE_PLASMA_ENERGY_RELEASED*fire_ratio_1) / heat_capacity()
+
+			if((fuel_level || liquid_level) && temperature < PLASMA_UPPER_TEMPERATURE)
+				temperature += (vsc.FIRE_CARBON_ENERGY_RELEASED*fire_ratio_1) / heat_capacity()
+
+			if(toxins > fire_ratio_1)
+				oxygen -= vsc.OXY_TO_PLASMA*fire_ratio_1
+				toxins -= fire_ratio_1
+				carbon_dioxide += fire_ratio_1
+			else if(toxins)
+				oxygen -= toxins * vsc.OXY_TO_PLASMA
+				carbon_dioxide += toxins
+				toxins = 0
+
+			if(fuel_level > fire_ratio_1/1.5)
+				oxygen -= vsc.OXY_TO_PLASMA*fire_ratio_1
+				fuel.moles -= fire_ratio_1
+				carbon_dioxide += fire_ratio_1
+
+			else if(fuel_level)
+				oxygen -= fuel.moles * vsc.OXY_TO_PLASMA
+				carbon_dioxide += fuel.moles
+				fuel.moles = 0
+
+			if(liquid_level > 0)
+				oxygen -= fire_ratio_1
+				liquid.amount = max(liquid.amount-fire_ratio_1,0)
+				carbon_dioxide += fire_ratio_1
+				if(liquid.amount <= 0)
+					del liquid
+			return 1
+	return 0 */
+
 datum/gas_mixture/proc/calculate_firelevel(obj/liquid_fuel/liquid)
 		//Calculates the firelevel based on one equation instead of having to do this multiple times in different areas.
 	var

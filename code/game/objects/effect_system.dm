@@ -13,6 +13,10 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	unacidable = 1//So effect are not targeted by alien acid.
 	flags = TABLEPASS
 
+/obj/effect/ex_act(severity)
+	if(severity)
+		del(src)
+
 /obj/effect/effect/water
 	name = "water"
 	icon = 'effects.dmi'

@@ -166,9 +166,7 @@ datum
 
 				if(tiles_to_update.len > 0) //If there are tiles to update, do so.
 					for(var/turf/simulated/T in tiles_to_update)
-						spawn
-							if(istype(T))
-								T.update_air_properties()
+						T.update_air_properties()
 					tiles_to_update = list()
 
 				for(var/zone/Z in zones)

@@ -126,11 +126,17 @@ proc/Airflow(zone/A,zone/B)
 	//These turfs are the midway point between A and B, and will be the destination point for thrown objects.
 	var/list/connection/connections_A = A.connections
 	var/list/turf/connected_turfs = list()
-	for(var/connection/C in connections_A)
+	for(var/connection/C in connections_A) //Grab the turf that is in the zone we are flowing to (determined by n)
 		if( ( A == C.A.zone || A == C.zone_A ) && ( B == C.B.zone || B == C.zone_B ) )
-			connected_turfs |= C.A
+			if(n < 0)
+				connected_turfs |= C.B
+			else
+				connected_turfs |= C.A
 		else if( ( A == C.B.zone || A == C.zone_B ) && ( B == C.A.zone || B == C.zone_A ) )
-			connected_turfs |= C.B
+			if(n < 0)
+				connected_turfs |= C.A
+			else
+				connected_turfs |= C.B
 
 	//Get lists of things that can be thrown across the room for each zone.
 	var/list/pplz = B.movables()
@@ -333,6 +339,7 @@ atom/movable
 			airflow_hit(A)
 		else
 			airflow_speed = 0
+			airflow_time = 0
 			. = ..()
 
 atom/movable/proc/airflow_hit(atom/A)
