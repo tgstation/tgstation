@@ -67,16 +67,16 @@
 
 	var/cx = tx
 	var/cy = ty
-	src.boxes.screen_loc = text("[],[] to [],[]", tx, ty, mx, my)
+	src.boxes.screen_loc = "[tx],[ty] to [mx],[my]"
 	for(var/obj/O in src.contents)
-		O.screen_loc = text("[],[]", cx, cy)
+		O.screen_loc = "[cx],[cy]"
 		O.layer = 20
 		cx++
 		if (cx > mx)
 			cx = tx
 			cy--
 		//Foreach goto(56)
-	src.closer.screen_loc = text("[],[]", mx, my)
+	src.closer.screen_loc = "[mx],[my]"
 	return
 
 //This proc draws out the inventory and places the items on it. It uses the standard position.
@@ -85,15 +85,15 @@
 	var/cols = 6
 	var/cx = 4
 	var/cy = 2+rows
-	src.boxes.screen_loc = text("4:16,2:16 to [4+cols]:16,[2+rows]:16")
+	src.boxes.screen_loc = "4:16,2:16 to [4+cols]:16,[2+rows]:16"
 	for(var/obj/O in src.contents)
-		O.screen_loc = text("[cx]:16,[cy]:16")
+		O.screen_loc = "[cx]:16,[cy]:16"
 		O.layer = 20
 		cx++
 		if (cx > (4+cols))
 			cx = 4
 			cy--
-	src.closer.screen_loc = text("11:16,2:16")
+	src.closer.screen_loc = "11:16,2:16"
 	return
 
 /obj/item/weapon/secstorage/proc/orient2hud(mob/user as mob)
