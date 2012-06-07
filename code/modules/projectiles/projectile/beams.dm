@@ -22,6 +22,10 @@
 	icon_state = "heavylaser"
 	damage = 40
 
+/obj/item/projectile/bean/xray
+	name = "xray beam"
+	icon_state = "xray"
+	damage = 30
 
 /obj/item/projectile/beam/pulse
 	name = "pulse"

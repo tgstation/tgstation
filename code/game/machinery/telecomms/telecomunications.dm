@@ -515,7 +515,7 @@
 
 /obj/machinery/telecomms/processor/preset_three
 	id = "Processor 3"
-	network = "Communications Satellite"
+	network = "tcommsat"
 	autolinkers = list("processor3")
 
 /obj/machinery/telecomms/processor/preset_four

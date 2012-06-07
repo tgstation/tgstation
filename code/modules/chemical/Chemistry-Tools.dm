@@ -808,7 +808,7 @@
 				user << "\red [target] is full."
 				return
 
-			if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/weapon/reagent_containers/food)) //You can inject humans and food but you cant remove the shit.
+			if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/clothing/mask/cigarette)) //You can inject humans and food but you cant remove the shit.
 				user << "\red You cannot directly fill this object."
 				return
 
@@ -1019,7 +1019,7 @@
 				if(istype(target, /obj/item/weapon/implantcase/chem))
 					return
 
-				if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/metroid_core))
+				if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/metroid_core) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/cigpacket))
 					user << "\red You cannot directly fill this object."
 					return
 				if(target.reagents.total_volume >= target.reagents.maximum_volume)

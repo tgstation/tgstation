@@ -12,7 +12,7 @@
 	icon_state = "comm_monitor"
 
 	var/screen = 0				// the screen number:
-	var/list/machines = list()	// the machines located by the computer
+	var/list/machinelist = list()	// the machines located by the computer
 	var/obj/machinery/telecomms/SelectedMachine
 
 	var/network = "NULL"		// the network to probe
@@ -116,7 +116,7 @@
 				else
 					network = newnet
 					screen = 0
-					machines = list()
+					machinelist = list()
 					temp = "<font color = #336699>- NEW NETWORK TAG SET IN ADDRESS \[[network]\] -</font color>"
 
 		updateUsrDialog()

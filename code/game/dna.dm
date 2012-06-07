@@ -158,17 +158,23 @@
 	else
 		return null
 
-/proc/getblockstring(input,block,subblock,blocksize)
+/proc/getblockstring(input,block,subblock,blocksize,src,ui) // src is probably used here just for urls; ui is 1 when requesting for the unique identifier screen, 0 for structural enzymes screen
 	var/string
 	var/subpos = 1 // keeps track of the current sub block
 	var/blockpos = 1 // keeps track of the current block
 
+
 	for(var/i = 1, i <= length(input), i++) // loop through each letter
 
-		var/pushstring = copytext(input, i, i+1)
+		var/pushstring
 
 		if(subpos == subblock && blockpos == block) // if the current block/subblock is selected, mark it
 			pushstring = "</font color><b>[copytext(input, i, i+1)]</b><font color='blue'>"
+		else
+			if(ui) //This is for allowing block clicks to be differentiated
+				pushstring = "<a href='?src=\ref[src];uimenuset=[num2text(blockpos)];uimenusubset=[num2text(subpos)]'>[copytext(input, i, i+1)]</a>"
+			else
+				pushstring = "<a href='?src=\ref[src];semenuset=[num2text(blockpos)];semenusubset=[num2text(subpos)]'>[copytext(input, i, i+1)]</a>"
 
 		string += pushstring // push the string to the return string
 
@@ -939,7 +945,7 @@
 			//src.temphtml = text("Unique Identifier: <font color='blue'>[getleftblocks(src.connected.occupant.dna.uni_identity,uniblock,3)][src.subblock == 1 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),1,1)][src.subblock == 2 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),2,1)][src.subblock == 3 ? "<U><B>"+getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)+"</U></B>" : getblock(getblock(src.connected.occupant.dna.uni_identity,src.uniblock,3),3,1)][getrightblocks(src.connected.occupant.dna.uni_identity,uniblock,3)]</FONT><BR><BR>")
 
 			// New way of displaying DNA blocks
-			src.temphtml = text("Unique Identifier: <font color='blue'>[getblockstring(src.connected.occupant.dna.uni_identity,uniblock,subblock,3)]</FONT><br><br>")
+			src.temphtml = text("Unique Identifier: <font color='blue'>[getblockstring(src.connected.occupant.dna.uni_identity,uniblock,subblock,3, src,1)]</FONT><br><br>")
 
 			src.temphtml += text("Selected Block: <font color='blue'><B>[]</B></FONT><BR>", src.uniblock)
 			src.temphtml += text("<A href='?src=\ref[];unimenuminus=1'><-</A> Block <A href='?src=\ref[];unimenuplus=1'>-></A><BR><BR>", src, src)
@@ -964,6 +970,14 @@
 			if (src.subblock > 1)
 				src.subblock--
 			dopage(src,"unimenu")
+		if (href_list["uimenuset"] && href_list["uimenusubset"]) // This chunk of code updates selected block / sub-block based on click
+			var/menuset = text2num(href_list["uimenuset"])
+			var/menusubset = text2num(href_list["uimenusubset"])
+			if ((menuset <= 13) && (menuset >= 1))
+				src.uniblock = menuset
+			if ((menusubset <= 3) && (menusubset >= 1))
+				src.subblock = menusubset
+			dopage(src, "unimenu")
 		if (href_list["unipulse"])
 			if(src.connected.occupant)
 				var/block
@@ -1019,7 +1033,7 @@
 				//src.temphtml = text("Structural Enzymes: <font color='blue'>[]</FONT><BR><BR>", src.connected.occupant.dna.struc_enzymes)
 
 				// New shit, it doesn't suck (as much)
-				src.temphtml = text("Structural Enzymes: <font color='blue'>[getblockstring(src.connected.occupant.dna.struc_enzymes,strucblock,subblock,3)]</FONT><br><br>")
+				src.temphtml = text("Structural Enzymes: <font color='blue'>[getblockstring(src.connected.occupant.dna.struc_enzymes,strucblock,subblock,3,src,0)]</FONT><br><br>")
 																							// SE of occupant,	selected block,	selected subblock,	block size (3 subblocks)
 
 				src.temphtml += text("Selected Block: <font color='blue'><B>[]</B></FONT><BR>", src.strucblock)
@@ -1045,6 +1059,14 @@
 			if (src.subblock > 1)
 				src.subblock--
 			dopage(src,"strucmenu")
+		if (href_list["semenuset"] && href_list["semenusubset"]) // This chunk of code updates selected block / sub-block based on click (se stands for strutural enzymes)
+			var/menuset = text2num(href_list["semenuset"])
+			var/menusubset = text2num(href_list["semenusubset"])
+			if ((menuset <= 14) && (menuset >= 1))
+				src.strucblock = menuset
+			if ((menusubset <= 3) && (menusubset >= 1))
+				src.subblock = menusubset
+			dopage(src, "strucmenu")
 		if (href_list["strucpulse"])
 			var/block
 			var/newblock
