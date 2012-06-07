@@ -205,10 +205,10 @@ turf
 						if(zone)
 							zone.rebuild = 1
 							continue
-					else if(!CanPass(null, src, 1.5, 1) && CanPass(null, src, 0, 0)) //I normally block air, but am permitting it.
+					else if(!(T.CanPass(null, src, 1.5, 1) && CanPass(null, T, 1.5, 1)) && (CanPass(null, T, 0, 0) || T.CanPass(null, src, 0, 0))) //I normally block air, but am permitting it.
 						if(zone) //Either open or no doors, air can flow.
 							ZConnect(src,T) //Connect 'em.
-					else if(!CanPass(null, src, 1.5, 1)) //If I block air, we must look to see if the adjacent turfs need rebuilt.
+					else if(!(T.CanPass(null, src, 1.5, 1) && CanPass(null, T, 1.5, 1))) //If I block air, we must look to see if the adjacent turfs need rebuilt.
 						if(T.zone && !T.zone.rebuild)
 							for(var/direction2 in cardinal - direction) //Check all other directions for air that might be connected.
 								var/turf/simulated/NT = get_step(src, direction2)

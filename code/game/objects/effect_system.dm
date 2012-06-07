@@ -1044,17 +1044,17 @@ steam.start() -- spawns the effect
 	proc/update_nearby_tiles(need_rebuild)
 		if(!air_master) return 0
 
-		var/turf/simulated/source = loc
+		var/turf/simulated/source = get_turf(src)
 		var/turf/simulated/north = get_step(source,NORTH)
 		var/turf/simulated/south = get_step(source,SOUTH)
 		var/turf/simulated/east = get_step(source,EAST)
 		var/turf/simulated/west = get_step(source,WEST)
 
-		if(istype(source)) air_master.tiles_to_update += source
-		if(istype(north)) air_master.tiles_to_update += north
-		if(istype(south)) air_master.tiles_to_update += south
-		if(istype(east)) air_master.tiles_to_update += east
-		if(istype(west)) air_master.tiles_to_update += west
+		if(istype(source)) air_master.tiles_to_update |= source
+		if(istype(north)) air_master.tiles_to_update |= north
+		if(istype(south)) air_master.tiles_to_update |= south
+		if(istype(east)) air_master.tiles_to_update |= east
+		if(istype(west)) air_master.tiles_to_update |= west
 
 		return 1
 

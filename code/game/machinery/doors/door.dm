@@ -32,7 +32,11 @@
 			layer = 3.1 //Above most items if closed
 		else
 			layer = 2.7 //Under all objects if opened. 2.7 due to tables being at 2.6
-		update_nearby_tiles(need_rebuild=1)
+		if(world.time < 10)
+			spawn(10)
+				update_nearby_tiles(need_rebuild=1)
+		else
+			update_nearby_tiles(need_rebuild=1)
 		return
 
 
