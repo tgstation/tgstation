@@ -142,6 +142,16 @@
 //////////// Clothing ////////////
 //////////////////////////////////
 
+//////////// Gloves ////////////
+
+/obj/item/clothing/gloves/fluff/walter_brooks_1 //botanistpower: Walter Brooks
+	name = "mittens"
+	desc = "A pair of well worn, blue mittens."
+	icon = 'custom_items.dmi'
+	icon_state = "walter_brooks_1"
+	item_state = "bluegloves"
+	color="blue"
+
 //////////// Eye Wear ////////////
 
 /obj/item/clothing/glasses/meson/fluff/book_berner_1 //asanadas: Book Berner
