@@ -720,7 +720,7 @@
 
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
-	desc = "Shhhhh."
+//	desc = "Shhhhh."
 	access = list(access_maint_tunnels)
 	origin_tech = "syndicate=3"
 
@@ -1840,7 +1840,7 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 
 /obj/item/weapon/plastique
 	name = "plastic explosives"
-	desc = "Used to put holes in specific areas without too much extra hole."
+	desc = "Used to put holes in specific areas without too much extra hole. Does not work on people."
 	gender = PLURAL
 	icon = 'assemblies.dmi'
 	icon_state = "plastic-explosive0"

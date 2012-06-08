@@ -342,7 +342,7 @@
 	update_nearby_tiles(need_rebuild)
 		if(!air_master) return 0
 
-		var/turf/simulated/source = loc
+		var/turf/simulated/source = get_turf(src)
 		var/turf/simulated/north = get_step(source,NORTH)
 		var/turf/simulated/south = get_step(source,SOUTH)
 		var/turf/simulated/east = get_step(source,EAST)

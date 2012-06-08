@@ -1,4 +1,18 @@
-vs_control/var/IgnitionLevel = 10 //Moles of oxygen+plasma - co2 needed to burn.
+/*
+
+Making Bombs with ZAS:
+Make burny fire with lots of burning
+Draw off 5000K gas from burny fire
+Separate gas into oxygen and plasma components
+Obtain plasma and oxygen tanks filled up about 50-75% with normal-temp gas
+Fill rest with super hot gas from separated canisters, they should be about 125C now.
+Attach to transfer valve and open. BOOM.
+
+*/
+
+
+
+vs_control/var/IgnitionLevel = 0.5 //Moles of oxygen+plasma - co2 needed to burn.
 
 //Some legacy definitions so fires can be started.
 atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -81,7 +95,7 @@ obj
 					firelevel = air_contents.calculate_firelevel(liquid)
 
 					//Ensure that there is an appropriate amount of fuel and O2 here.
-					if(firelevel > 25 && (air_contents.toxins || fuel || liquid))
+					if(firelevel > 0.25 && (air_contents.toxins || fuel || liquid))
 
 						for(var/direction in cardinal)
 							if(S.air_check_directions&direction) //Grab all valid bordering tiles
@@ -92,15 +106,17 @@ obj
 									//If extinguisher mist passed over the turf it's trying to spread to, don't spread and
 									//reduce firelevel.
 									if(enemy_tile.fire_protection > world.time-30)
-										firelevel -= 150
+										firelevel -= 1.5
 										continue
 
 									//Spread the fire.
 									if(!(locate(/obj/fire) in enemy_tile))
-										if( prob( firelevel/2.5 ) )
+										if( prob( firelevel*10 ) )
 											new/obj/fire(enemy_tile,firelevel)
 
-					var/datum/gas_mixture/flow = air_contents.remove_ratio(0.5) //Take half the air from the room I guess.
+					var/datum/gas_mixture/flow = air_contents.remove_ratio(0.25)
+					//The reason we're taking a part of the air instead of all of it is so that it doesn't jump to
+					//the fire's max temperature instantaneously.
 
 					if(flow)
 
@@ -109,9 +125,9 @@ obj
 
 							//Change icon depending on the fuel, and thus temperature.
 							icon_state = "1"
-							if(firelevel > 25)
+							if(firelevel > 2.5)
 								icon_state = "2"
-							if(firelevel > 100)
+							if(firelevel > 6)
 								icon_state = "3"
 
 							//Ensure flow temperature is higher than minimum fire temperatures.
@@ -245,16 +261,19 @@ datum/gas_mixture/proc/zburn(obj/liquid_fuel/liquid)
 				//Calculate the firelevel.
 			var/firelevel = calculate_firelevel(liquid)
 
-				//Reaches a maximum practical temperature of around 2750.
+				//Reaches a maximum practical temperature of around 4500.
 
-			temperature = 1000*log(0.016*firelevel + 1.45)
+			//Increase temperature.
+			temperature = max( 1700*log(0.4*firelevel + 1.23) , temperature )
 
 			//Consume some gas.
-			var/consumed_gas = min(oxygen,0.002*firelevel,total_fuel) / fuel_sources
+			var/consumed_gas = min(oxygen,0.0005*firelevel,total_fuel) / fuel_sources
 
 			oxygen -= consumed_gas
 
 			toxins = max(0,toxins-consumed_gas)
+
+			carbon_dioxide += consumed_gas*2
 
 			if(fuel)
 				fuel.moles -= consumed_gas
@@ -268,16 +287,20 @@ datum/gas_mixture/proc/zburn(obj/liquid_fuel/liquid)
 			return consumed_gas*fuel_sources
 	return 0
 
+
 datum/gas_mixture/proc/calculate_firelevel(obj/liquid_fuel/liquid)
 		//Calculates the firelevel based on one equation instead of having to do this multiple times in different areas.
 	var
 		datum/gas/volatile_fuel/fuel = locate() in trace_gases
-		fuel_level = 0
-		liquid_level = 0
+		liquid_concentration = 0
 
-	if(fuel) fuel_level = fuel.moles
-	if(liquid) liquid_level = liquid.amount
-	return oxygen + toxins + liquid_level*15 + fuel_level*5
+		oxy_concentration = oxygen / volume
+		tox_concentration = toxins / volume
+		fuel_concentration = 0
+
+	if(fuel) fuel_concentration = (fuel.moles*5) / volume
+	if(liquid) liquid_concentration = (liquid.amount*15) / volume
+	return (oxy_concentration + tox_concentration + liquid_concentration + fuel_concentration)*100
 
 /mob/living/carbon/human/proc/FireBurn(mx as num)
 	//Burns mobs due to fire. Respects heat transfer coefficients on various body parts.

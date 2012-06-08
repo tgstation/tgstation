@@ -87,43 +87,4 @@
 		return
 
 
-
-//border_only fire doors are special when it comes to air groups
 /obj/machinery/door/firedoor/border_only
-
-	New()
-		..()
-		var/turf/simulated/source = get_turf(src)
-		var/turf/simulated/T = get_step(source,dir)
-		if(!source.CanPass(null, T, 0, 0) || !locate(/obj/machinery/door/firedoor/border_only) in T)
-			var/obj/machinery/door/firedoor/F = new(source)
-			F.name = name
-			F.desc = desc
-			F.dir = dir
-			spawn(0)
-				del src
-
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if(air_group)
-			var/direction = get_dir(src,target)
-			if(direction)
-				return (dir != direction)
-			return 1 //It will break the zone when it actually drops, otherwise let it work normally.
-		else if(density)
-			if(!height)
-				var/direction = get_dir(src,target)
-				if(direction)
-					return (dir != direction)
-				return 0
-		return 1
-
-
-	update_nearby_tiles(need_rebuild)
-		if(!air_master) return 0
-
-		var/turf/simulated/source = get_turf(src)
-		var/turf/simulated/destination = get_step(source,dir)
-
-		if(istype(source)) air_master.tiles_to_update |= source
-		if(istype(destination)) air_master.tiles_to_update |= destination
-		return 1

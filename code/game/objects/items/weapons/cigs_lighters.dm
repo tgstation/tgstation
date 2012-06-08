@@ -406,7 +406,7 @@ ZIPPO
 	var/lit = 0
 
 /obj/item/weapon/lighter/zippo
-	name = "Zippo lighter"
+	name = "\improper Zippo lighter"
 	desc = "The zippo."
 	icon_state = "zippo"
 	item_state = "zippo"

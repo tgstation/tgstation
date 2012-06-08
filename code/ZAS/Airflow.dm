@@ -54,12 +54,12 @@ vs_control/var
 	airflow_light_pressure = 30
 	airflow_medium_pressure = 45
 	airflow_heavy_pressure = 60
-	airflow_heaviest_pressure = 100
+	airflow_heaviest_pressure = 90
 
 	airflow_damage = 0.3
 	airflow_stun = 0.15
 	airflow_speed_decay = 1
-	airflow_delay = 35 //Time in deciseconds before they can be moved by airflow again.
+	airflow_delay = 25 //Time in deciseconds before they can be moved by airflow again.
 	airflow_mob_slowdown = 3 //Time in tenths of a second to add as a delay to each movement by a mob.\
 	Only active if they are fighting the pull of the airflow.
 	airflow_stun_cooldown = 10 //How long, in tenths of a second, to wait before stunning them again.
@@ -85,7 +85,7 @@ mob/living/carbon/human/airflow_stun()
 	if(shoes)
 		if(shoes.flags & NOSLIP) return 0
 	if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
-	weakened = max(weakened,rand(1,2))
+	weakened = max(weakened,rand(1,5))
 	last_airflow_stun = world.time
 
 atom/movable/proc/check_airflow_movable(n)
@@ -126,11 +126,17 @@ proc/Airflow(zone/A,zone/B)
 	//These turfs are the midway point between A and B, and will be the destination point for thrown objects.
 	var/list/connection/connections_A = A.connections
 	var/list/turf/connected_turfs = list()
-	for(var/connection/C in connections_A)
+	for(var/connection/C in connections_A) //Grab the turf that is in the zone we are flowing to (determined by n)
 		if( ( A == C.A.zone || A == C.zone_A ) && ( B == C.B.zone || B == C.zone_B ) )
-			connected_turfs |= C.A
+			if(n < 0)
+				connected_turfs |= C.B
+			else
+				connected_turfs |= C.A
 		else if( ( A == C.B.zone || A == C.zone_B ) && ( B == C.A.zone || B == C.zone_A ) )
-			connected_turfs |= C.B
+			if(n < 0)
+				connected_turfs |= C.A
+			else
+				connected_turfs |= C.B
 
 	//Get lists of things that can be thrown across the room for each zone.
 	var/list/pplz = B.movables()
@@ -145,7 +151,7 @@ proc/Airflow(zone/A,zone/B)
 		if(M.last_airflow > world.time - vsc.airflow_delay) continue
 
 		//Check for knocking people over
-		if(ismob(M) && n > vsc.airflow_medium_pressure)
+		if(ismob(M) && n > vsc.airflow_heaviest_pressure)
 			if(M:nodamage) continue
 			M:airflow_stun()
 
@@ -333,6 +339,7 @@ atom/movable
 			airflow_hit(A)
 		else
 			airflow_speed = 0
+			airflow_time = 0
 			. = ..()
 
 atom/movable/proc/airflow_hit(atom/A)
@@ -343,6 +350,7 @@ mob/airflow_hit(atom/A)
 	for(var/mob/M in hearers(src))
 		M.show_message("\red <B>[src] slams into [A]!</B>",1,"\red You hear a loud slam!",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
+	weakened = max(weakened, (istype(A,/obj/item) ? A:w_class : rand(1,5))) //Heheheh
 	. = ..()
 
 obj/airflow_hit(atom/A)
@@ -356,8 +364,8 @@ obj/item/airflow_hit(atom/A)
 	airflow_dest = null
 
 mob/living/carbon/human/airflow_hit(atom/A)
-	for(var/mob/M in hearers(src))
-		M.show_message("\red <B>[src] slams into [A]!</B>",1,"\red You hear a loud slam!",2)
+//	for(var/mob/M in hearers(src))
+//		M.show_message("\red <B>[src] slams into [A]!</B>",1,"\red You hear a loud slam!",2)
 	playsound(src.loc, "punch", 25, 1, -1)
 	loc:add_blood(src)
 	if (src.wear_suit)

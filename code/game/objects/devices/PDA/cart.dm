@@ -182,7 +182,7 @@
 		access_status_display = 1
 
 	syndicate
-		name = "Detomatix Cartridge"
+		name = "modified signaler cartridge"
 		icon_state = "cart"
 		access_remote_door = 1
 		remote_door_id = "syndicate" //Make sure this matches the syndicate shuttle's shield/door id!!

@@ -40,7 +40,7 @@
 		return
 
 /obj/item/device/chameleon
-	name = "chameleon-projector"
+	name = "small device"
 	icon_state = "shield0"
 	flags = FPRINT | TABLEPASS| CONDUCT | USEDELAY
 	slot_flags = SLOT_BELT

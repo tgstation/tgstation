@@ -3,6 +3,8 @@
 		//Adds the turf to contents, increases the size of the zone, and sets the zone var.
 		if(T in contents)
 			return
+		if(T.zone)
+			T.zone.RemoveTurf(T)
 		contents += T
 		air.group_multiplier++
 		T.zone = src
@@ -42,8 +44,8 @@
 /turf/proc/check_connections()
 	//Checks for new connections that can be made.
 	for(var/d in cardinal)
-		var/turf/T = get_step(src,d)
-		if(!T || !T.zone || !T.CanPass(0,src,0,0))
+		var/turf/simulated/T = get_step(src,d)
+		if(!istype(T) || !T.zone || !T.CanPass(0,src,0,0))
 			continue
 		if(T.zone != zone)
 			ZConnect(src,T)
@@ -90,8 +92,11 @@ proc/ZMerge(zone/A,zone/B)
 	A.contents = new_contents
 
 	//Set all the zone vars.
-	for(var/turf/T in B.contents)
+	for(var/turf/simulated/T in B.contents)
 		T.zone = A
+
+	for(var/connection/C in A.connections)
+		C.Cleanup()
 
 	del B
 
@@ -111,12 +116,17 @@ proc/ZConnect(turf/A,turf/B)
 	//Make some preliminary checks to see if the connection is valid.
 	if(!A.zone || !B.zone) return
 	if(A.zone == B.zone) return
-	if(!A.CanPass(0,B,0,0)) return
+	if(!A.CanPass(0,B,0,0) || !B.CanPass(0,A,0,0)) return
+	if(A.CanPass(null, B, 1.5, 1) && B.CanPass(null, A, 1.5, 1))
+		return ZMerge(A.zone, B.zone)
 
 	//Ensure the connection isn't already made.
-	for(var/connection/C in A.zone.connections)
-		if((C.A == A && C.B == B) || (C.A == B && C.B == A))
-			return
+	if(air_master.tiles_with_connections["\ref[A]"])
+		var/list/connections = air_master.tiles_with_connections["\ref[A]"]
+		for(var/connection/C in connections)
+			C.Cleanup()
+			if(C.B == B || C.A == B)
+				return
 
 	var/connection/C = new(A,B)
 

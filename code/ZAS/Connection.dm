@@ -11,6 +11,8 @@ connection
 		zone
 			zone_A
 			zone_B
+		ref_A
+		ref_B
 		indirect = 0 //If the connection is purely indirect, the zones should not join.
 		last_updated //The tick at which this was last updated.
 		no_zone_count = 0
@@ -21,27 +23,29 @@ connection
 			if(!A.zone.connections) A.zone.connections = list()
 			A.zone.connections += src
 			zone_A = A.zone
+			ref_A = "\ref[A]"
 
 			if(!B.zone.connections) B.zone.connections = list()
 			B.zone.connections += src
 			zone_B = B.zone
+			ref_B = "\ref[B]"
 
 			if(!air_master.tiles_with_connections)
 				air_master.tiles_with_connections = list()
 
-			if(air_master.tiles_with_connections[A])
-				var/list/A_connections = air_master.tiles_with_connections[A]
+			if(air_master.tiles_with_connections[ref_A])
+				var/list/A_connections = air_master.tiles_with_connections[ref_A]
 				A_connections |= src
 			else
 				var/list/A_connections = list(src)
-				air_master.tiles_with_connections[A] = A_connections
+				air_master.tiles_with_connections[ref_A] = A_connections
 
-			if(air_master.tiles_with_connections[B])
-				var/list/B_connections = air_master.tiles_with_connections[B]
+			if(air_master.tiles_with_connections[ref_B])
+				var/list/B_connections = air_master.tiles_with_connections[ref_B]
 				B_connections |= src
 			else
 				var/list/B_connections = list(src)
-				air_master.tiles_with_connections[B] = B_connections
+				air_master.tiles_with_connections[ref_B] = B_connections
 
 			if(!A.zone.connected_zones)
 				A.zone.connected_zones = list()
@@ -68,23 +72,23 @@ connection
 				A.zone.connections.Remove(src)
 				if(!A.zone.connections.len)
 					del A.zone.connections
-			if(A in air_master.tiles_with_connections)
-				var/list/A_connections = air_master.tiles_with_connections[A]
-				A_connections -= src
-				if(A_connections && !A_connections.len)
-					del A_connections
-					air_master.tiles_with_connections.Remove(A)
+		if(ref_A in air_master.tiles_with_connections)
+			var/list/A_connections = air_master.tiles_with_connections[ref_A]
+			A_connections -= src
+			if(A_connections && !A_connections.len)
+				del A_connections
+				air_master.tiles_with_connections.Remove(ref_A)
 		if(B)
 			if(B.zone && B.zone.connections)
 				B.zone.connections.Remove(src)
 				if(!B.zone.connections.len)
 					del B.zone.connections
-			if(B in air_master.tiles_with_connections)
-				var/list/B_connections = air_master.tiles_with_connections[B]
-				B_connections -= src
-				if(B_connections && !B_connections.len)
-					del B_connections
-					air_master.tiles_with_connections.Remove(B)
+		if(ref_B in air_master.tiles_with_connections)
+			var/list/B_connections = air_master.tiles_with_connections[ref_B]
+			B_connections -= src
+			if(B_connections && !B_connections.len)
+				del B_connections
+				air_master.tiles_with_connections.Remove(ref_B)
 		if(zone_A)
 			if(zone_A && zone_A.connections)
 				zone_A.connections.Remove(src)
@@ -173,6 +177,8 @@ connection
 		if(A.zone == B.zone)
 			//world.log << "Connection removed: Zones now merged."
 			del src
+		if(ref_A != "\ref[A]" || ref_B != "\ref[B]")
+			del src
 		if((A.zone && A.zone != zone_A) || (B.zone && B.zone != zone_B))
 			Sanitize()
 		if(!A.zone || !B.zone)
@@ -188,6 +194,17 @@ connection
 		if(A.zone && A.zone != zone_A && B.zone && B.zone != zone_B)
 			if(!A.zone || !B.zone)
 				del src
+
+			if(A.zone == zone_B && B.zone == zone_A)
+				var/turf/temp = B
+				B = A
+				A = temp
+				zone_B = B.zone
+				zone_A = A.zone
+				var/temp_ref = ref_A
+				ref_A = ref_B
+				ref_B = temp_ref
+				return
 
 			if(zone_A)
 				if(zone_A.connections)
@@ -243,6 +260,7 @@ connection
 			zone_B = B.zone
 
 			zone_A = A.zone
+
 
 		else if(A.zone && A.zone != zone_A)
 			if(zone_A)

@@ -1,11 +1,11 @@
 /obj/item/weapon/storage/syndie_kit
-	name = "Box"
-	desc = "A sleek, sturdy box"
-	icon_state = "box_of_doom"
+	name = "box"
+	desc = "It's just an ordinary box."
+	icon_state = "box"
 	item_state = "syringe_kit"
 
 /obj/item/weapon/storage/syndie_kit/imp_freedom
-	name = "Freedom Implant (with injector)"
+	name = "box (FI)"
 
 /obj/item/weapon/storage/syndie_kit/imp_freedom/New()
 	var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
@@ -15,7 +15,7 @@
 	return
 
 /obj/item/weapon/storage/syndie_kit/imp_compress
-	name = "Compressed Matter Implant (with injector)"
+	name = "box (CMI)"
 
 /obj/item/weapon/storage/syndie_kit/imp_compress/New()
 	new /obj/item/weapon/implanter/compressed(src)
@@ -23,18 +23,18 @@
 	return
 
 /obj/item/weapon/storage/syndie_kit/imp_explosive
-	name = "Explosive Implant (with injector)"
+	name = "box (EI)"
 
 /obj/item/weapon/storage/syndie_kit/imp_explosive/New()
 	var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
 	O.imp = new /obj/item/weapon/implant/explosive(O)
-	O.name = "(BIO-HAZARD) BIO-detpack"
+//	O.name = "(BIO-HAZARD) BIO-detpack"
 	O.update()
 	..()
 	return
 
 /obj/item/weapon/storage/syndie_kit/imp_uplink
-	name = "Uplink Implant (with injector)"
+	name = "box (UI)"
 
 /obj/item/weapon/storage/syndie_kit/imp_uplink/New()
 	var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
@@ -44,7 +44,7 @@
 	return
 
 /obj/item/weapon/storage/syndie_kit/space
-	name = "Space Suit and Helmet"
+	name = "box (SS)"
 
 /obj/item/weapon/storage/syndie_kit/space/New()
 	new /obj/item/clothing/suit/space/syndicate(src)

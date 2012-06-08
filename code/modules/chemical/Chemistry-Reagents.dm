@@ -524,14 +524,14 @@ datum
 				src = null
 				var/turf/the_turf = get_turf(O)
 				var/datum/gas_mixture/napalm = new
-				napalm.oxygen = volume*10
+				napalm.oxygen = volume/10
 				napalm.temperature = T0C
 				napalm.update_values()
 				the_turf.assume_air(napalm)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				var/datum/gas_mixture/napalm = new
-				napalm.oxygen = volume*10
+				napalm.oxygen = volume/10
 				napalm.temperature = T0C
 				napalm.update_values()
 				T.assume_air(napalm)
@@ -554,14 +554,14 @@ datum
 				src = null
 				var/turf/the_turf = get_turf(O)
 				var/datum/gas_mixture/napalm = new
-				napalm.nitrogen = volume*10
+				napalm.nitrogen = volume/10
 				napalm.temperature = T0C
 				napalm.update_values()
 				the_turf.assume_air(napalm)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				var/datum/gas_mixture/napalm = new
-				napalm.nitrogen = volume*10
+				napalm.nitrogen = volume/10
 				napalm.temperature = T0C
 				napalm.update_values()
 				T.assume_air(napalm)
@@ -1036,18 +1036,10 @@ datum
 				var/turf/the_turf = get_turf(O)
 				if(!the_turf)
 					return //No sense trying to start a fire if you don't have a turf to set on fire. --NEO
-				var/datum/gas_mixture/napalm = new
-				napalm.toxins = volume*10
-				napalm.temperature = T0C
-				napalm.update_values()
-				the_turf.assume_air(napalm)
+				new /obj/liquid_fuel(the_turf, volume)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
-				var/datum/gas_mixture/napalm = new
-				napalm.toxins = volume*10
-				napalm.temperature = T0C
-				napalm.update_values()
-				T.assume_air(napalm)
+				new /obj/liquid_fuel(T, volume)
 				return
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -1155,19 +1147,17 @@ datum
 				src = null
 				var/turf/the_turf = get_turf(O)
 				var/datum/gas_mixture/napalm = new
-				var/datum/gas/volatile_fuel/fuel = new
-				fuel.moles = 5
-				napalm.trace_gases += fuel
+				napalm.toxins = volume/5
 				napalm.update_values()
 				the_turf.assume_air(napalm)
+				new /obj/liquid_fuel(the_turf, volume)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				var/datum/gas_mixture/napalm = new
-				var/datum/gas/volatile_fuel/fuel = new
-				fuel.moles = 5
-				napalm.trace_gases += fuel
+				napalm.toxins = volume/5
 				napalm.update_values()
 				T.assume_air(napalm)
+				new /obj/liquid_fuel(T, volume)
 				return
 
 		leporazine

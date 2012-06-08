@@ -174,7 +174,7 @@ turf
 				if(CanPass(null, get_step(src,direction), 0, 0))
 					air_check_directions |= direction
 
-			if(!zone && !density) //No zone and not a wall, lets add ourself to a zone.
+			if(!zone && CanPass(null, src, 1.5, 1)) //No zone and not a wall, lets add ourself to a zone.
 				for(var/direction in cardinal)
 					if(air_check_directions&direction)
 						var/turf/simulated/T = get_step(src,direction)
@@ -184,9 +184,10 @@ turf
 				if(!zone) //No zone found, new zone!
 					new/zone(src)
 
-			if(!CanPass(null, src, 0, 0)) //Can't pass, and was updated.  Delete zone connections involving this turf.
-				if(air_master.tiles_with_connections[src])
-					for(var/connection/C in air_master.tiles_with_connections[src])
+			if(!CanPass(null, src, 0, 0) && !CanPass(null, src, 1.5, 1)) //Can't pass, and was updated.  Delete zone connections involving this turf.
+				if(air_master.tiles_with_connections["\ref[src]"])
+					var/list/connections = air_master.tiles_with_connections["\ref[src]"]
+					for(var/connection/C in connections)
 						del C
 
 			update_zone_properties() //Update self zone and adjacent zones.
@@ -202,25 +203,26 @@ turf
 				var/turf/simulated/T = get_step(src,direction)
 				if(air_check_directions&direction) //I can connect air in this direction
 					if(!istype(T)) //Space
-						if(zone)
+						if(!CanPass(null, T, 1.5, 1) && CanPass(src, T, 0, 0)) //Normally would block it, instead lets make a connection to it.
+							if(zone)
+								zone.AddSpace(T)
+						else if(!CanPass(src, T, 0, 0)) //I block the air, disconnect from it if connected.
+							if(zone && T in zone.space_tiles)
+								zone.RemoveSpace(T)
+						else if(zone)
 							zone.rebuild = 1
 							continue
-					else if(!(T.CanPass(null, src, 1.5, 1) && CanPass(null, T, 1.5, 1)) && (CanPass(null, T, 0, 0) || T.CanPass(null, src, 0, 0))) //I normally block air, but am permitting it.
-						if(zone) //Either open or no doors, air can flow.
-							ZConnect(src,T) //Connect 'em.
-					else if(!(T.CanPass(null, src, 1.5, 1) && CanPass(null, T, 1.5, 1))) //If I block air, we must look to see if the adjacent turfs need rebuilt.
+					else if(!T.CanPass(null, src, 1.5, 1) && !T.CanPass(null, src, 0, 0)) //If I block air, we must look to see if the adjacent turfs need rebuilt.
 						if(T.zone && !T.zone.rebuild)
 							for(var/direction2 in cardinal - direction) //Check all other directions for air that might be connected.
 								var/turf/simulated/NT = get_step(src, direction2)
-								if(NT.zone && NT.zone == T.zone)
-									if(direction == reverse_direction(direction2)) //If it is opposite, then rebuild anyways.
-										T.zone.rebuild = 1
-										break
-									else
-										var/turf/simulated/LT = get_step(src, direction2|direction) //Is there a diagonal for the air to path around?
-										if(!LT || !LT.zone || LT.zone != T.zone) //Either it does not exist or the zone does not match, rebuild
-											T.zone.rebuild = 1
-											break
-										else if(!LT.CanPass(null, LT, 0, 0) || !NT.CanPass(null, NT, 0, 0)) //It exist, zone matches, see if it can transfer air.  Otherwise, rebuild.
-											T.zone.rebuild = 1
-											break
+								if(NT && NT.zone && NT.zone == T.zone)
+									T.zone.rebuild = 1
+					else if((!T.CanPass(null, src, 1.5, 1) && T.CanPass(null, src, 0, 0)) || (!CanPass(null, T, 1.5, 1) && CanPass(null, T, 0, 0)))
+						if(T.zone != zone)
+							ZConnect(src,T)
+				else if(zone && !zone.rebuild)
+					for(var/direction2 in cardinal - reverse_direction(direction)) //Check all other directions for air that might be connected.
+						var/turf/simulated/NT = get_step(T, direction2)
+						if(NT && NT.zone && NT.zone == zone)
+							zone.rebuild = 1
