@@ -69,6 +69,15 @@
 		reagents.add_reagent("nutriment", 3)
 		bitesize = 1
 
+/obj/item/weapon/reagent_containers/food/snacks/cookie
+	name = "cookie"
+	desc = "COOKIE!!!"
+	icon_state = "COOKIE!!!"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+		bitesize = 1
+
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar
 	name = "Chocolate Bar"
 	desc = "Such, sweet, fattening food."

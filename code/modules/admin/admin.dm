@@ -1230,6 +1230,24 @@ var/global/BSACooldown = 0
 					sleep(2)
 					cl.jumptomob(M)
 
+	if (href_list["adminspawncookie"])
+		var/mob/M = locate(href_list["adminspawncookie"])
+		if(M && ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.equip_if_possible( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), H.slot_l_hand )
+			if(!(istype(H.l_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
+				H.equip_if_possible( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), H.slot_r_hand )
+				if(!(istype(H.r_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
+					log_admin("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
+					message_admins("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
+					return
+			log_admin("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
+			message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
+			H << "\blue Your prayers have been answered!! You received the <b>best cookie</b>!"
+		else
+			src << "\blue The person who prayed is not a human. Cookies cannot be spawned."
+
+
 	if (href_list["traitor_panel_pp"])
 		var/mob/M = locate(href_list["traitor_panel_pp"])
 		if(isnull(M))
