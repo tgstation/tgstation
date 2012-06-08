@@ -54,7 +54,7 @@ vs_control/var
 	airflow_light_pressure = 30
 	airflow_medium_pressure = 45
 	airflow_heavy_pressure = 60
-	airflow_heaviest_pressure = 100
+	airflow_heaviest_pressure = 85
 
 	airflow_damage = 0.3
 	airflow_stun = 0.15
@@ -85,7 +85,7 @@ mob/living/carbon/human/airflow_stun()
 	if(shoes)
 		if(shoes.flags & NOSLIP) return 0
 	if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
-	weakened = max(weakened,rand(1,2))
+	weakened = max(weakened,rand(1,5))
 	last_airflow_stun = world.time
 
 atom/movable/proc/check_airflow_movable(n)
@@ -151,7 +151,7 @@ proc/Airflow(zone/A,zone/B)
 		if(M.last_airflow > world.time - vsc.airflow_delay) continue
 
 		//Check for knocking people over
-		if(ismob(M) && n > vsc.airflow_medium_pressure)
+		if(ismob(M) && n > vsc.airflow_heaviest_pressure)
 			if(M:nodamage) continue
 			M:airflow_stun()
 
@@ -350,6 +350,7 @@ mob/airflow_hit(atom/A)
 	for(var/mob/M in hearers(src))
 		M.show_message("\red <B>[src] slams into [A]!</B>",1,"\red You hear a loud slam!",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
+	weakened = max(weakened, (A.vars["w_class"] ? A:w_class : rand(1,5))) //Heheheh
 	. = ..()
 
 obj/airflow_hit(atom/A)
