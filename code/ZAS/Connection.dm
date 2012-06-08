@@ -189,6 +189,14 @@ connection
 			if(!A.zone || !B.zone)
 				del src
 
+			if(A.zone == zone_B && B.zone == zone_A)
+				var/turf/Temp = B
+				B = A
+				A = Temp
+				zone_B = B.zone
+				zone_A = A.zone
+				return
+
 			if(zone_A)
 				if(zone_A.connections)
 					zone_A.connections.Remove(src)

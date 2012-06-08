@@ -124,10 +124,32 @@
 /area/proc/firealert()
 	if(src.name == "Space") //no fire alarms in space
 		return
-	if (!( src.fire ))
-		src.fire = 1
-		src.updateicon()
-		src.mouse_opacity = 0
+	if (!fire)
+		fire = 1
+		updateicon()
+		mouse_opacity = 0
+		for(var/obj/machinery/door/airlock/E in master.all_doors)
+			if(!E.air_locked)
+				if((!E.arePowerSystemsOn()) || (E.stat & NOPOWER)) continue
+				if(!E.density)
+					spawn(0)
+						E.close()
+						sleep(10)
+						if(E.density)
+							E.air_locked = E.req_access
+							E.req_access = list(access_engine, access_atmospherics)
+							E.update_icon()
+				if(E.operating)
+					spawn(10)
+						E.close()
+						if(E.density)
+							E.air_locked = E.req_access
+							E.req_access = list(access_engine, access_atmospherics)
+							E.update_icon()
+				else if(!E:locked) //Don't lock already bolted doors.
+					E.air_locked = E.req_access
+					E.req_access = list(access_engine, access_atmospherics)
+					E.update_icon()
 		for(var/obj/machinery/door/firedoor/D in src)
 			if(!D.blocked)
 				if(D.operating)
@@ -145,10 +167,17 @@
 	return
 
 /area/proc/firereset()
-	if (src.fire)
-		src.fire = 0
-		src.mouse_opacity = 0
-		src.updateicon()
+	if (fire)
+		fire = 0
+		mouse_opacity = 0
+		updateicon()
+		for(var/obj/machinery/door/airlock/E in master.all_doors)
+			if((!E.arePowerSystemsOn()) || (E.stat & NOPOWER)) continue
+			if(E.air_locked) //Don't mess with doors locked for other reasons.
+				if(E.density)
+					E.req_access = E.air_locked
+					E.air_locked = null
+					E.update_icon()
 		for(var/obj/machinery/door/firedoor/D in src)
 			if(!D.blocked)
 				if(D.operating)

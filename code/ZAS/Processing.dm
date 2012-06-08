@@ -33,6 +33,7 @@ zone/proc/process()
 		for(var/turf/T in contents)
 			if(!(T in new_contents))
 				problem = 1
+				break
 
 		if(problem)
 			//Build some new zones for stuff that wasn't included.

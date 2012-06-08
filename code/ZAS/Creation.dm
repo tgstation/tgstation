@@ -70,13 +70,13 @@ turf/proc/ZCanPass(turf/T)
 		for(var/obj/obstacle in src)
 			if(istype(obstacle,/obj/machinery/door) && !istype(obstacle,/obj/machinery/door/window))
 				continue
-			if(!obstacle.CanPass(0, T, 0, 1))
+			if(!obstacle.CanPass(0, T, 1.5, 1))
 				return 0
 
 		for(var/obj/obstacle in T)
 			if(istype(obstacle,/obj/machinery/door) && !istype(obstacle,/obj/machinery/door/window))
 				continue
-			if(!obstacle.CanPass(0, src, 0, 1))
+			if(!obstacle.CanPass(0, src, 1.5, 1))
 				return 0
 
 		return 1

@@ -322,6 +322,8 @@
 
 /turf/proc/ReplaceWithWall()
 	var/old_icon = icon_state
+	if(zone)
+		zone.RemoveTurf(src)
 	var/turf/simulated/wall/S = new /turf/simulated/wall( locate(src.x, src.y, src.z) )
 	S.icon_old = old_icon
 	S.opacity = 0
@@ -342,6 +344,8 @@
 
 /turf/proc/ReplaceWithRWall()
 	var/old_icon = icon_state
+	if(zone)
+		zone.RemoveTurf(src)
 	var/turf/simulated/wall/r_wall/S = new /turf/simulated/wall/r_wall( locate(src.x, src.y, src.z) )
 	S.icon_old = old_icon
 	S.opacity = 0

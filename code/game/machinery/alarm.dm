@@ -1012,7 +1012,72 @@ table tr:first-child th:first-child { border: none;}
 				new_area_danger_level = max(new_area_danger_level,AA.danger_level)
 	if (alarm_area.atmosalert(new_area_danger_level)) //if area was in normal state or if area was in alert state
 		post_alert(new_area_danger_level)
+
+	if(danger_level > 1)
+		air_doors_close(0)
+	else
+		air_doors_open(0)
+
 	update_icon()
+
+
+/obj/machinery/alarm
+	proc/air_doors_close(manual)
+		var/area/A = get_area(src)
+		if(!A.master.air_doors_activated)
+			A.master.air_doors_activated = 1
+			for(var/obj/machinery/door/E in A.master.all_doors)
+				if(istype(E,/obj/machinery/door/firedoor))
+					if(!E:blocked)
+						if(E.operating)
+							E:nextstate = CLOSED
+						else if(!E.density)
+							spawn(0)
+								E.close()
+					continue
+				if(istype(E, /obj/machinery/door/airlock))
+					if((!E:arePowerSystemsOn()) || (E.stat & NOPOWER)) continue
+					if(!E.density)
+						spawn(0)
+							E.close()
+							sleep(10)
+							if(E.density)
+								E:air_locked = E.req_access
+								E:req_access = list(access_engine, access_atmospherics)
+								E.update_icon()
+					if(E.operating)
+						spawn(10)
+							E.close()
+							if(E.density)
+								E:air_locked = E.req_access
+								E:req_access = list(access_engine, access_atmospherics)
+								E.update_icon()
+					else if(!E:locked) //Don't lock already bolted doors.
+						E:air_locked = E.req_access
+						E:req_access = list(access_engine, access_atmospherics)
+						E.update_icon()
+
+	proc/air_doors_open(manual)
+		var/area/A = get_area(loc)
+		if(A.master.air_doors_activated)
+			A.master.air_doors_activated = 0
+			for(var/obj/machinery/door/E in A.master.all_doors)
+				if(istype(E, /obj/machinery/door/firedoor))
+					if(!E:blocked)
+						if(E.operating)
+							E:nextstate = OPEN
+						else if(E.density)
+							spawn(0)
+								E.open()
+					continue
+				if(istype(E, /obj/machinery/door/airlock))
+					if((!E:arePowerSystemsOn()) || (E.stat & NOPOWER)) continue
+					if(E:air_locked) //Don't mess with doors locked for other reasons.
+						if(E.density)
+							E:req_access = E:air_locked
+							E:air_locked = null
+							E.update_icon()
+
 
 /obj/machinery/alarm/attackby(obj/item/W as obj, mob/user as mob)
 /*	if (istype(W, /obj/item/weapon/wirecutters))
@@ -1186,12 +1251,9 @@ table tr:first-child th:first-child { border: none;}
 	return
 
 /obj/machinery/firealarm/proc/reset()
-	if (!( src.working ))
+	if (!working)
 		return
-	var/area/A = src.loc
-	A = A.loc
-	if (!( istype(A, /area) ))
-		return
+	var/area/A = get_area(src)
 	if(network)
 		for(var/obj/machinery/door/firedoor/D in world)
 			if(!D.blocked && D.net_id == src.network)
