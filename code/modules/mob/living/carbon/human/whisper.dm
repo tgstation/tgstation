@@ -5,6 +5,9 @@
 	if (!message)
 		return
 
+	if (silent)
+		return
+
 	log_whisper("[src.name]/[src.key] : [message]")
 
 	if (src.client && (src.client.muted || src.client.muted_complete))

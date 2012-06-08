@@ -1,3 +1,59 @@
+
+var/list/department_radio_keys = list(
+	  ":r" = "right hand",
+	  ":l" = "left hand",
+	  ":i" = "intercom",
+	  ":h" = "department",
+	  ":c" = "Command",
+	  ":n" = "Science",
+	  ":m" = "Medical",
+	  ":e" = "Engineering",
+	  ":s" = "Security",
+	  ":w" = "whisper",
+	  ":b" = "binary",
+	  ":a" = "alientalk",
+	  ":t" = "Syndicate",
+	  ":d" = "Mining",
+	  ":q" = "Cargo",
+	  ":g" = "changeling",
+
+	  ":R" = "right hand",
+	  ":L" = "left hand",
+	  ":I" = "intercom",
+	  ":H" = "department",
+	  ":C" = "Command",
+	  ":N" = "Science",
+	  ":M" = "Medical",
+	  ":E" = "Engineering",
+	  ":S" = "Security",
+	  ":W" = "whisper",
+	  ":B" = "binary",
+	  ":A" = "alientalk",
+	  ":T" = "Syndicate",
+	  ":D" = "Mining",
+	  ":Q" = "Cargo",
+	  ":G" = "changeling",
+
+	  //kinda localization -- rastaf0
+	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
+	  ":ê" = "right hand",
+	  ":ä" = "left hand",
+	  ":ø" = "intercom",
+	  ":ð" = "department",
+	  ":ñ" = "Command",
+	  ":ò" = "Science",
+	  ":ü" = "Medical",
+	  ":ó" = "Engineering",
+	  ":û" = "Security",
+	  ":ö" = "whisper",
+	  ":è" = "binary",
+	  ":ô" = "alientalk",
+	  ":å" = "Syndicate",
+	  ":â" = "Mining",
+	  ":é" = "Cargo",
+	  ":ï" = "changeling"
+)
+
 /mob/living/proc/binarycheck()
 	if (istype(src, /mob/living/silicon/pai))
 		return
@@ -40,7 +96,7 @@
 		src << "You are muted."
 		return
 
-	// wtf?
+	// stat == 2 is handled above, so this stops transmission of uncontious messages
 	if (stat)
 		return
 
@@ -70,73 +126,18 @@
 	else if (copytext(message, 1, 2) == ";")
 		if (ishuman(src))
 			message_mode = "headset"
-		else if(istype(src, /mob/living/silicon/pai) || istype(src, /mob/living/silicon/robot))
+		else if(ispAI(src) || isrobot(src))
 			message_mode = "pAI"
 		message = copytext(message, 2)
 
 	else if (length(message) >= 2)
 		var/channel_prefix = copytext(message, 1, 3)
 
-		var/list/keys = list(
-			  ":r" = "right hand",
-			  ":l" = "left hand",
-			  ":i" = "intercom",
-			  ":h" = "department",
-			  ":c" = "Command",
-			  ":n" = "Science",
-			  ":m" = "Medical",
-			  ":e" = "Engineering",
-			  ":s" = "Security",
-			  ":w" = "whisper",
-			  ":b" = "binary",
-			  ":a" = "alientalk",
-			  ":t" = "Syndicate",
-			  ":d" = "Mining",
-			  ":q" = "Cargo",
-			  ":g" = "changeling",
-
-			  ":R" = "right hand",
-			  ":L" = "left hand",
-			  ":I" = "intercom",
-			  ":H" = "department",
-			  ":C" = "Command",
-			  ":N" = "Science",
-			  ":M" = "Medical",
-			  ":E" = "Engineering",
-			  ":S" = "Security",
-			  ":W" = "whisper",
-			  ":B" = "binary",
-			  ":A" = "alientalk",
-			  ":T" = "Syndicate",
-			  ":D" = "Mining",
-			  ":Q" = "Cargo",
-			  ":G" = "changeling",
-
-			  //kinda localization -- rastaf0
-			  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
-			  ":ê" = "right hand",
-			  ":ä" = "left hand",
-			  ":ø" = "intercom",
-			  ":ð" = "department",
-			  ":ñ" = "Command",
-			  ":ò" = "Science",
-			  ":ü" = "Medical",
-			  ":ó" = "Engineering",
-			  ":û" = "Security",
-			  ":ö" = "whisper",
-			  ":è" = "binary",
-			  ":ô" = "alientalk",
-			  ":å" = "Syndicate",
-			  ":â" = "Mining",
-			  ":é" = "Cargo",
-			  ":ï" = "changeling",
-		)
-
-		message_mode = keys[channel_prefix]
+		message_mode = department_radio_keys[channel_prefix]
 		//world << "channel_prefix=[channel_prefix]; message_mode=[message_mode]"
 		if (message_mode)
 			message = trim(copytext(message, 3))
-			if (!(ishuman(src) || istype(src, /mob/living/simple_animal)) && (message_mode=="department" || (message_mode in radiochannels)))
+			if (!(ishuman(src) || isanimal(src) && (message_mode=="department" || (message_mode in radiochannels))))
 				message_mode = null //only humans can use headsets
 			// Check removed so parrots can use headsets!
 
@@ -263,50 +264,6 @@
 /////SPECIAL HEADSETS END
 
 	var/list/listening
-/*
-	if(istype(loc, /obj/item/device/aicard)) // -- TLE
-		var/obj/O = loc
-		if(istype(O.loc, /mob))
-			var/mob/M = O.loc
-			listening = hearers(message_range, M)
-		else
-			listening = hearers(message_range, O)
-	else
-		listening = hearers(message_range, src)
-
-	for (var/obj/O in view(message_range, src))
-		for (var/mob/M in O)
-			listening += M // maybe need to check if M can hear src
-		spawn (0)
-			if (O)
-				O.hear_talk(src, message)
-
-	if (!(src in listening))
-		listening += src
-
-*/
-/*  Handing this section over to get_mobs_in_view which was written with radiocode update
-	var/turf/T = get_turf(src)
-	listening = hearers(message_range, T)
-	for (var/O in listening)
-		world << O
-	var/list/V = view(message_range, T)
-	//find mobs in lockers, cryo, intellicards, brains, MMIs, and so on.
-	for (var/mob/M in world)
-		if (!M.client)
-			continue //skip monkeys and leavers
-		if (istype(M, /mob/new_player))
-			continue
-		if (M.stat <2) //is alive
-			if (isturf(M.loc))
-				continue //if M can hear us it was already found by hearers()
-			if (get_turf(M) in V) //this is slow, but I don't think we'd have a lot of wardrobewhores every round --rastaf0
-				listening+=M
-		else
-			if (M.client && M.client.ghost_ears)
-				listening|=M
-
-*/
 
 	listening = get_mobs_in_view(message_range, src)
 	for(var/mob/M in world)
@@ -320,9 +277,6 @@
 	var/turf/T = get_turf(src)
 	var/list/V = view(message_range, T)
 	var/list/W = V
-
-
-
 
 	for (var/obj/O in ((W | contents)-used_radios))
 		W |= O

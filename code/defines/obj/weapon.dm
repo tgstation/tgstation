@@ -1071,11 +1071,19 @@
 	maxcharge = 500
 	g_amt = 40
 
+/obj/item/weapon/cell/crap/empty/New()
+	..()
+	charge = 0
+
 /obj/item/weapon/cell/secborg
 	name = "\improper Security borg rechargable D battery"
 	origin_tech = "powerstorage=0"
 	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
 	g_amt = 40
+
+/obj/item/weapon/cell/secborg/empty/New()
+	..()
+	charge = 0
 
 /obj/item/weapon/cell/high
 	name = "high-capacity power cell"
@@ -1083,6 +1091,10 @@
 	icon_state = "hcell"
 	maxcharge = 10000
 	g_amt = 60
+
+/obj/item/weapon/cell/high/empty/New()
+	..()
+	charge = 0
 
 /obj/item/weapon/cell/super
 	name = "super-capacity power cell"
@@ -1092,6 +1104,10 @@
 	g_amt = 70
 	construction_cost = list("metal"=750,"glass"=100)
 
+/obj/item/weapon/cell/super/empty/New()
+	..()
+	charge = 0
+
 /obj/item/weapon/cell/hyper
 	name = "hyper-capacity power cell"
 	origin_tech = "powerstorage=6"
@@ -1099,6 +1115,10 @@
 	maxcharge = 30000
 	g_amt = 80
 	construction_cost = list("metal"=500,"glass"=150,"gold"=200,"silver"=200)
+
+/obj/item/weapon/cell/hyper/empty/New()
+	..()
+	charge = 0
 
 /obj/item/weapon/cell/infinite
 	name = "infinite-capacity power cell!"

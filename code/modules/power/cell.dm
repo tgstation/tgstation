@@ -4,21 +4,12 @@
 
 /obj/item/weapon/cell/New()
 	..()
-
-	charge = charge * maxcharge/100.0		// map obj has charge as percentage, convert to real value here
+	charge = maxcharge
 
 	spawn(5)
 		updateicon()
 
 /obj/item/weapon/cell/proc/updateicon()
-	/*if(maxcharge < 10000)
-		icon_state = "cell"
-	if(maxcharge >= 10000 && maxcharge < 20000)
-		icon_state = "hcell"
-	if(maxcharge >= 20000 && maxcharge < 30000)
-		icon_state = "scell"
-	else
-		icon_state = "hpcell"*/
 
 	overlays = null
 
