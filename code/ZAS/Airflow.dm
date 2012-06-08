@@ -350,7 +350,7 @@ mob/airflow_hit(atom/A)
 	for(var/mob/M in hearers(src))
 		M.show_message("\red <B>[src] slams into [A]!</B>",1,"\red You hear a loud slam!",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
-	weakened = max(weakened, (A.vars.Find("w_class") ? A:w_class : rand(1,5))) //Heheheh
+	weakened = max(weakened, (istype(A,/obj/item) ? A:w_class : rand(1,5))) //Heheheh
 	. = ..()
 
 obj/airflow_hit(atom/A)
