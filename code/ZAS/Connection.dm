@@ -196,8 +196,14 @@ connection
 				del src
 
 			if(A.zone == zone_B && B.zone == zone_A)
-				del src
-
+				var/turf/temp = B
+				B = A
+				A = temp
+				zone_B = B.zone
+				zone_A = A.zone
+				var/temp_ref = ref_A
+				ref_A = ref_B
+				ref_B = temp_ref
 				return
 
 			if(zone_A)
