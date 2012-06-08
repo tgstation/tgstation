@@ -1013,10 +1013,10 @@ table tr:first-child th:first-child { border: none;}
 	if (alarm_area.atmosalert(new_area_danger_level)) //if area was in normal state or if area was in alert state
 		post_alert(new_area_danger_level)
 
-	if(danger_level > 1)
-		air_doors_close(0)
-	else
-		air_doors_open(0)
+//	if(danger_level > 1)
+	//	air_doors_close(0)
+//	else
+	//	air_doors_open(0)
 
 	update_icon()
 

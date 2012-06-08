@@ -66,8 +66,6 @@ var/list/forbidden_varedit_object_types = list(
 				if("Specifc UID (Hexadecimal number)")
 					var/UID = input("Type in UID, without the leading 0x","Type in UID") as text|null
 					if(!UID) return
-					if(length(UID) != 7)
-						usr << "ERROR.  UID must be 7 digits"
 					var/temp_variable = locate("\[0x[UID]\]")
 					if(!temp_variable)
 						usr << "ERROR.  Could not locate referenced object."
@@ -131,8 +129,6 @@ var/list/forbidden_varedit_object_types = list(
 				if("Specifc UID (Hexadecimal number)")
 					var/UID = input("Type in UID, without the leading 0x","Type in UID") as text|null
 					if(!UID) return
-					if(length(UID) != 7)
-						usr << "ERROR.  UID must be 7 digits"
 					var/temp_variable = locate("\[0x[UID]\]")
 					if(!temp_variable)
 						usr << "ERROR.  Could not locate referenced object."
@@ -308,8 +304,6 @@ var/list/forbidden_varedit_object_types = list(
 				if("Specifc UID (Hexadecimal number)")
 					var/UID = input("Type in UID, without the leading 0x","Type in UID") as null|text
 					if(!UID) return
-					if(length(UID) != 7)
-						usr << "ERROR.  UID must be 7 digits"
 					var/temp_variable = locate("\[0x[UID]\]")
 					if(!temp_variable)
 						usr << "ERROR.  Could not locate referenced object."
@@ -554,8 +548,6 @@ var/list/forbidden_varedit_object_types = list(
 				if("Specifc UID (Hexadecimal number)")
 					var/UID = input("Type in UID, without the leading 0x","Type in UID") as text|null
 					if(!UID) return
-					if(length(UID) != 7)
-						usr << "ERROR.  UID must be 7 digits"
 					var/temp_variable = locate("\[0x[UID]\]")
 					if(!temp_variable)
 						usr << "ERROR.  Could not locate referenced object."

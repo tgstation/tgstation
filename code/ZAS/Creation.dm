@@ -8,6 +8,8 @@ zone
 
 		//Change all the zone vars of the turfs, check for space to be added to space_tiles.
 		for(var/turf/T in contents)
+			if(T.zone)
+				T.zone.RemoveTurf(T)
 			T.zone = src
 			if(istype(T,/turf/space))
 				AddSpace(T)
@@ -30,8 +32,14 @@ zone
 
 	Del()
 		//Ensuring the zone list doesn't get clogged with null values.
+		for(var/turf/simulated/T in contents)
+			if(T.zone && T.zone == src)
+				T.zone = null
+		for(var/zone/Z in connected_zones)
+			if(src in Z.connected_zones)
+				Z.connected_zones.Remove(src)
 		for(var/connection/C in connections)
-			del(C)
+			C.Cleanup()
 		zones -= src
 		. = ..()
 

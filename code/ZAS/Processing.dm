@@ -2,12 +2,12 @@
 var/explosion_halt = 0
 var/zone_share_percent = 3.5
 zone/proc/process()
+	//Deletes zone if empty.
+	if(!contents.len)
+		del src
+		return 0
 	//Does rebuilding stuff. Not sure if used.
 	if(rebuild)
-		//Deletes zone if empty.
-		if(!contents.len)
-			del src
-			return 0
 
 		//Choose a random turf and regenerate the zone from it.
 		var
@@ -21,7 +21,7 @@ zone/proc/process()
 		contents.Remove(null) //I can't believe this is needed.
 		do
 			sample = pick(contents)  //Nor this.
-		while(!istype(sample))
+		while(!istype(sample) || !sample.CanPass(null, sample, 1.5, 1))
 		new_contents = FloodFill(sample)
 
 		for(var/turf/space/S in new_contents)
@@ -33,23 +33,25 @@ zone/proc/process()
 		for(var/turf/T in contents)
 			if(!(T in new_contents))
 				problem = 1
-				break
+				T.zone = null
 
 		if(problem)
 			//Build some new zones for stuff that wasn't included.
-			var/list/rebuild_turfs = list()
-			for(var/turf/T in contents - new_contents)
-				contents -= T
-				rebuild_turfs += T
-				T.zone = null
+			var/list/turf/simulated/rebuild_turfs = contents - new_contents
+			var/list/turf/simulated/reconsider_turfs = list()
+			contents = new_contents
 			for(var/turf/T in rebuild_turfs)
+				if(istype(T,/turf/space))
+					air_master.tiles_to_update |= T
+				else if(!T.zone && T.CanPass(null, T, 1.5, 1))
+					var/zone/Z = new /zone(T)
+					Z.air.copy_from(air)
+				else
+					reconsider_turfs |= T
+			for(var/turf/T in reconsider_turfs)
 				if(!T.zone)
 					var/zone/Z = new /zone(T)
 					Z.air.copy_from(air)
-				if(istype(T,/turf/space))
-					if(!T.zone.space_tiles)
-						T.zone.space_tiles = list()
-					T.zone.space_tiles |= T
 		rebuild = 0
 
 	//Sometimes explosions will cause the air to be deleted for some reason.

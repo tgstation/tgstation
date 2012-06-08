@@ -184,9 +184,10 @@ turf
 				if(!zone) //No zone found, new zone!
 					new/zone(src)
 
-			if(!CanPass(null, src, 0, 0)) //Can't pass, and was updated.  Delete zone connections involving this turf.
-				if(air_master.tiles_with_connections[src])
-					for(var/connection/C in air_master.tiles_with_connections[src])
+			if(!CanPass(null, src, 0, 0) && !CanPass(null, src, 1.5, 1)) //Can't pass, and was updated.  Delete zone connections involving this turf.
+				if(air_master.tiles_with_connections["\ref[src]"])
+					var/list/connections = air_master.tiles_with_connections["\ref[src]"]
+					for(var/connection/C in connections)
 						del C
 
 			update_zone_properties() //Update self zone and adjacent zones.
@@ -211,9 +212,11 @@ turf
 								var/turf/simulated/NT = get_step(src, direction2)
 								if(NT && NT.zone && NT.zone == T.zone)
 									T.zone.rebuild = 1
+					else if((!T.CanPass(null, src, 1.5, 1) && T.CanPass(null, src, 0, 0)) || (!CanPass(null, T, 1.5, 1) && CanPass(null, T, 0, 0)))
+						if(T.zone != zone)
+							ZConnect(src,T)
 				else if(zone && !zone.rebuild)
 					for(var/direction2 in cardinal - reverse_direction(direction)) //Check all other directions for air that might be connected.
 						var/turf/simulated/NT = get_step(T, direction2)
 						if(NT && NT.zone && NT.zone == zone)
 							zone.rebuild = 1
-				T.check_connections()

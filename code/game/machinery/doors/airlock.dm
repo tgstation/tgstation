@@ -343,16 +343,16 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 				icon_state = "door_locked"
 			else
 				icon_state = "door_closed"
+			if(p_open || welded || air_locked)
+				overlays = list()
+				if(p_open)
+					overlays += image(icon, "panel_open")
+				if(welded)
+					overlays += image(icon, "welded")
+				if(air_locked)
+					overlays += image('Door1.dmi', "air")
 		else
 			icon_state = "door_open"
-		if(p_open || welded || air_locked)
-			overlays = list()
-			if(p_open)
-				overlays += image(icon, "panel_open")
-			if(welded)
-				overlays += image(icon, "welded")
-			if(air_locked)
-				overlays += image('Door1.dmi', "air")
 		return
 
 

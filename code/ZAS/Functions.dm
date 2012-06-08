@@ -3,6 +3,8 @@
 		//Adds the turf to contents, increases the size of the zone, and sets the zone var.
 		if(T in contents)
 			return
+		if(T.zone)
+			T.zone.RemoveTurf(T)
 		contents += T
 		air.group_multiplier++
 		T.zone = src
@@ -119,10 +121,12 @@ proc/ZConnect(turf/A,turf/B)
 		return ZMerge(A.zone, B.zone)
 
 	//Ensure the connection isn't already made.
-	for(var/connection/C in air_master.tiles_with_connections[A])
-		C.Cleanup()
-		if(C.B == B || C.A == B)
-			return
+	if(air_master.tiles_with_connections["\ref[A]"])
+		var/list/connections = air_master.tiles_with_connections["\ref[A]"]
+		for(var/connection/C in connections)
+			C.Cleanup()
+			if(C.B == B || C.A == B)
+				return
 
 	var/connection/C = new(A,B)
 

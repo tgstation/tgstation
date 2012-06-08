@@ -82,7 +82,6 @@
 
 	for(var/L = 1 to netcount)
 		var/datum/powernet/PN = new()
-		//PN.tag = "powernet #[L]"
 		powernets += PN
 		PN.number = L
 
@@ -287,7 +286,6 @@
 		// not looped, so make a new powernet
 
 		var/datum/powernet/PN = new()
-		//PN.tag = "powernet #[L]"
 		powernets += PN
 		PN.number = powernets.len
 
