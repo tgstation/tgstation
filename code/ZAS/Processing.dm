@@ -27,10 +27,13 @@ zone/proc/process()
 		do
 			if(sample)
 				tried_turfs |= sample
-			sample = pick(contents - tried_turfs)  //Nor this.
-		while(length(contents - tried_turfs) && (!istype(sample) || !sample.CanPass(null, sample, 1.5, 1)))
+			var/list/turfs_to_consider = contents - tried_turfs
+			if(!turfs_to_consider.len)
+				break
+			sample = pick(turfs_to_consider)  //Nor this.
+		while(!istype(sample) || !sample.CanPass(null, sample, 1.5, 1))
 
-		if(!sample) //Not a single valid turf.
+		if(!istype(sample) || !sample.CanPass(null, sample, 1.5, 1)) //Not a single valid turf.
 			for(var/turf/simulated/T in contents)
 				air_master.tiles_to_update |= T
 			del src
@@ -91,6 +94,16 @@ zone/proc/process()
 		if(abs(air.return_pressure()) > vsc.airflow_lightest_pressure)
 			AirflowSpace(src)
 		ShareSpace(air,total_space*(zone_share_percent/100))
+
+	if(!(last_update%20)) //every 20 processes.
+		if(connections)
+			connections.Remove(null)
+			if(!connections.len)
+				del connections
+		if(connected_zones)
+			connected_zones.Remove(null)
+			if(!connected_zones.len)
+				del connected_zones
 
 	//React the air here.
 	//air.react(null,0)
