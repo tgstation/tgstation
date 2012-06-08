@@ -5,6 +5,7 @@
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 
 	body_parts_covered = FEET
+	slot_flags = SLOT_FEET
 
 	protective_temperature = 500
 	heat_transfer_coefficient = 0.10

@@ -261,23 +261,25 @@ datum
 				for(var/mob/living/carbon/metroid/M in T)
 					M.adjustToxLoss(rand(15,20))
 
-				var/hotspot = (locate(/obj/effect/hotspot) in T)
+				var/hotspot = (locate(/obj/fire) in T)
 				if(hotspot && !istype(T, /turf/space))
 					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
+					T.apply_fire_protection()
 					del(hotspot)
 				return
 			reaction_obj(var/obj/O, var/volume)
 				src = null
 				var/turf/T = get_turf(O)
-				var/hotspot = (locate(/obj/effect/hotspot) in T)
+				var/hotspot = (locate(/obj/fire) in T)
 				if(hotspot && !istype(T, /turf/space))
 					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
+					//T.apply_fire_protection()
 					del(hotspot)
 				if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 					var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
@@ -522,14 +524,14 @@ datum
 				src = null
 				var/turf/the_turf = get_turf(O)
 				var/datum/gas_mixture/napalm = new
-				napalm.oxygen = volume*10
+				napalm.oxygen = volume/10
 				napalm.temperature = T0C
 				napalm.update_values()
 				the_turf.assume_air(napalm)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				var/datum/gas_mixture/napalm = new
-				napalm.oxygen = volume*10
+				napalm.oxygen = volume/10
 				napalm.temperature = T0C
 				napalm.update_values()
 				T.assume_air(napalm)
@@ -552,14 +554,14 @@ datum
 				src = null
 				var/turf/the_turf = get_turf(O)
 				var/datum/gas_mixture/napalm = new
-				napalm.nitrogen = volume*10
+				napalm.nitrogen = volume/10
 				napalm.temperature = T0C
 				napalm.update_values()
 				the_turf.assume_air(napalm)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				var/datum/gas_mixture/napalm = new
-				napalm.nitrogen = volume*10
+				napalm.nitrogen = volume/10
 				napalm.temperature = T0C
 				napalm.update_values()
 				T.assume_air(napalm)
@@ -861,7 +863,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(!data) data = 1
 				data++
-				M.mutations = 0
+				M.mutations = list()
 				M.disabilities = 0
 				M.jitteriness = 0
 				if(volume > REAGENTS_OVERDOSE)
@@ -1034,18 +1036,10 @@ datum
 				var/turf/the_turf = get_turf(O)
 				if(!the_turf)
 					return //No sense trying to start a fire if you don't have a turf to set on fire. --NEO
-				var/datum/gas_mixture/napalm = new
-				napalm.toxins = volume*10
-				napalm.temperature = T0C
-				napalm.update_values()
-				the_turf.assume_air(napalm)
+				new /obj/liquid_fuel(the_turf, volume)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
-				var/datum/gas_mixture/napalm = new
-				napalm.toxins = volume*10
-				napalm.temperature = T0C
-				napalm.update_values()
-				T.assume_air(napalm)
+				new /obj/liquid_fuel(T, volume)
 				return
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
@@ -1153,19 +1147,17 @@ datum
 				src = null
 				var/turf/the_turf = get_turf(O)
 				var/datum/gas_mixture/napalm = new
-				var/datum/gas/volatile_fuel/fuel = new
-				fuel.moles = 5
-				napalm.trace_gases += fuel
+				napalm.toxins = volume/5
 				napalm.update_values()
 				the_turf.assume_air(napalm)
+				new /obj/liquid_fuel(the_turf, volume)
 			reaction_turf(var/turf/T, var/volume)
 				src = null
 				var/datum/gas_mixture/napalm = new
-				var/datum/gas/volatile_fuel/fuel = new
-				fuel.moles = 5
-				napalm.trace_gases += fuel
+				napalm.toxins = volume/5
 				napalm.update_values()
 				T.assume_air(napalm)
+				new /obj/liquid_fuel(T, volume)
 				return
 
 		leporazine
@@ -1757,6 +1749,12 @@ datum
 			reagent_state = GAS
 			color = "#404030" // rgb: 64, 64, 48
 
+		ultraglue
+			name = "Ulta Glue"
+			id = "glue"
+			description = "An extremely powerful bonding agent."
+			color = "#FFFFCC" // rgb: 255, 255, 204
+
 		diethylamine
 			name = "Diethylamine"
 			id = "diethylamine"
@@ -2142,12 +2140,13 @@ datum
 						if(T.wet_overlay)
 							T.overlays -= T.wet_overlay
 							T.wet_overlay = null
-				var/hotspot = (locate(/obj/effect/hotspot) in T)
+				var/hotspot = (locate(/obj/fire) in T)
 				if(hotspot)
 					var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
 					lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 					lowertemp.react()
 					T.assume_air(lowertemp)
+					T.apply_fire_protection()
 					del(hotspot)
 
 		enzyme
@@ -2651,14 +2650,13 @@ datum
 			reagent_state = LIQUID
 			nutriment_factor = 0 //So alcohol can fill you up! If they want to.
 			color = "#404030" // rgb: 64, 64, 48
-			var
-				dizzy_adj = 3
-				slurr_adj = 3
-				confused_adj = 2
-				slur_start = 65			//amount absorbed after which mob starts slurring
-				confused_start = 130	//amount absorbed after which mob starts confusing directions
-				blur_start = 260	//amount absorbed after which mob starts getting blurred vision
-				pass_out = 325	//amount absorbed after which mob starts passing out
+			var/dizzy_adj = 3
+			var/slurr_adj = 3
+			var/confused_adj = 2
+			var/slur_start = 65			//amount absorbed after which mob starts slurring
+			var/confused_start = 130	//amount absorbed after which mob starts confusing directions
+			var/blur_start = 260	//amount absorbed after which mob starts getting blurred vision
+			var/pass_out = 325	//amount absorbed after which mob starts passing out
 
 			on_mob_life(var/mob/living/M as mob)
 				M:nutrition += nutriment_factor

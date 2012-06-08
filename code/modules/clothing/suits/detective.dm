@@ -21,7 +21,7 @@
 	desc = "An armored vest with a detective's badge on it."
 	icon_state = "detective-armor"
 	item_state = "armor"
-	flags = FPRINT | TABLEPASS | ONESIZEFITSALL
+	flags = FPRINT | TABLEPASS
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/taperoll/police)
 	armor = list(melee = 50, bullet = 15, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0)

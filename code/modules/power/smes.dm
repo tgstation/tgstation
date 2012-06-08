@@ -294,7 +294,7 @@
 				output += d
 				output = max(0, min(SMESMAXOUTPUT, output))	// clamp to range
 
-
+			investigate_log("input/output; [chargelevel>output?"<font color='green'>":"<font color='red'>"][chargelevel]/[output]</font> | Output-mode: [online?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [chargemode?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [usr.key]","singulo")
 			src.updateUsrDialog()
 
 		else
@@ -304,9 +304,9 @@
 
 
 	proc/ion_act()
-		if(src.z == 1)
+		if(z == 1)
 			if(prob(1)) //explosion
-				world << "\red SMES explosion in [src.loc.loc]"
+				world << "\red SMES explosion in \the [get_turf(src)]"
 				for(var/mob/M in viewers(src))
 					M.show_message("\red The [src.name] is making strange noises!", 3, "\red You hear sizzling electronics.", 2)
 				sleep(10*pick(4,5,6,7,10,14))
@@ -314,11 +314,11 @@
 				smoke.set_up(3, 0, src.loc)
 				smoke.attach(src)
 				smoke.start()
-				explosion(src.loc, -1, 0, 1, 3, 0)
+				explosion(get_turf(src), -1, 0, 1, 3, 0)
 				del(src)
 				return
 			if(prob(15)) //Power drain
-				world << "\red SMES power drain in [src.loc.loc]"
+				world << "\red SMES power drain in \the [get_turf(src)]"
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(3, 1, src)
 				s.start()
@@ -327,7 +327,7 @@
 				else
 					emp_act(2)
 			if(prob(5)) //smoke only
-				world << "\red SMES smoke in [src.loc.loc]"
+				world << "\red SMES smoke in \the [get_turf(src)]"
 				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
 				smoke.set_up(3, 0, src.loc)
 				smoke.attach(src)

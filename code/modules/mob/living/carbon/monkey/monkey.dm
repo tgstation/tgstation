@@ -69,7 +69,7 @@
 		if(!lying_icon)
 			lying_icon = new /icon('monkey.dmi', "monkey0")
 		icon = stand_icon
-		update_clothing()
+		rebuild_appearance()
 		src << "\blue Your icons have been generated!"
 
 	..()
@@ -98,7 +98,7 @@
 		if(ismob(AM))
 			var/mob/tmob = AM
 /*
-			if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
+			if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
 				if(prob(70))
 					usr << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
@@ -167,7 +167,7 @@
 			for(var/mob/O in viewers(src, null))
 				O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
 			var/damage = rand(1, 5)
-			if (mutations & HULK) damage += 10
+			if (HULK in mutations) damage += 10
 			adjustBruteLoss(damage)
 			updatehealth()
 
@@ -210,11 +210,13 @@
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return
-	if(M.gloves)
-		if(M.gloves.cell)
-			if(M.a_intent == "hurt")
-				if(M.gloves.cell.charge >= 2500)
-					M.gloves.cell.charge -= 2500
+
+	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
+		var/obj/item/clothing/gloves/G = M.gloves
+		if(G.cell)
+			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+				if(G.cell.charge >= 2500)
+					G.cell.charge -= 2500
 					Weaken(5)
 					if (stuttering < 5)
 						stuttering = 5
@@ -928,7 +930,6 @@
 
 	UpdateDamageIcon()
 	updatehealth()
-	update_clothing()
 	return 1
 
 /*/mob/living/carbon/monkey/UpdateDamageIcon()

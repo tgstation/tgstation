@@ -1,10 +1,67 @@
 var/CMinutes = null
 var/savefile/Banlist
 
+
+/proc/CheckBan(var/ckey, var/id, var/address)
+	if(!Banlist)		// if Banlist cannot be located for some reason
+		LoadBans()		// try to load the bans
+		if(!Banlist)	// uh oh, can't find bans!
+			return 0	// ABORT ABORT ABORT
+
+	. = list()
+	var/appeal
+	if(config && config.banappeals)
+		appeal = "\nFor more information on your ban, or to appeal, head to <a href='[config.banappeals]'>[config.banappeals]</a>"
+	Banlist.cd = "/base"
+	if( "[ckey][id]" in Banlist.dir )
+		Banlist.cd = "[ckey][id]"
+		if (Banlist["temp"])
+			if (!GetBanExp(Banlist["minutes"]))
+				ClearTempbans()
+				return 0
+			else
+				.["desc"] = "\nReason: [Banlist["reason"]]\nExpires: [GetBanExp(Banlist["minutes"])]\nBy: [Banlist["bannedby"]][appeal]"
+		else
+			Banlist.cd	= "/base/[ckey][id]"
+			.["desc"]	= "\nReason: [Banlist["reason"]]\nExpires: <B>PERMENANT</B>\nBy: [Banlist["bannedby"]][appeal]"
+		.["reason"]	= "ckey/id"
+		return .
+	else
+		for (var/A in Banlist.dir)
+			Banlist.cd = "/base/[A]"
+			var/matches
+			if( ckey == Banlist["key"] )
+				matches += "ckey"
+			if( id == Banlist["id"] && Banlist["skipIdCheck"] == 0)
+				if(matches)
+					matches += "/"
+				matches += "id"
+//			if( address == Banlist["ip"] )
+//				if(matches)
+//					matches += "/"
+//				matches += "ip"
+
+			if(matches)
+				if(Banlist["temp"])
+					if (!GetBanExp(Banlist["minutes"]))
+						ClearTempbans()
+						return 0
+					else
+						.["desc"] = "\nReason: [Banlist["reason"]]\nExpires: [GetBanExp(Banlist["minutes"])]\nBy: [Banlist["bannedby"]][appeal]"
+				else
+					.["desc"] = "\nReason: [Banlist["reason"]]\nExpires: <B>PERMENANT</B>\nBy: [Banlist["bannedby"]][appeal]"
+				.["reason"] = matches
+				return .
+	return 0
+
+/proc/UpdateTime() //No idea why i made this a proc.
+	CMinutes = (world.realtime / 10) / 60
+	return 1
+
 /proc/LoadBans()
 
 	Banlist = new("data/banlist.bdb")
-	log_admin("Loading banlist.")
+	log_admin("Loading Banlist")
 
 	if (!length(Banlist.dir)) log_admin("Banlist is empty.")
 
@@ -15,70 +72,6 @@ var/savefile/Banlist
 	Banlist.cd = "/base"
 
 	ClearTempbans()
-	return 1
-
-
-/proc/CheckBan(var/client/clientvar)
-
-	var/id = clientvar.computer_id
-	var/key = clientvar.ckey
-
-	if(!Banlist)		// if Banlist cannot be located for some reason
-		LoadBans()		// try to load the bans
-		if(!Banlist)	// uh oh, can't find bans!
-			return 0	// ABORT ABORT ABORT
-
-	Banlist.cd = "/base"
-	if (Banlist.dir.Find("[key][id]"))
-		Banlist.cd = "[key][id]"
-		if (Banlist["temp"])
-			if (!GetBanExp(Banlist["minutes"]))
-				ClearTempbans()
-				return 0
-			else
-				log_access("Failed Login: [clientvar] - Banned")
-				message_admins("\blue Failed Login: [clientvar] - Banned")
-				alert(clientvar,"You have been banned.\nReason : [Banlist["reason"]]\n(This ban will be automatically removed in [GetBanExp(Banlist["minutes"])].)[config.appeal_address ? "\nYou may try to appeal this at [config.appeal_address]" : ""]","Ban","Ok")
-				return 1
-		else
-			Banlist.cd = "/base/[key][id]"
-			log_access("Failed Login: [clientvar] - Banned")
-			message_admins("\blue Failed Login: [clientvar] - Banned")
-			alert(clientvar,"You have been banned.\nReason : [Banlist["reason"]]\n(This is a permanent ban.)[config.appeal_address ? "\nYou may try to appeal this at [config.appeal_address]" : ""]","Ban","Ok")
-			return 1
-
-	Banlist.cd = "/base"
-	for (var/A in Banlist.dir)
-		Banlist.cd = "/base/[A]"
-		if ( key == Banlist["key"] || (id == Banlist["id"] && Banlist["skipIdCheck"] == 0) )
-			if(Banlist["temp"])
-				if (!GetBanExp(Banlist["minutes"]))
-					ClearTempbans()
-					return 0
-				else
-					if(key != Banlist["key"])
-						log_access("Failed Login: [clientvar] - Banned as [Banlist["key"]]")
-						message_admins("\blue Failed Login: [clientvar] - Banned as [Banlist["key"]]")
-					else
-						log_access("Failed Login: [clientvar] - Banned")
-						message_admins("\blue Failed Login: [clientvar] - Banned")
-					alert(clientvar,"You have been banned.\nReason : [Banlist["reason"]]\n(This ban will be automatically removed in [GetBanExp(Banlist["minutes"])].)[config.appeal_address ? "\nYou may try to appeal this at [config.appeal_address]" : ""]","Ban","Ok")
-					return 1
-			else
-				if(key != Banlist["key"])
-					log_access("Failed Login: [clientvar] - Banned as [Banlist["key"]]")
-					message_admins("\blue Failed Login: [clientvar] - Banned as [Banlist["key"]]")
-				else
-					log_access("Failed Login: [clientvar] - Banned")
-					message_admins("\blue Failed Login: [clientvar] - Banned")
-				alert(clientvar,"You have been banned.\nReason : [Banlist["reason"]]\n(This is a permanent ban.)[config.appeal_address ? "\nYou may try to appeal this at [config.appeal_address]" : ""]","Ban","Ok")
-				return 1
-
-	return 0
-
-
-/proc/UpdateTime()
-	CMinutes = (world.realtime / 10) / 60
 	return 1
 
 /proc/ClearTempbans()
@@ -171,6 +164,7 @@ var/savefile/Banlist
 /obj/admins/proc/unbanpanel()
 	var/count = 0
 	var/dat
+	//var/dat = "<HR><B>Unban Player:</B> \blue(U) = Unban , (E) = Edit Ban\green (Total<HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >"
 	Banlist.cd = "/base"
 	for (var/A in Banlist.dir)
 		count++

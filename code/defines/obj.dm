@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /obj
 	//var/datum/module/mod		//not used
 	var/m_amt = 0	// metal
@@ -30,11 +32,10 @@
 	icon_state = "rollstart"
 	flags = FPRINT
 	w_class = 1.0
-	var
-		turf/start
-		turf/end
-		tape_type = /obj/item/tape
-		icon_base
+	var/turf/start
+	var/turf/end
+	var/tape_type = /obj/item/tape
+	var/icon_base
 
 /obj/item/tape
 	name = "tape"
@@ -422,12 +423,60 @@
 	var/burning = null
 	var/hitsound = null
 	var/w_class = 3.0
-	var/protective_temperature = 0 // Placing this here to avoid runtime errors, due to tiny items being allowed on ears and being queried for this variable
 	flags = FPRINT | TABLEPASS
+	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
 	pressure_resistance = 50
 //	causeerrorheresoifixthis
 	var/obj/item/master = null
+
+	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
+	var/see_face = 1.0
+	var/color = null
+	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
+	var/protective_temperature = 0
+	var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
+	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
+	var/permeability_coefficient = 1 // for chemicals/diseases
+	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
+	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
+	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
+	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	var/list/allowed = null //suit storage stuff.
+
+/obj/item/verb/verb_pickup()
+	set src in view(1)
+	set category = "Object"
+	set name = "Pickup"
+
+	if(!(usr))
+		return
+	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))//Is humanoid, and is not a brain
+		usr << "\red You can't pick things up!"
+		return
+	if( usr.stat || usr.restrained() )//Is not asleep/dead and is not restrained
+		usr << "\red You can't pick things up!"
+		return
+	if(src.anchored) //Object isn't anchored
+		usr << "\red You can't pick that up!"
+		return
+	if(!usr.hand && usr.r_hand) //Right hand is not full
+		usr << "\red Your right hand is full."
+		return
+	if(usr.hand && usr.l_hand) //Left hand is not full
+		usr << "\red Your left hand is full."
+		return
+	if(!istype(src.loc, /turf)) //Object is on a turf
+		usr << "\red You can't pick that up!"
+		return
+	//All checks are done, time to pick it up!
+	if(istype(usr, /mob/living/carbon/human))
+		src.attack_hand(usr)
+	if(istype(usr, /mob/living/carbon/alien))
+		src.attack_alien(usr)
+	if(istype(usr, /mob/living/carbon/monkey))
+		src.attack_paw(usr)
+	return
 
 /obj/item/device
 	icon = 'device.dmi'
@@ -458,7 +507,7 @@
 	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage
 
 /obj/item/device/hacktool
-	name = "hacktool"
+	name = "modifed door debugger"
 	icon_state = "hacktool"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	var/in_use = 0
@@ -514,7 +563,7 @@
 	density = 0
 	anchored = 1.0
 	layer = 2.3 //under pipes
-	//	flags = 64.0
+	//	flags = CONDUCT
 
 /obj/structure/lattice/New()
 	..()
@@ -1100,8 +1149,7 @@
 	throw_range = 5
 	origin_tech = "biotech=3"
 
-	var
-		mob/living/carbon/brain/brainmob = null
+	var/mob/living/carbon/brain/brainmob = null
 
 	New()
 		..()

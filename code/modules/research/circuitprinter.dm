@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /*///////////////Circuit Imprinter (By Darem)////////////////////////
 	Used to print new circuit boards (for computers and similar systems) and AI modules. Each circuit board pattern are stored in
 a /datum/desgin on the linked R&D console. You can then print them out in a fasion similar to a regular lathe. However, instead of
@@ -8,11 +10,11 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	name = "Circuit Imprinter"
 	icon_state = "circuit_imprinter"
 	flags = OPENCONTAINER
-	var
-		g_amount = 0
-		gold_amount = 0
-		diamond_amount = 0
-		max_material_amount = 75000.0
+
+	var/g_amount = 0
+	var/gold_amount = 0
+	var/diamond_amount = 0
+	var/max_material_amount = 75000.0
 
 	New()
 		..()

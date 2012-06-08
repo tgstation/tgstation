@@ -2,7 +2,8 @@
 	name = "emergency oxygen tank"
 	desc = "Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it."
 	icon_state = "emergency"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
 	w_class = 2.0
 	force = 4.0
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
@@ -11,7 +12,7 @@
 
 	New()
 		..()
-		air_contents.adjustGases((3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
+		air_contents.adjust((3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 		return
 
 
@@ -43,5 +44,5 @@
 		..()
 		var/datum/gas/sleeping_agent/trace_gas = new()
 		trace_gas.moles = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
-		air_contents.adjustGases((3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD, traces = list(trace_gas))
+		air_contents.adjust((3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD, traces = list(trace_gas))
 		return

@@ -11,7 +11,7 @@
 				if (ghost.client)
 					ghost.client.eye = ghost
 
-			explosion(src.loc, -1,-1,3,12)
+			explosion(get_turf(src), -1,-1,3,12)
 			sleep(2)
 			del(src)
 		else

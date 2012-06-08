@@ -15,33 +15,6 @@
 	var/lasttry = 0
 	layer = 2.98
 
-/obj/structure/closet/verb/open_close()
-	set name = "Open/Close"
-	set category = "Object"
-	set src in view(1)
-
-	if(!(usr))
-		return
-	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() )
-		usr << "\red You can't interact with this!"
-		return
-	if(src.anchored)
-		usr << "\red You can't interact with this!"
-		return
-	if(istype(usr, /mob/living/silicon/robot))
-		src.attack_hand(usr)
-		return
-	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))
-		usr << "\red You can't interact with this!"
-		return
-	if(istype(usr, /mob/living/carbon/human))
-		src.attack_hand(usr)
-	if(istype(usr, /mob/living/carbon/alien))
-		src.attack_alien(usr)
-	if(istype(usr, /mob/living/carbon/monkey))
-		src.attack_paw(usr)
-	return
-
 /obj/structure/closet/detective
 	name = "detective's closet"
 	desc = "Holds the detective's clothes while his coat rack is being repaired."
@@ -141,6 +114,32 @@
 	desc = "It's a storage unit for courtroom apparel and items."
 	icon_state = "blue"
 	icon_closed = "blue"
+
+/obj/structure/closet/boxinggloves
+	name = "boxing gloves"
+	desc = "It's a storage unit for gloves for use in the boxing ring."
+
+/obj/structure/closet/masks
+	name = "mask closet"
+	desc = "IT'S A STORAGE UNIT FOR FIGHTER MASKS OLE!"
+
+/obj/structure/closet/lasertag/red
+	name = "red laser tag equipment"
+	desc = "It's a storage unit for laser tag equipment."
+	icon_state = "red"
+	icon_closed = "red"
+
+/obj/structure/closet/lasertag/blue
+	name = "blue laser tag equipment"
+	desc = "It's a storage unit for laser tag equipment."
+	icon_state = "blue"
+	icon_closed = "blue"
+
+/obj/structure/closet/athletic_mixed
+	name = "athletic wardrobe"
+	desc = "It's a storage unit for athletic wear."
+	icon_state = "mixed"
+	icon_closed = "mixed"
 
 /obj/structure/closet/coffin
 	name = "coffin"

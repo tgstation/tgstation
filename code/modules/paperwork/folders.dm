@@ -35,8 +35,7 @@
 		user << "\blue You put the [W] into the folder."
 		update_icon()
 	else if(istype(W, /obj/item/weapon/pen))
-		var/n_name = input(usr, "What would you like to label the folder?", "Folder Labelling", null)  as text
-		n_name = copytext(n_name, 1, 32)
+		var/n_name = copytext(sanitize(input(usr, "What would you like to label the folder?", "Folder Labelling", null)  as text),1,MAX_NAME_LEN)
 		if ((loc == usr && usr.stat == 0))
 			name = "folder[(n_name ? text("- '[n_name]'") : null)]"
 	return

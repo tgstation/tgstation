@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /proc/dopage(src,target)
 	var/href_list
 	var/href
@@ -46,31 +48,6 @@
 /proc/in_range(source, user)
 	if(get_dist(source, user) <= 1)
 		return 1
-	else
-		if (istype(user, /mob/living/carbon))
-			if (usr.tkdisable != 0) //Remote Viewing + TK = oh god wat
-				user << "\red Your mind is too strained right now!"
-				return 0
-			if (user:mutations & TK)
-				var/X = source:x
-				var/Y = source:y
-				var/Z = source:z
-				spawn(0)
-					//I really shouldnt put this here but i dont have a better idea
-					var/obj/effect/overlay/O = new /obj/effect/overlay( locate(X,Y,Z) )
-					O.name = "sparkles"
-					O.anchored = 1
-					O.density = 0
-					O.layer = FLY_LAYER
-					O.dir = pick(cardinal)
-					O.icon = 'effects.dmi'
-					O.icon_state = "nothing"
-					flick("empdisable",O)
-					spawn(5)
-						del(O)
-
-
-				return 1
 
 	return 0 //not in range and not telekinetic
 
@@ -261,11 +238,10 @@ proc
 						return 0
 					Y1+=s
 		else
-			var
-				m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
-				b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
-				signX = SIGN(X2-X1)
-				signY = SIGN(Y2-Y1)
+			var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
+			var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
+			var/signX = SIGN(X2-X1)
+			var/signY = SIGN(Y2-Y1)
 			if(X1<X2)
 				b+=m
 			while(X1!=X2 || Y1!=Y2)

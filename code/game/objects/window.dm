@@ -34,7 +34,7 @@
 	del(src)
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && mover.pass_flags & PASSGLASS)
 		return 1
 	if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST)
 		return 0 //full tile window, you can't move into it!
@@ -44,7 +44,7 @@
 		return 1
 
 /obj/structure/window/CheckExit(atom/movable/O as mob|obj, target as turf)
-	if(istype(O) && O.checkpass(PASSGLASS))
+	if(istype(O) && O.pass_flags & PASSGLASS)
 		return 1
 	if (get_dir(O.loc, target) == dir)
 		return 0
@@ -68,7 +68,7 @@
 
 	..()
 	for(var/mob/O in viewers(src, null))
-		O.show_message(text("\red <B>[src] was hit by [AM].</B>"), 1)
+		O.show_message("\red <B>[src] was hit by [AM].</B>", 1)
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
@@ -87,15 +87,17 @@
 		src.density = 0
 		del(src)
 		return
-	..()
+	//..() //Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
 	return
 
+//These all need to be rewritten to use visiblemessage()
+
 /obj/structure/window/attack_hand()
-	if ((usr.mutations & HULK))
-		usr << text("\blue You smash through the window.")
+	if ((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
+		usr << "\blue You smash through the window."
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] smashes through the window!", usr)
+				O << "\red [usr] smashes through the window!"
 		src.health = 0
 		new /obj/item/weapon/shard( src.loc )
 		if(reinf) new /obj/item/stack/rods( src.loc)
@@ -111,11 +113,11 @@
 
 
 /obj/structure/window/attack_paw()
-	if ((usr.mutations & HULK))
-		usr << text("\blue You smash through the window.")
+	if ((HULK in usr.mutations))
+		usr << "\blue You smash through the window."
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] smashes through the window!", usr)
+				O << "\red [usr] smashes through the window!"
 		src.health = 0
 		new /obj/item/weapon/shard( src.loc )
 		if(reinf) new /obj/item/stack/rods( src.loc)
@@ -126,17 +128,17 @@
 /obj/structure/window/attack_alien()
 	if (istype(usr, /mob/living/carbon/alien/larva))//Safety check for larva. /N
 		return
-	usr << text("\green You smash against the window.")
+	usr << "\green You smash against the window."
 	for(var/mob/O in oviewers())
 		if ((O.client && !( O.blinded )))
-			O << text("\red [] smashes against the window.", usr)
+			O << "\red [usr] smashes against the window."
 	playsound(src.loc, 'Glasshit.ogg', 100, 1)
 	src.health -= 15
 	if(src.health <= 0)
-		usr << text("\green You smash through the window.")
+		usr << "\green You smash through the window."
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] smashes through the window!", usr)
+				O << "\red [usr] smashes through the window!"
 		src.health = 0
 		new /obj/item/weapon/shard(src.loc)
 		if(reinf)
@@ -150,17 +152,17 @@
 /obj/structure/window/attack_animal(mob/living/simple_animal/M as mob)
 	if (M.melee_damage_upper == 0)
 		return
-	M << text("\green You smash against the window.")
+	M << "\green You smash against the window."
 	for(var/mob/O in viewers(src, null))
 		if ((O.client && !( O.blinded )))
-			O << text("\red [] smashes against the window.", M)
+			O << "\red [M] smashes against the window."
 	playsound(src.loc, 'Glasshit.ogg', 100, 1)
 	src.health -= M.melee_damage_upper
 	if(src.health <= 0)
-		M << text("\green You smash through the window.")
+		M << "\green You smash through the window."
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] smashes through the window!", M)
+				O << "\red [M] smashes through the window!"
 		src.health = 0
 		new /obj/item/weapon/shard(src.loc)
 		if(reinf)
@@ -174,17 +176,17 @@
 	if(!istype(usr, /mob/living/carbon/metroid/adult))
 		return
 
-	usr<< text("\green You smash against the window.")
+	usr<< "\green You smash against the window."
 	for(var/mob/O in oviewers())
 		if ((O.client && !( O.blinded )))
-			O << text("\red [] smashes against the window.", usr)
+			O << "\red [usr] smashes against the window."
 	playsound(src.loc, 'Glasshit.ogg', 100, 1)
 	src.health -= rand(10,15)
 	if(src.health <= 0)
-		usr << text("\green You smash through the window.")
+		usr << "\green You smash through the window."
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] smashes through the window!", usr)
+				O << "\red [usr] smashes through the window!"
 		src.health = 0
 		new /obj/item/weapon/shard(src.loc)
 		if(reinf)
@@ -343,23 +345,11 @@
 /obj/structure/window/proc/update_nearby_tiles(need_rebuild)
 	if(!air_master) return 0
 
-	var/turf/simulated/source = loc
+	var/turf/simulated/source = get_turf(src)
 	var/turf/simulated/target = get_step(source,dir)
 
-	if(need_rebuild)
-		if(istype(source)) //Rebuild/update nearby group geometry
-			if(source.parent)
-				air_master.groups_to_rebuild += source.parent
-			else
-				air_master.tiles_to_update += source
-		if(istype(target))
-			if(target.parent)
-				air_master.groups_to_rebuild += target.parent
-			else
-				air_master.tiles_to_update += target
-	else
-		if(istype(source)) air_master.tiles_to_update += source
-		if(istype(target)) air_master.tiles_to_update += target
+	if(istype(source)) air_master.tiles_to_update |= source
+	if(istype(target)) air_master.tiles_to_update |= target
 
 	return 1
 

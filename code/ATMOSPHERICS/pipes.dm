@@ -158,7 +158,7 @@ obj/machinery/atmospherics/pipe
 			else return 1
 
 		proc/burst()
-			src.visible_message("\red \bold [src] bursts!");
+			src.visible_message("\red \bold \The [src] bursts!");
 			playsound(src.loc, 'bang.ogg', 25, 1)
 			var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
 			smoke.set_up(1,0, src.loc, 0)

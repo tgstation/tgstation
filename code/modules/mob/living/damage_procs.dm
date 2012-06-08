@@ -14,7 +14,7 @@
 		if(BRUTE)
 			adjustBruteLoss(damage/(blocked+1), used_weapon)
 		if(BURN)
-			if(mutations & COLD_RESISTANCE)	damage = 0
+			if(COLD_RESISTANCE in mutations)	damage = 0
 			adjustFireLoss(damage/(blocked+1), used_weapon)
 		if(TOX)
 			adjustToxLoss(damage/(blocked+1))

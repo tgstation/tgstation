@@ -13,6 +13,7 @@
 	var/oxygen_alert = 0
 	var/toxins_alert = 0
 	var/fire_alert = 0
+
 	var/temperature_alert = 0
 
 
@@ -131,15 +132,15 @@
 		handle_mutations_and_radiation()
 
 			if(src.getFireLoss())
-				if(src.mutations & COLD_RESISTANCE || prob(50))
+				if((COLD_RESISTANCE in mutations) || prob(50))
 					switch(src.getFireLoss())
 						if(1 to 50)
 							src.adjustFireLoss(-1)
 						if(51 to 100)
 							src.adjustFireLoss(-5)
 
-			if (src.mutations & HULK && src.health <= 25)
-				src.mutations &= ~HULK
+			if ((HULK in mutations) && src.health <= 25)
+				src.mutations.Remove(HULK)
 				src << "\red You suddenly feel very weak."
 				Weaken(3)
 				emote("collapse")
@@ -187,7 +188,7 @@
 			if(!loc) return //probably ought to make a proper fix for this, but :effort: --NeoFite
 
 			var/datum/gas_mixture/environment = loc.return_air()
-			var/datum/air_group/breath
+			var/datum/gas_mixture/breath
 
 			if(losebreath>0) //Suffocating so do not take a breath
 				src.losebreath--
@@ -369,7 +370,10 @@
 
 			if(stat==2)
 				bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
+
 			//Account for massive pressure differences
+
+
 			var/pressure = environment.return_pressure()
 
 		//	if(!wear_suit)		Monkies cannot into space.
@@ -384,6 +388,9 @@
 			if(pressure > HAZARD_HIGH_PRESSURE)
 
 				adjustBruteLoss(min((10+(round(pressure/(HIGH_STEP_PRESSURE)-2)*5)),MAX_PRESSURE_DAMAGE))
+
+
+
 			return //TODO: DEFERRED
 
 		handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
@@ -405,7 +412,7 @@
 				src.drowsyness--
 				src.eye_blurry = max(2, src.eye_blurry)
 				if (prob(5))
-					src.sleeping = 1
+					src.sleeping += 1
 					Paralyse(5)
 
 			confused = max(0, confused - 1)
@@ -527,7 +534,7 @@
 
 		handle_regular_hud_updates()
 
-			if (src.stat == 2 || src.mutations & XRAY)
+			if (src.stat == 2 || (XRAY in mutations))
 				src.sight |= SEE_TURFS
 				src.sight |= SEE_MOBS
 				src.sight |= SEE_OBJS
@@ -566,6 +573,7 @@
 							src.healths.icon_state = "health6"
 				else
 					src.healths.icon_state = "health7"
+
 			if (pressure)
 				var/datum/gas_mixture/environment = loc.return_air()
 				if(environment)

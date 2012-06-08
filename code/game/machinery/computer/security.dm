@@ -1,23 +1,24 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /obj/machinery/computer/secure_data
 	name = "Security Records"
 	desc = "Used to view and edit personnel's security records"
 	icon_state = "security"
 	req_access = list(access_security)
 	circuit = "/obj/item/weapon/circuitboard/secure_data"
-	var
-		obj/item/weapon/card/id/scan = null
-		obj/item/weapon/disk/records/disk = null
-		authenticated = null
-		rank = null
-		screen = null
-		datum/data/record/active1 = null
-		datum/data/record/active2 = null
-		a_id = null
-		temp = null
-		printing = null
-		can_change_id = 0
-		list/Perp
-		tempname = null
+	var/obj/item/weapon/card/id/scan = null
+	var/obj/item/weapon/disk/records/disk = null
+	var/authenticated = null
+	var/rank = null
+	var/screen = null
+	var/datum/data/record/active1 = null
+	var/datum/data/record/active2 = null
+	var/a_id = null
+	var/temp = null
+	var/printing = null
+	var/can_change_id = 0
+	var/list/Perp
+	var/tempname = null
 
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O as obj, user as mob)
@@ -348,7 +349,7 @@ What a mess.*/
 				if (!( istype(active2, /datum/data/record) ))
 					return
 				var/a2 = active2
-				var/t1 = input("Add Comment:", "Secure. records", null, null)  as message
+				var/t1 = copytext(sanitize(input("Add Comment:", "Secure. records", null, null)  as message),1,MAX_MESSAGE_LEN)
 				if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
 					return
 				var/counter = 1
@@ -415,13 +416,13 @@ What a mess.*/
 							active1.fields["name"] = t1
 					if("id")
 						if (istype(active2, /datum/data/record))
-							var/t1 = input("Please input id:", "Secure. records", active1.fields["id"], null)  as text
+							var/t1 = copytext(sanitize(input("Please input id:", "Secure. records", active1.fields["id"], null)  as text),1,MAX_MESSAGE_LEN)
 							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
 								return
 							active1.fields["id"] = t1
 					if("fingerprint")
 						if (istype(active1, /datum/data/record))
-							var/t1 = input("Please input fingerprint hash:", "Secure. records", active1.fields["fingerprint"], null)  as text
+							var/t1 = copytext(sanitize(input("Please input fingerprint hash:", "Secure. records", active1.fields["fingerprint"], null)  as text),1,MAX_MESSAGE_LEN)
 							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
 								return
 							active1.fields["fingerprint"] = t1
@@ -433,31 +434,31 @@ What a mess.*/
 								active1.fields["sex"] = "Male"
 					if("age")
 						if (istype(active1, /datum/data/record))
-							var/t1 = input("Please input age:", "Secure. records", active1.fields["age"], null)  as text
+							var/t1 = input("Please input age:", "Secure. records", active1.fields["age"], null)  as num
 							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active1 != a1))
 								return
 							active1.fields["age"] = t1
 					if("mi_crim")
 						if (istype(active2, /datum/data/record))
-							var/t1 = input("Please input minor disabilities list:", "Secure. records", active2.fields["mi_crim"], null)  as text
+							var/t1 = copytext(sanitize(input("Please input minor disabilities list:", "Secure. records", active2.fields["mi_crim"], null)  as text),1,MAX_MESSAGE_LEN)
 							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
 								return
 							active2.fields["mi_crim"] = t1
 					if("mi_crim_d")
 						if (istype(active2, /datum/data/record))
-							var/t1 = input("Please summarize minor dis.:", "Secure. records", active2.fields["mi_crim_d"], null)  as message
+							var/t1 = copytext(sanitize(input("Please summarize minor dis.:", "Secure. records", active2.fields["mi_crim_d"], null)  as message),1,MAX_MESSAGE_LEN)
 							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
 								return
 							active2.fields["mi_crim_d"] = t1
 					if("ma_crim")
 						if (istype(active2, /datum/data/record))
-							var/t1 = input("Please input major diabilities list:", "Secure. records", active2.fields["ma_crim"], null)  as text
+							var/t1 = copytext(sanitize(input("Please input major diabilities list:", "Secure. records", active2.fields["ma_crim"], null)  as text),1,MAX_MESSAGE_LEN)
 							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
 								return
 							active2.fields["ma_crim"] = t1
 					if("ma_crim_d")
 						if (istype(active2, /datum/data/record))
-							var/t1 = input("Please summarize major dis.:", "Secure. records", active2.fields["ma_crim_d"], null)  as message
+							var/t1 = copytext(sanitize(input("Please summarize major dis.:", "Secure. records", active2.fields["ma_crim_d"], null)  as message),1,MAX_MESSAGE_LEN)
 							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
 								return
 							active2.fields["ma_crim_d"] = t1
@@ -466,6 +467,8 @@ What a mess.*/
 							var/t1 = input("Please summarize notes:", "Secure. records", active2.fields["notes"], null)  as message
 							if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
 								return
+							t1 = copytext(t1, 1, MAX_PAPER_MESSAGE_LEN)
+							t1 = html_encode(t1)
 							active2.fields["notes"] = t1
 					if("criminal")
 						if (istype(active2, /datum/data/record))

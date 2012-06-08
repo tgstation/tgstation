@@ -17,8 +17,8 @@ SHARDS
 		var/obj/item/weapon/cable_coil/CC = W
 		if(CC.amount < 5)
 			user << "\b There is not enough wire in this coil. You need 5 lengths."
-		CC.amount -= 5
-		amount -= 1
+		CC.use(5)
+		src.use(1)
 		user << "\blue You attach wire to the [name]."
 		new/obj/item/stack/light_w(user.loc)
 		if(CC.amount <= 0)
@@ -50,37 +50,39 @@ SHARDS
 		return 0
 	var/title = "Sheet-Glass"
 	title += " ([src.amount] sheet\s left)"
-	switch(alert(title, "Would you like full tile glass or one direction?", "one direct", "full (2 sheets)", "cancel", null))
-		if("one direct")
+	switch(alert(title, "Would you like full tile glass or one direction?", "One Direction", "Full Window", "Cancel", null))
+		if("One Direction")
 			if(!src)	return 1
 			if(src.loc != user)	return 1
+
 			var/list/directions = new/list(cardinal)
+			var/i = 0
 			for (var/obj/structure/window/win in user.loc)
+				i++
+				if(i >= 4)
+					user << "\red There are too many windows in this location."
+					return 1
 				directions-=win.dir
 				if(!(win.ini_dir in cardinal))
 					user << "\red Can't let you do that."
 					return 1
-			var/dir_to_set = 2
-			//yes, this could probably be done better but hey... it works...
+
+			var/dir_to_set = NORTH
 			for(var/obj/structure/window/WT in user.loc)
-				if (WT.dir == dir_to_set)
-					dir_to_set = 4
-			for(var/obj/structure/window/WT in user.loc)
-				if (WT.dir == dir_to_set)
-					dir_to_set = 1
-			for(var/obj/structure/window/WT in user.loc)
-				if (WT.dir == dir_to_set)
-					dir_to_set = 8
-			for(var/obj/structure/window/WT in user.loc)
-				if (WT.dir == dir_to_set)
-					dir_to_set = 2
+				if (WT.dir == SOUTH)
+					dir_to_set = EAST
+				if (WT.dir == WEST)
+					dir_to_set = SOUTH
+				if (WT.dir == NORTH)
+					dir_to_set = WEST
+
 			var/obj/structure/window/W
 			W = new /obj/structure/window/basic( user.loc, 0 )
 			W.dir = dir_to_set
 			W.ini_dir = W.dir
 			W.anchored = 0
 			src.use(1)
-		if("full (2 sheets)")
+		if("Full Window")
 			if(!src)	return 1
 			if(src.loc != user)	return 1
 			if(src.amount < 2)
@@ -111,30 +113,32 @@ SHARDS
 		return 0
 	var/title = "Sheet Reinf. Glass"
 	title += " ([src.amount] sheet\s left)"
-	switch(alert(title, "Would you like full tile glass or one direction?", "one direct", "full (2 sheets)", "cancel", null))
-		if("one direct")
+	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
+		if("One Direction")
 			if(!src)	return 1
 			if(src.loc != user)	return 1
 			var/list/directions = new/list(cardinal)
+			var/i = 0
 			for (var/obj/structure/window/win in user.loc)
+				i++
+				if(i >= 4)
+					user << "\red There are too many windows in this location."
+					return 1
 				directions-=win.dir
 				if(!(win.ini_dir in cardinal))
 					user << "\red Can't let you do that."
 					return 1
-			var/dir_to_set = 2
-			//yes, this could probably be done better but hey... it works...
+			var/dir_to_set = NORTH
 			for(var/obj/structure/window/WT in user.loc)
-				if (WT.dir == dir_to_set)
-					dir_to_set = 4
-			for(var/obj/structure/window/WT in user.loc)
-				if (WT.dir == dir_to_set)
-					dir_to_set = 1
-			for(var/obj/structure/window/WT in user.loc)
-				if (WT.dir == dir_to_set)
-					dir_to_set = 8
-			for(var/obj/structure/window/WT in user.loc)
-				if (WT.dir == dir_to_set)
-					dir_to_set = 2
+				if (WT.dir == SOUTH)
+					dir_to_set = EAST
+				if (WT.dir == WEST)
+					dir_to_set = SOUTH
+				if (WT.dir == NORTH)
+					dir_to_set = WEST
+				/*else
+					dir_to_set stays NORTH*/
+
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced( user.loc, 1 )
 			W.state = 0
@@ -142,7 +146,8 @@ SHARDS
 			W.ini_dir = W.dir
 			W.anchored = 0
 			src.use(1)
-		if("full (2 sheets)")
+
+		if("Full Window")
 			if(!src)	return 1
 			if(src.loc != user)	return 1
 			if(src.amount < 2)
@@ -158,6 +163,44 @@ SHARDS
 			W.ini_dir = SOUTHWEST
 			W.anchored = 0
 			src.use(2)
+
+		if("Windoor")
+			if(!src || src.loc != user) return 1
+
+			if(isturf(user.loc) && locate(/obj/structure/windoor_assembly/, user.loc))
+				user << "\red There is already a windoor assembly in that location."
+				return 1
+
+			if(isturf(user.loc) && locate(/obj/machinery/door/window/, user.loc))
+				user << "\red There is already a windoor in that location."
+				return 1
+
+			if(src.amount < 5)
+				user << "\red You need more glass to do that."
+				return 1
+
+			var/obj/structure/windoor_assembly/WD
+			WD = new /obj/structure/windoor_assembly(user.loc)
+			WD.state = "01"
+			WD.anchored = 0
+			src.use(5)
+			switch(user.dir)
+				if(SOUTH)
+					WD.dir = SOUTH
+					WD.ini_dir = SOUTH
+				if(EAST)
+					WD.dir = EAST
+					WD.ini_dir = EAST
+				if(WEST)
+					WD.dir = WEST
+					WD.ini_dir = WEST
+				else//If the user is facing northeast. northwest, southeast, southwest or north, default to north
+					WD.dir = NORTH
+					WD.ini_dir = NORTH
+		else
+			return 1
+
+
 	return 0
 
 // SHARDS

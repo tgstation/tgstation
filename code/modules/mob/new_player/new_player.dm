@@ -1,10 +1,11 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /mob/new_player
-	var
-		datum/preferences/preferences = null
-		ready = 0
-		spawning = 0//Referenced when you want to delete the new_player later on in the code.
-		totalPlayers = 0		 //Player counts for the Lobby tab
-		totalPlayersReady = 0
+	var/datum/preferences/preferences = null
+	var/ready = 0
+	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
+	var/totalPlayers = 0		 //Player counts for the Lobby tab
+	var/totalPlayersReady = 0
 
 	invisibility = 101
 
@@ -13,97 +14,6 @@
 	canmove = 0
 
 	anchored = 1	//  don't get pushed around
-
-	Login()
-		if(!preferences)
-			preferences = new
-
-		if(!mind)
-			mind = new
-			mind.key = key
-			mind.current = src
-
-		var/starting_loc = pick(newplayer_start)
-		if(!starting_loc)	starting_loc = locate(1,1,1)
-		loc = starting_loc
-		lastarea = starting_loc
-
-		sight |= SEE_TURFS
-
-		var/list/watch_locations = list()
-		for(var/obj/effect/landmark/landmark in world)
-			if(landmark.tag == "landmark*new_player")
-				watch_locations += landmark.loc
-
-		if(watch_locations.len>0)
-			loc = pick(watch_locations)
-
-		if(!preferences.savefile_load(src, 1))
-			preferences.ShowChoices(src)
-			if(!client.changes)
-				changes()
-		else
-			var/lastchangelog = length('changelog.html')
-			if(!client.changes && preferences.lastchangelog!=lastchangelog)
-				changes()
-				preferences.lastchangelog = lastchangelog
-				preferences.savefile_save(src, 1)
-
-		if(preferences.pregame_music)
-			spawn() Playmusic() // git some tunes up in heeyaa~
-
-		if(client.has_news())
-			src << "<b><font color=blue>There are some unread <a href='?src=\ref[news_topic_handler];client=\ref[client];action=show_news'>news</a> for you! Please make sure to read all news, as they may contain important updates about roleplay rules or canon.</font></b>"
-
-		new_player_panel()
-		//PDA Resource Initialisation =======================================================>
-		/*
-		Quick note: local dream daemon instances don't seem to cache images right. Might be
-		a local problem with my machine but it's annoying nontheless.
-		*/
-		if(client)
-			//load the PDA iconset into the client
-			src << browse_rsc('pda_atmos.png')
-			src << browse_rsc('pda_back.png')
-			src << browse_rsc('pda_bell.png')
-			src << browse_rsc('pda_blank.png')
-			src << browse_rsc('pda_boom.png')
-			src << browse_rsc('pda_bucket.png')
-			src << browse_rsc('pda_crate.png')
-			src << browse_rsc('pda_cuffs.png')
-			src << browse_rsc('pda_eject.png')
-			src << browse_rsc('pda_exit.png')
-			src << browse_rsc('pda_flashlight.png')
-			src << browse_rsc('pda_honk.png')
-			src << browse_rsc('pda_mail.png')
-			src << browse_rsc('pda_medical.png')
-			src << browse_rsc('pda_menu.png')
-			src << browse_rsc('pda_mule.png')
-			src << browse_rsc('pda_notes.png')
-			src << browse_rsc('pda_power.png')
-			src << browse_rsc('pda_rdoor.png')
-			src << browse_rsc('pda_reagent.png')
-			src << browse_rsc('pda_refresh.png')
-			src << browse_rsc('pda_scanner.png')
-			src << browse_rsc('pda_signaler.png')
-			src << browse_rsc('pda_status.png')
-			//Loads icons for SpiderOS into client
-			src << browse_rsc('sos_1.png')
-			src << browse_rsc('sos_2.png')
-			src << browse_rsc('sos_3.png')
-			src << browse_rsc('sos_4.png')
-			src << browse_rsc('sos_5.png')
-			src << browse_rsc('sos_6.png')
-			src << browse_rsc('sos_7.png')
-			src << browse_rsc('sos_8.png')
-			src << browse_rsc('sos_9.png')
-			src << browse_rsc('sos_10.png')
-			src << browse_rsc('sos_11.png')
-			src << browse_rsc('sos_12.png')
-			src << browse_rsc('sos_13.png')
-			src << browse_rsc('sos_14.png')
-		//End PDA Resource Initialisation =====================================================>
-
 
 	Logout()
 		ready = 0
@@ -306,10 +216,11 @@
 			var/obj/item/weapon/card/id/C = H.wear_id
 			if (C)
 				G.fields["rank"] = C.assignment
+
 				G.fields["real_rank"] = H.mind.assigned_role
 			else
 				if(H.mind && H.mind.assigned_role)
-					G.fields["rank"] = H.mind.assigned_role
+					G.fields["rank"] = H.mind.role_alt_title ? H.mind.role_alt_title : H.mind.assigned_role
 					G.fields["real_rank"] = H.mind.assigned_role
 				else
 					G.fields["rank"] = "Unassigned"
@@ -330,21 +241,58 @@
 			G.fields["m_stat"] = "Stable"
 			M.fields["b_type"] = text("[]", H.dna.b_type)
 			M.fields["b_dna"] = H.dna.unique_enzymes
-			M.fields["mi_dis"] = "None"
-			M.fields["mi_dis_d"] = "No minor disabilities have been declared."
-			M.fields["ma_dis"] = "None"
-			M.fields["ma_dis_d"] = "No major disabilities have been diagnosed."
+
+			var/minor_dis = null
+			if(H.disabilities)
+				if(H.disabilities & 1)
+					minor_dis += "Myopia, "
+				if(H.disabilities & 4)
+					minor_dis += "Persistant Cough, "
+				if(H.disabilities & 16)
+					minor_dis += "Stuttering, "
+			if(minor_dis)
+				M.fields["mi_dis"] = minor_dis
+			else
+				M.fields["mi_dis"] = "None"
+
+			M.fields["mi_dis_d"] = "No additional minor disability notes."
+
+			var/major_dis = null
+			if(H.disabilities)
+				if(H.disabilities & 2)
+					major_dis += "Epilepsy, "
+				if(H.disabilities & 8)
+					major_dis += "Tourette's Syndrome, "
+				if(H.disabilities & 32)
+					major_dis += "Deafness, "
+			if(major_dis)
+				M.fields["ma_dis"] = major_dis
+			else
+				M.fields["ma_dis"] = "None"
+
+			M.fields["ma_dis_d"] = "No additional major disability notes."
 			M.fields["alg"] = "None"
-			M.fields["alg_d"] = "No allergies have been detected in this patient."
+			M.fields["alg_d"] = "No additional allergy notes."
 			M.fields["cdi"] = "None"
-			M.fields["cdi_d"] = "No diseases have been diagnosed at the moment."
-			M.fields["notes"] = "No notes."
+			M.fields["cdi_d"] = "No additional disease notes."
+
+			if(H.med_record && !jobban_isbanned(H, "Records"))
+				M.fields["notes"] = H.med_record
+			else
+				M.fields["notes"] = "No notes found."
+
 			S.fields["criminal"] = "None"
 			S.fields["mi_crim"] = "None"
 			S.fields["mi_crim_d"] = "No minor crime convictions."
 			S.fields["ma_crim"] = "None"
 			S.fields["ma_crim_d"] = "No major crime convictions."
-			S.fields["notes"] = "No notes."
+
+			if(H.sec_record && !jobban_isbanned(H, "Records"))
+				S.fields["notes"] = H.sec_record
+			else
+				S.fields["notes"] = "No notes."
+
+
 
 			//Begin locked reporting
 			L.fields["name"] = H.real_name
@@ -410,6 +358,12 @@
 			preferences.copy_to(new_character)
 			if((preferences.species == "Soghun") && (is_alien_whitelisted(src, "Soghun"))) //This probably shouldn't be here, but I can't think of any other way
 				new_character.mutantrace = "lizard"
+				new_character.soghun_talk_understand = 1
+				new_character.voice_name = "Soghun"
+			if((preferences.species == "Skrell") && (is_alien_whitelisted(src, "Skrell")))
+				new_character.mutantrace = "skrell"
+				new_character.skrell_talk_understand = 1
+				new_character.voice_name = "Skrell"
 		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
 
 		new_character.dna.ready_dna(new_character)

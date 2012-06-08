@@ -1,15 +1,16 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /obj/machinery/computer/card
 	name = "Identification Computer"
 	desc = "A computer used to modify ID cards."
 	icon_state = "id"
 	req_access = list(access_change_ids)
 	circuit = "/obj/item/weapon/circuitboard/card"
-	var
-		obj/item/weapon/card/id/scan = null
-		obj/item/weapon/card/id/modify = null
-		authenticated = 0.0
-		mode = 0.0
-		printing = null
+	var/obj/item/weapon/card/id/scan = null
+	var/obj/item/weapon/card/id/modify = null
+	var/authenticated = 0.0
+	var/mode = 0.0
+	var/printing = null
 
 
 /obj/machinery/computer/card/attackby(O as obj, user as mob)//TODO:SANITY
@@ -245,7 +246,7 @@
 			if (authenticated)
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
-					var/temp_t = copytext(sanitize(input("Enter a custom job assignment.","Assignment")),1,MAX_MESSAGE_LEN)
+					var/temp_t = copytext(sanitize(input("Enter a custom job assignment.","Assignment")),1,MAX_NAME_LEN)
 					if(temp_t)
 						t1 = temp_t
 				else

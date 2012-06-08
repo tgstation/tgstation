@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /proc/hex2num(hex)
 
 	if (!( istext(hex) ))
@@ -692,15 +694,15 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/ainame(var/mob/M as mob)
 	var/randomname = M.name
 	var/time_passed = world.time//Pretty basic but it'll do. It's still possible to bypass this by return ainame().
-	var/newname = input(M,"You are the AI. Would you like to change your name to something else?", "Name change",randomname)
+	var/newname = copytext(sanitize(input(M,"You are the AI. Would you like to change your name to something else?", "Name change",randomname)),1,MAX_NAME_LEN)
 	if((world.time-time_passed)>200)//If more than 20 game seconds passed.
 		M << "You took too long to decide. Default name selected."
 		return
 
-	if (length(newname) == 0)
+	if (!newname)
 		newname = randomname
 
-	if (newname)
+	else
 		if (newname == "Inactive AI")//Keeping this here to prevent dumb.
 			M << "That name is reserved."
 			return ainame(M)
@@ -708,22 +710,19 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if (A.real_name == newname&&newname!=randomname)
 				M << "There's already an AI with that name."
 				return ainame(M)
-		if (length(newname) >= 26)
-			newname = copytext(newname, 1, 26)
-		newname = dd_replacetext(newname, ">", "'")
 		M.real_name = newname
 		M.name = newname
 		M.original_name = newname
 
 /*/proc/clname(var/mob/M as mob) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea
 	var/randomname = pick(clown_names)
-	var/newname = input(M,"You are the clown. Would you like to change your name to something else?", "Name change",randomname)
+	var/newname = copytext(sanitize(input(M,"You are the clown. Would you like to change your name to something else?", "Name change",randomname)),1,MAX_NAME_LEN)
 	var/oldname = M.real_name
 
-	if (length(newname) == 0)
+	if (!newname)
 		newname = randomname
 
-	if (newname)
+	else
 		var/badname = 0
 		switch(newname)
 			if("Unknown")	badname = 1
@@ -740,9 +739,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(A.real_name == newname)
 				M << "That name is reserved."
 				return clname(M)
-		if(length(newname) >= 26)
-			newname = copytext(newname, 1, 26)
-		newname = dd_replacetext(newname, ">", "'")
 		M.real_name = newname
 		M.name = newname
 		M.original_name = newname
@@ -838,7 +834,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/names = list()
 	var/list/creatures = list()
 	var/list/namecounts = list()
-
 	for(var/mob/M in mobs)
 		var/name = M.name
 		if (name in names)
@@ -847,7 +842,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		else
 			names.Add(name)
 			namecounts[name] = 1
-
 		if (M.real_name && M.real_name != M.name)
 			name += " \[[M.original_name? M.original_name : M.real_name]\]"
 
@@ -856,7 +850,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				name += " \[ghost\]"
 			else
 				name += " \[dead\]"
-
 		creatures[name] = M
 
 	return creatures
@@ -1171,11 +1164,6 @@ proc/isemptylist(list/list)
 		return 1
 	return 0
 
-proc/clearlist(list/list)
-	if(istype(list))
-		list.len = 0
-	return
-
 proc/listclearnulls(list/list)
 	if(istype(list))
 		while(null in list)
@@ -1352,8 +1340,8 @@ proc/listclearnulls(list/list)
 	return 1
 */
 
-/proc/do_after(var/mob/user as mob, delay as num, var/numticks = 5) 		// Replacing the upper one with this one because Byond keeps feeling that the upper one is an infinate loop
-	if(!user || isnull(user))												// This one should have less temptation
+/proc/do_after(var/mob/user as mob, delay as num, var/numticks = 5, var/needhand = 1) 		// Replacing the upper one with this one because Byond keeps feeling that the upper one is an infinate loop
+	if(!user || isnull(user))																// This one should have less temptation
 		return 0
 	if(numticks == 0)
 		return 0
@@ -1364,7 +1352,10 @@ proc/listclearnulls(list/list)
 
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
-		if(!user || user.stat || user.weakened || user.stunned || !(user.loc == T) || !(user.equipped() == holding))
+
+		if(needhand && !(user.equipped() == holding))	//Sometimes you don't want the user to have to keep their active hand
+			return 0
+		if(!user || user.stat || user.weakened || user.stunned || !(user.loc == T))
 			return 0
 
 	return 1
@@ -1561,19 +1552,13 @@ proc/listclearnulls(list/list)
 		for(var/turf/simulated/T1 in toupdate)
 			for(var/obj/machinery/door/D2 in T1)
 				doors += D2
-			if(T1.parent)
-				air_master.groups_to_rebuild += T1.parent
-			else
-				air_master.tiles_to_update += T1
+			air_master.tiles_to_update |= T1
 
 	if(fromupdate.len)
 		for(var/turf/simulated/T2 in fromupdate)
 			for(var/obj/machinery/door/D2 in T2)
 				doors += D2
-			if(T2.parent)
-				air_master.groups_to_rebuild += T2.parent
-			else
-				air_master.tiles_to_update += T2
+			air_master.tiles_to_update |= T2
 
 	for(var/obj/O in doors)
 		O:update_nearby_tiles(1)
@@ -1728,10 +1713,7 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 		for(var/turf/simulated/T1 in toupdate)
 			for(var/obj/machinery/door/D2 in T1)
 				doors += D2
-			if(T1.parent)
-				air_master.groups_to_rebuild += T1.parent
-			else
-				air_master.tiles_to_update += T1
+			air_master.tiles_to_update += T1
 
 	for(var/obj/O in doors)
 		O:update_nearby_tiles(1)
@@ -1776,39 +1758,19 @@ proc/oview_or_orange(distance = world.view , center = usr , type)
 		if("range")
 			. = orange(distance,center)
 	return
-proc/get_opposite(var/checkdir)
-	switch(checkdir)
-		if(NORTH)
-			return SOUTH
-		if(SOUTH)
-			return NORTH
-		if(EAST)
-			return WEST
-		if(WEST)
-			return EAST
-		if(NORTHEAST)
-			return SOUTHWEST
-		if(NORTHWEST)
-			return SOUTHEAST
-		if(SOUTHEAST)
-			return NORTHWEST
-		if(SOUTHWEST)
-			return NORTHEAST
 
 /proc/stringsplit(txt, character)
-	var
-		cur_text = txt
-		last_found = 1
-		found_char = findtext(cur_text,character)
-		list/list = list()
+	var/cur_text = txt
+	var/last_found = 1
+	var/found_char = findtext(cur_text,character)
+	var/list/list = list()
 	if(found_char)
 		var/fs = copytext(cur_text,last_found,found_char)
 		list += fs
 		last_found = found_char+length(character)
 		found_char = findtext(cur_text,character,last_found)
 	while(found_char)
-		var
-			found_string = copytext(cur_text,last_found,found_char)
+		var/found_string = copytext(cur_text,last_found,found_char)
 		last_found = found_char+length(character)
 		list += found_string
 		found_char = findtext(cur_text,character,last_found)

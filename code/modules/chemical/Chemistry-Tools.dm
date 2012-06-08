@@ -11,9 +11,6 @@
 	item_state = "flashbang"
 	w_class = 2.0
 	force = 2.0
-	throw_speed = 4
-	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT | USEDELAY
 	var/obj/item/weapon/reagent_containers/glass/beaker_one
 	var/obj/item/weapon/reagent_containers/glass/beaker_two
 	var/obj/item/device/assembly/attached_device
@@ -27,6 +24,10 @@
 	var/list/allowed_containers = list("/obj/item/weapon/reagent_containers/glass/beaker", "/obj/item/weapon/reagent_containers/glass/dispenser", "/obj/item/weapon/reagent_containers/glass/bottle")
 	var/affected_area = 3
 	var/mob/attacher = "Unknown"
+	throw_speed = 4
+	throw_range = 20
+	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	slot_flags = SLOT_BELT
 
 	attackby(var/obj/item/weapon/W, var/mob/user)
 		if(path || !active)
@@ -784,7 +785,7 @@
 		/obj/structure/table,
 		/obj/structure/closet/secure_closet,
 		/obj/structure/closet,
-		/obj/machinery/sink,
+		/obj/structure/sink,
 		/obj/item/weapon/storage,
 		/obj/machinery/atmospherics/unary/cryo_cell,
 		/obj/item/weapon/chem_grenade,
@@ -994,7 +995,7 @@
 						if(!T.dna)
 							usr << "You are unable to locate any blood. (To be specific, your target seems to be missing their DNA datum)"
 							return
-						if(T.mutations2 & NOCLONE) //target done been et, no more blood in him
+						if(NOCLONE in T.mutations) //target done been et, no more blood in him
 							user << "\red You are unable to locate any blood."
 							return
 						if(ishuman(T))
@@ -1304,7 +1305,8 @@
 	amount_per_transfer_from_this = 5
 	volume = 30
 	possible_transfer_amounts = null
-	flags = FPRINT | ONBELT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	slot_flags = SLOT_BELT
 
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user as mob)
 	return src.attack_hand(user)
@@ -1349,9 +1351,9 @@
 	possible_transfer_amounts = null
 	flags = FPRINT
 	var/mode = 1
-	var/charge_cost = 100
+	var/charge_cost = 50
 	var/charge_tick = 0
-	var/recharge_time = 10 //Time it takes for shots to recharge (in seconds)
+	var/recharge_time = 5 //Time it takes for shots to recharge (in seconds)
 
 	New()
 		..()
@@ -1372,13 +1374,13 @@
 			if(R && R.cell)
 				if(mode == 1 && reagents.total_volume < 30) 	//Don't recharge reagents and drain power if the storage is full.
 					R.cell.use(charge_cost) 					//Take power from borg...
-					reagents.add_reagent("tricordrazine",10)	//And fill hypo with reagent.
+					reagents.add_reagent("tricordrazine",5)		//And fill hypo with reagent.
 				if(mode == 2 && reagents.total_volume < 30)
 					R.cell.use(charge_cost)
-					reagents.add_reagent("inaprovaline", 10)
+					reagents.add_reagent("inaprovaline", 5)
 				if(mode == 3 && reagents.total_volume < 30)
 					R.cell.use(charge_cost)
-					reagents.add_reagent("spaceacillin", 10)
+					reagents.add_reagent("spaceacillin", 5)
 		//update_icon()
 		return 1
 
@@ -1402,16 +1404,19 @@
 	playsound(src.loc, 'pop.ogg', 50, 0)		//Change the mode
 	if(mode == 1)
 		mode = 2
+		charge_tick = 0 //Prevents wasted chems/cell charge if you're cycling through modes.
 		reagents.clear_reagents() //Flushes whatever was in the storage previously, so you don't get chems all mixed up.
 		user << "\blue Synthesizer is now producing 'Inaprovaline'."
 		return
 	if(mode == 2)
 		mode = 3
+		charge_tick = 0
 		reagents.clear_reagents()
 		user << "\blue Synthesizer is now producing 'Spaceacillin'."
 		return
 	if(mode == 3)
 		mode = 1
+		charge_tick = 0
 		reagents.clear_reagents()
 		user << "\blue Synthesizer is now producing 'Tricordrazine'."
 		return
@@ -1461,6 +1466,7 @@
 	icon_state = null
 	var/bitesize = 1
 	var/bitecount = 0
+	var/eatsound = 'eatfood.ogg'
 	var/trash = null
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
@@ -1507,6 +1513,9 @@
 					M.put_in_hand(T)
 				if ("tray")
 					var/obj/item/trash/tray/T = new /obj/item/trash/tray/( M )
+					M.put_in_hand(T)
+				if ("liquidfood")
+					var/obj/item/trash/liquidfood/T = new /obj/item/trash/liquidfood/( M )
 					M.put_in_hand(T)
 		return
 
@@ -1580,10 +1589,11 @@
 						if(!reagents.total_volume)
 							if(M == user) user << "\red You finish eating [src]."
 							else user << "\red [M] finishes eating [src]."
+							del(src)
 							spawn(5)
 								user.update_clothing()
-							del(src)
-				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
+
+				playsound(M.loc, eatsound, rand(10,50), 1)
 				return 1
 		else if(istype(M, /mob/living/simple_animal/livestock))
 			if(M == user)								//If you're eating it yourself.
@@ -1979,14 +1989,7 @@
 
 	attackby(var/obj/D, mob/user as mob)
 		if(isprox(D))
-			var/obj/item/weapon/bucket_sensor/B = new /obj/item/weapon/bucket_sensor
-			B.loc = user
-			if (user.r_hand == D)
-				user.u_equip(D)
-				user.r_hand = B
-			else
-				user.u_equip(D)
-				user.l_hand = B
+			var/obj/item/weapon/bucket_sensor/B = new /obj/item/weapon/bucket_sensor(user.loc)
 			B.layer = 20
 			user << "You add the sensor to the bucket"
 			del(D)
@@ -2918,6 +2921,15 @@
 		src.pixel_x = rand(-10.0, 10)
 		src.pixel_y = rand(-10.0, 10)
 
+/obj/item/weapon/reagent_containers/food/drinks/waterbottle
+	name = "water bottle"
+	desc = "Straight from the ice lakes of Mars!"
+	icon_state = "waterbottle"
+	New()
+		..()
+		reagents.add_reagent("water", 30)
+		src.pixel_x = rand(-10.0, 10)
+		src.pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/sillycup
 	name = "Paper Cup"
@@ -3210,19 +3222,19 @@
 
 	bullet_act(var/obj/item/projectile/Proj)
 		if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-			explosion(src.loc,-1,0,2)
+			explosion(get_turf(src),-1,0,2)
 			if(src)
 				del(src)
 
 
 
 	blob_act()
-		explosion(src.loc,0,1,5,7,10)
+		explosion(get_turf(src),0,1,5,7,10)
 		if(src)
 			del(src)
 
 	ex_act()
-		explosion(src.loc,-1,0,2)
+		explosion(get_turf(src),-1,0,2)
 		if(src)
 			del(src)
 
@@ -3263,7 +3275,7 @@
 		reagents.add_reagent("beer",1000)
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act()
-	explosion(src.loc,0,3,5,7,10)
+	explosion(get_turf(src),0,3,5,7,10)
 	del(src)
 
 
@@ -3661,7 +3673,7 @@
 					desc = "A drink that is guaranteed to knock you silly."
 				if("hippiesdelight")
 					icon_state = "hippiesdelightglass"
-					name = "Hippiesdelight"
+					name = "Hippie's Delight"
 					desc = "A drink enjoyed by people during the 1960's."
 				if("bananahonk")
 					icon_state = "bananahonkglass"
@@ -3699,13 +3711,29 @@
 					icon_state = "driestmartiniglass"
 					name = "Driest Martini"
 					desc = "Only for the experienced. You think you see sand floating in the glass."
+				if("ice")
+					icon_state = "iceglass"
+					name = "Glass of ice"
+					desc = "Generally, you're supposed to put something else in there too..."
+				if("icecoffee")
+					icon_state = "icedcoffeeglass"
+					name = "Iced Coffee"
+					desc = "A drink to perk you up and refresh you!"
+				if("coffee")
+					icon_state = "glass_brown"
+					name = "Glass of coffee"
+					desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
+				if("bilk")
+					icon_state = "glass_brown"
+					name = "Glass of bilk"
+					desc = "A brew of milk and beer. For those alcoholics who fear osteoporosis."
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"
 					desc = "You can't really tell what this is."
 		else
 			icon_state = "glass_empty"
-			name = "Drinking glass"
+			name = "drinking glass"
 			desc = "Your standard drinking glass"
 			return
 

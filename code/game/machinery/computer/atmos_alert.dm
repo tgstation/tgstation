@@ -1,13 +1,15 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /obj/machinery/computer/atmos_alert
 	name = "Atmospheric Alert Computer"
 	desc = "Used to access the station's atmospheric sensors."
+	circuit = "/obj/item/weapon/circuitboard/atmos_alert"
 	icon_state = "alert:0"
-	var
-		list/priority_alarms = list()
-		list/minor_alarms = list()
-		receive_frequency = 1437
-		datum/radio_frequency/radio_connection
+	var/list/priority_alarms = list()
+	var/list/minor_alarms = list()
+	var/receive_frequency = 1437
+	var/datum/radio_frequency/radio_connection
 
 
 	initialize()
@@ -103,3 +105,26 @@
 					minor_alarms -= zone
 		update_icon()
 		return
+
+	attackby(I as obj, user as mob)
+		if(istype(I, /obj/item/weapon/screwdriver))
+			playsound(src.loc, 'Screwdriver.ogg', 50, 1)
+			if(do_after(user, 20))
+				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
+				var/obj/item/weapon/circuitboard/atmos_alert/M = new /obj/item/weapon/circuitboard/atmos_alert( A )
+				for (var/obj/C in src)
+					C.loc = src.loc
+				A.circuit = M
+				A.anchored = 1
+
+				if (src.stat & BROKEN)
+					user << "\blue The broken glass falls out."
+					new /obj/item/weapon/shard( src.loc )
+					A.state = 3
+					A.icon_state = "3"
+				else
+					user << "\blue You disconnect the monitor."
+					A.state = 4
+					A.icon_state = "4"
+
+				del(src)

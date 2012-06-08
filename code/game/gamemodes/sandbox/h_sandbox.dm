@@ -1,6 +1,7 @@
-var
-	hsboxspawn = 1
-	list
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
+var/hsboxspawn = 1
+var/list
 		hrefs = list(
 					"hsbsuit" = "Suit Up (Space Travel Gear)",
 					"hsbmetal" = "Spawn 50 Metal",
@@ -15,8 +16,7 @@ var
 					"hsbmedkit" = "Spawn Medical Kit")
 
 mob
-	var
-		datum/hSB/sandbox = null
+	var/datum/hSB/sandbox = null
 	proc
 		CanBuild()
 			if(master_mode == "sandbox")
@@ -30,9 +30,8 @@ mob
 				sandbox.update()
 
 datum/hSB
-	var
-		owner = null
-		admin = 0
+	var/owner = null
+	var/admin = 0
 	proc
 		update()
 			var/hsbpanel = "<center><b>h_Sandbox Panel</b></center><hr>"

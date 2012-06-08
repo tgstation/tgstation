@@ -27,7 +27,7 @@ datum/preferences
 
 	proc/randomize_hair(var/gender)
 		// Generate list of all possible hairs via typesof(), subtract the parent type however
-		var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
+		var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair - typesof(/datum/sprite_accessory/hair/alien)
 
 		// List of hair datums. Used in pick() to select random hair
 		var/list/hairs = list()
@@ -204,10 +204,7 @@ datum/preferences
 		del(preview_icon)
 
 		var/g = "m"
-		if (gender == MALE)
-			g = "m"
-		else if (gender == FEMALE)
-			g = "f"
+		if (gender == FEMALE)	g = "f"
 
 		if(species == "Tajaran")
 			preview_icon = new /icon('tajaran.dmi', "body_[g]_s", "dir" = preview_dir)
@@ -216,6 +213,11 @@ datum/preferences
 				preview_icon = new /icon('genetics.dmi', "lizard_male_s", "dir" = preview_dir)
 			else if(g == "f")
 				preview_icon = new /icon('genetics.dmi', "lizard_female_s", "dir" = preview_dir)
+		else if(species == "Skrell")
+			if(g == "m")
+				preview_icon = new /icon('genetics.dmi', "skrell_male_s", "dir" = preview_dir)
+			else if(g == "f")
+				preview_icon = new /icon('genetics.dmi', "skrell_female_s", "dir" = preview_dir)
 		else
 			preview_icon = new /icon('human.dmi', "body_[g]_s", "dir" = preview_dir)
 
@@ -229,7 +231,8 @@ datum/preferences
 			preview_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_s", "dir" = preview_dir), ICON_OVERLAY)
 
 		var/icon/eyes_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "eyes_s", "dir" = preview_dir)
-		eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
+		if(species != "Skrell")
+			eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
 
 
 		// Hair and facial hair, improved by Doohl
@@ -243,7 +246,8 @@ datum/preferences
 		var/icon/mouth_s = new/icon("icon" = 'human_face.dmi', "icon_state" = "mouth_[g]_s", "dir" = preview_dir)
 
 		eyes_s.Blend(hair_s, ICON_OVERLAY)
-		eyes_s.Blend(mouth_s, ICON_OVERLAY)
+		if(species == "Human")
+			eyes_s.Blend(mouth_s, ICON_OVERLAY)
 		eyes_s.Blend(facial_s, ICON_OVERLAY)
 
 		preview_icon.Blend(eyes_s, ICON_OVERLAY)

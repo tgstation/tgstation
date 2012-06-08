@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 // Mulebot - carries crates around for Quartermaster
 // Navigates via floor navbeacons
 // Remote Controlled from QM's PDA
@@ -52,17 +54,16 @@
 						// the installed power cell
 
 	// constants for internal wiring bitflags
-	var/const
-		wire_power1 = 1			// power connections
-		wire_power2 = 2
-		wire_mobavoid = 4		// mob avoidance
-		wire_loadcheck = 8		// load checking (non-crate)
-		wire_motor1 = 16		// motor wires
-		wire_motor2 = 32		//
-		wire_remote_rx = 64		// remote recv functions
-		wire_remote_tx = 128	// remote trans status
-		wire_beacon_rx = 256	// beacon ping recv
-		wire_beacon_tx = 512	// beacon ping trans
+	var/const/wire_power1 = 1			// power connections
+	var/const/wire_power2 = 2
+	var/const/wire_mobavoid = 4		// mob avoidance
+	var/const/wire_loadcheck = 8		// load checking (non-crate)
+	var/const/wire_motor1 = 16		// motor wires
+	var/const/wire_motor2 = 32		//
+	var/const/wire_remote_rx = 64		// remote recv functions
+	var/const/wire_remote_tx = 128	// remote trans status
+	var/const/wire_beacon_rx = 256	// beacon ping recv
+	var/const/wire_beacon_tx = 512	// beacon ping trans
 
 	var/wires = 1023		// all flags on
 
@@ -377,7 +378,7 @@
 
 			if("setid")
 				refresh=0
-				var/new_id = input("Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", suffix) as text|null
+				var/new_id = copytext(sanitize(input("Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", suffix) as text|null),1,MAX_NAME_LEN)
 				refresh=1
 				if(new_id)
 					suffix = new_id
@@ -801,6 +802,7 @@
 	H.apply_damage(0.5*damage, BRUTE, "r_arm")
 
 	var/obj/effect/decal/cleanable/blood/B = new(src.loc)
+	B.blood_DNA = list()
 	B.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
 
 	bloodiness += 4

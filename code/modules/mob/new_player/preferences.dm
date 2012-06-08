@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 #define UI_OLD 0
 #define UI_NEW 1
 
@@ -29,18 +31,17 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"infested monkey" = ispath(text2path("/datum/game_mode/monkey")),
 )
 */
-var/const
-	BE_TRAITOR   =(1<<0)
-	BE_OPERATIVE =(1<<1)
-	BE_CHANGELING=(1<<2)
-	BE_WIZARD    =(1<<3)
-	BE_MALF      =(1<<4)
-	BE_REV       =(1<<5)
-	BE_ALIEN     =(1<<6)
-	BE_CULTIST   =(1<<7)
-	BE_MONKEY    =(1<<8)
-	BE_PAI       =(1<<9)
-	BE_MEME		 =(1<<10)
+var/const/BE_TRAITOR   =(1<<0)
+var/const/BE_OPERATIVE =(1<<1)
+var/const/BE_CHANGELING=(1<<2)
+var/const/BE_WIZARD    =(1<<3)
+var/const/BE_MALF      =(1<<4)
+var/const/BE_REV       =(1<<5)
+var/const/BE_ALIEN     =(1<<6)
+var/const/BE_CULTIST   =(1<<7)
+var/const/BE_MONKEY    =(1<<8)
+var/const/BE_PAI       =(1<<9)
+var/const/BE_MEME		 =(1<<10)
 
 
 
@@ -124,6 +125,9 @@ datum/preferences
 	var/list/job_alt_titles = new()		// the default name of a job like "Medical Doctor"
 
 	var/flavor_text = ""
+
+	var/med_record = ""
+	var/sec_record = ""
 
 		// slot stuff (Why were they var/var?  --SkyMarshal)
 	var/slotname
@@ -319,6 +323,10 @@ datum/preferences
 
 		dat += "<hr><b><a href=\"byond://?src=\ref[user];preferences=1;disabilities=-1\">Disabilities</a></b><br>"
 
+		if(jobban_isbanned(user, "Records"))
+			dat += "<hr><b>You are banned from using character records.</b><br>"
+		else
+			dat += "<hr><b><a href=\"byond://?src=\ref[user];preferences=1;records=1\">Character Records</a></b><br>"
 		dat += "<hr><b>Flavor Text</b><br>"
 		dat += "<a href='byond://?src=\ref[user];preferences=1;flavor_text=1'>Change</a><br>"
 		if(lentext(flavor_text) <= 40)
@@ -389,6 +397,33 @@ datum/preferences
 
 		user << browse(null, "window=preferences")
 		user << browse(HTML, "window=disabil;size=350x300")
+		return
+
+	proc/SetRecords(mob/user)
+		var/HTML = "<body>"
+		HTML += "<tt><center>"
+		HTML += "<b>Set Character Records</b><br>"
+
+		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;med_record=1\">Medical Records</a><br>"
+
+		if(lentext(med_record) <= 40)
+			HTML += "[med_record]"
+		else
+			HTML += "[copytext(med_record, 1, 37)]..."
+
+		HTML += "<br><br><a href=\"byond://?src=\ref[user];preferences=1;sec_record=1\">Security Records</a><br>"
+
+		if(lentext(sec_record) <= 40)
+			HTML += "[sec_record]<br>"
+		else
+			HTML += "[copytext(sec_record, 1, 37)]...<br>"
+
+		HTML += "<br>"
+		HTML += "<a href=\"byond://?src=\ref[user];preferences=1;records=-1\">\[Done\]</a>"
+		HTML += "</center></tt>"
+
+		user << browse(null, "window=preferences")
+		user << browse(HTML, "window=records;size=350x300")
 		return
 
 	proc/GetAltTitle(datum/job/job)
@@ -633,16 +668,15 @@ datum/preferences
 
 			switch(link_tags["real_name"])
 				if("input")
-					new_name = input(user, "Please select a name:", "Character Generation")  as text
+					new_name = copytext( (input(user, "Please select a name:", "Character Generation")  as text) ,1,MAX_NAME_LEN)
 					var/list/bad_characters = list("_", "'", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\","0","1","2","3","4","5","6","7","8","9")
 					for(var/c in bad_characters)
 						new_name = dd_replacetext(new_name, c, "")
+
 					if(!new_name || (new_name == "Unknown") || (new_name == "floor") || (new_name == "wall") || (new_name == "r-wall"))
 						alert("Invalid name. Don't do that!")
 						return
-					if(length(new_name) >= 26)
-						alert("That name is too long.")
-						return
+
 					//Make it so number one. (means you can have names like McMillian). Credit to: Jtgibson
 					new_name = simple_titlecase(new_name)
 /*
@@ -660,8 +694,6 @@ datum/preferences
 					randomize_name()
 
 			if(new_name)
-				if(length(new_name) >= 26)
-					new_name = copytext(new_name, 1, 26)
 				real_name = new_name
 
 		if(link_tags["age"])
@@ -675,17 +707,9 @@ datum/preferences
 
 		if(link_tags["OOC"])
 			var/tempnote = ""
-			tempnote = input(user, "Please enter your OOC Notes!:", "OOC notes" , metadata)  as text
-			var/list/bad_characters = list("_", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\","0","1","2","3","4","5","6","7","8","9")
-
-			for(var/c in bad_characters)
-				tempnote = dd_replacetext(tempnote, c, "")
-
-			if(length(tempnote) >= 255)
-				alert("That name is too long. (255 character max, please)")
-				return
-
-			metadata = tempnote
+			tempnote = copytext(sanitize(input(user, "Please enter your OOC Notes!:", "OOC notes" , metadata)  as text),1,MAX_MESSAGE_LEN)
+			if(tempnote)
+				metadata = tempnote
 			return
 
 
@@ -707,17 +731,25 @@ datum/preferences
 					if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
 						if(is_alien_whitelisted(user, "Soghun")) //Check for Soghun and admins
 							new_species += "Soghun"
-						if(is_alien_whitelisted(user, "Tajaran")) //Check for Tajaran
+						if(is_alien_whitelisted(user, "Tajaran")) //Check for Tajaran and admins
 							new_species += "Tajaran"
+						if(is_alien_whitelisted(user, "Skrell")) //Check for Skrell and admins
+							new_species += "Skrell"
 					else //Not using the whitelist? Aliens for everyone!
 						new_species += "Tajaran"
 						new_species += "Soghun"
+						new_species += "Skrell"
 					species = input("Please select a species", "Character Generation", null) in new_species
 					h_style = "Bald" //Try not to carry face/head hair over.
 					f_style = "Shaved"
 					s_tone = 0 //Don't carry over skintone either.
 					hair_style = new/datum/sprite_accessory/hair/bald
 					facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
+					if(species == "Skrell")
+						if(gender == FEMALE)
+							hair_style = new/datum/sprite_accessory/hair/alien/skrell/female/tentacle
+						else
+							hair_style = new/datum/sprite_accessory/hair/alien/skrell/male/tentacle
 
 		if(link_tags["hair"])
 			switch(link_tags["hair"])
@@ -757,18 +789,19 @@ datum/preferences
 				if("random")
 					randomize_skin_tone()
 				if("input")
-					var/new_tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black) or 20-70 for Tajarans", "Character Generation")  as text
+					var/new_tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black) or 20-70 for other species.", "Character Generation")  as num
 					if(new_tone)
-						if(species == "Tajaran")
+						if(species != "Human")
 							s_tone = max(min(round(text2num(new_tone)), 70), 20)
 						else
 							s_tone = max(min(round(text2num(new_tone)), 220), 1)
 						s_tone = -s_tone + 35
 
 		if(link_tags["h_style"])
-			if(species != "Human")
+			if(species == "Tajaran" || species == "Soghun")
 				return
 			switch(link_tags["h_style"])
+
 				// New and improved hair selection code, by Doohl
 				if("random") // random hair selection
 
@@ -778,7 +811,13 @@ datum/preferences
 				if("input") // input hair selection
 
 					// Generate list of hairs via typesof()
-					var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
+					var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair - typesof(/datum/sprite_accessory/hair/alien)
+
+					if(species == "Skrell")
+						if(gender == FEMALE)
+							all_hairs = typesof(/datum/sprite_accessory/hair/alien/skrell/female) - /datum/sprite_accessory/hair/alien/skrell/female
+						else
+							all_hairs = typesof(/datum/sprite_accessory/hair/alien/skrell/male) - /datum/sprite_accessory/hair/alien/skrell/male
 
 					// List of hair names
 					var/list/hairs = list()
@@ -811,7 +850,7 @@ datum/preferences
 				src.ooccolor = ooccolor
 
 		if(link_tags["f_style"])
-			if(species != "Human") //Tajarans and Soghuns don't have hair stuff yet.
+			if(species != "Human") //Non-humans don't have hair stuff yet.
 				return
 			switch(link_tags["f_style"])
 
@@ -843,8 +882,12 @@ datum/preferences
 		if(link_tags["gender"])
 			if(gender == MALE)
 				gender = FEMALE
+				if(species == "Skrell")
+					hair_style = new/datum/sprite_accessory/hair/alien/skrell/female/tentacle
 			else
 				gender = MALE
+				if(species == "Skrell")
+					hair_style = new/datum/sprite_accessory/hair/alien/skrell/male/tentacle
 
 		if(link_tags["UI"])
 			switch(UI_style)
@@ -993,6 +1036,7 @@ datum/preferences
 			midis = 1
 			ghost_ears = 1
 			disabilities = 0
+
 		if(link_tags["disabilities"])
 			if(text2num(link_tags["disabilities"]) >= -1)
 				if(text2num(link_tags["disabilities"]) >= 0)
@@ -1002,6 +1046,33 @@ datum/preferences
 			else
 				user << browse(null, "window=disabil")
 
+		if(link_tags["records"])
+			if(text2num(link_tags["records"]) >= 1)
+				SetRecords(user)
+				return
+			else
+				user << browse(null, "window=records")
+
+		if(link_tags["med_record"])
+			var/medmsg = input(usr,"Set your medical notes here.","Medical Records",html_decode(med_record)) as message
+
+			if(medmsg != null)
+				medmsg = copytext(medmsg, 1, MAX_PAPER_MESSAGE_LEN)
+				medmsg = html_encode(medmsg)
+
+				med_record = medmsg
+				SetRecords(user)
+
+		if(link_tags["sec_record"])
+			var/secmsg = input(usr,"Set your security notes here.","Security Records",html_decode(sec_record)) as message
+
+			if(secmsg != null)
+				secmsg = copytext(secmsg, 1, MAX_PAPER_MESSAGE_LEN)
+				secmsg = html_encode(secmsg)
+
+				sec_record = secmsg
+				SetRecords(user)
+
 		ShowChoices(user)
 
 	proc/copy_to(mob/living/carbon/human/character, safety = 0)
@@ -1010,7 +1081,11 @@ datum/preferences
 		character.real_name = real_name
 		character.original_name = real_name //Original name is only used in ghost chat! It is not to be edited by anything!
 
+		character.species = species
+
 		character.flavor_text = flavor_text
+		character.med_record = med_record
+		character.sec_record = sec_record
 
 		character.gender = gender
 

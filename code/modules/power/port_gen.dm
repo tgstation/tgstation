@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /* new portable generator - work in progress
 
 /obj/machinery/power/port_gen
@@ -49,12 +51,11 @@ display round(lastgen) and plasmatank amount
 	directwired = 1
 	use_power = 0
 
-	var
-		active = 0
-		power_gen = 5000
-		open = 0
-		recent_fault = 0
-		power_output = 1
+	var/active = 0
+	var/power_gen = 5000
+	var/open = 0
+	var/recent_fault = 0
+	var/power_output = 1
 
 	proc
 		HasFuel() //Placeholder for fuel check.
@@ -98,14 +99,13 @@ display round(lastgen) and plasmatank amount
 
 /obj/machinery/power/port_gen/pacman
 	name = "P.A.C.M.A.N.-type Portable Generator"
-	var
-		sheets = 0
-		max_sheets = 100
-		sheet_path = /obj/item/stack/sheet/plasma
-		board_path = "/obj/item/weapon/circuitboard/pacman"
-		sheet_left = 0 // How much is left of the sheet
-		time_per_sheet = 10
-		heat = 0
+	var/sheets = 0
+	var/max_sheets = 100
+	var/sheet_path = /obj/item/stack/sheet/plasma
+	var/board_path = "/obj/item/weapon/circuitboard/pacman"
+	var/sheet_left = 0 // How much is left of the sheet
+	var/time_per_sheet = 10
+	var/heat = 0
 
 	New()
 		..()
@@ -183,7 +183,7 @@ display round(lastgen) and plasmatank amount
 
 	proc
 		overheat()
-			explosion(src.loc, 2, 5, 2, -1)
+			explosion(get_turf(src), 2, 5, 2, -1)
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
 		if(istype(O, sheet_path))
@@ -302,7 +302,7 @@ display round(lastgen) and plasmatank amount
 	time_per_sheet = 25
 	board_path = "/obj/item/weapon/circuitboard/pacman/super"
 	overheat()
-		explosion(src.loc, 3, 3, 3, -1)
+		explosion(get_turf(src), 3, 3, 3, -1)
 
 /obj/machinery/power/port_gen/pacman/mrs
 	name = "M.R.S.P.A.C.M.A.N.-type Portable Generator"
@@ -312,7 +312,7 @@ display round(lastgen) and plasmatank amount
 	time_per_sheet = 30
 	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"
 	overheat()
-		explosion(src.loc, 4, 4, 4, -1)
+		explosion(get_turf(src), 4, 4, 4, -1)
 
 /obj/machinery/power/port_gen/pacman/industrial
 	name = "Industrial P.A.C.M.A.N.-type Portable Generator"
@@ -322,4 +322,4 @@ display round(lastgen) and plasmatank amount
 	time_per_sheet = 30
 	board_path = "/obj/item/weapon/circuitboard/pacman/industrial"
 	overheat()
-		explosion(src.loc, 4, 4, 4, -1)
+		explosion(get_turf(src), 4, 4, 4, -1)

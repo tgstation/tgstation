@@ -46,8 +46,8 @@
 
 
 
-	var/husk = (mutations & HUSK)
-	//var/obese = (mutations & FAT)
+	var/husk = (HUSK in mutations)
+	//var/obese = (FAT in mutation)
 
 	stand_icon.Blend(new /icon('birdman.dmi', "chest_[g]_s"), ICON_OVERLAY)
 	lying_icon.Blend(new /icon('birdman.dmi', "chest_[g]_l"), ICON_OVERLAY)

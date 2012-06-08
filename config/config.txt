@@ -38,6 +38,9 @@ LOG_ATTACK
 ## log pda messages
 LOG_PDA
 
+## log all Topic() calls (for use by coders in tracking down Topic issues)
+# LOG_HREFS
+
 ## log admin warning messages
 ##LOG_ADMINWARN  ## Also duplicates a bunch of other messages.
 
@@ -53,21 +56,22 @@ SQL_ENABLED 0
 ## set to 0 to disable that mode
 ## Cult mode is in alpha test, enable at your own risk
 PROBABILITY EXTENDED 0
-PROBABILITY TRAITOR 3
+PROBABILITY TRAITOR 1
 PROBABILITY METEOR 0
 PROBABILITY MALFUNCTION 0
-PROBABILITY BLOB 1
+PROBABILITY BLOB 0
 PROBABILITY NUCLEAR 0
 PROBABILITY SANDBOX 0
 PROBABILITY WIZARD 0
 PROBABILITY RESTRUCTURING 0
 PROBABILITY REVOLUTION 1
 PROBABILITY CHANGELING 0
-PROBABILITY CULT 1
+PROBABILITY CULT 2
 PROBABILITY MONKEY 0
 PROBABILITY TRAITORCHAN 0
 PROBABILITY EXTEND-A-TRAITORMONGOUS 3
 PROBABILITY EPIDEMIC 1
+PROBABILITY MEME 0
 
 ## Hash out to disable random events during the round.
 ALLOW_RANDOM_EVENTS
@@ -78,7 +82,8 @@ TRAITOR_SCALING
 ## If security is prohibited from being most antagonists
 #PROTECT_ROLES_FROM_ANTAGONIST
 
-## If the auto-tensioner is active by default.  It creates more tratiors/other antagonists if it consideers the round slowing down.
+## If the TG auto-tensioner is active by default.  It creates more traitors/other antagonists if it consideers the round slowing down.
+## On BS12 we use Traitor-among-us. 
 #TENSIONER_ACTIVE
 
 ## If metadata is supported
@@ -126,20 +131,14 @@ GUEST_JOBBAN 1
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
 # SERVER ss13.example.com:2506
 
-
-
-
-
-
-
 ## forum address
-# FORUMURL http://baystation12.net/forums/
+# FORUMURL http://example.com
 
 ## Wiki address
-# WIKIURL http://baystation12.net/wiki/index.php
+# WIKIURL http://example.com
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
-# BANAPPEALS http://justanotherday.example.com
+# BANAPPEALS http://example.com
 
 ## In-game features
 ## spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
@@ -156,7 +155,7 @@ GUEST_JOBBAN 1
 #POPUP_ADMIN_PM
 
 ##What address should banned people appeal ther ban at?  Remember to escape the characters, if needed!
-APPEAL_ADDRESS http://baystation12.net/forums/index.php/board,2.0.html
+# APPEAL_ADDRESS http://example.com
 
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
 TICKLAG 0.9

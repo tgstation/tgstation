@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 /*
 CONTAINS:
 
@@ -13,7 +15,8 @@ WELDINGTOOOL
 	desc = "A wrench with common uses. Can be found in your hand."
 	icon = 'items.dmi'
 	icon_state = "wrench"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0
@@ -24,7 +27,29 @@ WELDINGTOOOL
 
 // SCREWDRIVER
 /obj/item/weapon/screwdriver/New()
-	icon_state = pick("screwdriver","screwdriver2","screwdriver3","screwdriver4","screwdriver5","screwdriver6","screwdriver7")
+	switch(pick("red","blue","purple","brown","green","cyan","yellow"))
+		if ("red")
+			icon_state = "screwdriver2"
+			item_state = "screwdriver"
+		if ("blue")
+			icon_state = "screwdriver"
+			item_state = "screwdriver_blue"
+		if ("purple")
+			icon_state = "screwdriver3"
+			item_state = "screwdriver_purple"
+		if ("brown")
+			icon_state = "screwdriver4"
+			item_state = "screwdriver_brown"
+		if ("green")
+			icon_state = "screwdriver5"
+			item_state = "screwdriver_green"
+		if ("cyan")
+			icon_state = "screwdriver6"
+			item_state = "screwdriver_cyan"
+		if ("yellow")
+			icon_state = "screwdriver7"
+			item_state = "screwdriver_yellow"
+
 	if (prob(75))
 		src.pixel_y = rand(0, 16)
 	return
@@ -33,7 +58,7 @@ WELDINGTOOOL
 	if(!istype(M))	return ..()
 	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
 		return ..()
-	if((user.mutations & CLUMSY) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		M = user
 	return eyestab(M,user)
 
@@ -44,7 +69,8 @@ WELDINGTOOOL
 	name = "Welding Tool"
 	icon = 'items.dmi'
 	icon_state = "welder"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
 	force = 3.0
 	throwforce = 5.0
 	throw_speed = 1
@@ -53,10 +79,9 @@ WELDINGTOOOL
 	m_amt = 70
 	g_amt = 30
 	origin_tech = "engineering=1"
-	var
-		welding = 0
-		status = 1
-		max_fuel = 20
+	var/welding = 0
+	var/status = 1
+	var/max_fuel = 20
 	proc
 		get_fuel()
 		remove_fuel(var/amount = 1, var/mob/M = null)
@@ -224,7 +249,6 @@ WELDINGTOOOL
 			src.damtype = "brute"
 			src.icon_state = "welder"
 			src.welding = 0
-		return
 
 
 	eyecheck(mob/user as mob)
@@ -313,7 +337,8 @@ WELDINGTOOOL
 	desc = "This cuts wires."
 	icon = 'items.dmi'
 	icon_state = "cutters"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	slot_flags = SLOT_BELT
 	force = 6.0
 	throw_speed = 2
 	throw_range = 9
@@ -324,6 +349,7 @@ WELDINGTOOOL
 	New()
 		if(prob(50))
 			icon_state = "cutters-y"
+			item_state = "cutters_yellow"
 
 /obj/item/weapon/wirecutters/attack(mob/M as mob, mob/user as mob)
 	if((M.handcuffed) && (istype(M:handcuffed, /obj/item/weapon/handcuffs/cable)))

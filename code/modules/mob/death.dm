@@ -47,7 +47,8 @@
 
 /mob/proc/death(gibbed)
 	timeofdeath = world.time
-	client.onDeath()
+	if(client)
+		client.onDeath()
 
 	var/cancel = 0
 	for(var/mob/M in world)

@@ -84,6 +84,7 @@
 
 	// HIDDEN MUTATIONS / SUPERPOWERS INITIALIZTION
 
+/*
 	for(var/x in typesof(/datum/mutations) - /datum/mutations)
 		var/datum/mutations/mut = new x
 
@@ -100,10 +101,60 @@
 
 
 		global_mutations += mut// add to global mutations list!
+*/
+
+//setupdooralarms() goes through every door in the world before the game starts, checks all the squares
+//adjacent to them, and if the adjacent square does not contain a dense turf and is not in the same
+//area as the door, then the door is added to that adjacent area's auxdoor list to be used later on for
+//atmos and fire alarms.
+proc/setupdooralarms()		//Strumpetplaya added 11/09/10 Automated Secondary Alarms on Doors
+	world << "\red <B>Setting up atmospheric lockdown areas...</b>"
+	for(var/obj/machinery/door/D in world)
+		var/turf/source = get_turf(D)
+		var/area/A = get_area(source)
+		var/turf/north = get_step(source, NORTH)
+		var/turf/east = get_step(source, EAST)
+		var/turf/south = get_step(source, SOUTH)
+		var/turf/west = get_step(source, WEST)
+		A.all_doors |= D
+
+		if(!north.density)
+			var/area/other_area = get_area(north)
+			if(other_area.name != A.name)
+				other_area.master.all_doors |= D
+
+		if(!east.density)
+			var/area/other_area = get_area(east)
+			if(other_area.name != A.name)
+				other_area.master.all_doors |= D
+
+		if(!south.density)
+			var/area/other_area = get_area(south)
+			if(other_area.name != A.name)
+				other_area.master.all_doors |= D
+
+		if(!west.density)
+			var/area/other_area = get_area(west)
+			if(other_area.name != A.name)
+				other_area.master.all_doors |= D
 
 
 
+/proc/setupfactions()
 
+	// Populate the factions list:
+	for(var/x in typesof(/datum/faction))
+		var/datum/faction/F = new x
+		if(!F.name)
+			del(F)
+			continue
+		else
+			ticker.factions.Add(F)
+			ticker.availablefactions.Add(F)
+
+	// Populate the syndicate coalition:
+	for(var/datum/faction/syndicate/S in ticker.factions)
+		ticker.syndicate_coalition.Add(S)
 
 
 /* This was used for something before, I think, but is not worth the effort to process now.

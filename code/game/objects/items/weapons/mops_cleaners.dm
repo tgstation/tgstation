@@ -1,10 +1,13 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/item/weapon/cleaner
 	desc = "A chemical that cleans messes."
 	icon = 'janitor.dmi'
 	name = "space cleaner"
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	flags = TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 2.0
 	throw_speed = 2
@@ -115,7 +118,8 @@
 	name = "chem sprayer"
 	icon_state = "chemsprayer"
 	item_state = "chemsprayer"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	flags = TABLEPASS|OPENCONTAINER|FPRINT|USEDELAY
+	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 3.0
 	throw_speed = 2
@@ -210,7 +214,6 @@
 	return
 
 
-	return
 
 //Pepper spray, set up to make the 2 different types
 /obj/item/weapon/pepperspray //This is riot control
@@ -219,7 +222,8 @@
 	name = "pepperspray"
 	icon_state = "pepperspray"
 	item_state = "pepperspray"
-	flags = ONBELT|TABLEPASS|FPRINT|USEDELAY
+	flags = TABLEPASS | FPRINT | USEDELAY
+	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 2.0
 	throw_speed = 2
@@ -234,7 +238,8 @@
 	name = "mace"
 	icon_state = "pepperspray"
 	item_state = "pepperspray"
-	flags = ONBELT|TABLEPASS|FPRINT|USEDELAY
+	flags = TABLEPASS | FPRINT | USEDELAY
+	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 1.0
 	throw_speed = 2
@@ -451,13 +456,12 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A as turf)
 
 /proc/GetColors(hex)
 	hex = uppertext(hex)
-	var
-		hi1 = text2ascii(hex, 2)
-		lo1 = text2ascii(hex, 3)
-		hi2 = text2ascii(hex, 4)
-		lo2 = text2ascii(hex, 5)
-		hi3 = text2ascii(hex, 6)
-		lo3 = text2ascii(hex, 7)
+	var/hi1 = text2ascii(hex, 2)
+	var/lo1 = text2ascii(hex, 3)
+	var/hi2 = text2ascii(hex, 4)
+	var/lo2 = text2ascii(hex, 5)
+	var/hi3 = text2ascii(hex, 6)
+	var/lo3 = text2ascii(hex, 7)
 	return list(((hi1>= 65 ? hi1-55 : hi1-48)<<4) | (lo1 >= 65 ? lo1-55 : lo1-48),
 		((hi2 >= 65 ? hi2-55 : hi2-48)<<4) | (lo2 >= 65 ? lo2-55 : lo2-48),
 		((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48))

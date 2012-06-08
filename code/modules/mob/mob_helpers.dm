@@ -212,10 +212,10 @@ proc/hasorgans(A)
 
 proc/slur(phrase)
 	phrase = html_decode(phrase)
-	var
-		leng=lentext(phrase)
-		counter=lentext(phrase)
-		newphrase="";newletter=""
+	var/leng=lentext(phrase)
+	var/counter=lentext(phrase)
+	var/newphrase=""
+	var/newletter=""
 	while(counter>=1)
 		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
 		if(rand(1,3)==3)
@@ -343,7 +343,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	return 0
 
-/mob/proc/put_in_hands(var/obj/item/I)
+/mob/proc/put_in_hands(var/obj/item/I) //A suprisingly useful proc.  Allows a simple way to place an object in a mob's hands, or, if they are full, on the ground below them.
 	if(!r_hand)
 		I.loc = src
 		r_hand = I

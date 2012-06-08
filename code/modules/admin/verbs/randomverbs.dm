@@ -621,10 +621,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_gib_self()
 	set name = "Gibself"
 	set category = "Fun"
-	if (istype(mob, /mob/dead/observer)) // so they don't spam gibs everywhere
-		return
-	else
-		mob.gib()
+
+	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
+	if(confirm == "Yes")
+		if (istype(mob, /mob/dead/observer)) // so they don't spam gibs everywhere
+			return
+		else
+			mob.gib()
 
 		log_admin("[key_name(usr)] used gibself.")
 		message_admins("\blue [key_name_admin(usr)] used gibself.", 1)

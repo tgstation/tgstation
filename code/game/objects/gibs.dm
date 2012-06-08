@@ -51,6 +51,7 @@
 								gib.viruses += viruus
 								viruus.holder = gib
 								viruus.spread_type = CONTACT_FEET
+					gib.blood_DNA = list()
 					if(MobDNA)
 						gib.blood_DNA[MobDNA.unique_enzymes] = MobDNA.b_type
 						if(MobDNA.original_name != "Unknown")

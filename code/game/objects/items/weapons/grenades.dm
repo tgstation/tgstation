@@ -14,15 +14,17 @@ FLASHBANG
 	item_state = "emp"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
 	origin_tech = "materials=2;magnets=3"
-	var
-		active = 0
-		det_time = 50
-	proc
-		prime()
-		clown_check(var/mob/living/user)
+	var/active = 0
+	var/det_time = 50
 
+	proc/prime()
+		return
+
+	proc/clown_check(var/mob/living/user)
+		return
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (istype(target, /obj/item/weapon/storage)) return ..() // Trying to put it in a full container
@@ -66,7 +68,7 @@ FLASHBANG
 
 
 	clown_check(var/mob/living/user)
-		if((user.mutations & CLUMSY) && prob(50))
+		if((CLUMSY in user.mutations) && prob(50))
 			user << "\red Huh? How does this thing work?!"
 			src.active = 1
 			src.icon_state = "empar"
@@ -88,17 +90,21 @@ FLASHBANG
 	item_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
 	origin_tech = "materials=2;combat=1"
-	var
-		active = 0
-		det_time = 30
-		banglet = 0
-	proc
-		bang(var/turf/T , var/mob/living/carbon/M)
-		prime()
-		clown_check(var/mob/living/user)
+	var/active = 0
+	var/det_time = 30
+	var/banglet = 0
 
+	proc/bang(var/turf/T , var/mob/living/carbon/M)
+		return
+
+	proc/prime()
+		return
+
+	proc/clown_check(var/mob/living/user)
+		return
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
 		if (isscrewdriver(W))
@@ -169,7 +175,7 @@ FLASHBANG
 			if(ishuman(M))
 				if(istype(M:l_ear, /obj/item/clothing/ears/earmuffs) || istype(M:r_ear, /obj/item/clothing/ears/earmuffs))
 					ear_safety += 2
-				if(M.mutations & HULK)
+				if(HULK in M.mutations)
 					ear_safety += 1
 				if(istype(M:head, /obj/item/clothing/head/helmet))
 					ear_safety += 1
@@ -227,7 +233,6 @@ FLASHBANG
 				M << "\red Your ears start to ring!"
 
 	prime()													// Prime now just handles the two loops that query for people in lockers and people who can see it.
-
 		var/turf/T = get_turf(src)
 		if(T)
 			T.hotspot_expose(700,125)
@@ -272,7 +277,7 @@ FLASHBANG
 
 
 	clown_check(var/mob/living/user)
-		if ((user.mutations & CLUMSY) && prob(50))
+		if ((CLUMSY in user.mutations) && prob(50))
 			user << "\red Huh? How does this thing work?!"
 			src.active = 1
 			src.icon_state = "flashbang1"

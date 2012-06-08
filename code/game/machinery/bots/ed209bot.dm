@@ -242,7 +242,7 @@ Auto Patrol: []"},
 					var/mob/living/carbon/M = src.target
 					var/maxstuns = 4
 					if (istype(M, /mob/living/carbon/human))
-						if (M.stuttering < 10 && (!(M.mutations & HULK))  /*&& (!istype(M:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
+						if (M.stuttering < 10 && (!(HULK in M.mutations))  /*&& (!istype(M:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
 							M.stuttering = 10
 						M.Stun(10)
 						M.Weaken(10)
@@ -869,7 +869,7 @@ Auto Patrol: []"},
 
 	else if(istype(W, /obj/item/weapon/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
-		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+		t = copytext(sanitize(t), 1, MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && src.loc != usr)

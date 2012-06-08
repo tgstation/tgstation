@@ -46,7 +46,7 @@ var/list/supply_groups = new()
 	layer = 4
 
 /obj/structure/plasticflaps/CanPass(atom/A, turf/T)
-	if(istype(A) && A.checkpass(PASSGLASS))
+	if(istype(A) && A.pass_flags&PASSGLASS)
 		return prob(60)
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A
@@ -69,18 +69,10 @@ var/list/supply_groups = new()
 	name = "\improper Airtight plastic flaps"
 	desc = "Heavy duty, airtight, plastic flaps."
 
-	New() //set the turf below the flaps to block air
-		var/turf/T = get_turf(src.loc)
-		if(T)
-			T.blocks_air = 1
-		..()
-
-	Del() //lazy hack to set the turf to allow air to pass if it's a simulated floor
-		var/turf/T = get_turf(src.loc)
-		if(T)
-			if(istype(T, /turf/simulated/floor))
-				T.blocks_air = 0
-		..()
+	CanPass(atom/A, turf/T, height = 0, air_group = 0)
+		if(!istype(A))
+			return 0
+		return ..()
 
 /area/supplyshuttle
 	name = "Supply Shuttle"
@@ -373,7 +365,9 @@ This method wont take into account storage items developed in the future and doe
 			var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(src.loc)
 			var/idname = "Unknown"
 			var/idrank = "Unknown"
-			var/reason = input(usr,"Reason:","Why do you require this item?","")
+			var/reason = copytext(sanitize(input(usr,"Reason:","Why do you require this item?","")),1,MAX_MESSAGE_LEN)
+			if(!reason)
+				reason = "Unknown"
 
 			reqform.name = "Requisition Form - [P.name]"
 			reqform.overlays += "paper_words"
@@ -587,7 +581,7 @@ This method wont take into account storage items developed in the future and doe
 				supply_shuttle_points -= P.cost
 				O.object = P
 				O.orderedby = usr.name
-				O.comment = input(usr,"Comment:","Enter comment","")
+				O.comment = copytext(sanitize(input(usr,"Comment:","Enter comment","")),1,MAX_MESSAGE_LEN)
 				supply_shuttle_shoppinglist += O
 				src.temp = "Thanks for your order.<BR>"
 				src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
@@ -603,7 +597,7 @@ This method wont take into account storage items developed in the future and doe
 				supply_shuttle_points -= P.cost
 				O.object = P
 				O.orderedby = usr.name
-				O.comment = input(usr,"Comment:","Enter comment","")
+				O.comment = copytext(sanitize(input(usr,"Comment:","Enter comment","")),1,MAX_MESSAGE_LEN)
 				supply_shuttle_shoppinglist += O
 				src.temp = "Thanks for your order.<BR>"
 				src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
@@ -676,7 +670,7 @@ This method wont take into account storage items developed in the future and doe
 	if (supply_shuttle_moving) return
 
 	if (!supply_can_move())
-		usr << "\red The supply shuttle can not transport station employees or homing beacons."
+		usr << "\red The supply shuttle can not transport station employees, exosuits, classified nuclear codes, or homing beacons."
 		return
 
 	var/shuttleat = supply_shuttle_at_station ? SUPPLY_STATION_AREATYPE : SUPPLY_DOCK_AREATYPE

@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 #define BOOK_VERSION_MIN	1
 #define BOOK_VERSION_MAX	2
 #define BOOK_PATH			"data/books/"
@@ -61,16 +63,15 @@ datum/book_manager/proc/remove(var/id)
 	fdel(path(id))
 
 datum/archived_book
-	var
-		author		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
-		title		 // The real name of the book.
-		category	 // The category/genre of the book
-		id			 // the id of the book (like an isbn number)
-		dat			 // Actual page content
+	var/author		 // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	var/title		 // The real name of the book.
+	var/category	 // The category/genre of the book
+	var/id			 // the id of the book (like an isbn number)
+	var/dat			 // Actual page content
 
-		author_real	 // author's real_name
-		author_key	 // author's byond key
-		list/icon/photos	 // in-game photos used
+	var/author_real	 // author's real_name
+	var/author_key	 // author's byond key
+	var/list/icon/photos	 // in-game photos used
 
 // loads the book corresponding by the specified id
 datum/archived_book/New(var/path)

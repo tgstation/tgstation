@@ -1,19 +1,3 @@
-/mob/living/Life()
-
-	..()
-
-	// While I'm doing a terriblly lazy way of initalizing things, why don't I make it so people's preferences tag along with them.  This could be useful in fixing the fucking cloned-as-unknown thing, making me not have to dynamically load them during tensioner, and of course, storing metadata.
-//Whoever wrote this should go suck a choad.  This was causing runtimes, asshat.  IN ADDITION, YOU PUT IT IN THE LIFE PROC YOU ASSHAT
-//	if(!src.storedpreferences)
-//		src.storedpreferences = new
-//		storedpreferences.savefile_load(src, 0)
-
-
-
-
-	return
-
-
 /mob/living/verb/succumb()
 	set hidden = 1
 	if ((src.health < 0 && src.health > -95.0))
@@ -33,26 +17,20 @@
 //sort of a legacy burn method for /electrocute, /shock, and the e_chair
 /mob/living/proc/burn_skin(burn_amount, used_weapon = null)
 	if(istype(src, /mob/living/carbon/human))
-		if(src.mutations2 & mShock)
+		if(mShock in src.mutations)
 			return 0
 		//world << "DEBUG: burn_skin(), mutations=[mutations]"
-		if (src.mutations & COLD_RESISTANCE) //fireproof
+		if (COLD_RESISTANCE in src.mutations) //fireproof
 			return 0
 		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
 		var/divided_damage = (burn_amount)/(H.organs.len)
-		var/extradam = 0	//added to when organ is at max dam
 		for(var/name in H.organs)
-			var/datum/organ/external/affecting = H.organs[name]
-			if(!affecting)	continue
-			if(affecting.take_damage(0, divided_damage+extradam, 0, used_weapon))
-				extradam = 0
-			else
-				extradam += divided_damage
+			apply_damage(divided_damage, BURN, name, 0, 0, "Skin Burns")
 		H.UpdateDamageIcon()
 		H.updatehealth()
 		return 1
 	else if(istype(src, /mob/living/carbon/monkey))
-		if (src.mutations & COLD_RESISTANCE) //fireproof
+		if (COLD_RESISTANCE in src.mutations) //fireproof
 			return 0
 		var/mob/living/carbon/monkey/M = src
 		M.adjustFireLoss(burn_amount)

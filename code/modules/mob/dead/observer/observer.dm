@@ -63,7 +63,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/proc/ghost()
 	set category = "Ghost"
 	set name = "Ghost"
-	set desc = "You cannot be revived as a ghost."
 
 	/*if(stat != 2) //this check causes nothing but troubles. Commented out for Nar-Sie's sake. --rastaf0
 		src << "Only dead people and admins get to ghost, and admins don't use this verb to ghost while alive."

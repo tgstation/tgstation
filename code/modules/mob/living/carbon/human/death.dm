@@ -65,7 +65,7 @@
 		//For ninjas exploding when they die./N
 		if (istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)&&wear_suit:s_initialized)
 			src << browse(null, "window=spideros")//Just in case.
-			var/location = loc
+			var/turf/location = get_turf(src)
 			explosion(location, 1, 2, 3, 4)
 
 		canmove = 0
@@ -100,17 +100,17 @@
 	return ..(gibbed)
 
 /mob/living/carbon/human/proc/ChangeToHusk()
-	if(mutations & HUSK)
+	if(HUSK in src.mutations)
 		return
 	var/datum/organ/external/head/head = get_organ("head")
 	if(head)
 		head.disfigured = 1
 	name = get_visible_name()
-	mutations |= HUSK
+	mutations.Add(HUSK)
 	update_body()
 	return
 
 /mob/living/carbon/human/proc/Drain()
 	ChangeToHusk()
-	mutations2 |= NOCLONE
+	mutations.Add(NOCLONE)
 	return

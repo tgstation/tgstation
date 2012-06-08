@@ -9,11 +9,13 @@
 		visible_message("\red <B>[M] attempted to touch [src]!</B>")
 		return 0
 
-	if(M.gloves)
-		if(M.gloves.cell)
-			if(M.a_intent == "hurt")
-				if(M.gloves.cell.charge >= 2500)
-					M.gloves.cell.charge -= 2500
+
+	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
+		var/obj/item/clothing/gloves/G = M.gloves
+		if(G.cell)
+			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+				if(G.cell.charge >= 2500)
+					G.cell.charge -= 2500
 					visible_message("\red <B>[src] has been touched with the stun gloves by [M]!</B>")
 					M.attack_log += text("\[[time_stamp()]\] <font color='red'>Stungloved [src.name] ([src.ckey])</font>")
 					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been stungloved by [M.name] ([M.ckey])</font>")
@@ -42,7 +44,9 @@
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/armor_block = run_armor_check(affecting, "melee")
 
-			if(M.mutations & HULK)	damage += 5
+			if(HULK in M.mutations)			damage += 5
+			if(SUPRSTR in M.augmentations)	damage += 5
+
 			playsound(loc, "punch", 25, 1, -1)
 
 			visible_message("\red <B>[M] has punched [src]!</B>")
@@ -101,6 +105,28 @@
 			return 1
 
 		if("hurt")
+
+			if(ELECTRICHANDS in M.augmentations)
+				var/gendertxt = "their"
+				if(M.gender == "male")
+					gendertxt = "his"
+				if(M.gender == "female")
+					gendertxt = "her"
+
+				visible_message("\red <B>[M] has shocked [src] with [gendertxt] bare hands!</B>")
+				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Used Electric Hands nanoaug power on [src.name] ([src.ckey])</font>")
+				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been shocked by [M.name] with the Electric Hands nanoaug ([M.ckey])</font>")
+
+				log_admin("ATTACK: [M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name] ([src.ckey]), shocking them .")
+				message_admins("ATTACK: [M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name] ([src.ckey]), shocking them .")
+				log_attack("<font color='red'>[M.name] ([M.ckey]) used Electric Hands nanoaug on [src.name] ([src.ckey]), shocking them </font>")
+
+
+				var/armorblock = run_armor_check(M.zone_sel.selecting, "energy")
+				apply_effects(5,5,0,0,5,0,0,armorblock)
+
+				return
+
 			if(M.type != /mob/living/carbon/human/tajaran)
 				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Punched [src.name] ([src.ckey])</font>")
 				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been punched by [M.name] ([M.ckey])</font>")
@@ -128,11 +154,10 @@
 
 			var/damage = rand(0, 5)
 			if(!damage)
-				switch(attack_verb)
-					if(("slash") || ("scratch"))
-						playsound(loc, 'slashmiss.ogg', 25, 1, -1)
-					else
-						playsound(loc, 'punchmiss.ogg', 25, 1, -1)
+				if(attack_verb == "scratch" || attack_verb == "slash")
+					playsound(loc, 'slashmiss.ogg', 25, 1, -1)
+				else
+					playsound(loc, 'punchmiss.ogg', 25, 1, -1)
 
 				visible_message("\red <B>[M] has attempted to [attack_verb] [src]!</B>")
 				return 0
@@ -141,14 +166,13 @@
 			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
 			var/armor_block = run_armor_check(affecting, "melee")
 
-			if(M.mutations & HULK)	damage += 5
-
-			switch(attack_verb)
-				if(("slash") || ("scratch"))
-					damage += 10
-					playsound(loc, 'slice.ogg', 25, 1, -1)
-				else
-					playsound(loc, "punch", 25, 1, -1)
+			if(HULK in M.mutations)			damage += 5
+			if(SUPRSTR in M.augmentations) 	damage += 5
+			if(attack_verb == "scratch" || attack_verb == "slash")
+				damage += 7
+				playsound(loc, 'slice.ogg', 25, 1, -1)
+			else
+				playsound(loc, "punch", 25, 1, -1)
 
 			visible_message("\red <B>[M] has [attack_verb]ed [src]!</B>")
 
@@ -211,7 +235,6 @@
 
 			playsound(loc, 'punchmiss.ogg', 25, 1, -1)
 			visible_message("\red <B>[M] attempted to disarm [src]!</B>")
-	update_clothing()
 	return
 
 /mob/living/carbon/human/proc/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, inrange, params)

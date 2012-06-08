@@ -20,6 +20,8 @@
 //	name = "Xenoburger"													//Name that displays in the UI.
 //	desc = "Smells caustic. Tastes like heresy."						//Duh
 //	icon_state = "xburger"												//Refers to an icon in food.dmi
+//	eatsound = 'eatfood.ogg'											//Don't touch this if you want your food to have a crunch sound.
+//  trash = "plate"														//Refers to the trash item.
 //	New()																//Don't mess with this.
 //		..()															//Same here.
 //		reagents.add_reagent("xenomicrobes", 10)						//This is what is in the food item. you may copy/paste
@@ -944,6 +946,7 @@
 	name = "Meatball soup"
 	desc = "Smells like copper"
 	icon_state = "meatballsoup"
+	eatsound = 'drink.ogg'
 	New()
 		..()
 		reagents.add_reagent("nutriment", 2)
@@ -954,6 +957,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/clownstears
 	name = "Clown's Tears"
 	desc = "Not very funny."
+	eatsound = 'drink.ogg'
 	icon_state = "clownstears"
 	New()
 		..()
@@ -967,6 +971,7 @@
 	desc = "A true vegan meal" //TODO
 	icon_state = "vegetablesoup"
 	trash = "snack_bowl"
+	eatsound = 'drink.ogg'
 	New()
 		..()
 		reagents.add_reagent("nutriment", 10)
@@ -977,6 +982,7 @@
 	name = "Nettle soup"
 	desc = "To think, the botanist would've beat you to death with one of these."
 	icon_state = "nettlesoup"
+	eatsound = 'drink.ogg'
 	trash = "snack_bowl"
 	New()
 		..()
@@ -989,6 +995,7 @@
 	name = "Mystery soup"
 	desc = "The mystery is, why aren't you eating it?"
 	icon_state = "mysterysoup"
+	eatsound = 'drink.ogg'
 	trash = "snack_bowl"
 	New()
 		..()
@@ -1035,6 +1042,7 @@
 	desc = "I wish this was soup."
 	icon_state = "wishsoup"
 	trash = "snack_bowl"
+	eatsound = 'drink.ogg'
 	New()
 		..()
 		reagents.add_reagent("water", 10)
@@ -1096,7 +1104,7 @@
 		reagents.add_reagent("nutriment",12)
 
 	afterattack(obj/O as obj, mob/user as mob)
-		if(istype(O,/obj/machinery/sink) && !wrapped)
+		if(istype(O,/obj/structure/sink) && !wrapped)
 			user << "You place [name] under a stream of water..."
 			loc = get_turf(O)
 			return Expand()
@@ -1224,6 +1232,7 @@
 	desc = "Drinking this feels like being a vampire! A tomato vampire..."
 	icon_state = "tomatosoup"
 	trash = "snack_bowl"
+	eatsound = 'drink.ogg'
 	New()
 		..()
 		reagents.add_reagent("nutriment", 5)
@@ -1245,6 +1254,7 @@
 	name = "Stew"
 	desc = "A nice and warm stew. Healthy and strong."
 	icon_state = "stew"
+	eatsound = 'drink.ogg'
 	New()
 		..()
 		reagents.add_reagent("nutriment", 20)
@@ -1416,6 +1426,7 @@
 	name = "chantrelle soup"
 	desc = "A delicious and hearty mushroom soup."
 	icon_state = "mushroomsoup"
+	eatsound = 'drink.ogg'
 	trash = "snack_bowl"
 	New()
 		..()
@@ -1470,6 +1481,20 @@
 				name = "borscht"
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/liquidfood
+	name = "\improper \"LiquidFood\" ration"
+	icon_state = "liquidfood"
+	desc = "A bland, tasteless pulp of what you need to survive. Packaged in a airtight bag, which you can drink through a straw. Strangely crunchy."
+	eatsound = 'drink.ogg'
+	trash = "liquidfood"
+	var/flavored = 0
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+		reagents.add_reagent("water", 5)
+		reagents.add_reagent("tricordrazine", 2)
+		bitesize = 6
 
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
@@ -2021,6 +2046,27 @@
 		return
 	else
 		..()
+
+// Liquidfood + Flavoring = Flavored Liquidfood! :P
+/obj/item/weapon/reagent_containers/food/snacks/liquidfood/attackby(obj/item/weapon/flavor/W as obj, mob/user as mob)
+	// Check if already flavored
+	if(istype(W))
+		if (flavored)
+			user << "You cannot add flavoring to an already flavored ration, however bland it may be."
+			return
+
+		user.visible_message("\The [user] adds [prob(30) ? "some of" : ""] \a [W] to \a [src], mixing it into [W.descriptor] gruel.",\
+		"You add \the [W] into your bland [src].  As you mix it into a grotesquely [W.color] paste, you reflect that this was not a wise decision.",\
+		"You hear a small tinfoil package being ripped open, then the sound of a thick paste being mixed.")
+		name = "[W.color] \"LiquidFood\" ration"
+		icon_state = "liquidfood-[W.color]"
+		desc = "A flavored pulp of nutritional essentials. [W.newDesc]"
+		flavored = 1
+
+		del(W)
+		return
+
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/taco
 	name = "taco"

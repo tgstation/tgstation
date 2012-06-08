@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /*
 CONTAINS:
 RETRACTOR
@@ -344,7 +346,7 @@ CIRCULAR SAW
 					if(M != user)
 						for(var/mob/O in (viewers(M) - user - M))
 							O.show_message("\red [user] is beginning to clamp bleeders in [M]'s cut open torso with [src].", 1)
-						M << "\red [user] begins to torso bleeders in your chest with [src]!"
+						M << "\red [user] begins to clamp bleeders in your chest with [src]!"
 						user << "\red You clamp bleeders in [M]'s torso with [src]!"
 						M:embryo_op_stage = 2.0
 						return
@@ -501,12 +503,12 @@ CIRCULAR SAW
 				if(3.0)
 					if(M != user)
 						M.visible_message( \
-							"\red [user] is beginning to reshape [M]'s vocal chords and face with [src].", \
+							"\red [user] is beginning to reshape [M]'s vocal cords and face with [src].", \
 							"\red [user] begins to reshape your vocal chords and face [src]!")
 					else
 						M.visible_message( \
-							"\red [user] begins to reshape their vocal chords and face and face with [src]!", \
-							"\red You begin to reshape your vocal chords and face with [src]!")
+							"\red [user] begins to reshape their vocal cords and face and face with [src]!", \
+							"\red You begin to reshape your vocal cords and face with [src]!")
 
 					if(do_mob(user, M, 120))
 						if(M != user)
@@ -521,12 +523,12 @@ CIRCULAR SAW
 					if(do_mob(user, M, 120))
 						if(M != user)
 							M.visible_message( \
-								"\red [user] reshapes [M]'s vocal chords and face with [src]!", \
-								"\red [user] reshapes your vocal chords and face with [src]!")
+								"\red [user] reshapes [M]'s vocal cords and face with [src]!", \
+								"\red [user] reshapes your vocal cords and face with [src]!")
 						else
 							M.visible_message( \
-								"\red [user] reshapes their vocal chords and face with [src]!", \
-								"\red You reshape your vocal chords and face with [src]!")
+								"\red [user] reshapes their vocal cords and face with [src]!", \
+								"\red You reshape your vocal cords and face with [src]!")
 
 						if(M == user && prob(25))
 							user << "\red You mess up!"
@@ -561,7 +563,7 @@ CIRCULAR SAW
 		return ..()
 
 	if(S.robot)
-		user << "Medical equipment for a robot arm?  How would that do any good..."
+		user << "Medical equipment for a robot arm?  How would that do any good?"
 		return
 
 	if(!S.open)
@@ -651,11 +653,10 @@ CIRCULAR SAW
 /obj/item/weapon/autopsy_scanner/var/timeofdeath = null
 
 /datum/autopsy_data_data
-	var
-		weapon = null // this is the DEFINITE weapon type that was used
-		list/organs_scanned = list() // this maps a number of scanned organs to
+	var/weapon = null // this is the DEFINITE weapon type that was used
+	var/list/organs_scanned = list() // this maps a number of scanned organs to
 		                             // the wounds to those organs with this data's weapon type
-		organ_names = ""
+	var/organ_names = ""
 
 /obj/item/weapon/autopsy_scanner/proc/add_data(var/datum/organ/external/O)
 	if(!O.autopsy_data.len && !O.trace_chemicals.len) return
@@ -813,7 +814,7 @@ CIRCULAR SAW
 		usr << "<b>You have to cut the limb open first!</b>"
 		return
 	if(S.robot)
-		user << "Medical equipment for a robot arm?  How would that do any good..."
+		user << "Medical equipment for a robot arm?  How would that do any good?"
 		return
 	for(var/mob/O in viewers(M))
 		O.show_message("\red [user.name] scans the wounds on [M.name]'s [S.display_name] with \the [src.name]", 1)
@@ -1081,9 +1082,9 @@ CIRCULAR SAW
 	if(!istype(M))
 		return ..()
 
-	//if(M.mutations & HUSK)	return ..()
+	//if(NOCLONE in M.mutations)	return ..()
 
-	if((user.mutations & CLUMSY) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		M = user
 		return eyestab(M,user)
 
@@ -1487,12 +1488,11 @@ CIRCULAR SAW
 ////////////////
 //CIRCULAR SAW//
 ////////////////
-
 /obj/item/weapon/circular_saw/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
 		return ..()
 
-	if((user.mutations & CLUMSY) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		M = user
 		return eyestab(M,user)
 
@@ -1672,7 +1672,7 @@ CIRCULAR SAW
 /obj/item/weapon/surgical_tool/attack(mob/living/carbon/human/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M, /mob))
 		return
-	if((usr.mutations & 16) && prob(50))
+	if((CLUMSY in user.mutations) && prob(50))
 		M << "\red You stab yourself in the eye."
 		M.disabilities |= 128
 		M.weakened += 4

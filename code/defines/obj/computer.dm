@@ -6,22 +6,6 @@
 	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassemble
 
 
-/obj/machinery/computer/arcade
-	name = "arcade machine"
-	desc = "Does not support Pinball."
-	icon = 'computer.dmi'
-	icon_state = "arcade"
-	circuit = "/obj/item/weapon/circuitboard/arcade"
-	var/enemy_name = "Space Villian"
-	var/temp = "Winners Don't Use Spacedrugs" //Temporary message, for attack messages, etc
-	var/player_hp = 30 //Player health/attack points
-	var/player_mp = 10
-	var/enemy_hp = 45 //Enemy health/attack points
-	var/enemy_mp = 20
-	var/gameover = 0
-	var/blocked = 0 //Player cannot attack/heal while set
-
-
 /obj/machinery/computer/station_alert
 	name = "Station Alert Computer"
 	desc = "Used to access the station's automated alert system."
@@ -130,15 +114,6 @@
 	var/list/connected_doors
 	var/department		//each department has a hardcoded list of possible door networks
 
-/obj/machinery/computer/crew
-	name = "Crew monitoring computer"
-	desc = "Used to monitor active health sensors built into most of the crew's uniforms."
-	icon_state = "crew"
-	use_power = 1
-	idle_power_usage = 250
-	active_power_usage = 500
-	circuit = "/obj/item/weapon/circuitboard/crew"
-	var/list/tracked =	list(  )
 
 /*/obj/machinery/computer/scan_consolenew    //Coming Soon, I highly doubt this but Ill leave it here anyways
 	name = "DNA Modifier Access Console"

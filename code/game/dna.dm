@@ -430,63 +430,63 @@
 	M.dna.check_integrity()
 
 	M.disabilities = 0
-	M.mutations = 0
-	M.mutations2 = 0
+	M.mutations = list()
 
 	M.see_in_dark = 2
 	M.see_invisible = 0
 
+
 	if(ismuton(NOBREATHBLOCK,M))
 		if(prob(50))
 			M << "\blue You feel no need to breathe."
-			M.mutations |= mNobreath
+			M.mutations.Add(mNobreath)
 	if(ismuton(REMOTEVIEWBLOCK,M))
 		if(prob(50))
 			M << "\blue Your mind expands"
-			M.mutations |= mRemote
+			M.mutations.Add(mRemote)
 	if(ismuton(REGENERATEBLOCK,M))
 		if(prob(50))
 			M << "\blue You feel strange"
-			M.mutations |= mRegen
+			M.mutations.Add(mRegen)
 	if(ismuton(INCREASERUNBLOCK,M))
 		if(prob(50))
 			M << "\blue You feel quick"
-			M.mutations |= mRun
+			M.mutations.Add(mRun)
 	if(ismuton(REMOTETALKBLOCK,M))
 		if(prob(50))
 			M << "\blue You expand your mind outwards"
-			M.mutations |= mRemotetalk
+			M.mutations.Add(mRemotetalk)
 	if(ismuton(MORPHBLOCK,M))
 		if(prob(50))
-			M.mutations |= mMorph
+			M.mutations.Add(mMorph)
 			M << "\blue Your skin feels strange"
 	if(ismuton(BLENDBLOCK,M))
 		if(prob(50))
-			M.mutations |= mBlend
+			M.mutations.Add(mBlend)
 			M << "\blue You feel alone"
 	if(ismuton(HALLUCINATIONBLOCK,M))
 		if(prob(50))
-			M.mutations2 |= mHallucination
+			M.mutations.Add(mHallucination)
 			M << "\blue Your mind says 'Hello'"
 	if(ismuton(NOPRINTSBLOCK,M))
 		if(prob(50))
-			M.mutations2 |= mFingerprints
+			M.mutations.Add(mFingerprints)
 			M << "\blue Your fingers feel numb"
 	if(ismuton(SHOCKIMMUNITYBLOCK,M))
 		if(prob(50))
-			M.mutations2 |= mShock
+			M.mutations.Add(mShock)
 			M << "\blue You feel strange"
 	if(ismuton(SMALLSIZEBLOCK,M))
 		if(prob(50))
 			M << "\blue Your skin feels rubbery"
-			M.mutations2 |= mSmallsize
+			M.mutations.Add(mSmallsize)
 
 
 
 	if (isblockon(getblock(M.dna.struc_enzymes, HULKBLOCK,3),HULKBLOCK))
 		if(inj || prob(5))
 			M << "\blue Your muscles hurt."
-			M.mutations |= HULK
+			M.mutations.Add(HULK)
 	if (isblockon(getblock(M.dna.struc_enzymes, HEADACHEBLOCK,3),HEADACHEBLOCK))
 		M.disabilities |= 2
 		M << "\red You get a headache."
@@ -504,7 +504,7 @@
 		M << "\red You start coughing."
 	if (isblockon(getblock(M.dna.struc_enzymes, CLUMSYBLOCK,3),CLUMSYBLOCK))
 		M << "\red You feel lightheaded."
-		M.mutations |= CLUMSY
+		M.mutations.Add(CLUMSY)
 	if (isblockon(getblock(M.dna.struc_enzymes, TWITCHBLOCK,3),TWITCHBLOCK))
 		M.disabilities |= 8
 		M << "\red You twitch."
@@ -514,21 +514,21 @@
 			M.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 			M.see_in_dark = 8
 			M.see_invisible = 2
-			M.mutations |= XRAY
+			M.mutations.Add(XRAY)
 	if (isblockon(getblock(M.dna.struc_enzymes, NERVOUSBLOCK,3),NERVOUSBLOCK))
 		M.disabilities |= 16
 		M << "\red You feel nervous."
 	if (isblockon(getblock(M.dna.struc_enzymes, FIREBLOCK,3),FIREBLOCK))
 		if(inj || prob(30))
 			M << "\blue Your body feels warm."
-			M.mutations |= COLD_RESISTANCE
+			M.mutations.Add(COLD_RESISTANCE)
 	if (isblockon(getblock(M.dna.struc_enzymes, BLINDBLOCK,3),BLINDBLOCK))
 		M.disabilities |= 128
 		M << "\red You can't seem to see anything."
 	if (isblockon(getblock(M.dna.struc_enzymes, TELEBLOCK,3),TELEBLOCK))
 		if(inj || prob(15))
 			M << "\blue You feel smarter."
-			M.mutations |= TK
+			M.mutations.Add(TK)
 	if (isblockon(getblock(M.dna.struc_enzymes, DEAFBLOCK,3),DEAFBLOCK))
 		M.disabilities |= 32
 		M.ear_deaf = 1
@@ -536,6 +536,7 @@
 	if (isblockon(getblock(M.dna.struc_enzymes, GLASSESBLOCK,3),GLASSESBLOCK))
 		M.disabilities |= 1
 		M << "Your eyes feel weird..."
+
 
 //////////////////////////////////////////////////////////// Monkey Block
 	if (isblockon(getblock(M.dna.struc_enzymes, MONKEYBLOCK,3),MONKEYBLOCK) && istype(M, /mob/living/carbon/human))
@@ -547,7 +548,7 @@
 				if (W==H.w_uniform) // will be teared
 					continue
 				H.drop_from_slot(W)
-			M.update_clothing()
+			M.rebuild_appearance()
 			M.monkeyizing = 1
 			M.canmove = 0
 			M.icon = null
@@ -604,7 +605,7 @@
 		O.a_intent = "hurt"
 		O.flavor_text = M.flavor_text
 		O.warn_flavor_changed()
-		O.update_clothing()
+		O.rebuild_appearance()
 		del(M)
 		return
 
@@ -615,7 +616,7 @@
 		if(!connected)
 			for(var/obj/item/W in (Mo.contents))
 				Mo.drop_from_slot(W)
-			M.update_clothing()
+			M.rebuild_appearance()
 			M.monkeyizing = 1
 			M.canmove = 0
 			M.icon = null
@@ -681,12 +682,12 @@
 		O.stat = M.stat
 		O.flavor_text = M.flavor_text
 		O.warn_flavor_changed()
-		O.update_clothing()
+		O.rebuild_appearance()
 		del(M)
 		return
 //////////////////////////////////////////////////////////// Monkey Block
 	if (M)
-		M.update_clothing()
+		M.rebuild_appearance()
 	return null
 /////////////////////////// DNA MISC-PROCS
 
@@ -790,13 +791,7 @@
 /obj/machinery/dna_scannernew/proc/go_out()
 	if ((!( src.occupant ) || src.locked))
 		return
-/*
-//	it's like this was -just- here to break constructed dna scanners -Pete
-//	if that's not the case, slap my shit and uncomment this.
-//	for(var/obj/O in src)
-//		O.loc = src.loc
-*/
-		//Foreach goto(30)
+
 	if (src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
@@ -926,7 +921,7 @@
 			var/mob/occupant = src.connected.occupant
 			dat = "<font color='blue'><B>Occupant Statistics:</B></FONT><BR>" //Blah obvious
 			if(occupant && occupant.dna) //is there REALLY someone in there?
-				if(occupant.mutations2 & NOCLONE)
+				if(NOCLONE in occupant.mutations)
 					dat += "The occupant's DNA structure is ruined beyond recognition, please insert a subject with an intact DNA structure.<BR><BR>" //NOPE. -Pete
 					dat += text("<A href='?src=\ref[];buffermenu=1'>View/Edit/Transfer Buffer</A><BR><BR>", src)
 					dat += text("<A href='?src=\ref[];radset=1'>Radiation Emitter Settings</A><BR><BR>", src)
@@ -1226,7 +1221,7 @@
 				src.temphtml += text("Data: <font color='blue'>[]</FONT><BR>", src.buffer1)
 				src.temphtml += text("By: <font color='blue'>[]</FONT><BR>", src.buffer1owner)
 				src.temphtml += text("Label: <font color='blue'>[]</FONT><BR>", src.buffer1label)
-			if (src.connected.occupant && !(src.connected.occupant.mutations & HUSK)) src.temphtml += text("Save : <A href='?src=\ref[];b1addui=1'>UI</A> - <A href='?src=\ref[];b1adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b1addse=1'>SE</A><BR>", src, src, src)
+			if (src.connected.occupant && !(NOCLONE in src.connected.occupant.mutations)) src.temphtml += text("Save : <A href='?src=\ref[];b1addui=1'>UI</A> - <A href='?src=\ref[];b1adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b1addse=1'>SE</A><BR>", src, src, src)
 			if (src.buffer1) src.temphtml += text("Transfer to: <A href='?src=\ref[];b1transfer=1'>Occupant</A> - <A href='?src=\ref[];b1injector=1'>Injector</A><BR>", src, src)
 			//if (src.buffer1) src.temphtml += text("<A href='?src=\ref[];b1iso=1'>Isolate Block</A><BR>", src)
 			if (src.buffer1) src.temphtml += "Disk: <A href='?src=\ref[src];save_disk=1'>Save To</a> | <A href='?src=\ref[src];load_disk=1'>Load From</a><br>"
@@ -1240,7 +1235,7 @@
 				src.temphtml += text("Data: <font color='blue'>[]</FONT><BR>", src.buffer2)
 				src.temphtml += text("By: <font color='blue'>[]</FONT><BR>", src.buffer2owner)
 				src.temphtml += text("Label: <font color='blue'>[]</FONT><BR>", src.buffer2label)
-			if (src.connected.occupant && !(src.connected.occupant.mutations2 & NOCLONE)) src.temphtml += text("Save : <A href='?src=\ref[];b2addui=1'>UI</A> - <A href='?src=\ref[];b2adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b2addse=1'>SE</A><BR>", src, src, src)
+			if (src.connected.occupant && !(NOCLONE in src.connected.occupant.mutations)) src.temphtml += text("Save : <A href='?src=\ref[];b2addui=1'>UI</A> - <A href='?src=\ref[];b2adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b2addse=1'>SE</A><BR>", src, src, src)
 			if (src.buffer2) src.temphtml += text("Transfer to: <A href='?src=\ref[];b2transfer=1'>Occupant</A> - <A href='?src=\ref[];b2injector=1'>Injector</A><BR>", src, src)
 			//if (src.buffer2) src.temphtml += text("<A href='?src=\ref[];b2iso=1'>Isolate Block</A><BR>", src)
 			if (src.buffer2) src.temphtml += "Disk: <A href='?src=\ref[src];save_disk=2'>Save To</a> | <A href='?src=\ref[src];load_disk=2'>Load From</a><br>"
@@ -1254,7 +1249,7 @@
 				src.temphtml += text("Data: <font color='blue'>[]</FONT><BR>", src.buffer3)
 				src.temphtml += text("By: <font color='blue'>[]</FONT><BR>", src.buffer3owner)
 				src.temphtml += text("Label: <font color='blue'>[]</FONT><BR>", src.buffer3label)
-			if (src.connected.occupant && !(src.connected.occupant.mutations2 & NOCLONE)) src.temphtml += text("Save : <A href='?src=\ref[];b3addui=1'>UI</A> - <A href='?src=\ref[];b3adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b3addse=1'>SE</A><BR>", src, src, src)
+			if (src.connected.occupant && !(NOCLONE in src.connected.occupant.mutations)) src.temphtml += text("Save : <A href='?src=\ref[];b3addui=1'>UI</A> - <A href='?src=\ref[];b3adduiue=1'>UI+UE</A> - <A href='?src=\ref[];b3addse=1'>SE</A><BR>", src, src, src)
 			if (src.buffer3) src.temphtml += text("Transfer to: <A href='?src=\ref[];b3transfer=1'>Occupant</A> - <A href='?src=\ref[];b3injector=1'>Injector</A><BR>", src, src)
 			//if (src.buffer3) src.temphtml += text("<A href='?src=\ref[];b3iso=1'>Isolate Block</A><BR>", src)
 			if (src.buffer3) src.temphtml += "Disk: <A href='?src=\ref[src];save_disk=3'>Save To</a> | <A href='?src=\ref[src];load_disk=3'>Load From</a><br>"
@@ -1415,7 +1410,7 @@
 			src.buffer3label = sanitize(input("New Label:","Edit Label","Infos here"))
 			dopage(src,"buffermenu")
 		if (href_list["b1transfer"])
-			if (!src.connected.occupant || src.connected.occupant.mutations2 & NOCLONE || !src.connected.occupant.dna)
+			if (!src.connected.occupant || (NOCLONE in src.connected.occupant.mutations) || !src.connected.occupant.dna)
 				return
 			if (src.buffer1type == "ui")
 				if (src.buffer1iue)
@@ -1431,7 +1426,7 @@
 			src.connected.occupant.radiation += rand(20,50)
 			src.delete = 0
 		if (href_list["b2transfer"])
-			if (!src.connected.occupant || src.connected.occupant.mutations2 & NOCLONE || !src.connected.occupant.dna)
+			if (!src.connected.occupant || (NOCLONE in src.connected.occupant.mutations) || !src.connected.occupant.dna)
 				return
 			if (src.buffer2type == "ui")
 				if (src.buffer2iue)
@@ -1447,7 +1442,7 @@
 			src.connected.occupant.radiation += rand(20,50)
 			src.delete = 0
 		if (href_list["b3transfer"])
-			if (!src.connected.occupant || src.connected.occupant.mutations2 & NOCLONE || !src.connected.occupant.dna)
+			if (!src.connected.occupant || (NOCLONE in src.connected.occupant.mutations) || !src.connected.occupant.dna)
 				return
 			if (src.buffer3type == "ui")
 				if (src.buffer3iue)

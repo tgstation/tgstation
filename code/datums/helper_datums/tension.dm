@@ -579,14 +579,15 @@ var/global/datum/tension/tension_master
 							if(synd_mind.current.client)
 								for(var/image/I in synd_mind.current.client.images)
 									if(I.icon_state == "synd")
-										del(I)
+										synd_mind.current.client.images -= I
 
 					for(var/datum/mind/synd_mind in ticker.mode.syndicates)
 						if(synd_mind.current)
 							if(synd_mind.current.client)
 								for(var/datum/mind/synd_mind_1 in ticker.mode.syndicates)
 									if(synd_mind_1.current)
-										var/I = image('mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
+										var/image/I = synd_mind_1.current.antag_img
+										I.icon_state = "synd"
 										synd_mind.current.client.images += I
 
 					for (var/obj/machinery/nuclearbomb/bomb in world)

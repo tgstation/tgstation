@@ -1,10 +1,11 @@
-/datum/organ
-	var
-		name = "organ"
-		mob/living/carbon/human/owner = null
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
 
-		list/datum/autopsy_data/autopsy_data = list()
-		list/trace_chemicals = list() // traces of chemicals in the organ,
+/datum/organ
+	var/name = "organ"
+	var/mob/living/carbon/human/owner = null
+
+	var/list/datum/autopsy_data/autopsy_data = list()
+	var/list/trace_chemicals = list() // traces of chemicals in the organ,
 								      // links chemical IDs to number of ticks for which they'll stay in the blood
 
 
@@ -15,12 +16,11 @@
 		return 0
 
 /datum/autopsy_data
-	var
-		weapon = null
-		pretend_weapon = null
-		damage = 0
-		hits = 0
-		time_inflicted = 0
+	var/weapon = null
+	var/pretend_weapon = null
+	var/damage = 0
+	var/hits = 0
+	var/time_inflicted = 0
 
 	proc/copy()
 		var/datum/autopsy_data/W = new()
@@ -36,38 +36,37 @@
 ****************************************************/
 /datum/organ/external
 	name = "external"
-	var
-		icon_name = null
-		body_part = null
+	var/icon_name = null
+	var/body_part = null
 
-		damage_state = "00"
-		brute_dam = 0
-		burn_dam = 0
-		bandaged = 0
-		max_damage = 0
-		max_size = 0
-		tmp/list/obj/item/weapon/implant/implant = list()
+	var/damage_state = "00"
+	var/brute_dam = 0
+	var/burn_dam = 0
+	var/bandaged = 0
+	var/max_damage = 0
+	var/max_size = 0
+	var/tmp/list/obj/item/weapon/implant/implant = list()
 
-		display_name
-		tmp/list/wounds = list()
-		tmp/bleeding = 0
-		tmp/perma_injury = 0
-		tmp/perma_dmg = 0
-		tmp/broken = 0
-		tmp/destroyed = 0
-		tmp/destspawn = 0 //Has it spawned the broken limb?
-		tmp/gauzed = 0 //Has the missing limb been patched?
-		tmp/robot = 0 //ROBOT ARM MAN!
-		tmp/cutaway = 0 //First part of limb reattachment.
-		tmp/attachable = 0 //Can limb be attached?
-		min_broken_damage = 30
-		datum/organ/external/parent
-		list/datum/organ/external/children
-		damage_msg = "\red You feel a intense pain"
+	var/display_name
+	var/tmp/list/wounds = list()
+	var/tmp/bleeding = 0
+	var/tmp/perma_injury = 0
+	var/tmp/perma_dmg = 0
+	var/tmp/broken = 0
+	var/tmp/destroyed = 0
+	var/tmp/destspawn = 0 //Has it spawned the broken limb?
+	var/tmp/gauzed = 0 //Has the missing limb been patched?
+	var/tmp/robot = 0 //ROBOT ARM MAN!
+	var/tmp/cutaway = 0 //First part of limb reattachment.
+	var/tmp/attachable = 0 //Can limb be attached?
+	var/min_broken_damage = 30
+	var/datum/organ/external/parent
+	var/list/datum/organ/external/children
+	var/damage_msg = "\red You feel a intense pain"
 
-		var/open = 0
-		var/stage = 0
-		var/wound = 0
+	var/open = 0
+	var/stage = 0
+	var/wound = 0
 
 	New(mob/living/carbon/H)
 		..(H)
@@ -104,7 +103,7 @@
 			burn *= 0.66 //~2/3 damage for ROBOLIMBS
 
 		if(owner && !robot)
-			owner.pain(display_name, (brute+burn)*3, 1)
+			owner.pain(display_name, (brute+burn)*3, 1, burn > brute)
 		if(sharp)
 			var/nux = brute * rand(10,15)
 			if(brute_dam >= max_damage)
@@ -235,7 +234,8 @@
 				var/datum/autopsy_data/W = autopsy_data[V]
 				del W
 			autopsy_data = list()
-		return update_icon()
+		var/result = update_icon()
+		return result
 
 	proc/add_wound(var/used_weapon, var/damage)
 		var/datum/autopsy_data/W = autopsy_data[used_weapon]
@@ -248,6 +248,7 @@
 		W.damage += damage
 		W.time_inflicted = world.time
 
+		owner.update_body_appearance()
 
 
 	proc/get_damage()	//returns total damage
@@ -314,6 +315,7 @@
 		var/n_is = damage_state_text()
 		if (n_is != damage_state)
 			damage_state = n_is
+			owner.update_body_appearance() // I'm not sure about this, Sky probably knows better where to put it
 			return 1
 		return 0
 
@@ -412,7 +414,7 @@
 			for(var/datum/organ/wound/W in wounds)
 				W.update_health()
 				del(W)
-			owner.update_body()
+			owner.update_body_appearance()
 			owner.update_clothing()
 
 	proc/createwound(var/size = 1, var/type = 0, var/damage)

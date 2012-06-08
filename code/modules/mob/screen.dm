@@ -554,6 +554,12 @@
 					usr:inv3.icon_state = "inv3"
 					usr:module_active = null
 
+		if("radar")
+			usr:close_radar()
+
+		if("radar closed")
+			usr:start_radar()
+
 		if("Allow Walking")
 			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
 				return
@@ -687,7 +693,7 @@
 			displaytime = 4
 		usr.next_move = world.time + 100
 		usr.last_special = world.time + 100
-		if(isalienadult(usr) || usr.mutations & HULK)//Don't want to do a lot of logic gating here.
+		if(isalienadult(usr) || (HULK in usr.mutations) || (SUPRSTR in usr.augmentations))//Don't want to do a lot of logic gating here.
 			usr << "\green You attempt to break \the [usr:handcuffed]. (This will take around 5 seconds and you need to stand still)"
 			for(var/mob/O in viewers(usr))
 				O.show_message(text("\red <B>[] is trying to break \the [usr:handcuffed]!</B>", usr), 1)
@@ -737,7 +743,7 @@
 	if(istype(usr, /mob/living/carbon/human) && istype(usr:wear_suit, /obj/item/clothing/suit/straight_jacket) && usr:canmove && (usr.last_special <= world.time))
 		usr.next_move = world.time + 200
 		usr.last_special = world.time + 200
-		if(isalienadult(usr) || usr.mutations & HULK)//Don't want to do a lot of logic gating here.
+		if(isalienadult(usr) || (HULK in usr.mutations) || (SUPRSTR in usr.augmentations))//Don't want to do a lot of logic gating here.
 			usr << "\green You attempt to break out of your straight jacket. (This will take around 5 seconds and you need to stand still)"
 			for(var/mob/O in viewers(usr))
 				O.show_message(text("\red <B>[] is trying to break out of \his straight jacket!</B>", usr), 1)

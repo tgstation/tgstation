@@ -10,6 +10,12 @@ emp_act
 
 /mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
 
+	if(REFLEXES in augmentations)
+		if(prob(50))
+			var/message = pick("[src] skillfully dodges the [P.name]!", "[src] ducks, dodging the [P.name]!", "[src] effortlessly jumps out of the way of the [P.name]!", "[src] dodges the [P.name] in one graceful movement!", "[src] leans back, dodging the [P.name] narrowly!")
+			visible_message("\red <B>[message]</B>")
+			return -1
+
 	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor/laserproof))
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 			var/reflectchance = 40 - round(P.damage/3)
@@ -153,10 +159,11 @@ emp_act
 			if(H.wear_suit)			H.wear_suit.add_blood(src)
 			else if(H.w_uniform)	H.w_uniform.add_blood(src)
 			if(H.shoes)				H.shoes.add_blood(src)
-			if (H.gloves)
-				H.gloves.add_blood(H)
-				H.gloves.transfer_blood = 2
-				H.gloves.bloody_hands_mob = H
+			if (H.gloves && istype(H.gloves,/obj/item/clothing/gloves))
+				var/obj/item/clothing/gloves/G = H.gloves
+				G.add_blood(H)
+				G.transfer_blood = 2
+				G.bloody_hands_mob = H
 			else
 				H.add_blood(H)
 				H.bloody_hands = 2
@@ -198,4 +205,3 @@ emp_act
 				if(src.w_uniform)	src.w_uniform.add_blood(src)
 
 	UpdateDamageIcon()
-	update_clothing()

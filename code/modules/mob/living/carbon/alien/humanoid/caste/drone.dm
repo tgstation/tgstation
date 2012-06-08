@@ -13,7 +13,7 @@
 		src.resting_icon = new /icon('alien.dmi', "aliend_sleep")
 		src.running_icon = new /icon('alien.dmi', "aliend_running")
 		src.icon = src.stand_icon
-		update_clothing()
+		rebuild_appearance()
 		src << "\blue Your icons have been generated!"
 
 //Drones use the same base as generic humanoids.

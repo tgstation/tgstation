@@ -8,7 +8,6 @@
 /obj/item/weapon/bedsheet/attack_self(mob/user as mob)
 	user.drop_item()
 	src.layer = 5
-	user.update_clothing()
 	add_fingerprint(user)
 	return
 
@@ -28,7 +27,7 @@
 					M.handcuffed = new /obj/item/weapon/handcuffs(M)
 
 	else
-		if ((usr.mutations & CLUMSY) && prob(50))
+		if ((CLUMSY in usr.mutations) && prob(50))
 			usr << "\red Uh ... how do those things work?!"
 			if (istype(M, /mob/living/carbon/human))
 				if(!M.handcuffed)
@@ -118,13 +117,13 @@
 	if( istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
 		var/obj/o = target
 		o.reagents.trans_to(src, 50)
-		user << "\blue Extinguisher refilled"
+		user << "\blue \The [src] is now refilled"
 		playsound(src.loc, 'refill.ogg', 50, 1, -6)
 		return
 
 	if (!safety)
 		if (src.reagents.total_volume < 1)
-			usr << "\red the [src] is empty."
+			usr << "\red \The [src] is empty."
 			return
 
 		if (world.time < src.last_use + 20)
@@ -565,3 +564,20 @@
 		for(var/mob/M in viewers(5, src))
 			M << "\red \the [src] burns up."
 		del(src)
+
+/obj/item/weapon/megaphone/attack_self(mob/user as mob)
+	if(!ishuman(user))
+		usr << "\red You don't know how to use this!"
+		return
+	if(cooldown)
+		usr << "\red \The [src] needs to recharge!"
+		return
+	var/message = copytext(sanitize(input(user, "Shout a message?", "Megaphone", null)  as text),1,MAX_MESSAGE_LEN)
+	if(message && !cooldown)
+		if ((src.loc == user && usr.stat == 0))
+			for(var/mob/O in (viewers(user)))
+				O.show_message("<B>[user]</B> broadcasts, <FONT size=3>\"[message]\"</FONT>",2) // 2 stands for hearable message
+			cooldown = 1
+			spawn(100)
+				cooldown = 0
+			return

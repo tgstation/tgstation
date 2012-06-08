@@ -96,7 +96,7 @@
 	icon_state = "johann_erzatz_1"
 	volume = 50
 
-/obj/item/weapon/lighter/zippo/fluff/li_tsun_1 //mangled: Li Tsun
+/obj/item/weapon/lighter/zippo/fluff/li_matsuda_1 //mangled: Li Matsuda
 	name = "blue zippo lighter"
 	desc = "A zippo lighter made of some blue metal."
 	icon = 'custom_items.dmi'
@@ -141,6 +141,16 @@
 //////////////////////////////////
 //////////// Clothing ////////////
 //////////////////////////////////
+
+//////////// Gloves ////////////
+
+/obj/item/clothing/gloves/fluff/walter_brooks_1 //botanistpower: Walter Brooks
+	name = "mittens"
+	desc = "A pair of well worn, blue mittens."
+	icon = 'custom_items.dmi'
+	icon_state = "walter_brooks_1"
+	item_state = "bluegloves"
+	color="blue"
 
 //////////// Eye Wear ////////////
 

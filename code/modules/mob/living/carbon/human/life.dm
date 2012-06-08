@@ -1,19 +1,20 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 #define HUMAN_MAX_OXYLOSS 3 //Defines how much oxyloss humans can get per tick. No air applies this value.
 
 /mob/living/carbon/human
-	var
-		oxygen_alert = 0
-		toxins_alert = 0
-		fire_alert = 0
+	var/oxygen_alert = 0
+	var/toxins_alert = 0
+	var/fire_alert = 0
 
-		temperature_alert = 0
+	var/temperature_alert = 0
 
 		// used to do some stuff only on every X life tick
-		life_tick = 0
-		isbreathing = 1
-		holdbreath = 0
-		lyingcheck = 0
-		buckle_check = 0
+	var/life_tick = 0
+	var/isbreathing = 1
+	var/holdbreath = 0
+	var/lyingcheck = 0
+	var/buckle_check = 0
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
@@ -29,16 +30,16 @@
 
 	//Being buckled to a chair or bed
 	check_if_buckled()
+	handle_clothing()
 
-	// Update clothing
-//	update_clothing()
+	// TODO: this check and the lyingcheck variable should probably be removed in favor of the visual_lying check
 	if((lyingcheck != lying) || (buckle_check != (buckled ? 1 : 0)))		//This is a fix for falling down / standing up not updating icons.  Instead of going through and changing every
 		spawn(5)
 			update_clothing()		//instance in the code where lying is modified, I've just added a new variable "lyingcheck" which will be compared
 		lyingcheck = lying		//to lying, so if lying ever changes, update_clothing() will run like normal.
 
 	if(stat == 2)
-		if((!lying || !lyingcheck) && !buckled)
+		if(!lying && !buckled)
 			lying = 1
 			update_clothing()
 		return
@@ -164,7 +165,7 @@
 
 
 		handle_disabilities()
-			if(mutations2 & mHallucination)
+			if(mHallucination in mutations)
 				hallucination = 100
 				halloss = 0
 
@@ -194,7 +195,7 @@
 					Paralyse(15)
 					setHalLoss(99)
 
-			if(mutations2 & mSmallsize)
+			if(mSmallsize in mutations)
 				if(!(pass_flags & PASSTABLE))
 					pass_flags |= PASSTABLE
 			else
@@ -203,7 +204,7 @@
 
 
 
-			if (mutations & mRegen)
+			if (mRegen in mutations)
 				adjustBruteLoss(-2)
 				adjustToxLoss(-2)
 				adjustOxyLoss(-2)
@@ -216,24 +217,24 @@
 				updatehealth()
 
 			if(!(/mob/living/carbon/human/proc/morph in src.verbs))
-				if(mutations & mMorph)
+				if(mMorph in mutations)
 					src.verbs += /mob/living/carbon/human/proc/morph
 			else
-				if(!(mutations & mMorph))
+				if(!(mMorph in mutations))
 					src.verbs -= /mob/living/carbon/human/proc/morph
 
 			if(!(/mob/living/carbon/human/proc/remoteobserve in src.verbs))
-				if(mutations & mRemote)
+				if(mRemote in mutations)
 					src.verbs += /mob/living/carbon/human/proc/remoteobserve
 			else
-				if(!(mutations & mRemote))
+				if(!(mRemote in mutations))
 					src.verbs -= /mob/living/carbon/human/proc/remoteobserve
 
 			if(!(/mob/living/carbon/human/proc/remotesay in src.verbs))
-				if(mutations & mRemotetalk)
+				if(mRemotetalk in mutations)
 					src.verbs += /mob/living/carbon/human/proc/remotesay
 			else
-				if(!(mutations & mRemotetalk))
+				if(!(mRemotetalk in mutations))
 					src.verbs -= /mob/living/carbon/human/proc/remotesay
 
 
@@ -284,11 +285,37 @@
 
 		handle_mutations_and_radiation()
 			if(getFireLoss())
-				if(mutations & COLD_RESISTANCE || (prob(1) && prob(75)))
+				if((COLD_RESISTANCE in mutations) || (prob(1) && prob(75)))
 					heal_organ_damage(0,1)
 
-			if (mutations & HULK && health <= 25)
-				mutations &= ~HULK
+			// Make nanoregen heal youu, -3 all damage types
+			if(NANOREGEN in augmentations)
+				var/healed = 0
+				if(getToxLoss())
+					adjustToxLoss(-3)
+					healed = 1
+				if(getOxyLoss())
+					adjustOxyLoss(-3)
+					healed = 1
+				if(getCloneLoss())
+					adjustCloneLoss(-3)
+					healed = 1
+				if(getBruteLoss())
+					heal_organ_damage(3,0)
+					healed = 1
+				if(getFireLoss())
+					heal_organ_damage(0,3)
+					healed = 1
+				if(halloss > 0)
+					halloss -= 3
+					if(halloss < 0) halloss = 0
+					healed = 1
+				if(healed)
+					if(prob(5))
+						src << "\blue You feel your wounds mending..."
+
+			if ((HULK in mutations) && health <= 25)
+				mutations.Remove(HULK)
 				src << "\red You suddenly feel very weak."
 				Weaken(3)
 				emote("collapse")
@@ -359,7 +386,7 @@
 			if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 
 			var/datum/gas_mixture/environment = loc.return_air()
-			var/datum/air_group/breath
+			var/datum/gas_mixture/breath
 
 			// HACK NEED CHANGING LATER
 			if(isbreathing && health < config.health_threshold_crit)
@@ -420,6 +447,16 @@
 											smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
 									break // If they breathe in the nasty stuff once, no need to continue checking
 
+					if(istype(wear_mask, /obj/item/clothing/mask/gas))
+						var/datum/gas_mixture/filtered = new()
+						filtered.toxins = breath.toxins
+						filtered.trace_gases = breath.trace_gases.Copy()
+						filtered.update_values()
+						breath.toxins = 0
+						breath.trace_gases = list()
+						breath.update_values()
+						loc.assume_air(filtered)
+
 				else //Still give containing object the chance to interact
 					if(istype(loc, /obj/))
 						var/obj/location_as_object = loc
@@ -452,7 +489,7 @@
 				canmove = 1
 
 		handle_breath(datum/gas_mixture/breath)
-			if(nodamage || (mutations & mNobreath))
+			if(nodamage || REBREATHER in augmentations || (mNobreath in mutations))
 				return
 
 			if(!breath || (breath.total_moles == 0))
@@ -469,7 +506,7 @@
 			var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 			//var/safe_oxygen_max = 140 // Maximum safe partial pressure of O2, in kPa (Not used for now)
 			var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
-			var/safe_toxins_max = 0.005
+			var/safe_toxins_max = 0.0025
 			var/SA_para_min = 1
 			var/SA_sleep_min = 5
 			var/oxygen_used = 0
@@ -541,7 +578,7 @@
 					SA.moles = 0 //Hack to stop the damned surgeon from giggling.
 
 
-			if(breath.temperature > (T0C+66) && !(mutations & COLD_RESISTANCE)) // Hot air hurts :(
+			if(breath.temperature > (T0C+66) && !(COLD_RESISTANCE in mutations)) // Hot air hurts :(
 				if(prob(20))
 					src << "\red You feel a searing heat in your lungs!"
 				fire_alert = max(fire_alert, 1)
@@ -648,8 +685,10 @@
 			*/
 
 			//Account for massive pressure differences.  Done by Polymorph
+
+
 			var/pressure = environment.return_pressure()
-			if(!istype(wear_suit, /obj/item/clothing/suit/space))
+			if(!istype(wear_suit, /obj/item/clothing/suit/space) && !istype(wear_suit, /obj/item/clothing/suit/fire))
 					/*if(pressure < 20)
 						if(prob(25))
 							src << "You feel the splittle on your lips and the fluid on your eyes boiling away, the capillteries in your skin breaking."
@@ -657,6 +696,9 @@
 					*/
 				if(pressure > HAZARD_HIGH_PRESSURE)
 					adjustBruteLoss(min((10+(round(pressure/(HIGH_STEP_PRESSURE)-2)*5)),MAX_PRESSURE_DAMAGE))
+
+			if(environment.toxins > MOLES_PLASMA_VISIBLE)
+				pl_effects()
 
 			return //TODO: DEFERRED
 
@@ -670,11 +712,17 @@
 				increments = difference/10
 			var/change = increments*boost	// Get the amount to change by (x per increment)
 			var/temp_change
-			if(current < loc_temp)
-				temperature = min(loc_temp, temperature+change)
-			else if(current > loc_temp)
-				temperature = max(loc_temp, temperature-change)
-			temp_change = (temperature - current)
+			if(current < loc_temp) //If your body temp is less than loc, then try to heat up
+				if(istajaran(src)) //If Tajaran, you heat up faster
+					change = change*4
+				temperature = min(loc_temp, temperature+change) //Pick the minimum of these two
+			else if(current > loc_temp) //If your body temp is more than loc, then try to cool down
+				if(istajaran(src)) //If Tajaran, you cool down slower
+					change = change*0.5
+				if(mutantrace == "lizard") //If Soghun, you cool down faster
+					change = change*3
+				temperature = max(loc_temp, temperature-change) //Pick the max of these two
+			temp_change = (temperature - current) //Work out the actual change of temp
 			return temp_change
 
 		get_thermal_protection()
@@ -700,7 +748,7 @@
 				thermal_protection += 3
 			if(head && (head.flags & HEADSPACE))
 				thermal_protection += 1
-			if(mutations & COLD_RESISTANCE)
+			if(COLD_RESISTANCE in mutations)
 				thermal_protection += 5
 
 			return thermal_protection
@@ -780,20 +828,25 @@
 					adjustToxLoss(-1)
 					adjustOxyLoss(-1)
 
-			/*if(overeatduration > 500 && !(mutations & FAT))
+/*			if(overeatduration > 500 && !(FAT in mutations))
 				src << "\red You suddenly feel blubbery!"
-				mutations |= FAT
+				mutations.Add(FAT)
 				update_body()
-			if (overeatduration < 100 && mutations & FAT)
+			if ((overeatduration < 100 && (FAT in mutations)))
 				src << "\blue You feel fit again!"
-				mutations &= ~FAT
-				update_body()*/
-
+				mutations.Remove(FAT)
+				update_body()
+*/
 			// nutrition decrease
 			if (nutrition > 0 && stat != 2)
 				// sleeping slows the metabolism, hunger increases more slowly
 				if(stat == 1)
-					nutrition = max (0, nutrition - HUNGER_FACTOR)
+					if(istajaran(src)) //Tajarans get hungry slightly faster
+						nutrition = max (0, nutrition - HUNGER_FACTOR*1.25)
+					if(mutantrace == "lizard") //Soghuns get hungry much slower
+						nutrition = max (0, nutrition - HUNGER_FACTOR*0.5)
+					else
+						nutrition = max (0, nutrition - HUNGER_FACTOR)
 				else
 					nutrition = max (0, nutrition - HUNGER_FACTOR / 4)
 
@@ -1079,11 +1132,11 @@
 			// Apparently deletes all the hud_ icons
 			for(var/image/hud in client.images)
 				if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe
-					del(hud)
+					client.images -= hud//del(hud)
 
 			// Handle special vision stuff, such as thermals or ghost vision
 			// -------------------------------------------------------------
-			if (stat == 2 || mutations & XRAY)
+			if (stat == 2 || (XRAY in mutations))
 				sight |= SEE_TURFS
 				sight |= SEE_MOBS
 				sight |= SEE_OBJS
@@ -1098,16 +1151,16 @@
 				else
 					seer = 0
 					see_invisible = 0
+
 			else if (istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
 				switch(wear_mask:mode)
 					if(0)
-						if(client)
-							var/target_list[] = list()
-							for(var/mob/living/target in oview(src))
-								if( target.mind&&(target.mind.special_role||issilicon(target)) )//They need to have a mind.
-									target_list += target
-							if(target_list.len)//Everything else is handled by the ninja mask proc.
-								wear_mask:assess_targets(target_list, src)
+						var/target_list[] = list()
+						for(var/mob/living/target in oview(src))
+							if( target.mind&&(target.mind.special_role||issilicon(target)) )//They need to have a mind.
+								target_list += target
+						if(target_list.len)//Everything else is handled by the ninja mask proc.
+							wear_mask:assess_targets(target_list, src)
 						if (!druggy)
 							see_invisible = 0
 					if(1)
@@ -1122,6 +1175,7 @@
 						sight |= SEE_TURFS
 						if(!druggy)
 							see_invisible = 0
+
 			else if(istype(glasses, /obj/item/clothing/glasses/meson))
 				sight |= SEE_TURFS
 				if(!druggy)
@@ -1131,10 +1185,12 @@
 				see_in_dark = 5
 				if(!druggy)
 					see_invisible = 0
+
 			else if(istype(glasses, /obj/item/clothing/glasses/thermal))
 				sight |= SEE_MOBS
 				if(!druggy)
 					see_invisible = 2
+
 			else if(istype(glasses, /obj/item/clothing/glasses/material))
 				sight |= SEE_OBJS
 				if (!druggy)
@@ -1165,11 +1221,6 @@
 					see_invisible = 0
 
 
-
-
-
-
-
 			else if(istype(head, /obj/item/clothing/head/helmet/welding))		// wat.  This is never fucking called.
 				if(!head:up && tinted_weldhelh)
 					see_in_dark = 1
@@ -1183,23 +1234,20 @@
 			// Special on-map HUDs like the medical HUD
 			// ----------------------------------------
 			if(istype(glasses, /obj/item/clothing/glasses/hud/health))
-				if(client)
-					glasses:process_hud(src)
+				glasses:process_hud(src)
 				if (!druggy)
 					see_invisible = 0
 
-			if(istype(glasses, /obj/item/clothing/glasses/hud/security))
-				if(client)
-					glasses:process_hud(src)
+			else if(istype(glasses, /obj/item/clothing/glasses/hud/security))
+				glasses:process_hud(src)
 				if (!druggy)
 					see_invisible = 0
 
-			if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
+			else if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
 				see_in_dark = 1
 				if(istype(glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-					if(client)
-						if(glasses:hud)
-							glasses:hud:process_hud(src)
+					if(glasses:hud)
+						glasses:hud:process_hud(src)
 				if (!druggy)
 					see_invisible = 0
 
@@ -1339,8 +1387,20 @@
 				else
 					blind.layer = 0
 
-					if ((disabilities & 1 && ((glasses && !glasses.prescription) || !glasses)) || (glasses && glasses.prescription && !(disabilities & 1)))
-						client.screen += hud_used.vimpaired
+					if(disabilities & 1)
+						if(!glasses)
+							client.screen += hud_used.vimpaired
+						else if (glasses && istype(glasses,/obj/item/clothing/glasses))
+							var/obj/item/clothing/glasses/G = glasses
+							if(!G.prescription)
+								client.screen += hud_used.vimpaired
+						else
+							client.screen += hud_used.vimpaired
+					else
+						if(glasses && istype(glasses,/obj/item/clothing/glasses))
+							var/obj/item/clothing/glasses/G = glasses
+							if(G.prescription)
+								client.screen += hud_used.vimpaired
 
 					if (eye_blurry)
 						client.screen += hud_used.blurry
@@ -1366,7 +1426,7 @@
 				if (machine)
 					if (!( machine.check_eye(src) ))
 						reset_view(null)
-				else if(!(mutations & mRemote) && !client.adminobs)
+				else if(!(mRemote in mutations) && !client.adminobs)
 					reset_view(null)
 					if(remoteobserve)
 						remoteobserve = null
@@ -1495,3 +1555,28 @@
 			src << "<font color='red'><b>"+pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")
 		else if(shock_stage == 80)
 			src << "<font color='red'><b>"+pick("You see a light at the end of the tunnel!", "You feel like you could die any moment now.", "You're about to lose consciousness.")
+
+
+/mob/living/carbon/human/proc/handle_clothing()
+	// Non-visual stuff that was in update_clothing()
+
+	if(buckled)
+		if(istype(buckled, /obj/structure/stool/bed/chair))
+			lying = 0
+		else
+			lying = 1
+
+	if(!w_uniform)
+		// Automatically drop anything in store / id / belt if you're not wearing a uniform.
+		for (var/obj/item/thing in list(r_store, l_store, wear_id, belt))
+			if (thing)
+				u_equip(thing)
+				if (client)
+					client.screen -= thing
+				if (thing)
+					thing.loc = loc
+					thing.dropped(src)
+					thing.layer = initial(thing.layer)
+
+
+	name = get_visible_name()

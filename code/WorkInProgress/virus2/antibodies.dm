@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:06
+
 // pure concentrated antibodies
 datum/reagent/antibodies
 	data = new/list("antibodies"=0)
@@ -16,20 +18,19 @@ datum/reagent/antibodies
 		return
 
 // reserving some numbers for later special antigens
-var/global/const
-	ANTIGEN_A  = 1
-	ANTIGEN_B  = 2
-	ANTIGEN_RH = 4
-	ANTIGEN_Q  = 8
-	ANTIGEN_U  = 16
-	ANTIGEN_V  = 32
-	ANTIGEN_X  = 64
-	ANTIGEN_Y  = 128
-	ANTIGEN_Z  = 256
-	ANTIGEN_M  = 512
-	ANTIGEN_N  = 1024
-	ANTIGEN_P  = 2048
-	ANTIGEN_O  = 4096
+var/global/const/ANTIGEN_A  = 1
+var/global/const/ANTIGEN_B  = 2
+var/global/const/ANTIGEN_RH = 4
+var/global/const/ANTIGEN_Q  = 8
+var/global/const/ANTIGEN_U  = 16
+var/global/const/ANTIGEN_V  = 32
+var/global/const/ANTIGEN_X  = 64
+var/global/const/ANTIGEN_Y  = 128
+var/global/const/ANTIGEN_Z  = 256
+var/global/const/ANTIGEN_M  = 512
+var/global/const/ANTIGEN_N  = 1024
+var/global/const/ANTIGEN_P  = 2048
+var/global/const/ANTIGEN_O  = 4096
 
 var/global/list/ANTIGENS = list("[ANTIGEN_A]" = "A", "[ANTIGEN_B]" = "B", "[ANTIGEN_RH]" = "RH", "[ANTIGEN_Q]" = "Q",
 								      "[ANTIGEN_U]" = "U", "[ANTIGEN_V]" = "V", "[ANTIGEN_Z]" = "Z", "[ANTIGEN_M]" = "M",
@@ -43,8 +44,8 @@ var/global/list/ANTIGENS = list("[ANTIGEN_A]" = "A", "[ANTIGEN_B]" = "B", "[ANTI
 	icon_state = "health"
 	w_class = 2.0
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | USEDELAY
-
+	flags = FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	slot_flags = SLOT_BELT
 
 /obj/item/device/antibody_scanner/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	if(! istype(M, /mob/living/carbon) || !M:antibodies)

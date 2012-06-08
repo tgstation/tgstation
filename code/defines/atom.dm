@@ -17,7 +17,7 @@
 	// replaced by OPENCONTAINER flags and atom/proc/is_open_container()
 	///Chemistry.
 
-	proc/assume_air(datum/air_group/giver)
+	proc/assume_air(datum/gas_mixture/giver)
 		del(giver)
 		return null
 
@@ -47,8 +47,16 @@
 		return flags & INSERT_CONTAINER
 */
 
+	Del()
+		var/F = file("del_log.txt")
+		var/coords = ""
+		if(src)
+			coords = "[src.x],[src.y],[src.z]"
+		F << "[time2text(world.timeofday, "hh:mm.ss")]: [src] - [src.loc] [coords] - [usr]"
+		..()
+
 obj
-	assume_air(datum/air_group/giver)
+	assume_air(datum/gas_mixture/giver)
 		if(loc)
 			return loc.assume_air(giver)
 		else

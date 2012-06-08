@@ -46,6 +46,9 @@
 		name = "candle"
 		icon = 'candle.dmi'
 		icon_state = "candle4"
+	liquidfood
+		name = "\improper \"LiquidFood\" ration"
+		icon_state = "liquidfood"
 
 /obj/item/trash/attack(mob/M as mob, mob/living/user as mob)
 	return
@@ -58,7 +61,8 @@
 	desc = "A heavy-duty, no fun allowed trash bag."
 	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
 	var/capacity = 25; //the number of trash it can carry.
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	w_class = 2.0
 
 /obj/item/weapon/trashbag/update_icon()
@@ -88,6 +92,7 @@
 				if(contents.len < capacity)	//slightly redundant, but it makes it prettier in the chatbox. -Pete
 					user << "\blue You pick up all the trash."
 					for(var/obj/item/O in get_turf(W))
+						if(istype(O, /obj/item/weapon/disk/nuclear)) continue //No nuke disks - Nodrak
 						if(contents.len < capacity)
 							if(O.w_class <= 2)
 								contents += O;
@@ -97,6 +102,7 @@
 				else
 					user << "\blue The bag is full!"
 			else
+				if(istype(W, /obj/item/weapon/disk/nuclear)) return //No nuke disks - Nodrak
 				if(contents.len < capacity)
 					contents += W;
 				else

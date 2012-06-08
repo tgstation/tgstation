@@ -1,23 +1,34 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/item/weapon/implant
 	name = "implant"
 	desc = "An implant. Not usually seen outside a body."
 	icon = 'items.dmi'
 	icon_state = "implant"
-	var
-		implanted = null
-		mob/imp_in = null
-		color = "b"
-		allow_reagents = 0
-	proc
-		trigger(emote, source as mob)
-		activate()
-		implanted(source as mob)
-		get_data()
-		hear(message, source as mob)
+	var/implanted = null
+	var/mob/imp_in = null
+	color = "b"
+	var/allow_reagents = 0
+
+	proc/trigger(emote, source as mob)
+		return
+
+	proc/activate()
+		return
+
+	proc/implanted(source as mob)
+		return
+
+	proc/get_data()
+		return
+
+	proc/hear(message, source as mob)
+		return
 
 
 	trigger(emote, source as mob)
 		return
+
 
 	activate()
 		return
@@ -37,6 +48,7 @@
 	implanted(source as mob)
 		return
 
+
 	get_data()
 		return "No information available"
 
@@ -48,9 +60,8 @@
 /obj/item/weapon/implant/uplink
 	name = "uplink implant"
 	desc = "A micro-telecrystal implant which allows for instant transportation of equipment."
-	var
-		activation_emote = "chuckle"
-		obj/item/device/uplink/radio/uplink = null
+	var/activation_emote = "chuckle"
+	var/obj/item/device/uplink/radio/uplink = null
 
 
 	New()
@@ -77,8 +88,7 @@
 /obj/item/weapon/implant/tracking
 	name = "tracking implant"
 	desc = "An implant which relays information to the appropriate tracking computer."
-	var
-		id = 1.0
+	var/id = 1.0
 
 
 	get_data()

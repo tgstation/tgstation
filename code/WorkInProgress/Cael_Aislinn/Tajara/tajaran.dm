@@ -22,10 +22,16 @@
 		if(!lying_icon)
 			lying_icon = new /icon('tajaran.dmi', "body_[g]_l")
 		icon = stand_icon
-		update_clothing()
+		rebuild_appearance()
 		src << "\blue Your icons have been generated!"
 
 	..()
+
+/mob/living/carbon/human/tajaran/rebuild_appearance()
+	update_clothing()
+
+/mob/living/carbon/human/tajaran/update_body_appearance()
+	update_clothing()
 
 /mob/living/carbon/human/tajaran/update_clothing()
 //	..()
@@ -37,19 +43,19 @@
 
 	// lol
 	var/fat = ""
-	/*if (mutations & FAT)
+	/*if (FAT in mutation)
 		fat = "fat"*/
 /*
-	if (mutations & HULK)
+	if (HULK in mutations)
 		overlays += image("icon" = 'genetics.dmi', "icon_state" = "hulk[fat][!lying ? "_s" : "_l"]")
 */
-	if (mutations & COLD_RESISTANCE)
+	if (COLD_RESISTANCE in mutations)
 		overlays += image("icon" = 'genetics.dmi', "icon_state" = "fire[fat][!lying ? "_s" : "_l"]")
 
-	if (mutations & TK)
+	if (TK in mutations)
 		overlays += image("icon" = 'genetics.dmi', "icon_state" = "telekinesishead[fat][!lying ? "_s" : "_l"]")
 
-	if (mutations & LASER)
+	if (LASER in mutations)
 		overlays += image("icon" = 'genetics.dmi', "icon_state" = "lasereyes[!lying ? "_s" : "_l"]")
 
 	if (mutantrace)
@@ -70,6 +76,18 @@
 					del(face_standing)
 				if(face_lying)
 					del(face_lying)
+				if(stand_icon)
+					del(stand_icon)
+				if(lying_icon)
+					del(lying_icon)
+			if("skrell")
+				body_overlays_standing += image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace]_[gender]_s")
+				body_overlays_lying	   += image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace]_[gender]_l")
+// This needs to be matched up with humans, but I'm too lazy right now
+//				if(face_standing)
+//					del(face_standing)
+//				if(face_lying)
+//					del(face_lying)
 				if(stand_icon)
 					del(stand_icon)
 				if(lying_icon)
@@ -121,21 +139,21 @@
 	if (lying)
 		icon = lying_icon
 
-		overlays += body_lying
+		overlays += damageicon_lying
 
 		if (face_lying)
 			overlays += face_lying
 	else
 		icon = stand_icon
 
-		overlays += body_standing
+		overlays += damageicon_standing
 
 		if (face_standing)
 			overlays += face_standing
 
 	// Uniform
 	if(w_uniform)
-		/*if (mutations & FAT && !(w_uniform.flags & ONESIZEFITSALL))
+		/*if ((FAT in mutations) && !(w_uniform.flags & ONESIZEFITSALL))
 			src << "\red You burst out of the [w_uniform.name]!"
 			var/obj/item/clothing/c = w_uniform
 			u_equip(c)
@@ -151,7 +169,7 @@
 			var/t1 = w_uniform.color
 			if (!t1)
 				t1 = icon_state
-			/*if (mutations & FAT)
+			/*if (FAT in mutations)
 				overlays += image("icon" = 'uniform_fat.dmi', "icon_state" = "[t1][!lying ? "_s" : "_l"]", "layer" = MOB_LAYER)
 			else*/
 			overlays += image("icon" = 'uniform.dmi', "icon_state" = text("[][]",t1, (!(lying) ? "_s" : "_l")), "layer" = MOB_LAYER)
@@ -263,7 +281,7 @@
 
 	var/tail_shown = 1
 	if (wear_suit)
-		/*if (mutations & FAT && !(wear_suit.flags & ONESIZEFITSALL))
+		/*if ((FAT in mutations) && !(wear_suit.flags & ONESIZEFITSALL))
 			src << "\red You burst out of the [wear_suit.name]!"
 			var/obj/item/clothing/c = wear_suit
 			u_equip(c)
@@ -457,8 +475,8 @@
 
 
 
-	var/husk = (mutations & HUSK)
-	//var/obese = (mutations & FAT)
+	var/husk = (HUSK in mutations)
+	//var/obese = (FAT in mutations)
 
 	stand_icon.Blend(new /icon('tajaran.dmi', "chest_[g]_s"), ICON_OVERLAY)
 	lying_icon.Blend(new /icon('tajaran.dmi', "chest_[g]_l"), ICON_OVERLAY)

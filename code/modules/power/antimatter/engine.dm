@@ -2,7 +2,7 @@
 	icon = 'AM_Engine.dmi'
 	density = 1
 	anchored = 1.0
-	flags = 512.0
+	flags = ON_BORDER
 
 /obj/machinery/power/am_engine/bits
 	name = "Antimatter Engine"

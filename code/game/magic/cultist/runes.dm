@@ -534,7 +534,7 @@ var/list/sacrificed = list()
 /////////////////////////////////////////FOURTEETH RUNE
 
 		communicate()
-			var/input = input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "") as text|null
+			var/input = copytext(sanitize(input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "") as text|null),1,MAX_MESSAGE_LEN)
 			if(!input)
 				if (istype(src))
 					return fizzle()
@@ -961,7 +961,7 @@ var/list/sacrificed = list()
 				usr.say("Fuu ma'jin!")
 				for(var/mob/living/carbon/C in viewers(src))
 					flick("e_flash", C.flash)
-					if (C.stuttering < 1 && (!(C.mutations & HULK)))
+					if (C.stuttering < 1 && (!(HULK in C.mutations)))
 						C.stuttering = 1
 					C.Weaken(1)
 					C.Stun(1)
@@ -977,7 +977,7 @@ var/list/sacrificed = list()
 					for(var/mob/O in viewers(T, null))
 						O.show_message(text("\red <B>[] invokes a talisman at []</B>", usr, T), 1)
 					flick("e_flash", T.flash)
-					if (!(T.mutations & HULK))
+					if (!(HULK in T.mutations))
 						T.silent += 15
 					T.Weaken(25)
 					T.Stun(25)

@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 obj/machinery/recharger
 	anchored = 1
 	icon = 'stationobjs.dmi'
@@ -7,9 +9,8 @@ obj/machinery/recharger
 	idle_power_usage = 4
 	active_power_usage = 250
 
-	var
-		obj/item/weapon/gun/energy/charging = null
-		obj/item/weapon/melee/baton/charging2 = null
+	var/obj/item/weapon/gun/energy/charging = null
+	var/obj/item/weapon/melee/baton/charging2 = null
 
 	attackby(obj/item/weapon/G as obj, mob/user as mob)
 		if(issilicon(user))
@@ -28,7 +29,7 @@ obj/machinery/recharger
 			if(!isarea(a))
 				return
 			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				user << "\red The recharger rejects the weapon!"
+				user << "\red \The [src] blinks red as you try to insert the item!"
 				return
 			user.drop_item()
 			G.loc = src

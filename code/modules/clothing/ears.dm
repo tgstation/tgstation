@@ -4,6 +4,7 @@
 	name = "ears"
 	w_class = 1.0
 	throwforce = 2
+	slot_flags = SLOT_EARS
 	var/twoeared = 0
 
 /obj/item/clothing/ears/attack_hand(mob/user as mob)

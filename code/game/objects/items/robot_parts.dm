@@ -3,7 +3,8 @@
 	icon = 'robot_parts.dmi'
 	item_state = "buildpipe"
 	icon_state = "blank"
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
 	var/construction_time = 100
 	var/list/construction_cost = list("metal"=20000,"glass"=5000)
 
@@ -220,7 +221,7 @@
 
 	if (istype(W, /obj/item/weapon/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
-		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+		t = copytext(sanitize(t), 1, MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && src.loc != usr)

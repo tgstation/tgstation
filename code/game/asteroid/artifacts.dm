@@ -1,21 +1,31 @@
-var/global/list/space_surprises = list(				/obj/item/clothing/mask/facehugger/angry			=4,
-												//	/obj/effect/critter/spesscarp						=2,
-													/obj/effect/critter/spesscarp/elite					=2,
-												//	/obj/creature										=0,
-												//	/obj/item/weapon/rcd								=0,
-												//	/obj/item/weapon/rcd_ammo							=0,
-												//	/obj/item/weapon/money							=0,
-												//	/obj/item/weapon/cloaking_device					=1,
-												//	/obj/item/weapon/gun/energy/teleport_gun			=0,
-												//	/obj/item/weapon/rubber_chicken						=0,
-													/obj/item/weapon/melee/energy/sword/pirate			=3,
-													/obj/structure/closet/syndicate/resources			=2,
-												//	/obj/machinery/wish_granter							=1,  // Okayyyy... Mayyyybe Kor is kinda sorta right.  A little.  Tiny bit.  >.>
-												//	/obj/item/clothing/glasses/thermal					=2,	// Could maybe be cool as its own rapid mode, sorta like wizard.  Maybe.
-												//	/obj/item/weapon/storage/box/stealth/				=2
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-												//														=11
-													)
+var/global/list/space_surprises = list(		/obj/item/clothing/mask/facehugger/angry		=4,
+											// /obj/item/weapon/pickaxe/hammer					=4, //Waiting on a sprite
+											/obj/item/weapon/pickaxe/silver					=4,
+											/obj/item/weapon/pickaxe/drill					=4,
+											/obj/item/weapon/pickaxe/jackhammer				=4,
+											/obj/effect/critter/spesscarp/elite				=3,
+											/obj/item/weapon/pickaxe/diamond				=3,
+											/obj/item/weapon/pickaxe/diamonddrill			=3,
+											/obj/item/weapon/pickaxe/gold					=3,
+											/obj/item/weapon/pickaxe/plasmacutter			=2,
+											/obj/structure/closet/syndicate/resources		=2,
+											/obj/item/weapon/melee/energy/sword/pirate		=1,
+											/obj/mecha/working/ripley/mining				=1
+
+											//	/obj/creature									=0,
+											//	/obj/item/weapon/rcd							=0,
+											//	/obj/item/weapon/rcd_ammo						=0,
+											//	/obj/item/weapon/spacecash						=0,
+											//	/obj/item/weapon/cloaking_device				=0,
+											//	/obj/item/weapon/gun/energy/teleport_gun		=0,
+											//	/obj/item/weapon/rubber_chicken					=0,
+											//	/obj/machinery/wish_granter						=0,  // Okayyyy... Mayyyybe Kor is kinda sorta right.  A little.  Tiny bit.  >.>
+											//	/obj/item/clothing/glasses/thermal				=0,	// Could maybe be cool as its own rapid mode, sorta like wizard.  Maybe.
+											//	/obj/item/weapon/storage/box/stealth/			=0
+											//													=11
+											)
 
 var/global/list/spawned_surprises = list()
 
@@ -34,9 +44,8 @@ var/global/list/spawned_surprises = list()
 	anchored = 1
 	density = 1
 
-	var
-		charges = 1
-		insisting = 0
+	var/charges = 1
+	var/insisting = 0
 
 /obj/machinery/wish_granter/attack_hand(var/mob/user as mob)
 	usr.machine = src
@@ -63,26 +72,26 @@ var/global/list/spawned_surprises = list()
 		charges--
 		insisting = 0
 
-		if (!(user.mutations & HULK))
-			user.mutations |= HULK
+		if (!(HULK in user.mutations))
+			user.mutations.Add(HULK)
 
-		if (!(user.mutations & LASER))
-			user.mutations |= LASER
+		if (!(LASER in user.mutations))
+			user.mutations.Add(LASER)
 
-		if (!(user.mutations & XRAY))
-			user.mutations |= XRAY
+		if (!(XRAY in user.mutations))
+			user.mutations.Add(XRAY)
 			user.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 			user.see_in_dark = 8
 			user.see_invisible = 2
 
-		if (!(user.mutations & COLD_RESISTANCE))
-			user.mutations |= COLD_RESISTANCE
+		if (!(COLD_RESISTANCE in user.mutations))
+			user.mutations.Add(COLD_RESISTANCE)
 
-		if (!(user.mutations & TK))
-			user.mutations |= TK
+		if (!(TK in user.mutations))
+			user.mutations.Add(TK)
 
-		if(!(user.mutations & HEAL))
-			user.mutations |= HEAL
+		if(!(HEAL in user.mutations))
+			user.mutations.Add(HEAL)
 
 		ticker.mode.traitors += user.mind
 		user.mind.special_role = "Avatar of the Wish Granter"

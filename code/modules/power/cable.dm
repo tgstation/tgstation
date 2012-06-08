@@ -284,7 +284,7 @@
 			return
 
 		else
-			user << "You transfer [MAXCOIL - src.amount ] length\s of cable from one coil to the other."
+			user << "You transfer [MAXCOIL - C.amount ] length\s of cable from one coil to the other."
 			src.amount -= (MAXCOIL-C.amount)
 			src.updateicon()
 			C.amount = MAXCOIL

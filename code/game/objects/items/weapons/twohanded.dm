@@ -93,7 +93,7 @@
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	force = 5
 	w_class = 4.0
-	flags = ONBACK
+	slot_flags = SLOT_BACK
 	force_unwielded = 5
 	force_wielded = 18
 

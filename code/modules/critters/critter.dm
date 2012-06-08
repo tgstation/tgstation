@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/effect/critter
 	name = "Critter"
 	desc = "Generic critter."
@@ -6,79 +8,78 @@
 	layer = 5.0
 	density = 1
 	anchored = 0
-	var
-		alive = 1
-		health = 10
-		max_health = 10
-		aggression = 100
-		speed = 8
-		list/access_list = list()//accesses go here
+	var/alive = 1
+	var/health = 10
+	var/max_health = 10
+	var/aggression = 100
+	var/speed = 8
+	var/list/access_list = list()//accesses go here
 //AI things
-		task = "thinking"
+	var/task = "thinking"
 	//Attacks at will
-		aggressive = 1
+	var/aggressive = 1
 	//Will target an attacker
-		defensive = 0
+	var/defensive = 0
 	//Will randomly move about
-		wanderer = 1
+	var/wanderer = 1
 	//Will open doors it bumps ignoring access
-		opensdoors = 0
+	var/opensdoors = 0
 	//Will randomly travel through vents
-		ventcrawl = 0
+	var/ventcrawl = 0
 
 	//Internal tracking ignore
-		frustration = 0
-		max_frustration = 8
-		attack = 0
-		attacking = 0
-		steps = 0
-		last_found = null
-		target = null
-		oldtarget_name = null
-		target_lastloc = null
+	var/frustration = 0
+	var/max_frustration = 8
+	var/attack = 0
+	var/attacking = 0
+	var/steps = 0
+	var/last_found = null
+	var/target = null
+	var/oldtarget_name = null
+	var/target_lastloc = null
 
-		thinkspeed  = 15
-		chasespeed  = 4
-		wanderspeed = 10
+	var/thinkspeed  = 15
+	var/chasespeed  = 4
+	var/wanderspeed = 10
 		//The last guy who attacked it
-		attacker = null
+	var/attacker = null
 		//Will not attack this thing
-		friend = null
+	var/friend = null
 		//How far to look for things dont set this overly high
-		seekrange = 7
+	var/seekrange = 7
 
 	//If true will attack these things
-		atkcarbon = 1
-		atksilicon = 0
-		atkcritter = 0
+	var/atkcarbon = 1
+	var/atksilicon = 0
+	var/atkcritter = 0
 		//Attacks critters of the same type
-		atksame = 0
-		atkmech = 0
+	var/atksame = 0
+	var/atkmech = 0
 
 		//Attacks syndies/traitors (distinguishes via mind)
-		atksynd = 1
+	var/atksynd = 1
 		//Attacks things NOT in its obj/req_access list
-		atkreq = 0
+	var/atkreq = 0
 
 	//Damage multipliers
-		brutevuln = 1
-		firevuln = 1
+	var/brutevuln = 1
+	var/firevuln = 1
 		//DR
-		armor = 0
+	var/armor = 0
 
 		//How much damage it does it melee
-		melee_damage_lower = 1
-		melee_damage_upper = 2
+	var/melee_damage_lower = 1
+	var/melee_damage_upper = 2
 		//Basic attack message when they move to attack and attack
-		angertext = "charges at"
-		attacktext = "attacks"
-		deathtext = "dies!"
+	var/angertext = "charges at"
+	var/attacktext = "attacks"
+	var/deathtext = "dies!"
 
-		chasestate = null // the icon state to use when attacking or chasing a target
-		attackflick = null // the icon state to flick when it attacks
-		attack_sound = null // the sound it makes when it attacks!
+	var/chasestate = null // the icon state to use when attacking or chasing a target
+	var/attackflick = null // the icon state to flick when it attacks
+	var/attack_sound = null // the sound it makes when it attacks!
 
-		attack_speed = 25 // delay of attack
+	var/attack_speed = 25 // delay of attack
 
 
 	proc

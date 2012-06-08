@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 //I will need to recode parts of this but I am way too tired atm
 /obj/effect/blob
 	name = "blob"
@@ -7,22 +9,21 @@
 	density = 1
 	opacity = 0
 	anchored = 1
-	var
-		active = 1
-		health = 30
-		brute_resist = 4
-		fire_resist = 1
-		blobtype = "Blob"
-		blobdebug = 0
+	var/active = 1
+	var/health = 30
+	var/brute_resist = 4
+	var/fire_resist = 1
+	var/blobtype = "Blob"
+	var/blobdebug = 0
 		/*Types
-		Blob
-		Node
-		Core
-		Factory
-		Shield
+	var/Blob
+	var/Node
+	var/Core
+	var/Factory
+	var/Shield
 		*/
-		steps_per_action = 4	// how many times should process() needs to be called for Life() to happen
-		steps_since_action = 1
+	var/steps_per_action = 4	// how many times should process() needs to be called for Life() to happen
+	var/steps_since_action = 1
 
 
 	New(loc, var/h = 30)
@@ -49,7 +50,7 @@
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		if((air_group && blobtype != "Shield") || (height==0))	return 1
-		if(istype(mover) && mover.checkpass(PASSBLOB))	return 1
+		if(istype(mover) && mover.pass_flags&PASSBLOB)	return 1
 		return 0
 
 

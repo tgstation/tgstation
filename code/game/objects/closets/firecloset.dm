@@ -8,7 +8,7 @@
 	new /obj/item/device/flashlight(src)
 	new /obj/item/weapon/tank/oxygen/red(src)
 	new /obj/item/weapon/extinguisher(src)
-	new /obj/item/clothing/head/helmet/hardhat/red(src)
+	new /obj/item/clothing/head/helmet/space/fire_helmet(src)
 
 /obj/structure/closet/firecloset/New()
 	..()
@@ -17,7 +17,7 @@
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/weapon/tank/oxygen/red(src)
 	new /obj/item/weapon/extinguisher(src)
-	new /obj/item/clothing/head/helmet/hardhat/red(src)
+	new /obj/item/clothing/head/helmet/space/fire_helmet(src)
 
 	/*switch (pickweight(list("nothing" = 5, "bare-bones" = 35, "basic" = 40, "pickpocketed" = 10, "untouched" = 10)))
 		if ("nothing")

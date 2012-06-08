@@ -4,7 +4,8 @@
 	icon = 'belts.dmi'
 	icon_state = "utilitybelt"
 	item_state = "utility"
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	slot_flags = SLOT_BELT
 	max_w_class = 3
 	max_combined_w_class = 21
 
@@ -164,3 +165,14 @@
 	new /obj/item/device/soulstone(src)
 	new /obj/item/device/soulstone(src)
 	new /obj/item/device/soulstone(src)
+
+
+/obj/item/weapon/storage/belt/champion
+	name = "championship belt"
+	desc = "Proves to the world that you are the strongest!"
+	icon_state = "championbelt"
+	item_state = "champion"
+	storage_slots = 1
+	can_hold = list(
+		"/obj/item/clothing/mask/luchador"
+		)

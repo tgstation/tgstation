@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 /obj/item/tk_grab
 	name = "Telekinetic Grab"
 	desc = "Magic"
@@ -8,10 +10,9 @@
 	w_class = 10.0
 	layer = 20
 
-	var
-		last_throw = 0
-		obj/focus = null
-		mob/living/host = null
+	var/last_throw = 0
+	var/obj/focus = null
+	var/mob/living/host = null
 
 
 	dropped(mob/user as mob)
@@ -47,7 +48,7 @@
 		if(!host)
 			del(src)
 			return
-		if(!host.mutations & TK)
+		if(!(TK in host.mutations))
 			del(src)
 			return
 		if(!focus)
@@ -113,7 +114,7 @@
 //equip_if_possible(obj/item/W, slot, del_on_fail = 1)
 /*
 		if(istype(user, /mob/living/carbon))
-			if(user:mutations & TK && get_dist(source, user) <= 7)
+			if((TK in user:mutations) && get_dist(source, user) <= 7)
 				if(user:equipped())	return 0
 				var/X = source:x
 				var/Y = source:y

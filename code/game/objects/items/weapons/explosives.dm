@@ -1,5 +1,7 @@
 /obj/item/weapon/plastique/attack_self(mob/user as mob)
-	var/newtime = input(usr, "Please set the timer.", "Timer", 10)
+	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
+	if(newtime < 1)
+		newtime = 10
 	timer = newtime
 	user << "Timer set for [timer] seconds."
 
@@ -26,6 +28,8 @@
 			message_admins("ATTACK: [user] ([user.ckey]) planted [src] on [target] ([target:ckey]).")
 			log_attack("<font color='red'> [user.real_name] ([user.ckey]) tried planting [name] on [target:real_name] ([target:ckey])</font>")
 		target.overlays += image('assemblies.dmi', "plastic-explosive2")
+		log_admin("[user] ([user.ckey]) has planted a [src].")
+		message_admins("[user] ([user.ckey]) planted a [src].")
 		user << "Bomb has been planted. Timer counting down from [timer]."
 		spawn(timer*10)
 			if(target)

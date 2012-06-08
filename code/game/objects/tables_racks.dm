@@ -20,6 +20,11 @@ TABLE AND RACK OBJECT INTERATIONS
 		else
 	return
 
+/obj/structure/table/examine()
+	set src in oview()
+	..()
+	if(dented)
+		usr << "It looks to have [dented] [prob(30) ? "face shaped " : ""] dents in it."
 
 /obj/structure/table/blob_act()
 	if(prob(75))
@@ -38,11 +43,11 @@ TABLE AND RACK OBJECT INTERATIONS
 
 
 /obj/structure/table/attack_paw(mob/user as mob)
-	if ((usr.mutations & HULK))
-		usr << text("\blue You destroy the table.")
+	if ((HULK in usr.mutations))
+		usr << "\blue You destroy the table."
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] smashes the table apart!", usr)
+				O << "\red [user] smashes the table apart!"
 		if(istype(src, /obj/structure/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced( src.loc )
 		else if(istype(src, /obj/structure/table/woodentable))
@@ -57,16 +62,16 @@ TABLE AND RACK OBJECT INTERATIONS
 			user.layer = TURF_LAYER
 			for(var/mob/O in oviewers())
 				if ((O.client && !( O.blinded )))
-					O << text("[] hides under the table!", user)
+					O << "[user] hides under the table!"
 				//Foreach goto(69)
 	return
 
 
 /obj/structure/table/attack_alien(mob/user as mob) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
-	usr << text("\green You destroy the table.")
+	usr << "\green You destroy the table."
 	for(var/mob/O in oviewers())
 		if ((O.client && !( O.blinded )))
-			O << text("\red [] slices the table apart!", user)
+			O << "\red [user] slices the table apart!"
 	if(istype(src, /obj/structure/table/reinforced))
 		new /obj/item/weapon/table_parts/reinforced( src.loc )
 	else if(istype(src, /obj/structure/table/woodentable))
@@ -80,10 +85,10 @@ TABLE AND RACK OBJECT INTERATIONS
 
 /obj/structure/table/attack_animal(mob/living/simple_animal/user as mob) //Removed code for larva since it doesn't work. Previous code is now a larva ability. /N
 	if(user.wall_smash)
-		usr << text("\red You destroy the table.")
+		usr << "\red You destroy the table."
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] smashes the table apart!", user)
+				O << "\red [user] smashes the table apart!"
 		if(istype(src, /obj/structure/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced( src.loc )
 		else if(istype(src, /obj/structure/table/woodentable))
@@ -98,11 +103,11 @@ TABLE AND RACK OBJECT INTERATIONS
 
 
 /obj/structure/table/attack_hand(mob/user as mob)
-	if (usr.mutations & HULK)
-		usr << text("\blue You destroy the table.")
+	if ((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
+		usr << "\blue You destroy the table."
 		for(var/mob/O in oviewers())
 			if ((O.client && !( O.blinded )))
-				O << text("\red [] smashes the table apart!", usr)
+				O << "\red [user] smashes the table apart!"
 		if(istype(src, /obj/structure/table/reinforced))
 			new /obj/item/weapon/table_parts/reinforced( src.loc )
 		else if(istype(src, /obj/structure/table/woodentable))
@@ -111,23 +116,13 @@ TABLE AND RACK OBJECT INTERATIONS
 			new /obj/item/weapon/table_parts( src.loc )
 		src.density = 0
 		del(src)
-/*	if (user.mutations2 & mSmallsize)
-		step(user, get_dir(user, src))
-		if (user.loc == src.loc)
-			user.layer = TURF_LAYER
-			user.update_clothing()
-			for(var/mob/M in viewers(user, null))
-				M.show_message("[user] hides under the table!", 1)
-				//Foreach goto(69)
-				*/
-//Googol never tested this shit.
 	return
 
 
 /obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
 
-	if(istype(mover) && (mover.checkpass(PASSTABLE) || (mover.flags & TABLEPASS) || mover.throwing)) //WTF do things hit tables like that?  Jeez.
+	if(istype(mover) && (mover.pass_flags & PASSTABLE || (mover.flags & TABLEPASS) || mover.throwing)) //WTF do things hit tables like that?  Jeez.
 		return 1
 	else
 		return 0
@@ -164,23 +159,23 @@ TABLE AND RACK OBJECT INTERATIONS
 					affecting.take_damage(rand(10,15), 0)
 					H.Weaken(2)
 					if(prob(20)) // One chance in 20 to DENT THE TABLE
-						affecting.take_damage(rand(0,5), 0) //Extra damage
+						affecting.take_damage(rand(5,10), 0) //Extra damage
 						if(dented)
 							G.assailant.visible_message("\red \The [G.assailant] smashes \the [H]'s head on \the [src] with enough force to further deform \the [src]!\nYou wish you could unhear that sound.",\
 							"\red You smash \the [H]'s head on \the [src] with enough force to leave another dent!\n[prob(50)?"That was a satisfying noise." : "That sound will haunt your nightmares"]",\
 							"\red You hear the nauseating crunch of bone and gristle on solid metal and the squeal of said metal deforming.")
 						else
-							dented = 1
 							G.assailant.visible_message("\red \The [G.assailant] smashes \the [H]'s head on \the [src] so hard it left a dent!\nYou wish you could unhear that sound.",\
 							"\red You smash \the [H]'s head on \the [src] with enough force to leave a dent!\n[prob(5)?"That was a satisfying noise." : "That sound will haunt your nightmares"]",\
 							"\red You hear the nauseating crunch of bone and gristle on solid metal and the squeal of said metal deforming.")
+						dented++
 					else if(prob(50))
-						G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src], [H.gender == MALE? "his" : "her"] bone and cartilage making a loud crunch!",\
-						"\red You smash \the [H]'s head on \the [src], [H.gender == MALE? "his" : "her"] bone and cartilage making a loud crunch!",\
+						G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src], [H.get_gender_form("its")] bone and cartilage making a loud crunch!",\
+						"\red You smash \the [H]'s head on \the [src], [H.get_gender_form("its")] bone and cartilage making a loud crunch!",\
 						"\red You hear the nauseating crunch of bone and gristle on solid metal, the noise echoing through the room.")
 					else
-						G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src], [H.gender == MALE? "his" : "her"] nose smashed and face bloodied!",\
-						"\red You smash \the [H]'s head on \the [src], [H.gender == MALE? "his" : "her"] nose smashed and face bloodied!",\
+						G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src], [H.get_gender_form("its")] nose smashed and face bloodied!",\
+						"\red You smash \the [H]'s head on \the [src], [H.get_gender_form("its")] nose smashed and face bloodied!",\
 						"\red You hear the nauseating crunch of bone and gristle on solid metal and the gurgling gasp of someone who is trying to breathe through their own blood.")
 				else
 					affecting.take_damage(rand(5,10), 0)
@@ -189,14 +184,13 @@ TABLE AND RACK OBJECT INTERATIONS
 					"\red You hear the nauseating crunch of bone and gristle on solid metal.")
 				H.UpdateDamageIcon()
 				H.updatehealth()
-				H.update_clothing()
 				playsound(src.loc, 'tablehit1.ogg', 50, 1, -3)
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
 		for(var/mob/O in viewers(world.view, src))
 			if (O.client)
-				O << text("\red [] puts [] on the table.", G.assailant, G.affecting)
+				O << "\red [G.assailant] puts [G.affecting] on the table."
 		del(W)
 		return
 
@@ -220,7 +214,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		playsound(src.loc, 'blade1.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
 		for(var/mob/O in viewers(user, 4))
-			O.show_message(text("\blue The table was sliced apart by []!", user), 1, text("\red You hear metal coming apart."), 2)
+			O.show_message("\blue The table was sliced apart by [user]!", 1, "\red You hear metal coming apart.", 2)
 		new /obj/item/weapon/table_parts( src.loc )
 		del(src)
 		return
@@ -242,7 +236,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		G.affecting.Weaken(5)
 		for(var/mob/O in viewers(world.view, src))
 			if (O.client)
-				O << text("\red [] puts [] on the wooden table.", G.assailant, G.affecting)
+				O << "\red [G.assailant] puts [G.affecting] on the wooden table."
 		del(W)
 		return
 	if (istype(W, /obj/item/weapon/wrench))
@@ -262,7 +256,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		playsound(src.loc, 'blade1.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
 		for(var/mob/O in viewers(user, 4))
-			O.show_message(text("\blue The wooden table was sliced apart by []!", user), 1, text("\red You hear wood coming apart."), 2)
+			O.show_message("\blue The wooden table was sliced apart by [user]!", 1, "\red You hear wood coming apart.", 2)
 		new /obj/item/weapon/table_parts/wood( src.loc )
 		del(src)
 		return
@@ -284,7 +278,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		G.affecting.Weaken(5)
 		for(var/mob/O in viewers(world.view, src))
 			if (O.client)
-				O << text("\red [] puts [] on the reinforced table.", G.assailant, G.affecting)
+				O << "\red [G.assailant] puts [G.affecting] on the reinforced table."
 		del(W)
 		return
 
@@ -332,7 +326,7 @@ TABLE AND RACK OBJECT INTERATIONS
 		playsound(src.loc, 'blade1.ogg', 50, 1)
 		playsound(src.loc, "sparks", 50, 1)
 		for(var/mob/O in viewers(user, 4))
-			O.show_message(text("\blue The reinforced table was sliced apart by []!", user), 1, text("\red You hear metal coming apart."), 2)
+			O.show_message("\blue The reinforced table was sliced apart by [user]!", 1, "\red You hear metal coming apart.", 2)
 		new /obj/item/weapon/table_parts/reinforced( src.loc )
 		del(src)
 		return
@@ -369,7 +363,7 @@ TABLE AND RACK OBJECT INTERATIONS
 	if(air_group || (height==0)) return 1
 	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
 		return 1
-	if(istype(mover) && (mover.checkpass(PASSTABLE) || mover.flags & TABLEPASS || mover.throwing))
+	if(istype(mover) && (mover.pass_flags & PASSTABLE || mover.flags & TABLEPASS || mover.throwing))
 		return 1
 	else
 		return 0

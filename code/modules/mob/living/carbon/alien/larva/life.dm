@@ -1,10 +1,11 @@
-/mob/living/carbon/alien/larva
-	var
-		oxygen_alert = 0
-		toxins_alert = 0
-		fire_alert = 0
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
-		temperature_alert = 0
+/mob/living/carbon/alien/larva
+	var/oxygen_alert = 0
+	var/toxins_alert = 0
+	var/fire_alert = 0
+
+	var/temperature_alert = 0
 
 
 /mob/living/carbon/alien/larva/Life()
@@ -158,7 +159,7 @@
 			if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
 
 			var/datum/gas_mixture/environment = loc.return_air()
-			var/datum/air_group/breath
+			var/datum/gas_mixture/breath
 			// HACK NEED CHANGING LATER
 			if(health < 0)
 				losebreath++
@@ -258,7 +259,7 @@
 			breath.toxins -= toxins_used
 			breath.oxygen += toxins_used
 
-			if(breath.temperature > (T0C+66) && !(mutations & COLD_RESISTANCE)) // Hot air hurts :(
+			if(breath.temperature > (T0C+66) && !(COLD_RESISTANCE in src.mutations)) // Hot air hurts :(
 				if(prob(20))
 					src << "\red You feel a searing heat in your lungs!"
 				fire_alert = max(fire_alert, 1)
@@ -286,16 +287,17 @@
 
 			if(reagents) reagents.metabolize(src)
 
-		/*	if(nutrition > 500 && !(mutations & FAT))
+/*			if(nutrition > 500 && !(FAT in src.mutations))
 				if(prob(5 + round((nutrition - 200) / 2)))
 					src << "\red You suddenly feel blubbery!"
-					mutations |= FAT
-					update_body()
-			if (nutrition < 100 && mutations & FAT)
+					mutations.Add(FAT)
+//					update_body()
+			if (nutrition < 100 && (FAT in src.mutations))
 				if(prob(round((50 - nutrition) / 100)))
 					src << "\blue You feel fit again!"
-					mutations &= ~FAT
-					update_body()*/
+					mutations.Add(FAT)
+//					update_body()
+*/
 			if (nutrition > 0)
 				nutrition-= HUNGER_FACTOR
 
@@ -410,7 +412,7 @@
 
 		handle_regular_hud_updates()
 
-			if (stat == 2 || mutations & XRAY)
+			if (stat == 2 || (XRAY in src.mutations))
 				sight |= SEE_TURFS
 				sight |= SEE_MOBS
 				sight |= SEE_OBJS

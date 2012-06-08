@@ -21,12 +21,17 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	var/items						// List of items
 	var/list/ItemList				// Parsed list of items
 	var/uses 						// Numbers of crystals
+	var/uplink_data					// designated uplink items
 	// List of items not to shove in their hands.
 	var/list/NotInHand = list(/obj/machinery/singularity_beacon/syndicate)
 
 	New()
-		welcome = ticker.mode.uplink_welcome
-		items = dd_replacetext(ticker.mode.uplink_items, "\n", "")	// Getting the text string of items
+		if(!welcome)
+			welcome = ticker.mode.uplink_welcome
+		if(!uplink_data)
+			uplink_data = ticker.mode.uplink_items
+
+		items = dd_replacetext(uplink_data, "\n", "")	// Getting the text string of items
 		ItemList = dd_text2list(src.items, ";")	// Parsing the items text string
 		uses = ticker.mode.uplink_uses
 
@@ -312,7 +317,8 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	var/temp = null 			//Temporary storage area for a message offering the option to destroy the radio
 	var/selfdestruct = 0		//Set to 1 while the radio is self destructing itself.
 	var/obj/item/device/radio/origradio = null
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
 	w_class = 2.0
 	item_state = "radio"
 	throwforce = 5

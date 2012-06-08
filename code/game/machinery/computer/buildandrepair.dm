@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /obj/structure/computerframe
 	density = 1
 	anchored = 0
@@ -17,16 +19,15 @@
 	icon_state = "id_mod"
 	item_state = "electronic"
 	origin_tech = "programming=2"
-	var
-		id = null
-		frequency = null
-		build_path = null
-		board_type = "computer"
-		list/req_components = null
-		powernet = null
-		list/records = null
-		frame_desc = null
-		contain_parts = 1
+	var/id = null
+	var/frequency = null
+	var/build_path = null
+	var/board_type = "computer"
+	var/list/req_components = null
+	var/powernet = null
+	var/list/records = null
+	var/frame_desc = null
+	var/contain_parts = 1
 
 /obj/item/weapon/circuitboard/aicore
 	name = "Circuit board (AI core)"
@@ -192,7 +193,6 @@
 	name = "Circuit board (Telecommunications Server Monitor)"
 	build_path = "/obj/machinery/computer/telecomms/server"
 	origin_tech = "programming=3"
-
 /obj/item/weapon/circuitboard/comm_traffic
 	name = "Circuitboard (Telecommunications Traffic Control)"
 	build_path = "/obj/machinery/computer/telecomms/traffic"
@@ -201,11 +201,30 @@
 /obj/item/weapon/circuitboard/curefab
 	name = "Circuit board (Cure fab)"
 	build_path = "/obj/machinery/computer/curer"
-
 /obj/item/weapon/circuitboard/splicer
 	name = "Circuit board (Disease Splicer)"
 	build_path = "/obj/machinery/computer/diseasesplicer"
 
+/obj/item/weapon/circuitboard/mining_shuttle
+	name = "Circuit board (Mining Shuttle)"
+	build_path = "/obj/machinery/computer/mining_shuttle"
+	origin_tech = "programming=2"
+/obj/item/weapon/circuitboard/HolodeckControl // Not going to let people get this, but it's just here for future
+	name = "Circuit board (Holodeck Control)"
+	build_path = "/obj/machinery/computer/HolodeckControl"
+	origin_tech = "programming=4"
+/obj/item/weapon/circuitboard/aifixer
+	name = "Circuit board (AI Integrity Fixer)"
+	build_path = "/obj/machinery/computer/aifixer"
+	origin_tech = "programming=3;biotech=2"
+/obj/item/weapon/circuitboard/area_atmos
+	name = "Circuit board (Area Air Control)"
+	build_path = "/obj/machinery/computer/area_atmos"
+	origin_tech = "programming=2"
+/obj/item/weapon/circuitboard/prison_shuttle
+	name = "Circuit board (Prison Shuttle)"
+	build_path = "/obj/machinery/computer/prison_shuttle"
+	origin_tech = "programming=2"
 
 
 /obj/item/weapon/circuitboard/supplycomp/attackby(obj/item/I as obj, mob/user as mob)

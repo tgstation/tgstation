@@ -62,22 +62,16 @@
 	return
 
 /atom/proc/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if (istype(W, /obj/item/device/detective_scanner))
+	if (!(istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) && !(istype(W, /obj/item/weapon/cleaner)) && !(istype(W, /obj/item/weapon/chemsprayer)) && !(istype(W, /obj/item/weapon/pepperspray)) && !(istype(W, /obj/item/weapon/plantbgone)) && !istype(W, /obj/item/device/detective_scanner) && !(istype(W, /obj/item/weapon/reagent_containers/glass/rag)) )
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
-				O << "\red [src] has been scanned by [user] with the [W]"
-	else
-		if (!( istype(W, /obj/item/weapon/grab) ) && !(istype(W, /obj/item/weapon/plastique)) &&!(istype(W, /obj/item/weapon/cleaner)) &&!(istype(W, /obj/item/weapon/chemsprayer)) &&!(istype(W, /obj/item/weapon/pepperspray)) && !(istype(W, /obj/item/weapon/plantbgone)) && !(istype(W, /obj/item/weapon/reagent_containers/glass/rag)) )
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O << "\red <B>[src] has been hit by [user] with [W]</B>"
-
+				O << "\red <B>[src] has been hit by [user] with [W]</B>"
 	return
 
 /atom/proc/add_hiddenprint(mob/living/M as mob)
 	if(isnull(M)) return
 	if(isnull(M.key)) return
-	if (!( src.flags ) & 256)
+	if (!( src.flags ) & FPRINT)
 		return
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -102,15 +96,8 @@
 /atom/proc/add_fingerprint(mob/living/M as mob)
 	if(isnull(M)) return
 	if(isnull(M.key)) return
-	if (!( flags ) & 256)
+	if (!( src.flags ) & FPRINT)
 		return
-	//Smudge up dem prints some
-	for(var/P in fingerprints)
-		var/test_print = stars(fingerprints[P], rand(85,95))
-		if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
-			fingerprints.Remove(P)
-		else
-			fingerprints[P] = test_print
 	if (ishuman(M))
 		//Add the list if it does not exist.
 		if(!fingerprintshidden)
@@ -118,7 +105,7 @@
 		//Fibers~
 		add_fibers(M)
 		//He has no prints!
-		if (M.mutations2 & mFingerprints)
+		if (mFingerprints in M.mutations)
 			if(fingerprintslast != M.key)
 				fingerprintshidden += "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]"
 				fingerprintslast = M.key
@@ -151,6 +138,15 @@
 			fingerprints = list()
 		//Hash this shit.
 		var/full_print = md5(H.dna.uni_identity)
+		//Smudge up dem prints some
+		for(var/P in fingerprints)
+			if(P == full_print)
+				continue
+			var/test_print = stars(fingerprints[P], rand(85,95))
+			if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
+				fingerprints.Remove(P)
+			else
+				fingerprints[P] = test_print
 		var/print = fingerprints[full_print] //Find if the print is already there.
 		//It is not!  We need to add it!
 		if(!print)
@@ -160,6 +156,13 @@
 			fingerprints[full_print] = stringmerge(print, stars(full_print, (H.gloves ? rand(10,20) : rand(25,40))))
 		return 1
 	else
+		//Smudge up dem prints some
+		for(var/P in fingerprints)
+			var/test_print = stars(fingerprints[P], rand(85,95))
+			if(stringpercent(test_print) == 32) //She's full of stars! (No actual print left)
+				fingerprints.Remove(P)
+			else
+				fingerprints[P] = test_print
 		if(fingerprintslast != M.key)
 			fingerprintshidden += text("Real name: [], Key: []",M.real_name, M.key)
 			fingerprintslast = M.key
@@ -175,7 +178,7 @@
 	if (!istype(M.dna, /datum/dna))
 		M.dna = new /datum/dna(null)
 	M.check_dna()
-	if (!( src.flags ) & 256)
+	if (!( src.flags ) & FPRINT)
 		return 0
 	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
@@ -200,6 +203,7 @@
 			O.overlays += O.blood_overlay
 
 		//if this blood isn't already in the list, add it
+
 		if(blood_DNA[M.dna.unique_enzymes])
 			return 0 //already bloodied with this blood. Cannot add more.
 		blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
@@ -291,9 +295,9 @@
 
 /atom/proc/clean_blood()
 
-	if (!flags & 256)
+	if (!( src.flags ) & FPRINT)
 		return
-	if (blood_DNA )
+	if (blood_DNA)
 
 		//Cleaning blood off of mobs
 		if (istype (src, /mob/living/carbon))
@@ -338,11 +342,12 @@
 		del(fingerprints)
 	if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src
-		M.update_clothing()
+		M.rebuild_appearance() // both clothes and hands need to be cleaned, so just rebuild all
 	return
 
 /atom/MouseDrop(atom/over_object as mob|obj|turf|area)
 	spawn( 0 )
+
 		if (istype(over_object, /atom))
 			over_object.MouseDrop_T(src, usr)
 		return
@@ -904,7 +909,6 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 							usr << "\blue You look at your stump."
 							return*/
 					src.attack_hand(usr, usr.hand)
-//					usr:afterattack(src, usr, (t5 ? 1 : 0), params)
 				else
 					// ------- YOU ARE NOT HUMAN. WHAT ARE YOU - DETERMINED HERE AND PROPER ATTACK_MOBTYPE CALLED -------
 					if (istype(usr, /mob/living/carbon/monkey))
@@ -967,7 +971,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 					src.hand_al(usr, usr.hand)
 		else
 			// ------- YOU ARE CLICKING ON AN OBJECT THAT'S INACCESSIBLE TO YOU AND IS NOT YOUR HUD -------
-			if(usr:mutations & LASER && usr:a_intent == "hurt" && world.time >= usr.next_move)
+			if((LASER in usr:mutations) && usr:a_intent == "hurt" && world.time >= usr.next_move)
 				// ------- YOU HAVE THE LASER MUTATION, YOUR INTENT SET TO HURT AND IT'S BEEN MORE THAN A DECISECOND SINCE YOU LAS TATTACKED -------
 				var/turf/oloc
 				var/turf/T = get_turf(usr)
@@ -996,7 +1000,6 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 				usr.next_move = world.time + 6
 	return
-
 
 /proc/CanReachThrough(turf/srcturf, turf/targetturf, atom/target)
 	var/obj/item/weapon/dummy/D = new /obj/item/weapon/dummy( srcturf )
@@ -1028,6 +1031,38 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 /atom/proc/AltClick()
 	if(hascall(src,"pull"))
 		src:pull()
+
+	/* // NOT UNTIL I FIGURE OUT A GOOD WAY TO DO THIS SHIT
+	if((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
+		if(!istype(src, /obj/item) && !istype(src, /mob) && !istype(src, /turf))
+			if(!usr.equipped())
+
+				var/liftable = 0
+				for(var/x in liftable_structures)
+					if(findtext("[src.type]", "[x]"))
+						liftable = 1
+						break
+
+				if(liftable)
+
+					add_fingerprint(usr)
+					var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(usr)
+					G.assailant = usr
+					if (usr.hand)
+						usr.l_hand = G
+					else
+						usr.r_hand = G
+					G.layer = 20
+					G.structure = src
+					G.synch()
+
+					visible_message("\red [usr] has picked up [src]!")
+
+					return
+				else
+					usr << "\red You can't pick this up!"
+	*/
+
 	return
 
 /atom/proc/ShiftClick()
@@ -1080,95 +1115,32 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		var/mob/living/carbon/U = M
 		U.swap_hand()
 
-/*
-/atom/proc/get_global_map_pos()
-	if(!islist(global_map) || isemptylist(global_map)) return
-	var/cur_x = null
-	var/cur_y = null
-	var/list/y_arr = null
-	for(cur_x=1,cur_x<=global_map.len,cur_x++)
-		y_arr = global_map[cur_x]
-		cur_y = y_arr.Find(src.z)
-		if(cur_y)
-			break
-//	world << "X = [cur_x]; Y = [cur_y]"
-	if(cur_x && cur_y)
-		return list("x"=cur_x,"y"=cur_y)
-	else
-		return 0
-*/ //Don't touch this either. DMTG
-/atom/proc/checkpass(passflag)
-	return pass_flags&passflag
-
-
 //Could not find object proc defines and this could almost be an atom level one.
 
 /obj/proc/process()
 	processing_objects.Remove(src)
 	return 0
 
+// Show a message to all mobs in sight of this one
+// This would be for visible actions by the src mob
+// message is the message output to anyone who can see e.g. "[src] does something!"
+// self_message (optional) is what the src mob sees  e.g. "You do something!"
+// blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
-/*Really why was this in the click proc of all the places you could put it
-					if (usr:a_intent == "help")
-						// ------- YOU HAVE THE HELP INTENT SELECTED -------
-						if(istype(src, /mob/living/carbon))
-							// ------- YOUR TARGET IS LIVING CARBON CREATURE (NOT AI OR CYBORG OR SIMPLE ANIMAL) -------
-							var/mob/living/carbon/C = src
-							if(usr:mutations & HEAL)
-								// ------- YOU ARE HUMAN, WITH THE HELP INTENT TARGETING A HUMAN AND HAVE THE 'HEAT' GENETIC MUTATION -------
+/mob/visible_message(var/message, var/self_message, var/blind_message)
+	for(var/mob/M in viewers(src))
+		var/msg = message
+		if(self_message && M==src)
+			msg = self_message
+		M.show_message( msg, 1, blind_message, 2)
 
-								if(C.stat != 2)
-									// ------- THE PERSON YOU'RE TOUCHING IS NOT DEAD -------
-
-									var/t_him = "it"
-									if (src.gender == MALE)
-										t_him = "his"
-									else if (src.gender == FEMALE)
-										t_him = "her"
-									var/u_him = "it"
-									if (usr.gender == MALE)
-										t_him = "him"
-									else if (usr.gender == FEMALE)
-										t_him = "her"
-
-									if(src != usr)
-										usr.visible_message( \
-										"\blue <i>[usr] places [u_him] palms on [src], healing [t_him]!</i>", \
-										"\blue You place your palms on [src] and heal [t_him].", \
-										)
-									else
-										usr.visible_message( \
-										"\blue <i>[usr] places [u_him] palms on [u_him]self and heals.</i>", \
-										"\blue You place your palms on yourself and heal.", \
-										)
-
-									C.adjustOxyLoss(-25)
-									C.adjustToxLoss(-25)
-
-									if(istype(C, /mob/living/carbon/human))
-										// ------- YOUR TARGET IS HUMAN -------
-										var/mob/living/carbon/human/H = C
-										var/datum/organ/external/affecting = H.get_organ(check_zone(usr:zone_sel:selecting))
-										if(affecting && affecting.heal_damage(25, 25))
-											H.UpdateDamageIcon()
-									else
-										C.heal_organ_damage(25, 25)
-									C.adjustCloneLoss(-25)
-									C.stunned = max(0, C.stunned-5)
-									C.paralysis = max(0, C.paralysis-5)
-									C.stuttering = max(0, C.stuttering-5)
-									C.drowsyness = max(0, C.drowsyness-5)
-									C.weakened = max(0, C.weakened-5)
-									usr:nutrition -= rand(1,10)
-									usr.next_move = world.time + 6
-								else
-									// ------- PERSON YOU'RE TOUCHING IS ALREADY DEAD -------
-									usr << "\red [src] is dead and can't be healed."
-								return
-
-					// ------- IF YOU DON'T HAVE THE SILLY ABILITY ABOVE OR FAIL ON ANY OTHER CHECK, THEN YOU'RE CLICKING ON SOMETHING WITH AN EMPTY HAND. ATTACK_HAND IT IS THEN -------
-*/
-
+// Show a message to all mobs in sight of this atom
+// Use for objects performing visible actions
+// message is output to anyone who can see, e.g. "The [src] does something!"
+// blind_message (optional) is what blind people will hear e.g. "You hear something!"
+/atom/proc/visible_message(var/message, var/blind_message)
+	for(var/mob/M in viewers(src))
+		M.show_message( message, 1, blind_message, 2)
 
 
 

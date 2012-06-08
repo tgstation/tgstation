@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /**********************************************************************
 						Cyborg Spec Items
 ***********************************************************************/
@@ -90,8 +92,7 @@
 	possible_transfer_amounts = list(5,10,15,25,30,50,100)
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	volume = 60
-	var
-		reagent = ""
+	var/reagent = ""
 
 
 /obj/item/weapon/reagent_containers/glass/bottle/robot/inaprovaline
@@ -221,11 +222,10 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 5.0
 	w_class = 3.0
-	var
 	//	datum/effect/effect/system/spark_spread/spark_system
-		working = 0
-		mode = 1
-		disabled = 0
+	var/working = 0
+	var/mode = 1
+	var/disabled = 0
 
 /*
 	New()

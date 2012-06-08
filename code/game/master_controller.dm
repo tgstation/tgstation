@@ -59,6 +59,8 @@ datum/controller/game_controller
 
 		setupgenetics()
 
+		setupdooralarms()
+
 //		for(var/i = 0, i < max_secret_rooms, i++)
 //			make_mining_asteroid_secret()
 // Because energy cutlasses, facehuggers, and empty rooms are silly. FOR NOW. - Erthilo
@@ -69,6 +71,8 @@ datum/controller/game_controller
 
 		if(!ticker)
 			ticker = new /datum/controller/gameticker()
+
+		setupfactions()
 
 		spawn
 			ticker.pregame()

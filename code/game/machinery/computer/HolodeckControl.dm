@@ -52,6 +52,7 @@
 				dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=red>Disable Safety Protocols?</font>)</A><BR>"
 			dat += "<BR>"
 			dat += "Safety Protocols are <font color=green> ENABLED </font><BR>"
+
 		user << browse(dat, "window=computer;size=400x500")
 		onclose(user, "computer")
 
@@ -91,13 +92,13 @@
 					loadProgram(target)
 
 			else if(href_list["burntest"])
-				if(!emagged)	return
+				if(safety)	return
 				target = locate(/area/holodeck/source_burntest)
 				if(target)
 					loadProgram(target)
 
 			else if(href_list["wildlifecarp"])
-				if(!emagged)	return
+				if(safety)	return
 				target = locate(/area/holodeck/source_wildlife)
 				if(target)
 					loadProgram(target)
@@ -119,6 +120,8 @@
 
 
 /obj/machinery/computer/HolodeckControl/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
+//Warning, uncommenting this can have concequences. For example, deconstructing the computer may cause holographic eswords to never derez
+
 /*		if(istype(D, /obj/item/weapon/screwdriver))
 			playsound(src.loc, 'Screwdriver.ogg', 50, 1)
 			if(do_after(user, 20))
@@ -165,6 +168,30 @@
 	//	target = locate(/area/holodeck/source_emptycourt)
 	//	if(target)
 	//		loadProgram(target)
+
+//This could all be done better, but it works for now.
+/obj/machinery/computer/HolodeckControl/Del()
+	emergencyShutdown()
+	..()
+
+/obj/machinery/computer/HolodeckControl/meteorhit(var/obj/O as obj)
+	emergencyShutdown()
+	..()
+
+
+/obj/machinery/computer/HolodeckControl/emp_act(severity)
+	emergencyShutdown()
+	..()
+
+
+/obj/machinery/computer/HolodeckControl/ex_act(severity)
+	emergencyShutdown()
+	..()
+
+
+/obj/machinery/computer/HolodeckControl/blob_act()
+	emergencyShutdown()
+	..()
 
 
 /obj/machinery/computer/HolodeckControl/process()
@@ -282,7 +309,18 @@
 						T.hotspot_expose(50000,50000,1)
 
 
+/obj/machinery/computer/HolodeckControl/proc/emergencyShutdown()
+	//Get rid of any items
+	for(var/item in holographic_items)
+		derez(item)
+	//Turn it back to the regular non-holographic room
+	target = locate(/area/holodeck/source_plating)
+	if(target)
+		loadProgram(target)
 
+	var/area/targetsource = locate(/area/holodeck/source_plating)
+	targetsource.copy_contents_to(linkedholodeck , 1)
+	active = 0
 
 
 
@@ -371,7 +409,6 @@
 						"\red You hear a whine as \the [src]'s is hit by something dense.")
 					H.UpdateDamageIcon()
 					H.updatehealth()
-					H.update_clothing()
 					playsound(src.loc, 'tablehit1.ogg', 50, 1, -3)
 				else //Lets do REAL DAMAGE, YEAH!
 					G.affecting.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been smashed on a table by [G.assailant.name] ([G.assailant.ckey])</font>")
@@ -380,6 +417,7 @@
 					log_admin("ATTACK: [G.assailant] ([G.assailant.ckey]) smashed [G.affecting] ([G.affecting.ckey]) on a table.")
 					message_admins("ATTACK: [G.assailant] ([G.assailant.ckey]) smashed [G.affecting] ([G.affecting.ckey]) on a table.")
 					log_attack("<font color='red'>[G.assailant] ([G.assailant.ckey]) smashed [G.affecting] ([G.affecting.ckey]) on a table.</font>")
+
 					if(prob(25))
 						add_blood(G.affecting)
 						affecting.take_damage(rand(10,15), 0)
@@ -388,20 +426,20 @@
 							affecting.take_damage(rand(0,5), 0) //Extra damage
 							if(dented)
 								G.assailant.visible_message("\red \The [G.assailant] smashes \the [H]'s head on \the [src] with enough force to further deform \the [src]!\nYou wish you could unhear that sound.",\
-								"\red You smash \the [H]'s head on \the [src] with enough force to leave another dent!\n[prob(50)?"That was a satisfying noise." : "That sound will haunt your nightmares"]",\
+								"\red You smash \the [H]'s head on \the [src] with enough force to leave another dent!\n\black [prob(50)?"That was a satisfying noise." : "That sound will haunt your nightmares"]",\
 								"\red You hear the nauseating crunch of bone and gristle on solid metal and the squeal of said metal deforming.")
 							else
-								dented = 1
 								G.assailant.visible_message("\red \The [G.assailant] smashes \the [H]'s head on \the [src] so hard it left a dent!\nYou wish you could unhear that sound.",\
-								"\red You smash \the [H]'s head on \the [src] with enough force to leave a dent!\n[prob(5)?"That was a satisfying noise." : "That sound will haunt your nightmares"]",\
+								"\red You smash \the [H]'s head on \the [src] with enough force to leave a dent!\n\black [prob(5)?"That was a satisfying noise." : "That sound will haunt your nightmares"]",\
 								"\red You hear the nauseating crunch of bone and gristle on solid metal and the squeal of said metal deforming.")
+							dented++
 						else if(prob(50))
-							G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src], [H.gender == MALE? "his" : "her"] bone and cartilage making a loud crunch!",\
-							"\red You smash \the [H]'s head on \the [src], [H.gender == MALE? "his" : "her"] bone and cartilage making a loud crunch!",\
+							G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src], [H.get_gender_form("its")] bone and cartilage making a loud crunch!",\
+							"\red You smash \the [H]'s head on \the [src], [H.get_gender_form("its")] bone and cartilage making a loud crunch!",\
 							"\red You hear the nauseating crunch of bone and gristle on solid metal, the noise echoing through the room.")
 						else
-							G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src], [H.gender == MALE? "his" : "her"] nose smashed and face bloodied!",\
-							"\red You smash \the [H]'s head on \the [src], [H.gender == MALE? "his" : "her"] nose smashed and face bloodied!",\
+							G.assailant.visible_message("\red [G.assailant] smashes \the [H]'s head on \the [src], [H.get_gender_form("its")] nose smashed and face bloodied!",\
+							"\red You smash \the [H]'s head on \the [src], [H.get_gender_form("its")] nose smashed and face bloodied!",\
 							"\red You hear the nauseating crunch of bone and gristle on solid metal and the gurgling gasp of someone who is trying to breathe through their own blood.")
 					else
 						affecting.take_damage(rand(5,10), 0)
@@ -410,7 +448,6 @@
 						"\red You hear the nauseating crunch of bone and gristle on solid metal.")
 					H.UpdateDamageIcon()
 					H.updatehealth()
-					H.update_clothing()
 					playsound(src.loc, 'tablehit1.ogg', 50, 1, -3)
 			return
 		G.affecting.loc = src.loc

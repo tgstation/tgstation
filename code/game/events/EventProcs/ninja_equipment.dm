@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 +++++++++++++++++++++++++++++++++//                    //++++++++++++++++++++++++++++++++++
@@ -840,22 +842,23 @@ ________________________________________________________________________________
 					U << "\red Procedure interrupted. Protocol terminated."
 			return
 		else if(istype(I, /obj/item/weapon/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
-			if(I:stored)//If it has something on it.
+			var/obj/item/weapon/disk/tech_disk/T = I
+			if(T.stored)//If it has something on it.
 				U << "Research information detected, processing..."
 				if(do_after(U,s_delay))
 					for(var/datum/tech/current_data in stored_research)
-						if(current_data.id==I:stored.id)
-							if(current_data.level<I:stored.level)
-								current_data.level=I:stored.level
+						if(current_data.id==T.stored.id)
+							if(current_data.level<T.stored.level)
+								current_data.level=T.stored.level
 							break
-					I:stored = null
+					T.stored = null
 					U << "\blue Data analyzed and updated. Disk erased."
 				else
 					U << "\red <b>ERROR</b>: \black Procedure interrupted. Process terminated."
 			else
-				I.loc = src
-				t_disk = I
-				U << "\blue You slot \the [I] into \the [src]."
+				T.loc = src
+				t_disk = T
+				U << "\blue You slot \the [T] into \the [src]."
 			return
 	..()
 
@@ -870,6 +873,7 @@ ________________________________________________________________________________
 		U << "\blue You are now invisible to normal detection."
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] vanishes into thin air!",1)
+	U.update_clothing()
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/cancel_stealth()
@@ -881,6 +885,7 @@ ________________________________________________________________________________
 		U << "\blue You are now visible."
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] appears from thin air!",1)
+		U.update_clothing()
 		return 1
 	return 0
 
@@ -1307,10 +1312,9 @@ It is possible to destroy the net by the occupant or someone else.
 	mouse_opacity = 1//So you can hit it with stuff.
 	anchored = 1//Can't drag/grab the trapped mob.
 
-	var
-		health = 25//How much health it has.
-		mob/living/affecting = null//Who it is currently affecting, if anyone.
-		mob/living/master = null//Who shot web. Will let this person know if the net was successful or failed.
+	var/health = 25//How much health it has.
+	var/mob/living/affecting = null//Who it is currently affecting, if anyone.
+	var/mob/living/master = null//Who shot web. Will let this person know if the net was successful or failed.
 
 	proc
 		healthcheck()
@@ -1422,7 +1426,7 @@ It is possible to destroy the net by the occupant or someone else.
 		return
 
 	attack_hand()
-		if ((usr.mutations & HULK))
+		if ((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
 			usr << text("\blue You easily destroy the energy net.")
 			for(var/mob/O in oviewers(src))
 				O.show_message(text("\red [] rips the energy net apart!", usr), 1)

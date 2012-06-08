@@ -7,7 +7,7 @@
 		name = text("alien larva ([rand(1, 1000)])")
 	real_name = name
 	spawn (1)
-		update_clothing()
+		rebuild_appearance()
 		src << "\blue Your icons have been generated!"
 //	spawn(1200) grow()  Grow after 120 seconds -- TLE Commented out because life.dm has better version -- Urist
 	..()
@@ -28,7 +28,7 @@
 		now_pushing = 1
 		if(ismob(AM))
 			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
+			if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
 /*
 				if(prob(70))
 					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
@@ -367,11 +367,12 @@
 
 	..()
 
-	if(M.gloves)
-		if(M.gloves.cell)
+	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
+		var/obj/item/clothing/gloves/G = M.gloves
+		if(G.cell)
 			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
-				if(M.gloves.cell.charge >= 2500)
-					M.gloves.cell.charge -= 2500
+				if(G.cell.charge >= 2500)
+					G.cell.charge -= 2500
 
 					Weaken(5)
 					if (stuttering < 5)
@@ -443,7 +444,7 @@
 				attack_verb = "slash"
 
 			if (prob(90))
-				if (M.mutations & HULK)
+				if ((HULK in M.mutations) || (SUPRSTR in M.augmentations))
 					damage += 5
 					spawn(0)
 						Paralyse(1)

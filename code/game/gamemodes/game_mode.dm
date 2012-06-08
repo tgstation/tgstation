@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /*
  * GAMEMODES (by Rastaf0)
  *
@@ -11,24 +13,23 @@
 
 
 /datum/game_mode
-	var
-		name = "invalid"
-		config_tag = null
-		intercept_hacked = 0
-		votable = 1
-		probability = 1
-		station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
-		explosion_in_progress = 0 //sit back and relax
-		list/datum/mind/modePlayer = new
-		list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
-		list/protected_jobs = list()	// Jobs that can't be tratiors because
-		list/logtraitors = list()
-		required_players = 1
-		required_enemies = 0
-		recommended_enemies = 0
-		uplink_welcome
-		uplink_uses
-		uplink_items = {"Highly Visible and Dangerous Weapons;
+	var/name = "invalid"
+	var/config_tag = null
+	var/intercept_hacked = 0
+	var/votable = 1
+	var/probability = 1
+	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
+	var/explosion_in_progress = 0 //sit back and relax
+	var/list/datum/mind/modePlayer = new
+	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
+	var/list/protected_jobs = list()	// Jobs that can't be tratiors because
+	var/list/logtraitors = list()
+	var/required_players = 1
+	var/required_enemies = 0
+	var/recommended_enemies = 0
+	var/uplink_welcome
+	var/uplink_uses
+	var/uplink_items = {"Highly Visible and Dangerous Weapons;
 /obj/item/weapon/gun/projectile:6:Revolver;
 /obj/item/ammo_magazine/a357:2:Ammo-357;
 /obj/item/weapon/gun/energy/crossbow:5:Energy Crossbow;
@@ -58,7 +59,7 @@ Devices and Tools;
 /obj/item/weapon/storage/syndie_kit/space:3:Space Suit;
 /obj/item/clothing/glasses/thermal:3:Thermal Imaging Glasses;
 /obj/item/weapon/aiModule/syndicate:7:Hacked AI Upload Module;
-/obj/item/weapon/plastique:2:C-4 (Destroys walls);
+/obj/item/weapon/plastique:2:C-4 (Destroys walls, not people);
 /obj/item/weapon/syndie/c4explosive:4:Low Power Explosive Charge, with Detonator;
 /obj/item/device/powersink:5:Powersink (DANGER!);
 /obj/item/device/radio/beacon/syndicate:7:Singularity Beacon (DANGER!);

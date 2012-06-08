@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /*Composed of 7 parts
 3 Particle emitters
 proc
@@ -62,13 +64,12 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	icon_state = "none"
 	anchored = 0
 	density = 1
-	var
-		obj/machinery/particle_accelerator/control_box/master = null
-		construction_state = 0
-		reference = null
-		powered = 0
-		strength = null
-		desc_holder = null
+	var/obj/machinery/particle_accelerator/control_box/master = null
+	var/construction_state = 0
+	var/reference = null
+	var/powered = 0
+	var/strength = null
+	var/desc_holder = null
 
 	end_cap
 		name = "Alpha Particle Generation Array"
@@ -151,6 +152,12 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 		return
 
 
+	Move()
+		..()
+		if(master && master.active)
+			master.toggle_power()
+			investigate_log("was moved whilst active; it <font color='red'>powered down</font>.","singulo")
+
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
@@ -181,9 +188,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 	update_icon()
 		switch(construction_state)
-			if(0)
-				icon_state="[reference]"
-			if(1)
+			if(0,1)
 				icon_state="[reference]"
 			if(2)
 				icon_state="[reference]w"
@@ -291,13 +296,12 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	use_power = 0
 	idle_power_usage = 0
 	active_power_usage = 0
-	var
-		construction_state = 0
-		active = 0
-		reference = null
-		powered = null
-		strength = 0
-		desc_holder = null
+	var/construction_state = 0
+	var/active = 0
+	var/reference = null
+	var/powered = null
+	var/strength = 0
+	var/desc_holder = null
 
 
 	verb/rotate()
@@ -375,7 +379,6 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 		if(prob(50))
 			del(src)
 		return
-
 
 	proc
 		update_state()

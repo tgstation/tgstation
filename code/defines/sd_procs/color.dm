@@ -1,15 +1,16 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /* sd_color and procs
 	sd_color is a special datum that contains color data in various
 	formats. Sample colors are available in samplecolors.dm.
 
 sd_color
-	var
-		name		// the name of the color
-		red			// red componant of the color
-		green		// green componant of the color
-		blue		// red componant of the color
-		html		// html string for the color
-		icon/Icon	// contains the icon produced by the rgb2icon() proc
+	var/name		// the name of the color
+	var/red			// red componant of the color
+	var/green		// green componant of the color
+	var/blue		// red componant of the color
+	var/html		// html string for the color
+	var/icon/Icon	// contains the icon produced by the rgb2icon() proc
 
 	PROCS
 		brightness()
@@ -30,13 +31,12 @@ sd_color
 *  Implimentation: No need to read further.  *
 *********************************************/
 sd_color
-	var
-		name		// the name of the color
-		red = 0		// red componant of the color
-		green = 0	// green componant of the color
-		blue = 0	// red componant of the color
-		html		// html string for the color
-		icon/Icon	// contains the icon produced by the rgb2icon() proc
+	var/name		// the name of the color
+	var/red = 0		// red componant of the color
+	var/green = 0	// green componant of the color
+	var/blue = 0	// red componant of the color
+	var/html		// html string for the color
+	var/icon/Icon	// contains the icon produced by the rgb2icon() proc
 
 	proc
 		brightness()

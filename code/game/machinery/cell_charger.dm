@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /obj/machinery/cell_charger
 	name = "cell charger"
@@ -9,9 +11,8 @@
 	idle_power_usage = 5
 	active_power_usage = 60
 	power_channel = EQUIP
-	var
-		obj/item/weapon/cell/charging = null
-		chargelevel = -1
+	var/obj/item/weapon/cell/charging = null
+	var/chargelevel = -1
 	proc
 		updateicon()
 			icon_state = "ccharger[charging ? 1 : 0]"
@@ -49,7 +50,7 @@
 				if(!isarea(a))
 					return
 				if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-					user << "\red The charger rejects the cell!"
+					user << "\red \The [src] blinks red as you try to insert the cell!"
 					return
 
 				user.drop_item()

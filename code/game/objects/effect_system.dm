@@ -13,12 +13,16 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	unacidable = 1//So effect are not targeted by alien acid.
 	flags = TABLEPASS
 
+/obj/effect/ex_act(severity)
+	if(severity)
+		del(src)
+
 /obj/effect/effect/water
 	name = "water"
 	icon = 'effects.dmi'
 	icon_state = "extinguish"
 	var/life = 15.0
-	flags = 2.0
+	flags = TABLEPASS
 	mouse_opacity = 0
 
 /obj/effect/effect/smoke
@@ -1000,7 +1004,7 @@ steam.start() -- spawns the effect
 		return
 
 	attack_hand(var/mob/user)
-		if (user.mutations & HULK || (prob(75 - metal*25)))
+		if ((HULK in user.mutations) || (prob(75 - metal*25)) || (SUPRSTR in user.augmentations))
 			user << "\blue You smash through the metal foam wall."
 			for(var/mob/O in oviewers(user))
 				if ((O.client && !( O.blinded )))
@@ -1044,44 +1048,17 @@ steam.start() -- spawns the effect
 	proc/update_nearby_tiles(need_rebuild)
 		if(!air_master) return 0
 
-		var/turf/simulated/source = loc
+		var/turf/simulated/source = get_turf(src)
 		var/turf/simulated/north = get_step(source,NORTH)
 		var/turf/simulated/south = get_step(source,SOUTH)
 		var/turf/simulated/east = get_step(source,EAST)
 		var/turf/simulated/west = get_step(source,WEST)
 
-		if(need_rebuild)
-			if(istype(source)) //Rebuild/update nearby group geometry
-				if(source.parent)
-					air_master.groups_to_rebuild += source.parent
-				else
-					air_master.tiles_to_update += source
-			if(istype(north))
-				if(north.parent)
-					air_master.groups_to_rebuild += north.parent
-				else
-					air_master.tiles_to_update += north
-			if(istype(south))
-				if(south.parent)
-					air_master.groups_to_rebuild += south.parent
-				else
-					air_master.tiles_to_update += south
-			if(istype(east))
-				if(east.parent)
-					air_master.groups_to_rebuild += east.parent
-				else
-					air_master.tiles_to_update += east
-			if(istype(west))
-				if(west.parent)
-					air_master.groups_to_rebuild += west.parent
-				else
-					air_master.tiles_to_update += west
-		else
-			if(istype(source)) air_master.tiles_to_update += source
-			if(istype(north)) air_master.tiles_to_update += north
-			if(istype(south)) air_master.tiles_to_update += south
-			if(istype(east)) air_master.tiles_to_update += east
-			if(istype(west)) air_master.tiles_to_update += west
+		if(istype(source)) air_master.tiles_to_update |= source
+		if(istype(north)) air_master.tiles_to_update |= north
+		if(istype(south)) air_master.tiles_to_update |= south
+		if(istype(east)) air_master.tiles_to_update |= east
+		if(istype(west)) air_master.tiles_to_update |= west
 
 		return 1
 

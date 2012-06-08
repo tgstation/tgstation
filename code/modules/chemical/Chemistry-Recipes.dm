@@ -350,8 +350,6 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = get_turf(holder.my_atom.loc)
 				for(var/turf/simulated/floor/target_tile in range(0,location))
-					if(target_tile.parent && target_tile.parent.group_processing)
-						target_tile.parent.suspend_group_processing()
 
 					var/datum/gas_mixture/napalm = new
 
@@ -887,7 +885,7 @@ datum
 			name = "Soy Sauce"
 			id = "soysauce"
 			result = "soysauce"
-			required_reagents = list("soymilk" = 4, "acid" = 1)
+			required_reagents = list("soymilk" = 4, "water" = 1) //Was sulphuric acid, probably should change it
 			result_amount = 5
 
 		cheesewheel

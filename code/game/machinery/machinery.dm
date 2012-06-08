@@ -223,3 +223,4 @@ Class Procs:
 /obj/machinery/proc/assign_uid()
 	uid = gl_uid
 	gl_uid++
+

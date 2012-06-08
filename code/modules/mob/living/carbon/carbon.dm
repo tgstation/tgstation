@@ -5,9 +5,9 @@
 			src.nutrition -= HUNGER_FACTOR/10
 			if(src.m_intent == "run")
 				src.nutrition -= HUNGER_FACTOR/10
-		/*if(src.mutations & FAT && src.m_intent == "run" && src.bodytemperature <= 360)
-			src.bodytemperature += 2*/
-
+/*		if((FAT in src.mutations) && src.m_intent == "run" && src.bodytemperature <= 360)
+			src.bodytemperature += 2
+*/
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
 		if(prob(40))
@@ -204,10 +204,9 @@
 		if(src == M && istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			var/list/damaged = H.get_damaged_organs(1,1)
-			src.visible_message( \
-				text("\blue [src] examines [].",src.gender==MALE?"himself":"herself"), \
-				"\blue You check yourself for injuries." \
-				)
+			visible_message("\blue [src] examines [get_gender_form("itself")].", \
+				"\blue You check yourself for injuries.", \
+				"You hear a rustle, as someone checks about their person.")
 
 			for(var/datum/organ/external/org in damaged)
 				var/status = ""
@@ -222,9 +221,11 @@
 				if(brutedamage > 0)
 					status = "bruised"
 				if(brutedamage > 20)
-					status = "bleeding"
+					status = "blugeoned"
 				if(brutedamage > 40)
 					status = "mangled"
+				if(org.bleeding && brutedamage)
+					status += ",[burndamage ? "" : " and"] bleeding[burndamage ? "," : ""]"
 				if(brutedamage > 0 && burndamage > 0)
 					status += " and "
 				if(burndamage > 40)
@@ -242,11 +243,6 @@
 				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.getDisplayName(),status),1)
 			src.show_message(text("\blue You finish checking yourself."),1)
 		else
-			var/t_him = "it"
-			if (src.gender == MALE)
-				t_him = "him"
-			else if (src.gender == FEMALE)
-				t_him = "her"
 			if (istype(src,/mob/living/carbon/human) && src:w_uniform)
 				var/mob/living/carbon/human/H = src
 				H.w_uniform.add_fingerprint(M)
@@ -259,9 +255,9 @@
 			AdjustWeakened(-3)
 			playsound(src.loc, 'thudswoosh.ogg', 50, 1, -1)
 			M.visible_message( \
-				"\blue [M] shakes [src] trying to wake [t_him] up!", \
-				"\blue You shake [src] trying to wake [t_him] up!", \
-				)
+				"\blue \The [M] shakes \the [src] trying to wake them up!", \
+				"\blue You shake \the [src] trying to wake them up!", \
+				"You hear someone get shaken.") //Using it or its here have he or his, which made no sense, so sticking with gender neutral for now
 
 /mob/living/carbon/proc/eyecheck()
 	return 0

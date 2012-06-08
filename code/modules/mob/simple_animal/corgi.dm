@@ -47,7 +47,7 @@
 
 /mob/living/simple_animal/corgi/Life()
 	..()
-	update_clothing()
+	rebuild_appearance()
 
 /mob/living/simple_animal/corgi/show_inv(mob/user as mob)
 	/*
@@ -182,7 +182,6 @@
 					usr.drop_item()
 					item_to_add.loc = src
 					src.inventory_head = item_to_add
-					update_clothing()
 
 					//Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a HAT is removed.
 
@@ -351,11 +350,11 @@
 		now_pushing = 1
 		if(ismob(AM))
 			var/mob/tmob = AM
-			if(istype(tmob, /mob/living/carbon/human) && tmob.mutations & FAT)
+/*			if(istype(tmob, /mob/living/carbon/human) && (FAT in tmob.mutations))
 				if(prob(70))
 					src << "\red <B>You fail to push [tmob]'s fat ass out of the way.</B>"
 					now_pushing = 0
-					return
+					return*/
 			if(tmob.nopush)
 				now_pushing = 0
 				return

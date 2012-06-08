@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+
 /datum/game_mode/var/list/memes = list()
 
 /datum/game_mode/meme
@@ -9,31 +11,29 @@
 	votable = 0 // temporarily disable this mode for voting
 
 
-	var
 
-		var/list/datum/mind/first_hosts = list()
-		var/list/assigned_hosts = list()
+	var/var/list/datum/mind/first_hosts = list()
+	var/var/list/assigned_hosts = list()
 
-		const
-			prob_int_murder_target = 50 // intercept names the assassination target half the time
-			prob_right_murder_target_l = 25 // lower bound on probability of naming right assassination target
-			prob_right_murder_target_h = 50 // upper bound on probability of naimg the right assassination target
+	var/const/prob_int_murder_target = 50 // intercept names the assassination target half the time
+	var/const/prob_right_murder_target_l = 25 // lower bound on probability of naming right assassination target
+	var/const/prob_right_murder_target_h = 50 // upper bound on probability of naimg the right assassination target
 
-			prob_int_item = 50 // intercept names the theft target half the time
-			prob_right_item_l = 25 // lower bound on probability of naming right theft target
-			prob_right_item_h = 50 // upper bound on probability of naming the right theft target
+	var/const/prob_int_item = 50 // intercept names the theft target half the time
+	var/const/prob_right_item_l = 25 // lower bound on probability of naming right theft target
+	var/const/prob_right_item_h = 50 // upper bound on probability of naming the right theft target
 
-			prob_int_sab_target = 50 // intercept names the sabotage target half the time
-			prob_right_sab_target_l = 25 // lower bound on probability of naming right sabotage target
-			prob_right_sab_target_h = 50 // upper bound on probability of naming right sabotage target
+	var/const/prob_int_sab_target = 50 // intercept names the sabotage target half the time
+	var/const/prob_right_sab_target_l = 25 // lower bound on probability of naming right sabotage target
+	var/const/prob_right_sab_target_h = 50 // upper bound on probability of naming right sabotage target
 
-			prob_right_killer_l = 25 //lower bound on probability of naming the right operative
-			prob_right_killer_h = 50 //upper bound on probability of naming the right operative
-			prob_right_objective_l = 25 //lower bound on probability of determining the objective correctly
-			prob_right_objective_h = 50 //upper bound on probability of determining the objective correctly
+	var/const/prob_right_killer_l = 25 //lower bound on probability of naming the right operative
+	var/const/prob_right_killer_h = 50 //upper bound on probability of naming the right operative
+	var/const/prob_right_objective_l = 25 //lower bound on probability of determining the objective correctly
+	var/const/prob_right_objective_h = 50 //upper bound on probability of determining the objective correctly
 
-			waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-			waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
+	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
+	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 /datum/game_mode/meme/announce()
 	world << "<B>The current game mode is - Meme!</B>"

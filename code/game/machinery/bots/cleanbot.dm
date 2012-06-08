@@ -355,6 +355,13 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 /obj/item/weapon/bucket_sensor/attackby(var/obj/item/W, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
+		var/cleanbots = 0
+		for(var/obj/machinery/bot/cleanbot in world)
+			cleanbots++
+		if(cleanbots >= 6) //For some reason it starts at 4, so max limit is actually 2.
+			user << "\red The station frequencies can't handle anymore cleanbots!" //TOO MANY GODDAMN CLEANBOTS
+			cleanbots = 0
+			return
 		var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot
 		A.loc = get_turf(src.loc)
 		A.name = src.created_name
@@ -364,7 +371,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 
 	else if (istype(W, /obj/item/weapon/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
-		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
+		t = copytext(sanitize(t), 1, MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && src.loc != usr)

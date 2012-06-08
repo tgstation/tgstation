@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+
 /obj/item/weapon/tank/jetpack
 	name = "Jetpack (Empty)"
 	desc = "A tank of compressed gas for use as propulsion in zero-gravity areas. Use with caution."
@@ -5,11 +7,10 @@
 	w_class = 4.0
 	item_state = "jetpack"
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
-	var
-		datum/effect/effect/system/ion_trail_follow/ion_trail
-		on = 0.0
-		stabilization_on = 0
-		volume_rate = 500              //Needed for borg jetpack transfer
+	var/datum/effect/effect/system/ion_trail_follow/ion_trail
+	var/on = 0.0
+	var/stabilization_on = 0
+	var/volume_rate = 500              //Needed for borg jetpack transfer
 
 	New()
 		..()
@@ -75,7 +76,7 @@
 
 	New()
 		..()
-		air_contents.adjustGases((6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
+		air_contents.adjust((6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 		return
 
 /obj/item/weapon/tank/jetpack/oxygen
@@ -86,7 +87,7 @@
 
 	New()
 		..()
-		air_contents.adjustGases((6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
+		air_contents.adjust((6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 		return
 
 /obj/item/weapon/tank/jetpack/carbondioxide
@@ -99,7 +100,7 @@
 		..()
 		src.ion_trail = new /datum/effect/effect/system/ion_trail_follow()
 		src.ion_trail.set_up(src)
-		air_contents.adjustGases(0,(6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
+		air_contents.adjust(0,(6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 		return
 
 	examine()

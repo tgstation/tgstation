@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:06
+
 /obj/item/weapon/stamperaser
 	name = "eraser"
 	desc = "It looks like some kind of eraser."
@@ -15,10 +17,9 @@
 	var/on = 0
 	flags = FPRINT|TABLEPASS
 	w_class = 1
-	var
-		list/obj/item/device/radio/Old = list()
-		list/obj/item/device/radio/Curr = list()
-		time_remaining = 5
+	var/list/obj/item/device/radio/Old = list()
+	var/list/obj/item/device/radio/Curr = list()
+	var/time_remaining = 5
 
 /obj/item/device/jammer/New()
 	..()

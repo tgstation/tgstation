@@ -28,58 +28,59 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			E.set_up(epicenter)
 			E.start()
 
-		var/list/exTurfs = list()
+		var/list/dTurfs = list() //Holds the turfs in devestation range.
+		var/list/hTurfs = list() //Holds the turfs in heavy impact range, minus turfs in devestation range.
+		var/list/lTurfs = list() //Holds the turfs in light impact range, minus turfs in devestation range and heavy impact range.
+		var/list/fTurfs = list() //Holds turfs to loop through for mobs to flash. (Hehehe, dirty)
 
 		if(roundExplosions)
-			for(var/turf/T in circlerange(epicenter,light_impact_range))
-				exTurfs += T
+			fTurfs = circlerange(epicenter,max(devastation_range, heavy_impact_range, light_impact_range, flash_range))
+			dTurfs = circlerange(epicenter,devastation_range)
+			hTurfs = circlerange(epicenter,heavy_impact_range) - dTurfs
+			lTurfs = circlerange(epicenter,light_impact_range) - dTurfs - hTurfs
 		else
-			for(var/turf/T in range(light_impact_range, epicenter))
-				exTurfs += T
+			fTurfs = range(epicenter,max(devastation_range, heavy_impact_range, light_impact_range, flash_range))
+			dTurfs = range(epicenter,devastation_range)
+			hTurfs = range(epicenter,heavy_impact_range) - dTurfs
+			lTurfs = range(epicenter,light_impact_range) - dTurfs - hTurfs
 
-		for(var/turf/T in exTurfs)
-			var/distance = 0
-			if(roundExplosions)
-				distance = get_dist_euclidian(epicenter, T)
-			else
-				distance = get_dist(epicenter, T)
-			if(distance < 0)
-				distance = 0
-			if(distance < devastation_range)
-				for(var/atom/object in T.contents)
-					spawn()
-						if(object)
-							object.ex_act(1)
-				if(prob(5))
-					if(T)
+
+		for(var/turf/T in dTurfs) //Loop through the turfs in devestation range.
+			spawn() //Try to pop each turf into it's own thread, speed things along.
+				if(T) //Sanity checking.
+					//Now, the actual explosion stuff happens.
+					if(prob(5))
 						T.ex_act(2)
-				else
-					if(T)
+					else
 						T.ex_act(1)
-			else if(distance < heavy_impact_range)
-				for(var/atom/object in T.contents)
-					spawn()
-						if(object)
-							object.ex_act(2)
+					for(var/atom/object in T.contents)
+						spawn()
+							if(object)
+								object.ex_act(1)
+
+		for(var/turf/T in hTurfs)
+			spawn()
 				if(T)
-					T.ex_act(2)
-			else if (distance == heavy_impact_range)
-				for(var/atom/object in T.contents)
-					if(object)
-						object.ex_act(2)
-				if(prob(15) && devastation_range > 2 && heavy_impact_range > 2)
-					secondaryexplosion(T, 1)
-				else
-					if(T)
+					if(prob(15) && devastation_range > 2 && heavy_impact_range > 2)
+						secondaryexplosion(T, 1)
+					else
 						T.ex_act(2)
-			else if(distance <= light_impact_range)
-				for(var/atom/object in T.contents)
-					spawn()
-						if(object)
-							object.ex_act(3)
+					for(var/atom/object in T.contents)
+						spawn()
+							if(object)
+								object.ex_act(2)
+
+		for(var/turf/T in lTurfs)
+			spawn()
 				if(T)
 					T.ex_act(3)
-			for(var/mob/living/carbon/mob in T)
+					for(var/atom/object in T.contents)
+						spawn()
+							if(object)
+								object.ex_act(3)
+
+		spawn()
+			for(var/mob/living/carbon/mob in fTurfs)
 				flick("flash", mob:flash)
 
 		sleep(-1)
@@ -91,5 +92,6 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 
 proc/secondaryexplosion(turf/epicenter, range)
-	for(var/turf/tile in range(range, epicenter))
-		tile.ex_act(2)
+	spawn()
+		for(var/turf/tile in range(range, epicenter))
+			tile.ex_act(2)

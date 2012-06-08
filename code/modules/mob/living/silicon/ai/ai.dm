@@ -123,6 +123,8 @@
 	var/list/icons = list("Blue", "Monochrome", "Rainbow", "Inverted", "Firewall", "Green", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Red", "Static")
 	if (src.name == "B.A.N.N.E.D." && src.ckey == "spaceman96")
 		icons += "B.A.N.N.E.D."
+	if (src.name == "M00X-BC" && src.ckey == "searif")
+		icons += "M00X-BC"
 	icontype = input("Please, select a display!", "AI", null/*, null*/) in icons
 	if(icontype == "Blue")
 		icon_state = "ai"
@@ -148,6 +150,8 @@
 		icon_state = "ai-bliss"
 	else if(icontype == "B.A.N.N.E.D.")
 		icon_state = "ai-banned"
+	else if(icontype == "M00X-BC")
+		icon_state = "ai-searif"
 	else if(icontype == "Red")
 		icon_state = "ai-malf"
 	else if(icontype == "Static")
