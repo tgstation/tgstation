@@ -19,6 +19,8 @@ zone/proc/process()
 			del(space_tiles)
 
 		contents.Remove(null) //I can't believe this is needed.
+		if(!contents.len)
+			del src
 		do
 			sample = pick(contents)  //Nor this.
 		while(!istype(sample) || !sample.CanPass(null, sample, 1.5, 1))
