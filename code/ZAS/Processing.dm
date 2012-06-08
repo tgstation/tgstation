@@ -11,7 +11,7 @@ zone/proc/process()
 
 		//Choose a random turf and regenerate the zone from it.
 		var
-			turf/sample = pick(contents)
+			turf/simulated/sample = pick(contents)
 			list/new_contents
 			problem = 0
 
@@ -19,11 +19,22 @@ zone/proc/process()
 			del(space_tiles)
 
 		contents.Remove(null) //I can't believe this is needed.
+
 		if(!contents.len)
 			del src
+
+		var/list/tried_turfs = list()
 		do
-			sample = pick(contents)  //Nor this.
-		while(!istype(sample) || !sample.CanPass(null, sample, 1.5, 1))
+			if(sample)
+				tried_turfs |= sample
+			sample = pick(contents - tried_turfs)  //Nor this.
+		while(length(contents - tried_turfs) && (!istype(sample) || !sample.CanPass(null, sample, 1.5, 1)))
+
+		if(!sample) //Not a single valid turf.
+			for(var/turf/simulated/T in contents)
+				air_master.tiles_to_update |= T
+			del src
+
 		new_contents = FloodFill(sample)
 
 		for(var/turf/space/S in new_contents)
