@@ -54,12 +54,12 @@ vs_control/var
 	airflow_light_pressure = 30
 	airflow_medium_pressure = 45
 	airflow_heavy_pressure = 60
-	airflow_heaviest_pressure = 85
+	airflow_heaviest_pressure = 90
 
 	airflow_damage = 0.3
 	airflow_stun = 0.15
 	airflow_speed_decay = 1
-	airflow_delay = 35 //Time in deciseconds before they can be moved by airflow again.
+	airflow_delay = 25 //Time in deciseconds before they can be moved by airflow again.
 	airflow_mob_slowdown = 3 //Time in tenths of a second to add as a delay to each movement by a mob.\
 	Only active if they are fighting the pull of the airflow.
 	airflow_stun_cooldown = 10 //How long, in tenths of a second, to wait before stunning them again.
@@ -350,7 +350,7 @@ mob/airflow_hit(atom/A)
 	for(var/mob/M in hearers(src))
 		M.show_message("\red <B>[src] slams into [A]!</B>",1,"\red You hear a loud slam!",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
-	weakened = max(weakened, (A.vars["w_class"] ? A:w_class : rand(1,5))) //Heheheh
+	weakened = max(weakened, (A.vars.Find("w_class") ? A:w_class : rand(1,5))) //Heheheh
 	. = ..()
 
 obj/airflow_hit(atom/A)
@@ -364,8 +364,8 @@ obj/item/airflow_hit(atom/A)
 	airflow_dest = null
 
 mob/living/carbon/human/airflow_hit(atom/A)
-	for(var/mob/M in hearers(src))
-		M.show_message("\red <B>[src] slams into [A]!</B>",1,"\red You hear a loud slam!",2)
+//	for(var/mob/M in hearers(src))
+//		M.show_message("\red <B>[src] slams into [A]!</B>",1,"\red You hear a loud slam!",2)
 	playsound(src.loc, "punch", 25, 1, -1)
 	loc:add_blood(src)
 	if (src.wear_suit)
