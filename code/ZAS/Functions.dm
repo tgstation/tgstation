@@ -117,8 +117,6 @@ proc/ZConnect(turf/A,turf/B)
 	if(!A.zone || !B.zone) return
 	if(A.zone == B.zone) return
 	if(!A.CanPass(0,B,0,0) || !B.CanPass(0,A,0,0)) return
-	if(A.CanPass(null, B, 1.5, 1) && B.CanPass(null, A, 1.5, 1))
-		return ZMerge(A.zone, B.zone)
 
 	//Ensure the connection isn't already made.
 	if(air_master.tiles_with_connections["\ref[A]"])
