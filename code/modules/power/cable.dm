@@ -242,6 +242,24 @@
 	else
 		usr << "A coil of power cable. There are [amount] lengths of cable in the coil."
 
+/obj/item/weapon/cable_coil/verb/make_restraint()
+	set name = "Make Cable Restraints"
+	set category = "Object"
+	var/mob/M = usr
+
+	if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
+		if(!istype(usr.loc,/turf)) return
+		if(src.amount <= 14)
+			usr << "\red You need at least 15 lengths to make restraints!"
+			return
+		src.use(15)
+		var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
+		B.icon_state = "cuff_[color]"
+		usr << "\blue You wind some cable together to make some restraints."
+	else
+		usr << "\blue You cannot do that."
+	..()
+
 /obj/item/weapon/cable_coil/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if( istype(W, /obj/item/weapon/wirecutters) && src.amount > 1)
@@ -542,3 +560,11 @@ obj/structure/cable/proc/cableColor(var/colorC)
 			icon = 'power_cond_green.dmi'
 		if("blue")
 			icon = 'power_cond_blue.dmi'
+		if("pink")
+			icon = 'power_cond_pink.dmi'
+		if("orange")
+			icon = 'power_cond_orange.dmi'
+		if("cyan")
+			icon = 'power_cond_cyan.dmi'
+		if("white")
+			icon = 'power_cond_white.dmi'

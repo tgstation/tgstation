@@ -62,7 +62,10 @@
 				O.place = "handcuff"
 				M.requests += O
 				spawn( 0 )
-					playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
+					if(istype(src, /obj/item/weapon/handcuffs/cable))
+						playsound(src.loc, 'cablecuff.ogg', 30, 1, -2)
+					else
+						playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
 					O.process()
 			return
 		else
@@ -76,7 +79,10 @@
 				O.place = "handcuff"
 				M.requests += O
 				spawn( 0 )
-					playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
+					if(istype(src, /obj/item/weapon/handcuffs/cable))
+						playsound(src.loc, 'cablecuff.ogg', 30, 1, -2)
+					else
+						playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
 					O.process()
 			return
 	return

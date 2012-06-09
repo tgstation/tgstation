@@ -8,33 +8,33 @@
 	slot_flags = SLOT_BELT
 
 
-	proc/can_use()
-		if(!ismob(loc)) return 0
-		var/mob/M = loc
-		if(src in M.get_equipped_items())
-			return 1
+/obj/item/weapon/storage/belt/proc/can_use()
+	if(!ismob(loc)) return 0
+	var/mob/M = loc
+	if(src in M.get_equipped_items())
+		return 1
+	else
+		return 0
+
+
+/obj/item/weapon/storage/belt/MouseDrop(obj/over_object as obj, src_location, over_location)
+	var/mob/M = usr
+	if(!istype(over_object, /obj/screen))
+		return ..()
+	playsound(src.loc, "rustle", 50, 1, -5)
+	if (!M.restrained() && !M.stat && can_use())
+		if (over_object.name == "r_hand")
+			if (!( M.r_hand ))
+				M.u_equip(src)
+				M.r_hand = src
 		else
-			return 0
-
-
-	MouseDrop(obj/over_object as obj, src_location, over_location)
-		var/mob/M = usr
-		if(!istype(over_object, /obj/screen))
-			return ..()
-		playsound(src.loc, "rustle", 50, 1, -5)
-		if (!M.restrained() && !M.stat && can_use())
-			if (over_object.name == "r_hand")
-				if (!( M.r_hand ))
+			if (over_object.name == "l_hand")
+				if (!( M.l_hand ))
 					M.u_equip(src)
-					M.r_hand = src
-			else
-				if (over_object.name == "l_hand")
-					if (!( M.l_hand ))
-						M.u_equip(src)
-						M.l_hand = src
-			M.update_clothing()
-			src.add_fingerprint(usr)
-			return
+					M.l_hand = src
+		M.update_clothing()
+		src.add_fingerprint(usr)
+		return
 
 
 
@@ -63,7 +63,7 @@
 	new /obj/item/weapon/weldingtool(src)
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
-	new /obj/item/weapon/cable_coil(src,30,pick("red","yellow"))
+	new /obj/item/weapon/cable_coil(src,30,pick("red","yellow","orange"))
 
 
 /obj/item/weapon/storage/belt/utility/atmostech/New()

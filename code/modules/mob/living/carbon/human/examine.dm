@@ -115,8 +115,13 @@
 		msg += "<span class='warning'>[t_He] [t_has] blood-stained hands!</span>\n"
 
 	//handcuffed?
+
+	//handcuffed?
 	if (src.handcuffed)
-		msg += "[t_He] [t_is] \icon[src.handcuffed] handcuffed!\n"
+		if(istype(src.handcuffed, /obj/item/weapon/handcuffs/cable))
+			msg += "<span class='warning'>[t_He] [t_is] \icon[src.handcuffed] restrained with cable!</span>\n"
+		else
+			msg += "<span class='warning'>[t_He] [t_is] \icon[src.handcuffed] handcuffed!</span>\n"
 
 	//belt
 	if (src.belt)

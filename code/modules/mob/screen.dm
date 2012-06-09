@@ -589,17 +589,23 @@
 					del(usr:handcuffed)
 					usr:handcuffed = null
 		else
-			usr << "\red You attempt to remove your handcuffs. (This will take around 2 minutes and you need to stand still)"
+			var/obj/item/weapon/handcuffs/HC = usr:handcuffed
+			var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
+			var/displaytime = 2 //Minutes to display in the "this will take X minutes."
+			if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
+				breakouttime = HC.breakouttime
+				displaytime = breakouttime / 600 //Minutes
+			usr << "\red You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)"
 			for(var/mob/O in viewers(usr))
-				O.show_message(text("\red <B>[] attempts to remove the handcuffs!</B>", usr), 1)
+				O.show_message( "\red <B>[usr] attempts to remove \the [HC]!</B>", 1)
 			spawn(0)
-				if(do_after(usr, 1200))
+				if(do_after(usr, breakouttime))
 					if(!usr:handcuffed || usr:buckled)
 						return // time leniency for lag which also might make this whole thing pointless but the server
 					for(var/mob/O in viewers(usr))//                                         lags so hard that 40s isn't lenient enough - Quarxink
 						O.show_message(text("\red <B>[] manages to remove the handcuffs!</B>", usr), 1)
-					usr << "\blue You successfully remove your handcuffs."
-					usr:handcuffed:loc = usr:loc
+					usr << "\blue You successfully remove \the [usr:handcuffed]."
+					usr:handcuffed.loc = usr.loc
 					usr:handcuffed = null
 	if(usr:handcuffed && (usr.last_special <= world.time) && usr:buckled)
 		usr.next_move = world.time + 100

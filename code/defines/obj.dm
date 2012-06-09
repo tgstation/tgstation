@@ -544,6 +544,22 @@
 	color="blue"
 	icon = 'power_cond_blue.dmi'
 
+/obj/structure/cable/pink
+	color="pink"
+	icon = 'power_cond_pink.dmi'
+
+/obj/structure/cable/orange
+	color="orange"
+	icon = 'power_cond_orange.dmi'
+
+/obj/structure/cable/cyan
+	color="cyan"
+	icon = 'power_cond_cyan.dmi'
+
+/obj/structure/cable/white
+	color="white"
+	icon = 'power_cond_white.dmi'
+
 /obj/effect/manifest
 	name = "manifest"
 	icon = 'screen1.dmi'
