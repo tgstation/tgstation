@@ -204,7 +204,7 @@
 
 					network = newnet
 					screen = 0
-					machines = list()
+					servers = list()
 					temp = "<font color = #336699>- NEW NETWORK TAG SET IN ADDRESS \[[network]\] -</font color>"
 
 		updateUsrDialog()

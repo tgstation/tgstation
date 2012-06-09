@@ -16,6 +16,7 @@
 	var/scrub_CO2 = 1
 	var/scrub_Toxins = 0
 	var/scrub_N2O = 0
+	var/scrub_rate = 1
 
 	var/volume_rate = 120
 	var/panic = 0 //is this scrubber panicked?
@@ -32,8 +33,8 @@
 			assign_uid()
 			id_tag = num2text(uid)
 		if(ticker && ticker.current_state == 3)//if the game is running
-			src.initialize()
-			src.broadcast_status()
+			initialize()
+			broadcast_status()
 		..()
 
 	update_icon()
@@ -46,42 +47,33 @@
 			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
 		return
 
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, frequency)
-			frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, frequency, radio_filter_in)
+	proc/broadcast_status()
+		var/datum/signal/signal = new
+		signal.transmission_method = 1 //radio signal
+		signal.source = src
+		signal.data = list(
+			"area" = area_uid,
+			"tag" = id_tag,
+			"device" = "AScr",
+			"timestamp" = world.time,
+			"power" = on,
+			"scrubbing" = scrubbing,
+			"panic" = panic,
+			"filter_co2" = scrub_CO2,
+			"filter_toxins" = scrub_Toxins,
+			"filter_n2o" = scrub_N2O,
+			"sigtype" = "status",
+			"setting" = scrub_rate
+		)
+		var/area/alarm_area = get_area(src)
+		if(alarm_area.master.master_air_alarm && alarm_area.master.master_air_alarm.master_is_operating())
+			receive_signal(signal)
+		else
+			for(var/area/A in alarm_area.related)
+				for(var/obj/machinery/alarm/AA in A)
+					receive_signal(signal)
 
-		broadcast_status()
-			if(!radio_connection)
-				return 0
-
-			var/datum/signal/signal = new
-			signal.transmission_method = 1 //radio signal
-			signal.source = src
-			signal.data = list(
-				"area" = area_uid,
-				"tag" = id_tag,
-				"device" = "AScr",
-				"timestamp" = world.time,
-				"power" = on,
-				"scrubbing" = scrubbing,
-				"panic" = panic,
-				"filter_co2" = scrub_CO2,
-				"filter_toxins" = scrub_Toxins,
-				"filter_n2o" = scrub_N2O,
-				"sigtype" = "status"
-			)
-			radio_connection.post_signal(src, signal, radio_filter_out)
-
-			return 1
-
-	initialize()
-		..()
-		radio_filter_in = frequency==initial(frequency)?(RADIO_FROM_AIRALARM):null
-		radio_filter_out = frequency==initial(frequency)?(RADIO_TO_AIRALARM):null
-		if (frequency)
-			set_frequency(frequency)
+		return 1
 
 	process()
 		..()
@@ -93,12 +85,11 @@
 		if(!on)
 			return 0
 
-
 		var/datum/gas_mixture/environment = loc.return_air()
 
 		if(scrubbing)
 			if((environment.toxins>0) || (environment.carbon_dioxide>0) || (environment.trace_gases.len>0))
-				var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles
+				var/transfer_moles = min(1, volume_rate*scrub_rate/environment.volume)*environment.total_moles
 
 				//Take a gas sample
 				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
@@ -136,7 +127,7 @@
 			if (air_contents.return_pressure()>=50*ONE_ATMOSPHERE)
 				return
 
-			var/transfer_moles = environment.total_moles*(volume_rate/environment.volume)
+			var/transfer_moles = environment.total_moles*(volume_rate*scrub_rate/environment.volume)
 
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 
@@ -217,6 +208,9 @@
 			spawn(2)
 				broadcast_status()
 			return //do not update_icon
+
+		if("setting" in signal.data)
+			scrub_rate = text2num(signal.data["setting"])
 
 //			log_admin("DEBUG \[[world.timeofday]\]: vent_scrubber/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
 		spawn(2)

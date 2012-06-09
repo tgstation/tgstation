@@ -1,9 +1,9 @@
 /obj/item/weapon/circuitboard/atmoscontrol
-	name = "Central Atmospherics Computer Circuitboard"
+	name = "\improper Central Atmospherics Computer Circuitboard"
 	build_path = "/obj/machinery/computer/security/atmoscontrol"
 
 /obj/machinery/computer/atmoscontrol
-	name = "Central Atmospherics Computer"
+	name = "\improper Central Atmospherics Computer"
 	icon = 'computer.dmi'
 	icon_state = "computer_generic"
 	density = 1
@@ -18,7 +18,7 @@
 	user.machine = src
 	var/dat = "<a href='?src=\ref[src]&reset=1'>Main Menu</a><hr>"
 	if(current)
-		dat += src.specific()
+		dat += specific()
 	else
 		for(var/obj/machinery/alarm/alarm in world)
 			dat += "<a href='?src=\ref[src]&alarm=\ref[alarm]'>"
@@ -37,8 +37,8 @@
 		return ""
 	var/dat = "<h3>[current.name]</h3><hr>"
 	dat += current.return_status()
-	if(current.remote_control || overridden && current.rcon_setting)
-		dat += "<hr>[src.return_controls()]"
+	if(current.remote_control || (overridden && current.rcon_setting) )
+		dat += "<hr>[return_controls()]"
 	return dat
 
 //a bunch of this is copied from atmos alarms
@@ -69,24 +69,25 @@
 				//if("adjust_threshold") //was a good idea but required very wide window
 				if("set_threshold")
 					var/env = href_list["env"]
-					var/varname = href_list["var"]
-					var/datum/tlv/tlv = current.TLV[env]
-					var/newval = input("Enter [varname] for env", "Alarm triggers", tlv.vars[varname]) as num|null
+					var/threshold = text2num(href_list["var"])
+					var/list/selected = current.TLV[env]
+					var/list/thresholds = list("lower bound", "low warning", "high warning", "upper bound")
+					var/newval = input("Enter [thresholds[threshold]] for [env]", "Alarm triggers", selected[threshold]) as num|null
 					if (isnull(newval) || ..() || (current.locked && issilicon(usr)))
 						return
 					if (newval<0)
-						tlv.vars[varname] = -1.0
+						selected[threshold] = -1.0
 					else if (env=="temperature" && newval>5000)
-						tlv.vars[varname] = 5000
+						selected[threshold] = 5000
 					else if (env=="pressure" && newval>50*ONE_ATMOSPHERE)
-						tlv.vars[varname] = 50*ONE_ATMOSPHERE
+						selected[threshold] = 50*ONE_ATMOSPHERE
 					else if (env!="temperature" && env!="pressure" && newval>200)
-						tlv.vars[varname] = 200
+						selected[threshold] = 200
 					else
 						newval = round(newval,0.01)
-						tlv.vars[varname] = newval
+						selected[threshold] = newval
 					spawn(1)
-						src.updateUsrDialog()
+						updateUsrDialog()
 			return
 
 		if(href_list["screen"])
@@ -98,14 +99,14 @@
 
 		if(href_list["atmos_alarm"])
 			if (current.alarm_area.atmosalert(2))
-				current.post_alert(2)
+				current.apply_danger_level(2)
 			spawn(1)
 				src.updateUsrDialog()
 			current.update_icon()
 			return
 		if(href_list["atmos_reset"])
 			if (current.alarm_area.atmosalert(0))
-				current.post_alert(0)
+				current.apply_danger_level(0)
 			spawn(1)
 				src.updateUsrDialog()
 			current.update_icon()
@@ -121,11 +122,10 @@
 
 //copypasta from alarm code, changed to work with this without derping hard
 //---START COPYPASTA----
-#define AALARM_MODE_SCRUBBING    1
-#define AALARM_MODE_VENTING      2 //makes draught
-#define AALARM_MODE_PANIC        3 //constantly sucks all air
-#define AALARM_MODE_REPLACEMENT  4 //sucks off all air, then refill and swithes to scrubbing
-#define AALARM_MODE_OFF          5
+#define AALARM_MODE_SCRUBBING	1
+#define AALARM_MODE_PANIC		2 //constantly sucks all air
+#define AALARM_MODE_REPLACEMENT	3 //sucks off all air, then refill and swithes to scrubbing
+#define AALARM_MODE_FILL		4 //emergency fill
 
 #define AALARM_SCREEN_MAIN    1
 #define AALARM_SCREEN_VENT    2
@@ -151,7 +151,7 @@
 <HR>
 "}
 			if (current.mode==AALARM_MODE_PANIC)
-				output += "<font color='red'><B>PANIC SYPHON ACTIVE</B></font><br><A href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_OFF]'>turn syphoning off</A>"
+				output += "<font color='red'><B>PANIC SYPHON ACTIVE</B></font><br><A href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_SCRUBBING]'>turn syphoning off</A>"
 			else
 				output += "<A href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_PANIC]'><font color='red'><B>ACTIVATE PANIC SYPHON IN AREA</B></font></A>"
 		if (AALARM_SCREEN_VENT)
@@ -160,14 +160,8 @@
 				for(var/id_tag in current.alarm_area.air_vent_names)
 					var/long_name = current.alarm_area.air_vent_names[id_tag]
 					var/list/data = current.alarm_area.air_vent_info[id_tag]
-					var/state = ""
-					if(!data)
-						state = "<font color='red'> can not be found!</font>"
-						data = list("external" = 0) //for "0" instead of empty string
-					else if (data["timestamp"]+AALARM_REPORT_TIMEOUT < world.time)
-						state = "<font color='red'> not responding!</font>"
 					sensor_data += {"
-<B>[long_name]</B>[state]<BR>
+<B>[long_name]</B><BR>
 <B>Operating:</B>
 <A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=power;val=[!data["power"]]'>[data["power"]?"on":"off"]</A>
 <BR>
@@ -203,15 +197,9 @@ siphoning
 				for(var/id_tag in current.alarm_area.air_scrub_names)
 					var/long_name = current.alarm_area.air_scrub_names[id_tag]
 					var/list/data = current.alarm_area.air_scrub_info[id_tag]
-					var/state = ""
-					if(!data)
-						state = "<font color='red'> can not be found!</font>"
-						data = list("external" = 0) //for "0" instead of empty string
-					else if (data["timestamp"]+AALARM_REPORT_TIMEOUT < world.time)
-						state = "<font color='red'> not responding!</font>"
 
 					sensor_data += {"
-<B>[long_name]</B>[state]<BR>
+<B>[long_name]</B><BR>
 <B>Operating:</B>
 <A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=power;val=[!data["power"]]'>[data["power"]?"on":"off"]</A><BR>
 <B>Type:</B>
@@ -243,11 +231,10 @@ Nitrous Oxide
 <a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>
 <b>Air machinery mode for the area:</b><ul>"}
 			var/list/modes = list(
-				AALARM_MODE_SCRUBBING   = "Filtering",
-				AALARM_MODE_VENTING     = "Draught",
-				AALARM_MODE_PANIC       = "<font color='red'>PANIC</font>",
-				AALARM_MODE_REPLACEMENT = "<font color='red'>REPLACE AIR</font>",
-				AALARM_MODE_OFF         = "Off",
+					AALARM_MODE_SCRUBBING   = "Filtering",
+					AALARM_MODE_PANIC       = "<font color='red'>PANIC</font>",
+					AALARM_MODE_REPLACEMENT = "<font color='red'>REPLACE AIR</font>",
+					AALARM_MODE_FILL = "<font color='red'>FILL</font>"
 			)
 			for (var/m=1,m<=modes.len,m++)
 				if (current.mode==m)
@@ -278,49 +265,26 @@ table tr:first-child th:first-child { border: none;}
 				"plasma"         = "Toxin",
 				"other"          = "Other",
 			)
-			var/list/thresholds = list("min2", "min1", "max1", "max2")
-			var/datum/tlv/tlv
+			var/list/tlv
 			for (var/g in gases)
-				output += {"
-<TR><th>[gases[g]]</th>
-"}
+				output += "<TR><th>[gases[g]]</th>"
 				tlv = current.TLV[g]
-				for (var/v in thresholds)
-					output += {"
-<td>
-<A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=[g];var=[v]'>[tlv.vars[v]>=0?tlv.vars[v]:"OFF"]</A>
-</td>
-"}
-				output += {"
-</TR>
-"}
+				for (var/i = 1, i <= 4, i++)
+					output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=[g];var=[i]'>[tlv[i]?tlv[i]:"OFF"]</A></td>"
+				output += "</TR>"
+
 			tlv = current.TLV["pressure"]
-			output += {"
-<TR><th>Pressure</th>
-"}
-			for (var/v in thresholds)
-				output += {"
-<td>
-<A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=pressure;var=[v]'>[tlv.vars[v]>=0?tlv.vars[v]:"OFF"]</A>
-</td>
-"}
-			output += {"
-</TR>
-"}
+			output += "<TR><th>Pressure</th>"
+			for (var/i = 1, i <= 4, i++)
+				output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=pressure;var=[i]'>[tlv[i]?tlv[i]:"OFF"]</A></td>"
+			output += "</TR>"
+
 			tlv = current.TLV["temperature"]
-			output += {"
-<TR><th>Temperature</th>
-"}
-			for (var/v in thresholds)
-				output += {"
-<td>
-<A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=temperature;var=[v]'>[tlv.vars[v]>=0?tlv.vars[v]:"OFF"]</A>
-</td>
-"}
-			output += {"
-</TR>
-"}
-			output += {"</table>"}
+			output += "<TR><th>Temperature</th>"
+			for (var/i = 1, i <= 4, i++)
+				output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=temperature;var=[i]'>[tlv[i]?tlv[i]:"OFF"]</A></td>"
+			output += "</TR>"
+			output += "</table>"
 
 	return output
 //---END COPYPASTA----
