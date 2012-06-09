@@ -1230,6 +1230,37 @@ var/global/BSACooldown = 0
 					sleep(2)
 					cl.jumptomob(M)
 
+	if (href_list["adminmoreinfo"])
+		var/mob/M = locate(href_list["adminmoreinfo"])
+		if(src && src.owner)
+			var/location_description = ""
+			var/special_role_description = ""
+			var/health_description = ""
+			var/turf/T = get_turf(M)
+
+			//Location
+			if(T && isturf(T))
+				if(T.loc && isarea(T.loc))
+					location_description = "([T.x], [T.y], [T.z] in area <b>[T.loc]</b>)"
+				else
+					location_description = "([T.x], [T.y], [T.z])"
+
+			//Job + antagonist
+			if(M.mind)
+				special_role_description = "Role: <b>[M.mind.assigned_role]</b>; Antagonist: <font color='red'><b>[M.mind.special_role]</b></font>; Has been rev: [(M.mind.has_been_rev)?"Yes":"No"]"
+			else
+				special_role_description = "Role: <i>Mind datum missing</i> Antagonist: <i>Mind datum missing</i>; Has been rev: <i>Mind datum missing</i>;"
+
+			//Health
+			health_description = "Oxy: [M.oxyloss] - Tox: [M.toxloss] - Fire: [M.fireloss] - Brute: [M.bruteloss] - Clone: [M.cloneloss] - Brain: [M.brainloss]"
+
+			src.owner << "<b>Info about [M.name]:</b> "
+			src.owner << "Mob type = [M.type]; Damage = [health_description]"
+			src.owner << "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Original_name = [M.original_name]; Key = <b>[M.key]</b>;"
+			src.owner << "Location = [location_description];"
+			src.owner << "[special_role_description]"
+			src.owner << "(<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?src=\ref[src];adminplayervars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];adminplayersubtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A>) (<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)"
+
 	if (href_list["adminspawncookie"])
 		var/mob/M = locate(href_list["adminspawncookie"])
 		if(M && ishuman(M))
