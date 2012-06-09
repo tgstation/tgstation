@@ -111,8 +111,8 @@
 
 			if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
 				var/mob/dead/observer/observer = new()
-                if(isnull(observer))
-                    CRASH("An observer mob could not be created. ( null after var/mob/dead/observer/observer = new() )
+				if(isnull(observer))
+					CRASH("An observer mob could not be created. ( null after var/mob/dead/observer/observer = new() )")
 
 				spawning = 1
 				src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS cant last forever yo
