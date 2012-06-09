@@ -438,7 +438,7 @@
 				if (emptyHand)
 					wear_mask.DblClick()
 				return
-			if (!( istype(W, /obj/item/clothing/mask) ))
+			if (!( W.slot_flags & SLOT_MASK ))
 				return
 			u_equip(W)
 			wear_mask = W
