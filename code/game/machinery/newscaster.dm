@@ -142,12 +142,12 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 /obj/machinery/newscaster/attack_hand(mob/user as mob)
 	if(!src.ispowered || src.isbroken)
 		return
-	if(istype(user, /mob/living/carbon/human) )
-		var/mob/living/carbon/human/human_user = user
+	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) )
+		var/mob/living/human_or_robot_user = user
 		var/dat
 		dat = text("<HEAD><TITLE>Newscaster</TITLE></HEAD><H3>Newscaster Unit #[src.unit_no]</H3>")
 
-		src.scan_user(human_user) //Newscaster scans you
+		src.scan_user(human_or_robot_user) //Newscaster scans you
 
 		switch(screen)
 			if(0)
@@ -160,7 +160,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 				dat+= "<BR><A href='?src=\ref[src];create_feed_story=1'>Submit new Feed story</A>"
 				dat+= "<BR><A href='?src=\ref[src];menu_paper=1'>Print newspaper</A>"
 				dat+= "<BR><A href='?src=\ref[src];refresh=1'>Re-scan User</A>"
-				dat+= "<BR><BR><A href='?src=\ref[human_user];mach_close=newscaster_main'>Exit</A>"
+				dat+= "<BR><BR><A href='?src=\ref[human_or_robot_user];mach_close=newscaster_main'>Exit</A>"
 				if(src.securityCaster)
 					var/wanted_already = 0
 					for(var/obj/machinery/newscaster/N in allCasters)
@@ -363,8 +363,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
 
 
-		human_user << browse(dat, "window=newscaster_main;size=400x600")
-		onclose(human_user, "newscaster_main")
+		human_or_robot_user << browse(dat, "window=newscaster_main;size=400x600")
+		onclose(human_or_robot_user, "newscaster_main")
 
 	/*if(src.isbroken) //debugging shit
 		return
@@ -377,7 +377,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 /obj/machinery/newscaster/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
+	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		usr.machine = src
 		if(href_list["set_channel_name"])
 			src.channel_name = strip_html(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", ""))
@@ -752,7 +752,7 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 obj/item/weapon/newspaper/Topic(href, href_list)
 	var/mob/living/U = usr
 	..()
-	if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ) )
+	if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ))
 		U.machine = src
 		if(href_list["next_page"])
 			if(curr_page==src.pages+1)
@@ -801,21 +801,26 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 ////////////////////////////////////helper procs
 
 
-/obj/machinery/newscaster/proc/scan_user(mob/living/carbon/human/human_user as mob)
-	if(human_user.wear_id)                                      //Newscaster scans you
-		if(istype(human_user.wear_id, /obj/item/device/pda) )	//autorecognition, woo!
-			var/obj/item/device/pda/P = human_user.wear_id
-			if(P.id)
-				src.scanned_user = "[P.id.registered_name] ([P.id.assignment])"
+/obj/machinery/newscaster/proc/scan_user(mob/living/user as mob)
+	if(istype(user,/mob/living/carbon/human))                       //User is a human
+		var/mob/living/carbon/human/human_user = user
+		if(human_user.wear_id)                                      //Newscaster scans you
+			if(istype(human_user.wear_id, /obj/item/device/pda) )	//autorecognition, woo!
+				var/obj/item/device/pda/P = human_user.wear_id
+				if(P.id)
+					src.scanned_user = "[P.id.registered_name] ([P.id.assignment])"
+				else
+					src.scanned_user = "Unknown"
+			else if(istype(human_user.wear_id, /obj/item/weapon/card/id) )
+				var/obj/item/weapon/card/id/ID = human_user.wear_id
+				src.scanned_user ="[ID.registered_name] ([ID.assignment])"
 			else
-				src.scanned_user = "Unknown"
-		else if(istype(human_user.wear_id, /obj/item/weapon/card/id) )
-			var/obj/item/weapon/card/id/ID = human_user.wear_id
-			src.scanned_user ="[ID.registered_name] ([ID.assignment])"
+				src.scanned_user ="Unknown"
 		else
 			src.scanned_user ="Unknown"
 	else
-		src.scanned_user ="Unknown"
+		var/mob/living/silicon/ai_user = user
+		src.scanned_user = "[ai_user.name] ([ai_user.job])"
 
 
 /obj/machinery/newscaster/proc/print_paper()
