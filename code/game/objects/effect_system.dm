@@ -393,6 +393,7 @@ steam.start() -- spawns the effect
 	opacity = 1
 	anchored = 0.0
 	mouse_opacity = 0
+	pass_flags = PASSBLOB
 	var/amount = 6.0
 	var/divisor = 1
 

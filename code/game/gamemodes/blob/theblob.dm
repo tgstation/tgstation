@@ -11,10 +11,14 @@
 	anchored = 1
 	var/active = 1
 	var/health = 30
-	var/brute_resist = 4
-	var/fire_resist = 1
+	var/maxhealth = 60
+	var/brute_resist = 3
+	var/fire_resist = 3
 	var/blobtype = "Blob"
 	var/blobdebug = 0
+	var/list/blob_attributes = list("fire","brute","cold","elec","acid")
+	var/weakness = null //What works best
+	var/strength = null //What doesn't/heals them
 		/*Types
 	var/Blob
 	var/Node
@@ -26,9 +30,16 @@
 	var/steps_since_action = 1
 
 
-	New(loc, var/h = 30)
+	New(loc, var/h = 30, var/w = "fire", var/s = "brute")
 		blobs += src
 		src.health = h
+		src.weakness = w
+		src.strength = s
+		if(w)
+			if(w == "fire")
+				src.fire_resist = 1
+			if(w == "brute")
+				src.brute_resist = 1
 		src.dir = pick(1,2,4,8)
 		src.update()
 		..(loc)
@@ -77,6 +88,16 @@
 			blobtype = "Core"
 			blob_cores += src
 			processing_objects.Add(src)
+			var/list/a = blob_attributes
+			weakness = pick(a)
+			a -= weakness
+			strength = pick(a)
+			var/w = src.weakness
+			if(w)
+				if(w == "fire")
+					src.fire_resist = 1
+				if(w == "brute")
+					src.brute_resist = 1
 			return 1
 		//Nodeblob
 		if((blobdebug == 2))
@@ -132,7 +153,7 @@
 			var/turf/T = get_step(src, dirn)
 			var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 			if(!B)
-				expand(T)//No blob here so try and expand
+				expand(T, src.weakness, src.strength)//No blob here so try and expand
 				return
 			B.Pulse((pulse+1),get_dir(src.loc,T))
 			return
@@ -182,10 +203,29 @@
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if(temperature > T0C+200)
-			health -= 0.01 * temperature
+			if(weakness == "fire")
+				health -= 0.01 * temperature
+			if(strength == "fire")
+				health += 0.01 * temperature
+			else
+				health -= 0.005 * temperature
 			update()
+		if(temperature < T0C+20) //Because cold is rather hard to change, it happens at a relatively high temperature
+			if(weakness == "cold")
+				if(temperature >= T0C)
+					health -= 0.1 * (20-temperature)
+				else
+					health -= 0.1 * abs(temperature)
+				update()
+			if(strength == "cold") //Don't want blobs on space to be too hard to kill
+				if(temperature >= T0C)
+					health += 0.01 * (20-temperature)
+				else
+					health += 0.01 * abs(temperature)
+				update()
 
-	proc/expand(var/turf/T = null)
+
+	proc/expand(var/turf/T = null, var/weakness, var/strength)
 		if(!prob(health))	return//TODO: Change this to prob(health + o2 mols or such)
 		if(!T)
 			var/list/dirs = list(1,2,4,8)
@@ -198,7 +238,7 @@
 					continue
 				else 	break
 		if(T)
-			var/obj/effect/blob/B = new /obj/effect/blob(src.loc, min(src.health, 30))
+			var/obj/effect/blob/B = new /obj/effect/blob(src.loc, min(src.health, 30), weakness, strength)
 			if(T.Enter(B,src))
 				B.loc = T
 			else
@@ -221,6 +261,8 @@
 
 
 	proc/update()//Needs to be updated with the types
+		if(health > maxhealth)
+			health = maxhealth
 		if(health <= 0)
 			playsound(src.loc, 'splat.ogg', 50, 1)
 			del(src)
@@ -236,8 +278,33 @@
 
 	bullet_act(var/obj/item/projectile/Proj)
 		if(!Proj)	return
-		src.health -= Proj.damage
-		update()
+		var/damage = 0
+		if(istype(Proj, /obj/item/projectile/energy/electrode))
+			damage = Proj.damage
+			if(src.weakness == "elec")
+				damage += 20
+				src.visible_message("\red \The [src] disintegrates slightly from \the [Proj]!")
+			if(src.strength == "elec")
+				damage -= 10
+				src.visible_message("\red \The [src] absorbs \the [Proj]!")
+		else if(istype(Proj, /obj/item/projectile/beam))
+			damage = Proj.damage
+			if(src.weakness == "fire")
+				damage = damage*2
+			if(src.strength == "fire")
+				damage = -(damage*0.5)
+				src.visible_message("\red \The [src] absorbs \the [Proj]!")
+		else if(istype(Proj, /obj/item/projectile/bullet))
+			damage = Proj.damage
+			if(src.weakness == "brute")
+				damage = damage*2
+			if(src.strength == "brute")
+				damage = damage*0.5
+				src.visible_message("\red \The [src] absorbs \the [Proj]!")
+		else
+			damage = Proj.damage
+		src.health -= damage
+		src.update()
 		return 0
 
 
@@ -248,11 +315,35 @@
 		switch(W.damtype)
 			if("fire")
 				damage = (W.force / max(src.fire_resist,1))
+				if(src.weakness == "fire")
+					damage = damage*1.25
+				if(src.strength == "fire")
+					damage = -(damage*0.5)
+					src.visible_message("\red <B>The [src.name] rebuilds itself from the heat!")
 				if(istype(W, /obj/item/weapon/weldingtool))
 					playsound(src.loc, 'Welder.ogg', 100, 1)
 			if("brute")
 				damage = (W.force / max(src.brute_resist,1))
-
+				if(istype(W, /obj/item/weapon/melee/baton))
+					var/obj/item/weapon/melee/baton/T = W
+					if(T.status == 1 && T.charges > 0) //Copied over from stun baton code
+						playsound(src.loc, 'Egloves.ogg', 50, 1, -1)
+						if(isrobot(user))
+							var/mob/living/silicon/robot/R = user
+							R.cell.charge -= 20
+						else
+							T.charges--
+						if(src.weakness == "elec")
+							damage = damage*2
+							src.visible_message("\red <B>The [src.name] disintegrates from the electricity!")
+						if(src.strength == "elec")
+							damage = -(damage*0.5)
+							src.visible_message("\red <B>The [src.name] absorbs the electricity!")
+				if(src.weakness == "brute")
+					damage = damage*1.25
+				if(src.strength == "brute")
+					damage = damage*0.5
+					src.visible_message("\red <B>The [src.name] rebounds the hit!")
 		src.health -= damage
 		src.update()
 		return
@@ -278,8 +369,10 @@
 	icon_state = "blobidle0"
 
 
-	New(loc, var/h = 10)
+	New(loc, var/h = 10, var/w = "fire", var/s = "brute")
 		src.health = h
+		src.weakness = w
+		src.strength = s
 		src.dir = pick(1,2,4,8)
 		src.update_idle()
 
@@ -298,7 +391,7 @@
 
 
 	Del()		//idle blob that spawns a normal blob when killed.
-		var/obj/effect/blob/B = new /obj/effect/blob( src.loc )
+		var/obj/effect/blob/B = new /obj/effect/blob(src.loc, src.weakness, src.strength)
 		spawn(30)
 			B.Life()
 		..()
@@ -310,6 +403,17 @@
 	spawn()
 		src.blobdebug = 1
 		src.Life()
+		var/list/a = blob_attributes
+		weakness = pick(a)
+		a -= weakness
+		strength = pick(a)
+		var/w = src.weakness
+		if(w)
+			if(w == "fire")
+				src.fire_resist = 1
+			if(w == "brute")
+				src.brute_resist = 1
+
 
 /obj/effect/blob/node/New()
 	..()

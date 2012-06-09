@@ -6,8 +6,6 @@ chinsky: Summer Springfield: /obj/item/weapon/camera_test/fluff/orange
 compactninja: Ysyr Rylias: /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 desiderium: Momiji Inubashiri: /obj/item/clothing/under/fluff/olddressuniform
 desiderium: Rook Maudlin: /obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat, /obj/item/clothing/head/det_hat/fluff/retpolcap, /obj/item/clothing/under/det/fluff/retpoluniform
-deusdactyl: Greg Anderson: /obj/item/clothing/head/helmet/hardhat/fluff/greg_anderson_1
-deusdactyl: Roger Wiles: /obj/item/clothing/under/rank/virologist/fluff/cdc_jumpsuit, /obj/item/clothing/suit/storage/labcoat/fluff/cdc_labcoat
 deusdactyl: James Girard: /obj/item/clothing/head/secsoft/fluff/swatcap
 eternal248: Maximilian Haynes: /obj/item/weapon/paper/certificate
 fastler: Fastler Greay: /obj/item/weapon/card/id/fluff/lifetime
