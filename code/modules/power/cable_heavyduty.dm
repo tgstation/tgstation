@@ -4,7 +4,7 @@
 	icon_state = "wire"
 
 /obj/structure/cable/heavyduty
-	icon = 'power_local.dmi'
+	icon = 'power_cond_heavy.dmi'
 	name = "large power cable"
 	desc = "This cable is tough. It cannot be cut with simple hand tools."
 
