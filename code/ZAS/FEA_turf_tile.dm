@@ -42,18 +42,18 @@ turf
 			datum/gas_mixture/air
 
 			processing = 1
-			group_border = 0
-			length_space_border = 0
+//			group_border = 0
+//			length_space_border = 0
 
 			air_check_directions = 0 //Do not modify this, just add turf to air_master.tiles_to_update
 
-			archived_cycle = 0
-			current_cycle = 0
+//			archived_cycle = 0
+//			current_cycle = 0
 
 			obj/fire/active_hotspot
 
-			temperature_archived //USED ONLY FOR SOLIDS
-			being_superconductive = 0
+//			temperature_archived //USED ONLY FOR SOLIDS
+//			being_superconductive = 0
 
 
 		proc
@@ -129,12 +129,12 @@ turf
 			else
 				return ..()
 
-		archive()
-			if(air) //For open space like floors
-				air.archive()
+//		archive()
+//			if(air) //For open space like floors
+//				air.archive()
 
-			temperature_archived = temperature
-			archived_cycle = air_master.current_cycle
+//			temperature_archived = temperature
+//			archived_cycle = air_master.current_cycle
 
 		share_air_with_tile(turf/simulated/T)
 			return air.share(T.air)
@@ -184,11 +184,10 @@ turf
 				if(!zone) //No zone found, new zone!
 					new/zone(src)
 
-			if(!CanPass(null, src, 0, 0) && !CanPass(null, src, 1.5, 1)) //Can't pass, and was updated.  Delete zone connections involving this turf.
-				if(air_master.tiles_with_connections["\ref[src]"])
-					var/list/connections = air_master.tiles_with_connections["\ref[src]"]
-					for(var/connection/C in connections)
-						del C
+			if(air_master.tiles_with_connections["\ref[src]"]) //Check pass sanity of the connections.
+				var/list/connections = air_master.tiles_with_connections["\ref[src]"]
+				for(var/connection/C in connections)
+					C.CheckPassSanity()
 
 			update_zone_properties() //Update self zone and adjacent zones.
 

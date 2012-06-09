@@ -189,6 +189,11 @@ connection
 			return 0
 		return 1
 
+	proc/CheckPassSanity()
+		Cleanup()
+		if(!A.CanPass(null, B, 0, 0) || !B.CanPass(null, A, 0, 0))
+			del src
+
 	proc/Sanitize()
 		//If the zones change on connected turfs, update it.
 		if(A.zone && A.zone != zone_A && B.zone && B.zone != zone_B)
