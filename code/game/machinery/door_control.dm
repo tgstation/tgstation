@@ -27,6 +27,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user as mob)
+	src.add_fingerprint(usr)
 	if(stat & (NOPOWER|BROKEN))
 		return
 
@@ -89,7 +90,6 @@
 	spawn(15)
 		if(!(stat & NOPOWER))
 			icon_state = "doorctrl0"
-	src.add_fingerprint(usr)
 
 /obj/machinery/door_control/power_change()
 	..()
@@ -112,6 +112,7 @@
 
 /obj/machinery/driver_button/attack_hand(mob/user as mob)
 
+	src.add_fingerprint(usr)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(active)

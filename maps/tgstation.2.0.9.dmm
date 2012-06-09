@@ -5297,7 +5297,7 @@
 "bXS" = (/turf/simulated/floor{tag = "icon-warnwhite (NORTH)"; icon_state = "warnwhite"; dir = 1},/area/assembly/assembly_line)
 "bXT" = (/obj/structure/table,/obj/item/device/mmi,/obj/item/device/mmi,/obj/item/device/mmi,/turf/simulated/floor{tag = "icon-warnwhite (NORTH)"; icon_state = "warnwhite"; dir = 1},/area/assembly/assembly_line)
 "bXU" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/wall,/area/assembly/assembly_line)
-"bXV" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/obj/structure/disposalpipe/segment{dir = 4},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = "Streight"},/turf/simulated/floor/plating,/area/maintenance/aft)
+"bXV" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = "Streight"},/turf/simulated/floor/plating,/area/maintenance/aft)
 "bXW" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/wall,/area/maintenance/aft)
 "bXX" = (/obj/machinery/door/firedoor/border_only,/turf/simulated/floor{dir = 8; icon_state = "yellowcorner"},/area/hallway/primary/aft)
 "bXY" = (/obj/machinery/door/firedoor/border_only,/obj/effect/sign/securearea{desc = "A warning sign which reads 'HIGH VOLTAGE'"; icon_state = "shock"; name = "HIGH VOLTAGE"; pixel_x = 32},/turf/simulated/floor{icon_state = "yellowcorner"},/area/hallway/primary/aft)
