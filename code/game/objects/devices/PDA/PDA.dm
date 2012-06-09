@@ -545,7 +545,6 @@
 						return
 					if (!in_range(src, U) && loc != U)
 						return
-
 					var/obj/item/device/pda/P = locate(href_list["target"])
 					if(!istype(P))	return
 
@@ -557,14 +556,17 @@
 							return
 
 						last_text = world.time
-
 						// check if telecomms I/O route 1459 is stable
-						var/telecomms_intact = telecomms_process(P.owner, owner, t)
-
-						if(telecomms_intact) // only send the message if it's stable!
-
-							for (var/obj/machinery/message_server/MS in world)
-								MS.send_pda_message("[P.owner]","[owner]","[t]")
+						//var/telecomms_intact = telecomms_process(P.owner, owner, t)
+						var/obj/machinery/message_server/useMS = null
+						if(message_servers)
+							for (var/obj/machinery/message_server/MS in message_servers)
+							//PDAs are now dependant on the Message Server.
+								if(MS.active)
+									useMS = MS
+									break
+						if(useMS) // only send the message if it's stable
+							useMS.send_pda_message("[P.owner]","[owner]","[t]")
 
 							tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
 							P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a> ([ownjob]):</b></i><br>[t]<br>"
@@ -583,21 +585,25 @@
 								if( P.loc && ishuman(P.loc) )
 									var/mob/living/carbon/human/H = P.loc
 									H << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
-
+							log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
 							P.overlays = null
 							P.overlays += image('pda.dmi', "pda-r")
+						else
+							U << "ERROR: Server isn't responding."
 
 					// pAI Message
 					else
 
-						var/telecomms_intact = telecomms_process(P.owner, owner, t)
-
-						if(telecomms_intact) // only send the message if it's stable!
-
-							for (var/obj/machinery/message_server/MS in world)
-								MS.send_pda_message("[P.owner]","[owner]","[t]")
-
-
+						//var/telecomms_intact = telecomms_process(P.owner, owner, t)
+						var/obj/machinery/message_server/useMS = null
+						if(message_servers)
+							for (var/obj/machinery/message_server/MS in message_servers)
+							//PDAs are now dependant on the Message Server.
+								if(MS.active)
+									useMS = MS
+									break
+						if(useMS) // only send the message if it's stable
+							useMS.send_pda_message("[P.owner]","[owner]","[t]")
 							tnote += "<i><b>&rarr; To [P]:</b></i><br>[t]<br>"
 							P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];soft=pdamessage;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
 
@@ -609,9 +615,16 @@
 								for (var/mob/living/silicon/ai/ai in world)
 									ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
 
-							playsound(P.loc, 'twobeep.ogg', 50, 1)
-
-					log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
+							if (!P.silent)
+								playsound(P.loc, 'twobeep.ogg', 50, 1)
+								for (var/mob/O in hearers(3, P.loc))
+									O.show_message(text("\icon[P] *[P.ttone]*"))
+								if( P.loc && ishuman(P.loc) )
+									var/mob/living/carbon/human/H = P.loc
+									H << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
+							log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
+						else
+							U << "ERROR: Server isn't responding."
 
 
 
@@ -752,20 +765,22 @@
 	var/telecomms_intact = 0
 	/* Make sure telecomms is intact */
 	for (var/obj/machinery/telecomms/receiver/R in world)
+
 		if((1459 in R.freq_listening) && R.on)
 
 			for (var/obj/machinery/telecomms/bus/B in R.links)
+
 				if((1459 in B.freq_listening) && B.on)
 
 					for(var/obj/machinery/telecomms/server/S in B.links)
-						if((1459 in S.freq_listening) && S.on)
 
+						if((1459 in S.freq_listening) && S.on)
 							// Add a log
 							S.add_entry("[originator] sent to [receipent]: \"[data]\"", "PDA log")
 
 							for(var/obj/machinery/telecomms/broadcaster/C in S.links)
 
-								if((1459 in C.freq_listening) && C.on)
+								if(((1459 in C.freq_listening  || C.freq_listening.len == 0)) && C.on)
 
 									telecomms_intact = 1
 									break
@@ -1033,17 +1048,28 @@
 
 	if (selected:toff)
 		return
+	var/obj/machinery/message_server/useMS = null
+	if(!isnull(message_servers))
+		for (var/obj/machinery/message_server/MS in message_servers)
+		//PDAs are now dependant on the Message Server.
+			if(MS.active)
+				useMS = MS
+				break
+	if(!isnull(useMS)) // only send the message if it's stable
+		useMS.send_pda_message("[selected:owner]","[usr.name]","[t]")
 
-	usr.show_message("<i>PDA message to <b>[selected:owner]</b>: [t]</i>")
-	selected:tnote += "<i><b>&larr; From (AI) [usr.name]:</b></i><br>[t]<br>"
+		usr.show_message("<i>PDA message to <b>[selected:owner]</b>: [t]</i>")
+		selected:tnote += "<i><b>&larr; From (AI) [usr.name]:</b></i><br>[t]<br>"
 
-	if (!selected:silent)
-		playsound(selected.loc, 'twobeep.ogg', 50, 1)
-		for (var/mob/O in hearers(3, selected.loc))
-			O.show_message(text("\icon[selected] *[selected:ttone]*"))
+		if (!selected:silent)
+			playsound(selected.loc, 'twobeep.ogg', 50, 1)
+			for (var/mob/O in hearers(3, selected.loc))
+				O.show_message(text("\icon[selected] *[selected:ttone]*"))
 
-	selected.overlays = null
-	selected.overlays += image('pda.dmi', "pda-r")
+		selected.overlays = null
+		selected.overlays += image('pda.dmi', "pda-r")
+	else
+		usr << "ERROR: Server isn't responding."
 
 
 //Some spare PDAs in a box

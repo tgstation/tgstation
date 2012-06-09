@@ -28,6 +28,11 @@
 	var/list/records = null
 	var/frame_desc = null
 
+
+/obj/item/weapon/circuitboard/message_monitor
+	name = "Circuit board (Message Monitor)"
+	build_path = "/obj/machinery/computer/message_monitor"
+	origin_tech = "programming=3"
 /obj/item/weapon/circuitboard/security
 	name = "Circuit board (Security)"
 	build_path = "/obj/machinery/computer/security"

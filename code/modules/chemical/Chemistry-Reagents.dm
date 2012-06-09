@@ -805,6 +805,7 @@ datum
 
 
 
+
 		mutagen
 			name = "Unstable mutagen"
 			id = "mutagen"
@@ -1557,6 +1558,19 @@ datum
 					if (!M:confused) M:confused = 1
 					M:confused += 3
 				..()
+				return
+			reaction_obj(var/obj/O, var/volume)
+				if(istype(O,/obj/item/weapon/paper))
+					var/obj/item/weapon/paper/paperaffected = O
+					paperaffected.clearpaper()
+					usr << "The solution melts away the ink on the paper."
+				if(istype(O,/obj/item/weapon/book))
+					if(volume >= 5)
+						var/obj/item/weapon/book/affectedbook = O
+						affectedbook.dat = null
+						usr << "The solution melts away the ink on the book."
+					else
+						usr << "It wasn't enough..."
 				return
 
 		ammonia

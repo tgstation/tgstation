@@ -22,3 +22,13 @@
 	desc = "It's a normal red ink pen."
 	icon_state = "pen_red"
 	colour = "red"
+
+/obj/item/weapon/pen/invisble
+	desc = "It's an invisble pen marker."
+	icon_state = "pen"
+	colour = "white"
+
+/obj/item/weapon/pen/invisble
+	desc = "It's an invisble pen marker."
+	icon_state = "pen"
+	colour = "white"

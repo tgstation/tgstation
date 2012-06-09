@@ -358,6 +358,15 @@ datum
 			materials = list("$glass" = 2000, "acid" = 20)
 			build_path = "/obj/item/weapon/circuitboard/comm_server"
 
+		message_monitor
+			name = "Circuit Design (Messaging Monitor Console)"
+			desc = "Allows for the construction of circuit boards used to build a messaging monitor console."
+			id = "message_monitor"
+			req_tech = list("programming" = 5)
+			build_type = IMPRINTER
+			materials = list("$glass" = 2000, "acid" = 20)
+			build_path = "/obj/item/weapon/circuitboard/message_monitor"
+
 ///////////////////////////////////
 //////////AI Module Disks//////////
 ///////////////////////////////////
