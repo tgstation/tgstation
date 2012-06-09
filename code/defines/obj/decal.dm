@@ -1,3 +1,6 @@
+/obj/effect/decal
+	pass_flags = PASSBLOB
+
 /obj/effect/decal/ash
 	name = "ashes"
 	desc = "Ashes to ashes, dust to dust, and into space."

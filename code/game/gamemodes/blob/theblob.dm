@@ -16,6 +16,7 @@
 	var/fire_resist = 3
 	var/blobtype = "Blob"
 	var/blobdebug = 0
+	var/list/blob_attributes = list("fire","brute","cold","elec","acid")
 	var/weakness = null //What works best
 	var/strength = null //What doesn't/heals them
 		/*Types
@@ -61,7 +62,6 @@
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 		if((air_group && blobtype != "Shield") || (height==0))	return 1
 		if(istype(mover) && mover.pass_flags&PASSBLOB)	return 1
-		if(istype(mover, /obj/effect/decal) || istype(mover, /obj/effect/effect/chem_smoke)) return 1
 		return 0
 
 
@@ -88,10 +88,10 @@
 			blobtype = "Core"
 			blob_cores += src
 			processing_objects.Add(src)
-			weakness = pick("fire", "brute", "cold", "acid", "elec")
-			strength = pick("fire", "brute", "cold", "acid", "elec")
-			if(src.strength == src.weakness) //Yes, they could have the same weakness and strength, but this should reduce the odds.
-				src.strength = pick("fire", "brute", "cold", "acid", "elec")
+			var/list/a = blob_attributes
+			weakness = pick(a)
+			a -= weakness
+			strength = pick(a)
 			var/w = src.weakness
 			if(w)
 				if(w == "fire")
@@ -300,7 +300,7 @@
 				damage = damage*2
 			if(src.strength == "brute")
 				damage = damage*0.5
-				src.visible_message("\red \The [src] abosrbs \the [Proj]!")
+				src.visible_message("\red \The [src] absorbs \the [Proj]!")
 		else
 			damage = Proj.damage
 		src.health -= damage
@@ -403,10 +403,10 @@
 	spawn()
 		src.blobdebug = 1
 		src.Life()
-		src.weakness = pick("fire", "brute", "cold", "acid", "elec")
-		src.strength = pick("fire", "brute", "cold", "acid", "elec")
-		if(src.strength == src.weakness) //Yes, they could have the same weakness and strength, but this should reduce the odds.
-			src.strength = pick("fire", "brute", "cold", "acid", "elec")
+		var/list/a = blob_attributes
+		weakness = pick(a)
+		a -= weakness
+		strength = pick(a)
 		var/w = src.weakness
 		if(w)
 			if(w == "fire")
