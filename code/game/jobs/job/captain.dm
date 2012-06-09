@@ -25,11 +25,6 @@
 			H.equip_if_possible(new /obj/item/weapon/storage/id_kit(H), H.slot_r_hand)
 		else
 			H.equip_if_possible(new /obj/item/weapon/storage/id_kit(H.back), H.slot_in_backpack)
-		var/datum/organ/external/O = H.organs[pick(H.organs)]
-		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(O)
-		O.implant += L
-		L.imp_in = H
-		L.implanted = 1
 		world << "<b>[H.real_name] is the captain!</b>"
 		return 1
 
