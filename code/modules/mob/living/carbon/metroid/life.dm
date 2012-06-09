@@ -235,10 +235,12 @@
 
 			while(AIproc && stat != 2 && (attacked > 0 || starving || hungry || rabid || Victim))
 				if(Victim) // can't eat AND have this little process at the same time
-					break
+					AIproc = 0
+					return
 
 				if(!Target || client)
-					break
+					AIproc = 0
+					return
 
 
 				if(Target.health <= -70 || Target.stat == 2)
@@ -250,10 +252,10 @@
 					if(M.Victim == Target)
 						Target = null
 						AIproc = 0
-						break
+						return
 
 				if(!AIproc)
-					break
+					return
 
 				if(get_obstacle_ok(Target))
 					Obstacle = 0
@@ -299,7 +301,7 @@
 					else
 						Target = null
 						AIproc = 0
-						break
+						return
 
 				var/sleeptime = movement_delay()
 				if(sleeptime < 1) sleeptime = 1
