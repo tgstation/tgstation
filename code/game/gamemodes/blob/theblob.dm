@@ -12,8 +12,8 @@
 	var/active = 1
 	var/health = 30
 	var/maxhealth = 60
-	var/brute_resist = 2
-	var/fire_resist = 2
+	var/brute_resist = 3
+	var/fire_resist = 3
 	var/blobtype = "Blob"
 	var/blobdebug = 0
 	var/weakness = null //What works best
@@ -39,11 +39,6 @@
 				src.fire_resist = 1
 			if(w == "brute")
 				src.brute_resist = 1
-		if(s)
-			if(s == "fire")
-				src.fire_resist = 4
-			if(s == "brute")
-				src.brute_resist = 4
 		src.dir = pick(1,2,4,8)
 		src.update()
 		..(loc)
