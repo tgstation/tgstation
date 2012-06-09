@@ -50,17 +50,17 @@ atom/movable/RepelAirflowDest(n)
 
 vs_control/var
 
-	airflow_lightest_pressure = 15
-	airflow_light_pressure = 30
-	airflow_medium_pressure = 45
-	airflow_heavy_pressure = 60
+	airflow_lightest_pressure = 30
+	airflow_light_pressure = 45
+	airflow_medium_pressure = 60
+	airflow_heavy_pressure = 75
 	airflow_heaviest_pressure = 90
 
 	airflow_damage = 0.3
 	airflow_stun = 0.15
 	airflow_speed_decay = 1
-	airflow_delay = 25 //Time in deciseconds before they can be moved by airflow again.
-	airflow_mob_slowdown = 3 //Time in tenths of a second to add as a delay to each movement by a mob.\
+	airflow_delay = 30 //Time in deciseconds before they can be moved by airflow again.
+	airflow_mob_slowdown = 1 //Time in tenths of a second to add as a delay to each movement by a mob.\
 	Only active if they are fighting the pull of the airflow.
 	airflow_stun_cooldown = 10 //How long, in tenths of a second, to wait before stunning them again.
 
@@ -390,8 +390,11 @@ mob/living/carbon/human/airflow_hit(atom/A)
 		stunned += round(airflow_speed * vsc.airflow_stun/2)
 	. = ..()
 
+var/list/airflow_forbidden = list(/obj/structure/ore_box, /mob/aiEye)
+
 zone/proc/movables()
 	. = list()
 	for(var/turf/T in contents)
 		for(var/atom/A in T)
-			. += A
+			if(!(locate(A) in airflow_forbidden))
+				. += A

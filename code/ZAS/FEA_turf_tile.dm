@@ -187,7 +187,7 @@ turf
 			if(air_master.tiles_with_connections["\ref[src]"]) //Check pass sanity of the connections.
 				var/list/connections = air_master.tiles_with_connections["\ref[src]"]
 				for(var/connection/C in connections)
-					C.CheckPassSanity()
+					air_master.connections_checked |= C
 
 			update_zone_properties() //Update self zone and adjacent zones.
 
@@ -211,15 +211,18 @@ turf
 						else if(zone)
 							zone.rebuild = 1
 							continue
+
 					else if(!T.CanPass(null, src, 1.5, 1) && !T.CanPass(null, src, 0, 0)) //If I block air, we must look to see if the adjacent turfs need rebuilt.
 						if(T.zone && !T.zone.rebuild)
 							for(var/direction2 in cardinal - direction) //Check all other directions for air that might be connected.
 								var/turf/simulated/NT = get_step(src, direction2)
 								if(NT && NT.zone && NT.zone == T.zone)
 									T.zone.rebuild = 1
+
 					else if((!T.CanPass(null, src, 1.5, 1) && T.CanPass(null, src, 0, 0)) || (!CanPass(null, T, 1.5, 1) && CanPass(null, T, 0, 0)))
 						if(T.zone != zone)
 							ZConnect(src,T)
+
 				else if(zone && !zone.rebuild)
 					for(var/direction2 in cardinal - reverse_direction(direction)) //Check all other directions for air that might be connected.
 						var/turf/simulated/NT = get_step(T, direction2)

@@ -170,8 +170,10 @@
 	..()
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)
-			buckled_mob.loc = src.loc
-			buckled_mob.dir = src.dir
+			buckled_mob.loc = loc
+			buckled_mob.dir = dir
+		else
+			buckled_mob = null
 
 /obj/structure/stool/bed/chair/Move()
 	..()

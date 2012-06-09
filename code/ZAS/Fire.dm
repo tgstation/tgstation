@@ -267,9 +267,9 @@ datum/gas_mixture/proc/zburn(obj/liquid_fuel/liquid)
 			temperature = max( 1700*log(0.4*firelevel + 1.23) , temperature )
 
 			//Consume some gas.
-			var/consumed_gas = min(oxygen,0.0005*firelevel,total_fuel) / fuel_sources
+			var/consumed_gas = min(oxygen,0.005*firelevel,total_fuel) / fuel_sources
 
-			oxygen -= consumed_gas
+			oxygen = max(0,oxygen-consumed_gas)
 
 			toxins = max(0,toxins-consumed_gas)
 
