@@ -52,7 +52,7 @@
 		..()
 		return
 
-	if(user.a_intent != "help")
+	if(user.a_intent == "hurt")
 		if(!..()) return
 		H.apply_effect(5, WEAKEN, 0)
 		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")

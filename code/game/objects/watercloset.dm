@@ -58,7 +58,10 @@
 		var/obj/item/weapon/grab/G = I
 		var/mob/GM = G.affecting
 		if(ismob(G.affecting))
-			if(G.state>1 && GM.loc == get_turf(src))
+			if(G.state>1)
+				if(!GM.loc == get_turf(src))
+					user << "<span class='notice'>[GM.name] needs to be on the toilet.</span>"
+					return
 				if(open && !swirlie)
 					user.visible_message("<span class='danger'>[user] starts to give [GM.name] a swirlie!</span>", "<span class='notice'>You start to give [GM.name] a swirlie!</span>")
 					swirlie = GM
@@ -101,7 +104,10 @@
 		var/obj/item/weapon/grab/G = I
 		var/mob/GM = G.affecting
 		if(ismob(G.affecting))
-			if(G.state>1 && GM.loc == get_turf(src))
+			if(G.state>1)
+				if(!GM.loc == get_turf(src))
+					user << "<span class='notice'>[GM.name] needs to be on the urinal.</span>"
+					return
 				user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM.name] into the [src]!</span>")
 				GM.adjustBruteLoss(8)
 			else
