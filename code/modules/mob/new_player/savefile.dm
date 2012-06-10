@@ -66,6 +66,8 @@ datum/preferences/proc/savefile_save(mob/user)
 
 	F["OOC_Notes"] << src.metadata
 
+	F["sound_adminhelp"] << src.sound_adminhelp
+
 	return 1
 
 // loads the savefile corresponding to the mob's ckey
@@ -137,6 +139,8 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["job_engsec_low"] >> src.job_engsec_low
 
 	F["OOC_Notes"] >> src.metadata
+
+	F["sound_adminhelp"] >> src.sound_adminhelp
 
 	if(isnull(metadata))
 		metadata = ""
