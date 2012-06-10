@@ -1697,7 +1697,7 @@
 "aGG" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/turf/simulated/floor/plating,/area/hallway/primary/central)
 "aGH" = (/obj/machinery/vending/snack,/turf/simulated/floor{icon_state = "dark"},/area/hallway/primary/central)
 "aGI" = (/turf/simulated/floor{icon_state = "neutral"; dir = 4},/area/hallway/primary/central)
-"aGJ" = (/obj/machinery/light{dir = 1},/turf/simulated/floor{icon_state = "hydrofloor"},/area/hydroponics)
+"aGJ" = (/obj/machinery/light{dir = 1},/obj/structure/closet/crate/hydroponics,/obj/item/weapon/shovel/spade,/obj/item/weapon/wrench,/obj/item/weapon/screwdriver,/obj/item/weapon/reagent_containers/glass/bucket,/turf/simulated/floor{icon_state = "hydrofloor"},/area/hydroponics)
 "aGK" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; tag = "Streight"},/turf/simulated/floor{icon_state = "hydrofloor"},/area/hydroponics)
 "aGL" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/structure/closet/secure_closet/hydroponics,/turf/simulated/floor{icon_state = "hydrofloor"},/area/hydroponics)
 "aGM" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/item/device/radio/intercom{pixel_y = 25},/obj/structure/closet/secure_closet/hydroponics,/turf/simulated/floor{icon_state = "hydrofloor"},/area/hydroponics)

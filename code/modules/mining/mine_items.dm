@@ -263,7 +263,8 @@ proc/move_mining_shuttle()
 /*****************************Shovel********************************/
 
 /obj/item/weapon/shovel
-	name = "Shovel"
+	name = "shovel"
+	desc = "A large tool for digging and moving dirt."
 	icon = 'items.dmi'
 	icon_state = "shovel"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -275,11 +276,14 @@ proc/move_mining_shuttle()
 	m_amt = 50
 	origin_tech = "materials=1;engineering=1"
 
-
-
-
-
-
+/obj/item/weapon/shovel/spade
+	name = "spade"
+	desc = "A small tool for digging and moving dirt."
+	icon_state = "spade"
+	item_state = "spade"
+	force = 5.0
+	throwforce = 7.0
+	w_class = 2.0
 
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
