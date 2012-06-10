@@ -90,10 +90,11 @@
 	//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 	ticker.mode.check_win()
 	//Traitor's dead! Oh no!
+	/* --Admins do not need to know when people die. This was a relic of the singletraitor times where a traitor dying meant there were no antagonists left ~Erro
 	if (ticker.mode.name == "traitor" && src.mind && src.mind.special_role == "traitor")
 		message_admins("\red Traitor [key_name_admin(src)] has died.")
 		log_game("Traitor [key_name(src)] has died.")
-
+	*/
 	return ..(gibbed)
 
 /mob/living/carbon/human/proc/ChangeToHusk()

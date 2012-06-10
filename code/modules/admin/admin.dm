@@ -1547,7 +1547,7 @@ var/global/BSACooldown = 0
 				if (!paths)
 					return
 				else if (length(paths) > 5)
-					alert("Select less object types, (max 5)")
+					alert("Select fewer object types, (max 5)")
 					return
 				else if (length(removed_paths))
 					alert("Removed:\n" + dd_list2text(removed_paths, "\n"))
@@ -1613,8 +1613,6 @@ var/global/BSACooldown = 0
 									if(istype(O,/mob))
 										var/mob/M = O
 										M.real_name = obj_name
-
-
 
 				if (number == 1)
 					log_admin("[key_name(usr)] created a [english_list(paths)]")
