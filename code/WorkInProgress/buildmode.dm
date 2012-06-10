@@ -6,7 +6,7 @@
 			log_admin("[key_name(usr)] has left build mode.")
 			M.client.buildmode = 0
 			M.client.show_popup_menus = 1
-			for(var/obj/bmode/buildholder/H)
+			for(var/obj/effect/bmode/buildholder/H)
 				if(H.cl == M.client)
 					del(H)
 		else
@@ -14,14 +14,14 @@
 			M.client.buildmode = 1
 			M.client.show_popup_menus = 0
 
-			var/obj/bmode/buildholder/H = new/obj/bmode/buildholder()
-			var/obj/bmode/builddir/A = new/obj/bmode/builddir(H)
+			var/obj/effect/bmode/buildholder/H = new/obj/effect/bmode/buildholder()
+			var/obj/effect/bmode/builddir/A = new/obj/effect/bmode/builddir(H)
 			A.master = H
-			var/obj/bmode/buildhelp/B = new/obj/bmode/buildhelp(H)
+			var/obj/effect/bmode/buildhelp/B = new/obj/effect/bmode/buildhelp(H)
 			B.master = H
-			var/obj/bmode/buildmode/C = new/obj/bmode/buildmode(H)
+			var/obj/effect/bmode/buildmode/C = new/obj/effect/bmode/buildmode(H)
 			C.master = H
-			var/obj/bmode/buildquit/D = new/obj/bmode/buildquit(H)
+			var/obj/effect/bmode/buildquit/D = new/obj/effect/bmode/buildquit(H)
 			D.master = H
 
 			H.builddir = A
@@ -34,15 +34,15 @@
 			M.client.screen += D
 			H.cl = M.client
 
-/obj/bmode//Cleaning up the tree a bit
+/obj/effect/bmode//Cleaning up the tree a bit
 	density = 1
 	anchored = 1
 	layer = 20
 	dir = NORTH
 	icon = 'buildmode.dmi'
-	var/obj/bmode/buildholder/master = null
+	var/obj/effect/bmode/buildholder/master = null
 
-/obj/bmode/builddir
+/obj/effect/bmode/builddir
 	icon_state = "build"
 	screen_loc = "NORTH,WEST"
 	Click()
@@ -59,7 +59,7 @@
 				dir = NORTH
 		return
 
-/obj/bmode/buildhelp
+/obj/effect/bmode/buildhelp
 	icon = 'buildmode.dmi'
 	icon_state = "buildhelp"
 	screen_loc = "NORTH,WEST+1"
@@ -97,24 +97,24 @@
 				usr << "\blue ***********************************************************"
 		return
 
-/obj/bmode/buildquit
+/obj/effect/bmode/buildquit
 	icon_state = "buildquit"
 	screen_loc = "NORTH,WEST+3"
 
 	Click()
 		togglebuildmode(master.cl.mob)
 
-/obj/bmode/buildholder
+/obj/effect/bmode/buildholder
 	density = 0
 	anchored = 1
 	var/client/cl = null
-	var/obj/bmode/builddir/builddir = null
-	var/obj/bmode/buildhelp/buildhelp = null
-	var/obj/bmode/buildmode/buildmode = null
-	var/obj/bmode/buildquit/buildquit = null
+	var/obj/effect/bmode/builddir/builddir = null
+	var/obj/effect/bmode/buildhelp/buildhelp = null
+	var/obj/effect/bmode/buildmode/buildmode = null
+	var/obj/effect/bmode/buildquit/buildquit = null
 	var/atom/movable/throw_atom = null
 
-/obj/bmode/buildmode
+/obj/effect/bmode/buildmode
 	icon_state = "buildmode1"
 	screen_loc = "NORTH,WEST+2"
 	var/varholder = "name"
@@ -173,8 +173,8 @@
 
 
 /proc/build_click(var/mob/user, buildmode, location, control, params, var/obj/object)
-	var/obj/bmode/buildholder/holder = null
-	for(var/obj/bmode/buildholder/H)
+	var/obj/effect/bmode/buildholder/holder = null
+	for(var/obj/effect/bmode/buildholder/H)
 		if(H.cl == user.client)
 			holder = H
 			break

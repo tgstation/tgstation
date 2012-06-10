@@ -394,29 +394,27 @@
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && ((stat & BROKEN) || malfhack))
 		user << "\red You cannot put the board inside, the frame is damaged."
 		return
-	else if (istype(W, /obj/item/weapon/weldingtool) && W:welding && opened && has_electronics==0 && !terminal)
-		if (W:get_fuel() < 3)
-			user << "\blue You need more welding fuel to do this."
+	else if (istype(W, /obj/item/weapon/weldingtool) && opened && has_electronics==0 && !terminal)
+		var/obj/item/weapon/weldingtool/WT = W
+		if (WT.get_fuel() < 3)
+			user << "\blue You need more welding fuel to complete this task."
 			return
 		user << "You start welding APC frame..."
-		if(W:remove_fuel(0,user))
-			W:welding = 2
-			playsound(src.loc, 'Welder.ogg', 50, 1)
-			if(do_after(user, 50))
-
-				if (emagged || malfhack || (stat & BROKEN) || opened==2)
-					new /obj/item/stack/sheet/metal(loc)
-					user.visible_message(\
-						"\red \The [src] has been cut apart by [user.name] with the welding tool.",\
-						"You disassemble the broken APC frame.",\
-						"\red You hear welding.")
-				else
-					new /obj/item/apc_frame(loc)
-					user.visible_message(\
-						"\red \The [src] has been cut from the wall by [user.name] with the welding tool.",\
-						"You cut APC frame from the wall.",\
-						"\red You hear welding.")
-			W:welding = 1
+		playsound(src.loc, 'Welder.ogg', 50, 1)
+		if(do_after(user, 50))
+			if(!src || !WT.remove_fuel(3, user)) return
+			if (emagged || malfhack || (stat & BROKEN) || opened==2)
+				new /obj/item/stack/sheet/metal(loc)
+				user.visible_message(\
+					"\red [src] has been cut apart by [user.name] with the weldingtool.",\
+					"You disassembled the broken APC frame.",\
+					"\red You hear welding.")
+			else
+				new /obj/item/apc_frame(loc)
+				user.visible_message(\
+					"\red [src] has been cut from the wall by [user.name] with the weldingtool.",\
+					"You cut APC frame from the wall.",\
+					"\red You hear welding.")
 			del(src)
 			return
 	else if (istype(W, /obj/item/apc_frame) && opened && emagged)
@@ -769,7 +767,7 @@
 				(istype(robot) && (robot in malfai.connected_robots))    \
 			)                                                            \
 		)
-			user << "\red \The [src] has it's AI control disabled!"
+			user << "\red \The [src] has its AI control disabled!"
 			user << browse(null, "window=apc")
 			user.machine = null
 			return 0

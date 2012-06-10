@@ -76,7 +76,7 @@ Alien plants should do something if theres a lot of poison
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 
-		if(WT.welding)
+		if(WT.remove_fuel(0, user))
 			damage = 15
 			playsound(loc, 'Welder.ogg', 100, 1)
 

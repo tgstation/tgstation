@@ -1,6 +1,6 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-var/global/obj/datacore/data_core = null
+var/global/obj/effect/datacore/data_core = null
 var/global/obj/effect/overlay/plmaster = null
 var/global/obj/effect/overlay/slmaster = null
 
@@ -80,7 +80,7 @@ var/aliens_allowed = 1
 var/ooc_allowed = 1
 var/dooc_allowed = 1
 var/traitor_scaling = 1
-var/goonsay_allowed = 0
+//var/goonsay_allowed = 0
 var/dna_ident = 1
 var/abandon_allowed = 1
 var/enter_allowed = 1

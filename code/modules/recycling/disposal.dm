@@ -48,6 +48,10 @@
 		if(isrobot(user) && !istype(I, /obj/item/weapon/trashbag))
 			return
 		if(mode<=0) // It's off
+			if(contents.len > 0)
+				user << "Eject the items first!"
+				return
+
 			if(istype(I, /obj/item/weapon/screwdriver))
 				if(mode==0) // It's off but still not unscrewed
 					mode=-1 // Set it to doubleoff l0l
@@ -64,8 +68,9 @@
 				if(W.remove_fuel(0,user))
 					playsound(src.loc, 'Welder2.ogg', 100, 1)
 					user << "You start slicing the floorweld off the disposal unit."
-					W:welding = 2
+
 					if(do_after(user,20))
+						if(!src || !W.isOn()) return
 						user << "You sliced the floorweld off the disposal unit."
 						var/obj/structure/disposalconstruct/C = new (src.loc)
 						C.ptype = 6 // 6 = disposal unit
@@ -73,7 +78,6 @@
 						C.density = 1
 						C.update()
 						del(src)
-					W:welding = 1
 					return
 				else
 					user << "You need more welding fuel to complete this task."
@@ -896,23 +900,21 @@
 		if(istype(I, /obj/item/weapon/weldingtool))
 			var/obj/item/weapon/weldingtool/W = I
 
-			if(W.welding)
-				if(W.remove_fuel(0,user))
-					W:welding = 2
-					playsound(src.loc, 'Welder2.ogg', 100, 1)
-					// check if anything changed over 2 seconds
-					var/turf/uloc = user.loc
-					var/atom/wloc = W.loc
-					user << "Slicing the disposal pipe."
-					sleep(30)
-					if(user.loc == uloc && wloc == W.loc)
-						welded()
-					else
-						user << "You must stay still while welding the pipe."
-					W:welding = 1
+			if(W.remove_fuel(0,user))
+				playsound(src.loc, 'Welder2.ogg', 100, 1)
+				// check if anything changed over 2 seconds
+				var/turf/uloc = user.loc
+				var/atom/wloc = W.loc
+				user << "Slicing the disposal pipe."
+				sleep(30)
+				if(!W.isOn()) return
+				if(user.loc == uloc && wloc == W.loc)
+					welded()
 				else
-					user << "You need more welding fuel to cut the pipe."
-					return
+					user << "You must stay still while welding the pipe."
+			else
+				user << "You need more welding fuel to cut the pipe."
+				return
 
 	// called when pipe is cut with welder
 	proc/welded()
@@ -1238,95 +1240,114 @@
 
 		return P
 
+
+
+
+
 //a trunk joining to a disposal bin or outlet on the same turf
 /obj/structure/disposalpipe/trunk
 	icon_state = "pipe-t"
 	var/obj/linked 	// the linked obj/machinery/disposal or obj/disposaloutlet
 
-	New()
-		..()
-		dpdir = dir
-		spawn(1)
-			getlinked()
+/obj/structure/disposalpipe/trunk/New()
+	..()
+	dpdir = dir
+	spawn(1)
+		getlinked()
 
-		update()
-		return
+	update()
+	return
 
-	proc/getlinked()
-		linked = null
-		var/obj/machinery/disposal/D = locate() in src.loc
-		if(D)
-			linked = D
-			if (!D.trunk)
-				D.trunk = src
+/obj/structure/disposalpipe/trunk/proc/getlinked()
+	linked = null
+	var/obj/machinery/disposal/D = locate() in src.loc
+	if(D)
+		linked = D
+		if (!D.trunk)
+			D.trunk = src
 
-		var/obj/structure/disposaloutlet/O = locate() in src.loc
-		if(O)
-			linked = O
+	var/obj/structure/disposaloutlet/O = locate() in src.loc
+	if(O)
+		linked = O
 
-		update()
-		return
+	update()
+	return
 
 	// Override attackby so we disallow trunkremoval when somethings ontop
-	attackby(var/obj/item/I, var/mob/user)
+/obj/structure/disposalpipe/trunk/attackby(var/obj/item/I, var/mob/user)
 
-		if(linked != null)
+	//Disposal bins or chutes
+	/*
+	These shouldn't be required
+	var/obj/machinery/disposal/D = locate() in src.loc
+	if(D && D.anchored)
+		return
+
+	//Disposal outlet
+	var/obj/structure/disposaloutlet/O = locate() in src.loc
+	if(O && O.anchored)
+		return
+	*/
+
+	//Disposal constructors
+	var/obj/structure/disposalconstruct/C = locate() in src.loc
+	if(C && C.anchored)
+		return
+
+
+
+	var/turf/T = src.loc
+	if(T.intact)
+		return		// prevent interaction with T-scanner revealed pipes
+
+	if(istype(I, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/W = I
+
+		if(W.remove_fuel(0,user))
+			playsound(src.loc, 'Welder2.ogg', 100, 1)
+			// check if anything changed over 2 seconds
+			var/turf/uloc = user.loc
+			var/atom/wloc = W.loc
+			user << "Slicing the disposal pipe."
+			sleep(30)
+			if(!W.isOn()) return
+			if(user.loc == uloc && wloc == W.loc)
+				welded()
+			else
+				user << "You must stay still while welding the pipe."
+		else
+			user << "You need more welding fuel to cut the pipe."
 			return
-
-		var/turf/T = src.loc
-		if(T.intact)
-			return		// prevent interaction with T-scanner revealed pipes
-
-		if(istype(I, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/W = I
-
-			if(W.welding)
-				if(W.remove_fuel(0,user))
-					W:welding = 2
-					playsound(src.loc, 'Welder2.ogg', 100, 1)
-					// check if anything changed over 2 seconds
-					var/turf/uloc = user.loc
-					var/atom/wloc = W.loc
-					user << "Slicing the disposal pipe."
-					sleep(30)
-					if(user.loc == uloc && wloc == W.loc)
-						welded()
-					else
-						user << "You must stay still while welding the pipe."
-					W:welding = 1
-				else
-					user << "You need more welding fuel to cut the pipe."
-					return
 
 	// would transfer to next pipe segment, but we are in a trunk
 	// if not entering from disposal bin,
 	// transfer to linked object (outlet or bin)
 
-	transfer(var/obj/structure/disposalholder/H)
+/obj/structure/disposalpipe/trunk/transfer(var/obj/structure/disposalholder/H)
 
-		if(H.dir == DOWN)		// we just entered from a disposer
-			return ..()		// so do base transfer proc
-		// otherwise, go to the linked object
-		if(linked)
-			var/obj/structure/disposaloutlet/O = linked
-			if(istype(O) && (H))
-				O.expel(H)	// expel at outlet
-			else
-				var/obj/machinery/disposal/D = linked
-				if(H)
-					D.expel(H)	// expel at disposal
+	if(H.dir == DOWN)		// we just entered from a disposer
+		return ..()		// so do base transfer proc
+	// otherwise, go to the linked object
+	if(linked)
+		var/obj/structure/disposaloutlet/O = linked
+		if(istype(O) && (H))
+			O.expel(H)	// expel at outlet
 		else
+			var/obj/machinery/disposal/D = linked
 			if(H)
-				src.expel(H, src.loc, 0)	// expel at turf
-		return null
+				D.expel(H)	// expel at disposal
+	else
+		if(H)
+			src.expel(H, src.loc, 0)	// expel at turf
+	return null
 
 	// nextdir
 
-	nextdir(var/fromdir)
-		if(fromdir == DOWN)
-			return dir
-		else
-			return 0
+/obj/structure/disposalpipe/trunk/nextdir(var/fromdir)
+	if(fromdir == DOWN)
+		return dir
+	else
+		return 0
 
 // a broken pipe
 /obj/structure/disposalpipe/broken
@@ -1368,6 +1389,11 @@
 
 		spawn(1)
 			target = get_ranged_target_turf(src, dir, 10)
+
+
+			var/obj/structure/disposalpipe/trunk/trunk = locate() in src.loc
+			if(trunk)
+				trunk.linked = src	// link the pipe trunk to self
 
 	// expel the contents of the holder object, then delete it
 	// called when the holder exits the outlet
@@ -1419,8 +1445,8 @@
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'Welder2.ogg', 100, 1)
 				user << "You start slicing the floorweld off the disposal outlet."
-				W:welding = 2
 				if(do_after(user,20))
+					if(!src || !W.isOn()) return
 					user << "You sliced the floorweld off the disposal outlet."
 					var/obj/structure/disposalconstruct/C = new (src.loc)
 					C.ptype = 7 // 7 =  outlet
@@ -1428,7 +1454,6 @@
 					C.anchored = 1
 					C.density = 1
 					del(src)
-				W:welding = 1
 				return
 			else
 				user << "You need more welding fuel to complete this task."

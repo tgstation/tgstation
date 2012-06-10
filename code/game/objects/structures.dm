@@ -173,7 +173,6 @@ obj/structure/meteorhit(obj/O as obj)
 			else
 		return
 
-
 /obj/structure/girder/displaced
 	icon_state = "displaced"
 	anchored = 0
@@ -259,9 +258,10 @@ obj/structure/meteorhit(obj/O as obj)
 		var/turf/T = get_turf(src)
 		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead
 		return
-	if (istype(C, /obj/item/weapon/weldingtool) && C:welding)
-		user << "\blue Slicing lattice joints ..."
-		C:eyecheck(user)
+	if (istype(C, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = C
+		if(WT.remove_fuel(0, user))
+			user << "\blue Slicing lattice joints ..."
 		new /obj/item/stack/rods(src.loc)
 		del(src)
 

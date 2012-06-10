@@ -108,6 +108,27 @@
 	density = 1
 	anchored = 1.0
 
+/*
+//Allow you to push disposal pipes into it (for those with density 1)
+/obj/machinery/pipedispenser/disposal/HasEntered(var/obj/structure/disposalconstruct/pipe as obj)
+	if(istype(pipe) && !pipe.anchored)
+		del(pipe)
+
+Nah
+*/
+
+//Allow you to drag-drop disposal pipes into it
+/obj/machinery/pipedispenser/disposal/MouseDrop_T(var/obj/structure/disposalconstruct/pipe as obj, mob/usr as mob)
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return
+
+	if (!istype(pipe) || get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
+		return
+
+	if (pipe.anchored)
+		return
+
+	del(pipe)
 
 /obj/machinery/pipedispenser/disposal/attack_hand(user as mob)
 	if(..())
