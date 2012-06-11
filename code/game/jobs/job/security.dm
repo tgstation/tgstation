@@ -20,18 +20,12 @@
 		H.equip_if_possible(new /obj/item/clothing/suit/storage/armourrigvest(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/clothing/shoes/jackboots(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/heads/hos(H), H.slot_belt)
-//		H.equip_if_possible(new /obj/item/clothing/suit/armor/hos(H), H.slot_wear_suit)
-//We're Bay12, not Goon.  We don't need armor 24/7
+//		H.equip_if_possible(new /obj/item/clothing/suit/armor/hos(H), H.slot_wear_suit) //We're Bay12, not Goon.  We don't need armor 24/7
 		H.equip_if_possible(new /obj/item/clothing/gloves/hos(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/clothing/head/helmet/HoS(H), H.slot_head)
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses/sechud(H), H.slot_glasses)
 		H.equip_if_possible(new /obj/item/weapon/handcuffs(H), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/weapon/gun/energy/gun(H), H.slot_s_store)
-		var/datum/organ/external/O = H.organs[pick(H.organs)]
-		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(O)
-		O.implant += L
-		L.imp_in = H
-		L.implanted = 1
 		return 1
 
 
@@ -62,11 +56,6 @@
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses/sechud(H), H.slot_glasses)
 		H.equip_if_possible(new /obj/item/weapon/handcuffs(H), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/device/flash(H), H.slot_l_store)
-		var/datum/organ/external/O = H.organs[pick(H.organs)]
-		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(O)
-		O.implant += L
-		L.imp_in = H
-		L.implanted = 1
 		return 1
 
 
@@ -97,18 +86,12 @@
 /*		var/obj/item/clothing/mask/cigarette/CIG = new /obj/item/clothing/mask/cigarette(H)
 		CIG.light("")
 		H.equip_if_possible(CIG, H.slot_wear_mask)	*/
-		//Fuck that thing.  --SkyMarshal
 		H.equip_if_possible(new /obj/item/clothing/gloves/detective(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/weapon/storage/box/evidence(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/weapon/fcardholder(H), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/device/detective_scanner(H), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/weapon/reagent_containers/food/drinks/dflask(H.back), H.slot_in_backpack)
 		H.equip_if_possible(new /obj/item/weapon/lighter/zippo(H), H.slot_l_store)
-		var/datum/organ/external/O = H.organs[pick(H.organs)]
-		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(O)
-		O.implant += L
-		L.imp_in = H
-		L.implanted = 1
 		return 1
 
 
@@ -139,9 +122,4 @@
 		H.equip_if_possible(new /obj/item/clothing/gloves/red(H), H.slot_gloves)
 		H.equip_if_possible(new /obj/item/weapon/handcuffs(H), H.slot_s_store)
 		H.equip_if_possible(new /obj/item/device/flash(H), H.slot_l_store)
-		var/datum/organ/external/O = H.organs[pick(H.organs)]
-		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(O)
-		O.implant += L
-		L.imp_in = H
-		L.implanted = 1
 		return 1

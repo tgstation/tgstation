@@ -18,6 +18,7 @@
 #define ui_back "6:14,1:5"
 #define ui_rhand "7:16,1:5"
 #define ui_lhand "8:16,1:5"
+#define ui_equip "7:16,2:5"
 #define ui_swaphand1 "7:16,2:5"
 #define ui_swaphand2 "8:16,2:5"
 #define ui_storage1 "9:18,1:5"

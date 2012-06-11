@@ -237,19 +237,20 @@ SHARDS
 
 /obj/item/weapon/shard/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if ( istype(W, /obj/item/weapon/weldingtool) && W:welding )
-		W:eyecheck(user)
-		var/obj/item/stack/sheet/glass/NG = new (user.loc)
-		for (var/obj/item/stack/sheet/glass/G in user.loc)
-			if(G==NG)
-				continue
-			if(G.amount>=G.max_amount)
-				continue
-			G.attackby(NG, user)
-			usr << "You add the newly-formed glass to the stack. It now contains [NG.amount] sheets."
-		//SN src = null
-		del(src)
-		return
+	if ( istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(WT.remove_fuel(0, user))
+			var/obj/item/stack/sheet/glass/NG = new (user.loc)
+			for (var/obj/item/stack/sheet/glass/G in user.loc)
+				if(G==NG)
+					continue
+				if(G.amount>=G.max_amount)
+					continue
+				G.attackby(NG, user)
+				usr << "You add the newly-formed glass to the stack. It now contains [NG.amount] sheets."
+			//SN src = null
+			del(src)
+			return
 	return ..()
 
 /obj/item/weapon/shard/HasEntered(AM as mob|obj)

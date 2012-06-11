@@ -784,7 +784,7 @@ datum
 			result_amount = 2
 			required_container = /obj/item/metroid_core
 			required_other = 5
-		metroidretro
+/*		metroidretro
 			name = "Metroid Retro"
 			id = "m_xeno"
 			result = null
@@ -795,7 +795,7 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/datum/disease/F = new /datum/disease/dna_retrovirus(0)
 				var/list/data = list("viruses"= list(F))
-				holder.add_reagent("blood", 20, data)
+				holder.add_reagent("blood", 20, data)*/
 		metroidfoam
 			name = "Metroid Foam"
 			id = "m_foam"

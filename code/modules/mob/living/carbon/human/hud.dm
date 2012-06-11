@@ -294,6 +294,14 @@
 	using.layer = 20
 	src.adding += using
 
+	using = new src.h_type( src )
+	using.name = "equip"
+	using.icon = ui_style
+	using.icon_state = "act_equip"
+	using.screen_loc = ui_equip
+	using.layer = 20
+	src.adding += using
+
 /*
 	using = new src.h_type( src )
 	using.name = "intent"

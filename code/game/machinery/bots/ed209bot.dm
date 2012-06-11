@@ -813,8 +813,9 @@ Auto Patrol: []"},
 		src.item_state = "ed209_shell"
 		src.icon_state = "ed209_shell"
 		del(W)
-	else if((istype(W, /obj/item/weapon/weldingtool) && W:welding) && (src.build_step == 3))
-		if (W:remove_fuel(0,user))
+	else if(istype(W, /obj/item/weapon/weldingtool) && src.build_step == 3)
+		var/obj/item/weapon/weldingtool/WT = W
+		if(WT.remove_fuel(0,user))
 			src.build_step++
 			src.name = "shielded frame assembly"
 			user << "You welded the vest to [src]!"

@@ -1,4 +1,18 @@
-vs_control/var/IgnitionLevel = 10 //Moles of oxygen+plasma - co2 needed to burn.
+/*
+
+Making Bombs with ZAS:
+Make burny fire with lots of burning
+Draw off 5000K gas from burny fire
+Separate gas into oxygen and plasma components
+Obtain plasma and oxygen tanks filled up about 50-75% with normal-temp gas
+Fill rest with super hot gas from separated canisters, they should be about 125C now.
+Attach to transfer valve and open. BOOM.
+
+*/
+
+
+
+vs_control/var/IgnitionLevel = 0.5 //Moles of oxygen+plasma - co2 needed to burn.
 
 //Some legacy definitions so fires can be started.
 atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -81,7 +95,7 @@ obj
 					firelevel = air_contents.calculate_firelevel(liquid)
 
 					//Ensure that there is an appropriate amount of fuel and O2 here.
-					if(firelevel > 25 && (air_contents.toxins || fuel || liquid))
+					if(firelevel > 0.25 && (air_contents.toxins || fuel || liquid))
 
 						for(var/direction in cardinal)
 							if(S.air_check_directions&direction) //Grab all valid bordering tiles
@@ -92,15 +106,17 @@ obj
 									//If extinguisher mist passed over the turf it's trying to spread to, don't spread and
 									//reduce firelevel.
 									if(enemy_tile.fire_protection > world.time-30)
-										firelevel -= 150
+										firelevel -= 1.5
 										continue
 
 									//Spread the fire.
 									if(!(locate(/obj/fire) in enemy_tile))
-										if( prob( firelevel/2.5 ) )
+										if( prob( firelevel*10 ) )
 											new/obj/fire(enemy_tile,firelevel)
 
-					var/datum/gas_mixture/flow = air_contents.remove_ratio(0.5) //Take half the air from the room I guess.
+					var/datum/gas_mixture/flow = air_contents.remove_ratio(0.25)
+					//The reason we're taking a part of the air instead of all of it is so that it doesn't jump to
+					//the fire's max temperature instantaneously.
 
 					if(flow)
 
@@ -109,9 +125,9 @@ obj
 
 							//Change icon depending on the fuel, and thus temperature.
 							icon_state = "1"
-							if(firelevel > 25)
+							if(firelevel > 2.5)
 								icon_state = "2"
-							if(firelevel > 100)
+							if(firelevel > 6)
 								icon_state = "3"
 
 							//Ensure flow temperature is higher than minimum fire temperatures.
@@ -245,16 +261,19 @@ datum/gas_mixture/proc/zburn(obj/liquid_fuel/liquid)
 				//Calculate the firelevel.
 			var/firelevel = calculate_firelevel(liquid)
 
-				//Reaches a maximum practical temperature of around 2750.
+				//Reaches a maximum practical temperature of around 4500.
 
-			temperature = 1000*log(0.016*firelevel + 1.45)
+			//Increase temperature.
+			temperature = max( 1700*log(0.4*firelevel + 1.23) , temperature )
 
 			//Consume some gas.
-			var/consumed_gas = min(oxygen,0.002*firelevel,total_fuel) / fuel_sources
+			var/consumed_gas = min(oxygen,0.005*firelevel,total_fuel) / fuel_sources
 
-			oxygen -= consumed_gas
+			oxygen = max(0,oxygen-consumed_gas)
 
 			toxins = max(0,toxins-consumed_gas)
+
+			carbon_dioxide += consumed_gas*2
 
 			if(fuel)
 				fuel.moles -= consumed_gas
@@ -268,126 +287,20 @@ datum/gas_mixture/proc/zburn(obj/liquid_fuel/liquid)
 			return consumed_gas*fuel_sources
 	return 0
 
-/*
-OLD FIRE:
-fire()
-				var/energy_released = 0
-				var/old_heat_capacity = heat_capacity()
-
-				var/datum/gas/volatile_fuel/fuel_store = locate(/datum/gas/volatile_fuel/) in trace_gases
-				if(fuel_store) //General volatile gas burn
-					var/burned_fuel = 0
-
-					if(oxygen < fuel_store.moles)
-						burned_fuel = oxygen
-						fuel_store.moles -= burned_fuel
-						oxygen = 0
-					else
-						burned_fuel = fuel_store.moles
-						oxygen -= fuel_store.moles
-						del(fuel_store)
-
-					energy_released += vsc.FIRE_CARBON_ENERGY_RELEASED * burned_fuel
-					carbon_dioxide += burned_fuel
-					fuel_burnt += burned_fuel
-
-				//Handle plasma burning
-				if(toxins > MINIMUM_HEAT_CAPACITY)
-					var/plasma_burn_rate = 0
-					var/oxygen_burn_rate = 0
-					//more plasma released at higher temperatures
-					var/temperature_scale
-					if(temperature < PLASMA_UPPER_TEMPERATURE)
-						temperature_scale = 1
-					else
-						temperature_scale = (temperature-PLASMA_MINIMUM_BURN_TEMPERATURE)/(PLASMA_UPPER_TEMPERATURE-PLASMA_MINIMUM_BURN_TEMPERATURE)
-					if(temperature_scale > 0)
-						oxygen_burn_rate = 1.4 - temperature_scale
-						if(oxygen > toxins*PLASMA_OXYGEN_FULLBURN)
-							plasma_burn_rate = (toxins*temperature_scale)/4
-						else
-							plasma_burn_rate = (temperature_scale*(oxygen/PLASMA_OXYGEN_FULLBURN))/4
-						if(plasma_burn_rate > MINIMUM_HEAT_CAPACITY)
-							toxins -= plasma_burn_rate
-							oxygen -= plasma_burn_rate*oxygen_burn_rate
-							carbon_dioxide += plasma_burn_rate
-
-							energy_released += vsc.FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
-
-							fuel_burnt += (plasma_burn_rate)*(1+oxygen_burn_rate)
-
-				if(energy_released > 0)
-					var/new_heat_capacity = heat_capacity()
-					if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-						temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
-
-				return fuel_burnt
- OLD ZBURN:
-datum/gas_mixture/proc/zburn(obj/liquid_fuel/liquid)
-	if(vsc.switch_fire)
-		. = fire()
-		if(liquid && liquid.amount > 0)
-			oxygen -= fire_ratio_1
-			liquid.amount = max(liquid.amount-fire_ratio_1,0)
-			carbon_dioxide += fire_ratio_1
-			if(liquid.amount <= 0)
-				del liquid
-		return
-	if(temperature > PLASMA_MINIMUM_BURN_TEMPERATURE)
-		var
-			fuel_level = 0
-			datum/gas/volatile_fuel/fuel = locate() in trace_gases
-			liquid_level = 0
-		if(fuel) fuel_level = fuel.moles
-		if(liquid) liquid_level = liquid.amount
-		if(liquid.amount <= 0)
-			del liquid
-			liquid_level = 0
-		if(oxygen > 0.3 && (toxins || fuel_level || liquid_level))
-			if(toxins && temperature < PLASMA_UPPER_TEMPERATURE)
-				temperature += (vsc.FIRE_PLASMA_ENERGY_RELEASED*fire_ratio_1) / heat_capacity()
-
-			if((fuel_level || liquid_level) && temperature < PLASMA_UPPER_TEMPERATURE)
-				temperature += (vsc.FIRE_CARBON_ENERGY_RELEASED*fire_ratio_1) / heat_capacity()
-
-			if(toxins > fire_ratio_1)
-				oxygen -= vsc.OXY_TO_PLASMA*fire_ratio_1
-				toxins -= fire_ratio_1
-				carbon_dioxide += fire_ratio_1
-			else if(toxins)
-				oxygen -= toxins * vsc.OXY_TO_PLASMA
-				carbon_dioxide += toxins
-				toxins = 0
-
-			if(fuel_level > fire_ratio_1/1.5)
-				oxygen -= vsc.OXY_TO_PLASMA*fire_ratio_1
-				fuel.moles -= fire_ratio_1
-				carbon_dioxide += fire_ratio_1
-
-			else if(fuel_level)
-				oxygen -= fuel.moles * vsc.OXY_TO_PLASMA
-				carbon_dioxide += fuel.moles
-				fuel.moles = 0
-
-			if(liquid_level > 0)
-				oxygen -= fire_ratio_1
-				liquid.amount = max(liquid.amount-fire_ratio_1,0)
-				carbon_dioxide += fire_ratio_1
-				if(liquid.amount <= 0)
-					del liquid
-			return 1
-	return 0 */
 
 datum/gas_mixture/proc/calculate_firelevel(obj/liquid_fuel/liquid)
 		//Calculates the firelevel based on one equation instead of having to do this multiple times in different areas.
 	var
 		datum/gas/volatile_fuel/fuel = locate() in trace_gases
-		fuel_level = 0
-		liquid_level = 0
+		liquid_concentration = 0
 
-	if(fuel) fuel_level = fuel.moles
-	if(liquid) liquid_level = liquid.amount
-	return oxygen + toxins + liquid_level*15 + fuel_level*5
+		oxy_concentration = oxygen / volume
+		tox_concentration = toxins / volume
+		fuel_concentration = 0
+
+	if(fuel) fuel_concentration = (fuel.moles*5) / volume
+	if(liquid) liquid_concentration = (liquid.amount*15) / volume
+	return (oxy_concentration + tox_concentration + liquid_concentration + fuel_concentration)*100
 
 /mob/living/carbon/human/proc/FireBurn(mx as num)
 	//Burns mobs due to fire. Respects heat transfer coefficients on various body parts.

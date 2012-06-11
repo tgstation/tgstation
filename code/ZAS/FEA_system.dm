@@ -101,6 +101,7 @@ datum
 			//Geometry updates lists
 			var/list/turf/simulated/tiles_to_update = list()
 			var/list/turf/simulated/tiles_with_connections = list()
+			var/list/connection/connections_checked = list()
 //			var/list/turf/simulated/groups_to_rebuild = list()
 
 			var/current_cycle = 0
@@ -170,6 +171,9 @@ datum
 					for(var/turf/simulated/T in tiles_to_update)
 						T.update_air_properties()
 					tiles_to_update = list()
+					for(var/connection/C in connections_checked)
+						C.CheckPassSanity()
+					connections_checked = list()
 
 				for(var/zone/Z in zones)
 					if(Z.last_update < current_cycle)

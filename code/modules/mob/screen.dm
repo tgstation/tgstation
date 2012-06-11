@@ -303,6 +303,15 @@
 
 			usr.hud_used.other_update()
 
+		if("equip")
+			var/obj/item/I = usr.get_active_hand()
+			if(!I)
+				usr << "\blue You are not holding anything to equip."
+				return
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				H.equip_to_appropriate_slot(I)
+
 		if("maprefresh")
 			var/obj/machinery/computer/security/seccomp = usr.machine
 

@@ -521,14 +521,11 @@
 	if( istype(W, /obj/item/weapon/weldingtool) )
 		var/obj/item/weapon/weldingtool/WT = W
 		if( WT.remove_fuel(0,user) )
-			WT.welding = 2
-
 			user << "<span class='notice'>You begin slicing through the outer plating.</span>"
 			playsound(src.loc, 'Welder.ogg', 100, 1)
 
 			sleep(100)
-			if( !istype(src, /turf/simulated/wall) || !user || !WT || !T )	return
-			WT.welding = 1
+			if( !istype(src, /turf/simulated/wall) || !user || !WT || !WT.isOn() || !T )	return
 
 			if( user.loc == T && user.equipped() == WT )
 				user << "<span class='notice'>You remove the outer plating.</span>"
@@ -681,14 +678,12 @@
 			if( istype(W, /obj/item/weapon/weldingtool) )
 				var/obj/item/weapon/weldingtool/WT = W
 				if( WT.remove_fuel(0,user) )
-					WT.welding = 2
 
 					user << "<span class='notice'>You begin slicing through the metal cover.</span>"
 					playsound(src.loc, 'Welder.ogg', 100, 1)
 
 					sleep(60)
-					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !WT || !T )	return
-					WT.welding = 1
+					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !WT || !WT.isOn() || !T )	return
 
 					if( d_state == 2 && user.loc == T && user.equipped() == WT )
 						src.d_state = 3
@@ -746,14 +741,12 @@
 			if( istype(W, /obj/item/weapon/weldingtool) )
 				var/obj/item/weapon/weldingtool/WT = W
 				if( WT.remove_fuel(0,user) )
-					WT.welding = 2
 
 					user << "<span class='notice'>You begin slicing through the support rods.</span>"
 					playsound(src.loc, 'Welder.ogg', 100, 1)
 
 					sleep(100)
-					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !WT || !T )	return
-					WT.welding = 1
+					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !WT || !WT.isOn() || !T )	return
 
 					if( d_state == 5 && user.loc == T && user.equipped() == WT )
 						src.d_state = 6
@@ -1382,7 +1375,7 @@ turf/simulated/floor/return_siding_icon_state()
 
 	if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/welder = C
-		if(welder.welding && (is_plating()))
+		if(welder.isOn() && (is_plating()))
 			if(broken || burnt)
 				if(welder.remove_fuel(0,user))
 					user << "\red You fix some dents on the broken plating."

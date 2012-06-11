@@ -167,13 +167,15 @@
 	icon_state = "serithi_artalis_1"
 
 //////////// Hats ////////////
-
+//Removed by request
+/*
 /obj/item/clothing/head/helmet/hardhat/fluff/greg_anderson_1 //deusdactyl: Greg Anderson
 	name = "old hard hat"
 	desc = "An old dented hard hat with the nametag \"Anderson\". It seems to be backwards."
 	icon_state = "hardhat0_dblue" //Already an in-game sprite
 	item_state = "hardhat0_dblue"
 	color = "dblue"
+*/
 
 /obj/item/clothing/head/secsoft/fluff/swatcap //deusdactyl: James Girard
 	name = "\improper SWAT hat"
@@ -287,7 +289,8 @@
 //////////// Sets ////////////
 
 ////// CDC //deusdactyl: Roger Wiles
-
+//Removed by request.
+/*
 /obj/item/clothing/under/rank/virologist/fluff/cdc_jumpsuit
 	name = "\improper CDC jumpsuit"
 	desc = "A modified standard-issue CDC jumpsuit made of a special fiber that gives special protection against biohazards.  It has a biohazard symbol sewn into the back."
@@ -300,7 +303,7 @@
 	desc = "A standard-issue CDC labcoat that protects against minor chemical spills.  It has the name \"Wiles\" sewn on to the breast pocket."
 	icon = 'custom_items.dmi'
 	icon_state = "labcoat_cdc_open"
-
+*/
 ////// Short Sleeve Medical Outfit //erthilo: Farah Lants
 
 /obj/item/clothing/under/rank/medical/fluff/short

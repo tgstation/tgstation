@@ -31,7 +31,15 @@
 	for (var/mob/M in world)
 		if(M && M.client && M.client.holder)
 			if(usr.client.holder  && (usr.client.holder.level != 0))
-				usr << "[M.key] is a [M.client.holder.rank][M.client.stealth ? " <i>(as [M.client.fakekey])</i>" : ""]"
+				var/afk = 0
+				if( M.client.inactivity > 3000 ) //3000 deciseconds = 300 seconds = 5 minutes
+					afk = 1
+				if(isobserver(M))
+					usr << "[M.key] is a [M.client.holder.rank][M.client.stealth ? " <i>(as [M.client.fakekey])</i>" : ""] - Observing [afk ? "(AFK)" : ""]"
+				else if(istype(M,/mob/new_player))
+					usr << "[M.key] is a [M.client.holder.rank][M.client.stealth ? " <i>(as [M.client.fakekey])</i>" : ""] - Has not entered [afk ? "(AFK)" : ""]"
+				else if(istype(M,/mob/living))
+					usr << "[M.key] is a [M.client.holder.rank][M.client.stealth ? " <i>(as [M.client.fakekey])</i>" : ""] - Playing [afk ? "(AFK)" : ""]"
 			else if(!M.client.stealth && (M.client.holder.level != -3))
 				usr << "\t[pick(nobles)] [M.client] is a [M.client.holder.rank]"
 

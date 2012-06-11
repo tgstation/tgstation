@@ -283,23 +283,22 @@ TABLE AND RACK OBJECT INTERATIONS
 		return
 
 	if (istype(W, /obj/item/weapon/weldingtool))
-		if(W:welding == 1)
+		var/obj/item/weapon/weldingtool/WT = W
+		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
-				W:welding = 2
 				user << "\blue Now weakening the reinforced table"
 				playsound(src.loc, 'Welder.ogg', 50, 1)
 				if (do_after(user, 50))
+					if(!src || !WT.isOn()) return
 					user << "\blue Table weakened"
 					src.status = 1
-					W:welding = 1
 			else
-				W:welding = 2
 				user << "\blue Now strengthening the reinforced table"
 				playsound(src.loc, 'Welder.ogg', 50, 1)
 				if (do_after(user, 50))
+					if(!src || !WT.isOn()) return
 					user << "\blue Table strengthened"
 					src.status = 2
-					W:welding = 1
 			return
 		if(isrobot(user))
 			return

@@ -375,6 +375,14 @@
 	var/defaultDestination = "Disposals"
 
 	var/c_mode = 0
+
+	New()
+		..()
+		spawn(5)
+			trunk = locate() in src.loc
+			if(trunk)
+				trunk.linked = src	// link the pipe trunk to self
+
 	interact()
 		return
 
@@ -451,8 +459,8 @@
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'Welder2.ogg', 100, 1)
 				user << "You start slicing the floorweld off the delivery chute."
-				W:welding = 2
 				if(do_after(user,20))
+					if(!src || !W.isOn()) return
 					user << "You sliced the floorweld off the delivery chute."
 					var/obj/structure/disposalconstruct/C = new (src.loc)
 					C.ptype = 8 // 8 =  Delivery chute
@@ -460,7 +468,6 @@
 					C.anchored = 1
 					C.density = 1
 					del(src)
-				W:welding = 1
 				return
 			else
 				user << "You need more welding fuel to complete this task."

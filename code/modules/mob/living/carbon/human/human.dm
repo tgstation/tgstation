@@ -942,10 +942,6 @@
 		client.screen -= hud_used.intents
 		client.screen -= hud_used.mov_int
 
-
-	//Screenlocs for these slots are handled by the huds other_update()
-	//because theyre located on the 'other' inventory bar.
-
 	// Gloves
 	var/datum/organ/external/lo = organs["l_hand"]
 	var/datum/organ/external/ro = organs["r_hand"]
@@ -1067,9 +1063,10 @@
 		clothing_overlays += image("icon" = 'back.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = BACK_LAYER)
 		back.screen_loc = ui_back
 
-	if(client) hud_used.other_update() //Update the screenloc of the items on the 'other' inventory bar
-								       //to hide / show them.
-								       // WHAT IS THIS DOING IN UPDATE_CLOTHING(), AHHHHHHHHHHHHH
+	if(client)
+		client.screen -= contents
+		client.screen += contents
+											   //to hide / show them.
 	if (handcuffed)
 		pulling = null
 		var/h1 = handcuffed.icon_state
@@ -1127,6 +1124,11 @@
 					stain_icon = icon('blood.dmi', "suitblood[!lying ? "" : "2"]")
 				clothing_overlays += image("icon" = stain_icon, "layer" = B_SUIT_LAYER)
 			wear_suit.screen_loc = ui_oclothing
+
+	//Update_other() MUST be called after all the storage slots get updated. This is because all the storage slots assign their
+	//respective items a screen_loc, which other_update() will then override if needed.
+	if(client)
+		hud_used.other_update() //Update the screenloc of the items on the 'other' inventory bar
 
 	switch(shielded)
 		if(1)
@@ -1225,11 +1227,13 @@
 
 	if(lying)
 		icon = lying_icon
-		overlays += body_overlays_lying
+		if(damageicon_lying)
+			overlays += body_overlays_lying
 
 	if(!lying)
 		icon = stand_icon
-		overlays += body_overlays_standing
+		if(damageicon_standing)
+			overlays += body_overlays_standing
 
 
 

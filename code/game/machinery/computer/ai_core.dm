@@ -20,13 +20,16 @@
 					anchored = 1
 					state = 1
 			if(istype(P, /obj/item/weapon/weldingtool))
+				var/obj/item/weapon/weldingtool/WT = P
+				if(!WT.isOn())
+					user << "The welder must be on for this task."
+					return
 				playsound(loc, 'Welder.ogg', 50, 1)
-				P:welding = 2
 				if(do_after(user, 20))
+					if(!src || !WT.remove_fuel(0, user)) return
 					user << "\blue You deconstruct the frame."
 					new /obj/item/stack/sheet/plasteel( loc, 4)
 					del(src)
-				P:welding = 1
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'Ratchet.ogg', 50, 1)
@@ -162,6 +165,7 @@
 				playsound(loc, 'Screwdriver.ogg', 50, 1)
 				user << "\blue You connect the monitor."
 				new /mob/living/silicon/ai ( loc, laws, brain )
+//				feedback_inc("cyborg_ais_created",1)
 				del(src)
 
 /obj/structure/AIcore/deactivated

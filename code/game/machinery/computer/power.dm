@@ -96,7 +96,7 @@
 
 			for(var/obj/machinery/power/apc/A in L)
 
-				t += copytext(add_tspace(A.area.name, 30), 1, 30)
+				t += copytext(add_tspace("\The [A.area]", 30), 1, 30)
 				if(control)
 					t += " (<A href='?src=\ref[src];apc=\ref[A];breaker=1'>[A.operating? " On" : "Off"]</A>)"
 				else

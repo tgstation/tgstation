@@ -119,6 +119,7 @@
 					// add to inventory
 					if(comp)
 						comp.inventory += B
+			update_icon()
 
 /obj/structure/bookcase/attackby(obj/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/book))

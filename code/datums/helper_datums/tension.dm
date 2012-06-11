@@ -626,31 +626,14 @@ var/global/datum/tension/tension_master
 
 	//Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
 
-/*
-		for(var/obj/debug/debugger/B in world)
-			B.list1 = list()
-			B.list2 = list()
-			B.list3 = list()
-			B.list4 = list()
-*/
 
 		for(var/mob/dead/observer/G in world)
-/*
-			for(var/obj/debug/debugger/B in world)
-				B.list1 += G
-				B.list2 += G.key
-*/
 			spawn(0)
 				switch(alert(G,"Do you wish to be considered for an elite syndicate strike team being sent in?","Please answer in 30 seconds!","Yes","No"))
 					if("Yes")
 						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
 							return
 						candidates += G
-						/*
-						for(var/obj/debug/debugger/B in world)
-							B.list3 += G
-							B.list4 += G.key
-						*/
 					if("No")
 						return
 		sleep(300)
@@ -660,19 +643,7 @@ var/global/datum/tension/tension_master
 				candidates.Remove(G)
 
 		if(candidates.len)
-		/*
-			for(var/obj/debug/debugger/B in world)
-				B.var1 = candidates.len
-				B.list5 = candidates.Copy()
-				for(var/mob/dead/observer/G in candidates)
-					B.list6 += G.key
-
-		*/
 			var/numagents = 6
-/*
-			for(var/obj/debug/debugger/B in world)
-				B.var2 = 0
-*/
 			//Spawns commandos and equips them.
 			for (var/obj/effect/landmark/L in world)
 				if(numagents<=0)
@@ -685,18 +656,10 @@ var/global/datum/tension/tension_master
 
 
 					while((!theghost || !theghost.client) && candidates.len)
-					/*
-						for(var/obj/debug/debugger/B in world)
-							B.var2++
-					*/
 						theghost = pick(candidates)
 						candidates.Remove(theghost)
 
 					if(!theghost)
-					/*
-						for(var/obj/debug/debugger/B in world)
-							B.var4 = 1
-					*/
 						del(new_syndicate_commando)
 						break
 

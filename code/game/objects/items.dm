@@ -511,18 +511,19 @@
 	if (is_sharp(W))
 		burst()
 
+//Is this even used for anything besides balloons? Yes I took out the W:lit stuff because : really shouldnt be used.
 /proc/is_sharp(obj/item/W as obj)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
 	return ( \
 		istype(W, /obj/item/weapon/screwdriver)                   || \
 		istype(W, /obj/item/weapon/pen)                           || \
-		istype(W, /obj/item/weapon/weldingtool)      && W:welding || \
-		istype(W, /obj/item/weapon/lighter/zippo)            && W:lit     || \
-		istype(W, /obj/item/weapon/match)            && W:lit     || \
-		istype(W, /obj/item/clothing/mask/cigarette) && W:lit     || \
+		istype(W, /obj/item/weapon/weldingtool)					  || \
+		istype(W, /obj/item/weapon/lighter/zippo)				  || \
+		istype(W, /obj/item/weapon/match)            		      || \
+		istype(W, /obj/item/clothing/mask/cigarette) 		      || \
 		istype(W, /obj/item/weapon/wirecutters)                   || \
 		istype(W, /obj/item/weapon/circular_saw)                  || \
-		istype(W, /obj/item/weapon/melee/energy/sword)            && W:active  || \
-		istype(W, /obj/item/weapon/melee/energy/blade)                         || \
+		istype(W, /obj/item/weapon/melee/energy/sword)            || \
+		istype(W, /obj/item/weapon/melee/energy/blade)            || \
 		istype(W, /obj/item/weapon/shovel)                        || \
 		istype(W, /obj/item/weapon/kitchenknife)                  || \
 		istype(W, /obj/item/weapon/butch)						  || \
