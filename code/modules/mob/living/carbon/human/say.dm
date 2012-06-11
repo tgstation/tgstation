@@ -13,18 +13,19 @@
 			for(var/i = 0,i<imax,i++)
 				message += "E"
 
-	for(var/datum/disease/pierrot_throat/D in viruses)
-		var/list/temp_message = dd_text2list(message, " ")
-		var/list/pick_list = list()
-		for(var/i = 1, i <= temp_message.len, i++)
-			pick_list += i
-		for(var/i=1, ((i <= D.stage) && (i <= temp_message.len)), i++)
-			if(prob(5 * D.stage))
-				var/H = pick(pick_list)
-				if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
-				temp_message[H] = "HONK"
-				pick_list -= H
-			message = dd_list2text(temp_message, " ")
+	if(stat != 2)
+		for(var/datum/disease/pierrot_throat/D in viruses)
+			var/list/temp_message = dd_text2list(message, " ") //List each word in the message
+			var/list/pick_list = list()
+			for(var/i = 1, i <= temp_message.len, i++) //Create a second list for excluding words down the line
+				pick_list += i
+			for(var/i=1, ((i <= D.stage) && (i <= temp_message.len)), i++) //Loop for each stage of the disease or until we run out of words
+				if(prob(3 * D.stage)) //Stage 1: 3% Stage 2: 6% Stage 3: 9% Stage 4: 12%
+					var/H = pick(pick_list)
+					if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
+					temp_message[H] = "HONK"
+					pick_list -= H //Make sure that you dont HONK the same word twice
+				message = dd_list2text(temp_message, " ")
 
 	if(istype(src.wear_mask, /obj/item/clothing/mask/luchador))
 		if(copytext(message, 1, 2) != "*")

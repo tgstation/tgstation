@@ -540,7 +540,7 @@
 					"/obj/machinery/deployable/barrier")
 	cost = 20
 	containertype = "/obj/structure/closet/crate/secure/gear"
-	containername = "Secruity Barriers crate"
+	containername = "Security Barriers crate"
 
 /datum/supply_packs/randomised
 	var/num_contained = 3 //number of items picked to be contained in a randomised crate

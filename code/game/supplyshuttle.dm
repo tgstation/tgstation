@@ -37,7 +37,7 @@ var/ordernum=0
 
 /obj/structure/plasticflaps //HOW DO YOU CALL THOSE THINGS ANYWAY
 	name = "\improper Plastic flaps"
-	desc = "I definitely cant get past those. no way."
+	desc = "I definitely cant get past those. No way."
 	icon = 'stationobjs.dmi' //Change this.
 	icon_state = "plasticflaps"
 	density = 0
@@ -49,7 +49,7 @@ var/ordernum=0
 		return prob(60)
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A
-		if(!M.lying || istype(M, /mob/living/carbon/monkey) || istype(M, /mob/living/carbon/metroid))	// unless you're lying down, or a small creature
+		if(!M.lying && !istype(M, /mob/living/carbon/monkey) && !istype(M, /mob/living/carbon/metroid))	//If your not laying down, or a small creature, no pass.
 			return 0
 	return ..()
 
