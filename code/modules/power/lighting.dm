@@ -9,8 +9,207 @@
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
 
-// the standard tube light fixture
 
+
+/obj/item/light_fixture_frame
+	name = "light fixture frame"
+	desc = "Used for building lights."
+	icon = 'lighting.dmi'
+	icon_state = "tube-construct-item"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	var/fixture_type = "tube"
+	var/obj/machinery/light/newlight = null
+	var/sheets_refunded = 2
+
+/obj/item/light_fixture_frame/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if (istype(W, /obj/item/weapon/wrench))
+		new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
+		del(src)
+		return
+	..()
+
+/obj/item/light_fixture_frame/proc/try_build(turf/on_wall)
+	if (get_dist(on_wall,usr)>1)
+		return
+	var/ndir = get_dir(usr,on_wall)
+	if (!(ndir in cardinal))
+		return
+	var/turf/loc = get_turf_loc(usr)
+	if (!istype(loc, /turf/simulated/floor))
+		usr << "\red [src.name] cannot be placed on this spot."
+		return
+	usr << "Attaching [src] to the wall."
+	playsound(src.loc, 'click.ogg', 75, 1)
+	var/constrdir = usr.dir
+	var/constrloc = usr.loc
+	if (!do_after(usr, 30))
+		return
+	switch(fixture_type)
+		if("bulb")
+			newlight = new /obj/machinery/light_construct/small(constrloc)
+		if("tube")
+			newlight = new /obj/machinery/light_construct(constrloc)
+	newlight.dir = constrdir
+	newlight.fingerprints = src.fingerprints
+	newlight.fingerprintshidden = src.fingerprintshidden
+	newlight.fingerprintslast = src.fingerprintslast
+
+	usr.visible_message("[usr.name] attaches [src] to the wall.", \
+		"You attach [src] to the wall.")
+	del(src)
+
+/obj/item/light_fixture_frame/small
+	name = "small light fixture frame"
+	desc = "Used for building small lights."
+	icon = 'lighting.dmi'
+	icon_state = "bulb-construct-item"
+	flags = FPRINT | TABLEPASS| CONDUCT
+	fixture_type = "bulb"
+	sheets_refunded = 1
+
+/obj/machinery/light_construct
+	name = "light fixture frame"
+	desc = "A light fixture under construction."
+	icon = 'lighting.dmi'
+	icon_state = "tube-construct-stage1"
+	anchored = 1
+	layer = 5
+	var/stage = 1
+	var/fixture_type = "tube"
+	var/sheets_refunded = 2
+	var/obj/machinery/light/newlight = null
+
+/obj/machinery/light_construct/New()
+	..()
+	if (fixture_type == "bulb")
+		icon_state = "bulb-construct-stage1"
+
+/obj/machinery/light_construct/examine()
+	set src in view()
+	..()
+	if (!(usr in view(2))) return
+	switch(src.stage)
+		if(1)
+			usr << "It's an empty frame."
+			return
+		if(2)
+			usr << "It's wired."
+			return
+		if(3)
+			usr << "The casing is closed."
+			return
+
+/obj/machinery/light_construct/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	src.add_fingerprint(user)
+	if (istype(W, /obj/item/weapon/wrench))
+		if (src.stage == 1)
+			playsound(src.loc, 'Ratchet.ogg', 75, 1)
+			usr << "You begin deconstructing [src]."
+			if (!do_after(usr, 30))
+				return
+			new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
+			user.visible_message("[user.name] deconstructs [src].", \
+				"You deconstruct [src].", "You hear a noise.")
+			playsound(src.loc, 'Deconstruct.ogg', 75, 1)
+			del(src)
+		if (src.stage == 2)
+			usr << "You have to remove the wires first."
+			return
+
+		if (src.stage == 3)
+			usr << "You have to unscrew the case first."
+			return
+
+	if(istype(W, /obj/item/weapon/wirecutters))
+		if (src.stage != 2) return
+		src.stage = 1
+		switch(fixture_type)
+			if ("tube")
+				src.icon_state = "tube-construct-stage1"
+			if("bulb")
+				src.icon_state = "bulb-construct-stage1"
+		new /obj/item/weapon/cable_coil(get_turf(src.loc), 1, "red")
+		user.visible_message("[user.name] removes the wiring from [src].", \
+			"You remove the wiring from [src].", "You hear a noise.")
+		playsound(src.loc, 'Wirecutter.ogg', 100, 1)
+		return
+
+	if(istype(W, /obj/item/weapon/cable_coil))
+		if (src.stage != 1) return
+		var/obj/item/weapon/cable_coil/coil = W
+		coil.use(1)
+		switch(fixture_type)
+			if ("tube")
+				src.icon_state = "tube-construct-stage2"
+			if("bulb")
+				src.icon_state = "bulb-construct-stage2"
+		src.stage = 2
+		user.visible_message("[user.name] adds wires to [src].", \
+			"You add wires to [src].")
+		return
+
+	if(istype(W, /obj/item/weapon/screwdriver))
+		if (src.stage == 2)
+			switch(fixture_type)
+				if ("tube")
+					src.icon_state = "tube-empty"
+				if("bulb")
+					src.icon_state = "bulb-empty"
+			src.stage = 3
+			user.visible_message("[user.name] closes [src]'s casing.", \
+				"You close [src]'s casing.", "You hear a noise.")
+			playsound(src.loc, 'Screwdriver.ogg', 75, 1)
+			return
+		else if (src.stage == 3)
+			switch(fixture_type)
+				if ("tube")
+					src.icon_state = "tube-construct-stage2"
+				if("bulb")
+					src.icon_state = "bulb-construct-stage2"
+			user.visible_message("[user.name] opens [src]'s casing.", \
+				"You open [src]'s casing.", "You hear a noise.")
+			playsound(src.loc, 'Screwdriver.ogg', 75, 1)
+			src.stage = 2
+			return
+
+	if(istype(W, /obj/item/weapon/light/))
+		if (istype(W, /obj/item/weapon/light/tube) && !(fixture_type == "tube")) return
+		if (istype(W, /obj/item/weapon/light/bulb) && !(fixture_type == "bulb")) return
+		if (src.stage != 3) return
+		switch(fixture_type)
+			if("tube")
+				newlight = new /obj/machinery/light(src.loc)
+			if ("bulb")
+				newlight = new /obj/machinery/light/small(src.loc)
+		var/obj/item/weapon/light/L = W
+		newlight.status = L.status
+		newlight.switchcount = L.switchcount
+		newlight.rigged = L.rigged
+		newlight.brightness = L.brightness
+		newlight.dir = src.dir
+		newlight.on = newlight.has_power()
+		newlight.fingerprints = src.fingerprints
+		newlight.fingerprintshidden = src.fingerprintshidden
+		newlight.fingerprintslast = src.fingerprintslast
+		user.visible_message("[user.name] adds a light tube to [src], finishing it.", \
+			"You finish [src].")
+		del(W)
+		del(src)
+		return
+	..()
+
+/obj/machinery/light_construct/small
+	name = "small light fixture frame"
+	desc = "A small light fixture under construction."
+	icon = 'lighting.dmi'
+	icon_state = "bulb-construct-stage1"
+	anchored = 1
+	layer = 5
+	stage = 1
+	fixture_type = "bulb"
+	sheets_refunded = 1
+
+// the standard tube light fixture
 /obj/machinery/light
 	name = "light fixture"
 	icon = 'lighting.dmi'
@@ -202,6 +401,27 @@
 
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
+		if(istype(W, /obj/item/weapon/screwdriver)) //If it's a screwdriver open it.
+			playsound(src.loc, 'Screwdriver.ogg', 75, 1)
+			user.visible_message("[user.name] opens [src]'s casing.", \
+				"You open [src]'s casing.", "You hear a noise.")
+			var/obj/machinery/light_construct/newlight = null
+			switch(fitting)
+				if("tube")
+					newlight = new /obj/machinery/light_construct(src.loc)
+					newlight.icon_state = "tube-construct-stage2"
+
+				if("bulb")
+					newlight = new /obj/machinery/light_construct/small(src.loc)
+					newlight.icon_state = "bulb-construct-stage2"
+			newlight.dir = src.dir
+			newlight.stage = 2
+			newlight.fingerprints = src.fingerprints
+			newlight.fingerprintshidden = src.fingerprintshidden
+			newlight.fingerprintslast = src.fingerprintslast
+			del(src)
+			return
+
 		user << "You stick \the [W] into the light socket!"
 		if(has_power() && (W.flags & CONDUCT))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

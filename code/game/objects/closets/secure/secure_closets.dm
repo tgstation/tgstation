@@ -101,11 +101,14 @@
 	return src.attack_hand(user)
 
 /obj/structure/closet/secure_closet/verb/verb_togglelock()
-	set src in oview(1) // Can only use it from one square distance
+	set src in oview(1) // One square distance
 	set category = "Object"
 	set name = "Toggle Lock"
 
 	if(!usr.canmove || usr.stat || usr.restrained()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
+		return
+
+	if(get_dist(usr, src) != 1)
 		return
 
 	if (ishuman(usr))
