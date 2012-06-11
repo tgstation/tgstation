@@ -193,7 +193,7 @@
 	build_path = "/obj/machinery/computer/HolodeckControl"
 	origin_tech = "programming=4"
 /obj/item/weapon/circuitboard/aifixer
-	name = "Circuit board (AI Integrity Fixer)"
+	name = "Circuit board (AI Integrity Restorer)"
 	build_path = "/obj/machinery/computer/aifixer"
 	origin_tech = "programming=3;biotech=2"
 /obj/item/weapon/circuitboard/area_atmos
