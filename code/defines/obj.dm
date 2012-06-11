@@ -1183,7 +1183,7 @@
 
 /obj/item/stack
 	var/singular_name
-	var/amount = 1.0
+	var/amount = 1
 	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
 
 /obj/item/stack/rods
@@ -1261,13 +1261,6 @@
 	desc = "This roll of cloth is made from only the finest chemicals and bunny rabbits."
 	singular_name = "cloth roll"
 	icon_state = "sheet-cloth"
-	origin_tech = "materials=2"
-
-/obj/item/stack/sheet/leather
-	name = "leather"
-	desc = "The by-product of monkey farming."
-	singular_name = "leather piece"
-	icon_state = "sheet-leather"
 	origin_tech = "materials=2"
 
 

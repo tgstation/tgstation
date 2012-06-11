@@ -40,6 +40,13 @@
 	for(var/atom/A in contents)
 		A.clean_blood()
 
+	//Tanning!
+	for(var/obj/item/stack/sheet/hairlesshide/HH in contents)
+		var/obj/item/stack/sheet/wetleather/WL = new(src)
+		WL.amount = HH.amount
+		del(HH)
+
+
 	if(crayon)
 		var/color
 		if(istype(crayon,/obj/item/toy/crayon))
@@ -180,7 +187,14 @@
 				state = 3
 		else
 			..()
-	else if(istype(W,/obj/item/clothing/under) || istype(W,/obj/item/clothing/mask) || istype(W,/obj/item/clothing/head) || istype(W,/obj/item/clothing/gloves) || istype(W,/obj/item/clothing/shoes) || istype(W,/obj/item/clothing/suit) || istype(W,/obj/item/weapon/bedsheet))
+	else if(istype(W,/obj/item/stack/sheet/hairlesshide) || \
+		istype(W,/obj/item/clothing/under) || \
+		istype(W,/obj/item/clothing/mask) || \
+		istype(W,/obj/item/clothing/head) || \
+		istype(W,/obj/item/clothing/gloves) || \
+		istype(W,/obj/item/clothing/shoes) || \
+		istype(W,/obj/item/clothing/suit) || \
+		istype(W,/obj/item/weapon/bedsheet))
 
 		//YES, it's hardcoded... saves a var/can_be_washed for every single clothing item.
 		if ( istype(W,/obj/item/clothing/suit/space ) )

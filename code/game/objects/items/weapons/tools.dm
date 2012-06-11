@@ -376,8 +376,8 @@ WELDINGTOOOL
 
 /obj/item/weapon/wirecutters/attack(mob/M as mob, mob/user as mob)
 	if((M.handcuffed) && (istype(M:handcuffed, /obj/item/weapon/handcuffs/cable)))
-		M.visible_message("You cut \the [M]'s restraints with \the [src]!",\
-		"\The [usr] cuts \the [M]'s restraints with \the [src]!",\
+		usr.visible_message("\The [usr] cuts \the [M]'s restraints with \the [src]!",\
+		"You cut \the [M]'s restraints with \the [src]!",\
 		"You hear cable being cut.")
 		M.handcuffed = null
 		M.update_clothing()

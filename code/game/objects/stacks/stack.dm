@@ -28,7 +28,8 @@
 	if (src.amount<=0)
 		var/oldsrc = src
 		src = null //dont kill proc after del()
-		usr.before_take_item(oldsrc)
+		if(usr)
+			usr.before_take_item(oldsrc)
 		del(oldsrc)
 	return
 
