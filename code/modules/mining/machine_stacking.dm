@@ -42,6 +42,14 @@
 		dat += text("Uranium: [machine.ore_uranium] <A href='?src=\ref[src];release=uranium'>Release</A><br>")
 	if(machine.ore_diamond)
 		dat += text("Diamond: [machine.ore_diamond] <A href='?src=\ref[src];release=diamond'>Release</A><br>")
+	if(machine.ore_wood)
+		dat += text("Wood: [machine.ore_wood] <A href='?src=\ref[src];release=wood'>Release</A><br>")
+	if(machine.ore_cardboard)
+		dat += text("Cardboard: [machine.ore_cardboard] <A href='?src=\ref[src];release=cardboard'>Release</A><br>")
+	if(machine.ore_cloth)
+		dat += text("Cloth: [machine.ore_cloth] <A href='?src=\ref[src];release=cloth'>Release</A><br>")
+	if(machine.ore_leather)
+		dat += text("Leather: [machine.ore_leather] <A href='?src=\ref[src];release=leather'>Release</A><br>")
 	if(machine.ore_clown)
 		dat += text("Bananium: [machine.ore_clown] <A href='?src=\ref[src];release=clown'>Release</A><br>")
 	if(machine.ore_adamantine)
@@ -114,6 +122,30 @@
 					G.amount = machine.ore_plasteel
 					G.loc = machine.output.loc
 					machine.ore_plasteel = 0
+			if ("wood")
+				if (machine.ore_wood > 0)
+					var/obj/item/stack/sheet/wood/G = new /obj/item/stack/sheet/wood
+					G.amount = machine.ore_wood
+					G.loc = machine.output.loc
+					machine.ore_wood = 0
+			if ("cardboard")
+				if (machine.ore_cardboard > 0)
+					var/obj/item/stack/sheet/cardboard/G = new /obj/item/stack/sheet/cardboard
+					G.amount = machine.ore_cardboard
+					G.loc = machine.output.loc
+					machine.ore_cardboard = 0
+			if ("cloth")
+				if (machine.ore_cloth > 0)
+					var/obj/item/stack/sheet/cloth/G = new /obj/item/stack/sheet/cloth
+					G.amount = machine.ore_cloth
+					G.loc = machine.output.loc
+					machine.ore_cloth = 0
+			if ("leather")
+				if (machine.ore_leather > 0)
+					var/obj/item/stack/sheet/leather/G = new /obj/item/stack/sheet/leather
+					G.amount = machine.ore_diamond
+					G.loc = machine.output.loc
+					machine.ore_leather = 0
 			if ("clown")
 				if (machine.ore_clown > 0)
 					var/obj/item/stack/sheet/clown/G = new /obj/item/stack/sheet/clown
@@ -160,6 +192,10 @@
 	var/ore_glass = 0;
 	var/ore_rglass = 0;
 	var/ore_plasteel = 0;
+	var/ore_wood = 0
+	var/ore_cardboard = 0
+	var/ore_cloth = 0;
+	var/ore_leather = 0;
 	var/ore_adamantine = 0;
 	var/ore_mythril = 0;
 	var/stack_amt = 50; //ammount to stack before releassing
@@ -230,6 +266,22 @@
 				ore_mythril+= O:amount
 				del(O)
 				continue
+			if (istype(O,/obj/item/stack/sheet/cardboard))
+				ore_cardboard+= O:amount
+				del(O)
+				continue
+			if (istype(O,/obj/item/stack/sheet/wood))
+				ore_wood+= O:amount
+				del(O)
+				continue
+			if (istype(O,/obj/item/stack/sheet/cloth))
+				ore_cloth+= O:amount
+				del(O)
+				continue
+			if (istype(O,/obj/item/stack/sheet/leather))
+				ore_leather+= O:amount
+				del(O)
+				continue
 			if (istype(O,/obj/item/weapon/ore/slag))
 				del(O)
 				continue
@@ -293,6 +345,30 @@
 		G.amount = stack_amt
 		G.loc = output.loc
 		ore_plasteel -= stack_amt
+		return
+	if (ore_wood >= stack_amt)
+		var/obj/item/stack/sheet/wood/G = new /obj/item/stack/sheet/wood
+		G.amount = stack_amt
+		G.loc = output.loc
+		ore_wood -= stack_amt
+		return
+	if (ore_cardboard >= stack_amt)
+		var/obj/item/stack/sheet/cardboard/G = new /obj/item/stack/sheet/cardboard
+		G.amount = stack_amt
+		G.loc = output.loc
+		ore_cardboard -= stack_amt
+		return
+	if (ore_cloth >= stack_amt)
+		var/obj/item/stack/sheet/cloth/G = new /obj/item/stack/sheet/cloth
+		G.amount = stack_amt
+		G.loc = output.loc
+		ore_cloth -= stack_amt
+		return
+	if (ore_leather >= stack_amt)
+		var/obj/item/stack/sheet/leather/G = new /obj/item/stack/sheet/leather
+		G.amount = stack_amt
+		G.loc = output.loc
+		ore_leather -= stack_amt
 		return
 	if (ore_adamantine >= stack_amt)
 		var/obj/item/stack/sheet/adamantine/G = new /obj/item/stack/sheet/adamantine

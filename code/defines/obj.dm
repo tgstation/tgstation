@@ -1256,6 +1256,20 @@
 	g_amt = 0
 	m_amt = 0
 
+/obj/item/stack/sheet/cloth
+	name = "cloth"
+	desc = "This roll of cloth is made from only the finest chemicals and bunny rabbits."
+	singular_name = "cloth roll"
+	icon_state = "sheet-cloth"
+	origin_tech = "materials=2"
+
+/obj/item/stack/sheet/leather
+	name = "leather"
+	desc = "The by-product of monkey farming."
+	singular_name = "leather piece"
+	icon_state = "sheet-leather"
+	origin_tech = "materials=2"
+
 
 /obj/item/stack/sheet/metal
 	name = "metal"
