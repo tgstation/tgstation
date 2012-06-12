@@ -387,9 +387,9 @@ About the new airlock wires panel:
 				src.updateDialog()
 		if(AIRLOCK_WIRE_ELECTRIFY)
 			//one wire for electrifying the door. Sending a pulse through this electrifies the door for 30 seconds.
-			shockedby = "[usr](ckey:[usr.ckey])"
 			if(src.secondsElectrified==0)
-
+				shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
+				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>")
 				src.secondsElectrified = 30
 				spawn(10)
 					//TODO: Move this into process() and make pulsing reset secondsElectrified to 30
@@ -450,7 +450,8 @@ About the new airlock wires panel:
 		if(AIRLOCK_WIRE_ELECTRIFY)
 			//Cutting this wire electrifies the door, so that the next person to touch the door without insulated gloves gets electrocuted.
 			if(src.secondsElectrified != -1)
-				shockedby = "[usr](ckey: [usr.ckey])"
+				shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
+				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>")
 				src.secondsElectrified = -1
 		if (AIRLOCK_WIRE_SAFETY)
 			safe = 0
@@ -1014,7 +1015,8 @@ About the new airlock wires panel:
 					else if(src.secondsElectrified!=0)
 						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
-						shockedby = "[usr](ckey:[usr.ckey])"
+						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
+						usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>")
 						src.secondsElectrified = 30
 						spawn(10)
 							while (src.secondsElectrified>0)
@@ -1032,7 +1034,8 @@ About the new airlock wires panel:
 					else if(src.secondsElectrified!=0)
 						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
-						shockedby = "[usr](ckey:[usr.ckey])"
+						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
+						usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>")
 						src.secondsElectrified = -1
 
 				if (8) // Not in order >.>
