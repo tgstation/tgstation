@@ -4,7 +4,8 @@ var/global/controllernum = "no"
 var/global/controller_iteration = 0
 
 
-
+var/global/last_tick_timeofday = world.timeofday
+var/global/last_tick_duration = 0
 
 
 datum/controller/game_controller
@@ -100,6 +101,11 @@ datum/controller/game_controller
 			spawn(0)
 				Failsafe.spin()
 
+		var/currenttime = world.timeofday
+		var/diff = (currenttime - last_tick_timeofday) / 10
+		world << "timeofday = [currenttime]; Diff = [diff]s"
+		last_tick_timeofday = currenttime
+		last_tick_duration = diff
 
 		if(!processing)
 			return 0

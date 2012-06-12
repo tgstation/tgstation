@@ -19,6 +19,20 @@
 	icon_state = "sheet-cat"
 	origin_tech = ""
 
+/obj/item/stack/sheet/animalhide/monkey
+	name = "monkey hide"
+	desc = "The by-product of monkey farming."
+	singular_name = "monkey hide piece"
+	icon_state = "sheet-monkey"
+	origin_tech = ""
+
+/obj/item/stack/sheet/animalhide/lizard
+	name = "lizard skin"
+	desc = "Sssssss..."
+	singular_name = "lizard skin piece"
+	icon_state = "sheet-lizard"
+	origin_tech = ""
+
 /obj/item/stack/sheet/hairlesshide
 	name = "hairless hide"
 	desc = "This hide was stripped of it's hair, but still needs tanning."
