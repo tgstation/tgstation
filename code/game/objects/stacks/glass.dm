@@ -67,14 +67,16 @@ SHARDS
 					user << "\red Can't let you do that."
 					return 1
 
-			var/dir_to_set = NORTH
-			for(var/obj/structure/window/WT in user.loc)
-				if (WT.dir == SOUTH)
-					dir_to_set = EAST
-				if (WT.dir == WEST)
-					dir_to_set = SOUTH
-				if (WT.dir == NORTH)
-					dir_to_set = WEST
+			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
+			var/dir_to_set = 2
+			for(var/direction in list( user.dir, turn(user.dir,90), turn(user.dir,180), turn(user.dir,270) ))
+				var/found = 0
+				for(var/obj/structure/window/WT in user.loc)
+					if(WT.dir == direction)
+						found = 1
+				if(!found)
+					dir_to_set = direction
+					break
 
 			var/obj/structure/window/W
 			W = new /obj/structure/window/basic( user.loc, 0 )
@@ -128,16 +130,17 @@ SHARDS
 				if(!(win.ini_dir in cardinal))
 					user << "\red Can't let you do that."
 					return 1
-			var/dir_to_set = NORTH
-			for(var/obj/structure/window/WT in user.loc)
-				if (WT.dir == SOUTH)
-					dir_to_set = EAST
-				if (WT.dir == WEST)
-					dir_to_set = SOUTH
-				if (WT.dir == NORTH)
-					dir_to_set = WEST
-				/*else
-					dir_to_set stays NORTH*/
+
+			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
+			var/dir_to_set = 2
+			for(var/direction in list( user.dir, turn(user.dir,90), turn(user.dir,180), turn(user.dir,270) ))
+				var/found = 0
+				for(var/obj/structure/window/WT in user.loc)
+					if(WT.dir == direction)
+						found = 1
+				if(!found)
+					dir_to_set = direction
+					break
 
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced( user.loc, 1 )

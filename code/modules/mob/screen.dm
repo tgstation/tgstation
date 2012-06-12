@@ -548,7 +548,11 @@
 	if(usr.next_move > world.time)
 		return
 	usr.next_move = world.time + 20
+	world << "pass0"
+
+	//resisting grabs (as if it helps anyone...)
 	if ((!( usr.stat ) && usr.canmove && !( usr.restrained() )))
+		world << "area1"
 		var/resisting = 0
 		for(var/obj/O in usr.requests)
 			del(O)
@@ -572,7 +576,12 @@
 		if(resisting)
 			for(var/mob/O in viewers(usr, null))
 				O.show_message(text("\red <B>[] resists!</B>", usr), 1)
+
+
+
+	//breaking out of handcuffs
 	if(usr:handcuffed && usr:canmove && (usr.last_special <= world.time))
+		world << "area2"
 		usr.next_move = world.time + 100
 		usr.last_special = world.time + 100
 		if(isalienadult(usr) || (HULK in usr.mutations) || (SUPRSTR in usr.augmentations))//Don't want to do a lot of logic gating here.
@@ -603,21 +612,84 @@
 					if(!usr:handcuffed || usr:buckled)
 						return // time leniency for lag which also might make this whole thing pointless but the server
 					for(var/mob/O in viewers(usr))//                                         lags so hard that 40s isn't lenient enough - Quarxink
-						O.show_message(text("\red <B>[] manages to remove the handcuffs!</B>", usr), 1)
+						O.show_message("\red <B>[usr] manages to remove the handcuffs!</B>", 1)
 					usr << "\blue You successfully remove \the [usr:handcuffed]."
 					usr:handcuffed.loc = usr.loc
 					usr:handcuffed = null
-	if(usr:handcuffed && (usr.last_special <= world.time) && usr:buckled)
+
+	//unbuckling yourself
+	else if(usr:handcuffed && (usr.last_special <= world.time) && usr:buckled)
+		world << "area3"
 		usr.next_move = world.time + 100
 		usr.last_special = world.time + 100
 		usr << "\red You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)"
 		for(var/mob/O in viewers(usr))
-			O.show_message(text("\red <B>[] attempts to unbuckle themself!</B>", usr), 1)
+			O.show_message("\red <B>[usr] attempts to unbuckle themself!</B>", 1)
 		spawn(0)
 			if(do_after(usr, 1200))
 				if(!usr:buckled)
 					return
 				for(var/mob/O in viewers(usr))
-					O.show_message(text("\red <B>[] manages to unbuckle themself!</B>", usr), 1)
+					O.show_message("\red <B>[usr] manages to unbuckle themself!</B>", 1)
 				usr << "\blue You successfully unbuckle yourself."
 				usr:buckled.manual_unbuckle(usr)
+	else if( src.loc && (istype(src.loc, /obj/structure/closet)) )
+		world << "area4"
+		var/obj/structure/closet/C = usr.loc
+		world << "pass1"
+		if(C.opened)
+			return //Door's open... wait, why are you in it's contents then?
+		if(istype(usr.loc, /obj/structure/closet/secure_closet))
+			var/obj/structure/closet/secure_closet/SC = usr.loc
+			if(!SC.locked && !SC.welded)
+				return //It's a secure closet, but isn't locked. Easily escapable from, no need to 'resist'
+		else
+			if(!C.welded)
+				return //closed but not welded...
+		world << "pass2"
+
+		//okay, so the closet is either welded or locked... resist!!!
+		usr.next_move = world.time + 100
+		usr.last_special = world.time + 100
+		usr << "\red You lean on the back of \the [C] and start pushing the door open. (this will take about 2 minutes)"
+		for(var/mob/O in viewers(usr.loc))
+			O.show_message("\red <B>The [usr.loc] begins to shake violently!</B>", 1)
+		spawn(0)
+			if(do_after(usr, 50))
+				world << "pass3"
+				if(!C || !usr || usr.loc != C || C.opened) //User, closet destroyed OR user no longer in closet OR closet opened
+					return
+
+				//Perform the same set of checks as above for weld and lock status to determine if there is even still a point in 'resisting'...
+				if(istype(usr.loc, /obj/structure/closet/secure_closet))
+					var/obj/structure/closet/secure_closet/SC = usr.loc
+					if(!SC.locked && !SC.welded)
+						return
+				else
+					if(!C.welded)
+						return
+				world << "pass4"
+
+				//Well then break it!
+				if(istype(usr.loc, /obj/structure/closet/secure_closet))
+					var/obj/structure/closet/secure_closet/SC = usr.loc
+					SC.desc = "It appears to be broken."
+					SC.icon_state = SC.icon_off
+					flick(SC.icon_broken, SC)
+					sleep(10)
+					flick(SC.icon_broken, SC)
+					sleep(10)
+					SC.broken = 1
+					SC.locked = 0
+					usr << "\red You successfully break out!"
+					for(var/mob/O in viewers(usr.loc))
+						O.show_message("\red <B>\the [usr] successfully broke out of \the [SC]!</B>", 1)
+					SC.open()
+				else
+					C.welded = 0
+					usr << "\red You successfully break out!"
+					for(var/mob/O in viewers(usr.loc))
+						O.show_message("\red <B>\the [usr] successfully broke out of \the [C]!</B>", 1)
+					C.open()
+				world << "pass5"
+	world << "area5"

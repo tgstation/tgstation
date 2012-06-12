@@ -5,6 +5,20 @@
 	icon_state = "sheet-hide"
 	origin_tech = ""
 
+/obj/item/stack/sheet/animalhide/corgi
+	name = "corgi hide"
+	desc = "The by-product of corgi farming."
+	singular_name = "corgi hide piece"
+	icon_state = "sheet-corgi"
+	origin_tech = ""
+
+/obj/item/stack/sheet/animalhide/cat
+	name = "cat hide"
+	desc = "The by-product of cat farming."
+	singular_name = "cat hide piece"
+	icon_state = "sheet-cat"
+	origin_tech = ""
+
 /obj/item/stack/sheet/hairlesshide
 	name = "hairless hide"
 	desc = "This hide was stripped of it's hair, but still needs tanning."
