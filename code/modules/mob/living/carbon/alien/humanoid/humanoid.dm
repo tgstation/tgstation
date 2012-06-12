@@ -398,10 +398,7 @@
 				overlays += image("icon" = 'blood.dmi', "icon_state" = "armorblood[!lying ? "" : "2"]", "layer" = B_SUIT_LAYER)
 			else
 				overlays += image("icon" = 'blood.dmi', "icon_state" = "suitblood[!lying ? "" : "2"]", "layer" = B_SUIT_LAYER)
-		if(istype(hud_used,/obj/hud/slim))
-			wear_suit.screen_loc = new_ui_alien_oclothing
-		if(istype(hud_used,/obj/hud/retro))
-			wear_suit.screen_loc = ui_iclothing
+		wear_suit.screen_loc = ui_alien_oclothing
 		if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
 			if (handcuffed)
 				handcuffed.loc = loc
@@ -423,22 +420,13 @@
 		overlays += image("icon" = 'mob.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = HEAD_LAYER)
 		if (head.blood_DNA)
 			overlays += image("icon" = 'blood.dmi', "icon_state" = "helmetblood[!lying ? "" : "2"]", "layer" = B_HEAD_LAYER)
-		if(istype(hud_used,/obj/hud/slim))
-			head.screen_loc = new_ui_alien_head
-		if(istype(hud_used,/obj/hud/retro))
-			head.screen_loc = ui_oclothing
+		head.screen_loc = ui_alien_head
 
 	if (l_store)
-		if(istype(hud_used,/obj/hud/retro))
-			l_store.screen_loc = ui_storage1
-		if(istype(hud_used,/obj/hud/slim))
-			l_store.screen_loc = new_ui_storage1
+		l_store.screen_loc = ui_storage1
 
 	if (r_store)
-		if(istype(hud_used,/obj/hud/retro))
-			r_store.screen_loc = ui_storage2
-		if(istype(hud_used,/obj/hud/slim))
-			r_store.screen_loc = new_ui_storage2
+		r_store.screen_loc = ui_storage2
 
 	if (client)
 		client.screen -= contents
@@ -446,19 +434,13 @@
 
 	if (r_hand)
 		overlays += image("icon" = 'items_righthand.dmi', "icon_state" = r_hand.item_state ? r_hand.item_state : r_hand.icon_state, "layer" = INHANDS_LAYER)
-		if(istype(hud_used,/obj/hud/slim))
-			r_hand.screen_loc = new_ui_rhand
-		if(istype(hud_used,/obj/hud/retro))
-			r_hand.screen_loc = ui_id
 
+		r_hand.screen_loc = ui_rhand
 
 	if (l_hand)
 		overlays += image("icon" = 'items_lefthand.dmi', "icon_state" = l_hand.item_state ? l_hand.item_state : l_hand.icon_state, "layer" = INHANDS_LAYER)
-		if(istype(hud_used,/obj/hud/slim))
-			l_hand.screen_loc = new_ui_lhand
-		if(istype(hud_used,/obj/hud/retro))
-			l_hand.screen_loc = ui_belt
 
+		l_hand.screen_loc = ui_lhand
 
 
 

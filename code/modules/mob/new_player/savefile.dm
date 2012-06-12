@@ -54,9 +54,7 @@ datum/preferences/proc/savefile_save(mob/user)
 
 
 	F["be_special"] << src.be_special
-	if(isnull(UIType))
-		UIType = 0
-	F["UIType"] << src.UIType
+	//F["UI"] << src.UI
 	if(isnull(UI_style))
 		UI_style = "Midnight"
 	F["UI_style"] << UI_style
@@ -122,9 +120,7 @@ datum/preferences/proc/savefile_load(mob/user)
 	if(isnull(ghost_sight)) ghost_sight = 1 //Hotfix
 	F["ooccolor"] >> src.ooccolor
 	F["lastchangelog"] >> src.lastchangelog
-	F["UIType"] >> src.UIType
-	if(isnull(UIType))
-		UIType = 0
+	//F["UI"] >> src.UI
 	F["UI_style"] >> src.UI_style
 	if(isnull(UI_style))
 		UI_style = "Midnight"

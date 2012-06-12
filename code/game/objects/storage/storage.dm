@@ -66,7 +66,7 @@
 /obj/item/weapon/storage/proc/orient_objs(tx, ty, mx, my)
 	var/cx = tx
 	var/cy = ty
-	src.boxes.screen_loc = "[tx],[ty] to [mx],[my]"
+	src.boxes.screen_loc = "[tx]:,[ty] to [mx],[my]"
 	for(var/obj/O in src.contents)
 		O.screen_loc = "[cx],[cy]"
 		O.layer = 20
@@ -94,36 +94,13 @@
 
 //This proc determins the size of the inventory to be displayed. Please touch it only if you know what you're doing.
 /obj/item/weapon/storage/proc/orient2hud(mob/user as mob)
-
-
+	//var/mob/living/carbon/human/H = user
 	var/row_num = 0
-	var/col_num = 0
-
-	if(istype(user.hud_used,/obj/hud/slim))
-		col_num = min(7,storage_slots) -1
-		if (contents.len > 7)
-			row_num = round((contents.len-1) / 7) // 7 is the maximum allowed width.
-		src.standard_orient_objs(row_num,col_num)
-		return
-
-
-	if(istype(user.hud_used,/obj/hud/retro))
-		row_num = min(7,storage_slots) -1 //For belts, the meanings of the two variables are inverted, so we don't have to declare new ones
-		if (contents.len > 7)
-			col_num = round((contents.len-1) / 7) // 7 is the maximum allowed column height for r_hand, l_hand and back storage items.
-		if (src == user.l_hand)
-			src.orient_objs(3-col_num, 3+row_num, 3, 3)
-		else if(src == user.r_hand)
-			src.orient_objs(1, 3+row_num, 1+col_num, 3)
-		else if(src == user.back)
-			src.orient_objs(4-col_num, 3+row_num, 4, 3)
-		else if(ishuman(user) && src == user:belt)//only humans have belts
-			src.orient_objs(1, 3+col_num, 1+row_num, 3)
-		else
-			src.orient_objs(5, 10+col_num, 5 + row_num, 10)
-		return
-
-
+	var/col_count = min(7,storage_slots) -1
+	if (contents.len > 7)
+		row_num = round((contents.len-1) / 7) // 7 is the maximum allowed width.
+	src.standard_orient_objs(row_num,col_count)
+	return
 
 //This proc is called when you want to place an item into the storage item.
 /obj/item/weapon/storage/attackby(obj/item/W as obj, mob/user as mob)
@@ -212,12 +189,6 @@
 	return
 
 /obj/item/weapon/storage/dropped(mob/user as mob)
-	if(istype(user.hud_used,/obj/hud/retro))
-		var/col_num = 0
-		var/row_count = min(7,storage_slots) -1
-		if (contents.len > 7)
-			col_num = round((contents.len-1) / 7) // 7 is the maximum allowed column height for r_hand, l_hand and back storage items.
-		src.orient_objs(5, 10+col_num, 5 + row_count, 10)
 	return
 
 /obj/item/weapon/storage/MouseDrop(over_object, src_location, over_location)
@@ -272,7 +243,7 @@
 	src.closer.master = src
 	src.closer.icon_state = "x"
 	src.closer.layer = 20
-	//orient2hud()
+	orient2hud()
 	return
 
 /obj/item/weapon/storage/emp_act(severity)

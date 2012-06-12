@@ -27,10 +27,10 @@
 	if(!src.dna) src.dna = new /datum/dna(null)
 	world.update_status()
 	if(!src.hud_used)
-		new/obj/hud(src,src.hud_type)
+		src.hud_used = new/obj/hud( src )
 	else
 		del(src.hud_used)
-		new/obj/hud(src,src.hud_type)
+		src.hud_used = new/obj/hud( src )
 
 	src.next_move = 1
 	src.sight |= SEE_SELF

@@ -275,6 +275,31 @@
 	opacity = 0
 	density = 0
 
+/obj/hud
+	name = "hud"
+	unacidable = 1
+	var/mob/mymob = null
+	var/list/adding = null
+	var/list/other = null
+	var/list/intents = null
+	var/list/mov_int = null
+	var/list/mon_blo = null
+	var/list/m_ints = null
+	var/obj/screen/druggy = null
+	var/vimpaired = null
+	var/obj/screen/alien_view = null
+	var/obj/screen/g_dither = null
+	var/obj/screen/blurry = null
+	var/list/darkMask = null
+	var/obj/screen/r_hand_hud_object = null
+	var/obj/screen/l_hand_hud_object = null
+	var/list/obj/screen/intent_small_hud_objects = null
+	var/show_intent_icons = 0
+	var/list/obj/screen/hotkeybuttons = null
+	var/hotkey_ui_hidden = 0 //This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
+
+	var/h_type = /obj/screen		//this is like...the most pointless thing ever. Use a god damn define!
+
 /obj/item
 	name = "item"
 	icon = 'items.dmi'

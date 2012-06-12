@@ -97,20 +97,7 @@
 	return
 
 /obj/item/weapon/secstorage/proc/orient2hud(mob/user as mob)
-	if(istype(user.hud_used,/obj/hud/slim))
-		standard_orient_objs()
-	if(istype(user.hud_used,/obj/hud/retro))
-		if (src == user.l_hand)
-			src.orient_objs(3, 11, 3, 4)
-		else
-			if (src == user.r_hand)
-				src.orient_objs(1, 11, 1, 4)
-			else
-				if (src == user.back)
-					src.orient_objs(4, 10, 4, 3)
-				else
-					src.orient_objs(7, 8, 10, 7)
-
+	standard_orient_objs()
 	return
 
 /obj/item/weapon/secstorage/attackby(obj/item/weapon/W as obj, mob/user as mob)
