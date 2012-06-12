@@ -322,6 +322,7 @@ To combat this, I changed the window name. -- Doohl
 
 
 /obj/machinery/vending/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	add_fingerprint(user)
 	if (istype(W, /obj/item/weapon/card/emag))
 		src.emagged = 1
 		user << "You short out the ID lock on [src]"
@@ -359,6 +360,7 @@ To combat this, I changed the window name. -- Doohl
 	return attack_hand(user)
 
 /obj/machinery/vending/attack_hand(mob/user as mob)
+	add_fingerprint(user)
 	if(stat & (BROKEN|NOPOWER))
 		return
 	user.machine = src

@@ -289,6 +289,14 @@
 		updateMineralOverlays()
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
+	switch(severity)
+		if(3.0)
+			return
+		if(2.0)
+			if (prob(70))
+				src.gets_dug()
+		if(1.0)
+			src.gets_dug()
 	return
 
 /turf/simulated/floor/plating/airless/asteroid/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -301,7 +309,7 @@
 		if (!( istype(T, /turf) ))
 			return
 
-		if (dug == 1)
+		if (dug)
 			user << "\red This area has already been dug"
 			return
 
@@ -312,9 +320,6 @@
 		if ((user.loc == T && user.equipped() == W))
 			user << "\blue You dug a hole."
 			gets_dug()
-			dug = 1
-			icon_plating = "asteroid_dug"
-			icon_state = "asteroid_dug"
 	else
 		..(W,user)
 	if ((istype(W,/obj/item/weapon/pickaxe/drill)))
@@ -322,7 +327,7 @@
 		if (!( istype(T, /turf) ))
 			return
 
-		if (dug == 1)
+		if (dug)
 			user << "\red This area has already been dug"
 			return
 
@@ -333,9 +338,6 @@
 		if ((user.loc == T && user.equipped() == W))
 			user << "\blue You dug a hole."
 			gets_dug()
-			dug = 1
-			icon_plating = "asteroid_dug"
-			icon_state = "asteroid_dug"
 	else
 		..(W,user)
 
@@ -344,7 +346,7 @@
 		if (!( istype(T, /turf) ))
 			return
 
-		if (dug == 1)
+		if (dug)
 			user << "\red This area has already been dug"
 			return
 
@@ -355,20 +357,22 @@
 		if ((user.loc == T && user.equipped() == W))
 			user << "\blue You dug a hole."
 			gets_dug()
-			dug = 1
-			icon_plating = "asteroid_dug"
-			icon_state = "asteroid_dug"
 	else
 		..(W,user)
 
 	return
 
 /turf/simulated/floor/plating/airless/asteroid/proc/gets_dug()
+	if(dug)
+		return
 	new/obj/item/weapon/ore/glass(src)
 	new/obj/item/weapon/ore/glass(src)
 	new/obj/item/weapon/ore/glass(src)
 	new/obj/item/weapon/ore/glass(src)
 	new/obj/item/weapon/ore/glass(src)
+	dug = 1
+	icon_plating = "asteroid_dug"
+	icon_state = "asteroid_dug"
 	return
 
 /turf/simulated/floor/plating/airless/asteroid/proc/updateMineralOverlays()

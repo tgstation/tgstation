@@ -20,9 +20,6 @@
 	for(var/obj/item/I in src)
 		I.loc = src.loc
 
-	for(var/obj/mecha/working/ripley/deathripley/I in src)
-		I.loc = src.loc
-
 	for(var/mob/M in src)
 		M.loc = src.loc
 		if(M.client)
@@ -57,9 +54,6 @@
 		if(!I.anchored)
 			I.loc = src
 
-	for(var/obj/mecha/working/ripley/deathripley/I in src.loc)
-		I.loc = src
-
 	for(var/mob/M in src.loc)
 		if(istype (M, /mob/dead/observer))
 			continue
@@ -89,21 +83,21 @@
 /obj/structure/closet/ex_act(severity)
 	switch(severity)
 		if(1)
-			for(var/atom/movable/A as mob|obj in src)
+			for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
 				A.loc = src.loc
-				ex_act(severity)
+				A.ex_act(severity++)
 			del(src)
 		if(2)
 			if(prob(50))
 				for (var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
-					ex_act(severity)
+					A.ex_act(severity++)
 				del(src)
 		if(3)
 			if(prob(5))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
-					ex_act(severity)
+					A.ex_act(severity++)
 				del(src)
 
 /obj/structure/closet/bullet_act(var/obj/item/projectile/Proj)
@@ -125,6 +119,8 @@
 
 /obj/structure/closet/meteorhit(obj/O as obj)
 	if(O.icon_state == "flaming")
+		for(var/mob/M in src)
+			M.meteorhit(O)
 		src.dump_contents()
 		del(src)
 

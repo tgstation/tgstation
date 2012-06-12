@@ -38,6 +38,7 @@
 
 	use_power(5)
 	icon_state = "doorctrl1"
+	add_fingerprint(user)
 
 	if(normaldoorcontrol)
 		for(var/obj/machinery/door/airlock/D in range(range))
@@ -117,6 +118,7 @@
 		return
 	if(active)
 		return
+	add_fingerprint(user)
 
 	use_power(5)
 

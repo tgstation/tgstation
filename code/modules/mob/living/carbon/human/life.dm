@@ -691,6 +691,8 @@
 				var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 				if(istype(loc,/turf)) //else, there's considered to be no light
 					light_amount = min(10,loc:sd_lumcount) - 5 //hardcapped so it's not abused by having a ton of flashlights
+				if(istype(loc,/turf/simulated/shuttle))//Now not only will potatomen not starve on the shuttle, they will actually be fed
+					light_amount =  5
 				if(nutrition < 500) //so they can't store nutrition to survive without light forever
 					nutrition += light_amount
 				if(light_amount > 0) //if there's enough light, heal
