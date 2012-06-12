@@ -548,11 +548,9 @@
 	if(usr.next_move > world.time)
 		return
 	usr.next_move = world.time + 20
-	world << "pass0"
 
 	//resisting grabs (as if it helps anyone...)
 	if ((!( usr.stat ) && usr.canmove && !( usr.restrained() )))
-		world << "area1"
 		var/resisting = 0
 		for(var/obj/O in usr.requests)
 			del(O)
@@ -581,7 +579,6 @@
 
 	//breaking out of handcuffs
 	if(usr:handcuffed && usr:canmove && (usr.last_special <= world.time))
-		world << "area2"
 		usr.next_move = world.time + 100
 		usr.last_special = world.time + 100
 		if(isalienadult(usr) || (HULK in usr.mutations) || (SUPRSTR in usr.augmentations))//Don't want to do a lot of logic gating here.
@@ -619,7 +616,6 @@
 
 	//unbuckling yourself
 	else if(usr:handcuffed && (usr.last_special <= world.time) && usr:buckled)
-		world << "area3"
 		usr.next_move = world.time + 100
 		usr.last_special = world.time + 100
 		usr << "\red You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)"
@@ -634,9 +630,7 @@
 				usr << "\blue You successfully unbuckle yourself."
 				usr:buckled.manual_unbuckle(usr)
 	else if( src.loc && (istype(src.loc, /obj/structure/closet)) )
-		world << "area4"
 		var/obj/structure/closet/C = usr.loc
-		world << "pass1"
 		if(C.opened)
 			return //Door's open... wait, why are you in it's contents then?
 		if(istype(usr.loc, /obj/structure/closet/secure_closet))
@@ -646,7 +640,6 @@
 		else
 			if(!C.welded)
 				return //closed but not welded...
-		world << "pass2"
 
 		//okay, so the closet is either welded or locked... resist!!!
 		usr.next_move = world.time + 100
@@ -656,7 +649,6 @@
 			O.show_message("\red <B>The [usr.loc] begins to shake violently!</B>", 1)
 		spawn(0)
 			if(do_after(usr, 50))
-				world << "pass3"
 				if(!C || !usr || usr.loc != C || C.opened) //User, closet destroyed OR user no longer in closet OR closet opened
 					return
 
@@ -668,7 +660,6 @@
 				else
 					if(!C.welded)
 						return
-				world << "pass4"
 
 				//Well then break it!
 				if(istype(usr.loc, /obj/structure/closet/secure_closet))
@@ -691,5 +682,3 @@
 					for(var/mob/O in viewers(usr.loc))
 						O.show_message("\red <B>\the [usr] successfully broke out of \the [C]!</B>", 1)
 					C.open()
-				world << "pass5"
-	world << "area5"
