@@ -32,7 +32,7 @@
 	icon = 'zone_sel.dmi'
 	icon_state = "blank"
 	var/selecting = "chest"
-	screen_loc = ui_zonesel
+	screen_loc = new_ui_zonesel
 
 
 /obj/screen/zone_sel/MouseDown(location, control,params)
@@ -202,6 +202,7 @@
 /obj/screen/MouseEntered(object,location,control,params)
 	if(!ishuman(usr) && !istype(usr,/mob/living/carbon/alien/humanoid) && !islarva(usr) && !ismonkey(usr))
 		return
+	if(!istype(usr.hud_used,/obj/hud/slim))	return
 	switch(name)
 		/*
 		if("other")
@@ -220,6 +221,7 @@
 /obj/screen/MouseExited(object,location,control,params)
 	if(!ishuman(usr) && !istype(usr,/mob/living/carbon/alien/humanoid) && !islarva(usr) && !ismonkey(usr))
 		return
+	if(!istype(usr.hud_used,/obj/hud/slim))	return
 	switch(name)
 		if("act_intent")
 			if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
@@ -229,6 +231,7 @@
 				usr.hud_used.action_intent.icon_state = "[intent]"
 
 /obj/screen/Click(location, control, params)
+//	var/list/pa = params2list(params)
 	switch(name)
 		if("map")
 			usr.clearmap()
@@ -265,57 +268,58 @@
 			else
 				usr.clearmap()
 
+
 		if("arrowleft")
 			switch(usr.a_intent)
 				if("help")
 					if(issilicon(usr))
 						usr.a_intent = "hurt"
-						usr.hud_used.action_intent.icon_state = "harm"
+						usr.hud_used.action_intent.icon_state = "intent_hurt"
 					else
 						usr.a_intent = "grab"
-						usr.hud_used.action_intent.icon_state = "grab"
+						usr.hud_used.action_intent.icon_state = "intent_grab"
 
 				if("disarm")
 					usr.a_intent = "help"
-					usr.hud_used.action_intent.icon_state = "help"
+					usr.hud_used.action_intent.icon_state = "intent_help"
 
 				if("hurt")
 					if(issilicon(usr))
 						usr.a_intent = "help"
-						usr.hud_used.action_intent.icon_state = "help"
+						usr.hud_used.action_intent.icon_state = "intent_help"
 					else
 						usr.a_intent = "disarm"
-						usr.hud_used.action_intent.icon_state = "disarm"
+						usr.hud_used.action_intent.icon_state = "intent_disarm"
 
 				if("grab")
 					usr.a_intent = "hurt"
-					usr.hud_used.action_intent.icon_state = "harm"
+					usr.hud_used.action_intent.icon_state = "intent_hurt"
 
 		if("arrowright")
 			switch(usr.a_intent)
 				if("help")
 					if(issilicon(usr))
 						usr.a_intent = "hurt"
-						usr.hud_used.action_intent.icon_state = "harm"
+						usr.hud_used.action_intent.icon_state = "intent_hurt"
 					else
 						usr.a_intent = "disarm"
-						usr.hud_used.action_intent.icon_state = "disarm"
+						usr.hud_used.action_intent.icon_state = "intent_disarm"
 
 				if("disarm")
 					usr.a_intent = "hurt"
-					usr.hud_used.action_intent.icon_state = "harm"
+					usr.hud_used.action_intent.icon_state = "intent_hurt"
 
 				if("hurt")
 					if(issilicon(usr))
 						usr.a_intent = "help"
-						usr.hud_used.action_intent.icon_state = "help"
+						usr.hud_used.action_intent.icon_state = "intent_help"
 					else
 						usr.a_intent = "grab"
-						usr.hud_used.action_intent.icon_state = "grab"
+						usr.hud_used.action_intent.icon_state = "intent_grab"
 
 				if("grab")
 					usr.a_intent = "help"
-					usr.hud_used.action_intent.icon_state = "help"
+					usr.hud_used.action_intent.icon_state = "intent_help"
 
 		if("mov_intent")
 			switch(usr.m_intent)
@@ -416,26 +420,35 @@
 				else
 					usr.a_intent = "help"
 					usr.hud_used.action_intent.icon_state = "help"
+
 		if("help")
-			usr.a_intent = "help"
-			usr.hud_used.action_intent.icon_state = "help"
-			usr.hud_used.show_intent_icons = 0
-			usr.client.screen -= usr.hud_used.intent_small_hud_objects
+			if(istype(usr.hud_used,/obj/hud/slim))
+				var/obj/hud/slim/hud = usr.hud_used
+				usr.a_intent = "help"
+				hud.action_intent.icon_state = "help"
+				hud.show_intent_icons = 0
+				usr.client.screen -= hud.intent_small_hud_objects
 		if("harm")
-			usr.a_intent = "hurt"
-			usr.hud_used.action_intent.icon_state = "harm"
-			usr.hud_used.show_intent_icons = 0
-			usr.client.screen -= usr.hud_used.intent_small_hud_objects
+			if(istype(usr.hud_used,/obj/hud/slim))
+				var/obj/hud/slim/hud = usr.hud_used
+				usr.a_intent = "hurt"
+				hud.action_intent.icon_state = "harm"
+				hud.show_intent_icons = 0
+				usr.client.screen -= hud.intent_small_hud_objects
 		if("grab")
-			usr.a_intent = "grab"
-			usr.hud_used.action_intent.icon_state = "grab"
-			usr.hud_used.show_intent_icons = 0
-			usr.client.screen -= usr.hud_used.intent_small_hud_objects
+			if(istype(usr.hud_used,/obj/hud/slim))
+				var/obj/hud/slim/hud = usr.hud_used
+				usr.a_intent = "grab"
+				hud.action_intent.icon_state = "grab"
+				hud.show_intent_icons = 0
+				usr.client.screen -= hud.intent_small_hud_objects
 		if("disarm")
-			usr.a_intent = "disarm"
-			usr.hud_used.action_intent.icon_state = "disarm"
-			usr.hud_used.show_intent_icons = 0
-			usr.client.screen -= usr.hud_used.intent_small_hud_objects
+			if(istype(usr.hud_used,/obj/hud/slim))
+				var/obj/hud/slim/hud = usr.hud_used
+				usr.a_intent = "disarm"
+				hud.action_intent.icon_state = "disarm"
+				hud.show_intent_icons = 0
+				usr.client.screen -= hud.intent_small_hud_objects
 		if("pull")
 			usr.pulling = null
 		if("throw")
@@ -460,6 +473,14 @@
 				if(usr:module)
 					return
 				usr:pick_module()
+
+		if("sleep")
+			usr:mob_sleep()
+		if("rest")
+			usr:lay_down()
+		if("resist")
+			usr:resist()
+
 
 		if("radio")
 			if(issilicon(usr))

@@ -148,17 +148,24 @@
 				usr << "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>"
 				return
 	src.hand = !( src.hand )
-	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
-		if(hand)	//This being 1 means the left hand is in use
-			hud_used.l_hand_hud_object.icon_state = "hand_active"
-			hud_used.r_hand_hud_object.icon_state = "hand_inactive"
+
+
+	if(istype(hud_used,/obj/hud/slim))
+		var/obj/hud/slim/hud = usr.hud_used
+		if(hud.l_hand_hud_object && hud.r_hand_hud_object)
+			if(hand)	//This being 1 means the left hand is in use
+				hud.l_hand_hud_object.icon_state = "hand_active"
+				hud.r_hand_hud_object.icon_state = "hand_inactive"
+			else
+				hud.l_hand_hud_object.icon_state = "hand_inactive"
+				hud.r_hand_hud_object.icon_state = "hand_active"
+
+	if(istype(hud_used,/obj/hud/retro))
+		if (!( src.hand ))
+			src.hands.dir = NORTH
 		else
-			hud_used.l_hand_hud_object.icon_state = "hand_inactive"
-			hud_used.r_hand_hud_object.icon_state = "hand_active"
-	/*if (!( src.hand ))
-		src.hands.dir = NORTH
-	else
-		src.hands.dir = SOUTH*/
+			src.hands.dir = SOUTH
+
 	return
 
 /mob/living/carbon/proc/activate_hand(var/selhand) //0 or "r" or "right" for right hand; 1 or "l" or "left" for left hand.

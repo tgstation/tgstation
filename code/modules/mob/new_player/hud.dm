@@ -1,3 +1,3 @@
 
-/obj/hud/proc/unplayer_hud()
+/obj/hud/slim/proc/unplayer_hud()
 	return

@@ -95,7 +95,7 @@ datum/preferences
 	var/b_eyes = 0
 
 		//UI style
-		//UI = UI_OLD
+	var/UIType = UI_OLD
 	var/UI_style = "Midnight"
 
 		//Mob preview
@@ -143,7 +143,9 @@ datum/preferences
 		dat += "<b>Age:</b> <a href='byond://?src=\ref[user];preferences=1;age=input'>[age]</a>"
 
 		dat += "<br>"
-		dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UI=input\"><b>[UI_style]</b></a><br>"
+		dat += "<b>UI Type:</b> <a href=\"byond://?src=\ref[user];preferences=1;UIType=input\"><b>[UIType == UI_NEW ? "Slim" : "Retro"]</b></a><br>"
+		if(UIType == UI_NEW)
+			dat += "<b>UI Style:</b> <a href=\"byond://?src=\ref[user];preferences=1;UIStyle=input\"><b>[UI_style]</b></a><br>"
 		dat += "<b>Play admin midis:</b> <a href=\"byond://?src=\ref[user];preferences=1;midis=input\"><b>[midis == 1 ? "Yes" : "No"]</b></a><br>"
 		dat += "<b>Ghost ears:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_ears=input\"><b>[ghost_ears == 0 ? "Nearest Creatures" : "All Speech"]</b></a><br>"
 		dat += "<b>Ghost sight:</b> <a href=\"byond://?src=\ref[user];preferences=1;ghost_sight=input\"><b>[ghost_sight == 0 ? "Nearest Creatures" : "All Emotes"]</b></a><br>"
@@ -608,7 +610,13 @@ datum/preferences
 			else
 				gender = MALE
 
-		if(link_tags["UI"])
+		if(link_tags["UIType"])
+			if(UIType == UI_OLD)
+				UIType = UI_NEW
+			else
+				UIType = UI_OLD
+
+		if(link_tags["UIStyle"])
 			switch(UI_style)
 				if("Midnight")
 					UI_style = "Orange"
@@ -699,7 +707,7 @@ datum/preferences
 			b_eyes = 0.0
 			s_tone = 0.0
 			b_type = "A+"
-			//UI = UI_OLD
+			UIType = UI_OLD
 			UI_style = "Midnight"
 			midis = 1
 			ghost_ears = 1
@@ -733,15 +741,22 @@ datum/preferences
 		character.h_style = h_style
 		character.f_style = f_style
 
-		switch(UI_style)
-			if("Midnight")
-				character.UI = 'screen1_Midnight.dmi'
-			if("Orange")
-				character.UI = 'screen1_Orange.dmi'
-			if("old")
-				character.UI = 'screen1_old.dmi'
-			else
-				character.UI = 'screen1_Midnight.dmi'
+
+		if(UIType == UI_OLD)
+			character.hud_type = "retro"
+			character.UI = 'screen1.dmi'
+			//character.UI = 'screen1_old.dmi'
+		else if(UIType == UI_NEW)
+			character.hud_type = "slim"
+			switch(UI_style)
+				if("Midnight")
+					character.UI = 'screen1_Midnight.dmi'
+				if("Orange")
+					character.UI = 'screen1_Orange.dmi'
+				if("old")
+					character.UI = 'screen1_old.dmi'
+				else
+					character.UI = 'screen1_Midnight.dmi'
 
 		character.hair_style = hair_style
 		character.facial_hair_style = facial_hair_style

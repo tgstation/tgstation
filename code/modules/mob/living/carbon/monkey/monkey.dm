@@ -418,24 +418,39 @@
 
 	if (wear_mask)
 		if (istype(wear_mask, /obj/item/clothing/mask))
+
 			var/t1 = wear_mask.icon_state
 			overlays += image("icon" = 'monkey.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = layer)
-			wear_mask.screen_loc = ui_monkey_mask
+
+		if(istype(hud_used,/obj/hud/slim))
+			wear_mask.screen_loc = new_ui_monkey_mask
+		if(istype(hud_used,/obj/hud/retro))
+			wear_mask.screen_loc = ui_mask
+
 
 	if (r_hand)
 		if(update_icon)
 			overlays += image("icon" = 'items_righthand.dmi', "icon_state" = r_hand.item_state ? r_hand.item_state : r_hand.icon_state, "layer" = layer)
-		r_hand.screen_loc = ui_rhand
+		if(istype(hud_used,/obj/hud/retro))
+			r_hand.screen_loc = ui_rhand
+		if(istype(hud_used,/obj/hud/slim))
+			r_hand.screen_loc = new_ui_rhand
 
 	if (l_hand)
 		if(update_icon)
 			overlays += image("icon" = 'items_lefthand.dmi', "icon_state" = l_hand.item_state ? l_hand.item_state : l_hand.icon_state, "layer" = layer)
-		l_hand.screen_loc = ui_lhand
+		if(istype(hud_used,/obj/hud/retro))
+			l_hand.screen_loc = ui_lhand
+		if(istype(hud_used,/obj/hud/slim))
+			l_hand.screen_loc = new_ui_lhand
 
 	if (back)
 		var/t1 = back.icon_state //apparently tables make me upset and cause my dreams to shatter
 		overlays += image("icon" = 'back.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = layer)
-		back.screen_loc = ui_monkey_back
+		if(istype(hud_used,/obj/hud/slim))
+			back.screen_loc = new_ui_monkey_back
+		if(istype(hud_used,/obj/hud/retro))
+			back.screen_loc = ui_back
 
 	if (handcuffed && update_icon)
 		pulling = null

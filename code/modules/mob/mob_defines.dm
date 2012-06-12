@@ -149,6 +149,7 @@
 	var/miming = null //checks if the guy is a mime//Human
 	var/silent = null //Can't talk. Value goes down every life proc.//Human
 
+	var/hud_type = "slim"
 	var/obj/hud/hud_used = null
 
 	//var/list/organs = list(  ) //moved to human.

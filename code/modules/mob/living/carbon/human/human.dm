@@ -843,7 +843,10 @@
 				c:dropped(src)
 				c:layer = initial(c:layer)
 		if(w_uniform)//I should really not need these
-			w_uniform.screen_loc = ui_iclothing
+			if(istype(hud_used,/obj/hud/retro))
+				w_uniform.screen_loc = ui_iclothing
+			if(istype(hud_used,/obj/hud/slim))
+				w_uniform.screen_loc = new_ui_iclothing
 		if(istype(w_uniform, /obj/item/clothing/under))
 			var/t1 = w_uniform.color
 			if (!t1)
@@ -859,7 +862,7 @@
 	if (wear_id)
 		overlays += image("icon" = 'mob.dmi', "icon_state" = "id[!lying ? null : "2"]", "layer" = ID_LAYER)
 
-	if (client)
+	if (client && hud_used)
 		client.screen -= hud_used.intents
 		client.screen -= hud_used.mov_int
 
@@ -896,7 +899,10 @@
 		if (!t1)
 			t1 = s_store.icon_state
 		overlays += image("icon" = 'belt_mirror.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = SUIT_STORE_LAYER)
-		s_store.screen_loc = ui_sstore1
+		if(istype(hud_used,/obj/hud/retro))
+			s_store.screen_loc = ui_sstore1
+		if(istype(hud_used,/obj/hud/slim))
+			s_store.screen_loc = new_ui_sstore1
 
 	if (client)
 		if (i_select)
@@ -933,7 +939,11 @@
 				if (wear_mask.blood_DNA)
 					var/icon/stain_icon = icon('blood.dmi', "maskblood[!lying ? "" : "2"]")
 					overlays += image("icon" = stain_icon, "layer" = B_FACEMASK_LAYER)
-			wear_mask.screen_loc = ui_mask
+			if(istype(hud_used,/obj/hud/retro))
+				wear_mask.screen_loc = ui_mask
+			if(istype(hud_used,/obj/hud/slim))
+				wear_mask.screen_loc = new_ui_mask
+
 
 	// Head
 	if (head)
@@ -945,7 +955,10 @@
 		if (head.blood_DNA)
 			var/icon/stain_icon = icon('blood.dmi', "helmetblood[!lying ? "" : "2"]")
 			overlays += image("icon" = stain_icon, "layer" = B_HEAD_LAYER)
-		head.screen_loc = ui_head
+		if(istype(hud_used,/obj/hud/retro))
+			head.screen_loc = ui_head
+		if(istype(hud_used,/obj/hud/slim))
+			head.screen_loc = new_ui_head
 
 	// Belt
 	if (belt)
@@ -953,24 +966,39 @@
 		if (!t1)
 			t1 = belt.icon_state
 		overlays += image("icon" = 'belt.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = BELT_LAYER)
-		belt.screen_loc = ui_belt
+		if(istype(hud_used,/obj/hud/retro))
+			belt.screen_loc = ui_belt
+		if(istype(hud_used,/obj/hud/slim))
+			belt.screen_loc = new_ui_belt
 
 
 	name = get_visible_name()
 
 	if (wear_id)
-		wear_id.screen_loc = ui_id
+		if(istype(hud_used,/obj/hud/retro))
+			wear_id.screen_loc = ui_id
+		if(istype(hud_used,/obj/hud/slim))
+			wear_id.screen_loc = new_ui_id
 
 	if (l_store)
-		l_store.screen_loc = ui_storage1
+		if(istype(hud_used,/obj/hud/retro))
+			l_store.screen_loc = ui_storage1
+		if(istype(hud_used,/obj/hud/slim))
+			l_store.screen_loc = new_ui_storage1
 
 	if (r_store)
-		r_store.screen_loc = ui_storage2
+		if(istype(hud_used,/obj/hud/retro))
+			r_store.screen_loc = ui_storage2
+		if(istype(hud_used,/obj/hud/slim))
+			r_store.screen_loc = new_ui_storage2
 
 	if (back)
 		var/t1 = back.icon_state
 		overlays += image("icon" = 'back.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = BACK_LAYER)
-		back.screen_loc = ui_back
+		if(istype(hud_used,/obj/hud/retro))
+			back.screen_loc = ui_back
+		if(istype(hud_used,/obj/hud/slim))
+			back.screen_loc = new_ui_back
 
 	if(client)
 		client.screen -= contents
@@ -985,11 +1013,17 @@
 
 	if (r_hand)
 		overlays += image("icon" = 'items_righthand.dmi', "icon_state" = r_hand.item_state ? r_hand.item_state : r_hand.icon_state, "layer" = INHANDS_LAYER)
-		r_hand.screen_loc = ui_rhand
+		if(istype(hud_used,/obj/hud/retro))
+			r_hand.screen_loc = ui_rhand
+		if(istype(hud_used,/obj/hud/slim))
+			r_hand.screen_loc = new_ui_rhand
 
 	if (l_hand)
 		overlays += image("icon" = 'items_lefthand.dmi', "icon_state" = l_hand.item_state ? l_hand.item_state : l_hand.icon_state, "layer" = INHANDS_LAYER)
-		l_hand.screen_loc = ui_lhand
+		if(istype(hud_used,/obj/hud/retro))
+			l_hand.screen_loc = ui_lhand
+		if(istype(hud_used,/obj/hud/slim))
+			l_hand.screen_loc = new_ui_lhand
 
 
 	var/shielded = 0
@@ -1036,7 +1070,10 @@
 				else
 					stain_icon = icon('blood.dmi', "suitblood[!lying ? "" : "2"]")
 				overlays += image("icon" = stain_icon, "layer" = B_SUIT_LAYER)
-			wear_suit.screen_loc = ui_oclothing
+			if(istype(hud_used,/obj/hud/retro))
+				wear_suit.screen_loc = ui_oclothing
+			if(istype(hud_used,/obj/hud/slim))
+				wear_suit.screen_loc = new_ui_oclothing
 
 	//Update_other() MUST be called after all the storage slots get updated. This is because all the storage slots assign their
 	//respective items a screen_loc, which other_update() will then override if needed.

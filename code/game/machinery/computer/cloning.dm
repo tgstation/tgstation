@@ -372,7 +372,7 @@
 //Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
 			if ((!selected) || (!src.pod1) || (src.pod1.occupant) || (src.pod1.mess) || !config.revival_cloning)
 				src.temp = "Unable to initiate cloning cycle." // most helpful error message in THE HISTORY OF THE WORLD
-			else if (src.pod1.growclone(selected, C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["interface"],C.fields["changeling"]))
+			else if (src.pod1.growclone(selected, C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["interface"],C.fields["interfaceType"],C.fields["changeling"]))
 				src.temp = "Cloning cycle activated."
 				src.records.Remove(C)
 				del(C)
@@ -418,7 +418,7 @@
 
 	// Preferences stuff
 	R.fields["interface"] = subject.UI
-
+	R.fields["interfaceType"] = subject.hud_type
 
 
 	//Add an implant if needed

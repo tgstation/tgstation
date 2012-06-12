@@ -111,7 +111,7 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(mob/ghost as mob, var/clonename, var/ui, var/se, var/mindref, var/mrace, var/UI, var/datum/changeling/changelingClone)
+/obj/machinery/clonepod/proc/growclone(mob/ghost as mob, var/clonename, var/ui, var/se, var/mindref, var/mrace, var/UI, var/hud_type, var/datum/changeling/changelingClone)
 	if(((!ghost) || (!ghost.client)) || src.mess || src.attempting)
 		return 0
 
@@ -124,11 +124,12 @@
 
 	src.occupant = new /mob/living/carbon/human(src)
 
+	occupant:hud_type = hud_type
 	occupant:UI = UI // set interface preference
 
 	ghost.client.mob = src.occupant
 
-	src.occupant.hud_used = new/obj/hud( src.occupant )
+	new/obj/hud(src.occupant,src.occupant.hud_type)
 		// probably redundant because previous line calls mob/Login() which does this line of code
 		// but until this is proven useless keep it for safety - Doohl
 
