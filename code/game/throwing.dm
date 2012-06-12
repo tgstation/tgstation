@@ -107,6 +107,8 @@
 		var/mob/living/M = hit_atom
 		M.visible_message("\red [hit_atom] has been hit by [src].")
 
+		/* // fuck this shit, love, Doohl
+
 		if(!istype(src, /obj/item)) // this is a big item that's being thrown at them~
 
 			if(istype(M, /mob/living/carbon/human))
@@ -123,6 +125,10 @@
 
 		else if(src.vars.Find("throwforce"))
 			M.take_organ_damage(src:throwforce)
+
+		*/
+
+		M.take_organ_damage(src:throwforce)
 
 
 	else if(isobj(hit_atom))
