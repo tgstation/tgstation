@@ -4,7 +4,7 @@
 obj/machinery/door/airlock
 	var/id_tag
 	var/frequency
-
+	var/shockedby
 	var/datum/radio_frequency/radio_connection
 
 	receive_signal(datum/signal/signal)
