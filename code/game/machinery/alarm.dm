@@ -30,7 +30,8 @@
 
 #define AALARM_MODE_SCRUBBING	1
 #define AALARM_MODE_PANIC		2 //constantly sucks all air
-#define AALARM_MODE_REPLACEMENT	3 //sucks off all air, then refill and swithes to scrubbing
+#define AALARM_MODE_REPLACEMENT	5 //like scrubbing, but faster.
+#define AALARM_MODE_CYCLE		3 //sucks off all air, then refill and swithes to scrubbing
 #define AALARM_MODE_FILL		4 //emergency fill
 
 #define AALARM_SCREEN_MAIN		1
@@ -48,10 +49,8 @@
 //all air alarms in area are connected via magic
 /area
 	var/obj/machinery/alarm/master_air_alarm
-	var/list/air_vent_names
-	var/list/air_scrub_names
-	var/list/air_vent_info
-	var/list/air_scrub_info
+	var/list/air_vents
+	var/list/air_scrubbers
 
 /obj/machinery/alarm
 	name = "alarm"
@@ -156,9 +155,12 @@
 			other_dangerlevel,
 			temperature_dangerlevel)
 
-
 		if (old_danger_level != danger_level)
 			apply_danger_level(danger_level)
+
+		if (mode==AALARM_MODE_CYCLE && environment_pressure<ONE_ATMOSPHERE*0.05)
+			mode=AALARM_MODE_FILL
+			apply_mode()
 
 
 		//atmos computer remote controll stuff
@@ -186,11 +188,9 @@
 			for (var/obj/machinery/alarm/AA in A)
 				if (!(AA.stat & (NOPOWER|BROKEN)))
 					alarm_area.master_air_alarm = AA
-					if (!alarm_area.air_vent_names)
-						alarm_area.air_vent_names = list()
-						alarm_area.air_scrub_names = list()
-						alarm_area.air_vent_info = list()
-						alarm_area.air_scrub_info = list()
+					if (!alarm_area.air_vents)
+						alarm_area.air_vents = list()
+						alarm_area.air_scrubbers = list()
 					return 1
 		return 0
 
@@ -216,101 +216,58 @@
 			if (2)
 				icon_state = "alarm1"
 
-	proc/send_signal(var/target, var/list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
+	proc/send(var/target, var/list/command)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
+		if(target in alarm_area.air_vents)
+			var/obj/machinery/atmospherics/unary/vent_pump/target_machine = alarm_area.air_vents[target]
+			target_machine.receive(command)
 
-		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
-		signal.source = src
-
-		signal.data = command
-		signal.data["tag"] = target
-		signal.data["sigtype"] = "command"
-
-		var/obj/machinery/target_machine = machines[target]
-		target_machine.receive_signal(signal)
-
+		else if(target in alarm_area.air_scrubbers)
+			var/obj/machinery/atmospherics/unary/vent_scrubber/target_machine = alarm_area.air_scrubbers[target]
+			target_machine.receive(command)
 		return 1
 
-	receive_signal(datum/signal/signal)
-		if(stat & (NOPOWER|BROKEN))
-			return
-		if (alarm_area.master_air_alarm != src)
-			if (master_is_operating())
-				return
-			elect_master()
-			if (alarm_area.master_air_alarm != src)
-				return
-		if(!signal || signal.encryption)
-			return
-		var/id_tag = signal.data["tag"]
-		if (!id_tag)
-			return
-		if (signal.data["area"] != area_uid)
-			return
-		if (signal.data["sigtype"] != "status")
-			return
-
-		var/dev_type = signal.data["device"]
-		if(!(id_tag in alarm_area.air_scrub_names) && !(id_tag in alarm_area.air_vent_names))
-			register_env_machine(id_tag, dev_type)
-		if(dev_type == "AScr")
-			alarm_area.air_scrub_info[id_tag] = signal.data
-		else if(dev_type == "AVP")
-			alarm_area.air_vent_info[id_tag] = signal.data
-
-	proc/register_env_machine(var/m_id, var/device_type)
-		var/new_name
-		if (device_type=="AVP")
-			new_name = "[alarm_area.name] Vent Pump #[alarm_area.air_vent_names.len+1]"
-			alarm_area.air_vent_names[m_id] = new_name
-		else if (device_type=="AScr")
-			new_name = "[alarm_area.name] Air Scrubber #[alarm_area.air_scrub_names.len+1]"
-			alarm_area.air_scrub_names[m_id] = new_name
-		else
-			return
-		spawn (10)
-			send_signal(m_id, list("init" = new_name) )
-
-	proc/refresh_all()
-		for(var/id_tag in alarm_area.air_vent_names)
-			var/list/I = alarm_area.air_vent_info[id_tag]
-			if (I && I["timestamp"]+AALARM_REPORT_TIMEOUT/2 > world.time)
-				continue
-			send_signal(id_tag, list("status") )
-		for(var/id_tag in alarm_area.air_scrub_names)
-			var/list/I = alarm_area.air_scrub_info[id_tag]
-			if (I && I["timestamp"]+AALARM_REPORT_TIMEOUT/2 > world.time)
-				continue
-			send_signal(id_tag, list("status") )
-
+	proc/register_env_machine(var/obj/machinery/source_machine)
+		if (istype(source_machine, /obj/machinery/atmospherics/unary/vent_pump))
+			var/new_name = "[alarm_area] Vent Pump #[alarm_area.air_vents.len+1]"
+			alarm_area.air_vents += "\"[new_name]\""
+			alarm_area.air_vents["\"[new_name]\""] = source_machine
+			source_machine:id_tag = new_name
+			source_machine.name = new_name
+		else if (istype(source_machine, /obj/machinery/atmospherics/unary/vent_scrubber))
+			var/new_name = "[alarm_area] Air Scrubber #[alarm_area.air_scrubbers.len+1]"
+			alarm_area.air_scrubbers += "\"[new_name]\""
+			alarm_area.air_scrubbers["\"[new_name]\""] = source_machine
+			source_machine:id_tag = new_name
+			source_machine.name = new_name
+		return
 
 	proc/apply_mode()
 		var/current_pressures = TLV["pressure"]
 		var/target_pressure = (current_pressures[2] + current_pressures[3])/2
 		switch(mode)
 			if(AALARM_MODE_SCRUBBING)
-				for(var/device_id in alarm_area.air_scrub_names)
-					send_signal(device_id, list("power"= 1, "co2_scrub"= 1, "setting"= 1, "scrubbing"= 1, "panic_siphon"= 0) )
-				for(var/device_id in alarm_area.air_vent_names)
-					send_signal(device_id, list("power"= 1, "checks"= 1, "setting"= 1, "set_external_pressure"= target_pressure) )
+				for(var/device_id in alarm_area.air_scrubbers)
+					send(device_id, list("power"= 1, "co2_scrub"= 1, "setting"= 1, "scrubbing"= 1, "panic_siphon"= 0) )
+				for(var/device_id in alarm_area.air_vents)
+					send(device_id, list("power"= 1, "checks"= 1, "setting"= 1, "set_external_pressure"= target_pressure) )
 
-			if(AALARM_MODE_PANIC)
-				for(var/device_id in alarm_area.air_scrub_names)
-					send_signal(device_id, list("power"= 1, "panic_siphon"= 1) )
-				for(var/device_id in alarm_area.air_vent_names)
-					send_signal(device_id, list("power"= 0) )
+			if(AALARM_MODE_PANIC, AALARM_MODE_CYCLE)
+				for(var/device_id in alarm_area.air_scrubbers)
+					send(device_id, list("power"= 1, "panic_siphon"= 1) )
+				for(var/device_id in alarm_area.air_vents)
+					send(device_id, list("power"= 0) )
 
 			if(AALARM_MODE_REPLACEMENT)
-				for(var/device_id in alarm_area.air_scrub_names)
-					send_signal(device_id, list("power"= 1, "co2_scrub"= 1, "setting"= 2, "scrubbing"= 1, "panic_siphon"= 0) )
-				for(var/device_id in alarm_area.air_vent_names)
-					send_signal(device_id, list("power"= 1, "checks"= 1, "setting"= 2, "set_external_pressure"= target_pressure) )
+				for(var/device_id in alarm_area.air_scrubbers)
+					send(device_id, list("power"= 1, "co2_scrub"= 1, "setting"= 2, "scrubbing"= 1, "panic_siphon"= 0) )
+				for(var/device_id in alarm_area.air_vents)
+					send(device_id, list("power"= 1, "checks"= 1, "setting"= 2, "set_external_pressure"= target_pressure) )
 
 			if(AALARM_MODE_FILL)
-				for(var/device_id in alarm_area.air_scrub_names)
-					send_signal(device_id, list("power"= 0) )
-				for(var/device_id in alarm_area.air_vent_names)
-					send_signal(device_id, list("power"= 1, "checks"= 1, "setting"= 2, "set_external_pressure"= target_pressure) )
+				for(var/device_id in alarm_area.air_scrubbers)
+					send(device_id, list("power"= 0) )
+				for(var/device_id in alarm_area.air_vents)
+					send(device_id, list("power"= 1, "checks"= 1, "setting"= 2, "set_external_pressure"= target_pressure) )
 
 	proc/apply_danger_level(var/new_danger_level)
 		alarm_area.atmosalm = new_danger_level
@@ -553,7 +510,6 @@
 		if(!shorted)
 			user << browse(return_text(user),"window=air_alarm")
 			onclose(user, "air_alarm")
-			refresh_all()
 
 		return
 
@@ -679,21 +635,20 @@ Toxins: <span class='dl[plasma_dangerlevel]'>[plasma_percent]</span>%<br>
 
 			if (AALARM_SCREEN_VENT)
 				var/sensor_data = ""
-				if(alarm_area.air_vent_names.len)
-					for(var/id_tag in alarm_area.air_vent_names)
-						var/long_name = alarm_area.air_vent_names[id_tag]
-						var/list/data = alarm_area.air_vent_info[id_tag]
+				if(alarm_area.air_vents.len)
+					for(var/id_tag in alarm_area.air_vents)
+						var/obj/machinery/atmospherics/unary/vent_pump/data = alarm_area.air_vents[id_tag]
 						if(!data)
-							continue;
+							continue
 
 						sensor_data += {"
-<B>[long_name]</B><BR>
+<B>[id_tag]</B><BR>
 <B>Operating:</B>
-<A href='?src=\ref[src];id_tag=[id_tag];command=power;val=[!data["power"]]'>[data["power"]?"on":"off"]</A>
+<A href='?src=\ref[src];id_tag=[id_tag];command=power;val=[!data.on]'>[data.on?"on":"off"]</A>
 <BR>
 <B>Pressure checks:</B>
-<A href='?src=\ref[src];id_tag=[id_tag];command=checks;val=[data["checks"]^1]' [(data["checks"]&1)?"style='font-weight:bold;'":""]>external</A>
-<A href='?src=\ref[src];id_tag=[id_tag];command=checks;val=[data["checks"]^2]' [(data["checks"]&2)?"style='font-weight:bold;'":""]>internal</A>
+<A href='?src=\ref[src];id_tag=[id_tag];command=checks;val=[data.pressure_checks^1]' [(data.pressure_checks&1)?"style='font-weight:bold;'":""]>external</A>
+<A href='?src=\ref[src];id_tag=[id_tag];command=checks;val=[data.pressure_checks^2]' [(data.pressure_checks&2)?"style='font-weight:bold;'":""]>internal</A>
 <BR>
 <B>External pressure bound:</B>
 <A href='?src=\ref[src];id_tag=[id_tag];command=adjust_external_pressure;val=-1000'>-</A>
@@ -707,7 +662,7 @@ Toxins: <span class='dl[plasma_dangerlevel]'>[plasma_percent]</span>%<br>
 <A href='?src=\ref[src];id_tag=[id_tag];command=adjust_external_pressure;val=+1000'>+</A>
 <A href='?src=\ref[src];id_tag=[id_tag];command=set_external_pressure;val=[ONE_ATMOSPHERE]'> (reset) </A>
 <BR>"}
-						if (data["direction"] == "siphon")
+						if (!data.pump_direction)
 							sensor_data += {"
 <B>Direction:</B>
 siphoning
@@ -721,35 +676,34 @@ siphoning
 
 			if (AALARM_SCREEN_SCRUB)
 				var/sensor_data = ""
-				if(alarm_area.air_scrub_names.len)
-					for(var/id_tag in alarm_area.air_scrub_names)
-						var/long_name = alarm_area.air_scrub_names[id_tag]
-						var/list/data = alarm_area.air_scrub_info[id_tag]
+				if(alarm_area.air_scrubbers.len)
+					for(var/id_tag in alarm_area.air_scrubbers)
+						var/obj/machinery/atmospherics/unary/vent_scrubber/data = alarm_area.air_scrubbers[id_tag]
 						if(!data)
 							continue
 
 						sensor_data += {"
-<B>[long_name]</B><BR>
+<B>[id_tag]</B><BR>
 <B>Operating:</B>
-<A href='?src=\ref[src];id_tag=[id_tag];command=power;val=[!data["power"]]'>[data["power"]?"on":"off"]</A><BR>
+<A href='?src=\ref[src];id_tag=[id_tag];command=power;val=[!data.on]'>[data.on ?"on":"off"]</A><BR>
 <B>Type:</B>
-<A href='?src=\ref[src];id_tag=[id_tag];command=scrubbing;val=[!data["scrubbing"]]'>[data["scrubbing"]?"scrubbing":"syphoning"]</A><BR>
+<A href='?src=\ref[src];id_tag=[id_tag];command=scrubbing;val=[!data.scrubbing]'>[data.scrubbing?"scrubbing":"syphoning"]</A><BR>
 "}
 
-						if(data["scrubbing"])
+						if(data.scrubbing)
 							sensor_data += {"
 <B>Filtering:</B>
 Carbon Dioxide
-<A href='?src=\ref[src];id_tag=[id_tag];command=co2_scrub;val=[!data["filter_co2"]]'>[data["filter_co2"]?"on":"off"]</A>;
+<A href='?src=\ref[src];id_tag=[id_tag];command=co2_scrub;val=[!data.scrub_CO2]'>[data.scrub_CO2?"on":"off"]</A>;
 Toxins
-<A href='?src=\ref[src];id_tag=[id_tag];command=tox_scrub;val=[!data["filter_toxins"]]'>[data["filter_toxins"]?"on":"off"]</A>;
+<A href='?src=\ref[src];id_tag=[id_tag];command=tox_scrub;val=[!data.scrub_Toxins]'>[data.scrub_Toxins?"on":"off"]</A>;
 Nitrous Oxide
-<A href='?src=\ref[src];id_tag=[id_tag];command=n2o_scrub;val=[!data["filter_n2o"]]'>[data["filter_n2o"]?"on":"off"]</A>
+<A href='?src=\ref[src];id_tag=[id_tag];command=n2o_scrub;val=[!data.scrub_N2O]'>[data.scrub_N2O?"on":"off"]</A>
 <BR>
 "}
 						sensor_data += {"
-<B>Panic syphon:</B> [data["panic"]?"<font color='red'><B>PANIC SYPHON ACTIVATED</B></font>":"Disabled"]
-<A href='?src=\ref[src];id_tag=[id_tag];command=panic_siphon;val=[!data["panic"]]'><font color='[(data["panic"]?"blue'>Dea":"red'>A")]ctivate</font></A><BR>
+<B>Panic syphon:</B> [data.panic?"<font color='red'><B>PANIC SYPHON ACTIVATED</B></font>":"Disabled"]
+<A href='?src=\ref[src];id_tag=[id_tag];command=panic_siphon;val=[!data.panic]'><font color='[(data.panic?"blue'>Dea":"red'>A")]ctivate</font></A><BR>
 <HR>
 "}
 				else
@@ -762,10 +716,11 @@ Nitrous Oxide
 				var/list/modes = list(
 					AALARM_MODE_SCRUBBING   = "Filtering",
 					AALARM_MODE_PANIC       = "<font color='red'>PANIC</font>",
-					AALARM_MODE_REPLACEMENT = "<font color='red'>REPLACE AIR</font>",
-					AALARM_MODE_FILL = "<font color='red'>FILL</font>"
+					AALARM_MODE_REPLACEMENT = "<font color='blue'>REPLACE AIR</font>",
+					AALARM_MODE_FILL        = "<font color='red'>FILL</font>",
+					AALARM_MODE_CYCLE       = "<font color='red'>CYCLE</font>",
 				)
-				for (var/m=1, m<=modes.len, m++)
+				for (var/m in modes)
 					if (mode==m)
 						output += "<li><A href='?src=\ref[src];mode=[m]'><b>[modes[m]]</b></A> (selected)</li>"
 					else
@@ -835,8 +790,7 @@ table tr:first-child th:first-child { border: none;}
 		if(href_list["command"])
 			var/device_id = href_list["id_tag"]
 			switch(href_list["command"])
-				if(
-					"power",
+				if( "power",
 					"adjust_external_pressure",
 					"set_external_pressure",
 					"checks",
@@ -846,7 +800,7 @@ table tr:first-child th:first-child { border: none;}
 					"panic_siphon",
 					"scrubbing")
 
-					send_signal(device_id, list(href_list["command"] = text2num(href_list["val"]) ) )
+					send(device_id, list(href_list["command"] = text2num(href_list["val"]) ) )
 
 				if("set_threshold")
 					var/env = href_list["env"]

@@ -7,7 +7,7 @@
 
 	level = 1
 	var/area_uid
-	var/id_tag = null
+	var/id_tag
 	power_channel = ENVIRON
 
 	var/on = 0
@@ -24,12 +24,6 @@
 
 	var/welded = 0 // Added for aliens -- TLE
 
-	var/frequency = 1439
-	var/datum/radio_frequency/radio_connection
-
-	var/radio_filter_out
-	var/radio_filter_in
-
 	New()
 		var/area/A = get_area(loc)
 		if (A.master)
@@ -43,12 +37,22 @@
 			broadcast_status()
 		..()
 
+	Del()
+		var/area/alarm_area = get_area(src)
+		if(alarm_area && "\"[id_tag]\"" in alarm_area.master.air_vents)
+			alarm_area.master.air_vents.Remove("\"[id_tag]\"")
+		..()
+
 	high_volume
 		name = "Large Air Vent"
 
 		New()
 			..()
 			air_contents.volume = 1000
+
+	initialize()
+		spawn(20)
+			broadcast_status()
 
 	update_icon()
 		if(welded)
@@ -66,6 +70,7 @@
 
 	process()
 		..()
+		broadcast_status()
 		if(stat & (NOPOWER|BROKEN))
 			return
 		if (!node)
@@ -123,93 +128,76 @@
 
 
 
-	//Radio remote control
 
 	proc/broadcast_status()
-		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
-		signal.source = src
-
-		signal.data = list(
-			"area" = src.area_uid,
-			"tag" = src.id_tag,
-			"device" = "AVP",
-			"power" = on,
-			"direction" = pump_direction?("release"):("siphon"),
-			"checks" = pressure_checks,
-			"internal" = internal_pressure_bound,
-			"external" = external_pressure_bound,
-			"timestamp" = world.time,
-			"sigtype" = "status",
-			"setting" = pump_speed
-		)
-
 		var/area/alarm_area = get_area(src)
-		if(alarm_area.master.master_air_alarm && alarm_area.master.master_air_alarm.master_is_operating())
-			receive_signal(signal)
+		if(alarm_area.master.master_air_alarm)
+			if(!id_tag)
+				if(alarm_area.master.master_air_alarm)
+					alarm_area.master.master_air_alarm.register_env_machine(src)
+					world << "No ID, air alarm. New ID = [id_tag]"
+				else
+					world << "No ID, no air alarm."
+			else if(!"\"[id_tag]\"" in alarm_area.air_vents)
+				if(alarm_area.master.master_air_alarm)
+					alarm_area.master.master_air_alarm.register_env_machine(src)
+					world << "ID, air alarm. New ID = [id_tag]"
+				else
+					world << "ID = [id_tag], no air alarm."
+			else if(stat & (NOPOWER|BROKEN))
+				alarm_area.master.air_vents.Remove("\"[id_tag]\"")
+				world << "Broken"
 		else
-			for(var/area/A in alarm_area.related)
-				for(var/obj/machinery/alarm/AA in A)
-					receive_signal(signal)
-
-		return 1
+			world << "Trying to register (No alarm)"
 
 
-	receive_signal(datum/signal/signal)
+	proc/receive(var/list/signal)
 		if(stat & (NOPOWER|BROKEN))
 			return
-		//log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/unary/vent_pump/receive_signal([signal.debug_print()])")
-		if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
-			return 0
 
-		if("purge" in signal.data)
+		if("purge" in signal)
 			pressure_checks &= ~1
 			pump_direction = 0
 
-		if("stabalize" in signal.data)
+		if("stabalize" in signal)
 			pressure_checks |= 1
 			pump_direction = 1
 
-		if("power" in signal.data)
-			on = text2num(signal.data["power"])
+		if("power" in signal)
+			on = text2num(signal["power"])
 
-		if("power_toggle" in signal.data)
+		if("power_toggle" in signal)
 			on = !on
 
-		if("checks" in signal.data)
-			pressure_checks = text2num(signal.data["checks"])
+		if("checks" in signal)
+			pressure_checks = text2num(signal["checks"])
 
-		if("checks_toggle" in signal.data)
+		if("checks_toggle" in signal)
 			pressure_checks = (pressure_checks?0:3)
 
-		if("direction" in signal.data)
-			pump_direction = text2num(signal.data["direction"])
+		if("direction" in signal)
+			pump_direction = text2num(signal["direction"])
 
-		if("set_internal_pressure" in signal.data)
-			internal_pressure_bound = between(0, text2num(signal.data["set_internal_pressure"]), ONE_ATMOSPHERE*50)
+		if("set_internal_pressure" in signal)
+			internal_pressure_bound = between(0, text2num(signal["set_internal_pressure"]), ONE_ATMOSPHERE*50)
 
-		if("set_external_pressure" in signal.data)
-			external_pressure_bound = between(0, text2num(signal.data["set_external_pressure"]), ONE_ATMOSPHERE*50)
+		if("set_external_pressure" in signal)
+			external_pressure_bound = between(0, text2num(signal["set_external_pressure"]), ONE_ATMOSPHERE*50)
 
-		if("adjust_internal_pressure" in signal.data)
-			internal_pressure_bound = between(0, text2num(signal.data["adjust_internal_pressure"]), ONE_ATMOSPHERE*50)
+		if("adjust_internal_pressure" in signal)
+			internal_pressure_bound = between(0, text2num(signal["adjust_internal_pressure"]), ONE_ATMOSPHERE*50)
 
-		if("adjust_external_pressure" in signal.data)
-			external_pressure_bound = between(0, text2num(signal.data["adjust_external_pressure"]), ONE_ATMOSPHERE*50)
+		if("adjust_external_pressure" in signal)
+			external_pressure_bound = between(0, text2num(signal["adjust_external_pressure"]), ONE_ATMOSPHERE*50)
 
-		if("init" in signal.data)
-			name = signal.data["init"]
+		if("init" in signal)
+			name = signal["init"]
 			return
 
-		if("status" in signal.data)
-			spawn(2)
-				broadcast_status()
-			return //do not update_icon
+		if("setting" in signal)
+			pump_speed = text2num(signal["setting"])
 
-		if("setting" in signal.data)
-			pump_speed = text2num(signal.data["setting"])
-
-			//log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
+			//log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal["command"]]\"\n[signal.debug_print()]")
 		spawn(2)
 			broadcast_status()
 		update_icon()

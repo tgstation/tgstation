@@ -8,8 +8,6 @@
 	level = 1
 
 	var/id_tag = null
-	var/frequency = 1439
-	var/datum/radio_frequency/radio_connection
 
 	var/on = 0
 	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
@@ -22,8 +20,6 @@
 	var/panic = 0 //is this scrubber panicked?
 
 	var/area_uid
-	var/radio_filter_out
-	var/radio_filter_in
 	New()
 		var/area/A = get_area(loc)
 		if (A.master)
@@ -37,6 +33,16 @@
 			broadcast_status()
 		..()
 
+	Del()
+		var/area/alarm_area = get_area(src)
+		if(alarm_area && "\"[id_tag]\"" in alarm_area.master.air_scrubbers)
+			alarm_area.master.air_scrubbers.Remove("\"[id_tag]\"")
+		..()
+
+	initialize()
+		spawn(20)
+			broadcast_status()
+
 	update_icon()
 		if(node && on && !(stat & (NOPOWER|BROKEN)))
 			if(scrubbing)
@@ -48,40 +54,26 @@
 		return
 
 	proc/broadcast_status()
-		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
-		signal.source = src
-		signal.data = list(
-			"area" = area_uid,
-			"tag" = id_tag,
-			"device" = "AScr",
-			"timestamp" = world.time,
-			"power" = on,
-			"scrubbing" = scrubbing,
-			"panic" = panic,
-			"filter_co2" = scrub_CO2,
-			"filter_toxins" = scrub_Toxins,
-			"filter_n2o" = scrub_N2O,
-			"sigtype" = "status",
-			"setting" = scrub_rate
-		)
 		var/area/alarm_area = get_area(src)
-		if(alarm_area.master.master_air_alarm && alarm_area.master.master_air_alarm.master_is_operating())
-			receive_signal(signal)
-		else
-			for(var/area/A in alarm_area.related)
-				for(var/obj/machinery/alarm/AA in A)
-					receive_signal(signal)
-
-		return 1
+		if(alarm_area.master.master_air_alarm)
+			if(!id_tag)
+				if(alarm_area.master.master_air_alarm)
+					alarm_area.master.master_air_alarm.register_env_machine(src)
+			else if(!"\"[id_tag]\"" in alarm_area.air_scrubbers)
+				if(alarm_area.master.master_air_alarm)
+					alarm_area.master.master_air_alarm.register_env_machine(src)
+			else if(stat & (NOPOWER|BROKEN))
+				alarm_area.master.air_scrubbers.Remove("\"[id_tag]\"")
+		return
 
 	process()
 		..()
+		broadcast_status()
 		if(stat & (NOPOWER|BROKEN))
 			return
 		if (!node)
 			on = 0
-		//broadcast_status()
+
 		if(!on)
 			return 0
 
@@ -150,19 +142,17 @@
 		return
 */
 
-	receive_signal(datum/signal/signal)
+	proc/receive(var/list/signal)
 		if(stat & (NOPOWER|BROKEN))
 			return
-		if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
-			return 0
 
-		if("power" in signal.data)
-			on = text2num(signal.data["power"])
-		if("power_toggle" in signal.data)
+		if("power" in signal)
+			on = text2num(signal["power"])
+		if("power_toggle" in signal)
 			on = !on
 
-		if("panic_siphon" in signal.data) //must be before if("scrubbing" thing
-			panic = text2num(signal.data["panic_siphon"])
+		if("panic_siphon" in signal) //must be before if("scrubbing" thing
+			panic = text2num(signal["panic_siphon"])
 			if(panic)
 				on = 1
 				scrubbing = 0
@@ -170,7 +160,7 @@
 			else
 				scrubbing = 1
 				volume_rate = initial(volume_rate)
-		if("toggle_panic_siphon" in signal.data)
+		if("toggle_panic_siphon" in signal)
 			panic = !panic
 			if(panic)
 				on = 1
@@ -180,39 +170,33 @@
 				scrubbing = 1
 				volume_rate = initial(volume_rate)
 
-		if("scrubbing" in signal.data)
-			scrubbing = text2num(signal.data["scrubbing"])
-		if("toggle_scrubbing" in signal.data)
+		if("scrubbing" in signal)
+			scrubbing = text2num(signal["scrubbing"])
+		if("toggle_scrubbing" in signal)
 			scrubbing = !scrubbing
 
-		if("co2_scrub" in signal.data)
-			scrub_CO2 = text2num(signal.data["co2_scrub"])
-		if("toggle_co2_scrub" in signal.data)
+		if("co2_scrub" in signal)
+			scrub_CO2 = text2num(signal["co2_scrub"])
+		if("toggle_co2_scrub" in signal)
 			scrub_CO2 = !scrub_CO2
 
-		if("tox_scrub" in signal.data)
-			scrub_Toxins = text2num(signal.data["tox_scrub"])
-		if("toggle_tox_scrub" in signal.data)
+		if("tox_scrub" in signal)
+			scrub_Toxins = text2num(signal["tox_scrub"])
+		if("toggle_tox_scrub" in signal)
 			scrub_Toxins = !scrub_Toxins
 
-		if("n2o_scrub" in signal.data)
-			scrub_N2O = text2num(signal.data["n2o_scrub"])
-		if("toggle_n2o_scrub" in signal.data)
+		if("n2o_scrub" in signal)
+			scrub_N2O = text2num(signal["n2o_scrub"])
+		if("toggle_n2o_scrub" in signal)
 			scrub_N2O = !scrub_N2O
 
-		if("init" in signal.data)
-			name = signal.data["init"]
+		if("init" in signal)
+			name = signal["init"]
 			return
 
-		if("status" in signal.data)
-			spawn(2)
-				broadcast_status()
-			return //do not update_icon
+		if("setting" in signal)
+			scrub_rate = text2num(signal["setting"])
 
-		if("setting" in signal.data)
-			scrub_rate = text2num(signal.data["setting"])
-
-//			log_admin("DEBUG \[[world.timeofday]\]: vent_scrubber/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
 		spawn(2)
 			broadcast_status()
 		update_icon()

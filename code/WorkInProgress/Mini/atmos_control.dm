@@ -63,7 +63,7 @@
 					"panic_siphon",
 					"scrubbing"
 				)
-					current.send_signal(device_id, list (href_list["command"] = text2num(href_list["val"])))
+					current.send(device_id, list (href_list["command"] = text2num(href_list["val"])))
 					spawn(3)
 						src.updateUsrDialog()
 				//if("adjust_threshold") //was a good idea but required very wide window
@@ -156,18 +156,19 @@
 				output += "<A href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_PANIC]'><font color='red'><B>ACTIVATE PANIC SYPHON IN AREA</B></font></A>"
 		if (AALARM_SCREEN_VENT)
 			var/sensor_data = ""
-			if(current.alarm_area.air_vent_names.len)
-				for(var/id_tag in current.alarm_area.air_vent_names)
-					var/long_name = current.alarm_area.air_vent_names[id_tag]
-					var/list/data = current.alarm_area.air_vent_info[id_tag]
+			if(current.alarm_area.air_vents.len)
+				for(var/id_tag in current.alarm_area.air_vents)
+					var/obj/machinery/atmospherics/unary/vent_pump/data = current.alarm_area.air_vents[id_tag]
+					if(!data)
+						continue
 					sensor_data += {"
-<B>[long_name]</B><BR>
+<B>[id_tag]</B><BR>
 <B>Operating:</B>
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=power;val=[!data["power"]]'>[data["power"]?"on":"off"]</A>
+<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=power;val=[!data.on]'>[data.on?"on":"off"]</A>
 <BR>
 <B>Pressure checks:</B>
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=checks;val=[data["checks"]^1]' [(data["checks"]&1)?"style='font-weight:bold;'":""]>external</A>
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=checks;val=[data["checks"]^2]' [(data["checks"]&2)?"style='font-weight:bold;'":""]>internal</A>
+<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=checks;val=[data.pressure_checks^1]' [(data.pressure_checks&1)?"style='font-weight:bold;'":""]>external</A>
+<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=checks;val=[data.pressure_checks^2]' [(data.pressure_checks&2)?"style='font-weight:bold;'":""]>internal</A>
 <BR>
 <B>External pressure bound:</B>
 <A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=adjust_external_pressure;val=-1000'>-</A>
@@ -181,7 +182,7 @@
 <A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=adjust_external_pressure;val=+1000'>+</A>
 <BR>
 "}
-					if (data["direction"] == "siphon")
+					if (!data.pump_direction)
 						sensor_data += {"
 <B>Direction:</B>
 siphoning
@@ -193,33 +194,34 @@ siphoning
 			output = {"<a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>[sensor_data]"}
 		if (AALARM_SCREEN_SCRUB)
 			var/sensor_data = ""
-			if(current.alarm_area.air_scrub_names.len)
-				for(var/id_tag in current.alarm_area.air_scrub_names)
-					var/long_name = current.alarm_area.air_scrub_names[id_tag]
-					var/list/data = current.alarm_area.air_scrub_info[id_tag]
+			if(current.alarm_area.air_scrubbers.len)
+				for(var/id_tag in current.alarm_area.air_scrubbers)
+					var/obj/machinery/atmospherics/unary/vent_scrubber/data = current.alarm_area.air_scrubbers[id_tag]
+					if(!data)
+						continue
 
 					sensor_data += {"
-<B>[long_name]</B><BR>
+<B>[id_tag]</B><BR>
 <B>Operating:</B>
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=power;val=[!data["power"]]'>[data["power"]?"on":"off"]</A><BR>
+<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=power;val=[!data.on]'>[data.on?"on":"off"]</A><BR>
 <B>Type:</B>
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=scrubbing;val=[!data["scrubbing"]]'>[data["scrubbing"]?"scrubbing":"syphoning"]</A><BR>
+<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=scrubbing;val=[!data.scrubbing]'>[data.scrubbing?"scrubbing":"syphoning"]</A><BR>
 "}
 
 					if(data["scrubbing"])
 						sensor_data += {"
 <B>Filtering:</B>
 Carbon Dioxide
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=co2_scrub;val=[!data["filter_co2"]]'>[data["filter_co2"]?"on":"off"]</A>;
+<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=co2_scrub;val=[!data.scrub_CO2]'>[data.scrub_CO2?"on":"off"]</A>;
 Toxins
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=tox_scrub;val=[!data["filter_toxins"]]'>[data["filter_toxins"]?"on":"off"]</A>;
+<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=tox_scrub;val=[!data.scrub_Toxins]'>[data.scrub_Toxins?"on":"off"]</A>;
 Nitrous Oxide
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=n2o_scrub;val=[!data["filter_n2o"]]'>[data["filter_n2o"]?"on":"off"]</A>
+<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=n2o_scrub;val=[!data.scrub_N2O]'>[data.scrub_N2O?"on":"off"]</A>
 <BR>
 "}
 					sensor_data += {"
-<B>Panic syphon:</B> [data["panic"]?"<font color='red'><B>PANIC SYPHON ACTIVATED</B></font>":""]
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=panic_siphon;val=[!data["panic"]]'><font color='[(data["panic"]?"blue'>Dea":"red'>A")]ctivate</font></A><BR>
+<B>Panic syphon:</B> [data.panic?"<font color='red'><B>PANIC SYPHON ACTIVATED</B></font>":""]
+<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=panic_siphon;val=[!data.panic]'><font color='[(data.panic?"blue'>Dea":"red'>A")]ctivate</font></A><BR>
 <HR>
 "}
 			else
@@ -234,7 +236,8 @@ Nitrous Oxide
 					AALARM_MODE_SCRUBBING   = "Filtering",
 					AALARM_MODE_PANIC       = "<font color='red'>PANIC</font>",
 					AALARM_MODE_REPLACEMENT = "<font color='red'>REPLACE AIR</font>",
-					AALARM_MODE_FILL = "<font color='red'>FILL</font>"
+					AALARM_MODE_FILL = "<font color='red'>FILL</font>",
+					AALARM_MODE_CYCLE		= "<font color='red'>CYCLE</font>"
 			)
 			for (var/m=1,m<=modes.len,m++)
 				if (current.mode==m)
