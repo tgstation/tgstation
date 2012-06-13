@@ -103,7 +103,6 @@ datum/controller/game_controller
 
 		var/currenttime = world.timeofday
 		var/diff = (currenttime - last_tick_timeofday) / 10
-		world << "timeofday = [currenttime]; Diff = [diff]s"
 		last_tick_timeofday = currenttime
 		last_tick_duration = diff
 
