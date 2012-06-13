@@ -276,6 +276,18 @@
 	containername = "Virus crate"
 	access = access_cmo
 
+/datum/supply_packs/surgery
+	name = "Surgery crate"
+	contains = list("/obj/item/weapon/hemostat",
+					"/obj/item/weapon/surgicaldrill",
+					"/obj/item/weapon/retractor",
+					"/obj/item/weapon/cautery",
+					"/obj/item/weapon/circular_saw",
+					"/obj/item/weapon/scalpel")
+	cost = 20
+	containertype = "/obj/structure/closet/crate/medical"
+	containername = "Surgery crate"
+
 /datum/supply_packs/metal50
 	name = "50 Metal Sheets"
 	contains = list("/obj/item/stack/sheet/metal")
