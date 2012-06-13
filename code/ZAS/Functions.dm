@@ -126,10 +126,7 @@ proc/ZConnect(turf/A,turf/B)
 			if(C.B == B || C.A == B)
 				return
 
-	var/connection/C = new(A,B)
-
-	//Ensure zones separated by doors do not merge.
-	if(A.HasDoor(B) || B.HasDoor(A)) C.indirect = 1
+	new /connection(A,B)
 
 /*
 proc/ZDisconnect(turf/A,turf/B)
