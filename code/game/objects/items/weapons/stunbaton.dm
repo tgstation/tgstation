@@ -67,7 +67,12 @@
 		H.apply_effect(10, STUTTER, 0)
 		user.lastattacked = M
 		H.lastattacker = user
-		charges--
+		if(isrobot(src.loc))
+			var/mob/living/silicon/robot/R = src.loc
+			if(R && R.cell)
+				R.cell.use(50)
+		else
+			charges--
 		H.visible_message("<span class='danger'>[M] has been stunned with the [src] by [user]!</span>")
 		playsound(src.loc, "sparks", 75, 1, -1)
 		if(charges < 1)
