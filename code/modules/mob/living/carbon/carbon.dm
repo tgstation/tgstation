@@ -22,8 +22,8 @@
 					var/organ = H.get_organ("chest")
 					if (istype(organ, /datum/organ/external))
 						var/datum/organ/external/temp = organ
-						temp.take_damage(d, 0)
-					H.UpdateDamageIcon()
+						if(temp.take_damage(d, 0))
+							H.UpdateDamageIcon()
 					H.updatehealth()
 				else
 					src.take_organ_damage(d)

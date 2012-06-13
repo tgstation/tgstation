@@ -256,11 +256,10 @@
 	usr << "Our genes cry out!"
 
 	var/list/implants = list() //Try to preserve implants.
-	for(var/obj/item/weapon/W in usr)
-		if (istype(W, /obj/item/weapon/implant))
-			implants += W
+	for(var/obj/item/weapon/implant/W in usr)
+		implants += W
 
-	usr.update_clothing()
+	usr.regenerate_icons()
 	usr.monkeyizing = 1
 	usr.canmove = 0
 	usr.icon = null
@@ -346,7 +345,7 @@
 	for (var/obj/item/weapon/implant/I in usr) //Still preserving implants
 		implants += I
 
-	usr.update_clothing()
+	usr.regenerate_icons()
 	usr.monkeyizing = 1
 	usr.canmove = 0
 	usr.icon = null
@@ -414,7 +413,7 @@
 		return
 	for(var/obj/item/W in src)
 		usr.drop_from_slot(W)
-	usr.update_clothing()
+	usr.regenerate_icons()
 	usr.monkeyizing = 1
 	usr.canmove = 0
 	usr.icon = null

@@ -792,10 +792,10 @@ About the new airlock wires panel:
 				for(var/mob/M in viewers(src, null))
 					M << "\red [user] headbutts the airlock."
 				var/datum/organ/external/affecting = H.get_organ("head")
-				affecting.take_damage(10, 0)
 				H.Stun(8)
 				H.Weaken(5)
-				H.UpdateDamageIcon()
+				if(affecting.take_damage(10, 0))
+					H.UpdateDamageIcon()
 			else
 				for(var/mob/M in viewers(src, null))
 					M << "\red [user] headbutts the airlock. Good thing they're wearing a helmet."

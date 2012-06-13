@@ -14,20 +14,15 @@
 	set invisibility = 0
 	set background = 1
 
-	if (monkeyizing)
-		return
-
-	if(!loc)			// Fixing a null error that occurs when the mob isn't found in the world -- TLE
-		return
+	if (monkeyizing)	return
+	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
 
 	..()
 
+	//TODO: seperate this out
 	var/datum/gas_mixture/environment = loc.return_air()
-
-	if (stat != 2) //still breathing
-
+	if(stat != DEAD) //still breathing
 		//First, resolve location and get a breath
-
 		if(air_master.current_cycle%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
 			spawn(0) breathe()
@@ -72,26 +67,33 @@
 
 	//Status updates, death etc.
 	UpdateLuminosity()
-	handle_regular_status_updates()
+	handle_regular_status_updates()		//TODO: optimise ~Carn
 
-	// Update clothing
-	update_clothing()
+	//Being buckled to chairs/beds/etc
+	check_if_buckled()
+
+	//Temporary, whilst I finish the regenerate_icons changes ~Carn
+	if( update_icon )	//forces a full overlay update
+		update_icon = 0
+		regenerate_icons()
+	else if( lying != lying_prev )
+		update_icons()
+
+	//Update our name based on whether our face is obscured/disfigured
+	name = get_visible_name()	//TODO: this was broken by the dismemberment revert ~Carn
 
 	if(client)
 		handle_regular_hud_updates()
 
-	//Being buckled to a chair or bed
-	check_if_buckled()
+	update_canmove()	//TODO: check ~Carn
 
-	// Yup.
-	update_canmove()
-
-	clamp_values()
+	clamp_values()		//TODO: check that dmage procs aren't outputing bad values outside clamp ranges ~Carn
 
 	// Grabbing
 	for(var/obj/item/weapon/grab/G in src)
 		G.process()
 
+	//TODO: optimise this.
 	if(isturf(loc) && rand(1,1000) == 1) //0.1% chance of playing a scary sound to someone who's in complete darkness
 		var/turf/currentTurf = loc
 		if(!currentTurf.sd_lumcount)
@@ -99,17 +101,18 @@
 
 /mob/living/carbon/human
 	proc
+		//I've rewritten this to do what it was intended to do.
+		//This can probably be removed like Rockdtben suggested, but I'd like to go over the damage procs first just to be safe.
+		//Perhaps code view-vars to be unable to directly edit the damagevariables without using procs
 		clamp_values()
-
-			SetStunned(min(stunned, 20))
-			SetParalysis(min(paralysis, 20))
-			SetWeakened(min(weakened, 20))
-			sleeping = max(min(sleeping, 20), 0)
-			adjustBruteLoss(0)
-			adjustToxLoss(0)
-			adjustOxyLoss(0)
-			adjustFireLoss(0)
-
+			stunned		= max( min(stunned,20), 0 )		// positive and under 20
+			paralysis	= max( min(paralysis,20), 0 )	// positive and under 20
+			weakened	= max( min(weakened,20), 0 )	// positive and under 20
+			sleeping	= max( min(sleeping, 20), 0 )	// positive and under 20
+			oxyloss		= max(oxyloss,0)				// positive
+			toxloss		= max(toxloss,0)				// positive
+			bruteloss	= max(bruteloss,0)				// positive
+			fireloss	= max(fireloss,0)				// positive
 
 		update_mind()
 			if(!mind && client)
@@ -233,6 +236,7 @@
 
 			if ((HULK in mutations) && health <= 25)
 				mutations.Remove(HULK)
+				update_mutations()		//update our mutation overlays
 				src << "\red You suddenly feel very weak."
 				Weaken(3)
 				emote("collapse")
@@ -700,14 +704,16 @@
 					adjustToxLoss(-1)
 					adjustOxyLoss(-1)
 
-			if(overeatduration > 500 && !(FAT in mutations))
-				src << "\red You suddenly feel blubbery!"
-				mutations.Add(FAT)
-				update_body()
-			if ((overeatduration < 100 && (FAT in mutations)))
-				src << "\blue You feel fit again!"
-				mutations.Remove(FAT)
-				update_body()
+			if(FAT in mutations)
+				if(overeatduration < 100)
+					src << "\blue You feel fit again!"
+					mutations.Remove(FAT)
+					update_body()
+			else
+				if(overeatduration > 500)
+					src << "\red You suddenly feel blubbery!"
+					mutations.Add(FAT)
+					update_body()
 
 			// nutrition decrease
 			if (nutrition > 0 && stat != 2)
@@ -758,33 +764,33 @@
 				//if(!rejuv) oxyloss++
 				if(!reagents.has_reagent("inaprovaline")) adjustOxyLoss(1)
 
-				if(stat != 2)	stat = 1
+				if(stat != DEAD)	stat = UNCONSCIOUS
 				Paralyse(5)
 
-			if (stat != 2) //Alive.
+			if (stat != DEAD) //Alive.
 				if (silent)
 					silent--
 
 				if (resting || sleeping || paralysis || stunned || weakened || (changeling && changeling.changeling_fakedeath)) //Stunned etc.
 					if (stunned > 0)
 						AdjustStunned(-1)
-						stat = 0
+						stat = CONSCIOUS
 					if (weakened > 0)
 						AdjustWeakened(-1)
 						lying = 1
-						stat = 0
+						stat = CONSCIOUS
 					if (paralysis > 0)
 						AdjustParalysis(-1)
 						blinded = 1
 						lying = 1
-						stat = 1
+						stat = UNCONSCIOUS
 
 					if (sleeping > 0)
 						handle_dreams()
 						adjustHalLoss(-5)
 						blinded = 1
 						lying = 1
-						stat = 1
+						stat = UNCONSCIOUS
 						if (prob(10) && health && !hal_crit)
 							spawn(0)
 								emote("snore")
@@ -792,7 +798,7 @@
 
 					if(resting)
 						lying = 1
-						stat = 0
+						stat = CONSCIOUS
 
 					var/h = hand
 					hand = 0
@@ -803,12 +809,12 @@
 
 				else	//Not stunned.
 					lying = 0
-					stat = 0
+					stat = CONSCIOUS
 
 			else //Dead.
 				lying = 1
 				blinded = 1
-				stat = 2
+				stat = DEAD
 				silent = 0
 
 			if (stuttering) stuttering--

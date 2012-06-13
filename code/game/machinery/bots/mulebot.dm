@@ -325,8 +325,10 @@
 					cell.layer = 20
 					if(usr.hand)
 						usr.l_hand = cell
+						usr.update_inv_l_hand()
 					else
 						usr.r_hand = cell
+						usr.update_inv_r_hand()
 
 					cell.add_fingerprint(usr)
 					cell.updateicon()

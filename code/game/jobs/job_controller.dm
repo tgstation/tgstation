@@ -251,7 +251,7 @@ var/global/datum/controller/occupations/job_master
 				new /obj/item/weapon/storage/box/survival(BPK)
 				H.equip_if_possible(BPK, H.slot_back,1)
 
-
+		H.regenerate_icons()
 		return 1
 
 

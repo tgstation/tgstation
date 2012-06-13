@@ -1,12 +1,12 @@
 /mob/living/carbon/alien/humanoid/Login()
 	..()
 
-	update_clothing()
+	update_hud()
 
 	if (!isturf(src.loc))
 		src.client.eye = src.loc
 		src.client.perspective = EYE_PERSPECTIVE
-	if (src.stat == 2)
+	if (src.stat == DEAD)
 		src.verbs += /mob/proc/ghost
 
 	return
@@ -29,7 +29,7 @@
 	src.rest = new /obj/screen( null )
 	src.zone_sel = new /obj/screen/zone_sel( null )
 
-	update_clothing()
+	regenerate_icons()
 
 	src.mach.dir = NORTH
 

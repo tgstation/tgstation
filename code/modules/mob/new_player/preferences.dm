@@ -754,9 +754,6 @@ datum/preferences
 			backbag = 1 //Same as above
 		character.backbag = backbag
 
-		character.update_face()
-		character.update_body()
-
 		if(!safety)//To prevent run-time errors due to null datum when using randomize_appearance_for()
 			spawn(10)
 				if(character&&character.client)

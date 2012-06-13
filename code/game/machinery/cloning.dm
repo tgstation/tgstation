@@ -198,9 +198,8 @@
 	if(se)
 		src.occupant.dna.struc_enzymes = se
 		randmutb(src.occupant) //Sometimes the clones come out wrong.
-	src.occupant:update_face()
-	src.occupant:update_body()
 	src.occupant:mutantrace = mrace
+	src.occupant:update_mutantrace()
 	src.occupant:suiciding = 0
 	src.attempting = 0
 	return 1

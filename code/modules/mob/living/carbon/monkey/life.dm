@@ -11,24 +11,18 @@
 /mob/living/carbon/monkey/Life()
 	set invisibility = 0
 	set background = 1
-
-	if (src.monkeyizing)
-		return
-
+	if (src.monkeyizing)	return
 	..()
 
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
 	if(src.loc)
 		environment = loc.return_air()
 
-	if (src.stat != 2) //still breathing
-
+	if (src.stat != DEAD) //still breathing
 		//First, resolve location and get a breath
-
 		if(air_master.current_cycle%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
 			breathe()
-
 		else //Still give containing object the chance to interact
 			if(istype(loc, /obj/))
 				var/obj/location_as_object = loc
@@ -69,11 +63,15 @@
 	//Being buckled to a chair or bed
 	check_if_buckled()
 
+	//Temporary, whilst I finish the regenerate_icons changes ~Carn
+	if( update_icon )	//forces a full overlay update
+		update_icon = 0
+		regenerate_icons()
+	else if( lying != lying_prev )
+		update_icons()
+
 	// Yup.
 	update_canmove()
-
-	// Update clothing
-	update_clothing()
 
 	clamp_values()
 

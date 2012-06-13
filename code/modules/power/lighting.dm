@@ -370,7 +370,8 @@
 
 				on = has_power()
 				update()
-				user.update_clothing()
+				user.update_inv_l_hand(0)
+				user.update_inv_r_hand()
 				if(on && rigged)
 					explode()
 			else
@@ -486,10 +487,9 @@
 
 			var/datum/organ/external/affecting = H.get_organ("[user.hand ? "l" : "r" ]_arm")
 
-			affecting.take_damage( 0, 5 )		// 5 burn damage
-
+			if(affecting.take_damage( 0, 5 ))		// 5 burn damage
+				H.UpdateDamageIcon()
 			H.updatehealth()
-			H.UpdateDamageIcon()
 			return				// if burned, don't remove the light
 
 	// create a light tube/bulb item and put it in the user's hand
@@ -501,8 +501,10 @@
 	L.layer = 20
 	if(user.hand)
 		user.l_hand = L
+		user.update_inv_l_hand()
 	else
 		user.r_hand = L
+		user.update_inv_r_hand()
 
 	// light item inherits the switchcount, then zero it
 	L.switchcount = switchcount
@@ -514,7 +516,6 @@
 
 	status = LIGHT_EMPTY
 	update()
-	user.update_clothing()
 
 // break the light and make sparks if was on
 

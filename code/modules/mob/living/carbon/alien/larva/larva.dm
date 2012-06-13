@@ -7,7 +7,7 @@
 		name = text("alien larva ([rand(1, 1000)])")
 	real_name = name
 	spawn (1)
-		update_clothing()
+		regenerate_icons()
 		src << "\blue Your icons have been generated!"
 //	spawn(1200) grow()  Grow after 120 seconds -- TLE Commented out because life.dm has better version -- Urist
 	..()
@@ -223,46 +223,6 @@
 
 	return
 
-/mob/living/carbon/alien/larva/update_clothing()
-	..()
-
-	if (monkeyizing)
-		return
-
-
-	if (client)
-		if (i_select)
-			if (intent)
-				client.screen += hud_used.intents
-
-				var/list/L = dd_text2list(intent, ",")
-				L[1] += ":-11"
-				i_select.screen_loc = dd_list2text(L,",") //ICONS4, FUCKING SHIT
-			else
-				i_select.screen_loc = null
-		if (m_select)
-			if (m_int)
-				client.screen += hud_used.mov_int
-
-				var/list/L = dd_text2list(m_int, ",")
-				L[1] += ":-11"
-				m_select.screen_loc = dd_list2text(L,",") //ICONS4, FUCKING SHIT
-			else
-				m_select.screen_loc = null
-
-	if (alien_invis)
-		invisibility = 2
-		if(istype(loc, /turf))//If they are standing on a turf.
-			AddCamoOverlay(loc)//Overlay camo.
-	else
-		invisibility = 0
-
-	for (var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
-			spawn (0)
-				show_inv(M)
-				return
-
 
 /mob/living/carbon/alien/larva/hand_p(mob/M as mob)
 	if (!ticker)
@@ -413,8 +373,10 @@
 			G.assailant = M
 			if (M.hand)
 				M.l_hand = G
+				M.update_inv_l_hand()
 			else
 				M.r_hand = G
+				M.update_inv_r_hand()
 			G.layer = 20
 			G.affecting = src
 			grabbed_by += G

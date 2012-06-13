@@ -376,9 +376,11 @@
 	if (user.r_hand == T)
 		user.u_equip(T)
 		user.r_hand = B
+		user.update_inv_r_hand()
 	else
 		user.u_equip(T)
 		user.l_hand = B
+		user.update_inv_l_hand()
 	B.layer = 20
 	user << "You add the tiles into the empty toolbox. They stick oddly out the top."
 	del(T)
@@ -392,9 +394,11 @@
 		if (user.r_hand == W)
 			user.u_equip(W)
 			user.r_hand = B
+			user.update_inv_r_hand()
 		else
 			user.u_equip(W)
 			user.l_hand = B
+			user.update_inv_l_hand()
 		B.created_name = src.created_name
 		B.layer = 20
 		user << "You add the sensor to the toolbox and tiles!"
@@ -416,6 +420,8 @@
 		var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot
 		if(user.r_hand == src || user.l_hand == src)
 			A.loc = user.loc
+			user.update_inv_l_hand(0)
+			user.update_inv_l_hand(1)
 		else
 			A.loc = src.loc
 		A.name = src.created_name

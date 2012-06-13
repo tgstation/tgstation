@@ -29,7 +29,7 @@
 			if("monkey")
 				if (M.monkeyizing)
 					return
-				M.update_clothing()
+//				M.regenerate_icons()
 				M.monkeyizing = 1
 				M.canmove = 0
 				M.icon = null
@@ -48,7 +48,7 @@
 			if("robot")
 				if (M.monkeyizing)
 					return
-				M.update_clothing()
+//				M.regenerate_icons()
 				M.monkeyizing = 1
 				M.canmove = 0
 				M.icon = null
@@ -56,7 +56,6 @@
 				if(M.client)
 					M.client.screen -= M.hud_used.contents
 					M.client.screen -= M.hud_used.adding
-					M.client.screen -= M.hud_used.mon_blo
 					M.client.screen -= list( M.oxygen, M.throw_icon, M.i_select, M.m_select, M.toxin, M.internals, M.fire, M.hands, M.healths, M.pullin, M.blind, M.flash, M.rest, M.sleep, M.mach )
 					M.client.screen -= list( M.zone_sel, M.oxygen, M.throw_icon, M.i_select, M.m_select, M.toxin, M.internals, M.fire, M.hands, M.healths, M.pullin, M.blind, M.flash, M.rest, M.sleep, M.mach )
 
@@ -98,7 +97,7 @@
 			if("metroid")
 				if (M.monkeyizing)
 					return
-				M.update_clothing()
+//				M.regenerate_icons()
 				M.monkeyizing = 1
 				M.canmove = 0
 				M.icon = null
@@ -129,7 +128,7 @@
 			if("alien")
 				if (M.monkeyizing)
 					return
-				M.update_clothing()
+//				M.regenerate_icons()
 				M.monkeyizing = 1
 				M.canmove = 0
 				M.icon = null
@@ -155,7 +154,7 @@
 			if("human")
 				if (M.monkeyizing)
 					return
-				M.update_clothing()
+//				M.regenerate_icons()
 				M.monkeyizing = 1
 				M.canmove = 0
 				M.icon = null

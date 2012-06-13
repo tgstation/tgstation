@@ -100,7 +100,8 @@
 /obj/structure/stool/bed/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if(!istype(M)) return
 	buckle_mob(M, user)
-	M.lying = 1
+//	M.lying = 1
+//	M.update_icons()	//update our icons to reflect our lying/standing status
 	return
 
 /obj/structure/stool/bed/attack_paw(mob/user as mob)
@@ -136,6 +137,7 @@
 /obj/structure/stool/bed/chair/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if(!istype(M)) return
 	buckle_mob(M, user)
+//	M.update_icons()	//update our icons to reflect our lying/standing status
 	return
 
 //roller bed
@@ -156,7 +158,6 @@
 	if ((!( istype(M, /mob) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat || M.buckled || istype(usr, /mob/living/silicon/pai)))
 		return
 	M.pixel_y = 6
-	M.update_clothing()
 	density = 1
 	icon_state = "up"
 	..()

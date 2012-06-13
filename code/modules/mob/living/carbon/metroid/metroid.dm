@@ -9,7 +9,7 @@
 
 	real_name = name
 	spawn (1)
-		update_clothing()
+		regenerate_icons()
 		src << "\blue Your icons have been generated!"
 	..()
 
@@ -283,43 +283,6 @@
 	return
 
 
-
-/mob/living/carbon/metroid/update_clothing()
-	..()
-
-	if (monkeyizing)
-		return
-
-
-	if (client)
-		if (i_select)
-			if (intent)
-				client.screen += hud_used.intents
-
-				var/list/L = dd_text2list(intent, ",")
-				L[1] += ":-11"
-				i_select.screen_loc = dd_list2text(L,",") //ICONS4, FUCKING SHIT
-			else
-				i_select.screen_loc = null
-		if (m_select)
-			if (m_int)
-				client.screen += hud_used.mov_int
-
-				var/list/L = dd_text2list(m_int, ",")
-				L[1] += ":-11"
-				m_select.screen_loc = dd_list2text(L,",") //ICONS4, FUCKING SHIT
-			else
-				m_select.screen_loc = null
-
-
-	for (var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
-			spawn (0)
-				show_inv(M)
-				return
-
-
-
 /mob/living/carbon/metroid/attack_metroid(mob/living/carbon/metroid/M as mob)
 	if (!ticker)
 		M << "You cannot attack people before the game has started."
@@ -490,8 +453,10 @@
 			G.assailant = M
 			if (M.hand)
 				M.l_hand = G
+				M.update_inv_l_hand()
 			else
 				M.r_hand = G
+				M.update_inv_r_hand()
 			G.layer = 20
 			G.affecting = src
 			grabbed_by += G
@@ -594,8 +559,10 @@
 			G.assailant = M
 			if (M.hand)
 				M.l_hand = G
+				M.update_inv_l_hand()
 			else
 				M.r_hand = G
+				M.update_inv_r_hand()
 			G.layer = 20
 			G.affecting = src
 			grabbed_by += G

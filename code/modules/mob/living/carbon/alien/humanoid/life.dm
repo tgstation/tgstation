@@ -62,14 +62,18 @@
 	//Status updates, death etc.
 	handle_regular_status_updates()
 
-	// Update clothing
-	update_clothing()
+	//Being buckled to a chair or bed
+	check_if_buckled()
+
+	//Temporary, whilst I finish the regenerate_icons changes ~Carn
+	if( update_icon )	//forces a full overlay update
+		update_icon = 0
+		regenerate_icons()
+	else if( lying != lying_prev )
+		update_icons()
 
 	if(client)
 		handle_regular_hud_updates()
-
-	//Being buckled to a chair or bed
-	check_if_buckled()
 
 	// Yup.
 	update_canmove()
@@ -408,8 +412,8 @@
 				//if (prob(10) && health) emote("snore") //Invalid emote for aliens, but it might be worth making sleep noticeable somehow -Yvarov
 				src.sleeping--
 
-			if(src.resting)
-				Weaken(5)
+//			if(src.resting)
+//				Weaken(5)
 
 			if(move_delay_add > 0)
 				move_delay_add = max(0, move_delay_add - rand(1, 2))
@@ -425,9 +429,11 @@
 				if(src.stat != 2)	src.stat = 1
 				Paralyse(5)
 
-			if (src.stat != 2) //Alive.
+			if (src.stat != DEAD) //Alive.
 
-				if (src.paralysis || src.stunned || src.weakened) //Stunned etc.
+				if (resting || src.paralysis || src.stunned || src.weakened) //Stunned etc.
+					if (resting)
+						src.lying = 1
 					if (src.stunned > 0)
 						AdjustStunned(-1)
 						src.stat = 0
@@ -440,12 +446,10 @@
 						src.blinded = 1
 						src.lying = 1
 						src.stat = 1
-					var/h = src.hand
-					src.hand = 0
 					drop_item()
-					src.hand = 1
+					hand = !hand
 					drop_item()
-					src.hand = h
+					hand = !hand
 
 				else	//Not stunned.
 					src.lying = 0

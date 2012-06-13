@@ -128,6 +128,8 @@ emp_act
 	var/bloody = 0
 	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))
 		I.add_blood(src)	//Make the weapon bloody, not the person.
+//		if(user.hand)	user.update_inv_l_hand()	//updates the attacker's overlay for the (now bloodied) weapon
+//		else			user.update_inv_r_hand()	//removed because weapons don't have on-mob blood overlays
 		if(prob(33))
 			bloody = 1
 			var/turf/location = loc
@@ -135,8 +137,12 @@ emp_act
 				location.add_blood(src)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
-				if(H.wear_suit)			H.wear_suit.add_blood(src)
-				else if(H.w_uniform)	H.w_uniform.add_blood(src)
+				if(H.wear_suit)
+					H.wear_suit.add_blood(src)
+					H.update_inv_wear_suit(0)	//updates mob overlays to show the new blood (no refresh)
+				else if(H.w_uniform)
+					H.w_uniform.add_blood(src)
+					H.update_inv_w_uniform(0)	//updates mob overlays to show the new blood (no refresh)
 				if (H.gloves)
 					H.gloves.add_blood(H)
 					H.gloves:transfer_blood = 2
@@ -145,6 +151,7 @@ emp_act
 					H.add_blood(H)
 					H.bloody_hands = 2
 					H.bloody_hands_mob = H
+				H.update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
 
 		switch(hit_area)
 			if("head")//Harder to score a stun but if you do it lasts a bit longer
@@ -155,9 +162,15 @@ emp_act
 						ticker.mode.remove_revolutionary(mind)
 
 				if(bloody)//Apply blood
-					if(wear_mask)				wear_mask.add_blood(src)
-					if(head)					head.add_blood(src)
-					if(glasses && prob(33))		glasses.add_blood(src)
+					if(wear_mask)
+						wear_mask.add_blood(src)
+						update_inv_wear_mask(0)
+					if(head)
+						head.add_blood(src)
+						update_inv_head(0)
+					if(glasses && prob(33))
+						glasses.add_blood(src)
+						update_inv_glasses(0)
 
 			if("chest")//Easier to score a stun but lasts less time
 				if(prob((I.force + 10)))
@@ -165,6 +178,10 @@ emp_act
 					visible_message("\red <B>[src] has been knocked down!</B>")
 
 				if(bloody)
-					if(src.wear_suit)	src.wear_suit.add_blood(src)
-					if(src.w_uniform)	src.w_uniform.add_blood(src)
-	src.UpdateDamageIcon()
+
+					if(wear_suit)
+						wear_suit.add_blood(src)
+						update_inv_wear_suit(0)
+					if(w_uniform)
+						w_uniform.add_blood(src)
+						update_inv_w_uniform(0)

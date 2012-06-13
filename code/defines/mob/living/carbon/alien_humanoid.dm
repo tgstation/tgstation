@@ -2,54 +2,45 @@
 	name = "alien"
 	icon_state = "alien_s"
 
-	var/obj/item/clothing/suit/wear_suit = null
-	var/obj/item/clothing/head/head = null
+	var/obj/item/clothing/suit/wear_suit = null		//TODO: necessary? Are they even used? ~Carn
+	var/obj/item/clothing/head/head = null			//
 	var/obj/item/weapon/r_store = null
 	var/obj/item/weapon/l_store = null
+	var/alien_invis = 0
+	var/caste = ""
+	update_icon = 1
 
-	var/icon/stand_icon = null
-	var/icon/lying_icon = null
-	var/icon/resting_icon = null
-	var/icon/running_icon = null
-
-	var/last_b_state = 1.0
-
-	var/image/face_standing = null
-	var/image/face_lying = null
-
-	var/image/damageicon_standing = null
-	var/image/damageicon_lying = null
 
 /mob/living/carbon/alien/humanoid/hunter
 	name = "alien hunter"
-
+	caste = "h"
 	health = 150
 	storedPlasma = 100
 	max_plasma = 150
-	icon_state = "alien_s"
+	icon_state = "alienh_s"
 
 /mob/living/carbon/alien/humanoid/sentinel
 	name = "alien sentinel"
-
+	caste = "s"
 	health = 125
 	storedPlasma = 100
 	max_plasma = 250
-	icon_state = "alien_s"
+	icon_state = "aliens_s"
 
 /mob/living/carbon/alien/humanoid/drone
 	name = "alien drone"
-
+	caste = "d"
 	health = 100
-	icon_state = "alien_s"
+	icon_state = "aliend_s"
 
 /mob/living/carbon/alien/humanoid/queen
 	name = "alien queen"
-
+	caste = "q"
 	health = 250
-	icon_state = "queen_s"
+	icon_state = "alienq_s"
 	nopush = 1
+
 /mob/living/carbon/alien/humanoid/rpbody
 	update_icon = 0
-
 	voice_message = "says"
 	say_message = "says"

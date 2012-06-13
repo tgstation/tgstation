@@ -200,8 +200,6 @@
 /obj/machinery/shower/proc/wash(atom/movable/O as obj|mob)
 	if(!on) return
 
-	O.clean_blood()
-
 	if(istype(O, /mob/living/carbon))
 		var/mob/living/carbon/monkey = O	//it's not necessarily a monkey, but >accurate varnames
 		if(monkey.r_hand)
@@ -210,21 +208,27 @@
 			monkey.l_hand.clean_blood()
 		if(monkey.wear_mask)
 			monkey.wear_mask.clean_blood()
+			monkey.update_inv_wear_mask(0)
 
 		if(istype(O, /mob/living/carbon/human))
 			var/mob/living/carbon/human/washer = O
 			if(washer.head)
 				washer.head.clean_blood()
+				washer.update_inv_head(0)
 			if(washer.wear_suit)
 				washer.wear_suit.clean_blood()
+				washer.update_inv_wear_suit(0)
 			else if(washer.w_uniform)
 				washer.w_uniform.clean_blood()
+				washer.update_inv_w_uniform(0)
 			if(washer.shoes)
 				washer.shoes.clean_blood()
+				washer.update_inv_shoes(0)
 			if(washer.gloves)
 				washer.gloves.clean_blood()
-			if(washer.head)
-				washer.head.clean_blood()
+//				washer.update_inv_gloves(0)		//no need for this one since it's located in clean_blood too.
+
+	O.clean_blood()
 
 	if(loc)
 		var/turf/tile = get_turf(loc)
@@ -299,8 +303,10 @@
 			var/mob/living/carbon/human/washer = C
 			if(washer.gloves)					//if they have gloves
 				washer.gloves.clean_blood()		//clean the gloves
+				washer.update_inv_gloves()		//update our overlays
 			else								//and if they don't,
 				washer.clean_blood()			//wash their hands (a mob being bloody means they are 'red handed')
+				//overlays will be updated in clean_blood()
 		else
 			C.clean_blood()						//other things that can't wear gloves should just wash the mob.
 	for(var/mob/V in viewers(src, null))

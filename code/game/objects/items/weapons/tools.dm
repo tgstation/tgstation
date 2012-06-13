@@ -380,7 +380,7 @@ WELDINGTOOOL
 		"You cut \the [M]'s restraints with \the [src]!",\
 		"You hear cable being cut.")
 		M.handcuffed = null
-		M.update_clothing()
+		M.update_inv_handcuffed()
 		return
 	else
 		..()

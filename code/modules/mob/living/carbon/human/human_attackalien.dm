@@ -16,8 +16,10 @@
 			G.assailant = M
 			if (M.hand)
 				M.l_hand = G
+				M.update_inv_l_hand()
 			else
 				M.r_hand = G
+				M.update_inv_r_hand()
 			G.layer = 20
 			G.affecting = src
 			grabbed_by += G
@@ -47,7 +49,6 @@
 			if (damage >= 25)
 				visible_message("\red <B>[M] has wounded [src]!</B>")
 				apply_effect(4, WEAKEN, armor_block)
-			UpdateDamageIcon()
 			updatehealth()
 
 		if("disarm")

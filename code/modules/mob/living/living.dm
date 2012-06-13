@@ -41,11 +41,8 @@
 		var/extradam = 0	//added to when organ is at max dam
 		for(var/datum/organ/external/affecting in H.organs)
 			if(!affecting)	continue
-			if(affecting.take_damage(0, divided_damage+extradam))
-				extradam = 0
-			else
-				extradam += divided_damage
-		H.UpdateDamageIcon()
+			if(affecting.take_damage(0, divided_damage+extradam))	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
+				H.UpdateDamageIcon()
 		H.updatehealth()
 		return 1
 	else if(istype(src, /mob/living/carbon/monkey))
@@ -173,19 +170,20 @@
 
 /mob/living/proc/check_if_buckled()
 	if (buckled)
-		if(buckled == /obj/structure/stool/bed || istype(buckled, /obj/machinery/conveyor))
-			lying = 1
-		if(lying)
-			var/h = hand
-			hand = 0
-			drop_item()
-			hand = 1
-			drop_item()
-			hand = h
 		density = 1
+		if( istype(buckled, /obj/structure/stool/bed/chair) )
+			lying = 0
+		else
+			lying = 1
 	else
 		density = !lying
-
+	if(lying)
+		var/h = hand
+		hand = 0
+		drop_item()
+		hand = 1
+		drop_item()
+		hand = h
 
 /mob/living/proc/Examine_OOC()
 	set name = "Examine Meta-Info (OOC)"

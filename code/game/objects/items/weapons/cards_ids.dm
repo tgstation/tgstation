@@ -96,13 +96,13 @@ FINGERPRINT CARD
 					usr.l_hand = P
 					P.loc = usr
 					P.layer = 20
-					usr.update_clothing()
+					usr.update_inv_l_hand()
 				else
 					if (!( usr.r_hand ))
 						usr.r_hand = P
 						P.loc = usr
 						P.layer = 20
-						usr.update_clothing()
+						usr.update_inv_r_hand()
 				src.add_fingerprint(usr)
 				P.add_fingerprint(usr)
 			src.update()

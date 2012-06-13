@@ -5,16 +5,7 @@
 	if(src.name == "alien hunter")
 		src.name = text("alien hunter ([rand(1, 1000)])")
 	src.real_name = src.name
-	spawn (1)
-		src.verbs -= /mob/living/carbon/alien/humanoid/verb/corrode
-		src.stand_icon = new /icon('alien.dmi', "alienh_s")
-		src.lying_icon = new /icon('alien.dmi', "alienh_l")
-		src.resting_icon = new /icon('alien.dmi', "alienh_sleep")
-		src.running_icon = new /icon('alien.dmi', "alienh_running")
-		src.icon = src.stand_icon
-		update_clothing()
-		src << "\blue Your icons have been generated!"
-
+	src.verbs -= /mob/living/carbon/alien/humanoid/verb/corrode
 
 /mob/living/carbon/alien/humanoid/hunter
 
@@ -154,16 +145,21 @@
 	set desc = "Makes you invisible for 15 seconds"
 	set category = "Alien"
 
-	if(powerc(50))
-		adjustToxLoss(-50)
-		alien_invis = 1.0
-		src << "\green You are now invisible."
-		for(var/mob/O in oviewers(src, null))
-			O.show_message(text("\red <B>[src] fades into the surroundings!</B>"), 1)
-		spawn(150)
-			if(!isnull(src))//Don't want the game to runtime error when the mob no-longer exists.
-				alien_invis = 0.0
-				src << "\green You are no longer invisible."
+	if(alien_invis)
+		update_icons()
+	else
+		if(powerc(50))
+			adjustToxLoss(-50)
+			alien_invis = 1.0
+			update_icons()
+			src << "\green You are now invisible."
+			for(var/mob/O in oviewers(src, null))
+				O.show_message(text("\red <B>[src] fades into the surroundings!</B>"), 1)
+			spawn(250)
+				if(!isnull(src))//Don't want the game to runtime error when the mob no-longer exists.
+					alien_invis = 0.0
+					update_icons()
+					src << "\green You are no longer invisible."
 	return
 
 /mob/living/carbon/alien/humanoid/hunter/verb/regurgitate()

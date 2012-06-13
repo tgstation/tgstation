@@ -151,7 +151,7 @@ var/const/MAX_ACTIVE_TIME = 600
 		layer = 20
 		target.wear_mask = src
 
-		target.update_clothing()
+		target.update_inv_wear_mask()
 
 		GoIdle() //so it doesn't jump the people that tear it off
 
@@ -178,7 +178,7 @@ var/const/MAX_ACTIVE_TIME = 600
 		else
 			for(var/mob/O in viewers(target,null))
 				O.show_message("\red \b [src] violates [target]'s face!", 1)
-
+		target.update_inv_wear_mask()
 		return
 
 	proc/GoActive()

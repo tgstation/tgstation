@@ -3,10 +3,6 @@
 
 	src.adding = list(  )
 	src.other = list(  )
-	src.intents = list(  )
-	src.mon_blo = list(  )
-	src.m_ints = list(  )
-	src.mov_int = list(  )
 	src.vimpaired = list(  )
 	src.darkMask = list(  )
 

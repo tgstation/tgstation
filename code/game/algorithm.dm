@@ -51,24 +51,25 @@ proc/countJob(rank)
 			jobCount++
 	return jobCount
 
-/mob/living/carbon/human/var/const/slot_back = 1
-/mob/living/carbon/human/var/const/slot_wear_mask = 2
-/mob/living/carbon/human/var/const/slot_handcuffed = 3
-/mob/living/carbon/human/var/const/slot_l_hand = 4
-/mob/living/carbon/human/var/const/slot_r_hand = 5
-/mob/living/carbon/human/var/const/slot_belt = 6
-/mob/living/carbon/human/var/const/slot_wear_id = 7
-/mob/living/carbon/human/var/const/slot_ears = 8
-/mob/living/carbon/human/var/const/slot_glasses = 9
-/mob/living/carbon/human/var/const/slot_gloves = 10
-/mob/living/carbon/human/var/const/slot_head = 11
-/mob/living/carbon/human/var/const/slot_shoes = 12
-/mob/living/carbon/human/var/const/slot_wear_suit = 13
-/mob/living/carbon/human/var/const/slot_w_uniform = 14
-/mob/living/carbon/human/var/const/slot_l_store = 15
-/mob/living/carbon/human/var/const/slot_r_store = 16
-/mob/living/carbon/human/var/const/slot_s_store = 17
-/mob/living/carbon/human/var/const/slot_in_backpack = 18
+//TODO: these could be defines
+/mob/living/carbon/human/var/const/slot_back		= 1
+/mob/living/carbon/human/var/const/slot_wear_mask	= 2
+/mob/living/carbon/human/var/const/slot_handcuffed	= 3
+/mob/living/carbon/human/var/const/slot_l_hand		= 4
+/mob/living/carbon/human/var/const/slot_r_hand		= 5
+/mob/living/carbon/human/var/const/slot_belt		= 6
+/mob/living/carbon/human/var/const/slot_wear_id		= 7
+/mob/living/carbon/human/var/const/slot_ears		= 8
+/mob/living/carbon/human/var/const/slot_glasses		= 9
+/mob/living/carbon/human/var/const/slot_gloves		= 10
+/mob/living/carbon/human/var/const/slot_head		= 11
+/mob/living/carbon/human/var/const/slot_shoes		= 12
+/mob/living/carbon/human/var/const/slot_wear_suit	= 13
+/mob/living/carbon/human/var/const/slot_w_uniform	= 14
+/mob/living/carbon/human/var/const/slot_l_store		= 15
+/mob/living/carbon/human/var/const/slot_r_store		= 16
+/mob/living/carbon/human/var/const/slot_s_store		= 17
+/mob/living/carbon/human/var/const/slot_in_backpack	= 18
 
 /mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, del_on_fail = 1)
 	for (var/slot in slots)
@@ -89,15 +90,15 @@ proc/countJob(rank)
 			if( src.get_active_hand() == W )
 				src.u_equip(W)
 			src.back = W
-			update_clothing()
+			update_inv_back()
 			return
 
 	if(W.slot_flags & SLOT_ID)
-		if(!src.wear_id)
+		if(!src.wear_id && src.w_uniform)
 			if( src.get_active_hand() == W )
 				src.u_equip(W)
 			src.wear_id = W
-			update_clothing()
+			update_inv_wear_id()
 			return
 
 	if(W.slot_flags & SLOT_ICLOTHING)
@@ -105,7 +106,7 @@ proc/countJob(rank)
 			if( src.get_active_hand() == W )
 				src.u_equip(W)
 			src.w_uniform = W
-			update_clothing()
+			update_inv_w_uniform()
 			return
 
 	if(W.slot_flags & SLOT_OCLOTHING)
@@ -113,7 +114,7 @@ proc/countJob(rank)
 			if( src.get_active_hand() == W )
 				src.u_equip(W)
 			src.wear_suit = W
-			update_clothing()
+			update_inv_wear_suit()
 			return
 
 	if(W.slot_flags & SLOT_MASK)
@@ -121,7 +122,7 @@ proc/countJob(rank)
 			if( src.get_active_hand() == W )
 				src.u_equip(W)
 			src.wear_mask = W
-			update_clothing()
+			update_inv_wear_mask()
 			return
 
 	if(W.slot_flags & SLOT_HEAD)
@@ -129,7 +130,7 @@ proc/countJob(rank)
 			if( src.get_active_hand() == W )
 				src.u_equip(W)
 			src.head = W
-			update_clothing()
+			update_inv_head()
 			return
 
 	if(W.slot_flags & SLOT_FEET)
@@ -137,7 +138,7 @@ proc/countJob(rank)
 			if( src.get_active_hand() == W )
 				src.u_equip(W)
 			src.shoes = W
-			update_clothing()
+			update_inv_shoes()
 			return
 
 	if(W.slot_flags & SLOT_GLOVES)
@@ -145,7 +146,7 @@ proc/countJob(rank)
 			if( src.get_active_hand() == W )
 				src.u_equip(W)
 			src.gloves = W
-			update_clothing()
+			update_inv_gloves()
 			return
 
 	if(W.slot_flags & SLOT_EARS)
@@ -153,7 +154,7 @@ proc/countJob(rank)
 			if( src.get_active_hand() == W )
 				src.u_equip(W)
 			src.ears = W
-			update_clothing()
+			update_inv_ears()
 			return
 
 	if(W.slot_flags & SLOT_EYES)
@@ -161,15 +162,15 @@ proc/countJob(rank)
 			if( src.get_active_hand() == W )
 				src.u_equip(W)
 			src.glasses = W
-			update_clothing()
+			update_inv_glasses()
 			return
 
 	if(W.slot_flags & SLOT_BELT)
-		if(!src.belt)
+		if(!src.belt && w_uniform)
 			if( src.get_active_hand() == W )
 				src.u_equip(W)
 			src.belt = W
-			update_clothing()
+			update_inv_belt()
 			return
 
 	//Suit storage
@@ -183,7 +184,7 @@ proc/countJob(rank)
 		if(confirm)
 			src.u_equip(W)
 			src.s_store = W
-			update_clothing()
+			update_inv_s_store()
 			return
 
 	//Pockets
@@ -192,13 +193,13 @@ proc/countJob(rank)
 			if ( W.w_class <= 2 || ( W.slot_flags & SLOT_POCKET ) )
 				u_equip(W)
 				l_store = W
-				update_clothing()
+				update_inv_pockets()
 				return
 		if(!src.r_store)
 			if ( W.w_class <= 2 || ( W.slot_flags & SLOT_POCKET ) )
 				u_equip(W)
 				r_store = W
-				update_clothing()
+				update_inv_pockets()
 				return
 
 
@@ -215,70 +216,87 @@ proc/countJob(rank)
 		if(slot_back)
 			if(!src.back)
 				src.back = W
+				update_inv_back(0)
 				equipped = 1
 		if(slot_wear_mask)
 			if(!src.wear_mask)
 				src.wear_mask = W
+				update_inv_wear_mask(0)
 				equipped = 1
 		if(slot_handcuffed)
 			if(!src.handcuffed)
 				src.handcuffed = W
+				update_inv_handcuffed(0)
 				equipped = 1
 		if(slot_l_hand)
 			if(!src.l_hand)
 				src.l_hand = W
+				update_inv_l_hand(0)
 				equipped = 1
 		if(slot_r_hand)
 			if(!src.r_hand)
 				src.r_hand = W
+				update_inv_r_hand(0)
 				equipped = 1
 		if(slot_belt)
 			if(!src.belt)
 				src.belt = W
+				update_inv_belt(0)
 				equipped = 1
 		if(slot_wear_id)
 			if(!src.wear_id)
 				src.wear_id = W
+				update_inv_wear_id(0)
 				equipped = 1
 		if(slot_ears)
 			if(!src.ears)
 				src.ears = W
+				update_inv_ears(0)
 				equipped = 1
 		if(slot_glasses)
 			if(!src.glasses)
 				src.glasses = W
+				update_inv_glasses(0)
 				equipped = 1
 		if(slot_gloves)
 			if(!src.gloves)
 				src.gloves = W
+				update_inv_gloves(0)
 				equipped = 1
 		if(slot_head)
 			if(!src.head)
 				src.head = W
+				update_inv_head(0)
 				equipped = 1
 		if(slot_shoes)
 			if(!src.shoes)
 				src.shoes = W
+				update_inv_shoes(0)
 				equipped = 1
 		if(slot_wear_suit)
 			if(!src.wear_suit)
 				src.wear_suit = W
+				update_inv_wear_suit(0)
 				equipped = 1
 		if(slot_w_uniform)
 			if(!src.w_uniform)
 				src.w_uniform = W
+				update_inv_w_uniform(0)
 				equipped = 1
 		if(slot_l_store)
 			if(!src.l_store)
 				src.l_store = W
+				update_inv_pockets(0)
 				equipped = 1
 		if(slot_r_store)
 			if(!src.r_store)
 				src.r_store = W
+				update_inv_pockets(0)
 				equipped = 1
 		if(slot_s_store)
 			if(!src.s_store)
 				src.s_store = W
+				update_inv_s_store(0)
 				equipped = 1
 		if(slot_in_backpack)
 			if (src.back && istype(src.back, /obj/item/weapon/storage/backpack))

@@ -2092,7 +2092,7 @@ var/global/BSACooldown = 0
 						feedback_add_details("admin_secrets_fun_used","DF")
 						for(var/mob/living/carbon/human/B in world)
 							B.face_icon_state = "facial_wise"
-							B.update_face()
+							B.update_hair()
 						message_admins("[key_name_admin(usr)] activated dorf mode")
 					else
 						alert("You cannot perform this action. You must be of a higher administrative rank!")

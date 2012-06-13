@@ -1,0 +1,603 @@
+	///////////////////////
+	//UPDATE_ICONS SYSTEM//
+	///////////////////////
+/*
+Calling this  a system is perhaps a bit trumped up. It is essentially update_clothing dismantled into its
+core parts. The key difference is that when we generate overlays we do not generate either lying or standing
+versions. Instead, we generate both and store them in two fixed-length lists, both using the same list-index
+(The indexes are in setup.dm): Each list for humans is (at the time of writing) of length 19.
+This will hopefully be reduced as the system is refined.
+
+	var/overlays_lying[19]			//For the lying down stance
+	var/overlays_standing[19]		//For the standing stance
+
+When we call update_icons, the 'lying' variable is checked and then the appropriate list is assigned to our overlays!
+That in itself uses a tiny bit more memory (no more than all the ridiculous lists the game has already mind you).
+
+On the other-hand, it should be very CPU cheap in comparison to the old system.
+In the old system, we updated all our overlays every life() call, even if we were standing still inside a crate!
+or dead!. 25ish overlays, all generated from scratch every second for every xeno/human/monkey and then applied.
+More often than not update_clothing was being called a few times in addition to that! CPU was not the only issue,
+all those icons had to be sent to every client. So really the cost was extremely cumulative. To the point where
+update_clothing would frequently appear in the top 10 most CPU intensive procs during profiling.
+
+Another feature of this new system is that our lists are indexed. This means we can update specific overlays!
+So we only regenerate icons when we need them to be updated! This is the main saving for this system.
+
+In practice this means that:
+	everytime you fall over, we just switch between precompiled lists. Which is fast and cheap.
+	Everytime you do something minor like take a pen out of your pocket, we only update the in-hand overlay
+	etc...
+
+
+There are several things that need to be remembered:
+
+>	Whenever we do something that should cause an overlay to update (which doesn't use standard procs
+	( i.e. you do something like l_hand = /obj/item/something new(src) )
+	You will need to call the relevant update_inv_* proc:
+		update_inv_head()
+		update_inv_wear_suit()
+		update_inv_gloves()
+		update_inv_shoes()
+		update_inv_w_uniform()
+		update_inv_glassed()
+		update_inv_l_hand()
+		update_inv_r_hand()
+		update_inv_belt()
+		update_inv_wear_id()
+		update_inv_ears()
+		update_inv_s_store()
+		update_inv_pockets()
+		update_inv_back()
+		update_inv_handcuffed()
+		update_inv_wear_mask()
+
+	All of these are named after the variable they update from. They are defined at the mob/ level like
+	update_clothing was, so you won't cause undefined proc runtimes with usr.update_inv_wear_id() if the usr is a
+	metroid etc. Instead, it'll just return without doing any work. So no harm in calling it for metroids and such.
+
+
+>	There are also these special cases:
+		update_mutations()	//handles updating your appearance for certain mutations.  e.g TK head-glows
+		update_mutantrace()	//handles updating your appearance after setting the mutantrace var
+		UpdateDamageIcon()	//handles damage overlays for brute/burn damage //(will rename this when I geta round to it)
+		update_body()	//Handles updating your mob's icon to reflect their gender/race/complexion etc
+		update_hair()	//Handles updating your hair overlay (used to be update_face, but mouth and
+																			...eyes were merged into update_body)
+
+>	All of these procs update our overlays_lying and overlays_standing, and then call update_icons() by default.
+	If you wish to update several overlays at once, you can set the argument to 0 to disable the update and call
+	it manually:
+		e.g.
+		update_inv_head(0)
+		update_inv_l_hand(0)
+		update_inv_r_hand()		//<---calls update_icons()
+
+	or equivillantly:
+		update_inv_head(0)
+		update_inv_l_hand(0)
+		update_inv_r_hand(0)
+		update_icons()
+
+>	If you need to update all overlays you can use regenerate_icons(). it works exactly like update_clothing used to.
+
+>	I reimplimented an old unused variable which was in the code called (coincidentally) var/update_icon
+	It can be used as another method of triggering regenerate_icons(). It's basically a flag that when set to non-zero
+	will call regenerate_icons() at the next life() call and then reset itself to 0.
+	The idea behind it is icons are regenerated only once, even if multiple events requested it.
+
+This system is confusing and is still a WIP. It's primary goal is speeding up the controls of the game whilst
+reducing processing costs. So please bear with me while I iron out the kinks. It will be worth it, I promise.
+If I can eventually free var/lying stuff from the life() process altogether, stuns/death/status stuff
+will become less affected by lag-spikes and will be instantaneous! :3
+
+If you have any questions/constructive-comments/bugs-to-report/or have a massivly devestated butt...
+Please contact me on #coderbus IRC. ~Carn x
+*/
+
+
+//TODO: FAT -> disability not a mutation
+
+/mob/living/carbon/human
+	var/list/overlays_lying[TOTAL_LAYERS]
+	var/list/overlays_standing[TOTAL_LAYERS]
+
+
+//UPDATES OVERLAYS FROM OVERLAYS_LYING/OVERLAYS_STANDING
+//this proc is messy as I was forced to include some old laggy cloaking code to it so that I don't break cloakers
+//I'll work on removing that stuff by rewriting some of the cloaking stuff at a later date.
+/mob/living/carbon/human/update_icons()
+	lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
+	update_hud()		//TODO: remove the need for this
+	overlays = null
+
+	if(lying)		//can't be cloaked when lying. (for now)
+		icon = lying_icon
+		for(var/image/I in overlays_lying)
+			overlays += I
+	else
+		var/stealth = 0
+		if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja) && wear_suit:s_active)
+			stealth = 1
+		else
+			//cloaking devices. //TODO: get rid of this :<
+			for(var/obj/item/weapon/cloaking_device/S in list(l_hand,r_hand,belt,l_store,r_store))
+				if(S.active)
+					stealth = 1
+					break
+		if(stealth)
+			icon = 'human.dmi'
+			icon_state = "body_cloaked"
+			var/image/I	= overlays_standing[L_HAND_LAYER]
+			if(istype(I))	overlays += I
+			I 			= overlays_standing[R_HAND_LAYER]
+			if(istype(I))	overlays += I
+		else
+			icon = stand_icon
+			for(var/image/I in overlays_standing)
+				overlays += I
+
+
+
+//DAMAGE OVERLAYS
+//constructs damage icon for each organ from mask * damage field and saves it in our overlays_ lists
+/mob/living/carbon/human/UpdateDamageIcon(var/update_icons=1)
+	var/image/standing	= image("icon" = 'dam_human.dmi', "icon_state" = "blank")
+	var/image/lying		= image("icon" = 'dam_human.dmi', "icon_state" = "blank2")
+	for(var/datum/organ/external/O in organs)
+		if(O.brutestate)
+			standing.overlays	+= "[O.icon_name]_[O.brutestate]0"	//we're adding icon_states of the base image as overlays
+			lying.overlays		+= "[O.icon_name]2_[O.brutestate]0"
+		if(O.burnstate)
+			standing.overlays	+= "[O.icon_name]_0[O.burnstate]"
+			lying.overlays		+= "[O.icon_name]2_0[O.burnstate]"
+
+	overlays_standing[DAMAGE_LAYER]	= standing
+	overlays_lying[DAMAGE_LAYER]	= lying
+	if(update_icons)   update_icons()
+
+//BASE MOB SPRITE
+/mob/living/carbon/human/proc/update_body()
+	if(stand_icon)	del(stand_icon)
+	if(lying_icon)	del(lying_icon)
+	if(mutantrace)	return
+	var/husk = (HUSK in src.mutations)
+	var/fat = (FAT in src.mutations)
+	var/g = "m"
+	if(gender == FEMALE)	g = "f"
+	//Base mob icon
+	if(husk)
+		stand_icon = new /icon('human.dmi', "husk_s")
+		lying_icon = new /icon('human.dmi', "husk_l")
+	else if(fat)
+		stand_icon = new /icon('human.dmi', "fatbody_s")
+		lying_icon = new /icon('human.dmi', "fatbody_l")
+	else
+		stand_icon = new /icon('human.dmi', "body_[g]_s")
+		lying_icon = new /icon('human.dmi', "body_[g]_l")
+
+	//Skin tone
+	if(s_tone >= 0)
+		stand_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
+		lying_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
+	else
+		stand_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
+		lying_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
+
+	//Eyes
+	var/icon/eyes_s = new/icon('human_face.dmi', "eyes_s")
+	var/icon/eyes_l = new/icon('human_face.dmi', "eyes_l")
+	eyes_s.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
+	eyes_l.Blend(rgb(r_eyes, g_eyes, b_eyes), ICON_ADD)
+	stand_icon.Blend(eyes_s, ICON_OVERLAY)
+	lying_icon.Blend(eyes_l, ICON_OVERLAY)
+
+	//Mouth
+	stand_icon.Blend(new/icon('human_face.dmi', "mouth_[g]_s"), ICON_OVERLAY)
+	lying_icon.Blend(new/icon('human_face.dmi', "mouth_[g]_l"), ICON_OVERLAY)
+
+	//Underwear
+	if(underwear < 6 && underwear > 0)
+		if(!fat)
+			stand_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
+			lying_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_l"), ICON_OVERLAY)
+
+
+//HAIR OVERLAY
+/mob/living/carbon/human/proc/update_hair(var/update_icons=1)
+	//Reset our hair
+	overlays_lying[HAIR_LAYER]		= null
+	overlays_standing[HAIR_LAYER]	= null
+
+	//mutants don't have hair. masks and helmets can obscure our hair too.
+	if( mutantrace || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) )
+		if(update_icons)   update_icons()
+		return
+
+	//base icons
+	var/icon/face_standing	= new /icon('human_face.dmi',"bald_s")
+	var/icon/face_lying		= new /icon('human_face.dmi',"bald_l")
+
+	if(facial_hair_style)
+		var/icon/facial_s = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s")
+		var/icon/facial_l = new/icon("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_l")
+		facial_s.Blend(rgb(r_facial, g_facial, b_facial), ICON_ADD)
+		facial_l.Blend(rgb(r_facial, g_facial, b_facial), ICON_ADD)
+		face_standing.Blend(facial_s, ICON_OVERLAY)
+		face_lying.Blend(facial_l, ICON_OVERLAY)
+
+	if(hair_style)
+		var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
+		var/icon/hair_l = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_l")
+		hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
+		hair_l.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
+		face_standing.Blend(hair_s, ICON_OVERLAY)
+		face_lying.Blend(hair_l, ICON_OVERLAY)
+
+	overlays_lying[HAIR_LAYER]		= image(face_lying)
+	overlays_standing[HAIR_LAYER]	= image(face_standing)
+
+	if(update_icons)   update_icons()
+
+/mob/living/carbon/human/update_mutations(var/update_icons=1)
+	var/fat
+	if( FAT in mutations )
+		fat = "fat"
+		if( w_uniform && !(w_uniform&ONESIZEFITSALL) )
+			src << "\red You burst out of \the [w_uniform]!"
+			var/obj/item/clothing/c = w_uniform
+			u_equip(c)							//Check
+			if(client)							//
+				client.screen -= c				//
+			if(c)								//
+				c:loc = loc						//
+				c:dropped(src)					//
+				c:layer = initial(c:layer)		//
+		if( wear_suit && !(wear_suit&ONESIZEFITSALL) )
+			src << "\red You burst out of \the [wear_suit]!"
+			var/obj/item/clothing/c = wear_suit
+			u_equip(c)
+			if(client)
+				client.screen -= c
+			if(c)
+				c:loc = loc
+				c:dropped(src)
+				c:layer = initial(c:layer)
+
+	var/image/lying		= image("icon" = 'genetics.dmi')
+	var/image/standing	= image("icon" = 'genetics.dmi')
+	var/add_image = 0
+	for(var/mut in mutations)
+		switch(mut)
+			if(HULK)
+				lying.underlays		+= "hulk[fat]_l"
+				standing.underlays	+= "hulk[fat]_s"
+				add_image = 1
+			if(COLD_RESISTANCE)
+				lying.underlays		+= "fire[fat]_l"
+				standing.underlays	+= "fire[fat]_s"
+				add_image = 1
+			if(TK)
+				lying.underlays		+= "telekinesishead[fat]_l"
+				standing.underlays	+= "telekinesishead[fat]_s"
+				add_image = 1
+			if(LASER)
+				lying.overlays		+= "lasereyes_l"
+				standing.overlays	+= "lasereyes_s"
+				add_image = 1
+	if(add_image)
+		overlays_lying[MUTATIONS_LAYER]		= lying
+		overlays_standing[MUTATIONS_LAYER]	= standing
+	else
+		overlays_lying[MUTATIONS_LAYER]		= null
+		overlays_standing[MUTATIONS_LAYER]	= null
+	if(update_icons)   update_icons()
+
+
+/mob/living/carbon/human/proc/update_mutantrace(var/update_icons=1)
+	var/fat
+	if( FAT in mutations )
+		fat = "fat"
+
+	switch(mutantrace)
+		if("lizard","golem","metroid")
+			overlays_lying[MUTANTRACE_LAYER]	= image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace][fat]_l")
+			overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace][fat]_s")
+		if("plant")
+			if(stat == DEAD)	//TODO
+				overlays_lying[MUTANTRACE_LAYER] = image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace]_d")
+			else
+				overlays_lying[MUTANTRACE_LAYER]	= image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace][fat]_[gender]_l")
+				overlays_standing[MUTANTRACE_LAYER]	= image("icon" = 'genetics.dmi', "icon_state" = "[mutantrace][fat]_[gender]_s")
+		else
+			overlays_lying[MUTANTRACE_LAYER]	= null
+			overlays_standing[MUTANTRACE_LAYER]	= null
+	update_body()
+	update_hair(0)
+	if(update_icons)   update_icons()
+
+/* --------------------------------------- */
+//For legacy support.
+/mob/living/carbon/human/regenerate_icons()
+	..()
+	if(monkeyizing)		return
+	update_mutations(0)
+	update_mutantrace(0)
+	update_inv_w_uniform(0)
+	update_inv_wear_id(0)
+	update_inv_gloves(0)
+	update_inv_glasses(0)
+	update_inv_ears(0)
+	update_inv_shoes(0)
+	update_inv_s_store(0)
+	update_inv_wear_mask(0)
+	update_inv_head(0)
+	update_inv_belt(0)
+	update_inv_back(0)
+	update_inv_wear_suit(0)
+	update_inv_r_hand(0)
+	update_inv_l_hand(0)
+	update_inv_handcuffed(0)
+	update_inv_pockets(0)
+	update_icons()
+	//Hud Stuff
+	update_hud()
+
+/* --------------------------------------- */
+//vvvvvv UPDATE_INV PROCS vvvvvv
+
+/mob/living/carbon/human/update_inv_w_uniform(var/update_icons=1)
+	if(w_uniform)
+		w_uniform.screen_loc = ui_iclothing			//what is this?
+		if( istype(w_uniform, /obj/item/clothing/under) )
+			var/t_color = w_uniform.color
+			if(!t_color)		t_color = icon_state
+			var/image/lying		= image("icon_state" = "[t_color]_l")
+			var/image/standing	= image("icon_state" = "[t_color]_s")
+			if( (FAT in mutations) )
+				lying.icon		= 'uniform_fat.dmi'
+				standing.icon	= 'uniform_fat.dmi'
+			else
+				lying.icon		= 'uniform.dmi'
+				standing.icon	= 'uniform.dmi'
+
+			if(w_uniform.blood_DNA)
+				lying.overlays		+= image("icon" = 'blood.dmi', "icon_state" = "uniformblood2")
+				standing.overlays	+= image("icon" = 'blood.dmi', "icon_state" = "uniformblood")
+			overlays_lying[UNIFORM_LAYER]		= lying
+			overlays_standing[UNIFORM_LAYER]	= standing
+	else
+		overlays_lying[UNIFORM_LAYER]		= null
+		overlays_standing[UNIFORM_LAYER]	= null
+		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
+		for( var/obj/item/thing in list(r_store, l_store, wear_id, belt) )						//
+			if(thing)																			//
+				u_equip(thing)																	//
+				if (client)																		//
+					client.screen -= thing														//
+																								//
+				if (thing)																		//
+					thing.loc = loc																//
+					thing.dropped(src)															//
+					thing.layer = initial(thing.layer)
+	if(update_icons)   update_icons()
+
+/mob/living/carbon/human/update_inv_wear_id(var/update_icons=1)
+	if(wear_id)
+		overlays_lying[ID_LAYER]	= image("icon" = 'mob.dmi', "icon_state" = "id2")
+		overlays_standing[ID_LAYER]	= image("icon" = 'mob.dmi', "icon_state" = "id")
+		wear_id.screen_loc = ui_id	//TODO
+	else
+		overlays_lying[ID_LAYER]	= null
+		overlays_standing[ID_LAYER]	= null
+	if(update_icons)   update_icons()
+
+/mob/living/carbon/human/update_inv_gloves(var/update_icons=1)
+	if(gloves)
+		var/t_state = gloves.item_state
+		if(!t_state)	t_state = gloves.icon_state
+		var/image/lying		= image("icon" = 'hands.dmi', "icon_state" = "[t_state]2")
+		var/image/standing	= image("icon" = 'hands.dmi', "icon_state" = "[t_state]")
+		if(gloves.blood_DNA)
+			lying.overlays		+= image("icon" = 'blood.dmi', "icon_state" = "bloodyhands2")
+			standing.overlays	+= image("icon" = 'blood.dmi', "icon_state" = "bloodyhands")
+		gloves.screen_loc = ui_gloves
+		overlays_lying[GLOVES_LAYER]	= lying
+		overlays_standing[GLOVES_LAYER]	= standing
+	else
+		if(blood_DNA)
+			overlays_lying[GLOVES_LAYER]	= image("icon" = 'blood.dmi', "icon_state" = "bloodyhands2")
+			overlays_standing[GLOVES_LAYER]	= image("icon" = 'blood.dmi', "icon_state" = "bloodyhands")
+		else
+			overlays_lying[GLOVES_LAYER]	= null
+			overlays_standing[GLOVES_LAYER]	= null
+	if(update_icons)   update_icons()
+
+
+/mob/living/carbon/human/update_inv_glasses(var/update_icons=1)
+	if(glasses)
+		overlays_lying[GLASSES_LAYER]		= image("icon" = 'eyes.dmi', "icon_state" = "[glasses.icon_state]2")
+		overlays_standing[GLASSES_LAYER]	= image("icon" = 'eyes.dmi', "icon_state" = "[glasses.icon_state]")
+	else
+		overlays_lying[GLASSES_LAYER]		= null
+		overlays_standing[GLASSES_LAYER]	= null
+	if(update_icons)   update_icons()
+
+/mob/living/carbon/human/update_inv_ears(var/update_icons=1)
+	if(ears)
+		overlays_lying[EARS_LAYER] = image("icon" = 'ears.dmi', "icon_state" = "[ears.icon_state]2")
+		overlays_standing[EARS_LAYER] = image("icon" = 'ears.dmi', "icon_state" = "[ears.icon_state]")
+	else
+		overlays_lying[EARS_LAYER]		= null
+		overlays_standing[EARS_LAYER]	= null
+	if(update_icons)   update_icons()
+
+/mob/living/carbon/human/update_inv_shoes(var/update_icons=1)
+	if(shoes)
+		var/image/lying		= image("icon" = 'feet.dmi', "icon_state" = "[shoes.icon_state]2")
+		var/image/standing	= image("icon" = 'feet.dmi', "icon_state" = "[shoes.icon_state]")
+		if(shoes.blood_DNA)
+			lying.overlays		+= image("icon" = 'blood.dmi', "icon_state" = "shoeblood2")
+			standing.overlays	+= image("icon" = 'blood.dmi', "icon_state" = "shoeblood")
+		overlays_lying[SHOES_LAYER]		= lying
+		overlays_standing[SHOES_LAYER]	= standing
+	else
+		overlays_lying[SHOES_LAYER]			= null
+		overlays_standing[SHOES_LAYER]		= null
+	if(update_icons)   update_icons()
+
+/mob/living/carbon/human/update_inv_s_store(var/update_icons=1)
+	if(s_store)
+		var/t_state = s_store.item_state
+		if(!t_state)	t_state = s_store.icon_state
+		overlays_lying[SUIT_STORE_LAYER]	= image("icon" = 'belt_mirror.dmi', "icon_state" = "[t_state]2")
+		overlays_standing[SUIT_STORE_LAYER]	= image("icon" = 'belt_mirror.dmi', "icon_state" = "[t_state]")
+		s_store.screen_loc = ui_sstore1		//TODO
+	else
+		overlays_lying[SUIT_STORE_LAYER]	= null
+		overlays_standing[SUIT_STORE_LAYER]	= null
+	if(update_icons)   update_icons()
+
+
+/mob/living/carbon/human/update_inv_head(var/update_icons=1)
+	if(head)
+		head.screen_loc = ui_head		//TODO
+		var/image/lying
+		var/image/standing
+		if(istype(head,/obj/item/clothing/head/kitty))
+			lying		= image("icon" = head:mob2)
+			standing	= image("icon" = head:mob)
+		else
+			lying		= image("icon" = 'head.dmi', "icon_state" = "[head.icon_state]2")
+			standing	= image("icon" = 'head.dmi', "icon_state" = "[head.icon_state]")
+		if(head.blood_DNA)
+			lying.overlays		+= image("icon" = 'blood.dmi', "icon_state" = "helmetblood2")
+			standing.overlays	+= image("icon" = 'blood.dmi', "icon_state" = "helmetblood")
+		overlays_lying[HEAD_LAYER]		= lying
+		overlays_standing[HEAD_LAYER]	= standing
+	else
+		overlays_lying[HEAD_LAYER]		= null
+		overlays_standing[HEAD_LAYER]	= null
+	if(update_icons)   update_icons()
+
+/mob/living/carbon/human/update_inv_belt(var/update_icons=1)
+	if(belt)
+		belt.screen_loc = ui_belt	//TODO
+		var/t_state = belt.item_state
+		if(!t_state)	t_state = belt.icon_state
+		overlays_lying[BELT_LAYER]		= image("icon" = 'belt.dmi', "icon_state" = "[t_state]2")
+		overlays_standing[BELT_LAYER]	= image("icon" = 'belt.dmi', "icon_state" = "[t_state]")
+	else
+		overlays_lying[BELT_LAYER]		= null
+		overlays_standing[BELT_LAYER]	= null
+	if(update_icons)   update_icons()
+
+
+
+/mob/living/carbon/human/update_inv_wear_suit(var/update_icons=1)
+	if( wear_suit && istype(wear_suit, /obj/item/clothing/suit) )	//TODO check this
+		wear_suit.screen_loc = ui_oclothing	//TODO
+		var/image/lying		= image("icon" = 'suit.dmi', "icon_state" = "[wear_suit.icon_state]2")
+		var/image/standing	= image("icon" = 'suit.dmi', "icon_state" = "[wear_suit.icon_state]")
+
+		if( istype(wear_suit, /obj/item/clothing/suit/straight_jacket) )	//TODO
+			if (handcuffed)													//
+				handcuffed.loc = loc										//
+				handcuffed.layer = initial(handcuffed.layer)				//
+				handcuffed = null											//
+			if (l_hand || r_hand)											//
+				var/h = hand												//
+				hand = 1													//
+				drop_item()													//
+				hand = 0													//
+				drop_item()													//
+				hand = h													//
+
+		if(wear_suit.blood_DNA)
+			var/t_state
+			if( istype(wear_suit, /obj/item/clothing/suit/armor/vest || /obj/item/clothing/suit/wcoat) )
+				t_state = "armor"
+			else if( istype(wear_suit, /obj/item/clothing/suit/det_suit || /obj/item/clothing/suit/labcoat) )
+				t_state = "coat"
+			else
+				t_state = "suit"
+			lying.overlays		+= image("icon" = 'blood.dmi', "icon_state" = "[t_state]blood2")
+			standing.overlays	+= image("icon" = 'blood.dmi', "icon_state" = "[t_state]blood")
+
+		overlays_lying[SUIT_LAYER]		= lying
+		overlays_standing[SUIT_LAYER]	= standing
+	else
+		overlays_lying[SUIT_LAYER]		= null
+		overlays_standing[SUIT_LAYER]	= null
+	if(update_icons)   update_icons()
+
+/mob/living/carbon/human/update_inv_pockets(var/update_icons=1)
+	if(l_store)			l_store.screen_loc = ui_storage1	//TODO
+	if(r_store)			r_store.screen_loc = ui_storage2	//TODO
+	if(update_icons)	update_icons()
+
+
+/mob/living/carbon/human/update_inv_wear_mask(var/update_icons=1)
+	if( wear_mask && istype(wear_mask, /obj/item/clothing/mask) )
+		wear_mask.screen_loc = ui_mask	//TODO
+		var/image/lying		= image("icon" = 'mask.dmi', "icon_state" = "[wear_mask.icon_state]2")
+		var/image/standing	= image("icon" = 'mask.dmi', "icon_state" = "[wear_mask.icon_state]")
+		if( !istype(wear_mask, /obj/item/clothing/mask/cigarette) && wear_mask.blood_DNA )
+			lying.overlays		+= image("icon" = 'blood.dmi', "icon_state" = "maskblood2")
+			standing.overlays	+= image("icon" = 'blood.dmi', "icon_state" = "maskblood")
+		overlays_lying[FACEMASK_LAYER]		= lying
+		overlays_standing[FACEMASK_LAYER]	= standing
+	else
+		overlays_lying[FACEMASK_LAYER]		= null
+		overlays_standing[FACEMASK_LAYER]	= null
+	if(update_icons)   update_icons()
+
+
+/mob/living/carbon/human/update_inv_back(var/update_icons=1)
+	if(back)
+		back.screen_loc = ui_back	//TODO
+		overlays_lying[BACK_LAYER]		= image("icon" = 'back.dmi', "icon_state" = "[back.icon_state]2")
+		overlays_standing[BACK_LAYER]	= image("icon" = 'back.dmi', "icon_state" = "[back.icon_state]")
+	else
+		overlays_lying[BACK_LAYER]		= null
+		overlays_standing[BACK_LAYER]	= null
+	if(update_icons)   update_icons()
+
+
+/mob/living/carbon/human/update_hud()	//TODO: do away with this if possible
+	if(client)
+		client.screen |= contents
+		hud_used.other_update() 	//Updates the screenloc of the items on the 'other' inventory bar
+
+
+/mob/living/carbon/human/update_inv_handcuffed(var/update_icons=1)
+	if(handcuffed)
+		pulling = null	//TODO: should be handled elsewhere
+		overlays_lying[HANDCUFF_LAYER]		= image("icon" = 'mob.dmi', "icon_state" = "handcuff2")
+		overlays_standing[HANDCUFF_LAYER]	= image("icon" = 'mob.dmi', "icon_state" = "handcuff1")
+	else
+		overlays_lying[HANDCUFF_LAYER]		= null
+		overlays_standing[HANDCUFF_LAYER]	= null
+	if(update_icons)   update_icons()
+
+
+/mob/living/carbon/human/update_inv_r_hand(var/update_icons=1)
+	if(r_hand)
+		r_hand.screen_loc = ui_rhand	//TODO
+		var/t_state = r_hand.item_state
+		if(!t_state)	t_state = r_hand.icon_state
+		overlays_standing[R_HAND_LAYER] = image("icon" = 'items_righthand.dmi', "icon_state" = "[t_state]")
+	else
+		overlays_standing[R_HAND_LAYER] = null
+	if(update_icons)   update_icons()
+
+
+/mob/living/carbon/human/update_inv_l_hand(var/update_icons=1)
+	if(l_hand)
+		l_hand.screen_loc = ui_lhand	//TODO
+		var/t_state = l_hand.item_state
+		if(!t_state)	t_state = l_hand.icon_state
+		overlays_standing[L_HAND_LAYER] = image("icon" = 'items_lefthand.dmi', "icon_state" = "[t_state]")
+	else
+		overlays_standing[L_HAND_LAYER] = null
+	if(update_icons)   update_icons()

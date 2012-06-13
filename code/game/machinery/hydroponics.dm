@@ -934,11 +934,9 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			updateappearance(podman, ui)
 		if (se)
 			podman.dna.struc_enzymes = se
-		podman:update_face()
-		podman:update_body()
-
 		if(!prob(potency)) //if it fails, plantman!
 			podman.mutantrace = "plant"
+		podman.update_mutantrace()
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1

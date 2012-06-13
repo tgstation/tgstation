@@ -4,13 +4,8 @@
 
 	src.adding = list(  )
 	src.other = list(  )
-	src.intents = list(  )
-	src.mon_blo = list(  )
-	src.m_ints = list(  )
-	src.mov_int = list(  )
 	src.vimpaired = list(  )
 	src.darkMask = list(  )
-	src.intent_small_hud_objects = list(  )
 	src.hotkeybuttons = list(  ) //These can be disabled for hotkey usersx
 
 	src.g_dither = new src.h_type( src )
@@ -56,41 +51,6 @@
 	using.layer = 20
 	src.adding += using
 	action_intent = using
-
-//intent small hud objects
-	using = new src.h_type( src )
-	using.name = "help"
-	using.icon = ui_style
-	using.icon_state = "help_small"
-	using.screen_loc = ui_help_small
-	using.layer = 21
-	src.intent_small_hud_objects += using
-
-	using = new src.h_type( src )
-	using.name = "disarm"
-	using.icon = ui_style
-	using.icon_state = "disarm_small"
-	using.screen_loc = ui_disarm_small
-	using.layer = 21
-	src.intent_small_hud_objects += using
-
-	using = new src.h_type( src )
-	using.name = "grab"
-	using.icon = ui_style
-	using.icon_state = "grab_small"
-	using.screen_loc = ui_grab_small
-	using.layer = 21
-	src.intent_small_hud_objects += using
-
-	using = new src.h_type( src )
-	using.name = "harm"
-	using.icon = ui_style
-	using.icon_state = "harm_small"
-	using.screen_loc = ui_harm_small
-	using.layer = 21
-	src.intent_small_hud_objects += using
-
-//end intent small hud objects
 
 	using = new src.h_type( src )
 	using.name = "mov_intent"

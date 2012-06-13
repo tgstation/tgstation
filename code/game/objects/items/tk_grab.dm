@@ -33,10 +33,12 @@
 			user.l_hand = focus
 		else
 			user.r_hand = focus
+
 		focus.loc = user
 		focus.layer = 20
 		add_fingerprint(user)
-		user.update_clothing()
+		user.update_inv_l_hand(0)
+		user.update_inv_r_hand()
 		spawn(0)
 			del(src)
 		return

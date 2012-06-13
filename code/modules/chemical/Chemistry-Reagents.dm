@@ -658,8 +658,8 @@ datum
 
 							var/datum/organ/external/affecting = M:get_organ("head")
 							if(affecting)
-								affecting.take_damage(25, 0)
-								M:UpdateDamageIcon()
+								if(affecting.take_damage(25, 0))
+									M:UpdateDamageIcon()
 								M:emote("scream")
 						else
 							M.take_organ_damage(min(15, volume * 2)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
@@ -708,8 +708,8 @@ datum
 
 						if(!M.unacidable)
 							var/datum/organ/external/affecting = M:get_organ("head")
-							affecting.take_damage(15, 0)
-							M:UpdateDamageIcon()
+							if(affecting.take_damage(15, 0))
+								M:UpdateDamageIcon()
 							M:emote("scream")
 					else
 						if(istype(M, /mob/living/carbon/monkey) && M:wear_mask)
@@ -724,8 +724,8 @@ datum
 					if(!M.unacidable)
 						if(istype(M, /mob/living/carbon/human))
 							var/datum/organ/external/affecting = M:get_organ("head")
-							affecting.take_damage(15, 0)
-							M:UpdateDamageIcon()
+							if(affecting.take_damage(15, 0))
+								M:UpdateDamageIcon()
 							M:emote("scream")
 						else
 							M.take_organ_damage(min(15, volume * 4))

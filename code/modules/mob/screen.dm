@@ -325,6 +325,7 @@
 				if("walk")
 					usr.m_intent = "run"
 					usr.hud_used.move_intent.icon_state = "running"
+			if(istype(usr,/mob/living/carbon/alien/humanoid))	usr.update_icons()
 		if("m_intent")
 			if (!( usr.m_int ))
 				switch(usr.m_intent)
@@ -420,22 +421,18 @@
 			usr.a_intent = "help"
 			usr.hud_used.action_intent.icon_state = "help"
 			usr.hud_used.show_intent_icons = 0
-			usr.client.screen -= usr.hud_used.intent_small_hud_objects
 		if("harm")
 			usr.a_intent = "hurt"
 			usr.hud_used.action_intent.icon_state = "harm"
 			usr.hud_used.show_intent_icons = 0
-			usr.client.screen -= usr.hud_used.intent_small_hud_objects
 		if("grab")
 			usr.a_intent = "grab"
 			usr.hud_used.action_intent.icon_state = "grab"
 			usr.hud_used.show_intent_icons = 0
-			usr.client.screen -= usr.hud_used.intent_small_hud_objects
 		if("disarm")
 			usr.a_intent = "disarm"
 			usr.hud_used.action_intent.icon_state = "disarm"
 			usr.hud_used.show_intent_icons = 0
-			usr.client.screen -= usr.hud_used.intent_small_hud_objects
 		if("pull")
 			usr.pulling = null
 		if("throw")
@@ -540,6 +537,7 @@
 
 	usr.resting = !( usr.resting )
 	usr << "\blue You are now [(usr.resting) ? "resting" : "getting up"]"
+
 
 /mob/living/verb/resist()
 	set name = "Resist"

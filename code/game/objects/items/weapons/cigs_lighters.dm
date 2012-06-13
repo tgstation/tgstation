@@ -74,8 +74,10 @@ ZIPPO
 				var/obj/item/weapon/match/W = new /obj/item/weapon/match(user)
 				if(user.hand)
 					user.l_hand = W
+					user.update_inv_l_hand()
 				else
 					user.r_hand = W
+					user.update_inv_r_hand()
 				W.layer = 20
 		else
 			return ..()
@@ -156,6 +158,11 @@ ZIPPO
 		var/obj/item/weapon/match/M = W
 		if(M.lit > 0)
 			light("\red [user] lights their [name] with their [W].")
+
+	//can't think of any other way to update the overlays :<
+	user.update_inv_wear_mask(0)
+	user.update_inv_l_hand(0)
+	user.update_inv_r_hand(1)
 	return
 
 
@@ -202,10 +209,12 @@ ZIPPO
 	src.smoketime--
 	if(src.smoketime < 1)
 		new type_butt(location)
+		processing_objects.Remove(src)
 		if(ismob(src.loc))
 			var/mob/living/M = src.loc
 			M << "\red Your [src.name] goes out."
-		processing_objects.Remove(src)
+			M.u_equip(src)	//un-equip it so the overlays can update
+			M.update_icons()
 		del(src)
 		return
 	if(location)
@@ -423,8 +432,10 @@ ZIPPO
 				reagents.trans_to(W, reagents.total_volume)
 				if(user.hand)
 					user.l_hand = W
+					user.update_inv_l_hand()
 				else
 					user.r_hand = W
+					user.update_inv_r_hand()
 				W.layer = 20
 		else
 			return ..()

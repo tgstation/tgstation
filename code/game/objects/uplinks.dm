@@ -335,13 +335,14 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 					item:loc = A
 					A.r_hand = item
 					item:layer = 20
+					A.update_inv_r_hand()
 				else if(!A.l_hand)
 					item:loc = A
 					A.l_hand = item
 					item:layer = 20
+					A.update_inv_l_hand()
 			else
 				item:loc = get_turf(A)
-			usr.update_clothing()
 	//		usr.client.onBought("[item:name]")	When we have the stats again, uncomment.
 	/*		if(istype(item, /obj/spawner)) // Spawners need to have del called on them to avoid leaving a marker behind
 				del item*/
@@ -441,10 +442,12 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 						if(!A.r_hand)
 							item:loc = A
 							A.r_hand = item
+							A.update_inv_r_hand()
 							item:layer = 20
 						else if(!A.l_hand)
 							item:loc = A
 							A.l_hand = item
+							A.update_inv_l_hand()
 							item:layer = 20
 					else
 						item:loc = get_turf(A)
@@ -469,10 +472,11 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 				if (usr.r_hand == R)
 					usr.u_equip(R)
 					usr.r_hand = T
-
+//					usr.update_inv_r_hand()
 				else
 					usr.u_equip(R)
 					usr.l_hand = T
+//					usr.update_inv_l_hand()
 				R.loc = T
 				T.layer = 20
 				T.set_frequency(initial(T.frequency))
@@ -532,9 +536,11 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			if (L.r_hand == R)
 				L.u_equip(R)
 				L.r_hand = T
+				L.update_inv_r_hand()
 			else
 				L.u_equip(R)
 				L.l_hand = T
+				L.update_inv_l_hand()
 			T.layer = 20
 		T.set_frequency(initial(T.frequency))
 		return

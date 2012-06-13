@@ -100,14 +100,13 @@
 //		organStructure.ProcessOrgans()
 	return
 
-/mob/proc/update_clothing()
-	return
 
 /mob/proc/restrained()
 	if (handcuffed)
 		return 1
 	return
 
+//Used by monkeys, *chimpers* //TODO: eliminate this convoluted proc it's incredibly shitty. ~Carn
 /mob/proc/db_click(text, t1)
 	var/obj/item/weapon/W = equipped()
 	switch(text)
@@ -119,6 +118,7 @@
 			u_equip(W)
 			wear_mask = W
 			W.equipped(src, text)
+			update_inv_wear_mask()
 		if("back")
 			if (back)
 				return
@@ -132,15 +132,8 @@
 			u_equip(W)
 			back = W
 			W.equipped(src, text)
-		if("back")
-			if ((back || !( istype(W, /obj/item/weapon) )))
-				return
-			if (!( W.flags & 1 ))
-				return
-			u_equip(W)
-			back = W
-			W.equipped(src, text)
-		else
+			update_inv_back()
+
 	return
 
 
@@ -173,6 +166,7 @@
 
 	if (W)
 		u_equip(W)
+		update_icons()
 		if (client)
 			client.screen -= W
 		if (W)
@@ -193,7 +187,7 @@
 	u_equip(item)
 	//if (client)
 	//	client.screen -= item
-	//update_clothing()
+	//regenerate_icons()
 	return
 
 /mob/proc/get_active_hand()
@@ -213,19 +207,21 @@
 	I.loc = src
 	if (hand)
 		l_hand = I
+		update_inv_l_hand()
 	else
 		r_hand = I
+		update_inv_r_hand()
 	I.layer = 20
-	update_clothing()
 
 /mob/proc/put_in_inactive_hand(var/obj/item/I)
 	I.loc = src
 	if (!hand)
 		l_hand = I
+		update_inv_l_hand()
 	else
 		r_hand = I
+		update_inv_r_hand()
 	I.layer = 20
-	update_clothing()
 
 /mob/proc/reset_view(atom/A)
 	if (client)
@@ -277,15 +273,19 @@
 /mob/proc/u_equip(W as obj)
 	if (W == r_hand)
 		r_hand = null
+		update_inv_r_hand()
 	else if (W == l_hand)
 		l_hand = null
+		update_inv_l_hand()
 	else if (W == handcuffed)
 		handcuffed = null
+		update_inv_handcuffed()
 	else if (W == back)
 		back = null
+		update_inv_back()
 	else if (W == wear_mask)
 		wear_mask = null
-	update_clothing()
+		update_inv_wear_mask()
 	return
 
 

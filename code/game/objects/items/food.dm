@@ -62,14 +62,14 @@ MONKEY CUBE BOX
 				P.loc = usr
 				P.layer = 20
 				usr.l_hand = P
-				usr.update_clothing()
+				usr.update_inv_l_hand()
 				usr << "You take a donut out of the box."
 				break
 			else if (!usr.r_hand)
 				P.loc = usr
 				P.layer = 20
 				usr.r_hand = P
-				usr.update_clothing()
+				usr.update_inv_r_hand()
 				usr << "You take a donut out of the box."
 				break
 	else
@@ -138,7 +138,7 @@ MONKEY CUBE BOX
 				P.layer = 20
 				usr.l_hand = P
 				P = null
-				usr.update_clothing()
+				usr.update_inv_l_hand()
 				usr << "You take an egg out of the box."
 				break
 			else if (!usr.r_hand)
@@ -146,7 +146,7 @@ MONKEY CUBE BOX
 				P.layer = 20
 				usr.r_hand = P
 				P = null
-				usr.update_clothing()
+				usr.update_inv_r_hand()
 				usr << "You take an egg out of the box."
 				break
 	else
@@ -189,11 +189,12 @@ MONKEY CUBE BOX
 				var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/M = new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src)
 				if (user.hand)
 					user.l_hand = M
+					user.update_inv_l_hand()
 				else
 					user.r_hand = M
+					user.update_inv_r_hand()
 				M.loc = user
 				M.layer = 20
-				user.update_clothing()
 				user << "You take a monkey cube out of the box."
 				amount--
 			else

@@ -1,3 +1,5 @@
+//For the love of god,space out your code! This is a nightmare to read.
+
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /*
@@ -151,7 +153,7 @@ ________________________________________________________________________________
 //=======//INITIALIZE//=======//
 
 /obj/item/clothing/suit/space/space_ninja/proc/ninitialize(delay = s_delay, mob/living/carbon/human/U = loc)
-	if(U.mind&&U.mind.assigned_role=="MODE"&&!s_initialized&&!s_busy)//Shouldn't be busy... but anything is possible I guess.
+	if(U.mind && U.mind.assigned_role=="MODE" && !s_initialized && !s_busy)//Shouldn't be busy... but anything is possible I guess.
 		s_busy = 1
 		for(var/i,i<7,i++)
 			switch(i)
@@ -169,7 +171,7 @@ ________________________________________________________________________________
 						unlock_suit()
 						break
 					lock_suit(U,1)//Check for icons.
-					U.update_clothing()
+					U.regenerate_icons()
 					U << "\blue Linking neural-net interface...\nPattern \green <B>GREEN</B>\blue, continuing operation."
 				if(4)
 					U << "\blue VOID-shift device status: <B>ONLINE</B>.\nCLOAK-tech device status: <B>ONLINE</B>."
@@ -228,7 +230,7 @@ ________________________________________________________________________________
 					blade_check(U,2)
 					remove_equip_verbs()
 					unlock_suit()
-					U.update_clothing()
+					U.regenerate_icons()
 			sleep(delay)
 		s_busy = 0
 	return
@@ -589,7 +591,7 @@ ________________________________________________________________________________
 									U << "\blue Power nodes re-routed. \nLimiter unlocked."
 								if(3)
 									grant_kamikaze(U)//Give them verbs and change variables as necessary.
-									U.update_clothing()//Update their clothing.
+									U.regenerate_icons()//Update their clothing.
 									ninjablade()//Summon two energy blades.
 									message_admins("\blue [U.key] used KAMIKAZE mode.", 1)//Let the admins know.
 									s_busy = 0
@@ -869,6 +871,7 @@ ________________________________________________________________________________
 		spawn(0)
 			anim(U.loc,U,'mob.dmi',,"cloak",,U.dir)
 		s_active=!s_active
+		U.update_icons()	//update their icons
 		U << "\blue You are now invisible to normal detection."
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] vanishes into thin air!",1)
@@ -880,6 +883,7 @@ ________________________________________________________________________________
 		spawn(0)
 			anim(U.loc,U,'mob.dmi',,"uncloak",,U.dir)
 		s_active=!s_active
+		U.update_icons()	//update their icons
 		U << "\blue You are now visible."
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] appears from thin air!",1)

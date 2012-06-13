@@ -197,9 +197,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			if (usr.r_hand == R)
 				usr.u_equip(R)
 				usr.r_hand = T
+				usr.update_inv_r_hand()
 			else
 				usr.u_equip(R)
 				usr.l_hand = T
+				usr.update_inv_l_hand()
 			R.loc = T
 			T.layer = 20
 			T.attack_self(usr)

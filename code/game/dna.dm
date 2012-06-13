@@ -362,8 +362,8 @@
 		H.h_style = hair.icon_state
 		H.hair_style = hair
 
-		H.update_face()
 		H.update_body()
+		H.update_hair()
 
 		return 1
 	else
@@ -459,7 +459,6 @@
 				if (W==H.w_uniform) // will be teared
 					continue
 				H.drop_from_slot(W)
-			M.update_clothing()
 			M.monkeyizing = 1
 			M.canmove = 0
 			M.icon = null
@@ -514,6 +513,7 @@
 		for (var/obj/item/weapon/implant/I in implants)
 			I.loc = O
 			I.implanted = O
+//		O.update_icon = 1	//queue a full icon update at next life() call
 		del(M)
 		return
 
@@ -528,7 +528,6 @@
 		if(!connected)
 			for(var/obj/item/W in (Mo.contents-implants))
 				Mo.drop_from_slot(W)
-			M.update_clothing()
 			M.monkeyizing = 1
 			M.canmove = 0
 			M.icon = null
@@ -595,11 +594,12 @@
 		for (var/obj/item/weapon/implant/I in implants)
 			I.loc = O
 			I.implanted = O
+//		O.update_icon = 1	//queue a full icon update at next life() call
 		del(M)
 		return
 //////////////////////////////////////////////////////////// Monkey Block
-	if (M)
-		M.update_clothing()
+	if(M)
+		M.update_icon = 1	//queue a full icon update at next life() call
 	return null
 /////////////////////////// DNA MISC-PROCS
 

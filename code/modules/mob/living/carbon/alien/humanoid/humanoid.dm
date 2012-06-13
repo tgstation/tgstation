@@ -6,15 +6,6 @@
 	if(name == "alien")
 		name = text("alien ([rand(1, 1000)])")
 	real_name = name
-	spawn (1)
-		if(!istype(src, /mob/living/carbon/alien/humanoid/queen))
-			stand_icon = new /icon('alien.dmi', "alien_s")
-			lying_icon = new /icon('alien.dmi', "alien_l")
-			resting_icon = new /icon('alien.dmi', "alienh_sleep")
-			running_icon = new /icon('alien.dmi', "alienh_running")
-		icon = stand_icon
-		update_clothing()
-		src << "\blue Your icons have been generated!"
 	..()
 
 /mob/living/carbon/alien/humanoid/proc/mind_initialize(mob/G, alien_caste)
@@ -152,16 +143,22 @@
 /mob/living/carbon/alien/humanoid/u_equip(obj/item/W as obj)
 	if (W == wear_suit)
 		wear_suit = null
+		update_inv_wear_suit(0)
 	else if (W == head)
 		head = null
+		update_inv_head(0)
 	else if (W == r_store)
 		r_store = null
+		update_inv_pockets(0)
 	else if (W == l_store)
 		l_store = null
+		update_inv_pockets(0)
 	else if (W == r_hand)
 		r_hand = null
+		update_inv_r_hand(0)
 	else if (W == l_hand)
 		l_hand = null
+		update_inv_l_hand(0)
 
 /mob/living/carbon/alien/humanoid/db_click(text, t1)
 	var/obj/item/W = equipped()
@@ -179,6 +176,8 @@
 			if (wear_suit)
 				if (emptyHand)
 					wear_suit.DblClick()
+//			else
+//				update_inv_wear_suit()
 			return
 /*			if (!( istype(W, /obj/item/clothing/suit) ))
 				return
@@ -190,11 +189,10 @@
 			if (head)
 				if (emptyHand)
 					head.DblClick()
-				return
-			if (( istype(W, /obj/effect/alien/head) ))
+			else if (( istype(W, /obj/effect/alien/head) ))	//TODO: figure out wtf this is about ~Carn
 				u_equip(W)
 				head = W
-				return
+				update_inv_head()
 			return
 /*			if (!( istype(W, /obj/item/clothing/head) ))
 				return
@@ -211,6 +209,7 @@
 				return
 			u_equip(W)
 			l_store = W
+			update_inv_pockets()
 		if("storage2")
 			if (r_store)
 				if (emptyHand)
@@ -220,7 +219,7 @@
 				return
 			u_equip(W)
 			r_store = W
-		else
+			update_inv_pockets()
 	return
 
 /mob/living/carbon/alien/humanoid/meteorhit(O as obj)
@@ -310,161 +309,6 @@
 
 	return
 
-/mob/living/carbon/alien/humanoid/update_clothing()
-	..()
-
-	if (monkeyizing)
-		return
-
-	overlays = null
-
-	if(buckled)
-		if(istype(buckled, /obj/structure/stool/bed/chair))
-			lying = 0
-		else
-			lying = 1
-
-	// Automatically drop anything in store / id / belt if you're not wearing a uniform.
-	if (zone_sel)
-		zone_sel.overlays = null
-		zone_sel.overlays += damageicon_standing
-		zone_sel.overlays += image("icon" = 'zone_sel.dmi', "icon_state" = text("[]", zone_sel.selecting))
-
-	if (lying)
-		if(update_icon)
-			if(!resting)
-				icon = lying_icon
-			else
-				icon = resting_icon
-
-	else if(!lying)
-		if(update_icon)
-			if(m_intent == "run")
-				icon = running_icon
-			else
-				icon = stand_icon
-
-		overlays += damageicon_lying
-
-		if (face_lying)
-			overlays += face_lying
-	else
-		if(update_icon)
-			icon = stand_icon
-
-		overlays += damageicon_standing
-
-		if (face_standing)
-			overlays += face_standing
-
-	// Uniform
-	if (client)
-		client.screen -= hud_used.other
-		client.screen -= hud_used.intents
-		client.screen -= hud_used.mov_int
-
-	// ???
-	if (client && other)
-		client.screen += hud_used.other
-
-
-	if (client)
-		if (i_select)
-			if (intent)
-				client.screen += hud_used.intents
-
-				var/list/L = dd_text2list(intent, ",")
-				L[1] += ":-11"
-				i_select.screen_loc = dd_list2text(L,",") //ICONS4, FUCKING SHIT
-			else
-				i_select.screen_loc = null
-		if (m_select)
-			if (m_int)
-				client.screen += hud_used.mov_int
-
-				var/list/L = dd_text2list(m_int, ",")
-				L[1] += ":-11"
-				m_select.screen_loc = dd_list2text(L,",") //ICONS4, FUCKING SHIT
-			else
-				m_select.screen_loc = null
-
-	if (wear_suit)
-		var/t1 = wear_suit.item_state
-		if (!t1)
-			t1 = wear_suit.icon_state
-		overlays += image("icon" = 'mob.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = SUIT_LAYER)
-		if (wear_suit.blood_DNA)
-			if (istype(wear_suit, /obj/item/clothing/suit/armor))
-				overlays += image("icon" = 'blood.dmi', "icon_state" = "armorblood[!lying ? "" : "2"]", "layer" = B_SUIT_LAYER)
-			else
-				overlays += image("icon" = 'blood.dmi', "icon_state" = "suitblood[!lying ? "" : "2"]", "layer" = B_SUIT_LAYER)
-		wear_suit.screen_loc = ui_alien_oclothing
-		if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-			if (handcuffed)
-				handcuffed.loc = loc
-				handcuffed.layer = initial(handcuffed.layer)
-				handcuffed = null
-			if ((l_hand || r_hand))
-				var/h = hand
-				hand = 1
-				drop_item()
-				hand = 0
-				drop_item()
-				hand = h
-
-	// Head
-	if (head)
-		var/t1 = head.item_state
-		if (!t1)
-			t1 = head.icon_state
-		overlays += image("icon" = 'mob.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = HEAD_LAYER)
-		if (head.blood_DNA)
-			overlays += image("icon" = 'blood.dmi', "icon_state" = "helmetblood[!lying ? "" : "2"]", "layer" = B_HEAD_LAYER)
-		head.screen_loc = ui_alien_head
-
-	if (l_store)
-		l_store.screen_loc = ui_storage1
-
-	if (r_store)
-		r_store.screen_loc = ui_storage2
-
-	if (client)
-		client.screen -= contents
-		client.screen += contents
-
-	if (r_hand)
-		overlays += image("icon" = 'items_righthand.dmi', "icon_state" = r_hand.item_state ? r_hand.item_state : r_hand.icon_state, "layer" = INHANDS_LAYER)
-
-		r_hand.screen_loc = ui_rhand
-
-	if (l_hand)
-		overlays += image("icon" = 'items_lefthand.dmi', "icon_state" = l_hand.item_state ? l_hand.item_state : l_hand.icon_state, "layer" = INHANDS_LAYER)
-
-		l_hand.screen_loc = ui_lhand
-
-
-
-	var/shielded = 0
-	for (var/obj/item/weapon/cloaking_device/S in src)
-		if (S.active)
-			shielded = 2
-			break
-
-	if (shielded == 2 || alien_invis)
-		invisibility = 2
-		//New stealth. Hopefully doesn't lag too much. /N
-		if(istype(loc, /turf))//If they are standing on a turf.
-			AddCamoOverlay(loc)//Overlay camo.
-	else
-		invisibility = 0
-
-	for (var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
-			spawn (0)
-				show_inv(M)
-				return
-
-	last_b_state = stat
 
 /mob/living/carbon/alien/humanoid/hand_p(mob/M as mob)
 	if (!ticker)
@@ -641,8 +485,10 @@
 			G.assailant = M
 			if (M.hand)
 				M.l_hand = G
+				M.update_inv_l_hand()
 			else
 				M.r_hand = G
+				M.update_inv_r_hand()
 			G.layer = 20
 			G.affecting = src
 			grabbed_by += G

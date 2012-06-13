@@ -1,12 +1,22 @@
 /mob/living/carbon/proc/toggle_throw_mode()
-	if(!equipped())//Not holding anything
-		if(TK in mutations)
+	var/W = equipped()
+	if( !W )//Not holding anything
+		if( client && (TK in mutations) )
 			if (hand)
 				l_hand = new/obj/item/tk_grab(src)
 				l_hand:host = src
+				l_hand.screen_loc = ui_lhand
+				client.screen += l_hand
 			else
 				r_hand = new/obj/item/tk_grab(src)
 				r_hand:host = src
+				r_hand.screen_loc = ui_rhand
+				client.screen += r_hand
+		return
+
+	if( istype(W,/obj/item/tk_grab) )
+		if(hand)	del(l_hand)
+		else		del(r_hand)
 		return
 
 	if (src.in_throw_mode)
@@ -33,9 +43,8 @@
 
 	if(!item) return
 
-
-
 	u_equip(item)
+	update_icons()
 	if(src.client)
 		src.client.screen -= item
 	item.loc = src.loc
@@ -118,7 +127,6 @@
 				visible_message("\red <B>[M] has been knocked down by the force of [src]!</B>")
 				M:apply_effect(rand(4,12), WEAKEN, armor_block)
 
-				M:UpdateDamageIcon()
 			else
 				M.take_organ_damage(rand(20,45))
 

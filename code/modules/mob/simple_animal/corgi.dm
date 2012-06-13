@@ -22,31 +22,9 @@
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 
-/mob/living/simple_animal/corgi/update_clothing()
-	overlays = list()
-
-	if(inventory_head)
-		var/head_icon_state = inventory_head.icon_state
-		if(health <= 0)
-			head_icon_state += "2"
-
-		var/icon/head_icon = icon('corgi_head.dmi',head_icon_state)
-		if(head_icon)
-			overlays += head_icon
-
-	if(inventory_back)
-		var/back_icon_state = inventory_back.icon_state
-		if(health <= 0)
-			back_icon_state += "2"
-
-		var/icon/back_icon = icon('corgi_back.dmi',back_icon_state)
-		if(back_icon)
-			overlays += back_icon
-	return
-
 /mob/living/simple_animal/corgi/Life()
 	..()
-	update_clothing()
+	regenerate_icons()
 
 /mob/living/simple_animal/corgi/show_inv(mob/user as mob)
 	user.machine = src
@@ -179,7 +157,7 @@
 					usr.drop_item()
 					item_to_add.loc = src
 					src.inventory_head = item_to_add
-					update_clothing()
+					regenerate_icons()
 
 					//Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a HAT is removed.
 
@@ -267,7 +245,7 @@
 					usr.drop_item()
 					item_to_add.loc = src
 					src.inventory_back = item_to_add
-					update_clothing()
+					regenerate_icons()
 
 		//show_inv(usr) //Commented out because changing Ian's  name and then calling up his inventory opens a new inventory...which is annoying.
 	else

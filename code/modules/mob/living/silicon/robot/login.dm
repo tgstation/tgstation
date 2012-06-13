@@ -1,7 +1,7 @@
 /mob/living/silicon/robot/Login(var/syndie = 0)
 	..()
 
-	update_clothing()
+	regenerate_icons()
 
 	if (!isturf(src.loc))
 		src.client.eye = src.loc

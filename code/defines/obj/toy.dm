@@ -370,11 +370,12 @@
 				var/obj/item/toy/snappop/M = new /obj/item/toy/snappop(src)
 				if (user.hand)
 					user.l_hand = M
+					user.update_inv_l_hand()
 				else
 					user.r_hand = M
+					user.update_inv_r_hand()
 				M.loc = user
 				M.layer = 20
-				user.update_clothing()
 				user << "You take a snap pop out of the box."
 				amount--
 			else

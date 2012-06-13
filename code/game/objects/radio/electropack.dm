@@ -58,9 +58,11 @@
 			if (user.r_hand == W)
 				user.u_equip(W)
 				user.r_hand = A
+				user.update_inv_r_hand()
 			else
 				user.u_equip(W)
 				user.l_hand = A
+				user.update_inv_l_hand()
 			W.master = A
 			src.master = A
 			src.layer = initial(src.layer)

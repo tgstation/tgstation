@@ -279,8 +279,10 @@
 			G.assailant = M
 			if (M.hand)
 				M.l_hand = G
+				M.update_inv_l_hand()
 			else
 				M.r_hand = G
+				M.update_inv_r_hand()
 			G.layer = 20
 			G.affecting = src
 			grabbed_by += G

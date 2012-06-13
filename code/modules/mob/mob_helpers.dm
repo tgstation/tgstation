@@ -273,10 +273,12 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(!r_hand)
 		I.loc = src
 		r_hand = I
+		update_inv_r_hand()
 		I.layer = 20
 	else if(!l_hand)
 		I.loc = src
 		l_hand = I
+		update_inv_l_hand()
 		I.layer = 20
 	else
 		I.loc = get_turf(src)

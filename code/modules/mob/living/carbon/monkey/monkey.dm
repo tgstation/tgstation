@@ -213,8 +213,10 @@
 				G.assailant = M
 				if (M.hand)
 					M.l_hand = G
+					M.update_inv_l_hand()
 				else
 					M.r_hand = G
+					M.update_inv_r_hand()
 				G.layer = 20
 				G.affecting = src
 				grabbed_by += G
@@ -286,8 +288,10 @@
 			G.assailant = M
 			if (M.hand)
 				M.l_hand = G
+				M.update_inv_l_hand()
 			else
 				M.r_hand = G
+				M.update_inv_r_hand()
 			G.layer = 20
 			G.affecting = src
 			grabbed_by += G
@@ -399,82 +403,7 @@
 				stat("Genetic Damage Time", changeling.geneticdamage)
 	return
 
-/mob/living/carbon/monkey/update_clothing()
-	if(buckled)
-		if(istype(buckled, /obj/structure/stool/bed/chair))
-			lying = 0
-		else
-			lying = 1
 
-	if(update_icon) // Skie
-		..()
-		for(var/i in overlays)
-			overlays -= i
-
-		if (!( lying ))
-			icon_state = "monkey1"
-		else
-			icon_state = "monkey0"
-
-	if (wear_mask)
-		if (istype(wear_mask, /obj/item/clothing/mask))
-			var/t1 = wear_mask.icon_state
-			overlays += image("icon" = 'monkey.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = layer)
-			wear_mask.screen_loc = ui_monkey_mask
-
-	if (r_hand)
-		if(update_icon)
-			overlays += image("icon" = 'items_righthand.dmi', "icon_state" = r_hand.item_state ? r_hand.item_state : r_hand.icon_state, "layer" = layer)
-		r_hand.screen_loc = ui_rhand
-
-	if (l_hand)
-		if(update_icon)
-			overlays += image("icon" = 'items_lefthand.dmi', "icon_state" = l_hand.item_state ? l_hand.item_state : l_hand.icon_state, "layer" = layer)
-		l_hand.screen_loc = ui_lhand
-
-	if (back)
-		var/t1 = back.icon_state //apparently tables make me upset and cause my dreams to shatter
-		overlays += image("icon" = 'back.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")), "layer" = layer)
-		back.screen_loc = ui_monkey_back
-
-	if (handcuffed && update_icon)
-		pulling = null
-		if (!( lying ))
-			overlays += image("icon" = 'monkey.dmi', "icon_state" = "handcuff1", "layer" = layer)
-		else
-			overlays += image("icon" = 'monkey.dmi', "icon_state" = "handcuff2", "layer" = layer)
-
-	if (client)
-		client.screen -= contents
-		client.screen += contents
-		client.screen -= hud_used.m_ints
-		client.screen -= hud_used.mov_int
-		if (i_select)
-			if (intent)
-				client.screen += hud_used.m_ints
-
-				var/list/L = dd_text2list(intent, ",")
-				L[1] += ":-11"
-				i_select.screen_loc = dd_list2text(L,",") //ICONS, FUCKING SHIT//What
-
-			else
-				i_select.screen_loc = null
-		if (m_select)
-			if (m_int)
-				client.screen += hud_used.mov_int
-
-				var/list/L = dd_text2list(m_int, ",")
-				L[1] += ":-11"
-				m_select.screen_loc = dd_list2text(L,",") //ICONS, FUCKING SHIT//the fuck
-
-			else
-				m_select.screen_loc = null
-	for(var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
-			spawn( 0 )
-				show_inv(M)
-				return
-	return
 
 /mob/living/carbon/monkey/Move()
 	if ((!( buckled ) || buckled.loc != loc))
@@ -760,8 +689,8 @@
 							if ((M.client && !( M.blinded )))
 								M.show_message(text("[] is now running on internals.", target), 1)
 		else
-	source.update_clothing()
-	target.update_clothing()
+	source.regenerate_icons()
+	target.regenerate_icons()
 	del(src)
 	return
 

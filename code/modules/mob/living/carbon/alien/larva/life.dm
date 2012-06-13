@@ -59,7 +59,7 @@
 	handle_regular_status_updates()
 
 	// Update clothing
-	update_clothing()
+//	regenerate_icons()
 
 	if(client)
 		handle_regular_hud_updates()

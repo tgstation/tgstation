@@ -138,8 +138,8 @@
 					affecting = H.get_organ(type)
 					H.Stun(3)
 		if(affecting)
-			affecting.take_damage(1, 0)
-			H.UpdateDamageIcon()
+			if(affecting.take_damage(1, 0))
+				H.UpdateDamageIcon()
 			H.updatehealth()
 	playsound(target.loc, 'snap.ogg', 50, 1)
 	icon_state = "mousetrap"

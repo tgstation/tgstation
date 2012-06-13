@@ -233,6 +233,7 @@
 		if(blood_DNA[H.dna.unique_enzymes])
 			return 0 //already bloodied with this blood. Cannot add more.
 		blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
+		H.update_inv_gloves()	//handles bloody hands overlays and updating
 		return 1 //we applied blood to the item
 	return
 
@@ -331,7 +332,7 @@
 		del(fingerprints)
 	if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src
-		M.update_clothing()
+		M.update_inv_gloves()		//handles bloody hands too
 	return
 
 /atom/MouseDrop(atom/over_object as mob|obj|turf|area)
@@ -422,8 +423,8 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 	//Attack self
 	if (W == src && usr.stat == 0)
-		spawn (0)
-			W.attack_self(usr)
+//		spawn (0)		//causes runtimes under heavy lag
+		W.attack_self(usr)
 		return
 
 	//Attackby, attack_hand, afterattack, etc. can only be done once every 1 second, unless an object has the NODELAY or USEDELAY flags set
@@ -490,7 +491,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		var/in_range = in_range(src, human) || src.loc == human
 
 		if (in_range)
-			if ( !human.restrained() )
+			if (!( human.restrained() || human.lying ))
 				if (W)
 					attackby(W,human)
 					if (W)
@@ -761,8 +762,12 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 
 	// ------- ATTACK SELF -------
 	if (W == src && usr.stat == 0)
-		spawn (0)
-			W.attack_self(usr)
+//		spawn (0)	//would cause a runtime if W was deconstructed during a lagspike
+		W.attack_self(usr)
+		if(usr.hand)
+			usr.update_inv_l_hand()	//update in-hand overlays
+		else
+			usr.update_inv_r_hand()
 		return
 
 	// ------- PARALYSIS, STUN, WEAKENED, DEAD, (And not AI) -------
@@ -914,7 +919,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				// ------- TESTS ABOVE DETERMINED YOU CANNOT REACH THE TILE -------
 				return 0
 
-		if (!( usr.restrained() ))
+		if (!( usr.restrained() || usr.lying ))
 			// ------- YOU ARE NOT REASTRAINED -------
 
 			if (W)

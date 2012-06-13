@@ -5,7 +5,7 @@
 		if (W==w_uniform) // will be teared
 			continue
 		drop_from_slot(W)
-	update_clothing()
+	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
 	stunned = 1
@@ -64,7 +64,7 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_slot(W)
-	update_clothing()
+	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
@@ -152,7 +152,7 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_slot(W)
-	update_clothing()
+	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
@@ -163,7 +163,6 @@
 		//client.screen -= main_hud1.contents
 		client.screen -= hud_used.contents
 		client.screen -= hud_used.adding
-		client.screen -= hud_used.mon_blo
 		client.screen -= list( oxygen, throw_icon, i_select, m_select, toxin, internals, fire, hands, healths, pullin, blind, flash, rest, sleep, mach )
 		client.screen -= list( zone_sel, oxygen, throw_icon, i_select, m_select, toxin, internals, fire, hands, healths, pullin, blind, flash, rest, sleep, mach )
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
@@ -216,7 +215,7 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_slot(W)
-	update_clothing()
+	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
@@ -256,7 +255,7 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_slot(W)
-	update_clothing()
+	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
 	icon = null
@@ -307,7 +306,7 @@
 		return
 	for(var/obj/item/W in src)
 		drop_from_slot(W)
-	update_clothing()
+	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
 	icon = null

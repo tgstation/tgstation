@@ -245,8 +245,10 @@ client
 			body += "<option value='byond://?src=\ref[src];build_mode=\ref[D]'>Toggle Build Mode</option>"
 			body += "<option value='byond://?src=\ref[src];direct_control=\ref[D]'>Assume Direct Control</option>"
 			body += "<option value='byond://?src=\ref[src];drop_everything=\ref[D]'>Drop Everything</option>"
+			body += "<option value='byond://?src=\ref[src];regenerateicons=\ref[D]'>Regenerate Icons</option>"
 			if(ishuman(D))
 				body += "<option value>---</option>"
+				body += "<option value='byond://?src=\ref[src];setmutantrace=\ref[D]'>Set Mutantrace</option>"
 				body += "<option value='byond://?src=\ref[src];makeai=\ref[D]'>Make AI</option>"
 				body += "<option value='byond://?src=\ref[src];makerobot=\ref[D]'>Make cyborg</option>"
 				body += "<option value='byond://?src=\ref[src];makemonkey=\ref[D]'>Make monkey</option>"
@@ -731,6 +733,32 @@ client
 				usr << "Mob doesn't exist anymore"
 				return
 			holder.Topic(href, list("makeai"=href_list["makeai"]))
+		else if (href_list["setmutantrace"])
+			var/mob/living/carbon/human/H = locate(href_list["setmutantrace"])
+			if(!istype(H))
+				usr << "This can only be done to objects of type /mob/living/carbon/human"
+				return
+			if(!src.holder)
+				usr << "You are not an administrator."
+				return
+			var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","golem","lizard","metroid","plant")
+			switch(new_mutantrace)
+				if(null)		return
+				if("NONE")		new_mutantrace = ""
+			if(!H || !istype(H))
+				usr << "Mob doesn't exist anymore"
+				return
+			H.mutantrace = new_mutantrace
+			H.update_mutantrace()
+		else if (href_list["regenerateicons"])
+			var/mob/M = locate(href_list["regenerateicons"])
+			if(!istype(M))
+				usr << "This can only be done to objects of type /mob"
+				return
+			if(!src.holder)
+				usr << "You are not an administrator."
+				return
+			M.regenerate_icons()
 		else if (href_list["adjustDamage"] && href_list["mobToDamage"])
 			var/mob/M = locate(href_list["mobToDamage"])
 			var/Text = locate(href_list["adjustDamage"])

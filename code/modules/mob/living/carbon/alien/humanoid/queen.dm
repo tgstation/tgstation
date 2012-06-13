@@ -6,17 +6,9 @@
 //	if(src.name == "alien")
 //		src.name = text("alien ([rand(1, 1000)])")
 	src.real_name = src.name
-	spawn (1)
-		src.verbs += /mob/living/carbon/alien/humanoid/proc/corrode_target
-		src.verbs += /mob/living/carbon/alien/humanoid/sentinel/verb/spit
-		src.verbs -= /mob/living/carbon/alien/humanoid/verb/ventcrawl
-		src.stand_icon = new /icon('alien.dmi', "queen_s")
-		src.lying_icon = new /icon('alien.dmi', "queen_l")
-		src.resting_icon = new /icon('alien.dmi', "queen_sleep")
-		src.running_icon = new /icon('alien.dmi', "queen_running")
-		src.icon = src.stand_icon
-		update_clothing()
-		src << "\blue Your icons have been generated!"
+	src.verbs += /mob/living/carbon/alien/humanoid/proc/corrode_target
+	src.verbs += /mob/living/carbon/alien/humanoid/sentinel/verb/spit
+	src.verbs -= /mob/living/carbon/alien/humanoid/verb/ventcrawl
 
 
 /mob/living/carbon/alien/humanoid/queen

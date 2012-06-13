@@ -96,9 +96,7 @@ THERMAL GLASSES
 		src.force = 3
 		src.damtype = "fire"
 		src.icon_state = "cake1"
-
 		processing_objects.Add(src)
-
 	else
 		src.force = null
 		src.damtype = "brute"
@@ -176,6 +174,7 @@ THERMAL GLASSES
 	icon_state = A.icon_state
 	item_state = A.item_state
 	color = A.color
+	usr.update_inv_w_uniform()	//so our overlays update.
 
 /obj/item/clothing/under/chameleon/emp_act(severity)
 	name = "psychedelic"
@@ -208,6 +207,7 @@ THERMAL GLASSES
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"
 	set category = "Object"
+	set src in usr
 	var/mob/M = usr
 	if (istype(M, /mob/dead/)) return
 	if (usr.stat) return
@@ -251,7 +251,9 @@ THERMAL GLASSES
 /obj/item/clothing/head/helmet/welding/verb/toggle()
 	set category = "Object"
 	set name = "Adjust welding mask"
-	if(usr.canmove && usr.stat != 2 && !usr.restrained())
+	set src in usr
+
+	if(usr.canmove && !usr.stat && !usr.restrained())
 		if(src.up)
 			src.up = !src.up
 			src.see_face = !src.see_face
@@ -266,6 +268,7 @@ THERMAL GLASSES
 			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES)
 			icon_state = "weldingup"
 			usr << "You push the mask up out of your face."
+		usr.update_inv_head()	//so our mob-overlays update
 
 /obj/item/clothing/head/cargosoft/dropped()
 	src.icon_state = "cargosoft"
@@ -275,18 +278,22 @@ THERMAL GLASSES
 /obj/item/clothing/head/cargosoft/verb/flip()
 	set category = "Object"
 	set name = "Flip cap"
-	src.flipped = !src.flipped
-	if(src.flipped)
-		icon_state = "cargosoft_flipped"
-		usr << "You flip the hat backwards."
-	else
-		icon_state = "cargosoft"
-		usr << "You flip the hat back in normal position."
+	set src in usr
+	if(usr.canmove && !usr.stat && !usr.restrained())
+		src.flipped = !src.flipped
+		if(src.flipped)
+			icon_state = "cargosoft_flipped"
+			usr << "You flip the hat backwards."
+		else
+			icon_state = "cargosoft"
+			usr << "You flip the hat back in normal position."
+		usr.update_inv_head()	//so our mob-overlays update
 
 
 /obj/item/clothing/shoes/magboots/verb/toggle()
 	set name = "Toggle Magboots"
 	set category = "Object"
+	set src in usr
 	if(src.magpulse)
 		src.flags &= ~NOSLIP
 		src.slowdown = SHOES_SLOWDOWN
@@ -299,6 +306,7 @@ THERMAL GLASSES
 		src.magpulse = 1
 		icon_state = "magboots1"
 		usr << "You enable the mag-pulse traction system."
+	usr.update_inv_shoes()	//so our mob-overlays update
 
 /obj/item/clothing/shoes/magboots/examine()
 	set src in view()
@@ -311,6 +319,11 @@ THERMAL GLASSES
 /obj/item/clothing/suit/suit/verb/toggle()
 	set name = "Toggle Jacket Buttons"
 	set category = "Object"
+	set src in usr
+
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return 0
+
 	if(src.icon_state == "suitjacket_blue_open")
 		src.icon_state = "suitjacket_blue"
 		src.item_state = "suitjacket_blue"
@@ -320,62 +333,65 @@ THERMAL GLASSES
 		src.item_state = "suitjacket_blue_open"
 		usr << "You unbutton the suit jacket."
 	else
-		usr << "Sorry! The suit you're wearing doesn't have buttons!"
+		usr << "You button-up some imaginary buttons on your [src]."
+		return
+	usr.update_inv_wear_suit()
 
 /obj/item/clothing/suit/labcoat/verb/toggle()
 	set name = "Toggle Labcoat Buttons"
 	set category = "Object"
+	set src in usr
 
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return 0
 
-	else
-
-		if(src.icon_state == "labcoat_open")
+	switch(icon_state)
+		if("labcoat_open")
 			src.icon_state = "labcoat"
 			usr << "You button up the labcoat."
-		else if(src.icon_state == "labcoat")
+		if("labcoat")
 			src.icon_state = "labcoat_open"
 			usr << "You unbutton the labcoat."
-		else if(src.icon_state == "labcoat_cmo_open")
+		if("labcoat_cmo_open")
 			src.icon_state = "labcoat_cmo"
 			usr << "You button up the labcoat."
-		else if(src.icon_state == "labcoat_cmo")
+		if("labcoat_cmo")
 			src.icon_state = "labcoat_cmo_open"
 			usr << "You unbutton the labcoat."
-		else if(src.icon_state == "labcoat_gen_open")
+		if("labcoat_gen_open")
 			src.icon_state = "labcoat_gen"
 			usr << "You button up the labcoat."
-		else if(src.icon_state == "labcoat_gen")
+		if("labcoat_gen")
 			src.icon_state = "labcoat_gen_open"
 			usr << "You unbutton the labcoat."
-		else if(src.icon_state == "labcoat_chem_open")
+		if("labcoat_chem_open")
 			src.icon_state = "labcoat_chem"
 			usr << "You button up the labcoat."
-		else if(src.icon_state == "labcoat_chem")
+		if("labcoat_chem")
 			src.icon_state = "labcoat_chem_open"
 			usr << "You unbutton the labcoat."
-		else if(src.icon_state == "labcoat_vir_open")
+		if("labcoat_vir_open")
 			src.icon_state = "labcoat_vir"
 			usr << "You button up the labcoat."
-		else if(src.icon_state == "labcoat_vir")
+		if("labcoat_vir")
 			src.icon_state = "labcoat_vir_open"
 			usr << "You unbutton the labcoat."
-		else if(src.icon_state == "labcoat_tox_open")
+		if("labcoat_tox_open")
 			src.icon_state = "labcoat_tox"
 			usr << "You button up the labcoat."
-		else if(src.icon_state == "labcoat_tox")
+		if("labcoat_tox")
 			src.icon_state = "labcoat_tox_open"
 			usr << "You unbutton the labcoat."
-		else if(src.icon_state == "labgreen_open")
+		if("labgreen_open")
 			src.icon_state = "labgreen"
 			usr << "You button up the labcoat."
-		else if(src.icon_state == "labgreen")
+		if("labgreen")
 			src.icon_state = "labgreen_open"
 			usr << "You unbutton the labcoat."
-
 		else
-			usr << "Sorry! The suit you're wearing doesn't have buttons!"
+			usr << "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are."
+			return
+	usr.update_inv_wear_suit()	//so our overlays update
 
 /obj/item/clothing/head/ushanka/attack_self(mob/user as mob)
 	if(src.icon_state == "ushankadown")

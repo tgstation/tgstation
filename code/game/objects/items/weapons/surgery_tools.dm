@@ -69,7 +69,8 @@ CIRCULAR SAW
 					user << "\red You mess up!"
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/affecting = M:get_organ("head")
-						affecting.take_damage(15)
+						if(affecting.take_damage(15))
+							M:UpdateDamageIcon()
 						M.updatehealth()
 					else
 						M.take_organ_damage(15)
@@ -155,7 +156,8 @@ CIRCULAR SAW
 					user << "\red You mess up!"
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/affecting = M:get_organ("head")
-						affecting.take_damage(15)
+						if(affecting.take_damage(15))
+							M:UpdateDamageIcon()
 						M.updatehealth()
 					else
 						M.take_organ_damage(15)
@@ -230,7 +232,8 @@ CIRCULAR SAW
 					user << "\red You mess up!"
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/affecting = M:get_organ("head")
-						affecting.take_damage(15)
+						if(affecting.take_damage(15))
+							M:UpdateDamageIcon()
 						M.updatehealth()
 					else
 						M.take_organ_damage(15)
@@ -329,7 +332,8 @@ CIRCULAR SAW
 					user << "\red You mess up!"
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/affecting = M:get_organ("head")
-						affecting.take_damage(15)
+						if(affecting.take_damage(15))
+							M:UpdateDamageIcon()
 					else
 						M.take_organ_damage(15)
 
@@ -374,7 +378,8 @@ CIRCULAR SAW
 					user << "\red You nick an artery!"
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/affecting = M:get_organ("head")
-						affecting.take_damage(75)
+						if(affecting.take_damage(75))
+							M:UpdateDamageIcon()
 					else
 						M.take_organ_damage(75)
 
@@ -429,7 +434,8 @@ CIRCULAR SAW
 					user << "\red You mess up!"
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/affecting = M:get_organ("head")
-						affecting.take_damage(15)
+						if(affecting.take_damage(15))
+							M:UpdateDamageIcon()
 					else
 						M.take_organ_damage(15)
 
@@ -498,7 +504,8 @@ CIRCULAR SAW
 					user << "\red You mess up!"
 					if(istype(M, /mob/living/carbon/human))
 						var/datum/organ/external/affecting = M:get_organ("head")
-						affecting.take_damage(40)
+						if(affecting.take_damage(40))
+							M:UpdateDamageIcon()
 						M.updatehealth()
 					else
 						M.take_organ_damage(40)

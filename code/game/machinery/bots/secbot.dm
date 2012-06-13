@@ -719,9 +719,11 @@ Auto Patrol: []"},
 		if(user.r_hand == S)
 			user.u_equip(S)
 			user.r_hand = A
+			user.update_inv_r_hand()
 		else
 			user.u_equip(S)
 			user.l_hand = A
+			user.update_inv_l_hand()
 		A.layer = 20
 		user << "You add the signaler to the helmet."
 		del(S)

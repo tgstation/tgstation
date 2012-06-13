@@ -119,15 +119,15 @@
 		src.pickup(user)
 		user.lastDblClick = world.time + 2
 		user.next_move = world.time + 2
-
-	if (user.hand)
-		user.l_hand = src
-	else
-		user.r_hand = src
 	src.loc = user
 	src.layer = 20
 	add_fingerprint(user)
-	user.update_clothing()
+	if (user.hand)
+		user.l_hand = src
+		user.update_inv_l_hand()
+	else
+		user.r_hand = src
+		user.update_inv_r_hand()
 	return
 
 
@@ -158,14 +158,14 @@
 		src.pickup(user)
 		user.lastDblClick = world.time + 2
 		user.next_move = world.time + 2
-
-	if (user.hand)
-		user.l_hand = src
-	else
-		user.r_hand = src
 	src.loc = user
 	src.layer = 20
-	user.update_clothing()
+	if (user.hand)
+		user.l_hand = src
+		user.update_inv_l_hand()
+	else
+		user.r_hand = src
+		user.update_inv_r_hand()
 	return
 
 /obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -361,7 +361,8 @@
 		)
 	if(istype(M, /mob/living/carbon/human))
 		var/datum/organ/external/affecting = M:get_organ("head")
-		affecting.take_damage(7)
+		if(affecting.take_damage(7))
+			M:UpdateDamageIcon()
 	else
 		M.take_organ_damage(7)
 	M.eye_blurry += rand(3,4)

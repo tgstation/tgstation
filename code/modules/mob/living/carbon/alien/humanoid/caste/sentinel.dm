@@ -5,16 +5,7 @@
 	if(src.name == "alien sentinel")
 		src.name = text("alien sentinel ([rand(1, 1000)])")
 	src.real_name = src.name
-	spawn (1)
-		src.verbs += /mob/living/carbon/alien/humanoid/proc/corrode_target
-		src.stand_icon = new /icon('alien.dmi', "aliens_s")
-		src.lying_icon = new /icon('alien.dmi', "aliens_l")
-		src.resting_icon = new /icon('alien.dmi', "aliens_sleep")
-		src.running_icon = new /icon('alien.dmi', "aliens_running")
-		src.icon = src.stand_icon
-		update_clothing()
-		src << "\blue Your icons have been generated!"
-
+	src.verbs += /mob/living/carbon/alien/humanoid/proc/corrode_target
 
 /mob/living/carbon/alien/humanoid/sentinel
 

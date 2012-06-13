@@ -4,7 +4,7 @@
 		blood.override = 1
 		client.images += blood
 	..()
-	update_clothing()
+	regenerate_icons()
 	for(var/S in src.client.screen)
 		del(S)
 	src.flash = new /obj/screen( null )

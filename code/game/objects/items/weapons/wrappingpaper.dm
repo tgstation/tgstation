@@ -84,8 +84,10 @@ PHOTOGRAPHS
 	src.gift.loc = user
 	if (user.hand)
 		user.l_hand = src.gift
+		user.update_inv_l_hand()
 	else
 		user.r_hand = src.gift
+		user.update_inv_r_hand()
 	src.gift.layer = 20
 	src.gift.add_fingerprint(user)
 	del(src)
@@ -125,8 +127,10 @@ PHOTOGRAPHS
 			var/obj/item/device/flash/W = new /obj/item/device/flash( M )
 			if (M.hand)
 				M.l_hand = W
+				M.update_inv_l_hand()
 			else
 				M.r_hand = W
+				M.update_inv_r_hand()
 			W.layer = 20
 			W.add_fingerprint(M)
 			//SN src = null
@@ -136,8 +140,10 @@ PHOTOGRAPHS
 			var/obj/item/weapon/gun/energy/laser/W = new /obj/item/weapon/gun/energy/laser( M )
 			if (M.hand)
 				M.l_hand = W
+				M.update_inv_l_hand()
 			else
 				M.r_hand = W
+				M.update_inv_r_hand()
 			W.layer = 20
 			W.add_fingerprint(M)
 			//SN src = null
@@ -147,8 +153,10 @@ PHOTOGRAPHS
 			var/obj/item/weapon/gun/energy/taser/W = new /obj/item/weapon/gun/energy/taser( M )
 			if (M.hand)
 				M.l_hand = W
+				M.update_inv_l_hand()
 			else
 				M.r_hand = W
+				M.update_inv_r_hand()
 			W.layer = 20
 			W.add_fingerprint(M)
 			//SN src = null
@@ -158,8 +166,10 @@ PHOTOGRAPHS
 			var/obj/item/weapon/melee/energy/sword/W = new /obj/item/weapon/melee/energy/sword( M )
 			if (M.hand)
 				M.l_hand = W
+				M.update_inv_l_hand()
 			else
 				M.r_hand = W
+				M.update_inv_r_hand()
 			W.layer = 20
 			W.add_fingerprint(M)
 			//SN src = null
@@ -169,8 +179,10 @@ PHOTOGRAPHS
 			var/obj/item/weapon/melee/energy/axe/W = new /obj/item/weapon/melee/energy/axe( M )
 			if (M.hand)
 				M.l_hand = W
+				M.update_inv_l_hand()
 			else
 				M.r_hand = W
+				M.update_inv_r_hand()
 			W.layer = 20
 			W.add_fingerprint(M)
 			//SN src = null

@@ -7,22 +7,6 @@
 		return 0
 	return
 
-// new damage icon system
-// now constructs damage icon for each organ from mask * damage field
-
-/mob/living/carbon/human/UpdateDamageIcon()
-	var/icon/standing = new /icon('dam_human.dmi', "00")
-	var/icon/lying = new /icon('dam_human.dmi', "00-2")
-	for(var/datum/organ/external/O in organs)
-		var/icon/DI = new /icon('dam_human.dmi', O.damage_state)			// the damage icon for whole human
-		DI.Blend(new /icon('dam_mask.dmi', O.icon_name), ICON_MULTIPLY)		// mask with this organ's pixels
-		standing.Blend(DI,ICON_OVERLAY)
-		DI = new /icon('dam_human.dmi', "[O.damage_state]-2")				// repeat for lying icons
-		DI.Blend(new /icon('dam_mask.dmi', "[O.icon_name]2"), ICON_MULTIPLY)
-		lying.Blend(DI,ICON_OVERLAY)
-	damageicon_standing = new /image("icon" = standing, "layer" = DAMAGE_LAYER)
-	damageicon_lying = new /image("icon" = lying, "layer" = DAMAGE_LAYER)
-
 
 /mob/living/carbon/human/proc/get_organ(var/zone)
 	if(!zone)	zone = "chest"
@@ -54,9 +38,10 @@
 
 	switch(damagetype)
 		if(BRUTE)
-			organ.take_damage(damage, 0)
+			if(organ.take_damage(damage, 0))
+				UpdateDamageIcon()
 		if(BURN)
-			organ.take_damage(0, damage)
-	UpdateDamageIcon()
+			if(organ.take_damage(0, damage))
+				UpdateDamageIcon()
 	updatehealth()
 	return 1

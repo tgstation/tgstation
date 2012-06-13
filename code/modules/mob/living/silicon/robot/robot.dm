@@ -579,8 +579,10 @@
 			G.assailant = M
 			if (M.hand)
 				M.l_hand = G
+				M.update_inv_l_hand()
 			else
 				M.r_hand = G
+				M.update_inv_r_hand()
 			G.layer = 20
 			G.affecting = src
 			grabbed_by += G
@@ -712,8 +714,10 @@
 			cell.layer = 20
 			if (user.hand )
 				user.l_hand = cell
+				user.update_inv_l_hand()
 			else
 				user.r_hand = cell
+				user.update_inv_r_hand()
 
 			cell.add_fingerprint(user)
 			cell.updateicon()

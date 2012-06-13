@@ -163,6 +163,7 @@
 			return //To prevent the stacking of the same sized items.
 
 	user.u_equip(W)
+	user.update_icons()	//update our overlays
 	W.loc = src
 	if ((user.client && user.s_active != src))
 		user.client.screen -= W
@@ -377,12 +378,13 @@
 				if (!( M.r_hand ))
 					M.u_equip(src)
 					M.r_hand = src
+					M.update_inv_r_hand()
 			else
 				if (over_object.name == "l_hand")
 					if (!( M.l_hand ))
 						M.u_equip(src)
 						M.l_hand = src
-			M.update_clothing()
+						M.update_inv_l_hand()
 			src.add_fingerprint(usr)
 			return
 		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))

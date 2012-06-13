@@ -34,7 +34,10 @@
 	if(usr.control_object && usr.name_archive) //if you have a name archived and if you are actually relassing an object
 		usr.real_name = usr.name_archive
 		usr.name = usr.real_name
-		usr.update_clothing() //So the name is updated properly
+		if(ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			H.name = H.get_visible_name()
+//		usr.regenerate_icons() //So the name is updated properly
 
 	usr.loc = O.loc // Appear where the object you were controlling is -- TLE
 	usr.client.eye = usr

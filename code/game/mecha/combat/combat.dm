@@ -44,12 +44,13 @@
 
 				var/datum/organ/external/temp = H.get_organ(pick("chest", "chest", "chest", "head"))
 				if(temp)
+					var/update = 0
 					switch(damtype)
 						if("brute")
 							H.Paralyse(1)
-							temp.take_damage(rand(force/2, force), 0)
+							update |= temp.take_damage(rand(force/2, force), 0)
 						if("fire")
-							temp.take_damage(0, rand(force/2, force))
+							update |= temp.take_damage(0, rand(force/2, force))
 						if("tox")
 							if(H.reagents)
 								if(H.reagents.get_reagent_amount("carpotoxin") + force < force*2)
@@ -58,7 +59,7 @@
 									H.reagents.add_reagent("cryptobiolin", force)
 						else
 							return
-					H.UpdateDamageIcon()
+					if(update)	H.UpdateDamageIcon()
 				H.updatehealth()
 
 			else

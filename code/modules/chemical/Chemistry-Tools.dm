@@ -1838,9 +1838,11 @@
 			if (user.r_hand == D)
 				user.u_equip(D)
 				user.r_hand = B
+				user.update_inv_r_hand()
 			else
 				user.u_equip(D)
 				user.l_hand = B
+				user.update_inv_l_hand()
 			B.layer = 20
 			user << "You add the sensor to the bucket"
 			del(D)
