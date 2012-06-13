@@ -1434,6 +1434,15 @@ datum
 			reliability_base = 79
 			build_path = "/obj/item/weapon/pickaxe/diamonddrill"
 
+		mesons
+			name = "Optical Meson Scanners"
+			desc = "Used for seeing walls, floors, and stuff through anything."
+			id = "mesons"
+			req_tech = list("magnets" = 2, "engineering" = 2)
+			build_type = PROTOLATHE
+			materials = list("$metal" = 50, "$glass" = 50)
+			build_path = "/obj/item/clothing/glasses/meson"
+
 /////////////////////////////////////////
 //////////////Blue Space/////////////////
 /////////////////////////////////////////
