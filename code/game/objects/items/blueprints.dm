@@ -220,6 +220,8 @@ move an amendment</a> to the designs.</p>
 
 
 		if("Merge")
+			usr << "We appologize, but this function is not availible"
+			/*
 			var/list/turf/search_remaining_turfs = A.contents.Copy()
 			var/list/turfs = list()
 			for(var/turf/simulated/T in search_remaining_turfs)
@@ -316,7 +318,7 @@ move an amendment</a> to the designs.</p>
 					return
 
 			else
-				return
+				return*/
 
 		if("Cancel")
 			return
