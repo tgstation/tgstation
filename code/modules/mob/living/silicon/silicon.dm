@@ -50,7 +50,6 @@
 			eye_blurry = max(eye_blurry,(effect/(blocked+1)))
 		if(DROWSY)
 			drowsyness = max(drowsyness,(effect/(blocked+1)))
-	UpdateDamageIcon()
 	updatehealth()
 	return 1*/
 
