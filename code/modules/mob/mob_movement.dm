@@ -40,10 +40,7 @@
 /client/Southwest()
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
-		if(!C.get_active_hand())
-			usr << "\red You have nothing in your hand to throw."
-			return
-		toggle_throw_mode()
+		C.toggle_throw_mode()
 	else
 		usr << "\red This mob type cannot throw items."
 	return
@@ -132,10 +129,12 @@
 
 /client/verb/toggle_throw_mode()
 	set hidden = 1
-	if(!istype(mob, /mob/living/carbon))	return
-	if((mob.stat || mob.restrained()) || !(isturf(mob.loc)))	return
-	mob:toggle_throw_mode()
-	return
+	if(!istype(mob, /mob/living/carbon))
+		return
+	if (!mob.stat && isturf(mob.loc) && !mob.restrained())
+		mob:toggle_throw_mode()
+	else
+		return
 
 
 /client/verb/drop_item()

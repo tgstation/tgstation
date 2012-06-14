@@ -129,7 +129,7 @@
 					disp2 = "STATN"
 				else
 					disp1 = "SPPLY"
-					disp2 = "DOCK"
+					disp2 = "AWAY"
 
 			update_display(disp1, disp2)
 
