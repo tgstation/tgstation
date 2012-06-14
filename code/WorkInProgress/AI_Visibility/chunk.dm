@@ -216,6 +216,9 @@
 			images_added += t.obscured
 
 	for(var/mob/aiEye/eye in seenby)
-		if(eye.ai.client)
-			eye.ai.client.images -= images_removed
-			eye.ai.client.images |= images_added
+		if(eye.ai)
+			if(eye.ai.client)
+				eye.ai.client.images -= images_removed
+				eye.ai.client.images |= images_added
+		else
+			seenby -= eye

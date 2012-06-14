@@ -513,10 +513,10 @@ obj/machinery/computer/forensic_scanning
 						prints[print] = atom_fingerprints[print]
 		else
 			var/list/templist[4]
-			templist[1] = atom_suit_fibers
-			templist[2] = atom_blood_DNA
+			templist[1] = atom_suit_fibers.Copy()
+			templist[2] = atom_blood_DNA.Copy()
 			templist[3] = atom_name
-			templist[4] = atom_fingerprints
+			templist[4] = atom_fingerprints.Copy()
 			misc[atom_reference] = templist	//Store it!
 		//Has prints.
 		if(atom_fingerprints)
@@ -560,17 +560,17 @@ obj/machinery/computer/forensic_scanning
 					//It's not in there!  We gotta add it.
 					update_fingerprints(main_print, atom_fingerprints[main_print])
 					var/list/data_point[4]
-					data_point[1] = atom_fingerprints
-					data_point[2] = atom_suit_fibers
-					data_point[3] = atom_blood_DNA
+					data_point[1] = atom_fingerprints.Copy()
+					data_point[2] = atom_suit_fibers.Copy()
+					data_point[3] = atom_blood_DNA.Copy()
 					data_point[4] = atom_name
 					data_entry[atom_reference] = data_point
 					continue
 				//No print at all!  New data entry, go!
 				var/list/data_point[4]
-				data_point[1] = atom_fingerprints
-				data_point[2] = atom_suit_fibers
-				data_point[3] = atom_blood_DNA
+				data_point[1] = atom_fingerprints.Copy()
+				data_point[2] = atom_suit_fibers.Copy()
+				data_point[3] = atom_blood_DNA.Copy()
 				data_point[4] = atom_name
 				var/list/new_file[2]
 				new_file[1] = atom_fingerprints[main_print]
