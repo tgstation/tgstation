@@ -157,14 +157,14 @@ obj
 		New(newLoc,fl)
 			..()
 			dir = pick(cardinal)
-			sd_SetLuminosity(3)
+			ul_SetLuminosity(3)
 			firelevel = fl
 			for(var/mob/living/carbon/human/M in loc)
 				M.FireBurn(min(max(0.1,firelevel / 20),10)) //Burn the humans!
 
 		Del()
 			if (istype(loc, /turf/simulated))
-				src.sd_SetLuminosity(0)
+				ul_SetLuminosity(0)
 
 				loc = null
 
@@ -267,7 +267,7 @@ datum/gas_mixture/proc/zburn(obj/liquid_fuel/liquid)
 			temperature = max( 1700*log(0.4*firelevel + 1.23) , temperature )
 
 			//Consume some gas.
-			var/consumed_gas = min(oxygen,0.005*firelevel,total_fuel) / fuel_sources
+			var/consumed_gas = min(oxygen,0.05*firelevel,total_fuel) / fuel_sources
 
 			oxygen = max(0,oxygen-consumed_gas)
 

@@ -123,7 +123,7 @@
 	var/oldlum = luminosity
 
 	//luminosity = on * brightness
-	sd_SetLuminosity(on * brightness)		// *DAL*
+	ul_SetLuminosity(on * brightness, on * brightness, ( fitting == "tube" ? on * brightness : 0 ) )		// *DAL*
 
 	// if the state changed, inc the switching counter
 	if(oldlum != luminosity)
@@ -137,7 +137,7 @@
 				status = LIGHT_BURNED
 				icon_state = "[base_state]-burned"
 				on = 0
-				sd_SetLuminosity(0)
+				ul_SetLuminosity(0)
 	active_power_usage = (luminosity * 20)
 	if(on != on_gs)
 		on_gs = on

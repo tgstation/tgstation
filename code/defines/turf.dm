@@ -45,6 +45,8 @@
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
 
+	LightLevelBlue = 5
+
 	transit
 
 		var/pushdirection // push things that get caught in the transit tile this direction
@@ -311,7 +313,7 @@
 
 	New()
 		..()
-		sd_SetLuminosity(3)
+		ul_SetLuminosity(3)
 
 /turf/simulated/wall/mineral/gold
 	walltype = "gold"

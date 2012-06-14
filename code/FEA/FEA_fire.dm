@@ -156,13 +156,13 @@ obj
 		New()
 			..()
 			dir = pick(cardinal)
-			sd_SetLuminosity(3)
+			ul_SetLuminosity(3)
 
 		Del()
 			if (istype(loc, /turf/simulated))
 				var/turf/simulated/T = loc
 				loc:active_hotspot = null
-				src.sd_SetLuminosity(0)
+				src.ul_SetLuminosity(0)
 
 
 

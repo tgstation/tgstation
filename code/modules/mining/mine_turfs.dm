@@ -199,8 +199,8 @@
 	if(old_icon) W.icon_state = old_icon
 	*/
 	W.opacity = 1
-	W.sd_SetOpacity(0)
-	W.sd_LumReset()
+	W.ul_SetOpacity(0)
+	W.ul_Recalculate()
 	W.levelupdate()
 	return W
 

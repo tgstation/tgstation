@@ -1149,16 +1149,16 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/Del()
 	if(istype(loc,/mob))
-		loc.sd_SetLuminosity(loc.luminosity - potency/5)
+		loc.ul_SetLuminosity(loc.LuminosityRed - potency/5, loc.LuminosityGreen - potency/5, loc.LuminosityBlue - potency/5)
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/pickup(mob/user)
-	src.sd_SetLuminosity(0)
-	user.total_luminosity += potency/5
+	src.ul_SetLuminosity(0)
+	user.ul_SetLuminosity(user.LuminosityRed + potency/5, user.LuminosityGreen + potency/5, user.LuminosityBlue + potency/5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/dropped(mob/user)
-	user.total_luminosity -= potency/5
-	src.sd_SetLuminosity(potency/5)
+	user.ul_SetLuminosity(user.LuminosityRed - potency/5, user.LuminosityGreen - potency/5, user.LuminosityBlue - potency/5)
+	src.ul_SetLuminosity(potency/5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	seed = "/obj/item/seeds/cocoapodseed"
@@ -1621,7 +1621,7 @@
 		if(istype(src.loc,/mob))
 			pickup(src.loc)
 		else
-			src.sd_SetLuminosity(potency/10)
+			src.ul_SetLuminosity(potency/10)
 	lifespan = 120 //ten times that is the delay
 	endurance = 30
 	maturation = 15
@@ -1646,16 +1646,16 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Del()
 	if(istype(loc,/mob))
-		loc.sd_SetLuminosity(loc.luminosity - potency/10)
+		loc.ul_SetLuminosity(loc.LuminosityRed - potency/10, loc.LuminosityGreen - potency/10, loc.LuminosityBlue - potency/10)
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/pickup(mob/user)
-	src.sd_SetLuminosity(0)
-	user.total_luminosity += potency/10
+	ul_SetLuminosity(0)
+	user.ul_SetLuminosity(user.LuminosityRed + potency/10, user.LuminosityGreen + potency/10, user.LuminosityBlue + potency/10)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/dropped(mob/user)
-	user.total_luminosity -= potency/10
-	src.sd_SetLuminosity(potency/10)
+	user.ul_SetLuminosity(user.LuminosityRed - potency/10, user.LuminosityGreen - potency/10, user.LuminosityBlue - potency/10)
+	ul_SetLuminosity(potency/10)
 
 // **********************
 // Other harvested materials from plants (that are not food)

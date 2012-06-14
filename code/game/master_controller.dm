@@ -55,11 +55,11 @@ datum/controller/game_controller
 		//	Now that the game is world is fully initialized, pause server until a user connects.
 		world.sleep_offline = 1
 
-		setup_objects()
-
 		setupgenetics()
 
 		setupdooralarms()
+
+		setup_objects()
 
 //		for(var/i = 0, i < max_secret_rooms, i++)
 //			make_mining_asteroid_secret()
@@ -103,6 +103,8 @@ datum/controller/game_controller
 			emclosets -= loc
 			new /obj/structure/closet/emcloset(loc)
 			emclosetcount--
+
+		setup_UL()
 
 		world << "\red \b Initializations complete."
 

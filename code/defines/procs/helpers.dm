@@ -1515,9 +1515,9 @@ proc/listclearnulls(list/list)
 
 					var/area/AR = X.loc
 
-					if(AR.sd_lighting)
+					if(AR.ul_Lighting)
 						X.opacity = !X.opacity
-						X.sd_SetOpacity(!X.opacity)
+						X.ul_SetOpacity(!X.opacity)
 
 					toupdate += X
 
@@ -1526,9 +1526,9 @@ proc/listclearnulls(list/list)
 
 						var/area/AR2 = ttl.loc
 
-						if(AR2.sd_lighting)
+						if(AR2.ul_Lighting)
 							ttl.opacity = !ttl.opacity
-							ttl.sd_SetOpacity(!ttl.opacity)
+							ttl.ul_SetOpacity(!ttl.opacity)
 
 						fromupdate += ttl
 
@@ -1687,9 +1687,9 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 
 					var/area/AR = X.loc
 
-					if(AR.sd_lighting)
+					if(AR.ul_Lighting)
 						X.opacity = !X.opacity
-						X.sd_SetOpacity(!X.opacity)
+						X.ul_SetOpacity(!X.opacity)
 
 					toupdate += X
 

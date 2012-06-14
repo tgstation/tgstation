@@ -14,9 +14,9 @@
 	uid = ++global_uid
 	spawn(1)
 	//world.log << "New: [src] [tag]"
-		var/sd_created = findtext(tag,"sd_L")
-		sd_New(sd_created)
-		if(sd_created)
+		var/ul_created = findtext(tag,":UL")
+		ul_Prep()
+		if(ul_created)
 			related += src
 			return
 		related = list(src)
@@ -27,7 +27,7 @@
 		if(name == "Space")			// override defaults for space
 			requires_power = 1
 			always_unpowered = 1
-			sd_SetLuminosity(1)
+			ul_SetLuminosity(1)
 			power_light = 0
 			power_equip = 0
 			power_environ = 0
@@ -38,11 +38,11 @@
 			power_equip = 0//rastaf0
 			power_environ = 0//rastaf0
 			luminosity = 1
-			sd_lighting = 0			// *DAL*
+			ul_Lighting = 0			// *DAL*
 		else
 			luminosity = 0
 			area_lights_luminosity = rand(6,9)
-			//sd_SetLuminosity(0)		// *DAL*
+			//ul_SetLuminosity(0)		// *DAL*
 
 
 

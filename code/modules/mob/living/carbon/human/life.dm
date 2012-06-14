@@ -125,8 +125,8 @@
 		G.process()
 
 	if(isturf(loc) && rand(1,1000) == 1) //0.1% chance of playing a scary sound to someone who's in complete darkness
-		var/turf/currentTurf = loc
-		if(!currentTurf.sd_lumcount)
+		var/turf/currentTurf = get_turf(src)
+		if(!max(currentTurf.ul_GetRed(), currentTurf.ul_GetGreen(), currentTurf.ul_GetBlue()))
 			playsound_local(src,pick(scarySounds),50, 1, -1)
 
 	src.moved_recently = max(0, moved_recently-1)
@@ -825,7 +825,8 @@
 			if(mutantrace == "plant") //couldn't think of a better place to place it, since it handles nutrition -- Urist
 				var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 				if(istype(loc,/turf)) //else, there's considered to be no light
-					light_amount = min(10,loc:sd_lumcount) - 5 //hardcapped so it's not abused by having a ton of flashlights
+					var/turf/currentTurf = get_turf(src)
+					light_amount = min(10,max(currentTurf.ul_GetRed(), currentTurf.ul_GetGreen(), currentTurf.ul_GetBlue())) - 5 //hardcapped so it's not abused by having a ton of flashlights
 				if(nutrition < 500) //so they can't store nutrition to survive without light forever
 					nutrition += light_amount
 				if(light_amount > 0) //if there's enough light, heal
