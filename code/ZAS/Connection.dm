@@ -63,6 +63,8 @@ connection
 				B.zone.connected_zones[A.zone] = 1
 			else
 				B.zone.connected_zones[A.zone]++
+			if(A.HasDoor(B) || B.HasDoor(A))
+				indirect = 1
 		else
 			world.log << "Attempted to create connection object for non-zone tiles: [T] -> [O]"
 			del(src)
@@ -193,6 +195,8 @@ connection
 		Cleanup()
 		if(!A.CanPass(null, B, 0, 0) || !B.CanPass(null, A, 0, 0))
 			del src
+		if(A.HasDoor(B) || B.HasDoor(A))
+			indirect = 1
 
 	proc/Sanitize()
 		//If the zones change on connected turfs, update it.
