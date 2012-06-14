@@ -219,9 +219,8 @@ Release Pressure: <A href='?src=\ref[src];pressure_adj=-1000'>-</A> <A href='?sr
 	return
 
 /obj/machinery/portable_atmospherics/canister/Topic(href, href_list)
-	..()
-	if (usr.stat || usr.restrained())
-		return
+	if(..()) return
+
 	if (((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
 		usr.machine = src
 

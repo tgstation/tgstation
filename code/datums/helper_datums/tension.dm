@@ -232,8 +232,17 @@ var/global/datum/tension/tension_master
 
 	Topic(href, href_list)
 
+		if(!usr || !usr.client)
+			return //This shouldnt happen
+
+		if(!usr.client.holder)
+			message_admins("\red [key_name(usr)] tried to use the tensioner without authorization.")
+			log_admin("[key_name(usr)] tried to use the tensioner without authorization.")
+			return
+
 		log_admin("[key_name(usr)] used a tensioner override.  The override was [href]")
 		message_admins("[key_name(usr)] used a tensioner override.  The override was [href]")
+
 
 		if(href_list["addScore"])
 			score += 50000

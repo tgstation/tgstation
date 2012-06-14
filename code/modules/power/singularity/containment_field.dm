@@ -11,6 +11,7 @@
 	use_power = 0
 	var/obj/machinery/field_generator/FG1 = null
 	var/obj/machinery/field_generator/FG2 = null
+	var/hasShocked = 0 //Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
 
 	New()
 		spawn(1)
@@ -52,6 +53,8 @@
 
 	proc
 		shock(mob/living/user as mob)
+			if(hasShocked)
+				return 0
 			if(!FG1 || !FG2)
 				del(src)
 				return 0
@@ -59,6 +62,8 @@
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, user.loc)
 				s.start()
+
+				hasShocked = 1
 				var/shock_damage = min(rand(30,40),rand(30,40))
 				user.burn_skin(shock_damage)
 				user.updatehealth()
@@ -73,11 +78,17 @@
 				user.updatehealth()
 				var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
 				user.throw_at(target, 200, 4)
+
+				sleep(20)
+				hasShocked = 0
 				return
+
 			else if(issilicon(user))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, user.loc)
 				s.start()
+
+				hasShocked = 1
 				var/shock_damage = rand(15,30)
 				user.take_overall_damage(0,shock_damage)
 				user.visible_message("\red [user.name] was shocked by the [src.name]!", \
@@ -85,7 +96,11 @@
 					"\red You hear an electrical crack")
 				if(prob(20))
 					user.Stun(2)
+
+				sleep(20)
+				hasShocked = 0
 				return
+
 			return
 
 		set_master(var/master1,var/master2)

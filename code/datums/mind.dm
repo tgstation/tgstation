@@ -287,6 +287,13 @@ datum/mind
 		usr << browse(out, "window=edit_memory[src]")
 
 	Topic(href, href_list)
+		if(!usr || !usr.client)
+			return
+
+		if(!usr.client.holder)
+			message_admins("\red [key_name(usr)] tried to access [current]'s mind without authorization.")
+			log_admin("[key_name(usr)] tried to access [current]'s mind without authorization.")
+			return
 
 		if (href_list["role_edit"])
 			var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in get_all_jobs()
