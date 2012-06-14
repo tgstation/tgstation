@@ -392,3 +392,43 @@
 
 	mob << "Gravity!"
 
+/area/proc/absorb(var/area/A)
+	if(!istype(A))
+		return
+	var/oldname = A.name
+	var/list/other_related = A.related
+	var/area/other_master = A.master
+	other_related -= other_master
+	var/list/total_contents = list()
+	for(var/area/RA in other_related)
+		RA.sd_lighting = 0
+		total_contents |= RA.contents
+		del RA.contents
+		del RA.related
+		RA.master = null
+	other_master.master = null
+	del other_master.related
+	total_contents |= other_master.contents
+	del other_master.contents
+	for(var/area/RA in other_related)
+		del(RA)
+	src += total_contents
+	spawn(5)
+		power_change()
+		set_area_machinery_title(oldname)
+
+
+/area/proc/set_area_machinery_title(var/oldtitle)
+	if(!oldtitle)
+		return
+	for(var/area/RA in related)
+		for(var/obj/machinery/alarm/M in RA)
+			M.name = dd_replacetext(M.name,oldtitle,name)
+		for(var/obj/machinery/power/apc/M in RA)
+			M.name = dd_replacetext(M.name,oldtitle,name)
+		for(var/obj/machinery/atmospherics/unary/vent_scrubber/M in RA)
+			M.name = dd_replacetext(M.name,oldtitle,name)
+		for(var/obj/machinery/atmospherics/unary/vent_pump/M in RA)
+			M.name = dd_replacetext(M.name,oldtitle,name)
+		for(var/obj/machinery/door/M in RA)
+			M.name = dd_replacetext(M.name,oldtitle,name)

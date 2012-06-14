@@ -52,7 +52,7 @@
 					user.put_in_hand(pinned_target)
 					user << "You take the target out of the stake."
 			else
-				pinned_target.loc = get_turf_loc(user)
+				pinned_target.loc = get_turf(user)
 				user << "You take the target out of the stake."
 
 			pinned_target = null
@@ -122,7 +122,7 @@
 						user.put_in_hand(src)
 						user << "You take the target out of the stake."
 				else
-					src.loc = get_turf_loc(user)
+					src.loc = get_turf(user)
 					user << "You take the target out of the stake."
 
 				stake.pinned_target = null
