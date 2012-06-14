@@ -1,6 +1,7 @@
+#define WHITELISTFILE "data/whitelist.txt"
+
 var/list/whitelist
 
-#define WHITELISTFILE "data/whitelist.txt"
 /proc/load_whitelist()
 	var/text = file2text(WHITELISTFILE)
 	if (!text)

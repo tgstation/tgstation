@@ -193,3 +193,5 @@ datum/preferences/proc/convert_hairstyles()
 			f_style = "Adam Jensen Beard"
 	return
 
+#undef SAVEFILE_VERSION_MIN
+#undef SAVEFILE_VERSION_MAX

@@ -5,7 +5,7 @@
 Calling this  a system is perhaps a bit trumped up. It is essentially update_clothing dismantled into its
 core parts. The key difference is that when we generate overlays we do not generate either lying or standing
 versions. Instead, we generate both and store them in two fixed-length lists, both using the same list-index
-(The indexes are in setup.dm): Each list for humans is (at the time of writing) of length 19.
+(The indexes are in update_icons.dm): Each list for humans is (at the time of writing) of length 19.
 This will hopefully be reduced as the system is refined.
 
 	var/overlays_lying[19]			//For the lying down stance
@@ -95,8 +95,28 @@ If you have any questions/constructive-comments/bugs-to-report/or have a massivl
 Please contact me on #coderbus IRC. ~Carn x
 */
 
-
-//TODO: FAT -> disability not a mutation
+//Human Overlays Indexes/////////
+#define MUTANTRACE_LAYER		1		//TODO: make part of body?
+#define MUTATIONS_LAYER			2
+#define DAMAGE_LAYER			3
+#define UNIFORM_LAYER			4
+#define ID_LAYER				5
+#define SHOES_LAYER				6
+#define GLOVES_LAYER			7
+#define EARS_LAYER				8
+#define SUIT_LAYER				9
+#define GLASSES_LAYER			10
+#define FACEMASK_LAYER			11
+#define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER		13
+#define BACK_LAYER				14
+#define HAIR_LAYER				15		//TODO: make part of head layer?
+#define HEAD_LAYER				16
+#define HANDCUFF_LAYER			17
+#define L_HAND_LAYER			18
+#define R_HAND_LAYER			19
+#define TOTAL_LAYERS			19
+//////////////////////////////////
 
 /mob/living/carbon/human
 	var/list/overlays_lying[TOTAL_LAYERS]
@@ -601,3 +621,25 @@ Please contact me on #coderbus IRC. ~Carn x
 	else
 		overlays_standing[L_HAND_LAYER] = null
 	if(update_icons)   update_icons()
+
+//Human Overlays Indexes/////////
+#undef MUTANTRACE_LAYER
+#undef MUTATIONS_LAYER
+#undef DAMAGE_LAYER
+#undef UNIFORM_LAYER
+#undef ID_LAYER
+#undef SHOES_LAYER
+#undef GLOVES_LAYER
+#undef EARS_LAYER
+#undef SUIT_LAYER
+#undef GLASSES_LAYER
+#undef FACEMASK_LAYER
+#undef BELT_LAYER
+#undef SUIT_STORE_LAYER
+#undef BACK_LAYER
+#undef HAIR_LAYER
+#undef HEAD_LAYER
+#undef HANDCUFF_LAYER
+#undef L_HAND_LAYER
+#undef R_HAND_LAYER
+#undef TOTAL_LAYERS

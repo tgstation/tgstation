@@ -172,44 +172,6 @@ var/MAX_EXPLOSION_RANGE = 14
 #define HIDEEARS	2	//APPLIES ONLY TO HELMETS!!
 #define HIDEEYES	4	//APPLIES ONLY TO HELMETS!!
 
-//Human Overlays Indexes
-#define MUTANTRACE_LAYER		1	//TODO: make part of body?
-#define MUTATIONS_LAYER			2
-#define DAMAGE_LAYER			3
-#define UNIFORM_LAYER			4
-#define ID_LAYER				5
-#define SHOES_LAYER				6
-#define GLOVES_LAYER			7
-#define EARS_LAYER				8
-#define SUIT_LAYER				9
-#define GLASSES_LAYER			10
-#define FACEMASK_LAYER			11
-#define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		13
-#define BACK_LAYER				14
-#define HAIR_LAYER				15	//TODO: make part of head layer?
-#define HEAD_LAYER				16
-#define HANDCUFF_LAYER			17
-#define L_HAND_LAYER			18
-#define R_HAND_LAYER			19
-#define TOTAL_LAYERS			19
-
-//Monkey Overlays Indexes
-#define M_MASK_LAYER			1
-#define M_BACK_LAYER			2
-#define M_HANDCUFF_LAYER		3
-#define M_L_HAND_LAYER			4
-#define M_R_HAND_LAYER			5
-#define M_TOTAL_LAYERS			5
-
-//Xeno Overlays Indexes
-#define X_HEAD_LAYER			1
-#define X_SUIT_LAYER			2
-#define X_L_HAND_LAYER			3
-#define X_R_HAND_LAYER			4
-#define X_TOTAL_LAYERS			4
-
-
 //Cant seem to find a mob bitflags area other than the powers one
 
 // bitflags for clothing parts

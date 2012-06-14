@@ -1,3 +1,12 @@
+//Monkey Overlays Indexes////////
+#define M_MASK_LAYER			1
+#define M_BACK_LAYER			2
+#define M_HANDCUFF_LAYER		3
+#define M_L_HAND_LAYER			4
+#define M_R_HAND_LAYER			5
+#define M_TOTAL_LAYERS			5
+/////////////////////////////////
+
 /mob/living/carbon/monkey
 	var/list/overlays_lying[M_TOTAL_LAYERS]
 	var/list/overlays_standing[M_TOTAL_LAYERS]
@@ -87,3 +96,12 @@
 /mob/living/carbon/monkey/update_hud()
 	if (client)
 		client.screen |= contents
+
+//Monkey Overlays Indexes////////
+#undef M_MASK_LAYER
+#undef M_BACK_LAYER
+#undef M_HANDCUFF_LAYER
+#undef M_L_HAND_LAYER
+#undef M_R_HAND_LAYER
+#undef M_TOTAL_LAYERS
+

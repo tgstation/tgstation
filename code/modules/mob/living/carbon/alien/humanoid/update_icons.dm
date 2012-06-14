@@ -1,3 +1,11 @@
+//Xeno Overlays Indexes//////////
+#define X_HEAD_LAYER			1
+#define X_SUIT_LAYER			2
+#define X_L_HAND_LAYER			3
+#define X_R_HAND_LAYER			4
+#define X_TOTAL_LAYERS			4
+/////////////////////////////////
+
 /mob/living/carbon/alien/humanoid
 	var/list/overlays_lying[X_TOTAL_LAYERS]
 	var/list/overlays_standing[X_TOTAL_LAYERS]
@@ -122,3 +130,11 @@
 	else
 		overlays_standing[X_L_HAND_LAYER]	= null
 	if(update_icons)	update_icons()
+
+
+//Xeno Overlays Indexes//////////
+#undef X_HEAD_LAYER
+#undef X_SUIT_LAYER
+#undef X_L_HAND_LAYER
+#undef X_R_HAND_LAYER
+#undef X_TOTAL_LAYERS
