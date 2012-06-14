@@ -732,6 +732,7 @@
 #include "code\game\objects\items\weapons\plant_bag.dm"
 #include "code\game\objects\items\weapons\RCD.dm"
 #include "code\game\objects\items\weapons\RSF.dm"
+#include "code\game\objects\items\weapons\stunbaton.dm"
 #include "code\game\objects\items\weapons\stungloves.dm"
 #include "code\game\objects\items\weapons\surgery_limbattachment.dm"
 #include "code\game\objects\items\weapons\surgery_tools.dm"
