@@ -123,7 +123,7 @@ proc/ZConnect(turf/A,turf/B)
 		var/list/connections = air_master.tiles_with_connections["\ref[A]"]
 		for(var/connection/C in connections)
 			C.Cleanup()
-			if(C.B == B || C.A == B)
+			if(C && (C.B == B || C.A == B))
 				return
 
 	new /connection(A,B)
