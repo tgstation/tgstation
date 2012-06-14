@@ -612,9 +612,9 @@ Code:
 						blood[main_blood] = A.blood_DNA[blood]
 			return 1
 		var/list/sum_list[4]	//Pack it back up!
-		sum_list[1] = A.fingerprints
-		sum_list[2] = A.suit_fibers
-		sum_list[3] = A.blood_DNA
+		sum_list[1] = A.fingerprints.Copy()
+		sum_list[2] = A.suit_fibers.Copy()
+		sum_list[3] = A.blood_DNA.Copy()
 		sum_list[4] = "\The [A] in \the [get_area(A)]"
 		stored_data["\ref [A]"] = sum_list
 		return 0
