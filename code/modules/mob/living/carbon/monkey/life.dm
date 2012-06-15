@@ -369,24 +369,11 @@
 			bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
 
 		//Account for massive pressure differences
-
-
 		var/pressure = environment.return_pressure()
-
-	//	if(!wear_suit)		Monkies cannot into space.
-	//		if(!istype(wear_suit, /obj/item/clothing/suit/space))
-
-				/*if(pressure < 20)
-					if(prob(25))
-						src << "You feel the splittle on your lips and the fluid on your eyes boiling away, the capillteries in your skin breaking."
-					adjustBruteLoss(5)
-				*/
-
 		if(pressure > HAZARD_HIGH_PRESSURE)
-
-			adjustBruteLoss(min((10+(round(pressure/(HIGH_STEP_PRESSURE)-2)*5)),MAX_PRESSURE_DAMAGE))
-
-
+			var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
+			if(adjusted_pressure > HAZARD_HIGH_PRESSURE)
+				adjustBruteLoss( min( (adjusted_pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT , MAX_PRESSURE_DAMAGE) )
 
 		return //TODO: DEFERRED
 
