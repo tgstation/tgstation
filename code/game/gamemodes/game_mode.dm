@@ -241,7 +241,7 @@ Badassery;
 		set_security_level(SEC_LEVEL_BLUE)*/
 
 
-/datum/game_mode/proc/get_players_for_role(var/role, override_jobbans=1)
+/datum/game_mode/proc/get_players_for_role(var/role, draft_people=0, override_jobbans=0)
 	var/list/candidates = list()
 	var/list/drafted = list()
 	var/datum/mind/applicant = null
@@ -269,7 +269,7 @@ Badassery;
 				if(player.assigned_role == job)
 					candidates -= player
 
-	if(candidates.len < recommended_enemies)
+	if(candidates.len < recommended_enemies && draft_people)
 		for(var/mob/new_player/player in world)
 			if (player.client && player.ready)
 				if(!(player.preferences.be_special & role)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
