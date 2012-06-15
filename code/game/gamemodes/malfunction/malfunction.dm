@@ -147,15 +147,21 @@
 	set name = "System Override"
 	set desc = "Start the victory timer"
 	if (!istype(ticker.mode,/datum/game_mode/malfunction))
-		usr << "You cannot begin takeover!."
+		usr << "You cannot begin a takeover in this round type!."
 		return
 	if (ticker.mode:malf_mode_declared)
 		usr << "You've already begun your takeover."
 		return
 	if (ticker.mode:apcs < 3)
-		usr << "You don't have enough hacked APCs to take over the station yet."
+		usr << "You don't have enough hacked APCs to take over the station yet. You need to hack at least 3, however hacking more will make the takeover faster. You have hacked [ticker.mode:apcs] APCs so far."
 		return
+
+	if (alert(usr, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [ticker.mode:apcs] APCs.", "Takeover:", "Yes", "No") != "Yes")
+		return
+
 	command_alert("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert")
+	set_security_level("delta")
+
 	ticker.mode:malf_mode_declared = 1
 	for(var/datum/mind/AI_mind in ticker.mode:malf_ai)
 		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/takeover
