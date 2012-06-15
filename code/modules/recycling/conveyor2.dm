@@ -123,7 +123,7 @@
 						//if it's a crate, move the item into the crate
 						var/turf/T = get_step(A,movedir)
 						for(var/obj/structure/closet/crate/C in T)
-							if(C && C.opened && !istype(A, /obj/structure/closet/crate))
+							if(C && C.opened)
 								A.loc = C.loc
 								break
 

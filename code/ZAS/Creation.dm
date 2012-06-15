@@ -67,10 +67,10 @@ proc/FloodFill(turf/start)
 
 	return closed
 
-turf/proc/ZCanPass(turf/T, var/include_space = 0)
+turf/proc/ZCanPass(turf/T)
 	//Fairly standard pass checks for turfs, objects and directional windows. Also stops at the edge of space.
 
-	if(istype(T,/turf/space) && !include_space) return 0
+	if(istype(T,/turf/space)) return 0
 	else
 		if(T.blocks_air||blocks_air)
 			return 0

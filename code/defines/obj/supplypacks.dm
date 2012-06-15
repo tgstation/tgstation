@@ -804,8 +804,7 @@
 
 /datum/supply_packs/randomised/contraband
 	num_contained = 5
-	//We randomly pick 5 items from this list through the constructor, look below
-	contains = list("/obj/item/weapon/contraband/poster","/obj/item/weapon/cigpacket/dromedaryco","/obj/item/clothing/mask/cigarette/cigar/havana", "/obj/item/seeds/plumphelmet", "/obj/item/seeds/libertycap", "/obj/item/seeds/bloodtomato", "/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe", "/obj/item/weapon/reagent_containers/food/drinks/bottle/deadrum" )
+	contains = list("/obj/item/weapon/contraband/poster","/obj/item/weapon/cigpacket/dromedaryco") //We randomly pick 5 items from this list through the constructor, look below
 	name = "Contraband crate"
 	cost = 30
 	containertype = "/obj/structure/closet/crate"
