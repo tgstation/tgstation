@@ -12,7 +12,7 @@
 	var/ndir = get_dir(usr,on_wall)
 	if (!(ndir in cardinal))
 		return
-	var/turf/loc = get_turf_loc(usr)
+	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
 		usr << "\red APC cannot be placed on this spot."

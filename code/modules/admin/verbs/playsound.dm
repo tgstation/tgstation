@@ -45,7 +45,7 @@
 	if(src.holder.rank == "Game Master" || src.holder.rank == "Game Admin")
 		log_admin("[key_name(src)] played a local sound [S]")
 		message_admins("[key_name_admin(src)] played a local sound [S]", 1)
-		playsound(get_turf_loc(src.mob), S, 50, 0, 0)
+		playsound(get_turf(src.mob), S, 50, 0, 0)
 		return
 	//feedback_add_details("admin_verb","PLS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

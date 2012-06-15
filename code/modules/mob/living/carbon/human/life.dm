@@ -495,7 +495,12 @@
 			if(!breath || (breath.total_moles == 0))
 				if(reagents.has_reagent("inaprovaline"))
 					return
-				adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+				if(health < config.health_threshold_crit)
+					// in crit, we pretend your metabolism has become slower, which
+					// will reduce the rate at which you lose health
+					adjustOxyLoss(round(HUMAN_MAX_OXYLOSS / 2))
+				else
+					adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 
 				oxygen_alert = max(oxygen_alert, 1)
 

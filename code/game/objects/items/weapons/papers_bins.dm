@@ -360,7 +360,7 @@ NOTEBOOK
 					usr.put_in_hand(P)
 					usr << "You take a paper out of the bin."
 			else
-				P.loc = get_turf_loc(src)
+				P.loc = get_turf(src)
 				usr << "You take a paper out of the bin."
 
 	src.update()

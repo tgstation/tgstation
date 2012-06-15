@@ -104,6 +104,14 @@
 	icon_on = "bluezippoon"
 	icon_off = "bluezippo"
 
+/obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1 //rawrtaicho: Riley Rohtin
+	name = "Riley's black zippo"
+	desc = "A black zippo lighter, which holds some form of sentimental value."
+	icon = 'custom_items.dmi'
+	icon_state = "blackzippo"
+	icon_on = "blackzippoon"
+	icon_off = "blackzippo"
+
 /obj/item/weapon/fluff/cado_keppel_1 //sparklysheep: Cado Keppel
 	name = "purple comb"
 	desc = "A pristine purple comb made from flexible plastic. It has a small K etched into its side."
