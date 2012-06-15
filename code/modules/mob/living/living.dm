@@ -29,6 +29,11 @@
 		src.health = 100
 		src.stat = 0
 
+//This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
+//affects them once clothing is factored in. ~Errorage
+/mob/living/proc/calculate_affecting_pressure(var/pressure)
+	return 0
+
 
 //sort of a legacy burn method for /electrocute, /shock, and the e_chair
 /mob/living/proc/burn_skin(burn_amount)

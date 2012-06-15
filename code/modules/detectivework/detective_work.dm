@@ -54,11 +54,10 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 obj/machinery/computer/forensic_scanning
 	name = "\improper High-Res Forensic Scanning Computer"
 	icon_state = "forensic"
-	var
-		obj/item/scanning
-		temp = ""
-		canclear = 1
-		authenticated = 0
+	var/obj/item/scanning
+	var/temp = ""
+	var/canclear = 1
+	var/authenticated = 0
 
 //Here's the structure for files: each entry is a list, and entry one in that list is the string of their
 //full and scrambled fingerprint.  This acts as the method to arrange evidence.  Each subsequent entry is list
@@ -68,14 +67,14 @@ obj/machinery/computer/forensic_scanning
 //	3: All fibers on the object
 //	4: All blood on the object
 //This is then used to show what objects were used to "find" the full print, as well as the fibers on it.
-		list/files
+	var/list/files
 //This holds objects (1) without prints, and their fibers(2) and blood(3).
-		list/misc
-		obj/item/weapon/f_card/card
+	var/list/misc
+	var/obj/item/weapon/f_card/card
 
-		scan_data = ""
-		scan_name = ""
-		scan_process = 0
+	var/scan_data = ""
+	var/scan_name = ""
+	var/scan_process = 0
 
 	req_access = list(access_forensics_lockers)
 

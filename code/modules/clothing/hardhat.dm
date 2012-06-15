@@ -19,11 +19,14 @@
 	icon_state = "hardhat0_red"
 	item_state = "hardhat0_red"
 	color = "red"
+	name = "firefighter helmet"
+	flags = FPRINT | TABLEPASS | SUITSPACE | STOPSPRESSUREDMAGE
 
 /obj/item/clothing/head/helmet/hardhat/white
 	icon_state = "hardhat0_white"
 	item_state = "hardhat0_white"
 	color = "white"
+	flags = FPRINT | TABLEPASS | SUITSPACE | STOPSPRESSUREDMAGE
 
 /obj/item/clothing/head/helmet/hardhat/dblue
 	icon_state = "hardhat0_dblue"

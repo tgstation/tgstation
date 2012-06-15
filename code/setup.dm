@@ -23,12 +23,16 @@
 	//Amount of air needed before pass out/suffocation commences
 
 // Pressure limits.
-#define HAZARD_HIGH_PRESSURE 750
-#define HIGH_STEP_PRESSURE HAZARD_HIGH_PRESSURE/2
-#define WARNING_HIGH_PRESSURE HAZARD_HIGH_PRESSURE*0.7
-#define HAZARD_LOW_PRESSURE 20
-#define WARNING_LOW_PRESSURE HAZARD_LOW_PRESSURE*2.5
-#define MAX_PRESSURE_DAMAGE 20
+#define HAZARD_HIGH_PRESSURE 750	//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
+#define WARNING_HIGH_PRESSURE 525 	//This determins when the orange pressure icon is displayed (it is 0.7 * HAZARD_HIGH_PRESSURE)
+#define WARNING_LOW_PRESSURE 50 	//This is when the gray low pressure icon is displayed. (it is 2.5 * HAZARD_LOW_PRESSURE)
+#define HAZARD_LOW_PRESSURE 20		//This is when the black ultra-low pressure icon is displayed. (This one is set as a constant)
+
+#define PRESSURE_DAMAGE_COEFFICIENT 5 //The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
+#define MAX_PRESSURE_DAMAGE 7 //This used to be 20... I got this much random rage for some retarded decision by polymorph?! Polymorph now lies in a pool of blood with a katana jammed in his spleen. ~Errorage --PS: The katana did less than 20 damage to him :(
+
+#define PRESSURE_SUIT_REDUCTION_COEFFICIENT 0.8 //This is how much (percentual) a suit with the flag STOPSPRESSUREDMAGE reduces pressure.
+#define PRESSURE_HEAD_REDUCTION_COEFFICIENT 0.4 //This is how much (percentual) a helmet/hat with the flag STOPSPRESSUREDMAGE reduces pressure.
 
 // Doors!
 #define DOOR_CRUSH_DAMAGE 10
@@ -100,7 +104,7 @@ var/MAX_EXPLOSION_RANGE = 14
 #define SHOES_SLOWDOWN -1.0			// How much shoes slow you down by default. Negative values speed you up
 
 
-//ITEM INVENTORY SLOT BITMASKS: (HUMANS ONLY!)
+//ITEM INVENTORY SLOT BITMASKS
 #define SLOT_OCLOTHING 1
 #define SLOT_ICLOTHING 2
 #define SLOT_GLOVES 4
@@ -117,14 +121,10 @@ var/MAX_EXPLOSION_RANGE = 14
 
 
 //FLAGS BITMASK
+#define STOPSPRESSUREDMAGE 1	//This flag is used on the flags variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
+//To successfully stop you taking all pressure damage you must have both a suit and head item with this flag.
+
 #define TABLEPASS 2			// can pass by a table or rack
-
-/********************************************************************************
-*	WOO WOO WOO	THIS IS UNUSED	WOO WOO WOO										*
-*	#define HALFMASK 4	// mask only gets 1/2 of air supply from internals		*
-*	WOO WOO WOO	THIS IS UNUSED	WOO WOO WOO										*
-********************************************************************************/
-
 #define HEADSPACE 4			// head wear protects against space
 
 #define MASKINTERNALS	8	// mask allows internals
