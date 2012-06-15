@@ -13,29 +13,27 @@
 	uplink_welcome = "Syndicate Uplink Console:"
 	uplink_uses = 10
 
-	var
-		const
-			prob_int_murder_target = 50 // intercept names the assassination target half the time
-			prob_right_murder_target_l = 25 // lower bound on probability of naming right assassination target
-			prob_right_murder_target_h = 50 // upper bound on probability of naimg the right assassination target
+	var/const/prob_int_murder_target = 50 // intercept names the assassination target half the time
+	var/const/prob_right_murder_target_l = 25 // lower bound on probability of naming right assassination target
+	var/const/prob_right_murder_target_h = 50 // upper bound on probability of naimg the right assassination target
 
-			prob_int_item = 50 // intercept names the theft target half the time
-			prob_right_item_l = 25 // lower bound on probability of naming right theft target
-			prob_right_item_h = 50 // upper bound on probability of naming the right theft target
+	var/const/prob_int_item = 50 // intercept names the theft target half the time
+	var/const/prob_right_item_l = 25 // lower bound on probability of naming right theft target
+	var/const/prob_right_item_h = 50 // upper bound on probability of naming the right theft target
 
-			prob_int_sab_target = 50 // intercept names the sabotage target half the time
-			prob_right_sab_target_l = 25 // lower bound on probability of naming right sabotage target
-			prob_right_sab_target_h = 50 // upper bound on probability of naming right sabotage target
+	var/const/prob_int_sab_target = 50 // intercept names the sabotage target half the time
+	var/const/prob_right_sab_target_l = 25 // lower bound on probability of naming right sabotage target
+	var/const/prob_right_sab_target_h = 50 // upper bound on probability of naming right sabotage target
 
-			prob_right_killer_l = 25 //lower bound on probability of naming the right operative
-			prob_right_killer_h = 50 //upper bound on probability of naming the right operative
-			prob_right_objective_l = 25 //lower bound on probability of determining the objective correctly
-			prob_right_objective_h = 50 //upper bound on probability of determining the objective correctly
+	var/const/prob_right_killer_l = 25 //lower bound on probability of naming the right operative
+	var/const/prob_right_killer_h = 50 //upper bound on probability of naming the right operative
+	var/const/prob_right_objective_l = 25 //lower bound on probability of determining the objective correctly
+	var/const/prob_right_objective_h = 50 //upper bound on probability of determining the objective correctly
 
-			waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
-			waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
+	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
+	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
-			const/changeling_amount = 4
+	var/const/changeling_amount = 4
 
 /datum/game_mode/changeling/announce()
 	world << "<B>The current game mode is - Changeling!</B>"
@@ -85,46 +83,27 @@
 
 	var/datum/objective/absorb/absorb_objective = new
 	absorb_objective.owner = changeling
-	absorb_objective.gen_amount_goal(6,8)
+	absorb_objective.gen_amount_goal(2, 3)
 	changeling.objectives += absorb_objective
 
+	var/datum/objective/assassinate/kill_objective = new
+	kill_objective.owner = changeling
+	kill_objective.find_target()
+	changeling.objectives += kill_objective
+
+	var/datum/objective/steal/steal_objective = new
+	steal_objective.owner = changeling
+	steal_objective.find_target()
+	changeling.objectives += steal_objective
+
+
 	switch(rand(1,100))
-		if(1 to 45)
-
-			var/datum/objective/assassinate/kill_objective = new
-			kill_objective.owner = changeling
-			kill_objective.find_target()
-			changeling.objectives += kill_objective
-
+		if(1 to 80)
 			if (!(locate(/datum/objective/escape) in changeling.objectives))
 				var/datum/objective/escape/escape_objective = new
 				escape_objective.owner = changeling
 				changeling.objectives += escape_objective
-
-		if(46 to 90)
-
-			var/datum/objective/steal/steal_objective = new
-			steal_objective.owner = changeling
-			steal_objective.find_target()
-			changeling.objectives += steal_objective
-
-			if (!(locate(/datum/objective/escape) in changeling.objectives))
-				var/datum/objective/escape/escape_objective = new
-				escape_objective.owner = changeling
-				changeling.objectives += escape_objective
-
 		else
-
-			var/datum/objective/assassinate/kill_objective = new
-			kill_objective.owner = changeling
-			kill_objective.find_target()
-			changeling.objectives += kill_objective
-
-			var/datum/objective/steal/steal_objective = new
-			steal_objective.owner = changeling
-			steal_objective.find_target()
-			changeling.objectives += steal_objective
-
 			if (!(locate(/datum/objective/survive) in changeling.objectives))
 				var/datum/objective/survive/survive_objective = new
 				survive_objective.owner = changeling
