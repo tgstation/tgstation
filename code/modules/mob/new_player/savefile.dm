@@ -109,7 +109,7 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["eyes_blue"] >> src.b_eyes
 	F["blood_type"] >> src.b_type
 	F["underwear"] >> src.underwear
-	if(underwear == 0) underwear = 6 //For old players who have 0 in their savefile
+	if(underwear == 0) underwear = 12 //For old players who have 0 in their savefile
 	F["backbag"] >> src.backbag
 	if(isnull(backbag)) backbag = 2
 	F["name_is_always_random"] >> src.be_random_name

@@ -217,7 +217,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	lying_icon.Blend(new/icon('human_face.dmi', "mouth_[g]_l"), ICON_OVERLAY)
 
 	//Underwear
-	if(underwear < 6 && underwear > 0)
+	if(underwear < 12 && underwear > 0)
 		if(!fat)
 			stand_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
 			lying_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_l"), ICON_OVERLAY)

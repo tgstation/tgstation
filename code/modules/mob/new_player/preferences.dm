@@ -65,8 +65,8 @@ datum/preferences
 		//Just like it sounds
 	var/ooccolor = "#b82e00"
 	var/underwear = 1
-	var/list/underwear_m = list("White", "Grey", "Green", "Blue", "Black", "None") //Curse whoever made male/female underwear diffrent colours
-	var/list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "None")
+	var/list/underwear_m = list("White", "Grey", "Green", "Blue", "Black", "Mankini", "Love-Hearts", "Black2", "Grey2", "Stripey", "Kinky", "None") //Curse whoever made male/female underwear diffrent colours
+	var/list/underwear_f = list("Red", "White", "Yellow", "Blue", "Black", "Thong", "Babydoll", "Baby-Blue", "Green", "Pink", "Kinky", "None")
 	var/backbag = 2
 	var/list/backbaglist = list("Nothing", "Backpack", "Satchel")
 
@@ -639,10 +639,7 @@ datum/preferences
 					if(tempUnderwear)
 						underwear = underwear_f.Find(tempUnderwear)
 				if("random")
-					if(prob (75))
-						underwear = pick(1,2,3,4,5)
-					else
-						underwear = 6
+					underwear = rand(1,12)
 
 		if(link_tags["backbag_type"])
 			switch(link_tags["backbag_type"])
@@ -746,7 +743,7 @@ datum/preferences
 		character.hair_style = hair_style
 		character.facial_hair_style = facial_hair_style
 
-		if(underwear > 6 || underwear < 1)
+		if(underwear > 12 || underwear < 1)
 			underwear = 1 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me.
 		character.underwear = underwear
 

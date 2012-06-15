@@ -1479,7 +1479,8 @@ It can still be worn/put on as normal.
 							target.internals.icon_state = "internal1"
 	//update overlays
 //	source.update_icons()
-	target.update_icons()
+	if(target)
+		target.update_icons()
 
 	spawn(0)	// <-- not sure why this spawn is here
 		if(source)
