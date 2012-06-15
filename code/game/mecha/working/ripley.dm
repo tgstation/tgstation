@@ -46,7 +46,8 @@
 	name = "APLU \"Miner\""
 
 /obj/mecha/working/ripley/mining/New()
-	..()
+	//Do not use ..() here, doing so would spawn it with a tracking beacon allowing people to find secret mining asteroid rooms easily.
+
 	//Attach drill
 	if(prob(25)) //Possible diamond drill... Feeling lucky?
 		var/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill/D = new /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill

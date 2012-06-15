@@ -97,6 +97,8 @@
 	if(contents.len)
 		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in contents as obj|null
 		if(choice)
+			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+				return
 			if(ishuman(user))
 				if(!user.get_active_hand())
 					user.put_in_hand(choice)
@@ -367,6 +369,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 
 
 /obj/machinery/librarypubliccomp/Topic(href, href_list)
+	if(..())
+		usr << browse(null, "window=publiclibrary")
+		onclose(usr, "publiclibrary")
+		return
+
 	if(href_list["settitle"])
 		var/newtitle = input("Enter a title to search for:") as text|null
 		if(newtitle)
@@ -545,6 +552,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		..()
 
 /obj/machinery/librarycomp/Topic(href, href_list)
+	if(..())
+		usr << browse(null, "window=library")
+		onclose(usr, "library")
+		return
+
 	if(href_list["switchscreen"])
 		switch(href_list["switchscreen"])
 			if("0")
@@ -728,6 +740,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	onclose(user, "scanner")
 
 /obj/machinery/libraryscanner/Topic(href, href_list)
+	if(..())
+		usr << browse(null, "window=scanner")
+		onclose(usr, "scanner")
+		return
+
 	if(href_list["scan"])
 		for(var/obj/item/weapon/book/B in contents)
 			cache = B
