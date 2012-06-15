@@ -592,6 +592,7 @@
 					usr << "\green You successfully break your handcuffs."
 					del(usr:handcuffed)
 					usr:handcuffed = null
+					usr.update_inv_handcuffed()
 		else
 			var/obj/item/weapon/handcuffs/HC = usr:handcuffed
 			var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
@@ -611,6 +612,7 @@
 					usr << "\blue You successfully remove \the [usr:handcuffed]."
 					usr:handcuffed.loc = usr.loc
 					usr:handcuffed = null
+					usr.update_inv_handcuffed()
 
 	//unbuckling yourself
 	else if(usr:handcuffed && (usr.last_special <= world.time) && usr:buckled)

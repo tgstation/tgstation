@@ -23,8 +23,10 @@
 			for(var/mob/O in viewers(user, null))
 				O.show_message("\red <B>[user] is trying to put handcuffs on [M]!</B>", 1)
 			spawn(30)
+				if(!M)	return
 				if(p_loc == user.loc && p_loc_m == M.loc)
 					M.handcuffed = new /obj/item/weapon/handcuffs(M)
+					M.update_inv_handcuffed()
 
 	else
 		if ((CLUMSY in usr.mutations) && prob(50))
