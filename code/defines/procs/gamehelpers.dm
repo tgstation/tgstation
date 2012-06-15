@@ -51,17 +51,17 @@
 /proc/circleview(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
-	var/list/turfs = new/list()
+	var/list/atoms = new/list()
 	var/rsq = radius * (radius+0.5)
 
-	for(var/atom/T in view(radius, centerturf))
-		var/dx = T.x - centerturf.x
-		var/dy = T.y - centerturf.y
+	for(var/atom/A in view(radius, centerturf))
+		var/dx = A.x - centerturf.x
+		var/dy = A.y - centerturf.y
 		if(dx*dx + dy*dy <= rsq)
-			turfs += T
+			atoms += A
 
 	//turfs += centerturf
-	return turfs
+	return atoms
 
 /proc/get_dist_euclidian(atom/Loc1 as turf|mob|obj,atom/Loc2 as turf|mob|obj)
 	var/dx = Loc1.x - Loc2.x
@@ -84,7 +84,7 @@
 			turfs += T
 	return turfs
 
-/proc/circleviewturfs(center=usr,radius=3)
+/proc/circleviewturfs(center=usr,radius=3)		//Is there even a diffrence between this proc and circlerangeturfs()?
 
 	var/turf/centerturf = get_turf(center)
 	var/list/turfs = new/list()

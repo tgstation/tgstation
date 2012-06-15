@@ -26,10 +26,10 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 		var/list/fTurfs = list() //Holds turfs to loop through for mobs to flash. (Hehehe, dirty)
 
 		if(roundExplosions)
-			fTurfs = circlerange(epicenter,max(devastation_range, heavy_impact_range, light_impact_range, flash_range))
-			dTurfs = circlerange(epicenter,devastation_range)
-			hTurfs = circlerange(epicenter,heavy_impact_range) - dTurfs
-			lTurfs = circlerange(epicenter,light_impact_range) - dTurfs - hTurfs
+			fTurfs = circlerangeturfs(epicenter,max(devastation_range, heavy_impact_range, light_impact_range, flash_range))
+			dTurfs = circlerangeturfs(epicenter,devastation_range)
+			hTurfs = circlerangeturfs(epicenter,heavy_impact_range) - dTurfs
+			lTurfs = circlerangeturfs(epicenter,light_impact_range) - dTurfs - hTurfs
 		else
 			fTurfs = range(epicenter,max(devastation_range, heavy_impact_range, light_impact_range, flash_range))
 			dTurfs = range(epicenter,devastation_range)
