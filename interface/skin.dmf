@@ -252,7 +252,7 @@ menu "menu"
 window "Telecomms IDE"
 	elem "Telecomms IDE"
 		type = MAIN
-		pos = 303,13
+		pos = 281,0
 		size = 652x582
 		anchor1 = none
 		anchor2 = none
@@ -1181,7 +1181,7 @@ window "rpane"
 		lock = none
 	elem "rulesb"
 		type = BUTTON
-		pos = 369,0
+		pos = 289,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
@@ -1209,7 +1209,7 @@ window "rpane"
 		button-type = pushbutton
 	elem "forumb"
 		type = BUTTON
-		pos = 304,0
+		pos = 224,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
@@ -1237,7 +1237,7 @@ window "rpane"
 		button-type = pushbutton
 	elem "wikib"
 		type = BUTTON
-		pos = 240,0
+		pos = 160,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
@@ -1293,7 +1293,7 @@ window "rpane"
 		button-type = pushbox
 	elem "browseb"
 		type = BUTTON
-		pos = 65,0
+		pos = 464,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
@@ -1302,7 +1302,7 @@ window "rpane"
 		font-style = ""
 		text-color = #000000
 		background-color = none
-		is-visible = true
+		is-visible = false
 		is-disabled = false
 		is-transparent = false
 		is-default = false
@@ -1321,7 +1321,7 @@ window "rpane"
 		button-type = pushbox
 	elem "infob"
 		type = BUTTON
-		pos = 130,0
+		pos = 64,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none

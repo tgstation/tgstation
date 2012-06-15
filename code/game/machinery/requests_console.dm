@@ -191,7 +191,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				else
 					dat += text("Speaker <A href='?src=\ref[src];setSilent=1'>ON</A>")
 
-		user << browse("[dat]", "")
+		user << browse("[dat]", "window=request_console")
 		onclose(user, "req_console")
 	return
 

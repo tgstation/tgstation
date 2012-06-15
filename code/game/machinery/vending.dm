@@ -188,7 +188,7 @@
 		if (product_slogans != "")
 			dat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
 
-	user << browse(dat, "")
+	user << browse(dat, "window=vending")
 	onclose(user, "")
 	return
 
