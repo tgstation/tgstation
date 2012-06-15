@@ -295,3 +295,124 @@ proc/is_carrying(var/M as mob, var/O as obj)
 			return 1
 		O = O:loc
 	return 0
+
+//hackcopy from a ZAS function, first created for use with intertial_damper/new shielding
+proc/CircleFloodFill(turf/start, var/radius = 3)
+	if(!istype(start))
+		return list()
+	var
+		list
+			open = list(start)
+			closed = list()
+			possibles = circlerange(start,radius)
+
+	while(open.len)
+		for(var/turf/T in open)
+			//Stop if there's a door, even if it's open. These are handled by indirect connection.
+			if(!T.HasDoor())
+
+				for(var/d in cardinal)
+					var/turf/O = get_step(T,d)
+					//Simple pass check.
+					if(O.ZCanPass(T, 1) && !(O in open) && !(O in closed) && O in possibles)
+						open += O
+
+			open -= T
+			closed += T
+
+	return closed
+
+//floods in a square area, flowing around any shielding but including all other turf types
+//created initially for explosion / shield interaction
+proc/ExplosionFloodFill(turf/start, var/radius = 3)
+	if(!istype(start))
+		return list()
+	var
+		list
+			open = list(start)
+			closed = list()
+			possibles = range(start,radius)
+
+	while(open.len)
+		for(var/turf/T in open)
+			for(var/turf/O in range(T,1))
+				if( !(O in possibles) || O in open || O in closed )
+					continue
+				var/shield_here = 0
+				for(var/obj/effect/energy_field/E in O)
+					if(E.density)
+						shield_here = 1
+						break
+				if(!shield_here)
+					open += O
+
+			open -= T
+			closed += T
+
+	return closed
+
+/*
+
+/obj/machinery/shield_gen/external/get_shielded_turfs()
+	var
+		list
+			open = list(get_turf(src))
+			closed = list()
+
+	while(open.len)
+		for(var/turf/T in open)
+			for(var/turf/O in orange(1, T))
+				if(get_dist(O,src) > field_radius)
+					continue
+				var/add_this_turf = 0
+				if(istype(O,/turf/space))
+					for(var/turf/simulated/G in orange(1, O))
+						add_this_turf = 1
+						break
+					for(var/obj/structure/S in orange(1, O))
+						add_this_turf = 1
+						break
+					for(var/obj/structure/S in O)
+						add_this_turf = 0
+						break
+
+					if(add_this_turf && !(O in open) && !(O in closed))
+						open += O
+			open -= T
+			closed += T
+
+	return closed
+*/
+
+//floods in a circular area, flowing around any shielding but including all other turf types
+//created initially for explosion / shield interaction
+proc/ExplosionCircleFloodFill(turf/start, var/radius = 3)
+	if(!istype(start))
+		return list()
+	var
+		list
+			open = list(start)
+			closed = list()
+			possibles = circlerange(start,radius)
+
+	while(open.len)
+		for(var/turf/T in open)
+			for(var/turf/O in range(T,1))
+				if(get_dist(O,start) > radius)
+					continue
+
+				if( !(O in possibles) || O in open || O in closed )
+					continue
+				var/shield_here = 0
+				for(var/obj/effect/energy_field/E in O)
+					if(E.density)
+						shield_here = 1
+						break
+				if(!shield_here && (O in possibles) && !(O in open) && !(O in closed))
+					open += O
+
+			open -= T
+			closed += T
+
+	return closed
+
