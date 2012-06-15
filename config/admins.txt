@@ -1,3 +1,6 @@
+<<<<<<< .mine
+nodrak - Game Master
+carnwennan - Game Master=======
 quarxink - Game Master
 tle - Game Master
 xsi - Game Master
@@ -26,4 +29,4 @@ errorage - Game Master
 uhangi - Game Master
 superxpdude - Game Master
 petethegoat - Game Master
-korphaeron - Game Master
+korphaeron - Game Master>>>>>>> .r3825
