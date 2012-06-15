@@ -160,3 +160,10 @@
 	icon_state = "jackboots"
 	item_state = "jackboots"
 	color = "hosred"
+
+/obj/item/clothing/shoes/cult
+	name = "boots"
+	desc = "A pair of boots worn by the followers of Nar-Sie."
+	icon_state = "cult"
+	item_state = "cult"
+	color = "cult"
