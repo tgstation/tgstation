@@ -833,7 +833,7 @@
 	else if( istype(W,/obj/item/apc_frame) )
 		var/obj/item/apc_frame/AH = W
 		AH.try_build(src)
-		
+
 	else if(istype(W,/obj/item/light_fixture_frame))
 		var/obj/item/light_fixture_frame/AH = W
 		AH.try_build(src)
@@ -1385,7 +1385,7 @@ turf/simulated/floor/return_siding_icon_state()
 		if(is_light_floor())
 			var/obj/item/stack/tile/light/T = floor_tile
 			if(T.state)
-				user.u_equip(C)
+				user.drop_item(C)
 				del(C)
 				T.state = C //fixing it by bashing it with a light bulb, fun eh?
 				update_icon()

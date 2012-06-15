@@ -284,19 +284,19 @@
 
 
 		handle_chemicals_in_body()
-
 			if(reagents) reagents.metabolize(src)
 
-			if(nutrition > 500 && !(FAT in src.mutations))
-				if(prob(5 + round((nutrition - 200) / 2)))
-					src << "\red You suddenly feel blubbery!"
-					mutations.Add(FAT)
-//					update_body()
-			if (nutrition < 100 && (FAT in src.mutations))
-				if(prob(round((50 - nutrition) / 100)))
-					src << "\blue You feel fit again!"
-					mutations.Add(FAT)
-//					update_body()
+			if(FAT in mutations)
+				if(nutrition < 100)
+					if(prob(round((50 - nutrition) / 100)))
+						src << "\blue You feel fit again!"
+						mutations.Add(FAT)
+			else
+				if(nutrition > 500)
+					if(prob(5 + round((nutrition - 200) / 2)))
+						src << "\red You suddenly feel blubbery!"
+						mutations.Add(FAT)
+
 			if (nutrition > 0)
 				nutrition-= HUNGER_FACTOR
 

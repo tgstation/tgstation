@@ -1,3 +1,6 @@
+/datum/organ/internal
+	name = "internal"
+
 /datum/organ/internal/blood_vessels
 	name = "blood vessels"
 	var/heart = null
@@ -45,3 +48,4 @@
 	name = "throat"
 	var/lungs = null
 	var/stomach = null
+

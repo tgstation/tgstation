@@ -362,7 +362,7 @@
 		H.h_style = hair.icon_state
 		H.hair_style = hair
 
-		H.update_body()
+		H.update_body(0)
 		H.update_hair()
 
 		return 1

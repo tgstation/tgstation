@@ -102,7 +102,8 @@
 		return
 	mutations.Add(HUSK)
 	real_name = "Unknown"
-	update_body()
+	update_body(0)
+	update_mutantrace()
 	return
 
 /mob/living/carbon/human/proc/Drain()

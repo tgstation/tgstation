@@ -1118,7 +1118,7 @@ It can still be worn/put on as normal.
 					W.layer = initial(W.layer)
 					W.add_fingerprint(source)
 			else
-				if ((istype(item, /obj) && item.flags & 128 && target.w_uniform))
+				if ((istype(item, /obj) && (item.slot_flags & SLOT_BELT) && target.w_uniform))
 					source.drop_item()
 					loc = target
 					item.layer = 20
@@ -1363,7 +1363,7 @@ It can still be worn/put on as normal.
 					W.layer = initial(W.layer)
 					W.add_fingerprint(source)
 			else
-				if ((istype(item, /obj/item) && item.flags & 1))
+				if ((istype(item, /obj/item) && (item.slot_flags & SLOT_BACK) ))
 					source.drop_item()
 					loc = target
 					item.layer = 20
@@ -1605,80 +1605,6 @@ It can still be worn/put on as normal.
 	return ..(shock_damage,source,siemens_coeff)
 
 
-/mob/living/carbon/human/proc/get_damaged_organs(var/brute, var/burn)
-	var/list/datum/organ/external/parts = list()
-	for(var/datum/organ/external/organ in organs)
-		if((brute && organ.brute_dam) || (burn && organ.burn_dam))
-			parts += organ
-	return parts
-
-/mob/living/carbon/human/proc/get_damageable_organs()
-	var/list/datum/organ/external/parts = list()
-	for(var/datum/organ/external/organ in organs)
-		if(organ.brute_dam + organ.burn_dam < organ.max_damage)
-			parts += organ
-	return parts
-
-// heal ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/carbon/human/heal_organ_damage(var/brute, var/burn)
-	var/list/datum/organ/external/parts = get_damaged_organs(brute,burn)
-	if(!parts.len)
-		return
-	var/datum/organ/external/picked = pick(parts)
-	if(picked.heal_damage(brute,burn))
-		UpdateDamageIcon()
-	updatehealth()
-
-// damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/carbon/human/take_organ_damage(var/brute, var/burn)
-	var/list/datum/organ/external/parts = get_damageable_organs()
-	if(!parts.len)
-		return
-	var/datum/organ/external/picked = pick(parts)
-	if(picked.take_damage(brute,burn))
-		UpdateDamageIcon()
-	updatehealth()
-
-
-// heal MANY external organs, in random order
-/mob/living/carbon/human/heal_overall_damage(var/brute, var/burn)
-	var/list/datum/organ/external/parts = get_damaged_organs(brute,burn)
-
-	var/update = 0
-	while(parts.len && (brute>0 || burn>0) )
-		var/datum/organ/external/picked = pick(parts)
-
-		var/brute_was = picked.brute_dam
-		var/burn_was = picked.burn_dam
-
-		update |= picked.heal_damage(brute,burn)
-
-		brute -= (brute_was-picked.brute_dam)
-		burn -= (burn_was-picked.burn_dam)
-
-		parts -= picked
-	updatehealth()
-	if(update)	UpdateDamageIcon()
-
-// damage MANY external organs, in random order
-/mob/living/carbon/human/take_overall_damage(var/brute, var/burn)
-	var/list/datum/organ/external/parts = get_damageable_organs()
-	var/update = 0
-	while(parts.len && (brute>0 || burn>0) )
-		var/datum/organ/external/picked = pick(parts)
-
-		var/brute_was = picked.brute_dam
-		var/burn_was = picked.burn_dam
-
-		update |= picked.take_damage(brute,burn)
-
-		brute -= (picked.brute_dam-brute_was)
-		burn -= (picked.burn_dam-burn_was)
-
-		parts -= picked
-	updatehealth()
-	if(update)	UpdateDamageIcon()
-
 /mob/living/carbon/human/Topic(href, href_list)
 	if (href_list["refresh"])
 		if((machine)&&(in_range(src, usr)))
@@ -1759,17 +1685,6 @@ It can still be worn/put on as normal.
 	return 1//Humans can use guns and such
 
 
-/mob/living/carbon/human/updatehealth()
-	if(src.nodamage)
-		src.health = 100
-		src.stat = 0
-		return
-	src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss() - src.getCloneLoss()
-	if(getFireLoss() > (100 - config.health_threshold_dead) && stat == DEAD) //100 only being used as the magic human max health number, feel free to change it if you add a var for it -- Urist
-		ChangeToHusk()
-	return
-
-
 /mob/living/carbon/human/abiotic(var/full_body = 0)
 	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.ears || src.gloves)))
 		return 1
@@ -1779,44 +1694,6 @@ It can still be worn/put on as normal.
 
 	return 0
 
-/mob/living/carbon/human/getBruteLoss()
-	var/amount = 0.0
-	for(var/datum/organ/external/O in organs)
-		amount+= O.brute_dam
-	return amount
-
-/mob/living/carbon/human/adjustBruteLoss(var/amount)
-	if(amount > 0)
-		take_overall_damage(amount, 0)
-	else
-		heal_overall_damage(-amount, 0)
-
-/mob/living/carbon/human/getFireLoss()
-	var/amount = 0.0
-	for(var/datum/organ/external/O in organs)
-		amount+= O.burn_dam
-	return amount
-
-/mob/living/carbon/human/adjustFireLoss(var/amount)
-	if(amount > 0)
-		take_overall_damage(0, amount)
-	else
-		heal_overall_damage(0, -amount)
-
-/mob/living/carbon/human/Stun(amount)
-	if(HULK in mutations)
-		return
-	..()
-
-/mob/living/carbon/human/Weaken(amount)
-	if(HULK in mutations)
-		return
-	..()
-
-/mob/living/carbon/human/Paralyse(amount)
-	if(HULK in mutations)
-		return
-	..()
 
 /mob/living/carbon/human/proc/check_dna()
 	dna.check_integrity(src)

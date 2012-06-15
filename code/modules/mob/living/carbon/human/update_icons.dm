@@ -106,11 +106,11 @@ Please contact me on #coderbus IRC. ~Carn x
 #define EARS_LAYER				8
 #define SUIT_LAYER				9
 #define GLASSES_LAYER			10
-#define FACEMASK_LAYER			11
-#define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		13
-#define BACK_LAYER				14
-#define HAIR_LAYER				15		//TODO: make part of head layer?
+#define BELT_LAYER				11		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER		12
+#define BACK_LAYER				13
+#define HAIR_LAYER				14		//TODO: make part of head layer?
+#define FACEMASK_LAYER			15
 #define HEAD_LAYER				16
 #define HANDCUFF_LAYER			17
 #define L_HAND_LAYER			18
@@ -177,7 +177,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(update_icons)   update_icons()
 
 //BASE MOB SPRITE
-/mob/living/carbon/human/proc/update_body()
+/mob/living/carbon/human/proc/update_body(var/update_icons=1)
 	if(stand_icon)	del(stand_icon)
 	if(lying_icon)	del(lying_icon)
 	if(mutantrace)	return
@@ -221,6 +221,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(!fat)
 			stand_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_s"), ICON_OVERLAY)
 			lying_icon.Blend(new /icon('human.dmi', "underwear[underwear]_[g]_l"), ICON_OVERLAY)
+	if(update_icons)	update_icons()
 
 
 //HAIR OVERLAY
@@ -263,26 +264,6 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/fat
 	if( FAT in mutations )
 		fat = "fat"
-		if( w_uniform && !(w_uniform&ONESIZEFITSALL) )
-			src << "\red You burst out of \the [w_uniform]!"
-			var/obj/item/clothing/c = w_uniform
-			u_equip(c)							//Check
-			if(client)							//
-				client.screen -= c				//
-			if(c)								//
-				c:loc = loc						//
-				c:dropped(src)					//
-				c:layer = initial(c:layer)		//
-		if( wear_suit && !(wear_suit&ONESIZEFITSALL) )
-			src << "\red You burst out of \the [wear_suit]!"
-			var/obj/item/clothing/c = wear_suit
-			u_equip(c)
-			if(client)
-				client.screen -= c
-			if(c)
-				c:loc = loc
-				c:dropped(src)
-				c:layer = initial(c:layer)
 
 	var/image/lying		= image("icon" = 'genetics.dmi')
 	var/image/standing	= image("icon" = 'genetics.dmi')
@@ -332,7 +313,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		else
 			overlays_lying[MUTANTRACE_LAYER]	= null
 			overlays_standing[MUTANTRACE_LAYER]	= null
-	update_body()
+	update_body(0)
 	update_hair(0)
 	if(update_icons)   update_icons()
 
@@ -367,25 +348,36 @@ Please contact me on #coderbus IRC. ~Carn x
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
 /mob/living/carbon/human/update_inv_w_uniform(var/update_icons=1)
-	if(w_uniform)
-		w_uniform.screen_loc = ui_iclothing			//what is this?
-		if( istype(w_uniform, /obj/item/clothing/under) )
-			var/t_color = w_uniform.color
-			if(!t_color)		t_color = icon_state
-			var/image/lying		= image("icon_state" = "[t_color]_l")
-			var/image/standing	= image("icon_state" = "[t_color]_s")
-			if( (FAT in mutations) )
+	if(w_uniform && istype(w_uniform, /obj/item/clothing/under) )
+		w_uniform.screen_loc = ui_iclothing
+		var/t_color = w_uniform.color
+		if(!t_color)		t_color = icon_state
+		var/image/lying		= image("icon_state" = "[t_color]_l")
+		var/image/standing	= image("icon_state" = "[t_color]_s")
+		if( (FAT in mutations) )
+			if(w_uniform.flags&ONESIZEFITSALL)
 				lying.icon		= 'uniform_fat.dmi'
 				standing.icon	= 'uniform_fat.dmi'
 			else
-				lying.icon		= 'uniform.dmi'
-				standing.icon	= 'uniform.dmi'
+				src << "\red You burst out of \the [w_uniform]!"
+				var/obj/item/clothing/c = w_uniform
+				w_uniform = null
+				if(client)
+					client.screen -= c
+				c.loc = loc
+				c.dropped(src)
+				c.layer = initial(c.layer)
+				lying		= null
+				standing	= null
+		else
+			lying.icon		= 'uniform.dmi'
+			standing.icon	= 'uniform.dmi'
 
-			if(w_uniform.blood_DNA)
-				lying.overlays		+= image("icon" = 'blood.dmi', "icon_state" = "uniformblood2")
-				standing.overlays	+= image("icon" = 'blood.dmi', "icon_state" = "uniformblood")
-			overlays_lying[UNIFORM_LAYER]		= lying
-			overlays_standing[UNIFORM_LAYER]	= standing
+		if(w_uniform.blood_DNA)
+			lying.overlays		+= image("icon" = 'blood.dmi', "icon_state" = "uniformblood2")
+			standing.overlays	+= image("icon" = 'blood.dmi', "icon_state" = "uniformblood")
+		overlays_lying[UNIFORM_LAYER]		= lying
+		overlays_standing[UNIFORM_LAYER]	= standing
 	else
 		overlays_lying[UNIFORM_LAYER]		= null
 		overlays_standing[UNIFORM_LAYER]	= null
@@ -513,36 +505,49 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(update_icons)   update_icons()
 
 
-
 /mob/living/carbon/human/update_inv_wear_suit(var/update_icons=1)
 	if( wear_suit && istype(wear_suit, /obj/item/clothing/suit) )	//TODO check this
 		wear_suit.screen_loc = ui_oclothing	//TODO
 		var/image/lying		= image("icon" = 'suit.dmi', "icon_state" = "[wear_suit.icon_state]2")
 		var/image/standing	= image("icon" = 'suit.dmi', "icon_state" = "[wear_suit.icon_state]")
 
-		if( istype(wear_suit, /obj/item/clothing/suit/straight_jacket) )	//TODO
-			if (handcuffed)													//
-				handcuffed.loc = loc										//
-				handcuffed.layer = initial(handcuffed.layer)				//
-				handcuffed = null											//
-			if (l_hand || r_hand)											//
-				var/h = hand												//
-				hand = 1													//
-				drop_item()													//
-				hand = 0													//
-				drop_item()													//
-				hand = h													//
+		if(FAT in mutations)
+			if(!wear_suit.flags&ONESIZEFITSALL)
+				src << "\red You burst out of \the [wear_suit]!"
+				var/obj/item/clothing/c = wear_suit
+				wear_suit = null
+				if(client)
+					client.screen -= c
+				c.loc = loc
+				c.dropped(src)
+				c.layer = initial(c.layer)
+				lying		= null
+				standing	= null
 
-		if(wear_suit.blood_DNA)
-			var/t_state
-			if( istype(wear_suit, /obj/item/clothing/suit/armor/vest || /obj/item/clothing/suit/wcoat) )
-				t_state = "armor"
-			else if( istype(wear_suit, /obj/item/clothing/suit/det_suit || /obj/item/clothing/suit/labcoat) )
-				t_state = "coat"
-			else
-				t_state = "suit"
-			lying.overlays		+= image("icon" = 'blood.dmi', "icon_state" = "[t_state]blood2")
-			standing.overlays	+= image("icon" = 'blood.dmi', "icon_state" = "[t_state]blood")
+		else
+			if( istype(wear_suit, /obj/item/clothing/suit/straight_jacket) )	//TODO
+				if (handcuffed)													//
+					handcuffed.loc = loc										//
+					handcuffed.layer = initial(handcuffed.layer)				//
+					handcuffed = null											//
+				if (l_hand || r_hand)											//
+					var/h = hand												//
+					hand = 1													//
+					drop_item()													//
+					hand = 0													//
+					drop_item()													//
+					hand = h													//
+
+			if(wear_suit.blood_DNA)
+				var/t_state
+				if( istype(wear_suit, /obj/item/clothing/suit/armor/vest || /obj/item/clothing/suit/wcoat) )
+					t_state = "armor"
+				else if( istype(wear_suit, /obj/item/clothing/suit/det_suit || /obj/item/clothing/suit/labcoat) )
+					t_state = "coat"
+				else
+					t_state = "suit"
+				lying.overlays		+= image("icon" = 'blood.dmi', "icon_state" = "[t_state]blood2")
+				standing.overlays	+= image("icon" = 'blood.dmi', "icon_state" = "[t_state]blood")
 
 		overlays_lying[SUIT_LAYER]		= lying
 		overlays_standing[SUIT_LAYER]	= standing

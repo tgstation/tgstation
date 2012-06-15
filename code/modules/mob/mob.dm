@@ -187,7 +187,7 @@
 	u_equip(item)
 	//if (client)
 	//	client.screen -= item
-	//regenerate_icons()
+	update_icons()
 	return
 
 /mob/proc/get_active_hand()
