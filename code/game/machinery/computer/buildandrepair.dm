@@ -241,9 +241,11 @@
 		switch( alert("Current receiver spectrum is set to: [catastasis]","Multitool-Circuitboard interface","Switch to [opposite_catastasis]","Cancel") )
 		//switch( alert("Current receiver spectrum is set to: " {(src.contraband_enabled) ? ("BROAD") : ("STANDARD")} , "Multitool-Circuitboard interface" , "Switch to " {(src.contraband_enabled) ? ("STANDARD") : ("BROAD")}, "Cancel") )
 			if("Switch to STANDARD","Switch to BROAD")
-				src.contraband_enabled = !src.contraband_enabled
-
-			if("Cancel")
+				if(src.contraband_enabled)
+					src.contraband_enabled = 0
+				else
+					src.contraband_enabled = 1
+			else if("Cancel")
 				return
 			else
 				user << "DERP! BUG! Report this (And what you were doing to cause it) to Agouri"

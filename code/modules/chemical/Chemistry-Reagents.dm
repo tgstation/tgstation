@@ -2749,11 +2749,46 @@ datum
 				color = "#664300" // rgb: 102, 67, 0
 				dizzy_adj = 3
 
+			absinthe
+				name = "Absinthe"
+				id = "absinthe"
+				description = "Watch out that the Green Fairy doesn't come for you!"
+				color = "#33EE00" // rgb: lots, ??, ??
+				dizzy_adj = 5
+				slur_start = 25
+				confused_start = 100
+
+				//copy paste from LSD... shoot me
+				on_mob_life(var/mob/M)
+					if(!M) M = holder.my_atom
+					if(!data) data = 1
+					data++
+					M:hallucination += 5
+					if(volume > REAGENTS_OVERDOSE)
+						M:adjustToxLoss(1)
+	//				if(data >= 100)
+	//					M:adjustToxLoss(0.1)
+					..()
+					return
+
 			rum
 				name = "Rum"
 				id = "rum"
 				description = "Yohoho and all that."
 				color = "#664300" // rgb: 102, 67, 0
+
+			deadrum
+				name = "Deadrum"
+				id = "rum"
+				description = "Popular with the sailors. Not very popular with everyone else."
+				color = "#664300" // rgb: 102, 67, 0
+
+				on_mob_life(var/mob/living/M as mob)
+					..()
+					M.dizziness +=5
+					if(volume > REAGENTS_OVERDOSE)
+						M:adjustToxLoss(1)
+					return
 
 			vodka
 				name = "Vodka"
