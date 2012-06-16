@@ -3743,6 +3743,14 @@
 					icon_state = "glass_brown"
 					name = "Glass of bilk"
 					desc = "A brew of milk and beer. For those alcoholics who fear osteoporosis."
+				if("absinthe")
+					icon_state = "glass_green"
+					name = "Glass of absinthe"
+					desc = "A glass of the Green Fairy."
+				if("deadrum")
+					icon_state = "glass_brown"
+					name = "Glass of Dead Rum"
+					desc = "Dangerously sweet rum. You won't be getting scurvy any time soon!"
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"
