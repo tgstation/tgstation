@@ -1,4 +1,4 @@
-var/global/list/message_servers = list()
+var/global/list/obj/machinery/message_server/message_servers = list()
 
 /datum/data_pda_msg
 	var/recipient = "Unspecified" //name of the person
@@ -6,6 +6,7 @@ var/global/list/message_servers = list()
 	var/message = "Blank" //transferred message
 
 /datum/data_pda_msg/New(var/param_rec = "",var/param_sender = "",var/param_message = "")
+
 	if(param_rec)
 		recipient = param_rec
 	if(param_sender)
@@ -56,11 +57,11 @@ var/global/list/message_servers = list()
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
 	var/active = 1
-	var/decryptkey = "password";
+	var/decryptkey = "password"
 
 /obj/machinery/message_server/New()
 	message_servers += src
-	decryptkey = generateKey()
+	decryptkey = GenerateKey()
 	send_pda_message("System Administrator", "system", "This is an automated message. The messaging system is functioning correctly.")
 	..()
 	return
@@ -70,10 +71,10 @@ var/global/list/message_servers = list()
 	..()
 	return
 
-/obj/machinery/message_server/proc/generateKey()
+/obj/machinery/message_server/proc/GenerateKey()
 	//Feel free to move to Helpers.
 	var/newKey
-	newKey += pick("the", "if", "of", "as", "in", "a", "you", "from", "to", "an", "too", "little", "snow", "dead", "drunk", "rose")
+	newKey += pick("the", "if", "of", "as", "in", "a", "you", "from", "to", "an", "too", "little", "snow", "dead", "drunk", "rosebud", "duck", "al", "le")
 	newKey += pick("diamond", "beer", "mushroom", "assistant", "clown", "captain", "twinkie", "security", "nuke", "small", "big", "escape", "yellow", "gloves", "monkey", "engine", "nuclear", "ai")
 	newKey += pick("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
 	return newKey

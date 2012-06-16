@@ -87,20 +87,20 @@
 
 		var/hungry = 0 // determines if the metroid is hungry
 		var/starving = 0 // determines if the metroid is starving-hungry
-		if(istype(src, /mob/living/carbon/metroid/adult))
+		if(istype(src, /mob/living/carbon/metroid/adult)) // 1200 max nutrition
 			switch(nutrition)
-				if(400 to 1100) hungry = 1
-				if(0 to 399)
+				if(301 to 600) hungry = 1
+				if(0 to 300)
 					starving = 1
 
 		else
-			switch(nutrition)
-				if(150 to 800) hungry = 1
-				if(0 to 149) starving = 1
+			switch(nutrition)			// 1000 max nutrition
+				if(201 to 500) hungry = 1
+				if(0 to 200) starving = 1
 
 
 		if(starving && !client) // if a metroid is starving, it starts losing its friends
-			if(prob(15) && Friends.len > 0)
+			if(prob(1) && Friends.len > 0)
 				var/friendnum = 0
 				for(var/mob/M in Friends)
 					friendnum++
@@ -504,8 +504,8 @@
 						var/number = pick(2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,4)
 						for(var/i=1,i<=number,i++) // reproduce (has a small chance of producing 3 or 4 offspring)
 							var/mob/living/carbon/metroid/M = new/mob/living/carbon/metroid(loc)
-							M.nutrition = round(nutrition/number)
-							M.powerlevel = round(powerlevel / number)
+							M.nutrition = round(nutrition * 0.9)
+							M.powerlevel = round(powerlevel/number)
 							M.Friends = Friends
 							M.tame = tame
 							M.rabid = rabid
@@ -518,6 +518,7 @@
 					if(!client)
 						var/mob/living/carbon/metroid/adult/A = new/mob/living/carbon/metroid/adult(src.loc)
 						A.nutrition = nutrition
+						A.nutrition += 100
 						A.powerlevel = max(0, powerlevel-1)
 						A.Friends = Friends
 						A.tame = tame

@@ -248,46 +248,55 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			sending += "<br>"
 		screen = 7 //if it's successful, this will get overrwritten (7 = unsufccessfull, 6 = successfull)
 		if (sending)
+			var/pass = 0
 			for (var/obj/machinery/message_server/MS in world)
+				if(!MS.active) continue
 				MS.send_rc_message(href_list["department"],department,log_msg,msgStamped,msgVerified,priority)
+				pass = 1
 
-			for (var/obj/machinery/requests_console/Console in allConsoles)
-				if (ckey(Console.department) == ckey(href_list["department"]))
+			if(pass)
 
-					switch(priority)
-						if("2")		//High priority
-							if(Console.newmessagepriority < 2)
-								Console.newmessagepriority = 2
-								Console.icon_state = "req_comp2"
-							if(!Console.silent)
-								playsound(Console.loc, 'twobeep.ogg', 50, 1)
-								for (var/mob/O in hearers(5, Console.loc))
-									O.show_message(text("\icon[Console] *The Requests Console beeps: 'PRIORITY Alert in [department]'"))
-							Console.messages += "<B><FONT color='red'>High Priority message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[sending]"
+				for (var/obj/machinery/requests_console/Console in allConsoles)
+					if (ckey(Console.department) == ckey(href_list["department"]))
 
-	//					if("3")		//Not implemanted, but will be 		//Removed as it doesn't look like anybody intends on implimenting it ~Carn
-	//						if(Console.newmessagepriority < 3)
-	//							Console.newmessagepriority = 3
-	//							Console.icon_state = "req_comp3"
-	//						if(!Console.silent)
-	//							playsound(Console.loc, 'twobeep.ogg', 50, 1)
-	//							for (var/mob/O in hearers(7, Console.loc))
-	//								O.show_message(text("\icon[Console] *The Requests Console yells: 'EXTREME PRIORITY alert in [department]'"))
-	//						Console.messages += "<B><FONT color='red'>Extreme Priority message from [ckey(department)]</FONT></B><BR>[message]"
+						switch(priority)
+							if("2")		//High priority
+								if(Console.newmessagepriority < 2)
+									Console.newmessagepriority = 2
+									Console.icon_state = "req_comp2"
+								if(!Console.silent)
+									playsound(Console.loc, 'twobeep.ogg', 50, 1)
+									for (var/mob/O in hearers(5, Console.loc))
+										O.show_message(text("\icon[Console] *The Requests Console beeps: 'PRIORITY Alert in [department]'"))
+								Console.messages += "<B><FONT color='red'>High Priority message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[sending]"
 
-						else		// Normal priority
-							if(Console.newmessagepriority < 1)
-								Console.newmessagepriority = 1
-								Console.icon_state = "req_comp1"
-							if(!Console.silent)
-								playsound(Console.loc, 'twobeep.ogg', 50, 1)
-								for (var/mob/O in hearers(4, Console.loc))
-									O.show_message(text("\icon[Console] *The Requests Console beeps: 'Message from [department]'"))
-							Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[message]"
+		//					if("3")		//Not implemanted, but will be 		//Removed as it doesn't look like anybody intends on implimenting it ~Carn
+		//						if(Console.newmessagepriority < 3)
+		//							Console.newmessagepriority = 3
+		//							Console.icon_state = "req_comp3"
+		//						if(!Console.silent)
+		//							playsound(Console.loc, 'twobeep.ogg', 50, 1)
+		//							for (var/mob/O in hearers(7, Console.loc))
+		//								O.show_message(text("\icon[Console] *The Requests Console yells: 'EXTREME PRIORITY alert in [department]'"))
+		//						Console.messages += "<B><FONT color='red'>Extreme Priority message from [ckey(department)]</FONT></B><BR>[message]"
 
-					screen = 6
-					Console.luminosity = 2
-			messages += "<B>Message sent to [dpt]</B><BR>[message]"
+							else		// Normal priority
+								if(Console.newmessagepriority < 1)
+									Console.newmessagepriority = 1
+									Console.icon_state = "req_comp1"
+								if(!Console.silent)
+									playsound(Console.loc, 'twobeep.ogg', 50, 1)
+									for (var/mob/O in hearers(4, Console.loc))
+										O.show_message(text("\icon[Console] *The Requests Console beeps: 'Message from [department]'"))
+								Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(department)]'>[department]</A></FONT></B><BR>[message]"
+
+						screen = 6
+						Console.luminosity = 2
+				messages += "<B>Message sent to [dpt]</B><BR>[message]"
+			else
+				for (var/mob/O in hearers(4, src.loc))
+					O.show_message(text("\icon[src] *The Requests Console beeps: 'NOTICE: No server detected!'"))
+
 
 	//Handle screen switching
 	switch(text2num(href_list["setScreen"]))

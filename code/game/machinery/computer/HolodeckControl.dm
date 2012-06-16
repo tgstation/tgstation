@@ -42,6 +42,8 @@
 			dat += "<A href='?src=\ref[src];wildlifecarp=1'>(<font color=red>Begin Wildlife Simulation</font>)</A><BR>"
 			dat += "Ensure the holodeck is empty before testing.<BR>"
 			dat += "<BR>"
+			if(issilicon(user))
+				dat += "<A href='?src=\ref[src];AIoverride=1'>(<font color=green>Re-Enable Safety Protocols?</font>)</A><BR>"
 			dat += "Safety Protocols are <font color=red> DISABLED </font><BR>"
 		else
 			if(issilicon(user))
@@ -101,7 +103,7 @@
 
 			else if(href_list["AIoverride"])
 				if(!issilicon(usr))	return
-				emagged = 1
+				emagged = !emagged
 
 			src.add_fingerprint(usr)
 		src.updateUsrDialog()

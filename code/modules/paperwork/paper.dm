@@ -45,12 +45,17 @@
 	set src in oview(1)
 
 //	..()	//We don't want them to see the dumb "this is a paper" thing every time.
-	if(!(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/dead/observer) || istype(usr, /mob/living/silicon)))
-		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)][stamps]</BODY></HTML>", "window=[name]")
-		onclose(usr, "[name]")
+	// I didn't like the idea that people can read tiny pieces of paper from across the room.
+	// Now you need to be next to the paper in order to read it.
+	if(in_range(usr, src))
+		if(!(istype(usr, /mob/living/carbon/human) || istype(usr, /mob/dead/observer) || istype(usr, /mob/living/silicon)))
+			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)][stamps]</BODY></HTML>", "window=[name]")
+			onclose(usr, "[name]")
+		else
+			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info][stamps]</BODY></HTML>", "window=[name]")
+			onclose(usr, "[name]")
 	else
-		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info][stamps]</BODY></HTML>", "window=[name]")
-		onclose(usr, "[name]")
+		usr << "<span class='notice'>It is too far away.</span>"
 	return
 
 /obj/item/weapon/paper/verb/rename()
@@ -155,7 +160,7 @@
 	t = dd_replacetext(t, "\[/i\]", "</I>")
 	t = dd_replacetext(t, "\[u\]", "<U>")
 	t = dd_replacetext(t, "\[/u\]", "</U>")
-	t = dd_replacetext(t, "\[large\]", "<font size = \"4\">")
+	t = dd_replacetext(t, "\[large\]", "<font size=\"4\">")
 	t = dd_replacetext(t, "\[/large\]", "</font>")
 	t = dd_replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[user.real_name]</i></font>")
 	t = dd_replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
@@ -189,6 +194,7 @@
 		fields++
 
 	return t
+
 
 /obj/item/weapon/paper/proc/openhelp(mob/user as mob)
 	user << browse({"<HTML><HEAD><TITLE>Pen Help</TITLE></HEAD>

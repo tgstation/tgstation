@@ -1,6 +1,9 @@
 
 //The advanced pea-green monochrome lcd of tomorrow.
 
+var/global/list/obj/item/device/pda/PDAs = list()
+
+
 /obj/item/device/pda
 	name = "PDA"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by a preprogrammed ROM cartridge."
@@ -182,6 +185,7 @@
 
 /obj/item/device/pda/New()
 	..()
+	PDAs += src
 	spawn(3)
 	if (default_cartridge)
 		cartridge = new default_cartridge(src)
@@ -331,7 +335,7 @@
 				var/count = 0
 
 				if (!toff)
-					for (var/obj/item/device/pda/P in world)
+					for (var/obj/item/device/pda/P in PDAs)
 						if (!P.owner||P.toff||P == src)	continue
 						dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
 						if (istype(cartridge, /obj/item/weapon/cartridge/syndicate))
@@ -1008,6 +1012,7 @@
 	return
 
 /obj/item/device/pda/Del()
+	PDAs -= src
 	if (src.id)
 		src.id.loc = get_turf(src.loc)
 	..()
@@ -1042,7 +1047,7 @@
 		usr << "You can't send PDA messages because you are dead!"
 		return
 
-	for (var/obj/item/device/pda/P in world)
+	for (var/obj/item/device/pda/P in PDAs)
 		if (!P.owner)
 			continue
 		else if (P == src)

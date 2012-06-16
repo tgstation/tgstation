@@ -76,6 +76,7 @@
 				if(Victim.health <= 0)
 					Victim.adjustToxLoss(rand(2,4))
 
+				// Heal yourself
 				adjustToxLoss(-10)
 				adjustOxyLoss(-10)
 				adjustBruteLoss(-10)
@@ -136,7 +137,8 @@
 			if(Victim && !rabid && !attacked)
 				if(Victim.LAssailant && Victim.LAssailant != Victim)
 					if(prob(50))
-						Friends |= Victim.LAssailant
+						if(!(Victim.LAssailant in Friends))
+							Friends.Add(Victim.LAssailant) // no idea why i was using the |= operator
 
 		if(M.client && istype(src, /mob/living/carbon/human))
 			if(prob(85))
@@ -205,7 +207,7 @@
 					var/list/babies = list()
 					for(var/i=1,i<=number,i++) // reproduce (has a small chance of producing 3 or 4 offspring)
 						var/mob/living/carbon/metroid/M = new/mob/living/carbon/metroid(loc)
-						M.nutrition = round(nutrition/number)
+						M.nutrition = round(nutrition * 0.9)
 						M.powerlevel = round(powerlevel / number)
 						if(i != 1) step_away(M,src)
 						babies += M

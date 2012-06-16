@@ -15,6 +15,7 @@
 	var/playing = 0
 	var/help = 0
 	var/edit = 1
+	var/repeat = 0
 
 	proc
 		playnote(var/note as text)
@@ -368,42 +369,44 @@
 				M << sound(soundfile)
 
 		playsong()
-			var/cur_oct[7]
-			var/cur_acc[7]
-			for(var/i = 1 to 7)
-				cur_oct[i] = "3"
-				cur_acc[i] = "n"
+			do
+				var/cur_oct[7]
+				var/cur_acc[7]
+				for(var/i = 1 to 7)
+					cur_oct[i] = "3"
+					cur_acc[i] = "n"
 
-			for(var/line in song.lines)
-				//world << line
-				for(var/beat in dd_text2list(lowertext(line), ","))
-					//world << "beat: [beat]"
-					var/list/notes = dd_text2list(beat, "/")
-					for(var/note in dd_text2list(notes[1], "-"))
-						//world << "note: [note]"
-						if(!playing || !anchored)//If the piano is playing, or is loose
-							playing = 0
-							return
-						if(lentext(note) == 0)
-							continue
-						//world << "Parse: [copytext(note,1,2)]"
-						var/cur_note = text2ascii(note) - 96
-						if(cur_note < 1 || cur_note > 7)
-							continue
-						for(var/i=2 to lentext(note))
-							var/ni = copytext(note,i,i+1)
-							if(!text2num(ni))
-								if(ni == "#" || ni == "b" || ni == "n")
-									cur_acc[cur_note] = ni
-								else if(ni == "s")
-									cur_acc[cur_note] = "#" // so shift is never required
-							else
-								cur_oct[cur_note] = ni
-						playnote(uppertext(copytext(note,1,2)) + cur_acc[cur_note] + cur_oct[cur_note])
-					if(notes.len >= 2 && text2num(notes[2]))
-						sleep(song.tempo / text2num(notes[2]))
-					else
-						sleep(song.tempo)
+				for(var/line in song.lines)
+					//world << line
+					for(var/beat in dd_text2list(lowertext(line), ","))
+						//world << "beat: [beat]"
+						var/list/notes = dd_text2list(beat, "/")
+						for(var/note in dd_text2list(notes[1], "-"))
+							//world << "note: [note]"
+							if(!playing || !anchored)//If the piano is playing, or is loose
+								playing = 0
+								return
+							if(lentext(note) == 0)
+								continue
+							//world << "Parse: [copytext(note,1,2)]"
+							var/cur_note = text2ascii(note) - 96
+							if(cur_note < 1 || cur_note > 7)
+								continue
+							for(var/i=2 to lentext(note))
+								var/ni = copytext(note,i,i+1)
+								if(!text2num(ni))
+									if(ni == "#" || ni == "b" || ni == "n")
+										cur_acc[cur_note] = ni
+									else if(ni == "s")
+										cur_acc[cur_note] = "#" // so shift is never required
+								else
+									cur_oct[cur_note] = ni
+							playnote(uppertext(copytext(note,1,2)) + cur_acc[cur_note] + cur_oct[cur_note])
+						if(notes.len >= 2 && text2num(notes[2]))
+							sleep(song.tempo / text2num(notes[2]))
+						else
+							sleep(song.tempo)
+			while(repeat)
 			playing = 0
 			updateUsrDialog()
 
@@ -417,9 +420,10 @@
 		if(song)
 			if(song.lines.len > 0 && !(playing))
 				dat += "<A href='?src=\ref[src];play=1'>Play Song</A><BR><BR>"
+				dat += "<A href='?src=\ref[src];repeat=1'>Repeat Song: [repeat ? "Yes" : "No"]</A><BR><BR>"
 			if(playing)
-				dat += "<A href='?src=\ref[src];stop=1'>Stop Playing</A><BR><BR>"
-
+				dat += "<A href='?src=\ref[src];stop=1'>Stop Playing</A><BR>"
+				dat += "<A href='?src=\ref[src];repeat=1'>Repeat Song: [repeat ? "Yes" : "No"]</A><BR><BR>"
 		if(!edit)
 			dat += "<A href='?src=\ref[src];edit=2'>Show Editor</A><BR><BR>"
 		else
@@ -460,7 +464,11 @@
 		onclose(user, "piano")
 
 	Topic(href, href_list)
+
 		if(in_range(src, usr) && !issilicon(usr) && anchored)
+			if(href_list["repeat"])
+				repeat = !repeat
+
 			if(href_list["tempo"])
 				song.tempo += text2num(href_list["tempo"])
 				if(song.tempo < 1)
@@ -531,6 +539,7 @@
 					song.lines = lines
 					song.tempo = tempo
 					updateUsrDialog()
+
 		add_fingerprint(usr)
 		updateUsrDialog()
 		return
