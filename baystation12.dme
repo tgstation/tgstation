@@ -1168,6 +1168,7 @@
 #include "code\WorkInProgress\animusstation\atm.dm"
 #include "code\WorkInProgress\Cael_Aislinn\energy_field.dm"
 #include "code\WorkInProgress\Cael_Aislinn\external_shield_gen.dm"
+#include "code\WorkInProgress\Cael_Aislinn\sculpture.dm"
 #include "code\WorkInProgress\Cael_Aislinn\shield_capacitor.dm"
 #include "code\WorkInProgress\Cael_Aislinn\shield_gen.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Rust\core_field.dm"
