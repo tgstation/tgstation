@@ -192,7 +192,7 @@ obj/machinery/atmospherics/trinary/filter/attack_hand(user as mob) // -- TLE
 			<A href='?src=\ref[src];filterset=4'>Nitrous Oxide</A><BR>
 			<A href='?src=\ref[src];filterset=-1'>Nothing</A><BR>
 			<HR><B>Desirable output pressure:</B>
-			[src.target_pressure] | <a href='?src=\ref[src];set_press=1'>Change</a>
+			[src.target_pressure]k | <a href='?src=\ref[src];set_press=1'>Change</a>
 			"}
 /*
 		user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD>[dat]","window=atmo_filter")
