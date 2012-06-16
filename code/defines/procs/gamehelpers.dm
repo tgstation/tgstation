@@ -296,7 +296,7 @@ proc/is_carrying(var/M as mob, var/O as obj)
 		O = O:loc
 	return 0
 
-//hackcopy from a ZAS function, first created for use with intertial_damper/new shielding
+	//hackcopy from a ZAS function, first created for use with intertial_damper/new shielding
 proc/CircleFloodFill(turf/start, var/radius = 3)
 	if(!istype(start))
 		return list()
@@ -415,4 +415,3 @@ proc/ExplosionCircleFloodFill(turf/start, var/radius = 3)
 			closed += T
 
 	return closed
-
