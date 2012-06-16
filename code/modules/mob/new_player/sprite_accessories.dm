@@ -74,9 +74,17 @@
 		name = "Kusanagi Hair"
 		icon_state = "hair_kusanagi"
 
-	ponytail
-		name = "Ponytail"
+	ponytail1
+		name = "Ponytail 1"
 		icon_state = "hair_ponytail"
+
+	ponytail2
+		name = "Ponytail 2"
+		icon_state = "hair_pa"
+
+	ponytail3
+		name = "Ponytail 3"
+		icon_state = "hair_ponytail3"
 
 	cut
 		name = "Cut Hair"
