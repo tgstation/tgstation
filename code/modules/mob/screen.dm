@@ -361,10 +361,7 @@
 							usr << "\red You are not wearing a mask"
 							return
 						else
-							if (istype(usr.back, /obj/item/weapon/tank))
-								usr << "\blue You are now running on internals from the [usr.back] on your back."
-								usr.internal = usr.back
-							else if (ishuman(usr) && istype(usr:s_store, /obj/item/weapon/tank))
+							if (ishuman(usr) && istype(usr:s_store, /obj/item/weapon/tank))
 								usr << "\blue You are now running on internals from the [usr:s_store] on your [usr:wear_suit]."
 								usr.internal = usr:s_store
 							else if (ishuman(usr) && istype(usr:belt, /obj/item/weapon/tank))
@@ -376,6 +373,9 @@
 							else if (istype(usr:r_store, /obj/item/weapon/tank))
 								usr << "\blue You are now running on internals from the [usr:r_store] in your right pocket."
 								usr.internal = usr:r_store
+							else if (istype(usr.back, /obj/item/weapon/tank))
+								usr << "\blue You are now running on internals from the [usr.back] on your back."
+								usr.internal = usr.back
 							else if (istype(usr.l_hand, /obj/item/weapon/tank))
 								usr << "\blue You are now running on internals from the [usr.l_hand] on your left hand."
 								usr.internal = usr.l_hand
