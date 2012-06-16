@@ -1187,6 +1187,7 @@
 #include "code\WorkInProgress\Cael_Aislinn\Tajara\tajaran.dm"
 #include "code\WorkInProgress\Cael_Aislinn\Tajara\whisper.dm"
 #include "code\WorkInProgress\Chinsky\ashtray.dm"
+#include "code\WorkInProgress\Mini\asay_trap.dm"
 #include "code\WorkInProgress\Mini\atmos_control.dm"
 #include "code\WorkInProgress\Mini\pipe_heater.dm"
 #include "code\WorkInProgress\Mloc\Shortcuts.dm"
