@@ -60,6 +60,15 @@
 	..()
 	return
 
+/obj/machinery/computer/message_monitor/power_change()
+	..()
+	if(stat & (NOPOWER|BROKEN))
+		return
+	if(emag || hacking)
+		icon_state = hack_icon
+	else
+		icon_state = normal_icon
+
 /obj/machinery/computer/message_monitor/process()
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
 	if(!linkedServer)
@@ -180,15 +189,15 @@
 
 			dat += {"<table border='1' width='100%'>
 					<tr><td width='20%'><A href='?src=\ref[src];select=Sender'>Sender</a></td>
+					<td width='20%'><A href='?src=\ref[src];select=RecJob'>Sender's Job</a></td>
 					<td width='20%'><A href='?src=\ref[src];select=Recepient'>Recipient</a></td>
-					<td width='20%'><A href='?src=\ref[src];select=RecJob'>Recepient Job</a></td>
 					<td width='300px' word-wrap: break-word><A href='?src=\ref[src];select=Message'>Message</a></td></tr>"}
-				//Sender   - Recepient - Message
-				//Al Green - Your Mom  - WHAT UP!?
+				//Sender  - Sender's Job  - Recepient - Message
+				//Al Green- Your Dad	  - Your Mom  - WHAT UP!?
 
 			dat += {"<tr><td width='20%'>[customsender]</td>
-			<td width='20%'>[customrecepient ? customrecepient.owner : "NONE"]</td>
 			<td width='20%'>[customjob]</td>
+			<td width='20%'>[customrecepient ? customrecepient.owner : "NONE"]</td>
 			<td width='300px'>[custommessage]</td></tr>"}
 			dat += "</table><br><center><A href='?src=\ref[src];select=Send'>Send</a>"
 
