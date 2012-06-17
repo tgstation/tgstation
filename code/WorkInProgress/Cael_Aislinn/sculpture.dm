@@ -135,9 +135,12 @@
 
 	//see if we're able to do stuff
 	if(!observed || in_darkness)
-		if(G && prob(random_escape_chance))
-			//chance to allow the stranglee to escape
-			allow_escape = 1
+		if(G)
+			if(prob(random_escape_chance))
+				//chance to allow the stranglee to escape
+				allow_escape = 1
+			if(G.affecting.stat == 2)
+				del G
 		else if(!G)
 			//see if we're able to strangle anyone
 			var/turf/myTurf = get_turf(src)
@@ -153,9 +156,9 @@
 				//this may not be quite the right test
 				if(M == src)
 					continue
-				if(M.stat)
+				if(M.stat == 1)
 					incapacitated.Add(M)
-				else
+				else if(!M.stat)
 					conscious.Add(M)
 
 			//pick the nearest valid conscious target
