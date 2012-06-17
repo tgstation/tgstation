@@ -106,13 +106,13 @@ obj/structure/windoor_assembly/Del()
 					else
 						src.name = "Windoor Assembly"
 
-			//Adding r-glass makes the assembly a secure windoor assembly. Step 2 (optional) complete.
+			//Adding plasteel makes the assembly a secure windoor assembly. Step 2 (optional) complete.
 			else if(istype(W, /obj/item/stack/sheet/plasteel) && !secure)
 				var/obj/item/stack/sheet/plasteel/P = W
 				if(P.amount < 2)
-					user << "\red You need more rods to do this."
+					user << "\red You need more plasteel to do this."
 					return
-				user << "\blue You start to reinforce the windoor with rods."
+				user << "\blue You start to reinforce the windoor with plasteel."
 
 				if(do_after(user,40))
 					if(!src) return
