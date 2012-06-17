@@ -3,15 +3,17 @@ var/global/BSACooldown = 0
 
 
 ////////////////////////////////
-/proc/message_admins(var/text, var/admin_ref = 0)
+/proc/message_admins(var/text, var/admin_ref = 0, var/admin_holder_ref = 0)
 	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[text]</span></span>"
 	log_adminwarn(rendered)
 	for (var/mob/M in world)
 		if (M && M.client && M.client.holder)
+			var/msg = rendered
 			if (admin_ref)
-				M << dd_replaceText(rendered, "%admin_ref%", "\ref[M]")
-			else
-				M << rendered
+				msg = dd_replaceText(msg, "%admin_ref%", "\ref[M]")
+			if (admin_holder_ref && M.client.holder)
+				msg = dd_replaceText(msg, "%holder_ref%", "\ref[M.client.holder]")
+			M << msg
 
 
 /obj/admins/Topic(href, href_list)

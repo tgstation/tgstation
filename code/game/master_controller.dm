@@ -7,6 +7,9 @@ var/global/controller_iteration = 0
 var/global/last_tick_timeofday = world.timeofday
 var/global/last_tick_duration = 0
 
+var/global/obj/machinery/last_obj_processed			//Used for MC 'proc break' debugging
+var/global/datum/disease/last_disease_processed		//Used for MC 'proc break' debugging
+var/global/obj/machinery/last_machine_processed		//Used for MC 'proc break' debugging
 
 datum/controller/game_controller
 	var/processing = 1
@@ -22,12 +25,7 @@ datum/controller/game_controller
 	var/global/powernets_ready = 0
 	var/global/ticker_ready = 0
 
-	proc
-		setup()
-		setup_objects()
-		process()
-
-	setup()
+	proc/setup()
 		if(master_controller && (master_controller != src))
 			del(src)
 			return
@@ -71,7 +69,7 @@ datum/controller/game_controller
 		spawn
 			ticker.pregame()
 
-	setup_objects()
+	proc/setup_objects()
 		world << "\red \b Initializing objects"
 		sleep(-1)
 
@@ -94,7 +92,7 @@ datum/controller/game_controller
 		world << "\red \b Initializations complete."
 
 
-	process()
+	proc/process()
 
 		if(!Failsafe)
 			Failsafe = new /datum/failsafe
@@ -127,10 +125,6 @@ datum/controller/game_controller
 		powernets_ready = 0
 		ticker_ready = 0
 
-
-
-
-
 		spawn(0)
 			air_master.process()
 			air_master_ready = 1
@@ -155,14 +149,16 @@ datum/controller/game_controller
 
 		sleep(-1)
 
+
 		spawn(0)
 			for(var/datum/disease/D in active_diseases)
+				last_disease_processed = D
 				D.process()
 			diseases_ready = 1
-
 		spawn(0)
 			for(var/obj/machinery/machine in machines)
 				if(machine)
+					last_machine_processed = machine
 					machine.process()
 					if(machine && machine.use_power)
 						machine.auto_use_power()
@@ -174,6 +170,7 @@ datum/controller/game_controller
 
 		spawn(0)
 			for(var/obj/object in processing_objects)
+				last_obj_processed = object
 				object.process()
 			objects_ready = 1
 
@@ -195,8 +192,33 @@ datum/controller/game_controller
 
 		sleep(world.timeofday+12-start_time)
 
+		var/IL_check = 0 //Infinite loop check (To report when the master controller breaks.)
 		while(!air_master_ready || !tension_master_ready || !sun_ready || !mobs_ready || !diseases_ready || !machines_ready || !objects_ready || !networks_ready || !powernets_ready || !ticker_ready)
+			IL_check++
+			if(IL_check > 600)
+				var/MC_report = "air_master_ready = [air_master_ready]; tension_master_ready = [tension_master_ready]; sun_ready = [sun_ready]; mobs_ready = [mobs_ready]; diseases_ready = [diseases_ready]; machines_ready = [machines_ready]; objects_ready = [objects_ready]; networks_ready = [networks_ready]; powernets_ready = [powernets_ready]; ticker_ready = [ticker_ready];"
+				message_admins("<b><font color='red'>PROC BREAKAGE WARNING:</font> The game's master contorller appears to be stuck in one of it's cycles. It has looped through it's delaying loop [IL_check] times.</b>")
+				message_admins("<b>The master controller reports: [MC_report]</b>")
+				if(!diseases_ready)
+					if(last_disease_processed)
+						message_admins("<b>DISEASE PROCESSING stuck on </b><A HREF='?src=%holder_ref%;adminplayervars=\ref[last_disease_processed]'>[last_disease_processed]</A>", 0, 1)
+					else
+						message_admins("<b>DISEASE PROCESSING stuck on </b>unknown")
+				if(!machines_ready)
+					if(last_machine_processed)
+						message_admins("<b>MACHINE PROCESSING stuck on </b><A HREF='?src=%holder_ref%;adminplayervars=\ref[last_machine_processed]'>[last_machine_processed]</A>", 0, 1)
+					else
+						message_admins("<b>MACHINE PROCESSING stuck on </b>unknown")
+				if(!objects_ready)
+					if(last_obj_processed)
+						message_admins("<b>OBJ PROCESSING stuck on </b><A HREF='?src=ADMINHOLDERREF;adminplayervars=\ref[last_obj_processed]'>[last_obj_processed]</A>", 0, 1)
+					else
+						message_admins("<b>OBJ PROCESSING stuck on </b>unknown")
+				log_admin("PROC BREAKAGE WARNING: infinite_loop_check = [IL_check]; [MC_report];")
+				message_admins("<font color='red'><b>Master controller breaking out of delaying loop. Restarting the round is advised if problem persists. DO NOT manually restart the master controller.</b></font>")
+				break;
 			sleep(1)
+
 
 		spawn
 			process()
