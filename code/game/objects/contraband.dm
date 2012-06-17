@@ -1,7 +1,8 @@
 
 //########################## CONTRABAND ;3333333333333333333 -Agouri ###################################################
 
-#define NUM_OF_POSTER_DESIGNS 17
+#define NUM_OF_POSTER_DESIGNS 22
+#define BS12_POSTERS_START 18
 
 /obj/item/weapon/contraband
 	name = "contraband item"
@@ -20,7 +21,11 @@
 
 /obj/item/weapon/contraband/poster/New(turf/loc,var/given_serial=0)
 	if(given_serial==0)
-		serial_number = rand(1,NUM_OF_POSTER_DESIGNS)
+		//add an increased chance for BS12 specific posters to spawn
+		if(prob(10))
+			serial_number = rand(BS12_POSTERS_START,NUM_OF_POSTER_DESIGNS)
+		else
+			serial_number = rand(1,NUM_OF_POSTER_DESIGNS)
 		src.resulting_poster = new(serial_number)
 	else
 		serial_number = given_serial
@@ -78,10 +83,16 @@ obj/effect/decal/poster/New(var/serial)
 
 	src.serial_number = serial
 
-	if(serial_number==src.loc){serial_number = rand(1,NUM_OF_POSTER_DESIGNS);} //This is for the mappers that want individual posters without having to use rolled posters.
+	if(serial_number==src.loc)
+		//add an increased chance for BS12 specific posters to spawn
+		if(prob(10))
+			serial_number = rand(BS12_POSTERS_START,NUM_OF_POSTER_DESIGNS)
+		else
+			serial_number = rand(1,NUM_OF_POSTER_DESIGNS)
 
 	icon_state = "poster[serial_number]"
 
+	//This is for the mappers that want individual posters without having to use rolled posters.
 	switch(serial_number)
 		if(1)
 			name += " - Unlucky Space Explorer"
@@ -134,6 +145,24 @@ obj/effect/decal/poster/New(var/serial)
 		if(17)
 			name += " - Dangerous Static"
 			desc += " This particular one depicts nothing remarkable other than a rather mesmerising pattern of monitor static. There's a tag on the sides of the poster, urging you to \"tear this poster in half to receive your free sample\"."
+		if(18)
+			name += " - Pinup Girl Val"		//art thou incensed, brethren?
+			desc += " Luscious Val McNeil, the vertically challenged Legal Extraordinaire, winner of Miss Space two years running and favoured pinup girl of Lawyers Weekly."
+		if(19)
+			name += " - Derpman, Enforcer of the State"
+			desc += " Here to protect and serve... your donuts! A generously proportioned man, he teaches you the value of hiding your snacks."
+		if(20)
+			name += " - Tajaran Today, Special #222"
+			desc += " A controversial front page pinup from NTFashion, banned on numerous stations for it's unreasonably cute depictions."
+		if(21)
+			name += " - Respect a Soghun"
+			desc += " This poster depicts a well dressed looking Soghun receiving a prestigious award. It appears to espouse greater co-operation and harmony between the two races."
+		if(22)
+			name += " - Skrell Twilight"
+			desc += " This poster depicts a mysteriously inscrutable, alien scene. Numerous Skrell can be seen conversing amidst great, crystalline towers rising above crashing waves"
+		/*if(20)
+			name += " - the Disabled Triptarch: Ironfoot, Seber and Ore"
+			desc += " This poster depicts a genetics researcher, a chemist and a medical doctor in various states of miscommunication."*/
 		else
 			name = "This shit just bugged. Report it to Agouri - polyxenitopalidou@gmail.com"
 			desc = "Why are you still here?"
