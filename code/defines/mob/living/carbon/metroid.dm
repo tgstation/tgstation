@@ -15,7 +15,7 @@
 	gender = NEUTER
 
 	update_icon = 0
-	nutrition = 900 // 1000 = max
+	nutrition = 700 // 1000 = max
 
 	see_in_dark = 8
 
@@ -54,5 +54,5 @@
 	gender = NEUTER
 
 	update_icon = 0
-	nutrition = 1100 // 1200 = max
+	nutrition = 800 // 1200 = max
 
