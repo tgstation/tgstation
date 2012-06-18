@@ -72,6 +72,7 @@
 	var/mineralAmtList = list("Uranium" = 5, "Iron" = 5, "Diamond" = 5, "Gold" = 5, "Silver" = 5, "Plasma" = 5/*, "Adamantine" = 5*/)
 	var/mineralSpawnChanceList = list("Uranium" = 5, "Iron" = 50, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Plasma" = 25/*, "Adamantine" =5*/)//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
+	var/artifactChance = 1
 
 /turf/simulated/mineral/random/New()
 	..()
@@ -98,6 +99,11 @@
 			if(M)
 				src = M
 				M.levelupdate()
+
+	else if (prob(artifactChance))
+		//spawn a rare, xeno-archaelogical artifact here
+		new/obj/machinery/artifact(src)
+
 	return
 
 /turf/simulated/mineral/random/high_chance
