@@ -100,6 +100,14 @@
 		icon_state = "hair_e"
 		choose_female = 0 // turnoff!
 
+	afro
+		name = "Afro"
+		icon_state = "hair_afro"
+
+	afro_large
+		name = "Big Afro"
+		icon_state = "hair_bigafro"
+
 	fag
 		name = "Flow Hair"
 		icon_state = "hair_f"
