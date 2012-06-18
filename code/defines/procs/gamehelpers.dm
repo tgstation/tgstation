@@ -33,6 +33,15 @@
 
 	return 0 //not in range and not telekinetic
 
+/proc/circledistance(center=usr, T) // T is just the second atom to check distance to center with
+	var/turf/centerturf = get_turf(center)
+	var/turf/targetturf = get_turf(T)
+
+	var/dx2 = (targetturf.x - centerturf.x)**2
+	var/dy2 = (targetturf.y - centerturf.y)**2
+
+	return sqrt(dx2 + dy2)
+
 /proc/circlerange(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
@@ -96,6 +105,7 @@
 		if(dx*dx + dy*dy <= rsq)
 			turfs += T
 	return turfs
+
 
 
 /proc/get_mobs_in_view(var/R, var/atom/source)

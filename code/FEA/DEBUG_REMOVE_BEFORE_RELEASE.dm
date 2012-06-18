@@ -116,7 +116,7 @@ obj/machinery/portable_atmospherics/canister
 
 		valve_open = 1
 		release_pressure = 1000
-
+/*
 obj/machinery/atmospherics
 	unary
 		heat_reservoir
@@ -352,6 +352,7 @@ obj/machinery/atmospherics
 					usr << "[x],[y] is in a pipeline with [parent.members.len] members ([parent.edges.len] edges)! Volume: [parent.air.volume]"
 					usr << "Pressure: [parent.air.return_pressure()], Temperature: [parent.air.temperature]"
 					usr << "[parent.air.oxygen], [parent.air.toxins], [parent.air.nitrogen], [parent.air.carbon_dioxide] .. [parent.alert_pressure]"
+*/
 mob
 	verb
 		flag_all_pipe_networks()

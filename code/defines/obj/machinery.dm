@@ -334,31 +334,6 @@
 	directwired = 0		// must have a cable on same turf connecting to terminal
 	layer = 2.6 // a bit above wires
 
-/obj/machinery/power/generator
-	name = "thermoelectric generator"
-	desc = "It's a high efficiency thermoelectric generator."
-	icon_state = "teg"
-	anchored = 1
-	density = 1
-
-	var/obj/machinery/atmospherics/binary/circulator/circ1
-	var/obj/machinery/atmospherics/binary/circulator/circ2
-
-	var/lastgen = 0
-	var/lastgenlev = -1
-
-/obj/machinery/power/generator_type2
-	name = "thermoelectric generator"
-	desc = "It's a high efficiency thermoelectric generator."
-	icon_state = "teg"
-	anchored = 1
-	density = 1
-
-	var/obj/machinery/atmospherics/unary/generator_input/input1
-	var/obj/machinery/atmospherics/unary/generator_input/input2
-
-	var/lastgen = 0
-	var/lastgenlev = -1
 
 /obj/machinery/power/monitor
 	name = "power monitoring computer"
