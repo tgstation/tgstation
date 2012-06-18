@@ -1,5 +1,5 @@
 /obj/item/clothing/head/helmet/HoS
-	name = "Head of Security Hat"
+	name = "head of security's hat"
 	desc = "The hat of the Head of Security. For showing the officers who's in charge."
 	icon_state = "hoscap"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADCOVERSEYES
@@ -7,7 +7,7 @@
 	flags_inv = HIDEEARS
 
 /obj/item/clothing/head/helmet/HoS/dermal
-	name = "Dermal Armour Patch"
+	name = "dermal armour patch"
 	desc = "You're not quite sure how you manage to take it on and off, but it implants nicely in your head."
 	icon_state = "dermal"
 	item_state = "dermal"
@@ -24,7 +24,7 @@
 
 /obj/item/clothing/suit/armor/hos/jensen
 	name = "armored trenchcoat"
-	desc = "A trenchoat augmented with a special alloy for some protection and style"
+	desc = "A trenchoat augmented with a special alloy for some protection and style."
 	icon_state = "jensencoat"
 	item_state = "jensencoat"
 	flags_inv = 0

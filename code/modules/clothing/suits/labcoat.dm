@@ -27,22 +27,22 @@
 	item_state = "labgreen"
 
 /obj/item/clothing/suit/storage/labcoat/genetics
-	name = "Geneticist Labcoat"
+	name = "geneticist's labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a blue stripe on the shoulder."
 	icon_state = "labcoat_gen_open"
 
 /obj/item/clothing/suit/storage/labcoat/chemist
-	name = "Chemist Labcoat"
+	name = "chemist's labcoat"
 	desc = "A suit that protects against minor chemical spills. Has an orange stripe on the shoulder."
 	icon_state = "labcoat_chem_open"
 
 /obj/item/clothing/suit/storage/labcoat/virologist
-	name = "Virologist Labcoat"
+	name = "virologist's labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a green stripe on the shoulder."
 	icon_state = "labcoat_vir_open"
 
 /obj/item/clothing/suit/storage/labcoat/science
-	name = "Scientist Labcoat"
+	name = "scientist's labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a purple stripe on the shoulder."
 	icon_state = "labcoat_tox_open"
 

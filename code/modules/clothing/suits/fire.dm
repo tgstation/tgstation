@@ -29,8 +29,8 @@
 	slowdown = 1.5
 
 /obj/item/clothing/head/helmet/space/fire_helmet
-	name = "Fire Helmet"
-	desc = "A helmet designed to protect against fires in sealed areas, which often create extreme pressures."
+	name = "fire helmet"
+	desc = "A helmet designed to protect against extreme temperature and pressure."
 	flags = FPRINT | TABLEPASS | HEADSPACE | HEADCOVERSEYES | BLOCKHAIR
 	see_face = 0.0
 	permeability_coefficient = 0.01
@@ -43,14 +43,14 @@
 
 
 /obj/item/clothing/head/radiation
-	name = "Radiation Hood"
+	name = "radiation hood"
 	icon_state = "rad"
-	desc = "A hood with radiation protective properties. Label: Made with lead, do not eat insulation"
+	desc = "A hood that protects against radiation. Label: Made with lead, do not eat insulation."
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 20)
 
 /obj/item/clothing/suit/radiation
-	name = "Radiation suit"
+	name = "radiation suit"
 	desc = "A suit that protects against radiation. Label: Made with lead, do not eat insulation."
 	icon_state = "rad"
 	item_state = "rad_suit"
