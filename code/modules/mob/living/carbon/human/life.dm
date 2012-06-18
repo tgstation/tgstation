@@ -383,11 +383,7 @@
 		else
 			lying = 0
 			canmove = 1
-/*			for(var/obj/effect/stop/S in geaslist)
-				if(S.victim == src)
-					geaslist -= S
-					del(S)
-*/
+
 
 	proc/handle_breath(datum/gas_mixture/breath)
 		if(nodamage || REBREATHER in augmentations)

@@ -268,17 +268,3 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return 1
 
 	return 0
-
-/mob/proc/put_in_hands(var/obj/item/I) //A suprisingly useful proc.  Allows a simple way to place an object in a mob's hands, or, if they are full, on the ground below them.
-	if(!r_hand)
-		I.loc = src
-		r_hand = I
-		update_inv_r_hand()
-		I.layer = 20
-	else if(!l_hand)
-		I.loc = src
-		l_hand = I
-		update_inv_l_hand()
-		I.layer = 20
-	else
-		I.loc = get_turf(src)

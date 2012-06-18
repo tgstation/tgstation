@@ -138,9 +138,6 @@
 	updatehealth()
 	return
 
-//can't unequip since it can't equip anything
-/mob/living/carbon/alien/larva/u_equip(obj/item/W as obj)
-	return
 
 //can't equip anything
 /mob/living/carbon/alien/larva/db_click(text, t1)

@@ -1210,14 +1210,14 @@
 	var/perunit = 3750
 
 /obj/item/stack/sheet/wood
-	name = "Wood Planks"
+	name = "wooden planks"
 	desc = "One can only guess that this is a bunch of wood."
 	singular_name = "wood plank"
 	icon_state = "sheet-wood"
 	origin_tech = "materials=1;biotech=1"
 
 /obj/item/stack/sheet/sandstone
-	name = "Sandstone Bricks"
+	name = "sandstone bricks"
 	desc = "This appears to be a combination of both sand and stone."
 	singular_name = "sandstone brick"
 	icon_state = "sheet-sandstone"

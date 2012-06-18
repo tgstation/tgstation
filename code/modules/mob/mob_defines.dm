@@ -253,8 +253,7 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 	var/incorporeal_move = 0
 
 
-	var/update_icon = 1 // Set to 0 if you want that the mob's icon doesn't update when it moves -- Skie
-						// This can be used if you want to change the icon on the fly and want it to stay
+	var/update_icon = 1 //Set to 1 to trigger update_icons() at the next life() call
 
 	var/UI = 'screen1_Midnight.dmi' // For changing the UI from preferences
 
@@ -270,7 +269,6 @@ the mob is also allowed to move without any sort of restriction. For instance, i
 
 	var/datum/preferences/storedpreferences = null
 
-	var/geaslist = list()
 
 	var/list/radar_blips = list() // list of screen objects, radar blips
 	var/radar_open = 0 	// nonzero is radar is open

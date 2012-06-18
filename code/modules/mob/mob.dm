@@ -136,93 +136,6 @@
 
 	return
 
-
-
-/mob/proc/drop_item_v()
-	if (stat == 0)
-		drop_item()
-	return
-
-/mob/proc/drop_from_slot(var/obj/item/item)
-	if(!item)
-		return
-	if(!(item in contents))
-		return
-	u_equip(item)
-	if (client)
-		client.screen -= item
-	if (item)
-		item.loc = loc
-		item.dropped(src)
-		if (item)
-			item.layer = initial(item.layer)
-		var/turf/T = get_turf(loc)
-		if (istype(T))
-			T.Entered(item)
-	return
-
-/mob/proc/drop_item(var/atom/target)
-	var/obj/item/W = equipped()
-
-	if (W)
-		u_equip(W)
-		update_icons()
-		if (client)
-			client.screen -= W
-		if (W)
-			W.layer = initial(W.layer)
-			if(target)
-				W.loc = target.loc
-			else
-				W.loc = loc
-			W.dropped(src)
-		var/turf/T = get_turf(loc)
-		if (istype(T))
-			T.Entered(W)
-	return
-
-/mob/proc/before_take_item(var/obj/item/item)
-	item.loc = null
-	item.layer = initial(item.layer)
-	u_equip(item)
-	//if (client)
-	//	client.screen -= item
-	update_icons()
-	return
-
-/mob/proc/get_active_hand()
-	if (hand)
-		return l_hand
-	else
-		return r_hand
-
-/mob/proc/get_inactive_hand()
-	if (!hand)
-		return l_hand
-	else
-		return r_hand
-
-/mob/proc/put_in_hand(var/obj/item/I)
-	if(!I) return
-	I.loc = src
-	if (hand)
-		l_hand = I
-		update_inv_l_hand()
-	else
-		r_hand = I
-		update_inv_r_hand()
-	I.layer = 20
-
-/mob/proc/put_in_inactive_hand(var/obj/item/I)
-	I.loc = src
-	if (!hand)
-		l_hand = I
-		update_inv_l_hand()
-	else
-		r_hand = I
-		update_inv_r_hand()
-	I.layer = 20
-
 /mob/proc/reset_view(atom/A)
 	if (client)
 		if (istype(A, /atom/movable))
@@ -237,17 +150,6 @@
 				client.eye = loc
 	return
 
-/mob/proc/equipped()
-	if(issilicon(src))
-		if(isrobot(src))
-			if(src:module_active)
-				return src:module_active
-	else
-		if (hand)
-			return l_hand
-		else
-			return r_hand
-		return
 
 /mob/proc/show_inv(mob/user as mob)
 	user.machine = src
@@ -267,37 +169,6 @@
 	user << browse(dat, text("window=mob[];size=325x500", name))
 	onclose(user, "mob[name]")
 	return
-
-
-
-/mob/proc/u_equip(W as obj)
-	if (W == r_hand)
-		r_hand = null
-		update_inv_r_hand()
-	else if (W == l_hand)
-		l_hand = null
-		update_inv_l_hand()
-	else if (W == handcuffed)
-		handcuffed = null
-		update_inv_handcuffed()
-	else if (W == back)
-		back = null
-		update_inv_back()
-	else if (W == wear_mask)
-		wear_mask = null
-		update_inv_wear_mask()
-	return
-
-
-//Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
-/mob/proc/remove_from_mob(var/obj/O)
-	src.u_equip(O)
-	if (src.client)
-		src.client.screen -= O
-	O.layer = initial(O.layer)
-	O.screen_loc = null
-	return 1
-
 
 /mob/proc/ret_grab(obj/effect/list_container/mobl/L as obj, flag)
 	if ((!( istype(l_hand, /obj/item/weapon/grab) ) && !( istype(r_hand, /obj/item/weapon/grab) )))
@@ -336,12 +207,18 @@
 /mob/verb/mode()
 	set name = "Activate Held Object"
 	set category = "IC"
-
 	set src = usr
 
-	var/obj/item/W = equipped()
-	if (W)
-		W.attack_self(src)
+	if(hand)
+		var/obj/item/W = l_hand
+		if (W)
+			W.attack_self(src)
+			update_inv_l_hand()
+	else
+		var/obj/item/W = r_hand
+		if (W)
+			W.attack_self(src)
+			update_inv_r_hand()
 	return
 
 /*
@@ -825,27 +702,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
 
-/mob/proc/createGeas()
-/*
-	var/obj/effect/stop/S
-	for(var/obj/effect/stop/temp in loc)
-		if(temp.victim == src)
-			S = temp
-
-	if(!S)
-		S = new /obj/effect/stop
-		S.victim = src
-		S.loc = src.loc
-		geaslist += S
-*/
-	return
-
 
 /mob/proc/Stun(amount)
 	if(canstun)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-		if(stunned)
-			createGeas()
+
+
 	else
 		if(istype(src, /mob/living/carbon/alien))	// add some movement delay
 			var/mob/living/carbon/alien/Alien = src
@@ -855,95 +717,68 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
 	if(canstun)
 		stunned = max(amount,0)
-		if(stunned)
-			createGeas()
+
+
 	return
 
 /mob/proc/AdjustStunned(amount)
 	if(canstun)
 		stunned = max(stunned + amount,0)
-		if(stunned)
-			createGeas()
 	return
 
 /mob/proc/Weaken(amount)
 	if(canweaken)
 		weakened = max(max(weakened,amount),0)
-		if(weakened)
-			createGeas()
 	return
 
 /mob/proc/SetWeakened(amount)
 	if(canweaken)
 		weakened = max(amount,0)
-		if(weakened)
-			createGeas()
 	return
 
 /mob/proc/AdjustWeakened(amount)
 	if(canweaken)
 		weakened = max(weakened + amount,0)
-		if(weakened)
-			createGeas()
 	return
 
 /mob/proc/Paralyse(amount)
 	paralysis = max(max(paralysis,amount),0)
-	if(paralysis)
-		createGeas()
 	return
 
 /mob/proc/SetParalysis(amount)
 	paralysis = max(amount,0)
 	return
-	if(paralysis)
-		createGeas()
 
 /mob/proc/AdjustParalysis(amount)
 	paralysis = max(paralysis + amount,0)
-	if(paralysis)
-		createGeas()
 	return
 
 /mob/proc/Sleeping(amount)
 	sleeping = max(max(sleeping,amount),0)
-	if(sleeping)
-		createGeas()
 	return
 
 /mob/proc/SetSleeping(amount)
 	sleeping = max(amount,0)
 	return
-	if(sleeping)
-		createGeas()
-
 
 /mob/proc/AdjustSleeping(amount)
 	sleeping = max(sleeping + amount,0)
-	if(sleeping)
-		createGeas()
 	return
 
 /mob/proc/Resting(amount)
 	resting = max(max(resting,amount),0)
-	if(resting)
-		createGeas()
 	return
 
 /mob/proc/SetResting(amount)
 	resting = max(amount,0)
 	return
-	if(resting)
-		createGeas()
 
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount,0)
-	if(resting)
-		createGeas()
 	return
 
-
-// ++++ROCKDTBEN++++ MOB PROCS -- Ask me before touching
+// ++++ROCKDTBEN++++ MOB PROCS -- Ask me before touching.
+// Stop! ... Hammertime! ~Carn
 
 /mob/proc/getBruteLoss()
 	return bruteloss
