@@ -1,6 +1,3 @@
-var/roundExplosions = 1 // If anyone else gets confused this means round as in circle, not the game round
-
-
 //TODO: Flash range does nothing currently
 
 proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1)
@@ -28,10 +25,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 		var/list/expTurfs = list() // All turfs being affected by the explosion (not flash range)
 
-		if(roundExplosions)
-			expTurfs = circlerangeturfs(epicenter, max(devastation_range, heavy_impact_range, light_impact_range))
-		else
-			expTurfs = range(epicenter, max(devastation_range, heavy_impact_range, light_impact_range))
+		expTurfs = circlerangeturfs(epicenter, max(devastation_range, heavy_impact_range, light_impact_range))
 
 
 		// Hello future editors, please note that 1000 calls to spawn will not speed this up, but this exact amount has been tested
@@ -60,6 +54,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 					T.ex_act(1)
 				for(var/atom/object in T.contents)
 					object.ex_act(1)
+
 		spawn()
 			for(var/turf/T in hTurfs)
 				T.ex_act(2)
@@ -74,6 +69,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 
 		if(defer_powernet_rebuild != 2)
 			defer_powernet_rebuild = 0
+
 	return 1
 
 
