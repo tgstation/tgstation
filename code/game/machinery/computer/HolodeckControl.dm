@@ -279,6 +279,9 @@
 	for(var/obj/effect/decal/cleanable/blood/B in linkedholodeck)
 		del(B)
 
+	for(var/obj/effect/critter/spesscarp/C in linkedholodeck)
+		del(C)
+
 	holographic_items = A.copy_contents_to(linkedholodeck , 1)
 
 	if(emagged)
@@ -296,6 +299,11 @@
 					if(T)
 						T.temperature = 5000
 						T.hotspot_expose(50000,50000,1)
+			if(L.name=="Holocarp Spawn")
+				if(prob(90))
+					new /obj/effect/critter/spesscarp(L.loc)
+				else
+					new /obj/effect/critter/spesscarp/elite(L.loc)
 
 
 /obj/machinery/computer/HolodeckControl/proc/emergencyShutdown()
