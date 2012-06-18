@@ -389,7 +389,7 @@ datum
 //					if(50 to INFINITY)
 //						M:adjustToxLoss(0.1)
 				data++
-				holder.remove_reagent(src.id, 0.4)
+				holder.remove_reagent(src.id, 0.04)
 				..()
 				return
 
@@ -1827,7 +1827,7 @@ datum
 					if(51 to INFINITY)
 						M:sleeping += 5
 						M:adjustToxLoss(2)
-				holder.remove_reagent(src.id, 0.4)
+				holder.remove_reagent(src.id, 0.04)
 				..()
 				return
 
