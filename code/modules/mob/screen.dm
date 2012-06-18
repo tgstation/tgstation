@@ -615,20 +615,25 @@
 					usr.update_inv_handcuffed()
 
 	//unbuckling yourself
-	else if(usr:handcuffed && (usr.last_special <= world.time) && usr:buckled)
-		usr.next_move = world.time + 100
-		usr.last_special = world.time + 100
-		usr << "\red You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)"
-		for(var/mob/O in viewers(usr))
-			O.show_message("\red <B>[usr] attempts to unbuckle themself!</B>", 1)
-		spawn(0)
-			if(do_after(usr, 1200))
-				if(!usr:buckled)
-					return
-				for(var/mob/O in viewers(usr))
-					O.show_message("\red <B>[usr] manages to unbuckle themself!</B>", 1)
-				usr << "\blue You successfully unbuckle yourself."
-				usr:buckled.manual_unbuckle(usr)
+	else if( usr:buckled && (usr.last_special <= world.time) )
+		if( usr:handcuffed )
+			usr.next_move = world.time + 100
+			usr.last_special = world.time + 100
+			usr << "\red You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)"
+			for(var/mob/O in viewers(usr))
+				O.show_message("\red <B>[usr] attempts to unbuckle themself!</B>", 1)
+			spawn(0)
+				if(do_after(usr, 1200))
+					if(!usr:buckled)
+						return
+					for(var/mob/O in viewers(usr))
+						O.show_message("\red <B>[usr] manages to unbuckle themself!</B>", 1)
+					usr << "\blue You successfully unbuckle yourself."
+					usr:buckled.manual_unbuckle(usr)
+		else
+			usr:buckled.manual_unbuckle(usr)
+
+
 	else if( src.loc && (istype(src.loc, /obj/structure/closet)) )
 		var/obj/structure/closet/C = usr.loc
 		if(C.opened)

@@ -919,7 +919,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 				// ------- TESTS ABOVE DETERMINED YOU CANNOT REACH THE TILE -------
 				return 0
 
-		if (!( usr.restrained() || usr.lying ))
+		if (!( usr.restrained() || (usr.lying && usr.buckled!=src) ))
 			// ------- YOU ARE NOT REASTRAINED -------
 
 			if (W)

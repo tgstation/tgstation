@@ -201,10 +201,6 @@
 		src.show_to(usr)
 	return
 
-/obj/item/weapon/storage/attack_paw(mob/user as mob)
-	//playsound(src.loc, "rustle", 50, 1, -5) // what
-	return src.attack_hand(user)
-
 /obj/item/weapon/storage/attack_hand(mob/user as mob)
 	playsound(src.loc, "rustle", 50, 1, -5)
 
