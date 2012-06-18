@@ -17,7 +17,7 @@
 
 /obj/item/clothing/suit/bluetag
 	name = "blue laser tag armour"
-	desc = "Blue Pride, Station Wide"
+	desc = "Blue pride, station wide."
 	icon_state = "bluetag"
 	item_state = "bluetag"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
@@ -26,7 +26,7 @@
 
 /obj/item/clothing/suit/redtag
 	name = "red laser tag armour"
-	desc = "Pew pew pew"
+	desc = "Pew pew pew!"
 	icon_state = "redtag"
 	item_state = "redtag"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
@@ -44,7 +44,7 @@
 
 /obj/item/clothing/suit/storage/chef
 	name = "chef's apron"
-	desc = "An apron used by a high class chef. Has a few pockets for nic-naks."
+	desc = "An apron used by a high class chef. Has a few pockets for knick-knacks."
 	icon_state = "chef"
 	item_state = "chef"
 	gas_transfer_coefficient = 0.90
@@ -90,7 +90,7 @@
 
 /obj/item/clothing/suit/storage/captunic
 	name = "captain's parade tunic"
-	desc = "Worn by a Captain to show their class."
+	desc = "Worn by a captain to show their class."
 	icon_state = "captunic"
 	item_state = "bio_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -114,7 +114,7 @@
 
 /obj/item/clothing/suit/storage/chaplain_hoodie
 	name = "chaplain hoodie"
-	desc = "This suit says to you 'hush'!"
+	desc = "This suit says to you, 'hush'!"
 	icon_state = "chaplain_hoodie"
 	item_state = "chaplain_hoodie"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -122,7 +122,7 @@
 
 /obj/item/clothing/suit/hastur
 	name = "\improper Hastur's robes"
-	desc = "Robes not meant to be worn by man"
+	desc = "Robes not meant to be worn by man."
 	icon_state = "hastur"
 	item_state = "hastur"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -158,7 +158,7 @@
 
 /obj/item/clothing/suit/holidaypriest
 	name = "holiday priest"
-	desc = "This is a nice holiday my son."
+	desc = "This is a nice holiday, my son."
 	icon_state = "holidaypriest"
 	item_state = "holidaypriest"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS

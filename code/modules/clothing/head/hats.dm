@@ -6,7 +6,7 @@
 	slot_flags = SLOT_HEAD
 
 /obj/item/clothing/head/cakehat
-	name = "cake-hat"
+	name = "cake hat"
 	desc = "It's tasty looking!"
 	icon_state = "cake0"
 	var/onfire = 0.0
@@ -43,7 +43,7 @@
 	item_state = "pwig"
 
 /obj/item/clothing/head/that
-	name = "top-hat"
+	name = "top hat"
 	desc = "It's an amish looking hat."
 	icon_state = "tophat"
 	item_state = "that"
@@ -55,7 +55,7 @@
 	desc = "It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work."
 	icon_state = "chef"
 	item_state = "chef"
-	desc = "The commander in chef's head wear."
+	//desc = "The commander in chef's head wear."  //Two descriptions, wha? -Deus
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/head/redcoat
@@ -72,7 +72,7 @@
 
 /obj/item/clothing/head/plaguedoctorhat
 	name = "plague doctor's hat"
-	desc = "These were once used by Plague doctors. They're pretty much useless."
+	desc = "These were once used by plague doctors. They're pretty much useless."
 	icon_state = "plaguedoctor"
 	flags = FPRINT | TABLEPASS
 	permeability_coefficient = 0.01
@@ -97,7 +97,7 @@
 
 /obj/item/clothing/head/hasturhood
 	name = "hastur's hood"
-	desc = "It's unspeakably stylish"
+	desc = "It's unspeakably stylish!"
 	icon_state = "hasturhood"
 	flags = FPRINT|TABLEPASS|HEADSPACE|HEADCOVERSEYES|BLOCKHAIR
 
@@ -117,8 +117,8 @@
 	flags_inv = 0
 
 /obj/item/clothing/head/secsoft
-	name = "soft cap"
-	desc = "It's baseball hat in tasteful red colour."
+	name = "security cap"
+	desc = "It's a baseball hat in a tasteful red colour."
 	icon_state = "secsoft"
 	flags = FPRINT|TABLEPASS|HEADCOVERSEYES
 	item_state = "helmet"
@@ -134,8 +134,8 @@
 
 // CHUMP HELMETS: COOKING THEM DESTROYS THE CHUMP HELMET SPAWN.
 /obj/item/clothing/head/syndicatefake
-	name = "red space-helmet replica"
-	desc = "A plastic replica of a red space space helmet. This is a toy, it is not made for use in space!"
+	name = "red space helmet replica"
+	desc = "A plastic replica of a red space helmet. This is a toy, it is not made for use in space!"
 	icon_state = "syndicate"
 	item_state = "syndicate"
 	see_face = 0.0
