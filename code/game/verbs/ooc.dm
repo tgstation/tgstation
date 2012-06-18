@@ -39,7 +39,7 @@
 	log_ooc("[src.name]/[src.key] : [msg]")
 
 	for (var/client/C)
-		if(C.listen_OOC)
+		if(C.listen_ooc)
 			if (src.client.holder && (!src.client.stealth || C.holder))
 				if (src.client.holder.rank == "Admin Observer")
 					C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
@@ -49,33 +49,3 @@
 					C << "<span class='adminooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 			else
 				C << "<span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.client.stealth ? src.client.fakekey : src.key]:</EM> <span class='message'>[msg]</span></span>"
-/*
-/mob/verb/goonsay(msg as text)
-	set name = "Goonsay"
-	if (!src.client.authenticated || !src.client.goon)
-		src << "You are not authorized to communicate over these channels."
-		return
-	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
-	if (!msg)
-		return
-	else if (!src.client.listen_ooc)
-		return
-	else if (!goonsay_allowed && !src.client.holder)
-		return
-	else if (src.muted)
-		return
-
-	log_ooc("GOON : [key_name(src)] : [msg]")
-
-	for (var/client/C)
-		if (C.goon)
-			if(src.client.holder && (!src.client.stealth || C.holder))
-				if (src.client.holder.rank == "Admin Observer")
-					C << "<span class=\"gfartgoonsay\"><span class=\"prefix\">GOONSAY:</span> <span class=\"name\">[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</span> <span class=\"message\">[msg]</span></span>"
-				else
-					C << "<span class=\"admingoonsay\"><span class=\"prefix\">GOONSAY:</span> <span class=\"name\">[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</span> <span class=\"message\">[msg]</span></span>"
-			else if(C.listen_ooc)
-				C << "<span class=\"goonsay\"><span class=\"prefix\">GOONSAY:</span> <span class=\"name\">[src.client.stealth ? src.client.fakekey : src.key]:</span> <span class=\"message\">[msg]</span></span>"
-
-
-				-- Skie */
