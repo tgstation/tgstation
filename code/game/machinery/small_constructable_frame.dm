@@ -5,7 +5,7 @@
 	icon = 'stock_parts.dmi'
 	icon_state = "sbox_0"
 	density = 1
-	anchored = 0
+	anchored = 1
 	use_power = 0
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/list/components = null
@@ -34,11 +34,6 @@
 			return
 		switch(state)
 			if(1)
-				if(istype(P, /obj/item/weapon/wrench))
-					if(P:amount >= 5)
-						playsound(src.loc, 'Ratchet.ogg', 50, 1)
-						user << "\blue You wrench the frame in place."
-			if(2)
 				if(istype(P, /obj/item/weapon/cable_coil))
 					if(P:amount >= 5)
 						playsound(src.loc, 'Deconstruct.ogg', 50, 1)
@@ -54,7 +49,7 @@
 					user << "\blue You dismantle the frame"
 					new /obj/item/stack/sheet/metal(src.loc, 5)
 					del(src)
-			if(3)
+			if(2)
 				if(istype(P, /obj/item/weapon/circuitboard))
 					var/obj/item/weapon/circuitboard/B = P
 					if(B.board_type == "smachine")
@@ -89,7 +84,7 @@
 					var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( src.loc )
 					A.amount = 5
 
-			if(4)
+			if(3)
 				if(istype(P, /obj/item/weapon/crowbar))
 					playsound(src.loc, 'Crowbar.ogg', 50, 1)
 					state = 2
