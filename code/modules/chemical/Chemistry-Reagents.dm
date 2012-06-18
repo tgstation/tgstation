@@ -389,7 +389,7 @@ datum
 //					if(50 to INFINITY)
 //						M:adjustToxLoss(0.1)
 				data++
-				holder.remove_reagent(src.id, 0.1)
+				holder.remove_reagent(src.id, 0.04)
 				..()
 				return
 
@@ -1819,14 +1819,15 @@ datum
 				if(!data) data = 1
 				data++
 				switch(data)
-					if(1)
+					if(10)
 						M:confused += 2
 						M:drowsyness += 2
-					if(2 to 50)
+					if(11 to 50)
 						M:sleeping += 5
 					if(51 to INFINITY)
 						M:sleeping += 5
 						M:adjustToxLoss(2)
+				holder.remove_reagent(src.id, 0.04)
 				..()
 				return
 
