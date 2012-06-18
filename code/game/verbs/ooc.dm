@@ -19,34 +19,36 @@
 	if(!msg)
 		return
 	else if (!src.client.listen_ooc)
+		src << "\red You have OOC muted."
 		return
 	else if (!ooc_allowed && !src.client.holder)
+		src << "\red OOC is globally muted"
 		return
 	else if (!dooc_allowed && !src.client.holder && (src.client.deadchat != 0))
-		usr << "OOC for dead mobs has been turned off."
+		usr << "\red OOC for dead mobs has been turned off."
 		return
 	else if (src.client && (src.client.muted || src.client.muted_complete))
 		src << "You are muted."
 		return
 	else if (findtext(msg, "byond://") && !src.client.holder)
 		src << "<B>Advertising other servers is not allowed.</B>"
-		log_admin("[key_name(src)] has attempted to advertise in OOC.")
-		message_admins("[key_name_admin(src)] has attempted to advertise in OOC.")
+		log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
+		message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 		return
 
 	log_ooc("[src.name]/[src.key] : [msg]")
 
 	for (var/client/C)
-		if (src.client.holder && (!src.client.stealth || C.holder))
-			if (src.client.holder.rank == "Admin Observer")
-				C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
-			else if (src.client.holder.level >= 5)
-				C << "<font color=[src.client.ooccolor]><b><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
+		if(C.listen_OOC)
+			if (src.client.holder && (!src.client.stealth || C.holder))
+				if (src.client.holder.rank == "Admin Observer")
+					C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
+				else if (src.client.holder.level >= 5)
+					C << "<font color=[src.client.ooccolor]><b><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
+				else
+					C << "<span class='adminooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 			else
-				C << "<span class='adminooc'><span class='prefix'>OOC:</span> <EM>[src.key][src.client.stealth ? "/([src.client.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
-
-		else if (C.listen_ooc)
-			C << "<span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.client.stealth ? src.client.fakekey : src.key]:</EM> <span class='message'>[msg]</span></span>"
+				C << "<span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.client.stealth ? src.client.fakekey : src.key]:</EM> <span class='message'>[msg]</span></span>"
 /*
 /mob/verb/goonsay(msg as text)
 	set name = "Goonsay"
