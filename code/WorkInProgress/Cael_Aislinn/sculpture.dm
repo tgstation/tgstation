@@ -258,3 +258,6 @@
 /mob/living/simple_animal/sculpture/Bumped(atom/movable/AM as mob, yes)
 	if(!G)
 		GrabMob(AM)
+
+/mob/living/simple_animal/sculpture/ex_act(var/severity)
+	//nothing
