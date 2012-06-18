@@ -1,7 +1,7 @@
 //Copied from the constructable frame code to make this a hell of a lot easier.
 
 /obj/machinery/small_constructable_frame //Made into a seperate type to make future revisions easier.
-	name = "machine frame"
+	name = "small machine frame"
 	icon = 'stock_parts.dmi'
 	icon_state = "sbox_0"
 	density = 1
