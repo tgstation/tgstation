@@ -115,28 +115,8 @@
 	if(istype(hit_atom,/mob/living))
 		var/mob/living/M = hit_atom
 		M.visible_message("\red [hit_atom] has been hit by [src].")
-
-		/* // fuck this shit, love, Doohl
-
-		if(!istype(src, /obj/item)) // this is a big item that's being thrown at them~
-
-			if(istype(M, /mob/living/carbon/human))
-				var/armor_block = M:run_armor_check("chest", "melee")
-				M:apply_damage(rand(20,45), BRUTE, "chest", armor_block)
-
-				visible_message("\red <B>[M] has been knocked down by the force of [src]!</B>")
-				M:apply_effect(rand(4,12), WEAKEN, armor_block)
-
-			else
-				M.take_organ_damage(rand(20,45))
-
-
-		else if(src.vars.Find("throwforce"))
+		if(isobj(src))//Hate typecheckin for a child object but this is just fixing crap another guy broke so if someone wants to put the time in and make this proper feel free.
 			M.take_organ_damage(src:throwforce)
-
-		*/
-
-		M.take_organ_damage(src:throwforce)
 
 
 	else if(isobj(hit_atom))
