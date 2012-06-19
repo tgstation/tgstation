@@ -124,11 +124,18 @@ obj
 						if(flow.oxygen > 0.3 && (flow.toxins || fuel || liquid))
 
 							//Change icon depending on the fuel, and thus temperature.
-							icon_state = "1"
-							if(firelevel > 2.5)
-								icon_state = "2"
 							if(firelevel > 6)
 								icon_state = "3"
+								if(LuminosityRed != 7)
+									ul_SetLuminosity(7,5,0)
+							else if(firelevel > 2.5)
+								icon_state = "2"
+								if(LuminosityRed != 5)
+									ul_SetLuminosity(5,4,0)
+							else
+								icon_state = "1"
+								if(LuminosityRed != 3)
+									ul_SetLuminosity(3,2,0)
 
 							//Ensure flow temperature is higher than minimum fire temperatures.
 							flow.temperature = max(PLASMA_MINIMUM_BURN_TEMPERATURE+0.1,flow.temperature)
@@ -157,7 +164,7 @@ obj
 		New(newLoc,fl)
 			..()
 			dir = pick(cardinal)
-			ul_SetLuminosity(3)
+			ul_SetLuminosity(3,2,0)
 			firelevel = fl
 			for(var/mob/living/carbon/human/M in loc)
 				M.FireBurn(min(max(0.1,firelevel / 20),10)) //Burn the humans!
@@ -187,7 +194,6 @@ obj/liquid_fuel
 				other.amount += src.amount
 				spawn other.Spread()
 				del src
-				return
 
 		Spread()
 		. = ..()
@@ -201,8 +207,9 @@ obj/liquid_fuel
 			if(S.air_check_directions & d)
 				if(rand(25))
 					var/turf/simulated/O = get_step(src,d)
-					new/obj/liquid_fuel(O,amount*0.25)
-					amount *= 0.75
+					if(!locate(/obj/liquid_fuel) in O)
+						new/obj/liquid_fuel(O,amount*0.25)
+						amount *= 0.75
 
 	flamethrower_fuel
 		icon_state = "mustard"

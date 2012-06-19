@@ -7,9 +7,11 @@
 #define UL_I_LIT 0
 #define UL_I_EXTINGUISHED 1
 #define UL_I_ONZERO 2
+
 var
 	ul_LightingEnabled = 1
 	ul_LightingResolution = 1
+	ul_LightingResolutionSqrt = sqrt(ul_LightingResolution)
 	ul_Steps = 7
 	ul_FalloffStyle = UL_I_FALLOFF_ROUND // Sets the lighting falloff to be either squared or circular.
 	ul_TopLuminosity = 0
@@ -20,26 +22,15 @@ var
 							5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
 							7, 7)
 
-var/list/light_to_instantiate = list()
-var/UL_setup = 0
-
-proc/setup_UL()
-	UL_setup = 1
-	world << "\red <b>Setting up UltraLight...</b>"
-	for(var/atom/A in light_to_instantiate)
-		if(A.ul_IsLuminous())
-			A.ul_Illuminate()
 
 proc/ul_Clamp(var/Value)
 	return min(max(Value, 0), ul_Steps)
 
-atom
-	var
-		LuminosityRed = 0
-		LuminosityGreen = 0
-		LuminosityBlue = 0
+atom/var/LuminosityRed = 0
+atom/var/LuminosityGreen = 0
+atom/var/LuminosityBlue = 0
 
-		ul_Extinguished = UL_I_ONZERO
+atom/var/ul_Extinguished = UL_I_ONZERO
 
 atom/proc/ul_SetLuminosity(var/Red, var/Green = Red, var/Blue = Red)
 
@@ -76,22 +67,38 @@ atom/proc/ul_Illuminate()
 	ul_UpdateTopLuminosity()
 	luminosity = ul_Luminosity()
 
-	for(var/turf/Affected in view(ul_Luminosity(), src))
+	for(var/turf/Affected in view(luminosity, src))
 		var/Falloff = src.ul_FalloffAmount(Affected)
 
 		var/DeltaRed = LuminosityRed - Falloff
 		var/DeltaGreen = LuminosityGreen - Falloff
 		var/DeltaBlue = LuminosityBlue - Falloff
 
-		if(ul_IsLuminous(DeltaRed, DeltaGreen, DeltaBlue))
+		if(DeltaRed > 0 || DeltaGreen > 0 || DeltaBlue > 0)
 
-			Affected.LightLevelRed += max(DeltaRed, 0)
-			Affected.LightLevelGreen += max(DeltaGreen, 0)
-			Affected.LightLevelBlue += max(DeltaBlue, 0)
+			if(DeltaRed > 0)
+				if(!Affected.MaxRed)
+					Affected.MaxRed = list()
+				if("[DeltaRed]" in Affected.MaxRed)
+					Affected.MaxRed["[DeltaRed]"]++
+				else
+					Affected.MaxRed["[DeltaRed]"] = 1
 
-			Affected.MaxRed += LuminosityRed
-			Affected.MaxGreen += LuminosityGreen
-			Affected.MaxBlue += LuminosityBlue
+			if(DeltaGreen > 0)
+				if(!Affected.MaxGreen)
+					Affected.MaxGreen = list()
+				if("[DeltaGreen]" in Affected.MaxGreen)
+					Affected.MaxGreen["[DeltaGreen]"]++
+				else
+					Affected.MaxGreen["[DeltaGreen]"] = 1
+
+			if(DeltaBlue > 0)
+				if(!Affected.MaxBlue)
+					Affected.MaxBlue = list()
+				if("[DeltaBlue]" in Affected.MaxBlue)
+					Affected.MaxBlue["[DeltaBlue]"]++
+				else
+					Affected.MaxBlue["[DeltaBlue]"] = 1
 
 			Affected.ul_UpdateLight()
 
@@ -117,15 +124,34 @@ atom/proc/ul_Extinguish()
 		var/DeltaGreen = LuminosityGreen - Falloff
 		var/DeltaBlue = LuminosityBlue - Falloff
 
-		if(ul_IsLuminous(DeltaRed, DeltaGreen, DeltaBlue))
+		if(DeltaRed > 0 || DeltaGreen > 0 || DeltaBlue > 0)
 
-			Affected.LightLevelRed -= max(DeltaRed, 0)
-			Affected.LightLevelGreen -= max(DeltaGreen, 0)
-			Affected.LightLevelBlue -= max(DeltaBlue, 0)
+			if(DeltaRed > 0)
+				if(Affected.MaxRed)
+					if(Affected.MaxRed["[DeltaRed]"] > 1)
+						Affected.MaxRed["[DeltaRed]"]--
+					else
+						Affected.MaxRed.Remove("[DeltaRed]")
+					if(!Affected.MaxRed.len)
+						del Affected.MaxRed
 
-			Affected.MaxRed -= LuminosityRed
-			Affected.MaxGreen -= LuminosityGreen
-			Affected.MaxBlue -= LuminosityBlue
+			if(DeltaGreen > 0)
+				if(Affected.MaxGreen)
+					if(Affected.MaxGreen["[DeltaGreen]"] > 1)
+						Affected.MaxGreen["[DeltaGreen]"]--
+					else
+						Affected.MaxGreen.Remove("[DeltaGreen]")
+					if(!Affected.MaxGreen.len)
+						del Affected.MaxGreen
+
+			if(DeltaBlue > 0)
+				if(Affected.MaxBlue)
+					if(Affected.MaxBlue["[DeltaBlue]"] > 1)
+						Affected.MaxBlue["[DeltaBlue]"]--
+					else
+						Affected.MaxBlue.Remove("[DeltaBlue]")
+					if(!Affected.MaxBlue.len)
+						del Affected.MaxBlue
 
 			Affected.ul_UpdateLight()
 
@@ -151,10 +177,17 @@ atom/proc/ul_FalloffAmount(var/atom/ref)
 	if (ul_FalloffStyle == UL_I_FALLOFF_ROUND)
 		var/x = (ref.x - src.x)
 		var/y = (ref.y - src.y)
-		if ((x*x + y*y) > ul_FastRoot.len)
-			for(var/i = ul_FastRoot.len, i <= x*x+y*y, i++)
-				ul_FastRoot += round(sqrt(x*x+y*y))
-		return round(ul_LightingResolution * ul_FastRoot[x*x + y*y + 1], 1)
+		if(ul_LightingResolution != 1)
+			if (round((x*x + y*y)*ul_LightingResolutionSqrt,1) > ul_FastRoot.len)
+				for(var/i = ul_FastRoot.len, i <= round(x*x+y*y*ul_LightingResolutionSqrt,1), i++)
+					ul_FastRoot += round(sqrt(i))
+			return ul_FastRoot[round((x*x + y*y)*ul_LightingResolutionSqrt, 1) + 1]/ul_LightingResolution
+
+		else
+			if ((x*x + y*y) > ul_FastRoot.len)
+				for(var/i = ul_FastRoot.len, i <= x*x+y*y, i++)
+					ul_FastRoot += round(sqrt(i))
+			return ul_FastRoot[x*x + y*y + 1]/ul_LightingResolution
 
 	else if (ul_FalloffStyle == UL_I_FALLOFF_SQUARE)
 		return get_dist(src, ref)
@@ -165,16 +198,8 @@ atom/proc/ul_SetOpacity(var/NewOpacity)
 	if(opacity != NewOpacity)
 
 		var/list/Blanked = ul_BlankLocal()
-		var/atom/T = src
-		while(T && !isturf(T))
-			T = T.loc
 
 		opacity = NewOpacity
-
-		if(T)
-			T:LightLevelRed = 0
-			T:LightLevelGreen = 0
-			T:LightLevelBlue = 0
 
 		ul_UnblankLocal(Blanked)
 
@@ -222,49 +247,43 @@ atom/proc/ul_LightLevelChanged()
 
 atom/New()
 	..()
-	if(UL_setup)
-		if(ul_IsLuminous())
+	if(ul_IsLuminous())
+		spawn(1)
 			ul_Illuminate()
-	else
-		light_to_instantiate |= src
+	return
 
 atom/Del()
 	if(ul_IsLuminous())
 		ul_Extinguish()
-
 	..()
 
-	return
-
-// formerly atom/proc/movable/Move(), this now overwrites other shit causing random inexplicable problems.
-// need to find a way to plug it in to the root without overriding, might just do the snowflake treatment
-/*atom/proc/Move()
-	ul_Extinguish()
-	..()
-	ul_Illuminate()
-	return*/
-
-turf
-	var
-		LightLevelRed = 0
-		LightLevelGreen = 0
-		LightLevelBlue = 0
-
-		list/MaxRed = list( )
-		list/MaxGreen = list( )
-		list/MaxBlue = list( )
+atom/movable/Move()
+	if(ul_IsLuminous())
+		ul_Extinguish()
+		..()
+		ul_Illuminate()
+	else
+		..()
 
 
+turf/var/list/MaxRed
+turf/var/list/MaxGreen
+turf/var/list/MaxBlue
 
 turf/proc/ul_GetRed()
-	return ul_Clamp(min(LightLevelRed, max(MaxRed)))
+	if(MaxRed)
+		return ul_Clamp(text2num(max(MaxRed)))
+	return 0
 turf/proc/ul_GetGreen()
-	return ul_Clamp(min(LightLevelGreen, max(MaxGreen)))
+	if(MaxGreen)
+		return ul_Clamp(text2num(max(MaxGreen)))
+	return 0
 turf/proc/ul_GetBlue()
-	return ul_Clamp(min(LightLevelBlue, max(MaxBlue)))
+	if(MaxBlue)
+		return ul_Clamp(text2num(max(MaxBlue)))
+	return 0
 
 turf/proc/ul_UpdateLight()
-
 	var/area/CurrentArea = loc
 
 	if(!isarea(CurrentArea) || !CurrentArea.ul_Lighting)
@@ -298,25 +317,19 @@ turf/proc/ul_Recalculate()
 
 	var/list/Lights = ul_BlankLocal()
 
-	LightLevelRed = 0
-	LightLevelGreen = 0
-	LightLevelBlue = 0
-
 	ul_UnblankLocal(Lights)
 
 	ul_SuppressLightLevelChanges--
 
 	return
 
-area
-	var
-		ul_Overlay = null
-		ul_Lighting = 1
+area/var/ul_Overlay = null
+area/var/ul_Lighting = 1
 
-		LightLevelRed = 0
-		LightLevelGreen = 0
-		LightLevelBlue = 0
-
+area/var/LightLevelRed = 0
+area/var/LightLevelGreen = 0
+area/var/LightLevelBlue = 0
+area/var/list/LightLevels
 
 area/proc/ul_Light(var/Red = LightLevelRed, var/Green = LightLevelGreen, var/Blue = LightLevelBlue)
 
@@ -324,6 +337,13 @@ area/proc/ul_Light(var/Red = LightLevelRed, var/Green = LightLevelGreen, var/Blu
 		return
 
 	overlays -= ul_Overlay
+	if(LightLevels)
+		if(Red < LightLevels["Red"])
+			Red = LightLevels["Red"]
+		if(Green < LightLevels["Green"])
+			Green = LightLevels["Green"]
+		if(Blue < LightLevels["Blue"])
+			Blue = LightLevels["Blue"]
 
 	LightLevelRed = Red
 	LightLevelGreen = Green

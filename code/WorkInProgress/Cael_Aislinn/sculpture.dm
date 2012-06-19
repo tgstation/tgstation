@@ -130,7 +130,7 @@
 	//account for darkness
 	var/turf/T = get_turf(src)
 	var/in_darkness = 0
-	if(T.sd_lumcount == 0 && !istype(T, /turf/simulated))
+	if(max(T.ul_GetRed(), T.ul_GetGreen(), T.ul_GetBlue()) == 0 && !istype(T, /turf/simulated))
 		in_darkness = 1
 
 	//see if we're able to do stuff

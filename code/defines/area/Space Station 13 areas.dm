@@ -957,6 +957,7 @@ proc/process_ghost_teleport_locs()
 //Solars
 
 /area/solar
+	LightLevels = list("Red" = 2, "Green" = 2, "Blue" = 3)
 	requires_power = 0
 
 	auxport

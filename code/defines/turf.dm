@@ -45,8 +45,6 @@
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
 
-	LightLevelBlue = 5
-
 	transit
 
 		var/pushdirection // push things that get caught in the transit tile this direction
@@ -127,7 +125,6 @@
 
 
 /turf/space/New()
-//	icon = 'space.dmi'
 	if(!istype(src, /turf/space/transit))
 		..()
 		icon_state = "[rand(1,25)]"
