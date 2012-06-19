@@ -1931,7 +1931,8 @@ datum
 				if(!M) M = holder.my_atom
 				M:bodytemperature += 5
 				if(prob(40) && !istype(M, /mob/living/carbon/metroid))
-					M.apply_damage(1, BURN, pick("head", "chest"))
+					if( !( istype( M, /mob/living/carbon/human ) && M:mutantrace == "lizard" ) )	//because sbiten are now a soghun drink, and sometimes there is some of this left over in the drink
+						M.apply_damage(1, BURN, pick("head", "chest"))
 
 				if(istype(M, /mob/living/carbon/metroid))
 					M:bodytemperature += rand(5,20)
