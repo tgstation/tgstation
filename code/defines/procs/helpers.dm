@@ -1427,15 +1427,19 @@ proc/listclearnulls(list/list)
 	var/list/turfs_src = get_area_turfs(src.type)
 	var/list/turfs_trg = get_area_turfs(A.type)
 
+	var/blanked_turfs = list()
+
 	var/src_min_x = 0
 	var/src_min_y = 0
 	for (var/turf/T in turfs_src)
+		blanked_turfs |= T.ul_BlankLocal()
 		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
 		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
 
 	var/trg_min_x = 0
 	var/trg_min_y = 0
 	for (var/turf/T in turfs_trg)
+		blanked_turfs |= T.ul_BlankLocal()
 		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
 		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
 
@@ -1552,6 +1556,8 @@ proc/listclearnulls(list/list)
 			for(var/obj/machinery/door/D2 in T2)
 				doors += D2
 			air_master.tiles_to_update |= T2
+
+	ul_UnblankLocal(blanked_turfs)
 
 	for(var/obj/O in doors)
 		O:update_nearby_tiles(1)

@@ -83,7 +83,7 @@
 					var/area/A = src.loc.loc
 					brightness = A.area_lights_luminosity
 				else
-					brightness = rand(5,7)
+					brightness = rand(6,7)
 				if(prob(5))
 					broken(1)
 			if("bulb")
@@ -123,7 +123,7 @@
 	var/oldlum = luminosity
 
 	//luminosity = on * brightness
-	ul_SetLuminosity(on * brightness, on * brightness, ( fitting != "bulb" ? on * brightness  : on ) )		// *DAL*
+	ul_SetLuminosity(on * brightness, on * brightness, ( fitting != "bulb" ? on * brightness  : round(on*brightness/2) ) )		// *DAL*
 
 	// if the state changed, inc the switching counter
 	if(oldlum != luminosity)
