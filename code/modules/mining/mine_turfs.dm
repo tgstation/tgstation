@@ -14,6 +14,7 @@
 	var/mineralAmt = 0
 	var/spread = 0 //will the seam spread?
 	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
+	var/last_act = 0
 
 /turf/simulated/mineral/Del()
 	return
@@ -216,7 +217,9 @@
 			return
 */
 //Watch your tabbing, microwave. --NEO
-
+		if(last_act+W:digspeed > world.time)//prevents message spam
+			return
+		last_act = world.time
 		user << "\red You start picking."
 		playsound(user, 'Genhit.ogg', 20, 1)
 
@@ -263,6 +266,28 @@
 			mineralAmt = 5
 	return*/
 
+/turf/simulated/mineral/Bumped(AM as mob|obj)
+	..()
+	if(istype(AM,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = AM
+		if(istype(H.l_hand,/obj/item/weapon/pickaxe))
+			src.attackby(H.l_hand,H)
+		else if(istype(H.r_hand,/obj/item/weapon/pickaxe))
+			src.attackby(H.r_hand,H)
+		return
+	else if(istype(AM,/mob/living/silicon/robot))
+		var/mob/living/silicon/robot/R = AM
+		if(istype(R.module_active,/obj/item/weapon/pickaxe))
+			src.attackby(R.module_active,R)
+			return
+/*	else if(istype(AM,/obj/mecha))
+		var/obj/mecha/M = AM
+		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/tool/drill))
+			src.attackby(M.selected,M)
+			return*/
+//Aparantly mechs are just TOO COOL to call Bump(), so fuck em (for now)
+	else
+		return
 
 /**********************Asteroid**************************/
 
@@ -320,8 +345,7 @@
 		if ((user.loc == T && user.equipped() == W))
 			user << "\blue You dug a hole."
 			gets_dug()
-	else
-		..(W,user)
+
 	if ((istype(W,/obj/item/weapon/pickaxe/drill)))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
@@ -338,8 +362,6 @@
 		if ((user.loc == T && user.equipped() == W))
 			user << "\blue You dug a hole."
 			gets_dug()
-	else
-		..(W,user)
 
 	if ((istype(W,/obj/item/weapon/pickaxe/diamonddrill)) || (istype(W,/obj/item/weapon/pickaxe/borgdrill)))
 		var/turf/T = user.loc
@@ -357,9 +379,16 @@
 		if ((user.loc == T && user.equipped() == W))
 			user << "\blue You dug a hole."
 			gets_dug()
+
+	if(istype(W,/obj/item/weapon/satchel))
+		var/obj/item/weapon/satchel/S = W
+		if(S.mode)
+			for(var/obj/item/weapon/ore/O in src.contents)
+				O.attackby(W,user)
+				return
+
 	else
 		..(W,user)
-
 	return
 
 /turf/simulated/floor/plating/airless/asteroid/proc/gets_dug()
@@ -416,3 +445,17 @@
 		A = get_step(src, SOUTH)
 		A.updateMineralOverlays()
 	src.updateMineralOverlays()
+
+/turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M as mob|obj)
+	..()
+	if(istype(M,/mob/living/silicon/robot))
+		var/mob/living/silicon/robot/R = M
+		if(istype(R.module, /obj/item/weapon/robot_module/miner))
+			if(istype(R.module_state_1,/obj/item/weapon/satchel/borg))
+				src.attackby(R.module_state_1,R)
+			else if(istype(R.module_state_2,/obj/item/weapon/satchel/borg))
+				src.attackby(R.module_state_2,R)
+			else if(istype(R.module_state_3,/obj/item/weapon/satchel/borg))
+				src.attackby(R.module_state_3,R)
+			else
+				return

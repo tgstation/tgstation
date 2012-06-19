@@ -198,8 +198,8 @@
 		src.emag = new /obj/item/borg/stun(src)
 		src.modules += new /obj/item/weapon/satchel/borg(src)
 		src.modules += new /obj/item/weapon/pickaxe/borgdrill(src)
+		src.modules += new /obj/item/weapon/sheetsnatcher/borg(src)
 //		src.modules += new /obj/item/weapon/shovel(src) Uneeded due to buffed drill
-//		src.jetpack += new/obj/item/weapon/tank/jetpack/carbondioxide(src)
 		return
 
 

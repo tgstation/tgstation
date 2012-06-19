@@ -151,8 +151,31 @@
 /turf/proc/ReplaceWithFloor(explode=0)
 	var/prior_icon = icon_old
 	var/old_dir = dir
+	var/aoxy = 0//Holders to assimilate air from nearby turfs
+	var/anitro = 0
+	var/aco = 0
+	var/atox = 0
+	var/atemp = 0
 
 	var/turf/simulated/floor/W = new /turf/simulated/floor( locate(src.x, src.y, src.z) )
+
+	for(var/direction in cardinal)
+		var/turf/T = get_step(src,direction)
+		if(istype(T,/turf/space))
+			continue
+		else if(istype(T,/turf/simulated))
+			var/turf/simulated/S = T
+			if(S.air)
+				aoxy += S.air.oxygen
+				anitro += S.air.nitrogen
+				aco += S.air.carbon_dioxide
+				atox += S.air.toxins
+				atemp += S.air.temperature
+	W.air.oxygen = (aoxy/4)
+	W.air.nitrogen = (anitro/4)
+	W.air.carbon_dioxide = (aco/4)
+	W.air.toxins = (atox/4)
+	W.air.temperature = (atemp/4)
 
 	W.RemoveLattice()
 	W.dir = old_dir
@@ -169,8 +192,31 @@
 /turf/proc/ReplaceWithPlating()
 	var/prior_icon = icon_old
 	var/old_dir = dir
+	var/aoxy = 0//Holders to assimilate air from nearby turfs
+	var/anitro = 0
+	var/aco = 0
+	var/atox = 0
+	var/atemp = 0
 
 	var/turf/simulated/floor/plating/W = new /turf/simulated/floor/plating( locate(src.x, src.y, src.z) )
+	for(var/direction in cardinal)
+		var/turf/T = get_step(src,direction)
+		if(istype(T,/turf/space))
+			continue
+		else if(istype(T,/turf/simulated))
+			var/turf/simulated/S = T
+			if(S.air)
+				aoxy += S.air.oxygen
+				anitro += S.air.nitrogen
+				aco += S.air.carbon_dioxide
+				atox += S.air.toxins
+				atemp += S.air.temperature
+	W.air.oxygen = (aoxy/4)
+	W.air.oxygen = (aoxy/4)
+	W.air.nitrogen = (anitro/4)
+	W.air.carbon_dioxide = (aco/4)
+	W.air.toxins = (atox/4)
+	W.air.temperature = (atemp/4)
 
 	W.RemoveLattice()
 	W.dir = old_dir
