@@ -200,8 +200,8 @@
 			else
 				dat += "<td>No Assigned Role</td>"
 */
-			dat += {"<td>IP: [M.client.address]<br>
-			CID: [M.client.computer_id]</td>
+			dat += {"<td>IP: [M.client ? M.client.address : "Disconnected"]<br>
+			CID: [M.client ? M.client.computer_id : "Disconnected"]</td>
 			"}
 
 			dat += {"<td><A HREF='?src=\ref[src];player_info=[M.ckey]'>[player_has_info(M.ckey) ? "Info" : "N/A"] </A></td>

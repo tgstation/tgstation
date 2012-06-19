@@ -206,6 +206,34 @@
 	if(istype(west)) air_master.tiles_to_update |= west
 	return W
 
+/turf/proc/ReplaceWithAirlessPlating()
+	var/prior_icon = icon_old
+	var/old_dir = dir
+
+	for(var/obj/structure/lattice/L in locate(src.x, src.y, src.z))
+		del(L)
+	var/turf/simulated/floor/plating/airless/W = new /turf/simulated/floor/plating/airless( locate(src.x, src.y, src.z) )
+
+	W.RemoveLattice()
+	W.dir = old_dir
+	if(prior_icon) W.icon_state = prior_icon
+	else W.icon_state = "plating"
+	W.opacity = 1
+	W.ul_SetOpacity(0)
+	W.levelupdate()
+	air_master.tiles_to_update |= W
+
+	var/turf/simulated/north = get_step(W,NORTH)
+	var/turf/simulated/south = get_step(W,SOUTH)
+	var/turf/simulated/east = get_step(W,EAST)
+	var/turf/simulated/west = get_step(W,WEST)
+
+	if(istype(north)) air_master.tiles_to_update |= north
+	if(istype(south)) air_master.tiles_to_update |= south
+	if(istype(east)) air_master.tiles_to_update |= east
+	if(istype(west)) air_master.tiles_to_update |= west
+	return W
+
 /turf/proc/ReplaceWithEngineFloor()
 	var/old_dir = dir
 
