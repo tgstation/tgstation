@@ -26,6 +26,12 @@ var
 proc/ul_Clamp(var/Value)
 	return min(max(Value, 0), ul_Steps)
 
+proc/ul_UnblankLocal(var/list/ReApply = view(ul_TopLuminosity, src))
+	for(var/atom/Light in ReApply)
+		if(Light.ul_IsLuminous())
+			Light.ul_Illuminate()
+	return
+
 atom/var/LuminosityRed = 0
 atom/var/LuminosityGreen = 0
 atom/var/LuminosityBlue = 0
@@ -238,13 +244,6 @@ atom/proc/ul_SetOpacity(var/NewOpacity)
 		opacity = NewOpacity
 
 		ul_UnblankLocal(Blanked)
-
-	return
-
-atom/proc/ul_UnblankLocal(var/list/ReApply = view(ul_TopLuminosity, src))
-	for(var/atom/Light in ReApply)
-		if(Light.ul_IsLuminous())
-			Light.ul_Illuminate()
 
 	return
 

@@ -42,7 +42,7 @@
 				luminosity = 1
 		else
 			luminosity = 0
-			area_lights_luminosity = rand(5,7)
+			area_lights_luminosity = rand(6,7)
 		if(LightLevels)
 			ul_Light()
 			//ul_SetLuminosity(0)		// *DAL*

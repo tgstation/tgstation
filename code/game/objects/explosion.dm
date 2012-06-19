@@ -78,16 +78,16 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 				E.Stress(1)*/
 
 		if(roundExplosions)
-			if(/obj/effect/energy_field in range(src, max(devastation_range, heavy_impact_range, light_impact_range)))
-				fTurfs = circlerange(epicenter,max(devastation_range, heavy_impact_range, light_impact_range, flash_range))
-				dTurfs = circlerange(epicenter,devastation_range)
-				hTurfs = circlerange(epicenter,heavy_impact_range) - dTurfs
-				lTurfs = circlerange(epicenter,light_impact_range) - dTurfs - hTurfs
+			if(locate(/obj/effect/energy_field) in range(src, max(devastation_range, heavy_impact_range, light_impact_range)))
+				fTurfs = circlerangeturfs(epicenter,max(devastation_range, heavy_impact_range, light_impact_range, flash_range))
+				dTurfs = circlerangeturfs(epicenter,devastation_range)
+				hTurfs = circlerangeturfs(epicenter,heavy_impact_range) - dTurfs
+				lTurfs = circlerangeturfs(epicenter,light_impact_range) - dTurfs - hTurfs
 			else
-				fTurfs = circlerange(epicenter,max(devastation_range, heavy_impact_range, light_impact_range, flash_range))
-				dTurfs = circlerange(epicenter,devastation_range)
-				hTurfs = circlerange(epicenter,heavy_impact_range) - dTurfs
-				lTurfs = circlerange(epicenter,light_impact_range) - dTurfs - hTurfs
+				fTurfs = circlerangeturfs(epicenter,max(devastation_range, heavy_impact_range, light_impact_range, flash_range))
+				dTurfs = circlerangeturfs(epicenter,devastation_range)
+				hTurfs = circlerangeturfs(epicenter,heavy_impact_range) - dTurfs
+				lTurfs = circlerangeturfs(epicenter,light_impact_range) - dTurfs - hTurfs
 
 			//add some stress to nearby shields
 			for(var/obj/effect/energy_field/E in circlerange(epicenter, devastation_range))
