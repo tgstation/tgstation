@@ -448,8 +448,7 @@ datum/preferences
 		 // Modify this if you added more jobs and it looks like a mess. Add the jobs in the splitJobs that you want to trigger and intitate a new table.
 
 		if(splitJobs == null)
-			if (ticker.current_state >= GAME_STATE_PLAYING
-)
+			if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
 				splitJobs = list()
 			else
 				splitJobs = list("Chief Engineer")

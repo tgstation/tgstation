@@ -28,6 +28,7 @@
 			requires_power = 1
 			always_unpowered = 1
 			LightLevels = list("Red" = 2, "Green" = 2, "Blue" = 3)
+			ul_SetLuminosity(2,2,3)
 			power_light = 0
 			power_equip = 0
 			power_environ = 0
@@ -130,7 +131,7 @@
 		fire = 1
 		updateicon()
 		mouse_opacity = 0
-		for(var/obj/machinery/door/airlock/E in master.all_doors)
+/*		for(var/obj/machinery/door/airlock/E in master.all_doors)
 			if(!E.air_locked)
 				if((!E.arePowerSystemsOn()) || (E.stat & NOPOWER)) continue
 				if(!E.density)
@@ -158,7 +159,7 @@
 					D.nextstate = CLOSED
 				else if(!D.density)
 					spawn(0)
-					D.close()
+					D.close() */
 		var/list/cameras = list()
 		for (var/obj/machinery/camera/C in src)
 			cameras += C
@@ -173,7 +174,7 @@
 		fire = 0
 		mouse_opacity = 0
 		updateicon()
-		for(var/obj/machinery/door/airlock/E in master.all_doors)
+/*		for(var/obj/machinery/door/airlock/E in master.all_doors)
 			if((!E.arePowerSystemsOn()) || (E.stat & NOPOWER)) continue
 			if(E.air_locked) //Don't mess with doors locked for other reasons.
 				if(E.density)
@@ -186,7 +187,7 @@
 					D.nextstate = OPEN
 				else if(D.density)
 					spawn(0)
-					D.open()
+					D.open()*/
 		for (var/mob/living/silicon/ai/aiPlayer in world)
 			aiPlayer.cancelAlarm("Fire", src, src)
 		for (var/obj/machinery/computer/station_alert/a in world)

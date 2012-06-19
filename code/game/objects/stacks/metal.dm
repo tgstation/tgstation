@@ -142,7 +142,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	return
 
 /obj/item/stack/tile/plasteel/proc/build(turf/S as turf)
-	S.ReplaceWithPlating()
+	S.ReplaceWithAirlessPlating()
 //	var/turf/simulated/floor/W = S.ReplaceWithFloor()
 //	W.make_plating()
 	return
