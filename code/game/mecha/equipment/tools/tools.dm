@@ -936,7 +936,9 @@
 	range = MELEE
 	construction_cost = list("metal"=5000,"glass"=10000)
 	reliability = 1000
-	equip_cooldown = 20
+	equip_cooldown = 50 // rather lengthy cooldown since otherwise
+			    // this would be a too effective weapon for
+			    // capturing somebody
 	var/mob/living/carbon/occupant = null
 	var/datum/global_iterator/pr_mech_sleeper
 	var/inject_amount = 10

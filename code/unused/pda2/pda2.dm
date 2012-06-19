@@ -60,13 +60,13 @@
 
 /obj/item/device/pda2/pickup(mob/user)
 	if (src.fon)
-		src.sd_SetLuminosity(0)
-		user.sd_SetLuminosity(user.luminosity + src.f_lum)
+		src.ul_SetLuminosity(0)
+		user.ul_SetLuminosity(user.luminosity + src.f_lum)
 
 /obj/item/device/pda2/dropped(mob/user)
 	if (src.fon)
-		user.sd_SetLuminosity(user.luminosity - src.f_lum)
-		src.sd_SetLuminosity(src.f_lum)
+		user.ul_SetLuminosity(user.luminosity - src.f_lum)
+		src.ul_SetLuminosity(src.f_lum)
 
 /obj/item/device/pda2/New()
 	..()
@@ -240,11 +240,11 @@
 
 		if (ismob(src.loc))
 			if (src.fon)
-				src.loc.sd_SetLuminosity(src.loc.luminosity + src.f_lum)
+				src.loc.ul_SetLuminosity(src.loc.luminosity + src.f_lum)
 			else
-				src.loc.sd_SetLuminosity(src.loc.luminosity - src.f_lum)
+				src.loc.ul_SetLuminosity(src.loc.luminosity - src.f_lum)
 		else
-			src.sd_SetLuminosity(src.fon * src.f_lum)
+			src.ul_SetLuminosity(src.fon * src.f_lum)
 
 		src.updateSelfDialog()
 

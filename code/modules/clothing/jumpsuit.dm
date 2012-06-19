@@ -34,8 +34,8 @@
 
 /obj/item/clothing/under/chameleon/psyche
 	item_state = "bl_suit"
-	name = "Groovy Jumpsuit"
-	desc = "A groovy jumpsuit! It seems to have a small dial on the wrist, that won't stop spinning."
+	name = "groovy jumpsuit"
+	desc = "A groovy jumpsuit! It seems to have a small dial on the wrist that won't stop spinning."
 	icon_state = "psyche"
 	color = "psyche"
 
@@ -49,7 +49,7 @@
 
 /obj/item/clothing/under/color/blackf
 	name = "feminine black jumpsuit"
-	desc = "It's very smart and in a ladies-size!"
+	desc = "It's very smart and in a ladies size!"
 	icon_state = "black"
 	item_state = "bl_suit"
 	color = "blackf"
@@ -74,7 +74,7 @@
 
 /obj/item/clothing/under/color/orange
 	name = "orange jumpsuit"
-	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
+	desc = "It's standardised Nanotrasen prisoner wear. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "orange"
 	item_state = "o_suit"
 	color = "orange"
@@ -141,7 +141,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 10)
 
 /obj/item/clothing/under/rank/forensic_technician
-	desc = "It has a Forensics rank stripe on it."
+	desc = "It has a forensics rank stripe on it."
 	name = "forensic technician's jumpsuit"
 	icon_state = "darkred"
 	item_state = "r_suit"
@@ -242,7 +242,7 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/rank/chief_engineer
-	desc = "It's a high visibility jumpsuit given to those engineers insane enough to achieve the rank of \"Chief engineer\". It has minor radiation shielding."
+	desc = "It's a high visibility jumpsuit given to those engineers insane enough to achieve the rank of \"Chief Engineer\". It has minor radiation shielding."
 	name = "chief engineer's jumpsuit"
 	icon_state = "chiefengineer"
 	item_state = "g_suit"
@@ -425,7 +425,7 @@
 
 
 /obj/item/clothing/under/jensen
-	desc = "You never asked for anything that stylish."
+	desc = "You never asked for anything this stylish."
 	name = "head of security's jumpsuit"
 	icon_state = "jensen"
 	item_state = "jensen"
@@ -448,7 +448,7 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/syndicate/tacticool
-	name = "\improper Tacticool turtleneck"
+	name = "\improper tacticool turtleneck"
 	desc = "Just looking at it makes you want to buy an SKS, go into the woods, and -operate-."
 	icon_state = "tactifool"
 	item_state = "bl_suit"
@@ -483,7 +483,7 @@
 // Athletic shorts.. heh
 /obj/item/clothing/under/shorts
 	name = "athletic shorts"
-	desc = "95% Polyester, 5% Spandex!"
+	desc = "95% polyester, 5% spandex!"
 	gender = PLURAL
 	flags = FPRINT | TABLEPASS
 	body_parts_covered = LOWER_TORSO

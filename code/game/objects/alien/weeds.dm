@@ -13,7 +13,7 @@
 
 /obj/effect/alien/weeds/node/New()
 	..()
-	sd_SetLuminosity(NODERANGE)
+	ul_SetLuminosity(NODERANGE)
 	return
 
 /obj/effect/alien/weeds/proc/Life()

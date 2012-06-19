@@ -12,7 +12,8 @@ Attach to transfer valve and open. BOOM.
 
 
 
-vs_control/var/IgnitionLevel = 0.5 //Moles of oxygen+plasma - co2 needed to burn.
+vs_control/var/IgnitionLevel = 0.5
+vs_control/var/IgnitionLevel_DESC = "Moles of oxygen+plasma - co2 needed to burn."
 
 //Some legacy definitions so fires can be started.
 atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -124,11 +125,18 @@ obj
 						if(flow.oxygen > 0.3 && (flow.toxins || fuel || liquid))
 
 							//Change icon depending on the fuel, and thus temperature.
-							icon_state = "1"
-							if(firelevel > 2.5)
-								icon_state = "2"
 							if(firelevel > 6)
 								icon_state = "3"
+								if(LuminosityRed != 7)
+									ul_SetLuminosity(7,5,0)
+							else if(firelevel > 2.5)
+								icon_state = "2"
+								if(LuminosityRed != 5)
+									ul_SetLuminosity(5,4,0)
+							else
+								icon_state = "1"
+								if(LuminosityRed != 3)
+									ul_SetLuminosity(3,2,0)
 
 							//Ensure flow temperature is higher than minimum fire temperatures.
 							flow.temperature = max(PLASMA_MINIMUM_BURN_TEMPERATURE+0.1,flow.temperature)
@@ -157,14 +165,14 @@ obj
 		New(newLoc,fl)
 			..()
 			dir = pick(cardinal)
-			sd_SetLuminosity(3)
+			ul_SetLuminosity(3,2,0)
 			firelevel = fl
 			for(var/mob/living/carbon/human/M in loc)
 				M.FireBurn(min(max(0.1,firelevel / 20),10)) //Burn the humans!
 
 		Del()
 			if (istype(loc, /turf/simulated))
-				src.sd_SetLuminosity(0)
+				ul_SetLuminosity(0)
 
 				loc = null
 
@@ -187,7 +195,6 @@ obj/liquid_fuel
 				other.amount += src.amount
 				spawn other.Spread()
 				del src
-				return
 
 		Spread()
 		. = ..()
@@ -201,8 +208,9 @@ obj/liquid_fuel
 			if(S.air_check_directions & d)
 				if(rand(25))
 					var/turf/simulated/O = get_step(src,d)
-					new/obj/liquid_fuel(O,amount*0.25)
-					amount *= 0.75
+					if(!locate(/obj/liquid_fuel) in O)
+						new/obj/liquid_fuel(O,amount*0.25)
+						amount *= 0.75
 
 	flamethrower_fuel
 		icon_state = "mustard"
@@ -267,7 +275,7 @@ datum/gas_mixture/proc/zburn(obj/liquid_fuel/liquid)
 			temperature = max( 1700*log(0.4*firelevel + 1.23) , temperature )
 
 			//Consume some gas.
-			var/consumed_gas = min(oxygen,0.005*firelevel,total_fuel) / fuel_sources
+			var/consumed_gas = min(oxygen,0.05*firelevel,total_fuel) / fuel_sources
 
 			oxygen = max(0,oxygen-consumed_gas)
 

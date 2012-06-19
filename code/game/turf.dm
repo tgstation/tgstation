@@ -162,7 +162,7 @@
 
 	if (!explode)
 		W.opacity = 1
-		W.sd_SetOpacity(0)
+		W.ul_SetOpacity(0)
 		//This is probably gonna make lighting go a bit wonky in bombed areas, but sd_SetOpacity was the primary reason bombs have been so laggy. --NEO
 	W.levelupdate()
 	air_master.tiles_to_update |= W
@@ -191,7 +191,35 @@
 	if(prior_icon) W.icon_state = prior_icon
 	else W.icon_state = "plating"
 	W.opacity = 1
-	W.sd_SetOpacity(0)
+	W.ul_SetOpacity(0)
+	W.levelupdate()
+	air_master.tiles_to_update |= W
+
+	var/turf/simulated/north = get_step(W,NORTH)
+	var/turf/simulated/south = get_step(W,SOUTH)
+	var/turf/simulated/east = get_step(W,EAST)
+	var/turf/simulated/west = get_step(W,WEST)
+
+	if(istype(north)) air_master.tiles_to_update |= north
+	if(istype(south)) air_master.tiles_to_update |= south
+	if(istype(east)) air_master.tiles_to_update |= east
+	if(istype(west)) air_master.tiles_to_update |= west
+	return W
+
+/turf/proc/ReplaceWithAirlessPlating()
+	var/prior_icon = icon_old
+	var/old_dir = dir
+
+	for(var/obj/structure/lattice/L in locate(src.x, src.y, src.z))
+		del(L)
+	var/turf/simulated/floor/plating/airless/W = new /turf/simulated/floor/plating/airless( locate(src.x, src.y, src.z) )
+
+	W.RemoveLattice()
+	W.dir = old_dir
+	if(prior_icon) W.icon_state = prior_icon
+	else W.icon_state = "plating"
+	W.opacity = 1
+	W.ul_SetOpacity(0)
 	W.levelupdate()
 	air_master.tiles_to_update |= W
 
@@ -306,7 +334,6 @@
 	var/old_dir = dir
 	var/turf/space/S = new /turf/space( locate(src.x, src.y, src.z) )
 	S.dir = old_dir
-	S.sd_LumReset()
 	new /obj/structure/lattice( locate(src.x, src.y, src.z) )
 	air_master.tiles_to_update |= S
 
@@ -328,8 +355,7 @@
 	var/turf/simulated/wall/S = new /turf/simulated/wall( locate(src.x, src.y, src.z) )
 	S.icon_old = old_icon
 	S.opacity = 0
-	S.sd_NewOpacity(1)
-	S.sd_LumReset()
+	S.ul_SetOpacity(1)
 	levelupdate()
 	air_master.tiles_to_update |= S
 
@@ -351,8 +377,7 @@
 	var/turf/simulated/wall/r_wall/S = new /turf/simulated/wall/r_wall( locate(src.x, src.y, src.z) )
 	S.icon_old = old_icon
 	S.opacity = 0
-	S.sd_NewOpacity(1)
-	S.sd_LumReset()
+	S.ul_SetOpacity(1)
 	levelupdate()
 	air_master.tiles_to_update |= S
 
@@ -372,10 +397,9 @@
 	var/turf/simulated/wall/mineral/S = new /turf/simulated/wall/mineral( locate(src.x, src.y, src.z) )
 	S.icon_old = old_icon
 	S.opacity = 0
-	S.sd_NewOpacity(1)
+	S.ul_SetOpacity(1)
 	S.mineral = ore
 	S.New()//Hackish as fuck, but what can you do? -Sieve
-	S.sd_LumReset()
 	levelupdate()
 	air_master.tiles_to_update |= S
 
@@ -1017,7 +1041,7 @@
 
 	spawn(100)
 		if(O)	del(O)
-	F.sd_LumReset()
+	F.ul_Recalculate()
 	return
 
 /turf/simulated/wall/meteorhit(obj/M as obj)
@@ -1061,8 +1085,6 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 	airless
 		icon_state = "floor"
 		name = "airless floor"
-		oxygen = 0.01
-		nitrogen = 0.01
 		temperature = TCMB
 
 		New()
@@ -1225,19 +1247,19 @@ turf/simulated/floor/proc/update_icon()
 			switch(T.state)
 				if(0)
 					icon_state = "light_on"
-					sd_SetLuminosity(5)
+					ul_SetLuminosity(5)
 				if(1)
 					var/num = pick("1","2","3","4")
 					icon_state = "light_on_flicker[num]"
-					sd_SetLuminosity(5)
+					ul_SetLuminosity(5)
 				if(2)
 					icon_state = "light_on_broken"
-					sd_SetLuminosity(5)
+					ul_SetLuminosity(5)
 				if(3)
 					icon_state = "light_off"
-					sd_SetLuminosity(0)
+					ul_SetLuminosity(0)
 		else
-			sd_SetLuminosity(0)
+			ul_SetLuminosity(0)
 			icon_state = "light_off"
 	if(is_grass_floor())
 		if(!broken && !burnt)
@@ -1385,7 +1407,7 @@ turf/simulated/floor/return_siding_icon_state()
 	if(!floor_tile) return
 	del(floor_tile)
 	icon_plating = "plating"
-	sd_SetLuminosity(0)
+	ul_SetLuminosity(0)
 	floor_tile = null
 	intact = 0
 	broken = 0
@@ -1401,7 +1423,7 @@ turf/simulated/floor/return_siding_icon_state()
 	broken = 0
 	burnt = 0
 	intact = 1
-	sd_SetLuminosity(0)
+	ul_SetLuminosity(0)
 	if(T)
 		if(istype(T,/obj/item/stack/tile/plasteel))
 			floor_tile = T

@@ -124,7 +124,7 @@
 				playSpecials(destturf,effectout,soundout)
 
 		// Re-Apply lum
-		teleatom.sd_SetLuminosity(prevlum)
+		teleatom.ul_SetLuminosity(prevlum)
 
 		destarea.Entered(teleatom)
 

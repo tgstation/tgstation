@@ -47,7 +47,7 @@ datum/controller/game_controller
 
 		world.tick_lag = config.Ticklag
 
-		createRandomZlevel()
+//		createRandomZlevel()
 
 		//	Sleep for about 5 seconds to allow background initialization procs to finish
 		sleep(50)
@@ -58,8 +58,6 @@ datum/controller/game_controller
 		setup_objects()
 
 		setupgenetics()
-
-		setupdooralarms()
 
 //		for(var/i = 0, i < max_secret_rooms, i++)
 //			make_mining_asteroid_secret()
@@ -103,6 +101,8 @@ datum/controller/game_controller
 			emclosets -= loc
 			new /obj/structure/closet/emcloset(loc)
 			emclosetcount--
+
+		setupdooralarms()
 
 		world << "\red \b Initializations complete."
 

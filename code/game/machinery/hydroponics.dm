@@ -179,12 +179,12 @@ obj/machinery/hydroponics/proc/updateicon()
 
 	if(myseed)
 		if(luminosity && !istype(myseed,/obj/item/seeds/glowshroom)) //revert luminosity to 0
-			sd_SetLuminosity(0)
+			ul_SetLuminosity(0)
 		else if(!luminosity && istype(myseed,/obj/item/seeds/glowshroom)) //update luminosity
-			sd_SetLuminosity(myseed.potency/10)
+			ul_SetLuminosity(myseed.potency/10)
 	else
 		if(luminosity)
-			sd_SetLuminosity(0)
+			ul_SetLuminosity(0)
 	return
 
 
@@ -1022,10 +1022,10 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 		if(myseed)
 			if(luminosity && !istype(myseed,/obj/item/seeds/glowshroom))
-				sd_SetLuminosity(0)
+				ul_SetLuminosity(0)
 			else if(!luminosity && istype(myseed,/obj/item/seeds/glowshroom))
-				sd_SetLuminosity(myseed.potency/10)
+				ul_SetLuminosity(myseed.potency/10)
 		else
 			if(luminosity)
-				sd_SetLuminosity(0)
+				ul_SetLuminosity(0)
 		return

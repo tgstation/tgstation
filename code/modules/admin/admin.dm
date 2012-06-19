@@ -1577,6 +1577,7 @@ var/global/BSACooldown = 0
 			return
 		alert("Cannot make this mob a traitor! It has no mind!")
 
+
 	if (href_list["create_object"])
 		if (src.rank in list("Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"))
 			return create_object(usr)
@@ -2343,7 +2344,6 @@ var/global/BSACooldown = 0
 								dat += "<tr><td>[H]</td><td>H.dna = null</td></tr>"
 					dat += "</table>"
 					usr << browse(dat, "window=fingerprints;size=440x410")
-				else
 			if (usr)
 				log_admin("[key_name(usr)] used secret [href_list["secretsadmin"]]")
 				if (ok)
@@ -2376,6 +2376,16 @@ var/global/BSACooldown = 0
 					J.spawn_positions = -1
 					message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
 		return
+
+	if(href_list["vsc"])
+		if ((src.rank in list( "Moderator", "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master" )))
+			if(href_list["vsc"] == "airflow")
+				vsc.ChangeSettingsDialog(usr,vsc.settings)
+			if(href_list["vsc"] == "plasma")
+				vsc.ChangeSettingsDialog(usr,vsc.plc.settings)
+			if(href_list["vsc"] == "default")
+				vsc.SetDefault(usr)
+
 	if (href_list["rnd_max"])
 		for(var/obj/machinery/computer/rdconsole/C in world)
 			for(var/datum/tech/T in C.files.known_tech)
@@ -2704,8 +2714,12 @@ var/global/BSACooldown = 0
 		dat += "<A href='?src=\ref[src];create_turf=1'>Create Turf</A><br>"
 	if(lvl >= 5)
 		dat += "<A href='?src=\ref[src];create_mob=1'>Create Mob</A><br>"
+	if(lvl >= 3 )
+		dat += "<br><A href='?src=\ref[src];vsc=airflow'>Edit Airflow Settings</A><br>"
+		dat += "<A href='?src=\ref[src];vsc=plasma'>Edit Plasma Settings</A><br>"
+		dat += "<A href='?src=\ref[src];vsc=default'>Choose a default ZAS setting</A><br>"
 //			if(lvl == 6 )
-	usr << browse(dat, "window=admin2;size=210x180")
+	usr << browse(dat, "window=admin2;size=210x280")
 	return
 /*
 /obj/admins/proc/goons()

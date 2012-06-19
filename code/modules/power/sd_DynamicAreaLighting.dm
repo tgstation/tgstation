@@ -1,23 +1,23 @@
 /* Overview of sd_DynamicAreaLighting as modified for SS13
  *
  *
- * Use sd_SetLuminosity(value) to change the luminosity of an atom
+ * Use ul_SetLuminosity(value) to change the luminosity of an atom
  * rather than setting the luminosity var directly.
  * Avoid having luminous objects at compile-time since this can mess up
- * the lighting system during map load. Instead use sd_SetLuminosity() in
+ * the lighting system during map load. Instead use ul_SetLuminosity() in
  * the atom's New() proc after a small spawn delay.
  *
- * Use sd_SetOpacity(value) to change the opacity of an atom (e.g. doors)
+ * Use ul_SetOpacity(value) to change the opacity of an atom (e.g. doors)
  * rather than setting the opacity var directly. This ensures that lighting
  * will be blocked/unblocked as necessary.
  *
  * If creating a new opaque atom (e.g. a wall) at runtime, create the atom,
- * set its opacity var to zero, then perform sd_SetOpacity(1)
+ * set its opacity var to zero, then perform ul_SetOpacity(1)
  * e.g.:
  *
  * var/obj/block/B = new(loc)
  * B.opacity = 0
- * B.sd_SetOpacity(1)
+ * B.ul_SetOpacity(1)
  *
  *
  * The library creates multiple instances of each /area to split a mapped area
@@ -52,13 +52,13 @@ Using sd_DynamicAreaLighting
 
 	1)	Luminosity changes at run time.
 		If your program makes changes in luminosity while it is
-		running, you need to use sd_SetLuminosity(new_luminosity)
+		running, you need to use ul_SetLuminosity(new_luminosity)
 		so the library can remove the effect of the old luminosity
 		and apply the new effect.
 
 	2)	Opacity changes at run time.
 		As with luminosity changes, you need to use
-		sd_SetOpacity(new_opacity) if your program changes the opacity
+		ul_SetOpacity(new_opacity) if your program changes the opacity
 		of atoms at runtime.
 
 	3)	New atoms that change the opacity of a location.
@@ -67,17 +67,17 @@ Using sd_DynamicAreaLighting
 		sd_StripLocalLum() to strip the luminosity effect of
 		anything shining on that space, create the new atom, then
 		use sd_ApplyLocalLum() to reapply the luminosity effect.
-		Examine the sd_SetOpacity() proc for an example of the
+		Examine the ul_SetOpacity() proc for an example of the
 		procedure.
 
 	All areas will automatically use the sd_DynamicAreaLighting
 	library when it is included in your project. You may disable
 	lighting effect in an area by specifically setting the area's
-	sd_lighting var to 0. For example:
+	ul_Lighting var to 0. For example:
 
 	area/always_lit
 		luminosity = 1
-		sd_lighting = 0
+		ul_Lighting = 0
 
 	This library chops areas into 5 separate areas of differing
 	light effect, so you may want to modify area Enter(), Exit(),
@@ -253,17 +253,17 @@ All atoms have the following procs:
 		IMPORTANT! Each sd_StripLocalLum() call should have a matching
 			sd_ApplyLocalLum() to restore the local effect.
 
-	sd_SetLuminosity(new_luminosity as num)
+	ul_SetLuminosity(new_luminosity as num)
 		Sets the atom's luminosity, making adjustments to the
 		sd_lumcount of local turfs.
 
-	sd_SetOpacity(new_opacity as num)
+	ul_SetOpacity(new_opacity as num)
 		Sets the atom's opacity, making adjustments to the
 		sd_lumcount of local turfs.
 
 Areas have one additional proc and 4 variables:
 	var
-		sd_lighting
+		ul_Lighting
 			Turn this flag off to prevent sd_DynamicAreaLighting
 			from effecting this area.
 			DEFAULT VALUE: 1 (allow dynamic lighting)
@@ -304,7 +304,7 @@ Turfs have these additional procs and vars:
 			Places the turf in the appropriate sd_dark area,
 			depending on its brightness (sd_lumcount).
 
-		sd_LumReset()
+		ul_Recalculate()
 			Resets a turf's lumcount by stripping local luminosity,
 			zeroing the lumcount, then reapplying local luminosity.
 
@@ -436,7 +436,7 @@ atom
 
 			return affected
 
-		sd_SetLuminosity(new_luminosity as num)
+		ul_SetLuminosity(new_luminosity as num)
 			/*	This proc should be called everytime you want to change the
 				luminosity of an atom instead of setting it directly.
 
@@ -448,7 +448,7 @@ atom
 				sd_ApplyLum()
 
 
-		sd_SetOpacity(new_opacity as num)
+		ul_SetOpacity(new_opacity as num)
 			/* if(opacity != new_opacity)
 				var/list/affected = sd_StripLocalLum()
 				opacity = new_opacity
@@ -567,7 +567,7 @@ turf
 			sd_lumcount = 0	// the brightness of the turf
 
 	proc
-		sd_LumReset()
+		ul_Recalculate()
 			/* Clear local lum, reset this turf's sd_lumcount, and
 				re-apply local lum*/
 			var/list/affected = sd_StripLocalLum()
@@ -580,7 +580,7 @@ turf
 		sd_LumUpdate()
 			set background = 1
 			var/area/Loc = loc
-			if(!istype(Loc) || !Loc.sd_lighting) return
+			if(!istype(Loc) || !Loc.ul_Lighting) return
 
 			// change the turf's area depending on its brightness
 			// restrict light to valid levels
@@ -685,7 +685,7 @@ area
 	var
 		/*	Turn this flag off to prevent sd_DynamicAreaLighting from affecting
 			this area */
-		sd_lighting = 1
+		ul_Lighting = 1
 
 		/*	This var determines if an area is outside (affected by sunlight) or
 			not.  */
@@ -718,7 +718,7 @@ area
 		..()
 		if(!tag) tag = "[type]"
 		spawn(1)	// wait a tick
-			if(sd_lighting)
+			if(ul_Lighting)
 				// see if this area was created by the library
 				if(!findtext(tag, "sd_L"))
 					/*	show the dark overlay so areas outside of luminous regions
@@ -731,7 +731,7 @@ area
 
 		if(!tag) tag = "[type]"
 		spawn(1)	// wait a tick
-			if(sd_lighting)
+			if(ul_Lighting)
 				// see if this area was created by the library
 				if(!sd_created)
 					/*	show the dark overlay so areas outside of luminous regions

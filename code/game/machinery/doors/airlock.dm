@@ -1305,7 +1305,7 @@ About the new airlock wires panel:
 						update_icon()
 
 						if(!istype(src, /obj/machinery/door/airlock/glass))
-							src.sd_SetOpacity(0)
+							src.ul_SetOpacity(0)
 						src.operating = 0
 					return
 				user << "\red You need to be wielding the Fire axe to do that."
@@ -1322,7 +1322,7 @@ About the new airlock wires panel:
 					update_icon()
 
 					if(!istype(src, /obj/machinery/door/airlock/glass))
-						src.sd_SetOpacity(0)
+						src.ul_SetOpacity(0)
 					src.operating = 0
 					return
 
@@ -1341,7 +1341,7 @@ About the new airlock wires panel:
 							update_icon()
 
 							if((src.visible) && (!istype(src, /obj/machinery/door/airlock/glass)))
-								src.sd_SetOpacity(1)
+								src.ul_SetOpacity(1)
 							src.operating = 0
 					else
 						user << "\red You need to be wielding the Fire axe to do that."
@@ -1356,7 +1356,7 @@ About the new airlock wires panel:
 						update_icon()
 
 						if((src.visible) && (!istype(src, /obj/machinery/door/airlock/glass)))
-							src.sd_SetOpacity(1)
+							src.ul_SetOpacity(1)
 						src.operating = 0
 
 	else
@@ -1865,4 +1865,3 @@ About the new airlock wires panel:
 		user << "\red You were warned..."
 		world << "\red [user.name] has been found attempting to hack a CentCom Secure Door via AI/Hacktool.  Better luck next time."
 		user.ex_act(1)
-

@@ -22,7 +22,7 @@
 					for(var/obj/machinery/atmospherics/unary/vent_pump/vent in vents)
 						if(vent.loc.z != loc.z)
 							continue
-						var/atom/a = get_turf_loc(vent)
+						var/atom/a = get_turf(vent)
 						choices.Add(a.loc)
 					var/turf/startloc = loc
 					var/obj/selection = input("Select a destination.", "Duct System") in choices

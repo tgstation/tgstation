@@ -55,7 +55,7 @@
 	//might need an else for the ..()
 	DblClick()
 		if((usr.hand && istype(usr.l_hand, /obj/item/weapon/flamethrower)) || (!usr.hand && istype(usr.r_hand, /obj/item/weapon/flamethrower)))
-			var/turf/location = get_turf_loc(src)
+			var/turf/location = get_turf(src)
 			location.DblClick()
 		return ..()
 

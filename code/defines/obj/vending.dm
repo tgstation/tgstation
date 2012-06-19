@@ -388,6 +388,7 @@
 	desc = "All the fine parts you need in one vending machine!"
 	product_hidden = ""
 	product_hideamt = ""
+	points = 40
 	product_paths = "/obj/item/clothing/under/rank/scientist;/obj/item/clothing/suit/bio_suit;/obj/item/clothing/head/bio_hood;/obj/item/device/transfer_valve;/obj/item/device/assembly/signaler;/obj/item/device/assembly/prox_sensor;/obj/item/device/assembly/igniter;/obj/item/device/assembly/timer"
 //	product_amounts = "6;6;6;6;6"
 	product_prices = "1;2;2;2;2;2;2;2"
@@ -447,6 +448,7 @@
 	name = "Toxins Charge"
 	charge_type = "toxins"
 	icon_state = "toxins-charge"
+	charge_amt = 40
 
 /obj/item/weapon/vending_charge/robotics
 	name = "Robotics Charge"

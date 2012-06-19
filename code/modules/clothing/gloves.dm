@@ -99,7 +99,7 @@
 
 /obj/item/clothing/gloves/swat
 	desc = "These tactical gloves are somewhat fire and impact-resistant."
-	name = "\improper SWAT Gloves"
+	name = "\improper SWAT gloves"
 	icon_state = "black"
 	item_state = "swat_gl"
 	siemens_coefficient = 0

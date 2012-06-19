@@ -448,20 +448,20 @@ obj/structure/meteorhit(obj/O as obj)
 		flick("[mineral]fwall_opening", src)
 		sleep(15)
 		src.density = 0
-		src.sd_SetOpacity(0)
+		src.ul_SetOpacity(0)
 		var/turf/T = src.loc
-		T.sd_LumReset()
+		T.ul_Recalculate()
 
 	else
 		flick("[mineral]fwall_closing", src)
 		icon_state = "[mineral]0"
 		sleep(15)
 		src.density = 1
-		src.sd_SetOpacity(1)
+		src.ul_SetOpacity(1)
 		var/turf/T = src.loc
-		//T.sd_LumUpdate()
+		//T.ul_LumUpdate()
 		src.relativewall()
-		T.sd_LumReset()
+		T.ul_Recalculate()
 
 /obj/structure/falsewall/uranium/attack_hand(mob/user as mob)
 	radiate()
@@ -546,20 +546,20 @@ obj/structure/meteorhit(obj/O as obj)
 			flick("frwall_opening", src)
 			sleep(15)
 			src.density = 0
-			src.sd_SetOpacity(0)
+			src.ul_SetOpacity(0)
 			var/turf/T = src.loc
-			T.sd_LumReset()
+			T.ul_Recalculate()
 
 		else
 			icon_state = "r_wall"
 			flick("frwall_closing", src)
 			sleep(15)
 			src.density = 1
-			src.sd_SetOpacity(1)
+			src.ul_SetOpacity(1)
 			var/turf/T = src.loc
-			//T.sd_LumUpdate()
+			//T.ul_LumUpdate()
 			src.relativewall()
-			T.sd_LumReset()
+			T.ul_Recalculate()
 
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)

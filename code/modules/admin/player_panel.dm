@@ -200,8 +200,8 @@
 			else
 				dat += "<td>No Assigned Role</td>"
 */
-			dat += {"<td>IP: [M.client.address]<br>
-			CID: [M.client.computer_id]</td>
+			dat += {"<td>IP: [M.client ? M.client.address : "Disconnected"]<br>
+			CID: [M.client ? M.client.computer_id : "Disconnected"]</td>
 			"}
 
 			dat += {"<td><A HREF='?src=\ref[src];player_info=[M.ckey]'>[player_has_info(M.ckey) ? "Info" : "N/A"] </A></td>
@@ -341,7 +341,7 @@
 				if(M)
 					dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>"
-					var/turf/mob_loc = get_turf_loc(M)
+					var/turf/mob_loc = get_turf(M)
 					dat += "<td>[mob_loc.loc]</td></tr>"
 				else
 					dat += "<tr><td><i>Head not found!</i></td></tr>"
