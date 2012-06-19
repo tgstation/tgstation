@@ -79,26 +79,35 @@ atom/proc/ul_Illuminate()
 			if(DeltaRed > 0)
 				if(!Affected.MaxRed)
 					Affected.MaxRed = list()
-				if("[DeltaRed]" in Affected.MaxRed)
-					Affected.MaxRed["[DeltaRed]"]++
+				var/list/parameter_list = params2list(Affected.MaxRedValues)
+				if(!("[DeltaRed]" in parameter_list))
+					Affected.MaxRed.Add(DeltaRed)
+					parameter_list["[DeltaRed]"] = 1
 				else
-					Affected.MaxRed["[DeltaRed]"] = 1
+					parameter_list["[DeltaRed]"] = "[text2num(parameter_list["[DeltaRed]"]) + 1]"
+				Affected.MaxRedValues = list2params(parameter_list)
 
 			if(DeltaGreen > 0)
 				if(!Affected.MaxGreen)
 					Affected.MaxGreen = list()
-				if("[DeltaGreen]" in Affected.MaxGreen)
-					Affected.MaxGreen["[DeltaGreen]"]++
+				var/list/parameter_list = params2list(Affected.MaxGreenValues)
+				if(!("[DeltaGreen]" in parameter_list))
+					Affected.MaxGreen.Add(DeltaGreen)
+					parameter_list["[DeltaGreen]"] = 1
 				else
-					Affected.MaxGreen["[DeltaGreen]"] = 1
+					parameter_list["[DeltaGreen]"] = "[text2num(parameter_list["[DeltaGreen]"]) + 1]"
+				Affected.MaxGreenValues = list2params(parameter_list)
 
 			if(DeltaBlue > 0)
 				if(!Affected.MaxBlue)
 					Affected.MaxBlue = list()
-				if("[DeltaBlue]" in Affected.MaxBlue)
-					Affected.MaxBlue["[DeltaBlue]"]++
+				var/list/parameter_list = params2list(Affected.MaxBlueValues)
+				if(!("[DeltaBlue]" in parameter_list))
+					Affected.MaxBlue.Add(DeltaBlue)
+					parameter_list["[DeltaBlue]"] = 1
 				else
-					Affected.MaxBlue["[DeltaBlue]"] = 1
+					parameter_list["[DeltaBlue]"] = "[text2num(parameter_list["[DeltaBlue]"]) + 1]"
+				Affected.MaxBlueValues = list2params(parameter_list)
 
 			Affected.ul_UpdateLight()
 
@@ -128,28 +137,55 @@ atom/proc/ul_Extinguish()
 
 			if(DeltaRed > 0)
 				if(Affected.MaxRed)
-					if(Affected.MaxRed["[DeltaRed]"] > 1)
-						Affected.MaxRed["[DeltaRed]"]--
+					if(findtext(Affected.MaxRedValues, "[DeltaRed]"))
+						var/list/parameter_list = params2list(Affected.MaxRedValues)
+						if(!("[DeltaRed]" in parameter_list))
+							Affected.MaxRed.Remove(DeltaRed)
+							parameter_list.Remove("[DeltaRed]")
+						else if (parameter_list["[DeltaRed]"] != "1")
+							parameter_list["[DeltaRed]"] = "[text2num(parameter_list["[DeltaRed]"]) - 1]"
+						else
+							Affected.MaxRed.Remove(DeltaRed)
+							parameter_list.Remove("[DeltaRed]")
+						Affected.MaxRedValues = list2params(parameter_list)
 					else
-						Affected.MaxRed.Remove("[DeltaRed]")
+						Affected.MaxRed.Remove(DeltaRed)
 					if(!Affected.MaxRed.len)
 						del Affected.MaxRed
 
 			if(DeltaGreen > 0)
 				if(Affected.MaxGreen)
-					if(Affected.MaxGreen["[DeltaGreen]"] > 1)
-						Affected.MaxGreen["[DeltaGreen]"]--
+					if(findtext(Affected.MaxGreenValues, "[DeltaGreen]"))
+						var/list/parameter_list = params2list(Affected.MaxGreenValues)
+						if(!("[DeltaGreen]" in parameter_list))
+							Affected.MaxGreen.Remove(DeltaGreen)
+							parameter_list.Remove("[DeltaGreen]")
+						else if (parameter_list["[DeltaGreen]"] != "1")
+							parameter_list["[DeltaGreen]"] = "[text2num(parameter_list["[DeltaGreen]"]) - 1]"
+						else
+							Affected.MaxGreen.Remove(DeltaGreen)
+							parameter_list.Remove("[DeltaGreen]")
+						Affected.MaxGreenValues = list2params(parameter_list)
 					else
-						Affected.MaxGreen.Remove("[DeltaGreen]")
+						Affected.MaxGreen.Remove(DeltaGreen)
 					if(!Affected.MaxGreen.len)
 						del Affected.MaxGreen
 
 			if(DeltaBlue > 0)
 				if(Affected.MaxBlue)
-					if(Affected.MaxBlue["[DeltaBlue]"] > 1)
-						Affected.MaxBlue["[DeltaBlue]"]--
+					if(findtext(Affected.MaxBlueValues, "[DeltaBlue]"))
+						var/list/parameter_list = params2list(Affected.MaxBlueValues)
+						if(!("[DeltaBlue]" in parameter_list))
+							Affected.MaxBlue.Remove(DeltaBlue)
+							parameter_list.Remove("[DeltaBlue]")
+						else if (parameter_list["[DeltaBlue]"] != "1")
+							parameter_list["[DeltaBlue]"] = "[text2num(parameter_list["[DeltaBlue]"]) - 1]"
+						else
+							Affected.MaxBlue.Remove(DeltaBlue)
+							parameter_list.Remove("[DeltaBlue]")
+						Affected.MaxBlueValues = list2params(parameter_list)
 					else
-						Affected.MaxBlue.Remove("[DeltaBlue]")
+						Affected.MaxBlue.Remove(DeltaBlue)
 					if(!Affected.MaxBlue.len)
 						del Affected.MaxBlue
 
@@ -269,18 +305,21 @@ atom/movable/Move()
 turf/var/list/MaxRed
 turf/var/list/MaxGreen
 turf/var/list/MaxBlue
+turf/var/MaxRedValues
+turf/var/MaxGreenValues
+turf/var/MaxBlueValues
 
 turf/proc/ul_GetRed()
 	if(MaxRed)
-		return ul_Clamp(text2num(max(MaxRed)))
+		return ul_Clamp(max(MaxRed))
 	return 0
 turf/proc/ul_GetGreen()
 	if(MaxGreen)
-		return ul_Clamp(text2num(max(MaxGreen)))
+		return ul_Clamp(max(MaxGreen))
 	return 0
 turf/proc/ul_GetBlue()
 	if(MaxBlue)
-		return ul_Clamp(text2num(max(MaxBlue)))
+		return ul_Clamp(max(MaxBlue))
 	return 0
 
 turf/proc/ul_UpdateLight()

@@ -895,8 +895,6 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 	airless
 		icon_state = "floor"
 		name = "airless floor"
-		oxygen = 0.01
-		nitrogen = 0.01
 		temperature = TCMB
 
 		New()
