@@ -158,6 +158,7 @@
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
 	icon = 'walls.dmi'
+	var/mineral = "metal"
 	opacity = 1
 	density = 1
 	blocks_air = 1
@@ -166,6 +167,80 @@
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
 
 	var/walltype = "wall"
+
+/turf/simulated/wall/mineral
+	name = "mineral wall"
+	desc = "This shouldn't exist"
+	icon_state = ""
+	var/last_event = 0
+	var/active = null
+
+/turf/simulated/wall/mineral/New()
+	switch(mineral)
+		if("gold")
+			name = "gold wall"
+			desc = "A wall with gold plating. Swag!"
+			icon_state = "gold0"
+			walltype = "gold"
+//			var/electro = 1
+//			var/shocked = null
+		if("silver")
+			name = "silver wall"
+			desc = "A wall with silver plating. Shiny!"
+			icon_state = "silver0"
+			walltype = "silver"
+//			var/electro = 0.75
+//			var/shocked = null
+		if("diamond")
+			name = "diamond wall"
+			desc = "A wall with diamond plating. You monster."
+			icon_state = "diamond0"
+			walltype = "diamond"
+		if("uranium")
+			name = "uranium wall"
+			desc = "A wall with uranium plating. This is probably a bad idea."
+			icon_state = "uranium0"
+			walltype = "uranium"
+		if("plasma")
+			name = "plasma wall"
+			desc = "A wall with plasma plating. This is definately a bad idea."
+			icon_state = "plasma0"
+			walltype = "plasma"
+		if("clown")
+			name = "bananium wall"
+			desc = "A wall with bananium plating. Honk!"
+			icon_state = "clown0"
+			walltype = "clown"
+		if("sandstone")
+			name = "sandstone wall"
+			desc = "A wall with sandstone plating."
+			icon_state = "sandstone0"
+			walltype = "sandstone"
+	..()
+
+/turf/simulated/wall/mineral/proc/radiate()
+	if(!active)
+		if(world.time > last_event+15)
+			active = 1
+			for(var/mob/living/L in range(3,src))
+				L.apply_effect(12,IRRADIATE,0)
+			for(var/turf/simulated/wall/mineral/T in range(3,src))
+				if(T.mineral == "uranium")
+					T.radiate()
+			last_event = world.time
+			active = null
+			return
+	return
+
+/*/turf/simulated/wall/mineral/proc/shock()
+	if (electrocute_mob(user, C, src))
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(5, 1, src)
+		s.start()
+		return 1
+	else
+		return 0
+		*/
 
 /turf/simulated/wall/heatshield
 	thermal_conductivity = 0
@@ -257,7 +332,7 @@
 		return L
 
 
-
+/*
 /turf/simulated/wall/mineral
 	icon = 'mineral_walls.dmi'
 	walltype = "iron"
@@ -357,3 +432,4 @@
 
 			hardness -= toxinsToDeduce/100
 			CheckHardness()
+*/

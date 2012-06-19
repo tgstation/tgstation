@@ -42,7 +42,7 @@
 				priority = "Undetermined"
 
 /obj/machinery/message_server
-	icon = 'stationobjs.dmi'
+	icon = 'research.dmi'
 	icon_state = "server"
 	name = "Messaging Server"
 	density = 1

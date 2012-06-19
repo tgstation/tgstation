@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/door
 	name = "Door"
@@ -153,7 +153,7 @@
 							if(4) temp=new/obj/structure/door_assembly/door_assembly_med(src.loc)
 							if(5) temp=new/obj/structure/door_assembly/door_assembly_mai(src.loc)
 							if(6) temp=new/obj/structure/door_assembly/door_assembly_ext(src.loc)
-							if(7) temp=new/obj/structure/door_assembly/door_assembly_g(src.loc)
+							if(7) temp=new/obj/structure/door_assembly/door_assembly_glass(src.loc)
 							else	failsafe=1
 						if(!failsafe)
 							temp.anchored=0
@@ -249,6 +249,7 @@
 		if(!src.operating) //in case of emag
 			src.operating = 1
 		animate("opening")
+		icon_state = "door0"
 		src.sd_SetOpacity(0)
 		sleep(10)
 		src.layer = 2.7

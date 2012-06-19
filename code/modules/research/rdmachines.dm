@@ -1,10 +1,11 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:06
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 //All devices that link into the R&D console fall into thise type for easy identification and some shared procs.
 
 
 /obj/machinery/r_n_d
 	name = "R&D Device"
+	icon = 'research.dmi'
 	density = 1
 	anchored = 1
 	use_power = 1
