@@ -12,8 +12,8 @@ Attach to transfer valve and open. BOOM.
 
 
 
-vs_control/var/IgnitionLevel = 0.5 //Moles of oxygen+plasma - co2 needed to burn.
-vs_control/var/IgnitionLeve_DESC = "Moles of oxygen+plasma - co2 needed to burn."
+vs_control/var/IgnitionLevel = 0.5
+vs_control/var/IgnitionLevel_DESC = "Moles of oxygen+plasma - co2 needed to burn."
 
 //Some legacy definitions so fires can be started.
 atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)

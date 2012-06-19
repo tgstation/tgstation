@@ -126,7 +126,7 @@ proc/ZConnect(turf/A,turf/B)
 			if(C && (C.B == B || C.A == B))
 				return
 
-	new /connection(A,B)
+	new connection(A,B)
 
 /*
 proc/ZDisconnect(turf/A,turf/B)
