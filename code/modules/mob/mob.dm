@@ -713,6 +713,9 @@
 				M.LAssailant = null
 			else
 				M.LAssailant = usr
+	if(istype(src, /obj/machinery/artifact))
+		var/obj/machinery/artifact/A = src
+		A.attack_hand(usr)
 	return
 
 /atom/verb/examine()
