@@ -441,7 +441,7 @@ ZIPPO
 						for(var/mob/O in viewers(user, null))
 							O.show_message("\red After a few attempts, \the [user] manages to light \the [src], they however burn themself in the process.", 1)
 
-				user.total_luminosity += 2
+				user.ul_SetLuminosity(user.LuminosityRed + 2, user.LuminosityGreen + 1, user.LuminosityBlue)
 				processing_objects.Add(src)
 			else
 				src.lit = 0
@@ -454,7 +454,7 @@ ZIPPO
 					for(var/mob/O in viewers(user, null))
 						O.show_message("\red [user] quietly shuts off the [src].", 1)
 
-				user.total_luminosity -= 2
+				user.ul_SetLuminosity(user.LuminosityRed - 2, user.LuminosityGreen - 1, user.LuminosityBlue)
 				processing_objects.Remove(src)
 		else
 			return ..()
@@ -483,13 +483,13 @@ ZIPPO
 
 	pickup(mob/user)
 		if(lit)
-			src.sd_SetLuminosity(0)
-			user.total_luminosity += 2
+			ul_SetLuminosity(0)
+			user.ul_SetLuminosity(user.LuminosityRed + 2, user.LuminosityGreen + 1, user.LuminosityBlue)
 		return
 
 
 	dropped(mob/user)
 		if(lit)
-			user.total_luminosity -= 2
-			src.sd_SetLuminosity(2)
+			user.ul_SetLuminosity(user.LuminosityRed - 2, user.LuminosityGreen - 1, user.LuminosityBlue)
+			ul_SetLuminosity(2)
 		return

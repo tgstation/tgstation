@@ -173,13 +173,13 @@
  */
 /obj/item/device/pda/pickup(mob/user)
 	if (fon)
-		sd_SetLuminosity(0)
-		user.total_luminosity += f_lum
+		ul_SetLuminosity(0)
+		user.ul_SetLuminosity(user.LuminosityRed + (f_lum - 1), user.LuminosityGreen + (f_lum - 1), user.LuminosityBlue + (f_lum + 1))
 
 /obj/item/device/pda/dropped(mob/user)
 	if (fon)
-		user.total_luminosity -= f_lum
-		sd_SetLuminosity(f_lum)
+		user.ul_SetLuminosity(user.LuminosityRed - (f_lum - 1), user.LuminosityGreen - (f_lum - 1), user.LuminosityBlue - (f_lum + 1))
+		ul_SetLuminosity(f_lum - 1, f_lum - 1, f_lum + 1)
 
 /obj/item/device/pda/New()
 	..()
@@ -468,11 +468,11 @@
 					fon = (!fon)
 					if (src in U.contents)
 						if (fon)
-							U.total_luminosity += f_lum
+							U.ul_SetLuminosity(U.LuminosityRed + (f_lum - 1), U.LuminosityGreen + (f_lum - 1), U.LuminosityBlue + (f_lum + 1))
 						else
-							U.total_luminosity -= f_lum
+							U.ul_SetLuminosity(U.LuminosityRed - (f_lum - 1), U.LuminosityGreen - (f_lum - 1), U.LuminosityBlue - (f_lum + 1))
 					else
-						sd_SetLuminosity(fon * f_lum)
+						ul_SetLuminosity(fon * f_lum)
 				if("Medical Scan")
 					if(scanmode == 1)
 						scanmode = 0
@@ -939,7 +939,7 @@
 		if (src in M.contents)
 			if(fon)
 				fon = 0
-				M.total_luminosity -= f_lum
+				M.ul_SetLuminosity(M.LuminosityRed + (f_lum - 1), M.LuminosityGreen + (f_lum - 1), M.LuminosityBlue + (f_lum + 1))
 	if(T)
 		T.hotspot_expose(700,125)
 

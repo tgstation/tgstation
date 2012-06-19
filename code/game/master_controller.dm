@@ -59,8 +59,6 @@ datum/controller/game_controller
 
 		setupgenetics()
 
-		setupdooralarms()
-
 //		for(var/i = 0, i < max_secret_rooms, i++)
 //			make_mining_asteroid_secret()
 // Because energy cutlasses, facehuggers, and empty rooms are silly. FOR NOW. - Erthilo
@@ -103,6 +101,8 @@ datum/controller/game_controller
 			emclosets -= loc
 			new /obj/structure/closet/emcloset(loc)
 			emclosetcount--
+
+		setupdooralarms()
 
 		world << "\red \b Initializations complete."
 

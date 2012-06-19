@@ -673,9 +673,7 @@
 	return health
 
 /mob/proc/UpdateLuminosity()
-	if(total_luminosity == last_luminosity)	return 0//nothing to do here
-	last_luminosity = total_luminosity
-	sd_SetLuminosity(min(total_luminosity,7))//Current hardcode max at 7, should likely be a const somewhere else
+	ul_SetLuminosity(LuminosityRed, LuminosityGreen, LuminosityBlue)//Current hardcode max at 7, should likely be a const somewhere else
 	return 1
 
 /mob/MouseDrop(mob/M as mob)

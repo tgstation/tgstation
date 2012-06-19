@@ -477,7 +477,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 							update_icon()
 
 							if (!istype(src, /obj/machinery/door/airlock/glass))
-								src.sd_SetOpacity(0)
+								src.ul_SetOpacity(0)
 							src.operating = 0
 						return
 					user << "\red You need to be wielding the Fire axe to do that."
@@ -494,7 +494,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 						update_icon()
 
 						if (!istype(src, /obj/machinery/door/airlock/glass))
-							src.sd_SetOpacity(0)
+							src.ul_SetOpacity(0)
 						src.operating = 0
 						return
 
@@ -513,7 +513,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 								update_icon()
 
 								if ((src.visible) && (!istype(src, /obj/machinery/door/airlock/glass)))
-									src.sd_SetOpacity(1)
+									src.ul_SetOpacity(1)
 								src.operating = 0
 						else
 							user << "\red You need to be wielding the Fire axe to do that."
@@ -527,7 +527,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 							update_icon()
 
 							if ((src.visible) && (!istype(src, /obj/machinery/door/airlock/glass)))
-								src.sd_SetOpacity(1)
+								src.ul_SetOpacity(1)
 							src.operating = 0
 
 		else

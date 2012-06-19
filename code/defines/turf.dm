@@ -125,7 +125,6 @@
 
 
 /turf/space/New()
-//	icon = 'space.dmi'
 	if(!istype(src, /turf/space/transit))
 		..()
 		icon_state = "[rand(1,25)]"
@@ -311,7 +310,7 @@
 
 	New()
 		..()
-		sd_SetLuminosity(3)
+		ul_SetLuminosity(3)
 
 /turf/simulated/wall/mineral/gold
 	walltype = "gold"

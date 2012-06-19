@@ -3,7 +3,7 @@
 /area/shipbuilder
 	requires_power = 0
 	luminosity = 1
-	sd_lighting = 0
+	ul_Lighting = 0
 
 /area/shipbuilder/station
 	name = "shipbuilder station"

@@ -41,7 +41,7 @@
 		icon_state = "glowshroomf"
 
 	spawn(2) //allows the luminosity and spread rate to be affected by potency at the moment of creation
-		sd_SetLuminosity(potency/10)
+		ul_SetLuminosity(potency/10)
 		spawn(delay)
 			if(src)
 				Spread()

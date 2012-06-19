@@ -72,20 +72,20 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.icon = A.holo_icon
 	hologram.mouse_opacity = 0//So you can't click on it.
 	hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-	hologram.sd_SetLuminosity(1)//To make it glowy.
+	hologram.ul_SetLuminosity(1)//To make it glowy.
 	hologram.anchored = 1//So space wind cannot drag it.
 	hologram.name = "AI hologram"//If someone decides to right click.
-	sd_SetLuminosity(1)//To make the pad glowy.
+	ul_SetLuminosity(0,0,1)//To make the pad glowy.
 	icon_state = "holopad1"
 	master = A//AI is the master.
 	use_power = 2//Active power usage.
 	return 1
 
 /obj/machinery/hologram/holopad/proc/clear_holo()
-	hologram.sd_SetLuminosity(0)//Clear lighting.
+	hologram.ul_SetLuminosity(0)//Clear lighting.
 	del(hologram)//Get rid of hologram.
 	master = null//Null the master, since no-one is using it now.
-	sd_SetLuminosity(0)//Clear lighting for the parent.
+	ul_SetLuminosity(0)//Clear lighting for the parent.
 	icon_state = "holopad0"
 	use_power = 1//Passive power usage.
 	return 1

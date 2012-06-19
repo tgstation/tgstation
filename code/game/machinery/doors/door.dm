@@ -249,12 +249,12 @@
 		if(!src.operating) //in case of emag
 			src.operating = 1
 		animate("opening")
-		src.sd_SetOpacity(0)
+		src.ul_SetOpacity(0)
 		sleep(10)
 		src.layer = 2.7
 		src.density = 0
 		update_icon()
-		src.sd_SetOpacity(0)
+		src.ul_SetOpacity(0)
 		update_nearby_tiles()
 
 		if(operating == 1) //emag again
@@ -332,7 +332,7 @@
 		update_icon()
 
 		if(src.visible && (!src.glass))
-			src.sd_SetOpacity(1)
+			src.ul_SetOpacity(1)
 		if(operating == 1)
 			operating = 0
 		update_nearby_tiles()

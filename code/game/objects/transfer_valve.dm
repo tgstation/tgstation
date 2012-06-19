@@ -191,20 +191,20 @@
 			flick("fwall_opening", src)
 			sleep(15)
 			src.density = 0
-			src.sd_SetOpacity(0)
+			src.ul_SetOpacity(0)
 			var/turf/T = src.loc
-			T.sd_LumReset()
+			T.ul_Recalculate()
 
 		else
 			icon_state = "wall"
 			flick("fwall_closing", src)
 			sleep(15)
 			src.density = 1
-			src.sd_SetOpacity(1)
+			src.ul_SetOpacity(1)
 			var/turf/T = src.loc
 			//T.sd_LumUpdate()
 			src.relativewall()
-			T.sd_LumReset()
+			T.ul_Recalculate()
 
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -235,20 +235,20 @@
 			flick("frwall_opening", src)
 			sleep(15)
 			src.density = 0
-			src.sd_SetOpacity(0)
+			src.ul_SetOpacity(0)
 			var/turf/T = src.loc
-			T.sd_LumReset()
+			T.ul_Recalculate()
 
 		else
 			icon_state = "r_wall"
 			flick("frwall_closing", src)
 			sleep(15)
 			src.density = 1
-			src.sd_SetOpacity(1)
+			src.ul_SetOpacity(1)
 			var/turf/T = src.loc
 			//T.sd_LumUpdate()
 			src.relativewall()
-			T.sd_LumReset()
+			T.ul_Recalculate()
 
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
