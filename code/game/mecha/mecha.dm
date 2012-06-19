@@ -556,6 +556,14 @@
 			loc.Exited(src)
 		loc = null
 		if(T)
+			if(istype(src, /obj/mecha/working/ripley/))
+				var/obj/mecha/working/ripley/R = src
+				if(R.cargo)
+					for(var/obj/O in R.cargo) //Dump contents of stored cargo
+						O.loc = T
+						R.cargo -= O
+						T.Entered(O)
+
 			if(prob(30))
 				explosion(T, 0, 0, 1, 3)
 			spawn(0)

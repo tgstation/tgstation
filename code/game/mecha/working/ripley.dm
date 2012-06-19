@@ -66,7 +66,6 @@
 		return 0
 	return ..()
 
-
 /obj/mecha/working/ripley/Topic(href, href_list)
 	..()
 	if(href_list["drop_from_cargo"])

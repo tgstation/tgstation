@@ -83,6 +83,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/safe = 1
 	normalspeed = 1
 	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/hasShocked = 0 //Prevents multiple shocks from happening
 
 /obj/machinery/door/airlock/command
 	name = "Airlock"
@@ -575,12 +576,17 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/proc/shock(mob/user, prb)
 	if((stat & (NOPOWER)) || !src.arePowerSystemsOn())		// unpowered, no shock
 		return 0
+	if(hasShocked)
+		return 0	//Already shocked someone recently?
 	if(!prob(prb))
 		return 0 //you lucked out, no shock for you
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
 	if(electrocute_mob(user, get_area(src), src))
+		hasShocked = 1
+		sleep(10)
+		hasShocked = 0
 		return 1
 	else
 		return 0

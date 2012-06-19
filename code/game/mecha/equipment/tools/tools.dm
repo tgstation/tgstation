@@ -52,8 +52,8 @@
 				M.take_overall_damage(dam_force)
 				M.adjustOxyLoss(round(dam_force/2))
 				M.updatehealth()
-				occupant_message("\red You squeese [target] with [src.name]. Something cracks.")
-				chassis.visible_message("\red [chassis] squeeses [target].")
+				occupant_message("\red You squeeze [target] with [src.name]. Something cracks.")
+				chassis.visible_message("\red [chassis] squeezes [target].")
 			else
 				step_away(M,chassis)
 				occupant_message("You push [target] out of the way.")
