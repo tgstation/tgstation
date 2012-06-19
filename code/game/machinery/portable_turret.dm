@@ -32,6 +32,7 @@
 	var/installation		// the type of weapon installed
 	var/gun_charge = 0		// the charge of the gun inserted
 	var/projectile = null	//holder for bullettype
+	var/eprojectile = null//holder for the shot when emagged
 	var/reqpower = 0 //holder for power needed
 	var/sound = null//So the taser can have sound
 	var/iconholder = null//holder for the icon_state
@@ -63,6 +64,112 @@
 		spark_system = new /datum/effect/effect/system/spark_spread
 		spark_system.set_up(5, 0, src)
 		spark_system.attach(src)
+		sleep(10)
+		if(!installation)// if for some reason the turret has no gun (ie, admin spawned) it resorts to basic taser shots
+			projectile = /obj/item/projectile/energy/electrode//holder for the projectile, here it is being set
+			eprojectile = /obj/item/projectile/beam//holder for the projectile when emagged, if it is different
+			reqpower = 200
+			sound = 1
+			iconholder = 1
+		else
+			var/obj/item/weapon/gun/energy/E=new installation
+					// All energy-based weapons are applicable
+			switch(E.type)
+				if(/obj/item/weapon/gun/energy/laser/bluetag)
+					projectile = /obj/item/projectile/bluetag
+					eprojectile = /obj/item/projectile/omnitag//This bolt will stun ERRYONE with a vest
+					iconholder = null
+					reqpower = 100
+					lasercolor = "b"
+					req_access = list(access_maint_tunnels,access_clown,access_mime)
+					check_records = 0
+					criminals = 0
+					auth_weapons = 1
+					stun_all = 0
+					check_anomalies = 0
+					shot_delay = 30
+
+				if(/obj/item/weapon/gun/energy/laser/redtag)
+					projectile = /obj/item/projectile/redtag
+					eprojectile = /obj/item/projectile/omnitag
+					iconholder = null
+					reqpower = 100
+					lasercolor = "r"
+					req_access = list(access_maint_tunnels,access_clown,access_mime)
+					check_records = 0
+					criminals = 0
+					auth_weapons = 1
+					stun_all = 0
+					check_anomalies = 0
+					shot_delay = 30
+
+				if(/obj/item/weapon/gun/energy/pulse_rifle)
+					projectile = /obj/item/projectile/beam/pulse
+					eprojectile = projectile
+					iconholder = null
+					reqpower = 700
+
+				if(/obj/item/weapon/gun/energy/staff)
+					projectile = /obj/item/projectile/change
+					eprojectile = projectile
+					iconholder = 1
+					reqpower = 700
+
+				if(/obj/item/weapon/gun/energy/ionrifle)
+					projectile = /obj/item/projectile/ion
+					eprojectile = projectile
+					iconholder = 1
+					reqpower = 700
+
+				if(/obj/item/weapon/gun/energy/taser)
+					projectile = /obj/item/projectile/energy/electrode
+					eprojectile = projectile
+					iconholder = 1
+					reqpower = 200
+
+				if(/obj/item/weapon/gun/energy/stunrevolver)
+					projectile = /obj/item/projectile/energy/electrode
+					eprojectile = projectile
+					iconholder = 1
+					reqpower = 200
+
+				if(/obj/item/weapon/gun/energy/lasercannon)
+					projectile = /obj/item/projectile/beam/heavylaser
+					eprojectile = projectile
+					iconholder = null
+					reqpower = 600
+
+				if(/obj/item/weapon/gun/energy/decloner)
+					projectile = /obj/item/projectile/energy/declone
+					eprojectile = projectile
+					iconholder = null
+					reqpower = 600
+
+				if(/obj/item/weapon/gun/energy/crossbow/largecrossbow)
+					projectile = /obj/item/projectile/energy/bolt/large
+					eprojectile = projectile
+					iconholder = null
+					reqpower = 125
+
+				if(/obj/item/weapon/gun/energy/crossbow)
+					projectile = /obj/item/projectile/energy/bolt
+					eprojectile = projectile
+					iconholder = null
+					reqpower = 50
+
+				if(/obj/item/weapon/gun/energy/laser)
+					projectile = /obj/item/projectile/beam
+					eprojectile = projectile
+					iconholder = null
+					reqpower = 500
+
+				else // Energy gun shots
+					projectile = /obj/item/projectile/energy/electrode// if it hasn't been emagged, it uses normal taser shots
+					eprojectile = /obj/item/projectile/beam//If it has, going to kill mode
+					iconholder = 1
+					egun = 1
+					reqpower = 200
+
 	Del()
 		// deletes its own cover with it
 		del(cover)
@@ -79,15 +186,16 @@
 	var/dat
 
 	// The browse() text, similar to ED-209s and beepskies.
-	dat += text({"
+	if(!(src.lasercolor))//Lasertag turrets have less options
+		dat += text({"
 <TT><B>Automatic Portable Turret Installation</B></TT><BR><BR>
 Status: []<BR>
 Behaviour controls are [src.locked ? "locked" : "unlocked"]"},
 
 "<A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A>" )
 
-	if(!src.locked)
-		dat += text({"<BR>
+		if(!src.locked)
+			dat += text({"<BR>
 Check for Weapon Authorization: []<BR>
 Check Security Records: []<BR>
 Neutralize Identified Criminals: []<BR>
@@ -99,6 +207,18 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 "<A href='?src=\ref[src];operation=shootcrooks'>[src.criminals ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=shootall'>[stun_all ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=checkxenos'>[check_anomalies ? "Yes" : "No"]</A>" )
+	else
+		if(istype(user,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = user
+			if(((src.lasercolor) == "b") && (istype(H.wear_suit, /obj/item/clothing/suit/redtag)))
+				return
+			if(((src.lasercolor) == "r") && (istype(H.wear_suit, /obj/item/clothing/suit/bluetag)))
+				return
+		dat += text({"
+<TT><B>Automatic Portable Turret Installation</B></TT><BR><BR>
+Status: []<BR>"},
+
+"<A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A>" )
 
 
 	user << browse("<HEAD><TITLE>Automatic Portable Turret Installation</TITLE></HEAD>[dat]", "window=autosec")
@@ -251,11 +371,13 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 	if((src.lasercolor == "b") && (src.disabled == 0))
 		if(istype(Proj, /obj/item/projectile/redtag))
 			src.disabled = 1
+			del (Proj)
 			sleep(100)
 			src.disabled = 0
 	if((src.lasercolor == "r") && (src.disabled == 0))
 		if(istype(Proj, /obj/item/projectile/bluetag))
 			src.disabled = 1
+			del (Proj)
 			sleep(100)
 			src.disabled = 0
 	return
@@ -286,7 +408,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 	src.health = 0
 	src.density = 0
 	src.stat |= BROKEN // enables the BROKEN bit
-	src.icon_state = "destroyed_target_prism"
+	src.icon_state = "[lasercolor]destroyed_target_prism"
 	invisibility=0
 	src.spark_system.start() // creates some sparks because they look cool
 	src.density=1
@@ -396,6 +518,8 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 
 /obj/machinery/porta_turret/proc
 	popUp() // pops the turret up
+		if(disabled)
+			return
 		if(raising || raised) return
 		if(stat & BROKEN) return
 		invisibility=0
@@ -409,6 +533,8 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 		layer=4
 
 	popDown() // pops the turret down
+		if(disabled)
+			return
 		if(raising || !raised) return
 		if(stat & BROKEN) return
 		layer=3
@@ -435,7 +561,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 	if(auth_weapons) // check for weapon authorization
 		if((isnull(perp:wear_id)) || (istype(perp:wear_id, /obj/item/weapon/card/id/syndicate)))
 
-			if((src.allowed(perp)) && (!lasercolor)) // if the perp has security access, return 0
+			if((src.allowed(perp)) && !(src.lasercolor)) // if the perp has security access, return 0
 				return 0
 
 			if((istype(perp.l_hand, /obj/item/weapon/gun) && !istype(perp.l_hand, /obj/item/weapon/gun/projectile/shotgun)) || istype(perp.l_hand, /obj/item/weapon/melee/baton))
@@ -447,7 +573,8 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 			if(istype(perp:belt, /obj/item/weapon/gun) || istype(perp:belt, /obj/item/weapon/melee/baton))
 				threatcount += 2
 
-	if(src.lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
+	if((src.lasercolor) == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
+		threatcount = 0//But does not target anyone else
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/redtag))
 			threatcount += 4
 		if((istype(perp:r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(perp:l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
@@ -455,7 +582,8 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 		if(istype(perp:belt, /obj/item/weapon/gun/energy/laser/redtag))
 			threatcount += 2
 
-	if(src.lasercolor == "r")
+	if((src.lasercolor) == "r")
+		threatcount = 0
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/bluetag))
 			threatcount += 4
 		if((istype(perp:r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(perp:l_hand,/obj/item/weapon/gun/energy/laser/bluetag)))
@@ -483,6 +611,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 						break
 
 
+
 	return threatcount
 
 
@@ -490,6 +619,13 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 
 
 /obj/machinery/porta_turret/proc/shootAt(var/atom/movable/target) // shoots at a target
+	if(disabled)
+		return
+
+	if(lasercolor && (istype(target,/mob/living/carbon/human)))
+		var/mob/living/carbon/human/H = target
+		if(H.lying)
+			return
 
 	if(!emagged) // if it hasn't been emagged, it has to obey a cooldown rate
 		if(last_fired || !raised) return // prevents rapid-fire shooting, unless it's been emagged
@@ -509,110 +645,23 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 
 	// any emagged turrets will shoot extremely fast! This not only is deadly, but drains a lot power!
 
-
-	if(!projectile)
-		lasercolor = ""
-		req_access = list(access_security)
-		if(!installation)// if for some reason the turret has no gun (ie, admin spawned) it resorts to basic taser shots
-			projectile = /obj/item/projectile/energy/electrode
-			reqpower = 200
-			sound = 1
-			iconholder = 1
-		else
-			var/obj/item/weapon/gun/energy/E=new installation
-					// All energy-based weapons are applicable
-			if(istype(E, /obj/item/weapon/gun/energy/laser/bluetag))
-				projectile = /obj/item/projectile/bluetag
-				iconholder = null
-				reqpower = 100
-				lasercolor = "b"
-				req_access = list(access_maint_tunnels,access_clown,access_mime)
-
-			else if(istype(E, /obj/item/weapon/gun/energy/laser/redtag))
-				projectile = /obj/item/projectile/redtag
-				iconholder = null
-				reqpower = 100
-				lasercolor = "r"
-				req_access = list(access_maint_tunnels,access_clown,access_mime)
-
-			else if(istype(E, /obj/item/weapon/gun/energy/pulse_rifle))
-				projectile = /obj/item/projectile/beam/pulse
-				iconholder = null
-				reqpower = 700
-
-			else if(istype(E, /obj/item/weapon/gun/energy/staff))
-				projectile = /obj/item/projectile/change
-				iconholder = 1
-				reqpower = 700
-
-			else if(istype(E, /obj/item/weapon/gun/energy/ionrifle))
-				projectile = /obj/item/projectile/ion
-				iconholder = 1
-				reqpower = 700
-
-			else if(istype(E, /obj/item/weapon/gun/energy/taser) || istype(E, /obj/item/weapon/gun/energy/stunrevolver))
-				projectile = /obj/item/projectile/energy/electrode
-				iconholder = 1
-				reqpower = 200
-
-			else if(istype(E, /obj/item/weapon/gun/energy/lasercannon))
-				projectile = /obj/item/projectile/beam/heavylaser
-				iconholder = null
-				reqpower = 600
-
-			else if(istype(E, /obj/item/weapon/gun/energy/decloner))
-				projectile = /obj/item/projectile/energy/declone
-				iconholder = null
-				reqpower = 600
-
-			else if(istype(E, /obj/item/weapon/gun/energy/crossbow/largecrossbow))
-				projectile = /obj/item/projectile/energy/bolt/large
-				iconholder = null
-				reqpower = 125
-
-			else if(istype(E, /obj/item/weapon/gun/energy/crossbow))
-				projectile = /obj/item/projectile/energy/bolt
-				iconholder = null
-				reqpower = 50
-
-			else if(istype(E, /obj/item/weapon/gun/energy/laser))
-				projectile = /obj/item/projectile/beam
-				iconholder = null
-				reqpower = 500
-
-			else // Energy gun shots
-				projectile = /obj/item/projectile/energy/electrode// if it hasn't been emagged, it uses normal taser shots
-				iconholder = 1
-				egun = 1
-				reqpower = 200
-
-	var/obj/item/projectile/A = projectile
-	var/obj/item/weapon/gun/energy/E=new installation
 	if(iconholder)
 		icon_state = "[lasercolor]target_prism"
 	else
 		icon_state = "[lasercolor]orange_target_prism"
 	if(sound)
 		playsound(src.loc, 'Taser.ogg', 75, 1)
-	A = new projectile( loc )
+	var/obj/item/projectile/A
+	if(emagged)
+		A = new eprojectile( loc )
+	else
+		A = new projectile( loc )
 	A.original = target.loc
 	if(!emagged)
 		use_power(reqpower)
 	else
 		use_power((reqpower*2))
-		if(egun)// if it has been emagged, use laser shots
-			projectile = /obj/item/projectile/beam
-			iconholder = null
-			reqpower = 500
-
 		// Shooting Code:
-
-		if(!E.silenced)
-			playsound(src.loc, E.fire_sound, 75, 1)
-		else
-			playsound(src.loc, E.fire_sound, 10, 1)
-
-		del(E)
 	A.current = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
@@ -773,9 +822,10 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 					Turret.installation = src.installation
 					Turret.gun_charge = src.gun_charge
 
-					Turret.cover=new/obj/machinery/porta_turret_cover(src.loc)
-					Turret.cover.Parent_Turret=Turret
-					Turret.cover.name = finish_name
+//					Turret.cover=new/obj/machinery/porta_turret_cover(src.loc)
+//					Turret.cover.Parent_Turret=Turret
+//					Turret.cover.name = finish_name
+					Turret.New()
 					del(src)
 
 			else if(istype(W, /obj/item/weapon/crowbar))
@@ -846,8 +896,8 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 	if (.)
 		return
 	var/dat
-
-	dat += text({"
+	if(!(Parent_Turret.lasercolor))
+		dat += text({"
 <TT><B>Automatic Portable Turret Installation</B></TT><BR><BR>
 Status: []<BR>
 Behaviour controls are [Parent_Turret.locked ? "locked" : "unlocked"]"},
@@ -855,38 +905,6 @@ Behaviour controls are [Parent_Turret.locked ? "locked" : "unlocked"]"},
 "<A href='?src=\ref[src];power=1'>[Parent_Turret.on ? "On" : "Off"]</A>" )
 
 
-	dat += text({"<BR>
-Check for Weapon Authorization: []<BR>
-Check Security Records: []<BR>
-Neutralize Identified Criminals: []<BR>
-Neutralize All Non-Security and Non-Command Personnel: []<BR>
-Neutralize All Unidentified Life Signs: []<BR>"},
-
-"<A href='?src=\ref[src];operation=authweapon'>[Parent_Turret.auth_weapons ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=checkrecords'>[Parent_Turret.check_records ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=shootcrooks'>[Parent_Turret.criminals ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=shootall'>[Parent_Turret.stun_all ? "Yes" : "No"]</A>" ,
-"<A href='?src=\ref[src];operation=checkxenos'>[Parent_Turret.check_anomalies ? "Yes" : "No"]</A>" )
-
-
-	user << browse("<HEAD><TITLE>Automatic Portable Turret Installation</TITLE></HEAD>[dat]", "window=autosec")
-	onclose(user, "autosec")
-	return
-
-/obj/machinery/porta_turret_cover/attack_hand(mob/user as mob)
-	. = ..()
-	if (.)
-		return
-	var/dat
-
-	dat += text({"
-<TT><B>Automatic Portable Turret Installation</B></TT><BR><BR>
-Status: []<BR>
-Behaviour controls are [Parent_Turret.locked ? "locked" : "unlocked"]"},
-
-"<A href='?src=\ref[src];power=1'>[Parent_Turret.on ? "On" : "Off"]</A>" )
-
-	if(!Parent_Turret.locked)
 		dat += text({"<BR>
 Check for Weapon Authorization: []<BR>
 Check Security Records: []<BR>
@@ -899,6 +917,56 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 "<A href='?src=\ref[src];operation=shootcrooks'>[Parent_Turret.criminals ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=shootall'>[Parent_Turret.stun_all ? "Yes" : "No"]</A>" ,
 "<A href='?src=\ref[src];operation=checkxenos'>[Parent_Turret.check_anomalies ? "Yes" : "No"]</A>" )
+	else
+		dat += text({"
+<TT><B>Automatic Portable Turret Installation</B></TT><BR><BR>
+Status: []<BR>"},
+
+"<A href='?src=\ref[src];power=1'>[Parent_Turret.on ? "On" : "Off"]</A>" )
+
+	user << browse("<HEAD><TITLE>Automatic Portable Turret Installation</TITLE></HEAD>[dat]", "window=autosec")
+	onclose(user, "autosec")
+	return
+
+/obj/machinery/porta_turret_cover/attack_hand(mob/user as mob)
+	. = ..()
+	if (.)
+		return
+	var/dat
+	if(!(Parent_Turret.lasercolor))
+		dat += text({"
+<TT><B>Automatic Portable Turret Installation</B></TT><BR><BR>
+Status: []<BR>
+Behaviour controls are [Parent_Turret.locked ? "locked" : "unlocked"]"},
+
+"<A href='?src=\ref[src];power=1'>[Parent_Turret.on ? "On" : "Off"]</A>" )
+
+		if(!Parent_Turret.locked)
+			dat += text({"<BR>
+Check for Weapon Authorization: []<BR>
+Check Security Records: []<BR>
+Neutralize Identified Criminals: []<BR>
+Neutralize All Non-Security and Non-Command Personnel: []<BR>
+Neutralize All Unidentified Life Signs: []<BR>"},
+
+"<A href='?src=\ref[src];operation=authweapon'>[Parent_Turret.auth_weapons ? "Yes" : "No"]</A>",
+"<A href='?src=\ref[src];operation=checkrecords'>[Parent_Turret.check_records ? "Yes" : "No"]</A>",
+"<A href='?src=\ref[src];operation=shootcrooks'>[Parent_Turret.criminals ? "Yes" : "No"]</A>",
+"<A href='?src=\ref[src];operation=shootall'>[Parent_Turret.stun_all ? "Yes" : "No"]</A>" ,
+"<A href='?src=\ref[src];operation=checkxenos'>[Parent_Turret.check_anomalies ? "Yes" : "No"]</A>" )
+	else
+		if(istype(user,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = user
+			if(((Parent_Turret.lasercolor) == "b") && (istype(H.wear_suit, /obj/item/clothing/suit/redtag)))
+				return
+			if(((Parent_Turret.lasercolor) == "r") && (istype(H.wear_suit, /obj/item/clothing/suit/bluetag)))
+				return
+		dat += text({"
+<TT><B>Automatic Portable Turret Installation</B></TT><BR><BR>
+Status: []<BR>"},
+
+"<A href='?src=\ref[src];power=1'>[Parent_Turret.on ? "On" : "Off"]</A>" )
+
 
 
 	user << browse("<HEAD><TITLE>Automatic Portable Turret Installation</TITLE></HEAD>[dat]", "window=autosec")

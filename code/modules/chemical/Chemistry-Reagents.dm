@@ -762,7 +762,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.apply_effect(10,IRRADIATE,0)
+				M.apply_effect(2,IRRADIATE,0)
 				..()
 				return
 
@@ -912,7 +912,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.apply_effect(3,IRRADIATE,0)
+				M.apply_effect(1,IRRADIATE,0)
 				..()
 				return
 
