@@ -74,6 +74,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts, 2), \
 	new/datum/stack_recipe("rack parts", /obj/item/weapon/rack_parts), \
 	new/datum/stack_recipe("closet", /obj/structure/closet, 2, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("filling cabinet", /obj/structure/filingcabinet, 3, one_per_turf = 1, on_floor = 1), \
 	null, \
 	new/datum/stack_recipe("canister", /obj/machinery/portable_atmospherics/canister, 10, one_per_turf = 1, on_floor = 1), \
 	null, \
@@ -84,6 +85,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("wall girders", /obj/structure/girder, 2, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("airlock assembly", /obj/structure/door_assembly, 4, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("machine frame", /obj/machinery/constructable_frame/machine_frame, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("small machine frame", /obj/machinery/small_constructable_frame, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("turret frame", /obj/machinery/porta_turret_construct, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wall machine frame", /obj/machinery/constructable_frame/wallmount_frame, 2, one_per_turf = 1, on_floor = 1), \
 	null, \

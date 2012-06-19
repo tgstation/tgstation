@@ -512,6 +512,7 @@
 #include "code\game\machinery\seed_extractor.dm"
 #include "code\game\machinery\shieldgen.dm"
 #include "code\game\machinery\Sleeper.dm"
+#include "code\game\machinery\small_constructable_frame.dm"
 #include "code\game\machinery\spaceheater.dm"
 #include "code\game\machinery\status_display.dm"
 #include "code\game\machinery\suit_storage_unit.dm"
