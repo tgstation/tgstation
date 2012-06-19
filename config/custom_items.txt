@@ -4,7 +4,7 @@ botanistpower: Walter Brooks: /obj/item/clothing/gloves/fluff/walter_brooks_1
 chinsky: Victor Kaminski: /obj/item/fluff/victor_kaminsky_1
 chinsky: Summer Springfield: /obj/item/weapon/camera_test/fluff/orange
 compactninja: Al Peterson: /obj/item/clothing/head/flatcap
-compactninja: Ysyr Rylias: /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
+compactninja: Lister Black: /obj/item/weapon/storage/pill_bottle/fluff/listermedbottle, /obj/item/weapon/storage/pill_bottle/fluff/listermedbottle
 desiderium: Momiji Inubashiri: /obj/item/clothing/under/fluff/olddressuniform
 desiderium: Rook Maudlin: /obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat, /obj/item/clothing/head/det_hat/fluff/retpolcap, /obj/item/clothing/under/det/fluff/retpoluniform
 deusdactyl: James Girard: /obj/item/clothing/head/secsoft/fluff/swatcap
