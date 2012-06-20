@@ -116,6 +116,11 @@
 	changeling.current << "<b>\red Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</b>"
 	changeling.current << "<B>You must complete the following tasks:</B>"
 
+	if (changeling.current.mind)
+		if (changeling.current.mind.assigned_role == "Clown")
+			changeling.current << "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself."
+			changeling.current.mutations.Remove(CLUMSY)
+
 	var/obj_count = 1
 	for(var/datum/objective/objective in changeling.objectives)
 		changeling.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"

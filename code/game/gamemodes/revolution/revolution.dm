@@ -127,6 +127,13 @@
 /datum/game_mode/proc/equip_revolutionary(mob/living/carbon/human/mob)
 	if(!istype(mob))
 		return
+
+	if (mob.mind)
+		if (mob.mind.assigned_role == "Clown")
+			mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
+			mob.mutations.Remove(CLUMSY)
+
+
 	var/obj/item/device/flash/T = new(mob)
 
 	var/list/slots = list (

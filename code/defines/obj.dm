@@ -1217,6 +1217,7 @@
 		else
 			for (var/obj/item/stack/sheet/stack in locate(src.x,src.y,src.z))
 				S.add(stack,user)
+	..()
 
 /obj/item/stack/sheet/wood
 	name = "wooden planks"
