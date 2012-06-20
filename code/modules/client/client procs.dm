@@ -63,6 +63,7 @@
 		src << "<font color='red'>Error: AllowUpload(): Spam prevention. Please wait [round(time_to_wait/10)] seconds.</font>"
 		return 0
 	fileaccess_timer = world.time + FTPDELAY	*/
+	world.log << "[src] uploaded [filename] of [filelength]"
 	return 1
 
 
