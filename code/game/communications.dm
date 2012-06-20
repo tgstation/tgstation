@@ -123,14 +123,16 @@ var/NUKE_FREQ = 1200 //Randomised on nuke rounds.
 #define TRANSMISSION_RADIO	1
 
 /* filters */
-var/const/RADIO_CHAT = "1"
-var/const/RADIO_ATMOSIA = "2"
-var/const/RADIO_NAVBEACONS = "3"
-var/const/RADIO_AIRLOCK = "4"
-var/const/RADIO_SECBOT = "5"
-var/const/RADIO_MULEBOT = "6"
-var/const/RADIO_MAGNETS = "7"
-var/const/RADIO_POWER = "8"
+var/const/RADIO_TO_AIRALARM = "1"
+var/const/RADIO_FROM_AIRALARM = "2"
+var/const/RADIO_CHAT = "3"
+var/const/RADIO_ATMOSIA = "4"
+var/const/RADIO_NAVBEACONS = "5"
+var/const/RADIO_AIRLOCK = "6"
+var/const/RADIO_SECBOT = "7"
+var/const/RADIO_MULEBOT = "8"
+var/const/RADIO_MAGNETS = "9"
+var/const/RADIO_POWER = "10"
 
 var/global/datum/controller/radio/radio_controller
 
