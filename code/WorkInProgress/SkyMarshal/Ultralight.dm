@@ -8,14 +8,15 @@
 #define UL_I_EXTINGUISHED 1
 #define UL_I_ONZERO 2
 
+#define ul_LightingEnabled 1
+#define ul_LightingResolution 1
+#define ul_Steps 7
+#define ul_FalloffStyle UL_I_FALLOFF_ROUND // Sets the lighting falloff to be either squared or circular.
+#define ul_Layer 10
+
 var
-	ul_LightingEnabled = 1
-	ul_LightingResolution = 1
 	ul_LightingResolutionSqrt = sqrt(ul_LightingResolution)
-	ul_Steps = 7
-	ul_FalloffStyle = UL_I_FALLOFF_ROUND // Sets the lighting falloff to be either squared or circular.
 	ul_TopLuminosity = 0
-	ul_Layer = 10
 	ul_SuppressLightLevelChanges = 0
 
 	list/ul_FastRoot = list(0, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5,
@@ -85,35 +86,35 @@ atom/proc/ul_Illuminate()
 			if(DeltaRed > 0)
 				if(!Affected.MaxRed)
 					Affected.MaxRed = list()
-				var/list/parameter_list = params2list(Affected.MaxRedValues)
-				if(!("[DeltaRed]" in parameter_list))
+					Affected.MaxRedSources = list()
+				if(!(DeltaRed in Affected.MaxRed))
 					Affected.MaxRed.Add(DeltaRed)
-					parameter_list["[DeltaRed]"] = 1
+					Affected.MaxRedSources.Add(1)
 				else
-					parameter_list["[DeltaRed]"] = "[text2num(parameter_list["[DeltaRed]"]) + 1]"
-				Affected.MaxRedValues = list2params(parameter_list)
+					var/list_location = Affected.MaxRed.Find(DeltaRed)
+					Affected.MaxRedSources[list_location]++
 
 			if(DeltaGreen > 0)
 				if(!Affected.MaxGreen)
 					Affected.MaxGreen = list()
-				var/list/parameter_list = params2list(Affected.MaxGreenValues)
-				if(!("[DeltaGreen]" in parameter_list))
+					Affected.MaxGreenSources = list()
+				if(!(DeltaGreen in Affected.MaxGreen))
 					Affected.MaxGreen.Add(DeltaGreen)
-					parameter_list["[DeltaGreen]"] = 1
+					Affected.MaxGreenSources.Add(1)
 				else
-					parameter_list["[DeltaGreen]"] = "[text2num(parameter_list["[DeltaGreen]"]) + 1]"
-				Affected.MaxGreenValues = list2params(parameter_list)
+					var/list_location = Affected.MaxGreen.Find(DeltaGreen)
+					Affected.MaxGreenSources[list_location]++
 
 			if(DeltaBlue > 0)
 				if(!Affected.MaxBlue)
 					Affected.MaxBlue = list()
-				var/list/parameter_list = params2list(Affected.MaxBlueValues)
-				if(!("[DeltaBlue]" in parameter_list))
+					Affected.MaxBlueSources = list()
+				if(!(DeltaBlue in Affected.MaxBlue))
 					Affected.MaxBlue.Add(DeltaBlue)
-					parameter_list["[DeltaBlue]"] = 1
+					Affected.MaxBlueSources.Add(1)
 				else
-					parameter_list["[DeltaBlue]"] = "[text2num(parameter_list["[DeltaBlue]"]) + 1]"
-				Affected.MaxBlueValues = list2params(parameter_list)
+					var/list_location = Affected.MaxBlue.Find(DeltaBlue)
+					Affected.MaxBlueSources[list_location]++
 
 			Affected.ul_UpdateLight()
 
@@ -143,57 +144,42 @@ atom/proc/ul_Extinguish()
 
 			if(DeltaRed > 0)
 				if(Affected.MaxRed)
-					if(findtext(Affected.MaxRedValues, "[DeltaRed]"))
-						var/list/parameter_list = params2list(Affected.MaxRedValues)
-						if(!("[DeltaRed]" in parameter_list))
-							Affected.MaxRed.Remove(DeltaRed)
-							parameter_list.Remove("[DeltaRed]")
-						else if (parameter_list["[DeltaRed]"] != "1")
-							parameter_list["[DeltaRed]"] = "[text2num(parameter_list["[DeltaRed]"]) - 1]"
+					var/list_location = Affected.MaxRed.Find(DeltaRed)
+					if(list_location)
+						if(Affected.MaxRedSources[list_location] > 1)
+							Affected.MaxRedSources[list_location]--
 						else
 							Affected.MaxRed.Remove(DeltaRed)
-							parameter_list.Remove("[DeltaRed]")
-						Affected.MaxRedValues = list2params(parameter_list)
-					else
-						Affected.MaxRed.Remove(DeltaRed)
+							Affected.MaxRedSources.Cut(list_location, list_location + 1)
 					if(!Affected.MaxRed.len)
 						del Affected.MaxRed
+						del Affected.MaxRedSources
 
 			if(DeltaGreen > 0)
 				if(Affected.MaxGreen)
-					if(findtext(Affected.MaxGreenValues, "[DeltaGreen]"))
-						var/list/parameter_list = params2list(Affected.MaxGreenValues)
-						if(!("[DeltaGreen]" in parameter_list))
-							Affected.MaxGreen.Remove(DeltaGreen)
-							parameter_list.Remove("[DeltaGreen]")
-						else if (parameter_list["[DeltaGreen]"] != "1")
-							parameter_list["[DeltaGreen]"] = "[text2num(parameter_list["[DeltaGreen]"]) - 1]"
+					var/list_location = Affected.MaxGreen.Find(DeltaGreen)
+					if(list_location)
+						if(Affected.MaxGreenSources[list_location] > 1)
+							Affected.MaxGreenSources[list_location]--
 						else
 							Affected.MaxGreen.Remove(DeltaGreen)
-							parameter_list.Remove("[DeltaGreen]")
-						Affected.MaxGreenValues = list2params(parameter_list)
-					else
-						Affected.MaxGreen.Remove(DeltaGreen)
+							Affected.MaxGreenSources.Cut(list_location, list_location + 1)
 					if(!Affected.MaxGreen.len)
 						del Affected.MaxGreen
+						del Affected.MaxGreenSources
 
 			if(DeltaBlue > 0)
 				if(Affected.MaxBlue)
-					if(findtext(Affected.MaxBlueValues, "[DeltaBlue]"))
-						var/list/parameter_list = params2list(Affected.MaxBlueValues)
-						if(!("[DeltaBlue]" in parameter_list))
-							Affected.MaxBlue.Remove(DeltaBlue)
-							parameter_list.Remove("[DeltaBlue]")
-						else if (parameter_list["[DeltaBlue]"] != "1")
-							parameter_list["[DeltaBlue]"] = "[text2num(parameter_list["[DeltaBlue]"]) - 1]"
+					var/list_location = Affected.MaxBlue.Find(DeltaBlue)
+					if(list_location)
+						if(Affected.MaxBlueSources[list_location] > 1)
+							Affected.MaxBlueSources[list_location]--
 						else
 							Affected.MaxBlue.Remove(DeltaBlue)
-							parameter_list.Remove("[DeltaBlue]")
-						Affected.MaxBlueValues = list2params(parameter_list)
-					else
-						Affected.MaxBlue.Remove(DeltaBlue)
+							Affected.MaxBlueSources.Cut(list_location, list_location + 1)
 					if(!Affected.MaxBlue.len)
 						del Affected.MaxBlue
+						del Affected.MaxBlueSources
 
 			Affected.ul_UpdateLight()
 
@@ -281,32 +267,28 @@ atom/proc/ul_LightLevelChanged()
 	return
 
 atom/New()
-	..()
+	. = ..()
 	if(ul_IsLuminous())
 		spawn(1)
 			ul_Illuminate()
-	return
 
 atom/Del()
 	if(ul_IsLuminous())
 		ul_Extinguish()
-	..()
+	. = ..()
 
 atom/movable/Move()
-	if(ul_IsLuminous())
-		ul_Extinguish()
-		..()
-		ul_Illuminate()
-	else
-		..()
+	ul_Extinguish()
+	. = ..()
+	ul_Illuminate()
 
 
 turf/var/list/MaxRed
 turf/var/list/MaxGreen
 turf/var/list/MaxBlue
-turf/var/MaxRedValues
-turf/var/MaxGreenValues
-turf/var/MaxBlueValues
+turf/var/list/MaxRedSources
+turf/var/list/MaxGreenSources
+turf/var/list/MaxBlueSources
 
 turf/proc/ul_GetRed()
 	if(MaxRed)
@@ -405,3 +387,14 @@ area/proc/ul_Prep()
 	//world.log << tag
 
 	return
+
+#undef UL_I_FALLOFF_SQUARE
+#undef UL_I_FALLOFF_ROUND
+#undef UL_I_LIT
+#undef UL_I_EXTINGUISHED
+#undef UL_I_ONZERO
+#undef ul_LightingEnabled
+#undef ul_LightingResolution
+#undef ul_Steps
+#undef ul_FalloffStyle
+#undef ul_Layer

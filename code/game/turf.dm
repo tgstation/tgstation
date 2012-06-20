@@ -193,34 +193,27 @@
 	W.opacity = 1
 	W.ul_SetOpacity(0)
 	W.levelupdate()
-	air_master.tiles_to_update |= W
 
-	var/turf/simulated/north = get_step(W,NORTH)
-	var/turf/simulated/south = get_step(W,SOUTH)
-	var/turf/simulated/east = get_step(W,EAST)
-	var/turf/simulated/west = get_step(W,WEST)
+	if(W && W.air)
+		var/new_ox = 0
+		var/new_n2 = 0
+		var/new_co2 = 0
+		var/new_tx = 0
+		for(var/direction in cardinal)
+			var/turf/T = get_step(src, direction)
+			if(istype(T))
+				var/datum/gas_mixture/G = T.return_air()
+				new_ox += G.oxygen
+				new_n2 += G.nitrogen
+				new_co2 += G.carbon_dioxide
+				new_tx += G.toxins
 
-	if(istype(north)) air_master.tiles_to_update |= north
-	if(istype(south)) air_master.tiles_to_update |= south
-	if(istype(east)) air_master.tiles_to_update |= east
-	if(istype(west)) air_master.tiles_to_update |= west
-	return W
+		W.air.nitrogen = new_n2/4
+		W.air.oxygen = new_ox/4
+		W.air.carbon_dioxide = new_co2/4
+		W.air.toxins = new_tx/4
+		W.air.update_values()
 
-/turf/proc/ReplaceWithAirlessPlating()
-	var/prior_icon = icon_old
-	var/old_dir = dir
-
-	for(var/obj/structure/lattice/L in locate(src.x, src.y, src.z))
-		del(L)
-	var/turf/simulated/floor/plating/airless/W = new /turf/simulated/floor/plating/airless( locate(src.x, src.y, src.z) )
-
-	W.RemoveLattice()
-	W.dir = old_dir
-	if(prior_icon) W.icon_state = prior_icon
-	else W.icon_state = "plating"
-	W.opacity = 1
-	W.ul_SetOpacity(0)
-	W.levelupdate()
 	air_master.tiles_to_update |= W
 
 	var/turf/simulated/north = get_step(W,NORTH)

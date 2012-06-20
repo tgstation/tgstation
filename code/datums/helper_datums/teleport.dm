@@ -114,7 +114,7 @@
 
 		// Remove any luminosity etc.
 		var/prevlum = teleatom.luminosity
-		teleatom.luminosity = 0
+		teleatom.ul_SetLuminosity(0)
 
 		if(force_teleport)
 			teleatom.forceMove(destturf)

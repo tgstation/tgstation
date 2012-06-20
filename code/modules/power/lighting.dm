@@ -123,7 +123,7 @@
 	var/oldlum = luminosity
 
 	//luminosity = on * brightness
-	ul_SetLuminosity(on * brightness, on * brightness, ( fitting != "bulb" ? on * brightness  : round(on*brightness/2) ) )		// *DAL*
+	ul_SetLuminosity(on * brightness, on * brightness, ( fitting != "bulb" ? on * brightness  : round(on*brightness/2 + 1)  ) )		// *DAL*
 
 	// if the state changed, inc the switching counter
 	if(oldlum != luminosity)

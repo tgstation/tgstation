@@ -28,24 +28,22 @@
 			requires_power = 1
 			always_unpowered = 1
 			LightLevels = list("Red" = 2, "Green" = 2, "Blue" = 3)
-			ul_SetLuminosity(2,2,3)
 			power_light = 0
 			power_equip = 0
 			power_environ = 0
 			//has_gravity = 0    // Space has gravity.  Because.. because.
 
-		else if(!requires_power)
+		if(!requires_power)
 			power_light = 0//rastaf0
 			power_equip = 0//rastaf0
 			power_environ = 0//rastaf0
-			if(!ul_Lighting)
-				luminosity = 1
+			luminosity = 1
+			ul_Lighting = 0
 		else
 			luminosity = 0
 			area_lights_luminosity = rand(6,7)
 		if(LightLevels)
 			ul_Light()
-			//ul_SetLuminosity(0)		// *DAL*
 
 
 

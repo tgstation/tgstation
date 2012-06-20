@@ -28,14 +28,14 @@
 		if(src.loc == user)
 			user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + brightness_on, user.LuminosityBlue)
 		else if (isturf(src.loc))
-			src.ul_SetLuminosity(brightness_on, brightness_on, 0)
+			ul_SetLuminosity(brightness_on, brightness_on, 0)
 
 	else
 		icon_state = icon_off
 		if(src.loc == user)
 			user.ul_SetLuminosity(user.LuminosityRed - brightness_on, user.LuminosityGreen - brightness_on, user.LuminosityBlue)
 		else if (isturf(src.loc))
-			src.ul_SetLuminosity(0)
+			ul_SetLuminosity(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
 //	if(!isturf(user.loc))

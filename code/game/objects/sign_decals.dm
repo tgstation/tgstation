@@ -7,7 +7,7 @@
 		return
 	proc/ChangeSign(var/Text)
 		src.icon_state = "[Text]"
-		//ul_SetLuminosity(4)
+		ul_SetLuminosity(3,0,0)
 		return
 
 /obj/effect/sign/securearea/ex_act(severity)

@@ -174,7 +174,7 @@
 
 	New()
 		..()
-		ul_SetLuminosity(3)
+		ul_SetLuminosity(0,3,0)
 
 /obj/structure/mineral_door/sandstone
 	mineralType = "sandstone"

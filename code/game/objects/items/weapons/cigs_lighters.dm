@@ -491,5 +491,5 @@ ZIPPO
 	dropped(mob/user)
 		if(lit)
 			user.ul_SetLuminosity(user.LuminosityRed - 2, user.LuminosityGreen - 1, user.LuminosityBlue)
-			ul_SetLuminosity(2)
+			ul_SetLuminosity(2,1,0)
 		return
