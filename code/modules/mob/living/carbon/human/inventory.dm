@@ -451,8 +451,10 @@
 				message = text("\red <B>[] is trying to inject []!</B>", source, target)
 			if("pill")
 				message = text("\red <B>[] is trying to force [] to swallow []!</B>", source, target, item)
-			if("fuel")
-				message = text("\red [source] is trying to force [target] to eat the [item:content]!")
+//			dear god this is all horrible, godspeed carn ;-;
+//			mport: i dunno if you care about this, but it's related to AM.	-Pete
+//			if("fuel")
+//				message = text("\red [source] is trying to force [target] to eat the [item:content]!")
 			if("drink")
 				message = text("\red <B>[] is trying to force [] to swallow a gulp of []!</B>", source, target, item)
 			if("dnainjector")
