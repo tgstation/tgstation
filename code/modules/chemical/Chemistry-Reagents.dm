@@ -860,7 +860,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.radiation += 3
+				M.apply_effect(10,IRRADIATE,0)
 
 				// radium may increase your chances to cure a disease
 				if(istype(M,/mob/living/carbon)) // make sure to only use it on carbon mobs
@@ -943,7 +943,7 @@ datum
 				if(isrobot(M) || isAI(M)) return // Mutagen doesn't do anything to robutts!
 				if(!M) M = holder.my_atom
 				if(prob(33))
-					M.radiation += 1
+					M.apply_effect(10,IRRADIATE,0)
 				..()
 				return
 
@@ -1026,7 +1026,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.radiation += 1
+				M.apply_effect(3,IRRADIATE,0)
 				..()
 				return
 

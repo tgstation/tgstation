@@ -15,17 +15,40 @@
 	internal_damage_threshold = 35
 	max_equip = 3
 
+/obj/mecha/combat/gygax/dark
+	desc = "A lightweight exosuit used by Nanotrasen Death Squads. A significantly upgraded Gygax security mech."
+	name = "Dark Gygax"
+	icon_state = "darkgygax"
+	health = 400
+	deflect_chance = 25
+	damage_absorption = list("brute"=0.6,"fire"=0.8,"bullet"=0.6,"laser"=0.5,"energy"=0.65,"bomb"=0.8)
+	max_temperature = 4500
+	overload_coeff = 1
+	wreckage = /obj/effect/decal/mecha_wreckage/gygax/dark
+	max_equip = 4
+	step_energy_drain = 5
 
-
-/*
-/obj/mecha/combat/gygax/New()
+/obj/mecha/combat/gygax/dark/New()
 	..()
-	weapons += new /datum/mecha_weapon/taser(src)
-	weapons += new /datum/mecha_weapon/laser(src)
-	weapons += new /datum/mecha_weapon/missile_rack/flashbang(src)
-	selected_weapon = weapons[1]
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/teleporter
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
+	ME.attach(src)
 	return
-*/
+
+/obj/mecha/combat/gygax/dark/add_cell(var/obj/item/weapon/cell/C=null)
+	if(C)
+		C.forceMove(src)
+		cell = C
+		return
+	cell = new(src)
+	cell.charge = 30000
+	cell.maxcharge = 30000
+
 
 /obj/mecha/combat/gygax/verb/overload()
 	set category = "Exosuit Interface"

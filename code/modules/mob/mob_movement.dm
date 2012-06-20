@@ -40,10 +40,7 @@
 /client/Southwest()
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
-		if(!C.get_active_hand())
-			usr << "\red You have nothing in your hand to throw."
-			return
-		toggle_throw_mode()
+		C.toggle_throw_mode()
 	else
 		usr << "\red This mob type cannot throw items."
 	return
@@ -119,7 +116,75 @@
 	set hidden = 1
 	if(istype(mob, /mob/living/carbon))
 		mob:swap_hand()
+	if(istype(mob,/mob/living/silicon/robot))//Oh nested logic loops, is there anything you can't do? -Sieve
+		var/mob/living/silicon/robot/R = mob
+		if(!R.module_active)
+			if(!R.module_state_1)
+				if(!R.module_state_2)
+					if(!R.module_state_3)
+						return
+					else
+						R:inv1.icon_state = "inv1"
+						R:inv2.icon_state = "inv2"
+						R:inv3.icon_state = "inv3 +a"
+						R:module_active = R:module_state_3
+				else
+					R:inv1.icon_state = "inv1"
+					R:inv2.icon_state = "inv2 +a"
+					R:inv3.icon_state = "inv3"
+					R:module_active = R:module_state_2
+			else
+				R:inv1.icon_state = "inv1 +a"
+				R:inv2.icon_state = "inv2"
+				R:inv3.icon_state = "inv3"
+				R:module_active = R:module_state_1
+		else
+			if(R.module_active == R.module_state_1)
+				if(!R.module_state_2)
+					if(!R.module_state_3)
+						return
+					else
+						R:inv1.icon_state = "inv1"
+						R:inv2.icon_state = "inv2"
+						R:inv3.icon_state = "inv3 +a"
+						R:module_active = R:module_state_3
+				else
+					R:inv1.icon_state = "inv1"
+					R:inv2.icon_state = "inv2 +a"
+					R:inv3.icon_state = "inv3"
+					R:module_active = R:module_state_2
+			else if(R.module_active == R.module_state_2)
+				if(!R.module_state_3)
+					if(!R.module_state_1)
+						return
+					else
+						R:inv1.icon_state = "inv1 +a"
+						R:inv2.icon_state = "inv2"
+						R:inv3.icon_state = "inv3"
+						R:module_active = R:module_state_1
+				else
+					R:inv1.icon_state = "inv1"
+					R:inv2.icon_state = "inv2"
+					R:inv3.icon_state = "inv3 +a"
+					R:module_active = R:module_state_3
+			else if(R.module_active == R.module_state_3)
+				if(!R.module_state_1)
+					if(!R.module_state_2)
+						return
+					else
+						R:inv1.icon_state = "inv1"
+						R:inv2.icon_state = "inv2 +a"
+						R:inv3.icon_state = "inv3"
+						R:module_active = R:module_state_2
+				else
+					R:inv1.icon_state = "inv1 +a"
+					R:inv2.icon_state = "inv2"
+					R:inv3.icon_state = "inv3"
+					R:module_active = R:module_state_1
+			else
+				return
 	return
+
 
 
 /client/verb/attack_self()
@@ -132,10 +197,12 @@
 
 /client/verb/toggle_throw_mode()
 	set hidden = 1
-	if(!istype(mob, /mob/living/carbon))	return
-	if((mob.stat || mob.restrained()) || !(isturf(mob.loc)))	return
-	mob:toggle_throw_mode()
-	return
+	if(!istype(mob, /mob/living/carbon))
+		return
+	if (!mob.stat && isturf(mob.loc) && !mob.restrained())
+		mob:toggle_throw_mode()
+	else
+		return
 
 
 /client/verb/drop_item()
@@ -220,7 +287,8 @@
 	if(mob.stat==2)	return
 
 	if(isAI(mob))	return AIMove(n,direct,mob)
-	if(mob.monkeyizing)  return //This is sota the goto stop mobs from moving var
+
+	if(mob.monkeyizing)	return//This is sota the goto stop mobs from moving var
 
 	if(mob.incorporeal_move)//Move though walls
 		Process_Incorpmove(direct)

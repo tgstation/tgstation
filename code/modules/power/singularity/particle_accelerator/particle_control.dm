@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /obj/machinery/particle_accelerator/control_box
 	name = "Particle Accelerator Control Computer"
@@ -13,10 +13,10 @@
 	active_power_usage = 10000
 	construction_state = 0
 	active = 0
+	dir = 1
 	var/list/obj/structure/particle_accelerator/connected_parts
 	var/assembled = 0
 	var/parts = null
-
 
 	New()
 		connected_parts = list()
@@ -26,7 +26,6 @@
 	attack_hand(mob/user as mob)
 		if(construction_state >= 3)
 			interact(user)
-
 
 	update_state()
 		if(construction_state < 3)
@@ -47,7 +46,10 @@
 			icon_state = "[reference]p1"
 		else
 			if(use_power)
-				icon_state = "[reference]p"
+				if(assembled)
+					icon_state = "[reference]p"
+				else
+					icon_state = "u[reference]p"
 			else
 				switch(construction_state)
 					if(0)
@@ -137,6 +139,8 @@
 
 	proc
 		part_scan()
+			for(var/obj/structure/particle_accelerator/fuel_chamber/F in orange(1,src))
+				src.dir = F.dir
 			connected_parts = list()
 			var/tally = 0
 			var/ldir = turn(dir,-90)

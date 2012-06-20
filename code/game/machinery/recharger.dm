@@ -1,94 +1,85 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 obj/machinery/recharger
-	anchored = 1
+	name = "recharger"
 	icon = 'stationobjs.dmi'
 	icon_state = "recharger0"
-	name = "recharger"
+	anchored = 1
 	use_power = 1
 	idle_power_usage = 4
 	active_power_usage = 250
+	var/obj/item/weapon/charging = null
 
-	var/obj/item/weapon/gun/energy/charging = null
-	var/obj/item/weapon/melee/baton/charging2 = null
+obj/machinery/recharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
+	if(issilicon(user))
+		return
 
-	attackby(obj/item/weapon/G as obj, mob/user as mob)
-		if(issilicon(user))
+	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton))
+		if(charging)
 			return
-
-		if (istype(G, /obj/item/weapon/gun/energy))
-			if (src.charging || src.charging2)
-				return
-			if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
-				user << "Your gun's recharge port was removed to make room for a miniaturized reactor."
-				return
-			if (istype(G, /obj/item/weapon/gun/energy/staff))
-				user << "It's a wooden staff, not a gun!"
-				return
-			var/area/a = loc.loc // Gets our locations location, like a dream within a dream
-			if(!isarea(a))
-				return
-			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				user << "\red \The [src] blinks red as you try to insert the item!"
-				return
-			user.drop_item()
-			G.loc = src
-			src.charging = G
-			use_power = 2
-		else if (istype(G, /obj/item/weapon/melee/baton))
-			if (src.charging || src.charging2)
-				return
-			user.drop_item()
-			G.loc = src
-			src.charging2 = G
-			use_power = 2
-		else if(istype(G, /obj/item/weapon/wrench))
-			if (src.charging || src.charging2)
-				user << "\red Remove the weapon first!"
-				return
-			anchored = !anchored
-			user << "You [anchored ? "attach" : "detach"] the recharger [anchored ? "to" : "from"] the ground"
-			playsound(src.loc, 'Ratchet.ogg', 75, 1)
-
-	attack_hand(mob/user as mob)
-		src.add_fingerprint(user)
-		if(ishuman(user))
-			if(istype(user:gloves, /obj/item/clothing/gloves/space_ninja)&&user:gloves:candrain&&!user:gloves:draining)
-				call(/obj/item/clothing/gloves/space_ninja/proc/drain)("MACHINERY",src,user:wear_suit)
-				return
-
-		if (src.charging)
-			src.charging.update_icon()
-			src.charging.loc = src.loc
-			src.charging = null
-			use_power = 1
-		if(src.charging2)
-			src.charging2.update_icon()
-			src.charging2.loc = src.loc
-			src.charging2 = null
-			use_power = 1
-
-	attack_paw(mob/user as mob)
-		if ((ticker && ticker.mode.name == "monkey"))
-			return src.attack_hand(user)
-
-	process()
-		if(stat & (NOPOWER|BROKEN) || !anchored)
+		var/area/a = get_area(src)
+		if(!isarea(a))
 			return
+		if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
+			user << "\red The [name] blinks red as you try to insert the item!"
+			return
+		if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
+			user << "<span class='notice'>Your gun's recharge port was removed to make room for a miniaturized reactor.</span>"
+			return
+		if (istype(G, /obj/item/weapon/gun/energy/staff))
+			return
+		user.drop_item()
+		G.loc = src
+		charging = G
+		use_power = 2
+		update_icon()
+	else if(istype(G, /obj/item/weapon/wrench))
+		if(charging)
+			user << "\red Remove the weapon first!"
+			return
+		anchored = !anchored
+		user << "You [anchored ? "attached" : "detached"] the recharger."
+		playsound(loc, 'Ratchet.ogg', 75, 1)
 
-		if (src.charging)
-			if (src.charging.power_supply.charge < src.charging.power_supply.maxcharge)
-				src.charging.power_supply.give(100)
-				src.icon_state = "recharger1"
+obj/machinery/recharger/attack_hand(mob/user as mob)
+	add_fingerprint(user)
+
+	if(charging)
+		charging.update_icon()
+		charging.loc = loc
+		charging = null
+		use_power = 1
+		update_icon()
+
+obj/machinery/recharger/attack_paw(mob/user as mob)
+	if((ticker && ticker.mode.name == "monkey"))
+		return attack_hand(user)
+
+obj/machinery/recharger/process()
+	if(stat & (NOPOWER|BROKEN) || !anchored)
+		return
+
+	if(charging)
+		if(istype(charging, /obj/item/weapon/gun/energy))
+			var/obj/item/weapon/gun/energy/E = charging
+			if(E.power_supply.charge < E.power_supply.maxcharge)
+				E.power_supply.give(100)
+				icon_state = "recharger1"
 				use_power(250)
 			else
-				src.icon_state = "recharger2"
-		else if (src.charging2)
-			if (src.charging2.charges < src.charging2.maximum_charges)
-				src.charging2.charges++
-				src.icon_state = "recharger1"
-				use_power(250)
+				icon_state = "recharger2"
+			return
+		if(istype(charging, /obj/item/weapon/melee/baton))
+			var/obj/item/weapon/melee/baton/B = charging
+			if(B.charges < initial(B.charges))
+				B.charges++
+				icon_state = "recharger1"
+				use_power(150)
 			else
-				src.icon_state = "recharger2"
-		else
-			src.icon_state = "recharger0"
+				icon_state = "recharger2"
+
+obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
+	if(charging)
+		icon_state = "recharger1"
+	else
+		icon_state = "recharger0"

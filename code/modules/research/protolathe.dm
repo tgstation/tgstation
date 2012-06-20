@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:06
-
 /*
 Protolathe
 
@@ -13,6 +11,7 @@ Note: Must be placed west/left of and R&D console to function.
 	name = "Protolathe"
 	icon_state = "protolathe"
 	flags = OPENCONTAINER
+
 	var/max_material_storage = 100000 //All this could probably be done better with a list but meh.
 	var/m_amount = 0.0
 	var/g_amount = 0.0
@@ -84,31 +83,31 @@ Note: Must be placed west/left of and R&D console to function.
 					I.loc = src.loc
 				if(m_amount >= 3750)
 					var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
-					G.amount = round(m_amount / 3750)
+					G.amount = round(m_amount / G.perunit)
 				if(g_amount >= 3750)
 					var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
-					G.amount = round(g_amount / 3750)
-				if(plasma_amount >= 3750)
+					G.amount = round(g_amount / G.perunit)
+				if(plasma_amount >= 2000)
 					var/obj/item/stack/sheet/plasma/G = new /obj/item/stack/sheet/plasma(src.loc)
-					G.amount = round(plasma_amount / 3750)
-				if(silver_amount >= 3750)
+					G.amount = round(plasma_amount / G.perunit)
+				if(silver_amount >= 2000)
 					var/obj/item/stack/sheet/silver/G = new /obj/item/stack/sheet/silver(src.loc)
-					G.amount = round(silver_amount / 3750)
-				if(gold_amount >= 3750)
+					G.amount = round(silver_amount / G.perunit)
+				if(gold_amount >= 2000)
 					var/obj/item/stack/sheet/gold/G = new /obj/item/stack/sheet/gold(src.loc)
-					G.amount = round(gold_amount / 3750)
-				if(uranium_amount >= 3750)
+					G.amount = round(gold_amount / G.perunit)
+				if(uranium_amount >= 2000)
 					var/obj/item/stack/sheet/uranium/G = new /obj/item/stack/sheet/uranium(src.loc)
-					G.amount = round(uranium_amount / 3750)
-				if(diamond_amount >= 3750)
+					G.amount = round(uranium_amount / G.perunit)
+				if(diamond_amount >= 2000)
 					var/obj/item/stack/sheet/diamond/G = new /obj/item/stack/sheet/diamond(src.loc)
-					G.amount = round(diamond_amount / 3750)
-				if(clown_amount >= 3750)
+					G.amount = round(diamond_amount / G.perunit)
+				if(clown_amount >= 2000)
 					var/obj/item/stack/sheet/clown/G = new /obj/item/stack/sheet/clown(src.loc)
-					G.amount = round(clown_amount / 3750)
-				if(adamantine_amount >= 3750)
+					G.amount = round(clown_amount / G.perunit)
+				if(adamantine_amount >= 2000)
 					var/obj/item/stack/sheet/adamantine/G = new /obj/item/stack/sheet/adamantine(src.loc)
-					G.amount = round(adamantine_amount / 3750)
+					G.amount = round(adamantine_amount / G.perunit)
 				del(src)
 				return 1
 			else
@@ -131,21 +130,18 @@ Note: Must be placed west/left of and R&D console to function.
 			user << "\red The protolathe's material bin is full. Please remove material before adding more."
 			return 1
 
-		var/obj/item/stack/stack = O
-		var/amount = 1
-		var/title = "[stack.name]: [stack.amount] sheet\s left"
-		switch(alert(title, "How many sheets do you want to load?", "one", "max", "cancel", null))
-			if("one")
-				amount = 1
-			if("max")
-				amount = min(stack.amount, round((max_material_storage-TotalMaterials())/3750))
-			else
-				return 1
+		var/obj/item/stack/sheet/stack = O
+		var/amount = round(input("How many sheets do you want to add?") as num)
+		if(amount < 0)
+			amount = 0
+		if(amount == 0)
+			return
+		if(amount > stack.amount)
+			amount = min(stack.amount, round((max_material_storage-TotalMaterials())/stack.perunit))
 
-		if(istype(O, /obj/item/stack/sheet/glass))
-			flick("protolathe_r",src)//plays glass insertion animation
-		else
-			flick("protolathe_o",src)//plays metal insertion animation
+		src.overlays += "protolathe_[stack.name]"
+		sleep(10)
+		src.overlays -= "protolathe_[stack.name]"
 
 		icon_state = "protolathe"
 		busy = 1
@@ -153,25 +149,24 @@ Note: Must be placed west/left of and R&D console to function.
 		spawn(16)
 			user << "\blue You add [amount] sheets to the [src.name]."
 			icon_state = "protolathe"
-			flick("protolathe_o",src)
 			if(istype(stack, /obj/item/stack/sheet/metal))
 				m_amount += amount * 3750
 			else if(istype(stack, /obj/item/stack/sheet/glass))
 				g_amount += amount * 3750
 			else if(istype(stack, /obj/item/stack/sheet/gold))
-				gold_amount += amount * 3750
+				gold_amount += amount * 2000
 			else if(istype(stack, /obj/item/stack/sheet/silver))
-				silver_amount += amount * 3750
+				silver_amount += amount * 2000
 			else if(istype(stack, /obj/item/stack/sheet/plasma))
-				plasma_amount += amount * 3750
+				plasma_amount += amount * 2000
 			else if(istype(stack, /obj/item/stack/sheet/uranium))
-				uranium_amount += amount * 3750
+				uranium_amount += amount * 2000
 			else if(istype(stack, /obj/item/stack/sheet/diamond))
-				diamond_amount += amount * 3750
+				diamond_amount += amount * 2000
 			else if(istype(stack, /obj/item/stack/sheet/clown))
-				clown_amount += amount * 3750
+				clown_amount += amount * 2000
 			else if(istype(stack, /obj/item/stack/sheet/adamantine))
-				adamantine_amount += amount * 3750
+				adamantine_amount += amount * 2000
 			stack.use(amount)
 			busy = 0
 			src.updateUsrDialog()

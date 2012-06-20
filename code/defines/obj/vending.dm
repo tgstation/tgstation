@@ -180,7 +180,7 @@
 //	product_hideamt = "3;4;6"
 	hidden_prices = "3;3;2"
 	points = 25
-	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?"
+//	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
 	charge_type = "medical"
 
 /obj/machinery/vending/wallmed1
@@ -310,7 +310,7 @@
 	product_ads = "For Tsar and Country.;Have you fulfilled your nutrition quota today?;Very nice!;We are simple people, for this is all we eat.;If there is a person, there is a problem. If there is no person, then there is no problem."
 	charge_type = "soda"
 
-/obj/machinery/vending/tool
+/obj/machinery/vending/tool//Who did this and why is it here? I don't even
 	name = "YouTool"
 	desc = "Tools for tools."
 	icon_state = "tool"
@@ -325,6 +325,22 @@
 	hidden_prices = "4;4"
 	product_coin = "/obj/item/clothing/gloves/yellow"
 	product_coin_amt = "1"
+	charge_type = "engineering"
+
+/obj/machinery/vending/engivend//Source of tools and what have you for Engineering (Needed on account of the public auto-lathe being removed) -Sieve
+	name = "Engi-Vend"
+	desc = "Spare tool vending. What? Did you expect some witty description?"
+	icon_state = "engivend"
+	icon_deny = "engivend-deny"
+	req_access_txt = "10" //Engineering access
+	product_paths = "/obj/item/weapon/cable_coil/random;/obj/item/weapon/crowbar;/obj/item/weapon/weldingtool/largetank;/obj/item/weapon/wirecutters;/obj/item/weapon/wrench;/obj/item/device/t_scanner;/obj/item/device/multitool;/obj/item/weapon/airlock_electronics;/obj/item/weapon/module/power_control"
+//	product_amounts = "10;5;3;5;5;5;3;5;5"
+	product_prices = "1;2;3;2;2;2;3;2;2"
+	product_hidden = "/obj/item/weapon/weldingtool/hugetank;/obj/item/clothing/gloves/fyellow"
+//	product_hideamt = "2;2"
+	hidden_prices = "4;4"
+	product_coin = "/obj/item/weapon/storage/belt/utility"
+	product_coin_amt = "3"
 	charge_type = "engineering"
 
 /obj/machinery/vending/genetics

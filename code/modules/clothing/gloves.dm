@@ -165,7 +165,7 @@
 	color="yellow"
 
 	New()
-		siemens_coefficient = pick(0,0,0.25,0.25,0.5,0.5,1)
+		siemens_coefficient = pick(0,0,0.25,0.5,0.5,0.75,1.5)
 		heat_transfer_coefficient = pick(0.01,0.1,0.25,0.25,0.5)
 
 /obj/item/clothing/gloves/captain

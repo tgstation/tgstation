@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/item/device/assembly/signaler
 	name = "Remote Signaling Device"
@@ -77,9 +77,9 @@
 	Topic(href, href_list)
 		..()
 
-		if(get_dist(src, usr) > 1)
-			usr << browse(null, "window=signal")
-			onclose(usr, "signal")
+		if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+			usr << browse(null, "window=radio")
+			onclose(usr, "radio")
 			return
 
 		if (href_list["freq"])

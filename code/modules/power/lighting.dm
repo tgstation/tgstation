@@ -488,6 +488,15 @@
 	g_amt = 100
 	brightness = 5
 
+/obj/item/weapon/light/bulb/fire
+	name = "fire bulb"
+	desc = "A replacement fire bulb."
+	icon_state = "fbulb"
+	base_state = "fbulb"
+	item_state = "egg4"
+	g_amt = 100
+	brightness = 5
+
 // update the icon state and description of the light
 /obj/item/weapon/light
 	proc/update()

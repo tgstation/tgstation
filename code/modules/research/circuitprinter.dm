@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
-
 /*///////////////Circuit Imprinter (By Darem)////////////////////////
 	Used to print new circuit boards (for computers and similar systems) and AI modules. Each circuit board pattern are stored in
 a /datum/desgin on the linked R&D console. You can then print them out in a fasion similar to a regular lathe. However, instead of
@@ -81,6 +79,12 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 				if(g_amount >= 3750)
 					var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
 					G.amount = round(g_amount / 3750)
+				if(gold_amount >= 2000)
+					var/obj/item/stack/sheet/gold/G = new /obj/item/stack/sheet/gold(src.loc)
+					G.amount = round(gold_amount / 2000)
+				if(diamond_amount >= 2000)
+					var/obj/item/stack/sheet/diamond/G = new /obj/item/stack/sheet/diamond(src.loc)
+					G.amount = round(diamond_amount / 2000)
 				del(src)
 				return 1
 			else
@@ -101,20 +105,18 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		if (busy)
 			user << "\red The [name] is busy. Please wait for completion of previous operation."
 			return 1
-		if ((TotalMaterials() + 3750) > max_material_amount)
+		var/obj/item/stack/sheet/stack = O
+		if ((TotalMaterials() + stack.perunit) > max_material_amount)
 			user << "\red The [name] is full. Please remove glass from the protolathe in order to insert more."
 			return 1
 
-		var/obj/item/stack/stack = O
-		var/amount = 1
-		var/title = "[stack.name]: [stack.amount] sheet\s left"
-		switch(alert(title, "How many sheets do you want to load?", "one", "max", "cancel", null))
-			if("one")
-				amount = 1
-			if("max")
-				amount = min(stack.amount, round((max_material_amount-TotalMaterials())/3750))
-			else
-				return 1
+		var/amount = round(input("How many sheets do you want to add?") as num)
+		if(amount < 0)
+			amount = 0
+		if(amount == 0)
+			return
+		if(amount > stack.amount)
+			amount = min(stack.amount, round((max_material_amount-TotalMaterials())/stack.perunit))
 
 		busy = 1
 		use_power(max(1000, (3750*amount/10)))
@@ -123,9 +125,9 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			if(istype(stack, /obj/item/stack/sheet/glass))
 				g_amount += amount * 3750
 			else if(istype(stack, /obj/item/stack/sheet/gold))
-				gold_amount += amount * 3750
+				gold_amount += amount * 2000
 			else if(istype(stack, /obj/item/stack/sheet/diamond))
-				diamond_amount += amount * 3750
+				diamond_amount += amount * 2000
 			stack.use(amount)
 			busy = 0
 			src.updateUsrDialog()
