@@ -123,7 +123,7 @@
 	var/oldlum = luminosity
 
 	//luminosity = on * brightness
-	ul_SetLuminosity(on * brightness, on * brightness, ( fitting != "bulb" ? on * brightness  : round(on*brightness/2) ) )		// *DAL*
+	ul_SetLuminosity(on * brightness, on * brightness, ( fitting != "bulb" ? on * brightness  : round(on*brightness/2 + 1)  ) )		// *DAL*
 
 	// if the state changed, inc the switching counter
 	if(oldlum != luminosity)
@@ -485,6 +485,15 @@
 	icon_state = "lbulb"
 	base_state = "lbulb"
 	item_state = "contvapour"
+	g_amt = 100
+	brightness = 5
+
+/obj/item/weapon/light/bulb/fire
+	name = "fire bulb"
+	desc = "A replacement fire bulb."
+	icon_state = "fbulb"
+	base_state = "fbulb"
+	item_state = "egg4"
 	g_amt = 100
 	brightness = 5
 

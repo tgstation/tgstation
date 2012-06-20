@@ -127,16 +127,16 @@ obj
 							//Change icon depending on the fuel, and thus temperature.
 							if(firelevel > 6)
 								icon_state = "3"
-								if(LuminosityRed != 7)
-									ul_SetLuminosity(7,5,0)
+								if(LuminosityRed != 11)
+									ul_SetLuminosity(11,9,0)
 							else if(firelevel > 2.5)
 								icon_state = "2"
-								if(LuminosityRed != 5)
-									ul_SetLuminosity(5,4,0)
+								if(LuminosityRed != 8)
+									ul_SetLuminosity(8,7,0)
 							else
 								icon_state = "1"
-								if(LuminosityRed != 3)
-									ul_SetLuminosity(3,2,0)
+								if(LuminosityRed != 5)
+									ul_SetLuminosity(5,4,0)
 
 							//Ensure flow temperature is higher than minimum fire temperatures.
 							flow.temperature = max(PLASMA_MINIMUM_BURN_TEMPERATURE+0.1,flow.temperature)

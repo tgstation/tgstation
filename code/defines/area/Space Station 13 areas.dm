@@ -13,7 +13,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 */
 
-
 /area
 	var/fire = null
 	var/atmos = 1
@@ -128,6 +127,8 @@ proc/process_ghost_teleport_locs()
 
 /area/shuttle //DO NOT TURN THE ul_Lighting STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
 	requires_power = 0
+	luminosity = 1
+	ul_Lighting = 0
 
 /area/shuttle/arrival
 	name = "\improper Arrival Shuttle"
@@ -231,11 +232,15 @@ proc/process_ghost_teleport_locs()
 	icon_state = "shuttle"
 	name = "\improper Alien Shuttle Base"
 	requires_power = 1
+	luminosity = 1
+	ul_Lighting = 0
 
 /area/shuttle/alien/mine
 	icon_state = "shuttle"
 	name = "\improper Alien Shuttle Mine"
 	requires_power = 1
+	luminosity = 1
+	ul_Lighting = 0
 
 /area/shuttle/prison/
 	name = "\improper Prison Shuttle"
@@ -802,6 +807,8 @@ proc/process_ghost_teleport_locs()
 /area/holodeck
 	name = "\improper Holodeck"
 	icon_state = "Holodeck"
+	luminosity = 1
+	ul_Lighting = 0
 
 /area/holodeck/alphadeck
 	name = "\improper Holodeck Alpha"
@@ -957,8 +964,9 @@ proc/process_ghost_teleport_locs()
 //Solars
 
 /area/solar
-	LightLevels = list("Red" = 2, "Green" = 2, "Blue" = 3)
 	requires_power = 0
+	luminosity = 1
+	ul_Lighting = 0
 
 	auxport
 		name = "\improper Port Auxiliary Solar Array"
@@ -1474,18 +1482,26 @@ proc/process_ghost_teleport_locs()
 /area/turret_protected/AIsatextFP
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
+	luminosity = 1
+	ul_Lighting = 0
 
 /area/turret_protected/AIsatextFS
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
+	luminosity = 1
+	ul_Lighting = 0
 
 /area/turret_protected/AIsatextAS
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
+	luminosity = 1
+	ul_Lighting = 0
 
 /area/turret_protected/AIsatextAP
 	name = "\improper AI Sat Ext"
 	icon_state = "storage"
+	luminosity = 1
+	ul_Lighting = 0
 
 /area/turret_protected/NewAIMain
 	name = "\improper AI Main New"

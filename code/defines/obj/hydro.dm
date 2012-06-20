@@ -1153,12 +1153,12 @@
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/pickup(mob/user)
-	src.ul_SetLuminosity(0)
+	ul_SetLuminosity(0)
 	user.ul_SetLuminosity(user.LuminosityRed + potency/5, user.LuminosityGreen + potency/5, user.LuminosityBlue + potency/5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/dropped(mob/user)
 	user.ul_SetLuminosity(user.LuminosityRed - potency/5, user.LuminosityGreen - potency/5, user.LuminosityBlue - potency/5)
-	src.ul_SetLuminosity(potency/5)
+	ul_SetLuminosity(potency/5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	seed = "/obj/item/seeds/cocoapodseed"
@@ -1621,7 +1621,7 @@
 		if(istype(src.loc,/mob))
 			pickup(src.loc)
 		else
-			src.ul_SetLuminosity(potency/10)
+			ul_SetLuminosity(potency/10)
 	lifespan = 120 //ten times that is the delay
 	endurance = 30
 	maturation = 15

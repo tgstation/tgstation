@@ -193,34 +193,27 @@
 	W.opacity = 1
 	W.ul_SetOpacity(0)
 	W.levelupdate()
-	air_master.tiles_to_update |= W
 
-	var/turf/simulated/north = get_step(W,NORTH)
-	var/turf/simulated/south = get_step(W,SOUTH)
-	var/turf/simulated/east = get_step(W,EAST)
-	var/turf/simulated/west = get_step(W,WEST)
+	if(W && W.air)
+		var/new_ox = 0
+		var/new_n2 = 0
+		var/new_co2 = 0
+		var/new_tx = 0
+		for(var/direction in cardinal)
+			var/turf/T = get_step(src, direction)
+			if(istype(T))
+				var/datum/gas_mixture/G = T.return_air()
+				new_ox += G.oxygen
+				new_n2 += G.nitrogen
+				new_co2 += G.carbon_dioxide
+				new_tx += G.toxins
 
-	if(istype(north)) air_master.tiles_to_update |= north
-	if(istype(south)) air_master.tiles_to_update |= south
-	if(istype(east)) air_master.tiles_to_update |= east
-	if(istype(west)) air_master.tiles_to_update |= west
-	return W
+		W.air.nitrogen = new_n2/4
+		W.air.oxygen = new_ox/4
+		W.air.carbon_dioxide = new_co2/4
+		W.air.toxins = new_tx/4
+		W.air.update_values()
 
-/turf/proc/ReplaceWithAirlessPlating()
-	var/prior_icon = icon_old
-	var/old_dir = dir
-
-	for(var/obj/structure/lattice/L in locate(src.x, src.y, src.z))
-		del(L)
-	var/turf/simulated/floor/plating/airless/W = new /turf/simulated/floor/plating/airless( locate(src.x, src.y, src.z) )
-
-	W.RemoveLattice()
-	W.dir = old_dir
-	if(prior_icon) W.icon_state = prior_icon
-	else W.icon_state = "plating"
-	W.opacity = 1
-	W.ul_SetOpacity(0)
-	W.levelupdate()
 	air_master.tiles_to_update |= W
 
 	var/turf/simulated/north = get_step(W,NORTH)
@@ -392,6 +385,28 @@
 	if(istype(west)) air_master.tiles_to_update |= west
 	return S
 
+/turf/proc/ReplaceWithMineralWall(var/ore)
+	var/old_icon = icon_state
+	var/turf/simulated/wall/mineral/S = new /turf/simulated/wall/mineral( locate(src.x, src.y, src.z) )
+	S.icon_old = old_icon
+	S.opacity = 0
+	S.ul_SetOpacity(1)
+	S.mineral = ore
+	S.New()//Hackish as fuck, but what can you do? -Sieve
+	levelupdate()
+	air_master.tiles_to_update |= S
+
+	var/turf/simulated/north = get_step(S,NORTH)
+	var/turf/simulated/south = get_step(S,SOUTH)
+	var/turf/simulated/east = get_step(S,EAST)
+	var/turf/simulated/west = get_step(S,WEST)
+
+	if(istype(north)) air_master.tiles_to_update |= north
+	if(istype(south)) air_master.tiles_to_update |= south
+	if(istype(east)) air_master.tiles_to_update |= east
+	if(istype(west)) air_master.tiles_to_update |= west
+	return S
+
 //turf/simulated/wall/New()
 //	..()
 
@@ -417,13 +432,82 @@
 	else
 		if(!devastated)
 			playsound(src.loc, 'Welder.ogg', 100, 1)
-			new /obj/structure/girder(src)
-			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/metal( src )
+			switch(mineral)
+				if("metal")
+					new /obj/structure/girder(src)
+					new /obj/item/stack/sheet/metal( src )
+					new /obj/item/stack/sheet/metal( src )
+				if("gold")
+					new /obj/structure/girder(src)
+					new /obj/item/stack/sheet/gold( src )
+					new /obj/item/stack/sheet/gold( src )
+				if("silver")
+					new /obj/structure/girder(src)
+					new /obj/item/stack/sheet/silver( src )
+					new /obj/item/stack/sheet/silver( src )
+				if("diamond")
+					new /obj/structure/girder(src)
+					new /obj/item/stack/sheet/diamond( src )
+					new /obj/item/stack/sheet/diamond( src )
+				if("uranium")
+					new /obj/structure/girder(src)
+					new /obj/item/stack/sheet/uranium( src )
+					new /obj/item/stack/sheet/uranium( src )
+				if("plasma")
+					new /obj/structure/girder(src)
+					new /obj/item/stack/sheet/plasma( src )
+					new /obj/item/stack/sheet/plasma( src )
+				if("clown")
+					new /obj/structure/girder(src)
+					new /obj/item/stack/sheet/clown( src )
+					new /obj/item/stack/sheet/clown( src )
+				if("sandstone")
+					new /obj/structure/girder(src)
+					new /obj/item/stack/sheet/sandstone( src )
+					new /obj/item/stack/sheet/sandstone( src )
+				if("wood")
+					new /obj/structure/girder(src)
+					new /obj/item/stack/sheet/wood( src )
+					new /obj/item/stack/sheet/wood( src )
+
 		else
-			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/metal( src )
-			new /obj/item/stack/sheet/metal( src )
+			switch(mineral)
+				if("metal")
+					new /obj/item/stack/sheet/metal( src )
+					new /obj/item/stack/sheet/metal( src )
+					new /obj/item/stack/sheet/metal( src )
+				if("gold")
+					new /obj/item/stack/sheet/gold( src )
+					new /obj/item/stack/sheet/gold( src )
+					new /obj/item/stack/sheet/metal( src )
+				if("silver")
+					new /obj/item/stack/sheet/silver( src )
+					new /obj/item/stack/sheet/silver( src )
+					new /obj/item/stack/sheet/metal( src )
+				if("diamond")
+					new /obj/item/stack/sheet/diamond( src )
+					new /obj/item/stack/sheet/diamond( src )
+					new /obj/item/stack/sheet/metal( src )
+				if("uranium")
+					new /obj/item/stack/sheet/uranium( src )
+					new /obj/item/stack/sheet/uranium( src )
+					new /obj/item/stack/sheet/metal( src )
+				if("plasma")
+					new /obj/item/stack/sheet/plasma( src )
+					new /obj/item/stack/sheet/plasma( src )
+					new /obj/item/stack/sheet/metal( src )
+				if("clown")
+					new /obj/item/stack/sheet/clown( src )
+					new /obj/item/stack/sheet/clown( src )
+					new /obj/item/stack/sheet/metal( src )
+				if("sandstone")
+					new /obj/item/stack/sheet/sandstone( src )
+					new /obj/item/stack/sheet/sandstone( src )
+					new /obj/item/stack/sheet/metal( src )
+				if("wood")
+					new /obj/item/stack/sheet/wood( src )
+					new /obj/item/stack/sheet/wood( src )
+					new /obj/item/stack/sheet/metal( src )
 
 	for(var/obj/O in src.contents) //Eject contents!
 		if(istype(O,/obj/effect/decal/poster))
@@ -443,8 +527,7 @@
 	switch(severity)
 		if(1.0)
 			//SN src = null
-			src.ReplaceWithSpace()
-			del(src)
+			ReplaceWithSpace()
 			return
 		if(2.0)
 			if (prob(50))
@@ -568,6 +651,8 @@
 		playsound(src.loc, 'Welder.ogg', 100, 1)
 
 		sleep(60)
+		if(mineral == "diamond")//Oh look, it's tougher
+			sleep(60)
 		if( !istype(src, /turf/simulated/wall) || !user || !W || !T )	return
 
 		if( user.loc == T && user.equipped() == W )
@@ -583,6 +668,8 @@
 		user << "<span class='notice'>You begin to drill though the wall.</span>"
 
 		sleep(60)
+		if(mineral == "diamond")
+			sleep(60)
 		if( !istype(src, /turf/simulated/wall) || !user || !W || !T )	return
 
 		if( user.loc == T && user.equipped() == W )
@@ -600,6 +687,8 @@
 		playsound(src.loc, "sparks", 50, 1)
 
 		sleep(70)
+		if(mineral == "diamond")
+			sleep(70)
 		if( !istype(src, /turf/simulated/wall) || !user || !EB || !T )	return
 
 		if( user.loc == T && user.equipped() == W )
@@ -862,7 +951,72 @@
 		return attack_hand(user)
 	return
 
+/turf/simulated/wall/mineral/attack_hand(mob/user as mob)
+	if(mineral == "uranium")
+		radiate()
+	..()
+
+/turf/simulated/wall/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if((mineral == "plasma") && W)
+		if(is_hot(W) > 300)
+			ignite(is_hot(W))
+			return
+	if(mineral == "uranium")
+		radiate()
+//	if((mineral == "gold") || (mineral == "silver"))
+//		if(shocked)
+//			shock()
+	..()
+
+/turf/simulated/wall/mineral/proc/PlasmaBurn(temperature)
+	spawn(2)
+	new /obj/structure/girder(src)
+	src.ReplaceWithFloor()
+	for(var/turf/simulated/floor/target_tile in range(0,src))
+//		if(target_tile.parent && target_tile.parent.group_processing) // THESE PROBABLY DO SOMETHING IMPORTANT BUT I DON'T KNOW HOW TO FIX IT - Erthilo
+//			target_tile.parent.suspend_group_processing()
+		var/datum/gas_mixture/napalm = new
+		var/toxinsToDeduce = 20
+		napalm.toxins = toxinsToDeduce
+		napalm.temperature = 400+T0C
+		target_tile.assume_air(napalm)
+		spawn (0) target_tile.hotspot_expose(temperature, 400)
+	for(var/obj/structure/falsewall/plasma/F in range(3,src))//Hackish as fuck, but until temperature_expose works, there is nothing I can do -Sieve
+		var/turf/T = get_turf(F)
+		T.ReplaceWithMineralWall("plasma")
+		del (F)
+	for(var/turf/simulated/wall/mineral/W in range(3,src))
+		if(mineral == "plasma")
+			W.ignite((temperature/4))//Added so that you can't set off a massive chain reaction with a small flame
+	for(var/obj/machinery/door/airlock/plasma/D in range(3,src))
+		D.ignite(temperature/4)
+
+/turf/simulated/wall/mineral/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(mineral == "plasma")
+		if(exposed_temperature > 300)
+			PlasmaBurn(exposed_temperature)
+
+/turf/simulated/wall/mineral/proc/ignite(exposed_temperature)
+	if(mineral == "plasma")
+		if(exposed_temperature > 300)
+			PlasmaBurn(exposed_temperature)
+
+/turf/simulated/wall/mineral/Bumped(AM as mob|obj)
+	if(mineral == "uranium")
+		radiate()
+	..()
+
+/turf/simulated/wall/mineral/bullet_act(var/obj/item/projectile/Proj)
+	if(mineral == "plasma")
+		if(istype(Proj,/obj/item/projectile/beam))
+			PlasmaBurn(2500)
+		else if(istype(Proj,/obj/item/projectile/ion))
+			PlasmaBurn(500)
+	..()
+
 /turf/simulated/wall/proc/thermitemelt(mob/user as mob)
+	if(mineral == "diamond")
+		return
 	var/obj/effect/overlay/O = new/obj/effect/overlay( src )
 	O.name = "Thermite"
 	O.desc = "Looks hot."
@@ -1023,9 +1177,13 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 		..()
 		name = "plating"
 
-/turf/simulated/floor/grid
+/turf/simulated/floor/bluegrid
 	icon = 'floors.dmi'
-	icon_state = "circuit"
+	icon_state = "bcircuit"
+
+/turf/simulated/floor/greengrid
+	icon = 'floors.dmi'
+	icon_state = "gcircuit"
 
 /turf/simulated/floor/New()
 	..()
@@ -1044,14 +1202,14 @@ var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3
 	//set src in oview(1)
 	switch(severity)
 		if(1.0)
-			src.ReplaceWithSpace()
+			ReplaceWithSpace()
 		if(2.0)
 			switch(pick(1,2;75,3))
 				if (1)
-					src.ReplaceWithLattice()
+					ReplaceWithLattice()
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 				if(2)
-					src.ReplaceWithSpace()
+					ReplaceWithSpace()
 				if(3)
 					if(prob(80))
 						src.break_tile_to_plating()
