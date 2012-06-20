@@ -311,40 +311,6 @@
 	idle_power_usage = 0
 	active_power_usage = 1
 */
-/obj/machinery/power
-	name = null
-	icon = 'power.dmi'
-	anchored = 1.0
-	var/datum/powernet/powernet = null
-	var/netnum = 0
-	var/directwired = 1		// by default, power machines are connected by a cable in a neighbouring turf
-							// if set to 0, requires a 0-X cable on this turf
-	use_power = 0
-	idle_power_usage = 0
-	active_power_usage = 0
-
-/obj/machinery/power/terminal
-	name = "terminal"
-	icon_state = "term"
-	desc = "It's an underfloor wiring terminal for power equipment."
-	level = 1
-	layer = TURF_LAYER
-	var/obj/machinery/power/master = null
-	anchored = 1
-	directwired = 0		// must have a cable on same turf connecting to terminal
-	layer = 2.6 // a bit above wires
-
-
-/obj/machinery/power/monitor
-	name = "power monitoring computer"
-	desc = "It monitors power levels across the station."
-	icon = 'computer.dmi'
-	icon_state = "power"
-	density = 1
-	anchored = 1
-	use_power = 2
-	idle_power_usage = 20
-	active_power_usage = 80
 
 /obj/machinery/light_switch
 	name = "light switch"

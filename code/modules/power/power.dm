@@ -1,3 +1,15 @@
+/obj/machinery/power
+	name = null
+	icon = 'power.dmi'
+	anchored = 1.0
+	var/datum/powernet/powernet = null
+	var/netnum = 0
+	var/directwired = 1		// by default, power machines are connected by a cable in a neighbouring turf
+							// if set to 0, requires a 0-X cable on this turf
+	use_power = 0
+	idle_power_usage = 0
+	active_power_usage = 0
+
 // common helper procs for all power machines
 /obj/machinery/power/proc/add_avail(var/amount)
 	if(powernet)
@@ -31,7 +43,7 @@
 	if(!A || !isarea(A) || !A.master)
 		return 0					// if not, then not powered
 
-	return A.master.powered(power_channel)	// return power status of the area
+	return A.master.powered(chan)	// return power status of the area
 
 // increment the power usage stats for an area
 
@@ -45,7 +57,7 @@
 /obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
 										// by default, check equipment channel & set flag
 										// can override if needed
-	if(powered())
+	if(powered(power_channel))
 		stat &= ~NOPOWER
 	else
 

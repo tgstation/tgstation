@@ -1,5 +1,16 @@
 // the power monitoring computer
 // for the moment, just report the status of all APCs in the same powernet
+/obj/machinery/power/monitor
+	name = "power monitoring computer"
+	desc = "It monitors power levels across the station."
+	icon = 'computer.dmi'
+	icon_state = "power"
+	density = 1
+	anchored = 1
+	use_power = 2
+	idle_power_usage = 20
+	active_power_usage = 80
+
 /obj/machinery/power/monitor/attack_ai(mob/user)
 	add_fingerprint(user)
 

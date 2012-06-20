@@ -451,10 +451,6 @@
 				message = text("\red <B>[] is trying to inject []!</B>", source, target)
 			if("pill")
 				message = text("\red <B>[] is trying to force [] to swallow []!</B>", source, target, item)
-//			dear god this is all horrible, godspeed carn ;-;
-//			mport: i dunno if you care about this, but it's related to AM.	-Pete
-//			if("fuel")
-//				message = text("\red [source] is trying to force [target] to eat the [item:content]!")
 			if("drink")
 				message = text("\red <B>[] is trying to force [] to swallow a gulp of []!</B>", source, target, item)
 			if("dnainjector")
@@ -944,21 +940,6 @@ It can still be worn/put on as normal.
 					O.show_message(text("\red [] performs CPR on []!", source, target), 1)
 				target << "\blue <b>You feel a breath of fresh air enter your lungs. It feels good.</b>"
 				source << "\red Repeat every 7 seconds AT LEAST."
-/*		if("fuel")
-			var/obj/item/weapon/fuel/S = item
-			if (!( istype(S, /obj/item/weapon/fuel) ))
-				//SN src = null
-				del(src)
-				return
-			if (S.s_time >= world.time + 30)
-				//SN src = null
-				del(src)
-				return
-			S.s_time = world.time
-			var/a = S.content
-			for(var/mob/O in viewers(source, null))
-				O.show_message(text("\red [source] forced [target] to eat the [a]!"), 1)
-			S.injest(target)	*/
 		if("dnainjector")
 			var/obj/item/weapon/dnainjector/S = item
 			if(item)
