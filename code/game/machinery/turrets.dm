@@ -54,6 +54,8 @@
 		// 2 = cannons
 		// 3 = pulse
 		// 4 = change (HONK)
+		// 5 = bluetag
+		// 6 = redtag
 	var/health = 18
 	var/id = ""
 	var/obj/machinery/turretcover/cover = null
@@ -211,6 +213,10 @@
 				A = new /obj/item/projectile/beam/pulse( loc )
 			if(4)
 				A = new /obj/item/projectile/change( loc )
+			if(5)
+				A = new /obj/item/projectile/bluetag( loc )
+			if(6)
+				A = new /obj/item/projectile/redtag( loc )
 		A.original = target.loc
 		use_power(500)
 	else

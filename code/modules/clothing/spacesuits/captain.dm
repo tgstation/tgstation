@@ -10,7 +10,7 @@
 
 
 /obj/item/clothing/suit/armor/captain
-	name = "Captain's armor"
+	name = "captain's armor"
 	desc = "A bulky, heavy-duty piece of exclusive Nanotrasen armor. YOU are in charge!"
 	icon_state = "caparmor"
 	item_state = "capspacesuit"

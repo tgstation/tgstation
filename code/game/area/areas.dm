@@ -14,9 +14,9 @@
 	uid = ++global_uid
 	spawn(1)
 	//world.log << "New: [src] [tag]"
-		var/sd_created = findtext(tag,"sd_L")
-		sd_New(sd_created)
-		if(sd_created)
+		var/ul_created = findtext(tag,":UL")
+		ul_Prep()
+		if(ul_created)
 			related += src
 			return
 		related = list(src)
@@ -27,7 +27,7 @@
 		if(name == "Space")			// override defaults for space
 			requires_power = 1
 			always_unpowered = 1
-			sd_SetLuminosity(1)
+			LightLevels = list("Red" = 2, "Green" = 2, "Blue" = 3)
 			power_light = 0
 			power_equip = 0
 			power_environ = 0
@@ -38,11 +38,12 @@
 			power_equip = 0//rastaf0
 			power_environ = 0//rastaf0
 			luminosity = 1
-			sd_lighting = 0			// *DAL*
+			ul_Lighting = 0
 		else
 			luminosity = 0
-			area_lights_luminosity = rand(6,9)
-			//sd_SetLuminosity(0)		// *DAL*
+			area_lights_luminosity = rand(6,7)
+		if(LightLevels)
+			ul_Light()
 
 
 
@@ -128,7 +129,7 @@
 		fire = 1
 		updateicon()
 		mouse_opacity = 0
-		for(var/obj/machinery/door/airlock/E in master.all_doors)
+/*		for(var/obj/machinery/door/airlock/E in master.all_doors)
 			if(!E.air_locked)
 				if((!E.arePowerSystemsOn()) || (E.stat & NOPOWER)) continue
 				if(!E.density)
@@ -156,7 +157,7 @@
 					D.nextstate = CLOSED
 				else if(!D.density)
 					spawn(0)
-					D.close()
+					D.close() */
 		var/list/cameras = list()
 		for (var/obj/machinery/camera/C in src)
 			cameras += C
@@ -171,7 +172,7 @@
 		fire = 0
 		mouse_opacity = 0
 		updateicon()
-		for(var/obj/machinery/door/airlock/E in master.all_doors)
+/*		for(var/obj/machinery/door/airlock/E in master.all_doors)
 			if((!E.arePowerSystemsOn()) || (E.stat & NOPOWER)) continue
 			if(E.air_locked) //Don't mess with doors locked for other reasons.
 				if(E.density)
@@ -184,7 +185,7 @@
 					D.nextstate = OPEN
 				else if(D.density)
 					spawn(0)
-					D.open()
+					D.open()*/
 		for (var/mob/living/silicon/ai/aiPlayer in world)
 			aiPlayer.cancelAlarm("Fire", src, src)
 		for (var/obj/machinery/computer/station_alert/a in world)
@@ -401,7 +402,7 @@
 	other_related -= other_master
 	var/list/total_contents = list()
 	for(var/area/RA in other_related)
-		RA.sd_lighting = 0
+//		RA.ul_lighting = 0
 		total_contents |= RA.contents
 		del RA.contents
 		del RA.related

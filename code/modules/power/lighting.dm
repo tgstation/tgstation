@@ -83,12 +83,12 @@
 					var/area/A = src.loc.loc
 					brightness = A.area_lights_luminosity
 				else
-					brightness = rand(6,9)
-				if(prob(10))
+					brightness = rand(6,7)
+				if(prob(5))
 					broken(1)
 			if("bulb")
-				brightness = 3
-				if(prob(25))
+				brightness = rand(4,5)
+				if(prob(15))
 					broken(1)
 		spawn(1)
 			update()
@@ -123,7 +123,7 @@
 	var/oldlum = luminosity
 
 	//luminosity = on * brightness
-	sd_SetLuminosity(on * brightness)		// *DAL*
+	ul_SetLuminosity(on * brightness, on * brightness, ( fitting != "bulb" ? on * brightness  : round(on*brightness/2 + 1)  ) )		// *DAL*
 
 	// if the state changed, inc the switching counter
 	if(oldlum != luminosity)
@@ -137,7 +137,7 @@
 				status = LIGHT_BURNED
 				icon_state = "[base_state]-burned"
 				on = 0
-				sd_SetLuminosity(0)
+				ul_SetLuminosity(0)
 	active_power_usage = (luminosity * 20)
 	if(on != on_gs)
 		on_gs = on
@@ -485,6 +485,15 @@
 	icon_state = "lbulb"
 	base_state = "lbulb"
 	item_state = "contvapour"
+	g_amt = 100
+	brightness = 5
+
+/obj/item/weapon/light/bulb/fire
+	name = "fire bulb"
+	desc = "A replacement fire bulb."
+	icon_state = "fbulb"
+	base_state = "fbulb"
+	item_state = "egg4"
 	g_amt = 100
 	brightness = 5
 

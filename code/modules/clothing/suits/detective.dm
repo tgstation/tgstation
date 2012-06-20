@@ -1,5 +1,5 @@
 /obj/item/clothing/head/det_hat
-	name = "hat"
+	name = "detective's hat"
 	desc = "Someone who wears this will look very smart."
 	icon_state = "detective"
 	allowed = list(/obj/item/weapon/reagent_containers/food/snacks/candy_corn, /obj/item/weapon/pen)
@@ -7,7 +7,7 @@
 
 
 /obj/item/clothing/suit/storage/det_suit
-	name = "coat"
+	name = "detective's coat"
 	desc = "An 18th-century multi-purpose trenchcoat. Someone who wears this means serious business."
 	icon_state = "detective"
 	item_state = "det_suit"
@@ -17,7 +17,7 @@
 
 
 /obj/item/clothing/suit/det_suit/armor
-	name = "armor"
+	name = "detective's armor"
 	desc = "An armored vest with a detective's badge on it."
 	icon_state = "detective-armor"
 	item_state = "armor"

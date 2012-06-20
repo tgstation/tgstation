@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /obj/machinery/photocopier
 	name = "Photocopier"
@@ -102,6 +102,10 @@
 				updateUsrDialog()
 			else
 				user << "This cartridge is not yet ready for replacement! Use up the rest of the toner."
+		else if(istype(O, /obj/item/weapon/wrench))
+			playsound(loc, 'Ratchet.ogg', 50, 1)
+			anchored = !anchored
+			user << "You [anchored ? "wrench" : "unwrench"] \the [src]."
 		return
 
 	ex_act(severity)

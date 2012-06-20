@@ -52,8 +52,8 @@
 		f2 = new/obj/machinery/door/poddoor/filler_object (get_step(src,EAST))
 		f1.density = density
 		f2.density = density
-		f1.sd_SetOpacity(opacity)
-		f2.sd_SetOpacity(opacity)
+		f1.ul_SetOpacity(opacity)
+		f2.ul_SetOpacity(opacity)
 
 	Del()
 		del f1
@@ -71,8 +71,8 @@
 		f2 = new/obj/machinery/door/poddoor/filler_object (get_step(src,NORTH))
 		f1.density = density
 		f2.density = density
-		f1.sd_SetOpacity(opacity)
-		f2.sd_SetOpacity(opacity)
+		f1.ul_SetOpacity(opacity)
+		f2.ul_SetOpacity(opacity)
 
 	Del()
 		del f1
@@ -96,10 +96,10 @@
 		f2.density = density
 		f3.density = density
 		f4.density = density
-		f1.sd_SetOpacity(opacity)
-		f2.sd_SetOpacity(opacity)
-		f4.sd_SetOpacity(opacity)
-		f3.sd_SetOpacity(opacity)
+		f1.ul_SetOpacity(opacity)
+		f2.ul_SetOpacity(opacity)
+		f4.ul_SetOpacity(opacity)
+		f3.ul_SetOpacity(opacity)
 
 	Del()
 		del f1
@@ -125,10 +125,10 @@
 		f2.density = density
 		f3.density = density
 		f4.density = density
-		f1.sd_SetOpacity(opacity)
-		f2.sd_SetOpacity(opacity)
-		f4.sd_SetOpacity(opacity)
-		f3.sd_SetOpacity(opacity)
+		f1.ul_SetOpacity(opacity)
+		f2.ul_SetOpacity(opacity)
+		f4.ul_SetOpacity(opacity)
+		f3.ul_SetOpacity(opacity)
 
 	Del()
 		del f1

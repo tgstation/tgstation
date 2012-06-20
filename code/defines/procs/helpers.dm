@@ -1427,15 +1427,19 @@ proc/listclearnulls(list/list)
 	var/list/turfs_src = get_area_turfs(src.type)
 	var/list/turfs_trg = get_area_turfs(A.type)
 
+	var/blanked_turfs = list()
+
 	var/src_min_x = 0
 	var/src_min_y = 0
 	for (var/turf/T in turfs_src)
+		blanked_turfs |= T.ul_BlankLocal()
 		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
 		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
 
 	var/trg_min_x = 0
 	var/trg_min_y = 0
 	for (var/turf/T in turfs_trg)
+		blanked_turfs |= T.ul_BlankLocal()
 		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
 		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
 
@@ -1515,9 +1519,9 @@ proc/listclearnulls(list/list)
 
 					var/area/AR = X.loc
 
-					if(AR.sd_lighting)
+					if(AR.ul_Lighting)
 						X.opacity = !X.opacity
-						X.sd_SetOpacity(!X.opacity)
+						X.ul_SetOpacity(!X.opacity)
 
 					toupdate += X
 
@@ -1526,9 +1530,9 @@ proc/listclearnulls(list/list)
 
 						var/area/AR2 = ttl.loc
 
-						if(AR2.sd_lighting)
+						if(AR2.ul_Lighting)
 							ttl.opacity = !ttl.opacity
-							ttl.sd_SetOpacity(!ttl.opacity)
+							ttl.ul_SetOpacity(!ttl.opacity)
 
 						fromupdate += ttl
 
@@ -1552,6 +1556,8 @@ proc/listclearnulls(list/list)
 			for(var/obj/machinery/door/D2 in T2)
 				doors += D2
 			air_master.tiles_to_update |= T2
+
+	ul_UnblankLocal(blanked_turfs)
 
 	for(var/obj/O in doors)
 		O:update_nearby_tiles(1)
@@ -1589,15 +1595,19 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 	var/list/turfs_src = get_area_turfs(src.type)
 	var/list/turfs_trg = get_area_turfs(A.type)
 
+	var/blanked_turfs = list()
+
 	var/src_min_x = 0
 	var/src_min_y = 0
 	for (var/turf/T in turfs_src)
+		blanked_turfs |= T.ul_BlankLocal()
 		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
 		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
 
 	var/trg_min_x = 0
 	var/trg_min_y = 0
 	for (var/turf/T in turfs_trg)
+		blanked_turfs |= T.ul_BlankLocal()
 		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
 		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
 
@@ -1687,9 +1697,9 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 
 					var/area/AR = X.loc
 
-					if(AR.sd_lighting)
+					if(AR.ul_Lighting)
 						X.opacity = !X.opacity
-						X.sd_SetOpacity(!X.opacity)
+						X.ul_SetOpacity(!X.opacity)
 
 					toupdate += X
 
@@ -1701,6 +1711,7 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 
 
 	var/list/doors = new/list()
+	ul_UnblankLocal(blanked_turfs)
 
 	if(toupdate.len)
 		for(var/turf/simulated/T1 in toupdate)

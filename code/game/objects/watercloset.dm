@@ -4,28 +4,56 @@
 	name = "toilet"
 	desc = "The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean."
 	icon = 'watercloset.dmi'
-	icon_state = "toilet0"
+	icon_state = "toilet00"
 	density = 0
 	anchored = 1
-	var/open = 0
-	var/mob/swirlie = null
+	var/open = 0			//if the lid is up
+	var/cistern = 0			//if the cistern bit is open
+	var/w_items = 0			//the combined w_class of all the items in the cistern
+	var/mob/swirlie = null	//the mob being given a swirlie
 
 /obj/structure/toilet/New()
 	open = round(rand(0, 1))
 	update_icon()
 
-/obj/structure/toilet/attack_hand()
-	if(!swirlie)
-		open = !open
-		update_icon()
-	else
-		usr.visible_message("<span class='danger'>[usr] slams the toilet seat onto [swirlie.name]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie.name]'s head!</span>", "You hear reverberating porcelain.")
+/obj/structure/toilet/attack_hand(mob/user as mob)
+	if(swirlie)
+		usr.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie.name]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie.name]'s head!</span>", "You hear reverberating porcelain.")
 		swirlie.adjustBruteLoss(8)
+		return
+
+	if(cistern && !open)
+		if(!contents.len)
+			user << "<span class='notice'>The cistern is empty.</span>"
+			return
+		else
+			var/obj/item/I = pick(contents)
+			if(ishuman(user))
+				if(!user.get_active_hand())
+					I.loc = user.loc
+					user.put_in_hand(I)
+			else
+				I.loc = get_turf(src)
+			user << "<span class='notice'>You find \an [I] in the cistern.</span>"
+			w_items -= I.w_class
+			return
+
+	open = !open
+	update_icon()
 
 /obj/structure/toilet/update_icon()
-	icon_state = "toilet[open]"
+	icon_state = "toilet[open][cistern]"
 
-/obj/structure/toilet/attackby(var/obj/item/I, var/mob/user)
+/obj/structure/toilet/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I, /obj/item/weapon/crowbar))
+		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>"
+		playsound(loc, 'stonedoor_openclose.ogg', 50, 1)
+		if(do_after(user, 30))
+			user.visible_message("<span class='notice'>[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "You hear grinding porcelain.")
+			cistern = !cistern
+			update_icon()
+			return
+
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 		var/mob/GM = G.affecting
@@ -45,6 +73,19 @@
 			else
 				user << "<span class='notice'>You need a tighter grip.</span>"
 
+	if(cistern)
+		if(I.w_class > 3)
+			user << "<span class='notice'>\The [I] does not fit.</span>"
+			return
+		if(w_items + I.w_class > 5)
+			user << "<span class='notice'>The cistern is full.</span>"
+			return
+		user.drop_item()
+		I.loc = src
+		w_items += I.w_class
+		user << "You carefully place \the [I] into the cistern."
+		return
+
 
 
 /obj/structure/urinal
@@ -55,7 +96,7 @@
 	density = 0
 	anchored = 1
 
-/obj/structure/urinal/attackby(var/obj/item/I, var/mob/user)
+/obj/structure/urinal/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 		var/mob/GM = G.affecting
@@ -97,7 +138,7 @@
 		wash(M)
 		check_heat(M)
 
-/obj/machinery/shower/attackby(var/obj/item/I, var/mob/user)
+/obj/machinery/shower/attackby(var/obj/item/I as obj, var/mob/user as mob)
 	if(I.type == /obj/item/device/analyzer)
 		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
 	if(istype(I, /obj/item/weapon/wrench))

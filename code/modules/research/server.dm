@@ -1,7 +1,6 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:06
-
 /obj/machinery/r_n_d/server
 	name = "R&D Server"
+	icon = 'research.dmi'
 	icon_state = "server"
 	var/datum/research/files
 	var/health = 100

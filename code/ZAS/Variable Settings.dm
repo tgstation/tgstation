@@ -39,7 +39,7 @@ vs_control
 			else
 				vw = vars[ch]
 				if("[ch]_DESC" in vars) vw_desc = vars["[ch]_DESC"]
-				if("[ch]_NAME" in plc.vars) vw_name = vars["[ch]_NAME"]
+				if("[ch]_NAME" in vars) vw_name = vars["[ch]_NAME"]
 			dat += "<b>[vw_name] = [vw]</b> <A href='?src=\ref[src];changevar=[ch]'>\[Change\]</A><br>"
 			dat += "<i>[vw_desc]</i><br><br>"
 		user << browse(dat,"window=settings")
@@ -114,7 +114,11 @@ vs_control
 			plc.Randomize(V)
 		////world << "Plasma randomized."
 
-	proc/SetDefault(def)
+	proc/SetDefault(var/mob/user)
+		var/list/setting_choices = list("Original", "Hazard - Low", "Hazard - High", "Oh Shit!")
+		var/def = input(user, "Which of these presets should be used?") as null|anything in setting_choices
+		if(!def)
+			return
 		switch(def)
 			if("Original")
 				plc.CLOTH_CONTAMINATION = 0 //If this is on, plasma does damage by getting into cloth.

@@ -128,9 +128,15 @@
 	new /obj/item/clothing/mask/spiderman(src.loc)
 	del(src)*/
 
+/*
 /obj/effect/landmark/costume/marisawizard/New()
 	new /obj/item/clothing/head/wizard/marisa(src.loc)
 	new/obj/item/clothing/suit/wizrobe/marisa(src.loc)
+	del(src)*/
+
+/obj/effect/landmark/costume/marisawizard/fake/New()
+	new /obj/item/clothing/head/wizard/marisa/fake(src.loc)
+	new/obj/item/clothing/suit/wizrobe/marisa/fake(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/fakewizard/New()

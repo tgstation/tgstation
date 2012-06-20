@@ -47,14 +47,6 @@
 		return flags & INSERT_CONTAINER
 */
 
-	Del()
-		var/F = file("del_log.txt")
-		var/coords = ""
-		if(src)
-			coords = "[src.x],[src.y],[src.z]"
-		F << "[time2text(world.timeofday, "hh:mm.ss")]: [src] - [src.loc] [coords] - [usr]"
-		..()
-
 obj
 	assume_air(datum/gas_mixture/giver)
 		if(loc)

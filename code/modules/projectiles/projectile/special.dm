@@ -49,10 +49,11 @@
 
 	on_hit(var/atom/target, var/blocked = 0)
 		var/mob/M = target
-		if(istype(target, /mob/living/carbon/human) && M:mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
+		if(istype(target, /mob/living) && M:mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
+			var/mob/living/L as mob
 			if(prob(15))
-				M.radiation += rand(10,30)
-				M.Weaken(5)
+				L.apply_effect((rand(30,80)),IRRADIATE)
+				L.Weaken(5)
 				for (var/mob/V in viewers(src))
 					V.show_message("\red [M] writhes in pain as \his vacuoles boil.", 3, "\red You hear the crunching of leaves.", 2)
 			if(prob(35))

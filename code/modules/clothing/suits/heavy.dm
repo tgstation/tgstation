@@ -37,7 +37,7 @@
 	item_state = "tdgreen"
 
 /obj/item/clothing/suit/armor/swat
-	name = "swat suit"
+	name = "SWAT armour"
 	desc = "A heavily armored suit that protects against moderate damage. Used in special operations."
 	icon_state = "deathsquad"
 	item_state = "swat_suit"
@@ -53,7 +53,7 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/suit/storage/officer
-	name = "officer jacket"
+	name = "officer's jacket"
 	desc = "An armored jacket used in special operations."
 	icon_state = "detective"
 	item_state = "det_suit"

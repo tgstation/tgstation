@@ -20,9 +20,11 @@
 	weak
 		movement_range = 8
 		energy = 5
+
 	strong
 		movement_range = 15
 		energy = 15
+
 
 	New(loc, dir = 2)
 		src.loc = loc
@@ -31,6 +33,7 @@
 		spawn(1)
 			move(1)
 		return
+
 
 	Bump(atom/A)
 		if (A)
@@ -55,33 +58,36 @@
 						del (src)
 		return
 
+
 	Bumped(atom/A)
 		if(ismob(A))
 			Bump(A)
 		return
 
+
 	ex_act(severity)
 		del(src)
 		return
 
+
 	proc
 		toxmob(var/mob/living/M)
 			var/radiation = (energy*2)
-			if(istype(M,/mob/living/carbon/human))
+/*			if(istype(M,/mob/living/carbon/human))
 				if(M:wear_suit) //TODO: check for radiation protection
 					radiation = round(radiation/2,1)
 			if(istype(M,/mob/living/carbon/monkey))
 				if(M:wear_suit) //TODO: check for radiation protection
-					radiation = round(radiation/2,1)
+					radiation = round(radiation/2,1)*/
 			if(ionizing)
-				//give them standard rad damage
-				M.radiation += radiation
+				M.apply_effects((radiation*3),IRRADIATE,0)
 				M.updatehealth()
 			else
-				//burn them
-				M.take_overall_damage(0, radiation)
+				M.apply_effects((radiation*2),IRRADIATE,0)
+				M.updatehealth()
 			//M << "\red You feel odd."
 			return
+
 
 		move(var/lag)
 			if(target)

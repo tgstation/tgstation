@@ -3009,6 +3009,14 @@
 		..()
 		reagents.add_reagent("rum", 100)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/deadrum
+	name = "Deadrum Bumbo"
+	desc = "Tastes a lot sweeter than ordinary rum (that's to help disguise the kick)."
+	icon_state = "deadrumbottle"
+	New()
+		..()
+		reagents.add_reagent("deadrum", 100)
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater
 	name = "Flask of Holy Water"
 	desc = "A flask of the chaplain's holy water."
@@ -3056,6 +3064,14 @@
 	New()
 		..()
 		reagents.add_reagent("wine", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
+	name = "Jailbreaker Verte"
+	desc = "Twenty-fourth century Green Fairy, one sip of this and you just know you're gonna have a good time."
+	icon_state = "absinthebottle"
+	New()
+		..()
+		reagents.add_reagent("absinthe", 100)
 
 //////////////////////////JUICES AND STUFF ///////////////////////
 
@@ -3727,6 +3743,14 @@
 					icon_state = "glass_brown"
 					name = "Glass of bilk"
 					desc = "A brew of milk and beer. For those alcoholics who fear osteoporosis."
+				if("absinthe")
+					icon_state = "glass_green"
+					name = "Glass of absinthe"
+					desc = "A glass of the Green Fairy."
+				if("deadrum")
+					icon_state = "glass_brown"
+					name = "Glass of Dead Rum"
+					desc = "Dangerously sweet rum. You won't be getting scurvy any time soon!"
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"

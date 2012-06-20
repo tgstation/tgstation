@@ -146,6 +146,27 @@
 	icon_state = "shinyflask"
 	volume = 50
 
+/obj/item/weapon/storage/pill_bottle/fluff/listermedbottle //compactninja: Lister Black
+	name = "Pill bottle (anti-depressants)"
+	desc = "Contains pills used to deal with depression. They appear to be prescribed to Lister Black"
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
+		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
+		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
+		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
+		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
+		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
+		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
+/obj/item/weapon/reagent_containers/pill/fluff/listermed
+	name = "anti-depressant pill"
+	desc = "Used to deal with depression."
+	icon_state = "pill9"
+	New()
+		..()
+		reagents.add_reagent("stoxin", 5)
+		reagents.add_reagent("sugar", 10)
+		reagents.add_reagent("ethanol", 5)
 //////////////////////////////////
 //////////// Clothing ////////////
 //////////////////////////////////

@@ -100,7 +100,7 @@
 	name = "Head of Personnel's Encryption Key"
 	desc = "An encyption key for a radio headset.  Contains cypherkeys."
 	icon_state = "hop_cypherkey"
-	channels = list("Command" = 1, "Security" = 0, "Cargo" = 1, "Mining" = 0)
+	channels = list("Command" = 1, "Cargo" = 1, "Mining" = 0)
 
 /obj/item/device/encryptionkey/headset_mine
 	name = "Mining Radio Encryption Key"

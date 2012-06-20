@@ -30,7 +30,7 @@
 	New()
 		..()
 		spawn(1)
-			sd_SetLuminosity(4)
+			ul_SetLuminosity(4,6,0)
 
 	bullet_act(var/obj/item/projectile/Proj)
 		if(Proj.flag != "bullet")

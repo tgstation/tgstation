@@ -114,7 +114,7 @@
 
 		// Remove any luminosity etc.
 		var/prevlum = teleatom.luminosity
-		teleatom.luminosity = 0
+		teleatom.ul_SetLuminosity(0)
 
 		if(force_teleport)
 			teleatom.forceMove(destturf)
@@ -124,7 +124,7 @@
 				playSpecials(destturf,effectout,soundout)
 
 		// Re-Apply lum
-		teleatom.sd_SetLuminosity(prevlum)
+		teleatom.ul_SetLuminosity(prevlum)
 
 		destarea.Entered(teleatom)
 

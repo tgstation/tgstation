@@ -942,9 +942,9 @@
 		return
 	lights = !lights
 	if(lights)
-		src.sd_SetLuminosity(src.luminosity + src.lights_power)
+		ul_SetLuminosity(luminosity + lights_power, luminosity + lights_power, luminosity)
 	else
-		src.sd_SetLuminosity(src.luminosity - src.lights_power)
+		ul_SetLuminosity(luminosity - lights_power, luminosity - lights_power, luminosity)
 	src.log_message("Toggled lights.")
 	return
 

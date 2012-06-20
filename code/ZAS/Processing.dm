@@ -95,7 +95,7 @@ zone/proc/process()
 			AirflowSpace(src)
 		ShareSpace(air,total_space*(zone_share_percent/100))
 
-	if(!(last_update%20)) //every 20 processes.
+/*	if(!(last_update%20)) //every 20 processes.
 		if(connections)
 			connections.Remove(null)
 			if(!connections.len)
@@ -103,7 +103,7 @@ zone/proc/process()
 		if(connected_zones)
 			connected_zones.Remove(null)
 			if(!connected_zones.len)
-				del connected_zones
+				del connected_zones*/
 
 	//React the air here.
 	//air.react(null,0)

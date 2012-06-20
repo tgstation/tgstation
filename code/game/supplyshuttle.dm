@@ -20,18 +20,18 @@ var/supply_shuttle_points = 50
 var/ordernum=0
 var/list/supply_groups = new()
 
-/area/supply/station //DO NOT TURN THE SD_LIGHTING STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
+/area/supply/station //DO NOT TURN THE ul_Lighting STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
 	name = "supply shuttle"
 	icon_state = "shuttle3"
 	luminosity = 1
-	sd_lighting = 0
+	ul_Lighting = 0
 	requires_power = 0
 
-/area/supply/dock //DO NOT TURN THE SD_LIGHTING STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
+/area/supply/dock //DO NOT TURN THE ul_Lighting STUFF ON FOR SHUTTLES. IT BREAKS THINGS.
 	name = "supply shuttle"
 	icon_state = "shuttle3"
 	luminosity = 1
-	sd_lighting = 0
+	ul_Lighting = 0
 	requires_power = 0
 
 //SUPPLY PACKS MOVED TO /code/defines/obj/supplypacks.dm
@@ -160,6 +160,7 @@ var/list/supply_groups = new()
 /proc/supply_can_move()
 	if(supply_shuttle_moving) return 0
 
+//I know this is an absolutly horrendous way to do this, very inefficient, but it's the only reliable way I can think of.
 	//Check for carbon mobs - Allows simple animals.
 	for(var/mob/living/carbon/M in world)
 		var/area/A = get_area(M)
@@ -445,10 +446,10 @@ This method wont take into account storage items developed in the future and doe
 		dat = src.temp
 	else
 		dat += {"<BR><B>Supply shuttle</B><HR>
-		\nLocation: [supply_shuttle_moving ? "Moving to station ([supply_shuttle_timeleft] Mins.)":supply_shuttle_at_station ? "Station":"Dock"]<BR>
+		\nLocation: [supply_shuttle_moving ? "Moving to station ([supply_shuttle_timeleft] Mins.)":supply_shuttle_at_station ? "Station":"Away"]<BR>
 		<HR>\nSupply points: [supply_shuttle_points]<BR>\n<BR>
-		[supply_shuttle_moving ? "\n*Must be at dock to order items*<BR>\n<BR>":supply_shuttle_at_station ? "\n*Must be at dock to order items*<BR>\n<BR>":"\n<A href='?src=\ref[src];order=1'>Order items</A><BR>\n<BR>"]
-		[supply_shuttle_moving ? "\n*Shuttle already called*<BR>\n<BR>":supply_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Send to Dock</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Send to station</A><BR>\n<BR>"]
+		[supply_shuttle_moving ? "\n*Must be away to order items*<BR>\n<BR>":supply_shuttle_at_station ? "\n*Must be away to order items*<BR>\n<BR>":"\n<A href='?src=\ref[src];order=1'>Order items</A><BR>\n<BR>"]
+		[supply_shuttle_moving ? "\n*Shuttle already called*<BR>\n<BR>":supply_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Send away</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Send to station</A><BR>\n<BR>"]
 		\n<A href='?src=\ref[src];viewrequests=1'>View requests</A><BR>\n<BR>
 		\n<A href='?src=\ref[src];vieworders=1'>View orders</A><BR>\n<BR>
 		\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
@@ -506,6 +507,7 @@ This method wont take into account storage items developed in the future and doe
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		usr.machine = src
 
+	//From Station to Centcomm
 	if (href_list["sendtodock"])
 		if(!supply_shuttle_at_station || supply_shuttle_moving) return
 
@@ -531,6 +533,7 @@ This method wont take into account storage items developed in the future and doe
 
 		send_supply_shuttle()
 
+	//From Centcomm to Station
 	else if (href_list["sendtostation"])
 		if(supply_shuttle_at_station || supply_shuttle_moving) return
 
@@ -669,9 +672,11 @@ This method wont take into account storage items developed in the future and doe
 
 	if (supply_shuttle_moving) return
 
-	if (!supply_can_move())
-		usr << "\red The supply shuttle can not transport station employees, exosuits, classified nuclear codes, or homing beacons."
-		return
+	var/area/the_shuttles_way = locate(SUPPLY_STATION_AREATYPE)
+
+	//Do I really need to explain this loop?
+	for(var/mob/living/unlucky_person in the_shuttles_way)
+		unlucky_person.gib()
 
 	var/shuttleat = supply_shuttle_at_station ? SUPPLY_STATION_AREATYPE : SUPPLY_DOCK_AREATYPE
 	var/shuttleto = !supply_shuttle_at_station ? SUPPLY_STATION_AREATYPE : SUPPLY_DOCK_AREATYPE

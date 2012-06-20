@@ -387,12 +387,12 @@
 	construction_time = 130
 	construction_cost = list("metal"=15000)
 
-/obj/item/mecha_parts/part/odysseus_armour
+/*/obj/item/mecha_parts/part/odysseus_armour
 	name="Odysseus Carapace"
 	icon_state = "odysseus_armour"
 	origin_tech = "materials=3;engineering=3"
 	construction_time = 200
-	construction_cost = list("metal"=15000)
+	construction_cost = list("metal"=15000)*/
 
 
 ///////// Circuitboards
