@@ -17,9 +17,6 @@
 		var/ul_created = findtext(tag,":UL")
 		ul_Prep()
 		if(ul_created)
-			if(!related)
-				related = list(src)
-				return
 			related += src
 			return
 		related = list(src)
