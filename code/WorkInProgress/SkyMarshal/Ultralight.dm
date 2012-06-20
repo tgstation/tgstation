@@ -278,9 +278,12 @@ atom/Del()
 	. = ..()
 
 atom/movable/Move()
-	ul_Extinguish()
-	. = ..()
-	ul_Illuminate()
+	if(LuminosityRed || LuminosityGreen || LuminosityBlue)
+		ul_Extinguish()
+		. = ..()
+		ul_Illuminate()
+	else
+		return ..()
 
 
 turf/var/list/MaxRed
