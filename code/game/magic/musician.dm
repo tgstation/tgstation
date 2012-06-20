@@ -406,7 +406,9 @@
 							sleep(song.tempo / text2num(notes[2]))
 						else
 							sleep(song.tempo)
-			while(repeat)
+				if(repeat > 0)
+					repeat-- //Infinite loops are baaaad.
+			while(repeat > 0)
 			playing = 0
 			updateUsrDialog()
 
@@ -420,10 +422,10 @@
 		if(song)
 			if(song.lines.len > 0 && !(playing))
 				dat += "<A href='?src=\ref[src];play=1'>Play Song</A><BR><BR>"
-				dat += "<A href='?src=\ref[src];repeat=1'>Repeat Song: [repeat ? "Yes" : "No"]</A><BR><BR>"
+				dat += "<A href='?src=\ref[src];repeat=1'>Repeat Song: [repeat] times.</A><BR><BR>"
 			if(playing)
 				dat += "<A href='?src=\ref[src];stop=1'>Stop Playing</A><BR>"
-				dat += "<A href='?src=\ref[src];repeat=1'>Repeat Song: [repeat ? "Yes" : "No"]</A><BR><BR>"
+				dat += "Repeats left: [repeat].<BR><BR>"
 		if(!edit)
 			dat += "<A href='?src=\ref[src];edit=2'>Show Editor</A><BR><BR>"
 		else
@@ -465,80 +467,97 @@
 
 	Topic(href, href_list)
 
-		if(in_range(src, usr) && !issilicon(usr) && anchored)
-			if(href_list["repeat"])
-				repeat = !repeat
+		if(!in_range(src, usr) || issilicon(usr) || !anchored || !usr.canmove || usr.restrained())
+			usr << browse(null, "window=piano;size=700x300")
+			onclose(usr, "piano")
+			return
 
-			if(href_list["tempo"])
-				song.tempo += text2num(href_list["tempo"])
-				if(song.tempo < 1)
-					song.tempo = 1
-			if(href_list["play"])
-				if(song)
-					playing = 1
-					spawn() playsong()
-			if(href_list["newsong"])
+		if(href_list["repeat"]) //Changing this from a toggle to a number of repeats to avoid infinite loops.
+			if(playing) return //So that people cant keep adding to repeat. If the do it intentionally, it could result in the server crashing.
+			var/tempnum = input("How many times do you want to repeat this piece? (max:10)") as num
+			if(tempnum > 10)
+				tempnum = 10
+			repeat = tempnum
+
+		else if(href_list["tempo"])
+			song.tempo += text2num(href_list["tempo"])
+			if(song.tempo < 1)
+				song.tempo = 1
+
+		else if(href_list["play"])
+			if(song)
+				playing = 1
+				spawn() playsong()
+
+		else if(href_list["newsong"])
+			song = new()
+
+		else if(href_list["newline"])
+			var/newline = input("Enter your line: ", "Piano") as text|null
+			if(!newline)
+				return
+			if(song.lines.len > 50)
+				return
+			if(lentext(newline) > 50)
+				newline = copytext(newline, 1, 50)
+			song.lines.Add(newline)
+
+		else if(href_list["deleteline"])
+			var/num = text2num(href_list["deleteline"])
+			song.lines.Cut(num, num+1)
+
+		else if(href_list["modifyline"])
+			var/num = text2num(href_list["modifyline"])
+			var/content = input("Enter your line: ", "Piano", song.lines[num]) as text|null
+			if(!content)
+				return
+			if(lentext(content) > 50)
+				content = copytext(content, 1, 50)
+			song.lines[num] = content
+
+		else if(href_list["stop"])
+			playing = 0
+
+		else if(href_list["help"])
+			help = text2num(href_list["help"]) - 1
+
+		else if(href_list["edit"])
+			edit = text2num(href_list["edit"]) - 1
+
+		else if(href_list["import"])
+			var/t = ""
+			do
+				t = input(usr, "Please paste the entire song, formatted:", text("[]", src.name), t)  as message
+				if (!in_range(src, usr))
+					return
+
+				if(lentext(t) >= 3072)
+					var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
+					if(cont == "no")
+						break
+			while(lentext(t) > 3072)
+
+			//split into lines
+			spawn()
+				var/list/lines = dd_text2list(t, "\n")
+				var/tempo = 5
+				if(copytext(lines[1],1,6) == "BPM: ")
+					tempo = 600 / text2num(copytext(lines[1],6))
+					lines.Cut(1,2)
+				if(lines.len > 50)
+					usr << "Too many lines!"
+					lines.Cut(51)
+				var/linenum = 1
+				for(var/l in lines)
+					if(lentext(l) > 50)
+						usr << "Line [linenum] too long!"
+						lines.Remove(l)
+					else
+						linenum++
 				song = new()
-			if(href_list["newline"])
-				var/newline = input("Enter your line: ", "Piano") as text|null
-				if(!newline)
-					return
-				if(song.lines.len > 50)
-					return
-				if(lentext(newline) > 50)
-					newline = copytext(newline, 1, 50)
-				song.lines.Add(newline)
-			if(href_list["deleteline"])
-				var/num = text2num(href_list["deleteline"])
-				song.lines.Cut(num, num+1)
-			if(href_list["modifyline"])
-				var/num = text2num(href_list["modifyline"])
-				var/content = input("Enter your line: ", "Piano", song.lines[num]) as text|null
-				if(!content)
-					return
-				if(lentext(content) > 50)
-					content = copytext(content, 1, 50)
-				song.lines[num] = content
-			if(href_list["stop"])
-				playing = 0
-			if(href_list["help"])
-				help = text2num(href_list["help"]) - 1
-			if(href_list["edit"])
-				edit = text2num(href_list["edit"]) - 1
-			if(href_list["import"])
-				var/t = ""
-				do
-					t = input(usr, "Please paste the entire song, formatted:", text("[]", src.name), t)  as message
-					if (!in_range(src, usr))
-						return
-
-					if(lentext(t) >= 3072)
-						var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
-						if(cont == "no")
-							break
-				while(lentext(t) > 3072)
-
-				//split into lines
-				spawn()
-					var/list/lines = dd_text2list(t, "\n")
-					var/tempo = 5
-					if(copytext(lines[1],1,6) == "BPM: ")
-						tempo = 600 / text2num(copytext(lines[1],6))
-						lines.Cut(1,2)
-					if(lines.len > 50)
-						usr << "Too many lines!"
-						lines.Cut(51)
-					var/linenum = 1
-					for(var/l in lines)
-						if(lentext(l) > 50)
-							usr << "Line [linenum] too long!"
-							lines.Remove(l)
-						else
-							linenum++
-					song = new()
-					song.lines = lines
-					song.tempo = tempo
-					updateUsrDialog()
+				song.lines = lines
+				song.tempo = tempo
+				updateUsrDialog()
 
 		add_fingerprint(usr)
 		updateUsrDialog()

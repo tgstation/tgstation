@@ -118,15 +118,13 @@
 					user << "\red Sticking a dead brain into the frame would sort of defeat the purpose."
 					return
 
-				if(P:brainmob.mind in ticker.mode.head_revolutionaries)
-					user << "\red The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'.  It refuses to accept the MMI."
-					return
-				if(P:brainmob.mind in ticker.mode:revolutionaries)
-					ticker.mode:remove_revolutionary(P:brainmob.mind , 1)
-
 				if(jobban_isbanned(P:brainmob, "AI"))
 					user << "\red This MMI does not seem to fit."
 					return
+
+				if(P:brainmob.mind)
+					ticker.mode.remove_cultist(P:brainmob.mind, 1)
+					ticker.mode.remove_revolutionary(P:brainmob.mind, 1)
 
 				user.drop_item()
 				P.loc = src

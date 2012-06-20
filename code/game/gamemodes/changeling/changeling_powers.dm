@@ -450,7 +450,7 @@
 		usr.mind.transfer_to(O)
 
 	spawn(300)
-		command_alert("Extreme danger.  A level four biological entity has been detected on board the station.  Emergancy evacuation procedures have begun.  Civilian staff, do NOT engage the creature if spotted.  Renforcements are on route.")
+		command_alert("Extreme danger.  A level four biological entity has been detected on board the station.  Emergency evacuation procedures have begun.  Civilian staff, do NOT engage the creature if spotted.  Renforcements are on route.")
 		emergency_shuttle.online = 1
 		emergency_shuttle.settimeleft(10)
 		spawn(10)
@@ -484,7 +484,7 @@
 				new_commando << "\blue You are a Special Ops Commando in the service of Central Command. \nYour current mission is: \red<B>Assist in mobilizing station crew against the hostile entity.  Do not allow the hostile entity to escape.  Do not leave or permit anyone to leave until the entity is contained.</B>"
 		spawn(100)
 			emergency_shuttle.online = 0
-			command_alert("The emergancy shuttle will hold until the hostile entity has been terminated.  During evacuation, do NOT use escape pods.  To avoid the chance of a hostile entity escaping, the Thunderchild will be firing on and destorying any escape pods leaving the station")
+			command_alert("The emergency shuttle will hold until the hostile entity has been terminated.  During evacuation, do NOT use escape pods.  To avoid the chance of a hostile entity escaping, the Thunderchild will be firing on and destorying any escape pods leaving the station")
 			O << "Your way out has arrived.  Obtain the ID of three heads to override the holding protocol and escape.  Let none stand in your way, for you are a perfect creature."
 			for(var/datum/objective/objective in O.mind.objectives)
 				O.mind.objectives.Remove(objective)
@@ -497,7 +497,7 @@
 /*			spawn(0)
 				while(emergency_shuttle.online == 0)
 					sleep(10)
-				command_alert("Authorization codes recieved, confirming hostile entity terminated.  The emergancy shuttle is now departing.")
+				command_alert("Authorization codes recieved, confirming hostile entity terminated.  The emergency shuttle is now departing.")
 				spawn(900)
 					for(var/mob/M in locate(/area/shuttle/escape_pod1/transit))
 						M.gib()

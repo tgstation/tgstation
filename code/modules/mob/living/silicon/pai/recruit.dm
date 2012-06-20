@@ -31,21 +31,30 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 				pai.name = candidate.name
 				pai.real_name = pai.name
 				pai.key = candidate.key
+
+				pai.mind = new()//Make a new mind for the pai
+				pai.mind.current = pai
+				pai.mind.assigned_role = "Assistant"//Default to an assistant.
+
 				card.pai = pai
 				card.looking_for_personality = 0
+
+				ticker.mode.update_cult_icons_removed(card.pai.mind)
+				ticker.mode.update_rev_icons_removed(card.pai.mind)
+
 				pai_candidates.Remove(candidate)
 				usr << browse(null, "window=findPai")
+
 		if(href_list["new"])
 			var/datum/paiCandidate/candidate = locate(href_list["candidate"])
 			var/option = href_list["option"]
 			var/t = ""
-			var/maxNameLen = 26
 
 			switch(option)
 				if("name")
 					t = input("Enter a name for your pAI", "pAI Name", candidate.name) as text
 					if(t)
-						candidate.name = copytext(sanitize(t),1,maxNameLen)
+						candidate.name = copytext(sanitize(t),1,MAX_NAME_LEN)
 				if("desc")
 					t = input("Enter a description for your pAI", "pAI Description", candidate.description) as message
 					if(t)
@@ -64,7 +73,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 					candidate.savefile_load(usr)
 					//In case people have saved unsanitized stuff.
 					if(candidate.name)
-						candidate.name = copytext(sanitize(candidate.name),1,maxNameLen)
+						candidate.name = copytext(sanitize(candidate.name),1,MAX_NAME_LEN)
 					if(candidate.description)
 						candidate.description = copytext(sanitize(candidate.description),1,MAX_MESSAGE_LEN)
 					if(candidate.role)

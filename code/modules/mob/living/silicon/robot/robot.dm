@@ -51,8 +51,6 @@
 		var/obj/item/weapon/cell/C = new(src)
 		C.charge = 1500
 		cell = C
-	if(src.mind)
-		ticker.mode.remove_revolutionary(src.mind)
 	started = 1
 	..()
 
@@ -520,41 +518,6 @@
 	else
 		spark_system.start()
 		return ..()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)

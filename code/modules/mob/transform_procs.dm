@@ -135,6 +135,10 @@
 //	O.verbs += /mob/living/silicon/ai/proc/ai_cancel_call
 	O.job = "AI"
 
+	if(O.mind)
+		ticker.mode.remove_cultist(O.mind, 1)
+		ticker.mode.remove_revolutionary(O.mind, 1)
+
 	spawn(0)
 		ainame(O)
 		world << text("<b>[O.real_name] is the AI!</b>")
@@ -204,6 +208,10 @@
 
 	O.mmi = new /obj/item/device/mmi(O)
 	O.mmi.transfer_identity(src)//Does not transfer key/client.
+
+	if(O.mind)
+		ticker.mode.remove_cultist(O.mind, 1)
+		ticker.mode.remove_revolutionary(O.mind, 1)
 
 	spawn(0)//To prevent the proc from returning null.
 		del(src)

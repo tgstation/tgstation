@@ -200,15 +200,15 @@
 	memoize_cult_objectives(cult_mind)
 
 
-/datum/game_mode/proc/remove_cultist(datum/mind/cult_mind)
+/datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1)
 	if(cult_mind in cult)
 		cult -= cult_mind
 		cult_mind.current << "\red <FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT>"
 		cult_mind.memory = ""
 		update_cult_icons_removed(cult_mind)
-		for(var/mob/M in viewers(cult_mind.current))
-			M << "<FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</FONT>"
-
+		if(show_message)
+			for(var/mob/M in viewers(cult_mind.current))
+				M << "<FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</FONT>"
 
 /datum/game_mode/proc/update_all_cult_icons()
 	spawn(0)

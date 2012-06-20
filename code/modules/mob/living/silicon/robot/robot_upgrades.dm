@@ -56,7 +56,7 @@
 	return 1
 
 /obj/item/borg/upgrade/restart/
-	name = "Borg emergancy restart module"
+	name = "Borg emergency restart module"
 	desc = "Used to force a restart of a disabled-but-repaired borg, bringing it back online."
 	construction_cost = list("metal"=60000 , "glass"=5000)
 	icon_state = "cyborg_upgrade1"

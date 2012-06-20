@@ -531,7 +531,7 @@
 	return
 
 /obj/structure/closet/syndicate/resources/everything
-	desc = "It's an emergancy storage closet for repairs."
+	desc = "It's an emergency storage closet for repairs."
 
 /obj/structure/closet/syndicate/resources/everything/New()
 
