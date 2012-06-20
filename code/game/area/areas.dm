@@ -37,8 +37,8 @@
 			power_light = 0//rastaf0
 			power_equip = 0//rastaf0
 			power_environ = 0//rastaf0
-			luminosity = 1
-			ul_Lighting = 0
+			if(!ul_Lighting)
+				luminosity = 1
 		else
 			luminosity = 0
 			area_lights_luminosity = rand(6,7)
