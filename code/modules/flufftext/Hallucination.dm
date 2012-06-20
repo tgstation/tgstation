@@ -54,8 +54,8 @@ mob/living/carbon/proc/handle_hallucinations()
 								halitem.icon_state = "revolver"
 								halitem.name = "Revolver"
 							if(2) //c4
-								halitem.icon = 'syndieweapons.dmi'
-								halitem.icon_state = "c4small_0"
+								halitem.icon = 'assemblies.dmi'
+								halitem.icon_state = "plastic-explosive0"
 								halitem.name = "Mysterious Package"
 								if(prob(25))
 									halitem.icon_state = "c4small_1"
@@ -97,7 +97,7 @@ mob/living/carbon/proc/handle_hallucinations()
 								halimage = image('fire.dmi',target,"1",TURF_LAYER)
 							if(3)
 								//src << "C4"
-								halimage = image('syndieweapons.dmi',target,"c4small_1",OBJ_LAYER+0.01)
+								halimage = image('assemblies.dmi',target,"plastic-explosive2",OBJ_LAYER+0.01)
 
 
 						if(client) client.images += halimage
