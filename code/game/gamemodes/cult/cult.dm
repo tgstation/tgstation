@@ -237,11 +237,11 @@
 					var/image/I = cult_mind.current.antag_img
 					I.icon_state = "cult"
 					cultist.current.client.images += I
-			if(cult_mind.current)
-				if(cult_mind.current.client)
-					var/image/I = cultist.current.antag_img
-					I.icon_state = "cult"
-					cult_mind.current.client.images += I
+				if(cult_mind.current)
+					if(cult_mind.current.client)
+						var/image/I = cultist.current.antag_img
+						I.icon_state = "cult"
+						cult_mind.current.client.images += I
 
 
 /datum/game_mode/proc/update_cult_icons_removed(datum/mind/cult_mind)
@@ -253,11 +253,11 @@
 						if(I.icon_state == "cult" && I.loc == cult_mind.current)
 							cultist.current.client.images -= I
 
-		if(cult_mind.current)
-			if(cult_mind.current.client)
-				for(var/image/I in cult_mind.current.client.images)
-					if(I.icon_state == "cult")
-						cult_mind.current.client.images -= I
+			if(cult_mind.current)
+				if(cult_mind.current.client)
+					for(var/image/I in cult_mind.current.client.images)
+						if(I.icon_state == "cult")
+							cult_mind.current.client.images -= I
 
 
 /datum/game_mode/cult/proc/get_unconvertables()
