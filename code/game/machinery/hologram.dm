@@ -72,7 +72,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.icon = A.holo_icon
 	hologram.mouse_opacity = 0//So you can't click on it.
 	hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-	hologram.ul_SetLuminosity(1)//To make it glowy.
+	hologram.ul_SetLuminosity(0,0,2)//To make it glowy.
 	hologram.anchored = 1//So space wind cannot drag it.
 	hologram.name = "AI hologram"//If someone decides to right click.
 	ul_SetLuminosity(0,0,1)//To make the pad glowy.

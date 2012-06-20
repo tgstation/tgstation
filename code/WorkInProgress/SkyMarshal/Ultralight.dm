@@ -267,20 +267,19 @@ atom/proc/ul_LightLevelChanged()
 	return
 
 atom/New()
-	..()
+	. = ..()
 	if(ul_IsLuminous())
 		spawn(1)
 			ul_Illuminate()
-	return
 
 atom/Del()
 	if(ul_IsLuminous())
 		ul_Extinguish()
-	..()
+	. = ..()
 
 atom/movable/Move()
 	ul_Extinguish()
-	..()
+	. = ..()
 	ul_Illuminate()
 
 

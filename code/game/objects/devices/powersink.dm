@@ -94,7 +94,7 @@
 			var/datum/powernet/PN = attached.get_powernet()
 			if(PN)
 				if(!luminosity)
-					ul_SetLuminosity(12)
+					ul_SetLuminosity(12,3,0)
 
 
 				// found a powernet, so drain up to max power from it
