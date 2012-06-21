@@ -17,6 +17,8 @@
 		var/ul_created = findtext(tag,":UL")
 		ul_Prep()
 		if(ul_created)
+			if(!islist(related))
+				related = list()
 			related += src
 			return
 		related = list(src)
@@ -41,11 +43,13 @@
 				luminosity = 1
 		else
 			luminosity = 0
-			area_lights_luminosity = rand(6,7)
+			area_lights_luminosity = rand(6,8)
 		if(LightLevels)
 			ul_Light()
 
-
+/area/Del()
+	related -= src
+	. = ..()
 
 
 	/*spawn(5)
@@ -100,9 +104,7 @@
 /area/proc/atmosalert(danger_level)
 //	if(src.type==/area) //No atmos alarms in space
 //		return 0 //redudant
-	if(danger_level != src.atmosalm)
-		//src.updateicon()
-		//src.mouse_opacity = 0
+	if(danger_level != atmosalm)
 		if (danger_level==2)
 			var/list/cameras = list()
 			for(var/area/RA in src.related)
@@ -113,12 +115,12 @@
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
 			for(var/obj/machinery/computer/station_alert/a in world)
 				a.triggerAlarm("Atmosphere", src, cameras, src)
-		else if (src.atmosalm == 2)
+		else if (atmosalm == 2)
 			for(var/mob/living/silicon/aiPlayer in world)
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
 			for(var/obj/machinery/computer/station_alert/a in world)
 				a.cancelAlarm("Atmosphere", src, src)
-		src.atmosalm = danger_level
+		atmosalm = danger_level
 		return 1
 	return 0
 

@@ -51,7 +51,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/list/lights				// list of all lights on this area
 
 	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
-	var/air_doors_activated
+	var/air_doors_activated = 0
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -328,6 +328,7 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Centcom"
 	icon_state = "centcom"
 	requires_power = 0
+	ul_Lighting = 1
 
 /area/centcom/control
 	name = "\improper Centcom Control"
@@ -380,6 +381,7 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Asteroid"
 	icon_state = "asteroid"
 	requires_power = 0
+	ul_Lighting = 1
 
 /area/asteroid/cave				// -- TLE
 	name = "\improper Asteroid - Underground"
@@ -965,8 +967,9 @@ proc/process_ghost_teleport_locs()
 
 /area/solar
 	requires_power = 0
-	luminosity = 1
-	ul_Lighting = 0
+	luminosity = 0
+	ul_Lighting = 1
+	LightLevels = list("Red" = 2, "Green" = 2, "Blue" = 3)
 
 	auxport
 		name = "\improper Port Auxiliary Solar Array"

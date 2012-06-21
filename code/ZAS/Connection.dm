@@ -197,6 +197,8 @@ connection
 			del src
 		if(A.HasDoor(B) || B.HasDoor(A))
 			indirect = 1
+		else
+			indirect = 0
 
 	proc/Sanitize()
 		//If the zones change on connected turfs, update it.

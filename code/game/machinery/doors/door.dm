@@ -37,6 +37,37 @@
 				update_nearby_tiles(need_rebuild=1)
 		else
 			update_nearby_tiles(need_rebuild=1)
+
+		spawn(1)
+			var/area/A = get_area(src)
+			if(A.master)
+				A = A.master
+			var/turf/north = get_step(src, NORTH)
+			var/turf/east = get_step(src, EAST)
+			var/turf/south = get_step(src, SOUTH)
+			var/turf/west = get_step(src, WEST)
+			A.all_doors |= src
+
+			if(!north.density)
+				var/area/other_area = get_area(north)
+				if(other_area.name != A.name)
+					other_area.master.all_doors |= src
+
+			if(!east.density)
+				var/area/other_area = get_area(east)
+				if(other_area.name != A.name)
+					other_area.master.all_doors |= src
+
+			if(!south.density)
+				var/area/other_area = get_area(south)
+				if(other_area.name != A.name)
+					other_area.master.all_doors |= src
+
+			if(!west.density)
+				var/area/other_area = get_area(west)
+				if(other_area.name != A.name)
+					other_area.master.all_doors |= src
+
 		return
 
 
