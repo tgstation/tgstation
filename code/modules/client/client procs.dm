@@ -1,7 +1,9 @@
 	////////////
 	//SECURITY//
 	////////////
-#define TOPIC_SPAM_DELAY	7		//7 tick delay is about half a second
+#define TOPIC_SPAM_DELAY	4		//4 tick delay is about half a second
+	// REDUCED because holy fucking balls the delay was too damn high
+
 #define UPLOAD_LIMIT		1048576	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
 	/*
 	When somebody clicks a link in game, this Topic is called first.
