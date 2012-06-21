@@ -84,6 +84,3 @@
 
 
 /obj/machinery/door/firedoor/border_only
-
-#undef OPEN
-#undef CLOSED
