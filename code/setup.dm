@@ -1,5 +1,8 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
+#define TRUE 1
+#define FALSE 0
+
 #define PI 3.1415
 
 #define R_IDEAL_GAS_EQUATION	8.31 //kPa*L/(K*mol)
@@ -422,3 +425,38 @@ var/list/liftable_structures = list(\
 	/obj/structure/filingcabinet, \
 	/obj/structure/reagent_dispensers, \
 	/obj/machinery/portable_atmospherics/canister)
+
+//////////////////
+//GLOBAL DEFINES//
+//////////////////
+
+#define SPEED_OF_LIGHT 3e8 //not exact but hey!
+#define SPEED_OF_LIGHT_SQ 9e+16
+#define FIRE_DAMAGE_MODIFIER 0.0215 //Higher values result in more external fire damage to the skin (default 0.0215)
+#define AIR_DAMAGE_MODIFIER 2.025 //More means less damage from hot air scalding lungs, less = more damage. (default 2.025)
+#define INFINITY 1e31 //closer then enough
+
+	//Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
+#define MAX_MESSAGE_LEN 1024
+#define MAX_PAPER_MESSAGE_LEN 3072
+#define MAX_BOOK_MESSAGE_LEN 9216
+
+#define MAX_NAME_LEN 32
+
+/////////////////
+//RADIO DEFINES//
+/////////////////
+#define TRANSMISSION_WIRE	0
+#define TRANSMISSION_RADIO	1
+
+/* filters */
+#define RADIO_TO_AIRALARM "1"
+#define RADIO_FROM_AIRALARM "2"
+#define RADIO_CHAT "3"
+#define RADIO_ATMOSIA "4"
+#define RADIO_NAVBEACONS "5"
+#define RADIO_AIRLOCK "6"
+#define RADIO_SECBOT "7"
+#define RADIO_MULEBOT "8"
+#define RADIO_MAGNETS "9"
+#define RADIO_POWER "10"
