@@ -24,30 +24,31 @@
 	if(istype(W,/obj/item/weapon/weldingtool/))
 		if(!src.method)
 			if(inside)
-				var/obj/o = new src.inside(get_turf(src))
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message("\blue The rock burns away revealing a [o.name].",1)
+				var/obj/A = new src.inside(get_turf(src))
+				for(var/mob/M in viewers(world.view, user))
+					M.show_message("\blue The rock burns away revealing a [A.name].",1)
 			else
-				for(var/mob/O in viewers(world.view, user))
-					O.show_message("\blue The rock burns away into nothing.",1)
+				for(var/mob/M in viewers(world.view, user))
+					M.show_message("\blue The rock burns away into nothing.",1)
 			del src
 		else
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message("\blue A few sparks fly off the rock, but otherwise nothing else happens.",1)
-	else if(istype(O, /obj/item/weapon/reagent_containers/glass))
-		if(O.reagents.has_reagent("pacid", 1))
+			for(var/mob/M in viewers(world.view, user))
+				M.show_message("\blue A few sparks fly off the rock, but otherwise nothing else happens.",1)
+	else if(istype(W, /obj/item/weapon/reagent_containers/))
+		var/obj/item/weapon/reagent_containers/R = W
+		if(R.reagents.has_reagent("pacid", 1))
 			if(src.method)
 				if(inside)
-					var/obj/o = new src.inside(get_turf(src))
-					for(var/mob/O in viewers(world.view, get_turf(src)))
-						O.show_message("\blue The rock fizzes away revealing a [o.name].",1)
+					var/obj/A = new src.inside(get_turf(src))
+					for(var/mob/M in viewers(world.view, get_turf(src)))
+						M.show_message("\blue The rock fizzes away revealing a [A.name].",1)
 				else
-					for(var/mob/O in viewers(world.view, get_turf(src)))
-						O.show_message("\blue The rock fizzes away into nothing.",1)
+					for(var/mob/M in viewers(world.view, get_turf(src)))
+						M.show_message("\blue The rock fizzes away into nothing.",1)
 				del src
 			else
-				for(var/mob/O in viewers(world.view, get_turf(src)))
-					O.show_message("\blue The acid splashes harmlessly off the rock, nothing else interesting happens.",1)
+				for(var/mob/M in viewers(world.view, get_turf(src)))
+					M.show_message("\blue The acid splashes harmlessly off the rock, nothing else interesting happens.",1)
 
 
 
