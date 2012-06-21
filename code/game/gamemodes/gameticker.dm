@@ -34,6 +34,8 @@ var/global/datum/controller/gameticker/ticker
 
 	var/delay_end = 0	//if set to nonzero, the round will not restart on it's own
 
+	var/triai = 0//Global holder for Triumvirate
+
 /datum/controller/gameticker/proc/pregame()
 	login_music = pick('title2.ogg') // choose title music!
 
@@ -82,7 +84,6 @@ var/global/datum/controller/gameticker/ticker
 		return 0
 
 	//Configure mode and assign player to special mode stuff
-
 	job_master.DivideOccupations() //Distribute jobs
 	var/can_continue = src.mode.pre_setup()//Setup special modes
 	if(!can_continue)

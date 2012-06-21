@@ -907,7 +907,7 @@
 
 /turf/simulated/wall/mineral/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if((mineral == "plasma") && W)
-		if(is_hot(W) > 300)
+		if(is_hot(W) > 300)//If the temperature of the object is over 300, then ignite
 			ignite(is_hot(W))
 			return
 	if(mineral == "uranium")
@@ -940,7 +940,7 @@
 	for(var/obj/machinery/door/airlock/plasma/D in range(3,src))
 		D.ignite(temperature/4)
 
-/turf/simulated/wall/mineral/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/turf/simulated/wall/mineral/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)//Doesn't fucking work because walls don't interact with air :(
 	if(mineral == "plasma")
 		if(exposed_temperature > 300)
 			PlasmaBurn(exposed_temperature)
@@ -1003,7 +1003,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				"light_on_broken","light_off","wall_thermite","grass1","grass2","grass3","grass4",
 				"asteroid","asteroid_dug",
 				"asteroid0","asteroid1","asteroid2","asteroid3","asteroid4",
-				"asteroid5","asteroid6","asteroid7","asteroid8",
+				"asteroid5","asteroid6","asteroid7","asteroid8","asteroid9","asteroid10","asteroid11","asteroid12",
 				"burning","oldburning","light-on-r","light-on-y","light-on-g","light-on-b")
 
 var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3","asteroid","asteroid_dug")
@@ -1321,6 +1321,7 @@ turf/simulated/floor/return_siding_icon_state()
 
 /turf/simulated/floor/proc/burn_tile()
 	if(istype(src,/turf/simulated/floor/engine)) return
+	if(istype(src,/turf/simulated/floor/plating/airless/asteroid)) return//Asteroid tiles don't burn
 	if(broken || burnt) return
 	if(is_plasteel_floor())
 		src.icon_state = "damaged[pick(1,2,3,4,5)]"

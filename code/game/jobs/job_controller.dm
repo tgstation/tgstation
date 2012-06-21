@@ -111,27 +111,28 @@ var/global/datum/controller/occupations/job_master
 		if(!job)	return 0
 		if((job.title == "AI") && (config) && (!config.allow_ai))	return 0
 
-		for(var/level = 1 to 3)
-			var/list/candidates = list()
-			if(ticker.mode.name == "AI malfunction")//Make sure they want to malf if its malf
-				candidates = FindOccupationCandidates(job, level, BE_MALF)
-			else
-				candidates = FindOccupationCandidates(job, level)
-			if(candidates.len)
-				var/mob/new_player/candidate = pick(candidates)
-				if(AssignRole(candidate, "AI"))
-					ai_selected++
-					break
-		//Malf NEEDS an AI so force one if we didn't get a player who wanted it
-		if((ticker.mode.name == "AI malfunction")&&(!ai_selected))
-			unassigned = shuffle(unassigned)
-			for(var/mob/new_player/player in unassigned)
-				if(jobban_isbanned(player, "AI"))	continue
-				if(AssignRole(player, "AI"))
-					ai_selected++
-					break
-		if(ai_selected)	return 1
-		return 0
+		for(var/i = job.total_positions, i > 0, i--)
+			for(var/level = 1 to 3)
+				var/list/candidates = list()
+				if(ticker.mode.name == "AI malfunction")//Make sure they want to malf if its malf
+					candidates = FindOccupationCandidates(job, level, BE_MALF)
+				else
+					candidates = FindOccupationCandidates(job, level)
+				if(candidates.len)
+					var/mob/new_player/candidate = pick(candidates)
+					if(AssignRole(candidate, "AI"))
+						ai_selected++
+						break
+			//Malf NEEDS an AI so force one if we didn't get a player who wanted it
+			if((ticker.mode.name == "AI malfunction")&&(!ai_selected))
+				unassigned = shuffle(unassigned)
+				for(var/mob/new_player/player in unassigned)
+					if(jobban_isbanned(player, "AI"))	continue
+					if(AssignRole(player, "AI"))
+						ai_selected++
+						break
+			if(ai_selected)	return 1
+			return 0
 
 
 /** Proc DivideOccupations
@@ -144,6 +145,10 @@ var/global/datum/controller/occupations/job_master
 		SetupOccupations()
 
 		occupations = shuffle(occupations) //Shuffles job-list at round start so that people don't have their job picks randomized
+		if(ticker)//Holder for Triumvirate is stored in the ticker, this just processes it
+			for(var/datum/job/ai/A in occupations)
+				if(ticker.triai)
+					A.spawn_positions = 3
 
 		//Get the players who are ready
 		for(var/mob/new_player/player in world)
