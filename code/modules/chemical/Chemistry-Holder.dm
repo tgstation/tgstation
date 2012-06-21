@@ -36,7 +36,7 @@ datum
 					total_transfered++
 					src.update_total()
 
-				handle_reactions()
+			//	handle_reactions() this proc only removes reagents from src, no reason to check for reactions since they wont happen
 				return total_transfered
 
 			get_master_reagent_name()
@@ -78,7 +78,7 @@ datum
 				src.update_total()
 				R.update_total()
 				R.handle_reactions()
-				src.handle_reactions()
+			//	src.handle_reactions() this proc only removes reagents from src, no reason to check for reactions since they wont happen
 				return amount
 
 			copy_to(var/obj/target, var/amount=1, var/multiplier=1, var/preserve_data=1)
@@ -99,7 +99,7 @@ datum
 				src.update_total()
 				R.update_total()
 				R.handle_reactions()
-				src.handle_reactions()
+			//	src.handle_reactions()
 				return amount
 
 			trans_id_to(var/obj/target, var/reagent, var/amount=1, var/preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
@@ -378,8 +378,8 @@ datum
 					if (R.id == reagent)
 						R.volume -= amount
 						update_total()
-						if(!safety)//So it does not handle reactions when it need not to
-							handle_reactions()
+					//	if(!safety)//So it does not handle reactions when it need not to
+					//		handle_reactions() this proc only removes reagents from src, no reason to check for reactions since they wont happen
 						my_atom.on_reagent_change()
 						return 0
 
