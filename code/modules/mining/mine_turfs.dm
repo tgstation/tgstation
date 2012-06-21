@@ -14,6 +14,7 @@
 	var/mineralAmt = 0
 	var/spread = 0 //will the seam spread?
 	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
+	var/artifactChance = 0.1	//percent chance to spawn a xenoarchaelogical artifact
 
 /turf/simulated/mineral/Del()
 	return
@@ -69,10 +70,9 @@
 
 /turf/simulated/mineral/random
 	name = "Mineral deposit"
-	var/mineralAmtList = list("Uranium" = 5, "Iron" = 5, "Diamond" = 5, "Gold" = 5, "Silver" = 5, "Plasma" = 5/*, "Adamantine" = 5*/)
-	var/mineralSpawnChanceList = list("Uranium" = 5, "Iron" = 50, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Plasma" = 25/*, "Adamantine" =5*/)//Currently, Adamantine won't spawn as it has no uses. -Durandan
+	var/mineralAmtList = list("Uranium" = 5, "Iron" = 5, "Diamond" = 5, "Gold" = 5, "Silver" = 5, "Plasma" = 5, "Archaeo" = 2/*, "Adamantine" = 5*/)
+	var/mineralSpawnChanceList = list("Uranium" = 5, "Iron" = 50, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Plasma" = 25, "Archaeo" = 4/*, "Adamantine" =5*/)//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
-	var/artifactChance = 0.5
 
 /turf/simulated/mineral/random/New()
 	..()
@@ -94,6 +94,8 @@
 					M = new/turf/simulated/mineral/silver(src)
 				if("Plasma")
 					M = new/turf/simulated/mineral/plasma(src)
+				if("Archaeo")
+					M = new/turf/simulated/mineral/archaeo(src)
 				/*if("Adamantine")
 					M = new/turf/simulated/mineral/adamantine(src)*/
 			if(M)
@@ -108,7 +110,7 @@
 
 /turf/simulated/mineral/random/high_chance
 	mineralChance = 25
-	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 30, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Plasma" = 25)
+	mineralSpawnChanceList = list("Uranium" = 10, "Iron" = 30, "Diamond" = 2, "Gold" = 10, "Silver" = 10, "Plasma" = 25, "Archaeo" = 2)
 
 /turf/simulated/mineral/random/Del()
 	return
@@ -168,6 +170,16 @@
 	spread = 1
 
 
+/turf/simulated/mineral/archaeo
+	name = "Strange rock formation"
+	icon_state = "rock_Archaeo"
+	mineralName = "Archaeo"
+	mineralAmt = 2
+	spreadChance = 20
+	spread = 1
+	artifactChance = 2
+
+
 /turf/simulated/mineral/clown
 	name = "Bananium deposit"
 	icon_state = "rock_Clown"
@@ -223,18 +235,26 @@
 */
 //Watch your tabbing, microwave. --NEO
 
-		user << "\red You start picking."
-		playsound(user, 'Genhit.ogg', 20, 1)
+		if(istype(W, /obj/item/weapon/pickaxe/excavationtool))
+			user << "\red You carefully start clearing away the rock."
+			playsound(user, 'Genhit.ogg', 20, 1)
 
-		if(do_after(user,W:digspeed))
-			user << "\blue You finish cutting into the rock."
-			gets_drilled()
+			if(do_after(user,W:digspeed))
+				user << "\blue You finish clearing away the rock."
+				gets_drilled(1)
+		else
+			user << "\red You start picking."
+			playsound(user, 'Genhit.ogg', 20, 1)
+
+			if(do_after(user,W:digspeed))
+				user << "\blue You finish cutting into the rock."
+				gets_drilled()
 
 	else
 		return attack_hand(user)
 	return
 
-/turf/simulated/mineral/proc/gets_drilled()
+/turf/simulated/mineral/proc/gets_drilled(var/delicate = 0)
 	if ((src.mineralName != "") && (src.mineralAmt > 0) && (src.mineralAmt < 11))
 		var/i
 		for (i=0;i<mineralAmt;i++)
@@ -250,8 +270,14 @@
 				new /obj/item/weapon/ore/plasma(src)
 			if (src.mineralName == "Diamond")
 				new /obj/item/weapon/ore/diamond(src)
+			if (src.mineralName == "Archaeo" && (prob(10) || delicate) )
+				//spawn strange rocks here
+				new /obj/item/weapon/ore/strangerock(src)
 			if (src.mineralName == "Clown")
 				new /obj/item/weapon/ore/clown(src)
+	if (prob(src.artifactChance))
+		//spawn a rare, xeno-archaelogical artifact here
+		new /obj/machinery/artifact(src)
 	ReplaceWithFloor()
 	return
 
