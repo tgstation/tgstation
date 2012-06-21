@@ -9,27 +9,36 @@
 #define UL_I_ONZERO 2
 
 #define ul_LightingEnabled 1
-#define ul_LightingResolution 1
+//#define ul_LightingResolution 2
+//Uncomment if you want maybe slightly smoother lighting
 #define ul_Steps 7
 #define ul_FalloffStyle UL_I_FALLOFF_ROUND // Sets the lighting falloff to be either squared or circular.
 #define ul_Layer 10
 #define ul_TopLuminosity 12 //Maximum brightness an object can have.
 
-var
-	ul_LightingResolutionSqrt = sqrt(ul_LightingResolution)
-	ul_SuppressLightLevelChanges = 0
+//#define ul_LightLevelChangedUpdates
+//Uncomment if you have code that you want triggered when the light level on an atom changes.
 
-	list/ul_FastRoot = list(0, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5,
+
+#define ul_Clamp(Value) min(max(Value, 0), ul_Steps)
+#define ul_IsLuminous(A) (A.LuminosityRed > 0 || A.LuminosityGreen > 0 || A.LuminosityBlue > 0)
+#define ul_Luminosity(A) max(A.LuminosityRed, A.LuminosityGreen, A.LuminosityBlue)
+
+
+#ifdef ul_LightingResolution
+var/ul_LightingResolutionSqrt = sqrt(ul_LightingResolution)
+#endif
+var/ul_SuppressLightLevelChanges = 0
+
+
+var/list/ul_FastRoot = list(0, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5,
 							5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
 							7, 7)
 
 
-proc/ul_Clamp(var/Value)
-	return min(max(Value, 0), ul_Steps)
-
 proc/ul_UnblankLocal(var/list/ReApply = view(ul_TopLuminosity, src))
 	for(var/atom/Light in ReApply)
-		if(Light.ul_IsLuminous())
+		if(ul_IsLuminous(Light))
 			Light.ul_Illuminate()
 	return
 
@@ -41,7 +50,7 @@ atom/var/ul_Extinguished = UL_I_ONZERO
 
 atom/proc/ul_SetLuminosity(var/Red, var/Green = Red, var/Blue = Red)
 
-	if(LuminosityRed == Red && LuminosityGreen == Green && LuminosityBlue == Blue)
+	if(LuminosityRed == min(Red, ul_TopLuminosity) && LuminosityGreen == min(Green, ul_TopLuminosity) && LuminosityBlue == min(Blue, ul_TopLuminosity))
 		return //No point doing all that work if it won't have any effect anyways...
 
 	if (ul_Extinguished == UL_I_EXTINGUISHED)
@@ -51,7 +60,7 @@ atom/proc/ul_SetLuminosity(var/Red, var/Green = Red, var/Blue = Red)
 
 		return
 
-	if (ul_IsLuminous())
+	if (ul_IsLuminous(src))
 		ul_Extinguish()
 
 	LuminosityRed = min(Red,ul_TopLuminosity)
@@ -60,7 +69,7 @@ atom/proc/ul_SetLuminosity(var/Red, var/Green = Red, var/Blue = Red)
 
 	ul_Extinguished = UL_I_ONZERO
 
-	if (ul_IsLuminous())
+	if (ul_IsLuminous(src))
 		ul_Illuminate()
 
 	return
@@ -71,7 +80,7 @@ atom/proc/ul_Illuminate()
 
 	ul_Extinguished = UL_I_LIT
 
-	luminosity = ul_Luminosity()
+	luminosity = ul_Luminosity(src)
 
 	for(var/turf/Affected in view(luminosity, src))
 		var/Falloff = src.ul_FalloffAmount(Affected)
@@ -117,11 +126,13 @@ atom/proc/ul_Illuminate()
 
 			Affected.ul_UpdateLight()
 
+			#ifdef ul_LightLevelChangedUpdates
 			if (ul_SuppressLightLevelChanges == 0)
 				Affected.ul_LightLevelChanged()
 
 				for(var/atom/AffectedAtom in Affected)
 					AffectedAtom.ul_LightLevelChanged()
+			#endif
 	return
 
 atom/proc/ul_Extinguish()
@@ -131,7 +142,7 @@ atom/proc/ul_Extinguish()
 
 	ul_Extinguished = UL_I_EXTINGUISHED
 
-	for(var/turf/Affected in view(ul_Luminosity(), src))
+	for(var/turf/Affected in view(ul_Luminosity(src), src))
 
 		var/Falloff = ul_FalloffAmount(Affected)
 
@@ -182,11 +193,13 @@ atom/proc/ul_Extinguish()
 
 			Affected.ul_UpdateLight()
 
+			#ifdef ul_LightLevelChangedUpdates
 			if (ul_SuppressLightLevelChanges == 0)
 				Affected.ul_LightLevelChanged()
 
 				for(var/atom/AffectedAtom in Affected)
 					AffectedAtom.ul_LightLevelChanged()
+			#endif
 
 	luminosity = 0
 
@@ -204,17 +217,20 @@ atom/proc/ul_FalloffAmount(var/atom/ref)
 	if (ul_FalloffStyle == UL_I_FALLOFF_ROUND)
 		var/x = (ref.x - src.x)
 		var/y = (ref.y - src.y)
-		if(ul_LightingResolution != 1)
-			if (round((x*x + y*y)*ul_LightingResolutionSqrt,1) > ul_FastRoot.len)
-				for(var/i = ul_FastRoot.len, i <= round(x*x+y*y*ul_LightingResolutionSqrt,1), i++)
-					ul_FastRoot += round(sqrt(i))
-			return ul_FastRoot[round((x*x + y*y)*ul_LightingResolutionSqrt, 1) + 1]/ul_LightingResolution
 
-		else
-			if ((x*x + y*y) > ul_FastRoot.len)
-				for(var/i = ul_FastRoot.len, i <= x*x+y*y, i++)
-					ul_FastRoot += round(sqrt(i))
-			return ul_FastRoot[x*x + y*y + 1]/ul_LightingResolution
+		#ifdef ul_LightingResolution
+		if (round((x*x + y*y)*ul_LightingResolutionSqrt,1) > ul_FastRoot.len)
+			for(var/i = ul_FastRoot.len, i <= round(x*x+y*y*ul_LightingResolutionSqrt,1), i++)
+				ul_FastRoot += round(sqrt(i))
+		return ul_FastRoot[round((x*x + y*y)*ul_LightingResolutionSqrt, 1) + 1]/ul_LightingResolution
+
+		#else
+		if ((x*x + y*y) > ul_FastRoot.len)
+			for(var/i = ul_FastRoot.len, i <= x*x+y*y, i++)
+				ul_FastRoot += round(sqrt(i))
+		return ul_FastRoot[x*x + y*y + 1]
+
+		#endif
 
 	else if (ul_FalloffStyle == UL_I_FALLOFF_SQUARE)
 		return get_dist(src, ref)
@@ -237,17 +253,11 @@ atom/proc/ul_BlankLocal()
 	var/TurfAdjust = isturf(src) ? 1 : 0
 
 	for(var/atom/Affected in view(ul_TopLuminosity, src))
-		if(Affected.ul_IsLuminous() && Affected.ul_Extinguished == UL_I_LIT && (ul_FalloffAmount(Affected) <= Affected.luminosity + TurfAdjust))
+		if(ul_IsLuminous(Affected) && Affected.ul_Extinguished == UL_I_LIT && (ul_FalloffAmount(Affected) <= Affected.luminosity + TurfAdjust))
 			Affected.ul_Extinguish()
 			Blanked += Affected
 
 	return Blanked
-
-atom/proc/ul_Luminosity()
-	return max(LuminosityRed, LuminosityGreen, LuminosityBlue)
-
-atom/proc/ul_IsLuminous(var/Red = LuminosityRed, var/Green = LuminosityGreen, var/Blue = LuminosityBlue)
-	return (Red > 0 || Green > 0 || Blue > 0)
 
 atom/proc/ul_LightLevelChanged()
 	//Designed for client projects to use.  Called on items when the turf they are in has its light level changed
@@ -255,17 +265,17 @@ atom/proc/ul_LightLevelChanged()
 
 atom/New()
 	. = ..()
-	if(ul_IsLuminous())
-		spawn(2)
+	if(ul_IsLuminous(src))
+		spawn(5)
 			ul_Illuminate()
 
 atom/Del()
-	if(ul_IsLuminous())
+	if(ul_IsLuminous(src))
 		ul_Extinguish()
 	. = ..()
 
 atom/movable/Move()
-	if(LuminosityRed || LuminosityGreen || LuminosityBlue)
+	if(ul_IsLuminous(src))
 		ul_Extinguish()
 		. = ..()
 		ul_Illuminate()
@@ -359,7 +369,7 @@ area/proc/ul_Light(var/Red = LightLevelRed, var/Green = LightLevelGreen, var/Blu
 	LightLevelGreen = Green
 	LightLevelBlue = Blue
 
-	luminosity = ul_IsLuminous(LightLevelRed, LightLevelGreen, LightLevelBlue)
+	luminosity = LightLevelRed || LightLevelGreen || LightLevelBlue
 
 	ul_Overlay = image('ULIcons.dmi', , num2text(LightLevelRed) + "-" + num2text(LightLevelGreen) + "-" + num2text(LightLevelBlue), ul_Layer)
 
@@ -389,3 +399,5 @@ area/proc/ul_Prep()
 #undef ul_FalloffStyle
 #undef ul_Layer
 #undef ul_TopLuminosity
+#undef ul_Clamp
+#undef ul_LightLevelChangedUpdates

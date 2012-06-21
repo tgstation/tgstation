@@ -206,7 +206,7 @@
 	density = 1.0
 	var/processing = null
 	var/locked = 1
-	req_access = list(access_janitor)
+	req_access = list(ACCESS_JANITOR)
 	desc = "A compact incineration device, used to dispose of garbage."
 	icon = 'stationobjs.dmi'
 	icon_state = "trashcan"

@@ -179,23 +179,10 @@ var/list/AAlarmIndexToFlag
 var/list/AAlarmIndexToWireColor
 var/list/AAlarmWireColorToIndex
 
-var/const/SPEED_OF_LIGHT = 3e8 //not exact but hey!
-var/const/SPEED_OF_LIGHT_SQ = 9e+16
-var/const/FIRE_DAMAGE_MODIFIER = 0.0215 //Higher values result in more external fire damage to the skin (default 0.0215)
-var/const/AIR_DAMAGE_MODIFIER = 2.025 //More means less damage from hot air scalding lungs, less = more damage. (default 2.025)
-var/const/INFINITY = 1e31 //closer then enough
-
-	//Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
-var/const/MAX_MESSAGE_LEN = 1024
-var/const/MAX_PAPER_MESSAGE_LEN = 3072
-var/const/MAX_BOOK_MESSAGE_LEN = 9216
-
-var/const/MAX_NAME_LEN = 32
-
 var/list/paper_blacklist = list("script","frame","iframe","input","button","a","embed","object")
 
-var/const/shuttle_time_in_station = 1800 // 3 minutes in the station
-var/const/shuttle_time_to_arrive = 6000 // 10 minutes to arrive
+#define shuttle_time_in_station 1800 // 3 minutes in the station
+#define shuttle_time_to_arrive 6000 // 10 minutes to arrive
 
 
 

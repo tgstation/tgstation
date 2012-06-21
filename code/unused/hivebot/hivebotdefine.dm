@@ -21,7 +21,7 @@
 
 	var/obj/item/device/radio/radio = null
 
-	var/list/req_access = list(access_robotics)
+	var/list/req_access = list(ACCESS_ROBOTICS)
 	var/energy = 4000
 	var/energy_max = 4000
 	var/jetpack = 0

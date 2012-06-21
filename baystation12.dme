@@ -225,6 +225,7 @@
 #define DEBUG
 // END_PREFERENCES
 // BEGIN_INCLUDE
+#include "code\access_defines.dm"
 #include "code\names.dm"
 #include "code\setup.dm"
 #include "code\stylesheet.dm"

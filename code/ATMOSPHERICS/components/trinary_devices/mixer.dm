@@ -5,7 +5,7 @@ obj/machinery/atmospherics/trinary/mixer
 
 	name = "Gas mixer"
 
-//	req_access = list(access_atmospherics)
+//	req_access = list(ACCESS_ATMOSPHERICS)
 
 	var/on = 0
 

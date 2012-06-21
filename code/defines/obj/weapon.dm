@@ -196,7 +196,7 @@
 	var/split = 5
 	var/round = 0.01
 	var/access = list()
-	access = access_crate_cash
+	access = ACCESS_CRATE_CASH
 
 /obj/item/weapon/spacecash
 	New() // Just in case
@@ -219,43 +219,43 @@
 
 /obj/item/weapon/money/c10
 	icon_state = "spacecash10"
-	access = access_crate_cash
+	access = ACCESS_CRATE_CASH
 	desc = "A pile of 10 credits."
 	worth = 10
 
 /obj/item/weapon/money/c20
 	icon_state = "spacecash20"
-	access = access_crate_cash
+	access = ACCESS_CRATE_CASH
 	desc = "A pile of 20 credits."
 	worth = 20
 
 /obj/item/weapon/money/c50
 	icon_state = "spacecash50"
-	access = access_crate_cash
+	access = ACCESS_CRATE_CASH
 	desc = "A pile of 50 credits."
 	worth = 50
 
 /obj/item/weapon/money/c100
 	icon_state = "spacecash100"
-	access = access_crate_cash
+	access = ACCESS_CRATE_CASH
 	desc = "A pile of 100 credits."
 	worth = 100
 
 /obj/item/weapon/money/c200
 	icon_state = "spacecash200"
-	access = access_crate_cash
+	access = ACCESS_CRATE_CASH
 	desc = "A pile of 200 credits."
 	worth = 200
 
 /obj/item/weapon/money/c500
 	icon_state = "spacecash500"
-	access = access_crate_cash
+	access = ACCESS_CRATE_CASH
 	desc = "A pile of 500 credits."
 	worth = 500
 
 /obj/item/weapon/money/c1000
 	icon_state = "spacecash1000"
-	access = access_crate_cash
+	access = ACCESS_CRATE_CASH
 	desc = "A pile of 1000 credits."
 	worth = 1000
 
@@ -706,7 +706,7 @@
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
 //	desc = "Shhhhh."
-	access = list(access_maint_tunnels)
+	access = list(ACCESS_MAINT_TUNNELS)
 	origin_tech = "syndicate=3"
 
 /obj/item/weapon/card/id/syndicate_command
@@ -714,7 +714,7 @@
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
-	access = list(access_syndicate)
+	access = list(ACCESS_SYNDICATE)
 
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"

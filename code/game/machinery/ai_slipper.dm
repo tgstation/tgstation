@@ -11,7 +11,7 @@
 	var/cooldown_time = 0
 	var/cooldown_timeleft = 0
 	var/cooldown_on = 0
-	req_access = list(access_ai_upload)
+	req_access = list(ACCESS_AI_UPLOAD)
 
 /obj/machinery/ai_slipper/power_change()
 	if(stat & BROKEN)

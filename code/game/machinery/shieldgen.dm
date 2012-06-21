@@ -19,7 +19,7 @@
 		icon_state = "Shield_Gen"
 		anchored = 0
 		density = 1
-		req_access = list(access_security)
+		req_access = list(ACCESS_SECURITY)
 		var/active = 0
 		var/power = 0
 		var/state = 0

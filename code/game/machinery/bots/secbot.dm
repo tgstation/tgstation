@@ -11,7 +11,7 @@
 	fire_dam_coeff = 0.7
 	brute_dam_coeff = 0.5
 //	weight = 1.0E7
-	req_access = list(access_security)
+	req_access = list(ACCESS_SECURITY)
 	var/locked = 1 //Behavior Controls lock
 	var/mob/living/carbon/target
 	var/oldtarget_name
