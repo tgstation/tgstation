@@ -1,4 +1,3 @@
-/var/const
 /var/const/access_security = 1
 /var/const/access_brig = 2
 /var/const/access_armory = 3

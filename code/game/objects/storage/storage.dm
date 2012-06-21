@@ -30,9 +30,9 @@
 		if(MT.armed)
 			for(var/mob/O in viewers(user, null))
 				if(O == user)
-					user.show_message(text("\red <B>You reach into the [src.name], but there was a live mousetrap in there!</B>"), 1)
+					user.show_message(text("\red <B>You reach into \the [src], but there was a live mousetrap in there!</B>"), 1)
 				else
-					user.show_message(text("\red <B>[user] reaches into the [src.name] and sets off a hidden mousetrap!</B>"), 1)
+					user.show_message(text("\red <B>\The [user] reaches into \the [src] and sets off a hidden mousetrap!</B>"), 1)
 			MT.loc = user.loc
 			MT.triggered(user, user.hand ? "l_hand" : "r_hand")
 			MT.layer = OBJ_LAYER
@@ -116,7 +116,7 @@
 		return //Means the item is already in the storage item
 
 	if(contents.len >= storage_slots)
-		user << "\red The [src] is full, make some space."
+		user << "\red \The [src] is full, make some space."
 		return //Storage item is full
 
 	if(can_hold.len)
@@ -184,11 +184,11 @@
 	if (istype(W, /obj/item/weapon/gun/energy/crossbow)) return //STEALTHY
 	for(var/mob/M in viewers(user, null))
 		if (M == user)
-			user << "\blue You put the \the [W] into \the [src]."
+			user << "\blue You put \the [W] into \the [src]."
 		else if (M in range(1)) //If someone is standing close enough, they can tell what it is...
-			M.show_message(text("\blue \The [user] puts \the [W] into \the [src]."))
+			M.show_message(text("\blue \The [user] puts \a [W] into \the [src]."))
 		else if (W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
-			M.show_message(text("\blue \The [user] puts \the [W] into \the [src]."))
+			M.show_message(text("\blue \The [user] puts \a [W] into \the [src]."))
 	return
 
 /obj/item/weapon/storage/dropped(mob/user as mob)

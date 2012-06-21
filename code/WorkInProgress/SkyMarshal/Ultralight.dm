@@ -13,10 +13,10 @@
 #define ul_Steps 7
 #define ul_FalloffStyle UL_I_FALLOFF_ROUND // Sets the lighting falloff to be either squared or circular.
 #define ul_Layer 10
+#define ul_TopLuminosity 12 //Maximum brightness an object can have.
 
 var
 	ul_LightingResolutionSqrt = sqrt(ul_LightingResolution)
-	ul_TopLuminosity = 0
 	ul_SuppressLightLevelChanges = 0
 
 	list/ul_FastRoot = list(0, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5,
@@ -45,18 +45,18 @@ atom/proc/ul_SetLuminosity(var/Red, var/Green = Red, var/Blue = Red)
 		return //No point doing all that work if it won't have any effect anyways...
 
 	if (ul_Extinguished == UL_I_EXTINGUISHED)
-		LuminosityRed = Red
-		LuminosityGreen = Green
-		LuminosityBlue = Blue
+		LuminosityRed = min(Red,ul_TopLuminosity)
+		LuminosityGreen = min(Green,ul_TopLuminosity)
+		LuminosityBlue = min(Blue,ul_TopLuminosity)
 
 		return
 
 	if (ul_IsLuminous())
 		ul_Extinguish()
 
-	LuminosityRed = Red
-	LuminosityGreen = Green
-	LuminosityBlue = Blue
+	LuminosityRed = min(Red,ul_TopLuminosity)
+	LuminosityGreen = min(Green,ul_TopLuminosity)
+	LuminosityBlue = min(Blue,ul_TopLuminosity)
 
 	ul_Extinguished = UL_I_ONZERO
 
@@ -71,7 +71,6 @@ atom/proc/ul_Illuminate()
 
 	ul_Extinguished = UL_I_LIT
 
-	ul_UpdateTopLuminosity()
 	luminosity = ul_Luminosity()
 
 	for(var/turf/Affected in view(luminosity, src))
@@ -244,18 +243,6 @@ atom/proc/ul_BlankLocal()
 
 	return Blanked
 
-atom/proc/ul_UpdateTopLuminosity()
-	if (ul_TopLuminosity < LuminosityRed)
-		ul_TopLuminosity = LuminosityRed
-
-	if (ul_TopLuminosity < LuminosityGreen)
-		ul_TopLuminosity = LuminosityGreen
-
-	if (ul_TopLuminosity < LuminosityBlue)
-		ul_TopLuminosity = LuminosityBlue
-
-	return
-
 atom/proc/ul_Luminosity()
 	return max(LuminosityRed, LuminosityGreen, LuminosityBlue)
 
@@ -269,7 +256,7 @@ atom/proc/ul_LightLevelChanged()
 atom/New()
 	. = ..()
 	if(ul_IsLuminous())
-		spawn(1)
+		spawn(2)
 			ul_Illuminate()
 
 atom/Del()
@@ -401,3 +388,4 @@ area/proc/ul_Prep()
 #undef ul_Steps
 #undef ul_FalloffStyle
 #undef ul_Layer
+#undef ul_TopLuminosity

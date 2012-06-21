@@ -1,6 +1,8 @@
 #define QUANTIZE(variable)		(round(variable,0.0001))
 var/explosion_halt = 0
-var/zone_share_percent = 3.5
+vs_control/var/zone_share_percent = 10
+vs_control/var/zone_share_percent_NAME = "Zone Share Percent"
+vs_control/var/zone_share_percent_DESC = "Percentage of air difference to move per tick"
 zone/proc/process()
 	//Deletes zone if empty.
 	if(!contents.len)
@@ -93,20 +95,10 @@ zone/proc/process()
 		//If there is space, air should flow out of the zone.
 		if(abs(air.return_pressure()) > vsc.airflow_lightest_pressure)
 			AirflowSpace(src)
-		ShareSpace(air,total_space*(zone_share_percent/100))
-
-/*	if(!(last_update%20)) //every 20 processes.
-		if(connections)
-			connections.Remove(null)
-			if(!connections.len)
-				del connections
-		if(connected_zones)
-			connected_zones.Remove(null)
-			if(!connected_zones.len)
-				del connected_zones*/
+		ShareSpace(air,total_space*(vsc.zone_share_percent/100))
 
 	//React the air here.
-	//air.react(null,0)
+	air.react(null,0)
 
 	//Check the graphic.
 
@@ -160,7 +152,9 @@ zone/proc/process()
 			if(abs(air.total_moles - Z.air.total_moles) > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
 				if(abs(Z.air.return_pressure() - air.return_pressure()) > vsc.airflow_lightest_pressure)
 					Airflow(src,Z)
-				ShareRatio(air,Z.air,connected_zones[Z]*(zone_share_percent/100))
+				ShareRatio( air , Z.air , max(connected_zones[Z]*(vsc.zone_share_percent/200)*(space_tiles || Z.space_tiles ? 2 : 1) , 1) )
+				//Divided by 200 since each zone is processed.  Each connection is considered twice
+				//Space tiles force it to try and move twice as much air.
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, ratio)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.

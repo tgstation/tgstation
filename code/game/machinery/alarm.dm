@@ -29,10 +29,10 @@
 #define AALARM_WIRE_AALARM		5
 
 #define AALARM_MODE_SCRUBBING	1
-#define AALARM_MODE_PANIC		2 //constantly sucks all air
-#define AALARM_MODE_REPLACEMENT	5 //like scrubbing, but faster.
-#define AALARM_MODE_CYCLE		3 //sucks off all air, then refill and swithes to scrubbing
-#define AALARM_MODE_FILL		4 //emergency fill
+#define AALARM_MODE_REPLACEMENT	2 //like scrubbing, but faster.
+#define AALARM_MODE_PANIC		3 //constantly sucks all air
+#define AALARM_MODE_CYCLE		4 //sucks off all air, then refill and swithes to scrubbing
+#define AALARM_MODE_FILL		5 //emergency fill
 
 #define AALARM_SCREEN_MAIN		1
 #define AALARM_SCREEN_VENT		2
@@ -316,15 +316,15 @@
 
 			if(AALARM_MODE_REPLACEMENT)
 				for(var/device_id in alarm_area.air_scrub_names)
-					send_signal(device_id, list("power"= 1, "co2_scrub"= 1, "setting"= 2, "scrubbing"= 1, "panic_siphon"= 0) )
+					send_signal(device_id, list("power"= 1, "co2_scrub"= 1, "setting"= 3, "scrubbing"= 1, "panic_siphon"= 0) )
 				for(var/device_id in alarm_area.air_vent_names)
-					send_signal(device_id, list("power"= 1, "checks"= 1, "setting"= 2, "set_external_pressure"= target_pressure) )
+					send_signal(device_id, list("power"= 1, "checks"= 1, "setting"= 3, "set_external_pressure"= target_pressure) )
 
 			if(AALARM_MODE_FILL)
 				for(var/device_id in alarm_area.air_scrub_names)
 					send_signal(device_id, list("power"= 0) )
 				for(var/device_id in alarm_area.air_vent_names)
-					send_signal(device_id, list("power"= 1, "checks"= 1, "setting"= 2, "set_external_pressure"= target_pressure) )
+					send_signal(device_id, list("power"= 1, "checks"= 1, "setting"= 3, "set_external_pressure"= target_pressure) )
 
 	proc/apply_danger_level(var/new_danger_level)
 		alarm_area.atmosalm = new_danger_level
@@ -334,7 +334,7 @@
 				if (!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted && AA.danger_level != new_danger_level)
 					AA.update_icon()
 
-		if(danger_level > 2)
+		if(danger_level > 1)
 			air_doors_close(0)
 		else
 			air_doors_open(0)
@@ -647,6 +647,8 @@ Toxins: <span class='dl[plasma_dangerlevel]'>[plasma_percent]</span>%<br>
 				else
 					output += {"<span class='dl0'>Optimal</span>"}
 
+		output += "<br><br>Atmospheric Lockdown: <a href='?src=\ref[src];atmos_unlock=[alarm_area.air_doors_activated]'>[alarm_area.air_doors_activated ? "<b>ENABLED</b>" : "Disabled"]</a>"
+
 		return output
 
 	proc/rcon_text()
@@ -772,13 +774,11 @@ Toxins: <span class='dl[plasma_dangerlevel]'>[plasma_percent]</span>%<br>
 
 			if (AALARM_SCREEN_MODE)
 				output += "<a href='?src=\ref[src];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br><b>Air machinery mode for the area:</b><ul>"
-				world << "Made it here"
 				var/list/modes = list(AALARM_MODE_SCRUBBING   = "Filtering",\
+					AALARM_MODE_REPLACEMENT = "<font color='blue'>REPLACE AIR</font>",\
 					AALARM_MODE_PANIC       = "<font color='red'>PANIC</font>",\
 					AALARM_MODE_CYCLE       = "<font color='red'>CYCLE</font>",\
-					AALARM_MODE_FILL        = "<font color='red'>FILL</font>",\
-					AALARM_MODE_REPLACEMENT = "<font color='blue'>REPLACE AIR</font>")
-				world << "List created"
+					AALARM_MODE_FILL        = "<font color='red'>FILL</font>",)
 				for (var/m=1,m<=modes.len,m++)
 					if (mode==m)
 						output += "<li><A href='?src=\ref[src];mode=[m]'><b>[modes[m]]</b></A> (selected)</li>"
@@ -814,19 +814,19 @@ table tr:first-child th:first-child { border: none;}
 					output += "<TR><th>[gases[g]]</th>"
 					selected = TLV[g]
 					for(var/i = 1, i <= 4, i++)
-						output += "<td><A href='?src=\ref[src];command=set_threshold;env=[g];var=[i]'>[selected[i] ? selected[i] :"OFF"]</A></td>"
+						output += "<td><A href='?src=\ref[src];command=set_threshold;env=[g];var=[i]'>[selected[i] >= 0 ? selected[i] :"OFF"]</A></td>"
 					output += "</TR>"
 
 				selected = TLV["pressure"]
 				output += "	<TR><th>Pressure</th>"
 				for(var/i = 1, i <= 4, i++)
-					output += "<td><A href='?src=\ref[src];command=set_threshold;env=pressure;var=[i]'>[selected[i] ? selected[i] :"OFF"]</A></td>"
+					output += "<td><A href='?src=\ref[src];command=set_threshold;env=pressure;var=[i]'>[selected[i] >= 0 ? selected[i] :"OFF"]</A></td>"
 				output += "</TR>"
 
 				selected = TLV["temperature"]
 				output += "<TR><th>Temperature</th>"
 				for(var/i = 1, i <= 4, i++)
-					output += "<td><A href='?src=\ref[src];command=set_threshold;env=temperature;var=[i]'>[selected[i] ? selected[i] :"OFF"]</A></td>"
+					output += "<td><A href='?src=\ref[src];command=set_threshold;env=temperature;var=[i]'>[selected[i] >= 0 ? selected[i] :"OFF"]</A></td>"
 				output += "</TR></table>"
 
 		return output
@@ -880,9 +880,45 @@ table tr:first-child th:first-child { border: none;}
 					else
 						newval = round(newval,0.01)
 						selected[threshold] = newval
+					if(threshold == 1)
+						if(selected[1] > selected[2])
+							selected[2] = selected[1]
+						if(selected[1] > selected[3])
+							selected[3] = selected[1]
+						if(selected[1] > selected[4])
+							selected[4] = selected[1]
+					if(threshold == 2)
+						if(selected[1] > selected[2])
+							selected[1] = selected[2]
+						if(selected[2] > selected[3])
+							selected[3] = selected[2]
+						if(selected[2] > selected[4])
+							selected[4] = selected[2]
+					if(threshold == 3)
+						if(selected[1] > selected[3])
+							selected[1] = selected[3]
+						if(selected[2] > selected[3])
+							selected[2] = selected[3]
+						if(selected[3] > selected[4])
+							selected[4] = selected[3]
+					if(threshold == 4)
+						if(selected[1] > selected[4])
+							selected[1] = selected[4]
+						if(selected[2] > selected[4])
+							selected[2] = selected[4]
+						if(selected[3] > selected[4])
+							selected[3] = selected[4]
+					apply_mode()
 
 		if(href_list["screen"])
 			screen = text2num(href_list["screen"])
+
+		if(href_list["atmos_unlock"])
+			switch(href_list["atmos_unlock"])
+				if("0")
+					air_doors_close(1)
+				if("1")
+					air_doors_open(1)
 
 		if(href_list["atmos_alarm"])
 			if (alarm_area.atmosalert(2))

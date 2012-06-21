@@ -4,6 +4,7 @@
 #define AIRLOCK_STATE_CLOSED		0
 #define AIRLOCK_STATE_DEPRESSURIZE	1
 #define AIRLOCK_STATE_OUTOPEN		2
+#define AIRLOCK_STATE_BOTHOPEN		3
 
 datum/computer/file/embedded_program/airlock_controller
 	var/id_tag
@@ -44,6 +45,10 @@ datum/computer/file/embedded_program/airlock_controller
 						target_state = AIRLOCK_STATE_OUTOPEN
 					else
 						target_state = AIRLOCK_STATE_INOPEN
+				if("cycle_exterior")
+					target_state = AIRLOCK_STATE_OUTOPEN
+				if("cycle_interior")
+					target_state = AIRLOCK_STATE_INOPEN
 
 	receive_user_command(command)
 		switch(command)
@@ -55,6 +60,42 @@ datum/computer/file/embedded_program/airlock_controller
 				target_state = AIRLOCK_STATE_INOPEN
 			if("abort")
 				target_state = AIRLOCK_STATE_CLOSED
+			if("cycle_both")
+				target_state = AIRLOCK_STATE_BOTHOPEN
+				state = AIRLOCK_STATE_BOTHOPEN
+				var/datum/signal/signal = new
+				signal.data["tag"] = interior_door_tag
+				signal.data["command"] = "secure_open"
+				post_signal(signal)
+				signal = new
+				signal.data["tag"] = exterior_door_tag
+				signal.data["command"] = "secure_open"
+				post_signal(signal)
+			if("force_exterior")
+				target_state = AIRLOCK_STATE_OUTOPEN
+				state = AIRLOCK_STATE_OUTOPEN
+				var/datum/signal/signal = new
+				signal.data["tag"] = exterior_door_tag
+				signal.data["command"] = "secure_open"
+				post_signal(signal)
+			if("force_interior")
+				target_state = AIRLOCK_STATE_INOPEN
+				state = AIRLOCK_STATE_INOPEN
+				var/datum/signal/signal = new
+				signal.data["tag"] = interior_door_tag
+				signal.data["command"] = "secure_open"
+				post_signal(signal)
+			if("close")
+				target_state = AIRLOCK_STATE_CLOSED
+				state = AIRLOCK_STATE_CLOSED
+				var/datum/signal/signal = new
+				signal.data["tag"] = exterior_door_tag
+				signal.data["command"] = "secure_close"
+				post_signal(signal)
+				signal = new
+				signal.data["tag"] = interior_door_tag
+				signal.data["command"] = "secure_close"
+				post_signal(signal)
 
 	process()
 		var/process_again = 1
@@ -260,24 +301,31 @@ obj/machinery/embedded_controller/radio/airlock_controller
 
 		switch(state)
 			if(AIRLOCK_STATE_INOPEN)
-				state_options = {"<A href='?src=\ref[src];command=cycle_closed'>Close Interior Airlock</A><BR>
-<A href='?src=\ref[src];command=cycle_exterior'>Cycle to Exterior Airlock</A><BR>"}
+				state_options = "<A href='?src=\ref[src];command=cycle_closed'>Close Interior Airlock</A><BR>\
+				<A href='?src=\ref[src];command=cycle_exterior'>Cycle to Exterior Airlock</A><BR>"
 			if(AIRLOCK_STATE_PRESSURIZE)
 				state_options = "<A href='?src=\ref[src];command=abort'>Abort Cycling</A><BR>"
 			if(AIRLOCK_STATE_CLOSED)
-				state_options = {"<A href='?src=\ref[src];command=cycle_interior'>Open Interior Airlock</A><BR>
-<A href='?src=\ref[src];command=cycle_exterior'>Open Exterior Airlock</A><BR>"}
+				state_options = "<A href='?src=\ref[src];command=cycle_interior'>Open Interior Airlock</A><BR>\
+<A href='?src=\ref[src];command=cycle_exterior'>Open Exterior Airlock</A><BR>"
 			if(AIRLOCK_STATE_DEPRESSURIZE)
 				state_options = "<A href='?src=\ref[src];command=abort'>Abort Cycling</A><BR>"
 			if(AIRLOCK_STATE_OUTOPEN)
-				state_options = {"<A href='?src=\ref[src];command=cycle_interior'>Cycle to Interior Airlock</A><BR>
-<A href='?src=\ref[src];command=cycle_closed'>Close Exterior Airlock</A><BR>"}
+				state_options = "<A href='?src=\ref[src];command=cycle_interior'>Cycle to Interior Airlock</A><BR>\
+<A href='?src=\ref[src];command=cycle_closed'>Close Exterior Airlock</A><BR>"
+			if(AIRLOCK_STATE_BOTHOPEN)
+				state_options = "<A href='?src=\ref[src];command=close'>Close Airlocks</A><BR>"
 
 		var/output = {"<B>Airlock Control Console</B><HR>
 [state_options]<HR>
 <B>Chamber Pressure:</B> [sensor_pressure] kPa<BR>
 <B>Exterior Door: </B> [exterior_status]<BR>
 <B>Interior Door: </B> [interior_status]<BR>
-<B>Control Pump: </B> [pump_status]<BR>"}
+<B>Control Pump: </B> [pump_status]<BR><br>"}
+
+		if(program && program.state == AIRLOCK_STATE_CLOSED)
+			output += {"<A href='?src=\ref[src];command=cycle_both'>Force Both Airlocks</A><br>
+	<A href='?src=\ref[src];command=force_interior'>Force Inner Airlock</A><br>
+	<A href='?src=\ref[src];command=force_exterior'>Force Outer Airlock</A>"}
 
 		return output

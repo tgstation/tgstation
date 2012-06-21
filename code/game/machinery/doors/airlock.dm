@@ -77,7 +77,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/spawnPowerRestoreRunning = 0
 	var/welded = null
 	var/locked = 0
-	var/list/air_locked = 0
+	var/list/air_locked
 	var/wires = 4095
 	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
 	var/aiDisabledIdScanner = 0
@@ -720,7 +720,7 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/update_icon()
 	if(overlays) overlays = null
 	if(density)
-		if(locked && safetylight)
+		if(locked && safetylight && !air_locked)
 			icon_state = "door_locked"
 		else
 			icon_state = "door_closed"

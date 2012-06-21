@@ -58,12 +58,12 @@ vs_control/var
 	airflow_medium_pressure = 90
 	airflow_medium_pressure_NAME = "Airflow - Heavy Movement Threshold %"
 	airflow_medium_pressure_DESC = "Percent of 1 Atm. at which items with the largest weight classes will move."
-	airflow_heavy_pressure = 90
+	airflow_heavy_pressure = 95
 	airflow_heavy_pressure_NAME = "Airflow - Dense Movement Threshold %"
 	airflow_heavy_pressure_DESC = "Percent of 1 Atm. at which items with canisters and closets will move."
-	airflow_heaviest_pressure = 95
-	airflow_heaviest_pressure_NAME = "Airflow - Human Movement Threshold % (Mob Stunning)"
-	airflow_heaviest_pressure_DESC = "Percent of 1 Atm. at which mobs will be shifted by airflow. (Mob Stunning)"
+	airflow_heaviest_pressure = 100
+	airflow_heaviest_pressure_NAME = "Airflow - Mob Stunning Threshold %"
+	airflow_heaviest_pressure_DESC = "Percent of 1 Atm. at which mobs will be stunned by airflow."
 	airflow_stun_cooldown = 60
 	airflow_stun_cooldown_NAME = "Aiflow Stunning - Cooldown"
 	airflow_stun_cooldown_DESC = "How long, in tenths of a second, to wait before stunning them again."
@@ -85,6 +85,8 @@ vs_control/var
 
 mob/var/last_airflow_stun = 0
 mob/proc/airflow_stun()
+	if(stat == 2)
+		return 0
 	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)	return 0
 	if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
 	weakened = max(weakened,5)
@@ -244,7 +246,7 @@ proc/AirflowSpace(zone/A)
 
 				M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
 				spawn
-					if(M) M.GotoAirflowDest(n/20)
+					if(M) M.GotoAirflowDest(n/10)
 					//Sometimes shit breaks, and M isn't there after the spawn.
 
 atom/movable
@@ -273,7 +275,11 @@ atom/movable
 					if(src:shoes)
 						if(src:shoes.type == /obj/item/clothing/shoes/magboots && src:shoes.flags & NOSLIP) return
 			src << "\red You are sucked away by airflow!"
-		airflow_speed = min(round(n)/max(get_dist(src,airflow_dest)/2,1),9)
+		var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
+		if(airflow_falloff < 1)
+			airflow_dest = null
+			return
+		airflow_speed = min(max(n * (9/airflow_falloff),1),9)
 		var
 			xo = airflow_dest.x - src.x
 			yo = airflow_dest.y - src.y
@@ -323,7 +329,11 @@ atom/movable
 					if(src:shoes)
 						if(src:shoes.type == /obj/item/clothing/shoes/magboots && src:shoes.flags & NOSLIP) return
 			src << "\red You are pushed away by airflow!"
-		airflow_speed = min(round(n)/max(get_dist(src,airflow_dest)/2,1),9)
+		var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
+		if(airflow_falloff < 1)
+			airflow_dest = null
+			return
+		airflow_speed = min(max(n * (9/airflow_falloff),1),9)
 		var
 			xo = -(airflow_dest.x - src.x)
 			yo = -(airflow_dest.y - src.y)
@@ -413,5 +423,6 @@ zone/proc/movables()
 	. = list()
 	for(var/turf/T in contents)
 		for(var/atom/A in T)
-			if(istype(A, /mob/aiEye)) continue
+			if(istype(A, /mob/aiEye) || istype(A, /obj/effect))
+				continue
 			. += A

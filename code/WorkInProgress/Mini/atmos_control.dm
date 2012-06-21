@@ -9,13 +9,18 @@
 	density = 1
 	anchored = 1.0
 	circuit = "/obj/item/weapon/circuitboard/atmoscontrol"
-	var/obj/machinery/alarm/current = ""
+	var/obj/machinery/alarm/current
 	var/overridden = 0 //not set yet, can't think of a good way to do it
+	req_access = list(access_ce)
 
 /obj/machinery/computer/atmoscontrol/attack_hand(mob/user)
 	if(..())
 		return
 	user.machine = src
+	if(allowed(user))
+		overridden = 1
+	else if(!emagged)
+		overridden = 0
 	var/dat = "<a href='?src=\ref[src]&reset=1'>Main Menu</a><hr>"
 	if(current)
 		dat += specific()
@@ -32,12 +37,22 @@
 			dat += "[alarm]</font></a><br/>"
 	user << browse(dat, "window=atmoscontrol")
 
+/obj/machinery/computer/atmoscontrol/attackby(var/obj/item/I as obj, var/mob/user as mob)
+	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
+		user.visible_message("\red \The [user] swipes \a [I] through \the [src], causing the screen to flash!",\
+			"\red You swipe your [I] through \the [src], the screen flashing as you gain full control.",\
+			"You hear the swipe of a card through a reader, and an electronic warble.")
+		emagged = 1
+		overridden = 1
+		return
+	return ..()
+
 /obj/machinery/computer/atmoscontrol/proc/specific()
 	if(!current)
 		return ""
 	var/dat = "<h3>[current.name]</h3><hr>"
 	dat += current.return_status()
-	if(current.remote_control || (overridden && current.rcon_setting) )
+	if(current.remote_control || overridden)
 		dat += "<hr>[return_controls()]"
 	return dat
 
@@ -86,6 +101,34 @@
 					else
 						newval = round(newval,0.01)
 						selected[threshold] = newval
+					if(threshold == 1)
+						if(selected[1] > selected[2])
+							selected[2] = selected[1]
+						if(selected[1] > selected[3])
+							selected[3] = selected[1]
+						if(selected[1] > selected[4])
+							selected[4] = selected[1]
+					if(threshold == 2)
+						if(selected[1] > selected[2])
+							selected[1] = selected[2]
+						if(selected[2] > selected[3])
+							selected[3] = selected[2]
+						if(selected[2] > selected[4])
+							selected[4] = selected[2]
+					if(threshold == 3)
+						if(selected[1] > selected[3])
+							selected[1] = selected[3]
+						if(selected[2] > selected[3])
+							selected[2] = selected[3]
+						if(selected[3] > selected[4])
+							selected[4] = selected[3]
+					if(threshold == 4)
+						if(selected[1] > selected[4])
+							selected[1] = selected[4]
+						if(selected[2] > selected[4])
+							selected[2] = selected[4]
+						if(selected[3] > selected[4])
+							selected[3] = selected[4]
 					spawn(1)
 						updateUsrDialog()
 			return
@@ -122,16 +165,6 @@
 
 //copypasta from alarm code, changed to work with this without derping hard
 //---START COPYPASTA----
-#define AALARM_MODE_SCRUBBING	1
-#define AALARM_MODE_PANIC		2 //constantly sucks all air
-#define AALARM_MODE_REPLACEMENT	3 //sucks off all air, then refill and swithes to scrubbing
-#define AALARM_MODE_FILL		4 //emergency fill
-
-#define AALARM_SCREEN_MAIN    1
-#define AALARM_SCREEN_VENT    2
-#define AALARM_SCREEN_SCRUB   3
-#define AALARM_SCREEN_MODE    4
-#define AALARM_SCREEN_SENSORS 5
 
 /obj/machinery/computer/atmoscontrol/proc/return_controls()
 	var/output = ""//"<B>[alarm_zone] Air [name]</B><HR>"
@@ -244,10 +277,10 @@ Nitrous Oxide
 <b>Air machinery mode for the area:</b><ul>"}
 			var/list/modes = list(
 					AALARM_MODE_SCRUBBING   = "Filtering",
+					AALARM_MODE_REPLACEMENT = "<font color='red'>REPLACE AIR</font>",
 					AALARM_MODE_PANIC       = "<font color='red'>PANIC</font>",
 					AALARM_MODE_CYCLE		= "<font color='red'>CYCLE</font>",
 					AALARM_MODE_FILL = "<font color='red'>FILL</font>",
-					AALARM_MODE_REPLACEMENT = "<font color='red'>REPLACE AIR</font>",
 			)
 			for (var/m=1,m<=modes.len,m++)
 				if (current.mode==m)
@@ -283,19 +316,19 @@ table tr:first-child th:first-child { border: none;}
 				output += "<TR><th>[gases[g]]</th>"
 				tlv = current.TLV[g]
 				for (var/i = 1, i <= 4, i++)
-					output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=[g];var=[i]'>[tlv[i]?tlv[i]:"OFF"]</A></td>"
+					output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=[g];var=[i]'>[tlv[i] >= 0?tlv[i]:"OFF"]</A></td>"
 				output += "</TR>"
 
 			tlv = current.TLV["pressure"]
 			output += "<TR><th>Pressure</th>"
 			for (var/i = 1, i <= 4, i++)
-				output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=pressure;var=[i]'>[tlv[i]?tlv[i]:"OFF"]</A></td>"
+				output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=pressure;var=[i]'>[tlv[i]>= 0?tlv[i]:"OFF"]</A></td>"
 			output += "</TR>"
 
 			tlv = current.TLV["temperature"]
 			output += "<TR><th>Temperature</th>"
 			for (var/i = 1, i <= 4, i++)
-				output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=temperature;var=[i]'>[tlv[i]?tlv[i]:"OFF"]</A></td>"
+				output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=temperature;var=[i]'>[tlv[i]>= 0?tlv[i]:"OFF"]</A></td>"
 			output += "</TR>"
 			output += "</table>"
 

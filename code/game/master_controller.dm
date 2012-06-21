@@ -102,8 +102,6 @@ datum/controller/game_controller
 			new /obj/structure/closet/emcloset(loc)
 			emclosetcount--
 
-		setupdooralarms()
-
 		world << "\red \b Initializations complete."
 
 
