@@ -187,6 +187,12 @@ proc/move_mining_shuttle()
 	var/digspeed = 40 //moving the delay to an item var so R&D can make improved picks. --NEO
 	origin_tech = "materials=1;engineering=1"
 
+	excavationtool
+		name = "Excavation Tool"
+		icon_state = "excavation"
+		digspeed = 50
+		desc = "A carefully calibrated, archaeological excavation tool."
+
 	hammer
 		name = "Mining Sledge Hammer"
 		//icon_state = "sledgehammer" Waiting on sprite
