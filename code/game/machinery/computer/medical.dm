@@ -4,7 +4,7 @@
 	name = "Medical Records"
 	desc = "This can be used to check medical records."
 	icon_state = "medcomp"
-	req_access = list(access_medical)
+	req_access = list(ACCESS_MEDICAL)
 	circuit = "/obj/item/weapon/circuitboard/med_data"
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/disk/records/disk = null

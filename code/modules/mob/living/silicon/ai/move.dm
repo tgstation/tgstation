@@ -1,5 +1,5 @@
-/var/const/SHARED_TYPES_WEIGHT = 5
-/var/const/CAMERA_PROXIMITY_PREFERENCE = 0.2
+#define SHARED_TYPES_WEIGHT 5
+#define CAMERA_PROXIMITY_PREFERENCE 0.2
 // the smaller this is, the more a straight line will be preferred over a closer camera when changing cameras
 // if you set this to 0 the game will crash. don't do that.
 // if you set it to be negative the algorithm will do completely nonsensical things (like choosing the camera that's

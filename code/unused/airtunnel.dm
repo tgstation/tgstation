@@ -8,7 +8,7 @@
 	var/obj/machinery/door/d1 = null
 	var/obj/machinery/door/d2 = null
 	anchored = 1.0
-	req_access = list(access_brig)
+	req_access = list(ACCESS_BRIG)
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4

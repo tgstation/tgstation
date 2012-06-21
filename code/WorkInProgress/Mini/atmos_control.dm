@@ -11,7 +11,7 @@
 	circuit = "/obj/item/weapon/circuitboard/atmoscontrol"
 	var/obj/machinery/alarm/current
 	var/overridden = 0 //not set yet, can't think of a good way to do it
-	req_access = list(access_ce)
+	req_access = list(ACCESS_CE)
 
 /obj/machinery/computer/atmoscontrol/attack_hand(mob/user)
 	if(..())

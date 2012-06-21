@@ -19,7 +19,7 @@
 
 	icon_state = "apc0"
 	anchored = 1
-	req_access = list(access_engine_equip)
+	req_access = list(ACCESS_ENGINE_EQUIP)
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/cell/cell

@@ -77,7 +77,7 @@ obj/machinery/computer/forensic_scanning
 		scan_name = ""
 		scan_process = 0
 
-	req_access = list(access_forensics_lockers)
+	req_access = list(ACCESS_FORENSICS_LOCKERS)
 
 
 	New()

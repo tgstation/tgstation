@@ -1,6 +1,6 @@
 /obj/structure/closet/secure_closet/captains
 	name = "Captain's Locker"
-	req_access = list(access_captain)
+	req_access = list(ACCESS_CAPTAIN)
 	icon_state = "capsecure1"
 	icon_closed = "capsecure"
 	icon_locked = "capsecure1"
@@ -30,7 +30,7 @@
 
 /obj/structure/closet/secure_closet/hop
 	name = "Head of Personnel's Locker"
-	req_access = list(access_hop)
+	req_access = list(ACCESS_HOP)
 	icon_state = "hopsecure1"
 	icon_closed = "hopsecure"
 	icon_locked = "hopsecure1"
@@ -59,7 +59,7 @@
 
 /obj/structure/closet/secure_closet/hos
 	name = "Head of Security's Locker"
-	req_access = list(access_hos)
+	req_access = list(ACCESS_HOS)
 	icon_state = "hossecure1"
 	icon_closed = "hossecure"
 	icon_locked = "hossecure1"
@@ -87,7 +87,7 @@
 
 /obj/structure/closet/secure_closet/warden
 	name = "Warden's Locker"
-	req_access = list(access_armory)
+	req_access = list(ACCESS_ARMORY)
 	icon_state = "wardensecure1"
 	icon_closed = "wardensecure"
 	icon_locked = "wardensecure1"
@@ -119,7 +119,7 @@
 
 /obj/structure/closet/secure_closet/security
 	name = "Security Officer's Locker"
-	req_access = list(access_security)
+	req_access = list(ACCESS_SECURITY)
 	icon_state = "sec1"
 	icon_closed = "sec"
 	icon_locked = "sec1"
@@ -155,7 +155,7 @@
 
 /obj/structure/closet/secure_closet/detective
 	name = "Detective's Cabinet"
-	req_access = list(access_forensics_lockers)
+	req_access = list(ACCESS_FORENSICS_LOCKERS)
 	icon_state = "cabinetdetective_locked"
 	icon_closed = "cabinetdetective"
 	icon_locked = "cabinetdetective_locked"
@@ -189,7 +189,7 @@
 
 /obj/structure/closet/secure_closet/injection
 	name = "Lethal Injections"
-	req_access = list(access_hos)
+	req_access = list(ACCESS_HOS)
 
 
 	New()
@@ -203,7 +203,7 @@
 
 /obj/structure/closet/secure_closet/brig
 	name = "Brig Locker"
-	req_access = list(access_brig)
+	req_access = list(ACCESS_BRIG)
 	anchored = 1
 	var/id = null
 
@@ -216,7 +216,7 @@
 
 /obj/structure/closet/secure_closet/courtroom
 	name = "Courtroom Locker"
-	req_access = list(access_court)
+	req_access = list(ACCESS_COURT)
 
 	New()
 		..()

@@ -2,7 +2,7 @@
 	name = "Exosuit Control"
 	icon = 'computer.dmi'
 	icon_state = "mecha"
-	req_access = list(access_robotics)
+	req_access = list(ACCESS_ROBOTICS)
 	circuit = "/obj/item/weapon/circuitboard/mecha_control"
 	var/list/located = list()
 	var/screen = 0

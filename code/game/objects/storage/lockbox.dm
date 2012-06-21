@@ -9,7 +9,7 @@
 	max_w_class = 3
 	max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	storage_slots = 4
-	req_access = list(access_armory)
+	req_access = list(ACCESS_ARMORY)
 	var/locked = 1
 	var/broken = 0
 	var/icon_locked = "lockbox+l"
@@ -74,7 +74,7 @@
 
 /obj/item/weapon/storage/lockbox/loyalty
 	name = "Lockbox (Loyalty Implants)"
-	req_access = list(access_security)
+	req_access = list(ACCESS_SECURITY)
 
 	New()
 		..()
@@ -87,7 +87,7 @@
 /obj/item/weapon/storage/lockbox/clusterbang
 	name = "lockbox (clusterbang)"
 	desc = "You have a bad feeling about opening this."
-	req_access = list(access_security)
+	req_access = list(ACCESS_SECURITY)
 
 	New()
 		..()

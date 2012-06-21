@@ -394,6 +394,9 @@ var/static/list/scarySounds = list('thudswoosh.ogg','Taser.ogg','armbomb.ogg','h
 
 #define TRANSITIONEDGE	7 //Distance from edge to move to another z-level
 
+#define OPEN 1
+#define CLOSED 0
+
 // Maximum and minimum character ages.
 var/const/minimum_age = 20
 var/const/maximum_age = 65

@@ -166,7 +166,7 @@
 	var/name = "Cyborg"
 	name += " [pick(rand(1, 999))]"
 	W.name = "Fake Cyborg Card"
-	W.access = list(access_theatre)
+	W.access = list(ACCESS_THEATRE)
 	W.assignment = "Kill all humans! Beep. Boop."
 	W.registered_name = name
 	del(src)

@@ -16,7 +16,7 @@
 	var/on = 1
 	var/remoteenabled = 1
 	//
-	req_access = list(access_engine)
+	req_access = list(ACCESS_ENGINE)
 	//
 	use_power = 1
 	idle_power_usage = 10

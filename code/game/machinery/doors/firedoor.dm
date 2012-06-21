@@ -1,7 +1,3 @@
-/var/const/OPEN = 1
-/var/const/CLOSED = 2
-
-
 /obj/machinery/door/firedoor
 	name = "Firelock"
 	desc = "Apply crowbar"
@@ -88,3 +84,6 @@
 
 
 /obj/machinery/door/firedoor/border_only
+
+#undef OPEN
+#undef CLOSED

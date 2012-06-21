@@ -307,7 +307,7 @@
 	var/locked = 1
 	var/control_area //can be area name, path or nothing.
 	var/ailock = 0 // AI cannot use this
-	req_access = list(access_ai_upload)
+	req_access = list(ACCESS_AI_UPLOAD)
 	var/similar_controls
 	var/turrets
 
