@@ -75,7 +75,7 @@
 
 /obj/structure/closet/walllocker/security
 	name = "wall locker"
-	req_access = list(access_security)
+	req_access = list(ACCESS_SECURITY)
 	icon_state = "wall-locker1"
 	density = 1
 

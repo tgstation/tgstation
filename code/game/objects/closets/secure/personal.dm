@@ -1,5 +1,5 @@
 /obj/structure/closet/secure_closet/personal/var/registered_name = null
-/obj/structure/closet/secure_closet/personal/req_access = list(access_all_personal_lockers)
+/obj/structure/closet/secure_closet/personal/req_access = list(ACCESS_ALL_PERSONAL_LOCKERS)
 
 /obj/structure/closet/secure_closet/personal/New()
 	..()

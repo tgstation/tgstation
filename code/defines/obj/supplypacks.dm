@@ -347,7 +347,7 @@
 	cost = 10
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Standard Costumes"
-	access = access_theatre
+	access = ACCESS_THEATRE
 	group = "Clothing"
 
 /datum/supply_packs/wizard
@@ -382,7 +382,7 @@
 	cost = 10
 	containertype = /obj/structure/closet/crate/hydroponics
 	containername = "Hydroponics crate"
-	access = access_hydroponics
+	access = ACCESS_HYDROPONICS
 	group = "Hydroponics"
 
 /datum/supply_packs/seeds
@@ -402,7 +402,7 @@
 	cost = 10
 	containertype = /obj/structure/closet/crate/hydroponics
 	containername = "Seeds crate"
-	access = access_hydroponics
+	access = ACCESS_HYDROPONICS
 	group = "Hydroponics"
 
 /datum/supply_packs/exoticseeds
@@ -419,7 +419,7 @@
 	cost = 15
 	containertype = /obj/structure/closet/crate/hydroponics
 	containername = "Exotic Seeds crate"
-	access = access_hydroponics
+	access = ACCESS_HYDROPONICS
 	group = "Hydroponics"
 
 /datum/supply_packs/medical
@@ -454,7 +454,7 @@
 	cost = 20
 	containertype = "/obj/structure/closet/crate/secure/weapon"
 	containername = "Virus crate"
-	access = access_cmo
+	access = ACCESS_CMO
 	group = "Medical / Science"
 */
 
@@ -489,7 +489,7 @@
 	cost = 15
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Electrical maintenance crate"
-	access = access_engine
+	access = ACCESS_ENGINE
 	group = "Engineering"
 
 /datum/supply_packs/mechanical
@@ -506,7 +506,7 @@
 	cost = 10
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Mechanical maintenance crate"
-	access = access_engine
+	access = ACCESS_ENGINE
 	group = "Engineering"
 
 /datum/supply_packs/waterfueltank
@@ -524,7 +524,7 @@
 	cost = 10
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Emitter crate"
-	access = access_heads
+	access = ACCESS_HEADS
 	group = "Engineering"
 
 /datum/supply_packs/engine/field_gen
@@ -569,7 +569,7 @@
 	cost = 30
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "APLU \"Ripley\" Circuit Crate"
-	access = access_robotics
+	access = ACCESS_ROBOTICS
 	group = "Robotics"
 
 /datum/supply_packs/surgery
@@ -585,7 +585,7 @@
 	cost = 20
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Surgery crate"
-	access = access_medical
+	access = ACCESS_MEDICAL
 	group = "Medical / Science"
 
 /datum/supply_packs/mecha_odysseus
@@ -597,7 +597,7 @@
 	cost = 25
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "\"Odysseus\" Circuit Crate"
-	access = access_robotics
+	access = ACCESS_ROBOTICS
 	group = "Robotics"
 
 /datum/supply_packs/robotics
@@ -615,7 +615,7 @@
 	cost = 10
 	containertype = "/obj/structure/closet/crate/secure/gear"
 	containername = "Robotics Assembly"
-	access = access_robotics
+	access = ACCESS_ROBOTICS
 	group = "Robotics"
 
 /datum/supply_packs/plasma
@@ -635,7 +635,7 @@
 	cost = 10
 	containertype = "/obj/structure/closet/crate/secure/plasma"
 	containername = "Plasma assembly crate"
-	access = access_tox
+	access = ACCESS_TOX
 	group = "Medical / Science"
 
 /datum/supply_packs/weapons
@@ -651,7 +651,7 @@
 	cost = 30
 	containertype = "/obj/structure/closet/crate/secure/weapon"
 	containername = "Weapons crate"
-	access = access_security
+	access = ACCESS_SECURITY
 	group = "Security"
 
 /datum/supply_packs/eweapons
@@ -666,7 +666,7 @@
 	cost = 25
 	containertype = "/obj/structure/closet/crate/secure/weapon"
 	containername = "Experimental weapons crate"
-	access = access_heads
+	access = ACCESS_HEADS
 	group = "Security"
 
 /datum/supply_packs/armor
@@ -678,7 +678,7 @@
 	cost = 15
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Armor crate"
-	access = access_security
+	access = ACCESS_SECURITY
 	group = "Security"
 
 /datum/supply_packs/riot
@@ -704,7 +704,7 @@
 	cost = 60
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Riot gear crate"
-	access = access_armory
+	access = ACCESS_ARMORY
 	group = "Security"
 
 /datum/supply_packs/loyalty
@@ -713,7 +713,7 @@
 	cost = 60
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Loyalty implant crate"
-	access = access_armory
+	access = ACCESS_ARMORY
 	group = "Security"
 
 /datum/supply_packs/ballistic
@@ -725,7 +725,7 @@
 	cost = 50
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Ballistic gear crate"
-	access = access_armory
+	access = ACCESS_ARMORY
 	group = "Security"
 
 /datum/supply_packs/expenergy
@@ -737,7 +737,7 @@
 	cost = 50
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Experimental energy gear crate"
-	access = access_armory
+	access = ACCESS_ARMORY
 	group = "Security"
 
 /datum/supply_packs/exparmor
@@ -749,7 +749,7 @@
 	cost = 35
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "Experimental armor crate"
-	access = access_armory
+	access = ACCESS_ARMORY
 	group = "Security"
 
 /datum/supply_packs/securitybarriers

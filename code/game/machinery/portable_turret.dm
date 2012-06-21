@@ -20,7 +20,7 @@
 	use_power = 1			// this turret uses and requires power
 	idle_power_usage = 50	// when inactive, this turret takes up constant 50 Equipment power
 	active_power_usage = 300// when active, this turret takes up constant 300 Equipment power
-	req_access = list(access_security)
+	req_access = list(ACCESS_SECURITY)
 	power_channel = EQUIP	// drains power from the EQUIPMENT channel
 
 	var/lasercolor = ""
@@ -517,7 +517,7 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 
 	if(!projectile)
 		lasercolor = ""
-		req_access = list(access_security)
+		req_access = list(ACCESS_SECURITY)
 		if(!installation)// if for some reason the turret has no gun (ie, admin spawned) it resorts to basic taser shots
 			projectile = /obj/item/projectile/energy/electrode
 			reqpower = 200
@@ -531,14 +531,14 @@ Neutralize All Unidentified Life Signs: []<BR>"},
 				iconholder = null
 				reqpower = 100
 				lasercolor = "b"
-				req_access = list(access_maint_tunnels,access_clown,access_mime)
+				req_access = list(ACCESS_MAINT_TUNNELS,ACCESS_CLOWN,ACCESS_MIME)
 
 			else if(istype(E, /obj/item/weapon/gun/energy/laser/redtag))
 				projectile = /obj/item/projectile/redtag
 				iconholder = null
 				reqpower = 100
 				lasercolor = "r"
-				req_access = list(access_maint_tunnels,access_clown,access_mime)
+				req_access = list(ACCESS_MAINT_TUNNELS,ACCESS_CLOWN,ACCESS_MIME)
 
 			else if(istype(E, /obj/item/weapon/gun/energy/pulse_rifle))
 				projectile = /obj/item/projectile/beam/pulse

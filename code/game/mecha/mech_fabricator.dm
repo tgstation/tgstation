@@ -12,7 +12,7 @@
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 5000
-	req_access = list(access_robotics)
+	req_access = list(ACCESS_ROBOTICS)
 	var/time_coeff = 1.5 //can be upgraded with research
 	var/resource_coeff = 1.5 //can be upgraded with research
 	var/list/resources = list(

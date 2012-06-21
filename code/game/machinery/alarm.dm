@@ -64,7 +64,7 @@
 	idle_power_usage = 4
 	active_power_usage = 8
 	power_channel = ENVIRON
-	req_access = list(access_atmospherics, access_engine_equip)
+	req_access = list(ACCESS_ATMOSPHERICS, ACCESS_ENGINE_EQUIP)
 	var/frequency = 1439
 	//var/skipprocess = 0 //Experimenting
 	var/alarm_frequency = 1437
@@ -89,7 +89,7 @@
 
 	server/New()
 		..()
-		req_access = list(access_rd, access_engine_equip, access_atmospherics)
+		req_access = list(ACCESS_RD, ACCESS_ENGINE_EQUIP, ACCESS_ATMOSPHERICS)
 		TLV["oxygen"] =			list(-1.0, -1.0,-1.0,-1.0) // Partial pressure, kpa
 		TLV["carbon dioxide"] = list(-1.0, -1.0,   5,  10) // Partial pressure, kpa
 		TLV["plasma"] =			list(-1.0, -1.0, 0.2, 0.5) // Partial pressure, kpa
@@ -362,18 +362,18 @@
 							sleep(10)
 							if(E.density)
 								E:air_locked = E.req_access
-								E:req_access = list(access_engine, access_atmospherics)
+								E:req_access = list(ACCESS_ENGINE, ACCESS_ATMOSPHERICS)
 								E.update_icon()
 					if(E.operating)
 						spawn(10)
 							E.close()
 							if(E.density)
 								E:air_locked = E.req_access
-								E:req_access = list(access_engine, access_atmospherics)
+								E:req_access = list(ACCESS_ENGINE, ACCESS_ATMOSPHERICS)
 								E.update_icon()
 					else if(!E:locked) //Don't lock already bolted doors.
 						E:air_locked = E.req_access
-						E:req_access = list(access_engine, access_atmospherics)
+						E:req_access = list(ACCESS_ENGINE, ACCESS_ATMOSPHERICS)
 						E.update_icon()
 
 	proc/air_doors_open(manual)

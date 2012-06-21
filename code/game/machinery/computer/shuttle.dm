@@ -22,7 +22,7 @@
 				user << "The access level of [W:registered_name]\'s card is not high enough. "
 				return
 
-			if(!(access_heads in W:access)) //doesn't have this access
+			if(!(ACCESS_HEADS in W:access)) //doesn't have this access
 				user << "The access level of [W:registered_name]\'s card is not high enough. "
 				return 0
 

@@ -53,7 +53,7 @@
 	var/internal_damage = 0 //contains bitflags
 
 	var/list/operation_req_access = list()//required access level for mecha operation
-	var/list/internals_req_access = list(access_engine,access_robotics)//required access level to open cell compartment
+	var/list/internals_req_access = list(ACCESS_ENGINE,ACCESS_ROBOTICS)//required access level to open cell compartment
 
 	var/datum/global_iterator/pr_int_temp_processor //normalizes internal air mixture temperature
 	var/datum/global_iterator/pr_inertial_movement //controls intertial movement in spesss

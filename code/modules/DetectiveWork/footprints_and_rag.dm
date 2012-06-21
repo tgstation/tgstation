@@ -15,7 +15,7 @@ obj/item/clothing/gloves/var
 	mob/living/carbon/human/bloody_hands_mob
 
 
-obj/effect/decal/cleanable/var
+/*obj/effect/decal/cleanable/var
 	track_amt = 3
 	mob/blood_owner
 
@@ -145,7 +145,7 @@ proc/get_tracks(mob/M)
 		else if(istype(M,/mob/living/carbon/alien/larva))
 			. = "small alien feet"
 		else
-			. = "an unknown creature"
+			. = "an unknown creature"*/
 
 
 proc/blood_incompatible(donor,receiver)

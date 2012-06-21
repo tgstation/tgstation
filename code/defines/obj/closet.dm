@@ -456,7 +456,7 @@
 	anchored = 1
 	density = 0
 	wall_mounted = 1
-	req_access = list(access_medical)
+	req_access = list(ACCESS_MEDICAL)
 
 /obj/structure/closet/secure_closet/personal
 	desc = "It's a secure locker for personnel. The first card swiped gains control."
@@ -475,7 +475,7 @@
 
 /obj/structure/closet/secure_closet/kitchen
 	name = "kitchen cabinet"
-	req_access = list(access_kitchen)
+	req_access = list(ACCESS_KITCHEN)
 
 /obj/structure/closet/secure_closet/kitchen/mining
 	req_access = list()
@@ -506,14 +506,14 @@
 	icon_opened = "fridgeopen"
 	icon_broken = "fridgebroken"
 	icon_off = "fridge1"
-	req_access = list(access_heads_vault)
+	req_access = list(ACCESS_HEADS_VAULT)
 
 /obj/structure/closet/secure_closet/personal/patient
 	name = "patient's closet"
 
 /obj/structure/closet/secure_closet/wall
 	name = "wall locker"
-	req_access = list(access_security)
+	req_access = list(ACCESS_SECURITY)
 	icon_state = "wall-locker1"
 	density = 1
 	icon_closed = "wall-locker"

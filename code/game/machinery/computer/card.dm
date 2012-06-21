@@ -4,7 +4,7 @@
 	name = "Identification Computer"
 	desc = "A computer used to modify ID cards."
 	icon_state = "id"
-	req_access = list(access_change_ids)
+	req_access = list(ACCESS_CHANGE_IDS)
 	circuit = "/obj/item/weapon/circuitboard/card"
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/card/id/modify = null
@@ -16,7 +16,7 @@
 /obj/machinery/computer/card/attackby(O as obj, user as mob)//TODO:SANITY
 	if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = O
-		if(access_change_ids in idcard.access)
+		if(ACCESS_CHANGE_IDS in idcard.access)
 			if(!scan)
 				usr.drop_item()
 				idcard.loc = src
@@ -279,5 +279,5 @@
 /obj/machinery/computer/card/centcom
 	name = "CentCom Identification Computer"
 	circuit = "/obj/item/weapon/circuitboard/card/centcom"
-	req_access = list(access_cent_captain)
+	req_access = list(ACCESS_CENT_CAPTAIN)
 

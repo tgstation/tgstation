@@ -30,7 +30,7 @@
 	var/new_destination = ""	// pending new destination (waiting for beacon response)
 	var/destination = ""		// destination description
 	var/home_destination = "" 	// tag of home beacon
-	req_access = list(access_cargo, access_cargo_bot) // added robotics access so assembly line drop-off works properly -veyveyr //I don't think so, Tim. You need to add it to the MULE's hidden robot ID card. -NEO
+	req_access = list(ACCESS_CARGO, ACCESS_CARGO_BOT) // added robotics access so assembly line drop-off works properly -veyveyr //I don't think so, Tim. You need to add it to the MULE's hidden robot ID card. -NEO
 	var/path[] = new()
 
 	var/mode = 0		//0 = idle/ready
@@ -77,7 +77,7 @@
 	..()
 	botcard = new(src)
 	botcard.access = get_access("Quartermaster")
-	botcard.access += access_robotics
+	botcard.access += ACCESS_ROBOTICS
 	cell = new(src)
 	cell.charge = 2000
 	cell.maxcharge = 2000

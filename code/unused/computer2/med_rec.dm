@@ -2,7 +2,7 @@
 	name = "Medical Records"
 	size = 32.0
 	active_icon = "dna"
-	req_access = list(access_medical)
+	req_access = list(ACCESS_MEDICAL)
 	var/authenticated = null
 	var/rank = null
 	var/screen = null

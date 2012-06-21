@@ -228,7 +228,7 @@
 		//if there isn't a blood decal already, make one.
 		var/obj/effect/decal/cleanable/blood/newblood = new /obj/effect/decal/cleanable/blood(T)
 		newblood.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-		newblood.blood_owner = M
+//		newblood.blood_owner = M
 		newblood.virus2 = M.virus2
 		for(var/datum/disease/D in M.viruses)
 			var/datum/disease/newDisease = new D.type

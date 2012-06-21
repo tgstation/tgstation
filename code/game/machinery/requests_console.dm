@@ -361,7 +361,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			updateUsrDialog()
 		if(screen == 10)
 			var/obj/item/weapon/card/id/ID = O
-			if (access_RC_announce in ID.access)
+			if (ACCESS_RC_ANNOUNCE in ID.access)
 				announceAuth = 1
 			else
 				announceAuth = 0

@@ -35,7 +35,7 @@
 	var/emagged = 0
 	var/wiresexposed = 0
 	var/locked = 1
-	var/list/req_access = list(access_robotics)
+	var/list/req_access = list(ACCESS_ROBOTICS)
 	var/ident = 0
 	//var/list/laws = list()
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())

@@ -13,12 +13,12 @@
 	anchored = 0
 	health = 20
 	maxhealth = 20
-	req_access =list(access_medical)
+	req_access =list(ACCESS_MEDICAL)
 	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
 	var/locked = 1
 //var/emagged = 0
 	var/obj/machinery/camera/cam = null
-	var/list/botcard_access = list(access_medical, access_morgue, access_genetics, access_robotics)
+	var/list/botcard_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_GENETICS, ACCESS_ROBOTICS)
 	var/obj/item/weapon/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
 	var/skin = null //Set to "tox", "ointment" or "o2" for the other two firstaid kits.
 	var/frustration = 0

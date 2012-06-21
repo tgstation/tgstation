@@ -35,7 +35,7 @@
 	var/obj/effect/decal/cleanable/target
 	var/obj/effect/decal/cleanable/oldtarget
 	var/oldloc = null
-	req_access = list(access_janitor)
+	req_access = list(ACCESS_JANITOR)
 	var/path[] = new()
 	var/patrol_path[] = null
 	var/beacon_freq = 1445		// navigation beacon frequency

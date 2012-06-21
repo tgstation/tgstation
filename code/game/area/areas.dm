@@ -140,18 +140,18 @@
 						sleep(10)
 						if(E.density)
 							E.air_locked = E.req_access
-							E.req_access = list(access_engine, access_atmospherics)
+							E.req_access = list(ACCESS_ENGINE, ACCESS_ATMOSPHERICS)
 							E.update_icon()
 				if(E.operating)
 					spawn(10)
 						E.close()
 						if(E.density)
 							E.air_locked = E.req_access
-							E.req_access = list(access_engine, access_atmospherics)
+							E.req_access = list(ACCESS_ENGINE, ACCESS_ATMOSPHERICS)
 							E.update_icon()
 				else if(!E:locked) //Don't lock already bolted doors.
 					E.air_locked = E.req_access
-					E.req_access = list(access_engine, access_atmospherics)
+					E.req_access = list(ACCESS_ENGINE, ACCESS_ATMOSPHERICS)
 					E.update_icon()
 		for(var/obj/machinery/door/firedoor/D in src)
 			if(!D.blocked)

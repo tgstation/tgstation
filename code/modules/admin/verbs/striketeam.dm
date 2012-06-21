@@ -190,7 +190,7 @@ var/global/sent_strike_team = 0
 	W.name = "[real_name]'s ID Card"
 	W.icon_state = "centcom"
 	W.access = get_all_accesses()//They get full station access.
-	W.access += list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage)//Let's add their alloted CentCom access.
+	W.access += list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE)//Let's add their alloted CentCom access.
 	W.assignment = "Death Commando"
 	W.registered_name = real_name
 	equip_if_possible(W, slot_wear_id)
