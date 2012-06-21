@@ -189,7 +189,7 @@
 	name = "MULEbot Crate"
 	contains = list("/obj/machinery/bot/mulebot")
 	cost = 20
-	containertype = "/obj/structure/closet/crate"
+	containertype = "/obj/structure/largecrate/mule"
 	containername = "MULEbot Crate"
 
 /datum/supply_packs/hydroponics // -- Skie
@@ -204,7 +204,7 @@
 					"/obj/item/clothing/gloves/botanic_leather",
 					"/obj/item/clothing/suit/apron") // Updated with new things
 	cost = 10
-	containertype = /obj/structure/closet/crate/hydroponics
+	containertype = "/obj/structure/closet/crate/hydroponics"
 	containername = "Hydroponics crate"
 	access = access_hydroponics
 
@@ -223,7 +223,7 @@
 					"/obj/item/seeds/potatoseed",
 					"/obj/item/seeds/sugarcaneseed")
 	cost = 10
-	containertype = /obj/structure/closet/crate/hydroponics
+	containertype = "/obj/structure/closet/crate/hydroponics"
 	containername = "Seeds crate"
 	access = access_hydroponics
 
@@ -240,7 +240,7 @@
 					"/obj/item/seeds/bananaseed",
 					"/obj/item/seeds/eggyseed")
 	cost = 15
-	containertype = /obj/structure/closet/crate/hydroponics
+	containertype = "/obj/structure/closet/crate/hydroponics"
 	containername = "Exotic Seeds crate"
 	access = access_hydroponics
 
@@ -333,13 +333,19 @@
 	containertype = "/obj/structure/closet/crate"
 	containername = "Mechanical maintenance crate"
 
-/datum/supply_packs/waterfueltank
-	name = "Water/Fuel tank crate"
-	contains = list("/obj/structure/reagent_dispensers/watertank",
-					"/obj/structure/reagent_dispensers/fueltank")
-	cost = 15
-	containertype = "/obj/structure/closet/crate"
-	containername = "Water/Fuel tank crate"
+/datum/supply_packs/watertank
+	name = "Water tank crate"
+	contains = list("/obj/structure/reagent_dispensers/watertank")
+	cost = 8
+	containertype = "/obj/structure/largecrate"
+	containername = "water tank crate"
+
+/datum/supply_packs/fueltank
+	name = "Fuel tank crate"
+	contains = list("/obj/structure/reagent_dispensers/fueltank")
+	cost = 8
+	containertype = "/obj/structure/largecrate"
+	containername = "fuel tank crate"
 
 /datum/supply_packs/engine
 	name = "Emitter crate"
@@ -392,10 +398,8 @@
 
 /datum/supply_packs/mecha_odysseus
 	name = "Circuit Crate (\"Odysseus\")"
-	contains = list(
-						"/obj/item/weapon/circuitboard/mecha/odysseus/peripherals", //TEMPORARY due to lack of circuitboard printer
-						"/obj/item/weapon/circuitboard/mecha/odysseus/main" //TEMPORARY due to lack of circuitboard printer
-						)
+	contains = list("/obj/item/weapon/circuitboard/mecha/odysseus/peripherals", //TEMPORARY due to lack of circuitboard printer
+					"/obj/item/weapon/circuitboard/mecha/odysseus/main") //TEMPORARY due to lack of circuitboard printer
 	cost = 25
 	containertype = "/obj/structure/closet/crate/secure"
 	containername = "\"Odysseus\" Circuit Crate"
@@ -595,7 +599,7 @@
 
 /datum/supply_packs/randomised/contraband
 	num_contained = 5
-	contains = list("/obj/item/weapon/contraband/poster","/obj/item/weapon/cigpacket/dromedaryco") //We randomly pick 5 items from this list through the constructor, look below
+	contains = list("/obj/item/weapon/contraband/poster", "/obj/item/weapon/cigpacket/dromedaryco")
 	name = "Contraband crate"
 	cost = 30
 	containertype = "/obj/structure/closet/crate"

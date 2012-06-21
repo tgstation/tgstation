@@ -207,8 +207,13 @@ This method wont take into account storage items developed in the future and doe
 	var/shuttleat = supply_shuttle_at_station ? SUPPLY_STATION_AREATYPE : SUPPLY_DOCK_AREATYPE
 
 	for(var/turf/T in get_area_turfs(shuttleat) )
+		var/obj/item/weapon/paper/slip = locate(/obj/item/weapon/paper/manifest) in T
+		if(slip)
+			if(slip.stamped.len)	//yes, the clown stamp will work. clown is the highest authority on the station, it makes sense
+				supply_shuttle_points += SUPPLY_POINTSPERSLIP
+			del(slip)
 		var/crate = locate(/obj/structure/closet/crate) in T
-		if (crate)
+		if(crate)
 			del(crate)
 			supply_shuttle_points += SUPPLY_POINTSPERCRATE
 
@@ -230,7 +235,7 @@ This method wont take into account storage items developed in the future and doe
 		var/pickedloc = 0
 		var/found = 0
 		for(var/C in markers)
-			if (locate(/obj/structure/closet/crate) in get_turf(C)) continue
+			if ((locate(/obj/structure/closet/crate) in get_turf(C)) || (locate(/obj/structure/largecrate) in get_turf(C))) continue
 			found = 1
 			pickedloc = get_turf(C)
 		if (!found) pickedloc = get_turf(pick(markers))

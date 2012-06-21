@@ -176,7 +176,7 @@
 /obj/item/weapon/spacecash/c1000
 	icon_state = "spacecash1000"
 	access = access_crate_cash
-	desc = "It's worth 1000 credits."
+	desc = "It's worth 1000 credits. El oh dee ess of ee em oh en ee! What's that spell? LOADSAMONEY, probly!"
 
 /obj/item/device/mass_spectrometer
 	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
