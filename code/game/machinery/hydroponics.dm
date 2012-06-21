@@ -487,29 +487,25 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 						else 			user << "Nothing happens..."
 
 				// Antitoxin binds shit pretty well. So the tox goes significantly down
-
 				if(S.reagents.has_reagent("anti_toxin", 1))
 					src.toxic -= round(S.reagents.get_reagent_amount("anti_toxin")*2)
 
 				// NIGGA, YOU JUST WENT ON FULL RETARD.
-
 				if(S.reagents.has_reagent("toxin", 1))
 					src.toxic += round(S.reagents.get_reagent_amount("toxin")*2)
 
-				// Milk is good for humans, but bad for plants. The sugars canot be used by ploants, and the milk fat fuck up growth. Not shrooms though. I can't deal with this now...
+				// Milk is good for humans, but bad for plants. The sugars canot be used by plants, and the milk fat fucks up growth. Not shrooms though. I can't deal with this now...
 				if(S.reagents.has_reagent("milk", 1))
 					src.nutrilevel += round(S.reagents.get_reagent_amount("milk")*0.1)
 					src.waterlevel += round(S.reagents.get_reagent_amount("milk")*0.9)
 
 				// Beer is a chemical composition of alcohol and various other things. It's a shitty nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
-
 				if(S.reagents.has_reagent("beer", 1))
 					src.health -= round(S.reagents.get_reagent_amount("beer")*0.05)
 					src.nutrilevel += round(S.reagents.get_reagent_amount("beer")*0.25)
 					src.waterlevel += round(S.reagents.get_reagent_amount("beer")*0.7)
 
 				// You're an idiot of thinking that one of the most corrosive and deadly gasses would be beneficial
-
 				if(S.reagents.has_reagent("fluorine", 1))
 					src.health -= round(S.reagents.get_reagent_amount("fluorine")*2)
 					src.toxic += round(S.reagents.get_reagent_amount("flourine")*2.5)
@@ -517,15 +513,13 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 					src.weedlevel -= rand(1,4)
 
 				// You're an idiot of thinking that one of the most corrosive and deadly gasses would be beneficial
-
 				if(S.reagents.has_reagent("chlorine", 1))
 					src.health -= round(S.reagents.get_reagent_amount("chlorine")*1)
 					src.toxic += round(S.reagents.get_reagent_amount("chlorine")*1.5)
 					src.waterlevel -= round(S.reagents.get_reagent_amount("chlorine")*0.5)
 					src.weedlevel -= rand(1,3)
 
-				// White Phosphorous + water -> phosphoric acid. That's not a good thing really. Phosphoric salts are beneficial though. And even if the plan suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
-
+				// White Phosphorous + water -> phosphoric acid. That's not a good thing really. Phosphoric salts are beneficial though. And even if the plant suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
 				if(S.reagents.has_reagent("phosphorus", 1))
 					src.health -= round(S.reagents.get_reagent_amount("phosphorus")*0.75)
 					src.nutrilevel += round(S.reagents.get_reagent_amount("phosphorus")*0.1)
@@ -533,7 +527,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 					src.weedlevel -= rand(1,2)
 
 				// Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
-
 				if(S.reagents.has_reagent("sugar", 1))
 					src.weedlevel += rand(1,2)
 					src.pestlevel += rand(1,2)
@@ -543,6 +536,11 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 				if(S.reagents.has_reagent("water", 1))
 					src.waterlevel += round(S.reagents.get_reagent_amount("water")*1)
 
+				// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits~
+				if(S.reagents.has_reagent("holywater", 1))
+					src.waterlevel += round(S.reagents.get_reagent_amount("holywater")*1)
+					src.health += round(S.reagents.get_reagent_amount("holywater")*0.1)
+
 				// A variety of nutrients are dissolved in club soda, without sugar. These nutrients include carbon, oxygen, hydrogen, phosphorous, potassium, sulfur and sodium, all of which are needed for healthy plant growth.
 				if(S.reagents.has_reagent("sodawater", 1))
 					src.waterlevel += round(S.reagents.get_reagent_amount("sodawater")*1)
@@ -550,53 +548,45 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 					src.nutrilevel += round(S.reagents.get_reagent_amount("sodawater")*0.1)
 
 				// Man, you guys are retards
-
 				if(S.reagents.has_reagent("acid", 1))
 					src.health -= round(S.reagents.get_reagent_amount("acid")*1)
 					src.toxic += round(S.reagents.get_reagent_amount("acid")*1.5)
 					src.weedlevel -= rand(1,2)
 
 				// SERIOUSLY
-
 				if(S.reagents.has_reagent("pacid", 1))
 					src.health -= round(S.reagents.get_reagent_amount("pacid")*2)
 					src.toxic += round(S.reagents.get_reagent_amount("pacid")*3)
 					src.weedlevel -= rand(1,4)
 
 				// Plant-B-Gone is just as bad
-
 				if(S.reagents.has_reagent("plantbgone", 1))
 					src.health -= round(S.reagents.get_reagent_amount("plantbgone")*2)
 					src.toxic -= round(S.reagents.get_reagent_amount("plantbgone")*3)
 					src.weedlevel -= rand(4,8)
 
 				// Healing
-
 				if(S.reagents.has_reagent("cryoxadone", 1))
 					src.health += round(S.reagents.get_reagent_amount("cryoxadone")*3)
 					src.toxic -= round(S.reagents.get_reagent_amount("cryoxadone")*3)
 
 				// FINALLY IMPLEMENTED, Ammonia is bad ass.
-
 				if(S.reagents.has_reagent("ammonia", 1))
 					src.health += round(S.reagents.get_reagent_amount("ammonia")*0.5)
 					src.nutrilevel += round(S.reagents.get_reagent_amount("ammonia")*1)
 
-				// FINALLY IMPLEMENTED, This is more bad ass, and pest get hurt by the crossive nature of it, not the plant
-
+				// FINALLY IMPLEMENTED, This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant.
 				if(S.reagents.has_reagent("diethylamine", 1))
 					src.health += round(S.reagents.get_reagent_amount("diethylamine")*1)
 					src.nutrilevel += round(S.reagents.get_reagent_amount("diethylamine")*2)
 					src.pestlevel -= rand(1,2)
 
 				// Compost, effectively
-
 				if(S.reagents.has_reagent("nutriment", 1))
 					src.health += round(S.reagents.get_reagent_amount("nutriment")*0.5)
 					src.nutrilevel += round(S.reagents.get_reagent_amount("nutriment")*1)
 
 				// Poor man's mutagen.
-
 				if(S.reagents.has_reagent("radium", 1))
 					src.health -= round(S.reagents.get_reagent_amount("radium")*1.5)
 					src.toxic += round(S.reagents.get_reagent_amount("radium")*2)
@@ -612,7 +602,6 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 						else 			user << "Nothing happens..."
 
 				// The best stuff there is. For testing/debugging.
-
 				if(S.reagents.has_reagent("adminordrazine", 1))
 					src.waterlevel += round(S.reagents.get_reagent_amount("adminordrazine")*1)
 					src.health += round(S.reagents.get_reagent_amount("adminordrazine")*1)
@@ -627,18 +616,22 @@ obj/machinery/hydroponics/attackby(var/obj/item/O as obj, var/mob/user as mob)
 						else 			user << "Nothing happens..."
 
 				S.reagents.clear_reagents()
-				if (src.weedlevel < 0 ) // Make sure it won't go overoboard
+				if (src.weedlevel < 0 ) // The following checks are to prevent the stats from going out of bounds.
 					src.weedlevel = 0
-				if (src.health < 0 ) // Make sure it won't go overoboard
+				if (src.health < 0 )
 					src.health = 0
-				if (src.waterlevel > 100 )	// Make sure it won't go overoboard
+				if (src.waterlevel > 100 )
 					src.waterlevel = 100
-				if (src.waterlevel < 0 )	// Make sure it won't go overoboard
+				if (src.waterlevel < 0 )
 					src.waterlevel = 0
-				if (src.toxic < 0 ) // Make sure it won't go overoboard
+				if (src.toxic < 0 )
 					src.toxic = 0
-				if (src.toxic > 100 ) // Make sure it won't go overoboard
+				if (src.toxic > 100 )
 					src.toxic = 100
+				if (src.pestlevel < 0 )
+					src.pestlevel = 0
+				if (src.nutrilevel > 10 )
+					src.nutrilevel = 10
 			else
 				user << "You can't get any extract out of this plant."
 		else

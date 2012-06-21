@@ -424,6 +424,17 @@ datum
 			required_reagents = list("sodiumchloride" = 1, "ethanol" = 1, "radium" = 1)
 			result_amount = 3
 
+		plasmasolidification
+			name = "Solid Plasma"
+			id = "solidplasma"
+			result = null
+			required_reagents = list("iron" = 5, "frostoil" = 5, "plasma" = 20)
+			result_amount = 1
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/location = get_turf(holder.my_atom)
+				new /obj/item/stack/sheet/plasma(location)
+				return
+
 ///////////////////////////////////////////////////////////////////////////////////
 
 // foam and foam precursor

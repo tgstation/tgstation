@@ -1038,7 +1038,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/corn
 	seed = "/obj/item/seeds/cornseed"
-	name = "cob of corn"
+	name = "ear of corn"
 	desc = "Needs some butter!"
 	icon_state = "corn"
 	potency = 40
@@ -1217,10 +1217,10 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
-		reagents.add_reagent("space_drugs", 3+round(potency / 5, 1))
-		reagents.add_reagent("kelotane", 3+round(potency / 5, 1))
-		reagents.add_reagent("bicaridine", 3+round(potency / 5, 1))
-		reagents.add_reagent("toxin", 3+round(potency / 5, 1))
+		reagents.add_reagent("space_drugs", 1+round(potency / 8, 1))
+		reagents.add_reagent("kelotane", 1+round(potency / 8, 1))
+		reagents.add_reagent("bicaridine", 1+round(potency / 10, 1))
+		reagents.add_reagent("toxin", 1+round(potency / 10, 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
@@ -1232,11 +1232,10 @@
 	New()
 		..()
 		reagents.add_reagent("nutriment", 1)
-		reagents.add_reagent("bicaridine", 3+round(potency / 5, 1))
-		reagents.add_reagent("synaptizine", 3+round(potency / 5, 1))
-		reagents.add_reagent("hyperzine", 3+round(potency / 8, 1))
-		reagents.add_reagent("kelotane", 3+round(potency / 8, 1))
-		reagents.add_reagent("toxin", 1+round(potency / 8, 1))
+		reagents.add_reagent("bicaridine", 1+round(potency / 8, 1))
+		reagents.add_reagent("synaptizine", 1+round(potency / 8, 1))
+		reagents.add_reagent("hyperzine", 1+round(potency / 10, 1))
+		reagents.add_reagent("space_drugs", 1+round(potency / 10, 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple
@@ -2031,7 +2030,7 @@
 	name = "blue-space tomato"
 	desc = "So lubricated, you might slip through space-time."
 	icon_state = "bluespacetomato"
-	potency = 10
+	potency = 20
 	origin_tech = "bluespace=3"
 	New()
 		..()
@@ -2045,6 +2044,12 @@
 		var/outer_teleport_radius = potency/10 //Plant potency determines radius of teleport.
 		var/inner_teleport_radius = potency/15
 		var/list/turfs = new/list()
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		if(inner_teleport_radius < 1) //Wasn't potent enough, it just splats.
+			new/obj/effect/decal/cleanable/oil(src.loc)
+			src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+			del(src)
+			return
 		for(var/turf/T in orange(M,outer_teleport_radius))
 			if(T in orange(M,inner_teleport_radius)) continue
 			if(istype(T,/turf/space)) continue
@@ -2060,18 +2065,25 @@
 			turfs += pick(/turf in turfs_to_pick_from)
 		var/turf/picked = pick(turfs)
 		if(!isturf(picked)) return
-		switch(rand(1,2))//Allows for easy addition of more bluespace weirdness.
+		switch(rand(1,2))//Decides randomly to teleport the thrower or the throwee.
 			if(1) // Teleports the person who threw the tomato.
-				new/obj/effect/effect/sparks(M.loc)
-				new/obj/effect/decal/ash(M.loc) //Leaves a pile of ash behind for dramatic effect.
-				M.loc = picked
-				new/obj/effect/effect/sparks(M.loc) //Two set of sparks, one before the teleport and one after.
+				s.set_up(3, 1, M)
+				s.start()
+				new/obj/effect/decal/cleanable/molten_item(M.loc) //Leaves a pile of goo behind for dramatic effect.
+				M.loc = picked //
+				sleep(1)
+				s.set_up(3, 1, M)
+				s.start() //Two set of sparks, one before the teleport and one after.
 			if(2) //Teleports mob the tomato hit instead.
-				for(var/mob/A in get_turf(hit_atom))
-					new/obj/effect/effect/sparks(A.loc)
-					new/obj/effect/decal/ash(A.loc)
-					A.loc = picked
-					new/obj/effect/effect/sparks(A.loc)
-		src.visible_message("<span class='notice'>The [src.name] has been squashed, causing a distortion in space-time.</span>","<span class='moderate'>You hear a smack.</span>")
+				for(var/mob/A in get_turf(hit_atom))//For the mobs in the tile that was hit...
+					s.set_up(3, 1, A)
+					s.start()
+					new/obj/effect/decal/cleanable/molten_item(A.loc) //Leave a pile of goo behind for dramatic effect...
+					A.loc = picked//And teleport them to the chosen location.
+					sleep(1)
+					s.set_up(3, 1, A)
+					s.start()
+		new/obj/effect/decal/cleanable/oil(src.loc)
+		src.visible_message("<span class='notice'>The [src.name] has been squashed, causing a distortion in space-time.</span>","<span class='moderate'>You hear a splat and a crackle.</span>")
 		del(src)
 		return

@@ -1806,8 +1806,8 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				M:bodytemperature -= 5
-				if(prob(40))
-					M.take_organ_damage(0, 1)
+				//if(prob(40))
+				//	M.take_organ_damage(0, 1)
 				if(prob(80) && istype(M, /mob/living/carbon/metroid))
 					M.adjustFireLoss(rand(5,20))
 					M << "\red You feel a terrible chill inside your body!"
@@ -2219,6 +2219,8 @@ datum
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
 				if(M:getBruteLoss() && prob(20)) M:heal_organ_damage(1,0)
+				if(holder.has_reagent("capsaicin"))
+					holder.remove_reagent("	capsaicin", 2)
 				M:nutrition++
 				..()
 				return
