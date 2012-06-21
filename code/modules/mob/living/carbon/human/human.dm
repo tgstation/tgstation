@@ -188,7 +188,7 @@
 	this.icon_state = pick(iconL)
 	this.blood_DNA = list()
 	this.blood_DNA[dna.unique_enzymes] = dna.b_type
-	this.blood_owner = src
+//	this.blood_owner = src
 
 	if(virus2)
 		this.virus2 = virus2.getcopy()

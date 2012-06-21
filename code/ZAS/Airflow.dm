@@ -83,7 +83,7 @@ vs_control/var
 	airflow_mob_slowdown_NAME = "Airflow Slowdown"
 	airflow_mob_slowdown_DESC = "Time in tenths of a second to add as a delay to each movement by a mob if they are fighting the pull of the airflow."
 
-mob/var/last_airflow_stun = 0
+mob/var/tmp/last_airflow_stun = 0
 mob/proc/airflow_stun()
 	if(stat == 2)
 		return 0
@@ -250,10 +250,10 @@ proc/AirflowSpace(zone/A)
 					//Sometimes shit breaks, and M isn't there after the spawn.
 
 atom/movable
-	var/turf/airflow_dest
-	var/airflow_speed = 0
-	var/airflow_time = 0
-	var/last_airflow = 0
+	var/tmp/turf/airflow_dest
+	var/tmp/airflow_speed = 0
+	var/tmp/airflow_time = 0
+	var/tmp/last_airflow = 0
 
 	proc/GotoAirflowDest(n)
 		if(!airflow_dest) return
