@@ -144,60 +144,66 @@
 	var/clown = 0
 	var/euranium = 0
 	var/plasteel = 0
+	var/rglass = 0
 
 /obj/item/weapon/sheetsnatcher/attack_self(mob/user as mob)//Credit goes to carn on this one
 	var/location = get_turf(src)    //fetches the turf containing the object. (so stuff spawns on the floor)
-	if(metal)
+	while(metal)
 		var/obj/item/stack/sheet/metal/S = new (location)
 		var/stacksize = min(metal,50)  //maximum stack size is 50!
 		S.amount = stacksize
 		metal -= stacksize
-	if(glass)
+	while(glass)
 		var/obj/item/stack/sheet/glass/S = new (location)
 		var/stacksize = min(glass,50)
 		S.amount = stacksize
 		glass -= stacksize
-	if(gold)
+	while(gold)
 		var/obj/item/stack/sheet/gold/S = new (location)
 		var/stacksize = min(gold,50)
 		S.amount = stacksize
 		gold -= stacksize
-	if(silver)
+	while(silver)
 		var/obj/item/stack/sheet/silver/S = new (location)
 		var/stacksize = min(silver,50)
 		S.amount = stacksize
 		silver -= stacksize
-	if(diamond)
+	while(diamond)
 		var/obj/item/stack/sheet/diamond/S = new (location)
 		var/stacksize = min(diamond,50)
 		S.amount = stacksize
 		diamond -= stacksize
-	if(plasma)
+	while(plasma)
 		var/obj/item/stack/sheet/plasma/S = new (location)
 		var/stacksize = min(plasma,50)
 		S.amount = stacksize
 		plasma -= stacksize
-	if(uranium)
+	while(uranium)
 		var/obj/item/stack/sheet/uranium/S = new (location)
 		var/stacksize = min(uranium,50)
 		S.amount = stacksize
 		uranium -= stacksize
-	if(clown)
+	while(clown)
 		var/obj/item/stack/sheet/clown/S = new (location)
 		var/stacksize = min(clown,50)
 		S.amount = stacksize
 		clown -= stacksize
-	if(euranium)
+	while(euranium)
 		var/obj/item/stack/sheet/enruranium/S = new (location)
 		var/stacksize = min(euranium,50)
 		S.amount = stacksize
 		euranium -= stacksize
-	if(plasteel)
+	while(plasteel)
 		var/obj/item/stack/sheet/plasteel/S = new (location)
 		var/stacksize = min(plasteel,50)
 		S.amount = stacksize
 		plasteel -= stacksize
-	else if(!metal && !glass && !gold && !silver && !diamond && !plasma && !uranium && !clown && !euranium && !plasteel)
+	while(rglass)
+		var/obj/item/stack/sheet/rglass/S = new (location)
+		var/stacksize = min(rglass,50)
+		S.amount = stacksize
+		rglass -= stacksize
+	if(!metal && !glass && !gold && !silver && !diamond && !plasma && !uranium && !clown && !euranium && !plasteel && !rglass)
 		user << "\blue You empty the snatch."
 		return
 
@@ -223,7 +229,7 @@
 /obj/item/weapon/sheetsnatcher/proc/add(var/obj/item/stack/sheet/S as obj, mob/user as mob)//Handles sheets, adds them to the holder values
 	if((S.name == "Sandstone Bricks") || (S.name == "Wood Planks"))//Does not pick up sandstone or wood, as they are not true sheets
 		return
-	var/current = metal+glass+gold+silver+diamond+plasma+uranium+clown
+	var/current = metal+glass+gold+silver+diamond+plasma+uranium+clown+euranium+plasteel+rglass
 	if(capacity == current)//If it's full, you're done
 		user << "\red The snatcher is full."
 		return
@@ -250,6 +256,8 @@
 				euranium += diff
 			if("plasteel")
 				plasteel += diff
+			if("reinforced glass")
+				rglass += diff
 		S.amount -= diff
 		user << "\blue You add the [S.name] to the [name]"
 	else
@@ -274,6 +282,8 @@
 				euranium += S.amount
 			if("plasteel")
 				plasteel += S.amount
+			if("reinforced glass")
+				rglass += S.amount
 		user << "\blue You add the [S.name] to the [name]"
 		del (S)
 	return
