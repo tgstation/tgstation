@@ -22,6 +22,11 @@ NOTEBOOK
 			src.overlays += "paper_words"
 		return
 
+/obj/item/weapon/paper/Del()
+	if(burning && istype(loc, /mob))
+		loc.ul_SetLuminosity(loc.LuminosityRed - 8, loc.LuminosityGreen - 6, loc.LuminosityBlue)
+	..()
+
 /obj/item/weapon/paper/process()
 	if(iteration < 5)
 		var/turf/location = src.loc
@@ -35,11 +40,6 @@ NOTEBOOK
 	else
 		for(var/mob/M in viewers(5, get_turf(src)))
 			M << "\red \the [src] burns up."
-		if(istype(src.loc,/mob))
-			var/mob/M = src.loc
-			M.ul_SetLuminosity(M.LuminosityRed - 8, M.LuminosityGreen - 6, M.LuminosityBlue)
-		else
-			ul_SetLuminosity(0)
 		processing_objects.Remove(src)
 		del(src)
 
