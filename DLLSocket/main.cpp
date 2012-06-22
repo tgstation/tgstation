@@ -39,7 +39,7 @@ const char* SUCCESS = "1\0"; // string representing success
 #ifdef __WIN32
     #define DLL_EXPORT __declspec(dllexport)
 #else
-    #define DLL_EXPORT _attribute__ ((visibility ("default")))
+    #define DLL_EXPORT __attribute__ ((visibility ("default")))
 #endif
 
 // arg1: ip(in the xx.xx.xx.xx format)
