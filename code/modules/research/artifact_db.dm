@@ -1,9 +1,10 @@
 
 /datum/catalogued_artifact
-	var/name = ""
-	var/function = ""
-	var/range = ""
-	var/trigger = ""
+	var/trigger = "touch"      // What activates it?
+	var/effecttype = "healing" // What does it do?
+	var/effectmode = "aura"    // How does it carry out the effect?
+	var/display_id = ""        // Artifact ID to display once successfully scanned
+	var/origin = ""
 
 /obj/machinery/computer/artifact_database
 	name = "Artifact Database"
@@ -43,11 +44,24 @@
 	var/t = "<B>Artifact Database</B><BR>"
 	t += "<hr>"
 	for(var/datum/catalogued_artifact/CA in catalogued_artifacts)
-		t += "<B>Artifact ID:</B> [CA.name] (determined from unique energy emission signatures)<BR>"
+		t += "<B>Artifact ID:</B> [CA.display_id] (determined from unique energy emission signatures)<BR>"
+		t += "<B>Artifact Origin:</B> [CA.origin]<BR>"
 		t += "<B>Activation Trigger:</B> [CA.trigger]<BR>"
-		t += "<B>Artifact Function:</B> [CA.function]<BR>"
-		t += "<B>Artifact Range:</B> [CA.range]<BR><BR>"
+		t += "<B>Artifact Function:</B> [CA.effecttype]<BR>"
+		t += "<B>Artifact Range:</B> [CA.effectmode]<BR><BR>"
 	t += "<hr>"
 	t += "<A href='?src=\ref[src];refresh=1'>Refresh</A> <A href='?src=\ref[src];close=1'>Close</A><BR>"
 	user << browse(t, "window=artifact_db;size=500x800")
 	user.machine = src
+
+/*
+/datum/artifact_effect
+	var/origin = null          // Used in the randomisation/research of the artifact.
+	var/trigger = "touch"      // What activates it?
+	var/triggerX = "none"      // Used for more varied triggers
+	var/effecttype = "healing" // What does it do?
+	var/effectmode = "aura"    // How does it carry out the effect?
+	var/aurarange = 4          // How far the artifact will extend an aura effect.
+	var/display_id = ""        // Artifact ID to display once successfully scanned
+	var/list/created_field
+*/

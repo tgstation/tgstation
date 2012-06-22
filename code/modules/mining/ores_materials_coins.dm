@@ -78,6 +78,15 @@
 	desc = "Completely useless"
 	icon_state = "slag"
 
+/obj/item/weapon/ore/strangerock		//see artifact_archaeo.dm in modules/research for more info
+	name = "Strange rock"
+	desc = "Seems to have some unusal strata evident throughout it."
+	icon_state = "strange"
+	var/obj/inside
+	var/method // 0 = fire, 1+ = acid
+	origin_tech = "materials=5"
+
+
 /obj/item/weapon/ore/New()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
