@@ -11,6 +11,8 @@
     #include <arpa/inet.h>
     #include <netdb.h>
     #include <fcntl.h>
+    #include <stdlib.h>
+    #include <string.h>
     }
 
     typedef int SOCKET;
