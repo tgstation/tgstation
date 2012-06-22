@@ -37,7 +37,7 @@ const char* SUCCESS = "1\0"; // string representing success
 // arg1: ip(in the xx.xx.xx.xx format)
 // arg2: port(a short)
 // return: NULL on failure, SUCCESS otherwise
-extern "C" const char* establish_connection(int n, char *v[])
+extern "C" __declspec(dllexport) const char* establish_connection(int n, char *v[])
 {
     // extract args
     // ------------
@@ -77,10 +77,11 @@ extern "C" const char* establish_connection(int n, char *v[])
 
 // arg1: string message to send
 // return: NULL on failure, SUCCESS otherwise
-extern "C" const char* send_message(int n, char *v[])
+extern "C" __declspec(dllexport) const char* send_message(int n, char *v[])
 {
     // extract the args
-    const char* msg = v[1];
+    if(n < 1) return 0;
+    const char* msg = v[0];
 
     // send the message
     int rc = sendto(sock,msg,strlen(msg),0,(SOCKADDR*)&addr,sizeof(SOCKADDR));
@@ -96,7 +97,7 @@ extern "C" const char* send_message(int n, char *v[])
 
 // no args
 // return: message if any received, NULL otherwise
-extern "C" const char* recv_message(int n, char *v[])
+extern "C" __declspec(dllexport) const char* recv_message(int n, char *v[])
 {
     SOCKADDR_IN sender; // we will store the sender address here
 
