@@ -103,7 +103,7 @@
 
 		if(46 to 90)
 
-			var/list/datum/objective/theft = PickObjectiveFromList(GenerateTheft(changeling.assigned_role,changeling))
+			var/list/datum/objective/theft = pickweight(GenerateTheft(changeling.assigned_role,changeling))
 			var/datum/objective/steal/steal_objective = pick(theft)
 			steal_objective.owner = changeling
 			changeling.objectives += steal_objective
@@ -120,7 +120,7 @@
 			kill_objective.find_target()
 			changeling.objectives += kill_objective
 
-			var/list/datum/objective/theft = PickObjectiveFromList(GenerateTheft(changeling.assigned_role,changeling))
+			var/list/datum/objective/theft = pickweight(GenerateTheft(changeling.assigned_role,changeling))
 			var/datum/objective/steal/steal_objective = pick(theft)
 			steal_objective.owner = changeling
 			changeling.objectives += steal_objective

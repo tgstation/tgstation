@@ -177,11 +177,29 @@
 		if(traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
 			var/traitorwin = 1
 			var/count = 1
+			var/list/success_log = list("Steal-Win" = 0, "Steal-Fail" = 0, "Protect-Win" = 0, "Protect-Fail" = 0,\
+				"Frame-Win" = 0, "Frame-Fail" = 0, "Kill-Win" = 0, "Kill-Fail" = 0)
 			for(var/datum/objective/objective in traitor.objectives)
 				if(objective.check_completion())
+					if(istype(objective, /datum/objective/frame))
+						success_log["Frame-Win"]++
+					if(istype(objective, /datum/objective/protection))
+						success_log["Protect-Win"]++
+					if(istype(objective, /datum/objective/assassinate))
+						success_log["Kill-Win"]++
+					if(istype(objective, /datum/objective/steal))
+						success_log["Steal-Win"]++
 					world << "<B>Objective #[count]</B>: [objective.explanation_text] \green <B>Success</B>"
 					//feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
 				else
+					if(istype(objective, /datum/objective/frame))
+						success_log["Frame-Fail"]++
+					if(istype(objective, /datum/objective/protection))
+						success_log["Protect-Fail"]++
+					if(istype(objective, /datum/objective/assassinate))
+						success_log["Kill-Fail"]++
+					if(istype(objective, /datum/objective/steal))
+						success_log["Steal-Fail"]++
 					world << "<B>Objective #[count]</B>: [objective.explanation_text] \red Failed"
 					//feedback_add_details("traitor_objective","[objective.type]|FAIL")
 					traitorwin = 0
@@ -193,6 +211,31 @@
 			else
 				world << "<B>The [special_role_text] has failed!<B>"
 				//feedback_add_details("traitor_success","FAIL")
+			var/savefile/traitor_logs = new("data/player_saves/[copytext(traitor.key, 1, 2)]/[traitor.key]/traitor.sav")
+			var/list/infos
+			traitor_logs >> infos
+			if(istype(infos))
+				infos["Total"]++
+				infos["Success"] += traitorwin
+				infos["Steal"] = (success_log["Steal-Win"]+success_log["Steal-Fail"]+infos["Steal_Total"]) ? ((infos["Steal"]*infos["Steal_Total"]) + success_log["Steal-Win"])/(success_log["Steal-Win"]+success_log["Steal-Fail"]+infos["Steal_Total"]) : 1
+				infos["Kill"] = (success_log["Kill-Win"]+success_log["Kill-Fail"]+infos["Kill_Total"]) ? ((infos["Kill"]*infos["Kill_Total"]) + success_log["Kill-Win"])/(success_log["Kill-Win"]+success_log["Kill-Fail"]+infos["Kill_Total"]) : 1
+				infos["Frame"] = (success_log["Frame-Win"]+success_log["Frame-Fail"]+infos["Frame_Total"]) ? ((infos["Frame"]*infos["Frame_Total"]) + success_log["Frame-Win"])/(success_log["Frame-Win"]+success_log["Frame-Fail"]+infos["Frame_Total"]) : 1
+				infos["Protect"] = (success_log["Protect-Win"]+success_log["Protect-Fail"]+infos["Protect_Total"]) ? ((infos["Protect"]*infos["Protect_Total"]) + success_log["Protect-Win"])/(success_log["Protect-Win"]+success_log["Protect-Fail"]+infos["Protect_Total"]) : 1
+				infos["Steal_Total"] = infos["Steal_Total"]+success_log["Steal-Win"]+success_log["Steal-Fail"]
+				infos["Kill_Total"] = infos["Kill_Total"]+success_log["Kill-Win"]+success_log["Kill-Fail"]
+				infos["Frame_Total"] = infos["Frame_Total"]+success_log["Frame-Win"]+success_log["Frame-Fail"]
+				infos["Protect_Total"] = infos["Protect_Total"]+success_log["Protect-Win"]+success_log["Protect-Fail"]
+			else
+				infos = list("Total" = 1, "Success" = traitorwin,
+				"Steal" = (success_log["Steal-Win"]+success_log["Steal-Fail"]) ? success_log["Steal-Win"]/(success_log["Steal-Win"]+success_log["Steal-Fail"]) : 1,
+				"Kill" = (success_log["Kill-Win"]+success_log["Kill-Fail"]) ? success_log["Kill-Win"]/(success_log["Kill-Win"]+success_log["Kill-Fail"]) : 1,
+				"Frame" = (success_log["Frame-Win"]+success_log["Frame-Fail"]) ? success_log["Frame-Win"]/(success_log["Frame-Win"]+success_log["Frame-Fail"]) : 1,
+				"Protect" = (success_log["Protect-Win"]+success_log["Protect-Fail"]) ? success_log["Protect-Win"]/(success_log["Protect-Win"]+success_log["Protect-Fail"]) : 1,
+				"Steal_Total" = success_log["Steal-Win"]+success_log["Steal-Fail"],
+				"Kill_Total" = success_log["Kill-Win"]+success_log["Kill-Fail"],
+				"Frame_Total" = success_log["Frame-Win"]+success_log["Frame-Fail"],
+				"Protect_Total" = success_log["Protect-Win"]+success_log["Protect-Fail"])
+			traitor_logs << infos
 
 			var/datum/traitorinfo/info = logtraitors[traitor]
 			if (info)
