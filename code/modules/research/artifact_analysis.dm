@@ -110,7 +110,7 @@
 
 /obj/machinery/artifact_analyser/process()
 	if(!owned_pad)
-		for(var/obj/machinery/analyser_pad/pad in orange(1))
+		for(var/obj/machinery/analyser_pad/pad in range(1))
 			owned_pad = pad
 			break
 
@@ -210,17 +210,38 @@
 /obj/machinery/artifact_analyser/proc/AA_Analyse()
 	if(!cur_artifact)
 		return
-	src.accuO = rand(0,10) + origin_bonuses[cur_artifact.origin]
-	src.accuT = rand(0,10) + trigger_bonuses[cur_artifact.origin]
-	src.accuE1 = rand(0,10) + function_bonuses[cur_artifact.origin]
-	src.accuE2 = rand(0,10) + range_bonuses[cur_artifact.origin]
+
+	//keep any correctly determined properties the same
+	var/origin_correct = 0
+	var/trigger_correct = 0
+	var/function_correct = 0
+	var/range_correct = 0
+	if(cur_id == cur_artifact.display_id)
+		if(src.aorigin == cur_artifact.origin)
+			origin_correct = 1
+
+		if(src.atrigger == cur_artifact.trigger)
+			trigger_correct = 1
+		else if(src.atrigger == cur_artifact.triggerX)
+			trigger_correct = 1
+
+		if(src.aeffect1 == cur_artifact.effecttype)
+			function_correct = 1
+
+		if(src.aeffect2 == cur_artifact.effectmode)
+			range_correct = 1
+
+	src.accuO = 5 + rand(0,10) + origin_bonuses[cur_artifact.origin]
+	src.accuT = 5 + rand(0,10) + trigger_bonuses[cur_artifact.origin]
+	src.accuE1 = 5 + rand(0,10) + function_bonuses[cur_artifact.origin]
+	src.accuE2 = 5 + rand(0,10) + range_bonuses[cur_artifact.origin]
 
 	if (src.accuO > 100) src.accuO = 100
 	if (src.accuT > 100) src.accuT = 100
 	if (src.accuE1 > 100) src.accuE1 = 100
 	if (src.accuE2 > 100) src.accuE2 = 100
 	// Roll to generate report
-	if (prob(accuO))
+	if (prob(accuO) || origin_correct)
 		switch(cur_artifact.origin)
 			if("ancient") src.aorigin = "Ancient Robots"
 			if("martian") src.aorigin = "Martian"
@@ -230,7 +251,7 @@
 			else src.aorigin = "Unknown Origin"
 		origin_bonuses[cur_artifact.origin] += 10
 	else AA_FailedAnalysis(1)
-	if (prob(accuT))
+	if (prob(accuT) || trigger_correct)
 		switch(cur_artifact.trigger)
 			if("touch") src.atrigger = "Contact with Living Organism"
 			if("force") src.atrigger = "Heavy Impact"
@@ -243,9 +264,9 @@
 					if("toxin") src.atrigger = "Contact with Toxins"
 			if("heat") src.atrigger = "Exposure to Heat"
 			else src.atrigger = "Unknown Trigger"
-		origin_bonuses[cur_artifact.origin] += 5
+		trigger_bonuses[cur_artifact.origin] += 5
 	else AA_FailedAnalysis(2)
-	if (prob(accuE1))
+	if (prob(accuE1) || function_correct)
 		switch(cur_artifact.effecttype)
 			if("healing")  src.aeffect1 = "Healing Device"
 			if("injure") src.aeffect1 = "Anti-biological Weapon"
@@ -258,9 +279,9 @@
 			if("forcefield") src.aeffect1 = "Shield Generator"
 			if("teleport") src.aeffect1 = "Space-Time Displacer"
 			else src.aeffect1 = "Unknown Effect"
-		origin_bonuses[cur_artifact.origin] += 5
+		function_bonuses[cur_artifact.origin] += 5
 	else AA_FailedAnalysis(3)
-	if (prob(accuE2))
+	if (prob(accuE2) || range_correct)
 		switch(cur_artifact.effectmode)
 			if("aura") src.aeffect2 = "Constant Short-Range Energy Field"
 			if("pulse")
@@ -269,7 +290,7 @@
 			if("worldpulse") src.aeffect2 = "Extreme Range Energy Pulses"
 			if("contact") src.aeffect2 = "Requires contact with subject"
 			else src.aeffect2 = "Unknown Range"
-		origin_bonuses[cur_artifact.origin] += 5
+		range_bonuses[cur_artifact.origin] += 5
 	else AA_FailedAnalysis(4)
 
 	cur_artifact.name = "alien artifact ([cur_artifact.display_id])"
