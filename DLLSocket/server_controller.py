@@ -12,6 +12,8 @@ sock.bind( (UDP_IP,UDP_PORT) )
 last_ticker_state = None
 
 def handle_message(data, addr):
+    global last_ticker_state
+    
     params = urlparse.parse_qs(data)
     print(data)
     
@@ -30,9 +32,8 @@ def handle_message(data, addr):
         pass
     
     try:
-        global last_ticker_state
         if params["type"][0] == "startup" and last_ticker_state:
-            open("crashlog.txt","a+").write("Server exited, last ticker state was: "+last_ticker_state)
+            open("crashlog.txt","a+").write("Server exited, last ticker state was: "+last_ticker_state+"\n")
     except KeyError:
         pass
             
