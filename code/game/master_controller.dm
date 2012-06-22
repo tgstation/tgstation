@@ -110,7 +110,7 @@ datum/controller/game_controller
 		// Useful for crashlogs and similar, because that way it's easy to tell what
 		// was going on when the server crashed.
 
-		crashlog << "TickerState: [txt]"
+		return
 
 	process()
 
@@ -140,12 +140,6 @@ datum/controller/game_controller
 		networks_ready = 0
 		powernets_ready = 0
 		ticker_ready = 0
-
-		// Wipe the crashlog every now and then to avoid it becoming too large
-		if(controller_iteration % 600 == 0)
-			del(crashlog)
-			fdel("crashlog.txt")
-			crashlog = file("crashlog.txt")
 
 		// the fact that the air master is not in the master controller
 		// will make it very hard to find out whether it's responsible

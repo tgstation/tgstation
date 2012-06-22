@@ -3,11 +3,6 @@
 /world/New()
 	..()
 
-	// Setup crashlog for debugging purposes
-	crashlog = file("crashlog.txt")
-	crashlog << "==========================================================\n"
-	crashlog << "** A new round has started.\n"
-
 	diary = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
 	diary << {"
 
