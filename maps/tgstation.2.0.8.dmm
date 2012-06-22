@@ -3676,7 +3676,7 @@
 "bsJ" = (/obj/structure/cable{icon_state = "4-8"; pixel_x = 1; d1 = 4; d2 = 8},/obj/machinery/door/airlock/glass/glass_research{name = "Anomaly Lab"; req_access_txt = "7"},/turf/simulated/floor,/area/anomaly)
 "bsK" = (/obj/structure/cable{icon_state = "4-8"; pixel_x = 1; d1 = 4; d2 = 8},/turf/simulated/floor,/area/anomaly)
 "bsL" = (/obj/structure/cable{icon_state = "4-8"; pixel_x = 1; d1 = 4; d2 = 8},/obj/effect/sign/nosmoking_2{pixel_x = 0; pixel_y = 32},/obj/machinery/camera{c_tag = "Anomaly Lab Testing"; dir = 2; network = "Research"; pixel_x = 22},/turf/simulated/floor,/area/anomaly)
-"bsM" = (/obj/machinery/door/airlock/glass/glass_research{name = "Anomaly Lab"; req_access_txt = "7"},/turf/simulated/floor,/area/anomaly)
+"bsM" = (/obj/machinery/door/airlock/glass/glass_research{name = "Anomaly Lab"; req_access_txt = "7"},/obj/structure/cable{icon_state = "4-8"; pixel_x = 1; d1 = 4; d2 = 8},/turf/simulated/floor,/area/anomaly)
 "bsN" = (/obj/structure/cable{icon_state = "4-8"; pixel_x = 1; d1 = 4; d2 = 8},/turf/simulated/floor{icon_state = "white"},/area/anomaly)
 "bsO" = (/obj/structure/cable{icon_state = "4-8"; pixel_x = 1; d1 = 4; d2 = 8},/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"; tag = "90Curve"},/turf/simulated/floor{icon_state = "white"},/area/anomaly)
 "bsP" = (/obj/structure/cable{icon_state = "4-8"; pixel_x = 1; d1 = 4; d2 = 8},/obj/structure/stool/bed/chair/office/light,/turf/simulated/floor{icon_state = "white"},/area/anomaly)
