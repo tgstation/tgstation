@@ -162,7 +162,7 @@ datum
 						if(!success) //Runtimed.
 							failed_ticks++
 							if(failed_ticks > 20)
-								world << "<font size='4' color='red'>ERROR IN ATMOS TICKER.  Killing air simulation!</font>"
+								world << "<font color='red'><b>ERROR IN ATMOS TICKER.  Killing air simulation!</font></b>"
 								kill_air = 1
 					sleep(max(5,update_delay*tick_multiplier))
 

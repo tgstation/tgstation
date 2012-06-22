@@ -32,7 +32,7 @@
 
 /proc/get_turf(turf/location as turf)
 	while (location)
-		if (istype(location, /turf))
+		if (istype(location))
 			return location
 
 		location = location.loc

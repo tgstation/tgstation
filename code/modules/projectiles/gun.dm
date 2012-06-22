@@ -57,7 +57,7 @@
 				if(M)
 					M.NotTargeted(src)
 			del(target)
-			usr.visible_message("\blue [usr] lowers \the [src]...")
+			usr.visible_message("\blue \The [usr] lowers \the [src]...")
 			return 0
 		return 1
 
@@ -65,36 +65,36 @@
 	attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 		if (M == user && user.zone_sel.selecting == "mouth" && load_into_chamber() && !mouthshoot) //Suicide handling.
 			mouthshoot = 1
-			M.visible_message("\red [user] sticks their gun in their mouth, ready to pull the trigger...")
+			M.visible_message("\red \The [user] sticks their gun in their mouth, ready to pull the trigger...")
 			if(!do_after(user, 40))
-				M.visible_message("\blue [user] decided life was worth living")
+				M.visible_message("\blue \The [user] decided life was worth living")
 				mouthshoot = 0
 				return
 			if(istype(src.in_chamber, /obj/item/projectile/bullet) && !istype(src.in_chamber, /obj/item/projectile/bullet/stunshot) && !istype(src.in_chamber, /obj/item/ammo_casing/shotgun/beanbag))
 				M.apply_damage(75, BRUTE, "head", used_weapon = "Suicide attempt with a projectile weapon.")
 				M.apply_damage(85, BRUTE, "chest")
-				M.visible_message("\red [user] pulls the trigger.")
+				M.visible_message("\red \The [user] pulls the trigger.")
 			else if(istype(src.in_chamber, /obj/item/projectile/bullet/stunshot) || istype(src.in_chamber, /obj/item/projectile/energy/electrode))
 				M.apply_damage(10, BURN, "head", used_weapon = "Suicide attempt with a stun round.")
-				M.visible_message("\red [user] pulls the trigger, but luckily it was a stun round.")
+				M.visible_message("\red \The [user] pulls the trigger, but luckily it was a stun round.")
 			else if(istype(src.in_chamber, /obj/item/ammo_casing/shotgun/beanbag))
 				M.apply_damage(20, BRUTE, "head", used_weapon = "Suicide attempt with a beanbag.")
-				M.visible_message("\red [user] pulls the trigger, but luckily it was a stun round.")
+				M.visible_message("\red \The [user] pulls the trigger, but luckily it was a stun round.")
 			else if(istype(src.in_chamber, /obj/item/projectile/beam) || istype(src.in_chamber, /obj/item/projectile/energy))
 				M.apply_damage(75, BURN, "head", used_weapon = "Suicide attempt with an energy weapon")
 				M.apply_damage(85, BURN, "chest")
-				M.visible_message("\red [user] pulls the trigger.")
+				M.visible_message("\red \The [user] pulls the trigger.")
 			else
 				M.apply_damage(75, BRUTE, "head", used_weapon = "Suicide attempt with a gun")
 				M.apply_damage(85, BRUTE, "chest")
-				M.visible_message("\red [user] pulls the trigger. Ow.")
+				M.visible_message("\red \The [user] pulls the trigger. Ow.")
 			del(in_chamber)
 			mouthshoot = 0
 			return
 		else if(user.a_intent == "hurt" && load_into_chamber() && (istype(src.in_chamber, /obj/item/projectile/beam) || istype(src.in_chamber, /obj/item/projectile/energy)\
 		 || istype(src.in_chamber, /obj/item/projectile/bullet)) && !istype(in_chamber,/obj/item/projectile/energy/electrode)) //Point blank shooting.
 			//Lets shoot them, then.
-			user.visible_message("\red <b> [user] fires \the [src] point blank at [M]!</b>")
+			user.visible_message("\red <b> \The [user] fires \the [src] point blank at [M]!</b>")
 			if(silenced)
 				playsound(user, fire_sound, 10, 1)
 			else
@@ -109,7 +109,7 @@
 			return
 		else if(user.a_intent != "hurt" && load_into_chamber() && istype(in_chamber,/obj/item/projectile/energy/electrode)) //Point blank tasering.
 			if (M.canstun == 0 || M.canweaken == 0)
-				user.visible_message("\red <B>[M] has been stunned with the taser gun by [user] to no effect!</B>")
+				user.visible_message("\red <B>\The [M] has been stunned with the taser gun by \the [user] to no effect!</B>")
 				del(in_chamber)
 				update_icon()
 				return
@@ -125,7 +125,7 @@
 				playsound(user, fire_sound, 10, 1)
 			else
 				playsound(user, fire_sound, 50, 1)
-			user.visible_message("\red <B>[M] has been stunned with the taser gun by [user]!</B>")
+			user.visible_message("\red <B>\The [M] has been stunned with the taser gun by \the [user]!</B>")
 			M.attack_log += text("\[[]\] <b>[]/[]</b> stunned <b>[]/[]</b> with a <b>[]</b>", time_stamp(), user, user.ckey, M, M.ckey, src)
 			user.attack_log += text("\[[]\] <b>[]/[]</b> stunned <b>[]/[]</b> with a <b>[]</b>", time_stamp(), user, user.ckey, M, M.ckey, src)
 			log_admin("ATTACK: [user] ([user.ckey]) stunned [M] ([M.ckey]) with [src].")
@@ -144,7 +144,7 @@
 
 
 //POWPOW!...  Used to be afterattack.
-	proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params)//TODO: go over this
+	proc/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0)//TODO: go over this
 		if(istype(user, /mob/living))
 			var/mob/living/M = user
 			if ((CLUMSY in M.mutations) && prob(50)) ///Who ever came up with this...
@@ -193,7 +193,10 @@
 			playsound(user, fire_sound, 10, 1)
 		else
 			playsound(user, fire_sound, 50, 1)
-			user.visible_message("\red [user] fires \the [src]!", "\red You fire \the [src]!", "\blue You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
+			if(reflex)
+				user.visible_message("\red \The [user] fires \the [src] by reflex!", "\red You reflex fire \the [src]!", "\blue You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
+			else
+				user.visible_message("\red \The [user] fires \the [src]!", "\red You fire \the [src]!", "\blue You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 
 		in_chamber.original = targloc
 		in_chamber.loc = get_turf(user)
@@ -254,7 +257,7 @@
 			var/firing_check = in_chamber.check_fire(T,usr) //0 if it cannot hit them, 1 if it is capable of hitting, and 2 if a special check is preventing it from firing.
 			if(firing_check > 0)
 				if(firing_check == 1)
-					Fire(T,usr)
+					Fire(T,usr, reflex = 1)
 			else if(!told_cant_shoot)
 				M << "\red They can't be hit from here!"
 				told_cant_shoot = 1

@@ -1152,17 +1152,6 @@ proc/islist(list/list)
 		return 1
 	return 0
 
-proc/isemptylist(list/list)
-	if(!list.len)
-		return 1
-	return 0
-
-proc/listclearnulls(list/list)
-	if(istype(list))
-		while(null in list)
-			list -= null
-	return
-
 /atom/proc/GetAllContents(searchDepth = 5)
 	var/list/toReturn = list()
 

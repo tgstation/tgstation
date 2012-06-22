@@ -93,8 +93,9 @@
 	src.inherent = list()
 
 /datum/ai_laws/proc/add_supplied_law(var/number, var/law)
-	while (src.supplied.len < number + 1)
-		src.supplied += ""
+//	while (src.supplied.len < number + 1)
+//		src.supplied += ""
+//Infinite loop
 
 	src.supplied[number + 1] = law
 
