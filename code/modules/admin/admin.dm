@@ -1894,7 +1894,7 @@ var/global/BSACooldown = 0
 					//feedback_add_details("admin_secrets_fun_used","PW")
 					message_admins("\blue [key_name_admin(usr)] teleported all players to the prison station.", 1)
 					for(var/mob/living/carbon/human/H in world)
-						var/turf/loc = find_loc(H)
+						var/turf/loc = get_turf(H)
 						var/security = 0
 						if(loc.z > 1 || prisonwarped.Find(H))
 	//don't warp them if they aren't ready or are already there

@@ -165,16 +165,10 @@ var/intercom_range_display_status = 0
 
 		for(var/atom/A in world)
 			if(istype(A,type_path))
-				var/atom/B = A
-				while(!(isturf(B.loc)))
-					if(B && B.loc)
-						B = B.loc
-					else
-						break
-				if(B)
-					if(B.z == num_level)
-						count++
-						atom_list += A
+				var/turf/B = get_turf(A)
+				if(istype(B) && B.z == num_level)
+					count++
+					atom_list += A
 		/*
 		var/atom/temp_atom
 		for(var/i = 0; i <= (atom_list.len/10); i++)

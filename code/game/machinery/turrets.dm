@@ -477,6 +477,7 @@
 	var/health = 40
 	var/list/scan_for = list("human"=0,"cyborg"=0,"mecha"=0,"alien"=1)
 	var/on = 0
+	var/processing = 0 //So we dun get dozens of duplicate while loops
 	icon = 'turrets.dmi'
 	icon_state = "gun_turret"
 
@@ -567,16 +568,20 @@
 
 
 	process()
-		spawn while(on)
-			if(projectiles<=0)
-				on = 0
-				return
-			if(cur_target && !validate_target(cur_target))
-				cur_target = null
-			if(!cur_target)
-				cur_target = get_target()
-			fire(cur_target)
-			sleep(cooldown)
+		if(!processing)
+			spawn
+				while(on)
+					processing = 1
+					if(projectiles<=0)
+						on = 0
+						return
+					if(cur_target && !validate_target(cur_target))
+						cur_target = null
+					if(!cur_target)
+						cur_target = get_target()
+					fire(cur_target)
+					sleep(cooldown)
+				processing = 0
 		return
 
 	proc/get_target()
