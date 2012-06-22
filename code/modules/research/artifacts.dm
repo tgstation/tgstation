@@ -85,7 +85,7 @@
 			if (get_dist(user, src) > 1)
 				user << "\red You can't reach [src] from here."
 				return
-		if(istype(M:gloves,/obj/item/clothing/gloves))
+		if(istype(user:gloves,/obj/item/clothing/gloves))
 			return ..()
 		for(var/mob/O in viewers(src, null))
 			O.show_message(text("<b>[]</b> touches [].", user, src), 1)
