@@ -152,7 +152,7 @@
 			//find out what mobs we can see
 			var/list/incapacitated = list()
 			var/list/conscious = list()
-			for(var/mob/living/M in view(7, src))
+			for(var/mob/living/carbon/M in view(7, src))
 				//this may not be quite the right test
 				if(M == src)
 					continue
@@ -162,14 +162,14 @@
 					conscious.Add(M)
 
 			//pick the nearest valid conscious target
-			var/mob/living/target_mob
-			for(var/mob/living/M in conscious)
+			var/mob/living/carbon/target_mob
+			for(var/mob/living/carbon/M in conscious)
 				if(!target_mob || get_dist(src, M) < get_dist(src, target_mob))
 					target_mob = M
 
 			if(!target_mob)
 				//get an unconscious mob
-				for(var/mob/living/M in incapacitated)
+				for(var/mob/living/carbon/M in incapacitated)
 					if(!target_mob || get_dist(src, M) < get_dist(src, target_mob))
 						target_mob = M
 			if(target_mob)

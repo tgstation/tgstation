@@ -2,22 +2,15 @@
 //talking crystals may quickly turnout to be very annoying
 
 //strange rocks have been mostly redone
-/obj/item/weapon/ore/strangerock
-	name = "Strange rock"
-	icon = 'rubble.dmi'
-	icon_state = "strange"
-	var/obj/inside
-	var/method // 0 = fire, 1+ = acid
-
-	New()
-		//var/datum/reagents/r = new/datum/reagents(50)
-		//src.reagents = r
-		icon = 'rubble.dmi'
-		if(rand(3))
-			method = 0
-		else
-			method = 1
-		inside = pick(150;"", 50;"/obj/item/weapon/crystal", 25;"/obj/item/weapon/talkingcrystal", "/obj/item/weapon/fossil/base")
+/obj/item/weapon/ore/strangerock/New()
+	..()
+	//var/datum/reagents/r = new/datum/reagents(50)
+	//src.reagents = r
+	if(rand(3))
+		method = 0
+	else
+		method = 1
+	inside = pick(150;"", 50;"/obj/item/weapon/crystal", 25;"/obj/item/weapon/talkingcrystal", "/obj/item/weapon/fossil/base")
 
 /obj/item/weapon/ore/strangerock/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/weldingtool/))
@@ -56,19 +49,15 @@
 
 /obj/item/weapon/crystal
 	name = "Crystal"
-	icon = 'rubble.dmi'
+	icon = 'mining.dmi'
 	icon_state = "crystal"
 
 /obj/item/weapon/talkingcrystal
 	name = "Crystal"
-	icon = 'rubble.dmi'
+	icon = 'mining.dmi'
 	icon_state = "crystal2"
 	var/list/list/words = list()
 	var/lastsaid
-
-/obj/item/weapon/talkingcrystal/New()
-	icon = 'rubble.dmi'
-	return
 
 /obj/item/weapon/talkingcrystal/proc/catchMessage(var/msg, var/mob/source)
 	var/list/seperate = list()
@@ -141,7 +130,7 @@
 		else
 			msg+="!"
 	for(var/mob/M in viewers(src))
-		M << "\blue You hear \"[msg]\" from the [src]"
+		M << "<b>The crystal</b> says, \"[msg]\""
 	lastsaid = world.timeofday + rand(300,800)
 
 /obj/item/weapon/talkingcrystal/process()
@@ -160,7 +149,6 @@
 	desc = "It's a fossil."
 
 /obj/item/weapon/fossil/base/New()
-	icon = 'fossil.dmi'
 	spawn(0)
 		var/list/l = list("/obj/item/weapon/fossil/bone"=8,"/obj/item/weapon/fossil/skull"=2,
 		"/obj/item/weapon/fossil/skull/horned"=2,"/obj/item/weapon/fossil/shell"=1)
