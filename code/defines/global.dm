@@ -64,7 +64,6 @@ var/blobevent = 0
 	///////////////
 
 var/diary = null
-var/crashlog = null // Text file to store info in that might help with debugging crashes
 var/diaryofmeanpeople = null
 var/href_logfile = null
 var/station_name = null
