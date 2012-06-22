@@ -240,9 +240,8 @@ datum/radio_frequency
 			for (var/devices_filter in devices)
 				var/list/devices_line = devices[devices_filter]
 				devices_line-=device
-				while (null in devices_line)
-					devices_line -= null
-				if (devices_line.len==0)
+				devices_line.Remove(null)
+				if (!devices_line.len)
 					devices -= devices_filter
 					del(devices_line)
 

@@ -1081,7 +1081,7 @@ note dizziness decrements automatically in the mob's Life() proc.
  * Sends resource files to client cache
  */
 /mob/proc/getFiles()
-	if(!isemptylist(args))
+	if(args && args.len)
 		for(var/file in args)
 			src << browse_rsc(file)
 		return 1
