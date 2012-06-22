@@ -256,6 +256,7 @@
 
 /turf/simulated/mineral/proc/gets_drilled(var/delicate = 0)
 	if ((src.mineralName != "") && (src.mineralAmt > 0) && (src.mineralAmt < 11))
+		var/destroyed = 0
 		var/i
 		for (i=0;i<mineralAmt;i++)
 			if (src.mineralName == "Uranium")
@@ -270,15 +271,19 @@
 				new /obj/item/weapon/ore/plasma(src)
 			if (src.mineralName == "Diamond")
 				new /obj/item/weapon/ore/diamond(src)
-			if (src.mineralName == "Archaeo" && (prob(10) || delicate) )
+			if (src.mineralName == "Archaeo")
 				//spawn strange rocks here
-				new /obj/item/weapon/ore/strangerock(src)
+				if(prob(10) || delicate)
+					new /obj/item/weapon/ore/strangerock(src)
+				else
+					destroyed = 1
 			if (src.mineralName == "Clown")
 				new /obj/item/weapon/ore/clown(src)
 	if (prob(src.artifactChance))
 		//spawn a rare, xeno-archaelogical artifact here
 		new /obj/machinery/artifact(src)
 	ReplaceWithFloor()
+	usr << "\red You accidentally destroy some of the rocks!"
 	return
 
 /*

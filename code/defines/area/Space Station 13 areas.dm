@@ -328,7 +328,7 @@ proc/process_ghost_teleport_locs()
 	name = "\improper Centcom"
 	icon_state = "centcom"
 	requires_power = 0
-	ul_Lighting = 1
+	ul_Lighting = 0
 
 /area/centcom/control
 	name = "\improper Centcom Control"

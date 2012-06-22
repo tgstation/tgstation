@@ -21,7 +21,7 @@
 
 
 #define ul_Clamp(Value) min(max(Value, 0), ul_Steps)
-#define ul_IsLuminous(A) (A.LuminosityRed > 0 || A.LuminosityGreen > 0 || A.LuminosityBlue > 0)
+#define ul_IsLuminous(A) (A.LuminosityRed || A.LuminosityGreen || A.LuminosityBlue)
 #define ul_Luminosity(A) max(A.LuminosityRed, A.LuminosityGreen, A.LuminosityBlue)
 
 
@@ -94,35 +94,17 @@ atom/proc/ul_Illuminate()
 			if(DeltaRed > 0)
 				if(!Affected.MaxRed)
 					Affected.MaxRed = list()
-					Affected.MaxRedSources = list()
-				if(!(DeltaRed in Affected.MaxRed))
-					Affected.MaxRed.Add(DeltaRed)
-					Affected.MaxRedSources.Add(1)
-				else
-					var/list_location = Affected.MaxRed.Find(DeltaRed)
-					Affected.MaxRedSources[list_location]++
+				Affected.MaxRed += DeltaRed
 
 			if(DeltaGreen > 0)
 				if(!Affected.MaxGreen)
 					Affected.MaxGreen = list()
-					Affected.MaxGreenSources = list()
-				if(!(DeltaGreen in Affected.MaxGreen))
-					Affected.MaxGreen.Add(DeltaGreen)
-					Affected.MaxGreenSources.Add(1)
-				else
-					var/list_location = Affected.MaxGreen.Find(DeltaGreen)
-					Affected.MaxGreenSources[list_location]++
+				Affected.MaxGreen += DeltaGreen
 
 			if(DeltaBlue > 0)
 				if(!Affected.MaxBlue)
 					Affected.MaxBlue = list()
-					Affected.MaxBlueSources = list()
-				if(!(DeltaBlue in Affected.MaxBlue))
-					Affected.MaxBlue.Add(DeltaBlue)
-					Affected.MaxBlueSources.Add(1)
-				else
-					var/list_location = Affected.MaxBlue.Find(DeltaBlue)
-					Affected.MaxBlueSources[list_location]++
+				Affected.MaxBlue += DeltaBlue
 
 			Affected.ul_UpdateLight()
 
@@ -154,42 +136,21 @@ atom/proc/ul_Extinguish()
 
 			if(DeltaRed > 0)
 				if(Affected.MaxRed)
-					var/list_location = Affected.MaxRed.Find(DeltaRed)
-					if(list_location)
-						if(Affected.MaxRedSources[list_location] > 1)
-							Affected.MaxRedSources[list_location]--
-						else
-							Affected.MaxRed.Remove(DeltaRed)
-							Affected.MaxRedSources.Cut(list_location, list_location + 1)
+					Affected.MaxRed -= DeltaRed
 					if(!Affected.MaxRed.len)
 						del Affected.MaxRed
-						del Affected.MaxRedSources
 
 			if(DeltaGreen > 0)
 				if(Affected.MaxGreen)
-					var/list_location = Affected.MaxGreen.Find(DeltaGreen)
-					if(list_location)
-						if(Affected.MaxGreenSources[list_location] > 1)
-							Affected.MaxGreenSources[list_location]--
-						else
-							Affected.MaxGreen.Remove(DeltaGreen)
-							Affected.MaxGreenSources.Cut(list_location, list_location + 1)
+					Affected.MaxGreen -= DeltaGreen
 					if(!Affected.MaxGreen.len)
 						del Affected.MaxGreen
-						del Affected.MaxGreenSources
 
 			if(DeltaBlue > 0)
 				if(Affected.MaxBlue)
-					var/list_location = Affected.MaxBlue.Find(DeltaBlue)
-					if(list_location)
-						if(Affected.MaxBlueSources[list_location] > 1)
-							Affected.MaxBlueSources[list_location]--
-						else
-							Affected.MaxBlue.Remove(DeltaBlue)
-							Affected.MaxBlueSources.Cut(list_location, list_location + 1)
+					Affected.MaxBlue -= DeltaBlue
 					if(!Affected.MaxBlue.len)
 						del Affected.MaxBlue
-						del Affected.MaxBlueSources
 
 			Affected.ul_UpdateLight()
 
@@ -286,9 +247,6 @@ atom/movable/Move()
 turf/var/list/MaxRed
 turf/var/list/MaxGreen
 turf/var/list/MaxBlue
-turf/var/list/MaxRedSources
-turf/var/list/MaxGreenSources
-turf/var/list/MaxBlueSources
 
 turf/proc/ul_GetRed()
 	if(MaxRed)
