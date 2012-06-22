@@ -469,8 +469,8 @@
 */
 		//talking crystals
 
-//		for(var/obj/item/weapon/talkingcrystal/O in view(3,src))
-//			O.catchMessage(message,src)
+		for(var/obj/item/weapon/talkingcrystal/O in view(3,src))
+			O.catchMessage(message,src)
 
 
 		for (var/mob/M in heard_a)

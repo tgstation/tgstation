@@ -1130,6 +1130,7 @@
 #include "code\modules\recycling\disposal.dm"
 #include "code\modules\recycling\sortingmachinery.dm"
 #include "code\modules\research\artifact_analysis.dm"
+#include "code\modules\research\artifact_archaeo.dm"
 #include "code\modules\research\artifact_misc.dm"
 #include "code\modules\research\artifacts.dm"
 #include "code\modules\research\circuitprinter.dm"
