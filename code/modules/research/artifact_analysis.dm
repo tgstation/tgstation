@@ -136,6 +136,7 @@
 				spawn(time)
 					src.working = 0
 					icon_state = "analyser"
+					cur_artifact.anchored = 0
 					if(cur_artifact.loc == pad_turf)
 						AA_Analyse()
 						scan_num++
