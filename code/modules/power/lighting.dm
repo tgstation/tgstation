@@ -10,8 +10,8 @@
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
 
-#define TUBE_BRIGHT_MIN 6
-#define TUBE_BRIGHT_MAX 8
+#define TUBE_BRIGHT_MIN 7
+#define TUBE_BRIGHT_MAX 9
 #define BULB_BRIGHT_MIN 4
 #define BULB_BRIGHT_MAX 5
 
