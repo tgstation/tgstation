@@ -11,6 +11,8 @@
     #include <arpa/inet.h>
     #include <netdb.h>
     #include <fcntl.h>
+    #include <stdlib.h>
+    #include <string.h>
     }
 
     typedef int SOCKET;
@@ -34,10 +36,16 @@ char return_buffer[BUFFER_SIZE];
 
 const char* SUCCESS = "1\0"; // string representing success
 
+#ifdef __WIN32
+    #define DLL_EXPORT __declspec(dllexport)
+#else
+    #define DLL_EXPORT _attribute__ ((visibility ("default")))
+#endif
+
 // arg1: ip(in the xx.xx.xx.xx format)
 // arg2: port(a short)
 // return: NULL on failure, SUCCESS otherwise
-extern "C" __declspec(dllexport) const char* establish_connection(int n, char *v[])
+extern "C" DLL_EXPORT const char* establish_connection(int n, char *v[])
 {
     // extract args
     // ------------
@@ -77,7 +85,7 @@ extern "C" __declspec(dllexport) const char* establish_connection(int n, char *v
 
 // arg1: string message to send
 // return: NULL on failure, SUCCESS otherwise
-extern "C" __declspec(dllexport) const char* send_message(int n, char *v[])
+extern "C" DLL_EXPORT const char* send_message(int n, char *v[])
 {
     // extract the args
     if(n < 1) return 0;
@@ -97,7 +105,7 @@ extern "C" __declspec(dllexport) const char* send_message(int n, char *v[])
 
 // no args
 // return: message if any received, NULL otherwise
-extern "C" __declspec(dllexport) const char* recv_message(int n, char *v[])
+extern "C" DLL_EXPORT const char* recv_message(int n, char *v[])
 {
     SOCKADDR_IN sender; // we will store the sender address here
 
