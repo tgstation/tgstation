@@ -8,8 +8,6 @@
 	icon_state = "strange"
 	var/obj/inside
 	var/method // 0 = fire, 1+ = acid
-	var/rock = 10
-	var/ahealth = 10
 
 	New()
 		//var/datum/reagents/r = new/datum/reagents(50)
@@ -55,6 +53,11 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/obj/item/weapon/crystal
+	name = "Crystal"
+	icon = 'rubble.dmi'
+	icon_state = "crystal"
 
 /obj/item/weapon/talkingcrystal
 	name = "Crystal"
