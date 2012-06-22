@@ -125,6 +125,8 @@
 			verbs += /client/proc/admin_observe
 			verbs += /client/proc/hide_verbs
 			verbs += /client/proc/deadmin_self
+			verbs += /client/proc/Report
+			verbs += /client/proc/display_admin_reports
 			verbs += /obj/admins/proc/show_skills
 		else	return
 
