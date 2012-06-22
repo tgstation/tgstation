@@ -206,6 +206,7 @@
 #define FILE_DIR "icons/vending_icons"
 #define FILE_DIR "interface"
 #define FILE_DIR "maps"
+#define FILE_DIR "maps/backup"
 #define FILE_DIR "maps/RandomZLevels"
 #define FILE_DIR "sound"
 #define FILE_DIR "sound/AI"
