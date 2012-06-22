@@ -6,6 +6,7 @@
 	total_positions = 0
 	spawn_positions = 1
 	selection_color = "#ccffcc"
+	supervisors = "your laws"
 
 
 	equip(var/mob/living/carbon/human/H)
