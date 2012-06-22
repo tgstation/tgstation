@@ -12,13 +12,11 @@
 
 /obj/machinery/analyser_pad/New()
 	..()
-	/*spawn(10)
-		for(var/obj/machinery/artifact_analyser/analyser in orange(1))
-			world << "pad found analyser"
+	spawn(10)
+		for(var/obj/machinery/artifact_analyser/analyser in orange(1, src))
 			if(!analyser.owned_pad)
 				analyser.owned_pad = src
-				world << "pad set analyser to self"
-				break*/
+				break
 
 /obj/machinery/artifact_analyser
 	name = "Artifact Analyser"
@@ -77,11 +75,7 @@
 	range_bonuses["precursor"] = 0
 	//
 	spawn(10)
-		if(!owned_pad)
-			for(var/obj/machinery/analyser_pad/pad in orange(1))
-				owned_pad = pad
-				world << "\blue found pad"
-				break
+		owned_pad = locate() in orange(1, src)
 
 /obj/machinery/artifact_analyser/attack_hand(var/mob/user as mob)
 	user.machine = src
@@ -109,10 +103,8 @@
 	onclose(user, "artanalyser")
 
 /obj/machinery/artifact_analyser/process()
-	if(!owned_pad)
-		for(var/obj/machinery/analyser_pad/pad in range(1))
-			owned_pad = pad
-			break
+	//
+	return
 
 /obj/machinery/artifact_analyser/Topic(href, href_list)
 	if(href_list["analyse"])
