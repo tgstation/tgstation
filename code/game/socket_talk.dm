@@ -3,7 +3,6 @@
 /datum/socket_talk
 	var
 		enabled = 0
-		library_name =
 	New()
 		..()
 		src.enabled = config.socket_talk
