@@ -70,8 +70,8 @@
 
 /turf/simulated/mineral/random
 	name = "Mineral deposit"
-	var/mineralAmtList = list("Uranium" = 5, "Iron" = 5, "Diamond" = 5, "Gold" = 5, "Silver" = 5, "Plasma" = 5, "Archaeo" = 2/*, "Adamantine" = 5*/)
-	var/mineralSpawnChanceList = list("Uranium" = 5, "Iron" = 50, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Plasma" = 25, "Archaeo" = 4/*, "Adamantine" =5*/)//Currently, Adamantine won't spawn as it has no uses. -Durandan
+	var/mineralAmtList = list("Uranium" = 5, "Iron" = 5, "Diamond" = 5, "Gold" = 5, "Silver" = 5, "Plasma" = 5, "Archaeo" = 3/*, "Adamantine" = 5*/)
+	var/mineralSpawnChanceList = list("Uranium" = 5, "Iron" = 50, "Diamond" = 1, "Gold" = 5, "Silver" = 5, "Plasma" = 25, "Archaeo" = 5/*, "Adamantine" =5*/)//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
 
 /turf/simulated/mineral/random/New()
@@ -101,11 +101,9 @@
 			if(M)
 				src = M
 				M.levelupdate()
-
 	else if (prob(artifactChance))
-		//spawn a rare, xeno-archaelogical artifact here
+		//spawn a rare, xeno-arch artifact here
 		new/obj/machinery/artifact(src)
-
 	return
 
 /turf/simulated/mineral/random/high_chance
@@ -174,10 +172,9 @@
 	name = "Strange rock formation"
 	icon_state = "rock_Archaeo"
 	mineralName = "Archaeo"
-	mineralAmt = 2
-	spreadChance = 20
+	mineralAmt = 3
+	spreadChance = 30
 	spread = 1
-	artifactChance = 2
 
 
 /turf/simulated/mineral/clown

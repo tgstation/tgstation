@@ -8,12 +8,11 @@
 	icon_state = "strange"
 	var/obj/inside
 	var/method // 0 = fire, 1+ = acid
-	var/rock = 10
-	var/ahealth = 10
 
 	New()
 		//var/datum/reagents/r = new/datum/reagents(50)
 		//src.reagents = r
+		icon = 'rubble.dmi'
 		if(rand(3))
 			method = 0
 		else
@@ -55,14 +54,20 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/obj/item/weapon/crystal
+	name = "Crystal"
+	icon = 'rubble.dmi'
+	icon_state = "crystal"
+
 /obj/item/weapon/talkingcrystal
 	name = "Crystal"
 	icon = 'rubble.dmi'
 	icon_state = "crystal2"
 	var/list/list/words = list()
 	var/lastsaid
+
 /obj/item/weapon/talkingcrystal/New()
-	..()
+	icon = 'rubble.dmi'
 	return
 
 /obj/item/weapon/talkingcrystal/proc/catchMessage(var/msg, var/mob/source)
@@ -155,6 +160,7 @@
 	desc = "It's a fossil."
 
 /obj/item/weapon/fossil/base/New()
+	icon = 'fossil.dmi'
 	spawn(0)
 		var/list/l = list("/obj/item/weapon/fossil/bone"=8,"/obj/item/weapon/fossil/skull"=2,
 		"/obj/item/weapon/fossil/skull/horned"=2,"/obj/item/weapon/fossil/shell"=1)
