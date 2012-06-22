@@ -22,16 +22,26 @@ datum/controller/game_controller
 	var/global/ticker_ready = 0
 
 	proc
+		keepalive()
 		setup()
 		setup_objects()
 		process()
 		set_debug_state(txt)
+
+	keepalive()
+		spawn while(1)
+			sleep(10)
+
+			// Notify the other process that we're still there
+			socket_talk.send_keepalive()
 
 	setup()
 		if(master_controller && (master_controller != src))
 			del(src)
 			return
 			//There can be only one master.
+
+		socket_talk = new /datum/socket_talk()
 
 		if(!air_master)
 			air_master = new /datum/controller/air_system()
@@ -73,6 +83,8 @@ datum/controller/game_controller
 
 		setupfactions()
 
+		spawn keepalive()
+
 		spawn
 			ticker.pregame()
 
@@ -109,7 +121,7 @@ datum/controller/game_controller
 		// This should describe what is currently being done by the master controller
 		// Useful for crashlogs and similar, because that way it's easy to tell what
 		// was going on when the server crashed.
-
+		socket_talk.send_log("crashlog.txt","TickerState: [txt]")
 		return
 
 	process()
@@ -140,6 +152,9 @@ datum/controller/game_controller
 		networks_ready = 0
 		powernets_ready = 0
 		ticker_ready = 0
+
+		// Notify the other process that we're still there
+		socket_talk.send_keepalive()
 
 		// the fact that the air master is not in the master controller
 		// will make it very hard to find out whether it's responsible
