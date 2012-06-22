@@ -70,9 +70,12 @@
 		if ("me")
 			if(silent)
 				return
-			if (src.client && (client.muted || client.muted_complete))
-				src << "You are muted."
-				return
+			if (src.client)
+				if(client.muted_ic)
+					src << "You cannot send IC messages (muted by admins)."
+					return
+				if (src.client.handle_spam_prevention(message,MUTE_IC))
+					return
 			if (stat)
 				return
 			if(!(message))

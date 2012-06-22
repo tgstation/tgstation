@@ -10,9 +10,14 @@
 
 	log_whisper("[src.name]/[src.key] : [message]")
 
-	if (src.client && (src.client.muted || src.client.muted_complete))
-		src << "You are muted."
-		return
+	if (src.client)
+		if (src.client.muted_ic)
+			src << "\red You cannot whisper (muted by admins)."
+			return
+
+		if (src.client.handle_spam_prevention(message,MUTE_IC))
+			return
+
 
 	if (src.stat == 2)
 		return src.say_dead(message)

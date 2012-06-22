@@ -123,25 +123,73 @@
 	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.nodamage ? "On" : "Off")]", 1)
 	feedback_add_details("admin_verb","GOD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_mute(mob/M as mob in world)
-	set category = "Special Verbs"
-	set name = "Admin Mute"
-	if(!holder)
-		src << "Only administrators may use this command."
-		return
-	if (M.client && M.client.holder && (M.client.holder.level >= holder.level))
-		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
-		return
+proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
+	if(!automute)
+		if(usr && usr.client)
+			if(!usr.client.holder)
+				src << "Only administrators may use this command."
+				return
+			if (M.client && M.client.holder && (M.client.holder.level >= usr.client.holder.level))
+				alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+				return
 	if(!M.client)
 		src << "This mob doesn't have a client tied to it."
 		return
-	M.client.muted = !M.client.muted
 
-	log_admin("[key_name(src)] has [(M.client.muted ? "muted" : "voiced")] [key_name(M)].")
-	message_admins("[key_name_admin(src)] has [(M.client.muted ? "muted" : "voiced")] [key_name_admin(M)].", 1)
+	var/muteunmute = 0	//0 = unmuted; 1 = muted
+	var/mute_string = "unknown"
 
-	M << "You have been [(M.client.muted ? "muted" : "voiced")]."
-	feedback_add_details("admin_verb","MUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	//The '| automute' thing ensures that if an automute is being applied by code, it always mutes to prevent any potential for automute to unmute someone who was muted.
+	switch(mute_type)
+		if(MUTE_IC)
+			M.client.muted_ic = !M.client.muted_ic | automute
+			muteunmute = M.client.muted_ic
+			mute_string = "IC (say and emote)"
+		if(MUTE_OOC)
+			M.client.muted_ooc = !M.client.muted_ooc | automute
+			muteunmute = M.client.muted_ooc
+			mute_string = "OOC"
+		if(MUTE_PRAY)
+			M.client.muted_pray = !M.client.muted_pray | automute
+			muteunmute = M.client.muted_pray
+			mute_string = "pray"
+		if(MUTE_ADMINHELP)
+			M.client.muted_adminhelp = !M.client.muted_adminhelp | automute
+			muteunmute = M.client.muted_adminhelp
+			mute_string = "adminhelp, admin PM and ASAY"
+		if(MUTE_DEADCHAT)
+			M.client.muted_deadchat = !M.client.muted_deadchat | automute
+			muteunmute = M.client.muted_deadchat
+			mute_string = "deadchat and DSAY"
+		if(MUTE_ALL)
+			mute_string = "everything"
+			if( M.client.muted_ic )
+				M.client.muted_ic = 1
+				M.client.muted_ooc = 1
+				M.client.muted_pray = 1
+				M.client.muted_adminhelp = 1
+				M.client.muted_deadchat = 1
+				muteunmute = 1
+			else
+				M.client.muted_ic = 0
+				M.client.muted_ooc = 0
+				M.client.muted_pray = 0
+				M.client.muted_adminhelp = 0
+				M.client.muted_deadchat = 0
+				muteunmute = 0
+
+	if(!automute)
+		log_admin("[key_name(usr)] has [(muteunmute ? "muted" : "voiced")] [key_name(M)] from [mute_string]")
+		message_admins("[key_name_admin(usr)] has [(muteunmute ? "muted" : "voiced")] [key_name_admin(M)] from [mute_string].", 1)
+
+		M << "You have been [(muteunmute ? "muted" : "voiced")] from [mute_string] by [(usr.client.stealth)?"an admin":"[usr.client]"]."
+		feedback_add_details("admin_verb","MUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	else
+		log_admin("SPAM AUTOMUTE: [(muteunmute ? "muted" : "voiced")] [key_name(M)] from [mute_string]")
+		message_admins("SPAM AUTOMUTE: [(muteunmute ? "muted" : "voiced")] [key_name_admin(M)] from [mute_string].", 1)
+
+		M << "You have been [(muteunmute ? "muted" : "voiced")] from [mute_string] by the SPAM AUTOMUTE system. Contact an admin."
+		feedback_add_details("admin_verb","AUTOMUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/cmd_admin_add_random_ai_law()

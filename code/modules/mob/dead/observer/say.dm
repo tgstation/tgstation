@@ -9,9 +9,13 @@
 
 	log_say("Ghost/[src.key] : [message]")
 
-	if (src.client && (src.client.muted || src.client.muted_complete))
-		src << "You are muted."
-		return
+	if (src.client)
+		if(src.client.muted_deadchat)
+			src << "\red You cannot talk in deadchat (muted by admins)."
+			return
+
+		if (src.client.handle_spam_prevention(message,MUTE_DEADCHAT))
+			return
 
 	. = src.say_dead(message)
 

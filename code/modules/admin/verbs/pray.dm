@@ -7,14 +7,18 @@
 	if (!msg)
 		return
 
-	if (usr.client && (usr.client.muted || usr.client.muted_complete))
-		return
+	if (usr.client)
+		if(usr.client.muted_pray)
+			return
+
+		if (src.client.handle_spam_prevention(msg,MUTE_PRAY))
+			return
 
 	var/icon/cross = icon('storage.dmi',"bible")
 
 	for (var/mob/M in world)
 		if (M.client && M.client.holder && M.client.seeprayers)
-			M << "\blue \icon[cross] <b><font color=purple>PRAY: </font>[key_name(src, M)] (<A HREF='?src=\ref[M.client.holder];adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?src=\ref[M.client.holder];adminplayervars=\ref[src]'>VV</A>) (<A HREF='?src=\ref[M.client.holder];adminplayersubtlemessage=\ref[src]'>SM</A>) (<A HREF='?src=\ref[M.client.holder];adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?src=\ref[M.client.holder];secretsadmin=check_antagonist'>CA</A>) (<A HREF='?src=\ref[M.client.holder];adminspawncookie=\ref[src]'>SC</a>):</b> [msg]"
+			M << "\blue \icon[cross] <b><font color=purple>PRAY: </font>[key_name(src, M)] (<A HREF='?src=\ref[M.client.holder];adminmoreinfo=\ref[src]'>?</A>) (<A HREF='?src=\ref[M.client.holder];adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?src=\ref[M.client.holder];adminplayervars=\ref[src]'>VV</A>) (<A HREF='?src=\ref[M.client.holder];adminplayersubtlemessage=\ref[src]'>SM</A>) (<A HREF='?src=\ref[M.client.holder];adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?src=\ref[M.client.holder];secretsadmin=check_antagonist'>CA</A>) (<A HREF='?src=\ref[M.client.holder];adminspawncookie=\ref[src]'>SC</a>):</b> [msg]"
 
 	usr << "Your prayers have been received by the gods."
 	feedback_add_details("admin_verb","PR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

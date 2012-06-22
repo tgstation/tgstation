@@ -752,34 +752,23 @@ var/global/BSACooldown = 0
 				message_admins("\blue [key_name_admin(usr)] removed [t] from the goonlist.")
 				remove_goon(t)
 */
-	if (href_list["mute2"])
-		if ((src.rank in list( "Moderator", "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
-			var/mob/M = locate(href_list["mute2"])
+	if (href_list["mute"])
+		if ((src.rank in list( "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
+			var/mob/M = locate(href_list["mute"])
+			var/mute_type = href_list["mute_type"]
+			if(istext(mute_type))
+				mute_type = text2num(mute_type)
+			if(!isnum(mute_type))
+				return
 			if (ismob(M))
-				if ((M.client && M.client.holder && (M.client.holder.level >= src.level)))
-					alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
-					return
 				if(!M.client)
 					src << "This mob doesn't have a client tied to it."
 					return
-				M.client.muted = !M.client.muted
-				log_admin("[key_name(usr)] has [(M.client.muted ? "muted" : "voiced")] [key_name(M)].")
-				message_admins("\blue [key_name_admin(usr)] has [(M.client.muted ? "muted" : "voiced")] [key_name_admin(M)].", 1)
-				M << "You have been [(M.client.muted ? "muted" : "voiced")]. Please resolve this in adminhelp."
-	if (href_list["mute_complete"])
-		if ((src.rank in list( "Moderator", "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
-			var/mob/M = locate(href_list["mute_complete"])
-			if (ismob(M))
 				if ((M.client && M.client.holder && (M.client.holder.level >= src.level)))
 					alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 					return
-				if(!M.client)
-					src << "This mob doesn't have a client tied to it."
-					return
-				M.client.muted_complete = !M.client.muted_complete
-				log_admin("[key_name(usr)] has [(M.client.muted_complete ? "completely muted" : "voiced (complete)")] [key_name(M)].")
-				message_admins("\blue [key_name_admin(usr)] has [(M.client.muted_complete ? "completely muted" : "voiced (complete)")] [key_name_admin(M)].", 1)
-				M << "You have been [(M.client.muted_complete ? "completely muted" : "voiced (complete)")]. You are unable to speak or even adminhelp"
+
+				cmd_admin_mute(M, mute_type)
 
 	if (href_list["c_mode"])
 		if ((src.rank in list( "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"  )))
@@ -1234,6 +1223,10 @@ var/global/BSACooldown = 0
 
 	if (href_list["adminmoreinfo"])
 		var/mob/M = locate(href_list["adminmoreinfo"])
+		if(!M)
+			usr << "\blue The mob no longer exists."
+			return
+
 		if(src && src.owner)
 			var/location_description = ""
 			var/special_role_description = ""
@@ -2279,14 +2272,13 @@ var/global/BSACooldown = 0
 
 	if(M.client)
 		body += "| <A HREF='?src=\ref[src];sendtoprison=\ref[M]'>Prison</A> | "
-		body += "<b>Mute:</b> "
-		if(M.client.muted_complete)
-			body += "<b>Completely Muted:</b> (<A href='?src=\ref[src];mute_complete=\ref[M]'>Allow adminhelp</A>)"
-		else
-			if(M.client.muted)
-				body += "<b>Soft Mute:</b> (<A href='?src=\ref[src];mute2=\ref[M]'>Unmute</A>) (<A href='?src=\ref[src];mute_complete=\ref[M]'>Mute adminhelps</A>)"
-			else
-				body += "Voiced: (<A href='?src=\ref[src];mute2=\ref[M]'>Mute</A>)"
+		body += "<br><b>Mute: </b> "
+		body += "\[<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_IC]'><font color='[(M.client.muted_ic)?"red":"blue"]'>IC</font></a> | "
+		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_OOC]'><font color='[(M.client.muted_ooc)?"red":"blue"]'>OOC</font></a> | "
+		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_PRAY]'><font color='[(M.client.muted_pray)?"red":"blue"]'>PRAY</font></a> | "
+		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ADMINHELP]'><font color='[(M.client.muted_adminhelp)?"red":"blue"]'>ADMINHELP</font></a> | "
+		body += "<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_DEADCHAT]'><font color='[(M.client.muted_deadchat)?"red":"blue"]'>DEADCHAT</font></a>\]"
+		body += "(<A href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ALL]'>toggle all</a>)"
 
 	body += "<br><br>"
 	body += "<A href='?src=\ref[src];jumpto=\ref[M]'><b>Jump to</b></A> | "

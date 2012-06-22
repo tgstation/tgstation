@@ -7,8 +7,11 @@
 		src << "Only administrators may use this command."
 		return
 
-	if (src.muted || src.muted_complete)
-		src << "You are muted."
+	if (src.muted_adminhelp)
+		src << "You cannot send ASAY messages (muted by admins)."
+		return
+
+	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)

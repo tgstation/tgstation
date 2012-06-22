@@ -1,14 +1,17 @@
 
 
 //This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
-var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "alien")
+var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "alien", "as")
 
 /client/verb/adminhelp(msg as text)
 	set category = "Admin"
 	set name = "Adminhelp"
 
-	if (muted_complete)
-		src << "<font color='red'>Error: Admin-PM: You are completely muted.</font>"
+	if (muted_adminhelp)
+		src << "<font color='red'>Error: Admin-PM: You cannot send adminhelps (Muted by admins).</font>"
+		return
+
+	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
 	if(!msg)	return
@@ -80,7 +83,7 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an", "monkey", "ali
 			if (X.holder)
 				if(X.sound_adminhelp)
 					X << 'adminhelp.ogg'
-				var/msg_to_send = "\blue <b><font color=red>HELP: </font>[key_name(src, X)] (<A HREF='?src=\ref[X.holder];adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?src=\ref[X.holder];adminplayervars=[ref_mob]'>VV</A>) (<A HREF='?src=\ref[X.holder];adminplayersubtlemessage=[ref_mob]'>SM</A>) (<A HREF='?src=\ref[X.holder];adminplayerobservejump=[ref_mob]'>JMP</A>) (<A HREF='?src=\ref[X.holder];secretsadmin=check_antagonist'>CA</A>):</b> [msg]"
+				var/msg_to_send = "\blue <b><font color=red>HELP: </font>[key_name(src, X)] (<A HREF='?src=\ref[X.holder];adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?src=\ref[X.holder];adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?src=\ref[X.holder];adminplayervars=[ref_mob]'>VV</A>) (<A HREF='?src=\ref[X.holder];adminplayersubtlemessage=[ref_mob]'>SM</A>) (<A HREF='?src=\ref[X.holder];adminplayerobservejump=[ref_mob]'>JMP</A>) (<A HREF='?src=\ref[X.holder];secretsadmin=check_antagonist'>CA</A>):</b> [msg]"
 				msg_to_send = dd_replaceText(msg_to_send, "HOLDERREF", "\ref[X.holder]")
 				msg_to_send = dd_replaceText(msg_to_send, "ADMINREF", "\ref[X]")
 				X << msg_to_send

@@ -7,7 +7,11 @@
 		return
 	if(!src.mob)
 		return
-	if(src.muted || src.muted_complete)
+	if(src.muted_deadchat)
+		src << "\red You cannot send DSAY messages (muted by admins)."
+		return
+
+	if (src.handle_spam_prevention(msg,MUTE_DEADCHAT))
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)

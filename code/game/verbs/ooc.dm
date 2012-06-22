@@ -27,9 +27,13 @@
 	else if (!dooc_allowed && !src.client.holder && (src.client.deadchat != 0))
 		usr << "\red OOC for dead mobs has been turned off."
 		return
-	else if (src.client && (src.client.muted || src.client.muted_complete))
-		src << "You are muted."
-		return
+	else if (src.client)
+		if(src.client.muted_ooc)
+			src << "\red You cannot use OOC (muted by admins)."
+			return
+
+		if (src.client.handle_spam_prevention(msg,MUTE_OOC))
+			return
 	else if (findtext(msg, "byond://") && !src.client.holder)
 		src << "<B>Advertising other servers is not allowed.</B>"
 		log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")

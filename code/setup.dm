@@ -361,3 +361,14 @@ var/list/liftable_structures = list(\
 	/obj/structure/filingcabinet, \
 	/obj/structure/reagent_dispensers, \
 	/obj/machinery/portable_atmospherics/canister)
+
+//A set of constants used to determine which type of mute an admin wishes to apply:
+#define MUTE_IC 1
+#define MUTE_OOC 2
+#define MUTE_PRAY 3
+#define MUTE_ADMINHELP 4
+#define MUTE_DEADCHAT 5
+#define MUTE_ALL 6
+
+#define SPAM_TRIGGER_WARNING 5
+#define SPAM_TRIGGER_AUTOMUTE 10
