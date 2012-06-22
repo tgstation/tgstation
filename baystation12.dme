@@ -783,6 +783,7 @@
 #include "code\game\objects\tanks\emergency.dm"
 #include "code\game\objects\tanks\jetpack.dm"
 #include "code\game\objects\tanks\oxygen.dm"
+#include "code\game\player\admin_report.dm"
 #include "code\game\player\news.dm"
 #include "code\game\vehicles\vehicle.dm"
 #include "code\game\vehicles\airtight\airtight.dm"
