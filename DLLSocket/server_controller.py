@@ -22,12 +22,5 @@ def handle_message(data, addr):
         pass
 
 while True:
-    try:
-        data, addr = sock.recvfrom( 1024 ) # buffer size is 1024 bytes
-        handle_message(data,addr)
-    except socket.timeout:
-        print("No response in 120 seconds.. Trying to reboot server.")
-        subprocess.call("./restart")
-    
-    # start expecting a message after the first timeout
-    sock.settimeout(120)
+    data, addr = sock.recvfrom( 1024 ) # buffer size is 1024 bytes
+    handle_message(data,addr)
