@@ -78,7 +78,7 @@ ALLOW_RANDOM_EVENTS
 #PROTECT_ROLES_FROM_ANTAGONIST
 
 ## If the auto-tensioner is active by default.  It creates more tratiors/other antagonists if it consideers the round slowing down.
-TENSIONER_ACTIVE
+#TENSIONER_ACTIVE
 
 ## If metadata is supported
 ALLOW_METADATA
