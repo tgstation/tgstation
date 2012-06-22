@@ -9,6 +9,8 @@ sock = socket.socket( socket.AF_INET, # Internet
                       socket.SOCK_DGRAM ) # UDP
 sock.bind( (UDP_IP,UDP_PORT) )
 
+last_ticker_state = None
+
 def handle_message(data, addr):
     params = urlparse.parse_qs(data)
     print(data)
@@ -20,6 +22,20 @@ def handle_message(data, addr):
         pass
     except KeyError:
         pass
+    
+    try:
+        if params["type"][0] == "ticker_state" and str(params["message"][0]):
+            last_ticker_state = str(params["message"][0])
+    except KeyError:
+        pass
+    
+    try:
+        global last_ticker_state
+        if params["type"][0] == "startup" and last_ticker_state:
+            open("crashlog.txt","a+").write("Server exited, last ticker state was: "+last_ticker_state)
+    except KeyError:
+        pass
+            
 
 while True:
     data, addr = sock.recvfrom( 1024 ) # buffer size is 1024 bytes

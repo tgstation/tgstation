@@ -43,6 +43,9 @@ datum/controller/game_controller
 
 		socket_talk = new /datum/socket_talk()
 
+		// notify the other process that we started up
+		socket_talk.send_raw("type=startup")
+
 		if(!air_master)
 			air_master = new /datum/controller/air_system()
 			air_master.setup()
@@ -121,7 +124,7 @@ datum/controller/game_controller
 		// This should describe what is currently being done by the master controller
 		// Useful for crashlogs and similar, because that way it's easy to tell what
 		// was going on when the server crashed.
-		socket_talk.send_log("crashlog.txt","TickerState: [txt]")
+		socket_talk.send_raw("type=ticker_state&message=[txt]")
 		return
 
 	process()
