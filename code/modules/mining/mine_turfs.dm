@@ -255,8 +255,8 @@
 	return
 
 /turf/simulated/mineral/proc/gets_drilled(var/delicate = 0)
+	var/destroyed = 0
 	if ((src.mineralName != "") && (src.mineralAmt > 0) && (src.mineralAmt < 11))
-		var/destroyed = 0
 		var/i
 		for (i=0;i<mineralAmt;i++)
 			if (src.mineralName == "Uranium")
@@ -283,7 +283,8 @@
 		//spawn a rare, xeno-archaelogical artifact here
 		new /obj/machinery/artifact(src)
 	ReplaceWithFloor()
-	usr << "\red You accidentally destroy some of the rocks!"
+	if(destroyed)
+		usr << "\red You destroy some of the rocks!"
 	return
 
 /*

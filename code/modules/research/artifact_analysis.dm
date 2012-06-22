@@ -150,6 +150,27 @@
 		else
 			var/message = "<b>[src]</b> states, \"Cannot analyse, no analysis pad connected.\""
 			src.visible_message(message, message)
+	else if(href_list["upload"])
+		//add new datum to every DB in the world
+		for(var/obj/machinery/computer/artifact_database/DB in world)
+			var/update = 0
+			for(var/datum/catalogued_artifact/CA in DB.catalogued_artifacts)
+				if(CA.name == cur_id)
+					//already there, so update it
+					update = 1
+					CA.name = aorigin + " ([accuO]%)"
+					CA.trigger = atrigger + " ([accuT]%)"
+					CA.function = aeffect1 + " ([accuE1]%)"
+					CA.range = aeffect2 + " ([accuE2]%)"
+			if(!update)
+				//not there, so add it
+				var/datum/catalogued_artifact/CA = new()
+				CA.name = cur_id
+				CA.name = aorigin + " ([accuO]%)"
+				CA.trigger = atrigger + " ([accuT]%)"
+				CA.function = aeffect1 + " ([accuE1]%)"
+				CA.range = aeffect2 + " ([accuE2]%)"
+				DB.catalogued_artifacts.Add(CA)
 
 	else if(href_list["print"])
 		var/r = "Artifact Analysis Report (Scan #[scan_num])<hr>"
