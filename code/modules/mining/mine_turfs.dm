@@ -270,9 +270,9 @@
 				new /obj/item/weapon/ore/plasma(src)
 			if (src.mineralName == "Diamond")
 				new /obj/item/weapon/ore/diamond(src)
-			if (src.mineralName == "Archaeo" && (prob(10) || delicate) )
+	//		if (src.mineralName == "Archaeo" && (prob(10) || delicate) )
 				//spawn strange rocks here
-				new /obj/item/weapon/ore/strangerock(src)
+	//			new /obj/item/weapon/ore/strangerock(src)
 			if (src.mineralName == "Clown")
 				new /obj/item/weapon/ore/clown(src)
 	if (prob(src.artifactChance))
