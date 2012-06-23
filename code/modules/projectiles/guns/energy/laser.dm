@@ -78,7 +78,14 @@ obj/item/weapon/gun/energy/laser/retro
 	projectile_type = "/obj/item/projectile/beam/heavylaser"
 
 
-
+/obj/item/weapon/gun/energy/xray
+	name = "xray laser gun"
+	desc = "A high-power laser gun capable of expelling concentrated xray blasts."
+	icon_state = "xray"
+	fire_sound = 'laser3.ogg'
+	origin_tech = "combat=5;materials=3;magnets=2;syndicate=2"
+	projectile_type = "/obj/item/projectile/beam/xray"
+	charge_cost = 50
 
 
 ////////Laser Tag////////////////////

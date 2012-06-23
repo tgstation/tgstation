@@ -2,6 +2,7 @@
 CONTAINS:
 EMP GRENADE
 FLASHBANG
+CRITTER GRENADE
 
 */
 
@@ -231,6 +232,7 @@ FLASHBANG
 		else
 			if (M.ear_damage >= 5)
 				M << "\red Your ears start to ring!"
+		M.update_icons()
 
 	prime()													// Prime now just handles the two loops that query for people in lockers and people who can see it.
 		var/turf/T = get_turf(src)
@@ -289,7 +291,7 @@ FLASHBANG
 
 /obj/item/weapon/flashbang/clusterbang
 	desc = "Use of this weapon may constiute a war crime in your area, consult your local captain."
-	name = "Clusterbang"
+	name = "clusterbang"
 	icon = 'grenade.dmi'
 	icon_state = "clusterbang"
 	var/child = 0
@@ -367,6 +369,159 @@ FLASHBANG
 
 
 
+/****************************Critter Grenades***********************************************/
+
+
+/obj/item/weapon/spawnergrenade
+	desc = "It is set to detonate in 3 seconds. It will unleash unleash an unspecified anomaly into the vicinity."
+	name = "delivery grenade"
+	icon = 'grenade.dmi'
+	icon_state = "delivery"
+	w_class = 2.0
+	item_state = "flashbang"
+	throw_speed = 4
+	throw_range = 20
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT
+	origin_tech = "materials=3;magnets=4"
+	var/active = 0
+	var/det_time = 30
+	var/banglet = 0
+	var/spawner_type = null // must be an object path
+	var/deliveryamt = 1 // amount of type to deliver
+
+
+	proc/prime()
+		return
+
+	proc/clown_check(var/mob/living/user)
+		return
+
+	attackby(obj/item/weapon/W as obj, mob/user as mob)
+		if (isscrewdriver(W))
+			switch(src.det_time)
+				if ("1")
+					src.det_time = 30
+					user.show_message("\blue You set the delivery grenade for 3 second detonation time.")
+					src.desc = "It is set to detonate in 3 seconds."
+				if ("30")
+					src.det_time = 100
+					user.show_message("\blue You set the delivery grenade for 10 second detonation time.")
+					src.desc = "It is set to detonate in 10 seconds."
+				if ("100")
+					src.det_time = 1
+					user.show_message("\blue You set the delivery grenade for instant detonation.")
+					src.desc = "It is set to detonate instantly."
+			src.add_fingerprint(user)
+		..()
+		return
+
+
+	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+		if (istype(target, /obj/item/weapon/storage)) return ..() // Trying to put it in a full container
+		if (istype(target, /obj/item/weapon/gun/grenadelauncher)) return ..()
+		if((user.equipped() == src)&&(!active)&&(clown_check(user)))
+			user << "\red You prime the delivery grenade! [det_time/10] seconds!"
+			src.active = 1
+			src.icon_state = "delivery1"
+			playsound(src.loc, 'armbomb.ogg', 75, 1, -3)
+			spawn(src.det_time)
+				prime()
+				return
+			user.dir = get_dir(user, target)
+			user.drop_item()
+			var/t = (isturf(target) ? target : target.loc)
+			walk_towards(src, t, 3)
+		return
+
+
+	attack_paw(mob/user as mob)
+		return src.attack_hand(user)
+
+
+	attack_hand()
+		walk(src, null, null)
+		..()
+		return
+
+	prime()													// Prime now just handles the two loops that query for people in lockers and people who can see it.
+
+		if(spawner_type && deliveryamt)
+			// Make a quick flash
+			var/turf/T = get_turf(src)
+			playsound(T, 'phasein.ogg', 100, 1)
+			for(var/mob/living/carbon/human/M in viewers(T, null))
+				if(M:eyecheck() <= 0)
+					flick("e_flash", M.flash) // flash dose faggots
+
+			for(var/i=1, i<=deliveryamt, i++)
+				var/atom/movable/x = new spawner_type
+				x.loc = T
+				if(prob(50))
+					for(var/j = 1, j <= rand(1, 3), j++)
+						step(x, pick(NORTH,SOUTH,EAST,WEST))
+
+				// Spawn some hostile syndicate critters
+				if(istype(x, /obj/effect/critter))
+					var/obj/effect/critter/C = x
+
+					C.atkcarbon = 1
+					C.atksilicon = 1
+					C.atkmech = 0
+					C.atksynd = 0
+					C.aggressive = 1
+
+		del(src)
+		return
+
+
+	attack_self(mob/user as mob)
+		if(!active)
+			if(clown_check(user))
+				user << "\red You prime the delivery grenade! [det_time/10] seconds!"
+				src.active = 1
+				src.icon_state = "delivery1"
+				add_fingerprint(user)
+				spawn( src.det_time )
+					prime()
+					return
+		return
+
+
+	attack_hand()
+		walk(src, null, null)
+		..()
+		return
+
+
+	clown_check(var/mob/living/user)
+		if ((CLUMSY in user.mutations) && prob(50))
+			user << "\red Huh? How does this thing work?!"
+			src.active = 1
+			src.icon_state = "delivery1"
+			playsound(src.loc, 'armbomb.ogg', 75, 1, -3)
+			spawn( 5 )
+				prime()
+			return 0
+		return 1
+
+/obj/item/weapon/spawnergrenade/manhacks
+	name = "manhack delivery grenade"
+	spawner_type = /obj/effect/critter/manhack
+	deliveryamt = 5
+	origin_tech = "materials=3;magnets=4;syndicate=4"
+
+/obj/item/weapon/spawnergrenade/spesscarp
+	name = "carp delivery grenade"
+	spawner_type = /obj/effect/critter/spesscarp
+	deliveryamt = 5
+	origin_tech = "materials=3;magnets=4;syndicate=4"
+
+/obj/item/weapon/spawnergrenade/elitespesscarp
+	name = "elite carp delivery grenade"
+	spawner_type = /obj/effect/critter/spesscarp/elite
+	deliveryamt = 2
+	origin_tech = "materials=3;magnets=4;syndicate=4"
 
 
 

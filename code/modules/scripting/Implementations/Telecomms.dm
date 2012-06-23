@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 
 /* --- Traffic Control Scripting Language --- */
 	// Nanotrasen TCS Language - Made by Doohl
@@ -16,14 +18,13 @@
 	/* -- Compile a raw block of text -- */
 
 	proc/Compile(code as message)
-		var
-			n_scriptOptions/nS_Options/options = new()
-			n_Scanner/nS_Scanner/scanner       = new(code, options)
-			list/tokens                        = scanner.Scan()
-			n_Parser/nS_Parser/parser          = new(tokens, options)
-			node/BlockDefinition/GlobalBlock/program   	 = parser.Parse()
+		var/n_scriptOptions/nS_Options/options = new()
+		var/n_Scanner/nS_Scanner/scanner       = new(code, options)
+		var/list/tokens                        = scanner.Scan()
+		var/n_Parser/nS_Parser/parser          = new(tokens, options)
+		var/node/BlockDefinition/GlobalBlock/program   	 = parser.Parse()
 
-			list/returnerrors = list()
+		var/list/returnerrors = list()
 
 		returnerrors += scanner.errors
 		returnerrors += parser.errors

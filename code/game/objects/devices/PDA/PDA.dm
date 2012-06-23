@@ -243,6 +243,7 @@
 				dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=pda_notes.png> Notekeeper</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=pda_mail.png> Messenger</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png> View Crew Manifest</a></li>"
+				//dat += "<li><a href='byond://?src=\red[src];choice=chatroom'><img src=pda_chatroom.png> Nanotrasen Relay Chat</a></li>"
 
 				if (cartridge)
 					if (cartridge.access_clown)
@@ -382,6 +383,17 @@
 							dat += "OTHER: [round(unknown_level)]%<br>"
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 				dat += "<br>"
+
+			if (5)
+				dat += "<h4><img src=pda_chatroom.png> Nanotrasen Relay Chat</h4>"
+
+				dat += "<h4><img src=pda_menu.png> Detected Channels</h4>: <li>"
+				for(var/datum/chatroom/C in chatrooms)
+					dat += "<a href='byond://?src=\ref[src];pdachannel=[C.name]'>#[html_encode(lowertext(C.name))]"
+					if(C.password != "")
+						dat += " <img src=pda_locked.png>"
+					dat += "</li>"
+
 			if (41) //crew manifest
 
 				dat += "<h4><img src=pda_notes.png> Crew Manifest</h4>"
@@ -454,12 +466,14 @@
 					mode = 2
 				if("21")//Read messeges
 					mode = 21
-				if("41")//Read messeges
+				if("41")//Check Manifest
 					mode = 41
 				if("3")//Atmos scan
 					mode = 3
 				if("4")//Redirects to hub
 					mode = 0
+				if("chatroom") // chatroom hub
+					mode = 5
 
 
 //MAIN FUNCTIONS===================================
@@ -555,69 +569,83 @@
 							return
 
 						last_text = world.time
+						// check if telecomms I/O route 1459 is stable
+						//var/telecomms_intact = telecomms_process(P.owner, owner, t)
+						var/obj/machinery/message_server/useMS = null
+						if(message_servers)
+							for (var/obj/machinery/message_server/MS in message_servers)
+							//PDAs are now dependant on the Message Server.
+								if(MS.active)
+									useMS = MS
+									break
+						if(useMS) // only send the message if it's stable
+							useMS.send_pda_message("[P.owner]","[owner]","[t]")
 
+							tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
+							P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a> ([ownjob]):</b></i><br>[t]<br>"
 
-						var/AnsweringMS = 0
-						for (var/obj/machinery/message_server/MS in world)
-							MS.send_pda_message("[P.owner]","[owner]","[t]")
-							if(MS.active)
-								AnsweringMS++
+							// Give every ghost the ability to see all messages
+							for (var/mob/dead/observer/G in world)
+								G.show_message("<i>PDA message from <b>[src.owner]</b> to <b>[P:owner]</b>: [t]</i>")
+	
+							if (prob(15)) //Give the AI a chance of intercepting the message
+								var/who = src.owner
+								if(prob(50))
+									who = P:owner
+								for(var/mob/living/silicon/ai/ai in world)
+									ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
 
-						if(!AnsweringMS)
-							return
-
-						tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
-						P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[owner]</a> ([ownjob]):</b></i><br>[t]<br>"
-
-						// Give every ghost the ability to see all messages
-						for (var/mob/dead/observer/G in world)
-							G.show_message("<i>PDA message from <b>[src.owner]</b> to <b>[P:owner]</b>: [t]</i>")
-
-						if (prob(15)) //Give the AI a chance of intercepting the message
-							var/who = src.owner
-							if(prob(50))
-								who = P:owner
-							for(var/mob/living/silicon/ai/ai in world)
-								ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
-
-						if (!P.silent)
-							playsound(P.loc, 'twobeep.ogg', 50, 1)
-							for (var/mob/O in hearers(3, P.loc))
-								O.show_message(text("\icon[P] *[P.ttone]*"))
-							if( P.loc && ishuman(P.loc) )
-								var/mob/living/carbon/human/H = P.loc
-								H << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
-
-						P.overlays = null
-						P.overlays += image('pda.dmi', "pda-r")
+							if (!P.silent)
+								playsound(P.loc, 'twobeep.ogg', 50, 1)
+								for (var/mob/O in hearers(3, P.loc))
+									O.show_message(text("\icon[P] *[P.ttone]*"))
+								if( P.loc && ishuman(P.loc) )
+									var/mob/living/carbon/human/H = P.loc
+									H << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
+							log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
+							P.overlays = null
+							P.overlays += image('pda.dmi', "pda-r")
+						else
+							U << "ERROR: Server isn't responding."
 
 					// pAI Message
 					else
 
-						var/AnsweringMS = 0
-						for (var/obj/machinery/message_server/MS in world)
-							MS.send_pda_message("[P]","[src]","[t]")
-							if(MS.active)
-								AnsweringMS++
+						//var/telecomms_intact = telecomms_process(P.owner, owner, t)
+						var/obj/machinery/message_server/useMS = null
+						if(message_servers)
+							for (var/obj/machinery/message_server/MS in message_servers)
+							//PDAs are now dependant on the Message Server.
+								if(MS.active)
+									useMS = MS
+									break
+						if(useMS) // only send the message if it's stable
+							useMS.send_pda_message("[P.owner]","[owner]","[t]")
+							tnote += "<i><b>&rarr; To [P]:</b></i><br>[t]<br>"
+							P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];soft=pdamessage;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
 
-						if(!AnsweringMS)
-							return
+							// Give every ghost the ability to see all messages
+							for (var/mob/dead/observer/G in world)
+								G.show_message("<i>PDA message from <b>[src.owner]</b> to <b>[P:owner]</b>: [t]</i>")
 
+							if (prob(15)) //Give the AI a chance of intercepting the message
+								var/who = src
+								if(prob(50))
+									who = P
+								for (var/mob/living/silicon/ai/ai in world)
+									ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
 
-						tnote += "<i><b>&rarr; To [P]:</b></i><br>[t]<br>"
-						P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];soft=pdamessage;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
+							if (!P.silent)
+								playsound(P.loc, 'twobeep.ogg', 50, 1)
+								for (var/mob/O in hearers(3, P.loc))
+									O.show_message(text("\icon[P] *[P.ttone]*"))
+								if( P.loc && ishuman(P.loc) )
+									var/mob/living/carbon/human/H = P.loc
+									H << "\icon[P] <b>Message from [src.owner] ([ownjob]), </b>\"[t]\" (<a href='byond://?src=\ref[P];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
+							log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
+						else
+							U << "ERROR: Server isn't responding."
 
-
-						if (prob(15)) //Give the AI a chance of intercepting the message
-							var/who = src
-							if(prob(50))
-								who = P
-							for (var/mob/living/silicon/ai/ai in world)
-								ai.show_message("<i>Intercepted message from <b>[who]</b>: [t]</i>")
-
-						playsound(P.loc, 'twobeep.ogg', 50, 1)
-
-					log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
 
 
 				if("Send Honk")//Honk virus
@@ -755,6 +783,37 @@
 				return
 		id.loc = get_turf(src)
 		id = null
+
+/obj/item/device/pda/proc/telecomms_process(var/receipent, var/originator, var/data)
+	var/telecomms_intact = 0
+	/* Make sure telecomms is intact */
+	for (var/obj/machinery/telecomms/receiver/R in world)
+
+		if((1459 in R.freq_listening) && R.on)
+
+			for (var/obj/machinery/telecomms/bus/B in R.links)
+
+				if((1459 in B.freq_listening) && B.on)
+
+					for(var/obj/machinery/telecomms/server/S in B.links)
+
+						if((1459 in S.freq_listening) && S.on)
+							// Add a log
+							S.add_entry("[originator] sent to [receipent]: \"[data]\"", "PDA log")
+
+							for(var/obj/machinery/telecomms/broadcaster/C in S.links)
+
+								if(((1459 in C.freq_listening  || C.freq_listening.len == 0)) && C.on)
+
+									telecomms_intact = 1
+									break
+
+							break
+					break
+			break
+
+	return telecomms_intact
+
 
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"

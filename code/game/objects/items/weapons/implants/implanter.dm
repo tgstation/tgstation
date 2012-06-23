@@ -74,6 +74,15 @@
 	update()
 	return
 
+/obj/item/weapon/implanter/adrenalin
+	name = "implanter-adrenalin"
+
+/obj/item/weapon/implanter/adrenalin/New()
+	src.imp = new /obj/item/weapon/implant/adrenalin(src)
+	..()
+	update()
+	return
+
 /obj/item/weapon/implanter/compressed
 	name = "implanter (C)"
 	icon_state = "cimplanter0"
