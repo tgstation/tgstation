@@ -37,24 +37,6 @@
 	return 1
 
 
-
-/obj/item/borg/upgrade/flashproof/
-	name = "Borg Flash-Supression"
-	desc = "A highly advanced, complicated system for supressing incoming flashes directed at the borg's optical processing system."
-	construction_cost = list("metal"=10000,"gold"=2000,"silver"=3000,"glass"=2000, "diamond"=5000)
-	icon_state = "cyborg_upgrade4"
-	require_module = 1
-
-
-/obj/item/borg/upgrade/flashproof/New()   // Why the fuck does the fabricator make a new instance of all the items?
-	//desc = "Sunglasses with duct tape." // Why?  D:
-
-/obj/item/borg/upgrade/flashproof/action(var/mob/living/silicon/robot/R)
-	if(R.module)
-		R.module += src
-
-	return 1
-
 /obj/item/borg/upgrade/restart/
 	name = "Borg emergency restart module"
 	desc = "Used to force a restart of a disabled-but-repaired borg, bringing it back online."

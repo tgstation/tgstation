@@ -138,8 +138,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		if(!iscultist(user))
 			user << "You can't mouth the arcane scratchings without fumbling over them."
 			return
-		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle) || user.ear_deaf)
-			user << "You need to be able to both speak and hear to use runes."
+		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
+			user << "You are unable to speak the words of the rune."
 			return
 		if(!word1 || !word2 || !word3 || prob(usr.getBrainLoss()))
 			return fizzle()

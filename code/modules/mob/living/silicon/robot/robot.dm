@@ -1058,11 +1058,3 @@ Frequency:
 		R.UnlinkSelf()
 		R << "Buffers flushed and reset.  All systems operational."
 		src.verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes
-
-
-/mob/living/silicon/robot/proc/flashproof()
-	if(module)
-		for(var/obj/item/borg/upgrade/flashproof/F in module.modules)
-			return 1
-
-	return 0

@@ -77,10 +77,6 @@
 		if (istype(O, /mob/living/carbon/alien))//So aliens don't get flashed (they have no external eyes)/N
 			continue
 
-		if (istype(O, /mob/living/silicon/robot))
-			if(O:flashproof())
-				continue
-
 		O.Weaken(strength)
 		if ((O.eye_stat > 15 && prob(O.eye_stat + 50)))
 			flick("e_flash", O:flash)
