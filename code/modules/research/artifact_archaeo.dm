@@ -12,6 +12,11 @@
 		method = 1
 	inside = pick(150;"", 50;"/obj/item/weapon/crystal", 25;"/obj/item/weapon/talkingcrystal", "/obj/item/weapon/fossil/base")
 
+/obj/item/weapon/ore/strangerock/bullet_act(var/obj/item/projectile/P)
+
+/obj/item/weapon/ore/strangerock/ex_act(var/severity)
+	src.visible_message("The [src] crumbles away, leaving some dust and gravel behind.")
+
 /obj/item/weapon/ore/strangerock/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/weldingtool/))
 		if(!src.method)
@@ -52,12 +57,70 @@
 	icon = 'mining.dmi'
 	icon_state = "crystal"
 
+/obj/item/weapon/crystal/bullet_act(var/obj/item/projectile/P)
+	if(istype(P,/obj/item/projectile/beam/emitter))
+		switch(rand(0,3))
+			if(0)
+				var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
+				A.dir = pick(alldirs)
+				A.yo = 20
+				A.xo = 0
+			if(0)
+				var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
+				A.dir = pick(alldirs)
+				A.yo = -20
+				A.xo = 0
+			if(0)
+				var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
+				A.dir = pick(alldirs)
+				A.yo = 0
+				A.xo = 20
+			if(0)
+				var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
+				A.dir = pick(alldirs)
+				A.yo = 0
+				A.xo = -20
+	else
+		..()
+
 /obj/item/weapon/talkingcrystal
 	name = "Crystal"
 	icon = 'mining.dmi'
 	icon_state = "crystal2"
 	var/list/list/words = list()
 	var/lastsaid
+
+/obj/item/weapon/talkingcrystal/New()
+	spawn(100)
+		process()
+
+/obj/item/weapon/talkingcrystal/bullet_act(var/obj/item/projectile/P)
+	if(istype(P,/obj/item/projectile/beam/emitter))
+		switch(rand(0,3))
+			if(0)
+				var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
+				A.dir = pick(alldirs)
+				A.yo = 20
+				A.xo = 0
+			if(0)
+				var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
+				A.dir = pick(alldirs)
+				A.yo = -20
+				A.xo = 0
+			if(0)
+				var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
+				A.dir = pick(alldirs)
+				A.yo = 0
+				A.xo = 20
+			if(0)
+				var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
+				A.dir = pick(alldirs)
+				A.yo = 0
+				A.xo = -20
+		var/word = pick("pain","hurt","masochism","sadist","rage","repressed","ouch","evil","void","kill","destroy")
+		SaySomething(word)
+	else
+		..()
 
 /obj/item/weapon/talkingcrystal/proc/catchMessage(var/msg, var/mob/source)
 	var/list/seperate = list()
@@ -68,6 +131,10 @@
 		if(findtext(msg," ",l,l+1)==0)
 			msg+=" "*/
 		seperate = stringsplit(msg, " ")
+
+	var/addressing_crystal = 0
+	if("crystal" in seperate || "gem" in seperate)
+		addressing_crystal = 1
 
 	for(var/Xa = 1,Xa<seperate.len,Xa++)
 		var/next = Xa + 1
@@ -82,7 +149,7 @@
 
 	for(var/mob/O in viewers(src))
 		O.show_message("\blue The crystal hums for bit then stops...", 1)
-	if(!rand(0,5))
+	if(!rand(0, 5 - addressing_crystal * 3))
 		spawn(2) SaySomething(pick(seperate))
 
 /obj/item/weapon/talkingcrystal/proc/debug()
@@ -136,6 +203,8 @@
 /obj/item/weapon/talkingcrystal/process()
 	if(prob(25) && world.timeofday >= lastsaid && words.len >= 1)
 		SaySomething()
+	spawn(100)
+		process()
 
 
 
