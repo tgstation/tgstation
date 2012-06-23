@@ -40,9 +40,6 @@
 		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted by admins).</font>"
 		return
 
-	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
-		return
-
 	if( !C || !istype(C,/client) )
 		if(holder)		src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
 		else			adminhelp(msg)	//admin we are replying to left. adminhelp instead
@@ -51,11 +48,15 @@
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
 		msg = input(src,"Message:", "Private message to [C.key]") as text|null
+
 		if(!msg)	return
 		if(!C)
 			if(holder)	src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
 			else		adminhelp(msg)	//admin we are replying to has vanished, adminhelp instead
 			return
+
+	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
+		return
 
 	//clean the message if it's not sent by a GA or GM
 	if( !holder || !(holder.rank in list("Game Admin", "Game Master")) )
