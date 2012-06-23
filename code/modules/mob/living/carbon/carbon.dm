@@ -49,13 +49,13 @@
 	if (M.hand)
 		if(ishuman(M) || ismonkey(M))
 			var/datum/organ/external/temp = M:organs["l_hand"]
-			if(temp.destroyed)
+			if(temp.status & DESTROYED)
 				M << "\red Yo- wait a minute."
 				return
 	else
 		if(ishuman(M) || ismonkey(M))
 			var/datum/organ/external/temp = M:organs["r_hand"]
-			if(temp.destroyed)
+			if(temp.status & DESTROYED)
 				M << "\red Yo- wait a minute."
 				return
 
@@ -100,13 +100,13 @@
 	if (M.hand)
 		if(ishuman(M) || ismonkey(M))
 			var/datum/organ/external/temp = M:organs["l_hand"]
-			if(temp.destroyed)
+			if(temp.status & DESTROYED)
 				M << "\red Yo- wait a minute."
 				return
 	else
 		if(ishuman(M) || ismonkey(M))
 			var/datum/organ/external/temp = M:organs["r_hand"]
-			if(temp.destroyed)
+			if(temp.status & DESTROYED)
 				M << "\red Yo- wait a minute."
 				return
 
@@ -224,7 +224,7 @@
 					status = "blugeoned"
 				if(brutedamage > 40)
 					status = "mangled"
-				if(org.bleeding && brutedamage)
+				if(org.status & BLEEDING && brutedamage)
 					status += ",[burndamage ? "" : " and"] bleeding[burndamage ? "," : ""]"
 				if(brutedamage > 0 && burndamage > 0)
 					status += " and "
@@ -235,7 +235,7 @@
 					status += "blistered"
 				else if(burndamage > 0)
 					status += "numb"
-				if(org.destroyed)
+				if(org.status & DESTROYED)
 					status = "MISSING!"
 
 				if(status == "")

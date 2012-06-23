@@ -239,17 +239,17 @@
 	if (src.digitalcamo)
 		msg += "[t_He] [t_is] repulsively uncanny!\n"
 
-	var/list/wound_descriptions = list()
 	var/list/wound_flavor_text = list()
 	var/list/is_destroyed = list()
+	var/list/is_bleeding = list()
 	for(var/named in organs)
 		var/datum/organ/external/temp = organs[named]
 		if(temp)
-			if(temp.destroyed)
+			if(temp.status & DESTROYED)
 				is_destroyed["[temp.display_name]"] = 1
 				wound_flavor_text["[temp.display_name]"] = "<span class='warning'><b>[t_He] is missing [t_his] [temp.display_name].</b></span>\n"
 				continue
-			if(temp.robot)
+			if(temp.status & ROBOT)
 				if(!(temp.brute_dam + temp.burn_dam))
 					wound_flavor_text["[temp.display_name]"] = "<span class='warning'>[t_He] has a robot [temp.display_name]!</span>\n"
 					continue
@@ -268,192 +268,52 @@
 					if(21 to INFINITY)
 						wound_flavor_text["[temp.display_name]"] += pick(" a lot of burns"," severe melting")
 				wound_flavor_text["[temp.display_name]"] += "!</span>\n"
-			else if(temp.wounds)
-				var/list/wounds = list(list(),list(),list(),list(),list(),list())
-				for(var/datum/organ/wound/w in temp.wounds)
-					switch(w.healing_state)
-						if(0)
-							var/list/cut = wounds[1]
-							cut += w
-							wounds[1] = cut
-						if(1)
-							var/list/cut = wounds[2]
-							cut += w
-							wounds[2] = cut
-						if(2)
-							var/list/cut = wounds[3]
-							cut += w
-							wounds[3] = cut
-						if(3)
-							var/list/cut = wounds[4]
-							cut += w
-							wounds[4] = cut
-						if(4)
-							var/list/cut = wounds[5]
-							cut += w
-							wounds[5] = cut
-						if(5)
-							var/list/cut = wounds[6]
-							cut += w
-							wounds[6] = cut
-				wound_descriptions["[temp.display_name]"] = wounds
-			else
-				wound_flavor_text["[temp.display_name]"] = ""
-	//Now that we have a big list of all the wounds, on all the limbs.
-	var/list/is_bleeding = list()
-	for(var/named in wound_descriptions)
-		var/list/wound_states = wound_descriptions[named]
-		var/list/flavor_text = list()
-		for(var/i = 1, i <= 6, i++)
-			var/list/wound_state = wound_states[i] //All wounds at this level of healing.
-			var/list/tally = list("cut" = 0, "deep cut" = 0, "flesh wound" = 0, "gaping wound" = 0, "big gaping wound" = 0, "massive wound" = 0,\
-			 "tiny bruise" = 0, "small bruise" = 0, "moderate bruise" = 0, "large bruise" = 0, "huge bruise" = 0, "monumental bruise" = 0,\
-			 "small burn" = 0, "moderate burn" = 0, "large burn" = 0, "severe burn" = 0, "deep burn" = 0, "carbonised area" = 0) //How many wounds of what size.
-			for(var/datum/organ/wound/w in wound_state)
-				if(w.bleeding && !is_bleeding[named]) is_bleeding[named] = 1
-				switch(w.wound_size)
-					if(1)
-						switch(w.wound_type)
-							if(0)
-								tally["cut"] += 1
-							if(1)
-								tally["tiny bruise"] += 1
-							if(2)
-								tally["small burn"] += 1
-					if(2)
-						switch(w.wound_type)
-							if(0)
-								tally["deep cut"] += 1
-							if(1)
-								tally["small bruise"] += 1
-							if(2)
-								tally["moderate burn"] += 1
-					if(3)
-						switch(w.wound_type)
-							if(0)
-								tally["flesh wound"] += 1
-							if(1)
-								tally["moderate bruise"] += 1
-							if(2)
-								tally["large burn"] += 1
-					if(4)
-						switch(w.wound_type)
-							if(0)
-								tally["gaping wound"] += 1
-							if(1)
-								tally["large bruise"] += 1
-							if(2)
-								tally["severe burn"] += 1
-					if(5)
-						switch(w.wound_type)
-							if(0)
-								tally["big gaping wound"] += 1
-							if(1)
-								tally["huge bruise"] += 1
-							if(2)
-								tally["deep burn"] += 1
-					if(6)
-						switch(w.wound_type)
-							if(0)
-								tally["massive wound"] += 1
-							if(1)
-								tally["monumental bruise"] += 1
-							if(2)
-								tally["carbonised area"] += 1
-			for(var/tallied in tally)
-				if(!tally[tallied])
-					continue
-				//if(flavor_text_string && tally[tallied])
-				//	for(
-				//	flavor_text_string += pick(list(", as well as", ", in addition to")) //add more later.
-				var/tallied_rename = list("cut" = "cut","deep cut" = "deep cut", "flesh wound" = "flesh wound",\
-				"gaping wound" = "gaping wound", "big gaping wound" = "big gaping wound", "massive wound" = "massive wound",\
-				"tiny bruise" = "tiny bruise", "small bruise" = "small bruise", "moderate bruise" = "moderate bruise",\
-				"large bruise" = "large bruise", "huge bruise" = "huge bruise", "monumental bruise" = "monumental bruise",\
-			 	"small burn" = "small burn", "moderate burn" = "moderate burn", "large burn" = "large burn",\
-			 	"severe burn" = "severe burn", "deep burn" = "deep burn", "carbonised area" = "carbonised area")
-				switch(i)
-					if(2) //Healing wounds.
-						if(tallied in list("cut","small burn"))
+			else if(temp.wound_descs)
+				var/list/wound_descriptors = list()
+				for(var/time in temp.wound_descs)
+					for(var/wound in temp.wound_descs[time])
+						if(wound in wound_descriptors)
+							wound_descriptors[wound]++
 							continue
-						tallied_rename = list("deep cut" = "clotted cut", "flesh wound" = "small bandaged wound",\
-						"gaping wound" = "bandaged wound", "big gaping wound" = "gauze wrapped wound",\
-						"massive wound" = "massive blood soaked bandage", "tiny bruise" = "tiny bruise", "small bruise" = "small bruise",\
-						"moderate bruise" = "moderate bruise", "large bruise" = "large bruise",\
-						"huge bruise" = "huge bruise", "monumental bruise" = "monumental bruise",\
-						"moderate burn" = "moderate salved burn", "large burn" = "large salved burn",\
-						"severe burn" = "severe salved burn", "deep burn" = "deep salved burn",\
-						"carbonised area" = "treated carbonised area")
-					if(3)
-						if(tallied in list("cut","tiny bruise","small burn"))
-							continue
-						tallied_rename = list("deep cut" = "fading cut", "flesh wound" = "small healing wound",\
-						"gaping wound" = "healing wound", "big gaping wound" = "big healing wound",\
-						"massive wound" = "massive healing wound", "small bruise" = "tiny bruise",\
-						"moderate bruise" = "small bruise", "large bruise" = "moderate bruise",\
-						"huge bruise" = "large bruise", "monumental bruise" = "huge bruise",\
-						"moderate burn" = "healing moderate burn", "large burn" = "healing large burn",\
-						"severe burn" = "healing severe burn", "deep burn" = "healing deep burn",\
-						"carbonised area" = "slowly healing carbonised area")
-					if(4)
-						if(tallied in list("cut","deep cut","tiny bruise", "small bruise","small burn", "moderate burn"))
-							continue
-						tallied_rename = list("flesh wound" = "small red scar", "gaping wound" = "angry straight scar",\
-						"big gaping wound" = "jagged angry scar", "massive wound" = "gigantic angry scar",\
-						"moderate bruise" = "tiny bruise", "large bruise" = "small bruise",\
-						"huge bruise" = "moderate bruise", "monumental bruise" = "large bruise",\
-						"large burn" = "large burn scar", "severe burn" = "severe burn scar",\
-						 "deep burn" = "deep burn scar", "carbonised area" = "healing carbonised area")
-					if(5)
-						if(tallied in list("cut","deep cut","tiny bruise", "moderate bruise", "small bruise","small burn", "moderate burn"))
-							continue
-						tallied_rename = list("flesh wound" = "small scar", "gaping wound" = "straight scar",\
-						"big gaping wound" = "jagged scar", "massive wound" = "gigantic scar",\
-						"large bruise" = "tiny bruise",\
-						"huge bruise" = "small bruise", "monumental bruise" = "moderate bruise",\
-						"large burn" = "large burn scar", "severe burn" = "severe burn scar",\
-						 "deep burn" = "deep burn scar", "carbonised area" = "large scarred area")
-					if(6)
-						if(tallied in list("cut","deep cut","flesh wound","tiny bruise", "small bruise", "moderate bruise", "large bruise", "huge bruise","small burn", "moderate burn"))
-							continue
-						tallied_rename = list("gaping wound" = "straight scar",\
-						"big gaping wound" = "jagged scar", "massive wound" = "gigantic scar",\
-						"monumental bruise" = "tiny bruise",\
-						"large burn" = "large burn scar", "severe burn" = "severe burn scar",\
-						 "deep burn" = "deep burn scar", "carbonised area" = "large scarred area")
+						wound_descriptors[wound] = 1
+				var/list/flavor_text = list()
 				var/list/no_exclude = list("gaping wound", "big gaping wound", "massive wound", "large bruise",\
 				"huge bruise", "massive bruise", "severe burn", "large burn", "deep burn", "carbonised area")
-				switch(tally[tallied])
-					if(1)
-						if(!flavor_text.len)
-							flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(tallied in no_exclude)  ? " what might be" : ""] a [tallied_rename[tallied]]"
-						else
-							flavor_text += "[prob(10) && !(tallied in no_exclude) ? " what might be" : ""] a [tallied_rename[tallied]]"
-					if(2)
-						if(!flavor_text.len)
-							flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(tallied in no_exclude) ? " what might be" : ""] a pair of [tallied_rename[tallied]]s"
-						else
-							flavor_text += "[prob(10) && !(tallied in no_exclude) ? " what might be" : ""] a pair of [tallied_rename[tallied]]s"
-					if(3 to 5)
-						if(!flavor_text.len)
-							flavor_text += "<span class='warning'>[t_He] has several [tallied_rename[tallied]]s"
-						else
-							flavor_text += " several [tallied_rename[tallied]]s"
-					if(6 to INFINITY)
-						if(!flavor_text.len)
-							flavor_text += "<span class='warning'>[t_He] has a bunch of [tallied_rename[tallied]]s"
-						else
-							flavor_text += " a ton of [tallied_rename[tallied]]s"
-		if(flavor_text.len)
-			var/flavor_text_string = ""
-			for(var/text = 1, text <= flavor_text.len, text++)
-				if(text == flavor_text.len && flavor_text.len > 1)
-					flavor_text_string += ", and"
-				else if(flavor_text.len > 1 && text > 1)
-					flavor_text_string += ","
-				flavor_text_string += flavor_text[text]
-			flavor_text_string += " on [t_his] [named].</span><br>"
-			wound_flavor_text["[named]"] = flavor_text_string
+				for(var/wound in wound_descriptors)
+					switch(wound_descriptors[wound])
+						if(1)
+							if(!flavor_text.len)
+								flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(wound in no_exclude)  ? " what might be" : ""] a [wound]"
+							else
+								flavor_text += "[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a [wound]"
+						if(2)
+							if(!flavor_text.len)
+								flavor_text += "<span class='warning'>[t_He] has[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a pair of [wound]s"
+							else
+								flavor_text += "[prob(10) && !(wound in no_exclude) ? " what might be" : ""] a pair of [wound]s"
+						if(3 to 5)
+							if(!flavor_text.len)
+								flavor_text += "<span class='warning'>[t_He] has several [wound]s"
+							else
+								flavor_text += " several [wound]s"
+						if(6 to INFINITY)
+							if(!flavor_text.len)
+								flavor_text += "<span class='warning'>[t_He] has a bunch of [wound]s"
+							else
+								flavor_text += " a ton of [wound]\s"
+				var/flavor_text_string = ""
+				for(var/text = 1, text <= flavor_text.len, text++)
+					if(text == flavor_text.len && flavor_text.len > 1)
+						flavor_text_string += ", and"
+					else if(flavor_text.len > 1 && text > 1)
+						flavor_text_string += ","
+					flavor_text_string += flavor_text[text]
+				flavor_text_string += " on [t_his] [named].</span><br>"
+				wound_flavor_text["[named]"] = flavor_text_string
+				if(temp.status & BLEEDING)
+					is_bleeding["[named]"] = 1
+			else
+				wound_flavor_text["[temp.display_name]"] = ""
 
 	//Handles the text strings being added to the actual description.
 	//If they have something that covers the limb, and it is not missing, put flavortext.  If it is covered but bleeding, add other flavortext.

@@ -283,7 +283,7 @@ var/list/sacrificed = list()
 			del(ghost)
 			for(var/name in corpse_to_raise.organs)
 				var/datum/organ/external/affecting = corpse_to_raise.organs[name]
-				affecting.robot = 0
+				affecting.status &= ~ROBOT
 				affecting.heal_damage(1000, 1000)
 			corpse_to_raise.setToxLoss(0)
 			corpse_to_raise.setOxyLoss(0)

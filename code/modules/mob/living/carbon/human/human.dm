@@ -57,7 +57,6 @@
 
 	var/mutantrace = null
 
-	var/bloodloss = 0
 	var/datum/reagents/vessel
 	var/pale = 0
 	var/examine_text = ""
@@ -285,7 +284,7 @@
 
 	for(var/organ in list("l_leg","l_foot","r_leg","r_foot"))
 		var/datum/organ/external/o = organs["[organ]"]
-		if(o.broken)
+		if(o.status & BROKEN)
 			tally += 6
 
 	if(wear_suit)
@@ -778,7 +777,7 @@
 			M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (health > 0)
 		var/datum/organ/external/affecting = get_organ(pick("chest", "chest", "chest", "head"))
-		if(!affecting || affecting.destroyed)	return
+		if(!affecting || affecting.status & DESTROYED)	return
 		if (istype(O, /obj/effect/immovablerod))
 			affecting.take_damage(101, 0)
 		else
@@ -948,29 +947,29 @@
 	// Gloves
 	var/datum/organ/external/lo = organs["l_hand"]
 	var/datum/organ/external/ro = organs["r_hand"]
-	if (!lo.destroyed || !ro.destroyed)
+	if (!(lo.status & DESTROYED && ro.status & DESTROYED))
 		if (gloves)
 			var/t1 = gloves.item_state
 			if (!t1)
 				t1 = gloves.icon_state
 			var/icon/gloves_icon = new /icon("icon" = 'hands.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")))
-			if(lo.destroyed)
+			if(lo.status & DESTROYED)
 				gloves_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
-			if(ro.destroyed)
+			if(ro.status & DESTROYED)
 				gloves_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
 			clothing_overlays += image(gloves_icon, "layer" = GLOVES_LAYER)
 			if (gloves.blood_DNA)
 				var/icon/stain_icon = icon('blood.dmi', "bloodyhands[!lying ? "" : "2"]")
-				if(lo.destroyed)
+				if(lo.status & DESTROYED)
 					stain_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
-				else if(ro.destroyed)
+				else if(ro.status & DESTROYED)
 					stain_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
 				clothing_overlays += image("icon" = stain_icon, "layer" = B_GLOVES_LAYER)
 		else if (blood_DNA)
 			var/icon/stain_icon = icon('blood.dmi', "bloodyhands[!lying ? "" : "2"]")
-			if(lo.destroyed)
+			if(lo.status & DESTROYED)
 				stain_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
-			else if(ro.destroyed)
+			else if(ro.status & DESTROYED)
 				stain_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
 			clothing_overlays += image("icon" = stain_icon, "layer" = B_GLOVES_LAYER)
 
@@ -990,19 +989,19 @@
 	// Shoes
 	lo = organs["l_foot"]
 	ro = organs["r_foot"]
-	if ((!lo.destroyed || !ro.destroyed) && shoes)
+	if (!(lo.status & DESTROYED && ro.status & DESTROYED) && shoes)
 		var/t1 = shoes.icon_state
 		var/icon/shoes_icon = new /icon("icon" = 'feet.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")))
-		if(lo.destroyed && !lying)
+		if(lo.status & DESTROYED && !lying)
 			shoes_icon.Blend(new /icon('limb_mask.dmi', "right[lying?"_l":""]"), ICON_MULTIPLY)
-		else if(ro.destroyed && !lying)
+		else if(ro.status & DESTROYED && !lying)
 			shoes_icon.Blend(new /icon('limb_mask.dmi', "left[lying?"_l":""]"), ICON_MULTIPLY)
 		clothing_overlays += image(shoes_icon, "layer" = SHOES_LAYER)
 		if (shoes.blood_DNA)
 			var/icon/stain_icon = icon('blood.dmi', "shoeblood[!lying ? "" : "2"]")
-			if(lo.destroyed)
+			if(lo.status & DESTROYED)
 				stain_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
-			else if(ro.destroyed)
+			else if(ro.status & DESTROYED)
 				stain_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
 			clothing_overlays += image("icon" = stain_icon, "layer" = B_SHOES_LAYER)	// Radio
 
@@ -1389,7 +1388,7 @@
 	lying_icon.Blend(new /icon('human.dmi', "chest_[g]_l"), ICON_OVERLAY)
 
 	var/datum/organ/external/head = organs["head"]
-	if(!head.destroyed)
+	if(!(head.status & DESTROYED))
 		stand_icon.Blend(new /icon('human.dmi', "head_[g]_s"), ICON_OVERLAY)
 		lying_icon.Blend(new /icon('human.dmi', "head_[g]_l"), ICON_OVERLAY)
 
@@ -1398,12 +1397,12 @@
 		if(!istype(part, /datum/organ/external/groin) \
 			&& !istype(part, /datum/organ/external/chest) \
 			&& !istype(part, /datum/organ/external/head) \
-			&& !part.destroyed)
+			&& !(part.status & DESTROYED))
 			var/icon/temp = new /icon('human.dmi', "[part.icon_name]_s")
-			if(part.robot) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+			if(part.status & ROBOT) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 			stand_icon.Blend(temp, ICON_OVERLAY)
 			temp = new /icon('human.dmi', "[part.icon_name]_l")
-			if(part.robot) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+			if(part.status & ROBOT) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 			lying_icon.Blend(temp , ICON_OVERLAY)
 
 	stand_icon.Blend(new /icon('human.dmi', "groin_[g]_s"), ICON_OVERLAY)
@@ -1443,7 +1442,7 @@
 			if(!istype(part, /datum/organ/external/groin) \
 				&& !istype(part, /datum/organ/external/chest) \
 				&& !istype(part, /datum/organ/external/head) \
-				&& part.destroyed)
+				&& (part.status & DESTROYED))
 				husk_s.Blend(new /icon('dam_mask.dmi', "[part.icon_name]"), ICON_SUBTRACT)
 				husk_l.Blend(new /icon('dam_mask.dmi', "[part.icon_name]2"), ICON_SUBTRACT)
 
@@ -1473,7 +1472,7 @@
 	if(organs)
 		var/datum/organ/external/head = organs["head"]
 		if(head)
-			if(head.destroyed)
+			if(head.status & DESTROYED)
 				del(face_standing)
 				del(face_lying)
 				return
@@ -2598,7 +2597,7 @@ It can still be worn/put on as normal.
 	var/amount = 0.0
 	for(var/name in organs)
 		var/datum/organ/external/O = organs[name]
-		if(!O.robot) amount+= O.brute_dam
+		if(!(O.status & ROBOT)) amount+= O.brute_dam
 	return amount
 
 /mob/living/carbon/human/adjustBruteLoss(var/amount, var/used_weapon = null)
@@ -2611,7 +2610,7 @@ It can still be worn/put on as normal.
 	var/amount = 0.0
 	for(var/name in organs)
 		var/datum/organ/external/O = organs[name]
-		if(!O.robot) amount+= O.burn_dam
+		if(!(O.status & ROBOT)) amount+= O.burn_dam
 	return amount
 
 /mob/living/carbon/human/adjustFireLoss(var/amount,var/used_weapon = null)

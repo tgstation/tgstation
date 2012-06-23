@@ -701,12 +701,12 @@
 	if(ishuman(usr))
 		if(usr.hand) // if he's using his left hand.
 			var/datum/organ/external/temp = usr:get_organ("l_hand")
-			if(temp.destroyed)
+			if(temp.status & DESTROYED)
 				usr << "\blue You look at your stump."
 				return
 		else
 			var/datum/organ/external/temp = usr:get_organ("r_hand")
-			if(temp.destroyed)
+			if(temp.status & DESTROYED)
 				usr << "\blue You look at your stump."
 				return
 

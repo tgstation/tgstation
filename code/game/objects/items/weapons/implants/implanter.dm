@@ -31,7 +31,7 @@
 			return
 		if(hasorgans(M))
 			var/datum/organ/external/target = M:get_organ(check_zone(user.zone_sel.selecting))
-			if(target.destroyed)
+			if(target.status & DESTROYED)
 				user << "What [target.display_name]?"
 				return
 			target.implant += imp
