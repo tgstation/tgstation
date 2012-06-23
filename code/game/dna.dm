@@ -1068,7 +1068,7 @@
 		if (href_list["uimenuset"] && href_list["uimenusubset"]) // This chunk of code updates selected block / sub-block based on click
 			var/menuset = text2num(href_list["uimenuset"])
 			var/menusubset = text2num(href_list["uimenusubset"])
-			if ((menuset <= 13) && (menuset >= 1))
+			if ((menuset <= 27) && (menuset >= 1))
 				src.uniblock = menuset
 			if ((menusubset <= 3) && (menusubset >= 1))
 				src.subblock = menusubset
