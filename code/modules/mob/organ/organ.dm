@@ -410,7 +410,7 @@ var/list/wound_progressions = list(
 		if(hasorgans(owner))
 			var/wound_name
 			var/update_time = world.time + damage*100
-			var/size = min( max( 0, damage/10 ) , 6)
+			var/size = min( max( 1, damage/10 ) , 6)
 			switch(type)
 				if(CUT)
 					var/list/size_names = list("cut", "deep cut", "flesh wound", "gaping wound", "big gaping wound", "massive wound")
