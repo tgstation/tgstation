@@ -95,25 +95,25 @@
 		process()
 
 /obj/item/weapon/talkingcrystal/bullet_act(var/obj/item/projectile/P)
-	if(istype(P,/obj/item/projectile/beam/emitter))
+	if(istype(P,/obj/item/projectile/beam))
 		switch(rand(0,3))
 			if(0)
-				var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
+				var/obj/item/projectile/beam/A = new /obj/item/projectile/beam( src.loc )
 				A.dir = pick(alldirs)
 				A.yo = 20
 				A.xo = 0
 			if(0)
-				var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
+				var/obj/item/projectile/beam/A = new /obj/item/projectile/beam( src.loc )
 				A.dir = pick(alldirs)
 				A.yo = -20
 				A.xo = 0
 			if(0)
-				var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
+				var/obj/item/projectile/beam/A = new /obj/item/projectile/beam( src.loc )
 				A.dir = pick(alldirs)
 				A.yo = 0
 				A.xo = 20
 			if(0)
-				var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
+				var/obj/item/projectile/beam/A = new /obj/item/projectile/beam( src.loc )
 				A.dir = pick(alldirs)
 				A.yo = 0
 				A.xo = -20
