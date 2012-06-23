@@ -151,7 +151,7 @@ var/list/department_radio_keys = list(
 		//world << "channel_prefix=[channel_prefix]; message_mode=[message_mode]"
 		if (message_mode)
 			message = trim(copytext(message, 3))
-			if (!(ishuman(src) || isanimal(src) && (message_mode=="department" || (message_mode in radiochannels) || message_mode == "right ear" || message_mode == "left ear")))
+			if (!(ishuman(src) || istype(src, /mob/living/simple_animal/parrot)) && (message_mode=="department" || (message_mode in radiochannels) || message_mode == "right ear" || message_mode == "left ear"))
 				message_mode = null //only humans can use headsets
 			// Check removed so parrots can use headsets!
 

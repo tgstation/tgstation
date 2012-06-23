@@ -83,7 +83,7 @@
 			switch(href_list["operation"])
 
 				if("release")
-					machines = list()
+					machinelist = list()
 					screen = 0
 
 				if("mainmenu")
