@@ -1076,17 +1076,28 @@
 
 	if (selected:toff)
 		return
+	var/obj/machinery/message_server/useMS = null
+	if(!isnull(message_servers))
+		for (var/obj/machinery/message_server/MS in message_servers)
+		//PDAs are now dependant on the Message Server.
+			if(MS.active)
+				useMS = MS
+				break
+	if(!isnull(useMS)) // only send the message if it's stable
+		useMS.send_pda_message("[selected:owner]","[usr.name]","[t]")
 
-	usr.show_message("<i>PDA message to <b>[selected:owner]</b>: [t]</i>")
-	selected:tnote += "<i><b>&larr; From (AI) [usr.name]:</b></i><br>[t]<br>"
+		usr.show_message("<i>PDA message to <b>[selected:owner]</b>: [t]</i>")
+		selected:tnote += "<i><b>&larr; From (AI) [usr.name]:</b></i><br>[t]<br>"
 
-	if (!selected:silent)
-		playsound(selected.loc, 'twobeep.ogg', 50, 1)
-		for (var/mob/O in hearers(3, selected.loc))
-			O.show_message(text("\icon[selected] *[selected:ttone]*"))
+		if (!selected:silent)
+			playsound(selected.loc, 'twobeep.ogg', 50, 1)
+			for (var/mob/O in hearers(3, selected.loc))
+				O.show_message(text("\icon[selected] *[selected:ttone]*"))
 
-	selected.overlays = null
-	selected.overlays += image('pda.dmi', "pda-r")
+		selected.overlays = null
+		selected.overlays += image('pda.dmi', "pda-r")
+	else
+		usr << "ERROR: Server isn't responding."
 
 
 //Some spare PDAs in a box

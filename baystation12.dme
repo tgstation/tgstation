@@ -555,6 +555,7 @@
 #include "code\game\machinery\computer\law.dm"
 #include "code\game\machinery\computer\lockdown.dm"
 #include "code\game\machinery\computer\medical.dm"
+#include "code\game\machinery\computer\message.dm"
 #include "code\game\machinery\computer\Operating.dm"
 #include "code\game\machinery\computer\pod.dm"
 #include "code\game\machinery\computer\power.dm"
