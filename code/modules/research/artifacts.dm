@@ -17,7 +17,6 @@
 	var/datum/artifact_effect/my_effect = null
 
 /obj/machinery/artifact/New()
-	world << "\blue new artifact"
 	..()
 	// Origin and appearance randomisation
 	// cael - need some more icons
