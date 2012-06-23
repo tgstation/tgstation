@@ -387,7 +387,7 @@
 			spawn(config.vote_period * 10)
 				vote.endvote()
 
-			world << "\red<B>*** A custom vote has been initiated by [M.key].</B>"
+			world << "\red<B>*** A custom vote has been initiated by [usr.key].</B>"
 			world << "\red     You have [vote.timetext(config.vote_period)] to vote."
 
 			//log_vote("Voting to [vote.mode ? "change mode" : "restart round"] started by [M.name]/[M.key]")
@@ -398,16 +398,16 @@
 				else
 					C.vote = "default"
 
-			if(M) M.vote()
+			if(usr) usr.vote()
 			return
 
 		if(vote.mode == 0)
-			var/answer = alert(M,"Do you want to force an immediate restart? Only do this when there are round-breaking glitches, or risk being banned.","Immediate Reboot?","Yes","No")
+			var/answer = alert(usr,"Do you want to force an immediate restart? Only do this when there are round-breaking glitches, or risk being banned.","Immediate Reboot?","Yes","No")
 
 			if(answer == "Yes")
 				vote.instant_restart = 1
-				log_admin("[M.key] has initiated an instant reboot vote! This may be banworthy!")
-				message_admins("[M.key] has initiated an instant reboot vote! This may be banworthy!")
+				log_admin("[usr.key] has initiated an instant reboot vote! This may be banworthy!")
+				message_admins("[usr.key] has initiated an instant reboot vote! This may be banworthy!")
 			else
 				vote.instant_restart = 0
 
