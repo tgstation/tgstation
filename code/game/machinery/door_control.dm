@@ -59,6 +59,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user as mob)
+	src.add_fingerprint(usr)
 	if(stat & (NOPOWER|BROKEN))
 		return
 
@@ -69,6 +70,7 @@
 
 	use_power(5)
 	icon_state = "doorctrl1"
+	add_fingerprint(user)
 
 	if(normaldoorcontrol)
 		for(var/obj/machinery/door/airlock/D in range(range))
@@ -119,7 +121,6 @@
 	spawn(15)
 		if(!(stat & NOPOWER))
 			icon_state = "doorctrl0"
-	src.add_fingerprint(usr)
 
 /obj/machinery/door_control/power_change()
 	..()
@@ -142,10 +143,12 @@
 
 /obj/machinery/driver_button/attack_hand(mob/user as mob)
 
+	src.add_fingerprint(usr)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(active)
 		return
+	add_fingerprint(user)
 
 	use_power(5)
 

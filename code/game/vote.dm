@@ -188,7 +188,7 @@
 
 	var/text = "<HTML><HEAD><TITLE>Voting</TITLE></HEAD><BODY scroll=no>"
 
-	var/footer = "<HR><A href='?src=\ref[vote];voter=\ref[src];vclose=1'>Close</A></BODY></HTML>"
+	var/footer = "<HR><A href='?src=\ref[vote];vclose=1'>Close</A></BODY></HTML>"
 
 
 	if(config.vote_no_dead && usr.stat == 2)
@@ -247,7 +247,7 @@
 				if(src.client.vote == md)
 					text += "<LI><B>[disp]</B>"
 				else
-					text += "<LI><A href='?src=\ref[vote];voter=\ref[src];vote=[md]'>[disp]</A>"
+					text += "<LI><A href='?src=\ref[vote];vote=[md]'>[disp]</A>"
 
 				text += "[votes[md]>0?" - [votes[md]] vote\s":null]<BR>"
 
@@ -276,7 +276,7 @@
 				if(src.client.vote == md)
 					text += "<LI><B>[disp]</B>"
 				else
-					text += "<LI><A href='?src=\ref[vote];voter=\ref[src];vote=[md]'>[disp]</A>"
+					text += "<LI><A href='?src=\ref[vote];vote=[md]'>[disp]</A>"
 
 				text += "[votes[md]>0?" - [votes[md]] vote\s":null]<BR>"
 
@@ -315,10 +315,10 @@
 
 		else			// voting can begin
 			if(config.allow_vote_restart)
-				text += "<A href='?src=\ref[vote];voter=\ref[src];vmode=1'>Begin restart vote.</A><BR>"
+				text += "<A href='?src=\ref[vote];vmode=1'>Begin restart vote.</A><BR>"
 			if(config.allow_vote_mode)
 				if(!ticker || ticker.current_state == 1)
-					text += "<A href='?src=\ref[vote];voter=\ref[src];vmode=2'>Begin change mode vote.</A><BR>"
+					text += "<A href='?src=\ref[vote];vmode=2'>Begin change mode vote.</A><BR>"
 				else
 					text += "Change mode votes are disabled while a round is in progress, vote to restart first.<BR>"
 			if(src.client.holder)			//Strumpetplaya Add - Custom Votes for Admins
@@ -337,14 +337,17 @@
 
 /datum/vote/Topic(href, href_list)
 	..()
+	//world << "[usr] has activated the vote Topic"
 
-	var/mob/M = locate(href_list["voter"])			// mob of player that clicked link
+	if(href_list["voter"])
+		world << "[usr.ckey] has attempted to bypass the voting system." //ckey is easy key
+		return
 
 	if(href_list["vclose"])
 
-		if(M)
-			M << browse(null, "window=vote")
-			M.client.showvote = 0
+		if(usr)
+			usr << browse(null, "window=vote")
+			usr.client.showvote = 0
 		return
 
 	if(href_list["vmode"])
@@ -384,7 +387,7 @@
 			spawn(config.vote_period * 10)
 				vote.endvote()
 
-			world << "\red<B>*** A custom vote has been initiated by [M.key].</B>"
+			world << "\red<B>*** A custom vote has been initiated by [usr.key].</B>"
 			world << "\red     You have [vote.timetext(config.vote_period)] to vote."
 
 			//log_vote("Voting to [vote.mode ? "change mode" : "restart round"] started by [M.name]/[M.key]")
@@ -395,16 +398,16 @@
 				else
 					C.vote = "default"
 
-			if(M) M.vote()
+			if(usr) usr.vote()
 			return
 
 		if(vote.mode == 0)
-			var/answer = alert(M,"Do you want to force an immediate restart? Only do this when there are round-breaking glitches, or risk being banned.","Immediate Reboot?","Yes","No")
+			var/answer = alert(usr,"Do you want to force an immediate restart? Only do this when there are round-breaking glitches, or risk being banned.","Immediate Reboot?","Yes","No")
 
 			if(answer == "Yes")
 				vote.instant_restart = 1
-				log_admin("[M.key] has initiated an instant reboot vote! This may be banworthy!")
-				message_admins("[M.key] has initiated an instant reboot vote! This may be banworthy!")
+				log_admin("[usr.key] has initiated an instant reboot vote! This may be banworthy!")
+				message_admins("[usr.key] has initiated an instant reboot vote! This may be banworthy!")
 			else
 				vote.instant_restart = 0
 
@@ -415,14 +418,13 @@
 		vote.voting = 1						// now voting
 		vote.votetime = world.timeofday + config.vote_period*10	// when the vote will end
 
-
 		spawn(config.vote_period*10)
 			vote.endvote()
 
-		world << "\red<B>*** A vote to [vote.mode?"change game mode":"restart"] has been initiated by [M.key].</B>"
+		world << "\red<B>*** A vote to [vote.mode?"change game mode":"restart"] has been initiated by [usr.key].</B>"
 		world << "\red     You have [vote.timetext(config.vote_period)] to vote."
 
-		log_vote("Voting to [vote.mode ? "change mode" : "restart round"] started by [M.name]/[M.key]")
+		log_vote("Voting to [vote.mode ? "change mode" : "restart round"] started by [usr.name]/[usr.key]")
 
 		for(var/mob/CM in world)
 			if(CM.client)
@@ -431,17 +433,17 @@
 				else
 					CM.client.vote = "default"
 
-		if(M) M.vote()
+		if(usr) usr.vote()
 		return
 
 
 		return
 
 	if(href_list["vote"] && vote.voting)
-		if(M)
-			M.client.vote = href_list["vote"]
+		if(usr)
+			usr.client.vote = href_list["vote"]
 
-			//world << "Setting client [M.key]'s vote to: [href_list["vote"]]."
+			//world << "Setting client [usr.key]'s vote to: [href_list["vote"]]."
 
-			M.vote()
+			usr.vote()
 		return

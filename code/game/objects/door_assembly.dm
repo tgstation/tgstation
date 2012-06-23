@@ -221,7 +221,7 @@ obj/structure/door_assembly
 	door_assembly_clown
 		name = "Bananium Airlock Assembly"
 		desc = "Honk"
-		icon_state = "door_as_bananium1"
+		icon_state = "door_as_clown1"
 		airlock_type = /obj/machinery/door/airlock/clown
 		anchored = 1
 		density = 1

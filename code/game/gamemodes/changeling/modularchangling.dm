@@ -407,7 +407,8 @@ var/list/obj/effect/proc_holder/power/powerinstances = list()
 				<td align='center'>
 					<font size='5'><b>Changling Evolution Menu</b></font><br>
 					Hover over a power to see more information<br>
-					Current genomes left to evolve with: [usr.changeling.geneticpoints]
+					Current evolution points left to evolve with: [usr.changeling.geneticpoints]<br>
+					Absorb genomes to acquire more evolution points
 					<p>
 				</td>
 			</tr>

@@ -115,62 +115,7 @@
 	else if (length(message) >= 2)
 		var/channel_prefix = copytext(message, 1, 3)
 
-		var/list/keys = list(
-			":r" = "right ear",
-			":l" = "left ear",
-			":i" = "intercom",
-			":h" = "department",
-			":c" = "Command",
-			":n" = "Science",
-			":m" = "Medical",
-			":e" = "Engineering",
-			":s" = "Security",
-			":w" = "whisper",
-			":b" = "binary",
-			":a" = "alientalk",
-			":t" = "Syndicate",
-			":d" = "Mining",
-			":q" = "Cargo",
-			":g" = "changeling",
-
-			":R" = "right hand",
-			":L" = "left hand",
-			":I" = "intercom",
-			":H" = "department",
-			":C" = "Command",
-			":N" = "Science",
-			":M" = "Medical",
-			":E" = "Engineering",
-			":S" = "Security",
-			":W" = "whisper",
-			":B" = "binary",
-			":A" = "alientalk",
-			":T" = "Syndicate",
-			":D" = "Mining",
-			":Q" = "Cargo",
-			":G" = "changeling",
-
-			  //kinda localization -- rastaf0
-			  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
-			  ":ê" = "right hand",
-			  ":ä" = "left hand",
-			  ":ø" = "intercom",
-			  ":ð" = "department",
-			  ":ñ" = "Command",
-			  ":ò" = "Science",
-			  ":ü" = "Medical",
-			  ":ó" = "Engineering",
-			  ":û" = "Security",
-			  ":ö" = "whisper",
-			  ":è" = "binary",
-			  ":ô" = "alientalk",
-			  ":å" = "Syndicate",
-			  ":â" = "Mining",
-			  ":é" = "Cargo",
-			  ":ï" = "changeling",
-		)
-
-		message_mode = keys[channel_prefix]
+		message_mode = department_radio_keys[channel_prefix]
 		//world << "channel_prefix=[channel_prefix]; message_mode=[message_mode]"
 		if (message_mode)
 			message = trim(copytext(message, 3))

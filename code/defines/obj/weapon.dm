@@ -794,6 +794,18 @@
 	color = "pink"
 	icon_state = "coil_pink"
 
+/obj/item/weapon/cable_coil/orange
+	color = "orange"
+	icon_state = "coil_orange"
+
+/obj/item/weapon/cable_coil/cyan
+	color = "cyan"
+	icon_state = "coil_cyan"
+
+/obj/item/weapon/cable_coil/white
+	color = "white"
+	icon_state = "coil_white"
+
 /obj/item/weapon/cable_coil/random/New()
 	color = pick("red","yellow","green","blue","pink")
 	icon_state = "coil_[color]"
@@ -972,14 +984,41 @@
 	m_amt = 500
 	origin_tech = "materials=1"
 	var/dispenser = 0
-
-/obj/item/weapon/handcuffs/cyborg
-	dispenser = 1
+	var/breakouttime = 1200 //Deciseconds = 120s = 2 minutes
 
 /obj/item/weapon/handcuffs/cable
 	name = "cable restraints"
 	desc = "Looks like some cables tied together. Could be used to tie something up."
 	icon_state = "cuff_red"
+	breakouttime = 300 //Deciseconds = 30s
+
+/obj/item/weapon/handcuffs/cable/red
+	icon_state = "cuff_red"
+
+/obj/item/weapon/handcuffs/cable/yellow
+	icon_state = "cuff_yellow"
+
+/obj/item/weapon/handcuffs/cable/blue
+	icon_state = "cuff_blue"
+
+/obj/item/weapon/handcuffs/cable/green
+	icon_state = "cuff_green"
+
+/obj/item/weapon/handcuffs/cable/pink
+	icon_state = "cuff_pink"
+
+/obj/item/weapon/handcuffs/cable/orange
+	icon_state = "cuff_orange"
+
+/obj/item/weapon/handcuffs/cable/cyan
+	icon_state = "cuff_cyan"
+
+/obj/item/weapon/handcuffs/cable/white
+	icon_state = "cuff_white"
+
+/obj/item/weapon/handcuffs/cyborg
+	dispenser = 1
+
 
 /obj/item/weapon/locator
 	name = "locator"
@@ -1356,11 +1395,19 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	maxcharge = 500
 	g_amt = 40
 
+/obj/item/weapon/cell/crap/empty/New()
+	..()
+	charge = 0
+
 /obj/item/weapon/cell/secborg
 	name = "\improper Security borg rechargable D battery"
 	origin_tech = "powerstorage=0"
 	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
 	g_amt = 40
+
+/obj/item/weapon/cell/secborg/empty/New()
+	..()
+	charge = 0
 
 /obj/item/weapon/cell/high
 	name = "high-capacity power cell"
@@ -1368,6 +1415,10 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	icon_state = "hcell"
 	maxcharge = 10000
 	g_amt = 60
+
+/obj/item/weapon/cell/high/empty/New()
+	..()
+	charge = 0
 
 /obj/item/weapon/cell/super
 	name = "super-capacity power cell"
@@ -1377,6 +1428,10 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	g_amt = 70
 	construction_cost = list("metal"=750,"glass"=100)
 
+/obj/item/weapon/cell/super/empty/New()
+	..()
+	charge = 0
+
 /obj/item/weapon/cell/hyper
 	name = "hyper-capacity power cell"
 	origin_tech = "powerstorage=6"
@@ -1384,6 +1439,10 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	maxcharge = 30000
 	g_amt = 80
 	construction_cost = list("metal"=500,"glass"=150,"gold"=200,"silver"=200)
+
+/obj/item/weapon/cell/hyper/empty/New()
+	..()
+	charge = 0
 
 /obj/item/weapon/cell/infinite
 	name = "infinite-capacity power cell!"

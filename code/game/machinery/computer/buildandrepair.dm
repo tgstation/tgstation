@@ -29,6 +29,10 @@
 	var/frame_desc = null
 	var/contain_parts = 1
 
+/obj/item/weapon/circuitboard/message_monitor
+	name = "Circuit board (Message Monitor)"
+	build_path = "/obj/machinery/computer/message_monitor"
+	origin_tech = "programming=3"
 /obj/item/weapon/circuitboard/aicore
 	name = "Circuit board (AI core)"
 	origin_tech = "programming=4;biotech=2"

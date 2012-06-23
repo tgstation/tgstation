@@ -13,6 +13,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 */
 
+
 /area
 	var/fire = null
 	var/atmos = 1
@@ -593,31 +594,35 @@ proc/process_ghost_teleport_locs()
 	icon_state = "fpmaint"
 
 /area/maintenance/fpmaint
-	name = "Fore Port Maintenance"
+	name = "EVA Maintenance"
 	icon_state = "fpmaint"
 
 /area/maintenance/fpmaint2
-	name = "Secondary Fore Port Maintenance"
+	name = "Arrivals North Maintenance"
 	icon_state = "fpmaint"
 
 /area/maintenance/fsmaint
-	name = "Fore Starboard Maintenance"
+	name = "Security Maintenance"
+	icon_state = "fsmaint"
+
+/area/maintenance/fsmaint2
+	name = "Bar Maintenance"
 	icon_state = "fsmaint"
 
 /area/maintenance/asmaint
-	name = "Aft Starboard Maintenance"
+	name = "Library Maintenance"
 	icon_state = "asmaint"
 
 /area/maintenance/asmaint2
-	name = "Secondary Aft Starboard Maintenance"
+	name = "Med-Sci Maintenance"
 	icon_state = "asmaint"
 
 /area/maintenance/apmaint
-	name = "Aft Port Maintenance"
+	name = "Cargo Maintenance"
 	icon_state = "apmaint"
 
 /area/maintenance/maintcentral
-	name = "Central Maintenance"
+	name = "Bridge Maintenance"
 	icon_state = "maintcentral"
 
 /area/maintenance/fore
@@ -629,11 +634,11 @@ proc/process_ghost_teleport_locs()
 	icon_state = "smaint"
 
 /area/maintenance/port
-	name = "Port Maintenance"
+	name = "Locker Room Maintenance"
 	icon_state = "pmaint"
 
 /area/maintenance/aft
-	name = "Aft Maintenance"
+	name = "Robotics Maintenance"
 	icon_state = "amaint"
 
 /area/maintenance/storage
@@ -972,11 +977,11 @@ proc/process_ghost_teleport_locs()
 	LightLevels = list("Red" = 2, "Green" = 2, "Blue" = 3)
 
 	auxport
-		name = "\improper Port Auxiliary Solar Array"
+		name = "\improper Fore Port Solar Array"
 		icon_state = "panelsA"
 
 	auxstarboard
-		name = "\improper Starboard Auxiliary Solar Array"
+		name = "\improper Fore Starboard Solar Array"
 		icon_state = "panelsA"
 
 	fore
@@ -988,27 +993,27 @@ proc/process_ghost_teleport_locs()
 		icon_state = "aft"
 
 	starboard
-		name = "\improper Starboard Solar Array"
+		name = "\improper Aft Starboard Solar Array"
 		icon_state = "panelsS"
 
 	port
-		name = "\improper Port Solar Array"
+		name = "\improper Aft Port Solar Array"
 		icon_state = "panelsP"
 
 /area/maintenance/auxsolarport
-	name = "Port Auxiliary Solar Maintenance"
+	name = "Fore Port Solar Maintenance"
 	icon_state = "SolarcontrolA"
 
 /area/maintenance/starboardsolar
-	name = "Starboard Solar Maintenance"
+	name = "Aft Starboard Solar Maintenance"
 	icon_state = "SolarcontrolS"
 
 /area/maintenance/portsolar
-	name = "Port Solar Maintenance"
+	name = "Aft Port Solar Maintenance"
 	icon_state = "SolarcontrolP"
 
 /area/maintenance/auxsolarstarboard
-	name = "Starboard Auxiliary Solar Maintenance"
+	name = "Fore Starboard Solar Maintenance"
 	icon_state = "SolarcontrolA"
 
 
@@ -1551,6 +1556,10 @@ proc/process_ghost_teleport_locs()
 /area/turret_protected/tcomfoyer
 	name = "\improper Telecommunications Satellite Foyer"
 	icon_state = "tcomsatlob"
+
+/area/turret_protected/tcomfoyer
+	name = "\improper Telecoms Foyer"
+	icon_state = "tcomsatentrance"
 
 /area/turret_protected/tcomwest
 	name = "\improper Telecommunications Satellite West Wing"

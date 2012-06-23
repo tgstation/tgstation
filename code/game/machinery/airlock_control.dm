@@ -175,6 +175,7 @@ obj/machinery/access_button
 			icon_state = "access_button_off"
 
 	attack_hand(mob/user)
+		src.add_fingerprint(usr)
 		if(!allowed(user))
 			user << "\red Access Denied"
 

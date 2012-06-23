@@ -1158,6 +1158,7 @@
 					seer = 0
 					see_invisible = 0
 
+
 			else if (istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
 				switch(wear_mask:mode)
 					if(0)
@@ -1220,12 +1221,11 @@
 					see_in_dark = 2
 
 				var/seer = 0
-				for(var/obj/effect/rune/R in loc)
-					if(R.word1==wordsee && R.word2==wordhell && R.word3==wordjoin)
-						seer = 1
+				var/obj/effect/rune/R = locate() in loc
+				if (istype(R) && R.word1 == wordsee && R.word2 == wordhell && R.word3 == wordjoin)
+					seer = 1
 				if(!seer)
 					see_invisible = 0
-
 
 			else if(istype(head, /obj/item/clothing/head/helmet/welding))		// wat.  This is never fucking called.
 				if(!head:up && tinted_weldhelh)

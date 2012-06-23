@@ -23,8 +23,10 @@
 			for(var/mob/O in viewers(user, null))
 				O.show_message("\red <B>[user] is trying to put handcuffs on [M]!</B>", 1)
 			spawn(30)
+				if(!M)	return
 				if(p_loc == user.loc && p_loc_m == M.loc)
 					M.handcuffed = new /obj/item/weapon/handcuffs(M)
+					M.update_clothing()
 
 	else
 		if ((CLUMSY in usr.mutations) && prob(50))
@@ -64,8 +66,10 @@
 				M.requests += O
 				spawn( 0 )
 					if(istype(src, /obj/item/weapon/handcuffs/cable))
+//						feedback_add_details("handcuffs","C")
 						playsound(src.loc, 'cablecuff.ogg', 30, 1, -2)
 					else
+//						feedback_add_details("handcuffs","H")
 						playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
 					O.process()
 			return

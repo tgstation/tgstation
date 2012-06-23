@@ -136,6 +136,13 @@
 		addtofield(i, "<font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
 	info_links = info_links + "<font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
 
+/obj/item/weapon/paper/proc/clearpaper()
+	info = null
+	stamps = null
+	stamped = list()
+	overlays = null
+	updateinfolinks()
+
 /obj/item/weapon/paper/proc/parsepencode(var/t, var/obj/item/weapon/pen/P, mob/user as mob, var/iscrayon = 0)
 	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
@@ -183,6 +190,7 @@
 
 	return t
 
+
 /obj/item/weapon/paper/proc/openhelp(mob/user as mob)
 	user << browse({"<HTML><HEAD><TITLE>Pen Help</TITLE></HEAD>
 	<BODY>
@@ -203,7 +211,6 @@
 		\[*\] : A dot used for lists.<br>
 		\[hr\] : Adds a horizontal rule.
 	</BODY></HTML>"}, "window=paper_help")
-
 
 /obj/item/weapon/paper/Topic(href, href_list)
 	..()
