@@ -419,7 +419,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		return
 
 	//Gets equipped item or used module of robots
-	var/obj/item/W = usr.equipped()
+	var/obj/item/W = usr.get_active_hand()
 
 	//Attack self
 	if (W == src && usr.stat == 0)
@@ -751,7 +751,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 		return usr:throw_item(src)
 
 	// ------- ITEM IN HAND DEFINED -------
-	var/obj/item/W = usr.equipped()
+	var/obj/item/W = usr.get_active_hand()
 
 	// ------- ROBOT -------
 	if(istype(usr, /mob/living/silicon/robot))
@@ -1035,7 +1035,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 	/* // NOT UNTIL I FIGURE OUT A GOOD WAY TO DO THIS SHIT
 	if((HULK in usr.mutations) || (SUPRSTR in usr.augmentations))
 		if(!istype(src, /obj/item) && !istype(src, /mob) && !istype(src, /turf))
-			if(!usr.equipped())
+			if(!usr.get_active_hand())
 
 				var/liftable = 0
 				for(var/x in liftable_structures)
@@ -1048,11 +1048,7 @@ var/using_new_click_proc = 0 //TODO ERRORAGE (This is temporary, while the DblCl
 					add_fingerprint(usr)
 					var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(usr)
 					G.assailant = usr
-					if (usr.hand)
-						usr.l_hand = G
-					else
-						usr.r_hand = G
-					G.layer = 20
+					usr.put_in_active_hand(G)
 					G.structure = src
 					G.synch()
 

@@ -65,7 +65,7 @@
 				P.loc = usr.loc
 				if(ishuman(usr))
 					if(!usr.get_active_hand())
-						usr.put_in_hand(P)
+						usr.put_in_hands(P)
 				else
 					P.loc = get_turf(usr)
 

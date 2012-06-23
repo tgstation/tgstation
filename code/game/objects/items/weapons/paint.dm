@@ -53,7 +53,7 @@ var/global/list/cached_icons = list()
 
 	attack_self(mob/user as mob)
 		var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "black", "white")
-		if ((user.equipped() != src || user.stat || user.restrained()))
+		if ((user.get_active_hand() != src || user.stat || user.restrained()))
 			return
 		switch(t1)
 			if("red")

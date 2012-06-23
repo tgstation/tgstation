@@ -36,7 +36,7 @@
 					var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 					O.source = user
 					O.target = user
-					O.item = user.equipped()
+					O.item = user.get_active_hand()
 					O.s_loc = user.loc
 					O.t_loc = user.loc
 					O.place = "handcuff"
@@ -58,7 +58,7 @@
 				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 				O.source = user
 				O.target = M
-				O.item = user.equipped()
+				O.item = user.get_active_hand()
 				O.s_loc = user.loc
 				O.t_loc = M.loc
 				O.place = "handcuff"
@@ -77,7 +77,7 @@
 				var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey(  )
 				O.source = user
 				O.target = M
-				O.item = user.equipped()
+				O.item = user.get_active_hand()
 				O.s_loc = user.loc
 				O.t_loc = M.loc
 				O.place = "handcuff"

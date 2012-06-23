@@ -89,11 +89,11 @@
 		usr << "\red Not when we are incapacitated."
 		return
 
-	if (!istype(usr.equipped(), /obj/item/weapon/grab))
+	if (!istype(usr.get_active_hand(), /obj/item/weapon/grab))
 		usr << "\red We must be grabbing a creature in our active hand to absorb them."
 		return
 
-	var/obj/item/weapon/grab/G = usr.equipped()
+	var/obj/item/weapon/grab/G = usr.get_active_hand()
 	var/mob/M = G.affecting
 
 	if (!ishuman(M))
@@ -278,7 +278,7 @@
 	O.changeling = usr.changeling
 
 	for(var/obj/item/W in usr)
-		usr.drop_from_slot(W)
+		usr.drop_from_inventory(W)
 
 
 	for(var/obj/T in usr)
@@ -412,7 +412,7 @@
 	if (usr.monkeyizing)
 		return
 	for(var/obj/item/W in src)
-		usr.drop_from_slot(W)
+		usr.drop_from_inventory(W)
 	usr.regenerate_icons()
 	usr.monkeyizing = 1
 	usr.canmove = 0

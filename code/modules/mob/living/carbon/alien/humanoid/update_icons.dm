@@ -115,7 +115,7 @@
 	if(r_hand)
 		var/t_state = r_hand.item_state
 		if(!t_state)	t_state = r_hand.icon_state
-		r_hand.screen_loc = ui_rhand
+//		r_hand.screen_loc = ui_rhand
 		overlays_standing[X_R_HAND_LAYER]	= image("icon" = 'items_righthand.dmi', "icon_state" = t_state)
 	else
 		overlays_standing[X_R_HAND_LAYER]	= null
@@ -125,7 +125,7 @@
 	if(l_hand)
 		var/t_state = l_hand.item_state
 		if(!t_state)	t_state = l_hand.icon_state
-		l_hand.screen_loc = ui_lhand
+//		l_hand.screen_loc = ui_lhand
 		overlays_standing[X_L_HAND_LAYER]	= image("icon" = 'items_lefthand.dmi', "icon_state" = t_state)
 	else
 		overlays_standing[X_L_HAND_LAYER]	= null

@@ -49,7 +49,7 @@
 			pinned_target.loc = user.loc
 			if(ishuman(user))
 				if(!user.get_active_hand())
-					user.put_in_hand(pinned_target)
+					user.put_in_hands(pinned_target)
 					user << "You take the target out of the stake."
 			else
 				pinned_target.loc = get_turf_loc(user)
@@ -119,7 +119,7 @@
 				loc = user.loc
 				if(ishuman(user))
 					if(!user.get_active_hand())
-						user.put_in_hand(src)
+						user.put_in_hands(src)
 						user << "You take the target out of the stake."
 				else
 					src.loc = get_turf_loc(user)

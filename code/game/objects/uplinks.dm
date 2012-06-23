@@ -528,7 +528,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		var/mob/L = src.loc
 		R.loc = T
 		T.loc = L
-		// R.layer = initial(R.layer)
+		// R.layer = initial(R.layer)				//TODO: CARN
 		R.layer = 0
 		if (istype(L))
 			if (L.client)

@@ -451,14 +451,10 @@
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
 			G.assailant = M
-			if (M.hand)
-				M.l_hand = G
-				M.update_inv_l_hand()
-			else
-				M.r_hand = G
-				M.update_inv_r_hand()
-			G.layer = 20
 			G.affecting = src
+
+			M.put_in_active_hand(G)
+
 			grabbed_by += G
 			G.synch()
 
@@ -557,14 +553,10 @@
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
 			G.assailant = M
-			if (M.hand)
-				M.l_hand = G
-				M.update_inv_l_hand()
-			else
-				M.r_hand = G
-				M.update_inv_r_hand()
-			G.layer = 20
 			G.affecting = src
+
+			M.put_in_active_hand(G)
+
 			grabbed_by += G
 			G.synch()
 

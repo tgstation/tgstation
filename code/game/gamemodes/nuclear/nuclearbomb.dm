@@ -87,7 +87,7 @@
 				src.yes_code = 0
 				src.auth = null
 			else
-				var/obj/item/I = usr.equipped()
+				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/disk/nuclear))
 					usr.drop_item()
 					I.loc = src

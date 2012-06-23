@@ -23,7 +23,7 @@
 /obj/item/proc/equipped(var/mob/user, var/slot)
 	return
 //
-// ***TODO: implement unequipped()
+// ***TODO: implement unget_active_hand()
 //
 
 /obj/item/proc/afterattack()
@@ -119,15 +119,8 @@
 		src.pickup(user)
 		user.lastDblClick = world.time + 2
 		user.next_move = world.time + 2
-	src.loc = user
-	src.layer = 20
 	add_fingerprint(user)
-	if (user.hand)
-		user.l_hand = src
-		user.update_inv_l_hand()
-	else
-		user.r_hand = src
-		user.update_inv_r_hand()
+	user.put_in_active_hand(src)
 	return
 
 
@@ -158,14 +151,8 @@
 		src.pickup(user)
 		user.lastDblClick = world.time + 2
 		user.next_move = world.time + 2
-	src.loc = user
-	src.layer = 20
-	if (user.hand)
-		user.l_hand = src
-		user.update_inv_l_hand()
-	else
-		user.r_hand = src
-		user.update_inv_r_hand()
+
+	user.put_in_active_hand(src)
 	return
 
 /obj/item/attackby(obj/item/weapon/W as obj, mob/user as mob)

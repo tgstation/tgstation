@@ -71,7 +71,7 @@
 		var/turf/T = user.loc
 		user << text("\blue []ing the access hatch... (this is a long process)", (locked) ? "Open" : "Clos")
 		sleep(100)
-		if ((user.loc == T && user.equipped() == W && !( user.stat )))
+		if ((user.loc == T && user.get_active_hand() == W && !( user.stat )))
 			src.locked ^= 1
 			user << text("\blue The access hatch is now [].", (locked) ? "closed" : "open")
 

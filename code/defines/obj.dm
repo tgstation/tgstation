@@ -1348,19 +1348,19 @@
 			amount--
 			new/obj/item/stack/sheet/glass(user.loc)
 			if(amount <= 0)
-				user.u_equip(src)
+				user.drop_from_inventory(src)
 				del(src)
 
 		if(istype(O,/obj/item/stack/sheet/metal))
 			var/obj/item/stack/sheet/metal/M = O
 			M.amount--
 			if(M.amount <= 0)
-				user.u_equip(M)
+				user.drop_from_inventory(M)
 				del(M)
 			amount--
 			new/obj/item/stack/tile/light(user.loc)
 			if(amount <= 0)
-				user.u_equip(src)
+				user.drop_from_inventory(src)
 				del(src)
 
 /obj/item/stack/tile/light
@@ -1396,7 +1396,7 @@
 			amount--
 			new/obj/item/stack/light_w(user.loc)
 			if(amount <= 0)
-				user.u_equip(src)
+				user.drop_from_inventory(src)
 				del(src)
 
 /obj/item/stack/sheet/cardboard	//BubbleWrap

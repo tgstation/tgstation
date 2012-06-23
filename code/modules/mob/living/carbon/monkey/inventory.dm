@@ -66,7 +66,7 @@
 	if(source.loc != s_loc)						return
 	if(target.loc != t_loc)						return
 	if(LinkBlocked(s_loc,t_loc))				return
-	if(item && source.equipped() != item)	return
+	if(item && source.get_active_hand() != item)	return
 	if ((source.restrained() || source.stat))	return
 	switch(place)
 		if("mask")

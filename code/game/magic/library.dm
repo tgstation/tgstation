@@ -101,7 +101,7 @@
 				return
 			if(ishuman(user))
 				if(!user.get_active_hand())
-					user.put_in_hand(choice)
+					user.put_in_hands(choice)
 			else
 				choice.loc = get_turf(src)
 			update_icon()

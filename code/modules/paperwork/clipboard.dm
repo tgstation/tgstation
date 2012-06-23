@@ -21,18 +21,16 @@
 		var/mob/M = usr
 		if (!(istype(over_object, /obj/screen) ))
 			return ..()
-		if((!(M.restrained()) && !(M.stat)))
-			if(over_object.name == "r_hand")
-				if(!(M.r_hand))
+
+		if(!M.restrained() && !M.stat)
+			switch(over_object.name)
+				if("r_hand")
 					M.u_equip(src)
-					M.r_hand = src
-					M.update_inv_r_hand()
-			else
-				if(over_object.name == "l_hand")
-					if(!(M.l_hand))
-						M.u_equip(src)
-						M.l_hand = src
-						M.update_inv_l_hand()
+					M.put_in_r_hand(src)
+				if("l_hand")
+					M.u_equip(src)
+					M.put_in_l_hand(src)
+
 			src.add_fingerprint(usr)
 			return
 
@@ -91,7 +89,7 @@
 				haspen.loc = usr.loc
 				if(ishuman(usr))
 					if(!usr.get_active_hand())
-						usr.put_in_hand(haspen)
+						usr.put_in_hands(haspen)
 						haspen = null
 
 		if(href_list["addpen"])
@@ -115,7 +113,7 @@
 				P.loc = usr.loc
 				if(ishuman(usr))
 					if(!usr.get_active_hand())
-						usr.put_in_hand(P)
+						usr.put_in_hands(P)
 				else
 					P.loc = get_turf(usr)
 				if(P == toppaper)

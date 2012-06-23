@@ -867,7 +867,7 @@ About the new airlock wires panel:
 		usr.machine = src
 		if(href_list["wires"])
 			var/t1 = text2num(href_list["wires"])
-			if(!( istype(usr.equipped(), /obj/item/weapon/wirecutters) ))
+			if(!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
 				usr << "You need wirecutters!"
 				return
 			if(src.isWireColorCut(t1))
@@ -876,7 +876,7 @@ About the new airlock wires panel:
 				src.cut(t1)
 		else if(href_list["pulse"])
 			var/t1 = text2num(href_list["pulse"])
-			if(!istype(usr.equipped(), /obj/item/device/multitool))
+			if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
 				usr << "You need a multitool!"
 				return
 			if(src.isWireColorCut(t1))
@@ -886,13 +886,13 @@ About the new airlock wires panel:
 				src.pulse(t1)
 		else if(href_list["signaler"])
 			var/wirenum = text2num(href_list["signaler"])
-			if(!istype(usr.equipped(), /obj/item/device/assembly/signaler))
+			if(!istype(usr.get_active_hand(), /obj/item/device/assembly/signaler))
 				usr << "You need a signaller!"
 				return
 			if(src.isWireColorCut(wirenum))
 				usr << "You can't attach a signaller to a cut wire."
 				return
-			var/obj/item/device/assembly/signaler/R = usr.equipped()
+			var/obj/item/device/assembly/signaler/R = usr.get_active_hand()
 			if(R.secured)
 				usr << "This radio can't be attached!"
 				return

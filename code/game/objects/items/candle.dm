@@ -119,14 +119,7 @@
 			return
 		else
 			src.candlecount--
-			var/obj/item/candle/W = new /obj/item/candle(user)
-			if(user.hand)
-				user.l_hand = W
-				user.update_inv_l_hand()
-			else
-				user.r_hand = W
-				user.update_inv_r_hand()
-			W.layer = 20
+			user.put_in_hands(new /obj/item/candle(user))
 	else
 		return ..()
 	src.update_icon()

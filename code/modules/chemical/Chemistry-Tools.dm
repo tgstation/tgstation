@@ -1384,43 +1384,43 @@
 			switch(trash)
 				if ("raisins")
 					var/obj/item/trash/raisins/T = new /obj/item/trash/raisins/( M )
-					M.put_in_hand(T)
+					M.put_in_hands(T)
 				if ("candy")
 					var/obj/item/trash/candy/T = new /obj/item/trash/candy/( M )
-					M.put_in_hand(T)
+					M.put_in_hands(T)
 				if ("cheesie")
 					var/obj/item/trash/cheesie/T = new /obj/item/trash/cheesie/( M )
-					M.put_in_hand(T)
+					M.put_in_hands(T)
 				if ("chips")
 					var/obj/item/trash/chips/T = new /obj/item/trash/chips/( M )
-					M.put_in_hand(T)
+					M.put_in_hands(T)
 				if ("popcorn")
 					var/obj/item/trash/popcorn/T = new /obj/item/trash/popcorn/( M )
-					M.put_in_hand(T)
+					M.put_in_hands(T)
 				if ("sosjerky")
 					var/obj/item/trash/sosjerky/T = new /obj/item/trash/sosjerky/( M )
-					M.put_in_hand(T)
+					M.put_in_hands(T)
 				if ("syndi_cakes")
 					var/obj/item/trash/syndi_cakes/T = new /obj/item/trash/syndi_cakes/( M )
-					M.put_in_hand(T)
+					M.put_in_hands(T)
 				if ("waffles")
 					var/obj/item/trash/waffles/T = new /obj/item/trash/waffles/( M )
-					M.put_in_hand(T)
+					M.put_in_hands(T)
 				if ("plate")
 					var/obj/item/trash/plate/T = new /obj/item/trash/plate/( M )
-					M.put_in_hand(T)
+					M.put_in_hands(T)
 				if ("snack_bowl")
 					var/obj/item/trash/snack_bowl/T = new /obj/item/trash/snack_bowl/( M )
-					M.put_in_hand(T)
+					M.put_in_hands(T)
 				if ("pistachios")
 					var/obj/item/trash/pistachios/T = new /obj/item/trash/pistachios/( M )
-					M.put_in_hand(T)
+					M.put_in_hands(T)
 				if ("semki")
 					var/obj/item/trash/semki/T = new /obj/item/trash/semki/( M )
-					M.put_in_hand(T)
+					M.put_in_hands(T)
 				if ("tray")
 					var/obj/item/trash/tray/T = new /obj/item/trash/tray/( M )
-					M.put_in_hand(T)
+					M.put_in_hands(T)
 		return
 
 	attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -1431,6 +1431,7 @@
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
 			user << "\red None of [src] left, oh no!"
+			M.drop_from_inventory(src)	//so icons update :[
 			del(src)
 			return 0
 		if(istype(M, /mob/living/carbon))
@@ -1491,6 +1492,7 @@
 						if(!reagents.total_volume)
 							if(M == user) user << "\red You finish eating [src]."
 							else user << "\red [M] finishes eating [src]."
+							M.drop_from_inventory(src)	//so icons update :[
 							del(src)
 				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
 				return 1
@@ -1833,22 +1835,14 @@
 
 	attackby(var/obj/D, mob/user as mob)
 		if(isprox(D))
-			var/obj/item/weapon/bucket_sensor/B = new /obj/item/weapon/bucket_sensor
-			B.loc = user
-			if (user.r_hand == D)
-				user.u_equip(D)
-				user.r_hand = B
-				user.update_inv_r_hand()
-			else
-				user.u_equip(D)
-				user.l_hand = B
-				user.update_inv_l_hand()
-			B.layer = 20
-			user << "You add the sensor to the bucket"
+			user << "You add [D] to [src]."
 			del(D)
+			user.put_in_hands(new /obj/item/weapon/bucket_sensor)
+			user.drop_from_inventory(src)
 			del(src)
 
-/obj/item/weapon/reagent_containers/glass/cantister
+/*
+/obj/item/weapon/reagent_containers/glass/canister		//not used apparantly
 	desc = "It's a canister. Mainly used for transporting fuel."
 	name = "canister"
 	icon = 'tank.dmi'
@@ -1862,7 +1856,7 @@
 	possible_transfer_amounts = list(10,20,30,60)
 	volume = 120
 	flags = FPRINT
-
+*/
 
 /obj/item/weapon/reagent_containers/glass/dispenser
 	name = "reagent glass"

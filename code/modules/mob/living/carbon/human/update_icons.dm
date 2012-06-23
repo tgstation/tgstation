@@ -127,6 +127,8 @@ Please contact me on #coderbus IRC. ~Carn x
 //this proc is messy as I was forced to include some old laggy cloaking code to it so that I don't break cloakers
 //I'll work on removing that stuff by rewriting some of the cloaking stuff at a later date.
 /mob/living/carbon/human/update_icons()
+	if(Debug2)	world << "human/update_icons()"
+
 	lying_prev = lying	//so we don't update overlays for lying/standing unless our stance changes again
 	update_hud()		//TODO: remove the need for this
 	overlays = null
@@ -354,19 +356,14 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(!t_color)		t_color = icon_state
 		var/image/lying		= image("icon_state" = "[t_color]_l")
 		var/image/standing	= image("icon_state" = "[t_color]_s")
+
 		if( (FAT in mutations) )
 			if(w_uniform.flags&ONESIZEFITSALL)
 				lying.icon		= 'uniform_fat.dmi'
 				standing.icon	= 'uniform_fat.dmi'
 			else
 				src << "\red You burst out of \the [w_uniform]!"
-				var/obj/item/clothing/c = w_uniform
-				w_uniform = null
-				if(client)
-					client.screen -= c
-				c.loc = loc
-				c.dropped(src)
-				c.layer = initial(c.layer)
+				drop_from_inventory(w_uniform)
 				lying		= null
 				standing	= null
 		else

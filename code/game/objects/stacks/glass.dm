@@ -38,7 +38,7 @@ SHARDS
 		var/replace = (user.get_inactive_hand()==G)
 		G.use(1)
 		if (!G && !RG && replace)
-			user.put_in_hand(RG)
+			user.put_in_hands(RG)
 	else
 		return ..()
 

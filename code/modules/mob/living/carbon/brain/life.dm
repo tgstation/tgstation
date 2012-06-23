@@ -40,15 +40,13 @@
 
 		clamp_values()
 
-
-
 	proc
 
 		clamp_values()
 
 			AdjustParalysis(0)
-			AdjustStunned(0)
-			AdjustWeakened(0)
+//			AdjustStunned(0)
+//			AdjustWeakened(0)
 			adjustBruteLoss(0)
 			adjustFireLoss(0)
 			adjustOxyLoss(0)
@@ -89,12 +87,6 @@
 							emote("gasp")
 						updatehealth()
 
-		update_canmove()
-			if(in_contents_of(/obj/mecha))
-				canmove = 1
-			else
-				canmove = 0
-			return
 
 		handle_environment(datum/gas_mixture/environment)
 			if(!environment)
@@ -315,3 +307,7 @@
 					D.cure()
 			return
 
+	update_canmove()
+		if(in_contents_of(/obj/mecha))	canmove = 1
+		else							canmove = 0
+		return canmove

@@ -366,12 +366,12 @@
 				switchcount = L.switchcount
 				rigged = L.rigged
 				brightness = L.brightness
-				del(L)
-
 				on = has_power()
 				update()
-				user.update_inv_l_hand(0)
-				user.update_inv_r_hand()
+
+				user.drop_item()	//drop the item to update overlays and such
+				del(L)
+
 				if(on && rigged)
 					explode()
 			else
@@ -497,22 +497,15 @@
 	L.status = status
 	L.rigged = rigged
 	L.brightness = src.brightness
-	L.loc = usr
-	L.layer = 20
-	if(user.hand)
-		user.l_hand = L
-		user.update_inv_l_hand()
-	else
-		user.r_hand = L
-		user.update_inv_r_hand()
 
 	// light item inherits the switchcount, then zero it
 	L.switchcount = switchcount
 	switchcount = 0
 
-
 	L.update()
 	L.add_fingerprint(user)
+
+	user.put_in_active_hand(L)	//puts it in our active hand
 
 	status = LIGHT_EMPTY
 	update()

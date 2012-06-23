@@ -515,12 +515,12 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					if("Cancel")
 						return
 					if("Read it")
-						if(usr.equipped() != src)
+						if(usr.get_active_hand() != src)
 							return
 						user << browse("[tomedat]", "window=Arcane Tome")
 						return
 					if("Notes")
-						if(usr.equipped() != src)
+						if(usr.get_active_hand() != src)
 							return
 						notedat = {"
 					<br><b>Word translation notes</b> <br>
@@ -538,7 +538,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 //						call(/obj/item/weapon/tome/proc/edit_notes)()
 						user << browse("[notedat]", "window=notes")
 						return
-			if(usr.equipped() != src)
+			if(usr.get_active_hand() != src)
 				return
 
 			var/w1
@@ -563,7 +563,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 					if (words[w] == w3)
 						w3 = w
 
-			if(usr.equipped() != src)
+			if(usr.get_active_hand() != src)
 				return
 
 			for (var/mob/V in viewers(src))
@@ -571,7 +571,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			user << "\red You slice open one of your fingers and begin drawing a rune on the floor whilst chanting the ritual that binds your life essence with the dark arcane energies flowing through the surrounding world."
 			user.take_overall_damage(1)
 			if(do_after(user, 50))
-				if(usr.equipped() != src)
+				if(usr.get_active_hand() != src)
 					return
 				var/mob/living/carbon/human/H = user
 				var/obj/effect/rune/R = new /obj/effect/rune(user.loc)

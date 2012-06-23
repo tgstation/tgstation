@@ -755,14 +755,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/proc/remove_id()
 	if (id)
-		if (istype(loc, /mob))
+		if (ismob(loc))
 			var/mob/M = loc
-			if(M.equipped() == null)
-				M.put_in_hand(id)
-				id = null
-				usr << "\blue You remove the ID from the [name]."
-				return
-		id.loc = get_turf(src)
+			M.put_in_hands(id)
+			usr << "<span class='notice'>You remove the ID from the [name].</span>"
+		else
+			id.loc = get_turf(src)
 		id = null
 
 /obj/item/device/pda/proc/telecomms_process(var/receipent, var/originator, var/data)
@@ -820,8 +818,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(O)
 			if (istype(loc, /mob))
 				var/mob/M = loc
-				if(M.equipped() == null)
-					M.put_in_hand(O)
+				if(M.get_active_hand() == null)
+					M.put_in_hands(O)
 					usr << "<span class='notify'>You remove \the [O] from \the [src].</span>"
 					return
 			O.loc = get_turf(src)
@@ -835,23 +833,19 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if (id)
 			remove_id()
 		else
-			var/obj/item/I = user.equipped()
+			var/obj/item/I = user.get_active_hand()
 			if (istype(I, /obj/item/weapon/card/id))
 				user.drop_item()
 				I.loc = src
 				id = I
 	else
-		var/obj/item/weapon/card/I = user.equipped()
+		var/obj/item/weapon/card/I = user.get_active_hand()
 		if (istype(I, /obj/item/weapon/card/id) && I:registered_name)
-			if(id)//Get id and replace it.
-				user.drop_item()
-				I.loc = src
-				user.put_in_hand(id)
-				id = I
-			else//Insert id.
-				user.drop_item()
-				I.loc = src
-				id = I
+			var/obj/old_id = id
+			user.drop_item()
+			I.loc = src
+			id = I
+			user.put_in_hands(old_id)
 	return
 
 // access to status display signals

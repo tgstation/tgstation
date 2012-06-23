@@ -71,14 +71,7 @@ ZIPPO
 				return
 			else
 				src.matchcount--
-				var/obj/item/weapon/match/W = new /obj/item/weapon/match(user)
-				if(user.hand)
-					user.l_hand = W
-					user.update_inv_l_hand()
-				else
-					user.r_hand = W
-					user.update_inv_r_hand()
-				W.layer = 20
+				user.put_in_active_hand(new /obj/item/weapon/match(user))
 		else
 			return ..()
 		if(src.matchcount <= 0)
@@ -430,13 +423,7 @@ ZIPPO
 				cigcount--
 				var/obj/item/clothing/mask/cigarette/W = new /obj/item/clothing/mask/cigarette(user)
 				reagents.trans_to(W, reagents.total_volume)
-				if(user.hand)
-					user.l_hand = W
-					user.update_inv_l_hand()
-				else
-					user.r_hand = W
-					user.update_inv_r_hand()
-				W.layer = 20
+				user.put_in_active_hand(W)
 		else
 			return ..()
 		update_icon()

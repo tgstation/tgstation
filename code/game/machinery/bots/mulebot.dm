@@ -320,18 +320,10 @@
 
 
 			if("cellremove")
-				if(open && cell && !usr.equipped())
-					cell.loc = usr
-					cell.layer = 20
-					if(usr.hand)
-						usr.l_hand = cell
-						usr.update_inv_l_hand()
-					else
-						usr.r_hand = cell
-						usr.update_inv_r_hand()
-
-					cell.add_fingerprint(usr)
+				if(open && cell && !usr.get_active_hand())
 					cell.updateicon()
+					usr.put_in_active_hand(cell)
+					cell.add_fingerprint(usr)
 					cell = null
 
 					usr.visible_message("\blue [usr] removes the power cell from [src].", "\blue You remove the power cell from [src].")
@@ -339,7 +331,7 @@
 
 			if("cellinsert")
 				if(open && !cell)
-					var/obj/item/weapon/cell/C = usr.equipped()
+					var/obj/item/weapon/cell/C = usr.get_active_hand()
 					if(istype(C))
 						usr.drop_item()
 						cell = C
@@ -409,20 +401,20 @@
 
 
 			if("wirecut")
-				if(istype(usr.equipped(), /obj/item/weapon/wirecutters))
+				if(istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
 					var/wirebit = text2num(href_list["wire"])
 					wires &= ~wirebit
 				else
 					usr << "\blue You need wirecutters!"
 			if("wiremend")
-				if(istype(usr.equipped(), /obj/item/weapon/wirecutters))
+				if(istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
 					var/wirebit = text2num(href_list["wire"])
 					wires |= wirebit
 				else
 					usr << "\blue You need wirecutters!"
 
 			if("wirepulse")
-				if(istype(usr.equipped(), /obj/item/device/multitool))
+				if(istype(usr.get_active_hand(), /obj/item/device/multitool))
 					switch(href_list["wire"])
 						if("1","2")
 							usr << "\blue \icon[src] The charge light flickers."

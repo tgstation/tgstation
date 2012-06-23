@@ -559,7 +559,7 @@ It can still be worn/put on as normal.
 	if(source.loc != s_loc)						return
 	if(target.loc != t_loc)						return
 	if(LinkBlocked(s_loc,t_loc))				return
-	if(item && source.equipped() != item)		return
+	if(item && source.get_active_hand() != item)		return
 	if ((source.restrained() || source.stat))	return
 	switch(place)
 		if("mask")
@@ -920,8 +920,8 @@ It can still be worn/put on as normal.
 					W.add_fingerprint(source)
 			else
 				if (istype(item, /obj/item/weapon/handcuffs))
-					target.drop_from_slot(target.r_hand)
-					target.drop_from_slot(target.l_hand)
+					target.drop_from_inventory(target.r_hand)
+					target.drop_from_inventory(target.l_hand)
 					source.drop_item()
 					target.handcuffed = item
 					item.loc = target
@@ -1012,7 +1012,7 @@ It can still be worn/put on as normal.
 	return
 
 /mob/living/carbon/human/db_click(text, t1)
-	var/obj/item/W = equipped()
+	var/obj/item/W = get_active_hand()
 	var/emptyHand = (W == null)
 	if(emptyHand)
 		usr.next_move = usr.prev_move

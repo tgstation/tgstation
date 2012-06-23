@@ -212,13 +212,14 @@
 
 
 
-/obj/machinery/computer/HolodeckControl/proc/derez(var/obj , var/silent = 1)
+/obj/machinery/computer/HolodeckControl/proc/derez(var/obj/obj , var/silent = 1)
 	holographic_items.Remove(obj)
 
-	if(istype(obj , /obj/))
-		if(istype(obj:loc , /mob/))
-			var/mob/M = obj:loc
-			M.drop_from_slot(obj)
+	if(isobj(obj))
+		var/mob/M = obj.loc
+		if(ismob(M))
+			M.u_equip(obj)
+			M.update_icons()	//so their overlays update
 
 	if(!silent)
 		var/obj/oldobj = obj

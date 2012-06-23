@@ -23,17 +23,13 @@
 		return ..()
 	playsound(src.loc, "rustle", 50, 1, -5)
 	if (!M.restrained() && !M.stat && can_use())
-		if (over_object.name == "r_hand")
-			if (!( M.r_hand ))
+		switch(over_object.name)
+			if("r_hand")
 				M.u_equip(src)
-				M.r_hand = src
-				M.update_inv_r_hand()
-		else
-			if (over_object.name == "l_hand")
-				if (!( M.l_hand ))
-					M.u_equip(src)
-					M.l_hand = src
-					M.update_inv_l_hand()
+				M.put_in_r_hand(src)
+			if("l_hand")
+				M.u_equip(src)
+				M.put_in_l_hand(src)
 		src.add_fingerprint(usr)
 		return
 

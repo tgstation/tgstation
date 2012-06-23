@@ -98,8 +98,8 @@
 
 		// You need a multitool to use this, or be silicon
 		if(!issilicon(user))
-			if(user.equipped())
-				if(!istype(user.equipped(), /obj/item/device/multitool))
+			if(user.get_active_hand())
+				if(!istype(user.get_active_hand(), /obj/item/device/multitool))
 					return
 			else
 				return
@@ -109,7 +109,7 @@
 
 		var/obj/item/device/multitool/P = null
 		if(!issilicon(user))
-			P = user.equipped()
+			P = user.get_active_hand()
 
 		user.machine = src
 		var/dat
@@ -160,8 +160,8 @@
 	Topic(href, href_list)
 
 		if(!issilicon(usr))
-			if(usr.equipped())
-				if(!istype(usr.equipped(), /obj/item/device/multitool))
+			if(usr.get_active_hand())
+				if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
 					return
 			else
 				return
@@ -171,7 +171,7 @@
 
 		var/obj/item/device/multitool/P = null
 		if(!issilicon(usr))
-			P = usr.equipped()
+			P = usr.get_active_hand()
 
 		if(href_list["input"])
 			switch(href_list["input"])

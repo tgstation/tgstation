@@ -20,7 +20,9 @@
 		return
 
 
+	//stops TK grabs being equipped anywhere but into hands
 	equipped(var/mob/user, var/slot)
+		if( (slot=="l_hand") || (slot=="r_hand") )	return
 		del(src)
 		return
 
@@ -29,13 +31,7 @@
 		if(!istype(focus,/obj/item))	return
 		if(!check_path())	return//No clear path
 
-		if(user.hand == src)
-			user.l_hand = focus
-		else
-			user.r_hand = focus
-
-		focus.loc = user
-		focus.layer = 20
+		user.put_in_hands(focus)
 		add_fingerprint(user)
 		user.update_inv_l_hand(0)
 		user.update_inv_r_hand()
@@ -117,7 +113,7 @@
 /*
 		if(istype(user, /mob/living/carbon))
 			if(user:mutations & TK && get_dist(source, user) <= 7)
-				if(user:equipped())	return 0
+				if(user:get_active_hand())	return 0
 				var/X = source:x
 				var/Y = source:y
 				var/Z = source:z

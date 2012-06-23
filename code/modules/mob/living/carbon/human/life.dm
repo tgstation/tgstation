@@ -68,26 +68,13 @@
 	//Status updates, death etc.
 	UpdateLuminosity()
 	handle_regular_status_updates()		//TODO: optimise ~Carn
-
-	//Being buckled to chairs/beds/etc
-	check_if_buckled()
-
-	//Temporary, whilst I finish the regenerate_icons changes ~Carn
-	if( update_icon )	//forces a full overlay update
-		update_icon = 0
-		regenerate_icons()
-	else if( lying != lying_prev )
-		update_icons()
+	update_canmove()	//TODO: remove from life() if viable ~Carn (read as: if it won't cause massive problems)
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()	//TODO: this was broken by the dismemberment revert ~Carn
 
 	if(client)
 		handle_regular_hud_updates()
-
-	update_canmove()	//TODO: check ~Carn
-
-	clamp_values()		//TODO: check that dmage procs aren't outputing bad values outside clamp ranges ~Carn
 
 	// Grabbing
 	for(var/obj/item/weapon/grab/G in src)
@@ -98,6 +85,9 @@
 		var/turf/currentTurf = loc
 		if(!currentTurf.sd_lumcount)
 			playsound_local(src,pick(scarySounds),50, 1, -1)
+
+	clamp_values()		//TODO: finish removing this ~Carn
+
 
 /mob/living/carbon/human/calculate_affecting_pressure(var/pressure)
 	..()
@@ -121,9 +111,9 @@
 	//This can probably be removed like Rockdtben suggested, but I'd like to go over the damage procs first just to be safe.
 	//Perhaps code view-vars to be unable to directly edit the damagevariables without using procs
 	proc/clamp_values()
-		stunned		= max( min(stunned,20), 0 )		// positive and under 20
+//		stunned		= max( min(stunned,20), 0 )		// positive and under 20
 		paralysis	= max( min(paralysis,20), 0 )	// positive and under 20
-		weakened	= max( min(weakened,20), 0 )	// positive and under 20
+//		weakened	= max( min(weakened,20), 0 )	// positive and under 20
 		sleeping	= max( min(sleeping, 20), 0 )	// positive and under 20
 		oxyloss		= max(oxyloss,0)				// positive
 		toxloss		= max(toxloss,0)				// positive
@@ -375,14 +365,6 @@
 			else if(internals)
 				internals.icon_state = "internal0"
 		return null
-
-	proc/update_canmove()
-		if(stat || sleeping || paralysis || stunned || weakened || resting || buckled || (changeling && changeling.changeling_fakedeath))
-			canmove = 0
-
-		else
-			lying = 0
-			canmove = 1
 
 
 	proc/handle_breath(datum/gas_mixture/breath)
@@ -754,99 +736,86 @@
 		return //TODO: DEFERRED
 
 	proc/handle_regular_status_updates()
-
-	//	health = 100 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
-
-		if(getOxyLoss() > 50) Paralyse(3)
-
-		if(health < config.health_threshold_dead || brain_op_stage == 4.0)
-			death()
-		else if(health < config.health_threshold_crit)
-			if(health <= 20 && prob(1)) spawn(0) emote("gasp")
-
-			//if(!rejuv) oxyloss++
-			if(!reagents.has_reagent("inaprovaline")) adjustOxyLoss(1)
-
-			if(stat != DEAD)	stat = UNCONSCIOUS
-			Paralyse(5)
-
-		if (stat != DEAD) //Alive.
-			if (silent)
-				silent--
-
-			if (resting || sleeping || paralysis || stunned || weakened || (changeling && changeling.changeling_fakedeath)) //Stunned etc.
-				if (stunned > 0)
-					AdjustStunned(-1)
-					stat = CONSCIOUS
-				if (weakened > 0)
-					AdjustWeakened(-1)
-					lying = 1
-					stat = CONSCIOUS
-				if (paralysis > 0)
-					AdjustParalysis(-1)
-					blinded = 1
-					lying = 1
-					stat = UNCONSCIOUS
-
-				if (sleeping > 0)
-					handle_dreams()
-					adjustHalLoss(-5)
-					blinded = 1
-					lying = 1
-					stat = UNCONSCIOUS
-					if (prob(10) && health && !hal_crit)
-						spawn(0)
-							emote("snore")
-					sleeping--
-
-				if(resting)
-					lying = 1
-					stat = CONSCIOUS
-
-				var/h = hand
-				hand = 0
-				drop_item()
-				hand = 1
-				drop_item()
-				hand = h
-
-			else	//Not stunned.
-				lying = 0
-				stat = CONSCIOUS
-
-		else //Dead.
-			lying = 1
+		if(stat == DEAD)	//DEAD. BROWN BREAD. SWIMMING WITH THE SPESS CARP
 			blinded = 1
 			stat = DEAD
 			silent = 0
+		else				//ALIVE. LIGHTS ARE ON
+			if(health < config.health_threshold_dead || brain_op_stage == 4.0)
+				death()
+				blinded = 1
+				stat = DEAD
+				silent = 0
+				return 1
 
-		if (stuttering) stuttering--
+			stat = CONSCIOUS
+			if(getOxyLoss() > 50)
+				Paralyse(3)
 
-		if (eye_blind)
-			eye_blind--
-			blinded = 1
+			if(health < config.health_threshold_crit)	//UNCONSCIOUS. NO-ONE IS HOME
+				if( health <= 20 && prob(1) )
+					spawn(0)
+						emote("gasp")
 
-		if (ear_deaf > 0) ear_deaf--
-		if (ear_damage < 25)
-			ear_damage -= 0.05
-			ear_damage = max(ear_damage, 0)
+				if(!reagents.has_reagent("inaprovaline"))
+					adjustOxyLoss(1)
 
-		density = !( lying )
+				stat = UNCONSCIOUS
+				Paralyse(5)
 
-		if ((sdisabilities & 1 || istype(glasses, /obj/item/clothing/glasses/blindfold)))
-			blinded = 1
-		if ((sdisabilities & 4 || istype(ears, /obj/item/clothing/ears/earmuffs)))
-			ear_deaf = 1
+			if(silent)
+				silent = max(silent-1, 0)
 
-		if (eye_blurry > 0)
-			eye_blurry--
-			eye_blurry = max(0, eye_blurry)
+			if(stunned > 0)
+				AdjustStunned(-1)
+			if(weakened > 0)
+				AdjustWeakened(-1)
 
-		if (druggy > 0)
-			druggy--
-			druggy = max(0, druggy)
+			//Incapacitated
+			if(paralysis > 0)
+				AdjustParalysis(-1)
+				blinded = 1
+				stat = UNCONSCIOUS
 
+			if(sleeping > 0)
+				handle_dreams()
+				adjustHalLoss(-5)
+				blinded = 1
+				stat = UNCONSCIOUS
+				if( prob(10) && health && !hal_crit )
+					spawn(0)
+						emote("snore")
+				sleeping = max(sleeping-1, 0)
+
+			if(stuttering)
+				stuttering = max(stuttering-1, 0)
+
+			//Eyes & Ears
+			if(sdisabilities & 1)		//disabled-blind, doesn't get better on its own
+				blinded = 1
+			else if(eye_blind)			//blindness, heals slowly over time
+				eye_blind = max(eye_blind-1,0)
+				blinded = 1
+			else if(istype(glasses, /obj/item/clothing/glasses/blindfold))	//resting your eyes with a blindfold heals blurry eyes faster
+				eye_blurry = max(eye_blurry-3, 0)
+				blinded = 1
+			else if(eye_blurry)	//blurry eyes heal slowly
+				eye_blurry = max(eye_blurry-1, 0)
+
+			if(sdisabilities & 4)		//disabled-deaf, doesn't get better on its own
+				ear_deaf = max(ear_deaf, 1)
+			else if(ear_deaf)			//deafness, heals slowly over time
+				ear_deaf = max(ear_deaf-1, 0)
+			else if(istype(ears, /obj/item/clothing/ears/earmuffs))	//resting your ears with earmuffs heals ear damage faster
+				ear_damage = max(ear_damage-0.15, 0)
+				ear_deaf = max(ear_deaf, 1)
+			else if(ear_damage < 25)	//ear damage heals slowly under this threshold. otherwise you'll need earmuffs
+				ear_damage = max(ear_damage-0.05, 0)
+
+			if(druggy)
+				druggy = max(druggy-1, 0)
 		return 1
+
 
 	proc/handle_regular_hud_updates()
 

@@ -2,9 +2,9 @@
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
-		if (W==w_uniform) // will be teared
+		if (W==w_uniform) // will be torn
 			continue
-		drop_from_slot(W)
+		drop_from_inventory(W)
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
@@ -63,7 +63,7 @@
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
-		drop_from_slot(W)
+		drop_from_inventory(W)
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
@@ -155,7 +155,7 @@
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
-		drop_from_slot(W)
+		drop_from_inventory(W)
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
@@ -222,7 +222,7 @@
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
-		drop_from_slot(W)
+		drop_from_inventory(W)
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
@@ -262,7 +262,7 @@
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
-		drop_from_slot(W)
+		drop_from_inventory(W)
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0
@@ -313,7 +313,7 @@
 	if (monkeyizing)
 		return
 	for(var/obj/item/W in src)
-		drop_from_slot(W)
+		drop_from_inventory(W)
 	regenerate_icons()
 	monkeyizing = 1
 	canmove = 0

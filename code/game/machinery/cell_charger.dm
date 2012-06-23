@@ -70,7 +70,7 @@
 
 	attack_hand(mob/user)
 		if(charging)
-			usr.put_in_hand(charging)
+			usr.put_in_hands(charging)
 			charging.add_fingerprint(user)
 			charging.updateicon()
 

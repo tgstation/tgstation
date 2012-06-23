@@ -16,7 +16,7 @@
 		UpdateLuminosity()
 		handle_regular_hud_updates()
 		update_items()
-	if (src.stat != 2) //still using power
+	if (src.stat != DEAD) //still using power
 		use_power()
 		process_killswitch()
 		process_locks()
@@ -30,9 +30,9 @@
 	proc
 		clamp_values()
 
-			SetStunned(min(stunned, 30))
+//			SetStunned(min(stunned, 30))
 			SetParalysis(min(paralysis, 30))
-			SetWeakened(min(weakened, 20))
+//			SetWeakened(min(weakened, 20))
 			sleeping = 0
 			adjustBruteLoss(0)
 			adjustToxLoss(0)
@@ -65,12 +65,6 @@
 			else
 				uneq_all()
 				src.stat = 1
-
-
-		update_canmove()
-			if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0
-			else canmove = 1
-
 
 		update_mind()
 			if(!mind && client)
@@ -315,3 +309,8 @@
 						src << "\red <B>Weapon Lock Timed Out!"
 					weapon_lock = 0
 					weaponlock_time = 120
+
+	update_canmove()
+		if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0
+		else canmove = 1
+		return canmove

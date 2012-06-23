@@ -342,7 +342,7 @@
 		playsound(src.loc, 'rustle1.ogg', 50, 1) //russle sounds sounded better
 
 		sleep(40)
-		if ((user.loc == T && user.equipped() == W))
+		if ((user.loc == T && user.get_active_hand() == W))
 			user << "\blue You dug a hole."
 			gets_dug()
 
@@ -359,7 +359,7 @@
 		playsound(src.loc, 'rustle1.ogg', 50, 1) //russle sounds sounded better
 
 		sleep(30)
-		if ((user.loc == T && user.equipped() == W))
+		if ((user.loc == T && user.get_active_hand() == W))
 			user << "\blue You dug a hole."
 			gets_dug()
 
@@ -376,7 +376,7 @@
 		playsound(src.loc, 'rustle1.ogg', 50, 1) //russle sounds sounded better
 
 		sleep(0)
-		if ((user.loc == T && user.equipped() == W))
+		if ((user.loc == T && user.get_active_hand() == W))
 			user << "\blue You dug a hole."
 			gets_dug()
 

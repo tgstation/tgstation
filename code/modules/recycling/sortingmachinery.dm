@@ -47,7 +47,7 @@
 		if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
 			wrapped.loc = user.loc
 			if(ishuman(user))
-				user.put_in_hand(wrapped)
+				user.put_in_hands(wrapped)
 			else
 				wrapped.loc = get_turf_loc(src)
 

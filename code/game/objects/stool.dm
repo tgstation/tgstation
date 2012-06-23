@@ -49,8 +49,8 @@
 	if(buckled_mob)
 		if(buckled_mob.buckled == src)	//this is probably unneccesary, but it doesn't hurt
 			buckled_mob.buckled = null
-			buckled_mob.anchored = 0
-			buckled_mob.lying = 0
+			buckled_mob.anchored = initial(buckled_mob.anchored)
+			buckled_mob.update_canmove()
 			buckled_mob = null
 	return
 
@@ -74,7 +74,7 @@
 /obj/structure/stool/bed/proc/buckle_mob(mob/M as mob, mob/user as mob)
 	if (!ticker)
 		user << "You can't buckle anyone in before the game starts."
-	if ((!( istype(M, /mob) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat || M.buckled || istype(user, /mob/living/silicon/pai)))
+	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || usr.stat || M.buckled || istype(user, /mob/living/silicon/pai) )
 		return
 
 	unbuckle()
@@ -89,10 +89,10 @@
 			"\blue [M.name] is buckled in to [src] by [user.name]!",\
 			"You are buckled in to [src] by [user.name].",\
 			"You hear metal clanking")
-	M.anchored = 1
 	M.buckled = src
 	M.loc = src.loc
 	M.dir = src.dir
+	M.update_canmove()
 	src.buckled_mob = M
 	src.add_fingerprint(user)
 	return
@@ -100,8 +100,6 @@
 /obj/structure/stool/bed/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if(!istype(M)) return
 	buckle_mob(M, user)
-//	M.lying = 1
-//	M.update_icons()	//update our icons to reflect our lying/standing status
 	return
 
 /obj/structure/stool/bed/attack_paw(mob/user as mob)
@@ -137,7 +135,6 @@
 /obj/structure/stool/bed/chair/MouseDrop_T(mob/M as mob, mob/user as mob)
 	if(!istype(M)) return
 	buckle_mob(M, user)
-//	M.update_icons()	//update our icons to reflect our lying/standing status
 	return
 
 //roller bed
@@ -155,7 +152,7 @@
 			buckled_mob.loc = src.loc
 
 /obj/structure/stool/bed/roller/buckle_mob(mob/M as mob, mob/user as mob)
-	if ((!( istype(M, /mob) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat || M.buckled || istype(usr, /mob/living/silicon/pai)))
+	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.restrained() || usr.stat || M.buckled || istype(usr, /mob/living/silicon/pai) )
 		return
 	M.pixel_y = 6
 	density = 1
@@ -165,9 +162,12 @@
 
 /obj/structure/stool/bed/roller/manual_unbuckle(mob/user as mob)
 	if(buckled_mob)
-		buckled_mob.pixel_y = 0
-		buckled_mob.anchored = 0
-		buckled_mob.buckled = null
+		if(buckled_mob.buckled == src)	//this is probably unneccesary, but it doesn't hurt
+			buckled_mob.pixel_y = 0
+			buckled_mob.anchored = initial(buckled_mob.anchored)
+			buckled_mob.buckled = null
+			buckled_mob.update_canmove()
+			buckled_mob = null
 	density = 0
 	icon_state = "down"
 	..()

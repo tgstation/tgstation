@@ -540,14 +540,10 @@
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
 			G.assailant = M
-			if (M.hand)
-				M.l_hand = G
-				M.update_inv_l_hand()
-			else
-				M.r_hand = G
-				M.update_inv_r_hand()
-			G.layer = 20
 			G.affecting = src
+
+			M.put_in_active_hand(G)
+
 			grabbed_by += G
 			G.synch()
 			playsound(loc, 'thudswoosh.ogg', 50, 1, -1)
@@ -673,20 +669,11 @@
 
 	if(opened && !wiresexposed && (!istype(user, /mob/living/silicon)))
 		if(cell)
-			cell.loc = usr
-			cell.layer = 20
-			if (user.hand )
-				user.l_hand = cell
-				user.update_inv_l_hand()
-			else
-				user.r_hand = cell
-				user.update_inv_r_hand()
-
-			cell.add_fingerprint(user)
 			cell.updateicon()
-
+			cell.add_fingerprint(user)
+			user.put_in_active_hand(cell)
+			user << "You remove \the [cell]."
 			cell = null
-			user << "You remove the power cell."
 			updateicon()
 
 	if(ishuman(user))
@@ -701,12 +688,12 @@
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
-		if(check_access(H.equipped()) || check_access(H.wear_id))
+		if(check_access(H.get_active_hand()) || check_access(H.wear_id))
 			return 1
 	else if(istype(M, /mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
-		if(george.equipped() && istype(george.equipped(), /obj/item/weapon/card/id) && check_access(george.equipped()))
+		if(george.get_active_hand() && istype(george.get_active_hand(), /obj/item/weapon/card/id) && check_access(george.get_active_hand()))
 			return 1
 	return 0
 
@@ -854,76 +841,6 @@
 			src << "Module isn't activated"
 		installed_modules()
 	return
-
-/mob/living/silicon/robot/proc/uneq_active()
-	if(isnull(module_active))
-		return
-	if(module_state_1 == module_active)
-		if(istype(module_state_1,/obj/item/borg/sight))
-			sight_mode &= ~module_state_1:sight_mode
-		if (client)
-			client.screen -= module_state_1
-		contents -= module_state_1
-		module_active = null
-		module_state_1 = null
-		inv1.icon_state = "inv1"
-	else if(module_state_2 == module_active)
-		if(istype(module_state_2,/obj/item/borg/sight))
-			sight_mode &= ~module_state_2:sight_mode
-		if (client)
-			client.screen -= module_state_2
-		contents -= module_state_2
-		module_active = null
-		module_state_2 = null
-		inv2.icon_state = "inv2"
-	else if(module_state_3 == module_active)
-		if(istype(module_state_3,/obj/item/borg/sight))
-			sight_mode &= ~module_state_3:sight_mode
-		if (client)
-			client.screen -= module_state_3
-		contents -= module_state_3
-		module_active = null
-		module_state_3 = null
-		inv3.icon_state = "inv3"
-
-/mob/living/silicon/robot/proc/uneq_all()
-	module_active = null
-
-	if(module_state_1)
-		if(istype(module_state_1,/obj/item/borg/sight))
-			sight_mode &= ~module_state_1:sight_mode
-		if (client)
-			client.screen -= module_state_1
-		contents -= module_state_1
-		module_state_1 = null
-		inv1.icon_state = "inv1"
-	if(module_state_2)
-		if(istype(module_state_2,/obj/item/borg/sight))
-			sight_mode &= ~module_state_2:sight_mode
-		if (client)
-			client.screen -= module_state_2
-		contents -= module_state_2
-		module_state_2 = null
-		inv2.icon_state = "inv2"
-	if(module_state_3)
-		if(istype(module_state_3,/obj/item/borg/sight))
-			sight_mode &= ~module_state_3:sight_mode
-		if (client)
-			client.screen -= module_state_3
-		contents -= module_state_3
-		module_state_3 = null
-		inv3.icon_state = "inv3"
-
-
-/mob/living/silicon/robot/proc/activated(obj/item/O)
-	if(module_state_1 == O)
-		return 1
-	else if(module_state_2 == O)
-		return 1
-	else if(module_state_3 == O)
-		return 1
-	else
-		return 0
 
 /mob/living/silicon/robot/proc/radio_menu()
 	var/dat = {"

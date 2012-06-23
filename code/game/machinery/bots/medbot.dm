@@ -553,18 +553,10 @@
 	else if(istype(src,/obj/item/weapon/storage/firstaid/o2))
 		A.skin = "o2"
 
-	A.loc = user
-	if (user.r_hand == S)
-		user.u_equip(S)
-		user.r_hand = A
-		user.update_inv_r_hand()
-	else
-		user.u_equip(S)
-		user.l_hand = A
-		user.update_inv_l_hand()
-	A.layer = 20
-	user << "You add the robot arm to the first aid kit"
 	del(S)
+	user.put_in_hands(A)
+	user << "You add the robot arm to the first aid kit"
+	user.drop_from_inventory(src)
 	del(src)
 
 

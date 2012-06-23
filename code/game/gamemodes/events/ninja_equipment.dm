@@ -612,7 +612,7 @@ ________________________________________________________________________________
 		if("Eject Disk")
 			var/turf/T = get_turf(loc)
 			if(!U.get_active_hand())
-				U.put_in_hand(t_disk)
+				U.put_in_hands(t_disk)
 				t_disk.add_fingerprint(U)
 				t_disk = null
 			else
@@ -633,7 +633,7 @@ ________________________________________________________________________________
 		if("Eject pAI")
 			var/turf/T = get_turf(loc)
 			if(!U.get_active_hand())
-				U.put_in_hand(pai)
+				U.put_in_hands(pai)
 				pai.add_fingerprint(U)
 				pai = null
 			else
@@ -834,7 +834,7 @@ ________________________________________________________________________________
 					I:charge = min(I:charge+cell.charge, I:maxcharge)
 					var/obj/item/weapon/cell/old_cell = cell
 					old_cell.charge = 0
-					U.put_in_hand(old_cell)
+					U.put_in_hands(old_cell)
 					old_cell.add_fingerprint(U)
 					old_cell.corrupt()
 					old_cell.updateicon()
@@ -1355,7 +1355,7 @@ It is possible to destroy the net by the occupant or someone else.
 				if(istype(M,/mob/living/carbon/human))
 					if(W==M:w_uniform)	continue//So all they're left with are shoes and uniform.
 					if(W==M:shoes)	continue
-				M.drop_from_slot(W)
+				M.drop_from_inventory(W)
 
 			spawn(0)
 				playsound(M.loc, 'sparks4.ogg', 50, 1)

@@ -194,12 +194,12 @@ What a mess.*/
 			if("Confirm Identity")
 				if (scan)
 					if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
-						usr.put_in_hand(scan)
+						usr.put_in_hands(scan)
 					else
 						scan.loc = get_turf(src)
 					scan = null
 				else
-					var/obj/item/I = usr.equipped()
+					var/obj/item/I = usr.get_active_hand()
 					if (istype(I, /obj/item/weapon/card/id))
 						usr.drop_item()
 						I.loc = src

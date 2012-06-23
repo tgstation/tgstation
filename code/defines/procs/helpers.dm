@@ -1278,10 +1278,10 @@ proc/listclearnulls(list/list)
 	if(!user || !target) return 0
 	var/user_loc = user.loc
 	var/target_loc = target.loc
-	var/holding = user.equipped()
+	var/holding = user.get_active_hand()
 	sleep(time)
 	if(!user || !target) return 0
-	if ( user.loc == user_loc && target.loc == target_loc && user.equipped() == holding && !( user.stat ) && ( !user.stunned && !user.weakened && !user.paralysis && !user.lying ) )
+	if ( user.loc == user_loc && target.loc == target_loc && user.get_active_hand() == holding && !( user.stat ) && ( !user.stunned && !user.weakened && !user.paralysis && !user.lying ) )
 		return 1
 	else
 		return 0
@@ -1290,10 +1290,10 @@ proc/listclearnulls(list/list)
 	if(!M)
 		return 0
 	var/turf/T = M.loc
-	var/holding = M.equipped()
+	var/holding = M.get_active_hand()
 	for(var/i=0, i<time)
 		if(M)
-			if ((M.loc == T && M.equipped() == holding && !( M.stat )))
+			if ((M.loc == T && M.get_active_hand() == holding && !( M.stat )))
 				i++
 				sleep(1)
 			else
@@ -1309,12 +1309,12 @@ proc/listclearnulls(list/list)
 
 	var/delayfraction = round(delay/numticks)
 	var/turf/T = user.loc
-	var/holding = user.equipped()
+	var/holding = user.get_active_hand()
 
 	for(var/i = 0, i<numticks, i++)
 		sleep(delayfraction)
 
-		if(needhand && !(user.equipped() == holding))	//Sometimes you don't want the user to have to keep their active hand
+		if(needhand && !(user.get_active_hand() == holding))	//Sometimes you don't want the user to have to keep their active hand
 			return 0
 		if(!user || user.stat || user.weakened || user.stunned || !(user.loc == T))
 			return 0

@@ -52,7 +52,7 @@
 	if (user.get_inactive_hand() == src)
 		var/obj/item/stack/F = new src.type( user, amount=1)
 		F.copy_evidences(src)
-		user.put_in_hand(F)
+		user.put_in_hands(F)
 		src.add_fingerprint(user)
 		F.add_fingerprint(user)
 		use(1)
@@ -165,7 +165,7 @@
 
 /obj/item/stack/Topic(href, href_list)
 	..()
-	if ((usr.restrained() || usr.stat || usr.equipped() != src))
+	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
 		return
 	if (href_list["make"])
 		if (src.amount < 1) del(src) //Never should happen
@@ -204,7 +204,7 @@
 			usr.before_take_item(oldsrc)
 			del(oldsrc)
 			if (istype(O,/obj/item))
-				usr.put_in_hand(O)
+				usr.put_in_hands(O)
 		O.add_fingerprint(usr)
 		//BubbleWrap - so newly formed boxes are empty
 		if ( istype(O, /obj/item/weapon/storage) )

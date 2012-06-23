@@ -57,7 +57,7 @@
 	return
 
 /obj/item/weapon/smokebomb/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-	if (user.equipped() == src)
+	if (user.get_active_hand() == src)
 		if (!( src.state ))
 			user << "\red You prime the smoke bomb! [det_time/10] seconds!"
 			src.state = 1
@@ -126,7 +126,7 @@
 	return
 
 /obj/item/weapon/mustardbomb/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-	if (user.equipped() == src)
+	if (user.get_active_hand() == src)
 		if (!( src.state ))
 			user << "\red You prime the mustard gas bomb! [det_time/10] seconds!"
 			src.state = 1
@@ -232,7 +232,7 @@
 		//Foreach goto(46)
 	t += W.w_class
 	if (t > 30)
-		user << "You cannot fit the item inside. (Remove larger classed items)"
+		user << "You cannot fit the item inside. (Remove the larger items first)"
 		return
 	user.u_equip(W)
 	W.loc = src

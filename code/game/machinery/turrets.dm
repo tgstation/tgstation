@@ -10,9 +10,6 @@
 					src.Exited(target)
 
 
-//TODO: make teleporting to places trigger Entered() ~Carn
-// Done.
-
 /area/turret_protected/Entered(O)
 	..()
 	if( master && master != src )

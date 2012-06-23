@@ -16,16 +16,10 @@
 
 	MouseDrop(mob/user as mob)
 		if ((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
-			if (usr.hand)
-				if (!( usr.l_hand ))
-					spawn( 0 )
-						src.attack_hand(usr, 1, 1)
-						return
-			else
-				if (!( usr.r_hand ))
-					spawn( 0 )
-						src.attack_hand(usr, 0, 1)
-						return
+
+			if( !usr.get_active_hand() )		//if active hand is empty
+				attack_hand(usr, 1, 1)
+
 		return
 
 
@@ -53,7 +47,7 @@
 			P.loc = user.loc
 			if(ishuman(user))
 				if(!user.get_active_hand())
-					user.put_in_hand(P)
+					user.put_in_hands(P)
 					user << "You take a paper out of the bin."
 			else
 				P.loc = get_turf_loc(src)

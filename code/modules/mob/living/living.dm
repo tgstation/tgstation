@@ -173,22 +173,9 @@
 /mob/living/proc/UpdateDamageIcon()
 		return
 
+/*CARN: Deprecated. Please use update_canmove()
 /mob/living/proc/check_if_buckled()
-	if (buckled)
-		density = 1
-		if( istype(buckled, /obj/structure/stool/bed/chair) )
-			lying = 0
-		else
-			lying = 1
-	else
-		density = !lying
-	if(lying)
-		var/h = hand
-		hand = 0
-		drop_item()
-		hand = 1
-		drop_item()
-		hand = h
+*/
 
 /mob/living/proc/Examine_OOC()
 	set name = "Examine Meta-Info (OOC)"

@@ -58,32 +58,26 @@
 	//Status updates, death etc.
 	handle_regular_status_updates()
 
-	// Update clothing
-//	regenerate_icons()
-
-	if(client)
-		handle_regular_hud_updates()
-
-	//Being buckled to a chair or bed
-	check_if_buckled()
-
-	// Yup.
+	//Handles updating canmove.
 	update_canmove()
-
-	clamp_values()
 
 	// Grabbing
 	for(var/obj/item/weapon/grab/G in src)
 		G.process()
+
+	if(client)
+		handle_regular_hud_updates()
+
+	clamp_values()
 
 
 /mob/living/carbon/alien/larva
 	proc
 		clamp_values()
 
-			SetStunned(min(stunned, 20))
+	//		SetStunned(min(stunned, 20))
 			SetParalysis(min(paralysis, 20))
-			SetWeakened(min(weakened, 20))
+	//		SetWeakened(min(weakened, 20))
 			sleeping = max(min(sleeping, 20), 0)
 
 		handle_mutations_and_radiation()
@@ -226,10 +220,6 @@
 					if (internals)
 						internals.icon_state = "internal0"
 			return null
-
-		update_canmove()
-			if(paralysis || stunned || weakened || buckled) canmove = 0
-			else canmove = 1
 
 		handle_breath(datum/gas_mixture/breath)
 			if(nodamage)

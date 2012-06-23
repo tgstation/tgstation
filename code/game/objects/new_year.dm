@@ -59,7 +59,7 @@
 	slot_flags = SLOT_BELT
 
 /obj/item/weapon/firbang/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-	if (user.equipped() == src)
+	if (user.get_active_hand() == src)
 		if ((CLUMSY in usr.mutations) && prob(50))
 			user << "\red Huh? How does this thing work?!"
 			src.state = 1

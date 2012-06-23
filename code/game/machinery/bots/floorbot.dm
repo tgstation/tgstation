@@ -369,41 +369,26 @@
 	if(src.contents.len >= 1)
 		user << "They wont fit in as there is already stuff inside!"
 		return
-	if (user.s_active)
+	if(user.s_active)
 		user.s_active.close(user)
-	var/obj/item/weapon/toolbox_tiles/B = new /obj/item/weapon/toolbox_tiles
-	B.loc = user
-	if (user.r_hand == T)
-		user.u_equip(T)
-		user.r_hand = B
-		user.update_inv_r_hand()
-	else
-		user.u_equip(T)
-		user.l_hand = B
-		user.update_inv_l_hand()
-	B.layer = 20
-	user << "You add the tiles into the empty toolbox. They stick oddly out the top."
 	del(T)
+	var/obj/item/weapon/toolbox_tiles/B = new /obj/item/weapon/toolbox_tiles
+	user.put_in_hands(B)
+	user << "You add the tiles into the empty toolbox. They stick protrude from the top."
+	user.drop_from_inventory(src)
 	del(src)
 
 /obj/item/weapon/toolbox_tiles/attackby(var/obj/item/W, mob/user as mob)
 	..()
 	if(isprox(W))
-		var/obj/item/weapon/toolbox_tiles_sensor/B = new /obj/item/weapon/toolbox_tiles_sensor
-		B.loc = user
-		if (user.r_hand == W)
-			user.u_equip(W)
-			user.r_hand = B
-			user.update_inv_r_hand()
-		else
-			user.u_equip(W)
-			user.l_hand = B
-			user.update_inv_l_hand()
-		B.created_name = src.created_name
-		B.layer = 20
-		user << "You add the sensor to the toolbox and tiles!"
 		del(W)
+		var/obj/item/weapon/toolbox_tiles_sensor/B = new /obj/item/weapon/toolbox_tiles_sensor()
+		B.created_name = src.created_name
+		user.put_in_hands(B)
+		user << "You add the sensor to the toolbox and tiles!"
+		user.drop_from_inventory(src)
 		del(src)
+
 	else if (istype(W, /obj/item/weapon/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
 		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
@@ -417,16 +402,12 @@
 /obj/item/weapon/toolbox_tiles_sensor/attackby(var/obj/item/W, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
-		var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot
-		if(user.r_hand == src || user.l_hand == src)
-			A.loc = user.loc
-			user.update_inv_l_hand(0)
-			user.update_inv_l_hand(1)
-		else
-			A.loc = src.loc
-		A.name = src.created_name
-		user << "You add the robot arm to the odd looking toolbox assembly! Boop beep!"
 		del(W)
+		var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot
+		A.name = src.created_name
+		user.put_in_hands(A)
+		user << "You add the robot arm to the odd looking toolbox assembly! Boop beep!"
+		user.drop_from_inventory(src)
 		del(src)
 	else if (istype(W, /obj/item/weapon/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text

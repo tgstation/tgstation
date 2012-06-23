@@ -25,14 +25,9 @@
 
 /obj/item/weapon/twohanded/dropped(mob/user as mob)
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
-	//bit of a hack but it keeps other code pretty neat and with fewer conditionals
-	var/obj/item/weapon/twohanded/O
 	if(user)
-		if(user.l_hand)
-			O = user.l_hand
-		else
-			O = user.r_hand
-		if(O && istype(O))
+		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
+		if(istype(O))
 			O.unwield()
 	return	unwield()
 
@@ -67,11 +62,7 @@
 		var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
 		O.name = "[initial(name)] - offhand"
 		O.desc = "Your second grip on the [initial(name)]"
-		if(user.hand)
-			user.r_hand = O          ///Place dat offhand in the opposite hand
-		else
-			user.l_hand = O
-		O.layer = 20
+		user.put_in_inactive_hand(O)
 		return
 
 ///////////OFFHAND///////////////

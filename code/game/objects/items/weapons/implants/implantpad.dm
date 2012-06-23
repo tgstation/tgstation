@@ -26,18 +26,11 @@
 
 	attack_hand(mob/user as mob)
 		if ((src.case && (user.l_hand == src || user.r_hand == src)))
-			if (user.hand)
-				user.l_hand = src.case
-				user.update_inv_l_hand()
-			else
-				user.r_hand = src.case
-				user.update_inv_r_hand()
-			src.case.loc = user
-			src.case.layer = 20
+			user.put_in_active_hand(case)
+
 			src.case.add_fingerprint(user)
 			src.case = null
-			user.update_inv_l_hand(0)
-			user.update_inv_r_hand()
+
 			src.add_fingerprint(user)
 			update()
 		else

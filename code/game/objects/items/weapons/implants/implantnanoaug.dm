@@ -71,7 +71,7 @@
 
 		var/obj/item/weapon/melee/energy/blade/swordspawn = new /obj/item/weapon/melee/energy/blade
 		if(!source.get_active_hand())
-			source.put_in_hand(swordspawn)
+			source.put_in_hands(swordspawn)
 
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, source.loc)

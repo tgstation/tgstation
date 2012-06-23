@@ -794,7 +794,7 @@ datum/mind
 			switch(href_list["common"])
 				if("undress")
 					for(var/obj/item/W in current)
-						current.drop_from_slot(W)
+						current.drop_from_inventory(W)
 				if("takeuplink")
 					take_uplink()
 					memory = null//Remove any memory they may have had.
@@ -807,7 +807,7 @@ datum/mind
 							crystals = suplink.uses
 						else if (iuplink)
 							crystals = iuplink.uses
-						crystals = input("Amount of telecrystals for [key]","Sindicate uplink", crystals) as null|num
+						crystals = input("Amount of telecrystals for [key]","Syndicate uplink", crystals) as null|num
 						if (!isnull(crystals))
 							if (suplink)
 								suplink.uses = crystals

@@ -215,7 +215,7 @@
 
 		coin.loc = src.loc
 		if(!usr.get_active_hand())
-			usr.put_in_hand(coin)
+			usr.put_in_hands(coin)
 		usr << "\blue You remove the [coin] from the [src]"
 		coin = null
 
@@ -277,7 +277,7 @@
 
 		else if ((href_list["cutwire"]) && (src.panel_open))
 			var/twire = text2num(href_list["cutwire"])
-			if (!( istype(usr.equipped(), /obj/item/weapon/wirecutters) ))
+			if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
 				usr << "You need wirecutters!"
 				return
 			if (src.isWireColorCut(twire))
@@ -287,7 +287,7 @@
 
 		else if ((href_list["pulsewire"]) && (src.panel_open))
 			var/twire = text2num(href_list["pulsewire"])
-			if (!istype(usr.equipped(), /obj/item/device/multitool))
+			if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
 				usr << "You need a multitool!"
 				return
 			if (src.isWireColorCut(twire))

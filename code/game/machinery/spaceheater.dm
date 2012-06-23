@@ -52,7 +52,7 @@
 					return
 				else
 					// insert cell
-					var/obj/item/weapon/cell/C = usr.equipped()
+					var/obj/item/weapon/cell/C = usr.get_active_hand()
 					if(istype(C))
 						user.drop_item()
 						cell = C
@@ -123,26 +123,17 @@
 					set_temperature = dd_range(20, 90, set_temperature + value)
 
 				if("cellremove")
-					if(open && cell && !usr.equipped())
-						cell.loc = usr
-						cell.layer = 20
-						if(usr.hand)
-							usr.l_hand = cell
-							usr.update_inv_l_hand()
-						else
-							usr.r_hand = cell
-							usr.update_inv_r_hand()
-
-						cell.add_fingerprint(usr)
+					if(open && cell && !usr.get_active_hand())
 						cell.updateicon()
+						usr.put_in_hands(cell)
+						cell.add_fingerprint(usr)
 						cell = null
-
 						usr.visible_message("\blue [usr] removes the power cell from \the [src].", "\blue You remove the power cell from \the [src].")
 
 
 				if("cellinstall")
 					if(open && !cell)
-						var/obj/item/weapon/cell/C = usr.equipped()
+						var/obj/item/weapon/cell/C = usr.get_active_hand()
 						if(istype(C))
 							usr.drop_item()
 							cell = C

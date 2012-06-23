@@ -92,17 +92,7 @@ FINGERPRINT CARD
 		if (href_list["remove"])
 			var/obj/item/P = locate(href_list["remove"])
 			if ((P && P.loc == src))
-				if ((usr.hand && !( usr.l_hand )))
-					usr.l_hand = P
-					P.loc = usr
-					P.layer = 20
-					usr.update_inv_l_hand()
-				else
-					if (!( usr.r_hand ))
-						usr.r_hand = P
-						P.loc = usr
-						P.layer = 20
-						usr.update_inv_r_hand()
+				usr.put_in_hands(P)
 				src.add_fingerprint(usr)
 				P.add_fingerprint(usr)
 			src.update()
@@ -150,7 +140,7 @@ FINGERPRINT CARD
 	else
 		if (istype(P, /obj/item/weapon/pen))
 			var/t = input(user, "Holder Label:", text("[]", src.name), null)  as text
-			if (user.equipped() != P)
+			if (user.get_active_hand() != P)
 				return
 			if ((!in_range(src, usr) && src.loc != user))
 				return
@@ -209,11 +199,7 @@ FINGERPRINT CARD
 		var/obj/item/weapon/f_card/F = new /obj/item/weapon/f_card( user )
 		F.amount = 1
 		src.amount--
-		if (user.hand)
-			user.l_hand = F
-		else
-			user.r_hand = F
-		F.layer = 20
+		user.put_in_hands(F)
 		F.add_fingerprint(user)
 		if (src.amount < 1)
 			//SN src = null
@@ -244,7 +230,7 @@ FINGERPRINT CARD
 	else
 		if (istype(W, /obj/item/weapon/pen))
 			var/t = input(user, "Card Label:", text("[]", src.name), null)  as text
-			if (user.equipped() != W)
+			if (user.get_active_hand() != W)
 				return
 			if ((!in_range(src, usr) && src.loc != user))
 				return

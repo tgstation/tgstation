@@ -53,11 +53,9 @@
 			if(src.P)
 				user << "\red There's already a plasma tank loaded."
 				return 1
+			user.drop_item()
 			src.P = W
 			W.loc = src
-			if (user.client)
-				user.client.screen -= W
-			user.u_equip(W)
 			updateicon()
 		else if(istype(W, /obj/item/weapon/crowbar))
 			if(P && !src.locked)

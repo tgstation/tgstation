@@ -167,14 +167,14 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 				var/obj/item/weapon/melee/energy/blade/W = new()
 				spark_system.start()
 				playsound(U.loc, "sparks", 50, 1)
-				U.put_in_hand(W)
+				U.put_in_hands(W)
 				cell.charge-=(C*10)
 			else
 				U << "\red You can only summon one blade. Try dropping an item first."
 		else//Else you can run around with TWO energy blades. I don't know why you'd want to but cool factor remains.
 			if(!U.get_active_hand())
 				var/obj/item/weapon/melee/energy/blade/W = new()
-				U.put_in_hand(W)
+				U.put_in_hands(W)
 			if(!U.get_inactive_hand())
 				var/obj/item/weapon/melee/energy/blade/W = new()
 				U.put_in_inactive_hand(W)

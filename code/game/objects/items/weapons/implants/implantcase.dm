@@ -25,7 +25,7 @@
 		..()
 		if (istype(I, /obj/item/weapon/pen))
 			var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
-			if (user.equipped() != I)
+			if (user.get_active_hand() != I)
 				return
 			if((!in_range(src, usr) && src.loc != user))
 				return

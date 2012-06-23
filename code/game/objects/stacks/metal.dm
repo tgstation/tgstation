@@ -29,7 +29,7 @@ FLOOR TILES
 			var/replace = (user.get_inactive_hand()==R)
 			R.use(2)
 			if (!R && replace)
-				user.put_in_hand(new_item)
+				user.put_in_hands(new_item)
 		return
 	..()
 

@@ -1,17 +1,10 @@
 /mob/living/carbon/proc/toggle_throw_mode()
-	var/W = equipped()
+	var/obj/item/W = get_active_hand()
 	if( !W )//Not holding anything
 		if( client && (TK in mutations) )
-			if (hand)
-				l_hand = new/obj/item/tk_grab(src)
-				l_hand:host = src
-				l_hand.screen_loc = ui_lhand
-				client.screen += l_hand
-			else
-				r_hand = new/obj/item/tk_grab(src)
-				r_hand:host = src
-				r_hand.screen_loc = ui_rhand
-				client.screen += r_hand
+			var/obj/item/tk_grab/O = new(src)
+			put_in_active_hand(O)
+			O.host = src
 		return
 
 	if( istype(W,/obj/item/tk_grab) )
@@ -39,7 +32,7 @@
 		return
 	if(target.type == /obj/screen) return
 
-	var/atom/movable/item = src.equipped()
+	var/atom/movable/item = src.get_active_hand()
 
 	if(!item) return
 

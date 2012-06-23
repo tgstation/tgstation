@@ -375,7 +375,7 @@
 
 	if (href_list["AAlarmwires"])
 		var/t1 = text2num(href_list["AAlarmwires"])
-		if (!( istype(usr.equipped(), /obj/item/weapon/wirecutters) ))
+		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
 			usr << "You need wirecutters!"
 			return
 		if (src.isWireColorCut(t1))
@@ -384,7 +384,7 @@
 			src.cut(t1)
 	else if (href_list["pulse"])
 		var/t1 = text2num(href_list["pulse"])
-		if (!istype(usr.equipped(), /obj/item/device/multitool))
+		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
 			usr << "You need a multitool!"
 			return
 		if (src.isWireColorCut(t1))

@@ -85,7 +85,7 @@
 		var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey(  )
 		O.source = usr
 		O.target = src
-		O.item = usr.equipped()
+		O.item = usr.get_active_hand()
 		O.s_loc = usr.loc
 		O.t_loc = loc
 		O.place = href_list["item"]
@@ -211,14 +211,10 @@
 
 				var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
 				G.assailant = M
-				if (M.hand)
-					M.l_hand = G
-					M.update_inv_l_hand()
-				else
-					M.r_hand = G
-					M.update_inv_r_hand()
-				G.layer = 20
 				G.affecting = src
+
+				M.put_in_active_hand(G)
+
 				grabbed_by += G
 				G.synch()
 
@@ -286,14 +282,10 @@
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M )
 			G.assailant = M
-			if (M.hand)
-				M.l_hand = G
-				M.update_inv_l_hand()
-			else
-				M.r_hand = G
-				M.update_inv_r_hand()
-			G.layer = 20
 			G.affecting = src
+
+			M.put_in_active_hand(G)
+
 			grabbed_by += G
 			G.synch()
 

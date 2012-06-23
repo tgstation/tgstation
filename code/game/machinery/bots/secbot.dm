@@ -711,24 +711,15 @@ Auto Patrol: []"},
 	if(src.type != /obj/item/clothing/head/helmet) //Eh, but we don't want people making secbots out of space helmets.
 		return
 
-	if(!S.secured)
-		return
-	else
-		var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
-		A.loc = user
-		if(user.r_hand == S)
-			user.u_equip(S)
-			user.r_hand = A
-			user.update_inv_r_hand()
-		else
-			user.u_equip(S)
-			user.l_hand = A
-			user.update_inv_l_hand()
-		A.layer = 20
-		user << "You add the signaler to the helmet."
+	if(S.secured)
 		del(S)
+		var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
+		user.put_in_hands(A)
+		user << "You add the signaler to the helmet."
+		user.drop_from_inventory(src)
 		del(src)
-
+	else
+		return
 
 /obj/item/weapon/secbot_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -740,6 +731,7 @@ Auto Patrol: []"},
 			user << "You weld a hole in [src]!"
 
 	else if(isprox(W) && (src.build_step == 1))
+		user.drop_item()
 		src.build_step++
 		user << "You add the prox sensor to [src]!"
 		src.overlays += image('aibots.dmi', "hs_eye")
@@ -747,6 +739,7 @@ Auto Patrol: []"},
 		del(W)
 
 	else if(((istype(W, /obj/item/robot_parts/l_arm)) || (istype(W, /obj/item/robot_parts/r_arm))) && (src.build_step == 2))
+		user.drop_item()
 		src.build_step++
 		user << "You add the robot arm to [src]!"
 		src.name = "helmet/signaler/prox sensor/robot arm assembly"
@@ -754,6 +747,7 @@ Auto Patrol: []"},
 		del(W)
 
 	else if((istype(W, /obj/item/weapon/melee/baton)) && (src.build_step >= 3))
+		user.drop_item()
 		src.build_step++
 		user << "You complete the Securitron! Beep boop."
 		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot

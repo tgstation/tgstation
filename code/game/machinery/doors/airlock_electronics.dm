@@ -61,7 +61,7 @@
 			return
 
 		if (href_list["login"])
-			var/obj/item/I = usr.equipped()
+			var/obj/item/I = usr.get_active_hand()
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id

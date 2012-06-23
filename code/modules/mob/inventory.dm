@@ -1,115 +1,151 @@
+//These procs handle putting s tuff in your hand. It's probably best to use these rather than setting l_hand = ...etc
+//as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
+
+//Returns the thing in our active hand
 /mob/proc/get_active_hand()
-	if (hand)
-		return l_hand
-	else
-		return r_hand
+	if(hand)	return l_hand
+	else		return r_hand
 
+//Returns the thing in our inactive hand
 /mob/proc/get_inactive_hand()
-	if (!hand)
-		return l_hand
-	else
-		return r_hand
+	if(hand)	return r_hand
+	else		return l_hand
 
-/mob/proc/put_in_hand(var/obj/item/I)
-	if(!I) return
-	I.loc = src
-	if (hand)
-		l_hand = I
+
+//Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
+/mob/proc/put_in_l_hand(var/obj/item/W)
+	if(!W)		return 0
+	if(lying)	return 0
+	if(!l_hand)
+		W.loc = src		//TODO: move to equipped?
+		l_hand = W
+		W.layer = 20	//TODO: move to equipped?
+//		l_hand.screen_loc = ui_lhand
+		W.equipped(src,"l_hand")
+		if(client)	client.screen |= W
 		update_inv_l_hand()
-	else
-		r_hand = I
-		update_inv_r_hand()
-	I.layer = 20
+		return 1
+	return 0
 
-/mob/proc/put_in_hands(var/obj/item/I) //A suprisingly useful proc.  Allows a simple way to place an object in a mob's hands, or, if they are full, on the ground below them.
+//Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
+/mob/proc/put_in_r_hand(var/obj/item/W)
+	if(!W)		return 0
+	if(lying)	return 0
 	if(!r_hand)
-		I.loc = src
-		r_hand = I
+		W.loc = src
+		r_hand = W
+		W.layer = 20
+//		r_hand.screen_loc = ui_rhand
+		W.equipped(src,"r_hand")
+		if(client)	client.screen |= W
 		update_inv_r_hand()
-		I.layer = 20
-	else if(!l_hand)
-		I.loc = src
-		l_hand = I
-		update_inv_l_hand()
-		I.layer = 20
+		return 1
+	return 0
+
+//Puts the item into our active hand if possible. returns 1 on success.
+/mob/proc/put_in_active_hand(var/obj/item/W)
+	if(hand)	return put_in_l_hand(W)
+	else		return put_in_r_hand(W)
+
+//Puts the item into our inactive hand if possible. returns 1 on success.
+/mob/proc/put_in_inactive_hand(var/obj/item/W)
+	if(hand)	return put_in_r_hand(W)
+	else		return put_in_l_hand(W)
+
+//Puts the item our active hand if possible. Failing that it tries our inactive hand. Returns 1 on success.
+//If both fail it drops it on the floor and returns 0.
+//This is probably the main one you need to know :)
+/mob/proc/put_in_hands(var/obj/item/W)
+	if(!W)		return 0
+	if(put_in_active_hand(W))			return 1
+	else if(put_in_inactive_hand(W))	return 1
 	else
-		I.loc = get_turf(src)
+		W.loc = get_turf(src)
+		return 0
 
-/mob/proc/drop_item_v()
-	if (stat == 0)
-		drop_item()
-	return
 
-/mob/proc/drop_from_slot(var/obj/item/item)
-	if(!item)
-		return
-	if(!(item in contents))
-		return
-	u_equip(item)
-	if (client)
-		client.screen -= item
-	if (item)
-		item.loc = loc
-		item.dropped(src)
-		if (item)
-			item.layer = initial(item.layer)
-		var/turf/T = get_turf(loc)
-		if (istype(T))
-			T.Entered(item)
-	return
 
-/mob/proc/drop_item(var/atom/target)
-	var/obj/item/W = equipped()
+/mob/proc/drop_item_v()		//this is dumb.
+	if(stat == CONSCIOUS)
+		return drop_item()
+	return 0
 
-	if (W)
+
+/mob/proc/drop_from_inventory(var/obj/item/W)
+	if(W)
+		if(client)	client.screen -= W
 		u_equip(W)
-		update_icons()
-		if (client)
-			client.screen -= W
-		if (W)
-			W.layer = initial(W.layer)
-			if(target)
-				W.loc = target.loc
-			else
-				W.loc = loc
-			W.dropped(src)
-		var/turf/T = get_turf(loc)
-		if (istype(T))
-			T.Entered(W)
-	return
+		W.layer = initial(W.layer)
+		W.loc = loc
 
-/mob/proc/before_take_item(var/obj/item/item)
-	item.loc = null
-	item.layer = initial(item.layer)
-	u_equip(item)
-	//if (client)
-	//	client.screen -= item
+		var/turf/T = get_turf(loc)
+		if(isturf(T))
+			T.Entered(W)
+
+		W.dropped(src)
+		update_icons()
+		return 1
+	return 0
+
+
+//Drops the item in our left hand
+/mob/proc/drop_l_hand(var/atom/Target)
+	if(l_hand)
+		if(client)	client.screen -= l_hand
+		l_hand.layer = initial(l_hand.layer)
+
+		if(Target)	l_hand.loc = Target.loc
+		else		l_hand.loc = loc
+
+		var/turf/T = get_turf(loc)
+		if(isturf(T))
+			T.Entered(l_hand)
+
+		l_hand.dropped(src)
+		l_hand = null
+		update_inv_l_hand()
+		return 1
+	return 0
+
+//Drops the item in our right hand
+/mob/proc/drop_r_hand(var/atom/Target)
+	if(r_hand)
+		if(client)	client.screen -= r_hand
+		r_hand.layer = initial(r_hand.layer)
+
+		if(Target)	r_hand.loc = Target.loc
+		else		r_hand.loc = loc
+
+		var/turf/T = get_turf(Target)
+		if(istype(T))
+			T.Entered(r_hand)
+
+		r_hand.dropped(src)
+		r_hand = null
+		update_inv_r_hand()
+		return 1
+	return 0
+
+//Drops the item in our active hand.
+/mob/proc/drop_item(var/atom/Target)
+	if(hand)	return drop_l_hand(Target)
+	else		return drop_r_hand(Target)
+
+
+
+
+
+
+
+
+
+//TODO: phase out this proc
+/mob/proc/before_take_item(var/obj/item/W)	//TODO: what is this?
+	W.loc = null
+	W.layer = initial(W.layer)
+	u_equip(W)
 	update_icons()
 	return
-
-/mob/proc/put_in_inactive_hand(var/obj/item/I)
-	I.loc = src
-	if (!hand)
-		l_hand = I
-		update_inv_l_hand()
-	else
-		r_hand = I
-		update_inv_r_hand()
-	I.layer = 20
-
-
-/mob/proc/equipped()
-	if(issilicon(src))
-		if(isrobot(src))
-			if(src:module_active)
-				return src:module_active
-	else
-		if (hand)
-			return l_hand
-		else
-			return r_hand
-
-
 
 
 /mob/proc/u_equip(W as obj)

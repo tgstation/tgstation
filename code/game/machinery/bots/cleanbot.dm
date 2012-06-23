@@ -349,11 +349,13 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 /obj/item/weapon/bucket_sensor/attackby(var/obj/item/W, mob/user as mob)
 	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
+		user.drop_item()
+		del(W)
 		var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot
 		A.loc = get_turf(src.loc)
 		A.name = src.created_name
 		user << "You add the robot arm to the bucket and sensor assembly! Beep boop!"
-		del(W)
+		user.drop_from_inventory(src)
 		del(src)
 
 	else if (istype(W, /obj/item/weapon/pen))

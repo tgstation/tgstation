@@ -33,9 +33,8 @@
 					user.show_message(text("\red <B>You reach into the [src.name], but there was a live mousetrap in there!</B>"), 1)
 				else
 					user.show_message(text("\red <B>[user] reaches into the [src.name] and sets off a hidden mousetrap!</B>"), 1)
-			MT.loc = user.loc
+			user.drop_from_inventory(MT)
 			MT.triggered(user, user.hand ? "l_hand" : "r_hand")
-			MT.layer = OBJ_LAYER
 			return
 	user.client.screen -= src.boxes
 	user.client.screen -= src.closer
@@ -207,11 +206,11 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.l_store == src && !H.get_active_hand())
-			H.put_in_hand(src)
+			H.put_in_hands(src)
 			H.l_store = null
 			return
 		if(H.r_store == src && !H.get_active_hand())
-			H.put_in_hand(src)
+			H.put_in_hands(src)
 			H.r_store = null
 			return
 
@@ -370,17 +369,13 @@
 		if (!( istype(over_object, /obj/screen) ))
 			return ..()
 		if ((!( M.restrained() ) && !( M.stat ) /*&& M.pocket == src*/))
-			if (over_object.name == "r_hand")
-				if (!( M.r_hand ))
+			switch(over_object.name)
+				if("r_hand")
 					M.u_equip(src)
-					M.r_hand = src
-					M.update_inv_r_hand()
-			else
-				if (over_object.name == "l_hand")
-					if (!( M.l_hand ))
-						M.u_equip(src)
-						M.l_hand = src
-						M.update_inv_l_hand()
+					M.put_in_r_hand(src)
+				if("l_hand")
+					M.u_equip(src)
+					M.put_in_l_hand(src)
 			src.add_fingerprint(usr)
 			return
 		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))

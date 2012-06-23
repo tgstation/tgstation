@@ -255,7 +255,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 			if(href_list["act"])
 				var/temp_wire = href_list["wire"]
 				if(href_list["act"] == "pulse")
-					if (!istype(usr.equipped(), /obj/item/device/multitool))
+					if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
 						usr << "You need a multitool!"
 					else
 						if(src.wires[temp_wire])
@@ -273,7 +273,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 								src.shock(usr,50)
 								spawn(100) src.shocked = !src.shocked
 				if(href_list["act"] == "wire")
-					if (!istype(usr.equipped(), /obj/item/weapon/wirecutters))
+					if (!istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
 						usr << "You need wirecutters!"
 					else
 						wires[temp_wire] = !wires[temp_wire]

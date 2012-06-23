@@ -636,7 +636,7 @@
 			var/mob/M = usr
 			var/obj/item/stack/rods/W = new /obj/item/stack/rods( M )
 			M << "\blue You lick clean the rod."
-			M.put_in_hand(W)
+			M.put_in_hands(W)
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeykabob
 	name = "Meat-kabob"
@@ -651,7 +651,7 @@
 			var/mob/M = usr
 			var/obj/item/stack/rods/W = new /obj/item/stack/rods( M )
 			M << "\blue You lick clean the rod."
-			M.put_in_hand(W)
+			M.put_in_hands(W)
 
 /obj/item/weapon/reagent_containers/food/snacks/tofukabob
 	name = "Tofu-kabob"
@@ -666,7 +666,7 @@
 			var/mob/M = usr
 			var/obj/item/stack/rods/W = new /obj/item/stack/rods( M )
 			M << "\blue You lick clean the rod."
-			M.put_in_hand(W)
+			M.put_in_hands(W)
 
 /obj/item/weapon/reagent_containers/food/snacks/cubancarp
 	name = "Cuban Carp"
@@ -813,7 +813,7 @@
 					"\blue [M] takes a piece of paper from the cookie!", \
 					"\blue You take a piece of paper from the cookie! Read it!" \
 				)
-				M.put_in_hand(paper)
+				M.put_in_hands(paper)
 				paper.add_fingerprint(M)
 
 /obj/item/weapon/reagent_containers/food/snacks/badrecipe

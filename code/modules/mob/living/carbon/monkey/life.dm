@@ -56,24 +56,12 @@
 	//Status updates, death etc.
 	UpdateLuminosity()
 	handle_regular_status_updates()
+	update_canmove()
+	clamp_values()
+
 
 	if(client)
 		handle_regular_hud_updates()
-
-	//Being buckled to a chair or bed
-	check_if_buckled()
-
-	//Temporary, whilst I finish the regenerate_icons changes ~Carn
-	if( update_icon )	//forces a full overlay update
-		update_icon = 0
-		regenerate_icons()
-	else if( lying != lying_prev )
-		update_icons()
-
-	// Yup.
-	update_canmove()
-
-	clamp_values()
 
 	// Grabbing
 	for(var/obj/item/weapon/grab/G in src)
@@ -93,10 +81,9 @@
 
 
 	proc/clamp_values()
-
-		AdjustStunned(0)
+//		AdjustStunned(0)
 		AdjustParalysis(0)
-		AdjustWeakened(0)
+//		AdjustWeakened(0)
 
 	proc/handle_disabilities()
 
@@ -249,10 +236,6 @@
 				if (src.internals)
 					src.internals.icon_state = "internal0"
 		return null
-
-	proc/update_canmove()
-		if(paralysis || stunned || weakened || buckled || (changeling && changeling.changeling_fakedeath)) canmove = 0
-		else canmove = 1
 
 	proc/handle_breath(datum/gas_mixture/breath)
 		if(src.nodamage)

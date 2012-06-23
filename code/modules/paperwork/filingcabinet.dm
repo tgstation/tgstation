@@ -46,7 +46,7 @@
 		var/obj/item/P = locate(href_list["retrieve"])//contents[retrieveindex]
 		if(!isnull(P) && in_range(src,usr))
 			if(!usr.get_active_hand())
-				usr.put_in_hand(P)
+				usr.put_in_hands(P)
 			else
 				P.loc = get_turf_loc(src)
 

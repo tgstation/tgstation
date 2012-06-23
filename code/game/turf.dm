@@ -567,7 +567,7 @@
 			sleep(100)
 			if( !istype(src, /turf/simulated/wall) || !user || !WT || !WT.isOn() || !T )	return
 
-			if( user.loc == T && user.equipped() == WT )
+			if( user.loc == T && user.get_active_hand() == WT )
 				user << "<span class='notice'>You remove the outer plating.</span>"
 				dismantle_wall()
 		else
@@ -584,7 +584,7 @@
 			sleep(60)
 		if( !istype(src, /turf/simulated/wall) || !user || !W || !T )	return
 
-		if( user.loc == T && user.equipped() == W )
+		if( user.loc == T && user.get_active_hand() == W )
 			user << "<span class='notice'>You remove the outer plating.</span>"
 			dismantle_wall()
 			for(var/mob/O in viewers(user, 5))
@@ -601,7 +601,7 @@
 			sleep(60)
 		if( !istype(src, /turf/simulated/wall) || !user || !W || !T )	return
 
-		if( user.loc == T && user.equipped() == W )
+		if( user.loc == T && user.get_active_hand() == W )
 			user << "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>"
 			dismantle_wall()
 			for(var/mob/O in viewers(user, 5))
@@ -620,7 +620,7 @@
 			sleep(70)
 		if( !istype(src, /turf/simulated/wall) || !user || !EB || !T )	return
 
-		if( user.loc == T && user.equipped() == W )
+		if( user.loc == T && user.get_active_hand() == W )
 			EB.spark_system.start()
 			playsound(src.loc, "sparks", 50, 1)
 			playsound(src.loc, 'blade1.ogg', 50, 1)
@@ -711,7 +711,7 @@
 				sleep(40)
 				if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )	return
 
-				if( d_state == 1 && user.loc == T && user.equipped() == W )
+				if( d_state == 1 && user.loc == T && user.get_active_hand() == W )
 					src.d_state = 2
 					src.icon_state = "r_wall-2"
 					user << "<span class='notice'>You remove the support lines.</span>"
@@ -741,7 +741,7 @@
 					sleep(60)
 					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !WT || !WT.isOn() || !T )	return
 
-					if( d_state == 2 && user.loc == T && user.equipped() == WT )
+					if( d_state == 2 && user.loc == T && user.get_active_hand() == WT )
 						src.d_state = 3
 						src.icon_state = "r_wall-3"
 						user << "<span class='notice'>You press firmly on the cover, dislodging it.</span>"
@@ -757,7 +757,7 @@
 				sleep(40)
 				if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )	return
 
-				if( d_state == 2 && user.loc == T && user.equipped() == W )
+				if( d_state == 2 && user.loc == T && user.get_active_hand() == W )
 					src.d_state = 3
 					src.icon_state = "r_wall-3"
 					user << "<span class='notice'>You press firmly on the cover, dislodging it.</span>"
@@ -772,7 +772,7 @@
 				sleep(100)
 				if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )	return
 
-				if( d_state == 3 && user.loc == T && user.equipped() == W )
+				if( d_state == 3 && user.loc == T && user.get_active_hand() == W )
 					src.d_state = 4
 					src.icon_state = "r_wall-4"
 					user << "<span class='notice'>You pry off the cover.</span>"
@@ -787,7 +787,7 @@
 				sleep(40)
 				if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )	return
 
-				if( d_state == 4 && user.loc == T && user.equipped() == W )
+				if( d_state == 4 && user.loc == T && user.get_active_hand() == W )
 					src.d_state = 5
 					src.icon_state = "r_wall-5"
 					user << "<span class='notice'>You remove the bolts anchoring the support rods.</span>"
@@ -804,7 +804,7 @@
 					sleep(100)
 					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !WT || !WT.isOn() || !T )	return
 
-					if( d_state == 5 && user.loc == T && user.equipped() == WT )
+					if( d_state == 5 && user.loc == T && user.get_active_hand() == WT )
 						src.d_state = 6
 						src.icon_state = "r_wall-6"
 						new /obj/item/stack/rods( src )
@@ -821,7 +821,7 @@
 				sleep(70)
 				if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )	return
 
-				if( d_state == 5 && user.loc == T && user.equipped() == W )
+				if( d_state == 5 && user.loc == T && user.get_active_hand() == W )
 					src.d_state = 6
 					src.icon_state = "r_wall-6"
 					new /obj/item/stack/rods( src )
@@ -837,7 +837,7 @@
 				sleep(100)
 				if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )	return
 
-				if( user.loc == T && user.equipped() == W )
+				if( user.loc == T && user.get_active_hand() == W )
 					user << "<span class='notice'>You pry off the outer sheath.</span>"
 					dismantle_wall()
 				return
@@ -852,7 +852,7 @@
 		sleep(200)
 		if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )	return
 
-		if( user.loc == T && user.equipped() == W )
+		if( user.loc == T && user.get_active_hand() == W )
 			user << "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>"
 			dismantle_wall()
 
@@ -865,7 +865,7 @@
 		sleep( max(20*d_state,100) )	//time taken to repair is proportional to the damage! (max 10 seconds)
 		if( !istype(src, /turf/simulated/wall/r_wall) || !user || !MS || !T )	return
 
-		if( user.loc == T && user.equipped() == MS && d_state )
+		if( user.loc == T && user.get_active_hand() == MS && d_state )
 			src.d_state = 0
 			src.icon_state = "r_wall"
 			relativewall_neighbours()	//call smoothwall stuff

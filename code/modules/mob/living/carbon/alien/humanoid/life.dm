@@ -17,9 +17,7 @@
 
 	..()
 
-	if (src.stat != 2) //still breathing
-
-
+	if (src.stat != DEAD) //still breathing
 
 		//First, resolve location and get a breath
 
@@ -62,36 +60,25 @@
 	//Status updates, death etc.
 	handle_regular_status_updates()
 
-	//Being buckled to a chair or bed
-	check_if_buckled()
-
-	//Temporary, whilst I finish the regenerate_icons changes ~Carn
-	if( update_icon )	//forces a full overlay update
-		update_icon = 0
-		regenerate_icons()
-	else if( lying != lying_prev )
-		update_icons()
-
-	if(client)
-		handle_regular_hud_updates()
-
 	// Yup.
 	update_canmove()
-
-	clamp_values()
 
 	// Grabbing
 	for(var/obj/item/weapon/grab/G in src)
 		G.process()
 
+	if(client)
+		handle_regular_hud_updates()
+
+	clamp_values()
 
 /mob/living/carbon/alien/humanoid
 	proc
 		clamp_values()
 
-			SetStunned(min(stunned, 20))
+//			SetStunned(min(stunned, 20))
 			SetParalysis(min(paralysis, 20))
-			SetWeakened(min(weakened, 20))
+//			SetWeakened(min(weakened, 20))
 			sleeping = max(min(sleeping, 20), 0)
 			adjustBruteLoss(0)
 			adjustToxLoss(0)
@@ -255,10 +242,6 @@
 					if (src.internals)
 						src.internals.icon_state = "internal0"
 			return null
-
-		update_canmove()
-			if(paralysis || stunned || weakened || buckled) canmove = 0
-			else canmove = 1
 
 		handle_breath(datum/gas_mixture/breath)
 			if(src.nodamage)

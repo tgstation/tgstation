@@ -989,7 +989,7 @@ datum
 				for(var/mob/living/carbon/metroid/M in T)
 					M.adjustToxLoss(rand(5,10))
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)	//TODO: CARN
 				M.clean_blood()
 				if(istype(M, /mob/living/carbon))
 					var/mob/living/carbon/C = M

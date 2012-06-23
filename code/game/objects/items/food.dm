@@ -37,16 +37,8 @@ MONKEY CUBE BOX
 /obj/item/kitchen/donut_box/MouseDrop(mob/user as mob)
 	if ((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
 		if(!istype(user, /mob/living/carbon/metroid))
-			if (usr.hand)
-				if (!( usr.l_hand ))
-					spawn( 0 )
-						src.attack_hand(usr, 1, 1)
-						return
-			else
-				if (!( usr.r_hand ))
-					spawn( 0 )
-						src.attack_hand(usr, 0, 1)
-						return
+			if( !usr.get_active_hand() )
+				src.attack_hand(usr, usr.hand, 1)
 	return
 
 /obj/item/kitchen/donut_box/attack_paw(mob/user as mob)
@@ -56,36 +48,15 @@ MONKEY CUBE BOX
 	if (flag)
 		return ..()
 	src.add_fingerprint(user)
-	if (locate(/obj/item/weapon/reagent_containers/food/snacks/donut, src))
-		for(var/obj/item/weapon/reagent_containers/food/snacks/donut/P in src)
-			if (!usr.l_hand)
-				P.loc = usr
-				P.layer = 20
-				usr.l_hand = P
-				usr.update_inv_l_hand()
-				usr << "You take a donut out of the box."
-				break
-			else if (!usr.r_hand)
-				P.loc = usr
-				P.layer = 20
-				usr.r_hand = P
-				usr.update_inv_r_hand()
-				usr << "You take a donut out of the box."
-				break
-	else
-		if (src.amount >= 1)
-			src.amount--
-			var/obj/item/weapon/reagent_containers/food/snacks/donut/D = new /obj/item/weapon/reagent_containers/food/snacks/donut
-			D.loc = usr.loc
-			if(ishuman(usr))
-				if(!usr.get_active_hand())
-					usr.put_in_hand(D)
-					usr << "You take a donut out of the box."
-			else
-				D.loc = get_turf_loc(src)
-				usr << "You take a donut out of the box."
 
-	src.update()
+	var/obj/item/weapon/reagent_containers/food/snacks/donut/P = locate() in src
+	if(!P && (amount >= 1))
+		P = new /obj/item/weapon/reagent_containers/food/snacks/donut( src )
+	if(P)
+		usr.put_in_hands(P)
+		usr << "You take a donut out of the box."
+		src.amount--
+		src.update()
 	return
 
 /obj/item/kitchen/donut_box/examine()
@@ -112,16 +83,9 @@ MONKEY CUBE BOX
 
 /obj/item/kitchen/egg_box/MouseDrop(mob/user as mob)
 	if ((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
-		if (usr.hand)
-			if (!( usr.l_hand ))
-				spawn( 0 )
-					src.attack_hand(usr, 1, 1)
-					return
-		else
-			if (!( usr.r_hand ))
-				spawn( 0 )
-					src.attack_hand(usr, 0, 1)
-					return
+		if( !usr.get_active_hand() )
+			attack_hand(usr, usr.hand, 1)
+			return
 	return
 
 /obj/item/kitchen/egg_box/attack_paw(mob/user as mob)
@@ -131,31 +95,16 @@ MONKEY CUBE BOX
 	if (flag)
 		return ..()
 	src.add_fingerprint(user)
-	if (locate(/obj/item/weapon/reagent_containers/food/snacks/egg, src))
-		for(var/obj/item/weapon/reagent_containers/food/snacks/egg/P in src)
-			if (!usr.l_hand)
-				P.loc = usr.loc
-				P.layer = 20
-				usr.l_hand = P
-				P = null
-				usr.update_inv_l_hand()
-				usr << "You take an egg out of the box."
-				break
-			else if (!usr.r_hand)
-				P.loc = usr.loc
-				P.layer = 20
-				usr.r_hand = P
-				P = null
-				usr.update_inv_r_hand()
-				usr << "You take an egg out of the box."
-				break
-	else
-		if (src.amount >= 1)
-			src.amount--
-			new /obj/item/weapon/reagent_containers/food/snacks/egg( src.loc )
-			usr << "You take an egg out of the box."
-	src.update()
+	var/obj/item/weapon/reagent_containers/food/snacks/egg/P = locate() in src
+	if(!P && (amount >= 1))
+		P = new /obj/item/weapon/reagent_containers/food/snacks/egg( src )
+	if(P)
+		usr.put_in_hands(P)
+		usr << "You take an egg out of the box."
+		src.amount--
+		src.update()
 	return
+
 
 /obj/item/kitchen/egg_box/examine()
 	set src in oview(1)
@@ -186,15 +135,7 @@ MONKEY CUBE BOX
 
 		if(user.r_hand == src || user.l_hand == src)
 			if(amount)
-				var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/M = new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src)
-				if (user.hand)
-					user.l_hand = M
-					user.update_inv_l_hand()
-				else
-					user.r_hand = M
-					user.update_inv_r_hand()
-				M.loc = user
-				M.layer = 20
+				user.put_in_hands(new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(user))
 				user << "You take a monkey cube out of the box."
 				amount--
 			else

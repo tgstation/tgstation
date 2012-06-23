@@ -23,7 +23,7 @@
 		for(var/obj/item/W in M)
 			if (istype(M, /mob/living/silicon/robot)||istype(W, /obj/item/weapon/implant))
 				del (W)
-			M.drop_from_slot(W)
+			M.drop_from_inventory(W)
 		var/randomize = pick("monkey","robot","metroid","alien","human")
 		switch(randomize)
 			if("monkey")

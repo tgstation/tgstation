@@ -148,7 +148,7 @@ obj/machinery/computer/forensic_scanning
 					temp = "Eject Failed: No Object"
 			if("insert")
 				var/mob/M = usr
-				var/obj/item/I = M.equipped()
+				var/obj/item/I = M.get_active_hand()
 				if(I && istype(I))
 					if(istype(I, /obj/item/weapon/evidencebag))
 						scanning = I.contents[1]
@@ -163,7 +163,7 @@ obj/machinery/computer/forensic_scanning
 					usr << "Invalid Object Rejected."
 			if("card")  //Processing a fingerprint card.
 				var/mob/M = usr
-				var/obj/item/I = M.equipped()
+				var/obj/item/I = M.get_active_hand()
 				if(!(I && istype(I,/obj/item/weapon/f_card)))
 					I = card
 				if(I && istype(I,/obj/item/weapon/f_card))

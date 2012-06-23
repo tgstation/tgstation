@@ -108,7 +108,7 @@
 
 //Used by monkeys, *chimpers* //TODO: eliminate this convoluted proc it's incredibly shitty. ~Carn
 /mob/proc/db_click(text, t1)
-	var/obj/item/weapon/W = equipped()
+	var/obj/item/weapon/W = get_active_hand()
 	switch(text)
 		if("mask")
 			if (wear_mask)
@@ -666,6 +666,43 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(restrained())					return 0
 	return 1
 
+//Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
+/mob/proc/update_canmove()
+	if( stat || weakened || paralysis || resting || sleeping || (changeling && changeling.changeling_fakedeath) )
+		lying = 1
+		canmove = 0
+	else if( stunned )
+//		lying = 0
+		canmove = 0
+	else
+		lying = 0
+		canmove = 1
+
+	if(buckled)
+		anchored = 1
+		if( istype(buckled,/obj/structure/stool/bed/chair) )
+			lying = 0
+		else
+			lying = 1
+
+	if(lying)
+		density = 0
+		drop_l_hand()
+		drop_r_hand()
+	else
+		density = 1
+
+	//Temporarily moved here from the various life() procs
+	//I'm fixing stuff incrementally so this will likely find a better home.
+	//It just makes sense for now. ~Carn
+	if( update_icon )	//forces a full overlay update
+		update_icon = 0
+		regenerate_icons()
+	else if( lying != lying_prev )
+		update_icons()
+
+	return canmove
+
 
 /mob/verb/eastface()
 	set hidden = 1
@@ -706,8 +743,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/Stun(amount)
 	if(canstun)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-
-
 	else
 		if(istype(src, /mob/living/carbon/alien))	// add some movement delay
 			var/mob/living/carbon/alien/Alien = src
@@ -717,8 +752,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
 	if(canstun)
 		stunned = max(amount,0)
-
-
 	return
 
 /mob/proc/AdjustStunned(amount)
@@ -729,16 +762,19 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/Weaken(amount)
 	if(canweaken)
 		weakened = max(max(weakened,amount),0)
+		update_canmove()	//updates lying, canmove and icons
 	return
 
 /mob/proc/SetWeakened(amount)
 	if(canweaken)
 		weakened = max(amount,0)
+		update_canmove()	//updates lying, canmove and icons
 	return
 
 /mob/proc/AdjustWeakened(amount)
 	if(canweaken)
 		weakened = max(weakened + amount,0)
+		update_canmove()	//updates lying, canmove and icons
 	return
 
 /mob/proc/Paralyse(amount)

@@ -347,16 +347,20 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	/obj/item/clothing/suit/space/nasavoid, /obj/item/weapon/tank)
 
 /proc/fake_attack(var/mob/target)
-	var/list/possible_clones = new/list()
+//	var/list/possible_clones = new/list()
 	var/mob/living/carbon/human/clone = null
 	var/clone_weapon = null
 
 	for(var/mob/living/carbon/human/H in world)
 		if(H.stat || H.lying) continue
-		possible_clones += H
+//		possible_clones += H
+		clone = H
+		break	//changed the code a bit. Less randomised, but less work to do. Should be ok, world.contents aren't stored in any particular order.
 
-	if(!possible_clones.len) return
-	clone = pick(possible_clones)
+//	if(!possible_clones.len) return
+//	clone = pick(possible_clones)
+	if(!clone)	return
+
 	//var/obj/effect/fake_attacker/F = new/obj/effect/fake_attacker(outside_range(target))
 	var/obj/effect/fake_attacker/F = new/obj/effect/fake_attacker(target.loc)
 	if(clone.l_hand)

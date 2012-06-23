@@ -29,7 +29,7 @@
 
 /obj/structure/extinguisher_cabinet/attack_hand(mob/user as mob)
 	if(has_extinguisher)
-		user.put_in_hand(has_extinguisher)
+		user.put_in_hands(has_extinguisher)
 		has_extinguisher = null
 		user << "\blue You take the extinguisher from the [name]."
 		opened = 1

@@ -111,7 +111,7 @@
 			return
 		if(localopened)
 			if(fireaxe)
-				user.put_in_hand(fireaxe)
+				user.put_in_hands(fireaxe)
 				fireaxe = null
 				user << "\blue You take the fire axe from the [name]."
 				src.add_fingerprint(user)
@@ -160,7 +160,7 @@
 
 		if (localopened)
 			if(fireaxe)
-				usr.put_in_hand(fireaxe)
+				usr.put_in_hands(fireaxe)
 				fireaxe = null
 				usr << "\blue You take the Fire axe from the [name]."
 			else

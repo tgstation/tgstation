@@ -348,22 +348,11 @@
 			usr << browse(null, "window=radio")
 			var/obj/item/device/radio/T = src.origradio
 			var/obj/item/weapon/SWF_uplink/R = src
-			R.loc = T
 			T.loc = usr
-			// R.layer = initial(R.layer)
-			R.layer = 0
-			if (usr.client)
-				usr.client.screen -= R
-			if (usr.r_hand == R)
-				usr.u_equip(R)
-				usr.r_hand = T
-				usr.update_inv_r_hand()
-			else
-				usr.u_equip(R)
-				usr.l_hand = T
-				usr.update_inv_l_hand()
+
+			usr.u_equip(R)
+			usr.put_in_hands(T)
 			R.loc = T
-			T.layer = 20
 			T.set_frequency(initial(T.frequency))
 			T.attack_self(usr)
 			return

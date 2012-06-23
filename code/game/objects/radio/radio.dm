@@ -189,21 +189,14 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			// now transform the regular radio, into a (disguised)syndicate uplink!
 			var/obj/item/device/uplink/radio/T = traitorradio
 			var/obj/item/device/radio/R = src
+
+			usr.u_equip(R)
 			R.loc = T
-			T.loc = usr
-			R.layer = 0
-			if (usr.client)
-				usr.client.screen -= R
-			if (usr.r_hand == R)
-				usr.u_equip(R)
-				usr.r_hand = T
-				usr.update_inv_r_hand()
+			if(usr.r_hand == R)
+				usr.put_in_r_hand(T)
 			else
-				usr.u_equip(R)
-				usr.l_hand = T
-				usr.update_inv_l_hand()
-			R.loc = T
-			T.layer = 20
+				usr.put_in_l_hand(T)
+
 			T.attack_self(usr)
 			return
 	else if (href_list["talk"])
@@ -219,7 +212,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				channels[chan_name] |= FREQ_LISTENING
 	else if (href_list["wires"])
 		var/t1 = text2num(href_list["wires"])
-		if (!( istype(usr.equipped(), /obj/item/weapon/wirecutters) ))
+		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
 			return
 		if (wires & t1)
 			wires &= ~t1

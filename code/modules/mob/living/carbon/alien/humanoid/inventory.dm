@@ -20,7 +20,7 @@
 		update_inv_l_hand(0)
 
 /mob/living/carbon/alien/humanoid/db_click(text, t1)
-	var/obj/item/W = equipped()
+	var/obj/item/W = get_active_hand()
 	var/emptyHand = (W == null)
 	if ((!emptyHand) && (!istype(W, /obj/item)))
 		return
@@ -42,7 +42,7 @@
 				return
 			u_equip(W)
 			wear_suit = W
-			W.equipped(src, text)
+			W.get_active_hand(src, text)
 */
 		if("head")
 			if (head)
@@ -57,7 +57,7 @@
 				return
 			u_equip(W)
 			head = W
-			W.equipped(src, text)
+			W.get_active_hand(src, text)
 */
 		if("storage1")
 			if (l_store)

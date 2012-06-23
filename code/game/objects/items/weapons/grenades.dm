@@ -30,7 +30,7 @@ CRITTER GRENADE
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (istype(target, /obj/item/weapon/storage)) return ..() // Trying to put it in a full container
 		if (istype(target, /obj/item/weapon/gun/grenadelauncher)) return ..()
-		if((user.equipped() == src)&&(!active)&&(clown_check(user)))
+		if((user.get_active_hand() == src)&&(!active)&&(clown_check(user)))
 			user << "\red You prime the emp grenade! [det_time/10] seconds!"
 			src.active = 1
 			src.icon_state = "empar"
@@ -130,7 +130,7 @@ CRITTER GRENADE
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (istype(target, /obj/item/weapon/storage)) return ..() // Trying to put it in a full container
 		if (istype(target, /obj/item/weapon/gun/grenadelauncher)) return ..()
-		if((user.equipped() == src)&&(!active)&&(clown_check(user)))
+		if((user.get_active_hand() == src)&&(!active)&&(clown_check(user)))
 			user << "\red You prime the flashbang! [det_time/10] seconds!"
 			src.active = 1
 			src.icon_state = "flashbang1"
@@ -302,7 +302,7 @@ CRITTER GRENADE
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (istype(target, /obj/item/weapon/storage)) return ..() // Trying to put it in a full container
 		if (istype(target, /obj/item/weapon/gun/grenadelauncher)) return ..()
-		if((user.equipped() == src)&&(!active))
+		if((user.get_active_hand() == src)&&(!active))
 			//world << "cluster after attack"
 			arm(user)
 			user.dir = get_dir(user, target)
@@ -409,7 +409,7 @@ CRITTER GRENADE
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (istype(target, /obj/item/weapon/storage)) return ..() // Trying to put it in a full container
 		if (istype(target, /obj/item/weapon/gun/grenadelauncher)) return ..()
-		if((user.equipped() == src)&&(!active)&&(clown_check(user)))
+		if((user.get_active_hand() == src)&&(!active)&&(clown_check(user)))
 			user << "\red You prime the delivery grenade! [det_time/10] seconds!"
 			src.active = 1
 			src.icon_state = "delivery1"

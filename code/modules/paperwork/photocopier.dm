@@ -69,7 +69,7 @@
 				if(ishuman(usr))
 					if(!usr.get_active_hand())
 						copy.loc = usr.loc
-						usr.put_in_hand(copy)
+						usr.put_in_hands(copy)
 						usr << "You take the paper out of the photocopier."
 						copy = null
 						updateUsrDialog()

@@ -1065,7 +1065,7 @@
 			var/mob/M = usr
 			var/obj/item/weapon/corncob/W = new /obj/item/weapon/corncob( M )
 			M << "<span class='notice'>You chew on the corn, leaving nothing behind but a cob.</span>"
-			M.put_in_hand(W)
+			M.put_in_hands(W)
 			W.add_fingerprint(M)
 	New()
 		..()
@@ -1364,7 +1364,7 @@
 			var/mob/M = usr
 			var/obj/item/weapon/bananapeel/W = new /obj/item/weapon/bananapeel( M )
 			M << "<span class='notice'>You peel the banana.</span>"
-			M.put_in_hand(W)
+			M.put_in_hands(W)
 			W.add_fingerprint(M)
 	New()
 		..()
@@ -1452,7 +1452,6 @@
 	if(istype(user.loc,/turf/space))
 		return
 	new /obj/effect/critter/killertomato(user.loc)
-
 	del(src)
 
 	user << "<span class='notice'>You plant the killer-tomato.</span>"
@@ -1629,7 +1628,6 @@
 	if(istype(user.loc,/turf/space))
 		return
 	new /obj/effect/critter/walkingmushroom(user.loc)
-
 	del(src)
 
 	user << "<span class='notice'>You plant the walking mushroom.</span>"
@@ -1673,7 +1671,6 @@
 	planted.endurance = endurance
 	planted.yield = yield
 	planted.potency = potency
-
 	del(src)
 
 	user << "<span class='notice'>You plant the glowshroom.</span>"

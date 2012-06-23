@@ -886,122 +886,131 @@ Auto Patrol: []"},
 
 /obj/item/weapon/ed209_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if(((istype(W, /obj/item/robot_parts/l_leg)) || (istype(W, /obj/item/robot_parts/r_leg))) && (src.build_step == 0 || src.build_step == 1))
-		src.build_step++
-		user << "You add the robot leg to [src]!"
-		src.name = "legs/frame assembly"
-		if (src.build_step == 1)
-			src.item_state = "ed209_leg"
-			src.icon_state = "ed209_leg"
-		if (src.build_step == 2)
-			src.item_state = "ed209_legs"
-			src.icon_state = "ed209_legs"
 
-		del(W)
-
-	else if(istype(W, /obj/item/clothing/suit/armor/vest) && (src.build_step == 2))
-		src.build_step++
-		user << "You add the armor to [src]!"
-		src.name = "vest/legs/frame assembly"
-		src.item_state = "ed209_shell"
-		src.icon_state = "ed209_shell"
-		del(W)
-	else if(istype(W, /obj/item/clothing/suit/bluetag) && (src.build_step == 2))
-		src.build_step++
-		user << "You add the armor to [src]!"
-		src.name = "vest/legs/frame assembly"
-		lasercolor = "b"
-		src.item_state = "[lasercolor]ed209_shell"
-		src.icon_state = "[lasercolor]ed209_shell"
-		del(W)
-	else if(istype(W, /obj/item/clothing/suit/redtag) && (src.build_step == 2))
-		src.build_step++
-		user << "You add the armor to [src]!"
-		src.name = "vest/legs/frame assembly"
-		lasercolor = "r"
-		src.item_state = "[lasercolor]ed209_shell"
-		src.icon_state = "[lasercolor]ed209_shell"
-		del(W)
-	else if(istype(W, /obj/item/weapon/weldingtool) && src.build_step == 3)
-		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0,user))
-			src.build_step++
-			src.name = "shielded frame assembly"
-			user << "You welded the vest to [src]!"
-	else if(istype(W, /obj/item/clothing/head/helmet) && (src.build_step == 4))
-		src.build_step++
-		user << "You add the helmet to [src]!"
-		src.name = "covered and shielded frame assembly"
-		src.item_state = "[lasercolor]ed209_hat"
-		src.icon_state = "[lasercolor]ed209_hat"
-		del(W)
-	else if(isprox(W) && (src.build_step == 5))
-		src.build_step++
-		user << "You add the prox sensor to [src]!"
-		src.name = "prox/covered and armed the frame assembly"
-		src.item_state = "[lasercolor]ed209_prox"
-		src.icon_state = "[lasercolor]ed209_prox"
-		del(W)
-	else if(istype(W, /obj/item/weapon/cable_coil) && (src.build_step == 6) )
-		var/obj/item/weapon/cable_coil/coil = W
-		var/turf/T = get_turf(user)
-		user.visible_message("[user] wires killbot.", "You start to wire the killbot.")
-		sleep(40)
-		if(get_turf(user) == T)
-			coil.use(1)
-			src.build_step++
-			user << "\blue You wire the ED-209 assembly!"
-			src.name = "Wired ED-209 Assembly"
-	else if(istype(W, /obj/item/weapon/gun/energy/taser) && (src.build_step == 7) && (!lasercolor))
-		src.build_step++
-		user << "You add the taser gun to [src]!"
-		src.name = "Taser/Wired ED-209 Assembly"
-		src.item_state = "[lasercolor]ed209_taser"
-		src.icon_state = "[lasercolor]ed209_taser"
-		del(W)
-	else if(istype(W, /obj/item/weapon/gun/energy/laser/bluetag) && (src.build_step == 7) && (lasercolor == "b"))
-		src.build_step++
-		user << "You add the lasertag gun to [src]!"
-		src.name = "Bluetag ED-209 Assembly"
-		src.item_state = "[lasercolor]ed209_taser"
-		src.icon_state = "[lasercolor]ed209_taser"
-		del(W)
-	else if(istype(W, /obj/item/weapon/gun/energy/laser/redtag) && (src.build_step == 7) && (lasercolor == "r"))
-		src.build_step++
-		user << "You add the lasertag gun to [src]!"
-		src.name = "Redtag ED-209 Assembly"
-		src.item_state = "[lasercolor]ed209_taser"
-		src.icon_state = "[lasercolor]ed209_taser"
-		del(W)
-	else if(istype(W, /obj/item/weapon/screwdriver) && (src.build_step == 8) )
-		playsound(src.loc, 'Screwdriver.ogg', 100, 1)
-		var/turf/T = get_turf(user)
-		user << "\blue Now attaching the gun to the frame."
-		sleep(40)
-		if(get_turf(user) == T)
-			src.build_step++
-			src.name = "Armed ED-209 Assembly"
-			user << "\blue Taser gun attached!"
-	else if((istype(W, /obj/item/weapon/cell)) && (src.build_step >= 9))
-		src.build_step++
-		user << "You complete the ED-209!"
-		var/obj/machinery/bot/ed209/S = new /obj/machinery/bot/ed209
-		S.loc = get_turf(src)
-		S.name = src.created_name
-		S.lasercolor = src.lasercolor
-		S.New()
-		del(W)
-		del(src)
-
-	else if(istype(W, /obj/item/weapon/pen))
+	if(istype(W, /obj/item/weapon/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
 		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
-		if (!t)
-			return
-		if (!in_range(src, usr) && src.loc != usr)
-			return
+		if(!t)	return
+		if(!in_range(src, usr) && src.loc != usr)	return
+		created_name = t
+		return
 
-		src.created_name = t
+	switch(build_step)
+		if(0,1)
+			if( istype(W, /obj/item/robot_parts/l_leg) || istype(W, /obj/item/robot_parts/r_leg) )
+				user.drop_item()
+				del(W)
+				build_step++
+				user << "<span class='notice'>You add the robot leg to [src].</span>"
+				name = "legs/frame assembly"
+				if(build_step == 1)
+					item_state = "ed209_leg"
+					icon_state = "ed209_leg"
+				else
+					item_state = "ed209_legs"
+					icon_state = "ed209_legs"
+
+		if(2)
+			if( istype(W, /obj/item/clothing/suit/redtag) )
+				lasercolor = "r"
+			else if( istype(W, /obj/item/clothing/suit/bluetag) )
+				lasercolor = "b"
+			if( lasercolor || istype(W, /obj/item/clothing/suit/armor/vest) )
+				user.drop_item()
+				del(W)
+				build_step++
+				user << "<span class='notice'>You add the armor to [src].</span>"
+				name = "vest/legs/frame assembly"
+				item_state = "[lasercolor]ed209_shell"
+				icon_state = "[lasercolor]ed209_shell"
+
+		if(3)
+			if( istype(W, /obj/item/weapon/weldingtool) )
+				var/obj/item/weapon/weldingtool/WT = W
+				if(WT.remove_fuel(0,user))
+					build_step++
+					name = "shielded frame assembly"
+					user << "<span class='notice'>You welded the vest to [src].</span>"
+		if(4)
+			if( istype(W, /obj/item/clothing/head/helmet) )
+				user.drop_item()
+				del(W)
+				build_step++
+				user << "<span class='notice'>You add the helmet to [src].</span>"
+				name = "covered and shielded frame assembly"
+				item_state = "[lasercolor]ed209_hat"
+				icon_state = "[lasercolor]ed209_hat"
+
+		if(5)
+			if( isprox(W) )
+				user.drop_item()
+				del(W)
+				build_step++
+				user << "<span class='notice'>You add the prox sensor to [src].</span>"
+				name = "prox/covered and armed the frame assembly"
+				item_state = "[lasercolor]ed209_prox"
+				icon_state = "[lasercolor]ed209_prox"
+
+		if(6)
+			if( istype(W, /obj/item/weapon/cable_coil) )
+				var/obj/item/weapon/cable_coil/coil = W
+				var/turf/T = get_turf(user)
+				user << "<span class='notice'>You start to wire [src]...</span>"
+				sleep(40)
+				if(get_turf(user) == T)
+					coil.use(1)
+					build_step++
+					user << "<span class='notice'>You wire the ED-209 assembly.</span>"
+					name = "wired ED-209 assembly"
+
+		if(7)
+			switch(lasercolor)
+				if("b")
+					if( !istype(W, /obj/item/weapon/gun/energy/laser/bluetag) )
+						return
+					name = "bluetag ED-209 assembly"
+				if("r")
+					if( !istype(W, /obj/item/weapon/gun/energy/laser/redtag) )
+						return
+					name = "redtag ED-209 assembly"
+				if("")
+					if( !istype(W, /obj/item/weapon/gun/energy/taser) )
+						return
+					name = "taser ED-209 assembly"
+				else
+					return
+			build_step++
+			user << "<span class='notice'>You add [W] to [src].</span>"
+			src.item_state = "[lasercolor]ed209_taser"
+			src.icon_state = "[lasercolor]ed209_taser"
+			user.drop_item()
+			del(W)
+
+		if(8)
+			if( istype(W, /obj/item/weapon/screwdriver) )
+				playsound(src.loc, 'Screwdriver.ogg', 100, 1)
+				var/turf/T = get_turf(user)
+				user << "<span class='notice'>Now attaching the gun to the frame.</span>"
+				sleep(40)
+				if(get_turf(user) == T)
+					build_step++
+					name = "armed ED-209 assembly"
+					user << "<span class='notice'>Taser gun attached.</span>"
+
+		if(9)
+			if( istype(W, /obj/item/weapon/cell) )
+				build_step++
+				user << "<span class='notice'>You complete the ED-209.</span>"
+				var/obj/machinery/bot/ed209/S = new /obj/machinery/bot/ed209
+				S.loc = get_turf(src)
+				S.name = created_name
+				S.lasercolor = lasercolor
+				S.New()
+				user.drop_item()
+				del(W)
+				user.drop_from_inventory(src)
+				del(src)
+
 
 /obj/machinery/bot/ed209/bullet_act(var/obj/item/projectile/Proj)
 	if((src.lasercolor == "b") && (src.disabled == 0))
