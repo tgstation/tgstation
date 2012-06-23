@@ -15,6 +15,7 @@
 	var/recharge = 5           // How long does it take this artifact to recharge?
 	var/display_id = ""        // Artifact ID to display once successfully scanned
 	var/datum/artifact_effect/my_effect = null
+	var/being_used = 0
 
 /obj/machinery/artifact/New()
 	..()
