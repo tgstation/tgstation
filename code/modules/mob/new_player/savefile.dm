@@ -33,6 +33,8 @@ datum/preferences/proc/savefile_save(mob/user)
 	F["job_engsec_med"] << src.job_engsec_med
 	F["job_engsec_low"] << src.job_engsec_low
 
+	F["userandomjob"] << src.userandomjob
+
 	//Body data
 	F["hair_red"] << src.r_hair
 	F["hair_green"] << src.g_hair
@@ -137,6 +139,8 @@ datum/preferences/proc/savefile_load(mob/user)
 	F["job_engsec_high"] >> src.job_engsec_high
 	F["job_engsec_med"] >> src.job_engsec_med
 	F["job_engsec_low"] >> src.job_engsec_low
+
+	F["userandomjob"] >> src.userandomjob
 
 	F["OOC_Notes"] >> src.metadata
 

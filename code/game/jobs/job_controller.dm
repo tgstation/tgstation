@@ -81,6 +81,24 @@ var/global/datum/controller/occupations/job_master
 				candidates += player
 		return candidates
 
+	proc/GiveRandomJob(var/mob/new_player/player)
+		Debug("FOC Giving random job, Player: [player]")
+		for(var/datum/job/job in shuffle(occupations))
+			if(!job)
+				continue
+
+			if(istype(job, GetJob("Assistant"))) // We don't want to give him assistant, that's boring!
+				continue
+
+			if(jobban_isbanned(player, job.title))
+				Debug("FOC isbanned failed, Player: [player], Job: [job.title]")
+				continue
+
+			if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
+				Debug("FOC Random job given, Player: [player], Job: [job]")
+				AssignRole(player, job.title)
+				unassigned -= player
+				break
 
 	proc/ResetOccupations()
 		for(var/mob/new_player/player in world)
@@ -144,8 +162,8 @@ var/global/datum/controller/occupations/job_master
 		Debug("Running DO")
 		SetupOccupations()
 
-		occupations = shuffle(occupations) //Shuffles job-list at round start so that people don't have their job picks randomized
-		if(ticker)//Holder for Triumvirate is stored in the ticker, this just processes it
+		//Holder for Triumvirate is stored in the ticker, this just processes it
+		if(ticker)
 			for(var/datum/job/ai/A in occupations)
 				if(ticker.triai)
 					A.spawn_positions = 3
@@ -157,12 +175,13 @@ var/global/datum/controller/occupations/job_master
 
 		Debug("DO, Len: [unassigned.len]")
 		if(unassigned.len == 0)	return 0
+
 		//Shuffle players and jobs
 		unassigned = shuffle(unassigned)
 
 		HandleFeedbackGathering()
 
-		//Assistants are checked first
+		//People who wants to be assistants, sure, go on.
 		Debug("DO, Running Assistant Check 1")
 		var/datum/job/assist = new /datum/job/assistant()
 		var/list/assistant_candidates = FindOccupationCandidates(assist, 3)
@@ -185,6 +204,46 @@ var/global/datum/controller/occupations/job_master
 
 		//Other jobs are now checked
 		Debug("DO, Running Standard Check")
+
+
+		// New job giving system by Donkie
+		// This will cause lots of more loops, but since it's only done once it shouldn't really matter much at all.
+		// Hopefully this will add more randomness and fairness to job giving.
+
+		// Loop through all levels from high to low
+		var/list/shuffledoccupations = shuffle(occupations)
+		for(var/level = 1 to 3)
+
+			// Loop through all unassigned players
+			for(var/mob/new_player/player in unassigned)
+
+				// Loop through all jobs
+				for(var/datum/job/job in shuffledoccupations) // SHUFFLE ME BABY
+					if(!job)
+						continue
+
+					if(jobban_isbanned(player, job.title))
+						Debug("FOC isbanned failed, Player: [player], Job:[job.title]")
+						continue
+
+					// If the player wants that job on this level, then try give it to him.
+					if(player.preferences.GetJobDepartment(job, level) & job.flag)
+
+						// If the job isn't filled
+						if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
+							Debug("FOC pass, Player: [player], Level:[level], Job:[job.title]")
+							AssignRole(player, job.title)
+							unassigned -= player
+							break
+
+		// Hand out random jobs to the people who didn't get any in the last check
+		// Also makes sure that they got their preference correct
+		for(var/mob/new_player/player in unassigned)
+			if(player.preferences.userandomjob)
+				GiveRandomJob(player)
+
+		/*
+		Old job system
 		for(var/level = 1 to 3)
 			for(var/datum/job/job in occupations)
 				Debug("Checking job: [job]")
@@ -199,10 +258,13 @@ var/global/datum/controller/occupations/job_master
 					var/mob/new_player/candidate = pick(candidates)
 					Debug("Selcted: [candidate], for: [job.title]")
 					AssignRole(candidate, job.title)
-					candidates -= candidate
+					candidates -= candidate*/
+
 		Debug("DO, Standard Check end")
 
 		Debug("DO, Running AC2")
+
+		// For those who wanted to be assistant if their preferences were filled, here you go.
 		for(var/mob/new_player/player in unassigned)
 			Debug("AC2 Assistant located, Player: [player]")
 			AssignRole(player, "Assistant")

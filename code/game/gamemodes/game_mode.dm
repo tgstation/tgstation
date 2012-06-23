@@ -232,6 +232,7 @@ Whitespace:Seperator;
 
 
 /datum/game_mode/proc/get_players_for_role(var/role, override_jobbans=1)
+	var/list/players = list()
 	var/list/candidates = list()
 	var/list/drafted = list()
 	var/datum/mind/applicant = null
@@ -246,7 +247,16 @@ Whitespace:Seperator;
 		if(BE_CULTIST)		roletext="cultist"
 
 
+	// Ultimate randomizing code right here
 	for(var/mob/new_player/player in world)
+		if(player.client && player.ready)
+			players += player
+
+	// Shuffling, the players list is now ping-independent!!!
+	// Goodbye antag dante
+	players = shuffle(players)
+
+	for(var/mob/new_player/player in players)
 		if(player.client && player.ready)
 			if(player.preferences.be_special & role)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
@@ -259,7 +269,7 @@ Whitespace:Seperator;
 					candidates -= player
 
 	if(candidates.len < recommended_enemies)
-		for(var/mob/new_player/player in world)
+		for(var/mob/new_player/player in players)
 			if (player.client && player.ready)
 				if(!(player.preferences.be_special & role)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
 					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
@@ -270,6 +280,8 @@ Whitespace:Seperator;
 			for(var/job in restricted_jobs)
 				if(player.assigned_role == job)
 					drafted -= player
+
+	drafted = shuffle(drafted) // Will hopefully increase randomness, Donkie
 
 	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
 		if(drafted.len > 0)
@@ -282,7 +294,7 @@ Whitespace:Seperator;
 			break
 
 	if(candidates.len < recommended_enemies && override_jobbans) //If we still don't have enough people, we're going to start drafting banned people.
-		for(var/mob/new_player/player in world)
+		for(var/mob/new_player/player in players)
 			if (player.client && player.ready)
 				if(jobban_isbanned(player, "Syndicate") || jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
 					drafted += player.mind
@@ -292,6 +304,8 @@ Whitespace:Seperator;
 			for(var/job in restricted_jobs)
 				if(player.assigned_role == job)
 					drafted -= player
+
+	drafted = shuffle(drafted) // Will hopefully increase randomness, Donkie
 
 	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
 		if(drafted.len > 0)

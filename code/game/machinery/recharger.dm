@@ -14,12 +14,16 @@ obj/machinery/recharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
 	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton))
 		if(charging)
 			return
+
+		// Checks to make sure he's not in space doing it, and that the area got proper power.
 		var/area/a = get_area(src)
 		if(!isarea(a))
-			return
-		if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
 			user << "\red The [name] blinks red as you try to insert the item!"
 			return
+		if(a.power_equip == 0)
+			user << "\red The [name] blinks red as you try to insert the item!"
+			return
+
 		if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
 			user << "<span class='notice'>Your gun's recharge port was removed to make room for a miniaturized reactor.</span>"
 			return

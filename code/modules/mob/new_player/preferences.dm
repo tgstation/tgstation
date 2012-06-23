@@ -115,6 +115,9 @@ datum/preferences
 	var/job_engsec_med = 0
 	var/job_engsec_low = 0
 
+		// Want randomjob if preferences already filled - Donkie
+	var/userandomjob = 1 // Defaults to 1 for less assistants!
+
 		// OOC Metadata:
 	var/metadata = ""
 
@@ -297,7 +300,11 @@ datum/preferences
 
 		HTML += "</td'><tr></table>"
 
-		HTML += "</center></tt>"
+		HTML += "</center></table>"
+
+		HTML += "<center><br><u><a href=\"byond://?src=\ref[user];preferences=1;togglerandjob=1\"><font color=[userandomjob ? "green>Get random job if preferences unavailable" : "red>Be assistant if preference unavailable"]</font></a></u></center>"
+
+		HTML += "</tt>"
 
 		user << browse(null, "window=preferences")
 		user << browse(HTML, "window=mob_occupation;size=[width]x[height]")
@@ -415,6 +422,12 @@ datum/preferences
 	proc/process_link(mob/user, list/link_tags)
 		if(!usr)
 			return
+
+		if(link_tags["togglerandjob"])
+			userandomjob = !userandomjob
+			SetChoices(user)
+			return 1
+
 		if(link_tags["occ"])
 			if(link_tags["cancel"])
 				user << browse(null, "window=\ref[user]occupation")
@@ -700,6 +713,7 @@ datum/preferences
 			UI_style = "Midnight"
 			midis = 1
 			ghost_ears = 1
+			userandomjob = 1
 
 		ShowChoices(user)
 
