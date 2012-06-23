@@ -694,6 +694,10 @@
 		if(resisting)
 			for(var/mob/O in viewers(usr, null))
 				O.show_message(text("\red <B>[] resists!</B>", usr), 1)
+
+
+
+	//breaking out of handcuffs
 	if(usr:handcuffed && usr:canmove && (usr.last_special <= world.time))
 		var/breakouttime = 1200
 		var/displaytime = 2
@@ -716,10 +720,13 @@
 					del(usr:handcuffed)
 					usr:handcuffed = null
 		else
-			if(istype(usr:handcuffed, /obj/item/weapon/handcuffs/cable))
-				breakouttime = 300
-				displaytime = 0.5
-			usr << "\red You attempt to remove \the [usr:handcuffed]. (This will take around [displaytime] minutes and you need to stand still)"
+			var/obj/item/weapon/handcuffs/HC = usr:handcuffed
+			var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
+			var/displaytime = 2 //Minutes to display in the "this will take X minutes."
+			if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
+				breakouttime = HC.breakouttime
+				displaytime = breakouttime / 600 //Minutes
+			usr << "\red You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)"
 			for(var/mob/O in viewers(usr))
 				O.show_message(text("\red <B>[] attempts to remove \the [usr:handcuffed]!</B>", usr), 1)
 			spawn(0)
