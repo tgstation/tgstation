@@ -62,6 +62,9 @@
 	var/pale = 0
 	var/examine_text = ""
 
+	var/previous_damage_appearance // a string describing what the organ damage previously looked like
+						           // used to determine whether the icon needs to be rebuilt
+
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
 	nodamage = 1

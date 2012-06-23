@@ -21,8 +21,24 @@
 // now constructs damage icon for each organ from mask * damage field
 
 /mob/living/carbon/human/UpdateDamageIcon()
+	// first check whether something actually changed about damage appearance
+	var/damage_appearance = ""
+
+	for(var/name in organs)
+		var/datum/organ/external/O = organs[name]
+		if(O.destroyed) damage_appearance += "d"
+		else
+			damage_appearance += O.damage_state
+
+	if(damage_appearance == previous_damage_appearance)
+		// nothing to do here
+		return
+
+	previous_damage_appearance = damage_appearance
+
 	var/icon/standing = new /icon('dam_human.dmi', "00")
 	var/icon/lying = new /icon('dam_human.dmi', "00-2")
+
 	for(var/name in organs)
 		var/datum/organ/external/O = organs[name]
 		if(!O.destroyed)
