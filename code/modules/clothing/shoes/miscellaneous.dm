@@ -1,19 +1,5 @@
-/obj/item/clothing/shoes
-	name = "shoes"
-	icon = 'shoes.dmi'
-	desc = "Comfortable-looking shoes."
-	gender = PLURAL //Carn: for grammarically correct text-parsing
 
-	body_parts_covered = FEET
-	slot_flags = SLOT_FEET
-
-	protective_temperature = 500
-	heat_transfer_coefficient = 0.10
-	permeability_coefficient = 0.50
-	slowdown = SHOES_SLOWDOWN
-	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 0, rad = 0)
-
-
+//These still need to be broken down into other files or such
 /obj/item/clothing/shoes/syndigaloshes
 	desc = "A pair of brown shoes. They seem to have extra grip."
 	name = "brown shoes"
@@ -90,6 +76,18 @@
 	var/chained = 0
 	color = "orange"
 
+/obj/item/clothing/shoes/red
+	name = "red shoes"
+	desc = "Stylish red shoes."
+	icon_state = "red"
+	color = "red"
+
+/obj/item/clothing/shoes/rainbow
+	name = "rainbow shoes"
+	desc = "Very gay shoes."
+	icon_state = "rain_bow"
+	color = "rainbow"
+
 /obj/item/clothing/shoes/swat
 	name = "\improper SWAT shoes"
 	desc = "When you want to turn up the heat."
@@ -136,15 +134,6 @@
 	permeability_coefficient = 0.05
 	flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN+1
-
-/obj/item/clothing/shoes/magboots
-	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
-	name = "magboots"
-	icon_state = "magboots0"
-	protective_temperature = 800
-	heat_transfer_coefficient = 0.01
-	var/magpulse = 0
-//	flags = NOSLIP //disabled by default
 
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn they're huge!"

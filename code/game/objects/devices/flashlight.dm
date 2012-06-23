@@ -134,59 +134,6 @@
 		if(M.reagents) reagents.trans_to(M, 15)
 	return
 
-
-//Looks like most of the clothing lights are here
-/obj/item/clothing/head/helmet/hardhat/attack_self(mob/user)
-	if(!isturf(user.loc))
-		user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
-		return
-	on = !on
-	icon_state = "hardhat[on]_[color]"
-	item_state = "hardhat[on]_[color]"
-
-	if(on)
-		user.total_luminosity += brightness_on
-	else
-		user.total_luminosity -= brightness_on
-
-/obj/item/clothing/head/helmet/hardhat/pickup(mob/user)
-	if(on)
-		user.total_luminosity += brightness_on
-		user.UpdateLuminosity()
-		src.sd_SetLuminosity(0)
-
-/obj/item/clothing/head/helmet/hardhat/dropped(mob/user)
-	if(on)
-		user.total_luminosity -= brightness_on
-		user.UpdateLuminosity()
-		src.sd_SetLuminosity(brightness_on)
-
-//RIG helmet light
-/obj/item/clothing/head/helmet/space/rig/attack_self(mob/user)
-	if(!isturf(user.loc))
-		user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
-		return
-	on = !on
-	icon_state = "rig[on]-[color]"
-	item_state = "rig[on]-[color]"
-
-	if(on)
-		user.total_luminosity += brightness_on
-	else
-		user.total_luminosity -= brightness_on
-
-/obj/item/clothing/head/helmet/space/rig/pickup(mob/user)
-	if(on)
-		user.total_luminosity += brightness_on
-		user.UpdateLuminosity()
-		src.sd_SetLuminosity(0)
-
-/obj/item/clothing/head/helmet/space/rig/dropped(mob/user)
-	if(on)
-		user.total_luminosity -= brightness_on
-		user.UpdateLuminosity()
-		src.sd_SetLuminosity(brightness_on)
-
 // the desk lamps are a bit special
 /obj/item/device/flashlight/lamp
 	name = "desk lamp"

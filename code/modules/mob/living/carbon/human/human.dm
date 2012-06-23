@@ -672,7 +672,7 @@
 ///Returns a number between -1 to 2
 /mob/living/carbon/human/eyecheck()
 	var/number = 0
-	if(istype(src.head, /obj/item/clothing/head/helmet/welding))
+	if(istype(src.head, /obj/item/clothing/head/welding))
 		if(!src.head:up)
 			number += 2
 	if(istype(src.head, /obj/item/clothing/head/helmet/space))

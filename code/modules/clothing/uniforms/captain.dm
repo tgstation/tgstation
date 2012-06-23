@@ -1,3 +1,13 @@
+//Contains: Captains clothing
+/obj/item/clothing/under/rank/captain
+	desc = "It's a blue jumpsuit with some gold markings denoting the rank of \"Captain\"."
+	name = "captain's jumpsuit"
+	icon_state = "captain"
+	item_state = "caparmor"
+	color = "captain"
+
+
+//Spacesuit
 /obj/item/clothing/head/helmet/space/capspace
 	name = "space helmet"
 	icon_state = "capspace"
@@ -25,3 +35,25 @@
 	slowdown = 1.5
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+
+
+/obj/item/clothing/head/caphat
+	name = "captain's hat"
+	icon_state = "captain"
+	desc = "It's good being the king."
+	flags = FPRINT|TABLEPASS|SUITSPACE
+	item_state = "caphat"
+
+/obj/item/clothing/head/helmet/cap
+	name = "captain's cap"
+	desc = "You fear to wear it for the negligence it brings."
+	icon_state = "capcap"
+	flags = FPRINT|TABLEPASS|SUITSPACE
+	flags_inv = 0
+
+/obj/item/clothing/gloves/captain
+	desc = "Regal blue gloves, with a nice gold trim. Swanky."
+	name = "captain's gloves"
+	icon_state = "captain"
+	item_state = "egloves"
+	color = "captain"

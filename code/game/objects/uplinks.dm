@@ -124,7 +124,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			randomItems.Add("/obj/item/weapon/storage/syndie_kit/space") //Syndicate Space Suit
 			randomItems.Add("/obj/item/device/encryptionkey/binary") //Binary Translator Key
 			randomItems.Add("/obj/item/weapon/storage/syndie_kit/imp_freedom") //Freedom Implant
-			randomItems.Add("/obj/item/clothing/glasses/thermal") //Thermal Imaging Goggles
+			randomItems.Add("/obj/item/clothing/glasses/thermal/syndi") //Thermal Imaging Goggles
 
 		if(uses > 1)
 /*
@@ -165,7 +165,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 					uses -= 4
 				if("/obj/item/weapon/storage/emp_kit" , "/obj/item/weapon/pen/paralysis" , "/obj/item/weapon/cartridge/syndicate" , "/obj/item/clothing/under/chameleon" , \
 				"/obj/item/weapon/card/id/syndicate" , "/obj/item/weapon/card/emag" , "/obj/item/weapon/storage/syndie_kit/space" , "/obj/item/device/encryptionkey/binary" , \
-				"/obj/item/weapon/storage/syndie_kit/imp_freedom" , "/obj/item/clothing/glasses/thermal")
+				"/obj/item/weapon/storage/syndie_kit/imp_freedom" , "/obj/item/clothing/glasses/thermal/syndi")
 					uses -= 3
 				if("/obj/item/ammo_magazine/a357" , "/obj/item/clothing/shoes/syndigaloshes" , "/obj/item/weapon/plastique")
 					uses -= 2
@@ -221,7 +221,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 				feedback_add_details("traitor_uplink_items_bought","BT")
 			if("/obj/item/weapon/storage/syndie_kit/imp_freedom")
 				feedback_add_details("traitor_uplink_items_bought","FI")
-			if("/obj/item/clothing/glasses/thermal")
+			if("/obj/item/clothing/glasses/thermal/syndi")
 				feedback_add_details("traitor_uplink_items_bought","TM")
 			if("/obj/item/ammo_magazine/a357")
 				feedback_add_details("traitor_uplink_items_bought","RA")

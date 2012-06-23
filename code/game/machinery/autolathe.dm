@@ -12,7 +12,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/screwdriver(), \
 		new /obj/item/weapon/wirecutters(), \
 		new /obj/item/weapon/wrench(), \
-		new /obj/item/clothing/head/helmet/welding(), \
+		new /obj/item/clothing/head/welding(), \
 		new /obj/item/weapon/stock_parts/console_screen(), \
 		new /obj/item/weapon/airlock_electronics(), \
 		new /obj/item/stack/sheet/metal(), \

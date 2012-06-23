@@ -32,19 +32,18 @@
 	item_state = "bluesuit"
 	color = "bluesuit"
 
+/obj/item/clothing/under/lawyer/purpsuit
+	name = "Purple Suit"
+	icon_state = "lawyer_purp"
+	item_state = "lawyer_purp"
+	color = "lawyer_purp"
+
 /obj/item/clothing/suit/lawyer/bluejacket
 	name = "Blue Suit Jacket"
 	desc = "A snappy dress jacket."
 	icon_state = "suitjacket_blue_open"
 	item_state = "suitjacket_blue_open"
 	body_parts_covered = UPPER_TORSO|ARMS
-
-
-/obj/item/clothing/under/lawyer/purpsuit
-	name = "Purple Suit"
-	icon_state = "lawyer_purp"
-	item_state = "lawyer_purp"
-	color = "lawyer_purp"
 
 /obj/item/clothing/suit/lawyer/purpjacket
 	name = "Purple Suit Jacket"

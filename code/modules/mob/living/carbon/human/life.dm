@@ -939,7 +939,7 @@
 
 
 
-		else if(istype(head, /obj/item/clothing/head/helmet/welding))		// wat.  This is never fucking called.
+		else if(istype(head, /obj/item/clothing/head/welding))		// wat.  This is never fucking called.
 			if(!head:up && tinted_weldhelh)
 				see_in_dark = 1
 
@@ -1101,7 +1101,7 @@
 				if (druggy)
 					client.screen += hud_used.druggy
 
-				if ((istype(head, /obj/item/clothing/head/helmet/welding)) )
+				if ((istype(head, /obj/item/clothing/head/welding)) )
 					if(!head:up && tinted_weldhelh)
 						client.screen += hud_used.darkMask
 

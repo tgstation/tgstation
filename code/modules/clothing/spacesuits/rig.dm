@@ -9,6 +9,32 @@
 	var/on = 0
 	color = "engineering" //Determines used sprites: rig[on]-[color] and rig[on]-[color]2 (lying down sprite)
 
+	attack_self(mob/user)
+		if(!isturf(user.loc))
+			user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
+			return
+		on = !on
+		icon_state = "rig[on]-[color]"
+		item_state = "rig[on]-[color]"
+
+		if(on)
+			user.total_luminosity += brightness_on
+		else
+			user.total_luminosity -= brightness_on
+
+	pickup(mob/user)
+		if(on)
+			user.total_luminosity += brightness_on
+			user.UpdateLuminosity()
+			src.sd_SetLuminosity(0)
+
+	dropped(mob/user)
+		if(on)
+			user.total_luminosity -= brightness_on
+			user.UpdateLuminosity()
+			src.sd_SetLuminosity(brightness_on)
+
+
 /obj/item/clothing/head/helmet/space/rig/mining
 	name = "mining hardsuit helmet"
 	icon_state = "rig0-mining"

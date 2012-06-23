@@ -20,8 +20,8 @@
 /datum/game_mode/cult
 	name = "cult"
 	config_tag = "cult"
-	restricted_jobs = list("Chaplain","AI", "Cyborg")
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Captain", "Head of Security")
+	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_jobs = list()
 	required_players = 15
 	required_enemies = 3
 	recommended_enemies = 4

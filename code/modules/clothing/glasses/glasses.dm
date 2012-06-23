@@ -79,14 +79,32 @@
 		src.hud = new/obj/item/clothing/glasses/hud/security(src)
 		return
 
-/obj/item/clothing/glasses/thermal	//These are now a traitor item, concealed as mesons.	-Pete
+/obj/item/clothing/glasses/thermal
+	name = "Optical Thermal Scanner"
+	desc = "Thermals in the shape of glasses."
+	icon_state = "thermal"
+	item_state = "glasses"
+	origin_tech = "magnets=3"
+	vision_flags = SEE_MOBS
+	invisa_view = 2
+
+	emp_act(severity)
+		if(istype(src.loc, /mob/living/carbon/human))
+			var/mob/living/carbon/human/M = src.loc
+			M << "\red The Optical Thermal Scanner overloads and blinds you!"
+			if(M.glasses == src)
+				M.eye_blind = 3
+				M.eye_blurry = 5
+				M.disabilities |= 1
+				spawn(100)
+					M.disabilities &= ~1
+		..()
+
+/obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
 	name = "Optical Meson Scanner"
 	desc = "Used for seeing walls, floors, and stuff through anything."
 	icon_state = "meson"
-	item_state = "glasses"
 	origin_tech = "magnets=3;syndicate=4"
-	vision_flags = SEE_MOBS
-	invisa_view = 2
 
 /obj/item/clothing/glasses/thermal/monocle
 	name = "Thermoncle"

@@ -1,4 +1,4 @@
-/obj/item/clothing/head/helmet/hardhat
+/obj/item/clothing/head/hardhat
 	name = "hard hat"
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight."
 	icon_state = "hardhat0_yellow"
@@ -10,37 +10,52 @@
 	armor = list(melee = 30, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
 	flags_inv = 0
 
-/obj/item/clothing/head/helmet/hardhat/orange
+	attack_self(mob/user)
+		if(!isturf(user.loc))
+			user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
+			return
+		on = !on
+		icon_state = "hardhat[on]_[color]"
+		item_state = "hardhat[on]_[color]"
+
+		if(on)
+			user.total_luminosity += brightness_on
+		else
+			user.total_luminosity -= brightness_on
+
+	pickup(mob/user)
+		if(on)
+			user.total_luminosity += brightness_on
+			user.UpdateLuminosity()
+			src.sd_SetLuminosity(0)
+
+	dropped(mob/user)
+		if(on)
+			user.total_luminosity -= brightness_on
+			user.UpdateLuminosity()
+			src.sd_SetLuminosity(brightness_on)
+
+
+/obj/item/clothing/head/hardhat/orange
 	icon_state = "hardhat0_orange"
 	item_state = "hardhat0_orange"
 	color = "orange"
 
-/obj/item/clothing/head/helmet/hardhat/red
+/obj/item/clothing/head/hardhat/red
 	icon_state = "hardhat0_red"
 	item_state = "hardhat0_red"
 	color = "red"
 	name = "firefighter helmet"
 	flags = FPRINT | TABLEPASS | SUITSPACE | STOPSPRESSUREDMAGE
 
-/obj/item/clothing/head/helmet/hardhat/white
+/obj/item/clothing/head/hardhat/white
 	icon_state = "hardhat0_white"
 	item_state = "hardhat0_white"
 	color = "white"
 	flags = FPRINT | TABLEPASS | SUITSPACE | STOPSPRESSUREDMAGE
 
-/obj/item/clothing/head/helmet/hardhat/dblue
+/obj/item/clothing/head/hardhat/dblue
 	icon_state = "hardhat0_dblue"
 	item_state = "hardhat0_dblue"
 	color = "dblue"
 
-/obj/item/clothing/head/helmet/hardhat/pumpkinhead
-	name = "carved pumpkin"
-	desc = "A jack o' lantern! Believed to ward off evil spirits."
-	icon_state = "hardhat0_pumpkin"
-	item_state = "hardhat0_pumpkin"
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
-	brightness_on = 3
-	see_face = 0.0
-	color = "pumpkin"
-	armor = list(melee = 5, bullet = 0, laser = 5,energy = 5, bomb = 5, bio = 0, rad = 0)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES

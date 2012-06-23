@@ -1,3 +1,13 @@
+//Contains: Detective clothing
+/obj/item/clothing/under/det
+	name = "hard-worn suit"
+	desc = "Someone who wears this means business."
+	icon_state = "detective"
+	item_state = "det"
+	color = "detective"
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
+
 /obj/item/clothing/head/det_hat
 	name = "hat"
 	desc = "Someone who wears this will look very smart."

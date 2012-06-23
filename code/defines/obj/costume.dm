@@ -54,7 +54,7 @@
 	new /obj/item/clothing/shoes/white(src.loc)
 	new /obj/item/clothing/under/scratch(src.loc)
 	if (prob(30))
-		new /obj/item/clothing/head/helmet/cueball(src.loc)
+		new /obj/item/clothing/head/cueball(src.loc)
 	del(src)
 
 /obj/effect/landmark/costume/highlander/New()
@@ -102,15 +102,6 @@
 	new /obj/item/clothing/under/soviet(src.loc)
 	new /obj/item/clothing/head/ushanka(src.loc)
 	del(src)
-/*
-/obj/effect/landmark/costume/nurse/New()
-	new /obj/item/clothing/under/rank/nursesuit(src.loc)
-	new /obj/item/clothing/head/nursehat(src.loc)
-	new /obj/item/clothing/glasses/regular(src.loc)
-	new /obj/item/clothing/gloves/latex(src.loc)
-	new /obj/item/clothing/mask/surgical(src.loc)
-	del(src)*/
-
 
 /obj/effect/landmark/costume/imperium_monk/New()
 	new /obj/item/clothing/suit/imperium_monk(src.loc)
@@ -121,18 +112,6 @@
 /obj/effect/landmark/costume/holiday_priest/New()
 	new /obj/item/clothing/suit/holidaypriest(src.loc)
 	del(src)
-
-/*
-/obj/effect/landmark/costume/spiderman/New()
-	new /obj/item/clothing/under/spiderman(src.loc)
-	new /obj/item/clothing/mask/spiderman(src.loc)
-	del(src)*/
-
-/*
-/obj/effect/landmark/costume/marisawizard/New()
-	new /obj/item/clothing/head/wizard/marisa(src.loc)
-	new/obj/item/clothing/suit/wizrobe/marisa(src.loc)
-	del(src)*/
 
 /obj/effect/landmark/costume/marisawizard/fake/New()
 	new /obj/item/clothing/head/wizard/marisa/fake(src.loc)
@@ -153,21 +132,3 @@
 	new /obj/item/clothing/mask/gas/sexymime(src.loc)
 	new /obj/item/clothing/under/sexymime(src.loc)
 	del(src)
-
-
-/*
-/obj/effect/landmark/costume/cyborg/New()
-	new /obj/item/clothing/mask/gas/cyborg(src.loc)
-	new /obj/item/clothing/shoes/cyborg(src.loc)
-	new /obj/item/clothing/suit/cyborg_suit(src.loc)
-	new /obj/item/clothing/gloves/cyborg(src.loc)
-
-	var/obj/item/weapon/card/id/W = new /obj/item/weapon/card/id(src.loc)
-	var/name = "Cyborg"
-	name += " [pick(rand(1, 999))]"
-	W.name = "Fake Cyborg Card"
-	W.access = list(access_theatre)
-	W.assignment = "Kill all humans! Beep. Boop."
-	W.registered_name = name
-	del(src)
-	*/
