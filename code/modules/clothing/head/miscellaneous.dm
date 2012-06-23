@@ -127,12 +127,3 @@
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH
 	see_face = 0.0
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
-
-/obj/item/clothing/head/pumpkinhead
-	name = "carved pumpkin"
-	desc = "A jack o' lantern! Believed to ward off evil spirits."
-	icon_state = "hardhat0_pumpkin"
-	item_state = "hardhat0_pumpkin"
-	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
-	see_face = 0.0
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES

@@ -26,8 +26,8 @@
 	var/required_players = 0
 	var/required_enemies = 0
 	var/recommended_enemies = 0
-	var/uplink_welcome
-	var/uplink_uses
+	var/uplink_welcome = "Syndicate Uplink Console:"
+	var/uplink_uses = 10
 	var/uplink_items = {"Highly Visible and Dangerous Weapons;
 /obj/item/weapon/gun/projectile:6:Revolver;
 /obj/item/ammo_magazine/a357:2:Ammo-357;
