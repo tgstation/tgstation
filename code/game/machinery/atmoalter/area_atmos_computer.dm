@@ -1,7 +1,7 @@
 /obj/machinery/computer/area_atmos
 	name = "Area Air Control"
 	desc = "A computer used to control the stationary scrubbers and pumps in the area."
-	icon_state = "computer_generic"
+	icon_state = "area_atmos"
 	circuit = "/obj/item/weapon/circuitboard/area_atmos"
 	var/scrubber_state = 0 //0 = off; 1 = on
 
@@ -41,6 +41,11 @@
 					if ( istype(A2) && A2.master && A2.master == A )
 						SCRUBBER.on = scrubber_state
 						SCRUBBER.update_icon()
+
+			if(scrubber_state)
+				icon_state = "area_atmos2"
+			else
+				icon_state = "area_atmos"
 
 	attackby(I as obj, user as mob)
 		if(istype(I, /obj/item/weapon/screwdriver))

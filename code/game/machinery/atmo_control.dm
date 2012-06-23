@@ -76,7 +76,7 @@ obj/machinery/air_sensor
 
 obj/machinery/computer/general_air_control
 	icon = 'computer.dmi'
-	icon_state = "computer_generic"
+	icon_state = "tank"
 
 	name = "Computer"
 
