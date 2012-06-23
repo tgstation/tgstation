@@ -753,13 +753,9 @@ Auto Patrol: []"},
 	if(lastfired && world.time - lastfired < shot_delay)
 		return
 	lastfired = world.time
-	var/turf/T = loc
-	var/atom/U = (istype(target, /atom/movable) ? target.loc : target)
-	if ((!( U ) || !( T )))
-		return
-	while(!( istype(U, /turf) ))
-		U = U.loc
-	if (!( istype(T, /turf) ))
+	var/turf/T = get_turf(src)
+	var/turf/U = (istype(target, /atom/movable) ? get_turf(target) : target)
+	if ( !istype(T) || !istype(U) )
 		return
 
 	//if(lastfired && world.time - lastfired < 100)
@@ -767,31 +763,25 @@ Auto Patrol: []"},
 
 	var/obj/item/projectile/A
 	if(!lasercolor)
-		if (src.emagged)
-			A = new /obj/item/projectile/beam( loc )
+		if (emagged)
+			A = new /obj/item/projectile/beam( T )
 		else
-			A = new /obj/item/projectile/energy/electrode( loc )
+			A = new /obj/item/projectile/energy/electrode( T )
 	else if(lasercolor == "b")
-		if (src.emagged)
-			A = new /obj/item/projectile/energy/electrode( loc )
+		if (emagged)
+			A = new /obj/item/projectile/energy/electrode( T )
 		else
-			A = new /obj/item/projectile/bluetag( loc )
+			A = new /obj/item/projectile/bluetag( T )
 	else if(lasercolor == "r")
-		if (src.emagged)
-			A = new /obj/item/projectile/energy/electrode( loc )
+		if (emagged)
+			A = new /obj/item/projectile/energy/electrode( T )
 		else
-			A = new /obj/item/projectile/redtag( loc )
-
-	if (!( istype(U, /turf) ))
-		//A = null
-		del(A)
-		return
+			A = new /obj/item/projectile/redtag( T )
 	A.current = U
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
 	spawn( 0 )
-		A.process()
-		return
+		A.fired()
 	return
 
 /obj/machinery/bot/ed209/attack_alien(var/mob/living/carbon/alien/user as mob)

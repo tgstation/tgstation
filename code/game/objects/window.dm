@@ -229,12 +229,11 @@
 			step(src, get_dir(user, src))
 		if (src.health <= 0)
 			if (src.dir == SOUTHWEST)
-				var/index = null
-				index = 0
-				while(index < 2)
-					new /obj/item/weapon/shard( src.loc )
-					if(reinf) new /obj/item/stack/rods( src.loc)
-					index++
+				new /obj/item/weapon/shard( src.loc )
+				new /obj/item/weapon/shard( src.loc )
+				if(reinf)
+					new /obj/item/stack/rods( src.loc)
+					new /obj/item/stack/rods( src.loc)
 			else
 				new /obj/item/weapon/shard( src.loc )
 				if(reinf) new /obj/item/stack/rods( src.loc)

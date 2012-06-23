@@ -271,8 +271,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 			if(istype(imp_in, /mob/))
 				var/mob/T = imp_in
 				T.gib()
-			explosion(find_loc(imp_in), 1, 3, 4, 6, 3)
-			var/turf/t = find_loc(imp_in)
+			explosion(get_turf(imp_in), 1, 3, 4, 6, 3)
+			var/turf/t = get_turf(imp_in)
 			if(t)
 				t.hotspot_expose(3500,125)
 			del(src)

@@ -214,7 +214,7 @@ atom/proc/ul_BlankLocal()
 	var/TurfAdjust = isturf(src) ? 1 : 0
 
 	for(var/atom/Affected in view(ul_TopLuminosity, src))
-		if(ul_IsLuminous(Affected) && Affected.ul_Extinguished == UL_I_LIT && (ul_FalloffAmount(Affected) <= Affected.luminosity + TurfAdjust))
+		if(ul_IsLuminous(Affected) && Affected.ul_Extinguished == UL_I_LIT && (ul_FalloffAmount(Affected) <= ul_Luminosity(Affected) + TurfAdjust))
 			Affected.ul_Extinguish()
 			Blanked += Affected
 

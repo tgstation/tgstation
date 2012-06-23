@@ -721,7 +721,7 @@
 			del(src)
 			return 1
 		else
-			user << "\red You can't load the [src.name] while it's opened."
+			user << "\red You can't load \the [src] while it's opened."
 			return 1
 
 	if(istype(W, /obj/item/weapon/card/emag))

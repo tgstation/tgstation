@@ -1660,7 +1660,8 @@ turf/simulated/floor/return_siding_icon_state()
 				del(A) //The disk's Del() proc ensures a new one is created
 				return
 
-			if(!isemptylist(A.search_contents_for(/obj/item/weapon/disk/nuclear)))
+			var/list/temp = A.search_contents_for(/obj/item/weapon/disk/nuclear)
+			if(temp.len)
 				if(istype(A, /mob/living))
 					var/mob/living/MM = A
 					if(MM.client)

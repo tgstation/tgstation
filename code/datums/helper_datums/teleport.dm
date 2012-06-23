@@ -172,7 +172,8 @@
 		if(istype(teleatom, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks get teleported --NeoFite
 			teleatom.visible_message("\red <B>The [teleatom] bounces off of the portal!</B>")
 			return 0
-		if(!isemptylist(teleatom.search_contents_for(/obj/item/weapon/disk/nuclear)))
+		var/list/temp = teleatom.search_contents_for(/obj/item/weapon/disk/nuclear)
+		if(temp.len)
 			if(istype(teleatom, /mob/living))
 				var/mob/living/MM = teleatom
 				MM.visible_message("\red <B>The [MM] bounces off of the portal!</B>","\red Something you are carrying seems to be unable to pass through the portal. Better drop it if you want to go through.")
