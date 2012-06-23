@@ -699,6 +699,7 @@
 #include "code\game\objects\devices\shields.dm"
 #include "code\game\objects\devices\taperecorder.dm"
 #include "code\game\objects\devices\PDA\cart.dm"
+#include "code\game\objects\devices\PDA\chatroom.dm"
 #include "code\game\objects\devices\PDA\PDA.dm"
 #include "code\game\objects\devices\PDA\radio.dm"
 #include "code\game\objects\items\apc_frame.dm"

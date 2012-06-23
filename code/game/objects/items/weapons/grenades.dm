@@ -232,7 +232,6 @@ CRITTER GRENADE
 		else
 			if (M.ear_damage >= 5)
 				M << "\red Your ears start to ring!"
-		M.update_icons()
 
 	prime()													// Prime now just handles the two loops that query for people in lockers and people who can see it.
 		var/turf/T = get_turf(src)
