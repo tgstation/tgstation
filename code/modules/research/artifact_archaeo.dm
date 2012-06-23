@@ -62,22 +62,22 @@
 		switch(rand(0,3))
 			if(0)
 				var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
-				A.dir = pick(alldirs)
+				A.dir = 1
 				A.yo = 20
 				A.xo = 0
 			if(0)
 				var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
-				A.dir = pick(alldirs)
+				A.dir = 2
 				A.yo = -20
 				A.xo = 0
 			if(0)
 				var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
-				A.dir = pick(alldirs)
+				A.dir = 4
 				A.yo = 0
 				A.xo = 20
 			if(0)
 				var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
-				A.dir = pick(alldirs)
+				A.dir = 8
 				A.yo = 0
 				A.xo = -20
 	else
