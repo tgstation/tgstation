@@ -214,25 +214,31 @@
 				findarti++
 				cur_artifact = A
 			if (findarti == 1)
-				cur_artifact.anchored = 1
-				src.working = 1
-				src.icon_state = "analyser_processing"
-				var/time = rand(30,50) + max(0, 300 - scan_num * 10)
-				/*for(var/i = artifact_research.starting_tier, i <= artifact_research.max_tiers, i++)
-					for(var/datum/artiresearch/R in artifact_research.researched_items[i])
-						if (R.bonustype == "analyser") time -= R.bonusTime*/
-				time *= 10
-				var/message = "<b>[src]</b> states, \"Commencing analysis.\""
-				src.visible_message(message, message)
-				spawn(time)
-					src.working = 0
-					icon_state = "analyser"
-					cur_artifact.anchored = 0
-					if(cur_artifact.loc == pad_turf)
-						AA_Analyse()
-						scan_num++
-						message = "<b>[src]</b> states, \"Analysis complete.\""
-						src.visible_message(message, message)
+				if(cur_artifact.being_used)
+					var/message = "<b>[src]</b> states, \"Cannot analyse. Excess energy drain is disrupting signal.\""
+					src.visible_message(message, message)
+				else
+					cur_artifact.anchored = 1
+					cur_artifact.being_used = 1
+					src.working = 1
+					src.icon_state = "analyser_processing"
+					var/time = rand(30,50) + max(0, 300 - scan_num * 10)
+					/*for(var/i = artifact_research.starting_tier, i <= artifact_research.max_tiers, i++)
+						for(var/datum/artiresearch/R in artifact_research.researched_items[i])
+							if (R.bonustype == "analyser") time -= R.bonusTime*/
+					time *= 10
+					var/message = "<b>[src]</b> states, \"Commencing analysis.\""
+					src.visible_message(message, message)
+					spawn(time)
+						src.working = 0
+						icon_state = "analyser"
+						cur_artifact.anchored = 0
+						cur_artifact.being_used = 0
+						if(cur_artifact.loc == pad_turf)
+							AA_Analyse()
+							scan_num++
+							message = "<b>[src]</b> states, \"Analysis complete.\""
+							src.visible_message(message, message)
 			else if (findarti > 1)
 				var/message = "<b>[src]</b> states, \"Cannot analyse. Too many artifacts on pad.\""
 				src.visible_message(message, message)

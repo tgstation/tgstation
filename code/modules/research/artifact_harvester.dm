@@ -43,6 +43,7 @@
 			inserted_battery.stored_charge = inserted_battery.capacity
 			harvesting = 0
 			cur_artifact.anchored = 0
+			cur_artifact.being_used = 0
 			src.visible_message("<b>[name]</b> states, \"Battery is full.\"")
 			icon_state = "incubator"
 	return
@@ -102,6 +103,9 @@
 		else if(!articount)
 			var/message = "<b>[src]</b> states, \"Cannot harvest. No artifact found.\""
 			src.visible_message(message, message)
+		else if (cur_artifact.being_used)
+			var/message = "<b>[src]</b> states, \"Cannot harvest. Too much interferance from energy scan.\""
+			src.visible_message(message, message)
 		else
 			cur_artifact = analysed
 			//check to see if the battery is compatible
@@ -109,6 +113,7 @@
 				if(inserted_battery.battery_effect.artifact_id == cur_artifact.my_effect.artifact_id || inserted_battery.stored_charge == 0)
 					harvesting = 1
 					cur_artifact.anchored = 1
+					cur_artifact.being_used = 1
 					icon_state = "incubator_on"
 					var/message = "<b>[src]</b> states, \"Beginning artifact energy harvesting.\""
 					src.visible_message(message, message)
@@ -125,6 +130,7 @@
 		if(harvesting)
 			harvesting = 0
 			cur_artifact.anchored = 0
+			cur_artifact.being_used = 0
 			src.visible_message("<b>[name]</b> states, \"Harvesting interrupted.\"")
 			icon_state = "incubator"
 
