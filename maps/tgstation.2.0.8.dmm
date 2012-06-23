@@ -3618,7 +3618,7 @@
 "brD" = (/obj/structure/rack,/obj/item/clothing/suit/bio_suit/anomaly,/obj/item/clothing/head/bio_hood/anomaly,/obj/item/clothing/gloves/latex,/turf/simulated/floor{dir = 2; icon_state = "warnwhite"; tag = "icon-warnwhite (NORTH)"},/area/anomaly)
 "brE" = (/obj/structure/rack,/obj/item/clothing/suit/bio_suit/anomaly,/obj/item/clothing/head/bio_hood/anomaly,/obj/item/clothing/gloves/latex,/obj/machinery/light{dir = 1},/turf/simulated/floor{dir = 2; icon_state = "warnwhite"; tag = "icon-warnwhite (NORTH)"},/area/anomaly)
 "brF" = (/obj/structure/rack,/obj/item/clothing/suit/bio_suit/anomaly,/obj/item/clothing/head/bio_hood/anomaly,/obj/item/clothing/gloves/latex,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor{dir = 2; icon_state = "warnwhite"; tag = "icon-warnwhite (NORTH)"},/area/anomaly)
-"brG" = (/obj/structure/noticeboard/anomaly{icon_state = "nboard03"; notices = 3; pixel_x = -32; step_x = 0},/turf/simulated/floor{icon_state = "white"},/area/anomaly)
+"brG" = (/obj/structure/noticeboard/anomaly{icon_state = "nboard04"; notices = 4; pixel_x = -32; step_x = 0},/turf/simulated/floor{icon_state = "white"},/area/anomaly)
 "brH" = (/obj/machinery/atmospherics/unary/vent_pump{on = 1},/turf/simulated/floor{icon_state = "white"},/area/anomaly)
 "brI" = (/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor{dir = 8; icon_state = "warnwhite"},/area/anomaly)
 "brJ" = (/obj/machinery/conveyor{dir = 4; id = "QMLoad"},/obj/machinery/door/poddoor{density = 1; icon_state = "pdoor1"; id = "QMLoaddoor"; name = "Supply Dock Loading Door"; opacity = 1},/turf/simulated/floor/plating,/area/quartermaster/storage)
