@@ -422,7 +422,7 @@
 		if(access_mime)
 			return "Silent Access"
 		if(access_surgery)
-			return "Operating Room"
+			return "Surgery"
 		if(access_theatre)
 			return "Theatre"
 		if(access_manufacturing)
