@@ -41,6 +41,7 @@
 
 	spawn(10)
 		if(client)
+			handle_privacy_poll()
 			new_player_panel()
 	//PDA Resource Initialisation =======================================================>
 	/*

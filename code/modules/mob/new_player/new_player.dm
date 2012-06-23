@@ -45,6 +45,59 @@
 		src << browse(output,"window=playersetup;size=250x210;can_close=0")
 		return
 
+	proc/handle_privacy_poll()
+		var/user = sqlfdbklogin
+		var/pass = sqlfdbkpass
+		var/db = sqlfdbkdb
+		var/address = sqladdress
+		var/port = sqlport
+
+		var/DBConnection/dbcon = new()
+
+		dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+		if(!dbcon.IsConnected())
+			return
+		var/voted = 0
+
+		var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_privacy WHERE ckey='[src.ckey]'")
+		query.Execute()
+		while(query.NextRow())
+			voted = 1
+			break
+
+		if(!voted)
+			privacy_poll()
+
+		dbcon.Disconnect()
+
+	proc/privacy_poll()
+		var/output = "<div align='center'><B>Player poll</B>"
+		output +="<hr>"
+		output += "<b>We would like to expand our stats gathering.</b>"
+		output += "<br>This however involves gathering data about player behavior, play styles, unique player numbers, play times, etc. Data like that cannot be gathered fully anonymously, which is why we're asking you how you'd feel if player-specific data was gathered. Prior to any of this actually happening, a privacy policy will be discussed, but before that can begin, we'd preliminarily like to know how you feel about the concept."
+		output +="<hr>"
+		output += "How do you feel about the game gathering player-specific statistics? This includes statistics about individual players as well as in-game polling/opinion requests."
+
+		output += "<p><a href='byond://?src=\ref[src];privacy_poll=signed'>Signed stats gathering</A>"
+		output += "<br>Pick this option if you think usernames should be logged with stats. This allows us to have personalized stats as well as polls."
+
+		output += "<p><a href='byond://?src=\ref[src];privacy_poll=anonymous'>Anonymous stats gathering</A>"
+		output += "<br>Pick this option if you think only hashed (indecipherable) usernames should be logged with stats. This doesn't allow us to have personalized stats, as we can't tell who is who (hashed values aren't readable), we can however have ingame polls."
+
+		output += "<p><a href='byond://?src=\ref[src];privacy_poll=nostats'>No stats gathering</A>"
+		output += "<br>Pick this option if you don't want player-specific stats gathered. This does not allow us to have player-specific stats or polls."
+
+		output += "<p><a href='byond://?src=\ref[src];privacy_poll=later'>Ask again later</A>"
+		output += "<br>This poll will be brought up again next round."
+
+		output += "<p><a href='byond://?src=\ref[src];privacy_poll=abstain'>Don't ask again</A>"
+		output += "<br>Only pick this if you are fine with whatever option wins."
+
+		output += "</div>"
+
+		src << browse(output,"window=privacypoll;size=600x500")
+		return
+
 	proc/Playmusic()
 		while(!ticker) // wait for ticker to be created
 			sleep(1)
@@ -136,6 +189,54 @@
 
 			AttemptLateSpawn(href_list["SelectedJob"])
 			return
+
+		if(href_list["privacy_poll"])
+			var/user = sqlfdbklogin
+			var/pass = sqlfdbkpass
+			var/db = sqlfdbkdb
+			var/address = sqladdress
+			var/port = sqlport
+
+			var/DBConnection/dbcon = new()
+
+			dbcon.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+			if(!dbcon.IsConnected())
+				return
+			var/voted = 0
+
+			//First check if the person has not voted yet.
+			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_privacy WHERE ckey='[src.ckey]'")
+			query.Execute()
+			while(query.NextRow())
+				voted = 1
+				break
+
+			//This is a safety switch, so only valid options pass through
+			var/option = "UNKNOWN"
+			switch(href_list["privacy_poll"])
+				if("signed")
+					option = "SIGNED"
+				if("anonymous")
+					option = "ANONYMOUS"
+				if("nostats")
+					option = "NOSTATS"
+				if("later")
+					usr << browse(null,"window=privacypoll")
+					return
+				if("abstain")
+					option = "ABSTAIN"
+
+			if(option == "UNKNOWN")
+				return
+
+			if(!voted)
+				var/sql = "INSERT INTO erro_privacy VALUES (null, Now(), '[src.ckey]', '[option]')"
+				var/DBQuery/query_insert = dbcon.NewQuery(sql)
+				query_insert.Execute()
+				usr << "<b>Thank you for your vote!</b>"
+				usr << browse(null,"window=privacypoll")
+
+			dbcon.Disconnect()
 
 		if(!ready && href_list["preferences"])
 			preferences.process_link(src, href_list)
