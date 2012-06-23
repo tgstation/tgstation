@@ -684,6 +684,24 @@
 	maturation = 6
 	production = 6
 	yield = 5
+	potency = 10
+	plant_type = 0
+	growthstages = 6
+
+/obj/item/seeds/goldappleseed
+	name = "pack of golden apple seeds"
+	desc = "These seeds grow into golden apple trees. Good thing there are no firebirds in space."
+	icon_state = "seed-goldapple"
+	mypath = "/obj/item/seeds/goldappleseed"
+	species = "goldapple"
+	plantname = "Golden Apple Tree"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/goldapple"
+	lifespan = 55
+	endurance = 35
+	maturation = 10
+	production = 10
+	yield = 3
+	potency = 10
 	plant_type = 0
 	growthstages = 6
 
@@ -1249,6 +1267,24 @@
 		reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 		bitesize = 1+round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/goldapple
+	seed = "/obj/item/seeds/goldappleseed"
+	name = "golden apple"
+	desc = "Emblazoned upon the apple is the word 'Kallisti'."
+	icon_state = "goldapple"
+	potency = 15
+	New()
+		..()
+		reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
+		reagents.add_reagent("gold", 1+round((potency / 5), 1))
+		bitesize = 1+round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	. = ..()
+	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+		user << "<span class='info'>- Mineral Content: <i>[reagents.get_reagent_amount("gold")]%</i></span>"
+
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/watermelon
 	seed = "/obj/item/seeds/watermelonseed"
 	name = "watermelon"
@@ -1573,7 +1609,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom
 	seed = "/obj/item/seeds/walkingmushroom"
 	name = "walking mushroom"
-	desc = "The beginging of the great walk."
+	desc = "The beginning of the great walk."
 	icon_state = "walkingmushroom"
 	New()
 		..()
@@ -1611,7 +1647,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
 	seed = "/obj/item/seeds/glowshroom"
 	name = "glowshroom cluster"
-	desc = "<I>Glowshroom</I>: This species of mushroom glows in the dark. Or does it?"
+	desc = "<I>Mycena Bregprox</I>: This species of mushroom glows in the dark. Or does it?"
 	icon_state = "glowshroom"
 	New()
 		..()

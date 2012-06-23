@@ -1143,7 +1143,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sandwich
 	name = "Sandwich"
-	desc = "A grand creation of meat, cheese, bread and several leafs oflettuce! Arthur Dent would be proud."
+	desc = "A grand creation of meat, cheese, bread, and several leaves of lettuce! Arthur Dent would be proud."
 	icon_state = "sandwich"
 	trash = "plate"
 	New()
@@ -1411,7 +1411,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/beetsoup
 	name = "beet soup"
-	desc = "Wait, how do you spell it, again..?"
+	desc = "Wait, how do you spell it again..?"
 	icon_state = "beetsoup"
 	trash = "snack_bowl"
 	New()
@@ -1431,6 +1431,38 @@
 				name = "borscht"
 		reagents.add_reagent("nutriment", 8)
 		bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/herbsalad
+	name = "herb salad"
+	desc = "A tasty salad with apples on top."
+	icon_state = "herbsalad"
+	trash = "snack_bowl"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/aesirsalad
+	name = "Aesir salad"
+	desc = "Probably too incredible for mortal men to fully enjoy."
+	icon_state = "aesirsalad"
+	trash = "snack_bowl"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("tricordrazine", 8)
+		bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/appletart
+	name = "golden apple streusel tart"
+	desc = "A tasty dessert that won't make it through a metal detector."
+	icon_state = "gappletart"
+	trash = "plate"
+	New()
+		..()
+		reagents.add_reagent("nutriment", 8)
+		reagents.add_reagent("gold", 5)
+		bitesize = 3
 
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels

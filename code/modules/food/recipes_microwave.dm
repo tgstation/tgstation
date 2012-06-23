@@ -1128,3 +1128,30 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/beetsoup
+
+/datum/recipe/appletart
+	reagents = list("sugar" = 5, "milk" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/flour,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/goldapple,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/appletart
+
+/datum/recipe/herbsalad
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/herbsalad
+
+/datum/recipe/aesirsalad
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/goldapple,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/aesirsalad

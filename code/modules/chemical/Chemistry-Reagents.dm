@@ -374,9 +374,9 @@ datum
 				..()
 				return
 
-		srejuvinate
-			name = "Sleep Rejuvinate"
-			id = "stoxin"
+		srejuvenate
+			name = "Soporific Rejuvenant"
+			id = "stoxin2"
 			description = "Put people to sleep, and heals them."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
@@ -803,9 +803,6 @@ datum
 					T.overlays = image('effects.dmi',icon_state = "thermite")
 				return
 
-
-
-
 		mutagen
 			name = "Unstable mutagen"
 			id = "mutagen"
@@ -1214,7 +1211,7 @@ datum
 				..()
 				return
 
-		adminordrazine //An OP chemical for adminis
+		adminordrazine //An OP chemical for admins
 			name = "Adminordrazine"
 			id = "adminordrazine"
 			description = "It's magic. We don't have to explain it."
@@ -1730,12 +1727,25 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:bodytemperature += 5
-				if(prob(40) && !istype(M, /mob/living/carbon/metroid))
-					M.take_organ_damage(0, 1)
-
-				if(istype(M, /mob/living/carbon/metroid))
-					M:bodytemperature += rand(5,20)
+				if(!data) data = 1
+				switch(data)
+					if(1 to 15)
+						M:bodytemperature += 5
+						if(holder.has_reagent("frostoil"))
+							holder.remove_reagent("frostoil", 5)
+						if(prob(40) && !istype(M, /mob/living/carbon/metroid))
+							M.take_organ_damage(0, 1)
+						if(istype(M, /mob/living/carbon/metroid))
+							M:bodytemperature += rand(5,20)
+					if(15 to 25)
+						M:bodytemperature += 10
+						if(prob(60) && !istype(M, /mob/living/carbon/metroid))
+							M.take_organ_damage(0, 1)
+						if(istype(M, /mob/living/carbon/metroid))
+							M:bodytemperature += rand(5,20)
+					if(25 to INFINITY)
+						M:bodytemperature += 15
+				data++
 				..()
 				return
 
@@ -1805,12 +1815,25 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M:bodytemperature -= 5
-				//if(prob(40))
-				//	M.take_organ_damage(0, 1)
-				if(prob(80) && istype(M, /mob/living/carbon/metroid))
-					M.adjustFireLoss(rand(5,20))
-					M << "\red You feel a terrible chill inside your body!"
+				if(!data) data = 1
+				switch(data)
+					if(1 to 15)
+						M:bodytemperature -= 5
+						if(holder.has_reagent("capsaicin"))
+							holder.remove_reagent("capsaicin", 5)
+						if(prob(80) && istype(M, /mob/living/carbon/metroid))
+							M.adjustFireLoss(rand(5,20))
+							M << "\red You feel a terrible chill inside your body!"
+					if(15 to 25)
+						M:bodytemperature -= 10
+						if(prob(60) && !istype(M, /mob/living/carbon/metroid))
+							M.take_organ_damage(0, 1)
+						if(istype(M, /mob/living/carbon/metroid))
+							M:bodytemperature -= rand(5,20)
+					if(25 to INFINITY)
+						M:bodytemperature -= 15
+						if(prob(1)) M:emote("shiver")
+				data++
 				..()
 				return
 
@@ -2220,7 +2243,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(M:getBruteLoss() && prob(20)) M:heal_organ_damage(1,0)
 				if(holder.has_reagent("capsaicin"))
-					holder.remove_reagent("	capsaicin", 2)
+					holder.remove_reagent("capsaicin", 2)
 				M:nutrition++
 				..()
 				return
@@ -2268,6 +2291,8 @@ datum
 				if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
 					M.bodytemperature = min(310, M.bodytemperature+5)
 				M.make_jittery(5)
+				if(holder.has_reagent("frostoil"))
+					holder.remove_reagent("frostoil", 5)
 				..()
 				return
 
