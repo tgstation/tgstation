@@ -159,9 +159,18 @@ datum/controller/game_controller
 		// Notify the other process that we're still there
 		socket_talk.send_keepalive()
 
-		// the fact that the air master is not in the master controller
-		// will make it very hard to find out whether it's responsible
-		// for crashes
+		// moved this here from air_master.start()
+		// this might make atmos slower
+		// upsides:
+		//  1. atmos won't process if the game is generally lagged out(no deadlocks)
+		//  2. if the server frequently crashes during atmos processing we will know
+		if(!kill_air)
+			src.set_debug_state("Air Master")
+
+			var/success = air_master.tick() //Changed so that a runtime does not crash the ticker.
+			if(!success) //Runtimed.
+				world << "<font color='red'><b>ERROR IN ATMOS TICKER.  Killing air simulation!</font></b>"
+				kill_air = 1
 		air_master_ready = 1
 
 		src.set_debug_state("Tension Master")

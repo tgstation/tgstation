@@ -153,6 +153,7 @@ datum
 				//Inputs: None.
 				//Outputs: None.
 
+				/*
 				set background = 1
 
 				while(1)
@@ -165,6 +166,7 @@ datum
 								world << "<font color='red'><b>ERROR IN ATMOS TICKER.  Killing air simulation!</font></b>"
 								kill_air = 1
 					sleep(max(5,update_delay*tick_multiplier))
+				*/
 
 			proc/tick()
 
