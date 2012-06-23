@@ -699,8 +699,8 @@
 
 	//breaking out of handcuffs
 	if(usr:handcuffed && usr:canmove && (usr.last_special <= world.time))
-		var/breakouttime = 1200
-		var/displaytime = 2
+		var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
+		var/displaytime = 2 //Minutes to display in the "this will take X minutes."
 		if(!usr:canmove)
 			breakouttime = 2400
 			displaytime = 4
@@ -721,8 +721,6 @@
 					usr:handcuffed = null
 		else
 			var/obj/item/weapon/handcuffs/HC = usr:handcuffed
-			var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
-			var/displaytime = 2 //Minutes to display in the "this will take X minutes."
 			if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
 				breakouttime = HC.breakouttime
 				displaytime = breakouttime / 600 //Minutes

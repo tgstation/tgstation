@@ -26,7 +26,7 @@
 				if(!M)	return
 				if(p_loc == user.loc && p_loc_m == M.loc)
 					M.handcuffed = new /obj/item/weapon/handcuffs(M)
-					M.update_inv_handcuffed()
+					M.update_clothing()
 
 	else
 		if ((CLUMSY in usr.mutations) && prob(50))
