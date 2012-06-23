@@ -85,8 +85,19 @@
 			analysed = A
 			articount++
 
+		var/mundane = 0
+		for(var/obj/O in get_turf(owned_pad))
+			mundane++
+			break
+		for(var/mob/O in get_turf(owned_pad))
+			mundane++
+			break
+
 		if(articount > 1)
 			var/message = "<b>[src]</b> states, \"Cannot harvest. Too many artifacts on pad.\""
+			src.visible_message(message, message)
+		else if(mundane)
+			var/message = "<b>[src]</b> states, \"No noteworthy energy signatures detected.\""
 			src.visible_message(message, message)
 		else if(!articount)
 			var/message = "<b>[src]</b> states, \"Cannot harvest. No artifact found.\""
