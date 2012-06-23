@@ -48,7 +48,6 @@
 	else
 		var/list/lines = dd_text2list(text, "\n")
 		for(var/line in lines)
-			world.log << line
 			if (!line)
 				continue
 
@@ -58,7 +57,6 @@
 			var/m_key = copytext(line, 1, length(line)+1)
 			var/a_lev = "Moderator"
 			admins[m_key] = a_lev
-			world.log << ("ADMIN: [m_key] = [a_lev]")
 
 
 /world/proc/load_testers()
