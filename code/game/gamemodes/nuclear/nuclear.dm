@@ -237,7 +237,7 @@
 	synd_mob.equip_if_possible(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), synd_mob.slot_in_backpack)
 	synd_mob.equip_if_possible(new /obj/item/weapon/gun/projectile/automatic/c20r(synd_mob), synd_mob.slot_belt)
 	synd_mob.equip_if_possible(new /obj/item/weapon/storage/box/engineer(synd_mob.back), synd_mob.slot_in_backpack)
-	var/datum/organ/external/O = pick(synd_mob.organs)
+	var/datum/organ/external/O = synd_mob.organs[pick(synd_mob.organs)]
 	var/obj/item/weapon/implant/dexplosive/E = new/obj/item/weapon/implant/dexplosive(O)
 	O.implant += E
 	E.imp_in = synd_mob

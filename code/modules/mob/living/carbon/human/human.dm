@@ -2718,10 +2718,11 @@ It can still be worn/put on as normal.
 		else
 			gender = FEMALE
 	rebuild_appearance()
+	update_body()
 	check_dna()
 
 	for(var/mob/M in view())
-		M.show_message("[src.name] just morphed!")
+		user.visible_message("\blue \The [src] morphs and changes [user.get_gender_form() == MALE ? "his" : user.get_gender_form() == FEMALE ? "her" : "their"] appearance!", "\blue You change your appearance!", "\red Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!")
 
 /mob/living/carbon/human/proc/remotesay()
 	set name = "Project mind"

@@ -3,7 +3,7 @@
 	icon = 'mob.dmi'//
 	icon_state = "shadow"
 
-	robot_talk_understand = 0
+	robot_talk_understand = 1 //pAI's can now use binary
 
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null

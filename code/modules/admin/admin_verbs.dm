@@ -1013,6 +1013,7 @@
 		else
 			M.gender = FEMALE
 	M.rebuild_appearance()
+	M.update_body()
 	M.check_dna(M)
 
 

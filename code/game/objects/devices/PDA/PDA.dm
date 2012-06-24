@@ -416,7 +416,7 @@
 	//if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ) )
 
 	if(can_use()) //Why reinvent the wheel? There's a proc that does exactly that.
-		if ( !(U.stat || U.restrained()) )
+		if ( !(U.stat || U.restrained()) && (src in U.contents))
 
 			add_fingerprint(U)
 			U.machine = src
@@ -587,7 +587,7 @@
 							// Give every ghost the ability to see all messages
 							for (var/mob/dead/observer/G in world)
 								G.show_message("<i>PDA message from <b>[src.owner]</b> to <b>[P:owner]</b>: [t]</i>")
-	
+
 							if (prob(15)) //Give the AI a chance of intercepting the message
 								var/who = src.owner
 								if(prob(50))
@@ -681,7 +681,7 @@
 
 				if("Toggle Door")
 					if(!isnull(cartridge) && cartridge.access_remote_door)
-						for(var/obj/machinery/door/poddoor/M in machines)
+						for(var/obj/machinery/door/poddoor/M in world) //world is probably a bad idea, but at least it works?
 							if(M.id == cartridge.remote_door_id)
 								if(M.density)
 									spawn(0)
