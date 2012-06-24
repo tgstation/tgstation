@@ -31,24 +31,31 @@
 		else
 			for(var/mob/M in viewers(world.view, user))
 				M.show_message("\blue A few sparks fly off the rock, but otherwise nothing else happens.",1)
-	else if(istype(W, /obj/item/weapon/reagent_containers/))
-		var/obj/item/weapon/reagent_containers/R = W
-		if(R.reagents.has_reagent("pacid", 1))
-			if(src.method)
-				if(inside)
-					var/obj/A = new src.inside(get_turf(src))
-					for(var/mob/M in viewers(world.view, get_turf(src)))
-						M.show_message("\blue The rock fizzes away revealing a [A.name].",1)
-				else
-					for(var/mob/M in viewers(world.view, get_turf(src)))
-						M.show_message("\blue The rock fizzes away into nothing.",1)
-				del src
-			else
-				for(var/mob/M in viewers(world.view, get_turf(src)))
-					M.show_message("\blue The acid splashes harmlessly off the rock, nothing else interesting happens.",1)
 
+/obj/item/weapon/ore/strangerock/acid_act(var/datum/reagent/R)
+	if(src.method)
+		if(inside)
+			var/obj/A = new src.inside(get_turf(src))
+			for(var/mob/M in viewers(world.view, get_turf(src)))
+				M.show_message("\blue The rock fizzes away revealing a [A.name].",1)
+		else
+			for(var/mob/M in viewers(world.view, get_turf(src)))
+				M.show_message("\blue The rock fizzes away into nothing.",1)
+		del src
+	else
+		for(var/mob/M in viewers(world.view, get_turf(src)))
+			M.show_message("\blue The acid splashes harmlessly off the rock, nothing else interesting happens.",1)
+	return 1
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//this should probably be elsewhere, but oh well
+/atom/proc/acid_act(var/datum/reagent/R)
+	return 0
+/*/obj/proc/acid_act(var/datum/reagent/R)
+	return 0
+/mob/proc/acid_act(var/datum/reagent/R)
+	return 0*/
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -124,7 +131,11 @@
 
 /obj/item/weapon/talkingcrystal/proc/catchMessage(var/msg, var/mob/source)
 	var/list/seperate = list()
-	if(findtext(msg," ")==0)
+	if(findtext(msg,"(("))
+		return
+	else if(findtext(msg,"))"))
+		return
+	else if(findtext(msg," ")==0)
 		return
 	else
 		/*var/l = lentext(msg)
@@ -167,7 +178,7 @@
 	if(!word)
 		text = "[pick(words)]"
 	else
-		text = word
+		text = pick(stringsplit(word))
 	if(lentext(text)==1)
 		text=uppertext(text)
 	else
@@ -207,7 +218,7 @@
 			listening|=M
 
 	for(var/mob/M in listening)
-		M << "<b>The crystal</b> says, \"[msg]\""
+		M << "<b>The crystal</b> reverberates, \blue\"[msg]\""
 	lastsaid = world.timeofday + rand(300,800)
 
 /obj/item/weapon/talkingcrystal/process()

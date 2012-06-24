@@ -248,10 +248,10 @@
 							src.visible_message(message, message)
 							use_power(500)
 			else if (findarti > 1)
-				var/message = "<b>[src]</b> states, \"Cannot analyse. Too many artifacts on pad.\""
+				var/message = "<b>[src]</b> states, \"Cannot analyse. Error isolating energy signature.\""
 				src.visible_message(message, message)
 			else
-				var/message = "<b>[src]</b> states, \"Cannot analyse. No artifact found.\""
+				var/message = "<b>[src]</b> states, \"Cannot analyse. No noteworthy energy signature isolated.\""
 				src.visible_message(message, message)
 
 	if(href_list["upload"] && cur_id != "")
