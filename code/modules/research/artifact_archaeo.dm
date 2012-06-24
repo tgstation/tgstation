@@ -196,7 +196,17 @@
 			msg+="."
 		else
 			msg+="!"
-	for(var/mob/M in viewers(src))
+
+	var/list/listening = viewers(src)
+	for(var/mob/M in world)
+		if (!M.client)
+			continue //skip monkeys and leavers
+		if (istype(M, /mob/new_player))
+			continue
+		if(M.stat == 2 && M.client.ghost_ears)
+			listening|=M
+
+	for(var/mob/M in listening)
 		M << "<b>The crystal</b> says, \"[msg]\""
 	lastsaid = world.timeofday + rand(300,800)
 
