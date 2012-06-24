@@ -375,7 +375,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		var/obj/item/weapon/implant/uplink/U = src.loc
 		var/mob/living/A = U.imp_in
 		var/datum/organ/external/head = A:organs["head"]
-		head.destroyed = 1
+		head.status |= DESTROYED
 		spawn(2)
 			head.droplimb()
 			del(src.master)

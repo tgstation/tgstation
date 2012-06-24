@@ -397,7 +397,6 @@ var/static/list/scarySounds = list('thudswoosh.ogg','Taser.ogg','armbomb.ogg','h
 
 #define TRANSITIONEDGE	7 //Distance from edge to move to another z-level
 
-#define OPEN 1
 #define CLOSED 0
 
 // Maximum and minimum character ages.
@@ -460,3 +459,15 @@ var/list/liftable_structures = list(\
 #define RADIO_MULEBOT "8"
 #define RADIO_MAGNETS "9"
 #define RADIO_POWER "10"
+
+/////////////////
+//ORGAN DEFINES//
+/////////////////
+#define CUT_AWAY 1
+#define GAUZED 2
+#define ATTACHABLE 4
+#define BLEEDING 8
+#define BANDAGED 16
+#define BROKEN 32
+#define DESTROYED 64
+#define ROBOT 128

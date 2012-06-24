@@ -431,7 +431,7 @@
 			for(var/name in organs)
 				var/datum/organ/external/E = organs[name]
 				E.process()
-				if(E.broken || E.destroyed)
+				if(E.status & BROKEN || E.status & DESTROYED)
 					if(E.name == "l_hand" || E.name == "l_arm")
 						if(hand && equipped())
 							drop_item()

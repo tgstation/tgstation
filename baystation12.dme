@@ -356,7 +356,6 @@
 #include "code\defines\procs\logging.dm"
 #include "code\defines\procs\religion_name.dm"
 #include "code\defines\procs\station_name.dm"
-#include "code\defines\procs\statistics.dm"
 #include "code\defines\procs\syndicate_name.dm"
 #include "code\defines\procs\time_stamp.dm"
 #include "code\defines\sd_procs\base64.dm"

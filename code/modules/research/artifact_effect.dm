@@ -55,9 +55,6 @@
 						affecting = H.organs[A]
 						if(!istype(affecting, /datum/organ/external))    continue
 						affecting.heal_damage(25, 25)    //fixes getting hit after ingestion, killing you when game updates organ health
-						for(var/datum/organ/wound/W in affecting.wounds)
-							W.stopbleeding()
-							W.is_healing = 1
 						//user:heal_organ_damage(25, 25)
 						//
 						user.adjustOxyLoss(-25)

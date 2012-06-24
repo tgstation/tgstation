@@ -247,17 +247,17 @@
 						var/infected = ""
 						var/imp = ""
 						var/bled = ""
-						if(e.bleeding)
+						if(e.status & BLEEDING)
 							bled = "Bleeding:"
-						if(e.broken)
-							AN = "[e.wound]:"
+						if(e.status & BROKEN)
+							AN = "[e.broken_description]:"
 						if(e.open)
 							open = "OPEN:"
 						if(e.implant && e.implant.len)
 							imp = "IMPLANT:"
 						if(!AN && !open && !infected & !imp)
 							AN = "None"
-						if(!e.destroyed)
+						if(!e.status & DESTROYED)
 							dat += "<td>[e.display_name]</td><td>[e.burn_dam]</td><td>[e.brute_dam]</td><td>[bled][AN][open][infected][imp]</td>"
 						else
 							dat += "<td>[e.display_name]</td><td>-</td><td>-</td><td>Not Found</td>"
