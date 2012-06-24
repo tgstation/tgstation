@@ -219,7 +219,7 @@ turf
 								if(NT && NT.zone && NT.zone == T.zone)
 									T.zone.rebuild = 1
 
-					else if((!T.CanPass(null, src, 1.5, 1) && T.CanPass(null, src, 0, 0)) || (!CanPass(null, T, 1.5, 1) && CanPass(null, T, 0, 0)))
+					else if(T.CanPass(null, src, 0, 0))
 						if(T.zone != zone)
 							ZConnect(src,T)
 

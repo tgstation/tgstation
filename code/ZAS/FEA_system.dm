@@ -142,7 +142,7 @@ datum
 							if(S.CanPass(null, S, 0, 0))
 								new/zone(S)
 
-						tiles_to_update |= S
+						S.update_air_properties()
 
 				world << "\red \b Geometry processed in [time2text(world.timeofday-start_time, "mm:ss")] minutes!"
 				spawn start()
