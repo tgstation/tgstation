@@ -209,6 +209,7 @@
 	cur_artifact.name = "alien artifact ([cur_artifact.display_id])"
 	cur_artifact.desc = "A large alien device. It has a small tag near the bottom that reads \"[cur_artifact.display_id]\"."
 	cur_id = cur_artifact.display_id
+	cur_artifact.my_effect.artifact_id = cur_artifact.display_id
 
 /obj/machinery/artifact_analyser/Topic(href, href_list)
 

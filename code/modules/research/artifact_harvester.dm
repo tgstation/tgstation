@@ -66,7 +66,7 @@
 		else
 			if(inserted_battery)
 				dat += "<b>[inserted_battery.name]</b> inserted, charge level: [inserted_battery.stored_charge]/[inserted_battery.capacity] ([(inserted_battery.stored_charge/inserted_battery.capacity)*100]%)<BR>"
-				dat += "<b>Energy signature ID:</b>[inserted_battery.battery_effect.artifact_id]<BR>"
+				dat += "<b>Energy signature ID:</b>[inserted_battery.battery_effect.artifact_id == "" ? "???" : "[inserted_battery.battery_effect.artifact_id]"]<BR>"
 				dat += "<A href='?src=\ref[src];ejectbattery=1'>Eject battery</a><BR>"
 				dat += "<A href='?src=\ref[src];drainbattery=1'>Drain battery of all charge</a><BR>"
 				dat += "<A href='?src=\ref[src];harvest=1'>Begin harvesting</a><BR>"
@@ -94,7 +94,7 @@
 
 		var/mundane = 0
 		for(var/obj/O in get_turf(owned_pad))
-			if(!istype(O, /obj/machinery/artifact))
+			if(!istype(O, /obj/machinery/artifact) && !istype(O, /obj/machinery/analyser_pad))
 				mundane++
 				break
 		for(var/mob/O in get_turf(owned_pad))

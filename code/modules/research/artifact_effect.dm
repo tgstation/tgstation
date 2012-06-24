@@ -293,11 +293,11 @@
 					if(istype(M:wear_suit,/obj/item/clothing/suit/bio_suit/anomaly) && istype(M:head,/obj/item/clothing/head/bio_hood/anomaly))
 						continue
 					M << "\blue A wave of energy invigorates you."
-					M.adjustBruteLoss(5)
-					M.adjustFireLoss(5)
-					M.adjustToxLoss(5)
-					M.adjustOxyLoss(5)
-					M.adjustBrainLoss(5)
+					M.adjustBruteLoss(-5)
+					M.adjustFireLoss(-5)
+					M.adjustToxLoss(-5)
+					M.adjustOxyLoss(-5)
+					M.adjustBrainLoss(-5)
 					M.updatehealth()
 				return 1
 			if("injure")
