@@ -167,6 +167,7 @@ datum/controller/game_controller
 		if(!kill_air)
 			src.set_debug_state("Air Master")
 
+			air_master.current_cycle++
 			var/success = air_master.tick() //Changed so that a runtime does not crash the ticker.
 			if(!success) //Runtimed.
 				world << "<font color='red'><b>ERROR IN ATMOS TICKER.  Killing air simulation!</font></b>"
