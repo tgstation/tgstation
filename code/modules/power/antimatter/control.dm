@@ -218,7 +218,7 @@
 			visible_message("The [src.name] starts up.")
 		else
 			use_power = 1
-			visible_message("The [src.name] shuts down up.")
+			visible_message("The [src.name] shuts down.")
 		update_icon()
 		return
 
