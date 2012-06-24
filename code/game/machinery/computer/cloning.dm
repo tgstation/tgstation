@@ -185,7 +185,12 @@
 					if (src.scanner.occupant)
 						if(scantemp == "Scanner unoccupied") scantemp = "" // Stupid check to remove the text
 
-						dat += "<a href='byond://?src=\ref[src];scan=1'>Scan - [src.scanner.occupant]</a><br>"
+						// Make sure we can't scan a headless person. It breaks the cloner permanently.
+						var/datum/organ/external/temp = organs["head"]
+						if(temp && !(temp.status & DESTROYED))
+							dat += "<a href='byond://?src=\ref[src];scan=1'>Scan - [src.scanner.occupant]</a><br>"
+						else
+							dat += "Error: Cannot locate brain for mental indexing. Unable to continue.<br>"
 					else
 						dat += "Scanner unoccupied"
 
