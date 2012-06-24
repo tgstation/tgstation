@@ -36,8 +36,12 @@
 	interact(user)
 
 /obj/machinery/artifact_harvester/process()
+	if(stat & (NOPOWER|BROKEN))
+		return
+	use_power(350)
 
 	if(harvesting)
+		use_power(250)
 		inserted_battery.stored_charge += 10
 		if(inserted_battery.stored_charge >= inserted_battery.capacity)
 			inserted_battery.stored_charge = inserted_battery.capacity
@@ -49,6 +53,8 @@
 	return
 
 /obj/machinery/artifact_harvester/proc/interact(var/mob/user as mob)
+	if(stat & (NOPOWER|BROKEN))
+		return
 	user.machine = src
 	var/dat = "<B>Artifact Power Harvester</B><BR>"
 	dat += "<HR><BR>"
@@ -140,6 +146,7 @@
 		src.inserted_battery = null
 
 	if (href_list["drainbattery"])
+		use_power(100)
 		src.inserted_battery.battery_effect.artifact_id = ""
 		src.inserted_battery.stored_charge = 0
 		var/message = "<b>[src]</b> states, \"Battery drained of all charge.\""
