@@ -186,17 +186,26 @@
 /obj/machinery/artifact/proc/Artifact_Activate()
 	src.activated = !src.activated
 	var/display_msg = ""
-	switch(rand(1))
-		if(0)
-			display_msg = "momentarily glows brightly!"
-		if(1)
-			display_msg = "distorts slightly for a moment!"
-		if(2)
-			display_msg = "makes a slightly clicking noise!"
-		if(3)
-			display_msg = "flickers slightly!"
-		if(3)
-			display_msg = "vibrates!"
+	if(activated)
+		switch(rand(4))
+			if(0)
+				display_msg = "momentarily glows brightly!"
+			if(1)
+				display_msg = "distorts slightly for a moment!"
+			if(2)
+				display_msg = "makes a slightly clicking noise!"
+			if(3)
+				display_msg = "flickers slightly!"
+			if(4)
+				display_msg = "vibrates!"
+	else
+		switch(rand(2))
+			if(0)
+				display_msg = "grows dull!"
+			if(1)
+				display_msg = "fades in intensity!"
+			if(2)
+				display_msg = "suddenly becomes very quiet!"
 
 	for(var/mob/O in viewers(src, null))
 		O.show_message(text("<b>[]</b> [display_msg]", src), 1)
