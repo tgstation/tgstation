@@ -72,8 +72,8 @@
 						H.update_body()
 						H.update_face()
 						H.UpdateDamageIcon()
-						return 1
-						//
+					return 1
+					//
 				if (istype(user, /mob/living/carbon/monkey/))
 					user << "\blue You feel a soothing energy invigorate you."
 					user.adjustOxyLoss(-25)
@@ -81,6 +81,7 @@
 					user.adjustBruteLoss(-25)
 					user.adjustFireLoss(-25)
 					user.adjustBrainLoss(-25)
+					return 1
 				else user << "Nothing happens."
 			if("injure")
 				if (istype(user, /mob/living/carbon/))

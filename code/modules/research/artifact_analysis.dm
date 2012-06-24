@@ -61,6 +61,8 @@
 		owned_pad = locate() in orange(1, src)
 
 /obj/machinery/artifact_analyser/attack_hand(var/mob/user as mob)
+	if(stat & (NOPOWER|BROKEN))
+		return
 	user.machine = src
 	var/dat = "<B>Artifact Analyser</B><BR>"
 	dat += "<HR><BR>"
@@ -87,6 +89,10 @@
 	onclose(user, "artanalyser")
 
 /obj/machinery/artifact_analyser/process()
+	if(stat & (NOPOWER|BROKEN))
+		return
+	use_power(350)
+	//
 	if(!owned_pad)
 		for(var/obj/machinery/analyser_pad/pad in range(1))
 			owned_pad = pad
@@ -229,6 +235,7 @@
 					time *= 10
 					var/message = "<b>[src]</b> states, \"Commencing analysis.\""
 					src.visible_message(message, message)
+					use_power(500)
 					spawn(time)
 						src.working = 0
 						icon_state = "analyser"
@@ -239,6 +246,7 @@
 							scan_num++
 							message = "<b>[src]</b> states, \"Analysis complete.\""
 							src.visible_message(message, message)
+							use_power(500)
 			else if (findarti > 1)
 				var/message = "<b>[src]</b> states, \"Cannot analyse. Too many artifacts on pad.\""
 				src.visible_message(message, message)
@@ -267,6 +275,7 @@
 				CA.effecttype = aeffect1 + " ([accuE1]%)"
 				CA.effectmode = aeffect2 + " ([accuE2]%)"
 				DB.catalogued_artifacts.Add(CA)
+			use_power(100)
 
 	if(href_list["print"])
 		var/r = "Artifact Analysis Report (Scan #[scan_num])<hr>"
@@ -280,6 +289,7 @@
 		P.info = r
 		for(var/mob/O in hearers(src, null))
 			O.show_message("\icon[src] \blue The [src.name] prints a sheet of paper", 3)
+		use_power(10)
 
 	if(href_list["close"])
 		usr << browse(null, "window=artanalyser")
