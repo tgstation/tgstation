@@ -1026,6 +1026,8 @@ It can still be worn/put on as normal.
 				if(emptyHand)
 					wear_mask.DblClick()
 				return
+			if (!istype(W, /obj/item))
+				return
 			if (!( W.slot_flags & SLOT_MASK ))
 				return
 			u_equip(W)
