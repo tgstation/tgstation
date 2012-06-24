@@ -209,11 +209,6 @@
 				adjustToxLoss(-2)
 				adjustOxyLoss(-2)
 				adjustFireLoss(-2)
-
-				for(var/datum/organ/external/org in organs)
-					if(org.robot) continue
-					org.brute_dam = max(org.brute_dam - 2, 0)
-					org.burn_dam = max(org.burn_dam - 2, 0)
 				updatehealth()
 
 			if(!(/mob/living/carbon/human/proc/morph in src.verbs))
@@ -909,7 +904,7 @@
 			for(var/name in organs)
 				var/datum/organ/external/E = organs[name]
 				E.process()
-				if(E.robot && prob(E.brute_dam + E.burn_dam))
+				if(E.status & ROBOT && prob(E.brute_dam + E.burn_dam))
 					if(E.name == "l_hand" || E.name == "l_arm")
 						if(hand && equipped())
 							drop_item()
@@ -933,7 +928,7 @@
 					else if(E.name == "l_leg" || E.name == "l_foot" \
 						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
 						leg_tally--									// let it fail even if just foot&leg
-				if(E.broken || E.destroyed)
+				if(E.status & BROKEN || E.status & DESTROYED)
 					if(E.name == "l_hand" || E.name == "l_arm")
 						if(hand && equipped())
 							drop_item()
@@ -970,9 +965,7 @@
 						//At this point, we dun care which blood we are adding to, as long as they get more blood.
 						B.volume = max(min(B.volume + 560/blood_volume,560), 0) //Less blood = More blood generated per tick
 
-				if(!blood_volume) // what is this for? if their blood_volume is 0, they'll die anyway
-					bloodloss = 0
-				else if(blood_volume > 448)
+				if(blood_volume > 448)
 					if(pale)
 						pale = 0
 						update_body()
@@ -1096,15 +1089,12 @@
 			var/blood_max = 0
 			for(var/name in organs)
 				var/datum/organ/external/temp = organs[name]
-				if(!temp.bleeding || temp.robot)
+				if(!(temp.status & BLEEDING) || temp.status & ROBOT)
 					continue
-				var/lose_blood = temp.total_wound_bleeding()
-				if(lose_blood)
-					drip(lose_blood)
-					blood_max += lose_blood
-				if(temp.destroyed && !temp.gauzed)
+				blood_max += 2
+				if(temp.status & DESTROYED && !(temp.status & GAUZED))
 					blood_max += 10 //Yer missing a fucking limb.
-			bloodloss = min(bloodloss+1,sqrt(blood_max))
+			drip(blood_max)
 			if (eye_blind)
 				eye_blind--
 				blinded = 1

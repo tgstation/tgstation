@@ -119,8 +119,8 @@ MASS SPECTROMETER
 		var/mob/living/carbon/human/H = M
 		for(var/name in H.organs)
 			var/datum/organ/external/e = H.organs[name]
-			if(e.broken)
-				user.show_message(text("\red Bone fractures detected. Advanced scanner required for location."), 1)
+			if(e.status & BROKEN)
+				user.show_message("\red Bone fractures detected. Advanced scanner required for location.", 1)
 				break
 	if(ishuman(M))
 		if(M:vessel)

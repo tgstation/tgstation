@@ -398,7 +398,7 @@
 		return
 
 	var/datum/organ/external/head = H.organs["head"]
-	if(head.destroyed)
+	if(head.status & DESTROYED)
 		user << "\blue Put it where? There's no head."
 
 //since these people will be dead M != usr
