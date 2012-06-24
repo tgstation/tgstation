@@ -171,6 +171,7 @@ proc/trigger_armed_response_team(var/force = 0)
 		else
 			M.gender = FEMALE
 	M.rebuild_appearance()
+	M.update_body()
 
 	M.real_name = commando_name
 	M.name = commando_name
