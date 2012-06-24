@@ -95,6 +95,13 @@
 /atom/proc/blob_act()
 	return
 
+/atom/proc/acid_act(var/datum/reagent/R)
+	return 0
+/*/obj/proc/acid_act(var/datum/reagent/R)
+	return 0
+/mob/proc/acid_act(var/datum/reagent/R)
+	return 0*/
+
 // bullet_act called when anything is hit buy a projectile (bullet, tazer shot, laser, etc.)
 // flag is projectile type, can be:
 //PROJECTILE_TASER = 1   		taser gun

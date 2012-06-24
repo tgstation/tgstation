@@ -186,7 +186,7 @@
 						if(scantemp == "Scanner unoccupied") scantemp = "" // Stupid check to remove the text
 
 						// Make sure we can't scan a headless person. It breaks the cloner permanently.
-						var/datum/organ/external/temp = organs["head"]
+						var/datum/organ/external/temp = src.scanner.occupant.organs["head"]
 						if(temp && !(temp.status & DESTROYED))
 							dat += "<a href='byond://?src=\ref[src];scan=1'>Scan - [src.scanner.occupant]</a><br>"
 						else
