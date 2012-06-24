@@ -78,7 +78,7 @@
 			if("hurt")
 				usr.a_intent = "help"
 				usr.hud_used.action_intent.icon_state = "help"
-	if(issilicon(usr))
+	else if(isrobot(usr))
 		if(usr.a_intent == "help")
 			usr.a_intent = "hurt"
 			usr.hud_used.action_intent.icon_state = "harm"
