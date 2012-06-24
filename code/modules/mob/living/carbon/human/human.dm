@@ -2722,7 +2722,7 @@ It can still be worn/put on as normal.
 	check_dna()
 
 	for(var/mob/M in view())
-		user.visible_message("\blue \The [src] morphs and changes [user.get_gender_form() == MALE ? "his" : user.get_gender_form() == FEMALE ? "her" : "their"] appearance!", "\blue You change your appearance!", "\red Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!")
+		visible_message("\blue \The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!", "\blue You change your appearance!", "\red Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!")
 
 /mob/living/carbon/human/proc/remotesay()
 	set name = "Project mind"
