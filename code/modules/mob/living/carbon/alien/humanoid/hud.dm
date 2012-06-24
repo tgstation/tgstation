@@ -119,24 +119,28 @@
 	using.layer = 19
 	src.adding += using
 
-	//r hand
 	using = new src.h_type( src )
 	using.name = "r_hand"
 	using.dir = WEST
 	using.icon = 'screen1_alien.dmi'
-	using.icon_state = "equip"
+	using.icon_state = "hand_inactive"
+	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
+		using.icon_state = "hand_active"
 	using.screen_loc = ui_rhand
 	using.layer = 19
+	src.r_hand_hud_object = using
 	src.adding += using
 
-	//l hand
 	using = new src.h_type( src )
 	using.name = "l_hand"
 	using.dir = EAST
 	using.icon = 'screen1_alien.dmi'
-	using.icon_state = "equip"
+	using.icon_state = "hand_inactive"
+	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
+		using.icon_state = "hand_active"
 	using.screen_loc = ui_lhand
 	using.layer = 19
+	src.l_hand_hud_object = using
 	src.adding += using
 
 	//pocket 1

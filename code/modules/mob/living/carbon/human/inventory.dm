@@ -122,7 +122,7 @@
 
 	//Suit storage
 	var/confirm
-	if (wear_suit)
+	if (!s_store && wear_suit)
 		if(wear_suit.allowed)
 			if (istype(W, /obj/item/device/pda) || istype(W, /obj/item/weapon/pen))
 				confirm = 1
