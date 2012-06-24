@@ -23,6 +23,8 @@ mob/living/carbon/verb/give()
 	if(src.r_hand == null)
 		switch(alert(src,"[usr] wants to give you \a [I]?",,"Yes","No"))
 			if("Yes")
+				if(!I)
+					return
 				if(!check_can_reach(usr,src))
 					usr << "You need to keep in reaching distance."
 					src << "[usr.name] moved too far away."
@@ -52,6 +54,8 @@ mob/living/carbon/verb/give()
 	else if(src.l_hand == null)
 		switch(alert(src,"[usr] wants to give you \a [I]?",,"Yes","No"))
 			if("Yes")
+				if(!I)
+					return
 				if(!check_can_reach(usr,src))
 					usr << "You need to keep in reaching distance."
 					src << "[usr.name] moved too far away."
