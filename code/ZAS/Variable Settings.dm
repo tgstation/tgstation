@@ -49,9 +49,12 @@ vs_control
 	proc/ChangeSetting(mob/user,ch)
 		var/vw
 		var/how = "Text"
+		var/display_description = ch
 		if(ch in plc.settings)
 			vw = plc.vars[ch]
-			if("[ch]_METHOD" in vars)
+			if("[ch]_NAME" in plc.vars)
+				display_description = plc.vars["[ch]_NAME"]
+			if("[ch]_METHOD" in plc.vars)
 				how = plc.vars["[ch]_METHOD"]
 			else
 				if(isnum(vw))
@@ -60,6 +63,8 @@ vs_control
 					how = "Text"
 		else
 			vw = vars[ch]
+			if("[ch]_NAME" in vars)
+				display_description = vars["[ch]_NAME"]
 			if("[ch]_METHOD" in vars)
 				how = vars["[ch]_METHOD"]
 			else
@@ -91,7 +96,7 @@ vs_control
 			vars[ch] = vw
 		if(how == "Toggle")
 			newvar = (newvar?"ON":"OFF")
-		world << "\blue <b>[key_name(user)] changed the setting [ch] to [newvar].</b>"
+		world << "\blue <b>[key_name(user)] changed the setting [display_description] to [newvar].</b>"
 		//user << "[which] has been changed to [newvar]."
 		if(ch in plc.settings)
 			ChangeSettingsDialog(user,plc.settings)

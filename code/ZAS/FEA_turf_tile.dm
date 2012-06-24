@@ -205,7 +205,7 @@ turf
 						if(!CanPass(null, T, 1.5, 1) && CanPass(src, T, 0, 0)) //Normally would block it, instead lets make a connection to it.
 							if(zone)
 								zone.AddSpace(T)
-						else if(!CanPass(src, T, 0, 0)) //I block the air, disconnect from it if connected.
+						else if(!CanPass(src, T, 0, 0) || !CanPass(T, src, 0, 0)) //I block the air or it blocks air, disconnect from it if connected.
 							if(zone && T in zone.space_tiles)
 								zone.RemoveSpace(T)
 						else if(zone)

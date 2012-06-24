@@ -59,11 +59,14 @@ vs_control/var
 	airflow_medium_pressure_NAME = "Airflow - Heavy Movement Threshold %"
 	airflow_medium_pressure_DESC = "Percent of 1 Atm. at which items with the largest weight classes will move."
 	airflow_heavy_pressure = 95
-	airflow_heavy_pressure_NAME = "Airflow - Dense Movement Threshold %"
-	airflow_heavy_pressure_DESC = "Percent of 1 Atm. at which items with canisters and closets will move."
-	airflow_heaviest_pressure = 100
-	airflow_heaviest_pressure_NAME = "Airflow - Mob Stunning Threshold %"
-	airflow_heaviest_pressure_DESC = "Percent of 1 Atm. at which mobs will be stunned by airflow."
+	airflow_heavy_pressure_NAME = "Airflow - Mob Movement Threshold %"
+	airflow_heavy_pressure_DESC = "Percent of 1 Atm. at which mobs will move."
+	airflow_dense_pressure = 120
+	airflow_dense_pressure_NAME = "Airflow - Dense Movement Threshold %"
+	airflow_dense_pressure_DESC = "Percent of 1 Atm. at which items with canisters and closets will move."
+	airflow_stun_pressure = 100
+	airflow_stun_pressure_NAME = "Airflow - Mob Stunning Threshold %"
+	airflow_stun_pressure_DESC = "Percent of 1 Atm. at which mobs will be stunned by airflow."
 	airflow_stun_cooldown = 60
 	airflow_stun_cooldown_NAME = "Aiflow Stunning - Cooldown"
 	airflow_stun_cooldown_DESC = "How long, in tenths of a second, to wait before stunning them again."
@@ -113,8 +116,13 @@ atom/movable/proc/check_airflow_movable(n)
 
 	if(anchored && !ismob(src)) return 0
 
-	if(!istype(src,/obj/item) && n < vsc.airflow_heavy_pressure) return 0
+	if(!istype(src,/obj/item) && n < vsc.airflow_dense_pressure) return 0
 
+	return 1
+
+mob/check_airflow_movable(n)
+	if(n < vsc.airflow_heavy_pressure)
+		return 0
 	return 1
 
 mob/dead/observer/check_airflow_movable()
@@ -172,7 +180,7 @@ proc/Airflow(zone/A,zone/B)
 		if(M.last_airflow > world.time - vsc.airflow_delay) continue
 
 		//Check for knocking people over
-		if(ismob(M) && n > vsc.airflow_heaviest_pressure)
+		if(ismob(M) && n > vsc.airflow_stun_pressure)
 			if(M:nodamage) continue
 			M:airflow_stun()
 
@@ -230,7 +238,7 @@ proc/AirflowSpace(zone/A)
 
 		if(M.last_airflow > world.time - vsc.airflow_delay) continue
 
-		if(ismob(M) && n > vsc.airflow_medium_pressure)
+		if(ismob(M) && n > vsc.airflow_stun_pressure)
 			if(M:nodamage) continue
 			M:airflow_stun()
 
