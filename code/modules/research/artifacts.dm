@@ -179,7 +179,7 @@
 	my_effect.UpdateEffect(src.loc)
 
 	//activate
-	if(src.charged && my_effect.DoEffect(src.loc))
+	if(src.charged && my_effect.DoEffect(src))
 		src.charged = 0
 		src.chargetime = src.recharge
 
@@ -207,7 +207,7 @@
 	else if (my_effect.trigger != "touch" && !src.activated) user << "Nothing happens."
 
 	if (my_effect.effectmode == "contact" && src.activated && src.charged)
-		my_effect.DoEffect(src.loc)
+		my_effect.DoEffect(src)
 		src.charged = 0
 		src.chargetime = src.recharge
 
