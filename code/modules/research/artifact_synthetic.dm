@@ -149,6 +149,5 @@
 	if(href_list["close"])
 		usr << browse(null, "window=anodevice")
 		usr.machine = null
-
-	if(usr)
+	else if(usr)
 		src.interact(usr)
