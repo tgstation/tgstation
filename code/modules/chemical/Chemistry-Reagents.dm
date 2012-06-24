@@ -702,6 +702,8 @@ datum
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				if(!istype(M, /mob/living))
 					return
+				if(M.acid_act(src))
+					return
 				if(method == TOUCH)
 					if(istype(M, /mob/living/carbon/human))
 						if(M:wear_mask)
@@ -734,6 +736,8 @@ datum
 						M.take_organ_damage(min(15, volume * 2))
 
 			reaction_obj(var/obj/O, var/volume)
+				if(O.acid_act(src))
+					return
 				if(istype(O, /obj/effect/blob))
 					var/obj/effect/blob/B = O
 					if(B.weakness == "acid")
@@ -772,6 +776,9 @@ datum
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				if(!istype(M, /mob/living))
 					return //wooo more runtime fixin
+				//cael - added the option for things splashed with acid to handle it themselves (for xenoarch)
+				if(M.acid_act(src))
+					return
 				if(method == TOUCH)
 					if(istype(M, /mob/living/carbon/human))
 						if(M:wear_mask)
@@ -815,6 +822,8 @@ datum
 							M.take_organ_damage(min(15, volume * 4))
 
 			reaction_obj(var/obj/O, var/volume)
+				if(O.acid_act(src))
+					return
 				if(istype(O, /obj/effect/blob))
 					var/obj/effect/blob/B = O
 					if(B.weakness == "acid")
