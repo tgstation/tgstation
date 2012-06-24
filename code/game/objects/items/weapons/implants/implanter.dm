@@ -26,7 +26,7 @@
 		if (M != user)
 			user.visible_message("\red \The [user] tries to implant \the [M] with \the [src]!","\red You try to implant \the [M] with \the [src]!")
 		else
-			user.visible_message("\red \The [user] tries to implant [user.get_gender_form("itself")] with \the [src]!","\red You try to implant yourself with \the [src]!")
+			user.visible_message("\red \The [user] tries to implant [user.get_visible_gender() == MALE ? "himself" : user.get_visible_gender() == FEMALE ? "herself" : "themselves"] with \the [src]!","\red You try to implant yourself with \the [src]!")
 		if(!do_mob(user, M,60))
 			return
 		if(hasorgans(M))
@@ -34,12 +34,14 @@
 			if(target.status & DESTROYED)
 				user << "What [target.display_name]?"
 				return
+			if(!target.implant)
+				target.implant = list()
 			target.implant += imp
 			imp.loc = target
 			if (M != user)
 				user.visible_message("\red \The [user] implants \the [M]'s [target.display_name] with \the [src]!","\red You implant \the [M]'s [target.display_name] with \the [src]!")
 			else
-				user.visible_message("\red \The [user] implants [user.get_gender_form("its")] own [target.display_name] with \the [src]!","\red You implant your [target.display_name] with \the [src]!")
+				user.visible_message("\red \The [user] implants [user.get_visible_gender() == MALE ? "his" : user.get_visible_gender() == FEMALE ? "her" : "their"] own [target.display_name] with \the [src]!","\red You implant your [target.display_name] with \the [src]!")
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'> Implanted with [src] ([imp])  by [user] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src] ([imp]) to implant [M] ([M.ckey])</font>")
 		log_admin("ATTACK: [user] ([user.ckey]) implanted [M] ([M.ckey]) with [src].")

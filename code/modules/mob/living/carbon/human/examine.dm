@@ -27,19 +27,37 @@
 		skipears = src.head.flags_inv & HIDEEARS
 
 	// crappy hacks because you can't do \his[src] etc. I'm sorry this proc is so unreadable, blame the text macros :<
-	var/list/proper_forms = get_visible_gender()
-	var/t_He = proper_forms["It"] //capitalised for use at the start of each line.
-	var/t_his = proper_forms["its"]
-	var/t_him = proper_forms["it"]
-	var/t_has = proper_forms["has"]
-	var/t_is = proper_forms["is"]
+	var/t_He = "It" //capitalised for use at the start of each line.
+	var/t_his = "its"
+	var/t_him = "it"
+	var/t_has = "has"
+	var/t_is = "is"
+
+	var/msg = "<span class='info'>*---------*\nThis is "
+	if(src.icon)
+		msg += "\icon[src.icon] " //fucking BYOND: this should stop dreamseeker crashing if we -somehow- examine somebody before their icon is generated
+	else
+		switch(get_visible_gender())
+			if(MALE)
+				t_He = "He"
+				t_his = "his"
+				t_him = "him"
+			if(FEMALE)
+				t_He = "She"
+				t_his = "her"
+				t_him = "her"
+			if(NEUTER)
+				t_He = "They"
+				t_his = "their"
+				t_him = "them"
+				t_has = "have"
+				t_is = "are"
 
 	if(mutantrace == "lizard")
 		examine_text = "one of those lizard-like Soghuns"
 	if(mutantrace == "skrell")
 		examine_text = "one of those gelatinous Skrells"
 
-	var/msg = "<span class='info'>*---------*\nThis is "
 	if(icon)
 		msg += "\icon[icon] " //fucking BYOND: this should stop dreamseeker crashing if we -somehow- examine somebody before their icon is generated
 

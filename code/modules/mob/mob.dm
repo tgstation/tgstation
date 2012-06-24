@@ -1115,11 +1115,4 @@ note dizziness decrements automatically in the mob's Life() proc.
 	..()
 
 /mob/proc/get_visible_gender()
-	//Returns the proper words to use based on the mob's visible gender.  Used in text creation.
-	return list("It" = "It", "its" = "its", "it" = "it", "has" = "has", "is" = "is", "itself" = "itself")
-
-/mob/proc/get_gender_form(var/form)
-	if(!istext(form))
-		return
-	var/list/proper_forms = get_visible_gender()
-	return proper_forms[form]
+	return gender

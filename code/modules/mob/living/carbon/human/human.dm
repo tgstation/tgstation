@@ -2782,12 +2782,6 @@ It can still be worn/put on as normal.
 		src.tkdisable = 0
 
 /mob/living/carbon/human/get_visible_gender()
-	var/skip_gender = (wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT && ((head && head.flags_inv & HIDEMASK) || wear_mask))
-
-	if( !skip_gender ) //big suits/masks make it hard to tell their gender
-		switch(gender)
-			if(MALE)
-				return list("It" = "He", "its" = "his", "it" = "he", "has" = "has", "is" = "is", "itself" = "himself")
-			if(FEMALE)
-				return list("It" = "She", "its" = "her", "it" = "she", "has" = "has", "is" = "is", "itself" = "herself")
-	return list("It" = "They", "its" = "their", "it" = "them", "has" = "have", "is" = "are", "itself" = "themselves")
+	if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT && ((head && head.flags_inv & HIDEMASK) || wear_mask))
+		return NEUTER
+	return gender
