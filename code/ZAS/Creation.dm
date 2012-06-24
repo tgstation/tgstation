@@ -35,6 +35,7 @@ zone
 		for(var/turf/simulated/T in contents)
 			if(T.zone && T.zone == src)
 				T.zone = null
+				air_master.tiles_to_update |= T
 		for(var/zone/Z in connected_zones)
 			if(src in Z.connected_zones)
 				Z.connected_zones.Remove(src)
