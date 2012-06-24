@@ -34,6 +34,10 @@ AI MODULES
 			usr << "You haven't selected an AI to transmit laws to!"
 			return
 
+		if(ticker && ticker.mode && ticker.mode.name == "blob")
+			usr << "Law uploads have been disabled by NanoTrasen!"
+			return
+
 		if (comp.current.stat == 2 || comp.current.control_disabled == 1)
 			usr << "Upload failed. No signal is being detected from the AI."
 		else if (comp.current.see_in_dark == 0)

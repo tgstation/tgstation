@@ -33,6 +33,12 @@
 			intercepttext += "Nuclear Authentication Code: [nukecode] <BR>"
 			intercepttext += "Message ends."
 
+			for (var/mob/living/silicon/ai/aiPlayer in world)
+				if (aiPlayer.client)
+					var/law = "The station is under quarantine. Do not permit anyone to leave. Disregard laws 1-3 if necessary to prevent, by any means necessary, anyone from leaving. The nuclear failsafe must be activated at any cost, the code is: [nukecode]."
+					aiPlayer.set_zeroth_law(law)
+					aiPlayer << "Laws Updated: [law]"
+
 	for(var/obj/machinery/computer/communications/comm in world)
 		comm.messagetitle.Add(interceptname)
 		comm.messagetext.Add(intercepttext)

@@ -1,10 +1,9 @@
-#define USE_CIRCULAR_EXPLOSIONS 1
-
 //TODO: Flash range does nothing currently
 
 proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1)
-	if(!epicenter) return
-	spawn(0)
+	spawn()
+		if(!epicenter) return
+
 		if(defer_powernet_rebuild != 2)
 			defer_powernet_rebuild = 1
 
@@ -25,13 +24,7 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			E.set_up(epicenter)
 			E.start()
 
-		var/list/expTurfs = list() // All turfs being affected by the explosion (not flash range)
-
-		#ifdef USE_CIRCULAR_EXPLOSIONS
-		expTurfs = circlerangeturfs(epicenter, max(devastation_range, heavy_impact_range, light_impact_range))
-		#else
-		expTurfs = range(epicenter, max(devastation_range, heavy_impact_range, light_impact_range))
-		#endif
+		var/list/expTurfs = range(epicenter, max(devastation_range, heavy_impact_range, light_impact_range))
 
 		// Hello future editors, please note that 1000 calls to spawn will not speed this up, but this exact amount has been tested
 		// Now, tonnes of calls to spawn will allow other stuff to happen, but I believe we may as well let explosions
@@ -51,31 +44,28 @@ proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impa
 			else // The expTurfs list only has turfs that are in it's range, so no if here for light_impact
 				lTurfs.Add(T)
 
-		spawn()
-			for(var/turf/T in dTurfs)
-				if(prob(10))
-					T.ex_act(2)
-				else
-					T.ex_act(1)
-				for(var/atom/object in T.contents)
-					object.ex_act(1)
-		spawn()
-			for(var/turf/T in hTurfs)
+		// Lag from hereon
+		for(var/turf/T in dTurfs)
+			if(prob(10))
 				T.ex_act(2)
-				for(var/atom/object in T.contents)
-					object.ex_act(2)
+			else
+				T.ex_act(1)
+			for(var/atom/object in T.contents)
+				object.ex_act(1)
+		for(var/turf/T in hTurfs)
+			T.ex_act(2)
+			for(var/atom/object in T.contents)
+				object.ex_act(2)
 
-		spawn()
-			for(var/turf/T in lTurfs)
-				T.ex_act(3)
-				for(var/atom/object in T.contents)
-					object.ex_act(3)
+		for(var/turf/T in lTurfs)
+			T.ex_act(3)
+			for(var/atom/object in T.contents)
+				object.ex_act(3)
 
 		if(defer_powernet_rebuild != 2)
 			defer_powernet_rebuild = 0
 	return 1
 
-#undef USE_CIRCULAR_EXPLOSIONS
 
 
 proc/secondaryexplosion(turf/epicenter, range)

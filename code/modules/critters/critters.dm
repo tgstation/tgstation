@@ -124,8 +124,18 @@
 	angertext = "charges"
 	attacktext = "hits"
 	attack_sound = 'genhit1.ogg'
+	var/obj/effect/blob/factory/factory = null
+
+	New(loc, var/obj/effect/blob/factory/linked_node)
+		if(istype(linked_node))
+			factory = linked_node
+			factory.spores += src
+		..(loc)
+		return
 
 	Die()
+		if(factory)
+			factory.spores -= src
 		..()
 		del(src)
 

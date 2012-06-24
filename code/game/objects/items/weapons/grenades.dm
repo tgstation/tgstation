@@ -246,7 +246,7 @@ CRITTER GRENADE
 		for(var/obj/effect/blob/B in view(8,T))       		//Blob damage here
 			var/damage = round(30/(get_dist(B,T)+1))
 			B.health -= damage
-			B.update()
+			B.update_icon()
 		del(src)
 		return
 

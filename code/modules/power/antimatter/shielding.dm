@@ -92,9 +92,10 @@ proc/cardinalrange(var/center)
 	blob_act()
 		stability -= 20
 		if(prob(100-stability))
-			var/obj/effect/blob/B = new /obj/effect/blob(src.loc,60)
 			if(prob(10))//Might create a node
-				B.blobdebug = 2
+				new /obj/effect/blob/node(src.loc,150)
+			else
+				new /obj/effect/blob(src.loc,60)
 			spawn(0)
 				del(src)
 			return

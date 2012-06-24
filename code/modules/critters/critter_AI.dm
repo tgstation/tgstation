@@ -1,9 +1,9 @@
 
 /obj/effect/critter
 
-	New()
+	New(loc)
 		spawn(0) process()//I really dont like this much but it seems to work well
-		..()
+		..(loc)
 
 
 	process()

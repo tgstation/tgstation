@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 //I will need to recode parts of this but I am way too tired atm
 /obj/effect/blob
 	name = "blob"
@@ -13,8 +11,6 @@
 	var/health = 30
 	var/brute_resist = 4
 	var/fire_resist = 1
-	var/blobtype = "Blob"
-	var/blobdebug = 0
 		/*Types
 	var/Blob
 	var/Node
@@ -28,65 +24,20 @@
 		blobs += src
 		src.health = h
 		src.dir = pick(1,2,4,8)
-		src.update()
+		src.update_icon()
 		..(loc)
+		return
 
 
 	Del()
 		blobs -= src
-		if((blobtype == "Node") || (blobtype == "Core"))
-			processing_objects.Remove(src)
 		..()
+		return
 
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if((air_group && blobtype != "Shield") || (height==0))	return 1
+		if(air_group || (height==0))	return 1
 		if(istype(mover) && mover.checkpass(PASSBLOB))	return 1
-		return 0
-
-
-	proc/check_mutations()//These could be their own objects I guess
-		if(blobtype != "Blob")	return
-		//Spaceeeeeeblobbb
-		if((istype(src.loc, /turf/space)) || (blobdebug == 4))
-			active = 0
-			health = min(health*2, 100)
-			brute_resist = 1
-			fire_resist = 2
-			name = "strong blob"
-			icon_state = "blob_idle"//needs a new sprite
-			blobtype = "Shield"
-			return 1
-		//Commandblob
-		if((blobdebug == 1))
-			active = 0
-			health = min(health*4, 200)
-			brute_resist = 2
-			fire_resist = 2
-			name = "blob core"
-			icon_state = "blob_core"
-			blobtype = "Core"
-			blob_cores += src
-			processing_objects.Add(src)
-			return 1
-		//Nodeblob
-		if((blobdebug == 2))
-			active = 0
-			health = min(health*3, 150)
-			brute_resist = 1
-			fire_resist = 2
-			name = "blob node"
-			icon_state = "blob_node"//needs a new sprite
-			blobtype = "Node"
-			blob_nodes += src
-			processing_objects.Add(src)
-			return 1
-		if((blobdebug == 3))
-			health = min(health*2, 100)
-			name = "porous blob"
-			icon_state = "blob_factory"//needs a new sprite
-			blobtype = "Factory"
-			return 1
 		return 0
 
 
@@ -98,15 +49,12 @@
 
 	proc/Pulse(var/pulse = 0, var/origin_dir = 0)//Todo: Fix spaceblob expand
 		set background = 1
-		if((blobtype != "Node") && (blobtype != "Core"))//This is so bad
-			if(special_action())//If we can do something here then we dont need to pulse more
-				return
-			if(check_mutations())
+		if(!istype(src,/obj/effect/blob/core) && !istype(src,/obj/effect/blob/node))//Ill put these in the children later
+			if(run_action())//If we can do something here then we dont need to pulse more
 				return
 
-		if((blobtype == "Blob") && (pulse <= 2) && (prob(30)))
-			blobdebug = 4
-			check_mutations()
+		if(!istype(src,/obj/effect/blob/shield) && (pulse <= 2) && (pulse != 0) && (prob(30)))
+			change_to("Shield")
 			return
 
 		if(pulse > 20)	return//Inf loop check
@@ -127,83 +75,65 @@
 		return
 
 
-	proc/special_action()
-		set background = 1
-		switch(blobtype)
-			if("Factory")
-				new/obj/effect/critter/blob(src.loc)
-				return 1
-			if("Core")
-				spawn(0)
-					Pulse(0,1)
-					Pulse(0,2)
-					Pulse(0,4)
-					Pulse(0,8)
-				return 1
-			if("Node")
-				spawn(0)
-					Pulse(0,0)
-				return 1
-			if("Blob")
-				if(expand())
-					return 1
+	proc/run_action()
 		return 0
 
 
 	proc/Life()
-		update()
-		if(check_mutations())
-			return 1
-		if(special_action())
+		update_icon()
+		if(run_action())
 			return 1
 		return 0
 
-	temperature_expose(datum/gas_mixture/air, temperature, volume)
+/*	temperature_expose(datum/gas_mixture/air, temperature, volume) Blob is currently fireproof
 		if(temperature > T0C+200)
 			health -= 0.01 * temperature
 			update()
+			*/
 
 	proc/expand(var/turf/T = null)
-		if(!prob(health))	return//TODO: Change this to prob(health + o2 mols or such)
+		if(!prob(health))	return
 		if(!T)
 			var/list/dirs = list(1,2,4,8)
 			for(var/i = 1 to 4)
 				var/dirn = pick(dirs)
 				dirs.Remove(dirn)
 				T = get_step(src, dirn)
-				if((locate(/obj/effect/blob) in T))
-					T = null
-					continue
-				else 	break
-		if(T)
-			var/obj/effect/blob/B = new /obj/effect/blob(src.loc, min(src.health, 30))
-			if(T.Enter(B,src))
-				B.loc = T
-			else
-				T.blob_act()
-				del(B)
-			for(var/atom/A in T)
-				A.blob_act()
-		return
+				if(!(locate(/obj/effect/blob) in T))	break
+				else	T = null
+
+		if(!T)	return 0
+		var/obj/effect/blob/B = new /obj/effect/blob(src.loc, min(src.health, 30))
+		if(T.Enter(B,src))//Attempt to move into the tile
+			B.loc = T
+		else
+			T.blob_act()//If we cant move in hit the turf
+			del(B)
+		for(var/atom/A in T)//Hit everything in the turf
+			A.blob_act()
+		return 1
 
 
 	ex_act(severity)
+		var/damage = 50
 		switch(severity)
 			if(1)
-				src.health -= rand(40,60)
+				src.health -= rand(100,120)
 			if(2)
-				src.health -= rand(20,40)
+				src.health -= rand(60,100)
 			if(3)
-				src.health -= rand(15,20)
-		src.update()
+				src.health -= rand(20,60)
+
+		health -= (damage/brute_resist)
+		update_icon()
+		return
 
 
-	proc/update()//Needs to be updated with the types
+	update_icon()//Needs to be updated with the types
 		if(health <= 0)
 			playsound(src.loc, 'splat.ogg', 50, 1)
 			del(src)
 			return
-		if(blobtype != "Blob")	return
 		if(health <= 15)
 			icon_state = "blob_damaged"
 			return
@@ -214,8 +144,13 @@
 
 	bullet_act(var/obj/item/projectile/Proj)
 		if(!Proj)	return
-		src.health -= Proj.damage
-		update()
+		switch(Proj.damage_type)
+		 if(BRUTE)
+			 health -= (Proj.damage/brute_resist)
+		 if(BURN)
+			 health -= (Proj.damage/fire_resist)
+
+		update_icon()
 		return 0
 
 
@@ -231,22 +166,22 @@
 			if("brute")
 				damage = (W.force / max(src.brute_resist,1))
 
-		src.health -= damage
-		src.update()
+		health -= damage
+		update_icon()
 		return
 
-
-	proc/revert()
-		name = "blob"
-		icon_state = "blob"
-		brute_resist = 4
-		fire_resist = 1
-		blobtype = "Blob"
-		blobdebug = 0
-		health = (health/2)
-		src.update()
-		return 1
-
+	proc/change_to(var/type = "Normal")
+		switch(type)
+			if("Normal")
+				new/obj/effect/blob(src.loc,src.health)
+			if("Node")
+				new/obj/effect/blob/node(src.loc,src.health*2)
+			if("Factory")
+				new/obj/effect/blob/factory(src.loc,src.health)
+			if("Shield")
+				new/obj/effect/blob/shield(src.loc,src.health*2)
+		del(src)
+		return
 
 //////////////////////////////****IDLE BLOB***/////////////////////////////////////
 
@@ -262,7 +197,7 @@
 		src.update_idle()
 
 
-	proc/update_idle()			//put in stuff here to make it transform? Maybe when its down to around 5 health?
+	proc/update_idle()
 		if(health<=0)
 			del(src)
 			return
@@ -275,49 +210,10 @@
 		icon_state = "blobidle0"
 
 
-	Del()		//idle blob that spawns a normal blob when killed.
+	Del()
 		var/obj/effect/blob/B = new /obj/effect/blob( src.loc )
 		spawn(30)
 			B.Life()
 		..()
 
 
-
-/obj/effect/blob/core/New()
-	..()
-	spawn()
-		src.blobdebug = 1
-		src.Life()
-
-/obj/effect/blob/node/New()
-	..()
-	spawn()
-		src.blobdebug = 2
-		src.Life()
-
-/obj/effect/blob/factory/New()
-	..()
-	spawn()
-		src.blobdebug = 3
-		src.Life()
-
-
-/obj/effect/blob/proc/create_fragments(var/wave_size = 1)
-	var/list/candidates = list()
-	for(var/mob/dead/observer/G in world)
-		if(G.client && G.client.be_alien)
-			if(G.corpse)
-				if(G.corpse.stat==2)
-					candidates.Add(G)
-			else
-				candidates.Add(G)
-
-	for(var/i = 0 to wave_size)
-		if(!candidates.len)	break
-		var/mob/dead/observer/G = pick(candidates)
-		var/mob/living/blob/B = new/mob/living/blob(src.loc)
-		if(G.client)
-			G.client.screen.len = null
-			B.ghost_name = G.real_name
-			G.client.mob = B
-			del(G)
