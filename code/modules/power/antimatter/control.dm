@@ -1,6 +1,6 @@
 /obj/machinery/power/am_control_unit
 	name = "antimatter control unit"
-	desc = "This device injects antimatter into connected shielding units, the more shielding the more is antimatter is injected and the more power will be output."
+	desc = "This device injects antimatter into connected shielding units, the more antimatter injected the more power produced.  Wrench the device to set it up."
 	icon = 'antimatter.dmi'
 	icon_state = "control"
 	anchored = 1
@@ -69,7 +69,7 @@
 		var/core_damage = 0
 		var/fuel = fueljar.usefuel(fuel_injection)
 
-		stored_power = (fuel/core_power)*fuel*100000
+		stored_power = (fuel/core_power)*fuel*200000
 		//Now check if the cores could deal with it safely, this is done after so you can overload for more power if needed, still a bad idea
 		if(fuel > (2*core_power))//More fuel has been put in than the current cores can deal with
 			if(prob(50))core_damage = 1//Small chance of damage

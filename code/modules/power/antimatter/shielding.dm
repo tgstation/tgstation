@@ -183,7 +183,7 @@ proc/cardinalrange(var/center)
 	proc/check_stability(var/injecting_fuel = 0)
 		if(stability > 0) return
 		if(injecting_fuel)
-			explosion(get_turf(src),4,6,10,12)
+			explosion(get_turf(src),8,12,18,12)
 		if(src)
 			del(src)
 		return
