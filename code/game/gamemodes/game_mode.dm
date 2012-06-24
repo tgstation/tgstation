@@ -102,7 +102,7 @@ Whitespace:Seperator;
 		feedback_set_details("game_mode","[ticker.mode]")
 	if(revdata)
 		feedback_set_details("revision","[revdata.revision]")
-	feedback_set_details("server_ip","[world.internet_address]")
+	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
 	return 1
 
 
