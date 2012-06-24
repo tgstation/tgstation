@@ -759,6 +759,7 @@ datum/preferences
 			switch(link_tags["species"])
 				if("input")
 					var/list/new_species = list("Human")
+					var/prev_species = species
 					if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
 						if(is_alien_whitelisted(user, "Soghun")) //Check for Soghun and admins
 							new_species += "Soghun"
@@ -771,16 +772,17 @@ datum/preferences
 						new_species += "Soghun"
 						new_species += "Skrell"
 					species = input("Please select a species", "Character Generation", null) in new_species
-					h_style = "Bald" //Try not to carry face/head hair over.
-					f_style = "Shaved"
-					s_tone = 0 //Don't carry over skintone either.
-					hair_style = new/datum/sprite_accessory/hair/bald
-					facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
-					if(species == "Skrell")
-						if(gender == FEMALE)
-							hair_style = new/datum/sprite_accessory/hair/alien/skrell/female/tentacle
-						else
-							hair_style = new/datum/sprite_accessory/hair/alien/skrell/male/tentacle
+					if(prev_species != species)
+						h_style = "Bald" //Try not to carry face/head hair over.
+						f_style = "Shaved"
+						s_tone = 0 //Don't carry over skintone either.
+						hair_style = new/datum/sprite_accessory/hair/bald
+						facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
+						if(species == "Skrell")
+							if(gender == FEMALE)
+								hair_style = new/datum/sprite_accessory/hair/alien/skrell/female/tentacle
+							else
+								hair_style = new/datum/sprite_accessory/hair/alien/skrell/male/tentacle
 
 		if(link_tags["hair"])
 			switch(link_tags["hair"])
