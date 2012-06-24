@@ -26,7 +26,7 @@
 
 	for(var/name in organs)
 		var/datum/organ/external/O = organs[name]
-		if(O.destroyed) damage_appearance += "d"
+		if(O.status & DESTROYED) damage_appearance += "d"
 		else
 			damage_appearance += O.damage_state
 
