@@ -47,7 +47,7 @@
 		if(STUN)
 			Stun((effect - (min(effect*getarmor(null, "laser"), effect*(0.75 + (blocked*0.05))))))
 		if(WEAKEN)
-			Weaken((effect - (min(effect*getarmor(null, "laser"), effect*(0.75 + (blocked*0.05))))))
+			Weaken(effect/(blocked+1))
 		if(PARALYZE)
 			Paralyse(effect/(blocked+1))
 		if(IRRADIATE)
