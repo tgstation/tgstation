@@ -142,12 +142,12 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 /obj/machinery/newscaster/attack_hand(mob/user as mob)
 	if(!src.ispowered || src.isbroken)
 		return
-	if(istype(user, /mob/living/carbon/human) )
-		var/mob/living/carbon/human/human_user = user
+	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) )
+		var/mob/living/human_or_robot_user = user
 		var/dat
 		dat = text("<HEAD><TITLE>Newscaster</TITLE></HEAD><H3>Newscaster Unit #[src.unit_no]</H3>")
 
-		src.scan_user(human_user) //Newscaster scans you
+		src.scan_user(human_or_robot_user) //Newscaster scans you
 
 		switch(screen)
 			if(0)
@@ -160,7 +160,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 				dat+= "<BR><A href='?src=\ref[src];create_feed_story=1'>Submit new Feed story</A>"
 				dat+= "<BR><A href='?src=\ref[src];menu_paper=1'>Print newspaper</A>"
 				dat+= "<BR><A href='?src=\ref[src];refresh=1'>Re-scan User</A>"
-				dat+= "<BR><BR><A href='?src=\ref[human_user];mach_close=newscaster_main'>Exit</A>"
+				dat+= "<BR><BR><A href='?src=\ref[human_or_robot_user];mach_close=newscaster_main'>Exit</A>"
 				if(src.securityCaster)
 					var/wanted_already = 0
 					for(var/obj/machinery/newscaster/N in allCasters)
@@ -174,7 +174,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 				dat+="<BR><HR>The newscaster recognises you as: <FONT COLOR='green'>[src.scanned_user]</FONT>"
 			if(1)
 				dat+= "Station Feed Channels<HR>"
-				if(channel_list.len)
+				if( isemptylist(src.channel_list) )
 					dat+="<I>No active channels found...</I>"
 				else
 					for(var/datum/feed_channel/CHANNEL in src.channel_list)
@@ -255,7 +255,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 					dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
 					dat+="No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"
 				else
-					if(!viewing_channel.messages.len)
+					if( isemptylist(src.viewing_channel.messages) )
 						dat+="<I>No feed messages found in channel...</I><BR>"
 					else
 						for(var/datum/feed_message/MESSAGE in src.viewing_channel.messages)
@@ -267,7 +267,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 				dat+="<FONT SIZE=1>NOTE: Due to the nature of news Feeds, total deletion of a Feed Story is not possible.<BR>"
 				dat+="Keep in mind that users attempting to view a censored feed will instead see the \[REDACTED\] tag above it.</FONT>"
 				dat+="<HR>Select Feed channel to get Stories from:<BR>"
-				if(!channel_list.len)
+				if(isemptylist(src.channel_list))
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
 					for(var/datum/feed_channel/CHANNEL in src.channel_list)
@@ -278,7 +278,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 				dat+="<FONT SIZE=1>A D-Notice is to be bestowed upon the channel if the handling Authority deems it as harmful for the station's"
 				dat+="morale, integrity or disciplinary behaviour. A D-Notice will render a channel unable to be updated by anyone, without deleting any feed"
 				dat+="stories it might contain at the time. You can lift a D-Notice if you have the required access at any time.</FONT><HR>"
-				if(channel_list.len)
+				if(isemptylist(src.channel_list))
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
 					for(var/datum/feed_channel/CHANNEL in src.channel_list)
@@ -290,7 +290,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 				dat+="<FONT SIZE=2><A href='?src=\ref[src];censor_channel_author=\ref[src.viewing_channel]'>[(src.viewing_channel.author=="\[REDACTED\]") ? ("Undo Author censorship") : ("Censor channel Author")]</A></FONT><HR>"
 
 
-				if( !viewing_channel.messages.len )
+				if( isemptylist(src.viewing_channel.messages) )
 					dat+="<I>No feed messages found in channel...</I><BR>"
 				else
 					for(var/datum/feed_message/MESSAGE in src.viewing_channel.messages)
@@ -304,7 +304,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 					dat+="<FONT COLOR='red'><B>ATTENTION: </B></FONT>This channel has been deemed as threatening to the welfare of the station, and marked with a Nanotrasen D-Notice.<BR>"
 					dat+="No further feed story additions are allowed while the D-Notice is in effect.</FONT><BR><BR>"
 				else
-					if( !viewing_channel.messages.len )
+					if( isemptylist(src.viewing_channel.messages) )
 						dat+="<I>No feed messages found in channel...</I><BR>"
 					else
 						for(var/datum/feed_message/MESSAGE in src.viewing_channel.messages)
@@ -363,8 +363,8 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
 
 
-		human_user << browse(dat, "window=newscaster_main;size=400x600")
-		onclose(human_user, "newscaster_main")
+		human_or_robot_user << browse(dat, "window=newscaster_main;size=400x600")
+		onclose(human_or_robot_user, "newscaster_main")
 
 	/*if(src.isbroken) //debugging shit
 		return
@@ -377,7 +377,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 /obj/machinery/newscaster/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))
+	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		usr.machine = src
 		if(href_list["set_channel_name"])
 			src.channel_name = strip_html(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", ""))
@@ -444,6 +444,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //list that will contain r
 						FC.messages += newMsg                      // To avoid further confusion, this one for adds the message to all existing newscasters' channel_list's channels.
 						break                                      // Another for to go through newscasters is not needed. Due to the nature of submit_new_CHANNEL, every reference
 				src.screen=4                                       // to a channel in ANY newscaster is the same. Editing one will edit them all.
+
 				for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
 					NEWSCASTER.newsAlert(src.channel_name)
 
@@ -685,7 +686,7 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 			if(0) //Cover
 				dat+="<DIV ALIGN='center'><B><FONT SIZE=6>The Griffon</FONT></B></div>"
 				dat+="<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen© Space Facilities</FONT></div><HR>"
-				if(!news_content.len)
+				if(isemptylist(src.news_content))
 					if(src.important_message)
 						dat+="Contents:<BR><ul><B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [src.pages+2]\]</FONT><BR></ul>"
 					else
@@ -712,7 +713,7 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 				if(C.censored)
 					dat+="This channel was deemed dangerous to the general welfare of the station and therefore marked with a <B><FONT COLOR='red'>D-Notice</B></FONT>. Its contents were not transferred to the newspaper at the time of printing."
 				else
-					if(!C.messages.len)
+					if(isemptylist(C.messages))
 						dat+="No Feed stories stem from this channel..."
 					else
 						dat+="<ul>"
@@ -747,7 +748,7 @@ obj/item/weapon/newspaper/attack_self(mob/user as mob)
 obj/item/weapon/newspaper/Topic(href, href_list)
 	var/mob/living/U = usr
 	..()
-	if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ) )
+	if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ))
 		U.machine = src
 		if(href_list["next_page"])
 			if(curr_page==src.pages+1)
@@ -796,21 +797,26 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W as obj, mob/user as mob)
 ////////////////////////////////////helper procs
 
 
-/obj/machinery/newscaster/proc/scan_user(mob/living/carbon/human/human_user as mob)
-	if(human_user.wear_id)                                      //Newscaster scans you
-		if(istype(human_user.wear_id, /obj/item/device/pda) )	//autorecognition, woo!
-			var/obj/item/device/pda/P = human_user.wear_id
-			if(P.id)
-				src.scanned_user = "[P.id.registered_name] ([P.id.assignment])"
+/obj/machinery/newscaster/proc/scan_user(mob/living/user as mob)
+	if(istype(user,/mob/living/carbon/human))                       //User is a human
+		var/mob/living/carbon/human/human_user = user
+		if(human_user.wear_id)                                      //Newscaster scans you
+			if(istype(human_user.wear_id, /obj/item/device/pda) )	//autorecognition, woo!
+				var/obj/item/device/pda/P = human_user.wear_id
+				if(P.id)
+					src.scanned_user = "[P.id.registered_name] ([P.id.assignment])"
+				else
+					src.scanned_user = "Unknown"
+			else if(istype(human_user.wear_id, /obj/item/weapon/card/id) )
+				var/obj/item/weapon/card/id/ID = human_user.wear_id
+				src.scanned_user ="[ID.registered_name] ([ID.assignment])"
 			else
-				src.scanned_user = "Unknown"
-		else if(istype(human_user.wear_id, /obj/item/weapon/card/id) )
-			var/obj/item/weapon/card/id/ID = human_user.wear_id
-			src.scanned_user ="[ID.registered_name] ([ID.assignment])"
+				src.scanned_user ="Unknown"
 		else
 			src.scanned_user ="Unknown"
 	else
-		src.scanned_user ="Unknown"
+		var/mob/living/silicon/ai_user = user
+		src.scanned_user = "[ai_user.name] ([ai_user.job])"
 
 
 /obj/machinery/newscaster/proc/print_paper()
