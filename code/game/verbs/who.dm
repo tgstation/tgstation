@@ -1,3 +1,29 @@
+proc/get_all_clients()
+	var/list/client/clients = list()
+
+	for (var/mob/M in world)
+		if (!M.client)
+			continue
+
+		clients += M.client
+
+	return clients
+
+proc/get_all_admin_clients()
+	var/list/client/clients = list()
+
+	for (var/mob/M in world)
+		if (!M.client)
+			continue
+
+		if (!M.client.holder)
+			continue
+
+		clients += M.client
+
+	return clients
+
+
 /mob/verb/who()
 	set name = "Who"
 	set category = "OOC"

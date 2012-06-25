@@ -370,5 +370,12 @@ var/list/liftable_structures = list(\
 #define MUTE_DEADCHAT 5
 #define MUTE_ALL 6
 
+//Number of identical messages required to get the spam-prevention automute thing to trigger warnings and automutes
 #define SPAM_TRIGGER_WARNING 5
 #define SPAM_TRIGGER_AUTOMUTE 10
+
+//Some constants for DB_Ban
+#define BANTYPE_PERMA		1
+#define BANTYPE_TEMP		2
+#define BANTYPE_JOB_PERMA	3
+#define BANTYPE_JOB_TEMP	4
