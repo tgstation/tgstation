@@ -66,7 +66,7 @@
 		else
 			if(inserted_battery)
 				dat += "<b>[inserted_battery.name]</b> inserted, charge level: [inserted_battery.stored_charge]/[inserted_battery.capacity] ([(inserted_battery.stored_charge/inserted_battery.capacity)*100]%)<BR>"
-				dat += "<b>Energy signature ID:</b>[inserted_battery.battery_effect.artifact_id]<BR>"
+				dat += "<b>Energy signature ID:</b>[inserted_battery.battery_effect.artifact_id == "" ? "???" : "[inserted_battery.battery_effect.artifact_id]"]<BR>"
 				dat += "<A href='?src=\ref[src];ejectbattery=1'>Eject battery</a><BR>"
 				dat += "<A href='?src=\ref[src];drainbattery=1'>Drain battery of all charge</a><BR>"
 				dat += "<A href='?src=\ref[src];harvest=1'>Begin harvesting</a><BR>"
@@ -94,7 +94,7 @@
 
 		var/mundane = 0
 		for(var/obj/O in get_turf(owned_pad))
-			if(!istype(O, /obj/machinery/artifact))
+			if(!istype(O, /obj/machinery/artifact) && !istype(O, /obj/machinery/analyser_pad))
 				mundane++
 				break
 		for(var/mob/O in get_turf(owned_pad))
@@ -102,16 +102,7 @@
 				mundane++
 				break
 
-		if(articount > 1 || mundane)
-			var/message = "<b>[src]</b> states, \"Cannot harvest. Error isolating energy signature.\""
-			src.visible_message(message, message)
-		else if(!articount)
-			var/message = "<b>[src]</b> states, \"Cannot harvest. No noteworthy energy signature isolated.\""
-			src.visible_message(message, message)
-		else if (cur_artifact.being_used)
-			var/message = "<b>[src]</b> states, \"Cannot harvest. Too much interferance from energy scan.\""
-			src.visible_message(message, message)
-		else
+		if(articount == 1 && !mundane)
 			cur_artifact = analysed
 			//check to see if the battery is compatible
 			if(inserted_battery)
@@ -130,6 +121,15 @@
 			else if(cur_artifact)
 				var/message = "<b>[src]</b> states, \"Cannot harvest. No battery inserted.\""
 				src.visible_message(message, message)
+		else if(articount > 1 || mundane)
+			var/message = "<b>[src]</b> states, \"Cannot harvest. Error isolating energy signature.\""
+			src.visible_message(message, message)
+		else if(!articount)
+			var/message = "<b>[src]</b> states, \"Cannot harvest. No noteworthy energy signature isolated.\""
+			src.visible_message(message, message)
+		else if (cur_artifact.being_used)
+			var/message = "<b>[src]</b> states, \"Cannot harvest. Too much interferance from energy scan.\""
+			src.visible_message(message, message)
 
 	if (href_list["stopharvest"])
 		if(harvesting)

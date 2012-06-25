@@ -5,7 +5,8 @@
 	name = "alien artifact"
 	desc = "A large alien device."
 	icon = 'anomaly.dmi'
-	icon_state = "ano0"
+	icon_state = "ano00"
+	var/icon_num = 0
 	anchored = 0
 	density = 1
 	var/origin = null          // Used in the randomisation/research of the artifact.
@@ -26,11 +27,12 @@
 
 	src.origin = pick("ancient","martian","wizard","eldritch","precursor")
 	switch(src.origin)
-		if("ancient") src.icon_state = pick("ano2")
-		if("martian") src.icon_state = pick("ano4")
-		if("wizard") src.icon_state = pick("ano0","ano1")
-		if("eldritch") src.icon_state = pick("ano3")
-		if("precursor") src.icon_state = pick("ano5")
+		if("ancient") icon_num = pick(2)//src.icon_state = pick("ano2")
+		if("martian") icon_num = pick(4)//src.icon_state = pick("ano4")
+		if("wizard") icon_num = pick(0,1)//src.icon_state = pick("ano0","ano1")
+		if("eldritch") icon_num = pick(3)//src.icon_state = pick("ano3")
+		if("precursor") icon_num = pick(5)//src.icon_state = pick("ano5")
+	icon_state = "ano[icon_num]0"
 
 	// Low-ish random chance to not look like it's origin
 	if(prob(20)) src.icon_state = pick("ano0","ano1","ano2","ano3","ano4","ano5")
@@ -186,18 +188,28 @@
 /obj/machinery/artifact/proc/Artifact_Activate()
 	src.activated = !src.activated
 	var/display_msg = ""
-	switch(rand(1))
-		if(0)
-			display_msg = "momentarily glows brightly!"
-		if(1)
-			display_msg = "distorts slightly for a moment!"
-		if(2)
-			display_msg = "makes a slightly clicking noise!"
-		if(3)
-			display_msg = "flickers slightly!"
-		if(3)
-			display_msg = "vibrates!"
+	if(activated)
+		switch(rand(4))
+			if(0)
+				display_msg = "momentarily glows brightly!"
+			if(1)
+				display_msg = "distorts slightly for a moment!"
+			if(2)
+				display_msg = "makes a slightly clicking noise!"
+			if(3)
+				display_msg = "flickers slightly!"
+			if(4)
+				display_msg = "vibrates!"
+	else
+		switch(rand(2))
+			if(0)
+				display_msg = "grows dull!"
+			if(1)
+				display_msg = "fades in intensity!"
+			if(2)
+				display_msg = "suddenly becomes very quiet!"
 
+	icon_state = "ano[icon_num][activated]"
 	for(var/mob/O in viewers(src, null))
 		O.show_message(text("<b>[]</b> [display_msg]", src), 1)
 

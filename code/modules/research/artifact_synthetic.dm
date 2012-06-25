@@ -38,15 +38,17 @@
 /obj/item/weapon/anodevice/proc/interact(var/mob/user)
 	user.machine = src
 	var/dat = "<b>Anomalous Materials Energy Utiliser</b><br>"
-	if(cooldown)
+	if(activated)
+		dat += "Device active, stand by.<BR>"
+	else if(cooldown)
 		dat += "Cooldown in progress, please wait.<BR>"
 	else
 		if(!inserted_battery)
 			dat += "Please insert battery<BR>"
 		else
-			dat += "[inserted_battery] inserted, anomaly ID: [inserted_battery.battery_effect.artifact_id]<BR>"
+			dat += "[inserted_battery] inserted, anomaly ID: [inserted_battery.battery_effect.artifact_id == "" ? "???" : "[inserted_battery.battery_effect.artifact_id]"]<BR>"
 			dat += "<b>Total Power:</b> [inserted_battery.stored_charge]/[inserted_battery.capacity]<BR><BR>"
-			dat += "<b>Timed activation:</b> <A href='?src=\ref[src];changetime=-100'>--</a> <A href='?src=\ref[src];changetime=-10'>-</a> [time >= 1000 ? "[time/10]" : time >= 100 ? " [time/10]" : "  [time/10]" ] <A href='?src=\ref[src];changetime=10'>+</a> <A href='?src=\ref[src];changetime=100'>++</a><BR>"
+			dat += "<b>Timed activation:</b> <A href='?src=\ref[src];neg_changetime_max=-100'>--</a> <A href='?src=\ref[src];neg_changetime=-10'>-</a> [time >= 1000 ? "[time/10]" : time >= 100 ? " [time/10]" : "  [time/10]" ] <A href='?src=\ref[src];changetime=10'>+</a> <A href='?src=\ref[src];changetime_max=100'>++</a><BR>"
 			if(cooldown && !activated)
 				dat += "<font color=red>Cooldown in progress.</font><BR>"
 			else if(activated)
@@ -86,31 +88,52 @@
 
 /obj/item/weapon/anodevice/proc/pulse()
 	if(activated)
-		time -= 10
-		cooldown += 10
-		if(time <= 0)
+		if(time <= 0 || !inserted_battery)
 			time = 0
 			activated = 0
 			var/turf/T = get_turf(src)
 			T.visible_message("\icon[src]\blue The utiliser device buzzes.", "\icon[src]\blue You hear something buzz.")
-			updateDialog()
 		else
 			inserted_battery.battery_effect.DoEffect(src)
+		time -= 10
+		inserted_battery.stored_charge -= 10 + rand(-1,1)
+		cooldown += 10
 	else if(cooldown > 0)
 		cooldown -= 10
 		if(cooldown <= 0)
 			cooldown = 0
 			var/turf/T = get_turf(src)
 			T.visible_message("\icon[src]\blue The utiliser device chimes.", "\icon[src]\blue You hear something chime.")
-			updateDialog()
 
 	spawn(10)
 		pulse()
 
 /obj/item/weapon/anodevice/Topic(href, href_list)
+
+	if(href_list["neg_changetime_max"])
+		time += -100
+		if(time > inserted_battery.capacity)
+			time = inserted_battery.capacity
+		else if (time < 0)
+			time = 0
+	if(href_list["neg_changetime"])
+		time += -10
+		if(time > inserted_battery.capacity)
+			time = inserted_battery.capacity
+		else if (time < 0)
+			time = 0
 	if(href_list["changetime"])
-		var/mod = href_list["changetime"]
-		time += num2text(mod)
+		time += 10
+		if(time > inserted_battery.capacity)
+			time = inserted_battery.capacity
+		else if (time < 0)
+			time = 0
+	if(href_list["changetime_max"])
+		time += 100
+		if(time > inserted_battery.capacity)
+			time = inserted_battery.capacity
+		else if (time < 0)
+			time = 0
 
 	if(href_list["stoptimer"])
 		activated = 0
@@ -126,5 +149,5 @@
 	if(href_list["close"])
 		usr << browse(null, "window=anodevice")
 		usr.machine = null
-
-	updateDialog()
+	else if(usr)
+		src.interact(usr)
