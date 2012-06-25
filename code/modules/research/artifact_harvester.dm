@@ -36,8 +36,12 @@
 	interact(user)
 
 /obj/machinery/artifact_harvester/process()
+	if(stat & (NOPOWER|BROKEN))
+		return
+	use_power(350)
 
 	if(harvesting)
+		use_power(250)
 		inserted_battery.stored_charge += 10
 		if(inserted_battery.stored_charge >= inserted_battery.capacity)
 			inserted_battery.stored_charge = inserted_battery.capacity
@@ -49,6 +53,8 @@
 	return
 
 /obj/machinery/artifact_harvester/proc/interact(var/mob/user as mob)
+	if(stat & (NOPOWER|BROKEN))
+		return
 	user.machine = src
 	var/dat = "<B>Artifact Power Harvester</B><BR>"
 	dat += "<HR><BR>"
@@ -88,20 +94,19 @@
 
 		var/mundane = 0
 		for(var/obj/O in get_turf(owned_pad))
-			mundane++
-			break
+			if(!istype(O, /obj/machinery/artifact))
+				mundane++
+				break
 		for(var/mob/O in get_turf(owned_pad))
-			mundane++
-			break
+			if(!istype(O, /obj/machinery/artifact))
+				mundane++
+				break
 
-		if(articount > 1)
-			var/message = "<b>[src]</b> states, \"Cannot harvest. Too many artifacts on pad.\""
-			src.visible_message(message, message)
-		else if(mundane)
-			var/message = "<b>[src]</b> states, \"No noteworthy energy signatures detected.\""
+		if(articount > 1 || mundane)
+			var/message = "<b>[src]</b> states, \"Cannot harvest. Error isolating energy signature.\""
 			src.visible_message(message, message)
 		else if(!articount)
-			var/message = "<b>[src]</b> states, \"Cannot harvest. No artifact found.\""
+			var/message = "<b>[src]</b> states, \"Cannot harvest. No noteworthy energy signature isolated.\""
 			src.visible_message(message, message)
 		else if (cur_artifact.being_used)
 			var/message = "<b>[src]</b> states, \"Cannot harvest. Too much interferance from energy scan.\""
@@ -140,6 +145,7 @@
 		src.inserted_battery = null
 
 	if (href_list["drainbattery"])
+		use_power(100)
 		src.inserted_battery.battery_effect.artifact_id = ""
 		src.inserted_battery.stored_charge = 0
 		var/message = "<b>[src]</b> states, \"Battery drained of all charge.\""
