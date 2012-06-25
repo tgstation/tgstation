@@ -223,7 +223,7 @@ proc/trigger_armed_response_team(var/force = 0)
 	//Backpack
 	equip_if_possible(new /obj/item/weapon/storage/backpack/security(src), slot_back)
 	equip_if_possible(new /obj/item/weapon/storage/box/engineer(src), slot_in_backpack)
-	equip_if_possible(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
+	equip_if_possible(new /obj/item/weapon/storage/firstaid/adv(src), slot_in_backpack)
 
 	var/obj/item/weapon/card/id/W = new(src)
 	W.name = "[real_name]'s ID Card (Emergency Response Team)"

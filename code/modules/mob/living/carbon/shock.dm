@@ -26,6 +26,8 @@
 				src.traumatic_shock += 60
 			else if(organ.status & BROKEN || organ.open)
 				src.traumatic_shock += 30
+				if(organ.status & SPLINTED)
+					src.traumatic_shock -= 20
 
 	if(src.traumatic_shock < 0)
 		src.traumatic_shock = 0

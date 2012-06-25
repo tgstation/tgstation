@@ -128,6 +128,12 @@
 		else
 			msg += "<span class='warning'>[t_He] [t_is] \icon[src.handcuffed] handcuffed!</span>\n"
 
+	//splints
+	for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
+		var/datum/organ/external/o = organs["[organ]"]
+		if(o.status & SPLINTED)
+			msg += "<span class='warning'>[t_He] [t_has] a splint on his [o.getDisplayName()]!</span>\n"
+
 	//belt
 	if (src.belt)
 		if (src.belt.blood_DNA)

@@ -200,7 +200,7 @@
 		swap_hand()
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
-	if (src.health > 0)
+	if (src.health > config.health_threshold_crit)
 		if(src == M && istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			var/list/damaged = H.get_damaged_organs(1,1)

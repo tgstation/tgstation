@@ -619,6 +619,16 @@
 	amount = 10
 	max_amount = 10
 
+/obj/item/stack/medical/splint
+	name = "medical splint"
+	singular_name = "medical splint"
+	icon_state = "splint"
+	amount = 5
+	max_amount = 5
+
+/obj/item/stack/medical/splint/single
+	amount = 1
+
 /obj/item/weapon/c_tube
 	name = "cardboard tube"
 	desc = "A tube made of cardboard."
