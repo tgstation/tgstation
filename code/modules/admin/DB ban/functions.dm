@@ -70,7 +70,6 @@ obj/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = -1
 			adminwho += ", [C]"
 
 	var/sql = "INSERT INTO erro_ban VALUES (null, Now(), '[serverip]', '[bantype_str]', '[reason]', '[job]', [(duration)?"[duration]":"0"], [(rounds)?"[rounds]":"0"], Now() + INTERVAL [(duration>0) ? duration : 0] MINUTE, '[ckey]', '[computerid]', '[ip]', '[a_ckey]', '[a_computerid]', '[a_ip]', '[who]', '[adminwho]', '', null, null, null, null, null)"
-	world << sql
 	var/DBQuery/query_insert = dbcon.NewQuery(sql)
 	query_insert.Execute()
 
