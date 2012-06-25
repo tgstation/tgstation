@@ -1388,6 +1388,8 @@
 	desc = "Retracts stuff."
 	icon = 'surgery.dmi'
 	icon_state = "retractor"
+	m_amt = 10000
+	g_amt = 5000
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
@@ -1397,6 +1399,8 @@
 	desc = "You think you have seen this before."
 	icon = 'surgery.dmi'
 	icon_state = "hemostat"
+	m_amt = 5000
+	g_amt = 2500
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
@@ -1406,6 +1410,8 @@
 	desc = "This stops bleeding."
 	icon = 'surgery.dmi'
 	icon_state = "cautery"
+	m_amt = 5000
+	g_amt = 2500
 	flags = FPRINT | TABLEPASS | CONDUCT
 	w_class = 1.0
 	origin_tech = "materials=1;biotech=1"
@@ -1416,6 +1422,8 @@
 	icon = 'surgery.dmi'
 	icon_state = "drill"
 	hitsound = 'circsawhit.ogg'
+	m_amt = 15000
+	g_amt = 10000
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 15.0
 	w_class = 1.0

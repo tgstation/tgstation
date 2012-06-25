@@ -3,6 +3,7 @@
 //NOTE: hidden packs only show up when the computer has been hacked.
 //ANOTER NOTE: Contraband is obtainable through modified supplycomp circuitboards.
 //BIG NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
+
 /datum/supply_packs/specialops
 	name = "Special Ops supplies"
 	contains = list("/obj/item/weapon/storage/emp_kit",
@@ -41,17 +42,6 @@
 	containertype = "/obj/structure/closet/crate/freezer"
 	containername = "Monkey crate"
 
-/*
-/datum/supply_packs/shotgun
-	name = "Shotgun crate"
-	contains = list("/obj/item/weapon/gun/projectile/shotgun",
-					"/obj/item/ammo_casing/shotgun/beanbag",
-					"/obj/item/ammo_casing/shotgun/beanbag")
-	cost = 25
-	containertype = "/obj/structure/closet/crate"
-	containername = "Shotgun crate"
-//APPARENTLY OP?
-*/
 
 /datum/supply_packs/beanbagammo
 	name = "Beanbag shells"
@@ -276,18 +266,6 @@
 	containername = "Virus crate"
 	access = access_cmo
 
-/datum/supply_packs/surgery
-	name = "Surgery crate"
-	contains = list("/obj/item/weapon/hemostat",
-					"/obj/item/weapon/surgicaldrill",
-					"/obj/item/weapon/retractor",
-					"/obj/item/weapon/cautery",
-					"/obj/item/weapon/circular_saw",
-					"/obj/item/weapon/scalpel")
-	cost = 20
-	containertype = "/obj/structure/closet/crate/medical"
-	containername = "Surgery crate"
-
 /datum/supply_packs/metal50
 	name = "50 Metal Sheets"
 	contains = list("/obj/item/stack/sheet/metal")
@@ -326,9 +304,9 @@
 					"/obj/item/clothing/suit/hazardvest",
 					"/obj/item/clothing/suit/hazardvest",
 					"/obj/item/clothing/suit/hazardvest",
-					"/obj/item/clothing/head/helmet/welding",
-					"/obj/item/clothing/head/helmet/welding",
-					"/obj/item/clothing/head/helmet/hardhat")
+					"/obj/item/clothing/head/welding",
+					"/obj/item/clothing/head/welding",
+					"/obj/item/clothing/head/hardhat")
 	cost = 10
 	containertype = "/obj/structure/closet/crate"
 	containername = "Mechanical maintenance crate"
@@ -599,7 +577,8 @@
 
 /datum/supply_packs/randomised/contraband
 	num_contained = 5
-	contains = list("/obj/item/weapon/contraband/poster", "/obj/item/weapon/cigpacket/dromedaryco")
+	contains = list("/obj/item/weapon/contraband/poster",
+					"/obj/item/weapon/cigpacket/dromedaryco")
 	name = "Contraband crate"
 	cost = 30
 	containertype = "/obj/structure/closet/crate"
