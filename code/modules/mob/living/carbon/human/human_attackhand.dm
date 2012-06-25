@@ -62,11 +62,10 @@
 
 	switch(M.a_intent)
 		if("help")
-			if(health > 0)
+			if(health > config.health_threshold_crit)
 				help_shake_act(M)
 				return 1
-			if(M.health < -75)	return 0
-
+//			if(M.health < -75)	return 0
 			if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
 				M << "\blue <B>Remove your mask!</B>"
 				return 0

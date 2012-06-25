@@ -739,6 +739,16 @@
 				if (!( target.handcuffed ))
 					del(src)
 					return
+			if("splints")
+				var/count = 0
+				for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
+					var/datum/organ/external/o = target.organs["[organ]"]
+					if(o.status & SPLINTED)
+						count = 1
+						break
+				if(count == 0)
+					del(src)
+					return
 			if("internal")
 				if ((!( (istype(target.wear_mask, /obj/item/clothing/mask) && istype(target.back, /obj/item/weapon/tank) && !( target.internal )) ) && !( target.internal )))
 					del(src)
@@ -764,6 +774,8 @@
 				message = text("\red <B>[] is trying to take off a [] from []'s back!</B>", source, target.back, target)
 			if("handcuff")
 				message = text("\red <B>[] is trying to unhandcuff []!</B>", source, target)
+			if("splints")
+				message = text("\red <B>[] is trying to remove []'s splints!</B>", source, target)
 			if("internal")
 				if (target.internal)
 					message = text("\red <B>[] is trying to remove []'s internals</B>", source, target)
@@ -875,6 +887,16 @@
 					source.drop_item()
 					target.handcuffed = item
 					item.loc = target
+		if("splints")
+			for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
+				var/datum/organ/external/o = target.organs["[organ]"]
+				if (o.status & SPLINTED)
+					var/obj/item/W = new /obj/item/stack/medical/splint/single()
+					o.status &= ~SPLINTED
+					if (W)
+						W.loc = target.loc
+						W.layer = initial(W.layer)
+						W.add_fingerprint(source)
 		if("internal")
 			if (target.internal)
 				target.internal.add_fingerprint(source)

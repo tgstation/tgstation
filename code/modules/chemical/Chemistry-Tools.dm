@@ -1319,12 +1319,12 @@
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/M as mob, mob/user as mob)
 	if(!reagents.total_volume)
-		user << "\red The hypospray is empty."
+		user << "\red \The [src] is empty."
 		return
 	if (!( istype(M, /mob) ))
 		return
 	if (reagents.total_volume)
-		user << "\blue You inject [M] with the hypospray."
+		user << "\blue You inject [M] with \the [src]."
 		M << "\red You feel a tiny prick!"
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [src.name] by [user.name] ([user.ckey])</font>")
@@ -1337,11 +1337,11 @@
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
-			user << "\blue [trans] units injected.  [reagents.total_volume] units remaining in the hypospray."
+			user << "\blue [trans] units injected. [reagents.total_volume] units remaining in \the [src]."
 	return
 
 /obj/item/weapon/reagent_containers/borghypo
-	name = "Cyborg Hypospray"
+	name = "cyborg hypospray"
 	desc = "An advanced chemical synthesizer and injection system, designed for heavy-duty medical equipment."
 	icon = 'syringe.dmi'
 	item_state = "hypo"
@@ -1439,6 +1439,41 @@
 	desc = "The DeForest Medical Corporation hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients."
 	amount_per_transfer_from_this = 50
 	volume = 50
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector
+	name = "autoinjector"
+	desc = "A rapid and safe way to administer small amounts of drugs by untrained or trained personnel."
+	icon_state = "autoinjector"
+	item_state = "autoinjector"
+	amount_per_transfer_from_this = 5
+	volume = 5
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/New()
+	..()
+	reagents.remove_reagent("tricordrazine", 30)
+	reagents.add_reagent("inaprovaline", 5)
+	update_icon()
+	return
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/attack(mob/M as mob, mob/user as mob)
+	..()
+	update_icon()
+	return
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/update_icon()
+	if(reagents.total_volume > 0)
+		icon_state = "[initial(icon_state)]1"
+	else
+		icon_state = "[initial(icon_state)]0"
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/examine()
+	..()
+	if(reagents && reagents.reagent_list.len)
+		for(var/datum/reagent/R in reagents.reagent_list)
+			usr << "\blue It currently has [R.volume] units of [R.name] stored."
+	else
+		usr << "\blue It is currently empty."
+
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Food.
@@ -1590,8 +1625,6 @@
 							if(M == user) user << "\red You finish eating [src]."
 							else user << "\red [M] finishes eating [src]."
 							del(src)
-							spawn(5)
-								user.update_clothing()
 
 				playsound(M.loc, eatsound, rand(10,50), 1)
 				return 1
@@ -1646,10 +1679,9 @@
 						bitecount++
 						On_Consume()
 						if(!reagents.total_volume)
+
 							if(M == user) user << "\red You finish eating [src]."
 							else user << "\red [M] finishes eating [src]."
-							spawn(2)
-								user.update_clothing()
 							del(src)
 				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
 				return 1

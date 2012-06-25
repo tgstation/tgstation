@@ -285,7 +285,10 @@
 	for(var/organ in list("l_leg","l_foot","r_leg","r_foot"))
 		var/datum/organ/external/o = organs["[organ]"]
 		if(o.status & BROKEN)
-			tally += 6
+			if(o.status & SPLINTED)
+				tally += 3
+			else
+				tally += 6
 
 	if(wear_suit)
 		tally += wear_suit.slowdown
@@ -848,7 +851,26 @@
 							var/turf/location = M.loc
 							if (istype(location, /turf/simulated))
 								location.add_blood(M)
-
+								if(ishuman(M))
+									var/mob/living/carbon/H = M
+									var/blood_volume = round(H:vessel.get_reagent_amount("blood"))
+									if(blood_volume > 0)
+										H:vessel.remove_reagent("blood",1)
+							if(prob(5))
+								M.adjustBruteLoss(1)
+								visible_message("\red \The [M]'s wounds open more from being dragged!")
+						if(M.pull_damage())
+							if(prob(25))
+								M.adjustBruteLoss(2)
+								visible_message("\red \The [M]'s wounds worsen terribly from being dragged!")
+								var/turf/location = M.loc
+								if (istype(location, /turf/simulated))
+									location.add_blood(M)
+									if(ishuman(M))
+										var/mob/living/carbon/H = M
+										var/blood_volume = round(H:vessel.get_reagent_amount("blood"))
+										if(blood_volume > 0)
+											H:vessel.remove_reagent("blood",1)
 
 						step(pulling, get_dir(pulling.loc, T))
 						M.pulling = t
@@ -1076,6 +1098,15 @@
 			clothing_overlays += image("icon" = 'mob.dmi', "icon_state" = "[h1]1", "layer" = CUFFED_LAYER)
 		else
 			clothing_overlays += image("icon" = 'mob.dmi', "icon_state" = "[h1]2", "layer" = CUFFED_LAYER)
+
+	// Splints
+	for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
+		var/datum/organ/external/o = organs["[organ]"]
+		if (o.status & SPLINTED)
+			if (!lying)
+				clothing_overlays += image("icon" = 'mob.dmi', "icon_state" = "[o]_splint", "layer" = CUFFED_LAYER)
+			else
+				clothing_overlays += image("icon" = 'mob.dmi', "icon_state" = "[o]_splint2", "layer" = CUFFED_LAYER)
 
 	if (r_hand)
 		clothing_overlays += image("icon" = 'items_righthand.dmi', "icon_state" = r_hand.item_state ? r_hand.item_state : r_hand.icon_state, "layer" = INHANDS_LAYER)
@@ -1592,6 +1623,16 @@
 					//SN src = null
 					del(src)
 					return
+			if("splints")
+				var/count = 0
+				for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
+					var/datum/organ/external/o = target.organs["[organ]"]
+					if(o.status & SPLINTED)
+						count = 1
+						break
+				if(count == 0)
+					del(src)
+					return
 			if("id")
 				if ((!( target.wear_id ) || !( target.w_uniform )))
 					//SN src = null
@@ -1699,6 +1740,8 @@
 				message = text("\red <B>[] is trying to take off \a [] from []'s back!</B>", source, target.back, target)
 			if("handcuff")
 				message = text("\red <B>[] is trying to unhandcuff []!</B>", source, target)
+			if("splints")
+				message = text("\red <B>[] is trying to remove []'s splints!</B>", source, target)
 			if("uniform")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their uniform removed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) uniform</font>")
@@ -2184,14 +2227,24 @@ It can still be worn/put on as normal.
 					source.drop_item()
 					target.handcuffed = item
 					item.loc = target
+		if("splints")
+			for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
+				var/datum/organ/external/o = target.organs["[organ]"]
+				if (o.status & SPLINTED)
+					var/obj/item/W = new /obj/item/stack/medical/splint/single()
+					o.status &= ~SPLINTED
+					if (W)
+						W.loc = target.loc
+						W.layer = initial(W.layer)
+						W.add_fingerprint(source)
 		if("CPR")
 			if (target.cpr_time + 30 >= world.time)
 				//SN src = null
 				del(src)
 				return
-			if ((target.health >= -99.0 && target.stat == 1))
+			if ((target.health <= config.health_threshold_crit && target.stat == 1))
 				target.cpr_time = world.time
-				var/suff = min(target.getOxyLoss(), 7)
+				var/suff = min(target.getOxyLoss(), 2)
 				target.adjustOxyLoss(-suff)
 				target.losebreath = 0
 				target.updatehealth()
@@ -2314,6 +2367,7 @@ It can still be worn/put on as normal.
 	<BR><B>Suit Storage:</B> <A href='?src=\ref[src];item=s_store'>[(s_store ? s_store : "Nothing")]</A> [(istype(wear_mask, /obj/item/clothing/mask) && istype(s_store, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal;loc=store'>Set Internal</A>", src) : ""]
 	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
+	<BR><A href='?src=\ref[src];item=splints'>Remove Splints</A>
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
 	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>

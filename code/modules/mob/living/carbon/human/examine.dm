@@ -36,22 +36,22 @@
 	var/msg = "<span class='info'>*---------*\nThis is "
 	if(src.icon)
 		msg += "\icon[src.icon] " //fucking BYOND: this should stop dreamseeker crashing if we -somehow- examine somebody before their icon is generated
-	else
-		switch(get_visible_gender())
-			if(MALE)
-				t_He = "He"
-				t_his = "his"
-				t_him = "him"
-			if(FEMALE)
-				t_He = "She"
-				t_his = "her"
-				t_him = "her"
-			if(NEUTER)
-				t_He = "They"
-				t_his = "their"
-				t_him = "them"
-				t_has = "have"
-				t_is = "are"
+
+	switch(get_visible_gender())
+		if(MALE)
+			t_He = "He"
+			t_his = "his"
+			t_him = "him"
+		if(FEMALE)
+			t_He = "She"
+			t_his = "her"
+			t_him = "her"
+		if(NEUTER)
+			t_He = "They"
+			t_his = "their"
+			t_him = "them"
+			t_has = "have"
+			t_is = "are"
 
 	if(mutantrace == "lizard")
 		examine_text = "one of those lizard-like Soghuns"
@@ -127,6 +127,12 @@
 			msg += "<span class='warning'>[t_He] [t_is] \icon[src.handcuffed] restrained with cable!</span>\n"
 		else
 			msg += "<span class='warning'>[t_He] [t_is] \icon[src.handcuffed] handcuffed!</span>\n"
+
+	//splints
+	for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
+		var/datum/organ/external/o = organs["[organ]"]
+		if(o.status & SPLINTED)
+			msg += "<span class='warning'>[t_He] [t_has] a splint on his [o.getDisplayName()]!</span>\n"
 
 	//belt
 	if (src.belt)

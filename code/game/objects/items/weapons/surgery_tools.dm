@@ -1712,6 +1712,7 @@ CIRCULAR SAW
 
 						if(IsFinalStage(temp.stage))
 							temp.status &= ~BROKEN
+							temp.status &= ~SPLINTED
 							temp.stage = 0
 							temp.perma_injury = 0
 							temp.brute_dam = temp.min_broken_damage -1
@@ -1819,6 +1820,7 @@ CIRCULAR SAW
 			e.open = 0
 			e.status &= ~BROKEN
 			e.status &= ~DESTROYED
+			e.status &= ~SPLINTED
 			e.perma_injury = 0
 			e.update_icon()
 		H.update_body()

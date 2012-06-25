@@ -380,7 +380,7 @@
 /obj/item/weapon/storage/firstaid/adv
 	name = "advanced first-aid kit"
 	desc = "Contains advanced medical treatments."
-	icon_state = "o2"
+	icon_state = "advfirstaid"
 	item_state = "firstaid-advanced"
 
 /obj/item/weapon/storage/flashbang_kit
