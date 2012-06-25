@@ -60,7 +60,7 @@
 		..()
 		return
 
-	if(user.a_intent != "help")
+	if(user.a_intent == "hurt")
 		if(!..()) return
 		H.apply_effect(5, WEAKEN, 0)
 		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")
@@ -75,9 +75,14 @@
 		H.apply_effect(10, STUTTER, 0)
 		user.lastattacked = M
 		H.lastattacker = user
-		charges--
+		if(isrobot(src.loc))
+			var/mob/living/silicon/robot/R = src.loc
+			if(R && R.cell)
+				R.cell.use(50)
+		else
+			charges--
 		H.visible_message("<span class='danger'>[M] has been stunned with the [src] by [user]!</span>")
-		playsound(src.loc, "sparks", 75, 1, -1)
+		playsound(src.loc, 'Egloves.ogg', 50, 1, -1)
 		if(charges < 1)
 			status = 0
 			update_icon()
