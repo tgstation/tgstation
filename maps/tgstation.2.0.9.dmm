@@ -4326,7 +4326,7 @@
 "bFj" = (/obj/machinery/atmospherics/pipe/simple{color = "red"; icon_state = "intact-r"; level = 2},/turf/simulated/wall/r_wall,/area/atmos)
 "bFk" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/obj/machinery/atmospherics/pipe/simple{color = "red"; icon_state = "intact-r-f"; level = 1; name = "pipe"},/turf/simulated/floor/plating,/area/atmos)
 "bFl" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/atmos)
-"bFm" = (/obj/structure/grille,/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/atmos)
+"bFm" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/atmos)
 "bFn" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = "Streight"},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
 "bFo" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
 "bFp" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/simulated/wall,/area/medical/medbay)

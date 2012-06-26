@@ -19,6 +19,7 @@
 															"medical HUD" = 20,
 															"universal translator" = 35,
 															//"projection array" = 15
+															"remote signaller" = 5,
 															)
 
 /mob/living/silicon/pai/verb/paiInterface()
@@ -63,6 +64,8 @@
 				left_part = src.softwareDoor()
 			if("camerajack")
 				left_part = src.softwareCamera()
+			if("signaller")
+				left_part = src.softwareSignal()
 
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
@@ -141,6 +144,30 @@
 		if("radio")
 			src.card.radio.attack_self(src)
 
+		if("signaller")
+
+			if(href_list["send"])
+
+				sradio.send_signal("ACTIVATE")
+				for(var/mob/O in hearers(1, src.loc))
+					O.show_message(text("\icon[] *beep* *beep*", src), 3, "*beep* *beep*", 2)
+
+			if(href_list["freq"])
+
+				var/new_frequency = (sradio.frequency + text2num(href_list["freq"]))
+				if(new_frequency < 1200 || new_frequency > 1600)
+					new_frequency = sanitize_frequency(new_frequency)
+				sradio.set_frequency(new_frequency)
+
+			if(href_list["code"])
+
+				sradio.code += text2num(href_list["code"])
+				sradio.code = round(sradio.code)
+				sradio.code = min(100, sradio.code)
+				sradio.code = max(1, sradio.code)
+
+
+
 		if("directive")
 			if(href_list["getdna"])
 				var/mob/living/M = src.loc
@@ -171,13 +198,14 @@
 						return
 
 					var/AnsweringMS = 0
-					for (var/obj/machinery/message_server/MS in world)
-						MS.send_pda_message("[P.owner]","[src]","[t]")
+					for (var/obj/machinery/message_server/MS in message_servers)
 						if(MS.active)
-							AnsweringMS++
+							MS.send_pda_message("[P.owner]","[src]","[t]")
+							AnsweringMS = 1
+							break
 
 					if(!AnsweringMS)
-						return
+						return alert("ERROR: No response from server!")
 
 					tnote += "<i><b>&rarr; To [P.owner]:</b></i><br>[t]<br>"
 					P.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>[src]</a>:</b></i><br>[t]<br>"
@@ -202,13 +230,13 @@
 					var/mob/living/silicon/pai/P = target
 
 					var/AnsweringMS = 0
-					for (var/obj/machinery/message_server/MS in world)
+					for (var/obj/machinery/message_server/MS in message_servers)
 						MS.send_pda_message("[P]","[src]","[t]")
-						if(MS.active)
-							AnsweringMS++
+						AnsweringMS = 1
+						break
 
 					if(!AnsweringMS)
-						return
+						return alert("ERROR: No response from server!")
 
 
 					tnote += "<i><b>&rarr; To [P]:</b></i><br>[t]<br>"
@@ -277,6 +305,7 @@
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
 
+// MENUS
 
 /mob/living/silicon/pai/proc/softwareMenu()			// Populate the right menu
 	var/dat = ""
@@ -300,6 +329,8 @@
 			dat += "<a href='byond://?src=\ref[src];software=securityrecord;sub=0'>Security Records</a> <br>"
 		if(s == "camera")
 			dat += "<a href='byond://?src=\ref[src];software=[s]'>Camera Jack</a> <br>"
+		if(s == "remote signaller")
+			dat += "<a href='byond://?src=\ref[src];software=signaller;sub=0'>Remote Signaller</a> <br>"
 	dat += "<br>"
 
 	// Advanced
@@ -385,6 +416,28 @@
 		P << "[M] does not seem like \he is going to provide a DNA sample willingly."
 
 // -=-=-=-= Software =-=-=-=-=- //
+
+//Remote Signaller
+/mob/living/silicon/pai/proc/softwareSignal()
+	var/dat = ""
+	dat += "<h3>Remote Signaller</h3><br><br>"
+	dat += {"<B>Frequency/Code</B> for signaler:<BR>
+	Frequency:
+	<A href='byond://?src=\ref[src];software=signaller;freq=-10;'>-</A>
+	<A href='byond://?src=\ref[src];software=signaller;freq=-2'>-</A>
+	[format_frequency(src.sradio.frequency)]
+	<A href='byond://?src=\ref[src];software=signaller;freq=2'>+</A>
+	<A href='byond://?src=\ref[src];software=signaller;freq=10'>+</A><BR>
+
+	Code:
+	<A href='byond://?src=\ref[src];software=signaller;code=-5'>-</A>
+	<A href='byond://?src=\ref[src];software=signaller;code=-1'>-</A>
+	[src.sradio.code]
+	<A href='byond://?src=\ref[src];software=signaller;code=1'>+</A>
+	<A href='byond://?src=\ref[src];software=signaller;code=5'>+</A><BR>
+
+	<A href='byond://?src=\ref[src];software=signaller;send=1'>Send Signal</A><BR>"}
+	return dat
 
 // Crew Manifest
 /mob/living/silicon/pai/proc/softwareManifest()

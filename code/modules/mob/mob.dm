@@ -636,7 +636,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if (client && client.holder)
 		stat(null, "([x], [y], [z])")
 		stat(null, "CPU: [world.cpu]")
-		stat(null, "Controller: [controllernum]")
 		if (master_controller)
 			stat(null, "Current Iteration: [controller_iteration]")
 			stat(null, "Time between ticks: [last_tick_duration]")

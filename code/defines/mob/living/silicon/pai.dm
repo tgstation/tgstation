@@ -49,3 +49,5 @@
 
 	var/obj/machinery/door/hackdoor		// The airlock being hacked
 	var/hackprogress = 0				// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
+
+	var/obj/item/radio/integrated/signal/sradio // AI's signaller

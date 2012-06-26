@@ -84,12 +84,11 @@
 /obj/structure/cable/Del()		// called when a cable is deleted
 
 	if(!defer_powernet_rebuild)	// set if network will be rebuilt manually
-
-		if(netnum && powernets && powernets.len >= netnum)		// make sure cable & powernet data is valid
+		if(netnum && powernets && (powernets.len >= netnum) && (netnum >= 1) )		// make sure cable & powernet data is valid
 			var/datum/powernet/PN = powernets[netnum]
 			PN.cut_cable(src)									// updated the powernets
-	else
-		if(Debug) diary << "Defered cable deletion at [x],[y]: #[netnum]"
+//	else
+//		if(Debug) diary << "Defered cable deletion at [x],[y]: #[netnum]"
 	..()													// then go ahead and delete the cable
 
 /obj/structure/cable/hide(var/i)
@@ -141,10 +140,6 @@
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red [user] cuts the cable.", 1)
 
-		if(defer_powernet_rebuild)
-			if(netnum && powernets && powernets.len >= netnum)
-				var/datum/powernet/PN = powernets[netnum]
-				PN.cut_cable(src)
 		del(src)
 
 		return	// not needed, but for clarity
