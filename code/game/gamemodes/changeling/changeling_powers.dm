@@ -118,6 +118,7 @@
 
 	usr << "\blue This creature is compatible. We must hold still..."
 	usr.changeling.isabsorbing = 1
+	feedback_add_details("changeling_powers","A1")
 	if (!do_mob(usr, T, 150))
 		usr << "\red Our absorption of [T] has been interrupted!"
 		usr.changeling.isabsorbing = 0
@@ -125,6 +126,7 @@
 
 	usr << "\blue We extend a proboscis."
 	usr.visible_message(text("\red <B>[usr] extends a proboscis!</B>"))
+	feedback_add_details("changeling_powers","A2")
 
 	if (!do_mob(usr, T, 150))
 		usr << "\red Our absorption of [T] has been interrupted!"
@@ -135,6 +137,7 @@
 	usr.visible_message(text("\red <B>[usr] stabs [T] with the proboscis!</B>"))
 	T << "\red <B>You feel a sharp stabbing pain!</B>"
 	T.take_overall_damage(40)
+	feedback_add_details("changeling_powers","A3")
 
 	if (!do_mob(usr, T, 150))
 		usr << "\red Our absorption of [T] has been interrupted!"
@@ -144,6 +147,7 @@
 	usr << "\blue We have absorbed [T]!"
 	usr.visible_message(text("\red <B>[usr] sucks the fluids from [T]!</B>"))
 	T << "\red <B>You have been absorbed by the changeling!</B>"
+	feedback_add_details("changeling_powers","A4")
 
 	usr.changeling.absorbed_dna[T.real_name] = T.dna
 	if(usr.nutrition < 400) usr.nutrition = min((usr.nutrition + T.nutrition), 400)
@@ -218,6 +222,7 @@
 	usr.real_name = S
 	updateappearance(usr, usr.dna.uni_identity)
 	domutcheck(usr, null)
+	feedback_add_details("changeling_powers","TR")
 
 	usr.verbs -= /client/proc/changeling_transform
 
@@ -276,6 +281,7 @@
 	O.dna = usr.dna
 	usr.dna = null
 	O.changeling = usr.changeling
+	feedback_add_details("changeling_powers","LF")
 
 	for(var/obj/item/W in usr)
 		usr.drop_from_inventory(W)
@@ -376,6 +382,7 @@
 	usr.dna = null
 	O.changeling = usr.changeling
 	O.real_name = S
+	feedback_add_details("changeling_powers","LFT")
 
 	for(var/obj/T in usr)
 		del(T)
@@ -431,6 +438,7 @@
 	var/mob/living/carbon/human/O = new /mob/living/carbon/human( src )//Removed Emissary shit -Sieve{R}
 	del(animation)
 
+	feedback_add_details("changeling_powers","GF")
 	O.real_name = usr.real_name
 	O.name = usr.name
 	O.dna = usr.dna
@@ -533,6 +541,7 @@ Tarjan shit, not recoding this -Sieve{R}*/
 	usr.canmove = 0
 	usr.changeling.changeling_fakedeath = 1
 	usr.remove_changeling_powers()
+	feedback_add_details("changeling_powers","FD")
 
 	usr.emote("gasp")
 
@@ -586,6 +595,7 @@ Tarjan shit, not recoding this -Sieve{R}*/
 
 	usr << "\blue Your throat adjusts to launch the sting."
 	usr.changeling.sting_range = 2
+	feedback_add_details("changeling_powers","RS")
 
 	usr.verbs -= /client/proc/changeling_boost_range
 
@@ -621,6 +631,7 @@ Tarjan shit, not recoding this -Sieve{R}*/
 		usr.changeling.sting_range = 1
 
 		usr << "\blue We stealthily sting [T]."
+		feedback_add_details("changeling_powers","SS")
 
 		if(!T.changeling)
 		//	T << "You feel a small prick and a burning sensation in your throat."
@@ -661,6 +672,7 @@ Tarjan shit, not recoding this -Sieve{R}*/
 		usr.changeling.sting_range = 1
 
 		usr << "\blue We stealthily sting [T]."
+		feedback_add_details("changeling_powers","BS")
 
 		var/obj/effect/overlay/B = new /obj/effect/overlay( T.loc )
 		B.icon_state = "blspell"
@@ -716,6 +728,7 @@ Tarjan shit, not recoding this -Sieve{R}*/
 		usr.changeling.sting_range = 1
 
 		usr << "\blue We stealthily sting [T]."
+		feedback_add_details("changeling_powers","DS")
 
 		if(!T.changeling)
 			T.sdisabilities |= 4
@@ -757,12 +770,11 @@ Tarjan shit, not recoding this -Sieve{R}*/
 		usr.changeling.sting_range = 1
 
 		usr << "\blue We stealthily sting [T]."
+		feedback_add_details("changeling_powers","PS")
 
 		if(!T.changeling)
-			T << "You feel a small prick and a burning sensation."
-
-			if (T.reagents)
-				T.reagents.add_reagent("zombiepowder", 20)
+			T << "You feel a small prick and your muscles stiffening."
+			T.Weaken(10)
 		else
 			T << "You feel a small prick."
 
@@ -809,6 +821,7 @@ Tarjan shit, not recoding this -Sieve{R}*/
 		usr.changeling.sting_range = 1
 
 		usr << "\blue We stealthily sting [T]."
+		feedback_add_details("changeling_powers","TS")
 
 		if(!T.changeling)
 			T.visible_message(text("\red <B>[T] transforms!</B>"))
@@ -852,6 +865,7 @@ Tarjan shit, not recoding this -Sieve{R}*/
 		usr.changeling.sting_range = 1
 
 		usr << "\blue We stealthily sting [T]."
+		feedback_add_details("changeling_powers","US")
 
 		if(!T.changeling)
 			T << "You feel a small prick and a burning sensation."
@@ -891,6 +905,8 @@ Tarjan shit, not recoding this -Sieve{R}*/
 		C.SetWeakened(0)
 		C.lying = 0
 		C.canmove = 1
+
+	feedback_add_details("changeling_powers","UNS")
 
 	usr.verbs -= /client/proc/changeling_unstun
 
@@ -932,6 +948,7 @@ Tarjan shit, not recoding this -Sieve{R}*/
 				C.changeling.chem_charges -= 1/4
 				sleep(10)
 
+	feedback_add_details("changeling_powers","CAM")
 
 	usr.verbs -= /client/proc/changeling_digitalcamo
 
@@ -967,6 +984,7 @@ Tarjan shit, not recoding this -Sieve{R}*/
 		usr.changeling.sting_range = 1
 
 		usr << "\blue We stealthily sting [T]."
+		feedback_add_details("changeling_powers","DTHS")
 
 		if(!T.changeling)
 			T << "You feel a small prick and your chest becomes tight."
@@ -1006,6 +1024,7 @@ Tarjan shit, not recoding this -Sieve{R}*/
 	usr.changeling.chem_charges -= 30
 
 	var/mob/living/carbon/human/C = usr
+	feedback_add_details("changeling_powers","RR")
 
 	spawn(0)
 		for(var/i = 0, i<10,i++)
@@ -1053,6 +1072,7 @@ Tarjan shit, not recoding this -Sieve{R}*/
 		usr.changeling.sting_range = 1
 
 		usr << "\blue We stealthily sting [T]."
+		feedback_add_details("changeling_powers","HS")
 
 		if(!T.changeling)
 		//	T << "You feel a small prick." // No warning.
