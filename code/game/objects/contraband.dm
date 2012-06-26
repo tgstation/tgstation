@@ -153,7 +153,7 @@ obj/effect/decal/poster/New(var/serial)
 			desc += " Here to protect and serve... your donuts! A generously proportioned man, he teaches you the value of hiding your snacks."
 		if(20)
 			name += " - Tajaran Today, Special #222"
-			desc += " A controversial front page pinup from NTFashion, banned on numerous stations for it's unreasonably cute depictions."
+			desc += " A controversial front page pinup from NTFashion, banned on numerous stations for its unreasonably cute depictions."
 		if(21)
 			name += " - Respect a Soghun"
 			desc += " This poster depicts a well dressed looking Soghun receiving a prestigious award. It appears to espouse greater co-operation and harmony between the two races."
