@@ -87,25 +87,26 @@ MEDICAL
 			user << "\red \The [M] is wounded badly, this item cannot help [t_him]!"
 			return
 
+		if (user)
+			if (M != user)
+				user.visible_message("\red \The [H]'s [affecting.display_name] has been bandaged with \a [src] by \the [user].",\
+					"\red You bandage \the [H]'s [affecting.display_name] with \the [src].",\
+					"You hear gauze being ripped.")
+			else
+				var/t_his = "its"
+				if (user.gender == MALE)
+					t_his = "his"
+				else if (user.gender == FEMALE)
+					t_his = "her"
+				user.visible_message("\red \The [user] bandages [t_his] [affecting.display_name] with \a [src].",\
+					"\red You bandage your [affecting.display_name] with \the [src].",\
+					"You hear gauze being ripped.")
+		use(1)
+
 		if (affecting.heal_damage(src.heal_brute, src.heal_burn))
 			H.UpdateDamageIcon()
-			if (user)
-				if (M != user)
-					user.visible_message("\red \The [H]'s [affecting.display_name] has been bandaged with \a [src] by \the [user].",\
-						"\red You bandage \the [H]'s [affecting.display_name] with \the [src].",\
-						"You hear gauze being ripped.")
-				else
-					var/t_his = "its"
-					if (user.gender == MALE)
-						t_his = "his"
-					else if (user.gender == FEMALE)
-						t_his = "her"
-					user.visible_message("\red \The [user] bandages [t_his] [affecting.display_name] with \a [src].",\
-						"\red You bandage your [affecting.display_name] with \the [src].",\
-						"You hear gauze being ripped.")
-			use(1)
 		else
-			user << "Nothing to patch up!"
+			H.UpdateDamage()
 
 		M.updatehealth()
 	else
