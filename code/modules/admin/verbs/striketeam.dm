@@ -161,7 +161,7 @@ var/global/sent_strike_team = 0
 	equip_if_possible(new /obj/item/weapon/storage/box(src), slot_in_backpack)
 
 	equip_if_possible(new /obj/item/ammo_magazine/a357(src), slot_in_backpack)
-	equip_if_possible(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
+	equip_if_possible(new /obj/item/weapon/storage/firstaid/adv(src), slot_in_backpack)
 	equip_if_possible(new /obj/item/weapon/storage/flashbang_kit(src), slot_in_backpack)
 	equip_if_possible(new /obj/item/device/flashlight(src), slot_in_backpack)
 	if (!leader_selected)

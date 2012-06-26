@@ -315,6 +315,8 @@ var/list/wound_progressions = list(
 		if(override)
 			status |= DESTROYED
 		if(status & DESTROYED)
+			if(status & SPLINTED)
+				status &= ~SPLINTED
 			if(implant)
 				for(var/implants in implant)
 					del(implants)
