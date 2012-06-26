@@ -19,7 +19,7 @@
 		icon_state = "Shield_Gen"
 		anchored = 0
 		density = 1
-		req_access = list(access_security)
+		req_access = list(ACCESS_SECURITY)
 		var/active = 0
 		var/power = 0
 		var/state = 0
@@ -427,7 +427,7 @@
 	if(A && B)
 		needs_power = 1
 	spawn(1)
-		src.sd_SetLuminosity(3)
+		src.ul_SetLuminosity(0,0,4)
 
 /*	for(var/mob/M as mob in src.loc) //does not work for some reason.
 	 	if(istype(M,/mob/living/carbon))

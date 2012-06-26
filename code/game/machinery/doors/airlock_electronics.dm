@@ -8,7 +8,7 @@
 	m_amt = 50
 	g_amt = 50
 
-	req_access = list(access_engine)
+	req_access = list(ACCESS_ENGINE)
 
 	var/list/conf_access = null
 	var/last_configurator = null

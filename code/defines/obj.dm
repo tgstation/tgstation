@@ -384,6 +384,33 @@
 	opacity = 0
 	density = 0
 
+/obj/effect/sign/science//These 3 have multiple types, just var-edit the icon_state to whatever one you want on the map
+	desc = "A warning sign which reads 'SCIENCE!'"
+	name = "SCIENCE!"
+	icon = 'decals.dmi'
+	icon_state = "science1"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
+/obj/effect/sign/chemistry
+	desc = "A warning sign which reads 'CHEMISTY'"
+	name = "CHEMISTRY"
+	icon = 'decals.dmi'
+	icon_state = "chemistry1"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
+/obj/effect/sign/botany
+	desc = "A warning sign which reads 'HYDROPONICS'"
+	name = "HYDROPONICS"
+	icon = 'decals.dmi'
+	icon_state = "hydro1"
+	anchored = 1.0
+	opacity = 0
+	density = 0
+
 /obj/hud
 	name = "hud"
 	unacidable = 1
@@ -692,6 +719,18 @@
 /obj/structure/cable/pink
 	color="pink"
 	icon = 'power_cond_pink.dmi'
+
+/obj/structure/cable/orange
+	color="orange"
+	icon = 'power_cond_orange.dmi'
+
+/obj/structure/cable/cyan
+	color="cyan"
+	icon = 'power_cond_cyan.dmi'
+
+/obj/structure/cable/white
+	color="white"
+	icon = 'power_cond_white.dmi'
 
 /obj/effect/manifest
 	name = "manifest"
@@ -1278,6 +1317,46 @@
 	density = 1
 	opacity = 1
 	anchored = 1
+
+/obj/structure/falsewall/gold
+	name = "gold wall"
+	desc = "A wall with gold plating. Swag"
+	icon_state = ""
+
+/obj/structure/falsewall/silver
+	name = "silver wall"
+	desc = "A wall with silver plating. Shiny"
+	icon_state = ""
+
+/obj/structure/falsewall/diamond
+	name = "diamond wall"
+	desc = "A wall with diamond plating. You monster"
+	icon_state = ""
+
+/obj/structure/falsewall/uranium
+	name = "uranium wall"
+	desc = "A wall with uranium plating. This is probably a bad idea"
+	icon_state = ""
+
+/obj/structure/falsewall/plasma
+	name = "plasma wall"
+	desc = "A wall with plasma plating. This is definately a bad idea"
+	icon_state = ""
+
+/obj/structure/falsewall/bananium
+	name = "bananium wall"
+	desc = "A wall with bananium plating. Honk"
+	icon_state = ""
+
+/obj/structure/falsewall/sand
+	name = "sandstone wall"
+	desc = "A wall with sandstone plating."
+	icon_state = ""
+
+/*/obj/structure/falsewall/wood
+	name = "wooden wall"
+	desc = "A wall with classy wooden paneling."
+	icon_state = ""*/
 
 /obj/structure/falserwall
 	name = "r wall"

@@ -90,15 +90,20 @@
 		if("mask")
 			if (wear_mask)
 				return
-			if (!( istype(W, /obj/item/clothing/mask) ))
+			if (!( W.slot_flags & SLOT_MASK ))
 				return
 			u_equip(W)
 			wear_mask = W
 			W.equipped(src, text)
 		if("back")
-			if ((back || !( istype(W, /obj/item/weapon) )))
+			if (back)
 				return
-			if (!( W.flags & 1 ))
+			if (!istype(W, /obj/item))
+				return
+			if (!( W.slot_flags & SLOT_BACK ))
+				return
+			if(istype(W,/obj/item/weapon/twohanded) && W:wielded)
+				usr << "<span class='warning'>Unwield the [initial(W.name)] first!</span>"
 				return
 			u_equip(W)
 			back = W
@@ -673,10 +678,20 @@
 	return health
 
 /mob/proc/UpdateLuminosity()
-	if(total_luminosity == last_luminosity)	return 0//nothing to do here
-	last_luminosity = total_luminosity
-	sd_SetLuminosity(min(total_luminosity,7))//Current hardcode max at 7, should likely be a const somewhere else
+	ul_SetLuminosity(LuminosityRed, LuminosityGreen, LuminosityBlue)//Current hardcode max at 7, should likely be a const somewhere else
 	return 1
+
+/mob/proc/pull_damage()
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.health - H.halloss <= config.health_threshold_crit)
+			for(var/name in H.organs)
+				var/datum/organ/external/e = H.organs[name]
+				if((H.lying) && ((e.status & BROKEN && !e.status & SPLINTED) || e.status & BLEEDING) && (H.getBruteLoss() + H.getFireLoss() >= 100))
+					return 1
+					break
+		return 0
+
 
 /mob/MouseDrop(mob/M as mob)
 	..()
@@ -698,12 +713,12 @@
 	if(ishuman(usr))
 		if(usr.hand) // if he's using his left hand.
 			var/datum/organ/external/temp = usr:get_organ("l_hand")
-			if(temp.destroyed)
+			if(temp.status & DESTROYED)
 				usr << "\blue You look at your stump."
 				return
 		else
 			var/datum/organ/external/temp = usr:get_organ("r_hand")
-			if(temp.destroyed)
+			if(temp.status & DESTROYED)
 				usr << "\blue You look at your stump."
 				return
 
@@ -715,6 +730,11 @@
 				M.LAssailant = null
 			else
 				M.LAssailant = usr
+			if(M.pull_damage())
+				usr << "\red <B>Pulling \the [M] in their current condition would probably be a bad idea.</B>"
+	if(istype(src, /obj/machinery/artifact))
+		var/obj/machinery/artifact/A = src
+		A.attack_hand(usr)
 	return
 
 /atom/verb/examine()
@@ -1080,7 +1100,7 @@ note dizziness decrements automatically in the mob's Life() proc.
  * Sends resource files to client cache
  */
 /mob/proc/getFiles()
-	if(!isemptylist(args))
+	if(args && args.len)
 		for(var/file in args)
 			src << browse_rsc(file)
 		return 1
@@ -1109,11 +1129,4 @@ note dizziness decrements automatically in the mob's Life() proc.
 	..()
 
 /mob/proc/get_visible_gender()
-	//Returns the proper words to use based on the mob's visible gender.  Used in text creation.
-	return list("It" = "It", "its" = "its", "it" = "it", "has" = "has", "is" = "is", "itself" = "itself")
-
-/mob/proc/get_gender_form(var/form)
-	if(!istext(form))
-		return
-	var/list/proper_forms = get_visible_gender()
-	return proper_forms[form]
+	return gender

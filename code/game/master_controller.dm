@@ -22,15 +22,29 @@ datum/controller/game_controller
 	var/global/ticker_ready = 0
 
 	proc
+		keepalive()
 		setup()
 		setup_objects()
 		process()
+		set_debug_state(txt)
+
+	keepalive()
+		spawn while(1)
+			sleep(10)
+
+			// Notify the other process that we're still there
+			socket_talk.send_keepalive()
 
 	setup()
 		if(master_controller && (master_controller != src))
 			del(src)
 			return
 			//There can be only one master.
+
+		socket_talk = new /datum/socket_talk()
+
+		// notify the other process that we started up
+		socket_talk.send_raw("type=startup")
 
 		if(!air_master)
 			air_master = new /datum/controller/air_system()
@@ -47,7 +61,7 @@ datum/controller/game_controller
 
 		world.tick_lag = config.Ticklag
 
-		createRandomZlevel()
+//		createRandomZlevel()
 
 		//	Sleep for about 5 seconds to allow background initialization procs to finish
 		sleep(50)
@@ -58,8 +72,6 @@ datum/controller/game_controller
 		setup_objects()
 
 		setupgenetics()
-
-		setupdooralarms()
 
 //		for(var/i = 0, i < max_secret_rooms, i++)
 //			make_mining_asteroid_secret()
@@ -73,6 +85,8 @@ datum/controller/game_controller
 			ticker = new /datum/controller/gameticker()
 
 		setupfactions()
+
+		spawn keepalive()
 
 		spawn
 			ticker.pregame()
@@ -106,6 +120,12 @@ datum/controller/game_controller
 
 		world << "\red \b Initializations complete."
 
+	set_debug_state(txt)
+		// This should describe what is currently being done by the master controller
+		// Useful for crashlogs and similar, because that way it's easy to tell what
+		// was going on when the server crashed.
+		socket_talk.send_raw("type=ticker_state&message=[txt]")
+		return
 
 	process()
 
@@ -136,76 +156,86 @@ datum/controller/game_controller
 		powernets_ready = 0
 		ticker_ready = 0
 
+		// Notify the other process that we're still there
+		socket_talk.send_keepalive()
 
+		// moved this here from air_master.start()
+		// this might make atmos slower
+		// upsides:
+		//  1. atmos won't process if the game is generally lagged out(no deadlocks)
+		//  2. if the server frequently crashes during atmos processing we will know
+		if(!kill_air)
+			src.set_debug_state("Air Master")
 
+			air_master.current_cycle++
+			var/success = air_master.tick() //Changed so that a runtime does not crash the ticker.
+			if(!success) //Runtimed.
+				world << "<font color='red'><b>ERROR IN ATMOS TICKER.  Killing air simulation!</font></b>"
+				kill_air = 1
+		air_master_ready = 1
 
-
-		spawn(0)
-//			air_master.process()
-			air_master_ready = 1
-		spawn(0)
-			tension_master.process()
-			tension_master_ready = 1
+		src.set_debug_state("Tension Master")
+		tension_master.process()
+		tension_master_ready = 1
 
 		sleep(1)
 
-		spawn(0)
-			sun.calc_position()
-			sun_ready = 1
+		src.set_debug_state("Sun Position Calculations")
+		sun.calc_position()
+		sun_ready = 1
 
 		sleep(-1)
 
-		spawn(0)
-			for(var/mob/M in world)
-				M.Life()
-			mobs_ready = 1
-
-
+		src.set_debug_state("Mob Life Processing")
+		for(var/mob/M in world)
+			M.Life()
+		mobs_ready = 1
 
 		sleep(-1)
 
-		spawn(0)
-			for(var/datum/disease/D in active_diseases)
-				D.process()
-			diseases_ready = 1
+		src.set_debug_state("Old Disease Processing")
+		for(var/datum/disease/D in active_diseases)
+			D.process()
+		diseases_ready = 1
 
-		spawn(0)
-			for(var/obj/machinery/machine in machines)
-				if(machine)
-					machine.process()
-					if(machine && machine.use_power)
-						machine.auto_use_power()
+		src.set_debug_state("Machinery Processing")
+		for(var/obj/machinery/machine in machines)
+			if(machine)
+				machine.process()
+				if(machine && machine.use_power)
+					machine.auto_use_power()
 
-			machines_ready = 1
+		machines_ready = 1
 
 		sleep(-1)
 		sleep(1)
 
-		spawn(0)
-			for(var/obj/object in processing_objects)
-				object.process()
-			objects_ready = 1
+		src.set_debug_state("Object Processing")
+		for(var/obj/object in processing_objects)
+			object.process()
+		objects_ready = 1
 
-		spawn(0)
-			for(var/datum/pipe_network/network in pipe_networks)
-				network.process()
-			networks_ready = 1
+		src.set_debug_state("Pipe Network Processing")
+		for(var/datum/pipe_network/network in pipe_networks)
+			network.process()
+		networks_ready = 1
 
-		spawn(0)
-			for(var/datum/powernet/P in powernets)
-				P.reset()
-			powernets_ready = 1
+		src.set_debug_state("Powernet Processing")
+		for(var/datum/powernet/P in powernets)
+			P.reset()
+		powernets_ready = 1
 
 		sleep(-1)
 
-		spawn(0)
-			ticker.process()
-			ticker_ready = 1
+		src.set_debug_state("Mode Processing")
+		ticker.process()
+		ticker_ready = 1
 
+		src.set_debug_state("Idle")
 		sleep(world.timeofday+10-start_time)// Don't touch this. DMTG
 
-		while(!air_master_ready || !tension_master_ready || !sun_ready || !mobs_ready || !diseases_ready || !machines_ready || !objects_ready || !networks_ready || !powernets_ready || !ticker_ready)
-			sleep(1)
+		//while(!air_master_ready || !tension_master_ready || !sun_ready || !mobs_ready || !diseases_ready || !machines_ready || !objects_ready || !networks_ready || !powernets_ready || !ticker_ready)
+		//	sleep(1)
 
 		spawn
 			process()

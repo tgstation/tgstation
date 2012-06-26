@@ -17,7 +17,7 @@
 	icon_opened = "miningsecopen"
 	icon_broken = "miningsecbroken"
 	icon_off = "miningsecoff"
-	req_access = list(access_mining)
+	req_access = list(ACCESS_MINING)
 
 /obj/structure/closet/secure_closet/miner/New()
 	..()
@@ -87,7 +87,7 @@ proc/move_mining_shuttle()
 	name = "Mining Shuttle Console"
 	icon = 'computer.dmi'
 	icon_state = "shuttle"
-	req_access = list(access_mining)
+	req_access = list(ACCESS_MINING)
 	circuit = "/obj/item/weapon/circuitboard/mining_shuttle"
 	var/hacked = 0
 	var/location = 0 //0 = station, 1 = mining base
@@ -186,6 +186,12 @@ proc/move_mining_shuttle()
 	m_amt = 3750 //one sheet, but where can you make them?
 	var/digspeed = 40 //moving the delay to an item var so R&D can make improved picks. --NEO
 	origin_tech = "materials=1;engineering=1"
+
+	excavationtool
+		name = "Excavation Tool"
+		icon_state = "excavation"
+		digspeed = 50
+		desc = "A carefully calibrated, archaeological excavation tool."
 
 	hammer
 		name = "Mining Sledge Hammer"

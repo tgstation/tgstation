@@ -88,7 +88,7 @@
 	var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
-	sql_report_death(src)
+//	sql_report_death(src)
 
 	//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 	ticker.mode.check_win()

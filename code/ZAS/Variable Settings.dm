@@ -39,7 +39,7 @@ vs_control
 			else
 				vw = vars[ch]
 				if("[ch]_DESC" in vars) vw_desc = vars["[ch]_DESC"]
-				if("[ch]_NAME" in plc.vars) vw_name = vars["[ch]_NAME"]
+				if("[ch]_NAME" in vars) vw_name = vars["[ch]_NAME"]
 			dat += "<b>[vw_name] = [vw]</b> <A href='?src=\ref[src];changevar=[ch]'>\[Change\]</A><br>"
 			dat += "<i>[vw_desc]</i><br><br>"
 		user << browse(dat,"window=settings")
@@ -49,9 +49,12 @@ vs_control
 	proc/ChangeSetting(mob/user,ch)
 		var/vw
 		var/how = "Text"
+		var/display_description = ch
 		if(ch in plc.settings)
 			vw = plc.vars[ch]
-			if("[ch]_METHOD" in vars)
+			if("[ch]_NAME" in plc.vars)
+				display_description = plc.vars["[ch]_NAME"]
+			if("[ch]_METHOD" in plc.vars)
 				how = plc.vars["[ch]_METHOD"]
 			else
 				if(isnum(vw))
@@ -60,6 +63,8 @@ vs_control
 					how = "Text"
 		else
 			vw = vars[ch]
+			if("[ch]_NAME" in vars)
+				display_description = vars["[ch]_NAME"]
 			if("[ch]_METHOD" in vars)
 				how = vars["[ch]_METHOD"]
 			else
@@ -91,7 +96,7 @@ vs_control
 			vars[ch] = vw
 		if(how == "Toggle")
 			newvar = (newvar?"ON":"OFF")
-		world << "\blue <b>[key_name(user)] changed the setting [ch] to [newvar].</b>"
+		world << "\blue <b>[key_name(user)] changed the setting [display_description] to [newvar].</b>"
 		//user << "[which] has been changed to [newvar]."
 		if(ch in plc.settings)
 			ChangeSettingsDialog(user,plc.settings)
@@ -114,7 +119,11 @@ vs_control
 			plc.Randomize(V)
 		////world << "Plasma randomized."
 
-	proc/SetDefault(def)
+	proc/SetDefault(var/mob/user)
+		var/list/setting_choices = list("Original", "Hazard - Low", "Hazard - High", "Oh Shit!")
+		var/def = input(user, "Which of these presets should be used?") as null|anything in setting_choices
+		if(!def)
+			return
 		switch(def)
 			if("Original")
 				plc.CLOTH_CONTAMINATION = 0 //If this is on, plasma does damage by getting into cloth.

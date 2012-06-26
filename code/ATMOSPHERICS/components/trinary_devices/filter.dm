@@ -5,7 +5,7 @@ obj/machinery/atmospherics/trinary/filter
 
 	name = "Gas filter"
 
-	req_access = list(access_atmospherics)
+	req_access = list(ACCESS_ATMOSPHERICS)
 
 	var/locked = 1 // If it's not locked, no need for an access check.
 

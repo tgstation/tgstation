@@ -9,7 +9,7 @@
 
 /obj/item/clothing/suit/bio_suit
 	name = "bio suit"
-	desc = "A suit that protects against biological contamination."
+	desc = "A suit that protects against biological contaminants."
 	icon_state = "bio"
 	item_state = "bio_suit"
 	w_class = 4//bulky item
@@ -67,7 +67,7 @@
 
 
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit
-	name = "Plague doctor suit"
+	name = "plague doctor suit"
 	desc = "It protected doctors from the Black Death, back then. You bet your arse it's gonna help you against viruses."
 	icon_state = "plaguedoctor"
 	item_state = "bio_suit"

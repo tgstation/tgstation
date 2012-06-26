@@ -53,7 +53,7 @@
 	var/internal_damage = 0 //contains bitflags
 
 	var/list/operation_req_access = list()//required access level for mecha operation
-	var/list/internals_req_access = list(access_engine,access_robotics)//required access level to open cell compartment
+	var/list/internals_req_access = list(ACCESS_ENGINE,ACCESS_ROBOTICS)//required access level to open cell compartment
 
 	var/datum/global_iterator/pr_int_temp_processor //normalizes internal air mixture temperature
 	var/datum/global_iterator/pr_inertial_movement //controls intertial movement in spesss
@@ -350,7 +350,7 @@
 ///////////////////////////////////
 
 /obj/mecha/proc/check_for_internal_damage(var/list/possible_int_damage,var/ignore_threshold=null)
-	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
+	if(!islist(possible_int_damage) || !possible_int_damage.len) return
 	if(prob(20))
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
 			for(var/T in possible_int_damage)
@@ -942,9 +942,9 @@
 		return
 	lights = !lights
 	if(lights)
-		src.sd_SetLuminosity(src.luminosity + src.lights_power)
+		ul_SetLuminosity(LuminosityRed + lights_power, LuminosityGreen + lights_power, LuminosityBlue)
 	else
-		src.sd_SetLuminosity(src.luminosity - src.lights_power)
+		ul_SetLuminosity(LuminosityRed - lights_power, LuminosityGreen - lights_power, LuminosityBlue)
 	src.log_message("Toggled lights.")
 	return
 

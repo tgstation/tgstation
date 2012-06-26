@@ -196,7 +196,7 @@
 	var/split = 5
 	var/round = 0.01
 	var/access = list()
-	access = access_crate_cash
+	access = ACCESS_CRATE_CASH
 
 /obj/item/weapon/spacecash
 	New() // Just in case
@@ -219,43 +219,43 @@
 
 /obj/item/weapon/money/c10
 	icon_state = "spacecash10"
-	access = access_crate_cash
+	access = ACCESS_CRATE_CASH
 	desc = "A pile of 10 credits."
 	worth = 10
 
 /obj/item/weapon/money/c20
 	icon_state = "spacecash20"
-	access = access_crate_cash
+	access = ACCESS_CRATE_CASH
 	desc = "A pile of 20 credits."
 	worth = 20
 
 /obj/item/weapon/money/c50
 	icon_state = "spacecash50"
-	access = access_crate_cash
+	access = ACCESS_CRATE_CASH
 	desc = "A pile of 50 credits."
 	worth = 50
 
 /obj/item/weapon/money/c100
 	icon_state = "spacecash100"
-	access = access_crate_cash
+	access = ACCESS_CRATE_CASH
 	desc = "A pile of 100 credits."
 	worth = 100
 
 /obj/item/weapon/money/c200
 	icon_state = "spacecash200"
-	access = access_crate_cash
+	access = ACCESS_CRATE_CASH
 	desc = "A pile of 200 credits."
 	worth = 200
 
 /obj/item/weapon/money/c500
 	icon_state = "spacecash500"
-	access = access_crate_cash
+	access = ACCESS_CRATE_CASH
 	desc = "A pile of 500 credits."
 	worth = 500
 
 /obj/item/weapon/money/c1000
 	icon_state = "spacecash1000"
-	access = access_crate_cash
+	access = ACCESS_CRATE_CASH
 	desc = "A pile of 1000 credits."
 	worth = 1000
 
@@ -354,21 +354,6 @@
 	icon_state = "adv_spectrometer"
 	details = 1
 	origin_tech = "magnets=4;biotech=2"
-
-/obj/item/weapon/melee/baton
-	name = "stun baton"
-	desc = "The police baton of the future."
-	icon_state = "stunbaton"
-	item_state = "baton"
-	flags = FPRINT | TABLEPASS
-	slot_flags = SLOT_BELT
-	force = 15
-	throwforce = 7
-	w_class = 3
-	var/charges = 10.0
-	var/maximum_charges = 10.0
-	var/status = 0
-	origin_tech = "combat=2"
 
 /*/obj/item/weapon/melee/chainofcommand
 	name = "chain of command"
@@ -634,6 +619,16 @@
 	amount = 10
 	max_amount = 10
 
+/obj/item/stack/medical/splint
+	name = "medical splint"
+	singular_name = "medical splint"
+	icon_state = "splint"
+	amount = 5
+	max_amount = 5
+
+/obj/item/stack/medical/splint/single
+	amount = 1
+
 /obj/item/weapon/c_tube
 	name = "cardboard tube"
 	desc = "A tube made of cardboard."
@@ -721,7 +716,7 @@
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
 //	desc = "Shhhhh."
-	access = list(access_maint_tunnels)
+	access = list(ACCESS_MAINT_TUNNELS)
 	origin_tech = "syndicate=3"
 
 /obj/item/weapon/card/id/syndicate_command
@@ -729,7 +724,7 @@
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
-	access = list(access_syndicate)
+	access = list(ACCESS_SYNDICATE)
 
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"
@@ -808,6 +803,18 @@
 /obj/item/weapon/cable_coil/pink
 	color = "pink"
 	icon_state = "coil_pink"
+
+/obj/item/weapon/cable_coil/orange
+	color = "orange"
+	icon_state = "coil_orange"
+
+/obj/item/weapon/cable_coil/cyan
+	color = "cyan"
+	icon_state = "coil_cyan"
+
+/obj/item/weapon/cable_coil/white
+	color = "white"
+	icon_state = "coil_white"
 
 /obj/item/weapon/cable_coil/random/New()
 	color = pick("red","yellow","green","blue","pink")
@@ -987,14 +994,41 @@
 	m_amt = 500
 	origin_tech = "materials=1"
 	var/dispenser = 0
-
-/obj/item/weapon/handcuffs/cyborg
-	dispenser = 1
+	var/breakouttime = 1200 //Deciseconds = 120s = 2 minutes
 
 /obj/item/weapon/handcuffs/cable
 	name = "cable restraints"
 	desc = "Looks like some cables tied together. Could be used to tie something up."
 	icon_state = "cuff_red"
+	breakouttime = 300 //Deciseconds = 30s
+
+/obj/item/weapon/handcuffs/cable/red
+	icon_state = "cuff_red"
+
+/obj/item/weapon/handcuffs/cable/yellow
+	icon_state = "cuff_yellow"
+
+/obj/item/weapon/handcuffs/cable/blue
+	icon_state = "cuff_blue"
+
+/obj/item/weapon/handcuffs/cable/green
+	icon_state = "cuff_green"
+
+/obj/item/weapon/handcuffs/cable/pink
+	icon_state = "cuff_pink"
+
+/obj/item/weapon/handcuffs/cable/orange
+	icon_state = "cuff_orange"
+
+/obj/item/weapon/handcuffs/cable/cyan
+	icon_state = "cuff_cyan"
+
+/obj/item/weapon/handcuffs/cable/white
+	icon_state = "cuff_white"
+
+/obj/item/weapon/handcuffs/cyborg
+	dispenser = 1
+
 
 /obj/item/weapon/locator
 	name = "locator"
@@ -1371,11 +1405,19 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	maxcharge = 500
 	g_amt = 40
 
+/obj/item/weapon/cell/crap/empty/New()
+	..()
+	charge = 0
+
 /obj/item/weapon/cell/secborg
 	name = "\improper Security borg rechargable D battery"
 	origin_tech = "powerstorage=0"
 	maxcharge = 600	//600 max charge / 100 charge per shot = six shots
 	g_amt = 40
+
+/obj/item/weapon/cell/secborg/empty/New()
+	..()
+	charge = 0
 
 /obj/item/weapon/cell/high
 	name = "high-capacity power cell"
@@ -1383,6 +1425,10 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	icon_state = "hcell"
 	maxcharge = 10000
 	g_amt = 60
+
+/obj/item/weapon/cell/high/empty/New()
+	..()
+	charge = 0
 
 /obj/item/weapon/cell/super
 	name = "super-capacity power cell"
@@ -1392,6 +1438,10 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	g_amt = 70
 	construction_cost = list("metal"=750,"glass"=100)
 
+/obj/item/weapon/cell/super/empty/New()
+	..()
+	charge = 0
+
 /obj/item/weapon/cell/hyper
 	name = "hyper-capacity power cell"
 	origin_tech = "powerstorage=6"
@@ -1399,6 +1449,10 @@ eternal248: Found broken and buggy Z-levels 7-12, ended up leading to my discove
 	maxcharge = 30000
 	g_amt = 80
 	construction_cost = list("metal"=500,"glass"=150,"gold"=200,"silver"=200)
+
+/obj/item/weapon/cell/hyper/empty/New()
+	..()
+	charge = 0
 
 /obj/item/weapon/cell/infinite
 	name = "infinite-capacity power cell!"

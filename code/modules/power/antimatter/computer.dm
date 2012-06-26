@@ -1,18 +1,19 @@
 //This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+#define STATE_DEFAULT 1
+#define STATE_INJECTOR  2
+#define STATE_ENGINE 3
+
 
 /obj/machinery/computer/am_engine
 	name = "Antimatter Engine Console"
 	icon = 'stationobjs.dmi'
 	icon_state = "comm_computer"
-	req_access = list(access_engine)
+	req_access = list(ACCESS_ENGINE)
 	var/engine_id = 0
 	var/authenticated = 0
 	var/obj/machinery/power/am_engine/engine/connected_E = null
 	var/obj/machinery/power/am_engine/injector/connected_I = null
 	var/state = STATE_DEFAULT
-	var/const/STATE_DEFAULT = 1
-	var/const/STATE_INJECTOR = 2
-	var/const/STATE_ENGINE = 3
 
 /obj/machinery/computer/am_engine/New()
 	..()

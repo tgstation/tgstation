@@ -24,8 +24,8 @@
 
 	var/mob/living/carbon/human/H = M
 	var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
-	if(S.destroyed)
-		if(!S.attachable)
+	if(S.status & DESTROYED)
+		if(!(S.status & ATTACHABLE))
 			user << "\red The wound is not ready for a replacement!"
 			return 0
 		if(M != user)
@@ -51,15 +51,17 @@
 				user << "\red You mess up!"
 				S.take_damage(15)
 
-			S.broken = 0
-			S.attachable = 0
-			S.destroyed = 0
-			S.robot = 1
+			S.status &= ~BROKEN
+			S.status &= ~SPLINTED
+			S.status &= ~ATTACHABLE
+			S.status &= ~DESTROYED
+			S.status |= ROBOT
 			var/datum/organ/external/T = H.organs["[limbloc]"]
-			T.attachable = 0
-			T.destroyed = 0
-			T.broken = 0
-			T.robot = 1
+			T.status &= ~BROKEN
+			T.status &= ~SPLINTED
+			T.status &= ~ATTACHABLE
+			T.status &= ~DESTROYED
+			T.status |= ROBOT
 			M.update_body()
 			M.updatehealth()
 			M.UpdateDamageIcon()

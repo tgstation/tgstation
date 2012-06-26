@@ -1,7 +1,6 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:06
-
 /obj/machinery/r_n_d/server
 	name = "R&D Server"
+	icon = 'research.dmi'
 	icon_state = "server"
 	var/datum/research/files
 	var/health = 100
@@ -13,7 +12,7 @@
 	var/heat_gen = 100
 	var/heating_power = 40000
 	var/delay = 10
-	req_access = list(access_rd) //Only the R&D can change server settings.
+	req_access = list(ACCESS_RD) //Only the R&D can change server settings.
 
 	New()
 		..()

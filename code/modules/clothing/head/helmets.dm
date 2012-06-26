@@ -11,13 +11,13 @@
 
 /obj/item/clothing/head/helmet/warden
 	name = "warden's hat"
-	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
+	desc = "It's a special hat issued to the Warden of a securiy force. Protects the head from impacts."
 	icon_state = "wardencap"
 	flags_inv = 0
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"
-	desc = "They're often used by highly trained Swat Members."
+	desc = "They're often used by highly trained SWAT officers."
 	icon_state = "swat"
 	flags = FPRINT | TABLEPASS | SUITSPACE | HEADSPACE | HEADCOVERSEYES
 	item_state = "swat"
@@ -47,7 +47,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/helmet/that
-	name = "sturdy top-hat"
+	name = "sturdy top hat"
 	desc = "It's an amish looking armored top hat."
 	icon_state = "tophat"
 	item_state = "that"

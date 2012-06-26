@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/item/device/assembly/prox_sensor
 	name = "proximity sensor"
@@ -100,7 +100,6 @@
 				M.c_state(0)
 		if(holder)
 			holder.update_icon()
-
 		return
 
 
@@ -127,7 +126,7 @@
 
 	Topic(href, href_list)
 		..()
-		if(get_dist(src, usr) > 1)
+		if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 			usr << browse(null, "window=prox")
 			onclose(usr, "prox")
 			return

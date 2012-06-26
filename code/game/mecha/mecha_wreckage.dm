@@ -31,11 +31,12 @@
 
 
 /obj/effect/decal/mecha_wreckage/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W, /obj/item/weapon/weldingtool) && W:welding)
+	if(istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
 		if(salvage_num <= 0)
 			user << "You don't see anything that can be cut with [W]."
 			return
-		if (!isemptylist(welder_salvage) && W:remove_fuel(0,user))
+		if (welder_salvage && welder_salvage.len && WT.remove_fuel(0,user))
 			var/type = prob(70)?pick(welder_salvage):null
 			if(type)
 				var/N = new type(get_turf(user))
@@ -52,7 +53,7 @@
 		if(salvage_num <= 0)
 			user << "You don't see anything that can be cut with [W]."
 			return
-		else if(!isemptylist(wirecutters_salvage))
+		else if(wirecutters_salvage && wirecutters_salvage.len)
 			var/type = prob(70)?pick(wirecutters_salvage):null
 			if(type)
 				var/N = new type(get_turf(user))
@@ -61,7 +62,7 @@
 			else
 				user << "You failed to salvage anything valuable from [src]."
 	if(istype(W, /obj/item/weapon/crowbar))
-		if(!isemptylist(crowbar_salvage))
+		if(crowbar_salvage && crowbar_salvage.len)
 			var/obj/S = pick(crowbar_salvage)
 			if(S)
 				S.loc = get_turf(user)
@@ -88,12 +89,15 @@
 									/obj/item/mecha_parts/part/gygax_left_leg,
 									/obj/item/mecha_parts/part/gygax_right_leg)
 		for(var/i=0;i<2;i++)
-			if(!isemptylist(parts) && prob(40))
+			if(parts.len && prob(40))
 				var/part = pick(parts)
 				welder_salvage += part
 				parts -= part
 		return
 
+/obj/effect/decal/mecha_wreckage/gygax/dark
+	name = "Dark Gygax wreckage"
+	icon_state = "darkgygax-broken"
 
 /obj/effect/decal/mecha_wreckage/marauder
 	name = "Marauder wreckage"
@@ -120,7 +124,7 @@
 									/obj/item/mecha_parts/part/ripley_left_leg,
 									/obj/item/mecha_parts/part/ripley_right_leg)
 		for(var/i=0;i<2;i++)
-			if(!isemptylist(parts) && prob(40))
+			if(parts && parts.len && prob(40))
 				var/part = pick(parts)
 				welder_salvage += part
 				parts -= part
@@ -139,7 +143,7 @@
 									/obj/item/mecha_parts/part/ripley_right_leg,
 									/obj/item/clothing/suit/fire)
 		for(var/i=0;i<2;i++)
-			if(!isemptylist(parts) && prob(40))
+			if(parts && parts.len && prob(40))
 				var/part = pick(parts)
 				welder_salvage += part
 				parts -= part
@@ -164,7 +168,7 @@
 								/obj/item/mecha_parts/part/honker_left_leg,
 								/obj/item/mecha_parts/part/honker_right_leg)
 		for(var/i=0;i<2;i++)
-			if(!isemptylist(parts) && prob(40))
+			if(parts && parts.len && prob(40))
 				var/part = pick(parts)
 				welder_salvage += part
 				parts -= part
@@ -184,7 +188,7 @@
 									/obj/item/mecha_parts/part/durand_left_leg,
 									/obj/item/mecha_parts/part/durand_right_leg)
 		for(var/i=0;i<2;i++)
-			if(!isemptylist(parts) && prob(40))
+			if(parts && parts.len && prob(40))
 				var/part = pick(parts)
 				welder_salvage += part
 				parts -= part
@@ -209,7 +213,7 @@
 									/obj/item/mecha_parts/part/odysseus_left_leg,
 									/obj/item/mecha_parts/part/odysseus_right_leg)
 		for(var/i=0;i<2;i++)
-			if(!isemptylist(parts) && prob(40))
+			if(parts && parts.len && prob(40))
 				var/part = pick(parts)
 				welder_salvage += part
 				parts -= part

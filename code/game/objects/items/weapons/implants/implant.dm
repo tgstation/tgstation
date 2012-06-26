@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
-
 /obj/item/weapon/implant
 	name = "implant"
 	desc = "An implant. Not usually seen outside a body."
@@ -240,6 +238,44 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		H << "\blue You feel a surge of loyalty towards NanoTrasen."
 		return
 
+
+/obj/item/weapon/implant/adrenalin
+	name = "adrenalin"
+	desc = "Removes all stuns and knockdowns."
+	var/uses
+
+	get_data()
+		var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> Cybersun Industries Adrenalin Implant<BR>
+<b>Life:</b> Five days.<BR>
+<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
+<HR>
+<b>Implant Details:</b> Subjects injected with implant can activate a massive injection of adrenalin.<BR>
+<b>Function:</b> Contains nanobots to stimulate body to mass-produce Adrenalin.<BR>
+<b>Special Features:</b> Will prevent and cure most forms of brainwashing.<BR>
+<b>Integrity:</b> Implant can only be used three times before the nanobots are depleted."}
+		return dat
+
+
+	trigger(emote, mob/source as mob)
+		if (src.uses < 1)	return 0
+		if (emote == "pale")
+			src.uses--
+			source << "\blue You feel a sudden surge of energy!"
+			source.SetStunned(0)
+			source.SetWeakened(0)
+			source.SetParalysis(0)
+
+		return
+
+
+	implanted(mob/source as mob)
+		source.mind.store_memory("A implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.", 0, 0)
+		source << "The implanted freedom implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate."
+		return
+
+
 //BS12 Explosive
 /obj/item/weapon/implant/explosive
 	name = "explosive implant"
@@ -271,8 +307,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 			if(istype(imp_in, /mob/))
 				var/mob/T = imp_in
 				T.gib()
-			explosion(find_loc(imp_in), 1, 3, 4, 6, 3)
-			var/turf/t = find_loc(imp_in)
+			explosion(get_turf(imp_in), 1, 3, 4, 6, 3)
+			var/turf/t = get_turf(imp_in)
 			if(t)
 				t.hotspot_expose(3500,125)
 			del(src)

@@ -35,6 +35,7 @@ zone
 		for(var/turf/simulated/T in contents)
 			if(T.zone && T.zone == src)
 				T.zone = null
+				air_master.tiles_to_update |= T
 		for(var/zone/Z in connected_zones)
 			if(src in Z.connected_zones)
 				Z.connected_zones.Remove(src)
@@ -67,10 +68,10 @@ proc/FloodFill(turf/start)
 
 	return closed
 
-turf/proc/ZCanPass(turf/T)
+turf/proc/ZCanPass(turf/T, var/include_space = 0)
 	//Fairly standard pass checks for turfs, objects and directional windows. Also stops at the edge of space.
 
-	if(istype(T,/turf/space)) return 0
+	if(istype(T,/turf/space) && !include_space) return 0
 	else
 		if(T.blocks_air||blocks_air)
 			return 0

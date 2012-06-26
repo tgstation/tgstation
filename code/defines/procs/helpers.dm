@@ -1024,13 +1024,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		output += A
 	return output
 
-/proc/get_turf_loc(var/atom/movable/M) //gets the location of the turf that the atom is on, or what the atom is in is on, etc
-	//in case they're in a closet or sleeper or something
-	var/atom/loc = M.loc
-	while(!istype(loc, /turf/))
-		loc = loc.loc
-	return loc
-
 // returns the turf located at the map edge in the specified direction relative to A
 // used for mass driver
 /proc/get_edge_target_turf(var/atom/A, var/direction)
@@ -1158,17 +1151,6 @@ proc/islist(list/list)
 	if(istype(list))
 		return 1
 	return 0
-
-proc/isemptylist(list/list)
-	if(!list.len)
-		return 1
-	return 0
-
-proc/listclearnulls(list/list)
-	if(istype(list))
-		while(null in list)
-			list -= null
-	return
 
 /atom/proc/GetAllContents(searchDepth = 5)
 	var/list/toReturn = list()
@@ -1434,15 +1416,19 @@ proc/listclearnulls(list/list)
 	var/list/turfs_src = get_area_turfs(src.type)
 	var/list/turfs_trg = get_area_turfs(A.type)
 
+	var/blanked_turfs = list()
+
 	var/src_min_x = 0
 	var/src_min_y = 0
 	for (var/turf/T in turfs_src)
+		blanked_turfs |= T.ul_BlankLocal()
 		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
 		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
 
 	var/trg_min_x = 0
 	var/trg_min_y = 0
 	for (var/turf/T in turfs_trg)
+		blanked_turfs |= T.ul_BlankLocal()
 		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
 		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
 
@@ -1522,9 +1508,9 @@ proc/listclearnulls(list/list)
 
 					var/area/AR = X.loc
 
-					if(AR.sd_lighting)
+					if(AR.ul_Lighting)
 						X.opacity = !X.opacity
-						X.sd_SetOpacity(!X.opacity)
+						X.ul_SetOpacity(!X.opacity)
 
 					toupdate += X
 
@@ -1533,9 +1519,9 @@ proc/listclearnulls(list/list)
 
 						var/area/AR2 = ttl.loc
 
-						if(AR2.sd_lighting)
+						if(AR2.ul_Lighting)
 							ttl.opacity = !ttl.opacity
-							ttl.sd_SetOpacity(!ttl.opacity)
+							ttl.ul_SetOpacity(!ttl.opacity)
 
 						fromupdate += ttl
 
@@ -1559,6 +1545,8 @@ proc/listclearnulls(list/list)
 			for(var/obj/machinery/door/D2 in T2)
 				doors += D2
 			air_master.tiles_to_update |= T2
+
+	ul_UnblankLocal(blanked_turfs)
 
 	for(var/obj/O in doors)
 		O:update_nearby_tiles(1)
@@ -1596,15 +1584,19 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 	var/list/turfs_src = get_area_turfs(src.type)
 	var/list/turfs_trg = get_area_turfs(A.type)
 
+	var/blanked_turfs = list()
+
 	var/src_min_x = 0
 	var/src_min_y = 0
 	for (var/turf/T in turfs_src)
+		blanked_turfs |= T.ul_BlankLocal()
 		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
 		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
 
 	var/trg_min_x = 0
 	var/trg_min_y = 0
 	for (var/turf/T in turfs_trg)
+		blanked_turfs |= T.ul_BlankLocal()
 		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
 		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
 
@@ -1694,9 +1686,9 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 
 					var/area/AR = X.loc
 
-					if(AR.sd_lighting)
+					if(AR.ul_Lighting)
 						X.opacity = !X.opacity
-						X.sd_SetOpacity(!X.opacity)
+						X.ul_SetOpacity(!X.opacity)
 
 					toupdate += X
 
@@ -1708,6 +1700,7 @@ proc/DuplicateObject(obj/original, var/perfectcopy = 0 , var/sameloc = 0)
 
 
 	var/list/doors = new/list()
+	ul_UnblankLocal(blanked_turfs)
 
 	if(toupdate.len)
 		for(var/turf/simulated/T1 in toupdate)

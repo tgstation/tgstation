@@ -95,6 +95,13 @@
 /atom/proc/blob_act()
 	return
 
+/atom/proc/acid_act(var/datum/reagent/R)
+	return 0
+/*/obj/proc/acid_act(var/datum/reagent/R)
+	return 0
+/mob/proc/acid_act(var/datum/reagent/R)
+	return 0*/
+
 // bullet_act called when anything is hit buy a projectile (bullet, tazer shot, laser, etc.)
 // flag is projectile type, can be:
 //PROJECTILE_TASER = 1   		taser gun
@@ -130,12 +137,14 @@
 			if("feet")
 				if(!H.shoes)
 					affecting = H.get_organ(pick("l_leg", "r_leg"))
-					if(!affecting.robot) H.Weaken(3)
+					if(!(affecting.status & ROBOT))
+						H.Weaken(3)
 			if("l_hand", "r_hand")
 				if(!H.gloves)
 					affecting = H.get_organ(type)
-					if(!affecting.robot) H.Stun(3)
-		if(affecting && !affecting.robot)
+					if(!(affecting.status & ROBOT))
+						H.Stun(3)
+		if(affecting && !(affecting.status & ROBOT))
 			affecting.take_damage(1, 0)
 			H.UpdateDamageIcon()
 			H.updatehealth()

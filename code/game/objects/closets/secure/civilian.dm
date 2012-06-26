@@ -1,7 +1,7 @@
 
 /obj/structure/closet/secure_closet/chef_personal
 	name = "Chef's Locker"
-	req_access = list(access_kitchen)
+	req_access = list(ACCESS_KITCHEN)
 
 	New()
 		..()
@@ -15,7 +15,7 @@
 
 /obj/structure/closet/secure_closet/bar
 	name = "Booze"
-	req_access = list(access_bar)
+	req_access = list(ACCESS_BAR)
 
 
 	New()
@@ -35,7 +35,7 @@
 
 /obj/structure/closet/secure_closet/barman_personal
 	name = "Barman's Locker"
-	req_access = list(access_bar)
+	req_access = list(ACCESS_BAR)
 
 	New()
 		..()
@@ -53,7 +53,7 @@
 
 /obj/structure/closet/secure_closet/hydro_personal
 	name = "Botanist's Locker"
-	req_access = list(access_hydroponics)
+	req_access = list(ACCESS_HYDROPONICS)
 
 	New()
 		..()
@@ -68,7 +68,7 @@
 
 /obj/structure/closet/secure_closet/janitor_personal
 	name = "Janitor's Locker"
-	req_access = list(access_janitor)
+	req_access = list(ACCESS_JANITOR)
 
 	New()
 		..()
@@ -82,7 +82,7 @@
 
 /obj/structure/closet/secure_closet/lawyer_personal
 	name = "Lawyer's Locker"
-	req_access = list(access_lawyer)
+	req_access = list(ACCESS_LAWYER)
 
 	New()
 		..()
@@ -98,7 +98,7 @@
 
 /obj/structure/closet/secure_closet/librarian_personal
 	name = "Librarian's Locker"
-	req_access = list(access_library)
+	req_access = list(ACCESS_LIBRARY)
 
 	New()
 		..()
@@ -112,7 +112,7 @@
 
 /obj/structure/closet/secure_closet/counselor_personal
 	name = "Counselor's Locker"
-	req_access = list(access_chapel_office)
+	req_access = list(ACCESS_CHAPEL_OFFICE)
 
 	New()
 		..()

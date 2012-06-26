@@ -181,11 +181,10 @@
 			affecting = H.organs[A]
 			if(!istype(affecting, /datum/organ/external))    continue
 			affecting.heal_damage(1000, 1000)    //fixes getting hit after ingestion, killing you when game updates organ health
-			affecting.broken = 0
-			affecting.destroyed = 0
-			for(var/datum/organ/wound/W in affecting.wounds)
-				W.stopbleeding()
-				del(W)
+			affecting.status &= ~BROKEN
+			affecting.status &= ~SPLINTED
+			affecting.status &= ~DESTROYED
+			del affecting.wound_descs
 		H.UpdateDamageIcon()
 		H.update_body()
 	//src.fireloss = 0
@@ -210,17 +209,16 @@
 				var/datum/organ/external/e = H.organs[name]
 				e.brute_dam = 0.0
 				e.burn_dam = 0.0
-				e.bandaged = 0.0
+				e.status &= ~BANDAGED
 				e.max_damage = initial(e.max_damage)
-				e.bleeding = 0
+				e.status &= ~BLEEDING
 				e.open = 0
-				e.broken = 0
-				e.destroyed = 0
+				e.status &= ~BROKEN
+				e.status &= ~SPLINTED
+				e.status &= ~DESTROYED
 				e.perma_injury = 0
 				e.update_icon()
-				for(var/datum/organ/wound/W in e.wounds)
-					if(W.bleeding || !W.is_healing)
-						W.stopbleeding()
+				del e.wound_descs
 			del(H.vessel)
 			H.vessel = new/datum/reagents(560)
 			H.vessel.my_atom = H

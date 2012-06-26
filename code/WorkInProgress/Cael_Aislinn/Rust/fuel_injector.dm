@@ -19,7 +19,7 @@
 	var/targetting_field = 0
 	layer = 4
 	//
-	req_access = list(access_engine)
+	req_access = list(ACCESS_ENGINE)
 	//
 	use_power = 1
 	idle_power_usage = 10

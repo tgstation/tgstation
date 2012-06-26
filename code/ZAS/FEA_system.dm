@@ -107,6 +107,7 @@ datum
 			var/current_cycle = 0
 			var/update_delay = 5 //How long between check should it try to process atmos again.
 			var/failed_ticks = 0 //How many ticks have runtimed?
+			var/next_stat_check = 10
 
 
 /*				process()
@@ -141,7 +142,7 @@ datum
 							if(S.CanPass(null, S, 0, 0))
 								new/zone(S)
 
-						tiles_to_update |= S
+						S.update_air_properties()
 
 				world << "\red \b Geometry processed in [time2text(world.timeofday-start_time, "mm:ss")] minutes!"
 				spawn start()
@@ -152,6 +153,7 @@ datum
 				//Inputs: None.
 				//Outputs: None.
 
+				/*
 				set background = 1
 
 				while(1)
@@ -161,11 +163,18 @@ datum
 						if(!success) //Runtimed.
 							failed_ticks++
 							if(failed_ticks > 20)
-								world << "<font size='4' color='red'>ERROR IN ATMOS TICKER.  Killing air simulation!</font>"
+								world << "<font color='red'><b>ERROR IN ATMOS TICKER.  Killing air simulation!</font></b>"
 								kill_air = 1
 					sleep(max(5,update_delay*tick_multiplier))
+				*/
 
 			proc/tick()
+
+				if(current_cycle >= next_stat_check)
+					var/zone/z = pick(zones)
+					var/log_file = file("[time2text(world.timeofday, "statistics/DD-MM-YYYY.txt")]")
+					log_file << "Zone | \The [get_area(pick(z.contents))] | [z.air.oxygen], [z.air.nitrogen], [z.air.carbon_dioxide], [z.air.toxins] | [z.air.temperature] | [z.air.group_multiplier * z.air.volume]"
+					next_stat_check = current_cycle + (rand(5,7)*60)
 
 				if(tiles_to_update.len > 0) //If there are tiles to update, do so.
 					for(var/turf/simulated/T in tiles_to_update)

@@ -14,7 +14,7 @@
 
 	New()
 		spawn(1)
-			src.sd_SetLuminosity(5)
+			src.ul_SetLuminosity(5)
 
 
 	Del()

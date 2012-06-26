@@ -23,9 +23,7 @@
 			command_alert("Station has entered radiation cloud. Do not leave cover until it has passed.")
 		if(ActiveFor == 100 || ActiveFor == 150)	//1/2 and 2/2 f the way after it start proper make peope be half dead mostly
 			for(var/mob/living/carbon/M in world)
-				var/area = M.loc.loc
-				while(!istype(area, /area))
-					area = area:loc
+				var/area = get_area(M)
 				if(area:radsafe)
 					continue
 				if(!M.stat)

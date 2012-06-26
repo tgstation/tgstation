@@ -11,7 +11,7 @@
 	density = 1
 	icon = 'cloning.dmi'
 	icon_state = "pod_0"
-	req_access = list(access_genetics) //For premature unlocking.
+	req_access = list(ACCESS_GENETICS) //For premature unlocking.
 	var/mob/living/occupant
 	var/heal_level = 10 //The clone is released once its health reaches this level.
 	var/locked = 0

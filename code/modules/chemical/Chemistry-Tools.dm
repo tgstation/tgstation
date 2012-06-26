@@ -883,7 +883,7 @@
 				user << "\red [target] is full."
 				return
 
-			if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/weapon/reagent_containers/food)) //You can inject humans and food but you cant remove the shit.
+			if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/clothing/mask/cigarette)) //You can inject humans and food but you cant remove the shit.
 				user << "\red You cannot directly fill this object."
 				return
 
@@ -1079,7 +1079,7 @@
 				if(istype(target, /obj/item/weapon/implantcase/chem))
 					return
 
-				if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/metroid_core))
+				if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/metroid_core) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/cigpacket))
 					user << "\red You cannot directly fill this object."
 					return
 				if(target.reagents.total_volume >= target.reagents.maximum_volume)
@@ -1319,12 +1319,12 @@
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/M as mob, mob/user as mob)
 	if(!reagents.total_volume)
-		user << "\red The hypospray is empty."
+		user << "\red \The [src] is empty."
 		return
 	if (!( istype(M, /mob) ))
 		return
 	if (reagents.total_volume)
-		user << "\blue You inject [M] with the hypospray."
+		user << "\blue You inject [M] with \the [src]."
 		M << "\red You feel a tiny prick!"
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [src.name] by [user.name] ([user.ckey])</font>")
@@ -1337,11 +1337,11 @@
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
-			user << "\blue [trans] units injected.  [reagents.total_volume] units remaining in the hypospray."
+			user << "\blue [trans] units injected. [reagents.total_volume] units remaining in \the [src]."
 	return
 
 /obj/item/weapon/reagent_containers/borghypo
-	name = "Cyborg Hypospray"
+	name = "cyborg hypospray"
 	desc = "An advanced chemical synthesizer and injection system, designed for heavy-duty medical equipment."
 	icon = 'syringe.dmi'
 	item_state = "hypo"
@@ -1439,6 +1439,41 @@
 	desc = "The DeForest Medical Corporation hypospray is a sterile, air-needle autoinjector for rapid administration of drugs to patients."
 	amount_per_transfer_from_this = 50
 	volume = 50
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector
+	name = "autoinjector"
+	desc = "A rapid and safe way to administer small amounts of drugs by untrained or trained personnel."
+	icon_state = "autoinjector"
+	item_state = "autoinjector"
+	amount_per_transfer_from_this = 5
+	volume = 5
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/New()
+	..()
+	reagents.remove_reagent("tricordrazine", 30)
+	reagents.add_reagent("inaprovaline", 5)
+	update_icon()
+	return
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/attack(mob/M as mob, mob/user as mob)
+	..()
+	update_icon()
+	return
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/update_icon()
+	if(reagents.total_volume > 0)
+		icon_state = "[initial(icon_state)]1"
+	else
+		icon_state = "[initial(icon_state)]0"
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/examine()
+	..()
+	if(reagents && reagents.reagent_list.len)
+		for(var/datum/reagent/R in reagents.reagent_list)
+			usr << "\blue It currently has [R.volume] units of [R.name] stored."
+	else
+		usr << "\blue It is currently empty."
+
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Food.
@@ -1590,8 +1625,6 @@
 							if(M == user) user << "\red You finish eating [src]."
 							else user << "\red [M] finishes eating [src]."
 							del(src)
-							spawn(5)
-								user.update_clothing()
 
 				playsound(M.loc, eatsound, rand(10,50), 1)
 				return 1
@@ -1646,10 +1679,9 @@
 						bitecount++
 						On_Consume()
 						if(!reagents.total_volume)
+
 							if(M == user) user << "\red You finish eating [src]."
 							else user << "\red [M] finishes eating [src]."
-							spawn(2)
-								user.update_clothing()
 							del(src)
 				playsound(M.loc,'eatfood.ogg', rand(10,50), 1)
 				return 1
@@ -3009,6 +3041,14 @@
 		..()
 		reagents.add_reagent("rum", 100)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/deadrum
+	name = "Deadrum Bumbo"
+	desc = "Tastes a lot sweeter than ordinary rum (that's to help disguise the kick)."
+	icon_state = "deadrumbottle"
+	New()
+		..()
+		reagents.add_reagent("deadrum", 100)
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater
 	name = "Flask of Holy Water"
 	desc = "A flask of the chaplain's holy water."
@@ -3056,6 +3096,14 @@
 	New()
 		..()
 		reagents.add_reagent("wine", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
+	name = "Jailbreaker Verte"
+	desc = "Twenty-fourth century Green Fairy, one sip of this and you just know you're gonna have a good time."
+	icon_state = "absinthebottle"
+	New()
+		..()
+		reagents.add_reagent("absinthe", 100)
 
 //////////////////////////JUICES AND STUFF ///////////////////////
 
@@ -3727,6 +3775,14 @@
 					icon_state = "glass_brown"
 					name = "Glass of bilk"
 					desc = "A brew of milk and beer. For those alcoholics who fear osteoporosis."
+				if("absinthe")
+					icon_state = "glass_green"
+					name = "Glass of absinthe"
+					desc = "A glass of the Green Fairy."
+				if("deadrum")
+					icon_state = "glass_brown"
+					name = "Glass of Dead Rum"
+					desc = "Dangerously sweet rum. You won't be getting scurvy any time soon!"
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"

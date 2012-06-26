@@ -1422,6 +1422,60 @@ var/global/BSACooldown = 0
 		else
 			alert("You cannot perform this action. You must be of a higher administrative rank!")
 
+	if (href_list["adminmoreinfo"])
+		var/mob/M = locate(href_list["adminmoreinfo"])
+		if(!M)
+			usr << "\blue The mob no longer exists."
+			return
+
+		if(src && src.owner)
+			var/location_description = ""
+			var/special_role_description = ""
+			var/health_description = ""
+			var/turf/T = get_turf(M)
+
+			//Location
+			if(T && isturf(T))
+				if(T.loc && isarea(T.loc))
+					location_description = "([T.x], [T.y], [T.z] in area <b>[T.loc]</b>)"
+				else
+					location_description = "([T.x], [T.y], [T.z])"
+
+			//Job + antagonist
+			if(M.mind)
+				special_role_description = "Role: <b>[M.mind.assigned_role]</b>; Antagonist: <font color='red'><b>[M.mind.special_role]</b></font>; Has been rev: [(M.mind.has_been_rev)?"Yes":"No"]"
+			else
+				special_role_description = "Role: <i>Mind datum missing</i> Antagonist: <i>Mind datum missing</i>; Has been rev: <i>Mind datum missing</i>;"
+
+			//Health
+			health_description = "Oxy: [M.oxyloss] - Tox: [M.toxloss] - Fire: [M.fireloss] - Brute: [M.bruteloss] - Clone: [M.cloneloss] - Brain: [M.brainloss]"
+
+			src.owner << "<b>Info about [M.name]:</b> "
+			src.owner << "Mob type = [M.type]; Damage = [health_description]"
+			src.owner << "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Original_name = [M.original_name]; Key = <b>[M.key]</b>;"
+			src.owner << "Location = [location_description];"
+			src.owner << "[special_role_description]"
+			src.owner << "(<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?src=\ref[src];adminplayervars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];adminplayersubtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A>) (<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)"
+
+	if (href_list["adminspawncookie"])
+		var/mob/M = locate(href_list["adminspawncookie"])
+		if(M && ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.equip_if_possible( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), H.slot_l_hand )
+			if(!(istype(H.l_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
+				H.equip_if_possible( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), H.slot_r_hand )
+				if(!(istype(H.r_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
+					log_admin("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
+					message_admins("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
+					return
+			log_admin("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
+			message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
+			feedback_inc("admin_cookies_spawned",1)
+			H << "\blue Your prayers have been answered!! You received the <b>best cookie</b>!"
+		else
+			src << "\blue The person who prayed is not a human. Cookies cannot be spawned."
+
+
 	if (href_list["traitor_panel_pp"])
 		if(rank in list("Admin Observer", "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"))
 			var/mob/M = locate(href_list["traitor_panel_pp"])
@@ -1576,6 +1630,7 @@ var/global/BSACooldown = 0
 			M:mind.edit_memory()
 			return
 		alert("Cannot make this mob a traitor! It has no mind!")
+
 
 	if (href_list["create_object"])
 		if (src.rank in list("Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master"))
@@ -1893,7 +1948,7 @@ var/global/BSACooldown = 0
 					//feedback_add_details("admin_secrets_fun_used","PW")
 					message_admins("\blue [key_name_admin(usr)] teleported all players to the prison station.", 1)
 					for(var/mob/living/carbon/human/H in world)
-						var/turf/loc = find_loc(H)
+						var/turf/loc = get_turf(H)
 						var/security = 0
 						if(loc.z > 1 || prisonwarped.Find(H))
 	//don't warp them if they aren't ready or are already there
@@ -1902,7 +1957,7 @@ var/global/BSACooldown = 0
 						if(H.wear_id)
 							var/obj/item/weapon/card/id/id = H.get_idcard()
 							for(var/A in id.access)
-								if(A == access_security)
+								if(A == ACCESS_SECURITY)
 									security++
 						if(!security)
 							//strip their stuff before they teleport into a cell :downs:
@@ -2343,7 +2398,6 @@ var/global/BSACooldown = 0
 								dat += "<tr><td>[H]</td><td>H.dna = null</td></tr>"
 					dat += "</table>"
 					usr << browse(dat, "window=fingerprints;size=440x410")
-				else
 			if (usr)
 				log_admin("[key_name(usr)] used secret [href_list["secretsadmin"]]")
 				if (ok)
@@ -2361,13 +2415,13 @@ var/global/BSACooldown = 0
 					usr << browse(dat, "window=admin_log")
 				if("maint_access_brig")
 					for(var/obj/machinery/door/airlock/maintenance/M in world)
-						if (access_maint_tunnels in M.req_access)
-							M.req_access = list(access_brig)
+						if (ACCESS_MAINT_TUNNELS in M.req_access)
+							M.req_access = list(ACCESS_BRIG)
 					message_admins("[key_name_admin(usr)] made all maint doors brig access-only.")
 				if("maint_access_engiebrig")
 					for(var/obj/machinery/door/airlock/maintenance/M in world)
-						if (access_maint_tunnels in M.req_access)
-							M.req_access = list(access_brig,access_engine)
+						if (ACCESS_MAINT_TUNNELS in M.req_access)
+							M.req_access = list(ACCESS_BRIG,ACCESS_ENGINE)
 					message_admins("[key_name_admin(usr)] made all maint doors engineering and brig access-only.")
 				if("infinite_sec")
 					var/datum/job/J = job_master.GetJob("Security Officer")
@@ -2376,6 +2430,16 @@ var/global/BSACooldown = 0
 					J.spawn_positions = -1
 					message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
 		return
+
+	if(href_list["vsc"])
+		if ((src.rank in list( "Moderator", "Temporary Admin", "Admin Candidate", "Trial Admin", "Badmin", "Game Admin", "Game Master" )))
+			if(href_list["vsc"] == "airflow")
+				vsc.ChangeSettingsDialog(usr,vsc.settings)
+			if(href_list["vsc"] == "plasma")
+				vsc.ChangeSettingsDialog(usr,vsc.plc.settings)
+			if(href_list["vsc"] == "default")
+				vsc.SetDefault(usr)
+
 	if (href_list["rnd_max"])
 		for(var/obj/machinery/computer/rdconsole/C in world)
 			for(var/datum/tech/T in C.files.known_tech)
@@ -2704,8 +2768,12 @@ var/global/BSACooldown = 0
 		dat += "<A href='?src=\ref[src];create_turf=1'>Create Turf</A><br>"
 	if(lvl >= 5)
 		dat += "<A href='?src=\ref[src];create_mob=1'>Create Mob</A><br>"
+	if(lvl >= 3 )
+		dat += "<br><A href='?src=\ref[src];vsc=airflow'>Edit Airflow Settings</A><br>"
+		dat += "<A href='?src=\ref[src];vsc=plasma'>Edit Plasma Settings</A><br>"
+		dat += "<A href='?src=\ref[src];vsc=default'>Choose a default ZAS setting</A><br>"
 //			if(lvl == 6 )
-	usr << browse(dat, "window=admin2;size=210x180")
+	usr << browse(dat, "window=admin2;size=210x280")
 	return
 /*
 /obj/admins/proc/goons()

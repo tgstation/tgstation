@@ -246,19 +246,18 @@
 	set name = "Make Cable Restraints"
 	set category = "Object"
 	var/mob/M = usr
-	if (istype(M, /mob/dead/)) return
-	if (usr.stat) return
-	if(!istype(usr.loc,/turf)) return
-	if(src.amount <= 14)
-		usr << "\red You need at least 15 lengths to make restraints!"
-		return
-	var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
-	usr << "\blue You wind some cable together to make some restraints."
-	if(src.amount == 15)
-		del(src)
+
+	if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
+		if(!istype(usr.loc,/turf)) return
+		if(src.amount <= 14)
+			usr << "\red You need at least 15 lengths to make restraints!"
+			return
+		var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
+		B.icon_state = "cuff_[color]"
+		usr << "\blue You wind some cable together to make some restraints."
+		src.use(15)
 	else
-		src.amount -= 15
-	B.layer = 20
+		usr << "\blue You cannot do that."
 	..()
 
 /obj/item/weapon/cable_coil/attackby(obj/item/weapon/W, mob/user)
@@ -561,3 +560,11 @@ obj/structure/cable/proc/cableColor(var/colorC)
 			icon = 'power_cond_green.dmi'
 		if("blue")
 			icon = 'power_cond_blue.dmi'
+		if("pink")
+			icon = 'power_cond_pink.dmi'
+		if("orange")
+			icon = 'power_cond_orange.dmi'
+		if("cyan")
+			icon = 'power_cond_cyan.dmi'
+		if("white")
+			icon = 'power_cond_white.dmi'

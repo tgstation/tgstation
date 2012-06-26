@@ -119,21 +119,6 @@ var/const/COMM_FREQ = 1353 //command, colored gold in chat window
 var/const/SYND_FREQ = 1213
 var/NUKE_FREQ = 1200 //Randomised on nuke rounds.
 
-#define TRANSMISSION_WIRE	0
-#define TRANSMISSION_RADIO	1
-
-/* filters */
-var/const/RADIO_TO_AIRALARM = "1"
-var/const/RADIO_FROM_AIRALARM = "2"
-var/const/RADIO_CHAT = "3"
-var/const/RADIO_ATMOSIA = "4"
-var/const/RADIO_NAVBEACONS = "5"
-var/const/RADIO_AIRLOCK = "6"
-var/const/RADIO_SECBOT = "7"
-var/const/RADIO_MULEBOT = "8"
-var/const/RADIO_MAGNETS = "9"
-var/const/RADIO_POWER = "10"
-
 var/global/datum/controller/radio/radio_controller
 
 datum/controller/radio
@@ -255,9 +240,8 @@ datum/radio_frequency
 			for (var/devices_filter in devices)
 				var/list/devices_line = devices[devices_filter]
 				devices_line-=device
-				while (null in devices_line)
-					devices_line -= null
-				if (devices_line.len==0)
+				devices_line.Remove(null)
+				if (!devices_line.len)
 					devices -= devices_filter
 					del(devices_line)
 

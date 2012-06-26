@@ -58,6 +58,73 @@ should be listed in the changelog upon commit though. Thanks. -->
 
 <!-- To take advantage of the pretty new format (well it was new when I wrote this anyway), open the "add-to-changelog.html" file in any browser and add the stuff and then generate the html code and paste it here -->
 <div class="commit sansserif">
+	<h2 class="date">25 June 2012</h2>
+	<h3 class="author">Erthilo updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="experiment"><b>People in critical (less than -50 health) from external trauma (100+ damage from brute and/or burn) bleeding, and with unsplinted limbs, will send a message to anyone trying to drag them, to warn them it would be a bad idea trying to move them. They will suffer a lot more damage if dragged while lying down.<br>The correct procedure is therefore, A) Bring a roller bed, or B) Splint all limbs, stop all bleeding with gauze, and then drag them.</b></li>
+		<li class="rscadd">Dragging someone while injured (brute) will have a small chance of injuring them further that increases depending on how damaged they are. This coincides with the blood spatters that are already generated.</li>
+		<li class="rscadd">Added splints that can be applied to broken arms and legs, and will reduce effects of broken limbs. These can be removed the same way as handcuffs. They show up on the mob and on examine.</li>
+		<li class="rscadd">Added an autoinjector that can only hold five units, but acts like a hypospray.</li>
+		<li class="rscadd"> Added an advanced medical kit that Medical Doctors spawn with that has Advanced Trauma Kits, Advanced Burn Kits, autoinjectors, and splints.</li>
+		<li class="tweak">Health Scanners now show unsplinted fractures ONLY in arms or legs.</li>
+		<li class="tweak">Blood is now actually lost from the person being dragged.</li>
+		<li class="bugfix">Fixed CPR being performed at weird health levels.</li>
+	</ul>
+	<h3 class="author">Watermelon Storm updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Added a medbay (with rolling beds) and a holding cell to the destination of the escape shuttle.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">23 June 2012</h2>
+	<h3 class="author">SkyMarshal updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="tweak">ZAS now has different thresholds to move mobs and dense objects.  A depressurising room at normal pressure will no longer turn lockers deadly.</li>
+		<li class="bugfix">ZAS now properly rebuilds zones, and connect/merge adjacent zones.  This should be the final real bugfix to the system.</li>
+		<li class="wip">I have removed the aspects of the wound system causing the instant healing and, very likely, lag.  This will result in wounds healing instantly again, but the computational overhead being significantly less.</li>
+		<li class="tweak">The auto-targeting-mode for guns will now provide a different type of flavor text when it makes you fire, to make the situations that it occurs in to be less ambiguous.</li>
+		<li class="experiment">UltraLight is in, but has some lighting bugs still remaining.  This is the next thing I intend to tackle, bare with it please.</li>
+	</ul>
+	<h3 class="author">TG updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">Updated toilets. You can now crowbar open the cistern and hide stuff in there.</li>
+		<li class="rscadd">Omni-directional PA console! Never have to worry about rotating it again, because now it does it itself!</li>
+		<li class="rscadd">Players can fill their cigarettes with various chemicals and smoke them.</li>
+		<li class="rscadd">You can now click blocks to select them.</li>
+		<li class="tweak">Areas have been redefined and renamed to make more logical sense (eg "Arrivals North Maintenance" instead of "Secondary Fore Port Maintenance"). Same has been done with Solars.</li>
+		<li class="tweak">Scientists no longer start with gas masks and o2 tanks (Still available from the lockers).</li>
+		<li class="tweak">Hydroponics trays are now unwrenchable.</li>
+		<li class="tweak">The Experimental Welding Tool, rather than having a larger tank, will refill itself over time.</li>
+		<li class="bugfix">Borg diamond drills now properly dig sand.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">22 June 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="rscadd">A research laboratory has been constructed to store and catalogue xeno-archaelogical relics. Savvy anomalists are advised to supervise recovery efforts themselves, as unsubtle miners may damage delicate samples through not using the proper tools.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">18 June 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="experiment">A discovery on a nearby asteroid has brought xeno-archaelogists flocking to the NSS Exodus in search of ancient treasures. Miners beware, these artifacts may be helpful or deadly! There is talk of establishing a permanent research position on the station in an attempt to study them (thanks to ISaidNo for original code).</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
+	<h2 class="date">16 June 2012</h2>
+	<h3 class="author">Cael_Aislinn updated:</h3>
+	<ul class="changes bgimages16">
+		<li class="experiment">Recent breakthroughs have brought shield generation technology to the NSS Exodus. External (hull) shield generators and capacitors may now be built, with appropriate circuitboards available from RnD.</li>
+	</ul>
+</div>
+
+<div class="commit sansserif">
 	<h2 class="date">09 June 2012</h2>
 	<h3 class="author">Erthilo updated:</h3>
 	<ul class="changes bgimages16">
@@ -71,7 +138,7 @@ should be listed in the changelog upon commit though. Thanks. -->
 	<h3 class="author">SkyMarshal updated:</h3>
 	<ul class="changes bgimages16">
 		<li class="bugfix">ZAS now works properly.  No perpetually leaking doors, no walls that hold air like a seive.</li>
-		<li class="experiment"><font color='red'><b>ZAS airflow is now enabled</b>, and will move objects (AND PEOPLE!) when air moves with enough force.  <b>AIRLOCKS ARE NOW DEADLY DANGEROUS!<b></font></li>
+		<li class="experiment"><font color='red'><b>ZAS airflow is now enabled</b>, and will move objects (AND PEOPLE!) when air moves with enough force.  <b>AIRLOCKS ARE NOW DEADLY DANGEROUS!</b></font></li>
 		<li class="rscadd">Packages will now reflect the size of what they contain</li>
 	</ul>
 </div>
@@ -111,7 +178,6 @@ should be listed in the changelog upon commit though. Thanks. -->
 		<li class="bugfix">Fixed flavour text, it should now be possible to have it longer than 40 characters, and should stay properly formatted.</li>
 		<li class="bugfix">Fixes AI's not being able to talk through holopads.</li>
 	</ul>
-
 </div>
 
 <div class="commit sansserif">

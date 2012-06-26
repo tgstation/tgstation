@@ -2,7 +2,7 @@
 	//SECURITY//
 	////////////
 #define TOPIC_SPAM_DELAY	7		//7 tick delay is about half a second
-#define UPLOAD_LIMIT		1048576	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
+#define UPLOAD_LIMIT		10485760	//Restricts client uploads to the server to 10MB //Could probably do with being lower.
 	/*
 	When somebody clicks a link in game, this Topic is called first.
 	It does the stuff in this proc and  then is redirected to the Topic() proc for the src=[0xWhatever]
@@ -63,6 +63,7 @@
 		src << "<font color='red'>Error: AllowUpload(): Spam prevention. Please wait [round(time_to_wait/10)] seconds.</font>"
 		return 0
 	fileaccess_timer = world.time + FTPDELAY	*/
+	world.log << "[src] uploaded [filename] of [filelength]"
 	return 1
 
 

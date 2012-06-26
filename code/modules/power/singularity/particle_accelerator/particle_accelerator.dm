@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /*Composed of 7 parts
 3 Particle emitters
@@ -241,7 +241,6 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 						src.anchored = 1
 						user.visible_message("[user.name] secures the [src.name] to the floor.", \
 							"You secure the external bolts.")
-//						icon_state = "[reference]"
 						temp_state++
 				if(1)
 					if(iswrench(O))
@@ -249,30 +248,25 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 						src.anchored = 0
 						user.visible_message("[user.name] detaches the [src.name] from the floor.", \
 							"You remove the external bolts.")
-//						icon_state = "[reference]"
 						temp_state--
 					else if(iscoil(O))
 						if(O:use(1,user))
 							user.visible_message("[user.name] adds wires to the [src.name].", \
 								"You add some wires.")
-//							icon_state = "[reference]w"
 							temp_state++
 				if(2)
 					if(iswirecutter(O))//TODO:Shock user if its on?
 						user.visible_message("[user.name] removes some wires from the [src.name].", \
 							"You remove some wires.")
-//						icon_state = "[reference]"
 						temp_state--
 					else if(isscrewdriver(O))
 						user.visible_message("[user.name] closes the [src.name]'s access panel.", \
 							"You close the access panel.")
-//						icon_state = "[reference]c"
 						temp_state++
 				if(3)
 					if(isscrewdriver(O))
 						user.visible_message("[user.name] opens the [src.name]'s access panel.", \
 							"You open the access panel.")
-//						icon_state = "[reference]w"
 						temp_state--
 			if(temp_state == src.construction_state)//Nothing changed
 				return 0
@@ -398,7 +392,6 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 						src.anchored = 1
 						user.visible_message("[user.name] secures the [src.name] to the floor.", \
 							"You secure the external bolts.")
-						//icon_state = "[reference]"
 						temp_state++
 				if(1)
 					if(iswrench(O))
@@ -406,31 +399,27 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 						src.anchored = 0
 						user.visible_message("[user.name] detaches the [src.name] from the floor.", \
 							"You remove the external bolts.")
-						//icon_state = "[reference]"
 						temp_state--
 					else if(iscoil(O))
 						if(O:use(1))
 							user.visible_message("[user.name] adds wires to the [src.name].", \
 								"You add some wires.")
-							//icon_state = "[reference]w"
 							temp_state++
 				if(2)
 					if(iswirecutter(O))//TODO:Shock user if its on?
 						user.visible_message("[user.name] removes some wires from the [src.name].", \
 							"You remove some wires.")
-						//icon_state = "[reference]"
 						temp_state--
 					else if(isscrewdriver(O))
 						user.visible_message("[user.name] closes the [src.name]'s access panel.", \
 							"You close the access panel.")
-						//icon_state = "[reference]c"
 						temp_state++
 				if(3)
 					if(isscrewdriver(O))
 						user.visible_message("[user.name] opens the [src.name]'s access panel.", \
 							"You open the access panel.")
-						//icon_state = "[reference]w"
 						temp_state--
+						active = 0
 			if(temp_state == src.construction_state)//Nothing changed
 				return 0
 			else

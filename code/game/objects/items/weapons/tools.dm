@@ -327,7 +327,7 @@ WELDINGTOOOL
 /obj/item/weapon/weldingtool/attack(mob/M as mob, mob/user as mob)
 	if(hasorgans(M))
 		var/datum/organ/external/S = M:organs[user.zone_sel.selecting]
-		if(!S.robot || user.a_intent != "help")
+		if(!(S.status & ROBOT) || user.a_intent != "help")
 			return ..()
 		if(S.brute_dam)
 			S.heal_damage(15,0,0,1)
@@ -397,8 +397,8 @@ WELDINGTOOOL
 
 /obj/item/weapon/wirecutters/attack(mob/M as mob, mob/user as mob)
 	if((M.handcuffed) && (istype(M:handcuffed, /obj/item/weapon/handcuffs/cable)))
-		M.visible_message("You cut \the [M]'s restraints with \the [src]!",\
-		"\The [usr] cuts \the [M]'s restraints with \the [src]!",\
+		usr.visible_message("\The [usr] cuts \the [M]'s restraints with \the [src]!",\
+		"You cut \the [M]'s restraints with \the [src]!",\
 		"You hear cable being cut.")
 		M.handcuffed = null
 		M.update_clothing()

@@ -11,12 +11,12 @@
 
 //when adding a new camera network, you should only need to update these two procs
 	New()
-		possibleNets["Engineering"] = access_ce
-		possibleNets["SS13"] = access_hos
-		possibleNets["Mining"] = access_mining
-		possibleNets["Cargo"] = access_qm
-		possibleNets["Research"] = access_rd
-		possibleNets["Medbay"] = access_cmo
+		possibleNets["Engineering"] = ACCESS_CE
+		possibleNets["SS13"] = ACCESS_HOS
+		possibleNets["Mining"] = ACCESS_MINING
+		possibleNets["Cargo"] = ACCESS_QM
+		possibleNets["Research"] = ACCESS_RD
+		possibleNets["Medbay"] = ACCESS_CMO
 
 	proc/updateBuildPath()
 		build_path = ""
@@ -102,7 +102,7 @@
 				var/obj/item/device/pda/pda = I
 				I = pda.id
 			if (I && istype(I))
-				if(access_captain in I.access)
+				if(ACCESS_CAPTAIN in I.access)
 					authorised = 1
 				else if (possibleNets[network] in I.access)
 					authorised = 1

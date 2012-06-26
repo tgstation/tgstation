@@ -63,7 +63,7 @@
 
 	New()
 		..()
-		sd_SetLuminosity(1)
+		ul_SetLuminosity(0,3,0)
 
 		spawn(1200)		// 2 minutes
 			del(src)

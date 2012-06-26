@@ -47,7 +47,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/destroy()//missiles detonating, teleporter creating singularity?
 	if(chassis)
 		chassis.equipment -= src
-		listclearnulls(chassis.equipment)
+		chassis.equipment.Remove(null)
 		if(chassis.selected == src)
 			chassis.selected = null
 		src.update_chassis_page()

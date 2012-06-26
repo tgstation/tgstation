@@ -17,30 +17,30 @@
 	..()
 	if (on)
 		icon_state = icon_on
-		src.sd_SetLuminosity(brightness_on)
+		src.ul_SetLuminosity(brightness_on, brightness_on, 0)
 	else
 		icon_state = icon_off
-		src.sd_SetLuminosity(0)
+		src.ul_SetLuminosity(0)
 
 /obj/item/device/flashlight/proc/update_brightness(var/mob/user = null)
 	if (on)
 		icon_state = icon_on
 		if(src.loc == user)
-			user.total_luminosity += brightness_on
+			user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + brightness_on, user.LuminosityBlue)
 		else if (isturf(src.loc))
-			src.sd_SetLuminosity(brightness_on)
+			ul_SetLuminosity(brightness_on, brightness_on, 0)
 
 	else
 		icon_state = icon_off
 		if(src.loc == user)
-			user.total_luminosity -= brightness_on
+			user.ul_SetLuminosity(user.LuminosityRed - brightness_on, user.LuminosityGreen - brightness_on, user.LuminosityBlue)
 		else if (isturf(src.loc))
-			src.sd_SetLuminosity(0)
+			ul_SetLuminosity(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
-	if(!isturf(user.loc))
-		user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
-		return
+//	if(!isturf(user.loc))
+//		user << "You cannot turn the light on while in this [user.loc]" //To prevent some lighting anomalities.
+//		return
 	on = !on
 	update_brightness(user)
 	return
@@ -82,14 +82,14 @@
 
 /obj/item/device/flashlight/pickup(mob/user)
 	if(on)
-		user.total_luminosity += brightness_on
-		src.sd_SetLuminosity(0)
+		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + brightness_on, user.LuminosityBlue)
+		src.ul_SetLuminosity(0)
 
 
 /obj/item/device/flashlight/dropped(mob/user)
 	if(on)
-		user.total_luminosity -= brightness_on
-		src.sd_SetLuminosity(brightness_on)
+		user.ul_SetLuminosity(user.LuminosityRed - brightness_on, user.LuminosityGreen - brightness_on, user.LuminosityBlue)
+		src.ul_SetLuminosity(brightness_on)
 
 
 /obj/item/device/flashlight/pen
@@ -148,21 +148,19 @@
 	item_state = "hardhat[on]_[color]"
 
 	if(on)
-		user.total_luminosity += brightness_on
+		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + (brightness_on - 1), user.LuminosityBlue)
 	else
-		user.total_luminosity -= brightness_on
+		user.ul_SetLuminosity(user.LuminosityRed - brightness_on, user.LuminosityGreen - (brightness_on - 1), user.LuminosityBlue)
 
 /obj/item/clothing/head/helmet/hardhat/pickup(mob/user)
 	if(on)
-		user.total_luminosity += brightness_on
-		user.UpdateLuminosity()
-		src.sd_SetLuminosity(0)
+		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + (brightness_on - 1), user.LuminosityBlue)
+		ul_SetLuminosity(0)
 
 /obj/item/clothing/head/helmet/hardhat/dropped(mob/user)
 	if(on)
-		user.total_luminosity -= brightness_on
-		user.UpdateLuminosity()
-		src.sd_SetLuminosity(brightness_on)
+		user.ul_SetLuminosity(user.LuminosityRed - brightness_on, user.LuminosityGreen - (brightness_on - 1), user.LuminosityBlue)
+		ul_SetLuminosity(brightness_on, brightness_on - 1, 0)
 
 //RIG helmet light
 /obj/item/clothing/head/helmet/space/rig/attack_self(mob/user)
@@ -174,21 +172,19 @@
 	item_state = "rig[on]-[color]"
 
 	if(on)
-		user.total_luminosity += brightness_on
+		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + (brightness_on - 1), user.LuminosityBlue)
 	else
-		user.total_luminosity -= brightness_on
+		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + (brightness_on - 1), user.LuminosityBlue)
 
 /obj/item/clothing/head/helmet/space/rig/pickup(mob/user)
 	if(on)
-		user.total_luminosity += brightness_on
-		user.UpdateLuminosity()
-		src.sd_SetLuminosity(0)
+		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + (brightness_on - 1), user.LuminosityBlue)
+		ul_SetLuminosity(0)
 
 /obj/item/clothing/head/helmet/space/rig/dropped(mob/user)
 	if(on)
-		user.total_luminosity -= brightness_on
-		user.UpdateLuminosity()
-		src.sd_SetLuminosity(brightness_on)
+		user.ul_SetLuminosity(user.LuminosityRed + brightness_on, user.LuminosityGreen + (brightness_on - 1), user.LuminosityBlue)
+		ul_SetLuminosity(brightness_on, brightness_on-1, 0)
 
 // the desk lamps are a bit special
 /obj/item/device/flashlight/lamp

@@ -229,12 +229,11 @@
 			step(src, get_dir(user, src))
 		if (src.health <= 0)
 			if (src.dir == SOUTHWEST)
-				var/index = null
-				index = 0
-				while(index < 2)
-					new /obj/item/weapon/shard( src.loc )
-					if(reinf) new /obj/item/stack/rods( src.loc)
-					index++
+				new /obj/item/weapon/shard( src.loc )
+				new /obj/item/weapon/shard( src.loc )
+				if(reinf)
+					new /obj/item/stack/rods( src.loc)
+					new /obj/item/stack/rods( src.loc)
 			else
 				new /obj/item/weapon/shard( src.loc )
 				if(reinf) new /obj/item/stack/rods( src.loc)
@@ -323,7 +322,7 @@
 /obj/structure/window/Del()
 	density = 0
 
-	update_nearby_tiles()
+	update_nearby_tiles(need_rebuild=1)
 
 	playsound(src, "shatter", 70, 1)
 
@@ -344,6 +343,14 @@
 //This proc has to do with airgroups and atmos, it has nothing to do with smoothwindows, that's update_nearby_tiles().
 /obj/structure/window/proc/update_nearby_tiles(need_rebuild)
 	if(!air_master) return 0
+	if(!dir in cardinal)
+		var/turf/simulated/source = get_turf(src)
+		if(istype(source))
+			air_master.tiles_to_update |= source
+			for(var/dir in cardinal)
+				var/turf/simulated/target = get_step(source,dir)
+				if(istype(target)) air_master.tiles_to_update |= target
+		return 1
 
 	var/turf/simulated/source = get_turf(src)
 	var/turf/simulated/target = get_step(source,dir)

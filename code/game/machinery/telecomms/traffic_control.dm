@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 
 
@@ -68,7 +68,7 @@
 
 
 
-	req_access = list(access_tcomsat)
+	req_access = list(ACCESS_TCOMSAT)
 
 	attack_hand(mob/user as mob)
 		if(stat & (BROKEN|NOPOWER))
@@ -200,7 +200,7 @@
 
 					network = newnet
 					screen = 0
-					machines = list()
+					servers = list()
 					temp = "<font color = #336699>- NEW NETWORK TAG SET IN ADDRESS \[[network]\] -</font color>"
 
 		updateUsrDialog()

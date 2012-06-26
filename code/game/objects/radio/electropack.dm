@@ -36,8 +36,6 @@
 	return
 
 /obj/item/device/radio/electropack/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	..()
-
 	if (istype(W, /obj/item/weapon/screwdriver))
 		src.e_pads = !( src.e_pads )
 		if (src.e_pads)
@@ -46,32 +44,33 @@
 			user.show_message("\blue The electric pads have been reinserted!")
 		src.add_fingerprint(user)
 		return
+	else if (istype(W, /obj/item/clothing/head/helmet))
+		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
+		A.icon = 'assemblies.dmi'
+		W.loc = A
+		A.part1 = W
+		W.layer = initial(W.layer)
+		if (user.client)
+			user.client.screen -= W
+		if (user.r_hand == W)
+			user.u_equip(W)
+			user.r_hand = A
+		else
+			user.u_equip(W)
+			user.l_hand = A
+		W.master = A
+		src.master = A
+		src.layer = initial(src.layer)
+		user.u_equip(src)
+		if (user.client)
+			user.client.screen -= src
+		src.loc = A
+		A.part2 = src
+		A.layer = 20
+		src.add_fingerprint(user)
+		A.add_fingerprint(user)
 	else
-		if (istype(W, /obj/item/clothing/head/helmet))
-			var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
-			A.icon = 'assemblies.dmi'
-			W.loc = A
-			A.part1 = W
-			W.layer = initial(W.layer)
-			if (user.client)
-				user.client.screen -= W
-			if (user.r_hand == W)
-				user.u_equip(W)
-				user.r_hand = A
-			else
-				user.u_equip(W)
-				user.l_hand = A
-			W.master = A
-			src.master = A
-			src.layer = initial(src.layer)
-			user.u_equip(src)
-			if (user.client)
-				user.client.screen -= src
-			src.loc = A
-			A.part2 = src
-			A.layer = 20
-			src.add_fingerprint(user)
-			A.add_fingerprint(user)
+		..()
 	return
 
 /obj/item/device/radio/electropack/Topic(href, href_list)

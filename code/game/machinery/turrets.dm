@@ -54,6 +54,8 @@
 		// 2 = cannons
 		// 3 = pulse
 		// 4 = change (HONK)
+		// 5 = bluetag
+		// 6 = redtag
 	var/health = 18
 	var/id = ""
 	var/obj/machinery/turretcover/cover = null
@@ -211,6 +213,10 @@
 				A = new /obj/item/projectile/beam/pulse( loc )
 			if(4)
 				A = new /obj/item/projectile/change( loc )
+			if(5)
+				A = new /obj/item/projectile/bluetag( loc )
+			if(6)
+				A = new /obj/item/projectile/redtag( loc )
 		A.original = target.loc
 		use_power(500)
 	else
@@ -301,7 +307,7 @@
 	var/locked = 1
 	var/control_area //can be area name, path or nothing.
 	var/ailock = 0 // AI cannot use this
-	req_access = list(access_ai_upload)
+	req_access = list(ACCESS_AI_UPLOAD)
 	var/similar_controls
 	var/turrets
 
@@ -471,6 +477,7 @@
 	var/health = 40
 	var/list/scan_for = list("human"=0,"cyborg"=0,"mecha"=0,"alien"=1)
 	var/on = 0
+	var/processing = 0 //So we dun get dozens of duplicate while loops
 	icon = 'turrets.dmi'
 	icon_state = "gun_turret"
 
@@ -561,16 +568,20 @@
 
 
 	process()
-		spawn while(on)
-			if(projectiles<=0)
-				on = 0
-				return
-			if(cur_target && !validate_target(cur_target))
-				cur_target = null
-			if(!cur_target)
-				cur_target = get_target()
-			fire(cur_target)
-			sleep(cooldown)
+		if(!processing)
+			spawn
+				while(on)
+					processing = 1
+					if(projectiles<=0)
+						on = 0
+						return
+					if(cur_target && !validate_target(cur_target))
+						cur_target = null
+					if(!cur_target)
+						cur_target = get_target()
+					fire(cur_target)
+					sleep(cooldown)
+				processing = 0
 		return
 
 	proc/get_target()

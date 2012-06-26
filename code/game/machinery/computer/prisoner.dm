@@ -4,7 +4,7 @@
 	name = "Prisoner Management"
 	icon = 'computer.dmi'
 	icon_state = "explosive"
-	req_access = list(access_armory)
+	req_access = list(ACCESS_ARMORY)
 	circuit = "/obj/item/weapon/circuitboard/prisoner"
 	var/id = 0.0
 	var/temp = null
@@ -50,7 +50,7 @@
 				var/loc_display = "Unknown"
 				var/mob/living/carbon/M = T.imp_in
 				if(M.z == 1 && !istype(M.loc, /turf/space))
-					var/turf/mob_loc = get_turf_loc(M)
+					var/turf/mob_loc = get_turf(M)
 					loc_display = mob_loc.loc
 				dat += "ID: [T.id] | Location: [loc_display]<BR>"
 				dat += "<A href='?src=\ref[src];warn=\ref[T]'>(<font color=red><i>Message Holder</i></font>)</A> |<BR>"

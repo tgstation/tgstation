@@ -164,7 +164,7 @@ var/global/sent_syndicate_strike_team = 0
 	equip_if_possible(new /obj/item/weapon/storage/box(src), slot_in_backpack)
 
 	equip_if_possible(new /obj/item/ammo_magazine/c45(src), slot_in_backpack)
-	equip_if_possible(new /obj/item/weapon/storage/firstaid/regular(src), slot_in_backpack)
+	equip_if_possible(new /obj/item/weapon/storage/firstaid/adv(src), slot_in_backpack)
 	equip_if_possible(new /obj/item/weapon/plastique(src), slot_in_backpack)
 	equip_if_possible(new /obj/item/device/flashlight(src), slot_in_backpack)
 	if (!syndicate_leader_selected)
@@ -184,7 +184,7 @@ var/global/sent_syndicate_strike_team = 0
 	W.name = "[real_name]'s ID Card"
 	W.icon_state = "id"
 	W.access = get_all_accesses()//They get full station access because obviously the syndicate has HAAAX, and can make special IDs for their most elite members.
-	W.access += list(access_cent_general, access_cent_specops, access_cent_living, access_cent_storage, access_syndicate)//Let's add their forged CentCom access and syndicate access.
+	W.access += list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE, ACCESS_SYNDICATE)//Let's add their forged CentCom access and syndicate access.
 	W.assignment = "Syndicate Commando"
 	W.registered_name = real_name
 	equip_if_possible(W, slot_wear_id)

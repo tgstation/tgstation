@@ -21,7 +21,8 @@
 
 
 /obj/item/weapon/dnainjector/proc/inject(mob/M as mob)
-	M.radiation += rand(20,50)
+	if(istype(M,/mob/living))
+		M.radiation += rand(20,50)
 
 	if (!(NOCLONE in M.mutations)) // prevents drained people from having their DNA changed
 		if (dnatype == "ui")

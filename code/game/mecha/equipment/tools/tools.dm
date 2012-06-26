@@ -919,7 +919,10 @@
 	process(var/obj/item/mecha_parts/mecha_equipment/generator/nuclear/EG)
 		if(..())
 			for(var/mob/living/carbon/M in view(EG.chassis))
-				M.radiation += EG.rad_per_cycle
+				if(istype(M,/mob/living/carbon/human))
+					M.apply_effect((EG.rad_per_cycle*3),IRRADIATE,0)
+				else
+					M.radiation += EG.rad_per_cycle
 		return 1
 
 
@@ -933,7 +936,9 @@
 	range = MELEE
 	construction_cost = list("metal"=5000,"glass"=10000)
 	reliability = 1000
-	equip_cooldown = 20
+	equip_cooldown = 50 // rather lengthy cooldown since otherwise
+			    // this would be a too effective weapon for
+			    // capturing somebody
 	var/mob/living/carbon/occupant = null
 	var/datum/global_iterator/pr_mech_sleeper
 	var/inject_amount = 10

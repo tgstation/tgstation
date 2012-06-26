@@ -22,6 +22,11 @@ NOTEBOOK
 			src.overlays += "paper_words"
 		return
 
+/obj/item/weapon/paper/Del()
+	if(burning && istype(loc, /mob))
+		loc.ul_SetLuminosity(loc.LuminosityRed - 8, loc.LuminosityGreen - 6, loc.LuminosityBlue)
+	..()
+
 /obj/item/weapon/paper/process()
 	if(iteration < 5)
 		var/turf/location = src.loc
@@ -35,11 +40,6 @@ NOTEBOOK
 	else
 		for(var/mob/M in viewers(5, get_turf(src)))
 			M << "\red \the [src] burns up."
-		if(istype(src.loc,/mob))
-			var/mob/M = src.loc
-			M.total_luminosity -= 8
-		else
-			src.sd_SetLuminosity(0)
 		processing_objects.Remove(src)
 		del(src)
 
@@ -53,13 +53,13 @@ NOTEBOOK
 
 /obj/item/weapon/paper/pickup(mob/user)
 	if(burning)
-		src.sd_SetLuminosity(0)
-		user.total_luminosity += 8
+		src.ul_SetLuminosity(0)
+		user.ul_SetLuminosity(user.LuminosityRed + 8, user.LuminosityGreen + 6, user.LuminosityBlue)
 
 /obj/item/weapon/paper/dropped(mob/user)
 	if(burning)
-		user.total_luminosity -= 8
-		src.sd_SetLuminosity(8)
+		user.ul_SetLuminosity(user.LuminosityRed - 8, user.LuminosityGreen - 6, user.LuminosityBlue)
+		src.ul_SetLuminosity(8,6,0)
 
 /obj/item/weapon/paper/examine()
 	set src in view()
@@ -163,7 +163,7 @@ NOTEBOOK
 		if(is_burn(P))
 			for(var/mob/M in viewers(5, get_turf(src)))
 				M << "\red [user] sets \the [src] on fire."
-			user.total_luminosity += 8
+			user.ul_SetLuminosity(user.LuminosityRed + 8, user.LuminosityGreen + 6, user.LuminosityBlue)
 			burning = 1
 			processing_objects.Add(src)
 			update_icon()
@@ -360,7 +360,7 @@ NOTEBOOK
 					usr.put_in_hand(P)
 					usr << "You take a paper out of the bin."
 			else
-				P.loc = get_turf_loc(src)
+				P.loc = get_turf(src)
 				usr << "You take a paper out of the bin."
 
 	src.update()

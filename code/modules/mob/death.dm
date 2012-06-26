@@ -47,6 +47,8 @@
 
 /mob/proc/death(gibbed)
 	timeofdeath = world.time
+	var/log_file = file("[time2text(world.timeofday, "statistics/DD-MM-YYYY.txt")]")
+	log_file << "Death | \The [get_area(src)] | [bruteloss], [oxyloss], [toxloss], [fireloss][attack_log && attack_log.len? " | [attack_log[attack_log.len]]" : ""]"
 	if(client)
 		client.onDeath()
 

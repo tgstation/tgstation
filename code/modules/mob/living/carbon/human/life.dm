@@ -1,6 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
-#define HUMAN_MAX_OXYLOSS 3 //Defines how much oxyloss humans can get per tick. No air applies this value.
+#define HUMAN_MAX_OXYLOSS 6 //Defines how much oxyloss humans can get per tick. No air applies this value.
 
 /mob/living/carbon/human
 	var/oxygen_alert = 0
@@ -125,8 +125,8 @@
 		G.process()
 
 	if(isturf(loc) && rand(1,1000) == 1) //0.1% chance of playing a scary sound to someone who's in complete darkness
-		var/turf/currentTurf = loc
-		if(!currentTurf.sd_lumcount)
+		var/turf/currentTurf = get_turf(src)
+		if(!max(currentTurf.ul_GetRed(), currentTurf.ul_GetGreen(), currentTurf.ul_GetBlue()))
 			playsound_local(src,pick(scarySounds),50, 1, -1)
 
 	src.moved_recently = max(0, moved_recently-1)
@@ -209,11 +209,6 @@
 				adjustToxLoss(-2)
 				adjustOxyLoss(-2)
 				adjustFireLoss(-2)
-
-				for(var/datum/organ/external/org in organs)
-					if(org.robot) continue
-					org.brute_dam = max(org.brute_dam - 2, 0)
-					org.burn_dam = max(org.burn_dam - 2, 0)
 				updatehealth()
 
 			if(!(/mob/living/carbon/human/proc/morph in src.verbs))
@@ -495,7 +490,12 @@
 			if(!breath || (breath.total_moles == 0))
 				if(reagents.has_reagent("inaprovaline"))
 					return
-				adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+				if(health < config.health_threshold_crit)
+					// in crit, we pretend your metabolism has become slower, which
+					// will reduce the rate at which you lose health
+					adjustOxyLoss(round(HUMAN_MAX_OXYLOSS / 2))
+				else
+					adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 
 				oxygen_alert = max(oxygen_alert, 1)
 
@@ -820,7 +820,8 @@
 			if(mutantrace == "plant") //couldn't think of a better place to place it, since it handles nutrition -- Urist
 				var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 				if(istype(loc,/turf)) //else, there's considered to be no light
-					light_amount = min(10,loc:sd_lumcount) - 5 //hardcapped so it's not abused by having a ton of flashlights
+					var/turf/currentTurf = get_turf(src)
+					light_amount = min(10,max(currentTurf.ul_GetRed(), currentTurf.ul_GetGreen(), currentTurf.ul_GetBlue())) - 5 //hardcapped so it's not abused by having a ton of flashlights
 				if(nutrition < 500) //so they can't store nutrition to survive without light forever
 					nutrition += light_amount
 				if(light_amount > 0) //if there's enough light, heal
@@ -903,7 +904,7 @@
 			for(var/name in organs)
 				var/datum/organ/external/E = organs[name]
 				E.process()
-				if(E.robot && prob(E.brute_dam + E.burn_dam))
+				if(E.status & ROBOT && prob(E.brute_dam + E.burn_dam))
 					if(E.name == "l_hand" || E.name == "l_arm")
 						if(hand && equipped())
 							drop_item()
@@ -927,19 +928,27 @@
 					else if(E.name == "l_leg" || E.name == "l_foot" \
 						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
 						leg_tally--									// let it fail even if just foot&leg
-				if(E.broken || E.destroyed)
+				if(E.status & BROKEN || E.status & DESTROYED)
 					if(E.name == "l_hand" || E.name == "l_arm")
 						if(hand && equipped())
-							drop_item()
-							emote("scream")
+							if(E.status & SPLINTED && prob(10))
+								drop_item()
+								emote("scream")
+							else
+								drop_item()
+								emote("scream")
 					else if(E.name == "r_hand" || E.name == "r_arm")
 						if(!hand && equipped())
-							drop_item()
-							emote("scream")
+							if(E.status & SPLINTED && prob(10))
+								drop_item()
+								emote("scream")
+							else
+								drop_item()
+								emote("scream")
 					else if(E.name == "l_leg" || E.name == "l_foot" \
 						|| E.name == "r_leg" || E.name == "r_foot" && !lying)
-						leg_tally--									// let it fail even if just foot&leg
-
+						if(!E.status & SPLINTED)
+							leg_tally--									// let it fail even if just foot&leg
 			// can't stand
 			if(leg_tally == 0 && !paralysis && !(lying || resting))
 				emote("scream")
@@ -964,9 +973,7 @@
 						//At this point, we dun care which blood we are adding to, as long as they get more blood.
 						B.volume = max(min(B.volume + 560/blood_volume,560), 0) //Less blood = More blood generated per tick
 
-				if(!blood_volume) // what is this for? if their blood_volume is 0, they'll die anyway
-					bloodloss = 0
-				else if(blood_volume > 448)
+				if(blood_volume > 448)
 					if(pale)
 						pale = 0
 						update_body()
@@ -1090,15 +1097,12 @@
 			var/blood_max = 0
 			for(var/name in organs)
 				var/datum/organ/external/temp = organs[name]
-				if(!temp.bleeding || temp.robot)
+				if(!(temp.status & BLEEDING) || temp.status & ROBOT)
 					continue
-				var/lose_blood = temp.total_wound_bleeding()
-				if(lose_blood)
-					drip(lose_blood)
-					blood_max += lose_blood
-				if(temp.destroyed && !temp.gauzed)
+				blood_max += 2
+				if(temp.status & DESTROYED && !(temp.status & GAUZED))
 					blood_max += 10 //Yer missing a fucking limb.
-			bloodloss = min(bloodloss+1,sqrt(blood_max))
+			drip(blood_max)
 			if (eye_blind)
 				eye_blind--
 				blinded = 1
@@ -1151,6 +1155,7 @@
 				else
 					seer = 0
 					see_invisible = 0
+
 
 			else if (istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
 				switch(wear_mask:mode)
@@ -1214,12 +1219,11 @@
 					see_in_dark = 2
 
 				var/seer = 0
-				for(var/obj/effect/rune/R in loc)
-					if(R.word1==wordsee && R.word2==wordhell && R.word3==wordjoin)
-						seer = 1
+				var/obj/effect/rune/R = locate() in loc
+				if (istype(R) && R.word1 == wordsee && R.word2 == wordhell && R.word3 == wordjoin)
+					seer = 1
 				if(!seer)
 					see_invisible = 0
-
 
 			else if(istype(head, /obj/item/clothing/head/helmet/welding))		// wat.  This is never fucking called.
 				if(!head:up && tinted_weldhelh)

@@ -118,7 +118,7 @@
 	if (!usr.client.holder)
 		return
 	var/dat = "<html><head><title>Player Menu</title></head>"
-	dat += "<body><table border=1 cellspacing=5><B><tr><th>Name/Real Name</th><th>IP/CID</th><th>Info</th><th>Options</th></tr></B>"
+	dat += "<body><table border=1 cellspacing=5><B><tr><th>Name/Real Name</th><th>IP/CID</th><th>Info</th><th>Options</th><th>Traitor?</th></tr></B>"
 	//add <th>IP:</th> to this if wanting to add back in IP checking <th>Type</th> <th>Assigned Job</th> <th>Traitor?</th>
 	//add <td>(IP: [M.lastKnownIP])</td> if you want to know their ip to the lists below
 	var/list/mobs = get_sorted_mobs()
@@ -200,22 +200,22 @@
 			else
 				dat += "<td>No Assigned Role</td>"
 */
-			dat += {"<td>IP: [M.client.address]<br>
-			CID: [M.client.computer_id]</td>
+			dat += {"<td>IP: [M.client ? M.client.address : "Disconnected"]<br>
+			CID: [M.client ? M.client.computer_id : "Disconnected"]</td>
 			"}
 
 			dat += {"<td><A HREF='?src=\ref[src];player_info=[M.ckey]'>[player_has_info(M.ckey) ? "Info" : "N/A"] </A></td>
 			<td><A href='?src=\ref[usr];priv_msg=\ref[M]'><b>PM</b></A></td>
 			"}
 
-/*			switch(is_special_character(M))
+			switch(is_special_character(M))
 				if(0)
-					dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'>Traitor?</A></td>"}
+					dat += {"<td align=center>Loyal</td>"}
 				if(1)
-					dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'><font color=red>Traitor?</font></A></td>"}
+					dat += {"<td align=center><font color=red>Antag</font></td>"}
 				if(2)
-					dat += {"<td align=center><A HREF='?src=\ref[src];traitor=\ref[M]'><font color=red><b>Traitor?</b></font></A></td>"}
-*/
+					dat += {"<td align=center><font color=red><b>Mode-Antag</b></font></td>"}
+
 	dat += "</table></body></html>"
 
 	usr << browse(dat, "window=players;size=600x600")
@@ -341,7 +341,7 @@
 				if(M)
 					dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>"
-					var/turf/mob_loc = get_turf_loc(M)
+					var/turf/mob_loc = get_turf(M)
 					dat += "<td>[mob_loc.loc]</td></tr>"
 				else
 					dat += "<tr><td><i>Head not found!</i></td></tr>"

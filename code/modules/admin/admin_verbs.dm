@@ -125,6 +125,8 @@
 			verbs += /client/proc/admin_observe
 			verbs += /client/proc/hide_verbs
 			verbs += /client/proc/deadmin_self
+			verbs += /client/proc/Report
+			verbs += /client/proc/display_admin_reports
 			verbs += /obj/admins/proc/show_skills
 		else	return
 
@@ -1011,6 +1013,7 @@
 		else
 			M.gender = FEMALE
 	M.rebuild_appearance()
+	M.update_body()
 	M.check_dna(M)
 
 

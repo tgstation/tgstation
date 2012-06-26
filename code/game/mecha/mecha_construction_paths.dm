@@ -1185,6 +1185,8 @@
 	spawn_result()
 		var/obj/item/mecha_parts/chassis/const_holder = holder
 		const_holder.construct = new /datum/construction/reversible/mecha/odysseus(const_holder)
+		const_holder.icon = 'mech_construction.dmi'
+		const_holder.icon_state = "odysseus0"
 		const_holder.density = 1
 		spawn()
 			del src
@@ -1203,7 +1205,7 @@
 					 		"backkey"=/obj/item/weapon/crowbar,
 					 		"desc"="External armor is installed."),
 					 //3
-					 list("key"=/obj/item/mecha_parts/part/odysseus_armour,
+					 list("key"=/obj/item/stack/sheet/plasteel,
 					 		"backkey"=/obj/item/weapon/weldingtool,
 					 		"desc"="Internal armor is welded."),
 					 //4
@@ -1262,82 +1264,108 @@
 		switch(index)
 			if(14)
 				user.visible_message("[user] connects [holder] hydraulic systems", "You connect [holder] hydraulic systems.")
+				holder.icon_state = "odysseus1"
 			if(13)
 				if(diff==FORWARD)
 					user.visible_message("[user] activates [holder] hydraulic systems.", "You activate [holder] hydraulic systems.")
+					holder.icon_state = "odysseus2"
 				else
 					user.visible_message("[user] disconnects [holder] hydraulic systems", "You disconnect [holder] hydraulic systems.")
+					holder.icon_state = "odysseus0"
 			if(12)
 				if(diff==FORWARD)
 					user.visible_message("[user] adds the wiring to [holder].", "You add the wiring to [holder].")
+					holder.icon_state = "odysseus3"
 				else
 					user.visible_message("[user] deactivates [holder] hydraulic systems.", "You deactivate [holder] hydraulic systems.")
+					holder.icon_state = "odysseus1"
 			if(11)
 				if(diff==FORWARD)
 					user.visible_message("[user] adjusts the wiring of [holder].", "You adjust the wiring of [holder].")
+					holder.icon_state = "odysseus4"
 				else
 					user.visible_message("[user] removes the wiring from [holder].", "You remove the wiring from [holder].")
 					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil(get_turf(holder))
 					coil.amount = 4
+					holder.icon_state = "odysseus2"
 			if(10)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs the central control module into [holder].", "You install the central computer mainboard into [holder].")
 					del used_atom
+					holder.icon_state = "odysseus5"
 				else
 					user.visible_message("[user] disconnects the wiring of [holder].", "You disconnect the wiring of [holder].")
+					holder.icon_state = "odysseus3"
 			if(9)
 				if(diff==FORWARD)
 					user.visible_message("[user] secures the mainboard.", "You secure the mainboard.")
+					holder.icon_state = "odysseus6"
 				else
 					user.visible_message("[user] removes the central control module from [holder].", "You remove the central computer mainboard from [holder].")
 					new /obj/item/weapon/circuitboard/mecha/odysseus/main(get_turf(holder))
+					holder.icon_state = "odysseus4"
 			if(8)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs the peripherals control module into [holder].", "You install the peripherals control module into [holder].")
 					del used_atom
+					holder.icon_state = "odysseus7"
 				else
 					user.visible_message("[user] unfastens the mainboard.", "You unfasten the mainboard.")
+					holder.icon_state = "odysseus5"
 			if(7)
 				if(diff==FORWARD)
 					user.visible_message("[user] secures the peripherals control module.", "You secure the peripherals control module.")
+					holder.icon_state = "odysseus8"
 				else
 					user.visible_message("[user] removes the peripherals control module from [holder].", "You remove the peripherals control module from [holder].")
 					new /obj/item/weapon/circuitboard/mecha/odysseus/peripherals(get_turf(holder))
+					holder.icon_state = "odysseus6"
 			if(6)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs internal armor layer to [holder].", "You install internal armor layer to [holder].")
+					holder.icon_state = "odysseus9"
 				else
 					user.visible_message("[user] unfastens the peripherals control module.", "You unfasten the peripherals control module.")
+					holder.icon_state = "odysseus7"
 			if(5)
 				if(diff==FORWARD)
 					user.visible_message("[user] secures internal armor layer.", "You secure internal armor layer.")
+					holder.icon_state = "odysseus10"
 				else
 					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
 					var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
 					MS.amount = 5
+					holder.icon_state = "odysseus8"
 			if(4)
 				if(diff==FORWARD)
 					user.visible_message("[user] welds internal armor layer to [holder].", "You weld the internal armor layer to [holder].")
+					holder.icon_state = "odysseus11"
 				else
 					user.visible_message("[user] unfastens the internal armor layer.", "You unfasten the internal armor layer.")
+					holder.icon_state = "odysseus9"
 			if(3)
 				if(diff==FORWARD)
 					user.visible_message("[user] installs [used_atom] layer to [holder].", "You install external reinforced armor layer to [holder].")
-					holder.overlays += used_atom.icon_state
-					del used_atom
+
+					holder.icon_state = "odysseus12"
 				else
 					user.visible_message("[user] cuts internal armor layer from [holder].", "You cut the internal armor layer from [holder].")
-			if(2)
+					holder.icon_state = "odysseus10"
 				if(diff==FORWARD)
 					user.visible_message("[user] secures external armor layer.", "You secure external reinforced armor layer.")
+					holder.icon_state = "odysseus13"
 				else
-					var/obj/item/mecha_parts/part/odysseus_armour/MS = new /obj/item/mecha_parts/part/odysseus_armour(get_turf(holder))
+					var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
+					MS.amount = 5
 					user.visible_message("[user] pries [MS] from [holder].", "You prie [MS] from [holder].")
+					holder.icon_state = "odysseus11"
 			if(1)
 				if(diff==FORWARD)
 					user.visible_message("[user] welds external armor layer to [holder].", "You weld external armor layer to [holder].")
+					holder.icon_state = "odysseus14"
 				else
 					user.visible_message("[user] unfastens the external armor layer.", "You unfasten the external armor layer.")
+					holder.icon_state = "odysseus12"
 		return 1
 
 	spawn_result()

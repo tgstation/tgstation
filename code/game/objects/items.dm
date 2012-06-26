@@ -23,8 +23,10 @@
 			for(var/mob/O in viewers(user, null))
 				O.show_message("\red <B>[user] is trying to put handcuffs on [M]!</B>", 1)
 			spawn(30)
+				if(!M)	return
 				if(p_loc == user.loc && p_loc_m == M.loc)
 					M.handcuffed = new /obj/item/weapon/handcuffs(M)
+					M.update_clothing()
 
 	else
 		if ((CLUMSY in usr.mutations) && prob(50))
@@ -64,8 +66,10 @@
 				M.requests += O
 				spawn( 0 )
 					if(istype(src, /obj/item/weapon/handcuffs/cable))
+//						feedback_add_details("handcuffs","C")
 						playsound(src.loc, 'cablecuff.ogg', 30, 1, -2)
 					else
+//						feedback_add_details("handcuffs","H")
 						playsound(src.loc, 'handcuffs.ogg', 30, 1, -2)
 					O.process()
 			return
@@ -394,7 +398,7 @@
 		return
 
 	var/datum/organ/external/head = H.organs["head"]
-	if(head.destroyed)
+	if(head.status & DESTROYED)
 		user << "\blue Put it where? There's no head."
 
 //since these people will be dead M != usr
@@ -535,6 +539,38 @@
 		istype(W, /obj/item/weapon/twohanded/fireaxe)			  || \
 		istype(W,/obj/item/projectile)\
 	)
+
+proc/is_hot(obj/item/W as obj)
+	switch(W.type)
+		if(/obj/item/weapon/weldingtool)
+			var/obj/item/weapon/weldingtool/WT = W
+			if(WT.isOn())
+				return 3800
+			else
+				return 0
+		if(/obj/item/weapon/lighter)
+			if(W:lit)
+				return 1500
+			else
+				return 0
+		if(/obj/item/weapon/match)
+			if(W:lit)
+				return 1000
+			else
+				return 0
+		if(/obj/item/clothing/mask/cigarette)
+			if(W:lit)
+				return 1000
+			else
+				return 0
+		if(/obj/item/weapon/pickaxe/plasmacutter)
+			return 3800
+		if(/obj/item/weapon/melee/energy)
+			return 3500
+		else
+			return 0
+
+	return 0
 
 /proc/is_cut(obj/item/W as obj)
 	return ( \

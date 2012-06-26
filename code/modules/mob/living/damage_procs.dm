@@ -47,11 +47,11 @@
 		if(STUN)
 			Stun((effect - (min(effect*getarmor(null, "laser"), effect*(0.75 + (blocked*0.05))))))
 		if(WEAKEN)
-			Weaken((effect - (min(effect*getarmor(null, "laser"), effect*(0.75 + (blocked*0.05))))))
+			Weaken(effect/(blocked+1))
 		if(PARALYZE)
 			Paralyse(effect/(blocked+1))
 		if(IRRADIATE)
-			radiation += max((effect - (effect*getarmor(null, "rad"))), 0)//Rads auto check armor
+			radiation += max((((effect - (effect*(getarmor(null, "rad")/100))))/(blocked+1)),0)//Rads auto check armor
 		if(STUTTER)
 			if(canstun) // stun is usually associated with stutter
 				stuttering = max(stuttering,(effect/(blocked+1)))

@@ -24,11 +24,11 @@ CIRCULAR SAW
 	if(((user.zone_sel.selecting == "l_arm") || (user.zone_sel.selecting == "r_arm") || (user.zone_sel.selecting == "l_leg") || (user.zone_sel.selecting == "r_leg")) & (istype(M, /mob/living/carbon/human)))
 		var/mob/living/carbon/human/H = M
 		var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
-		if(S.destroyed)
-			if(S.bleeding)
+		if(S.status & DESTROYED)
+			if(S.status & BLEEDING)
 				user << "\red There's too much blood here!"
 				return 0
-			if(!S.cutaway)
+			if(!(S.status & CUT_AWAY))
 				user << "\red The flesh hasn't been cleanly cut!"
 				return 0
 			if(M != user)
@@ -245,17 +245,17 @@ CIRCULAR SAW
 	if(!S || !istype(S))
 		return 0
 
-	if(S.destroyed)
+	if(S.status & DESTROYED)
 		return ..()
 
-	if(S.robot)
+	if(S.status & ROBOT)
 		user << "Medical equipment for a robot arm?  How would that do any good..."
 		return
 
 	if(!S.open)
 		user << "\red There is skin in the way!"
 		return 0
-	if(S.bleeding)
+	if(S.status & BLEEDING)
 		user << "\red [H] is profusely bleeding in \his [S.display_name]!"
 		return 0
 
@@ -303,11 +303,11 @@ CIRCULAR SAW
 	if(((user.zone_sel.selecting == "l_arm") || (user.zone_sel.selecting == "r_arm") || (user.zone_sel.selecting == "l_leg") || (user.zone_sel.selecting == "r_leg")) & (istype(M, /mob/living/carbon/human)))
 		var/mob/living/carbon/human/H = M
 		var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
-		if(S.destroyed)
-			if(!S.bleeding)
+		if(S.status & DESTROYED)
+			if(!(S.status & BLEEDING))
 				user << "\red There is nothing bleeding here!"
 				return 0
-			if(!S.cutaway)
+			if(!(S.status & CUT_AWAY))
 				user << "\red The flesh hasn't been cleanly cut!"
 				return 0
 			if(M != user)
@@ -333,7 +333,7 @@ CIRCULAR SAW
 					user << "\red You mess up!"
 					S.take_damage(15)
 
-				S.bleeding = 0
+				S.status &= ~BLEEDING
 				M.updatehealth()
 				M.UpdateDamageIcon()
 
@@ -559,10 +559,10 @@ CIRCULAR SAW
 	if(!S || !istype(S))
 		return 0
 
-	if(S.destroyed)
+	if(S.status & DESTROYED)
 		return ..()
 
-	if(S.robot)
+	if(S.status & ROBOT)
 		user << "Medical equipment for a robot arm?  How would that do any good?"
 		return
 
@@ -570,7 +570,7 @@ CIRCULAR SAW
 		user << "\red There is skin in the way!"
 		return 0
 
-	if(!S.bleeding)
+	if(!(S.status & BLEEDING))
 		if(S.implant)
 			if(H != user)
 				H.visible_message( \
@@ -581,33 +581,34 @@ CIRCULAR SAW
 					"\red [user] attempts to remove the implant in \his [S.display_name] with \the [src]!", \
 					"\red You attempt to remove the implant in your [S.display_name] with \the [src]!")
 
-			if(do_mob(user, H, 50))
-				if(prob(50))
-					if(H != user)
-						H.visible_message( \
-							"\red [user] successfully removes the implant in [H]'s [S.display_name] with \the [src]!", \
-							"\red [user] successfully removes the implant in your [S.display_name] with \the [src]!")
-					else
-						H.visible_message( \
-							"\red [user] successfully removes the implant in \his [S.display_name] with \the [src]!", \
-							"\red You successfully remove the implant in your [S.display_name] with \the [src]!")
-					for(var/obj/item/weapon/implant/implant in S.implant)
+			do
+				if(do_mob(user, H, 50))
+					if(prob(50))
+						if(H != user)
+							H.visible_message( \
+								"\red [user] successfully removes the implant in [H]'s [S.display_name] with \a [src]!", \
+								"\red [user] successfully removes the implant in your [S.display_name] with \the [src]!")
+						else
+							H.visible_message( \
+								"\red [user] successfully removes the implant in \his [S.display_name] with \a [src]!", \
+								"\red You successfully remove the implant in your [S.display_name] with \the [src]!")
+						var/obj/item/weapon/implant/implant = pick(S.implant)
 						implant.loc = (get_turf(H))
 						implant.implanted = 0
-						S.implant = null
+						S.implant.Remove(implant)
 						playsound(user, 'squelch1.ogg', 50, 1)
 						if(istype(implant, /obj/item/weapon/implant/explosive) || istype(implant, /obj/item/weapon/implant/uplink) || istype(implant, /obj/item/weapon/implant/dexplosive) || istype(implant, /obj/item/weapon/implant/explosive) || istype(implant, /obj/item/weapon/implant/compressed))
 							usr << "The implant disintegrates into nothing..."
 							del(implant)
-				else
-					if(H != user)
-						H.visible_message( \
-							"\red [user] fails to removes the implant!", \
-							"\red [user] fails to removes the implant!")
+						if(!S.implant.len)
+							del S.implant
 					else
 						H.visible_message( \
-							"\red [user] fails to removes the implant!", \
-							"\red You fail to removes the implant!")
+							"\red [user] fails to remove the implant!", \
+							"\red You fail to remove the implant!")
+				else
+					break
+			while (S.implant && S.implant.len)
 
 			return 1
 		else
@@ -637,7 +638,7 @@ CIRCULAR SAW
 			user << "\red You mess up!"
 			S.take_damage(15)
 
-		S.bleeding = 0
+		S.status &= ~BLEEDING
 
 		H.updatehealth()
 		H.UpdateDamageIcon()
@@ -813,7 +814,7 @@ CIRCULAR SAW
 	if(!S.open)
 		usr << "<b>You have to cut the limb open first!</b>"
 		return
-	if(S.robot)
+	if(S.status & ROBOT)
 		user << "Medical equipment for a robot arm?  How would that do any good?"
 		return
 	for(var/mob/O in viewers(M))
@@ -837,11 +838,11 @@ CIRCULAR SAW
 	if(((user.zone_sel.selecting == "l_arm") || (user.zone_sel.selecting == "r_arm") || (user.zone_sel.selecting == "l_leg") || (user.zone_sel.selecting == "r_leg")) & (istype(M, /mob/living/carbon/human)))
 		var/mob/living/carbon/human/H = M
 		var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
-		if(S.destroyed)
-			if(S.bleeding)
+		if(S.status & DESTROYED)
+			if(S.status & BLEEDING)
 				user << "\red There's too much blood here!"
 				return 0
-			if(!S.cutaway)
+			if(!(S.status & CUT_AWAY))
 				user << "\red The flesh hasn't been cleanly cut!"
 				return 0
 			if(S.open != 3)
@@ -872,7 +873,7 @@ CIRCULAR SAW
 
 				S.open = 0
 				S.stage = 0
-				S.attachable = 1
+				S.status |= ATTACHABLE
 				M.updatehealth()
 				M.UpdateDamageIcon()
 
@@ -1028,10 +1029,10 @@ CIRCULAR SAW
 	if(!S || !istype(S))
 		return 0
 
-	if(S.destroyed)
+	if(S.status & DESTROYED)
 		user << "What [S.display_name]?"
 
-	if(S.robot)
+	if(S.status & ROBOT)
 		user << "Medical equipment for a robot arm?  How would that do any good..."
 		return
 	if(!S.open)
@@ -1096,7 +1097,7 @@ CIRCULAR SAW
 	if(((user.zone_sel.selecting == "l_arm") || (user.zone_sel.selecting == "r_arm") || (user.zone_sel.selecting == "l_leg") || (user.zone_sel.selecting == "r_leg")) & (istype(M, /mob/living/carbon/human)))
 		var/mob/living/carbon/human/H = M
 		var/datum/organ/external/S = H.organs[user.zone_sel.selecting]
-		if(S.destroyed)
+		if(S.status & DESTROYED)
 			if(M != user)
 				M.visible_message( \
 					"\red [user] is beginning to cut away at the flesh where [H]'s [S.display_name] used to be with [src].", \
@@ -1116,8 +1117,7 @@ CIRCULAR SAW
 						"\red [user] finishes cutting where \his [S.display_name] used to be with [src]!", \
 						"\red You finish cutting where your [S.display_name] used to be with [src]!")
 
-				S.cutaway = 1
-				S.bleeding = 1
+				S.status |= BLEEDING|CUT_AWAY
 				M.updatehealth()
 				M.UpdateDamageIcon()
 			else
@@ -1190,7 +1190,7 @@ CIRCULAR SAW
 
 		if(istype(H) && H.organs["head"])
 			var/datum/organ/external/affecting = H.organs["head"]
-			if(affecting.destroyed)
+			if(affecting.status & DESTROYED)
 				return ..()
 
 		if(istype(H) && ( \
@@ -1242,7 +1242,7 @@ CIRCULAR SAW
 				if(istype(M, /mob/living/carbon/human))
 					var/datum/organ/external/affecting = M:get_organ("head")
 					affecting.take_damage(7)
-					affecting.open = 1
+					affecting.status |= OPEN
 				else
 					M.take_organ_damage(7)
 
@@ -1420,10 +1420,10 @@ CIRCULAR SAW
 	if(!S || !istype(S))
 		return 0
 
-	if(S.destroyed)
+	if(S.status & DESTROYED)
 		return ..()
 
-	if(S.robot)
+	if(S.status & ROBOT)
 		user << "Medical equipment for a robot arm?  How would that do any good..."
 		return
 
@@ -1454,8 +1454,7 @@ CIRCULAR SAW
 			user << "\red You mess up!"
 			S.take_damage(15)
 
-		S.open = 1
-		S.bleeding = 1
+		S.status |= OPEN|BLEEDING
 		if(S.display_name == "chest")
 			H:embryo_op_stage = 1.0
 		if(S.display_name == "groin")
@@ -1467,14 +1466,13 @@ CIRCULAR SAW
 		var/msg
 		if(a == 1)
 			msg = "\red [user]'s move slices open [H]'s wound, causing massive bleeding"
-			S.brute_dam += 35
-			S.createwound(rand(1,3))
+			S.take_damage(35, 0, 1, "Malpractice")
 		else if(a == 2)
 			msg = "\red [user]'s move slices open [H]'s wound, and causes \him to accidentally stab himself"
-			S.brute_dam += 35
+			S.take_damage(35, 0, 1, "Malpractice")
 			var/datum/organ/external/userorgan = user:organs["chest"]
 			if(userorgan)
-				userorgan.brute_dam += 35
+				userorgan.take_damage(35, 0, 1, "Malpractice")
 			else
 				user.take_organ_damage(35)
 		else if(a == 3)
@@ -1524,7 +1522,7 @@ CIRCULAR SAW
 				if(!hasorgans(M))
 					return ..()
 				var/datum/organ/external/S = M:organs["head"]
-				if(S.destroyed)
+				if(S.status & DESTROYED)
 					return
 				for(var/mob/O in viewers(M, null))
 					O.show_message(text("\red [M] gets \his [S.display_name] sawed at with [src] by [user].... It looks like [user] is trying to cut it off!"), 1)
@@ -1534,7 +1532,7 @@ CIRCULAR SAW
 					return
 				for(var/mob/O in viewers(M, null))
 					O.show_message(text("\red [M] gets \his [S.display_name] sawed off with [src] by [user]."), 1)
-				S.destroyed = 1
+				S.status |= DESTROYED
 				S.droplimb()
 				M:update_body()
 			if(1.0)
@@ -1624,10 +1622,10 @@ CIRCULAR SAW
 	else if(user.zone_sel.selecting != "chest" && hasorgans(M))
 		var/mob/living/carbon/H = M
 		var/datum/organ/external/S = H:organs[user.zone_sel.selecting]
-		if(S.destroyed)
+		if(S.status & DESTROYED)
 			return
 
-		if(S.robot)
+		if(S.status & ROBOT)
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, M)
 			spark_system.attach(M)
@@ -1688,32 +1686,33 @@ CIRCULAR SAW
 		var/datum/organ/external/temp = M.organs[zone]
 		var/msg
 
-		if(temp.destroyed)
+		if(temp.status & DESTROYED)
 			return ..()
 
         // quickly convert embryo removal to bone surgery
 		if(zone == "chest" && M.embryo_op_stage == 3)
 			M.embryo_op_stage = 0
 			temp.open = 2
-			temp.bleeding = 0
+			temp.status &= ~BLEEDING
 
 		// quickly convert appendectomy to bone surgery
 		if(zone == "groin" && M.appendix_op_stage == 3)
 			M.appendix_op_stage = 0
 			temp.open = 2
-			temp.bleeding = 0
+			temp.status &= ~BLEEDING
 
 		msg = get_message(1,M,user,temp)
 		for(var/mob/O in viewers(M,null))
 			O.show_message("\red [msg]",1)
 		if(do_mob(user,M,time))
-			if(temp.open == 2 && !temp.bleeding)
-				if(temp.wound in wound)
+			if(temp.open == 2 && !(temp.status & BLEEDING))
+				if(temp.broken_description in wound)
 					if(temp.stage in stage)
 						temp.stage += 1
 
 						if(IsFinalStage(temp.stage))
-							temp.broken = 0
+							temp.status &= ~BROKEN
+							temp.status &= ~SPLINTED
 							temp.stage = 0
 							temp.perma_injury = 0
 							temp.brute_dam = temp.min_broken_damage -1
@@ -1811,16 +1810,17 @@ CIRCULAR SAW
 		var/mob/living/carbon/human/H = M
 		for(var/name in H.organs)
 			var/datum/organ/external/e = H.organs[name]
-			if(e.destroyed) // this is nanites, not space magic
+			if(e.status & DESTROYED) // this is nanites, not space magic
 				continue
 			e.brute_dam = 0.0
 			e.burn_dam = 0.0
-			e.bandaged = 0.0
+			e.status &= ~BANDAGED
 			e.max_damage = initial(e.max_damage)
-			e.bleeding = 0
+			e.status &= ~BLEEDING
 			e.open = 0
-			e.broken = 0
-			e.destroyed = 0
+			e.status &= ~BROKEN
+			e.status &= ~DESTROYED
+			e.status &= ~SPLINTED
 			e.perma_injury = 0
 			e.update_icon()
 		H.update_body()

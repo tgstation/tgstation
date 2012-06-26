@@ -13,7 +13,7 @@
 
 	var/universal_translate = 0 // set to 1 if it can translate nonhuman speech
 
-	req_access = list(access_tcomsat)
+	req_access = list(ACCESS_TCOMSAT)
 
 	attack_hand(mob/user as mob)
 		if(stat & (BROKEN|NOPOWER))
@@ -204,7 +204,7 @@
 
 					network = newnet
 					screen = 0
-					machines = list()
+					servers = list()
 					temp = "<font color = #336699>- NEW NETWORK TAG SET IN ADDRESS \[[network]\] -</font color>"
 
 		updateUsrDialog()

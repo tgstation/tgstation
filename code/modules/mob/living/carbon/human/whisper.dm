@@ -165,5 +165,5 @@
 	for (var/mob/M in world)
 		if (istype(M, /mob/new_player))
 			continue
-		if (M.stat > 1 && !(M in heard_a))
+		if (M.stat > 1 && !(M in heard_a) && M.client.ghost_ears)
 			M.show_message(rendered, 2)

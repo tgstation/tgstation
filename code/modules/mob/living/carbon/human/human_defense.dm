@@ -10,12 +10,6 @@ emp_act
 
 /mob/living/carbon/human/bullet_act(var/obj/item/projectile/P, var/def_zone)
 
-	if(REFLEXES in augmentations)
-		if(prob(50))
-			var/message = pick("[src] skillfully dodges the [P.name]!", "[src] ducks, dodging the [P.name]!", "[src] effortlessly jumps out of the way of the [P.name]!", "[src] dodges the [P.name] in one graceful movement!", "[src] leans back, dodging the [P.name] narrowly!")
-			visible_message("\red <B>[message]</B>")
-			return -1
-
 	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor/laserproof))
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 			var/reflectchance = 40 - round(P.damage/3)
@@ -116,7 +110,7 @@ emp_act
 		O.emp_act(severity)
 	for(var/named in organs)
 		var/datum/organ/external/O = organs[named]
-		if(O.destroyed)	continue
+		if(O.status & DESTROYED)	continue
 		O.emp_act(severity)
 	..()
 
@@ -131,7 +125,7 @@ emp_act
 	if((user != src) && check_shields(I.force, "the [I.name]"))
 		return 0
 
-	if(!affecting.destroyed)
+	if(!(affecting.status & DESTROYED))
 		visible_message("\red <B>[src] has been attacked in the [hit_area] with [I.name] by [user]!</B>")
 	else
 		user << "What [affecting]?"

@@ -1,79 +1,57 @@
+#define FRAME_PROBABILITY 3
+#define THEFT_PROBABILITY 55
+#define KILL_PROBABILITY 37
+#define PROTECT_PROBABILITY 5
+
+#define LENIENT 0
+#define NORMAL 1
+#define HARD 2
+#define IMPOSSIBLE 3
+
+
 /proc/GenerateTheft(var/job,var/datum/mind/traitor)
 	var/list/datum/objective/objectives = list()
-	var/list/weight = list()
-	var/index = 1
 
 	for(var/o in typesof(/datum/objective/steal))
 		if(o != /datum/objective/steal)		//Make sure not to get a blank steal objective.
 			var/datum/objective/target = new o(null,job)
-			weight += list("[index]" = target.weight)
 			objectives += target
-			index++
-	return list(objectives, weight)
+			objectives[target] = target.weight
+	return objectives
 
 /proc/GenerateAssassinate(var/job,var/datum/mind/traitor)
 	var/list/datum/objective/assassinate/missions = list()
-	var/list/weight = list()
-	var/index = 1
 
 	for(var/datum/mind/target in ticker.minds)
 		if((target != traitor) && istype(target.current, /mob/living/carbon/human))
 			if(target && target.current)
 				var/datum/objective/target_obj = new /datum/objective/assassinate(null,job,target)
-				weight += list("[index]" = target_obj.weight)
 				missions += target_obj
-				index++
-	return list(missions, weight)
+				missions[target_obj] = target_obj.weight
+	return missions
 
 /proc/GenerateFrame(var/job,var/datum/mind/traitor)
 	var/list/datum/objective/frame/missions = list()
-	var/list/weight = list()
-	var/index = 1
 
 	for(var/datum/mind/target in ticker.minds)
 		if((target != traitor) && istype(target.current, /mob/living/carbon/human))
 			if(target && target.current)
 				var/datum/objective/target_obj = new /datum/objective/frame(null,job,target)
-				weight += list("[index]" = target_obj.weight)
 				missions += target_obj
-				index++
-	return list(missions, weight)
+				missions[target_obj] = target_obj.weight
+	return missions
 
 /proc/GenerateProtection(var/job,var/datum/mind/traitor)
 	var/list/datum/objective/frame/missions = list()
-	var/list/weight = list()
-	var/index = 1
 
 	for(var/datum/mind/target in ticker.minds)
 		if((target != traitor) && istype(target.current, /mob/living/carbon/human))
 			if(target && target.current)
 				var/datum/objective/target_obj = new /datum/objective/protection(null,job,target)
-				weight += list("[index]" = target_obj.weight)
 				missions += target_obj
-				index++
-	return list(missions, weight)
+				missions[target_obj] = target_obj.weight
+	return missions
 
-/proc/PickObjectiveFromList(var/list/objectivesArray)
-	var/list/datum/objectives = objectivesArray[1]
-	var/pick_index = text2num(pickweight(objectivesArray[2]))
-	if (pick_index > objectives.len || pick_index < 1)
-		log_admin("Objective picking failed. Error logged. One or more traitors will need to be manually-assigned objectives. Pick_index was [pick_index].  Tell Sky.")
-		message_admins("Objective picking failed. Error logged. One or more traitors will need to be manually-assigned objectives. Pick_index was [pick_index]. Tell Sky.")
-		CRASH("Objective picking failed. Pick_index was [pick_index].")
-
-	return objectives[pick_index]
-
-/proc/RemoveObjectiveFromList(var/list/objectiveArray, var/datum/objective/objective)
-	var/list/datum/objective/temp = objectiveArray[1]
-	var/list/weight = objectiveArray[2]
-	var/index = temp.Find(objective)
-	if(index == temp.len)
-		temp.Cut(index)
-		weight.Cut(index)
-	else
-		temp.Cut(index, index+1)
-		weight.Cut(index, index+1)
-	return list(temp,weight)
 
 /proc/SelectObjectives(var/job,var/datum/mind/traitor,var/hijack = 0)
 	var/list/chosenobjectives = list()
@@ -81,36 +59,131 @@
 	var/list/killobjectives = GenerateAssassinate(job,traitor)
 	var/list/frameobjectives = GenerateFrame(job,traitor)
 	var/list/protectobjectives = GenerateProtection(job,traitor)
-	//var/points
-	var/totalweight
-	var/selectobj
+	var/total_weight
 	var/conflict
 
-	while(totalweight < 100)
-		selectobj = rand(1,100)	//Randomly determine the type of objective to be given.
-		if(!length(killobjectives[1]) || !length(protectobjectives[1])|| !length(frameobjectives[1]))	//If any of these lists are empty, just give them theft objectives.
-			var/datum/objective/objective = PickObjectiveFromList(theftobjectives)
+	var/steal_weight = THEFT_PROBABILITY
+	var/frame_weight = FRAME_PROBABILITY
+	var/kill_weight = KILL_PROBABILITY
+	var/protect_weight = PROTECT_PROBABILITY
+	var/target_weight = 50
+
+/////////////////////////////////////////////////////////////
+//HANDLE ASSIGNING OBJECTIVES BASED OFF OF PREVIOUS SUCCESS//
+/////////////////////////////////////////////////////////////
+
+	var/savefile/info = new("data/player_saves/[copytext(traitor.key, 1, 2)]/[traitor.key]/traitor.sav")
+	var/list/infos
+	info >> infos
+	if(istype(infos))
+		var/total_attempts = infos["Total"]
+		var/total_overall_success = infos["Success"]
+		var/success_ratio = total_overall_success/total_attempts
+		var/steal_success = infos["Steal"]
+		var/kill_success = infos["Kill"]
+		var/frame_success = infos["Frame"]
+		var/protect_success = infos["Protect"]
+
+		var/list/ordered_success = list(steal_success, kill_success, frame_success, protect_success)
+
+		var/difficulty = pick(LENIENT, LENIENT, NORMAL, NORMAL, NORMAL, HARD, HARD, IMPOSSIBLE)
+		//Highest to lowest in terms of success rate, and resulting weight for later computation
+		var/success_weights = list(1, 1, 1, 1)
+		switch(difficulty)
+			if(LENIENT)
+				success_weights = list(1.5, 1, 0.75, 0.5)
+				target_weight = success_ratio*100
+			if(NORMAL)
+				target_weight = success_ratio*150
+			if(HARD)
+				success_weights = list(0.66, 0.8, 1, 1.25)
+				target_weight = success_ratio*200
+			if(IMPOSSIBLE) //YOU SHALL NOT PASS
+				success_weights = list(0.5, 0.75, 1.2, 2)
+				target_weight = success_ratio*300
+
+		for(var/i = 1, i <= 4, i++)
+		//Iterate through the success rates, and determine the weights to chose based on the highest to
+		//	the lowest to multiply it by the proper success ratio.
+			var/weight = max(ordered_success)
+			ordered_success -= weight
+			if(weight == steal_success)
+				steal_weight *= steal_success*success_weights[i]
+			else if(weight == frame_success)
+				frame_weight *= frame_success*success_weights[i]
+			else if(weight == protect_success)
+				protect_weight *= protect_success*success_weights[i]
+			else if(weight == kill_success)
+				kill_weight *= kill_success*success_weights[i]
+
+		var/total_weights = kill_weight + protect_weight + frame_weight + steal_weight
+		frame_weight = round(frame_weight/total_weights)
+		kill_weight = round(kill_weight/total_weights)
+		steal_weight = round(steal_weight/total_weights)
+		//Protect is whatever is left over.
+
+	var/steal_range = steal_weight
+	var/frame_range = frame_weight + steal_range
+	var/kill_range = kill_weight + frame_range
+	//Protect is whatever is left over.
+
+	while(total_weight < target_weight)
+		var/selectobj = rand(1,100)	//Randomly determine the type of objective to be given.
+		if(!length(killobjectives) || !length(protectobjectives)|| !length(frameobjectives))	//If any of these lists are empty, just give them theft objectives.
+			var/datum/objective/objective = pickweight(theftobjectives)
 			chosenobjectives += objective
-			totalweight += objective.points
-			theftobjectives = RemoveObjectiveFromList(theftobjectives, objective)
+			total_weight += objective.points
+			theftobjectives -= objective
 		else switch(selectobj)
-			if(1 to 55)		//Theft Objectives (55% chance)
-				var/datum/objective/objective = PickObjectiveFromList(theftobjectives)
+			if(1 to steal_range)
+				if(!theftobjectives.len)
+					continue
+				var/datum/objective/objective = pickweight(theftobjectives)
 				for(1 to 10)
-					if(objective.points + totalweight <= 100)
+					if(objective.points + total_weight <= 100 || !theftobjectives.len)
 						break
-					objective = PickObjectiveFromList(theftobjectives)
+					theftobjectives -= objective
+					objective = pickweight(theftobjectives)
+				if(!objective && !theftobjectives.len)
+					continue
 				chosenobjectives += objective
-				totalweight += objective.points
-				theftobjectives = RemoveObjectiveFromList(theftobjectives, objective)
-			if(56 to 92)	//Assassination Objectives (37% chance)
-				var/datum/objective/assassinate/objective = PickObjectiveFromList(killobjectives)
+				total_weight += objective.points
+				theftobjectives -= objective
+			if(steal_range + 1 to frame_range)	//Framing Objectives (3% chance)
+				if(!frameobjectives.len)
+					continue
+				var/datum/objective/objective = pickweight(frameobjectives)
+				for(1 to 10)
+					if(objective.points + total_weight <= 100 || !frameobjectives.len)
+						break
+					frameobjectives -= objective
+					objective = pickweight(frameobjectives)
+				if(!objective && !frameobjectives.len)
+					continue
+				for(var/datum/objective/protection/conflicttest in chosenobjectives)	//Check to make sure we aren't telling them to Assassinate somebody they need to Protect.
+					if(conflicttest.target == objective.target)
+						conflict = 1
+						break
+				for(var/datum/objective/assassinate/conflicttest in chosenobjectives)	//Check to make sure we aren't telling them to Protect somebody they need to Assassinate.
+					if(conflicttest.target == objective.target)
+						conflict = 1
+						break
+				if(!conflict)
+					chosenobjectives += objective
+					total_weight += objective.points
+				frameobjectives -= objective
+				conflict = 0
+			if(frame_range + 1 to kill_range)
+				if(!killobjectives.len)
+					continue
+				var/datum/objective/assassinate/objective = pickweight(killobjectives)
 				world << objective
 				for(1 to 10)
-					if(objective.points + totalweight <= 100)
+					if(objective.points + total_weight <= 100 || !killobjectives.len)
 						break
-					objective = PickObjectiveFromList(killobjectives)
-				if(!objective)
+					killobjectives -= objective
+					objective = pickweight(killobjectives)
+				if(!objective && !killobjectives.len)
 					continue
 				for(var/datum/objective/protection/conflicttest in chosenobjectives)	//Check to make sure we aren't telling them to Assassinate somebody they need to Protect.
 					if(conflicttest.target == objective.target)
@@ -122,37 +195,19 @@
 						break
 				if(!conflict)
 					chosenobjectives += objective
-					totalweight += objective.points
-					killobjectives = RemoveObjectiveFromList(killobjectives, objective)
+					total_weight += objective.points
+				killobjectives -= objective
 				conflict = 0
-			if(93 to 95)	//Framing Objectives (3% chance)
-				var/datum/objective/objective = PickObjectiveFromList(frameobjectives)
-				for(1 to 10)
-					if(objective.points + totalweight <= 100)
-						break
-					objective = PickObjectiveFromList(frameobjectives)
-				if(!objective)
+			if(kill_range + 1 to 100)	//Protection Objectives (5% chance)
+				if(!protectobjectives.len)
 					continue
-				for(var/datum/objective/protection/conflicttest in chosenobjectives)	//Check to make sure we aren't telling them to Assassinate somebody they need to Protect.
-					if(conflicttest.target == objective.target)
-						conflict = 1
-						break
-				for(var/datum/objective/assassinate/conflicttest in chosenobjectives)	//Check to make sure we aren't telling them to Protect somebody they need to Assassinate.
-					if(conflicttest.target == objective.target)
-						conflict = 1
-						break
-				if(!conflict)
-					chosenobjectives += objective
-					totalweight += objective.points
-					frameobjectives = RemoveObjectiveFromList(frameobjectives, objective)
-				conflict = 0
-			if(96 to 100)	//Protection Objectives (5% chance)
-				var/datum/objective/protection/objective = PickObjectiveFromList(protectobjectives)
+				var/datum/objective/protection/objective = pickweight(protectobjectives)
 				for(1 to 10)
-					if(objective.points + totalweight <= 100)
+					if(objective.points + total_weight <= 100 || !protectobjectives.len)
 						break
-					objective = PickObjectiveFromList(protectobjectives)
-				if(!objective)
+					protectobjectives -= objective
+					objective = pickweight(protectobjectives)
+				if(!objective || !protectobjectives.len)
 					continue
 				for(var/datum/objective/assassinate/conflicttest in chosenobjectives)	//Check to make sure we aren't telling them to Protect somebody they need to Assassinate.
 					if(conflicttest.target == objective.target)
@@ -164,19 +219,11 @@
 						break
 				if(!conflict)
 					chosenobjectives += objective
-					totalweight += objective.points
-					protectobjectives = RemoveObjectiveFromList(protectobjectives, objective)
+					total_weight += objective.points
+				protectobjectives -= objective
 				conflict = 0
 
-	var/hasendgame = 0
-	for(var/datum/objective/o in chosenobjectives)
-		if(o.type == /datum/objective/hijack || o.type == /datum/objective/escape)
-			hasendgame = 1
-			break
-	for(var/datum/objective/o in chosenobjectives)
-		if(o.explanation_text == "Free Objective")
-			del(o) //Cleaning up any sillies.
-	if(hasendgame == 0)
+	if(!locate(/datum/objective/hijack) in chosenobjectives && !locate(/datum/objective/escape) in chosenobjectives)
 		if(hijack)
 			chosenobjectives += new /datum/objective/hijack(null,job)
 		else
@@ -1401,3 +1448,12 @@ datum/objective/silence
 					if (get_turf(player) in pod4)
 						return 0
 		return 1
+
+#undef FRAME_PROBABILITY
+#undef THEFT_PROBABILITY
+#undef KILL_PROBABILITY
+#undef PROTECT_PROBABILITY
+#undef LENIENT
+#undef NORMAL
+#undef HARD
+#undef IMPOSSIBLE

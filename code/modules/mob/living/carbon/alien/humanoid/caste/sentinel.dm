@@ -167,19 +167,14 @@
 			if ((O.client && !( O.blinded )))
 				O << "\red [src] spits neurotoxin at [target]!"
 		//I'm not motivated enough to revise this. Prjectile code in general needs update.
-		var/turf/T = loc
-		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
+		var/turf/T = get_turf(src)
+		var/turf/U = (istype(target, /atom/movable) ? get_turf(target) : target)
 
-		if(!U || !T)
+		if(!istype(T, /turf) || !istype(U,/turf))
 			return
-		while(U && !istype(U,/turf))
-			U = U.loc
-		if(!istype(T, /turf))
-			return
+
 		if (U == T)
 			usr.bullet_act(src, src.get_organ_target())
-			return
-		if(!istype(U, /turf))
 			return
 
 		var/obj/item/projectile/energy/dart/A = new /obj/item/projectile/energy/dart(usr.loc)

@@ -389,7 +389,7 @@ datum
 //					if(50 to INFINITY)
 //						M:adjustToxLoss(0.1)
 				data++
-				holder.remove_reagent(src.id, 0.1)
+				holder.remove_reagent(src.id, 0.04)
 				..()
 				return
 
@@ -702,6 +702,8 @@ datum
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				if(!istype(M, /mob/living))
 					return
+				if(M.acid_act(src))
+					return
 				if(method == TOUCH)
 					if(istype(M, /mob/living/carbon/human))
 						if(M:wear_mask)
@@ -734,6 +736,8 @@ datum
 						M.take_organ_damage(min(15, volume * 2))
 
 			reaction_obj(var/obj/O, var/volume)
+				if(O.acid_act(src))
+					return
 				if(istype(O, /obj/effect/blob))
 					var/obj/effect/blob/B = O
 					if(B.weakness == "acid")
@@ -772,6 +776,9 @@ datum
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				if(!istype(M, /mob/living))
 					return //wooo more runtime fixin
+				//cael - added the option for things splashed with acid to handle it themselves (for xenoarch)
+				if(M.acid_act(src))
+					return
 				if(method == TOUCH)
 					if(istype(M, /mob/living/carbon/human))
 						if(M:wear_mask)
@@ -815,6 +822,8 @@ datum
 							M.take_organ_damage(min(15, volume * 4))
 
 			reaction_obj(var/obj/O, var/volume)
+				if(O.acid_act(src))
+					return
 				if(istype(O, /obj/effect/blob))
 					var/obj/effect/blob/B = O
 					if(B.weakness == "acid")
@@ -860,7 +869,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.radiation += 3
+				M.apply_effect(10,IRRADIATE,0)
 
 				// radium may increase your chances to cure a disease
 				if(istype(M,/mob/living/carbon)) // make sure to only use it on carbon mobs
@@ -943,7 +952,7 @@ datum
 				if(isrobot(M) || isAI(M)) return // Mutagen doesn't do anything to robutts!
 				if(!M) M = holder.my_atom
 				if(prob(33))
-					M.radiation += 1
+					M.apply_effect(10,IRRADIATE,0)
 				..()
 				return
 
@@ -1026,7 +1035,7 @@ datum
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M) M = holder.my_atom
-				M.radiation += 1
+				M.apply_effect(3,IRRADIATE,0)
 				..()
 				return
 
@@ -1819,14 +1828,15 @@ datum
 				if(!data) data = 1
 				data++
 				switch(data)
-					if(1)
+					if(10)
 						M:confused += 2
 						M:drowsyness += 2
-					if(2 to 50)
+					if(11 to 50)
 						M:sleeping += 5
 					if(51 to INFINITY)
 						M:sleeping += 5
 						M:adjustToxLoss(2)
+				holder.remove_reagent(src.id, 0.04)
 				..()
 				return
 
@@ -1930,7 +1940,8 @@ datum
 				if(!M) M = holder.my_atom
 				M:bodytemperature += 5
 				if(prob(40) && !istype(M, /mob/living/carbon/metroid))
-					M.apply_damage(1, BURN, pick("head", "chest"))
+					if( !( istype( M, /mob/living/carbon/human ) && M:mutantrace == "lizard" ) )	//because sbiten are now a soghun drink, and sometimes there is some of this left over in the drink
+						M.apply_damage(1, BURN, pick("head", "chest"))
 
 				if(istype(M, /mob/living/carbon/metroid))
 					M:bodytemperature += rand(5,20)
@@ -2715,6 +2726,20 @@ datum
 				..()
 				return
 
+/*			reaction_obj(var/obj/O, var/volume)
+				if(istype(O,/obj/item/weapon/paper))
+					var/obj/item/weapon/paper/paperaffected = O
+					paperaffected.clearpaper()
+					usr << "The solution melts away the ink on the paper."
+				if(istype(O,/obj/item/weapon/book))
+					if(volume >= 5)
+						var/obj/item/weapon/book/affectedbook = O
+						affectedbook.dat = null
+						usr << "The solution melts away the ink on the book."
+					else
+						usr << "It wasn't enough..."
+				return
+*/
 			beer	//It's really much more stronger than other drinks.
 				name = "Beer"
 				id = "beer"
@@ -2749,11 +2774,46 @@ datum
 				color = "#664300" // rgb: 102, 67, 0
 				dizzy_adj = 3
 
+			absinthe
+				name = "Absinthe"
+				id = "absinthe"
+				description = "Watch out that the Green Fairy doesn't come for you!"
+				color = "#33EE00" // rgb: lots, ??, ??
+				dizzy_adj = 5
+				slur_start = 25
+				confused_start = 100
+
+				//copy paste from LSD... shoot me
+				on_mob_life(var/mob/M)
+					if(!M) M = holder.my_atom
+					if(!data) data = 1
+					data++
+					M:hallucination += 5
+					if(volume > REAGENTS_OVERDOSE)
+						M:adjustToxLoss(1)
+	//				if(data >= 100)
+	//					M:adjustToxLoss(0.1)
+					..()
+					return
+
 			rum
 				name = "Rum"
 				id = "rum"
 				description = "Yohoho and all that."
 				color = "#664300" // rgb: 102, 67, 0
+
+			deadrum
+				name = "Deadrum"
+				id = "rum"
+				description = "Popular with the sailors. Not very popular with everyone else."
+				color = "#664300" // rgb: 102, 67, 0
+
+				on_mob_life(var/mob/living/M as mob)
+					..()
+					M.dizziness +=5
+					if(volume > REAGENTS_OVERDOSE)
+						M:adjustToxLoss(1)
+					return
 
 			vodka
 				name = "Vodka"

@@ -31,7 +31,7 @@
 	spawn_positions = 3
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
-	alt_titles = list("Plasma Researcher", "Xenobiologist")
+	alt_titles = list("Plasma Researcher", "Xenobiologist", "Anomalist", "Xenoarchaeologist")
 
 
 	equip(var/mob/living/carbon/human/H)
@@ -44,6 +44,6 @@
 		H.equip_if_possible(new /obj/item/clothing/shoes/white(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/device/pda/toxins(H), H.slot_belt)
 		H.equip_if_possible(new /obj/item/clothing/suit/storage/labcoat/science(H), H.slot_wear_suit)
-		H.equip_if_possible(new /obj/item/clothing/mask/gas(H), H.slot_wear_mask)
-		H.equip_if_possible(new /obj/item/weapon/tank/oxygen(H), H.slot_l_hand)
+//		H.equip_if_possible(new /obj/item/clothing/mask/gas(H), H.slot_wear_mask)
+//		H.equip_if_possible(new /obj/item/weapon/tank/oxygen(H), H.slot_l_hand)
 		return 1

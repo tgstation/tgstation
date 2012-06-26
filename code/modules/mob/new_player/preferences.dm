@@ -5,32 +5,19 @@
 
 var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm --rastaf
 //some autodetection here.
-	"traitor" = IS_MODE_COMPILED("traitor"),
-	"operative" = IS_MODE_COMPILED("nuclear"),
-	"changeling" = IS_MODE_COMPILED("changeling"),
-	"wizard" = IS_MODE_COMPILED("wizard"),
-	"malf AI" = IS_MODE_COMPILED("malfunction"),
-	"revolutionary" = IS_MODE_COMPILED("revolution"),
-	"alien candidate" = 1, //always show
-	"pAI candidate" = 1, // -- TLE
-	"cultist" = IS_MODE_COMPILED("cult"),
-	"infested monkey" = IS_MODE_COMPILED("monkey"),
-	"meme" = IS_MODE_COMPILED("meme"),
+	"traitor" = IS_MODE_COMPILED("traitor"),             // 0
+	"operative" = IS_MODE_COMPILED("nuclear"),           // 1
+	"changeling" = IS_MODE_COMPILED("changeling"),       // 2
+	"wizard" = IS_MODE_COMPILED("wizard"),               // 3
+	"malf AI" = IS_MODE_COMPILED("malfunction"),         // 4
+	"revolutionary" = IS_MODE_COMPILED("revolution"),    // 5
+	"alien candidate" = 1, //always show                 // 6
+	"pAI candidate" = 1, // -- TLE                       // 7
+	"cultist" = IS_MODE_COMPILED("cult"),                // 8
+	"infested monkey" = IS_MODE_COMPILED("monkey"),      // 9
+	"meme" = IS_MODE_COMPILED("meme"),                   // 10
 )
-/*
-var/global/list/special_roles = list( //keep synced with the defines BE_* in setup.dm --rastaf
-//some autodetection here.
-	"traitor" = ispath(text2path("/datum/game_mode/traitor")),
-	"operative" = ispath(text2path("/datum/game_mode/nuclear")),
-	"changeling" = ispath(text2path("/datum/game_mode/changeling")),
-	"wizard" = ispath(text2path("/datum/game_mode/wizard")),
-	"malf AI" = ispath(text2path("/datum/game_mode/malfunction")),
-	"revolutionary" = ispath(text2path("/datum/game_mode/revolution")),
-	"alien candidate" = 1, //always show
-	"cultist" = ispath(text2path("/datum/game_mode/cult")),
-	"infested monkey" = ispath(text2path("/datum/game_mode/monkey")),
-)
-*/
+
 var/const/BE_TRAITOR   =(1<<0)
 var/const/BE_OPERATIVE =(1<<1)
 var/const/BE_CHANGELING=(1<<2)
@@ -38,9 +25,9 @@ var/const/BE_WIZARD    =(1<<3)
 var/const/BE_MALF      =(1<<4)
 var/const/BE_REV       =(1<<5)
 var/const/BE_ALIEN     =(1<<6)
-var/const/BE_CULTIST   =(1<<7)
-var/const/BE_MONKEY    =(1<<8)
-var/const/BE_PAI       =(1<<9)
+var/const/BE_PAI       =(1<<7)
+var/const/BE_CULTIST   =(1<<8)
+var/const/BE_MONKEY    =(1<<9)
 var/const/BE_MEME		 =(1<<10)
 
 
@@ -448,8 +435,7 @@ datum/preferences
 		 // Modify this if you added more jobs and it looks like a mess. Add the jobs in the splitJobs that you want to trigger and intitate a new table.
 
 		if(splitJobs == null)
-			if (ticker.current_state >= GAME_STATE_PLAYING
-)
+			if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
 				splitJobs = list()
 			else
 				splitJobs = list("Chief Engineer")
@@ -760,6 +746,7 @@ datum/preferences
 			switch(link_tags["species"])
 				if("input")
 					var/list/new_species = list("Human")
+					var/prev_species = species
 					if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
 						if(is_alien_whitelisted(user, "Soghun")) //Check for Soghun and admins
 							new_species += "Soghun"
@@ -772,16 +759,17 @@ datum/preferences
 						new_species += "Soghun"
 						new_species += "Skrell"
 					species = input("Please select a species", "Character Generation", null) in new_species
-					h_style = "Bald" //Try not to carry face/head hair over.
-					f_style = "Shaved"
-					s_tone = 0 //Don't carry over skintone either.
-					hair_style = new/datum/sprite_accessory/hair/bald
-					facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
-					if(species == "Skrell")
-						if(gender == FEMALE)
-							hair_style = new/datum/sprite_accessory/hair/alien/skrell/female/tentacle
-						else
-							hair_style = new/datum/sprite_accessory/hair/alien/skrell/male/tentacle
+					if(prev_species != species)
+						h_style = "Bald" //Try not to carry face/head hair over.
+						f_style = "Shaved"
+						s_tone = 0 //Don't carry over skintone either.
+						hair_style = new/datum/sprite_accessory/hair/bald
+						facial_hair_style = new/datum/sprite_accessory/facial_hair/shaved
+						if(species == "Skrell")
+							if(gender == FEMALE)
+								hair_style = new/datum/sprite_accessory/hair/alien/skrell/female/tentacle
+							else
+								hair_style = new/datum/sprite_accessory/hair/alien/skrell/male/tentacle
 
 		if(link_tags["hair"])
 			switch(link_tags["hair"])

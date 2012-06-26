@@ -1,6 +1,7 @@
 #define QUANTIZE(variable)		(round(variable,0.0001))
-var/explosion_halt = 0
-var/zone_share_percent = 3.5
+vs_control/var/zone_share_percent = 10
+vs_control/var/zone_share_percent_NAME = "Zone Share Percent"
+vs_control/var/zone_share_percent_DESC = "Percentage of air difference to move per tick"
 zone/proc/process()
 	//Deletes zone if empty.
 	if(!contents.len)
@@ -8,67 +9,8 @@ zone/proc/process()
 		return 0
 	//Does rebuilding stuff. Not sure if used.
 	if(rebuild)
-
-		//Choose a random turf and regenerate the zone from it.
-		var
-			turf/simulated/sample = pick(contents)
-			list/new_contents
-			problem = 0
-
-		if(space_tiles)
-			del(space_tiles)
-
-		contents.Remove(null) //I can't believe this is needed.
-
-		if(!contents.len)
-			del src
-
-		var/list/tried_turfs = list()
-		do
-			if(sample)
-				tried_turfs |= sample
-			var/list/turfs_to_consider = contents - tried_turfs
-			if(!turfs_to_consider.len)
-				break
-			sample = pick(turfs_to_consider)  //Nor this.
-		while(!istype(sample) || !sample.CanPass(null, sample, 1.5, 1))
-
-		if(!istype(sample) || !sample.CanPass(null, sample, 1.5, 1)) //Not a single valid turf.
-			for(var/turf/simulated/T in contents)
-				air_master.tiles_to_update |= T
-			del src
-
-		new_contents = FloodFill(sample)
-
-		for(var/turf/space/S in new_contents)
-			if(!space_tiles)
-				space_tiles = list()
-			space_tiles |= S
-
-		//If something isn't carried over, there was a complication.
-		for(var/turf/T in contents)
-			if(!(T in new_contents))
-				problem = 1
-				T.zone = null
-
-		if(problem)
-			//Build some new zones for stuff that wasn't included.
-			var/list/turf/simulated/rebuild_turfs = contents - new_contents
-			var/list/turf/simulated/reconsider_turfs = list()
-			contents = new_contents
-			for(var/turf/T in rebuild_turfs)
-				if(istype(T,/turf/space))
-					air_master.tiles_to_update |= T
-				else if(!T.zone && T.CanPass(null, T, 1.5, 1))
-					var/zone/Z = new /zone(T)
-					Z.air.copy_from(air)
-				else
-					reconsider_turfs |= T
-			for(var/turf/T in reconsider_turfs)
-				if(!T.zone)
-					var/zone/Z = new /zone(T)
-					Z.air.copy_from(air)
 		rebuild = 0
+		Rebuild() //Shoving this into a proc.
 
 	//Sometimes explosions will cause the air to be deleted for some reason.
 	if(!air)
@@ -93,20 +35,10 @@ zone/proc/process()
 		//If there is space, air should flow out of the zone.
 		if(abs(air.return_pressure()) > vsc.airflow_lightest_pressure)
 			AirflowSpace(src)
-		ShareSpace(air,total_space*(zone_share_percent/100))
-
-	if(!(last_update%20)) //every 20 processes.
-		if(connections)
-			connections.Remove(null)
-			if(!connections.len)
-				del connections
-		if(connected_zones)
-			connected_zones.Remove(null)
-			if(!connected_zones.len)
-				del connected_zones
+		ShareSpace(air,total_space*(vsc.zone_share_percent/100))
 
 	//React the air here.
-	//air.react(null,0)
+	air.react(null,0)
 
 	//Check the graphic.
 
@@ -160,7 +92,9 @@ zone/proc/process()
 			if(abs(air.total_moles - Z.air.total_moles) > 0.1 || abs(air.temperature - Z.air.temperature) > 0.1)
 				if(abs(Z.air.return_pressure() - air.return_pressure()) > vsc.airflow_lightest_pressure)
 					Airflow(src,Z)
-				ShareRatio(air,Z.air,connected_zones[Z]*(zone_share_percent/100))
+				ShareRatio( air , Z.air , max(connected_zones[Z]*(vsc.zone_share_percent/200)*(space_tiles || Z.space_tiles ? 2 : 1) , 1) )
+				//Divided by 200 since each zone is processed.  Each connection is considered twice
+				//Space tiles force it to try and move twice as much air.
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, ratio)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
@@ -279,3 +213,77 @@ zone/proc/connected_zones()
 		else
 			. += Z
 			.[Z] = 1
+
+zone/proc/Rebuild()
+	//Choose a random turf and regenerate the zone from it.
+	var
+		turf/simulated/sample = pick(contents)
+		list/new_contents
+		problem = 0
+
+	if(space_tiles)
+		del(space_tiles)
+
+	contents.Remove(null) //I can't believe this is needed.
+
+	if(!contents.len)
+		del src
+
+	var/list/tried_turfs = list()
+	do
+		if(sample)
+			tried_turfs |= sample
+		var/list/turfs_to_consider = contents - tried_turfs
+		if(!turfs_to_consider.len)
+			break
+		sample = pick(turfs_to_consider)  //Nor this.
+	while(!istype(sample) || !sample.CanPass(null, sample, 1.5, 1))
+
+	if(!istype(sample) || !sample.CanPass(null, sample, 1.5, 1)) //Not a single valid turf.
+		for(var/turf/simulated/T in contents)
+			air_master.tiles_to_update |= T
+		del src
+
+	new_contents = FloodFill(sample)
+
+	for(var/turf/space/S in new_contents)
+		if(!space_tiles)
+			space_tiles = list()
+		space_tiles |= S
+
+	if(contents.len != new_contents.len)
+		problem = 1
+
+	//If something isn't carried over, there was a complication.
+	for(var/turf/T in contents)
+		if(!(T in new_contents))
+			T.zone = null
+			problem = 1
+
+	for(var/turf/T in new_contents)
+
+	if(problem)
+		//Build some new zones for stuff that wasn't included.
+		var/list/turf/simulated/rebuild_turfs = contents - new_contents
+		var/list/turf/simulated/reconsider_turfs = list()
+		contents = new_contents
+		for(var/turf/T in rebuild_turfs)
+			if(istype(T,/turf/space))
+				air_master.tiles_to_update |= T
+			else if(!T.zone && T.CanPass(null, T, 1.5, 1))
+				var/zone/Z = new /zone(T)
+				Z.air.copy_from(air)
+			else
+				reconsider_turfs |= T
+		for(var/turf/T in reconsider_turfs)
+			if(!T.zone)
+				var/zone/Z = new /zone(T)
+				Z.air.copy_from(air)
+
+	for(var/turf/T in contents)
+		if(T.zone && T.zone != src)
+			T.zone.RemoveTurf(T)
+			T.zone = src
+		else if(!T.zone)
+			T.zone = src
+	air.group_multiplier = contents.len

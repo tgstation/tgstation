@@ -122,9 +122,17 @@ ZIPPO
 	var/icon_butt = "cigbutt"
 	var/lastHolder = null
 	var/smoketime = 300
+	var/chem_volume = 15
 	var/butt_count = 5  //count of butt sprite variations
 
+/obj/item/clothing/mask/cigarette/New()
+	..()
+	flags |= NOREACT // so it doesn't react until you light it
+	create_reagents(chem_volume) // making the cigarrete a chemical holder with a maximum volume of 15
 
+/obj/item/clothing/mask/cigarette/Del()
+	..()
+	del(reagents)
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
@@ -155,10 +163,37 @@ ZIPPO
 	return
 
 
+/obj/item/clothing/mask/cigarette/afterattack(obj/item/weapon/reagent_containers/glass/glass, mob/user as mob)
+	..()
+	if(istype(glass)) // you can dip cigarettes into beakers
+		var/transfered = glass.reagents.trans_to(src, chem_volume)
+		if(transfered) // if reagents were transfered, show the message
+			user << "\blue You dip \the [src] into \the [glass]."
+		else // if not, either the beaker was empty, or the cigarette was full
+			if(!glass.reagents.total_volume)
+				user << "\red [glass] is empty."
+			else
+				user << "\red [src] is full."
+
+
 /obj/item/clothing/mask/cigarette/proc/light(var/flavor_text = "[usr] lights the [name].")
 	if(!src.lit)
 		src.lit = 1
 		src.damtype = "fire"
+		if(reagents.get_reagent_amount("plasma")) // the plasma explodes when exposed to fire
+			var/datum/effect/effect/system/reagents_explosion/e = new()
+			e.set_up(round (src.reagents.get_reagent_amount("plasma")/2.5, 1), get_turf(src), 0, 0)
+			e.start()
+			del(src)
+			return
+		if(reagents.get_reagent_amount("fuel")) // the fuel explodes, too, but much less violently
+			var/datum/effect/effect/system/reagents_explosion/e = new()
+			e.set_up(round (src.reagents.get_reagent_amount("fuel")/5, 1), get_turf(src), 0, 0)
+			e.start()
+			del(src)
+			return
+		src.flags &= ~NOREACT // allowing reagents to react after being lit
+		src.reagents.handle_reactions()
 		src.icon_state = icon_on
 		src.item_state = icon_on
 		for(var/mob/O in viewers(usr, null))
@@ -181,6 +216,14 @@ ZIPPO
 		return
 	if(location)
 		location.hotspot_expose(700, 5)
+	if(reagents && reagents.total_volume)	//	check if it has any reagents at all
+		if( iscarbon(src.loc) && (src == loc:wear_mask) ) // if it's in the human/monkey mouth, transfer reagents to the mob
+			var/mob/living/carbon/C = loc
+			if(prob(15)) // so it's not an instarape in case of acid
+				reagents.reaction(C, INGEST)
+			reagents.trans_to(C, REAGENTS_METABOLISM)
+		else // else just remove some of the reagents
+			reagents.remove_any(REAGENTS_METABOLISM)
 	return
 
 
@@ -214,6 +257,7 @@ ZIPPO
 	throw_speed = 0.5
 	item_state = "cigaroff"
 	smoketime = 1500
+	chem_volume = 20
 	butt_count = 0
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
@@ -230,6 +274,7 @@ ZIPPO
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
 	smoketime = 7200
+	chem_volume = 30
 
 /obj/item/weapon/cigbutt
 	name = "cigarette butt"
@@ -360,6 +405,14 @@ ZIPPO
 	slot_flags = SLOT_BELT
 	var/cigcount = 6
 
+	New()
+		..()
+		flags |= NOREACT
+		create_reagents(15)//so people can inject cigarettes without opening a packet
+
+	Del()
+		..()
+		del(reagents)
 
 	update_icon()
 		icon_state = "[initial(icon_state)][cigcount]"
@@ -375,6 +428,7 @@ ZIPPO
 			else
 				cigcount--
 				var/obj/item/clothing/mask/cigarette/W = new /obj/item/clothing/mask/cigarette(user)
+				reagents.trans_to(W, reagents.total_volume)
 				user.put_in_hand(W)
 		else
 			return ..()
@@ -441,7 +495,7 @@ ZIPPO
 						for(var/mob/O in viewers(user, null))
 							O.show_message("\red After a few attempts, \the [user] manages to light \the [src], they however burn themself in the process.", 1)
 
-				user.total_luminosity += 2
+				user.ul_SetLuminosity(user.LuminosityRed + 2, user.LuminosityGreen + 1, user.LuminosityBlue)
 				processing_objects.Add(src)
 			else
 				src.lit = 0
@@ -454,7 +508,7 @@ ZIPPO
 					for(var/mob/O in viewers(user, null))
 						O.show_message("\red [user] quietly shuts off the [src].", 1)
 
-				user.total_luminosity -= 2
+				user.ul_SetLuminosity(user.LuminosityRed - 2, user.LuminosityGreen - 1, user.LuminosityBlue)
 				processing_objects.Remove(src)
 		else
 			return ..()
@@ -483,13 +537,13 @@ ZIPPO
 
 	pickup(mob/user)
 		if(lit)
-			src.sd_SetLuminosity(0)
-			user.total_luminosity += 2
+			ul_SetLuminosity(0)
+			user.ul_SetLuminosity(user.LuminosityRed + 2, user.LuminosityGreen + 1, user.LuminosityBlue)
 		return
 
 
 	dropped(mob/user)
 		if(lit)
-			user.total_luminosity -= 2
-			src.sd_SetLuminosity(2)
+			user.ul_SetLuminosity(user.LuminosityRed - 2, user.LuminosityGreen - 1, user.LuminosityBlue)
+			ul_SetLuminosity(2,1,0)
 		return

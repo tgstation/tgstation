@@ -123,13 +123,10 @@ proc/ZConnect(turf/A,turf/B)
 		var/list/connections = air_master.tiles_with_connections["\ref[A]"]
 		for(var/connection/C in connections)
 			C.Cleanup()
-			if(C.B == B || C.A == B)
+			if(C && (C.B == B || C.A == B))
 				return
 
-	var/connection/C = new(A,B)
-
-	//Ensure zones separated by doors do not merge.
-	if(A.HasDoor(B) || B.HasDoor(A)) C.indirect = 1
+	new /connection(A,B)
 
 /*
 proc/ZDisconnect(turf/A,turf/B)

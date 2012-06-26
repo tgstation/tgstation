@@ -49,23 +49,47 @@ atom/movable/RepelAirflowDest(n)
 */
 
 vs_control/var
-
 	airflow_lightest_pressure = 30
+	airflow_lightest_pressure_NAME = "Airflow - Small Movement Threshold %"
+	airflow_lightest_pressure_DESC = "Percent of 1 Atm. at which items with the small weight classes will move."
 	airflow_light_pressure = 45
-	airflow_medium_pressure = 60
-	airflow_heavy_pressure = 75
-	airflow_heaviest_pressure = 90
-
-	airflow_damage = 0.3
+	airflow_light_pressure_NAME = "Airflow - Medium Movement Threshold %"
+	airflow_light_pressure_DESC = "Percent of 1 Atm. at which items with the medium weight classes will move."
+	airflow_medium_pressure = 90
+	airflow_medium_pressure_NAME = "Airflow - Heavy Movement Threshold %"
+	airflow_medium_pressure_DESC = "Percent of 1 Atm. at which items with the largest weight classes will move."
+	airflow_heavy_pressure = 95
+	airflow_heavy_pressure_NAME = "Airflow - Mob Movement Threshold %"
+	airflow_heavy_pressure_DESC = "Percent of 1 Atm. at which mobs will move."
+	airflow_dense_pressure = 120
+	airflow_dense_pressure_NAME = "Airflow - Dense Movement Threshold %"
+	airflow_dense_pressure_DESC = "Percent of 1 Atm. at which items with canisters and closets will move."
+	airflow_stun_pressure = 100
+	airflow_stun_pressure_NAME = "Airflow - Mob Stunning Threshold %"
+	airflow_stun_pressure_DESC = "Percent of 1 Atm. at which mobs will be stunned by airflow."
+	airflow_stun_cooldown = 60
+	airflow_stun_cooldown_NAME = "Aiflow Stunning - Cooldown"
+	airflow_stun_cooldown_DESC = "How long, in tenths of a second, to wait before stunning them again."
 	airflow_stun = 0.15
-	airflow_speed_decay = 1
-	airflow_delay = 30 //Time in deciseconds before they can be moved by airflow again.
-	airflow_mob_slowdown = 1 //Time in tenths of a second to add as a delay to each movement by a mob.\
-	Only active if they are fighting the pull of the airflow.
-	airflow_stun_cooldown = 10 //How long, in tenths of a second, to wait before stunning them again.
+	airflow_stun_NAME = "Airflow Impact - Stunning"
+	airflow_stun_DESC = "How much a mob is stunned when hit by an object."
+	airflow_damage = 0.3
+	airflow_damage_NAME = "Airflow Impact - Damage"
+	airflow_damage_DESC = "Damage from airflow impacts."
+	airflow_speed_decay = 1.5
+	airflow_speed_decay_NAME = "Airflow Speed Decay"
+	airflow_speed_decay_DESC = "How rapidly the speed gained from airflow decays."
+	airflow_delay = 30
+	airflow_delay_NAME = "Airflow Retrigger Delay"
+	airflow_delay_DESC = "Time in deciseconds before things can be moved by airflow again."
+	airflow_mob_slowdown = 1
+	airflow_mob_slowdown_NAME = "Airflow Slowdown"
+	airflow_mob_slowdown_DESC = "Time in tenths of a second to add as a delay to each movement by a mob if they are fighting the pull of the airflow."
 
-mob/var/last_airflow_stun = 0
+mob/var/tmp/last_airflow_stun = 0
 mob/proc/airflow_stun()
+	if(stat == 2)
+		return 0
 	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)	return 0
 	if(weakened <= 0) src << "\red The sudden rush of air knocks you over!"
 	weakened = max(weakened,5)
@@ -92,8 +116,13 @@ atom/movable/proc/check_airflow_movable(n)
 
 	if(anchored && !ismob(src)) return 0
 
-	if(!istype(src,/obj/item) && n < vsc.airflow_heavy_pressure) return 0
+	if(!istype(src,/obj/item) && n < vsc.airflow_dense_pressure) return 0
 
+	return 1
+
+mob/check_airflow_movable(n)
+	if(n < vsc.airflow_heavy_pressure)
+		return 0
 	return 1
 
 mob/dead/observer/check_airflow_movable()
@@ -151,7 +180,7 @@ proc/Airflow(zone/A,zone/B)
 		if(M.last_airflow > world.time - vsc.airflow_delay) continue
 
 		//Check for knocking people over
-		if(ismob(M) && n > vsc.airflow_heaviest_pressure)
+		if(ismob(M) && n > vsc.airflow_stun_pressure)
 			if(M:nodamage) continue
 			M:airflow_stun()
 
@@ -209,7 +238,7 @@ proc/AirflowSpace(zone/A)
 
 		if(M.last_airflow > world.time - vsc.airflow_delay) continue
 
-		if(ismob(M) && n > vsc.airflow_medium_pressure)
+		if(ismob(M) && n > vsc.airflow_stun_pressure)
 			if(M:nodamage) continue
 			M:airflow_stun()
 
@@ -225,14 +254,14 @@ proc/AirflowSpace(zone/A)
 
 				M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
 				spawn
-					if(M) M.GotoAirflowDest(n/20)
+					if(M) M.GotoAirflowDest(n/10)
 					//Sometimes shit breaks, and M isn't there after the spawn.
 
 atom/movable
-	var/turf/airflow_dest
-	var/airflow_speed = 0
-	var/airflow_time = 0
-	var/last_airflow = 0
+	var/tmp/turf/airflow_dest
+	var/tmp/airflow_speed = 0
+	var/tmp/airflow_time = 0
+	var/tmp/last_airflow = 0
 
 	proc/GotoAirflowDest(n)
 		if(!airflow_dest) return
@@ -254,7 +283,11 @@ atom/movable
 					if(src:shoes)
 						if(src:shoes.type == /obj/item/clothing/shoes/magboots && src:shoes.flags & NOSLIP) return
 			src << "\red You are sucked away by airflow!"
-		airflow_speed = min(round(n)/max(sqrt(get_dist(src,airflow_dest)),1),9)
+		var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
+		if(airflow_falloff < 1)
+			airflow_dest = null
+			return
+		airflow_speed = min(max(n * (9/airflow_falloff),1),9)
 		var
 			xo = airflow_dest.x - src.x
 			yo = airflow_dest.y - src.y
@@ -304,7 +337,11 @@ atom/movable
 					if(src:shoes)
 						if(src:shoes.type == /obj/item/clothing/shoes/magboots && src:shoes.flags & NOSLIP) return
 			src << "\red You are pushed away by airflow!"
-		airflow_speed = min(round(n)/max(sqrt(get_dist(src,airflow_dest)),1),9)
+		var/airflow_falloff = 9 - ul_FalloffAmount(airflow_dest) //It's a fast falloff calc.  Very useful.
+		if(airflow_falloff < 1)
+			airflow_dest = null
+			return
+		airflow_speed = min(max(n * (9/airflow_falloff),1),9)
 		var
 			xo = -(airflow_dest.x - src.x)
 			yo = -(airflow_dest.y - src.y)
@@ -348,14 +385,14 @@ atom/movable/proc/airflow_hit(atom/A)
 
 mob/airflow_hit(atom/A)
 	for(var/mob/M in hearers(src))
-		M.show_message("\red <B>[src] slams into [A]!</B>",1,"\red You hear a loud slam!",2)
+		M.show_message("\red <B>\The [src] slams into \a [A]!</B>",1,"\red You hear a loud slam!",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
 	weakened = max(weakened, (istype(A,/obj/item) ? A:w_class : rand(1,5))) //Heheheh
 	. = ..()
 
 obj/airflow_hit(atom/A)
 	for(var/mob/M in hearers(src))
-		M.show_message("\red <B>[src] slams into [A]!</B>",1,"\red You hear a loud slam!",2)
+		M.show_message("\red <B>\The [src] slams into \a [A]!</B>",1,"\red You hear a loud slam!",2)
 	playsound(src.loc, "smash.ogg", 25, 1, -1)
 	. = ..()
 
@@ -390,11 +427,10 @@ mob/living/carbon/human/airflow_hit(atom/A)
 		stunned += round(airflow_speed * vsc.airflow_stun/2)
 	. = ..()
 
-var/list/airflow_forbidden = list(/obj/structure/ore_box, /mob/aiEye)
-
 zone/proc/movables()
 	. = list()
 	for(var/turf/T in contents)
 		for(var/atom/A in T)
-			if(!(locate(A) in airflow_forbidden))
-				. += A
+			if(istype(A, /mob/aiEye) || istype(A, /obj/effect))
+				continue
+			. += A

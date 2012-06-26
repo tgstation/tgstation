@@ -1,6 +1,6 @@
 /obj/item/clothing/head/rabbitears
 	name = "rabbit ears"
-	desc = "Wearing these makes you looks useless, and only good for your sex appeal."
+	desc = "Wearing these makes you looks useless and is only good for your sex appeal."
 	icon_state = "bunny"
 	flags = FPRINT | TABLEPASS
 
@@ -48,7 +48,7 @@
 	color = "owl"
 
 /obj/item/clothing/gloves/cyborg
-	desc = "beep boop borp"
+	desc = "Beep boop borp."
 	name = "cyborg gloves"
 	icon_state = "black"
 	item_state = "r_hands"
@@ -56,12 +56,12 @@
 
 /obj/item/clothing/mask/gas/cyborg
 	name = "cyborg visor"
-	desc = "Beep boop"
+	desc = "Beep boop."
 	icon_state = "death"
 
 /obj/item/clothing/shoes/cyborg
 	name = "cyborg boots"
-	desc = "Shoes for a cyborg costume"
+	desc = "Shoes for a cyborg costume."
 	icon_state = "boots"
 
 /obj/item/clothing/suit/cyborg_suit
@@ -81,7 +81,7 @@
 
 /obj/item/clothing/suit/greatcoat
 	name = "great coat"
-	desc = "A Nazi great coat"
+	desc = "A Nazi great coat."
 	icon_state = "nazi"
 	item_state = "nazi"
 	flags = FPRINT | TABLEPASS
@@ -373,29 +373,29 @@
 	desc = "A rare collectable hat."
 
 /obj/item/clothing/head/collectable/petehat
-	name = "ultra rare Pete's hat!"
-	desc = "It smells faintly of plasma"
+	name = "ultra rare Pete's hat"
+	desc = "It smells faintly of plasma."
 	icon_state = "petehat"
 
 /obj/item/clothing/head/collectable/metroid
-	name = "collectable metroid cap!"
+	name = "collectable metroid cap"
 	desc = "It just latches right in place!"
 	icon_state = "metroid"
 
 /obj/item/clothing/head/collectable/xenom
-	name = "collectable xenomorph helmet!"
+	name = "collectable xenomorph helmet"
 	desc = "Hiss hiss hiss!"
 	icon_state = "xenom"
 
 /obj/item/clothing/head/collectable/chef
 	name = "collectable chef's hat"
-	desc = "A rare Chef's Hat meant for hat collectors!"
+	desc = "A rare chef's hat meant for hat collectors!"
 	icon_state = "chef"
 	item_state = "chef"
 
 /obj/item/clothing/head/collectable/paper
 	name = "collectable paper hat"
-	desc = "What looks like an ordinary paper hat, is actually a rare and valuable collector's edition paper hat. Keep away from water, fire and Librarians."
+	desc = "What looks like an ordinary paper hat, is actually a rare and valuable collector's edition paper hat. Keep away from water, fire and librarians."
 	icon_state = "paper"
 
 /obj/item/clothing/head/collectable/tophat
@@ -406,35 +406,35 @@
 
 /obj/item/clothing/head/collectable/captain
 	name = "collectable captain's hat"
-	desc = "A Collectable Hat that'll make you look just like a real comdom!"
+	desc = "A collectable hat that'll make you look just like a real comdom!"
 	icon_state = "captain"
 	item_state = "caphat"
 
 /obj/item/clothing/head/collectable/police
 	name = "collectable police officer's hat"
-	desc = "A Collectable Police Officer's Hat. This hat emphasizes that you are THE LAW."
+	desc = "A collectable police officer's hat. This hat emphasizes that you are THE LAW."
 	icon_state = "policehelm"
 
 /obj/item/clothing/head/collectable/beret
 	name = "collectable beret"
-	desc = "A Collectable red Beret. It smells faintly of Garlic."
+	desc = "A collectable red beret. It smells faintly of garlic."
 	icon_state = "beret"
 
 /obj/item/clothing/head/collectable/welding
 	name = "collectable welding helmet"
-	desc = "A Collectable Welding Helmet. Now with 80% less lead! Not for actual welding. Any welding done while wearing this Helmet is done so at the owner's own risk!"
+	desc = "A collectable welding helmet. Now with 80% less lead! Not for actual welding. Any welding done while wearing this helmet is done so at the owner's own risk!"
 	icon_state = "welding"
 	item_state = "welding"
 
 /obj/item/clothing/head/collectable/slime
 	name = "collectable slime hat"
-	desc = "Just like a real Brain Slug!"
+	desc = "Just like a real brain slug!"
 	icon_state = "headslime"
 	item_state = "headslime"
 
 /obj/item/clothing/head/collectable/flatcap
 	name = "collectable flat cap"
-	desc = "A Collectible farmer's Flat Cap!"
+	desc = "A collectible farmer's flat cap!"
 	icon_state = "flat_cap"
 	item_state = "detective"
 
@@ -468,12 +468,12 @@
 	item_state = "hardhat0_yellow"
 
 /obj/item/clothing/head/collectable/HoS
-	name = "collectable HoS hat"
+	name = "collectable head of security's hat"
 	desc = "Now you can beat prisoners, set silly sentences and arrest for no reason too!"
 	icon_state = "hoscap"
 
 /obj/item/clothing/head/collectable/thunderdome
-	name = "collectable Thunderdome helmet"
+	name = "collectable thunderdome helmet"
 	desc = "Go Red! I mean Green! I mean Red! No Green!"
 	icon_state = "thunderdome"
 	item_state = "thunderdome"
@@ -521,7 +521,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/head/bowler
-	name = "bowler-hat"
+	name = "bowler hat"
 	desc = "Gentleman, elite aboard!"
 	icon_state = "bowler"
 	item_state = "bowler"
@@ -587,7 +587,7 @@ obj/item/clothing/suit/justice
 	name = "beaver hat"
 	icon_state = "beaver_hat"
 	item_state = "beaver_hat"
-	desc = "Soft felt make this hat both comfortable and elegant."
+	desc = "Soft felt makes this hat both comfortable and elegant."
 	flags = FPRINT|TABLEPASS
 
 /obj/item/clothing/head/boaterhat
@@ -598,37 +598,37 @@ obj/item/clothing/suit/justice
 	flags = FPRINT|TABLEPASS
 
 /obj/item/clothing/head/fedora
-	name = "\improper Fedora"
+	name = "\improper fedora"
 	icon_state = "fedora"
 	item_state = "fedora"
 	desc = "A sharp, stylish hat."
 	flags = FPRINT|TABLEPASS
 
 /obj/item/clothing/head/feathertrilby
-	name = "\improper Feather trilby"
+	name = "\improper feather trilby"
 	icon_state = "feather_trilby"
 	item_state = "feather_trilby"
 	desc = "A sharp, stylish hat with a feather."
 	flags = FPRINT|TABLEPASS
 
 /obj/item/clothing/head/fez
-	name = "\improper Fez"
+	name = "\improper fez"
 	icon_state = "fez"
 	item_state = "fez"
-	desc = "You should wear a Fez. Fezzes are cool."
+	desc = "You should wear a fez. Fezzes are cool."
 	flags = FPRINT|TABLEPASS
 
 //pyjamas
 
 /obj/item/clothing/under/bluepyjamas
-	name = "Blue pyjamas"
+	name = "blue pyjamas"
 	desc = "Slightly old-fashioned sleepwear."
 	icon_state = "blue_pyjamas"
 	item_state = "blue_pyjamas"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 /obj/item/clothing/under/redpyjamas
-	name = "Red pyjamas"
+	name = "red pyjamas"
 	desc = "Slightly old-fashioned sleepwear."
 	icon_state = "red_pyjamas"
 	item_state = "red_pyjamas"
@@ -637,7 +637,7 @@ obj/item/clothing/suit/justice
 //scarves (fit in in mask slot)
 
 /obj/item/clothing/mask/bluescarf
-	name = "Blue neck scarf"
+	name = "blue neck scarf"
 	desc = "A blue neck scarf."
 	icon_state = "blueneckscarf"
 	item_state = "blueneckscarf"
@@ -646,7 +646,7 @@ obj/item/clothing/suit/justice
 	gas_transfer_coefficient = 0.90
 
 /obj/item/clothing/mask/redscarf
-	name = "Red scarf"
+	name = "red scarf"
 	desc = "A red and white checkered neck scarf."
 	icon_state = "redwhite_scarf"
 	item_state = "redwhite_scarf"
@@ -655,7 +655,7 @@ obj/item/clothing/suit/justice
 	gas_transfer_coefficient = 0.90
 
 /obj/item/clothing/mask/greenscarf
-	name = "Green scarf"
+	name = "green scarf"
 	desc = "A green neck scarf."
 	icon_state = "green_scarf"
 	item_state = "green_scarf"
@@ -664,7 +664,7 @@ obj/item/clothing/suit/justice
 	gas_transfer_coefficient = 0.90
 
 /obj/item/clothing/mask/ninjascarf
-	name = "Ninja scarf"
+	name = "ninja scarf"
 	desc = "A stealthy, dark scarf."
 	icon_state = "ninja_scarf"
 	item_state = "ninja_scarf"
@@ -675,7 +675,7 @@ obj/item/clothing/suit/justice
 //shoes
 
 /obj/item/clothing/shoes/laceups
-	name = "Laceup shoes"
+	name = "laceup shoes"
 	desc = "Stylish black leather."
 	icon_state = "laceups"
 	item_state = "laceups"
@@ -684,28 +684,28 @@ obj/item/clothing/suit/justice
 //suits
 
 /obj/item/clothing/suit/leathercoat
-	name = "Leather Coat"
+	name = "leather coat"
 	desc = "A long, thick black leather coat."
 	icon_state = "leathercoat"
 	item_state = "leathercoat"
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/suit/browncoat
-	name = "Brown Leather Coat"
+	name = "brown leather coat"
 	desc = "A long, brown leather coat."
 	icon_state = "browncoat"
 	item_state = "browncoat"
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/suit/neocoat
-	name = "Black coat"
+	name = "black coat"
 	desc = "A flowing, black coat."
 	icon_state = "neocoat"
 	item_state = "neocoat"
 	flags = FPRINT | TABLEPASS
 
 /obj/item/clothing/suit/creamsuit
-	name = "Cream suit"
+	name = "cream suit"
 	desc = "A cream coloured, genteel suit."
 	icon_state = "creamsuit"
 	item_state = "creamsuit"

@@ -19,7 +19,7 @@
 	else if(istype(P, /obj/item/weapon/wrench))
 		playsound(loc, 'Ratchet.ogg', 50, 1)
 		anchored = !anchored
-		user << "You [anchored ? "wrench" : "unwrench"] the [src]."
+		user << "You [anchored ? "wrench" : "unwrench"] \the [src]."
 	else
 		user << "You can't put a [P] in the [src]!"
 

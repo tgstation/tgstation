@@ -57,10 +57,12 @@
 
 	var/mutantrace = null
 
-	var/bloodloss = 0
 	var/datum/reagents/vessel
 	var/pale = 0
 	var/examine_text = ""
+
+	var/previous_damage_appearance // a string describing what the organ damage previously looked like
+						           // used to determine whether the icon needs to be rebuilt
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
@@ -188,7 +190,7 @@
 	this.icon_state = pick(iconL)
 	this.blood_DNA = list()
 	this.blood_DNA[dna.unique_enzymes] = dna.b_type
-	this.blood_owner = src
+//	this.blood_owner = src
 
 	if(virus2)
 		this.virus2 = virus2.getcopy()
@@ -282,8 +284,11 @@
 
 	for(var/organ in list("l_leg","l_foot","r_leg","r_foot"))
 		var/datum/organ/external/o = organs["[organ]"]
-		if(o.broken)
-			tally += 6
+		if(o.status & BROKEN)
+			if(o.status & SPLINTED)
+				tally += 3
+			else
+				tally += 6
 
 	if(wear_suit)
 		tally += wear_suit.slowdown
@@ -544,7 +549,7 @@
 				if (emptyHand)
 					wear_mask.DblClick()
 				return
-			if (!( istype(W, /obj/item/clothing/mask) ))
+			if (!( W.slot_flags & SLOT_MASK ))
 				return
 			u_equip(W)
 			wear_mask = W
@@ -775,7 +780,7 @@
 			M.show_message(text("\red [] has been hit by []", src, O), 1)
 	if (health > 0)
 		var/datum/organ/external/affecting = get_organ(pick("chest", "chest", "chest", "head"))
-		if(!affecting || affecting.destroyed)	return
+		if(!affecting || affecting.status & DESTROYED)	return
 		if (istype(O, /obj/effect/immovablerod))
 			affecting.take_damage(101, 0)
 		else
@@ -846,7 +851,26 @@
 							var/turf/location = M.loc
 							if (istype(location, /turf/simulated))
 								location.add_blood(M)
-
+								if(ishuman(M))
+									var/mob/living/carbon/H = M
+									var/blood_volume = round(H:vessel.get_reagent_amount("blood"))
+									if(blood_volume > 0)
+										H:vessel.remove_reagent("blood",1)
+							if(prob(5))
+								M.adjustBruteLoss(1)
+								visible_message("\red \The [M]'s wounds open more from being dragged!")
+						if(M.pull_damage())
+							if(prob(25))
+								M.adjustBruteLoss(2)
+								visible_message("\red \The [M]'s wounds worsen terribly from being dragged!")
+								var/turf/location = M.loc
+								if (istype(location, /turf/simulated))
+									location.add_blood(M)
+									if(ishuman(M))
+										var/mob/living/carbon/H = M
+										var/blood_volume = round(H:vessel.get_reagent_amount("blood"))
+										if(blood_volume > 0)
+											H:vessel.remove_reagent("blood",1)
 
 						step(pulling, get_dir(pulling.loc, T))
 						M.pulling = t
@@ -945,29 +969,29 @@
 	// Gloves
 	var/datum/organ/external/lo = organs["l_hand"]
 	var/datum/organ/external/ro = organs["r_hand"]
-	if (!lo.destroyed || !ro.destroyed)
+	if (!(lo.status & DESTROYED && ro.status & DESTROYED))
 		if (gloves)
 			var/t1 = gloves.item_state
 			if (!t1)
 				t1 = gloves.icon_state
 			var/icon/gloves_icon = new /icon("icon" = 'hands.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")))
-			if(lo.destroyed)
+			if(lo.status & DESTROYED)
 				gloves_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
-			if(ro.destroyed)
+			if(ro.status & DESTROYED)
 				gloves_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
 			clothing_overlays += image(gloves_icon, "layer" = GLOVES_LAYER)
 			if (gloves.blood_DNA)
 				var/icon/stain_icon = icon('blood.dmi', "bloodyhands[!lying ? "" : "2"]")
-				if(lo.destroyed)
+				if(lo.status & DESTROYED)
 					stain_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
-				else if(ro.destroyed)
+				else if(ro.status & DESTROYED)
 					stain_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
 				clothing_overlays += image("icon" = stain_icon, "layer" = B_GLOVES_LAYER)
 		else if (blood_DNA)
 			var/icon/stain_icon = icon('blood.dmi', "bloodyhands[!lying ? "" : "2"]")
-			if(lo.destroyed)
+			if(lo.status & DESTROYED)
 				stain_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
-			else if(ro.destroyed)
+			else if(ro.status & DESTROYED)
 				stain_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
 			clothing_overlays += image("icon" = stain_icon, "layer" = B_GLOVES_LAYER)
 
@@ -987,19 +1011,19 @@
 	// Shoes
 	lo = organs["l_foot"]
 	ro = organs["r_foot"]
-	if ((!lo.destroyed || !ro.destroyed) && shoes)
+	if (!(lo.status & DESTROYED && ro.status & DESTROYED) && shoes)
 		var/t1 = shoes.icon_state
 		var/icon/shoes_icon = new /icon("icon" = 'feet.dmi', "icon_state" = text("[][]", t1, (!( lying ) ? null : "2")))
-		if(lo.destroyed && !lying)
+		if(lo.status & DESTROYED && !lying)
 			shoes_icon.Blend(new /icon('limb_mask.dmi', "right[lying?"_l":""]"), ICON_MULTIPLY)
-		else if(ro.destroyed && !lying)
+		else if(ro.status & DESTROYED && !lying)
 			shoes_icon.Blend(new /icon('limb_mask.dmi', "left[lying?"_l":""]"), ICON_MULTIPLY)
 		clothing_overlays += image(shoes_icon, "layer" = SHOES_LAYER)
 		if (shoes.blood_DNA)
 			var/icon/stain_icon = icon('blood.dmi', "shoeblood[!lying ? "" : "2"]")
-			if(lo.destroyed)
+			if(lo.status & DESTROYED)
 				stain_icon.Blend(new /icon('limb_mask.dmi', "right_[lying?"l":"s"]"), ICON_MULTIPLY)
-			else if(ro.destroyed)
+			else if(ro.status & DESTROYED)
 				stain_icon.Blend(new /icon('limb_mask.dmi', "left_[lying?"l":"s"]"), ICON_MULTIPLY)
 			clothing_overlays += image("icon" = stain_icon, "layer" = B_SHOES_LAYER)	// Radio
 
@@ -1074,6 +1098,15 @@
 			clothing_overlays += image("icon" = 'mob.dmi', "icon_state" = "[h1]1", "layer" = CUFFED_LAYER)
 		else
 			clothing_overlays += image("icon" = 'mob.dmi', "icon_state" = "[h1]2", "layer" = CUFFED_LAYER)
+
+	// Splints
+	for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
+		var/datum/organ/external/o = organs["[organ]"]
+		if (o.status & SPLINTED)
+			if (!lying)
+				clothing_overlays += image("icon" = 'mob.dmi', "icon_state" = "[o]_splint", "layer" = CUFFED_LAYER)
+			else
+				clothing_overlays += image("icon" = 'mob.dmi', "icon_state" = "[o]_splint2", "layer" = CUFFED_LAYER)
 
 	if (r_hand)
 		clothing_overlays += image("icon" = 'items_righthand.dmi', "icon_state" = r_hand.item_state ? r_hand.item_state : r_hand.icon_state, "layer" = INHANDS_LAYER)
@@ -1386,7 +1419,7 @@
 	lying_icon.Blend(new /icon('human.dmi', "chest_[g]_l"), ICON_OVERLAY)
 
 	var/datum/organ/external/head = organs["head"]
-	if(!head.destroyed)
+	if(!(head.status & DESTROYED))
 		stand_icon.Blend(new /icon('human.dmi', "head_[g]_s"), ICON_OVERLAY)
 		lying_icon.Blend(new /icon('human.dmi', "head_[g]_l"), ICON_OVERLAY)
 
@@ -1395,12 +1428,12 @@
 		if(!istype(part, /datum/organ/external/groin) \
 			&& !istype(part, /datum/organ/external/chest) \
 			&& !istype(part, /datum/organ/external/head) \
-			&& !part.destroyed)
+			&& !(part.status & DESTROYED))
 			var/icon/temp = new /icon('human.dmi', "[part.icon_name]_s")
-			if(part.robot) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+			if(part.status & ROBOT) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 			stand_icon.Blend(temp, ICON_OVERLAY)
 			temp = new /icon('human.dmi', "[part.icon_name]_l")
-			if(part.robot) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+			if(part.status & ROBOT) temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 			lying_icon.Blend(temp , ICON_OVERLAY)
 
 	stand_icon.Blend(new /icon('human.dmi', "groin_[g]_s"), ICON_OVERLAY)
@@ -1440,7 +1473,7 @@
 			if(!istype(part, /datum/organ/external/groin) \
 				&& !istype(part, /datum/organ/external/chest) \
 				&& !istype(part, /datum/organ/external/head) \
-				&& part.destroyed)
+				&& (part.status & DESTROYED))
 				husk_s.Blend(new /icon('dam_mask.dmi', "[part.icon_name]"), ICON_SUBTRACT)
 				husk_l.Blend(new /icon('dam_mask.dmi', "[part.icon_name]2"), ICON_SUBTRACT)
 
@@ -1470,7 +1503,7 @@
 	if(organs)
 		var/datum/organ/external/head = organs["head"]
 		if(head)
-			if(head.destroyed)
+			if(head.status & DESTROYED)
 				del(face_standing)
 				del(face_lying)
 				return
@@ -1590,6 +1623,16 @@
 					//SN src = null
 					del(src)
 					return
+			if("splints")
+				var/count = 0
+				for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
+					var/datum/organ/external/o = target.organs["[organ]"]
+					if(o.status & SPLINTED)
+						count = 1
+						break
+				if(count == 0)
+					del(src)
+					return
 			if("id")
 				if ((!( target.wear_id ) || !( target.w_uniform )))
 					//SN src = null
@@ -1697,6 +1740,8 @@
 				message = text("\red <B>[] is trying to take off \a [] from []'s back!</B>", source, target.back, target)
 			if("handcuff")
 				message = text("\red <B>[] is trying to unhandcuff []!</B>", source, target)
+			if("splints")
+				message = text("\red <B>[] is trying to remove []'s splints!</B>", source, target)
 			if("uniform")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their uniform removed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) uniform</font>")
@@ -2182,14 +2227,24 @@ It can still be worn/put on as normal.
 					source.drop_item()
 					target.handcuffed = item
 					item.loc = target
+		if("splints")
+			for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
+				var/datum/organ/external/o = target.organs["[organ]"]
+				if (o.status & SPLINTED)
+					var/obj/item/W = new /obj/item/stack/medical/splint/single()
+					o.status &= ~SPLINTED
+					if (W)
+						W.loc = target.loc
+						W.layer = initial(W.layer)
+						W.add_fingerprint(source)
 		if("CPR")
 			if (target.cpr_time + 30 >= world.time)
 				//SN src = null
 				del(src)
 				return
-			if ((target.health >= -99.0 && target.stat == 1))
+			if ((target.health <= config.health_threshold_crit && target.stat == 1))
 				target.cpr_time = world.time
-				var/suff = min(target.getOxyLoss(), 7)
+				var/suff = min(target.getOxyLoss(), 2)
 				target.adjustOxyLoss(-suff)
 				target.losebreath = 0
 				target.updatehealth()
@@ -2312,6 +2367,7 @@ It can still be worn/put on as normal.
 	<BR><B>Suit Storage:</B> <A href='?src=\ref[src];item=s_store'>[(s_store ? s_store : "Nothing")]</A> [(istype(wear_mask, /obj/item/clothing/mask) && istype(s_store, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal;loc=store'>Set Internal</A>", src) : ""]
 	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
+	<BR><A href='?src=\ref[src];item=splints'>Remove Splints</A>
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
 	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
@@ -2595,7 +2651,7 @@ It can still be worn/put on as normal.
 	var/amount = 0.0
 	for(var/name in organs)
 		var/datum/organ/external/O = organs[name]
-		if(!O.robot) amount+= O.brute_dam
+		if(!(O.status & ROBOT)) amount+= O.brute_dam
 	return amount
 
 /mob/living/carbon/human/adjustBruteLoss(var/amount, var/used_weapon = null)
@@ -2608,7 +2664,7 @@ It can still be worn/put on as normal.
 	var/amount = 0.0
 	for(var/name in organs)
 		var/datum/organ/external/O = organs[name]
-		if(!O.robot) amount+= O.burn_dam
+		if(!(O.status & ROBOT)) amount+= O.burn_dam
 	return amount
 
 /mob/living/carbon/human/adjustFireLoss(var/amount,var/used_weapon = null)
@@ -2716,10 +2772,11 @@ It can still be worn/put on as normal.
 		else
 			gender = FEMALE
 	rebuild_appearance()
+	update_body()
 	check_dna()
 
 	for(var/mob/M in view())
-		M.show_message("[src.name] just morphed!")
+		visible_message("\blue \The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!", "\blue You change your appearance!", "\red Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!")
 
 /mob/living/carbon/human/proc/remotesay()
 	set name = "Project mind"
@@ -2780,12 +2837,6 @@ It can still be worn/put on as normal.
 		src.tkdisable = 0
 
 /mob/living/carbon/human/get_visible_gender()
-	var/skip_gender = (wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT && ((head && head.flags_inv & HIDEMASK) || wear_mask))
-
-	if( !skip_gender ) //big suits/masks make it hard to tell their gender
-		switch(gender)
-			if(MALE)
-				return list("It" = "He", "its" = "his", "it" = "he", "has" = "has", "is" = "is", "itself" = "himself")
-			if(FEMALE)
-				return list("It" = "She", "its" = "her", "it" = "she", "has" = "has", "is" = "is", "itself" = "herself")
-	return list("It" = "They", "its" = "their", "it" = "them", "has" = "have", "is" = "are", "itself" = "themselves")
+	if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT && ((head && head.flags_inv & HIDEMASK) || wear_mask))
+		return NEUTER
+	return gender

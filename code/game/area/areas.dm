@@ -14,9 +14,11 @@
 	uid = ++global_uid
 	spawn(1)
 	//world.log << "New: [src] [tag]"
-		var/sd_created = findtext(tag,"sd_L")
-		sd_New(sd_created)
-		if(sd_created)
+		var/ul_created = findtext(tag,":UL")
+		ul_Prep()
+		if(ul_created)
+			if(!islist(related))
+				related = list()
 			related += src
 			return
 		related = list(src)
@@ -27,7 +29,7 @@
 		if(name == "Space")			// override defaults for space
 			requires_power = 1
 			always_unpowered = 1
-			sd_SetLuminosity(1)
+			LightLevels = list("Red" = 2, "Green" = 2, "Blue" = 3)
 			power_light = 0
 			power_equip = 0
 			power_environ = 0
@@ -37,14 +39,17 @@
 			power_light = 0//rastaf0
 			power_equip = 0//rastaf0
 			power_environ = 0//rastaf0
-			luminosity = 1
-			sd_lighting = 0			// *DAL*
+			if(!ul_Lighting)
+				luminosity = 1
 		else
 			luminosity = 0
-			area_lights_luminosity = rand(6,9)
-			//sd_SetLuminosity(0)		// *DAL*
+			area_lights_luminosity = rand(6,8)
+		if(LightLevels)
+			ul_Light()
 
-
+/area/Del()
+	related -= src
+	. = ..()
 
 
 	/*spawn(5)
@@ -99,9 +104,7 @@
 /area/proc/atmosalert(danger_level)
 //	if(src.type==/area) //No atmos alarms in space
 //		return 0 //redudant
-	if(danger_level != src.atmosalm)
-		//src.updateicon()
-		//src.mouse_opacity = 0
+	if(danger_level != atmosalm)
 		if (danger_level==2)
 			var/list/cameras = list()
 			for(var/area/RA in src.related)
@@ -112,12 +115,12 @@
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
 			for(var/obj/machinery/computer/station_alert/a in world)
 				a.triggerAlarm("Atmosphere", src, cameras, src)
-		else if (src.atmosalm == 2)
+		else if (atmosalm == 2)
 			for(var/mob/living/silicon/aiPlayer in world)
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
 			for(var/obj/machinery/computer/station_alert/a in world)
 				a.cancelAlarm("Atmosphere", src, src)
-		src.atmosalm = danger_level
+		atmosalm = danger_level
 		return 1
 	return 0
 
@@ -128,7 +131,7 @@
 		fire = 1
 		updateicon()
 		mouse_opacity = 0
-		for(var/obj/machinery/door/airlock/E in master.all_doors)
+/*		for(var/obj/machinery/door/airlock/E in master.all_doors)
 			if(!E.air_locked)
 				if((!E.arePowerSystemsOn()) || (E.stat & NOPOWER)) continue
 				if(!E.density)
@@ -137,18 +140,18 @@
 						sleep(10)
 						if(E.density)
 							E.air_locked = E.req_access
-							E.req_access = list(access_engine, access_atmospherics)
+							E.req_access = list(ACCESS_ENGINE, ACCESS_ATMOSPHERICS)
 							E.update_icon()
 				if(E.operating)
 					spawn(10)
 						E.close()
 						if(E.density)
 							E.air_locked = E.req_access
-							E.req_access = list(access_engine, access_atmospherics)
+							E.req_access = list(ACCESS_ENGINE, ACCESS_ATMOSPHERICS)
 							E.update_icon()
 				else if(!E:locked) //Don't lock already bolted doors.
 					E.air_locked = E.req_access
-					E.req_access = list(access_engine, access_atmospherics)
+					E.req_access = list(ACCESS_ENGINE, ACCESS_ATMOSPHERICS)
 					E.update_icon()
 		for(var/obj/machinery/door/firedoor/D in src)
 			if(!D.blocked)
@@ -156,7 +159,7 @@
 					D.nextstate = CLOSED
 				else if(!D.density)
 					spawn(0)
-					D.close()
+					D.close() */
 		var/list/cameras = list()
 		for (var/obj/machinery/camera/C in src)
 			cameras += C
@@ -171,7 +174,7 @@
 		fire = 0
 		mouse_opacity = 0
 		updateicon()
-		for(var/obj/machinery/door/airlock/E in master.all_doors)
+/*		for(var/obj/machinery/door/airlock/E in master.all_doors)
 			if((!E.arePowerSystemsOn()) || (E.stat & NOPOWER)) continue
 			if(E.air_locked) //Don't mess with doors locked for other reasons.
 				if(E.density)
@@ -184,7 +187,7 @@
 					D.nextstate = OPEN
 				else if(D.density)
 					spawn(0)
-					D.open()
+					D.open()*/
 		for (var/mob/living/silicon/ai/aiPlayer in world)
 			aiPlayer.cancelAlarm("Fire", src, src)
 		for (var/obj/machinery/computer/station_alert/a in world)
@@ -392,3 +395,43 @@
 
 	mob << "Gravity!"
 
+/area/proc/absorb(var/area/A)
+	if(!istype(A))
+		return
+	var/oldname = A.name
+	var/list/other_related = A.related
+	var/area/other_master = A.master
+	other_related -= other_master
+	var/list/total_contents = list()
+	for(var/area/RA in other_related)
+//		RA.ul_lighting = 0
+		total_contents |= RA.contents
+		del RA.contents
+		del RA.related
+		RA.master = null
+	other_master.master = null
+	del other_master.related
+	total_contents |= other_master.contents
+	del other_master.contents
+	for(var/area/RA in other_related)
+		del(RA)
+	src += total_contents
+	spawn(5)
+		power_change()
+		set_area_machinery_title(oldname)
+
+
+/area/proc/set_area_machinery_title(var/oldtitle)
+	if(!oldtitle)
+		return
+	for(var/area/RA in related)
+		for(var/obj/machinery/alarm/M in RA)
+			M.name = dd_replacetext(M.name,oldtitle,name)
+		for(var/obj/machinery/power/apc/M in RA)
+			M.name = dd_replacetext(M.name,oldtitle,name)
+		for(var/obj/machinery/atmospherics/unary/vent_scrubber/M in RA)
+			M.name = dd_replacetext(M.name,oldtitle,name)
+		for(var/obj/machinery/atmospherics/unary/vent_pump/M in RA)
+			M.name = dd_replacetext(M.name,oldtitle,name)
+		for(var/obj/machinery/door/M in RA)
+			M.name = dd_replacetext(M.name,oldtitle,name)

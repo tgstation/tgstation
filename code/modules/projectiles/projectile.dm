@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
-
 /*
 #define BRUTE "brute"
 #define BURN "burn"
@@ -30,6 +28,7 @@
 	var/current = null
 	var/turf/original = null // the original turf clicked
 	var/turf/starting = null // the projectile's starting turf
+	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
 
 	var/p_x = 16
 	var/p_y = 16 // the pixel location of the tile that the player clicked. Default is the center
@@ -77,6 +76,8 @@
 
 		if(bumped)	return
 
+		var/forcedodge = 0 // force the projectile to pass
+
 		bumped = 1
 		if(firer && istype(A, /mob))
 			var/mob/M = A
@@ -84,10 +85,18 @@
 				loc = A.loc
 				return // nope.avi
 
-			if(!silenced)
+			// check for dodge (i can't place in bullet_act because then things get wonky)
+			if((REFLEXES in M.augmentations) && (!M.stat && !M.lying))
+				if(prob(85))
+					var/message = pick("[M] skillfully dodges the [name]!", "[M] ducks, dodging the [name]!", "[M] effortlessly jumps out of the way of the [name]!", "[M] dodges the [name] in one graceful movement!", "[M] leans back, dodging the [name] narrowly!", "[M] sidesteps, avoiding the [name] narrowly.", "[M] barely weaves out of the way of the [name].")
+					M.visible_message("\red <B>[message]</B>")
+					forcedodge = 1
+
+			if(!silenced && !forcedodge)
 				visible_message("\red [A.name] is hit by the [src.name] in the [def_zone]!")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 			else
-				M << "\red You've been shot in the [def_zone] by the [src.name]!"
+				if(!forcedodge)
+					M << "\red You've been shot in the [def_zone] by the [src.name]!"
 			if(istype(firer, /mob))
 				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 				firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
@@ -106,12 +115,13 @@
 		spawn(0)
 			if(A)
 				var/permutation = A.bullet_act(src, def_zone) // searches for return value
-				if(permutation == -1) // the bullet passes through a dense object!
+				if(permutation == -1 || forcedodge) // the bullet passes through a dense object!
 					bumped = 0 // reset bumped variable!
 					if(istype(A, /turf))
 						loc = A
 					else
 						loc = A.loc
+					permutated.Add(A)
 					return
 
 				if(istype(A,/turf))
@@ -147,8 +157,9 @@
 			if(!bumped)
 				if(loc == original)
 					for(var/mob/living/M in original)
-						Bump(M)
-						sleep(1)
+						if(!(M in permutated))
+							Bump(M)
+							sleep(1)
 		return
 
 /obj/item/projectile/test //Used to see if you can hit them.

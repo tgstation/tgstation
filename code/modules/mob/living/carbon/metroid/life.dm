@@ -516,6 +516,7 @@
 							M.Friends = Friends
 							M.tame = tame
 							M.rabid = rabid
+							M.Discipline = Discipline
 							if(i != 1) step_away(M,src)
 
 						del(src)

@@ -34,7 +34,7 @@
 		return
 	if(istype(W,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/ID = W
-		if(access_keycard_auth in ID.access)
+		if(ACCESS_KEYCARD_AUTH in ID.access)
 			if(active == 1)
 				//This is not the device that made the initial request. It is the device confirming the request.
 				if(event_source)

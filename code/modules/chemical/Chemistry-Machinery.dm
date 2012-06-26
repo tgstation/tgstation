@@ -9,6 +9,7 @@
 	icon = 'chemical.dmi'
 	icon_state = "dispenser"
 	use_power = 1
+	idle_power_usage = 40
 	var/energy = 25
 	var/max_energy = 75
 	var/amount = 30
@@ -168,6 +169,8 @@
 	anchored = 1
 	icon = 'chemical.dmi'
 	icon_state = "mixer0"
+	use_power = 1
+	idle_power_usage = 20
 	var/beaker = null
 	var/mode = 0
 	var/condi = 0
