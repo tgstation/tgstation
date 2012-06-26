@@ -3,6 +3,7 @@
 	desc = "A jack o' lantern! Believed to ward off evil spirits."
 	icon_state = "hardhat0_pumpkin"//Could stand to be renamed
 	item_state = "hardhat0_pumpkin"
+	color = "pumpkin"
 	flags = FPRINT | TABLEPASS | HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
 	see_face = 0.0
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
