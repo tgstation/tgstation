@@ -128,6 +128,8 @@ datum/preferences
 		// OOC Metadata:
 	var/metadata = ""
 
+	var/sound_adminhelp = 0
+
 
 	New()
 		hair_style = new/datum/sprite_accessory/hair/short
@@ -261,9 +263,13 @@ datum/preferences
 		if(config.allow_Metadata)
 			dat += "<b>OOC Notes:</b> <a href='byond://?src=\ref[user];preferences=1;OOC=input'> Edit </a><br>"
 
-		if((user.client) && (user.client.holder) && (user.client.holder.rank) && (user.client.holder.level >= 5))
-			dat += "<hr><b>OOC</b><br>"
-			dat += "<a href='byond://?src=\ref[user];preferences=1;ooccolor=input'>Change colour</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table style='display:inline;'  bgcolor=\"[ooccolor]\"><tr><td>__</td></tr></table></font>"
+		if((user.client) && (user.client.holder) && (user.client.holder.rank))
+			dat += "<hr><b>Adminhelp sound</b>: "
+			dat += "[(sound_adminhelp)?"On":"Off"] <a href='byond://?src=\ref[user];preferences=1;toggleadminhelpsound=1'>toggle</a>"
+
+			if(user.client.holder.level >= 5)
+				dat += "<hr><b>OOC</b><br>"
+				dat += "<a href='byond://?src=\ref[user];preferences=1;ooccolor=input'>Change color</a> <font face=\"fixedsys\" size=\"3\" color=\"[ooccolor]\"><table style='display:inline;'  bgcolor=\"[ooccolor]\"><tr><td>__</td></tr></table></font>"
 
 		dat += "<hr><b>Occupation Choices</b><br>"
 		dat += "\t<a href=\"byond://?src=\ref[user];preferences=1;occ=1\"><b>Set Preferences</b></a><br>"
@@ -869,6 +875,9 @@ datum/preferences
 			if(ooccolor)
 				src.ooccolor = ooccolor
 
+		if(link_tags["toggleadminhelpsound"])
+			src.sound_adminhelp = !src.sound_adminhelp
+
 		if(link_tags["f_style"])
 			if(species != "Human") //Non-humans don't have hair stuff yet.
 				return
@@ -1169,6 +1178,7 @@ datum/preferences
 
 	proc/setup_client(var/client/C)
 		if(C)
+			C.sound_adminhelp = src.sound_adminhelp
 			C.midis = src.midis
 			C.ooccolor = src.ooccolor
 			C.be_alien = be_special & BE_ALIEN

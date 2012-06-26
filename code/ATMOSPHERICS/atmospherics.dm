@@ -37,22 +37,22 @@ obj/machinery/atmospherics/proc/build_network()
 
 	return null
 
-return_network(obj/machinery/atmospherics/reference)
+obj/machinery/atmospherics/proc/return_network(obj/machinery/atmospherics/reference)
 	// Returns pipe_network associated with connection to reference
 	// Notes: should create network if necessary
 	// Should never return null
 
 	return null
 
-reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
+obj/machinery/atmospherics/proc/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
 	// Used when two pipe_networks are combining
 
-return_network_air(datum/network/reference)
+obj/machinery/atmospherics/proc/return_network_air(datum/network/reference)
 	// Return a list of gas_mixture(s) in the object
 	//		associated with reference pipe_network for use in rebuilding the networks gases list
 	// Is permitted to return null
 
-	disconnect(obj/machinery/atmospherics/reference)
+obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
 
-update_icon()
+obj/machinery/atmospherics/update_icon()
 	return null
