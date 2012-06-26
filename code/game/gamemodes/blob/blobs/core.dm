@@ -58,8 +58,23 @@
 				G.client.mob = B
 				del(G)
 
-
-
-
-
-
+/*
+	Pulse(var/pulse = 0, var/origin_dir = 0)//Todo: Fix spaceblob expand
+		set background = 1
+		if(pulse > 20)	return
+		//Looking for another blob to pulse
+		var/list/dirs = list(1,2,4,8)
+		dirs.Remove(origin_dir)//Dont pulse the guy who pulsed us
+		for(var/i = 1 to 4)
+			if(!dirs.len)	break
+			var/dirn = pick(dirs)
+			dirs.Remove(dirn)
+			var/turf/T = get_step(src, dirn)
+			var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
+			if(!B)
+				expand(T)//No blob here so try and expand
+				return
+			B.Pulse((pulse+1),get_dir(src.loc,T))
+			return
+		return
+*/

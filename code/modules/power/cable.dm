@@ -141,7 +141,7 @@
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red [user] cuts the cable.", 1)
 
-		if(!defer_powernet_rebuild)
+		if(defer_powernet_rebuild)
 			if(netnum && powernets && powernets.len >= netnum)
 				var/datum/powernet/PN = powernets[netnum]
 				PN.cut_cable(src)

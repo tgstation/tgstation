@@ -209,7 +209,7 @@ This method wont take into account storage items developed in the future and doe
 	for(var/turf/T in get_area_turfs(shuttleat) )
 		var/obj/item/weapon/paper/slip = locate(/obj/item/weapon/paper/manifest) in T
 		if(slip)
-			if(slip.stamped.len)	//yes, the clown stamp will work. clown is the highest authority on the station, it makes sense
+			if(slip.stamped && slip.stamped.len)	//yes, the clown stamp will work. clown is the highest authority on the station, it makes sense
 				supply_shuttle_points += SUPPLY_POINTSPERSLIP
 			del(slip)
 		var/crate = locate(/obj/structure/closet/crate) in T

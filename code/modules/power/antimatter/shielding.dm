@@ -25,8 +25,9 @@ proc/cardinalrange(var/center)
 	var/stability = 100//If this gets low bad things tend to happen
 	var/efficiency = 1//How many cores this core counts for when doing power processing, plasma in the air and stability could affect this
 
-	New(var/l)
-		..(l)
+
+	New(loc)
+		..(loc)
 		spawn(10)
 			controllerscan()
 		return
@@ -182,8 +183,8 @@ proc/cardinalrange(var/center)
 
 	proc/check_stability(var/injecting_fuel = 0)
 		if(stability > 0) return
-		if(injecting_fuel)
-			explosion(get_turf(src),8,12,18,12)
+		if(injecting_fuel && control_unit)
+			control_unit.exploding = 1
 		if(src)
 			del(src)
 		return

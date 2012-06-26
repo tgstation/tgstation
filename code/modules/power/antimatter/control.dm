@@ -14,6 +14,7 @@
 	var/obj/item/weapon/am_containment/fueljar
 	var/update_shield_icons = 0
 	var/stability = 100
+	var/exploding = 0
 
 	var/active = 0//On or not
 	var/fuel_injection = 2//How much fuel to inject
@@ -26,6 +27,7 @@
 	var/stored_core_stability_delay = 0
 
 	var/stored_power = 0//Power to deploy per tick
+
 
 	New()
 		..()
@@ -40,6 +42,10 @@
 
 
 	process()
+		if(exploding)
+			explosion(get_turf(src),8,12,18,12)
+			if(src) del(src)
+
 		if(update_shield_icons && !shield_icon_delay)
 			check_shield_icons()
 			update_shield_icons = 0

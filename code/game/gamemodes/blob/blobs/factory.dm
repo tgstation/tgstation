@@ -6,7 +6,7 @@
 	brute_resist = 1
 	fire_resist = 2
 	var/list/spores = list()
-	var/max_spores = 6
+	var/max_spores = 4
 
 
 	update_icon()
@@ -18,6 +18,6 @@
 
 
 	run_action()
-		if(spores.len > max_spores)	return 0
+		if(spores.len >= max_spores)	return 0
 		new/obj/effect/critter/blob(src.loc, src)
 		return 1

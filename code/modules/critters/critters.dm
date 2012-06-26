@@ -91,6 +91,12 @@
 	brutevuln = 2
 
 
+/*	process()
+		if(prob(50))
+			TakeDamage(1)
+		..()*/
+
+
 	Die()
 		src.visible_message("<b>[src]</b> ruptures and explodes!")
 		src.alive = 0
