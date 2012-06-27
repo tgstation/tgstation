@@ -9,9 +9,11 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 /mob/proc/contract_disease(var/datum/disease/virus, var/skip_this = 0, var/force_species_check=1)
 //	world << "Contract_disease called by [src] with virus [virus]"
 	if(stat >=2) return
-	if(virus.type in resistances)
-		if(prob(99.9)) return
-		resistances.Remove(virus.type)//the resistance is futile
+
+//This gives a chance to re-infect cured/vaccinated mobs
+//	if(virus.type in resistances)
+//		if(prob(99.9)) return
+//		resistances.Remove(virus.type)//the resistance is futile
 
 	for(var/datum/disease/D in viruses)
 		if(istype(D, virus.type))

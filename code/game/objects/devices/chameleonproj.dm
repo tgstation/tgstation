@@ -23,6 +23,8 @@
 		..()
 		master.disrupt()
 	relaymove(var/mob/user, direction)
+		if(istype(loc, /turf/space)) return //No magical space movement!
+
 		if(can_move)
 			can_move = 0
 			switch(usr.bodytemperature)

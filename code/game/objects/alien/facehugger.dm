@@ -163,7 +163,7 @@ var/const/MAX_ACTIVE_TIME = 600
 		return
 
 	proc/Impregnate(mob/living/carbon/target as mob)
-		if(target.wear_mask != src) //was taken off or something
+		if(!target || target.wear_mask != src) //was taken off or something
 			return
 
 		if(!sterile)
