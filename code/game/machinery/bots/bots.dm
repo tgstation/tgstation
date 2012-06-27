@@ -36,9 +36,9 @@
 	..()
 	if (src.health < maxhealth)
 		if (src.health > maxhealth/3)
-			usr << text("\red [src]'s parts look loose.")
+			usr << "<span class='warning'>[src]'s parts look loose.</span>"
 		else
-			usr << text("\red <B>[src]'s parts look very loose!</B>")
+			usr << "<span class='danger'>[src]'s parts look very loose!</span>"
 	return
 
 /obj/machinery/bot/attack_alien(var/mob/living/carbon/alien/user as mob)
@@ -77,7 +77,7 @@
 				"\blue You repair [src]!"
 			)
 		else
-			user << "\blue [src] does not need a repair!"
+			user << "<span class='notice'>[src] does not need a repair.</span>"
 	else if (istype(W, /obj/item/weapon/card/emag) && !emagged)
 		Emag(user)
 	else

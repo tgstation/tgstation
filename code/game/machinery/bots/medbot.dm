@@ -171,7 +171,7 @@
 			src.reagent_glass.loc = get_turf(src)
 			src.reagent_glass = null
 		else
-			usr << "You cannot eject the beaker because the panel is locked!"
+			usr << "<span class='notice'>You cannot eject the beaker because the panel is locked.</span>"
 
 	else if ((href_list["togglevoice"]) && (!src.locked))
 		src.shut_up = !src.shut_up
@@ -183,23 +183,23 @@
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))
 			src.locked = !src.locked
-			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+			user << "<span class='notice'>Controls are now [src.locked ? "locked." : "unlocked."]</span>"
 			src.updateUsrDialog()
 		else
-			user << "\red Access denied."
+			user << "<span class='warning'>Access denied.</span>"
 
 	else if (istype(W, /obj/item/weapon/reagent_containers/glass))
 		if(src.locked)
-			user << "You cannot insert a beaker because the panel is locked!"
+			user << "<span class='notice'>You cannot insert a beaker because the panel is locked.</span>"
 			return
 		if(!isnull(src.reagent_glass))
-			user << "There is already a beaker loaded!"
+			user << "<span class='notice'>There is already a beaker loaded.</span>"
 			return
 
 		user.drop_item()
 		W.loc = src
 		src.reagent_glass = W
-		user << "You insert [W]."
+		user << "<span class='notice'>You insert [W].</span>"
 		src.updateUsrDialog()
 		return
 
@@ -210,7 +210,7 @@
 
 /obj/machinery/bot/medbot/Emag(mob/user as mob)
 	..()
-	if(user) user << "\red You short out [src]'s reagent synthesis circuits."
+	if(user) user << "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>"
 	spawn(0)
 		for(var/mob/O in hearers(src, null))
 			O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
@@ -542,7 +542,7 @@
 
 	//Making a medibot!
 	if(src.contents.len >= 1)
-		user << "\red You need to empty [src] out first!"
+		user << "<span class='notice'>You need to empty [src] out first.</span>"
 		return
 
 	var/obj/item/weapon/firstaid_arm_assembly/A = new /obj/item/weapon/firstaid_arm_assembly
@@ -555,31 +555,14 @@
 
 	del(S)
 	user.put_in_hands(A)
-	user << "You add the robot arm to the first aid kit"
+	user << "<span class='notice'>You add the robot arm to the first aid kit.</span>"
 	user.drop_from_inventory(src)
 	del(src)
 
 
 /obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	..()
-	if((istype(W, /obj/item/device/healthanalyzer)) && (!src.build_step))
-		src.build_step++
-		user << "You add the health sensor to [src]!"
-		src.name = "First aid/robot arm/health analyzer assembly"
-		src.overlays += image('aibots.dmi', "na_scanner")
-		del(W)
-
-	else if((isprox(W)) && (src.build_step == 1))
-		src.build_step++
-		user << "You complete the Medibot! Beep boop."
-		var/obj/machinery/bot/medbot/S = new /obj/machinery/bot/medbot
-		S.skin = src.skin
-		S.loc = get_turf(src)
-		S.name = src.created_name
-		del(W)
-		del(src)
-
-	else if(istype(W, /obj/item/weapon/pen))
+	if(istype(W, /obj/item/weapon/pen))
 		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
 		t = copytext(sanitize(t), 1, MAX_MESSAGE_LEN)
 		if (!t)
@@ -588,3 +571,27 @@
 			return
 
 		src.created_name = t
+	else
+		switch(build_step)
+			if(0)
+				if(istype(W, /obj/item/device/healthanalyzer))
+					user.drop_item()
+					del(W)
+					src.build_step++
+					user << "<span class='notice'>You add the health sensor to [src].</span>"
+					src.name = "First aid/robot arm/health analyzer assembly"
+					src.overlays += image('aibots.dmi', "na_scanner")
+
+			if(1)
+				if(isprox(W))
+					user.drop_item()
+					del(W)
+					src.build_step++
+					user << "<span class='notice'>You complete the Medibot! Beep boop.</span>"
+					var/turf/T = get_turf(src)
+					var/obj/machinery/bot/medbot/S = new /obj/machinery/bot/medbot(T)
+					S.skin = src.skin
+					S.name = src.created_name
+					user.drop_from_inventory(src)
+					del(src)
+

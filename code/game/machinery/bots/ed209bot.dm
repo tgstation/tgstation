@@ -74,8 +74,10 @@
 	var/lasercolor = ""
 
 
-/obj/machinery/bot/ed209/New()
+/obj/machinery/bot/ed209/New(loc,created_name,created_lasercolor)
 	..()
+	if(created_name)		name = created_name
+	if(created_lasercolor)	lasercolor = created_lasercolor
 	src.icon_state = "[lasercolor]ed209[src.on]"
 	spawn(3)
 		src.botcard = new /obj/item/weapon/card/id(src)
@@ -186,9 +188,9 @@ Auto Patrol: []"},
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (src.allowed(user))
 			src.locked = !src.locked
-			user << "Controls are now [src.locked ? "locked." : "unlocked."]"
+			user << "<span class='notice'>Controls are now [src.locked ? "locked" : "unlocked"].</span>"
 		else
-			user << "\red Access denied."
+			user << "<span class='warning'>Access denied.</span>"
 	else
 		..()
 		if (!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!src.target))
@@ -199,7 +201,7 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/ed209/Emag(mob/user as mob)
 	..()
-	if(user) user << "\red You short out [src]'s target assessment circuits."
+	if(user) user << "<span class='warning'>You short out [src]'s target assessment circuits.</span>"
 	spawn(0)
 		for(var/mob/O in hearers(src, null))
 			O.show_message("\red <B>[src] buzzes oddly!</B>", 1)
@@ -947,7 +949,7 @@ Auto Patrol: []"},
 				del(W)
 				build_step++
 				user << "<span class='notice'>You add the prox sensor to [src].</span>"
-				name = "prox/covered and armed the frame assembly"
+				name = "covered, shielded and sensored frame assembly"
 				item_state = "[lasercolor]ed209_prox"
 				icon_state = "[lasercolor]ed209_prox"
 
@@ -990,7 +992,7 @@ Auto Patrol: []"},
 			if( istype(W, /obj/item/weapon/screwdriver) )
 				playsound(src.loc, 'Screwdriver.ogg', 100, 1)
 				var/turf/T = get_turf(user)
-				user << "<span class='notice'>Now attaching the gun to the frame.</span>"
+				user << "<span class='notice'>Now attaching the gun to the frame...</span>"
 				sleep(40)
 				if(get_turf(user) == T)
 					build_step++
@@ -1001,11 +1003,8 @@ Auto Patrol: []"},
 			if( istype(W, /obj/item/weapon/cell) )
 				build_step++
 				user << "<span class='notice'>You complete the ED-209.</span>"
-				var/obj/machinery/bot/ed209/S = new /obj/machinery/bot/ed209
-				S.loc = get_turf(src)
-				S.name = created_name
-				S.lasercolor = lasercolor
-				S.New()
+				var/turf/T = get_turf(src)
+				new /obj/machinery/bot/ed209(T,created_name,lasercolor)
 				user.drop_item()
 				del(W)
 				user.drop_from_inventory(src)
@@ -1033,16 +1032,10 @@ Auto Patrol: []"},
 		..()
 
 /obj/machinery/bot/ed209/bluetag/New()//If desired, you spawn red and bluetag bots easily
-	var/obj/machinery/bot/ed209/S = new /obj/machinery/bot/ed209
-	S.loc = get_turf(src)
-	S.lasercolor = "b"
-	S.New()
+	new /obj/machinery/bot/ed209(get_turf(src),null,"b")
 	del(src)
 
 
 /obj/machinery/bot/ed209/redtag/New()
-	var/obj/machinery/bot/ed209/S = new /obj/machinery/bot/ed209
-	S.loc = get_turf(src)
-	S.lasercolor = "r"
-	S.New()
+	new /obj/machinery/bot/ed209(get_turf(src),null,"r")
 	del(src)

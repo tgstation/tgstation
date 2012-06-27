@@ -129,30 +129,30 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 			src.updateUsrDialog()
 		if("screw")
 			src.screwloose = !src.screwloose
-			usr << "You twiddle the screw."
+			usr << "<span class='notice>You twiddle the screw.</span>"
 			src.updateUsrDialog()
 		if("oddbutton")
 			src.oddbutton = !src.oddbutton
-			usr << "You press the weird button."
+			usr << "<span class='notice'>You press the weird button.</span>"
 			src.updateUsrDialog()
 
 /obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user as mob)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.allowed(usr))
 			src.locked = !src.locked
-			user << "You [ src.locked ? "lock" : "unlock"] the [src] behaviour controls."
+			user << "<span class='notice'>You [ src.locked ? "lock" : "unlock"] the [src] behaviour controls.</span>"
 		else
-			user << "\red This [src] doesn't seem to accept your authority."
+			user << "<span class='notice'>This [src] doesn't seem to respect your authority.</span>"
 	else if (istype(W, /obj/item/weapon/screwdriver))
 		if(!src.locked)
 			src.panelopen = !src.panelopen
-			user << "You [ src.panelopen ? "open" : "close"] the hidden panel on [src]."
+			user << "<span class='notice'>You [ src.panelopen ? "open" : "close"] the hidden panel on [src].</span>"
 	else
 		return ..()
 
 /obj/machinery/bot/cleanbot/Emag(mob/user as mob)
 	..()
-	if(user) user << "The [src] buzzes and beeps."
+	if(user) user << "<span class='notice'>The [src] buzzes and beeps.</span>"
 	src.oddbutton = 1
 	src.screwloose = 1
 	src.panelopen = 0
@@ -352,10 +352,10 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
 		user.drop_item()
 		del(W)
-		var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot
-		A.loc = get_turf(src.loc)
+		var/turf/T = get_turf(src.loc)
+		var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot(T)
 		A.name = src.created_name
-		user << "You add the robot arm to the bucket and sensor assembly! Beep boop!"
+		user << "<span class='notice'>You add the robot arm to the bucket and sensor assembly. Beep boop!</span>"
 		user.drop_from_inventory(src)
 		del(src)
 

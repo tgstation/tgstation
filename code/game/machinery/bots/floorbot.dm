@@ -106,14 +106,14 @@
 		var/loaded = min(50-src.amount, T.amount)
 		T.use(loaded)
 		src.amount += loaded
-		user << "\red You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles!"
+		user << "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles.</span>"
 		src.updateicon()
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(src.allowed(usr))
 			src.locked = !src.locked
-			user << "You [src.locked ? "lock" : "unlock"] the [src] behaviour controls."
+			user << "<span class='notice'>You [src.locked ? "lock" : "unlock"] the [src] behaviour controls.</span>"
 		else
-			user << "The [src] doesn't seem to accept your authority."
+			user << "<span class='notice'>The [src] doesn't seem to respect your authority.</span>"
 		src.updateUsrDialog()
 	else
 		..()
@@ -367,14 +367,14 @@
 		..()
 		return
 	if(src.contents.len >= 1)
-		user << "They wont fit in as there is already stuff inside!"
+		user << "<span class='notice'>They wont fit in as there is already stuff inside.</span>"
 		return
 	if(user.s_active)
 		user.s_active.close(user)
 	del(T)
 	var/obj/item/weapon/toolbox_tiles/B = new /obj/item/weapon/toolbox_tiles
 	user.put_in_hands(B)
-	user << "You add the tiles into the empty toolbox. They stick protrude from the top."
+	user << "<span class='notice'>You add the tiles into the empty toolbox. They protrude from the top.</span>"
 	user.drop_from_inventory(src)
 	del(src)
 
@@ -385,7 +385,7 @@
 		var/obj/item/weapon/toolbox_tiles_sensor/B = new /obj/item/weapon/toolbox_tiles_sensor()
 		B.created_name = src.created_name
 		user.put_in_hands(B)
-		user << "You add the sensor to the toolbox and tiles!"
+		user << "<span class='notice'>You add the sensor to the toolbox and tiles!</span>"
 		user.drop_from_inventory(src)
 		del(src)
 
@@ -403,10 +403,10 @@
 	..()
 	if(istype(W, /obj/item/robot_parts/l_arm) || istype(W, /obj/item/robot_parts/r_arm))
 		del(W)
-		var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot
+		var/turf/T = get_turf(user.loc)
+		var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot(T)
 		A.name = src.created_name
-		user.put_in_hands(A)
-		user << "You add the robot arm to the odd looking toolbox assembly! Boop beep!"
+		user << "<span class='notice'>You add the robot arm to the odd looking toolbox assembly! Boop beep!</span>"
 		user.drop_from_inventory(src)
 		del(src)
 	else if (istype(W, /obj/item/weapon/pen))
