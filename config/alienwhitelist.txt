@@ -8,6 +8,7 @@ forsamori - Tajaran
 forsamori - Soghun
 galenus - Soghun
 masterofstuff - Skrell
+mangled - Skrell
 searif - Soghun
 searif - Tajaran
 searif - Skrell
