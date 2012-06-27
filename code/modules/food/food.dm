@@ -1946,7 +1946,7 @@
 /obj/item/pizzabox/attack_hand( mob/user as mob )
 
 	if( open && pizza )
-		user.put_in_hand( pizza )
+		user.put_in_hands( pizza )
 
 		user << "\red You take the [src.pizza] out of the [src]."
 		src.pizza = null
@@ -1961,7 +1961,7 @@
 		var/obj/item/pizzabox/box = boxes[boxes.len]
 		boxes -= box
 
-		user.put_in_hand( box )
+		user.put_in_hands( box )
 		user << "\red You remove the topmost [src] from your hand."
 		box.update_icon()
 		update_icon()
