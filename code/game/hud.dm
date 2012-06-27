@@ -41,6 +41,7 @@
 #define ui_acti "13:26,1:5"
 #define ui_movi "12:24,1:5"
 #define ui_zonesel "14:28,1:5"
+#define ui_acti_alt "14:28,1:5" //alternative intent switcher for when the interface is hidden (F12)
 
 #define ui_borg_pull "12:24,2:7"
 #define ui_borg_module "13:26,2:7"
@@ -110,35 +111,54 @@ obj/hud/New(var/type = 0)
 	return
 
 
-/obj/hud/proc/other_update()
-
+/obj/hud/proc/hidden_inventory_update()
 	if(!mymob) return
-	if(show_otherinventory)
-		if(mymob:shoes) mymob:shoes:screen_loc = ui_shoes
-		if(mymob:gloves) mymob:gloves:screen_loc = ui_gloves
-		if(mymob:ears) mymob:ears:screen_loc = ui_ears
-		//if(mymob:s_store) mymob:s_store:screen_loc = ui_sstore1
-		if(mymob:glasses) mymob:glasses:screen_loc = ui_glasses
-		if(mymob:w_uniform) mymob:w_uniform:screen_loc = ui_iclothing
-		if(mymob:wear_suit) mymob:wear_suit:screen_loc = ui_oclothing
-		if(mymob:wear_mask) mymob:wear_mask:screen_loc = ui_mask
-		if(mymob:head) mymob:head:screen_loc = ui_head
+	if(inventory_shown && hud_shown)
+		if(ishuman(mymob))
+			if(mymob:shoes) mymob:shoes:screen_loc = ui_shoes
+			if(mymob:gloves) mymob:gloves:screen_loc = ui_gloves
+			if(mymob:ears) mymob:ears:screen_loc = ui_ears
+			if(mymob:glasses) mymob:glasses:screen_loc = ui_glasses
+			if(mymob:w_uniform) mymob:w_uniform:screen_loc = ui_iclothing
+			if(mymob:wear_suit) mymob:wear_suit:screen_loc = ui_oclothing
+			if(mymob:wear_mask) mymob:wear_mask:screen_loc = ui_mask
+			if(mymob:head) mymob:head:screen_loc = ui_head
 	else
 		if(ishuman(mymob))
 			if(mymob:shoes) mymob:shoes:screen_loc = null
 			if(mymob:gloves) mymob:gloves:screen_loc = null
 			if(mymob:ears) mymob:ears:screen_loc = null
-			//if(mymob:s_store) mymob:s_store:screen_loc = null
 			if(mymob:glasses) mymob:glasses:screen_loc = null
 			if(mymob:w_uniform) mymob:w_uniform:screen_loc = null
 			if(mymob:wear_suit) mymob:wear_suit:screen_loc = null
 			if(mymob:wear_mask) mymob:wear_mask:screen_loc = null
 			if(mymob:head) mymob:head:screen_loc = null
 
+/obj/hud/proc/persistant_inventory_update()
+	if(!mymob) return
+	if(hud_shown)
+		if(ishuman(mymob))
+			if(mymob:s_store) mymob:s_store:screen_loc = ui_sstore1
+			if(mymob:wear_id) mymob:wear_id:screen_loc = ui_id
+			if(mymob:belt) mymob:belt:screen_loc = ui_belt
+			if(mymob:back) mymob:back:screen_loc = ui_back
+			if(mymob:l_store) mymob:l_store:screen_loc = ui_storage1
+			if(mymob:r_store) mymob:r_store:screen_loc = ui_storage2
+	else
+		if(ishuman(mymob))
+			if(mymob:s_store) mymob:s_store:screen_loc = null
+			if(mymob:wear_id) mymob:wear_id:screen_loc = null
+			if(mymob:belt) mymob:belt:screen_loc = null
+			if(mymob:back) mymob:back:screen_loc = null
+			if(mymob:l_store) mymob:l_store:screen_loc = null
+			if(mymob:r_store) mymob:r_store:screen_loc = null
 
-/obj/hud/var/show_otherinventory = 1
-/obj/hud/var/obj/screen/action_intent
-/obj/hud/var/obj/screen/move_intent
+
+/obj/hud
+	var/obj/screen/action_intent
+	var/obj/screen/move_intent
+	var/hud_shown = 1	//Used for the HUD toggle (F12)
+	var/inventory_shown = 1	//the inventory
 
 /obj/hud/proc/instantiate(var/type = 0)
 

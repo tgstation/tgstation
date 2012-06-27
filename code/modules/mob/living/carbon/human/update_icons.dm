@@ -588,7 +588,7 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/update_hud()	//TODO: do away with this if possible
 	if(client)
 		client.screen |= contents
-		hud_used.other_update() 	//Updates the screenloc of the items on the 'other' inventory bar
+		hud_used.hidden_inventory_update() 	//Updates the screenloc of the items on the 'other' inventory bar
 
 
 /mob/living/carbon/human/update_inv_handcuffed(var/update_icons=1)

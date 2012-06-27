@@ -5,9 +5,6 @@
 	flags = NOREACT
 	var/datum/mind/mind
 
-
-
-
 	//MOB overhaul
 
 	//Not in use yet

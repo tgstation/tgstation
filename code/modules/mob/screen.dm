@@ -205,14 +205,14 @@
 	switch(name)
 		/*
 		if("other")
-			if (usr.hud_used.show_otherinventory)
-				usr.hud_used.show_otherinventory = 0
+			if (usr.hud_used.inventory_shown)
+				usr.hud_used.inventory_shown = 0
 				usr.client.screen -= usr.hud_used.other
 			else
-				usr.hud_used.show_otherinventory = 1
+				usr.hud_used.inventory_shown = 1
 				usr.client.screen += usr.hud_used.other
 
-			usr.hud_used.other_update()*/
+			usr.hud_used.hidden_inventory_update()*/
 		if("act_intent")
 			if(ishuman(usr) || istype(usr,/mob/living/carbon/alien/humanoid) || islarva(usr))
 				usr.hud_used.action_intent.icon_state = "intent_[usr.a_intent]"
@@ -234,14 +234,14 @@
 			usr.clearmap()
 
 		if("other")
-			if (usr.hud_used.show_otherinventory)
-				usr.hud_used.show_otherinventory = 0
+			if (usr.hud_used.inventory_shown)
+				usr.hud_used.inventory_shown = 0
 				usr.client.screen -= usr.hud_used.other
 			else
-				usr.hud_used.show_otherinventory = 1
+				usr.hud_used.inventory_shown = 1
 				usr.client.screen += usr.hud_used.other
 
-			usr.hud_used.other_update()
+			usr.hud_used.hidden_inventory_update()
 
 		if("equip")
 			var/obj/item/I = usr.get_active_hand()
