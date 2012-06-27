@@ -7,10 +7,10 @@ MEDICAL
 
 
 /obj/item/stack/medical/attack(mob/living/carbon/M as mob, mob/user as mob)
-	var/heal_cap = 0
+	var/heal_cap = 50
 
 	if(istype(src, /obj/item/stack/medical/advanced))
-		heal_cap = -50
+		heal_cap = 0
 
 	if (M.stat == 2)
 		var/t_him = "it"
