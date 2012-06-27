@@ -167,7 +167,7 @@
 	var/cdir = 0
 	var/gen = 0
 	var/lastgen = 0
-	var/track = 2			// 0= off  1=timed  2=auto (tracker)
+	var/track = 0			// 0= off  1=timed  2=auto (tracker)
 	var/trackrate = 600		// 300-900 seconds
 	var/trackdir = 1		// 0 =CCW, 1=CW
 	var/nexttime = 0

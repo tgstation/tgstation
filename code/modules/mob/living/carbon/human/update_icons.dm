@@ -40,7 +40,7 @@ There are several things that need to be remembered:
 		update_inv_gloves()
 		update_inv_shoes()
 		update_inv_w_uniform()
-		update_inv_glassed()
+		update_inv_glasse()
 		update_inv_l_hand()
 		update_inv_r_hand()
 		update_inv_belt()

@@ -21,54 +21,59 @@
 
 	//TODO: seperate this out
 	var/datum/gas_mixture/environment = loc.return_air()
-	if(stat != DEAD) //still breathing
-		//First, resolve location and get a breath
-		if(air_master.current_cycle%4==2)
-			//Only try to take a breath every 4 seconds, unless suffocating
-			spawn(0) breathe()
+
+
+
+	//No need to update all of these procs if the guy is dead.
+	if(stat != DEAD)
+		if(air_master.current_cycle%4==2) 	//First, resolve location and get a breath
+			spawn(0) breathe() 				//Only try to take a breath every 4 seconds, unless suffocating
 
 		else //Still give containing object the chance to interact
 			if(istype(loc, /obj/))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
-	//Apparently, the person who wrote this code designed it so that
-	//blinded get reset each cycle and then get activated later in the
-	//code. Very ugly. I dont care. Moving this stuff here so its easy
-	//to find it.
+		//Disease Check
+		handle_virus_updates()
+
+		//Changeling things
+		handle_changeling()
+
+		//Mutations and radiation
+		handle_mutations_and_radiation()
+
+		//Chemicals in the body
+		handle_chemicals_in_body()
+
+		//Disabilities
+		handle_disabilities()
+
+		//Random events (vomiting etc)
+		handle_random_events()
+
+		update_canmove() //TODO: remove from life() if viable ~Carn
+						 //Removed for dead people, that's at least a small step closer to removing it! - Nodrak
+
+	else if(stat == DEAD)
+		canmove = 0 //Since canmove doesn't update if they're dead, force this var 0.
+
+	//These should be updated whether the mob is dead or alive
 	blinded = null
 
 	//Update Mind
 	update_mind()
 
-	//Disease Check
-	handle_virus_updates()
-
-	//Changeling things
-	handle_changeling()
-
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)
-
-	//Mutations and radiation
-	handle_mutations_and_radiation()
-
-	//Chemicals in the body
-	handle_chemicals_in_body()
 
 	//stuff in the stomach
 	handle_stomach()
 
-	//Disabilities
-	handle_disabilities()
-
-	//Random events (vomiting etc)
-	handle_random_events()
 
 	//Status updates, death etc.
 	UpdateLuminosity()
 	handle_regular_status_updates()		//TODO: optimise ~Carn
-	update_canmove()	//TODO: remove from life() if viable ~Carn (read as: if it won't cause massive problems)
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()	//TODO: this was broken by the dismemberment revert ~Carn

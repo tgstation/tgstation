@@ -20,7 +20,7 @@ SHARDS
 		CC.use(5)
 		src.use(1)
 		user << "\blue You attach wire to the [name]."
-		new/obj/item/stack/light_w(user.loc)
+		new /obj/item/stack/light_w(user.loc)
 		if(CC.amount <= 0)
 			user.u_equip(CC)
 			del(CC)
