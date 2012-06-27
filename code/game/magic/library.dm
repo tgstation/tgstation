@@ -184,70 +184,75 @@
 	var/unique = 0   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 	var/title		 // The real name of the book.
 
-	attack_self(var/mob/user as mob)
-		if(src.dat)
-			user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")
-			user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
-			onclose(user, "book")
-		else
-			user << "This book is completely blank!"
+/obj/item/weapon/book/attack_self(var/mob/user as mob)
+	if(src.dat)
+		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")
+		user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
+		onclose(user, "book")
+	else
+		user << "This book is completely blank!"
 
-	attackby(obj/item/weapon/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weapon/pen))
-			if(unique)
-				user << "These pages don't seem to take the ink well. Looks like you can't modify it."
-				return
-			var/choice = input("What would you like to change?") in list("Title", "Contents", "Author", "Cancel")
-			switch(choice)
-				if("Title")
-					var/title = copytext(sanitize(input("Write a new title:") as text|null),1,MAX_MESSAGE_LEN)
-					if(!title)
-						return
-				else if("Contents")
-					var/content = strip_html(input("Write your book's contents (HTML NOT allowed):"),8192) as message|null
-					if(!content)
-						return
-					else
-						src.dat += content
-				else if("Author")
-					var/nauthor = copytext(sanitize(input("Write the author's name:") as text|null),1,MAX_NAME_LEN)
-					if(!nauthor)
-						return
-					else
-						src.author = sanitize(nauthor)
-				else
+/obj/item/weapon/book/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/pen))
+		if(unique)
+			user << "These pages don't seem to take the ink well. Looks like you can't modify it."
+			return
+		var/choice = input("What would you like to change?") in list("Title", "Contents", "Author", "Cancel")
+		switch(choice)
+			if("Title")
+				var/newtitle = copytext(sanitize(input("Write a new title:") as text|null),1,MAX_MESSAGE_LEN)
+				if(!newtitle)
+					usr << "The title is invalid."
 					return
-		else if(istype(W, /obj/item/weapon/barcodescanner))
-			var/obj/item/weapon/barcodescanner/scanner = W
-			if(!scanner.computer)
-				user << "[W]'s screen flashes: 'No associated computer found!'"
+				else
+					src.author = sanitize(newtitle)
+			if("Contents")
+				var/content = strip_html(input("Write your book's contents (HTML NOT allowed):"),8192) as message|null
+				if(!content)
+					usr << "The content is invalid."
+					return
+				else
+					src.dat += content
+			if("Author")
+				var/newauthor = copytext(sanitize(input("Write the author's name:") as text|null),1,MAX_NAME_LEN)
+				if(!newauthor)
+					usr << "The name is invalid."
+					return
+				else
+					src.author = newauthor
 			else
-				switch(scanner.mode)
-					if(0)
-						scanner.book = src
-						user << "[W]'s screen flashes: 'Book stored in buffer.'"
-					if(1)
-						scanner.book = src
-						scanner.computer.buffer_book = src.name
-						user << "[W]'s screen flashes: 'Book stored in buffer. Book title stored in associated computer buffer.'"
-					if(2)
-						scanner.book = src
-						for(var/datum/borrowbook/b in scanner.computer.checkouts)
-							if(b.bookname == src.name)
-								scanner.computer.checkouts.Remove(b)
-								user << "[W]'s screen flashes: 'Book stored in buffer. Book has been checked in.'"
-								return
-						user << "[W]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'"
-					if(3)
-						scanner.book = src
-						for(var/obj/item/weapon/book in scanner.computer.inventory)
-							if(book == src)
-								user << "[W]'s screen flashes: 'Book stored in buffer. Title already present in inventory, aborting to avoid duplicate entry.'"
-								return
-						scanner.computer.inventory.Add(src)
-						user << "[W]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"
+				return
+	else if(istype(W, /obj/item/weapon/barcodescanner))
+		var/obj/item/weapon/barcodescanner/scanner = W
+		if(!scanner.computer)
+			user << "[W]'s screen flashes: 'No associated computer found!'"
 		else
-			..()
+			switch(scanner.mode)
+				if(0)
+					scanner.book = src
+					user << "[W]'s screen flashes: 'Book stored in buffer.'"
+				if(1)
+					scanner.book = src
+					scanner.computer.buffer_book = src.name
+					user << "[W]'s screen flashes: 'Book stored in buffer. Book title stored in associated computer buffer.'"
+				if(2)
+					scanner.book = src
+					for(var/datum/borrowbook/b in scanner.computer.checkouts)
+						if(b.bookname == src.name)
+							scanner.computer.checkouts.Remove(b)
+							user << "[W]'s screen flashes: 'Book stored in buffer. Book has been checked in.'"
+							return
+					user << "[W]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'"
+				if(3)
+					scanner.book = src
+					for(var/obj/item/weapon/book in scanner.computer.inventory)
+						if(book == src)
+							user << "[W]'s screen flashes: 'Book stored in buffer. Title already present in inventory, aborting to avoid duplicate entry.'"
+							return
+					scanner.computer.inventory.Add(src)
+					user << "[W]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"
+	else
+		..()
 
 
 
@@ -654,10 +659,6 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 							alert("Upload Complete.")
 						dbcon.Disconnect()
 	if(href_list["targetid"])
-
-
-
-
 		var/sqlid = sanitizeSQL(href_list["targetid"])
 		var/DBConnection/dbcon = new()
 		dbcon.Connect("dbi:mysql:[sqldb]:[sqladdress]:[sqlport]","[sqllogin]","[sqlpass]")
@@ -670,7 +671,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			bibledelay = 1
 			spawn(60)
 				bibledelay = 0
-			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM library WHERE id=\"[sqlid]\"")
+			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM library WHERE id=[sqlid]")
 			query.Execute()
 
 			while(query.NextRow())
@@ -689,24 +690,12 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	if(href_list["orderbyid"])
 		var/orderid = input("Enter your order:") as num|null
 		if(orderid)
-			orderid = sanitizeSQL(orderid)
-			var/nhref = "src=\ref[src];targetid=[orderid]"
-			spawn() src.Topic(nhref, params2list(nhref), src)
+			if(isnum(orderid))
+				var/nhref = "src=\ref[src];targetid=[orderid]"
+				spawn() src.Topic(nhref, params2list(nhref), src)
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
-
-
-
-
-
-
-
-
-
-
-
-
 
 /obj/machinery/libraryscanner
 	name = "scanner"
@@ -772,18 +761,18 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	anchored = 1
 	density = 1
 
-	attackby(var/obj/O as obj, var/mob/user as mob)
-		if(istype(O, /obj/item/weapon/paper))
-			user.drop_item()
-			O.loc = src
-			user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
-			src.visible_message("[src] begins to hum as it warms up its printing drums.")
-			sleep(rand(200,400))
-			src.visible_message("[src] whirs as it prints and binds a new book.")
-			var/obj/item/weapon/book/b = new(src.loc)
-			b.dat = O:info
-			b.name = "Print Job #" + "[rand(100, 999)]"
-			b.icon_state = "book[rand(1,7)]"
-			del(O)
-		else
-			..()
+/obj/machinery/bookbinder/attackby(var/obj/O as obj, var/mob/user as mob)
+	if(istype(O, /obj/item/weapon/paper))
+		user.drop_item()
+		O.loc = src
+		user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
+		src.visible_message("[src] begins to hum as it warms up its printing drums.")
+		sleep(rand(200,400))
+		src.visible_message("[src] whirs as it prints and binds a new book.")
+		var/obj/item/weapon/book/b = new(src.loc)
+		b.dat = O:info
+		b.name = "Print Job #" + "[rand(100, 999)]"
+		b.icon_state = "book[rand(1,7)]"
+		del(O)
+	else
+		..()
