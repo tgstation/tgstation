@@ -192,7 +192,7 @@
 		return 0
 	var/mob/M = loc
 
-	if(!M.canmove)
+	if(!M.canmove && (!M.buckled && M.handcuffed))
 		return 0
 
 	if((src in M.contents) || ( istype(loc, /turf) && in_range(src, M) ) )
