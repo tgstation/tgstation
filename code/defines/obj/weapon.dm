@@ -79,6 +79,21 @@
 	IsShield()
 		return 1
 
+/obj/item/weapon/katana
+	name = "katana"
+	desc = "Woefully underpowered in D20"
+	icon_state = "katana"
+	item_state = "katana"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	slot_flags = SLOT_BELT | SLOT_BACK
+	force = 40
+	throwforce = 10
+	w_class = 3
+
+	IsShield()
+		return 1
+
+
 /obj/item/weapon/bodybag
 	name = "body bag"
 	desc = "Bag mixed with a bit of body."
