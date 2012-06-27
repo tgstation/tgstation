@@ -26,6 +26,10 @@
 		user << "You are wearing that."
 		return
 
+	if(O in user) //TEMPORARY FIX. It seems trying to put items that are in your hand in the bags breaks them horribly. - Erthilo
+		user << "You'll need to put the evidence down to properly bag it."
+		return
+
 	if(contents.len)
 		user << "The [src] already has something inside it."
 		return ..()
