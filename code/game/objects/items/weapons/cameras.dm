@@ -81,7 +81,7 @@
 			scribble = txt
 
 	..()
-
+z
 /obj/item/weapon/photo/examine()
 	set src in oview(2)
 	..()
@@ -103,7 +103,8 @@
 
 	var/n_name = input(usr, "What would you like to label the photo?", "Photo Labelling", src.name)  as text
 	n_name = copytext(n_name, 1, 32)
-	if ((loc == usr && usr.stat == 0))
+	//loc.loc check is for making possible renaming photos in clipboards
+	if (( (src.loc == usr || (src.loc.loc && src.loc.loc == usr)) && usr.stat == 0))
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 	return
